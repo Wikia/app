@@ -56,7 +56,7 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 		return result;
 	}
 
-	function build(slotName, src, passback) {
+	function build(slotName, src) {
 		var adUnitElements,
 			params = page.getPageLevelParams(),
 			device = getDevice(params),
@@ -75,10 +75,6 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 			skin + '-' + pageType,
 			wikiName + '-' + vertical
 		];
-
-		if (passback) {
-			adUnitElements.push(passback);
-		}
 
 		return adUnitElements.join('/');
 	}

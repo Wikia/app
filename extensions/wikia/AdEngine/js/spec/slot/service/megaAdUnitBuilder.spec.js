@@ -111,8 +111,8 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 		});
 		mockTargetingWikiIsTop1000(true);
 
-		expect(getModule().build('MOBILE_PREFOOTER', 'mobile_remnant', 'Evolve'))
-			.toEqual('/5441/wka2a.PF/mobile_prefooter/smartphone/mercury-home/_godofwar-gaming/Evolve');
+		expect(getModule().build('MOBILE_PREFOOTER', 'mobile_remnant'))
+			.toEqual('/5441/wka2a.PF/mobile_prefooter/smartphone/mercury-home/_godofwar-gaming');
 	});
 
 	it('Should build new ad unit with correct tablet recognition', function () {
@@ -121,8 +121,8 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 
 		spyOn(mocks.browserDetect, 'isMobile').and.returnValue(true);
 
-		expect(getModule().build('MOBILE_PREFOOTER', 'mobile_remnant', 'test_passback'))
-			.toEqual('/5441/wka2a.PF/mobile_prefooter/tablet/oasis-home/_godofwar-gaming/test_passback');
+		expect(getModule().build('MOBILE_PREFOOTER', 'mobile_remnant'))
+			.toEqual('/5441/wka2a.PF/mobile_prefooter/tablet/oasis-home/_godofwar-gaming');
 	});
 
 	it('Should build new ad unit for wiki not in top 1000', function () {
@@ -131,18 +131,8 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 
 		spyOn(mocks.browserDetect, 'isMobile').and.returnValue(true);
 
-		expect(getModule().build('MOBILE_PREFOOTER', 'mobile_remnant', 'test_passback'))
-			.toEqual('/5441/wka2a.PF/mobile_prefooter/tablet/oasis-home/_not_a_top1k_wiki-gaming/test_passback');
-	});
-
-	it('Should build new ad unit without passback', function () {
-		mockPageParams(DEFAULT_PAGE_PARAMS);
-		mockTargetingWikiIsTop1000(true);
-
-		spyOn(mocks.browserDetect, 'isMobile').and.returnValue(true);
-
 		expect(getModule().build('MOBILE_PREFOOTER', 'mobile_remnant'))
-			.toEqual('/5441/wka2a.PF/mobile_prefooter/tablet/oasis-home/_godofwar-gaming');
+			.toEqual('/5441/wka2a.PF/mobile_prefooter/tablet/oasis-home/_not_a_top1k_wiki-gaming');
 	});
 
 	it('Should build new ad unit non-remnant provider with wka1a', function () {
