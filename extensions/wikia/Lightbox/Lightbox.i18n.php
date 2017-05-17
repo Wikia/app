@@ -858,4 +858,4 @@ $messages['zh-hant'] = array(
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|電子郵件|電子郵件}}已發送。',
 	'lightbox-visit-the-wiki' => '請訪問這個Wiki：',
 );
-s
+
