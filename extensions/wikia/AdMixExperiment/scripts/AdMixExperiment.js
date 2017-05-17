@@ -210,10 +210,10 @@ require(['wikia.throttle'], function (throttle) {
 		function update() {
 			var scrollTop = $window.scrollTop();
 			var firstAdTopPosition = getFirstAdTopPosition();
-			var firstAdBottomPosition = getFirstAdBottomPosition(firstAdTopPosition);
+			var firstAdBottomPosition;
 			var adAndRecircWrapperTopPosition = getAdAndRecircWrapperTopPosition();
-			var adAndRecircWrapperBottomPosition = getAdAndRecircWrapperBottomPosition(adAndRecircWrapperTopPosition);
-			var stopPosition = getStopPosition();
+			var adAndRecircWrapperBottomPosition;
+			var stopPosition;
 
 			if (
 				scrollTop < firstAdTopPosition ||
@@ -221,22 +221,40 @@ require(['wikia.throttle'], function (throttle) {
 				viewportWidth <= breakpointSmall
 			) {
 				reset();
-			} else if (
+				return;
+			}
+
+			firstAdBottomPosition = getFirstAdBottomPosition(firstAdTopPosition);
+
+			if (
 				scrollTop >= firstAdTopPosition &&
 				scrollTop < firstAdBottomPosition
 			) {
 				scrollAfterFirstAdTopPosition();
-			} else if (
+				return;
+			}
+
+			if (
 				scrollTop >= firstAdBottomPosition &&
 				scrollTop < adAndRecircWrapperTopPosition
 			) {
 				scrollAfterFirstAdBottomPosition();
-			} else if (
+				return;
+			}
+
+			adAndRecircWrapperBottomPosition = getAdAndRecircWrapperBottomPosition(adAndRecircWrapperTopPosition);
+
+			if (
 				scrollTop >= adAndRecircWrapperTopPosition &&
 				scrollTop < adAndRecircWrapperBottomPosition
 			) {
 				scrollAfterAdAndRecircWrapperTopPosition();
-			} else if (
+				return;
+			}
+
+			stopPosition = getStopPosition();
+
+			if (
 				scrollTop >= adAndRecircWrapperBottomPosition &&
 				scrollTop < stopPosition
 			) {
