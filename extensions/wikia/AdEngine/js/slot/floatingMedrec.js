@@ -57,21 +57,21 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 				});
 			}
 
-			if ($win.scrollTop() > startPosition && $win.scrollTop() < stopPosition) {
-				$adSlot.css({
-					position: 'fixed',
-					top: globalNavigationHeight + margin + 'px',
-					visibility: 'visible'
-				});
-			}
-
-			if ($win.scrollTop() >= stopPosition) {
-				$adSlot.css({
-					position: 'absolute',
-					top: stopPosition - startPosition + 'px',
-					visibility: 'visible'
-				});
-			}
+			// if ($win.scrollTop() > startPosition && $win.scrollTop() < stopPosition) {
+			// 	$adSlot.css({
+			// 		position: 'fixed',
+			// 		top: globalNavigationHeight + margin + 'px',
+			// 		visibility: 'visible'
+			// 	});
+			// }
+			//
+			// if ($win.scrollTop() >= stopPosition) {
+			// 	$adSlot.css({
+			// 		position: 'absolute',
+			// 		top: stopPosition - startPosition + 'px',
+			// 		visibility: 'visible'
+			// 	});
+			// }
 		}
 
 		function handleFloatingMedrec() {
@@ -86,14 +86,14 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 				win.removeEventListener('scroll', update);
 				win.removeEventListener('resize', update);
 
-				$adSlot.css({
-					visibility: 'hidden'
-				});
+				// $adSlot.css({
+				// 	visibility: 'hidden'
+				// });
 
 				enabled = false;
 			}
 
-			if (!enabled && isEnoughSpace && $win.scrollTop() > startPosition) {
+			if (!enabled && isEnoughSpace && $win.scrollTop() > 0) {
 				log(['handleFloatingMedrec', 'Enabling floating medrec'], 'debug', logGroup);
 
 				enabled = true;
