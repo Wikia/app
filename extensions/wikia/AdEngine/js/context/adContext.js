@@ -53,13 +53,13 @@ define('ext.wikia.adEngine.adContext', [
 	}
 
 	function isSourcePointDetectionDesktopEnabled(context) {
-		return context.opts.sourcePointDetectionUrl && (context.targeting.skin === 'oasis' &&
-			geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionCountries));
+		return context.opts.sourcePointDetectionUrl && context.targeting.skin === 'oasis' &&
+			geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionCountries);
 	}
 
 	function isSourcePointDetectionMobileEnabled(context) {
-		return context.opts.sourcePointDetectionUrl && (context.targeting.skin === 'mercury' &&
-			geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionMobileCountries));
+		return context.opts.sourcePointDetectionUrl && context.targeting.skin === 'mercury' &&
+			geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionMobileCountries);
 	}
 
 	function updateDetectionServicesAdContext(context, noExternals) {
@@ -71,7 +71,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.pageFairDetection = !noExternals && isPageFairDetectionEnabled();
 	}
 
-	function updateRecoveryServicesAdContext(context, noExternals) {
+	function updateAdContextRecoveryServices(context, noExternals) {
 		var taboolaConfig = instantGlobals.wgAdDriverTaboolaConfig || {},
 			isRecoveryServiceAlreadyEnabled = false,
 			serviceCanBeEnabled = !noExternals && context.opts.showAds;
@@ -79,23 +79,23 @@ define('ext.wikia.adEngine.adContext', [
 		// PageFair recovery
 		context.opts.pageFairRecovery = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
 			context.opts.pageFairRecovery && geo.isProperGeo(instantGlobals.wgAdDriverPageFairRecoveryCountries);
-		isRecoveryServiceAlreadyEnabled = context.opts.pageFairRecovery;
+		isRecoveryServiceAlreadyEnabled |= context.opts.pageFairRecovery;
 
 		// SourcePoint recovery
 		context.opts.sourcePointRecovery = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
 			context.opts.sourcePointRecovery && geo.isProperGeo(instantGlobals.wgAdDriverSourcePointRecoveryCountries);
-		isRecoveryServiceAlreadyEnabled = isRecoveryServiceAlreadyEnabled || context.opts.sourcePointRecovery;
+		isRecoveryServiceAlreadyEnabled |= context.opts.sourcePointRecovery;
 
 		// SourcePoint MMS
 		context.opts.sourcePointMMS = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled && context.opts.sourcePointMMS;
-		isRecoveryServiceAlreadyEnabled = isRecoveryServiceAlreadyEnabled || context.opts.sourcePointMMS;
+		isRecoveryServiceAlreadyEnabled |= context.opts.sourcePointMMS;
 
 		context.opts.sourcePointBootstrap = context.opts.sourcePointMMS || context.opts.sourcePointRecovery;
 
 		// Taboola
 		context.opts.loadTaboolaLibrary = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
 			shouldLoadTaboolaOnBlockingTraffic(taboolaConfig);
-		isRecoveryServiceAlreadyEnabled = isRecoveryServiceAlreadyEnabled || context.opts.loadTaboolaLibrary;
+		isRecoveryServiceAlreadyEnabled |= context.opts.loadTaboolaLibrary;
 
 		// Google Consumer Surveys
 		context.opts.googleConsumerSurveys = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
@@ -133,7 +133,7 @@ define('ext.wikia.adEngine.adContext', [
 			geo.isProperGeo(instantGlobals.wgAdDriverSrcPremiumCountries);
 
 		updateDetectionServicesAdContext(context, noExternals);
-		updateRecoveryServicesAdContext(context, noExternals);
+		updateAdContextRecoveryServices(context, noExternals);
 
 		// showcase.*
 		if (cookies.get('mock-ads') === 'NlfdjR5xC0') {
