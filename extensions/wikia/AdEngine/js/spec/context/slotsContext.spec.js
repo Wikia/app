@@ -1,6 +1,6 @@
 
 /*global beforeEach, describe, it, expect, modules, spyOn*/
-describe('ext.wikia.adEngine.context.uapContext', function () {
+describe('ext.wikia.adEngine.context.slotsContext', function () {
 	'use strict';
 
 	function noop() {
@@ -67,8 +67,6 @@ describe('ext.wikia.adEngine.context.uapContext', function () {
 		var context = getContext();
 
 		expect(context.isApplicable('INVISIBLE_HIGH_IMPACT_2')).toBeFalsy();
-		expect(context.isApplicable('INCONTENT_LEADERBOARD')).toBeFalsy();
-		expect(context.isApplicable('INCONTENT_PLAYER')).toBeFalsy();
 	});
 
 	it('geo based slots', function () {
@@ -76,14 +74,6 @@ describe('ext.wikia.adEngine.context.uapContext', function () {
 			{
 				countriesVariable: 'wgAdDriverHighImpact2SlotCountries',
 				slotName: 'INVISIBLE_HIGH_IMPACT_2'
-			},
-			{
-				countriesVariable: 'wgAdDriverIncontentLeaderboardSlotCountries',
-				slotName: 'INCONTENT_LEADERBOARD'
-			},
-			{
-				countriesVariable: 'wgAdDriverIncontentPlayerSlotCountries',
-				slotName: 'INCONTENT_PLAYER'
 			}
 		];
 
@@ -151,9 +141,8 @@ describe('ext.wikia.adEngine.context.uapContext', function () {
 	});
 
 	it('filter slot map that is undefined - no slot maps for given skin', function () {
-		var context = getContext(),
-			slotMap;
+		var context = getContext();
 
-		expect(context.filterSlotMap(slotMap)).toEqual({});
+		expect(context.filterSlotMap()).toEqual({});
 	});
 });
