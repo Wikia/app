@@ -675,11 +675,6 @@ $messages['pt'] = [
 	'videos-error-provider-not-supported' => 'Este provedor de vídeo não é suportado. Veja nossa lista de [http://community.wikia.com/wiki/Help:Video_Embed_Tool#Supported_sites suportada provedores].',
 ];
 
-$messages['pt-br'] = [
-	'videohandler-category' => 'Vídeos',
-	'videos-add-video' => 'Adicione um vídeo',
-];
-
 $messages['ro'] = [
 	'videohandler-category' => 'Videoclipuri',
 ];
@@ -840,54 +835,6 @@ $messages['zh-hans'] = [
 	'videos-error-provider-not-supported' => '不支持该影片（视频）提供商。请查看我们[http://zh.community.wikia.com/wiki/Help:%E5%BD%B1%E7%89%87%E5%B5%8C%E5%85%A5%E5%B7%A5%E5%85%B7 支持的供应商]列表。',
 ];
 
-$messages['zh-tw'] = [
-	'wikia-videohandlers-desc' => 'MediaWiki文檔體系結構內的影片（視頻）處理',
-	'videohandler' => '影片處理器（或視頻處理器）',
-	'prototype-videohandler-extension-desc' => 'Prototype影片處理器（或Prototype視頻處理器）',
-	'movieclips-videohandler-extension-desc' => 'MovieClips影片處理器（或MovieClips視頻處理器）',
-	'screenplay-videohandler-extension-desc' => 'Screenplay影片處理器（或Screenplay視頻處理器）',
-	'youtube-videohandler-extension-desc' => 'YouTube影片處理器（或YouTube視頻處理器）',
-	'videohandler-error-missing-parameter' => '缺少需要的變量 "$1"',
-	'videohandler-error-video-no-exist' => '這個標題的影片不存在',
-	'videohandler-unknown-title' => '未知的標題',
-	'videohandler-video-details' => '$1（提供商: $2）',
-	'videohandler-category' => '影片',
-	'videohandler-description' => '敘述',
-	'videohandler-video-views' => '$1次{{PLURAL:$1|瀏覽|瀏覽}}',
-	'videohandler-non-premium-with-links' => '這個Wiki只允許增加來自於[http://video.wikia.com Wikia影片圖書館]的授權內容。請至[http://video.wikia.com http://video.wikia.com ]搜尋影片。',
-	'videohandler-non-premium' => '這個Wiki只允許增加來自於Wikia影片圖書館的授權內容。請至http://video.wikia.com 搜尋影片。',
-	'videohandler-remove' => '移除',
-	'videohandler-remove-video-modal-title' => '你確定要移除這個影片嗎？',
-	'videohandler-remove-video-modal-ok' => '移除',
-	'videohandler-remove-video-modal-success' => 'File:$1 已從這個Wiki中移除',
-	'videohandler-remove-video-modal-cancel' => '取消',
-	'videohandler-remove-error-unknown' => '非常抱歉，在刪除時出了問題。',
-	'videohandler-log-add-description' => '增加影片描述',
-	'videohandler-log-add-video' => '創建影片',
-	'videos-error-empty-title' => '標題為空。',
-	'videos-error-blocked-user' => '此用戶已被屏蔽。',
-	'videos-error-readonly' => '唯讀模式',
-	'videos-error-permissions' => '無法刪除此影片（視頻）。',
-	'videohandler-error-restricted-video' => '這個影片有受限制的內容不能在這Wiki上播放。',
-	'videos-add-video' => '添加影片（視頻）',
-	'videos-add-video-to-this-wiki' => '添加影片（視頻）到此維基網站',
-	'videos-add-video-label-name' => '請輸入來自任何受支持的網站的完整網址。',
-	'videos-add-video-label-all' => '查看全部',
-	'videos-add-video-ok' => '添加',
-	'videos-notify' => '我們正在處理此影片（視頻），請稍候。',
-	'videos-something-went-wrong' => '很抱歉，但上載時出了問題。',
-	'videos-error-not-logged-in' => '請先登入。',
-	'videos-error-no-video-url' => '沒有提供影片（視頻）網址。',
-	'videos-error-invalid-video-url' => '請輸入來自受支援的內容提供商的有效連接。',
-	'videos-error-unknown' => '出現未知錯誤。代碼：$ 1。',
-	'videos-error-old-type-video' => '不再支援舊式影片或視頻（視頻頁面）',
-	'videos-error-while-loading' => '載入資料時出錯。請重新檢查你的網絡連接，並刷新頁面。',
-	'videos-error-admin-only' => '對不起，只有此維基網站的管理員才有權上傳視頻。',
-	'videos-initial-upload-edit-summary' => '影片（視頻）已創建',
-	'videos-update-edit-summary' => '影片（視頻）已更新',
-	'videos-error-provider-not-supported' => '不支援此影片（視頻）供應商。請查看我們查看我们[http://zh.community.wikia.com/wiki/Help:%E5%BD%B1%E7%89%87%E5%B5%8C%E5%85%A5%E5%B7%A5%E5%85%B7 支持的供应商]列表。',
-];
-
 $messages['ko'] = [
 	'videohandler-non-premium' => '이 위키에 위키아 동영상 라이브러리의 저작권이 있는 동영상을 불러와 올릴 수 있습니다. 동영상을 찾아보려면 http://video.wikia.com 사이트를 방문하세요.',
 	'videohandler-non-premium-with-links' => '이 위키에 [http://video.wikia.com 위키아 동영상 라이브러리 (영어)]의 저작권이 있는 동영상을 불러와 올릴 수 있습니다. 동영상을 찾아보려면 [http://video.wikia.com video.wikia.com]을 방문하세요.',
@@ -924,49 +871,9 @@ $messages['ko'] = [
 	'videos-something-went-wrong' => '동영상을 추가하는 과정에서 오류가 발생했습니다.',
 ];
 
-$messages['zh'] = [
-	'videohandler-non-premium' => '这个Wiki只允许增加来自于Wikia视频图书馆的授权内容。请至http://video.wikia.com 搜寻视频。',
-	'videohandler-non-premium-with-links' => '這個Wiki只允許增加來自於[http://video.wikia.com Wikia视频圖書館]的授權內容。請至[http://video.wikia.com http://video.wikia.com ]搜尋视频。',
-	'videohandler-description' => '叙述',
-	'videohandler-error-missing-parameter' => '缺少需要的变量 "$1"',
-	'videohandler-error-restricted-video' => '这个视频有受限制的内容不能在这Wiki上播放。',
-	'videohandler-error-video-no-exist' => '这个标题的视频不存在',
-	'videohandler-log-add-description' => '增加视频描述',
-	'videohandler-log-add-video' => '创建视频',
-	'videohandler-remove-error-unknown' => '非常抱歉，在删除时出了问题。',
-	'videohandler-remove-video-modal-cancel' => '取消',
-	'videohandler-remove-video-modal-ok' => '移除',
-	'videohandler-remove-video-modal-success' => 'File:$1 已自這個Wiki中移除',
-	'videohandler-remove-video-modal-title' => '你确定要移除这个视频吗？',
-	'videohandler-remove' => '移除',
-	'videohandler-unknown-title' => '未知的标题',
-	'videohandler-video-views' => '$1次{{PLURAL:$1|浏览|浏览}}',
-	'videos-add-video' => '添加视频',
-];
-
 $messages['zh-hant'] = [
 	'videohandler-non-premium' => '這個wiki只允許添加Fandom影片庫中的許可内容。請進入http://video.wikia.com搜索影片。',
 	'videohandler-non-premium-with-links' => '這個wiki只允許添加[http://video.wikia.com Fandom影片庫]中的許可内容。請進入[http://video.wikia.com video.wikia.com]搜索影片。',
-	'videohandler-category' => '影片',
-	'videohandler-description' => '敘述',
-	'videohandler-error-missing-parameter' => '缺少需要的變量 "$1"',
-	'videohandler-error-restricted-video' => '這個影片有受限制的內容不能在這Wiki上播放。',
-	'videohandler-error-video-no-exist' => '這個標題的影片不存在',
-	'videohandler-log-add-description' => '增加影片描述',
-	'videohandler-log-add-video' => '創建影片',
-	'videohandler-remove-error-unknown' => '非常抱歉，在刪除時出了問題。',
-	'videohandler-remove-video-modal-cancel' => '取消',
-	'videohandler-remove-video-modal-ok' => '移除',
-	'videohandler-remove-video-modal-success' => 'File:$1 已從這個Wiki中移除',
-	'videohandler-remove-video-modal-title' => '你確定要移除這個影片嗎？',
-	'videohandler-remove' => '移除',
-	'videohandler-unknown-title' => '未知的標題',
-	'videohandler-video-views' => '$1次{{PLURAL:$1|瀏覽|瀏覽}}',
-];
-
-$messages['zh-hk'] = [
-	'videohandler-non-premium' => '這個Wiki只允許增加來自於Wikia影片圖書館的授權內容。請至http://video.wikia.com 搜尋影片。',
-	'videohandler-non-premium-with-links' => '這個Wiki只允許增加來自於[http://video.wikia.com Wikia影片圖書館]的授權內容。請至[http://video.wikia.com http://video.wikia.com ]搜尋影片。',
 	'videohandler-category' => '影片',
 	'videohandler-description' => '敘述',
 	'videohandler-error-missing-parameter' => '缺少需要的變量 "$1"',
