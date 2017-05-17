@@ -188,7 +188,7 @@ define('ext.wikia.adEngine.adEngine', [
 			var slotName = slot.slotName,
 				providerList = adConfig.getProviderList(slotName).slice(); // Get a copy of the array
 
-			if (pageFair.isSlotRecoverable(slotName)) {
+			if (pageFair && pageFair.isSlotRecoverable(slotName)) {
 				log(['Add adonis-marker to slot', slot], log.levels.debug, logGroup);
 
 				pageFair.addMarker(doc.getElementById(slotName));
