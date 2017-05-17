@@ -8,7 +8,7 @@
 // proxy class to allow unit testing of ImageServingDriverMainNS class
 class ImageServingDriverMainNSProxy extends ImageServingDriverMainNS {
 
-	protected function getImagesPopularity($images) {
+	protected function getImagesPopularity( array $images, $limit ) {
 		$res = [];
 
 		foreach($images as $image) {

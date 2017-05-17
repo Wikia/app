@@ -14,9 +14,9 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 	var bidderName = 'veles',
 		logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.veles',
 		allowedSlots = {
-			IC: ['INCONTENT_PLAYER', 'INCONTENT_LEADERBOARD', 'MOBILE_IN_CONTENT'],
+			IC: ['INCONTENT_PLAYER', 'MOBILE_IN_CONTENT'],
 			LB: ['TOP_LEADERBOARD'],
-			XX: ['TOP_LEADERBOARD', 'INCONTENT_PLAYER', 'INCONTENT_LEADERBOARD', 'MOBILE_IN_CONTENT']
+			XX: ['TOP_LEADERBOARD', 'INCONTENT_PLAYER', 'MOBILE_IN_CONTENT']
 		},
 		slots = {
 			// Order of slots is important - first slot name in group will be used to create ad unit
@@ -27,11 +27,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 					]
 				},
 				TOP_LEADERBOARD: {
-					sizes: [
-						[640, 480]
-					]
-				},
-				INCONTENT_LEADERBOARD: {
 					sizes: [
 						[640, 480]
 					]
@@ -136,7 +131,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 			skin = adContext.getContext().targeting.skin,
 			vastUrl = vastUrlBuilder.build(640 / 480, {
 				pos: Object.keys(slots[skin]),
-				src: 'gpt',
+				src: skin === 'oasis' ? 'gpt' : 'mobile',
 				passback: bidderName
 			});
 

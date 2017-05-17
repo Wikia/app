@@ -55,8 +55,8 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 				adUnit: '/5441/wka2.OTHER/bottom_leaderboard/tablet/oasis-home/_godofwar-gaming'
 			},
 			{
-				slotName: 'INCONTENT_LEADERBOARD',
-				adUnit: '/5441/wka2.OTHER/incontent_leaderboard/tablet/oasis-home/_godofwar-gaming'
+				slotName: 'INCONTENT_PLAYER',
+				adUnit: '/5441/wka2.OTHER/incontent_player/tablet/oasis-home/_godofwar-gaming'
 			},
 			{
 				slotName: 'BOTTOM_LEADERBOARD',

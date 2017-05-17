@@ -40,7 +40,7 @@ Permitted {{PLURAL:$3|file type is|file types are}} $2.',
 	'file-too-large' => 'The file you submitted was too large.',
 	'filename-tooshort' => 'The filename is too short.',
 	'filetype-banned' => 'This type of file is banned.',
-	'fileexists' => 'A photo with this name has already been uploaded to the wiki. Please check $1 if you\'re not sure if you want to change it. Once uploaded, this photo may take up to 2 minutes to be visible.',
+	'fileexists' => 'A photo with this name has already been uploaded to the wiki. Please check [[:$1]] if you\'re not sure if you want to change it. Once uploaded, this photo may take up to 2 minutes to be visible.',
 	'filepageexists' => 'The description page for this file has already been created at \'\'\'<tt>[[:$1]]</tt>\'\'\', but no file with this name currently exists.
 The summary you enter will not appear on the description page.
 To make your summary appear there, you will need to manually edit it.
