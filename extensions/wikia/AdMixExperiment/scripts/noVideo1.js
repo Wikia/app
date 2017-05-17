@@ -146,6 +146,8 @@ require(['wikia.throttle'], function (throttle) {
 				$recircWrapper
 					.css('margin-bottom', gapSize + 'px')
 					.height($recirc.outerHeight(true));
+			} else {
+				gapSize = 0;
 			}
 
 			$adAndRecircWrapper = $('#WikiaAdInContentPlaceHolder');
