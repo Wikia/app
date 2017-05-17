@@ -40,7 +40,7 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconTargeting', function () {
 	});
 
 	it('Returns targeting based on context and adLogicZoneParams', function () {
-		var rubiconTargeting = getModule().getTargeting('TOP_LEADERBOARD', 'oasis', 'vulcan');
+		var rubiconTargeting = getModule().getTargeting('TOP_LEADERBOARD', 'oasis', 'fastlane');
 
 		expect(rubiconTargeting).toEqual({
 			pos: 'TOP_LEADERBOARD',
@@ -49,20 +49,20 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconTargeting', function () {
 			s1: 'not a top1k wiki',
 			s2: 'article',
 			lang: 'pl',
-			passback: 'vulcan'
+			passback: 'fastlane'
 		});
 	});
 
 	it('Returns targeting with specific dbname when wiki is from top1k', function () {
 		mocks.targeting.wikiIsTop1000 = true;
 
-		var rubiconTargeting = getModule().getTargeting('TOP_LEADERBOARD', 'oasis', 'vulcan');
+		var rubiconTargeting = getModule().getTargeting('TOP_LEADERBOARD', 'oasis', 'fastlane');
 
 		expect(rubiconTargeting.s1).toEqual('_dragonball');
 	});
 
 	it('Returns mobile src when skin is mercury', function () {
-		var rubiconTargeting = getModule().getTargeting('TOP_LEADERBOARD', 'mercury', 'vulcan');
+		var rubiconTargeting = getModule().getTargeting('TOP_LEADERBOARD', 'mercury', 'fastlane');
 
 		expect(rubiconTargeting.src).toEqual('mobile');
 	});
