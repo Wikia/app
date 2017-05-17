@@ -830,82 +830,6 @@ The Fandom Community Team',
 	'fbconnect-connect-msg' => '恭喜您！您的Fandom和Facebook的帐户已经连结。',
 ];
 
-$messages['zh-tw'] = [
-	'fbconnect-connect-existing' => '與 Facebook 連結帳戶',
-	'fbconnect-connect-login-legend' => '登錄到您現有的帳戶',
-	'fbconnect-connect-username-label' => '用戶名：',
-	'fbconnect-connect-password-label' => '密碼：',
-	'fbconnect-wrong-pass-msg' => '您輸入的密碼不正確',
-	'fbconnect-graphapi-not-configured' => 'Facebook應用帳號和密碼不正確。',
-	'prefs-fbconnect-disconnect-prefstext' => '斷開Facebook連接',
-	'fbconnect-error-already-connected' => '這個Wikia帳戶已經連結到Facebook。如要連結到另一個帳戶，請先中斷原本的帳戶連結。',
-	'fbconnect-error-fb-account-in-use' => '這個Facebook帳戶已經連結到另一個Wikia帳戶。請連結到另一個帳戶，或者先登入Facebook並中斷原本到帳戶$1 的連結。',
-	'fbconnect-error-fb-unavailable-title' => '連結到Facebook時發生錯誤',
-	'fbconnect-error-fb-unavailable-text' => 'Facebook 似乎現在無法使用。請稍後再試。',
-	'fbconnect-desc' => '讓用戶 [[Special:FacebookConnect|連結到]]他們的 [http://www.facebook.com Facebook] 帳戶。提供基於Facebook群體的認證以及在Wiki文本中使用FBML。',
-	'fbconnect-connect' => 'Log in with Facebook Connect',
-	'fbconnect-connect-simple' => 'Connect',
-	'fbconnect-convert' => '將此帳戶與Facebook連結',
-	'fbconnect-or' => '或',
-	'fbconnect-error' => 'Verification error',
-	'fbconnect-errortext' => 'Yikes! It looks like that didn\'t work out. Please try again.',
-	'fbconnect-disconnect-account-link' => '您已經成功使用Facebook註冊了Wikia賬戶。您可以通過點擊斷開連接取消和Wikia賬戶的連接，之後可以繼續使用您的Wikia賬戶進行編輯或者參與社區活動。',
-	'fbconnect-disconnect-info' => '我們已經發送了新的密碼到您的註冊郵箱。您可以使用這個密碼重新登錄。',
-	'fbconnect-disconnect-info-existing' => '中斷連結完成。你仍然可以持續使用你的用戶名和密碼登入。',
-	'fbconnect-unknown-error' => 'Unknown error, please try again.',
-	'fbconnect-passwordremindertitle' => 'Your Wikia account is now disconnected from Facebook!',
-	'fbconnect-passwordremindertitle-exist' => 'Your Wikia account is now disconnected from Facebook!',
-	'fbconnect-passwordremindertext' => 'Hi,
-It looks like you\'ve just disconnected your Wikia account from Facebook. We\'ve kept all of your history, edit points and achievements intact, so don\'t worry!
-
-You can use the same username as before, and we\'ve generated a new password for you to use. Here are your details:
-
-Username: $2
-Password: $3
-
-The replacement password has been sent only to you at this email address.
-
-Thanks,
-
-The Wikia Community Team',
-	'fbconnect-passwordremindertext-exist' => '您好，
-您剛才中斷了您Wikia帳戶和Facebook的連結。我們已經保留了您所有的編輯紀錄、編輯點數、成就等，因此不用擔心！
-
-您仍可以像連結以前一樣，使用同個用戶名和密碼。
-
-謝謝，
-
-Wikia社區團隊',
-	'fbconnect-wikia-signup-w-facebook' => '使用Facebook註冊',
-	'fbconnect-logout-confirm' => '選擇取消會讓你登出Wikia和Facebook。你要繼續嗎？',
-	'prefs-fbconnect-prefstext' => 'Facebook 連結',
-	'prefs-fbconnect-status-prefstext' => '狀態',
-	'fbconnect-cancel' => 'Action cancelled',
-	'fbconnect-canceltext' => 'The previous action was cancelled by the user.',
-	'fbconnect-preferences-connected' => '太棒了！您的Wikia賬戶已經和Facebook成功連接。',
-	'fbconnect-preferences-connected-error' => '抱歉，我們無法完成您的連結。請確認您已經登入Wikia帳戶，並且允許它連結到Facebook。',
-	'fbconnect-connect-msg' => '恭喜！你的Wikia賬戶已經和Facebook成功連接。',
-];
-
-$messages['pt-br'] = [
-	'fbconnect-connect-msg' => 'Parabéns! As suas contas da Wikia e do Facebook agora estão conectadas.',
-	'fbconnect-disconnect-account-link' => 'Sua conta na Wikia está atualmente conectada com o Facebook. Você pode [[#desconectar]] a sua conta do Facebook. Você poderá continuar usando a sua conta da Wikia normalmente, com o seu histórico (edições, pointos, conquistas) intacto.',
-	'fbconnect-disconnect-info' => 'Nós enviamos um email com uma nova senha para a sua conta - você pode se conectar com o mesmo nome de usuário.',
-	'fbconnect-preferences-connected' => 'Parabéns! As suas contas na Wikia e no Facebook agora estão conectadas.',
-	'fbconnect-wikia-signup-w-facebook' => 'Conecte-se com o Facebook',
-	'fbconnect-wrong-pass-msg' => 'A senha que você digitou está incorreta',
-	'prefs-fbconnect-disconnect-prefstext' => 'Desconectar do Facebook',
-];
-
-$messages['zh'] = [
-	'fbconnect-connect-msg' => '恭喜！你的Wikia账户已经和Facebook成功连接。',
-	'fbconnect-disconnect-account-link' => '您已经成功使用Facebook注册了Wikia账户。您可以通过点击[[#|断开连接]]取消和Wikia账户的连接，之后可以继续使用您的Wikia账户进行编辑或者参与社区活动。',
-	'fbconnect-disconnect-info' => '我们已经发送了新的密码到您的注册邮箱。您可以使用这个密码重新登录。',
-	'fbconnect-preferences-connected' => '太棒了！您的Wikia账户已经和Facebook成功连接。',
-	'fbconnect-wikia-signup-w-facebook' => '使用Facebook注册',
-	'prefs-fbconnect-disconnect-prefstext' => '断开Facebook连接',
-];
-
 $messages['zh-hant'] = [
 	'fbconnect-connect-msg' => '恭喜 ！您的Fandom和Facebook的帳戶已經連結。',
 	'fbconnect-disconnect-account-link' => '你的Fandom帳戶現在已連結到Facebook。你可以選擇[[#|中斷]] 這個連結，之後你仍然可以繼續使用你的Fandom帳戶，編輯歷史、成就等都不會改變。',
@@ -936,18 +860,6 @@ Thanks,
 The Fandom Community Team',
 	'fbconnect-passwordremindertitle' => 'Your Fandom account is now disconnected from Facebook!',
 	'fbconnect-passwordremindertitle-exist' => 'Your Fandom account is now disconnected from Facebook!',
-	'fbconnect-wikia-signup-w-facebook' => '使用Facebook註冊',
-	'fbconnect-wrong-pass-msg' => '您輸入的密碼不正確',
-	'prefs-fbconnect-disconnect-prefstext' => '斷開Facebook連接',
-	'prefs-fbconnect-prefstext' => 'Facebook 連結',
-	'prefs-fbconnect-status-prefstext' => '狀態',
-];
-
-$messages['zh-hk'] = [
-	'fbconnect-connect-msg' => '恭喜！你的Wikia賬戶已經和Facebook成功連接。',
-	'fbconnect-disconnect-account-link' => '您已經成功使用Facebook註冊了Wikia賬戶。您可以通過點擊斷開連接取消和Wikia賬戶的連接，之後可以繼續使用您的Wikia賬戶進行編輯或者參與社區活動。',
-	'fbconnect-disconnect-info' => '我們已經發送了新的密碼到您的註冊郵箱。您可以使用這個密碼重新登錄。',
-	'fbconnect-preferences-connected' => '太棒了！您的Wikia賬戶已經和Facebook成功連接。',
 	'fbconnect-wikia-signup-w-facebook' => '使用Facebook註冊',
 	'fbconnect-wrong-pass-msg' => '您輸入的密碼不正確',
 	'prefs-fbconnect-disconnect-prefstext' => '斷開Facebook連接',

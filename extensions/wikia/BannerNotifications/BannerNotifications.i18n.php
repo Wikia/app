@@ -160,11 +160,6 @@ $messages['pt'] = array(
 	'bannernotifications-no-email' => 'Aparentemente não temos um endereço de e-mail para você. Para definir o seu e-mail, acesse [[Special:Preferences#mw-prefsection-emailv2|Preferências]].',
 );
 
-$messages['pt-br'] = array(
-	'bannernotifications-desc' => 'Exibe notificações de sistema para eventos como falhas de AJAX',
-	'bannernotifications-general-ajax-failure' => 'O navegador não pode se conectar a Wikia. Tente novamente mais tarde.',
-);
-
 $messages['roa-tara'] = array(
 	'bannernotifications-desc' => "Face vedè le notifiche d'u sisteme pe le avveneminde cumme a le falleminde AJAX",
 	'bannernotifications-general-ajax-failure' => "'U browser non ge pò collegarse a 'a Uicchia. Pruève arrete.",

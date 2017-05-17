@@ -2739,91 +2739,6 @@ Boa sorte com o projeto, <br />< br / >
  Equipe da comunidade Fandom <br /></p>',
 );
 
-$messages['pt-br'] = array(
-	'createnewwiki-desc' => 'Assistente de criação de wikias',
-	'cnw-next' => 'Próximo',
-	'cnw-back' => 'Voltar',
-	'cnw-title' => 'Crie uma nova wikia',
-	'cnw-name-wiki-headline' => 'Nomeie sua wiki',
-	'cnw-name-wiki-creative' => 'Seja uma comunidade focada em entretenimento no mundo ou um projeto muito pessoal, sua wiki precisa de um nome bom e exclusivo:',
-	'cnw-name-wiki-label' => 'Nomeie sua wiki',
-	'cnw-name-wiki-domain-label' => 'Dê um endereço a sua wiki',
-	'cnw-name-wiki-submit-error' => 'Opa! Você precisa preencher ambas as caixas acima para continuar.',
-	'cnw-desc-headline' => 'Sobre o que é a sua wiki?',
-	'cnw-desc-creative' => 'Como você descreveria sua wiki?',
-	'cnw-desc-placeholder' => 'Esta descrição aparecerá na página principal da sua wiki. Não se preocupe, você pode sempre mudar mais tarde.',
-	'cnw-desc-select-one' => 'Selecione uma',
-	'cnw-desc-all-ages' => 'Esta wikia é destinada a crianças?',
-	'cnw-desc-tip-all-ages' => 'Esta wiki é sobre um assunto que interessa a crianças? A fim de ajudar-nos a cumprir a lei dos Estados Unidos, nós acompanhamos de perto as wikis que tratam de assuntos de interesse de crianças menores de 12 anos.',
-	'cnw-desc-lang' => 'Idioma de sua wiki',
-	'cnw-desc-wiki-submit-error' => 'Por favor, escolha uma categoria',
-	'cnw-theme-headline' => 'Escolha seu tema',
-	'cnw-theme-creative' => 'Selecione o tema que melhor se adapta a sua wiki.',
-	'cnw-theme-instruction' => 'Você pode personalizar a aparência de sua wiki no Designer de Temas sempre que quiser!',
-	'cnw-welcome-headline' => 'Parabéns! Você criou com êxito a $1',
-	'cnw-welcome-instruction1' => 'Clique no botão abaixo para adicionar páginas a sua wiki.',
-	'cnw-welcome-help' => 'Encontre respostas, conselhos, e muito mais na <a href="http://comunidade.wikia.com">Central da Comunidade Wikia</a>.',
-	'cnw-error-general' => 'Opa, algo deu errado em nosso sistema! Por favor, tente novamente ou [[Special:Contact|entre em contato]] conosco para obter ajuda.',
-	'cnw-error-general-heading' => 'Nossas desculpas',
-	'cnw-badword-header' => 'Atenção',
-	'cnw-badword-msg' => 'Olá, por favor não use palavras grosseiras ou proibidas na descrição da Wikia: $1',
-	'cnw-error-wiki-limit-header' => 'Limite de wikias atingido',
-	'cnw-error-wiki-limit' => 'Olá, você está limitado a {{PLURAL:$1|criar $1 wikia|criar $1 wikias}} por dia. Espere 24 horas antes de criar outra wikia.',
-	'cnw-error-blocked-header' => 'Conta bloqueada',
-	'cnw-error-blocked' => 'Você foi bloqueado por $1. O motivo dado foi: $2. (ID de Bloqueio para referência: $3)',
-	'cnw-error-anon-user-header' => 'Por favor, inicie sessão',
-	'cnw-error-anon-user' => 'A criação de wikias para usuários anônimos está desativada. Por favor [[Special:UserLogin|faça login]] e tente novamente.',
-	'cnw-error-torblock' => 'A criação de wikias usando a rede Tor não é permitida.',
-	'cnw-error-unconfirmed-email-header' => 'Seu endereço de e-mail não foi confirmado.',
-	'cnw-error-unconfirmed-email' => 'Seu endereço de e-mail deve ser confirmado para criar uma wikia.',
-	'cnw-name-wiki-language' => '',
-	'cnw-desc-select-vertical' => 'Escolha um hub:',
-	'cnw-desc-select-categories' => 'Selecione categorias adicionais',
-	'cnw-theme-loading-state' => 'Criando sua wiki. Você pode alterar seu tema durante este processo.',
-	'cnw-theme-show-wiki' => 'Mostre-me minha wiki',
-	'cnw-next-create-wiki' => 'Criar uma wiki',
-	'autocreatewiki' => 'Crie uma nova wikia',
-	'createwiki' => 'Crie uma nova wikia',
-	'autocreatewiki-language-top' => 'Os $1 idiomas mais usados',
-	'autocreatewiki-language-all' => 'Todos os idiomas',
-	'autocreatewiki-title-template' => 'comunidade $1',
-	'autocreatewiki-empty-field' => 'Por favor, preencha esse campo.',
-	'autocreatewiki-bad-name' => 'O nome não pode conter caracteres especiais (como $ ou @) nem espaços e precisa estar todo em minúsculas.',
-	'autocreatewiki-invalid-wikiname' => 'O nome não pode conter caracteres especiais (como $ ou @) e não pode estar vazio.',
-	'autocreatewiki-violate-policy' => 'Esse nome contém uma palavra que viola as nossas políticas de nomeação',
-	'autocreatewiki-name-taken' => 'Já existe uma wiki com este endereço. Você pode editá-la em <ahref="http://$1.wikia.com">http://$1.wikia.com</a> ou escolher outro endereço.',
-	'autocreatewiki-name-too-short' => 'Este endereço é muito curto, por favor escolha outro com no mímino 3 caracteres.',
-	'autocreatewiki-name-too-long' => 'Este endereço é muito longo. Escolha outro com no máximo 50 caracteres.',
-	'autocreatewiki-empty-wikiname' => 'O nome da wikia não pode estar vazio.',
-	'autocreatewiki-category-label' => 'Categoria:',
-	'autocreatewiki-welcometalk-log' => 'Mensagem de Boas-vindas',
-	'autocreatewiki-regex-error-comment' => 'usado na wikia $1 (texto completo: $2)',
-	'autocreatewiki-protect-reason' => 'Parte da interface oficial',
-	'autocreatewiki-welcometalk-wall-title' => 'Bem-vindo!',
-	'autocreatewiki-welcometalk' => '==Bem-vindo!==
-Olá!
-
-Estamos felizes em ter $4 como parte da comunidade Fandom! Ainda há muita coisa a fazer; aqui estão algumas dicas e links importantes para incrementar sua wiki:
-
-*Confira os [[Especial:WikiFeatures|Recursos da Wiki]] para ver quais recursos você pode ativar em sua wiki, incluindo chat, medalhas e muito mais.
-*Dê uma olhada na [[w:c:comunidade|Central da Comunidade]] para ficar informado através do nosso [[w:c:comunidade:Categoria:Notícias da Wikia|blog do staff]], tenha suas dúvidas respondidas no nosso [[w:c:comunidade:Especial:Forum|fórum da comunidade]], assista vídeos em [[w:c:comunidade:Universidade_da_Wikia|Universidade Fandom]], ou converse ao vivo com outros membros da comunidade Fandom.
-*Por último, visite nossas [[Ajuda:Conteúdos|páginas de ajuda]] para aprender mais sobre as manhas de como usar o Fandom.
-
-Todos os links acima são ótimos lugares para começar a explorar, divirta-se!
-
--- [[User:$2|$3]] <staff />',
-	'requestwiki-filter-language' => 'als,an,ang,ast,bar,de2,de-at,de-ch,de-formal,de-weigsbrag,dk,en-gb,eshelp,fihelp,frc,frhelp,ia,ie,ithelp,jahelp,kh,kohelp,kp,ksh,nb,nds,nds-nl,mu,mwl,nlhelp,pdc,pdt,pfl,pthelp,pt-brhelp,ruhelp,simple,tokipona,tp,zh-classical,zh-cn,zh-hans,zh-hant,zh-hk,zh-min-nan,zh-mo,zh-my,zh-sg,zh-tw,zh-yue',
-	'autocreatewiki-welcometalk-wall' => 'Olá, eu sou membro da equipe de suporte da comunidade do Fandom. Estamos felizes em ter {{subst:SITENAME}} como parte da comunidade Fandom!
-
-Pode parecer que há muito o que fazer, mas estamos aqui para ajudá-lo a começar rápida e facilmente. Aqui estão algumas dicas úteis e links para iniciar sua comunidade:
-
- *Confira os [[especial: WikiFeatures |Recursos wiki]] para ativar alguns recursos especiais, incluindo nossa comunidade popular de bate-papo.
- *Personalize a cor e o estilo da sua comunidade, visitando o [Especial:ThemeDesigner|Designer de Tema]].
- *Visite a [[w:c:comunidade|Central da Comunidade]] para dar uma olhada no [[w:c:comunidade:Categoria:Not%C3%ADcias_da_Comunidade|blog do staff] e fazer perguntas no [[w:c:comunidade:Especial:Forum|Fórum da comunidade]].
-*Por último, visite nossas [[Ajuda:Conteúdos|páginas de ajuda]] para aprender como utilizar o Fandom, ou visite [[w:c:comunidade:Universidade_da_Wikia|Universidade Fandom]] para assistir vídeos instrucionais. Divirta-se!',
-	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
-);
-
 $messages['ro'] = array(
 	'cnw-title' => 'Crează un nou wiki',
 	'cnw-name-wiki-headline' => 'Porneşte un wiki',
@@ -3533,15 +3448,6 @@ $messages['vi'] = array(
 	'autocreatewiki-title-template' => 'Wikia $1',
 );
 
-$messages['zh'] = array(
-	'autocreatewiki-welcomebody-HTML' => '<p>嗨 $2,<br /><br />
-您创建的Wiki已经可以在 <a href="$1">$1</a>访问。 期望很快能看到您的编辑！<br /><br />
-我们在您的<a href="$5">用户对话页</a>提供了一些资讯来协助您开始。如果有任何问题，可以浏览我们的 <a href="http://zh.community.wikia.com/wiki/help:content">帮助中心</a>.<br /><br />
-祝一切顺利。<br /><br />
-<a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
-Wikia社区团队<br /></p>',
-);
-
 $messages['zh-hans'] = array(
 	'createnewwiki-desc' => '维基创建向导',
 	'cnw-next' => '下一步',
@@ -3729,26 +3635,3 @@ $messages['zh-hant'] = array(
 <a href="http://zh.community.wikia.com/wiki/User:$4">$3</a><br />
 Fandom社區團隊<br /></p>',
 );
-
-$messages['zh-hk'] = array(
-	'autocreatewiki-welcomebody-HTML' => '<p>嗨 $2,<br /><br />
-您創建的Wiki已經可以在 <a href="$1">$1</a>訪問。 期望很快能看到您的編輯！<br /><br />
-我們在您的<a href="$5">用戶對話頁</a>提供了一些資訊來協助您開始。如果有任何問題，可以瀏覽我們的 <a href="http://zh.community.wikia.com/wiki/help:content">幫助中心</a>.<br /><br />
-祝一切順利。<br /><br />
-<a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
-Wikia社區團隊<br /></p>',
-);
-
-$messages['zh-sg'] = array(
-	'createwiki' => '申请wiki',
-);
-
-$messages['zh-tw'] = array(
-	'autocreatewiki-welcomebody-HTML' => '<p>嗨 $2,<br /><br />
-您創建的Wiki已經可以在 <a href="$1">$1</a>訪問。 期望很快能看到您的編輯！<br /><br />
-我們在您的<a href="$5">用戶對話頁</a>提供了一些資訊來協助您開始。如果有任何問題，可以瀏覽我們的 <a href="http://zh.community.wikia.com/wiki/help:content">幫助中心</a>.<br /><br />
-祝一切順利。<br /><br />
-<a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
-Wikia社區團隊<br /></p>',
-);
-

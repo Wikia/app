@@ -531,10 +531,6 @@ $messages['pt'] = [
 	'wikiacuratedcontent-modal-title' => 'Página principal móvel',
 ];
 
-$messages['pt-br'] = [
-	'wikiacuratedcontent-desc' => 'Módulos de aplicações móveis dos Guias de Jogos da Wikia',
-];
-
 $messages['roa-tara'] = [
 	'wikiacuratedcontent-desc' => 'Module de l\'applicazione mobile Wikia Curated Content',
 ];
@@ -702,83 +698,3 @@ $messages['zh-hant'] = [
 	'wikiacuratedcontent-close-modal-prompt-message' => '您是否確實要關閉此模式?',
 	'wikiacuratedcontent-modal-title' => '手機版首頁',
 ];
-
-$messages['zh-tw'] = [
-	'wikiacuratedcontent-desc' => 'Wikia內容手機移行動應用模組',
-	'wikiacuratedcontent-preview-description' => '這是Wikia內容應用的效果展示圖。',
-	'wikiacuratedcontent-content-title' => 'Wikia應用內容管理工具',
-	'wikiacuratedcontent-content-item' => '項目',
-	'wikiacuratedcontent-content-section' => '項目分類（可選填）',
-	'wikiacuratedcontent-content-name' => '顯示名稱',
-	'wikiacuratedcontent-content-add-section' => '增加項目分類',
-	'wikiacuratedcontent-content-add-item' => '增加項目',
-	'wikiacuratedcontent-content-save' => '保存',
-	'wikiacuratedcontent-content-orphaned-error' => '項目必須屬於某一項目分類',
-	'wikiacuratedcontent-content-required-entry' => '需要填充項目',
-	'wikiacuratedcontent-content-duplicate-entry' => '這個名稱重複了',
-	'wikiacuratedcontent-content-empty-section' => '這個項目分類需要填寫一些項目',
-	'wikiacuratedcontent-content-description-items' => '請添加維基「項目」並可以重新命名，以便它們以「顯示名稱」出現。',
-	'wikiacuratedcontent-content-description-supported-items-for-sections' => '所有項目分類底下的項目都可以輸入類別。而新增的「特色」項目分類則還可以使用: 文章頁，網誌，影片 （YouTube和Ooyala）',
-	'wikiacuratedcontent-content-description-tag-needs-image' => '項目分類必須有一張圖片。',
-	'wikiacuratedcontent-content-description-section' => '將某些項目依照遊戲或作品的系列進行分類是否更好呢？請添加“項目分類”並且將項目拖拽至下方。',
-	'wikiacuratedcontent-content-description-organize' => '您可以刪除或者添加更多列，並且通過拖拽重新排序',
-	'wikiacuratedcontent-content-description-no-section' => '沒有分類或者該分類無內容的項目將顯示在內容的最底部。',
-	'wikiacuratedcontent-content-description-items-input' => '當增加項目的時候，請在右側標記顯示名稱，在左側依以下格式輸入名稱: 文章頁名稱、 {{ns:Category}}:分類名稱、{{ns:500}}:用戶名稱/博客標題、{{ns:File}}:影片名稱',
-	'wikiacuratedcontent-content-articlenotfound-error' => '找不到文章',
-	'wikiacuratedcontent-content-emptylabel-error' => '您需要為這個項目輸入顯示名稱',
-	'wikiacuratedcontent-content-videonotsupported-error' => '不支持此來源的影片檔案',
-	'wikiacuratedcontent-content-notsupportedtype-error' => '不支援此類型',
-	'wikiacuratedcontent-content-nocategoryintag-error' => '你只能在這裡添加頁面分類',
-	'wikiacuratedcontent-featured-section-name' => '特色內容',
-	'wikiacuratedcontent-content-toolonglabel-error' => '策劃內容名稱最多不能超過48個字元',
-];
-
-$messages['zh-hk'] = [
-	'wikiacuratedcontent-content-title' => 'Wikia應用內容管理工具',
-	'wikiacuratedcontent-desc' => 'Wikia內容手機移行動應用模組',
-	'wikiacuratedcontent-preview-description' => '這是Wikia內容應用的效果展示圖。',
-	'wikiacuratedcontent-content-add-item' => '增加項目',
-	'wikiacuratedcontent-content-add-section' => '增加項目分類',
-	'wikiacuratedcontent-content-description-items-input' => '當增加項目的時候，請在右側標記顯示名稱，在左側依以下格式輸入名稱: 文章頁名稱、 {{ns:Category}}:分類名稱、{{ns:500}}:用戶名稱/博客標題、{{ns:File}}:影片名稱',
-	'wikiacuratedcontent-content-description-items' => '請添加維基"項目"並可以重新命名，以便它們以“顯示名稱”出現。',
-	'wikiacuratedcontent-content-description-no-section' => '沒有分類或者該分類無內容的項目將顯示在內容的最底部。',
-	'wikiacuratedcontent-content-description-organize' => '您可以刪除或者添加更多列，並且通過拖拽重新排序。',
-	'wikiacuratedcontent-content-description-section' => '將某些項目依照遊戲或作品的系列進行分類是否更好呢？請添加“項目分類”並且將項目拖拽至下方。',
-	'wikiacuratedcontent-content-description-supported-items-for-sections' => '所有項目分類底下的項目都可以輸入類別。而新增的「特色」項目分類則還可以使用: 文章頁，網誌，影片 （YouTube和Ooyala）',
-	'wikiacuratedcontent-content-description-tag-needs-image' => '項目分類必須有一張圖片。',
-	'wikiacuratedcontent-content-duplicate-entry' => '這個名稱重複了',
-	'wikiacuratedcontent-content-empty-section' => '這個項目分類需要填寫一些項目',
-	'wikiacuratedcontent-content-emptylabel-error' => '您需要為這個項目輸入顯示名稱',
-	'wikiacuratedcontent-content-item' => '項目',
-	'wikiacuratedcontent-content-name' => '顯示名稱',
-	'wikiacuratedcontent-content-nocategoryintag-error' => '你只能在這裡添加頁面分類',
-	'wikiacuratedcontent-content-notsupportedtype-error' => '不支援此類型',
-	'wikiacuratedcontent-content-orphaned-error' => '項目必須屬於某一項目分類',
-	'wikiacuratedcontent-content-required-entry' => '需要填充項目',
-	'wikiacuratedcontent-content-section' => '項目分類（可選填）',
-	'wikiacuratedcontent-content-videonotsupported-error' => '不支持此來源的影片檔案',
-];
-
-$messages['zh'] = [
-	'wikiacuratedcontent-content-add-item' => '添加项目',
-	'wikiacuratedcontent-content-add-section' => '添加项目分类',
-	'wikiacuratedcontent-content-description-items-input' => '当添加项目的时候，请在右侧标记显示名称，在左侧依以下格式输入名称: 文章页名称、 {{ns:Category}}:分类名称, {{ns:500}}:用户名称/博客标题, {{ns:File}}:视频名称',
-	'wikiacuratedcontent-content-description-items' => '请添加维基"项目"并可以重新命名，以便它們以“显示名称”出现。',
-	'wikiacuratedcontent-content-description-no-section' => '没有分类或者该分类无内容的项目将显示在内容的最底部。',
-	'wikiacuratedcontent-content-description-section' => '将某些项目依照游戏或作品的系列进行分类是否更好呢？请添加“项目分类”并且将项目拖拽至下方。',
-	'wikiacuratedcontent-content-description-supported-items-for-sections' => '所有项目分类底下的项目都可以输入类别。而新增的「特色」项目分类则还可以使用: 文章页，博客，视频 （YouTube和Ooyala）',
-	'wikiacuratedcontent-content-description-tag-needs-image' => '项目分类必须有一个图像',
-	'wikiacuratedcontent-content-duplicate-entry' => '这个名称重复了',
-	'wikiacuratedcontent-content-empty-section' => '这个项目分类需要填写一些项目',
-	'wikiacuratedcontent-content-emptylabel-error' => '您需要为这个项目输入显示名称',
-	'wikiacuratedcontent-content-item' => '项目',
-	'wikiacuratedcontent-content-name' => '显示名称',
-	'wikiacuratedcontent-content-nocategoryintag-error' => '你只能在这里添加类别',
-	'wikiacuratedcontent-content-orphaned-error' => '项目必须属于某一项目分类',
-	'wikiacuratedcontent-content-required-entry' => '需要填充项目',
-	'wikiacuratedcontent-content-section' => '项目分类（可选）',
-	'wikiacuratedcontent-content-videonotsupported-error' => '不支持此来源的视频内容文件',
-	'wikiacuratedcontent-edit-mobile-main-page' => '编辑手机版主页',
-	'wikiacuratedcontent-modal-title' => '手机版主页',
-];
-
