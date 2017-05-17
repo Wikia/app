@@ -5,12 +5,14 @@ require(['wikia.throttle'], function (throttle) {
 		var $footer = $('#WikiaFooter');
 		var $moduleBeforeRecirc;
 		var $rail = $('#WikiaRail');
+		var $recirc;
 		var $recircWrapper;
 		var $window = $(window);
 		var adMixRecircWrapperHeight;
 		var bottomMargin = 20;
 		var breakpointSmall = 1023;
 		var globalNavigationHeight = $('#globalNavigation').outerHeight(true);
+		var gapSize = 200;
 		var moduleBeforeRecircHeight;
 		var viewportWidth = $(window).width();
 
@@ -26,9 +28,7 @@ require(['wikia.throttle'], function (throttle) {
 		}
 
 		function getMidPosition() {
-			// INCONTENT_BOXAD_1
-			// var adOffset = parseInt($('#INCONTENT_BOXAD_1').offset().top, 10);
-			return getStartPosition() + $('#premium-recirculation-rail').outerHeight(true) + 250;
+			return getStartPosition() + gapSize;
 		}
 
 		function update() {
@@ -38,21 +38,20 @@ require(['wikia.throttle'], function (throttle) {
 			var midPosition = getMidPosition();
 
 			if (scrollTop < startPosition || viewportWidth <= breakpointSmall) {
-				$('#recirculation-rail').css('margin-bottom', '250px');
-
+				$recircWrapper.css('margin-bottom', gapSize + 'px');
 				$adMixRecircWrapper.css({
 					position: '',
 					top: '',
 					width: ''
 				});
-				$('.premium-recirculation-rail').css({
+				$recirc.css({
 					position: '',
 					top: '',
 					width: ''
 				});
 			} else if (scrollTop > startPosition && scrollTop < midPosition) {
-				$('#recirculation-rail').css('margin-bottom', '250px');
-				$('.premium-recirculation-rail').css({
+				$recircWrapper.css('margin-bottom', gapSize + 'px');
+				$recirc.css({
 					position: 'fixed',
 					top: globalNavigationHeight + 'px',
 					width: '280px'
@@ -63,27 +62,26 @@ require(['wikia.throttle'], function (throttle) {
 					width: ''
 				});
 			} else if (scrollTop >= midPosition && scrollTop < stopPosition) {
-				$('#recirculation-rail').css('margin-bottom', '0');
+				$recircWrapper.css('margin-bottom', '0');
 				$adMixRecircWrapper.css({
 					position: 'fixed',
 					top: globalNavigationHeight + 'px',
 					width: '300px'
 				});
-				$('.premium-recirculation-rail').css({
+				$recirc.css({
 					position: '',
 					top: '',
 					width: ''
 				});
 			} else if (scrollTop > stopPosition) {
-				$('#recirculation-rail').css('margin-bottom', '0');
-
 				var topAdHeight = $('#WikiaTopAds').outerHeight(true);
+				$recircWrapper.css('margin-bottom', '0');
 				$adMixRecircWrapper.css({
 					position: 'absolute',
 					top: (stopPosition - topAdHeight) + 'px',
 					width: '300px'
 				});
-				$('.premium-recirculation-rail').css({
+				$recirc.css({
 					position: '',
 					top: '',
 					width: ''
@@ -98,9 +96,10 @@ require(['wikia.throttle'], function (throttle) {
 
 		function onRecircReady() {
 			$adMixRecircWrapper = $('#WikiaAdInContentPlaceHolder');
-			$('#recirculation-rail').css('margin-bottom', '250px');
-			$('#recirculation-rail').height($('.premium-recirculation-rail').outerHeight(true));
-			$moduleBeforeRecirc = $adMixRecircWrapper.prevAll(':visible').eq(0);
+			$recirc = $recircWrapper.find('.premium-recirculation-rail');
+			$recircWrapper.css('margin-bottom', gapSize + 'px');
+			$recircWrapper.height($recirc.outerHeight(true));
+			$moduleBeforeRecirc = $adMixRecircWrapper.prevAll(':not(#LEFT_SKYSCRAPER_2)').eq(0);
 			moduleBeforeRecircHeight = $moduleBeforeRecirc.outerHeight(true);
 			$window.scroll(throttle(update, 100));
 			$window.resize(throttle(function () {
