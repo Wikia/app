@@ -9,8 +9,7 @@ define('ext.wikia.adEngine.adEngine', [
 	'ext.wikia.adEngine.utils.hooks',
 	'wikia.document',
 	'wikia.lazyqueue',
-	'wikia.log',
-	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery')
+	'wikia.log'
 ], function (
 	adDecoratorLegacyParamFormat,
 	eventDispatcher,
@@ -21,8 +20,7 @@ define('ext.wikia.adEngine.adEngine', [
 	registerHooks,
 	doc,
 	lazyQueue,
-	log,
-	pageFair
+	log
 ) {
 	'use strict';
 
@@ -187,12 +185,6 @@ define('ext.wikia.adEngine.adEngine', [
 
 			var slotName = slot.slotName,
 				providerList = adConfig.getProviderList(slotName).slice(); // Get a copy of the array
-
-			if (pageFair && pageFair.isSlotRecoverable(slotName)) {
-				log(['Add adonis-marker to slot', slot], log.levels.debug, logGroup);
-
-				pageFair.addMarker(doc.getElementById(slotName));
-			}
 
 			log(['fillInSlot', slot, 'provider list', JSON.stringify(providerList)], log.levels.debug, logGroup);
 

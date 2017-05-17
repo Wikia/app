@@ -13,7 +13,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.aRecoveryEngine.adBlockRecovery',
 	'ext.wikia.adEngine.slotTweaker',
 	'wikia.log',
-	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper')
+	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
+	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery')
 ], function (
 	adContext,
 	adLogicPageParams,
@@ -27,7 +28,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	adBlockRecovery,
 	slotTweaker,
 	log,
-	sraHelper
+	sraHelper,
+	pageFair
 ) {
 	'use strict';
 
@@ -79,6 +81,12 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		setAdditionalTargeting(slotTargetingData);
 
 		element = new AdElement(slotName, slotPath, slotTargetingData);
+
+		if (pageFair && extra.isPageFairRecoverable) {
+			log(['Adding adonis-marker to slot', slot], log.levels.debug, logGroup);
+
+			pageFair.addMarker(element.node);
+		}
 
 		function queueAd() {
 			log(['queueAd', slotName, element], log.levels.debug, logGroup);
