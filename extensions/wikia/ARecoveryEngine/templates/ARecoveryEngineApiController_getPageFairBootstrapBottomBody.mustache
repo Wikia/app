@@ -2,12 +2,13 @@
 <script type="text/javascript">
 	require([
 		'ext.wikia.adEngine.adContext',
-		'wikia.instantGlobals'
-	], function (adContext, instantGlobals) {
+		'wikia.instantGlobals',
+		'wikia.window'
+	], function (adContext, instantGlobals, win) {
 		var context = adContext.getContext();
 
 		if (context.opts.pageFairRecovery === true) {
-			var adonis = adonis || {};
+			var adonis = win.adonis || {};
 
 			adonis.ENABLE_SLOT_CACHE = true;
 			if (instantGlobals.wgAdDriverPageFairConditionalAdRendering === true) {
