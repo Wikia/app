@@ -13,6 +13,10 @@ if (!defined('MEDIAWIKI')) {
 
 class WikiaApiQueryAllUsers extends ApiQueryBase {
 
+	private $params = [];
+
+	private $mCityId, $mDB;
+
 	public function __construct($query, $moduleName) {
 		parent::__construct( $query, $moduleName, 'au' );
 		$this->showError = true;
@@ -22,29 +26,39 @@ class WikiaApiQueryAllUsers extends ApiQueryBase {
 		global $wgMemc, $wgSpecialsDB;
 		wfProfileIn( __METHOD__ );
 
-		$memkey = sprintf( "%s-%s-%d", __METHOD__, implode("-", (array)$this->params['group'] ), $this->mCityId );
+		$memkey = wfSharedMemcKey( __METHOD__, implode("-", (array) $this->params['group'] ), $this->mCityId );
 		$data = $wgMemc->get( $memkey );
-		if ( empty($data) ) {
+
+		if ( !is_array( $data ) ) {
 			$db = wfGetDB(DB_SLAVE, array(), $wgSpecialsDB);
 
-			$group = isset($this->params['group'][0]) ? $this->params['group'][0] : '';
-
-			$where = array(
-				'wiki_id' => intval($this->mCityId),
-				"all_groups" . $db->buildLike( $db->anyString(), $group, $db->anyString() )
+			// SUS-2038: build condition for all groups mentioned in the URL
+			$groupsCondition = array_map(
+				function($group) use ($db) {
+					return "all_groups" . $db->buildLike( $db->anyString(), $group, $db->anyString() );
+				},
+				$this->params['group']
 			);
 
 			$this->profileDBIn();
-			$oRes = $db->select( 
+
+			// e.g. SELECT  user_id,all_groups FROM `events_local_users`  WHERE wiki_id = '177' AND ((all_groups LIKE '%staff%'  OR all_groups LIKE '%sysop%' ))
+			$oRes = $db->select(
 				'events_local_users',
-				array('user_id, all_groups as ug_groups'),	 
-				$where,
+				[
+					'user_id',
+					'all_groups'
+				],
+				[
+					'wiki_id' => $this->mCityId,
+					join( ' OR ', $groupsCondition )
+				],
 				__METHOD__
 			);
-			
-			$data = array();
+
+			$data = [];
 			while ($row = $db->fetchObject($oRes)) {
-				$data[$row->user_id] = $row->ug_groups;
+				$data[$row->user_id] = $row->all_groups;
 			}
 			$db->freeResult($oRes);
 			$wgMemc->set( $memkey , $data, 300 );			
@@ -126,7 +140,7 @@ class WikiaApiQueryAllUsers extends ApiQueryBase {
 		global $wgCityId;
 		
 		$this->params = $this->extractRequestParams();
-		$this->mCityId = $wgCityId;
+		$this->mCityId = (int) $wgCityId;
 
 		# prop
 		$prop = $this->params['prop'];
