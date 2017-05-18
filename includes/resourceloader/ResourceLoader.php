@@ -519,7 +519,9 @@ class ResourceLoader {
 		wfProfileOut( __METHOD__.'-getModifiedTime' );
 
 		// Send content type and cache related headers
-		$this->sendResponseHeaders( $context, $mtime );
+		if ( $errors === '' ) {
+			$this->sendResponseHeaders($context, $mtime);
+		}
 
 		// If there's an If-Modified-Since header, respond with a 304 appropriately
 		if ( $this->tryRespondLastModified( $context, $mtime ) ) {
