@@ -91,13 +91,16 @@ describe('AdContext', function () {
 		context.opts.sourcePointMMS = true;
 	}
 
-	function enableTaboola() {
+	function enableTaboola(context) {
 		mocks.instantGlobals = mocks.instantGlobals || {};
 		mocks.instantGlobals.wgAdDriverTaboolaConfig = {
 			SLOT: {
 				recovery: ['CURRENT_COUNTRY']
 			}
 		};
+
+		context.opts = context.opts || {};
+		context.opts.useTaboola = true;
 	}
 
 	function enablePageFairDetection() {
@@ -706,7 +709,36 @@ describe('AdContext', function () {
 	it('Should enable Taboola', function () {
 		var context = {};
 
-		enableTaboola();
+		enableTaboola(context);
+		getModule().setContext(context);
+
+		expect(context.opts.loadTaboolaLibrary).toBeTruthy();
+	});
+
+	it('Should disable Taboola if useTaboola is false', function () {
+		var context = {};
+
+		enableTaboola(context);
+		context.opts = {
+			useTaboola: false,
+			disableTaboola: true
+		};
+
+		getModule().setContext(context);
+
+		expect(context.opts.loadTaboolaLibrary).toBeFalsy();
+	});
+
+	it('Should enable Taboola if there is no useTaboola variable (cache issue)', function () {
+		var context = {};
+
+		mocks.instantGlobals = mocks.instantGlobals || {};
+		mocks.instantGlobals.wgAdDriverTaboolaConfig = {
+			SLOT: {
+				recovery: ['CURRENT_COUNTRY']
+			}
+		};
+
 		getModule().setContext(context);
 
 		expect(context.opts.loadTaboolaLibrary).toBeTruthy();
@@ -758,7 +790,7 @@ describe('AdContext', function () {
 		var context = {};
 
 		enableSourcePointMMS(context);
-		enableTaboola();
+		enableTaboola(context);
 		getModule().setContext(context);
 
 		expect(context.opts.sourcePointMMS).toBeTruthy();
@@ -769,7 +801,7 @@ describe('AdContext', function () {
 		var context = {};
 
 		enablePageFairRecovery(context);
-		enableTaboola();
+		enableTaboola(context);
 		getModule().setContext(context);
 
 		expect(context.opts.pageFairRecovery).toBeTruthy();
@@ -779,7 +811,7 @@ describe('AdContext', function () {
 	it('Should disable GCS if Taboola is enabled', function () {
 		var context = {};
 
-		enableTaboola();
+		enableTaboola(context);
 		enableGCS(context);
 		getModule().setContext(context);
 

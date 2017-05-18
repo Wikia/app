@@ -49,7 +49,9 @@ class AdEngine2ContextService {
 					'sourcePointRecovery' => ARecoveryModule::isSourcePointRecoveryEnabled(),
 					'pageFairDetectionUrl' => $pageFairDetectionUrl,
 					'pageFairRecovery' => ARecoveryModule::isPageFairRecoveryEnabled(),
-					'prebidBidderUrl' => $prebidBidderUrl
+					'prebidBidderUrl' => $prebidBidderUrl,
+					'useTaboola' => $wg->AdDriverUseTaboola,
+					'disableTaboola' => !$wg->AdDriverUseTaboola // TODO: remove after release ADEN-5094 cache walkaround
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
 					'enableKruxTargeting' => AnalyticsProviderKrux::isEnabled(),

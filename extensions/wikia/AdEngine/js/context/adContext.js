@@ -94,7 +94,7 @@ define('ext.wikia.adEngine.adContext', [
 
 		// Taboola
 		context.opts.loadTaboolaLibrary = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
-			shouldLoadTaboolaOnBlockingTraffic(taboolaConfig);
+			(context.opts.useTaboola || !context.opts.disableTaboola) && shouldLoadTaboolaOnBlockingTraffic(taboolaConfig);
 		isRecoveryServiceAlreadyEnabled |= context.opts.loadTaboolaLibrary;
 
 		// Google Consumer Surveys
