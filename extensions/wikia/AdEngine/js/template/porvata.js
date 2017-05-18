@@ -1,4 +1,4 @@
-/*global define*/
+/*global define, require, setTimeout*/
 define('ext.wikia.adEngine.template.porvata', [
 	'ext.wikia.adEngine.domElementTweaker',
 	'ext.wikia.adEngine.slotTweaker',
@@ -27,7 +27,8 @@ define('ext.wikia.adEngine.template.porvata', [
 	mercuryListener
 ) {
 	'use strict';
-	var logGroup = 'ext.wikia.adEngine.template.porvata';
+	var logGroup = 'ext.wikia.adEngine.template.porvata',
+		videoAspectRatio = 640/360;
 
 	function loadVeles(params) {
 		params.vastResponse = params.vastResponse || params.bid.ad;
@@ -35,9 +36,9 @@ define('ext.wikia.adEngine.template.porvata', [
 	}
 
 	function createInteractiveArea() {
-		var controlBar = document.createElement('div'),
-			controlBarItems = document.createElement('div'),
-			interactiveArea = document.createElement('div');
+		var controlBar = doc.createElement('div'),
+			controlBarItems = doc.createElement('div'),
+			interactiveArea = doc.createElement('div');
 
 		controlBar.classList.add('control-bar');
 		controlBarItems.classList.add('control-bar-items');
@@ -72,8 +73,9 @@ define('ext.wikia.adEngine.template.porvata', [
 	}
 
 	function onReady(video, params) {
-		var slot = document.getElementById(params.slotName),
-			slotExpanded = false;
+		var slot = doc.getElementById(params.slotName),
+			slotExpanded = false,
+			slotWidth;
 
 		video.addEventListener('loaded', function () {
 			var adsManager = video.ima.getAdsManager(),
@@ -106,7 +108,8 @@ define('ext.wikia.adEngine.template.porvata', [
 			}
 
 			if (params.isDynamic) {
-				video.resize(slot.scrollWidth, slot.scrollHeight);
+				slotWidth = slot.scrollWidth;
+				video.resize(slotWidth, slotWidth / videoAspectRatio);
 			}
 		});
 
@@ -120,7 +123,8 @@ define('ext.wikia.adEngine.template.porvata', [
 		if (params.isDynamic) {
 			win.addEventListener('resize', function () {
 				if (!(video.isFloating && video.isFloating())) {
-					video.resize(slot.clientWidth, slot.clientHeight);
+					slotWidth = slot.clientWidth;
+					video.resize(slotWidth, slotWidth / videoAspectRatio);
 				}
 			});
 		}
@@ -160,7 +164,7 @@ define('ext.wikia.adEngine.template.porvata', [
 
 		if (params.isDynamic) {
 			slotTweaker.collapse(params.slotName);
-			slotTweaker.makeResponsive(params.slotName, 1.77777777778);
+			slotTweaker.makeResponsive(params.slotName, videoAspectRatio);
 		}
 
 		porvata.inject(settings).then(function (video) {
