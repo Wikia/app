@@ -1,6 +1,11 @@
 <?php
 
 class TvRssModelTest extends WikiaBaseTest {
+	protected function setUp() {
+		parent::setUp();
+		require_once __DIR__ . '/../../models/TvRssModel.class.php';
+	}
+
 	protected static function getFn( $obj, $name ) {
 		$class = new ReflectionClass(get_class( $obj ));
 		$method = $class->getMethod( $name );

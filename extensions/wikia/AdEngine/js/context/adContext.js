@@ -167,9 +167,6 @@ define('ext.wikia.adEngine.adContext', [
 				geo.isProperGeo(instantGlobals.wgAdDriverHighImpactSlotCountries)
 			) || isUrlParamSet('highimpactslot');
 
-		context.opts.incontentLeaderboardAsOutOfPage =
-			geo.isProperGeo(instantGlobals.wgAdDriverIncontentLeaderboardOutOfPageSlotCountries);
-
 		// AdInfo warehouse logging
 		context.opts.enableAdInfoLog = geo.isProperGeo(instantGlobals.wgAdDriverKikimoraTrackingCountries);
 		context.opts.playerTracking = geo.isProperGeo(instantGlobals.wgAdDriverKikimoraPlayerTrackingCountries);
