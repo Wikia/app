@@ -1,4 +1,4 @@
-require(['wikia.throttle'], function (throttle) {
+require(['wikia.throttle', 'wikia.querystring'], function (throttle, querystring) {
 	$(function () {
 		var $adAndRecircWrapper;
 		var $topRightAd = $('#TOP_RIGHT_BOXAD');
@@ -15,6 +15,7 @@ require(['wikia.throttle'], function (throttle) {
 		var breakpointSmall = 1023;
 		var globalNavigationHeight = $('#globalNavigation').outerHeight(true);
 		var gapSize = 200;
+		var firstAdTopSpace = 10;
 		var noRecircAdBottomSpace = 5;
 		var recircEnabled = true;
 		var topRightAdHeight = 250;
@@ -22,12 +23,12 @@ require(['wikia.throttle'], function (throttle) {
 		var viewportWidth = $window.width();
 		var visibleElementBeforeWrapperHeight;
 
+
 		// FIXME it should be true only for ad mix variant XW-3156
-		// var topRightAdFixed = true;
-		var topRightAdFixed = false;
+		var topRightAdFixed = !!querystring().getVal('topRightAdFixed', false);
 
 		function getFirstAdTopPosition() {
-			return $rail.offset().top - globalNavigationHeight;
+			return $rail.offset().top - globalNavigationHeight - firstAdTopSpace;
 		}
 
 		function getFirstAdBottomPosition(firstAdTopPosition) {
@@ -122,7 +123,7 @@ require(['wikia.throttle'], function (throttle) {
 			resetTopAdPaddings();
 			$topRightAd.css({
 				position: 'fixed',
-				top: globalNavigationHeight + 'px',
+				top: globalNavigationHeight + firstAdTopSpace + 'px',
 				width: '300px'
 			});
 		}
@@ -304,7 +305,8 @@ require(['wikia.throttle'], function (throttle) {
 		if (topRightAdFixed) {
 			$topRightAdWrapper.css({
 				height: topRightAdHeight + 'px',
-				'padding-bottom': gapSize + 'px'
+				'padding-bottom': gapSize + 'px',
+				'margin-bottom': '10px'
 			});
 		}
 	});
