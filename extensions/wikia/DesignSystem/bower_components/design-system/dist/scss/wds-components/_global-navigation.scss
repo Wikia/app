@@ -52,9 +52,9 @@
 	}
 
 	&__dropdown-content {
+		border-top: 1px solid $wds-color-light-c4;
 		color: $wds-color-dark-blue-gray;
 		min-width: 190px;
-		top: calc(100% + 1px);
 		z-index: -1;
 	}
 
@@ -114,7 +114,8 @@
 		}
 
 		&:active,
-		&.wds-is-active {
+		&.wds-is-active,
+		&:hover {
 			background-color: $wds-color-slate-gray;
 			border-color: darken($wds-color-slate-gray, 20%);
 			color: $wds-color-white;

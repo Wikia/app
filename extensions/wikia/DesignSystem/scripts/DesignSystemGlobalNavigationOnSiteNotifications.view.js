@@ -99,8 +99,9 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 			};
 
 			this.addDropdownLoadingEvent = function () {
-				var $dropdown = $('#onSiteNotificationsDropdown');
-				$dropdown.click(this.onDropDownClick.notify.bind(this.onDropDownClick));
+				$('#onSiteNotificationsDropdown').on('mouseenter',
+					this.onDropDownClick.notify.bind(this.onDropDownClick)
+				);
 			};
 
 			this._mapToView = function (notifications) {

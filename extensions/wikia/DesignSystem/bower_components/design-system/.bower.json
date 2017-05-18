@@ -14,14 +14,13 @@
     "ember-cli-shims": "0.1.1"
   },
   "homepage": "https://github.com/Wikia/design-system",
-  "version": "6.0.2",
-  "_release": "6.0.2",
+  "_release": "0ad3b0ed86",
   "_resolution": {
-    "type": "version",
-    "tag": "6.0.2",
-    "commit": "ef7074a1058d7ccfee7312251fc66bc6546ab0b1"
+    "type": "branch",
+    "branch": "XW-3295",
+    "commit": "0ad3b0ed86dde821ca9f16af97e68f7bbd5796a8"
   },
-  "_source": "git://github.com/Wikia/design-system.git",
-  "_target": "6.0.2",
+  "_source": "https://github.com/Wikia/design-system.git",
+  "_target": "XW-3295",
   "_originalSource": "Wikia/design-system"
 }

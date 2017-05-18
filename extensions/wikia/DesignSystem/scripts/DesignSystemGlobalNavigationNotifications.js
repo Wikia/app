@@ -44,7 +44,7 @@ require(
 				this.$notificationsEntryPoint
 					.on('click', this.proxy(this.updateCounts))
 					.on('click', this.proxy(this.fetchForCurrentWiki))
-					.on('wds-dropdown-open', this.proxy(this.onNotificationsOpen));
+					.on('mouseenter', this.proxy(this.onNotificationsOpen));
 
 				this.$wallNotifications.add($('#pt-wall-notifications'))
 					.on('click', '.notifications-markasread', this.markAllAsReadAllWikis.bind(this));
