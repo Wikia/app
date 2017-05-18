@@ -408,10 +408,6 @@ class WikiaApiQueryAllUsers extends ApiQueryBase {
 				ApiBase::PARAM_TYPE => $userGroups,
 				ApiBase::PARAM_ISMULTI => true,
 			),
-			'excludegroup' => array(
-				ApiBase::PARAM_TYPE => $userGroups,
-				ApiBase::PARAM_ISMULTI => true,
-			),
 			'rights' => array(
 				ApiBase::PARAM_TYPE => User::getAllRights(),
 				ApiBase::PARAM_ISMULTI => true,
@@ -457,7 +453,6 @@ class WikiaApiQueryAllUsers extends ApiQueryBase {
 			'prefix' => 'Search for all users that begin with this value',
 			'dir' => 'Direction to sort in',
 			'group' => 'Limit users to given group name(s)',
-			'excludegroup' => 'Exclude users in given group name(s)',
 			'rights' => 'Limit users to given right(s)',
 			'prop' => array(
 				'What pieces of information to include.',
@@ -488,12 +483,6 @@ class WikiaApiQueryAllUsers extends ApiQueryBase {
 
 	public function getDescription() {
 		return 'Enumerate all registered users';
-	}
-
-	public function getPossibleErrors() {
-		return array_merge( parent::getPossibleErrors(), array(
-			array( 'code' => 'group-excludegroup', 'info' => 'group and excludegroup cannot be used together' ),
-		) );
 	}
 
 	public function getExamples() {
