@@ -19,7 +19,7 @@
 						type="text"
 						name="categoryName[]"
 						placeholder="<?= wfMessage( 'videopagetool-category-name-placeholder' )->escaped() ?>"
-						value="<?= $category[ 'categoryName' ] ?>">
+						value="<?= Sanitizer::encodeAttribute( $category[ 'categoryName' ] ); ?>">
 				</div>
 				<button class="search-button">
 					<?= wfMessage( 'videopagetool-button-search' )->escaped(); ?>
@@ -35,7 +35,7 @@
 						type="text"
 						name="displayTitle[]"
 						placeholder="<?= wfMessage( 'videopagetool-category-display-title-placeholder' )->escaped(); ?>"
-						value="<?= $category[ 'displayTitle' ] ?>">
+						value="<?= Sanitizer::encodeAttribute( $category[ 'displayTitle' ] ); ?>">
 				</div>
 				<button class="secondary navigation nav-up">
 					<img class="chevron chevron-up" src="<?= $wg->BlankImgUrl ?>">
@@ -55,8 +55,8 @@
 
 	<? endfor; ?>
 
-	<input type="hidden" value="<?= $date ?>" name="date">
-	<input type="hidden" value="<?= $language ?>" name="language">
+	<input type="hidden" value="<?= Sanitizer::encodeAttribute( $date ); ?>" name="date">
+	<input type="hidden" value="<?= Sanitizer::encodeAttribute( $language ); ?>" name="language">
 
 	<div class="submits">
 		<button type="submit">

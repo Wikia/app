@@ -15,38 +15,43 @@
 
 			<div class="input-group button-group">
 				<button type="button" class="add-video-button media-btn">
-					<?= wfMessage( 'videopagetool-button-add-video' )->text() ?>
+					<?= wfMessage( 'videopagetool-button-add-video' )->escaped(); ?>
 				</button>
-				<p class="video-title <?= $video[ 'videoTitleClass' ] ?>"><?= $video[ 'videoTitle' ]  ?></p>
-				<input type="hidden" name="videoKey[]" class="video-key" id="video-key-<?= $x ?>" value="<?= htmlspecialchars( $video[ 'videoKey' ] ) ?>">
+				<p class="video-title <?= Sanitizer::encodeAttribute( $video[ 'videoTitleClass' ] ); ?>">
+					<?= htmlspecialchars( $video['videoTitle' ] ); ?>
+				</p>
+				<input type="hidden" name="videoKey[]" class="video-key" id="video-key-<?= $x ?>"
+				       value="<?= Sanitizer::encodeAttribute( $video[ 'videoKey' ] ); ?>">
 			</div>
 
 			<div class="video-thumb-wrapper">
 				<div class="video-thumb">
-					<?= $video[ 'videoThumb' ] ?>
+					<?= htmlspecialchars( $video[ 'videoThumb' ] ); ?>
 				</div>
-				<a class="preview-large-link <?= $previewLinkDisplayClass ?>" href="<?= $video[ 'largeThumbUrl' ] ?>" target="_blank">Preview large version</a>
+				<a class="preview-large-link <?= $previewLinkDisplayClass ?>" href="<?= Sanitizer::encodeAttribute( $video[	'largeThumbUrl' ] ); ?>" target="_blank">
+					Preview large version
+				</a>
 			</div>
 
 			<div class="input-group button-group">
 				<button type="button" class="media-uploader-btn media-btn">
-					<?= wfMessage( 'videopagetool-button-add-thumbnail' )->plain() ?>
+					<?= wfMessage( 'videopagetool-button-add-thumbnail' )->escaped(); ?>
 				</button>
 
-				<p class="alt-thumb-name <?= $video[ 'altThumbClass' ]  ?>">
+				<p class="alt-thumb-name <?= Sanitizer::encodeAttribute( $video[ 'altThumbClass'] ); ?>">
 					<? $thumbText = $video[ 'altThumbName' ] ?>
-					<?= $thumbText == '' ? wfMessage('videopagetool-image-title-default-text')->plain() : $thumbText ?>
+					<?= $thumbText == '' ? wfMessage('videopagetool-image-title-default-text')->escaped() : htmlspecialchars( $thumbText ); ?>
 				</p>
 
-				<input type="hidden" name="altThumbKey[]" class="alt-thumb" id="alt-thumb-<?= $x ?>" value="<?= $video[ 'altThumbKey' ] ?>">
-				<div class="hint"><?= wfMessage('videopagetool-hint-required-dimensions')->plain() ?></div>
+				<input type="hidden" name="altThumbKey[]" class="alt-thumb" id="alt-thumb-<?= $x ?>" value="<?= Sanitizer::encodeAttribute( $video[ 'altThumbKey' ] ); ?>">
+				<div class="hint"><?= wfMessage('videopagetool-hint-required-dimensions')->escaped(); ?></div>
 			</div>
 
 			<div class="input-group border">
 				<label for="display-title-<?= $x ?>">
 					<?= wfMessage( 'videopagetool-label-display-title' )->escaped() ?>
 				</label>
-				<input class="display-title" id="display-title-<?= $x ?>" type="text" name="displayTitle[]" value="<?= htmlspecialchars( $video[ 'displayTitle' ] ) ?>">
+				<input class="display-title" id="display-title-<?= $x ?>" type="text" name="displayTitle[]" value="<?= Sanitizer::encodeAttribute( $video[ 'displayTitle' ] ); ?>">
 			</div>
 
 			<div class="input-group">
@@ -58,7 +63,7 @@
 					class="description"
 					id="description-<?= $x ?>"
 					placeholder="<?= wfMessage( 'videopagetool-placeholder-video-description' )->escaped() ?>"
-					name="description[]"><?= $video[ 'description' ] ?></textarea>
+					name="description[]"><?= htmlspecialchars( $video[ 'description' ] ); ?></textarea>
 				<p class="hint">
 					<?= wfMessage( 'videopagetool-hint-description-maxlength' )
 						->numParams( $descriptionMaxLength )
