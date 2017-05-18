@@ -870,29 +870,6 @@ $messages['pt'] = [
 	'tog-disablecategoryselect-v2' => 'Desligar o módulo de Categorias (aplica-se apenas se a edição em modo visual estiver desativada)',
 ];
 
-$messages['pt-br'] = [
-	'categoryselect-desc' => 'Disponibiliza uma interface para a administração de categorias de uma página sem que seja necessário editá-lo por inteiro',
-	'categoryselect-button-add' => 'Adicionar categoria',
-	'categoryselect-button-cancel' => 'Cancelar',
-	'categoryselect-button-save' => 'Salvar',
-	'categoryselect-category-add' => 'Adicionar categoria...',
-	'categoryselect-category-edit' => 'Editar categoria',
-	'categoryselect-category-remove' => 'Remover categoria',
-	'categoryselect-edit-summary' => 'Adicionando categorias',
-	'categoryselect-error-article-doesnt-exist' => 'O artigo [id=$1] não existe.',
-	'categoryselect-error-category-name-length' => 'Atingiu-se o comprimento máximo para um nome de categoria.',
-	'categoryselect-error-db-locked' => 'O banco de dados está bloqueado.',
-	'categoryselect-error-duplicate-category-name' => 'A categoria "$1" já existe.',
-	'categoryselect-error-edit-abort' => 'As mudanças que você tentou fazer foram abortadas por um anzol de extensão.',
-	'categoryselect-error-empty-category-name' => 'Por favor forneça um nome para a categoria.',
-	'categoryselect-error-user-rights' => 'O usuário não têm permissão para realizar esta ação.',
-	'categoryselect-modal-category-name' => 'Escreva o nome da categoria:',
-	'categoryselect-modal-category-sortkey' => 'Opcionalmente, você pode alfabetizar esta página na página da categoria "$1" sob o nome:',
-	'categoryselect-tooltip-add' => 'Pressione a tecla Enter ou Return quando pronto.',
-	'tog-disablecategoryselect' => 'Desabilitar o módulo de categorias (apenas aplicado caso a edição em modo visual foi desabilitada)',
-	'tog-disablecategoryselect-v2' => 'Desativar o módulo de Categorias (aplicado apenas se o Modo Visual está desativado)',
-];
-
 $messages['ro'] = [
 	'categoryselect-button-cancel' => 'Renunţă',
 	'categoryselect-button-save' => 'Salvează',
@@ -1120,14 +1097,6 @@ $messages['wuu'] = [
 	'categoryselect-button-cancel' => '取消',
 ];
 
-$messages['zh'] = [
-	'categoryselect-button-cancel' => '取消',
-	'categoryselect-button-save' => '儲存',
-	'categoryselect-category-edit' => '分類選項',
-	'tog-disablecategoryselect-v2' => '禁用分类模块（仅适用于不能使用可视模式的情況）',
-	'tog-disablecategoryselect' => '禁用分类模块（仅适用于不能使用可视模式的情況）',
-];
-
 $messages['zh-hans'] = [
 	'categoryselect-desc' => '提供一个接口，用以在不编辑整个条目的情况下管理条目中的分类',
 	'categoryselect-button-add' => '添加分类',
@@ -1173,14 +1142,3 @@ $messages['no'] = [
 	'categoryselect-button-cancel' => 'Avbryt',
 	'categoryselect-button-save' => 'Lagre',
 ];
-
-$messages['zh-hk'] = [
-	'tog-disablecategoryselect-v2' => '關閉分類模塊（僅適用於不能使用可視模式編輯的情況）',
-	'tog-disablecategoryselect' => '關閉分類模塊（僅適用於不能使用可視模式編輯的情況）',
-];
-
-$messages['zh-tw'] = [
-	'tog-disablecategoryselect-v2' => '關閉分類模塊（僅適用於不能使用可視模式編輯的情況）',
-	'tog-disablecategoryselect' => '關閉分類模塊（僅適用於不能使用可視模式編輯的情況）',
-];
-

@@ -2860,87 +2860,6 @@ Podes, por exemplo:
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|uma mensagem|$1 mensagens}}',
 ];
 
-$messages['pt-br'] = [
-	'myhome-desc' => 'Uma página privada para usuários autenticados',
-	'myhome' => 'Minha página inicial',
-	'wikiactivity' => 'Atividade na Wiki',
-	'myhome-activity-more' => 'ver mais atividade recente',
-	'myhome-activity-feed' => 'Atividade recente',
-	'myhome-activity-feed-empty' => 'Esta wikia está esperando a sua participação. Clique em \'\'\'[[Special:CreatePage|nova página]]\'\'\' para começar a escrever.',
-	'myhome-watchlist-feed' => 'Lista de vigiados',
-	'myhome-watchlist-feed-empty' => 'Você pode adicionar páginas à sua lista de páginas vigiadas clicando o link "{{int:watch}}" na barra do topo da página.
-Use a lista de páginas vigiadas para monitorar alterações das páginas pelas quais você se interessa.',
-	'myhome-user-contributions-feed' => 'Contribuições',
-	'myhome-hot-spots-feed' => 'Mais populares',
-	'myhome-hot-spots-feed-empty' => 'Esta wiki está esperando a sua participação. Clique em \'\'\'[[Special:CreatePage|nova página]]\'\'\' para começar a escrever.',
-	'myhome-hot-spots-newest' => 'Páginas novas na wiki',
-	'tog-userlandingpage' => 'Página inicial:',
-	'prefs-myhome' => 'Minha página inicial',
-	'myhome-feed-newpage' => 'nova página',
-	'myhome-feed-edit' => 'editar',
-	'myhome-feed-move' => 'página movida',
-	'myhome-feed-talkpage' => 'página de discussão',
-	'myhome-feed-blogcomment' => 'comentário do blog',
-	'myhome-feed-delete' => 'deletado',
-	'myhome-feed-image' => 'imagem adicionada',
-	'myhome-feed-video' => 'vídeo adicionado',
-	'myhome-feed-categorization' => 'categorização',
-	'myhome-feed-created-by' => 'criado por $1',
-	'myhome-feed-added-by' => 'adicionado por $1',
-	'myhome-feed-edited-by' => 'editado por $1',
-	'myhome-feed-posted-by' => 'postado por $1',
-	'myhome-feed-comment-by' => 'comentado por $1',
-	'myhome-feed-deleted-by' => 'deletado por $1',
-	'myhome-feed-moved-by' => 'movido por $1',
-	'myhome-feed-article-comment-created-by' => 'novo comentário por $1',
-	'myhome-feed-article-comment-edited-by' => 'comentário editado por $1',
-	'myhome-feed-by' => 'por $1',
-	'myhome-feed-diff-alt' => 'mostrar as mudanças nesta página',
-	'myhome-feed-new-page-details' => 'Página nova',
-	'myhome-feed-summary-details' => 'Resumo',
-	'myhome-feed-section-edit-details' => 'seção editada',
-	'myhome-feed-new-blog-post-details' => 'Novo blog',
-	'myhome-feed-new-blog-comment-details' => 'Comentário',
-	'myhome-feed-new-article-comment-details' => 'Comentário',
-	'myhome-feed-move-details' => 'Renomeado',
-	'myhome-feed-redirect-details' => 'Redirecionamento',
-	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Imagem adicionada|Imagens adicionadas}}',
-	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Vídeo adicionado|Vídeos adicionados}}',
-	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Categoria adicionada|Categorias adicionadas}}',
-	'myhome-user-contributions-empty' => 'Você pode participar nesta wiki clicando "{{int:editthispage}}" em qualquer página e adicionando o que souber.
-Todos podem fazer alterações, adicionar informação ou corrigir um erro.
-Esta wiki é criada pela comunidade e, ao clicar o botão para editar, você torna-se parte desta comunidade.
-Experimente!',
-	'myhome-hot-spots-number-of-editors' => 'editores',
-	'myhome-log-in' => '<center>As opções da Minha Página Inícial estão disponíveis apenas quando você está logado.<br /><br /><big>\'\'\'[{{fullurl:Special:Signup|$1}} Por favor, faça o login para visualizar essa página!]\'\'\'</big></center>',
-	'myhome-switch-to-monaco' => 'As opções da Minha Página Inicial estão disponíveis apenas se você estiver usando a estilo (skin) Monaco. Se você deseja visualizar a Minha Página Inicial, por favor visite \'\'\'[[Special:Preferences|suas preferências]]\'\'\' e mude o seu estilo (skin).',
-	'myhome-namespace-blog' => 'Blog',
-	'myhome-community-corner-header' => 'Mensagens Comunitárias',
-	'oasis-myhome-community-corner-edit' => 'editar mensagem &gt;',
-	'myhome-community-corner-edit' => 'editar mensagem',
-	'community-corner' => '\'\'\'Bem-vindo a sua página inicial!\'\'\'
-
-Esta página ajuda você a se manter atualizado sobre o que está acontecendo nesta wiki.
-
-Se você é o fundador ou um administrador desta wiki, pode mudar esta mensagem para contar à comunidade sobre coisas importanes que estão acontecendo no site. Por exemplo, você pode:
-
-* Organizar um projeto para construir uma área da wiki
-
-* Mostrar algumas páginas novas que todos deveriam ver
-
-* Fazer que as pessoas se envolvam em alguma discussão que está ocorrendo no site
-
-* Anunciar um editor que acrescentou algo especial à wiki
-
-* Ou apenas publicar algumas palavras de encorajamento!',
-	'myhome-hot-spots-definition' => 'Páginas com mais editores {{PLURAL:$1|no último dia|nos últimos $1 dias}}.',
-	'myhome-default-view-checkbox' => 'Transformar $1 na minha visualização padrão',
-	'myhome-default-view-success' => 'OK, esse é o seu padrão agora',
-	'tooltip-pt-myhome' => 'Ir para Minha Página Inicial',
-	'activityfeed' => 'Feed das mudanças',
-	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|uma mensagem|$1 mensagens}}',
-];
-
 $messages['roa-tara'] = [
 	'myhome-desc' => '\'Na pàgena prengèpale private pe le utinde trasute',
 	'myhome' => 'Pàgena meje',
@@ -3772,10 +3691,6 @@ Ví dụ, bạn có thể:
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|một thông điệp|$1 thông điệp}}',
 ];
 
-$messages['zh'] = [
-	'myhome' => '我的首页',
-];
-
 $messages['zh-hans'] = [
 	'myhome-desc' => '已登录的用户的个人主页',
 	'myhome' => '我的主页',
@@ -3944,11 +3859,6 @@ $messages['zh-hant'] = [
 	'tooltip-pt-myhome' => '轉到我的首頁',
 	'activityfeed' => '活動 Feed',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|1 則訊息|$1 則訊息}}',
-];
-
-$messages['zh-tw'] = [
-	'myhome' => '我的首頁',
-	'myhome-feed-edit' => '編輯',
 ];
 
 $messages['no'] = [

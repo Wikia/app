@@ -1604,40 +1604,6 @@ $messages['ps'] = [
 ];
 
 $messages['pt'] = [
-	'founderprogressbar-widget-label' => 'Progresso de {{SITENAME}}',
-	'founderprogressbar-progress-label' => 'Tarefas realizadas',
-	'founderprogressbar-progress-see-full-list' => 'Ver lista completa',
-	'founderprogressbar-progress-hide-full-list' => 'Esconder lista completa',
-	'founderprogressbar-skip-for-now' => 'Saltar por agora',
-	'founderprogressbar-task-completed' => 'Concluído',
-	'founderprogressbar-list-label' => 'Tarefas de {{SITENAME}}',
-	'founderprogressbar-list-task-label' => 'Tarefas',
-	'founderprogressbar-list-skipped-task-label' => 'Tarefas Ignoradas',
-	'founderprogressbar-list-skipped-task-desc' => 'Você pode completar estas a qualquer altura.',
-	'founderprogressbar-list-bonus-task-label' => 'Tarefas Bónus',
-	'founderprogressbar-task-call-to-action' => 'Ir para tarefa',
-	'founderprogressbar-page-add10-label' => 'Atingir $1 {{PLURAL:$1|página|páginas}}',
-	'founderprogressbar-themedesigner-visit-label' => 'Personaliza o teu tema',
-	'founderprogressbar-photo-add10-label' => 'Atingir $1 {{PLURAL:$1|Imagem|Imagens}}',
-	'founderprogressbar-category-add3-label' => 'Atingir $1 {{PLURAL:$1|Categoria|Categorias}}',
-	'founderprogressbar-wikiactivity-visit-label' => 'Visitar a Atividade da Wiki',
-	'founderprogressbar-photo-add20-label' => 'Alcançou $1 {{PLURAL:$1|Imagem|Imagens}}',
-	'founderprogressbar-total-edit75-label' => 'Alcançar 75 Edições',
-	'founderprogressbar-page-add20-label' => 'Alcançou $1 {{PLURAL:$1|página|páginas}}',
-	'founderprogressbar-gallery-add-label' => 'Adicionar uma galeria de imagens',
-	'founderprogressbar-video-add-label' => 'Adicionar um vídeo',
-	'founderprogressbar-user-add5-label' => 'Alcançar 5 perfis de utilizadores',
-	'founderprogressbar-recentchanges-visit-description' => 'Mudanças Recentes é uma versão mais avançada da atividade da wiki. Pode ver «diferenças» que detalham a mudança exata feita a uma página, desfazer edições, e ver mais detalhes do que na atividade da wiki. É uma boa ferramenta de gestão para quando precisa de mais informação.',
-	'founderprogressbar-wordmark-edit-label' => 'Enviar um símbolo',
-	'founderprogressbar-fb-likes3-label' => 'Alcançar $1 Gostos no Facebook',
-	'founderprogressbar-total-edit300-label' => 'Alcançou {{PLURAL:$1|$1 edição|as $1 edições}}',
-	'founderprogressbar-bonus-photo-add10-label' => 'Adicionar mais $1 imagens',
-	'founderprogressbar-bonus-edit50-label' => 'Editar mais {{PLURAL:$1|$1 página|$1 páginas}}',
-	'founderprogressbar-wikialabs-visit-description' => 'Os laboratórios do Fandom permitem que você utilize os novos recursos do Fandom em sua wiki. Esses recursos estão todos em beta, mas é uma boa maneira de ver o que vem por aí e de experimentar você mesmo.',
-	'founderprogressbar-wikialabs-visit-label' => 'Visite os laboratórios',
-];
-
-$messages['pt-br'] = [
 	'founderprogressbar-credits' => 'Um hub de tarefas e guia para novos fundadores wiki',
 	'founderprogressbar-widget-label' => 'Progresso da {{SITENAME}}',
 	'founderprogressbar-progress-label' => 'Tarefas realizadas',
@@ -2470,31 +2436,3 @@ $messages['it'] = [
 	'founderprogressbar-wordmark-edit-description' => 'Il logo è una caratteristica fondamentale della tua wiki, perché è visibile in ogni pagina e può davvero aiutare gli utenti a farsi un\'idea dell\'argomento trattato e inoltre aggiungere un tocco di stile. Caricando il tuo logo personalizzato contribuirai a far risaltare ancora di più il marchio della tua wiki.',
 	'founderprogressbar-wordmark-edit-label' => 'Carica un logo',
 ];
-
-$messages['zh-hk'] = [
-	'founderprogressbar-wikialabs-visit-description' => 'Wikia實驗室讓你可以在你的wiki上開啟Wikia的最新功能，這些功能還在試驗中，但看看有什麼新功能並自己試用看看是很棒的。',
-	'founderprogressbar-category-add3-label' => '達到 $1 個分類',
-	'founderprogressbar-category-add5-label' => '達到 $1 個分類',
-	'founderprogressbar-gallery-add-url' => 'http://zh.community.wikia.com/wiki/Help:Gallery',
-	'founderprogressbar-photo-add10-label' => '達到 $1 張圖片',
-	'founderprogressbar-photo-add20-label' => '達到 $1 張圖片',
-	'founderprogressbar-user-add5-url' => 'http://zh.community.wikia.com/wiki/Help:%E5%BB%BA%E8%A8%AD%E4%B8%80%E5%80%8B%E6%88%90%E5%8A%9F%E7%9A%84wiki',
-];
-
-$messages['zh-tw'] = [
-	'founderprogressbar-wikialabs-visit-description' => 'Wikia實驗室讓你可以在你的wiki上開啟Wikia的最新功能，這些功能還在試驗中，但看看有什麼新功能並自己試用看看是很棒的。',
-	'founderprogressbar-category-add3-label' => '達到 $1 個分類',
-	'founderprogressbar-category-add5-label' => '達到 $1 個分類',
-	'founderprogressbar-gallery-add-url' => 'http://zh.community.wikia.com/wiki/Help:Gallery',
-	'founderprogressbar-photo-add10-label' => '達到 $1 張圖片',
-	'founderprogressbar-photo-add20-label' => '達到 $1 張圖片',
-	'founderprogressbar-user-add5-url' => 'http://zh.community.wikia.com/wiki/Help:%E5%BB%BA%E8%A8%AD%E4%B8%80%E5%80%8B%E6%88%90%E5%8A%9F%E7%9A%84wiki',
-];
-
-$messages['zh'] = [
-	'founderprogressbar-gallery-add-url' => 'http://zh.community.wikia.com/wiki/Help:Gallery',
-	'founderprogressbar-photo-add10-label' => '达到 $1 张图片',
-	'founderprogressbar-photo-add20-label' => '达到 $1 张图片',
-	'founderprogressbar-user-add5-url' => 'http://zh.community.wikia.com/wiki/Help:%E5%BB%BA%E8%A8%AD%E4%B8%80%E5%80%8B%E6%88%90%E5%8A%9F%E7%9A%84wiki',
-];
-
