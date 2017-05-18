@@ -2591,39 +2591,6 @@ Clique no botão 'voltar' no seu navegador para retornar ao editor da página.",
 	'recaptcha-misconfigured' => 'ReCaptcha não está configurado corretamente',
 );
 
-$messages['pt-br'] = array(
-	'captcha-edit' => 'Para editar esta página será necessário que você resolva a simples soma abaixo e entre com a resposta no respectivo campo ([[Special:Captcha/help|o que é isto?]])',
-	'captcha-desc' => 'Fornece técnicas captcha para proteção contra spam e tentativas de obtenção de senhas',
-	'captcha-addurl' => 'Sua edição inclui novas ligações externas.
-Para prevenção contra sistemas automatizados que inserem spam, será necessário que você resolva a simples soma abaixo e entre com a resposta no respectivo campo ([[Special:Captcha/help|o que é isto?]])',
-	'captcha-badlogin' => 'Como prevenção contra sistemas automatizados de pesquisa e descoberta de senhas, será necessário que você resolva a simples soma abaixo e entre com a resposta no respectivo campo ([[Special:Captcha/help|o que é isto?]])',
-	'captcha-createaccount' => 'Como prevenção contra sistemas automatizados de criação de contas, por favor resolva a simples soma abaixo e entre com a resposta no respectivo campo ([[Special:Captcha/help|O que é isto?]]):',
-	'captcha-createaccount-fail' => 'Código de confirmação incorreto ou não preenchido.',
-	'captcha-create' => 'Para criar a página, por favor resolva a simples soma abaixo e entre com a resposta no respectivo campo ([[Special:Captcha/help|o que é isto?]])',
-	'captcha-sendemail' => "Para ajudar a prevenir o ''spam'' automatizado, por favor, resolva a soma simples apresentada abaixo e introduza a resposta na caixa ([[Special:Captcha/help|mais informações]]):",
-	'captcha-sendemail-fail' => 'Código de confirmação incorreto ou não preenchido.',
-	'captcha-disabledinapi' => 'Esta operação necessita de captcha, por isso não pode ser realizada através da API.',
-	'captchahelp-title' => 'Ajuda com o Captcha',
-	'captchahelp-cookies-needed' => 'Você precisa ter cookies habilitados em seu navegador para que possa funcionar',
-	'captchahelp-text' => "Sites abertos a inserções públicas, como é o caso desta wiki, são vulneráveis a spammers que utilizam ferramentas automatizadas para inserir seus links em diversos locais.
-Remover tais ligações posteriormente pode ser um incômodo significativo.
-
-Algumas vezes, especialmente ao adicionar novas ligações externas a uma página, o wiki exibirá uma imagem com um texto colorido ou distorcido e pedirá que você introduza as palavras exibidas.
-Uma vez que essa é uma tarefa um tanto difícil de ser automatizada, ela possibilita que a maioria dos humanos faça as suas inserções ao mesmo tempo que inibe as que forem feitas por spammers e mecanismos automatizados.
-
-Infelizmente, isso pode ser um inconveniente para usuários com limitações visuais ou que naveguem através de mecanismos baseados em texto ou baseados em voz.
-No momento, não está disponível uma alternativa em áudio.
-Por favor, contate os [[{{MediaWiki:Grouppage-sysop}}|administradores do sítio]] em casos que seja necessária a assistência de alguém para que você possa fazer as suas inserções legítimas.
-
-Pressione o botão 'voltar' de seu navegador para retornar à página de edição.",
-	'captcha-addurl-whitelist' => ' #<!-- deixe este linha exatamente como está --> <pre>
-# A sintaxe é a que se segue:
-#  * Tudo desde o caractere "#" até ao fim da linha é um comentário
-#  * Qualquer linha não vazia é um fragmento de regex que irá apenas verificar o servidor dentro das URLs
-  #</pre> <!-- deixe este linha exatamente como está -->',
-	'right-skipcaptcha' => 'Executar ações disparadoras de captcha sem ter que passar pelo captcha',
-);
-
 $messages['qu'] = array(
 	'captchahelp-title' => 'Captcha nisqamanta yanapay',
 );
@@ -3413,30 +3380,6 @@ $messages['yue'] = array(
 	'right-skipcaptcha' => '執行captcha引發嘅動作時唔需要經過captcha',
 );
 
-$messages['zh'] = array(
-	'captcha-badlogin' => '請輸入以下數學算式的答案([[Special:Captcha/help|更多資訊]])：',
-	'captcha-create' => '請輸入以下數學算式的答案([[Special:Captcha/help|更多資訊]])：',
-	'captcha-createaccount-fail' => '验证码错误或丢失',
-	'captcha-createaccount' => '为了防止程序自动添加垃圾链接。你需要输入以下图片中显示的文字才能注册帐户：<br />([[Special:Captcha/help|这是什么？]])',
-	'captchahelp-text' => '象本站一样，对公众开放编辑的站点经常被垃圾链接骚扰。那些人使用自动化垃圾程序将他们的链接张贴到很多站点。虽然这些链接可以被清除，但是这些东西确实令人十分讨厌。
-
-有时，特别是当给一个页面添加新的网页链接时，本站会让你看一幅有颜色的或者有变形文字的图像，并且要你输入所显示的文字。因为这是难以自动完成的一项任务，它将允许人保存他们的编辑，同时阻止大多数发送垃圾邮件者和其他机器人的攻击。 
-
-令人遗憾是，这会使得视力不好的人，或者使用基于文本或者基于声音的浏览器的用户感到不便。而目前我们还没有提供的音频的选择。如果这正好阻止你进行正常的编辑，请和管理员联系获得帮助。 
-
-单击你浏览器中的“后退”按钮返回你所编辑的页面。',
-	'captchahelp-title' => 'Captcha 帮助',
-);
-
-$messages['zh-cn'] = array(
-	'captcha-badlogin' => '请输入以下数学算式的答案([[Special:Captcha/help|更多资讯]])：',
-	'captcha-create' => '请输入以下数学算式的答案([[Special:Captcha/help|更多资讯]])：',
-	'captcha-createaccount-fail' => '{{MediaWiki:Captcha-createaccount-fail}}',
-	'captcha-createaccount' => '{{MediaWiki:Captcha-createaccount}}',
-	'captchahelp-text' => '{{MediaWiki:Captchahelp-text}}',
-	'captchahelp-title' => '{{MediaWiki:Captchahelp-title}}',
-);
-
 $messages['zh-hans'] = array(
 	'captcha-edit' => '要编辑这个页面，请回答以下简单的计算并在格子中输入答案（([[Special:Captcha/help|进一步了解]])：',
 	'captcha-desc' => '提供验证码技术来防止垃圾讯息和密码猜测',
@@ -3514,61 +3457,3 @@ $messages['zh-hant'] = array(
 	'recaptcha-create' => '為了協助防止自動頁面創建，請完成以下的問題：',
 	'recaptcha-misconfigured' => '驗證碼未正確放置',
 );
-
-$messages['zh-hk'] = array(
-	'captcha-create' => '請輸入以下數學算式的答案([[Special:Captcha/help|更多資訊]])：',
-	'captcha-createaccount-fail' => '驗證碼錯誤或丢失',
-	'captcha-createaccount' => '為了防止程序自動添加垃圾鏈接。你需要輸入以下圖片中顯示的文字才能注册帳户：<br />([[Special:Captcha/help|這是什麽？]])',
-	'captchahelp-text' => '象本站一様，對公衆開放編輯的站點經常被垃圾鏈接騷擾。那些人使用自動化垃圾程序將他們的鏈接張貼到很多站點。雖然這些鏈接可以被清除，但是這些東西確實令人十分討厭。
-
-有時，特彆是當給一個頁面添加新的網頁鏈接時，本站會讓你看一幅有顔色的或者有變形文字的圖像，并且要你輸入所顯示的文字。因為這是難以自動完成的一項任務，它將允許人保存他們的編輯，同時阻止大多數發送垃圾郵件者和其他機器人的攻撃。 
-
-令人遺憾是，這會使得視力不好的人，或者使用基于文本或者基于聲音的瀏覧器的用户感到不便。而目前我們還没有提供的音頻的選擇。如果這正好阻止你進行正常的編輯，請和管理員聯系獲得幫助。 
-
-單撃你瀏覧器中的“後退”按鈕返回你所編輯的頁面。',
-	'captchahelp-title' => 'Captcha 幫助',
-);
-
-$messages['zh-sg'] = array(
-	'captcha-badlogin' => '请输入以下数学算式的答案([[Special:Captcha/help|更多资讯]])：',
-	'captcha-create' => '请输入以下数学算式的答案([[Special:Captcha/help|更多资讯]])：',
-	'captcha-createaccount-fail' => '{{MediaWiki:Captcha-createaccount-fail}}',
-	'captcha-createaccount' => '{{MediaWiki:Captcha-createaccount}}',
-	'captchahelp-text' => '{{MediaWiki:Captchahelp-text}}',
-	'captchahelp-title' => '{{MediaWiki:Captchahelp-title}}',
-);
-
-$messages['zh-tw'] = array(
-	'captcha-edit' => '要編輯這個頁面，請回答以下簡單的計算並在格子中輸入答案（([[Special:Captcha/help|進一步了解]])：',
-	'captcha-desc' => '提供驗證碼技術來防止垃圾訊息和密碼猜測',
-	'captcha-addurl' => '您的編輯包括新的外部連結。為了防止自動廣告訊息，請回答以下簡單的計算並在格子中輸入答案（ ([[Special:Captcha/help|進一步了解]])：',
-	'captcha-badlogin' => '請輸入以下數學算式的答案([[Special:Captcha/help|更多資訊]])：',
-	'captcha-createaccount' => '{{MediaWiki:Captcha-createaccount}}',
-	'captcha-createaccount-fail' => '{{MediaWiki:Captcha-createaccount-fail}}',
-	'captcha-create' => '請輸入以下數學算式的答案([[Special:Captcha/help|更多資訊]])：',
-	'captcha-sendemail' => '為了防止自動垃圾郵件，請回答以下的計算並在格子中輸入答案（[[special:Captcha/help|進一步了解]]）：',
-	'captcha-sendemail-fail' => '不正確或不完整的驗證碼。',
-	'captcha-disabledinapi' => '此操作需要驗證碼，因此無法通過 API 執行。',
-	'captchahelp-title' => '{{MediaWiki:Captchahelp-title}}',
-	'captchahelp-cookies-needed' => '你需要在瀏覽器中啟用 cookie以進行這個操作。',
-	'captchahelp-text' => '像本站一樣的，對公眾開放編輯的網站經常被垃圾鏈接騷擾。這些人使用自動化垃圾程序將他們的鏈接張貼到很多網站。雖然這些鏈接可以被清除，但是這會令人十分困擾。
-有時，特別是當給一個頁面添加新的網頁鏈接時，本站可能會讓你看一幅有顏色或扭曲文字的圖像，並且要你輸入所顯示的文字。因為這是難以自動完成的，它能夠讓真人用戶能保存他們的編輯，同時阻止大多數發送垃圾郵件者和其他機器人的攻擊。
-令人遺憾是，這可能會使得視力不好，或者使用純文字或聲音的瀏覽器用戶感到不便。而目前我們還沒有提供聲音形式的驗證碼。如果這阻礙了你進行正常的編輯，請和 [[{{MediaWiki:Grouppage-sysop}}|管理員]]聯繫獲得幫助。
-點擊你瀏覽器中的“後退”按鈕返回頁面編輯畫面。',
-	'captcha-addurl-whitelist' => ' #<!-- 不要更改本行的內容 --> <pre>
-# 語法像下面這樣:
-# * 所有在 "#" 字符後的內容全部是注釋
-# * 所有非空白行是一個正規表示式，只會對網址中的內容進行匹配 #
- #</pre> <!-- 不要更改本行的內容 -->',
-	'right-skipcaptcha' => '進行會觸發驗證碼的操作時無需通過驗證碼',
-	'captcha-input-placeholder' => '在此處輸入文字',
-	'captcha-recaptcha-desc' => '用來確認編輯的驗證碼模組',
-	'captcha-recaptcha-edit' => '為了幫助防止自動编辑垃圾訊息，請完成以下的問題：',
-	'captcha-recaptcha-addurl' => '您的編輯包括新的外部連結。為了避免自動編輯的垃圾訊息，請完成以下問題：',
-	'captcha-recaptcha-badpass' => '為了防止自動密碼破解，請完成以下的問題：',
-	'captcha-recaptcha-createaccount' => '為了防止自動帳戶創建，請完成以下的問題：',
-	'captcha-recaptcha-createaccount-fail' => '驗證碼答案不正確或未填寫。',
-	'captcha-recaptcha-create' => '為了協助防止自動頁面創建，請完成以下的問題：',
-	'captcha-recaptcha-misconfigured' => '驗證碼未正確放置',
-);
-

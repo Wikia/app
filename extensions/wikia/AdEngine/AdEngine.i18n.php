@@ -149,10 +149,6 @@ $messages['pt'] = array(
 	'adengine-desc' => "Wikia's Ad Engine",
 );
 
-$messages['pt-br'] = array(
-	'adengine-advertisement' => 'anúncio',
-);
-
 $messages['roa-tara'] = array(
 	'adengine-advertisement' => 'pubblecetà',
 	'adengine-desc' => 'AD Engine de Uicchia',
