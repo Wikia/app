@@ -24,6 +24,11 @@ class WikiaApiQueryAllUsers extends ApiQueryBase {
 
 	private function getUsersForGroup() {
 		global $wgMemc, $wgSpecialsDB;
+
+		if ( empty( $this->params['group'] ) ) {
+			return [];
+		}
+
 		wfProfileIn( __METHOD__ );
 
 		$memkey = wfSharedMemcKey( __METHOD__, implode("-", (array) $this->params['group'] ), $this->mCityId );
