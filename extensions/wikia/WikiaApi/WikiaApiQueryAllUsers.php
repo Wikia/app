@@ -408,10 +408,6 @@ class WikiaApiQueryAllUsers extends ApiQueryBase {
 				ApiBase::PARAM_TYPE => $userGroups,
 				ApiBase::PARAM_ISMULTI => true,
 			),
-			'rights' => array(
-				ApiBase::PARAM_TYPE => User::getAllRights(),
-				ApiBase::PARAM_ISMULTI => true,
-			),
 			'prop' => array(
 				ApiBase::PARAM_ISMULTI => true,
 				ApiBase::PARAM_TYPE => array(
@@ -453,7 +449,6 @@ class WikiaApiQueryAllUsers extends ApiQueryBase {
 			'prefix' => 'Search for all users that begin with this value',
 			'dir' => 'Direction to sort in',
 			'group' => 'Limit users to given group name(s)',
-			'rights' => 'Limit users to given right(s)',
 			'prop' => array(
 				'What pieces of information to include.',
 				' blockinfo      - Adds the information about a current block on the user',
