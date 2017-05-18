@@ -59,8 +59,6 @@ class AnalyticsEngine {
 				return new AnalyticsProviderRubiconVulcan();
 			case 'DynamicYield':
 				return new AnalyticsProviderDynamicYield();
-			case 'IVW3':
-				return new AnalyticsProviderIVW3();
 			case 'NetzAthleten':
 				return new AnalyticsProviderNetzAthleten();
 		}
