@@ -9,8 +9,7 @@
 
 <? if ( !empty( $wg->InContextTranslationsProject ) ): ?>
 	<script type="text/javascript">
-		var _jipt = [];
-		_jipt.push(['project', '<?= $wg->InContextTranslationsProject ?>' ]);
+		var _jipt = [['project', '<?= addslashes($wg->InContextTranslationsProject) ?>' ]];
 	</script>
 	<script type="text/javascript" src="//cdn.crowdin.com/jipt/jipt.js"></script>
 <? endif; ?>
