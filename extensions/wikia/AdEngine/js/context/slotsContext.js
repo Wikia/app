@@ -24,15 +24,14 @@ define('ext.wikia.adEngine.context.slotsContext', [
 		// those slots exists on all pages
 		setStatus('TOP_LEADERBOARD', true);
 		setStatus('TOP_RIGHT_BOXAD', true);
+		// presence of this slot depends additionally on article structure
+		setStatus('INCONTENT_PLAYER', true);
 
 		setStatus('LEFT_SKYSCRAPER_2', !isHome);
 		setStatus('LEFT_SKYSCRAPER_3', !isHome);
 		setStatus('INCONTENT_BOXAD_1', !isHome);
 
 		setStatus('INVISIBLE_HIGH_IMPACT_2', geo.isProperGeo(instantGlobals.wgAdDriverHighImpact2SlotCountries));
-		setStatus('INCONTENT_LEADERBOARD', geo.isProperGeo(instantGlobals.wgAdDriverIncontentLeaderboardSlotCountries));
-		setStatus('INCONTENT_PLAYER', geo.isProperGeo(instantGlobals.wgAdDriverIncontentPlayerSlotCountries));
-
 		setStatus('PREFOOTER_RIGHT_BOXAD', !context.opts.overridePrefootersSizes);
 
 		log(['Disabled slots:', slots], 'info', logGroup);

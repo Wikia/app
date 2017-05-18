@@ -1585,6 +1585,20 @@ $wgAdDriverPageFairRecoveryCountries = null;
 $wgAdDriverEnablePageFairRecovery = true;
 
 /**
+ * @name $wgAdDriverPageFairConditionalAdRendering
+ * Flag to enable PF conditionalAdRendering, more in PF docs
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverPageFairConditionalAdRendering = false;
+
+/**
+ * @name $wgAdDriverPageFairConditionalIframeRendering
+ * Flag to enable PF conditionalIframeRendering, more in PF docs
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverPageFairConditionalIframeRendering = false;
+
+/**
  * trusted proxy service registry
  */
 $wgAutoloadClasses[ 'TrustedProxyService'] =  "$IP/includes/wikia/services/TrustedProxyService.class.php" ;
@@ -1842,20 +1856,6 @@ $wgAdDriverMobileTransitionInterstitialCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverMobileFloorAdhesionCountries = null;
-
-/**
- * @name $wgAdDriverIncontentLeaderboardSlotCountries
- * Enables INCONTENT_LEADERBOARD slot in these countries
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverIncontentLeaderboardSlotCountries = null;
-
-/**
- * @name $wgAdDriverIncontentLeaderboardOutOfPageSlotCountries
- * Enables INCONTENT_LEADERBOARD as out-of-page slot in these countries
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverIncontentLeaderboardOutOfPageSlotCountries = null;
 
 /**
  * @name $wgAdDriverIncontentPlayerSlotCountries

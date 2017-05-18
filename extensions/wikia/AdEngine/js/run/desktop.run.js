@@ -98,47 +98,32 @@ require([
 
 // Inject extra slots
 require([
-	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.slot.bottomLeaderboard',
 	'ext.wikia.adEngine.slot.highImpact',
 	'ext.wikia.adEngine.slot.inContent',
 	'ext.wikia.adEngine.slot.skyScraper3',
-	'ext.wikia.adEngine.slotTweaker',
 	'wikia.document',
 	'wikia.window'
 ], function (
-	adContext,
 	slotsContext,
 	bottomLeaderboard,
 	highImpact,
 	inContent,
 	skyScraper3,
-	slotTweaker,
 	doc,
 	win
 ) {
 	'use strict';
 
-	var context = adContext.getContext();
-
 	function initDesktopSlots() {
-		var incontentLeaderboardSlotName = 'INCONTENT_LEADERBOARD',
-			incontentPlayerSlotName = 'INCONTENT_PLAYER';
+		var incontentPlayerSlotName = 'INCONTENT_PLAYER';
 
 		highImpact.init();
 		skyScraper3.init();
 
 		if (slotsContext.isApplicable(incontentPlayerSlotName)) {
 			inContent.init(incontentPlayerSlotName);
-		}
-
-		if (slotsContext.isApplicable(incontentLeaderboardSlotName)) {
-			inContent.init(incontentLeaderboardSlotName, function () {
-				if (context.opts.incontentLeaderboardAsOutOfPage) {
-					slotTweaker.adjustIframeByContentSize(incontentLeaderboardSlotName);
-				}
-			});
 		}
 	}
 
