@@ -28,7 +28,7 @@ define('ext.wikia.adEngine.template.porvata', [
 ) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.template.porvata',
-		videoAspectRatio = 640/360;
+		videoAspectRatio = 640 / 360;
 
 	function loadVeles(params) {
 		params.vastResponse = params.vastResponse || params.bid.ad;
