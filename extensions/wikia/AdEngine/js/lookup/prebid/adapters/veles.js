@@ -133,6 +133,9 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 				pos: Object.keys(slots[skin]),
 				src: skin === 'oasis' ? 'gpt' : 'mobile',
 				passback: bidderName
+			}, {
+				numberOfAds: 1,
+				prerollOnly: true
 			});
 
 		request.onreadystatechange = function () {
