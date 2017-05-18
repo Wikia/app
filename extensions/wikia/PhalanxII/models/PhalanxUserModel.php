@@ -22,8 +22,7 @@ class PhalanxUserModel extends PhalanxModel {
 		if ( !empty( $this->text ) ) {
 			// text is used for checking email addresses
 			$ret = $this->text;
-		}
-		else {
+		} else {
 			$ret = [
 				$this->user instanceof User ? $this->user->getName() : ""
 			];
@@ -77,18 +76,7 @@ class PhalanxUserModel extends PhalanxModel {
 		return $this->match( "user" );
 	}
 
-	public function match_user_old() {
-		/* problem with Phalanx service? - use previous version of Phalanx extension - tested */
-		return UserBlock::blockCheck( $this->user, $this->block );
-	}
-
 	public function match_email() {
 		return $this->setText( $this->user->getEmail() )->match( "email" );
-	}
-
-	public function match_email_old() {
-		/* problem with Phalanx service? - use previous version of Phalanx extension - tested */
-		$abortError = '';
-		return UserBlock::onAbortNewAccount( $this->user, $abortError, $this->block );
 	}
 }

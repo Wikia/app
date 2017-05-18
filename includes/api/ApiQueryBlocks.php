@@ -65,8 +65,8 @@ class ApiQueryBlocks extends ApiQueryBase {
 
 		$this->addFieldsIf ( 'ipb_id', $fld_id );
 		$this->addFieldsIf( array( 'ipb_address', 'ipb_user' ), $fld_user || $fld_userid );
-		$this->addFieldsIf( 'ipb_by_text', $fld_by );
-		$this->addFieldsIf( 'ipb_by', $fld_by || $fld_byid );
+		$this->addFieldsIf( [ 'ipb_by', 'ipb_by_text' ], $fld_by );
+		$this->addFieldsIf( 'ipb_by', $fld_byid );
 		$this->addFieldsIf( 'ipb_timestamp', $fld_timestamp );
 		$this->addFieldsIf( 'ipb_expiry', $fld_expiry );
 		$this->addFieldsIf( 'ipb_reason', $fld_reason );

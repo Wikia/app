@@ -79,13 +79,6 @@ class UserChangesHistory {
 						// @see PLATFORM-1309
 						$dbw_specials = wfGetDB( DB_MASTER, array(), $wgSpecialsDB ) ;
 
-						$dbw_specials->insert(
-							"user_login_history",
-							$params,
-							__METHOD__,
-							array('IGNORE')
-						);
-
 						$dbw_specials->replace(
 							"user_login_history_summary",
 							array( 'user_id' ),

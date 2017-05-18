@@ -10,6 +10,9 @@
 	$search-buttons-transition-duration: 50ms;
 	$search-buttons-transition-delay: $search-transition-duration - $search-buttons-transition-duration;
 
+	// this should be moved to _colors in the future as that color is from the new palette of Fandom colors
+	$new-fandom-logo-color: #00d6d6;
+
 	@mixin visible-search-input {
 		&__search-input {
 			// transitioned property: padding;
@@ -140,8 +143,16 @@
 		}
 
 		&.wds-is-wds-company-logo-powered-by-wikia {
-			margin: 0 1px 2px 11px;
+			// borders and height set for fandom logo swap in May 2017
+			// horizontal bars are only displayed on desktop global nav
+			border-bottom: 2px solid $new-fandom-logo-color;
+			border-top: 2px solid $new-fandom-logo-color;
+			height: 10px;
+			padding: 1px 0;
+			margin: 0 1px 3px 11px;
 			width: 98px;
+			// hack fix for Safari 9
+			zoom: 1.0000001;
 		}
 
 		&.wds-is-wds-company-logo-wikia-org {

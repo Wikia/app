@@ -42,13 +42,6 @@ define('ext.wikia.adEngine.adContext', [
 		return context.targeting.pageType === pageType;
 	}
 
-	function isRecoveryModuleEnabled(wgCountries, contextVariable) {
-		var isGeoSupported = geo.isProperGeo(wgCountries),
-			isNotDisabledOnWiki = contextVariable !== false;
-
-		return !!(isNotDisabledOnWiki && isGeoSupported);
-	}
-
 	function setContext(newContext) {
 		var i,
 			len,
@@ -86,24 +79,24 @@ define('ext.wikia.adEngine.adContext', [
 			}
 		}
 
+		context.opts.premiumOnly = context.targeting.hasFeaturedVideo &&
+			geo.isProperGeo(instantGlobals.wgAdDriverSrcPremiumCountries);
+
 		// PageFair recovery
-		context.opts.pageFairRecovery = noExternals ?
-			false :
-			isRecoveryModuleEnabled(instantGlobals.wgAdDriverPageFairRecoveryCountries, context.opts.pageFairRecovery);
+		context.opts.pageFairRecovery = !noExternals &&
+			context.opts.pageFairRecovery &&
+			geo.isProperGeo(instantGlobals.wgAdDriverPageFairRecoveryCountries);
 
 		// SourcePoint recovery
-		context.opts.sourcePointRecovery = noExternals ?
-			false :
-			isRecoveryModuleEnabled(instantGlobals.wgAdDriverSourcePointRecoveryCountries, context.opts.sourcePointRecovery);
+		context.opts.sourcePointRecovery = !noExternals &&
+			context.opts.sourcePointRecovery &&
+			geo.isProperGeo(instantGlobals.wgAdDriverSourcePointRecoveryCountries);
 
 		// SourcePoint MMS
-		if (noExternals && context.opts.sourcePointMMS === true) {
-			context.opts.sourcePointMMS = false;
-		}
+		context.opts.sourcePointMMS = !noExternals &&
+			context.opts.sourcePointMMS;
 
-		if (context.opts.sourcePointMMS || context.opts.sourcePointRecovery) {
-			context.opts.sourcePointBootstrap = true;
-		}
+		context.opts.sourcePointBootstrap = context.opts.sourcePointMMS || context.opts.sourcePointRecovery;
 
 		// SourcePoint detection integration
 		if (!noExternals && context.opts.sourcePointDetectionUrl) {
@@ -151,18 +144,13 @@ define('ext.wikia.adEngine.adContext', [
 				geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneProviderCountries);
 		}
 
+		context.opts.enableRemnantNewAdUnit = geo.isProperGeo(instantGlobals.wgAdDriverMEGACountries);
+
 		// INVISIBLE_HIGH_IMPACT slot
 		context.slots.invisibleHighImpact = (
 				context.slots.invisibleHighImpact &&
 				geo.isProperGeo(instantGlobals.wgAdDriverHighImpactSlotCountries)
 			) || isUrlParamSet('highimpactslot');
-
-		context.opts.incontentLeaderboardAsOutOfPage =
-			geo.isProperGeo(instantGlobals.wgAdDriverIncontentLeaderboardOutOfPageSlotCountries);
-
-		context.opts.scrollHandlerConfig = instantGlobals.wgAdDriverScrollHandlerConfig;
-		context.opts.enableScrollHandler = geo.isProperGeo(instantGlobals.wgAdDriverScrollHandlerCountries) ||
-			isUrlParamSet('scrollhandler');
 
 		// AdInfo warehouse logging
 		context.opts.enableAdInfoLog = geo.isProperGeo(instantGlobals.wgAdDriverKikimoraTrackingCountries);
@@ -188,14 +176,6 @@ define('ext.wikia.adEngine.adContext', [
 
 		// OpenX for remnant slot enabled
 		context.opts.openXRemnantEnabled = geo.isProperGeo(instantGlobals.wgAdDriverOpenXBidderCountriesRemnant);
-
-		context.opts.yavli = !!(
-			!noExternals &&
-			geo.isProperGeo(instantGlobals.wgAdDriverYavliCountries) &&
-			isPageType('article')
-		);
-
-		context.providers.revcontent = !noExternals && geo.isProperGeo(instantGlobals.wgAdDriverRevcontentCountries);
 
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js

@@ -66,7 +66,7 @@ class ApiQueryAbuseLog extends ApiQueryBase {
 		$this->addTables( 'abuse_filter_log' );
 		$this->addFields( 'afl_timestamp' );
 		$this->addFieldsIf( array( 'afl_id', 'afl_filter' ), $fld_ids );
-		$this->addFieldsIf( 'afl_user_text', $fld_user );
+		$this->addFieldsIf( [ 'afl_user', 'afl_user_text' ], $fld_user );
 		$this->addFieldsIf( 'afl_ip', $fld_ip );
 		$this->addFieldsIf( array( 'afl_namespace', 'afl_title' ), $fld_title );
 		$this->addFieldsIf( 'afl_action', $fld_action );

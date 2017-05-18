@@ -11,9 +11,14 @@ require([
 	});
 
 	$(function() {
-		$('.community-page-entry-point-button').on(
+		$('.community-page-rail-module .entry-button').on(
 			'mousedown touchstart',
 			track.bind(this, {label: 'entry-button'})
+		);
+
+		$('.community-page-rail-module .wds-avatar').on(
+			'mousedown touchstart',
+			track.bind(this, {label: 'avatar'})
 		);
 
 		// Track impression

@@ -121,9 +121,6 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$this->signupToken = UserLoginHelper::getSignupToken();
 		$this->uselang = $this->request->getVal( 'uselang', 'en' );
 
-		// fb#38260 -- removed uselang
-		$this->avatars = $this->userLoginHelper->getRandomAvatars();
-
 		// template params
 		$this->pageHeading = wfMessage( 'usersignup-heading' )->escaped();
 		$this->createAccountButtonLabel = wfMessage( 'createaccount' )->escaped();

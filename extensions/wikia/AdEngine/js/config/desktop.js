@@ -14,8 +14,7 @@ define('ext.wikia.adEngine.config.desktop', [
 	'ext.wikia.adEngine.provider.remnantGpt',
 	'ext.wikia.adEngine.provider.rubiconFastlane',
 	'ext.wikia.adEngine.provider.turtle',
-	require.optional('ext.wikia.adEngine.provider.taboola'),
-	require.optional('ext.wikia.adEngine.provider.revcontent')
+	require.optional('ext.wikia.adEngine.provider.taboola')
 ], function (
 	// regular dependencies
 	log,
@@ -31,8 +30,7 @@ define('ext.wikia.adEngine.config.desktop', [
 	adProviderRemnantGpt,
 	adProviderRubiconFastlane,
 	adProviderTurtle,
-	adProviderTaboola,
-	adProviderRevcontent
+	adProviderTaboola
 ) {
 	'use strict';
 
@@ -71,11 +69,6 @@ define('ext.wikia.adEngine.config.desktop', [
 			return [adProviderTaboola];
 		}
 
-		// Revcontent
-		if (adProviderRevcontent && context.providers.revcontent && adProviderRevcontent.canHandleSlot(slotName)) {
-			return [adProviderRevcontent];
-		}
-
 		// First provider: Turtle, Evolve or Direct GPT?
 		if (context.providers.turtle && adProviderTurtle.canHandleSlot(slotName)) {
 			providerList.push(adProviderTurtle);
@@ -83,6 +76,10 @@ define('ext.wikia.adEngine.config.desktop', [
 			providerList.push(adProviderEvolve2);
 		} else if (gptEnabled) {
 			providerList.push(adProviderDirectGpt);
+
+			if (context.opts.premiumOnly) {
+				return providerList;
+			}
 		}
 
 		// Second provider: Remnant GPT
