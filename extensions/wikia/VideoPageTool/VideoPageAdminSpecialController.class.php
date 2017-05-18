@@ -8,28 +8,9 @@
  */
 
 class VideoPageAdminSpecialController extends WikiaSpecialPageController {
-	const EXTERNALLY_ACCESSIBLE_METHODS = [
-		'index',
-		'publish',
-		'getCalendarInfo',
-		'getVideosByCategory',
-		'getFeaturedVideoData',
-		'getImageData'
-	];
 
 	public function __construct() {
 		parent::__construct( 'VideoPageAdmin', '', false );
-	}
-
-	/**
-	 * SUS-1999: Limit methods accessible via wikia.php AJAX endpoint to a whitelist
-	 * @throws ForbiddenException if a non-whitelisted method is requested externally
-	 */
-	public function init() {
-		$method = $this->request->getVal( 'method' );
-		if ( !in_array( $method, static::EXTERNALLY_ACCESSIBLE_METHODS ) && !$this->request->isInternal() ) {
-			throw new ForbiddenException();
-		}
 	}
 
 	/**
