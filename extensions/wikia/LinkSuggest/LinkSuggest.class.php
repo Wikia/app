@@ -182,8 +182,8 @@ class LinkSuggest {
 			if( mb_strlen( $queryLower ) >= 2 ) {
 				if ( LinkSuggest::containsMultibyteCharacters( $firstChar . $secondChar ) ) {
 					$pageTitlePrefilter = "(
-						( convert(binary convert(page_title using latin1) using utf8) LIKE convert(binary convert('" . strtoupper( $firstChar ) . strtolower( $secondChar ) . "%' using latin1) using utf8)) ) OR
-						( convert(binary convert(page_title using latin1) using utf8) LIKE convert(binary convert('" . strtoupper( $firstChar ) . strtoupper( $secondChar )  . "%' using latin1) using utf8) ) AND ";
+						( convert(binary convert(page_title using latin1) using utf8) LIKE convert(binary '" . strtoupper( $firstChar ) . strtolower( $secondChar ) . "%' using utf8)) ) OR
+						( convert(binary convert(page_title using latin1) using utf8) LIKE convert(binary '" . strtoupper( $firstChar ) . strtoupper( $secondChar )  . "%' using utf8) ) AND ";
 				} else {
 					$pageTitlePrefilter = "(
 						( convert(binary convert(page_title using latin1) using utf8) " . $db->buildLike( strtoupper( $firstChar ) . strtolower( $secondChar ) , $db->anyString() ) . " ) OR
@@ -191,14 +191,14 @@ class LinkSuggest {
 				}
 			} else if( mb_strlen($queryLower) >= 1 ) {
 				if ( LinkSuggest::containsMultibyteCharacters( $firstChar ) ) {
-					$pageTitlePrefilter = "( convert(binary convert(page_title using latin1) using utf8) LIKE convert(binary convert('" . $firstChar . "%' using latin1) using utf8) ) AND ";
+					$pageTitlePrefilter = "( convert(binary convert(page_title using latin1) using utf8) LIKE convert(binary '" . $firstChar . "%' using utf8) ) AND ";
 				} else {
 					$pageTitlePrefilter = "( convert(binary convert(page_title using latin1) using utf8) " . $db->buildLike(strtoupper( $firstChar ) , $db->anyString() ) . " ) AND ";
 				}
 			}
 
 			if ( LinkSuggest::containsMultibyteCharacters( $queryLower ) ) {
-				$pageTitleLikeClause = "convert(binary convert('{$queryLower}%' using latin1) using utf8)";
+				$pageTitleLikeClause = "convert(binary '{$queryLower}%' using utf8)";
 			} else {
 				$pageTitleLikeClause = "'{$queryLower}%'";
 			}
