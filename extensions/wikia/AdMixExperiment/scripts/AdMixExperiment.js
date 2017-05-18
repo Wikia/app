@@ -16,13 +16,13 @@ require(['wikia.throttle', 'wikia.querystring'], function (throttle, querystring
 		var globalNavigationHeight = $('#globalNavigation').outerHeight(true);
 		var gapSize = 200;
 		var firstAdTopSpace = 10;
-		var noRecircAdBottomSpace = 5;
+		var noRecircAdBottomSpace = 30;
 		var recircEnabled = true;
+		var recircTopSpace = 10;
 		var topRightAdHeight = 250;
-		var viewportHeight = $window.height();
-		var viewportWidth = $window.width();
+		var viewportHeight;
+		var viewportWidth;
 		var visibleElementBeforeWrapperHeight;
-
 
 		// FIXME it should be true only for ad mix variant XW-3156
 		var topRightAdFixed = !!querystring().getVal('topRightAdFixed', false);
@@ -40,7 +40,7 @@ require(['wikia.throttle', 'wikia.querystring'], function (throttle, querystring
 				visibleElementBeforeWrapperHeight;
 
 			if (recircEnabled) {
-				return visibleElementBeforeWrapperBottom - globalNavigationHeight;
+				return visibleElementBeforeWrapperBottom - globalNavigationHeight - recircTopSpace;
 			} else {
 				return visibleElementBeforeWrapperBottom + noRecircAdBottomSpace -
 					(viewportHeight - $adAndRecircWrapper.outerHeight(true));
@@ -81,7 +81,7 @@ require(['wikia.throttle', 'wikia.querystring'], function (throttle, querystring
 
 				$recirc.css({
 					position: 'fixed',
-					top: globalNavigationHeight + 'px',
+					top: globalNavigationHeight + recircTopSpace + 'px',
 					width: '280px'
 				});
 			}
@@ -109,7 +109,7 @@ require(['wikia.throttle', 'wikia.querystring'], function (throttle, querystring
 					width: ''
 				});
 
-				adAndRecircWrapperStyles.top = globalNavigationHeight + 'px';
+				adAndRecircWrapperStyles.top = globalNavigationHeight + recircTopSpace + 'px';
 			} else {
 				adAndRecircWrapperStyles.bottom = noRecircAdBottomSpace + 'px';
 				adAndRecircWrapperStyles.top = '';
@@ -290,10 +290,13 @@ require(['wikia.throttle', 'wikia.querystring'], function (throttle, querystring
 			$visibleElementBeforeWrapper = $adAndRecircWrapper.prevAll(':not(#LEFT_SKYSCRAPER_2)').eq(0);
 			visibleElementBeforeWrapperHeight = $visibleElementBeforeWrapper.outerHeight(true);
 
+			viewportHeight = $window.height();
+			viewportWidth = $window.width();
+
 			$window.scroll(throttle(update, 100));
 			$window.resize(throttle(function () {
-				viewportHeight = $(window).height();
-				viewportWidth = $(window).width();
+				viewportHeight = $window.height();
+				viewportWidth = $window.width();
 				update();
 			}, 100));
 
