@@ -74,7 +74,7 @@ define('ext.wikia.adEngine.adContext', [
 	function updateAdContextRecoveryServices(context, noExternals) {
 		var taboolaConfig = instantGlobals.wgAdDriverTaboolaConfig || {},
 			isRecoveryServiceAlreadyEnabled = false,
-			serviceCanBeEnabled = !noExternals && context.opts.showAds;
+			serviceCanBeEnabled = !noExternals && context.opts.showAds !== false; // showAds is undefined by default
 
 		// PageFair recovery
 		context.opts.pageFairRecovery = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
@@ -123,7 +123,9 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.noExternals = noExternals;
 
 		// Don't show ads when Sony requests the page
-		context.opts.showAds = !referrerIsSonySite();
+		if (referrerIsSonySite()) {
+			context.opts.showAds = false;
+		}
 
 		if (geo.isProperGeo(instantGlobals.wgAdDriverDelayCountries)) {
 			context.opts.delayEngine = true;
