@@ -1879,6 +1879,11 @@ $wgEnableFliteTagExt = false;
 $wgARecoveryEngineCustomLog = null;
 
 /**
+ * Allow filter logs by renamed user globally
+ */
+$wgLogTypes[] = 'renameuser';
+
+/**
  * Protect Piggyback logs even if the extension is disabled
  */
 $wgLogRestrictions['piggyback'] = 'piggyback';
