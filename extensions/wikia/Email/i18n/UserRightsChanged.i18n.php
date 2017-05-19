@@ -80,12 +80,6 @@ $messages['zh-hant'] = [
 	'emailext-user-rights-changed-button-text' => '全文摘要',
 ];
 
-$messages['zh-tw'] = [
-	'emailext-user-rights-changed-subject' => '你在{{SITENAME}}網站的用戶權限已經被更改。',
-	'emailext-user-rights-changed-subject-follower' => '$1在{{SITENAME}}網站的用戶權限已經被更改。',
-	'emailext-user-rights-changed-button-text' => '全文摘要',
-];
-
 $messages['ko'] = [
 	'emailext-user-rights-changed-button-text' => '전체 요약',
 	'emailext-user-rights-changed-subject-follower' => '{{SITENAME}}에서 $1 님의 사용자 권한이 변경되었습니다',

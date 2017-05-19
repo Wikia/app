@@ -274,24 +274,3 @@ $messages['zh-hant'] = array(
 	'emailext-welcome-fandom-connect-header' => '與Fandom連結',
 	'emailext-welcome-fandom-connect-description' => '在你最喜愛的社交媒體上使用@getfandom以便獲得網站最新的流行文化内容。',
 );
-
-$messages['zh-tw'] = array(
-	'emailext-welcome-subject' => '歡迎來到Fandom，$1！',
-	'emailext-welcome-summary' => '歡迎來到Fandom！你已經成為世界上最大的娛樂社區的一分子了。分享你的知識、想法，並探索和發現各種精彩內容吧！',
-	'emailext-welcome-summary-extended' => '下一步要做什麼呢？',
-	'emailext-welcome-profile-header' => '創建您的個人資料',
-	'emailext-welcome-profile-description' => '在Fandom上創建您的帳戶。與其他人交流，分享你的Fandom社區。',
-	'emailext-welcome-mobile-header' => '讓Fandom無處不在',
-	'emailext-welcome-mobile-description' => '下載你最喜愛的Fandom社區App到[$1 iOS] 或[$2 Android] 設備，持續不斷地參與你的粉絲社群。',
-	'emailext-welcome-basics-url' => 'http://zh.community.wikia.com/wiki/Fandom课堂',
-	'emailext-welcome-basics-header' => '了解基礎知識',
-	'emailext-welcome-basics-description' => '需要了解如何編輯頁面、開始討論或上傳媒體？請觀看下列[$1 幫助影片]。',
-	'emailext-welcome-fandom-header' => '找到你最喜歡的粉絲社區',
-	'emailext-welcome-fandom-description' => '去探尋更多的電影、電視、遊戲和其他的社區吧！時常評論或關注你所喜歡的討論。',
-	'emailext-welcome-footer-community' => '想要得到更多資訊嗎？訪問[http://zh.community.wikia.com Fandom社區中心]獲得更多建議、協助和朋友。',
-	'emailext-welcome-footer-closing' => '謝謝你加入Fandom！',
-	'emailext-welcome-summary-extended-tips' => '有以下幾種方法可以讓您在Fandom有更多的收穫：',
-	'emailext-welcome-fandom-connect-header' => '與Fandom連結',
-	'emailext-welcome-fandom-connect-description' => '在你最喜愛的社交媒體上使用@getfandom以便獲得網站最新的流行文化内容。'
-);
-

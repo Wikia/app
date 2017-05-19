@@ -93,13 +93,6 @@ $messages['zh-hant'] = [
 	'emailext-reactivate-account-welcome-back' => '歡迎回到Fandom！',
 ];
 
-$messages['zh-tw'] = [
-	'emailext-reactivate-account-subject' => '重新成爲維基用戶',
-	'emailext-reactivate-account-summary' => '你只差一步就可重新啓動你的維基帳戶了。請按一下下面的連接確認你的請求並開始使用。',
-	'emailext-reactivate-account-button-text' => '現在就重新啟動',
-	'emailext-reactivate-account-welcome-back' => '歡迎回來！',
-];
-
 $messages['ko'] = [
 	'emailext-reactivate-account-subject' => '위키아 계정 재활성화',
 	'emailext-reactivate-account-summary' => '이제 한 단계만 거치면 귀하의 위키아 계정을 재활성하실 수 있습니다. 아래의 링크를 눌러 인증을 완료해 주세요!',

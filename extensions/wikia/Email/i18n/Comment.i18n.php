@@ -119,15 +119,6 @@ $messages['zh-hant'] = [
 	'emailext-comment-view-all' => '[$1 查看所有評論]',
 ];
 
-$messages['zh-tw'] = [
-	'emailext-articlecomment-subject' => '大家都在談論發佈發佈在{{SITENAME}}上標題為$1的文章！',
-	'emailext-blogcomment-subject' => '大家都在談論發佈在{{SITENAME}}上名為$1的部落格！',
-	'emailext-articlecomment-summary' => '有人在討論發佈在{{SITENAME}}上標題為$1的文章！',
-	'emailext-blogcomment-summary' => '有人在討論{{SITENAME}}上名為$1的網誌！',
-	'emailext-comment-link-label' => '查看評論',
-	'emailext-comment-view-all' => '[$1 查看所有評論]',
-];
-
 $messages['ko'] = [
 	'emailext-articlecomment-subject' => '사람들이 {{SITENAME}}의 $1 문서에 대한 얘기를 나누고 있습니다!',
 	'emailext-articlecomment-summary' => '사람들이 [{{SERVER}} {{SITENAME}}]의 [$1 $2] 문서에 대한 얘기를 나누고 있습니다!',
@@ -135,18 +126,5 @@ $messages['ko'] = [
 	'emailext-blogcomment-summary' => '사람들이 [{{SERVER}} {{SITENAME}}]의 [$1 $2] 글에 대한 얘기를 나누고 있습니다!',
 	'emailext-comment-link-label' => '해당 댓글 보기',
 	'emailext-comment-view-all' => '[$1 모든 댓글 보기]',
-];
-
-$messages['zh-hk'] = [
-	'emailext-articlecomment-subject' => '大家都在談論發佈在{{SERVER}}上標題為$1的文章！',
-	'emailext-articlecomment-summary' => '有人在討論發佈在{{SITENAME}}上標題為$1的文章！',
-	'emailext-blogcomment-subject' => '大家都在談論發佈在{{SERVER}}上名為$1的網誌！',
-	'emailext-blogcomment-summary' => '有人在討論{{SITENAME}}上名為$1的網誌！',
-	'emailext-comment-link-label' => '查看評論',
-	'emailext-comment-view-all' => '[$1 查看所有評論]',
-];
-
-$messages['zh'] = [
-	'emailext-articlecomment-summary' => '有人在讨论发布在{{SITENAME}}上标题为$1的文章！',
 ];
 

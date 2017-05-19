@@ -145,17 +145,6 @@ $messages['zh-hant'] = [
 	'emailext-forumreply-unfollow-text' => '不想再收到這類更新的訊息？按一下[$1這裡]取消在[{{SERVER}} {{SITENAME}}]監視[$2 這個討論]。',
 ];
 
-$messages['zh-tw'] = [
-	'emailext-forum-subject' => '在{{SITENAME}}的$1論壇上,大家正在對一個新的話題進行討論。',
-	'emailext-forum-summary' => '\'\'\'在[{{SERVER}} {{SITENAME}}]的[$1 $2]上，大家正在討論一個新的話題。\'\'\'',
-	'emailext-forum-button-label' => '查看討論',
-	'emailext-forum-reply-subject' => '{{SITENAME}}上的$1有新的回覆。',
-	'emailext-forum-reply-summary' => '\'\'\'[{{SERVER}} {{SITENAME}}]上的[$2 $1]有新的回覆。\'\'\'',
-	'emailext-forum-reply-link-label' => '閲讀回覆',
-	'emailext-forum-reply-view-all' => '[$1 查看整個討論內容]',
-	'emailext-forumreply-unfollow-text' => '不想再收到這類更新的訊息？按一下[$1這裡]取消在[{{SERVER}} {{SITENAME}}]監視[$2 這個討論]。',
-];
-
 $messages['ko'] = [
 	'emailext-forum-button-label' => '토론 보기',
 	'emailext-forum-reply-link-label' => '댓글 보기',
@@ -166,15 +155,3 @@ $messages['ko'] = [
 	'emailext-forum-summary' => '\'\'\'[{{SERVER}} {{SITENAME}}]의 [$1 $2]에 새 토론이 있습니다.\'\'\'',
 	'emailext-forumreply-unfollow-text' => '더 이상 이에 관한 이메일 알림을 받고 싶지 않으신가요? [$1 이곳]에서 [{{SERVER}} {{SITENAME}}]의 [$2 토론]을 주시 해제하실 수 있습니다.',
 ];
-
-$messages['zh-hk'] = [
-	'emailext-forum-button-label' => '查看討論內容',
-	'emailext-forum-reply-link-label' => '閱讀回覆',
-	'emailext-forum-reply-subject' => '{{SITENAME}}上的$1有新的回覆。',
-	'emailext-forum-reply-summary' => '\'\'\'[{{SERVER}} {{SITENAME}}]上的[$2 $1]有新的回覆。\'\'\'',
-	'emailext-forum-reply-view-all' => '[$1 查看完整討論。]',
-	'emailext-forum-subject' => '在{{SITENAME}}的$1論壇上,大家正在對一個新的話題進行討論。',
-	'emailext-forum-summary' => '\'\'\'在[{{SERVER}} {{SITENAME}}]的[$1 $2]上，大家正在討論一個新的話題。\'\'\'',
-	'emailext-forumreply-unfollow-text' => '不想再收到這類更新的訊息？按一下[$1這裡]取消在[{{SERVER}} {{SITENAME}}]監視[$2 這個討論]。',
-];
-

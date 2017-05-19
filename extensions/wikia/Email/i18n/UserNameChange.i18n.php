@@ -137,11 +137,3 @@ $messages['zh-hant'] = array(
 	'emailext-usernamechange-check-out' => '查看Fandom',
 );
 
-$messages['zh-tw'] = array(
-	'emailext-usernamechange-subject' => '你的Wikia用戶名已更改！',
-	'emailext-usernamechange-summary' => '你的Wikia用戶名已更改。',
-	'emailext-usernamechange-changed' => "用戶名已由'''$1'''更改為'''$2'''了。",
-	'emailext-usernamechange-closing' => '期待見到你！',
-	'emailext-usernamechange-signature' => 'Wikia社區團隊',
-);
-

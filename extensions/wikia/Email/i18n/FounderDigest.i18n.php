@@ -210,17 +210,3 @@ $messages['zh-hant'] = array(
 	'emailext-founder-digest-signature' => 'Fandon社區團隊',
 );
 
-$messages['zh-tw'] = array(
-	'emailext-founder-activity-digest-subject' => '$1上的最新活動',
-	'emailext-founder-views-digest-subject' => '$1的今日訪問量',
-	'emailext-founder-digest-summary' => '又到了你參加$1上每日活動的時間了。',
-	'emailext-founder-activity-digest-link-label' => 'Wikia的最新活動',
-	'emailext-founder-activity-digest-footer' => '獲取如何創建維基的小訣竅、並在[http://zh.community.wikia.com 社區中心]提問。',
-	'emailext-founder-views-digest-link-label' => '添加頁面',
-	'emailext-founder-digest-views-header' => '已查看$1個頁面',
-	'emailext-founder-digest-views-description-1' => '繼續添加有趣的文章、 討論、 照片和視頻供大家欣賞。',
-	'emailext-founder-digest-views-description-2' => '不斷添加新的東西、宣傳你的維基，這樣可以鼓勵更多的人來閱讀、貢獻，並讓更多的人知道它。你的社區看起來棒極了!',
-	'emailext-founder-digest-edits-header' => '已編輯$1次',
-	'emailext-founder-digest-edits-description' => '快樂社區成員打造讓人快樂的維基。千萬別忘了一定要感謝那些貢獻者，讓他們感受到愛哦！',
-);
-

@@ -132,16 +132,6 @@ $messages['zh-hant'] = [
 	'emailext-blogpost-unfollow-text' => '不想再收到這類更新内容？點擊[$1 這裡]取消對{{SITENAME}}上$2頁面的關注。',
 ];
 
-$messages['zh-tw'] = [
-	'emailext-blogpost-user-subject' => '$1 撰寫了標題為「$2」的新文章。',
-	'emailext-blogpost-list-subject' => '$1在$2頁面撰寫了「$3」的新文章',
-	'emailext-blogpost-user-summary' => '在[{{SERVER}} {{SITENAME}}]的[$1 $2的網誌]頁面有一篇新文章。快來看看吧！',
-	'emailext-blogpost-list-summary' => '在[{{SERVER}} {{SITENAME}}]的 [$1 $2]頁面有一篇新文章。快來看看吧！',
-	'emailext-blogpost-link-label' => '閱讀全文',
-	'emailext-blogpost-view-all' => '[$1 最近在$2的所有網誌文章]',
-	'emailext-blogpost-unfollow-text' => '不想再收到這類更新内容？點擊[$1 這裡]取消對{{SITENAME}}上$2頁面的關注。',
-];
-
 $messages['ko'] = [
 	'emailext-blogpost-link-label' => '전체 글 읽기',
 	'emailext-blogpost-list-subject' => '$1 님이 $2에 ‘$3’ 글을 작성했습니다',
@@ -151,14 +141,3 @@ $messages['ko'] = [
 	'emailext-blogpost-user-summary' => '[{{SERVER}} {{SITENAME}}]의 [$1 $2 님의 블로그]에 새 글이 있습니다. 지금 확인해 보세요!',
 	'emailext-blogpost-view-all' => '[$1 $2의 모든 최근 블로그 글 보기]',
 ];
-
-$messages['zh-hk'] = [
-	'emailext-blogpost-link-label' => '閱讀全文',
-	'emailext-blogpost-list-subject' => '$1在$2頁面撰寫了標題為「$3」的新文章',
-	'emailext-blogpost-list-summary' => '在[{{SERVER}} {{SITENAME}}]的 [$1 $2]頁面有一篇新文章。快來看看吧！',
-	'emailext-blogpost-unfollow-text' => '不想再收到這類更新内容？點擊[$1 這裡]取消對{{SITENAME}}上$2頁面的關注。',
-	'emailext-blogpost-user-subject' => '$1 撰寫了標題為「$2」的新文章。',
-	'emailext-blogpost-user-summary' => '在[{{SERVER}} {{SITENAME}}]的[$1 $2的網誌]頁面有一篇新文章。快來看看吧！',
-	'emailext-blogpost-view-all' => '[$1 最近在$2的所有網誌文章]',
-];
-

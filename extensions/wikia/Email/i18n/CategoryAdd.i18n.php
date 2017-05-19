@@ -117,15 +117,3 @@ $messages['ko'] = [
 	'emailext-categoryadd-see-article' => '문서 보기',
 	'emailext-categoryadd-subject' => '{{SITENAME}}의 $1 문서에 분류가 추가되었습니다!',
 ];
-
-$messages['zh-hk'] = [
-	'emailext-categoryadd-details' => '您在{{SITENAME}}上關注的一個類別中添加了一個新的頁面。',
-	'emailext-categoryadd-see-all-pages' => '查看分類 [$1 $2] 中的所有頁面。',
-	'emailext-categoryadd-subject' => '{{SITENAME}}上的分類$1中添加了新的頁面！',
-];
-
-$messages['zh'] = [
-	'emailext-categoryadd-see-all-pages' => '查看分类 [$1 $2] 中的所有页面。',
-	'emailext-categoryadd-subject' => '{{SITENAME}}上的分类$1中添加了新的页面！',
-];
-

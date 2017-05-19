@@ -80,12 +80,6 @@ $messages['zh-hant'] = [
 	'emailext-watchedpage-article-restored-button-text' => '轉到頁面',
 ];
 
-$messages['zh-tw'] = [
-	'emailext-watchedpage-article-restored-subject' => '{{SITENAME}}網站上標題為$1的文章已被$2恢復。',
-	'emailext-watchedpage-article-restored-summary' => '{{SITENAME}}網站上標題為$1的文章已被恢復。趕快查看...',
-	'emailext-watchedpage-article-restored-button-text' => '參閲文章',
-];
-
 $messages['ko'] = [
 	'emailext-watchedpage-article-restored-button-text' => '문서 보기',
 	'emailext-watchedpage-article-restored-subject' => '$2 님이 {{SITENAME}}의 $1 문서를 복구했습니다',

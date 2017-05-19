@@ -145,17 +145,6 @@ $messages['zh-hant'] = [
 	'emailext-wallmessage-reply-summary' => '有人在[{{SERVER}} {{SITENAME}}]上對[$1 $2]作了回復',
 ];
 
-$messages['zh-tw'] = [
-	'emailext-wallmessage-owned-subject' => '有人在{{SITENAME}}上給你留言：$1',
-	'emailext-wallmessage-following-subject' => '有人在{{SITENAME}}上給$1留言：$1',
-	'emailext-wallmessage-owned-summary' => '有人在[{{SERVER}} {{SITENAME}}]上給你留言：[$1 $2]',
-	'emailext-wallmessage-following-summary' => '有人在[{{SERVER}} {{SITENAME}}]上給$1留言： [$2 $3]',
-	'emailext-wallmessage-full-conversation' => '完整對話',
-	'emailext-wallmessage-recent-messages' => '[$1$2上最近的所有留言]',
-	'emailext-wallmessage-reply-subject' => '有人在{{SITENAME}}上對$1作了回復。',
-	'emailext-wallmessage-reply-summary' => '有人在[{{SERVER}} {{SITENAME}}]上對[$1 $2]作了回復',
-];
-
 $messages['ko'] = [
 	'emailext-wallmessage-following-subject' => '$1 님이 {{SITENAME}}에서 $2 님에게 메시지를 남겼습니다',
 	'emailext-wallmessage-following-summary' => '\'\'\'[$1 $2] 님이 [{{SERVER}} {{SITENAME}}]에서 $3 님에게 메시지를 남겼습니다.\'\'\'',
@@ -165,14 +154,5 @@ $messages['ko'] = [
 	'emailext-wallmessage-recent-messages' => '[$1 $2의 모든 최근 메시지 보기]',
 	'emailext-wallmessage-reply-subject' => '{{SITENAME}}의 $1 메시지에 새 댓글이 달렸습니다',
 	'emailext-wallmessage-reply-summary' => '\'\'\'[{{SERVER}} {{SITENAME}}]의 [$1 $2] 메시지에 새 댓글이 달렸습니다.\'\'\'',
-];
-
-$messages['zh-hk'] = [
-	'emailext-wallmessage-following-subject' => '$1在{{SITENAME}}上給$2留言了',
-	'emailext-wallmessage-following-summary' => '\'\'\'[$1 $2]在[{{SERVER}} {{SITENAME}}]給$3留言了。\'\'\'',
-	'emailext-wallmessage-full-conversation' => '完整對話',
-	'emailext-wallmessage-owned-subject' => '有人在{{SITENAME}}上給您留言了：$1',
-	'emailext-wallmessage-owned-summary' => '\'\'\'有人在[{{SERVER}} {{SITENAME}}]上給您留言了：[$1 $2]。真好！\'\'\'',
-	'emailext-wallmessage-reply-subject' => '有人在{{SITENAME}}上對$1作了回覆。',
 ];
 
