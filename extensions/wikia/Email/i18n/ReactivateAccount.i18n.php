@@ -72,10 +72,10 @@ $messages['pl'] = array(
 );
 
 $messages['pt'] = array(
-	'emailext-reactivate-account-subject' => 'Reactivate Your Fandom Account',
-	'emailext-reactivate-account-summary' => "You're one step away from reactivating your account on Fandom. Click the link below to confirm your request and get started.",
+	'emailext-reactivate-account-subject' => 'Reativar a sua conta no Fandom',
+	'emailext-reactivate-account-summary' => 'Você está a um passo de reativar sua conta no Fandom. Clique no link abaixo para confirmar seu pedido e começar.',
 	'emailext-reactivate-account-button-text' => 'Reativar agora',
-	'emailext-reactivate-account-welcome-back' => 'Welcome back to Fandom!',
+	'emailext-reactivate-account-welcome-back' => 'Bem-vindo de volta ao Fandom!',
 );
 
 $messages['ru'] = array(

@@ -113,10 +113,10 @@ $messages['pl'] = array(
 
 $messages['pt'] = array(
 	'emailext-forum-subject' => 'Há uma nova discussão em $1 na {{SITENAME}}.',
-	'emailext-forum-summary' => 'There is a new discussion on [$1 $2] on [{{SERVER}} {{SITENAME}}].',
+	'emailext-forum-summary' => 'Há uma nova discussão em [$1 $2] na [{{SERVER}} {{SITENAME}}].',
 	'emailext-forum-button-label' => 'Ver a discussão',
 	'emailext-forum-reply-subject' => '$1 na {{SITENAME}} tem novas respostas.',
-	'emailext-forum-reply-summary' => '[$2 $1] on [{{SERVER}} {{SITENAME}}] has new replies.',
+	'emailext-forum-reply-summary' => '[$2 $1] na [{{SERVER}} {{SITENAME}}] tem novas respostas.',
 	'emailext-forum-reply-link-label' => 'Leia a resposta',
 	'emailext-forum-reply-view-all' => '[$1 Ver toda a discussão.]',
 	'emailext-forumreply-unfollow-text' => 'Você não deseja mais receber essas atualizações? Clique [$1 aqui] para deixar de seguir [$2 esta discussão] na [{{SERVER}} {{SITENAME}}].',

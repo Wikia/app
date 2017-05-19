@@ -64,7 +64,7 @@ $messages['pl'] = array(
 $messages['pt'] = array(
 	'emailext-watchedpage-article-restored-subject' => '$1 na {{SITENAME}} foi restaurado por $2.',
 	'emailext-watchedpage-article-restored-summary' => '$2 na {{SITENAME}} foi restaurado. Confira!',
-	'emailext-watchedpage-article-restored-button-text' => 'Go to page',
+	'emailext-watchedpage-article-restored-button-text' => 'Ir para página',
 );
 
 $messages['ru'] = array(
