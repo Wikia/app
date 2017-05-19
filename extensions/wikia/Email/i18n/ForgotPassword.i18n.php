@@ -142,10 +142,6 @@ $messages['ru'] = array(
 	'emailext-password-reset-link-link-caption' => 'СОЗДАТЬ НОВЫЙ ПАРОЛЬ',
 );
 
-$messages['zh'] = array(
-	'emailext-password-questions' => '有疑问或顾虑？请随时[http://zh.community.wikia.com/wiki/Special:Contact/account-issue 联系我们]。',
-);
-
 $messages['zh-hans'] = array(
 	'emailext-password-subject' => '请重置您的Fandom密码',
 	'emailext-password-summary' => '看来您好像无法登入帐户。真抱歉！尽管我们希望将您的密码发送给您，但是为了安全考虑，我们需要您使用一个临时密码进行登录。',
@@ -169,3 +165,4 @@ $messages['zh-hant'] = array(
 	'emailext-password-reset-link-summary' => '看來您好像無法登入帳戶。真抱歉！儘管我們希望將您的密碼發送給您，但是為了安全考慮，我們只能發送給您一個臨時密碼，您可以使用這個臨時密碼登入。',
 	'emailext-password-reset-link-link-caption' => '設定新密碼',
 );
+
