@@ -36,10 +36,10 @@ function wfGoogleDocs( Parser $parser ) {
 function renderGoogleSpreadsheet( $input, $argv ) {
 	$height = 300;
 	$width = 500;
-	if ( !empty( $argv['height'] ) ) {
+	if ( !empty( $argv['height'] ) && is_numeric( $argv['height'] ) ) {
 		$height = intval( $argv['height'] );
 	}
-	if ( !empty( $argv['width'] ) ) {
+	if ( !empty( $argv['width'] ) && is_numeric( $argv['width'] ) ) {
 		$width = intval( $argv['width'] );
 	}
 
