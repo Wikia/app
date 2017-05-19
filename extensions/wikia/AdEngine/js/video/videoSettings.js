@@ -18,23 +18,14 @@ define('ext.wikia.adEngine.video.videoSettings', [
 			withUiControls: false
 		};
 
-		init();
-
-		function init() {
-			state.resolvedState = resolvedState.isResolvedState();
-			state.autoPlay = isAutoPlay(params);
-			state.splitLayout = Boolean(params.splitLayoutVideoPosition);
-			state.moatTracking = isMoatTrackingEnabled(params);
-			state.withUiControls = Boolean(params.hasUiControls);
-		}
-
-		function isAutoPlay(params) {
+		function calculateAutoPlayFlag(params) {
 			var defaultStateAutoPlay = params.autoPlay && !state.resolvedState,
 				resolvedStateAutoPlay = params.resolvedStateAutoPlay && state.resolvedState;
+
 			return Boolean(defaultStateAutoPlay || resolvedStateAutoPlay);
 		}
 
-		function isMoatTrackingEnabled(params) {
+		function calculateMoatTrackingFlag(params) {
 			var sampling = params.moatTracking || 0;
 
 			if (typeof params.moatTracking === 'boolean') {
@@ -52,6 +43,16 @@ define('ext.wikia.adEngine.video.videoSettings', [
 
 			return false;
 		}
+
+		function init() {
+			state.resolvedState = resolvedState.isResolvedState();
+			state.autoPlay = calculateAutoPlayFlag(params);
+			state.splitLayout = Boolean(params.splitLayoutVideoPosition);
+			state.moatTracking = calculateMoatTrackingFlag(params);
+			state.withUiControls = Boolean(params.hasUiControls);
+		}
+
+		init();
 
 		return {
 			getParams: function () {
