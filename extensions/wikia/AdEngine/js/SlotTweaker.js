@@ -158,7 +158,8 @@ define('ext.wikia.adEngine.slotTweaker', [
 	function collapse(slotName) {
 		var slot = doc.getElementById(slotName);
 
-		slot.style.maxHeight = slot.scrollHeight + 'px';
+		// make max-height consistent with expand()
+		slot.style.maxHeight = 2 * slot.scrollHeight + 'px';
 		DOMElementTweaker.forceRepaint(slot);
 		DOMElementTweaker.addClass(slot, 'slot-animation');
 		slot.style.maxHeight = '0';
@@ -170,7 +171,8 @@ define('ext.wikia.adEngine.slotTweaker', [
 		slot.style.maxHeight = slot.offsetHeight + 'px';
 		DOMElementTweaker.removeClass(slot, 'hidden');
 		DOMElementTweaker.addClass(slot, 'slot-animation');
-		slot.style.maxHeight = slot.scrollHeight + 'px';
+		// make some space for slot content after page resize
+		slot.style.maxHeight = 2 * slot.scrollHeight + 'px';
 	}
 
 	/**

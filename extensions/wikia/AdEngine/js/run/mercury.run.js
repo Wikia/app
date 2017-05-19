@@ -7,7 +7,6 @@ require([
 	'ext.wikia.adEngine.lookup.openXBidder',
 	'ext.wikia.adEngine.lookup.prebid',
 	'ext.wikia.adEngine.lookup.rubicon.rubiconFastlane',
-	'ext.wikia.adEngine.lookup.rubicon.rubiconVulcan',
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.mobile.mercuryListener',
@@ -23,7 +22,6 @@ require([
 	oxBidder,
 	prebid,
 	rubiconFastlane,
-	rubiconVulcan,
 	customAdsLoader,
 	messageListener,
 	mercuryListener,
@@ -58,10 +56,6 @@ require([
 
 		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
 			prebid.call();
-		}
-
-		if (geo.isProperGeo(instantGlobals.wgAdDriverRubiconVulcanCountries)) {
-			rubiconVulcan.call();
 		}
 
 		adInfoTracker.run();

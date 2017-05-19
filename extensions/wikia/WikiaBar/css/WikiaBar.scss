@@ -8,7 +8,6 @@
 @import "skins/shared/mixins/transform";
 
 $animationSpeed: 200ms;
-$wikia-bar-wrapper-height: 25px;
 
 #WikiaNotifications {
 	z-index: $zTop;
@@ -25,7 +24,7 @@ $wikia-bar-wrapper-height: 25px;
 
 .WikiaBarWrapper {
 	bottom: 0;
-	height: $wikia-bar-wrapper-height;
+	height: $wikia-bar-height;
 	padding: 0;
 	position: fixed;
 	width: 100%;
