@@ -40,8 +40,8 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 				}
 			},
 			log: noop,
-			priceGranularityHelper: {
-				transformPriceFromCpm: function () {
+			bidHelper: {
+				transformPriceFromBid: function () {
 					return '1.20';
 				}
 			},
@@ -61,7 +61,7 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			mocks.adContext,
 			mocks.adLogicPageParams,
 			mocks.adTracker,
-			mocks.priceGranularityHelper,
+			mocks.bidHelper,
 			mocks.slotTargeting,
 			mocks.browserDetect,
 			mocks.geo,
