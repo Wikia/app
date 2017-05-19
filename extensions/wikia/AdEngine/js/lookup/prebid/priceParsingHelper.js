@@ -3,8 +3,9 @@ define('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', [
 	'ext.wikia.adEngine.utils.sampler',
 	'wikia.geo',
 	'wikia.instantGlobals',
-	'wikia.log'
-], function (sampler, geo, instantGlobals, log) {
+	'wikia.log',
+	'wikia.window'
+], function (sampler, geo, instantGlobals, log, win) {
 	'use strict';
 
 	/**
@@ -20,6 +21,7 @@ define('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', [
 			price: 0
 		},
 		invalidResult = {
+			moatTracking: 1,
 			position: defaults.position,
 			price: defaults.price,
 			valid: false
@@ -76,6 +78,10 @@ define('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', [
 		return position;
 	}
 
+	function extractMoatTrackingSampling(input) {
+		return input.indexOf('+100%') !== -1 ? 100 : 1;
+	}
+
 	/**
 	 * For given input, if contains string in form like:
 	 * ve6749ic
@@ -97,6 +103,7 @@ define('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', [
 			price = extractPriceFrom(regexpResult);
 
 			result = {
+				moatTracking: extractMoatTrackingSampling(input),
 				position: extractPositionFrom(regexpResult),
 				price: price,
 				valid: Boolean(price)

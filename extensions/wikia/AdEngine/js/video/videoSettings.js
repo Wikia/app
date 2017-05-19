@@ -1,9 +1,13 @@
 /*global define*/
 define('ext.wikia.adEngine.video.videoSettings', [
 	'ext.wikia.adEngine.slot.resolvedState',
+	'ext.wikia.adEngine.utils.sampler',
+	'wikia.geo',
 	'wikia.window'
-], function (resolvedState, win) {
+], function (resolvedState, sampler, geo, win) {
 	'use strict';
+
+	var moatTrackingCountries = [ 'AU', 'CA', 'DE', 'UK', 'US' ];
 
 	function create(params) {
 		var state = {
@@ -20,7 +24,7 @@ define('ext.wikia.adEngine.video.videoSettings', [
 			state.resolvedState = resolvedState.isResolvedState();
 			state.autoPlay = isAutoPlay(params);
 			state.splitLayout = Boolean(params.splitLayoutVideoPosition);
-			state.moatTracking = Boolean(params.moatTracking);
+			state.moatTracking = isMoatTrackingEnabled(params);
 			state.withUiControls = Boolean(params.hasUiControls);
 		}
 
@@ -28,6 +32,26 @@ define('ext.wikia.adEngine.video.videoSettings', [
 			var defaultStateAutoPlay = params.autoPlay && !state.resolvedState,
 				resolvedStateAutoPlay = params.resolvedStateAutoPlay && state.resolvedState;
 			return Boolean(defaultStateAutoPlay || resolvedStateAutoPlay);
+		}
+
+		function isMoatTrackingEnabled(params) {
+			var sampling;
+
+			if (typeof params.moatTracking === 'boolean') {
+				return params.moatTracking;
+			}
+
+			if ((params.bid && params.bid.moatTracking === 100) || params.moatTracking === 100) {
+				return true;
+			}
+
+			sampling = params.moatTracking || 0;
+			if (sampling > 0) {
+				return sampler.sample('moatVideoTracking',  sampling, 100) &&
+					geo.isProperGeo(moatTrackingCountries);
+			}
+
+			return false;
 		}
 
 		return {
