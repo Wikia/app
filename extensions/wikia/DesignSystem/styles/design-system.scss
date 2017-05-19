@@ -68,6 +68,10 @@ $global-navigation-z-index: 5000101;
 	}
 
 	&__search-suggestions {
+		.wds-list {
+			display: none;
+		}
+
 		strong {
 			font-weight: bold;
 		}
