@@ -33,13 +33,13 @@ prepare:
 #
 
 # runs unit tests
-phpunit: prepare
+phpunit:
 	${CMD_PHPUNIT} \
 		--log-junit=${LOGS_PATH}/phpunit-unit.xml \
 		--exclude-group Infrastructure,Integration,Broken,Stub,Monitoring,Hack,ExternalIntegration,ContractualResponsibilitiesValidation
 
 # runs integration tests only
-phpunit-infrastructure: prepare
+phpunit-infrastructure:
 	${CMD_PHPUNIT} \
 		--log-junit=${LOGS_PATH}/phpunit-infrastructure.xml \
 		--group Infrastructure,Integration
