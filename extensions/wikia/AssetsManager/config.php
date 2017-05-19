@@ -2204,6 +2204,7 @@ $config['design_system_js'] = [
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemAuthenticationMenu.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationSearch.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationSearchSuggestions.js',
+		'//extensions/wikia/DesignSystem/ds.built.js',
 	],
 ];
 
