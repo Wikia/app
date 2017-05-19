@@ -103,14 +103,6 @@ $messages['zh-hant'] = [
 	'emailext-categoryadd-see-all-pages' => '查看分類 [$1 $2] 中的所有頁面。',
 ];
 
-$messages['zh-tw'] = [
-	'emailext-categoryadd-subject' => '{{SITENAME}}上的分類$1中添加了新的頁面！',
-	'emailext-categoryadd-details' => '您在{{SITENAME}}上關注的一個類別中添加了一個新的頁面。',
-	'emailext-categoryadd-footer-1' => '查看[$1 $2]類的所有頁面。',
-	'emailext-categoryadd-see-article' => '參閲文章',
-	'emailext-categoryadd-see-all-pages' => '查看分類 [$1 $2] 中的所有頁面。',
-];
-
 $messages['ko'] = [
 	'emailext-categoryadd-details' => '{{SITENAME}}에서 귀하가 주시하고 있는 분류에 문서가 추가되었습니다.',
 	'emailext-categoryadd-see-all-pages' => '[$1 $2] 분류에 속한 모든 문서 보기',
