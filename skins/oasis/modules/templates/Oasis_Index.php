@@ -70,7 +70,6 @@
 <?= $amazonMatch ?>
 <?= $openXBidder ?>
 <?= $prebid ?>
-<?= $rubiconVulcan ?>
 <?= $krux ?>
 <?= $netzathleten ?>
 <?= $dynamicYield ?>
