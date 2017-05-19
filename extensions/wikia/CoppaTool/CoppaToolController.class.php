@@ -139,7 +139,7 @@ class CoppaToolController extends WikiaController {
 		}
 
 		$ipAddr = IP::sanitizeIP( $ipAddr );
-		$newIpAddr = '0.0.0.0';
+		$newIpAddr = '::';
 
 		$wikiIDs = RenameUserHelper::lookupIPActivity( $ipAddr );
 
