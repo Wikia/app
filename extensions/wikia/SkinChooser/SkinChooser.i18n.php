@@ -161,12 +161,6 @@ $messages['pt'] = [
 	'site-layout' => 'Composições do Site',
 ];
 
-$messages['pt-br'] = [
-	'skinchooser-desc' => 'Permite que os utilizadores escolham temas nas suas preferências',
-	'new-look' => 'Wikia',
-	'site-layout' => 'Composições do Site',
-];
-
 $messages['roa-tara'] = [
 	'skinchooser-desc' => 'Permette a l\'utinde de scacchià le teme jndr\'à sezione Me piace accussì',
 	'new-look' => 'Uicchia',
