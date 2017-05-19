@@ -24445,7 +24445,6 @@ $messages['no'] = [
 	'moredotdotdot' => 'Meir …',
 	'mypage' => 'Sida mi',
 	'mytalk' => 'Diskusjonssida mi',
-	'mainpage' => 'Hovudside',
 	'mainpage-description' => 'Hovudside',
 	'missing-article' => 'Databasen burde ha funne sida «$1» $2, men det gjorde han ikkje.
 
