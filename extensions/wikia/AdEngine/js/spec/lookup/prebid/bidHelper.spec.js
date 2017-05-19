@@ -2,18 +2,18 @@
 describe('ext.wikia.adEngine.lookup.prebid.bidHelper', function () {
 	'use strict';
 
-	function getModule() {
-		return modules['ext.wikia.adEngine.lookup.prebid.bidHelper'](
-			mocks.bidHelper
-		);
-	}
-
 	var mocks = {
 		bidHelper: {
 			transformPriceFromCpm: function() {}
 		}
 	};
 
+
+	function getModule() {
+		return modules['ext.wikia.adEngine.lookup.prebid.bidHelper'](
+			mocks.bidHelper
+		);
+	}
 	it('transformPriceFromBid calls priceGranularityHelper with maxCpm: 20 by default', function () {
 		var module = getModule();
 
