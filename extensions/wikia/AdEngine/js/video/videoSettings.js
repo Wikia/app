@@ -35,17 +35,16 @@ define('ext.wikia.adEngine.video.videoSettings', [
 		}
 
 		function isMoatTrackingEnabled(params) {
-			var sampling;
+			var sampling = params.moatTracking || 0;
 
 			if (typeof params.moatTracking === 'boolean') {
 				return params.moatTracking;
 			}
 
-			if ((params.bid && params.bid.moatTracking === 100) || params.moatTracking === 100) {
+			if ((params.bid && params.bid.moatTracking === 100) || sampling === 100) {
 				return true;
 			}
 
-			sampling = params.moatTracking || 0;
 			if (sampling > 0) {
 				return sampler.sample('moatVideoTracking',  sampling, 100) &&
 					geo.isProperGeo(moatTrackingCountries);
