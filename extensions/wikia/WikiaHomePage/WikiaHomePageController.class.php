@@ -21,6 +21,8 @@ class WikiaHomePageController extends WikiaController {
 	static $seoSamplesNo = 17;
 	static $seoMemcKeyVer = '1.35';
 
+	const WAM_SCORE_ROUND_PRECISION = 2;
+
 	//images sizes
 	const REMIX_IMG_SMALL_WIDTH = 155;
 	const REMIX_IMG_SMALL_HEIGHT = 100;
@@ -666,7 +668,7 @@ class WikiaHomePageController extends WikiaController {
 			$wamModel = new WAMPageModel();
 			$this->wamUrl = $wamModel->getWAMMainPageUrl();
 
-			$this->wikiWamScore = $this->helper->getWamScore($wikiId);
+			$this->wikiWamScore = $this->getWamScore($wikiId);
 		}
 
 		$this->imagesSlider = $this->sendRequest('WikiaMediaCarouselController', 'renderSlider', array('data' => $images));
@@ -684,6 +686,18 @@ class WikiaHomePageController extends WikiaController {
 
 		$this->wordmark = $wordmarkUrl;
 
+	}
+
+	public function getWamScore($wikiId) {
+		$wamScore = null;
+
+		$wamData = $this->app->sendRequest('WAMApi', 'getWAMIndex', ['wiki_id' => $wikiId])->getData();
+
+		if (!empty($wamData['wam_index'][$wikiId]['wam'])) {
+			$wamScore = round($wamData['wam_index'][$wikiId]['wam'], self::WAM_SCORE_ROUND_PRECISION);
+		}
+
+		return $wamScore;
 	}
 
 	public static function onGetHTMLAfterBody($skin, &$html) {
