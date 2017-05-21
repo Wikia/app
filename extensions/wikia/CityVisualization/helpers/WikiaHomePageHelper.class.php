@@ -58,24 +58,6 @@ class WikiaHomePageHelper extends WikiaModel {
 		return $this->getVarFromWikiFactory($this->getCorpWikiIdByLang($lang), self::VIDEO_GAMES_SLOTS_VAR_NAME);
 	}
 
-	public function getNumberOfSlotsForType($wikiId, $slotTypeName) {
-		switch ($slotTypeName) {
-			case 'entertainment':
-				$slots = $this->getNumberOfEntertainmentSlots($wikiId);
-				break;
-			case 'video games':
-				$slots = $this->getNumberOfVideoGamesSlots($wikiId);
-				break;
-			case 'lifestyle':
-				$slots = $this->getNumberOfLifestyleSlots($wikiId);
-				break;
-			default:
-				$slots = 0;
-				break;
-		}
-
-		return $slots;
-	}
 
 	/**
 	 * @param string $lang corporate page language
