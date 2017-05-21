@@ -84,10 +84,6 @@ class WikiaHomePageHelper extends WikiaModel {
 		return $value;
 	}
 
-	public function setWikiFactoryVar($wikiId, $wfVar, $wfVarValue) {
-		return WikiFactory::setVarByName($wfVar, $wikiId, $wfVarValue, wfMsg('wikia-hone-page-special-wikis-in-slots-change-reason'));
-	}
-
 	/**
 	 * Get information about hubs to display on wikia homepage in hubs section
 	 *
@@ -135,85 +131,6 @@ class WikiaHomePageHelper extends WikiaModel {
 			$hubSlotsV2['hub_slot'][] = $slot['hub_slot'];
 		}
 		return $hubSlotsV2;
-	}
-
-	/**
-	 * get total number of pages across Wikia
-	 * @return integer totalPages
-	 */
-	public function getTotalPages() {
-		wfProfileIn(__METHOD__);
-
-		$totalPages = 0;
-		if (!empty($this->wg->StatsDBEnabled)) {
-			$db = wfGetDB(DB_SLAVE, array(), $this->wg->StatsDB);
-
-			$row = $db->selectRow(
-				array('wikia_monthly_stats'),
-				array('sum(articles) cnt'),
-				array("stats_date = date_format(curdate(),'%Y%m')"),
-				__METHOD__
-			);
-
-			if ($row) {
-				$totalPages = $row->cnt;
-			}
-		}
-
-		wfProfileOut(__METHOD__);
-
-		return $totalPages;
-	}
-
-	/**
-	 * get wiki stats ( pages, images, videos, users )
-	 * @param integer $wikiId
-	 * @return array wikiStats
-	 */
-	public function getWikiStats($wikiId) {
-		$wikiStats = array();
-
-		if (!empty($wikiId)) {
-			$wikiService = new WikiService();
-
-			try {
-				//this try-catch block is here because of devbox environments
-				//where we don't have all wikis imported
-				$sitestats = $wikiService->getSiteStats($wikiId);
-				$videos = $wikiService->getTotalVideos($wikiId);
-			} catch (Exception $e) {
-				$sitestats = array(
-					'articles' => 0,
-					'pages' => 0,
-					'images' => 0,
-					'users' => 0,
-				);
-				$videos = 0;
-			}
-
-			$wikiStats = array(
-				'articles' => intval($sitestats['articles']),
-				'pages' => intval($sitestats['pages']),
-				'images' => intval($sitestats['images']),
-				'videos' => $videos,
-				'users' => intval($sitestats['users']),
-			);
-		}
-
-		return $wikiStats;
-	}
-
-	/**
-	 * Get main vertical names
-	 *
-	 * @return array
-	 */
-	public function getWikiVerticals( $lang = 'en' ) {
-		return array(
-			WikiFactoryHub::CATEGORY_ID_GAMING => wfMessage('hub-Gaming')->inLanguage( $lang )->text(),
-			WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => wfMessage('hub-Entertainment')->inLanguage( $lang )->text(),
-			WikiFactoryHub::CATEGORY_ID_LIFESTYLE => wfMessage('hub-Lifestyle')->inLanguage( $lang )->text()
-		);
 	}
 
 	/**
@@ -371,12 +288,6 @@ class WikiaHomePageHelper extends WikiaModel {
 		wfProfileOut(__METHOD__);
 
 		return $wikiInfo;
-	}
-
-	public function isWikiBlocked($wikiId, $langCode) {
-		$visualization = $this->getVisualization();
-		$flags = $this->getFlag($wikiId, $langCode);
-		return $visualization->isBlockedWiki($flags);
 	}
 
 	public function getImageDataForSlider($wikiId, $imageName) {
