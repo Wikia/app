@@ -46,27 +46,6 @@ class WikiaHomePageHelper extends WikiaModel {
 	protected $visualizationModel = null;
 	protected $collectionsModel;
 
-	public function getNumberOfEntertainmentSlots($lang) {
-		return $this->getVarFromWikiFactory($this->getCorpWikiIdByLang($lang), self::ENTERTAINMENT_SLOTS_VAR_NAME);
-	}
-
-	public function getNumberOfLifestyleSlots($lang) {
-		return $this->getVarFromWikiFactory($this->getCorpWikiIdByLang($lang), self::LIFESTYLE_SLOTS_VAR_NAME);
-	}
-
-	public function getNumberOfVideoGamesSlots($lang) {
-		return $this->getVarFromWikiFactory($this->getCorpWikiIdByLang($lang), self::VIDEO_GAMES_SLOTS_VAR_NAME);
-	}
-
-
-	/**
-	 * @param string $lang corporate page language
-	 * @return int
-	 */
-	protected function getCorpWikiIdByLang($lang) {
-		return $this->getVisualization()->getTargetWikiId($lang);
-	}
-
 	/**
 	 * @return CityVisualization
 	 */
