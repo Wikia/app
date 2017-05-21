@@ -303,16 +303,6 @@ class WikiaHomePageHelper extends WikiaModel {
 		);
 	}
 
-	public function getWikiInfoForSpecialPromote($wikiId, $langCode) {
-		wfProfileIn(__METHOD__);
-
-		$dataGetter = new WikiDataGetterForSpecialPromote();
-		$wikiInfo = $this->getWikiInfo($wikiId, $langCode, $dataGetter);
-
-		wfProfileOut(__METHOD__);
-		return $wikiInfo;
-	}
-
 	public function getWikiInfoForVisualization($wikiId, $langCode) {
 		wfProfileIn(__METHOD__);
 
@@ -757,10 +747,6 @@ class WikiaHomePageHelper extends WikiaModel {
 		return false;
 	}
 
-	public function getVisualizationWikisData() {
-		return $this->getVisualization()->getVisualizationWikisData();
-	}
-
 	/**
 	 * @param Array $sites lists of wikis from WikiFactory::getListOfWikisWithVar()
 	 * @return array
@@ -780,20 +766,6 @@ class WikiaHomePageHelper extends WikiaModel {
 
 		return $results;
 	}
-
-	public function getWikisCountForStaffTool($options) {
-		return $this->getVisualization()->getWikisCountForStaffTool($options);
-	}
-
-	public function getWikisForStaffTool($options) {
-		$wikiList = $this->getVisualization()->getWikisForStaffTool($options);
-
-		foreach ($wikiList as &$wiki) {
-			$wiki->collections = $this->getCollectionsModel()->getCollectionsByCityId($wiki->city_id);
-		}
-		return $wikiList;
-	}
-
 
 	/**
 	 * @return string
