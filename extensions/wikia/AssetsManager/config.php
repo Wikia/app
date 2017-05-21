@@ -2044,16 +2044,6 @@ $config['LyricsFindTracking'] = [
 	],
 ];
 
-/* ManageWikiaHome */
-$config['manage_wikia_home_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/SpecialManageWikiaHome/js/ManageWikiaHome.js',
-		'//extensions/wikia/SpecialManageWikiaHome/js/CollectionsSetup.js',
-		'//extensions/wikia/SpecialManageWikiaHome/js/CollectionsNavigation.js',
-	],
-];
-
 /* UI repo JS API */
 $config['ui_repo_api_js'] = [
 	'type' => AssetsManager::TYPE_JS,
