@@ -14,9 +14,6 @@ use \Wikia\Logger\WikiaLogger;
 
 class WikiaHomePageHelper extends WikiaModel {
 
-	const VIDEO_GAMES_SLOTS_VAR_NAME = 'wgWikiaHomePageVideoGamesSlots';
-	const ENTERTAINMENT_SLOTS_VAR_NAME = 'wgWikiaHomePageEntertainmentSlots';
-	const LIFESTYLE_SLOTS_VAR_NAME = 'wgWikiaHomePageLifestyleSlots';
 	const SLOTS_IN_TOTAL = 17;
 
 	const SLOTS_BIG = 2;

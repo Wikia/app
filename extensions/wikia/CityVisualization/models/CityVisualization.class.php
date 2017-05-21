@@ -30,9 +30,9 @@ class CityVisualization extends WikiaModel {
 	);
 
 	protected $verticalSlotsMap = array(
-		WikiFactoryHub::CATEGORY_ID_LIFESTYLE => WikiaHomePageHelper::LIFESTYLE_SLOTS_VAR_NAME,
-		WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => WikiaHomePageHelper::ENTERTAINMENT_SLOTS_VAR_NAME,
-		WikiFactoryHub::CATEGORY_ID_GAMING => WikiaHomePageHelper::VIDEO_GAMES_SLOTS_VAR_NAME
+		WikiFactoryHub::CATEGORY_ID_LIFESTYLE => 'wgWikiaHomePageLifestyleSlots',
+		WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => 'wgWikiaHomePageEntertainmentSlots',
+		WikiFactoryHub::CATEGORY_ID_GAMING => 'wgWikiaHomePageLifestyleSlots'
 	);
 
 	/**
