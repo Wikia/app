@@ -3,7 +3,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.adTracker',
-	'ext.wikia.adEngine.lookup.prebid.priceGranularityHelper',
+	'ext.wikia.adEngine.lookup.prebid.bidHelper',
 	'ext.wikia.adEngine.slot.slotTargeting',
 	'wikia.browserDetect',
 	'wikia.geo',
@@ -14,7 +14,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	adContext,
 	pageLevel,
 	adTracker,
-	granularity,
+	bidHelper,
 	slotTargeting,
 	browserDetect,
 	geo,
@@ -64,7 +64,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				params.bid.rubiconAdvertiserId || emptyValue.string,
 				params.bid.rubiconAdId || emptyValue.string
 			].join(':');
-			trackingData['price'] = granularity.transformPriceFromCpm(params.bid.cpm);
+			trackingData['price'] = bidHelper.transformPriceFromBid(params.bid);
 		}
 
 		if (params.bid && params.adProduct === 'veles') {
