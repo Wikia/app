@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpunit
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.1/phpunit.xsd"
+	backupGlobals="false"
+	backupStaticAttributes="false"
+	convertErrorsToExceptions="true"
+	convertNoticesToExceptions="true"
+	convertWarningsToExceptions="true"
+	beStrictAboutTestsThatDoNotTestAnything="true"
+	forceCoversAnnotation="true"
+	failOnWarning="true"
+	processIsolation="false"
+>
+	<testsuites>
+		<testsuite name="Insights">
+			<directory suffix=".php">./tests</directory>
+		</testsuite>
+	</testsuites>
+	<groups>
+		<exclude>
+			<group>Broken</group>
+			<group>Stub</group>
+		</exclude>
+	</groups>
+	<filter>
+		<whitelist addUncoveredFilesFromWhitelist="true">
+			<directory suffix=".php">.</directory>
+			<exclude>
+				<directory suffix=".php">./tests</directory>
+				<directory suffix=".php">./templates</directory>
+				<file>./InsightsV2.setup.php</file>
+				<file>./PagesWithoutInfobox.setup.php</file>
+				<file>./PopularPages.setup.php</file>
+				<file>./Insights.i18n.php</file>
+				<file>./Insights.alias.php</file>
+			</exclude>
+		</whitelist>
+	</filter>
+</phpunit>
