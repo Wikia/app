@@ -12,16 +12,10 @@ class MetadataSpecialController extends WikiaSpecialPageController {
 	 */
 	protected $currentTitle;
 
-	/**
-	 * @param \HubRssFeedModel $model
-	 */
 	public function setModel( $model ) {
 		$this->model = $model;
 	}
 
-	/**
-	 * @return \HubRssFeedModel
-	 */
 	public function getModel() {
 		return $this->model;
 	}
