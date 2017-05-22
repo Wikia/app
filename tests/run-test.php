@@ -1,30 +1,11 @@
 <?php
-
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-$wgNoDBUnits = false;
-
-$params = getopt('', ['exclude-group::', 'slow-list']);
-if (isset($params['exclude-group'])) {
-	foreach(explode(',', $params['exclude-group']) as $group) {
-		if (trim($group) == 'UsingDB') {
-			$wgNoDBUnits = true;
-		}
-	}
+/**
+ * This file is the main entry point for PHPUnit commands executed in continuous integration.
+ * Since many of our tests rely on monkey patching techniques provided by uopz,
+ * we must disable XDebug before firing up MediaWiki and running the actual tests.
+ */
+if ( extension_loaded( 'xdebug' ) ) {
+	xdebug_disable();
 }
 
-$wgAnnotateTestSpeed = (getenv('ANNOTATE_TEST_SPEED') === '1');
-
-require_once dirname(__FILE__) . '/bootstrap.php';
-
-if (extension_loaded('xdebug')) {
-    xdebug_disable();
-}
-
-if ( !isset( $params['slow-list'] ) ) {
-	\PHPUnit\TextUI\Command::main();
-} else {
-	include_once( 'SlowTestsFinder.php' );
-	SlowTestsFinder::main();
-}
+require_once __DIR__ . '/bootstrap.php';
