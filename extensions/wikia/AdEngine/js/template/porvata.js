@@ -8,10 +8,10 @@ define('ext.wikia.adEngine.template.porvata', [
 	'ext.wikia.adEngine.video.player.ui.videoInterface',
 	'ext.wikia.adEngine.video.videoSettings',
 	'ext.wikia.adEngine.wrappers.prebid',
+	'wikia.browserDetect',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
-	'wikia.browserDetect',
 	require.optional('ext.wikia.adEngine.lookup.prebid.adapters.veles'),
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
 ], function (
@@ -23,10 +23,10 @@ define('ext.wikia.adEngine.template.porvata', [
 	videoInterface,
 	videoSettings,
 	prebid,
+	browserDetect,
 	doc,
 	log,
 	win,
-	browserDetect,
 	veles,
 	mercuryListener
 ) {
@@ -157,18 +157,6 @@ define('ext.wikia.adEngine.template.porvata', [
 
 		log(['show', params], log.levels.debug, logGroup);
 
-		if (!isVideoAutoplaySupported()) {
-			log(['hop', params.adProduct, params.slotName, params], log.levels.info, logGroup);
-			slotRegistry.get(params.slotName).hop();
-
-			return null;
-		}
-
-		if (params.vpaidMode === imaVpaidModeInsecure) {
-			params.originalContainer = params.container;
-			params.container = getVideoContainer(params.slotName);
-		}
-
 		if (params.hbAdId) {
 			params.bid = prebid.getBidByAdId(params.hbAdId);
 			params.vastUrl = params.bid.vastUrl;
@@ -176,6 +164,21 @@ define('ext.wikia.adEngine.template.porvata', [
 
 		if (params.bid && params.adProduct === 'veles') {
 			loadVeles(params);
+		}
+
+		if (!isVideoAutoplaySupported()) {
+			log(['hop', params.adProduct, params.slotName, params], log.levels.info, logGroup);
+			slotRegistry.get(params.slotName).hop({
+				adType: 'empty',
+				source: 'porvata'
+			});
+
+			return null;
+		}
+
+		if (params.vpaidMode === imaVpaidModeInsecure) {
+			params.originalContainer = params.container;
+			params.container = getVideoContainer(params.slotName);
 		}
 
 		if (params.isDynamic) {
