@@ -8,7 +8,8 @@
 error_reporting( E_ALL );
 ini_set( 'display_errors', 1 );
 
-$wgRunningUnitTests = true; // don't include DevBoxSettings when running unit tests
+// don't include DevBoxSettings when running unit tests
+$wgRunningUnitTests = true;
 $wgDevelEnvironment = true;
 $wgAnnotateTestSpeed = ( getenv( 'ANNOTATE_TEST_SPEED' ) === '1' );
 
