@@ -1,22 +1,24 @@
 <?php
-class ReverseParserTest extends WikiaBaseTest {
 
-	/* @var RTEReverseParser */
+class ReverseParserTest extends WikiaBaseTest {
+	/* @var RTEReverseParser $reverseParser */
 	private $reverseParser;
 
-	function setUp() {
-		$this->setupFile = __DIR__ . "/..//RTE_setup.php";
+	protected function setUp() {
+		$this->setupFile = __DIR__ . "/../RTE_setup.php";
 		parent::setUp();
 
 		$this->reverseParser = new RTEReverseParser();
 	}
 
 	/**
+	 * @covers RTEReverseParser::parse()
 	 * @dataProvider reverseParserDataProvider
-	 * @param $markup
-	 * @param $expectedWikitext
+	 *
+	 * @param string $markup
+	 * @param string $expectedWikitext
 	 */
-	function testReverseParser( $markup, $expectedWikitext ) {
+	public function testReverseParser( string $markup, string $expectedWikitext ) {
 		$this->assertEquals(
 			$expectedWikitext,
 			$this->reverseParser->parse( $markup ) );
