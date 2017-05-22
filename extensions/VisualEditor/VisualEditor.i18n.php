@@ -35771,3 +35771,4 @@ $messages['zh-hant'] = array(
 	'visualeditor-wikitext-warning-link' => 'mediawikiwiki:Special:MyLanguage/Help:Formatting',
 	'visualeditor-help-link' => 'mw:Special:MyLanguage/Help:VisualEditor/User guide',
 );
+

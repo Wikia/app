@@ -79,16 +79,16 @@ $messages['qqq'] = array(
 $messages['de'] = array(
 	'closemyaccount' => 'Benutzerkonto schließen',
 	'closemyaccount-desc' => 'Ermöglicht Benutzern, ihre Benutzerkonten zu schließen.',
-	'closemyaccount-intro-text' => 'Schade, dass {{GENDER:$2|du}} dein Benutzerkonto schließen möchtest. Fandom bietet jede Menge Wikis zu allen möglichen Themen und wir würden uns freuen, wenn du noch ein wenig bleibst und das richtige für dich findest. Falls du ein Problem in deiner Community hast, zögere nicht, einen der [[Spezial:Benutzer/sysop|Admins dort]] um Hilfe zu bitten.
+	'closemyaccount-intro-text' => 'Schade, dass {{GENDER:$2|du}} dein Benutzerkonto schließen möchtest. Fandom bietet jede Menge Wikis zu allen möglichen Themen und wir würden uns freuen, wenn du noch ein wenig bleibst und das Richtige für dich findest. Falls du ein Problem in deiner Community hast, zögere nicht, einen der [[Spezial:Benutzer/sysop|Admins dort]] um Hilfe zu bitten.
 
 Wenn du dich dazu entschlossen hast, dein Benutzerkonto definitiv zu schließen, beachte die folgenden Hinweise:
-* Fandom hat nicht die Möglichkeit, Benutzerkonten komplett zu entfernen, aber wir können sie deaktivieren. Das stellt sicher, dass das Konto geschlossen ist und nicht mehr benutzt werden kann.
+* Fandom kann Benutzerkonten nicht komplett zu entfernen, aber wir können sie deaktivieren. Das stellt sicher, dass das Konto geschlossen ist und nicht mehr benutzt werden kann.
 * Diese Entscheidung kann nach dem Ablauf von $1 {{PLURAL:$1|Tag|Tagen}} NICHT wieder rückgängig gemacht werden und du wirst ein neues Konto anlegen müssen, wenn du Fandom wieder beitreten möchtest.
 * Dieser Prozess entfernt keinen deiner Beiträge von Fandom, da diese Bearbeitungen der gesamten Community gehören.
 
 Falls du genauer wissen möchtest, was bei der Deaktivierung eines Benutzerkontos passiert, schau dir unsere [[w:c:de:Hilfe:Benutzerkonto_stilllegen|Hilfeseite zum Thema]] an. Wenn du dir sicher bist, dass du dein Benutzerkonto deaktivieren möchtest, klicke bitte auf den untenstehenden Knopf.
 
-Bitte beachte, dass du nach dem Abschicken $1 {{PLURAL:$1|Tag|Tage}} Zeit hast, um dein Benutzerkonto wieder zu aktivieren. Melde dich dazu an und folgen den Hinweisen. Nach dieser Übergangszeit wird dein Benutzerkonto dauerhaft geschlossen und kann nicht wiederhergestellt werden.',
+Bitte beachte, dass du nach dem Abschicken $1 {{PLURAL:$1|Tag|Tage}} Zeit hast, um dein Benutzerkonto wieder zu aktivieren. Melde dich dazu an und folge den Hinweisen. Nach dieser Übergangszeit wird dein Benutzerkonto dauerhaft geschlossen und kann nicht wiederhergestellt werden.',
 	'closemyaccount-unconfirmed-email' => 'Achtung: Du hast keine bestätigte E-Mail-Adresse mit diesem Benutzerkonto verbunden. Ohne eine bestätigte E-Mail-Adresse kannst du dein Konto in der Wartezeit nicht wieder aktivieren. Bitte überlege dir, eine E-Mail-Adresse in deinen [[Special:Preferences|Benutzereinstellungen]] anzugeben und zu bestätigen, bevor du fortfährst.',
 	'closemyaccount-logged-in-as' => 'Du bist angemeldet als {{GENDER:$1|$1}}. [[Special:UserLogout|Das bist du nicht?]]',
 	'closemyaccount-current-email' => '{{GENDER:$2|Deine}} E-Mail-Adresse lautet $1. [[Special:Preferences|Möchtest du sie ändern?]]',

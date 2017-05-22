@@ -924,3 +924,4 @@ $messages['zh-hant'] = array(
 	'wikiamobile-wikiasearch2-count-of-results' => '$3{{PLURAL:$3|項結果|項結果}}中的$1- $2',
 	'wikiasearch2-video-results' => '關於「$1」的影片',
 );
+

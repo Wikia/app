@@ -4287,8 +4287,8 @@ $messages['yi'] = array(
 );
 
 $messages['zh-hans'] = array(
-	'forum-desc' => 'Wikia的 特殊:论坛 扩展',
-	'forum-disabled-desc' => 'Wikia的 特殊:论坛 扩展；已禁用',
+	'forum-desc' => 'Wikia的Special:Forum extension',
+	'forum-disabled-desc' => 'Wikia的Special:Forum extension已禁用',
 	'forum-forum-title' => '论坛',
 	'forum-active-threads' => '$1{{PLURAL:$1|条活跃讨论|条活跃讨论}}',
 	'forum-active-threads-on-topic' => "$1{{PLURAL:$1|条活跃讨论|条活跃讨论}}有关：'''[[$2]]'''",
@@ -4454,11 +4454,11 @@ ___________________________________________<br />
 	'forum-related-discussion-total-replies' => '$1条信息',
 	'forum-related-discussion-see-more' => '参阅更多讨论',
 	'forum-confirmation-board-deleted' => '“$1”已被删除。',
-	'forum-token-mismatch' => '呀！令牌不匹配',
+	'forum-token-mismatch' => '哎呀 ！标记不匹配',
 	'forum-specialpage-blurb' => '',
-	'right-forumadmin' => 'Has admin access to the forums',
-	'right-forumoldedit' => 'Can edit the old, archived forums',
-	'right-boardedit' => 'Edit Forum board information',
+	'right-forumadmin' => '对论坛有管理员访问权限',
+	'right-forumoldedit' => '可以编辑旧的存档的论坛内容',
+	'right-boardedit' => '编辑论坛面板信息',
 );
 
 $messages['zh-hant'] = array(
@@ -4603,9 +4603,9 @@ $messages['zh-hant'] = array(
 	'forum-related-discussion-see-more' => '請參考更多討論',
 	'forum-confirmation-board-deleted' => ' "$1" 已被删除。',
 	'forum-specialpage-blurb' => '',
-	'forum-token-mismatch' => "Oops! Token doesn't match",
-	'right-forumadmin' => 'Has admin access to the forums',
-	'right-forumoldedit' => 'Can edit the old, archived forums',
-	'right-boardedit' => 'Edit Forum board information',
+	'forum-token-mismatch' => '哎呀 ！標記不匹配',
+	'right-forumadmin' => '對論壇有管理員訪問權限',
+	'right-forumoldedit' => '可以編輯舊的存檔論壇',
+	'right-boardedit' => '編輯論壇的面板訊息。',
 );
 

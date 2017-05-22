@@ -1261,8 +1261,8 @@ $messages['ru'] = array(
 	'tog-editondblclick-v2' => 'Править страницы по двойному щелчку мыши',
 	'tog-hidefollowedpages-v2' => 'Скрыть список отслеживаемых мной страниц от всех',
 	'prefs-wikiemail' => 'Настройки {{SITENAME}}. Отправлять мне письма, когда…',
-	'tog-enotifdiscussions-follows-v2' => '...в обсуждениях, которые я отслеживаю, появляются новые ответы',
-	'tog-enotifdiscussions-votes-v2' => '...мои сообщения в обсуждениях получают оценки',
+	'tog-enotifdiscussions-follows-v2' => '…в обсуждениях, которые я отслеживаю, появляются новые ответы',
+	'tog-enotifdiscussions-votes-v2' => '…мои сообщения в обсуждениях получают оценки',
 );
 
 $messages['sco'] = array(

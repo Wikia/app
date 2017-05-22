@@ -2867,3 +2867,4 @@ $messages['zh-hant'] = array(
 	'wikia-visualeditor-anon-register' => '註冊',
 	'wikia-visualeditor-dialog-wikiamediainsert-register-button' => '註冊',
 );
+

@@ -3979,3 +3979,4 @@ $messages['zh-hant'] = array(
 	'right-multiwikifinder' => '查詢多個Wiki上的頁面',
 	'right-multiwikiedit' => '單次編輯多個Wiki上的同一頁面',
 );
+

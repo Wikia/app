@@ -3086,3 +3086,4 @@ ___________________________________________
 	'userlogin-email-confirmation-banner-success-message' => '您的電子信箱已成功認證！',
 	'userlogin-email-confirmation-banner-error' => '這個認證連結已經過期或是您登入了另一個Fandom帳號，請登入您需要認證的帳號或[[Special:ConfirmEmail|點擊這裡]]以收到新的連結。',
 );
+

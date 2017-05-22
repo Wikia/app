@@ -2345,7 +2345,7 @@ $messages['ko'] = array(
 	'oasis-badge-notification' => 'You just earned the "$2" badge $3',
 	'oasis-button-add-photo' => 'Add image',
 	'oasis-button-add-video' => 'Add video',
-	'oasis-button-contribute-tooltip' => 'Contribute',
+	'oasis-button-contribute-tooltip' => '기여하다',
 	'oasis-button-create-page' => 'Add page',
 	'oasis-button-random-page' => 'Random Page',
 	'oasis-button-random-wiki' => 'Random Wiki',
@@ -5007,3 +5007,4 @@ $messages['zh-hant'] = array(
 	'oasis-social-instagram' => 'Instagram',
 	'oasis-social-instagram-link' => 'https://www.instagram.com/getfandom/',
 );
+

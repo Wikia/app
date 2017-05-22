@@ -483,7 +483,7 @@ Gelieve community support te contacteren via [mailto:support@wikia-inc.com suppo
 
 $messages['pl'] = array(
 	'wam-html-title' => 'Monitor Aktywności Wiki (WAM)',
-	'wampage-header' => 'WAM',
+	'wampage-header' => 'Wam',
 	'wampage-header-wam' => 'Co to jest WAM?',
 	'wampage-header-faq' => 'FAQ',
 	'wampage-content' => 'Punktacja WAM aktualizowana jest codziennie, a 5000 najwyżej ocenionych wiki dodawanych jest do rankingu ogólnego i rankingów dla odrębnych kategorii. Ranking WAM uwzględnia aktualne wydarzenia i jest często aktualizowany, dzięki czemu odzwierciedla najnowsze trendy wśród wiki Fandomu.',
@@ -779,3 +779,4 @@ WAM上的資料最早可以追溯到2012年1月1日。
 	'wam-index-filter-language-default' => '所有',
 	'wam-index-filter-vertical-default' => '所有',
 );
+

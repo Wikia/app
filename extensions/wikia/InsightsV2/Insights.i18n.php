@@ -990,3 +990,4 @@ $messages['zh-hant'] = array(
 	'insights-error' => '出現錯誤。 請再試一次。',
 	'right-insights' => '允許查看到 [[Special:Insights|問題頁面列表]]特殊頁面和其子頁面，其中列出了貢獻者需要注意的文章、模板等。',
 );
+
