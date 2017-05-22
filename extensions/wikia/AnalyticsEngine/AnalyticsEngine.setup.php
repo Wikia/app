@@ -19,7 +19,6 @@ $wgAutoloadClasses['AnalyticsProviderAmazonMatch'] = __DIR__ . '/AnalyticsProvid
 $wgAutoloadClasses['AnalyticsProviderDynamicYield'] = __DIR__ . '/AnalyticsProviderDynamicYield.php';
 $wgAutoloadClasses['AnalyticsProviderGoogleFundingChoices'] = __DIR__ . '/AnalyticsProviderGoogleFundingChoices.php';
 $wgAutoloadClasses['AnalyticsProviderGoogleUA'] = __DIR__ . '/AnalyticsProviderGoogleUA.php';
-$wgAutoloadClasses['AnalyticsProviderIVW3'] = __DIR__ . '/AnalyticsProviderIVW3.php';
 $wgAutoloadClasses['AnalyticsProviderKrux'] = __DIR__ . '/AnalyticsProviderKrux.php';
 $wgAutoloadClasses['AnalyticsProviderNielsen'] = __DIR__ . '/AnalyticsProviderNielsen.php';
 $wgAutoloadClasses['AnalyticsProviderOpenXBidder'] = __DIR__ . '/AnalyticsProviderOpenXBidder.php';
@@ -34,7 +33,6 @@ $wgHooks['WikiaSkinTopScripts'][] = 'AnalyticsProviderGoogleUA::onWikiaSkinTopSc
 $wgHooks['WikiaSkinTopScripts'][] = 'AnalyticsProviderNielsen::onWikiaSkinTopScripts';
 $wgHooks['OasisSkinAssetGroupsBlocking'][] = 'AnalyticsProviderGoogleUA::onOasisSkinAssetGroupsBlocking';
 $wgHooks['InstantGlobalsGetVariables'][] = 'AnalyticsProviderGoogleFundingChoices::onInstantGlobalsGetVariables';
-$wgHooks['InstantGlobalsGetVariables'][] = 'AnalyticsProviderIVW3::onInstantGlobalsGetVariables';
 
 //register hook for WikiaMobile skin to get the asset as part of the head js package in one request
 $wgHooks['WikiaMobileAssetsPackages'][] = 'AnalyticsProviderGoogleUA::onWikiaMobileAssetsPackages';

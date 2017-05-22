@@ -73,7 +73,6 @@
 <?= $krux ?>
 <?= $netzathleten ?>
 <?= $dynamicYield ?>
-<?= $ivw3 ?>
 <?= $sourcePoint ?>
 <?= $gfc ?>
 
