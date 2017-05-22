@@ -135,9 +135,9 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			adaptersRegistry: {
 				getAdapters: noop
 			},
-			priceGranularityHelper: {
-				transformPriceFromCpm: function(cpm) {
-					return cpm;
+			bidHelper: {
+				transformPriceFromBid: function(bid) {
+					return bid.cpm;
 				}
 			}
 		},
@@ -149,7 +149,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 		return modules['ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker'](
 			mocks.adTracker,
 			mocks.adaptersRegistry,
-			mocks.priceGranularityHelper,
+			mocks.bidHelper,
 			mocks.timeBuckets,
 			mocks.prebid
 		);

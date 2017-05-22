@@ -8,7 +8,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', function () {
 	function getModule() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker'](
 			mocks.adaptersRegistry,
-			mocks.priceGranularityHelper,
+			mocks.bidHelper,
 			mocks.prebid,
 			mocks.log
 		);
@@ -31,9 +31,9 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', function () {
 				]
 			}
 		},
-		priceGranularityHelper: {
-			transformPriceFromCpm: function(cpm) {
-				return cpm;
+		bidHelper: {
+			transformPriceFromBid: function(bid) {
+				return bid.cpm;
 			}
 		},
 		prebid: {

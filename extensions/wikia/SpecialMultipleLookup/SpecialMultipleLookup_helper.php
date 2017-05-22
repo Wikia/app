@@ -68,7 +68,7 @@ class MultipleLookupCore {
 		global $wgMemc, $wgSpecialsDB;
 
 		$countActivity = 0;
-		$ip = ip2long( $this->mUsername );
+		$ip = inet_pton( $this->mUsername );
 		$memkey = __METHOD__ . ":all:" . $ip;
 		$cached = $wgMemc->get( $memkey );
 		if ( ( empty( $cached ) || MULTILOOKUP_NO_CACHE ) ) {
@@ -77,7 +77,7 @@ class MultipleLookupCore {
 			$oRow = $dbs->selectRow(
 				array( 'multilookup' ),
 				array( 'count(ml_city_id) as cnt' ),
-				array( 'ml_ip' => $ip ),
+				array( 'ml_ip_bin' => $ip ),
 				__METHOD__
 			);
 
@@ -100,7 +100,7 @@ class MultipleLookupCore {
 
 		$userActivity = array();
 
-		$ip = ip2long( $this->mUsername );
+		$ip = inet_pton( $this->mUsername );
 		$memkey = __METHOD__ . ":all:ip:" . $ip . ":limit:" . intval($this->mLimit) . ":offset:" . intval($this->mOffset) . ":order:" . $order;
 		$cached = $wgMemc->get( $memkey );
 		if ( ( !is_array ( $cached ) || MULTILOOKUP_NO_CACHE ) ) {
@@ -117,7 +117,7 @@ class MultipleLookupCore {
 			$oRes = $dbs->select(
 				array( 'multilookup' ),
 				array( 'ml_city_id', 'ml_ts' ),
-				array( 'ml_ip' => $ip ),
+				array( 'ml_ip_bin' => $ip ),
 				__METHOD__,
 				$qOptions
 			);

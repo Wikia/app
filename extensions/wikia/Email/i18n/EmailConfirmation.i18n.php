@@ -277,19 +277,3 @@ $messages['zh-hant'] = array(
 	'emailext-emailconfirmation-footer-list-4' => '成為你最喜歡的Fandom社區的成員',
 );
 
-$messages['zh-tw'] = array(
-	'emailext-emailconfirmation-subject' => '確認你的電子郵件，開始使用維基!',
-	'emailext-emailconfirmation-summary' => '快完成了！按下面的連接確認你的電子郵件地址，即可開始使用維基：',
-	'emailext-emailconfirmation-footer-1' => '你是不是想知道確認電子郵件的理由？確認電子郵件后你可以收到最新更新内容、粉絲張貼的訊息，以及更多其他信息。你還可以創建自己的維基頁面，並可獲得已認證會員的其它專屬權限。',
-	'emailext-emailconfirmation-footer-2' => '我們在社區等你喔！',
-	'emailext-emailconfirmation-reminder-subject' => '請趕快確認電子郵件、並確認你的 $1用戶名！',
-	'emailext-emailconfirmation-reminder-summary' => '你已經註冊好幾天了，可是好像還沒有確認你的維基帳戶。我們期待你使用Wikia！只需按下面的確認連接即可完成確認：',
-	'emailext-emailconfirmation-reminder-footer-1' => '如果你在23天内沒有完成確認，其他用戶可使用 $1的用戶名。趕快確認吧，此用戶名就歸你所有了！',
-	'emailext-emailconfirmation-changed-subject' => '確認更改了在Wikia上的電子郵件。',
-	'emailext-emailconfirmation-changed-summary' => '按下面的連接確認你更改了Wikia電子郵件地址，這樣你才能收到所有粉絲們的熱情參與和回應。',
-	'emailext-emailconfirmation-changed-footer-1' => '在你確認這個電子郵件地址之前，我們會繼續將郵件發送到你以前使用的電子郵件地址。',
-	'emailext-emailconfirmation-changed-footer-2' => '網上見！',
-	'emailext-emailconfirmation-community-team' => '維基社區團隊',
-	'emailext-emailconfirmation-button-text' => '立即確認',
-);
-

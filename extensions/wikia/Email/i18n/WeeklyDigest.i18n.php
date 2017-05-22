@@ -71,13 +71,3 @@ $messages['zh-hant'] = array(
 	'emailext-weeklydigest-summary' => '自您上次訪問之後，有Fandom用戶已對您關注的頁面進行了許多更改。趕快去看一下吧︰',
 );
 
-$messages['zh-hk'] = array(
-	'emailext-weeklydigest-subject' => '看看您喜歡的社區這週有什麼新內容',
-	'emailext-weeklydigest-summary' => '自您上次訪問之後，有Fandom用戶已對您關注的頁面進行了許多更改。趕快去看一下吧︰',
-);
-
-$messages['zh-tw'] = array(
-	'emailext-weeklydigest-subject' => '看看您喜歡的社區這週有什麼新內容',
-	'emailext-weeklydigest-summary' => '自您上次訪問之後，有Fandom用戶已對您關注的頁面進行了許多更改。趕快去看一下吧︰',
-);
-
