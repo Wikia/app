@@ -18,6 +18,7 @@ class LinkHelperTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @covers LinkHelper::forceLoginLink()
 	 * @dataProvider forceLoginLinkTestCases
 	 */
 	public function testForceLoginLink( $user, $editMode, $disableAnonEdits, $expectedLink ) {

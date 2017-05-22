@@ -8,6 +8,7 @@ class CommunityPageSpecialTopAdminsFormatterTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @covers CommunityPageSpecialTopAdminsFormatter::prepareData()
 	 * @dataProvider adminsDataFormatProvider
 	 */
 	public function testAdminsDataFormat( $param, $expected, $expectedTopAdminsCount, $message ) {
