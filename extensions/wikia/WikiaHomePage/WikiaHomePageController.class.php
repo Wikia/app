@@ -69,13 +69,13 @@ class WikiaHomePageController extends WikiaController {
 	protected $visualization;
 
 	public function __construct() {
+		Wikia\Logger\WikiaLogger::instance()->debug( 'SUS-1276', [ 'method' => __METHOD__ ] );
 		parent::__construct();
 		$this->helper = new WikiaHomePageHelper();
 		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL(
 			'extensions/wikia/WikiaHomePage/css/WikiaHomePage.scss'
 		));
 	}
-
 
 	public function index() {
 		//cache response on varnish for 1h to enable rolling of stats
@@ -520,6 +520,7 @@ class WikiaHomePageController extends WikiaController {
 	 * @return bool
 	 */
 	public static function onAfterOasisSettingsInitialized( &$oasisSettings ) {
+		Wikia\Logger\WikiaLogger::instance()->debug( 'SUS-1276', [ 'method' => __METHOD__ ] );
 		global $wgContLang, $wgCityId;
 
 		$settings = [];
@@ -687,6 +688,7 @@ class WikiaHomePageController extends WikiaController {
 	}
 
 	public static function onGetHTMLAfterBody($skin, &$html) {
+		Wikia\Logger\WikiaLogger::instance()->debug( 'SUS-1276', [ 'method' => __METHOD__ ] );
 		$app = F::app();
 
 		if ($app->checkSkin('wikiamobile') && $app->wg->EnableWikiaHomePageExt && WikiaPageType::isMainPage()) {
@@ -696,6 +698,7 @@ class WikiaHomePageController extends WikiaController {
 	}
 
 	public static function onOutputPageBeforeHTML(OutputPage &$out, &$text) {
+		Wikia\Logger\WikiaLogger::instance()->debug( 'SUS-1276', [ 'method' => __METHOD__ ] );
 		if (WikiaPageType::isMainPage() && !(F::app()->checkSkin('wikiamobile'))) {
 			$text = '';
 			$out->clearHTML();
@@ -705,6 +708,7 @@ class WikiaHomePageController extends WikiaController {
 	}
 
 	public static function onArticleCommentCheck($title) {
+		Wikia\Logger\WikiaLogger::instance()->debug( 'SUS-1276', [ 'method' => __METHOD__ ] );
 		if (WikiaPageType::isMainPage()) {
 			return false;
 		}
@@ -712,6 +716,7 @@ class WikiaHomePageController extends WikiaController {
 	}
 
 	public static function onWikiaMobileAssetsPackages(Array &$jsStaticPackages, Array &$jsExtensionPackages, Array &$scssPackages) {
+		Wikia\Logger\WikiaLogger::instance()->debug( 'SUS-1276', [ 'method' => __METHOD__ ] );
 		//this hook is fired only by the WikiaMobile skin, no need to check for what skin is being used
 		if (F::app()->wg->EnableWikiaHomePageExt && WikiaPageType::isMainPage()) {
 			$scssPackages[] = 'wikiahomepage_scss_wikiamobile';
@@ -721,6 +726,7 @@ class WikiaHomePageController extends WikiaController {
 	}
 
 	public static function onAfterGlobalHeader(&$menuNodes, $category, $messageName) {
+		Wikia\Logger\WikiaLogger::instance()->debug( 'SUS-1276', [ 'method' => __METHOD__ ] );
 		if (!empty($menuNodes) && isset($category->cat_id) && $category->cat_id == WikiFactoryHub::CATEGORY_ID_CORPORATE) {
 			foreach ($menuNodes as $key => $node) {
 				if (!empty($node['specialAttr'])) {
@@ -766,13 +772,14 @@ class WikiaHomePageController extends WikiaController {
 	}
 
 	public static function onBeforePageDisplay( OutputPage &$out, &$skin ) {
-
+		Wikia\Logger\WikiaLogger::instance()->debug( 'SUS-1276', [ 'method' => __METHOD__ ] );
 		OasisController::addBodyClass( 'wikia-contentlang-' . self::getContentLang() );
 
 		return true;
 	}
 
 	public static function onArticleFromTitle ( &$title, &$article ) {
+		Wikia\Logger\WikiaLogger::instance()->debug( 'SUS-1276', [ 'method' => __METHOD__ ] );
 		$redirectService = new RedirectService('hubsv2');
 		$redirectService->redirectIfURLExists();
 		return true;
@@ -787,6 +794,7 @@ class WikiaHomePageController extends WikiaController {
 	 * @returns string User language code
 	 */
 	private static function getContentLang() {
+		Wikia\Logger\WikiaLogger::instance()->debug( 'SUS-1276', [ 'method' => __METHOD__ ] );
 		global $wgLang;
 		$lang = $wgLang->getCode();
 
