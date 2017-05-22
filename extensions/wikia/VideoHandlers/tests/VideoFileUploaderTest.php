@@ -8,6 +8,7 @@
 class VideoFileUploaderTest extends WikiaBaseTest {
 
 	/**
+	 * @covers VideoFileUploader::getNormalizedDestinationTitle()
 	 * @dataProvider destinationTitleDataProvider
 	 */
 	public function testGetNormalizedDestinationTitle( $areIdentical, $title, $expectedTitle ) {
