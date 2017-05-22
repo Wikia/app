@@ -15,8 +15,10 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @param array $params An array as defined in the dataProvider
+	 * @covers ContentReviewApiController::submitPageForReview()
 	 * @dataProvider submitPageForReviewProvider
+	 *
+	 * @param array $params An array as defined in the dataProvider
 	 */
 	public function testSubmitPageForReview( $params ) {
 
@@ -37,11 +39,14 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 	/**
 	 * Tests if the updateReviewsStatus method performs all necessary checks to validate
 	 * a request and check a user's permissions to perform the action.
+	 *
+	 * @covers ContentReviewApiController::updateReviewsStatus()
+	 * @dataProvider updateReviewsStatusDataProvider
+	 *
 	 * @param bool $wasPosted
 	 * @param bool $matchEditToken
 	 * @param bool $isAllowed
 	 * @param string $exception A name of a class of an expected exception
-	 * @dataProvider updateReviewsStatusDataProvider
 	 */
 	public function testUpdateReviewsStatus( $wasPosted, $matchEditToken, $isAllowed, $exception ) {
 		/* @var \WikiaRequest $requestMock */
@@ -72,7 +77,10 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 
 	/**
 	 * A test for the API method that enable JS test mode.
+	 *
+	 * @covers ContentReviewApiController::enableTestMode()
 	 * @dataProvider enableTestModeDataProvider
+	 *
 	 * @param array $inputData
 	 *	[
 	 * 		'wasPosted' => bool,
@@ -118,7 +126,9 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @covers ContentReviewApiController::removeCompletedAndUpdateLogs()
 	 * @dataProvider removeCompletedAndUpdateLogsDataProvider
+	 *
 	 * @param array $inputData
 	 * @param string $expected
 	 * @param string $message

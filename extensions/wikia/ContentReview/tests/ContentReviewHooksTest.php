@@ -8,6 +8,8 @@ class ContentReviewHooksTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @covers \Wikia\ContentReview\Hooks::onUserLogoutComplete()
+	 *
 	 * In this test case the setSessionData() method should not be called
 	 * because there are no IDs of wikias stored in a session under the test mode key.
 	 */
@@ -30,6 +32,8 @@ class ContentReviewHooksTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @covers \Wikia\ContentReview\Hooks::onUserLogoutComplete()
+	 *
 	 * In this test case the setSessionData() method should be called once
 	 * because there are IDs of wikia under the test mode key.
 	 */
@@ -52,17 +56,16 @@ class ContentReviewHooksTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @covers \Wikia\ContentReview\Hooks::onSkinAfterBottomScripts()
 	 * @dataProvider addingImportJSScriptsProvider
 	 */
 	public function testAddingImportJSScripts( $jsEnabled, $userJsAllowed, $importScripts, $bottomScriptsResult ) {
 		$this->mockGlobalVariable( 'wgUseSiteJs', $jsEnabled );
 
-		$outputMock = $this->getMockBuilder( 'Output' )
-			->setMethods( [ 'isUserJsAllowed' ] )
-			->getMock();
+		$outputMock = $this->createMock( OutputPage::class );
 		$outputMock->expects( $this->any() )
 			->method( 'isUserJsAllowed' )
-			->will( $this->returnValue( $userJsAllowed ) );
+			->willReturn( $userJsAllowed );
 
 		$skinMock = $this->getMockBuilder( '\Skin' )
 			->disableOriginalConstructor()
@@ -71,15 +74,9 @@ class ContentReviewHooksTest extends WikiaBaseTest {
 			->method( 'getOutput' )
 			->will( $this->returnValue( $outputMock ) );
 
-
-		$importJSMock = $this->getMockBuilder( 'Wikia\ContentReview\ImportJS' )
-			->setMethods( [ 'getImportScripts' ] )
-			->getMock();
-		$importJSMock->expects( $this->any() )
-			->method( 'getImportScripts' )
-			->will( $this->returnValue( $importScripts ) );
-
-		$this->mockClass( 'Wikia\ContentReview\ImportJS', $importJSMock );
+		$cacheMock = new HashBagOStuff();
+		$cacheMock->set( \Wikia\ContentReview\ImportJS::getImportJSMemcKey(), $importScripts );
+		$this->mockGlobalVariable( 'wgMemc', $cacheMock );
 
 		$bottomScripts = '';
 

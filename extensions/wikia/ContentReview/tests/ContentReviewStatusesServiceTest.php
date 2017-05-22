@@ -8,11 +8,11 @@ class ContentReviewStatusesServiceTest extends WikiaBaseTest {
 	}
 
 	/**
-	 *
+	 * @covers \Wikia\ContentReview\ContentReviewStatusesService::getStatusKey()
 	 * @dataProvider getStatusKeyDataProvider
 	 *
 	 * @param $status
-	 * @param $statusKey
+	 * @param $expectedStatusKey
 	 */
 	public function testGetStatusKey( $status, $expectedStatusKey ) {
 		$contentReviewStatusesService = new Wikia\ContentReview\ContentReviewStatusesService();
@@ -36,7 +36,7 @@ class ContentReviewStatusesServiceTest extends WikiaBaseTest {
 	}
 
 	/**
-	 *
+	 * @covers \Wikia\ContentReview\ContentReviewStatusesService::prepareRevisionLinkParams()
 	 * @dataProvider prepareRevisionLinkParamsDataProvider
 	 *
 	 * @param $revisionId
@@ -59,7 +59,7 @@ class ContentReviewStatusesServiceTest extends WikiaBaseTest {
 	}
 
 	/**
-	 *
+	 * @covers \Wikia\ContentReview\ContentReviewStatusesService::getLiveRevision()
 	 * @dataProvider getLiveRevisionDataProvider
 	 *
 	 * @param $pageStatus
@@ -121,6 +121,7 @@ class ContentReviewStatusesServiceTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @covers \Wikia\ContentReview\ContentReviewStatusesService::preparePageStatuses()
 	 * @dataProvider preparePageStatusesDataProvider
 	 *
 	 * @param $jsPages

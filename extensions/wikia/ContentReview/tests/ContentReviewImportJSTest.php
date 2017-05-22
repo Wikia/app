@@ -7,10 +7,11 @@ class ContentReviewImportJSTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @covers \Wikia\ContentReview\ImportJS::prepareImports()
 	 * @dataProvider prepareImportsScriptDataProvider
 	 *
-	 * @param Array $scripts
-	 * @param Array $expectedScripts
+	 * @param string[] $scripts
+	 * @param string[] $expectedScripts
 	 */
 	public function testPrepareImportsScript( $scripts, $expectedScripts ) {
 		$imports = ( new Wikia\ContentReview\ImportJS() )->prepareImports( $scripts );
@@ -69,10 +70,11 @@ class ContentReviewImportJSTest extends WikiaBaseTest {
 
 
 	/**
+	 * @covers \Wikia\ContentReview\ImportJS::createInlineScript()
 	 * @dataProvider createInlineScriptDataProvider
 	 *
-	 * @param Array $scripts
-	 * @param String $expectedScript
+	 * @param string[] $scripts
+	 * @param string $expectedScript
 	 */
 	public function testCreateInlineScript( $scripts, $expectedScript ) {
 		$script = ( new Wikia\ContentReview\ImportJS() )->createInlineScript( $scripts );
