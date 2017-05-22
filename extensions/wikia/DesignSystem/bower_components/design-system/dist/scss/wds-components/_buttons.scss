@@ -18,14 +18,13 @@
 	}
 
 	$active-color: darken($wds-color-link, 20%);
-	$button-padding-horizontal: 18px;
 	$button-squished-padding-horizontal: 12px;
 	$line-height: 1.3em;
 
 	@include button-background-color($wds-color-link);
 
 	border-style: solid;
-	border-width: 1px;
+	border-width: $wds-button-border-width;
 	box-sizing: border-box;
 	color: $wds-color-white;
 	cursor: pointer;
@@ -124,7 +123,7 @@
 		&.wds-is-squished {
 			padding-left: $button-squished-padding-horizontal + $wds-icon-tiny-size + 6px;
 
-			.wds-icon {
+			.wds-icon:first-child {
 				height: $wds-icon-tiny-size;
 				left: $button-squished-padding-horizontal;
 				margin-top: -$wds-icon-tiny-size / 2;
@@ -132,7 +131,7 @@
 			}
 		}
 
-		.wds-icon {
+		.wds-icon:first-child {
 			height: $wds-icon-small-size;
 			left: $button-padding-horizontal;
 			margin-top: -$wds-icon-small-size / 2;
@@ -152,7 +151,6 @@
 	}
 
 	.wds-dropdown__toggle-chevron {
-		display: block;
 		margin: -1px 0;
 	}
 

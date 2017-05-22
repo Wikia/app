@@ -3,7 +3,7 @@
 	display: inline-flex;
 	justify-content: flex-start;
 
-	.wds-button {
+	> .wds-button {
 		//To achieve oneness of buttons, we overlap their border
 		height: auto;
 		margin-left: auto;
@@ -16,11 +16,26 @@
 
 		//For primary buttons add white border between buttons
 		&:not(.wds-is-secondary) {
-			&:not(:last-of-type) {
+			&:not(:last-child) {
 				border-right: 1px solid $wds-color-white;
 			}
 
-			&:not(:first-of-type) {
+			&:not(:first-child) {
+				border-left: 1px solid $wds-color-white;
+			}
+		}
+
+	}
+
+	> .wds-dropdown {
+		&:not(:last-child) {
+			.wds-button {
+				border-right: 1px solid $wds-color-white;
+			}
+		}
+
+		&:not(:first-child) {
+			.wds-button {
 				border-left: 1px solid $wds-color-white;
 			}
 		}

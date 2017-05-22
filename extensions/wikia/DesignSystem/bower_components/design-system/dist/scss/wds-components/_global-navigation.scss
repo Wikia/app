@@ -58,18 +58,6 @@
 		z-index: -1;
 	}
 
-	&__dropdown-link {
-		color: $wds-color-dark-blue-gray;
-		text-decoration: none;
-		transition: color $search-transition-duration;
-
-		&:active,
-		&:hover,
-		&.wds-is-active {
-			color: $wds-color-link;
-		}
-	}
-
 	&__content-bar {
 		display: flex;
 		height: $nav-height;
@@ -226,6 +214,21 @@
 		flex: 1 1 auto;
 		height: 28px;
 		transition: border-bottom-color $search-transition-duration;
+
+		// Strenghten selector to hide dropdown's arrow
+		&.wds-dropdown {
+			&::after,
+			&::before {
+				display: none;
+			}
+		}
+
+		// Override default dropdowns behaviour which open on hover
+		&:hover:not(.wds-is-active) {
+			.wds-dropdown__content {
+				display: none;
+			}
+		}
 	}
 
 	&__search-label {
@@ -322,8 +325,10 @@
 	}
 
 	&__search-suggestions {
+		left: 0;
 		right: 0;
 		top: calc(100% + 1px);
+		transform: none;
 	}
 
 	&__account-menu-caption {

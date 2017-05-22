@@ -19,10 +19,6 @@
 	padding: 0 $tab-padding-horizontal;
 	position: relative;
 
-	.wds-icon {
-		fill: $tab-default-color;
-	}
-
 	&-label {
 		align-items: center;
 		color: $tab-default-color;
@@ -62,19 +58,15 @@
 		pointer-events: none;
 	}
 
+	.wds-dropdown__content {
+		left: $tab-padding-horizontal - $button-padding-horizontal;
+		transform: none;
+	}
+
 	&.wds-is-active,
 	&:hover {
-		> .wds-dropdown,
-		> .wds-dropdown .wds-dropdown__content {
-			display: block;
-		}
-
 		.wds-tabs__tab-label {
 			color: $tab-hover-color;
-		}
-
-		.wds-icon {
-			fill: $tab-hover-color;
 		}
 
 		&.wds-is-current {
