@@ -1,6 +1,7 @@
 /*global define, require, setTimeout*/
 define('ext.wikia.adEngine.template.porvata', [
 	'ext.wikia.adEngine.domElementTweaker',
+	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.video.player.porvata',
 	'ext.wikia.adEngine.video.player.uiTemplate',
@@ -10,10 +11,12 @@ define('ext.wikia.adEngine.template.porvata', [
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
+	'wikia.browserDetect',
 	require.optional('ext.wikia.adEngine.lookup.prebid.adapters.veles'),
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
 ], function (
 	DOMElementTweaker,
+	slotRegistry,
 	slotTweaker,
 	porvata,
 	uiTemplate,
@@ -23,6 +26,7 @@ define('ext.wikia.adEngine.template.porvata', [
 	doc,
 	log,
 	win,
+	browserDetect,
 	veles,
 	mercuryListener
 ) {
@@ -130,6 +134,11 @@ define('ext.wikia.adEngine.template.porvata', [
 		}
 	}
 
+	function isVideoAutoplaySupported() {
+		return !browserDetect.isAndroid() ||
+			(browserDetect.getBrowser().indexOf('Chrome') !== -1 && browserDetect.getBrowserVersion() >= 54);
+	}
+
 	/**
 	 * @param {object} params
 	 * @param {object} params.container - DOM element where player should be placed
@@ -147,6 +156,13 @@ define('ext.wikia.adEngine.template.porvata', [
 			imaVpaidModeInsecure = 2;
 
 		log(['show', params], log.levels.debug, logGroup);
+
+		if (!isVideoAutoplaySupported()) {
+			log(['hop', params.adProduct, params.slotName, params], log.levels.info, logGroup);
+			slotRegistry.get(params.slotName).hop();
+
+			return null;
+		}
 
 		if (params.vpaidMode === imaVpaidModeInsecure) {
 			params.originalContainer = params.container;
