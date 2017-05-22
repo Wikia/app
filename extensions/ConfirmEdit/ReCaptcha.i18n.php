@@ -267,14 +267,14 @@ $messages['nl'] = array(
 );
 
 $messages['pl'] = array(
-	'recaptcha-edit' => 'Aby uchronić nas przed robotami, proszę wpisać dwa widoczne słowa w poniższym polu:',
-	'recaptcha-addurl' => 'Twoja edycja zawiera linki zewnętrzne. Aby uchronić nas przed robotami, proszę wpisać dwa widoczne słowa w poniższym polu:',
-	'recaptcha-badpass' => 'Aby uchronić nas przed złamaniem automatycznym haseł, proszę wpisać dwa widoczne słowa w poniższym polu:',
-	'recaptcha-createaccount' => 'Aby uchronić nas przed automatycznym stworzeniem użytkowników, proszę wpisać dwa widoczne słowa w poniższym polu:',
-	'recaptcha-createaccount-fail' => 'Odpowiedź na reCAPTCHA jest fałszywa lub brakująca.',
-	'recaptcha-create' => 'Aby uchronić nas przed tworzeniem stron przez robotów, proszę wpisać dwa widoczne słowa w poniższym polu:',
+	'recaptcha-edit' => 'Aby pomóc w ochronie przed zautomatyzowanym spamem, proszę przepisać poniższe słowa:',
+	'recaptcha-addurl' => 'Dodano nowe linki zewnętrzne. Ze względu na ochronę przed zautomatyzowanym spamem, proszę przepisać poniższe słowa:',
+	'recaptcha-badpass' => 'Aby pomóc w ochronie przed nadmiernym wpisywaniem hasła, proszę przepisać poniższe słowa:',
+	'recaptcha-createaccount' => 'Ze względu na ochronę przed automatycznym tworzeniem kont, proszę przepisać poniższe słowa:',
+	'recaptcha-createaccount-fail' => 'Brak lub błędna odpowiedź na reCAPTCHA.',
+	'recaptcha-create' => 'Ze względu na ochronę przed automatycznym tworzeniem stron, proszę przepisać poniższe słowa:',
 	'recaptcha-misconfigured' => 'Niepoprawna konfiguracja ReCaptcha',
-	'recaptcha-desc' => 'reCAPTCHA module for Confirm Edit',
+	'recaptcha-desc' => 'Moduł reCAPTCHA do potwierdzania edycji',
 );
 
 $messages['pms'] = array(

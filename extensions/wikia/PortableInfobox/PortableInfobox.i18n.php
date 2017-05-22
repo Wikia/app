@@ -16,7 +16,7 @@ $messages['en'] = array(
 	'portable-infobox-xml-parse-error-gt-required' => 'Tag definition is not properly terminated',
 	'portable-infobox-xml-parse-error-tag-name-mismatch' => 'Opening and ending tag mismatch',
 	'portable-infobox-xml-parse-error-tag-not-finished' => 'Premature end of tag',
-	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'Attribute "$1" is not supported in <infobox> tag'
+	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'Attribute "$1" is not supported in <infobox> tag',
 );
 
 $messages['qqq'] = array(
@@ -33,7 +33,7 @@ $messages['qqq'] = array(
 	'portable-infobox-xml-parse-error-gt-required' => 'XML Error: could not find end of tag definition (for example: <data><label </data>',
 	'portable-infobox-xml-parse-error-tag-name-mismatch' => 'XML Error: Opening and ending tag mismatch (for example: <data></label>)',
 	'portable-infobox-xml-parse-error-tag-not-finished' => 'XML Error: premature end of tag',
-	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'Unsupported attribute used inside <infobox> tag. $1 param contains attribute name.'
+	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'Unsupported attribute used inside <infobox> tag. $1 param contains attribute name.',
 );
 
 $messages['de'] = array(
@@ -76,7 +76,7 @@ $messages['fr'] = array(
 	'portable-infobox-desc' => "À l'aide d'un balisage de type XML facile à comprendre et simple, permet de créer des infoboxes portables et de les afficher sur n'importe quelle apparence/plateforme",
 	'portable-infobox-unimplemented-infobox-tag' => "Balise d'infobox non reconnue : <$1>",
 	'portable-infobox-xml-parse-error' => 'Code XML incorrect. Veuillez valider votre code.',
-	'portable-infobox-xml-parse-error-info' => "Un problème est survenu lors de l'analyse de l'infobox.",
+	'portable-infobox-xml-parse-error-info' => "Un problème est survenu lors de l'analyse de l’infobox.",
 	'portable-infobox-xml-parse-error-document-end' => 'Contenu supplémentaire à la fin du document',
 	'portable-infobox-xml-parse-error-undeclared-entity' => 'Entité non déclarée (par exemple : &nbsp;)',
 	'portable-infobox-xml-parse-error-attribute-not-started' => "Vous devez spécifier la valeur de l'attribut entre guillemets.",

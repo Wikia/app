@@ -141,10 +141,6 @@ $messages['pt'] = array(
 	'right-imageservingtest' => 'Permite o acesso a Especial:ImageServingTest',
 );
 
-$messages['pt-br'] = array(
-	'imageserving-desc' => 'Escolhe imagens de um conjunto especificado de páginas com base em requisitos visuais',
-);
-
 $messages['roa-tara'] = array(
 	'imageserving-desc' => "Scacchie le immaggine da 'na collezziona specifeche de pàggene ca se basabe sus a requisite visuale",
 );

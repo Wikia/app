@@ -658,14 +658,14 @@ $messages['de'] = array(
 	'cnw-next' => 'Weiter',
 	'cnw-back' => 'Zurück',
 	'cnw-title' => 'Neues Wiki Erstellen',
-	'cnw-name-wiki-headline' => 'Starte ein Wiki',
+	'cnw-name-wiki-headline' => 'Gib deinem Wiki einen Namen',
 	'cnw-name-wiki-creative' => 'Egal, ob es in deinem Wiki um ein brandaktuelles Thema aus dem Entertainment-Bereich oder um ein ganz privates Projekt geht, es braucht erst mal einen einzigartigen Namen:',
 	'cnw-name-wiki-label' => 'Gib deinem Wiki einen Namen',
 	'cnw-name-wiki-domain-label' => 'Gib deinem Wiki eine Adresse',
 	'cnw-name-wiki-submit-error' => 'Hoppla! Um weitermachen zu können, musst du oben beide Felder ausfüllen.',
 	'cnw-desc-headline' => 'Worum geht es in deinem Wiki?',
-	'cnw-desc-creative' => 'Eine tolle Beschreibung hilft anderen dabei, dein Wiki zu finden.',
-	'cnw-desc-placeholder' => 'Gib dir Mühe! Die Beschreibung wird auf der Hauptseite deines Wikis angezeigt.',
+	'cnw-desc-creative' => 'Wie würdest du dein Wiki beschreiben?',
+	'cnw-desc-placeholder' => 'Diese Beschreibung wird auf der Hauptseite deines Wikis angezeigt. Keine Sorge, du kannst sie später noch anpassen.',
 	'cnw-desc-select-vertical' => 'Wähle einen Hub:',
 	'cnw-desc-select-categories' => 'Wähle zusätzliche Kategorien aus',
 	'cnw-desc-select-one' => 'Wähle eine Kategorie aus',
@@ -864,14 +864,14 @@ $messages['es'] = array(
 	'cnw-next' => 'Siguiente',
 	'cnw-back' => 'Atrás',
 	'cnw-title' => 'Crear un nuevo wiki',
-	'cnw-name-wiki-headline' => 'Crear un wiki',
+	'cnw-name-wiki-headline' => 'Nombre de tu wiki',
 	'cnw-name-wiki-creative' => 'Ya sea una comunidad centrada en un fenómeno del entretenimiento mundial o un proyecto personal, esta necesita tener un buen nombre:',
 	'cnw-name-wiki-label' => 'Nombre de tu wiki',
 	'cnw-name-wiki-domain-label' => 'Dale a tu wiki una dirección',
 	'cnw-name-wiki-submit-error' => '¡Uy! Asegúrate de que los campos estén completados para continuar.',
 	'cnw-desc-headline' => '¿De qué trata tu wiki?',
-	'cnw-desc-creative' => 'Una buena descripción ayudará a que la gente encuentre tu wiki.',
-	'cnw-desc-placeholder' => '¡Hazlo bien! Este texto aparecerá en la portada de tu wiki.',
+	'cnw-desc-creative' => '¿Cómo describirías a tu wiki?',
+	'cnw-desc-placeholder' => 'Esta descripción aparecerá en la portada de tu wiki. No te preocupes, siempre puedes cambiarla más adelante.',
 	'cnw-desc-select-vertical' => 'Elige un hub:',
 	'cnw-desc-select-categories' => 'Selecciona algunas categorías adicionales si es necesario',
 	'cnw-desc-select-one' => 'Selecciona una',
@@ -1117,14 +1117,14 @@ $messages['fr'] = array(
 	'cnw-next' => 'Suite',
 	'cnw-back' => 'Retour',
 	'cnw-title' => 'Créer un nouveau wiki',
-	'cnw-name-wiki-headline' => 'Créer un wiki',
+	'cnw-name-wiki-headline' => 'Donner un nom à votre wiki',
 	'cnw-name-wiki-creative' => "Qu'il s'agisse d'une communauté axée sur un sujet de divertissement faisant sensation à travers le monde ou sur un projet très personnel, son nom doit être unique et attractif :",
 	'cnw-name-wiki-label' => 'Donnez un nom au wiki :',
 	'cnw-name-wiki-domain-label' => 'Donnez une adresse au wiki :',
 	'cnw-name-wiki-submit-error' => 'Oups, vous devez remplir les deux champs ci-dessus pour pouvoir continuer.',
 	'cnw-desc-headline' => 'De quoi parle votre wiki ?',
-	'cnw-desc-creative' => 'Une bonne description rendra votre wiki plus visible.',
-	'cnw-desc-placeholder' => 'Ce texte apparaîtra sur la page principale de votre wiki.',
+	'cnw-desc-creative' => 'Comment décririez-vous votre wiki ?',
+	'cnw-desc-placeholder' => "Ce texte apparaîtra sur la page d'accueil de votre wiki. Ne vous inquiétez pas, vous pourrez le modifier plus tard.",
 	'cnw-desc-select-vertical' => 'Choisissez un portail :',
 	'cnw-desc-select-categories' => 'Catégories supplémentaires',
 	'cnw-desc-select-one' => 'En choisir un',
@@ -1565,14 +1565,14 @@ $messages['it'] = array(
 	'cnw-next' => 'Avanti',
 	'cnw-back' => 'Indietro',
 	'cnw-title' => 'Crea una nuova wiki',
-	'cnw-name-wiki-headline' => 'Crea una wiki',
+	'cnw-name-wiki-headline' => 'Dai un nome alla tua wiki',
 	'cnw-name-wiki-creative' => "Che si tratti di una community incentrata sull'intrattenimento globale o un progetto molto personale, ha bisogno di un buon nome specifico:",
 	'cnw-name-wiki-label' => 'Dai un nome alla tua wiki',
 	'cnw-name-wiki-domain-label' => 'Dai un indirizzo alla tua wiki',
 	'cnw-name-wiki-submit-error' => 'Ops! Devi riempire entrambi i campi qui sopra per continuare.',
 	'cnw-desc-headline' => 'Di cosa tratta la tua wiki?',
-	'cnw-desc-creative' => "Aiuta le persone a trovare la tua wiki con un'eccellente descrizione.",
-	'cnw-desc-placeholder' => 'Scrivilo bene! Questo testo apparirà nella pagina principale della tua wiki.',
+	'cnw-desc-creative' => 'Come descriveresti la tua wiki?',
+	'cnw-desc-placeholder' => 'Questa descrizione apparirà sulla pagina principale della tua wiki. Non ti preoccupare, puoi sempre cambiarla in seguito.',
 	'cnw-desc-select-one' => 'Selezionane uno',
 	'cnw-desc-lang' => 'Lingua della tua wiki',
 	'cnw-desc-wiki-submit-error' => 'Scegli una categoria',
@@ -1664,8 +1664,8 @@ $messages['ja'] = array(
 	'cnw-name-wiki-domain-label' => 'このWikiのアドレスを指定してください（半角英数字のみ）',
 	'cnw-name-wiki-submit-error' => '次へ進むには、上の欄をどちらも入力する必要があります。',
 	'cnw-desc-headline' => 'これは何に関するWikiですか？',
-	'cnw-desc-creative' => 'このwikiが見つけやすくなるよう、わかりやすい紹介文を書いてみましょう。',
-	'cnw-desc-placeholder' => 'この内容はwikiのメインページに表示されます。',
+	'cnw-desc-creative' => 'このWikiが見つけやすくなるよう、わかりやすい紹介文を書いてみましょう。',
+	'cnw-desc-placeholder' => 'この内容はWikiのメインページに表示されます。後からいつでも変更可能です。',
 	'cnw-desc-select-one' => 'ひとつ選択',
 	'cnw-desc-all-ages' => '子供向けのコミュニティですか？',
 	'cnw-desc-lang' => 'このWikiの言語',
@@ -2457,14 +2457,14 @@ $messages['pl'] = array(
 	'cnw-next' => 'Dalej',
 	'cnw-back' => 'Wstecz',
 	'cnw-title' => 'Utwórz nową wiki',
-	'cnw-name-wiki-headline' => 'Utwórz wiki',
+	'cnw-name-wiki-headline' => 'Nazwa twojej wiki',
 	'cnw-name-wiki-creative' => 'Nieważne, czy twoja wiki dotyczy najnowszego hitu ze świata rozrywki, czy prywatnego projektu – potrzebuje dobrej, unikatowej nazwy:',
 	'cnw-name-wiki-label' => 'Nazwa twojej wiki',
 	'cnw-name-wiki-domain-label' => 'Nadaj swojej wiki adres',
 	'cnw-name-wiki-submit-error' => 'Ups! Musisz wypełnić oba pola powyżej, aby przejść dalej.',
 	'cnw-desc-headline' => 'O czym jest twoja wiki?',
-	'cnw-desc-creative' => 'Ułatw innym ludziom znalezienie twojej wiki dodając świetny opis.',
-	'cnw-desc-placeholder' => 'Postaraj się! Twój tekst pojawi się na stronie głównej twojej wiki.',
+	'cnw-desc-creative' => 'Jak {{GENDER:|opisałbyś|opisałabyś}} twoją wiki?',
+	'cnw-desc-placeholder' => 'Ten opis będzie widoczny na stronie głównej twojej wiki. Nie przejmuj się, możesz go zmienić w dowolnym momencie.',
 	'cnw-desc-select-vertical' => 'Wybierz Hub:',
 	'cnw-desc-select-categories' => 'Wybierz dodatkowe kategorie',
 	'cnw-desc-select-one' => 'Wybierz',
@@ -2653,15 +2653,15 @@ $messages['pt'] = array(
 	'cnw-back' => 'Anterior',
 	'cnw-next-create-wiki' => 'Criar uma wiki',
 	'cnw-title' => 'Crie uma nova wiki',
-	'cnw-name-wiki-headline' => 'Começar uma wiki',
+	'cnw-name-wiki-headline' => 'Nomeie sua wiki',
 	'cnw-name-wiki-creative' => 'Seja uma comunidade focada em entretenimento no mundo ou um projeto muito pessoal, sua wiki precisa de um nome bom e exclusivo:',
 	'cnw-name-wiki-label' => 'Nomeie sua wiki',
 	'cnw-name-wiki-domain-label' => 'Dê um endereço a sua wiki',
 	'cnw-name-wiki-language' => '',
 	'cnw-name-wiki-submit-error' => 'Opa! Você precisa preencher ambas as caixas acima para continuar.',
 	'cnw-desc-headline' => 'Sobre o que é a sua wiki?',
-	'cnw-desc-creative' => 'Ajude as pessoas a encontrar sua wiki usando uma excelente descrição.',
-	'cnw-desc-placeholder' => 'Capriche! Seu texto aparecerá na página principal da sua wiki.',
+	'cnw-desc-creative' => 'Como você descreveria sua wiki?',
+	'cnw-desc-placeholder' => 'Esta descrição aparecerá na página principal da sua wiki. Não se preocupe, você pode sempre mudar mais tarde.',
 	'cnw-desc-select-vertical' => 'Escolha um hub:',
 	'cnw-desc-select-categories' => 'Selecione categorias adicionais',
 	'cnw-desc-select-one' => 'Selecione uma',
@@ -2739,91 +2739,6 @@ Boa sorte com o projeto, <br />< br / >
  Equipe da comunidade Fandom <br /></p>',
 );
 
-$messages['pt-br'] = array(
-	'createnewwiki-desc' => 'Assistente de criação de wikias',
-	'cnw-next' => 'Próximo',
-	'cnw-back' => 'Voltar',
-	'cnw-title' => 'Crie uma nova wikia',
-	'cnw-name-wiki-headline' => 'Nomeie sua wiki',
-	'cnw-name-wiki-creative' => 'Seja uma comunidade focada em entretenimento no mundo ou um projeto muito pessoal, sua wiki precisa de um nome bom e exclusivo:',
-	'cnw-name-wiki-label' => 'Nomeie sua wiki',
-	'cnw-name-wiki-domain-label' => 'Dê um endereço a sua wiki',
-	'cnw-name-wiki-submit-error' => 'Opa! Você precisa preencher ambas as caixas acima para continuar.',
-	'cnw-desc-headline' => 'Sobre o que é a sua wiki?',
-	'cnw-desc-creative' => 'Como você descreveria sua wiki?',
-	'cnw-desc-placeholder' => 'Esta descrição aparecerá na página principal da sua wiki. Não se preocupe, você pode sempre mudar mais tarde.',
-	'cnw-desc-select-one' => 'Selecione uma',
-	'cnw-desc-all-ages' => 'Esta wikia é destinada a crianças?',
-	'cnw-desc-tip-all-ages' => 'Esta wiki é sobre um assunto que interessa a crianças? A fim de ajudar-nos a cumprir a lei dos Estados Unidos, nós acompanhamos de perto as wikis que tratam de assuntos de interesse de crianças menores de 12 anos.',
-	'cnw-desc-lang' => 'Idioma de sua wiki',
-	'cnw-desc-wiki-submit-error' => 'Por favor, escolha uma categoria',
-	'cnw-theme-headline' => 'Escolha seu tema',
-	'cnw-theme-creative' => 'Selecione o tema que melhor se adapta a sua wiki.',
-	'cnw-theme-instruction' => 'Você pode personalizar a aparência de sua wiki no Designer de Temas sempre que quiser!',
-	'cnw-welcome-headline' => 'Parabéns! Você criou com êxito a $1',
-	'cnw-welcome-instruction1' => 'Clique no botão abaixo para adicionar páginas a sua wiki.',
-	'cnw-welcome-help' => 'Encontre respostas, conselhos, e muito mais na <a href="http://comunidade.wikia.com">Central da Comunidade Wikia</a>.',
-	'cnw-error-general' => 'Opa, algo deu errado em nosso sistema! Por favor, tente novamente ou [[Special:Contact|entre em contato]] conosco para obter ajuda.',
-	'cnw-error-general-heading' => 'Nossas desculpas',
-	'cnw-badword-header' => 'Atenção',
-	'cnw-badword-msg' => 'Olá, por favor não use palavras grosseiras ou proibidas na descrição da Wikia: $1',
-	'cnw-error-wiki-limit-header' => 'Limite de wikias atingido',
-	'cnw-error-wiki-limit' => 'Olá, você está limitado a {{PLURAL:$1|criar $1 wikia|criar $1 wikias}} por dia. Espere 24 horas antes de criar outra wikia.',
-	'cnw-error-blocked-header' => 'Conta bloqueada',
-	'cnw-error-blocked' => 'Você foi bloqueado por $1. O motivo dado foi: $2. (ID de Bloqueio para referência: $3)',
-	'cnw-error-anon-user-header' => 'Por favor, inicie sessão',
-	'cnw-error-anon-user' => 'A criação de wikias para usuários anônimos está desativada. Por favor [[Special:UserLogin|faça login]] e tente novamente.',
-	'cnw-error-torblock' => 'A criação de wikias usando a rede Tor não é permitida.',
-	'cnw-error-unconfirmed-email-header' => 'Seu endereço de e-mail não foi confirmado.',
-	'cnw-error-unconfirmed-email' => 'Seu endereço de e-mail deve ser confirmado para criar uma wikia.',
-	'cnw-name-wiki-language' => '',
-	'cnw-desc-select-vertical' => 'Escolha um hub:',
-	'cnw-desc-select-categories' => 'Selecione categorias adicionais',
-	'cnw-theme-loading-state' => 'Criando sua wiki. Você pode alterar seu tema durante este processo.',
-	'cnw-theme-show-wiki' => 'Mostre-me minha wiki',
-	'cnw-next-create-wiki' => 'Criar uma wiki',
-	'autocreatewiki' => 'Crie uma nova wikia',
-	'createwiki' => 'Crie uma nova wikia',
-	'autocreatewiki-language-top' => 'Os $1 idiomas mais usados',
-	'autocreatewiki-language-all' => 'Todos os idiomas',
-	'autocreatewiki-title-template' => 'comunidade $1',
-	'autocreatewiki-empty-field' => 'Por favor, preencha esse campo.',
-	'autocreatewiki-bad-name' => 'O nome não pode conter caracteres especiais (como $ ou @) nem espaços e precisa estar todo em minúsculas.',
-	'autocreatewiki-invalid-wikiname' => 'O nome não pode conter caracteres especiais (como $ ou @) e não pode estar vazio.',
-	'autocreatewiki-violate-policy' => 'Esse nome contém uma palavra que viola as nossas políticas de nomeação',
-	'autocreatewiki-name-taken' => 'Já existe uma wiki com este endereço. Você pode editá-la em <ahref="http://$1.wikia.com">http://$1.wikia.com</a> ou escolher outro endereço.',
-	'autocreatewiki-name-too-short' => 'Este endereço é muito curto, por favor escolha outro com no mímino 3 caracteres.',
-	'autocreatewiki-name-too-long' => 'Este endereço é muito longo. Escolha outro com no máximo 50 caracteres.',
-	'autocreatewiki-empty-wikiname' => 'O nome da wikia não pode estar vazio.',
-	'autocreatewiki-category-label' => 'Categoria:',
-	'autocreatewiki-welcometalk-log' => 'Mensagem de Boas-vindas',
-	'autocreatewiki-regex-error-comment' => 'usado na wikia $1 (texto completo: $2)',
-	'autocreatewiki-protect-reason' => 'Parte da interface oficial',
-	'autocreatewiki-welcometalk-wall-title' => 'Bem-vindo!',
-	'autocreatewiki-welcometalk' => '==Bem-vindo!==
-Olá!
-
-Estamos felizes em ter $4 como parte da comunidade Fandom! Ainda há muita coisa a fazer; aqui estão algumas dicas e links importantes para incrementar sua wiki:
-
-*Confira os [[Especial:WikiFeatures|Recursos da Wiki]] para ver quais recursos você pode ativar em sua wiki, incluindo chat, medalhas e muito mais.
-*Dê uma olhada na [[w:c:comunidade|Central da Comunidade]] para ficar informado através do nosso [[w:c:comunidade:Categoria:Notícias da Wikia|blog do staff]], tenha suas dúvidas respondidas no nosso [[w:c:comunidade:Especial:Forum|fórum da comunidade]], assista vídeos em [[w:c:comunidade:Universidade_da_Wikia|Universidade Fandom]], ou converse ao vivo com outros membros da comunidade Fandom.
-*Por último, visite nossas [[Ajuda:Conteúdos|páginas de ajuda]] para aprender mais sobre as manhas de como usar o Fandom.
-
-Todos os links acima são ótimos lugares para começar a explorar, divirta-se!
-
--- [[User:$2|$3]] <staff />',
-	'requestwiki-filter-language' => 'als,an,ang,ast,bar,de2,de-at,de-ch,de-formal,de-weigsbrag,dk,en-gb,eshelp,fihelp,frc,frhelp,ia,ie,ithelp,jahelp,kh,kohelp,kp,ksh,nb,nds,nds-nl,mu,mwl,nlhelp,pdc,pdt,pfl,pthelp,pt-brhelp,ruhelp,simple,tokipona,tp,zh-classical,zh-cn,zh-hans,zh-hant,zh-hk,zh-min-nan,zh-mo,zh-my,zh-sg,zh-tw,zh-yue',
-	'autocreatewiki-welcometalk-wall' => 'Olá, eu sou membro da equipe de suporte da comunidade do Fandom. Estamos felizes em ter {{subst:SITENAME}} como parte da comunidade Fandom!
-
-Pode parecer que há muito o que fazer, mas estamos aqui para ajudá-lo a começar rápida e facilmente. Aqui estão algumas dicas úteis e links para iniciar sua comunidade:
-
- *Confira os [[especial: WikiFeatures |Recursos wiki]] para ativar alguns recursos especiais, incluindo nossa comunidade popular de bate-papo.
- *Personalize a cor e o estilo da sua comunidade, visitando o [Especial:ThemeDesigner|Designer de Tema]].
- *Visite a [[w:c:comunidade|Central da Comunidade]] para dar uma olhada no [[w:c:comunidade:Categoria:Not%C3%ADcias_da_Comunidade|blog do staff] e fazer perguntas no [[w:c:comunidade:Especial:Forum|Fórum da comunidade]].
-*Por último, visite nossas [[Ajuda:Conteúdos|páginas de ajuda]] para aprender como utilizar o Fandom, ou visite [[w:c:comunidade:Universidade_da_Wikia|Universidade Fandom]] para assistir vídeos instrucionais. Divirta-se!',
-	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
-);
-
 $messages['ro'] = array(
 	'cnw-title' => 'Crează un nou wiki',
 	'cnw-name-wiki-headline' => 'Porneşte un wiki',
@@ -2873,14 +2788,14 @@ $messages['ru'] = array(
 	'cnw-next' => 'Далее',
 	'cnw-back' => 'Назад',
 	'cnw-title' => 'Создать новую вики',
-	'cnw-name-wiki-headline' => 'Создать вики',
+	'cnw-name-wiki-headline' => 'Дайте название вики',
 	'cnw-name-wiki-creative' => 'Какой бы ни была тема вашей вики, дайте ей интересное, уникальное название:',
 	'cnw-name-wiki-label' => 'Дайте название вики',
 	'cnw-name-wiki-domain-label' => 'Задайте адрес вики',
 	'cnw-name-wiki-submit-error' => 'Чтобы продолжить, необходимо заполнить поля выше.',
 	'cnw-desc-headline' => 'О чём ваша вики?',
-	'cnw-desc-creative' => 'Составьте описание, которое поможет людям найти вашу вики.',
-	'cnw-desc-placeholder' => 'Этот текст будет отображаться на заглавной странице вики.',
+	'cnw-desc-creative' => 'Как бы вы описали свою вики?',
+	'cnw-desc-placeholder' => 'Это описание будет отображаться на заглавной странице вашей вики. Не беспокойтесь, вы сможете изменить его в любой момент.',
 	'cnw-desc-select-vertical' => 'Выберите портал:',
 	'cnw-desc-select-categories' => 'Дополнительные категории',
 	'cnw-desc-select-one' => 'Список порталов',
@@ -3533,28 +3448,19 @@ $messages['vi'] = array(
 	'autocreatewiki-title-template' => 'Wikia $1',
 );
 
-$messages['zh'] = array(
-	'autocreatewiki-welcomebody-HTML' => '<p>嗨 $2,<br /><br />
-您创建的Wiki已经可以在 <a href="$1">$1</a>访问。 期望很快能看到您的编辑！<br /><br />
-我们在您的<a href="$5">用户对话页</a>提供了一些资讯来协助您开始。如果有任何问题，可以浏览我们的 <a href="http://zh.community.wikia.com/wiki/help:content">帮助中心</a>.<br /><br />
-祝一切顺利。<br /><br />
-<a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
-Wikia社区团队<br /></p>',
-);
-
 $messages['zh-hans'] = array(
 	'createnewwiki-desc' => '维基创建向导',
 	'cnw-next' => '下一步',
 	'cnw-back' => '上一步',
 	'cnw-title' => '创建新的维基',
-	'cnw-name-wiki-headline' => '创建维基',
+	'cnw-name-wiki-headline' => '给您的维基命名',
 	'cnw-name-wiki-creative' => '无论社区关注的是娱乐焦点或者是个人兴趣，它都需要一个独特的名称：',
 	'cnw-name-wiki-label' => '给您的维基命名',
 	'cnw-name-wiki-domain-label' => '给你的维基选择网址',
 	'cnw-name-wiki-submit-error' => '很抱歉！您需要填写上面两栏才能继续下一步。',
 	'cnw-desc-headline' => '您的维基是关于什么的？',
-	'cnw-desc-creative' => '用准确到位的描述帮助网友找到您的维基。',
-	'cnw-desc-placeholder' => '写好一些！您的文字会显示在您的维基首页上。',
+	'cnw-desc-creative' => '你如何描述你的维基站？',
+	'cnw-desc-placeholder' => '这个描述将出现在你的维基站主页面上。别担心，你之后还是可以进行更改的。',
 	'cnw-desc-select-vertical' => '选择一个主题中心︰',
 	'cnw-desc-select-categories' => '查看其他类别',
 	'cnw-desc-select-one' => '主题类',
@@ -3641,14 +3547,14 @@ $messages['zh-hant'] = array(
 	'cnw-next' => '下一步',
 	'cnw-back' => '前一步',
 	'cnw-title' => '創建新的Wiki',
-	'cnw-name-wiki-headline' => '創建wiki',
+	'cnw-name-wiki-headline' => '為你的Wiki命名',
 	'cnw-name-wiki-creative' => '無論這個社區關注的是世界級的娛樂焦點或者是個人專案，它都需要一個獨特的名稱：',
 	'cnw-name-wiki-label' => '命名你的Wiki',
 	'cnw-name-wiki-domain-label' => '給你的Wiki一個網址',
 	'cnw-name-wiki-submit-error' => '抱歉！需要填寫上面兩欄才能繼續。',
 	'cnw-desc-headline' => '你的Wiki的主題是什麼？',
-	'cnw-desc-creative' => '用精確的描述幫助網友找到你的wiki。',
-	'cnw-desc-placeholder' => '寫好一些！您的文字會顯示在您的wiki首頁上。',
+	'cnw-desc-creative' => '你想要怎樣描述你的Wiki呢？',
+	'cnw-desc-placeholder' => '您的文字會顯示在您的Wiki首頁上。但也別太擔心，因為之後隨時能作更改。',
 	'cnw-desc-select-one' => '選擇一項',
 	'cnw-desc-all-ages' => '這個社區主要是針對兒童的嗎？',
 	'cnw-desc-tip-all-ages' => '這是孩子感興趣的話題嗎？為了能遵守美國法律，我們會追縱主題直接針對12歲以下兒童的Wiki社區。',
@@ -3728,27 +3634,5 @@ $messages['zh-hant'] = array(
 祝您編輯一切順利！<br /><br />
 <a href="http://zh.community.wikia.com/wiki/User:$4">$3</a><br />
 Fandom社區團隊<br /></p>',
-);
-
-$messages['zh-hk'] = array(
-	'autocreatewiki-welcomebody-HTML' => '<p>嗨 $2,<br /><br />
-您創建的Wiki已經可以在 <a href="$1">$1</a>訪問。 期望很快能看到您的編輯！<br /><br />
-我們在您的<a href="$5">用戶對話頁</a>提供了一些資訊來協助您開始。如果有任何問題，可以瀏覽我們的 <a href="http://zh.community.wikia.com/wiki/help:content">幫助中心</a>.<br /><br />
-祝一切順利。<br /><br />
-<a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
-Wikia社區團隊<br /></p>',
-);
-
-$messages['zh-sg'] = array(
-	'createwiki' => '申请wiki',
-);
-
-$messages['zh-tw'] = array(
-	'autocreatewiki-welcomebody-HTML' => '<p>嗨 $2,<br /><br />
-您創建的Wiki已經可以在 <a href="$1">$1</a>訪問。 期望很快能看到您的編輯！<br /><br />
-我們在您的<a href="$5">用戶對話頁</a>提供了一些資訊來協助您開始。如果有任何問題，可以瀏覽我們的 <a href="http://zh.community.wikia.com/wiki/help:content">幫助中心</a>.<br /><br />
-祝一切順利。<br /><br />
-<a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
-Wikia社區團隊<br /></p>',
 );
 
