@@ -143,8 +143,8 @@ define('ext.wikia.adEngine.template.porvata', [
 	 * @param {Boolean} [params.isDynamic] - Flag defining if slot should be collapsed and expanded
 	 */
 	function show(params) {
-		var settings = videoSettings.create(params),
-			imaVpaidModeInsecure = 2;
+		var imaVpaidModeInsecure = 2,
+			settings;
 
 		log(['show', params], log.levels.debug, logGroup);
 
@@ -167,6 +167,7 @@ define('ext.wikia.adEngine.template.porvata', [
 			slotTweaker.makeResponsive(params.slotName, videoAspectRatio);
 		}
 
+		settings = videoSettings.create(params);
 		porvata.inject(settings).then(function (video) {
 			if (typeof params.onReady === 'function') {
 				params.onReady(video);
