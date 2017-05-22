@@ -13,7 +13,7 @@
 		width: auto;
 
 		.wds-is-linked & {
-			// wds-is-linked does this to <a>
+			box-sizing: border-box;
 			display: block;
 			padding: $wds-list-item-vertical-padding $wds-dropdown-padding / 2;
 			width: 100%;
