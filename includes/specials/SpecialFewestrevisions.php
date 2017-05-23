@@ -42,22 +42,22 @@ class FewestrevisionsPage extends QueryPage {
 	}
 
 	function getQueryInfo() {
-		return array (
-			'tables' => array ( 'revision', 'page' ),
-			'fields' => array ( 'page_namespace AS namespace',
-					'page_title AS title',
-					'COUNT(*) AS value',
-					'page_is_redirect AS redirect' ),
-			'conds' => array ( 'page_namespace' => MWNamespace::getContentNamespaces(),
-					'page_id = rev_page' ),
-			'options' => array ( 'HAVING' => 'COUNT(*) > 1',
-			// ^^^ This was probably here to weed out redirects.
-			// Since we mark them as such now, it might be
-			// useful to remove this. People _do_ create pages
-			// and never revise them, they aren't necessarily
-			// redirects.
-			'GROUP BY' => 'page_namespace, page_title, page_is_redirect' )
-		);
+		return [
+			'tables' => [ 'revision', 'page' ],
+			'fields' => [
+				'page_namespace AS namespace',
+				'page_title AS title',
+				'COUNT(*) AS value',
+			],
+			'conds' => [
+				'page_is_redirect' => 0,
+				'page_namespace' => MWNamespace::getContentNamespaces(),
+				'page_id = rev_page',
+			],
+			'options' => [
+				'GROUP BY' => 'page_namespace, page_title'
+			]
+		];
 	}
 
 
@@ -68,6 +68,7 @@ class FewestrevisionsPage extends QueryPage {
 	/**
 	 * @param $skin Skin object
 	 * @param $result Object: database row
+	 * @return string formatted HTML of a single row
 	 */
 	function formatResult( $skin, $result ) {
 		global $wgContLang;
@@ -81,14 +82,12 @@ class FewestrevisionsPage extends QueryPage {
 		$plink = Linker::linkKnown( $nt, $text );
 
 		$nl = $this->msg( 'nrevisions' )->numParams( $result->value )->escaped();
-		$redirect = isset( $result->redirect ) && $result->redirect ?
-			' - ' . wfMsgHtml( 'isredirect' ) : '';
 		$nlink = Linker::linkKnown(
 			$nt,
 			$nl,
-			array(),
-			array( 'action' => 'history' )
-		) . $redirect;
+			[],
+			[ 'action' => 'history' ]
+		);
 
 		return $this->getLanguage()->specialList( $plink, $nlink );
 	}
