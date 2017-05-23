@@ -131,11 +131,6 @@ define('ext.wikia.adEngine.adContext', [
 			context.opts.delayEngine = true;
 		}
 
-		// don't wait for ATF response on pages with featured video on mercury
-		if (context.targeting.skin === 'mercury' && context.targeting.hasFeaturedVideo) {
-			context.opts.delayBtf = false;
-		}
-
 		context.opts.premiumOnly = context.targeting.hasFeaturedVideo &&
 			geo.isProperGeo(instantGlobals.wgAdDriverSrcPremiumCountries);
 
