@@ -335,12 +335,8 @@ $white: #fff;
 	}
 }
 
-// make DS dropdown invisible for old notifications
+// make DS dropdown content invisible for old notifications
 #notificationsEntryPoint {
-	&::after, &::before  {
-		content: none;
-	}
-
 	.wds-dropdown__content {
 		border: 0;
 		background: none;
