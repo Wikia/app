@@ -41,6 +41,8 @@ class SynchronizeExternalUser extends Maintenance {
 				$this->output( sprintf( "%s: ID mismatch found for %s (cluster #%d / shared #%d)\n",
 					$cluster->getDBname(), $row->user_name, $row->user_id, $shared_user_id ) );
 
+				$found++;
+
 				// remove user copy on cluster (when run with --clean option)
 				if ( $this->getOption('clean') ) {
 					ExternalUser_Wikia::removeFromSecondaryClusters( $row->user_id );
@@ -49,6 +51,8 @@ class SynchronizeExternalUser extends Maintenance {
 					sleep( 0.25 );
 				}
 			}
+
+			$scanned++;
 		}
 
 		$this->output( "\n{$scanned} cluster users scanned, {$found} mismatches found!\n" );
