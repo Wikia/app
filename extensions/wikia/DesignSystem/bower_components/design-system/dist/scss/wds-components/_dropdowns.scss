@@ -3,7 +3,6 @@ $dropdown-border-width: 1px;
 
 .wds-dropdown {
 	$content-z-index: 1;
-	$gap-size: 3px;
 	$link-transition-duration: 0.2s;
 
 	display: inline-block;
@@ -28,9 +27,9 @@ $dropdown-border-width: 1px;
 		left: 50%;
 		min-width: 60%;
 		// we assume that there will be regular size .wds-list inside the dropdown content
-		padding: $wds-dropdown-padding - $wds-list-item-vertical-padding 0 $wds-dropdown-padding;
+		padding: $wds-dropdown-padding - $wds-list-item-vertical-padding 0;
 		position: absolute;
-		top: calc(100% + #{$gap-size});
+		top: 100%;
 		transform: translateX(-50%);
 		z-index: $content-z-index;
 
@@ -84,11 +83,6 @@ $dropdown-border-width: 1px;
 						@include wds-dropdown-linked-list-item-hover;
 					}
 				}
-
-				&.wds-has-small-items > li > a {
-					padding-left: $wds-dropdown-padding / 2;
-					padding-right: $wds-dropdown-padding / 2;
-				}
 			}
 		}
 	}
@@ -96,7 +90,7 @@ $dropdown-border-width: 1px;
 	&::after {
 		border: 8px solid transparent;
 		border-bottom-color: $wds-color-white;
-		bottom: -$gap-size - $dropdown-border-width;
+		bottom: -$dropdown-border-width;
 		content: '';
 		display: none;
 		height: 0;
@@ -111,7 +105,7 @@ $dropdown-border-width: 1px;
 	&::before {
 		border: 9px solid transparent;
 		border-bottom-color: $wds-color-faint-gray;
-		bottom: -$gap-size - $dropdown-border-width;
+		bottom: -$dropdown-border-width;
 		content: '';
 		display: none;
 		height: 0;
@@ -135,17 +129,6 @@ $dropdown-border-width: 1px;
 	&:hover {
 		.wds-dropdown__content {
 			display: inline-block;
-
-			// allows to have on-hover dropdowns with a gap between toggle and content
-			&::before {
-				content: '';
-				display: block;
-				left: 0;
-				right: 0;
-				top: -$gap-size - $dropdown-border-width;
-				height: $gap-size + $dropdown-border-width;
-				position: absolute;
-			}
 		}
 
 		.wds-dropdown__toggle-chevron {
@@ -178,32 +161,47 @@ $dropdown-border-width: 1px;
 	}
 }
 
-.wds-dropdown__content .wds-list .wds-dropdown-l2 {
+.wds-dropdown__content .wds-list.wds-is-linked .wds-dropdown-level-2 {
 	margin-right: 0;
 
-	.wds-dropdown-l2__content {
-		background-color: $wds-color-white;
-		border: $dropdown-border-width solid $wds-color-faint-gray;
-		border-bottom-right-radius: $border-radius;
-		border-top-right-radius: $border-radius;
-		display: none;
-		left: calc(100% - 2px);
-		padding: $wds-dropdown-padding - $wds-list-item-vertical-padding 0;
-		position: absolute;
-		top: -($wds-dropdown-padding - $wds-list-item-vertical-padding + $dropdown-border-width);
+	> a {
+		padding-right: 18px;
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.wds-dropdown-chevron {
+		transform: rotate(-90deg);
+		margin-left: 18px;
 	}
 
 	&.wds-is-sticked-to-parent {
 		position: relative;
 
-		.wds-dropdown-l2__content {
+		.wds-dropdown-level-2__content {
 			top: auto;
 			bottom: -($wds-dropdown-padding - $wds-list-item-vertical-padding + $dropdown-border-width);
 		}
 	}
 
-	&:hover {
-		.wds-dropdown-l2__content {
+	.wds-dropdown-level-2__content {
+		background-color: $wds-color-white;
+		border: $dropdown-border-width solid $wds-color-faint-gray;
+		border-radius: $border-radius;
+		display: none;
+		left: 100%;
+		padding: $wds-dropdown-padding - $wds-list-item-vertical-padding 0;
+		position: absolute;
+		top: -($wds-dropdown-padding - $wds-list-item-vertical-padding + $dropdown-border-width);
+
+		.wds-list.wds-is-linked > li > a {
+			font-size: $wds-typescale-size-minus-2;
+		}
+	}
+
+	&:hover,
+	&.wds-is-active {
+		.wds-dropdown-level-2__content {
 			display: block;
 		}
 	}

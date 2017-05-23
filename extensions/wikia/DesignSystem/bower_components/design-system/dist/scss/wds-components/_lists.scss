@@ -27,18 +27,6 @@
 		}
 	}
 
-	&.wds-has-small-items {
-		> li {
-			font-size: $wds-typescale-size-minus-2;
-			// font-size is 2px smaller then regular list so we need to add 1px padding to have elements in the same size
-			padding: $wds-list-item-vertical-padding + 1px 0;
-		}
-
-		&.wds-is-linked > li > a {
-			padding: $wds-list-item-vertical-padding + 1px 0;
-		}
-	}
-
 	&.wds-has-bolded-items {
 		> li {
 			font-weight: bold;
