@@ -169,11 +169,19 @@ define('ext.wikia.adEngine.template.porvata', [
 		if (!isVideoAutoplaySupported()) {
 			log(['hop', params.adProduct, params.slotName, params], log.levels.info, logGroup);
 			slotRegistry.get(params.slotName).hop({
-				adType: 'empty',
+				adType: params.adType,
 				source: 'porvata'
 			});
 
-			return null;
+			return;
+		} else {
+			// TODO remove `if` and always track success after ADEN-5109 full roll out
+			if (params.adType === 'manual') {
+				slotRegistry.get(params.slotName).success({
+					adType: params.adType,
+					source: 'porvata'
+				});
+			}
 		}
 
 		if (params.vpaidMode === imaVpaidModeInsecure) {
