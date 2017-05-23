@@ -18,7 +18,7 @@ class SynchronizeExternalUser extends Maintenance {
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->addOption( 'cluster', 'Which cluster to check (e.g. "c1")', true /* $required */ );
+		$this->addOption( 'cluster', 'Which cluster to check (e.g. "c1")', true /* $required */, true /* $withArg */ );
 		$this->addOption( 'clean', 'Really remove cluster copies of user table entries' );
 		$this->mDescription = 'This script removes per-cluster entries in user table that do not match those in shared DB (wikicities)';
 	}
