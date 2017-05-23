@@ -1,12 +1,14 @@
 /*global define, require, setTimeout*/
 define('ext.wikia.adEngine.template.porvata', [
 	'ext.wikia.adEngine.domElementTweaker',
+	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.video.player.porvata',
 	'ext.wikia.adEngine.video.player.uiTemplate',
 	'ext.wikia.adEngine.video.player.ui.videoInterface',
 	'ext.wikia.adEngine.video.videoSettings',
 	'ext.wikia.adEngine.wrappers.prebid',
+	'wikia.browserDetect',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
@@ -14,12 +16,14 @@ define('ext.wikia.adEngine.template.porvata', [
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
 ], function (
 	DOMElementTweaker,
+	slotRegistry,
 	slotTweaker,
 	porvata,
 	uiTemplate,
 	videoInterface,
 	videoSettings,
 	prebid,
+	browserDetect,
 	doc,
 	log,
 	win,
@@ -130,6 +134,11 @@ define('ext.wikia.adEngine.template.porvata', [
 		}
 	}
 
+	function isVideoAutoplaySupported() {
+		return !browserDetect.isAndroid() ||
+			(browserDetect.getBrowser().indexOf('Chrome') !== -1 && browserDetect.getBrowserVersion() >= 54);
+	}
+
 	/**
 	 * @param {object} params
 	 * @param {object} params.container - DOM element where player should be placed
@@ -148,11 +157,6 @@ define('ext.wikia.adEngine.template.porvata', [
 
 		log(['show', params], log.levels.debug, logGroup);
 
-		if (params.vpaidMode === imaVpaidModeInsecure) {
-			params.originalContainer = params.container;
-			params.container = getVideoContainer(params.slotName);
-		}
-
 		if (params.hbAdId) {
 			params.bid = prebid.getBidByAdId(params.hbAdId);
 			params.vastUrl = params.bid.vastUrl;
@@ -160,6 +164,29 @@ define('ext.wikia.adEngine.template.porvata', [
 
 		if (params.bid && params.adProduct === 'veles') {
 			loadVeles(params);
+		}
+
+		if (!isVideoAutoplaySupported()) {
+			log(['hop', params.adProduct, params.slotName, params], log.levels.info, logGroup);
+			slotRegistry.get(params.slotName).hop({
+				adType: params.adType,
+				source: 'porvata'
+			});
+
+			return;
+		} else {
+			// TODO remove `if` and always track success after ADEN-5109 full roll out
+			if (params.adType === 'manual') {
+				slotRegistry.get(params.slotName).success({
+					adType: params.adType,
+					source: 'porvata'
+				});
+			}
+		}
+
+		if (params.vpaidMode === imaVpaidModeInsecure) {
+			params.originalContainer = params.container;
+			params.container = getVideoContainer(params.slotName);
 		}
 
 		if (params.isDynamic) {
