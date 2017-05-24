@@ -35,7 +35,7 @@
 	line-height: $line-height;
 	margin: 0;
 	outline: none;
-	padding: 16px $button-padding-horizontal 15px;
+	padding: 16px $wds-button-padding-horizontal 15px;
 	text-align: center;
 	text-decoration: none;
 	text-transform: uppercase;
@@ -118,7 +118,7 @@
 	}
 
 	&.wds-has-icon {
-		padding-left: $button-padding-horizontal + $wds-icon-small-size + 6px;
+		padding-left: $wds-button-padding-horizontal + $wds-icon-small-size + 6px;
 		position: relative;
 
 		&.wds-is-squished {
@@ -134,7 +134,7 @@
 
 		.wds-icon:first-child {
 			height: $wds-icon-small-size;
-			left: $button-padding-horizontal;
+			left: $wds-button-padding-horizontal;
 			margin-top: -$wds-icon-small-size / 2;
 			pointer-events: none;
 			position: absolute;
