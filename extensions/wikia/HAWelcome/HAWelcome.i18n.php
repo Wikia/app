@@ -1054,16 +1054,16 @@ Divertiti su {{SITENAME}}!",
 
 $messages['ja'] = array(
 	'welcome-user-page' => "== 自己紹介 ==
-'''ここは、「{{PAGENAME}}」さんの利用者ページです。'''
+'''ここは、「{{Pagename}}」さんの利用者ページです。'''
 
 上の\"編集\"ボタンをクリックしてこのページを編集してみましょう。
 
 [[File:Placeholder|thumb|220px]]
 
-ここは、「{{PAGENAME}}」さんのユーザーページです。上の「編集」ボタンをクリックしてこのページを編集し、{{PAGENAME}}さん自身のことについてコミュニティに紹介してみましょう！
+ここは、「{{Pagename}}」さんのユーザーページです。上の「編集」ボタンをクリックしてこのページを編集し、{{Pagename}}さん自身のことについてコミュニティに紹介してみましょう！
 
 == お気に入りのウィキア ==
-* ウィキアにあるあなたのお気に入りのウィキのリンクを追加してください！
+* Fandom上のあなたのお気に入りのWikiのリンクを追加してください！
 * お気に入りのページ #2
 * お気に入りのページ #3",
 	'welcome-message-user' => '==ようこそ==
@@ -1084,7 +1084,7 @@ $2',
 私でお役に立てそうなことがございましたら、お気軽に[[$2|メッセージをお送りください]]。それでは、{{SITENAME}}をお楽しみください！
 
 $2",
-	'welcome-message-log' => 'ウィキアへようこそ！',
+	'welcome-message-log' => 'Fandomへようこそ！',
 	'welcome-message-user-staff' => '==ようこそ==
 
 はじめまして、Fandomのコミュニティ・サポートチームです。このたびは、{{SITENAME}}へようこそ！そして、[[:$1]]に編集を加えていただきありがとうございます！
@@ -1703,11 +1703,11 @@ $messages['ps'] = array(
 $messages['pt'] = array(
 	'welcome-user-page' => "==Sobre mim==
 
-''Esta é a sua página de usuário. Por favor, edite esta página para contar mais sobre você para a comunidade!''
+''Esta é sua página de usuário. Por favor, edite esta página para contar mais sobre você para a comunidade!''
 
 ==Minhas páginas favoritas==
 
-* Adicione links para suas páginas favoritas da wikia!
+* Adicione links para suas páginas favoritas da comunidade!
 * Página favorita #2
 * Página favorita #3",
 	'welcome-message-user' => '==Bem-vindo==
@@ -1792,7 +1792,7 @@ ou visite a [[w:c:comunidade|Central da comunidade]] para explorar nossos [[w:c:
 Você lambem pode seguir o [[w:c:community:Categoria:Notícias_da_Comunidade|blog do staff]] para saber das últimas notícias e eventos no Fandom. E não se esqueça de dar uma olhada na [[w:c:comunidade:Univerdade Fandom|Universidade Fandom]] para assistir vídeos informativos.
 
 Divirta-se em {{SITENAME}}!",
-	'welcome-description' => 'Envia uma mensagem de boas-vindas para utilizadores depois das suas primeiras edições',
+	'welcome-description' => 'Envie uma mensagem de boas-vindas para usuários depois das suas primeiras edições',
 	'welcome-enabled' => 'page-user message-anon message-user',
 	'welcome-user' => '@latest',
 	'welcome-bot' => '@bot',
