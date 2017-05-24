@@ -7,6 +7,7 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 		var $footer = $('#WikiaFooter');
 		var $rail = $('#WikiaRail');
 		var $recirc;
+		var recircEnabled = false;
 		var $recircWrapper;
 		var $visibleElementBeforeWrapper;
 		var $window = $(window);
@@ -26,7 +27,7 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 
 		// ad mix flags
 		var topRightAdFixed = !!(abTest.getGroup('AD_MIX') && abTest.getGroup('AD_MIX') !== 'AD_MIX_2');
-		var recircEnabled = !!(abTest.getGroup('AD_MIX') && abTest.getGroup('AD_MIX') !== 'CONTROL');
+		var recircFixed = !!(abTest.getGroup('AD_MIX') && abTest.getGroup('AD_MIX') !== 'CONTROL');
 
 		function getFirstAdTopPosition() {
 			return $rail.offset().top - globalNavigationHeight - firstAdTopSpace;
@@ -267,6 +268,11 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 
 		function onRightRailReady() {
 			$recircWrapper = $('#recirculation-rail');
+			$adAndRecircWrapper = $('#WikiaAdInContentPlaceHolder');
+
+			if (recircFixed) {
+				$adAndRecircWrapper.addClass('ad-mix-experiment-enabled');
+			}
 
 			// There is no recirculation right rail module on non-en wikis
 			if (window.wgContentLanguage === 'en') {
@@ -286,9 +292,6 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 					.height($recirc.outerHeight(true));
 			}
 
-			$adAndRecircWrapper = $('#WikiaAdInContentPlaceHolder');
-			$adAndRecircWrapper.addClass('ad-mix-experiment-enabled');
-
 			$visibleElementBeforeWrapper = $adAndRecircWrapper.prevAll(':not(#LEFT_SKYSCRAPER_2)').eq(0);
 			visibleElementBeforeWrapperHeight = $visibleElementBeforeWrapper.outerHeight(true);
 
@@ -305,7 +308,7 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 			update();
 		}
 
-		if(context.opts.adMixExperimentEnabled) {
+		if (context.opts.adMixExperimentEnabled) {
 			$rail.one('afterLoad.rail', onRightRailReady);
 
 			if (topRightAdFixed) {
