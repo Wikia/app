@@ -22,7 +22,6 @@
 	}
 
 	&__mark-all-as-read-button {
-		box-shadow: 0 -1px 10px 0 rgba(0, 0, 0, 0.1);
 		display: flex;
 		justify-content: flex-start;
 		margin-top: -7px;
@@ -49,11 +48,15 @@
 		min-height: 80px;
 		min-width: $content-padding * 2 + 320px;
 		width: 100%;
+
+		// that's here because we need to override DS dropdowns list styles
+		.wds-notifications__notification-list.wds-list {
+			max-height: 420px;
+		}
 	}
 
 	&__notification-list {
 		box-sizing: border-box;
-		max-height: 420px;
 		overflow-y: auto;
 		width: 100%;
 
