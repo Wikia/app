@@ -11,6 +11,7 @@ class CloseMyAccountTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @covers CloseMyAccountHelper::getDaysUntilClosure()
 	 * @dataProvider getDaysUntilClosureProvider
 	 *
 	 * @param $expected
@@ -18,7 +19,9 @@ class CloseMyAccountTest extends WikiaBaseTest {
 	 */
 	public function testGetDaysUntilClosure( $expected, $getOptionValue ) {
 		/** @var User|PHPUnit_Framework_MockObject_MockObject $userMock */
-		$userMock = $this->getMock( 'User', [ 'getGlobalPreference' ] );
+		$userMock = $this->getMockBuilder( User::class )
+			->setMethods( [ 'getGlobalPreference' ] )
+			->getMock();
 
 		$userMock->expects( $this->once() )
 			->method( 'getGlobalPreference' )
@@ -44,6 +47,7 @@ class CloseMyAccountTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @covers CloseMyAccountHelper::reactivateAccount()
 	 * @dataProvider reactivateAccountProvider
 	 *
 	 * @param $expected
@@ -52,16 +56,14 @@ class CloseMyAccountTest extends WikiaBaseTest {
 	 */
 	public function testReactivateAccountReturnValues( $expected, $isScheduledForClosure, $isClosed ) {
 		/** @var User|PHPUnit_Framework_MockObject_MockObject $userMock */
-		$userMock = $this->getMock( 'User', [ 'setOption', 'saveSettings' ] );
-
-		$userMock->expects( $this->any() )
-			->method( 'setOption' );
-
-		$userMock->expects( $this->any() )
-			->method( 'saveSettings' );
+		$userMock = $this->getMockBuilder( User::class )
+			->setMethods( [ 'setOption', 'saveSettings' ] )
+			->getMock();
 
 		/** @var CloseMyAccountHelper|PHPUnit_Framework_MockObject_MockObject $helperMock */
-		$helperMock = $this->getMock( 'CloseMyAccountHelper', [ 'isClosed', 'isScheduledForClosure', 'track' ] );
+		$helperMock = $this->getMockBuilder( CloseMyAccountHelper::class )
+			->setMethods( [ 'isClosed', 'isScheduledForClosure', 'track' ] )
+			->getMock();
 
 		$helperMock->expects( $this->any() )
 			->method( 'isClosed' )
@@ -89,6 +91,7 @@ class CloseMyAccountTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @covers CloseMyAccountHelper::requestReactivation()
 	 * @dataProvider requestReactivationProvider
 	 *
 	 * @param $expected
@@ -98,8 +101,13 @@ class CloseMyAccountTest extends WikiaBaseTest {
 	 */
 	public function testRequestReactivation( $expected, $isScheduledForClosure, $isEmailConfirmed, $sendConfirmationMailStatus ) {
 		/** @var User|PHPUnit_Framework_MockObject_MockObject $userMock */
-		$userMock = $this->getMock( 'User', [ 'isEmailConfirmed', 'sendConfirmationMail' ] );
-		$statusMock = $this->getMock( 'Status', [ 'isGood' ] );
+		$userMock = $this->getMockBuilder( User::class )
+			->setMethods( [ 'isEmailConfirmed', 'sendConfirmationMail'	] )
+			->getMock();
+
+		$statusMock = $this->getMockBuilder( Status::class )
+			->setMethods( [ 'isGood' ] )
+			->getMock();
 
 		$statusMock->expects( $this->any() )
 			->method( 'isGood' )
@@ -114,7 +122,9 @@ class CloseMyAccountTest extends WikiaBaseTest {
 			->will( $this->returnValue( $statusMock ) );
 
 		/** @var CloseMyAccountHelper|PHPUnit_Framework_MockObject_MockObject $helperMock */
-		$helperMock = $this->getMock( 'CloseMyAccountHelper', [ 'isScheduledForClosure', 'track' ] );
+		$helperMock = $this->getMockBuilder( CloseMyAccountHelper::class )
+			->setMethods( [ 'isScheduledForClosure', 'track' ] )
+			->getMock();
 
 		$helperMock->expects( $this->once() )
 			->method( 'isScheduledForClosure' )
@@ -130,15 +140,16 @@ class CloseMyAccountTest extends WikiaBaseTest {
 
 	public function requestReactivationProvider() {
 		return [
-			[ false, false, true, null ],
-			[ false, true, false, null ],
-			[ false, false, false, null ],
-			[ false, true, true, false ],
-			[ true, true, true, true ],
+			'not scheduled for closure and emailconfirmed' => [ false, false, true, null ],
+			'scheduled for closure and not emailconfirmed' => [ false, true, false, null ],
+			'not scheduled for closure and not emailconfirmed' => [ false, false, false, null ],
+			'scheduled for closure, emailconfirmed, and email not sent' => [ false, true, true, false ],
+			'scheduled for closure, emailconfirmed, and email sent' => [ true, true, true, true ],
 		];
 	}
 
 	/**
+	 * @covers CloseMyAccountHelper::isScheduledForClosure()
 	 * @dataProvider isScheduledProvider
 	 *
 	 * @param $expected
@@ -146,7 +157,9 @@ class CloseMyAccountTest extends WikiaBaseTest {
 	 */
 	public function testIsScheduledForClosure( $expected, $requestedClosureDateMap ) {
 		/** @var User|PHPUnit_Framework_MockObject_MockObject $userMock */
-		$userMock = $this->getMock( 'User', [ 'getGlobalPreference' ] );
+		$userMock = $this->getMockBuilder( User::class )
+			->setMethods( [ 'getGlobalPreference' ] )
+			->getMock();
 
 		$userMock->expects( $this->any() )
 			->method( 'getGlobalPreference')
@@ -167,9 +180,14 @@ class CloseMyAccountTest extends WikiaBaseTest {
 		];
 	}
 
+	/**
+	 * @covers CloseMyAccountHelper::isClosed()
+	 */
 	public function testIsClosed() {
 		/** @var User|PHPUnit_Framework_MockObject_MockObject $userMock */
-		$userMock = $this->getMock( 'User', [ 'getGlobalFlag' ] );
+		$userMock = $this->getMockBuilder( User::class )
+			->setMethods( [ 'getGlobalFlag' ] )
+			->getMock();
 
 		$userMock->expects( $this->exactly( 2 ) )
 			->method( 'getGlobalFlag' )
