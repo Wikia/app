@@ -64,6 +64,8 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 			pane.show();
 		}
 
+		$('.cnw-tooltip').tooltip();
+
 		// onload stuff
 		wikiName.focus();
 		if (wikiName.val() || wikiDomain.val()) {
