@@ -107,6 +107,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			}
 
 			slotTargetingData.wsi = slotTargeting.getWikiaSlotId(slotName, slotTargetingData.src);
+			slotTargetingData.hb_si = slotTargeting.getPrebidSlotId(slotTargetingData);
 			slotTargetingData.uap = uapId ? uapId.toString() : 'none';
 		}
 
