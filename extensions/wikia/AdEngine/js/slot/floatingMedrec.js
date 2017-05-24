@@ -35,7 +35,9 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 			$win = $(win);
 
 		function getStartPosition(placeHolder) {
-			return parseInt(placeHolder.offset().top, 10) - globalNavigationHeight - margin;
+			return parseInt(placeHolder.offset().top, 10) +
+				parseInt(placeHolder.height(), 10) -
+				globalNavigationHeight - margin;
 		}
 
 		function getStopPosition(ad, footer, leftSkyscraper3) {
@@ -57,21 +59,23 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 				});
 			}
 
-			// if ($win.scrollTop() > startPosition && $win.scrollTop() < stopPosition) {
-			// 	$adSlot.css({
-			// 		position: 'fixed',
-			// 		top: globalNavigationHeight + margin + 'px',
-			// 		visibility: 'visible'
-			// 	});
-			// }
-			//
-			// if ($win.scrollTop() >= stopPosition) {
-			// 	$adSlot.css({
-			// 		position: 'absolute',
-			// 		top: stopPosition - startPosition + 'px',
-			// 		visibility: 'visible'
-			// 	});
-			// }
+			if (!context.opts.adMixExperimentEnabled) {
+				if ($win.scrollTop() > startPosition && $win.scrollTop() < stopPosition) {
+					$adSlot.css({
+						position: 'fixed',
+						top: globalNavigationHeight + margin + 'px',
+						visibility: 'visible'
+					});
+				}
+
+				if ($win.scrollTop() >= stopPosition) {
+					$adSlot.css({
+						position: 'absolute',
+						top: stopPosition - startPosition + 'px',
+						visibility: 'visible'
+					});
+				}
+			}
 		}
 
 		function handleFloatingMedrec() {
@@ -81,14 +85,16 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 
 			if (enabled && !isEnoughSpace) {
 				log(['handleFloatingMedrec',
-					 'Disabling floating medrec: not enough space in right rail'], 'debug', logGroup);
+					'Disabling floating medrec: not enough space in right rail'], 'debug', logGroup);
 
 				win.removeEventListener('scroll', update);
 				win.removeEventListener('resize', update);
 
-				// $adSlot.css({
-				// 	visibility: 'hidden'
-				// });
+				if (!context.opts.adMixExperimentEnabled) {
+					$adSlot.css({
+						visibility: 'hidden'
+					});
+				}
 
 				enabled = false;
 			}

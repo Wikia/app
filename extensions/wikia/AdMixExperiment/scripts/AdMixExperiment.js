@@ -1,5 +1,6 @@
-require(['wikia.throttle', 'wikia.querystring'], function (throttle, querystring) {
+require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], function (adContext, abTest, throttle) {
 	$(function () {
+		var context = adContext.getContext();
 		var $adAndRecircWrapper;
 		var $topRightAd = $('#TOP_RIGHT_BOXAD');
 		var $topRightAdWrapper = $('#top-right-boxad-wrapper');
@@ -17,15 +18,15 @@ require(['wikia.throttle', 'wikia.querystring'], function (throttle, querystring
 		var gapSize = 200;
 		var firstAdTopSpace = 10;
 		var noRecircAdBottomSpace = 30;
-		var recircEnabled = true;
 		var recircTopSpace = 10;
 		var topRightAdHeight = 250;
 		var viewportHeight;
 		var viewportWidth;
 		var visibleElementBeforeWrapperHeight;
 
-		// FIXME it should be true only for ad mix variant XW-3156
-		var topRightAdFixed = !!querystring().getVal('topRightAdFixed', false);
+		// ad mix flags
+		var topRightAdFixed = !!(abTest.getGroup('AD_MIX') && abTest.getGroup('AD_MIX') !== 'AD_MIX_2');
+		var recircEnabled = !!(abTest.getGroup('AD_MIX') && abTest.getGroup('AD_MIX') !== 'CONTROL');
 
 		function getFirstAdTopPosition() {
 			return $rail.offset().top - globalNavigationHeight - firstAdTopSpace;
@@ -286,6 +287,7 @@ require(['wikia.throttle', 'wikia.querystring'], function (throttle, querystring
 			}
 
 			$adAndRecircWrapper = $('#WikiaAdInContentPlaceHolder');
+			$adAndRecircWrapper.addClass('ad-mix-experiment-enabled');
 
 			$visibleElementBeforeWrapper = $adAndRecircWrapper.prevAll(':not(#LEFT_SKYSCRAPER_2)').eq(0);
 			visibleElementBeforeWrapperHeight = $visibleElementBeforeWrapper.outerHeight(true);
@@ -303,14 +305,16 @@ require(['wikia.throttle', 'wikia.querystring'], function (throttle, querystring
 			update();
 		}
 
-		$rail.one('afterLoad.rail', onRightRailReady);
+		if(context.opts.adMixExperimentEnabled) {
+			$rail.one('afterLoad.rail', onRightRailReady);
 
-		if (topRightAdFixed) {
-			$topRightAdWrapper.css({
-				height: topRightAdHeight + 'px',
-				'padding-bottom': gapSize + 'px',
-				'margin-bottom': '10px'
-			});
+			if (topRightAdFixed) {
+				$topRightAdWrapper.css({
+					height: topRightAdHeight + 'px',
+					'padding-bottom': gapSize + 'px',
+					'margin-bottom': '10px'
+				});
+			}
 		}
 	});
 });

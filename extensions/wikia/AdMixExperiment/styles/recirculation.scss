@@ -1,8 +1,6 @@
 @import 'skins/shared/mixins/flexbox';
 
-
-// FIXME that styles should be applied only for new ad mixes and not for control variant
-#WikiaAdInContentPlaceHolder .premium-recirculation-rail {
+#WikiaAdInContentPlaceHolder.ad-mix-experiment-enabled .premium-recirculation-rail {
 	.item.is-video .image-thumbnail::after {
 		bottom: 6px;
 		height: 20px;
