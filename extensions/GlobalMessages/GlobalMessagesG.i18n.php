@@ -73,8 +73,8 @@ $messages['en'] = [
 	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
 	'group-content-moderator' => 'Content Moderators',
 	'group-content-moderator-member' => 'Content Moderator',
-	'group-fandom-staff' => 'Fandom Staff',
-	'group-fandom-staff-member' => 'Fandom Staff',
+	'group-fandom-editor' => 'Fandom Editor',
+	'group-fandom-editor-member' => 'Fandom Editor',
 ];
 
 $messages['qqq'] = [
