@@ -3,6 +3,7 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 		var context = adContext.getContext();
 		var $adAndRecircWrapper;
 		var $topRightAd = $('#TOP_RIGHT_BOXAD');
+		var $floatingMedrec = $('#INCONTENT_BOXAD_1');
 		var $topRightAdWrapper = $('#top-right-boxad-wrapper');
 		var $footer = $('#WikiaFooter');
 		var $rail = $('#WikiaRail');
@@ -26,7 +27,13 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 		var visibleElementBeforeWrapperHeight;
 
 		// ad mix flags
-		var topRightAdFixed = !!(abTest.getGroup('AD_MIX') && abTest.getGroup('AD_MIX') !== 'AD_MIX_2');
+		// AD_MIX_1: reloadFloatingMedrec === true && recircFixed === true
+		// AD_MIX_2: topRightAdFixed === true && recircFixed === true
+		// AD_MIX_3: reloadRecirc === true && recircFixed === true
+		// CONTROL: all === false
+		var reloadFloatingMedrec = !!(abTest.getGroup('AD_MIX') && abTest.getGroup('AD_MIX') === 'AD_MIX_1');
+		var topRightAdFixed = !!(abTest.getGroup('AD_MIX') && abTest.getGroup('AD_MIX') === 'AD_MIX_2');
+		var reloadRecirc = !!(abTest.getGroup('AD_MIX') && abTest.getGroup('AD_MIX') === 'AD_MIX_3');
 		var recircFixed = !!(abTest.getGroup('AD_MIX') && abTest.getGroup('AD_MIX') !== 'CONTROL');
 
 		function getFirstAdTopPosition() {
@@ -290,6 +297,14 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 				$recircWrapper
 					.css('margin-bottom', gapSize + 'px')
 					.height($recirc.outerHeight(true));
+			}
+
+			if (reloadRecirc || topRightAdFixed) {
+				$floatingMedrec.hide();
+			}
+
+			if (reloadFloatingMedrec) {
+				// reload the FMR ad
 			}
 
 			$visibleElementBeforeWrapper = $adAndRecircWrapper.prevAll(':not(#LEFT_SKYSCRAPER_2)').eq(0);
