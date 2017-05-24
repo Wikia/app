@@ -22,6 +22,7 @@
 		border-radius: $wds-dropdown-border-radius;
 		display: none;
 		left: 50%;
+		// it's for long dropdowns toggles, to make sure dropdown content is always below the nodge
 		min-width: 60%;
 		// we assume that there will be regular size .wds-list inside the dropdown content
 		padding: $wds-dropdown-padding - $wds-list-item-vertical-padding 0;
