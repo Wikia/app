@@ -177,6 +177,12 @@ define('ext.wikia.adEngine.adContext', [
 			geo.isProperGeo(instantGlobals.wgAdDriverOverridePrefootersCountries) && !isPageType('home')
 		);
 
+		context.opts.adMixExperimentEnabled = !!(
+			context.targeting.skin === 'oasis' &&
+			abTest.getGroup('AD_MIX') &&
+			isPageType('article')
+		);
+
 		// OpenX for remnant slot enabled
 		context.opts.openXRemnantEnabled = geo.isProperGeo(instantGlobals.wgAdDriverOpenXBidderCountriesRemnant);
 

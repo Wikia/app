@@ -64,6 +64,9 @@ define('ext.wikia.adEngine.provider.directGpt', [
 				'INCONTENT_LEADERBOARD',
 				'INCONTENT_PLAYER',
 				'INVISIBLE_HIGH_IMPACT_2'
+			],
+			adMixBtfSlots: [
+				'INCONTENT_BOXAD_1'
 			]
 		}
 	);
