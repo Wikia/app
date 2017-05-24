@@ -12,19 +12,15 @@ class IpAddressQuery implements SearchQuery {
 	static function getQuery( $ipAddress, $paginationSize ) {
 		return <<<JSON_BODY
 {
-	"query": {
-		"filtered": {
-			"query": {
-				"bool": {
-					"should": [{
-						"query_string": {
-							"query":"rawTags:dis_service_* AND client_ip:$ipAddress"
-						}
-					}]
-				}
-			}
-		}
-	},
+    "query": {
+        "bool": {
+            "should": [{
+                "query_string": {
+                    "query":"rawTags:dis_service_* AND client_ip:$ipAddress"
+                }
+            }]
+        }
+    },
 	"size":$paginationSize,
 	"sort":[{
 		"@timestamp": {
