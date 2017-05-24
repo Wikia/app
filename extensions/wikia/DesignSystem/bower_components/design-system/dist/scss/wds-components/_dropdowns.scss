@@ -73,7 +73,8 @@
 						padding-left: $wds-dropdown-padding / 2;
 						padding-right: $wds-dropdown-padding / 2;
 						text-decoration: none;
-						transition: color $link-transition-duration;
+						transition-duration: $link-transition-duration;
+						transition-property: background-color, color;
 					}
 
 					&:hover > a {
@@ -162,7 +163,7 @@
 	margin-right: 0;
 
 	> a {
-		padding-right: 18px;
+		padding-right: $wds-dropdown-padding;
 		display: flex;
 		justify-content: space-between;
 	}
