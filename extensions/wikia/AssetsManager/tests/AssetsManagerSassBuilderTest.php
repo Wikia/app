@@ -15,6 +15,7 @@ class AssetsManagerSassBuilderTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @covers AssetsManagerSassBuilder::getContent()
 	 * @group Slow
 	 * @slowExecutionTime 0.85936 ms
 	 */
