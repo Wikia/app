@@ -10,9 +10,6 @@
 	$tab-padding-vertical: 13px;
 	$tab-default-color: $wds-color-link;
 	$tab-hover-color: darken($tab-default-color, 20%);
-	$tab-icon-size: 14px;
-	$tab-chevron-size: $wds-icon-tiny-size;
-	$tab-icon-margin: 6px;
 
 	cursor: pointer;
 	line-height: 14px;
@@ -31,16 +28,8 @@
 		text-transform: uppercase;
 		transition: color .1s;
 
-		.wds-dropdown__toggle-chevron {
-			margin-left: 0;
-		}
-
 		:not(:first-child):not(:only-child) {
 			margin: 0 4px;
-		}
-
-		.wds-icon {
-			@include square($tab-icon-size);
 		}
 	}
 

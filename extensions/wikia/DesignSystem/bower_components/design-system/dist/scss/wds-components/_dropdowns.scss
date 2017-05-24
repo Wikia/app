@@ -8,8 +8,6 @@
 	&__toggle {
 		cursor: pointer;
 		position: relative;
-		// dropdown content has shadow that should be hidden below the toggle
-		z-index: $content-z-index + 1;
 	}
 
 	&__toggle-chevron {
