@@ -260,7 +260,8 @@ class PhalanxHooks extends WikiaObject {
 				'ip_from_fastly' => $clientIPFromFastly,
 				'ip_from_user' => $user->getName(),
 				'ip_from_request' => $wgRequest->getIP(),
-				'user_agent' => $userAgent ? $userAgent : '',
+				// SUS-2008, always log user_agent as string
+				'user_agent' => $userAgent ?: '',
 			] );
 		}
 
