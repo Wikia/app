@@ -37,17 +37,7 @@ $(function () {
 			params.excludeScss = window.wgSassLoadedScss;
 		}
 
-		// TODO XW-2760 remove after experiment is done
-		if (
-			window.Wikia &&
-			window.Wikia.AbTest &&
-			true
-			// FIXME uncomment and adjust after AB test is set up
-			// window.Wikia.AbTest.isExperimentActive('AD_MIX') &&
-			// !window.Wikia.AbTest.inGroup('CONTROL')
-		) {
-			params.isAdMixExperimentEnabled = true;
-		}
+		params.isAdMixExperimentEnabled = window.ads.context.opts.adMixExperimentEnabled;
 
 		$.extend(params, getParamsFromUrl());
 
