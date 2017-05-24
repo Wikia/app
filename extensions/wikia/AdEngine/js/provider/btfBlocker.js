@@ -57,7 +57,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 				return;
 			}
 
-			if (context.opts.adMixExperimentEnabled) {
+			if (context.opts.adMixExperimentEnabled && config.adMixBtfSlots) {
 				win.ads.runtime.disableBtf = true;
 				config.adMixBtfSlots.map(unblock);
 			}
