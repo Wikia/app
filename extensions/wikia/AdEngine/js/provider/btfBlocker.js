@@ -62,10 +62,6 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 				config.adMixBtfSlots.map(unblock);
 			}
 
-			if (win.ads.runtime.unblockHighlyViewableSlots && config.highlyViewableSlots) {
-				config.highlyViewableSlots.map(unblock);
-			}
-
 			lazyQueue.makeQueue(btfQueue, processBtfSlot);
 			btfQueue.start();
 
