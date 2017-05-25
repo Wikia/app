@@ -62,6 +62,13 @@ describe('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', function () {
 			isValid: true
 		},
 		{
+			configPrice: 've0031LB+100%',
+			expectedPrice: 0.31,
+			expectedPosition: 'LB',
+			expectedMoatTracking: 100,
+			isValid: true
+		},
+		{
 			configPrice: 've0000xx',
 			expectedPrice: DEFAULT_PRICE,
 			expectedPosition: DEFAULT_POS,
@@ -71,6 +78,13 @@ describe('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', function () {
 			configPrice: 've0001xx',
 			expectedPrice: 0.01,
 			expectedPosition: 'XX',
+			isValid: true
+		},
+		{
+			configPrice: 've0001xx+100%',
+			expectedPrice: 0.01,
+			expectedPosition: 'XX',
+			expectedMoatTracking: 100,
 			isValid: true
 		},
 		{
@@ -166,6 +180,11 @@ describe('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', function () {
 			expect(result.position).toEqual(testCase.expectedPosition);
 			expect(result.valid).toEqual(testCase.isValid);
 			expect(result.vastId).toEqual('DFP:' + adId);
+			if (testCase.expectedMoatTracking) {
+				expect(result.moatTracking).toEqual(testCase.expectedMoatTracking);
+			} else {
+				expect(result.moatTracking).toEqual(1);
+			}
 		});
 	});
 

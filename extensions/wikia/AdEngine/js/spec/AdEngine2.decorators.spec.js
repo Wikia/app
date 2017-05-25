@@ -44,8 +44,13 @@ describe('ext.wikia.adEngine.adEngine decorators', function () {
 			show: noop,
 			hide: noop
 		},
-		slotTracker: {}
+		slotTracker: {},
+		pageFair: {
+			isSlotRecoverable: noop
+		}
 	};
+
+	mocks.log.levels = {};
 
 	function getAdEngine() {
 		return modules['ext.wikia.adEngine.adEngine'](
@@ -58,7 +63,8 @@ describe('ext.wikia.adEngine.adEngine decorators', function () {
 			mocks.hooks,
 			mocks.doc,
 			mocks.lazyQueue,
-			mocks.log
+			mocks.log,
+			mocks.pageFair
 		);
 	}
 

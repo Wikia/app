@@ -89,8 +89,16 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 	public function reallyDoQuery( $limit = false, $offset = false ) {
 		global $wgCityId;
 
-		$tcs = new UserTemplateClassificationService();
-		$recognizedTemplates = $tcs->getTemplatesOnWiki( $wgCityId );
+		try {
+			$tcs = new UserTemplateClassificationService();
+			$recognizedTemplates = $tcs->getTemplatesOnWiki( $wgCityId );
+		}
+		catch ( Swagger\Client\ApiException $e ) {
+			Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ , [
+				'exception' => $e
+			]);
+			return [];
+		}
 
 		$nonportableInfoboxes = [];
 

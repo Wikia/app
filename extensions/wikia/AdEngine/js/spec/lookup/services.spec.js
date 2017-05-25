@@ -38,13 +38,6 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 			getName: function () { return 'prebid'; },
 			hasResponse: function () { return true; }
 		},
-		vulcan: {
-			trackState: noop,
-			wasCalled: noop,
-			getSlotParams: noop,
-			getName: function () { return 'rubicon_vulcan'; },
-			hasResponse: function () { return true; }
-		},
 		window: {}
 	};
 
@@ -135,44 +128,21 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 		expect(mocks.prebid.trackState).toHaveBeenCalled();
 	});
 
-	it('extends slot targeting for Rubicon Vulcan', function () {
-		var lookup = modules['ext.wikia.adEngine.lookup.services'](
-			mocks.log,
-			undefined,
-			mocks.vulcan
-			),
-			slotTargetingMock = {a: 'b'},
-			expectedSlotTargeting = {
-				a: 'b',
-				vulcanslots: ['va1s', 'va2s', 'va3s'],
-				bid: 'xxxVx'
-			};
-
-		spyOn(mocks.vulcan, 'trackState');
-		spyOn(mocks.vulcan, 'wasCalled').and.returnValue(true);
-		spyOn(mocks.vulcan, 'getSlotParams').and.returnValue({vulcanslots: ['va1s', 'va2s', 'va3s']});
-
-		lookup.extendSlotTargeting('TOP_LEADERBOARD', slotTargetingMock, 'DirectGpt');
-		expect(slotTargetingMock).toEqual(expectedSlotTargeting);
-		expect(mocks.vulcan.trackState).toHaveBeenCalled();
-	});
-
 	it('correctly mark all bid slots', function () {
 		var lookup = modules['ext.wikia.adEngine.lookup.services'](
 			mocks.log,
 			mocks.prebid,
 			mocks.amazon,
 			mocks.oxBidder,
-			mocks.fastlane,
-			mocks.vulcan
+			mocks.fastlane
 			),
 			slotTargetingMock = {a: 'b'},
 			expectedSlotTargeting = {
 				a: 'b',
 				slots: ['va1s', 'va2s', 'va3s'],
-				bid: 'ROAVP'
+				bid: 'ROAxP'
 			},
-			testedProviders = [mocks.vulcan, mocks.amazon, mocks.prebid, mocks.oxBidder, mocks.fastlane];
+			testedProviders = [mocks.amazon, mocks.prebid, mocks.oxBidder, mocks.fastlane];
 
 		testedProviders.forEach(function(provider) {
 			spyOn(provider, 'wasCalled').and.returnValue(true);

@@ -12,16 +12,10 @@ class MetadataSpecialController extends WikiaSpecialPageController {
 	 */
 	protected $currentTitle;
 
-	/**
-	 * @param \HubRssFeedModel $model
-	 */
 	public function setModel( $model ) {
 		$this->model = $model;
 	}
 
-	/**
-	 * @return \HubRssFeedModel
-	 */
 	public function getModel() {
 		return $this->model;
 	}
@@ -34,6 +28,7 @@ class MetadataSpecialController extends WikiaSpecialPageController {
 
 
 	public function index() {
+		Wikia\Logger\WikiaLogger::instance()->debug( 'SUS-1276', [ 'method' => __METHOD__ ] );
 		if ( !$this->checkAccess() ) {
 			$this->forward( "MetadataSpecialController", "noperms" );
 		} else {

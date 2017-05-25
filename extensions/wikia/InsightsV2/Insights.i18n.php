@@ -857,12 +857,6 @@ $messages['ru'] = array(
 	'right-insights' => 'Позволяет просматривать служебную страницу [[Special:Insights]] и её подстраницы со списком статей или шаблонов, которые требуется доработать.',
 );
 
-$messages['zh'] = array(
-	'insights-altaction-convert' => '变更！',
-	'insights-list-subtitle-templateswithouttype' => '未分类的模板',
-	'insights-used-on' => '使用于 $1 篇文章',
-);
-
 $messages['zh-hans'] = array(
 	'insights' => '问题页面列表',
 	'insights-desc' => '介绍了[[Special:Insights|问题页面列表]]特别页以及其子页面，它们列出了所有需要贡献者注意的文章页面或模版。',
@@ -995,17 +989,5 @@ $messages['zh-hant'] = array(
 	'insights-list-description-popularpages' => '這些是讀者感興趣的頁面！請確保各頁面達到你的標準，並加上最新的圖片和資訊。',
 	'insights-error' => '出現錯誤。 請再試一次。',
 	'right-insights' => '允許查看到 [[Special:Insights|問題頁面列表]]特殊頁面和其子頁面，其中列出了貢獻者需要注意的文章、模板等。',
-);
-
-$messages['zh-hk'] = array(
-	'insights-altaction-convert' => '變更！',
-	'insights-list-subtitle-templateswithouttype' => '未分類的模板',
-	'insights-used-on' => '使用於 $1 篇文章',
-);
-
-$messages['zh-tw'] = array(
-	'insights-altaction-convert' => '變更！',
-	'insights-list-subtitle-templateswithouttype' => '未分類的模板',
-	'insights-used-on' => '使用於 $1 篇文章',
 );
 

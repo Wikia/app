@@ -89,8 +89,8 @@ class Chat {
 	 */
 	public static function banUser( $subjectUserName, User $adminUser, $time, $reason ) {
 		self::info( __METHOD__ . ': Method called', [
-			'subjectUserName' => $subjectUserName,
-			'adminUser' => $adminUser,
+			'subject_user_name' => $subjectUserName,
+			'admin_user' => $adminUser->getId(),
 			'time' => $time,
 			'reason' => $reason,
 		] );
@@ -129,9 +129,8 @@ class Chat {
 		}
 
 		self::info( __METHOD__ . ': Method called', [
-			'cityId' => $cityId,
-			'subjectUser' => $subjectUser->getId(),
-			'adminUser' => $adminUser->getId(),
+			'subject_user' => $subjectUser->getId(),
+			'admin_user' => $adminUser->getId(),
 			'time' => $time,
 			'reason' => $reason,
 			'action' => $action,
@@ -230,8 +229,8 @@ class Chat {
 	 */
 	public static function promoteModerator( $subjectUserName, $adminUser ) {
 		self::info( __METHOD__ . ': Method called', [
-			'subjectUserName' => $subjectUserName,
-			'adminUser' => $adminUser
+			'subject_user_name' => $subjectUserName,
+			'admin_user' => $adminUser->getId()
 		] );
 
 		$subjectUser = User::newFromName( $subjectUserName );

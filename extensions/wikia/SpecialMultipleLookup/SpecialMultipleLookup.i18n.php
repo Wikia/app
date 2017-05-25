@@ -814,34 +814,6 @@ $messages['pt'] = array(
 	'action-multilookup' => 'pesquisar informações sobre usuários em múltiplas wikis',
 );
 
-$messages['pt-br'] = array(
-	'specialmultiplelookup-desc' => 'Permite procurar informação de usuários em várias wikis',
-	'multilookup' => 'Procura múltipla',
-	'multilookupstitle' => 'Procura múltipla',
-	'multilookupselectuser' => 'Procurar contas vindas do mesmo endereço IP em várias wikis',
-	'multilookupgo' => 'Ir',
-	'multilookupnotspecify' => 'Você ainda não especificou um endereço IP.',
-	'multilookupnext' => 'seguinte',
-	'multilookupprevious' => 'anterior',
-	'multilookupnbrresult' => 'Número de resultados:',
-	'multilookupinvalidresults' => 'Resultados inválidos!',
-	'multilookupnoresultfound' => 'Nenhum resultado encontrado!',
-	'multilookupwiki' => 'Wiki',
-	'multilookuplink' => 'Link para contribuições',
-	'multilookupdetails' => 'Ver detalhes',
-	'multilookuplistwikiainfo' => 'Lista das wikis com artigos editados por usuários com o IP: <b>$1</b>',
-	'multilookupinvaliduser' => '<p class="error">O IP "<b>$1</b>" não existe. Verifique se você se enganou ao escrever o endereço.</p>',
-	'multilookuplastedit' => 'Última edição deste IP:',
-	'multilookupwikidbname' => 'Nome da base de dados',
-	'multilookupwikiurl' => 'Site',
-	'multilookupwikititle' => 'Título',
-	'multilookupwikioptions' => 'Opções',
-	'multilookuplastedithdr' => 'Última edição',
-	'multilookuprecordspager' => "Mostrando os registos '''$1''' a '''$2''' de '''$3'''.",
-	'right-multilookup' => 'Procure informação de usuários em várias wikis',
-	'action-multilookup' => 'pesquisar informações sobre usuários em múltiplas wikis',
-);
-
 $messages['ro'] = array(
 	'multilookupdetails' => 'Vezi detalii',
 	'multilookupwikiurl' => 'Adresă',
@@ -1031,10 +1003,6 @@ $messages['yi'] = array(
 	'multilookupprevious' => 'פֿריערדיקער',
 );
 
-$messages['zh'] = array(
-	'multilookup' => '查询多个帐户',
-);
-
 $messages['zh-hans'] = array(
 	'specialmultiplelookup-desc' => '在多个wiki上提供用户信息查阅',
 	'multilookup' => '查询多个帐户',
@@ -1089,13 +1057,5 @@ $messages['zh-hant'] = array(
 	'multilookuprecordspager' => "Showing '''$1''' to '''$2''' of '''$3''' records.",
 	'right-multilookup' => '查看所有Wiki上的IP操作',
 	'action-multilookup' => 'look up information on users in multiple wikis',
-);
-
-$messages['zh-hk'] = array(
-	'multilookup' => '查詢多個帳戶',
-);
-
-$messages['zh-tw'] = array(
-	'multilookup' => '查詢多個帳戶',
 );
 

@@ -9,9 +9,9 @@ describe('ext.wikia.adEngine.lookup.prebid.prebidSettings', function () {
 				size: '728x90',
 				cpm: 10
 			},
-			priceGranularityHelper: {
-				transformPriceFromCpm: function(cpm) {
-					return cpm;
+			bidHelper: {
+				transformPriceFromBid: function(bid) {
+					return bid.cpm;
 				}
 			}
 		},
@@ -19,7 +19,7 @@ describe('ext.wikia.adEngine.lookup.prebid.prebidSettings', function () {
 
 	function getPrebidSettings() {
 		return modules['ext.wikia.adEngine.lookup.prebid.prebidSettings'](
-			mocks.priceGranularityHelper
+			mocks.bidHelper
 		);
 	}
 

@@ -130,11 +130,18 @@ define('wikia.browserDetect', ['wikia.window'], function (win) {
 		return browser;
 	}
 
+	function getBrowserVersion() {
+		var browserStringParts = getBrowser().split(' ');
+
+		return parseInt(browserStringParts[1], 10);
+	}
+
 	/**
 	 * Public API
 	 */
 	return {
 		getBrowser: getBrowser,
+		getBrowserVersion: getBrowserVersion,
 		getOS: getOS,
 		isIE: isIE,
 		isFirefox: isFirefox,

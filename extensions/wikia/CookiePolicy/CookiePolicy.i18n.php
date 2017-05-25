@@ -66,8 +66,3 @@ $messages['zh-hant'] = array(
 	'cookie-policy-notification-message' => 'Fandom使用cookie以便能提供最好的用戶使用體驗。訪問Fandom，即代表您同意接受使用我們的cookie。[http://zh-tw.wikia.com/wiki/%E9%9A%B1%E7%A7%81%E6%AC%8A%E6%96%B9%E9%87%9D#Cookies 了解更多cookie的相關內容]',
 );
 
-$messages['zh-tw'] = array(
-	'cookie-policy-description' => '在歐盟國家，法律規定網路網站點在對第一次進行網路訪問的使用者記錄cookie的時候，需要對其進行告知。這項擴展功能允許Wikia符合相關的法律規定。',
-	'cookie-policy-notification-message' => 'Wikia使用cookie提供最好的用戶使用經驗。通過不斷地訪問Wikia，您將同意接受使用我們的cookie。[[homepage:Privacy_Policy#Cookies|了解更多cookie的相關內容]]',
-);
-
