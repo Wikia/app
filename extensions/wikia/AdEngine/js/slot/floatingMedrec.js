@@ -1,13 +1,17 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.floatingMedrec', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.slot.service.viewabilityHandler',
 	'jquery',
+	'wikia.abTest',
 	'wikia.log',
 	'wikia.throttle',
 	'wikia.window'
 ], function (
 	adContext,
+	viewabilityHandler,
 	$,
+	abTest,
 	log,
 	throttle,
 	win
@@ -32,7 +36,12 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 			$adSlot = $('<div class="wikia-ad"></div>').attr('id', slotName),
 			$footer = $('#WikiaFooter'),
 			$placeHolder = $('#WikiaAdInContentPlaceHolder'),
-			$win = $(win);
+			$win = $(win),
+			refresh = {
+				refreshAdPos: 0,
+				lastRefreshTime: new Date(),
+				refreshNumber: 0
+			};
 
 		function getStartPosition(placeHolder) {
 			return parseInt(placeHolder.offset().top, 10) -
@@ -51,6 +60,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 		}
 
 		function update() {
+
 			if ($win.scrollTop() <= startPosition) {
 				$adSlot.css({
 					position: 'relative',
@@ -75,6 +85,27 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 						visibility: 'visible'
 					});
 				}
+			}
+
+			if (abTest.getGroup('AD_MIX') === 'AD_MIX_1') {
+				refreshAdIfPossible();
+			}
+		}
+
+		function getDifference(currentAdPos) {
+			return currentAdPos > refresh.refreshAdPos ? currentAdPos - refresh.refreshAdPos : refresh.refreshAdPos - currentAdPos;
+		}
+
+		function refreshAdIfPossible() {
+			var currentAdPos = $adSlot.offset().top,
+				heightScrolled = getDifference(currentAdPos),
+				timeDifference = (new Date()) - refresh.lastRefreshTime;
+
+			if (heightScrolled > 10 && timeDifference > 10000 && refresh.refreshNumber < 3) {
+				refresh.lastRefreshTime = new Date();
+				refresh.refreshAdPos = currentAdPos;
+				refresh.refreshNumber++;
+				viewabilityHandler.refreshOnView(slotName, 0);
 			}
 		}
 
@@ -112,6 +143,8 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 							win.addEventListener('scroll', update);
 							win.addEventListener('resize', update);
 
+							refresh.refreshAdPos = $adSlot.offset().top;
+							refresh.lastRefreshTime = new Date();
 						}
 					});
 					adPushed = true;
