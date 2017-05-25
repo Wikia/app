@@ -31,10 +31,10 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 		// AD_MIX_2: topRightAdFixed === true && recircFixed === true
 		// AD_MIX_3: reloadRecirc === true && recircFixed === true
 		// CONTROL: all === false
-		var reloadFloatingMedrec = !!(abTest.getGroup('AD_MIX') && abTest.getGroup('AD_MIX') === 'AD_MIX_1');
-		var topRightAdFixed = !!(abTest.getGroup('AD_MIX') && abTest.getGroup('AD_MIX') === 'AD_MIX_2');
-		var reloadRecirc = !!(abTest.getGroup('AD_MIX') && abTest.getGroup('AD_MIX') === 'AD_MIX_3');
-		var recircFixed = !!(abTest.getGroup('AD_MIX') && abTest.getGroup('AD_MIX') !== 'CONTROL');
+		var reloadFloatingMedrec = abTest.getGroup('AD_MIX') === 'AD_MIX_1';
+		var topRightAdFixed = abTest.getGroup('AD_MIX') === 'AD_MIX_2';
+		var reloadRecirc = abTest.getGroup('AD_MIX') === 'AD_MIX_3';
+		var recircFixed = abTest.getGroup('AD_MIX') !== 'CONTROL';
 
 		function getFirstAdTopPosition() {
 			return $rail.offset().top - globalNavigationHeight - firstAdTopSpace;
