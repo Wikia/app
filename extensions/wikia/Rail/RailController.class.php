@@ -75,7 +75,7 @@ class RailController extends WikiaController {
 		krsort( $railModules );
 
 		// TODO XW-2760 remove after experiment is done
-		$isAdMixExperimentEnabled = $this->request->getVal( 'isAdMixExperimentEnabled', false );
+		$isAdMixExperimentEnabled = $this->request->getBool( 'isAdMixExperimentEnabled', false );
 
 		if ( $isAdMixExperimentEnabled ) {
 			// copied from RecirculationHooks::onGetRailModuleList
