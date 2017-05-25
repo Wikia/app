@@ -27,14 +27,14 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 		var visibleElementBeforeWrapperHeight;
 
 		// ad mix flags
-		// AD_MIX_1: reloadFloatingMedrec === true && recircFixed === true
-		// AD_MIX_2: topRightAdFixed === true && recircFixed === true
-		// AD_MIX_3: reloadRecirc === true && recircFixed === true
+		// AD_MIX_1: reloadFloatingMedrec === true && recircEnabled === true
+		// AD_MIX_2: topRightAdFixed === true && recircEnabled === true
+		// AD_MIX_3: reloadRecirc === true && recircEnabled === true
 		// CONTROL: all === false
 		var reloadFloatingMedrec = abTest.getGroup('AD_MIX') === 'AD_MIX_1';
 		var topRightAdFixed = abTest.getGroup('AD_MIX') === 'AD_MIX_2';
 		var reloadRecirc = abTest.getGroup('AD_MIX') === 'AD_MIX_3';
-		var recircFixed = abTest.getGroup('AD_MIX') !== 'CONTROL';
+		var recircEnabled = abTest.getGroup('AD_MIX') !== 'CONTROL';
 
 		function getFirstAdTopPosition() {
 			return $rail.offset().top - globalNavigationHeight - firstAdTopSpace;
@@ -283,7 +283,7 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 			$recircWrapper = $('#recirculation-rail');
 			$adAndRecircWrapper = $('#WikiaAdInContentPlaceHolder');
 
-			if (recircFixed) {
+			if (recircEnabled) {
 				$adAndRecircWrapper.addClass('ad-mix-experiment-enabled');
 			}
 
