@@ -79,16 +79,16 @@ $messages['qqq'] = array(
 $messages['de'] = array(
 	'closemyaccount' => 'Benutzerkonto schließen',
 	'closemyaccount-desc' => 'Ermöglicht Benutzern, ihre Benutzerkonten zu schließen.',
-	'closemyaccount-intro-text' => 'Schade, dass {{GENDER:$2|du}} dein Benutzerkonto schließen möchtest. Fandom bietet jede Menge Wikis zu allen möglichen Themen und wir würden uns freuen, wenn du noch ein wenig bleibst und das richtige für dich findest. Falls du ein Problem in deiner Community hast, zögere nicht, einen der [[Spezial:Benutzer/sysop|Admins dort]] um Hilfe zu bitten.
+	'closemyaccount-intro-text' => 'Schade, dass {{GENDER:$2|du}} dein Benutzerkonto schließen möchtest. Fandom bietet jede Menge Wikis zu allen möglichen Themen und wir würden uns freuen, wenn du noch ein wenig bleibst und das Richtige für dich findest. Falls du ein Problem in deiner Community hast, zögere nicht, einen der [[Spezial:Benutzer/sysop|Admins dort]] um Hilfe zu bitten.
 
 Wenn du dich dazu entschlossen hast, dein Benutzerkonto definitiv zu schließen, beachte die folgenden Hinweise:
-* Fandom hat nicht die Möglichkeit, Benutzerkonten komplett zu entfernen, aber wir können sie deaktivieren. Das stellt sicher, dass das Konto geschlossen ist und nicht mehr benutzt werden kann.
+* Fandom kann Benutzerkonten nicht komplett zu entfernen, aber wir können sie deaktivieren. Das stellt sicher, dass das Konto geschlossen ist und nicht mehr benutzt werden kann.
 * Diese Entscheidung kann nach dem Ablauf von $1 {{PLURAL:$1|Tag|Tagen}} NICHT wieder rückgängig gemacht werden und du wirst ein neues Konto anlegen müssen, wenn du Fandom wieder beitreten möchtest.
 * Dieser Prozess entfernt keinen deiner Beiträge von Fandom, da diese Bearbeitungen der gesamten Community gehören.
 
 Falls du genauer wissen möchtest, was bei der Deaktivierung eines Benutzerkontos passiert, schau dir unsere [[w:c:de:Hilfe:Benutzerkonto_stilllegen|Hilfeseite zum Thema]] an. Wenn du dir sicher bist, dass du dein Benutzerkonto deaktivieren möchtest, klicke bitte auf den untenstehenden Knopf.
 
-Bitte beachte, dass du nach dem Abschicken $1 {{PLURAL:$1|Tag|Tage}} Zeit hast, um dein Benutzerkonto wieder zu aktivieren. Melde dich dazu an und folgen den Hinweisen. Nach dieser Übergangszeit wird dein Benutzerkonto dauerhaft geschlossen und kann nicht wiederhergestellt werden.',
+Bitte beachte, dass du nach dem Abschicken $1 {{PLURAL:$1|Tag|Tage}} Zeit hast, um dein Benutzerkonto wieder zu aktivieren. Melde dich dazu an und folge den Hinweisen. Nach dieser Übergangszeit wird dein Benutzerkonto dauerhaft geschlossen und kann nicht wiederhergestellt werden.',
 	'closemyaccount-unconfirmed-email' => 'Achtung: Du hast keine bestätigte E-Mail-Adresse mit diesem Benutzerkonto verbunden. Ohne eine bestätigte E-Mail-Adresse kannst du dein Konto in der Wartezeit nicht wieder aktivieren. Bitte überlege dir, eine E-Mail-Adresse in deinen [[Special:Preferences|Benutzereinstellungen]] anzugeben und zu bestätigen, bevor du fortfährst.',
 	'closemyaccount-logged-in-as' => 'Du bist angemeldet als {{GENDER:$1|$1}}. [[Special:UserLogout|Das bist du nicht?]]',
 	'closemyaccount-current-email' => '{{GENDER:$2|Deine}} E-Mail-Adresse lautet $1. [[Special:Preferences|Möchtest du sie ändern?]]',
@@ -482,14 +482,6 @@ $messages['ru'] = array(
 	'closemyaccount-reactivate-success' => 'Ваша учётная запись была восстановлена.',
 );
 
-$messages['zh'] = array(
-	'closemyaccount' => '关闭我的帐号',
-);
-
-$messages['zh-cn'] = array(
-	'closemyaccount' => '关闭我的帐号',
-);
-
 $messages['zh-hans'] = array(
 	'closemyaccount' => '关闭我的帐户',
 	'closemyaccount-desc' => '允许用户关闭其自己的帐户。',
@@ -566,46 +558,5 @@ $messages['zh-hant'] = array(
 
 請注意，您還有$1{{PLURAL:$1|天|天}}時間可重新啟用您的帳號。請您[[Special:UserLogin|登錄帳號]]進行重新啟用。在這段時間之後，您的帳號將被永久關閉而無法恢復。',
 	'closemyaccount-scheduled-failed' => '關閉帳號出現錯誤，請[[Special:CloseMyAccount|重新進行關閉]]。如果問題依然存在，請[[Special:Contact|聯絡我們]]。',
-);
-
-$messages['zh-hk'] = array(
-	'closemyaccount' => '關閉我的帳號',
-);
-
-$messages['zh-tw'] = array(
-	'closemyaccount' => '關閉我的帳號',
-	'closemyaccount-desc' => 'Allows users to close their own accounts.',
-	'closemyaccount-intro-text' => '我們很抱歉您希望禁用您的帳戶。 Wikia擁有眾多的流行話題，您在此可以不斷查看新的主題社區。如果您在任何喜歡的維基上遇到了問題，您可以選擇聯繫這個維基的[[Special:ListUsers/sysop|管理員]]獲取建議和幫助。
-
-如果您已經確定需要禁用帳戶，您需要注意的是：
-* Wikia沒有能力完全刪除您的帳戶，但是我們可以禁用您的帳戶。這將確保此帳戶被永久鎖定，不能被再次使用。
-* 這個過程將在$1{{PLURAL:$1|天|天}}後不可逆。如果您希望重新加入Wikia，您必須重新創建一個新的帳戶。
-* 禁用的過程不會刪除您舊帳戶的歷史紀錄，因為這些紀錄屬於您之前編輯過的維基社區的一部分。
-
-如果您希望了解更多關於禁用帳戶的有關信息，請訪問社區中心的[[Help:Close_my_account|幫助:關閉帳戶]]。如果您確定需要關閉您的帳戶，請點擊下面的按鈕。
-
-請注意，您將有$1{{PLURAL:$1|天|天}}時間重新激活您的帳戶。超過這段時間之後，您的帳戶將被永久禁用並且不能被重新恢復。',
-	'closemyaccount-unconfirmed-email' => '警告: 您並沒有任何和您帳戶相連的註冊郵件信息，因此我們將不能在有效時間內幫您重新激活帳戶。請您在進行下一步之前，在[[Special:Preferences|個人設置]]中設置您的電子郵箱。',
-	'closemyaccount-logged-in-as' => '您將作為{{GENDER:$1|$1}}登陸。 [[Special:UserLogout|非本人?]]',
-	'closemyaccount-current-email' => '{{GENDER:$2|您的}}電子郵箱將被設置為$1。 [[Special:Preferences|您希望進行更改?]]',
-	'closemyaccount-confirm' => '{{GENDER:$1|我}}已經閱讀了[[Help:Close_my_account|幫助頁面關閉帳戶]]的相關條款並且同意禁用我的Wikia帳戶。',
-	'closemyaccount-button-text' => '關閉我的帳戶',
-	'closemyaccount-reactivate-button-text' => '重新啟動我的帳戶',
-	'closemyaccount-reactivate-page-title' => '重新啟動我的帳戶',
-	'closemyaccount-reactivate-intro' => '您之前申請過要求禁用此帳戶，不過您目前還有$1{{PLURAL:$1|天|天}}的時間可以恢復您的帳戶。如果您仍然希望關閉此帳戶，請繼續您的網頁瀏覽。如果您希望重新激活此帳戶，請點擊下面按鈕，並且按照郵件中的說明逐步進行。
-
-您希望重新激活您的帳戶嗎？',
-	'closemyaccount-reactivate-requested' => '我們已經發送了一封郵件到您的郵箱中。請點擊郵件中的鏈接重新激活您的帳戶。',
-	'closemyaccount-reactivate-error-id' => '請登錄您的帳戶進行重新激活。',
-	'closemyaccount-reactivate-error-email' => '在您要求關閉此帳戶之前未設置任何郵件地址，因此我們無法幫您重新激活此帳戶。如果您有任何疑問，請發郵件[http://zh.community.wikia.com/wiki/Special:Contact/general 聯繫我們]。',
-	'closemyaccount-reactivate-error-not-scheduled' => '帳戶不能被成功關閉。',
-	'closemyaccount-reactivate-error-invalid-code' => '您似乎使用的是過期的驗證碼。請登陸您的郵箱查看最新的驗證碼，或者[[Special:UserLogin|登陸您之前要求封禁的帳戶]]，按步驟重新進行激活。',
-	'closemyaccount-reactivate-error-empty-code' => '激活帳戶的驗證碼不可用。您需要點擊郵件中的鏈接地址重新激活您的帳戶；或者，您可以[[Special:UserLogin|登陸]]帳戶重新發送驗證碼。',
-	'closemyaccount-reactivate-error-disabled' => '這個帳戶已經被禁用。如果您有任何問題，請[http://zh.community.wikia.com/wiki/Special:Contact/general 聯繫Wikia]。',
-	'closemyaccount-reactivate-error-failed' => '重新激活帳戶出現錯誤，請再試一次。如果問題依然存在，請[http://zh.community.wikia.com/wiki/Special:Contact/general 聯繫我們]。',
-	'closemyaccount-scheduled' => '您的帳戶已經成功被禁用。
-
-請注意，您還有$1{{PLURAL:$1|天|天}}時間重新激活您的帳戶。請您[[Special:UserLogin|登陸帳戶]]進行激活。在這段時間之後，您的帳戶將被永久禁用並且無法恢復。',
-	'closemyaccount-scheduled-failed' => '關閉帳戶出現錯誤，請[[Special:CloseMyAccount|重新進行關閉]]。如果問題依然存在，請[http://zh.community.wikia.com/wiki/Special:Contact/general 聯繫我們]。',
 );
 

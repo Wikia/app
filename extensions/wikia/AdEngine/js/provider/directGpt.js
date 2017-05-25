@@ -19,7 +19,6 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			GPT_FLUSH:                  {flushOnly: true},
 			INCONTENT_BOXAD_1:          {size: '120x600,160x600,300x250,300x600', loc: 'hivi'},
 			INCONTENT_PLAYER:           {size: '1x1', loc: 'middle'},
-			INCONTENT_LEADERBOARD:      {size: '1x1,728x90,300x250,468x60', loc: 'hivi'},
 			INVISIBLE_HIGH_IMPACT_2:    {loc: 'hivi'},
 			INVISIBLE_SKIN:             {size: '1000x1000,1x1', loc: 'top'},
 			LEFT_SKYSCRAPER_2:          {size: '120x600,160x600,300x250,300x600,300x1050', loc: 'middle'},
@@ -61,12 +60,8 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			],
 			highlyViewableSlots: [
 				'INCONTENT_BOXAD_1',
-				'INCONTENT_LEADERBOARD',
 				'INCONTENT_PLAYER',
 				'INVISIBLE_HIGH_IMPACT_2'
-			],
-			adMixBtfSlots: [
-				'INCONTENT_BOXAD_1'
 			]
 		}
 	);

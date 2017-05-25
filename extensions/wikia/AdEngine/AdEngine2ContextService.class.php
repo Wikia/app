@@ -34,6 +34,7 @@ class AdEngine2ContextService {
 			$newWikiVertical = $wikiFactoryHub->getWikiVertical( $wg->CityId );
 			$newWikiVertical = !empty($newWikiVertical['short']) ? $newWikiVertical['short'] : 'error';
 
+
 			$context = [
 				'opts' => $this->filterOutEmptyItems( [
 					'adsInContent' => $wg->EnableAdsInContent,
@@ -49,7 +50,9 @@ class AdEngine2ContextService {
 					'sourcePointRecovery' => ARecoveryModule::isSourcePointRecoveryEnabled(),
 					'pageFairDetectionUrl' => $pageFairDetectionUrl,
 					'pageFairRecovery' => ARecoveryModule::isPageFairRecoveryEnabled(),
-					'prebidBidderUrl' => $prebidBidderUrl
+					'prebidBidderUrl' => $prebidBidderUrl,
+					'useTaboola' => $wg->AdDriverUseTaboola,
+					'disableTaboola' => !$wg->AdDriverUseTaboola // TODO: remove after release ADEN-5094 cache walkaround
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
 					'enableKruxTargeting' => AnalyticsProviderKrux::isEnabled(),

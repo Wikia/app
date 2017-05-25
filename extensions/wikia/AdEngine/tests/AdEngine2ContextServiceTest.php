@@ -87,7 +87,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			],
 			[
 				'titleMockType' => 'article',
-				'flags' => [ 'wgEnableOutboundScreenExt' ],
+				'flags' => [ ],
 				'expectedOpts' => [ ],
 				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ] ],
 				'expectedProviders' => [ ],
@@ -95,7 +95,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			],
 			[
 				'titleMockType' => 'article',
-				'flags' => [ 'wgOutboundScreenRedirectDelay' ],
+				'flags' => [ ],
 				'expectedOpts' => [ ],
 				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ] ],
 				'expectedProviders' => [ ],
@@ -291,12 +291,11 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgAdDriverEnableAdsInMaps', false );
 		$this->mockGlobalVariable( 'wgAdDriverEnableInvisibleHighImpactSlot', false );
 		$this->mockGlobalVariable( 'wgAdDriverTrackState', false );
+		$this->mockGlobalVariable( 'wgAdDriverUseTaboola', true );
 		$this->mockGlobalVariable( 'wgEnableAdsInContent', false );
 		$this->mockGlobalVariable( 'wgEnableKruxTargeting', false );
 		$this->mockGlobalVariable( 'wgEnableWikiaHomePageExt', false );
 		$this->mockGlobalVariable( 'wgEnableWikiaHubsV3Ext', false );
-		$this->mockGlobalVariable( 'wgEnableOutboundScreenExt', false );
-		$this->mockGlobalVariable( 'wgOutboundScreenRedirectDelay', false );
 		$this->mockGlobalVariable( 'wgWikiDirectedAtChildrenByFounder', false );
 		$this->mockGlobalVariable( 'wgWikiDirectedAtChildrenByStaff', false );
 
@@ -349,7 +348,8 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'delayBtf' => true,
 				'sourcePointMMSDomain' => 'mms.bre.wikia-dev.com',
 				'sourcePointRecovery' => true,
-				'pageFairRecovery' => true
+				'pageFairRecovery' => true,
+				'useTaboola' => true
 			],
 			'targeting' => [
 				'esrbRating' => 'teen',

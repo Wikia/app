@@ -36,11 +36,19 @@ $messages['cs'] = array(
 $messages['de'] = array(
 	'adengine-advertisement' => 'Anzeige',
 	'adengine-desc' => 'Anzeigenengine von Wikia',
+	'adengine-exitstitial-title-template' => 'Du verlässt $1 …',
+	'adengine-exitstitial-redirecting' => 'Dein Browser leitet dich in wenigen Sekunden auf die angeforderte Seite weiter.',
+	'adengine-exitstitial-go-back' => 'Zur vorherigen Seite zurückkehren?',
+	'adengine-exitstitial-button' => 'Diese Anzeige überspringen',
 );
 
 $messages['es'] = array(
 	'adengine-advertisement' => 'anuncio',
 	'adengine-desc' => "Wikia's Ad Engine",
+	'adengine-exitstitial-title-template' => 'Estás saliendo de $1...',
+	'adengine-exitstitial-redirecting' => 'Tu navegador te redirigirá a la página que solicitaste en unos segundos.',
+	'adengine-exitstitial-go-back' => '¿Quieres regresar?',
+	'adengine-exitstitial-button' => 'Saltar este anuncio',
 );
 
 $messages['eu'] = array(
@@ -59,6 +67,10 @@ $messages['fo'] = array(
 $messages['fr'] = array(
 	'adengine-advertisement' => 'publicité',
 	'adengine-desc' => 'Moteur d’annonces de Wikia',
+	'adengine-exitstitial-title-template' => 'Vous êtes en train de quitter $1…',
+	'adengine-exitstitial-redirecting' => 'Votre navigateur vous redirigera vers la page demandée dans quelques secondes.',
+	'adengine-exitstitial-go-back' => 'Revenir en arrière ?',
+	'adengine-exitstitial-button' => 'Passer cette publicité',
 );
 
 $messages['fy'] = array(
@@ -92,13 +104,21 @@ $messages['inh'] = array(
 );
 
 $messages['it'] = array(
-	'adengine-advertisement' => 'Pubblicità',
+	'adengine-advertisement' => 'pubblicità',
 	'adengine-desc' => 'Wikia motore di ricerca',
+	'adengine-exitstitial-title-template' => 'Stai lasciando $1...',
+	'adengine-exitstitial-redirecting' => 'Il browser ti reindirizzerà alla pagina richiesta in pochi secondi.',
+	'adengine-exitstitial-go-back' => 'Vuoi tornare indietro?',
+	'adengine-exitstitial-button' => 'Ignora questo annuncio',
 );
 
 $messages['ja'] = array(
 	'adengine-advertisement' => '広告',
 	'adengine-desc' => "Wikia's Ad Engine",
+	'adengine-exitstitial-title-template' => '$1 から移動する',
+	'adengine-exitstitial-redirecting' => 'お使いのブラウザをご指定のページへリダイレクトします。',
+	'adengine-exitstitial-go-back' => '戻る',
+	'adengine-exitstitial-button' => '広告をスキップ',
 );
 
 $messages['ko'] = array(
@@ -119,7 +139,6 @@ $messages['mk'] = array(
 	'adengine-desc' => 'Рекламен погон на Викија',
 );
 
-
 $messages['mr'] = array(
 	'adengine-advertisement' => 'जाहिरात',
 );
@@ -132,11 +151,19 @@ $messages['ms'] = array(
 $messages['nl'] = array(
 	'adengine-advertisement' => 'advertentie',
 	'adengine-desc' => "Wikia's advertentie-engine",
+	'adengine-exitstitial-title-template' => 'U verlaat nu $1...',
+	'adengine-exitstitial-redirecting' => 'Uw browser leidt u over een paar seconden om naar de pagina die u gevraagd.',
+	'adengine-exitstitial-go-back' => 'Wilt u terug?',
+	'adengine-exitstitial-button' => 'Advertentie overslaan',
 );
 
 $messages['pl'] = array(
 	'adengine-advertisement' => 'reklama',
 	'adengine-desc' => 'Silnik reklam Wikii',
+	'adengine-exitstitial-title-template' => 'Opuszczasz $1…',
+	'adengine-exitstitial-redirecting' => 'Twoja przeglądarka przekieruje cię na pożądaną stronę w ciągu kilku sekund.',
+	'adengine-exitstitial-go-back' => 'Chcesz wrócić na wiki?',
+	'adengine-exitstitial-button' => 'Pomiń tą reklamę',
 );
 
 $messages['ps'] = array(
@@ -147,10 +174,10 @@ $messages['ps'] = array(
 $messages['pt'] = array(
 	'adengine-advertisement' => 'anúncio',
 	'adengine-desc' => "Wikia's Ad Engine",
-);
-
-$messages['pt-br'] = array(
-	'adengine-advertisement' => 'anúncio',
+	'adengine-exitstitial-title-template' => 'Você está deixando $1...',
+	'adengine-exitstitial-redirecting' => 'Seu navegador irá redirecioná-lo à página que você requisitou em alguns segundos.',
+	'adengine-exitstitial-go-back' => 'Deseja voltar?',
+	'adengine-exitstitial-button' => 'Pular este anúncio',
 );
 
 $messages['roa-tara'] = array(
@@ -161,6 +188,10 @@ $messages['roa-tara'] = array(
 $messages['ru'] = array(
 	'adengine-advertisement' => 'реклама',
 	'adengine-desc' => "Wikia's Ad Engine",
+	'adengine-exitstitial-title-template' => 'Вы покидаете $1…',
+	'adengine-exitstitial-redirecting' => 'Ваш браузер перенаправит вас на запрошенную страницу через несколько секунд.',
+	'adengine-exitstitial-go-back' => 'Хотите вернуться?',
+	'adengine-exitstitial-button' => 'Пропустить эту рекламу',
 );
 
 $messages['si'] = array(
@@ -212,10 +243,18 @@ $messages['vi'] = array(
 $messages['zh-hans'] = array(
 	'adengine-advertisement' => '广告',
 	'adengine-desc' => 'Wikia的广告引擎',
+	'adengine-exitstitial-title-template' => '你正在离开$1...',
+	'adengine-exitstitial-redirecting' => '您的浏览器将在几秒钟后重新导向至您需要访问的页面。',
+	'adengine-exitstitial-go-back' => '想要返回吗？',
+	'adengine-exitstitial-button' => '跳过这个广告',
 );
 
 $messages['zh-hant'] = array(
 	'adengine-advertisement' => '廣告',
 	'adengine-desc' => 'Wikia 的廣告引擎',
+	'adengine-exitstitial-title-template' => '您正要離開 $1 ……',
+	'adengine-exitstitial-redirecting' => '您的瀏覽器幾秒鐘內將重新導向到您請求的頁面。',
+	'adengine-exitstitial-go-back' => '想要返回嗎？',
+	'adengine-exitstitial-button' => '跳過廣告',
 );
 
