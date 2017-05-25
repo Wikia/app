@@ -320,12 +320,12 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 			viewportHeight = $window.height();
 			viewportWidth = $window.width();
 
-			$window.scroll(throttle(update, 100));
+			$window.scroll(throttle(update, 32));
 			$window.resize(throttle(function () {
 				viewportHeight = $window.height();
 				viewportWidth = $window.width();
 				update();
-			}, 100));
+			}, 32));
 
 			update();
 		}
