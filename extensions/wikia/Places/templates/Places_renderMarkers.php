@@ -1,4 +1,4 @@
-<div id="<?= $mapId ?>" class="places-map" style="width:100%; height:<?= $height; ?>px"></div>
+<div id="<?= Sanitizer::encodeAttribute( $mapId ); ?>" class="places-map" style="width:100%; height:<?= Sanitizer::encodeAttribute( $height ); ?>px"></div>
 <?=  JSSnippets::addToStack(
 		array( 'places_css', 'places_js' ),
 		array( '$.loadGoogleMaps' ),

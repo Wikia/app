@@ -37,6 +37,7 @@ class PlacesSpecialController extends WikiaSpecialPageController {
 		$this->wg->Out->setSubtitle(wfMsgExt('places-on-map', array('parsemag'), count($this->markers)));
 
 		// use Places controller to render interactive map
+		$this->request->setInternal( true );
 		$this->request->setVal('center', $this->center);
 		$this->request->setVal('markers', $this->markers);
 		$this->request->setVal('height', 500);
