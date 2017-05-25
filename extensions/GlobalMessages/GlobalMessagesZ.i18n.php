@@ -1,5 +1,4 @@
 <?php
-/** Internationalization file for /extensions/GlobalMessages/GlobalMessagesZ extension. */
 $messages = [];
 
 $messages['en'] = [
@@ -709,15 +708,6 @@ Ni mogoče ustrezno preveriti njene varnosti.',
 ];
 
 $messages['sq'] = [
-	'zip-file-open-error' => 'Një gabim është hasur gjatë hapjes së dokumentit për ZIP kontrollimin.',
-	'zip-wrong-format' => 'Dokumenti i specifikuar nuk ishte ZIP dokument.',
-	'zip-bad' => 'Dokumenti është i korruptuar ose përndryshe dokument ZIP i palexueshëm.
-Ajo nuk mund të kontrollohet siç duhet për sigurinë',
-	'zip-unsupported' => 'Dokumenti është ZIP format i cili përdorë ZIP karakteristikat që nuk mbështeten nga MediaWiki.
-Ajo nuk mund të kontrollohet siç duhet për sigurinë.',
-];
-
-$messages['sr'] = [
 	'zip-file-open-error' => 'Një gabim është hasur gjatë hapjes së dokumentit për ZIP kontrollimin.',
 	'zip-wrong-format' => 'Dokumenti i specifikuar nuk ishte ZIP dokument.',
 	'zip-bad' => 'Dokumenti është i korruptuar ose përndryshe dokument ZIP i palexueshëm.

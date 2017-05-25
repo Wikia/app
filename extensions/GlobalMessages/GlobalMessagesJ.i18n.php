@@ -1,5 +1,4 @@
 <?php
-/** Internationalization file for /extensions/GlobalMessages/GlobalMessagesJ extension. */
 $messages = [];
 
 $messages['en'] = [
@@ -4460,22 +4459,6 @@ $messages['sq'] = [
 	'jumpto' => 'Shko tek:',
 	'jumptonavigation' => 'lundrim',
 	'jumptosearch' => 'kërko',
-];
-
-$messages['sr'] = [
-	'january' => 'janar',
-	'june' => 'qershor',
-	'july' => 'korrik',
-	'january-gen' => 'janar',
-	'june-gen' => 'qershor',
-	'july-gen' => 'korrik',
-	'jan' => 'Jan',
-	'jun' => 'Qer',
-	'jul' => 'Korr',
-	'jumpto' => 'Shko tek:',
-	'jumptonavigation' => 'lundrim',
-	'jumptosearch' => 'kërko',
-	'joinnow' => 'Pridružite se',
 ];
 
 $messages['sr-ec'] = [

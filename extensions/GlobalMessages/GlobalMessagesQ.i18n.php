@@ -1,5 +1,4 @@
 <?php
-/** Internationalization file for /extensions/GlobalMessages/GlobalMessagesQ extension. */
 $messages = [];
 
 $messages['en'] = [
@@ -2068,16 +2067,6 @@ $messages['so'] = [
 ];
 
 $messages['sq'] = [
-	'qbfind' => 'Kërko',
-	'qbbrowse' => 'Shfletoni',
-	'qbpageoptions' => 'Kjo faqe',
-	'qbpageinfo' => 'Kontekst',
-	'querypage-no-updates' => 'Përditësimet për këtë faqe për momentin janë të ç\'aktivizuara.
-Këtu informacioni nuk do të jetë i përditësuar.',
-	'querypage-disabled' => 'Kjo faqe speciale është çaktivizuar për arsye të performancës.',
-];
-
-$messages['sr'] = [
 	'qbfind' => 'Kërko',
 	'qbbrowse' => 'Shfletoni',
 	'qbpageoptions' => 'Kjo faqe',

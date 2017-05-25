@@ -1,5 +1,4 @@
 <?php
-/** Internationalization file for /extensions/GlobalMessages/GlobalMessagesV extension. */
 $messages = [];
 
 $messages['en'] = [
@@ -9060,62 +9059,6 @@ $messages['so'] = [
 ];
 
 $messages['sq'] = [
-	'variants' => 'Variante',
-	'view' => 'Shiko',
-	'viewdeleted_short' => 'Shiko {{PLURAL:$1|një redaktim të fshirë|$1 redaktime të fshira}}',
-	'views' => 'Shikime',
-	'viewcount' => 'Kjo faqe është shikuar {{PLURAL:$1|një|$1 herë}} .',
-	'view-pool-error' => 'Ju kërkojmë ndjesë, serverët janë të mbingarkuar për momentin.
-Këtë faqe po përpiqen t\'i shikojnë më shumë njerëz nga ç\'është e mundur.
-Ju lutemi prisni pak para se ta hapni sërish këtë faqe.
-
-$1',
-	'versionrequired' => 'Nevojitet versioni $1 i MediaWiki-it',
-	'versionrequiredtext' => 'Nevojitet versioni $1 i MediaWiki-it për përdorimin e kësaj faqeje. Shikoni [[Special:Version|versionin]] tuaj.',
-	'viewsourceold' => 'Shiko tekstin',
-	'viewsourcelink' => 'Shiko tekstin',
-	'viewdeleted' => 'Do ta shikosh $1?',
-	'viewsource' => 'Shiko tekstin',
-	'viewsource-title' => 'Shiko tekstin për $1',
-	'viewsourcetext' => 'Ju mund të shikoni dhe kopjoni tekstin e kësaj faqeje:',
-	'viewyourtext' => 'Ju mund të shikoni dhe të kopjoni tekstin e \'\'\'ndryshimeve tuaja\'\'\' tek kjo faqe:',
-	'virus-badscanner' => 'Konfiguracion i parregullt: Skaner i panjohur virusesh: \'\'$1\'\'',
-	'virus-scanfailed' => 'skani dështoi (code $1)',
-	'virus-unknownscanner' => 'antivirus i pa njohur:',
-	'viewpagelogs' => 'Shiko regjistrat për këtë faqe',
-	'viewprevnext' => 'Shikoni ($1 {{int:pipe-separator}} $2) ($3).',
-	'verification-error' => 'Kjo skedë nuk e kaloi verifikimin e skedave.',
-	'viewdeletedpage' => 'Shikoni faqet e grisura',
-	'version' => 'Versioni',
-	'version-extensions' => 'Zgjerime të instaluara',
-	'version-specialpages' => 'Faqe speciale',
-	'version-parserhooks' => 'Parser goditje',
-	'version-variables' => 'Variabël',
-	'version-antispam' => 'Spam',
-	'version-skins' => 'Pamjet',
-	'version-other' => 'Të tjera',
-	'version-mediahandlers' => 'Mbajtesit e Media-s',
-	'version-hooks' => 'Goditjet',
-	'version-extension-functions' => 'Funksionet shtese',
-	'version-parser-extensiontags' => 'Parser etiketat shtese',
-	'version-parser-function-hooks' => 'Parser goditjet e funksionit',
-	'version-hook-name' => 'Emri i goditjes',
-	'version-hook-subscribedby' => 'Abonuar nga',
-	'version-version' => '(Versioni $1)',
-	'version-license' => 'Licensa',
-	'version-poweredby-credits' => 'Ky wiki është mundësuar nga \'\'\'[//www.mediawiki.org/ MediaWiki]\'\'\', copyright © 2001-$1 $2.',
-	'version-poweredby-others' => 'të tjerë',
-	'version-license-info' => 'MediaWiki është një softuer i lirë; ju mund ta shpërndani dhe redakatoni atë nën kushtet GNU General Public License si e publikuar nga fondacioni Free Software; ose versioni 2 i licensës, ose çdo version më i vonshëm.
-
-MediaWiki është shpërndarë me shpresën se do të jetë i dobishëm, por PA ASNJË GARANCI; as garancinë e shprehur të SHITJES apo PËRDORIMIT PËR NJË QËLLIM TË CAKTUAR. Shikoni GNU General Public License  për më shumë detaje.
-
-Ju duhet të keni marrë [{{SERVER}}{{SCRIPTPATH}}/COPYING një kopje të GNU General Public License] së bashku me këtë program; nëse jo, shkruani tek Free Software Foundation, Inc., 51 Rruga Franklin, Kati i pestë, Boston, MA 02110-1301, ShBA ose [//www.gnu.org/licenses/old-licenses/gpl-2.0.html lexojeni atë online].',
-	'version-software' => 'Softuerët e instaluar',
-	'version-software-product' => 'Produkti',
-	'version-software-version' => 'Versioni',
-];
-
-$messages['sr'] = [
 	'variants' => 'Variante',
 	'view' => 'Shiko',
 	'viewdeleted_short' => 'Shiko {{PLURAL:$1|një redaktim të fshirë|$1 redaktime të fshira}}',

@@ -1,5 +1,4 @@
 <?php
-/** Internationalization file for /extensions/GlobalMessages/GlobalMessagesG extension. */
 $messages = [];
 
 $messages['en'] = [
@@ -5853,36 +5852,6 @@ $messages['so'] = [
 ];
 
 $messages['sq'] = [
-	'go' => 'Shko',
-	'gotaccount' => 'Keni një llogari? \'\'\'$1\'\'\'.',
-	'gotaccountlink' => 'Hyni',
-	'guesstimezone' => 'Gjeje nga shfletuesi',
-	'gender-unknown' => 'e pacaktuar',
-	'gender-male' => 'Mashkull',
-	'gender-female' => 'Femër',
-	'group' => 'Grupi:',
-	'group-user' => 'Përdorues',
-	'group-autoconfirmed' => 'Përdorues të vërtetuar automatikisht',
-	'group-bot' => 'Robot',
-	'group-sysop' => 'Administrues',
-	'group-bureaucrat' => 'Burokrat',
-	'group-suppress' => 'Kujdestari',
-	'group-all' => '(të gjitha)',
-	'group-user-member' => '{{GENDER:$1|përdorues|përdoruese}}',
-	'group-autoconfirmed-member' => '{{GENDER:$1|përdorues i vërtetuar automatikisht|përdoruese e vërtetuar automatikisht}}',
-	'group-bot-member' => '{{GENDER:$1|robot|robote}}',
-	'group-sysop-member' => '{{GENDER:$1|administrues|administruese}}',
-	'group-bureaucrat-member' => '{{GENDER:$1|burokrat|burokrate}}',
-	'group-suppress-member' => '{{GENDER:$1|kujdestar|kujdestare}}',
-	'grouppage-user' => '{{ns:project}}:Përdorues',
-	'grouppage-autoconfirmed' => '{{ns:project}}:Përdorues të vërtetuar automatikisht',
-	'grouppage-bot' => '{{ns:project}}:Robotë',
-	'grouppage-sysop' => '{{ns:project}}:Administruesit',
-	'grouppage-bureaucrat' => '{{ns:project}}:Burokratë',
-	'grouppage-suppress' => '{{ns:project}}:Kujdestari',
-];
-
-$messages['sr'] = [
 	'go' => 'Shko',
 	'gotaccount' => 'Keni një llogari? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Hyni',
