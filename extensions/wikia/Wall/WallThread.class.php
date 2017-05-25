@@ -10,10 +10,15 @@ class WallThread {
 	// cached data
 	private $data;
 
-	public function __construct() {
+	private $main_message = false;
+
+	/**
+	 * @param int $id thread ID
+	 */
+	private function __construct( int $id ) {
 		$this->initializeReplyData();
+		$this->mThreadId = $id;
 		$this->mCached = null;
-		$this->mCityId = F::app()->wg->CityId;
 	}
 
 	protected function initializeReplyData() {
@@ -26,11 +31,33 @@ class WallThread {
 	 * @param int $id
 	 * @return WallThread
 	 */
-	static public function newFromId( $id ) {
-		$wt = new WallThread();
-		$wt->mThreadId = $id;
+	static public function newFromId( int $id ) : WallThread {
+		return new WallThread( $id );
+	}
 
-		return $wt;
+	/**
+	 * @param int[] $ids
+	 * @return WallThread[]
+	 */
+	static public function newFromIds( array $ids ) : array {
+		$threads = [];
+
+		// fetch main wall messages for requested threads in a single batch
+		$wall_messages = WallMessage::newFromIds( $ids );
+
+		foreach( $ids as $i => $id ) {
+			$thread = self::newFromId( $id );
+
+			// this saves one select query on comments_index table for each item in $ids
+			// i.e. number of parent wall messages on a single wall page
+			if ( !empty( $wall_messages[ $id ] ) ) {
+				$thread->main_message = $wall_messages[ $id ];
+			}
+
+			$threads[] = $thread;
+		}
+
+		return $threads;
 	}
 
 	public function loadIfCached() {
@@ -155,8 +182,17 @@ class WallThread {
 		$this->mForceMaster = false;
 	}
 
+	/**
+	 * This field is set by WallThread::newFromIds to avoid DB queries for single rows
+	 *
+	 * @return WallMessage|null
+	 */
 	public function getThreadMainMsg() {
-		return WallMessage::newFromId( $this->mThreadId );
+		if ( $this->main_message === false ) {
+			$this->main_message = WallMessage::newFromId( $this->mThreadId );
+		}
+
+		return $this->main_message;
 	}
 
 	public function getRepliesCount() {

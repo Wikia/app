@@ -111,7 +111,9 @@
 						<a href="#"><?= wfMessage( 'wall-message-loadmore' )->numParams( $repliesNumber )->parse(); ?></a>
 					</li>
 				<? endif; ?>
-				<? foreach( $replies as $key  => $val): ?>
+				<?php
+				/* @var WallMessage[] $replies */
+				foreach( $replies as $key  => $val): ?>
 					<?php //TODO: move this logic to controler !!! ?>
 					<?php if(!$val->isRemove() || $showDeleteOrRemoveInfo): ?>
 						<?= $app->renderView( 'WallController', 'message', [ 'isThreadPage' => $isThreadPage, 'comment' => $val, 'isreply' => true, 'repliesNumber' => $repliesNumber, 'showRepliesNumber' => $showRepliesNumber,  'current' => $i ] ) ; ?>

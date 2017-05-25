@@ -299,10 +299,14 @@ class Wall extends WikiaModel {
 		}
 	}
 
-	public function getThreads( $page = 1, $master = false ) {
+	/**
+	 * @param int $page
+	 * @return WallThread[]
+	 */
+	public function getThreads( int $page = 1 ) : array {
 		wfProfileIn( __METHOD__ );
 		// get list of threads (article IDs) on Message Wall
-		$db = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE );
 
 		$offset = ( $page - 1 ) * $this->mMaxPerPage;
 
@@ -312,21 +316,19 @@ class Wall extends WikiaModel {
 		if ( $where ) {
 			$where .= ' and parent_comment_id = 0 ';
 
-			$orderBy = $this->getOrderBy();
+			$ids = $db->selectFieldValues(
+				'comments_index',
+				'comment_id',
+				$where,
+				__METHOD__,
+				[
+					'ORDER BY' => $this->getOrderBy(),
+					'LIMIT' => $this->mMaxPerPage,
+					'OFFSET' => $offset
+				]
+			);
 
-			$query = "
-			SELECT comment_id FROM comments_index
-				WHERE $where
-				ORDER BY $orderBy
-				LIMIT $offset, {$this->mMaxPerPage}
-			";
-
-			$res = $db->query( $query, __METHOD__ );
-
-
-			while ( $row = $db->fetchObject( $res ) ) {
-				$out[] = WallThread::newFromId( $row->comment_id );
-			}
+			$out = WallThread::newFromIds( $ids );
 		}
 
 		wfProfileOut( __METHOD__ );

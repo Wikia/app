@@ -142,7 +142,14 @@ class WallRelatedPages extends WikiaModel {
 	}
 
 
-	public function getArticlesRelatedMessgesSnippet( $pageId, $messageCount, $replyCount ) {
+	/**
+	 * TODO: Used by RelatedForumDiscussionController only, move there?
+	 *
+	 * @param $pageId
+	 * @param $messageCount
+	 * @return array
+	 */
+	public function getArticlesRelatedMessgesSnippet( $pageId, $messageCount ) {
 		$messages = $this->getArticlesRelatedMessgesIds( $pageId, 'last_update desc', $messageCount );
 
 		$out = [ ];
@@ -151,6 +158,7 @@ class WallRelatedPages extends WikiaModel {
 		$helper = new WallHelper();
 
 		foreach ( $messages as $value ) {
+			// TODO: use WallThread::newFromIds to fetch all threads in a single batch
 			$wallThread = WallThread::newFromId( $value['comment_id'] );
 
 			if ( empty( $wallThread ) ) {

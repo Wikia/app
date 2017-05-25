@@ -21,7 +21,7 @@ class WallMessage {
 	/**
 	 * @var $commentsIndex CommentsIndexEntry
 	 */
-	public $commentsIndex = false;
+	private $commentsIndex = false;
 	/**
 	 * @var $helper WallHelper
 	 */
@@ -130,7 +130,7 @@ class WallMessage {
 		}
 
 		wfProfileOut( __METHOD__ );
-		return array_values( $wallMessages );
+		return $wallMessages;
 	}
 
 	static public function isWallMessage( Title $title ) {
@@ -162,7 +162,7 @@ class WallMessage {
 	/**
 	 * @return CommentsIndexEntry
 	 */
-		public function getCommentsIndexEntry() {
+	public function getCommentsIndexEntry() {
 		if ( false === $this->commentsIndex ) { // false means we didn't call newFromId yet
 			$this->commentsIndex = CommentsIndex::getInstance()->entryFromId( $this->getId() ); // note: can return null
 		}
@@ -945,7 +945,7 @@ class WallMessage {
 	}
 
 	public function archive( $user, $reason = '' ) {
-		$status = $this->markInProps( WPP_WALL_ARCHIVE );
+		$status = $this->setInCommentsIndex( WPP_WALL_ARCHIVE, true );
 		if ( $this->can( $user, 'wallarchive' ) ) {
 			$this->markInProps( WPP_WALL_MODERATORARCHIVE ); // VOLDEV-79
 		}
@@ -956,7 +956,7 @@ class WallMessage {
 	}
 
 	public function reopen( $user ) {
-		$this->unMarkInProps( WPP_WALL_ARCHIVE );
+		$this->setInCommentsIndex( WPP_WALL_ARCHIVE, false );
 		if ( $this->isMarkInProps( WPP_WALL_MODERATORARCHIVE ) ) {
 			$this->unMarkInProps( WPP_WALL_MODERATORARCHIVE );
 		}
@@ -971,14 +971,14 @@ class WallMessage {
 	public function remove( $user, $reason = '', $notifyAdmins = false ) {
 		$this->saveReason( $user, $reason );
 
-		$this->unMarkInProps( WPP_WALL_ARCHIVE );
+		$this->setInCommentsIndex( WPP_WALL_ARCHIVE, false );
 		if ( $this->isMarkInProps( WPP_WALL_MODERATORARCHIVE ) ) {
 			$this->unMarkInProps( WPP_WALL_MODERATORARCHIVE );
 		}
 		if ( $this->isMarkInProps( WPP_WALL_MODERATORREOPEN ) ) {
 			$this->unMarkInProps( WPP_WALL_MODERATORREOPEN );
 		}
-		$status = $this->markInProps( WPP_WALL_REMOVE );
+		$status = $this->setInCommentsIndex( WPP_WALL_REMOVE, true );
 		if ( $this->can( $user, 'wallremove' ) ) {
 			$this->markInProps( WPP_WALL_MODERATORREMOVE );
 		}
@@ -1071,34 +1071,37 @@ class WallMessage {
 		return $wnoe;
 	}
 
-	public function adminDelete( $user, $reason = '', $notifyAdmins = false ) {
+	/**
+	 * @param User $user
+	 * @param string $reason
+	 * @param bool $notifyAdmins
+	 * @return bool
+	 */
+	public function adminDelete( User $user, $reason = '', $notifyAdmins = false ) : bool {
 		$this->saveReason( $user, $reason );
-		$status = $this->markInProps( WPP_WALL_ADMINDELETE );
+		$this->setInCommentsIndex( WPP_WALL_ADMINDELETE, true );
 
-		if ( $status === true ) {
-			$this->customActionNotifyRC( $user, 'wall_admindelete', $reason );
+		$this->customActionNotifyRC( $user, 'wall_admindelete', $reason );
 
-			$wnae = $this->getAdminNotificationEntity( $user, $reason );
-			if ( $notifyAdmins ) {
-				$this->addAdminNotificationFromEntity( $wnae );
-			}
-
-			$wh = new WallHistory();
-			$wh->add( WH_DELETE, $wnae, $user );
-
-			if ( $this->isMain() === true ) {
-				$this->getWall()->invalidateCache();
-				$wnoe = $this->getOwnerNotificationEntity( $user, $reason );
-				$this->addOwnerNotificationFromEntity( $wnoe );
-			} else {
-				$this->getThread()->invalidateCache();
-			}
-			$this->hideRelatedNotifications();
+		$wnae = $this->getAdminNotificationEntity( $user, $reason );
+		if ( $notifyAdmins ) {
+			$this->addAdminNotificationFromEntity( $wnae );
 		}
+    
+    $wh = new WallHistory();
+    $wh->add( WH_DELETE, $wnae, $user );
+
+		if ( $this->isMain() === true ) {
+			$this->getWall()->invalidateCache();
+			$wnoe = $this->getOwnerNotificationEntity( $user, $reason );
+			$this->addOwnerNotificationFromEntity( $wnoe );
+		} else {
+			$this->getThread()->invalidateCache();
+		}
+		$this->hideRelatedNotifications();
 
 		$this->addWatch( $user );
-
-		return $status;
+		return true;
 	}
 
 	public function fastAdminDelete( $user ) {
@@ -1163,18 +1166,36 @@ class WallMessage {
 		}
 	}
 
+	/**
+	 * Is given Forum thread marked as closed?
+	 *
+	 * @return bool
+	 */
 	public function isArchive() {
-		return $this->isMarkInProps( WPP_WALL_ARCHIVE );
+		return $this->getCommentsIndexEntry()->isArchived();
 	}
 
+	/**
+	 * Was given Wall / Forum entry deleted via Wall's drop-down menu "remove" item?
+	 *
+	 * @return bool
+	 */
 	public function isRemove() {
-		return $this->isMarkInProps( WPP_WALL_REMOVE );
+		return $this->getCommentsIndexEntry()->isRemoved();
 	}
 
+	/**
+	 * Was given Wall / Forum entry was deleted via "VSTF Delete" button or "delete" dropdown item?
+	 *
+	 * @return bool
+	 */
 	public function isAdminDelete() {
-		return $this->isMarkInProps( WPP_WALL_ADMINDELETE );
+		return $this->getCommentsIndexEntry()->isDeleted();;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function canReply() {
 		return !$this->isArchive() && !$this->isAdminDelete() && !$this->isRemove();
 	}
@@ -1203,14 +1224,6 @@ class WallMessage {
 		return false;
 	}
 
-	public function isVisible( $user ) {
-		if ( !$this->isAdminDelete( $user ) ) {
-			return true;
-		}
-
-		return false;
-	}
-
 	/*
 	 * expanded view, you can use it if you want to check if you can see deleted message
 	 */
@@ -1233,8 +1246,8 @@ class WallMessage {
 	}
 
 	public function restore( $user, $reason = '' ) {
-		$this->unMarkInProps( WPP_WALL_REMOVE );
-		$this->unMarkInProps( WPP_WALL_ADMINDELETE );
+		$this->setInCommentsIndex( WPP_WALL_REMOVE, false );
+		$this->setInCommentsIndex( WPP_WALL_ADMINDELETE, false );
 		$this->unMarkInProps( WPP_WALL_MODERATORREMOVE );
 		$this->customActionNotifyRC( $user, 'wall_restore', $reason );
 
@@ -1374,7 +1387,11 @@ class WallMessage {
 		return false;
 	}
 
-	public function setInCommentsIndex( $prop, $value ) {
+	/**
+	 * @param int $prop one of the following: WPP_WALL_ARCHIVE, WPP_WALL_ADMINDELETE, WPP_WALL_REMOVE
+	 * @param bool $value
+	 */
+	public function setInCommentsIndex( int $prop, bool $value ) {
 		$commentId = $this->getId();
 		if ( !empty( $commentId ) ) {
 			$entry = $this->getCommentsIndexEntry();
@@ -1399,7 +1416,6 @@ class WallMessage {
 
 	protected function markInProps( $prop ) {
 		$this->setInProps( $prop, 1 );
-		$this->setInCommentsIndex( $prop, 1 );
 		return true;
 	}
 
@@ -1424,8 +1440,6 @@ class WallMessage {
 		$cache->set( $key, false );
 
 		wfDeleteWikiaPageProp( $prop, $this->getId() );
-
-		$this->setInCommentsIndex( $prop, 0 );
 	}
 
 	protected function getPropVal( $prop ) {
