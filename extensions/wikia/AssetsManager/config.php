@@ -2209,6 +2209,7 @@ $config['design_system_js'] = [
 	'assets' => [
 		'//resources/wikia/modules/scrollToLink.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemTracking.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemDropdowns.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationScrollToLink.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemAuthenticationMenu.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationSearch.js',
