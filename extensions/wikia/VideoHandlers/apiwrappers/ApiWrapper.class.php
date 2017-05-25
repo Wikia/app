@@ -583,11 +583,17 @@ class EmptyResponseException extends Exception {
 	}
 }
 class NegativeResponseException extends Exception {
+	/**
+	 * NegativeResponseException constructor.
+	 * @param \Status $status
+	 * @param int $content
+	 * @param Exception $apiUrl
+	 */
 	public function __construct( $status, $content, $apiUrl ) {
 		$this->status = $status;
 		$this->content = $content;
 		$this->apiUrl = $apiUrl;
-		$this->errors = $status->errors;
+		$this->errors = $status instanceof \Status ? $status->errors : [];
 
 		$message = "Negative response from URL '".$apiUrl."'";
 
