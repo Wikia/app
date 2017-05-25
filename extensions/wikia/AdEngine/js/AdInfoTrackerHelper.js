@@ -49,7 +49,7 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 			'kv_ref': pageParams.ref || '',
 			'kv_top': pageParams.top || '',
 			'kv_ah': pageParams.ah || '',
-			'bidder_won': '',
+			'bidder_won': slotParams.hb_bidder || '',
 			'bidder_1': slotPrices.indexExchange || '',
 			'bidder_2': slotPrices.appnexus || '',
 			'bidder_3': slotPrices.fastlane || '',
