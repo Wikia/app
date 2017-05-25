@@ -35,8 +35,8 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 			$win = $(win);
 
 		function getStartPosition(placeHolder) {
-			return parseInt(placeHolder.offset().top, 10) +
-				parseInt(placeHolder.height(), 10) -
+			return parseInt(placeHolder.offset().top, 10) -
+					// TODO understand when palceholder height is required
 				globalNavigationHeight - margin;
 		}
 
@@ -99,7 +99,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 				enabled = false;
 			}
 
-			if (!enabled && isEnoughSpace && $win.scrollTop() > 0) {
+			if (!enabled && isEnoughSpace && $win.scrollTop() > startPosition) {
 				log(['handleFloatingMedrec', 'Enabling floating medrec'], 'debug', logGroup);
 
 				enabled = true;

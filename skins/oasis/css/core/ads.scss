@@ -501,6 +501,9 @@ body > a > img[src$="noad.gif"] {
 
 // Floating medrec
 #WikiaAdInContentPlaceHolder {
+	// TODO find why admixes want to remove it
+	position: absolute;
+
 	#INCONTENT_BOXAD_1 {
 		position: relative;
 		text-align: center;
