@@ -84,46 +84,36 @@
 		}
 	}
 
-	&::after {
-		border: 8px solid transparent;
-		border-bottom-color: $wds-color-white;
+	&::before, &::after {
 		bottom: -$wds-dropdown-border-width;
 		content: '';
 		display: none;
 		height: 0;
 		left: 50%;
-		margin-left: -8px;
 		pointer-events: none;
 		position: absolute;
 		width: 0;
 		z-index: $content-z-index + 1;
+	}
+
+	&::after {
+		border: 8px solid transparent;
+		border-bottom-color: $wds-color-white;
+		margin-left: -8px;
 	}
 
 	&::before {
 		border: 9px solid transparent;
 		border-bottom-color: $wds-color-faint-gray;
-		bottom: -$wds-dropdown-border-width;
-		content: '';
-		display: none;
-		height: 0;
-		left: 50%;
 		margin-left: -9px;
-		pointer-events: none;
-		position: absolute;
-		width: 0;
-		z-index: $content-z-index + 1;
-	}
-
-	&:hover::after {
-		display: block;
-	}
-
-	&:hover::before {
-		display: block;
 	}
 
 	&.wds-is-active,
 	&:hover {
+		&::before, &::after {
+			display: block;
+		}
+
 		.wds-dropdown__content {
 			display: inline-block;
 		}

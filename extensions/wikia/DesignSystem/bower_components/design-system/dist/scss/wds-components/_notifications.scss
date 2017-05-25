@@ -48,17 +48,17 @@
 		min-height: 80px;
 		min-width: $content-padding * 2 + 320px;
 		width: 100%;
-
-		// that's here because we need to override DS dropdowns list styles
-		.wds-notifications__notification-list.wds-list {
-			max-height: 420px;
-		}
 	}
 
 	&__notification-list {
 		box-sizing: border-box;
 		overflow-y: auto;
 		width: 100%;
+
+		.wds-notifications__dropdown-content &.wds-list {
+			// notifications list has to be higher than dropdowns lists to show more notifications
+			max-height: 420px;
+		}
 
 		> li.wds-notification-card {
 			white-space: normal;
