@@ -6,10 +6,10 @@ $(function ($) {
 	// On touch devices, the first click opens dropdown, the second one opens the link if there is any
 	if (window.Wikia.isTouchScreen()) {
 		$('body')
-			.on('touchstart', '.wds-dropdown', function (e) {
+			.on('touchstart', '.wds-dropdown', function (event) {
 				if (!$(this).hasClass(className)) {
 					$(this).addClass(className);
-					e.preventDefault();
+					event.preventDefault();
 				}
 			})
 			.on('mouseleave', '.wds-dropdown', function () {
