@@ -109,6 +109,7 @@ define('ext.wikia.adEngine.adContext', [
 			group.indexOf('AD_MIX_') === 0 &&
 			isPageType('article') &&
 			context.targeting.skin === 'oasis' &&
+			context.targeting.wikiLanguage === 'en' &&
 			geo.isProperGeo(instantGlobals.wgAdDriverAdMixCountries)
 		);
 
