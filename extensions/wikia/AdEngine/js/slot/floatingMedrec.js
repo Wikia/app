@@ -99,7 +99,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 				enabled = false;
 			}
 
-			if (!enabled && isEnoughSpace && $win.scrollTop() > startPosition) {
+			if (!enabled && isEnoughSpace && $win.scrollTop() >= startPosition) {
 				log(['handleFloatingMedrec', 'Enabling floating medrec'], 'debug', logGroup);
 
 				enabled = true;

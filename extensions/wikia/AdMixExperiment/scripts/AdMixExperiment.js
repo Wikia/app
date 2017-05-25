@@ -291,7 +291,8 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 			if (window.wgContentLanguage === 'en') {
 				$recircWrapper.one('premiumRecirculationRail.ready', onRecircReady);
 			} else {
-				recircEnabled = false;
+				// TODO check which experiment needs it
+				// recircEnabled = false;
 				gapSize = 0;
 				onRecircReady();
 			}
