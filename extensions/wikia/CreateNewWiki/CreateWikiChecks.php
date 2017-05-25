@@ -153,43 +153,10 @@ class CreateWikiChecks {
 	}
 
 	/**
-	 * check "bad" words by TextRegex extension
+	 * Test the provided text against Phalanx antispam service
 	 */
 	public static function checkBadWords( $sText, $where, $split = false ) {
-		wfProfileIn( __METHOD__ );
-
-		if ( !wfRunHooks( 'CreateWikiChecks::checkBadWords', array( $sText, $where, $split ) ) ) {
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-
-		// TODO: temporary check for Phalanx (don't perform additional filtering when enabled)
-		global $wgEnablePhalanxExt;
-		if ( !empty($wgEnablePhalanxExt) ) {
-			wfProfileOut( __METHOD__ );
-			return true;
-		}
-		// TextRegexCore is disabled by default now.  If phalanx is disabled, this will fail
-		if ( !class_exists( 'TextRegexCore' ) ) {
-			wfProfileOut( __METHOD__ );
-			return true;
-		}
-
-		$allowed = true;
-		$oRegexCore = new TextRegexCore( "creation", 0 );
-		if ( $oRegexCore instanceof TextRegexCore ) {
-			$newText = preg_replace( "/[^a-z0-9]/i", "", $sText );
-			#--
-			if ( $split == true ) {
-				$aWordsInText = preg_split( "/[\s,]+/", $newText );
-			} else {
-				$aWordsInText = array( $newText );
-			}
-			$allowed = $oRegexCore->isAllowedText( $aWordsInText, wfMsg( 'autocreatewiki-regex-error-comment', $where, $sText ) );
-		}
-		#---
-		wfProfileOut( __METHOD__ );
-		return $allowed;
+		return Hooks::run( 'CreateWikiChecks::checkBadWords', [ $sText, $where, $split ] );
 	}
 
 	/**

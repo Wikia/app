@@ -78,7 +78,7 @@ class TitleBlacklist {
 	 * Get the text of a blacklist from a specified source
 	 *
 	 * @param $source A blacklist source from $wgTitleBlacklistSources
-	 * @return The content of the blacklist source as a string
+	 * @return string The content of the blacklist source as a string
 	 */
 	private static function getBlacklistText( $source ) {
 		if( !is_array( $source ) || count( $source ) <= 0 ) {
@@ -106,9 +106,6 @@ class TitleBlacklist {
 					return $article->getContent();
 				}
 			}
-		} elseif( $source['type'] == TBLSRC_GLOBALPAGE && count( $source ) >= 2 ) {
-			list( $title, $ns, $wikia ) = $source['src'];
-			return GlobalTitle::newFromText( $title, $ns, $wikia )->getContent();
 		} elseif( $source['type'] == TBLSRC_FILE && count( $source ) >= 2 ) {
 			if( file_exists( $source['src'] ) ) {
 				return file_get_contents( $source['src'] );
