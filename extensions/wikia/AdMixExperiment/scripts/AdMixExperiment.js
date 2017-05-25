@@ -129,21 +129,27 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 
 		function scrollAfterFirstAdTopPosition() {
 			resetRecircStyles();
-			resetTopAdPaddings();
-			$topRightAd.css({
-				position: 'fixed',
-				top: globalNavigationHeight + firstAdTopSpace + 'px',
-				width: '300px'
-			});
+
+			if (topRightAdFixed) {
+				resetTopAdPaddings();
+				$topRightAd.css({
+					position: 'fixed',
+					top: globalNavigationHeight + firstAdTopSpace + 'px',
+					width: '300px'
+				});
+			}
 		}
 
 		function scrollAfterFirstAdBottomPosition() {
 			resetRecircStyles();
-			resetTopAd();
-			$topRightAdWrapper.css({
-				'padding-bottom': '',
-				'padding-top': gapSize + 'px'
-			});
+
+			if (topRightAdFixed) {
+				resetTopAd();
+				$topRightAdWrapper.css({
+					'padding-bottom': '',
+					'padding-top': gapSize + 'px'
+				});
+			}
 		}
 
 		function scrollStopPosition(stopPosition) {
