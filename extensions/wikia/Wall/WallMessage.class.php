@@ -760,7 +760,7 @@ class WallMessage {
 		} else {
 			// this only happend for wrong enties in DB
 			// without revision information
-			return User::newFromName( '::', false );
+			return User::newFromName( NON_ROUTABLE_IPV6, false );
 		}
 	}
 
