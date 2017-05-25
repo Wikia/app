@@ -954,10 +954,16 @@ class Block {
 	 * Purge expired blocks from the ipblocks table
 	 */
 	public static function purgeExpired() {
+		global $wgCityId;
+
 		if ( !wfReadOnly() ) {
-			$dbw = wfGetDB( DB_MASTER );
-			$dbw->delete( 'ipblocks',
-				array( 'ipb_expiry < ' . $dbw->addQuotes( $dbw->timestamp() ) ), __METHOD__ );
+			// Wikia change - begin
+			// @see SUS-2147
+			$task = new Wikia\Tasks\Tasks\BlockPurgeExpiredTask();
+			$task->wikiId( $wgCityId );
+			$task->call( 'purgeExpired' );
+			$task->queue();
+			// Wikia change - end
 		}
 	}
 

@@ -1,4 +1,4 @@
-require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracker) {
+require(['wikia.window', 'jquery', 'wikia.tracker', 'wikia.abTest'], function (window, $, tracker, abTest) {
 	'use strict';
 
 	var track = tracker.buildTrackingFunction({
@@ -20,6 +20,14 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 		$('.pph-local-nav-item-l1').on('mouseleave', function () {
 			$(this).children('a').removeClass('pph-click');
 		});
+
+		$('.pph-local-nav-container > a').on('click', function (event) {
+			var $this = $(this);
+			if (!$this.hasClass('pph-click')) {
+				$this.addClass('pph-click');
+				event.preventDefault();
+			}
+		});
 	}
 
 	function initTracking() {
@@ -33,12 +41,9 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 			}
 		};
 
-		$('.pph-local-nav-container > a').on('click', function (event) {
+		$('.pph-local-nav-container > a').on('click', function () {
 			var $this = $(this);
-			if (!$this.hasClass('pph-click')) {
-				$this.addClass('pph-click');
-				event.preventDefault();
-			} else {
+			if ($this.hasClass('pph-click')) {
 				linkTrack($this);
 			}
 		});
@@ -48,7 +53,9 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 	}
 
 	$(function () {
-		initTracking();
+		if (abTest.inGroup('PREMIUM_PAGE_HEADER', 'PREMIUM') || window.wgUserName) {
+			initTracking();
+		}
 		initTabletSupport();
 	});
 });

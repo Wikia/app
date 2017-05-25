@@ -9,6 +9,13 @@
 // Platform-specific styles for DesignSystem integration
 $global-navigation-z-index: 5000101;
 
+.wds-hidden-svg {
+	height: 0;
+	overflow: hidden;
+	position: absolute;
+	width: 0;
+}
+
 .wds-global-navigation-wrapper {
 	height: $wds-global-navigation-height;
 }

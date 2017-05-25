@@ -31,10 +31,10 @@ class Filesystem
      */
     public static function classNameToFilename($className)
     {
-        return str_replace(
-                ['_', '\\'],
-                DIRECTORY_SEPARATOR,
-                $className
-            ) . '.php';
+        return \str_replace(
+            ['_', '\\'],
+            DIRECTORY_SEPARATOR,
+            $className
+        ) . '.php';
     }
 }

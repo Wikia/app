@@ -71,6 +71,10 @@ define('ext.wikia.adEngine.sourcePointDetection', [
 		win.ads.runtime = win.ads.runtime || {};
 		win.ads.runtime.sp = win.ads.runtime.sp || {};
 
+		win._sp_ = win._sp_ || {};
+		win._sp_.config = win._sp_.config || {};
+		win._sp_.config.account_id = win._sp_.config.account_id || 106;
+
 		doc.addEventListener('sp.blocking', function () {
 			win.ads.runtime.sp.blocking = true;
 			trackStatusOnce('yes');
@@ -82,7 +86,7 @@ define('ext.wikia.adEngine.sourcePointDetection', [
 			log('sp.not_blocking', 'info', logGroup);
 		});
 
-		if (!context.opts.sourcePointRecovery && !context.opts.sourcePointMMS) {
+		if (!context.opts.sourcePointBootstrap) {
 			loadLibrary(context);
 		}
 	}

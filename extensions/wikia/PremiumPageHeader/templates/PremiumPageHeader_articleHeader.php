@@ -2,7 +2,7 @@
 	<div class="pph-article-title">
 		<?php if ( count( $visibleCategories ) > 0 ): ?>
 			<div class="pph-categories">
-				<span class="pph-categories-in pph-track" data-tracking="categories-in"><?= $inCategoriesText ?>:</span>
+				<span class="pph-categories-in pph-track" data-tracking="categories-top-in"><?= $inCategoriesText ?>:</span>
 				<span class="pph-category-links">
 					<?= join( ', ', $visibleCategories ); ?><!--
 				 --><?php if ( $moreCategoriesLength > 0 ): ?><!--
@@ -39,7 +39,7 @@
 						<?php foreach ( $languageList as $key => $val ) : ?>
 							<li>
 								<a href="<?= Sanitizer::encodeAttribute( $val['href'] ); ?>"
-								   data-tracking="<?= $key ?>"><?= htmlspecialchars( $val['name'] ); ?></a>
+								   data-tracking="top-<?= $key ?>"><?= htmlspecialchars( $val['name'] ); ?></a>
 							</li>
 						<?php endforeach ?>
 					</ul>

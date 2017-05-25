@@ -238,7 +238,7 @@ class AbuseFilterHooks {
 			} else {
 				// Sorry dude, we need this account.
 				$user->setPassword( null );
-				$user->setEmail( null );
+				$user->setEmail( '' );
 				$user->saveSettings();
 			}
 			$updater->insertUpdateRow( 'create abusefilter-blocker-user' );

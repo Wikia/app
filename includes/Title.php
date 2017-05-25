@@ -219,7 +219,7 @@ class Title {
 		/* wikia change here */
 		if ( $id == 0 ) {
 			$title = null;
-		} 
+		}
 		/* </wikia> */
 		else {
 			$db = ( $flags & self::GAID_FOR_UPDATE ) ? wfGetDB( DB_MASTER ) : wfGetDB( DB_SLAVE );
@@ -2056,6 +2056,17 @@ class Title {
 				&& !$this->userCan( 'bigdelete', $user ) && $this->isBigDeletion() )
 			{
 				$errors[] = array( 'delete-toobig', $wgLang->formatNum( $wgDeleteRevisionsLimit ) );
+			}
+		} elseif ( $action === 'undelete' ) {
+			if ( count( $this->getUserPermissionsErrorsInternal( 'edit', $user, $doExpensiveQueries, true ) ) ) {
+				// Undeleting implies editing
+				$errors[] = [ 'undelete-cantedit' ];
+			}
+			if ( !$this->exists()
+				&& count( $this->getUserPermissionsErrorsInternal( 'create', $user, $doExpensiveQueries, true ) )
+			) {
+				// Undeleting where nothing currently exists implies creating
+				$errors[] = [ 'undelete-cantcreate' ];
 			}
 		}
 		# start change by wikia
@@ -4054,7 +4065,7 @@ class Title {
 		$data = array();
 
 		$titleKey = $this->getArticleId();
-		
+
 		if ( $titleKey === 0 ) {
 			return $data;
 		}

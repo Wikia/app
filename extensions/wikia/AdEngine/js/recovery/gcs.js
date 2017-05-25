@@ -2,7 +2,7 @@
 /*jshint camelcase:false*/
 define('ext.wikia.adEngine.recovery.gcs', [
 	'ext.wikia.adEngine.adTracker',
-	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
+	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.document',
 	'wikia.location',
 	'wikia.log',
@@ -10,7 +10,7 @@ define('ext.wikia.adEngine.recovery.gcs', [
 	'wikia.window'
 ], function (
 	adTracker,
-	sourcePoint,
+	adBlockDetection,
 	doc,
 	loc,
 	log,
@@ -80,7 +80,7 @@ define('ext.wikia.adEngine.recovery.gcs', [
 	}
 
 	function addRecoveryCallback() {
-		sourcePoint.addOnBlockingCallback(function () {
+		adBlockDetection.addOnBlockingCallback(function () {
 			init();
 		});
 	}

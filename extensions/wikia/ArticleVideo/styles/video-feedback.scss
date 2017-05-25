@@ -7,6 +7,7 @@
 		@include align-items(center);
 		background-color: rgba(255, 255, 255, 0.9);
 		border-radius: 2px;
+		color: $wds-color-dark-blue-gray;
 		cursor: default;
 		display: none;
 		font-size: 14px;
@@ -53,7 +54,7 @@
 		}
 	}
 
-	&.collapsed .video-feedback {
+	&.is-collapsed .video-feedback {
 		display: none;
 	}
 }

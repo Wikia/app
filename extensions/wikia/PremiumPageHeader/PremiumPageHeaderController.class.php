@@ -73,9 +73,9 @@ class PremiumPageHeaderController extends WikiaController {
 			$visibleCategoriesLimit = 3;
 		}
 		$categories = array_slice( $normalCategoryLinks, 0, $visibleCategoriesLimit );
-		$visibleCategories = $this->extendWithTrackingAttribute( $categories, 'categories' );
+		$visibleCategories = $this->extendWithTrackingAttribute( $categories, 'categories-top' );
 		$extendedCategories = array_slice( $normalCategoryLinks, $visibleCategoriesLimit );
-		$moreCategories = $this->extendWithTrackingAttribute( $extendedCategories, 'categories-more' );
+		$moreCategories = $this->extendWithTrackingAttribute( $extendedCategories, 'categories-top-more' );
 
 		$this->setVal( 'title', $title );
 		$this->setVal( 'inCategoriesText', wfMessage( 'pph-in-categories' )->escaped() );
@@ -286,7 +286,7 @@ class PremiumPageHeaderController extends WikiaController {
 
 		if ( $this->checkArticleComments() ) {
 			// link to article comments section
-			if ( $wgTitle != $wgTitle || $isHistory ) {
+			if ( $isHistory ) {
 				$commentsLink = $wgTitle->getLocalUrl() . '#WikiaArticleComments';
 			} else {
 				// fix for redirected articles
@@ -354,6 +354,9 @@ class PremiumPageHeaderController extends WikiaController {
 	}
 
 	private function getExplore(): array {
+		global $wgEnableDiscussions, $wgEnableForumExt;
+
+		//TODO: when productizing, please translate as crowdin messages or fix aliases of these special pages
 		$explore = [
 			[ 'title' => 'WikiActivity', 'tracking' => 'explore-activity', 'key' => 'oasis-button-wiki-activity' ],
 			[ 'title' => 'Random', 'tracking' => 'explore-random', 'key' => 'randompage' ],
@@ -361,6 +364,10 @@ class PremiumPageHeaderController extends WikiaController {
 			[ 'title' => 'Videos', 'tracking' => 'explore-videos' ],
 			[ 'title' => 'Images', 'tracking' => 'explore-images' ]
 		];
+
+		if ( !empty( $wgEnableForumExt ) && !empty( $wgEnableDiscussions ) ) {
+			$explore[] = [ 'title' => 'Forum', 'tracking' => 'explore-forum' ];
+		}
 
 		$children = array_map( function ( $page ) {
 			$title = Title::newFromText( $page['title'], NS_SPECIAL );
@@ -385,19 +392,22 @@ class PremiumPageHeaderController extends WikiaController {
 	}
 
 	private function getDiscuss(): array {
-		global $wgEnableDiscussionsNavigation, $wgEnableDiscussions, $wgEnableForumExt;
+		global $wgEnableDiscussions, $wgEnableForumExt;
 
-		$href =
-			!empty( $wgEnableDiscussionsNavigation ) && !empty( $wgEnableDiscussions ) &&
-			empty( $wgEnableForumExt )
-				? '/d/f'
-				: Title::newFromText( 'Forum', NS_SPECIAL )
-				->getLocalURL();
-
-		return [
-			'text' => wfMessage( 'pph-discuss' )->inContentLanguage()->escaped(),
-			'href' => $href
-		];
+		if ( !empty( $wgEnableDiscussions ) ) {
+			return [
+				'text' => wfMessage( 'pph-discuss' )->inContentLanguage()->escaped(),
+				'href' => '/d/f'
+			];
+		} elseif ( !empty( $wgEnableForumExt ) ) {
+			$title = Title::newFromText( 'Forum', NS_SPECIAL )->fixSpecialName();
+			return [
+				'text' => $title->getText(),
+				'href' => $title->getLocalURL()
+			];
+		} else {
+			return [];
+		}
 	}
 
 	private function extendWithTrackingAttribute( $categories, $prefix ): array {

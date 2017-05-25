@@ -12,7 +12,6 @@ $wgExtensionCredits['other'][] =
 // Autoload
 $wgAutoloadClasses['AdEngine2ContextService'] =  __DIR__ . '/AdEngine2ContextService.class.php';
 $wgAutoloadClasses['AdEngine2Controller'] =  __DIR__ . '/AdEngine2Controller.class.php';
-$wgAutoloadClasses['AdEngine2ExitstitialHooks'] =  __DIR__ . '/AdEngine2ExitstitialHooks.class.php';
 $wgAutoloadClasses['AdEngine2Hooks'] =  __DIR__ . '/AdEngine2Hooks.class.php';
 $wgAutoloadClasses['AdEngine2PageTypeService'] = __DIR__ . '/AdEngine2PageTypeService.class.php';
 $wgAutoloadClasses['AdEngine2Resource'] = __DIR__ . '/ResourceLoaders/AdEngine2Resource.class.php';
@@ -20,14 +19,7 @@ $wgAutoloadClasses['AdEngine2Service'] =  __DIR__ . '/AdEngine2Service.class.php
 $wgAutoloadClasses['AdTargeting'] =  __DIR__ . '/AdTargeting.class.php';
 $wgAutoloadClasses['ResourceLoaderAdEngineBase'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineBase.php';
 $wgAutoloadClasses['ResourceLoaderScript'] = __DIR__ . '/ResourceLoaders/ResourceLoaderScript.php';
-$wgAutoloadClasses['ResourceLoaderAdEngineYavliModule'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineYavliModule.php';
 $wgAutoloadClasses['AdEngine2ApiController'] = __DIR__ . '/AdEngine2ApiController.class.php';
-
-// Hooks for Exitstitial ads
-$wgHooks['LinkerMakeExternalLink'][] = 'AdEngine2ExitstitialHooks::onLinkerMakeExternalLink';
-$wgHooks['LinkEnd'][] = 'AdEngine2ExitstitialHooks::onLinkEnd';
-$wgHooks['MakeGlobalVariablesScript'][] = 'AdEngine2ExitstitialHooks::onMakeGlobalVariablesScript';
-$wgHooks['OasisSkinAssetGroups'][] = 'AdEngine2ExitstitialHooks::onOasisSkinAssetGroups';
 
 // Hooks for AdEngine2
 $wgHooks['AfterInitialize'][] = 'AdEngine2Hooks::onAfterInitialize';
@@ -51,7 +43,6 @@ JSMessages::enqueuePackage('AdEngine', JSMessages::EXTERNAL);
 
 AdEngine2Resource::register('wikia.ext.adengine.pf.detection', 'ResourceLoaderAdEnginePageFairDetectionModule');
 AdEngine2Resource::register('wikia.ext.adengine.sp.detection', 'ResourceLoaderAdEngineSourcePointDetectionModule');
-AdEngine2Resource::register('wikia.ext.adengine.yavli', 'ResourceLoaderAdEngineYavliModule');
 
 // Special page for importing ad test
 if ( !empty( $wgDevelEnvironment ) && $wgDBname === 'adtest' ) {

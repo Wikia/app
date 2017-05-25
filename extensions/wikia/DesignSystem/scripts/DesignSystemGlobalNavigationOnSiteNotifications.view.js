@@ -10,7 +10,7 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 	], function ($, log, window, Event, templating, Spinner, TextFormatter, common) {
 		'use strict';
 
-		var isVisibleClass = 'wds-is-visible',
+		var isHiddenClass = 'wds-is-hidden',
 			almostBottom = 100,
 			avatarPlaceholder = 'http://static.wikia.nocookie.net/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width-down/50';
 
@@ -76,7 +76,7 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 			};
 
 			this.onMouseWheel = function (event) {
-				const delta = -event.originalEvent.wheelDelta || event.originalEvent.detail,
+				var delta = -event.originalEvent.wheelDelta || event.originalEvent.detail,
 					scrollTop = this.scrollTop;
 				if ((delta < 0 && scrollTop === 0)
 					|| (delta > 0 && this.scrollHeight - this.clientHeight - scrollTop === 0)) {
@@ -194,29 +194,35 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 			};
 
 			this.renderZeroState = function () {
-				$('.wds-notifications__zero-state').addClass(isVisibleClass);
+				$('.wds-notifications__zero-state').removeClass(isHiddenClass);
 			};
 
 			this.renderUnreadCount = function (count) {
 				if (count > 0) {
-					this._$markAllAsReadButton.addClass(isVisibleClass);
-					this._$notificationsCount.html(count).parent('.bubbles').addClass('show');
+					this._$markAllAsReadButton.removeClass(isHiddenClass);
+					this._$notificationsCount.html(limitTo99(count))
+						.removeClass(isHiddenClass);
 				} else {
-					this._$markAllAsReadButton.removeClass(isVisibleClass);
-					this._$notificationsCount.empty().parent('.bubbles').removeClass('show');
+					this._$markAllAsReadButton.addClass(isHiddenClass);
+					this._$notificationsCount.empty()
+						.addClass(isHiddenClass);
 				}
 			};
 
-			/**
-			 * .classRemove does not work on SVG
-			 * @param element
-			 */
+			function limitTo99(count) {
+				if (count > 99) {
+					return '99+';
+				} else {
+					return count;
+				}
+			}
+
 			function removeIsUnreadClass(element) {
-				element.classList.remove('wds-is-unread');
+				element.removeClass('wds-is-unread');
 			}
 
 			function findUnreadAndClearClass($element) {
-				$element.find('.wds-icon.wds-is-unread').each(function (_, element) {
+				$element.find('.wds-notification-card.wds-is-unread').each(function (_, element) {
 					removeIsUnreadClass(element);
 				});
 			}
@@ -226,8 +232,8 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 			};
 
 			this.renderNotificationAsRead = function (id) {
-				var container = this._$container.find('[data-uri="' + id + '"]');
-				findUnreadAndClearClass(container);
+				var element = this._$container.find('[data-uri="' + id + '"]');
+				removeIsUnreadClass(element);
 			};
 
 		}

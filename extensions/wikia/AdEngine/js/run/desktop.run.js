@@ -5,20 +5,19 @@ require([
 	'ext.wikia.adEngine.adEngineRunner',
 	'ext.wikia.adEngine.adInfoTracker',
 	'ext.wikia.adEngine.adLogicPageParams',
+	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.config.desktop',
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.pageFairDetection',
 	'ext.wikia.adEngine.taboolaHelper',
-	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
-	'ext.wikia.adEngine.slot.scrollHandler',
+	'ext.wikia.adEngine.slot.service.actionHandler',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.sourcePointDetection',
-	'ext.wikia.adEngine.provider.yavliTag',
+	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.window',
-	'wikia.loader',
 	require.optional('ext.wikia.adEngine.recovery.gcs'),
 	require.optional('ext.wikia.adEngine.template.floatingRail')
 ], function (
@@ -26,27 +25,25 @@ require([
 	adEngineRunner,
 	adInfoTracker,
 	pageLevelParams,
+	slotStateMonitor,
 	adConfigDesktop,
 	customAdsLoader,
 	dartHelper,
 	messageListener,
 	pageFairDetection,
 	taboolaHelper,
-	sourcePoint,
-	scrollHandler,
+	actionHandler,
 	slotTracker,
 	slotTweaker,
 	sourcePointDetection,
-	yavliTag,
+	adBlockDetection,
 	win,
-	loader,
 	gcs,
 	floatingRail
 ) {
 	'use strict';
 
-	var context = adContext.getContext(),
-		skin = 'oasis';
+	var context = adContext.getContext();
 
 	win.AdEngine_getTrackerStats = slotTracker.getStats;
 
@@ -69,13 +66,13 @@ require([
 		}
 
 		adInfoTracker.run();
-		
+		slotStateMonitor.run();
+
 		// Ads
-		scrollHandler.init(skin);
 		win.adslots2 = win.adslots2 || [];
 		adEngineRunner.run(adConfigDesktop, win.adslots2, 'queue.desktop', !!context.opts.delayEngine);
 
-		slotTweaker.registerMessageListener();
+		actionHandler.registerMessageListener();
 
 		sourcePointDetection.initDetection();
 
@@ -83,12 +80,12 @@ require([
 			pageFairDetection.initDetection(context);
 		}
 
-		// Recovery
-		sourcePoint.initEventQueues();
+		// Recovery & detection
+		adBlockDetection.initEventQueues();
 
 		// Taboola
 		if (context.opts.loadTaboolaLibrary) {
-			sourcePoint.addOnBlockingCallback(function() {
+			adBlockDetection.addOnBlockingCallback(function() {
 				taboolaHelper.loadTaboola();
 			});
 		}
@@ -96,68 +93,37 @@ require([
 		if (context.opts.googleConsumerSurveys && gcs) {
 			gcs.addRecoveryCallback();
 		}
-
-		if (context.opts.yavli) {
-			yavliTag.add();
-		}
 	});
 });
 
 // Inject extra slots
 require([
-	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.slot.bottomLeaderboard',
 	'ext.wikia.adEngine.slot.highImpact',
 	'ext.wikia.adEngine.slot.inContent',
 	'ext.wikia.adEngine.slot.skyScraper3',
-	'ext.wikia.adEngine.slotTweaker',
 	'wikia.document',
-	'wikia.window',
-	require.optional('ext.wikia.adEngine.slot.exitstitial'),
-	require.optional('ext.wikia.adEngine.slot.revcontentSlots')
+	'wikia.window'
 ], function (
-	adContext,
 	slotsContext,
 	bottomLeaderboard,
 	highImpact,
 	inContent,
 	skyScraper3,
-	slotTweaker,
 	doc,
-	win,
-	exitstitial,
-	revcontentSlots
+	win
 ) {
 	'use strict';
 
-	var context = adContext.getContext();
-
 	function initDesktopSlots() {
-		var incontentLeaderboardSlotName = 'INCONTENT_LEADERBOARD',
-			incontentPlayerSlotName = 'INCONTENT_PLAYER';
+		var incontentPlayerSlotName = 'INCONTENT_PLAYER';
 
 		highImpact.init();
 		skyScraper3.init();
 
-		if (revcontentSlots && context.providers.revcontent) {
-			revcontentSlots.init();
-		}
-
 		if (slotsContext.isApplicable(incontentPlayerSlotName)) {
 			inContent.init(incontentPlayerSlotName);
-		}
-
-		if (slotsContext.isApplicable(incontentLeaderboardSlotName)) {
-			inContent.init(incontentLeaderboardSlotName, function () {
-				if (context.opts.incontentLeaderboardAsOutOfPage) {
-					slotTweaker.adjustIframeByContentSize(incontentLeaderboardSlotName);
-				}
-			});
-		}
-
-		if (exitstitial) {
-			exitstitial.init();
 		}
 	}
 

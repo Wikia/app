@@ -7,6 +7,13 @@
 /** @var $isEditPage bool */
 ?>
 
+<? if ( !empty( $wg->InContextTranslationsProject ) ): ?>
+	<script type="text/javascript">
+		var _jipt = [['project', '<?= addslashes($wg->InContextTranslationsProject) ?>' ]];
+	</script>
+	<script type="text/javascript" src="//cdn.crowdin.com/jipt/jipt.js"></script>
+<? endif; ?>
+
 <? if ( $displayHeader ): ?>
 	<h2><?= wfMessage( 'oasis-global-page-header' )->escaped(); ?></h2>
 <? endif; ?>
@@ -20,11 +27,11 @@
 <div id="ad-skin" class="wikia-ad noprint"></div>
 
 <?= $app->renderView( 'DesignSystemGlobalNavigationService', 'index' ) ?>
-<?php if ( !empty( $wg->EnablePremiumPageHeader ) && empty( $wg->SuppressWikiHeader ) ): ?>
+<? if ( !empty( $wg->EnablePremiumPageHeader ) && empty( $wg->SuppressWikiHeader ) ): ?>
 	<div class="banner-notifications-placeholder">
 		<?= $app->renderView( 'BannerNotifications', 'Confirmation' ) ?>
 	</div>
-<?php endif; ?>
+<? endif; ?>
 <?= $app->renderView( 'Ad', 'Top' ) ?>
 <?= empty( $wg->EnableEBS ) ? '' : $app->renderView( 'EmergencyBroadcastSystem', 'index' ); ?>
 
@@ -38,50 +45,40 @@
 	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
 	<div class="WikiaPageContentWrapper">
 
-		<?php if ( !empty( $wg->EnablePremiumPageHeader ) && empty( $wg->SuppressWikiHeader ) ): ?>
+		<? if ( !empty( $wg->EnablePremiumPageHeader ) && empty( $wg->SuppressWikiHeader ) ) : ?>
 			<div class="PremiumPageHeader">
 				<?= $app->renderView( 'PremiumPageHeader', 'wikiHeader' ) ?>
 			</div>
-		<?php else: ?>
+		<? else: ?>
 			<?= $app->renderView( 'BannerNotifications', 'Confirmation' ) ?>
-		<?php endif; ?>
+		<? endif; ?>
 
-		<?php
-			if ( empty( $wg->SuppressWikiHeader ) ) {
-				echo $app->renderView( 'WikiHeader', 'Index' );
-			}
-		?>
+		<? if ( empty( $wg->SuppressWikiHeader ) ) : ?>
+			<?= $app->renderView( 'WikiHeader', 'Index' ) ?>
+		<? endif; ?>
 
-		<?php
-			if ( !empty( $wg->EnableWikiAnswers ) ) {
-				echo $app->renderView( 'WikiAnswers', 'QuestionBox' );
-			}
-		?>
+		<? if ( !empty( $wg->EnableWikiAnswers ) ) : ?>
+			<?= $app->renderView( 'WikiAnswers', 'QuestionBox' ) ?>
+		<? endif; ?>
 
-		<?php
-		if ( !empty( $wg->InterlangOnTop ) ) {
-			echo $app->renderView( 'ArticleInterlang', 'Index' );
-		}
-		?>
+		<? if ( !empty( $wg->InterlangOnTop ) ) : ?>
+			<?= $app->renderView( 'ArticleInterlang', 'Index' ) ?>
+		<? endif; ?>
 
-		<?php
-		if ( $headerModuleName == 'UserPagesHeader' && ( $headerModuleAction != 'BlogPost' && $headerModuleAction != 'BlogListing' ) ) {
-			echo $app->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams );
-		}
-		?>
+		<? if ( $headerModuleName == 'UserPagesHeader' && ( $headerModuleAction != 'BlogPost' && $headerModuleAction != 'BlogListing' ) ) : ?>
+			<?= $app->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams ) ?>
+		<? endif; ?>
 
-		<?php
-			// Needs to be above page header so it can suppress page header
-			if ( $displayAdminDashboard ) {
-				echo $app->renderView( 'AdminDashboard', 'Chrome' );
-			}
-		?>
+		<? if ( $displayAdminDashboard ) : ?>
+			<!--Needs to be above page header so it can suppress page header-->
+			<?= $app->renderView( 'AdminDashboard', 'Chrome' ) ?>
+		<? endif; ?>
 
-		<?php if ( !empty( $wg->EnablePremiumPageHeader ) ): ?>
+		<? if ( !empty( $wg->EnablePremiumPageHeader ) ) : ?>
 			<div class="PremiumPageArticleHeader">
 				<?= $app->renderView( 'PremiumPageHeader', 'articleHeader' ) ?>
 			</div>
-		<?php endif; ?>
+		<? endif; ?>
 
 		<article id="WikiaMainContent" class="WikiaMainContent<?= !empty( $isGridLayoutEnabled ) ? $railModulesExist ? ' grid-4' : ' grid-6' : '' ?>">
 			<div id="WikiaMainContentContainer" class="WikiaMainContentContainer">
@@ -106,17 +103,18 @@
 					}
 				?>
 
-				<?php if ( $wg->enableArticleFeaturedVideo ): ?>
+				<? if ( $wg->enableArticleFeaturedVideo ) : ?>
 					<?= $app->renderView( 'ArticleVideo', 'featured' ) ?>
-				<?php endif; ?>
+				<? endif; ?>
 
-				<?php if ( $wg->enableArticleRelatedVideo ): ?>
+				<? if ( $wg->enableArticleRelatedVideo ) : ?>
 					<?= $app->renderView( 'ArticleVideo', 'related' ) ?>
-				<?php endif; ?>
+				<? endif; ?>
 
-				<?php if ( $subtitle != '' && $headerModuleName == 'UserPagesHeader' ) { ?>
+				<? if ( $subtitle != '' && $headerModuleName == 'UserPagesHeader' ) : ?>
 					<div id="contentSub"><?= $subtitle ?></div>
-				<?php } ?>
+				<? endif; ?>
+
 				<div id="WikiaArticle" class="WikiaArticle">
 					<div class="home-top-right-ads">
 					<?php
@@ -128,6 +126,7 @@
 						}
 					?>
 					</div>
+
 					<?php
 					// for InfoBox-Testing
 					if ( $wg->EnableInfoBoxTest ) {
@@ -137,7 +136,8 @@
 					<?= $bodytext ?>
 
 				</div>
-				<?php if ( !(new ARecoveryModule)->isSourcePointRecoveryDisabled() ) { ?>
+
+				<? if ( ARecoveryModule::isSourcePointRecoveryEnabled() ) : ?>
 					<!--googleoff: all-->
 					<div id="WikiaArticleMsg">
 						<h2><?= wfMessage('arecovery-blocked-message-headline')->escaped() ?></h2>
@@ -148,48 +148,45 @@
 						</h3>
 					</div>
 					<!--googleon: all-->
-				<?php } ?>
+				<? endif; ?>
+
 				<? if ( empty( $wg->SuppressArticleCategories ) ): ?>
 					<? if ( !empty( $wg->EnableCategorySelectExt ) && CategorySelectHelper::isEnabled() ): ?>
 						<?= $app->renderView( 'CategorySelect', 'articlePage' ) ?>
 					<? else: ?>
 						<?= $app->renderView( 'ArticleCategories', 'Index' ) ?>
-					<? endif ?>
-				<? endif ?>
+					<? endif; ?>
+				<? endif; ?>
 
-				<?php
-				if ( empty( $wg->InterlangOnTop ) ) {
-					 echo $app->renderView( 'ArticleInterlang', 'Index' );
-				}
-				?>
+				<? if ( empty( $wg->InterlangOnTop ) ) : ?>
+					<?= $app->renderView( 'ArticleInterlang', 'Index' ) ?>
+				<? endif; ?>
 
-				<?php if ( !empty( $afterContentHookText ) ) { ?>
+				<? if ( !empty( $afterContentHookText ) ) : ?>
 					<div id="WikiaArticleFooter" class="WikiaArticleFooter">
 						<?= $afterContentHookText ?>
 					</div>
-				<?php } ?>
+				<? endif; ?>
 
 				<div id="WikiaArticleBottomAd" class="noprint">
 					<?= $app->renderView( 'Ad', 'Index', ['slotName' => 'PREFOOTER_LEFT_BOXAD', 'onLoad' => true] ) ?>
-					<?php
-					if ( WikiaPageType::isMainPage() ) {
-						echo $app->renderView( 'Ad', 'Index', ['slotName' => 'PREFOOTER_MIDDLE_BOXAD', 'onLoad' => true] );
-					}
-					?>
+
+					<? if ( WikiaPageType::isMainPage() ) : ?>
+						<?= $app->renderView( 'Ad', 'Index', ['slotName' => 'PREFOOTER_MIDDLE_BOXAD', 'onLoad' => true] ) ?>
+					<? endif; ?>
+
 					<?= $app->renderView( 'Ad', 'Index', ['slotName' => 'PREFOOTER_RIGHT_BOXAD', 'onLoad' => true] ) ?>
 				</div>
 			</div>
 		</article><!-- WikiaMainContent -->
 
-		<?php if( $railModulesExist ): ?>
+		<? if ( $railModulesExist ) : ?>
 			<?= $app->renderView( 'Rail', 'Index', array( 'railModuleList' => $railModuleList, 'isEditPage' => $isEditPage ) ); ?>
-		<?php endif; ?>
+		<? endif; ?>
 
-		<?php
-		if ( $displayAdminDashboard ) {
-			echo $app->renderView( 'AdminDashboard', 'Rail' );
-		}
-		?>
+		<? if ( $displayAdminDashboard ) : ?>
+			<?= $app->renderView( 'AdminDashboard', 'Rail' ) ?>
+		<? endif; ?>
 
 		<?= empty( $wg->SuppressFooter ) ? $app->renderView( 'Footer', 'Index' ) : '' ?>
 	</div>
@@ -197,6 +194,6 @@
 
 <?= $app->renderView( 'DesignSystemGlobalFooterService', 'index' ); ?>
 
-<?php if ( $wg->EnableWikiaBarExt ): ?>
+<? if ( $wg->EnableWikiaBarExt ): ?>
 	<?= $app->renderView( 'WikiaBar', 'Index' ); ?>
-<?php endif; ?>
+<? endif; ?>

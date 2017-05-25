@@ -22,19 +22,9 @@ class MercuryApiHooks {
 	 *
 	 * @param WikiPage $wikiPage
 	 * @param User $user
-	 * @param $text
-	 * @param $summary
-	 * @param $minoredit
-	 * @param $watchthis
-	 * @param $sectionanchor
-	 * @param $flags
-	 * @param $revision
-	 * @param $status
-	 * @param $baseRevId
 	 * @return bool
 	 */
-	public static function onArticleSaveComplete( WikiPage $wikiPage, User $user, $text, $summary, $minoredit, $watchthis,
-												  $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
+	public static function onArticleSaveComplete( WikiPage $wikiPage, User $user ) {
 		if ( !$user->isAnon() ) {
 			$articleId = $wikiPage->getId();
 			if ( $articleId ) {

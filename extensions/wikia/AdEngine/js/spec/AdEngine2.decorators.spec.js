@@ -36,24 +36,35 @@ describe('ext.wikia.adEngine.adEngine decorators', function () {
 		eventDispatcher: {},
 		fillInSlot: noop,
 		log: noop,
+		slotRegistry: {
+			add: noop,
+			reset: noop
+		},
 		slotTweaker: {
 			show: noop,
 			hide: noop
 		},
-		slotTracker: {}
+		slotTracker: {},
+		pageFair: {
+			isSlotRecoverable: noop
+		}
 	};
+
+	mocks.log.levels = {};
 
 	function getAdEngine() {
 		return modules['ext.wikia.adEngine.adEngine'](
 			mocks.adDecoratorLegacyParamFormat,
 			mocks.eventDispatcher,
 			mocks.adSlot,
+			mocks.slotRegistry,
 			mocks.slotTracker,
 			mocks.slotTweaker,
 			mocks.hooks,
 			mocks.doc,
 			mocks.lazyQueue,
-			mocks.log
+			mocks.log,
+			mocks.pageFair
 		);
 	}
 

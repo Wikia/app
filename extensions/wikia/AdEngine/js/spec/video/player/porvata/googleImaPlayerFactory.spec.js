@@ -7,7 +7,11 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', funct
 
 	var mocks = {
 		document: {
-			createElement: noop
+			createElement: function () {
+				return {
+					setAttribute: noop
+				};
+			}
 		},
 		adsLoaderMock: {
 			addEventListener: noop,

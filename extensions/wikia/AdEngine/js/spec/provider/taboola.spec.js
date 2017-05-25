@@ -13,8 +13,11 @@ describe('Taboola ', function () {
 					};
 				}
 			},
-			sourcePoint: {
+			adBlockDetection: {
 				addOnBlockingCallback: noop
+			},
+			adBlockRecovery: {
+				isEnabled: noop
 			},
 			slotTweaker: {
 				show: noop
@@ -54,7 +57,8 @@ describe('Taboola ', function () {
 	function getTaboola() {
 		return modules['ext.wikia.adEngine.provider.taboola'](
 			mocks.adContext,
-			mocks.sourcePoint,
+			mocks.adBlockDetection,
+			mocks.adBlockRecovery,
 			mocks.slotTweaker,
 			mocks.taboolaHelper,
 			mocks.geo,
@@ -147,7 +151,7 @@ describe('Taboola ', function () {
 	});
 
 	it('Fills regular slot without using recovery helper', function () {
-		spyOn(mocks.sourcePoint, 'addOnBlockingCallback');
+		spyOn(mocks.adBlockDetection, 'addOnBlockingCallback');
 		spyOn(mocks.slotTweaker, 'show');
 		mocks.instantGlobals.wgAdDriverTaboolaConfig.NATIVE_TABOOLA_RAIL = {
 			recovery: ['CURRENT'],
@@ -158,7 +162,7 @@ describe('Taboola ', function () {
 		taboola.canHandleSlot('NATIVE_TABOOLA_ARTICLE');
 		taboola.fillInSlot(createSlot('NATIVE_TABOOLA_ARTICLE'));
 
-		expect(mocks.sourcePoint.addOnBlockingCallback).not.toHaveBeenCalled();
+		expect(mocks.adBlockDetection.addOnBlockingCallback).not.toHaveBeenCalled();
 		expect(mocks.slotTweaker.show).toHaveBeenCalled();
 	});
 
@@ -167,13 +171,13 @@ describe('Taboola ', function () {
 			recovery: ['CURRENT'],
 			regular: []
 		};
-		spyOn(mocks.sourcePoint, 'addOnBlockingCallback');
+		spyOn(mocks.adBlockDetection, 'addOnBlockingCallback');
 		var taboola = getTaboola();
 
 		taboola.canHandleSlot('NATIVE_TABOOLA_RAIL');
 		taboola.fillInSlot(createSlot('NATIVE_TABOOLA_RAIL'));
 
-		expect(mocks.sourcePoint.addOnBlockingCallback).toHaveBeenCalled();
+		expect(mocks.adBlockDetection.addOnBlockingCallback).toHaveBeenCalled();
 	});
 
 	it('Fills in TOP_LEADERBOARD_AB recovery slot using recovery helper', function () {
@@ -181,12 +185,12 @@ describe('Taboola ', function () {
 			recovery: ['CURRENT'],
 			regular: []
 		};
-		spyOn(mocks.sourcePoint, 'addOnBlockingCallback');
+		spyOn(mocks.adBlockDetection, 'addOnBlockingCallback');
 		var taboola = getTaboola();
 
 		taboola.canHandleSlot('TOP_LEADERBOARD_AB');
 		taboola.fillInSlot(createSlot('TOP_LEADERBOARD_AB'));
 
-		expect(mocks.sourcePoint.addOnBlockingCallback).toHaveBeenCalled();
+		expect(mocks.adBlockDetection.addOnBlockingCallback).toHaveBeenCalled();
 	});
 });

@@ -104,11 +104,15 @@ define('ext.wikia.adEngine.video.player.porvata.floatingContextFactory', [
 					isStill: function () {
 						return this.state === state.never || this.state === state.paused;
 					},
+					isStopped: function() {
+						return this.state == state.stopped;
+					},
 					listeners: {},
 					pause: function () {
 						this.state = state.paused;
 						this.fireEvent(events.attach);
 					},
+					pauseOnClose: params.hasUiControls,
 					state: state.never,
 					stop: function () {
 						this.state = state.stopped;

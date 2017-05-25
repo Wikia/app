@@ -334,27 +334,23 @@ class Wikia {
 		$name = strtolower( $name );
 
 		$parts = explode(".", trim($name));
-		Wikia::log( __METHOD__, "info", "$name $language $type" );
-		if( is_array( $parts ) ) {
-			if( count( $parts ) <= 2 ) {
-				$allowLang = true;
-				switch( $type ) {
-					case "answers":
-						$domains = self::getAnswersDomains();
-						if ( $language && isset($domains[$language]) && !empty($domains[$language]) ) {
-							$name =  sprintf("%s.%s.%s", $name, $domains[$language], $wgWikiaBaseDomain);
-							$allowLang = false;
-						} else {
-							$name =  sprintf("%s.%s.%s", $name, $domains["default"], $wgWikiaBaseDomain);
-						}
-						break;
+		if( is_array( $parts ) && count( $parts ) <= 2 ) {
+			$allowLang = true;
 
-					default:
-						$name = sprintf("%s.%s", $name, $wgWikiaBaseDomain);
+			if ( $type === 'answers' ) {
+				$domains = self::getAnswersDomains();
+				if ( $language && isset( $domains[$language] ) && !empty( $domains[$language] ) ) {
+					$name = sprintf( "%s.%s.%s", $name, $domains[$language], $wgWikiaBaseDomain );
+					$allowLang = false;
+				} else {
+					$name = sprintf( "%s.%s.%s", $name, $domains["default"], $wgWikiaBaseDomain );
 				}
-				if ( $language && $language != "en" && $allowLang ) {
-					$name = $language.".".$name;
-				}
+			} else {
+				$name = sprintf("%s.%s", $name, $wgWikiaBaseDomain);
+			}
+
+			if ( $language && $language != "en" && $allowLang ) {
+				$name = $language.".".$name;
 			}
 		}
 		return $name;
@@ -583,54 +579,23 @@ class Wikia {
 	 * @access public
 	 * @static
 	 *
-	 * @param String $lang  -- language code
+	 * @param String $langCode  -- language code
 	 *
 	 * @return User -- instance of user object
 	 */
 	static public function staffForLang( $langCode ) {
-		wfProfileIn( __METHOD__ );
+		$staffMap = WikiFactory::getVarValueByName( 'wgFounderWelcomeAuthor', Wikia::COMMUNITY_WIKI_ID );
 
-		$staffSigs = wfMsgExt('staffsigs', array('language'=>'en')); // fzy, rt#32053
-
-		$staffUser = false;
-		if( !empty( $staffSigs ) ) {
-			$lines = explode("\n", $staffSigs);
-
-			$data = array();
-			$sectLangCode = '';
-			foreach ( $lines as $line ) {
-				if( strpos( $line, '* ' ) === 0 ) {
-					//language line
-					$sectLangCode = trim( $line, '* ' );
-					continue;
-				}
-				if( strpos( $line, '* ' ) == 1 && $sectLangCode ) {
-					//user line
-					$user = trim( $line, '** ' );
-					$data[$sectLangCode][] = $user;
-				}
-			}
-
-			//did we get any names for our target language?
-			if( !empty( $data[$langCode] ) ) {
-				//pick one
-				$key = array_rand($data[$langCode]);
-
-				//use it
-				$staffUser = User::newFromName( $data[$langCode][$key] );
-				$staffUser->load();
-			}
+		if ( !empty( $staffMap[$langCode] ) && is_array( $staffMap[$langCode] ) ) {
+			$key = array_rand( $staffMap[$langCode] );
+			$staffUser = User::newFromName( $staffMap[$langCode][$key] );
+		} else {
+			// Fallback to robot when there is no explicit welcoming user set (unsupported language)
+			$staffUser = User::newFromName( 'Fandom' );
 		}
 
-		/**
-		 * fallback to Wikia
-		 */
-		if( ! $staffUser ) {
-			$staffUser = User::newFromName( 'Wikia' );
-			$staffUser->load();
-		}
+		$staffUser->load();
 
-		wfProfileOut( __METHOD__ );
 		return $staffUser;
 	}
 
@@ -1145,13 +1110,10 @@ class Wikia {
 	/**
 	 * get properties for page
 	 * FIXME: maybe it should be cached?
-	 * @static
-	 * @access public
-	 * @param page_id
-	 * @param oneProp if you just want one property, this will return the value only, not an array
-	 * @return Array
+	 * @param $page_id int
+	 * @param $oneProp string if you just want one property, this will return the value only, not an array
+	 * @return mixed
 	 */
-
 	static public function getProps( $page_id, $oneProp = null ) {
 		wfProfileIn( __METHOD__ );
 		$return = array();
@@ -1174,7 +1136,7 @@ class Wikia {
 		);
 		while( $row = $dbr->fetchObject( $res ) ) {
 			$return[ $row->pp_propname ] = $row->pp_value;
-			Wikia::log( __METHOD__, "get", "id: {$page_id}, key: {$row->pp_propname}, value: {$row->pp_value}" );
+			wfDebug( __METHOD__ . " id: {$page_id}, key: {$row->pp_propname}, value: {$row->pp_value}\n" );
 		}
 		$dbr->freeResult( $res );
 		wfProfileOut( __METHOD__ );
@@ -2020,7 +1982,15 @@ class Wikia {
 		$output = wfShellExec("identify -regard-warnings {$imageFile} 2>&1", $retVal);
 		wfDebug("Exit code #{$retVal}\n{$output}\n");
 
-		$isValid = ($retVal === 0);
+		/**
+		 * Let's ignore warnings reported by "identify" binary and focus on errors, examples:
+		 *
+		 * identify: Ignoring attempt to set negative chromaticity value `/tmp/Gree.png' @ warning/png.c/MagickPNGWarningHandler/1671.
+		 * identify.im6: no decode delegate for this image format `/tmp/UploadTestExwn06' @ error/constitute.c/ReadImage/544.
+		 *
+		 * @see SUS-1625
+		 */
+		$isValid = strpos( $output, ' @ error/' ) === false; /* no errors reported */
 
 		if (!$isValid) {
 			Wikia\Logger\WikiaLogger::instance()->warning( __METHOD__ . ' failed', [

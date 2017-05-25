@@ -2853,6 +2853,13 @@
 		},
 
 		render: function() {
+			if(this.props.skinConfig.icons[this.props.icon].svg) {
+				var svg = {
+					__html: this.props.skinConfig.icons[this.props.icon].svg
+				};
+				return React.createElement("span", {dangerouslySetInnerHTML: svg, onMouseOver: this.props.onMouseOver, onMouseOut: this.props.onMouseOut,
+					onClick: this.props.onClick, className: "oo-icon-svg"});
+			}
 			var iconStyle = Utils.extend({fontFamily: this.props.skinConfig.icons[this.props.icon].fontFamilyName}, this.props.style);
 			return (
 				React.createElement("span", {

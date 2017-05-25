@@ -176,8 +176,6 @@ class WikiDetailsService extends WikiService {
 	 * @return array
 	 */
 	protected function getFromService( $id ) {
-		global $wgEnableDiscussions;
-
 		$wikiStats = $this->getSiteStats( $id );
 		$topUsers = $this->getTopEditors( $id, static::DEFAULT_TOP_EDITORS_NUMBER, true );
 		$modelData = $this->getDetails( [ $id ] );
@@ -216,7 +214,11 @@ class WikiDetailsService extends WikiService {
 			'image' => isset( $modelData[ $id ] ) ? $modelData[ $id ][ 'image' ] : '',
 		];
 
-		if ( $wgEnableDiscussions ) {
+		/*
+		 * This method can be called in context of other wiki that can have different value.
+		 * We need to get value from WikiFactory to make sure the value is correct
+		 */
+		if ( WikiFactory::getVarValueByName( 'wgEnableDiscussions', $id ) ) {
 			$wikiDetails[ 'stats' ][ 'discussions' ] = (int)$this->getDiscussionStats( $id );
 		}
 

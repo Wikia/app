@@ -16,10 +16,16 @@ describe('ext.wikia.adEngine.provider.*', function () {
 				return mocks.context;
 			}
 		},
-		adUnitBuilder: {
-			build: function(slotName, src) {
-				return '/5441/wka.ent/_muppet//home/' + src + '/' + slotName;
+		passbackHandler: {
+			get: function () {
+				return null;
 			}
+		},
+		adUnitBuilder: {
+			build: function (slotName, src) {
+				return '/5441/wka.ent/_muppet//home/' + src + '/' + slotName;
+			},
+			buildNew: noop
 		},
 		gptHelper: {
 			pushAd: function (slotName, slotElement, slotPath, slotTargeting, extra) {
@@ -29,6 +35,11 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		},
 		lookups: {
 			extendSlotTargeting: noop
+		},
+		slotRegistry: {
+			getRefreshCount: function () {
+				return 3;
+			}
 		},
 		slotTweaker: {
 			removeDefaultHeight: noop,
@@ -43,7 +54,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		beforeSuccess: noop,
 		beforeHop: noop,
 		btfBlocker: {
-			decorate: function(fillInSlot) {
+			decorate: function (fillInSlot) {
 				return fillInSlot;
 			}
 		}
@@ -63,6 +74,8 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			mocks.btfBlocker,
 			mocks.gptHelper,
 			mocks.adUnitBuilder,
+			mocks.passbackHandler,
+			mocks.slotRegistry,
 			mocks.log,
 			mocks.lookups
 		);
@@ -71,16 +84,29 @@ describe('ext.wikia.adEngine.provider.*', function () {
 	function getProvider(providerName) {
 		switch (providerName) {
 			case 'directGpt':
-			case 'remnantGpt':
 				return modules['ext.wikia.adEngine.provider.' + providerName](
 					mocks.uapContext,
 					getFactory(),
+					mocks.slotTweaker,
+					mocks.adUnitBuilder
+				);
+			case 'remnantGpt':
+				return modules['ext.wikia.adEngine.provider.' + providerName](
+					mocks.adContext,
+					mocks.uapContext,
+					getFactory(),
+					mocks.adUnitBuilder,
 					mocks.slotTweaker
 				);
 			case 'directGptMobile':
-			case 'remnantGptMobile':
 				return modules['ext.wikia.adEngine.provider.' + providerName](
 					getFactory()
+				);
+			case 'remnantGptMobile':
+				return modules['ext.wikia.adEngine.provider.' + providerName](
+					mocks.adContext,
+					getFactory(),
+					mocks.adUnitBuilder
 				);
 			default:
 				return null;
@@ -119,14 +145,12 @@ describe('ext.wikia.adEngine.provider.*', function () {
 
 	beforeEach(function () {
 		mocks.context.opts.overridePrefootersSizes = false;
-		mocks.context.opts.incontentLeaderboardAsOutOfPage = false;
 	});
 
 	it('directGpt: Push ad with specific slot sizes', function () {
 		var expectedSizes = {
 			BOTTOM_LEADERBOARD: '728x90',
 			INCONTENT_BOXAD_1: '120x600,160x600,300x250,300x600',
-			INCONTENT_LEADERBOARD: '1x1,728x90,300x250,468x60',
 			INCONTENT_PLAYER: '1x1',
 			INVISIBLE_HIGH_IMPACT_2: 'out-of-page',
 			INVISIBLE_SKIN: '1000x1000,1x1',
@@ -151,20 +175,10 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		assertProviderSlotMap(getProvider('directGpt'), expectedSizes);
 	});
 
-	it('directGpt: Push ad with overridden incontent leaderboard', function () {
-		mocks.context.opts.incontentLeaderboardAsOutOfPage = true;
-		var expectedSizes = {
-			INCONTENT_LEADERBOARD: 'out-of-page'
-		};
-
-		assertProviderSlotMap(getProvider('directGpt'), expectedSizes);
-	});
-
 	it('remnantGpt: Push ad with specific slot sizes', function () {
 		var expectedSizes = {
 			BOTTOM_LEADERBOARD: '728x90',
 			INCONTENT_BOXAD_1: '120x600,160x600,300x250,300x600',
-			INCONTENT_LEADERBOARD: '1x1,728x90,300x250,468x60',
 			INCONTENT_PLAYER: null,
 			INVISIBLE_HIGH_IMPACT_2: 'out-of-page',
 			INVISIBLE_SKIN: '1000x1000,1x1',
@@ -184,15 +198,6 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		var expectedSizes = {
 			PREFOOTER_LEFT_BOXAD: '300x250,468x60,728x90',
 			PREFOOTER_RIGHT_BOXAD: null
-		};
-
-		assertProviderSlotMap(getProvider('remnantGpt'), expectedSizes);
-	});
-
-	it('remnantGpt: Push ad with overridden incontent leaderboard', function () {
-		mocks.context.opts.incontentLeaderboardAsOutOfPage = true;
-		var expectedSizes = {
-			INCONTENT_LEADERBOARD: 'out-of-page'
 		};
 
 		assertProviderSlotMap(getProvider('remnantGpt'), expectedSizes);

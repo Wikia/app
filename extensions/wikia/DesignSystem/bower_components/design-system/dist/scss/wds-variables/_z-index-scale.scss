@@ -1,0 +1,20 @@
+// Z-Index Scale
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+
+// Never --ever-- implement z-index that doesn't use this scale, if you have a use-case that
+// for some reason falls out of this scale, ask for guidance before implementing one-offs.
+//
+// Copied from:
+// https://github.com/Wikia/style-guide/blob/db89f1a3940c8f8302309e7d34346a605d5285f8/src/scss/lib/_settings.scss
+
+$z-min : -1;
+$z-1   : 100;
+$z-2   : 200;
+$z-3   : 300;
+$z-4   : 400;
+$z-5   : 500;
+$z-6   : 600;
+$z-7   : 700;
+$z-8   : 800;
+$z-9   : 900;
+$z-max : 10000;

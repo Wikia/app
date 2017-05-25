@@ -1,14 +1,30 @@
-/*global describe, it, expect, modules*/
+/*global describe, it, expect, modules, spyOn*/
 describe('ext.wikia.adEngine.video.videoSettings', function () {
 	'use strict';
 
 	var mocks = {
+		geo: {
+			isProperGeo: function () {
+				return true;
+			}
+		},
 		resolvedState: {
 			isResolvedState: function () { return false; }
 		},
-		googleIma: {
-			vpaidMode: {
-				ENABLED: 1
+		sampler: {
+			sample: function () {
+				return true;
+			}
+		},
+		win: {
+			google: {
+				ima: {
+					ImaSdkSettings: {
+						VpaidMode: {
+							ENABLED: 1
+						}
+					}
+				}
 			}
 		}
 	};
@@ -17,7 +33,9 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 		params = params || {};
 		return modules['ext.wikia.adEngine.video.videoSettings'](
 			mocks.resolvedState,
-			mocks.googleIma
+			mocks.sampler,
+			mocks.geo,
+			mocks.win
 		).create(params);
 	}
 
@@ -95,6 +113,77 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 		});
 
 		expect(videoSettings.getVpaidMode()).toEqual(0);
+	});
+
+	it('Should not show ui controls by default', function () {
+		var videoSettings = getSettings({});
+
+		expect(videoSettings.hasUiControls()).toBeFalsy();
+	});
+
+	it('Should not ui controls when configured in params', function () {
+		var videoSettings = getSettings({
+			hasUiControls: true
+		});
+
+		expect(videoSettings.hasUiControls()).toBeTruthy();
+	});
+
+	it('Should enable tracking when param is boolean (true)', function () {
+		spyOn(mocks.sampler, 'sample').and.returnValue(true);
+
+		var videoSettings = getSettings({
+			moatTracking: true
+		});
+
+		expect(videoSettings.isMoatTrackingEnabled()).toBeTruthy();
+		expect(mocks.sampler.sample).not.toHaveBeenCalled();
+	});
+
+	it('Should disable tracking when param is boolean (false)', function () {
+		spyOn(mocks.sampler, 'sample').and.returnValue(true);
+
+		var videoSettings = getSettings({
+			moatTracking: false
+		});
+
+		expect(videoSettings.isMoatTrackingEnabled()).toBeFalsy();
+		expect(mocks.sampler.sample).not.toHaveBeenCalled();
+	});
+
+	it('Should enable tracking when param is integer (100)', function () {
+		spyOn(mocks.sampler, 'sample').and.returnValue(true);
+
+		var videoSettings = getSettings({
+			moatTracking: 100
+		});
+
+		expect(videoSettings.isMoatTrackingEnabled()).toBeTruthy();
+		expect(mocks.sampler.sample).not.toHaveBeenCalled();
+	});
+
+	it('Should enable tracking when param.bid is integer (100)', function () {
+		spyOn(mocks.sampler, 'sample').and.returnValue(true);
+
+		var videoSettings = getSettings({
+			bid: {
+				moatTracking: 100
+			},
+			moatTracking: 1
+		});
+
+		expect(videoSettings.isMoatTrackingEnabled()).toBeTruthy();
+		expect(mocks.sampler.sample).not.toHaveBeenCalled();
+	});
+
+	it('Should use sampling when param is integer lower than 100', function () {
+		spyOn(mocks.sampler, 'sample').and.returnValue(true);
+
+		getSettings({
+			moatTracking: 50
+		});
+
+		expect(mocks.sampler.sample).toHaveBeenCalled();
 	});
 });
 

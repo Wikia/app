@@ -1,11 +1,11 @@
 {{#.}}
-    <li data-type={{type}} data-uri={{uri}} class="wds-notification-card">
+    <li data-type={{type}} data-uri={{uri}} class="wds-notification-card {{#isUnread}}wds-is-unread{{/isUnread}}">
         {{#showAvatars}}
             <div class="wds-avatar-stack">
                 {{#avatars}}
                     <a class="wds-avatar-stack__avatar" href="{{profileUrl}}">
                         <img class="wds-avatar" src="{{avatarUrl}}" title="{{name}}"
-                             alt="Avatar">
+                             alt="{{name}}">
                     </a>
                 {{/avatars}}
                 {{#showAvatarOverflow}}
@@ -16,7 +16,7 @@
 
         <a href="{{latestEventUri}}" class="wds-notification-card__outer-body">
             <div class="wds-notification-card__icon-wrapper">
-                <svg class="wds-icon {{#isUnread}}wds-is-unread{{/isUnread}}"
+                <svg class="wds-icon"
                      viewBox="0 0 18 18">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink"
                          xlink:href="#{{icon}}"></use>

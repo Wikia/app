@@ -5,6 +5,7 @@ namespace ContributionPrototype;
 use Http;
 use MWHttpRequest;
 use OutputPage;
+use Title;
 use Wikia;
 use Wikia\Logger\Loggable;
 use Wikia\Service\Gateway\UrlProvider;
@@ -27,26 +28,36 @@ class CPArticleRenderer {
 	/** @var UrlProvider */
 	private $urlProvider;
 
+	/** @var bool */
+	private $premiumHeaderEnabled;
+
 	/**
 	 * CPArticleRenderer constructor.
 	 * @param string $publicHost
 	 * @param int $wikiId
 	 * @param string $dbName
 	 * @param UrlProvider $urlProvider
+	 * @param bool $premiumHeaderEnabled
 	 */
-	public function __construct($publicHost, $wikiId, $dbName, $urlProvider) {
+	public function __construct($publicHost, $wikiId, $dbName, $urlProvider, $premiumHeaderEnabled) {
 		$this->publicHost = $publicHost;
 		$this->wikiId = $wikiId;
 		$this->dbName = $dbName;
 		$this->urlProvider = $urlProvider;
+		$this->premiumHeaderEnabled = $premiumHeaderEnabled;
 	}
 
 	/**
-	 * @param string $title
+	 * @param Title $title
 	 * @param OutputPage $output
 	 */
-	public function render($title, OutputPage $output, $action='view') {
-		$content = $this->getArticleContent($title, $action);
+	public function render(Title $title, OutputPage $output, $action='view') {
+		if ( $title->getPartialURL() == '' ) {
+			$output->redirect( '/wiki/Home' );
+		}
+
+		$output->setPageTitle($title->getPrefixedText());
+		$content = $this->getArticleContent($title->getPartialURL(), $action);
 		
 		if ($content === false) {
 			// TODO: what do we want to show here?
@@ -91,11 +102,13 @@ class CPArticleRenderer {
 				'GET',
 				"{$internalHost}/{$path}",
 				[
+					'userAgent' => $_SERVER['HTTP_USER_AGENT'],
 					'noProxy' => true,
 					'returnInstance' => true,
 					'followRedirects'=> true,
 					'headers' => [
 						'X-Wikia-Community' => $this->dbName,
+						'X-Wikia-PremiumHeader' => $this->premiumHeaderEnabled
 					]
 				]
 		);

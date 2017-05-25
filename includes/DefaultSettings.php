@@ -1893,6 +1893,7 @@ $wgDummyLanguageCodes = array(
 	'be-x-old' => 'be-tarask',
 	'bh' => 'bho',
 	'fiu-vro' => 'vro',
+	'lol' => 'lol', # Used for In Context Translations
 	'no' => 'nb',
 	'qqq' => 'qqq', # Used for message documentation.
 	'qqx' => 'qqx', # Used for viewing message keys.

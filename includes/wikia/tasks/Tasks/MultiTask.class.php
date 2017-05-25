@@ -193,7 +193,7 @@ class MultiTask extends BaseTask {
 	 * Run this query to get the list of wikis where MultiTask should be run
 	 * instead of executing the task on all active wikis
 	 *
-	 * Example: SELECT * FROM pages WHERE page_title_lower = 'tomyvilu' AND page_namespace = 2;
+	 * Example: SELECT * FROM pages WHERE page_title = 'tomyvilu' AND page_namespace = 2;
 	 *
 	 * @see PLATFORM-783
 	 *
@@ -208,7 +208,7 @@ class MultiTask extends BaseTask {
 			'pages',
 			'page_wikia_id as wiki_id',
 			[
-				'page_title_lower' => $title->getDBkey(),
+				'page_title' => $title->getDBkey(),
 				'page_namespace'   => $title->getNamespace()
 			],
 			__METHOD__
