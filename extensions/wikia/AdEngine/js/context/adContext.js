@@ -102,6 +102,21 @@ define('ext.wikia.adEngine.adContext', [
 			context.opts.sourcePointDetection && isGSCEnabled();
 	}
 
+	function enableAdMixExperiment(context) {
+		var group = abTest.getGroup('AD_MIX') || '';
+
+		context.opts.adMixExperimentEnabled = !!(
+			group.indexOf('AD_MIX_') === 0 &&
+			isPageType('article') &&
+			context.targeting.skin === 'oasis' &&
+			geo.isProperGeo(instantGlobals.wgAdDriverAdMixCountries)
+		);
+
+		context.slots.adMixToUnblock = [
+			'INCONTENT_BOXAD_1'
+		];
+	}
+
 	function referrerIsSonySite() {
 		return doc && doc.referrer && doc.referrer.match(/info\.tvsideview\.sony\.net/);
 	}
@@ -191,11 +206,7 @@ define('ext.wikia.adEngine.adContext', [
 			geo.isProperGeo(instantGlobals.wgAdDriverOverridePrefootersCountries) && !isPageType('home')
 		);
 
-		context.opts.adMixExperimentEnabled = !!(
-			context.targeting.skin === 'oasis' &&
-			abTest.getGroup('AD_MIX') &&
-			isPageType('article')
-		);
+		enableAdMixExperiment(context);
 
 		// OpenX for remnant slot enabled
 		context.opts.openXRemnantEnabled = geo.isProperGeo(instantGlobals.wgAdDriverOpenXBidderCountriesRemnant);
