@@ -283,16 +283,6 @@ $config['adengine2_rubicon_fastlane_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconTargeting.js',
 		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconTier.js',
 		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconFastlane.js',
-	],
-];
-
-$config['adengine2_rubicon_vulcan_js'] = [
-	'skin' => [ 'oasis' ],
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconTargeting.js',
-		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconTier.js',
-		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconVulcan.js',
 		'//extensions/wikia/AdEngine/js/utils/math.js',
 	],
 ];
@@ -301,6 +291,7 @@ $config['adengine2_prebid_js'] = [
 	'skin' => [ 'oasis' ],
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
+		'//extensions/wikia/AdEngine/js/lookup/prebid/bidHelper.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/prebid.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/prebidHelper.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/prebidSettings.js',
@@ -315,6 +306,7 @@ $config['adengine2_prebid_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/audienceNetwork.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/indexExchange.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/openx.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/rubicon.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/wikia.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/veles.js',
 
@@ -935,7 +927,6 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/openx/openXBidderHelper.js',
 		'//extensions/wikia/AdEngine/js/lookup/openXBidder.js',
 		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconFastlane.js',
-		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconVulcan.js',
 		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconTargeting.js',
 		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconTier.js',
 		'//extensions/wikia/AdEngine/js/lookup/services.js',
@@ -2051,16 +2042,6 @@ $config['LyricsFindTracking'] = [
 	'assets' => [
 		'//extensions/3rdparty/LyricWiki/LyricFind/js/modules/LyricFind.Tracker.js',
 		'//extensions/3rdparty/LyricWiki/LyricFind/js/tracking.js',
-	],
-];
-
-/* ManageWikiaHome */
-$config['manage_wikia_home_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/SpecialManageWikiaHome/js/ManageWikiaHome.js',
-		'//extensions/wikia/SpecialManageWikiaHome/js/CollectionsSetup.js',
-		'//extensions/wikia/SpecialManageWikiaHome/js/CollectionsNavigation.js',
 	],
 ];
 

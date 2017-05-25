@@ -1,9 +1,9 @@
 define('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', [
 	'ext.wikia.adEngine.lookup.prebid.adaptersRegistry',
-	'ext.wikia.adEngine.lookup.prebid.priceGranularityHelper',
+	'ext.wikia.adEngine.lookup.prebid.bidHelper',
 	'ext.wikia.adEngine.wrappers.prebid',
 	'wikia.log'
-], function (adaptersRegistry, priceGranularityHelper, prebid, log) {
+], function (adaptersRegistry, bidHelper, prebid, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker';
@@ -22,7 +22,7 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', [
 		slotBids.forEach(function(bid) {
 			if (isValidPrice(bid)) {
 				var bidderCode = bid.bidderCode,
-					cpmPrice = priceGranularityHelper.transformPriceFromCpm(bid.cpm);
+					cpmPrice = bidHelper.transformPriceFromBid(bid);
 
 				bestPrices[bidderCode] = Math.max(bestPrices[bidderCode] || 0, parseFloat(cpmPrice)).toFixed(2).toString();
 

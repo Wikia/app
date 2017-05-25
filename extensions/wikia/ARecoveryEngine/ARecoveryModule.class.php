@@ -7,7 +7,7 @@ class ARecoveryModule {
 	 * @return bool
 	 */
 	public static function isPageFairRecoveryEnabled() {
-		global $wgUser, $wgAdDriverEnablePageFairRecovery;
+		global $wgAdDriverEnablePageFairRecovery;
 
 		return static::isRecoverablePage() && $wgAdDriverEnablePageFairRecovery === true;
 	}
@@ -29,7 +29,7 @@ class ARecoveryModule {
 	 * @return bool
 	 */
 	public static function isSourcePointMessagingEnabled() {
-		global $wgUser, $wgAdDriverEnableSourcePointMMS, $wgAdDriverEnableSourcePointRecovery;
+		global $wgAdDriverEnableSourcePointMMS, $wgAdDriverEnableSourcePointRecovery;
 
 		return static::isRecoverablePage() && $wgAdDriverEnableSourcePointMMS && !$wgAdDriverEnableSourcePointRecovery;
 	}

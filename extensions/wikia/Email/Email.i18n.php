@@ -272,31 +272,3 @@ $messages['zh-hant'] = [
 	'emailext-mobile-application-footer-1' => '和你最喜歡的粉絲社區保持同步，千萬不要錯過任何訊息。',
 	'emailext-mobile-application-footer-2' => '去看看我們的Fandom社群App吧！',
 ];
-
-$messages['zh-hk'] = [
-	'emailext-anonymous-editor' => 'Wikia粉絲',
-	'emailext-fanverse-tagline' => '全球粉絲社交帝國',
-	'emailext-recipient-notice' => 'Wikia已經發送電子郵件至$1',
-	'emailext-unsubscribe' => '如果您希望取消訂閱所有的Wikia電子郵件，請點擊[$1 這裡]。',
-	'emailext-desc' => '用來處理發送郵件的擴展功能',
-	'emailext-no-reply-name' => '不要回覆這封郵件',
-	'emailext-unfollow-text' => '不想再接收這類更新内容？點擊[$1 這裡]取消對{{SITENAME}}上$2頁面的關注。',
-];
-
-$messages['zh-tw'] = [
-	'emailext-desc' => '用來處理發送郵件的擴展功能',
-	'emailext--anonymous-editor' => 'Wikia粉絲',
-	'emailext-no-reply-name' => '不要回覆這封郵件',
-	'emailext-fanverse-tagline' => '全球粉絲社交帝國',
-	'emailext-recipient-notice' => 'Wikia已經發送電子郵件至$1',
-	'emailext-update-frequency' => '如果您需要更改電子郵件地址或接收方式，請訪問您的[{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} 用戶設定]頁面。',
-	'emailext-unsubscribe' => '如果您希望取消訂閱所有的Wikia電子郵件，請點擊[$1 這裡]。',
-	'emailext-unfollow-text' => '不想再接收這類更新内容？點擊[$1 這裡]取消對{{SITENAME}}上$2頁面的關注。',
-	'emailext-salutation' => '$1，你好！',
-	'emailext-anonymous-editor' => 'Wikia粉絲',
-	'group-translator-member' => 'Wikia Translator',
-	'group-translator' => 'Wikia Translators',
-	'grouppage-translator' => 'wikia:Help:Internationalization',
-	'emailext-wikia-home-url' => 'http://zh-tw.wikia.com',
-];
-

@@ -122,8 +122,8 @@ CREATE TABLE `city_list` (
   `city_cluster` varchar(255) DEFAULT NULL,
   `city_last_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `city_founding_ip` int(10) unsigned NOT NULL DEFAULT '0',
-  `city_founding_ip_bin` varbinary(10),
   `city_vertical` int(11) NOT NULL DEFAULT '0',
+  `city_founding_ip_bin` varbinary(16) DEFAULT NULL,
   PRIMARY KEY (`city_id`),
   UNIQUE KEY `urlidx` (`city_url`),
   UNIQUE KEY `city_dbname_idx` (`city_dbname`),
@@ -342,38 +342,6 @@ CREATE TABLE `city_visualization_xwiki` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `cu_changes`
---
-
-DROP TABLE IF EXISTS `cu_changes`;
-CREATE TABLE `cu_changes` (
-  `cuc_id` int(11) NOT NULL AUTO_INCREMENT,
-  `cuc_namespace` int(11) NOT NULL DEFAULT '0',
-  `cuc_title` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
-  `cuc_user` int(11) NOT NULL DEFAULT '0',
-  `cuc_user_text` varchar(255) NOT NULL DEFAULT '',
-  `cuc_actiontext` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
-  `cuc_comment` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
-  `cuc_minor` tinyint(1) NOT NULL DEFAULT '0',
-  `cuc_page_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `cuc_this_oldid` int(10) unsigned NOT NULL DEFAULT '0',
-  `cuc_last_oldid` int(10) unsigned NOT NULL DEFAULT '0',
-  `cuc_type` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `cuc_timestamp` char(14) NOT NULL DEFAULT '',
-  `cuc_ip` varchar(255) DEFAULT '',
-  `cuc_ip_hex` varchar(255) DEFAULT NULL,
-  `cuc_xff` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT '',
-  `cuc_xff_hex` varchar(255) DEFAULT NULL,
-  `cuc_agent` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL,
-  PRIMARY KEY (`cuc_id`),
-  KEY `cuc_ip_hex_time` (`cuc_ip_hex`,`cuc_timestamp`),
-  KEY `cuc_xff_hex_time` (`cuc_xff_hex`,`cuc_timestamp`),
-  KEY `cuc_timestamp` (`cuc_timestamp`),
-  KEY `cuc_user_ip_time` (`cuc_user`,`cuc_ip`,`cuc_timestamp`),
-  KEY `cuc_user_time` (`cuc_user`,`cuc_timestamp`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `dmca_request`
 --
 
@@ -552,6 +520,7 @@ CREATE TABLE `phalanx` (
   `p_id` int(6) unsigned NOT NULL AUTO_INCREMENT,
   `p_author_id` int(6) NOT NULL,
   `p_text` blob NOT NULL,
+  `p_ip_hex` varchar(35) DEFAULT NULL,
   `p_type` smallint(1) unsigned NOT NULL,
   `p_timestamp` binary(14) NOT NULL DEFAULT '\0\0\0\0\0\0\0\0\0\0\0\0\0\0',
   `p_expire` binary(14) DEFAULT NULL,
@@ -562,6 +531,7 @@ CREATE TABLE `phalanx` (
   `p_lang` varchar(10) DEFAULT NULL,
   `p_comment` tinyblob NOT NULL,
   PRIMARY KEY (`p_id`),
+  KEY `p_ip_hex` (`p_ip_hex`),
   KEY `p_lang` (`p_lang`,`p_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -646,6 +616,16 @@ CREATE TABLE `text` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Table structure for table `three_word_spam`
+--
+
+DROP TABLE IF EXISTS `three_word_spam`;
+CREATE TABLE `three_word_spam` (
+  `dbname` varchar(64) NOT NULL,
+  PRIMARY KEY (`dbname`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
 -- Table structure for table `user`
 --
 
@@ -654,16 +634,13 @@ CREATE TABLE `user` (
   `user_id` int(5) unsigned NOT NULL AUTO_INCREMENT,
   `user_name` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
   `user_real_name` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
-  `user_password` tinyblob,
-  `user_newpassword` tinyblob,
   `user_email` tinytext NOT NULL,
   `user_touched` char(14) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
-  `user_token` char(32) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
+  `user_token` char(32) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT '',
   `user_email_authenticated` char(14) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL,
   `user_email_token` char(32) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL,
   `user_email_token_expires` char(14) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL,
   `user_registration` varchar(16) DEFAULT NULL,
-  `user_newpass_time` char(14) DEFAULT NULL,
   `user_editcount` int(11) DEFAULT NULL,
   `user_birthdate` date DEFAULT NULL,
   `user_options` blob NOT NULL,
@@ -831,4 +808,4 @@ CREATE TABLE `wikia_tasks_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2017-03-30  9:35:09
+-- Dump completed on 2017-05-24  7:42:03

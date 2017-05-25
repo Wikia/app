@@ -103,11 +103,6 @@ $messages['pt'] = array(
 	'archive-wiki-forums-button-to-discussions' => 'Visitar Discussões',
 );
 
-$messages['pt-br'] = array(
-	'archive-wiki-forums-notification-message' => 'Este fórum foi arquivado',
-	'archive-wiki-forums-button-to-new-forums' => 'Visite os novos Fóruns',
-);
-
 $messages['ru'] = array(
 	'archive-wiki-forums-notification-message' => 'Этот форум был заархивирован',
 	'archive-wiki-forums-button-to-new-forums' => 'Посетите новые форумы',
@@ -132,11 +127,6 @@ $messages['uk'] = array(
 $messages['vi'] = array(
 	'archive-wiki-forums-notification-message' => 'Diễn đàn này đã được lưu trữ',
 	'archive-wiki-forums-button-to-new-forums' => 'Truy cập vào các diễn đàn mới',
-);
-
-$messages['zh'] = array(
-	'archive-wiki-forums-notification-message' => '这个论坛已经被存档',
-	'archive-wiki-forums-button-to-new-forums' => '访问新的论坛',
 );
 
 $messages['zh-hans'] = array(

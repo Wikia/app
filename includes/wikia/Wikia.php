@@ -1982,7 +1982,15 @@ class Wikia {
 		$output = wfShellExec("identify -regard-warnings {$imageFile} 2>&1", $retVal);
 		wfDebug("Exit code #{$retVal}\n{$output}\n");
 
-		$isValid = ($retVal === 0);
+		/**
+		 * Let's ignore warnings reported by "identify" binary and focus on errors, examples:
+		 *
+		 * identify: Ignoring attempt to set negative chromaticity value `/tmp/Gree.png' @ warning/png.c/MagickPNGWarningHandler/1671.
+		 * identify.im6: no decode delegate for this image format `/tmp/UploadTestExwn06' @ error/constitute.c/ReadImage/544.
+		 *
+		 * @see SUS-1625
+		 */
+		$isValid = strpos( $output, ' @ error/' ) === false; /* no errors reported */
 
 		if (!$isValid) {
 			Wikia\Logger\WikiaLogger::instance()->warning( __METHOD__ . ' failed', [

@@ -4651,7 +4651,8 @@ class User implements JsonSerializable {
 			if( $dbName !== $name ) {
 				WikiaLogger::instance()->debug( "Default name different than lookup", [
 					"user_id" => $userId,
-					"username_db" => $dbName,
+					// SUS-2008, always log username_db as string
+					"username_db" => $dbName ?: '',
 					"username_default" => $name,
 					"caller" => $callerFunction
 				] );

@@ -6,24 +6,6 @@
 
 
 --
--- Table structure for table `chatlog`
---
-
-DROP TABLE IF EXISTS `chatlog`;
-CREATE TABLE `chatlog` (
-  `wiki_id` int(8) unsigned NOT NULL,
-  `user_id` int(8) unsigned NOT NULL,
-  `log_id` int(8) unsigned NOT NULL AUTO_INCREMENT,
-  `event_type` tinyint(2) unsigned NOT NULL DEFAULT '6',
-  `event_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`log_id`),
-  KEY `wikilog` (`wiki_id`,`log_id`),
-  KEY `event_date` (`wiki_id`,`event_date`),
-  KEY `users` (`user_id`,`wiki_id`,`event_type`),
-  KEY `wiki_users` (`wiki_id`,`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `city_used_tags`
 --
 
@@ -96,20 +78,5 @@ CREATE TABLE `events` (
  PARTITION ev2014 VALUES LESS THAN (2014) ENGINE = InnoDB,
  PARTITION ev9999 VALUES LESS THAN MAXVALUE ENGINE = InnoDB) */;
 
---
--- Table structure for table `scribe_log`
---
 
-DROP TABLE IF EXISTS `scribe_log`;
-CREATE TABLE `scribe_log` (
-  `hostname` char(32) NOT NULL,
-  `logdate` int(5) unsigned NOT NULL DEFAULT '0',
-  `logcount` int(8) unsigned NOT NULL DEFAULT '0',
-  `ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`hostname`,`logdate`),
-  KEY `hostname_ts` (`hostname`,`ts`,`logdate`),
-  KEY `logdate` (`logdate`,`logcount`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
--- Dump completed on 2017-03-30  9:35:08
+-- Dump completed on 2017-05-24  7:42:02
