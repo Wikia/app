@@ -185,8 +185,7 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			slotName: 'TOP_LEADERBOARD'
 		}, 'fooPlayer', 'barEvent');
 
-		expect(getTrackedValue('vulcan_network')).toEqual(7872);
-		expect(getTrackedValue('vulcan_advertiser')).toEqual(5381);
+		expect(getTrackedValue('vast_id')).toEqual('7872:5381');
 		expect(getTrackedValue('vulcan_price')).toEqual('0.90');
 	});
 
@@ -208,5 +207,18 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 		}, 'fooPlayer', 'barEvent');
 
 		expect(getTrackedValue('wsi')).toEqual('MR-remnant');
+	});
+
+	it('Track veles vast id and content type', function () {
+		tracker.track({
+			adProduct: 'veles',
+			slotName: 'TOP_LEADERBOARD',
+			bid: {
+				vastId: 'GDFP:123'
+			}
+		}, 'fooPlayer', 'barEvent', undefined, 'application/javascript');
+
+		expect(getTrackedValue('vast_id')).toEqual('GDFP:123');
+		expect(getTrackedValue('content_type')).toEqual('application/javascript');
 	});
 });

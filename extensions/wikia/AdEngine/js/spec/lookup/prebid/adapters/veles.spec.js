@@ -1,4 +1,4 @@
-/*global document, describe, expect, it, modules, spyOn*/
+/*global describe, expect, it, modules, spyOn*/
 describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 	'use strict';
 
@@ -16,7 +16,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 			}
 		},
 		priceParsingHelper: {
-			getPriceFromString: function() {
+			getPriceFromString: function () {
 				return 0;
 			}
 		},
@@ -50,7 +50,25 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 			isProperGeo: noop
 		},
 		win: {
-			XMLHttpRequest: noop
+			XMLHttpRequest: noop,
+			pbjs: {
+				_bidsReceived: [{
+					bidderCode: 'veles',
+					adId: 123
+				}, {
+					bidderCode: 'veles',
+					adId: 456
+				}, {
+					bidderCode: 'veles',
+					adId: 789
+				}, {
+					bidderCode: 'wikia',
+					adId: 123
+				}, {
+					bidderCode: 'wikia',
+					adId: 456
+				}]
+			}
 		}
 	};
 
@@ -102,7 +120,9 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 		var veles = getVeles(),
 			slots = veles.getSlots('oasis');
 
-		expect(Object.keys(slots).sort()).toEqual(['TOP_LEADERBOARD', 'INCONTENT_PLAYER', 'INCONTENT_LEADERBOARD'].sort());
+		expect(Object.keys(slots).sort()).toEqual([
+			'TOP_LEADERBOARD', 'INCONTENT_PLAYER'
+		].sort());
 	});
 
 	it('Returns mercury slots', function () {
@@ -114,12 +134,12 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 
 	it('Returns prepared ad unit object', function () {
 		var veles = getVeles(),
-			adUnit = veles.prepareAdUnit('INCONTENT_PLAYER', { sizes: [ [ 640, 480 ] ]});
+			adUnit = veles.prepareAdUnit('INCONTENT_PLAYER', { sizes: [[640,480]]});
 
 		expect(adUnit).toEqual({
 			code: 'INCONTENT_PLAYER',
 			sizes: [
-				[ 640, 480 ]
+				[640, 480]
 			],
 			bids: [
 				{
@@ -132,7 +152,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 	it('Adds empty bids on failed response', function () {
 		var bid,
 			bidder = getVeles(),
-			bidderRequest = bidder.prepareAdUnit('INCONTENT_PLAYER', { sizes: [ [ 640, 480 ] ]}),
+			bidderRequest = bidder.prepareAdUnit('INCONTENT_PLAYER', { sizes: [[640, 480]]}),
 			velesAdapter = bidder.create();
 
 		mockFailedResponse();
@@ -148,5 +168,16 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 
 		bid = mocks.prebidBid.addBidResponse.calls.mostRecent().args[1];
 		expect(bid.code).toBe(2);
+	});
+
+	it('Marks Veles bids as used except given ad', function () {
+		var bidder = getVeles();
+
+		bidder.markBidsAsUsed(456);
+
+		expect(mocks.win.pbjs._bidsReceived[0].cpm).toBe(0.00);
+		expect(mocks.win.pbjs._bidsReceived[0].used).toBe(true);
+		expect(mocks.win.pbjs._bidsReceived[2].cpm).toBe(0.00);
+		expect(mocks.win.pbjs._bidsReceived[2].used).toBe(true);
 	});
 });

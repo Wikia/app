@@ -101,7 +101,6 @@ class Parser {
 
 	# Persistent:
 	var $mTagHooks = array();
-	var $mTransparentTagHooks = array();
 	var $mFunctionHooks = array();
 	var $mFunctionSynonyms = array( 0 => array(), 1 => array() );
 	var $mFunctionTagHooks = array();
@@ -440,7 +439,6 @@ class Parser {
 
 		wfRunHooks( 'ParserBeforeTidy', array( &$this, &$text ) );
 
-		$text = $this->replaceTransparentTags( $text );
 		$text = $this->mStripState->unstripGeneral( $text );
 
 		$text = Sanitizer::normalizeCharReferences( $text );
@@ -1205,7 +1203,7 @@ class Parser {
 			$text = $this->replaceVariables( $text );
 		}
 
-		$text = Sanitizer::removeHTMLtags( $text, array( &$this, 'attributeStripCallback' ), false, array_keys( $this->mTransparentTagHooks ) );
+		$text = Sanitizer::removeHTMLtags( $text, [ &$this, 'attributeStripCallback' ] );
 		wfRunHooks( 'InternalParseBeforeLinks', array( &$this, &$text, &$this->mStripState ) );
 
 		# Tables need to come after variable replacement for things to work
@@ -1383,9 +1381,7 @@ class Parser {
 				$this->getConverterLanguage()->markNoConversion($url), true, 'free',
 				$this->getExternalLinkAttribs( $url ) );
 			# Register it in the output object...
-			# Replace unnecessary URL escape codes with their equivalent characters
-			$pasteurized = self::replaceUnusualEscapes( $url );
-			$this->mOutput->addExternalLink( $pasteurized );
+			$this->mOutput->addExternalLink( $url );
 		}
 		wfProfileOut( __METHOD__ );
 		return $text . $trail;
@@ -1688,10 +1684,7 @@ class Parser {
 				$this->getExternalLinkAttribs( $url ) ) . $dtrail . $trail;
 
 			# Register link in the output object.
-			# Replace unnecessary URL escape codes with the referenced character
-			# This prevents spammers from hiding links from the filters
-			$pasteurized = self::replaceUnusualEscapes( $url );
-			$this->mOutput->addExternalLink( $pasteurized );
+			$this->mOutput->addExternalLink( $url );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -5079,31 +5072,6 @@ class Parser {
 	}
 
 	/**
-	 * As setHook(), but letting the contents be parsed.
-	 *
-	 * Transparent tag hooks are like regular XML-style tag hooks, except they
-	 * operate late in the transformation sequence, on HTML instead of wikitext.
-	 *
-	 * This is probably obsoleted by things dealing with parser frames?
-	 * The only extension currently using it is geoserver.
-	 *
-	 * @since 1.10
-	 * @todo better document or deprecate this
-	 *
-	 * @param $tag Mixed: the tag to use, e.g. 'hook' for <hook>
-	 * @param $callback Mixed: the callback function (and object) to use for the tag
-	 * @return The old value of the mTagHooks array associated with the hook
-	 */
-	function setTransparentTagHook( $tag, $callback ) {
-		$tag = strtolower( $tag );
-		if ( preg_match( '/[<>\r\n]/', $tag, $m ) ) throw new MWException( "Invalid character {$m[0]} in setTransparentHook('$tag', ...) call" );
-		$oldVal = isset( $this->mTransparentTagHooks[$tag] ) ? $this->mTransparentTagHooks[$tag] : null;
-		$this->mTransparentTagHooks[$tag] = $callback;
-
-		return $oldVal;
-	}
-
-	/**
 	 * Remove all tag hooks
 	 */
 	function clearTagHooks() {
@@ -5684,36 +5652,7 @@ class Parser {
 	 * @return array
 	 */
 	function getTags() {
-		return array_merge( array_keys( $this->mTransparentTagHooks ), array_keys( $this->mTagHooks ), array_keys( $this->mFunctionTagHooks ) );
-	}
-
-	/**
-	 * Replace transparent tags in $text with the values given by the callbacks.
-	 *
-	 * Transparent tag hooks are like regular XML-style tag hooks, except they
-	 * operate late in the transformation sequence, on HTML instead of wikitext.
-	 *
-	 * @param $text string
-	 *
-	 * @return string
-	 */
-	function replaceTransparentTags( $text ) {
-		$matches = array();
-		$elements = array_keys( $this->mTransparentTagHooks );
-		$text = self::extractTagsAndParams( $elements, $text, $matches, $this->mUniqPrefix );
-		$replacements = array();
-
-		foreach ( $matches as $marker => $data ) {
-			list( $element, $content, $params, $tag ) = $data;
-			$tagName = strtolower( $element );
-			if ( isset( $this->mTransparentTagHooks[$tagName] ) ) {
-				$output = call_user_func_array( $this->mTransparentTagHooks[$tagName], array( $content, $params, $this ) );
-			} else {
-				$output = $tag;
-			}
-			$replacements[$marker] = $output;
-		}
-		return strtr( $text, $replacements );
+		return array_merge( array_keys( $this->mTagHooks ), array_keys( $this->mFunctionTagHooks ) );
 	}
 
 	/**

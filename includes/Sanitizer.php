@@ -725,7 +725,7 @@ class Sanitizer {
 					$value = "{$value}px";
 				}
 			}
-			
+
 			/* Wikia change */
 			/* bugId::34438 mirror table alignment behavior as it would be in HTML4 */
 			if ($attribute === 'align' && $element === 'table') {
@@ -1007,6 +1007,7 @@ class Sanitizer {
 				| url\s*\(
 				| image\s*\(
 				| image-set\s*\(
+				| attr\s*\([^)]+[\s,]+url
 			!ix', $value ) ) {
 			return '/* insecure input */';
 		}

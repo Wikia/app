@@ -13,6 +13,9 @@ describe('ext.wikia.adEngine.adEngine', function () {
 			create: function (slotName, slotElement, callbacks) {
 				return {
 					name: slotName,
+					container: {
+						setAttribute: noop
+					},
 					success: callbacks.success || noop,
 					hop: callbacks.hop || noop,
 					post: noop
@@ -20,6 +23,10 @@ describe('ext.wikia.adEngine.adEngine', function () {
 			}
 		},
 		hooksMock = noop,
+		slotRegistryMock = {
+			add: noop,
+			reset: noop
+		},
 		slotTrackerMock = function () { return { track: noop }; },
 		slotTweakerMock = {
 			show: noop,
@@ -63,6 +70,7 @@ describe('ext.wikia.adEngine.adEngine', function () {
 			adDecoratorMock || adDecoratorLegacyParamFormatMock,
 			eventDispatcher,
 			adSlotMock,
+			slotRegistryMock,
 			slotTrackerMock,
 			slotTweakerMock,
 			hooksMock,

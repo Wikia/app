@@ -7,7 +7,7 @@ define('ext.wikia.recirculation.discussions', [
 ], function ($, w, abTest, nirvana, tracker) {
 	'use strict';
 
-	function injectDiscussions(experimentName) {
+	function injectDiscussions() {
 		nirvana.sendRequest({
 			controller: 'Recirculation',
 			method: 'discussions',
@@ -26,18 +26,18 @@ define('ext.wikia.recirculation.discussions', [
 					$('#WikiaArticleBottomAd').before($response);
 				}
 
-				tracker.trackVerboseImpression(experimentName, 'discussions');
+				tracker.trackImpression('discussions');
 				$response.find('.discussion-timestamp').timeago();
 
 				$response.find('.discussion-thread').click(function () {
 					var slot = $(this).index() + 1,
 						label = 'discussions-tile=slot-' + slot + '=discussions';
-					tracker.trackVerboseClick(experimentName, label);
+					tracker.trackClick(label);
 					w.location = $(this).data('link');
 				});
 
 				$response.find('.discussion-link').mousedown(function() {
-					tracker.trackVerboseClick(experimentName, 'discussions-link');
+					tracker.trackClick('discussions-link');
 				});
 			}
 		});

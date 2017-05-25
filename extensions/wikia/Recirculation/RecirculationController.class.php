@@ -14,23 +14,6 @@ class RecirculationController extends WikiaController {
 		}
 	}
 
-	public function index() {
-		$dataService = new ParselyDataService();
-
-		$posts = $dataService->getPosts( $this->type );
-
-		if ( count( $posts ) > 0 ) {
-			$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
-			$this->response->setData( [
-				'title'	=> wfMessage( 'recirculation-fandom-title' )->plain(),
-				'posts' => $posts,
-			] );
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	public function discussions() {
 		$cityId = $this->request->getVal( 'cityId', null );
 

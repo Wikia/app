@@ -1725,7 +1725,7 @@ $messages['cy'] = array(
 $messages['de'] = array(
 	'wall-no-title' => 'Kein Betreff',
 	'wall-message-loadmore' => 'Zeige alle <span class="count">$1</span> Antworten',
-	'wall-message-wall' => 'Nachrichtenseiten',
+	'wall-message-wall' => 'Nachrichtenseite',
 	'wall-message-wall-shorten' => 'Nachrichten',
 	'wall-message-unfollow' => 'Verfolgung aufheben',
 	'wall-message-undoremove' => 'Rückgängig machen',

@@ -166,20 +166,6 @@ CREATE TABLE `script_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Table structure for table `searchdigest`
---
-
-DROP TABLE IF EXISTS `searchdigest`;
-CREATE TABLE `searchdigest` (
-  `sd_wiki` int(9) unsigned NOT NULL,
-  `sd_query` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `sd_misses` int(9) unsigned NOT NULL,
-  `sd_lastseen` date DEFAULT NULL,
-  PRIMARY KEY (`sd_wiki`,`sd_query`),
-  KEY `sd_wikimisses` (`sd_wiki`,`sd_misses`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
 -- Table structure for table `user_groups`
 --
 

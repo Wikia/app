@@ -99,18 +99,4 @@ describe('ext.wikia.adEngine.adContext', function () {
 		expect(context.opts.pageFairRecovery).toBeFalsy();
 	});
 
-	it('Should enable PageFair recovery if there is only proper geo', function () {
-		var context = {
-			opts: {
-				pageFairRecovery: null
-			}
-		};
-		spyOn(mocks.geo, 'isProperGeo');
-		mocks.geo.isProperGeo.and.returnValue(true);
-
-		getModule().setContext(context);
-
-		expect(context.opts.pageFairRecovery).toBeTruthy();
-	});
-
 });

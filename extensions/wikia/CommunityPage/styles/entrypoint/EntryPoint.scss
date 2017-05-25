@@ -1,80 +1,53 @@
 @import 'skins/shared/color';
+@import "skins/shared/mixins/flexbox";
 @import '../components/variables';
 
-$logo-url: '/extensions/wikia/DesignSystem/bower_components/design-system/dist/svg/wds-company-logo-fandom-heart.svg';
-
-$button-height: 46px;
-$logo-size: 30px;
-$logo-border-radius: $logo-size / 2;
-
-.WikiaRail {
-	// override default .WikiaRail .module styles
-	.module {
-		position: relative;
-
-		&.community-page-entry-point-module {
-			padding-top: $content-spacing-xxlarge;
-		}
-	}
-}
-
-.community-page-entry-point-module {
-	font-family: $community-page-font-family;
-	font-size: $wds-typescale-size-base;
-	line-height: $module-default-line-height;
-	margin-top: $content-spacing-regular;
+.community-page-rail-module {
+	border-top: 1px solid $color-page-border;
+	margin-top: 18px;
 	position: relative;
-	text-align: center;
 
-	.community-page-entry-point-logo {
-		background: $wds-color-white url($logo-url) 50% 50%/18px 18px no-repeat; /* inline */
-		border: 1px solid $color-page-border;
-		border-radius: $logo-border-radius;
-		box-sizing: border-box;
-		height: $logo-size;
-		left: 50%;
+	.avatars {
+		@include flexbox();
+		@include justify-content(center);
+
+		height: 32px;
+		margin: 0;
 		position: absolute;
-		top: 0;
-		transform: translate(-50%, -40%);
-		width: $logo-size;
+		top: -16px;
+		width: 100%;
 	}
 
-	.community-page-entry-point-button {
-		background: $color-buttons;
-		color: $color-button-text;
-		display: inline-block;
-		font-size: $wds-typescale-size-minus-2;
-		font-weight: bold;
-		height: $button-height;
-		line-height: $button-height;
-		margin: $content-spacing-small-plus 0;
-		padding: 0 $content-spacing-xlarge;
-		text-decoration: none;
-		text-transform: uppercase;
-
-		&:hover, &:active {
-			background-color: $color-button-highlight;
-			text-decoration: none;
-		}
+	.wds-avatar-stack {
+		margin: 0;
+		max-width: 120px;
 	}
 
-	.community-page-entry-point-description {
-		white-space: pre-line; // Respect linebreaks
-
-		b {
-			font-size: $wds-typescale-size-plus-1;
-			&:before { content: '\A'; } // Add a linebreak before bolded text
-		}
-
-	}
-}
-
-@media #{$breakpoint-below-small-plus} {
-	.WikiaRail {
-		padding-top: $content-spacing-regular;
+	.wds-avatar {
+		border-color: $color-page-border;
+		position: relative;
 	}
 
-	.community-page-entry-point-module {
-		margin-top: 0;
+	.content {
+		@include flexbox();
+		@include flex-direction(row);
+		@include justify-content(space-between);
+		@include align-items(center);
+
+		margin-top: 26px;
+	}
+
+	.description {
+		@include flex(1);
+
+		font-size: 14px;
+		line-height: 18px;
+		overflow: hidden;
+	}
+
+	html[lang^='zh'] & .wds-is-squished {
+		font-size: 12px;
+		font-weight: 400;
+		padding: 9px 12px 8px;
 	}
 }

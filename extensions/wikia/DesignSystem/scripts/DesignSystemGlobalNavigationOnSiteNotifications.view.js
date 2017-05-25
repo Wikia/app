@@ -200,12 +200,22 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 			this.renderUnreadCount = function (count) {
 				if (count > 0) {
 					this._$markAllAsReadButton.removeClass(isHiddenClass);
-					this._$notificationsCount.html(count).parent('.bubbles').addClass('show');
+					this._$notificationsCount.html(limitTo99(count))
+						.removeClass(isHiddenClass);
 				} else {
 					this._$markAllAsReadButton.addClass(isHiddenClass);
-					this._$notificationsCount.empty().parent('.bubbles').removeClass('show');
+					this._$notificationsCount.empty()
+						.addClass(isHiddenClass);
 				}
 			};
+
+			function limitTo99(count) {
+				if (count > 99) {
+					return '99+';
+				} else {
+					return count;
+				}
+			}
 
 			function removeIsUnreadClass(element) {
 				element.removeClass('wds-is-unread');

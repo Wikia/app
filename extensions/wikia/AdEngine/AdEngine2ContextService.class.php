@@ -34,9 +34,6 @@ class AdEngine2ContextService {
 			$newWikiVertical = $wikiFactoryHub->getWikiVertical( $wg->CityId );
 			$newWikiVertical = !empty($newWikiVertical['short']) ? $newWikiVertical['short'] : 'error';
 
-			$yavliKey = AdEngine2Resource::getKey( 'wikia.ext.adengine.yavli' );
-			$yavliUrl = ResourceLoader::makeCustomURL( $wg->Out, [ $yavliKey ], 'scripts' );
-
 			$context = [
 				'opts' => $this->filterOutEmptyItems( [
 					'adsInContent' => $wg->EnableAdsInContent,
@@ -47,8 +44,11 @@ class AdEngine2ContextService {
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
 					'trackSlotState' => $wg->AdDriverTrackState,
 					'sourcePointDetectionUrl' => $sourcePointDetectionUrl,
-					'yavliUrl' => $yavliUrl,
+					'sourcePointMMS' => ARecoveryModule::isSourcePointMessagingEnabled(),
+					'sourcePointMMSDomain' => $wg->develEnvironment ? 'mms.bre.wikia-dev.com' : 'mms.bre.wikia.com',
+					'sourcePointRecovery' => ARecoveryModule::isSourcePointRecoveryEnabled(),
 					'pageFairDetectionUrl' => $pageFairDetectionUrl,
+					'pageFairRecovery' => ARecoveryModule::isPageFairRecoveryEnabled(),
 					'prebidBidderUrl' => $prebidBidderUrl
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
@@ -79,28 +79,10 @@ class AdEngine2ContextService {
 					'taboola' => $wg->AdDriverUseTaboola && $pageType === 'article',
 				] ),
 				'slots' => $this->filterOutEmptyItems( [
-					'exitstitial' => $wg->EnableOutboundScreenExt,
-					'exitstitialRedirectDelay' => $wg->OutboundScreenRedirectDelay,
 					'invisibleHighImpact' => $wg->AdDriverEnableInvisibleHighImpactSlot,
 				] ),
 				'forcedProvider' => $wg->AdDriverForcedProvider
 			];
-
-			/**
-			 * $wgAdDriverEnableSourcePointRecovery === false; // disabled on wiki
-			 * $wgAdDriverEnableSourcePointRecovery === true; // enabled on wiki
-			 * $wgAdDriverEnableSourcePointRecovery === null; // don't care - depend on $wgAdDriverSourcePointRecoveryCountries
-			 */
-			$context['opts']['sourcePointRecovery'] = $skinName === 'oasis' ? $wg->AdDriverEnableSourcePointRecovery : false;
-			$context['opts']['sourcePointMMS'] = ($skinName === 'oasis' && $context['opts']['sourcePointRecovery'] === false) ? $wg->AdDriverEnableSourcePointMMS : false;
-			$context['opts']['sourcePointMMSDomain'] = $wg->develEnvironment ? 'mms.bre.wikia-dev.com' : 'mms.bre.wikia.com';
-
-			/**
-			* $wgAdDriverEnablePageFairRecovery === false; // disabled on wiki
-			* $wgAdDriverEnablePageFairRecovery === true; // enabled on wiki
-			* $wgAdDriverEnablePageFairRecovery === null; // don't care - depend on $wgAdDriverPageFairRecoveryCountries
-			*/
-			$context['opts']['pageFairRecovery'] = $skinName === 'oasis' ? $wg->AdDriverEnablePageFairRecovery : false;
 
 			return $context;
 		} );

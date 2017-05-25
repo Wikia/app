@@ -302,6 +302,12 @@ class WallHooksHelper {
 
 	static public function onBeforePageHistory( &$article ) {
 		$title = $article->getTitle();
+
+		// Skip remaining logic if this is a Forum Thread and we are doing Discussion redirects
+		if ( self::isRedirectableForumThread( $article ) ) {
+			return true;
+		}
+
 		$app = F::App();
 		$page = $app->wg->Request->getVal( 'page', 1 );
 
@@ -321,6 +327,30 @@ class WallHooksHelper {
 
 		static::doSelfRedirect();
 		return true;
+	}
+
+	/**
+	 * Check to see if this is an article that will be redirected by the
+	 * SpecialForumRedirectController.  Since the hook handler in this class returns false and
+	 * renders its own page, it stops the hook handling and the hook
+	 * in SpecialForumRedirectController is never called.
+	 *
+	 * @param $article
+	 *
+	 * @return bool
+	 */
+	static public function isRedirectableForumThread( $article ) {
+		$wg = F::app()->wg;
+
+		// Make sure discussions are active but forums are not
+		if ( !empty( $wg->EnableDiscussions ) && empty( $wg->EnableForumExt ) ) {
+			$title = SpecialForumRedirectController::getRedirectableForumTitle( $article );
+			if ( !empty( $title ) ) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**

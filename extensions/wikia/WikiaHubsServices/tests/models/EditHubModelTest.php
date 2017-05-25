@@ -332,7 +332,6 @@ class EditHubModelTest extends WikiaBaseTest {
 
 		$dataToInsert = array(
 			'lang' => $params['langCode'],
-			'sectionId' => $params['sectionId'],
 			'verticalId' => $params['verticalId'],
 			'timestamp' => 1234567,
 			'moduleId' => WikiaHubsModulePollsService::MODULE_ID,
@@ -394,7 +393,6 @@ class EditHubModelTest extends WikiaBaseTest {
 
 		$dataToInsert = array(
 			'lang' => $params['langCode'],
-			'sectionId' => $params['sectionId'],
 			'verticalId' => $params['verticalId'],
 			'timestamp' => 1234567,
 			'moduleId' => WikiaHubsModulePollsService::MODULE_ID,

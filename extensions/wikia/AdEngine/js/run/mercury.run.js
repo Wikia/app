@@ -2,6 +2,7 @@
 require([
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adInfoTracker',
+	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.lookup.amazonMatch',
 	'ext.wikia.adEngine.lookup.openXBidder',
 	'ext.wikia.adEngine.lookup.prebid',
@@ -10,15 +11,14 @@ require([
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.mobile.mercuryListener',
-	'ext.wikia.adEngine.slotTweaker',
-	'ext.wikia.adEngine.slot.scrollHandler',
-	'ext.wikia.adEngine.provider.yavliTag',
+	'ext.wikia.adEngine.slot.service.actionHandler',
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.window'
 ], function (
 	adContext,
 	adInfoTracker,
+	slotStateMonitor,
 	amazon,
 	oxBidder,
 	prebid,
@@ -27,9 +27,7 @@ require([
 	customAdsLoader,
 	messageListener,
 	mercuryListener,
-	slotTweaker,
-	scrollHandler,
-	yavliTag,
+	actionHandler,
 	geo,
 	instantGlobals,
 	win
@@ -37,7 +35,6 @@ require([
 	'use strict';
 
 	messageListener.init();
-	scrollHandler.init('mercury');
 
 	// Custom ads (skins, footer, etc)
 	win.loadCustomAd = customAdsLoader.loadCustomAd;
@@ -51,7 +48,11 @@ require([
 			rubiconFastlane.call();
 		}
 
-		if (geo.isProperGeo(instantGlobals.wgAdDriverOpenXBidderCountries)) {
+		// TODO ADEN-5170 remove one condition or old OXBidder when we decide which way we go
+		if (
+			geo.isProperGeo(instantGlobals.wgAdDriverOpenXBidderCountries) &&
+			!geo.isProperGeo(instantGlobals.wgAdDriverOpenXPrebidBidderCountries)
+		) {
 			oxBidder.call();
 		}
 
@@ -63,12 +64,9 @@ require([
 			rubiconVulcan.call();
 		}
 
-		if (adContext.getContext().opts.yavli) {
-			yavliTag.add();
-		}
-
 		adInfoTracker.run();
-		slotTweaker.registerMessageListener();
+		slotStateMonitor.run();
+		actionHandler.registerMessageListener();
 	});
 
 	if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {

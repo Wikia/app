@@ -119,7 +119,7 @@ class MercuryApi {
 		global $wgAnalyticsDriverIVW3Countries, $wgCacheBuster, $wgCityId, $wgContLang, $wgContentNamespaces, $wgDBname,
 		       $wgDefaultSkin, $wgDisableAnonymousEditing, $wgDisableAnonymousUploadForMercury,
 		       $wgDisableMobileSectionEditor, $wgEnableCommunityData, $wgEnableDiscussions,
-		       $wgEnableOnSiteNotifications, $wgEnableNewAuth, $wgLanguageCode, $wgSitename,
+		       $wgEnableNewAuth, $wgLanguageCode, $wgSitename,
 		       $wgWikiDirectedAtChildrenByFounder, $wgWikiDirectedAtChildrenByStaff;
 
 		return [
@@ -133,7 +133,6 @@ class MercuryApi {
 			'disableMobileSectionEditor' => $wgDisableMobileSectionEditor,
 			'enableCommunityData' => $wgEnableCommunityData,
 			'enableDiscussions' => $wgEnableDiscussions,
-			'enableOnSiteNotifications' => $wgEnableOnSiteNotifications,
 			'enableNewAuth' => $wgEnableNewAuth,
 			'favicon' => Wikia::getFaviconFullUrl(),
 			'homepage' => $this->getHomepageUrl(),
@@ -328,15 +327,18 @@ class MercuryApi {
 			return '';
 		}
 
+		$htmlTitle = $displayTitle;
+
 		if ( class_exists( 'SEOTweaksHooksHelper' ) && $title->inNamespace( NS_FILE ) ) {
 			/*
 			 * Only run this code if SEOTweaks extension is enabled.
 			 * We don't use $wg variable because there are multiple switches enabling this extension
 			 */
 			$file = WikiaFileHelper::getFileFromTitle( $title );
-			$htmlTitle = SEOTweaksHooksHelper::getTitleForFilePage( $title, $file );
-		} else {
-			$htmlTitle = $displayTitle;
+
+			if ( !empty( $file ) ) {
+				$htmlTitle = SEOTweaksHooksHelper::getTitleForFilePage( $title, $file );
+			}
 		}
 
 		if ( empty( $htmlTitle ) ) {

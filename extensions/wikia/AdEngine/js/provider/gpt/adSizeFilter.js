@@ -39,7 +39,6 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 				return getNewSizes(slotSizes, doc.documentElement.offsetWidth, [[728, 90]]);
 			case slotName === 'INVISIBLE_SKIN':
 				return doc.documentElement.offsetWidth >= minSkinWidth ? slotSizes : [[1, 1]];
-			case slotName === 'INCONTENT_LEADERBOARD':
 			case slotName === 'PREFOOTER_LEFT_BOXAD' && context.opts.overridePrefootersSizes:
 				return isLargeBreakpoints() ? slotSizes : getNewSizes(slotSizes, maxAdSize, [[300, 250]]);
 			case slotName === 'BOTTOM_LEADERBOARD':

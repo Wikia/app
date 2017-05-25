@@ -308,55 +308,6 @@ class Chat {
 	}
 
 	/**
-	 * Logs to chatlog table that a user opened chat room
-	 *
-	 * Using chatlog table is temporary. It'll be last till event_type_description table will be done.
-	 * Now we have:
-	 * mysql> select * from event_type_details ;
-	 * +------------------------+------------+
-	 * | event_type_detail_text | event_type |
-	 * +------------------------+------------+
-	 * | EDIT_CATEGORY          |          1 |
-	 * | CREATEPAGE_CATEGORY    |          2 |
-	 * | DELETE_CATEGORY        |          3 |
-	 * | UNDELETE_CATEGORY      |          4 |
-	 * | UPLOAD_CATEGORY        |          5 |
-	 * +------------------------+------------+
-	 *
-	 * That's why I put as default 6 as a event_type value.
-	 *
-	 * @author Andrzej 'nAndy' Łukaszewski
-	 */
-	public static function logChatWindowOpenedEvent() {
-		$wg = F::app()->wg;
-
-		self::addConnectionLogEntry();
-
-		if ( $wg->DevelEnvironment ) {
-			return;
-		}
-
-		$dbw = wfGetDB( DB_MASTER, [ ], $wg->StatsDB );
-
-		$wikiId = intval( $wg->CityId );
-		$userId = intval( $wg->User->GetId() );
-		if ( $wikiId > 0 && $userId > 0 ) {
-			$eventRow = [
-				'wiki_id' => $wg->CityId,
-				'user_id' => $wg->User->GetId(),
-				'event_type' => 6
-			];
-
-			if ( !wfReadOnly() ) { // Change to wgReadOnlyDbMode if we implement that
-				$dbw->insert( 'chatlog', $eventRow, __METHOD__ );
-			}
-		} else {
-			wfDebugLog( 'chat', 'User did open a chat room but it was not logged in chatlog' );
-		}
-
-	}
-
-	/**
 	 * Add a rights log entry for an action.
 	 * Partially copied from SpecialUserrights.php
 	 *

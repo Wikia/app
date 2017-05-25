@@ -87,7 +87,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 			'970x250': 57,
 			'320x480': 67
 		},
-		slots;
+		slots = {};
 
 	function compareTiers(a,b) {
 		var aMatches = /^(\d+)/.exec(a),

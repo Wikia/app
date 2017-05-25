@@ -1,15 +1,12 @@
 <?php
 
-use Wikia\Util\GlobalStateWrapper;
-
 class DataTablesTest extends WikiaBaseTest {
-
-	/** @var GlobalStateWrapper */
-	private $globals;
 
 	public function setUp() {
 		parent::setUp();
-		$this->globals = new GlobalStateWrapper( [ 'wgEnableDataTablesParsing' => true, 'wgArticleAsJson' => true ] );
+
+		$this->mockGlobalVariable( 'wgEnableDataTablesParsing', true );
+		$this->mockGlobalVariable( 'wgArticleAsJson', true );
 	}
 
 	public function tearDown() {
@@ -21,9 +18,8 @@ class DataTablesTest extends WikiaBaseTest {
 	 * @dataProvider wikitextProvider
 	 */
 	public function testTemplateTablesMarking( $wt, $expected ) {
-		$this->globals->wrap( function () use ( &$wt ) {
-			DataTables::markTranscludedTables( $wt, $title );
-		} );
+		DataTables::markTranscludedTables( $wt, $title );
+
 		$this->assertEquals( $expected, $wt );
 	}
 
@@ -31,11 +27,13 @@ class DataTablesTest extends WikiaBaseTest {
 	 * @dataProvider htmlTablesProvider
 	 */
 	public function testTablesMarking( $html, $expected ) {
-		$this->globals->wrap( function () use ( &$html ) {
-			DataTables::markDataTables( null, $html );
-		} );
+		DataTables::markDataTables( null, $html );
+
 		$dom = new DOMDocument();
-		$dom->loadHTML( $html );
+		if ( !empty( $html ) ) {
+			$dom->loadHTML( $html );
+		}
+
 		$xpath = new DOMXPath( $dom );
 		$result = $xpath->query( '*//table[@data-portable="true"]' )->length;
 
@@ -50,9 +48,8 @@ class DataTablesTest extends WikiaBaseTest {
 	 * @dataProvider noCDATAProvider
 	 */
 	public function testNoCDATA( $html, $expected ) {
-		$this->globals->wrap( function () use ( &$html ) {
-			DataTables::markDataTables( null, $html );
-		} );
+		DataTables::markDataTables( null, $html );
+
 		$this->assertEquals( $expected, $html );
 	}
 

@@ -111,14 +111,27 @@ define('ooyala-player', function () {
 		$('.oo-state-screen-info').css('display', '');
 	};
 
-	OoyalaHTML5Player.initHTML5Player = function (videoElementId, playerParams, videoId, onCreate, autoplay) {
+	OoyalaHTML5Player.initHTML5Player = function (videoElementId, playerParams, videoId, onCreate, autoplay, vastUrl) {
 		var params = {
 				videoId: videoId,
 				autoplay: autoplay,
 				pcode: playerParams.ooyalaPCode,
 				playerBrandingId: playerParams.ooyalaPlayerBrandingId
 			},
-			html5Player = new OoyalaHTML5Player(document.getElementById(videoElementId), params, onCreate);
+			html5Player;
+
+		if (vastUrl) {
+			params['google-ima-ads-manager'] = {
+				all_ads: [
+					{
+						tag_url: vastUrl
+					}
+				],
+				useGoogleCountdown: true
+			};
+		}
+
+		html5Player = new OoyalaHTML5Player(document.getElementById(videoElementId), params, onCreate);
 		html5Player.setUpPlayer();
 
 		return html5Player;

@@ -70,7 +70,6 @@
 				namespace = namespaces[split.shift().toLowerCase()];
 
 				if(namespace) {
-					title = split.join(':');
 					ns = namespace;
 				}
 			}

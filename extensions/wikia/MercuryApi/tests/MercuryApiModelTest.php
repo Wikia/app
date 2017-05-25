@@ -416,14 +416,19 @@ class MercuryApiModelTest extends WikiaBaseTest {
 
 		$titleMock->expects( $this->any() )->method( 'getLocalURL' )->willReturn( $getLocalURL );
 
-		$this->getStaticMethodMock( 'Title', 'newFromID' )->expects( $this->any() )->method( 'newFromID' )->will(
-			$this->returnValueMap(
-				[
-					[ 0, null ],
-					[ $item['article_id'], $titleMock ]
-				]
-			)
-		);
+		$mockNewFromId = $this->getStaticMethodMock( 'Title', 'newFromID' )
+			->expects( $this->any() )
+			->method(	'newFromID' );
+
+		if ( !empty( $item['article_id'] ) ) {
+			$mockNewFromId
+				->with( $item['article_id'] )
+				->willReturn( $titleMock );
+		} else {
+			$mockNewFromId
+				->with( 0 )
+				->willReturn( null );
+		}
 
 		$this->mockGlobalVariable( 'wgArticlePath', $wgArticlePath );
 

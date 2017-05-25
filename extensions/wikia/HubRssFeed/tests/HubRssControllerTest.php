@@ -11,35 +11,14 @@
 class HubRssControllerTest extends WikiaBaseTest {
 
 	public function setUp() {
-		$dir = dirname( __FILE__ ) . '/../';
-		$this->setupFile = $dir . 'HubRssFeed.setup.php';
-
 		parent::setUp();
-	}
-
-	/**
-	 * @covers  HubRssFeedSpecialController::__construct
-	 */
-	public function testConstruct() {
-		$mock = $this->getMockBuilder( 'HubRssFeedSpecialController' )
-			->setMethods( ['notfound'] )
-			->getMock();
-
-		$refl = new \ReflectionObject($mock);
-		$prop = $refl->getProperty( 'currentTitle' );
-		$prop->setAccessible( true );
-
-		$val = $prop->getValue( $mock );
-		$this->assertInstanceOf( 'Title', $val );
-
+		require_once __DIR__ . '/../HubRssFeedSpecialController.class.php';
 	}
 
 	/**
 	 * @covers  HubRssFeedSpecialController::notfound
 	 */
 	public function testNotFound() {
-		$this->mockGlobalVariable('wgHubRssFeeds', ['Hub1', 'Hub2']);
-
 		$mockTitle = $this->getMockBuilder( 'Title' )
 			->disableOriginalConstructor()
 			->setMethods( ['getFullUrl'] )
@@ -49,24 +28,26 @@ class HubRssControllerTest extends WikiaBaseTest {
 			->method( 'getFullUrl' )
 			->will( $this->returnValue( 'abc' ) );
 
-		$mock = $this->getMockBuilder( 'HubRssFeedSpecialController' )
-			->disableOriginalConstructor()
-			->setMethods( ['__construct', 'setVal'] )
-			->getMock();
+		$context = new RequestContext();
+		$context->setTitle( $mockTitle );
 
-		$mock->expects( $this->once() )
-			->method( 'setVal' )
-			->with( 'links', [
-				'abc/Hub1',
-				'abc/Hub2'
-			] );
+		$app = new WikiaApp( new WikiaLocalRegistry() );
+		$app->wg->HubRssFeeds = [ 'Hub1', 'Hub2' ];
 
-		$mock->currentTitle = $mockTitle;
+		$request = new WikiaRequest( [] );
+		$response = new WikiaResponse( WikiaResponse::FORMAT_JSON, $request );
 
-		$mock->wg = new StdClass();
+		$hubRssFeedSpecialController = new HubRssFeedSpecialController();
 
-		$mock->notfound();
+		$hubRssFeedSpecialController->setApp( $app );
+		$hubRssFeedSpecialController->setContext( $context );
+		$hubRssFeedSpecialController->setRequest( $request );
+		$hubRssFeedSpecialController->setResponse( $response );
 
+		$hubRssFeedSpecialController->notfound();
+
+		$this->assertTrue( $app->wg->SupressPageSubtitle );
+		$this->assertEquals( [ 'abc/Hub1', 'abc/Hub2' ], $response->getVal( 'links' ) );
 	}
 
 
@@ -74,32 +55,35 @@ class HubRssControllerTest extends WikiaBaseTest {
 	 * @covers  HubRssFeedSpecialController::index
 	 */
 	public function testIndexNotFound() {
-		$mock = $this->getMockBuilder( 'HubRssFeedSpecialController' )
-			->disableOriginalConstructor()
-			->setMethods( ['forward', 'setVal'] )
-			->getMock();
-
-		$mockRequest = $this->getMockBuilder( 'WikiaRequest' )
-			->setMethods( [ 'getVal' ] )
-			->disableOriginalConstructor()
-			->getMock();
-
-		$mockRequest->expects( $this->any() )
-			->method( 'getVal' )
-			->will( $this->returnValue( ['par' => 'XyZ'] ) );
-
 		$mockTitle = $this->getMockBuilder( 'Title' )
 			->disableOriginalConstructor()
 			->setMethods( ['getFullUrl'] )
 			->getMock();
 
-		$mock->expects( $this->once() )
-			->method( 'forward' )
-			->with( 'HubRssFeedSpecial', 'notfound' );
+		$mockTitle->expects( $this->any() )
+			->method( 'getFullUrl' )
+			->will( $this->returnValue( 'abc' ) );
 
-		$mock->currentTitle = $mockTitle;
-		$mock->request = $mockRequest;
-		$mock->index();
+		$context = new RequestContext();
+		$context->setTitle( $mockTitle );
+
+		$app = new WikiaApp( new WikiaLocalRegistry() );
+		$app->wg->HubRssFeeds = [ 'Hub1', 'Hub2' ];
+
+		$request = new WikiaRequest( [ 'par' => 'XyZ' ] );
+		$response = new WikiaResponse( WikiaResponse::FORMAT_JSON, $request );
+
+		$hubRssFeedSpecialController = new HubRssFeedSpecialController();
+
+		$hubRssFeedSpecialController->setApp( $app );
+		$hubRssFeedSpecialController->setContext( $context );
+		$hubRssFeedSpecialController->setRequest( $request );
+		$hubRssFeedSpecialController->setResponse( $response );
+
+		$hubRssFeedSpecialController->notfound();
+
+		$this->assertTrue( $app->wg->SupressPageSubtitle );
+		$this->assertEquals( [ 'abc/Hub1', 'abc/Hub2' ], $response->getVal( 'links' ) );
 	}
 
 }

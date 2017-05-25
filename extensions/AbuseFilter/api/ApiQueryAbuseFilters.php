@@ -67,7 +67,7 @@ class ApiQueryAbuseFilters extends ApiQueryBase {
 		$this->addFieldsIf( 'af_pattern', $fld_pattern );
 		$this->addFieldsIf( 'af_actions', $fld_actions );
 		$this->addFieldsIf( 'af_comments', $fld_comments );
-		$this->addFieldsIf( 'af_user_text', $fld_user );
+		$this->addFieldsIf( [ 'af_user', 'af_user_text' ], $fld_user );
 		$this->addFieldsIf( 'af_timestamp', $fld_time );
 
 		$this->addOption( 'LIMIT', $params['limit'] + 1 );

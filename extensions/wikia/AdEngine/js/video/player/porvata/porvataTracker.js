@@ -23,6 +23,18 @@ define('ext.wikia.adEngine.video.player.porvata.porvataTracker', [
 			'wikiaAdStop': 'closed'
 		};
 
+	function getContentType(player) {
+		var ad;
+
+		if (player) {
+			ad = player.ima.getAdsManager().getCurrentAd();
+
+			if (ad) {
+				return ad.getContentType();
+			}
+		}
+	}
+
 	/**
 	 * @param {object} params
 	 * @param {string} params.adProduct
@@ -36,7 +48,8 @@ define('ext.wikia.adEngine.video.player.porvata.porvataTracker', [
 	 * @param {object} [player]
 	 */
 	function track(params, eventName, errorCode, player) {
-		var data = playerTracker.track(params, playerName, eventName, errorCode);
+		var contentType = getContentType(player),
+			data = playerTracker.track(params, playerName, eventName, errorCode, contentType);
 
 		if (data && params.adProduct === 'vulcan') {
 			logger.logVast(player, params, data);

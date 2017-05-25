@@ -3,10 +3,8 @@
 class RssFeedServiceTest extends WikiaBaseTest {
 
 	public function setUp() {
-		$dir = dirname( __FILE__ ) . '/../';
-		$this->setupFile = $dir . 'HubRssFeed.setup.php';
-
 		parent::setUp();
+		require_once __DIR__ . '/../RssFeedService.class.php';
 	}
 
 	/**

@@ -10,7 +10,7 @@ include_once dirname( __FILE__ ) . '/../../../Services/QuestDetails/' . "QuestDe
  */
 class QuestDetailsSearchSolrHelperMock extends QuestDetailsSolrHelper {
 
-	protected function getRevision( &$item ) {
+	protected function getRevision( $item ) {
 		$revision = [
 			'id' => 1234,
 			'user' => 'test_user',
@@ -20,7 +20,7 @@ class QuestDetailsSearchSolrHelperMock extends QuestDetailsSolrHelper {
 		return $revision;
 	}
 
-	protected function getCommentsNumber( &$item ) {
+	protected function getCommentsNumber( $item ) {
 		return 0;
 	}
 

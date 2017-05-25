@@ -29,6 +29,24 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 				wsi: 'oma2'
 			},
 			{
+				env: {
+					pageType: 'article',
+					skin: 'oasis',
+					src: 'rec',
+					slotName: 'TOP_LEADERBOARD'
+				},
+				wsi: 'olar'
+			},
+			{
+				env: {
+					pageType: 'article',
+					skin: 'oasis',
+					src: 'premium',
+					slotName: 'INCONTENT_PLAYER'
+				},
+				wsi: 'oiap'
+			},
+			{
 				env: {},
 				wsi: 'xxxx'
 			},
@@ -79,6 +97,18 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 					src: 'gpt'
 				},
 				wsi: 'xxx1'
+			},
+			{
+				env: {
+					src: 'rec'
+				},
+				wsi: 'xxxr'
+			},
+			{
+				env: {
+					src: 'premium'
+				},
+				wsi: 'xxxp'
 			},
 			{
 				env: {

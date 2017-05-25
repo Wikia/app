@@ -78,16 +78,26 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 	}
 
 	function getParamsFromBidForTracking(bid) {
-		var bucket = timeBuckets.getTimeBucket(buckets, bid.timeToRespond / 1000);
+		var price,
+			bucket = timeBuckets.getTimeBucket(buckets, bid.timeToRespond / 1000);
 
 		if (bid.getStatusCode() === prebid.errorResponseStatusCode) {
 			return [emptyResponseMsg, bucket].join(';');
 		}
 
+		if (bid.notInvolved) {
+			price = 'NOT_INVOLVED';
+		} else if (bid.used) {
+			price = 'USED';
+		} else {
+			price = priceGranularityHelper.transformPriceFromCpm(bid.cpm);
+		}
+
 		return [
 			bid.getSize(),
-			priceGranularityHelper.transformPriceFromCpm(bid.cpm),
-			bucket].join(';');
+			price,
+			bucket
+		].join(';');
 	}
 
 
@@ -96,5 +106,5 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 		trackBidderOnLookupEnd: trackBidderOnLookupEnd,
 		trackBidderSlotState: trackBidderSlotState,
 		updatePerformanceMap: updatePerformanceMap
-	}
+	};
 });

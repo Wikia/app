@@ -34,8 +34,8 @@
 <? endif ?>
 
 <?= $topScripts ?>
-<?= $recoveryHeadBootstrapCode ?>	
 <?= $globalBlockingScripts; /*needed for jsLoader and for the async loading of CSS files.*/ ?>
+<?= $recoveryHeadBootstrapCode ?>
 
 <!-- Make IE recognize HTML5 tags. -->
 <!--[if IE]>

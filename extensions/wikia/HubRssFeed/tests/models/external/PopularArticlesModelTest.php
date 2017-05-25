@@ -29,6 +29,7 @@ class fakeResultGenerator {
 }
 
 class PopularArticlesModelTest extends WikiaBaseTest {
+
 	protected static function getFn( $obj, $name ) {
 		$class = new ReflectionClass(get_class( $obj ));
 		$method = $class->getMethod( $name );
@@ -40,23 +41,19 @@ class PopularArticlesModelTest extends WikiaBaseTest {
 		};
 	}
 
-	public function setUp() {
-		$dir = dirname( __FILE__ ) . '/../../../';
-		global $wgAutoloadClasses;
-		$this->setupFile = $dir . 'HubRssFeed.setup.php';
-
+	protected function setUp() {
 		parent::setUp();
+
+		require_once __DIR__ . '/../../../models/external/PopularArticlesModel.class.php';
 	}
 
-	private function mockDbQuery( &$mockDb = null ) {
-		$mockQueryResults = $this->getMock( "ResultWrapper", array( 'fetchObject' ), array(), '', false );
-
-		$mockDb = $this->getDatabaseMock(array( 'query' ) );
-		$mockDb->expects( $this->any() )->method( 'query' )->will( $this->returnValue( $mockQueryResults ) );
+	private function mockDbQuery( FakeResultWrapper $mockQueryResults ) {
+		$mockDb = $this->getDatabaseMock( [ 'query' ] );
+		$mockDb->expects( $this->any() )
+			->method( 'query' )
+			->willReturn( $mockQueryResults );
 
 		$this->mockGlobalFunction( 'wfGetDb', $mockDb );
-
-		return $mockQueryResults;
 	}
 
 	/*
@@ -126,11 +123,9 @@ class PopularArticlesModelTest extends WikiaBaseTest {
 		$row1->article_id = 12;
 		$row1->pageviews = 112;
 
-		$mockResults = $this->mockDbQuery();
-		$mockResults->expects( $this->at( 0 ) )->method( "fetchObject" )
-			->will( $this->returnValue( $row0 ) );
-		$mockResults->expects( $this->at( 1 ) )->method( "fetchObject" )
-			->will( $this->returnValue( $row1 ) );
+		$mockResults = new FakeResultWrapper( [ $row0, $row1 ] );
+
+		$this->mockDbQuery( $mockResults );
 
 		$fn = self::getFn( new PopularArticlesModel(), 'getPageViewsMap' );
 		$result = $fn( 0, [ 0 ] );

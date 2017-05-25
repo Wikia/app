@@ -554,12 +554,6 @@ class WikiaQuizAjax {
 				else {
 					$ret['msg'] = wfMsg('wikiaquiz-game-email-error', $result->getMessage());
 				}
-
-				// store an email
-				$entry = (new EmailsStorage)->newEntry(EmailsStorage::QUIZ);
-				$entry->setPageId($quizId);
-				$entry->setEmail($email);
-				$ret['entryId'] = $entry->store();
 			}
 			else {
 				$ret['msg'] = wfMsg('wikiaquiz-game-email-valid-please');

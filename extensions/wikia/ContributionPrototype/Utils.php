@@ -11,7 +11,7 @@ class Utils {
 	 * @return CPArticleRenderer
 	 */
 	public static function getRenderer() {
-		global $wgContributionPrototypeExternalHost, $wgCityId, $wgDBname;
+		global $wgContributionPrototypeExternalHost, $wgCityId, $wgDBname, $wgEnablePremiumPageHeader;
 
 		/** @var UrlProvider $urlProvider */
 		$urlProvider = Injector::getInjector()->get(UrlProvider::class);
@@ -20,6 +20,7 @@ class Utils {
 				$wgContributionPrototypeExternalHost,
 				$wgCityId,
 				$wgDBname,
-				$urlProvider);
+				$urlProvider,
+				$wgEnablePremiumPageHeader);
 	}
 }

@@ -47,32 +47,6 @@ class RecirculationApiController extends WikiaApiController {
 		] );
 	}
 
-	public function getCakeRelatedContent() {
-		$this->cors->setHeaders( $this->response );
-
-		$target = trim( $this->request->getVal( 'relatedTo' ) );
-		if ( empty( $target ) ) {
-			throw new InvalidParameterApiException( 'relatedTo' );
-		}
-
-		$limit = trim( $this->request->getVal( 'limit' ) );
-		$ignore = trim( $this->request->getVal( 'ignore' ) );
-		$namespaceId = trim( $this->request->getVal( 'namespaceId' ) );
-
-		$this->response->setCacheValidity( WikiaResponse::CACHE_SHORT );
-		$this->response->setData( [
-				'title' => wfMessage( 'recirculation-fandom-subtitle' )->plain(),
-				'items' => ( new CakeRelatedContentService() )->getContentRelatedTo(
-						$target,
-						$namespaceId,
-						$this->wg->cityId,
-						$this->wg->sitename,
-						$limit,
-						$ignore
-				),
-		] );
-	}
-
 	public function getDiscussions() {
 		$this->cors->setHeaders( $this->response );
 

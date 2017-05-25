@@ -152,7 +152,7 @@ class LinkSuggest {
 				'qc_namespace = page_namespace',
 				'page_is_redirect = 0',
 				'qc_type' => 'Mostlinked',
-				"(qc_title LIKE '{$query}%' or LOWER(qc_title) LIKE '{$queryLower}%')",
+				"(convert(binary convert(qc_title using latin1) using utf8) LIKE convert(binary convert('{$query}%' using latin1) using utf8))",
 				'qc_namespace' => $namespaces
 			),
 			__METHOD__,
@@ -174,8 +174,8 @@ class LinkSuggest {
 			$pageTitlePrefilter = "";
 			if( strlen($queryLower) >= 2 ) {
 				$pageTitlePrefilter = "(
-							( page_title " . $db->buildLike(strtoupper($queryLower[0]) . strtolower($queryLower[1]) , $db->anyString() ) . " ) OR
-							( page_title " . $db->buildLike(strtoupper($queryLower[0]) . strtoupper($queryLower[1]) , $db->anyString() ) . " ) ) AND ";
+							( convert(binary convert(page_title using latin1) using utf8) " . $db->buildLike(strtoupper($queryLower[0]) . strtolower($queryLower[1]) , $db->anyString() ) . " ) OR
+							( convert(binary convert(page_title using latin1) using utf8) " . $db->buildLike(strtoupper($queryLower[0]) . strtoupper($queryLower[1]) , $db->anyString() ) . " ) ) AND ";
 			} else if( strlen($queryLower) >= 1 ) {
 				$pageTitlePrefilter = "( page_title " . $db->buildLike(strtoupper($queryLower[0]) , $db->anyString() ) . " ) AND ";
 			}
@@ -184,7 +184,7 @@ class LinkSuggest {
 						FROM page
 						LEFT JOIN redirect ON page_is_redirect = 1 AND page_id = rd_from
 						LEFT JOIN querycache ON qc_title = page_title AND qc_type = 'BrokenRedirects'
-						WHERE  {$pageTitlePrefilter} {$pageNamespaceClause} (LOWER(page_title) LIKE '{$queryLower}%')
+						WHERE  {$pageTitlePrefilter} {$pageNamespaceClause} (convert(binary convert(page_title using latin1) using utf8) LIKE convert(binary convert('{$queryLower}%' using latin1) using utf8))
 							AND qc_type IS NULL
 						LIMIT ".($wgLinkSuggestLimit * 3); // we fetch 3 times more results to leave out redirects to the same page
 
