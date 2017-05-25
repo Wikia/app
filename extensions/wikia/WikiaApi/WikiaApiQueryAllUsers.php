@@ -73,37 +73,6 @@ class WikiaApiQueryAllUsers extends ApiQueryBase {
 		wfProfileOut( __METHOD__ );
 		return $data;
 	}
-	
-	private function getAllUserGroups() {
-		global $wgMemc;
-		wfProfileIn( __METHOD__ );
-
-		$memkey = __METHOD__;
-		$data = $wgMemc->get( $memkey );
-		if (empty($data) ) {
-			$db = $this->getSharedDB();
-			$where = array();
-
-			$this->profileDBIn();
-			$oRes = $db->select( 
-				'user_groups', 
-				array('ug_user, ug_group'),	 
-				$where,
-				__METHOD__
-			);
-			
-			$data = array();
-			while ($row = $db->fetchObject($oRes)) {
-				$data[$row->ug_user][] = $row->ug_group;
-			}
-			$db->freeResult($oRes);
-			$wgMemc->set( $memkey , $data, 300 );			
-			$this->profileDBOut();
-		}
-
-		wfProfileOut( __METHOD__ );
-		return $data;
-	}
 
 	private function getUserRegistration($user_id) {
 		global $wgMemc, $wgExternalSharedDB;
@@ -189,8 +158,6 @@ class WikiaApiQueryAllUsers extends ApiQueryBase {
 			$this->addWhere( 'u1.user_editcount > 0' );
 		}
 
-		$user_groups = $this->fld_groups ? $this->getAllUserGroups() : array();
-		
 		if ( $this->fld_blockinfo ) {
 			$this->addTables('ipblocks');
 			$this->addTables('`user`', 'u2');
@@ -260,9 +227,11 @@ class WikiaApiQueryAllUsers extends ApiQueryBase {
 					$lastUserData['registration'] = wfTimestamp(TS_ISO_8601, $row->user_registration);
 				}
 
-			// Add user's group info
+				// Add user's group info
 				if ( $this->fld_groups ) {
-					$lastUserData['groups'] = array_key_exists($row->user_id, $user_groups) ? $user_groups[$row->user_id] : array();
+					$lastUserData['groups'] = ( !empty( $users ) && array_key_exists($row->user_id, $users) )
+						? explode( ';', $users[$row->user_id] )
+						: array();
 					$result->setIndexedTagName($lastUserData['groups'], 'g');
 				}
 			}
