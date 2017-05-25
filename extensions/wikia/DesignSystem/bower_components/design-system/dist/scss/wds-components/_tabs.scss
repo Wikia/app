@@ -48,7 +48,7 @@
 	}
 
 	.wds-dropdown__content {
-		left: $tab-padding-horizontal - $wds-button-padding-horizontal;
+		left: -$wds-dropdown-padding;
 		transform: none;
 	}
 
