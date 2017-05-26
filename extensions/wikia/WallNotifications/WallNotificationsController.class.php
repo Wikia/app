@@ -14,7 +14,7 @@ class WallNotificationsController extends WallNotificationControllerBase {
 	}
 
 	protected function addAssets() {
-		OasisController::addSkinAssetGroup( 'wall_notifications_js' );
+		$this->getContext()->getOutput()->addModules( 'ext.wikia.wallNotifications' );
 		$this->response->addAsset( 'extensions/wikia/WallNotifications/styles/WallNotifications.scss' );
 	}
 
