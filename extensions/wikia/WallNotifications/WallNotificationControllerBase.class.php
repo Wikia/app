@@ -4,8 +4,8 @@ abstract class WallNotificationControllerBase extends WikiaService {
 	const NOTIFICATION_TITLE_LIMIT = 48;
 
 	public function Index() {
-		global $wgUser, $wgEnableWallExt, $wgEnableForumExt;
-		$loggedIn = $wgUser->isLoggedIn();
+		global $wgEnableWallExt, $wgEnableForumExt;
+		$loggedIn = $this->getContext()->getUser()->isLoggedIn();
 		$suppressWallNotifications = $this->areNotificationsSuppressedByExtensions();
 		if ( $loggedIn && !$suppressWallNotifications ) {
 			$this->addAssets();

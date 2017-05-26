@@ -3,23 +3,13 @@
 class DesignSystemGlobalNavigationOnSiteNotificationsService extends WikiaService {
 
 	public function Index() {
-		if ( $this->isLoggedIn() ) {
-			$this->addAssets();
+		$context = $this->getContext();
 
+		if ( $context->getUser()->isLoggedIn() ) {
+			$context->getOutput()->addModules( 'ext.designSystem.onSiteNotifications' );
 			return true;
-		} else {
-			return false;
 		}
+
+		return false;
 	}
-
-	private function isLoggedIn() {
-		global $wgUser;
-
-		return $wgUser->isLoggedIn();
-	}
-
-	private function addAssets() {
-		OasisController::addSkinAssetGroup( 'design_system_on_site_notifications_js' );
-	}
-
 }

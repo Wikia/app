@@ -67,3 +67,37 @@ $wgResourceModules['ext.designSystem'] = [
 		'notifications-notifications'
 	]
 ];
+
+$wgResourceModules['ext.designSystem.onSiteNotifications'] = [
+	'scripts' => [
+		'scripts/templates.mustache.js',
+		'scripts/DesignSystemGlobalNavigationOnSiteNotifications.js',
+		'scripts/DesignSystemGlobalNavigationOnSiteNotifications.common.js',
+		'scripts/DesignSystemGlobalNavigationOnSiteNotifications.model.js',
+		'scripts/DesignSystemGlobalNavigationOnSiteNotifications.view.js',
+		'scripts/DesignSystemGlobalNavigationOnSiteNotifications.controller.js',
+		'scripts/DesignSystemGlobalNavigationOnSiteNotifications.text-formatter.js',
+		'scripts/DesignSystemGlobalNavigationOnSiteNotifications.tracking.js',
+		'scripts/DesignSystemTemplating.js',
+		'scripts/DesignSystemLoadingSpinner.js',
+		'scripts/DesignSystemEvent.js',
+	],
+	'dependencies' => [
+		'ext.designSystem',
+		'ext.wikia.timeAgoMessaging',
+		'wikia.mustache',
+	],
+	'source' => 'common',
+
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/DesignSystem',
+];
+
+$wgResourceModules['ext.designSystem.wallNotifications'] = [
+	'scripts' => 'scripts/DesignSystemGlobalNavigationNotifications.js',
+	'dependencies' => [ 'ext.wikia.timeAgoMessaging' ],
+	'source' => 'common',
+
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/DesignSystem',
+];
