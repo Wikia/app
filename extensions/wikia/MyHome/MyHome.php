@@ -46,21 +46,31 @@ if (!empty($wgEnableActivityFeedApiFeed)) {
 	$wgAPIModules["feedactivityfeed"] = "ApiFeedActivityFeed";
 }
 
+$wgResourceModules['ext.wikia.myHome'] = [
+	'scripts' => 'WikiActivity.js',
+    'dependencies' => [ 'ext.wikia.timeAgoMessaging' ],
+    'source' => 'common',
+
+    'localBasePath' => __DIR__,
+    'remoteExtPath' => 'wikia/MyHome'
+];
+
 // Ajax dispatcher
 $wgAjaxExportList[] = 'MyHomeAjax';
 function MyHomeAjax() {
 	global $wgRequest;
-	$method = $wgRequest->getVal('method', false);
+	$method = $wgRequest->getVal( 'method', false );
 
-	if (method_exists('MyHomeAjax', $method)) {
-		wfProfileIn(__METHOD__);
+	if ( method_exists( 'MyHomeAjax', $method ) ) {
+		wfProfileIn( __METHOD__ );
 
 		$data = MyHomeAjax::$method();
-		$json = json_encode($data);
+		$json = json_encode( $data );
 
-		$response = new AjaxResponse($json);
-		$response->setContentType('application/json; charset=utf-8');
-		wfProfileOut(__METHOD__);
+		$response = new AjaxResponse( $json );
+		$response->setContentType( 'application/json; charset=utf-8' );
+		wfProfileOut( __METHOD__ );
+
 		return $response;
 	}
 }

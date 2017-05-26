@@ -153,8 +153,11 @@ class ActivityFeedHelper {
 	/**
 	 * wrapper for getList witch caching output
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+	 *
+	 * @param array $parameters
+	 * @return string HTML
 	 */
-	static function getListForWidget($parameters, $userLangEqContent) {
+	static function getListForWidget( array $parameters ) {
 		global $wgMemc;
 		wfProfileIn(__METHOD__);
 		$key = wfMemcKey('community_widget_v1', $parameters['uselang']);
@@ -259,7 +262,7 @@ $wgAjaxExportList[] = 'CommunityWidgetAjax';
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function CommunityWidgetAjax() {
-	global $wgRequest, $wgLang, $wgLanguageCode, $wgContentNamespaces;
+	global $wgRequest, $wgLang, $wgContentNamespaces;
 	wfProfileIn(__METHOD__);
 
 	//this should be the same as in /extensions/wikia/WidgetFramework/Widgets/WidgetCommunity/WidgetCommunity.php
@@ -278,15 +281,14 @@ function CommunityWidgetAjax() {
 		$uselang = $langCode;
 	}
 	$parameters['uselang'] = $uselang;
-	$userLangEqContent = $uselang == $wgLanguageCode && $uselang == 'en';	//since we are using jQuery `timeago` plugin which works only for en, let's cache longer only this language
 
-	$feedHTML = ActivityFeedHelper::getListForWidget($parameters, $userLangEqContent);
+	$feedHTML = ActivityFeedHelper::getListForWidget( $parameters );
 	$data = array('data' => $feedHTML, 'timestamp' => wfTimestampNow());
 
 	$json = json_encode($data);
 	$response = new AjaxResponse($json);
 	$response->setContentType('application/json; charset=utf-8');
-	$response->setCacheDuration($userLangEqContent ? 60*60*24 : 60*5);
+	$response->setCacheDuration( 60*60*24 );
 	wfProfileOut(__METHOD__);
 	return $response;
 }
