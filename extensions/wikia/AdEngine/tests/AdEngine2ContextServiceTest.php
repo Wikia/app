@@ -321,10 +321,13 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			->method( 'getWikiVertical' )
 			->willReturn( [ 'short' => $verticals['newVertical'] ] );
 
-		if ( !empty($categories['old']) || !empty($categories['new']) ) {
+		if ( !empty( $categories['old'] ) || !empty( $categories['new'] ) ) {
 			$wikiFactoryHubMock->expects( $this->any() )
 				->method( 'getWikiCategoryNames' )
-				->will( $this->onConsecutiveCalls( $categories['old'], $categories['new'] ) );
+				->will( $this->onConsecutiveCalls(
+						empty( $categories['old'] ) ? [] : $categories['old'],
+						empty( $categories['new'] ) ? [] : $categories['new'] )
+					);
 		} else {
 			$wikiFactoryHubMock->expects( $this->any() )
 				->method( 'getWikiCategoryNames' )
