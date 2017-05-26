@@ -10,6 +10,6 @@ class CommunityHeaderController extends WikiaController {
 
 	public function index() {
 		$this->sitename = new Sitename();
-		$this->wordmark = ( new Wordmark() )->getData();
+		$this->wordmark = new Wordmark();
 	}
 }
