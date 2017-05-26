@@ -337,16 +337,13 @@ abstract class WikiaBaseTest extends TestCase {
 	/**
 	 * Mock given message
 	 *
-	 * @param $messageKey
-	 * @param $messageContent string
-	 * @return PHPUnit_Framework_MockObject_MockObject
+	 * @param string $messageKey
+	 * @param string $messageContent
+	 * @param string $langCode
 	 */
-	protected function mockMessage($messageKey, $messageContent) {
-		$mock = $this->getMessageMock( $messageKey );
-		$mock->expects( $this->any() )
-			->method( 'get' )
-			->will( $this->returnValue( $messageContent ) );
-		return $mock;
+	protected function mockMessage($messageKey, $messageContent, $langCode = 'en') {
+		MessageCache::singleton()->mExtensionMessages[$langCode][lcfirst( $messageKey )] =
+			$messageContent;
 	}
 
 	/**

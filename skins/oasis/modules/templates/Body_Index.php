@@ -7,6 +7,13 @@
 /** @var $isEditPage bool */
 ?>
 
+<? if ( !empty( $wg->InContextTranslationsProject ) ): ?>
+	<script type="text/javascript">
+		var _jipt = [['project', '<?= addslashes($wg->InContextTranslationsProject) ?>' ]];
+	</script>
+	<script type="text/javascript" src="//cdn.crowdin.com/jipt/jipt.js"></script>
+<? endif; ?>
+
 <? if ( $displayHeader ): ?>
 	<h2><?= wfMessage( 'oasis-global-page-header' )->escaped(); ?></h2>
 <? endif; ?>
@@ -130,7 +137,7 @@
 
 				</div>
 
-				<? if ( (new ARecoveryModule)->isSourcePointRecoveryEnabled() ) : ?>
+				<? if ( ARecoveryModule::isSourcePointRecoveryEnabled() ) : ?>
 					<!--googleoff: all-->
 					<div id="WikiaArticleMsg">
 						<h2><?= wfMessage('arecovery-blocked-message-headline')->escaped() ?></h2>

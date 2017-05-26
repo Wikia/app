@@ -101,7 +101,7 @@ $messages['pt'] = array(
 	'emailext-usernamechange-subject' => 'Sua mudança de nome de usuário no Fandom está completa!',
 	'emailext-usernamechange-summary' => 'Sua mudança de nome de usuário no Fandom está completa.',
 	'emailext-usernamechange-changed' => "'''$1''' é agora '''$2'''",
-	'emailext-usernamechange-closing' => 'Esperamos vê-lo por aqui!',
+	'emailext-usernamechange-closing' => 'Mal podemos esperar para vê-lo por aqui,',
 	'emailext-usernamechange-signature' => 'Equipe da Comunidade Fandom',
 	'emailext-usernamechange-profile-page' => 'Página de perfil',
 	'emailext-usernamechange-check-out' => 'Confira o Fandom',
@@ -135,13 +135,5 @@ $messages['zh-hant'] = array(
 	'emailext-usernamechange-signature' => 'Fandom社區團隊',
 	'emailext-usernamechange-profile-page' => '用戶資料頁',
 	'emailext-usernamechange-check-out' => '查看Fandom',
-);
-
-$messages['zh-tw'] = array(
-	'emailext-usernamechange-subject' => '你的Wikia用戶名已更改！',
-	'emailext-usernamechange-summary' => '你的Wikia用戶名已更改。',
-	'emailext-usernamechange-changed' => "用戶名已由'''$1'''更改為'''$2'''了。",
-	'emailext-usernamechange-closing' => '期待見到你！',
-	'emailext-usernamechange-signature' => 'Wikia社區團隊',
 );
 

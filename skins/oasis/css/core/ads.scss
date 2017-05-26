@@ -12,7 +12,6 @@
 @import 'ads-interstitial';
 @import 'ads-invisible-high-impact';
 @import '../../../../extensions/wikia/ArticleVideo/styles/video-shared-variables';
-@import '../../../../extensions/wikia/WikiaBar/css/WikiaBar';
 
 $wikia-top-ads-index: 2;
 $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
@@ -90,7 +89,7 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 		z-index: $floating-ad-index;
 
 		.wikia-ad {
-			bottom: $wikia-bar-wrapper-height + $floating-ad-margin;
+			bottom: $wikia-bar-height + $floating-ad-margin;
 			margin-bottom: 0;
 			position: fixed;
 			right: $floating-ad-margin;
@@ -120,7 +119,7 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 
 .wikia-ad {
 	&.slot-animation {
-		@include transition(max-height, 0.8s, ease, 0);
+		@include transition(max-height, 1.6s, ease, 0);
 		overflow: hidden;
 	}
 
@@ -349,38 +348,10 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 	}
 }
 
-#INCONTENT_LEADERBOARD {
-	text-align: center;
-	> div {
-		margin-left: auto;
-		margin-right: auto;
-	}
-}
-
 #INCONTENT_WRAPPER {
 	font-size: 0;
 	line-height: 0;
 	text-align: center;
-}
-
-#INCONTENT_LEADERBOARD {
-	display: inline-block;
-}
-
-#INCONTENT_LEADERBOARD:before {
-	color: $color-text;
-	content: attr(data-label);
-	display: block;
-	font-size: 0.625rem;
-	line-height: 0.75rem;
-	padding-bottom: 6px;
-	padding-top: 6px;
-	text-align: left;
-	text-transform: uppercase;
-}
-
-#INCONTENT_LEADERBOARD.hide-label:before {
-	display: none;
 }
 
 #LEFT_SKYSCRAPER_2 {
@@ -515,22 +486,6 @@ body > a > img[src$="noad.gif"] {
 	z-index: 0;
 }
 
-/** Exitstitial ad */
-#ExitstitialInfobox {
-	p {
-		border-bottom: 1px solid #ccc;
-		padding-bottom: 5px;
-	}
-	.close-exitstitial-ad {
-		font-size: 120%;
-		text-align: center;
-	}
-	.ad-centered-wrapper {
-		height: 400px;
-		margin-bottom: 20px;
-	}
-}
-
 .ad-centered-wrapper {
 	display: table;
 	margin-left: auto;
@@ -623,7 +578,7 @@ body > a > img[src$="noad.gif"] {
 		z-index: initial;
 
 		.wikia-ad {
-			bottom: $wikia-bar-wrapper-height + $floating-ad-margin;
+			bottom: $wikia-bar-height + $floating-ad-margin;
 			margin-bottom: 0;
 			position: fixed;
 			right: $floating-ad-margin;

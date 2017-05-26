@@ -10,22 +10,24 @@ abstract class WikiaHubsModuleService extends WikiaService {
 	private $shouldFilterCommercialData = false;
 
 	public function __construct($cityId) {
-		global $wgForeignFileRepos;
 		parent::__construct();
 
 		$this->cityId = $cityId;
 		$this->skinName = RequestContext::getMain()->getSkin()->getSkinName();
 
 		$hubWiki = WikiFactory::getWikiByID($cityId);
-		$hubDbName = $hubWiki->city_dbname;
+		if ( !empty( $hubWiki ) ) {
+			global $wgForeignFileRepos;
+			$hubDbName = $hubWiki->city_dbname;
 
-		$wgForeignFileRepos[] = [
-			'class'            => 'WikiaForeignDBViaLBRepo',
-			'name'             => $hubDbName,
-			'transformVia404'  => true,
-			'wiki'             => $hubDbName,
-			'backend'          => "wikia{$hubDbName}-backend"
-		];
+			$wgForeignFileRepos[] = [
+				'class' => 'WikiaForeignDBViaLBRepo',
+				'name' => $hubDbName,
+				'transformVia404' => true,
+				'wiki' => $hubDbName,
+				'backend' => "wikia{$hubDbName}-backend"
+			];
+		}
 	}
 
 	abstract public function getStructuredData($data);

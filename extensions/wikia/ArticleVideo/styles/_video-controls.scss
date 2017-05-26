@@ -44,6 +44,8 @@
 	.oo-control-bar {
 		@include transition-shorthand(none);
 
+		height: 50px;
+
 		.oo-logo {
 			display: none !important;
 		}

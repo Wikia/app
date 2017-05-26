@@ -245,7 +245,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 	}
 
 	// Current criteria for wikis to skip:
-	// Any wiki which is set "official" in the CityVisualization/ManageWikiaHome tool
+	// Any wiki which is set "official" in the CityVisualization tool
 	// Any wiki which has the WikiFactory "protect" flag set
 
 	protected function getWikisList() {

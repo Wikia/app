@@ -11,7 +11,6 @@ class AdEngine2Hooks {
 	const ASSET_GROUP_ADENGINE_OPENX_BIDDER = 'adengine2_ox_bidder_js';
 	const ASSET_GROUP_ADENGINE_PREBID = 'adengine2_prebid_js';
 	const ASSET_GROUP_ADENGINE_RUBICON_FASTLANE = 'adengine2_rubicon_fastlane_js';
-	const ASSET_GROUP_ADENGINE_RUBICON_VULCAN = 'adengine2_rubicon_vulcan_js';
 	const ASSET_GROUP_ADENGINE_TABOOLA = 'adengine2_taboola_js';
 	const ASSET_GROUP_ADENGINE_TRACKING = 'adengine2_tracking_js';
 
@@ -47,8 +46,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverGoogleConsumerSurveysCountries';
 		$vars[] = 'wgAdDriverHighImpactSlotCountries';
 		$vars[] = 'wgAdDriverHighImpact2SlotCountries';
-		$vars[] = 'wgAdDriverIncontentLeaderboardSlotCountries';
-		$vars[] = 'wgAdDriverIncontentLeaderboardOutOfPageSlotCountries';
 		$vars[] = 'wgAdDriverIncontentPlayerSlotCountries';
 		$vars[] = 'wgAdDriverIndexExchangeBidderCountries';
 		$vars[] = 'wgAdDriverKikimoraTrackingCountries';
@@ -58,6 +55,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverNetzAthletenCountries';
 		$vars[] = 'wgAdDriverOpenXBidderCountries';
 		$vars[] = 'wgAdDriverOpenXBidderCountriesRemnant';
+		$vars[] = 'wgAdDriverOpenXPrebidBidderCountries';
 		$vars[] = 'wgAdDriverOverridePrefootersCountries';
 		$vars[] = 'wgAdDriverPageFairDetectionCountries';
 		$vars[] = 'wgAdDriverPrebidBidderCountries';
@@ -65,9 +63,10 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverRubiconFastlaneMercuryFixCountries';
 		$vars[] = 'wgAdDriverRubiconFastlaneProviderCountries';
 		$vars[] = 'wgAdDriverRubiconFastlaneProviderSkipTier';
-		$vars[] = 'wgAdDriverRubiconVulcanCountries';
+		$vars[] = 'wgAdDriverRubiconPrebidCountries';
 		$vars[] = 'wgAdDriverSourcePointDetectionCountries';
 		$vars[] = 'wgAdDriverSourcePointDetectionMobileCountries';
+		$vars[] = 'wgAdDriverSrcPremiumCountries';
 		$vars[] = 'wgAdDriverTaboolaConfig';
 		$vars[] = 'wgAdDriverTurtleCountries';
 		$vars[] = 'wgAdDriverVelesBidderCountries';
@@ -177,10 +176,6 @@ class AdEngine2Hooks {
 
 		if ( AnalyticsProviderRubiconFastlane::isEnabled() ) {
 			$jsAssets[] = static::ASSET_GROUP_ADENGINE_RUBICON_FASTLANE;
-		}
-
-		if ( AnalyticsProviderRubiconVulcan::isEnabled() ) {
-			$jsAssets[] = static::ASSET_GROUP_ADENGINE_RUBICON_VULCAN;
 		}
 
 		return true;

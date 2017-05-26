@@ -1,5 +1,4 @@
 <?php
-/** Internationalization file for /extensions/GlobalMessages/GlobalMessagesX extension. */
 $messages = [];
 
 $messages['en'] = [
@@ -490,10 +489,6 @@ $messages['sl'] = [
 ];
 
 $messages['sq'] = [
-	'xml-error-string' => '$1 në vijën $2, kol $3 (bite $4): $5',
-];
-
-$messages['sr'] = [
 	'xml-error-string' => '$1 në vijën $2, kol $3 (bite $4): $5',
 ];
 

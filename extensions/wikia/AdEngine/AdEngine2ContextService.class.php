@@ -34,6 +34,7 @@ class AdEngine2ContextService {
 			$newWikiVertical = $wikiFactoryHub->getWikiVertical( $wg->CityId );
 			$newWikiVertical = !empty($newWikiVertical['short']) ? $newWikiVertical['short'] : 'error';
 
+
 			$context = [
 				'opts' => $this->filterOutEmptyItems( [
 					'adsInContent' => $wg->EnableAdsInContent,
@@ -44,8 +45,14 @@ class AdEngine2ContextService {
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
 					'trackSlotState' => $wg->AdDriverTrackState,
 					'sourcePointDetectionUrl' => $sourcePointDetectionUrl,
+					'sourcePointMMS' => ARecoveryModule::isSourcePointMessagingEnabled(),
+					'sourcePointMMSDomain' => $wg->develEnvironment ? 'mms.bre.wikia-dev.com' : 'mms.bre.wikia.com',
+					'sourcePointRecovery' => ARecoveryModule::isSourcePointRecoveryEnabled(),
 					'pageFairDetectionUrl' => $pageFairDetectionUrl,
-					'prebidBidderUrl' => $prebidBidderUrl
+					'pageFairRecovery' => ARecoveryModule::isPageFairRecoveryEnabled(),
+					'prebidBidderUrl' => $prebidBidderUrl,
+					'useTaboola' => $wg->AdDriverUseTaboola,
+					'disableTaboola' => !$wg->AdDriverUseTaboola // TODO: remove after release ADEN-5094 cache walkaround
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
 					'enableKruxTargeting' => AnalyticsProviderKrux::isEnabled(),
@@ -79,22 +86,6 @@ class AdEngine2ContextService {
 				] ),
 				'forcedProvider' => $wg->AdDriverForcedProvider
 			];
-
-			/**
-			 * $wgAdDriverEnableSourcePointRecovery === false; // disabled on wiki
-			 * $wgAdDriverEnableSourcePointRecovery === true; // enabled on wiki
-			 * $wgAdDriverEnableSourcePointRecovery === null; // don't care - depend on $wgAdDriverSourcePointRecoveryCountries
-			 */
-			$context['opts']['sourcePointRecovery'] = $skinName === 'oasis' ? $wg->AdDriverEnableSourcePointRecovery : false;
-			$context['opts']['sourcePointMMS'] = ($skinName === 'oasis' && $context['opts']['sourcePointRecovery'] === false) ? $wg->AdDriverEnableSourcePointMMS : false;
-			$context['opts']['sourcePointMMSDomain'] = $wg->develEnvironment ? 'mms.bre.wikia-dev.com' : 'mms.bre.wikia.com';
-
-			/**
-			* $wgAdDriverEnablePageFairRecovery === false; // disabled on wiki
-			* $wgAdDriverEnablePageFairRecovery === true; // enabled on wiki
-			* $wgAdDriverEnablePageFairRecovery === null; // don't care - depend on $wgAdDriverPageFairRecoveryCountries
-			*/
-			$context['opts']['pageFairRecovery'] = $skinName === 'oasis' ? $wg->AdDriverEnablePageFairRecovery : false;
 
 			return $context;
 		} );

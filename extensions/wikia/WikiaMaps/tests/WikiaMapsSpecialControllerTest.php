@@ -116,7 +116,7 @@ class WikiaMapsSpecialControllerTest extends WikiaBaseTest {
 		$wikiaMapsSpecialControllerMock->expects( $this->once() )
 			->method( 'getMenuMarkup' );
 
-		$wikiaMapsSpecialControllerMock->wg->CityId = self::WIKI_CITY_ID;
+		$wikiaMapsSpecialControllerMock->getApp()->wg->CityId = self::WIKI_CITY_ID;
 
 		$wikiaMapsSpecialControllerMock->map();
 	}
@@ -182,12 +182,12 @@ class WikiaMapsSpecialControllerTest extends WikiaBaseTest {
 	public function testRedirectIfForeignWiki_not_foreign() {
 		$wikiaMapsSpecialControllerMock = $this->getControllerMock( 'testRedirectIfForeignWiki' );
 
-		$wikiaMapsSpecialControllerMock->wg->CityId = self::WIKI_CITY_ID;
+		$wikiaMapsSpecialControllerMock->getApp()->wg->CityId = self::WIKI_CITY_ID;
 
 		$outputPageMock = $this->getMock( 'OutputPage', [ 'redirect' ], [], '', false );
 		$outputPageMock->expects( $this->never() )
 			->method( 'redirect' );
-		$wikiaMapsSpecialControllerMock->wg->out = $outputPageMock;
+		$wikiaMapsSpecialControllerMock->getApp()->wg->out = $outputPageMock;
 
 		$wikiaMapsSpecialControllerMock->redirectIfForeignWiki( self::WIKI_CITY_ID, 1 );
 	}
@@ -198,12 +198,12 @@ class WikiaMapsSpecialControllerTest extends WikiaBaseTest {
 	public function testRedirectIfForeignWiki_foreign() {
 		$wikiaMapsSpecialControllerMock = $this->getControllerMock( 'testRedirectIfForeignWiki' );
 
-		$wikiaMapsSpecialControllerMock->wg->CityId = self::WIKI_CITY_ID;
+		$wikiaMapsSpecialControllerMock->getApp()->wg->CityId = self::WIKI_CITY_ID;
 
 		$outputPageMock = $this->getMock( 'OutputPage', [ 'redirect' ], [], '', false );
 		$outputPageMock->expects( $this->once() )
 			->method( 'redirect' );
-		$wikiaMapsSpecialControllerMock->wg->out = $outputPageMock;
+		$wikiaMapsSpecialControllerMock->getApp()->wg->out = $outputPageMock;
 
 		$wikiaMapsSpecialControllerMock->redirectIfForeignWiki( self::WIKI_FOREIGN_CITY_ID, 1 );
 	}
@@ -396,8 +396,9 @@ class WikiaMapsSpecialControllerTest extends WikiaBaseTest {
 		switch( $test ) {
 			case 'testIndex':
 				$mapsSpecialControllerMock = $this->getMock( 'WikiaMapsSpecialController', [ 'getPar', 'getRequest', 'forward' ], [], '', false );
-				$outputPageMock = $this->getMock( 'OutputPage', [], [], '', false );
-				$mapsSpecialControllerMock->wg->out = $outputPageMock;
+				$mapsSpecialControllerMock->setApp( new WikiaApp( new WikiaLocalRegistry() ) );
+				$mapsSpecialControllerMock->getApp()->wg->out = ( new RequestContext() )
+					->getOutput();
 				break;
 
 			case 'testRedirectIfForeignWiki':
@@ -406,10 +407,17 @@ class WikiaMapsSpecialControllerTest extends WikiaBaseTest {
 				$mapsSpecialControllerMock->expects( $this->any() )
 					->method( 'getWikiPageUrl' )
 					->will( $this->returnValue( self::WIKI_URL ) );
+
+				$mapsSpecialControllerMock->setApp( new WikiaApp( new WikiaLocalRegistry() ) );
+				$mapsSpecialControllerMock->getApp()->wg->out = ( new RequestContext() )
+					->getOutput();
 				break;
 
 			case 'testMap':
-				$appMock = $this->getMock( 'WikiaApp', [ 'checkSkin' ], [], '', false );
+				$appMock = $this->getMockBuilder( WikiaApp::class )
+					->setMethods( [ 'checkSkin' ] )
+					->setConstructorArgs( [ new WikiaLocalRegistry() ] )
+					->getMock();
 				$appMock->expects( $this->once() )
 					->method( 'checkSkin' )
 					->will( $this->returnValue( false ) );
@@ -438,12 +446,11 @@ class WikiaMapsSpecialControllerTest extends WikiaBaseTest {
 				$mapsSpecialControllerMock->expects( $this->any() )
 					->method( 'setVal' );
 
-				$outputPageMock = $this->getMock( 'OutputPage', [], [], '', false );
-				$mapsSpecialControllerMock->wg->out = $outputPageMock;
-
-				$mapsSpecialControllerMock->app = $appMock;
-				$mapsSpecialControllerMock->request = $requestMock;
-				$mapsSpecialControllerMock->response = $responseMock;
+				$mapsSpecialControllerMock->setApp( $appMock );
+				$mapsSpecialControllerMock->setRequest( $requestMock );
+				$mapsSpecialControllerMock->setResponse( $responseMock );
+				$mapsSpecialControllerMock->getApp()->wg->out = ( new RequestContext() )
+					->getOutput();
 				break;
 
 			case 'testMapData':
@@ -469,8 +476,9 @@ class WikiaMapsSpecialControllerTest extends WikiaBaseTest {
 				$mapsSpecialControllerMock->expects( $this->any() )
 					->method( 'setVal' );
 
-				$outputPageMock = $this->getMock( 'OutputPage', [], [], '', false );
-				$mapsSpecialControllerMock->wg->out = $outputPageMock;
+				$mapsSpecialControllerMock->setApp( new WikiaApp( new WikiaLocalRegistry() ) );
+				$mapsSpecialControllerMock->getApp()->wg->out = ( new RequestContext() )
+					->getOutput();
 
 				$mapsSpecialControllerMock->request = $requestMock;
 				$mapsSpecialControllerMock->response = $responseMock;

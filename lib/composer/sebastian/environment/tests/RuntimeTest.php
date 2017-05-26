@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of the Environment package.
+ * This file is part of sebastian/environment.
  *
  * (c) Sebastian Bergmann <sebastian@phpunit.de>
  *
@@ -8,11 +8,16 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace SebastianBergmann\Environment;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class RuntimeTest extends PHPUnit_Framework_TestCase
+/**
+ * @covers \SebastianBergmann\Environment\Runtime
+ */
+class RuntimeTest extends TestCase
 {
     /**
      * @var \SebastianBergmann\Environment\Runtime
@@ -25,11 +30,8 @@ class RuntimeTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \SebastianBergmann\Environment\Runtime::canCollectCodeCoverage
-     *
-     * @uses   \SebastianBergmann\Environment\Runtime::hasXdebug
-     * @uses   \SebastianBergmann\Environment\Runtime::isHHVM
-     * @uses   \SebastianBergmann\Environment\Runtime::isPHP
+     * @todo Now that this component is PHP 7-only and uses return type declarations
+     * this test makes even less sense than before
      */
     public function testAbilityToCollectCodeCoverageCanBeAssessed()
     {
@@ -37,9 +39,8 @@ class RuntimeTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \SebastianBergmann\Environment\Runtime::getBinary
-     *
-     * @uses   \SebastianBergmann\Environment\Runtime::isHHVM
+     * @todo Now that this component is PHP 7-only and uses return type declarations
+     * this test makes even less sense than before
      */
     public function testBinaryCanBeRetrieved()
     {
@@ -47,7 +48,8 @@ class RuntimeTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \SebastianBergmann\Environment\Runtime::isHHVM
+     * @todo Now that this component is PHP 7-only and uses return type declarations
+     * this test makes even less sense than before
      */
     public function testCanBeDetected()
     {
@@ -55,9 +57,8 @@ class RuntimeTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \SebastianBergmann\Environment\Runtime::isPHP
-     *
-     * @uses   \SebastianBergmann\Environment\Runtime::isHHVM
+     * @todo Now that this component is PHP 7-only and uses return type declarations
+     * this test makes even less sense than before
      */
     public function testCanBeDetected2()
     {
@@ -65,10 +66,8 @@ class RuntimeTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \SebastianBergmann\Environment\Runtime::hasXdebug
-     *
-     * @uses   \SebastianBergmann\Environment\Runtime::isHHVM
-     * @uses   \SebastianBergmann\Environment\Runtime::isPHP
+     * @todo Now that this component is PHP 7-only and uses return type declarations
+     * this test makes even less sense than before
      */
     public function testXdebugCanBeDetected()
     {
@@ -76,12 +75,8 @@ class RuntimeTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \SebastianBergmann\Environment\Runtime::getNameWithVersion
-     *
-     * @uses   \SebastianBergmann\Environment\Runtime::getName
-     * @uses   \SebastianBergmann\Environment\Runtime::getVersion
-     * @uses   \SebastianBergmann\Environment\Runtime::isHHVM
-     * @uses   \SebastianBergmann\Environment\Runtime::isPHP
+     * @todo Now that this component is PHP 7-only and uses return type declarations
+     * this test makes even less sense than before
      */
     public function testNameAndVersionCanBeRetrieved()
     {
@@ -89,9 +84,8 @@ class RuntimeTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \SebastianBergmann\Environment\Runtime::getName
-     *
-     * @uses   \SebastianBergmann\Environment\Runtime::isHHVM
+     * @todo Now that this component is PHP 7-only and uses return type declarations
+     * this test makes even less sense than before
      */
     public function testNameCanBeRetrieved()
     {
@@ -99,9 +93,8 @@ class RuntimeTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \SebastianBergmann\Environment\Runtime::getVersion
-     *
-     * @uses   \SebastianBergmann\Environment\Runtime::isHHVM
+     * @todo Now that this component is PHP 7-only and uses return type declarations
+     * this test makes even less sense than before
      */
     public function testVersionCanBeRetrieved()
     {
@@ -109,9 +102,8 @@ class RuntimeTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \SebastianBergmann\Environment\Runtime::getVendorUrl
-     *
-     * @uses   \SebastianBergmann\Environment\Runtime::isHHVM
+     * @todo Now that this component is PHP 7-only and uses return type declarations
+     * this test makes even less sense than before
      */
     public function testVendorUrlCanBeRetrieved()
     {

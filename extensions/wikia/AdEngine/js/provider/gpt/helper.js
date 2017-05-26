@@ -1,7 +1,6 @@
 /*global define, setTimeout, require*/
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
 define('ext.wikia.adEngine.provider.gpt.helper', [
-	'wikia.log',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.context.uapContext',
@@ -13,10 +12,10 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'ext.wikia.aRecoveryEngine.adBlockRecovery',
 	'ext.wikia.adEngine.slotTweaker',
+	'wikia.log',
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
 	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery')
 ], function (
-	log,
 	adContext,
 	adLogicPageParams,
 	uapContext,
@@ -28,6 +27,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	adBlockDetection,
 	adBlockRecovery,
 	slotTweaker,
+	log,
 	sraHelper,
 	pageFair
 ) {
@@ -35,7 +35,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.helper',
 		hiddenSlots = [
-			'INCONTENT_LEADERBOARD'
+			'INCONTENT_PLAYER'
 		];
 
 	function isHiddenOnStart(slotName) {
@@ -82,9 +82,9 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 		element = new AdElement(slotName, slotPath, slotTargetingData);
 
-		// add adonis marker needed for PF recovery
-		// basing on extra.isPageFairRecoverable param set in factoryWikiaGpt
-		if (isRecoveryEnabled && isBlocking && extra.isPageFairRecoverable) {
+		if (pageFair && extra.isPageFairRecoverable) {
+			log(['Adding adonis-marker to slot', slot], log.levels.debug, logGroup);
+
 			pageFair.addMarker(element.node);
 		}
 
@@ -95,20 +95,19 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			googleTag.addSlot(element);
 		}
 
+		function shouldSetSrcPremium() {
+			return adContext.getContext().opts.premiumOnly;
+		}
+
 		function setAdditionalTargeting(slotTargetingData) {
-			if (adShouldBeRecovered) {
+			if (shouldSetSrcPremium()) {
+				slotTargetingData.src = 'premium';
+			} else if (adShouldBeRecovered) {
 				slotTargetingData.src = 'rec';
 			}
 
-			if (adShouldBeRecovered && sourcePoint.isEnabled()) {
-				slotTargetingData.provider = 'sp';
-			}
-
-			if (adShouldBeRecovered && pageFair && pageFair.isEnabled()) {
-				slotTargetingData.provider = 'pf';
-			}
-
 			slotTargetingData.wsi = slotTargeting.getWikiaSlotId(slotName, slotTargetingData.src);
+			slotTargetingData.hb_si = slotTargeting.getPrebidSlotId(slotTargetingData);
 			slotTargetingData.uap = uapId ? uapId.toString() : 'none';
 		}
 

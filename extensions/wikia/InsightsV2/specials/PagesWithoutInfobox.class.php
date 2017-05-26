@@ -81,8 +81,19 @@ class PagesWithoutInfobox extends PageQueryPage {
 
 		$tc = new UserTemplateClassificationService();
 
+		try {
+			$tcs = new UserTemplateClassificationService();
+			$recognizedTemplates = $tcs->getTemplatesOnWiki( $wgCityId );
+		}
+		catch ( Swagger\Client\ApiException $e ) {
+			Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ , [
+				'exception' => $e
+			]);
+			return [];
+		}
+
 		$infoboxTemplates = [ ];
-		foreach ( $tc->getTemplatesOnWiki( $wgCityId ) as $pageId => $templateType ) {
+		foreach ( $recognizedTemplates as $pageId => $templateType ) {
 			if ( $tc->isInfoboxType( $templateType ) ) {
 				$templateTitle = Title::newFromID( $pageId );
 				if ( $templateTitle instanceof Title ) {

@@ -120,8 +120,6 @@ $wgAutoloadClasses['PermissionsException'] = "{$IP}/includes/wikia/nirvana/Wikia
 $wgAutoloadClasses['AssetsManager'] = $IP . '/extensions/wikia/AssetsManager/AssetsManager.class.php';
 $wgAutoloadClasses['AssetsConfig'] = $IP . '/extensions/wikia/AssetsManager/AssetsConfig.class.php';
 
-$wgAutoloadClasses['FlashMessages'] = "{$IP}/includes/wikia/FlashMessages.class.php";
-
 /**
  * Wikia API
  * (based on Nirvana)
@@ -343,7 +341,6 @@ $wgAutoloadClasses['RevisionService'] = $IP . '/includes/wikia/services/Revision
 $wgAutoloadClasses['InfoboxesService'] = $IP . '/includes/wikia/services/InfoboxesService.class.php';
 $wgAutoloadClasses['RenderContentOnlyHelper'] = $IP . '/includes/wikia/RenderContentOnlyHelper.class.php';
 $wgAutoloadClasses['SolrDocumentService'] = $IP . '/includes/wikia/services/SolrDocumentService.class.php';
-$wgAutoloadClasses['FormBuilderService']  =  $IP.'/includes/wikia/services/FormBuilderService.class.php';
 $wgAutoloadClasses['LicensedWikisService']  =  $IP.'/includes/wikia/services/LicensedWikisService.class.php';
 $wgAutoloadClasses['ArticleQualityService'] = $IP.'/includes/wikia/services/ArticleQualityService.php';
 $wgAutoloadClasses['PortableInfoboxDataService'] = $IP . '/extensions/wikia/PortableInfobox/services/PortableInfoboxDataService.class.php';
@@ -736,7 +733,6 @@ $wgWikiFactoryTags = array();
 /**
  * external databases
  */
-$wgFlagsDB = 'portable_flags';
 $wgContentReviewDB = 'content_review';
 $wgExternalDatawareDB = 'dataware';
 $wgExternalArchiveDB = 'archive';
@@ -1267,17 +1263,11 @@ $wgAdDriverRubiconFastlaneProviderCountries = null;
 $wgAdDriverRubiconFastlaneProviderSkipTier = 0;
 
 /**
- * @name $wgAdDriverEnableRubiconVulcan
- * Enables Rubicon Vulcan
- */
-$wgAdDriverEnableRubiconVulcan = true;
-
-/**
- * @name $wgAdDriverRubiconVulcanCountries
- * Enables RubiconVulcan in these countries (given wgAdDriverEnableRubiconVulcan is also true).
+ * @name $wgAdDriverRubiconPrebidCountries
+ * Enables Rubicon (Prebid) in these countries.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
-$wgAdDriverRubiconVulcanCountries = null;
+$wgAdDriverRubiconPrebidCountries = null;
 
 /**
  * @name $wgAdDriverPrebidBidderCountries
@@ -1313,6 +1303,13 @@ $wgAdDriverAudienceNetworkBidderCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverIndexExchangeBidderCountries = null;
+
+/**
+ * @name $wgAdDriverOpenXPrebidBidderCountries
+ * List of countries where OpenX prebid bidding platform is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverOpenXPrebidBidderCountries = null;
 
 /**
  * @name $wgAdDriverOverridePrefootersCountries
@@ -1409,24 +1406,6 @@ $wgSitewideDisableAdsOnMercury = false;
 $wgSitewideDisableGpt = false;
 
 /**
- * @name $wgSitewideDisableIVW3
- * @link https://wikia-inc.atlassian.net/wiki/display/ADEN/Disaster+Recovery
- * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableIVW3
- *
- * Disable IVW3 Analytics pixel sitewide in case a disaster happens.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- * For more details consult https://wikia-inc.atlassian.net/wiki/display/ADEN/Disaster+Recovery
- */
-$wgSitewideDisableIVW3 = false;
-
-/**
- * @name $wgAnalyticsDriverIVW3Countries
- *
- * List of countries with enabled IVW3 tracking
- */
-$wgAnalyticsDriverIVW3Countries = ['AT', 'CH'];
-
-/**
  * @name $wgSitewideDisablePaidAssetDrop
  * @link https://wikia-inc.atlassian.net/wiki/display/ADEN/Disaster+Recovery
  * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisablePaidAssetDrop
@@ -1463,6 +1442,14 @@ $wgSitewideDisableKrux = false;
  * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgAdDriverKikimoraTrackingCountries
  */
 $wgAdDriverKikimoraTrackingCountries = [];
+
+/**
+ * @name $wgAdDriverSrcPremiumCountries
+ * Enables setting src=premium param for all ad slots on page, when premium video
+ * is present on that page.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverSrcPremiumCountries = [];
 
 /**
  * @name $wgAdDriverMEGACountries
@@ -1569,6 +1556,20 @@ $wgAdDriverPageFairRecoveryCountries = null;
  * Enable PageFair Recovery per wiki
  */
 $wgAdDriverEnablePageFairRecovery = true;
+
+/**
+ * @name $wgAdDriverPageFairConditionalAdRendering
+ * Flag to enable PF conditionalAdRendering, more in PF docs
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverPageFairConditionalAdRendering = false;
+
+/**
+ * @name $wgAdDriverPageFairConditionalIframeRendering
+ * Flag to enable PF conditionalIframeRendering, more in PF docs
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverPageFairConditionalIframeRendering = false;
 
 /**
  * trusted proxy service registry
@@ -1828,20 +1829,6 @@ $wgAdDriverMobileTransitionInterstitialCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverMobileFloorAdhesionCountries = null;
-
-/**
- * @name $wgAdDriverIncontentLeaderboardSlotCountries
- * Enables INCONTENT_LEADERBOARD slot in these countries
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverIncontentLeaderboardSlotCountries = null;
-
-/**
- * @name $wgAdDriverIncontentLeaderboardOutOfPageSlotCountries
- * Enables INCONTENT_LEADERBOARD as out-of-page slot in these countries
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverIncontentLeaderboardOutOfPageSlotCountries = null;
 
 /**
  * @name $wgAdDriverIncontentPlayerSlotCountries

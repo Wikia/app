@@ -519,7 +519,9 @@ class ResourceLoader {
 		wfProfileOut( __METHOD__.'-getModifiedTime' );
 
 		// Send content type and cache related headers
-		$this->sendResponseHeaders( $context, $mtime );
+		if ( $errors === '' ) {
+			$this->sendResponseHeaders($context, $mtime);
+		}
 
 		// If there's an If-Modified-Since header, respond with a 304 appropriately
 		if ( $this->tryRespondLastModified( $context, $mtime ) ) {
@@ -722,6 +724,11 @@ class ResourceLoader {
 		\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
 			'exception' => $e
 		] );
+
+		// SUS-1900: emit a proper HTTP error code indicating that something went wrong
+		HttpStatus::header( 500 );
+		header( "X-MediaWiki-Exception: 1" );
+		header( "Content-Type: text/plain; charset=utf-8" );
 
 		if ( $wgShowExceptionDetails ) {
 			return $this->makeComment( $e->__toString() );
