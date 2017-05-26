@@ -34,7 +34,7 @@ $wgAutoloadClasses['CommentsIndex'] = __DIR__ . '/../Wall/index/CommentsIndex.cl
 $wgAutoloadClasses['CommentsIndexEntry'] = __DIR__ . '/../Wall/index/CommentsIndexEntry.class.php';
 
 // add script in monobook
-$wgHooks['SkinAfterBottomScripts'][] = 'WallNotificationsHooksHelper::onBeforePageDisplay';
+$wgHooks['OnBeforePageDisplay'][] = 'WallNotificationsHooksHelper::onBeforePageDisplay';
 
 $wgHooks['PersonalUrls'][] = 'WallNotificationsHooksHelper::onPersonalUrls';
 
