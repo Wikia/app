@@ -33,7 +33,6 @@ $wgAutoloadClasses['WikiGetDataHelper'] = $dir . 'classes/WikiGetDataHelper.clas
 $wgAutoloadClasses['WikiGetDataForVisualizationHelper'] = $dir . 'classes/WikiGetDataForVisualizationHelper.class.php';
 $wgAutoloadClasses['WikiGetDataForPromoteHelper'] = $dir . 'classes/WikiGetDataForPromoteHelper.class.php';
 $wgAutoloadClasses['WikiDataGetter'] = $dir . 'classes/WikiDataGetter.class.php';
-$wgAutoloadClasses['WikiDataGetterForSpecialPromote'] = $dir . 'classes/WikiDataGetterForSpecialPromote.class.php';
 $wgAutoloadClasses['WikiDataGetterForVisualization'] = $dir . 'classes/WikiDataGetterForVisualization.class.php';
 $wgAutoloadClasses['WikiListConditioner'] = $dir . 'classes/WikiListConditioner.class.php';
 $wgAutoloadClasses['WikiListConditionerForVertical'] = $dir . 'classes/WikiListConditionerForVertical.class.php';

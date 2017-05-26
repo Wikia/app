@@ -21,6 +21,8 @@ class WikiaHomePageController extends WikiaController {
 	static $seoSamplesNo = 17;
 	static $seoMemcKeyVer = '1.35';
 
+	const WAM_SCORE_ROUND_PRECISION = 2;
+
 	//images sizes
 	const REMIX_IMG_SMALL_WIDTH = 155;
 	const REMIX_IMG_SMALL_HEIGHT = 100;
@@ -618,6 +620,44 @@ class WikiaHomePageController extends WikiaController {
 	}
 
 	/**
+	 * get wiki stats ( pages, images, videos, users )
+	 * @param integer $wikiId
+	 * @return array wikiStats
+	 */
+	public function getWikiStats($wikiId) {
+		$wikiStats = array();
+
+		if (!empty($wikiId)) {
+			$wikiService = new WikiService();
+
+			try {
+				//this try-catch block is here because of devbox environments
+				//where we don't have all wikis imported
+				$sitestats = $wikiService->getSiteStats($wikiId);
+				$videos = $wikiService->getTotalVideos($wikiId);
+			} catch (Exception $e) {
+				$sitestats = array(
+					'articles' => 0,
+					'pages' => 0,
+					'images' => 0,
+					'users' => 0,
+				);
+				$videos = 0;
+			}
+
+			$wikiStats = array(
+				'articles' => intval($sitestats['articles']),
+				'pages' => intval($sitestats['pages']),
+				'images' => intval($sitestats['images']),
+				'videos' => $videos,
+				'users' => intval($sitestats['users']),
+			);
+		}
+
+		return $wikiStats;
+	}
+
+	/**
 	 * Get interstitial data.  If format is json, returns data only.  Has template.
 	 * @requestParam integer wikiId
 	 * @responseParam array wikiAdminAvatars
@@ -646,7 +686,7 @@ class WikiaHomePageController extends WikiaController {
 		$this->wikiAdminAvatars = $this->helper->getWikiAdminAvatars($wikiId);
 		$this->wikiTopEditorAvatars = $this->helper->getWikiTopEditorAvatars($wikiId);
 		$tempArray = array();
-		foreach ($this->helper->getWikiStats($wikiId) as $key => $value) {
+		foreach ($this->getWikiStats($wikiId) as $key => $value) {
 			$tempArray[$key] = $this->wg->Lang->formatNum($value);
 		}
 		$this->wikiStats = $tempArray;
@@ -667,7 +707,7 @@ class WikiaHomePageController extends WikiaController {
 			$wamModel = new WAMPageModel();
 			$this->wamUrl = $wamModel->getWAMMainPageUrl();
 
-			$this->wikiWamScore = $this->helper->getWamScore($wikiId);
+			$this->wikiWamScore = $this->getWamScore($wikiId);
 		}
 
 		$this->imagesSlider = $this->sendRequest('WikiaMediaCarouselController', 'renderSlider', array('data' => $images));
@@ -685,6 +725,18 @@ class WikiaHomePageController extends WikiaController {
 
 		$this->wordmark = $wordmarkUrl;
 
+	}
+
+	public function getWamScore($wikiId) {
+		$wamScore = null;
+
+		$wamData = $this->app->sendRequest('WAMApi', 'getWAMIndex', ['wiki_id' => $wikiId])->getData();
+
+		if (!empty($wamData['wam_index'][$wikiId]['wam'])) {
+			$wamScore = round($wamData['wam_index'][$wikiId]['wam'], self::WAM_SCORE_ROUND_PRECISION);
+		}
+
+		return $wamScore;
 	}
 
 	public static function onGetHTMLAfterBody($skin, &$html) {

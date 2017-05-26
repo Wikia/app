@@ -30,9 +30,9 @@ class CityVisualization extends WikiaModel {
 	);
 
 	protected $verticalSlotsMap = array(
-		WikiFactoryHub::CATEGORY_ID_LIFESTYLE => WikiaHomePageHelper::LIFESTYLE_SLOTS_VAR_NAME,
-		WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => WikiaHomePageHelper::ENTERTAINMENT_SLOTS_VAR_NAME,
-		WikiFactoryHub::CATEGORY_ID_GAMING => WikiaHomePageHelper::VIDEO_GAMES_SLOTS_VAR_NAME
+		WikiFactoryHub::CATEGORY_ID_LIFESTYLE => 'wgWikiaHomePageLifestyleSlots',
+		WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => 'wgWikiaHomePageEntertainmentSlots',
+		WikiFactoryHub::CATEGORY_ID_GAMING => 'wgWikiaHomePageLifestyleSlots'
 	);
 
 	/**
@@ -506,16 +506,6 @@ class CityVisualization extends WikiaModel {
 	}
 
 	/**
-	 * Get wiki data for Special:Promote
-	 * @param integer $wikiId
-	 * @return array $wikiData
-	 */
-	public function getWikiDataForPromote($wikiId, $langCode) {
-		$helper = new WikiGetDataForPromoteHelper();
-		return $this->getWikiData($wikiId, $langCode, $helper);
-	}
-
-	/**
 	 * Get wiki data for Wikia Visualization
 	 * @param integer $wikiId
 	 * @return array $wikiData
@@ -887,119 +877,6 @@ class CityVisualization extends WikiaModel {
 	public function isCorporateLang($langCode) {
 		$corpWikis = $this->getVisualizationWikisData();
 		return isset($corpWikis[$langCode]);
-	}
-
-	public function getWikisCountForStaffTool($opt) {
-	//todo: reuse getWikisForStaffTool
-		$db = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
-		$table = $this->getTablesForStaffTool($opt);
-		$fields = array('count( ' . self::CITY_VISUALIZATION_TABLE_NAME . '.city_id ) as count');
-		$conds = $this->getConditionsForStaffTool($opt, $db);
-		$options = $this->getOptionsForStaffTool($opt);
-		$joinConds = $this->getJoinsForStaffTool($opt);
-
-		$results = $db->select($table, $fields, $conds, __METHOD__, $options, $joinConds);
-		$row = $results->fetchRow();
-
-		return isset($row['count']) ? $row['count'] : 0;
-	}
-
-	public function getWikisForStaffTool($opt) {
-	//todo: implement memc and purge it once admin changes data or main image is approved
-	//todo: add sql join and instead of headline provide wiki name
-		$db = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
-		$table = $this->getTablesForStaffTool($opt);
-		$fields = array(
-			self::CITY_VISUALIZATION_TABLE_NAME . '.city_id',
-			self::CITY_VISUALIZATION_TABLE_NAME . '.city_vertical',
-			'city_list.city_title',
-			self::CITY_VISUALIZATION_TABLE_NAME . '.city_flags',
-		);
-		$conds = $this->getConditionsForStaffTool($opt, $db);
-		$options = $this->getOptionsForStaffTool($opt);
-		$joinConds = $this->getJoinsForStaffTool($opt);
-
-		$results = $db->select($table, $fields, $conds, __METHOD__, $options, $joinConds);
-		$wikis = array();
-		while( $row = $db->fetchObject($results) ) {
-			$wikis[] = $row;
-		}
-
-		return $wikis;
-	}
-
-	protected function getJoinsForStaffTool($options) {
-		$joinConds = array(
-			'city_list' => array(
-				'join',
-				'city_list.city_id = ' . self::CITY_VISUALIZATION_TABLE_NAME . '.city_id'
-			)
-		);
-
-		if ( !empty($options->collectionId) ) {
-			$joinConds[WikiaCollectionsModel::COLLECTIONS_CV_TABLE] = [
-				'join',
-				WikiaCollectionsModel::COLLECTIONS_CV_TABLE . '.city_id = ' . self::CITY_VISUALIZATION_TABLE_NAME . '.city_id'
-			];
-		}
-
-		return $joinConds;
-	}
-
-	protected function getConditionsForStaffTool($options, DatabaseBase $db) {
-		$sqlOptions = array();
-
-		if( isset($options->lang) ) {
-			$sqlOptions[self::CITY_VISUALIZATION_TABLE_NAME . '.city_lang_code'] = $options->lang;
-		}
-
-		if( !empty($options->wikiHeadline) ) {
-			$sqlOptions[] = 'city_list.city_title like "%' . $db->strencode($options->wikiHeadline) . '%"';
-		}
-
-		if ( !empty($options->verticalId) ) {
-			$sqlOptions[self::CITY_VISUALIZATION_TABLE_NAME . '.city_vertical'] = $options->verticalId;
-		}
-
-		if ( !empty($options->collectionId) ) {
-			$sqlOptions[WikiaCollectionsModel::COLLECTIONS_CV_TABLE . '.collection_id'] = $options->collectionId;
-		}
-
-		if ( !empty($options->blockedFlag) ) {
-			$sqlOptions[] = self::CITY_VISUALIZATION_TABLE_NAME . '.city_flags & ' .WikisModel::FLAG_BLOCKED . ' > 0';
-		}
-
-		if ( !empty($options->officialFlag) ) {
-			$sqlOptions[] = self::CITY_VISUALIZATION_TABLE_NAME . '.city_flags & ' .WikisModel::FLAG_OFFICIAL . ' > 0';
-		}
-
-		if ( !empty($options->promotedFlag) ) {
-			$sqlOptions[] = self::CITY_VISUALIZATION_TABLE_NAME . '.city_flags & ' .WikisModel::FLAG_PROMOTED . ' > 0';
-		}
-
-		return $sqlOptions;
-	}
-
-	protected function getOptionsForStaffTool($options) {
-		$sqlOptions = array();
-
-		if( isset($options->offset) ) {
-			$sqlOptions['OFFSET'] = $options->offset;
-		}
-
-		if( isset($options->limit) ) {
-			$sqlOptions['LIMIT'] = $options->limit;
-		}
-
-		return $sqlOptions;
-	}
-
-	protected function getTablesForStaffTool($options) {
-		$tables = array(self::CITY_VISUALIZATION_TABLE_NAME,'city_list');
-		if ( !empty($options->collectionId) ) {
-			$tables[] = WikiaCollectionsModel::COLLECTIONS_CV_TABLE;
-		}
-		return $tables;
 	}
 
 	/**

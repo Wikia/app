@@ -14,9 +14,6 @@ use \Wikia\Logger\WikiaLogger;
 
 class WikiaHomePageHelper extends WikiaModel {
 
-	const VIDEO_GAMES_SLOTS_VAR_NAME = 'wgWikiaHomePageVideoGamesSlots';
-	const ENTERTAINMENT_SLOTS_VAR_NAME = 'wgWikiaHomePageEntertainmentSlots';
-	const LIFESTYLE_SLOTS_VAR_NAME = 'wgWikiaHomePageLifestyleSlots';
 	const SLOTS_IN_TOTAL = 17;
 
 	const SLOTS_BIG = 2;
@@ -38,52 +35,11 @@ class WikiaHomePageHelper extends WikiaModel {
 	const INTERSTITIAL_SMALL_IMAGE_WIDTH = 115;
 	const INTERSTITIAL_SMALL_IMAGE_HEIGHT = 65;
 
-	const WAM_SCORE_ROUND_PRECISION = 2;
-
 	const SLIDER_IMAGES_KEY = 'SliderImagesKey';
 	const WIKIA_HOME_PAGE_HELPER_MEMC_VERSION = 'v0.9';
 
 	protected $visualizationModel = null;
 	protected $collectionsModel;
-
-	public function getNumberOfEntertainmentSlots($lang) {
-		return $this->getVarFromWikiFactory($this->getCorpWikiIdByLang($lang), self::ENTERTAINMENT_SLOTS_VAR_NAME);
-	}
-
-	public function getNumberOfLifestyleSlots($lang) {
-		return $this->getVarFromWikiFactory($this->getCorpWikiIdByLang($lang), self::LIFESTYLE_SLOTS_VAR_NAME);
-	}
-
-	public function getNumberOfVideoGamesSlots($lang) {
-		return $this->getVarFromWikiFactory($this->getCorpWikiIdByLang($lang), self::VIDEO_GAMES_SLOTS_VAR_NAME);
-	}
-
-	public function getNumberOfSlotsForType($wikiId, $slotTypeName) {
-		switch ($slotTypeName) {
-			case 'entertainment':
-				$slots = $this->getNumberOfEntertainmentSlots($wikiId);
-				break;
-			case 'video games':
-				$slots = $this->getNumberOfVideoGamesSlots($wikiId);
-				break;
-			case 'lifestyle':
-				$slots = $this->getNumberOfLifestyleSlots($wikiId);
-				break;
-			default:
-				$slots = 0;
-				break;
-		}
-
-		return $slots;
-	}
-
-	/**
-	 * @param string $lang corporate page language
-	 * @return int
-	 */
-	protected function getCorpWikiIdByLang($lang) {
-		return $this->getVisualization()->getTargetWikiId($lang);
-	}
 
 	/**
 	 * @return CityVisualization
@@ -126,10 +82,6 @@ class WikiaHomePageHelper extends WikiaModel {
 
 		wfProfileOut(__METHOD__);
 		return $value;
-	}
-
-	public function setWikiFactoryVar($wikiId, $wfVar, $wfVarValue) {
-		return WikiFactory::setVarByName($wfVar, $wikiId, $wfVarValue, wfMsg('wikia-hone-page-special-wikis-in-slots-change-reason'));
 	}
 
 	/**
@@ -179,85 +131,6 @@ class WikiaHomePageHelper extends WikiaModel {
 			$hubSlotsV2['hub_slot'][] = $slot['hub_slot'];
 		}
 		return $hubSlotsV2;
-	}
-
-	/**
-	 * get total number of pages across Wikia
-	 * @return integer totalPages
-	 */
-	public function getTotalPages() {
-		wfProfileIn(__METHOD__);
-
-		$totalPages = 0;
-		if (!empty($this->wg->StatsDBEnabled)) {
-			$db = wfGetDB(DB_SLAVE, array(), $this->wg->StatsDB);
-
-			$row = $db->selectRow(
-				array('wikia_monthly_stats'),
-				array('sum(articles) cnt'),
-				array("stats_date = date_format(curdate(),'%Y%m')"),
-				__METHOD__
-			);
-
-			if ($row) {
-				$totalPages = $row->cnt;
-			}
-		}
-
-		wfProfileOut(__METHOD__);
-
-		return $totalPages;
-	}
-
-	/**
-	 * get wiki stats ( pages, images, videos, users )
-	 * @param integer $wikiId
-	 * @return array wikiStats
-	 */
-	public function getWikiStats($wikiId) {
-		$wikiStats = array();
-
-		if (!empty($wikiId)) {
-			$wikiService = new WikiService();
-
-			try {
-				//this try-catch block is here because of devbox environments
-				//where we don't have all wikis imported
-				$sitestats = $wikiService->getSiteStats($wikiId);
-				$videos = $wikiService->getTotalVideos($wikiId);
-			} catch (Exception $e) {
-				$sitestats = array(
-					'articles' => 0,
-					'pages' => 0,
-					'images' => 0,
-					'users' => 0,
-				);
-				$videos = 0;
-			}
-
-			$wikiStats = array(
-				'articles' => intval($sitestats['articles']),
-				'pages' => intval($sitestats['pages']),
-				'images' => intval($sitestats['images']),
-				'videos' => $videos,
-				'users' => intval($sitestats['users']),
-			);
-		}
-
-		return $wikiStats;
-	}
-
-	/**
-	 * Get main vertical names
-	 *
-	 * @return array
-	 */
-	public function getWikiVerticals( $lang = 'en' ) {
-		return array(
-			WikiFactoryHub::CATEGORY_ID_GAMING => wfMessage('hub-Gaming')->inLanguage( $lang )->text(),
-			WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => wfMessage('hub-Entertainment')->inLanguage( $lang )->text(),
-			WikiFactoryHub::CATEGORY_ID_LIFESTYLE => wfMessage('hub-Lifestyle')->inLanguage( $lang )->text()
-		);
 	}
 
 	/**
@@ -347,16 +220,6 @@ class WikiaHomePageHelper extends WikiaModel {
 		);
 	}
 
-	public function getWikiInfoForSpecialPromote($wikiId, $langCode) {
-		wfProfileIn(__METHOD__);
-
-		$dataGetter = new WikiDataGetterForSpecialPromote();
-		$wikiInfo = $this->getWikiInfo($wikiId, $langCode, $dataGetter);
-
-		wfProfileOut(__METHOD__);
-		return $wikiInfo;
-	}
-
 	public function getWikiInfoForVisualization($wikiId, $langCode) {
 		wfProfileIn(__METHOD__);
 
@@ -425,12 +288,6 @@ class WikiaHomePageHelper extends WikiaModel {
 		wfProfileOut(__METHOD__);
 
 		return $wikiInfo;
-	}
-
-	public function isWikiBlocked($wikiId, $langCode) {
-		$visualization = $this->getVisualization();
-		$flags = $this->getFlag($wikiId, $langCode);
-		return $visualization->isBlockedWiki($flags);
 	}
 
 	public function getImageDataForSlider($wikiId, $imageName) {
@@ -801,10 +658,6 @@ class WikiaHomePageHelper extends WikiaModel {
 		return false;
 	}
 
-	public function getVisualizationWikisData() {
-		return $this->getVisualization()->getVisualizationWikisData();
-	}
-
 	/**
 	 * @param Array $sites lists of wikis from WikiFactory::getListOfWikisWithVar()
 	 * @return array
@@ -824,43 +677,6 @@ class WikiaHomePageHelper extends WikiaModel {
 
 		return $results;
 	}
-
-	public function getWikisCountForStaffTool($options) {
-		return $this->getVisualization()->getWikisCountForStaffTool($options);
-	}
-
-	public function getWikisForStaffTool($options) {
-		$wikiList = $this->getVisualization()->getWikisForStaffTool($options);
-
-		foreach ($wikiList as &$wiki) {
-			$wiki->collections = $this->getCollectionsModel()->getCollectionsByCityId($wiki->city_id);
-		}
-		return $wikiList;
-	}
-
-	public function getWamScore($wikiId) {
-		$wamScore = null;
-
-		if( !empty($this->app->wg->DevelEnvironment) ) {
-			$wamScore = $this->getMockedScoreForDev();
-		} else {
-			$wamData = $this->app->sendRequest('WAMApi', 'getWAMIndex', ['wiki_id' => $wikiId])->getData();
-			if (!empty($wamData['wam_index'][$wikiId]['wam'])) {
-				$wamScore = round($wamData['wam_index'][$wikiId]['wam'], self::WAM_SCORE_ROUND_PRECISION);
-			}
-		}
-		return $wamScore;
-	}
-
-	private function getMockedScoreForDev() {
-		if (rand(0, 3)) {
-			$wam = rand(100, 9999) / 100;
-		} else {
-			$wam = null;
-		}
-		return $wam;
-	}
-
 
 	/**
 	 * @return string
