@@ -15,7 +15,8 @@ class RecirculationHooks {
 
 		// Check if we're on a page where we want to show a recirculation module.
 		// If we're not, stop right here.
-		if ( !static::isCorrectPageType() ) {
+		$context = RequestContext::getMain();
+		if ( !static::isCorrectPageType( $context ) ) {
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
@@ -36,6 +37,11 @@ class RecirculationHooks {
 		JSMessages::enqueuePackage( 'Recirculation', JSMessages::EXTERNAL );
 		Wikia::addAssetsToOutput( 'recirculation_scss' );
 		self::addMainPageMetadata( $out );
+
+		if ( $skin->getSkinName() === 'oasis' && static::isCorrectPageType( $skin ) ) {
+			$out->addModules( 'ext.wikia.reCirculation' );
+		}
+
 		return true;
 	}
 
@@ -53,27 +59,24 @@ class RecirculationHooks {
 			$jsAssets[] = 'recirculation_liftigniter_tracker';
 		}
 
-		if ( static::isCorrectPageType() ) {
-			$jsAssets[] = 'recirculation_js';
-		}
-
 		return true;
 	}
 
 	/**
 	 * Return whether we're on one of the pages where we want to show the Recirculation widgets,
 	 * specifically File pages, Article pages, and Main pages
+	 *
+	 * @param IContextSource $context
 	 * @return bool
 	 */
-	static public function isCorrectPageType() {
-		$wg = F::app()->wg;
+	static public function isCorrectPageType( IContextSource $context ) {
+		$title = $context->getTitle();
+		$request = $context->getRequest();
 
-		$showableNameSpaces = array_merge( $wg->ContentNamespaces, [ NS_FILE ] );
-
-		if ( $wg->Title->exists()
-				&& in_array( $wg->Title->getNamespace(), $showableNameSpaces )
-				&& $wg->request->getVal( 'action', 'view' ) === 'view'
-				&& $wg->request->getVal( 'diff' ) === null
+		if ( $title->exists()
+				&& ( $title->isContentPage() || $title->inNamespace( NS_FILE ) )
+				&& $request->getVal( 'action', 'view' ) === 'view'
+				&& $request->getVal( 'diff' ) === null
 		) {
 			return true;
 		} else {
