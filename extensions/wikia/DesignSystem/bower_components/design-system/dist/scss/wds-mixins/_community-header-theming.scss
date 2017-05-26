@@ -1,0 +1,117 @@
+@import '../wds-functions/index';
+
+@mixin community-header-theming(
+	$header-background-color,
+	$color-text,
+	$color-links,
+	$color-page,
+	$color-page-border
+) {
+
+	// the same logic as $is-dark-wiki in oasis
+	$is-dark-theme: lightness($color-page) < 50;
+
+	$text-color: $wds-color-white;
+	@if luminance($header-background-color) > .3 {
+		$text-color: $wds-color-black;
+	}
+	$text-hover-color: rgba($text-color, .8);
+
+	$dropdown-background-color: mix($color-page, #000, 90%);
+	@if $is-dark-theme {
+		$dropdown-background-color: mix($color-page, #fff, 90%);
+	}
+
+	background-color: $header-background-color;
+
+	&::before {
+		background: linear-gradient(to right, rgba($header-background-color, .5), rgba($header-background-color, .5)), linear-gradient(to left, rgba($header-background-color, 0) 200px, $header-background-color 430px);
+	}
+
+	.wds-button.wds-is-secondary {
+		background-color: rgba($header-background-color, .2);
+		border-color: $text-color;
+		color: $text-color;
+		transition-property: border-color, background-color, color;
+
+		svg {
+			fill: $text-color;
+		}
+	}
+
+	.wds-button.wds-is-secondary:hover {
+		background-color: rgba($header-background-color, .4);
+		border-color: $text-hover-color;
+		color: $text-hover-color;
+
+		svg {
+			fill: $text-hover-color;
+		}
+
+		a {
+			color: $text-hover-color;
+		}
+	}
+
+	.wds-tabs__tab-label {
+		color: $text-color;
+
+		a {
+			color:inherit;
+		}
+	}
+
+	.wds-tabs__tab.wds-is-active .wds-tabs__tab-label,
+	.wds-tabs__tab:hover .wds-tabs__tab-label {
+		color: $text-hover-color;
+
+		a {
+			color: inherit;
+		}
+	}
+
+	.wds-community-header__sitename a {
+		color: $text-color;
+		transition: color .2s;
+
+		&:hover {
+			color: $text-hover-color;
+		}
+	}
+
+	.wds-community-header__counter {
+		color: $text-color;
+	}
+
+	.wds-dropdown__content {
+		background-color: $dropdown-background-color;
+		border-color: $color-page-border;
+
+		.wds-list.wds-is-linked li {
+			> a {
+				color: $color-text;
+			}
+
+			&:hover {
+				> a {
+					background-color: rgba($color-links, .1);
+					color: $color-links;
+				}
+			}
+		}
+
+		.wds-list.wds-is-linked .wds-dropdown-level-2 .wds-dropdown-level-2__content {
+			background-color: $dropdown-background-color;
+			border-color: $color-page-border;
+			color: $color-text;
+		}
+	}
+
+	.wds-dropdown::after {
+		border-bottom-color: $dropdown-background-color;
+	}
+
+	.wds-dropdown::before {
+		border-bottom-color: $color-page-border;
+	}
+}

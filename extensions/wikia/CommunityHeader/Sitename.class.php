@@ -6,7 +6,7 @@ use \ThemeSettings;
 use \Title;
 
 class Sitename {
-	public $mainPageURL;
+	public $url;
 	public $titleText;
 
 	public function __construct( $themeSettings ) {
@@ -14,6 +14,6 @@ class Sitename {
 		$settings = $themeSettings->getSettings();
 
 		$this->titleText = new Label( $settings['wordmark-text'] );
-		$this->mainPageURL = Title::newMainPage()->getLocalURL();
+		$this->url = Title::newMainPage()->getLocalURL();
 	}
 }
