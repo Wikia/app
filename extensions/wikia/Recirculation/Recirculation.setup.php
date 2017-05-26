@@ -30,3 +30,28 @@ $wgExtensionMessagesFiles['Recirculation'] = __DIR__ . '/Recirculation.i18n.php'
 JSMessages::registerPackage('Recirculation', [
 	'recirculation-*',
 ]);
+
+$wgResourceModules['ext.wikia.reCirculation'] = [
+	'scripts' => [
+		'js/tracker.js',
+		'js/utils.js',
+		'js/helpers/FandomHelper.js',
+		'js/helpers/DiscussionsHelper.js',
+		'js/helpers/CuratedContentHelper.js',
+		'js/helpers/LiftigniterHelper.js',
+		'js/views/premiumRail.js',
+		'js/views/footer.js',
+		'js/views/impactFooter.js',
+		'js/recirculation.js',
+		'js/discussions.js',
+	],
+	'dependencies' => [
+		'ext.wikia.timeAgoMessaging',
+		'ext.wikia.rail',
+		'wikia.mustache',
+	],
+	'source' => 'common',
+
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/Recirculation',
+];
