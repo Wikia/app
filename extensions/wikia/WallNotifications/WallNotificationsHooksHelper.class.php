@@ -4,16 +4,15 @@ class WallNotificationsHooksHelper {
 	/**
 	 * @brief Adds Wall Notifications script to Monobook pages
 	 *
+	 * @param OutputPage $out
+	 * @param Skin $skin
 	 * @return boolean
 	 *
 	 * @author Liz Lee
 	 */
-	static public function onSkinAfterBottomScripts( Skin $skin, &$text ) {
-		global $wgUser, $wgJsMimeType, $wgResourceBasePath, $wgExtensionsPath;
-
-		if ( $wgUser instanceof User && $wgUser->isLoggedIn() && $skin->getSkinName() == 'monobook' ) {
-			$text .= "<script type=\"{$wgJsMimeType}\" src=\"{$wgResourceBasePath}/resources/wikia/libraries/jquery/timeago/jquery.timeago.js\"></script>\n" .
-				"<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WallNotifications/scripts/WallNotifications.js\"></script>\n";
+	static public function onBeforePageDisplay( OutputPage $out, Skin $skin ): bool {
+		if ( $skin->getSkinName() === 'monobook' && $skin->getUser()->isLoggedIn() ) {
+			$out->addModules( 'ext.wikia.wallNotifications.monoBook' );
 		}
 
 		return true;
@@ -28,7 +27,7 @@ class WallNotificationsHooksHelper {
 	 * @author Piotrek Bablok
 	 */
 	static public function onPersonalUrls( &$personalUrls, &$title ) {
-		global $wgUser, $wgEnableWallExt, $wgEnableForumExt, $wgOut;
+		global $wgUser, $wgEnableWallExt, $wgEnableForumExt;
 
 		if ( $wgUser instanceof User && $wgUser->isLoggedIn() ) {
 			if ( $wgUser->getSkin()->getSkinName() == 'monobook' ) {
@@ -47,8 +46,6 @@ class WallNotificationsHooksHelper {
 				if ( empty( $wgEnableWallExt ) && empty( $wgEnableForumExt ) ) {
 					$personalUrls['wall-notifications']['class'] .= 'prehide';
 				}
-
-				$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/WallNotifications/styles/monobook/WallNotificationsMonobook.scss' ) );
 			}
 		}
 

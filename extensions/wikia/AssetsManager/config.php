@@ -1407,13 +1407,6 @@ $config['theme_designer_js'] = [
 	],
 ];
 
-$config['wall_notifications_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/WallNotifications/scripts/WallNotifications.js',
-	],
-];
-
 $config['wall_mini_editor_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [

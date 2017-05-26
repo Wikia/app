@@ -34,6 +34,24 @@ $wgAutoloadClasses['CommentsIndex'] = __DIR__ . '/../Wall/index/CommentsIndex.cl
 $wgAutoloadClasses['CommentsIndexEntry'] = __DIR__ . '/../Wall/index/CommentsIndexEntry.class.php';
 
 // add script in monobook
-$wgHooks['SkinAfterBottomScripts'][] = 'WallNotificationsHooksHelper::onSkinAfterBottomScripts';
+$wgHooks['SkinAfterBottomScripts'][] = 'WallNotificationsHooksHelper::onBeforePageDisplay';
 
 $wgHooks['PersonalUrls'][] = 'WallNotificationsHooksHelper::onPersonalUrls';
+
+$wgResourceModules['ext.wikia.wallNotifications'] = [
+	'scripts' => 'scripts/WallNotifications.js',
+    'dependencies' => [ 'ext.wikia.timeAgoMessaging' ],
+    'source' => 'common',
+
+    'localBasePath' => __DIR__,
+    'remoteExtPath' => 'wikia/WallNotifications',
+];
+
+$wgResourceModules['ext.wikia.wallNotifications.monoBook'] = [
+	'styles' => 'styles/monobook/WallNotificationsMonobook.scss',
+    'dependencies' => [ 'ext.wikia.wallNotifications' ],
+    'source' => 'common',
+
+    'localBasePath' => __DIR__,
+    'remoteExtPath' => 'wikia/WallNotifications',
+];
