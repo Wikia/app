@@ -32,7 +32,7 @@ define('ext.wikia.adEngine.slot.service.actionHandler',  [
 				slotTweaker.makeResponsive(data.slotName, data.aspectRatio);
 				break;
 			case 'refresh-on-view':
-				if (abTest.getGroup('AD_MIX').indexOf('AD_MIX_1') === 0) { // Don't refresh ad by creative if in AD_MIX_1 and AD_MIX_1B AB test
+				if (!abTest.getGroup('AD_MIX') || (abTest.getGroup('AD_MIX') && abTest.getGroup('AD_MIX').indexOf('AD_MIX_1') === 0)) { // Don't refresh ad by creative if in AD_MIX_1 and AD_MIX_1B AB test
 					viewabilityHandler.refreshOnView(data.slotName, data.delay);
 				}
 				break;
