@@ -75,6 +75,15 @@ $wgHooks['WikiaMobileAssetsPackages'][] = 'Wikia\Search\Hooks::onWikiaMobileAsse
 
 $wgHooks['WikiFactoryPublicStatusChange'][] = 'Wikia\Search\Hooks::onWikiFactoryPublicStatusChange';
 
+$wgResourceModules['ext.wikia.search'] = [
+	'scripts' => 'js/WikiaSearch.js',
+    'dependencies' => [ 'ext.wikia.timeAgoMessaging' ],
+    'source' => 'common',
+
+    'localBasePath' => __DIR__,
+    'remoteExtPath' => 'wikia/Search',
+];
+
 $wgExtensionCredits['other'][] = [
 	'name' => 'Wikia Search',
 	'version' => '3.0',
