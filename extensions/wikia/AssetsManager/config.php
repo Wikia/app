@@ -474,9 +474,6 @@ $config['oasis_jquery'] = [
 		// Article length & screen width tracking
 		'//skins/oasis/js/ArticleLengthAbTesting.js',
 
-		// rail
-		'#group_rail_js',
-
 		'#group_page_share_js',
 	],
 ];
@@ -2155,14 +2152,6 @@ $config['imglzy_js'] = [
 	'assets' => [
 		'//extensions/wikia/ImageLazyLoad/js/ImgLzy.module.js',
 		'//extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
-	],
-];
-
-$config['rail_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/Rail/scripts/Rail.js',
 	],
 ];
 

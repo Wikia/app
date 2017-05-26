@@ -127,6 +127,7 @@ class RailController extends WikiaController {
 	 * @return array
 	 */
 	private function filterModules($moduleList, $lazy) {
+		/** @var callable $lazyChecker */
 		$lazyChecker = ($lazy == self::FILTER_LAZY_MODULES) ? [$this, 'modulesLazyCheck'] : [$this, 'modulesNotLazyCheck'];
 		$out = [];
 		foreach ($moduleList as $key => $val) {
@@ -142,5 +143,21 @@ class RailController extends WikiaController {
 	}
 	private function modulesLazyCheck($moduleKey) {
 		return $moduleKey < self::LAZY_LOADING_BEAKPOINT;
+	}
+
+	/**
+	 * Hook: OnBeforePageDisplay
+	 * Add Rail JS modules to output
+	 *
+	 * @param OutputPage $out
+	 * @param Skin $skin
+	 * @return bool
+	 */
+	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ): bool {
+		if ( $skin->getSkinName() === 'oasis' ) {
+			$out->addModules( 'ext.wikia.rail' );
+		}
+
+		return true;
 	}
 }
