@@ -6,8 +6,19 @@ require([
 	'wikia.abTest',
 	'wikia.articleVideo.videoFeedbackBox',
 	require.optional('ext.wikia.adEngine.adContext'),
+	require.optional('ext.wikia.adEngine.video.player.ooyala.ooyalaTracker'),
 	require.optional('ext.wikia.adEngine.video.vastUrlBuilder')
-], function (window, onScroll, tracker, OoyalaPlayer, abTest, VideoFeedbackBox, adContext, vastUrlBuilder) {
+], function (
+	window,
+	onScroll,
+	tracker,
+	OoyalaPlayer,
+	abTest,
+	VideoFeedbackBox,
+	adContext,
+	playerTracker,
+	vastUrlBuilder
+) {
 
 	$(function () {
 		var $video = $('#article-video'),
@@ -21,6 +32,10 @@ require([
 			collapsingDisabled = false,
 			playTime = -1,
 			percentagePlayTime = -1,
+			playerTrackerParams = {
+				adProduct: 'featured-video',
+				slotName: 'FEATURED_VIDEO'
+			},
 			track = tracker.buildTrackingFunction({
 				category: 'article-video',
 				trackingMethod: 'analytics'
@@ -37,9 +52,13 @@ require([
 				autoplay = abTest.inGroup('FEATURED_VIDEO_AUTOPLAY', 'AUTOPLAY') && window.OO.allowAutoPlay,
 				vastUrl;
 
+			if (playerTracker) {
+				playerTracker.track(playerTrackerParams, 'init');
+			}
+
 			if (vastUrlBuilder && adContext && adContext.getContext().opts.showAds) {
 				vastUrl = vastUrlBuilder.build(640/480, {
-					pos: 'FEATURED_VIDEO',
+					pos: playerTrackerParams.slotName,
 					src: 'premium'
 				});
 			}
@@ -170,6 +189,10 @@ require([
 
 		initVideo(function (player) {
 			$video.addClass('ready-to-play');
+
+			if (playerTracker) {
+				playerTracker.register(player, playerTrackerParams);
+			}
 
 			player.mb.subscribe(OO.EVENTS.INITIAL_PLAY, 'featured-video', function () {
 				track({
