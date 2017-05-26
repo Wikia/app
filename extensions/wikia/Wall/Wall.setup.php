@@ -170,6 +170,32 @@ $wgHooks['MWNamespace:isMovable'][] = 'WallHooksHelper::onNamespaceIsMovable';
 $wgHooks['ArticleDoDeleteArticleBeforeLogEntry'][] = 'CommentsIndexHooks::onArticleDoDeleteArticleBeforeLogEntry';
 $wgHooks['ArticleUndelete'][] = 'CommentsIndexHooks::onArticleUndelete';
 
+$wgResourceModules['ext.wikia.wall'] = [
+	'scripts' => [
+		'js/Wall.js',
+		'js/WallPagination.js',
+		'js/WallBackendBridge.js',
+		'js/WallMessageForm.js',
+		'js/WallNewMessageForm.js',
+		'js/WallEditMessageForm.js',
+		'js/WallReplyMessageForm.js',
+		'js/WallSortingBar.js',
+		'js/WallSetup.js',
+
+		// TODO: Should be separate
+	    'js/MessageTopic.js',
+	],
+    'dependencies' => [
+    	'jquery.autoresize',
+	    'jquery.scrollTo',
+        'ext.wikia.timeAgoMessaging'
+    ],
+    'source' => 'common',
+
+    'localBasePath' => __DIR__,
+    'remoteExtPath' => 'wikia/Wall'
+];
+
 JSMessages::registerPackage( 'Wall', [
 	'wall-notifications',
 	'wall-notifications-reminder',

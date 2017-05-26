@@ -20,8 +20,8 @@ class WallBaseController extends WikiaService {
 	public function addAsset() {
 		JSMessages::enqueuePackage( 'Wall', JSMessages::EXTERNAL );
 
-		$this->response->addAsset( 'wall_topic_js' );    // need to load on thread only
-		$this->response->addAsset( 'wall_js' );
+		$this->getContext()->getOutput()->addModules( 'ext.wikia.wall' );
+
 		$this->response->addAsset( 'extensions/wikia/Wall/css/Wall.scss' );
 		$this->response->addAsset( 'extensions/wikia/Wall/css/MessageTopic.scss' );    // need to load on thread only
 
