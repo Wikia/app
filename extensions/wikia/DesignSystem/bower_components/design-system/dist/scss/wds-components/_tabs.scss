@@ -11,11 +11,12 @@
 	$tab-default-color: $wds-color-link;
 	$tab-hover-color: darken($tab-default-color, 20%);
 	$tab-icon-size: 14px;
-	$tab-chevron-size: 10px;
+	$tab-chevron-size: $wds-icon-tiny-size;
 	$tab-icon-margin: 6px;
 
 	cursor: pointer;
 	line-height: 14px;
+	padding: 0 $tab-padding-horizontal;
 	position: relative;
 
 	.wds-icon {
@@ -23,57 +24,31 @@
 	}
 
 	&-label {
+		align-items: center;
 		color: $tab-default-color;
-		display: inline-block;
+		display: inline-flex;
 		font-size: $wds-typescale-size-minus-2;
 		font-weight: bold;
-		padding: $tab-padding-vertical $tab-padding-horizontal;
+		padding: $tab-padding-vertical 0;
 		text-align: center;
 		text-decoration: none;
 		text-transform: uppercase;
 		transition: color .1s;
 
-		&.wds-has-icon {
-			padding-left: $tab-padding-horizontal + $tab-icon-size + $tab-icon-margin;
+		.wds-dropdown__toggle-chevron {
+			margin-left: 0;
+		}
 
-			.wds-icon {
-				height: $tab-icon-size;
-				left: $tab-padding-horizontal;
-				margin-top: -$tab-icon-size / 2;
-				min-width: $tab-icon-size;
-				position: absolute;
-				top: 50%;
-				width: $tab-icon-size;
-			}
+		:not(:first-child):not(:only-child) {
+			margin: 0 4px;
+		}
+
+		.wds-icon {
+			@include square($tab-icon-size);
 		}
 	}
 
-	&.wds-has-dropdown {
-		padding-right: $tab-padding-horizontal + $tab-chevron-size + $tab-icon-margin;
-
-		.wds-tabs__tab-label {
-			padding-right: 0;
-
-			+ .wds-icon {
-				margin-top: -$tab-chevron-size / 2;
-				min-width: $tab-chevron-size;
-				opacity: .5;
-				position: absolute;
-				right: $tab-padding-horizontal;
-				top: 50%;
-				transition: fill .1s, opacity .1s;
-				width: $tab-chevron-size;
-			}
-		}
-
-		> .wds-dropdown {
-			display: none;
-			min-width: 100%;
-			position: absolute;
-		}
-	}
-
-	&.wds-is-active {
+	&.wds-is-current {
 		border-bottom: 2px solid $tab-default-color;
 		transition: border-color .1s;
 
@@ -87,6 +62,7 @@
 		pointer-events: none;
 	}
 
+	&.wds-is-active,
 	&:hover {
 		> .wds-dropdown,
 		> .wds-dropdown .wds-dropdown__content {
@@ -101,12 +77,7 @@
 			fill: $tab-hover-color;
 		}
 
-		&.wds-has-dropdown .wds-tabs__tab-label + .wds-icon {
-			opacity: 1;
-			transform: rotate(180deg);
-		}
-
-		&.wds-is-active {
+		&.wds-is-current {
 			border-color: $tab-hover-color;
 		}
 	}
