@@ -814,7 +814,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 */
 	protected function handleSkinSettings() {
 		global $wgCityId;
-		$this->wg->Out->addHTML( JSSnippets::addToStack( [ "/extensions/wikia/Search/js/WikiaSearch.js" ] ) );
+		$this->getOutput()->addModules( 'ext.wikia.search' );
 		$this->wg->SuppressRail = true;
 		if ( $this->isCorporateWiki() ) {
 			OasisController::addBodyClass( 'inter-wiki-search' );
@@ -822,7 +822,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$this->setVal( 'corporateWikiId', $wgCityId );
 			$this->overrideTemplate( 'CrossWiki_index' );
 		}
-		$skin = $this->wg->User->getSkin();
+		$skin = $this->getSkin();
 		if ( $skin instanceof SkinMonoBook ) {
 			$this->response->addAsset( 'extensions/wikia/Search/monobook/monobook.scss' );
 		}
