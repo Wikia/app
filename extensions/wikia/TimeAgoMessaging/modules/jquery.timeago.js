@@ -15,7 +15,7 @@
  *
  * Test it using: $('<time datetime="2012-07-06T14:23:57Z">').timeago()
  */
-(function ($) {
+(function ($, mw) {
 	function distance(date) {
 		return (new Date().getTime() - date.getTime());
 	}
@@ -60,7 +60,6 @@
 		settings:{
 			refreshMillis:60000,
 			allowFuture:true, // Wikia change (BugId: 30226)
-			strings:window.wgTimeAgoi18n || {} // Wikia change
 		},
 		inWords:function (distanceMillis) {
 			var $l = this.settings.strings,
@@ -78,22 +77,48 @@
 			var days = hours / 24;
 			var years = days / 365;
 
+			/**
+			 * Get the MediaWiki i18n message for the elapsed time
+			 * Strings used here:
+			 * - timeago-year
+			 * - timeago-month
+			 * - timeago-day
+			 * - timeago-hour
+			 * - timeago-minute
+			 * - timeago-second
+			 * - timeago-day
+			 * - timeago-hour
+			 * - timeago-minute
+			 * - timeago-second
+			 * - timeago-day-from-now
+			 * - timeago-hour-from-now
+			 * - timeago-minute-from-now
+			 * - timeago-second-from-now
+			 *
+			 * @param key
+			 * @param number
+			 */
 			function substitute(key, number) {
-				var string = $l[isFuture ? (key + '-from-now') : key] || '';
-				return string.replace(/%d/i, number);
+				key = 'timeago-' + key;
+
+				if (isFuture) {
+					key += '-from-now';
+				}
+
+				return mw.message(key, number).text();
 			}
 
-			var words = (seconds < 45 && substitute('seconds', Math.round(seconds))) ||
+			var words = (seconds < 45 && substitute('second', Math.round(seconds))) ||
 				(seconds < 90 && substitute('minute', 1)) ||
-				(minutes < 45 && substitute('minutes', Math.round(minutes))) ||
+				(minutes < 45 && substitute('minute', Math.round(minutes))) ||
 				(minutes < 90 && substitute('hour', 1)) ||
-				(hours < 24 && substitute('hours', Math.round(hours))) ||
+				(hours < 24 && substitute('hour', Math.round(hours))) ||
 				(hours < 48 && substitute('day', 1)) ||
-				(days < 30 && substitute('days', Math.floor(days))) ||
+				(days < 30 && substitute('day', Math.floor(days))) ||
 				(days < 60 && substitute('month', 1)) ||
-				(days < 365 && substitute('months', Math.floor(days / 30))) ||
+				(days < 365 && substitute('month', Math.floor(days / 30))) ||
 				(years < 2 && substitute('year', 1)) ||
-				substitute('years', Math.floor(years));
+				substitute('year', Math.floor(years));
 
 			return words;
 		},
@@ -128,7 +153,9 @@
 		return self;
 	};
 
-	// fix for IE6 suckage
-	document.createElement("abbr");
-	document.createElement("time");
-}(jQuery));
+	// On page load, initialize for default selector
+	$(function () {
+		$('.timeago').timeago();
+	});
+
+}(jQuery, mediaWiki));
