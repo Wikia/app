@@ -257,8 +257,16 @@ return [
 		'scripts' => 'resources/wikia/libraries/jquery/autocomplete/jquery.autocomplete.js'
 	],
 
+	'jquery.autoresize' => [
+		'scripts' => 'resources/wikia/libraries/jquery/autoresize/jquery.autoresize.js',
+	],
+
 	'jquery.dataTables' => [
 		'scripts' => 'resources/wikia/libraries/jquery/datatables/jquery.dataTables.min.js',
+	],
+
+	'jquery.scrollTo' => [
+		'scripts' => 'resources/wikia/libraries/jquery/scrollto/jquery.scrollTo-1.4.2.js',
 	],
 
 	// moved here from AssetsManager by wladek

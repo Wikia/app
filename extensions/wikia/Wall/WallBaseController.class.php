@@ -20,22 +20,27 @@ class WallBaseController extends WikiaService {
 	public function addAsset() {
 		JSMessages::enqueuePackage( 'Wall', JSMessages::EXTERNAL );
 
-		$this->response->addAsset( 'wall_topic_js' );    // need to load on thread only
-		$this->response->addAsset( 'wall_js' );
+		$context = $this->getContext();
+		$out = $context->getOutput();
+		$skin = $context->getSkin();
+
+		$out->addModules( 'ext.wikia.wall' );
+
 		$this->response->addAsset( 'extensions/wikia/Wall/css/Wall.scss' );
 		$this->response->addAsset( 'extensions/wikia/Wall/css/MessageTopic.scss' );    // need to load on thread only
 
 		// Load MiniEditor assets, if enabled
-		if ( $this->wg->EnableMiniEditorExtForWall && F::app()->checkSkin( 'oasis' ) ) {
+		if ( $this->wg->EnableMiniEditorExtForWall && $skin->getSkinName() === 'oasis' ) {
 			$this->sendRequest( 'MiniEditor', 'loadAssets', [
 				'additionalAssets' => [
-					'wall_mini_editor_js',
 					'extensions/wikia/MiniEditor/css/Wall/Wall.scss'
 				]
 			] );
+
+			$out->addModules( 'ext.wikia.wall.miniEditor' );
 		}
 
-		if ( $this->app->checkSkin( 'monobook' ) ) {
+		if ( $skin->getSkinName() === 'monobook' ) {
 			$this->response->addAsset( 'extensions/wikia/WikiaStyleGuide/js/Form.js' );
 			$this->response->addAsset( 'resources/wikia/modules/querystring.js' );
 			$this->response->addAsset( 'extensions/wikia/Wall/css/monobook/WallMonobook.scss' );

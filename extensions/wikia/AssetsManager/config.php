@@ -1409,24 +1409,6 @@ $config['theme_designer_js'] = [
 	],
 ];
 
-/** MessageWall **/
-$config['wall_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//resources/wikia/libraries/jquery/autoresize/jquery.autoresize.js',
-		'//resources/wikia/libraries/jquery/scrollto/jquery.scrollTo-1.4.2.js',
-		'//extensions/wikia/Wall/js/Wall.js',
-		'//extensions/wikia/Wall/js/WallPagination.js',
-		'//extensions/wikia/Wall/js/WallBackendBridge.js',
-		'//extensions/wikia/Wall/js/WallMessageForm.js',
-		'//extensions/wikia/Wall/js/WallNewMessageForm.js',
-		'//extensions/wikia/Wall/js/WallEditMessageForm.js',
-		'//extensions/wikia/Wall/js/WallReplyMessageForm.js',
-		'//extensions/wikia/Wall/js/WallSortingBar.js',
-		'//extensions/wikia/Wall/js/WallSetup.js',
-	],
-];
-
 $config['wall_notifications_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
@@ -1458,18 +1440,9 @@ $config['wall_history_js'] = [
 $config['forum_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
-//		'#group_wall_js',
 		'//extensions/wikia/Forum/js/Forum.js',
 		'//extensions/wikia/Forum/js/ForumNewMessageForm.js',
 		'//extensions/wikia/Forum/js/ForumSortingBar.js',
-	],
-];
-
-/** Wall MessageTopic (certain parts of Wall and Forum uses this) **/
-$config['wall_topic_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/Wall/js/MessageTopic.js',
 	],
 ];
 
