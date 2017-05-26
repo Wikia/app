@@ -9,26 +9,43 @@
  * @package MediaWiki
  */
 
-if (!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "This is MediaWiki extension named TimeAgo Messaging.\n";
-	exit(1) ;
+	exit( 1 );
 }
 
-$wgExtensionCredits['other'][] = array(
+$wgExtensionCredits['other'][] = [
 	'author' => 'Maciej Brencz',
 	'descriptionmsg' => 'timeagomessaging-desc',
 	'name' => 'TimeAgo Messaging',
 	'version' => '1.0',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/TimeAgoMessaging'
-);
-
-$dir = dirname(__FILE__);
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/TimeAgoMessaging',
+];
 
 // i18n
-$wgExtensionMessagesFiles['TimeAgoMessaging'] = "{$dir}/TimeAgoMessaging.i18n.php";
+$wgExtensionMessagesFiles['TimeAgoMessaging'] = __DIR__ . '/TimeAgoMessaging.i18n.php';
 
-// hooks
-$wgHooks['MakeGlobalVariablesScript'][] = 'TimeAgoMessaging::onMakeGlobalVariablesScript';
+$wgResourceModules['ext.wikia.timeAgoMessaging'] = [
+	'scripts' => 'modules/jquery.timeago.js',
+    'messages'=> [
+    	'timeago-year',
+	    'timeago-month',
+	    'timeago-day',
+	    'timeago-hour',
+	    'timeago-minute',
+	    'timeago-second',
+	    'timeago-day',
+	    'timeago-hour',
+	    'timeago-minute',
+	    'timeago-second',
 
-// classes
-$wgAutoloadClasses['TimeAgoMessaging'] = "{$dir}/TimeAgoMessaging.class.php";
+	    'timeago-day-from-now',
+	    'timeago-hour-from-now',
+	    'timeago-minute-from-now',
+	    'timeago-second-from-now',
+    ],
+    'dependencies' => [ 'mediawiki.jqueryMsg' ],
+
+    'localBasePath' => __DIR__,
+    'remoteExtPath' => 'wikia/TimeAgoMessaging'
+];

@@ -15,7 +15,7 @@
  *
  * Test it using: $('<time datetime="2012-07-06T14:23:57Z">').timeago()
  */
-(function ($) {
+(function ($, mw) {
 	function distance(date) {
 		return (new Date().getTime() - date.getTime());
 	}
@@ -60,7 +60,6 @@
 		settings:{
 			refreshMillis:60000,
 			allowFuture:true, // Wikia change (BugId: 30226)
-			strings:window.wgTimeAgoi18n || {} // Wikia change
 		},
 		inWords:function (distanceMillis) {
 			var $l = this.settings.strings,
@@ -78,9 +77,35 @@
 			var days = hours / 24;
 			var years = days / 365;
 
+			/**
+			 * Get the MediaWiki i18n message for the elapsed time
+			 * Strings used here:
+			 * - timeago-year
+			 * - timeago-month
+			 * - timeago-day
+			 * - timeago-hour
+			 * - timeago-minute
+			 * - timeago-second
+			 * - timeago-day
+			 * - timeago-hour
+			 * - timeago-minute
+			 * - timeago-second
+			 * - timeago-day-from-now
+			 * - timeago-hour-from-now
+			 * - timeago-minute-from-now
+			 * - timeago-second-from-now
+			 *
+			 * @param key
+			 * @param number
+			 */
 			function substitute(key, number) {
-				var string = $l[isFuture ? (key + '-from-now') : key] || '';
-				return string.replace(/%d/i, number);
+				key = 'timeago-' + key;
+
+				if (isFuture) {
+					key += '-from-now';
+				}
+
+				return mw.message(key, number).text();
 			}
 
 			var words = (seconds < 45 && substitute('seconds', Math.round(seconds))) ||
@@ -131,4 +156,4 @@
 	// fix for IE6 suckage
 	document.createElement("abbr");
 	document.createElement("time");
-}(jQuery));
+}(jQuery, mediaWiki));
