@@ -77,8 +77,7 @@ JS
 
 		$feedProvider = new DataFeedProvider($feedProxy);
 
-		global $wgJsMimeType, $wgExtensionsPath;
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/MyHome/WikiActivity.js\"></script>\n");
+		$this->getOutput()->addModules( 'ext.wikia.myHome' );
 		$wgOut->addExtensionStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/MyHome/oasis.scss'));
 
 		wfRunHooks( 'SpecialWikiActivityExecute', array( $wgOut, $wgUser ));
@@ -86,7 +85,7 @@ JS
 		$data = $feedProvider->get(50);  // this breaks when set to 60...
 
 		// FIXME: do it in AchievementsII extension
-		global $wgEnableAchievementsInActivityFeed, $wgEnableAchievementsExt;
+		global $wgEnableAchievementsInActivityFeed, $wgEnableAchievementsExt, $wgExtensionsPath;
 		if((!empty($wgEnableAchievementsInActivityFeed)) && (!empty($wgEnableAchievementsExt))){
 			$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/achievements_sidebar.css");
 		}
