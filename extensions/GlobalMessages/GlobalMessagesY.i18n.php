@@ -1,5 +1,4 @@
 <?php
-/** Internationalization file for /extensions/GlobalMessages/GlobalMessagesY extension. */
 $messages = [];
 
 $messages['en'] = [
@@ -4038,24 +4037,6 @@ $messages['so'] = [
 ];
 
 $messages['sq'] = [
-	'youhavenewmessages' => 'Ju keni $1 ($2).',
-	'youhavenewmessagesmulti' => 'Ju keni mesazhe të reja në $1',
-	'yourname' => 'Fusni nofkën tuaj',
-	'yourpassword' => 'Fusni fjalëkalimin tuaj',
-	'yourpasswordagain' => 'Fusni fjalëkalimin përsëri',
-	'yourdomainname' => 'Faqja juaj',
-	'yourtext' => 'Teksti juaj',
-	'yourdiff' => 'Ndryshimet',
-	'youremail' => 'Adresa e email-it*',
-	'yourrealname' => 'Emri juaj i vërtetë*',
-	'yourlanguage' => 'Ndërfaqja gjuhësore',
-	'yourvariant' => 'Varianti i gjuhës së përmbajtjes:',
-	'yournick' => 'Nënshkrimi',
-	'yourgender' => 'Gjinia:',
-	'year' => 'Nga viti (dhe më herët):',
-];
-
-$messages['sr'] = [
 	'youhavenewmessages' => 'Ju keni $1 ($2).',
 	'youhavenewmessagesmulti' => 'Ju keni mesazhe të reja në $1',
 	'yourname' => 'Fusni nofkën tuaj',

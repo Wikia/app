@@ -1,5 +1,4 @@
 <?php
-/** Internationalization file for /extensions/GlobalMessages/GlobalMessagesW extension. */
 $messages = [];
 
 $messages['en'] = [
@@ -15374,86 +15373,6 @@ Ha\' hilmaamin in aad wax ka bedesho [[Special:Preferences|{{SITENAME}} dooqaaga
 ];
 
 $messages['sq'] = [
-	'wednesday' => 'E mërkurë',
-	'wed' => 'Më',
-	'wrong_wfQuery_params' => 'Parametrat gabim tek wfQuery()<br />
-Funksioni: $1<br />
-Query: $2',
-	'welcomecreation' => '== Mirësevini, $1! ==
- Llogaria juaj është krijuar.
- Mos harroni të ndryshoni [[Special:Preferences|{{SITENAME}} preferencat]] tuaja.',
-	'wrongpassword' => 'Fjalëkalimi që futët nuk është i saktë. Provoni përsëri!',
-	'wrongpasswordempty' => 'Fjalëkalimi juaj ishte bosh. Ju lutemi provoni përsëri.',
-	'watchthis' => 'Vëzhgoje këtë faqe',
-	'whitelistedittext' => 'Ju duhet të $1 për të redaktuar faqet.',
-	'windows-nonascii-filename' => 'Ky wiki nuk e mbështet emrin e dokumentit me karaktere të veçanta.',
-	'watchthisupload' => 'Mbikqyre këtë skedë',
-	'withoutinterwiki' => 'Artikuj pa lidhje interwiki',
-	'withoutinterwiki-summary' => 'Artikujt në vazhdim nuk kanë asnjë lidhje te wikit në gjuhët tjera:',
-	'withoutinterwiki-legend' => 'Parashtesa',
-	'withoutinterwiki-submit' => 'Trego',
-	'wantedcategories' => 'Kategori më të dëshiruara',
-	'wantedpages' => 'Artikuj më të dëshiruar',
-	'wantedpages-badtitle' => 'Titull i pavlefshëm në vendosjen e rezultateve: $1',
-	'wantedfiles' => 'Skedat e dëshiruara',
-	'wantedtemplates' => 'Stampat e dëshiruara',
-	'watchlist' => 'Lista mbikqyrëse',
-	'watchlistfor2' => 'Për $1 $2',
-	'watchlistanontext' => 'Ju lutemi $1 për të parë redaktimet e artikujve në listë tuaj mbikqyrëse.',
-	'watchnologin' => 'Nuk keni hyrë brënda',
-	'watchnologintext' => 'Duhet të keni [[Special:UserLogin|hyrë brenda]] për të ndryshuar listën mbikqyrëse.',
-	'watch' => 'Mbikqyre',
-	'watchthispage' => 'Mbikqyre këtë faqe',
-	'watchnochange' => 'Asnjë nga artikujt nën mbikqyrje nuk është redaktuar gjatë kohës së dhënë.',
-	'watchlist-details' => '{{PLURAL:$1|$1 faqe|$1 faqe}} nën mbikqyrje duke mos numëruar faqet e diskutimit.',
-	'wlheader-enotif' => '* Njoftimi me email është lejuar.',
-	'wlheader-showupdated' => '* Faqet që kanë ndryshuar nga vizita juaj e fundit do të tregohen të \'\'\'trasha\'\'\'',
-	'watchmethod-recent' => 'duke parë ndryshimet e fundit për faqet nën mbikqyrje',
-	'watchmethod-list' => 'duke parë faqet nën mbikqyrje për ndryshimet e fundit',
-	'watchlistcontains' => 'Lista mbikqyrëse e juaj ka $1 {{PLURAL:$1|faqe|faqe}}.',
-	'wlnote' => 'Më poshtë {{PLURAL:$1|është ndryshimi i fundit|janë \'\'\'$1\'\'\' ndryshimet e fundit}} në {{PLUARAL:$2:orën e fundit|\'\'\'$2\'\'\' orët e fundit}}, që nga $3, $4.',
-	'wlshowlast' => 'Trego $1 orët $2 ditët $3',
-	'watchlist-options' => 'Mundësitë e listës mbikqyrëse',
-	'watching' => 'Duke mbikqyrur...',
-	'watcherrortext' => 'Është paraqitur një gabim përderisa ndryshuat parametrat e listës suaj mbikqyrëse për "$1".',
-	'whatlinkshere' => 'Lidhjet këtu',
-	'whatlinkshere-title' => 'Faqe që lidhen tek $1',
-	'whatlinkshere-page' => 'Faqja:',
-	'whatlinkshere-prev' => '{{PLURAL:$1|e kaluara|të kaluarat $1}}',
-	'whatlinkshere-next' => '{{PLURAL:$1|tjetra|tjerat $1}}',
-	'whatlinkshere-links' => '← lidhje',
-	'whatlinkshere-hideredirs' => '$1 përcjellimet',
-	'whatlinkshere-hidetrans' => '$1 përfshirjet',
-	'whatlinkshere-hidelinks' => '$1 lidhjet',
-	'whatlinkshere-hideimages' => '$1 lidhjet e figurave',
-	'whatlinkshere-filters' => 'Filtra',
-	'widthheightpage' => '$1 × $2, $3 {{PLURAL:$3|faqe|faqe}}',
-	'watchlistall2' => 'të gjitha',
-	'watchlistedit-numitems' => 'Lista mbikëqyrëse e juaj përmban {{PLURAL:$1|1 titull|$1 tituj}}, pa faqet e diskutimit.',
-	'watchlistedit-noitems' => 'Lista juaj mbikqyrëse nuk ka titull.',
-	'watchlistedit-normal-title' => 'Redakto listën mbikqyrëse',
-	'watchlistedit-normal-legend' => 'Largo titujt nga lista mbikqyrëse',
-	'watchlistedit-normal-explain' => 'Titujt në listën mbikëqyrëse janë treguar poshtë.
-Largo titullin duke shënuar kutizën dhe pastaj shtype butonin Largoj titujt.
-Ju gjithashtu mundeni ta redaktoni listën [[Special:EditWatchlist/raw|këtu]].',
-	'watchlistedit-normal-submit' => 'Largo Titujt',
-	'watchlistedit-normal-done' => '{{PLURAL:$1|1 titull u larguan|$1 tituj u larguan}} u larguan nga lista mbikëqyrëse e juaj:',
-	'watchlistedit-raw-title' => 'Redakto listën mbikëqyrëse të papërpunuar',
-	'watchlistedit-raw-legend' => 'Redakto listën mbikëqyrëse të papërpunuar',
-	'watchlistedit-raw-explain' => 'Titujt në listën tuaj mbikqyrëse janë të treguar poshtë dhe mund të redaktohen duke i shtuar ose duke i hequr nga lista; një titull pë rresht.
-Kur të mbaroni, klikoni "{{int:Watchlistedit-raw-submit}}".
-Ju gjithashtu mund [[Special:EditWatchlist|të përdorni redaktuesin standart]].',
-	'watchlistedit-raw-titles' => 'Titujt:',
-	'watchlistedit-raw-submit' => 'Aktualizoje listën',
-	'watchlistedit-raw-done' => 'Lista mbikëqyrëse u aktualizua.',
-	'watchlistedit-raw-added' => '{{PLURAL:$1|1 titull u shtua|$1 tituj u shtuan}}:',
-	'watchlistedit-raw-removed' => '{{PLURAL:$1|1 titull u largua|$1 tituj u larguan}}:',
-	'watchlisttools-view' => 'Shih ndryshimet e rëndësishme',
-	'watchlisttools-edit' => 'Shih dhe redakto listën mbikqyrëse.',
-	'watchlisttools-raw' => 'Redaktoje drejtpërdrejt listën',
-];
-
-$messages['sr'] = [
 	'wednesday' => 'E mërkurë',
 	'wed' => 'Më',
 	'wrong_wfQuery_params' => 'Parametrat gabim tek wfQuery()<br />
