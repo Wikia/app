@@ -8,7 +8,6 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 		var $footer = $('#WikiaFooter');
 		var $rail = $('#WikiaRail');
 		var $recirc;
-		var recircEnabled = false;
 		var $recircWrapper;
 		var $visibleElementBeforeWrapper;
 		var $window = $(window);
