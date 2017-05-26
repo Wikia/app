@@ -87,7 +87,8 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 				}
 			}
 
-			if (abTest.getGroup('AD_MIX') === 'AD_MIX_1') {
+			// AD_MIX_1 and AD_MIX_1B
+			if (abTest.getGroup('AD_MIX').indexOf('AD_MIX_1') === 0) {
 				refreshAdIfPossible();
 			}
 		}
