@@ -62,6 +62,7 @@ class RailController extends WikiaController {
 			// https://wikia-inc.atlassian.net/browse/BAC-906
 			$oldWgTitle = $wgTitle;
 			$wgTitle = $title;
+			$this->getContext()->setTitle( $title );
 			$assetManager = AssetsManager::getInstance();
 			$railModules = $this->filterModules((new BodyController)->getRailModuleList(), self::FILTER_LAZY_MODULES);
 			$this->railLazyContent = '';
@@ -114,6 +115,7 @@ class RailController extends WikiaController {
 			$wgUseSiteJs = $oldWgUseSiteJs;
 			$wgAllowUserJs = $oldWgAllowUserJs;
 			$wgTitle = $oldWgTitle;
+			$this->getContext()->setTitle( $oldWgTitle );
 		}
 
 		wfProfileOut(__METHOD__);
