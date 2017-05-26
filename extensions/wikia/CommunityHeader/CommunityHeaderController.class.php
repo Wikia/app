@@ -1,5 +1,6 @@
 <?php
 
+use \CommunityHeader\Sitename;
 use \CommunityHeader\Wordmark;
 
 class CommunityHeaderController extends WikiaController {
@@ -8,6 +9,7 @@ class CommunityHeaderController extends WikiaController {
 	}
 
 	public function index() {
-		$this->wordmark = (new Wordmark())->getData();
+		$this->sitename = new Sitename();
+		$this->wordmark = ( new Wordmark() )->getData();
 	}
 }

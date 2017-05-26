@@ -5,5 +5,6 @@ $dir = dirname( __FILE__ ) . '/';
 $wgAutoloadClasses[ 'CommunityHeaderController' ] = $dir . 'CommunityHeaderController.class.php';
 
 // Classes
+$wgAutoloadClasses[ 'CommunityHeader\Sitename' ] = $dir . 'Sitename.class.php';
 $wgAutoloadClasses[ 'CommunityHeader\Wordmark' ] = $dir . 'Wordmark.class.php';
 $wgAutoloadClasses[ 'CommunityHeader\Label' ] = $dir . 'Label.class.php';
