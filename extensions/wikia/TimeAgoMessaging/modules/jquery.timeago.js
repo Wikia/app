@@ -153,7 +153,9 @@
 		return self;
 	};
 
-	// fix for IE6 suckage
-	document.createElement("abbr");
-	document.createElement("time");
+	// On page load, initialize for default selector
+	$(function () {
+		$('.timeago').timeago();
+	});
+
 }(jQuery, mediaWiki));
