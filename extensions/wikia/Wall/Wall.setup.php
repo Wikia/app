@@ -183,17 +183,17 @@ $wgResourceModules['ext.wikia.wall'] = [
 		'js/WallSetup.js',
 
 		// TODO: Should be separate
-	    'js/MessageTopic.js',
+		'js/MessageTopic.js',
 	],
-    'dependencies' => [
-    	'jquery.autoresize',
-	    'jquery.scrollTo',
-        'ext.wikia.timeAgoMessaging'
-    ],
-    'source' => 'common',
+	'dependencies' => [
+		'jquery.autoresize',
+		'jquery.scrollTo',
+		'ext.wikia.timeAgoMessaging',
+	],
+	'source' => 'common',
 
-    'localBasePath' => __DIR__,
-    'remoteExtPath' => 'wikia/Wall'
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/Wall',
 ];
 
 JSMessages::registerPackage( 'Wall', [

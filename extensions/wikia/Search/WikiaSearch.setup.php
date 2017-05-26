@@ -77,11 +77,11 @@ $wgHooks['WikiFactoryPublicStatusChange'][] = 'Wikia\Search\Hooks::onWikiFactory
 
 $wgResourceModules['ext.wikia.search'] = [
 	'scripts' => 'js/WikiaSearch.js',
-    'dependencies' => [ 'ext.wikia.timeAgoMessaging' ],
-    'source' => 'common',
+	'dependencies' => [ 'ext.wikia.timeAgoMessaging' ],
+	'source' => 'common',
 
-    'localBasePath' => __DIR__,
-    'remoteExtPath' => 'wikia/Search',
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/Search',
 ];
 
 $wgExtensionCredits['other'][] = [

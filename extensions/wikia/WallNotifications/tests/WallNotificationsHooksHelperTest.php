@@ -45,7 +45,7 @@ class WallNotificationsHooksHelperTest extends WikiaBaseTest {
 	public function provideNotMonobookSkins() {
 		$notMonobookSkins = [
 			'oasis',
-		    'wikiamobile',
+			'wikiamobile',
 		];
 
 		foreach ( $notMonobookSkins as $skinName ) {
@@ -102,7 +102,7 @@ class WallNotificationsHooksHelperTest extends WikiaBaseTest {
 	public function provideMonoBookSkins() {
 		$monoBookSkins = [
 			'monobook',
-		    'uncyclopedia',
+			'uncyclopedia',
 		];
 
 		foreach ( $monoBookSkins as $skinName ) {

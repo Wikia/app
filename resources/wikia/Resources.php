@@ -265,9 +265,9 @@ return [
 		'scripts' => 'resources/wikia/libraries/jquery/datatables/jquery.dataTables.min.js',
 	],
 
-    'jquery.scrollTo' => [
-    	'scripts' => 'resources/wikia/libraries/jquery/scrollto/jquery.scrollTo-1.4.2.js',
-    ],
+	'jquery.scrollTo' => [
+		'scripts' => 'resources/wikia/libraries/jquery/scrollto/jquery.scrollTo-1.4.2.js',
+	],
 
 	// moved here from AssetsManager by wladek
 	'wikia.yui' => [

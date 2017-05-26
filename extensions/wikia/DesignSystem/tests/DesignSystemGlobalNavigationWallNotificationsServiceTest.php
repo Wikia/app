@@ -84,7 +84,7 @@ class DesignSystemGlobalNavigationWallNotificationsServiceTest extends WikiaBase
 	public function provideUserRights() {
 		return [
 			'user with read rights' => [ true ],
-		    'user without read rights' => [ false ],
+			'user without read rights' => [ false ],
 		];
 	}
 
@@ -117,7 +117,7 @@ class DesignSystemGlobalNavigationWallNotificationsServiceTest extends WikiaBase
 	public function provideUserLoginStatuses() {
 		return [
 			'logged-in user' => [ true ],
-		    'anonymous user' => [ false ],
+			'anonymous user' => [ false ],
 		];
 	}
 

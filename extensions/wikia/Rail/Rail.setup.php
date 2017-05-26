@@ -20,9 +20,9 @@ $wgHooks['OnBeforePageDisplay'][] = 'RailController::onBeforePageDisplay';
 
 $wgResourceModules['ext.wikia.rail'] = [
 	'scripts' => 'scripts/Rail.js',
-    'dependencies' => [ 'ext.wikia.timeAgoMessaging' ],
-    'source' => 'common',
+	'dependencies' => [ 'ext.wikia.timeAgoMessaging' ],
+	'source' => 'common',
 
-    'localBasePath' => __DIR__,
-    'remoteExtPath' => 'wikia/Rail',
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/Rail',
 ];

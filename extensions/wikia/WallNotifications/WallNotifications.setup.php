@@ -40,18 +40,18 @@ $wgHooks['PersonalUrls'][] = 'WallNotificationsHooksHelper::onPersonalUrls';
 
 $wgResourceModules['ext.wikia.wallNotifications'] = [
 	'scripts' => 'scripts/WallNotifications.js',
-    'dependencies' => [ 'ext.wikia.timeAgoMessaging' ],
-    'source' => 'common',
+	'dependencies' => [ 'ext.wikia.timeAgoMessaging' ],
+	'source' => 'common',
 
-    'localBasePath' => __DIR__,
-    'remoteExtPath' => 'wikia/WallNotifications',
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/WallNotifications',
 ];
 
 $wgResourceModules['ext.wikia.wallNotifications.monoBook'] = [
 	'styles' => 'styles/monobook/WallNotificationsMonobook.scss',
-    'dependencies' => [ 'ext.wikia.wallNotifications' ],
-    'source' => 'common',
+	'dependencies' => [ 'ext.wikia.wallNotifications' ],
+	'source' => 'common',
 
-    'localBasePath' => __DIR__,
-    'remoteExtPath' => 'wikia/WallNotifications',
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/WallNotifications',
 ];

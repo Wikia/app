@@ -39,8 +39,8 @@ class RailControllerTest extends WikiaBaseTest {
 	public function provideNotOasisSkins() {
 		$notOasisSkins = [
 			'monobook',
-		    'uncyclopedia',
-		    'wikiamobile'
+			'uncyclopedia',
+			'wikiamobile',
 		];
 
 		foreach ( $notOasisSkins as $skinName ) {

@@ -151,11 +151,11 @@ class RecirculationHooksTest extends WikiaBaseTest {
 	public function provideIncorrectPages() {
 		return [
 			'viewing nonexistent content page' => [ false, true, false, true, false ],
-		    'viewing nonexistent file' => [ false, false, true, true, false ],
-		    'non-view action on existing content page' => [ true, true, false, false, false ],
-		    'non-view action on existing file' => [ true, false, true, false, false ],
-		    'diff view on existing content page' => [ true, true, false, true, true ],
-		    'diff view on existing file page' => [ true, false, true, true, true ],
+			'viewing nonexistent file' => [ false, false, true, true, false ],
+			'non-view action on existing content page' => [ true, true, false, false, false ],
+			'non-view action on existing file' => [ true, false, true, false, false ],
+			'diff view on existing content page' => [ true, true, false, true, true ],
+			'diff view on existing file page' => [ true, false, true, true, true ],
 		];
 	}
 }

@@ -27,25 +27,25 @@ $wgExtensionMessagesFiles['TimeAgoMessaging'] = __DIR__ . '/TimeAgoMessaging.i18
 
 $wgResourceModules['ext.wikia.timeAgoMessaging'] = [
 	'scripts' => 'modules/jquery.timeago.js',
-    'messages'=> [
-    	'timeago-year',
-	    'timeago-month',
-	    'timeago-day',
-	    'timeago-hour',
-	    'timeago-minute',
-	    'timeago-second',
-	    'timeago-day',
-	    'timeago-hour',
-	    'timeago-minute',
-	    'timeago-second',
+	'messages' => [
+		'timeago-year',
+		'timeago-month',
+		'timeago-day',
+		'timeago-hour',
+		'timeago-minute',
+		'timeago-second',
+		'timeago-day',
+		'timeago-hour',
+		'timeago-minute',
+		'timeago-second',
 
-	    'timeago-day-from-now',
-	    'timeago-hour-from-now',
-	    'timeago-minute-from-now',
-	    'timeago-second-from-now',
-    ],
-    'dependencies' => [ 'mediawiki.jqueryMsg' ],
+		'timeago-day-from-now',
+		'timeago-hour-from-now',
+		'timeago-minute-from-now',
+		'timeago-second-from-now',
+	],
+	'dependencies' => [ 'mediawiki.jqueryMsg' ],
 
-    'localBasePath' => __DIR__,
-    'remoteExtPath' => 'wikia/TimeAgoMessaging'
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/TimeAgoMessaging',
 ];

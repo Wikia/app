@@ -48,11 +48,11 @@ if (!empty($wgEnableActivityFeedApiFeed)) {
 
 $wgResourceModules['ext.wikia.myHome'] = [
 	'scripts' => 'WikiActivity.js',
-    'dependencies' => [ 'ext.wikia.timeAgoMessaging' ],
-    'source' => 'common',
+	'dependencies' => [ 'ext.wikia.timeAgoMessaging' ],
+	'source' => 'common',
 
-    'localBasePath' => __DIR__,
-    'remoteExtPath' => 'wikia/MyHome'
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/MyHome',
 ];
 
 // Ajax dispatcher
