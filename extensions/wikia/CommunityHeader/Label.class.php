@@ -2,12 +2,20 @@
 namespace CommunityHeader;
 
 class Label {
-	public function __construct( $value, $type = 'text' ) {
+	const TYPE_TEXT = 'text';
+	const TYPE_TRANSLATABLE_TEXT = 'translatable-text';
+
+	public function __construct( $value, $type = self::TYPE_TEXT ) {
 		$this->type = $type;
-		if ( $this->type === 'translatable-text' ) {
+		if ( $this->type === self::TYPE_TRANSLATABLE_TEXT ) {
 			$this->key = $value;
 		} else {
 			$this->value = $value;
 		}
 	}
+
+	public function render() {
+		return \DesignSystemHelper::renderText( (array)$this );
+	}
+
 }

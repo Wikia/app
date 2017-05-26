@@ -9,7 +9,7 @@ class Sitename {
 	public $url;
 	public $titleText;
 
-	public function __construct( $themeSettings ) {
+	public function __construct() {
 		$themeSettings = new ThemeSettings();
 		$settings = $themeSettings->getSettings();
 
