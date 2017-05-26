@@ -45,7 +45,10 @@ $wgResourceModules['ext.wikia.reCirculation'] = [
 		'js/recirculation.js',
 		'js/discussions.js',
 	],
-	'dependencies' => [ 'ext.wikia.timeAgoMessaging' ],
+	'dependencies' => [
+		'ext.wikia.timeAgoMessaging',
+	    'wikia.mustache',
+	],
 	'source' => 'common',
 
 	'localBasePath' => __DIR__,
