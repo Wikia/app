@@ -100,6 +100,7 @@ class SkinTemplate extends Skin {
 	 */
 	var $useHeadElement = false;
 
+	var $data;
 	/**#@-*/
 
 	/**
@@ -1312,6 +1313,9 @@ class SkinTemplate extends Skin {
  * @ingroup Skins
  */
 abstract class QuickTemplate {
+	/* @var array */
+	var $data;
+
 	/**
 	 * Constructor
 	 */

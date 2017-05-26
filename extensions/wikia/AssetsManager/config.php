@@ -3241,3 +3241,11 @@ $config['premium_page_header_curated_content_js'] = [
 		'//extensions/wikia/PremiumPageHeader/scripts/curated-content-edit-hack.js',
 	]
 ];
+
+$config['article_header_scss'] = [
+    'type' => AssetsManager::TYPE_SCSS,
+    'skin' => [ 'oasis' ],
+    'assets' => [
+        '//extensions/wikia/ArticleHeader/styles/article-header.scss',
+    ],
+];
