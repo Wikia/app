@@ -235,12 +235,9 @@ class AbuseFilterHooks {
 				# Increment site_stats.ss_users
 				$ssu = new SiteStatsUpdate( 0, 0, 0, 0, 1 );
 				$ssu->doUpdate();
-			} else {
-				// Sorry dude, we need this account.
-				$user->setPassword( null );
-				$user->setEmail( '' );
-				$user->saveSettings();
 			}
+			// Wikia change - no action needed if user exists
+
 			$updater->insertUpdateRow( 'create abusefilter-blocker-user' );
 			# Promote user so it doesn't look too crazy.
 			$user->addGroup( 'sysop' );

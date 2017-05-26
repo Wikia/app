@@ -85,7 +85,6 @@ class MysqlUpdater extends DatabaseUpdater {
 			array( 'addIndex', 'recentchanges',   'rc_user_text',     'patch-rc_user_text-index.sql' ),
 
 			// 1.9
-			array( 'addField', 'user',          'user_newpass_time', 'patch-user_newpass_time.sql' ),
 			array( 'addTable', 'redirect',                           'patch-redirect.sql' ),
 			array( 'addTable', 'querycachetwo',                      'patch-querycachetwo.sql' ),
 			array( 'addField', 'ipblocks',      'ipb_enable_autoblock', 'patch-ipb_optional_autoblock.sql' ),
