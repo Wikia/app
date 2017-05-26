@@ -184,7 +184,7 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 
 		function resetRecircStyles() {
 			if (recircEnabled) {
-				$recircWrapper.css('margin-bottom', gapSize + 'px');
+				$recircWrapper.css('margin-bottom', (viewportWidth > breakpointSmall ? gapSize : 0) + 'px');
 
 				$recirc.css({
 					position: '',
@@ -307,10 +307,6 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 
 			if (reloadRecirc || topRightAdFixed) {
 				$floatingMedrec.hide();
-			}
-
-			if (reloadFloatingMedrec) {
-				// reload the FMR ad
 			}
 
 			$visibleElementBeforeWrapper = $adAndRecircWrapper.prevAll(':not(#LEFT_SKYSCRAPER_2)').eq(0);
