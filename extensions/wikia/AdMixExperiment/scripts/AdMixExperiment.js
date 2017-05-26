@@ -26,13 +26,13 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 		var visibleElementBeforeWrapperHeight;
 
 		// ad mix flags
-		// AD_MIX_1: reloadFloatingMedrec === true && recircEnabled === true
-		// AD_MIX_2: topRightAdFixed === true && recircEnabled === true
-		// AD_MIX_3: reloadRecirc === true && recircEnabled === true
+		// AD_MIX_1 & AD_MIX_1B: reloadFloatingMedrec === true && recircEnabled === true
+		// AD_MIX_2 & AD_MIX_2B: topRightAdFixed === true && recircEnabled === true
+		// AD_MIX_3 & AD_MIX_3B: reloadRecirc === true && recircEnabled === true
 		// CONTROL: all === false
-		var reloadFloatingMedrec = abTest.getGroup('AD_MIX') === 'AD_MIX_1';
-		var topRightAdFixed = abTest.getGroup('AD_MIX') === 'AD_MIX_2';
-		var reloadRecirc = abTest.getGroup('AD_MIX') === 'AD_MIX_3';
+		var reloadFloatingMedrec = abTest.getGroup('AD_MIX') === 'AD_MIX_1' || abTest.getGroup('AD_MIX') === 'AD_MIX_1B';
+		var topRightAdFixed = abTest.getGroup('AD_MIX') === 'AD_MIX_2' || abTest.getGroup('AD_MIX') === 'AD_MIX_2B';
+		var reloadRecirc = abTest.getGroup('AD_MIX') === 'AD_MIX_3' || abTest.getGroup('AD_MIX') === 'AD_MIX_3B';
 		var recircEnabled = abTest.getGroup('AD_MIX') !== 'CONTROL';
 
 		function getFirstAdTopPosition() {
