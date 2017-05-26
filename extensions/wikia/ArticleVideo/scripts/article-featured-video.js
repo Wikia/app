@@ -32,9 +32,10 @@ require([
 			collapsingDisabled = false,
 			playTime = -1,
 			percentagePlayTime = -1,
+			prerollSlotName = 'FEATURED_VIDEO',
 			playerTrackerParams = {
 				adProduct: 'featured-video',
-				slotName: 'FEATURED_VIDEO'
+				slotName: prerollSlotName
 			},
 			track = tracker.buildTrackingFunction({
 				category: 'article-video',
@@ -58,7 +59,7 @@ require([
 
 			if (vastUrlBuilder && adContext && adContext.getContext().opts.showAds) {
 				vastUrl = vastUrlBuilder.build(640/480, {
-					pos: playerTrackerParams.slotName,
+					pos: prerollSlotName,
 					src: 'premium'
 				});
 			}

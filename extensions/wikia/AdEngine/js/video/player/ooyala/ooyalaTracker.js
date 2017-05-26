@@ -6,17 +6,19 @@ define('ext.wikia.adEngine.video.player.ooyala.ooyalaTracker', [
 	'use strict';
 	var playerName = 'ooyala',
 		trackingEventsMap = {
-			'adsClickthroughOpened': 'clicked',
-			'adsError': 'error',
-			'adsPlayed': 'completed',
-			'willPlayAds': 'loaded',
-			'playerCreated': 'ready',
-			'willPauseAds': 'paused',
-			'willResumeAds': 'resumed',
-			'willPlaySingleAd': 'started',
+			// This event is not exposed in OO.EVENTS and there is no other equivalent
+			adsClickthroughOpened: 'clicked',
 
-			'willPlay': 'content_started',
-			'played': 'content_completed'
+			ADS_ERROR: 'error',
+			ADS_PLAYED: 'completed',
+			WILL_PLAY_ADS: 'loaded',
+			PLAYER_CREATED: 'ready',
+			WILL_PAUSE_ADS: 'paused',
+			WILL_RESUME_ADS: 'resumed',
+			WILL_PLAY_SINGLE_AD: 'started',
+
+			WILL_PLAY: 'content_started',
+			PLAYED: 'content_completed'
 		};
 
 	/**
@@ -30,7 +32,7 @@ define('ext.wikia.adEngine.video.player.ooyala.ooyalaTracker', [
 	}
 
 	/**
-	 * @param {object} player created by porvataPlayerFactory
+	 * @param {object} player
 	 * @param {object} params
 	 * @param {string} params.adProduct
 	 * @param {string} [params.slotName]
@@ -41,7 +43,7 @@ define('ext.wikia.adEngine.video.player.ooyala.ooyalaTracker', [
 		}
 
 		Object.keys(trackingEventsMap).forEach(function (playerEvent) {
-			player.mb.subscribe(playerEvent, 'ooyala-kikimora-tracking', function () {
+			player.mb.subscribe(win.OO.EVENTS[playerEvent] || playerEvent, 'ooyala-kikimora-tracking', function () {
 				track(params, trackingEventsMap[playerEvent]);
 			});
 		});
