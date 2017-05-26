@@ -371,7 +371,6 @@ class HistoryPager extends ReverseChronologicalPager {
 			$this->tagFilter
 		);
 		wfRunHooks( 'PageHistoryPager::getQueryInfo', array( &$this, &$queryInfo ) );
-		//var_dump($queryInfo);die;
 		return $queryInfo;
 	}
 

@@ -9,9 +9,6 @@ class LatestActivityController extends WikiaController {
 		$mKey = wfMemcKey( 'mOasisLatestActivity' );
 		$feedData = $wgMemc->get( $mKey );
 
-		var_dump($feedData);
-		die;
-
 		if ( empty( $feedData ) ) {
 			// data provider
 			$includeNamespaces = implode( '|', $wgContentNamespaces );
