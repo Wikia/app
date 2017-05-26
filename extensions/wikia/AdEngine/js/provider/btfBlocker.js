@@ -22,7 +22,6 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 	function decorate(fillInSlot, config) {
 		var btfQueue = [],
 			btfQueueStarted = false,
-			context = adContext.getContext(),
 			pendingAtfSlots = []; // ATF slots pending for response
 
 		// Update state on each pv on Mercury
@@ -51,6 +50,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 		}
 
 		function startBtfQueue() {
+			var context = adContext.getContext();
 			log('startBtfQueue', 'debug', logGroup);
 
 			if (btfQueueStarted) {
@@ -92,7 +92,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 				onSlotResponse(slot.name);
 			}
 
-			if (!context.opts.delayBtf) {
+			if (!adContext.getContext().opts.delayBtf) {
 				fillInSlot(slot);
 				return;
 			}

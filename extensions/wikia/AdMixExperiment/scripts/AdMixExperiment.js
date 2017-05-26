@@ -3,6 +3,7 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 		var context = adContext.getContext();
 		var $adAndRecircWrapper;
 		var $topRightAd = $('#TOP_RIGHT_BOXAD');
+		var $floatingMedrec = $('#INCONTENT_BOXAD_1');
 		var $topRightAdWrapper = $('#top-right-boxad-wrapper');
 		var $footer = $('#WikiaFooter');
 		var $rail = $('#WikiaRail');
@@ -25,8 +26,14 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 		var visibleElementBeforeWrapperHeight;
 
 		// ad mix flags
-		var topRightAdFixed = !!(abTest.getGroup('AD_MIX') && abTest.getGroup('AD_MIX') !== 'AD_MIX_2');
-		var recircEnabled = !!(abTest.getGroup('AD_MIX') && abTest.getGroup('AD_MIX') !== 'CONTROL');
+		// AD_MIX_1 & AD_MIX_1B: reloadFloatingMedrec === true && recircEnabled === true
+		// AD_MIX_2 & AD_MIX_2B: topRightAdFixed === true && recircEnabled === true
+		// AD_MIX_3 & AD_MIX_3B: reloadRecirc === true && recircEnabled === true
+		// CONTROL: all === false
+		var reloadFloatingMedrec = abTest.getGroup('AD_MIX') === 'AD_MIX_1' || abTest.getGroup('AD_MIX') === 'AD_MIX_1B';
+		var topRightAdFixed = abTest.getGroup('AD_MIX') === 'AD_MIX_2' || abTest.getGroup('AD_MIX') === 'AD_MIX_2B';
+		var reloadRecirc = abTest.getGroup('AD_MIX') === 'AD_MIX_3' || abTest.getGroup('AD_MIX') === 'AD_MIX_3B';
+		var recircEnabled = abTest.getGroup('AD_MIX') !== 'CONTROL';
 
 		function getFirstAdTopPosition() {
 			return $rail.offset().top - globalNavigationHeight - firstAdTopSpace;
@@ -121,21 +128,27 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 
 		function scrollAfterFirstAdTopPosition() {
 			resetRecircStyles();
-			resetTopAdPaddings();
-			$topRightAd.css({
-				position: 'fixed',
-				top: globalNavigationHeight + firstAdTopSpace + 'px',
-				width: '300px'
-			});
+
+			if (topRightAdFixed) {
+				resetTopAdPaddings();
+				$topRightAd.css({
+					position: 'fixed',
+					top: globalNavigationHeight + firstAdTopSpace + 'px',
+					width: '300px'
+				});
+			}
 		}
 
 		function scrollAfterFirstAdBottomPosition() {
 			resetRecircStyles();
-			resetTopAd();
-			$topRightAdWrapper.css({
-				'padding-bottom': '',
-				'padding-top': gapSize + 'px'
-			});
+
+			if (topRightAdFixed) {
+				resetTopAd();
+				$topRightAdWrapper.css({
+					'padding-bottom': '',
+					'padding-top': gapSize + 'px'
+				});
+			}
 		}
 
 		function scrollStopPosition(stopPosition) {
@@ -171,7 +184,7 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 
 		function resetRecircStyles() {
 			if (recircEnabled) {
-				$recircWrapper.css('margin-bottom', gapSize + 'px');
+				$recircWrapper.css('margin-bottom', (viewportWidth > breakpointSmall ? gapSize : 0) + 'px');
 
 				$recirc.css({
 					position: '',
@@ -267,12 +280,18 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 
 		function onRightRailReady() {
 			$recircWrapper = $('#recirculation-rail');
+			$adAndRecircWrapper = $('#WikiaAdInContentPlaceHolder');
+
+			if (recircEnabled) {
+				$adAndRecircWrapper.addClass('ad-mix-experiment-enabled');
+			}
 
 			// There is no recirculation right rail module on non-en wikis
 			if (window.wgContentLanguage === 'en') {
 				$recircWrapper.one('premiumRecirculationRail.ready', onRecircReady);
 			} else {
-				recircEnabled = false;
+				// TODO check which experiment needs it
+				// recircEnabled = false;
 				gapSize = 0;
 				onRecircReady();
 			}
@@ -286,8 +305,9 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 					.height($recirc.outerHeight(true));
 			}
 
-			$adAndRecircWrapper = $('#WikiaAdInContentPlaceHolder');
-			$adAndRecircWrapper.addClass('ad-mix-experiment-enabled');
+			if (reloadRecirc || topRightAdFixed) {
+				$floatingMedrec.hide();
+			}
 
 			$visibleElementBeforeWrapper = $adAndRecircWrapper.prevAll(':not(#LEFT_SKYSCRAPER_2)').eq(0);
 			visibleElementBeforeWrapperHeight = $visibleElementBeforeWrapper.outerHeight(true);
@@ -295,17 +315,17 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 			viewportHeight = $window.height();
 			viewportWidth = $window.width();
 
-			$window.scroll(throttle(update, 100));
+			$window.scroll(throttle(update, 32));
 			$window.resize(throttle(function () {
 				viewportHeight = $window.height();
 				viewportWidth = $window.width();
 				update();
-			}, 100));
+			}, 32));
 
 			update();
 		}
 
-		if(context.opts.adMixExperimentEnabled) {
+		if (context.opts.adMixExperimentEnabled) {
 			$rail.one('afterLoad.rail', onRightRailReady);
 
 			if (topRightAdFixed) {
