@@ -6,3 +6,4 @@ $wgAutoloadClasses[ 'CommunityHeaderController' ] = $dir . 'CommunityHeaderContr
 
 // Classes
 $wgAutoloadClasses[ 'CommunityHeader\Wordmark' ] = $dir . 'Wordmark.class.php';
+$wgAutoloadClasses[ 'CommunityHeader\Label' ] = $dir . 'Label.class.php';
