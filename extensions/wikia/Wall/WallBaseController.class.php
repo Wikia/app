@@ -29,10 +29,11 @@ class WallBaseController extends WikiaService {
 		if ( $this->wg->EnableMiniEditorExtForWall && F::app()->checkSkin( 'oasis' ) ) {
 			$this->sendRequest( 'MiniEditor', 'loadAssets', [
 				'additionalAssets' => [
-					'wall_mini_editor_js',
 					'extensions/wikia/MiniEditor/css/Wall/Wall.scss'
 				]
 			] );
+
+			$this->getContext()->getOutput()->addModules( 'ext.wikia.wall.miniEditor' );
 		}
 
 		if ( $this->app->checkSkin( 'monobook' ) ) {

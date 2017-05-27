@@ -355,7 +355,7 @@ class ForumController extends WallBaseController {
 
 	private function addAssets() {
 		JSMessages::enqueuePackage( 'Wall', JSMessages::EXTERNAL );
-		$this->response->addAsset( 'forum_js' );
+		$this->getContext()->getOutput()->addModules( 'ext.wikia.forum' );
 		$this->response->addAsset( 'extensions/wikia/Forum/css/ForumBoard.scss' );
 		$this->response->addAsset( 'extensions/wikia/Wall/css/MessageTopic.scss' );
 
@@ -367,8 +367,9 @@ class ForumController extends WallBaseController {
 
 		if ( $this->wg->EnableMiniEditorExtForWall && $this->app->checkSkin( 'oasis' ) ) {
 			$this->sendRequest( 'MiniEditor', 'loadAssets',
-				[ 'additionalAssets' => [ 'forum_mini_editor_js', 'extensions/wikia/MiniEditor/css/Wall/Wall.scss' ] ]
+				[ 'additionalAssets' => [ 'extensions/wikia/MiniEditor/css/Wall/Wall.scss' ] ]
 			);
+			$this->getContext()->getOutput()->addModules( 'ext.wikia.forum.miniEditor' );
 		}
 	}
 }

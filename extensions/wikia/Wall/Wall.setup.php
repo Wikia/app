@@ -196,6 +196,21 @@ $wgResourceModules['ext.wikia.wall'] = [
 	'remoteExtPath' => 'wikia/Wall',
 ];
 
+$wgResourceModules['ext.wikia.wall.miniEditor'] = [
+	'scripts' => [
+		'js/Wall/Wall.Setup.js',
+		'js/Wall/Wall.Animations.js',
+		'js/Wall/Wall.EditMessageForm.js',
+		'js/Wall/Wall.NewMessageForm.js',
+		'js/Wall/Wall.ReplyMessageForm.js',
+	],
+	'dependencies' => [ 'ext.wikia.wall' ],
+	'source' => 'common',
+
+	'localBasePath' => 'MiniEditor',
+	'remoteExtPath' => 'wikia/MiniEditor',
+];
+
 JSMessages::registerPackage( 'Wall', [
 	'wall-notifications',
 	'wall-notifications-reminder',

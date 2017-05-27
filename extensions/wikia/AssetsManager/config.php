@@ -1426,28 +1426,6 @@ $config['wall_history_js'] = [
 	],
 ];
 
-/** Forum **/
-$config['forum_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/Forum/js/Forum.js',
-		'//extensions/wikia/Forum/js/ForumNewMessageForm.js',
-		'//extensions/wikia/Forum/js/ForumSortingBar.js',
-	],
-];
-
-$config['forum_mini_editor_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'#group_wall_mini_editor_js',
-		'//extensions/wikia/MiniEditor/js/Forum/Forum.Setup.js',
-//		'//extensions/wikia/MiniEditor/js/Forum/Forum.Animations.js',
-//		'//extensions/wikia/MiniEditor/js/Forum/Forum.EditMessageForm.js',
-		'//extensions/wikia/MiniEditor/js/Forum/Forum.NewMessageForm.js',
-//		'//extensions/wikia/MiniEditor/js/Forum/Forum.ReplyMessageForm.js'
-	],
-];
-
 $config['VET_js'] = [
 	'skin' => [ 'oasis' ],
 	'type' => AssetsManager::TYPE_JS,

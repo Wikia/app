@@ -46,6 +46,7 @@ $wgResourceModules['ext.wikia.reCirculation'] = [
 		'js/discussions.js',
 	],
 	'dependencies' => [
+		'ext.wikia.rail',
 		'ext.wikia.timeAgoMessaging',
 	    'wikia.mustache',
 	],

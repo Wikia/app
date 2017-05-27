@@ -85,6 +85,7 @@ $wgResourceModules['ext.designSystem.onSiteNotifications'] = [
 	'dependencies' => [
 		'ext.designSystem',
 		'ext.wikia.timeAgoMessaging',
+	    'wikia.mustache',
 	],
 	'source' => 'common',
 
