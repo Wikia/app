@@ -13,18 +13,16 @@
 		<div class="edited-by">
 		<?= wfMessage( 'oasis-comments-added-by' )->rawParams( $comment['timestamp'], $comment['sig'] )->escaped() ?>
 		<?php if (!empty($comment['isStaff'])) { print "<span class=\"stafflogo\"><img src=\"".wfReplaceImageServer( wfGetSignatureUrl() ) . "\" title=\"This user is a member of Fandom staff\" alt=\"@fandom\" /></span>\n"; } ?>
-		<?php if (count($comment['buttons']) || $comment['replyButton']) { ?>
-			<div class="buttons">
-				<?php echo $comment['replyButton']; ?>
-				<span class="tools">
-					<?= implode(' ', $comment['buttons']) ?>
-				</span>
-			</div>
-		<?php } ?>
 			<div class="buttons">
 				<?php echo $comment['sentimentButtonNegative']; ?>
 				<?php echo $comment['sentimentButtonNeutral']; ?>
 				<?php echo $comment['sentimentButtonPositive']; ?>
+				<?php if (count($comment['buttons']) || $comment['replyButton']) { ?>
+					<?php echo $comment['replyButton']; ?>
+					<span class="tools">
+						<?= implode(' ', $comment['buttons']) ?>
+					</span>
+			<?php } ?>
 			</div>
 		</div>
 	</blockquote>

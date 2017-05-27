@@ -276,6 +276,10 @@
 			console.log(e);
 			var v = /article-comm-rate-([a-z]*)/.exec(e.target.className);
 
+			// var bubble = e.target.closest('.speech-bubble-message'),
+			// 	text = bubble.getElementsByClassName('.article-comm-text').innerText;
+
+
 			if (v && v[1]) {
 				window.Wikia.Tracker.track({
 					trackingMethod: 'internal',
@@ -285,6 +289,12 @@
 					author_name: 'DIANA',
 					sentiment_label: v[1]
 				});
+
+				Array.prototype.forEach.call(e.target.parentNode.children, (function(button) {
+					if (button.className.indexOf('article-comm-rate-') > -1) {
+						button.disabled = true;
+					}
+				}))
 			}
 		},
 
