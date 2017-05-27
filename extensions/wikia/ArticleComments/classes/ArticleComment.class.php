@@ -553,7 +553,7 @@ class ArticleComment {
 			self::CACHE_VERSION
 		);
 
-		$data = $wgMemc->get( $articleDataKey );
+		#$data = $wgMemc->get( $articleDataKey );
 
 		if ( !empty( $data ) ) {
 			$data['timestamp'] = "<a href='" . $title->getFullUrl( [ 'permalink' => $data['id'] ] ) . '#comm-' . $data['id'] . "' class='permalink'>" . wfTimeFormatAgo( $data['rawmwtimestamp'] ) . "</a>";
@@ -575,6 +575,9 @@ class ArticleComment {
 		$buttons = []; // action links with full markup (used in Oasis)
 		$links = []; // action links with only a URL
 		$replyButton = '';
+		$sentimentButtonPositive = '<button type="button" class="article-comm-rate-positive wikia-button secondary actionButton">Positive</button>';
+		$sentimentButtonNeutral = '<button type="button" class="article-comm-rate-neutral wikia-button secondary actionButton">Neutral</button>';
+		$sentimentButtonNegative = '<button type="button" class="article-comm-rate-negative wikia-button secondary actionButton">Negative</button>';
 
 		// this is for blogs we want to know if commenting on it is enabled
 		// we cannot check it using $title->getBaseText, as this returns main namespace title
@@ -629,6 +632,9 @@ class ArticleComment {
 			'buttons' => $buttons,
 			'links' => $links,
 			'replyButton' => $replyButton,
+			'sentimentButtonPositive' => $sentimentButtonPositive,
+			'sentimentButtonNeutral' => $sentimentButtonNeutral,
+			'sentimentButtonNegative' => $sentimentButtonNegative,
 			'sig' => $sig,
 			'rawtext' =>  $this->getRawText(),
 			'timestamp' => $timestamp,

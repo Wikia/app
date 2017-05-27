@@ -21,6 +21,11 @@
 				</span>
 			</div>
 		<?php } ?>
+			<div class="buttons">
+				<?php echo $comment['sentimentButtonNegative']; ?>
+				<?php echo $comment['sentimentButtonNeutral']; ?>
+				<?php echo $comment['sentimentButtonPositive']; ?>
+			</div>
 		</div>
 	</blockquote>
 </li>

@@ -68,6 +68,11 @@
 				);
 			}
 
+			$articleComments.on('click', '.article-comm-rate-positive', ArticleComments.actionProxy(ArticleComments.rate));
+			$articleComments.on('click', '.article-comm-rate-neutral', ArticleComments.actionProxy(ArticleComments.rate));
+			$articleComments.on('click', '.article-comm-rate-negative', ArticleComments.actionProxy(ArticleComments.rate));
+
+
 			$articleCommFbMonit.mouseenter(function () {
 				$fbCommentMessage.fadeIn('slow');
 			});
@@ -264,6 +269,22 @@
 				});
 
 				ArticleComments.processing = true;
+			}
+		},
+
+		rate: function(e) {
+			console.log(e);
+			var v = /article-comm-rate-([a-z]*)/.exec(e.target.className);
+
+			if (v && v[1]) {
+				window.Wikia.Tracker.track({
+					trackingMethod: 'internal',
+					eventName: 'comments_sentiment_analysis',
+					comment_id: 555,
+					comment_text: 'diana',
+					author_name: 'DIANA',
+					sentiment_label: v[1]
+				});
 			}
 		},
 

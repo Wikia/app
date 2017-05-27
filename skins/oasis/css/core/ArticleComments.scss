@@ -175,3 +175,17 @@
 	border-left: solid 1px $color-links;
 	padding-left: 16px;
 }
+
+.WikiaArticleComments {
+	.article-comm-rate-positive {
+		background: lightgreen none;
+	}
+
+	.article-comm-rate-neutral {
+		background: yellow none;
+	}
+
+	.article-comm-rate-negative {
+		background: indianred none;
+	}
+}
