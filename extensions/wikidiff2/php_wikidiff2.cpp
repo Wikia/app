@@ -79,8 +79,6 @@ PHP_FUNCTION(wikidiff2_do_diff)
 	int text2_len;
 	long numContextLines;
 
-	var_dump("diana");die;
-
 	if (zend_parse_parameters(argc TSRMLS_CC, "ssl", &text1, &text1_len, &text2, 
 		&text2_len, &numContextLines) == FAILURE)
 	{
@@ -92,7 +90,6 @@ PHP_FUNCTION(wikidiff2_do_diff)
 		Wikidiff2 wikidiff2;
 		Wikidiff2::String text1String(text1, text1_len);
 		Wikidiff2::String text2String(text2, text2_len);
-		var_dump("diana");die;
 		const Wikidiff2::String & ret = wikidiff2.execute(text1String, text2String, numContextLines);
 		RETURN_STRINGL( const_cast<char*>(ret.data()), ret.size(), 1);
 	} catch (std::bad_alloc &e) {
