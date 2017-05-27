@@ -398,7 +398,7 @@ class ScribeEventProducer {
 	 * @param  string $sLogMessage  A log message
 	 * @return void
 	 */
-	private function canlogSendScribeMessage() {
+	private function logSendScribeMessage() {
 		WikiaLogger::instance()->info( 'SendScribeMessage', [
 			'method' => __METHOD__,
 			'params' => $this->mParams,

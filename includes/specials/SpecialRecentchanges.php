@@ -282,7 +282,7 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 				$opts['limit'] = $m[1];
 			}
 			if( preg_match( '/^days=(\d+)$/', $bit, $m ) ) {
-				$opts['days'] = 1000; //$m[1];
+				$opts['days'] = $m[1];
 			}
 			if( preg_match( '/^namespace=(\d+)$/', $bit, $m ) ) {
 				$opts['namespace'] = $m[1];
@@ -415,8 +415,6 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 		$query_options = array(
 			'USE INDEX' => array( 'recentchanges' => 'rc_timestamp' )
 		);
-		
-		// diana
 
 		$uid = $this->getUser()->getId();
 		$dbr = wfGetDB( DB_SLAVE );
@@ -516,9 +514,6 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 		global $wgRCShowWatchingUsers, $wgShowUpdatedMarker, $wgAllowCategorizedRecentChanges;
 
 		$limit = $opts['limit'];
-
-		//tu widać! :)
-		//var_dump($rows);die;
 
 		if( !$this->including() ) {
 			// Output options box
