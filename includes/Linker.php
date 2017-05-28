@@ -1117,8 +1117,13 @@ class Linker {
 			// check if the user has an edit
 			$attribs = array();
 			if ( $redContribsWhenNoEdits ) {
-				$count = !is_null( $edits ) ? $edits : User::edits( $userId );
-				if ( $count == 0 ) {
+				// Wikia change - SUS-1771: use per-wiki service instead of cluster user table
+				if ( is_null( $edits ) ) {
+					$userStatsService = new UserStatsService( $userId );
+					$edits = $userStatsService->getEditCountWiki();
+				}
+
+				if ( $edits == 0 ) {
 					$attribs['class'] = 'new';
 				}
 			}

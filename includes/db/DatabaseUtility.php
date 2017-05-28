@@ -159,7 +159,7 @@ class ResultWrapper implements Iterator {
 	}
 
 	/**
-	 * @return int
+	 * @return stdClass
 	 */
 	function current() {
 		if ( is_null( $this->currentRow ) ) {
@@ -202,6 +202,10 @@ class FakeResultWrapper extends ResultWrapper {
 	var $pos        = 0;
 	var $currentRow = null;
 
+	/**
+	 * FakeResultWrapper constructor.
+	 * @param array $array
+	 */
 	function __construct( $array ) {
 		$this->result = $array;
 	}

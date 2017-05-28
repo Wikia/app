@@ -865,24 +865,23 @@ class RenameUserProcess {
 	}
 
 	/**
-	 * Reset local editcount for renamed user and fake user
+	 * Reset local editcount for renamed user and fake user by invalidating cache to force recalculation on next load
 	 * @author Kamil Koterba
 	 * @since Feb 2014
 	 */
 	private function resetEditCountWiki() {
+		global $wgCityId;
+
 		// Renamed user
-		$uss = new UserStatsService( $this->mUserId );
-		$uss->calculateEditCountWiki();
+		UserStatsService::purgeOptionsWikiCache( $this->mUserId, $wgCityId );
 
 		// FakeUser
 		if ( $this->mFakeUserId != 0 ) {
-			$uss = new UserStatsService( $this->mFakeUserId );
-			$uss->calculateEditCountWiki();
+			UserStatsService::purgeOptionsWikiCache( $this->mFakeUserId, $wgCityId );
 		} else {
 			// use OldUsername if FakeUser isn't set
 			$oldUser = User::newFromName( $this->mOldUsername );
-			$uss = new UserStatsService( $oldUser->getId() );
-			$uss->calculateEditCountWiki();
+			UserStatsService::purgeOptionsWikiCache( $oldUser->getId(), $wgCityId );
 		}
 	}
 
