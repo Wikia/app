@@ -273,7 +273,6 @@
 		},
 
 		rate: function(e) {
-			console.log(e);
 			var v = /article-comm-rate-([a-z]*)/.exec(e.target.className),
 				$bubble = $(e.target.closest('.speech-bubble-message')),
 				authorName = $bubble.parent().data('user'),
@@ -293,6 +292,12 @@
 				Array.prototype.forEach.call(e.target.parentNode.children, (function(button) {
 					if (button.className.indexOf('article-comm-rate-') > -1) {
 						button.disabled = true;
+						if (button === e.target) {
+							button.style.background = 'black none';
+							button.style.color = 'white';
+						} else {
+							button.style.background = 'white none';
+						}
 					}
 				}))
 			}
