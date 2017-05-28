@@ -1757,11 +1757,6 @@ $wgXhprofMinimumTime = 0.001;
  */
 $wgProfilerSendViaScribe = true;
 
-/* @name wgDisableWAMOnHubs
- * Disable WAM module on hub pages
- */
-$wgDisableWAMOnHubs = false;
-
 /**
  * Force ImageServing to return an empty list
  * see PLATFORM-392
