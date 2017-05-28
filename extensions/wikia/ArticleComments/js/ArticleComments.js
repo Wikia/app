@@ -274,19 +274,19 @@
 
 		rate: function(e) {
 			console.log(e);
-			var v = /article-comm-rate-([a-z]*)/.exec(e.target.className);
+			var v = /article-comm-rate-([a-z]*)/.exec(e.target.className),
+				$bubble = $(e.target.closest('.speech-bubble-message')),
+				authorName = $bubble.parent().data('user'),
+				commentTextDiv = $bubble.children('.article-comm-text').get(0);
 
-			// var bubble = e.target.closest('.speech-bubble-message'),
-			// 	text = bubble.getElementsByClassName('.article-comm-text').innerText;
-
-
-			if (v && v[1]) {
+			if (v && v[1] && commentTextDiv) {
 				window.Wikia.Tracker.track({
 					trackingMethod: 'internal',
 					eventName: 'comments_sentiment_analysis',
-					comment_id: 555,
-					comment_text: 'diana',
-					author_name: 'DIANA',
+					// id is in the form of comm-text-XXXXXXX
+					comment_id: commentTextDiv.getAttribute('id').substring(10),
+					comment_text: commentTextDiv.innerText.trim(),
+					author_name: authorName,
 					sentiment_label: v[1]
 				});
 
