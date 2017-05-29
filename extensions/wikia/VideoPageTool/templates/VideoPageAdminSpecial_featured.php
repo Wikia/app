@@ -26,7 +26,7 @@
 
 			<div class="video-thumb-wrapper">
 				<div class="video-thumb">
-					<?= htmlspecialchars( $video[ 'videoThumb' ] ); ?>
+					<?= $video[ 'videoThumb' ]; ?>
 				</div>
 				<a class="preview-large-link <?= $previewLinkDisplayClass ?>" href="<?= Sanitizer::encodeAttribute( $video[	'largeThumbUrl' ] ); ?>" target="_blank">
 					Preview large version
@@ -61,9 +61,9 @@
 				<textarea
 					maxlength="<?= $descriptionMaxLength ?>"
 					class="description"
-					id="description-<?= Sanitizer::encodeAttribute( $x ); ?>"
+					id="description-<?= $x ?>"
 					placeholder="<?= wfMessage( 'videopagetool-placeholder-video-description' )->escaped() ?>"
-					name="description[]"><?= htmlspecialchars( $video[ 'description' ] ); ?></textarea>
+					name="description[]"><?= $video[ 'description' ]; ?></textarea>
 				<p class="hint">
 					<?= wfMessage( 'videopagetool-hint-description-maxlength' )
 						->numParams( $descriptionMaxLength )
