@@ -77,48 +77,31 @@
 			<li class="wds-tabs__tab">
 				<div class="wds-dropdown">
 					<div class="wds-tabs__tab-label wds-dropdown__toggle">
-						<svg class="wds-icon-tiny wds-icon">
-							<use xmlns:xlink="http://www.w3.org/1999/xlink"
-								 xlink:href="#wds-icons-explore-small"></use>
-						</svg>
-						<span>					Explore			</span>
-						<svg class="wds-icon wds-icon-tiny wds-dropdown__toggle-chevron">
-							<use xmlns:xlink="http://www.w3.org/1999/xlink"
-								 xlink:href="#wds-icons-dropdown-tiny"></use>
-						</svg>
+						<?= DesignSystemHelper::renderSvg( 'wds-icons-explore-small', 'wds-icon-tiny wds-icon' ); ?>
+						<span><?= $navigation->exploreLabel->render() ?></span>
+						<?= DesignSystemHelper::renderSvg( 'wds-icons-dropdown-tiny', 'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron' ); ?>
 					</div>
 					<div class="wds-is-not-scrollable wds-dropdown__content">
 						<ul class="wds-list wds-is-linked wds-has-bolded-items">
-							<li>
-								<a href=""> Wiki Activity </a>
-							</li>
-							<li>
-								<a href=""> Random page </a>
-							</li>
-							<li>
-								<a href=""> Community </a>
-							</li>
-							<li>
-								<a href=""> Videos </a>
-							</li>
-							<li>
-								<a href=""> Images </a>
-							</li>
+							<? foreach( $navigation->exploreItems as $exploreItem ): ?>
+								<li>
+									<a href="<?= $exploreItem->href ?>"><?= $exploreItem->label->render() ?></a>
+								</li>
+							<? endforeach; ?>
 						</ul>
 					</div>
 				</div>
 			</li>
-			<li class="wds-tabs__tab">
-				<div class="wds-tabs__tab-label">
-					<a href="#">
-						<svg class="wds-icon-tiny wds-icon">
-							<use xmlns:xlink="http://www.w3.org/1999/xlink"
-								 xlink:href="#wds-icons-reply-small"></use>
-						</svg>
-						<span>								Forum						</span>
-					</a>
-				</div>
-			</li>
+			<? if( !empty( $navigation->discussLink ) ): ?>
+				<li class="wds-tabs__tab">
+					<div class="wds-tabs__tab-label">
+						<a href="<?= $navigation->discussLink->href ?>">
+							<?= DesignSystemHelper::renderSvg( 'wds-icons-reply-small', 'wds-icon-tiny wds-icon' ); ?>
+							<span><?= $navigation->discussLink->label->render() ?></span>
+						</a>
+					</div>
+				</li>
+			<? endif; ?>
 		</ul>
 	</nav>
 </header>
