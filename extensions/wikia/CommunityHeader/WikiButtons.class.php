@@ -22,7 +22,7 @@ class WikiButtons implements \Iterator {
 
 	}
 
-	private function anonButtons() {
+	private function anonButtons(): array {
 		$addNewPageButton =
 			new WikiButton( $this->getAddNewPageURL(),
 				new Label( 'community-header-add-new-page', Label::TYPE_TRANSLATABLE_TEXT ),
@@ -32,7 +32,7 @@ class WikiButtons implements \Iterator {
 		return [ $addNewPageButton ];
 	}
 
-	private function userButtons() {
+	private function userButtons(): array {
 		$addNewPageButton =
 			new WikiButton( $this->getAddNewPageURL(),
 				new Label( 'community-header-add', Label::TYPE_TRANSLATABLE_TEXT ),
@@ -47,7 +47,7 @@ class WikiButtons implements \Iterator {
 		return [ $addNewPageButton, $wikiActivityButton ];
 	}
 
-	private function adminButtons() {
+	private function adminButtons(): array {
 		$addNewPageButton =
 			new WikiButton( $this->getAddNewPageURL(), null,
 				new Label( 'community-header-add-new-page', Label::TYPE_TRANSLATABLE_TEXT ),
