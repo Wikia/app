@@ -246,7 +246,6 @@ class DataMartService {
 	 * Note: number of edits includes number of creates
 	 */
 	public static function getUserEditsByWikiId ( $userIds, $wikiId = null ) {
-		$app = F::app();
 		$periodId = self::PERIOD_ID_WEEKLY;
 		// Every weekly rollup is made on Sundays. We need date of penultimate Sunday.
 		// We dont get penultimate date of rollup from database, becasuse of performance issue
@@ -257,7 +256,9 @@ class DataMartService {
 		}
 
 		if ( empty( $wikiId ) ) {
-			$wikiId = $app->wg->CityId;
+			global $wgCityId;
+
+			$wikiId = $wgCityId;
 		}
 
 		// this is made because memcache key has character limit and a long
@@ -268,7 +269,7 @@ class DataMartService {
 			$events =
 				WikiaDataAccess::cacheWithLock( wfSharedMemcKey( 'datamart', 'user_edits', $wikiId,
 					$userIdsKey, $periodId, $rollupDate ), 86400 /* 24 hours */,
-					function () use ( $app, $wikiId, $userIds, $periodId, $rollupDate ) {
+					function () use ( $wikiId, $userIds, $periodId, $rollupDate ) {
 						$db = DataMartService::getDB();
 						$events =
 							( new WikiaSQL() )->skipIf( self::isDisabled() )
