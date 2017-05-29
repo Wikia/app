@@ -6,11 +6,11 @@
 
 .wds-community-header {
 	@include community-header-theming(
-					$color-buttons,
-					$color-text,
-					$color-links,
-					$color-page,
-					$color-page-border
+		$color-buttons,
+		$color-text,
+		$color-links,
+		$color-page,
+		$color-page-border
 	);
 
 	margin: 0 auto;
