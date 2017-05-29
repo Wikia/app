@@ -5,6 +5,7 @@ use \CommunityHeader\Wordmark;
 use \CommunityHeader\Counter;
 use \CommunityHeader\WikiButton;
 use \CommunityHeader\Label;
+use \CommunityHeader\Navigation;
 
 class CommunityHeaderController extends WikiaController {
 
@@ -19,5 +20,6 @@ class CommunityHeaderController extends WikiaController {
 			// fixme content of this array should be defined in another class
 			new WikiButton('/wiki/Special:CreatePage', new Label('community-header-add-new-page', Label::TYPE_TRANSLATABLE_TEXT), null, 'wds-icons-add-new-page-small')
 		];
+		$this->navigation = new Navigation();
 	}
 }
