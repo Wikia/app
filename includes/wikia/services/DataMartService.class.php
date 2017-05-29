@@ -6,7 +6,7 @@
 use FluentSql\StaticSQL as sql;
 use Wikia\Logger\WikiaLogger;
 
-class DataMartService extends Service {
+class DataMartService {
 
 	const PERIOD_ID_DAILY = 1;
 	const PERIOD_ID_WEEKLY = 2;
@@ -51,20 +51,30 @@ class DataMartService extends Service {
 			}
 		}
 
-		$db = DataMartService::getDB();
-		$pageViews = ( new WikiaSQL() )->skipIf( self::isDisabled() )
-			->cacheGlobal( self::TTL )
-			->SELECT( "date_format(time_id,'%Y-%m-%d')" )->AS_( 'date' )
-				->FIELD( 'pageviews' )->AS_( 'cnt' )
-			->FROM( 'rollup_wiki_pageviews' )
-			->WHERE( 'period_id' )->EQUAL_TO( $periodId )
-				->AND_( 'wiki_id' )->EQUAL_TO( $wikiId )
-				->AND_( 'time_id' )->BETWEEN( $startDate, $endDate )
-			->runLoop( $db, function ( &$pageViews, $row ) {
-				$pageViews[$row->date] = $row->cnt;
-			} );
+		try {
+			$db = DataMartService::getDB();
+			$pageViews =
+				( new WikiaSQL() )->skipIf( self::isDisabled() )
+					->cacheGlobal( self::TTL )
+					->SELECT( "date_format(time_id,'%Y-%m-%d')" )
+					->AS_( 'date' )
+					->FIELD( 'pageviews' )
+					->AS_( 'cnt' )
+					->FROM( 'rollup_wiki_pageviews' )
+					->WHERE( 'period_id' )
+					->EQUAL_TO( $periodId )
+					->AND_( 'wiki_id' )
+					->EQUAL_TO( $wikiId )
+					->AND_( 'time_id' )
+					->BETWEEN( $startDate, $endDate )
+					->runLoop( $db, function ( &$pageViews, $row ) {
+						$pageViews[$row->date] = $row->cnt;
+					} );
 
-		return $pageViews;
+			return $pageViews;
+		} catch ( DBError $dbError ) {
+			return [];
+		}
 	}
 
 	/**
@@ -77,7 +87,7 @@ class DataMartService extends Service {
 	 */
 	protected static function getPageviewsForWikis ( $periodId, $wikis, $startDate, $endDate = null ) {
 		if ( empty( $wikis ) ) {
-			return array();
+			return [];
 		}
 
 		if ( empty( $endDate ) ) {
@@ -88,22 +98,32 @@ class DataMartService extends Service {
 			}
 		}
 
-		$db = DataMartService::getDB();
-		$pageviews = ( new WikiaSQL() )->skipIf( self::isDisabled() )
-			->cacheGlobal( self::TTL )
-			->SELECT( 'wiki_id' )
-				->FIELD( "date_format(time_id,'%Y-%m-%d')" )->AS_( 'date' )
-				->FIELD( 'pageviews' )->AS_( 'cnt' )
-			->FROM( 'rollup_wiki_pageviews' )
-			->WHERE( 'period_id' )->EQUAL_TO( $periodId )
-				->AND_( 'wiki_id' )->IN( $wikis )
-				->AND_( 'time_id' )->BETWEEN( $startDate, $endDate )
-			->runLoop( $db, function ( &$pageViews, $row ) {
-				$pageViews[$row->wiki_id][$row->date] = $row->cnt;
-				$pageViews[$row->wiki_id]['SUM'] += $row->cnt;
-			} );
+		try {
+			$db = DataMartService::getDB();
+			$pageviews =
+				( new WikiaSQL() )->skipIf( self::isDisabled() )
+					->cacheGlobal( self::TTL )
+					->SELECT( 'wiki_id' )
+					->FIELD( "date_format(time_id,'%Y-%m-%d')" )
+					->AS_( 'date' )
+					->FIELD( 'pageviews' )
+					->AS_( 'cnt' )
+					->FROM( 'rollup_wiki_pageviews' )
+					->WHERE( 'period_id' )
+					->EQUAL_TO( $periodId )
+					->AND_( 'wiki_id' )
+					->IN( $wikis )
+					->AND_( 'time_id' )
+					->BETWEEN( $startDate, $endDate )
+					->runLoop( $db, function ( &$pageViews, $row ) {
+						$pageViews[$row->wiki_id][$row->date] = $row->cnt;
+						$pageViews[$row->wiki_id]['SUM'] += $row->cnt;
+					} );
 
-		return $pageviews;
+			return $pageviews;
+		} catch ( DBError $dbError ) {
+			return [];
+		}
 	}
 
 	// get daily pageviews

@@ -284,7 +284,7 @@ class WikiMetrics {
 			$startDate = date( 'Y-m-01', strtotime('-3 month') );
 			$endDate = date( 'Y-m-01', strtotime('now') );
 			$pageviews = DataMartService::getPageviewsMonthly( $startDate, $endDate, $wikiList );
-			if ( empty( $pageviews ) ) {
+			if ( !empty( $pageviews ) ) {
 				foreach ( $pageviews as $wiki_id => $wiki_data ) {
 					#---
 					$pviews = array_reduce (
@@ -742,7 +742,7 @@ class WikiMetrics {
 			$endDate = date( 'Y-m-01', strtotime('now') );
 			$pageviews = DataMartService::getPageviewsMonthly( $startDate, $endDate, $this->cityIds );
 
-			if ( empty( $pageviews ) ) {
+			if ( !empty( $pageviews ) ) {
 				foreach ( $pageviews as $wiki_id => $wiki_data ) {
 					#---
 					if ( $wiki_data['SUM'] > intval($pageViews) ) continue;
