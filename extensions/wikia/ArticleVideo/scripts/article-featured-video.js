@@ -34,7 +34,7 @@ require([
 			percentagePlayTime = -1,
 			prerollSlotName = 'FEATURED_VIDEO',
 			playerTrackerParams = {
-				adProduct: 'featured-video',
+				adProduct: 'featured-video-preroll',
 				slotName: prerollSlotName
 			},
 			track = tracker.buildTrackingFunction({
@@ -53,15 +53,17 @@ require([
 				autoplay = abTest.inGroup('FEATURED_VIDEO_AUTOPLAY', 'AUTOPLAY') && window.OO.allowAutoPlay,
 				vastUrl;
 
-			if (playerTracker) {
-				playerTracker.track(playerTrackerParams, 'init');
-			}
-
 			if (vastUrlBuilder && adContext && adContext.getContext().opts.showAds) {
 				vastUrl = vastUrlBuilder.build(640/480, {
 					pos: prerollSlotName,
 					src: 'premium'
 				});
+			} else {
+				playerTrackerParams.adProduct = 'featured-video-no-preroll';
+			}
+
+			if (playerTracker) {
+				playerTracker.track(playerTrackerParams, 'init');
 			}
 
 			ooyalaVideoController = OoyalaPlayer.initHTML5Player(
