@@ -17,15 +17,13 @@
 		</div>
 		<div class="wds-community-header__counter">
 			<span class="wds-community-header__counter-value"><?= $counter->value ?></span>
-			<span
-				class="wds-community-header__counter-label"><?= $counter->label->render() ?></span>
+			<span class="wds-community-header__counter-label"><?= $counter->label->render() ?></span>
 		</div>
 		<div class="wds-community-header__wiki-buttons wds-button-group">
 			<?php foreach ( $wikiButtons as $wikiButton ): ?>
 				<a class="wds-button wds-is-squished wds-is-secondary"
 				   href="<?= $wikiButton->href ?>"<?php if ( !empty( $wikiButton->title ) ): ?> title="<?= $wikiButton->title->render() ?>"<?php endif; ?>>
-					<?= DesignSystemHelper::renderSvg( $wikiButton->icon,
-						'wds-icon wds-icon-small' ) ?>
+					<?= DesignSystemHelper::renderSvg( $wikiButton->icon, 'wds-icon wds-icon-small' ) ?>
 					<?php if ( !empty( $wikiButton->label ) ): ?>
 						<span><?= $wikiButton->label->render() ?></span>
 					<?php endif; ?>
@@ -37,7 +35,7 @@
 		<ul class="wds-tabs">
 			<? foreach( $navigation->localNavigation as $firstLevelItem ): ?>
 				<li class="wds-tabs__tab">
-					<? if( !empty( $firstLevelItem['children'] ) ): ?>
+					<? if ( !empty( $firstLevelItem['children'] ) ): ?>
 						<div class="wds-dropdown">
 							<div class="wds-tabs__tab-label wds-dropdown__toggle">
 								<a href="<?= $firstLevelItem['href'] ?? '#' ?>">
@@ -48,7 +46,7 @@
 							<div class="wds-is-not-scrollable wds-dropdown__content">
 								<ul class="wds-list wds-is-linked wds-has-bolded-items">
 									<? foreach( $firstLevelItem['children'] as $index => $secondLevelItem ): ?>
-										<? if( array_key_exists( 'children', $secondLevelItem ) && !empty( $secondLevelItem['children'] ) ): ?>
+										<? if ( array_key_exists( 'children', $secondLevelItem ) && !empty( $secondLevelItem['children'] ) ): ?>
 											<li class="<?= $index > count($secondLevelItem['children']) - 1 ? 'wds-is-sticked-to-parent ' : '' ?>wds-dropdown-level-2">
 												<a href="<?= $secondLevelItem['href'] ?? '#' ?>" class="wds-dropdown-level-2__toggle">
 													<span><?= $secondLevelItem['textEscaped'] ?></span>
@@ -93,14 +91,14 @@
 						<ul class="wds-list wds-is-linked wds-has-bolded-items">
 							<? foreach( $navigation->exploreItems as $exploreItem ): ?>
 								<li>
-									<a href="<?= $exploreItem->href ?>"><?= $exploreItem->label->render(true) ?></a>
+									<a href="<?= $exploreItem->href ?>"><?= $exploreItem->label->render( true ) ?></a>
 								</li>
 							<? endforeach; ?>
 						</ul>
 					</div>
 				</div>
 			</li>
-			<? if( !empty( $navigation->discussLink ) ): ?>
+			<? if ( !empty( $navigation->discussLink ) ): ?>
 				<li class="wds-tabs__tab">
 					<div class="wds-tabs__tab-label">
 						<a href="<?= $navigation->discussLink->href ?>">

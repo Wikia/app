@@ -1,4 +1,5 @@
 <?php
+
 namespace CommunityHeader;
 
 class Label {
@@ -14,8 +15,7 @@ class Label {
 		}
 	}
 
-	public function render(bool $inContentLang = false ) {
-		return \DesignSystemHelper::renderText( (array)$this, $inContentLang );
+	public function render( bool $inContentLang = false ) {
+		return \DesignSystemHelper::renderText( (array) $this, $inContentLang );
 	}
-
 }
