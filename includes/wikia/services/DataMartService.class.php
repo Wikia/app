@@ -252,11 +252,8 @@ class DataMartService {
 		// We dont get penultimate date of rollup from database, becasuse of performance issue
 		$rollupDate = date( "Y-m-d", strtotime( "Sunday 1 week ago" ) );
 
-		wfProfileIn( __METHOD__ );
-
 		if ( empty( $userIds ) ) {
-			wfProfileOut( __METHOD__ );
-			return false;
+			return [];
 		}
 
 		if ( empty( $wikiId ) ) {
@@ -267,39 +264,49 @@ class DataMartService {
 		// list of user ids can be passed so we need to have it shorter
 		$userIdsKey = self::makeUserIdsMemCacheKey( $userIds );
 
-		$events = WikiaDataAccess::cacheWithLock(
-			wfSharedMemcKey( 'datamart', 'user_edits', $wikiId, $userIdsKey, $periodId, $rollupDate ),
-			86400 /* 24 hours */,
-			function () use ( $app, $wikiId, $userIds, $periodId, $rollupDate ) {
-				$db = DataMartService::getDB();
-				$events = ( new WikiaSQL() )->skipIf( self::isDisabled() )
-					->SELECT( 'user_id' )
-						->SUM( 'creates' )->AS_( 'creates' )
-						->SUM( 'edits' )->AS_( 'edits' )
-						->SUM( 'deletes' )->AS_( 'deletes' )
-						->SUM( 'undeletes' )->AS_( 'undeletes' )
-					->FROM( 'rollup_wiki_namespace_user_events' )
-					->WHERE( 'period_id' )->EQUAL_TO( $periodId )
-						->AND_( 'wiki_id' )->EQUAL_TO( $wikiId )
-						->AND_( 'time_id' )->EQUAL_TO( $rollupDate )
-						->AND_( 'user_id' )->IN( $userIds )
-					->GROUP_BY( 'user_id' )
-					->runLoop( $db, function( &$events, $row ) {
-						$events[$row->user_id] = [
-							'creates' => $row->creates,
-							'edits' => $row->creates + $row->edits,
-							'deletes' => $row->deletes,
-							'undeletes' => $row->undeletes,
-						];
+		try {
+			$events =
+				WikiaDataAccess::cacheWithLock( wfSharedMemcKey( 'datamart', 'user_edits', $wikiId,
+					$userIdsKey, $periodId, $rollupDate ), 86400 /* 24 hours */,
+					function () use ( $app, $wikiId, $userIds, $periodId, $rollupDate ) {
+						$db = DataMartService::getDB();
+						$events =
+							( new WikiaSQL() )->skipIf( self::isDisabled() )
+								->SELECT( 'user_id' )
+								->SUM( 'creates' )
+								->AS_( 'creates' )
+								->SUM( 'edits' )
+								->AS_( 'edits' )
+								->SUM( 'deletes' )
+								->AS_( 'deletes' )
+								->SUM( 'undeletes' )
+								->AS_( 'undeletes' )
+								->FROM( 'rollup_wiki_namespace_user_events' )
+								->WHERE( 'period_id' )
+								->EQUAL_TO( $periodId )
+								->AND_( 'wiki_id' )
+								->EQUAL_TO( $wikiId )
+								->AND_( 'time_id' )
+								->EQUAL_TO( $rollupDate )
+								->AND_( 'user_id' )
+								->IN( $userIds )
+								->GROUP_BY( 'user_id' )
+								->runLoop( $db, function ( &$events, $row ) {
+									$events[$row->user_id] = [
+										'creates' => $row->creates,
+										'edits' => $row->creates + $row->edits,
+										'deletes' => $row->deletes,
+										'undeletes' => $row->undeletes,
+									];
+								} );
+
+						return $events;
 					} );
 
-				return $events;
-			}
-		);
-
-		wfProfileOut( __METHOD__ );
-
-		return $events;
+			return $events;
+		} catch ( DBError $dbError ) {
+			return [];
+		}
 	}
 
 	private static function makeUserIdsMemCacheKey( $userIds ) {
