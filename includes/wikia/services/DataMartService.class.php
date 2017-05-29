@@ -209,69 +209,6 @@ class DataMartService extends Service {
 	}
 
 	/**
-	 * get events by wiki Id
-	 * @param integer $periodId
-	 * @param string $startDate [YYYY-MM-DD]
-	 * @param string $endDate [YYYY-MM-DD]
-	 * @param integer $wikiId
-	 * @param string $eventType [creates/edits/deletes/undeletes]
-	 * @return array $events [ array( 'YYYY-MM-DD' => pageviews ) ]
-	 * Note: number of edits includes number of creates
-	 */
-	protected static function getEventsByWikiId ( $periodId, $startDate, $endDate = null, $wikiId = null, $eventType = null ) {
-		$app = F::app();
-
-		wfProfileIn( __METHOD__ );
-
-		if ( empty( $wikiId ) ) {
-			$wikiId = $app->wg->CityId;
-		}
-
-		if ( empty( $endDate ) ) {
-			if ( $periodId == self::PERIOD_ID_MONTHLY ) {
-				$endDate = date( 'Y-m-01' );
-			} else {
-				$endDate = date( 'Y-m-d', strtotime( '-1 day' ) );
-			}
-		}
-
-		$db = DataMartService::getDB();
-		$events = ( new WikiaSQL() )->skipIf( self::isDisabled() )
-			->cacheGlobal( self::TTL )
-			->SELECT( "date_format(time_id,'%Y-%m-%d')" )->AS_( 'date' )
-				->SUM( 'creates' )->AS_( 'creates' )
-				->SUM( 'edits' )->AS_( 'edits' )
-				->SUM( 'deletes' )->AS_( 'deletes' )
-				->SUM( 'undeletes' )->AS_( 'undeletes' )
-			->FROM( 'rollup_wiki_namespace_user_events' )
-			->WHERE( 'period_id' )->EQUAL_TO( $periodId )
-				->AND_( 'wiki_id' )->EQUAL_TO( $wikiId )
-				->AND_( 'time_id' )->BETWEEN( $startDate, $endDate )
-			->GROUP_BY( 'date', 'wiki_id' )
-			->runLoop( $db, function( &$events, $row ) {
-				$events[$row->date] = array(
-					'creates' => $row->creates,
-					'edits' => $row->creates + $row->edits,
-					'deletes' => $row->deletes,
-					'undeletes' => $row->undeletes,
-				);
-			} );
-
-		// get data depending on eventType
-		if ( !empty( $eventType ) ) {
-			$temp = array();
-			foreach ( $events as $date => $value ) {
-				$temp[$date] = $value[$eventType];
-			}
-			$events = $temp;
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $events;
-	}
-
-	/**
 	 * Gets user edits by user and wiki id
 	 * It will be used in WAM and Interstitials
 	 * @param integer|array $userIds
@@ -339,27 +276,6 @@ class DataMartService extends Service {
 	private static function makeUserIdsMemCacheKey( $userIds ) {
 		$idsKey = md5( implode( ',', $userIds ) );
 		return $idsKey;
-	}
-
-	// get daily edits
-	public static function getEditsDaily ( $startDate, $endDate = null, $wikiId = null ) {
-		$edits = self::getEventsByWikiId( self::PERIOD_ID_DAILY, $startDate, $endDate, $wikiId, 'edits' );
-
-		return $edits;
-	}
-
-	// get weekly edits
-	public static function getEditsWeekly ( $startDate, $endDate = null, $wikiId = null ) {
-		$edits = self::getEventsByWikiId( self::PERIOD_ID_WEEKLY, $startDate, $endDate, $wikiId, 'edits' );
-
-		return $edits;
-	}
-
-	// get monthly edits
-	public static function getEditsMonthly ( $startDate, $endDate = null, $wikiId = null ) {
-		$edits = self::getEventsByWikiId( self::PERIOD_ID_MONTHLY, $startDate, $endDate, $wikiId, 'edits' );
-
-		return $edits;
 	}
 
 	public static function findLastRollupsDate( $period_id, $numTry = 5 ) {
