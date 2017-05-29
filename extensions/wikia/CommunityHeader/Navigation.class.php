@@ -15,7 +15,7 @@ class Navigation {
 		$exploreItems = [
 			[ 'title' => 'WikiActivity', 'key' => 'community-header-wiki-activity', 'include' => true ],
 			[ 'title' => 'Random', 'key' => 'community-header-random-page', 'include' => true ],
-			[ 'title' => 'Community', 'key' => 'community-header-community', 'include' => $wgEnableCommunityPageExt ],
+			[ 'title' => 'Community', 'key' => 'community-header-community', 'include' => !empty( $wgEnableCommunityPageExt ) ],
 			[ 'title' => 'Videos', 'key' => 'community-header-videos', 'include' => true ],
 			[ 'title' => 'Images', 'key' => 'community-header-images', 'include' => true ],
 			[
