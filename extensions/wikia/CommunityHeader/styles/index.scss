@@ -22,6 +22,7 @@
 		border-top: 0;
 	}
 
+	// these styles are compatible with the ones for #WikiaPage in 'skins/oasis/css/core/breakpoints-layout';
 	@if ($widthType == 0) {
 		@media #{$breakpoint-small-only} {
 			width: $page-width-small + 2 * $padding-width-small;
