@@ -315,50 +315,61 @@ class DataMartService {
 	}
 
 	public static function findLastRollupsDate( $period_id, $numTry = 5 ) {
-		$db = DataMartService::getDB();
-		// compensation for NOW
-		$date = date( 'Y-m-d' ) . ' 00:00:01';
-		do {
-			$date = ( new WikiaSQL() )->skipIf( self::isDisabled() )
-				->SELECT( 'time_id as t' )
-				->FROM( 'rollup_wiki_article_pageviews' )
-				->WHERE( 'time_id' )->LESS_THAN( $date )
-				->ORDER_BY( 'time_id' )->DESC()
-				->LIMIT( 1 )
-				->cache( self::CACHE_TOP_ARTICLES )
-				->run( $db, function ( ResultWrapper $result ) {
-					$row = $result->fetchObject();
+		try {
+			$db = DataMartService::getDB();
+			// compensation for NOW
+			$date = date( 'Y-m-d' ) . ' 00:00:01';
+			do {
+				$date =
+					( new WikiaSQL() )->skipIf( self::isDisabled() )
+						->SELECT( 'time_id as t' )
+						->FROM( 'rollup_wiki_article_pageviews' )
+						->WHERE( 'time_id' )
+						->LESS_THAN( $date )
+						->ORDER_BY( 'time_id' )
+						->DESC()
+						->LIMIT( 1 )
+						->cache( self::CACHE_TOP_ARTICLES )
+						->run( $db, function ( ResultWrapper $result ) {
+							$row = $result->fetchObject();
 
-					if ( $row && isset( $row->t ) ) {
-						return $row->t;
-					}
+							if ( $row && isset( $row->t ) ) {
+								return $row->t;
+							}
 
-					return null;
-				} );
-			if ( !$date ) {
-				break;
-			}
+							return null;
+						} );
+				if ( !$date ) {
+					break;
+				}
 
-			$found =  ( new WikiaSQL() )->skipIf( self::isDisabled() )
-				->SELECT( '1 as c' )
-				->FROM( 'rollup_wiki_article_pageviews' )
-				->WHERE( 'time_id' )->EQUAL_TO( $date )
-				->AND_( 'period_id' )->EQUAL_TO( $period_id )
-				->LIMIT( 1 )
-				->cache( self::CACHE_TOP_ARTICLES )
-				->run( $db, function ( ResultWrapper $result ) {
-					$row = $result->fetchObject();
+				$found =
+					( new WikiaSQL() )->skipIf( self::isDisabled() )
+						->SELECT( '1 as c' )
+						->FROM( 'rollup_wiki_article_pageviews' )
+						->WHERE( 'time_id' )
+						->EQUAL_TO( $date )
+						->AND_( 'period_id' )
+						->EQUAL_TO( $period_id )
+						->LIMIT( 1 )
+						->cache( self::CACHE_TOP_ARTICLES )
+						->run( $db, function ( ResultWrapper $result ) {
+							$row = $result->fetchObject();
 
-					if ( $row && isset( $row->c ) ) {
-						return $row->c;
-					}
+							if ( $row && isset( $row->c ) ) {
+								return $row->c;
+							}
 
-					return null;
-				} );
+							return null;
+						} );
 
-			$numTry--;
-		} while ( !$found &&  $numTry > 0 );
-		return $date;
+				$numTry --;
+			} while ( !$found && $numTry > 0 );
+
+			return $date;
+		} catch ( DBError $dbError ) {
+			return false;
+		}
 	}
 
 	/**
