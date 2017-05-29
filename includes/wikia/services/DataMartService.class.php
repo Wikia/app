@@ -106,33 +106,6 @@ class DataMartService extends Service {
 		return $pageviews;
 	}
 
-	/**
-	 * get pageviews
-	 * @param array $dates ( YYYY-MM-DD, YYYY-MM-DD ... )
-	 * @return array $pageviews [ array( 'YYYY-MM-DD' => pageviews ) ]
-	 */
-	public static function getSumPageviewsMonthly ( $dates = array() ) {
-		$periodId = self::PERIOD_ID_MONTHLY;
-
-		if ( empty( $dates ) ) {
-			return array();
-		}
-
-		$db = DataMartService::getDB();
-		$pageviews = ( new WikiaSQL() )->skipIf( self::isDisabled() )
-			->cacheGlobal( self::TTL )
-			->SELECT( 'time_id' )
-				->SUM( 'pageviews' )->AS_( 'cnt' )
-			->FROM( 'rollup_wiki_pageviews' )
-			->WHERE( 'period_id' )->EQUAL_TO( $periodId )
-				->AND_( 'time_id' )->IN( $dates )
-			->runLoop( $db, function( &$pageViews, $row ) {
-				$pageViews[$row->time_id] = intval( $row->cnt );
-			} );
-
-		return $pageviews;
-	}
-
 	// get daily pageviews
 	public static function getPageviewsDaily ( $startDate, $endDate = null, $wiki = null ) {
 		if ( is_array( $wiki ) ) {
