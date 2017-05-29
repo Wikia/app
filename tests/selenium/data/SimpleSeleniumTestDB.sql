@@ -333,7 +333,6 @@ DROP TABLE IF EXISTS `mw_interwiki`;
 CREATE TABLE `mw_interwiki` (
   `iw_prefix` varchar(32) NOT NULL,
   `iw_url` blob NOT NULL,
-  `iw_api` blob NOT NULL,
   `iw_wikiid` varchar(64) NOT NULL,
   `iw_local` tinyint(1) NOT NULL,
   `iw_trans` tinyint(4) NOT NULL DEFAULT '0',

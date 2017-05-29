@@ -195,7 +195,6 @@ class Interwiki {
 			$iw->mURL = $mc['iw_url'];
 			$iw->mLocal = isset( $mc['iw_local'] ) ? $mc['iw_local'] : 0;
 			$iw->mTrans = isset( $mc['iw_trans'] ) ? $mc['iw_trans'] : 0;
-			$iw->mAPI = isset( $mc['iw_api'] ) ? $mc['iw_api'] : '';
 			$iw->mWikiID = isset( $mc['iw_wikiid'] ) ? $mc['iw_wikiid'] : '';
 
 			return $iw;
@@ -300,7 +299,7 @@ class Interwiki {
 		// Wikia change - end
 
 		$res = $db->select( 'interwiki',
-			array( 'iw_prefix', 'iw_url', 'iw_api', 'iw_wikiid', 'iw_local', 'iw_trans' ),
+			array( 'iw_prefix', 'iw_url', 'iw_wikiid', 'iw_local', 'iw_trans' ),
 			$where, __METHOD__, array( 'ORDER BY' => 'iw_prefix' )
 		);
 		$retval = array();
