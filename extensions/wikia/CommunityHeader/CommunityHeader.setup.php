@@ -15,5 +15,6 @@ $wgAutoloadClasses[ 'CommunityHeader\Label' ] = $dir . 'Label.class.php';
 $wgAutoloadClasses[ 'CommunityHeader\Image' ] = $dir . 'Image.class.php';
 $wgAutoloadClasses[ 'CommunityHeader\Counter' ] = $dir . 'Counter.class.php';
 $wgAutoloadClasses[ 'CommunityHeader\WikiButton' ] = $dir . 'WikiButton.class.php';
+$wgAutoloadClasses[ 'CommunityHeader\WikiButtons' ] = $dir . 'WikiButtons.class.php';
 $wgAutoloadClasses[ 'CommunityHeader\Link'] = $dir . 'Link.class.php';
 $wgAutoloadClasses[ 'CommunityHeader\Navigation'] = $dir . 'Navigation.class.php';

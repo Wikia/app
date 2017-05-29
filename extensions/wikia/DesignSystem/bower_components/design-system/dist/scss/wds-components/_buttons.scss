@@ -46,7 +46,7 @@
 	-webkit-appearance: none;
 	-webkit-border-radius: 0;
 
-	@at-root button#{&} {
+	@at-root button#{&}, a#{&} {
 		cursor: pointer;
 	}
 

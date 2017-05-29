@@ -23,13 +23,14 @@
 		<div class="wds-community-header__wiki-buttons wds-button-group">
 			<?php foreach ( $wikiButtons as $wikiButton ): ?>
 				<a class="wds-button wds-is-squished wds-is-secondary"
-				   href="<?= $wikiButton->href ?>">
+				   href="<?= $wikiButton->href ?>"<?php if ( !empty( $wikiButton->title ) ): ?> title="<?= $wikiButton->title->render() ?>"<?php endif; ?>>
 					<?= DesignSystemHelper::renderSvg( $wikiButton->icon,
 						'wds-icon wds-icon-small' ) ?>
-					<span><?= $wikiButton->label->render() ?></span>
+					<?php if ( !empty( $wikiButton->label ) ): ?>
+						<span><?= $wikiButton->label->render() ?></span>
+					<?php endif; ?>
 				</a>
 			<?php endforeach; ?>
-
 		</div>
 	</div>
 	<nav class="wds-community-header__local-navigation">
