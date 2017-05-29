@@ -93,7 +93,7 @@
 						<ul class="wds-list wds-is-linked wds-has-bolded-items">
 							<? foreach( $navigation->exploreItems as $exploreItem ): ?>
 								<li>
-									<a href="<?= $exploreItem->href ?>"><?= $exploreItem->label->render() ?></a>
+									<a href="<?= $exploreItem->href ?>"><?= $exploreItem->label->render(true) ?></a>
 								</li>
 							<? endforeach; ?>
 						</ul>
@@ -105,7 +105,7 @@
 					<div class="wds-tabs__tab-label">
 						<a href="<?= $navigation->discussLink->href ?>">
 							<?= DesignSystemHelper::renderSvg( 'wds-icons-reply-small', 'wds-icon-tiny wds-icon' ); ?>
-							<span><?= $navigation->discussLink->label->render() ?></span>
+							<span><?= $navigation->discussLink->label->render( true ) ?></span>
 						</a>
 					</div>
 				</li>

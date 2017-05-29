@@ -108,7 +108,7 @@ class DesignSystemHelper {
 	 *
 	 * @return string
 	 */
-	public static function renderText( $fields, $recursionDepth = 0 ) {
+	public static function renderText( $fields, $inContentLang = false, $recursionDepth = 0 ) {
 		if ( $recursionDepth > static::MAX_RECURSION_DEPTH ) {
 			WikiaLogger::instance()->error( 'Recursion depth maximum reached' );
 
@@ -118,6 +118,8 @@ class DesignSystemHelper {
 		if ( $fields['type'] === 'text' ) {
 			return htmlspecialchars( $fields['value'] );
 		} elseif ( $fields['type'] === 'translatable-text' ) {
+			$message = wfMessage( $fields['key'] );
+
 			if ( isset( $fields['params'] ) ) {
 				$paramsRendered = [ ];
 
@@ -131,21 +133,25 @@ class DesignSystemHelper {
 					);
 				} else {
 					foreach ( static::MESSAGE_PARAMS_ORDER[$fields['key']] as $paramKey ) {
-						$paramsRendered[] = static::renderText( $fields['params'][$paramKey], $recursionDepth + 1 );
+						$paramsRendered[] = static::renderText( $fields['params'][$paramKey], false, $recursionDepth + 1 );
 					}
 				}
 
-				return wfMessage( $fields['key'] )->rawParams( $paramsRendered )->escaped();
-			} else {
-				return wfMessage( $fields['key'] )->escaped();
+				$message = $message->rawParams( $paramsRendered );
 			}
+
+			if ( $inContentLang ) {
+				$message = $message->inContentLanguage();
+			}
+
+			return $message ->escaped();
 		} elseif ( $fields['type'] === 'link-text' ) {
 			return Html::rawElement(
 				'a',
 				[
 					'href' => $fields['href']
 				],
-				static::renderText( $fields['title'], $recursionDepth + 1 )
+				static::renderText( $fields['title'], false, $recursionDepth + 1 )
 			);
 		} else {
 			WikiaLogger::instance()->error(

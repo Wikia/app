@@ -14,8 +14,8 @@ class Label {
 		}
 	}
 
-	public function render() {
-		return \DesignSystemHelper::renderText( (array)$this );
+	public function render(bool $inContentLang = false ) {
+		return \DesignSystemHelper::renderText( (array)$this, $inContentLang );
 	}
 
 }
