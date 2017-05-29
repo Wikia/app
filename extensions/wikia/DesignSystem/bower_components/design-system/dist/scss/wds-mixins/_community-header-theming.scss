@@ -21,7 +21,11 @@
 	@if $is-dark-theme {
 		$dropdown-background-color: mix($color-page, #fff, 90%);
 	}
+	@if luminance($color-page) > .9 {
+		$dropdown-background-color: $wds-color-white;
+	}
 
+	margin-top: luminance($color-page);
 	background-color: $header-background-color;
 
 	&::before {
