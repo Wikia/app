@@ -7,10 +7,16 @@ use Title;
 
 class Navigation {
 	public function __construct() {
-		global $wgEnableCommunityPageExt, $wgEnableForumExt, $wgEnableDiscussions;
 
 		$this->localNavigation =
 			( new NavigationModel() )->getLocalNavigationTree( NavigationModel::WIKI_LOCAL_MESSAGE );
+		$this->exploreLabel = new Label( 'community-header-explore', Label::TYPE_TRANSLATABLE_TEXT );
+		$this->exploreItems = $this->getExploreItems();
+		$this->discussLink = $this->getDiscussLink();
+	}
+
+	private function getExploreItems() {
+		global $wgEnableCommunityPageExt, $wgEnableForumExt, $wgEnableDiscussions;
 
 		$exploreItems = [
 			[ 'title' => 'WikiActivity', 'key' => 'community-header-wiki-activity', 'include' => true ],
@@ -25,8 +31,7 @@ class Navigation {
 			],
 		];
 
-		$this->exploreLabel = new Label( 'community-header-explore', Label::TYPE_TRANSLATABLE_TEXT );
-		$this->exploreItems = array_map(
+		return array_map(
 			function ($item) {
 				return new Link(
 					new Label($item['key'], Label::TYPE_TRANSLATABLE_TEXT),
@@ -40,18 +45,24 @@ class Navigation {
 				}
 			)
 		);
+	}
 
-		$this->discussLink = null;
+	private function getDiscussLink() {
+		global $wgEnableForumExt, $wgEnableDiscussions;
+
+		$discussLink = null;
 		if ( !empty( $wgEnableDiscussions ) ) {
-			$this->discussLink = new Link(
+			$discussLink = new Link(
 				new Label('community-header-discuss', Label::TYPE_TRANSLATABLE_TEXT),
 				'/d/f'
 			);
 		} elseif ( !empty( $wgEnableForumExt ) ) {
-			$this->discussLink = new Link(
+			$discussLink = new Link(
 				new Label('community-header-forum', Label::TYPE_TRANSLATABLE_TEXT),
 				Title::newFromText( 'Forum', NS_SPECIAL )->getLocalURL()
 			);
 		}
+
+		return $discussLink;
 	}
 }
