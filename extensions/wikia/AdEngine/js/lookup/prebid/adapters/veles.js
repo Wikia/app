@@ -144,6 +144,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 				onVastResponse(request, bidderRequest);
 			}
 		};
+		request.withCredentials = true;
 		request.open('GET', vastUrl, true);
 		request.send();
 
