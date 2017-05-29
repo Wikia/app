@@ -12,10 +12,19 @@ class CommunityHeaderController extends WikiaController {
 	}
 
 	public function index() {
-		$this->sitename = new Sitename();
-		$this->wordmark = new Wordmark();
-		$this->counter = new Counter();
-		$this->wikiButtons = new WikiButtons();
-		$this->navigation = new Navigation();
+		global $wgCityId;
+
+		$this->setVal( 'sitename', new Sitename() );
+		$this->setVal( 'wordmark', new Wordmark() );
+		$this->setVal( 'counter', new Counter() );
+		$this->setVal( 'wikiButtons', new WikiButtons() );
+		$this->setVal( 'navigation', new Navigation() );
+		$this->setVal(
+			'backgroundImageUrl',
+			( new SiteAttributeService() )
+				->getApiClient()
+				->getAttribute( $wgCityId, 'pageHeaderImage' )
+				->getValue() ?? ''
+		);
 	}
 }
