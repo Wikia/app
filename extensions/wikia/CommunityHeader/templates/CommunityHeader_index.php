@@ -35,200 +35,45 @@
 	</div>
 	<nav class="wds-community-header__local-navigation">
 		<ul class="wds-tabs">
-			<li class="wds-tabs__tab">
-				<div class="wds-dropdown">
-					<div class="wds-tabs__tab-label wds-dropdown__toggle">
-						<a href="#">
-							<span>						label 1				</span>
-						</a>
-						<svg class="wds-icon wds-icon-tiny wds-dropdown__toggle-chevron">
-							<use xmlns:xlink="http://www.w3.org/1999/xlink"
-								 xlink:href="#wds-icons-dropdown-tiny"></use>
-						</svg>
+			<? foreach( $navigation->localNavigation as $firstLevelItem ): ?>
+				<li class="wds-tabs__tab">
+					<div class="wds-dropdown">
+						<div class="wds-tabs__tab-label wds-dropdown__toggle">
+							<a href="#">
+								<span><?= $firstLevelItem['textEscaped'] ?></span>
+							</a>
+							<?= DesignSystemHelper::renderSvg('wds-icons-dropdown-tiny', 'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron'); ?>
+						</div>
+						<div class="wds-is-not-scrollable wds-dropdown__content">
+							<ul class="wds-list wds-is-linked wds-has-bolded-items">
+								<? foreach( $firstLevelItem['children'] as $index => $secondLevelItem ): ?>
+									<? if( array_key_exists( 'children', $secondLevelItem ) ): ?>
+										<li class="<?= $index > count($secondLevelItem['children']) - 1 ? 'wds-is-sticked-to-parent ' : '' ?>wds-dropdown-level-2">
+											<a href="<?= $secondLevelItem['href'] ?? '#' ?>" class="wds-dropdown-level-2__toggle">
+												<span><?= $secondLevelItem['textEscaped'] ?></span>
+												<?= DesignSystemHelper::renderSvg( 'wds-icons-menu-control-tiny', 'wds-icon wds-icon-tiny wds-dropdown-chevron' ); ?>
+											</a>
+											<div class="wds-is-not-scrollable wds-dropdown-level-2__content">
+												<ul class="wds-list wds-is-linked">
+													<? foreach( $secondLevelItem['children'] as $thirdLevelItem ): ?>
+														<li>
+															<a href="<?= $thirdLevelItem['href'] ?? '#' ?>"><?= $thirdLevelItem['textEscaped'] ?></a>
+														</li>
+													<? endforeach; ?>
+												</ul>
+											</div>
+										</li>
+									<? else : ?>
+										<li>
+											<a href="<?= $secondLevelItem['href'] ?? '#' ?>"><?= $secondLevelItem['textEscaped'] ?></a>
+										</li>
+									<? endif; ?>
+								<? endforeach; ?>
+							</ul>
+						</div>
 					</div>
-					<div class="wds-is-not-scrollable wds-dropdown__content">
-						<ul class="wds-list wds-is-linked wds-has-bolded-items">
-							<li>
-								<a href="#"> label 1.1 </a>
-							</li>
-							<li>
-								<a href="#"> label 1.2 </a>
-							</li>
-							<li>
-								<a href="#"> label 1.3 </a>
-							</li>
-							<li>
-								<a href="#"> label 1.4 </a>
-							</li>
-							<li class="wds-is-sticked-to-parent wds-dropdown-level-2">
-								<a href="#" class="wds-dropdown-level-2__toggle">
-									<span>				label 1.5		</span>
-									<svg class="wds-icon wds-icon-tiny wds-dropdown-chevron">
-										<use xmlns:xlink="http://www.w3.org/1999/xlink"
-											 xlink:href="#wds-icons-menu-control-tiny"></use>
-									</svg>
-								</a>
-								<div class="wds-is-not-scrollable wds-dropdown-level-2__content">
-									<ul class="wds-list wds-is-linked">
-										<li>
-											<a href="#">label 1.5.1</a>
-										</li>
-										<li>
-											<a href="#">label 1.5.2</a>
-										</li>
-										<li>
-											<a href="#">label 1.5.3</a>
-										</li>
-										<li>
-											<a href="#">label 1.5.4</a>
-										</li>
-									</ul>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</li>
-			<li class="wds-tabs__tab">
-				<div class="wds-dropdown">
-					<div class="wds-tabs__tab-label wds-dropdown__toggle">
-						<a href="#">
-							<span>						label 2				</span>
-						</a>
-						<svg class="wds-icon wds-icon-tiny wds-dropdown__toggle-chevron">
-							<use xmlns:xlink="http://www.w3.org/1999/xlink"
-								 xlink:href="#wds-icons-dropdown-tiny"></use>
-						</svg>
-					</div>
-					<div class="wds-is-not-scrollable wds-dropdown__content">
-						<ul class="wds-list wds-is-linked wds-has-bolded-items">
-							<li class="wds-dropdown-level-2">
-								<a href="#" class="wds-dropdown-level-2__toggle">
-									<span>				label 2.1		</span>
-									<svg class="wds-icon wds-icon-tiny wds-dropdown-chevron">
-										<use xmlns:xlink="http://www.w3.org/1999/xlink"
-											 xlink:href="#wds-icons-menu-control-tiny"></use>
-									</svg>
-								</a>
-								<div class="wds-is-not-scrollable wds-dropdown-level-2__content">
-									<ul class="wds-list wds-is-linked">
-										<li>
-											<a href="#">label 2.5.1</a>
-										</li>
-										<li>
-											<a href="#">label 2.5.2</a>
-										</li>
-										<li>
-											<a href="#">label 2.5.3</a>
-										</li>
-										<li>
-											<a href="#">label 2.5.4</a>
-										</li>
-									</ul>
-								</div>
-							</li>
-							<li>
-								<a href="#"> label 2.2 </a>
-							</li>
-							<li>
-								<a href="#"> label 2.3 </a>
-							</li>
-							<li>
-								<a href="#"> label 2.4 </a>
-							</li>
-							<li>
-								<a href="#"> label 2.5 </a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</li>
-			<li class="wds-tabs__tab">
-				<div class="wds-dropdown">
-					<div class="wds-tabs__tab-label wds-dropdown__toggle">
-						<a href="#">
-							<span>						label 3				</span>
-						</a>
-						<svg class="wds-icon wds-icon-tiny wds-dropdown__toggle-chevron">
-							<use xmlns:xlink="http://www.w3.org/1999/xlink"
-								 xlink:href="#wds-icons-dropdown-tiny"></use>
-						</svg>
-					</div>
-					<div class="wds-is-not-scrollable wds-dropdown__content">
-						<ul class="wds-list wds-is-linked wds-has-bolded-items">
-							<li>
-								<a href="#"> label 3.1 </a>
-							</li>
-							<li>
-								<a href="#"> label 3.2 </a>
-							</li>
-							<li class="wds-dropdown-level-2">
-								<a href="#" class="wds-dropdown-level-2__toggle">
-									<span>				label 3.3		</span>
-									<svg class="wds-icon wds-icon-tiny wds-dropdown-chevron">
-										<use xmlns:xlink="http://www.w3.org/1999/xlink"
-											 xlink:href="#wds-icons-menu-control-tiny"></use>
-									</svg>
-								</a>
-								<div class="wds-is-not-scrollable wds-dropdown-level-2__content">
-									<ul class="wds-list wds-is-linked">
-										<li>
-											<a href="#">label 3.5.1</a>
-										</li>
-										<li>
-											<a href="#">label 3.5.2</a>
-										</li>
-										<li>
-											<a href="#">label 3.5.3</a>
-										</li>
-										<li>
-											<a href="#">label 3.5.4</a>
-										</li>
-									</ul>
-								</div>
-							</li>
-							<li>
-								<a href="#"> label 3.4 </a>
-							</li>
-							<li>
-								<a href="#"> label 3.5 </a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</li>
-			<li class="wds-tabs__tab">
-				<div class="wds-dropdown">
-					<div class="wds-tabs__tab-label wds-dropdown__toggle">
-						<a href="#">
-							<span>						label 4				</span>
-						</a>
-						<svg class="wds-icon wds-icon-tiny wds-dropdown__toggle-chevron">
-							<use xmlns:xlink="http://www.w3.org/1999/xlink"
-								 xlink:href="#wds-icons-dropdown-tiny"></use>
-						</svg>
-					</div>
-					<div class="wds-is-not-scrollable wds-dropdown__content">
-						<ul class="wds-list wds-is-linked wds-has-bolded-items">
-							<li>
-								<a href="#"> label 4.1 </a>
-							</li>
-							<li>
-								<a href="#"> label 4.2 </a>
-							</li>
-							<li>
-								<a href="#"> label 4.3 </a>
-							</li>
-							<li>
-								<a href="#"> label 4.4 </a>
-							</li>
-							<li>
-								<a href="#"> label 4.5 </a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</li>
+				</li>
+			<? endforeach; ?>
 			<li class="wds-tabs__tab">
 				<div class="wds-dropdown">
 					<div class="wds-tabs__tab-label wds-dropdown__toggle">
