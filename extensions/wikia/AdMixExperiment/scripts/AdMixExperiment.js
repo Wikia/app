@@ -32,7 +32,6 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 		// CONTROL: all === false
 		var reloadFloatingMedrec = abTest.getGroup('AD_MIX') === 'AD_MIX_1' || abTest.getGroup('AD_MIX') === 'AD_MIX_1B';
 		var topRightAdFixed = abTest.getGroup('AD_MIX') === 'AD_MIX_2' || abTest.getGroup('AD_MIX') === 'AD_MIX_2B';
-		var reloadRecirc = abTest.getGroup('AD_MIX') === 'AD_MIX_3' || abTest.getGroup('AD_MIX') === 'AD_MIX_3B';
 		var recircEnabled = abTest.getGroup('AD_MIX') !== 'CONTROL';
 
 		function getFirstAdTopPosition() {
@@ -303,10 +302,6 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 				$recircWrapper
 					.css('margin-bottom', gapSize + 'px')
 					.height($recirc.outerHeight(true));
-			}
-
-			if (reloadRecirc || topRightAdFixed) {
-				$floatingMedrec.hide();
 			}
 
 			$visibleElementBeforeWrapper = $adAndRecircWrapper.prevAll(':not(#LEFT_SKYSCRAPER_2)').eq(0);
