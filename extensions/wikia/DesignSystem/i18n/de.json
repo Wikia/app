@@ -89,5 +89,17 @@
   "notifications-reply-upvote-single-user-no-title": "1 Benutzer hat deiner Antwort <b>zugestimmt</b>",
   "notifications-reply-upvote-multiple-users-with-title": "__number__ Benutzer haben deiner Antwort auf __postTitle__ <b>zugestimmt</b>",
   "notifications-reply-upvote-multiple-users-no-title": "__number__ Benutzer haben deiner Antwort <b>zugestimmt</b>",
-  "notifications-notifications": "Benachrichtigungen"
+  "notifications-notifications": "Benachrichtigungen",
+  "community-header-pages": "Seiten",
+  "community-header-add": "Hinzufügen",
+  "community-header-add-new-page": "Neue Seite hinzufügen",
+  "community-header-discuss": "Diskutieren",
+  "community-header-explore": "Erkunden",
+  "community-header-wiki-activity": "Wiki-Aktivität",
+  "community-header-random-page": "Zufällige Seite",
+  "community-header-community": "Community",
+  "community-header-videos": "Videos",
+  "community-header-images": "Bilder",
+  "community-header-forum": "Forum",
+  "community-header-admin-dashboard": "Wiki-Verwaltung"
 }
