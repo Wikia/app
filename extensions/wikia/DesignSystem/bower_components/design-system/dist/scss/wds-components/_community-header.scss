@@ -1,29 +1,22 @@
 .wds-community-header {
-	$community-header-height: 85px;
-	$community-header-l-down-height: 95px;
-	$local-navigation-height: 46px;
-
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
 	background-position: right center;
 	background-repeat: no-repeat;
 	background-size: auto 100%;
-	height: $community-header-height;
+	height: 105px;
 	position: relative;
-	padding-top: 20px;
 	z-index: 1;
 
 	@media #{$wds-breakpoint-l-down} {
-		height: $community-header-l-down-height;
+		height: 115px;
 	}
 
 	&::before {
 		content: '';
 		display: block;
 		height: 100%;
-		left: 0;
 		position: absolute;
-		top: 0;
 		width: 100%;
 		z-index: -1;
 	}
@@ -31,7 +24,7 @@
 	&__wordmark {
 		float: left;
 		height: 65px;
-		margin: 0 18px 0 20px;
+		margin: 20px 0 20px 20px;
 		max-width: 250px;
 		width: auto;
 
@@ -49,12 +42,11 @@
 	}
 
 	&__top-container {
-		align-items: flex-start;
 		display: flex;
-		height: $community-header-height - $local-navigation-height;
+		height: 59px;
 
 		@media #{$wds-breakpoint-l-down} {
-			height: $community-header-l-down-height - $local-navigation-height;
+			height: 69px;
 		}
 	}
 
@@ -63,7 +55,7 @@
 		font-size: $wds-typescale-size-plus-3;
 		font-weight: 600;
 		line-height: 1;
-		margin-top: 4px;
+		margin: 24px 0 0 18px;
 		overflow: hidden;
 		white-space: nowrap;
 
@@ -73,17 +65,21 @@
 
 		@media #{$wds-breakpoint-l-down} {
 			font-size: $wds-typescale-size-plus-2;
-			margin-top: 0;
+			margin-top: 20px;
 			max-height: 3*$wds-typescale-size-plus-2;
 			white-space: normal;
 			word-wrap: break-word;
 		}
 	}
 
-	&__counter {
+	&__counter{
 		font-weight: 600;
-		margin-left: 20px;
 		text-align: right;
+		margin: 18px 0 20px 20px;
+
+		@media #{$wds-breakpoint-l-down} {
+			margin-top: 22px;
+		}
 	}
 
 	&__counter-value {
@@ -104,25 +100,20 @@
 
 		@media #{$wds-breakpoint-l-down} {
 			font-size: $wds-typescale-size-minus-3;
-			margin-top: 2px;
 		}
 	}
 
 	&__wiki-buttons {
-		margin: 0 20px 0 15px;
+		margin: 20px 20px auto 15px;
 	}
 
 	&__local-navigation {
 		display: flex;
-		height: $local-navigation-height;
-
-		.wds-tabs__tab:first-child {
-			padding-left: 0;
-		}
+		height: 46px;
+		padding-left: 6px;
 
 		@media #{$wds-breakpoint-l-down} {
 			clear: both;
-			padding: 0 20px;
 		}
 	}
 }
