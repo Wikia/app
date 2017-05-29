@@ -3,7 +3,9 @@
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index';
 
 .wds-community-header {
-	z-index: 2;
+	// z-index needs to be at leas 5 to avoid apearing avatars from avatar_stack component (in community rail module)
+	// above the local nav dropdowns
+	z-index: 5;
 
 	@include community-header-theming(
 					$color-buttons,
