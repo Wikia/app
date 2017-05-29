@@ -3,8 +3,8 @@
 use \CommunityHeader\Sitename;
 use \CommunityHeader\Wordmark;
 use \CommunityHeader\Counter;
-use \CommunityHeader\WikiButton;
-use \CommunityHeader\Label;
+use \CommunityHeader\WikiButtons;
+use \CommunityHeader\Navigation;
 
 class CommunityHeaderController extends WikiaController {
 
@@ -12,12 +12,19 @@ class CommunityHeaderController extends WikiaController {
 	}
 
 	public function index() {
-		$this->sitename = new Sitename();
-		$this->wordmark = new Wordmark();
-		$this->counter = new Counter();
-		$this->wikiButtons = [
-			// fixme content of this array should be defined in another class
-			new WikiButton('/wiki/Special:CreatePage', new Label('community-header-add-new-page', Label::TYPE_TRANSLATABLE_TEXT), null, 'wds-icons-add-new-page-small')
-		];
+		global $wgCityId;
+
+		$this->setVal( 'sitename', new Sitename() );
+		$this->setVal( 'wordmark', new Wordmark() );
+		$this->setVal( 'counter', new Counter() );
+		$this->setVal( 'wikiButtons', new WikiButtons() );
+		$this->setVal( 'navigation', new Navigation() );
+		$this->setVal(
+			'backgroundImageUrl',
+			( new SiteAttributeService() )
+				->getApiClient()
+				->getAttribute( $wgCityId, 'pageHeaderImage' )
+				->getValue() ?? ''
+		);
 	}
 }

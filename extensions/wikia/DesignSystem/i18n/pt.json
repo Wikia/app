@@ -89,5 +89,17 @@
   "notifications-reply-upvote-single-user-no-title": "1 usuário <b>votou</b> na sua resposta",
   "notifications-reply-upvote-multiple-users-with-title": "__number__ usuários <b>votaram</b> em sua resposta em __postTitle__",
   "notifications-reply-upvote-multiple-users-no-title": "__number__ usuários <b>votaram</b> em sua resposta",
-  "notifications-notifications": "Notificações"
+  "notifications-notifications": "Notificações",
+  "community-header-pages": "Páginas",
+  "community-header-add": "Adicionar",
+  "community-header-add-new-page": "Adicionar nova página",
+  "community-header-discuss": "Converse",
+  "community-header-explore": "Explorar",
+  "community-header-wiki-activity": "Atividade na Wiki",
+  "community-header-random-page": "Página Aleatória",
+  "community-header-community": "Comunidade",
+  "community-header-videos": "Vídeos",
+  "community-header-images": "Imagens",
+  "community-header-forum": "Fórum",
+  "community-header-admin-dashboard": "Painel de Administração"
 }

@@ -89,5 +89,17 @@
   "notifications-reply-upvote-single-user-no-title": "Jeden użytkownik <b>zagłosował</b> na twoją odpowiedź",
   "notifications-reply-upvote-multiple-users-with-title": "__number__ użytkowników <b>zagłosowało</b> na twoją odpowiedź w __postTitle__",
   "notifications-reply-upvote-multiple-users-no-title": "__number__ użytkowników <b>zagłosowało</b> na twoją odpowiedź",
-  "notifications-notifications": "Powiadomienia"
+  "notifications-notifications": "Powiadomienia",
+  "community-header-pages": "Stron(y)",
+  "community-header-add": "Dodaj",
+  "community-header-add-new-page": "Dodaj nową stronę",
+  "community-header-discuss": "Dyskutuj",
+  "community-header-explore": "Eksploruj",
+  "community-header-wiki-activity": "Aktywność na wiki",
+  "community-header-random-page": "Losowa strona",
+  "community-header-community": "Społeczność",
+  "community-header-videos": "Filmy",
+  "community-header-images": "Obrazy",
+  "community-header-forum": "Forum",
+  "community-header-admin-dashboard": "Panel administratora"
 }

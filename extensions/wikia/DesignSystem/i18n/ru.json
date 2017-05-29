@@ -89,5 +89,17 @@
   "notifications-reply-upvote-single-user-no-title": "1 участник <b>оценил</b> ваш ответ",
   "notifications-reply-upvote-multiple-users-with-title": "__number__ — столько участников <b>оценили</b> ваш ответ в обсуждении __postTitle__",
   "notifications-reply-upvote-multiple-users-no-title": "__number__ — столько участников <b>оценили</b> ваш ответ",
-  "notifications-notifications": "Уведомления"
+  "notifications-notifications": "Уведомления",
+  "community-header-pages": "Страницы",
+  "community-header-add": "Добавить",
+  "community-header-add-new-page": "Добавить новую страницу",
+  "community-header-discuss": "Общение",
+  "community-header-explore": "Исследовать",
+  "community-header-wiki-activity": "Вики-деятельность",
+  "community-header-random-page": "Случайная статья",
+  "community-header-community": "Сообщество",
+  "community-header-videos": "Видео",
+  "community-header-images": "Изображения",
+  "community-header-forum": "Форум",
+  "community-header-admin-dashboard": "Кабинет администратора"
 }

@@ -89,5 +89,17 @@
   "notifications-reply-upvote-single-user-no-title": "1个用户<b>赞了</b>你的回复",
   "notifications-reply-upvote-multiple-users-with-title": "__number__个用户<b>赞了</b>你对__postTitle__的回复",
   "notifications-reply-upvote-multiple-users-no-title": "__number__个用户<b>赞了</b>你的回复",
-  "notifications-notifications": "提醒"
+  "notifications-notifications": "提醒",
+  "community-header-pages": "页面",
+  "community-header-add": "添加",
+  "community-header-add-new-page": "添加新页面",
+  "community-header-discuss": "讨论版",
+  "community-header-explore": "发现",
+  "community-header-wiki-activity": "维基动态",
+  "community-header-random-page": "随机页面",
+  "community-header-community": "社区",
+  "community-header-videos": "视频",
+  "community-header-images": "图片",
+  "community-header-forum": "论坛",
+  "community-header-admin-dashboard": "管理员控制面板"
 }
