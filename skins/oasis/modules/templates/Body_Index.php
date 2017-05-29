@@ -34,13 +34,13 @@
 
 <?= $beforeWikiaPageHtml ?>
 
+<? if ( !empty( $wg->EnableCommunityHeader ) ) : ?>
+	<?= $app->renderView( 'CommunityHeader', 'index' ) ?>
+<? endif; ?>
+
 <section id="WikiaPage" class="WikiaPage<?= empty( $wg->OasisNavV2 ) ? '' : ' V2' ?><?= !empty( $isGridLayoutEnabled ) ? ' WikiaGrid' : '' ?>">
 	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
 	<div class="WikiaPageContentWrapper">
-
-		<? if ( !empty( $wg->EnableCommunityHeader ) ) : ?>
-			<?= $app->renderView( 'CommunityHeader', 'index' ) ?>
-		<? endif; ?>
 
 		<? if ( empty( $wg->EnableCommunityHeader ) && !empty( $wg->EnablePremiumPageHeader ) && empty( $wg->SuppressWikiHeader ) ) : ?>
 			<div class="PremiumPageHeader">
