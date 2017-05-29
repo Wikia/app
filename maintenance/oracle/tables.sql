@@ -451,7 +451,6 @@ CREATE UNIQUE INDEX &mw_prefix.searchindex_u01 ON &mw_prefix.searchindex (si_pag
 CREATE TABLE &mw_prefix.interwiki (
   iw_prefix  VARCHAR2(32)   NOT NULL,
   iw_url     VARCHAR2(127)  NOT NULL,
-  iw_api 	BLOB NOT NULL,
   iw_wikiid VARCHAR2(64),
   iw_local   CHAR(1)  NOT NULL,
   iw_trans   CHAR(1)  DEFAULT '0' NOT NULL

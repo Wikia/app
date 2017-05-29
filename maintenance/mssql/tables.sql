@@ -573,7 +573,6 @@ CREATE UNIQUE INDEX pf_name_server ON profiling (pf_name, pf_server);
 CREATE TABLE /*$wgDBprefix*/interwiki (
    iw_prefix NCHAR(32) NOT NULL PRIMARY KEY,
    iw_url NCHAR(127)   NOT NULL,
-   iw_api TEXT NOT NULL DEFAULT '',
    iw_wikiid NVARCHAR(64) NOT NULL DEFAULT '',
    iw_local BIT NOT NULL,
    iw_trans BIT NOT NULL DEFAULT 0,

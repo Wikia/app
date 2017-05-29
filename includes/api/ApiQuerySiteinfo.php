@@ -302,9 +302,6 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 			if( isset( $row['iw_wikiid'] ) ) {
 				$val['wikiid'] = $row['iw_wikiid'];
 			}
-			if( isset( $row['iw_api'] ) ) {
-				$val['api'] = $row['iw_api'];
-			}
 
 			$data[] = $val;
 		}
