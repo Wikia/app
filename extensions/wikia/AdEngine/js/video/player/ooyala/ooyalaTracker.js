@@ -21,22 +21,10 @@ define('ext.wikia.adEngine.video.player.ooyala.ooyalaTracker', [
 			PLAYED: 'content_completed'
 		};
 
-	/**
-	 * @param {object} params
-	 * @param {string} params.adProduct
-	 * @param {string} [params.slotName]
-	 * @param {string} eventName
-	 */
 	function track(params, eventName) {
 		playerTracker.track(params, playerName, eventName);
 	}
 
-	/**
-	 * @param {object} player
-	 * @param {object} params
-	 * @param {string} params.adProduct
-	 * @param {string} [params.slotName]
-	 */
 	function register(player, params) {
 		if (!win.OO || !player || !playerTracker.isEnabled()) {
 			return;
