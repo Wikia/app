@@ -27,4 +27,8 @@ class CommunityHeaderController extends WikiaController {
 				->getValue() ?? ''
 		);
 	}
+
+	public function localNavigation() {
+		$this->setVal( 'navigation', $this->getVal( 'navigation' ) );
+	}
 }
