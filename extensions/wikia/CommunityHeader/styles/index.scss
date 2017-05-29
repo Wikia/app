@@ -1,0 +1,15 @@
+@import 'skins/shared/color';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-mixins/index';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index';
+
+.wds-community-header {
+	z-index: 2;
+
+	@include community-header-theming(
+					$color-buttons,
+					$color-text,
+					$color-links,
+					$color-page,
+					$color-page-border
+	);
+}
