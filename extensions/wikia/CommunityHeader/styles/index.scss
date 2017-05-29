@@ -13,10 +13,8 @@
 					$color-page-border
 	);
 
-	border: 1px solid $color-page-border;
-	border-bottom: 0;
 	margin: 0 auto;
-	z-index: 4;
+	z-index: 5;
 
 	+ .WikiaPage {
 		border-top: 0;
@@ -25,19 +23,19 @@
 	// these styles are compatible with the ones for #WikiaPage in 'skins/oasis/css/core/breakpoints-layout';
 	@if ($widthType == 0) {
 		@media #{$breakpoint-small-only} {
-			width: $page-width-small + 2 * $padding-width-small;
+			width: $page-width-small + $padding-width-small * 2 + $content-border-width * 2;
 		}
 
 		@media #{$breakpoint-small-plus} {
-			width: $page-width-small-plus + $padding-width-small-plus * 2;
+			width: $page-width-small-plus + $padding-width-small-plus * 2 + $content-border-width * 2;
 		}
 
 		@media #{$breakpoint-medium-only} {
-			width: $page-width-medium + $padding-width-medium * 2;
+			width: $page-width-medium + $padding-width-medium * 2 + $content-border-width * 2;
 		}
 
 		@media #{$breakpoint-large-up} {
-			width: $page-width-large + $padding-width-large * 2;
+			width: $page-width-large + $padding-width-large * 2 + $content-border-width * 2;
 		}
 	}
 }
