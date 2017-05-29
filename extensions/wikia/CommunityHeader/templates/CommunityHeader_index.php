@@ -39,7 +39,7 @@
 				<li class="wds-tabs__tab">
 					<div class="wds-dropdown">
 						<div class="wds-tabs__tab-label wds-dropdown__toggle">
-							<a href="#">
+							<a href="<?= $firstLevelItem['href'] ?? '#' ?>">
 								<span><?= $firstLevelItem['textEscaped'] ?></span>
 							</a>
 							<?= DesignSystemHelper::renderSvg('wds-icons-dropdown-tiny', 'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron'); ?>
