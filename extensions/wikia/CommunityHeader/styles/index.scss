@@ -1,10 +1,10 @@
 @import 'skins/shared/color';
+@import 'skins/oasis/css/core/layout';
+@import 'skins/oasis/css/core/breakpoints-variables';
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-mixins/index';
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index';
 
 .wds-community-header {
-	z-index: 4;
-
 	@include community-header-theming(
 					$color-buttons,
 					$color-text,
@@ -12,4 +12,31 @@
 					$color-page,
 					$color-page-border
 	);
+
+	border: 1px solid $color-page-border;
+	border-bottom: 0;
+	margin: 0 auto;
+	z-index: 4;
+
+	+ .WikiaPage {
+		border-top: 0;
+	}
+
+	@if ($widthType == 0) {
+		@media #{$breakpoint-small-only} {
+			width: $page-width-small + 2 * $padding-width-small;
+		}
+
+		@media #{$breakpoint-small-plus} {
+			width: $page-width-small-plus + $padding-width-small-plus * 2;
+		}
+
+		@media #{$breakpoint-medium-only} {
+			width: $page-width-medium + $padding-width-medium * 2;
+		}
+
+		@media #{$breakpoint-large-up} {
+			width: $page-width-large + $padding-width-large * 2;
+		}
+	}
 }

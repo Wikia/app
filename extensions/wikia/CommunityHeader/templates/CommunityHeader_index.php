@@ -1,6 +1,6 @@
 <header
 	style="background-image: url(http://static.wikia.nocookie.net/c4a1302b-476b-468d-8766-2f36a6ace398);"
-	class="wds-community-header WikiaPage">
+	class="wds-community-header">
 	<? if ( $wordmark->hasWordmark() ) : ?>
 		<div class="wds-community-header__wordmark">
 			<a accesskey="z" href="<?= $wordmark->href ?>">
