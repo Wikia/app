@@ -16,12 +16,11 @@ class Interwiki {
 	protected static $smCache = array();
 	const CACHE_LIMIT = 100; // 0 means unlimited, any other value is max number of entries.
 
-	protected $mPrefix, $mURL, $mAPI, $mWikiID, $mLocal, $mTrans;
+	protected $mPrefix, $mURL, $mWikiID, $mLocal, $mTrans;
 
-	public function __construct( $prefix = null, $url = '', $api = '', $wikiId = '', $local = 0, $trans = 0 ) {
+	public function __construct( $prefix = null, $url = '', $wikiId = '', $local = 0, $trans = 0 ) {
 		$this->mPrefix = $prefix;
 		$this->mURL = $url;
-		$this->mAPI = $api;
 		$this->mWikiID = $wikiId;
 		$this->mLocal = $local;
 		$this->mTrans = $trans;
@@ -170,7 +169,6 @@ class Interwiki {
 		if ( $iw ) {
 			$mc = array(
 				'iw_url' => $iw->mURL,
-				'iw_api' => $iw->mAPI,
 				'iw_local' => $iw->mLocal,
 				'iw_trans' => $iw->mTrans
 			);
@@ -343,15 +341,6 @@ class Interwiki {
 			$url = str_replace( "$1", wfUrlencode( $title ), $url );
 		}
 		return $url;
-	}
-
-	/**
-	 * Get the API URL for this wiki
-	 *
-	 * @return String: the URL
-	 */
-	public function getAPI() {
-		return $this->mAPI;
 	}
 
 	/**
