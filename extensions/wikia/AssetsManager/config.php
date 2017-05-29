@@ -3268,3 +3268,11 @@ $config['community_header_scss'] = [
 		'//extensions/wikia/CommunityHeader/styles/index.scss',
 	],
 ];
+
+$config['community_header_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/CommunityHeader/scripts/tracking.js',
+	],
+];

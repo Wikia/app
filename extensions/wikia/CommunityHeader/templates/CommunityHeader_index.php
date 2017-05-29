@@ -23,7 +23,8 @@
 		<div class="wds-community-header__wiki-buttons wds-button-group">
 			<?php foreach ( $wikiButtons as $wikiButton ): ?>
 				<a class="wds-button wds-is-squished wds-is-secondary"
-				   href="<?= $wikiButton->href ?>"<?php if ( !empty( $wikiButton->title ) ): ?> title="<?= $wikiButton->title->render() ?>"<?php endif; ?>>
+				   href="<?= $wikiButton->href ?>"
+				   data-tracking="<?= $wikiButton->tracking ?>"<?php if ( !empty( $wikiButton->title ) ): ?> title="<?= $wikiButton->title->render() ?>"<?php endif; ?>>
 					<?= DesignSystemHelper::renderSvg( $wikiButton->icon,
 						'wds-icon wds-icon-small' ) ?>
 					<?php if ( !empty( $wikiButton->label ) ): ?>
@@ -93,7 +94,7 @@
 						<ul class="wds-list wds-is-linked wds-has-bolded-items">
 							<? foreach( $navigation->exploreItems as $exploreItem ): ?>
 								<li>
-									<a href="<?= $exploreItem->href ?>"><?= $exploreItem->label->render(true) ?></a>
+									<a href="<?= $exploreItem->href ?>" data-tracking="<?= $exploreItem->tracking ?>"><?= $exploreItem->label->render(true) ?></a>
 								</li>
 							<? endforeach; ?>
 						</ul>
@@ -103,7 +104,7 @@
 			<? if( !empty( $navigation->discussLink ) ): ?>
 				<li class="wds-tabs__tab">
 					<div class="wds-tabs__tab-label">
-						<a href="<?= $navigation->discussLink->href ?>">
+						<a href="<?= $navigation->discussLink->href ?>" data-tracking="<?= $navigation->discussLink->tracking ?>">
 							<?= DesignSystemHelper::renderSvg( 'wds-icons-reply-small', 'wds-icon-tiny wds-icon' ); ?>
 							<span><?= $navigation->discussLink->label->render( true ) ?></span>
 						</a>
