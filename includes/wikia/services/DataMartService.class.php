@@ -194,38 +194,47 @@ class DataMartService {
 				break;
 		}
 
-		$db = DataMartService::getDB();
+		try {
+			$db = DataMartService::getDB();
 
-		$sql = ( new WikiaSQL() )->skipIf( self::isDisabled() )
-			->cacheGlobal( self::TTL )
-			->SELECT( 'r.wiki_id' )->AS_( 'id' )
-				->FIELD( $field )->AS_( 'pageviews' )
-			->FROM( 'report_wiki_recent_pageviews' )->AS_( 'r' )
-			->ORDER_BY( ['pageviews', 'desc'] )
-			->LIMIT( $limitUsed );
+			$sql =
+				( new WikiaSQL() )->skipIf( self::isDisabled() )
+					->cacheGlobal( self::TTL )
+					->SELECT( 'r.wiki_id' )
+					->AS_( 'id' )
+					->FIELD( $field )
+					->AS_( 'pageviews' )
+					->FROM( 'report_wiki_recent_pageviews' )
+					->AS_( 'r' )
+					->ORDER_BY( [ 'pageviews', 'desc' ] )
+					->LIMIT( $limitUsed );
 
-		if ( is_integer( $public ) ) {
-			$sql
-				->JOIN( 'dimension_wikis' )->AS_( 'd' )
+			if ( is_integer( $public ) ) {
+				$sql->JOIN( 'dimension_wikis' )
+					->AS_( 'd' )
 					->ON( 'r.wiki_id', 'd.wiki_id' )
-				->WHERE( 'd.public' )->EQUAL_TO( $public );
+					->WHERE( 'd.public' )
+					->EQUAL_TO( $public );
+			}
+
+			if ( !empty( $langs ) ) {
+				$sql->AND_( 'r.lang' )->IN( $langs );
+			}
+
+			if ( !empty( $hub ) ) {
+				$sql->AND_( 'r.hub_name' )->EQUAL_TO( $hub );
+			}
+
+			$topWikis = $sql->runLoop( $db, function ( &$topWikis, $row ) {
+				$topWikis[$row->id] = $row->pageviews;
+			} );
+
+			$topWikis = array_slice( $topWikis, 0, $limit, true );
+
+			return $topWikis;
+		} catch ( DBError $dbError ) {
+			return [];
 		}
-
-		if ( !empty( $langs ) ) {
-			$sql->AND_( 'r.lang' )->IN( $langs );
-		}
-
-		if ( !empty( $hub ) ) {
-			$sql->AND_( 'r.hub_name' )->EQUAL_TO( $hub );
-		}
-
-		$topWikis = $sql->runLoop( $db, function( &$topWikis, $row ) {
-			$topWikis[$row->id] = $row->pageviews;
-		} );
-
-		$topWikis = array_slice( $topWikis, 0, $limit, true );
-
-		return $topWikis;
 	}
 
 	/**
