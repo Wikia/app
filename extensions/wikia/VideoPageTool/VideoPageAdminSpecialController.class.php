@@ -8,9 +8,30 @@
  */
 
 class VideoPageAdminSpecialController extends WikiaSpecialPageController {
+	/**
+	 * Methods that should only be callable via Nirvana internal request.
+	 * These methods are responsible for rendering PHP partial templates on the page.
+	 */
+	const INTERNAL_ONLY_METHODS = [
+		'featured',
+	    'fan',
+	    'category',
+	];
 
 	public function __construct() {
 		parent::__construct( 'VideoPageAdmin', '', false );
+	}
+
+	/**
+	 * SUS-1999: Limit access to internal templating methods.
+	 * @throws ForbiddenException
+	 */
+	public function init() {
+		$method = $this->request->getVal( 'method' );
+
+		if ( in_array( $method, static::INTERNAL_ONLY_METHODS ) & !$this->request->isInternal() ) {
+			throw new ForbiddenException();
+		}
 	}
 
 	/**
@@ -205,7 +226,8 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 		}
 
 		// add default values if the number of assets is less than number of rows that needed to be shown
-		$defaultValues = array_pop( $helper->getDefaultValuesBySection( $section, 1 ) );
+		$defaultValuesBySection = $helper->getDefaultValuesBySection( $section, 1 );
+		$defaultValues = array_pop( $defaultValuesBySection );
 		for ( $i = count( $videos ) + 1; $i <= $helper->getRequiredRowsMax( $section ); $i++ ) {
 			$videos[$i] = $defaultValues;
 		}
@@ -375,6 +397,11 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	 * @responseParam array videos
 	 */
 	public function featured() {
+		// SUS-1999: Don't let this template be called externally
+		if ( !$this->request->isInternal() ) {
+			throw new ForbiddenException();
+		}
+
 		$this->videos = $this->getVal( 'videos', array() );
 		$this->date = $this->getVal( 'date' );
 		$this->language = $this->getVal( 'language' );
@@ -390,6 +417,11 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	 * @responseParam array $categories
 	 */
 	public function category() {
+		// SUS-1999: Don't let this template be called externally
+		if ( !$this->request->isInternal() ) {
+			throw new ForbiddenException();
+		}
+
 		$this->categories = $this->getVal( 'videos', array() );
 		$this->date = $this->getVal( 'date' );
 		$this->language = $this->getVal( 'language' );
@@ -405,6 +437,11 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	 * @responseParam array videos
 	 */
 	public function fan() {
+		// SUS-1999: Don't let this template be called externally
+		if ( !$this->request->isInternal() ) {
+			throw new ForbiddenException();
+		}
+
 		$videos[] = array(
 			'videoTitle' => 'Video Title',
 			'videoKey' => 'Video_Title',
