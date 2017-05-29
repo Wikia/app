@@ -8,9 +8,6 @@ use \CommunityHeader\Navigation;
 
 class CommunityHeaderController extends WikiaController {
 
-	public function init() {
-	}
-
 	public function index() {
 		global $wgCityId;
 
@@ -24,8 +21,7 @@ class CommunityHeaderController extends WikiaController {
 			( new SiteAttributeService() )
 				->getApiClient()
 				->getAttribute( $wgCityId, 'pageHeaderImage' )
-				->getValue() ?? ''
-		);
+				->getValue() );
 	}
 
 	public function localNavigation() {

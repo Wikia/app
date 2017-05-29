@@ -7,7 +7,7 @@ class WikiButtons implements \Iterator {
 	private $buttons;
 
 	public function __construct() {
-		$wgUser = \F::app()->wg->User;
+		$wgUser = \RequestContext::getMain()->getUser();
 
 		if ( $wgUser->isLoggedIn() ) {
 			if ( $wgUser->isAllowed( 'admindashboard' ) ) {

@@ -1,5 +1,5 @@
 <header
-	style="background-image: url(<?= $backgroundImageUrl ?>);"
+	<?= !empty( $backgroundImageUrl ) ? "style=\"background-image: url({$backgroundImageUrl});\"" : '' ?>
 	class="wds-community-header">
 	<? if ( $wordmark->hasWordmark() ) : ?>
 		<div class="wds-community-header__wordmark">
