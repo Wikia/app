@@ -61,7 +61,7 @@
 				<textarea
 					maxlength="<?= $descriptionMaxLength ?>"
 					class="description"
-					id="description-<?= $x ?>"
+					id="description-<?= Sanitizer::encodeAttribute( $x ); ?>"
 					placeholder="<?= wfMessage( 'videopagetool-placeholder-video-description' )->escaped() ?>"
 					name="description[]"><?= htmlspecialchars( $video[ 'description' ] ); ?></textarea>
 				<p class="hint">
@@ -82,8 +82,8 @@
 		</div>
 	<? endfor; ?>
 
-	<input type="hidden" value="<?= $date ?>" name="date">
-	<input type="hidden" value="<?= $language ?>" name="language">
+	<input type="hidden" value="<?= Sanitizer::encodeAttribute( $date ); ?>" name="date">
+	<input type="hidden" value="<?= Sanitizer::encodeAttribute( $language ); ?>" name="language">
 
 	<div class="submits">
 		<button type="submit"><?= wfMessage( 'videopagetool-button-save' )->escaped() ?></button>
