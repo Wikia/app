@@ -27,7 +27,7 @@ class WikiButtons implements \Iterator {
 			new WikiButton( $this->getAddNewPageURL(),
 				new Label( 'community-header-add-new-page', Label::TYPE_TRANSLATABLE_TEXT ),
 				new Label( 'community-header-add-new-page', Label::TYPE_TRANSLATABLE_TEXT ),
-				'wds-icons-add-new-page-small' );
+				'wds-icons-add-new-page-small', 'add-new-page' );
 
 		return [ $addNewPageButton ];
 	}
@@ -37,12 +37,12 @@ class WikiButtons implements \Iterator {
 			new WikiButton( $this->getAddNewPageURL(),
 				new Label( 'community-header-add', Label::TYPE_TRANSLATABLE_TEXT ),
 				new Label( 'community-header-add-new-page', Label::TYPE_TRANSLATABLE_TEXT ),
-				'wds-icons-add-new-page-small' );
+				'wds-icons-add-new-page-small', 'add-new-page' );
 
 		$wikiActivityButton =
 			new WikiButton( $this->getWikiActivityURL(), null,
 				new Label( 'community-header-wiki-activity', Label::TYPE_TRANSLATABLE_TEXT ),
-				'wds-icons-activity-small' );
+				'wds-icons-activity-small', 'wiki-activity' );
 
 		return [ $addNewPageButton, $wikiActivityButton ];
 	}
@@ -51,18 +51,18 @@ class WikiButtons implements \Iterator {
 		$addNewPageButton =
 			new WikiButton( $this->getAddNewPageURL(), null,
 				new Label( 'community-header-add-new-page', Label::TYPE_TRANSLATABLE_TEXT ),
-				'wds-icons-add-new-page-small' );
+				'wds-icons-add-new-page-small', 'add-new-page' );
 
 		$wikiActivityButton =
 			new WikiButton( $this->getWikiActivityURL(), null,
 				new Label( 'community-header-wiki-activity', Label::TYPE_TRANSLATABLE_TEXT ),
-				'wds-icons-activity-small' );
+				'wds-icons-activity-small', 'wiki-activity' );
 
 		$adminDashboardURL = $this->getAdminDashboardURL();
 		$adminDashboardButton =
 			new WikiButton( $adminDashboardURL, null,
 				new Label( 'community-header-admin-dashboard', Label::TYPE_TRANSLATABLE_TEXT ),
-				'wds-icons-dashboard-small' );
+				'wds-icons-dashboard-small', 'admin-dashboard' );
 
 		return [ $addNewPageButton, $wikiActivityButton, $adminDashboardButton ];
 	}
