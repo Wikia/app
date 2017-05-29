@@ -505,7 +505,8 @@ class DataMartService {
 	 * @param integer $limit [OPTIONAL] The maximum number of items in the list, defaults to 200
 	 * @param integer $rollupDate [OPTIONAL] Rollup ID to get (instead of the recent one)
 	 *
-	 * @return Array The list, the key contains article ID's and each item as a "namespace_id" and "pageviews" key
+	 * @return array The list, the key contains article ID's and each item as a "namespace_id"
+	 * and "pageviews" key
 	 */
 	public static function getTopArticlesByPageview(
 		$wikiId,
@@ -641,23 +642,34 @@ class DataMartService {
 	 *
 	 * @param array $articlesIds
 	 * @param datetime $timeId
+	 * @param int $wikiId
+	 * @param int $periodId
 	 * @return array
 	 */
 	public static function getPageViewsForArticles( Array $articlesIds, $timeId, $wikiId, $periodId = self::PERIOD_ID_WEEKLY ) {
-		$db = DataMartService::getDB();
+		try {
+			$db = DataMartService::getDB();
 
-		$articlePageViews = ( new WikiaSQL() )->skipIf( self::isDisabled() )
-			->SELECT( 'article_id', 'pageviews' )
-			->FROM( 'rollup_wiki_article_pageviews' )
-			->WHERE( 'article_id' )->IN( $articlesIds )
-			->AND_( 'time_id' )->EQUAL_TO( $timeId )
-			->AND_( 'wiki_id' )->EQUAL_TO( intval( $wikiId ) )
-			->AND_( 'period_id' )->EQUAL_TO( intval( $periodId ) )
-			->runLoop( $db, function( &$articlePageViews, $row ) {
-				$articlePageViews[ $row->article_id ] = $row->pageviews;
-			} );
+			$articlePageViews =
+				( new WikiaSQL() )->skipIf( self::isDisabled() )
+					->SELECT( 'article_id', 'pageviews' )
+					->FROM( 'rollup_wiki_article_pageviews' )
+					->WHERE( 'article_id' )
+					->IN( $articlesIds )
+					->AND_( 'time_id' )
+					->EQUAL_TO( $timeId )
+					->AND_( 'wiki_id' )
+					->EQUAL_TO( intval( $wikiId ) )
+					->AND_( 'period_id' )
+					->EQUAL_TO( intval( $periodId ) )
+					->runLoop( $db, function ( &$articlePageViews, $row ) {
+						$articlePageViews[$row->article_id] = $row->pageviews;
+					} );
 
-		return $articlePageViews;
+			return $articlePageViews;
+		} catch ( DBError $dbError ) {
+			return [];
+		}
 	}
 
 	/**
