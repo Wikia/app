@@ -515,36 +515,30 @@ class DataMartService {
 		$limit = 200,
 		$rollupDate = null
 	) {
-		$articles = self::doGetTopArticlesByPageview(
-			$wikiId,
-			$articleIds,
-			$namespaces,
-			$excludeNamespaces,
-			$limit,
-			$rollupDate
-		);
+		try {
+			$articles =
+				self::doGetTopArticlesByPageview( $wikiId, $articleIds, $namespaces,
+					$excludeNamespaces, $limit, $rollupDate );
 
-		if ( empty( $articles ) ) {
-			// log when the fallback takes place
-			WikiaLogger::instance()->error( __METHOD__ . ' fallback', [
-				'wiki_id' => $wikiId,
-				'rollup_date' => $rollupDate
-			] );
+			if ( empty( $articles ) ) {
+				// log when the fallback takes place
+				WikiaLogger::instance()->error( __METHOD__ . ' fallback', [
+					'wiki_id' => $wikiId,
+					'rollup_date' => $rollupDate
+				] );
 
-			$fallbackDate = self::findLastRollupsDate( self::PERIOD_ID_WEEKLY );
-			if ( $fallbackDate ) {
-				$articles = self::doGetTopArticlesByPageview(
-					$wikiId,
-					$articleIds,
-					$namespaces,
-					$excludeNamespaces,
-					$limit,
-					$fallbackDate
-				);
+				$fallbackDate = self::findLastRollupsDate( self::PERIOD_ID_WEEKLY );
+				if ( $fallbackDate ) {
+					$articles =
+						self::doGetTopArticlesByPageview( $wikiId, $articleIds, $namespaces,
+							$excludeNamespaces, $limit, $fallbackDate );
+				}
 			}
-		}
 
-		return $articles;
+			return $articles;
+		} catch ( DBError $dbError ) {
+			return [];
+		}
 	}
 
 	/**
