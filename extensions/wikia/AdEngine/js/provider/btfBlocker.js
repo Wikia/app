@@ -50,10 +50,16 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 		}
 
 		function startBtfQueue() {
+			var context = adContext.getContext();
 			log('startBtfQueue', 'debug', logGroup);
 
 			if (btfQueueStarted) {
 				return;
+			}
+
+			if (context.opts.adMixExperimentEnabled) {
+				win.ads.runtime.disableBtf = true;
+				context.slots.adMixToUnblock.map(unblock);
 			}
 
 			lazyQueue.makeQueue(btfQueue, processBtfSlot);

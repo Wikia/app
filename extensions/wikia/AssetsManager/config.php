@@ -3243,3 +3243,19 @@ $config['premium_page_header_curated_content_js'] = [
 		'//extensions/wikia/PremiumPageHeader/scripts/curated-content-edit-hack.js',
 	]
 ];
+
+$config['ad_mix_experiment_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/AdMixExperiment/scripts/AdMixExperiment.js',
+	]
+];
+
+$config['ad_mix_experiment_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/AdMixExperiment/styles/recirculation.scss',
+	],
+];

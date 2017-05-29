@@ -121,7 +121,7 @@ CREATE TABLE `city_list` (
   `city_flags` int(10) unsigned NOT NULL DEFAULT '0',
   `city_cluster` varchar(255) DEFAULT NULL,
   `city_last_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `city_founding_ip` int(10) unsigned NOT NULL DEFAULT '0',
+  `city_founding_ip_bin` varbinary(10),
   `city_vertical` int(11) NOT NULL DEFAULT '0',
   `city_founding_ip_bin` varbinary(16) DEFAULT NULL,
   PRIMARY KEY (`city_id`),
@@ -132,7 +132,7 @@ CREATE TABLE `city_list` (
   KEY `city_created` (`city_created`,`city_lang`),
   KEY `city_founding_user_inx` (`city_founding_user`),
   KEY `city_cluster` (`city_cluster`),
-  KEY `city_founding_ip` (`city_founding_ip`)
+  KEY `city_founding_ip_bin` (`city_founding_ip_bin`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
