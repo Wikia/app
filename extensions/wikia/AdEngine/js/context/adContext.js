@@ -115,6 +115,10 @@ define('ext.wikia.adEngine.adContext', [
 		context.slots.adMixToUnblock = [
 			'INCONTENT_BOXAD_1'
 		];
+
+		if (group.indexOf('AD_MIX_2') === 0) {
+			context.slots.adMixToUnblock.push('BOTTOM_LEADERBOARD');
+		}
 	}
 
 	function referrerIsSonySite() {

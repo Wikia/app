@@ -33,6 +33,7 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 	}
 
 	function filterSizes(slotName, slotSizes) {
+		var footerSize = doc.getElementById('WikiaFooter').offsetWidth;
 		log(['filterSizes', slotName, slotSizes], 'debug', logGroup);
 
 		switch (true) {
@@ -42,8 +43,11 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 				return doc.documentElement.offsetWidth >= minSkinWidth ? slotSizes : [[1, 1]];
 			case slotName === 'PREFOOTER_LEFT_BOXAD' && context.opts.overridePrefootersSizes:
 				return isLargeBreakpoints() ? slotSizes : getNewSizes(slotSizes, maxAdSize, [[300, 250]]);
+			case slotName === 'BOTTOM_LEADERBOARD' && context.opts.adMixExperimentEnabled &&
+				abTest.getGroup('AD_MIX').indexOf('AD_MIX_2') === 0:
+				console.log('AAAA', footerSize);
+				return getNewSizes([[970, 250], [728, 90]], footerSize, [[728, 90]]);
 			case slotName === 'BOTTOM_LEADERBOARD':
-				var footerSize = doc.getElementById('WikiaFooter').offsetWidth;
 				return getNewSizes(slotSizes, footerSize, [[728, 90]]);
 			case slotName === 'INCONTENT_BOXAD_1' && context.opts.adMixExperimentEnabled &&
 				abTest.getGroup('AD_MIX').indexOf('AD_MIX_1') === 0:
