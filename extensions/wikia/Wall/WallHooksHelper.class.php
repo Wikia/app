@@ -2279,6 +2279,9 @@ class WallHooksHelper {
 			switch ( $action ) {
 				// don't let user create Message Wall page, or bogus Thread
 				case 'create':
+				case 'edit':
+				case 'move':
+				case 'move-target':
 					$allow = false;
 					$result = [ 'badtitle' ];
 
@@ -2286,7 +2289,6 @@ class WallHooksHelper {
 
 				// don't let user edit or delete Message Wall page
 				case 'delete':
-				case 'edit':
 					if ( $ns === NS_USER_WALL ) {
 						$allow = false;
 						$result = [ 'badtitle' ];
@@ -2328,5 +2330,4 @@ class WallHooksHelper {
 
 		return $allow;
 	}
-
 }
