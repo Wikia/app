@@ -67,15 +67,15 @@ class WikiButtons implements \Iterator {
 		return [ $addNewPageButton, $wikiActivityButton, $adminDashboardButton ];
 	}
 
-	private function getAddNewPageURL() {
+	private function getAddNewPageURL(): string {
 		return SpecialPage::getTitleFor( 'CreatePage' )->getLocalURL();
 	}
 
-	private function getWikiActivityURL() {
+	private function getWikiActivityURL(): string {
 		return SpecialPage::getTitleFor( 'WikiActivity' )->getLocalURL();
 	}
 
-	private function getAdminDashboardURL() {
+	private function getAdminDashboardURL(): string {
 		return SpecialPage::getTitleFor( 'AdminDashboard' )->getLocalURL();
 	}
 

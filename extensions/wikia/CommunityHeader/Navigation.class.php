@@ -7,15 +7,15 @@ use Title;
 
 class Navigation {
 	public function __construct() {
-
 		$this->localNavigation =
 			( new NavigationModel() )->getLocalNavigationTree( NavigationModel::WIKI_LOCAL_MESSAGE );
-		$this->exploreLabel = new Label( 'community-header-explore', Label::TYPE_TRANSLATABLE_TEXT );
+		$this->exploreLabel =
+			new Label( 'community-header-explore', Label::TYPE_TRANSLATABLE_TEXT );
 		$this->exploreItems = $this->getExploreItems();
 		$this->discussLink = $this->getDiscussLink();
 	}
 
-	private function getExploreItems() {
+	private function getExploreItems(): array {
 		global $wgEnableCommunityPageExt, $wgEnableForumExt, $wgEnableDiscussions;
 
 		$exploreItems = [
@@ -57,21 +57,13 @@ class Navigation {
 			],
 		];
 
-		return array_map(
-			function ($item) {
-				return new Link(
-					new Label($item['key'], Label::TYPE_TRANSLATABLE_TEXT),
-					Title::newFromText($item['title'], NS_SPECIAL)->getLocalURL(),
-					$item['tracking']
-				);
-			},
-			array_filter(
-				$exploreItems,
-				function ( $item ) {
-					return $item['include'];
-				}
-			)
-		);
+		return array_map( function ( $item ) {
+			return new Link( new Label( $item['key'], Label::TYPE_TRANSLATABLE_TEXT ),
+				Title::newFromText( $item['title'], NS_SPECIAL )->getLocalURL(),
+				$item['tracking'] );
+		}, array_filter( $exploreItems, function ( $item ) {
+			return $item['include'];
+		} ) );
 	}
 
 	private function getDiscussLink(): Link {
@@ -79,17 +71,13 @@ class Navigation {
 
 		$discussLink = null;
 		if ( !empty( $wgEnableDiscussions ) ) {
-			$discussLink = new Link(
-				new Label('community-header-discuss', Label::TYPE_TRANSLATABLE_TEXT),
-				'/d/f',
-				'discuss'
-			);
+			$discussLink =
+				new Link( new Label( 'community-header-discuss', Label::TYPE_TRANSLATABLE_TEXT ),
+					'/d/f', 'discuss' );
 		} elseif ( !empty( $wgEnableForumExt ) ) {
-			$discussLink = new Link(
-				new Label('community-header-forum', Label::TYPE_TRANSLATABLE_TEXT),
-				Title::newFromText( 'Forum', NS_SPECIAL )->getLocalURL(),
-				'forum'
-			);
+			$discussLink =
+				new Link( new Label( 'community-header-forum', Label::TYPE_TRANSLATABLE_TEXT ),
+					Title::newFromText( 'Forum', NS_SPECIAL )->getLocalURL(), 'forum' );
 		}
 
 		return $discussLink;

@@ -13,7 +13,7 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 		$('.wds-community-header__local-navigation').on('click', 'a', function () {
 			var $this = $(this);
 			if ($this.data('tracking')) {
-				track({label: $(this).data('tracking')});
+				track({label: $this.data('tracking')});
 			} else {
 				var level = $this.parentsUntil('.wds-community-header__local-navigation', 'ul').length;
 				track({label: 'custom-level-' + level});
