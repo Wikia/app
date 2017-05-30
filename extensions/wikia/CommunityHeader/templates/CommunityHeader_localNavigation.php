@@ -51,7 +51,7 @@
 			<div class="wds-dropdown">
 				<div class="wds-tabs__tab-label wds-dropdown__toggle">
 					<?= DesignSystemHelper::renderSvg( 'wds-icons-explore-small', 'wds-icon-tiny wds-icon' ); ?>
-					<span><?= $navigation->exploreLabel->render() ?></span>
+					<span><?= $navigation->exploreLabel->renderInContentLang() ?></span>
 					<?= DesignSystemHelper::renderSvg( 'wds-icons-dropdown-tiny', 'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron' ); ?>
 				</div>
 				<div class="wds-is-not-scrollable wds-dropdown__content">
