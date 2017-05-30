@@ -2,7 +2,7 @@
 
 use \Wikia\CommunityHeader\Label;
 use \Wikia\CommunityHeader\WikiButton;
-use \CommunityHeader\WikiButtons;
+use \Wikia\CommunityHeader\WikiButtons;
 
 class WikiButtonsTest extends \WikiaBaseTest {
 	/**
