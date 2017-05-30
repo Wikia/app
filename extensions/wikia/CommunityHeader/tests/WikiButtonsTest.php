@@ -45,11 +45,16 @@ class WikiButtonsTest extends \WikiaBaseTest {
 
 	private function prepareWikiButtons( $raw ) {
 		return array_map( function ( $rawItem ) {
-			return new WikiButton( $rawItem['href'],
-				( $rawItem['label'] ? new Label( $rawItem['label']['key'],
-					$rawItem['label']['type'] ) : null ),
-				new Label( $rawItem['title']['key'], $rawItem['title']['type'] ), $rawItem['icon'],
-				$rawItem['tracking'] );
+			return new WikiButton(
+				$rawItem['href'],
+				( $rawItem['label'] ?
+					new Label( $rawItem['label']['key'], $rawItem['label']['type'] ) :
+					null
+				),
+				new Label( $rawItem['title']['key'], $rawItem['title']['type'] ),
+				$rawItem['icon'],
+				$rawItem['tracking']
+			);
 		}, $raw );
 	}
 

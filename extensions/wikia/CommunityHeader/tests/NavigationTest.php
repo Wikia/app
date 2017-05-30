@@ -16,13 +16,10 @@ class NavigationTest extends \WikiaBaseTest {
 			'wgEnableCommunityPageExt' => $globals['wgEnableCommunityPageExt'],
 			'wgEnableDiscussions' => $globals['wgEnableDiscussions'],
 			'wgEnableForumExt' => $globals['wgEnableForumExt'],
-
 		] );
 
 		$result = $globals->wrap( function () {
-			$navigation = new Navigation();
-
-			return $navigation;
+			return new Navigation();
 		} );
 
 		// used `array_values` to reset keys of array
@@ -39,13 +36,10 @@ class NavigationTest extends \WikiaBaseTest {
 		$globals = new GlobalStateWrapper( [
 			'wgEnableDiscussions' => $globals['wgEnableDiscussions'],
 			'wgEnableForumExt' => $globals['wgEnableForumExt'],
-
 		] );
 
 		$result = $globals->wrap( function () {
-			$navigation = new Navigation();
-
-			return $navigation;
+			return new Navigation();
 		} );
 
 		$this->assertEquals( $expected, $result->discussLink );
@@ -53,8 +47,11 @@ class NavigationTest extends \WikiaBaseTest {
 
 	private function prepareExploreItems( $raw ) {
 		return array_map( function ( $rawItem ) {
-			return new Link( new Label( $rawItem['label']['key'], $rawItem['label']['type'] ),
-				$rawItem['href'], $rawItem['tracking'] );
+			return new Link(
+				new Label( $rawItem['label']['key'], $rawItem['label']['type'] ),
+				$rawItem['href'],
+				$rawItem['tracking']
+			);
 		}, $raw );
 	}
 
@@ -317,8 +314,11 @@ class NavigationTest extends \WikiaBaseTest {
 	}
 
 	private function prepareDiscussLink( $raw ) {
-		return new Link( new Label( $raw['label']['key'], $raw['label']['type'] ), $raw['href'],
-			$raw['tracking'] );
+		return new Link(
+			new Label( $raw['label']['key'], $raw['label']['type'] ),
+			$raw['href'],
+			$raw['tracking']
+		);
 	}
 
 	public function discussLinkProviders() {
