@@ -95,12 +95,10 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 
 				if (context.opts.adMix3Enabled && shouldChangeSlot($adSlot.offset().top, 6)) {
 					if (refresh.adVisible) {
-						$adSlot.hide();
+						$adSlot.addClass('hidden');
 						$recirculationRail.show();
 					} else {
 						viewabilityHandler.refreshOnView(slotName, 0);
-						// TODO consider not showing flot with an old ad - delay
-						$adSlot.show();
 						$recirculationRail.hide();
 					}
 
