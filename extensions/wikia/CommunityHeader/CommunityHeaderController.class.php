@@ -1,10 +1,10 @@
 <?php
 
-use \CommunityHeader\Sitename;
-use \CommunityHeader\Wordmark;
-use \CommunityHeader\Counter;
-use \CommunityHeader\WikiButtons;
-use \CommunityHeader\Navigation;
+use \Wikia\CommunityHeader\Sitename;
+use \Wikia\CommunityHeader\Wordmark;
+use \Wikia\CommunityHeader\Counter;
+use \Wikia\CommunityHeader\WikiButtons;
+use \Wikia\CommunityHeader\Navigation;
 
 class CommunityHeaderController extends WikiaController {
 
