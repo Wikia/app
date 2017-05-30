@@ -8,13 +8,14 @@
 
 .wds-tabs__tab {
 	$tab-padding-horizontal: 12px;
+	$tab-height: 40px;
+	$current-tab-bottom-border-width: 2px;
 	$tab-default-color: $wds-color-link;
 	$tab-hover-color: darken($tab-default-color, 20%);
 
-	border-bottom: 2px solid transparent;
 	cursor: default;
 	line-height: 14px;
-	padding: 2px $tab-padding-horizontal 0;
+	padding: 0 $tab-padding-horizontal;
 	position: relative;
 
 	&-label {
@@ -23,7 +24,7 @@
 		display: inline-flex;
 		font-size: $wds-typescale-size-minus-2;
 		font-weight: bold;
-		height: 36px;
+		height: $tab-height;
 		text-align: center;
 		text-decoration: none;
 		text-transform: uppercase;
@@ -43,8 +44,13 @@
 	}
 
 	&.wds-is-current {
-		border-color: $tab-default-color;
+		border-bottom: $current-tab-bottom-border-width solid $tab-default-color;
 		transition: border-color .1s;
+
+		.wds-tabs__tab-label {
+			// this calculation is needed to align text properly after adding border-bottom
+			height: $tab-height - 2 * $current-tab-bottom-border-width;
+		}
 	}
 
 	&.wds-is-disabled {
