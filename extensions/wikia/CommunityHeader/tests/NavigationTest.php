@@ -1,7 +1,8 @@
 <?php
 
-namespace CommunityHeader;
-
+use CommunityHeader\Label;
+use CommunityHeader\Link;
+use CommunityHeader\Navigation;
 use Wikia\Util\GlobalStateWrapper;
 
 class NavigationTest extends \WikiaBaseTest {
