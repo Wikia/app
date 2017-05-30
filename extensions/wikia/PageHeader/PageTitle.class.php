@@ -3,6 +3,10 @@
 namespace PageHeader;
 
 use \RequestContext;
+use \Title;
+use \WikiaGlobalRegistry;
+use \WikiaApp;
+use \WikiaPageType;
 
 class PageTitle {
 
@@ -12,11 +16,14 @@ class PageTitle {
 	/* @var string */
 	public $prefix;
 
-	/* @var \WikiaGlobalRegistry */
+	/* @var WikiaGlobalRegistry */
 	private $wg;
 
 	/* @var int */
 	private $namespace;
+
+	/* @var Title */
+	private $MWTitle;
 
 	const PREFIX_LESS_NAMESPACES = [ NS_MEDIAWIKI, NS_TEMPLATE, NS_CATEGORY, NS_FILE ];
 
@@ -32,8 +39,8 @@ class PageTitle {
 		$this->prefix = $this->handlePrefix();
 	}
 
-	private function handleTitle( \WikiaApp $app ): string {
-		if ( \WikiaPageType::isMainPage() ) {
+	private function handleTitle( WikiaApp $app ): string {
+		if ( WikiaPageType::isMainPage() ) {
 			return $this->titleMainPage();
 		} else if ( $this->MWTitle->isTalkPage() || $this->shouldNotDisplayNamespacePrefix( $this->namespace ) ) {
 			return htmlspecialchars( $this->MWTitle->getText() );

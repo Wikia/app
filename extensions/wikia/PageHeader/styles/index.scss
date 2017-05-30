@@ -2,26 +2,26 @@
 @import "skins/shared/color.scss";
 
 .page-header {
-  padding-bottom: 12px;
-  margin: 5px 0 18px;
-  position: relative;
-  z-index: 4;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
+	padding-bottom: 12px;
+	margin: 5px 0 18px;
+	position: relative;
+	z-index: 4;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
 
-  &__title {
-    padding-bottom: 12px;
-    color: $color-text;
-    font-size: 28px;
-    font-weight: bold;
-    display: inline-block;
-    line-height: 1;
-  }
+	&__title {
+		padding-bottom: 12px;
+		color: $color-text;
+		font-size: 28px;
+		font-weight: bold;
+		display: inline-block;
+		line-height: 1;
+	}
 
-  &__separator {
-    background-color: $color-page-border;
-    border: 0;
-    height: 1px;
-  }
+	&__separator {
+		background-color: $color-page-border;
+		border: 0;
+		height: 1px;
+	}
 }
 
