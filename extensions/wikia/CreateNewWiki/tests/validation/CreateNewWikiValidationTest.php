@@ -69,14 +69,28 @@ class CreateNewWikiValidationTest extends WikiaBaseTest {
 		$this->userMock = $this->createMock( User::class );
 		$this->webRequestMock = $this->createMock( WebRequest::class );
 
-		$context = new RequestContext();
-		$context->setUser( $this->userMock );
-		$context->setRequest( $this->webRequestMock );
+		// Stub out messaging completely
+		$messageMock = $this->createMock( Message::class );
+		$messageMock->expects( $this->any() )
+			->method( $this->anything() )
+			->willReturnSelf();
+
+		/** @var RequestContext|PHPUnit_Framework_MockObject_MockObject $contextMock */
+		$contextMock = $this->getMockBuilder( RequestContext::class )
+			->setMethods( [ 'msg' ] )
+			->getMock();
+
+		$contextMock->expects( $this->any() )
+			->method( 'msg' )
+			->willReturn( $messageMock );
+
+		$contextMock->setUser( $this->userMock );
+		$contextMock->setRequest( $this->webRequestMock );
 
 		$this->createNewWikiController = new CreateNewWikiController();
 		$this->createNewWikiController->setRequest( $this->wikiaRequestMock );
 		$this->createNewWikiController->setResponse( $this->wikiaResponse );
-		$this->createNewWikiController->setContext( $context );
+		$this->createNewWikiController->setContext( $contextMock );
 	}
 
 	/**
