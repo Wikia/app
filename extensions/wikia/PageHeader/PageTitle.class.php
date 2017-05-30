@@ -28,7 +28,7 @@ class PageTitle {
 	const PREFIX_LESS_NAMESPACES = [ NS_MEDIAWIKI, NS_TEMPLATE, NS_CATEGORY, NS_FILE ];
 
 	/**
-	 * @param \WikiaApp $app
+	 * @param WikiaApp $app
 	 */
 	public function __construct( $app ) {
 		$this->wg = $app->wg;
@@ -49,7 +49,7 @@ class PageTitle {
 		return $app->getSkinTemplateObj()->data['title'];
 	}
 
-	private function handlePrefix() {
+	private function handlePrefix(): ?string {
 		if ( $this->MWTitle->isTalkPage() ) {
 			return $this->wg->ContLang->getNsText( NS_TALK );
 		}
@@ -57,19 +57,12 @@ class PageTitle {
 		return null;
 	}
 
-
-	/**
-	 * @return bool
-	 */
 	private function shouldNotDisplayNamespacePrefix( $namespace ): bool {
 		return in_array( $namespace,
 			array_merge( self::PREFIX_LESS_NAMESPACES, $this->wg->SuppressNamespacePrefix )
 		);
 	}
 
-	/**
-	 * @return string
-	 */
 	private function titleMainPage(): string {
 		return wfMessage( 'oasis-home' )->escaped();
 	}
