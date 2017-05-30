@@ -1,5 +1,4 @@
 <?php
-/** Internationalization file for /extensions/GlobalMessages/GlobalMessagesF extension. */
 $messages = [];
 
 $messages['en'] = [
@@ -40,7 +39,8 @@ Permitted {{PLURAL:$3|file type is|file types are}} $2.',
 	'file-too-large' => 'The file you submitted was too large.',
 	'filename-tooshort' => 'The filename is too short.',
 	'filetype-banned' => 'This type of file is banned.',
-	'fileexists' => 'A photo with this name has already been uploaded to the wiki. Please check [[:$1]] if you\'re not sure if you want to change it. Once uploaded, this photo may take up to 2 minutes to be visible.',
+	'fileexists' => 'A photo with this name has already been uploaded to the wiki. Please check [[:$1]] if you\'re not sure if you want to change it. Once uploaded, this photo may take up to 2 minutes to be visible.
+[[$1|thumb]]',
 	'filepageexists' => 'The description page for this file has already been created at \'\'\'<tt>[[:$1]]</tt>\'\'\', but no file with this name currently exists.
 The summary you enter will not appear on the description page.
 To make your summary appear there, you will need to manually edit it.
@@ -5466,7 +5466,8 @@ $messages['de'] = [
 	'filename-tooshort' => 'Der Dateiname ist zu kurz',
 	'filetype-banned' => 'Diese Dateiendung ist gesperrt.',
 	'fileexists' => "Eine Datei mit diesem Namen existiert bereits.
-Bitte prüfe '''<tt>[[:$1]]</tt>''' (öffnet ein neues Fenster), wenn du dir nicht sicher bist, ob du sie ändern willst.",
+Bitte prüfe '''<tt>[[:$1]]</tt>''' (öffnet ein neues Fenster), wenn du dir nicht sicher bist, ob du sie ändern willst.
+[[$1|thumb]]",
 	'filepageexists' => 'Eine Beschreibungsseite wurde bereits als \'\'\'<tt>[[:$1]]</tt>\'\'\' erstellt, es ist aber keine Datei mit diesem Namen vorhanden.
 Die eingegebene Beschreibung wird nicht auf die Beschreibungsseite übernommen.
 Die Beschreibungsseite musst du nach dem Hochladen der Datei noch manuell bearbeiten.
@@ -5703,7 +5704,8 @@ $messages['de-weigsbrag'] = [
 	'filetype-unwanted-type' => '\'\'\'„.$1“\'\'\' eines noggserwünschdes Dadeiwormad sei. Erlaubdes sei: $2.',
 	'filetype-banned-type' => '\'\'\'„.$1“\'\'\' eines noggserlaubdes Dadeiwormad sei. Erlaubdes sei: $2.',
 	'filetype-missing' => 'Dose Dadei wo wol hoglad haddar noggs Erweid (s.B. „.jpg“).',
-	'fileexists' => 'Gebdar schon eines Dadei mid dose Nam. Wan auw „Dadei schbeig“ gligg, dose Dadei übschreib. Bid brüw <strong><tt>$1</tt></strong>, wan noggs sock sei.',
+	'fileexists' => 'Gebdar schon eines Dadei mid dose Nam. Wan auw „Dadei schbeig“ gligg, dose Dadei übschreib. Bid brüw <strong><tt>$1</tt></strong>, wan noggs sock sei.
+[[$1|thumb]]',
 	'filepageexists' => 'Haddar schon eines Beschreibseid als <strong><tt>$1</tt></strong> erschdel, gebdar aba noggs Dadei mid dose Nam. Dose Beschreib wo eingeb noggs übnehm auw dose Beschreibseid. Musdar dose Beschreibseid nag Hoglad won Dadei nog manueles bearbeid.',
 	'fileexists-extension' => 'Gebdar schon eines Dadei mid ähnliges Nam:<br />
 Nam won Dadei wo wol hoglad: <strong><tt>$1</tt></strong><br />
@@ -23621,165 +23623,6 @@ Përndryshe, ju mund të formularin e thjeshtë më poshtë. Komenti juaj do të
 	'feedback-close' => 'Përfunduar',
 	'feedback-bugcheck' => 'Shumë mirë! Thjesht kontrolloni që nuk është një nga [$1 problemet e njohura].',
 	'feedback-bugnew' => 'E kontrollova. Raporto një problem të ri',
-];
-
-$messages['sr'] = [
-	'friday' => 'E premte',
-	'fri' => 'Pr',
-	'february' => 'shkurt',
-	'february-gen' => 'shkurt',
-	'feb' => 'Shku',
-	'faq' => 'Pyetje që bëhen shpesh',
-	'feedlinks' => 'Feed:',
-	'feed-invalid' => 'Tipi i feed-it është i pavlefshëm.',
-	'feed-unavailable' => 'Syndication feeds nuk janë të mundshme',
-	'fileappenderrorread' => 'I pamundur leximi "$1" gjatë procesit append.',
-	'fileappenderror' => 'E pamundur kryerja e procesit append "$1" tek "$2.',
-	'filecopyerror' => 'I pamundur kopjimi i skedës "$1" tek "$2".',
-	'filerenameerror' => 'I pamundur riemërtimi i skedës "$1" në "$2".',
-	'filedeleteerror' => 'E pamundur fshirja e skedës "$1".',
-	'filenotfound' => 'E pamundur gjetja e skedës "$1".',
-	'fileexistserror' => 'Skeda "$1" nuk mund të shkruhet : Skeda ekziston.',
-	'formerror' => 'Gabim: Formulari nuk mund të dërgohet.',
-	'filename' => 'Emri i skedës',
-	'filedesc' => 'Përmbledhje',
-	'fileuploadsummary' => 'Përshkrimi:',
-	'filereuploadsummary' => 'Ndryshimet e skedës:',
-	'filestatus' => 'Gjendja e të drejtave të autorit:',
-	'filesource' => 'Burimi:',
-	'filename-toolong' => 'Emrat e skedave nuk mund të jenë më të gjata se 240 bajt.',
-	'filetype-mime-mismatch' => 'Prapashtesa .$1 e skedarit ($2) nuk përshtatet me tipin MIME.',
-	'filetype-badmime' => 'Skedat e llojit MIME "$1" nuk lejohen për ngarkim.',
-	'filetype-bad-ie-mime' => 'Nuk mund të ngarkoni këtë skedë sepse Internet Explorer do ta zbulonte si "$1", që është një lloj skede e papranuar dhe potencialisht e rrezikshme.',
-	'filetype-unwanted-type' => '\'\'\'".$1"\'\'\' është një lloj skede i padëshiruar.
-Parapëlqehet {{PLURAL:$3|skeda të jetë e |skedat të jenë të}} llojit $2.',
-	'filetype-banned-type' => '\'\'\'".$1"\'\'\' {{PLURAL:$4|nuk është një lloj i skedës së lejuar|nuk janë lloje të lejuara të skedave}}.
-{{PLURAL:$3|Lloji i lejuar i skedës është|Llojet e lejuara të skedave janë}} $2.',
-	'filetype-missing' => 'Skeda nuk ka mbaresë (si p.sh. ".jpg").',
-	'file-too-large' => 'Skeda që paraqitët ishte shumë e madhe.',
-	'filename-tooshort' => 'Emri i skedës është shumë i shkurtër.',
-	'filetype-banned' => 'Kjo lloji i skedës është e ndalur.',
-	'fileexists' => 'Ekziston një skedë me atë emër, ju lutem kontrolloni \'\'\'<tt>[[:$1]]</tt>\'\'\' në qoftë se nuk jeni të sigurt nëse dëshironi ta zëvendësoni.
-[[$1|thumb]]',
-	'filepageexists' => 'Përshkrimi i faqes për këtë skedë është krijuar tek \'\'\'<tt>[[:$1]]</tt>\'\'\', por asnjë skedë me këtë emër nuk ekziston.
-Përmbledhja që shkruat nuk do të shfaqet në përshkrimin e faqes.
-Për ta bërë përmbledhjen tuaj të dukshme atje, ju duhet ta redaktoni automatikisht.
-[[$1|thumb]]',
-	'fileexists-extension' => 'Ekziston një skedë me emër të ngjashëm: [[$2|thumb]]
-* Emri i skedës në ngarkim: \'\'\'<tt>[[:$1]]</tt>\'\'\'
-* Emri i skedës ekzistuese: \'\'\'<tt>[[:$2]]</tt>\'\'\'
-Ju lutem zgjidhni një emër tjetër.',
-	'fileexists-thumbnail-yes' => 'Kjo skedë duket se është një figurë me madhësi të zvogëluar \'\'(figurë përmbledhëse)\'\'. [[$1|thumb]]
-Ju lutem kontrolloni skedën \'\'\'<tt>[[:$1]]</tt>\'\'\'.
-Nëse skeda e kontrolluar është e së njëjtës madhësi me origjinalen atëherë nuk ka nevojë të ngarkoni një figurë përmbledhëse.',
-	'file-thumbnail-no' => 'Emri i skedës fillon me \'\'\'<tt>$1</tt>\'\'\'.
-Duket se është një figurë me madhësi të zvogëluar \'\'(thumbnail)\'\'.
-Nëse keni këtë figurë me madhësi të plotë ju lutem të ngarkoni atë, përndryshe ju lutem të ndryshoni emrin e skedës.',
-	'fileexists-forbidden' => 'Ekziston një skedë me të njëjtin emër. Ju lutemi kthehuni mbrapsht dhe ngarkoni këtë skedë me një emër të ri.
-[[File:$1|thumb|center|$1]]',
-	'fileexists-shared-forbidden' => 'Ekziston një skedë me të njëjtin emër në magazinën e përbashkët. Ju lutem kthehuni mbrapsht dhe ngarkojeni këtë skedë me një emër të ri.
- [[File:$1|thumb|center|$1]]',
-	'file-exists-duplicate' => 'Kjo skedë është dyfish i {{PLURAL:$1|skedës|skedave}} në vijim:',
-	'file-deleted-duplicate' => 'Një skedë identike më këtë skedë ([[:$1]]) është grisur më përpara.
-Ju duhet të kontrolloni historikun e grisjes të asaj skede përpara se ta ri-ngarkoni atë.',
-	'filewasdeleted' => 'Një skedë më këtë emër është ngarkuar një here dhe pastaj është grisur. Duhet të shikoni $1 përpara se ta ngarkoni përsëri.',
-	'filename-bad-prefix' => 'Emri i skedës që po ngarkoni fillon me \'\'\'"$1"\'\'\' dhe nuk është veçantisht përshkrues pasi përdoret nga shumë kamera.
-Ju lutem zgjidhni një emër më përshkrues për skedën tuaj.',
-	'file-anchor-link' => 'Figura',
-	'filehist' => 'Historiku i dosjes',
-	'filehist-help' => 'Shtypni një datë/kohë për ta parë skedën ashtu si dukej në atë kohë.',
-	'filehist-deleteall' => 'grisi të tëra',
-	'filehist-deleteone' => 'grise këtë',
-	'filehist-revert' => 'riktheje',
-	'filehist-current' => 'e tanishme',
-	'filehist-datetime' => 'Data/Ora',
-	'filehist-thumb' => 'Thumbnail',
-	'filehist-thumbtext' => 'Thumbnail për versionin duke filluar nga $1',
-	'filehist-nothumb' => 'S\'ka parapamje',
-	'filehist-user' => 'Përdoruesi',
-	'filehist-dimensions' => 'Dimensionet',
-	'filehist-filesize' => 'Madhësia e skedës',
-	'filehist-comment' => 'Koment',
-	'filehist-missing' => 'Mungon skeda',
-	'filepage-nofile' => 'Asnjë faqe nuk lidhet tek kjo skedë.',
-	'filepage-nofile-link' => 'Një skedë me këtë emër nuk ekziston akoma, ju mundeni ta [$1 ngarkoni atë].',
-	'filerevert' => 'Rikthe $1',
-	'filerevert-legend' => 'Rikthe skedën',
-	'filerevert-intro' => 'Po ktheni \'\'\'[[Media:$1|$1]]\'\'\' tek [versioni $4 i $3, $2].',
-	'filerevert-comment' => 'Arsyeja:',
-	'filerevert-defaultcomment' => 'U rikthye tek versioni i $2, $1',
-	'filerevert-submit' => 'Riktheje',
-	'filerevert-success' => '\'\'\'[[Media:$1|$1]]\'\'\' është kthyer tek [versioni $4 i $3, $2].',
-	'filerevert-badversion' => 'Nuk ka version vendor tjetër të kësaj skede në kohën e dhënë.',
-	'filedelete' => 'Grise $1',
-	'filedelete-legend' => 'Grise skedën',
-	'filedelete-intro' => 'Jeni duke grisur \'\'\'[[Media:$1|$1]]\'\'\' së baashku me të gjithë historikun e saj.',
-	'filedelete-intro-old' => 'Po grisni versionin e \'\'\'[[Media:$1|$1]]\'\'\' të [$4 $3, $2].',
-	'filedelete-comment' => 'Arsyeja:',
-	'filedelete-submit' => 'Grise',
-	'filedelete-success' => '\'\'\'$1\'\'\' është grisur.',
-	'filedelete-success-old' => 'Versioni i \'\'\'[[Media:$1|$1]]\'\'\' që nga $3, $2 është grisur.',
-	'filedelete-nofile' => '\'\'\'$1\'\'\' nuk ekziston.',
-	'filedelete-nofile-old' => 'Nuk ka version të arkivuar të \'\'\'$1\'\'\' me të dhënat e kërkuara.',
-	'filedelete-otherreason' => 'Arsye tjetër / shtesë:',
-	'filedelete-reason-otherlist' => 'Arsye tjetër',
-	'filedelete-reason-dropdown' => '*Arsye të shpeshpërdorura për grisje:
-** Kundër të drejtave të autorit
-** Skedë kopje',
-	'filedelete-edit-reasonlist' => 'Arsye grisjeje për redaktimet',
-	'filedelete-maintenance' => 'Grisja dhe restaurimi i skedave është çaktivizuar përkohësisht gjatë mirëmbajtjes.',
-	'filedelete-maintenance-title' => 'Nuk mund të grisë skedën',
-	'fewestrevisions' => 'Artikuj më të paredaktuar',
-	'fix-double-redirects' => 'Përditësoni çdo përcjellim që tregon titullin origjinal',
-	'file-exists-sharedrepo' => 'Emri i zgjedhur i skedës është në përdorim në një magazinë të përbashkët.
-Ju lutemi zgjidhni në emët tjetër.',
-	'filemissing' => 'Mungon skeda',
-	'filedeleteerror-short' => 'Gabim gjatë grisjes së skedës: $1',
-	'filedeleteerror-long' => 'U hasën gabime gjatë grisjes së skedës:
-
-$1',
-	'filedelete-missing' => 'Skeda "$1" nuk mund të griset pasi nuk ekziston.',
-	'filedelete-old-unregistered' => 'Versioni i skedës që keni zgjedhur "$1" nuk ndodhet në regjistër.',
-	'filedelete-current-unregistered' => 'Skeda e zgjedhur "$1" nuk ndodhet në regjistër.',
-	'filedelete-archive-read-only' => 'Skedari i arkivimit "$1" nuk mund të ndryshohet nga shëbyesi.',
-	'file-info' => 'madhësia skedës: $1, lloji MIME: $2',
-	'file-info-size' => '$1 × $2 pixela, madhësia e skedës: $3, tipi MIME: $4',
-	'file-info-size-pages' => '$1 × $2 pixel, madhësia e dokumentit: $3 , MIME tipi: $4 , $5 {{PLURAL:$5| faqe | faqet}}',
-	'file-nohires' => 'Nuk ka rezolucion më të madh.',
-	'file-info-gif-looped' => 'kthyer',
-	'file-info-gif-frames' => '$1 {{PLURAL:$1|kornizë|korniza}}',
-	'file-info-png-looped' => 'kthyer',
-	'file-info-png-repeat' => 'luajtur $1 herë',
-	'file-info-png-frames' => '$1 {{PLURAL:$1|kornizë|korniza}}',
-	'filepath' => 'Vendndodhja e skedave',
-	'filepath-page' => 'Skeda:',
-	'filepath-submit' => 'Shko',
-	'filepath-summary' => 'Kjo faqe speciale jep vendndodhjen e plotë të një skede.
-Figurat tregohen me madhësi të plotë, skedat e tjera hapen me programet përkatëse.',
-	'fileduplicatesearch' => 'Kërkoni për skeda të dyfishta',
-	'fileduplicatesearch-summary' => 'Kërkoni për dyfishime të skedave në bazë të vlerës përmbledhëse («hash»).',
-	'fileduplicatesearch-legend' => 'Kërko për dyfishime',
-	'fileduplicatesearch-filename' => 'Emri i skedës:',
-	'fileduplicatesearch-submit' => 'Kërko',
-	'fileduplicatesearch-info' => '$1 × $2 pixel<br />Madhësia e skedës: $3<br />Lloji MIME: $4',
-	'fileduplicatesearch-result-1' => 'Skeda "$1" nuk ka kopje të njëjta',
-	'fileduplicatesearch-result-n' => 'Skeda "$1" ka {{PLURAL:$2|1 dyfishim|$2 dyfishime}}.',
-	'fileduplicatesearch-noresults' => 'Nuk u gjet asnjë skedë me emrin "$1".',
-	'feedback-bugornote' => 'Nëse jeni gati për të përshkruar një problem teknik me detaje ju lutemi [$1 raportoni një problem].
-Përndryshe, ju mund të formularin e thjeshtë më poshtë. Komenti juaj do të shtohet te faqja "[$3 $2]"", së bashku me emrin tuaj të përdoruesit dhe shfletuesin të cilin jeni duke përdorur.',
-	'feedback-subject' => 'Subjekti:',
-	'feedback-message' => 'Mesazhi:',
-	'feedback-cancel' => 'Anulo',
-	'feedback-submit' => 'Paraqit përshtypjet',
-	'feedback-adding' => 'Duke shtuar përshtypjen te faqja...',
-	'feedback-error1' => 'Gabim: Rezultat i panjohur nga API',
-	'feedback-error2' => 'Gabim: Redaktimi dështoi',
-	'feedback-error3' => 'Gabim: Nuk ka përgjigje nga API',
-	'feedback-thanks' => 'Faleminderit! Përshtypja juaj është postuar në faqen "[$2 $1]".',
-	'feedback-close' => 'Përfunduar',
-	'feedback-bugcheck' => 'Shumë mirë! Thjesht kontrolloni që nuk është një nga [$1 problemet e njohura].',
-	'feedback-bugnew' => 'E kontrollova. Raporto një problem të ri',
-	'forum' => 'Forum',
 ];
 
 $messages['sr-ec'] = [

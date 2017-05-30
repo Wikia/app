@@ -44,8 +44,10 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 		return aspectRatio >= 1 || !isNumeric(aspectRatio) ? adSizes.horizontal : adSizes.vertical;
 	}
 
-	function build(aspectRatio, slotParams) {
+	function build(aspectRatio, slotParams, options) {
+		options = options || {};
 		slotParams = slotParams || {};
+
 		var correlator = Math.round(Math.random() * 10000000000),
 			params = [
 				'output=vast',
@@ -59,8 +61,17 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 				'correlator=' + correlator,
 				'cust_params=' + getCustomParameters(slotParams)
 			],
-			url = baseUrl + params.join('&');
+			url;
 
+		if (options.numberOfAds !== undefined) {
+			params.push('pmad=' + options.numberOfAds);
+		}
+
+		if (options.prerollOnly) {
+			params.push('vpos=preroll');
+		}
+
+		url = baseUrl + params.join('&');
 		log(['build', url], 'debug', logGroup);
 
 		return url;

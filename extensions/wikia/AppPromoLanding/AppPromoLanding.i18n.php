@@ -1,11 +1,5 @@
 <?php
-/**
-* Internationalisation file for the AppPromoLanding extension.
-*
-* @addtogroup Languages
-*/
-
-$messages = [];
+$messages = array();
 
 $messages['en'] = array(
 	'apppromolanding-desc' => 'App Promo Landing Screen',

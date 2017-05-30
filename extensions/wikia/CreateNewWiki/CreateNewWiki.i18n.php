@@ -19,8 +19,7 @@ $messages['en'] = array(
 	'cnw-desc-select-vertical' => 'Choose a Hub:',
 	'cnw-desc-select-categories' => 'Check additional categories',
 	'cnw-desc-select-one' => 'Select one',
-	'cnw-desc-all-ages' => 'Is this community intended for kids?',
-	'cnw-desc-tip-all-ages' => 'Is this about a topic that children are interested in? In order to help us comply with US law we keep track of communities about topics that directly appeal to children 12 and under.',
+	'cnw-desc-all-ages' => 'Is this community directed to children under the age of 13?',
 	'cnw-desc-lang' => 'Language of your wiki',
 	'cnw-desc-wiki-submit-error' => 'Please choose a category',
 	'cnw-theme-headline' => 'Choose your theme',
@@ -114,7 +113,6 @@ $messages['qqq'] = array(
 	'cnw-desc-select-one' => 'Default empty label for category.
 {{Identical|Select one}}',
 	'cnw-desc-all-ages' => 'Missing documentation',
-	'cnw-desc-tip-all-ages' => 'Missing documentation',
 	'cnw-desc-lang' => 'Label for language.
 {{Identical|Language}}',
 	'cnw-desc-wiki-submit-error' => 'General error message for not selecting category',
@@ -196,7 +194,6 @@ $messages['ar'] = array(
 	'cnw-desc-select-categories' => 'أختر تصنيفات اضافية',
 	'cnw-desc-select-one' => 'إختر واحدة',
 	'cnw-desc-all-ages' => 'هل هذه الويكيا مجعولة من أجل الأطفال؟',
-	'cnw-desc-tip-all-ages' => 'هل هذه الويكيا عن موضوع للأطفال؟ لأجل مساعدتنا للامتثال للقانون الأمريكي، نستمر بمتابعة الويكيات التي تناسب مواضيعها مباشرة الأطفال بسن 12 أو أقل.',
 	'cnw-desc-lang' => 'اللغة',
 	'cnw-desc-wiki-submit-error' => 'الرجاء اختيار فئة',
 	'cnw-theme-headline' => 'إختيار المظهر',
@@ -386,7 +383,6 @@ $messages['br'] = array(
 	'cnw-desc-select-categories' => 'Dibab ar rummadoù ouzhpenn',
 	'cnw-desc-select-one' => 'Diuzañ unan',
 	'cnw-desc-all-ages' => 'Hag evit ar vugale eo ar wikia-mañ ?',
-	'cnw-desc-tip-all-ages' => "Daoust hag-eñ ez eo un danvez hag a c'hallfe dedennañ ar vugale ? Evit sikour ac'hanomp da zoujañ da lezennoù ar Stadoù-Unanet e viromp roudoù eus ar wikiaoù zo enno danvezioù savet war-eeun evit ar vugale 12 vloaz ha nebeutoc'h.",
 	'cnw-desc-lang' => 'Yezh',
 	'cnw-desc-wiki-submit-error' => 'Dibabit ur rummad, mar plij',
 	'cnw-theme-headline' => 'Krouit ho wiki',
@@ -462,7 +458,6 @@ $messages['ca'] = array(
 	'cnw-desc-select-categories' => 'Seleccioneu categories addicionals',
 	'cnw-desc-select-one' => 'Selecciona una',
 	'cnw-desc-all-ages' => 'Aquest wikia està pensat per a nens?',
-	'cnw-desc-tip-all-ages' => "Aquest wikia és sobre un tema d'interés pels nens? Per ajudar-nos a complir la llei dels Estats Units tenim un seguiment als wikis amb temes que afecten directament al nens de 12 o menys anys",
 	'cnw-desc-lang' => 'Llengua',
 	'cnw-desc-wiki-submit-error' => 'Trieu una categoria',
 	'cnw-theme-headline' => 'Tria un tema',
@@ -669,8 +664,7 @@ $messages['de'] = array(
 	'cnw-desc-select-vertical' => 'Wähle einen Hub:',
 	'cnw-desc-select-categories' => 'Wähle zusätzliche Kategorien aus',
 	'cnw-desc-select-one' => 'Wähle eine Kategorie aus',
-	'cnw-desc-all-ages' => 'Richtet sich diese Community an Kinder?',
-	'cnw-desc-tip-all-ages' => 'Ist das Thema dieses Wikis für Kinder interessant? Zur Einhaltung geltender Rechte achten wir besonders auf Communitys, die Kinder unter 12 Jahren direkt ansprechen.',
+	'cnw-desc-all-ages' => 'Richtet sich diese Community an Kinder unter 13 Jahren?',
 	'cnw-desc-lang' => 'Sprache deines Wikis',
 	'cnw-desc-wiki-submit-error' => 'Bitte wähle eine Kategorie aus',
 	'cnw-theme-headline' => 'Wähle dein Farbschema',
@@ -799,7 +793,6 @@ $messages['el'] = array(
 	'cnw-desc-creative' => 'Περιγράξτε το θέμα σας',
 	'cnw-desc-headline' => 'Για ποιό θέμα είναι το wiki σας;',
 	'cnw-desc-placeholder' => 'Αυτό το κείμενο θα προβληθεί στην αρχική σελίδα του wiki σας.',
-	'cnw-desc-tip-all-ages' => 'Είναι το wiki σας για ένα θέμα για το οποίο ενδιαφέρονται παιδιά; Για να μας βοηθήσετε να λειτουργούμε σύμφωνα με τον Αμερικάνικο νόμο, εποπτεύουμε wikis με θέματα που απευθείας σχετίζονται με παιδιά κάτω από 12 ετών.',
 	'cnw-name-wiki-domain-label' => 'Δώστε στο wiki σας μία διεύθυνση',
 	'cnw-name-wiki-headline' => 'Δημιούργησε ένα wiki',
 	'cnw-name-wiki-label' => 'Δώστε ένα όνομα στο wiki σας',
@@ -875,8 +868,7 @@ $messages['es'] = array(
 	'cnw-desc-select-vertical' => 'Elige un hub:',
 	'cnw-desc-select-categories' => 'Selecciona algunas categorías adicionales si es necesario',
 	'cnw-desc-select-one' => 'Selecciona una',
-	'cnw-desc-all-ages' => '¿Este wiki está destinado a un público infantil?',
-	'cnw-desc-tip-all-ages' => '¿Tu wiki es acerca de un tema para niños? Para ayudarnos a cumplir con las leyes de Estados Unidos mantenemos un seguimiento constante de aquellos wikis que interesan directamente a los niños de 12 años y menores de 12.',
+	'cnw-desc-all-ages' => '¿Es esta una comunidad dirigida a niños menores de 13 años?',
 	'cnw-desc-lang' => 'Idioma de tu wiki',
 	'cnw-desc-wiki-submit-error' => 'Por favor, elige una categoría',
 	'cnw-theme-headline' => 'Elige un diseño',
@@ -912,7 +904,7 @@ $messages['es'] = array(
 	'autocreatewiki-invalid-wikiname' => 'El nombre no puede contener caracteres especiales (como $ o @) y el campo no puede estar vacío.',
 	'autocreatewiki-violate-policy' => 'El nombre de este wiki contiene una palabra que viola nuestra política de nombres',
 	'autocreatewiki-name-taken' => 'Ya existe un wiki con esta dirección. Comienza a editar en <a href="http://$1.wikia.com">http://$1.wikia.com</a> o escoge otra dirección.',
-	'autocreatewiki-name-too-short' => 'Este nombre es demasiado corta, por favor, elige un nombre con al menos 3 caracteres.',
+	'autocreatewiki-name-too-short' => 'Esta dirección es demasiado corta, por favor, elige una dirección con al menos 3 caracteres.',
 	'autocreatewiki-name-too-long' => 'Esta dirección es demasiado larga, por favor, elige una dirección con un máximo de 50 caracteres.',
 	'autocreatewiki-empty-wikiname' => 'El campo del nombre del wiki no puede estar vacío.',
 	'autocreatewiki-category-label' => 'Categoría:',
@@ -927,14 +919,14 @@ Puede parecer que hayan muchas cosas por hacer, es por ello que estamos aquí pa
 *Revisa las [[{{#Special:WikiFeatures}}|Funcionalidades Wiki]] para habilitar algunas funcionalidades especiales, como el popular chat.
 *Personaliza el color y estilo de tu comunidad a través del [[{{#Special:ThemeDesigner}}|Diseñador de Temas]].
 *Visita [[w:c:comunidad|Comunidad Central]] y revisa [[w:c:comunidad:Blog:Noticias_de_Fandom|las entradas de blog publicadas por el staff]] además del [[w:c:comunidad:Especial:Foro|foro comunitario]].
-*Visita nuestras [[Ayuda:Contenidos|páginas de ayuda]] para entender mejor esta plataforma, o visita la [[w:c:comunidad:Universidad_de_Fandom|Universidad de Fandom]] para revisar videos educacionales.',
+*Visita nuestras [[Ayuda:Contenidos|páginas de ayuda]] para entender mejor esta plataforma, o visita la [[w:c:comunidad:Universidad_de_Fandom|Universidad de FANDOM]] para revisar videos educacionales.',
 	'autocreatewiki-welcometalk' => "== ¡Recibe nuestra bienvenida! ==
 ¡Hola!
 
 ¡Estamos muy contentos de que '''$4''' sea parte de la comunidad de Fandom! Puede parecer que hayan muchas cosas por hacer, es por ello que estamos aquí para ayudarte a empezar de una manera rápida y simple. Aquí tienes algunos consejos útiles y enlaces que te ayudarán a construir tu comunidad:
 
 *Revisa las [[{{#Special:WikiFeatures}}|funcionalidades Wiki]] para ver cuales funcionalidades puedes habilitar en tu wiki, como el chat, logros y muchos más.
-*Visita [[w:c:comunidad|Comunidad Central]] para revisar [[w:c:comunidad:Blog:Noticias_de_Fandom|las entradas de blog publicadas por el staff]], hacer preguntas en el [[w:c:comunidad:Especial:Foro|foros de la comunidad]], ver videos educacionales en la [[w:c:comunidad:Universidad_de_Fandom|Universidad de Fandom]] y chatear con miembros de Fandom.
+*Visita [[w:c:comunidad|Comunidad Central]] para revisar [[w:c:comunidad:Blog:Noticias_de_Fandom|las entradas de blog publicadas por el staff]], hacer preguntas en el [[w:c:comunidad:Especial:Foro|foros de la comunidad]], ver videos educacionales en la [[w:c:comunidad:Universidad_de_Fandom|Universidad de FANDOM]] y chatear con miembros de Fandom.
 *Visita nuestras [[Ayuda:Contenidos|páginas de ayuda]] para entender mejor esta plataforma, o visita la para revisar videos educacionales.
 
 Todos los enlaces anteriores son un gran lugar para comenzar a explorar, ¡así que diviértete!
@@ -944,7 +936,7 @@ Todos los enlaces anteriores son un gran lugar para comenzar a explorar, ¡así 
 	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
 	'autocreatewiki-welcomebody-HTML' => '<p>Hola $2, <br /><br /> 
 El wiki que has creado está disponible en <a href="$1">$1</a>. ¡Esperamos verte editando allí pronto! <br />< br /> 
-Hemos añadido cierta información y consejos en tu <a href="$5"> Página de discusión de usuario</a> para ayudarle a empezar. Si tienes alguna pregunta, responde a este correo electrónico o navega por nuestras páginas de ayuda en <a href="http://comunidad.wikia.com/wiki/Ayuda:Contenidos">Ayuda Fandom</a>.< br /><br /> 
+Hemos añadido cierta información y consejos en tu <a href="$5"> Página de discusión de usuario</a> para ayudarle a empezar. Si tienes alguna pregunta, responde a este correo electrónico o navega por nuestras páginas de ayuda en <a href="http://comunidad.wikia.com/wiki/Ayuda:Contenidos">Ayuda FANDOM</a>.< br /><br /> 
 Buena suerte con el proyecto, < br /><br /> 
 <a href="http://comunidad.wikia.com/wiki/Usuario:$4">$3</a>< br /> 
 Equipo comunitario de Fandom< br /></p>',
@@ -1034,7 +1026,6 @@ $messages['fi'] = array(
 	'cnw-desc-placeholder' => 'Tämä ilmestyy wikisi etusivulle.',
 	'cnw-desc-select-one' => 'Valitse yksi',
 	'cnw-desc-all-ages' => 'Onko tämä wikia tarkoitettu lapsille?',
-	'cnw-desc-tip-all-ages' => 'Käsitteleekö tämä wikia aihetta, jota kiinnostaa lapsia? Noudattaaksemme Yhdysvaltojen lakia pidämme seurantaa wikioista, joiden aiheet viehättävät 12-vuotiaita tai nuorempia lapsia.',
 	'cnw-desc-lang' => 'Kieli',
 	'cnw-desc-wiki-submit-error' => 'Valitse luokka',
 	'cnw-theme-headline' => 'Valitse teema',
@@ -1128,8 +1119,7 @@ $messages['fr'] = array(
 	'cnw-desc-select-vertical' => 'Choisissez un portail :',
 	'cnw-desc-select-categories' => 'Catégories supplémentaires',
 	'cnw-desc-select-one' => 'En choisir un',
-	'cnw-desc-all-ages' => 'Cette communauté est-elle destinée aux enfants ?',
-	'cnw-desc-tip-all-ages' => 'Le sujet pourrait-il intéresser les enfants ? Afin de ne pas enfreindre les lois en vigueur aux États-Unis, nous suivons les communautés destinées aux enfants de 12 ans et moins.',
+	'cnw-desc-all-ages' => "Cette communauté s'adresse-t-elle aux enfants de moins de 13 ans ?",
 	'cnw-desc-lang' => 'Langue du wiki',
 	'cnw-desc-wiki-submit-error' => 'Merci de choisir une catégorie',
 	'cnw-theme-headline' => 'Choix du thème',
@@ -1233,7 +1223,6 @@ $messages['gl'] = array(
 	'cnw-desc-select-vertical' => 'Seleccione unha categoría Hub',
 	'cnw-desc-select-one' => 'Seleccione unha',
 	'cnw-desc-all-ages' => 'Todas as idades',
-	'cnw-desc-tip-all-ages' => 'Este wiki trata un tema de interese para os nenos? Para axudarnos a cumprir coa lei dos EUA, levamos un seguimento dos wikis sobre temas dirixidos directamente a cativos de 12 anos ou menos.',
 	'cnw-desc-lang' => 'Lingua',
 	'cnw-desc-wiki-submit-error' => 'Seleccione unha categoría',
 	'cnw-theme-headline' => 'Escolla un tema visual',
@@ -1312,7 +1301,6 @@ $messages['he'] = array(
 	'cnw-desc-select-categories' => 'בחירת קטגוריות נוספות',
 	'cnw-desc-select-one' => 'לבחור אחת',
 	'cnw-desc-all-ages' => 'האם המיזם מיועד לילדים?',
-	'cnw-desc-tip-all-ages' => 'האם עוסק המיזם בנושא המעניין ילדים? בהתאם לחוק בארה"ב, אנו עוקבים אחרי מיזמי ויקיה על נושאים הפונים באופן ישיר לילדים בני 12 ומטה.',
 	'cnw-desc-lang' => 'שפה',
 	'cnw-desc-wiki-submit-error' => 'נא לבחור קטגוריה',
 	'cnw-theme-headline' => 'נא לבחור ערכת עיצוב',
@@ -1493,7 +1481,6 @@ $messages['id'] = array(
 	'cnw-desc-select-categories' => 'Pilih Kategori Tambahan',
 	'cnw-desc-select-one' => 'Pilih salah satu',
 	'cnw-desc-all-ages' => 'Apakah wikia ini ditujukan untuk anak-anak?',
-	'cnw-desc-tip-all-ages' => 'Apakah wiki ini berisi tentang topik yang menarik bagi anak-anak? Untuk membantu kami mematuhi undang-undang AS kami melacak wiki-wiki tentang topik yang secara langsung menarik kepada anak-anak 12 tahun ke bawah.',
 	'cnw-desc-lang' => 'Bahasa',
 	'cnw-desc-wiki-submit-error' => 'Silakan pilih kategori',
 	'cnw-theme-headline' => 'Pilih tema',
@@ -1597,8 +1584,7 @@ $messages['it'] = array(
 	'cnw-name-wiki-language' => '',
 	'cnw-desc-select-vertical' => 'Scegli un hub:',
 	'cnw-desc-select-categories' => 'Seleziona una o più categorie aggiuntive',
-	'cnw-desc-all-ages' => 'Questa community è destinata ai bambini?',
-	'cnw-desc-tip-all-ages' => "Riguarda un tema d'interesse per il pubblico infantile? In osservanza delle leggi degli Stati Uniti, monitoriamo le community che riguardano tematiche che attirano direttamente bambini di età fino ai 12 anni.",
+	'cnw-desc-all-ages' => 'Questa comunità è rivolta ai bambini al di sotto dei 13 anni?',
 	'cnw-error-anon-user' => 'La creazione di wiki da parte di utenti anonimi è stata disattivata. [[Special:UserLogin|Accedi]] e riprova.',
 	'cnw-theme-loading-state' => 'Creazione della wiki in corso. Puoi cambiare il tema durante questo periodo.',
 	'cnw-theme-show-wiki' => 'Mostrami la mia wiki',
@@ -1659,15 +1645,15 @@ $messages['ja'] = array(
 	'cnw-back' => '戻る',
 	'cnw-title' => '新しいFandomコミュニティを作成する',
 	'cnw-name-wiki-headline' => 'Wikiをはじめる',
-	'cnw-name-wiki-creative' => '世界中で大人気なエンターテイメントに関するコミュニティでも、個人的なプロジェクトについてのコミュニティでも、そのコミュニティを適切に表す名称が必要です。',
+	'cnw-name-wiki-creative' => '世界中で大人気のエンターテイメントに関するコミュニティでも、個人的なプロジェクトについてのコミュニティでも、そのコミュニティを適切に表す名称が必要です。',
 	'cnw-name-wiki-label' => 'Wikiの名称を入力してください',
 	'cnw-name-wiki-domain-label' => 'このWikiのアドレスを指定してください（半角英数字のみ）',
 	'cnw-name-wiki-submit-error' => '次へ進むには、上の欄をどちらも入力する必要があります。',
-	'cnw-desc-headline' => 'これは何に関するWikiですか？',
-	'cnw-desc-creative' => 'このwikiが見つけやすくなるよう、わかりやすい紹介文を書いてみましょう。',
-	'cnw-desc-placeholder' => 'この内容はwikiのメインページに表示されます。',
+	'cnw-desc-headline' => 'これは何についてのwikiですか？',
+	'cnw-desc-creative' => 'このWikiが見つけやすくなるよう、わかりやすい紹介文を書いてみましょう。',
+	'cnw-desc-placeholder' => 'この内容はWikiのメインページに表示されます。',
 	'cnw-desc-select-one' => 'ひとつ選択',
-	'cnw-desc-all-ages' => '子供向けのコミュニティですか？',
+	'cnw-desc-all-ages' => 'このコミュニティは13歳未満の子供向けですか？',
 	'cnw-desc-lang' => 'このWikiの言語',
 	'cnw-desc-wiki-submit-error' => 'カテゴリを選択してください',
 	'cnw-theme-headline' => 'テーマを選択してください',
@@ -1684,7 +1670,6 @@ $messages['ja'] = array(
 	'cnw-name-wiki-language' => '',
 	'cnw-desc-select-vertical' => 'このWikiが属するハブ：',
 	'cnw-desc-select-categories' => '他にあてはまるカテゴリがあれば選んでください（複数可）。',
-	'cnw-desc-tip-all-ages' => 'これは子供向けのトピックですか？Fandomでは、アメリカ合衆国の法律に準拠するため、12歳以下の子供向けに作られたwikiを確認しています。',
 	'cnw-badword-header' => '不適切な言葉です',
 	'cnw-badword-msg' => 'Fandomコミュニティの説明文での不適切な言葉、禁止されている言葉の使用はご遠慮ください：$1',
 	'cnw-error-wiki-limit-header' => 'Fandomコミュニティの上限に達しました',
@@ -1819,7 +1804,6 @@ $messages['ko'] = array(
 	'cnw-desc-select-categories' => '추가 분류 선택',
 	'cnw-desc-select-one' => '선택해주세요',
 	'cnw-desc-all-ages' => '어린이들이 볼 수 있는 위키인가요?',
-	'cnw-desc-tip-all-ages' => '어린이들이 관심을 가질만한 내용인가요? 12세 이하의 어린이들이 관심을 가질 만한 내용이라면 저희는 해당 위키아를 주시할 것입니다.',
 	'cnw-desc-lang' => '언어',
 	'cnw-desc-wiki-submit-error' => '분류를 선택해주세요.',
 	'cnw-theme-headline' => '테마 선택하기',
@@ -2026,7 +2010,6 @@ $messages['mk'] = array(
 	'cnw-desc-select-categories' => 'Изберете дополнителни категории',
 	'cnw-desc-select-one' => 'Одберете една категорија',
 	'cnw-desc-all-ages' => 'Дали оваа викија е наменета за деца?',
-	'cnw-desc-tip-all-ages' => 'Дали оваа викија е на тема што ги интересира децата? Законите на САД ни налагаат да водиме евиденција за темите од непосреден интерес за деца на возраст до 12 години.',
 	'cnw-desc-lang' => 'Јазик',
 	'cnw-desc-wiki-submit-error' => 'Одберете категорија',
 	'cnw-theme-headline' => 'Уредете го изгледот на викито',
@@ -2130,7 +2113,6 @@ $messages['ms'] = array(
 	'cnw-desc-select-categories' => 'Pilih kategori-kategori tambahan',
 	'cnw-desc-select-one' => 'Pilih satu',
 	'cnw-desc-all-ages' => 'Adakah wikia ini ditujukan untuk kanak-kanak?',
-	'cnw-desc-tip-all-ages' => 'Adakah wiki ini mengenai topik yang diminati oleh kanak-kanak? Demi membantu kita untuk mematuhi undang-undang Amerika Syarikat, kami mengawasi wiki-wiki yang mengenai topik yang ditujukan secara langsung kepada kanak-kanak berumur 12 tahun ke bawah.',
 	'cnw-desc-lang' => 'Bahasa',
 	'cnw-desc-wiki-submit-error' => 'Sila pilih kategori',
 	'cnw-theme-headline' => 'Pilih tema',
@@ -2303,8 +2285,7 @@ $messages['nl'] = array(
 	'cnw-desc-select-vertical' => 'Selecteer een Hubcategorie',
 	'cnw-desc-select-categories' => 'Selecteer extra categorieën',
 	'cnw-desc-select-one' => 'Maak een keuze',
-	'cnw-desc-all-ages' => 'Is deze wikia voor kinderen bedoeld?',
-	'cnw-desc-tip-all-ages' => "Gaat het over een onderwerp waar kinderen interesse in hebben? Om ons aan de Amerikaanse wetgeving te houden, houden we bij welke wikia's over onderwerpen gaan die kinderen van 12 jaar en jonger aanspreken.",
+	'cnw-desc-all-ages' => 'Is this community directed to children under the age of 13?',
 	'cnw-desc-lang' => 'Taal',
 	'cnw-desc-wiki-submit-error' => 'Kies een categorie',
 	'cnw-theme-headline' => 'Ontwerp uw wiki',
@@ -2463,13 +2444,12 @@ $messages['pl'] = array(
 	'cnw-name-wiki-domain-label' => 'Nadaj swojej wiki adres',
 	'cnw-name-wiki-submit-error' => 'Ups! Musisz wypełnić oba pola powyżej, aby przejść dalej.',
 	'cnw-desc-headline' => 'O czym jest twoja wiki?',
-	'cnw-desc-creative' => 'Ułatw innym ludziom znalezienie twojej wiki dodając świetny opis.',
+	'cnw-desc-creative' => 'Ułatw innym ludziom znalezienie twojej wiki, dodając świetny opis.',
 	'cnw-desc-placeholder' => 'Postaraj się! Twój tekst pojawi się na stronie głównej twojej wiki.',
 	'cnw-desc-select-vertical' => 'Wybierz Hub:',
 	'cnw-desc-select-categories' => 'Wybierz dodatkowe kategorie',
 	'cnw-desc-select-one' => 'Wybierz',
-	'cnw-desc-all-ages' => 'Czy ta społeczność jest przeznaczona dla dzieci?',
-	'cnw-desc-tip-all-ages' => 'Czy twoja wiki dotyczy tematu, którym będą zainteresowane dzieci? Aby móc działać w zgodzie z prawem Stanów Zjednoczonych, monitorujemy wiki o tematyce kierowanej bezpośrednio do dzieci w wieku 12 lat i młodszych.',
+	'cnw-desc-all-ages' => 'Czy ta społeczność jest skierowana do dzieci poniżej 13 lat?',
 	'cnw-desc-lang' => 'Język twojej wiki',
 	'cnw-desc-wiki-submit-error' => 'Wybierz kategorię',
 	'cnw-theme-headline' => 'Wybierz motyw',
@@ -2665,8 +2645,7 @@ $messages['pt'] = array(
 	'cnw-desc-select-vertical' => 'Escolha um hub:',
 	'cnw-desc-select-categories' => 'Selecione categorias adicionais',
 	'cnw-desc-select-one' => 'Selecione uma',
-	'cnw-desc-all-ages' => 'Esta wiki é destinada à crianças?',
-	'cnw-desc-tip-all-ages' => 'Esta wiki é sobre um assunto que interessa à crianças? A fim de ajudar-nos a cumprir com a lei dos Estados Unidos, nós acompanhamos de perto as wikis que tratam de assuntos de interesse de crianças menores de 12 anos.',
+	'cnw-desc-all-ages' => 'Esta comunidade é dirigida às crianças com menos de 13 anos de idade?',
 	'cnw-desc-lang' => 'Idioma da sua wiki',
 	'cnw-desc-wiki-submit-error' => 'Por favor, escolha uma categoria',
 	'cnw-theme-headline' => 'Escolha seu tema',
@@ -2739,91 +2718,6 @@ Boa sorte com o projeto, <br />< br / >
  Equipe da comunidade Fandom <br /></p>',
 );
 
-$messages['pt-br'] = array(
-	'createnewwiki-desc' => 'Assistente de criação de wikias',
-	'cnw-next' => 'Próximo',
-	'cnw-back' => 'Voltar',
-	'cnw-title' => 'Crie uma nova wikia',
-	'cnw-name-wiki-headline' => 'Nomeie sua wiki',
-	'cnw-name-wiki-creative' => 'Seja uma comunidade focada em entretenimento no mundo ou um projeto muito pessoal, sua wiki precisa de um nome bom e exclusivo:',
-	'cnw-name-wiki-label' => 'Nomeie sua wiki',
-	'cnw-name-wiki-domain-label' => 'Dê um endereço a sua wiki',
-	'cnw-name-wiki-submit-error' => 'Opa! Você precisa preencher ambas as caixas acima para continuar.',
-	'cnw-desc-headline' => 'Sobre o que é a sua wiki?',
-	'cnw-desc-creative' => 'Como você descreveria sua wiki?',
-	'cnw-desc-placeholder' => 'Esta descrição aparecerá na página principal da sua wiki. Não se preocupe, você pode sempre mudar mais tarde.',
-	'cnw-desc-select-one' => 'Selecione uma',
-	'cnw-desc-all-ages' => 'Esta wikia é destinada a crianças?',
-	'cnw-desc-tip-all-ages' => 'Esta wiki é sobre um assunto que interessa a crianças? A fim de ajudar-nos a cumprir a lei dos Estados Unidos, nós acompanhamos de perto as wikis que tratam de assuntos de interesse de crianças menores de 12 anos.',
-	'cnw-desc-lang' => 'Idioma de sua wiki',
-	'cnw-desc-wiki-submit-error' => 'Por favor, escolha uma categoria',
-	'cnw-theme-headline' => 'Escolha seu tema',
-	'cnw-theme-creative' => 'Selecione o tema que melhor se adapta a sua wiki.',
-	'cnw-theme-instruction' => 'Você pode personalizar a aparência de sua wiki no Designer de Temas sempre que quiser!',
-	'cnw-welcome-headline' => 'Parabéns! Você criou com êxito a $1',
-	'cnw-welcome-instruction1' => 'Clique no botão abaixo para adicionar páginas a sua wiki.',
-	'cnw-welcome-help' => 'Encontre respostas, conselhos, e muito mais na <a href="http://comunidade.wikia.com">Central da Comunidade Wikia</a>.',
-	'cnw-error-general' => 'Opa, algo deu errado em nosso sistema! Por favor, tente novamente ou [[Special:Contact|entre em contato]] conosco para obter ajuda.',
-	'cnw-error-general-heading' => 'Nossas desculpas',
-	'cnw-badword-header' => 'Atenção',
-	'cnw-badword-msg' => 'Olá, por favor não use palavras grosseiras ou proibidas na descrição da Wikia: $1',
-	'cnw-error-wiki-limit-header' => 'Limite de wikias atingido',
-	'cnw-error-wiki-limit' => 'Olá, você está limitado a {{PLURAL:$1|criar $1 wikia|criar $1 wikias}} por dia. Espere 24 horas antes de criar outra wikia.',
-	'cnw-error-blocked-header' => 'Conta bloqueada',
-	'cnw-error-blocked' => 'Você foi bloqueado por $1. O motivo dado foi: $2. (ID de Bloqueio para referência: $3)',
-	'cnw-error-anon-user-header' => 'Por favor, inicie sessão',
-	'cnw-error-anon-user' => 'A criação de wikias para usuários anônimos está desativada. Por favor [[Special:UserLogin|faça login]] e tente novamente.',
-	'cnw-error-torblock' => 'A criação de wikias usando a rede Tor não é permitida.',
-	'cnw-error-unconfirmed-email-header' => 'Seu endereço de e-mail não foi confirmado.',
-	'cnw-error-unconfirmed-email' => 'Seu endereço de e-mail deve ser confirmado para criar uma wikia.',
-	'cnw-name-wiki-language' => '',
-	'cnw-desc-select-vertical' => 'Escolha um hub:',
-	'cnw-desc-select-categories' => 'Selecione categorias adicionais',
-	'cnw-theme-loading-state' => 'Criando sua wiki. Você pode alterar seu tema durante este processo.',
-	'cnw-theme-show-wiki' => 'Mostre-me minha wiki',
-	'cnw-next-create-wiki' => 'Criar uma wiki',
-	'autocreatewiki' => 'Crie uma nova wikia',
-	'createwiki' => 'Crie uma nova wikia',
-	'autocreatewiki-language-top' => 'Os $1 idiomas mais usados',
-	'autocreatewiki-language-all' => 'Todos os idiomas',
-	'autocreatewiki-title-template' => 'comunidade $1',
-	'autocreatewiki-empty-field' => 'Por favor, preencha esse campo.',
-	'autocreatewiki-bad-name' => 'O nome não pode conter caracteres especiais (como $ ou @) nem espaços e precisa estar todo em minúsculas.',
-	'autocreatewiki-invalid-wikiname' => 'O nome não pode conter caracteres especiais (como $ ou @) e não pode estar vazio.',
-	'autocreatewiki-violate-policy' => 'Esse nome contém uma palavra que viola as nossas políticas de nomeação',
-	'autocreatewiki-name-taken' => 'Já existe uma wiki com este endereço. Você pode editá-la em <ahref="http://$1.wikia.com">http://$1.wikia.com</a> ou escolher outro endereço.',
-	'autocreatewiki-name-too-short' => 'Este endereço é muito curto, por favor escolha outro com no mímino 3 caracteres.',
-	'autocreatewiki-name-too-long' => 'Este endereço é muito longo. Escolha outro com no máximo 50 caracteres.',
-	'autocreatewiki-empty-wikiname' => 'O nome da wikia não pode estar vazio.',
-	'autocreatewiki-category-label' => 'Categoria:',
-	'autocreatewiki-welcometalk-log' => 'Mensagem de Boas-vindas',
-	'autocreatewiki-regex-error-comment' => 'usado na wikia $1 (texto completo: $2)',
-	'autocreatewiki-protect-reason' => 'Parte da interface oficial',
-	'autocreatewiki-welcometalk-wall-title' => 'Bem-vindo!',
-	'autocreatewiki-welcometalk' => '==Bem-vindo!==
-Olá!
-
-Estamos felizes em ter $4 como parte da comunidade Fandom! Ainda há muita coisa a fazer; aqui estão algumas dicas e links importantes para incrementar sua wiki:
-
-*Confira os [[Especial:WikiFeatures|Recursos da Wiki]] para ver quais recursos você pode ativar em sua wiki, incluindo chat, medalhas e muito mais.
-*Dê uma olhada na [[w:c:comunidade|Central da Comunidade]] para ficar informado através do nosso [[w:c:comunidade:Categoria:Notícias da Wikia|blog do staff]], tenha suas dúvidas respondidas no nosso [[w:c:comunidade:Especial:Forum|fórum da comunidade]], assista vídeos em [[w:c:comunidade:Universidade_da_Wikia|Universidade Fandom]], ou converse ao vivo com outros membros da comunidade Fandom.
-*Por último, visite nossas [[Ajuda:Conteúdos|páginas de ajuda]] para aprender mais sobre as manhas de como usar o Fandom.
-
-Todos os links acima são ótimos lugares para começar a explorar, divirta-se!
-
--- [[User:$2|$3]] <staff />',
-	'requestwiki-filter-language' => 'als,an,ang,ast,bar,de2,de-at,de-ch,de-formal,de-weigsbrag,dk,en-gb,eshelp,fihelp,frc,frhelp,ia,ie,ithelp,jahelp,kh,kohelp,kp,ksh,nb,nds,nds-nl,mu,mwl,nlhelp,pdc,pdt,pfl,pthelp,pt-brhelp,ruhelp,simple,tokipona,tp,zh-classical,zh-cn,zh-hans,zh-hant,zh-hk,zh-min-nan,zh-mo,zh-my,zh-sg,zh-tw,zh-yue',
-	'autocreatewiki-welcometalk-wall' => 'Olá, eu sou membro da equipe de suporte da comunidade do Fandom. Estamos felizes em ter {{subst:SITENAME}} como parte da comunidade Fandom!
-
-Pode parecer que há muito o que fazer, mas estamos aqui para ajudá-lo a começar rápida e facilmente. Aqui estão algumas dicas úteis e links para iniciar sua comunidade:
-
- *Confira os [[especial: WikiFeatures |Recursos wiki]] para ativar alguns recursos especiais, incluindo nossa comunidade popular de bate-papo.
- *Personalize a cor e o estilo da sua comunidade, visitando o [Especial:ThemeDesigner|Designer de Tema]].
- *Visite a [[w:c:comunidade|Central da Comunidade]] para dar uma olhada no [[w:c:comunidade:Categoria:Not%C3%ADcias_da_Comunidade|blog do staff] e fazer perguntas no [[w:c:comunidade:Especial:Forum|Fórum da comunidade]].
-*Por último, visite nossas [[Ajuda:Conteúdos|páginas de ajuda]] para aprender como utilizar o Fandom, ou visite [[w:c:comunidade:Universidade_da_Wikia|Universidade Fandom]] para assistir vídeos instrucionais. Divirta-se!',
-	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
-);
-
 $messages['ro'] = array(
 	'cnw-title' => 'Crează un nou wiki',
 	'cnw-name-wiki-headline' => 'Porneşte un wiki',
@@ -2884,8 +2778,7 @@ $messages['ru'] = array(
 	'cnw-desc-select-vertical' => 'Выберите портал:',
 	'cnw-desc-select-categories' => 'Дополнительные категории',
 	'cnw-desc-select-one' => 'Список порталов',
-	'cnw-desc-all-ages' => 'Эта вики предназначена для детей?',
-	'cnw-desc-tip-all-ages' => 'Тема вики будет интересна детям? В соответствии с законодательством США мы отслеживаем проекты по темам, которые предназначены для детей в возрасте до 12 лет.',
+	'cnw-desc-all-ages' => 'Эта вики предназначена для детей до 13 лет?',
 	'cnw-desc-lang' => 'Язык вашей вики',
 	'cnw-desc-wiki-submit-error' => 'Необходимо выбрать категорию',
 	'cnw-theme-headline' => 'Выберите оформление',
@@ -2985,7 +2878,6 @@ $messages['sco'] = array(
 	'cnw-desc-select-categories' => 'Check addeetional categeries',
 	'cnw-desc-select-one' => 'Select yin',
 	'cnw-desc-all-ages' => 'Is this wikia meant fer bairns?',
-	'cnw-desc-tip-all-ages' => 'Is this aneat ae tapic that bairns ar interested in? In order tae heelp us complie wi US law we keep track o wikias aneat tapics that directlie appeal tae bairns 12 year auld n unner.',
 	'cnw-desc-lang' => 'Leid',
 	'cnw-desc-wiki-submit-error' => 'Please chuise ae categerie',
 	'cnw-theme-headline' => 'Chuise ae theme',
@@ -3075,7 +2967,6 @@ $messages['sv'] = array(
 	'cnw-desc-select-categories' => 'Välj ytterligare kategorier',
 	'cnw-desc-select-one' => 'Välj en',
 	'cnw-desc-all-ages' => 'Är denna wikia avsedd för barn?',
-	'cnw-desc-tip-all-ages' => 'Handlar denna wikia om ett ämne som barn är intresserade i? För att vi ska kunna följa USA:s lagstiftning måste vi hålla reda på wikias med ämnen som riktar sig mot barn som är 12 och under.',
 	'cnw-desc-lang' => 'Språk',
 	'cnw-desc-wiki-submit-error' => 'Välj en kategori',
 	'cnw-theme-headline' => 'Designa din wiki',
@@ -3192,7 +3083,6 @@ $messages['te'] = array(
 	'cnw-desc-placeholder' => 'ఇది మీ వికీ మొదటిపేజీలో కనిపిస్తుంది.',
 	'cnw-desc-select-one' => 'ఒకటి ఎంచుకోండి',
 	'cnw-desc-all-ages' => 'అన్ని వయసుల వారికీ',
-	'cnw-desc-tip-all-ages' => 'ఈ వికీ పిల్లలకు ఆసక్తి కలిగించే అంశం గురించా? అమెరికా చట్టాలకు అనుగుణంగా 12 సంవత్సరాల లోపు పిల్లలను ఆకట్టుకునే అంశాలున్న వికీలను మేం గమనిస్తూంటాం.',
 	'cnw-desc-lang' => 'భాష',
 	'cnw-desc-wiki-submit-error' => 'ఓ వర్గాన్ని ఎంచుకోండి',
 	'cnw-theme-headline' => 'ఓ థీమును ఎంచుకోండి',
@@ -3307,7 +3197,6 @@ $messages['tr'] = array(
 	'cnw-desc-placeholder' => 'Bu wikinizin ana sayfanızda görünecektir.',
 	'cnw-desc-select-one' => 'Birini seç',
 	'cnw-desc-all-ages' => 'Tüm süreler',
-	'cnw-desc-tip-all-ages' => 'Bu wiki çocukları ilgilendiren bir konu hakkında mı? ABD yasaları uyarınca ve yardımcı olmak için 12 yaş ve altı çocuklara hitap eden konuları takip ediyoruz.',
 	'cnw-desc-lang' => 'Dil',
 	'cnw-desc-wiki-submit-error' => 'Lütfen bir kategori seçin',
 	'cnw-theme-headline' => 'Bir tema seçin',
@@ -3425,7 +3314,6 @@ $messages['uk'] = array(
 	'cnw-desc-select-categories' => 'Виберіть додаткові категорії',
 	'cnw-desc-select-one' => 'Оберіть одну',
 	'cnw-desc-all-ages' => 'Цей вікія призначена для дітей?',
-	'cnw-desc-tip-all-ages' => "Цей текст на тему, якою цікавляться діти? Для того, щоб допомогти нам дотримуватися законодавства США, ми стежимо за вікії на теми, безпосередньо пов'язані з дітьми віком 12 років і молодшими.",
 	'cnw-desc-lang' => 'Мова',
 	'cnw-desc-wiki-submit-error' => 'Просимо вибрати категорію',
 	'cnw-theme-headline' => 'Обрати тему',
@@ -3507,7 +3395,6 @@ $messages['vi'] = array(
 	'cnw-desc-select-categories' => 'Chọn các thể loại bổ sung',
 	'cnw-desc-select-one' => 'Chọn một',
 	'cnw-desc-all-ages' => 'Có phải wikia này dành cho trẻ em?',
-	'cnw-desc-tip-all-ages' => 'Đây có phải là nơi giới thiệu một chủ đề mà trẻ em có thể quan tâm? Để giúp chúng tôi tuân thủ luật pháp Hoa Kỳ, chúng tôi theo dõi các wikia về những chủ đề dành cho cho trẻ em từ 12 tuổi trở xuống.',
 	'cnw-desc-lang' => 'Ngôn ngữ',
 	'cnw-desc-wiki-submit-error' => 'Hãy chọn một thể loại',
 	'cnw-theme-headline' => 'Chọn một chủ đề',
@@ -3533,15 +3420,6 @@ $messages['vi'] = array(
 	'autocreatewiki-title-template' => 'Wikia $1',
 );
 
-$messages['zh'] = array(
-	'autocreatewiki-welcomebody-HTML' => '<p>嗨 $2,<br /><br />
-您创建的Wiki已经可以在 <a href="$1">$1</a>访问。 期望很快能看到您的编辑！<br /><br />
-我们在您的<a href="$5">用户对话页</a>提供了一些资讯来协助您开始。如果有任何问题，可以浏览我们的 <a href="http://zh.community.wikia.com/wiki/help:content">帮助中心</a>.<br /><br />
-祝一切顺利。<br /><br />
-<a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
-Wikia社区团队<br /></p>',
-);
-
 $messages['zh-hans'] = array(
 	'createnewwiki-desc' => '维基创建向导',
 	'cnw-next' => '下一步',
@@ -3554,12 +3432,11 @@ $messages['zh-hans'] = array(
 	'cnw-name-wiki-submit-error' => '很抱歉！您需要填写上面两栏才能继续下一步。',
 	'cnw-desc-headline' => '您的维基是关于什么的？',
 	'cnw-desc-creative' => '用准确到位的描述帮助网友找到您的维基。',
-	'cnw-desc-placeholder' => '写好一些！您的文字会显示在您的维基首页上。',
+	'cnw-desc-placeholder' => '记得好好写哟！因为这些文字会显示在您的维基首页上。',
 	'cnw-desc-select-vertical' => '选择一个主题中心︰',
 	'cnw-desc-select-categories' => '查看其他类别',
 	'cnw-desc-select-one' => '主题类',
-	'cnw-desc-all-ages' => '此社区适合儿童吗？',
-	'cnw-desc-tip-all-ages' => '这是孩子感兴趣的主题吗？根据美国法律，我们会跟踪12岁以下儿童感兴趣的主题社区网站。',
+	'cnw-desc-all-ages' => '这个社区是只针对13岁以下的儿童吗？',
 	'cnw-desc-lang' => '你的维基站的语言',
 	'cnw-desc-wiki-submit-error' => '请选择一个类别',
 	'cnw-theme-headline' => '选择样式',
@@ -3648,10 +3525,9 @@ $messages['zh-hant'] = array(
 	'cnw-name-wiki-submit-error' => '抱歉！需要填寫上面兩欄才能繼續。',
 	'cnw-desc-headline' => '你的Wiki的主題是什麼？',
 	'cnw-desc-creative' => '用精確的描述幫助網友找到你的wiki。',
-	'cnw-desc-placeholder' => '寫好一些！您的文字會顯示在您的wiki首頁上。',
+	'cnw-desc-placeholder' => '寫好一些！您的文字會顯示在您的Wiki首頁上。',
 	'cnw-desc-select-one' => '選擇一項',
-	'cnw-desc-all-ages' => '這個社區主要是針對兒童的嗎？',
-	'cnw-desc-tip-all-ages' => '這是孩子感興趣的話題嗎？為了能遵守美國法律，我們會追縱主題直接針對12歲以下兒童的Wiki社區。',
+	'cnw-desc-all-ages' => '這個社區的主題主要針對13歲以下的兒童嗎？',
 	'cnw-desc-lang' => '你的Wiki的語言',
 	'cnw-desc-wiki-submit-error' => '請選擇一個類別',
 	'cnw-theme-headline' => '選擇一個樣式',
@@ -3728,27 +3604,5 @@ $messages['zh-hant'] = array(
 祝您編輯一切順利！<br /><br />
 <a href="http://zh.community.wikia.com/wiki/User:$4">$3</a><br />
 Fandom社區團隊<br /></p>',
-);
-
-$messages['zh-hk'] = array(
-	'autocreatewiki-welcomebody-HTML' => '<p>嗨 $2,<br /><br />
-您創建的Wiki已經可以在 <a href="$1">$1</a>訪問。 期望很快能看到您的編輯！<br /><br />
-我們在您的<a href="$5">用戶對話頁</a>提供了一些資訊來協助您開始。如果有任何問題，可以瀏覽我們的 <a href="http://zh.community.wikia.com/wiki/help:content">幫助中心</a>.<br /><br />
-祝一切順利。<br /><br />
-<a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
-Wikia社區團隊<br /></p>',
-);
-
-$messages['zh-sg'] = array(
-	'createwiki' => '申请wiki',
-);
-
-$messages['zh-tw'] = array(
-	'autocreatewiki-welcomebody-HTML' => '<p>嗨 $2,<br /><br />
-您創建的Wiki已經可以在 <a href="$1">$1</a>訪問。 期望很快能看到您的編輯！<br /><br />
-我們在您的<a href="$5">用戶對話頁</a>提供了一些資訊來協助您開始。如果有任何問題，可以瀏覽我們的 <a href="http://zh.community.wikia.com/wiki/help:content">幫助中心</a>.<br /><br />
-祝一切順利。<br /><br />
-<a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
-Wikia社區團隊<br /></p>',
 );
 

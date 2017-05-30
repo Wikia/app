@@ -44,6 +44,9 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 			case slotName === 'BOTTOM_LEADERBOARD':
 				var footerSize = doc.getElementById('WikiaFooter').offsetWidth;
 				return getNewSizes(slotSizes, footerSize, [[728, 90]]);
+			case slotName === 'INCONTENT_BOXAD_1' && context.opts.adMixExperimentEnabled:
+			case slotName === 'TOP_RIGHT_BOXAD' && context.opts.adMixExperimentEnabled:
+				return [ [300, 250] ];
 			default:
 				return slotSizes;
 		}

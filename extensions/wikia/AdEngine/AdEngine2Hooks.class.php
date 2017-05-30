@@ -11,7 +11,6 @@ class AdEngine2Hooks {
 	const ASSET_GROUP_ADENGINE_OPENX_BIDDER = 'adengine2_ox_bidder_js';
 	const ASSET_GROUP_ADENGINE_PREBID = 'adengine2_prebid_js';
 	const ASSET_GROUP_ADENGINE_RUBICON_FASTLANE = 'adengine2_rubicon_fastlane_js';
-	const ASSET_GROUP_ADENGINE_RUBICON_VULCAN = 'adengine2_rubicon_vulcan_js';
 	const ASSET_GROUP_ADENGINE_TABOOLA = 'adengine2_taboola_js';
 	const ASSET_GROUP_ADENGINE_TRACKING = 'adengine2_tracking_js';
 
@@ -37,6 +36,8 @@ class AdEngine2Hooks {
 	 * @return bool
 	 */
 	public static function onInstantGlobalsGetVariables( array &$vars ) {
+		$vars[] = 'wgAdDriverAdMixCountries';
+		$vars[] = 'wgAdDriverAbTestIdTargeting';
 		$vars[] = 'wgAdDriverAolBidderCountries';
 		$vars[] = 'wgAdDriverAppNexusBidderCountries';
 		$vars[] = 'wgAdDriverAppNexusBidderPlacementsConfig';
@@ -64,7 +65,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverRubiconFastlaneMercuryFixCountries';
 		$vars[] = 'wgAdDriverRubiconFastlaneProviderCountries';
 		$vars[] = 'wgAdDriverRubiconFastlaneProviderSkipTier';
-		$vars[] = 'wgAdDriverRubiconVulcanCountries';
+		$vars[] = 'wgAdDriverRubiconPrebidCountries';
 		$vars[] = 'wgAdDriverSourcePointDetectionCountries';
 		$vars[] = 'wgAdDriverSourcePointDetectionMobileCountries';
 		$vars[] = 'wgAdDriverSrcPremiumCountries';
@@ -177,10 +178,6 @@ class AdEngine2Hooks {
 
 		if ( AnalyticsProviderRubiconFastlane::isEnabled() ) {
 			$jsAssets[] = static::ASSET_GROUP_ADENGINE_RUBICON_FASTLANE;
-		}
-
-		if ( AnalyticsProviderRubiconVulcan::isEnabled() ) {
-			$jsAssets[] = static::ASSET_GROUP_ADENGINE_RUBICON_VULCAN;
 		}
 
 		return true;

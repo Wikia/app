@@ -542,22 +542,6 @@ $messages['pt'] = array(
 	'right-dumpsondemand' => 'O usuário pode pedir despejo do banco de dados, via Especial:Estatísticas',
 );
 
-$messages['pt-br'] = array(
-	'dump-database' => 'Descarregamento do banco de dados',
-	'dump-database-info' => 'Descarregamentos do banco de dados podem ser usados como cópias de segurança pessoais (Fandom produz cópias de segurança para todas wikis automaticamente) ou para robôs de manutenção',
-	'dump-database-curr-pages' => 'Páginas atuais',
-	'dump-database-curr-pages-info' => '(Esta versão geralmente é melhor para uso por robôs)',
-	'dump-database-full-pages' => 'Páginas atuais e histórico',
-	'dump-database-full-pages-info' => '(Aviso: este arquivo pode ser muito grande)',
-	'dump-database-request' => 'Pedir atualização',
-	'dump-database-request-info' => '(Descarregamentos geralmente são gerados semanalmente)',
-	'dump-database-request-submit' => 'Enviar pedido',
-	'dump-database-request-already-submitted' => 'Foi solicitada recentemente uma cópia para arquivo (há menos de 7 dias)',
-	'dump-database-request-requested' => 'Pedido para descarregamento do banco de dados enviado',
-	'dump-database-info-more' => 'Por favor <a href="http://community.wikia.com/wiki/Help:Database_download">veja isto</a> para mais informações',
-	'dump-database-last-unknown' => 'Desconhecido',
-);
-
 $messages['ro'] = array(
 	'dump-database-curr-pages' => 'Pagini curente',
 	'dump-database-request' => 'Solicită o actualizare',

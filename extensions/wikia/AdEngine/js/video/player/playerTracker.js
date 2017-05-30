@@ -8,9 +8,20 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	'wikia.geo',
 	'wikia.log',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan'),
+	require.optional('ext.wikia.adEngine.lookup.prebid.bidHelper'),
 	require.optional('ext.wikia.adEngine.video.player.porvata.floater')
-], function (adContext, pageLevel, adTracker, slotTargeting, browserDetect, geo, log, win, vulcan, floater) {
+], function (
+	adContext,
+	pageLevel,
+	adTracker,
+	slotTargeting,
+	browserDetect,
+	geo,
+	log,
+	win,
+	bidHelper,
+	floater
+) {
 	'use strict';
 	var context = adContext.getContext(),
 		logGroup = 'ext.wikia.adEngine.video.player.playerTracker',
@@ -42,26 +53,22 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'content_type': contentType || emptyValue.string,
 				'line_item_id': params.lineItemId || emptyValue.int,
 				'creative_id': params.creativeId || emptyValue.int,
-				'vulcan_network': emptyValue.int,
-				'vulcan_advertiser': emptyValue.int,
-				'vulcan_price': emptyValue.price,
+				'price': emptyValue.price,
 				'browser': [ browserDetect.getOS(), browserDetect.getBrowser() ].join(' '),
 				'additional_1': canFloat,
 				'additional_2': floatingState
-			},
-			vulcanResponse;
+			};
 
-		if (vulcan && params.slotName && params.adProduct === 'vulcan') {
-			vulcanResponse = vulcan.getSingleResponse(params.slotName);
+		if (bidHelper && params.bid && params.adProduct === 'rubicon') {
 			trackingData['vast_id'] = [
-				vulcanResponse.network || emptyValue.string,
-				vulcanResponse.advertiser || emptyValue.string
+				params.bid.rubiconAdvertiserId || emptyValue.string,
+				params.bid.rubiconAdId || emptyValue.string
 			].join(':');
-			trackingData['vulcan_price'] = vulcan.getBestSlotPrice(params.slotName).vulcan || emptyValue.price;
+			trackingData['price'] = bidHelper.transformPriceFromBid(params.bid);
 		}
 
-		if (params.adProduct === 'veles') {
-			trackingData['vast_id'] = (params.bid && params.bid.vastId) || emptyValue.string;
+		if (bidHelper && params.bid && params.adProduct === 'veles') {
+			trackingData['vast_id'] = params.bid.vastId || emptyValue.string;
 		}
 
 		return trackingData;
