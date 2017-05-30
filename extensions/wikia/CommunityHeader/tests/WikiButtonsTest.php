@@ -108,6 +108,42 @@ class WikiButtonsTest extends \WikiaBaseTest {
 					],
 				] ),
 			],
+			[
+				'isLoggedUser' => true,
+				'hasAdminDashboardRight' => true,
+				'expected' => $this->prepareWikiButtons( [
+					[
+						'href' => '/wiki/Special:CreatePage',
+						'label' => null,
+						'title' => [
+							'type' => 'translatable-text',
+							'key' => 'community-header-add-new-page',
+						],
+						'icon' => 'wds-icons-add-new-page-small',
+						'tracking' => 'add-new-page',
+					],
+					[
+						'href' => '/wiki/Special:WikiActivity',
+						'label' => null,
+						'title' => [
+							'type' => 'translatable-text',
+							'key' => 'community-header-wiki-activity',
+						],
+						'icon' => 'wds-icons-activity-small',
+						'tracking' => 'wiki-activity',
+					],
+					[
+						'href' => '/wiki/Special:AdminDashboard',
+						'label' => null,
+						'title' => [
+							'type' => 'translatable-text',
+							'key' => 'community-header-admin-dashboard',
+						],
+						'icon' => 'wds-icons-dashboard-small',
+						'tracking' => 'admin-dashboard',
+					],
+				] ),
+			],
 		];
 	}
 }
