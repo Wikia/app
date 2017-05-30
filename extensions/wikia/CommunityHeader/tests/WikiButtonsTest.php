@@ -6,7 +6,8 @@ use CommunityHeader\WikiButtons;
 
 class WikiButtonsTest extends \WikiaBaseTest {
 	protected function setUp() {
-		$this->setupFile = __DIR__ . '/../CommunityHeader.setup.php';
+		global $IP;
+		$this->setupFile = "$IP/extensions/wikia/CommunityHeader/CommunityHeader.setup.php";
 		parent::setUp();
 	}
 
