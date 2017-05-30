@@ -18,7 +18,7 @@ class UserPagesHeaderController extends WikiaController {
 		$this->editTimestamp = null;
 
 		//User pages have custom page header
-        $this->wg->SuppressPageHeader = true;
+		$this->wg->SuppressPageHeader = true;
 	}
 
 	/**

@@ -80,9 +80,9 @@
 			</div>
 		<? endif; ?>
 
-        <? if ( empty( $wg->SuppressPageHeader ) ) : ?>
-            <?= $app->renderView( 'PageHeader', 'index' ) ?>
-        <? endif; ?>
+		<? if ( empty( $wg->SuppressPageHeader ) ) : ?>
+			<?= $app->renderView('PageHeader', 'index') ?>
+		<? endif; ?>
 
 		<article id="WikiaMainContent" class="WikiaMainContent<?= !empty( $isGridLayoutEnabled ) ? $railModulesExist ? ' grid-4' : ' grid-6' : '' ?>">
 			<div id="WikiaMainContentContainer" class="WikiaMainContentContainer">
