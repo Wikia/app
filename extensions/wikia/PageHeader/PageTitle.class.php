@@ -28,25 +28,23 @@ class PageTitle {
 		$this->MWTitle = RequestContext::getMain()->getTitle();
 
 		$this->namespace = $this->MWTitle->getNamespace();
-		$this->title = $this->handleTitle($app);
+		$this->title = $this->handleTitle( $app );
 		$this->prefix = $this->handlePrefix();
 	}
 
 	private function handleTitle( \WikiaApp $app ): string {
-		if (\WikiaPageType::isMainPage()) {
+		if ( \WikiaPageType::isMainPage() ) {
 			return $this->titleMainPage();
-		} else if (in_array($this->namespace, \BodyController::getUserPagesNamespaces())) {
-			return $this->titleUserPages();
-		} else if ($this->MWTitle->isTalkPage() || $this->shouldNotDisplayNamespacePrefix($this->namespace)) {
-			return htmlspecialchars($this->wg->Title->getText());
+		} else if ( $this->MWTitle->isTalkPage() || $this->shouldNotDisplayNamespacePrefix( $this->namespace ) ) {
+			return htmlspecialchars( $this->MWTitle->getText() );
 		}
 
 		return $app->getSkinTemplateObj()->data['title'];
 	}
 
 	private function handlePrefix() {
-		if ($this->MWTitle->isTalkPage()) {
-			return $this->wg->ContLang->getNsText(NS_TALK);
+		if ( $this->MWTitle->isTalkPage() ) {
+			return $this->wg->ContLang->getNsText( NS_TALK );
 		}
 
 		return null;
@@ -57,8 +55,8 @@ class PageTitle {
 	 * @return bool
 	 */
 	private function shouldNotDisplayNamespacePrefix( $namespace ): bool {
-		return in_array($namespace,
-			array_merge(self::PREFIX_LESS_NAMESPACES, $this->wg->SuppressNamespacePrefix)
+		return in_array( $namespace,
+			array_merge( self::PREFIX_LESS_NAMESPACES, $this->wg->SuppressNamespacePrefix )
 		);
 	}
 
@@ -66,6 +64,6 @@ class PageTitle {
 	 * @return string
 	 */
 	private function titleMainPage(): string {
-		return wfMessage('oasis-home')->escaped();
+		return wfMessage( 'oasis-home' )->escaped();
 	}
 }
