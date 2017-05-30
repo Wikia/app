@@ -90,6 +90,7 @@
   "notifications-reply-upvote-multiple-users-with-title": "__number__ — столько участников <b>оценили</b> ваш ответ в обсуждении __postTitle__",
   "notifications-reply-upvote-multiple-users-no-title": "__number__ — столько участников <b>оценили</b> ваш ответ",
   "notifications-notifications": "Уведомления",
+  "community-header-page": "Страница",
   "community-header-pages": "Страницы",
   "community-header-add": "Добавить",
   "community-header-add-new-page": "Добавить новую страницу",

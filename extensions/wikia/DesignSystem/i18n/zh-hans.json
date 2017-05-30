@@ -90,6 +90,7 @@
   "notifications-reply-upvote-multiple-users-with-title": "__number__个用户<b>赞了</b>你对__postTitle__的回复",
   "notifications-reply-upvote-multiple-users-no-title": "__number__个用户<b>赞了</b>你的回复",
   "notifications-notifications": "提醒",
+  "community-header-page": "页面",
   "community-header-pages": "页面",
   "community-header-add": "添加",
   "community-header-add-new-page": "添加新页面",

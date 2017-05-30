@@ -90,6 +90,7 @@
   "notifications-reply-upvote-multiple-users-with-title": "__number__ użytkowników <b>zagłosowało</b> na twoją odpowiedź w __postTitle__",
   "notifications-reply-upvote-multiple-users-no-title": "__number__ użytkowników <b>zagłosowało</b> na twoją odpowiedź",
   "notifications-notifications": "Powiadomienia",
+  "community-header-page": "Strona",
   "community-header-pages": "Stron(y)",
   "community-header-add": "Dodaj",
   "community-header-add-new-page": "Dodaj nową stronę",

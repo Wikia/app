@@ -90,6 +90,7 @@
   "notifications-reply-upvote-multiple-users-with-title": "__number__ Benutzer haben deiner Antwort auf __postTitle__ <b>zugestimmt</b>",
   "notifications-reply-upvote-multiple-users-no-title": "__number__ Benutzer haben deiner Antwort <b>zugestimmt</b>",
   "notifications-notifications": "Benachrichtigungen",
+  "community-header-page": "Seite",
   "community-header-pages": "Seiten",
   "community-header-add": "Hinzufügen",
   "community-header-add-new-page": "Neue Seite hinzufügen",

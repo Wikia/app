@@ -90,6 +90,7 @@
   "notifications-reply-upvote-multiple-users-with-title": "__number__個使用者<b>讚了</b>你對__postTitle__的回覆",
   "notifications-reply-upvote-multiple-users-no-title": "__number__個使用者<b>讚了</b>你的回覆",
   "notifications-notifications": "通知",
+  "community-header-page": "頁面",
   "community-header-pages": "個頁面",
   "community-header-add": "增加",
   "community-header-add-new-page": "增加新頁面",

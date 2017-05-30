@@ -90,6 +90,7 @@
   "notifications-reply-upvote-multiple-users-with-title": "__number__人のユーザーが、__postTitle__のあなたの返信に<b>「イイね！」</b>しました",
   "notifications-reply-upvote-multiple-users-no-title": "__number__人のユーザーが、あなたの返信に<b>「イイね！」</b>しました",
   "notifications-notifications": "通知",
+  "community-header-page": "ページ",
   "community-header-pages": "ページ",
   "community-header-add": "投稿",
   "community-header-add-new-page": "新しいページをつくる",
