@@ -40,7 +40,7 @@ class Navigation {
 			[
 				'title' => 'Videos',
 				'key' => 'community-header-videos',
-				'tracking' => 'explore-vidoes',
+				'tracking' => 'explore-videos',
 				'include' => true,
 			],
 			[
