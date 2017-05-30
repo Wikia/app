@@ -9,6 +9,10 @@
 @import 'extensions/wikia/ThemeDesigner/css/ThemeTab';
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index';
 
+.wds-community-header {
+	display: none;
+}
+
 .WikiaSiteWrapper {
 	background-color: $wds-color-off-white;
 }
