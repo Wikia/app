@@ -23,7 +23,6 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 			}
 		},
 		doc: {
-			getElementById: noop,
 			querySelectorAll: noop
 		},
 		geo: {

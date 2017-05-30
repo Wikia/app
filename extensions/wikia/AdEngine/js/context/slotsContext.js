@@ -17,10 +17,9 @@ define('ext.wikia.adEngine.context.slotsContext', [
 	}
 
 	function isInContentApplicable() {
-		var content = doc.getElementById('mw-content-text'),
-			header = doc.querySelectorAll('#mw-content-text > h2')[1];
+		var header = doc.querySelectorAll('#mw-content-text > h2')[1];
 
-		return content && header && header.offsetWidth >= content.offsetWidth;
+		return header && header.offsetWidth >= header.parentNode.offsetWidth;
 	}
 
 	function setupSlots() {
