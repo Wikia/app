@@ -1,54 +1,38 @@
 <?php
-$wgRunningUnitTests = true; // don't include DevBoxSettings when running unit tests
+/**
+ * This file handles initializing MediaWiki stack and setting global flags
+ * before handing over execution to PHPUnit that executes the tests
+ * provided in its configuration file set via the command line.
+ */
+
+error_reporting( E_ALL );
+ini_set( 'display_errors', 1 );
+
+// don't include DevBoxSettings when running unit tests
+$wgRunningUnitTests = true;
 $wgDevelEnvironment = true;
+$wgAnnotateTestSpeed = ( getenv( 'ANNOTATE_TEST_SPEED' ) === '1' );
 
-class FakeCache {
-	public function __call($a, $b) {
-		return '';
+require_once __DIR__ . '/../maintenance/Maintenance.php';
+
+class PhpUnit extends Maintenance {
+	public function __construct() {
+		parent::__construct();
+
+		$this->addOption( 'slow-list', 'Whether to find and mark slow tests' );
+	}
+
+	public function execute() {
+		// TODO: Broken. Fix.
+		if ( $this->hasOption( 'slow-list' ) ) {
+			require_once 'SlowTestsFinder.php';
+			SlowTestsFinder::main();
+			return;
+		}
+
+		\PHPUnit\TextUI\Command::main();
 	}
 }
 
-require_once __DIR__ . '/../maintenance/commandLine.inc';
-
-class MessageStub extends Message {
-	public function toString() {
-		throw new WikiaException('No messaging in unit tests');
-	}
-}
-
-function wfMsgExtStub() {
-	return '';
-}
-function wfMsgRealStub() {
-	return '';
-}
-function wfGetDBStub() {
-	throw new WikiaException('No DB in unit tests');
-}
-
-function sno_callback($className) {
-	if ($className == 'Message') {
-		$className = 'MessageStub';
-	}
-
-	return $className;
-}
-
-if ($wgRunningUnitTests && $wgNoDBUnits) {
-	rename_function('wfMsgExt', 'wfMsgExt_orig');
-	rename_function('wfMsgReal', 'wfMsgReal_orig');
-	rename_function('wfGetDB', 'wfGetDB_orig');
-	rename_function('wfMsgExtStub', 'wfMsgExt');
-	rename_function('wfMsgRealStub', 'wfMsgReal');
-	rename_function('wfGetDBStub', 'wfGetDB');
-
-	$wgMemc = new FakeCache();
-	$messageMemc = null;
-	$parserMemc = null;
-
-	set_new_overload('sno_callback');
-}
-
-require_once 'Zend/Exception.php';
-require_once 'Zend/Config.php';
-require_once 'Zend/Config/Exception.php';
+$maintClass = PhpUnit::class;
+require_once RUN_MAINTENANCE_IF_MAIN;

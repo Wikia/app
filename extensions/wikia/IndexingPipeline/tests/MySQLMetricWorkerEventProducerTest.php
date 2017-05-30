@@ -1,24 +1,26 @@
 <?php
 
-use Wikia\IndexingPipeline\MySQLMetricEventProducer;
-
+/**
+ * @covers Wikia\IndexingPipeline\MySQLMetricEventProducer
+ */
 class MySQLMetricEventProducerTest extends WikiaBaseTest {
-	/** @var MySQLMetricEventProducer $eventProducer */
+	/** @var Wikia\IndexingPipeline\MySQLMetricEventProducer $eventProducer */
 	private $eventProducer;
 
 	protected function setUp() {
 		$this->setupFile = dirname( __FILE__ ) . '/../IndexingPipeline.setup.php';
 		parent::setUp();
 
-		$this->eventProducer = new MySQLMetricEventProducer();
+		$this->eventProducer = new Wikia\IndexingPipeline\MySQLMetricEventProducer();
 	}
 
 
 	/**
+	 * @dataProvider prepareMessageDataProvider
+	 *
 	 * @param array $pageId
 	 * @param $wgCityId
 	 * @param array $expectedOutput
-	 * @dataProvider prepareMessageDataProvider
 	 */
 	public function testPrepareMessage( $pageId, $wgCityId, $expectedOutput ) {
 		$this->mockGlobalVariable('wgCityId', $wgCityId);

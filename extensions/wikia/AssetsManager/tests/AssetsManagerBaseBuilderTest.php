@@ -17,6 +17,7 @@ function foo() {
 JS;
 
 	/**
+	 * @covers AssetsManagerBaseBuilder::minifyJS()
 	 * @param $useYui
 	 * @throws Exception
 	 * @dataProvider minifyDataProvider

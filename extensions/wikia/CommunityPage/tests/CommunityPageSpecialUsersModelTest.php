@@ -1,7 +1,6 @@
 <?php
-use PHPUnit\Framework\TestCase;
 
-class CommunityPageSpecialUsersModelTest extends TestCase {
+class CommunityPageSpecialUsersModelTest extends WikiaBaseTest {
 
 	protected function setUp() {
 		parent::setUp();
@@ -13,6 +12,7 @@ class CommunityPageSpecialUsersModelTest extends TestCase {
 	 * @param array $admins
 	 * @param boolean $expectedResult
 	 *
+	 * @covers CommunityPageSpecialUsersModel::isAdmin()
 	 * @dataProvider isAdminDataProvider
 	 */
 	public function testIsAdmin( $userId, $admins, $expectedResult ) {

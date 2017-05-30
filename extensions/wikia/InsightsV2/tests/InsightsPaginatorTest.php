@@ -9,6 +9,7 @@ class InsightsPaginatorTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @covers InsightsPaginator::getParams()
 	 * @dataProvider providerRemovingCurrentPageParam
 	 */
 	public function testRemovingCurrentPageParam( $params, $expectedParams ) {
@@ -18,6 +19,7 @@ class InsightsPaginatorTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @covers InsightsPaginator::getPage()
 	 * @dataProvider providerCurrentPage
 	 */
 	public function testCurrentPage( $params, $expectedPageNumber ) {
@@ -27,6 +29,7 @@ class InsightsPaginatorTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @covers InsightsPaginator::getOffset()
 	 * @dataProvider providerOffset
 	 */
 	public function testOffset( $params, $expectedOffset ) {

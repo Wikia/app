@@ -31,13 +31,7 @@ $wgSpecialPageGroups['DevBoxPanel'] = 'wikia';
 $dir = __DIR__ . '/';
 $wgExtensionMessagesFiles['DevBoxPanel'] = $dir.'Special_DevBoxPanel.i18n.php';
 
-if (!empty($wgRunningUnitTests) && $wgNoDBUnits) {
-	Language::$dataCache = new FakeCache();
-	$wgHooks['WikiFactory::execute'] = ["wfUnitForceWiki"];
-} else {
-	$wgHooks['WikiFactory::execute'][] = "wfDevBoxForceWiki";
-}
-
+$wgHooks['WikiFactory::execute'][] = "wfDevBoxForceWiki";
 $wgHooks['WikiFactory::executeBeforeTransferToGlobals'][] = "wfDevBoxDisableWikiFactory";
 $wgHooks['ResourceLoaderGetConfigVars'][] = 'wfDevBoxResourceLoaderGetConfigVars';
 $wgExceptionHooks['MWExceptionRaw'][] = "wfDevBoxLogExceptions";

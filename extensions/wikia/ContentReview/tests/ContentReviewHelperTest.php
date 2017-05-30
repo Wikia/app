@@ -8,11 +8,13 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @covers \Wikia\ContentReview\Helper::isPageReviewed()
+	 * @dataProvider isPageForReviewTestData
+	 *
 	 * @param array $titleData Has to include `titleNamespace` and `titleText` keys
 	 * @param string $contentType
 	 * @param bool $expected
 	 * @param $message
-	 * @dataProvider isPageForReviewTestData
 	 */
 	public function testIsPageForReview( array $titleData, $contentType, $expected, $message ) {
 		$title = Title::makeTitle( $titleData['titleNamespace'], $titleData['titleText'] );
@@ -25,6 +27,7 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 	 *
 	 * To review different cases - check the documentation of the dataProvider.
 	 *
+	 * @covers \Wikia\ContentReview\Helper::replaceWithLastApproved()
 	 * @dataProvider replaceWithLastApprovedRevisionProvider
 	 * @param array $inputData Has to contain the following keys:
 	 * 		'isPageReviewed' =>
@@ -112,7 +115,9 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @covers \Wikia\ContentReview\Helper::userCanEditJsPage()
 	 * @dataProvider userCanEditJsPageProvider
+	 *
 	 * @param bool $isJsPage
 	 * @param bool $userCan
 	 * @param bool $expected
@@ -133,11 +138,13 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @covers \Wikia\ContentReview\Helper::hasPageApprovedId()
+	 * @dataProvider hasPageApprovedIdProvider
+	 *
 	 * @param int $latestReviewedId
 	 * @param int $oldId
 	 * @param bool $expected
 	 * @param string $message
-	 * @dataProvider hasPageApprovedIdProvider
 	 */
 	public function testHasPageApprovedId( $latestReviewedId, $oldId, $expected, $message ) {
 		$modelMock = $this->getMock( 'Wikia\ContentReview\Models\CurrentRevisionModel', [ 'getLatestReviewedRevision' ] );

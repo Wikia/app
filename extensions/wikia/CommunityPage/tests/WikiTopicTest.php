@@ -8,6 +8,7 @@ class WikiTopicTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @covers WikiTopic::getWikiTopic()
 	 * @dataProvider fallbackToSitenameProvider
 	 *
 	 * @param string $sitename
@@ -22,6 +23,7 @@ class WikiTopicTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @covers WikiTopic::getWikiTopic()
 	 * @dataProvider preparingWikiTopicFromSitenameProvider
 	 *
 	 * @param string $sitename

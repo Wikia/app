@@ -6,7 +6,7 @@ class AssetsManagerTest extends WikiaBaseTest {
 	const JS_GROUP = 'oasis_jquery';
 
 	private $cb;
-	/** @var AssetsManager */
+	/** @var AssetsManager $instance */
 	private $instance;
 
 	public function setUp() {
@@ -16,6 +16,7 @@ class AssetsManagerTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @covers AssetsManager::getSassCommonURL()
 	 * @group UsingDB
 	 */
 	public function testGetSassCommonURL() {
@@ -26,6 +27,9 @@ class AssetsManagerTest extends WikiaBaseTest {
 		$this->assertContains( self::SASS_FILE, $url );
 	}
 
+	/**
+	 * @covers AssetsManager::getGroupsCommonURL()
+	 */
 	public function testGetGroupsCommonURL() {
 		$url =  $this->instance->getGroupsCommonURL( array( 'foo', 'bar' ), array(), true /* $combine */, true /* $minify */ );
 
@@ -35,22 +39,32 @@ class AssetsManagerTest extends WikiaBaseTest {
 		$this->assertContains( 'foo,bar', $url[0] );
 	}
 
-	/** @dataProvider isSassFileDataProvider */
+	/**
+	 * @covers AssetsManager::isSassUrl()
+	 * @dataProvider isSassFileDataProvider
+	 */
 	public function testIsSassUrl( $file, $expected ) {
 		$this->assertEquals( $this->instance->isSassUrl( $file ), $expected );
 	}
 
-	/** @dataProvider isGroupUrlDataProvider */
+	/**
+	 * @covers AssetsManager::isGroupUrl()
+	 * @dataProvider isGroupUrlDataProvider
+	 */
 	public function testIsGroupUrl( $url, $expected ) {
 		$this->assertEquals( $this->instance->isGroupUrl( $url ), $expected );
 	}
 
-	/** @dataProvider getGroupNameFromUrlDataProvider */
+	/**
+	 * @covers AssetsManager::getGroupNameFromUrl()
+	 * @dataProvider getGroupNameFromUrlDataProvider
+	 */
 	public function testGetGroupNameFromUrl( $url, $expected ) {
 		$this->assertEquals( $this->instance->getGroupNameFromUrl( $url ), $expected );
 	}
 
 	/**
+	 * @covers AssetsManager::getSassFilePath()
 	 * @dataProvider getSassFilePathProvider
 	 * @group UsingDB
 	 */
@@ -60,6 +74,7 @@ class AssetsManagerTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @covers AssetsManager::getSassesUrl()
 	 * @group UsingDB
 	 */
 	public function testGetSassesUrl() {
@@ -95,10 +110,15 @@ class AssetsManagerTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @covers AssetsManager::checkIfGroupForSkin()
 	 * @dataProvider getGroupsForSkin
 	 */
 	public function testCheckIfGroupForSkin( $skin, $skinRegisteredInGroup, $isSkinStrict, $expectedValue ) {
-		$wikiaSkinMock = $this->getMock( 'WikiaSkin', ['getSkinName', 'isStrict'] );
+		/** @var PHPUnit_Framework_MockObject_MockObject|WikiaSkin $wikiaSkinMock */
+		$wikiaSkinMock = $this->getMockBuilder( WikiaSkin::class )
+			->setMethods( ['getSkinName', 'isStrict'] )
+			->getMock();
+
 		$wikiaSkinMock
 			->expects( $this->any() )
 			->method( 'getSkinName' )
@@ -109,32 +129,41 @@ class AssetsManagerTest extends WikiaBaseTest {
 			->method( 'isStrict' )
 			->will( $this->returnValue( $isSkinStrict) );
 
-		$assetsManagerConfigMock = $this->getMock( 'AssetsConfig', ['getGroupSkin'] );
+		$assetsManagerConfigMock = $this->getMockBuilder( AssetsConfig::class )
+			->setMethods( ['getGroupSkin'] )
+			->getMock();
+
 		$assetsManagerConfigMock
 			->expects( $this->any() )
 			->method( 'getGroupSkin' )
 			->will( $this->returnValue( $skinRegisteredInGroup ) );
 
-		// This needs to be called because AssetsConfig is a private singleton inside AssetsManager class
-		$this->mockClass( 'AssetsConfig', $assetsManagerConfigMock );
-		$assetsManagerMock = $this->getMock( 'AssetsManager', null, [], '', false );
+		$assetsManagerMirror = new ReflectionClass( AssetsManager::class );
+		$assetsManager = $assetsManagerMirror->newInstanceWithoutConstructor();
 
-		$this->assertEquals( $assetsManagerMock->checkIfGroupForSkin( 'foo', $wikiaSkinMock ), $expectedValue );
+		$assetsConfigProperty = new ReflectionProperty( AssetsManager::class, 'mAssetsConfig' );
+		$assetsConfigProperty->setAccessible( true );
+		$assetsConfigProperty->setValue( $assetsManager, $assetsManagerConfigMock );
+
+		$this->assertEquals( $assetsManager->checkIfGroupForSkin( 'foo', $wikiaSkinMock ), $expectedValue );
 	}
 
 	/**
+	 * @covers AssetsManager::checkAssetUrlForSkin()
 	 * @dataProvider checkAssetUrlForSkinDataProvider
 	 */
 	public function testCheckAssetUrlForSkin( $url, $isSkinStrict, $expectedValue ) {
-		$skinMock = $this->mockClassWithMethods('WikiaSkin', [
+		/** @var WikiaSkin $skinMock */
+		$skinMock = $this->getMockWithMethods(WikiaSkin::class, [
 			'isStrict' => $isSkinStrict,
 			'checkIfGroupForSkin' => false, // "block" all assets when in strict mode
 			'loadConfig' => null,
 		]);
 
-		$assetsManagerMock = $this->getMock( 'AssetsManager', null, [], '', false );
+		$assetsManagerMirror = new ReflectionClass( AssetsManager::class );
+		$assetsManager = $assetsManagerMirror->newInstanceWithoutConstructor();
 
-		$this->assertEquals( $expectedValue, $assetsManagerMock->checkAssetUrlForSkin($url, $skinMock) );
+		$this->assertEquals( $expectedValue, $assetsManager->checkAssetUrlForSkin($url, $skinMock) );
 	}
 
 	public function checkAssetUrlForSkinDataProvider() {
@@ -168,6 +197,7 @@ class AssetsManagerTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @covers AssetsManager::getMultiTypePackageURL()
 	 * @dataProvider getMultiTypePackageURLDataProvider
 	 */
 	public function testgetMultiTypePackageURL( $expectedUrl, $options ) {

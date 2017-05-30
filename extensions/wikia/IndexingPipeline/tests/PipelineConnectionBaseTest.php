@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @covers \Wikia\IndexingPipeline\ConnectionBase
+ */
 class PipelineConnectionBaseTest extends WikiaBaseTest {
 
 	protected function setUp() {

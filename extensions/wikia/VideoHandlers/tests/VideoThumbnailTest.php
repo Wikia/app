@@ -14,7 +14,10 @@ class VideoThumbnailTest extends WikiaBaseTest {
 	}
 
 	protected function setUpMock( $cache_value = false ) {
-		$mock_cache = $this->getMock( 'stdClass', array( 'set', 'delete', 'get' ) );
+		$mock_cache = $this->getMockBuilder( BagOStuff::class )
+			->setMethods( [ 'set', 'delete', 'get' ] )
+			->getMockForAbstractClass();
+
 		$mock_cache->expects( $this->any() )
 					->method( 'set' );
 		$mock_cache->expects( $this->any() )
@@ -28,13 +31,12 @@ class VideoThumbnailTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @covers WikiaFileHelper::formatDuration()
 	 * @dataProvider durationDataProvider
 	 */
 	public function testDuration( $sec , $expResult ) {
-		// setup
 		$this->setUpMock();
 
-		// test
 		$responseData = WikiaFileHelper::formatDuration( $sec );
 
 		$this->assertEquals( $expResult, $responseData );

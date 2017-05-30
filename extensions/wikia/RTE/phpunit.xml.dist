@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpunit
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.1/phpunit.xsd"
+	backupGlobals="false"
+	backupStaticAttributes="false"
+	convertErrorsToExceptions="true"
+	convertNoticesToExceptions="true"
+	convertWarningsToExceptions="true"
+	beStrictAboutTestsThatDoNotTestAnything="true"
+	forceCoversAnnotation="true"
+	failOnWarning="true"
+	processIsolation="false"
+>
+	<testsuites>
+		<testsuite name="CK Editor">
+			<directory suffix=".php">./tests</directory>
+		</testsuite>
+	</testsuites>
+	<groups>
+		<exclude>
+			<group>Broken</group>
+			<group>Stub</group>
+		</exclude>
+	</groups>
+	<filter>
+		<whitelist addUncoveredFilesFromWhitelist="true">
+			<directory suffix=".php">.</directory>
+			<exclude>
+				<directory suffix=".php">./tests</directory>
+				<directory suffix=".i18n.php">./i18n</directory>
+				<directory suffix=".php">./ckeditor</directory>
+				<file>./RTE_setup.php</file>
+			</exclude>
+		</whitelist>
+	</filter>
+</phpunit>
