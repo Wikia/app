@@ -1,59 +1,41 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.inContent', [
 	'ext.wikia.adEngine.adTracker',
+	'ext.wikia.adEngine.context.slotsContext',
 	'JSMessages',
+	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adTracker, msg, log, win) {
+], function (adTracker, slotsContext, msg, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.inContent',
-		selector = '#mw-content-text > h2',
-		header;
+		selector = '#mw-content-text > h2';
 
 	/**
 	 * Adds dynamically new slot in the right place and sends tracking data
 	 */
 	function init(slotName, onSuccessCallback) {
-		var adHtml = '<div id="INCONTENT_WRAPPER"><div id="' + slotName + '" class="wikia-ad default-height" data-label="' + msg('adengine-advertisement') + '"></div></div>',
-			logMessage,
-			logWikiData = '(wikiId: ' + win.wgCityId + ' articleId: ' + win.wgArticleId + ')',
-			$header,
-			slotNameGA;
+		var adHtml = doc.createElement('div'),
+			header = doc.querySelectorAll(selector)[1],
+			slotNameGA = slotName.toLowerCase();
 
-		if (!slotName) {
-			log('slotName is falsy', 'error', logGroup);
+		if (!slotsContext.isApplicable(slotName) || !header) {
+			log(slotName + ' not added - missing second h2 or lack of space', 'debug', logGroup);
+			adTracker.track('slot/' + slotNameGA + '/failed', win.wgCityId + ':' + win.wgArticleId);
 			return;
 		}
 
-		slotNameGA = slotName.toLowerCase();
+		adHtml.id = 'INCONTENT_WRAPPER';
+		adHtml.innerHTML = '<div id="' + slotName + '" class="wikia-ad default-height" data-label="' + msg('adengine-advertisement') + '"></div>';
 
-		// take 2nd header from the article
-		header = $(selector)[1];
-		log(header, 'debug', logGroup);
-
-		if (!header) {
-			logMessage = 'no second section in the article ' + logWikiData;
-			log(slotName + ' not added - ' + logMessage, 'debug', logGroup);
-			adTracker.track('slot/' + slotNameGA + '/failed', {'reason': logMessage});
-			return;
-		}
-
-		$header = $(header);
-		if ($header.width() < $('#mw-content-text').width()) {
-			logMessage = '2nd section in the article is not full width ' + logWikiData;
-			log(slotName + ' not added - ' + logMessage, 'debug', logGroup);
-			adTracker.track('slot/' + slotNameGA + '/failed', {'reason': logMessage});
-			return;
-		}
-
-		log('insertSlot()', 'debug', logGroup);
-		$header.before(adHtml);
-		adTracker.track('slot/' + slotNameGA + '/success');
+		log('insertSlot', 'debug', logGroup);
+		header.parentNode.insertBefore(adHtml, header);
 		win.adslots2.push({
 			slotName: slotName,
 			onSuccess: onSuccessCallback
 		});
+		adTracker.track('slot/' + slotNameGA + '/success');
 	}
 
 	return {
