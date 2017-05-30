@@ -326,12 +326,6 @@ body.ve {
 		pointer-events: all;
 	}
 
-	// do not show VE overlay
-	//TODO: XW-179 | Remove this overlay from VE code
-	.ve-ui-wikiaFocusWidget {
-		display: none !important;
-	}
-
 	.WikiaPageHeader {
 		margin: 0 10px;
 	}
