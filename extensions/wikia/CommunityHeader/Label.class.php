@@ -1,6 +1,6 @@
 <?php
 
-namespace CommunityHeader;
+namespace Wikia\CommunityHeader;
 
 class Label {
 	const TYPE_TEXT = 'text';

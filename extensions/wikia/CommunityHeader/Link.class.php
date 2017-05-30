@@ -1,6 +1,6 @@
 <?php
 
-namespace CommunityHeader;
+namespace Wikia\CommunityHeader;
 
 class Link {
 	public function __construct( Label $label, string $href, string $tracking = '') {

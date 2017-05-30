@@ -1,5 +1,6 @@
 <?php
-namespace CommunityHeader;
+
+namespace Wikia\CommunityHeader;
 
 class Image {
 	public function __construct( string $url, int $width, int $height ) {

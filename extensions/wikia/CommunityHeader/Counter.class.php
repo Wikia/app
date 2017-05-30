@@ -1,5 +1,6 @@
 <?php
-namespace CommunityHeader;
+
+namespace Wikia\CommunityHeader;
 
 use \SiteStats;
 

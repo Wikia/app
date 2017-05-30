@@ -1,9 +1,9 @@
 <?php
 
-namespace CommunityHeader;
+namespace Wikia\CommunityHeader;
 
-use NavigationModel;
-use Title;
+use \NavigationModel;
+use \Title;
 
 class Navigation {
 	public function __construct() {

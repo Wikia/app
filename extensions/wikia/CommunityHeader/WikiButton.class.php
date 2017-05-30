@@ -1,5 +1,6 @@
 <?php
-namespace CommunityHeader;
+
+namespace Wikia\CommunityHeader;
 
 class WikiButton {
 	public function __construct( $href, $label, $title, $icon, $tracking ) {

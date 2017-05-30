@@ -1,6 +1,6 @@
 <?php
 
-namespace CommunityHeader;
+namespace Wikia\CommunityHeader;
 
 use \ThemeSettings;
 use \Title;

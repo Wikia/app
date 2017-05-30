@@ -1,9 +1,10 @@
 <?php
-namespace CommunityHeader;
 
+namespace Wikia\CommunityHeader;
+
+use \File;
 use \ThemeSettings;
 use \Title;
-use \File;
 
 class Wordmark {
 	const WORDMARK_TYPE_GRAPHIC = 'graphic';
