@@ -43,8 +43,7 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 				return doc.documentElement.offsetWidth >= minSkinWidth ? slotSizes : [[1, 1]];
 			case slotName === 'PREFOOTER_LEFT_BOXAD' && context.opts.overridePrefootersSizes:
 				return isLargeBreakpoints() ? slotSizes : getNewSizes(slotSizes, maxAdSize, [[300, 250]]);
-			case slotName === 'BOTTOM_LEADERBOARD' && context.opts.adMixExperimentEnabled &&
-				abTest.getGroup('AD_MIX').indexOf('AD_MIX_2') === 0:
+			case slotName === 'BOTTOM_LEADERBOARD' && context.opts.adMix3Enabled:
 				return getNewSizes([[970, 250]], footerSize, [[728, 90]]);
 			case slotName === 'BOTTOM_LEADERBOARD':
 				return getNewSizes(slotSizes, footerSize, [[728, 90]]);
