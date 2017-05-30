@@ -40,6 +40,18 @@ $wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\TaskHelper'] = __DIR__ . '/task
 $wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\TaskResult'] = __DIR__ . '/tasks/TaskResult.php';
 $wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\TaskRunner'] = __DIR__ . '/tasks/TaskRunner.php';
 
+// Validation logic
+$wgAutoloadClasses['Wikia\\CreateNewWiki\\UserValidator'] = __DIR__ . '/classes/validation/UserValidator.php';
+$wgAutoloadClasses['Wikia\\CreateNewWiki\\RequestValidator'] = __DIR__ . '/classes/validation/RequestValidator.php';
+$wgAutoloadClasses['Wikia\\CreateNewWiki\\UserValidatorProxy'] = __DIR__ . '/classes/validation/UserValidatorProxy.php';
+$wgAutoloadClasses['Wikia\\CreateNewWiki\\ValidationException'] = __DIR__ . '/classes/validation/ValidationException.php';
+$wgAutoloadClasses['Wikia\\CreateNewWiki\\EmailNotConfirmedException'] = __DIR__ . '/classes/validation/EmailNotConfirmedException.php';
+$wgAutoloadClasses['Wikia\\CreateNewWiki\\MissingParamsException'] = __DIR__ . '/classes/validation/MissingParamsException.php';
+$wgAutoloadClasses['Wikia\\CreateNewWiki\\NotLoggedInException'] = __DIR__ . '/classes/validation/NotLoggedInException.php';
+$wgAutoloadClasses['Wikia\\CreateNewWiki\\RateLimitedException'] = __DIR__ . '/classes/validation/RateLimitedException.php';
+$wgAutoloadClasses['Wikia\\CreateNewWiki\\TorNodeException'] = __DIR__ . '/classes/validation/TorNodeException.php';
+$wgAutoloadClasses['Wikia\\CreateNewWiki\\UserBlockedException'] = __DIR__ . '/classes/validation/UserBlockedException.php';
+
 // Nirvana controllers
 $wgAutoloadClasses['CreateNewWikiController'] = $dir . 'CreateNewWikiController.class.php';
 

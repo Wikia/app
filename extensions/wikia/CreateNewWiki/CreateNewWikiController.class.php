@@ -1,5 +1,9 @@
 <?php
 
+use Wikia\CreateNewWiki\RequestValidator;
+use Wikia\CreateNewWiki\ValidationException;
+use Wikia\CreateNewWiki\UserValidator;
+use Wikia\DependencyInjection\Injector;
 use Wikia\Logger\Loggable;
 
 class CreateNewWikiController extends WikiaController {
@@ -202,90 +206,65 @@ class CreateNewWikiController extends WikiaController {
 	 * Ajax call for validate wiki name.
 	 */
 	public function CheckWikiName() {
-		wfProfileIn(__METHOD__);
+		$request = $this->getContext()->getRequest();
 
-		$wgRequest = $this->wg->Request;
-
-		$name = $wgRequest->getVal('name');
-		$lang = $wgRequest->getVal('lang');
+		$name = $request->getVal('name');
+		$lang = $request->getVal('lang');
 
 		$this->response->setVal( self::CHECK_RESULT_FIELD,  CreateWikiChecks::checkWikiNameIsCorrect($name, $lang) );
-
-		wfProfileOut(__METHOD__);
 	}
 
 	/**
 	 * Ajax call to Create wiki
-	 *
-	 * @throws BadRequestException
 	 */
 	public function CreateWiki() {
-		wfProfileIn(__METHOD__);
 		$this->checkWriteRequest();
 
-		$wgRequest = $this->app->getGlobal('wgRequest'); /* @var $wgRequest WebRequest */
 		$wgDevelDomains = $this->app->getGlobal('wgDevelDomains');
-		$wgUser = $this->app->getGlobal('wgUser'); /* @var $wgUser User */
 
-		$params = $wgRequest->getArray('data');
+		try {
+			$context = $this->getContext();
 
-        //CE-315
-        if($params['wLanguage'] != self::LANG_ALL_AGES_OPT ){
-            $params['wAllAges'] = null;
-        }
+			$requestValidator = $this->getRequestValidator();
+			$request = $context->getRequest();
 
-		if ( empty($params) ||
-			empty($params['wName']) ||
-			empty($params['wDomain']) ||
-			empty($params['wLanguage']) ||
-			(!isset($params['wVertical']) || $params['wVertical'] === '-1'))
-		{
-			// do nothing
-			$this->warning(__METHOD__ . ": no parameters provided" );
-			$this->response->setCode( 400 );
-			$this->response->setVal( self::STATUS_FIELD, self::STATUS_ERROR );
-			// VOLDEV-10: Parse the HTML in the message
-			$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-general' )->parse() );
-			$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-general-heading' )->escaped() );
+			$requestValidator->assertValidParams( $request );
+			$requestValidator->assertNotTorNode( $request );
 
-			wfProfileOut(__METHOD__);
+			$userValidator = $this->getUserValidator();
+			$user = $context->getUser();
+
+			$userValidator->assertLoggedIn( $user );
+			$userValidator->assertEmailConfirmed( $user );
+			$userValidator->assertNotBlocked( $user );
+			$userValidator->assertNotExceededRateLimit( $user );
+		} catch ( ValidationException $validationException ) {
+			$httpStatusCode = $validationException->getHttpStatusCode();
+
+			$headerMessageKey = $validationException->getHeaderMessageKey();
+			$headerMessageParams = $validationException->getHeaderMessageParams();
+
+			$errorMessageKey = $validationException->getErrorMessageKey();
+			$errorMessageParams = $validationException->getErrorMessageParams();
+
+			$headerMessage = wfMessage( $headerMessageKey )->params( $headerMessageParams )->parse();
+			$errorMessage = wfMessage( $errorMessageKey )->params( $errorMessageParams )->parse();
+
+			$this->response->setCode( $httpStatusCode );
+			$this->response->setValues( [
+				static::STATUS_FIELD => static::STATUS_ERROR,
+				static::STATUS_MSG_FIELD => $errorMessage,
+				static::STATUS_HEADER_FIELD => $headerMessage,
+			] );
+
 			return;
 		}
 
-		// check if user is logged in
-		if ( !$wgUser->isLoggedIn() ) {
-			$this->setUserNotLoggedInErrorResponse();
-			wfProfileOut(__METHOD__);
-			return;
-		}
+		$params = $this->request->getArray( 'data' );
 
-		// check if user has confirmed e-mail
-		if ( !$wgUser->isEmailConfirmed() ) {
-			$this->setEmailNotConfirmedErrorResponse();
-			wfProfileOut(__METHOD__);
-			return;
-		}
-
-		// check if user is blocked
-		if ( $wgUser->isBlocked() ) {
-			$this->setUserIsBlockedErrorResponse( $wgUser );
-			wfProfileOut(__METHOD__);
-			return;
-		}
-
-		// check if user is a tor node
-		if ( class_exists( 'TorBlock' ) && TorBlock::isExitNode() ) {
-			$this->setUserIsTorNodeErrorResponse();
-			wfProfileOut(__METHOD__);
-			return;
-		}
-
-		// check if user created more wikis than we allow per day
-		$numWikis = $this->countCreatedWikis($wgUser->getId());
-		if($numWikis >= self::DAILY_USER_LIMIT && $wgUser->isPingLimitable() && !$wgUser->isAllowed( 'createwikilimitsexempt' ) ) {
-			$this->setTooManyWikiCreatedByUserErrorResponse();
-			wfProfileOut(__METHOD__);
-			return;
+		// CE-315
+		if ( $params['wLanguage'] != self::LANG_ALL_AGES_OPT ) {
+			$params['wAllAges'] = null;
 		}
 
 		$categories = isset($params['wCategories']) ? $params['wCategories'] : array();
@@ -312,7 +291,6 @@ class CreateNewWikiController extends WikiaController {
 			$this->response->setVal( self::ERROR_CLASS_FIELD, get_class( $ex ) );
 			$this->response->setVal( self::ERROR_CODE_FIELD, $ex->getCode() );
 			$this->response->setVal( self::ERROR_MESSAGE_FIELD, $ex->getMessage() );
-			wfProfileOut( __METHOD__);
 			return;
 		}
 
@@ -334,8 +312,6 @@ class CreateNewWikiController extends WikiaController {
 			'city_id' => $cityId,
 			'params' => $params,
 		]);
-
-		wfProfileOut(__METHOD__);
 	}
 
 	/**
@@ -369,33 +345,6 @@ class CreateNewWikiController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
-	public static function setupCreateNewWiki() {
-	}
-
-	/**
-	 * get number of created Wikis for current day
-	 * note: copied from autocreatewiki
-	 */
-	private function countCreatedWikis($iUser = 0) {
-		global $wgExternalSharedDB;
-		wfProfileIn( __METHOD__ );
-
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-		$where = array( "date_format(city_created, '%Y%m%d') = date_format(now(), '%Y%m%d')" );
-		if ( !empty($iUser) ) {
-			$where[] = "city_founding_user = '{$iUser}' ";
-		}
-		$oRow = $dbr->selectRow(
-			"city_list",
-			array( "count(*) as count" ),
-			$where,
-			__METHOD__
-		);
-
-		wfProfileOut( __METHOD__ );
-		return intval($oRow->count);
-	}
-
 	/**
 	 * Return proper wiki language for for languages that have different dialects.
 	 */
@@ -419,43 +368,11 @@ class CreateNewWikiController extends WikiaController {
 		return array_key_exists($useLang, $squashLanguageData) ? $squashLanguageData[$useLang] : $useLang;
 	}
 
-	private function setUserNotLoggedInErrorResponse() {
-		$this->warning("CreateWiki: user not logged in" );
-		$this->response->setCode( 401 );
-		$this->response->setVal( self::STATUS_FIELD, self::STATUS_ERROR );
-		$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-anon-user' )->parse() );
-		$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-anon-user-header' )->text() );
+	private function getRequestValidator(): RequestValidator {
+		return Injector::getInjector()->get( RequestValidator::class );
 	}
 
-	private function setEmailNotConfirmedErrorResponse() {
-		$this->warning("CreateWiki: user's email not confirmed" );
-		$this->response->setCode( 403 );
-		$this->response->setVal( self::STATUS_FIELD, self::STATUS_ERROR );
-		$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-unconfirmed-email' )->parse() );
-		$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-unconfirmed-email-header' )->text() );
-	}
-
-	private function setUserIsBlockedErrorResponse( User $user ) {
-		$this->warning("CreateWiki: user is blocked" );
-		$this->response->setCode( 403 );
-		$this->response->setVal( self::STATUS_FIELD, self::STATUS_ERROR );
-		$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-blocked', $user->blockedBy(), $user->blockedFor(), $user->getBlockId() )->parse() );
-		$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-blocked-header' )->text() );
-	}
-
-	private function setUserIsTorNodeErrorResponse() {
-		$this->warning("CreateWiki: user is blocked (TOR detected)" );
-		$this->response->setCode( 403 );
-		$this->response->setVal( self::STATUS_FIELD, self::STATUS_ERROR );
-		$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-torblock' )->text() );
-		$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-blocked-header' )->text() );
-	}
-
-	private function setTooManyWikiCreatedByUserErrorResponse() {
-		$this->warning("CreateWiki: user reached daily creation count limit" );
-		$this->response->setCode( 429 );
-		$this->response->setVal( self::STATUS_FIELD, self::STATUS_CREATION_LIMIT );
-		$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-wiki-limit', self::DAILY_USER_LIMIT )->parse() );
-		$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-wiki-limit-header' )->text());
+	private function getUserValidator(): UserValidator {
+		return Injector::getInjector()->get( UserValidator::class );
 	}
 }
