@@ -2,13 +2,16 @@
 
 use \Wikia\CommunityHeader\Label;
 use \Wikia\CommunityHeader\WikiButton;
-use \Wikia\CommunityHeader\WikiButtons;
+use \CommunityHeader\WikiButtons;
 
 class WikiButtonsTest extends \WikiaBaseTest {
-	protected function setUp() {
-		global $IP;
-		$this->setupFile = "$IP/extensions/wikia/CommunityHeader/CommunityHeader.setup.php";
-		parent::setUp();
+	/**
+	 * $this->setUp() is called only after data providers are checked
+	 * We need the classes ready before that
+	 */
+	private function manualSetUp() {
+		global $IP, $wgAutoloadClasses;
+		require_once( "$IP/extensions/wikia/CommunityHeader/CommunityHeader.setup.php" );
 	}
 
 	/**
@@ -67,6 +70,8 @@ class WikiButtonsTest extends \WikiaBaseTest {
 	}
 
 	public function wikiButtonsProvider() {
+		$this->manualSetUp();
+
 		return [
 			[
 				'isLoggedUser' => false,

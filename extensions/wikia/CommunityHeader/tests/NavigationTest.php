@@ -5,11 +5,14 @@ use \Wikia\CommunityHeader\Link;
 use \Wikia\CommunityHeader\Navigation;
 use \Wikia\Util\GlobalStateWrapper;
 
-class NavigationTest extends \WikiaBaseTest {
-	protected function setUp() {
-		global $IP;
-		$this->setupFile = "$IP/extensions/wikia/CommunityHeader/CommunityHeader.setup.php";
-		parent::setUp();
+class NavigationTest extends WikiaBaseTest {
+	/**
+	 * $this->setUp() is called only after data providers are checked
+	 * We need the classes ready before that
+	 */
+	private function manualSetUp() {
+		global $IP, $wgAutoloadClasses;
+		require_once( "$IP/extensions/wikia/CommunityHeader/CommunityHeader.setup.php" );
 	}
 
 	/**
@@ -63,6 +66,8 @@ class NavigationTest extends \WikiaBaseTest {
 	}
 
 	public function exploreItemsProvider() {
+		$this->manualSetUp();
+
 		return [
 			[
 				'globals' => [
@@ -329,6 +334,8 @@ class NavigationTest extends \WikiaBaseTest {
 	}
 
 	public function discussLinkProvider() {
+		$this->manualSetUp();
+
 		return [
 			[
 				'globals' => [
