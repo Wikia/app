@@ -34,7 +34,7 @@
 
 <?= $beforeWikiaPageHtml ?>
 
-<? if ( !empty( $wg->EnableCommunityHeader ) ) : ?>
+<? if ( !empty( $wg->EnableCommunityHeader ) && empty( $wg->SuppressWikiHeader ) ) : ?>
 	<?= $app->renderView( 'CommunityHeader', 'index' ) ?>
 <? endif; ?>
 
