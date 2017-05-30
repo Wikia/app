@@ -65,8 +65,6 @@ class ForumController extends WallBaseController {
 
 		// TODO: keep the varnish cache and do purging on post
 		$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
-
-		$this->app->wg->SuppressPageHeader = true;
 	}
 
 	protected function redirectToIndex() {

@@ -80,15 +80,13 @@
 			</div>
 		<? endif; ?>
 
-		<?= $app->renderView( 'PageHeader', 'index' ) ?>
+		<? if ( empty( $wg->SuppressPageHeader ) ) : ?>
+			<?= $app->renderView('PageHeader', 'index') ?>
+		<? endif; ?>
 
 		<article id="WikiaMainContent" class="WikiaMainContent<?= !empty( $isGridLayoutEnabled ) ? $railModulesExist ? ' grid-4' : ' grid-6' : '' ?>">
 			<div id="WikiaMainContentContainer" class="WikiaMainContentContainer">
 				<?php
-//					if ( !empty( $wg->EnableForumExt ) && ForumHelper::isForum() ) {
-//						echo $app->renderView( 'ForumController', 'header' );
-//					}
-
 					// render UserPagesHeader or PageHeader or nothing...
 					if ( empty( $wg->SuppressPageHeader ) && $headerModuleName ) {
 						if ( $headerModuleName == 'UserPagesHeader' ) {
@@ -99,13 +97,6 @@
 								// Show just the edit button
 								echo $app->renderView( 'UserProfilePage', 'renderActionButton', array() );
 							}
-						} else {
-							//Todo: remove
-//							var_dump($headerModuleName);
-//							if ($headerModuleName !== 'PageHeader' && $headerModuleName !== 'Forum') {
-//								echo $app->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams );
-//
-//							}
 						}
 					}
 				?>

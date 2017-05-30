@@ -418,11 +418,6 @@ class BodyController extends WikiaController {
 			$this->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'skins/oasis/css/modules/SpecialAllMessages.scss' ) );
 		}
 
-		// Forum Extension
-		if ( !empty( $this->wg->EnableForumExt ) && ForumHelper::isForum() ) {
-			$this->wg->SuppressPageHeader = true;
-		}
-
 		$namespace = $this->wg->Title->getNamespace();
 		// extra logic for subpages (RT #74091)
 		if ( !empty( $this->subtitle ) ) {
