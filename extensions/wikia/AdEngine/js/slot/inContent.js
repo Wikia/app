@@ -18,11 +18,21 @@ define('ext.wikia.adEngine.slot.inContent', [
 	function init(slotName, onSuccessCallback) {
 		var adHtml = doc.createElement('div'),
 			header = doc.querySelectorAll(selector)[1],
+			logMessage,
+			logWikiData = '(wikiId: ' + win.wgCityId + ' articleId: ' + win.wgArticleId + ')',
 			slotNameGA = slotName.toLowerCase();
 
-		if (!slotsContext.isApplicable(slotName) || !header) {
-			log(slotName + ' not added - missing second h2 or lack of space', 'debug', logGroup);
-			adTracker.track('slot/' + slotNameGA + '/failed', win.wgCityId + ':' + win.wgArticleId);
+		if (!header) {
+			logMessage = 'no second section in the article ' + logWikiData;
+			log(slotName + ' not added - ' + logMessage, 'debug', logGroup);
+			adTracker.track('slot/' + slotNameGA + '/failed', {'reason': logMessage});
+			return;
+		}
+
+		if (!slotsContext.isApplicable(slotName)) {
+			logMessage = '2nd section in the article is not full width ' + logWikiData;
+			log(slotName + ' not added - ' + logMessage, 'debug', logGroup);
+			adTracker.track('slot/' + slotNameGA + '/failed', {'reason': logMessage});
 			return;
 		}
 
