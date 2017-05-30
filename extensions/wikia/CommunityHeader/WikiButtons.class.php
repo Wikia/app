@@ -80,6 +80,13 @@ class WikiButtons implements \Iterator {
 	}
 
 	/**
+	 * @return array
+	 */
+	public function getButtons(): array {
+		return $this->buttons;
+	}
+
+	/**
 	 * Return the current element
 	 * @link http://php.net/manual/en/iterator.current.php
 	 * @return mixed Can return any type.
