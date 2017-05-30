@@ -119,7 +119,7 @@ define('ext.wikia.adEngine.adContext', [
 			'INCONTENT_BOXAD_1'
 		];
 
-		if (group.indexOf('AD_MIX_2') === 0) {
+		if (context.opts.adMix3Enabled) {
 			context.slots.adMixToUnblock.push('BOTTOM_LEADERBOARD');
 		}
 	}
