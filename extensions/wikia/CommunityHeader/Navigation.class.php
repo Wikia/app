@@ -66,7 +66,7 @@ class Navigation {
 		} ) );
 	}
 
-	private function getDiscussLink(): Link {
+	private function getDiscussLink() {
 		global $wgEnableForumExt, $wgEnableDiscussions;
 
 		$discussLink = null;
