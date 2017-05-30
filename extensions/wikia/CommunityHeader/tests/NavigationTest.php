@@ -1,9 +1,9 @@
 <?php
 
-use CommunityHeader\Label;
-use CommunityHeader\Link;
-use CommunityHeader\Navigation;
-use Wikia\Util\GlobalStateWrapper;
+use \CommunityHeader\Label;
+use \CommunityHeader\Link;
+use \CommunityHeader\Navigation;
+use \Wikia\Util\GlobalStateWrapper;
 
 class NavigationTest extends \WikiaBaseTest {
 	protected function setUp() {

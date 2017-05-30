@@ -1,8 +1,8 @@
 <?php
 
-use CommunityHeader\Label;
-use CommunityHeader\WikiButton;
-use CommunityHeader\WikiButtons;
+use \CommunityHeader\Label;
+use \CommunityHeader\WikiButton;
+use \CommunityHeader\WikiButtons;
 
 class WikiButtonsTest extends \WikiaBaseTest {
 	protected function setUp() {
