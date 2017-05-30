@@ -17,7 +17,7 @@ define('ext.wikia.adEngine.video.player.ooyala.ooyalaTracker', [
 			WILL_RESUME_ADS: 'resumed',
 			WILL_PLAY_SINGLE_AD: 'started',
 
-			WILL_PLAY: 'content_started',
+			WILL_PLAY_FROM_BEGINNING: 'content_started',
 			PLAYED: 'content_completed'
 		};
 
@@ -34,6 +34,9 @@ define('ext.wikia.adEngine.video.player.ooyala.ooyalaTracker', [
 			player.mb.subscribe(win.OO.EVENTS[playerEvent] || playerEvent, 'ooyala-kikimora-tracking', function () {
 				track(params, trackingEventsMap[playerEvent]);
 			});
+		});
+		player.mb.subscribe('*', 'ooyala-kikimora-tracking', function (event) {
+			console.warn('OOe', event);
 		});
 	}
 
