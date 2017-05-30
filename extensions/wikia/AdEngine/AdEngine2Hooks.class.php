@@ -12,7 +12,7 @@ class AdEngine2Hooks {
 	const ASSET_GROUP_ADENGINE_PREBID = 'adengine2_prebid_js';
 	const ASSET_GROUP_ADENGINE_RUBICON_FASTLANE = 'adengine2_rubicon_fastlane_js';
 	const ASSET_GROUP_ADENGINE_TABOOLA = 'adengine2_taboola_js';
-	const ASSET_GROUP_ADENGINE_TRACKING = 'adengine2_tracking_js';
+	const ASSET_GROUP_ADENGINE_TOP = 'adengine2_top_js';
 
 	/**
 	 * Handle URL parameters and set proper global variables early enough
@@ -162,7 +162,7 @@ class AdEngine2Hooks {
 	public static function onOasisSkinAssetGroupsBlocking( &$jsAssets ) {
 
 		// Tracking should be available very early, so we can track how lookup calls perform
-		$jsAssets[] = static::ASSET_GROUP_ADENGINE_TRACKING;
+		$jsAssets[] = static::ASSET_GROUP_ADENGINE_TOP;
 
 		if ( AnalyticsProviderAmazonMatch::isEnabled() ) {
 			$jsAssets[] = static::ASSET_GROUP_ADENGINE_AMAZON_MATCH;

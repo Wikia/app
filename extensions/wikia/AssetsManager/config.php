@@ -205,8 +205,7 @@ $config['adengine2_interactive_maps_js'] = [
 ];
 
 // TODO
-// release n+1 Change group name in AdEngine2Hooks (use adengine2_top_js)
-// release n+2 Remove adengine2_tracking_js group
+// release n+1 Remove adengine2_tracking_js group
 $config['adengine2_tracking_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis', 'wikiamobile' ],
