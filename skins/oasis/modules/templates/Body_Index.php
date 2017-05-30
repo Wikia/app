@@ -97,13 +97,6 @@
 								// Show just the edit button
 								echo $app->renderView( 'UserProfilePage', 'renderActionButton', array() );
 							}
-						} else {
-							//Todo: remove
-//							var_dump($headerModuleName);
-//							if ($headerModuleName !== 'PageHeader' && $headerModuleName !== 'Forum') {
-//								echo $app->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams );
-//
-//							}
 						}
 					}
 				?>
