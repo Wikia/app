@@ -112,6 +112,9 @@ define('ext.wikia.adEngine.adContext', [
 			geo.isProperGeo(instantGlobals.wgAdDriverAdMixCountries)
 		);
 
+		context.opts.adMix1Enabled = context.opts.adMixExperimentEnabled && abTest.getGroup('AD_MIX').indexOf('AD_MIX_1') === 0;
+		context.opts.adMix3Enabled = context.opts.adMixExperimentEnabled && abTest.getGroup('AD_MIX').indexOf('AD_MIX_3') === 0;
+
 		context.slots.adMixToUnblock = [
 			'INCONTENT_BOXAD_1'
 		];
