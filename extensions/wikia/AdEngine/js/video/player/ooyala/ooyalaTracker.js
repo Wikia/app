@@ -35,9 +35,6 @@ define('ext.wikia.adEngine.video.player.ooyala.ooyalaTracker', [
 				track(params, trackingEventsMap[playerEvent]);
 			});
 		});
-		player.mb.subscribe('*', 'ooyala-kikimora-tracking', function (event) {
-			console.warn('OOe', event);
-		});
 	}
 
 	return {
