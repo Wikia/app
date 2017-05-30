@@ -1,20 +1,20 @@
 @import "extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index";
 
 .page-header {
-  color: #333333;
-  padding-top: 16px;
+	color: #333333;
+	padding-top: 16px;
 }
 
-.page-header > h1{
-  padding-bottom: 12px;
-  color: #333333;
-  font-size: 28px;
-  font-weight: bold;
+.page-header > h1 {
+	padding-bottom: 12px;
+	color: #333333;
+	font-size: 28px;
+	font-weight: bold;
 }
 
 .page-header > hr {
-  //border: solid 1px #cccccc;
-  background-color: $wds-color-light-c4;
-  border: 0;
-  height: 1px;
+	//border: solid 1px #cccccc;
+	background-color: $wds-color-light-c4;
+	border: 0;
+	height: 1px;
 }
