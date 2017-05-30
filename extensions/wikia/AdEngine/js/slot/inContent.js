@@ -12,12 +12,29 @@ define('ext.wikia.adEngine.slot.inContent', [
 	var logGroup = 'ext.wikia.adEngine.slot.inContent',
 		selector = '#mw-content-text > h2';
 
+	function createInContentWrapper() {
+		var adHtml = doc.createElement('div');
+
+		adHtml.id = 'INCONTENT_WRAPPER';
+		adHtml.innerHTML = '<div id="' + slotName + '" class="wikia-ad default-height" data-label="' + msg('adengine-advertisement') + '"></div>';
+		
+		return adHtml;
+	}
+	
+	function insertSlot(header, slotName, onSuccessCallback) {
+		log('insertSlot', 'debug', logGroup);
+		header.parentNode.insertBefore(createInContentWrapper(), header);
+		win.adslots2.push({
+			slotName: slotName,
+			onSuccess: onSuccessCallback
+		});
+	}
+
 	/**
 	 * Adds dynamically new slot in the right place and sends tracking data
 	 */
 	function init(slotName, onSuccessCallback) {
-		var adHtml = doc.createElement('div'),
-			header = doc.querySelectorAll(selector)[1],
+		var header = doc.querySelectorAll(selector)[1],
 			logMessage,
 			logWikiData = '(wikiId: ' + win.wgCityId + ' articleId: ' + win.wgArticleId + ')',
 			slotNameGA = slotName.toLowerCase();
@@ -36,15 +53,7 @@ define('ext.wikia.adEngine.slot.inContent', [
 			return;
 		}
 
-		adHtml.id = 'INCONTENT_WRAPPER';
-		adHtml.innerHTML = '<div id="' + slotName + '" class="wikia-ad default-height" data-label="' + msg('adengine-advertisement') + '"></div>';
-
-		log('insertSlot', 'debug', logGroup);
-		header.parentNode.insertBefore(adHtml, header);
-		win.adslots2.push({
-			slotName: slotName,
-			onSuccess: onSuccessCallback
-		});
+		insertSlot(header, slotName, onSuccessCallback);
 		adTracker.track('slot/' + slotNameGA + '/success');
 	}
 
