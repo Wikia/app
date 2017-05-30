@@ -9,6 +9,6 @@ class PageHeaderController extends WikiaController {
     }
 
 	public function index() {
-        $this->setVal('title', new PageTitle($this->app));
+        $this->setVal('pageTitle', new PageTitle($this->app));
 	}
 }
