@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Optimizely
  *
@@ -6,10 +7,8 @@
  *
  */
 class Optimizely {
-	static public function onOasisSkinAssetGroupsBlocking( &$jsAssetGroups ) {
-		global $wgNoExternals;
-
-		if ( empty( $wgNoExternals ) ) {
+	public static function onOasisSkinAssetGroupsBlocking( &$jsAssetGroups ) {
+		if ( static::shouldLoadOptimizely() ) {
 			$jsAssetGroups[] = 'optimizely_blocking_js';
 		}
 
@@ -17,20 +16,14 @@ class Optimizely {
 	}
 
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
-		global $wgOptimizelyLoadFromOurCDN, $wgNoExternals, $wgWikiaEnvironment;
+		global $wgOptimizelyLoadFromOurCDN, $wgWikiaEnvironment;
 
-		if ( !$wgNoExternals ) {
-			// load optimizely_blocking_js on wikiamobile
-			if ( F::app()->checkSkin( ['wikiamobile'], $skin ) ) {
-				foreach ( AssetsManager::getInstance()->getURL( [ 'optimizely_blocking_js' ] ) as $script ) {
-					$scripts .= '<script src="' . $script . '"></script>';
-				}
-			}
-
+		if ( static::shouldLoadOptimizely() ) {
 			// On devboxes and sandboxes Optimizely script should be laoded from original CDN for the ease of testing
 			// the experiments, by mitigating the need to run the fetchOptimizelyScript.php (or waiting for it to be run
 			// by cron for sandbox).
-			if ( $wgOptimizelyLoadFromOurCDN &&
+			if (
+				$wgOptimizelyLoadFromOurCDN &&
 				!in_array( $wgWikiaEnvironment, [ WIKIA_ENV_DEV, WIKIA_ENV_SANDBOX ] )
 			) {
 				$scripts .= static::loadFromOurCDN();
@@ -40,6 +33,12 @@ class Optimizely {
 		}
 
 		return true;
+	}
+
+	public static function shouldLoadOptimizely() {
+		global $wgNoExternals;
+
+		return empty( $wgNoExternals );
 	}
 
 	protected static function loadFromOurCDN() {
@@ -53,6 +52,6 @@ class Optimizely {
 	protected static function loadOriginal() {
 		global $wgDevelEnvironment, $wgOptimizelyUrl, $wgOptimizelyDevUrl;
 		// do not async - we need it for UA tracking
-		return '<script src="' . ($wgDevelEnvironment ? $wgOptimizelyDevUrl : $wgOptimizelyUrl) . '"></script>';
+		return '<script src="' . ( $wgDevelEnvironment ? $wgOptimizelyDevUrl : $wgOptimizelyUrl ) . '"></script>';
 	}
 }
