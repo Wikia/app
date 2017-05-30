@@ -99,6 +99,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 						$recirculationRail.show();
 					} else {
 						viewabilityHandler.refreshOnView(slotName, 0);
+						// TODO consider not showing flot with an old ad - delay
 						$adSlot.show();
 						$recirculationRail.hide();
 					}
