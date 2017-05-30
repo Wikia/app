@@ -5,6 +5,11 @@ use CommunityHeader\WikiButton;
 use CommunityHeader\WikiButtons;
 
 class WikiButtonsTest extends \WikiaBaseTest {
+	protected function setUp() {
+		$this->setupFile = __DIR__ . '/../CommunityHeader.setup.php';
+		parent::setUp();
+	}
+
 	/**
 	 * @dataProvider wikiButtonsProvider
 	 *

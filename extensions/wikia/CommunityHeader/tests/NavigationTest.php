@@ -6,8 +6,13 @@ use CommunityHeader\Navigation;
 use Wikia\Util\GlobalStateWrapper;
 
 class NavigationTest extends \WikiaBaseTest {
+	protected function setUp() {
+		$this->setupFile = __DIR__ . '/../CommunityHeader.setup.php';
+		parent::setUp();
+	}
+
 	/**
-	 * @dataProvider exploreItemsProviders
+	 * @dataProvider exploreItemsProvider
 	 *
 	 * @param $globals
 	 * @param $expectedExploreItems
@@ -28,7 +33,7 @@ class NavigationTest extends \WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider discussLinkProviders
+	 * @dataProvider discussLinkProvider
 	 *
 	 * @param $globals
 	 * @param $expected
@@ -56,7 +61,7 @@ class NavigationTest extends \WikiaBaseTest {
 		}, $raw );
 	}
 
-	public function exploreItemsProviders() {
+	public function exploreItemsProvider() {
 		return [
 			[
 				'globals' => [
@@ -322,7 +327,7 @@ class NavigationTest extends \WikiaBaseTest {
 		);
 	}
 
-	public function discussLinkProviders() {
+	public function discussLinkProvider() {
 		return [
 			[
 				'globals' => [
