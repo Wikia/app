@@ -3246,6 +3246,6 @@ $config['article_header_scss'] = [
     'type' => AssetsManager::TYPE_SCSS,
     'skin' => [ 'oasis' ],
     'assets' => [
-        '//extensions/wikia/ArticleHeader/styles/article-header.scss',
+        '//extensions/wikia/PageHeader/styles/index.scss',
     ],
 ];

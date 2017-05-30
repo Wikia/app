@@ -1,8 +1,8 @@
 <?php
 
-use \ArticleHeader\PageTitle;
+use \PageHeader\PageTitle;
 
-class ArticleHeaderController extends WikiaController {
+class PageHeaderController extends WikiaController {
 
     public function init() {
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace ArticleHeader;
+namespace PageHeader;
 
 class PageTitle {
 

@@ -80,7 +80,7 @@
 			</div>
 		<? endif; ?>
 
-		<?= $app->renderView( 'ArticleHeader', 'index' ) ?>
+		<?= $app->renderView( 'PageHeader', 'index' ) ?>
 
 		<article id="WikiaMainContent" class="WikiaMainContent<?= !empty( $isGridLayoutEnabled ) ? $railModulesExist ? ' grid-4' : ' grid-6' : '' ?>">
 			<div id="WikiaMainContentContainer" class="WikiaMainContentContainer">
