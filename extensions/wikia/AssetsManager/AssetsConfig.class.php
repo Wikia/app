@@ -21,8 +21,14 @@ class AssetsConfig {
 	}
 
 	public static function getRTEAssets() {
-		global $IP;
-		$path = "extensions/wikia/RTE";
+		global $IP, $wgRTEVersion;
+
+		if ( $wgRTEVersion == 2) {
+			$path = "extensions/wikia/RTE2";
+		} else {
+			$path = "extensions/wikia/RTE";
+		}
+
 		$files = array(
 			// CK core entry point
 			$path . '/ckeditor/_source/core/ckeditor_base.js',
