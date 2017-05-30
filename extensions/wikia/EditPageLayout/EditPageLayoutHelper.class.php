@@ -154,7 +154,10 @@ class EditPageLayoutHelper {
 		// on edit page so it will make proper list of modules
 		$action = $this->request->setVal( 'action',null );
 		$diff = $this->request->setVal( 'diff',null );
-		$railModuleList = (new BodyController)->getRailModuleList();
+
+		$bodyController = new BodyController();
+		$bodyController->setContext( RequestContext::getMain() );
+		$railModuleList = $bodyController->getRailModuleList();
 		$this->request->setVal( 'action',$action );
 		$this->request->setVal( 'diff',$diff );
 

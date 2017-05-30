@@ -1,13 +1,17 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.floatingMedrec', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.slot.service.viewabilityHandler',
 	'jquery',
+	'wikia.abTest',
 	'wikia.log',
 	'wikia.throttle',
 	'wikia.window'
 ], function (
 	adContext,
+	viewabilityHandler,
 	$,
+	abTest,
 	log,
 	throttle,
 	win
@@ -32,10 +36,17 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 			$adSlot = $('<div class="wikia-ad"></div>').attr('id', slotName),
 			$footer = $('#WikiaFooter'),
 			$placeHolder = $('#WikiaAdInContentPlaceHolder'),
-			$win = $(win);
+			$win = $(win),
+			refresh = {
+				refreshAdPos: 0,
+				lastRefreshTime: new Date(),
+				refreshNumber: 0
+			};
 
 		function getStartPosition(placeHolder) {
-			return parseInt(placeHolder.offset().top, 10) - globalNavigationHeight - margin;
+			return parseInt(placeHolder.offset().top, 10) -
+					// TODO understand when palceholder height is required
+				globalNavigationHeight - margin;
 		}
 
 		function getStopPosition(ad, footer, leftSkyscraper3) {
@@ -49,6 +60,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 		}
 
 		function update() {
+
 			if ($win.scrollTop() <= startPosition) {
 				$adSlot.css({
 					position: 'relative',
@@ -57,20 +69,44 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 				});
 			}
 
-			if ($win.scrollTop() > startPosition && $win.scrollTop() < stopPosition) {
-				$adSlot.css({
-					position: 'fixed',
-					top: globalNavigationHeight + margin + 'px',
-					visibility: 'visible'
-				});
+			if (!context.opts.adMixExperimentEnabled) {
+				if ($win.scrollTop() > startPosition && $win.scrollTop() < stopPosition) {
+					$adSlot.css({
+						position: 'fixed',
+						top: globalNavigationHeight + margin + 'px',
+						visibility: 'visible'
+					});
+				}
+
+				if ($win.scrollTop() >= stopPosition) {
+					$adSlot.css({
+						position: 'absolute',
+						top: stopPosition - startPosition + 'px',
+						visibility: 'visible'
+					});
+				}
 			}
 
-			if ($win.scrollTop() >= stopPosition) {
-				$adSlot.css({
-					position: 'absolute',
-					top: stopPosition - startPosition + 'px',
-					visibility: 'visible'
-				});
+			// AD_MIX_1 and AD_MIX_1B
+			if (abTest.getGroup('AD_MIX') && abTest.getGroup('AD_MIX').indexOf('AD_MIX_1') === 0) {
+				refreshAdIfPossible();
+			}
+		}
+
+		function getDifference(currentAdPos) {
+			return currentAdPos > refresh.refreshAdPos ? currentAdPos - refresh.refreshAdPos : refresh.refreshAdPos - currentAdPos;
+		}
+
+		function refreshAdIfPossible() {
+			var currentAdPos = $adSlot.offset().top,
+				heightScrolled = getDifference(currentAdPos),
+				timeDifference = (new Date()) - refresh.lastRefreshTime;
+
+			if (heightScrolled > 10 && timeDifference > 10000 && refresh.refreshNumber < 3) {
+				refresh.lastRefreshTime = new Date();
+				refresh.refreshAdPos = currentAdPos;
+				refresh.refreshNumber++;
+				viewabilityHandler.refreshOnView(slotName, 0);
 			}
 		}
 
@@ -81,19 +117,21 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 
 			if (enabled && !isEnoughSpace) {
 				log(['handleFloatingMedrec',
-					 'Disabling floating medrec: not enough space in right rail'], 'debug', logGroup);
+					'Disabling floating medrec: not enough space in right rail'], 'debug', logGroup);
 
 				win.removeEventListener('scroll', update);
 				win.removeEventListener('resize', update);
 
-				$adSlot.css({
-					visibility: 'hidden'
-				});
+				if (!context.opts.adMixExperimentEnabled) {
+					$adSlot.css({
+						visibility: 'hidden'
+					});
+				}
 
 				enabled = false;
 			}
 
-			if (!enabled && isEnoughSpace && $win.scrollTop() > startPosition) {
+			if (!enabled && isEnoughSpace && $win.scrollTop() >= startPosition) {
 				log(['handleFloatingMedrec', 'Enabling floating medrec'], 'debug', logGroup);
 
 				enabled = true;
@@ -106,6 +144,8 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 							win.addEventListener('scroll', update);
 							win.addEventListener('resize', update);
 
+							refresh.refreshAdPos = $adSlot.offset().top;
+							refresh.lastRefreshTime = new Date();
 						}
 					});
 					adPushed = true;

@@ -61,6 +61,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 				getUapId: noop
 			},
 			slotTargetingHelper: {
+				getAbTestId: noop,
 				getPrebidSlotId: noop,
 				getWikiaSlotId: noop
 			},
