@@ -56,6 +56,13 @@
 		opacity: .5;
 	}
 
+	&:focus:not(:disabled),
+	&:hover:not(:disabled),
+	&:active,
+	&.wds-is-active {
+		text-decoration: none;
+	}
+
 	&.wds-is-secondary {
 		background-color: transparent;
 		color: $wds-color-link;

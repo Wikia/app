@@ -8,7 +8,7 @@
 
 .wds-tabs__tab {
 	$tab-padding-horizontal: 12px;
-	$tab-padding-vertical: 13px;
+	$tab-height: 40px;
 	$tab-default-color: $wds-color-link;
 	$tab-hover-color: darken($tab-default-color, 20%);
 
@@ -23,11 +23,12 @@
 		display: inline-flex;
 		font-size: $wds-typescale-size-minus-2;
 		font-weight: bold;
-		padding: $tab-padding-vertical 0;
+		height: $tab-height;
 		text-align: center;
 		text-decoration: none;
 		text-transform: uppercase;
 		transition: color .1s;
+		white-space: nowrap;
 
 		:not(:first-child):not(:only-child) {
 			margin-left: 4px;
@@ -36,6 +37,7 @@
 		> a {
 			align-items: center;
 			display: inline-flex;
+			height: 100%;
 			text-decoration: none;
 		}
 	}
@@ -45,7 +47,9 @@
 		transition: border-color .1s;
 
 		.wds-tabs__tab-label {
-			padding-bottom: $tab-padding-vertical - 2px;
+			// 4px is a height needed to align text after adding 2px bottom-border - it is 2 * 2px
+			// (we need to subtract 2px from bottom and top of the label container for text to be aligned properly)
+			height: $tab-height - 4px;
 		}
 	}
 
