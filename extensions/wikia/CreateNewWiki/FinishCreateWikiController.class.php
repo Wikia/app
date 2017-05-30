@@ -1,9 +1,8 @@
 <?php
 
-use \Wikia\Logger\WikiaLogger;
-
 class FinishCreateWikiController extends WikiaController {
 
+	// cookie is set by WikiBuilder.js saveState() function
 	const COOKIE_NAME = 'createnewwiki';
 
 	// form field values
