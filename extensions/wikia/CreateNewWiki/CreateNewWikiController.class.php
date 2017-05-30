@@ -239,6 +239,8 @@ class CreateNewWikiController extends WikiaController {
 			$userValidator->assertNotBlocked( $user );
 			$userValidator->assertNotExceededRateLimit( $user );
 		} catch ( ValidationException $validationException ) {
+			$context = $this->getContext();
+
 			$httpStatusCode = $validationException->getHttpStatusCode();
 
 			$headerMessageKey = $validationException->getHeaderMessageKey();
@@ -247,8 +249,14 @@ class CreateNewWikiController extends WikiaController {
 			$errorMessageKey = $validationException->getErrorMessageKey();
 			$errorMessageParams = $validationException->getErrorMessageParams();
 
-			$headerMessage = wfMessage( $headerMessageKey )->params( $headerMessageParams )->parse();
-			$errorMessage = wfMessage( $errorMessageKey )->params( $errorMessageParams )->parse();
+			$headerMessage =
+				$context->msg( $headerMessageKey )
+					->params( $headerMessageParams )
+					->parse();
+			$errorMessage =
+				$context->msg( $errorMessageKey )
+					->params( $errorMessageParams )
+					->parse();
 
 			$this->response->setCode( $httpStatusCode );
 			$this->response->setValues( [
