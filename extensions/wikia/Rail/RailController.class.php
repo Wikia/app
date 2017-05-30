@@ -2,6 +2,8 @@
 
 /* This module encapsulates the right rail.  BodyModule handles the business logic for turning modules on or off */
 
+use Wikia\Util\GlobalStateWrapper;
+
 class RailController extends WikiaController {
 
 	const LAZY_LOADING_BEAKPOINT = 1440; // TOP_RIGHT_BOXAD
@@ -39,8 +41,9 @@ class RailController extends WikiaController {
 	protected function getLazyRail() {
 		global $wgAllInOne;
 
-		$context = RequestContext::getMain();
-
+		// override original wgTitle from title given in parameters
+		// we cannot use wgTitle that is created on by API because it's broken on wikis without '/wiki' in URL
+		// https://wikia-inc.atlassian.net/browse/BAC-906
 		$title = Title::newFromText(
 			$this->request->getVal( 'articleTitle', null ),
 			$this->request->getInt( 'namespace', null )
@@ -50,27 +53,27 @@ class RailController extends WikiaController {
 			return;
 		}
 
-		$wrapper = new Wikia\Util\GlobalStateWrapper( [
-			// Do not load user and site jses as they are already loaded and can break page
-			'wgAllowUserJs' => false,
-			'wgUseSiteJs' => false,
-			// override original wgTitle from title given in parameters
-			// we cannot use wgTitle that is created on by API because it's broken on wikis without '/wiki' in URL
-			// https://wikia-inc.atlassian.net/browse/BAC-906
-			'wgTitle' => $title
+		$wrapper = new GlobalStateWrapper( [
+			'wgTitle' => $title,
 		] );
 
-		$assetManager = AssetsManager::getInstance();
+		$context = new DerivativeContext( $this->getContext() );
+		$context->setTitle( $title );
 
-		$railModuleListRaw = $wrapper->wrap( function () {
-			return ( new BodyController )->getRailModuleList();
+		$bodyController = new BodyController();
+		$bodyController->setContext( $context );
+
+		$railModuleListRaw = [];
+		// XW-3476 wrap until refactor is complete
+		$wrapper->wrap( function () use ( $bodyController, &$railModuleListRaw ) {
+			$railModuleListRaw = $bodyController->getRailModuleList();
 		} );
 
 		$railModules = $this->filterModules(
 			$railModuleListRaw,
 			self::FILTER_LAZY_MODULES
 		);
-		$this->railLazyContent = '';
+		$railLazyContent = '';
 
 		krsort( $railModules );
 
@@ -85,18 +88,24 @@ class RailController extends WikiaController {
 			array_push( $railModules, [ 'AdMixExperiment', 'recirculationAndAdPlaceholder', [] ] );
 		}
 
-		foreach ( $railModules as $railModule ) {
-			$this->railLazyContent .= $this->app->renderView(
-				$railModule[0], /* Controller */
-				$railModule[1], /* Method */
-				$railModule[2] /* array of params */
-			);
-		}
+		$wrapper->wrap( function () use ( $railModules, &$railLazyContent ) {
+			foreach ( $railModules as $railModule ) {
+				$railLazyContent .= F::app()->renderView(
+					$railModule[0], /* Controller */
+					$railModule[1], /* Method */
+					$railModule[2] /* array of params */
+				);
+			}
+		} );
 
 		// ad mix experiment uses a wrapper to group recirculation and ad placeholder
 		if ( !$isAdMixExperimentEnabled ) {
-			$this->railLazyContent .= Html::element( 'div', [ 'id' => 'WikiaAdInContentPlaceHolder' ] );
+			$railLazyContent .= Html::element( 'div', [ 'id' => 'WikiaAdInContentPlaceHolder' ] );
 		}
+
+		$this->railLazyContent = $railLazyContent;
+
+		$assetManager = AssetsManager::getInstance();
 
 		$this->css = $sassFiles = [];
 		foreach ( array_keys( $context->getOutput()->styles ) as $style ) {
@@ -128,6 +137,12 @@ class RailController extends WikiaController {
 			}
 		}
 
+		$wrapper = new GlobalStateWrapper( [
+			// Do not load user and site jses as they are already loaded and can break page
+			'wgAllowUserJs' => false,
+			'wgUseSiteJs' => false,
+		] );
+
 		$this->js = $wrapper->wrap( function () use ( $context ) {
 			return $context->getOutput()->getBottomScripts();
 		} );
@@ -142,6 +157,7 @@ class RailController extends WikiaController {
 	 * @return array
 	 */
 	private function filterModules( $moduleList, $lazy ) {
+		/** @var callable $lazyChecker */
 		$lazyChecker = ( $lazy == self::FILTER_LAZY_MODULES ) ?
 			[ $this, 'modulesLazyCheck' ] :
 			[ $this, 'modulesNotLazyCheck' ];
