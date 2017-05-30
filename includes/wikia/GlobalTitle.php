@@ -290,7 +290,7 @@ class GlobalTitle extends Title {
 	/**
 	 * Get a real URL referring to this title
 	 *
-	 * @param string $query an optional query string
+	 * @param string|array $query an optional query string
 	 * @param string|bool $variant language variant of url (for sr, zh..)
 	 *
 	 * @return string the URL
