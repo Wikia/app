@@ -35,12 +35,14 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 			stopPosition,
 			$adSlot = $('<div class="wikia-ad"></div>').attr('id', slotName),
 			$footer = $('#WikiaFooter'),
+			$recirculationRail = $('#recirculation-rail'),
 			$placeHolder = $('#WikiaAdInContentPlaceHolder'),
 			$win = $(win),
 			refresh = {
 				refreshAdPos: 0,
 				lastRefreshTime: new Date(),
-				refreshNumber: 0
+				refreshNumber: 0,
+				adVisible: true,
 			};
 
 		function getStartPosition(placeHolder) {
@@ -87,14 +89,23 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 				}
 			}
 
-			// AD_MIX_1 and AD_MIX_1B
-			if (abTest.getGroup('AD_MIX') && abTest.getGroup('AD_MIX').indexOf('AD_MIX_1') === 0) {
-				refreshAdIfPossible();
-			}
+				if (context.opts.adMix1Enabled) {
+					refreshAdIfPossible();
+				}
 
-			if (abTest.getGroup('AD_MIX').indexOf('AD_MIX_3') === 0) {
+				if (context.opts.adMix3Enabled && shouldChangeSlot($adSlot.offset().top, 6)) {
+					if (refresh.adVisible) {
+						$adSlot.hide();
+						$recirculationRail.show();
+					} else {
+						viewabilityHandler.refreshOnView(slotName, 0);
+						$adSlot.show();
+						$recirculationRail.hide();
+					}
 
-			}
+					refresh.adVisible = !refresh.adVisible;
+				}
+
 		}
 
 		function getDifference(currentAdPos) {
@@ -102,19 +113,30 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 		}
 
 		function refreshAdIfPossible() {
-			var currentAdPos = $adSlot.offset().top,
-				heightScrolled = getDifference(currentAdPos),
-				timeDifference = (new Date()) - refresh.lastRefreshTime;
+			var currentAdPos = $adSlot.offset().top;
 
-			if (heightScrolled > 10 && timeDifference > 10000 && refresh.refreshNumber < 3) {
-				refresh.lastRefreshTime = new Date();
-				refresh.refreshAdPos = currentAdPos;
-				refresh.refreshNumber++;
+			if (shouldChangeSlot(currentAdPos, 3)) {
 				viewabilityHandler.refreshOnView(slotName, 0);
 			}
 		}
 
+		function shouldChangeSlot(currentAdPos, maxChanges) {
+			var heightScrolled = getDifference(currentAdPos),
+				timeDifference = (new Date()) - refresh.lastRefreshTime,
+				result = heightScrolled > 10 && timeDifference > 10000 && refresh.refreshNumber < maxChanges;
+
+			if (result) {
+				refresh.lastRefreshTime = new Date();
+				refresh.refreshAdPos = currentAdPos;
+				refresh.refreshNumber++;
+			}
+
+			return result;
+		}
+
 		function handleFloatingMedrec() {
+			var scrollTop = $win.scrollTop();
+
 			startPosition = getStartPosition($placeHolder);
 			stopPosition = getStopPosition($adSlot, $footer, $(leftSkyscraper3Selector));
 			isEnoughSpace = stopPosition - startPosition > minDistance;
@@ -135,25 +157,29 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 				enabled = false;
 			}
 
-			if (!enabled && isEnoughSpace && $win.scrollTop() >= startPosition) {
-				log(['handleFloatingMedrec', 'Enabling floating medrec'], 'debug', logGroup);
+			if (!enabled && isEnoughSpace && scrollTop >= startPosition) {
+					log(['handleFloatingMedrec', 'Enabling floating medrec'], 'debug', logGroup);
 
-				enabled = true;
+					enabled = !context.opts.adMix3Enabled;
 
-				if (!adPushed) {
-					$placeHolder.append($adSlot);
-					win.adslots2.push({
-						slotName: slotName,
-						onSuccess: function () {
-							win.addEventListener('scroll', update);
-							win.addEventListener('resize', update);
+					if (!adPushed && (!context.opts.adMix3Enabled || shouldChangeSlot(scrollTop, 6))) {
+						$placeHolder.append($adSlot);
+						win.adslots2.push({
+							slotName: slotName,
+							onSuccess: function () {
+								win.addEventListener('scroll', update);
+								win.addEventListener('resize', update);
 
-							refresh.refreshAdPos = $adSlot.offset().top;
-							refresh.lastRefreshTime = new Date();
+								refresh.refreshAdPos = $adSlot.offset().top;
+								refresh.lastRefreshTime = new Date();
+							}
+						});
+						adPushed = true;
+
+						if (context.opts.adMix3Enabled) {
+							$recirculationRail.hide();
 						}
-					});
-					adPushed = true;
-				}
+					}
 			}
 		}
 

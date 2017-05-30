@@ -30,9 +30,12 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 		// AD_MIX_2 & AD_MIX_2B: topRightAdFixed === true && recircEnabled === true
 		// AD_MIX_3 & AD_MIX_3B: reloadRecirc === true && recircEnabled === true
 		// CONTROL: all === false
-		var reloadFloatingMedrec = abTest.getGroup('AD_MIX') === 'AD_MIX_1' || abTest.getGroup('AD_MIX') === 'AD_MIX_1B';
 		var topRightAdFixed = abTest.getGroup('AD_MIX') === 'AD_MIX_2' || abTest.getGroup('AD_MIX') === 'AD_MIX_2B';
 		var recircEnabled = abTest.getGroup('AD_MIX') !== 'CONTROL';
+
+		if (context.opts.adMix3Enabled) {
+			gapSize = 0;
+		}
 
 		function getFirstAdTopPosition() {
 			return $rail.offset().top - globalNavigationHeight - firstAdTopSpace;

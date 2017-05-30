@@ -48,10 +48,8 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 				return getNewSizes([[970, 250], [728, 90]], footerSize, [[728, 90]]);
 			case slotName === 'BOTTOM_LEADERBOARD':
 				return getNewSizes(slotSizes, footerSize, [[728, 90]]);
-			case slotName === 'INCONTENT_BOXAD_1' && context.opts.adMixExperimentEnabled &&
-				abTest.getGroup('AD_MIX').indexOf('AD_MIX_1') === 0:
-			case slotName === 'TOP_RIGHT_BOXAD' && context.opts.adMixExperimentEnabled &&
-				abTest.getGroup('AD_MIX').indexOf('AD_MIX_1') === 0:
+			case slotName === 'INCONTENT_BOXAD_1' && context.opts.adMix1Enabled:
+			case slotName === 'TOP_RIGHT_BOXAD' && context.opts.adMix1Enabled:
 				return [ [300, 250] ];
 			default:
 				return slotSizes;
