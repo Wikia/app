@@ -37,7 +37,7 @@ class Counter {
 	}
 
 	private function getMessageForBlogListing( WikiaApp $app ) {
-		$count = $app->wg->Parser->getOutput()->getProperty('blogPostCount');
+		$count = $app->wg->Parser->getOutput()->getProperty( 'blogPostCount' );
 
 		return wfMessage( 'page-header-counter-blog-posts', $count )->parse();
 	}
