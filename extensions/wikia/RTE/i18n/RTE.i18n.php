@@ -566,27 +566,6 @@ $messages['pt'] = array(
 	'prefs-rte' => 'Editor de Texto Enriquecido',
 );
 
-$messages['pt-br'] = array(
-	'rte-desc' => 'Integração do CKeditor no MediaWiki',
-	'rte-no-js-fallback' => 'O editor de texto enriquecido não funciona com o JavaScript desativado. Ative-o nas opções do navegador, ou mude as suas [[Special:Preferences|preferências]] para o editor antigo do MediaWiki.',
-	'rte-edgecase-info-title' => 'É necessário o modo de código fonte',
-	'rte-edgecase-info' => 'A edição de texto enriquecido foi desativada porque a página contém código complexo.',
-	'rte-edgecase-comment' => 'comentários HTML',
-	'rte-edgecase-triplecurls' => 'parâmetros de predefinições',
-	'rte-edgecase-nowysiwyg' => 'o comando "sem WYSIWYG"',
-	'rte-edgecase-complex-description' => 'uma URL externa ou uma predefinição na descrição de um link',
-	'rte-edgecase-template-with-link' => 'uma predefinição com um link como parâmetro',
-	'rte-edgecase-syntax' => 'sintaxe não permitida',
-	'rte-edgecase-image-with-link' => 'imagem com um link na descrição',
-	'rte-edgecase-redirect' => 'redirecionamento',
-	'rte-edgecase-templateintable' => 'uma tabela cuja definição chama uma predefinição',
-	'rte-edgecase-unclosed-tags' => 'elemento HTML não foi fechado',
-	'enablerichtexteditor' => 'Habilitar a edição no modo visual (no lugar do modo de fonte)',
-	'rte-enablerichtexteditormessage' => 'O Editor de Texto Enriquecido foi ativado!',
-	'rte-first-run-notice' => 'Fizemos algumas melhorias no editor. Para saber mais, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news leia o anúncio].',
-	'prefs-rte' => 'Editor de Texto Enriquecido',
-);
-
 $messages['roa-tara'] = array(
 	'rte-edgecase-comment' => 'Commende HTML',
 	'rte-edgecase-triplecurls' => "parametre d'u template",
@@ -721,16 +700,6 @@ $messages['vi'] = array(
 	'rte-enablerichtexteditormessage' => 'Trình Soạn Thảo Văn Bản đã được kích hoạt!',
 	'rte-first-run-notice' => 'Chúng tôi đã thực hiện một số cải tiến để trình biên tập. Để tìm hiểu thêm, xin vui lòng đọc [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news thông báo] để biết thêm chi tiết.',
 	'prefs-rte' => 'Trình soạn thảo văn bản giàu định dạng',
-);
-
-$messages['zh'] = array(
-	'rte-edgecase-comment' => 'HTML 註解',
-	'rte-edgecase-triplecurls' => '模板變數',
-	'rte-edgecase-nowysiwyg' => '"__NOWYSIWYG__" 指令',
-	'rte-edgecase-complex-description' => '連結描述中有範本或外連結',
-	'rte-edgecase-template-with-link' => '模板的變數中使用連結',
-	'rte-edgecase-syntax' => '不被允許的語法',
-	'rte-edgecase-image-with-link' => '圖像描述中有連結',
 );
 
 $messages['zh-hans'] = array(
