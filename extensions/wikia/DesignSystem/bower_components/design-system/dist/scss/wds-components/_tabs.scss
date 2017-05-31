@@ -7,7 +7,7 @@
 }
 
 .wds-tabs__tab {
-	$tab-padding-horizontal: 12px;
+	$tab-margin-horizontal: 12px;
 	$tab-height: 40px;
 	$current-tab-bottom-border-width: 2px;
 	$tab-default-color: $wds-color-link;
@@ -15,7 +15,6 @@
 
 	cursor: default;
 	line-height: 14px;
-	padding: 0 $tab-padding-horizontal;
 	position: relative;
 
 	&-label {
@@ -25,6 +24,8 @@
 		font-size: $wds-typescale-size-minus-2;
 		font-weight: bold;
 		height: $tab-height;
+		letter-spacing: .5px;
+		margin: 0 $tab-margin-horizontal;
 		text-align: center;
 		text-decoration: none;
 		text-transform: uppercase;

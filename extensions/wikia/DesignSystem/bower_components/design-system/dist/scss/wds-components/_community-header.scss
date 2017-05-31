@@ -53,10 +53,10 @@
 
 	&__sitename {
 		flex: 1;
-		font-size: $wds-typescale-size-plus-3;
+		font-size: $wds-typescale-size-plus-4;
 		font-weight: 600;
 		line-height: 1;
-		margin: 24px 0 0 18px;
+		margin: 18px 0 0 18px;
 		overflow: hidden;
 		white-space: nowrap;
 
@@ -76,7 +76,7 @@
 	&__counter{
 		font-weight: 600;
 		text-align: right;
-		margin: 18px 0 20px 20px;
+		margin: 17px 0 20px 20px;
 
 		@media #{$wds-breakpoint-l-down} {
 			margin-top: 22px;
@@ -97,6 +97,7 @@
 		display: block;
 		font-size: $wds-typescale-size-minus-2;
 		line-height: 1;
+		margin-top: 3px;
 		text-transform: uppercase;
 
 		@media #{$wds-breakpoint-l-down} {
@@ -112,6 +113,16 @@
 		display: flex;
 		height: 46px;
 		padding-left: 6px;
+
+		.wds-dropdown__toggle-chevron {
+			opacity: .5;
+		}
+
+		.wds-dropdown:hover {
+			.wds-dropdown__toggle-chevron {
+				opacity: 1;
+			}
+		}
 
 		@media #{$wds-breakpoint-l-down} {
 			clear: both;
