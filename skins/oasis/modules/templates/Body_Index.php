@@ -81,7 +81,7 @@
 		<? endif; ?>
 
 		<? if ( empty( $wg->SuppressPageHeader ) ) : ?>
-			<?= $app->renderView('PageHeader', 'index') ?>
+			<?= $app->renderView('Wikia\PageHeader\PageHeaderController', 'index') ?>
 		<? endif; ?>
 
 		<article id="WikiaMainContent" class="WikiaMainContent<?= !empty( $isGridLayoutEnabled ) ? $railModulesExist ? ' grid-4' : ' grid-6' : '' ?>">

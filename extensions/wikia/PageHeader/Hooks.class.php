@@ -1,6 +1,6 @@
 <?php
 
-namespace PageHeader;
+namespace Wikia\PageHeader;
 
 class Hooks {
 	/**

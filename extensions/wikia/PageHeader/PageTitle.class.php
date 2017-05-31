@@ -1,6 +1,6 @@
 <?php
 
-namespace PageHeader;
+namespace Wikia\PageHeader;
 
 use \RequestContext;
 use \Title;
@@ -49,7 +49,7 @@ class PageTitle {
 		return $app->getSkinTemplateObj()->data['title'];
 	}
 
-	private function handlePrefix(): ?string {
+	private function handlePrefix() {
 		if ( $this->MWTitle->isTalkPage() ) {
 			return $this->wg->ContLang->getNsText( NS_TALK );
 		}
