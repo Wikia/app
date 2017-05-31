@@ -5,6 +5,9 @@ namespace Wikia\CommunityHeader;
 use \SiteStats;
 
 class Counter {
+	public $label;
+	public $value;
+
 	public function __construct() {
 		$value = SiteStats::articles();
 		$this->value =  \RequestContext::getMain()->getLanguage()->formatNum( $value );

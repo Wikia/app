@@ -6,6 +6,11 @@ use \NavigationModel;
 use \Title;
 
 class Navigation {
+	public $discussLink;
+	public $exploreItems;
+	public $exploreLabel;
+	public $localNavigation;
+
 	public function __construct() {
 		$this->localNavigation =
 			( new NavigationModel() )->getLocalNavigationTree( NavigationModel::WIKI_LOCAL_MESSAGE );

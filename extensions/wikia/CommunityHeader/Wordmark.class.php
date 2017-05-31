@@ -11,6 +11,10 @@ class Wordmark {
 
 	private $isValid;
 
+	public $href;
+	public $label;
+	public $image;
+
 	public function __construct() {
 		$themeSettings = new ThemeSettings();
 		$settings = $themeSettings->getSettings();
