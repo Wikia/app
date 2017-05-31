@@ -53,15 +53,22 @@
 
 	&__sitename {
 		flex: 1;
-		font-size: $wds-typescale-size-plus-4;
+		font-size: $wds-typescale-size-plus-3;
 		font-weight: 600;
 		line-height: 1;
-		margin: 18px 0 0 18px;
+		margin: 28px 0 0 18px;
 		overflow: hidden;
-		white-space: nowrap;
 
 		a {
 			text-decoration: none;
+
+			@media #{$wds-breakpoint-l-up} {
+				display: block;
+				overflow: hidden;
+				text-decoration: none;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
 		}
 
 		@media #{$wds-breakpoint-l-down} {
