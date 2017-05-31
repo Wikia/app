@@ -18,6 +18,23 @@ class ForumBoard extends Wall {
 	}
 
 	/**
+	 * @param Title $title
+	 *
+	 * @return null|ForumBoard
+	 */
+	static public function newFromTitle( Title $title ) {
+		if ( !( $title instanceof Title ) ) {
+			return null;
+		}
+
+		$forumBoard = self::getEmpty();
+		$forumBoard->mTitle = $title;
+		$forumBoard->mCityId = F::app()->wg->CityId;
+
+		return $forumBoard;
+	}
+
+	/**
 	 * get board info: the number of threads, the number of posts, the username and timestamp of the last post
 	 * @return ForumBoardInfo $info
 	 */
