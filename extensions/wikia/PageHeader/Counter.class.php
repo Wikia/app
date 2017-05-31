@@ -47,8 +47,13 @@ class Counter {
 	private function getMessageForForum() {
 		$forum = new Forum();
 		$count = $forum->getTotalThreads();
+		$countActive = $forum->getTotalActiveThreads();
 
-		return wfMessage( 'page-header-counter-forum-threads', $count )->parse();
+		if ( $countActive > 0 ) {
+			return wfMessage( 'page-header-counter-forum-threads-with-active', $count, $countActive )->parse();
+		} else {
+			return wfMessage( 'page-header-counter-forum-threads', $count )->parse();
+		}
 	}
 
 	private function getMessageForForumBoard( Title $title ) {
