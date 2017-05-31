@@ -194,9 +194,7 @@ class WikiaView {
 
 		// Add variations on the controller name
 		if ( $controllerBaseName === null ) {
-			$controllerBaseName = $this->getClassName(
-				F::app()->getBaseName( $controllerClass )
-			);
+			$controllerBaseName = F::app()->getBaseName( $controllerClass );
 		}
 		$templates[] = "{$controllerBaseName}_{$methodName}";
 		if ( $controllerClass !== $controllerBaseName ) {
