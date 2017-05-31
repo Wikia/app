@@ -367,7 +367,7 @@
 				// setup menu in preview mode
 				$( window ).bind( 'EditPageAfterRenderPreview', function ( ev, previewNode ) {
 					// don't style wiki nav like article content
-					previewNode.removeClass( 'WikiaArticle' );
+					previewNode.children().removeClass( 'WikiaArticle' );
 					WikiHeader.init( true );
 					var firstMenuValid = WikiHeader.firstMenuValidator(),
 						secondMenuValid = WikiHeader.secondMenuValidator(),

@@ -6,9 +6,14 @@ use \NavigationModel;
 use \Title;
 
 class Navigation {
-	public function __construct() {
-		$this->localNavigation =
-			( new NavigationModel() )->getLocalNavigationTree( NavigationModel::WIKI_LOCAL_MESSAGE );
+	public function __construct( $wikiText = null ) {
+		$navigationModel = new NavigationModel();
+		if ( empty( $wikiText ) ) {
+			$this->localNavigation =
+				$navigationModel->getLocalNavigationTree( NavigationModel::WIKI_LOCAL_MESSAGE );
+		} else {
+			$this->localNavigation = $navigationModel->getTreeFromText( $wikiText );
+		}
 		$this->exploreLabel =
 			new Label( 'community-header-explore', Label::TYPE_TRANSLATABLE_TEXT );
 		$this->exploreItems = $this->getExploreItems();

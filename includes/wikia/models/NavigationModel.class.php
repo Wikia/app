@@ -222,6 +222,24 @@ class NavigationModel extends WikiaModel {
 		return $menuData;
 	}
 
+	public function getTreeFromText( $wikiText ) {
+		$this->setShouldTranslateContent( false );
+		$menuData = [];
+
+		$this->menuNodes = $this->parseText( $wikiText, [
+			$this->wg->maxLevelOneNavElements,
+			$this->wg->maxLevelTwoNavElements,
+			$this->wg->maxLevelThreeNavElements,
+		], true );
+
+		foreach ( $this->menuNodes[0][self::CHILDREN] as $id ) {
+			$menuData[] = $this->recursiveConvertMenuNodeToArray( $id );
+		}
+		$this->setShouldTranslateContent( true );
+
+		return $menuData;
+	}
+
 	/*
 	 * TODO we should refactor whole model when we remove Oasis
 	 *
