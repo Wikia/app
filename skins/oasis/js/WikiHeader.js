@@ -298,62 +298,15 @@
 			},
 
 			firstMenuValidator: function () {
-				var widthLevelFirst = 0,
-					returnVal = true,
-					menuNodes = $( '.ArticlePreview #WikiHeader > nav > ul > li' );
+				var $localNavPreview = $('.wds-local-navigation-preview'),
+					$tabs = $localNavPreview.find('.wds-tabs');
 
-				menuNodes.reverse().each( $.proxy( function ( index, value ) {
-					var item = $( value ),
-						pos = item.position();
-
-					if ( pos.top === 0 ) {
-						// don't check next items
-						return false;
-					}
-					else {
-						returnVal = false;
-						this.log( 'menu level #1 not valid' );
-					}
-				}, this ) );
-
-				menuNodes.each( function ( menuItemKey, menuItem ) {
-					widthLevelFirst += $( menuItem ).width();
-				} );
-
-				if ( widthLevelFirst > 550 ) {
-					returnVal = false;
+				if ($tabs.width() > $localNavPreview.width()) {
 					this.log( 'menu level #1 not valid' );
+					return false;
 				}
 
-				return returnVal;
-			},
-
-			secondMenuValidator: function () {
-				var widthLevelSecond = 0,
-					returnVal = true,
-					maxWidth = $( '#WikiaPage' ).width() - 280,
-					menuNodes = $( '.ArticlePreview #WikiHeader .subnav-2' );
-
-				$.each( menuNodes, $.proxy( function ( index, value ) {
-					var menu = $( value );
-
-					menu.show();
-					$.each( menu.children( 'li' ), function () {
-						widthLevelSecond += $( this ).width();
-					} );
-					menu.hide();
-
-					if ( widthLevelSecond > maxWidth ) {
-						returnVal = false;
-						this.log( 'menu level #2 not valid' );
-					}
-					widthLevelSecond = 0;
-
-				}, this ) );
-
-				// show the first submenu
-				menuNodes.eq( 0 ).show();
-				return returnVal;
+				return true;
 			}
 		};
 
@@ -370,7 +323,6 @@
 					previewNode.children().removeClass( 'WikiaArticle' );
 					WikiHeader.init( true );
 					var firstMenuValid = WikiHeader.firstMenuValidator(),
-						secondMenuValid = WikiHeader.secondMenuValidator(),
 						menuParseError = !!previewNode.find( 'nav > ul' ).attr( 'data-parse-errors' ),
 						errorMessages = [];
 
@@ -378,14 +330,8 @@
 						errorMessages.push( $.msg( 'oasis-navigation-v2-magic-word-validation' ) );
 					}
 
-					if ( !firstMenuValid && !secondMenuValid ) {
-						errorMessages.push( $.msg( 'oasis-navigation-v2-level12-validation' ) );
-					}
-					else if ( !firstMenuValid ) {
+					if ( !firstMenuValid ) {
 						errorMessages.push( $.msg( 'oasis-navigation-v2-level1-validation' ) );
-					}
-					else if ( !secondMenuValid ) {
-						errorMessages.push( $.msg( 'oasis-navigation-v2-level2-validation' ) );
 					}
 
 					if ( errorMessages.length > 0 ) {

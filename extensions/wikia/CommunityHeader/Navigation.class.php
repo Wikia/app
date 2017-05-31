@@ -11,7 +11,7 @@ class Navigation {
 	public $exploreLabel;
 	public $localNavigation;
 
-	public function __construct() {
+	public function __construct( $wikiText = null ) {
 		$navigationModel = new NavigationModel();
 		if ( empty( $wikiText ) ) {
 			$this->localNavigation =
@@ -19,6 +19,7 @@ class Navigation {
 		} else {
 			$this->localNavigation = $navigationModel->getTreeFromText( $wikiText );
 		}
+
 		$this->exploreLabel =
 			new Label( 'community-header-explore', Label::TYPE_TRANSLATABLE_TEXT );
 		$this->exploreItems = $this->getExploreItems();
