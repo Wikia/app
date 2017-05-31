@@ -7,7 +7,7 @@ use MediaQueryService;
 use RequestContext;
 use WikiaApp;
 
-class Tally {
+class Counter {
 	public function __construct( WikiaApp $app ) {
 		$title = RequestContext::getMain()->getTitle();
 
