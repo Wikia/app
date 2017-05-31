@@ -270,8 +270,14 @@ class WikiaView {
 			return $this->render();
 		} catch( Exception $e ) {
 			// php doesn't allow exceptions to be thrown inside __toString() so we need an extra try/catch block here
-			if ($this->response == null) return "WikiaView: response object was null rendering {$this->templatePath}";
-			if ($this->response->getException() == null) $this->response->setException($e);
+			if ($this->response == null) {
+				return "WikiaView: response object was null rendering {$this->templatePath}";
+			}
+
+			if ($this->response->getException() == null) {
+				$this->response->setException($e);
+			}
+
 			return F::app()->getView( 'WikiaError', 'error', array( 'response' => $this->response, 'devel' => F::app()->wg->DevelEnvironment ) )->render();
 		}
 	}
