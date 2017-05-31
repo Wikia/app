@@ -317,7 +317,9 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 			viewportHeight = $window.height();
 			viewportWidth = $window.width();
 
-			if ($adAndRecircWrapper.offset().top + $adAndRecircWrapper.height() > $footer.offset().top) {
+			$('#WikiaArticleBottomAd').hide();
+
+			if ($adAndRecircWrapper.offset().top + $adAndRecircWrapper.height() >= $footer.offset().top) {
 				$adAndRecircWrapper.css('position', 'static');
 				$recircWrapper.css('margin-bottom', '0');
 				return;
