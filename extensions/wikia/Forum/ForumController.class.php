@@ -13,12 +13,28 @@ class ForumController extends WallBaseController {
 		 * Include Forum.scss only if
 		 * the method is called in a Forum context
 		 */
-		if ( ForumHelper::isForum() ) {
+		if ( DiscussionsRedirectHelper::areForumsArchivedAndDiscussionsEnabled()
+		 && ForumHelper::isForum() ) {
 			$this->response->addAsset( 'extensions/wikia/Forum/css/Forum.scss' );
 		}
 	}
 
+	public function thread() {
+		if ( DiscussionsRedirectHelper::areForumsArchivedAndDiscussionsEnabled()
+		     && ForumHelper::isForum() ) {
+			DiscussionsRedirectHelper::redirect( $this->app->wg->Out, $this->response );
+		} else {
+			return parent::thread();
+		}
+	}
+
 	public function board() {
+		if ( DiscussionsRedirectHelper::areForumsArchivedAndDiscussionsEnabled()
+		     && ForumHelper::isForum() ) {
+			DiscussionsRedirectHelper::redirect( $this->app->wg->Out, $this->response );
+			return false;
+		}
+
 		$ns = $this->wg->Title->getNamespace();
 
 		if ( $ns == NS_WIKIA_FORUM_TOPIC_BOARD ) {
@@ -211,6 +227,11 @@ class ForumController extends WallBaseController {
 	}
 
 	public function header() {
+		if ( DiscussionsRedirectHelper::areForumsArchivedAndDiscussionsEnabled()
+		     && ForumHelper::isForum() ) {
+			DiscussionsRedirectHelper::redirect( $this->app->wg->Out, $this->response );
+			return;
+		}
 		$forum = new Forum();
 		$this->response->setVal( 'threads', $forum->getTotalThreads() );
 		$this->response->setVal( 'activeThreads', $forum->getTotalActiveThreads() );
