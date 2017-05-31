@@ -1,5 +1,9 @@
 <?php
 
+require_once dirname(__FILE__) . '/_fixtures/TestController.php';
+require_once dirname(__FILE__) . '/_fixtures/TestATestController.php';
+require_once dirname(__FILE__) . '/_fixtures/TestATestBTestController.php';
+
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -20,11 +24,11 @@ class WikiaViewTest extends TestCase {
 	public function creatingNewFromControllerAndMethodDataProvider() {
 		return [
 			[ 'Test', 'Foo', [], 'html' ],
-			[ 'TestA/Test', 'Foo', [], 'html' ],
-			[ 'TestA/TestB/Test', 'Foo', [], 'html' ],
+			[ 'TestA\Test', 'Foo', [], 'html' ],
+			[ 'TestA\TestB\Test', 'Foo', [], 'html' ],
 			[ 'Test', 'Bar', [ 'foo1' => 1, 'foo2' => 2 ], 'json' ],
-			[ 'TestA/Test', 'Bar', [ 'foo1' => 1, 'foo2' => 2 ], 'json' ],
-			[ 'TestA/TestB/Test', 'Bar', [ 'foo1' => 1, 'foo2' => 2 ], 'json' ],
+			[ 'TestA\Test', 'Bar', [ 'foo1' => 1, 'foo2' => 2 ], 'json' ],
+			[ 'TestA\TestB\Test', 'Bar', [ 'foo1' => 1, 'foo2' => 2 ], 'json' ],
 		];
 	}
 
@@ -45,8 +49,8 @@ class WikiaViewTest extends TestCase {
 	public function setTemplateDataProvider() {
 		return [
 			[ true, 'Test' ],
-			[ true, 'TestA/Test' ],
-			[ true, 'TestA/TestB/Test' ],
+			[ true, 'TestA\Test' ],
+			[ true, 'TestA\TestB\Test' ],
 			[ false, 'NonExistent' ],
 		];
 	}
@@ -63,8 +67,11 @@ class WikiaViewTest extends TestCase {
 
 		$this->object->setTemplate( $controllerName, 'hello' );
 
+		$controllerNameExploded = explode('\\', $controllerName);
+		$controllerNameWithoutNamespace = end( $controllerNameExploded );
+
 		if ( $classExists ) {
-			$this->assertEquals( ( dirname( __FILE__ ) . '/_fixtures/templates/' . $controllerName . '_hello.php' ), $this->object->getTemplatePath() );
+			$this->assertEquals( ( dirname( __FILE__ ) . '/_fixtures/templates/' . $controllerNameWithoutNamespace . '_hello.php' ), $this->object->getTemplatePath() );
 		}
 		$this->unmockAutoloadedController( $controllerName );
 	}

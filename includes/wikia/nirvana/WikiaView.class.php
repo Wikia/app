@@ -116,13 +116,11 @@ class WikiaView {
 				$extension = WikiaResponse::TEMPLATE_ENGINE_PHP;
 			}
 
-			// Service classes must be dispatched by full name otherwise we default to a controller.
-			$controllerBaseName = null;
-			$controllerClass = self::normalizeControllerClass( $controllerClass, $controllerBaseName );
+			$controllerClass = self::normalizeControllerClass( $controllerClass );
 
 			$templateExists = false;
 			$templatePath = '';
-			$templates = $this->getTemplateOptions( $controllerClass, $methodName, $controllerBaseName );
+			$templates = $this->getTemplateOptions( $controllerClass, $methodName );
 			$dirName = $this->getTemplateDir( $controllerClass );
 
 			foreach ( $templates as $templateName ) {
@@ -147,26 +145,20 @@ class WikiaView {
 	 * 'Controller' or 'Service'.  Normalize to this form.
 	 *
 	 * @param string $controllerClass
-	 * @param string $controllerBaseName (out, optional) Controller class base name
 	 *
 	 * @return string
 	 *
 	 * @throws WikiaException
 	 */
-	private static function normalizeControllerClass( string $controllerClass, string &$controllerBaseName = null ): string {
-		$app = F::app();
-		// @author: wladek
-		// Improve performance by providing the same behavior without calling external functions
-		if ( substr( $controllerClass, -7 ) === 'Service' ) {
-			$controllerBaseName = substr( $controllerClass, 0, -7 );
-		} elseif ( substr( $controllerClass, -10 ) === 'Controller' ) {
-			$controllerBaseName = substr( $controllerClass, 0, -10 );
-		} else {
-			$controllerBaseName = $controllerClass;
+	private static function normalizeControllerClass( string $controllerClass ): string {
+		if (
+			substr( $controllerClass, -7 ) !== 'Service' &&
+			substr( $controllerClass, -10 ) !== 'Controller'
+		) {
 			$controllerClass .= 'Controller';
 		}
 
-		if ( empty( $app->wg->AutoloadClasses[$controllerClass] ) ) {
+		if ( empty( F::app()->wg->AutoloadClasses[$controllerClass] ) ) {
 			throw new WikiaException( "Invalid controller or service name: {$controllerClass}" );
 		}
 
@@ -207,7 +199,7 @@ class WikiaView {
 	private function getClassName( string $controllerClassWithNamespace ): string {
 		$controllerClassExploded = explode( '\\', $controllerClassWithNamespace );
 
-		return array_pop( $controllerClassExploded );
+		return end( $controllerClassExploded );
 	}
 
 	/**
