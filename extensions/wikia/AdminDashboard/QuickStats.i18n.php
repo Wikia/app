@@ -746,16 +746,6 @@ $messages['pt'] = array(
 	'quickstats-number-shortening-billions' => '$1B',
 );
 
-$messages['pt-br'] = array(
-	'quickstats-header-label' => 'Estatísticas Rápidas',
-	'quickstats-header-date' => 'Data',
-	'quickstats-header-views' => 'Visualizações',
-	'quickstats-header-edits' => 'Edições',
-	'quickstats-header-photos' => 'Fotos',
-	'quickstats-totals-label' => 'Totais',
-	'quickstats-see-more-stats-link' => '[[Special:Insights|Ver mais estatísticas]]',
-);
-
 $messages['roa-tara'] = array(
 	'quickstats-header-label' => 'Statisteche veloce',
 	'quickstats-header-date' => 'Date',
@@ -975,14 +965,6 @@ $messages['war'] = array(
 	'quickstats-header-photos' => 'Mga hulagway',
 );
 
-$messages['zh'] = array(
-	'quickstats-header-label' => '統計快訊',
-	'quickstats-header-date' => '日期',
-	'quickstats-header-views' => '點閱數',
-	'quickstats-header-edits' => '編輯數',
-	'quickstats-header-photos' => '照片',
-);
-
 $messages['zh-hans'] = array(
 	'quickstats-header-label' => '简明统计',
 	'quickstats-header-date' => '日期',
@@ -1010,14 +992,3 @@ $messages['zh-hant'] = array(
 	'quickstats-number-shortening-millions' => '$1百萬',
 	'quickstats-number-shortening-billions' => '$10億',
 );
-
-$messages['zh-hk'] = array(
-	'quickstats-header-label' => '快速統計資訊',
-	'quickstats-header-date' => '日期',
-	'quickstats-header-views' => '瀏覽次數',
-	'quickstats-header-edits' => '編輯次數',
-	'quickstats-header-photos' => '圖片數',
-	'quickstats-totals-label' => '總計',
-	'quickstats-see-more-stats-link' => '[[Special:Insights|查看更多統計]]',
-);
-
