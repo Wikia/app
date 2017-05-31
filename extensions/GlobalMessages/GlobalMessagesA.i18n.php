@@ -97,7 +97,6 @@ Some IP addresses change periodically, and may be shared by several users. If yo
 	'alllogstext' => 'Combined display of all available logs of {{SITENAME}}.
 You can narrow down the view by selecting a log type, the username (case-sensitive), or the affected page (also case-sensitive).',
 	'allpages' => 'All pages',
-	'allpages-summary' => '',
 	'alphaindexline' => '$1 to $2',
 	'allpagesfrom' => 'Display pages starting at:',
 	'allpagesto' => 'Display pages ending at:',
@@ -6520,16 +6519,6 @@ Bitte wähle einen anderen Titel.',
 	'addsection' => 'Kommentieren',
 	'admin_skin' => 'Admin-Optionen',
 	'adminskin_ds' => 'Voreinstellung',
-	'allpages-summary' => '{| cellpadding="4px" style="width:100%; background-color:#f9f9f9; border-style:solid; border-color:#e9e9e9; border-width:4px; margin:auto; margin-top:4px; margin-bottom:4px; clear:both; position:relative; color:black;"
-|<div style="float:right">http://images.wikia.com/de/images/4/47/Allpages-summary-de.png</div>
-<span style="font-weight:bold; font-size:140%;">Inhalt von A–Z</span>
-
-Diese automatisch erstellte Spezialseite bietet eine \'\'\'alphabetische Übersicht aller Seiten\'\'\' in diesem Wiki. Aktuell gibt es bereits \'\'\'{{NUMBEROFARTICLES}} Seiten\'\'\', die als „Artikel“ gelten. 
-
-* Mit dem Auswahlfeld lassen sich Seiten in bestimmten [[w:c:hilfe:Hilfe:Namensräume|Namensräumen]] anzeigen.
-* \'\'Kursiv\'\' dargestellte Einträge sind Weiterleitungen auf andere Seitentitel. 
-* Alternativ zu dieser automatisch erstellten Auflistung gibt es noch die [[:Kategorie:Inhalt|\'\'\'Kategorienübersicht\'\'\' als thematisch gegliederten Einstieg]].
-|}',
 	'already_a_member' => 'Bereits Wikia-Nutzer?',
 	'ancientpages-summary' => 'Diese Spezialseite zeigt eine Liste von Artikeln, die sehr lange nicht mehr geändert wurden. Sie ist hilfreich, um Artikel zu finden, die gegebenenfalls aktualisiert werden müssen.',
 ];
@@ -6622,7 +6611,6 @@ Gön $1 od eines won anderes [[{{MediaWiki:Grouppage-sysop}}|Adminisdradores]] g
 	'all-logs-page' => 'Ales Logbüges',
 	'alllogstext' => 'Dose eines gombinärdes Anseig won ales Logbüges sei ,wo in dose {{SITENAME}} wühr. Dose Ausgab gön durg Auswähl won dose Logbugdyb, dose Benuds od dose Seidesdid einschräng.',
 	'allpages' => 'Ales Seides',
-	'allpages-summary' => 'Auw dose Schbesialseid ales Seides won dose {{SITENAME}} alwabedisches auwlisd. Bei dose Sordär suersd Sähles, dan Grosbugschdabes, Gleinbugschdabes und dan Sondseiges gom. \'\'A&nbsp;10\'\' wor dose \'\'AZ\'\' gom, dose \'\'Aal\'\' aba nag dose gom.',
 	'alphaindexline' => '$1 bis $2',
 	'allpagesfrom' => 'Seides anseig ab:',
 	'allarticles' => 'Ales Seides',

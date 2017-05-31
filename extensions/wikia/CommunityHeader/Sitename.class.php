@@ -6,8 +6,8 @@ use \ThemeSettings;
 use \Title;
 
 class Sitename {
-	public $url;
 	public $titleText;
+	public $url;
 
 	public function __construct() {
 		$themeSettings = new ThemeSettings();

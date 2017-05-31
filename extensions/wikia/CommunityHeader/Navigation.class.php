@@ -6,7 +6,12 @@ use \NavigationModel;
 use \Title;
 
 class Navigation {
-	public function __construct( $wikiText = null ) {
+	public $discussLink;
+	public $exploreItems;
+	public $exploreLabel;
+	public $localNavigation;
+
+	public function __construct() {
 		$navigationModel = new NavigationModel();
 		if ( empty( $wikiText ) ) {
 			$this->localNavigation =
