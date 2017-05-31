@@ -316,7 +316,6 @@ class WikiaView {
 				wfProfileOut(__METHOD__);
 
 				return $result;
-				break;
 			case WikiaResponse::TEMPLATE_ENGINE_PHP:
 			default:
 				// Export the app wg and wf helper objects into the template
@@ -338,7 +337,6 @@ class WikiaView {
 				$out = ob_get_clean();
 				wfProfileOut(__METHOD__);
 				return $out;
-				break;
 		}
 
 	}
