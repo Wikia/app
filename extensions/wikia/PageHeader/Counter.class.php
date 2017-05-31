@@ -10,6 +10,8 @@ class Counter {
 
 		if ( $title->isSpecial( 'Videos' ) ) {
 			$this->message = $this->getMessageForVideos();
+		} else if ( $title->isSpecial( 'Images' ) ) {
+			$this->message = $this->getMessageForImages( $app );
 		} else if ( $title->inNamespace( NS_BLOG_LISTING ) ) {
 			$this->message = $this->getMessageForBlogPosts( $app );
 		}
@@ -20,6 +22,13 @@ class Counter {
 		$count = $mediaService->getTotalVideos();
 
 		return wfMessage( 'page-header-counter-videos', $count )->parse();
+	}
+
+	private function getMessageForImages() {
+		$mediaService = ( new \MediaQueryService );
+		$count = $mediaService->getTotalImages();
+
+		return wfMessage( 'page-header-counter-images', $count )->parse();
 	}
 
 	private function getMessageForBlogPosts( WikiaApp $app ) {
