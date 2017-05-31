@@ -8,8 +8,6 @@
 
 .wds-tabs__tab {
 	$tab-margin-horizontal: 12px;
-	$tab-height: 40px;
-	$current-tab-bottom-border-width: 2px;
 	$tab-default-color: $wds-color-link;
 	$tab-hover-color: darken($tab-default-color, 20%);
 
@@ -23,7 +21,7 @@
 		display: inline-flex;
 		font-size: $wds-typescale-size-minus-2;
 		font-weight: bold;
-		height: $tab-height;
+		height: 40px;
 		letter-spacing: .5px;
 		margin: 0 $tab-margin-horizontal;
 		text-align: center;
@@ -45,13 +43,8 @@
 	}
 
 	&.wds-is-current {
-		border-bottom: $current-tab-bottom-border-width solid $tab-default-color;
-		transition: border-color .1s;
-
-		.wds-tabs__tab-label {
-			// this calculation is needed to align text properly after adding border-bottom
-			height: $tab-height - 2 * $current-tab-bottom-border-width;
-		}
+		box-shadow: inset 0 -2px 0 0 $tab-default-color;
+		transition: box-shadow .1s;
 	}
 
 	&.wds-is-disabled {
@@ -60,7 +53,7 @@
 	}
 
 	.wds-dropdown__content {
-		left: -$wds-dropdown-padding;
+		left: -$wds-dropdown-padding + $tab-margin-horizontal;
 		transform: none;
 	}
 
@@ -75,7 +68,7 @@
 		}
 
 		&.wds-is-current {
-			border-color: $tab-hover-color;
+			box-shadow: inset 0 -2px 0 0 $tab-hover-color;
 		}
 	}
 }
