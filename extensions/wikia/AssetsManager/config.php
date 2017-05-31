@@ -3226,7 +3226,6 @@ $config['premium_page_header_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/PremiumPageHeader/scripts/banner-notifications-hack.js',
 		'//extensions/wikia/PremiumPageHeader/scripts/local-navigation.js',
 		'//extensions/wikia/PremiumPageHeader/scripts/old-nav-tracking-hack.js',
 		'//extensions/wikia/PremiumPageHeader/scripts/share-entry-point-hack.js',
