@@ -20,7 +20,7 @@
     "branch": "XW-3300_ds-fixes",
     "commit": "2ec4ef00e0df2ff86960c65b7c03e053e4f250f1"
   },
-  "_source": "git://github.com/Wikia/design-system.git",
+  "_source": "https://github.com/Wikia/design-system.git",
   "_target": "XW-3300_ds-fixes",
   "_originalSource": "Wikia/design-system"
 }
