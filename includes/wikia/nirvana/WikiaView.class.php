@@ -85,7 +85,7 @@ class WikiaView {
 	 * set template path
 	 * @param string $value
 	 */
-	public function setTemplatePath( string $value ) {
+	public function setTemplatePath( $value ) {
 		$this->templatePath = $value;
 	}
 
@@ -107,7 +107,7 @@ class WikiaView {
 	 *
 	 * @throws WikiaException
 	 */
-	protected function buildTemplatePath( string $controllerClass, string $methodName, bool $forceRebuild = false ) {
+	protected function buildTemplatePath( $controllerClass, $methodName, $forceRebuild = false ) {
 		wfProfileIn(__METHOD__);
 		if ( ( $this->templatePath == null ) || $forceRebuild ) {
 			if ( !empty( $this->response ) ) {
