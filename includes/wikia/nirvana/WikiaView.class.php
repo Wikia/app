@@ -157,14 +157,6 @@ class WikiaView {
 		$app = F::app();
 		// @author: wladek
 		// Improve performance by providing the same behavior without calling external functions
-		/*
-		$controllerBaseName = $app->getBaseName( $controllerClass );
-		if ( $app->isService( $controllerClass ) ) {
-			$controllerClass = $app->getServiceClassName( $controllerBaseName );
-		} else {
-			$controllerClass = $app->getControllerClassName( $controllerBaseName );
-		}
-		*/
 		if ( substr( $controllerClass, -7 ) === 'Service' ) {
 			$controllerBaseName = substr( $controllerClass, 0, -7 );
 		} elseif ( substr( $controllerClass, -10 ) === 'Controller' ) {
