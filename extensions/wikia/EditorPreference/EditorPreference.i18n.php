@@ -29,15 +29,6 @@ $messages['ko'] = [
 	'option-source-editor' => '소스 편집기',
 ];
 
-$messages['zh'] = [
-	'editor-preference-help' => '在本维基上, 预设编辑器为传统编辑器。 [[Help:Editing|了解更多]]。',
-	'option-ck-editor' => 'Wikia传统可视编辑器（在能使用的页面）',
-	'option-visual-editor' => 'Wikia的新版视效编辑器',
-	'editor-preference' => '偏好的编辑器:',
-	'option-default-editor' => '预设',
-	'option-source-editor' => '源代码编辑器',
-];
-
 $messages['zh-hans'] = [
 	'editor-preference-help' => '在这个维基上，传统编辑器被设定为默认编辑器。[[Help:Editing|点击这里了解更多]]。',
 	'option-ck-editor' => 'Fandom传统编辑器（如可用）',
@@ -51,24 +42,6 @@ $messages['zh-hant'] = [
 	'editor-preference-help' => '在這個wiki上，傳統編輯器被設定為預設編輯器。[[Help:Editing|按這裡了解更多]]。',
 	'option-ck-editor' => 'Fandom傳統編輯器（如可用）',
 	'option-visual-editor' => '視效編輯器',
-	'editor-preference' => '偏好的編輯器：',
-	'option-default-editor' => '預設',
-	'option-source-editor' => '源代碼編輯器',
-];
-
-$messages['zh-hk'] = [
-	'editor-preference-help' => '在本維基上, 預設編輯器為傳統編輯器。 [[Help:Editing|了解更多]]。',
-	'option-ck-editor' => 'Wikia傳統可視編輯器（在能使用的頁面）',
-	'option-visual-editor' => 'Wikia的新版視效編輯器',
-	'editor-preference' => '偏好的編輯器：',
-	'option-default-editor' => '預設',
-	'option-source-editor' => '源代碼編輯器',
-];
-
-$messages['zh-tw'] = [
-	'editor-preference-help' => '在本維基上, 預設編輯器為傳統編輯器。 [[Help:Editing|了解更多]]。',
-	'option-ck-editor' => 'Wikia傳統可視編輯器（在能使用的頁面）',
-	'option-visual-editor' => 'Wikia的新版視效編輯器',
 	'editor-preference' => '偏好的編輯器：',
 	'option-default-editor' => '預設',
 	'option-source-editor' => '源代碼編輯器',
