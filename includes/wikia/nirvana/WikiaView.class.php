@@ -220,7 +220,14 @@ class WikiaView {
 		return array_pop( $controllerClassExploded );
 	}
 
-	protected function getTemplateAnnotation( string $controllerClass, string $methodName ): string {
+	/**
+	 * Extract template form "@template" annotation of a method
+	 *
+	 * @param string $controllerClass
+	 * @param string $methodName
+	 * @return mixed|null
+	 */
+	protected function getTemplateAnnotation( string $controllerClass, string $methodName ) {
 		static $annotations = [];
 		$cacheKey = $controllerClass . '-' . $methodName;
 
