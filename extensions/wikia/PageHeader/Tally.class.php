@@ -7,7 +7,7 @@ use MediaQueryService;
 use RequestContext;
 use WikiaApp;
 
-class Counter {
+class Tally {
 	public function __construct( WikiaApp $app ) {
 		$title = RequestContext::getMain()->getTitle();
 
@@ -15,7 +15,7 @@ class Counter {
 			$this->message = $this->getMessageForSpecialVideos();
 		} else if ( $title->isSpecial( 'Images' ) ) {
 			$this->message = $this->getMessageForSpecialImages();
-		} else if ( $title->inNamespace( NS_BLOG_LISTING ) ) {
+		} else if ( defined( 'NS_BLOG_LISTING' ) && $title->inNamespace( NS_BLOG_LISTING ) ) {
 			$this->message = $this->getMessageForBlogListing( $app );
 		} else if ( $title->isSpecial( 'Forum' ) ) {
 			$this->message = $this->getMessageForForum();
