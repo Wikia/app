@@ -290,7 +290,11 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 
 			// There is no recirculation right rail module on non-en wikis
 			if (window.wgContentLanguage === 'en') {
-				$recircWrapper.one('premiumRecirculationRail.ready', onRecircReady);
+				if (!$recircWrapper.find('.premium-recirculation-rail').exists()) {
+					$recircWrapper.one('premiumRecirculationRail.ready', onRecircReady);
+				} else {
+					onRecircReady();
+				}
 			} else {
 				// TODO check which experiment needs it
 				// recircEnabled = false;
