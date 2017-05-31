@@ -110,6 +110,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/utils/eventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/utils/hooks.js',
 		'//extensions/wikia/AdEngine/js/utils/math.js',
+		'//extensions/wikia/AdEngine/js/video/player/ooyala/ooyalaTracker.js',
 		'//extensions/wikia/AdEngine/js/video/player/playerTracker.js',
 		'#group_adengine2_playwire_js',
 		'#group_adengine2_porvata_js',
@@ -1016,6 +1017,7 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/template/playwire.js',
 		'//extensions/wikia/AdEngine/js/template/porvata.js',
 		'//extensions/wikia/AdEngine/js/utils/scriptLoader.js',
+		'//extensions/wikia/AdEngine/js/video/player/ooyala/ooyalaTracker.js',
 		'//extensions/wikia/AdEngine/js/video/player/playerTracker.js',
 		'#group_adengine2_playwire_js',
 		'#group_adengine2_porvata_js',
@@ -3248,4 +3250,20 @@ $config['article_header_scss'] = [
     'assets' => [
         '//extensions/wikia/PageHeader/styles/index.scss',
     ],
+];
+
+$config['ad_mix_experiment_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/AdMixExperiment/scripts/AdMixExperiment.js',
+	]
+];
+
+$config['ad_mix_experiment_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/AdMixExperiment/styles/recirculation.scss',
+	],
 ];

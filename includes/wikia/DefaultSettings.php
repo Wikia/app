@@ -1559,20 +1559,6 @@ $wgAdDriverPageFairRecoveryCountries = null;
 $wgAdDriverEnablePageFairRecovery = true;
 
 /**
- * @name $wgAdDriverPageFairConditionalAdRendering
- * Flag to enable PF conditionalAdRendering, more in PF docs
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverPageFairConditionalAdRendering = false;
-
-/**
- * @name $wgAdDriverPageFairConditionalIframeRendering
- * Flag to enable PF conditionalIframeRendering, more in PF docs
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverPageFairConditionalIframeRendering = false;
-
-/**
  * trusted proxy service registry
  */
 $wgAutoloadClasses[ 'TrustedProxyService'] =  "$IP/includes/wikia/services/TrustedProxyService.class.php" ;
@@ -1901,3 +1887,5 @@ $wgReviveSpotlightsCountries = null;
 include_once("$IP/extensions/wikia/ARecoveryEngine/ARecoveryEngine.setup.php");
 
 require_once "$IP/extensions/wikia/ImageReview/ImageReviewEvents.setup.php";
+
+require_once("$IP/extensions/wikia/AdMixExperiment/AdMixExperiment.setup.php");

@@ -1,8 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.slotTargeting', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.utils.math'
-], function (adContext, math) {
+	'ext.wikia.adEngine.utils.math',
+	'wikia.abTest',
+	'wikia.instantGlobals'
+], function (adContext, math, abTest, instantGlobals) {
 	'use strict';
 
 	var skins = {
@@ -37,6 +39,10 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 			INCONTENT_PLAYER: 'i',
 			INCONTENT_BOXAD_1: 'f',
 			BOTTOM_LEADERBOARD: 'b',
+			LEFT_SKYSCRAPER_2: 's',
+			LEFT_SKYSCRAPER_3: 'k',
+			PREFOOTER_LEFT_BOXAD: 'p',
+			PREFOOTER_RIGHT_BOXAD: 'r',
 
 			MOBILE_TOP_LEADERBOARD: 'l',
 			MOBILE_IN_CONTENT: 'i',
@@ -84,7 +90,24 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 		return id + slotData.wsi.substr(0, 2);
 	}
 
+	function getAbTestId(slotData) {
+		var experimentId = instantGlobals.wgAdDriverAbTestIdTargeting,
+			experiments = abTest.getExperiments(),
+			id;
+
+		experiments.forEach(function (experiment) {
+			if (experimentId === experiment.id) {
+				id = experiment.id + '_' + experiment.group.id;
+			}
+		});
+
+		if (id) {
+			return id + slotData.wsi;
+		}
+	}
+
 	return {
+		getAbTestId: getAbTestId,
 		getPrebidSlotId: getPrebidSlotId,
 		getWikiaSlotId: getWikiaSlotId
 	};

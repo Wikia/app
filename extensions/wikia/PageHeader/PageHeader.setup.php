@@ -2,12 +2,12 @@
 $dir = dirname( __FILE__ ) . '/';
 
 // Controllers
-$wgAutoloadClasses[ 'PageHeaderController' ] = $dir . 'PageHeaderController.class.php';
+$wgAutoloadClasses[ 'Wikia\PageHeader\PageHeaderController' ] = $dir . 'PageHeaderController.class.php';
 
 // Classes
-$wgAutoloadClasses[ 'PageHeader\PageTitle' ] = $dir . 'PageTitle.class.php';
+$wgAutoloadClasses[ 'Wikia\PageHeader\PageTitle' ] = $dir . 'PageTitle.class.php';
 
 // Hooks
-$wgAutoloadClasses[ 'PageHeader\Hooks' ] = $dir . 'Hooks.class.php';
+$wgAutoloadClasses[ 'Wikia\PageHeader\Hooks' ] = $dir . 'Hooks.class.php';
 
-$wgHooks['BeforePageDisplay'][] = 'PageHeader\Hooks::onBeforePageDisplay';
+$wgHooks['BeforePageDisplay'][] = 'Wikia\PageHeader\Hooks::onBeforePageDisplay';
