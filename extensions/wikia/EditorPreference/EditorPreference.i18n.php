@@ -29,15 +29,6 @@ $messages['ko'] = [
 	'option-source-editor' => '소스 편집기',
 ];
 
-$messages['zh'] = [
-	'editor-preference-help' => '在本维基上, 预设编辑器为传统编辑器。 [[Help:Editing|了解更多]]。',
-	'option-ck-editor' => 'Wikia传统可视编辑器（在能使用的页面）',
-	'option-visual-editor' => 'Wikia的新版视效编辑器',
-	'editor-preference' => '偏好的编辑器:',
-	'option-default-editor' => '预设',
-	'option-source-editor' => '源代码编辑器',
-];
-
 $messages['zh-hans'] = [
 	'editor-preference-help' => '在这个维基上，传统编辑器被设定为默认编辑器。[[Help:Editing|点击这里了解更多]]。',
 	'option-ck-editor' => 'Fandom传统编辑器（如可用）',
