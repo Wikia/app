@@ -3,10 +3,15 @@
 namespace Wikia\PageHeader;
 
 class Counter {
-	public function __construct(\Title $title) {
+	public function __construct( \Title $title ) {
 		if ( $title->isSpecial( 'Videos' ) ) {
-			$mediaService = ( new \MediaQueryService );
-			$this->message = wfMessage( 'page-header-counter-videos', $mediaService->getTotalVideos() )->parse();
+			$this->message = $this->getMessageForVideo();
 		}
+	}
+
+	private function getMessageForVideo() {
+		$mediaService = ( new \MediaQueryService );
+
+		return wfMessage( 'page-header-counter-videos', $mediaService->getTotalVideos() )->parse();
 	}
 }
