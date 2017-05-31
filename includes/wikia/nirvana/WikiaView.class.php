@@ -37,7 +37,12 @@ class WikiaView {
 	 *
 	 * @return WikiaView
 	 */
-	public static function newFromControllerAndMethodName( $controllerName, $methodName, Array $data = [], $format = WikiaResponse::FORMAT_HTML ) {
+	public static function newFromControllerAndMethodName(
+		string $controllerName,
+		string $methodName,
+		array $data = [],
+		string $format = WikiaResponse::FORMAT_HTML
+	): WikiaView {
 		// Service classes must be dispatched by full name otherwise we default to a controller.
 		$controllerClassName = self::normalizeControllerClass( $controllerName );
 
@@ -56,7 +61,7 @@ class WikiaView {
 	 * get response object
 	 * @return WikiaResponse
 	 */
-	public function getResponse() {
+	public function getResponse(): WikiaResponse {
 		return $this->response;
 	}
 
@@ -72,7 +77,7 @@ class WikiaView {
 	 * get template path
 	 * @return string
 	 */
-	public function getTemplatePath() {
+	public function getTemplatePath(): string {
 		return $this->templatePath;
 	}
 
@@ -89,7 +94,7 @@ class WikiaView {
 	 * @param string $controllerName
 	 * @param string $methodName
 	 */
-	public function setTemplate( $controllerName, $methodName ) {
+	public function setTemplate( string $controllerName, string $methodName ) {
 		$this->buildTemplatePath($controllerName, $methodName, true);
 	}
 
@@ -119,6 +124,7 @@ class WikiaView {
 			$templatePath = '';
 			$templates = $this->getTemplateOptions( $controllerClass, $methodName, $controllerBaseName );
 			$dirName = $this->getTemplateDir( $controllerClass );
+
 			foreach ( $templates as $templateName ) {
 				$templatePath = $dirName . '/' . $templateName . '.' . $extension;
 				if ( file_exists( $templatePath ) ) {
@@ -147,18 +153,10 @@ class WikiaView {
 	 *
 	 * @throws WikiaException
 	 */
-	private static function normalizeControllerClass( $controllerClass, &$controllerBaseName = null ) {
+	private static function normalizeControllerClass( string $controllerClass, string &$controllerBaseName = null ): string {
 		$app = F::app();
 		// @author: wladek
 		// Improve performance by providing the same behavior without calling external functions
-		/*
-		$controllerBaseName = $app->getBaseName( $controllerClass );
-		if ( $app->isService( $controllerClass ) ) {
-			$controllerClass = $app->getServiceClassName( $controllerBaseName );
-		} else {
-			$controllerClass = $app->getControllerClassName( $controllerBaseName );
-		}
-		*/
 		if ( substr( $controllerClass, -7 ) === 'Service' ) {
 			$controllerBaseName = substr( $controllerClass, 0, -7 );
 		} elseif ( substr( $controllerClass, -10 ) === 'Controller' ) {
@@ -178,23 +176,27 @@ class WikiaView {
 	/**
 	 * Generates a list of possible template names ordered by preference
 	 *
-	 * @param string $controllerClass
+	 * @param string $controllerClassWithNamespace
 	 * @param string $methodName
 	 * @param string $controllerBaseName (optional) save cpu cycles by not
 	 *
 	 * @return array
 	 */
-	private function getTemplateOptions( $controllerClass, $methodName, $controllerBaseName = null ) {
+	private function getTemplateOptions( string $controllerClassWithNamespace, string $methodName, $controllerBaseName = null ): array {
 		$templates = [];
 
-		$fromAnnotation = $this->getTemplateAnnotation( $controllerClass, $methodName );
+		$controllerClass = $this->getClassName( $controllerClassWithNamespace );
+
+		$fromAnnotation = $this->getTemplateAnnotation( $controllerClassWithNamespace, $methodName );
 		if ( !empty( $fromAnnotation ) ) {
 			$templates[] = $fromAnnotation;
 		}
 
 		// Add variations on the controller name
 		if ( $controllerBaseName === null ) {
-			$controllerBaseName = F::app()->getBaseName( $controllerClass );
+			$controllerBaseName = $this->getClassName(
+				F::app()->getBaseName( $controllerClass )
+			);
 		}
 		$templates[] = "{$controllerBaseName}_{$methodName}";
 		if ( $controllerClass !== $controllerBaseName ) {
@@ -204,7 +206,20 @@ class WikiaView {
 		return $templates;
 	}
 
-	protected function getTemplateAnnotation( $controllerClass, $methodName ) {
+	private function getClassName( string $controllerClassWithNamespace ): string {
+		$controllerClassExploded = explode( '\\', $controllerClassWithNamespace );
+
+		return array_pop( $controllerClassExploded );
+	}
+
+	/**
+	 * Extract template form "@template" annotation of a method
+	 *
+	 * @param string $controllerClass
+	 * @param string $methodName
+	 * @return mixed|null
+	 */
+	protected function getTemplateAnnotation( string $controllerClass, string $methodName ) {
 		static $annotations = [];
 		$cacheKey = $controllerClass . '-' . $methodName;
 
@@ -239,7 +254,7 @@ class WikiaView {
 	 *
 	 * @return string
 	 */
-	private function getTemplateDir( $controllerClass ) {
+	private function getTemplateDir( string $controllerClass ): string {
 		$dirName = call_user_func( [ $controllerClass, 'getTemplateDir' ] );
 
 		// If the above returns null or a non-existent directory, fallback to the default.
@@ -250,13 +265,19 @@ class WikiaView {
 		return $dirName;
 	}
 
-	public function __toString() {
+	public function __toString(): string {
 		try {
 			return $this->render();
 		} catch( Exception $e ) {
 			// php doesn't allow exceptions to be thrown inside __toString() so we need an extra try/catch block here
-			if ($this->response == null) return "WikiaView: response object was null rendering {$this->templatePath}";
-			if ($this->response->getException() == null) $this->response->setException($e);
+			if ($this->response == null) {
+				return "WikiaView: response object was null rendering {$this->templatePath}";
+			}
+
+			if ($this->response->getException() == null) {
+				$this->response->setException($e);
+			}
+
 			return F::app()->getView( 'WikiaError', 'error', array( 'response' => $this->response, 'devel' => F::app()->wg->DevelEnvironment ) )->render();
 		}
 	}
@@ -267,7 +288,7 @@ class WikiaView {
 	 * @return string
 	 * @throws WikiaException
 	 */
-	public function render() {
+	public function render(): string {
 		if( empty( $this->response ) ) {
 			throw new WikiaException( "WikiaView: response object is null rendering {$this->templatePath}" );
 		}
@@ -282,7 +303,7 @@ class WikiaView {
 		}
 	}
 
-	protected function renderHtml() {
+	protected function renderHtml(): string {
 		wfProfileIn(__METHOD__);
 		$this->buildTemplatePath( $this->response->getControllerName(), $this->response->getMethodName() );
 
@@ -295,7 +316,6 @@ class WikiaView {
 				wfProfileOut(__METHOD__);
 
 				return $result;
-				break;
 			case WikiaResponse::TEMPLATE_ENGINE_PHP:
 			default:
 				// Export the app wg and wf helper objects into the template
@@ -317,12 +337,11 @@ class WikiaView {
 				$out = ob_get_clean();
 				wfProfileOut(__METHOD__);
 				return $out;
-				break;
 		}
 
 	}
 
-	protected function renderJson() {
+	protected function renderJson(): string {
 		global $wgShowSQLErrors;
 
 		if( $this->response->hasException() ) {
@@ -362,14 +381,14 @@ class WikiaView {
 		return $json;
 	}
 
-	protected function renderJsonp() {
+	protected function renderJsonp(): string {
 		$callbackName = $this->response->getRequest()->getVal('callback');
 		return "$callbackName(".$this->renderJson().");";
 	}
 
 	// Invalid request format is an interesting case since it's not really a fatal error by itself
 	// For now, we will process the request normally, default to json and attach an exception message
-	protected function renderInvalid() {
+	protected function renderInvalid(): string {
 		WikiaLogger::instance()->warning( 'Invalid response type passed to WikiaView' );
 		$output = [ 'exception' => [ 'message' => 'Invalid Response Format', 'code' => WikiaResponse::RESPONSE_CODE_BAD_REQUEST ] ];
 
