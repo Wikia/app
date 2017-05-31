@@ -2,20 +2,20 @@
 @import "skins/shared/color.scss";
 
 .page-header {
-	padding-bottom: 12px;
 	margin: 5px 0 18px;
+	padding-bottom: 12px;
 	position: relative;
 	z-index: 4;
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
 
 	&__title {
-		padding-bottom: 12px;
 		color: $color-text;
-		font-size: 28px;
-		font-weight: bold;
 		display: inline-block;
+		font-size: $wds-typescale-size-plus-3;
+		font-weight: bold;
 		line-height: 1;
+		padding-bottom: 12px;
 	}
 
 	&__separator {
