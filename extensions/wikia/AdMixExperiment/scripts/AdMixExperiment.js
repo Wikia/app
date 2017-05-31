@@ -330,7 +330,11 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 		}
 
 		if (context.opts.adMixExperimentEnabled) {
-			$rail.one('afterLoad.rail', onRightRailReady);
+			if ($rail.find('.loading').exists()) {
+				$rail.one('afterLoad.rail', onRightRailReady);
+			} else {
+				onRightRailReady();
+			}
 
 			if (topRightAdFixed) {
 				$topRightAdWrapper.css({
