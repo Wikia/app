@@ -225,7 +225,7 @@ class WikiMetrics {
 	/* get languages */
 	private function getLangs() {
 		$this->mTopLanguages = explode(',', wfMsg('awc-metrics-language-top-list'));
-		$this->mLanguages = self::getFixedLanguageNames();
+		$this->mLanguages = Language::getRequestSupportedLanguages();
 		asort($this->mLanguages);
 		return count($this->mLanguages);
 	}
@@ -661,26 +661,6 @@ class WikiMetrics {
 
 		wfProfileOut( __METHOD__ );
 		return array($AWCMetrics, $AWCCitiesCount, $aCategories);
-	}
-
-	/*
-	 * get a list of language names available for wiki request
-	 * (possibly filter some)
-	 *
-	 * @author nef@wikia-inc.com
-	 * @return array
-	 *
-	 * @see Language::getLanguageNames()
-	 * @see RT#11870
-	 */
-	public static function getFixedLanguageNames() {
-		$languages = Language::getLanguageNames();
-
-		$filter_languages = explode(',', wfMsg('requestwiki-filter-language'));
-		foreach ($filter_languages as $key) {
-			unset($languages[$key]);
-		}
-		return $languages;
 	}
 
 	/*

@@ -238,9 +238,11 @@ class NewWikisPage extends AlphabeticPager {
 	}
 
 	function getPageHeader() {
-		global $wgScript, $wgRequest;
+		global $wgScript;
 		$self = $this->getTitle();
-		$this->getLangs();
+		$this->mTopLanguages = Language::getSupportedLanguages();
+		$this->mLanguages = Language::getRequestSupportedLanguages();
+		asort($this->mLanguages);
 
 		$hubs = WikiFactoryHub::getInstance();
 		// fixme, this logic (and the form) need to be split into Verticals and Categories
@@ -302,16 +304,5 @@ class NewWikisPage extends AlphabeticPager {
 	function getDefaultQuery() {
 		$query = parent::getDefaultQuery();
 		return $query;
-	}
-
-	private function getLangs() {
-		$this->mTopLanguages = explode(',', wfMsg('autocreatewiki-language-top-list'));
-		$this->mLanguages = Language::getLanguageNames();
-		$filter_languages = explode(',', wfMsg('requestwiki-filter-language'));
-		foreach ($filter_languages as $key) {
-			unset($this->mLanguages[$key]);
-		}
-		asort($this->mLanguages);
-		return count($this->mLanguages);
 	}
 }

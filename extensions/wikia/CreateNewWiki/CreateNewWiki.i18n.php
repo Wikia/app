@@ -45,7 +45,7 @@ $messages['en'] = array(
 	'cnw-error-unconfirmed-email' => 'Your e-mail should be confirmed to create a Wiki.',
 	'autocreatewiki' => 'Create a new wiki',
 	'createwiki' => 'Create a new wiki',
-	'autocreatewiki-language-top' => 'Top $1 languages',
+	'autocreatewiki-language-top' => 'Supported languages',
 	'autocreatewiki-language-all' => 'All languages',
 	'autocreatewiki-title-template' => '$1 community',
 	'autocreatewiki-empty-field' => 'Please complete this field.',
@@ -59,7 +59,6 @@ $messages['en'] = array(
 	'autocreatewiki-category-label' => 'Category:',
 	'autocreatewiki-welcometalk-log' => 'Welcome Message',
 	'autocreatewiki-regex-error-comment' => 'used in wiki $1 (whole text: $2)',
-	'requestwiki-filter-language' => 'als,an,ang,ast,bar,de2,de-at,de-ch,de-formal,de-weigsbrag,dk,en-gb,eshelp,fihelp,frc,frhelp,ia,ie,ithelp,jahelp,kh,kohelp,kp,ksh,nb,nds,nds-nl,mu,mwl,nlhelp,pdc,pdt,pfl,pthelp,pt-brhelp,ruhelp,simple,tokipona,tp,zh-classical,zh-cn,zh-hans,zh-hant,zh-hk,zh-min-nan,zh-mo,zh-my,zh-sg,zh-tw,zh-yue',
 	'autocreatewiki-protect-reason' => 'Part of the official interface',
 	'autocreatewiki-welcometalk-wall-title' => 'Welcome!',
 	'autocreatewiki-welcometalk-wall' => "Hello, I'm a member of Fandom's Community Support team. We're excited to have {{subst:SITENAME}} as part of the Fandom community!
@@ -84,7 +83,6 @@ We're excited to have $4 as part of the Fandom community! There's still a lot to
 All of the above links are a great place to start exploring, and have fun!
 
 -- [[User:$2|$3]] <staff />",
-	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
 	'autocreatewiki-welcomebody-HTML' => '"<p>Hello $2,<br /><br />
 The wiki you created is now available at <a href="$1">$1</a>.  We hope to see you editing there soon!<br /><br />
 We have added some information and tips on your <a href="$5">user talk Page</a> to help you get started. If you have any questions, just reply to this e-mail or browse our help pages at <a href="http://help.wikia.com/">Fandom Help</a>.<br /><br />
@@ -144,7 +142,6 @@ Parameters:
 * $2 - <NO LONGER IN USE>
 * $3 - Name of Wikia Community Support member who is signing the welcome message
 * $4 - <nowiki>{{SITENAME}}</nowiki> of the wiki welcome message is being left on',
-	'autocreatewiki-language-top-list' => 'Do not translate. List of the top 13 languages used for wiki creation.',
 	'autocreatewiki-name-taken' => 'Missing documentation',
 	'autocreatewiki-welcometalk-wall' => 'Missing documentation',
 	'autocreatewiki-welcomebody-HTML' => 'Missing documentation',
@@ -729,8 +726,6 @@ Hallo! Wir freuen uns, dass {{subst:SITENAME}} jetzt auch Teil der Fandom-Gemein
 All diese Links sind gute Ausgangspunkte, um dich zurechtzufinden!
 
 -- [[User:$2|$3]] <staff />',
-	'requestwiki-filter-language' => 'als,an,ang,ast,bar,de2,de-at,de-ch,de-formal,de-weigsbrag,dk,en-gb,eshelp,fihelp,frc,frhelp,ia,ie,ithelp,jahelp,kh,kohelp,kp,ksh,nb,nds,nds-nl,mu,mwl,nlhelp,pdc,pdt,pfl,pthelp,pt-brhelp,ruhelp,simple,tokipona,tp,zh-classical,zh-cn,zh-hans,zh-hant,zh-hk,zh-min-nan,zh-mo,zh-my,zh-sg,zh-tw,zh-yue',
-	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
 	'autocreatewiki-welcomebody-HTML' => '"<p>Hallo $2,<br /><br />
 Das von dir erstellte Wiki steht nun unter <a href="$1">$1</a> bereit.  Wir freuen uns auf deine Beiträge dort!<br /><br />
 Wir haben dir auf deiner <a href="$5">Benutzer-Diskussionsseite</a> ein paar Informationen und Tipps hinterlassen, damit du gleich richtig durchstarten kannst. Wenn du Fragen hast, antworte einfach auf diese E-Mail oder schau dich auf unseren Hilfeseiten um. Hier findest du die <a href="http://help.wikia.com/">Fandom-Hilfe</a>.<br /><br />
@@ -932,8 +927,6 @@ Puede parecer que hayan muchas cosas por hacer, es por ello que estamos aquí pa
 Todos los enlaces anteriores son un gran lugar para comenzar a explorar, ¡así que diviértete!
 
 -- [[User:$3|$3]] <staff />",
-	'requestwiki-filter-language' => 'als,an,ang,ast,bar,de2,de-at,de-ch,de-formal,de-weigsbrag,dk,en-gb,eshelp,fihelp,frc,frhelp,ia,ie,ithelp,jahelp,kh,kohelp,kp,ksh,nb,nds,nds-nl,mu,mwl,nlhelp,pdc,pdt,pfl,pthelp,pt-brhelp,ruhelp,simple,tokipona,tp,zh-classical,zh-cn,zh-hans,zh-hant,zh-hk,zh-min-nan,zh-mo,zh-my,zh-sg,zh-tw,zh-yue',
-	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
 	'autocreatewiki-welcomebody-HTML' => '<p>Hola $2, <br /><br /> 
 El wiki que has creado está disponible en <a href="$1">$1</a>. ¡Esperamos verte editando allí pronto! <br />< br /> 
 Hemos añadido cierta información y consejos en tu <a href="$5"> Página de discusión de usuario</a> para ayudarle a empezar. Si tienes alguna pregunta, responde a este correo electrónico o navega por nuestras páginas de ayuda en <a href="http://comunidad.wikia.com/wiki/Ayuda:Contenidos">Ayuda FANDOM</a>.< br /><br /> 
@@ -1191,8 +1184,6 @@ Tous les liens ci-dessus sont un bon moyen de commencer à naviguer sur Fandom. 
 Bonnes modifications !
 
 — [[User:$2|$3]] <staff /></div>",
-	'requestwiki-filter-language' => 'als,an,ang,ast,bar,de2,de-at,de-ch,de-formal,de-weigsbrag,dk,en-gb,eshelp,fihelp,frc,frhelp,ia,ie,ithelp,jahelp,kh,kohelp,kp,ksh,nb,nds,nds-nl,mu,mwl,nlhelp,pdc,pdt,pfl,pthelp,pt-brhelp,ruhelp,simple,tokipona,tp,zh-classical,zh-cn,zh-hans,zh-hant,zh-hk,zh-min-nan,zh-mo,zh-my,zh-sg,zh-tw,zh-yue',
-	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
 	'autocreatewiki-welcomebody-HTML' => '"<p>Bonjour $2,<br /><br />
 Le wiki que vous avez créé est disponible ici : <a href="$1">$1</a>.  Nous sommes impatients de voir vos prochaines contributions !<br /><br />
 Pour vous aider à vous lancer, nous avons ajouté des informations et des astuces sur votre <a href="$5">page de discussion utilisateur</a>. En cas de question, vous pouvez répondre à cet e-mail ou consulter les <a href="http://communaute.wikia.com/wiki/Aide:Contenu">pages d\'aide de Fandom</a>.<br /><br />
@@ -1619,7 +1610,6 @@ Siamo entusiasti che '''$4''' faccia parte della comunità di Fandom! C'è ancor
 Tutti questi link sono un ottimo punto di partenza per iniziare ad esplorare e divertirsi!
 
 -- [[User:$2|$3]] <staff />",
-	'requestwiki-filter-language' => 'als,an,ang,ast,bar,de2,de-at,de-ch,de-formal,de-weigsbrag,dk,en-gb,eshelp,fihelp,frc,frhelp,ia,ie,ithelp,jahelp,kh,kohelp,kp,ksh,nb,nds,nds-nl,mu,mwl,nlhelp,pdc,pdt,pfl,pthelp,pt-brhelp,ruhelp,simple,tokipona,tp,zh-classical,zh-cn,zh-hans,zh-hant,zh-hk,zh-min-nan,zh-mo,zh-my,zh-sg,zh-tw,zh-yue',
 	'autocreatewiki-welcometalk-wall' => "Ciao, sono un membro del team supporto della community di Fandom. Siamo entusiasti di avere '''{{subst:SITENAME}}''' come parte della comunità di Fandom!
 
 Sembra che ci sia tanto da fare, ma siamo qui per aiutarti ad iniziare in modo rapido e semplice. Ecco alcuni consigli e link utili per mettere in moto la tua comunità:
@@ -1630,7 +1620,6 @@ Sembra che ci sia tanto da fare, ma siamo qui per aiutarti ad iniziare in modo r
 * Per finire, visita le nostre [[w:it:Aiuto:Contenuti|pagine d'aiuto]] per conoscere i segreti dell'utilizzo di Fandom o visita [[w:Fandom_University|Fandom University]] per visualizzare video tutorial rapidi.
 
 Buon divertimento!",
-	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
 	'autocreatewiki-welcomebody-HTML' => '<p>Ciao $2,<br /><br />
 La wiki che hai creato è ora disponibile su <a href="$1">$1</a>.  Ci auguriamo di vederti contribuire lì presto!<br /><br />
 Abbiamo aggiunto delle informazioni e suggerimenti nella tua <a href="$5">pagina di discussione utente</a> per aiutarti a iniziare. Se hai domande, rispondi semplicemente a questa e-mail o leggi le nostre guide sull\'<a href="http://it.community.wikia.com/wiki/Aiuto:Contenuti">Aiuto di Fandom</a>.<br /><br />
@@ -1709,7 +1698,6 @@ Fandomにて「$4」を立ち上げていただきありがとうございます
 Fandomをお楽しみいただく上で、ぜひこれらの記事を役立てていただけると幸いです。
 
 -- [[ユーザー:$2|$3]]<staff />',
-	'requestwiki-filter-language' => 'als,an,ang,ast,bar,de2,de-at,de-ch,de-formal,de-weigsbrag,dk,en-gb,eshelp,fihelp,frc,frhelp,ia,ie,ithelp,jahelp,kh,kohelp,kp,ksh,nb,nds,nds-nl,mu,mwl,nlhelp,pdc,pdt,pfl,pthelp,pt-brhelp,ruhelp,simple,tokipona,tp,zh-classical,zh-cn,zh-hans,zh-hant,zh-hk,zh-min-nan,zh-mo,zh-my,zh-sg,zh-tw,zh-yue',
 	'autocreatewiki-welcometalk-wall-title' => 'ようこそ！',
 	'autocreatewiki-welcometalk-wall' => 'こんにちは、Fandomコミュニティ・サポートチームです。このたびは、Fandomにて「{{subst:SITENAME}}」を立ち上げていただきありがとうございます。
 
@@ -1721,7 +1709,6 @@ Fandomをお楽しみいただく上で、ぜひこれらの記事を役立て�
 *[[ヘルプ:コンテンツ|ヘルプページ]]でFandomについての様々なヘルプ記事を読んだり、[[w:c:ja.community:Wikia_ユニバーシティ|Fandomユニバーシティ]]で使い方の動画をチェックしてみましょう。
 
 今後ともFandomをよろしくお願いいたします。',
-	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
 	'autocreatewiki-welcomebody-HTML' => '<p>$2さん<br /><br />
 このたび作成されたWikiに、<a href="$1">$1</a>からアクセスしていただけるようになりました。さっそく、編集をお楽しみください。<br /><br />
 なお、<a href="$5">ユーザー・トークページ</a>にて基本情報やヒントをいくつかご紹介しています。その他ご不明な点がある場合、このメールにご返信いただくか、<a href="http://ja.community.wikia.com/wiki/ヘルプ:コンテンツ">Fandomヘルプページ</a>をご参照ください。<br /><br />
@@ -2355,8 +2342,6 @@ En daarna vooral volhouden! De wiki's waar veel te lezen en te zien is zijn het 
 Als je vragen hebt, e-mail ons dan via het [[Special:Contact|contactformulier]]. Veel plezier!
 
 -- [[User:\$2|\$3]] <staff /></div>",
-	'requestwiki-filter-language' => 'als,an,ang,ast,bar,de2,de-at,de-ch,de-formal,de-weigsbrag,dk,en-gb,eshelp,fihelp,frc,frhelp,ia,ie,ithelp,jahelp,kh,kohelp,kp,ksh,nb,nds,nds-nl,mu,mwl,nlhelp,pdc,pdt,pfl,pthelp,pt-brhelp,ruhelp,simple,tokipona,tp,zh-classical,zh-cn,zh-hans,zh-hant,zh-hk,zh-min-nan,zh-mo,zh-my,zh-sg,zh-tw,zh-yue',
-	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
 	'autocreatewiki-welcomebody-HTML' => '"<p>Hello $2,<br /><br />
 The wiki you created is now available at <a href="$1">$1</a>.  We hope to see you editing there soon!<br /><br />
 We have added some information and tips on your <a href="$5">user talk Page</a> to help you get started. If you have any questions, just reply to this e-mail or browse our help pages at <a href="http://help.wikia.com/">Fandom Help</a>.<br /><br />
@@ -2515,8 +2500,6 @@ Cieszymy się, że $4 dołączyła do społeczności portalu Fandom. Wciąż jed
 Wszystkie powyższe linki to świetne miejsca, od których możesz rozpocząć swoją przygodę z Fandomem!
 
 — [[Użytkownik:$2|$3]] <staff />',
-	'requestwiki-filter-language' => 'als,an,ang,ast,bar,de2,de-at,de-ch,de-formal,de-weigsbrag,dk,en-gb,eshelp,fihelp,frc,frhelp,ia,ie,ithelp,jahelp,kh,kohelp,kp,ksh,nb,nds,nds-nl,mu,mwl,nlhelp,pdc,pdt,pfl,pthelp,pt-brhelp,ruhelp,simple,tokipona,tp,zh-classical,zh-cn,zh-hans,zh-hant,zh-hk,zh-min-nan,zh-mo,zh-my,zh-sg,zh-tw,zh-yue',
-	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
 	'autocreatewiki-welcomebody-HTML' => '"<p>Cześć $2,<br /><br />
 Wiki, którą stworzyłeś jest dostępna tutaj: <a href="$1">$1</a>. Mamy nadzieję już niedługo zobaczyć pierwsze efekty Twoich edycji!<br /><br />
 Dodaliśmy przydatne informacje i porady na Twojej <a href="$5">stronie dyskusji</a>. Pomogą Ci postawić pierwsze kroki na portalu Fandom. Jeżeli masz jakieś pytania, po prostu odpisz na ten e-mail lub poszukaj odpowiedzi na <a href="http://spolecznosc.wikia.com/wiki/Pomoc:Zawarto%C5%9B%C4%87">stronach pomocy</a>.<br /><br />
@@ -2685,7 +2668,6 @@ $messages['pt'] = array(
 	'autocreatewiki-category-label' => 'Categoria:',
 	'autocreatewiki-welcometalk-log' => 'Mensagem de boas-vindas',
 	'autocreatewiki-regex-error-comment' => 'usado na wiki $1 (texto completo: $2)',
-	'requestwiki-filter-language' => 'als,an,ang,ast,bar,de2,de-at,de-ch,de-formal,de-weigsbrag,dk,en-gb,eshelp,fihelp,frc,frhelp,ia,ie,ithelp,jahelp,kh,kohelp,kp,ksh,nb,nds,nds-nl,mu,mwl,nlhelp,pdc,pdt,pfl,pthelp,pt-brhelp,ruhelp,simple,tokipona,tp,zh-classical,zh-cn,zh-hans,zh-hant,zh-hk,zh-min-nan,zh-mo,zh-my,zh-sg,zh-tw,zh-yue',
 	'autocreatewiki-protect-reason' => 'Parte da interface oficial',
 	'autocreatewiki-welcometalk-wall-title' => 'Bem-vindo!',
 	'autocreatewiki-welcometalk-wall' => 'Olá, eu sou membro da equipe de suporte da comunidade do Fandom. Estamos felizes em ter {{subst:SITENAME}} como parte da comunidade Fandom!
@@ -2708,7 +2690,6 @@ Estamos felizes em ter $4 como parte da comunidade Fandom! Ainda há muita coisa
 Todos os links acima são ótimos lugares para começar a explorar, divirta-se!
 
 -- [[User:$2|$3]] <staff />',
-	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
 	'autocreatewiki-welcomebody-HTML' => '<p>Olá $2,<br/><br /> 
 A wiki que você criou está disponível agora em <a href="$1">$1</a>. Esperamos vê-lo editando por lá em breve!
 <br />< br /> 
@@ -2844,8 +2825,6 @@ $messages['ru'] = array(
 Все вышеприведённые ссылки помогут вам начать изучение основ создания вики. И помните, что самое главное — получать удовольствие от своей вики!
 
 -- [[Участник:$2|$3]] <staff />',
-	'requestwiki-filter-language' => 'als,an,ang,ast,bar,de2,de-at,de-ch,de-formal,de-weigsbrag,dk,en-gb,eshelp,fihelp,frc,frhelp,ia,ie,ithelp,jahelp,kh,kohelp,kp,ksh,nb,nds,nds-nl,mu,mwl,nlhelp,pdc,pdt,pfl,pthelp,pt-brhelp,ruhelp,simple,tokipona,tp,zh-classical,zh-cn,zh-hans,zh-hant,zh-hk,zh-min-nan,zh-mo,zh-my,zh-sg,zh-tw,zh-yue',
-	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
 	'autocreatewiki-welcomebody-HTML' => '<p>Здравствуйте, $2!<br /><br />
 Созданная вами вики доступна по адресу <a href="$1">$1</a>. Мы надеемся, что вы скоро начнете её развивать. <br /><br />
 Чтобы вам помочь, мы добавили информацию и полезные советы на вашу <a href="$5">стену обсуждения</a>. Если у вас есть вопросы, ответьте на это письмо или просмотрите наши справочные статьи в <a href="http://ru.community.wikia.com/wiki/Справка:Содержание">Справке Фэндома</a>. <br /><br />Желаем вам удачи в работе над вашим википроектом!<br /><br /><a href="http://ru.community.wikia.com/wiki/User:$4">$3</a><br /> 
@@ -3490,7 +3469,6 @@ $messages['zh-hans'] = array(
 
 祝你玩得开心！',
 	'autocreatewiki-name-taken' => '已有用此地址创建的维基。可在<a href="http://$1.wikia.com">http://$1.wikia.com</a>页面进行编辑或选择其他地址。',
-	'requestwiki-filter-language' => 'als,an,ang,ast,bar,de2,de-at,de-ch,de-formal,de-weigsbrag,dk,en-gb,eshelp,fihelp,frc,frhelp,ia,ie,ithelp,jahelp,kh,kohelp,kp,ksh,nb,nds,nds-nl,mu,mwl,nlhelp,pdc,pdt,pfl,pthelp,pt-brhelp,ruhelp,simple,tokipona,tp,zh-classical,zh-cn,zh-hans,zh-hant,zh-hk,zh-min-nan,zh-mo,zh-my,zh-sg,zh-tw,zh-yue',
 	'autocreatewiki-welcometalk' => '==欢迎==
 
 您好！
@@ -3504,7 +3482,6 @@ $messages['zh-hans'] = array(
 上面列出的所有链接都是开始探索的好起点。祝你玩得开心！
 
 -- [[User:$2|$3]] <staff />',
-	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
 	'autocreatewiki-welcomebody-HTML' => '<p>您好$2,<br /><br />
 您所创建的维基已经存在于<a href="$1">$1</a>。我们希望您可以尽快去那里编辑！<br /><br />
 同时，我们已经在您的<a href="$5">用户对话页</a>添加了一些入门信息和技巧供您查看。如果您有任何问题，可以回复这封邮件或者访问<a href="http://zh.help.wikia.com/">Fandom帮助</a>查看所有帮助页。<br /><br />
@@ -3595,9 +3572,7 @@ $messages['zh-hant'] = array(
 *最後，請訪問我們的[[Help:Contents|幫助頁面]]了解如何使用Fandom的所有功能，或者觀看我們的[[w:c:zh.community:Fandom课堂|Fandom課堂影片]]了解如何快速進行編輯。
 
 祝您玩得開心！',
-	'requestwiki-filter-language' => 'als,an,ang,ast,bar,de2,de-at,de-ch,de-formal,de-weigsbrag,dk,en-gb,eshelp,fihelp,frc,frhelp,ia,ie,ithelp,jahelp,kh,kohelp,kp,ksh,nb,nds,nds-nl,mu,mwl,nlhelp,pdc,pdt,pfl,pthelp,pt-brhelp,ruhelp,simple,tokipona,tp,zh-classical,zh-cn,zh-hans,zh-hant,zh-hk,zh-min-nan,zh-mo,zh-my,zh-sg,zh-tw,zh-yue',
 	'autocreatewiki-welcometalk-wall-title' => '歡迎你！',
-	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
 	'autocreatewiki-welcomebody-HTML' => '<p>您好$2，<br /><br />
 您所創建的Wiki已經存在於<a href="$1">$1</a>。我們希望看快能看到您在那裡編輯！<br /><br />
 同時，我們已經在您的<a href="$5">用戶對話頁</a>放了一些入門訊息和技巧供您查看。如果您有任何問題，可以回覆這封郵件或者訪問<a href="zh.community.wikia.com/wiki/Help:Contents/">Fandom幫助</a>瀏覽相關說明。<br /><br />
