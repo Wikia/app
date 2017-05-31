@@ -27,10 +27,7 @@ class PageTitle {
 
 	const PREFIX_LESS_NAMESPACES = [ NS_MEDIAWIKI, NS_TEMPLATE, NS_CATEGORY, NS_FILE ];
 
-	/**
-	 * @param WikiaApp $app
-	 */
-	public function __construct( $app ) {
+	public function __construct( WikiaApp $app ) {
 		$this->wg = $app->wg;
 		$this->MWTitle = RequestContext::getMain()->getTitle();
 
