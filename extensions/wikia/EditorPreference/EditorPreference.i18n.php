@@ -56,24 +56,6 @@ $messages['zh-hant'] = [
 	'option-source-editor' => '源代碼編輯器',
 ];
 
-$messages['zh-hk'] = [
-	'editor-preference-help' => '在本維基上, 預設編輯器為傳統編輯器。 [[Help:Editing|了解更多]]。',
-	'option-ck-editor' => 'Wikia傳統可視編輯器（在能使用的頁面）',
-	'option-visual-editor' => 'Wikia的新版視效編輯器',
-	'editor-preference' => '偏好的編輯器：',
-	'option-default-editor' => '預設',
-	'option-source-editor' => '源代碼編輯器',
-];
-
-$messages['zh-tw'] = [
-	'editor-preference-help' => '在本維基上, 預設編輯器為傳統編輯器。 [[Help:Editing|了解更多]]。',
-	'option-ck-editor' => 'Wikia傳統可視編輯器（在能使用的頁面）',
-	'option-visual-editor' => 'Wikia的新版視效編輯器',
-	'editor-preference' => '偏好的編輯器：',
-	'option-default-editor' => '預設',
-	'option-source-editor' => '源代碼編輯器',
-];
-
 $messages['de'] = [
 	'option-ck-editor' => 'Klassischer Rich-Text-Editor (wo verfügbar)',
 	'option-visual-editor' => 'VisualEditor',
