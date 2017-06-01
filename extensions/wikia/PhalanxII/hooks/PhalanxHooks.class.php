@@ -85,7 +85,7 @@ class PhalanxHooks extends WikiaObject {
 	 * Add/edit Phalanx block
 	 *
 	 * @param array $data contains block information, possible keys: id, author_id, text, 
-	 * type, timestamp, expire, exact, regex, case, reason, lang, ip_hex
+	 * type, timestamp, expire, exact, regex, case, reason, lang
 	 * @return int id block or false if error
 	 *
 	 * @author moli
@@ -255,11 +255,13 @@ class PhalanxHooks extends WikiaObject {
 		$clientIPFromFastly = $wgRequest->getHeader( $wgClientIPHeader );
 
 		if ( !User::isIP( $clientIPFromFastly ) && !$wgRequest->isWikiaInternalRequest() ) {
+			$userAgent = $wgRequest->getHeader( 'User-Agent' );
 			WikiaLogger::instance()->error( 'Phalanx user IP incorrect', [
 				'ip_from_fastly' => $clientIPFromFastly,
 				'ip_from_user' => $user->getName(),
 				'ip_from_request' => $wgRequest->getIP(),
-				'user_agent' => $wgRequest->getHeader( 'User-Agent' ),
+				// SUS-2008, always log user_agent as string
+				'user_agent' => $userAgent ?: '',
 			] );
 		}
 

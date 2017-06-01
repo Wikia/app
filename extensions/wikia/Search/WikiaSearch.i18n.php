@@ -709,9 +709,6 @@ $messages['pt'] = array(
 	'wikiasearch2-video-results' => "Vídeos para '$1'",
 );
 
-$messages['pt-br'] = array(
-);
-
 $messages['ro'] = array(
 );
 
@@ -826,36 +823,6 @@ $messages['uk'] = array(
 $messages['vi'] = array(
 );
 
-$messages['zh'] = array(
-	'wikiasearch2-global-search-headline' => '查询维基社区',
-	'wikiasearch2-advanced-search' => '进阶搜寻选项',
-	'wikiasearch2-advanced-select-all' => '选取全部',
-	'wikiasearch2-enable-go-search' => '直接进入在搜寻栏中键入的页面',
-	'wikiasearch2-filter-all' => '所有文件',
-	'wikiasearch2-filter-hd' => '只搜寻高清视频',
-	'wikiasearch2-filter-options-label' => '搜寻范围',
-	'wikiasearch2-filter-photos' => '只搜寻图像',
-	'wikiasearch2-filter-videos' => '只搜寻视频',
-	'wikiasearch2-noresults' => '搜寻不到结果。',
-	'wikiasearch2-results-count' => '在{{SITENAME}}搜寻$2得到大约$1个结果',
-	'wikiasearch2-results-for' => '在{{SITENAME}}搜寻 $1 的所有结果',
-	'wikiasearch2-results-redirected-from' => '重定向自',
-	'wikiasearch2-search-all-namespaces' => '预设搜寻所有命名空间',
-	'wikiasearch2-sort-duration' => '视频长度',
-	'wikiasearch2-sort-options-label' => '排序方式',
-	'wikiasearch2-sort-publish-date' => '上传时间',
-	'wikiasearch2-sort-relevancy' => '相关度',
-	'wikiasearch2-tabs-articles' => '文章页',
-	'wikiasearch2-tabs-photos-and-videos' => '图像和视频',
-	'wikiasearch2-users-tooltip' => '搜寻用户',
-	'wikiasearch2-users' => '用户',
-	'wikiasearch2-wiki-search-headline' => '搜寻这个wiki',
-);
-
-$messages['zh-cn'] = array(
-	'wikiasearch2-enable-go-search' => '启用搜寻时直达同名页面功能',
-);
-
 $messages['zh-hans'] = array(
 	'wikiasearch2-page-title-with-query' => '对“$1”的搜索结果 - $2',
 	'wikiasearch2-page-title-no-query-interwiki' => '搜索Fandom',
@@ -956,55 +923,5 @@ $messages['zh-hant'] = array(
 	'wikiamobile-wikiasearch2-prev' => '上一頁',
 	'wikiamobile-wikiasearch2-count-of-results' => '$3{{PLURAL:$3|項結果|項結果}}中的$1- $2',
 	'wikiasearch2-video-results' => '關於「$1」的影片',
-);
-
-$messages['zh-hk'] = array(
-	'wikiasearch2-advanced-search' => '進階搜尋選項',
-	'wikiasearch2-advanced-select-all' => '選取全部',
-	'wikiasearch2-enable-go-search' => '直接進入在搜尋欄中鍵入的頁面',
-	'wikiasearch2-filter-all' => '所有檔案',
-	'wikiasearch2-filter-hd' => '只搜尋高畫質影片',
-	'wikiasearch2-filter-options-label' => '搜尋範圍',
-	'wikiasearch2-filter-photos' => '只搜尋圖片',
-	'wikiasearch2-filter-videos' => '只搜尋影片',
-	'wikiasearch2-noresults' => '搜尋不到結果。',
-	'wikiasearch2-results-count' => '在{{SITENAME}}搜尋$2得到大約$1個結果',
-	'wikiasearch2-results-for' => '在{{SITENAME}}搜尋 $1 的所有結果',
-	'wikiasearch2-results-redirected-from' => '重定向自',
-	'wikiasearch2-search-all-namespaces' => '預設搜尋所有命名空間',
-	'wikiasearch2-sort-duration' => '影片長度',
-	'wikiasearch2-sort-options-label' => '排序方式',
-	'wikiasearch2-sort-publish-date' => '上傳時間',
-	'wikiasearch2-sort-relevancy' => '相關度',
-	'wikiasearch2-tabs-articles' => '文章頁',
-	'wikiasearch2-tabs-photos-and-videos' => '圖片和影片',
-	'wikiasearch2-users-tooltip' => '搜尋用戶',
-	'wikiasearch2-users' => '用戶',
-	'wikiasearch2-wiki-search-headline' => '搜尋這個wiki',
-);
-
-$messages['zh-tw'] = array(
-	'wikiasearch2-advanced-search' => '進階搜尋選項',
-	'wikiasearch2-advanced-select-all' => '選取全部',
-	'wikiasearch2-enable-go-search' => '直接進入在搜尋欄中鍵入的頁面',
-	'wikiasearch2-filter-all' => '所有檔案',
-	'wikiasearch2-filter-hd' => '只搜尋高畫質影片',
-	'wikiasearch2-filter-options-label' => '搜尋範圍',
-	'wikiasearch2-filter-photos' => '只搜尋圖片',
-	'wikiasearch2-filter-videos' => '只搜尋影片',
-	'wikiasearch2-noresults' => '搜尋不到結果。',
-	'wikiasearch2-results-count' => '在{{SITENAME}}搜尋$2得到大約$1個結果',
-	'wikiasearch2-results-for' => '在{{SITENAME}}搜尋 $1 的所有結果',
-	'wikiasearch2-results-redirected-from' => '重定向自',
-	'wikiasearch2-search-all-namespaces' => '預設搜尋所有命名空間',
-	'wikiasearch2-sort-duration' => '影片長度',
-	'wikiasearch2-sort-options-label' => '排序方式',
-	'wikiasearch2-sort-publish-date' => '上傳時間',
-	'wikiasearch2-sort-relevancy' => '相關度',
-	'wikiasearch2-tabs-articles' => '文章頁',
-	'wikiasearch2-tabs-photos-and-videos' => '圖片和影片',
-	'wikiasearch2-users-tooltip' => '搜尋用戶',
-	'wikiasearch2-users' => '用戶',
-	'wikiasearch2-wiki-search-headline' => '搜尋這個wiki',
 );
 

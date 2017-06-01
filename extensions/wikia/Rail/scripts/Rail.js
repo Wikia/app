@@ -37,6 +37,8 @@ $(function () {
 			params.excludeScss = window.wgSassLoadedScss;
 		}
 
+		params.isAdMixExperimentEnabled = window.ads.context.opts.adMixExperimentEnabled;
+
 		$.extend(params, getParamsFromUrl());
 
 		$.nirvana.sendRequest({

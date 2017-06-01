@@ -92,6 +92,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 			bidResponse.bidderRequestId = bidderRequest.bidderRequestId;
 			bidResponse.cpm = 0.00;
 			bidResponse.mediaType = 'video';
+			bidResponse.moatTracking = velesParams.moatTracking;
 			bidResponse.width = bid.sizes[0][0];
 			bidResponse.height = bid.sizes[0][1];
 			bidResponse.vastId = velesParams.vastId;

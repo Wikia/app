@@ -580,7 +580,7 @@ abstract class DatabaseInstaller {
 			if ( $row == "" ) continue;
 			$row .= "||";
 			$interwikis[] = array_combine(
-				array( 'iw_prefix', 'iw_url', 'iw_local', 'iw_api', 'iw_wikiid' ),
+				array( 'iw_prefix', 'iw_url', 'iw_local' ),
 				explode( '|', $row )
 			);
 		}

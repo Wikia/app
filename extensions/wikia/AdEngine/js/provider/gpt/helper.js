@@ -82,9 +82,9 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 		element = new AdElement(slotName, slotPath, slotTargetingData);
 
-		// add adonis marker needed for PF recovery
-		// basing on extra.isPageFairRecoverable param set in factoryWikiaGpt
-		if (isRecoveryEnabled && isBlocking && extra.isPageFairRecoverable) {
+		if (pageFair && extra.isPageFairRecoverable) {
+			log(['Adding adonis-marker to slot', slot], log.levels.debug, logGroup);
+
 			pageFair.addMarker(element.node);
 		}
 
@@ -100,22 +100,22 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 
 		function setAdditionalTargeting(slotTargetingData) {
+			var abId;
+
 			if (shouldSetSrcPremium()) {
 				slotTargetingData.src = 'premium';
 			} else if (adShouldBeRecovered) {
 				slotTargetingData.src = 'rec';
-
-				if (sourcePoint.isEnabled()) {
-					slotTargetingData.provider = 'sp';
-				}
-
-				if (pageFair && pageFair.isEnabled()) {
-					slotTargetingData.provider = 'pf';
-				}
 			}
 
 			slotTargetingData.wsi = slotTargeting.getWikiaSlotId(slotName, slotTargetingData.src);
+			slotTargetingData.hb_si = slotTargeting.getPrebidSlotId(slotTargetingData);
 			slotTargetingData.uap = uapId ? uapId.toString() : 'none';
+
+			abId = slotTargeting.getAbTestId(slotTargetingData);
+			if (abId) {
+				slotTargetingData.abi = abId;
+			}
 		}
 
 		function onAdLoadCallback(slotElementId, gptEvent, iframe) {

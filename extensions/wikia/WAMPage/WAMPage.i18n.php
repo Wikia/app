@@ -483,7 +483,7 @@ Gelieve community support te contacteren via [mailto:support@wikia-inc.com suppo
 
 $messages['pl'] = array(
 	'wam-html-title' => 'Monitor Aktywności Wiki (WAM)',
-	'wampage-header' => 'WAM',
+	'wampage-header' => 'Wam',
 	'wampage-header-wam' => 'Co to jest WAM?',
 	'wampage-header-faq' => 'FAQ',
 	'wampage-content' => 'Punktacja WAM aktualizowana jest codziennie, a 5000 najwyżej ocenionych wiki dodawanych jest do rankingu ogólnego i rankingów dla odrębnych kategorii. Ranking WAM uwzględnia aktualne wydarzenia i jest często aktualizowany, dzięki czemu odzwierciedla najnowsze trendy wśród wiki Fandomu.',
@@ -772,86 +772,6 @@ WAM上的資料最早可以追溯到2012年1月1日。
 	'wam-index-header-admins' => '管理員',
 	'wampage-breadcrumb-back-to-wam' => '返回WAM分數',
 	'wam-index-header-peak-rank' => '最高排名',
-	'wam-index-filter-search-placeholder' => '搜索',
-	'wam-index-filter-sort-label' => '主題社區',
-	'wam-index-filter-date-label' => '日期',
-	'wam-index-filter-lang-label' => '語言',
-	'wam-index-filter-language-default' => '所有',
-	'wam-index-filter-vertical-default' => '所有',
-);
-
-$messages['zh-hk'] = array(
-	'wampage-content' => 'WAM用來每日計算排名前5000的Wiki社區，包括所有社區和分類社區以及其0 -100的排名分數。WAM的排名每日都將按照社區的發展趨勢不斷變化，所以記得時常檢查一下最新的流行趨勢。',
-	'wampage-faq' => '__NOTOC____NOEDITSECTION__
-=== 如何計算WAM分數? ===
-WAM的排名是根據網頁流量、社區參與度和社區增長進行的資料整合分析。我們不能提供如何整合資料的具體細節，因為我們不想讓任何社區試圖以此操控排名，這對社區發展不利也不公平。我們將保證所有活躍和成功的Wiki社區都將被WAM納入其中。
-===為什麼WAM非常重要?===
-Wikia一直都認為知識就是力量。我們一直對相關資料和統計數字非常透明，WAM對線上社區的發展進行資料化的呈現也是一大進步。WAM的資料回饋對社區的創始人、管理員和貢獻者都非常有意義，因為他們可以更加輕鬆簡單地瞭解到所在社區發展的近況和活躍程度，更加宏觀地把握社區的整體發展。
-===如何提高WAM分數?===
-WAM使用複雜的計算方法，並沒有一種簡單的方式可以迅速提高社區的分數和排名。儘管如此，這裡還是有一些方法可以幫到你提高WAM分數。首先，我們建議您查看社區中心的[[w:c:zh:help:Attracting_contributors|説明:吸引參與者]]頁面。非常活躍或者每日編輯數量非常多的維琪社區一般在WAM上排名都會比較靠前。請記住，不要試圖和系統耍花招。只有豐富可信的社區內容才能讓你的社區和讀者產生共鳴。
-
-我們還建議您告知社區使用者[[w:c:zh:help:Making_a_successful_wiki|如何可以建設一個成功的Wiki]]。巡覽列內容條理清晰嗎？是否有大量的媒體內容，比如視頻或者圖片？文章頁面內容是否足夠詳細？您可以流覽[[w:c:en:help:Contents|説明中心:內容]]頁面獲取更多説明。
-
-===WAM可以保存多久的歷史記錄?===
-WAM上的資料最早可以追溯到2012年1月1日
-
-===WAM資料在哪些主題社區顯示?===
-你目前能在以下這些主題社區上找到WAM資料，[[w:c:en:Video Games|視頻遊戲]]，[[w:c:en:Entertainment|娛樂]]和[[w:c:en:Lifestyle|生活方式]]，以及適用于每個Wiki社區的預覽頁面。
-
-===我是否可以在我的社區上顯示WAM分數?===
-我們鼓勵您使用WAM分數並在您的主題社區上進行顯示，但是我們要求所有社區需要將這個顯示連結到WAM的產品頁面上。
-
-===如果我對WAM有更多問題需要向誰諮詢?===
-您可以通過發信至[mailto:support@wikia-inc.com support@wikia-inc.com]獲取説明。',
-);
-
-$messages['zh-tw'] = array(
-	'wam-html-title' => 'Wikia活動監視器(WAM)',
-	'wampage-header' => 'Wam',
-	'wampage-header-faq' => '常見問題',
-	'wam-all' => '所有',
-	'wam-tv' => '電視',
-	'wam-games' => '遊戲',
-	'wam-books' => '書籍',
-	'wam-comics' => '漫畫',
-	'wam-lifestyle' => '生活',
-	'wam-music' => '音樂',
-	'wam-movies' => '電影',
-	'wampage-top-gainers-header' => '排行榜',
-	'wampage-header-wam' => 'WAM分數',
-	'wampage-subheader-wam' => 'WAM分數是展示社區實力的標準和動力之所在。',
-	'wampage-content' => 'WAM用來每日計算排名前5000的Wiki社區，包括所有社區和分類社區以及其0 -100的排名分數。WAM的排名每日都將按照社區的發展趨勢不斷變化，所以記得時常檢查一下最新的流行趨勢。',
-	'wampage-content-faq-link' => '[[$1|常見問題]]',
-	'wampage-faq' => '__NOTOC____NOEDITSECTION__
-=== 如何計算WAM分數? ===
-WAM的排名是根據網頁流量、社區參與度和社區增長進行的資料整合分析。我們不能提供如何整合資料的具體細節，因為我們不想讓任何社區試圖以此操控排名，這對社區發展不利也不公平。我們將保證所有活躍和成功的Wiki社區都將被WAM納入其中。
-===為什麼WAM非常重要?===
-Wikia一直都認為知識就是力量。我們一直對相關資料和統計數字非常透明，WAM對線上社區的發展進行資料化的呈現也是一大進步。WAM的資料回饋對社區的創始人、管理員和貢獻者都非常有意義，因為他們可以更加輕鬆簡單地瞭解到所在社區發展的近況和活躍程度，更加宏觀地把握社區的整體發展。
-===如何提高WAM分數?===
-WAM使用複雜的計算方法，並沒有一種簡單的方式可以迅速提高社區的分數和排名。儘管如此，這裡還是有一些方法可以幫到你提高WAM分數。首先，我們建議您查看社區中心的[[w:c:zh:help:Attracting_contributors|説明:吸引參與者]]頁面。非常活躍或者每日編輯數量非常多的維琪社區一般在WAM上排名都會比較靠前。請記住，不要試圖和系統耍花招。只有豐富可信的社區內容才能讓你的社區和讀者產生共鳴。
-
-我們還建議您告知社區使用者[[w:c:zh:help:Making_a_successful_wiki|如何可以建設一個成功的Wiki]]。巡覽列內容條理清晰嗎？是否有大量的媒體內容，比如視頻或者圖片？文章頁面內容是否足夠詳細？您可以流覽[[w:c:en:help:Contents|説明中心:內容]]頁面獲取更多説明。
-
-===WAM可以保存多久的歷史記錄?===
-WAM上的資料最早可以追溯到2012年1月1日
-
-===WAM資料在哪些主題社區顯示?===
-你目前能在以下這些主題社區上找到WAM資料，[[w:c:en:Video Games|視頻遊戲]]，[[w:c:en:Entertainment|娛樂]]和[[w:c:en:Lifestyle|生活方式]]，以及適用于每個Wiki社區的預覽頁面。
-
-===我是否可以在我的社區上顯示WAM分數?===
-我們鼓勵您使用WAM分數並在您的主題社區上進行顯示，但是我們要求所有社區需要將這個顯示連結到WAM的產品頁面上。
-
-===如果我對WAM有更多問題需要向誰諮詢?===
-您可以通過發信至[mailto:support@wikia-inc.com support@wikia-inc.com]獲取説明。',
-	'wam-index-header-rank' => '排名',
-	'wam-index-header-score' => 'WAM分數',
-	'wam-index-header-wiki-name' => 'Wikia URL',
-	'wam-index-header-vertical' => '主題社區',
-	'wam-index-header-vertical-rank' => '主題社區排名',
-	'wam-index-header-admins' => '管理員',
-	'wampage-breadcrumb-back-to-wam' => '返回WAM分數',
-	'wam-index-header-peak-rank' => '頂尖排名',
-	'wam-index-no-results' => '您所查找的社區並不在WAM排名前5000之內。WAM排名每日都在不斷更新，您可以隨後重新訪問這個頁面。如果您有任何問題，歡迎發送郵件至[mailto:support@wikia-inc.com Contact Wikia Community Support]。',
 	'wam-index-filter-search-placeholder' => '搜索',
 	'wam-index-filter-sort-label' => '主題社區',
 	'wam-index-filter-date-label' => '日期',

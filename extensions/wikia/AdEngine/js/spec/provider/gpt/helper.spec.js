@@ -61,6 +61,8 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 				getUapId: noop
 			},
 			slotTargetingHelper: {
+				getAbTestId: noop,
+				getPrebidSlotId: noop,
 				getWikiaSlotId: noop
 			},
 			googleTag: {
@@ -312,8 +314,6 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 
 		pushAd();
 		expect(mocks.slotTargetingData.src).toBe('rec');
-		expect(mocks.slotTargetingData.provider).toBe('pf');
-		expect(mocks.slotTargetingData.provider).not.toBe('sp');
 	});
 
 	it('Should not set src=rec if PageFair is on, isPageFairRecoverable but adblock is off', function () {

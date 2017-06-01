@@ -98,7 +98,7 @@ class WallHooksHelperTest extends WikiaBaseTest {
 			'user trying to delete Message Wall' => [ NS_USER_WALL, 'delete', false, false ],
 			'user trying to create thread manually' =>  [ NS_USER_WALL_MESSAGE, 'create', false, false ],
 			'user posting thread via Nirvana' => [ NS_USER_WALL_MESSAGE, 'create', true, true ],
-			'user editing thread manually' => [ NS_USER_WALL_MESSAGE, 'edit', false, true ],
+			'user editing thread manually' => [ NS_USER_WALL_MESSAGE, 'edit', false, false ],
 			'user editing thread via Nirvana' => [ NS_USER_WALL_MESSAGE, 'edit', true, true ],
 		];
 	}
