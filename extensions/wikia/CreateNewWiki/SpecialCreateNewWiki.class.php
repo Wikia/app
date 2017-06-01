@@ -7,24 +7,20 @@ class SpecialCreateNewWiki extends UnlistedSpecialPage {
 	}
 
 	public function execute( $par ) {
-		global $wgUser, $wgOut;
 		wfProfileIn( __METHOD__ );
+		$out = $this->getOutput();
+
+		$this->checkPermissions();
 
 		if ( wfReadOnly() ) {
-			$wgOut->readOnlyPage();
+			$out->readOnlyPage();
 			wfProfileOut(__METHOD__);
 			return;
 		}
 
-		if (!$wgUser->isAllowed('createnewwiki')) {
-			$this->displayRestrictionError();
-			wfProfileOut( __METHOD__ );
-			return;
-		}
+		$out->setPageTitle(wfMsg('cnw-title'));
 
-		$wgOut->setPageTitle(wfMsg('cnw-title'));
-
-		$wgOut->addHtml( F::app()->renderView( 'CreateNewWiki', 'Index' ) );
+		$out->addHtml( F::app()->renderView( 'CreateNewWiki', 'Index' ) );
 		Wikia::addAssetsToOutput( 'create_new_wiki_scss' );
 		Wikia::addAssetsToOutput( 'create_new_wiki_js' );
 
