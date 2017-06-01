@@ -3,7 +3,7 @@
 	<? if ( !empty( $counter->message ) ) : ?>
 		<span class="page-header__counter"><?= $counter->message ?></span>
 	<? endif; ?>
-	<?= $app->renderView( 'Wikia\PageHeader\PageHeader', 'editButton' ); ?>
+	<?= $app->renderView( 'Wikia\PageHeader\PageHeader', 'actionButton' ); ?>
 	<?= $app->renderView( 'Wikia\PageHeader\PageHeader', 'subtitle' ); ?>
 	<hr class="page-header__separator">
 </header>

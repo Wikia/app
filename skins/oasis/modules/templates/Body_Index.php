@@ -74,12 +74,6 @@
 			<?= $app->renderView( 'AdminDashboard', 'Chrome' ) ?>
 		<? endif; ?>
 
-		<? if ( !empty( $wg->EnablePremiumPageHeader ) ) : ?>
-			<div class="PremiumPageArticleHeader">
-				<?= $app->renderView( 'PremiumPageHeader', 'articleHeader' ) ?>
-			</div>
-		<? endif; ?>
-
 		<? if ( empty( $wg->SuppressPageHeader ) ) : ?>
 			<?= $app->renderView('Wikia\PageHeader\PageHeaderController', 'index') ?>
 		<? endif; ?>

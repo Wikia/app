@@ -1,5 +1,5 @@
 <div class="wds-button-group page-header__edit-button">
-	<a href="<?= $buttonAction['href'] ?>" class="wds-is-squished wds-button" id="<?= $buttonAction['id'] ?>" accesskey="<?= $buttonAction['accesskey'] ?>">
+	<a href="<?= $buttonAction['href'] ?>" class="wds-is-squished wds-button" id="<?= $buttonAction['id'] ?>">
 		<?= DesignSystemHelper::renderSvg( 'wds-icons-pencil-small', 'wds-icon wds-icon-small' ); ?>
 		<span><?= $buttonAction['text'] ?></span>
 	</a>
