@@ -27,7 +27,7 @@ class SpecialCreateNewWiki extends UnlistedSpecialPage {
 			throw new ErrorPageError( 'cnw-error-unconfirmed-email-header', 'cnw-error-unconfirmed-email' );
 		}
 
-		$out->setPageTitle(wfMsg('cnw-title'));
+		$out->setPageTitle( wfMessage( 'cnw-title' ) );
 
 		$out->addHtml( F::app()->renderView( 'CreateNewWiki', 'Index' ) );
 		Wikia::addAssetsToOutput( 'create_new_wiki_scss' );
