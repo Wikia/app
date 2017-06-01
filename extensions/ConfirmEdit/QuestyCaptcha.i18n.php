@@ -329,6 +329,7 @@ Ya que esta es una tarea que es difícil de automatizar, eso permitirá que más
 Por favor contacta a los [[{{MediaWiki:Grouppage-sysop}}|administradores del sitio]] para asistencia si esto está impidiéndote hacer contribuciones legítimas.
 
 Haz click en el botón 'atrás' en tu navegador para regresar al editor de página.",
+	'questycaptcha-desc' => 'Questy CAPTCHA generator for Confirm Edit',
 );
 
 /** Estonian (Eesti)
@@ -380,6 +381,7 @@ Koska tämä on vaikeasti automatisoitava tehtävä, se antaa useimpien oikeiden
 Ota yhteyttä [[{{MediaWiki:Grouppage-sysop}}|ylläpitäjiin]] saadaksesi avustusta jos tämä odottamattomasti estää sinua tekemästä asiallisia muokkauksia.
 
 Napsauta selaimesi \'takaisin\'-painiketta palataksesi sivumuokkaimeen.',
+	'questycaptcha-desc' => 'Questy CAPTCHA generator for Confirm Edit',
 );
 
 /** French (Français)
@@ -608,6 +610,7 @@ In alcuni casi, ad esempio quando si tenta di aggiungere nuovi collegamenti Web 
 Se queste procedure impediscono contributi che si ritengono legittimi, si prega di contattare gli [[{{MediaWiki:Grouppage-sysop}}|amministratori del sito]] e chiedere loro assistenza. 
 
 Fare clic sul pulsante 'indietro' del browser per tornare alla pagina di modifica.",
+	'questycaptcha-desc' => 'Questy CAPTCHA generator for Confirm Edit',
 );
 
 /** Japanese (日本語)
@@ -637,6 +640,22 @@ $messages['ja'] = array(
  */
 $messages['ko'] = array(
 	'questycaptcha-badlogin' => '자동화된 비밀번호 깨기를 방지하기 위해 아래애 보이는 질문에 대답해주세요 ([[Special:Captcha/help|자세한 정보]]):',
+	'questycaptcha-desc' => 'Questy CAPTCHA generator for Confirm Edit',
+	'questycaptcha-addurl' => 'Your edit includes new external links.
+To help protect against automated spam, please answer the question that appears below ([[Special:Captcha/help|more info]]):',
+	'questycaptcha-createaccount' => 'To help protect against automated account creation, please answer the question that appears below ([[Special:Captcha/help|more info]]):',
+	'questycaptcha-create' => 'To create the page, please answer the question that appears below ([[Special:Captcha/help|more info]]):',
+	'questycaptcha-edit' => 'To edit this page, please answer the question that appears below ([[Special:Captcha/help|more info]]):',
+	'questycaptcha-sendemail' => 'To help protect against automated spamming, please answer the question that appears below ([[Special:Captcha/help|more info]]):',
+	'questycaptchahelp-text' => "Web sites that accept contributions from the public, like this wiki, are often abused by spammers who use automated tools to add their links to many sites.
+While these spam links can be removed, they are a significant nuisance.
+
+Sometimes, especially when adding new web links to a page, the wiki may ask you to answer a question.
+Since this is a task that is hard to automate, it will allow most real humans to make their contributions while stopping most spammers and other robotic attackers.
+
+Please contact the [[{{MediaWiki:Grouppage-sysop}}|site administrators]] for assistance if this is unexpectedly preventing you from making legitimate contributions.
+
+Click the 'back' button in your browser to return to the page editor.",
 );
 
 /** Colognian (Ripoarisch)
@@ -702,6 +721,17 @@ Well dëst eng Aufgab ass déi schwéier z'automatiséieren ass, erlaabt dëst d
 Kontaktéiert w.e.g. d'[[{{MediaWiki:Grouppage-sysop}}|Administrateure vun dësem Site]] fir Hëllef wann dëst Iech onerwaarter Weis vu legitimen Editen ofhält.
 
 Dréckt op den 'Zréck' Knäppche vun ärem Browser fir an d'Beaarbechtungsfënster zréckzekommen.",
+);
+
+$messages['lol'] = array(
+	'questycaptcha-desc' => 'crwdns66267:0crwdne66267:0',
+	'questycaptcha-addurl' => 'crwdns66268:0crwdne66268:0',
+	'questycaptcha-badlogin' => 'crwdns66269:0crwdne66269:0',
+	'questycaptcha-createaccount' => 'crwdns66270:0crwdne66270:0',
+	'questycaptcha-create' => 'crwdns66271:0crwdne66271:0',
+	'questycaptcha-edit' => 'crwdns66272:0crwdne66272:0',
+	'questycaptcha-sendemail' => 'crwdns66273:0crwdne66273:0',
+	'questycaptchahelp-text' => 'crwdns66274:0{{MediaWiki:Grouppage-sysop}}crwdne66274:0',
 );
 
 /** Macedonian (Македонски)
@@ -800,6 +830,7 @@ Omdat dit proces lastig te automatiseren is, zijn vrijwel alleen mensen in staat
 Vraag assistentie van de [[{{MediaWiki:Grouppage-sysop}}|sitebeheerders]] als dit proces u verhindert een nuttige bijdrage te leveren.
 
 Klik op de knop 'terug' in uw browser om terug te gaan naar het tekstbewerkingsscherm.",
+	'questycaptcha-desc' => 'Questy CAPTCHA generator for Confirm Edit',
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
@@ -855,6 +886,7 @@ Ponieważ odpowiadanie na pytania jest czynnością trudną do zautomatyzowania,
 Skontaktuj się z [[{{MediaWiki:Grouppage-sysop}}|administratorami]], jeśli potrzebujesz pomocy ponieważ mechanizm ten uniemożliwia Ci dokonywania uzasadnionych edycji.
 
 Kliknij przycisk 'wstecz' w przeglądarce, aby wrócić do strony edycji.",
+	'questycaptcha-desc' => 'Questy CAPTCHA generator for Confirm Edit',
 );
 
 /** Piedmontese (Piemontèis)
@@ -902,6 +934,7 @@ Uma vez que essa é uma tarefa um tanto difícil de ser automatizada, ela possib
 Entre em contato com os [[{{MediaWiki:Grouppage-sysop}}|administradores do site]] para pedir ajuda caso isso esteja te impedindo de realizar contribuições legítimas.
 
 Clique no botão 'voltar' de seu navegador para retornar ao editor de páginas.",
+	'questycaptcha-desc' => 'Questy CAPTCHA generator for Confirm Edit',
 );
 
 /** Tarandíne (Tarandíne)
@@ -946,6 +979,7 @@ $messages['ru'] = array(
 Пожалуйста, обратитесь к [[{{MediaWiki:Grouppage-sysop}}|администраторам сайта]] за помощь, если данная система не позволяет вам вносить допустимые изменения.
 
 Нажмите в вашем браузере кнопку «назад», чтобы вернуться к странице редактирования.',
+	'questycaptcha-desc' => 'Questy CAPTCHA generator for Confirm Edit',
 );
 
 /** Slovak (Slovenčina)
@@ -1119,6 +1153,26 @@ $messages['uk'] = array(
 Натисніть на кнопку "назад" у браузері, щоб повернутися на сторінку редагування.',
 );
 
+$messages['vi'] = array(
+	'questycaptcha-desc' => 'Questy CAPTCHA generator for Confirm Edit',
+	'questycaptcha-addurl' => 'Your edit includes new external links.
+To help protect against automated spam, please answer the question that appears below ([[Special:Captcha/help|more info]]):',
+	'questycaptcha-badlogin' => 'To help protect against automated password cracking, please answer the question that appears below ([[Special:Captcha/help|more info]]):',
+	'questycaptcha-createaccount' => 'To help protect against automated account creation, please answer the question that appears below ([[Special:Captcha/help|more info]]):',
+	'questycaptcha-create' => 'To create the page, please answer the question that appears below ([[Special:Captcha/help|more info]]):',
+	'questycaptcha-edit' => 'To edit this page, please answer the question that appears below ([[Special:Captcha/help|more info]]):',
+	'questycaptcha-sendemail' => 'To help protect against automated spamming, please answer the question that appears below ([[Special:Captcha/help|more info]]):',
+	'questycaptchahelp-text' => "Web sites that accept contributions from the public, like this wiki, are often abused by spammers who use automated tools to add their links to many sites.
+While these spam links can be removed, they are a significant nuisance.
+
+Sometimes, especially when adding new web links to a page, the wiki may ask you to answer a question.
+Since this is a task that is hard to automate, it will allow most real humans to make their contributions while stopping most spammers and other robotic attackers.
+
+Please contact the [[{{MediaWiki:Grouppage-sysop}}|site administrators]] for assistance if this is unexpectedly preventing you from making legitimate contributions.
+
+Click the 'back' button in your browser to return to the page editor.",
+);
+
 /** Yiddish (ייִדיש)
  * @author פוילישער
  */
@@ -1134,6 +1188,16 @@ $messages['zh-hans'] = array(
 	'questycaptcha-create' => '为防止不当程式大量建立页面，请回答以下问题（[[Special:Captcha/help|相关资讯]]）：',
 	'questycaptcha-edit' => '为防破坏，如您想要编辑此页面，请回答以下的问题（[[Special:Captcha/help|相关资讯]]）：',
 	'questycaptcha-sendemail' => '为防止不当程式破解密码，请回答下列问题（[[Special:Captcha/help|相关资讯]]）：',
+	'questycaptcha-desc' => 'Questy CAPTCHA generator for Confirm Edit',
+	'questycaptchahelp-text' => "Web sites that accept contributions from the public, like this wiki, are often abused by spammers who use automated tools to add their links to many sites.
+While these spam links can be removed, they are a significant nuisance.
+
+Sometimes, especially when adding new web links to a page, the wiki may ask you to answer a question.
+Since this is a task that is hard to automate, it will allow most real humans to make their contributions while stopping most spammers and other robotic attackers.
+
+Please contact the [[{{MediaWiki:Grouppage-sysop}}|site administrators]] for assistance if this is unexpectedly preventing you from making legitimate contributions.
+
+Click the 'back' button in your browser to return to the page editor.",
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
@@ -1147,5 +1211,15 @@ $messages['zh-hant'] = array(
 	'questycaptcha-create' => '為防止不當程式大量建立頁面，請回答以下問題（[[Special:Captcha/help|相關資訊]]）：',
 	'questycaptcha-edit' => '為防破壞，如您想要編輯此頁面，請回答以下的問題（[[Special:Captcha/help|相關資訊]]）：',
 	'questycaptcha-sendemail' => '為防止不當程式破解密碼，請回答下列問題（[[Special:Captcha/help|相關資訊]]）：',
+	'questycaptcha-desc' => 'Questy CAPTCHA generator for Confirm Edit',
+	'questycaptchahelp-text' => "Web sites that accept contributions from the public, like this wiki, are often abused by spammers who use automated tools to add their links to many sites.
+While these spam links can be removed, they are a significant nuisance.
+
+Sometimes, especially when adding new web links to a page, the wiki may ask you to answer a question.
+Since this is a task that is hard to automate, it will allow most real humans to make their contributions while stopping most spammers and other robotic attackers.
+
+Please contact the [[{{MediaWiki:Grouppage-sysop}}|site administrators]] for assistance if this is unexpectedly preventing you from making legitimate contributions.
+
+Click the 'back' button in your browser to return to the page editor.",
 );
 
