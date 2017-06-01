@@ -313,7 +313,7 @@ class CreateNewWikiController extends WikiaController {
 		$this->response->setVal( self::CITY_ID_FIELD, $cityId );
 		$finishCreateTitle = GlobalTitle::newFromText( "FinishCreate", NS_SPECIAL, $cityId );
 
-		$fullURL = $finishCreateTitle->getFullURL( [ 'editToken' => $wgUser->getEditToken() ] );
+		$fullURL = $finishCreateTitle->getFullURL( [ 'editToken' => $this->getContext()->getUser()->getEditToken() ] );
 		$finishCreateUrl = empty( $wgDevelDomains ) ? $fullURL : str_replace( '.wikia.com', '.'.$wgDevelDomains[0], $fullURL );
 		$this->response->setVal( 'finishCreateUrl',  $finishCreateUrl );
 
