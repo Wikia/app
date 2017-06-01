@@ -3,16 +3,13 @@ phpunit NothingTest ../_files/NothingTest.php
 --FILE--
 <?php
 $_SERVER['argv'][1] = '--no-configuration';
-$_SERVER['argv'][2] = '--verbose';
-$_SERVER['argv'][3] = 'NothingTest';
-$_SERVER['argv'][4] = __DIR__ . '/../_files/NothingTest.php';
+$_SERVER['argv'][2] = 'NothingTest';
+$_SERVER['argv'][3] = __DIR__ . '/../_files/NothingTest.php';
 
 require __DIR__ . '/../bootstrap.php';
 PHPUnit\TextUI\Command::main();
 --EXPECTF--
 PHPUnit %s by Sebastian Bergmann and contributors.
-
-Runtime:       %s
 
 R                                                                   1 / 1 (100%)
 

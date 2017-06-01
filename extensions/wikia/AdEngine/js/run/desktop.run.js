@@ -104,10 +104,8 @@ require([
 	'ext.wikia.adEngine.slot.highImpact',
 	'ext.wikia.adEngine.slot.inContent',
 	'ext.wikia.adEngine.slot.skyScraper3',
-	'ext.wikia.adEngine.slotTweaker',
 	'wikia.document',
-	'wikia.window',
-	require.optional('ext.wikia.adEngine.slot.exitstitial')
+	'wikia.window'
 ], function (
 	adContext,
 	slotsContext,
@@ -115,18 +113,14 @@ require([
 	highImpact,
 	inContent,
 	skyScraper3,
-	slotTweaker,
 	doc,
-	win,
-	exitstitial
+	win
 ) {
 	'use strict';
-
 	var context = adContext.getContext();
 
 	function initDesktopSlots() {
-		var incontentLeaderboardSlotName = 'INCONTENT_LEADERBOARD',
-			incontentPlayerSlotName = 'INCONTENT_PLAYER';
+		var incontentPlayerSlotName = 'INCONTENT_PLAYER';
 
 		highImpact.init();
 		skyScraper3.init();
@@ -134,21 +128,12 @@ require([
 		if (slotsContext.isApplicable(incontentPlayerSlotName)) {
 			inContent.init(incontentPlayerSlotName);
 		}
-
-		if (slotsContext.isApplicable(incontentLeaderboardSlotName)) {
-			inContent.init(incontentLeaderboardSlotName, function () {
-				if (context.opts.incontentLeaderboardAsOutOfPage) {
-					slotTweaker.adjustIframeByContentSize(incontentLeaderboardSlotName);
-				}
-			});
-		}
-
-		if (exitstitial) {
-			exitstitial.init();
-		}
 	}
 
 	win.addEventListener('wikia.uap', bottomLeaderboard.init);
+	if (context.opts.adMixExperimentEnabled && context.slots.adMixToUnblock.indexOf('BOTTOM_LEADERBOARD')) {
+		win.addEventListener('wikia.not_uap', bottomLeaderboard.init);
+	}
 
 	if (doc.readyState === 'complete') {
 		initDesktopSlots();

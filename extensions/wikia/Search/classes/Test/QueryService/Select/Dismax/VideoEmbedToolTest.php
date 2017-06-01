@@ -3,6 +3,9 @@
  * Class definition for Wikia\Search\Test\QueryService\Select\Dismax\VideoEmbedToolTest
  */
 namespace Wikia\Search\Test\QueryService\Select\Dismax;
+use Wikia\Search\MediaWikiService;
+use Wikia\Search\QueryService\DependencyContainer;
+use Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool;
 use Wikia\Search\Test\BaseTest, ReflectionMethod, Wikia\Search\Utilities;
 /**
  * Responsible for testing VideoEmbedTool query service.
@@ -97,27 +100,31 @@ class VideoEmbedToolTest extends BaseTest
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09934 ms
-	 * @covers Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool::getTopicsAsQuery
+	 * @covers \Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool::getTopicsAsQuery
 	 */
 	public function testGetTopicsAsQueryWithTopics() {
-		$service = $this->getMockBuilder( self::CLASSNAME )
-		                ->disableOriginalConstructor()
-		                ->setMethods( [ 'getService' ] )
-		                ->getMock();
-		
-		$mwService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getGlobalWithDefault' ] );
-		
-		$service
-		    ->expects( $this->once() )
-		    ->method ( 'getService' )
-		    ->will   ( $this->returnValue( $mwService ) )
-		;
+		/** @var MediaWikiService|\PHPUnit_Framework_MockObject_MockObject $mwService */
+		$mwService = $this->getMockBuilder( MediaWikiService::class )
+			->setMethods( [ 'getGlobalWithDefault' ] )
+			->getMock();
+
 		$mwService
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getGlobalWithDefault' )
 		    ->with   ( 'WikiVideoSearchTopics', [] )
 		    ->will   ( $this->returnValue( [ 'topic 1', 'topic2' ] ) )
 		;
+		$mwService
+			->expects( $this->at( 1 ) )
+			->method ( 'getGlobalWithDefault' )
+			->with   ( 'WikiVideoSearchTopicsAutomated', [] )
+			->will   ( $this->returnValue( [] ) )
+		;
+
+		$container = new DependencyContainer();
+		$container->setService( $mwService );
+
+		$service = new VideoEmbedTool( $container );
 		
 		$get = new ReflectionMethod( self::CLASSNAME, 'getTopicsAsQuery' );
 		$get->setAccessible( true );

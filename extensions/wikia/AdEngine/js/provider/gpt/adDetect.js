@@ -249,6 +249,10 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 			uapContext.dispatchEvent();
 		}
 
+		if (adType === 'manual') {
+			return;
+		}
+
 		if (['openx', 'rubicon', 'saymedia', 'turtle', 'evolve2'].indexOf(adType) !== -1 || isPartnerAdType(adType)) {
 			shouldPollForSuccess = true;
 			expectAsyncCollapse = true;

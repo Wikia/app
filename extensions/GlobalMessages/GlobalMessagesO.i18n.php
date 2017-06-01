@@ -1,5 +1,4 @@
 <?php
-/** Internationalization file for /extensions/GlobalMessages/GlobalMessagesO extension. */
 $messages = [];
 
 $messages['en'] = [
@@ -2853,19 +2852,6 @@ $messages['so'] = [
 ];
 
 $messages['sq'] = [
-	'october' => 'tetor',
-	'october-gen' => 'tetor',
-	'oct' => 'Tet',
-	'otherlanguages' => 'Në gjuhë të tjera',
-	'ok' => 'Ok',
-	'oldpassword' => 'I vjetri',
-	'overwrite' => 'Mbishkrimi i një skede ekzistuese nuk lejohet.',
-	'overwroteimage' => 'dha dhe zëvendësoi me një version të ri të "[[$1]]"',
-	'othercontribs' => 'Bazuar në punën e: $1',
-	'others' => 'të tjerë',
-];
-
-$messages['sr'] = [
 	'october' => 'tetor',
 	'october-gen' => 'tetor',
 	'oct' => 'Tet',

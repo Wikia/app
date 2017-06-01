@@ -46,6 +46,7 @@ use PHPUnit\TextUI\ResultPrinter;
  *          extensionsDirectory="tools/phpunit.d"
  *          printerClass="PHPUnit\TextUI\ResultPrinter"
  *          testSuiteLoaderClass="PHPUnit\Runner\StandardTestSuiteLoader"
+ *          defaultTestSuite=""
  *          beStrictAboutChangesToGlobalState="false"
  *          beStrictAboutCoversAnnotation="false"
  *          beStrictAboutOutputDuringTests="false"
@@ -53,6 +54,7 @@ use PHPUnit\TextUI\ResultPrinter;
  *          beStrictAboutTestsThatDoNotTestAnything="false"
  *          beStrictAboutTodoAnnotatedTests="false"
  *          enforceTimeLimit="false"
+ *          ignoreDeprecatedCodeUnitsFromCodeCoverage="false"
  *          timeoutForSmallTests="1"
  *          timeoutForMediumTests="10"
  *          timeoutForLargeTests="60"
@@ -167,8 +169,6 @@ class Configuration
         $this->xpath    = new DOMXPath($this->document);
     }
 
-    /**
-     */
     final private function __clone()
     {
     }
@@ -182,11 +182,11 @@ class Configuration
      */
     public static function getInstance($filename)
     {
-        $realpath = realpath($filename);
+        $realpath = \realpath($filename);
 
         if ($realpath === false) {
             throw new Exception(
-                sprintf(
+                \sprintf(
                     'Could not read "%s".',
                     $filename
                 )
@@ -221,6 +221,12 @@ class Configuration
         $processUncoveredFilesFromWhitelist = false;
 
         $tmp = $this->xpath->query('filter/whitelist');
+
+        if ($tmp->length == 0) {
+            return [
+                'whitelist' => []
+            ];
+        }
 
         if ($tmp->length == 1) {
             if ($tmp->item(0)->hasAttribute('addUncoveredFilesFromWhitelist')) {
@@ -334,9 +340,7 @@ class Configuration
                 if ($node instanceof DOMElement && $node->tagName == 'arguments') {
                     foreach ($node->childNodes as $argument) {
                         if ($argument instanceof DOMElement) {
-                            if ($argument->tagName == 'file' ||
-                                $argument->tagName == 'directory'
-                            ) {
+                            if ($argument->tagName == 'file' || $argument->tagName == 'directory') {
                                 $arguments[] = $this->toAbsolutePath((string) $argument->textContent);
                             } else {
                                 $arguments[] = Xml::xmlToVariable($argument);
@@ -489,25 +493,25 @@ class Configuration
         $configuration = $this->getPHPConfiguration();
 
         if (!empty($configuration['include_path'])) {
-            ini_set(
+            \ini_set(
                 'include_path',
-                implode(PATH_SEPARATOR, $configuration['include_path']) .
+                \implode(PATH_SEPARATOR, $configuration['include_path']) .
                 PATH_SEPARATOR .
-                ini_get('include_path')
+                \ini_get('include_path')
             );
         }
 
         foreach ($configuration['ini'] as $name => $value) {
-            if (defined($value)) {
-                $value = constant($value);
+            if (\defined($value)) {
+                $value = \constant($value);
             }
 
-            ini_set($name, $value);
+            \ini_set($name, $value);
         }
 
         foreach ($configuration['const'] as $name => $value) {
-            if (!defined($name)) {
-                define($name, $value);
+            if (!\defined($name)) {
+                \define($name, $value);
             }
         }
 
@@ -523,7 +527,7 @@ class Configuration
                     break;
 
                 default:
-                    $target = &$GLOBALS['_' . strtoupper($array)];
+                    $target = &$GLOBALS['_' . \strtoupper($array)];
                     break;
             }
 
@@ -533,8 +537,8 @@ class Configuration
         }
 
         foreach ($configuration['env'] as $name => $value) {
-            if (false === getenv($name)) {
-                putenv("{$name}={$value}");
+            if (false === \getenv($name)) {
+                \putenv("{$name}={$value}");
             }
             if (!isset($_ENV[$name])) {
                 $_ENV[$name] = $value;
@@ -713,6 +717,12 @@ class Configuration
             );
         }
 
+        if ($root->hasAttribute('defaultTestSuite')) {
+            $result['defaultTestSuite'] = (string) $root->getAttribute(
+                'defaultTestSuite'
+            );
+        }
+
         if ($root->getAttribute('testSuiteLoaderFile')) {
             $result['testSuiteLoaderFile'] = $this->toAbsolutePath(
                 (string) $root->getAttribute('testSuiteLoaderFile')
@@ -776,6 +786,13 @@ class Configuration
         if ($root->hasAttribute('enforceTimeLimit')) {
             $result['enforceTimeLimit'] = $this->getBoolean(
                 (string) $root->getAttribute('enforceTimeLimit'),
+                false
+            );
+        }
+
+        if ($root->hasAttribute('ignoreDeprecatedCodeUnitsFromCodeCoverage')) {
+            $result['ignoreDeprecatedCodeUnitsFromCodeCoverage'] = $this->getBoolean(
+                (string) $root->getAttribute('ignoreDeprecatedCodeUnitsFromCodeCoverage'),
                 false
             );
         }
@@ -904,10 +921,10 @@ class Configuration
         }
 
         $fileIteratorFacade = new File_Iterator_Facade;
-        $testSuiteFilter    = $testSuiteFilter ? explode(self::TEST_SUITE_FILTER_SEPARATOR, $testSuiteFilter) : [];
+        $testSuiteFilter    = $testSuiteFilter ? \explode(self::TEST_SUITE_FILTER_SEPARATOR, $testSuiteFilter) : [];
 
         foreach ($testSuiteNode->getElementsByTagName('directory') as $directoryNode) {
-            if (!empty($testSuiteFilter) && !in_array($directoryNode->parentNode->getAttribute('name'), $testSuiteFilter)) {
+            if (!empty($testSuiteFilter) && !\in_array($directoryNode->parentNode->getAttribute('name'), $testSuiteFilter)) {
                 continue;
             }
 
@@ -929,7 +946,7 @@ class Configuration
                 $phpVersionOperator = '>=';
             }
 
-            if (!version_compare(PHP_VERSION, $phpVersion, $phpVersionOperator)) {
+            if (!\version_compare(PHP_VERSION, $phpVersion, $phpVersionOperator)) {
                 continue;
             }
 
@@ -955,7 +972,7 @@ class Configuration
         }
 
         foreach ($testSuiteNode->getElementsByTagName('file') as $fileNode) {
-            if (!empty($testSuiteFilter) && !in_array($fileNode->parentNode->getAttribute('name'), $testSuiteFilter)) {
+            if (!empty($testSuiteFilter) && !\in_array($fileNode->parentNode->getAttribute('name'), $testSuiteFilter)) {
                 continue;
             }
 
@@ -988,7 +1005,7 @@ class Configuration
                 $phpVersionOperator = '>=';
             }
 
-            if (!version_compare(PHP_VERSION, $phpVersion, $phpVersionOperator)) {
+            if (!\version_compare(PHP_VERSION, $phpVersion, $phpVersionOperator)) {
                 continue;
             }
 
@@ -1006,9 +1023,11 @@ class Configuration
      */
     protected function getBoolean($value, $default)
     {
-        if (strtolower($value) == 'false') {
+        if (\strtolower($value) == 'false') {
             return false;
-        } elseif (strtolower($value) == 'true') {
+        }
+
+        if (\strtolower($value) == 'true') {
             return true;
         }
 
@@ -1023,7 +1042,7 @@ class Configuration
      */
     protected function getInteger($value, $default)
     {
-        if (is_numeric($value)) {
+        if (\is_numeric($value)) {
             return (int) $value;
         }
 
@@ -1103,7 +1122,7 @@ class Configuration
      */
     protected function toAbsolutePath($path, $useIncludePath = false)
     {
-        $path = trim($path);
+        $path = \trim($path);
 
         if ($path[0] === '/') {
             return $path;
@@ -1117,22 +1136,20 @@ class Configuration
         //  - C:\windows
         //  - C:/windows
         //  - c:/windows
-        if (defined('PHP_WINDOWS_VERSION_BUILD') &&
-            ($path[0] === '\\' ||
-                (strlen($path) >= 3 && preg_match('#^[A-Z]\:[/\\\]#i', substr($path, 0, 3))))
-        ) {
+        if (\defined('PHP_WINDOWS_VERSION_BUILD') &&
+            ($path[0] === '\\' || (\strlen($path) >= 3 && \preg_match('#^[A-Z]\:[/\\\]#i', \substr($path, 0, 3))))) {
             return $path;
         }
 
         // Stream
-        if (strpos($path, '://') !== false) {
+        if (\strpos($path, '://') !== false) {
             return $path;
         }
 
-        $file = dirname($this->filename) . DIRECTORY_SEPARATOR . $path;
+        $file = \dirname($this->filename) . DIRECTORY_SEPARATOR . $path;
 
-        if ($useIncludePath && !file_exists($file)) {
-            $includePathFile = stream_resolve_include_path($path);
+        if ($useIncludePath && !\file_exists($file)) {
+            $includePathFile = \stream_resolve_include_path($path);
 
             if ($includePathFile) {
                 $file = $includePathFile;

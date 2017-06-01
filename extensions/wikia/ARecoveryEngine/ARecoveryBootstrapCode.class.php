@@ -2,27 +2,27 @@
 class ARecoveryBootstrapCode {
 	public static function getHeadBootstrapCode() {
 
-		return (new ARecoveryModule())->isPageFairRecoveryEnabled() ?
+		return ARecoveryModule::isPageFairRecoveryEnabled() ?
 			F::app()->sendRequest( 'ARecoveryEngineApiController', 'getPageFairBootstrapHead' ) :
 			static::getBootstrapDisabledMessage('Head');
 	}
 	
 	public static function getTopBodyBootstrapCode() {
 
-		return (new ARecoveryModule())->isPageFairRecoveryEnabled() ?
+		return ARecoveryModule::isPageFairRecoveryEnabled() ?
 			F::app()->sendRequest( 'ARecoveryEngineApiController', 'getPageFairBootstrapTopBody' ) :
 			static::getBootstrapDisabledMessage('Top body');
 	}
 
 	public static function getBottomBodyBootstrapCode() {
 
-		return (new ARecoveryModule())->isPageFairRecoveryEnabled() ?
+		return ARecoveryModule::isPageFairRecoveryEnabled() ?
 			F::app()->sendRequest( 'ARecoveryEngineApiController', 'getPageFairBootstrapBottomBody' ) :
 			static::getBootstrapDisabledMessage('Bottom body');
 	}
 
 	public static function getSourcePointBootstrapCode() {
-		return (new ARecoveryModule())->isSourcePointRecoveryEnabled() ?
+		return ARecoveryModule::shouldLoadSourcePointBootstrap() ?
 			F::app()->sendRequest( 'ARecoveryEngineApiController', 'getBootstrap' ) :
 			static::getBootstrapDisabledMessage();
 	}

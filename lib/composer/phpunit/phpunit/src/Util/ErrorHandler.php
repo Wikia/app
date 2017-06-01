@@ -8,20 +8,12 @@
  * file that was distributed with this source code.
  */
 
-// Workaround for http://bugs.php.net/bug.php?id=47987,
-// see https://github.com/sebastianbergmann/phpunit/issues#issue/125 for details
-// Use dirname(__DIR__) instead of using /../ because of https://github.com/facebook/hhvm/issues/5215
 namespace PHPUnit\Util;
 
 use PHPUnit\Framework\Error\Error;
 use PHPUnit\Framework\Error\Deprecated;
 use PHPUnit\Framework\Error\Notice;
 use PHPUnit\Framework\Error\Warning;
-
-require_once dirname(__DIR__) . '/Framework/Error/Error.php';
-require_once dirname(__DIR__) . '/Framework/Error/Notice.php';
-require_once dirname(__DIR__) . '/Framework/Error/Warning.php';
-require_once dirname(__DIR__) . '/Framework/Error/Deprecated.php';
 
 /**
  * Error handler that converts PHP errors and warnings to exceptions.
@@ -50,14 +42,14 @@ class ErrorHandler
      */
     public static function handleError($errno, $errstr, $errfile, $errline)
     {
-        if (!($errno & error_reporting())) {
+        if (!($errno & \error_reporting())) {
             return false;
         }
 
         self::$errorStack[] = [$errno, $errstr, $errfile, $errline];
 
-        $trace = debug_backtrace(false);
-        array_shift($trace);
+        $trace = \debug_backtrace(false);
+        \array_shift($trace);
 
         foreach ($trace as $frame) {
             if ($frame['function'] == '__toString') {
@@ -96,7 +88,7 @@ class ErrorHandler
      *
      * @param int $severity PHP predefined error constant
      *
-     * @throws Exception if event of specified severity is emitted
+     * @throws \Exception if event of specified severity is emitted
      */
     public static function handleErrorOnce($severity = E_WARNING)
     {
@@ -105,11 +97,11 @@ class ErrorHandler
             if (!$expired) {
                 $expired = true;
                 // cleans temporary error handler
-                return restore_error_handler();
+                return \restore_error_handler();
             }
         };
 
-        set_error_handler(function ($errno, $errstr) use ($severity) {
+        \set_error_handler(function ($errno, $errstr) use ($severity) {
             if ($errno === $severity) {
                 return;
             }

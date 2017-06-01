@@ -1,5 +1,4 @@
 <?php
-/** Internationalization file for /extensions/GlobalMessages/GlobalMessagesD extension. */
 $messages = [];
 
 $messages['en'] = [
@@ -15303,103 +15302,6 @@ Kjo faqe është duke përjetuar vështirësi teknike.',
 	'dberr-usegoogle' => 'Ju mund të provoni të kërkoni përmes Googles në ndërkohë.',
 	'dberr-outofdate' => 'Vini re se indekset e tyre të përmbajtjes tona mund të jetë e vjetëruar.',
 	'dberr-cachederror' => 'Kjo është një kopje e faqes së kërkuar dhe mund të jetë e vjetëruar.',
-];
-
-$messages['sr'] = [
-	'december' => 'dhjetor',
-	'december-gen' => 'dhjetor',
-	'dec' => 'Dhje',
-	'delete' => 'Grise',
-	'deletethispage' => 'Grise këtë faqe',
-	'disclaimers' => 'Shfajësimet',
-	'disclaimerpage' => 'Project:Shfajësimet e përgjithshme',
-	'databaseerror' => 'Gabim në databazë',
-	'dberrortext' => 'Ka ndodhur një gabim me pyetjen e regjistrit.
-Kjo mund të ndodhi n.q.s. pyetja nuk është e vlehshme,
-ose mund të jetë një yçkël e softuerit.
-Pyetja e fundit që i keni bërë regjistrit ishte:
-<blockquote><tt>$1</tt></blockquote>
-nga funksioni "<tt>$2</tt>".
-MySQL kthehu gabimin "<tt>$3: $4</tt>".',
-	'dberrortextcl' => 'Ka ndodhur një gabim me sintaksën query në databazë.
-Query e fundit që i keni bërë regjistrit ishte:
-"$1"
-nga funksioni "$2".
-MySQL kthehu gabimin "$3: $4".',
-	'directorycreateerror' => 'I pamundur krijimi i direktorisë "$1".',
-	'deletedhist' => 'Historiku i grisjeve',
-	'difference' => '(Ndryshime midis versioneve)',
-	'difference-multipage' => '(Ndryshimi midis faqeve)',
-	'diff-multi' => '({{PLURAL:$1|Një version i ndërmjetshëm|$1 versione të ndërmjetshme}} nga {{PLURAL:$2|një përdorues|$2 përdorues}} i/të pashfaqur)',
-	'diff-multi-manyusers' => '({{PLURAL:$1|Një versioni i ndërmjetshëm|$1 versione të ndërmjetshme}} nga më shumë se $2 {{PLURAL:$2|përdorues|përdorues}} i/të pashfaqur)',
-	'datedefault' => 'Parazgjedhje',
-	'defaultns' => 'Kërko automatikisht vetëm në këto hapësira:',
-	'default' => 'parazgjedhje',
-	'diff' => 'ndrysh',
-	'destfilename' => 'Emri mbas dhënies:',
-	'duplicatesoffile' => 'Në vijim {{PLURAL:$1|skeda është identike|$1 janë idnetike}} me këtë skedë
-([[Special:FileDuplicateSearch/$2|më shumë detaje]]):',
-	'download' => 'shkarkim',
-	'disambiguations' => 'Faqet që lidhen te faqet kthjelluese',
-	'disambiguationspage' => 'Template:Kthjellim',
-	'disambiguations-text' => 'Faqet e mëposhtme lidhen tek një \'\'\'faqe kthjelluese\'\'\'.
-Ato duhet të kenë lidhje të drejtpërdrejtë tek artikujt e nevojshëm.<br />
-Një faqe trajtohet si faqe kthjelluese nëse përdor stampat e lidhura nga [[MediaWiki:Disambiguationspage]]',
-	'doubleredirects' => 'Përcjellime dopjo',
-	'doubleredirectstext' => 'Kjo faqe liston faqet përcjellëse tek faqet e tjera përcjellëse.
-Secili rresht përmban lidhjet tek përcjellimi i parë dhe përcjellimi i dytë, gjithashtu synimin e përcjellimit të dytë, që është zakonisht faqja synuese \'\'\'e vërtetë\'\'\', që faqja w parë duhej të ishte përcjellëse e kësaj faqeje.
-<del>Kalimet nga</del> hyrjet janë zgjidhur.',
-	'double-redirect-fixed-move' => '[[$1]] u zhvendos, tani është gjendet në [[$2]]',
-	'double-redirect-fixed-maintenance' => 'Duke zgjidhur përcjellimin e dyfishtë nga [[$1]] tek [[$2]].',
-	'double-redirect-fixer' => 'Rregullues zhvendosjesh',
-	'deadendpages' => 'Artikuj pa rrugëdalje',
-	'deadendpagestext' => 'Artikujt në vijim nuk kanë asnjë lidhje me artikuj e tjerë në këtë wiki.',
-	'deletedcontributions' => 'Kontribute të grisura',
-	'deletedcontributions-title' => 'Kontribute të grisura',
-	'defemailsubject' => '{{SITENAME}} posta elektronike nga përdoruesi "$1"',
-	'deletepage' => 'Grise faqen',
-	'delete-confirm' => 'Grise "$1"',
-	'delete-legend' => 'Grise',
-	'deletedtext' => '"$1" është grisur nga regjistri. Shikoni $2 për një pasqyrë të grisjeve së fundmi.',
-	'dellogpage' => 'Regjistri i grisjeve',
-	'dellogpagetext' => 'Më poshtë është një listë e grisjeve më të fundit.',
-	'deletionlog' => 'regjistrin e grisjeve',
-	'deletecomment' => 'Arsyeja:',
-	'deleteotherreason' => 'Arsye tjetër:',
-	'deletereasonotherlist' => 'Arsyeja tjetër',
-	'deletereason-dropdown' => '*Arsye për grisje:
-** Pa të drejtë autori
-** Kërkesë nga autori
-** Vandalizëm',
-	'delete-edit-reasonlist' => 'Ndrysho arsyet e grisjes',
-	'delete-toobig' => 'Kjo faqe ka një historik të madh redaktimesh, më shumë se $1 {{PLURAL:$1|version|versione}}.
-Grisja e faqeve të tilla ka qenë kufizuar për të parandaluar përçarjen aksidentale të {{SITENAME}}.',
-	'delete-warning-toobig' => 'Kjo faqe ka një historik të madh redaktimesh, më shumë se $1 {{PLURAL:$1|version|versione}}.
-Grisja e saj mund të ndërpresë operacionet e bazës së të dhënave të {{SITENAME}};
-vazhdoni me kujdes.',
-	'databasenotlocked' => 'Regjistri nuk është bllokuar.',
-	'delete_and_move' => 'Grise dhe zhvendose',
-	'delete_and_move_text' => '==Nevojitet grisje==
-
-Faqja "[[:$1]]" ekziston, dëshironi ta grisni për të mundësuar zhvendosjen?',
-	'delete_and_move_confirm' => 'Po, grise faqen',
-	'delete_and_move_reason' => 'U gris për të liruar vendin për përcjellim të "[[$1]]"',
-	'djvu_page_error' => 'Faqja DjVu jashtë renditjes',
-	'djvu_no_xml' => 'Nuk mund të gjendet XML për skedën DjVu',
-	'deletedrevision' => 'Gris versionin e vjetër $1',
-	'days' => '{{PLURAL:$1|$1 ditë|$1 ditë}}',
-	'deletedwhileediting' => 'Kujdes! Kjo faqe është grisur pasi keni filluar redaktimin!',
-	'descending_abbrev' => 'zbritje',
-	'duplicate-defaultsort' => '\'\'\'Kujdes:\'\'\' Renditja kryesore e çelësit "$2" refuzon renditjen e mëparshme kryesore të çelësit "$1".',
-	'dberr-header' => 'Kjo wiki ka një problem',
-	'dberr-problems' => 'Na vjen keq!
-Kjo faqe është duke përjetuar vështirësi teknike.',
-	'dberr-again' => 'Pritni disa minuta dhe provoni të ringarkoni faqen.',
-	'dberr-info' => '(Nuk mund të lidhet me serverin bazë e të dhënave : $1)',
-	'dberr-usegoogle' => 'Ju mund të provoni të kërkoni përmes Googles në ndërkohë.',
-	'dberr-outofdate' => 'Vini re se indekset e tyre të përmbajtjes tona mund të jetë e vjetëruar.',
-	'dberr-cachederror' => 'Kjo është një kopje e faqes së kërkuar dhe mund të jetë e vjetëruar.',
-	'discuss' => 'Diskutujte',
 ];
 
 $messages['sr-ec'] = [

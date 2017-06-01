@@ -133,10 +133,6 @@ define('ext.wikia.adEngine.video.player.porvata', [
 					muteFirstPlay(video);
 				}
 
-				if (params.onReady) {
-					params.onReady(video);
-				}
-
 				viewportListener = viewportObserver.addListener(params.container, inViewportCallback);
 
 				tryEnablingFloating(video, inViewportCallback);

@@ -270,6 +270,7 @@ class StyleguideComponents {
 		foreach( $samplesArray as $sampleArray ) {
 			$sample = new stdClass();
 			$sample->description = $this->prepareMessage( $sampleArray['description'] );
+			$sample->markup = '';
 
 			if( !empty( $sampleArray['params'] ) ) {
 				$sample->markup = $component->render( $sampleArray['params'] );

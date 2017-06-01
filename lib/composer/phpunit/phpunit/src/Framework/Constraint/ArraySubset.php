@@ -9,8 +9,6 @@
  */
 namespace PHPUnit\Framework\Constraint;
 
-use ArrayAccess;
-
 /**
  * Constraint that asserts that the array it is evaluated for has a specified subset.
  *
@@ -20,7 +18,7 @@ use ArrayAccess;
 class ArraySubset extends Constraint
 {
     /**
-     * @var array|ArrayAccess
+     * @var array|\Traversable
      */
     protected $subset;
 
@@ -30,8 +28,8 @@ class ArraySubset extends Constraint
     protected $strict;
 
     /**
-     * @param array|ArrayAccess $subset
-     * @param bool              $strict Check for object identity
+     * @param array|\Traversable $subset
+     * @param bool               $strict Check for object identity
      */
     public function __construct($subset, $strict = false)
     {
@@ -44,7 +42,7 @@ class ArraySubset extends Constraint
      * Evaluates the constraint for parameter $other. Returns true if the
      * constraint is met, false otherwise.
      *
-     * @param array|ArrayAccess $other Array or ArrayAccess object to evaluate.
+     * @param array|\Traversable $other Array or Traversable object to evaluate.
      *
      * @return bool
      */
@@ -52,21 +50,16 @@ class ArraySubset extends Constraint
     {
         //type cast $other & $this->subset as an array to allow
         //support in standard array functions.
-        if ($other instanceof ArrayAccess) {
-            $other = (array) $other;
-        }
+        $other        = $this->toArray($other);
+        $this->subset = $this->toArray($this->subset);
 
-        if ($this->subset instanceof ArrayAccess) {
-            $this->subset = (array) $this->subset;
-        }
-
-        $patched = array_replace_recursive($other, $this->subset);
+        $patched = \array_replace_recursive($other, $this->subset);
 
         if ($this->strict) {
             return $other === $patched;
-        } else {
-            return $other == $patched;
         }
+
+        return $other == $patched;
     }
 
     /**
@@ -92,5 +85,28 @@ class ArraySubset extends Constraint
     protected function failureDescription($other)
     {
         return 'an array ' . $this->toString();
+    }
+
+    /**
+     * @param array|\Traversable $other
+     *
+     * @return array
+     */
+    private function toArray($other)
+    {
+        if (\is_array($other)) {
+            return $other;
+        }
+
+        if ($other instanceof \ArrayObject) {
+            return $other->getArrayCopy();
+        }
+
+        if ($other instanceof \Traversable) {
+            return \iterator_to_array($other);
+        }
+
+        // Keep BC even if we know that array would not be the expected one
+        return (array) $other;
     }
 }

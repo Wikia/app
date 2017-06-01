@@ -10,7 +10,10 @@ class ImportStarterDataTest extends \WikiaBaseTest {
 		$this->setupFile = dirname( __FILE__ ) . '/../../CreateNewWiki_setup.php';
 		parent::setUp();
 
-		$this->taskContextMock = $this->getMock( '\Wikia\CreateNewWiki\Tasks\TaskContext', [ 'setStarterDB' ] );
+		$this->taskContextMock = $this->getMockBuilder( TaskContext::class )
+			->disableOriginalConstructor()
+			->setMethods( [ 'setStarterDB' ] )
+			->getMock();
 		$this->mockClass( 'TaskContext', $this->taskContextMock );
 	}
 

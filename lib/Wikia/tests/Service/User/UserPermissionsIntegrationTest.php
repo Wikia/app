@@ -179,7 +179,7 @@ class UserPermissionsIntegrationTest extends \WikiaBaseTest {
 	public function testShouldReturnPermissionsNotDuplicated() {
 		$permissions = $this->permissionsService()->getConfiguration()->getPermissions();
 		$this->assertContains( 'move', $permissions );
-		$this->assertContains( 'oversight', $permissions );
+		$this->assertContains( 'proxyunbannable', $permissions );
 
 		$permissionCount = [];
 		foreach ( $permissions as $permission ) {

@@ -190,7 +190,7 @@ class ChatWidgetTest extends WikiaBaseTest {
 					'viewedUsersInfo' => [
 						[
 							'username' => 'testUsername',
-							'userProfileUrl' => '/wiki/User:testUsername',
+							'profileUrl' => '/wiki/User:testUsername',
 							'avatarUrl' => 'www.image.com',
 						],
 					],
@@ -218,7 +218,7 @@ class ChatWidgetTest extends WikiaBaseTest {
 					'viewedUsersInfo' => [
 						[
 							'username' => 'testUsername',
-							'userProfileUrl' => '/wiki/User:testUsername',
+							'profileUrl' => '/wiki/User:testUsername',
 							'avatarUrl' => 'www.image.com',
 						],
 					],
@@ -246,7 +246,7 @@ class ChatWidgetTest extends WikiaBaseTest {
 					'viewedUsersInfo' => [
 						[
 							'username' => 'testUsername',
-							'userProfileUrl' => '/wiki/User:testUsername',
+							'profileUrl' => '/wiki/User:testUsername',
 							'avatarUrl' => 'www.image.com',
 						],
 					],

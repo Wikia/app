@@ -52,6 +52,10 @@ class CPArticleRenderer {
 	 * @param OutputPage $output
 	 */
 	public function render(Title $title, OutputPage $output, $action='view') {
+		if ( $title->getPartialURL() == '' ) {
+			$output->redirect( '/wiki/Home' );
+		}
+
 		$output->setPageTitle($title->getPrefixedText());
 		$content = $this->getArticleContent($title->getPartialURL(), $action);
 		
@@ -98,6 +102,7 @@ class CPArticleRenderer {
 				'GET',
 				"{$internalHost}/{$path}",
 				[
+					'userAgent' => $_SERVER['HTTP_USER_AGENT'],
 					'noProxy' => true,
 					'returnInstance' => true,
 					'followRedirects'=> true,

@@ -1,11 +1,22 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 	'ext.wikia.adEngine.adLogicPageParams',
-	'wikia.browserDetect'
-], function (page, browserDetect) {
+	'wikia.browserDetect',
+	'ext.wikia.adEngine.adContext'
+], function (page, browserDetect, adContext) {
 	'use strict';
 
-	var dfpId = '5441';
+	var dfpId = '5441',
+		context;
+
+	function getContextTargeting() {
+		if (!context) {
+			context = adContext.getContext();
+		}
+
+		return context.targeting;
+	}
+
 
 	function findSlotGroup(map, slotName) {
 		var result = Object.keys(map).filter(function (name) {
@@ -23,11 +34,10 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 			'PF': ['PREFOOTER_LEFT_BOXAD', 'PREFOOTER_MIDDLE_BOXAD', 'PREFOOTER_RIGHT_BOXAD', 'MOBILE_PREFOOTER'],
 			'PX': ['INVISIBLE_SKIN', 'INVISIBLE_HIGH_IMPACT_2'],
 			'HiVi': ['INCONTENT_BOXAD_1', 'MOBILE_IN_CONTENT']
-		}, result;
+		};
 
-		result = findSlotGroup(map, slotName);
-		// OTHER: 'BOTTOM_LEADERBOARD', 'MOBILE_BOTTOM_LEADERBOARD', 'INCONTENT_LEADERBOARD', 'EXIT_STITIAL_BOXAD_1'
-		return result ? result : 'OTHER';
+		// OTHER: 'BOTTOM_LEADERBOARD', 'MOBILE_BOTTOM_LEADERBOARD', 'INCONTENT_PLAYER'
+		return findSlotGroup(map, slotName) || 'OTHER';
 	}
 
 	function getDevice(params) {
@@ -46,25 +56,44 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 		return result;
 	}
 
-	function build(slotName, src, passback) {
+	function build(slotName, src) {
 		var adUnitElements,
 			params = page.getPageLevelParams(),
 			device = getDevice(params),
 			skin = params.skin,
 			pageType = params.s2,
-			wikiName = params.s1,
-			vertical = params.s0v;
+			provider = src.indexOf('remnant') === -1 ? 'wka1a' : 'wka2a',
+			wikiName = getContextTargeting().wikiIsTop1000 ? params.s1 : '_not_a_top1k_wiki',
+			vertical = params.s0;
 
-		adUnitElements = ['', dfpId, src + '.' + getGroup(slotName), slotName, device, skin + '-' + pageType, wikiName + '-' + vertical];
-
-		if (passback) {
-			adUnitElements.push(passback);
-		}
+		adUnitElements = [
+			'',
+			dfpId,
+			provider + '.' + getGroup(slotName),
+			slotName.toLowerCase(),
+			device,
+			skin + '-' + pageType,
+			wikiName + '-' + vertical
+		];
 
 		return adUnitElements.join('/');
 	}
 
+	function isValid(adUnit) {
+		return adUnit.indexOf('wka1a.') !== -1 || adUnit.indexOf('wka2a.') !== -1;
+	}
+
+	function getShortSlotName(adUnit) {
+		return adUnit.replace(/^.*\/(wka1a|wka2a)\.[\w]+\/([^\/]*)\/.*$/, function () {
+			if (arguments[2]) {
+				return arguments[2].toUpperCase();
+			}
+		});
+	}
+
 	return {
-		build: build
+		build: build,
+		getShortSlotName: getShortSlotName,
+		isValid: isValid
 	};
 });

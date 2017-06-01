@@ -44,7 +44,16 @@ define('ext.wikia.aRecoveryEngine.sourcePoint.recovery', [
 		return result;
 	}
 
+	function getSafeUri(url) {
+		if (isBlocking()) {
+			url = win._sp_.getSafeUri(url);
+		}
+
+		return url;
+	}
+
 	return {
+		getSafeUri: getSafeUri,
 		isBlocking: isBlocking,
 		isSlotRecoverable: isSlotRecoverable,
 		isEnabled: isEnabled

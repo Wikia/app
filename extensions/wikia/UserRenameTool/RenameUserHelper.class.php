@@ -79,14 +79,14 @@ class RenameUserHelper {
 		}
 
 		$result = [];
-		$ipLong = ip2long( $ipAddress );
+		$ip = inet_pton( $ipAddress );
 		if ( empty( $wgDevelEnvironment ) ) {
 			$dbr = wfGetDB( DB_SLAVE, [], $wgSpecialsDB );
 			$res = $dbr->select(
 				[ 'multilookup' ],
 				[ 'ml_city_id' ],
 				[
-					'ml_ip' => $ipLong,
+					'ml_ip_bin' => $ip,
 				],
 				__METHOD__
 			);

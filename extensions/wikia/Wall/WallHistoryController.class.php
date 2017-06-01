@@ -7,7 +7,7 @@ class WallHistoryController extends WallController {
 		parent::__construct();
 	}
 
-	public function index() {
+	public function index( $wallMessagesPerPage = null ) {
 		JSMessages::enqueuePackage( 'Wall', JSMessages::EXTERNAL );
 		$title = $this->getContext()->getTitle();
 

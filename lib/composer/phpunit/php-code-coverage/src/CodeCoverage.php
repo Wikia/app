@@ -130,6 +130,11 @@ class CodeCoverage
     private $shouldCheckForDeadAndUnused = true;
 
     /**
+     * @var Directory
+     */
+    private $report;
+
+    /**
      * Constructor.
      *
      * @param Driver $driver
@@ -160,9 +165,13 @@ class CodeCoverage
      */
     public function getReport()
     {
-        $builder = new Builder;
+        if ($this->report === null) {
+            $builder = new Builder;
 
-        return $builder->build($this);
+            $this->report = $builder->build($this);
+        }
+
+        return $this->report;
     }
 
     /**
@@ -174,6 +183,7 @@ class CodeCoverage
         $this->currentId     = null;
         $this->data          = [];
         $this->tests         = [];
+        $this->report        = null;
     }
 
     /**
@@ -210,7 +220,8 @@ class CodeCoverage
      */
     public function setData(array $data)
     {
-        $this->data = $data;
+        $this->data   = $data;
+        $this->report = null;
     }
 
     /**
@@ -375,6 +386,8 @@ class CodeCoverage
                 }
             }
         }
+
+        $this->report = null;
     }
 
     /**
@@ -410,7 +423,8 @@ class CodeCoverage
             }
         }
 
-        $this->tests = array_merge($this->tests, $that->getTests());
+        $this->tests  = array_merge($this->tests, $that->getTests());
+        $this->report = null;
     }
 
     /**
@@ -771,8 +785,8 @@ class CodeCoverage
 
             foreach ($tokens as $token) {
                 switch (get_class($token)) {
-                    case 'PHP_Token_COMMENT':
-                    case 'PHP_Token_DOC_COMMENT':
+                    case \PHP_Token_COMMENT::class:
+                    case \PHP_Token_DOC_COMMENT::class:
                         $_token = trim($token);
                         $_line  = trim($lines[$token->getLine() - 1]);
 
@@ -804,16 +818,16 @@ class CodeCoverage
 
                             // A DOC_COMMENT token or a COMMENT token starting with "/*"
                             // does not contain the final \n character in its text
-                            if (isset($lines[$i-1]) && 0 === strpos($_token, '/*') && '*/' === substr(trim($lines[$i-1]), -2)) {
+                            if (isset($lines[$i - 1]) && 0 === strpos($_token, '/*') && '*/' === substr(trim($lines[$i - 1]), -2)) {
                                 $this->ignoredLines[$filename][] = $i;
                             }
                         }
                         break;
 
-                    case 'PHP_Token_INTERFACE':
-                    case 'PHP_Token_TRAIT':
-                    case 'PHP_Token_CLASS':
-                    case 'PHP_Token_FUNCTION':
+                    case \PHP_Token_INTERFACE::class:
+                    case \PHP_Token_TRAIT::class:
+                    case \PHP_Token_CLASS::class:
+                    case \PHP_Token_FUNCTION::class:
                         /* @var \PHP_Token_Interface $token */
 
                         $docblock = $token->getDocblock();
@@ -866,18 +880,18 @@ class CodeCoverage
                         }
                         break;
 
-                    case 'PHP_Token_ENUM':
+                    case \PHP_Token_ENUM::class:
                         $this->ignoredLines[$filename][] = $token->getLine();
                         break;
 
-                    case 'PHP_Token_NAMESPACE':
+                    case \PHP_Token_NAMESPACE::class:
                         $this->ignoredLines[$filename][] = $token->getEndLine();
 
                     // Intentional fallthrough
-                    case 'PHP_Token_DECLARE':
-                    case 'PHP_Token_OPEN_TAG':
-                    case 'PHP_Token_CLOSE_TAG':
-                    case 'PHP_Token_USE':
+                    case \PHP_Token_DECLARE::class:
+                    case \PHP_Token_OPEN_TAG::class:
+                    case \PHP_Token_CLOSE_TAG::class:
+                    case \PHP_Token_USE::class:
                         $this->ignoredLines[$filename][] = $token->getLine();
                         break;
                 }
@@ -946,30 +960,24 @@ class CodeCoverage
      */
     private function performUnexecutedCoveredCodeCheck(array &$data, array $linesToBeCovered, array $linesToBeUsed)
     {
-        $expectedLines = $this->getAllowedLines(
-            $linesToBeCovered,
-            $linesToBeUsed
-        );
+        $executedCodeUnits = $this->coverageToCodeUnits($data);
+        $message           = '';
 
-        foreach ($data as $file => $_data) {
-            foreach (array_keys($_data) as $line) {
-                if (!isset($expectedLines[$file][$line])) {
-                    continue;
-                }
-
-                unset($expectedLines[$file][$line]);
+        foreach ($this->linesToCodeUnits($linesToBeCovered) as $codeUnit) {
+            if (!in_array($codeUnit, $executedCodeUnits)) {
+                $message .= sprintf(
+                    '- %s is expected to be executed (@covers) but was not executed' . "\n",
+                    $codeUnit
+                );
             }
         }
 
-        $message = '';
-
-        foreach ($expectedLines as $file => $lines) {
-            if (empty($lines)) {
-                continue;
-            }
-
-            foreach (array_keys($lines) as $line) {
-                $message .= sprintf('- %s:%d' . PHP_EOL, $file, $line);
+        foreach ($this->linesToCodeUnits($linesToBeUsed) as $codeUnit) {
+            if (!in_array($codeUnit, $executedCodeUnits)) {
+                $message .= sprintf(
+                    '- %s is expected to be executed (@uses) but was not executed' . "\n",
+                    $codeUnit
+                );
             }
         }
 
@@ -1109,5 +1117,43 @@ class CodeCoverage
 
             $this->append($data, 'UNCOVERED_FILES_FROM_WHITELIST');
         }
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
+    private function coverageToCodeUnits(array $data)
+    {
+        $codeUnits = [];
+
+        foreach ($data as $filename => $lines) {
+            foreach ($lines as $line => $flag) {
+                if ($flag == 1) {
+                    $codeUnits[] = $this->wizard->lookup($filename, $line);
+                }
+            }
+        }
+
+        return array_unique($codeUnits);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
+    private function linesToCodeUnits(array $data)
+    {
+        $codeUnits = [];
+
+        foreach ($data as $filename => $lines) {
+            foreach ($lines as $line) {
+                $codeUnits[] = $this->wizard->lookup($filename, $line);
+            }
+        }
+
+        return array_unique($codeUnits);
     }
 }
