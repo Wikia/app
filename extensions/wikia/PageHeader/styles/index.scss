@@ -6,24 +6,25 @@
 	padding-bottom: 12px;
 	position: relative;
 	z-index: 4;
-	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
 
 	&__title {
 		color: $color-text;
 		display: inline-block;
-		font-size: 28px;
+		font-size: $wds-typescale-size-plus-3;
 		font-weight: bold;
 		line-height: 1;
 		padding-bottom: 12px;
 	}
+
 	&__separator {
 		background-color: $color-page-border;
 		border: 0;
 		height: 1px;
 	}
 
-	&__tally {
+	&__counter {
 		color: $color-text;
 		float: right;
 		font-size: $wds-typescale-size-minus-1;

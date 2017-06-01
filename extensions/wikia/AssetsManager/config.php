@@ -3244,7 +3244,7 @@ $config['premium_page_header_curated_content_js'] = [
 	]
 ];
 
-$config['article_header_scss'] = [
+$config['page_header_scss'] = [
     'type' => AssetsManager::TYPE_SCSS,
     'skin' => [ 'oasis' ],
     'assets' => [

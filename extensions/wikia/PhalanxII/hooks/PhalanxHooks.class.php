@@ -85,7 +85,7 @@ class PhalanxHooks extends WikiaObject {
 	 * Add/edit Phalanx block
 	 *
 	 * @param array $data contains block information, possible keys: id, author_id, text, 
-	 * type, timestamp, expire, exact, regex, case, reason, lang, ip_hex
+	 * type, timestamp, expire, exact, regex, case, reason, lang
 	 * @return int id block or false if error
 	 *
 	 * @author moli

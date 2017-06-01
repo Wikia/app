@@ -30,10 +30,12 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 		// AD_MIX_2 & AD_MIX_2B: topRightAdFixed === true && recircEnabled === true
 		// AD_MIX_3 & AD_MIX_3B: reloadRecirc === true && recircEnabled === true
 		// CONTROL: all === false
-		var reloadFloatingMedrec = abTest.getGroup('AD_MIX') === 'AD_MIX_1' || abTest.getGroup('AD_MIX') === 'AD_MIX_1B';
 		var topRightAdFixed = abTest.getGroup('AD_MIX') === 'AD_MIX_2' || abTest.getGroup('AD_MIX') === 'AD_MIX_2B';
-		var reloadRecirc = abTest.getGroup('AD_MIX') === 'AD_MIX_3' || abTest.getGroup('AD_MIX') === 'AD_MIX_3B';
 		var recircEnabled = abTest.getGroup('AD_MIX') !== 'CONTROL';
+
+		if (context.opts.adMix3Enabled) {
+			gapSize = 0;
+		}
 
 		function getFirstAdTopPosition() {
 			return $rail.offset().top - globalNavigationHeight - firstAdTopSpace;
@@ -288,7 +290,11 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 
 			// There is no recirculation right rail module on non-en wikis
 			if (window.wgContentLanguage === 'en') {
-				$recircWrapper.one('premiumRecirculationRail.ready', onRecircReady);
+				if (!$recircWrapper.find('.premium-recirculation-rail').exists()) {
+					$recircWrapper.one('premiumRecirculationRail.ready', onRecircReady);
+				} else {
+					onRecircReady();
+				}
 			} else {
 				// TODO check which experiment needs it
 				// recircEnabled = false;
@@ -305,15 +311,19 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 					.height($recirc.outerHeight(true));
 			}
 
-			if (reloadRecirc || topRightAdFixed) {
-				$floatingMedrec.hide();
-			}
-
 			$visibleElementBeforeWrapper = $adAndRecircWrapper.prevAll(':not(#LEFT_SKYSCRAPER_2)').eq(0);
 			visibleElementBeforeWrapperHeight = $visibleElementBeforeWrapper.outerHeight(true);
 
 			viewportHeight = $window.height();
 			viewportWidth = $window.width();
+
+			$('#WikiaArticleBottomAd').hide();
+
+			if ($adAndRecircWrapper.offset().top + $adAndRecircWrapper.height() >= $footer.offset().top) {
+				$adAndRecircWrapper.css('position', 'static');
+				$recircWrapper.css('margin-bottom', '0');
+				return;
+			}
 
 			$window.scroll(throttle(update, 32));
 			$window.resize(throttle(function () {
@@ -326,7 +336,11 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 		}
 
 		if (context.opts.adMixExperimentEnabled) {
-			$rail.one('afterLoad.rail', onRightRailReady);
+			if ($rail.find('.loading').exists()) {
+				$rail.one('afterLoad.rail', onRightRailReady);
+			} else {
+				onRightRailReady();
+			}
 
 			if (topRightAdFixed) {
 				$topRightAdWrapper.css({

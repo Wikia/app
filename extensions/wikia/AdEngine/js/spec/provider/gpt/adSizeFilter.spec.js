@@ -16,6 +16,9 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 				};
 			}
 		},
+		abTest: {
+			getGroup: noop
+		},
 		breakpointsLayout: {
 			getLargeContentWidth: function () {
 				return 1238;
@@ -42,6 +45,7 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 	function getModule() {
 		return modules['ext.wikia.adEngine.provider.gpt.adSizeFilter'](
 			mocks.adContext,
+			mocks.abTest,
 			mocks.getDocument(),
 			mocks.log,
 			mocks.breakpointsLayout
