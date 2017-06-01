@@ -59,11 +59,12 @@ class Counter {
 		$forum = new Forum();
 		$count = $forum->getTotalThreads();
 		$countActive = $forum->getTotalActiveThreads();
+		$text = wfMessage( 'page-header-counter-forum-threads', $count )->parse();
 
 		if ( $countActive > 0 ) {
-			return wfMessage( 'page-header-counter-forum-threads-with-active', $count, $countActive )->parse();
-		} else {
-			return wfMessage( 'page-header-counter-forum-threads', $count )->parse();
+			$text .= ' | ' . wfMessage( 'page-header-counter-forum-active-threads', $countActive )->parse();
 		}
+
+		return $text;
 	}
 }
