@@ -1,5 +1,8 @@
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index';
 @import 'skins/shared/color.scss';
+@import 'skins/shared/mixins/flexbox';
+@import 'skins/shared/mixins/transform';
+@import 'skins/oasis/css/core/breakpoints-variables';
 
 .page-header {
 	margin: 5px 0 18px;
@@ -18,6 +21,10 @@
 		padding-bottom: 12px;
 	}
 
+	&__dropdown-padding {
+		padding-bottom: 10px;
+	}
+
 	&__separator {
 		background-color: $color-page-border;
 		border: 0;
@@ -31,4 +38,26 @@
 		font-weight: bold;
 		text-align: right;
 	}
+
+	&__categories {
+		@include align-items(flex-start);
+		@include flexbox();
+		font-size: 12px;
+		padding-top: 12px;
+
+		&__in {
+			font-weight: 600;
+			padding-right: 4px;
+		}
+
+		&__links {
+			color: $color-links;
+			font-style: italic;
+			line-height: 16px;
+			word-break: break-word;
+		}
+
+
+
+		}
 }

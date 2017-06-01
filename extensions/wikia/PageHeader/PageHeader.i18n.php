@@ -7,6 +7,9 @@ $messages['en'] = array(
 	'page-header-counter-blog-posts' => '{{FORMATNUM:$1}} {{PLURAL:$1|post|posts}}',
 	'page-header-counter-forum-threads' => '{{FORMATNUM:$1}} {{PLURAL:$1|thread|threads}}',
 	'page-header-counter-forum-threads-with-active' => '{{FORMATNUM:$1}} {{PLURAL:$1|thread|threads}} | {{FORMATNUM:$2}} active',
+	'page-header-in-categories' => 'in',
+	'page-header-categories-more-separator' => ', ',
+	'page-header-categories-more' => 'and {{FORMATNUM:$1}} more',
 );
 
 $messages['qqq'] = array(
@@ -15,4 +18,7 @@ $messages['qqq'] = array(
 	'page-header-counter-blog-posts' => 'Number of posts on the current blog',
 	'page-header-counter-forum-threads' => 'Number of forum threads',
 	'page-header-counter-forum-threads-with-active' => 'Number of active forum threads',
+	'page-header-in-categories' => 'Label displayed before list of categories that given article belongs to',
+	'page-header-categories-more-separator' => 'Separator between first couple of categories and "more categories" link',
+	'page-header-categories-more' => 'Link to more categories that are hidden by default',
 );
