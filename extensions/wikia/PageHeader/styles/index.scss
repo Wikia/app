@@ -34,6 +34,9 @@
 	}
 
 	&__edit-button {
+		button {
+			background-image: none;
+		}
 		@include dropdown-theming($color-page, $color-text, $color-links, $color-page-border);
 	}
 }
