@@ -1,5 +1,5 @@
-@import "extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index";
-@import "skins/shared/color.scss";
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index';
+@import 'skins/shared/color.scss';
 
 .WikiaPage .page-header {
 	margin: 5px 0 18px;
@@ -25,5 +25,12 @@
 		border: 0;
 		height: 1px;
 	}
-}
 
+	&__counter {
+		color: $color-text;
+		float: right;
+		font-size: $wds-typescale-size-minus-1;
+		font-weight: bold;
+		text-align: right;
+	}
+}
