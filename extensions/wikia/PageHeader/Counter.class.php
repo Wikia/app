@@ -35,14 +35,14 @@ class Counter {
 		$mediaService = ( new MediaQueryService );
 		$count = $mediaService->getTotalVideos();
 
-		return wfMessage( 'page-header-counter-videos', $count )->parse();
+		return wfMessage( 'page-header-counter-videos', $count )->escaped();
 	}
 
 	private function getTextForSpecialImages() {
 		$mediaService = ( new MediaQueryService );
 		$count = $mediaService->getTotalImages();
 
-		return wfMessage( 'page-header-counter-images', $count )->parse();
+		return wfMessage( 'page-header-counter-images', $count )->escaped();
 	}
 
 	private function getTextForBlogListing() {
@@ -52,17 +52,17 @@ class Counter {
 			// It's set in Blogs/BlogTemplate.php
 			->getProperty( 'blogPostCount' );
 
-		return wfMessage( 'page-header-counter-blog-posts', $count )->parse();
+		return wfMessage( 'page-header-counter-blog-posts', $count )->escaped();
 	}
 
 	private function getTextForForum() {
 		$forum = new Forum();
 		$count = $forum->getTotalThreads();
 		$countActive = $forum->getTotalActiveThreads();
-		$text = wfMessage( 'page-header-counter-forum-threads', $count )->parse();
+		$text = wfMessage( 'page-header-counter-forum-threads', $count )->escaped();
 
 		if ( $countActive > 0 ) {
-			$text .= ' | ' . wfMessage( 'page-header-counter-forum-active-threads', $countActive )->parse();
+			$text .= ' | ' . wfMessage( 'page-header-counter-forum-active-threads', $countActive )->escaped();
 		}
 
 		return $text;
