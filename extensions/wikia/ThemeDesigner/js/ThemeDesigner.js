@@ -259,6 +259,7 @@
 
 			});
 
+			//graphic wordmark clicking
 			$('#WordmarkTab').find('.graphic').find('.preview').find('.wordmark').click(function () {
 				ThemeDesigner.set('wordmark-type', 'graphic');
 			});
@@ -599,9 +600,7 @@
 				var resp = JSON.parse(response);
 
 				if (resp.errors && resp.errors.length > 0) {
-
 					window.alert(resp.errors.join('\n'));
-
 				} else {
 					ThemeDesigner.set('wordmark-image-name', resp.wordmarkImageName);
 					ThemeDesigner.set('wordmark-image-url', resp.wordmarkImageUrl);
@@ -748,7 +747,6 @@
 			var file,
 				theme,
 				settingsToLoad,
-				sitename,
 				wordmark,
 				wordmarkImg,
 				previewFrameContent = this.previewFrame.contents();
@@ -829,8 +827,7 @@
 			}
 
 			if (updateSkinPreview) {
-				sitename = previewFrameContent.find('.wds-community-header__sitename a');
-				sitename.text(ThemeDesigner.settings['wordmark-text']);
+				previewFrameContent.find('.wds-community-header__sitename a').text(ThemeDesigner.settings['wordmark-text']);
 
 				if (ThemeDesigner.settings['wordmark-type'] !== 'graphic') {
 					previewFrameContent.find('.wds-community-header__wordmark').remove();
