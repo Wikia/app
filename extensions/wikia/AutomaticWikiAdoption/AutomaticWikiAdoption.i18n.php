@@ -2591,7 +2591,7 @@ Já faz algumas semanas que nenhum administrador visita a wikia #WIKINAME. Os ad
 
 Se precisar de ajuda para cuidar da wikia, você pode permitir que outros membros da comunidade também sejam administradores através da página $2. Esperamos que regresse à #WIKINAME dentro de pouco tempo.
 
-A equipe da Wikia
+A equipe do Fandom
 
 Para deixar de receber atualizações desta lista, acesse o seguinte link: $3',
 	'wikiadoption-mail-first-content-HTML' => 'Olá $1,<br /><br />
@@ -2600,7 +2600,7 @@ Já fazem algumas semanas que nenhum administrador visita o wiki #WIKINAME. Os a
 
 Se precisar de ajuda para cuidar do wiki, você pode permitir que outros membros da comunidade também sejam administradores através da página de <a href="$2">gestão de privilégios de usuários</a>.  Esperamos que regresse à #WIKINAME dentro de pouco tempo.<br /><br />
 
-A equipe da Wikia<br /><br />
+A equipe do Fandom<br /><br />
 
 <a href="$3">Deixar de receber atualizações</a> desta lista.',
 	'wikiadoption-mail-second-subject' => 'A #WIKINAME será disponibilizada para adoção em breve',
@@ -2610,7 +2610,7 @@ Infelizmente, há quase 60 dias que nenhum administrador esteve ativo na wikia #
 
 Como já se passaram tantos dias desde a última aparição de um dos administradores, a wikia #WIKINAME será disponibilizada para outros usuários a adotarem.
 
-A equipe da Wikia
+A equipe do Fandom
 
 Para deixar de receber atualizações desta lista, acesse o seguinte link: $3',
 	'wikiadoption-mail-second-content-HTML' => 'Olá $1,<br /><br />
@@ -2618,7 +2618,7 @@ Infelizmente, há quase 60 dias que nenhum administrador esteve ativo no wiki #W
 
 Como já se passaram tantos dias desde a última aparição de um dos administradores, o wiki #WIKINAME será disponibilizado para outros usuários o adotarem.<br /><br />
 
-A equipe da Wikia<br /><br />
+A equipe do Fandom<br /><br />
 
 <a href="$3">Deixar de receber atualizações</a> desta lista.',
 	'wikiadoption-mail-adoption-subject' => 'O wiki #WIKINAME foi adotado',
@@ -2628,7 +2628,7 @@ O wiki #WIKINAME foi adotado. Os wikis ficam disponíveis para adoção se nenhu
 
 O usuário que adotou o wiki #WIKINAME passou a ter privilégios de burocrata e administrador. Não se preocupe, você também continuará sendo administrador neste wiki e bem-vindo a retornar e continuar contribuindo quando puder!
 
-A equipe da Wikia
+A equipe do Fandom
 
 Para deixar de receber atualizações desta lista, acesse o seguinte link: $3',
 	'wikiadoption-mail-adoption-content-HTML' => 'Olá $1,<br /><br />
@@ -2636,7 +2636,7 @@ O wiki #WIKINAME foi adotado. Os wikis ficam disponíveis para adoção se nenhu
 
 O usuário que adotou o wiki #WIKINAME passou a ter privilégios de burocrata e administrador. Não se preocupe, você também continuará sendo administrador neste wiki e bem-vindo a retornar e continuar contribuindo quando puder!<br /><br />
 
-A equipe da Wikia<br /><br />
+A equipe do Fandom<br /><br />
 
 <a href="$3">Deixar de receber atualizações</a> desta lista.',
 	'tog-adoptionmails' => 'Receber e-mail se o wiki $1 ficar disponível para ser adotado por outros usuários',

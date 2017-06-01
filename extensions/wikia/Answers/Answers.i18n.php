@@ -2182,7 +2182,7 @@ $messages['ps'] = [
 
 $messages['pt'] = [
 	'research_this' => 'Pesquisar isto',
-	'question_asked_by_a_wikia_user' => 'Pergunta feita por um usuário da Wikia',
+	'question_asked_by_a_wikia_user' => 'Pergunta feita por um usuário do Fandom',
 	'answer_this' => '<a class="huge_button huge_button_green hbg_white" href="$1" style="font-size:200%;"><div></div>Responder esta pergunta</a><br /><br /><hr /><br /><br />',
 	'answer_this_question' => 'Responder esta pergunta',
 	'answer_title' => 'Resposta',

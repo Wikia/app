@@ -311,7 +311,7 @@ $messages['ko'] = [
 ];
 
 $messages['pt'] = [
-	'specialvideos-sort-featured' => 'Fonte: Biblioteca da Wikia',
+	'specialvideos-sort-featured' => 'Fonte: Biblioteca do Fandom',
 	'specialvideos-filter-entertainment' => 'Popular em Entretenimento',
 	'specialvideos-filter-games' => 'Popular em Jogos',
 	'specialvideos-filter-lifestyle' => 'Popular em Estilo de Vida',
