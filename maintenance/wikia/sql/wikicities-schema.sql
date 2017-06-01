@@ -520,7 +520,6 @@ CREATE TABLE `phalanx` (
   `p_id` int(6) unsigned NOT NULL AUTO_INCREMENT,
   `p_author_id` int(6) NOT NULL,
   `p_text` blob NOT NULL,
-  `p_ip_hex` varchar(35) DEFAULT NULL,
   `p_type` smallint(1) unsigned NOT NULL,
   `p_timestamp` binary(14) NOT NULL DEFAULT '\0\0\0\0\0\0\0\0\0\0\0\0\0\0',
   `p_expire` binary(14) DEFAULT NULL,
@@ -531,7 +530,6 @@ CREATE TABLE `phalanx` (
   `p_lang` varchar(10) DEFAULT NULL,
   `p_comment` tinyblob NOT NULL,
   PRIMARY KEY (`p_id`),
-  KEY `p_ip_hex` (`p_ip_hex`),
   KEY `p_lang` (`p_lang`,`p_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
