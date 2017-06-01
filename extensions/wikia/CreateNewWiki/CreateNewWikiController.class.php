@@ -75,7 +75,7 @@ class CreateNewWikiController extends WikiaController {
 
 		// export info if user is logged in
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
-		
+
 		$this->wg->Out->addJsConfigVars([
 			'wgLangAllAgesOpt' => self::LANG_ALL_AGES_OPT
 		]);
@@ -313,7 +313,8 @@ class CreateNewWikiController extends WikiaController {
 		$this->response->setVal( self::CITY_ID_FIELD, $cityId );
 		$finishCreateTitle = GlobalTitle::newFromText( "FinishCreate", NS_SPECIAL, $cityId );
 
-		$finishCreateUrl = empty( $wgDevelDomains ) ? $finishCreateTitle->getFullURL() : str_replace( '.wikia.com', '.'.$wgDevelDomains[0], $finishCreateTitle->getFullURL() );
+		$fullURL = $finishCreateTitle->getFullURL( [ 'editToken' => $wgUser->getEditToken() ] );
+		$finishCreateUrl = empty( $wgDevelDomains ) ? $fullURL : str_replace( '.wikia.com', '.'.$wgDevelDomains[0], $fullURL );
 		$this->response->setVal( 'finishCreateUrl',  $finishCreateUrl );
 
 		$this->info(__METHOD__ . ': completed', [

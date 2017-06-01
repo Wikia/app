@@ -373,8 +373,10 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 }
 
 #BOTTOM_LEADERBOARD {
-	@include transition(height, $uap-video-animation-duration, ease, 0);
-	background: $color-black;
+	&.bfab-template {
+		@include transition(height, $uap-video-animation-duration, ease, 0);
+		background: $color-black;
+	}
 
 	overflow: hidden;
 	margin: 0 0 23px 0;
