@@ -35,8 +35,8 @@ $messages['it'] = [
 ];
 
 $messages['ja'] = [
-	'wikia-version-code' => 'Fandomコード',
-	'wikia-version-config' => 'Fandom設定',
+	'wikia-version-code' => 'FANDOMコード',
+	'wikia-version-config' => 'FANDOM設定',
 ];
 
 $messages['pl'] = [
@@ -56,12 +56,12 @@ $messages['ru'] = [
 ];
 
 $messages['zh-hans'] = [
-	'wikia-version-code' => 'Fandom代码',
-	'wikia-version-config' => 'Fandom配置',
+	'wikia-version-code' => 'FANDOM代码',
+	'wikia-version-config' => 'FANDOM配置',
 ];
 
 $messages['zh-hant'] = [
-	'wikia-version-code' => 'Fandom代碼',
-	'wikia-version-config' => 'Fandom配置',
+	'wikia-version-code' => 'FANDOM代碼',
+	'wikia-version-config' => 'FANDOM配置',
 ];
 

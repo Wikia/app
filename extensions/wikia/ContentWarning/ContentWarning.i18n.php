@@ -79,7 +79,7 @@ $messages['qqq'] = [
 $messages['ja'] = [
 	'content-warning-body' => '$1のwikiには、暴力的または性的な描写、過剰な風刺、その他一般ユーザー向けではない不適切なコンテンツが含まれている可能性があります。
 
-Fandomでは、いかなるwikiコンテンツに対する内容確認や承認は行っておりません。Fandomのポリシーについて詳しくは、[http://ja.wikia.com/利用規約 Wikia株式会社の利用規約]をご覧ください。',
+FANDOMでは、いかなるwikiコンテンツに対する内容確認や承認は行っておりません。FANDOMのポリシーについて詳しくは、[http://ja.wikia.com/利用規約 Wikia株式会社の利用規約]をご覧ください。',
 ];
 
 $messages['pt'] = [
@@ -91,12 +91,12 @@ Em geral, o FANDOM não revê nem endossa o conteúdo desta ou de qualquer wiki.
 $messages['zh-hans'] = [
 	'content-warning-body' => '在$1上的维基可能包含令人反感的内容，如暴力内容、性内容、冷幽默及滑稽嘲讽，或者其他非大众化的描述性内容。
 
-一般情况下，Fandom不会审查亦不会赞同此类内容以及社区的存在。有关我们网页条款的详细信息，请查看[http://zh.wikia.com/wiki/%E4%BD%BF%E7%94%A8%E6%9D%A1%E6%AC%BE Wikia, Inc使用条款]。',
+一般情况下，FANDOM不会审查亦不会赞同此类内容以及社区的存在。有关我们网页条款的详细信息，请查看[http://zh.wikia.com/wiki/%E4%BD%BF%E7%94%A8%E6%9D%A1%E6%AC%BE Wikia, Inc使用条款]。',
 ];
 
 $messages['zh-hant'] = [
 	'content-warning-body' => '在$1上的wiki可能包含令人反感的內容，如暴力、性描寫、黑色幽默及滑稽嘲諷，或者其他非針對一般大眾的內容。
 
-一般情況下，Fandom不會審核亦不會對此類內容和Wiki背書。有關我們網頁條款的詳細內容，請查看[http://zh-tw.wikia.com/wiki/%E4%Bd%Bf%E7%94%A8%E6%A2%9D%E6%Ac%Be Wikia, Inc使用條款]。',
+一般情況下，FANDOM不會審核亦不會對此類內容和Wiki背書。有關我們網頁條款的詳細內容，請查看[http://zh-tw.wikia.com/wiki/%E4%Bd%Bf%E7%94%A8%E6%A2%9D%E6%Ac%Be Wikia, Inc使用條款]。',
 ];
 
