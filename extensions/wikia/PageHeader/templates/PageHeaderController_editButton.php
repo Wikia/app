@@ -1,4 +1,4 @@
-<div class="wds-button-group">
+<div class="wds-button-group page-header__edit-button">
 	<button class="wds-is-squished wds-button">
 		<?= DesignSystemHelper::renderSvg( 'wds-icons-pencil-small', 'wds-icon wds-icon-small' ); ?>
 		<span>Edit</span>

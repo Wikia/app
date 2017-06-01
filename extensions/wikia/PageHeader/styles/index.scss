@@ -1,4 +1,5 @@
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-mixins/index';
 @import 'skins/shared/color.scss';
 
 .page-header {
@@ -30,5 +31,9 @@
 		font-size: $wds-typescale-size-minus-1;
 		font-weight: bold;
 		text-align: right;
+	}
+
+	&__edit-button {
+		@include dropdown-theming($color-page, $color-text, $color-links, $color-page-border);
 	}
 }
