@@ -2182,55 +2182,6 @@ $messages['ps'] = [
 
 $messages['pt'] = [
 	'research_this' => 'Pesquisar isto',
-	'question_asked_by_a_wikia_user' => 'Pergunta feita por um usuário do Fandom',
-	'answer_this' => '<a class="huge_button huge_button_green hbg_white" href="$1" style="font-size:200%;"><div></div>Responder esta pergunta</a><br /><br /><hr /><br /><br />',
-	'answer_this_question' => 'Responder esta pergunta',
-	'answer_title' => 'Resposta',
-	'answered_category' => 'Perguntas respondidas',
-	'answers-category-count-answered' => 'Esta categoria contem $1 pergunta/s respondida/s',
-	'answers-category-count-unanswered' => 'Esta categoria contem $1 pergunta/s sem resposta.',
-	'answers_toolbox' => 'WikiRespostas toolbox',
-	'answers_widget_admin_note' => '<a href="http://respostas.wikia.com" target="_blank">WikiRespostas</a> é uma wiki de Perguntas e Respostas em que todos participam.',
-	'answers_widget_anon_note' => '<a href="http://respostas.wikia.com" target="_blank">WikiRespostas</a> é uma wiki de Perguntas e Respostas em que todos participam.',
-	'answers_widget_no_questions' => 'Nos ajude a criar a melhor resposta para alguma das <a href="http://respostas.wikia.com/wiki/Categoria:Perguntas_sem_respostas" target="_blank">perguntas</a> na <b><a href="http://respostas.wikia.com/wiki/WikiRespostas" target="_blank">WikiRespostas</a>.</b><br><br><a href="http://respostas.wikia.com/wiki/Especial:Busca" target="_blank">Find</a> e responda as  <a href="http://respostas.wikia.com/wiki/Categoria:Perguntas_sem_respostas" target="_blank">perguntas sem respostas</a>.',
-	'answers_widget_no_questions_askabout' => '<br><br>Comece fazendo uma pergunta sobre "{{PAGENAME}}"',
-	'answers_widget_user_note' => '<a href="http://respostas.wikia.com" target="_blank">WikiRespostas</a> é uma wiki de Perguntas e Respostas em que todos participam.',
-	'ask_a_question-widget' => 'Faça sua pergunta...',
-	'ask_a_question' => 'Faça sua pergunta...',
-	'ask_button' => 'Pergunte',
-	'ask_friends' => 'Peça aos seus amigos para ajudar a responder:',
-	'ask_friends_on_twitter' => 'Pergunte aos seus amigos no <a href="$1">Twitter</a>',
-	'ask_thanks' => 'Obrigado pela otima pergunta!',
-	'badWords' => 'merda filhodaputa bunda',
-	'improve_this_answer' => 'Melhore esta resposta',
-	'in_category' => '...na categoria',
-	'new_question_comment' => 'nova pergunta',
-	'next_page' => 'Proxima »',
-	'notify_answered' => 'Avise-me por email quando tiver resposta.',
-	'notify_improved' => 'Avise-me por email sobre as alterações da resposta.',
-	'popular_categories' => 'Categorias mais populares',
-	'prev_page' => '« Anteriores',
-	'question_asked_by' => 'Pergunta feita por',
-	'question_not_answered' => 'Esta pergunta ainda não foi respondida',
-	'question_redirected_help_page' => 'Por que minha pergunta foi transferida para aqui',
-	'quick_action_panel' => 'Painel de ação rapida',
-	'receive_email' => '<a href="$1">Receba um email</a> quando esta pergunta for respondida',
-	'recent_answered_questions' => 'Perguntas respondidas recentemente',
-	'recent_asked_questions' => 'Perguntas Recentes',
-	'recent_edited_questions' => 'Perguntas editadas recentemente',
-	'recent_unanswered_questions' => 'Perguntas sem resposta mais recentes',
-	'related_answered_questions' => 'Perguntas respondidas relacionadas',
-	'rephrase' => 'Refazer a pergunta',
-	'research_this_on_wikipedia' => '<a href="$1">Pesquisar esta pergunta</a> na Wikipedia',
-	'see_all' => 'Ver todas',
-	'twitter_ask' => 'Faça esta pergunta no Twitter',
-	'twitter_hashtag' => 'WikiRespostas',
-	'unanswered_category' => 'Perguntas sem respostas',
-	'you_can' => 'Voce pode:',
-];
-
-$messages['pt-br'] = [
-	'research_this' => 'Pesquisar isto',
 	'question_asked_by_a_wikia_user' => 'Pergunta feita por um usuário da Wikia',
 	'answer_this' => '<a class="huge_button huge_button_green hbg_white" href="$1" style="font-size:200%;"><div></div>Responder esta pergunta</a><br /><br /><hr /><br /><br />',
 	'answer_this_question' => 'Responder esta pergunta',
@@ -2741,19 +2692,6 @@ $messages['ro'] = [
 	'unanswered_category' => 'Unanswered questions',
 ];
 
-$messages['zh'] = [
-	'answered_category' => '已回答的問題',
-	'answers_widget_admin_note' => '{{int:Answers widget user note}}',
-	'answers_widget_anon_note' => '{{int:Answers widget user note}}',
-	'answers_widget_no_questions' => '請到<b><a href="http://zh.answers.wikia.com/" target="_blank">Wikia知識</a></b>提供<a href="http://zh.answers.wikia.com/wiki/Category:未回答的問題" target="_blank">問題</a>的最佳答案。<br><br><a href="http://zh.answers.wikia.com/wiki/Special:Search" target="_blank">尋找</a>並回答<a href="http://zhanswers.wikia.com/wiki/Category:未回答的問題" target="_blank">未回答的問題</a>.',
-	'answers_widget_no_questions_askabout' => '<br><br>立即發問一條關於「{{PAGENAME}}」的問題。',
-	'answers_widget_user_note' => '尋找由{{SITENAME}}讀者在<a href="http://zh.answers.wikia.com">{{SITENAME}}</a>上發問的問題！',
-	'ask_a_question-widget' => '發問一條問題',
-	'ask_a_question' => '發問一條問題',
-	'category' => '分类名称',
-	'unanswered_category' => '未回答的問題',
-];
-
 $messages['nn'] = [
 	'answers_widget_admin_note' => '<a href="http://svar.wikia.com">WikiSvar</a> treng fleire administratorar. <a href="http://svar.wikia.com/wiki/WikiSvar:Administratorer">Finn ut meir her.</a>',
 	'answers_widget_anon_note' => '<a href="http://svar.wikia.com" target="_blank">WikiSvar er ein spør-og-svar-wiki der alle svar kan forbedras, av kven som helst.</a>',
@@ -2763,16 +2701,6 @@ $messages['nn'] = [
 	'ask_a_question-widget' => 'Spør på WikiSvar',
 	'ask_a_question' => 'Spør på WikiSvar',
 	'unanswered_category' => 'Ubesvarte spørsmål',
-];
-
-$messages['zh-hk'] = [
-	'category' => '分類名稱',
-	'popular_categories' => '熱門分類',
-];
-
-$messages['zh-tw'] = [
-	'category' => '分類名稱',
-	'popular_categories' => '熱門分類',
 ];
 
 $messages['vi'] = [

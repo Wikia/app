@@ -195,10 +195,6 @@ $messages['ko'] = [
 	'apiexplorer' => 'API 탐색기',
 ];
 
-$messages['zh'] = [
-	'apiexplorer' => 'API 浏览器',
-];
-
 $messages['zh-hans'] = [
 	'apiexplorer' => 'API 浏览器',
 ];
@@ -206,12 +202,3 @@ $messages['zh-hans'] = [
 $messages['zh-hant'] = [
 	'apiexplorer' => 'API 瀏覽器',
 ];
-
-$messages['zh-hk'] = [
-	'apiexplorer' => 'API 瀏覽器',
-];
-
-$messages['zh-tw'] = [
-	'apiexplorer' => 'API 瀏覽器',
-];
-

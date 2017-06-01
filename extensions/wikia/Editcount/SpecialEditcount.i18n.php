@@ -164,14 +164,6 @@ $messages['pl'] = [
 	'editcount_refresh_time' => 'Wyniki w kolumnie \'\'$1\'\' z są zapisane w pamięci podręcznej. Następnym razem dane zostaną odświeżone po $2',
 ];
 
-$messages['pt'] = [
-	'editcount' => 'Contador de edições',
-	'editcount-desc' => 'Apresenta [[Special:Editcount|a contagem de edições]] de um utilizador',
-	'editcount_username' => 'Usuário:',
-	'editcount_submit' => 'Enviar',
-	'editcount_total' => 'Total',
-];
-
 $messages['sk'] = [
 	'editcount' => 'Počet príspevkov',
 	'editcount-desc' => 'Zobrazuje [[Special:Editcount|počet úprav]] používateľa',
@@ -222,46 +214,6 @@ $messages['zh-hans'] = [
 $messages['zh-hant'] = [
 	'editcount' => '編輯次數',
 	'editcount-desc' => '顯示一個使用者的[[Special:Editcount|編輯次數]]',
-	'editcount_username' => '用戶:',
-	'editcount_submit' => '遞交',
-	'editcount_total' => '總數',
-];
-
-$messages['zh'] = [
-	'editcount' => '編輯統計',
-	'editcount-desc' => '显示用户的[[Special:Editcount|编辑次数]]',
-	'editcount_username' => '用户:',
-	'editcount_submit' => '提交',
-	'editcount_total' => '总数',
-];
-
-$messages['zh-cn'] = [
-	'editcount' => '编辑统计',
-	'editcount-desc' => '显示用户的[[Special:Editcount|编辑次数]]',
-	'editcount_username' => '用户:',
-	'editcount_submit' => '提交',
-	'editcount_total' => '总数',
-];
-
-$messages['zh-hk'] = [
-	'editcount' => '編輯統計',
-	'editcount-desc' => '顯示一個使用者的[[Special:Editcount|編輯次數]]',
-	'editcount_username' => '用戶:',
-	'editcount_submit' => '遞交',
-	'editcount_total' => '總數',
-];
-
-$messages['zh-tw'] = [
-	'editcount' => '編輯統計',
-	'editcount-desc' => '顯示一個使用者的[[Special:Editcount|編輯次數]]',
-	'editcount_username' => '用戶:',
-	'editcount_submit' => '遞交',
-	'editcount_total' => '總數',
-];
-
-$messages['zh-yue'] = [
-	'editcount' => '編輯次數',
-	'editcount-desc' => '顯示一位用戶嘅[[Special:Editcount|編輯次數]]',
 	'editcount_username' => '用戶:',
 	'editcount_submit' => '遞交',
 	'editcount_total' => '總數',
@@ -795,7 +747,7 @@ $messages['ps'] = [
 	'editcount_total' => 'ټولټال',
 ];
 
-$messages['pt-br'] = [
+$messages['pt'] = [
 	'editcount' => 'Contador de edições',
 	'editcount-desc' => 'Apresenta [[Special:Editcount|a contagem de edições]] de um usuário',
 	'editcount_username' => 'Usuário:',

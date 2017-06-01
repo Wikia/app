@@ -600,15 +600,6 @@ $messages['pt'] = [
 	'randomincategory-submit' => 'Ir',
 ];
 
-$messages['pt-br'] = [
-	'randomincategory' => 'Página aleatória na categoria',
-	'randomincategory-desc' => '[[Special:Randomincategory|Página especial]] para obter uma página aleatória na categoria',
-	'randomincategory-toolbox' => 'Página aleatória',
-	'randomincategory-nocategory' => 'A categoria $1 não existe ou está vazia',
-	'randomincategory-label' => 'Categoria:',
-	'randomincategory-submit' => 'Ir',
-];
-
 $messages['rif'] = [
 	'randomincategory-submit' => 'Raḥ ɣa',
 ];
@@ -806,16 +797,3 @@ $messages['fa'] = [
 	'randomincategory-toolbox' => 'صفحهٔ تصادفی',
 	'randomincategory' => 'صفحهٔ تصادفی در رده',
 ];
-
-$messages['zh'] = [
-	'randomincategory' => '特定分类中的随机页面',
-];
-
-$messages['zh-hk'] = [
-	'randomincategory' => '特定分類中的隨機頁面',
-];
-
-$messages['zh-tw'] = [
-	'randomincategory' => '特定分類中的隨機頁面',
-];
-

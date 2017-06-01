@@ -662,31 +662,6 @@ $messages['pt'] = [
 	'specialprotectsite-desc' => 'Permite que um administrador [[Special:ProtectSite|bloqueie temporariamente várias modificações do site]]',
 	'protectsite' => 'Proteger o site',
 	'protectsite-text-protect' => '<!-- Instruções/Comentários/Normas de utilização -->',
-	'protectsite-text-unprotect' => '<!-- Instruções/Comentários quando sob protecção -->',
-	'protectsite-title' => 'Configurações de protecção do site',
-	'protectsite-allowall' => 'Todos os utilizadores',
-	'protectsite-allowusersysop' => 'Utilizadores registados e administradores',
-	'protectsite-allowsysop' => 'Só administradores',
-	'protectsite-createaccount' => 'Permitir a criação de contas novas por',
-	'protectsite-createpage' => 'Permitir a criação de páginas por',
-	'protectsite-edit' => 'Permitir a edição de páginas por',
-	'protectsite-move' => 'Permitir a movimentação de páginas por',
-	'protectsite-upload' => 'Permitir o envio de ficheiros por',
-	'protectsite-timeout' => 'Prazo de expiração:',
-	'protectsite-timeout-error' => '\'\'\'Prazo de expiração inválido.\'\'\'',
-	'protectsite-maxtimeout' => 'Máximo:',
-	'protectsite-comment' => 'Comentário:',
-	'protectsite-ucomment' => 'Comentário de desprotecção:',
-	'protectsite-until' => 'Sob protecção até:',
-	'protectsite-protect' => 'Proteger',
-	'protectsite-unprotect' => 'Desproteger',
-	'protectsite-nologs' => 'não mostrar nos registos',
-];
-
-$messages['pt-br'] = [
-	'specialprotectsite-desc' => 'Permite que um administrador [[Special:ProtectSite|bloqueie temporariamente várias modificações do site]]',
-	'protectsite' => 'Proteger o site',
-	'protectsite-text-protect' => '<!-- Instruções/Comentários/Normas de utilização -->',
 	'protectsite-text-unprotect' => '<!-- Instruções/Comentários quando sob proteção -->',
 	'protectsite-title' => 'Configurações de proteção do site',
 	'protectsite-allowall' => 'Todos os usuários',
@@ -890,23 +865,7 @@ $messages['ko'] = [
 	'protectsite' => '위키 보호',
 ];
 
-$messages['zh'] = [
-	'protectsite-unprotect' => '取消保护',
-	'protectsite' => '保护全站',
-];
-
 $messages['zh-hant'] = [
 	'protectsite-unprotect' => '取消保護',
 	'protectsite' => '保護全站',
 ];
-
-$messages['zh-hk'] = [
-	'protectsite-unprotect' => '取消保護',
-	'protectsite' => '保護全站',
-];
-
-$messages['zh-tw'] = [
-	'protectsite-unprotect' => '取消保護',
-	'protectsite' => '保護全站',
-];
-

@@ -3295,38 +3295,6 @@ $messages['ps'] = [
 $messages['pt'] = [
 	'categorytree' => 'Árvore de categorias',
 	'categorytree-portlet' => 'Categorias',
-	'categorytree-legend' => 'Mostrar a árvore de categorias',
-	'categorytree-desc' => 'Acessório \'\'(gadget)\'\' baseado em AJAX que apresenta a [[Special:CategoryTree|estrutura]] de uma wiki',
-	'categorytree-header' => 'Introduza o nome de uma categoria para ver o seu conteúdo numa estrutura de árvore.
-Note que isto requer uma funcionalidade avançada do JavaScript, conhecida por AJAX.
-Caso o seu browser seja razoavelmente antigo ou o JavaScript esteja desactivado, não funcionará.',
-	'categorytree-category' => 'Categoria:',
-	'categorytree-go' => 'Mostrar árvore',
-	'categorytree-parents' => 'Categorias superiores',
-	'categorytree-mode-categories' => 'mostrar apenas as categorias',
-	'categorytree-mode-pages' => 'páginas, exceto imagens',
-	'categorytree-mode-all' => 'todas as páginas',
-	'categorytree-collapse' => 'ocultar',
-	'categorytree-expand' => 'expandir',
-	'categorytree-member-counts' => 'possui {{PLURAL:$1|$1 subcategoria|$1 subcategorias}}, {{PLURAL:$2|$2 página|$2 páginas}} e {{PLURAL:$3|$3 ficheiro|$3 ficheiros}}',
-	'categorytree-num-categories' => '$1C',
-	'categorytree-num-pages' => '$1P',
-	'categorytree-num-files' => '$1F',
-	'categorytree-num-empty' => 'vazia',
-	'categorytree-load' => 'carregar',
-	'categorytree-loading' => 'carregando',
-	'categorytree-nothing-found' => 'não foi encontrado nada',
-	'categorytree-no-subcategories' => 'sem subcategorias',
-	'categorytree-no-parent-categories' => 'não há categorias superiores',
-	'categorytree-no-pages' => 'sem páginas nem subcategorias',
-	'categorytree-not-found' => 'A categoria <i>$1</i> não foi encontrada',
-	'categorytree-error' => 'Problema ao carregar os dados.',
-	'categorytree-retry' => 'Por favor, aguarde um momento e tente novamente.',
-];
-
-$messages['pt-br'] = [
-	'categorytree' => 'Árvore de categorias',
-	'categorytree-portlet' => 'Categorias',
 	'categorytree-legend' => 'Exibir a árvore de categorias',
 	'categorytree-desc' => 'Acessório (gadget) baseado em AJAX que apresenta a [[Special:CategoryTree|estrutura]] de um wiki',
 	'categorytree-header' => 'Insira o nome de uma categoria para ver seu conteúdo como uma estrutura de "árvore".
@@ -4623,55 +4591,7 @@ $messages['zh-hant'] = [
 	'categorytree-retry' => '請稍候一會，然後再試。',
 ];
 
-$messages['zh-tw'] = [
-	'categorytree' => '分類樹',
-	'categorytree-category' => '分類',
-	'categorytree-mode-all' => '顯示所有頁面',
-	'categorytree-collapse' => '摺疊',
-	'categorytree-expand' => '展開',
-	'categorytree-go' => '顯示樹狀結構',
-	'categorytree-header' => '在此可以查詢以分類的樹狀結構。
-
-注意： 本特殊頁面使用[[AJAX]]技術，如果您的瀏覽器非常老舊，或者是關閉了[[JavaScript]]，本頁面將會無法正常運作。',
-	'categorytree-load' => '查詢此分類其下的子分類',
-	'categorytree-loading' => '載入中…',
-	'categorytree-mode-categories' => '只顯示分類',
-	'categorytree-mode-pages' => '省略圖像頁面',
-	'categorytree-no-subcategories' => '沒有任何子分類',
-	'categorytree-parents' => '上層分類',
-	'categorytree-retry' => '請稍後再試',
-];
-
 $messages['zu'] = [
 	'categorytree-collapse' => 'Nciphisa',
 	'categorytree-expand' => 'Khulisa',
 ];
-
-$messages['zh'] = [
-	'categorytree-header' => '在此可以查詢以分類的樹狀結構。
-
-注意： 本特殊頁面使用[[AJAX]]技術，如果您的瀏覽器非常老舊，或者是關閉了[[JavaScript]]，本頁面將會無法正常運作。',
-	'categorytree-load' => '查詢此分類其下的子分類',
-	'categorytree-loading' => '載入中…',
-	'categorytree-mode-pages' => '除去图像页面',
-	'categorytree-no-subcategories' => '沒有任何子分類',
-	'categorytree-not-found' => '找不到分類<b>$1</b>。',
-	'categorytree-nothing-found' => '找不到任何項目。',
-];
-
-$messages['zh-hk'] = [
-	'categorytree-header' => '{{MediaWiki:Categorytree-header}}',
-	'categorytree-load' => '查詢此分類其下的子分類',
-	'categorytree-loading' => '載入中…',
-	'categorytree-mode-all' => '所有頁面',
-	'categorytree-mode-pages' => '除去圖像頁面',
-	'categorytree-no-subcategories' => '沒有任何子分類',
-	'categorytree-not-found' => '找不到分類<b>$1</b>。',
-	'categorytree-nothing-found' => '找不到任何項目。',
-	'categorytree' => '分類樹',
-];
-
-$messages['zh-cn'] = [
-	'categorytree' => '分类树',
-];
-

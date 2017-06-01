@@ -523,28 +523,6 @@ $messages['ps'] = [
 $messages['pt'] = [
 	'partner-feed-achievements-leaderboard' => 'Liderança de medalhas das wikis',
 	'partner-feed-earned-badges' => 'Medalhas ganhas recentemente numa wiki específica',
-	'partner-feed-recent-blog-posts' => 'Entradas recentes em blogues, relacionadas com uma promoção',
-	'partner-feed-latest-images' => 'Galeria das últimas imagens enviadas',
-	'partner-feed-hotcontent' => '"Pontos Quentes" dos portais, de acordo com o número de editores',
-	'partner-feed-recent-blog-comments' => 'Comentários recentes relacionados com uma entrada de blogue especificada.',
-	'partner-feed-recent-changes' => 'Mudanças recentes',
-	'partnerfeed' => 'Feeds adicionais',
-	'error-no-article' => 'Erro: Não foi passado o parâmetro "article"',
-	'feed-title-blogposts' => 'Entradas recentes em blogues',
-	'feed-title-recent-badges' => 'Medalhas recentes',
-	'feed-title-recent-images' => 'Imagens recentes',
-	'feed-title-leaderboard' => 'Liderança de medalhas',
-	'feed-main-title' => 'Feed dos parceiros do Fandom',
-	'all-blog-posts' => 'todas as categorias',
-	'blog-posts-from-listing' => 'da listagem: $1',
-	'feed-title-hot-content' => 'Conteúdo popular - $1',
-	'feed-title-blogcomments' => 'Comentários a $1',
-	'feed-title-recentchanges' => 'Mudanças recentes',
-];
-
-$messages['pt-br'] = [
-	'partner-feed-achievements-leaderboard' => 'Liderança de medalhas das wikis',
-	'partner-feed-earned-badges' => 'Medalhas ganhas recentemente numa wiki específica',
 	'partner-feed-recent-blog-posts' => 'Posts recentes em blogues, relacionadas com uma promoção',
 	'partner-feed-latest-images' => 'Galeria das últimas imagens enviadas',
 	'partner-feed-hotcontent' => '"Pontos Quentes" dos portais, de acordo com o número de editores',
@@ -743,18 +721,3 @@ $messages['zh-hant'] = [
 	'blog-posts-from-listing' => '來自列表：$1',
 	'partnerfeed' => '相關頁面訂閱',
 ];
-
-$messages['zh-hk'] = [
-	'blog-posts-from-listing' => '來自列表：$1',
-	'partnerfeed' => '相關頁面訂閱',
-];
-
-$messages['zh-tw'] = [
-	'blog-posts-from-listing' => '來自列表：$1',
-	'partnerfeed' => '相關頁面訂閱',
-];
-
-$messages['zh'] = [
-	'partnerfeed' => '相关页面订阅',
-];
-

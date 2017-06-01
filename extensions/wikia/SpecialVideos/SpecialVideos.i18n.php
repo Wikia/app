@@ -311,28 +311,6 @@ $messages['ko'] = [
 ];
 
 $messages['pt'] = [
-	'specialvideos-sort-featured' => 'Fonte: biblioteca do Fandom',
-	'specialvideos-filter-entertainment' => 'Popular em Entretenimento',
-	'specialvideos-filter-games' => 'Popular em Jogos',
-	'specialvideos-filter-lifestyle' => 'Popular em Estilo de Vida',
-	'specialvideos-html-title' => 'Vídeos nesta wiki - {{SITENAME}}',
-	'specialvideos-meta-description-corporate' => '$1 tem vídeos que incluem os vídeo clips, resenhas, entrevistas e guias e trailers. Assista agora!',
-	'specialvideos-meta-description-entertainment' => '$1 tem novos vídeos que incluem os últimos clips de tv, trailers de filmes, vídeos de música, entrevistas com atores e episódios. Assista agora!',
-	'specialvideos-meta-description-gaming' => '$1 tem vídeos que incluem os últimos atalhos, resenhas, guias e trailers de jogos. Assista agora!',
-	'specialvideos-meta-description-lifestyle' => '$1 tem novos vídeos que incluem vídeos how-to, guias de viagem, programas de culinária, receitas e vídeos de artesanato. Assista agora!',
-	'specialvideos-page-title' => 'Vídeos',
-	'specialvideos-posted-in' => 'Postado em $1',
-	'specialvideos-remove-modal-message' => 'Você tem certeza que deletar esse vídeo da sua wiki?',
-	'specialvideos-remove-modal-title' => 'Deletar vídeo',
-	'specialvideos-sort-by' => 'Organizar por',
-	'specialvideos-sort-latest' => 'Mais recente',
-	'specialvideos-sort-most-popular' => 'Mais Popular',
-	'specialvideos-sort-trending' => 'Em alta',
-	'specialvideos-uploadby' => 'por $1',
-	'specialvideos-wiki-videos-tally' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|vídeo <br /> nessa wiki|vídeos <br /> nessa wiki}}</span>',
-];
-
-$messages['pt-br'] = [
 	'specialvideos-sort-featured' => 'Fonte: Biblioteca da Wikia',
 	'specialvideos-filter-entertainment' => 'Popular em Entretenimento',
 	'specialvideos-filter-games' => 'Popular em Jogos',
@@ -354,8 +332,8 @@ $messages['pt-br'] = [
 	'specialvideos-wiki-videos-tally' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|vídeo <br /> nessa wiki|vídeos <br /> nessa wiki}}</span>',
 ];
 
-$messages['zh'] = [
-	'specialvideos-sort-featured' => '来源: 维基图书馆',
+$messages['zh-hans'] = [
+	'specialvideos-sort-featured' => '资料来源：Fandom资料库',
 	'specialvideos-filter-entertainment' => '娱乐流行内容',
 	'specialvideos-filter-games' => '游戏流行内容',
 	'specialvideos-filter-lifestyle' => '生活流行内容',
@@ -377,10 +355,6 @@ $messages['zh'] = [
 	'videos' => '视频',
 ];
 
-$messages['zh-hans'] = [
-	'specialvideos-sort-featured' => '资料来源：Fandom资料库',
-];
-
 $messages['zh-hant'] = [
 	'specialvideos-sort-featured' => '資料來源: Fandom資料庫',
 ];
@@ -400,12 +374,3 @@ $messages['uk'] = [
 $messages['vi'] = [
 	'videos' => 'Đoạn phim',
 ];
-
-$messages['zh-hk'] = [
-	'videos' => '影片',
-];
-
-$messages['zh-tw'] = [
-	'videos' => '影片',
-];
-

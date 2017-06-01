@@ -1016,17 +1016,6 @@ $messages['ps'] = [
 ];
 
 $messages['pt'] = [
-	'inputbox-desc' => 'Permite a inclusão de formulários HTML pré-definidos.',
-	'inputbox-error-no-type' => 'Não especificou o tipo de caixa de edição a ser criado.',
-	'inputbox-error-bad-type' => 'O tipo de caixa de introdução de dados "$1" não foi reconhecido.
-Por favor, especifique "create", "comment", "search", "search2" ou "fulltext".',
-	'tryexact' => 'Tentar a exata expressão',
-	'searchfulltext' => 'Pesquisar no texto completo',
-	'createarticle' => 'Criar página',
-	'inputbox-ns-main' => 'Principal',
-];
-
-$messages['pt-br'] = [
 	'inputbox-desc' => 'Permite a inclusão de formulários definidos de HTML',
 	'inputbox-error-no-type' => 'Você não especificou o tipo de inputbox a ser criada.',
 	'inputbox-error-bad-type' => 'O tipo de caixa de introdução de dados "$1" não foi reconhecido.
@@ -1451,28 +1440,3 @@ $messages['zh-hant'] = [
 	'createarticle' => '建立文章',
 	'inputbox-ns-main' => '主',
 ];
-
-$messages['zh-tw'] = [
-	'createarticle' => '創建新條目',
-];
-
-$messages['zu'] = [
-	'searchfulltext' => 'Sesha ukubhala konke',
-];
-
-$messages['zh'] = [
-	'createarticle' => '创建新条目',
-];
-
-$messages['zh-hk'] = [
-	'createarticle' => '創建新條目',
-];
-
-$messages['zh-cn'] = [
-	'createarticle' => '创建新条目',
-];
-
-$messages['zh-sg'] = [
-	'createarticle' => '创建新条目',
-];
-

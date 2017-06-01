@@ -1926,34 +1926,12 @@ $messages['ps'] = array(
 	'antispoof-noletters' => 'هېڅ کوم توری نه شته',
 );
 
-/** Portuguese (Português)
- * @author Brunoy Anastasiya Seryozhenko
- * @author Hamilton Abreu
- * @author Malafaya
- */
-$messages['pt'] = array(
-	'antispoof-desc' => 'Impede a criação de contas com escrita mista, e nomes de utilizador confusos e semelhantes',
-	'antispoof-conflict-top' => 'O nome "$1" é demasiado semelhante {{PLURAL:$2|ao da seguinte conta já existente|aos das seguintes $2 contas}}:',
-	'antispoof-conflict-bottom' => 'Por favor, escolha outro nome.',
-	'antispoof-name-illegal' => 'O nome "$1" não é permitido para prevenir que seja confundido com outro (ou que seja feito algum trocadilho): já existe $2. Por favor, escolha outro nome.',
-	'antispoof-badtype' => 'Formato de dados incorreto',
-	'antispoof-empty' => 'Linha vazia',
-	'antispoof-blacklisted' => 'Contém caracteres proibidos',
-	'antispoof-combining' => 'Começa com um carácter de combinação',
-	'antispoof-unassigned' => 'Contém caracteres não reconhecidos ou depreciados',
-	'antispoof-noletters' => 'Não inclui nenhuma letra',
-	'antispoof-mixedscripts' => 'Contém scripts de escrita incompatíveis mesclados',
-	'antispoof-tooshort' => 'Nome canónico demasiado curto',
-	'antispoof-ignore' => 'Ignorar verificações de "spoofing"',
-	'right-override-antispoof' => 'Sobrepor verificações de spoofing',
-);
-
 /** Brazilian Portuguese (Português do Brasil)
  * @author Eduardo.mps
  * @author Helder.wiki
  * @author Heldergeovane
  */
-$messages['pt-br'] = array(
+$messages['pt'] = array(
 	'antispoof-desc' => 'Impede a criação de contas com escrita mista, e nomes de utilizador confusos e semelhantes',
 	'antispoof-conflict-top' => 'O nome "$1" é demasiado semelhante {{PLURAL:$2|ao da seguinte conta já existente|aos das seguintes $2 contas}}',
 	'antispoof-conflict-bottom' => 'Por favor, escolha outro nome.',
@@ -2701,15 +2679,3 @@ $messages['zh-hant'] = array(
 	'antispoof-ignore' => '略過欺詐檢查',
 	'right-override-antispoof' => '無視欺詐檢查',
 );
-
-/** Chinese (Hong Kong) (‪中文(香港)‬)
- * @author Oapbtommy
- */
-$messages['zh-hk'] = array(
-	'antispoof-conflict-bottom' => '請選擇另一個名稱。',
-	'antispoof-badtype' => '差的數據類型',
-	'antispoof-blacklisted' => '包含了已列入黑名單的字元',
-	'antispoof-combining' => '以結合標記開始',
-	'antispoof-noletters' => '沒有包含任何字母',
-);
-

@@ -779,16 +779,6 @@ $messages['ps'] = [
 
 $messages['pt'] = [
 	'fancycaptcha-desc' => 'Gerador sofisticado de captcha para o Confirm Edit',
-	'fancycaptcha-addurl' => 'A sua edição introduziu links externos novos.
-Para ajudar a prevenir o \'\'spam\'\' automatizado, por favor, introduza na caixa abaixo as palavras apresentadas ([[Special:Captcha/help|mais informações]]):',
-	'fancycaptcha-badlogin' => 'Para ajudar a prevenir mecanismos automatizados de descoberta de palavras-chave, por favor, introduza na caixa abaixo as palavras apresentadas ([[Special:Captcha/help|mais informações]]):',
-	'fancycaptcha-createaccount' => 'Para ajudar a prevenir a criação de contas automatizada, por favor, introduza na caixa abaixo as palavras apresentadas ([[Special:Captcha/help|mais informações]]):',
-	'fancycaptcha-create' => 'Para criar a página, por favor, introduza na caixa abaixo as palavras apresentadas ([[Special:Captcha/help|mais informações]]):',
-	'fancycaptcha-edit' => 'Para editar esta página, por favor, introduza na caixa abaixo as palavras apresentadas ([[Special:Captcha/help|mais informações]]):',
-	'fancycaptcha-sendemail' => 'Para ajudar a prevenir o \'\'spam\'\' automatizado, por favor, introduza na caixa as palavras que aparecem abaixo ([[Special:Captcha/help|mais informações]]):',
-];
-
-$messages['pt-br'] = [
 	'fancycaptcha-addurl' => 'A sua edição inclui novas ligações externas. Como prevenção contra sistemas automatizados que inserem \'\'spam\'\', por favor, introduza as palavras exibidas na seguinte caixa ([[Special:Captcha/help|mais informações]]):',
 	'fancycaptcha-badlogin' => 'Como prevenção contra formas automatizadas de descoberta de palavras-chave, por favor, introduza as palavras exibidas na seguinte caixa ([[Special:Captcha/help|mais informações]]):',
 	'fancycaptcha-createaccount' => 'Como prevenção contra sistemas automatizados de criação de contas, por favor, introduza as palavras exibidas na seguinte caixa ([[Special:Captcha/help|mais informações]]):',
@@ -1081,29 +1071,3 @@ $messages['zh-hant'] = [
 	'fancycaptcha-edit' => '如您想要編輯此頁面，請輸入以下的文字（[[Special:Captcha/help|相關資訊]]）：',
 	'fancycaptcha-sendemail' => '為防止不當程式進行破壞，請輸入以下的文字（[[Special:Captcha/help|相關資訊]]）：',
 ];
-
-$messages['zh'] = [
-	'fancycaptcha-badlogin' => '請輸入認證碼([[Special:Captcha/help|更多資訊]])：',
-	'fancycaptcha-createaccount' => '請輸入認證碼([[Special:Captcha/help|更多資訊]])：',
-];
-
-$messages['zh-cn'] = [
-	'fancycaptcha-badlogin' => '请输入认证码([[Special:Captcha/help|更多资讯]])：',
-	'fancycaptcha-createaccount' => '请输入认证码([[Special:Captcha/help|更多资讯]])：',
-];
-
-$messages['zh-hk'] = [
-	'fancycaptcha-badlogin' => '請輸入認證碼([[Special:Captcha/help|更多資訊]])：',
-	'fancycaptcha-createaccount' => '請輸入認證碼([[Special:Captcha/help|更多資訊]])：',
-];
-
-$messages['zh-sg'] = [
-	'fancycaptcha-badlogin' => '请输入认证码([[Special:Captcha/help|更多资讯]])：',
-	'fancycaptcha-createaccount' => '请输入认证码([[Special:Captcha/help|更多资讯]])：',
-];
-
-$messages['zh-tw'] = [
-	'fancycaptcha-badlogin' => '請輸入認證碼([[Special:Captcha/help|更多資訊]])：',
-	'fancycaptcha-createaccount' => '請輸入認證碼([[Special:Captcha/help|更多資訊]])：',
-];
-

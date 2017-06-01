@@ -37,10 +37,6 @@ $messages['ru'] = [
 	'comments-only-page-header-created-by' => 'Создал $1 на $2',
 ];
 
-$messages['zh'] = [
-	'comments-only-page-header-created-by' => '编辑时间-$1 编辑者-$2',
-];
-
 $messages['zh-hans'] = [
 	'comments-only-page-header-created-by' => '编辑时间-$1 编辑者-$2',
 ];
@@ -48,12 +44,3 @@ $messages['zh-hans'] = [
 $messages['zh-hant'] = [
 	'comments-only-page-header-created-by' => '編輯時間-$1 編輯者-$2',
 ];
-
-$messages['zh-hk'] = [
-	'comments-only-page-header-created-by' => '編輯時間-$1 編輯者-$2',
-];
-
-$messages['zh-tw'] = [
-	'comments-only-page-header-created-by' => '編輯時間-$1 編輯者-$2',
-];
-

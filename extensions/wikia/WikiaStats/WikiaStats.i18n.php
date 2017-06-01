@@ -115,18 +115,6 @@ $messages['pt'] = [
 	'wikiastats-visitors' => 'Visitantes por mês',
 ];
 
-$messages['pt-br'] = [
-	'wikiastats-communities' => 'Total de Comunidades',
-	'wikiastats-edits' => 'Mudanças hoje',
-	'wikiastats-heading' => 'Colaboração no momento',
-	'wikiastats-mobile-percentage' => '% Visitantes Móveis',
-	'wikiastats-mobile-visitors' => 'Visitantes mensais de aparelhos móveis',
-	'wikiastats-new-communities' => 'Comunidades hoje',
-	'wikiastats-totalpages' => 'Total de páginas',
-	'wikiastats-visitors-tooltip' => 'Visitantes Mensais é baseado na medida global "Pessoas" do site Quantcast, e inclue visitas do celular e do computador.',
-	'wikiastats-visitors' => 'Visitantes por mês',
-];
-
 $messages['ru'] = [
 	'wikiastats-communities' => 'Всего википроектов',
 	'wikiastats-edits' => 'Правок сегодня',
@@ -137,19 +125,6 @@ $messages['ru'] = [
 	'wikiastats-totalpages' => 'Всего статей',
 	'wikiastats-visitors-tooltip' => 'Эта цифра основана на данных сайта Quantcast - Global "People", которые показывают общее кол-во посетителей сайта, как с моб. устройств, так и с ПК.',
 	'wikiastats-visitors' => 'Посетителей за месяц',
-];
-
-$messages['zh'] = [
-	'wikiastats-communities' => '社区总数',
-	'wikiastats-desc' => 'Wikia统计',
-	'wikiastats-edits' => '日编辑量',
-	'wikiastats-heading' => '合作正在进行...',
-	'wikiastats-mobile-percentage' => '手机访客比例',
-	'wikiastats-mobile-visitors' => '每月手机访客数',
-	'wikiastats-new-communities' => '今日新建社区',
-	'wikiastats-totalpages' => '页面量',
-	'wikiastats-visitors-tooltip' => '月访问量是基于Quantcast的全球「人数」的数据，包括一般网页与手机版网页。',
-	'wikiastats-visitors' => '月访问量',
 ];
 
 $messages['zh-hans'] = [
@@ -177,30 +152,3 @@ $messages['zh-hant'] = [
 	'wikiastats-visitors-tooltip' => '月訪客量是基於Quantcast的全球「人數」的數據，包括一般網頁與手機版網頁。',
 	'wikiastats-visitors' => '月訪客量',
 ];
-
-$messages['zh-hk'] = [
-	'wikiastats-communities' => '社區總數',
-	'wikiastats-desc' => 'Wikia統計',
-	'wikiastats-edits' => '本日編輯數',
-	'wikiastats-heading' => '合作正在進行...',
-	'wikiastats-mobile-percentage' => '手機訪客比例',
-	'wikiastats-mobile-visitors' => '每月手機訪客數',
-	'wikiastats-new-communities' => '今日新建社區',
-	'wikiastats-totalpages' => '頁面總數',
-	'wikiastats-visitors-tooltip' => '月訪客量是基於Quantcast的全球「人數」的數據，包括一般網頁與手機版網頁。',
-	'wikiastats-visitors' => '月訪客量',
-];
-
-$messages['zh-tw'] = [
-	'wikiastats-communities' => '社區總數',
-	'wikiastats-desc' => 'Wikia統計',
-	'wikiastats-edits' => '本日編輯數',
-	'wikiastats-heading' => '合作正在進行...',
-	'wikiastats-mobile-percentage' => '手機訪客比例',
-	'wikiastats-mobile-visitors' => '每月手機訪客數',
-	'wikiastats-new-communities' => '今日新建社區',
-	'wikiastats-totalpages' => '頁面總數',
-	'wikiastats-visitors-tooltip' => '月訪客量是基於Quantcast的全球「人數」的數據，包括一般網頁與手機版網頁。',
-	'wikiastats-visitors' => '月訪客量',
-];
-

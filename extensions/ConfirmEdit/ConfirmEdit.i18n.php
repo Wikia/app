@@ -2361,39 +2361,6 @@ $messages['ps'] = [
 ];
 
 $messages['pt'] = [
-	'captcha-edit' => 'Para editar esta página, por favor, resolva a soma simples apresentada abaixo e introduza a resposta na caixa ([[Special:Captcha/help|mais informações]]):',
-	'captcha-desc' => 'Fornece técnicas CAPTCHA para protecção contra spam e tentativas de adivinhar a palavra-chave',
-	'captcha-addurl' => 'A sua edição introduziu links externos novos.
-Como prevenção contra sistemas automatizados de inserção de \'\'spam\'\', resolva a soma simples apresentada abaixo e introduza a resposta na caixa ([[Special:Captcha/help|mais informações]]):',
-	'captcha-badlogin' => 'Como prevenção com sistemas automatizados de descoberta de palavras-chave, resolva a soma simples apresentada abaixo e introduza a resposta na caixa ([[Special:Captcha/help|mais informações]]):',
-	'captcha-createaccount' => 'Como prevenção contra sistemas automatizados de criação de contas, resolva a soma simples apresentada abaixo e introduza a resposta na caixa ([[Special:Captcha/help|mais informações]]):',
-	'captcha-createaccount-fail' => 'Código incorreto ou não preenchido.',
-	'captcha-create' => 'Para criar a página, resolva a soma simples apresentada abaixo e introduza a resposta na caixa ([[Special:Captcha/help|mais informações]]):',
-	'captcha-sendemail' => 'Como prevenção contra sistemas automatizados de inserção de \'\'spam\'\', resolva a soma simples apresentada abaixo e introduza a resposta na caixa ([[Special:Captcha/help|mais informações]]):',
-	'captcha-sendemail-fail' => 'Código de confirmação incorrecto ou não preenchido.',
-	'captcha-disabledinapi' => 'Esta operação necessita de captcha, por isso não pode ser realizada através da API.',
-	'captchahelp-title' => 'Ajuda sobre o CAPTCHA',
-	'captchahelp-cookies-needed' => 'É necessário possibilitar o uso de \'\'cookies\'\' no seu browser para que o \'\'captcha\'\' funcione.',
-	'captchahelp-text' => 'Sites na internet abertos a edição pública, como é o caso desta wiki, são frequentemente abusados por \'\'spammers\'\' que utilizam ferramentas automatizadas para inserção em massa de links, em muitos sites.
-Embora esses links possam ser removidos, representam um incómodo significativo.
-
-Por vezes, especialmente quando introduzir links externos novos numa página, a wiki apresentará a imagem de um texto colorido ou distorcido e pedirá que escreva o texto apresentado.
-Porque a interpretação do texto apresentado nas imagens é uma tarefa difícil de automatizar, este pedido feito pela wiki permite que a maioria das pessoas façam as suas edições, ao mesmo tempo que inibe edições feitas por \'\'spammers\'\' e outros mecanismos automatizados.
-
-Infelizmente, esta funcionalidade pode revelar-se um inconveniente para utilizadores com limitações visuais ou que utilizam browsers baseados em texto ou voz.
-Neste momento, não temos disponível uma alternativa em áudio.
-Por favor, contacte os [[{{MediaWiki:Grouppage-sysop}}|administradores]] para assistência, caso a funcionalidade esteja a impedi-lo de fazer edições legítimas.
-
-Clique o botão \'voltar\' do seu browser para voltar à página de edição.',
-	'captcha-addurl-whitelist' => ' #<!-- deixe esta linha exactamente como está --> <pre>
-# A sintaxe é a seguinte:
-#  * Tudo desde um símbolo de cardinal (#) até ao fim da linha é um comentário
-#  * Qualquer linha que não esteja em branco é um fragmento de expressão regular (regex) que será comparado com o servidor das URLs
- #</pre> <!-- deixe esta linha exactamente como está -->',
-	'right-skipcaptcha' => 'Executar acções despoletadoras do CAPTCHA\' sem ter de passar pelo CAPTCHA',
-];
-
-$messages['pt-br'] = [
 	'captcha-edit' => 'Para editar esta página será necessário que você resolva a simples soma abaixo e entre com a resposta no respectivo campo ([[Special:Captcha/help|o que é isto?]])',
 	'captcha-desc' => 'Fornece técnicas captcha para proteção contra spam e tentativas de obtenção de senhas',
 	'captcha-addurl' => 'Sua edição inclui novas ligações externas.
@@ -3243,59 +3210,3 @@ $messages['zh-hant'] = [
  #</pre> <!-- leave this line exactly as it is -->',
 	'right-skipcaptcha' => '執行captcha引發的動作時不需要經過captcha',
 ];
-
-$messages['zh'] = [
-	'captcha-badlogin' => '請輸入以下數學算式的答案([[Special:Captcha/help|更多資訊]])：',
-	'captcha-create' => '請輸入以下數學算式的答案([[Special:Captcha/help|更多資訊]])：',
-	'captcha-createaccount-fail' => '验证码错误或丢失',
-	'captcha-createaccount' => '为了防止程序自动添加垃圾链接。你需要输入以下图片中显示的文字才能注册帐户：<br />([[Special:Captcha/help|这是什么？]])',
-	'captchahelp-text' => '象本站一样，对公众开放编辑的站点经常被垃圾链接骚扰。那些人使用自动化垃圾程序将他们的链接张贴到很多站点。虽然这些链接可以被清除，但是这些东西确实令人十分讨厌。
-
-有时，特别是当给一个页面添加新的网页链接时，本站会让你看一幅有颜色的或者有变形文字的图像，并且要你输入所显示的文字。因为这是难以自动完成的一项任务，它将允许人保存他们的编辑，同时阻止大多数发送垃圾邮件者和其他机器人的攻击。 
-
-令人遗憾是，这会使得视力不好的人，或者使用基于文本或者基于声音的浏览器的用户感到不便。而目前我们还没有提供的音频的选择。如果这正好阻止你进行正常的编辑，请和管理员联系获得帮助。 
-
-单击你浏览器中的“后退”按钮返回你所编辑的页面。',
-	'captchahelp-title' => 'Captcha 帮助',
-];
-
-$messages['zh-cn'] = [
-	'captcha-badlogin' => '请输入以下数学算式的答案([[Special:Captcha/help|更多资讯]])：',
-	'captcha-create' => '请输入以下数学算式的答案([[Special:Captcha/help|更多资讯]])：',
-	'captcha-createaccount-fail' => '{{MediaWiki:Captcha-createaccount-fail}}',
-	'captcha-createaccount' => '{{MediaWiki:Captcha-createaccount}}',
-	'captchahelp-text' => '{{MediaWiki:Captchahelp-text}}',
-	'captchahelp-title' => '{{MediaWiki:Captchahelp-title}}',
-];
-
-$messages['zh-sg'] = [
-	'captcha-badlogin' => '请输入以下数学算式的答案([[Special:Captcha/help|更多资讯]])：',
-	'captcha-create' => '请输入以下数学算式的答案([[Special:Captcha/help|更多资讯]])：',
-	'captcha-createaccount-fail' => '{{MediaWiki:Captcha-createaccount-fail}}',
-	'captcha-createaccount' => '{{MediaWiki:Captcha-createaccount}}',
-	'captchahelp-text' => '{{MediaWiki:Captchahelp-text}}',
-	'captchahelp-title' => '{{MediaWiki:Captchahelp-title}}',
-];
-
-$messages['zh-tw'] = [
-	'captcha-badlogin' => '請輸入以下數學算式的答案([[Special:Captcha/help|更多資訊]])：',
-	'captcha-create' => '請輸入以下數學算式的答案([[Special:Captcha/help|更多資訊]])：',
-	'captcha-createaccount-fail' => '{{MediaWiki:Captcha-createaccount-fail}}',
-	'captcha-createaccount' => '{{MediaWiki:Captcha-createaccount}}',
-	'captchahelp-title' => '{{MediaWiki:Captchahelp-title}}',
-];
-
-$messages['zh-hk'] = [
-	'captcha-create' => '請輸入以下數學算式的答案([[Special:Captcha/help|更多資訊]])：',
-	'captcha-createaccount-fail' => '驗證碼錯誤或丢失',
-	'captcha-createaccount' => '為了防止程序自動添加垃圾鏈接。你需要輸入以下圖片中顯示的文字才能注册帳户：<br />([[Special:Captcha/help|這是什麽？]])',
-	'captchahelp-text' => '象本站一様，對公衆開放編輯的站點經常被垃圾鏈接騷擾。那些人使用自動化垃圾程序將他們的鏈接張貼到很多站點。雖然這些鏈接可以被清除，但是這些東西確實令人十分討厭。
-
-有時，特彆是當給一個頁面添加新的網頁鏈接時，本站會讓你看一幅有顔色的或者有變形文字的圖像，并且要你輸入所顯示的文字。因為這是難以自動完成的一項任務，它將允許人保存他們的編輯，同時阻止大多數發送垃圾郵件者和其他機器人的攻撃。 
-
-令人遺憾是，這會使得視力不好的人，或者使用基于文本或者基于聲音的瀏覧器的用户感到不便。而目前我們還没有提供的音頻的選擇。如果這正好阻止你進行正常的編輯，請和管理員聯系獲得幫助。 
-
-單撃你瀏覧器中的“後退”按鈕返回你所編輯的頁面。',
-	'captchahelp-title' => 'Captcha 幫助',
-];
-

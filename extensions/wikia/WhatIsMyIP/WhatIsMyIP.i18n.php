@@ -32,23 +32,11 @@ $messages['ru'] = [
 	'whatismyip_out' => 'Ваш IP: $1',
 ];
 
-$messages['zh'] = [
-	'whatismyip' => '查询我的IP',
-];
-
 $messages['zh-hans'] = [
 	'whatismyip' => '查询我的IP',
 ];
 
 $messages['zh-hant'] = [
-	'whatismyip' => '查詢我的IP',
-];
-
-$messages['zh-hk'] = [
-	'whatismyip' => '查詢我的IP',
-];
-
-$messages['zh-tw'] = [
 	'whatismyip' => '查詢我的IP',
 ];
 

@@ -32,14 +32,6 @@ $messages['pl'] = [
 	'unusedvideostext' => 'Poniższe filmy zostały dodane do wiki, lecz nie są wykorzystane na żadnej ze stron. Inne strony mogą odwoływać się do tych plików, używając bezpośrednich adresów URL. Oznacza to, że niektóre z plików mogą się znajdować na tej liście pomimo tego, że są wykorzystywane.',
 ];
 
-$messages['zh-hk'] = [
-	'unusedvideos' => '未使用影片',
-];
-
-$messages['zh-tw'] = [
-	'unusedvideos' => '未使用影片',
-];
-
 $messages['fr'] = [
 	'unusedvideos-desc' => 'Implémente [[Special:UnusedVideos]]  pour afficher les vidéos inutilisées',
 	'unusedvideos' => 'Vidéos orphelines',
@@ -64,10 +56,6 @@ $messages['ko'] = [
 $messages['ru'] = [
 	'unusedvideos' => 'Неиспользуемые видеофайлы',
 	'unusedvideostext' => 'Следующие видеофайлы были добавлены на вики, но не используются на её страницах. Прежде, чем удалять их, обратите внимание, что эти видеофайлы могут использоваться на других веб-сайтах с помощью прямой URL ссылки.',
-];
-
-$messages['zh'] = [
-	'unusedvideos' => '未使用视频',
 ];
 
 $messages['zh-hans'] = [

@@ -354,15 +354,6 @@ $messages['ps'] = [
 ];
 
 $messages['pt'] = [
-	'imgplc-add-image' => 'Adicionar imagem',
-	'imgplc-add-video' => 'Adicionar vídeo',
-	'imgplc-placeholder' => 'Espaço reservado',
-	'imgplc-image' => 'Imagem',
-	'imgplc-notinhistory' => 'Não podes adicionar uma imagem no modo histórico.',
-	'imgplc-notinhistory-video' => 'Não podes adicionar um vídeo no modo histórico.',
-];
-
-$messages['pt-br'] = [
 	'imgplc-add-image' => 'Adicionar Imagem',
 	'imgplc-add-video' => 'Adicionar Vídeo',
 	'imgplc-placeholder' => 'Espaço reservado',
@@ -477,13 +468,7 @@ $messages['zh-hant'] = [
 	'imgplc-image' => '圖片',
 ];
 
-$messages['zh-hk'] = [
-	'imgplc-add-image' => '加入圖像',
-	'imgplc-image' => '圖像',
-];
-
 $messages['no'] = [
 	'imgplc-image' => 'Bilde',
 	'imgplc-placeholder' => 'Plassholder',
 ];
-

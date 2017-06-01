@@ -65,22 +65,10 @@ $messages['pt'] = [
 	'mediagallery-add-image-button' => 'Adicione Imagem',
 ];
 
-$messages['pt-br'] = [
-	'mediagallery-show-more' => 'Mostrar mais',
-	'mediagallery-show-less' => 'Mostrar menos',
-	'mediagallery-add-image-button' => 'Adicione Imagem',
-];
-
 $messages['ru'] = [
 	'mediagallery-show-more' => 'Показать больше',
 	'mediagallery-show-less' => 'Показать меньше',
 	'mediagallery-add-image-button' => 'Добавить фото',
-];
-
-$messages['zh'] = [
-	'mediagallery-show-more' => '显示更多',
-	'mediagallery-show-less' => '收起',
-	'mediagallery-add-image-button' => '添加图片',
 ];
 
 $messages['vi'] = [
@@ -100,16 +88,3 @@ $messages['zh-hant'] = [
 	'mediagallery-show-less' => '收起',
 	'mediagallery-show-more' => '顯示更多',
 ];
-
-$messages['zh-hk'] = [
-	'mediagallery-add-image-button' => '增加圖片',
-	'mediagallery-show-less' => '收起',
-	'mediagallery-show-more' => '顯示更多',
-];
-
-$messages['zh-tw'] = [
-	'mediagallery-add-image-button' => '增加圖片',
-	'mediagallery-show-less' => '收起',
-	'mediagallery-show-more' => '顯示更多',
-];
-

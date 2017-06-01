@@ -183,11 +183,6 @@ $messages['ko'] = [
 	'quicktools-createuserpage-reason' => '사용자 문서 생성하는 중...',
 ];
 
-$messages['zh'] = [
-	'quicktools-createuserpage-exists' => '用户页面已存在！',
-	'quicktools-createuserpage-link' => '创建用户页面',
-];
-
 $messages['zh-hans'] = [
 	'quicktools-createuserpage-exists' => '用户页面已存在！',
 	'quicktools-createuserpage-link' => '创建用户页面',
@@ -197,14 +192,3 @@ $messages['zh-hant'] = [
 	'quicktools-createuserpage-exists' => '用戶頁面已存在！',
 	'quicktools-createuserpage-link' => '創建用戶頁面',
 ];
-
-$messages['zh-hk'] = [
-	'quicktools-createuserpage-exists' => '用戶頁面已存在！',
-	'quicktools-createuserpage-link' => '創建用戶頁面',
-];
-
-$messages['zh-tw'] = [
-	'quicktools-createuserpage-exists' => '用戶頁面已存在！',
-	'quicktools-createuserpage-link' => '創建用戶頁面',
-];
-
