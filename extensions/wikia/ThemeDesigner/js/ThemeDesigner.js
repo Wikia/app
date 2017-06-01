@@ -259,15 +259,9 @@
 
 			});
 
-			//graphic wordmark clicking
-			$('#WordmarkTab').find('.graphic').find('.preview').find('.wordmark').click(function () {
-				ThemeDesigner.set('wordmark-type', 'graphic');
-			});
-
 			//grapic wordmark button
 			$('#WordmarkTab').find('.graphic').find('.preview').find('a').click(function (event) {
 				event.preventDefault();
-				ThemeDesigner.set('wordmark-type', 'graphic');
 				ThemeDesigner.set('wordmark-image-url', window.wgBlankImgUrl);
 
 				// Can't use js to clear file input value so reseting form
@@ -582,7 +576,7 @@
 				reloadCSS = true;
 			}
 
-			if (setting === 'wordmark-font-size' || setting === 'wordmark-text' || setting === 'wordmark-type' ||
+			if (setting === 'wordmark-font-size' || setting === 'wordmark-text' || setting === 'wordmark-image-url' ||
 				setting === 'page-opacity') {
 				updateSkinPreview = true;
 			}
@@ -607,7 +601,6 @@
 
 					ThemeDesigner.set('wordmark-image-name', resp.wordmarkImageName);
 					ThemeDesigner.set('wordmark-image-url', resp.wordmarkImageUrl);
-					ThemeDesigner.set('wordmark-type', 'graphic');
 				}
 			}
 		},
@@ -804,16 +797,9 @@
 			// wordmark image
 			$('#WordmarkTab .graphic .wordmark').attr('src', ThemeDesigner.settings['wordmark-image-url']);
 
-
-			if (ThemeDesigner.settings['wordmark-type'] === 'graphic') {
-				$('#WordmarkTab').find('.graphic')
-					.find('.preview').addClass('active')
-					.find('.wordmark').addClass('selected');
-			} else {
-				$('#WordmarkTab').find('.graphic')
-					.find('.preview').removeClass('active')
-					.find('.wordmark').removeClass('selected');
-			}
+			$('#WordmarkTab').find('.graphic')
+				.find('.preview').addClass('active')
+				.find('.wordmark').addClass('selected');
 
 			// favicon image
 			$('#WordmarkTab').find('.favicon').find('.preview').find('img')
@@ -832,22 +818,21 @@
 			}
 
 			if (updateSkinPreview) {
-				if (ThemeDesigner.settings['wordmark-type'] === 'text') {
-					sitename = previewFrameContent.find('.wds-community-header__sitename a');
-					sitename.text(ThemeDesigner.settings['wordmark-text']);
-				} else if (ThemeDesigner.settings['wordmark-type'] === 'graphic') {
-					if(ThemeDesigner.settings['wordmark-image-url'] === window.wgBlankImgUrl) {
-						previewFrameContent.find('.wds-community-header__wordmark').remove();
+				sitename = previewFrameContent.find('.wds-community-header__sitename a');
+				sitename.text(ThemeDesigner.settings['wordmark-text']);
+
+				if(ThemeDesigner.settings['wordmark-image-url'] === window.wgBlankImgUrl) {
+					previewFrameContent.find('.wds-community-header__wordmark').remove();
+				} else {
+					wordmark = previewFrameContent.find('.wds-community-header__wordmark a');
+					wordmarkImg = '<img src="' + ThemeDesigner.settings['wordmark-image-url'] + '">';
+					if(wordmark.length) {
+						wordmark.html(wordmarkImg);
 					} else {
-						wordmark = previewFrameContent.find('.wds-community-header__wordmark a');
-						wordmarkImg = '<img src="' + ThemeDesigner.settings['wordmark-image-url'] + '">';
-						if(wordmark.length) {
-							wordmark.html(wordmarkImg);
-						} else {
-							previewFrameContent.find('.wds-community-header').prepend('<div class="wds-community-header__wordmark"><a href="#">' + wordmarkImg + '</a></div>');
-						}
+						previewFrameContent.find('.wds-community-header').prepend('<div class="wds-community-header__wordmark"><a href="#">' + wordmarkImg + '</a></div>');
 					}
 				}
+
 
 				previewFrameContent.find('#WikiaPageBackground')
 					.css('opacity', ThemeDesigner.settings['page-opacity'] / ThemeDesigner.maxPageOpacity);
