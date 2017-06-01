@@ -4,7 +4,7 @@
 	<?php if ( $categories->hasVisibleCategories() ): ?>
 		<div class="page-header__categories">
 			<span class="page-header__categories__in pph-track" data-tracking="categories-top-in"><?= $categories->inCategoriesText ?>:</span>
-			<span class="page-header__links">
+			<span class="page-header__categories-links">
 					<?= join( ', ', $categories->visibleCategories ); ?>
 				 <?php if ( $categories->moreCategoriesLength > 0 ): ?>
 						<div class="wds-dropdown page-header__dropdown-padding"><?= $categories->moreCategoriesSeparator ?>

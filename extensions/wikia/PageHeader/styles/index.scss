@@ -50,14 +50,17 @@
 			padding-right: 4px;
 		}
 
-		&__links {
+		&-links {
 			color: $color-links;
 			font-style: italic;
 			line-height: 16px;
 			word-break: break-word;
+
+			> a:last-child {
+				padding-bottom: 10px;
+				display: inline-block;
+			}
 		}
-
-
 
 		}
 }
