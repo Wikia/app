@@ -6,7 +6,6 @@
 class AdEngine2Hooks {
 	const ASSET_GROUP_ADENGINE_AMAZON_MATCH = 'adengine2_amazon_match_js';
 	const ASSET_GROUP_ADENGINE_DESKTOP = 'adengine2_desktop_js';
-	const ASSET_GROUP_ADENGINE_GCS = 'adengine2_gcs_js';
 	const ASSET_GROUP_ADENGINE_MOBILE = 'wikiamobile_ads_js';
 	const ASSET_GROUP_ADENGINE_OPENX_BIDDER = 'adengine2_ox_bidder_js';
 	const ASSET_GROUP_ADENGINE_PREBID = 'adengine2_prebid_js';
@@ -44,7 +43,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverDelayCountries';
 		$vars[] = 'wgAdDriverDelayTimeout';
 		$vars[] = 'wgAdDriverEvolve2Countries';
-		$vars[] = 'wgAdDriverGoogleConsumerSurveysCountries';
 		$vars[] = 'wgAdDriverHighImpactSlotCountries';
 		$vars[] = 'wgAdDriverHighImpact2SlotCountries';
 		$vars[] = 'wgAdDriverIncontentPlayerSlotCountries';
@@ -131,16 +129,7 @@ class AdEngine2Hooks {
 	 * @return bool
 	 */
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
-
-		global $wgAdDriverUseGoogleConsumerSurveys;
-		$isArticle = WikiaPageType::getPageType() === 'article';
-
 		$jsAssets[] = static::ASSET_GROUP_ADENGINE_DESKTOP;
-
-		if ( $wgAdDriverUseGoogleConsumerSurveys && $isArticle ) {
-			$jsAssets[] = static::ASSET_GROUP_ADENGINE_GCS;
-		}
-
 		$jsAssets[] = 'adengine2_interactive_maps_js';
 
 		return true;

@@ -47,11 +47,6 @@ define('ext.wikia.adEngine.adContext', [
 		return isUrlParamSet('pagefairdetection') || (isSupportedGeo && sampler.sample('pageFairDetection', 1, 10));
 	}
 
-	function isGSCEnabled() {
-		return abTest.getGroup('PROJECT_43') === 'GROUP_5' &&
-			geo.isProperGeo(instantGlobals.wgAdDriverGoogleConsumerSurveysCountries);
-	}
-
 	function isSourcePointDetectionDesktopEnabled(context) {
 		return context.opts.sourcePointDetectionUrl && context.targeting.skin === 'oasis' &&
 			geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionCountries);
@@ -87,13 +82,8 @@ define('ext.wikia.adEngine.adContext', [
 
 		// SourcePoint MMS
 		context.opts.sourcePointMMS = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled && context.opts.sourcePointMMS;
-		isRecoveryServiceAlreadyEnabled |= context.opts.sourcePointMMS;
 
 		context.opts.sourcePointBootstrap = context.opts.sourcePointMMS || context.opts.sourcePointRecovery;
-
-		// Google Consumer Surveys
-		context.opts.googleConsumerSurveys = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
-			context.opts.sourcePointDetection && isGSCEnabled();
 	}
 
 	function enableAdMixExperiment(context) {

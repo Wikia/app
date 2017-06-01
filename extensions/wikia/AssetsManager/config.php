@@ -181,14 +181,6 @@ $config['spotlights_js'] = [
 	],
 ];
 
-$config['adengine2_gcs_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/AdEngine/js/recovery/gcs.js',
-	],
-];
-
 $config['adengine2_interactive_maps_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [

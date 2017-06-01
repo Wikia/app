@@ -122,18 +122,6 @@ describe('AdContext', function () {
 		mocks.instantGlobals.wgAdDriverSourcePointRecoveryCountries = ['CURRENT_COUNTRY'];
 	}
 
-	function enableGCS(context) {
-		enableSourcePointDetection(context);
-		context.opts = context.opts || {};
-		context.opts.sourcePointDetection = true;
-		context.opts.showAds = true;
-
-		spyOn(mocks.abTesting, 'getGroup').and.returnValue('GROUP_5');
-
-		mocks.instantGlobals = mocks.instantGlobals || {};
-		mocks.instantGlobals.wgAdDriverGoogleConsumerSurveysCountries = ['CURRENT_COUNTRY'];
-	}
-
 	it(
 		'fills getContext() with context, targeting, providers and forcedProvider ' +
 		'even for empty (or missing) ads.context',
@@ -694,15 +682,6 @@ describe('AdContext', function () {
 		expect(context.opts.sourcePointMMS).toBeTruthy();
 	});
 
-	it('Should enable GCS', function () {
-		var context = {};
-
-		enableGCS(context);
-		getModule().setContext(context);
-
-		expect(context.opts.googleConsumerSurveys).toBeTruthy();
-	});
-
 	it('Should disable SourcePoint Recovery when PageFair recovery is enabled', function () {
 		var context = {};
 
@@ -734,17 +713,6 @@ describe('AdContext', function () {
 
 		expect(context.opts.pageFairRecovery).toBeTruthy();
 		expect(context.opts.sourcePointMMS).toBeFalsy();
-	});
-
-	it('Should disable GCS if PageFair is enabled', function () {
-		var context = {};
-
-		enablePageFairRecovery(context);
-		enableGCS(context);
-		getModule().setContext(context);
-
-		expect(context.opts.pageFairRecovery).toBeTruthy();
-		expect(context.opts.googleConsumerSurveys).toBeFalsy();
 	});
 
 	it('showcase is enabled if the cookie is set', function () {

@@ -17,7 +17,6 @@ require([
 	'ext.wikia.adEngine.sourcePointDetection',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.recovery.gcs'),
 	require.optional('ext.wikia.adEngine.template.floatingRail')
 ], function (
 	adContext,
@@ -36,7 +35,6 @@ require([
 	sourcePointDetection,
 	adBlockDetection,
 	win,
-	gcs,
 	floatingRail
 ) {
 	'use strict';
@@ -80,10 +78,6 @@ require([
 
 		// Recovery & detection
 		adBlockDetection.initEventQueues();
-
-		if (context.opts.googleConsumerSurveys && gcs) {
-			gcs.addRecoveryCallback();
-		}
 	});
 });
 
