@@ -57,7 +57,11 @@ class UserValidator {
 	}
 
 	public function assertNotExceededRateLimit( User $user ): bool {
-		if ( $this->userValidatorProxy->getWikiCreationsToday( $user ) >= static::MAX_WIKI_CREATIONS_PER_USER_PER_DAY ) {
+		if (
+			!$user->isPingLimitable() &&
+			!$user->isAllowed( 'createwikilimitsexempt' ) &&
+			$this->userValidatorProxy->getWikiCreationsToday( $user ) >= static::MAX_WIKI_CREATIONS_PER_USER_PER_DAY
+		){
 			throw new RateLimitedException();
 		}
 

@@ -104,12 +104,28 @@ class UserValidatorTest extends WikiaBaseTest {
 	/**
 	 * @expectedException \Wikia\CreateNewWiki\RateLimitedException
 	 */
-	public function testRateLimitedUserIsNotValid() {
+	public function testRateLimitedUserIsNotValidIfTheyDoNotHaveExemptRight() {
 		$this->userValidatorProxyMock->expects( $this->once() )
 			->method( 'getWikiCreationsToday' )
 			->with( $this->userMock )
 			->willReturn( 1000 );
 
 		$this->userValidator->assertNotExceededRateLimit( $this->userMock );
+	}
+
+	public function testRateLimitedUserIsValidIfTheyHaveExemptRight() {
+		$this->userMock->expects( $this->once() )
+			->method( 'isAllowed' )
+			->with( 'createwikilimitsexempt' )
+			->willReturn( true );
+
+		$this->userValidatorProxyMock->expects( $this->any() )
+			->method( 'getWikiCreationsToday' )
+			->with( $this->userMock )
+			->willReturn( 1000 );
+
+		$result = $this->userValidator->assertNotExceededRateLimit( $this->userMock );
+
+		$this->assertTrue( $result );
 	}
 }
