@@ -42,7 +42,6 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 	 * Wikia Maps special page
 	 */
 	public function index() {
-		$this->wg->SuppressPageHeader = true;
 		$this->wg->out->setHTMLTitle( wfMessage( 'wikia-interactive-maps-title' )->escaped() );
 
 		if ( is_numeric( $this->getPar() ) ) {
