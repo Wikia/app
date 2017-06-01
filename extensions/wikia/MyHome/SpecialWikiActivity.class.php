@@ -66,13 +66,13 @@ JS
 			else {
 				$this->feedSelected = 'watchlist';
 				$feedProxy = new WatchlistFeedAPIProxy();
-				$feedRenderer = new WatchlistFeedRenderer();
+				new WatchlistFeedRenderer();
 			}
 		} else {
 		//for example: wiki-domain.com/wiki/Special:WikiActivity
 			$this->feedSelected = 'activity';
 			$feedProxy = new ActivityFeedAPIProxy();
-			$feedRenderer = new ActivityFeedRenderer();
+			new ActivityFeedRenderer();
 		}
 
 		$feedProvider = new DataFeedProvider($feedProxy);
@@ -115,7 +115,7 @@ JS
 
 		// page header: replace subtitle with navigation
 		global $wgHooks;
-		$wgHooks['PageHeaderIndexAfterExecute'][] = array($this, 'addNavigation');
+		$wgHooks['BeforePageHeaderSubtitle'][] = array($this, 'addNavigation');
 
 		if ($wgUser->isAnon()) {
 			$this->getOutput()->setSquidMaxage( 3600 ); // 1 hour
@@ -132,11 +132,10 @@ JS
 	 *
 	 * @author macbre
 	 */
-	function addNavigation(&$moduleObject, &$params) {
-		global $wgUser;
-		wfProfileIn(__METHOD__);
+	function addNavigation(&$subtitle) {
+		$wgUser = RequestContext::getMain()->getUser();
 
-		$template = new EasyTemplate(dirname(__FILE__).'/templates');
+		$template = new EasyTemplate(__DIR__ . '/templates');
 
 		// RT #68074: show default view checkbox for logged-in users only
 		$showDefaultViewSwitch = $wgUser->isLoggedIn() && ($this->defaultView != $this->feedSelected);
@@ -150,9 +149,7 @@ JS
 		));
 
 		// replace subtitle with navigation for WikiActivity
-		$moduleObject->pageSubtitle = $template->render('navigation.oasis');
-
-		wfProfileOut(__METHOD__);
+		$subtitle = $template->render('navigation.oasis');
 		return true;
 	}
 }
