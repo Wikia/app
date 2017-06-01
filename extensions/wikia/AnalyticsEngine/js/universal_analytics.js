@@ -263,12 +263,12 @@
 
 		return rating;
 	}
-	
+
 	function hasPortableInfobox() {
 		if (window.ads && window.ads.context.targeting.hasPortableInfobox) {
 			return 'Yes';
 		}
-		
+
 		return 'No';
 	}
 
@@ -322,31 +322,6 @@
 		['set', 'dimension5', !!window.wgUserName ? 'user' : 'anon']  // LoginStatus
 	);
 
-	/*
-	 * Remove when SOC-217 ABTest is finished
-	 */
-	/**
-	 * Get unconfirmed email AbTest user type
-	 * @returns {string}
-	 */
-	function getUnconfirmedEmailUserType() {
-		if (!window.wgUserName) {
-			return 'anon';
-		} else {
-			switch (window.wgNotConfirmedEmail) {
-				case '1':
-					return 'unconfirmed';
-				case '2':
-					return 'confirmed';
-				default:
-					return 'old user';
-			}
-		}
-	}
-	/*
-	 * end remove
-	 */
-
 	/**** Medium-Priority Custom Dimensions ****/
 	_gaWikiaPush(
 		['set', 'dimension8', window.wikiaPageType],                                // PageType
@@ -367,14 +342,6 @@
 		['set', 'dimension27', String(window.wgCanonicalSpecialPageName || '')],    // Special page canonical name (SUS-1465)
 		['set', 'dimension28', hasPortableInfobox()] // If there is Portable Infobox on the page (ADEN-4708)
 	);
-
-	/*
-	 * Remove when SOC-217 ABTest is finished
-	 */
-	_gaWikiaPush(['set', 'dimension39', getUnconfirmedEmailUserType()]);      // UnconfirmedEmailUserType
-	/*
-	 * end remove
-	 */
 
 	/**
 	 * Checks if Optimizely object and its crucial data attributes are available
