@@ -8,35 +8,44 @@ use ParserOptions;
 use RequestContext;
 
 class Counter {
+	/**
+	 * @var string
+	 */
+	public $text;
+
 	public function __construct() {
 		$title = RequestContext::getMain()->getTitle();
 
 		if ( $title->isSpecial( 'Videos' ) ) {
-			$this->message = $this->getMessageForSpecialVideos();
+			$this->text = $this->getTextForSpecialVideos();
 		} else if ( $title->isSpecial( 'Images' ) ) {
-			$this->message = $this->getMessageForSpecialImages();
+			$this->text = $this->getTextForSpecialImages();
 		} else if ( defined( 'NS_BLOG_LISTING' ) && $title->inNamespace( NS_BLOG_LISTING ) ) {
-			$this->message = $this->getMessageForBlogListing();
+			$this->text = $this->getTextForBlogListing();
 		} else if ( $title->isSpecial( 'Forum' ) ) {
-			$this->message = $this->getMessageForForum();
+			$this->text = $this->getTextForForum();
 		}
 	}
 
-	private function getMessageForSpecialVideos() {
+	public function isEmpty() {
+		return empty( $this->text );
+	}
+
+	private function getTextForSpecialVideos() {
 		$mediaService = ( new MediaQueryService );
 		$count = $mediaService->getTotalVideos();
 
 		return wfMessage( 'page-header-counter-videos', $count )->parse();
 	}
 
-	private function getMessageForSpecialImages() {
+	private function getTextForSpecialImages() {
 		$mediaService = ( new MediaQueryService );
 		$count = $mediaService->getTotalImages();
 
 		return wfMessage( 'page-header-counter-images', $count )->parse();
 	}
 
-	private function getMessageForBlogListing() {
+	private function getTextForBlogListing() {
 		$count = RequestContext::getMain()
 			->getWikiPage()
 			->getParserOutput( new ParserOptions() )
@@ -46,7 +55,7 @@ class Counter {
 		return wfMessage( 'page-header-counter-blog-posts', $count )->parse();
 	}
 
-	private function getMessageForForum() {
+	private function getTextForForum() {
 		$forum = new Forum();
 		$count = $forum->getTotalThreads();
 		$countActive = $forum->getTotalActiveThreads();
