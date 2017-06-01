@@ -581,7 +581,7 @@
 				reloadCSS = true;
 			}
 
-			if (setting === 'wordmark-font-size' || setting === 'wordmark-text' || setting === 'wordmark-image-url' ||
+			if (setting === 'wordmark-font-size' || setting === 'wordmark-text' || setting === 'wordmark-type' ||
 				setting === 'page-opacity') {
 				updateSkinPreview = true;
 			}
