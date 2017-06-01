@@ -453,7 +453,7 @@ TEXT;
 	 */
 	public function testCleanArticleSnippet( $content, $expected ) {
 		/* @var $title Title */
-		$title = $this->mockClassWithMethods( 'Title' );
+		$title = $this->createMock( Title::class );
 		$service = new ArticleService( $title );
 
 		$this->assertEquals($expected, $service->cleanArticleSnippet( $content ) );
