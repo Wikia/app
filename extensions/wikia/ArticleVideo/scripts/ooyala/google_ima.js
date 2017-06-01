@@ -4363,15 +4363,6 @@ var globalRequire = require;
 						moatVideoTracker.init(_IMAAdsManager, _uiContainer, google.ima.ViewMode.NORMAL, 'ooyala', 'featured-video');
 					});
 
-					var ids = {
-						partnerCode: 'wikiaimajsint377461931603',
-						viewMode: google.ima.ViewMode.NORMAL,
-						slicer1: 'ooyala',
-						slicer2: ''
-					};
-
-					window.initMoatTracking(_IMAAdsManager, ids, _uiContainer);
-
 					// When the ads manager is ready, we are ready to apply css changes to the video element
 					// If the sharedVideoElement is not used, mark it as null before applying css
 					if (this.videoControllerWrapper)
