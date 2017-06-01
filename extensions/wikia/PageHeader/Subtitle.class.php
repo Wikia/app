@@ -87,7 +87,9 @@ class Subtitle {
 				break;
 
 			case NS_SPECIAL:
-				if ( !$title->isSpecial('Forum') ) {
+				if ( !$title->isSpecial('Forum') &&
+					!$title->isSpecial('ThemeDesignerPreview')
+				) {
 					$pageType = wfMessage( 'oasis-page-header-subtitle-special' )->escaped();
 				}
 				break;
