@@ -6,6 +6,10 @@ class SpecialCreateNewWiki extends UnlistedSpecialPage {
 		parent::__construct('CreateNewWiki', 'createnewwiki');
 	}
 
+	/**
+	 * @param string $par
+	 * @throws ErrorPageError
+	 */
 	public function execute( $par ) {
 		wfProfileIn( __METHOD__ );
 		$out = $this->getOutput();
@@ -16,6 +20,11 @@ class SpecialCreateNewWiki extends UnlistedSpecialPage {
 			$out->readOnlyPage();
 			wfProfileOut(__METHOD__);
 			return;
+		}
+
+		// SUS-1182: CreateNewWiki should check for valid email before progressing to the second step
+		if ( !$this->getUser()->isEmailConfirmed() ) {
+			throw new ErrorPageError( 'cnw-error-unconfirmed-email-header', 'cnw-error-unconfirmed-email' );
 		}
 
 		$out->setPageTitle(wfMsg('cnw-title'));
