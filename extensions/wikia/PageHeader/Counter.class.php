@@ -27,8 +27,8 @@ class Counter {
 		}
 	}
 
-	public function isEmpty() {
-		return empty( $this->text );
+	public function isNotEmpty() {
+		return !empty( $this->text );
 	}
 
 	private function getTextForSpecialVideos() {
