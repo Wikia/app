@@ -70,14 +70,14 @@ class ActionButton {
 		) {
 			// force login to edit page that is not protected
 			$this->contentActions['edit'] = $this->contentActions['viewsource'];
-			$this->contentActions['edit']['text'] = wfMessage( 'edit' )->text();
+			$this->contentActions['edit']['text'] = wfMessage( 'edit' )->escaped();
 			unset( $this->contentActions['viewsource'] );
 		}
 
 		// If cascade protected, show viewsource button - BugId:VE-89
 		if ( isset( $this->contentActions['edit'] ) && $wgTitle->isCascadeProtected() ) {
 			$this->contentActions['viewsource'] = $this->contentActions['edit'];
-			$this->contentActions['viewsource']['text'] = wfMessage( 'viewsource' )->text();
+			$this->contentActions['viewsource']['text'] = wfMessage( 'viewsource' )->escaped();
 			unset( $this->contentActions['edit'] );
 		}
 

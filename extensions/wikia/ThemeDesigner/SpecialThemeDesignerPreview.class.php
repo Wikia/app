@@ -35,6 +35,7 @@ class SpecialThemeDesignerPreview extends UnlistedSpecialPage {
 		// page header: use static date
 		global $wgHooks;
 		$wgHooks['PageHeaderIndexAfterExecute'][] = 'SpecialThemeDesignerPreview::modifyHeaderData';
+		$wgHooks['BeforePrepareActionButtons'][] =  'SpecialThemeDesignerPreview::modifyActionButtonData';
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -67,6 +68,17 @@ class SpecialThemeDesignerPreview extends UnlistedSpecialPage {
 		$moduleObject->dropdown = array(['title' => 'foo', 'text' => 'foo'], ['title' => 'bar', 'text' => 'bar']);
 
 		wfProfileOut(__METHOD__);
+		return true;
+	}
+
+	static function modifyActionButtonData( $actionButton, &$contentActions ) {
+		$contentActions['edit'] = [
+			'text' => wfMessage( 'edit' )->text(),
+			'href' => '#',
+			'id' => 'ca-edit',
+			'main' => true
+		];
+
 		return true;
 	}
 }

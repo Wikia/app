@@ -82,7 +82,7 @@
 			<div id="WikiaMainContentContainer" class="WikiaMainContentContainer">
 				<?php
 					// render UserPagesHeader or PageHeader or nothing...
-					if ( empty( $wg->SuppressPageHeader ) && $headerModuleName ) {
+					if ( $headerModuleName ) {
 						if ( $headerModuleName == 'UserPagesHeader' ) {
 							if ( $headerModuleAction == 'BlogPost' || $headerModuleAction == 'BlogListing' ) {
 								// Show blog post header
