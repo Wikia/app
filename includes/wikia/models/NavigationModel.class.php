@@ -222,7 +222,7 @@ class NavigationModel extends WikiaModel {
 		return $menuData;
 	}
 
-	public function getTreeFromText( $wikiText ) {
+	public function getTreeFromText( string $wikiText ): array {
 		$this->setShouldTranslateContent( false );
 		$menuData = [];
 

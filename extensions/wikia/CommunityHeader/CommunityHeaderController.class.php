@@ -27,5 +27,6 @@ class CommunityHeaderController extends WikiaController {
 		// wikiText variable is used for local navigation preview
 		$wikiText = $this->getVal( 'wikiText', null );
 		$this->setVal( 'navigation', new Navigation( $wikiText ) );
+		$this->setVal( 'isPreview', $this->getVal( 'isPreview' ) );
 	}
 }

@@ -20,13 +20,11 @@ class CommunityHeaderHooks {
 	public static function onEditPageLayoutModifyPreview( Title $title, &$html, $wikitext ) {
 		if ( NavigationModel::isWikiNavMessage( $title ) ) {
 			// render a preview
-			$html =
-				F::app()
-					->renderPartial( 'CommunityHeader', 'localNavigationPreview',
-						[ 'wikiText' => $wikitext ] );
-
-			// open links in new tab
-			$html = str_replace( '<a ', '<a target="_blank" ', $html );
+			$html = F::app()->renderPartial(
+				'CommunityHeader',
+				'localNavigationPreview',
+				[ 'wikiText' => $wikitext ]
+			);
 		}
 
 		return true;
