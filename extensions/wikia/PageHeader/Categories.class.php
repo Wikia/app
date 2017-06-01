@@ -27,22 +27,14 @@ class Categories {
 		$extendedCategories = array_slice( $normalCategoryLinks, $visibleCategoriesLimit );
 		$moreCategories = $this->extendWithTrackingAttribute( $extendedCategories, 'categories-top-more' );
 
-		$title = $app->wg->title;
+		$this->setMessagesForCategories($moreCategories);
 
-		//$this->setVal( 'visibleCategories', $visibleCategories );
 		$this->visibleCategories = $visibleCategories;
-		//$this->setVal( 'inCategoriesText', wfMessage( 'pph-in-categories' )->escaped() ); //TODO
-		$this->inCategoriesText = wfMessage( 'page-header-in-categories' )->escaped();
-		//$this->setVal( 'moreCategoriesText', wfMessage( 'pph-categories-more' )->numParams( count( $moreCategories ) )->text() );
-		$this->moreCategoriesText = wfMessage( 'page-header-categories-more' )->numParams( count( $moreCategories ) )->text();
-		//$this->setVal( 'moreCategoriesSeparator', wfMessage( 'pph-categories-more-separator' )->text() );
-		$this->moreCategoriesSeparator = wfMessage( 'page-header-categories-more-separator' )->text();
-		//$this->setVal( 'moreCategoriesLength', count( $moreCategories ) );
+
 		$this->moreCategoriesLength = count( $moreCategories );
-		//$this->setVal( 'moreCategories', new Categories( $this->app ) );
 		$this->moreCategories = $moreCategories;
 
-		//No this class
+		//Not this class
 		//$this->setVal( 'curatedContentButton', $this->getEditMainPage() );
 		//$this->curatedContentButton = $this->getEditMainPage();
 		////$this->setVal( 'languageList', $this->getLanguages() );
@@ -52,6 +44,13 @@ class Categories {
 	public function hasVisibleCategories() {
 
 		return count($this->visibleCategories) > 0;
+	}
+
+	public function setMessagesForCategories($moreCategories) {
+		$this->inCategoriesText = wfMessage( 'page-header-in-categories' )->escaped();
+		$this->moreCategoriesText = wfMessage( 'page-header-categories-more' )->numParams( count( $moreCategories ) )->text();
+		$this->moreCategoriesSeparator = wfMessage( 'page-header-categories-more-separator' )->text();
+
 	}
 
 	private function extendWithTrackingAttribute( $categories, $prefix ): array {

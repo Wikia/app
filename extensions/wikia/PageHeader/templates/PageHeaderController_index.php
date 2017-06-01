@@ -18,7 +18,6 @@
 								</ul>
 							</div>
 						</div>
-						<!--<span class="pph-more-categories">--><?//= join( ', ', $categories->moreCategories ); ?><!--</span>-->
 				<?php endif; ?>
 				</span>
 		</div>
