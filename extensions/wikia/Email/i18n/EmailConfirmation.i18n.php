@@ -218,23 +218,23 @@ $messages['pt'] = array(
 );
 
 $messages['ru'] = array(
-	'emailext-emailconfirmation-subject' => 'Подтвердите адрес электронной почты и начните работу на Фэндоме.',
-	'emailext-emailconfirmation-summary' => 'Вы уже почти у цели. Перейдите по ссылке ниже, чтобы подтвердить адрес электронной почты и начать работу на Фэндоме:',
+	'emailext-emailconfirmation-subject' => 'Подтвердите адрес электронной почты и начните работу на FANDOM.',
+	'emailext-emailconfirmation-summary' => 'Вы уже почти у цели. Перейдите по ссылке ниже, чтобы подтвердить адрес электронной почты и начать работу на FANDOM:',
 	'emailext-emailconfirmation-footer-1' => 'Для чего нужно подтвердить адрес электронной почты? Во-первых, чтобы дать нам понять, что вы реальный человек. Во-вторых, вы сможете:',
-	'emailext-emailconfirmation-footer-2' => 'С нетерпением ждём вас на Фэндоме!',
-	'emailext-emailconfirmation-reminder-subject' => '$1, подтвердите ваш аккаунт на Фэндоме.',
-	'emailext-emailconfirmation-reminder-summary' => 'Прошло уже несколько дней, но, похоже, вы ещё не подтвердили свою учётную запись на Фэндоме. Мы надеемся, что вы готовы полностью погрузиться в мир Фэндома. Просто нажмите на ссылку ниже — и готово:',
+	'emailext-emailconfirmation-footer-2' => 'С нетерпением ждём вас на FANDOM!',
+	'emailext-emailconfirmation-reminder-subject' => '$1, подтвердите ваш аккаунт на FANDOM.',
+	'emailext-emailconfirmation-reminder-summary' => 'Прошло уже несколько дней, но, похоже, вы ещё не подтвердили свою учётную запись на FANDOM. Мы надеемся, что вы готовы полностью погрузиться в мир FANDOM. Просто нажмите на ссылку ниже — и готово:',
 	'emailext-emailconfirmation-reminder-footer-1' => 'Если вы не подтвердите свое имя участника ($1) в течение 23 дней, оно вновь станет доступно. Так что поторопитесь! Никто не должен использовать это имя, ведь оно ваше.',
-	'emailext-emailconfirmation-changed-subject' => 'Подтверждение изменения адреса электронной почты на Фэндоме',
-	'emailext-emailconfirmation-changed-summary' => 'Перейдите по ссылке ниже, чтобы подтвердить изменение адреса электронной почты на Фэндоме. Не прекращайте общаться со своим любимым сообществом!',
+	'emailext-emailconfirmation-changed-subject' => 'Подтверждение изменения адреса электронной почты на FANDOM',
+	'emailext-emailconfirmation-changed-summary' => 'Перейдите по ссылке ниже, чтобы подтвердить изменение адреса электронной почты на FANDOM. Не прекращайте общаться со своим любимым сообществом!',
 	'emailext-emailconfirmation-changed-footer-1' => 'Вы будете продолжать получать письма на свою прежнюю электронную почту до тех пор, пока не подтвердите эту.',
-	'emailext-emailconfirmation-changed-footer-2' => 'Увидимся на Фэндоме!',
-	'emailext-emailconfirmation-community-team' => 'Команда Фэндома',
+	'emailext-emailconfirmation-changed-footer-2' => 'Увидимся на FANDOM!',
+	'emailext-emailconfirmation-community-team' => 'Команда FANDOM',
 	'emailext-emailconfirmation-button-text' => 'Подтвердить сейчас',
 	'emailext-emailconfirmation-footer-list-1' => 'Создать и настроить личный профиль',
 	'emailext-emailconfirmation-footer-list-2' => 'Получать уведомления от сообществ и обсуждений',
 	'emailext-emailconfirmation-footer-list-3' => 'Загружать изображения и видео на ваше сообщество',
-	'emailext-emailconfirmation-footer-list-4' => 'Стать неотъемлемой частью любимых сообществ на Фэндоме',
+	'emailext-emailconfirmation-footer-list-4' => 'Стать неотъемлемой частью любимых сообществ на FANDOM',
 );
 
 $messages['zh-hans'] = array(

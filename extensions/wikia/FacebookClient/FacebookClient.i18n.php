@@ -677,25 +677,25 @@ $messages['ru'] = array(
 	'fbconnect-wrong-pass-msg' => 'Указан неверный пароль',
 	'fbconnect-graphapi-not-configured' => 'Facebook App ID, полученный через приложение, неверный.',
 	'prefs-fbconnect-disconnect-prefstext' => 'Отключение от Facebook',
-	'fbconnect-error-already-connected' => 'Эта учётная запись на Фэндоме уже подключена к Facebook. Пожалуйста, отключите её перед подключением к новому аккаунту Facebook.',
-	'fbconnect-error-fb-account-in-use' => 'Этот аккаунт на Facebook уже подключён к учётной записи другого участника на Фэндоме. Пожалуйста, подключите другой аккаунт или войдите в свою учётную запись на Фэндоме через Facebook и отвяжите её, чтобы соединить свой аккаунт на Facebook с новой учётной записью $1.',
+	'fbconnect-error-already-connected' => 'Эта учётная запись на FANDOM уже подключена к Facebook. Пожалуйста, отключите её перед подключением к новому аккаунту Facebook.',
+	'fbconnect-error-fb-account-in-use' => 'Этот аккаунт на Facebook уже подключён к учётной записи другого участника на FANDOM. Пожалуйста, подключите другой аккаунт или войдите в свою учётную запись на FANDOM через Facebook и отвяжите её, чтобы соединить свой аккаунт на Facebook с новой учётной записью $1.',
 	'fbconnect-error-fb-unavailable-title' => 'Ошибка при подключении к Facebook',
 	'fbconnect-error-fb-unavailable-text' => 'Facebook временно недоступен. Пожалуйста, повторите попытку позже.',
-	'fbconnect-desc' => 'Эта функция позволяет вам [[Special:FacebookConnect|соединить]] учётную запись на Фэндоме с аккаунтом в [http://www.facebook.com Facebook], чтобы входить на Фэндом через Facebook и использовать FBML в викитексте.',
+	'fbconnect-desc' => 'Эта функция позволяет вам [[Special:FacebookConnect|соединить]] учётную запись на FANDOM с аккаунтом в [http://www.facebook.com Facebook], чтобы входить на FANDOM через Facebook и использовать FBML в викитексте.',
 	'fbconnect-connect' => 'Войти с помощью Facebook Connect',
 	'fbconnect-connect-simple' => 'Подключение',
 	'fbconnect-convert' => 'Связать учётную запись с аккаунтом в Facebook',
 	'fbconnect-or' => 'ИЛИ',
 	'fbconnect-error' => 'Ошибка проверки',
 	'fbconnect-errortext' => 'Похоже, что произошла ошибка. Пожалуйста, попробуйте ещё раз.',
-	'fbconnect-disconnect-account-link' => 'Ваша учётная запись на Фэндоме подключена к Facebook. Вы можете её [[#|отключить]] и продолжать использовать сервис Фэндома как обычно, при этом история ваших действий (правки, достижения) останется без изменений.',
+	'fbconnect-disconnect-account-link' => 'Ваша учётная запись на FANDOM подключена к Facebook. Вы можете её [[#|отключить]] и продолжать использовать сервис FANDOM как обычно, при этом история ваших действий (правки, достижения) останется без изменений.',
 	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your FANDOM account.',
-	'fbconnect-disconnect-info-existing' => 'Отключение завершено. Вы можете войти на Фэндом как обычно, используя имя участника и пароль.',
+	'fbconnect-disconnect-info-existing' => 'Отключение завершено. Вы можете войти на FANDOM как обычно, используя имя участника и пароль.',
 	'fbconnect-unknown-error' => 'Неизвестная ошибка. Попробуйте ещё раз.',
 	'fbconnect-passwordremindertitle' => 'Your FANDOM account is now disconnected from Facebook!',
 	'fbconnect-passwordremindertitle-exist' => 'Your FANDOM account is now disconnected from Facebook!',
 	'fbconnect-passwordremindertext' => 'Здравствуйте,
-Вы отключили вашу учётную запись на Фэндоме от Facebook. Не волнуйтесь: все ваши правки, история редактирования и достижения были сохранены.
+Вы отключили вашу учётную запись на FANDOM от Facebook. Не волнуйтесь: все ваши правки, история редактирования и достижения были сохранены.
 
 Вы можете использовать то же самое имя участника, но мы создали для вас новый пароль. Вот ваши новые данные:
 
@@ -704,22 +704,22 @@ $messages['ru'] = array(
 
 Новый пароль был отправлен на адрес электронной почты, который вы указали в личных настройках.
 
-Команда Фэндома',
+Команда FANDOM',
 	'fbconnect-passwordremindertext-exist' => 'Здравствуйте,
-Вы отключили вашу учётную запись на Фэндоме от Facebook. Не волнуйтесь: все ваши правки, история редактирования и достижения были сохранены.
+Вы отключили вашу учётную запись на FANDOM от Facebook. Не волнуйтесь: все ваши правки, история редактирования и достижения были сохранены.
 
-Вы можете использовать то же самое имя участника и пароль, чтобы войти на Фэндом.
+Вы можете использовать то же самое имя участника и пароль, чтобы войти на FANDOM.
 
-Команда Фэндома',
+Команда FANDOM',
 	'fbconnect-wikia-signup-w-facebook' => 'Войти через Facebook',
 	'fbconnect-logout-confirm' => 'Выбрав "Отменить", вы выйдете из своих аккаунтов Викия и Facebook. Вы хотите продолжить?',
 	'prefs-fbconnect-prefstext' => 'Facebook Connect',
 	'prefs-fbconnect-status-prefstext' => 'Статус',
 	'fbconnect-cancel' => 'Действие отменено',
 	'fbconnect-canceltext' => 'Предыдущее действие было отменено.',
-	'fbconnect-preferences-connected' => 'Вы подключили учётную запись на Фэндоме к Facebook.',
+	'fbconnect-preferences-connected' => 'Вы подключили учётную запись на FANDOM к Facebook.',
 	'fbconnect-preferences-connected-error' => 'Мы сожалеем, но подключение завершить не удалось. Убедитесь, что вы вошли в свою учётную запись Викия и дали разрешение соединить её с Facebook.',
-	'fbconnect-connect-msg' => 'Поздравляем! Вы подключили учётную запись на Фэндоме к Facebook.',
+	'fbconnect-connect-msg' => 'Поздравляем! Вы подключили учётную запись на FANDOM к Facebook.',
 );
 
 $messages['vi'] = array(

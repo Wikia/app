@@ -557,9 +557,9 @@ $messages['roa-tara'] = array(
 );
 
 $messages['ru'] = array(
-	'wikiacuratedcontent-desc' => 'Инструмент курирования контента Фэндома для мобильных приложений',
-	'wikiacuratedcontent-preview-description' => 'Это предпросмотр страниц, созданных с помощью инструмента курирования контента Фэндома.',
-	'wikiacuratedcontent-content-title' => 'Управление инструментом курирования контента Фэндома',
+	'wikiacuratedcontent-desc' => 'Инструмент курирования контента FANDOM для мобильных приложений',
+	'wikiacuratedcontent-preview-description' => 'Это предпросмотр страниц, созданных с помощью инструмента курирования контента FANDOM.',
+	'wikiacuratedcontent-content-title' => 'Управление инструментом курирования контента FANDOM',
 	'wikiacuratedcontent-content-save' => 'Сохранить',
 	'wikiacuratedcontent-content-duplicate-entry' => 'Эта переменная уже используется',
 	'wikiacuratedcontent-content-item' => 'Пункт',

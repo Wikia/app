@@ -625,13 +625,13 @@ $messages['ru'] = array(
 	Рейтинг WAM рассчитывается с 1 января 2012 года.
 
 ===Где ещё можно найти рейтинг WAM?===
-	Рейтинг WAM можно также найти на центральных страницах Фэндома: [[w:c:en:Video Games|Video Games]], [[w:c:en:Entertainment|Entertainment]] and [[w:c:en:Lifestyle|Lifestyle]] и других.
+	Рейтинг WAM можно также найти на центральных страницах FANDOM: [[w:c:en:Video Games|Video Games]], [[w:c:en:Entertainment|Entertainment]] and [[w:c:en:Lifestyle|Lifestyle]] и других.
 
 ===Могу ли я отобразить рейтинг WAM на моей вики?===
 Если вы хотите указать рейтинг на своей вики, обязательно сделайте ссылку на общий рейтинг.
 
 ===Где я могу задать другие вопросы по рейтингу WAM?===
-Пожалуйста, свяжитесь с сотрудниками Фэндома через [mailto:support@wikia-inc.com support@wikia-inc.com].
+Пожалуйста, свяжитесь с сотрудниками FANDOM через [mailto:support@wikia-inc.com support@wikia-inc.com].
 	',
 	'wam-index-header-rank' => 'Позиция',
 	'wam-index-header-score' => 'Рейтинг WAM',
@@ -641,7 +641,7 @@ $messages['ru'] = array(
 	'wam-index-header-admins' => 'Администраторы',
 	'wampage-breadcrumb-back-to-wam' => 'Обратно к рейтингу WAM',
 	'wam-index-header-peak-rank' => 'Высшая позиция',
-	'wam-index-no-results' => 'Вики, которую вы искали, не входит в топ-5000 википроектов за указанную вами дату. Однако рейтинг WAM обновляется ежедневно, поэтому вы можете проверить его завтра. Если у вас есть вопросы, [mailto:support@wikia-inc.com свяжитесь с командой поддержки Фэндома].',
+	'wam-index-no-results' => 'Вики, которую вы искали, не входит в топ-5000 википроектов за указанную вами дату. Однако рейтинг WAM обновляется ежедневно, поэтому вы можете проверить его завтра. Если у вас есть вопросы, [mailto:support@wikia-inc.com свяжитесь с командой поддержки FANDOM].',
 	'wam-index-filter-search-placeholder' => 'Поиск',
 	'wam-index-filter-sort-label' => 'Портал',
 	'wam-index-filter-date-label' => 'Дата',

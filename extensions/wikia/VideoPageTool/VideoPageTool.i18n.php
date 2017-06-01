@@ -671,9 +671,9 @@ $messages['pt'] = array(
 );
 
 $messages['ru'] = array(
-	'videohomepage-header-search-placeholder' => 'Поиск видео на Фэндоме',
-	'videopagetool-page-title' => 'Инструмент Фэндома для видео',
-	'videopagetool-section-fan' => 'Медиаматериалы участников Фэндома',
+	'videohomepage-header-search-placeholder' => 'Поиск видео на FANDOM',
+	'videopagetool-page-title' => 'Инструмент FANDOM для видео',
+	'videopagetool-section-fan' => 'Медиаматериалы участников FANDOM',
 	'videohomepage-header-browse' => 'Смотреть',
 	'videohomepage-header-dropdown-name' => 'Открывать',
 	'videohomepage-partner-section-title' => 'Наши партнёры',
@@ -736,7 +736,7 @@ $messages['ru'] = array(
 	'videopagetool-tooltip-published' => 'Опубликовано',
 	'videopagetool-video-title-default-text' => 'Название видео',
 	'videopagetool-desc' => 'FANDOM Video Tool',
-	'right-videopagetool' => 'Доступ к инструменту Фэндома для создания видео',
+	'right-videopagetool' => 'Доступ к инструменту FANDOM для создания видео',
 	'videohomepage-partner-name-anyclip' => 'Anyclip',
 	'videohomepage-partner-name-ign' => 'IGN',
 	'videohomepage-partner-name-iva' => 'IVA',

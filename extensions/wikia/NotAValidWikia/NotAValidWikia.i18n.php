@@ -145,7 +145,7 @@ $messages['ru'] = array(
 |-
 |[http://www.wikia.com/Special:CreateNewWiki?uselang=ru Создайте свою вики]
 |
-|[[w:c:ru.community:Блог:Блоги_сотрудников|Оставайтесь в курсе последних новостей Фэндома]]
+|[[w:c:ru.community:Блог:Блоги_сотрудников|Оставайтесь в курсе последних новостей FANDOM]]
 |}',
 );
 

@@ -644,7 +644,7 @@ $messages['roa-tara'] = [
 
 $messages['ru'] = [
 	'activityindicator-message' => 'Загрузка...',
-	'window-wikis-title' => 'Game Guides Фэндома',
+	'window-wikis-title' => 'Game Guides FANDOM',
 	'window-wikis-wikilist-search-hint' => 'Поиск в Top Games...',
 	'window-category-load-batch' => 'Ещё',
 	'window-article-button-close' => 'Закрыть',

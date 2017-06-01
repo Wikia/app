@@ -3184,7 +3184,7 @@ $messages['roa-tara'] = array(
 );
 
 $messages['ru'] = array(
-	'usersignup-page-title' => 'Присоединиться к Фэндому',
+	'usersignup-page-title' => 'Присоединиться к FANDOM',
 	'usersignup-page-title-wikiamobile' => 'Создать учётную запись',
 	'usersignup-page-captcha-label' => 'Captcha',
 	'usersignup-error-username-length' => 'Имя участника не может содержать больше {{PLURAL:$1|одного символа|$1 символов}}.',
@@ -3202,7 +3202,7 @@ $messages['ru'] = array(
 	'usersignup-facebook-create-account' => 'Создать учётную запись',
 	'usersignup-facebook-email-tooltip' => 'Если вы хотите использовать другой адрес электронной почты, вы сможете изменить его позже в личных настройках.',
 	'usersignup-facebook-have-an-account-heading' => 'Уже есть учётная запись?',
-	'usersignup-facebook-have-an-account' => 'Подключить уже существующую учётную запись на Фэндоме к Facebook.',
+	'usersignup-facebook-have-an-account' => 'Подключить уже существующую учётную запись на FANDOM к Facebook.',
 	'usersignup-facebook-proxy-email' => 'Использовать адрес эл. почты от Facebook',
 	'usersignup-user-pref-emailconfirmlink' => 'Запросить новое подтверждение электронной почты',
 	'usersignup-user-pref-confirmemail_send' => 'Отправить подтверждение электронной почты',
@@ -3281,7 +3281,7 @@ ___________________________________________
 
 Чтобы узнать свежие новости Викия, посетите http://community.wikia.com
 Хотите отписаться от этой рассылки? Перейдите на страницу {{fullurl:{{ns:special}}:Preferences}}',
-	'usersignup-heading' => 'Присоединяйтесь к Фэндому сегодня',
+	'usersignup-heading' => 'Присоединяйтесь к FANDOM сегодня',
 	'usersignup-heading-byemail' => 'Создать учётную запись для другого человека',
 	'usersignup-marketing-wikia' => 'Начните сотрудничество с миллионами людей со всего мира, которые собрались вместе, чтобы поделиться тем, что они знают и любят.',
 	'usersignup-marketing-login' => 'Уже есть учётная запись? [[Special:UserLogin|Войти]]',
@@ -3291,7 +3291,7 @@ ___________________________________________
 	'usersignup-marketing-global-heading' => 'Создавайте',
 	'usersignup-marketing-global' => 'Создайте вики. Начните с малого и вырастите нечто большое с помощью других участников.',
 	'usersignup-marketing-creativity-heading' => 'Будьте креативны',
-	'usersignup-marketing-creativity' => 'Проявите ваши творческие способности на Фэндоме с помощью фотографий, видеогалерей, приложений и обсуждений.',
+	'usersignup-marketing-creativity' => 'Проявите ваши творческие способности на FANDOM с помощью фотографий, видеогалерей, приложений и обсуждений.',
 	'usersignup-createaccount-byemail' => 'Создать учётную запись для другого человека',
 	'usersignup-error-captcha' => 'Вызвать Captcha не удалось, попробуйте ещё раз.',
 	'usersignup-account-creation-heading' => 'Отлично!',
