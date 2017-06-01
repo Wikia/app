@@ -108,13 +108,13 @@ $messages['pt'] = array(
 );
 
 $messages['ru'] = array(
-	'emailext-usernamechange-subject' => 'Смена вашего имени участника на FANDOM завершена.',
-	'emailext-usernamechange-summary' => 'Смена вашего имени участника на FANDOM завершена.',
+	'emailext-usernamechange-subject' => 'Смена вашего имени участника на Фэндоме завершена.',
+	'emailext-usernamechange-summary' => 'Смена вашего имени участника на Фэндоме завершена.',
 	'emailext-usernamechange-changed' => "'''$1''' теперь {{GENDER:$2|известен|известна}} как '''$2'''",
 	'emailext-usernamechange-closing' => 'С нетерпением ждём вас,',
-	'emailext-usernamechange-signature' => 'Команда FANDOM',
+	'emailext-usernamechange-signature' => 'Команда Фэндома',
 	'emailext-usernamechange-profile-page' => 'Страница профиля',
-	'emailext-usernamechange-check-out' => 'Перейти на FANDOM',
+	'emailext-usernamechange-check-out' => 'Перейти на Фэндом',
 );
 
 $messages['zh-hans'] = array(

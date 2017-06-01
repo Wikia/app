@@ -79,10 +79,10 @@ $messages['pt'] = array(
 );
 
 $messages['ru'] = array(
-	'emailext-reactivate-account-subject' => 'Восстановить учётную запись на FANDOM',
-	'emailext-reactivate-account-summary' => 'Вы в шаге от восстановления вашего аккаунта на FANDOM. Кликните по ссылке ниже, чтобы подтвердить ваш запрос и начать восстановление.',
+	'emailext-reactivate-account-subject' => 'Восстановить учётную запись на Фэндоме',
+	'emailext-reactivate-account-summary' => 'Вы в шаге от восстановления вашего аккаунта на Фэндоме. Кликните по ссылке ниже, чтобы подтвердить ваш запрос и начать восстановление.',
 	'emailext-reactivate-account-button-text' => 'Восстановить сейчас',
-	'emailext-reactivate-account-welcome-back' => 'Мы рады вас видеть снова на FANDOM!',
+	'emailext-reactivate-account-welcome-back' => 'Мы рады вас видеть снова на Фэндоме!',
 );
 
 $messages['zh-hans'] = array(

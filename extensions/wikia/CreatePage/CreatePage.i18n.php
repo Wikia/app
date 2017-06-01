@@ -1687,7 +1687,7 @@ $messages['ro'] = array(
 );
 
 $messages['ru'] = array(
-	'createpage-desc' => 'Позволяет создавать новые страницы с помощью Визуального редактора FANDOM',
+	'createpage-desc' => 'Позволяет создавать новые страницы с помощью Визуального редактора Фэндома',
 	'createpage-sp-title' => 'Создать новую страницу',
 	'createpage_title' => 'Создать новую страницу',
 	'createpage_title_caption' => 'Название',

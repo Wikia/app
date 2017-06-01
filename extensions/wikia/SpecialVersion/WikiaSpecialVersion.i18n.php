@@ -51,8 +51,8 @@ $messages['pt'] = [
 ];
 
 $messages['ru'] = [
-	'wikia-version-code' => 'Код FANDOM',
-	'wikia-version-config' => 'Конфигурации FANDOM',
+	'wikia-version-code' => 'Код Фэндома',
+	'wikia-version-config' => 'Конфигурации Фэндома',
 ];
 
 $messages['zh-hans'] = [

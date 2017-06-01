@@ -193,7 +193,7 @@ $messages['qqq'] = [
 ];
 
 $messages['ru'] = [
-	'wikiahubs-search-placeholder' => 'Поиск по FANDOM',
+	'wikiahubs-search-placeholder' => 'Поиск по Фэндому',
 	'wikiahubs-v3-404-message' => 'Страница, которую вы ищете, не существует. [[$1|Нажмите сюда]], чтобы вернуться на страницу портала.',
 	'wikiahubs-v3-404-title' => 'Страница, которую вы ищете, не существует',
 	'wikiahubs-v3-button-cancel' => 'Отмена',

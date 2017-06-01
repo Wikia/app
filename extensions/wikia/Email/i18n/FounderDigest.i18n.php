@@ -193,7 +193,7 @@ $messages['ru'] = array(
 	'emailext-founder-digest-views-description-2' => 'Продолжайте добавлять интересные страницы, темы обсуждений, изображения и видео.',
 	'emailext-founder-digest-edits-header' => 'Сделано правок: $1',
 	'emailext-founder-digest-edits-description' => 'Не забудьте благодарить тех, кто делает вклад в ваше сообщество, чтобы их усилия не остались без внимания.',
-	'emailext-founder-digest-signature' => 'Команда FANDOM',
+	'emailext-founder-digest-signature' => 'Команда Фэндома',
 	'emailext-founder-digest-users-header' => 'Новых участников в сообществе: $1',
 	'emailext-founder-digest-users-description' => 'Поддерживайте новых участников. Поощряйте их активное участие в вашем замечательном сообществе.',
 );

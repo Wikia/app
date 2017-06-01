@@ -214,22 +214,22 @@ $messages['pt'] = array(
 
 $messages['ru'] = array(
 	'emailext-desc' => 'Расширение для доставки электронных сообщений',
-	'emailext-anonymous-editor' => 'Участник FANDOM',
+	'emailext-anonymous-editor' => 'Участник Фэндома',
 	'emailext-no-reply-name' => 'Не отвечать',
 	'emailext-fanverse-tagline' => 'Powered by Wikia',
-	'emailext-recipient-notice' => 'Электронное сообщение отправлено участнику FANDOM $1',
+	'emailext-recipient-notice' => 'Электронное сообщение отправлено участнику Фэндома $1',
 	'emailext-update-frequency' => 'Чтобы изменить параметры электронной почты или частоту получения сообщений, посетите страницу [{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} «Настройки»].',
-	'emailext-unsubscribe' => 'Чтобы отписаться от всех рассылок FANDOM, нажмите [$1 здесь].',
+	'emailext-unsubscribe' => 'Чтобы отписаться от всех рассылок Фэндома, нажмите [$1 здесь].',
 	'emailext-unfollow-text' => 'Не хотите больше получать эти сообщения? Нажмите [$1 здесь], чтобы перестать следить за страницей «$2» на {{SITENAME}}.',
 	'emailext-salutation' => 'Здравствуйте, $1!',
-	'group-translator-member' => 'Переводчик FANDOM',
-	'group-translator' => 'Переводчики FANDOM',
+	'group-translator-member' => 'Переводчик Фэндома',
+	'group-translator' => 'Переводчики Фэндома',
 	'grouppage-translator' => 'wikia:Help:Internationalization',
 	'emailext-wikia-home-url' => 'http://fandom.wikia.com/explore-ru',
 	'emailext-forumreply-unfollow-text' => 'Не хотите больше получать эти сообщения? Нажмите [$1 здесь], чтобы перестать следить за [$2 обсуждением] на [{{SERVER}} {{SITENAME}}].',
 	'right-access-sendemail' => 'Открыть доступ к странице Служебная:SendEmail',
 	'emailext-mobile-application-footer-1' => 'Оставайтесь в курсе всего происходящего на ваших любимых сообществах.',
-	'emailext-mobile-application-footer-2' => 'Проверьте приложения от FANDOM!',
+	'emailext-mobile-application-footer-2' => 'Проверьте приложения от Фэндома!',
 );
 
 $messages['zh-hans'] = array(

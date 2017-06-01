@@ -216,22 +216,22 @@ $messages['pt'] = array(
 );
 
 $messages['ru'] = array(
-	'emailext-welcome-subject' => '$1, добро пожаловать на FANDOM!',
-	'emailext-welcome-summary' => 'Добро пожаловать на FANDOM! Теперь вы часть крупнейшей сети сообществ в мире развлечений. Делитесь знаниями, обменивайтесь мнениями и получайте удовольствие от лучшего развлекательного и познавательного сайта.',
+	'emailext-welcome-subject' => '$1, добро пожаловать на Фэндом!',
+	'emailext-welcome-summary' => 'Добро пожаловать на Фэндом! Теперь вы часть крупнейшей сети сообществ в мире развлечений. Делитесь знаниями, обменивайтесь мнениями и получайте удовольствие от лучшего развлекательного и познавательного сайта.',
 	'emailext-welcome-summary-extended' => 'А что же дальше?',
 	'emailext-welcome-profile-header' => 'Создайте свой профиль',
-	'emailext-welcome-profile-description' => 'Выразите свою индивидуальность на FANDOM. Знакомьтесь с другими участниками и делитесь своими фэндомами.',
-	'emailext-welcome-mobile-header' => 'Возьмите FANDOM с собой',
-	'emailext-welcome-mobile-description' => 'Загрузите приложения FANDOM для [$1 iOS] или [$2 Android], чтобы никогда не терять связь с вашими любимыми сообществами.',
+	'emailext-welcome-profile-description' => 'Выразите свою индивидуальность на Фэндоме. Знакомьтесь с другими участниками и делитесь своими фэндомами.',
+	'emailext-welcome-mobile-header' => 'Возьмите Фэндом с собой',
+	'emailext-welcome-mobile-description' => 'Загрузите приложения Фэндома для [$1 iOS] или [$2 Android], чтобы никогда не терять связь с вашими любимыми сообществами.',
 	'emailext-welcome-basics-url' => 'http://ru.community.wikia.com/wiki/Университет_Фэндома',
 	'emailext-welcome-basics-header' => 'Изучите основы',
 	'emailext-welcome-basics-description' => 'Нуждаетесь в кратком руководстве по редактированию страниц, созданию обсуждений и загрузке файлов? Посмотрите эти [$1 обучающие видео].',
 	'emailext-welcome-fandom-header' => 'Найдите интересующие вас сообщества',
 	'emailext-welcome-fandom-description' => 'Откройте для себя сообщества вокруг фильмов, сериалов, видеоигр и многого другого. Участвуйте в интересующих вас обсуждениях или просто отслеживайте их.',
 	'emailext-welcome-footer-community' => 'Хотите получить больше информации? Найдите дополнительные советы, ответы на вопросы и познакомьтесь с новыми участниками на [http://ru.community.wikia.com Вики Сообщества].',
-	'emailext-welcome-footer-closing' => 'Спасибо, что присоединились к FANDOM!',
-	'emailext-welcome-summary-extended-tips' => 'Вот пять шагов, которые помогут вам освоиться на FANDOM:',
-	'emailext-welcome-fandom-connect-header' => 'Приобщайтесь к FANDOM',
+	'emailext-welcome-footer-closing' => 'Спасибо, что присоединились к Фэндому!',
+	'emailext-welcome-summary-extended-tips' => 'Вот пять шагов, которые помогут вам освоиться на Фэндоме:',
+	'emailext-welcome-fandom-connect-header' => 'Приобщайтесь к Фэндому',
 	'emailext-welcome-fandom-connect-description' => 'Подпишитесь на @ru_fandom в социальных сетях, чтобы следить за новинками поп-культуры на нашем сайте.',
 );
 

@@ -131,14 +131,14 @@ $messages['pt'] = array(
 );
 
 $messages['ru'] = array(
-	'emailext-password-subject' => 'Восстановление пароля на FANDOM',
+	'emailext-password-subject' => 'Восстановление пароля на Фэндоме',
 	'emailext-password-summary' => 'Похоже, у вас возникли проблемы при входе в систему. Из соображений безопасности мы не можем сразу выслать вам новый пароль, поэтому вам нужно будет войти в систему с помощью временного пароля.',
 	'emailext-password-intro' => 'Ваш временный пароль:',
 	'emailext-password-unrequested' => 'Если вы не запрашивали новый пароль, то не обращайте внимания на это сообщение и войдите в систему, используя свой старый пароль. Ваша учётная запись надёжно защищена.',
-	'emailext-password-questions' => 'Возникли вопросы или сложности? [http://ru.community.wikia.com/wiki/Служебная:Contact/account-issue Обратитесь в поддержку FANDOM].',
-	'emailext-password-signature' => 'Команда FANDOM',
+	'emailext-password-questions' => 'Возникли вопросы или сложности? [http://ru.community.wikia.com/wiki/Служебная:Contact/account-issue Обратитесь в поддержку Фэндома].',
+	'emailext-password-signature' => 'Команда Фэндома',
 	'emailext-password-reset-link-intro' => 'Нажмите на ссылку ниже, чтобы создать новый пароль:',
-	'emailext-password-reset-link-summary' => 'Похоже, у вас возникли проблемы при входе в систему. Из соображений безопасности мы не можем просто так выслать ваш пароль. Вам нужно создать новый пароль на FANDOM.',
+	'emailext-password-reset-link-summary' => 'Похоже, у вас возникли проблемы при входе в систему. Из соображений безопасности мы не можем просто так выслать ваш пароль. Вам нужно создать новый пароль на Фэндоме.',
 	'emailext-password-reset-link-link-caption' => 'СОЗДАТЬ НОВЫЙ ПАРОЛЬ',
 );
 

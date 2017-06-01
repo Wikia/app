@@ -42,7 +42,7 @@ $messages['pt'] = array(
 );
 
 $messages['ru'] = array(
-	'authmodal-registration-success' => 'Добро пожаловать, $1! Ваша учётная запись на FANDOM была успешно создана.',
+	'authmodal-registration-success' => 'Добро пожаловать, $1! Ваша учётная запись на Фэндоме была успешно создана.',
 );
 
 $messages['zh-hans'] = array(

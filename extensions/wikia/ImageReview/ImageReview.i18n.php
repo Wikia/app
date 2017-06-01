@@ -110,7 +110,7 @@ $messages['fr'] = [
 ];
 
 $messages['ru'] = [
-	'imagereview-reason' => 'Нарушение [[w:c:ru.community:Викия:Условия_использования|Условий использования]] FANDOM',
+	'imagereview-reason' => 'Нарушение [[w:c:ru.community:Викия:Условия_использования|Условий использования]] Фэндома',
 	'imagereview-noresults' => 'Изображения не найдены.',
 ];
 
