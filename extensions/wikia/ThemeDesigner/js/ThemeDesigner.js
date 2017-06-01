@@ -267,7 +267,7 @@
 			//grapic wordmark button
 			$('#WordmarkTab').find('.graphic').find('.preview').find('a').click(function (event) {
 				event.preventDefault();
-				ThemeDesigner.set('wordmark-type', 'text');
+				ThemeDesigner.set('wordmark-type', 'graphic');
 				ThemeDesigner.set('wordmark-image-url', window.wgBlankImgUrl);
 
 				// Can't use js to clear file input value so reseting form
@@ -752,6 +752,7 @@
 				settingsToLoad,
 				sitename,
 				wordmark,
+				wordmarkImg,
 				previewFrameContent = this.previewFrame.contents();
 
 			/*** Theme Tab ***/
@@ -835,8 +836,17 @@
 					sitename = previewFrameContent.find('.wds-community-header__sitename a');
 					sitename.text(ThemeDesigner.settings['wordmark-text']);
 				} else if (ThemeDesigner.settings['wordmark-type'] === 'graphic') {
-					wordmark = previewFrameContent.find('.wds-community-header__wordmark a');
-					wordmark.html('<img src="' + ThemeDesigner.settings['wordmark-image-url'] + '">');
+					if(ThemeDesigner.settings['wordmark-image-url'] === window.wgBlankImgUrl) {
+						previewFrameContent.find('.wds-community-header__wordmark').remove();
+					} else {
+						wordmark = previewFrameContent.find('.wds-community-header__wordmark a');
+						wordmarkImg = '<img src="' + ThemeDesigner.settings['wordmark-image-url'] + '">';
+						if(wordmark.length) {
+							wordmark.html(wordmarkImg);
+						} else {
+							previewFrameContent.find('.wds-community-header').prepend('<div class="wds-community-header__wordmark"><a href="#">' + wordmarkImg + '</a></div>');
+						}
+					}
 				}
 
 				previewFrameContent.find('#WikiaPageBackground')
