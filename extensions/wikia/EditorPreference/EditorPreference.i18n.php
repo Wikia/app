@@ -105,7 +105,7 @@ $messages['pl'] = array(
 
 $messages['pt'] = array(
 	'editor-preference-help' => 'Nesta wiki, o editor padrão é sempre o editor clássico. [[Ajuda:Editando|Saiba mais]].',
-	'option-ck-editor' => 'Editor clássico de rich text do Fandom (onde disponível)',
+	'option-ck-editor' => 'Editor clássico de rich text do FANDOM (onde disponível)',
 	'option-visual-editor' => 'Editor visual',
 	'editorpreference-desc' => 'Allows users to set their preference of editor',
 	'editor-preference' => 'Preferred editor:',

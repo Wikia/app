@@ -7,9 +7,9 @@ $messages['en'] = array(
 	'sharedhelp-searchprofile' => 'Help pages',
 	'sharedhelp-searchprofile-tooltip' => 'Search Help pages',
 	'shared_help_info' => 'Questions? Ask in the [[w:Special:Forum|Community Forum]].',
-	'shared_help_edit_info' => "The help text within the box is stored at [[w:Help:$1|Help:$1]] on Fandom $2. See [[Help:Shared Help]] for more info.
+	'shared_help_edit_info' => "The help text within the box is stored at [[w:Help:$1|Help:$1]] on FANDOM $2. See [[Help:Shared Help]] for more info.
 
-Any changes that apply to ''all'' wikis should be made to the Fandom $2 copy. [[w:Help_talk:$1|Suggest changes here]].
+Any changes that apply to ''all'' wikis should be made to the FANDOM $2 copy. [[w:Help_talk:$1|Suggest changes here]].
 
 Text should be placed on this page if you wish to explain usage, style and policy guidelines which apply only to {{SITENAME}}. Text added in this edit box will be displayed above the boxed help text.",
 	'shared_help_search_info' => 'If you wish to search [[Help:Shared Help|shared help]], please use [http://help.wikia.com/wiki/Special:Search?search=$1 Wikia Help].',
@@ -74,9 +74,9 @@ $messages['de'] = array(
 	'sharedhelp-searchprofile' => 'Hilfeseiten',
 	'sharedhelp-searchprofile-tooltip' => 'Hilfeseiten durchsuchen',
 	'shared_help_info' => 'Fragen? Stellt sie auf unserem [[w:de:Special:Forum|Community-Forum]].',
-	'shared_help_edit_info' => 'Der Hilfetext in diesem Fenster wird bei Fandom unter [[w:Help:$1|w:Help:$1]] auf $2 gespeichert. Unter [[Hilfe:Gemeinsame_Hilfe]] erfährst du mehr.
+	'shared_help_edit_info' => 'Der Hilfetext in diesem Fenster wird bei FANDOM unter [[w:Help:$1|w:Help:$1]] auf $2 gespeichert. Unter [[Hilfe:Gemeinsame_Hilfe]] erfährst du mehr.
 
-Alle Änderungen, die sich auf "alle" Wikis beziehen, sollten am Text der Site $2 bei Fandom durchgeführt werden. [[w:Help_talk:$1|Schlage hier Änderungen vor]].
+Alle Änderungen, die sich auf "alle" Wikis beziehen, sollten am Text der Site $2 bei FANDOM durchgeführt werden. [[w:Help_talk:$1|Schlage hier Änderungen vor]].
 
 Der Text sollte auf dieser Seite hinzugefügt werden, wenn er dazu dient, die Verwendung, den Stil und die Regeln und Richtlinien zu erklären, die nur auf {{SITENAME}} gelten. Text, der in dieses Bearbeitungsfenster eingefügt wird, erscheint über dem Hilfetext.',
 	'shared_help_search_info' => 'Wenn du Hilfe beim Editieren brauchst, besuche bitte die [http://hilfe.wikia.com/wiki/Special:Search?search=$1 Wikia Hilfe].',
@@ -129,9 +129,9 @@ $messages['fr'] = array(
 	'sharedhelp-searchprofile' => "Pages d'aide",
 	'sharedhelp-searchprofile-tooltip' => "Rechercher dans les pages d'aide",
 	'shared_help_info' => 'Vous avez des questions ? Posez-les sur le [[w:fr:Special:Forum|forum de la communauté]].',
-	'shared_help_edit_info' => "Le texte d'aide inclus dans le cadre est disponible sur la page [[w:Help:$1|Aide:$1]] de $2 sur Fandom. Pour plus d'informations, voir [[Aide:Aide_partagée]].
+	'shared_help_edit_info' => "Le texte d'aide inclus dans le cadre est disponible sur la page [[w:Help:$1|Aide:$1]] de $2 sur FANDOM. Pour plus d'informations, voir [[Aide:Aide_partagée]].
 
-Les changements s'appliquant à ''tous'' les wikis doivent être effectués sur la copie Fandom de $2. [[w:Help_talk:$1|Vous pouvez suggérer des modifications ici]].
+Les changements s'appliquant à ''tous'' les wikis doivent être effectués sur la copie FANDOM de $2. [[w:Help_talk:$1|Vous pouvez suggérer des modifications ici]].
 
 Si vous souhaitez expliquer une utilisation, un style et un règlement spécifique à {{SITENAME}}, précisez le texte sur cette page. Le texte ajouté à cette zone d'édition s'affichera au-dessus du texte d'aide inclus dans le cadre.",
 	'shared_help_search_info' => 'Si vous recherchez de l’aide, veuillez visiter le [http://communaute.wikia.com/wiki/Special:Search?search=$1 Centre des communautés].',
@@ -187,9 +187,9 @@ $messages['ja'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'トークページの自動作成',
 	'sharedhelp-searchprofile' => 'ヘルプページ',
 	'sharedhelp-searchprofile-tooltip' => 'ヘルプの検索',
-	'shared_help_edit_info' => "ボックス内のヘルプテキストは、Fandom「$2」の[[w:ja:ヘルプ:$1|ヘルプ:$1]]に保管されます。詳しくは、[[ヘルプ:共有ヘルプ]]をご覧ください。
+	'shared_help_edit_info' => "ボックス内のヘルプテキストは、FANDOM「$2」の[[w:ja:ヘルプ:$1|ヘルプ:$1]]に保管されます。詳しくは、[[ヘルプ:共有ヘルプ]]をご覧ください。
 
-''すべて''のwikiに変更を適用せさたい場合は、Fandom「$2」を修正します。[[w:ja:Help_talk:$1|ここで変更をリクエスト]]してください。
+''すべて''のwikiに変更を適用せさたい場合は、FANDOM「$2」を修正します。[[w:ja:Help_talk:$1|ここで変更をリクエスト]]してください。
 
 {{SITENAME}}にのみ適用できる使用法、スタイル、ポリシーについての説明を追加する場合は、このページにテキストを配置します。この編集ボックスに追加したテキストは、ボックス内のヘルプテキストの上に表示されます。",
 	'shared_help_info' => '質問ですか？ [[w:ja:Special:Forum|コミュニティフォーラム]]にて質問してみてください。',
@@ -209,9 +209,9 @@ $messages['ko'] = array(
 	'sharedhelp-autotalkcreate-summary' => '토론 문서를 자동으로 생성',
 	'sharedhelp-desc' => 'Takes pages from [[w:Help:Contents|Community Central]] and inserts them into the {{ns:help}} namespace on this wiki',
 	'sharedhelp-searchprofile-tooltip' => 'Search Help pages',
-	'shared_help_edit_info' => "The help text within the box is stored at [[w:Help:$1|Help:$1]] on Fandom $2. See [[Help:Shared Help]] for more info.
+	'shared_help_edit_info' => "The help text within the box is stored at [[w:Help:$1|Help:$1]] on FANDOM $2. See [[Help:Shared Help]] for more info.
 
-Any changes that apply to ''all'' wikis should be made to the Fandom $2 copy. [[w:Help_talk:$1|Suggest changes here]].
+Any changes that apply to ''all'' wikis should be made to the FANDOM $2 copy. [[w:Help_talk:$1|Suggest changes here]].
 
 Text should be placed on this page if you wish to explain usage, style and policy guidelines which apply only to {{SITENAME}}. Text added in this edit box will be displayed above the boxed help text.",
 );
@@ -335,9 +335,9 @@ $messages['pt'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Página de discussão criada automaticamente',
 	'sharedhelp-searchprofile' => 'Páginas de ajuda',
 	'sharedhelp-searchprofile-tooltip' => 'Pesquisar nas páginas de ajuda',
-	'shared_help_edit_info' => "O texto de ajuda dentro da caixa é armazenado em [[w:c:Ajuda:$1|Ajuda: $1]] no Fandom $2. Veja [[Ajuda:ajuda compartilhada]] para mais informações.
+	'shared_help_edit_info' => "O texto de ajuda dentro da caixa é armazenado em [[w:c:Ajuda:$1|Ajuda: $1]] no FANDOM $2. Veja [[Ajuda:ajuda compartilhada]] para mais informações.
 
-Quaisquer alterações que se aplicam a ''todas'' as wikis devem ser feitas para a cópia do $2 Fandom.
+Quaisquer alterações que se aplicam a ''todas'' as wikis devem ser feitas para a cópia do $2 FANDOM.
 [[w:c:Ajuda: $1|Sugerir mudanças aqui]].
 
 O texto deve ser colocado nesta página se você quer explicar as diretrizes de uso, estilo e política que se aplicam somente a {{SITENAME}}. O texto adicionado nesta caixa de edição será exibido acima do texto de ajuda.",
@@ -419,9 +419,9 @@ $messages['vi'] = array(
 	'sharedhelp-searchprofile' => 'Trang trợ giúp',
 	'sharedhelp-searchprofile-tooltip' => 'Trang trợ giúp tìm kiếm',
 	'shared_help_info' => 'Có thắc mắc? Hãy đặt câu hỏi tại [[w:vi:Special:Forum|Diễn đàn Cộng đồng]].',
-	'shared_help_edit_info' => "The help text within the box is stored at [[w:Help:$1|Help:$1]] on Fandom $2. See [[Help:Shared Help]] for more info.
+	'shared_help_edit_info' => "The help text within the box is stored at [[w:Help:$1|Help:$1]] on FANDOM $2. See [[Help:Shared Help]] for more info.
 
-Any changes that apply to ''all'' wikis should be made to the Fandom $2 copy. [[w:Help_talk:$1|Suggest changes here]].
+Any changes that apply to ''all'' wikis should be made to the FANDOM $2 copy. [[w:Help_talk:$1|Suggest changes here]].
 
 Text should be placed on this page if you wish to explain usage, style and policy guidelines which apply only to {{SITENAME}}. Text added in this edit box will be displayed above the boxed help text.",
 	'shared_help_search_info' => 'If you wish to search [[Help:Shared Help|shared help]], please use [http://help.wikia.com/wiki/Special:Search?search=$1 Wikia Help].',

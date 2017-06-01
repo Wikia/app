@@ -3125,7 +3125,7 @@ $messages['pt'] = array(
 
 Há um novo comentário em $PAGETITLE no {{SITENAME}}. Use esse link para ver todos os comentários: $PAGETITLE_URL#WikiaArticleComments
 
-- Suporte da Comunidade do Fandom
+- Suporte da Comunidade do FANDOM
 
 ___________________________________________
 * Encontre ajuda e conselhos na Central da Comunidade: http://comunidade.wikia.com
@@ -3134,7 +3134,7 @@ ___________________________________________
 <br /><br />
 Há um novo comentário em $PAGETITLE no {{SITENAME}}. Use esse link para ver todos os comentários: $PAGETITLE_URL#WikiaArticleComments
 <br /><br />
-- Suporte da Comunidade Fandom
+- Suporte da Comunidade FANDOM
 <br /><br />
 ___________________________________________
 <ul>

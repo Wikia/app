@@ -3,7 +3,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'bannernotifications-desc' => 'Displays system notifications for events such as AJAX failures',
-	'bannernotifications-general-ajax-failure' => 'The browser could not connect to Fandom.  Try again later.',
+	'bannernotifications-general-ajax-failure' => 'The browser could not connect to FANDOM.  Try again later.',
 	'bannernotifications-not-confirmed-email' => "Oh no! Your email address has not yet been confirmed. You should have a confirmation message in your inbox. Didn't get it? [[Special:ConfirmEmail|Click here and we'll send a new one.]] If you need to change your address, head to your [[Special:Preferences#mw-prefsection-emailv2|Preferences page]].",
 	'bannernotifications-no-email' => "Oh no! Looks like we don't have an email address for you. To set your email, head to your [[Special:Preferences#mw-prefsection-emailv2|Preferences page]].",
 );
@@ -46,14 +46,14 @@ $messages['cs'] = array(
 
 $messages['de'] = array(
 	'bannernotifications-desc' => 'Zeigt Systembenachrichtigungen für Ereignisse wie AJAX-Ausfälle.',
-	'bannernotifications-general-ajax-failure' => 'Der Browser konnte keine Verbindung mit Fandom herstellen. Bitte versuche es später erneut.',
+	'bannernotifications-general-ajax-failure' => 'Der Browser konnte keine Verbindung mit FANDOM herstellen. Bitte versuche es später erneut.',
 	'bannernotifications-not-confirmed-email' => 'Oh nein! Deine E-Mail-Adresse wurde noch nicht bestätigt. Die Bestätigungsnachricht sollte in deinem Postfach angekommen sein. Du hast sie nicht erhalten? [[Special:ConfirmEmail|Klicke hier und wir schicken sie dir noch einmal zu.]] Wenn du deine E-Mail-Adresse ändern musst, kannst du das in deinen [[Special:Preferences#mw-prefsection-emailv2|Einstellungen]] tun.',
 	'bannernotifications-no-email' => 'Oh nein! Wir haben deine E-Mail-Adresse nicht. In deinen [[Special:Preferences#mw-prefsection-emailv2|Einstellungen]] kannst du deine E-Mail-Adresse eintragen.',
 );
 
 $messages['es'] = array(
 	'bannernotifications-desc' => 'Muestra las notificaciones del sistema para eventos tales como fallas de AJAX',
-	'bannernotifications-general-ajax-failure' => 'El buscador no pudo conectarse a Fandom. Inténtalo más tarde.',
+	'bannernotifications-general-ajax-failure' => 'El buscador no pudo conectarse a FANDOM. Inténtalo más tarde.',
 	'bannernotifications-not-confirmed-email' => '¡Oh, no! Aún no se ha confirmado tu dirección de correo electrónico. Debes tener un mensaje de confirmación en tu bandeja de entrada. ¿No te llegó? [[{{#Special:ConfirmEmail}}|Haz clic aquí y te enviaremos uno nuevo.]] Si necesitas cambiar tu dirección, dirígete a tu [[Special:Preferences#mw-prefsection-emailv2|página de preferencias]].',
 	'bannernotifications-no-email' => '¡Oh no! Parece que no tenemos tu dirección de correo electrónico. Para configurar tu correo electrónico, dirígete a tu [[Special:Preferences#mw-prefsection-emailv2|página de preferencias]].',
 );
@@ -70,7 +70,7 @@ $messages['fo'] = array(
 
 $messages['fr'] = array(
 	'bannernotifications-desc' => 'Affiche des notifications système pour des événements tels que les échecs AJAX.',
-	'bannernotifications-general-ajax-failure' => 'Le navigateur n’a pas pu se connecter à Fandom. Veuillez réessayer plus tard.',
+	'bannernotifications-general-ajax-failure' => 'Le navigateur n’a pas pu se connecter à FANDOM. Veuillez réessayer plus tard.',
 	'bannernotifications-not-confirmed-email' => "Votre adresse e-mail n'a pas encore été confirmée. Vous devriez avoir un message de confirmation dans votre boîte de messagerie. Vous ne l'avez pas reçu ? [[Special:ConfirmEmail|Cliquez ici pour en avoir un nouveau.]] Pour changer d'adresse e-mail, allez à la [[Special:Preferences#mw-prefsection-emailv2|page Préférences]].",
 	'bannernotifications-no-email' => "Apparemment vous n'avez pas encore fourni d'adresse e-mail. Pour enregistrer votre e-mail, veuillez aller dans vos [[Special:Preferences#mw-prefsection-emailv2|Préférences]].",
 );
@@ -102,7 +102,7 @@ $messages['id'] = array(
 
 $messages['it'] = array(
 	'bannernotifications-desc' => 'Visualizza le notifiche di sistema per eventi quali guasti AJAX',
-	'bannernotifications-general-ajax-failure' => 'Il browser non è riuscito a connettersi a Fandom. Riprovare più tardi.',
+	'bannernotifications-general-ajax-failure' => 'Il browser non è riuscito a connettersi a FANDOM. Riprovare più tardi.',
 	'bannernotifications-not-confirmed-email' => "Oh no! Il tuo indirizzo email non è stato ancora confermato. Avresti dovuto ricevere un messaggio di conferma nella tua casella di posta. Non l'hai ricevuto? [[Special:ConfirmEmail|Clicca qui e te ne invieremo un altro]]. Se devi cambiare il tuo indirizzo, visita la pagina delle tue [[Special:Preferences#mw-prefsection-emailv2|preferenze]].",
 	'bannernotifications-no-email' => 'Oh no! A quanto pare non abbiamo un tuo indirizzo email. Per impostare la tua email, vai nelle tue [[Special:Preferences#mw-prefsection-emailv2|preferenze]].',
 );
@@ -143,7 +143,7 @@ $messages['oc'] = array(
 
 $messages['pl'] = array(
 	'bannernotifications-desc' => 'Wyświetla komunikaty systemowe dla zdarzeń takich jak błędy AJAX',
-	'bannernotifications-general-ajax-failure' => 'Przeglądarka nie była w stanie połączyć się z portalem Fandom. Spróbuj ponownie później.',
+	'bannernotifications-general-ajax-failure' => 'Przeglądarka nie była w stanie połączyć się z portalem FANDOM. Spróbuj ponownie później.',
 	'bannernotifications-not-confirmed-email' => 'O nie! Twój adres e-mail nie został jeszcze potwierdzony. E-mail pozwalający potwierdzić rejestrację powinien być w twojej skrzynce odbiorczej. Nie ma go tam? [[Special:ConfirmEmail|Kliknij tutaj, a wyślemy go ponownie.]] Jeśli chciałbyś zmienić adres, przejdź do [[Special:Preferences#mw-prefsection-emailv2|strony z preferencjami]].',
 	'bannernotifications-no-email' => 'O nie! Wygląda na to, że nie mamy twojego adresu e-mail. Aby ustawić swój adres e-mail przejdź do [[Special:Preferences#mw-prefsection-emailv2|strony z preferencjami]].',
 );
@@ -155,7 +155,7 @@ $messages['pms'] = array(
 
 $messages['pt'] = array(
 	'bannernotifications-desc' => 'Exibe notificações de sistema para eventos como falhas de AJAX',
-	'bannernotifications-general-ajax-failure' => 'O navegador não pode se conectar ao Fandom. Tente novamente mais tarde.',
+	'bannernotifications-general-ajax-failure' => 'O navegador não pode se conectar ao FANDOM. Tente novamente mais tarde.',
 	'bannernotifications-not-confirmed-email' => 'Seu endereço de e-mail ainda não foi confirmado. Você deve ter recebido uma mensagem de confirmação em sua caixa de entrada. Não recebeu? [[Special:ConfirmEmail|Clique aqui e enviaremos um novo.]] Se você precisar alterar o seu endereço, visite sua [[Special:Preferences#mw-prefsection-emailv2|página de preferências]].',
 	'bannernotifications-no-email' => 'Aparentemente não temos um endereço de e-mail para você. Para definir o seu e-mail, acesse sua [[Special:Preferences#mw-prefsection-emailv2|página de preferências]].',
 );
