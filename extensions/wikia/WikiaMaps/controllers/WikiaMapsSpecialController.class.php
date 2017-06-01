@@ -181,7 +181,7 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 		$this->response->setVal( 'mapCityId', $mapCityId );
 
 		$this->redirectIfForeignWiki( $mapCityId, $this->response->getVal( 'mapId' ) );
-		$this->wg->out->setHTMLTitle( $mapData->title );
+		RequestContext::getMain()->getOutput()->setPageTitle( $mapData->title );
 
 		$mapDeleted = $mapData->deleted == WikiaMaps::MAP_DELETED;
 
