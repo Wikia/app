@@ -61,12 +61,12 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			mocks.adContext,
 			mocks.adLogicPageParams,
 			mocks.adTracker,
-			mocks.bidHelper,
 			mocks.slotTargeting,
 			mocks.browserDetect,
 			mocks.geo,
 			mocks.log,
-			mocks.window
+			mocks.window,
+			mocks.bidHelper
 		);
 	}
 

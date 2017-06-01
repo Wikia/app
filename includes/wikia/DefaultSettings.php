@@ -602,6 +602,7 @@ $wgAjaxAutoCompleteSearch = true;
  * Wikia custom extensions, enabled sitewide. Pre-required by some skins
  */
 include_once( "$IP/extensions/ExtensionFunctions.php" );
+include_once( "$IP/extensions/wikia/DesignSystem/DesignSystem.setup.php" );
 include_once( "$IP/extensions/wikia/AnalyticsEngine/AnalyticsEngine.setup.php" );
 include_once( "$IP/extensions/wikia/AjaxFunctions.php" );
 include_once( "$IP/extensions/wikia/DataProvider/DataProvider.php" );
@@ -1558,20 +1559,6 @@ $wgAdDriverPageFairRecoveryCountries = null;
 $wgAdDriverEnablePageFairRecovery = true;
 
 /**
- * @name $wgAdDriverPageFairConditionalAdRendering
- * Flag to enable PF conditionalAdRendering, more in PF docs
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverPageFairConditionalAdRendering = false;
-
-/**
- * @name $wgAdDriverPageFairConditionalIframeRendering
- * Flag to enable PF conditionalIframeRendering, more in PF docs
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverPageFairConditionalIframeRendering = false;
-
-/**
  * trusted proxy service registry
  */
 $wgAutoloadClasses[ 'TrustedProxyService'] =  "$IP/includes/wikia/services/TrustedProxyService.class.php" ;
@@ -1770,11 +1757,6 @@ $wgXhprofMinimumTime = 0.001;
  * Enables sending profiler reports via Scribe
  */
 $wgProfilerSendViaScribe = true;
-
-/* @name wgDisableWAMOnHubs
- * Disable WAM module on hub pages
- */
-$wgDisableWAMOnHubs = false;
 
 /**
  * Force ImageServing to return an empty list
