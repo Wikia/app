@@ -53,8 +53,8 @@ class CreateNewWikiController extends WikiaController {
 
 		$this->setupVerticalsAndCategories();
 
-		$this->aTopLanguages = Language::getSupportedLanguages();
-		$languages = Language::getRequestSupportedLanguages();
+		$this->aTopLanguages = WikiaLanguage::getSupportedLanguages();
+		$languages = WikiaLanguage::getRequestSupportedLanguages();
 		asort( $languages );
 		$this->aLanguages = $languages;
 

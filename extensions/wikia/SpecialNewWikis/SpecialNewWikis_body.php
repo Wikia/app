@@ -240,8 +240,8 @@ class NewWikisPage extends AlphabeticPager {
 	function getPageHeader() {
 		global $wgScript;
 		$self = $this->getTitle();
-		$this->mTopLanguages = Language::getSupportedLanguages();
-		$this->mLanguages = Language::getRequestSupportedLanguages();
+		$this->mTopLanguages = WikiaLanguage::getSupportedLanguages();
+		$this->mLanguages = WikiaLanguage::getRequestSupportedLanguages();
 		asort($this->mLanguages);
 
 		$hubs = WikiFactoryHub::getInstance();

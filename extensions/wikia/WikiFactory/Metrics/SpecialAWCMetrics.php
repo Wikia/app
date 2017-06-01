@@ -225,7 +225,7 @@ class WikiMetrics {
 	/* get languages */
 	private function getLangs() {
 		$this->mTopLanguages = explode(',', wfMsg('awc-metrics-language-top-list'));
-		$this->mLanguages = Language::getRequestSupportedLanguages();
+		$this->mLanguages = WikiaLanguage::getRequestSupportedLanguages();
 		asort($this->mLanguages);
 		return count($this->mLanguages);
 	}
