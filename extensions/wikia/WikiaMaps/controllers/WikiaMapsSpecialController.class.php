@@ -42,7 +42,7 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 	 * Wikia Maps special page
 	 */
 	public function index() {
-		$this->wg->out->setHTMLTitle( wfMessage( 'wikia-interactive-maps-title' )->escaped() );
+		RequestContext::getMain()->getOutput()->setPageTitle( wfMessage( 'wikia-interactive-maps-title' )->escaped() );
 
 		if ( is_numeric( $this->getPar() ) ) {
 			if ( $this->getRequest()->getVal( '_escaped_fragment_' ) === null ) {
