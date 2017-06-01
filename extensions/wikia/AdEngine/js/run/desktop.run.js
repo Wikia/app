@@ -11,7 +11,6 @@ require([
 	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.pageFairDetection',
-	'ext.wikia.adEngine.taboolaHelper',
 	'ext.wikia.adEngine.slot.service.actionHandler',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
@@ -31,7 +30,6 @@ require([
 	dartHelper,
 	messageListener,
 	pageFairDetection,
-	taboolaHelper,
 	actionHandler,
 	slotTracker,
 	slotTweaker,
@@ -82,13 +80,6 @@ require([
 
 		// Recovery & detection
 		adBlockDetection.initEventQueues();
-
-		// Taboola
-		if (context.opts.loadTaboolaLibrary) {
-			adBlockDetection.addOnBlockingCallback(function() {
-				taboolaHelper.loadTaboola();
-			});
-		}
 
 		if (context.opts.googleConsumerSurveys && gcs) {
 			gcs.addRecoveryCallback();

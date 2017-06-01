@@ -1376,19 +1376,6 @@ $wgAdDriverUseEvolve2 = true;
  */
 $wgAdDriverEvolve2Countries = null;
 
-/**
- * @name $wgAdDriverUseTaboola
- * Whether to enable AdProviderTaboola (true) or not (false)
- */
-$wgAdDriverUseTaboola = true;
-
-/**
- * @name $wgAdDriverTaboolaConfig
- * Config with list of countries with enabled Taboola module.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverTaboolaConfig = null;
-
 /** @name $wgSitewideDisableAdsOnMercury
  * Disable ads on Mercury if set to true.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.

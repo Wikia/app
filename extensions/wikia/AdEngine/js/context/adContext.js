@@ -72,8 +72,7 @@ define('ext.wikia.adEngine.adContext', [
 	}
 
 	function updateAdContextRecoveryServices(context, noExternals) {
-		var taboolaConfig = instantGlobals.wgAdDriverTaboolaConfig || {},
-			isRecoveryServiceAlreadyEnabled = false,
+		var isRecoveryServiceAlreadyEnabled = false,
 			serviceCanBeEnabled = !noExternals && context.opts.showAds !== false; // showAds is undefined by default
 
 		// PageFair recovery
@@ -91,11 +90,6 @@ define('ext.wikia.adEngine.adContext', [
 		isRecoveryServiceAlreadyEnabled |= context.opts.sourcePointMMS;
 
 		context.opts.sourcePointBootstrap = context.opts.sourcePointMMS || context.opts.sourcePointRecovery;
-
-		// Taboola
-		context.opts.loadTaboolaLibrary = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
-			(context.opts.useTaboola || !context.opts.disableTaboola) && shouldLoadTaboolaOnBlockingTraffic(taboolaConfig);
-		isRecoveryServiceAlreadyEnabled |= context.opts.loadTaboolaLibrary;
 
 		// Google Consumer Surveys
 		context.opts.googleConsumerSurveys = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
@@ -227,21 +221,6 @@ define('ext.wikia.adEngine.adContext', [
 		for (i = 0, len = callbacks.length; i < len; i += 1) {
 			callbacks[i](context);
 		}
-	}
-
-	function shouldLoadTaboolaOnBlockingTraffic(taboolaConfig) {
-		var i, taboolaSlot;
-
-		for (taboolaSlot in taboolaConfig) {
-			if (taboolaConfig.hasOwnProperty(taboolaSlot) && taboolaConfig[taboolaSlot].recovery) {
-				for (i = 0; i < taboolaConfig[taboolaSlot].recovery.length; i++) {
-					if (geo.isProperGeo(taboolaConfig[taboolaSlot].recovery[i])) {
-						return true;
-					}
-				}
-			}
-		}
-		return false;
 	}
 
 	function addCallback(callback) {

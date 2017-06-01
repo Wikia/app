@@ -91,18 +91,6 @@ describe('AdContext', function () {
 		context.opts.sourcePointMMS = true;
 	}
 
-	function enableTaboola(context) {
-		mocks.instantGlobals = mocks.instantGlobals || {};
-		mocks.instantGlobals.wgAdDriverTaboolaConfig = {
-			SLOT: {
-				recovery: ['CURRENT_COUNTRY']
-			}
-		};
-
-		context.opts = context.opts || {};
-		context.opts.useTaboola = true;
-	}
-
 	function enablePageFairDetection() {
 		mocks.instantGlobals.wgAdDriverPageFairDetectionCountries = ['CURRENT_COUNTRY'];
 		spyOn(mocks.sampler, 'sample').and.returnValue(true);
@@ -706,44 +694,6 @@ describe('AdContext', function () {
 		expect(context.opts.sourcePointMMS).toBeTruthy();
 	});
 
-	it('Should enable Taboola', function () {
-		var context = {};
-
-		enableTaboola(context);
-		getModule().setContext(context);
-
-		expect(context.opts.loadTaboolaLibrary).toBeTruthy();
-	});
-
-	it('Should disable Taboola if useTaboola is false', function () {
-		var context = {};
-
-		enableTaboola(context);
-		context.opts = {
-			useTaboola: false,
-			disableTaboola: true
-		};
-
-		getModule().setContext(context);
-
-		expect(context.opts.loadTaboolaLibrary).toBeFalsy();
-	});
-
-	it('Should enable Taboola if there is no useTaboola variable (cache issue)', function () {
-		var context = {};
-
-		mocks.instantGlobals = mocks.instantGlobals || {};
-		mocks.instantGlobals.wgAdDriverTaboolaConfig = {
-			SLOT: {
-				recovery: ['CURRENT_COUNTRY']
-			}
-		};
-
-		getModule().setContext(context);
-
-		expect(context.opts.loadTaboolaLibrary).toBeTruthy();
-	});
-
 	it('Should enable GCS', function () {
 		var context = {};
 
@@ -784,39 +734,6 @@ describe('AdContext', function () {
 
 		expect(context.opts.pageFairRecovery).toBeTruthy();
 		expect(context.opts.sourcePointMMS).toBeFalsy();
-	});
-
-	it('Should disable Taboola if SourcePoint Recovery is enabled', function () {
-		var context = {};
-
-		enableSourcePointMMS(context);
-		enableTaboola(context);
-		getModule().setContext(context);
-
-		expect(context.opts.sourcePointMMS).toBeTruthy();
-		expect(context.opts.loadTaboolaLibrary).toBeFalsy();
-	});
-
-	it('Should disable Taboola if PageFair Recovery is enabled', function () {
-		var context = {};
-
-		enablePageFairRecovery(context);
-		enableTaboola(context);
-		getModule().setContext(context);
-
-		expect(context.opts.pageFairRecovery).toBeTruthy();
-		expect(context.opts.loadTaboolaLibrary).toBeFalsy();
-	});
-
-	it('Should disable GCS if Taboola is enabled', function () {
-		var context = {};
-
-		enableTaboola(context);
-		enableGCS(context);
-		getModule().setContext(context);
-
-		expect(context.opts.loadTaboolaLibrary).toBeTruthy();
-		expect(context.opts.googleConsumerSurveys).toBeFalsy();
 	});
 
 	it('Should disable GCS if PageFair is enabled', function () {
