@@ -4,13 +4,13 @@ $messages = [];
 
 $messages['en'] = [
 	'wikia-version-desc' => 'Wikia\'s extension for Special:Version, in support of package-based deployment.',
-	'wikia-version-code' => 'Fandom code',
-	'wikia-version-config' => 'Fandom config',
+	'wikia-version-code' => 'FANDOM code',
+	'wikia-version-config' => 'FANDOM config',
 ];
 
 $messages['fr'] = [
-	'wikia-version-code' => 'Code de Fandom',
-	'wikia-version-config' => 'Config de Fandom',
+	'wikia-version-code' => 'Code de FANDOM',
+	'wikia-version-config' => 'Config de FANDOM',
 	'wikia-version-desc' => 'Extension de Special:Version de Wikia, en soutien de déploiement à base de paquets',
 ];
 
@@ -20,18 +20,18 @@ $messages['qqq'] = [
 ];
 
 $messages['de'] = [
-	'wikia-version-code' => 'Fandom-Code',
-	'wikia-version-config' => 'Fandom-Config',
+	'wikia-version-code' => 'FANDOM-Code',
+	'wikia-version-config' => 'FANDOM-Config',
 ];
 
 $messages['es'] = [
-	'wikia-version-code' => 'Código de Fandom',
-	'wikia-version-config' => 'Configuración de Fandom',
+	'wikia-version-code' => 'Código de FANDOM',
+	'wikia-version-config' => 'Configuración de FANDOM',
 ];
 
 $messages['it'] = [
-	'wikia-version-code' => 'Codice Fandom',
-	'wikia-version-config' => 'Fandom config',
+	'wikia-version-code' => 'Codice FANDOM',
+	'wikia-version-config' => 'FANDOM config',
 ];
 
 $messages['ja'] = [
@@ -46,8 +46,8 @@ $messages['pl'] = [
 ];
 
 $messages['pt'] = [
-	'wikia-version-code' => 'Código do Fandom',
-	'wikia-version-config' => 'Configuração do Fandom',
+	'wikia-version-code' => 'Código do FANDOM',
+	'wikia-version-config' => 'Configuração do FANDOM',
 ];
 
 $messages['ru'] = [

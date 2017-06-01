@@ -51,7 +51,7 @@ $messages['qqq'] = array(
 
 $messages['de'] = array(
 	'global-shortcuts-description' => '
-Einfacheres Stöbern und Bearbeiten auf Fandom mithilfe von Tastenkombinationen. 
+Einfacheres Stöbern und Bearbeiten auf FANDOM mithilfe von Tastenkombinationen. 
 
 Durch diese Erweiterung kannst du über Tastenkombinationen wichtige Seiten einfacher aufrufen und bestimmte Aktionen schneller ausführen. 
 ',
@@ -92,7 +92,7 @@ $messages['es'] = array(
 	'global-shortcuts-title-keyboard-shortcuts' => 'Atajos de teclado',
 	'global-shortcuts-press-to-explore-shortcuts' => 'Pulsa $1 para explorar atajos',
 	'global-shortcuts-description' => '
-Mejora tu experiencia en navegación y edición usando los atajos de teclado en Fandom.
+Mejora tu experiencia en navegación y edición usando los atajos de teclado en FANDOM.
 
 Esta extensión ofrece algunos atajos de teclado y un explorador de acciones para ayudar a los usuarios a navegar en páginas importantes o realizar ciertas acciones.
 ',
@@ -118,7 +118,7 @@ $messages['fr'] = array(
 	'global-shortcuts-title-keyboard-shortcuts' => 'Raccourcis clavier',
 	'global-shortcuts-press-to-explore-shortcuts' => 'Appuyer sur $1 pour explorer les raccourcis',
 	'global-shortcuts-description' => "
-Utilisez les raccourcis clavier de Fandom pour améliorer votre expérience de navigation et de modification.
+Utilisez les raccourcis clavier de FANDOM pour améliorer votre expérience de navigation et de modification.
 
 Cette extension fournit des raccourcis clavier ainsi qu'un explorateur d'actions permettant aux utilisateurs d'accéder aux pages importantes ou d'effectuer certaines actions.
 ",
@@ -144,7 +144,7 @@ $messages['it'] = array(
 	'global-shortcuts-title-keyboard-shortcuts' => 'Scorciatoie da tastiera',
 	'global-shortcuts-press-to-explore-shortcuts' => 'Premi $1 per scoprire le scorciatoie',
 	'global-shortcuts-description' => '
-Migliora la tua esperienza di navigazione e di modifica delle wiki utilizzando le scorciatoie da tastiera di Fandom.
+Migliora la tua esperienza di navigazione e di modifica delle wiki utilizzando le scorciatoie da tastiera di FANDOM.
 
 Questa estensione ti offre alcune scorciatoie da tastiera e un esploratore di azioni per aiutarti a navigare con facilità sulle pagine importanti e a svolgere certe azioni.
 ',

@@ -30,7 +30,7 @@ It's been a couple of weeks since we have seen an administrator on #WIKINAME. Ad
 
 If you need help taking care of the community, you can also allow other community members to become administrators now by going to $2.  Hope to see you on #WIKINAME soon!
 
-The Fandom Team
+The FANDOM Team
 
 You can unsubscribe from changes to this list here: $3",
 	'wikiadoption-mail-first-content-HTML' => 'Hi $1,<br /><br />
@@ -39,7 +39,7 @@ It\'s been a couple of weeks since we have seen an administrator on #WIKINAME. A
 
 If you need help taking care of the community, you can also allow other community members to become administrators now by going to <a href="$2">User Rights management</a>.  Hope to see you on #WIKINAME soon!<br /><br />
 
-The Fandom Team<br /><br />
+The FANDOM Team<br /><br />
 
 You can <a href="$3">unsubscribe</a> from changes to this list.',
 	'wikiadoption-mail-second-subject' => '#WIKINAME will be put up for adoption soon',
@@ -48,7 +48,7 @@ It's been almost 60 days since there's been an active administrator on #WIKINAME
 
 Since it's been so many days since a current administrator has appeared, #WIKINAME will now be offered for adoption to other editors.
 
-The Fandom Team
+The FANDOM Team
 
 You can unsubscribe from changes to this list here: $3",
 	'wikiadoption-mail-second-content-HTML' => 'Hi $1,<br /><br />
@@ -56,7 +56,7 @@ It\'s been almost 60 days since there\'s been an active administrator on #WIKINA
 
 Since it\'s been so many days since a current administrator has appeared, #WIKINAME will now be offered for adoption to other editors. <br /><br />
 
-The Fandom Team<br /><br />
+The FANDOM Team<br /><br />
 
 You can <a href="$3">unsubscribe</a> from changes to this list.',
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME has been adopted',
@@ -66,7 +66,7 @@ You can <a href="$3">unsubscribe</a> from changes to this list.',
 
 The adopting user of #WIKINAME will now have bureaucrat and admin status.  Don't worry, you'll also your retain administrator status on this community and are welcome to return and continue contributing at any time!
 
-The Fandom Team
+The FANDOM Team
 
 You can unsubscribe from changes to this list here: $3",
 	'wikiadoption-mail-adoption-content-HTML' => 'Hi $1,<br /><br />
@@ -75,7 +75,7 @@ You can unsubscribe from changes to this list here: $3",
 
 The adopting user of #WIKINAME will now have bureaucrat and admin status.  Don\'t worry, you\'ll also your retain administrator status on this community and are welcome to return and continue contributing at any time!<br /><br />
 
-The Fandom Team<br /><br />
+The FANDOM Team<br /><br />
 
 You can <a href="$3">unsubscribe</a> from changes to this list.',
 	'tog-adoptionmails' => 'Email me if $1 will become available for other users to adopt',
@@ -535,7 +535,7 @@ es ist schon ein paar Wochen her, seit ein Admin auf #WIKINAME vorbei geschaut h
 
 Wenn du bei der Betreuung der Community Hilfe benötigst, kannst du auch andere Community-Mitglieder zu Administratoren machen, indem du diese Seite aufrufst: $2.  Wir hoffen, dich bald wieder auf #WIKINAME zu sehen!
 
-Dein Fandom-Team
+Dein FANDOM-Team
 
 Wenn du keine Nachrichten zu Änderungen dieser Liste mehr erhalten möchtest, kannst du dies hier abstellen: $3',
 	'wikiadoption-mail-first-content-HTML' => 'Hallo $1,<br /><br />
@@ -544,7 +544,7 @@ es ist schon ein paar Wochen her, seit ein Admin auf #WIKINAME vorbei geschaut h
 
 Wenn du bei der Betreuung der Community Hilfe benötigst, kannst du auch andere Community-Mitglieder zu Administratoren machen, indem du die Seite <a href="$2">Benutzerrechteverwaltung</a> aufrufst.  Wir hoffen, dich bald wieder auf #WIKINAME zu sehen!<br /><br />
 
-Dein Fandom-Team<br /><br />
+Dein FANDOM-Team<br /><br />
 
 Wenn du keine Nachrichten zu Änderungen dieser Liste mehr erhalten möchtest, kannst du dies <a href="$3">hier abstellen</a>.',
 	'wikiadoption-mail-second-subject' => '#WIKINAME wird bald zur Adoption freigegeben',
@@ -553,7 +553,7 @@ auf #WIKINAME hat schon seit fast 60 Tagen kein Administrator mehr vorbei gescha
 
 Da es schon so lange her ist, seit ein aktiver Administrator aufgetaucht ist, wird #WIKINAME nun anderen Autoren zur Adoption angeboten.
 
-Dein Fandom-Team
+Dein FANDOM-Team
 
 Wenn du keine Nachrichten zu Änderungen dieser Liste mehr erhalten möchtest, kannst du dies hier abstellen: $3',
 	'wikiadoption-mail-second-content-HTML' => 'Hallo $1,<br /><br />
@@ -561,7 +561,7 @@ auf #WIKINAME hat schon seit fast 60 Tagen kein Administrator mehr vorbei gescha
 
 Da es schon so lange her ist, seit ein aktiver Administrator aufgetaucht ist, wird #WIKINAME nun anderen Autoren zur Adoption angeboten.<br /><br />
 
-Dein Fandom-Team<br /><br />
+Dein FANDOM-Team<br /><br />
 
 Wenn du keine Nachrichten zu Änderungen dieser Liste mehr erhalten möchtest, kannst du dies <a href="$3">hier abstellen</a>.',
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME wurde adoptiert',
@@ -571,7 +571,7 @@ Wenn du keine Nachrichten zu Änderungen dieser Liste mehr erhalten möchtest, k
 
 Der Benutzer, der #WIKINAME adoptiert hat, hat jetzt Bürokraten- und Admin-Status. Keine Sorge, du behältst weiterhin deinen Admin-Status für diese Community und wir würden uns sehr darüber freuen, wenn du dich auch in Zukunft beteiligen würdest.
 
-Dein Fandom-Team
+Dein FANDOM-Team
 
 Wenn du keine Nachrichten zu Änderungen dieser Liste mehr erhalten möchtest, kannst du dies hier abstellen: $3',
 	'wikiadoption-mail-adoption-content-HTML' => 'Hallo $1,<br /><br />
@@ -580,7 +580,7 @@ Wenn du keine Nachrichten zu Änderungen dieser Liste mehr erhalten möchtest, k
 
 Der Benutzer, der #WIKINAME adoptiert hat, hat jetzt Bürokraten- und Admin-Status. Keine Sorge, du behältst weiterhin deinen Admin-Status für diese Community und wir würden uns sehr darüber freuen, wenn du dich auch in Zukunft beteiligen würdest.<br /><br />
 
-Dein Fandom-Team<br /><br />
+Dein FANDOM-Team<br /><br />
 
 Wenn du keine Nachrichten zu Änderungen dieser Liste mehr erhalten möchtest, kannst du dies <a href="$3">hier abstellen</a>.',
 	'tog-adoptionmails' => 'Sende mir eine E-Mail, wenn $1 zur Adoption durch andere Benutzer freigegeben wird',
@@ -661,7 +661,7 @@ Han pasado ya un par de semanas desde que vimos a un administrador en #WIKINAME.
 
 Si necesitas ayuda para cuidar de la comunidad, puedes permitir a otros miembros de la comunidad convertirse en administradores aquí, en la $2. ¡Esperamos verte pronto en #WIKINAME!  
 
-El equipo de Fandom 
+El equipo de FANDOM 
 
 Si quieres dejar de recibir mensajes sobre cambios en esta lista, haz clic aquí: $3',
 	'wikiadoption-mail-first-content-HTML' => 'Hola $1,<br /><br />
@@ -676,7 +676,7 @@ Han pasado ya 60 días desde que vimos a un administrador en #WIKINAME. Los admi
 
 Ya que han pasado varios días y ningún administrador ha ingresado a la comunidad, #WIKINAME se encuentra en adopción.
 
-El equipo de Fandom 
+El equipo de FANDOM 
 
 Si quieres dejar de recibir mensajes sobre cambios en esta lista, haz clic aquí: $3',
 	'wikiadoption-mail-second-content-HTML' => 'Hola $1,<br /><br />
@@ -691,7 +691,7 @@ Haz clic en el siguiente enlace para cancelar tu suscripción a esta lista: <a h
 
 El usuario que ha adoptado #WIKINAME será el nuevo administrador y burócrata. No te preocupes, seguirás teniendo el cargo de administrador en esta comunidad y eres bienvenidos a volver y seguir contribuyendo en cualquier momento.  
 
-El equipo de Fandom
+El equipo de FANDOM
 
 Si quieres dejar de recibir mensajes sobre cambios en esta lista, haz clic aquí: $3',
 	'wikiadoption-mail-adoption-content-HTML' => 'Hola $1,<br /><br />
@@ -911,7 +911,7 @@ Cela fait environ deux semaines que nous avons vu un administrateur sur #WIKINAM
 
 Si vous avez besoin d'aide pour gérer la communauté, vous pouvez également permettre à d'autres membres de cette communauté de devenir administrateurs en accédant à la page $2 dès maintenant. À bientôt sur #WIKINAME !
 
-L'équipe de Fandom
+L'équipe de FANDOM
 
 Vous pouvez vous désabonner des changements de cette liste ici : $3",
 	'wikiadoption-mail-first-content-HTML' => 'Bonjour $1,<br /><br />
@@ -920,7 +920,7 @@ Cela fait environ deux semaines que nous avons vu un administrateur sur #WIKINAM
 
 Si vous avez besoin d\'aide pour gérer la communauté, vous pouvez également permettre à d\'autres membres de cette communauté de devenir administrateurs en accédant à la page de <a href="$2">gestion des droits utilisateur</a> dès maintenant. À bientôt sur #WIKINAME !<br /><br />
 
-L\'équipe de Fandom<br /><br />
+L\'équipe de FANDOM<br /><br />
 
 Vous pouvez vous <a href="$3">désabonner</a> des changements de cette liste.',
 	'wikiadoption-mail-second-subject' => '#WIKINAME sera bientôt placé à l’adoption',
@@ -929,7 +929,7 @@ Cela fait presque 60 jours qu'un administrateur a été actif sur #WIKINAME. Il 
 
 Comme cela fait très longtemps qu'un administrateur a été présent, #WIKINAME va maintenant être disponible à l'adoption.
 
-L'équipe de Fandom
+L'équipe de FANDOM
 
 Vous pouvez vous désabonner des changements de cette liste ici : $3",
 	'wikiadoption-mail-second-content-HTML' => 'Bonjour $1,<br /><br />
@@ -937,7 +937,7 @@ Cela fait presque 60 jours qu\'un administrateur a été actif sur #WIKINAME. Il
 
 Comme cela fait très longtemps qu\'un administrateur a été présent, #WIKINAME va maintenant être disponible à l\'adoption.<br /><br />
 
-L\'équipe de Fandom<br /><br />
+L\'équipe de FANDOM<br /><br />
 
 Vous pouvez vous <a href="$3">désabonner</a> des changements de cette liste.',
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME a été adopté',
@@ -947,7 +947,7 @@ Vous pouvez vous <a href="$3">désabonner</a> des changements de cette liste.',
 
 L'utilisateur ayant adopté #WIKINAME aura désormais le statut de bureaucrate et administrateur. Ne vous inquiétez pas, vous conserverez votre statut d'administrateur de cette communauté et nous vous invitons à revenir y contribuer à tout moment !
 
-L'équipe de Fandom
+L'équipe de FANDOM
 
 Vous pouvez vous désabonner des changements de cette liste ici : $3",
 	'wikiadoption-mail-adoption-content-HTML' => "Bonjour \$1,<br /><br />
@@ -956,7 +956,7 @@ Vous pouvez vous désabonner des changements de cette liste ici : $3",
 
 L'utilisateur ayant adopté #WIKINAME aura désormais le statut de bureaucrate et administrateur. Ne vous inquiétez pas, vous conserverez votre statut d'administrateur de cette communauté et nous vous invitons à revenir y contribuer  à tout moment !<br /><br />
 
-L'équipe de Fandom<br /><br />
+L'équipe de FANDOM<br /><br />
 
 Vous pouvez vous <a href=\"\$3\">désabonner</a> des changements de cette liste.",
 	'tog-adoptionmails' => "Envoyez-moi un message si $1 devient disponible à l'adoption",
@@ -1480,7 +1480,7 @@ Sei pronto a fare i prossimi passi per aiutare {{SITENAME}}?",
 
 L'utente adottante di #WIKINAME avrà ora lo stato di burocrate e amministratore. Non temere, anche tu manterrai il tuo stato di amministratore in questa community e sei libro di tornare e continuare a contribuire in qualsiasi momento!
 
-Il team Fandom
+Il team FANDOM
 
 Puoi annullare la sottoscrizione alle modifiche a questo elenco qui: $3",
 	'wikiadoption-mail-adoption-content-HTML' => 'Ciao $1,<br /><br />
@@ -1489,7 +1489,7 @@ Puoi annullare la sottoscrizione alle modifiche a questo elenco qui: $3",
 
 L\'utente adottante di #WIKINAME avrà ora lo stato di burocrate e amministratore. Non temere, anche tu manterrai il tuo stato di amministratore in questa community e sei libro di tornare e continuare a contribuire in qualsiasi momento!<br /><br />
 
-Il team Fandom<br /><br />
+Il team FANDOM<br /><br />
 
 Puoi <a href="$3">annullare la sottoscrizione</a> alle modifiche a questo elenco.',
 	'wikiadoption-mail-first-content' => "Ciao $1,
@@ -1498,7 +1498,7 @@ Sono passate un paio di settimane da quando abbiamo visto un amministratore su #
 
 Se hai bisogno di una mano per prenderti cura della comunità, puoi anche promuovere altri membri ad amministratore andando adesso su $2. Speriamo di vederti presto su #WIKINAME!
 
-Il team Fandom
+Il team FANDOM
 
 Puoi annullare la sottoscrizione alle modifiche a questo elenco qui: $3",
 	'wikiadoption-mail-first-content-HTML' => 'Ciao $1,<br /><br />
@@ -1507,7 +1507,7 @@ Sono passate un paio di settimane da quando abbiamo visto un amministratore su #
 
 Se hai bisogno di una mano per prenderti cura della comunità, puoi anche promuovere altri membri ad amministratore andando adesso sulla pagina di <a href="$2">gestione dei diritti</a>. Speriamo di vederti presto su #WIKINAME!<br /><br />
 
-Il team Fandom<br /><br />
+Il team FANDOM<br /><br />
 
 Puoi <a href="$3">annullare la sottoscrizione</a> alle modifiche a questo elenco.',
 	'wikiadoption-mail-second-content' => "Ciao $1,
@@ -1515,7 +1515,7 @@ Sono passati quasi 60 giorni da quando c'è stato un amministratore attivo su #W
 
 Dal momento che sono passati così tanti giorni da quando un amministratore corrente si è fatto vedere, #WIKINAME sarà ora disponibile per l'adozione per altri utenti.
 
-Il team Fandom
+Il team FANDOM
 
 Puoi annullare la sottoscrizione alle modifiche a questo elenco qui: $3",
 	'wikiadoption-mail-second-content-HTML' => 'Ciao $1,<br /><br />
@@ -1523,7 +1523,7 @@ Sono passati quasi 60 giorni da quando c\'è stato un amministratore attivo su #
 
 Dal momento che sono passati così tanti giorni da quando un amministratore corrente si è fatto vedere, #WIKINAME sarà ora disponibile per l\'adozione per altri utenti.<br /><br />
 
-Il team Fandom<br /><br />
+Il team FANDOM<br /><br />
 
 Puoi <a href="$3">annullare la sottoscrizione</a> alle modifiche a questo elenco.',
 	'wikiadoption-mail-second-subject' => '#WIKINAME will be put up for adoption soon',
@@ -2470,7 +2470,7 @@ Minęło już kilka tygodni od czasu, kiedy #WIKINAME odwiedził administrator. 
 
 Jeżeli potrzebujesz pomocy przy zajmowaniu się twoją społecznością, możesz uczynić administratorami członków innej społeczności udając się do $2. Do zobaczenia niedługo na #WIKINAME!
 
-Zespół portalu Fandom
+Zespół portalu FANDOM
 
 Możesz zrezygnować z otrzymywania powiadomień na ten temat klikając tutaj: $3',
 	'wikiadoption-mail-first-content-HTML' => 'Cześć $1,<br /><br />
@@ -2479,7 +2479,7 @@ Minęło już kilka tygodni od czasu, kiedy #WIKINAME odwiedził administrator. 
 
 Jeżeli potrzebujesz pomocy przy zajmowaniu się twoją społecznością, możesz uczynić administratorami członków innej społeczności udając się do strony <a href="$2">Zarządzanie uprawnieniami użytkowników</a>. Do zobaczenia niedługo na #WIKINAME!<br /><br />
 
-Zespół portalu Fandom<br /><br />
+Zespół portalu FANDOM<br /><br />
 
 Możesz <a href="$3">zrezygnować z otrzymywania powiadomień</a> na ten temat.',
 	'wikiadoption-mail-second-subject' => '#WIKINAME będzie wkrótce dostępna do adopcji',
@@ -2488,7 +2488,7 @@ Minęło już prawie 60 dni od kiedy na #WIKINAME pojawił się aktywny administ
 
 W związku z tym, że minęło już tyle czasu od pojawienia się aktywnego administratora, #WIKINAME zostanie oddana do adopcji innym redaktorom.
 
-Zespół Fandom
+Zespół FANDOM
 
 Możesz zrezygnować z otrzymywania powiadomień na ten temat klikając tutaj: $3',
 	'wikiadoption-mail-second-content-HTML' => 'Cześć $1,<br /><br />
@@ -2496,7 +2496,7 @@ Minęło już prawie 60 dni od kiedy na #WIKINAME pojawił się aktywny administ
 
 W związku z tym, że minęło już tyle czasu od pojawienia się aktywnego administratora, #WIKINAME zostanie oddana do adopcji innym redaktorom.<br /><br />
 
-Zespół Fandom<br /><br />
+Zespół FANDOM<br /><br />
 
 Możesz <a href="$3">zrezygnować</a> z otrzymywania powiadomień na ten temat.',
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME została adoptowana',
@@ -2506,7 +2506,7 @@ Możesz <a href="$3">zrezygnować</a> z otrzymywania powiadomień na ten temat.'
 
 Użytkownik, który przygarnął #WIKINAME otrzyma uprawnienia biurokraty i status administratora. Nie martw się, to nie oznacza, że Ty stracisz status administratora w tej społeczności – zawsze możesz tu wrócić i dalej wspierać tę wiki!
 
-Zespół portalu Fandom
+Zespół portalu FANDOM
 
 Możesz zrezygnować z otrzymywania powiadomień na ten temat klikając tutaj: $3',
 	'wikiadoption-mail-adoption-content-HTML' => 'Cześć $1,<br /><br />
@@ -2515,7 +2515,7 @@ Możesz zrezygnować z otrzymywania powiadomień na ten temat klikając tutaj: $
 
 Użytkownik, który przygarnął #WIKINAME otrzyma uprawnienia biurokraty i status administratora. Nie martw się, to nie oznacza, że Ty stracisz status administratora w tej społeczności – zawsze możesz tu wrócić i dalej wspierać tę wiki!<br /><br />
 
-Zespół portalu Fandom<br /><br />
+Zespół portalu FANDOM<br /><br />
 
 Możesz <a href="$3">zrezygnować z otrzymywania powiadomień</a> na ten temat.',
 	'tog-adoptionmails' => 'Powiadom mnie emailem gdy $1 stanie się dostępna do adopcji',
@@ -2674,7 +2674,7 @@ Já faz algumas semanas que nenhum administrador visita a wikia #WIKINAME. Os ad
 
 Se precisar de ajuda para cuidar da wikia, você pode permitir que outros membros da comunidade também sejam administradores através da página $2. Esperamos que regresse à #WIKINAME dentro de pouco tempo.
 
-A equipe do Fandom
+A equipe do FANDOM
 
 Para deixar de receber atualizações desta lista, acesse o seguinte link: $3',
 	'wikiadoption-mail-first-content-HTML' => 'Olá $1,<br /><br />
@@ -2683,7 +2683,7 @@ Já fazem algumas semanas que nenhum administrador visita o wiki #WIKINAME. Os a
 
 Se precisar de ajuda para cuidar do wiki, você pode permitir que outros membros da comunidade também sejam administradores através da página de <a href="$2">gestão de privilégios de usuários</a>.  Esperamos que regresse à #WIKINAME dentro de pouco tempo.<br /><br />
 
-A equipe do Fandom<br /><br />
+A equipe do FANDOM<br /><br />
 
 <a href="$3">Deixar de receber atualizações</a> desta lista.',
 	'wikiadoption-mail-second-subject' => 'A #WIKINAME será disponibilizada para adoção em breve',
@@ -2693,7 +2693,7 @@ Infelizmente, há quase 60 dias que nenhum administrador esteve ativo na wikia #
 
 Como já se passaram tantos dias desde a última aparição de um dos administradores, a wikia #WIKINAME será disponibilizada para outros usuários a adotarem.
 
-A equipe do Fandom
+A equipe do FANDOM
 
 Para deixar de receber atualizações desta lista, acesse o seguinte link: $3',
 	'wikiadoption-mail-second-content-HTML' => 'Olá $1,<br /><br />
@@ -2701,7 +2701,7 @@ Infelizmente, há quase 60 dias que nenhum administrador esteve ativo no wiki #W
 
 Como já se passaram tantos dias desde a última aparição de um dos administradores, o wiki #WIKINAME será disponibilizado para outros usuários o adotarem.<br /><br />
 
-A equipe do Fandom<br /><br />
+A equipe do FANDOM<br /><br />
 
 <a href="$3">Deixar de receber atualizações</a> desta lista.',
 	'wikiadoption-mail-adoption-subject' => 'O wiki #WIKINAME foi adotado',
@@ -2711,7 +2711,7 @@ O wiki #WIKINAME foi adotado. Os wikis ficam disponíveis para adoção se nenhu
 
 O usuário que adotou o wiki #WIKINAME passou a ter privilégios de burocrata e administrador. Não se preocupe, você também continuará sendo administrador neste wiki e bem-vindo a retornar e continuar contribuindo quando puder!
 
-A equipe do Fandom
+A equipe do FANDOM
 
 Para deixar de receber atualizações desta lista, acesse o seguinte link: $3',
 	'wikiadoption-mail-adoption-content-HTML' => 'Olá $1,<br /><br />
@@ -2719,7 +2719,7 @@ O wiki #WIKINAME foi adotado. Os wikis ficam disponíveis para adoção se nenhu
 
 O usuário que adotou o wiki #WIKINAME passou a ter privilégios de burocrata e administrador. Não se preocupe, você também continuará sendo administrador neste wiki e bem-vindo a retornar e continuar contribuindo quando puder!<br /><br />
 
-A equipe do Fandom<br /><br />
+A equipe do FANDOM<br /><br />
 
 <a href="$3">Deixar de receber atualizações</a> desta lista.',
 	'tog-adoptionmails' => 'Receber e-mail se o wiki $1 ficar disponível para ser adotado por outros usuários',

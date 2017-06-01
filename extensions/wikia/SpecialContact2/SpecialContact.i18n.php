@@ -2,12 +2,12 @@
 $messages = array();
 
 $messages['en'] = array(
-	'specialcontact-desc' => "Fandom's contact [[Special:Contact]] form",
-	'contact' => 'Contact Fandom',
-	'specialcontact-wikia' => 'Contact Fandom',
-	'specialcontact-pagetitle' => 'Contact Fandom Support Staff',
-	'specialcontact-intro-main-head' => "<big>Need help? Don't worry, the Fandom community is here to help you!</big><br/>
-Follow the links below to learn more about how to use Fandom, make changes to your Fandom or modify your account.",
+	'specialcontact-desc' => "FANDOM's contact [[Special:Contact]] form",
+	'contact' => 'Contact FANDOM',
+	'specialcontact-wikia' => 'Contact FANDOM',
+	'specialcontact-pagetitle' => 'Contact FANDOM Support Staff',
+	'specialcontact-intro-main-head' => "<big>Need help? Don't worry, the FANDOM community is here to help you!</big><br/>
+Follow the links below to learn more about how to use FANDOM, make changes to your FANDOM or modify your account.",
 	'specialcontact-intro-main-local' => '',
 	'specialcontact-intro-main-foot' => "'''Does this page answer your question?''' If not, please feel free to [[Special:contact/general|contact us]] to discuss your issue further. Remember you can always check out our '''[[w:c:community:Help:Index|help pages]]''', [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]]  or post on our '''[[w:c:community:Special:Forum|community help forums]]'''.",
 	'specialcontact-secheader-onwiki' => 'Questions about this wiki',
@@ -20,8 +20,8 @@ Follow the links below to learn more about how to use Fandom, make changes to yo
 	'specialcontact-seclink-close-account' => 'Disable my account',
 	'specialcontact-seclink-rename-account' => 'Rename my account',
 	'specialcontact-seclink-blocked' => 'My account is blocked',
-	'specialcontact-secheader-editing' => 'Participating on Fandom',
-	'specialcontact-seclink-using-fandom' => 'How do I use Fandom?',
+	'specialcontact-secheader-editing' => 'Participating on FANDOM',
+	'specialcontact-seclink-using-fandom' => 'How do I use FANDOM?',
 	'specialcontact-seclink-feedback' => 'I want to offer some feedback',
 	'specialcontact-seclink-bug' => 'I think I found a bug',
 	'specialcontact-seclink-bad-ad' => 'I see a broken or inappropriate ad',
@@ -31,7 +31,7 @@ Follow the links below to learn more about how to use Fandom, make changes to yo
 	'specialcontact-seclink-design' => 'Design',
 	'specialcontact-seclink-features' => 'Add or remove Features',
 	'specialcontact-seclink-close-wiki' => 'Close this wiki',
-	'specialcontact-sectitle' => 'Fandom Support - $1',
+	'specialcontact-sectitle' => 'FANDOM Support - $1',
 	'specialcontact-sectitle-general' => 'General support',
 	'specialcontact-sectitle-content-issue' => 'Content issue',
 	'specialcontact-sectitle-user-conflict' => 'User interactions',
@@ -40,24 +40,24 @@ Follow the links below to learn more about how to use Fandom, make changes to yo
 	'specialcontact-sectitle-close-account' => 'Disable my account',
 	'specialcontact-sectitle-rename-account' => 'Rename my account',
 	'specialcontact-sectitle-blocked' => 'Account blocked',
-	'specialcontact-sectitle-using-fandom' => 'Using Fandom',
+	'specialcontact-sectitle-using-fandom' => 'Using FANDOM',
 	'specialcontact-sectitle-feedback' => 'Feedback',
 	'specialcontact-sectitle-bug' => 'Bug Report',
 	'specialcontact-sectitle-bad-ad' => 'Ad report',
 	'specialcontact-sectitle-security' => 'Security issue report',
 	'specialcontact-sectitle-wiki-name-change' => 'Community name change',
 	'specialcontact-sectitle-design' => 'Community design',
-	'specialcontact-sectitle-features' => 'Fandom features',
+	'specialcontact-sectitle-features' => 'FANDOM features',
 	'specialcontact-sectitle-close-wiki' => 'Close this wiki',
-	'specialcontact-intro-content-issue' => "The content on this wiki is created by the community here, and managed by the [[Special:ListAdmins|local admins]], not Fandom. If you wish to discuss this content, it is best to first contact the [[Special:ListAdmins|wiki's admins here]].
+	'specialcontact-intro-content-issue' => "The content on this wiki is created by the community here, and managed by the [[Special:ListAdmins|local admins]], not FANDOM. If you wish to discuss this content, it is best to first contact the [[Special:ListAdmins|wiki's admins here]].
 
-If you feel the content violates our [http://www.wikia.com/Terms_of_Use Terms of Use], you can contact Fandom staff directly [[Special:Contact/general|here]].",
-	'specialcontact-intro-content-issue-mobile' => "The content on this wiki is created by the community here and not the admins, not Fandom. If you wish to discuss this content, it is best to first contact the wiki's admins.
+If you feel the content violates our [http://www.wikia.com/Terms_of_Use Terms of Use], you can contact FANDOM staff directly [[Special:Contact/general|here]].",
+	'specialcontact-intro-content-issue-mobile' => "The content on this wiki is created by the community here and not the admins, not FANDOM. If you wish to discuss this content, it is best to first contact the wiki's admins.
 
-If you feel the content violates our Terms of Use, you can contact Fandom staff.",
+If you feel the content violates our Terms of Use, you can contact FANDOM staff.",
 	'specialcontact-intro-user-conflict' => "Wikis are community spaces where each and every person needs to work together with others for it to be successful. Conflicts can sometimes arise while working together; the best way to solve them is to have an open and respectful conversation on your community about the issue.
 
-If you need help, first contact your [[Special:ListAdmins|local admins]]. Admins are the local experts on the topic and community, so best to first chat with them further. If the admins are not able to help, or you feel the user is violating Wikia Inc.'s [http://www.wikia.com/Terms_of_Use Terms of Use], you can contact Fandom staff directly [[Special:Contact/general|here]].
+If you need help, first contact your [[Special:ListAdmins|local admins]]. Admins are the local experts on the topic and community, so best to first chat with them further. If the admins are not able to help, or you feel the user is violating Wikia Inc.'s [http://www.wikia.com/Terms_of_Use Terms of Use], you can contact FANDOM staff directly [[Special:Contact/general|here]].
 
 Happy editing!",
 	'specialcontact-intro-adoption' => "Are you interested in becoming an admin here? If so, please first check if the [[Special:Listusers/sysop|local admins]] are active. If they are, leave them a message with your request. It is also a good idea to talk with fellow users about your request to gather their support. You may want to start by posting in your community forum.
@@ -77,31 +77,31 @@ If there's an active user community on the wiki you wish to adopt, please start 
 If you have done all of these and are still having an issue - please send us a detailed report below. We will get back to you as soon as possible to help fix the problem.
 
 Happy editing!',
-	'specialcontact-intro-close-account' => "We are sorry you want to disable your account. Fandom has many wikis on all sorts of subjects and we'd love for you to stick around and find the one that's right for you. If you are having a local problem with your wiki, please don't hesitate to contact your [[Special:Listusers/sysop|local admins]] for help and advice.
+	'specialcontact-intro-close-account' => "We are sorry you want to disable your account. FANDOM has many wikis on all sorts of subjects and we'd love for you to stick around and find the one that's right for you. If you are having a local problem with your wiki, please don't hesitate to contact your [[Special:Listusers/sysop|local admins]] for help and advice.
 
-If you have decided you definitely want to disable your account please be aware that Fandom does not have the ability to fully remove accounts, but we can disable them. This will ensure the account is locked and can't be used. This process is NOT reversible, and you will have to create a new account if you wish to rejoin Fandom. However, this process will not remove your contributions from a given wiki as these contributions belong to the community as a whole.
+If you have decided you definitely want to disable your account please be aware that FANDOM does not have the ability to fully remove accounts, but we can disable them. This will ensure the account is locked and can't be used. This process is NOT reversible, and you will have to create a new account if you wish to rejoin FANDOM. However, this process will not remove your contributions from a given wiki as these contributions belong to the community as a whole.
 
 If you need any more information on what an account disable actually does, you can visit our [[Help:Close_my_account|help page on disabling your account]]. To confirm and disable your account, please fill out the form below.",
-	'specialcontact-intro-rename-account' => 'Changing your username is possible on Fandom, but only once, so be sure you want to change it before you submit a request. This process cannot be reversed, and once we change your username, we cannot change it again. Please make sure you have fully read this help page before sending in a request: http://help.wikia.com/wiki/Help:Changing_your_username
+	'specialcontact-intro-rename-account' => 'Changing your username is possible on FANDOM, but only once, so be sure you want to change it before you submit a request. This process cannot be reversed, and once we change your username, we cannot change it again. Please make sure you have fully read this help page before sending in a request: http://help.wikia.com/wiki/Help:Changing_your_username
 
 Once you have read that help page and are positive on the spelling of your new username, please submit a request below. Once your username is changed, you will receive a confirmation email. You can then log in with your new user name using your old password.
 
 Happy editing!',
-	'specialcontact-intro-blocked' => 'Account blocks are usually set by the local admins, and not by the Fandom staff. The name of the blocking admin should be on the block notice you received.You may be able to contact the blocking admin by leaving a message on your user talk page. This is still editable for blocked users (on some wikis) and changes will usually be seen by the other contributors to the wiki. Your user talk page is found by following the "my talk" link at the top right of any page.
+	'specialcontact-intro-blocked' => 'Account blocks are usually set by the local admins, and not by the FANDOM staff. The name of the blocking admin should be on the block notice you received.You may be able to contact the blocking admin by leaving a message on your user talk page. This is still editable for blocked users (on some wikis) and changes will usually be seen by the other contributors to the wiki. Your user talk page is found by following the "my talk" link at the top right of any page.
 
-However, if this talk page option is not available in your situation, then the best advice we can give you is to wait the block out or join the community at another of the many thousand Fandom communities available.
+However, if this talk page option is not available in your situation, then the best advice we can give you is to wait the block out or join the community at another of the many thousand FANDOM communities available.
 
-If you feel you still need to discuss this block further with Fandom staff, please contact us [[Special:Contact/general|here]].',
-	'specialcontact-intro-using-fandom' => "Now that you are a part of the community, you are able to edit and contribute to almost any page across Fandom. For some introductory help, check out our [[Help:Getting_Started|help pages here]]. They are a great place to learn the basics of editing, formatting and much more.
+If you feel you still need to discuss this block further with FANDOM staff, please contact us [[Special:Contact/general|here]].',
+	'specialcontact-intro-using-fandom' => "Now that you are a part of the community, you are able to edit and contribute to almost any page across FANDOM. For some introductory help, check out our [[Help:Getting_Started|help pages here]]. They are a great place to learn the basics of editing, formatting and much more.
 
 If you have questions about this specific community, start by [[Special:ListAdmins|contacting your local admins]].
 You can also ask general questions to other community members on our [[w:c:community:Special:Forum|community help forum]].
 
-Remember, you can't break a community on Fandom, so don't be afraid to get started. Happy editing!",
-	'specialcontact-intro-feedback' => 'Got feedback? We would love to hear it! Please provide your thoughts and details below. If you have feedback on a Fandom Labs product, please provide feedback [[Special:WikiaLabs|there]].
+Remember, you can't break a community on FANDOM, so don't be afraid to get started. Happy editing!",
+	'specialcontact-intro-feedback' => 'Got feedback? We would love to hear it! Please provide your thoughts and details below. If you have feedback on a FANDOM Labs product, please provide feedback [[Special:WikiaLabs|there]].
 
 Thanks in advance and happy editing!',
-	'specialcontact-intro-bug' => 'We are sorry to hear that you found a bug on Fandom. Please provide full details of the issue you are seeing below so we can investigate further. Important details to include are:
+	'specialcontact-intro-bug' => 'We are sorry to hear that you found a bug on FANDOM. Please provide full details of the issue you are seeing below so we can investigate further. Important details to include are:
 *Your username
 *Link to your community
 *Your browser information including type and version ([[Help:Supported_browsers|click here for our supported browser list]])
@@ -109,10 +109,10 @@ Thanks in advance and happy editing!',
 
 For more advice on what to include in your report, please see [[w:c:community:Help:How to report bugs|our help page on bug reports]].
 
-Thanks again for the report and for using Fandom.
+Thanks again for the report and for using FANDOM.
 
 Happy editing!',
-	'specialcontact-intro-bad-ad' => "We are sorry to hear you encountered a bad advertisement on Fandom. If you could provide further details below we will share them with our advertising manager, who will review the ad and may be able to remove it from the system.
+	'specialcontact-intro-bad-ad' => "We are sorry to hear you encountered a bad advertisement on FANDOM. If you could provide further details below we will share them with our advertising manager, who will review the ad and may be able to remove it from the system.
 
 Be sure to tell us which community you're on, which ad you saw, and why it was a problem. It would also help if you could include a screenshot and the URL of the ad. Instructions for finding the URL of an ad are listed here: http://help.wikia.com/wiki/Help:Bad_advertisements
 
@@ -122,33 +122,33 @@ Thank you and happy editing!",
 Happy editing!',
 	'specialcontact-intro-design' => "A wiki's design can be updated by any local admin on your community by using the [[Help:Theme_designer|Theme designer]]. If you are not an admin and wish to help with your wiki's design, first contact your [[Special:ListAdmins|local admins]].
 
-If you would like help with creating a more customized design, you can submit a request to the Fandom Content team [[w:Community_Central:Content_Team/Requests|here]]. Please read through the guidelines before submitting a request there.
+If you would like help with creating a more customized design, you can submit a request to the FANDOM Content team [[w:Community_Central:Content_Team/Requests|here]]. Please read through the guidelines before submitting a request there.
 
 If you feel you have found a bug while updating your wiki's design, please provide us with a detailed report [[Special:Contact/bug|here]].
 
 Happy editing!",
-	'specialcontact-intro-features' => "Fandom offers many features, the majority of which are live on all communities across the site by default.
+	'specialcontact-intro-features' => "FANDOM offers many features, the majority of which are live on all communities across the site by default.
 
 If you are an admin and feel that specific feature is not working well for your community, please discuss with your wiki's community if they would also like the feature turned off. If everyone agrees, you can use the [[Special:WikiFeatures|Wiki Features]] section of the [[Special:AdminDashboard|Admin Dashboard]] to disable or re-enable features. If the feature is not list there, please [[Special:Contact/general|contact us]] with your request.
 
 Admins interested in testing out new features that are still in development can check out the Labs section of [[Special:WikiFeatures|Wiki Features]].
 
 Want to stay current on announcement of new features and improvements to current ones? Stop by and follow the [[w:c:community:Blog:Wikia_New_Features|staff blog new features list]]",
-	'specialcontact-intro-close-wiki' => "Thanks for contacting Fandom. We don't usually delete wikis once they have been created. Wikis are community-owned projects, and a wiki you are no longer interested in can wait for someone else to come along and [[Special:Contact/adoption|adopt it]].
+	'specialcontact-intro-close-wiki' => "Thanks for contacting FANDOM. We don't usually delete wikis once they have been created. Wikis are community-owned projects, and a wiki you are no longer interested in can wait for someone else to come along and [[Special:Contact/adoption|adopt it]].
 
-If you wish to rename your wiki or fix spelling or grammatical issues please first consult [[Help:Rename]] for renaming pages, and [[Help:Theme designer]] for renaming the title of your wiki. Wikis can easily have their names changed, without the hassle of starting over. If you wish to change your wiki's URL [[Special:Contact/general|please write to us]] as we'd be more than happy to do so for you as there is no need to close your Fandom.
+If you wish to rename your wiki or fix spelling or grammatical issues please first consult [[Help:Rename]] for renaming pages, and [[Help:Theme designer]] for renaming the title of your wiki. Wikis can easily have their names changed, without the hassle of starting over. If you wish to change your wiki's URL [[Special:Contact/general|please write to us]] as we'd be more than happy to do so for you as there is no need to close your FANDOM.
 
 If you feel this wiki is on a topic that no other users may be interested in (such as a personal project), please submit a request using the form below. Please make the request from the wiki that needs closing.
 
-I hope you find another wiki among the many that are part of Fandom, and join in building a fantastic resource about everything you are passionate about.
+I hope you find another wiki among the many that are part of FANDOM, and join in building a fantastic resource about everything you are passionate about.
 
 Happy editing!",
-	'specialcontact-intro-general' => 'You can contact [[w:project:Staff|Fandom Staff]] using this form. Admins of this community can be found [[Special:ListAdmins|here]].
+	'specialcontact-intro-general' => 'You can contact [[w:project:Staff|FANDOM Staff]] using this form. Admins of this community can be found [[Special:ListAdmins|here]].
 
-Additional information on how to report problems to Fandom can be found [[w:project:Report_a_problem|here]], or you can post on [[w:c:community:Special:Forum|Fandom Community Forums]] for user support.
+Additional information on how to report problems to FANDOM can be found [[w:project:Report_a_problem|here]], or you can post on [[w:c:community:Special:Forum|FANDOM Community Forums]] for user support.
 
 If you prefer to use regular e-mail or have multiple attachments, you can contact us at [mailto:community@wikia.com community@wikia.com].',
-	'specialcontact-intro-security' => "If you have found or believe you have found a security issue in Fandom's code or on one of Fandom's communities, please let us know. We appreciate your help in keeping Fandom safe for everyone by disclosing it to us in a [[wikipedia:Responsible disclosure|responsible manner]].
+	'specialcontact-intro-security' => "If you have found or believe you have found a security issue in FANDOM's code or on one of FANDOM's communities, please let us know. We appreciate your help in keeping FANDOM safe for everyone by disclosing it to us in a [[wikipedia:Responsible disclosure|responsible manner]].
 
 If you are looking to report a general bug or another type of issue, please use one of the [[Special:Contact|other contact forms]].
 
@@ -166,7 +166,7 @@ When reporting a security issue, please provide full details of the issue includ
 ** Particularly for XSS or vulnerabilities that require a specific browser or plugin to reproduce
 * A short description of the vulnerability's potential security impact
 
-In response to security reports using this form, Fandom will:
+In response to security reports using this form, FANDOM will:
 * Prioritize the reproduction and confirmation of any reported vulnerability
 * Identify a reasonable timeline to patch any confirmed vulnerability
 * Not pursue legal action against any reporter who complies with all of the guidelines for testing and reporting security issues",
@@ -177,14 +177,14 @@ In response to security reports using this form, Fandom will:
 	'specialcontact-yourmail' => 'Your email',
 	'specialcontact-problem' => 'Subject',
 	'specialcontact-problemdesc' => 'Message',
-	'specialcontact-mail' => 'Send to Fandom',
+	'specialcontact-mail' => 'Send to FANDOM',
 	'specialcontact-filledin' => 'This information has been filled in from your account preferences',
 	'specialcontact-ccme' => 'Send me a copy of this message',
 	'specialcontact-ccdisabled' => 'Disabled: Please [[Special:ConfirmEmail|validate]] your e-mail address to use this function',
 	'specialcontact-notyou' => 'Not you?',
 	'specialcontact-captchainfo' => 'Please enter the text in the image.',
 	'specialcontact-captchatitle' => 'Blurry word',
-	'specialcontact-formtitle' => 'Contact Fandom Support Staff',
+	'specialcontact-formtitle' => 'Contact FANDOM Support Staff',
 	'specialcontact-label-screenshot' => 'Did you take a screenshot? If so, please upload here.',
 	'specialcontact-label-additionalscreenshot' => 'If you have another screenshot please upload it here.',
 	'specialcontact-label-bad-ad-description' => 'Please describe the problem with the ad',
@@ -194,13 +194,13 @@ In response to security reports using this form, Fandom will:
 	'specialcontact-label-bug-link' => 'Please provide the URL of the page where you are having the problem',
 	'specialcontact-label-bug-feature' => 'What feature is this related to?',
 	'specialcontact-label-bug-description' => 'Please describe the problem you are having',
-	'specialcontact-label-close-account-confirm' => 'I confirm that I want to disable my Fandom account',
+	'specialcontact-label-close-account-confirm' => 'I confirm that I want to disable my FANDOM account',
 	'specialcontact-label-close-account-read-help' => 'I have read the [[Help:Close_my_account|help page on closing your account]]',
 	'specialcontact-label-account-issue-description' => 'Please provide a detailed description of the issue you are having.',
 	'specialcontact-label-rename-newusername' => 'Please enter the new username',
 	'specialcontact-label-rename-account-confirm' => 'I confirm that the spelling and punctuation for my new name is correct',
 	'specialcontact-label-rename-account-read-help' => 'I have read the [[Help:Changing your username|help page on renaming my account]]',
-	'specialcontact-form-header' => 'Contact Fandom',
+	'specialcontact-form-header' => 'Contact FANDOM',
 	'specialcontact-logged-in-as' => 'You are logged in as $1. [[Special:UserLogout|Not you?]]',
 	'specialcontact-mail-on-file' => 'Your e-mail is set to $1. [[Special:Preferences|Do you wish to change it?]]',
 	'specialcontact-label-security-type' => 'Type of security issue if known',
@@ -227,12 +227,12 @@ Browser/OS: ',
 	'specialcontact-error-message' => 'Something went wrong while submitting your form. Please try again later.',
 	'specialcontact-error-logintext' => 'You must be logged in to make this request. Please [[Special:SignUp|login to your account]] and try again.',
 	'specialcontact-error-alreadyrenamed' => 'You have previously been renamed so you are not eligible for another one. Please [[Special:Contact/general|contact staff]] if you require further assistance.',
-	'specialcontact-mailsub' => 'Fandom Support',
-	'specialcontact-mailsubcc' => 'Copy of Fandom Contact Mail',
-	'specialcontact-ccheader' => 'This is a copy of your message that was sent to Fandom Support',
-	'specialcontact-submitcomplete' => 'Thank you for contacting Fandom. We receive and review all messages submitted here. We will do our best to get back to you in the next 2-3 business days, but please be patient as we work through all of the messages.
+	'specialcontact-mailsub' => 'FANDOM Support',
+	'specialcontact-mailsubcc' => 'Copy of FANDOM Contact Mail',
+	'specialcontact-ccheader' => 'This is a copy of your message that was sent to FANDOM Support',
+	'specialcontact-submitcomplete' => 'Thank you for contacting FANDOM. We receive and review all messages submitted here. We will do our best to get back to you in the next 2-3 business days, but please be patient as we work through all of the messages.
 
-Remember, you can also find help in our [[w:c:community:Special:Forum|Community Forum]] and [[w:c:community:Help:Index|Help pages]]. You can keep up to date with the latest Fandom news on our [[w:c:community:Blog:Wikia_Staff_Blog |Staff Blog]]. Happy editing!',
+Remember, you can also find help in our [[w:c:community:Special:Forum|Community Forum]] and [[w:c:community:Help:Index|Help pages]]. You can keep up to date with the latest FANDOM news on our [[w:c:community:Blog:Wikia_Staff_Blog |Staff Blog]]. Happy editing!',
 );
 
 $messages['qqq'] = array(
@@ -294,13 +294,13 @@ $messages['qqq'] = array(
 );
 
 $messages['de'] = array(
-	'contact' => 'Fandom kontaktieren',
-	'specialcontact-wikia' => 'Fandom kontaktieren',
-	'specialcontact-pagetitle' => 'Fandom-Mitarbeiter kontaktieren',
-	'specialcontact-intro-main-head' => '<big>Brauchst du Hilfe? Kein Problem, die Fandom-Community kann dir helfen.</big><br/>
-Klicke auf die folgenden Links, um mehr darüber zu erfahren, wie man Fandom benutzt, anpasst oder das eigene Benutzerkonto verwaltet.',
+	'contact' => 'FANDOM kontaktieren',
+	'specialcontact-wikia' => 'FANDOM kontaktieren',
+	'specialcontact-pagetitle' => 'FANDOM-Mitarbeiter kontaktieren',
+	'specialcontact-intro-main-head' => '<big>Brauchst du Hilfe? Kein Problem, die FANDOM-Community kann dir helfen.</big><br/>
+Klicke auf die folgenden Links, um mehr darüber zu erfahren, wie man FANDOM benutzt, anpasst oder das eigene Benutzerkonto verwaltet.',
 	'specialcontact-intro-main-local' => '',
-	'specialcontact-intro-main-foot' => "'''Beantwortet diese Seite deine Fragen?''' Wenn nicht, dann [[Special:contact/general|schreib uns]]. Vergiss nicht, dass du jederzeit unsere '''[[w:c:de.community:Hilfe:Übersicht|Hilfeseiten]]''', den [[w:c:de.community:Blog:Fandom_Deutschland_News|Fandom-Blog]] oder unsere '''[[w:c:de.community:Special:Forum|Foren]]''' zurate ziehen kannst.",
+	'specialcontact-intro-main-foot' => "'''Beantwortet diese Seite deine Fragen?''' Wenn nicht, dann [[Special:contact/general|schreib uns]]. Vergiss nicht, dass du jederzeit unsere '''[[w:c:de.community:Hilfe:Übersicht|Hilfeseiten]]''', den [[w:c:de.community:Blog:Fandom_Deutschland_News|FANDOM-Blog]] oder unsere '''[[w:c:de.community:Special:Forum|Foren]]''' zurate ziehen kannst.",
 	'specialcontact-secheader-onwiki' => 'Fragen zu diesem Wiki',
 	'specialcontact-seclink-content-issue' => 'Probleme mit den Inhalten dieses Wikis',
 	'specialcontact-seclink-user-conflict' => 'Schwierigkeiten mit einem anderen Benutzer?',
@@ -310,8 +310,8 @@ Klicke auf die folgenden Links, um mehr darüber zu erfahren, wie man Fandom ben
 	'specialcontact-seclink-close-account' => 'Ich möchte mein Benutzerkonto schließen',
 	'specialcontact-seclink-rename-account' => 'Ich möchte meinen Namen ändern',
 	'specialcontact-seclink-blocked' => 'Mein Benutzerkonto ist gesperrt',
-	'specialcontact-secheader-editing' => 'Bei Fandom mitmachen',
-	'specialcontact-seclink-using-fandom' => 'Wie benutze ich Fandom?',
+	'specialcontact-secheader-editing' => 'Bei FANDOM mitmachen',
+	'specialcontact-seclink-using-fandom' => 'Wie benutze ich FANDOM?',
 	'specialcontact-seclink-feedback' => 'Ich habe Verbesserungsvorschläge',
 	'specialcontact-seclink-bug' => 'Ich habe einen Bug gefunden',
 	'specialcontact-seclink-bad-ad' => 'Ich habe unangebrachte Werbung entdeckt',
@@ -320,7 +320,7 @@ Klicke auf die folgenden Links, um mehr darüber zu erfahren, wie man Fandom ben
 	'specialcontact-seclink-design' => 'Design',
 	'specialcontact-seclink-features' => 'Funktionen hinzufügen oder entfernen',
 	'specialcontact-seclink-close-wiki' => 'Dieses Wiki schließen',
-	'specialcontact-sectitle' => 'Fandom-Support - $1',
+	'specialcontact-sectitle' => 'FANDOM-Support - $1',
 	'specialcontact-sectitle-general' => 'Kontaktformular',
 	'specialcontact-sectitle-content-issue' => 'Probleme mit dem Inhalt',
 	'specialcontact-sectitle-user-conflict' => 'Schwierigkeiten mit Benutzern',
@@ -329,20 +329,20 @@ Klicke auf die folgenden Links, um mehr darüber zu erfahren, wie man Fandom ben
 	'specialcontact-sectitle-close-account' => 'Benutzerkonto schließen',
 	'specialcontact-sectitle-rename-account' => 'Benutzernamen ändern',
 	'specialcontact-sectitle-blocked' => 'Benutzerkonto gesperrt',
-	'specialcontact-sectitle-using-fandom' => 'Fandom verwenden',
+	'specialcontact-sectitle-using-fandom' => 'FANDOM verwenden',
 	'specialcontact-sectitle-feedback' => 'Verbesserungsvorschläge',
 	'specialcontact-sectitle-bug' => 'Bugs melden',
 	'specialcontact-sectitle-bad-ad' => 'Werbung melden',
 	'specialcontact-sectitle-wiki-name-change' => 'Änderung des Community-Namens',
 	'specialcontact-sectitle-design' => 'Community-Design',
-	'specialcontact-sectitle-features' => 'Fandom-Funktionen',
+	'specialcontact-sectitle-features' => 'FANDOM-Funktionen',
 	'specialcontact-sectitle-close-wiki' => 'Dieses Wiki schließen',
-	'specialcontact-intro-content-issue' => 'Der Inhalt dieses Wikis wurde von dessen Community erstellt und wird nicht von Fandom, sondern von den [[Special:ListAdmins|lokalen Admins]] verwaltet. Falls du Probleme oder Fragen zum Inhalt dieses Wikis hast, wende dich bitte an die zuständigen [[Special:ListAdmins|Admins]].
+	'specialcontact-intro-content-issue' => 'Der Inhalt dieses Wikis wurde von dessen Community erstellt und wird nicht von FANDOM, sondern von den [[Special:ListAdmins|lokalen Admins]] verwaltet. Falls du Probleme oder Fragen zum Inhalt dieses Wikis hast, wende dich bitte an die zuständigen [[Special:ListAdmins|Admins]].
 
-Falls du denkst, dass der Inhalt gegen unsere [http://de.wikia.com/Nutzungsbedingungen Nutzungsbedingungen] verstößt, kannst du dich [[Special:Contact/general|hier]] direkt an einen Fandom-Mitarbeiter wenden.',
+Falls du denkst, dass der Inhalt gegen unsere [http://de.wikia.com/Nutzungsbedingungen Nutzungsbedingungen] verstößt, kannst du dich [[Special:Contact/general|hier]] direkt an einen FANDOM-Mitarbeiter wenden.',
 	'specialcontact-intro-user-conflict' => 'Wikis sind Seiten für eine Community von Benutzern, wo alle zusammenarbeiten müssen. Manchmal kann es bei der Zusammenarbeit zu Konflikten kommen. Wenn man ein offenes und respektvolles Gespräch in der Community führt, dann kann man die Konflikte meist gut lösen.
 
-Wenn du Hilfe brauchst, dann schreibe bitte zuerst den [[Special:ListAdmins|Admins des Wikis]]. Die Admins kennen das Thema und die Mitglieder der Community am besten. Wenn die Admins auch nicht helfen können, oder der Benutzer die Fandom-[http://www.de.wikia.com/Nutzungsbedingungen Nutzungsbedingungen] missachtet, dann kontaktiere bitte an einen [[Special:Contact|Fandom-Mitarbeiter]].
+Wenn du Hilfe brauchst, dann schreibe bitte zuerst den [[Special:ListAdmins|Admins des Wikis]]. Die Admins kennen das Thema und die Mitglieder der Community am besten. Wenn die Admins auch nicht helfen können, oder der Benutzer die FANDOM-[http://www.de.wikia.com/Nutzungsbedingungen Nutzungsbedingungen] missachtet, dann kontaktiere bitte an einen [[Special:Contact|FANDOM-Mitarbeiter]].
 
 Viel Spaß beim Bearbeiten!',
 	'specialcontact-intro-adoption' => 'Würdest du gerne Admin dieses Wikis werden? Falls ja, prüfe zunächst ob es hier schon [[Special:ListAdmins|aktive Admins]] gibt. Wenn es sie gibt, dann schreibe sie einfach an. Außerdem ist es sinnvoll, mit den anderen Benutzern darüber zu sprechen. Wenn du ihren Segen hast, dann ist es grundsätzlich einfacher, Admin-Rechte für das Wiki zu bekommen. Beginne doch einfach mit einem Beitrag im Forum deiner Community.
@@ -362,31 +362,31 @@ Wenn das Wiki eine aktive Community hat, besprich mit deren Mitgliedern, wer sic
 Falls du all das versucht hast und das Problem dennoch weiter besteht, sende uns eine genaue Beschreibung des Problems über das Formular unten. Wir melden uns dann schnellstmöglich bei dir, um dir zu helfen.
 
 Viel Spaß!',
-	'specialcontact-intro-close-account' => 'Es tut uns Leid, dass du deine Benutzerkonto schließen möchtest. Fandom bietet eine große Anzahl an Wikis zu vielfältigen Themen und vielleicht ist da auch etwas für dich dabei. Falls du ein Problem mit einem bestimmten Wiki hast, kontaktiere bitte die [[Special:ListAdmins|Admins dort]]. Diese helfen gerne weiter.
+	'specialcontact-intro-close-account' => 'Es tut uns Leid, dass du deine Benutzerkonto schließen möchtest. FANDOM bietet eine große Anzahl an Wikis zu vielfältigen Themen und vielleicht ist da auch etwas für dich dabei. Falls du ein Problem mit einem bestimmten Wiki hast, kontaktiere bitte die [[Special:ListAdmins|Admins dort]]. Diese helfen gerne weiter.
 
-Solltest du dich dazu entscheiden, dein Konto auf jeden Fall zu deaktivieren, beachte bitte, dass wir Benutzerkonten nicht vollkommen löschen sondern nur deaktivieren können. Dadurch kann es ebenfalls nicht mehr benutzt werden. Dieser Prozess kann NICHT wieder rückgängig gemacht werden und du wirst ein neues Konto anlegen müssen, wenn du Fandom wieder beitreten möchtest. Dieser Prozess führt ebenso nicht zu einer Entfernung deiner Beiträge von Fandom, da diese Bearbeitungen der gesamten Community gehören.
+Solltest du dich dazu entscheiden, dein Konto auf jeden Fall zu deaktivieren, beachte bitte, dass wir Benutzerkonten nicht vollkommen löschen sondern nur deaktivieren können. Dadurch kann es ebenfalls nicht mehr benutzt werden. Dieser Prozess kann NICHT wieder rückgängig gemacht werden und du wirst ein neues Konto anlegen müssen, wenn du FANDOM wieder beitreten möchtest. Dieser Prozess führt ebenso nicht zu einer Entfernung deiner Beiträge von FANDOM, da diese Bearbeitungen der gesamten Community gehören.
 
 Falls du weitere Informationen darüber haben möchtest, was bei der Deaktivierung eines Benutzerkontos genau passiert, schau dir unsere [[w:c:de:Hilfe:Benutzerkonto_stilllegen|Hilfeseite zur Deaktivierung deines Kontos]] an. Um die Kontoschließung zu bestätigen, fülle bitte das folgende Formular aus.',
-	'specialcontact-intro-rename-account' => 'Dein Benutzername auf Fandom kann zwar geändert werden, aber nur ein Mal. Der Prozess kann nicht rückgängig gemacht werden. Stelle sicher, dass du die [http://de.community.wikia.com/wiki/Hilfe:Benutzerkonto_umbenennen Hilfeseite] zum Thema "Benutzernamen umbenennen" gelesen hast, bevor du den Antrag auf eine Umbenennung stellst.
+	'specialcontact-intro-rename-account' => 'Dein Benutzername auf FANDOM kann zwar geändert werden, aber nur ein Mal. Der Prozess kann nicht rückgängig gemacht werden. Stelle sicher, dass du die [http://de.community.wikia.com/wiki/Hilfe:Benutzerkonto_umbenennen Hilfeseite] zum Thema "Benutzernamen umbenennen" gelesen hast, bevor du den Antrag auf eine Umbenennung stellst.
 
 Nachdem du die Hilfeseite gelesen und sichergestellt hast, dass dein neuer Name richtig geschrieben ist, fülle bitte das folgende Formular aus. Nachdem der Prozess beendet ist, bekommst du eine Bestätigungsmail zugeschickt. Danach kannst du dich mit dem neuen Namen und deinem alten Passwort anmelden.
 
-Viel Spaß bei Fandom!',
-	'specialcontact-intro-blocked' => 'Benutzerkonto-Sperren werden meistens von den Admins des Wikis und nicht von Fandom-Mitarbeitern verhängt. Der Name des Admins, der dich gesperrt hat, sollte auf der Sperrnotiz zu finden sein. Du kannst den Admin kontaktieren, indem du eine Nachricht auf [[Special:MyTalk|deiner Nachrichtenseite]] hinterlässt. Das ist oft auch dann möglich, wenn du gesperrt worden bist und kann von den anderen Benutzern des Wikis eingesehen werden. 
+Viel Spaß bei FANDOM!',
+	'specialcontact-intro-blocked' => 'Benutzerkonto-Sperren werden meistens von den Admins des Wikis und nicht von FANDOM-Mitarbeitern verhängt. Der Name des Admins, der dich gesperrt hat, sollte auf der Sperrnotiz zu finden sein. Du kannst den Admin kontaktieren, indem du eine Nachricht auf [[Special:MyTalk|deiner Nachrichtenseite]] hinterlässt. Das ist oft auch dann möglich, wenn du gesperrt worden bist und kann von den anderen Benutzern des Wikis eingesehen werden. 
 
-Falls die Nachrichtenseite nicht bearbeitet werden kann, ist es am Besten, die Sperre auszusitzen oder sich eine andere der vielen tausend Fandom-Communitys auszusuchen.
+Falls die Nachrichtenseite nicht bearbeitet werden kann, ist es am Besten, die Sperre auszusitzen oder sich eine andere der vielen tausend FANDOM-Communitys auszusuchen.
 
-Falls du die Sperre dennoch mit einem Fandom-Mitarbeiter besprechen möchtest, kontaktiere uns [[Special:Contact/general|hier]].',
-	'specialcontact-intro-using-fandom' => 'Jetzt wo du ein Teil der Community bist, steht es dir frei, zu fast allen Seiten bei Fandom beizutragen. Für eine kleine Starthilfe besuche die [[w:c:de:Hilfe:Einführung|Hilfeseiten]].
+Falls du die Sperre dennoch mit einem FANDOM-Mitarbeiter besprechen möchtest, kontaktiere uns [[Special:Contact/general|hier]].',
+	'specialcontact-intro-using-fandom' => 'Jetzt wo du ein Teil der Community bist, steht es dir frei, zu fast allen Seiten bei FANDOM beizutragen. Für eine kleine Starthilfe besuche die [[w:c:de:Hilfe:Einführung|Hilfeseiten]].
 
 Hast du Fragen zu einer bestimmten Community, dann [[Special:ListAdmins|frag die Admins dort]].
 Du kannst auch jederzeit allgemeine Fragen in unserem [[Special:Forum|Hilfeforum]] stellen.
 
-Und vergiss nicht, dass man eine Community bei Fandom nicht kaputt machen kann! Experimentieren ist erwünscht. Viel Spaß dabei!',
-	'specialcontact-intro-feedback' => 'Du hast Verbesserungsvorschläge? Lass sie uns über das Formular unten wissen! Falls deine Vorschläge sich auf ein Produkt aus Fandom Labs beziehen, schicke sie uns bitte direkt [[Special:WikiFeatures|über die Feedback-Buttons dort]].
+Und vergiss nicht, dass man eine Community bei FANDOM nicht kaputt machen kann! Experimentieren ist erwünscht. Viel Spaß dabei!',
+	'specialcontact-intro-feedback' => 'Du hast Verbesserungsvorschläge? Lass sie uns über das Formular unten wissen! Falls deine Vorschläge sich auf ein Produkt aus FANDOM Labs beziehen, schicke sie uns bitte direkt [[Special:WikiFeatures|über die Feedback-Buttons dort]].
 
-Danke und viel Spaß bei Fandom!',
-	'specialcontact-intro-bug' => 'Es tut uns sehr leid, dass du bei Fandom auf einen Fehler gestoßen bist. Bitte beschreibe das Problem so ausführlich wie möglich. Wichtige Details wären:
+Danke und viel Spaß bei FANDOM!',
+	'specialcontact-intro-bug' => 'Es tut uns sehr leid, dass du bei FANDOM auf einen Fehler gestoßen bist. Bitte beschreibe das Problem so ausführlich wie möglich. Wichtige Details wären:
 *Dein Benutzername
 *Ein Link zu der Community
 *Typ und Version deines Browsers ([[w:c:de:Hilfe:Unterstützte_Webbrowser|Hier klicken für eine Liste der von uns unterstützten Browser]])
@@ -394,8 +394,8 @@ Danke und viel Spaß bei Fandom!',
 
 Weitere Informationen dazu, welche Angaben du in deinen Bericht aufnehmen solltest, findest du auf [[w:c:de.community:Hilfe:Bugs_melden|unserer Hilfeseite zur Meldung von Fehlern]]
 
-Vielen Dank für deine Meldung und weiterhin viel Spaß auf Fandom!',
-	'specialcontact-intro-bad-ad' => 'Es tut uns Leid, dass dir eine unangebrachte Werbeanzeige auf Fandom begegnet ist. Falls du weitere Details hast, teile sie uns mit. Wir leiten sie dann an unsere Marketing-Abteilung weiter, die die Anzeige überprüfen wird und sie eventuell von der Seite nehmen kann.
+Vielen Dank für deine Meldung und weiterhin viel Spaß auf FANDOM!',
+	'specialcontact-intro-bad-ad' => 'Es tut uns Leid, dass dir eine unangebrachte Werbeanzeige auf FANDOM begegnet ist. Falls du weitere Details hast, teile sie uns mit. Wir leiten sie dann an unsere Marketing-Abteilung weiter, die die Anzeige überprüfen wird und sie eventuell von der Seite nehmen kann.
 
 Vergiss nicht, uns mitzuteilen, in welcher Community du warst, welche Anzeige du gesehen hast und warum diese ein Problem darstellt. Eine große Hilfe wäre auch ein Screenshot und die URL, auf die die Anzeige verweist. Hier findest du die Anleitung dazu, wie du die URL der Anzeige herausfinden kannst: http://de.community.wikia.com/wiki/Hilfe:Unerw%C3%BCnschte_Werbung
 
@@ -403,45 +403,45 @@ Vielen Dank!',
 	'specialcontact-intro-wiki-name-change' => 'Falls du ein Admin der Community bist, kannst du hier den Antrag stellen, um den [[w:c:de:Hilfe:Projektname|Namen]] oder die [[w:c:de:Hilfe:Subdomain|URL]] zu ändern. Überprüfe die Schreibweise gründlich, um sicher zu stellen, das alles korrekt ist. Falls du kein Admin bist, dann wende dich mit deinem Antrag an die [[Special:ListAdmins|lokalen Admins]].',
 	'specialcontact-intro-design' => 'Das Design dieses Wikis kann von jedem Admin der Community im [[w:c:de:Hilfe:Theme_Designer|Theme-Designer]] aktualisiert werden. Falls du kein Admin bist, aber mit dem Design des Wikis helfen willst, wende dich bitte zuerst an die [[Special:ListAdmins|Admins hier]].
 
-Wenn du mithelfen möchtest, das Design noch besser an diese Community anzupassen, kannst du [[w:c:de.community:Community_Development|hier]] einen Antrag an das Fandom-Development-Team schicken. Bitte lies dir die Richtlinien durch, bevor du den Antrag abschickst.
+Wenn du mithelfen möchtest, das Design noch besser an diese Community anzupassen, kannst du [[w:c:de.community:Community_Development|hier]] einen Antrag an das FANDOM-Development-Team schicken. Bitte lies dir die Richtlinien durch, bevor du den Antrag abschickst.
 
 Falls du glaubst, dass du während des Design-Updates einen Bug gefunden hast, schicke uns einen detaillierten [[Special:Contact/bug|Fehlerbericht]]!',
-	'specialcontact-intro-features' => 'Fandom bietet eine Vielfalt an Funktionen, von denen die meisten in allen Communitys automatisch eingeschaltet sind.
+	'specialcontact-intro-features' => 'FANDOM bietet eine Vielfalt an Funktionen, von denen die meisten in allen Communitys automatisch eingeschaltet sind.
 
 Wenn du ein Admin bist und denkst, dass eine der Funktionen nicht zu deiner Community passt, dann besprich das mit den Benutzern deines Wikis. Falls die Mehrheit dafür ist, dann kannst du die Funktion im Menüpunkt [[Special:WikiFeatures|Wiki-Funktionen]] der [[Special:AdminDashboard|Wiki-Verwaltung]] abschalten. Falls die Funktion nicht in den Wiki-Funktionen zu finden ist, dann [[Special:Contact/general|kontaktiere uns]].
 
-Admins, die Interesse daran haben, neue Funktionen in der Entwicklung zu testen, können diese im Fandom-Labs-Menü in den [[Special:WikiFeatures|Wiki-Funktionen]] ansehen.
+Admins, die Interesse daran haben, neue Funktionen in der Entwicklung zu testen, können diese im FANDOM-Labs-Menü in den [[Special:WikiFeatures|Wiki-Funktionen]] ansehen.
 
 Wenn du über neue Funktionen auf dem Laufenden bleiben möchtest, folge einfach unserem [w:c:de.community.wikia.com/wiki/Blog:Fandom_Deutschland_News|Blog über neue Funktionen]]',
-	'specialcontact-intro-close-wiki' => 'Danke, dass du Fandom kontaktiert hast. Üblicherweise löschen wir keine Wikis, nachdem sie erstellt wurden. Wiki-Projekte gehören der Community, und falls du nicht länger an einem Wiki interessiert bist, gibt es vielleicht jemand anderen, der es [[Special:Contact/adoption|adoptieren möchte]].
+	'specialcontact-intro-close-wiki' => 'Danke, dass du FANDOM kontaktiert hast. Üblicherweise löschen wir keine Wikis, nachdem sie erstellt wurden. Wiki-Projekte gehören der Community, und falls du nicht länger an einem Wiki interessiert bist, gibt es vielleicht jemand anderen, der es [[Special:Contact/adoption|adoptieren möchte]].
 
 Falls du den Namen deines Wikis ändern möchtest oder einen Rechtschreib- oder Grammatikfehler korrigieren möchtest, informiere dich bitte zuerst unter [[w:c:de:Hilfe:Verschieben]], wie du eine Seite umbenennen kannst, und unter [[w:c:de:Hilfe:Projektname]], um den Namen des Wikis zu ändern. Der Name eines Wikis kann geändert werden, ohne dass du komplett von vorne beginnen musst. Falls du die URL deines Wikis ändern möchtest, dann [[Special:Contact/general|schreib uns]]. Wir übernehmen das gerne für dich und du musst deswegen deine Community nicht schließen.
 
 Wenn du das Gefühl hast, dass dieses Wiki keinen Nutzen für andere hat (wie z.B. ein Wiki zu einem persönlichen Thema), stelle einen Antrag, indem du das folgende Formular benutzt. Bitte füge auch einen Link zum entsprechenden Wiki in deiner Nachricht ein. 
 
-Ich hoffe, du findest unter den vielen Wikis bei Fandom eines, das dich fasziniert und wo du helfen kannst, eine großartige Informationsquelle zum Thema aufzubauen.
+Ich hoffe, du findest unter den vielen Wikis bei FANDOM eines, das dich fasziniert und wo du helfen kannst, eine großartige Informationsquelle zum Thema aufzubauen.
 
 Viel Spaß dabei!',
-	'specialcontact-intro-general' => 'Du kannst über dieses Formular einen [[Special:Contact|Fandom-Mitarbeiter]] kontaktieren. Die Admins dieser Community findest du [[Special:ListAdmins|hier]].
+	'specialcontact-intro-general' => 'Du kannst über dieses Formular einen [[Special:Contact|FANDOM-Mitarbeiter]] kontaktieren. Die Admins dieser Community findest du [[Special:ListAdmins|hier]].
 
 Zusätzliche Informationen zum Melden von Problemen findest du [[Special:Contact|hier]] oder wenn du in den [[w:c:de.community:Special:Forum|Foren]] andere Benutzer um Hilfe bittest. 
 
 Wenn du lieber eine E-Mail schicken möchtest, kontaktiere uns unter [mailto:community@fandom.com community@fandom.com].',
-	'specialcontact-noform-footer' => "'''Beantwortet diese Seite deine Fragen?''' Wenn nicht, dann [[Special:contact/general|schreib uns]]. Vergiss nicht, dass du jederzeit die '''[[w:c:de.community:Hilfe:Übersicht|Hilfeseiten]]''' durchschauen, den [[w:c:de.community:Blog:Fandom_Staff_Blog|Fandom-Blog]] lesen oder in unseren '''[[w:c:de.community:Special:Forum|Foren]]''' posten kannst.",
+	'specialcontact-noform-footer' => "'''Beantwortet diese Seite deine Fragen?''' Wenn nicht, dann [[Special:contact/general|schreib uns]]. Vergiss nicht, dass du jederzeit die '''[[w:c:de.community:Hilfe:Übersicht|Hilfeseiten]]''' durchschauen, den [[w:c:de.community:Blog:Fandom_Staff_Blog|FANDOM-Blog]] lesen oder in unseren '''[[w:c:de.community:Special:Forum|Foren]]''' posten kannst.",
 	'specialcontact-username' => 'Benutzername',
 	'specialcontact-wikiname' => 'Welches Wiki',
 	'specialcontact-realname' => 'Dein Name',
 	'specialcontact-yourmail' => 'Deine E-Mail',
 	'specialcontact-problem' => 'Betreff',
 	'specialcontact-problemdesc' => 'Nachricht',
-	'specialcontact-mail' => 'An Fandom senden',
+	'specialcontact-mail' => 'An FANDOM senden',
 	'specialcontact-filledin' => 'Diese Informationen wurden von deinen Benutzerkonto-Einstellungen übernommen',
 	'specialcontact-ccme' => 'Schicke mir eine Kopie dieser Nachricht',
 	'specialcontact-ccdisabled' => 'Deaktiviert: Bitte [[Special:ConfirmEmail|bestätige deine E-Mail-Adresse]], um diese Funktion zu nutzen',
 	'specialcontact-notyou' => 'Das bist nicht du?',
 	'specialcontact-captchainfo' => 'Bitte gib den Text aus dem Bild ein.',
 	'specialcontact-captchatitle' => 'Captcha',
-	'specialcontact-formtitle' => 'Fandom-Support-Mitarbeiter kontaktieren',
+	'specialcontact-formtitle' => 'FANDOM-Support-Mitarbeiter kontaktieren',
 	'specialcontact-label-screenshot' => 'Hast du einen Screenshot? Falls ja, lade ihn hier hoch.',
 	'specialcontact-label-additionalscreenshot' => 'Hast du einen weiteren Screenshot? Lade ihn hier hoch.',
 	'specialcontact-label-bad-ad-description' => 'Bitte beschreibe das Problem mit der Anzeige',
@@ -449,13 +449,13 @@ Wenn du lieber eine E-Mail schicken möchtest, kontaktiere uns unter [mailto:com
 	'specialcontact-label-bug-link' => 'Bitte gib die URL der Seite an, mit der ein Problem besteht',
 	'specialcontact-label-bug-feature' => 'Um welche Funktion geht es?',
 	'specialcontact-label-bug-description' => 'Bitte beschreibe das Problem',
-	'specialcontact-label-close-account-confirm' => 'Ich bestätige, dass ich mein Benutzerkonto bei Fandom schließen möchte',
+	'specialcontact-label-close-account-confirm' => 'Ich bestätige, dass ich mein Benutzerkonto bei FANDOM schließen möchte',
 	'specialcontact-label-close-account-read-help' => 'Ich habe die [[w:c:de:Hilfe:Benutzerkonto_schließen|Hilfeseite zur Konto-Schließung gelesen]]',
 	'specialcontact-label-account-issue-description' => 'Bitte füge eine detaillierte Beschreibung des Problems ein.',
 	'specialcontact-label-rename-newusername' => 'Gib den neuen Benutzernamen ein',
 	'specialcontact-label-rename-account-confirm' => 'Ich bestätige hiermit, dass der Name korrekt geschrieben ist',
 	'specialcontact-label-rename-account-read-help' => 'Ich habe die [[w:c:de:Hilfe:Benutzerkonto_umbenennen|Hilfeseiten zur Namensänderung gelesen]]',
-	'specialcontact-form-header' => 'Fandom kontaktieren',
+	'specialcontact-form-header' => 'FANDOM kontaktieren',
 	'specialcontact-logged-in-as' => 'Du bist als $1 angemeldet. [[Special:UserLogout|Das bist nicht du?]]',
 	'specialcontact-mail-on-file' => 'Deine E-Mail ist $1. [[Special:Preferences|Möchtest du sie ändern?]]',
 	'specialcontact-nomessage' => 'Bitte gib eine Nachricht ein',
@@ -463,17 +463,17 @@ Wenn du lieber eine E-Mail schicken möchtest, kontaktiere uns unter [mailto:com
 	'specialcontact-error-title' => 'Kontaktformular-Fehler',
 	'specialcontact-error-message' => 'Beim Absenden des Formulars ist ein Fehler aufgetreten. Bitte versuche es später erneut.',
 	'specialcontact-error-logintext' => 'Du musst angemeldet sein, um diesen Antrag zu stellen. Bitte [[Special:SignUp|melde dich an]] und versuche es erneut.',
-	'specialcontact-error-alreadyrenamed' => 'Dein Benutzername wurde schon einmal geändert und kann daher nicht noch einmal geändert werden. Kontaktiere einen [[Special:Contact/general|Fandom-Mitarbeiter]], falls du Hilfe brauchst.',
-	'specialcontact-mailsub' => 'Fandom-Support',
-	'specialcontact-mailsubcc' => 'Kopie der Fandom-Kontaktnachricht',
-	'specialcontact-ccheader' => 'Dies ist eine Kopie der Nachricht, die an den Fandom-Support geschickt wurde',
-	'specialcontact-submitcomplete' => "Danke für deine Nachricht an Fandom. Wir lesen alle Nachrichten, die uns hier geschickt werden. Wir tun unser Bestes, um innerhalb von 2-3 Arbeitstagen auf deine Nachricht zu antworten. Wir bitten um Geduld.
+	'specialcontact-error-alreadyrenamed' => 'Dein Benutzername wurde schon einmal geändert und kann daher nicht noch einmal geändert werden. Kontaktiere einen [[Special:Contact/general|FANDOM-Mitarbeiter]], falls du Hilfe brauchst.',
+	'specialcontact-mailsub' => 'FANDOM-Support',
+	'specialcontact-mailsubcc' => 'Kopie der FANDOM-Kontaktnachricht',
+	'specialcontact-ccheader' => 'Dies ist eine Kopie der Nachricht, die an den FANDOM-Support geschickt wurde',
+	'specialcontact-submitcomplete' => "Danke für deine Nachricht an FANDOM. Wir lesen alle Nachrichten, die uns hier geschickt werden. Wir tun unser Bestes, um innerhalb von 2-3 Arbeitstagen auf deine Nachricht zu antworten. Wir bitten um Geduld.
 
-Vergiss nicht: Du kannst dir jederzeit die '''[[w:c:de.community:Hilfe:Übersicht|Hilfeseiten]]''' ansehen, im [[w:c:community:Special:Forum|Community-Forum]] Fragen stellen oder den [[w:c:community:Blog:Fandom_Deutschland_News|Fandom-Blog]] lesen!",
+Vergiss nicht: Du kannst dir jederzeit die '''[[w:c:de.community:Hilfe:Übersicht|Hilfeseiten]]''' ansehen, im [[w:c:community:Special:Forum|Community-Forum]] Fragen stellen oder den [[w:c:community:Blog:Fandom_Deutschland_News|FANDOM-Blog]] lesen!",
 	'specialcontact-seclink-security' => 'Ich glaube, ich habe ein Sicherheitsproblem entdeckt',
 	'specialcontact-seclink-dmca-request' => 'Ich habe eine Urheberrechtsbeschwerde',
 	'specialcontact-sectitle-security' => 'Bericht über Sicherheitsproblem',
-	'specialcontact-intro-security' => 'Wenn du im Code von Fandom oder in einer der Fandom-Communitys ein Sicherheitsproblem entdeckt hast oder vermutest, eines entdeckt zu haben, teile uns dies bitte mit. Wir wissen es sehr zu schätzen, dass du uns dabei hilfst, die Benutzung von Fandom für jeden sicher zu machen, indem du uns dies auf [[wikipedia:Responsible disclosure|verantwortungsvolle Weise]] mitteilst.
+	'specialcontact-intro-security' => 'Wenn du im Code von FANDOM oder in einer der FANDOM-Communitys ein Sicherheitsproblem entdeckt hast oder vermutest, eines entdeckt zu haben, teile uns dies bitte mit. Wir wissen es sehr zu schätzen, dass du uns dabei hilfst, die Benutzung von FANDOM für jeden sicher zu machen, indem du uns dies auf [[wikipedia:Responsible disclosure|verantwortungsvolle Weise]] mitteilst.
 
 Wenn du einen allgemeinen Bug oder eine andere Art von Problem melden möchtest, verwende bitte das [[Special:Contact|reguläre Kontaktformular]].
 
@@ -491,7 +491,7 @@ Bitte achte darauf, dass du beim Melden eines Sicherheitsproblems dieses detaill
 ** Besonders mit XSS oder bei Schwachstellen, bei denen ein bestimmter Browser oder ein bestimmtes Plugin zur Reproduktion benötigt werden
 * Eine kurze Beschreibung der möglichen Sicherheitsauswirkungen, die durch diese Schwachstelle entstehen
 
-Wenn ein Sicherheitsbericht über dieses Formular abgeschickt wird, unternimmt Fandom Folgendes:
+Wenn ein Sicherheitsbericht über dieses Formular abgeschickt wird, unternimmt FANDOM Folgendes:
 * Wir stellen das Nachvollziehen und die Bestätigung der gemeldeten Schwachstelle an erste Stelle
 * Wir legen einen angemessenen Zeitrahmes für die Beseitigung der Schwachstelle fest
 * Wir leiten keine rechtlichen Schritte gegen Personen, die Bericht erstatten und sich an die Test- und Meldungsrichtlinien bei Sicherheitsproblemen halten',
@@ -513,20 +513,20 @@ Browser/System: ',
 	'specialcontact-security-issue-type-leak' => 'Datenleck',
 	'specialcontact-security-issue-type-redirect' => 'Missbrauch von Domainweiterleitungen',
 	'specialcontact-security-issue-type-other' => 'Andere',
-	'specialcontact-intro-content-issue-mobile' => 'Der Inhalt dieses Wikis wurde von dessen Community erstellt und wird nicht von Fandom verwaltet. Falls du Probleme oder Fragen zum Inhalt dieses Wikis hast, wende dich bitte zunächst an die Admins dieses Wikis.
+	'specialcontact-intro-content-issue-mobile' => 'Der Inhalt dieses Wikis wurde von dessen Community erstellt und wird nicht von FANDOM verwaltet. Falls du Probleme oder Fragen zum Inhalt dieses Wikis hast, wende dich bitte zunächst an die Admins dieses Wikis.
 
-Falls du denkst, dass der Inhalt gegen unsere Nutzungsbedingungen verstößt, kannst du dich direkt an einen Fandom-Mitarbeiter wenden.',
+Falls du denkst, dass der Inhalt gegen unsere Nutzungsbedingungen verstößt, kannst du dich direkt an einen FANDOM-Mitarbeiter wenden.',
 	'specialcontact-label-bad-ad-url' => 'Wenn möglich gib bitte die URL an, auf die die Anzeige verlinkt. Wie du diesen Link finden kannst, erfährst du auf dieser [[w:c:de:Hilfe:Unerwünschte_Werbung|Hilfeseite]].',
 	'specialcontact-desc' => 'Fandoms Kontaktformular [[Special:Contact]]',
 	'specialcontact-label-bad-ad-help-page' => 'Hilfe:Unerwünschte_Werbung',
 );
 
 $messages['es'] = array(
-	'contact' => 'Contáctate con Fandom',
-	'specialcontact-wikia' => 'Contáctate con Fandom',
-	'specialcontact-pagetitle' => 'Contactar con el equipo de soporte comunitario de Fandom',
-	'specialcontact-intro-main-head' => '<big>¿Necesitas ayuda? ¡Que no cunda el pánico, la comunidad de Fandom está aquí para ayudarte!</big><br/>
-Sigue los enlaces que hay debajo para aprender más sobre cómo usar Fandom, hacer cambios en tu wiki o modificar tu cuenta.',
+	'contact' => 'Contáctate con FANDOM',
+	'specialcontact-wikia' => 'Contáctate con FANDOM',
+	'specialcontact-pagetitle' => 'Contactar con el equipo de soporte comunitario de FANDOM',
+	'specialcontact-intro-main-head' => '<big>¿Necesitas ayuda? ¡Que no cunda el pánico, la comunidad de FANDOM está aquí para ayudarte!</big><br/>
+Sigue los enlaces que hay debajo para aprender más sobre cómo usar FANDOM, hacer cambios en tu wiki o modificar tu cuenta.',
 	'specialcontact-intro-main-local' => '',
 	'specialcontact-intro-main-foot' => "'''¿Responde esta página a tu pregunta?''' Si no lo hace, siéntete libre de [[{{#Special:contact/general}}|contactar con nosotros]] para hablar sobre el problema que tienes. Recuerda que siempre puedes revisar nuestras '''[[w:c:comunidad:Ayuda:Contenidos|páginas de ayuda]]''', '''[[w:c:comunidad:Blog:Noticias_de_Fandom|blog del staff]]''' o dejar un mensaje en nuestros '''[[w:c:comunidad:Especial:Foro|foros de ayuda]]'''.",
 	'specialcontact-secheader-onwiki' => 'Preguntas sobre este wiki',
@@ -538,8 +538,8 @@ Sigue los enlaces que hay debajo para aprender más sobre cómo usar Fandom, hac
 	'specialcontact-seclink-close-account' => 'Desactivar mi cuenta',
 	'specialcontact-seclink-rename-account' => 'Renombrar mi cuenta',
 	'specialcontact-seclink-blocked' => 'Mi cuenta está bloqueada',
-	'specialcontact-secheader-editing' => 'Participando en Fandom',
-	'specialcontact-seclink-using-fandom' => '¿Cómo uso Fandom?',
+	'specialcontact-secheader-editing' => 'Participando en FANDOM',
+	'specialcontact-seclink-using-fandom' => '¿Cómo uso FANDOM?',
 	'specialcontact-seclink-feedback' => 'Quiero dar mis sugerencias',
 	'specialcontact-seclink-bug' => 'Creo que encontré un bug',
 	'specialcontact-seclink-bad-ad' => 'Veo un anuncio roto o inapropiado',
@@ -548,7 +548,7 @@ Sigue los enlaces que hay debajo para aprender más sobre cómo usar Fandom, hac
 	'specialcontact-seclink-design' => 'Diseño',
 	'specialcontact-seclink-features' => 'Añadir o quitar funcionalidades',
 	'specialcontact-seclink-close-wiki' => 'Cerrar este wiki',
-	'specialcontact-sectitle' => 'Soporte de Fandom - $1',
+	'specialcontact-sectitle' => 'Soporte de FANDOM - $1',
 	'specialcontact-sectitle-general' => 'Formulario de contacto',
 	'specialcontact-sectitle-content-issue' => 'Problema con el contenido',
 	'specialcontact-sectitle-user-conflict' => 'Interacciones con los usuarios',
@@ -557,15 +557,15 @@ Sigue los enlaces que hay debajo para aprender más sobre cómo usar Fandom, hac
 	'specialcontact-sectitle-close-account' => 'Desactivar mi cuenta',
 	'specialcontact-sectitle-rename-account' => 'Renombrar mi cuenta',
 	'specialcontact-sectitle-blocked' => 'Cuenta bloqueada',
-	'specialcontact-sectitle-using-fandom' => 'Usando Fandom',
+	'specialcontact-sectitle-using-fandom' => 'Usando FANDOM',
 	'specialcontact-sectitle-feedback' => 'Sugerencias',
 	'specialcontact-sectitle-bug' => 'Informe de bug',
 	'specialcontact-sectitle-bad-ad' => 'Informe de anuncio inadecuado',
 	'specialcontact-sectitle-wiki-name-change' => 'Cambio de nombre de la comunidad',
 	'specialcontact-sectitle-design' => 'Diseño comunitario',
-	'specialcontact-sectitle-features' => 'Funcionalidades de Fandom',
+	'specialcontact-sectitle-features' => 'Funcionalidades de FANDOM',
 	'specialcontact-sectitle-close-wiki' => 'Cerrar este wiki',
-	'specialcontact-intro-content-issue' => 'El contenido de este wiki es creado por su comunidad, y controlado por los [[{{#Special:ListAdmins}}|administradores locales]], no por Fandom. Si deseas discutir sobre el contenido del wiki, lo mejor es que contactes primero a los [[{{#Special:ListAdmins}}|administradores]].
+	'specialcontact-intro-content-issue' => 'El contenido de este wiki es creado por su comunidad, y controlado por los [[{{#Special:ListAdmins}}|administradores locales]], no por FANDOM. Si deseas discutir sobre el contenido del wiki, lo mejor es que contactes primero a los [[{{#Special:ListAdmins}}|administradores]].
 
 Si piensas que el contenido viola nuestros [[w:c:es:Términos_de_uso|términos de uso]], puedes contactarte con el equipo de soporte comunitario directamente [[{{#Special:Contact/general}}|desde aquí]].',
 	'specialcontact-intro-user-conflict' => 'Los wikis son espacios comunitarios donde cada persona tiene que trabajar codo a codo con otros usuarios para que todo salga bien. Mientras trabajan juntos pueden surgir conflictos, y la mejor forma de resolverlos suele ser teniendo una conversación abierta y respetuosa.
@@ -590,24 +590,24 @@ Si hay una comunidad de usuarios activa en el wiki que quieres adoptar, antes de
 Si hiciste todas estas cosas y continúas teniendo problemas - envíanos un informe detallado usando el formulario de debajo. Te contestaremos lo antes posible para ayudarte a solucionar el problema.
 
 ¡Diviértete!',
-	'specialcontact-intro-close-account' => 'Lamentamos mucho que quieras cerrar tu cuenta. Fandom tiene muchos wikis sobre montones de temas diferentes y nos gustaría que te dieses una vuelta y encontrases alguno que te gustase para seguir colaborando. Si tienes un problema local en un wiki, por favor, no dudes en ponerte en contacto con tus [[{{#Special:Listusers/sysop}}|administradores locales]] para que te ayuden y aconsejen.
+	'specialcontact-intro-close-account' => 'Lamentamos mucho que quieras cerrar tu cuenta. FANDOM tiene muchos wikis sobre montones de temas diferentes y nos gustaría que te dieses una vuelta y encontrases alguno que te gustase para seguir colaborando. Si tienes un problema local en un wiki, por favor, no dudes en ponerte en contacto con tus [[{{#Special:Listusers/sysop}}|administradores locales]] para que te ayuden y aconsejen.
 
-Si estás completamente decidido a desactivar tu cuenta, por favor, ten en cuenta que Fandom no puede borrar completamente las cuentas, pero podemos desactivarlas. De esta forma te asegurarás de que la cuenta está cerrada y no podrá volver a ser utilizada. Este proceso NO es reversible, y tendrás que crear una nueva cuenta si deseas volver a participar en Fandom. En cualquier caso, este proceso no borra tus contribuciones en los wikis, ya que estas contribuciones forman parte de la propia comunidad del wiki.
+Si estás completamente decidido a desactivar tu cuenta, por favor, ten en cuenta que FANDOM no puede borrar completamente las cuentas, pero podemos desactivarlas. De esta forma te asegurarás de que la cuenta está cerrada y no podrá volver a ser utilizada. Este proceso NO es reversible, y tendrás que crear una nueva cuenta si deseas volver a participar en FANDOM. En cualquier caso, este proceso no borra tus contribuciones en los wikis, ya que estas contribuciones forman parte de la propia comunidad del wiki.
 
 Si necesitas más información sobre cómo desactivar tu cuenta, puedes visitar la [[w:c:comunidad:Ayuda:Cerrar mi cuenta|página de ayuda para desactivar cuentas de usuario]]. Para confirmar que leíste la página y quieres desactivar tu cuenta, rellena el formulario de debajo.
 
-Esperamos que hayas disfrutado mientras estuviste en Fandom y que si tienes algún problema, podamos solucionarlo para que continúes editando con nosotros.',
+Esperamos que hayas disfrutado mientras estuviste en FANDOM y que si tienes algún problema, podamos solucionarlo para que continúes editando con nosotros.',
 	'specialcontact-intro-rename-account' => 'Es posible cambiar tu nombre de usuario, pero solamente una vez, así que asegúrate de querer cambiarlo antes de solicitarlo. Este proceso no puede ser revertido, y una vez cambiemos tu nombre de usuario, no podremos cambiarlo de nuevo. Por favor, lee completamente esta página de ayuda antes de enviar tu solicitud: [[w:c:comunidad:Ayuda:Renombrar mi cuenta|Ayuda:Renombrar mi cuenta]]
 
 Una vez leas esa página de ayuda y estés seguro de que el nuevo nombre de usuario suena bien, envía tu solicitud [[{{#Special:Contact/rename}}|aquí]]. Cuando tu nombre de usuario cambie, recibirás un correo electrónico confirmándolo. Después podrás identificarte con tu nuevo nombre de usuario usando tu antigua contraseña.
 
 ¡Diviértete editando!',
-	'specialcontact-intro-blocked' => 'Normalmente, las cuentas de usuario son bloqueadas por los administradores locales de los wikis y no por Fandom. Deberías ver el nombre del administrador que te bloqueó en el aviso que recibiste. Deberías poder dejarle un mensaje al administrador desde tu propia página de usuario. Esta continúa siendo editable por los usuarios bloqueados (en algunos wikis) y los cambios que se hagan ahí, podrán ser vistos por otros editores del wiki. Encontrarás tu página de discusión siguiendo el enlace que aparece arriba a la derecha al pulsar en la flecha al lado de tu nombre de usuario.
+	'specialcontact-intro-blocked' => 'Normalmente, las cuentas de usuario son bloqueadas por los administradores locales de los wikis y no por FANDOM. Deberías ver el nombre del administrador que te bloqueó en el aviso que recibiste. Deberías poder dejarle un mensaje al administrador desde tu propia página de usuario. Esta continúa siendo editable por los usuarios bloqueados (en algunos wikis) y los cambios que se hagan ahí, podrán ser vistos por otros editores del wiki. Encontrarás tu página de discusión siguiendo el enlace que aparece arriba a la derecha al pulsar en la flecha al lado de tu nombre de usuario.
 
-Si tu página de discusión no puede ser editada, el mejor consejo que podemos darte es que esperes a que el bloqueo finalice o participes en la comunidad de otro de los muchos wikis que hay en Fandom.
+Si tu página de discusión no puede ser editada, el mejor consejo que podemos darte es que esperes a que el bloqueo finalice o participes en la comunidad de otro de los muchos wikis que hay en FANDOM.
 
-Si sientes que necesitas discutir tu bloqueo con el staff de Fandom, por favor, ponte en contacto con nosotros [[{{#Special:Contact/general}}|por aquí]].',
-	'specialcontact-intro-using-fandom' => 'Ahora que formas parte de la comunidad, puedes editar y contribuir en cualquier página de Fandom. Comprueba nuestras [[w:c:comunidad:Ayuda:Contenidos|páginas de ayuda]] para obtener una introducción de ayuda. Son un magnífico lugar donde aprender los conceptos básicos para editar, dar formato y mucho más.
+Si sientes que necesitas discutir tu bloqueo con el staff de FANDOM, por favor, ponte en contacto con nosotros [[{{#Special:Contact/general}}|por aquí]].',
+	'specialcontact-intro-using-fandom' => 'Ahora que formas parte de la comunidad, puedes editar y contribuir en cualquier página de FANDOM. Comprueba nuestras [[w:c:comunidad:Ayuda:Contenidos|páginas de ayuda]] para obtener una introducción de ayuda. Son un magnífico lugar donde aprender los conceptos básicos para editar, dar formato y mucho más.
 
 Si tienes preguntas sobre un wiki en específico, comienza [[{{#Special:ListAdmins}}|contactando con tus administradores locales]].
 Puedes hacer preguntas generales a los miembros de Comunidad Central en el [[w:c:comunidad:Especial:Foro|foro de ayuda]].
@@ -616,7 +616,7 @@ Recuerda que los wikis no pueden romperse, así que no tengas miedo de empezar. 
 	'specialcontact-intro-feedback' => '¿Tienes alguna sugerencia? ¡Nos encanta oírlas! Por favor, dinos lo que piensas a través del formulario presentando a continuación. Si tienes algún comentario sobre una funcionalidad dentro de Funcionalidades Wiki, déjanos el comentario [[{{#Special:WikiaLabs}}|aquí]].
 
 ¡Gracias por tus sugerencias y diviértete editando!',
-	'specialcontact-intro-bug' => 'Sentimos escuchar que encontraste un error en Fandom. Por favor danos todos los detalles del problema que descubriste en el formulario de debajo para que podamos investigar más al respecto. Los detalles importantes que debes incluir son:
+	'specialcontact-intro-bug' => 'Sentimos escuchar que encontraste un error en FANDOM. Por favor danos todos los detalles del problema que descubriste en el formulario de debajo para que podamos investigar más al respecto. Los detalles importantes que debes incluir son:
 *Tu nombre de usuario
 *Enlace a tu wiki
 *Información sobre tu navegador (incluyendo versión y nombre)
@@ -625,42 +625,42 @@ Recuerda que los wikis no pueden romperse, así que no tengas miedo de empezar. 
 
 Gracias de nuevo por informarnos al respecto.
 
-¡Y no olvides divertirte mientras usas Fandom!',
-	'specialcontact-intro-bad-ad' => 'Sentimos que hayas encontrado un anuncio inapropiado en Fandom. Si pudieras darnos todos los detalles que puedas sobre el anuncio, podremos avisar a nuestro administrador de publicidad, quién revisará el anuncio y decidirá si es necesario retirarlo del sistema.
+¡Y no olvides divertirte mientras usas FANDOM!',
+	'specialcontact-intro-bad-ad' => 'Sentimos que hayas encontrado un anuncio inapropiado en FANDOM. Si pudieras darnos todos los detalles que puedas sobre el anuncio, podremos avisar a nuestro administrador de publicidad, quién revisará el anuncio y decidirá si es necesario retirarlo del sistema.
 
 Asegúrate de decirnos en qué wiki estás, qué anuncio viste, y por qué fue inapropiado. Nos será de mucha ayuda incluir una captura de pantalla y la dirección del anuncio. Aquí tienes las instrucciones para reportar anuncios inapropiados:
 http://comunidad.wikia.com/wiki/Ayuda:Anuncios_inapropiados
 
-Muchas gracias por tu ayuda, ¡esperamos que te diviertas usando Fandom!',
+Muchas gracias por tu ayuda, ¡esperamos que te diviertas usando FANDOM!',
 	'specialcontact-intro-wiki-name-change' => 'Si eres administrador del wiki, puedes solicitar cambiar el [[w:c:comunidad:Ayuda:Sitename|nombre de sitio (sitename)]] o su [[w:c:comunidad:Ayuda:URL|dirección]] rellenando el formulario que se encuentra debajo. Por favor, comprueba que lo escribes bien, y corrígelo si te equivocas, así no tenemos que cambiarlo dos veces seguidas. Si no eres administrador, contacta con los administradores locales [[{{#Special:ListAdmins}}|de esta lista]].
 
 ¡Diviértete!',
 	'specialcontact-intro-design' => 'El diseño del wiki puede ser cambiado por cualquier administrador local de tu wiki usando el [[w:c:comunidad:Ayuda:Diseñador de Temas|Diseñador de temas]]. Si no eres administrador y quieres ayudar con el diseño del wiki, debes contactar antes con los [[{{#Special:ListAdmins}}|administradores locales]].
 
-Si quieres ayudar a crear un diseño más personalizado, puedes solicitar al Equipo de Diseño de Fandom en español que hagan un diseño personalizado para tu wiki [[w:c:comunidad:Comunidad Central:Diseños_y_portadas|aquí]]. Por favor, lee la guía antes de hacer tu solicitud allí.
+Si quieres ayudar a crear un diseño más personalizado, puedes solicitar al Equipo de Diseño de FANDOM en español que hagan un diseño personalizado para tu wiki [[w:c:comunidad:Comunidad Central:Diseños_y_portadas|aquí]]. Por favor, lee la guía antes de hacer tu solicitud allí.
 
 Si piensas que has encontrado un bug mientras actualizabas el diseño de tu wiki, por favor, envíanos un informe detallado desde [[{{#Special:Contact/bug}}|aquí]].
 
 ¡Diviértete editando!',
-	'specialcontact-intro-features' => 'Fandom ofrece muchas funcionalidades, la mayoría de ellas están activas en todos los wikis de Fandom por defecto.
+	'specialcontact-intro-features' => 'FANDOM ofrece muchas funcionalidades, la mayoría de ellas están activas en todos los wikis de FANDOM por defecto.
 
 Si eres administrador y piensas que una de las funcionalidades no está funcionando como debería, por favor, discute con la comunidad de tu wiki si están de acuerdo con desactivarla. Si todos aceptan, envíanos un mensaje con los detalles [[{{#Special:Contact/general}}|por aquí]].
 
 Los administradores interesados en probar nuevas funcionalidades que están aún en desarrollo, pueden revisar nuestro nuevo [[{{#Special:WikiFeatures}}|Funcionalidades Wiki]] que permite activar (o desactivar) algunas de estas funcionalidades.
 
-¿Quieres estar al tanto de las nuevas funcionalidades y mejoras que hacemos? Para y echa un vistazo al [[w:c:comunidad:Blog:Noticias_de_Fandom|blog de Fandom en español]] para estar informado.
+¿Quieres estar al tanto de las nuevas funcionalidades y mejoras que hacemos? Para y echa un vistazo al [[w:c:comunidad:Blog:Noticias_de_Fandom|blog de FANDOM en español]] para estar informado.
 
 ¡Diviértete editando!',
-	'specialcontact-intro-close-wiki' => 'Muchas gracias por contactarse con Fandom. Normalmente no borramos wikis una vez han sido creados. Los wikis son proyectos comunitarios, y si tú no estás interesado en continuar, puede que otros sí que estén interesados en [[{{#Special:Contact/adoption}}|adoptarlo]].
+	'specialcontact-intro-close-wiki' => 'Muchas gracias por contactarse con FANDOM. Normalmente no borramos wikis una vez han sido creados. Los wikis son proyectos comunitarios, y si tú no estás interesado en continuar, puede que otros sí que estén interesados en [[{{#Special:Contact/adoption}}|adoptarlo]].
 
 Si piensas que este wiki trata sobre un tema que no interesará a otros usuarios (o es un wiki personal o considerado spam), por favor, rellena el formulario de debajo. Asegúrate de hacer la solicitud desde el wiki que quieres que sea cerrado.
 
-Esperamos que encuentres otro wiki que forme parte de Fandom, en el que participar construyendo una fantástica fuente de información sobre cualquier tema que te apasione.
+Esperamos que encuentres otro wiki que forme parte de FANDOM, en el que participar construyendo una fantástica fuente de información sobre cualquier tema que te apasione.
 
 ¡Diviértete editando!',
-	'specialcontact-intro-general' => 'Contáctate con el [[w:c:comunidad:Comunidad Central:Staff|Staff de Fandom]] usando este formulario. Los administradores de este wiki pueden ser encontrados [[{{#Special:ListAdmins}}|aquí]].
+	'specialcontact-intro-general' => 'Contáctate con el [[w:c:comunidad:Comunidad Central:Staff|Staff de FANDOM]] usando este formulario. Los administradores de este wiki pueden ser encontrados [[{{#Special:ListAdmins}}|aquí]].
 
-Puedes encontrar información adicional sobre cómo reportar los bugs que veas en Fandom [[w:c:comunidad:Ayuda:Cómo informar de fallos|aquí]], o puedes dejar un mensaje en los [[w:c:comunidad:Especial:Foro|foros de la Comunidad Central]].
+Puedes encontrar información adicional sobre cómo reportar los bugs que veas en FANDOM [[w:c:comunidad:Ayuda:Cómo informar de fallos|aquí]], o puedes dejar un mensaje en los [[w:c:comunidad:Especial:Foro|foros de la Comunidad Central]].
 
 Si prefieres usar un correo electrónico o adjuntar archivos, puedes contactar con nosotros en la dirección [mailto:community@fandom.com community@fandom.com].',
 	'specialcontact-noform-footer' => "'''¿Responde esta página a tu pregunta?''' Si no lo hace, siéntete libre de [[{{#Special:contact/general}}|contactar con nosotros]] para hablar sobre el problema que tienes. Recuerda que siempre puedes revisar nuestras '''[[w:c:comunidad:Ayuda:Contenidos|páginas de ayuda]]''', '''[[w:c:comunidad:Blog:Noticias_de_Fandom|blog del staff]]''' o dejar un mensaje en nuestros '''[[w:c:comunidad:Especial:Foro|foros de ayuda]]'''.",
@@ -670,14 +670,14 @@ Si prefieres usar un correo electrónico o adjuntar archivos, puedes contactar c
 	'specialcontact-yourmail' => 'Correo electrónico',
 	'specialcontact-problem' => 'Asunto',
 	'specialcontact-problemdesc' => 'Mensaje',
-	'specialcontact-mail' => 'Enviar a Fandom',
+	'specialcontact-mail' => 'Enviar a FANDOM',
 	'specialcontact-filledin' => 'Esta información ha sido rellenada de acuerdo con tus preferencias',
 	'specialcontact-ccme' => 'Enviarme una copia de este mensaje',
 	'specialcontact-ccdisabled' => 'Deshabilitado: Por favor, [[Special:ConfirmEmail|confirma]] tu dirección de correo electrónico para usar esta función',
 	'specialcontact-notyou' => '¿No eres tú?',
 	'specialcontact-captchainfo' => 'Por favor, escribe el texto de la imagen.',
 	'specialcontact-captchatitle' => 'Palabra borrosa',
-	'specialcontact-formtitle' => 'Contactar con el equipo de soporte comunitario de Fandom',
+	'specialcontact-formtitle' => 'Contactar con el equipo de soporte comunitario de FANDOM',
 	'specialcontact-label-screenshot' => '¿Tomaste una captura? Si es así, súbela aquí.',
 	'specialcontact-label-additionalscreenshot' => 'Si tienes otra captura por favor súbela aquí.',
 	'specialcontact-label-bad-ad-description' => 'Por favor describe el problema con el anuncio',
@@ -685,13 +685,13 @@ Si prefieres usar un correo electrónico o adjuntar archivos, puedes contactar c
 	'specialcontact-label-bug-link' => 'Por favor incluye un enlace a la página donde estás teniendo el problema',
 	'specialcontact-label-bug-feature' => '¿A cuál funcionalidad está relacionado?',
 	'specialcontact-label-bug-description' => 'Por favor describe el problema que estás teniendo',
-	'specialcontact-label-close-account-confirm' => 'Confirmo que quiero deshabilitar mi cuenta en Fandom',
+	'specialcontact-label-close-account-confirm' => 'Confirmo que quiero deshabilitar mi cuenta en FANDOM',
 	'specialcontact-label-close-account-read-help' => 'He leído la [[w:c:comunidad:Ayuda:Cerrar mi cuenta|página de ayuda sobre cómo cerrar mi cuenta]]',
 	'specialcontact-label-account-issue-description' => 'Por favor incluye una descripción detallada del problema que estás teniendo.',
 	'specialcontact-label-rename-newusername' => 'Por favor escribe el nuevo nombre de usuario',
 	'specialcontact-label-rename-account-confirm' => 'Confirmo que la gramática y la ortografía de mi nuevo nombre es correcta',
 	'specialcontact-label-rename-account-read-help' => 'He leído la [[w:c:comunidad:Ayuda:Renombrar mi cuenta|página de ayuda sobre renombrar mi cuenta]]',
-	'specialcontact-form-header' => 'Contáctate con Fandom',
+	'specialcontact-form-header' => 'Contáctate con FANDOM',
 	'specialcontact-logged-in-as' => 'Has iniciado sesión como $1. [[{{#Special:UserLogout}}|¿No eres tú?]]',
 	'specialcontact-mail-on-file' => 'Tu correo electrónico es $1. [[{{#Special:Preferences}}|¿Quieres cambiarlo?]]',
 	'specialcontact-nomessage' => 'Por favor, rellena un mensaje',
@@ -699,17 +699,17 @@ Si prefieres usar un correo electrónico o adjuntar archivos, puedes contactar c
 	'specialcontact-error-title' => 'Error en el formulario',
 	'specialcontact-error-message' => 'Algo falló cuando se intentaba enviar tu solicitud. Por favor inténtalo de nuevo más tarde.',
 	'specialcontact-error-logintext' => 'Debes iniciar sesión para hacer esta solicitud. Por favor [[{{#Special:SignUp}}|inicia sesión]] e inténtalo de nuevo.',
-	'specialcontact-error-alreadyrenamed' => 'Tu cuenta ya ha sido renombrada por lo que no puedes volver a solicitar un cambio de nombre. Por favor [[{{#Special:contact/general}}|contacta con el equipo de Fandom]] si necesitas más ayuda.',
-	'specialcontact-mailsub' => 'Soporte de Fandom',
-	'specialcontact-mailsubcc' => 'Copia del correo de contacto de Fandom',
-	'specialcontact-ccheader' => 'Esta es una copia del mensaje que enviaste al Staff de Fandom',
-	'specialcontact-submitcomplete' => 'Muchas gracias por contactarse con Fandom. Recibimos y revisamos todos los mensajes que se envían por aquí. En los próximos 2 o 3 días laborables recibirás una respuesta, por favor sé paciente mientras nos encargamos de todos los mensajes que recibimos.
+	'specialcontact-error-alreadyrenamed' => 'Tu cuenta ya ha sido renombrada por lo que no puedes volver a solicitar un cambio de nombre. Por favor [[{{#Special:contact/general}}|contacta con el equipo de FANDOM]] si necesitas más ayuda.',
+	'specialcontact-mailsub' => 'Soporte de FANDOM',
+	'specialcontact-mailsubcc' => 'Copia del correo de contacto de FANDOM',
+	'specialcontact-ccheader' => 'Esta es una copia del mensaje que enviaste al Staff de FANDOM',
+	'specialcontact-submitcomplete' => 'Muchas gracias por contactarse con FANDOM. Recibimos y revisamos todos los mensajes que se envían por aquí. En los próximos 2 o 3 días laborables recibirás una respuesta, por favor sé paciente mientras nos encargamos de todos los mensajes que recibimos.
 
 Recuerda que puedes encontrar ayuda también en nuestro [[w:c:comunidad:Especial:Foro|foro]] o en nuestras [[w:c:comunidad:Ayuda:Contenidos|páginas de ayuda]]. Y por supuesto si quieres mantenerte al día con las últimas novedades, sigue nuestro [[w:c:comunidad:Blog:Noticias_de_Fandom|blog de noticias]]. ¡Diviértete!',
 	'specialcontact-seclink-security' => 'Creo que he encontrado un problema de seguridad',
 	'specialcontact-seclink-dmca-request' => 'Tengo una queja sobre derechos de autor',
 	'specialcontact-sectitle-security' => 'Informe de problemas de seguridad',
-	'specialcontact-intro-security' => 'Si has encontrado o crees que has encontrado un problema de seguridad en el código de Fandom o en una de las comunidades de Fandom, por favor avísanos. Apreciamos tu ayuda en mantener a salvo a Fandom para todos al revelarlo de una [[wikipedia:Responsible disclosure|manera responsable]].
+	'specialcontact-intro-security' => 'Si has encontrado o crees que has encontrado un problema de seguridad en el código de FANDOM o en una de las comunidades de FANDOM, por favor avísanos. Apreciamos tu ayuda en mantener a salvo a FANDOM para todos al revelarlo de una [[wikipedia:Responsible disclosure|manera responsable]].
 
 Si quieres informar de un error general u otro tipo de problema, por favor utiliza una de las [[{{#Special:Contact}}|otras formas de contacto]].
 
@@ -726,7 +726,7 @@ Al informar de un problema de seguridad, por favor proporciona todos los detalle
 ** Particularmente para XSS o vulnerabilidades que requieren de un navegador específico o un plugin para reproducir
 * Una breve descripción del impacto potencial de la vulnerabilidad sobre la seguridad
 
-En respuesta a informes de seguridad usando este formulario, Fandom:
+En respuesta a informes de seguridad usando este formulario, FANDOM:
 * Dará prioridad a la reproducción y la confirmación de cualquier vulnerabilidad divulgada
 * Determinará un calendario razonable para arreglar cualquier vulnerabilidad confirmada
 * No tomará acciones legales contra cualquier persona que reporte y que cumpla con todas las pautas para el análisis y registro de problemas de seguridad',
@@ -748,12 +748,12 @@ Navegador/sistema operativo: ',
 	'specialcontact-security-issue-type-leak' => 'Fuga de información',
 	'specialcontact-security-issue-type-redirect' => 'Abuso de redirección de URL',
 	'specialcontact-security-issue-type-other' => 'Otro',
-	'specialcontact-intro-content-issue-mobile' => 'El contenido de este wiki es creado por su comunidad, y controlado por los administradores locales, no por Fandom. Si deseas discutir sobre el contenido del wiki, lo mejor es que contactes primero a los administradores.
+	'specialcontact-intro-content-issue-mobile' => 'El contenido de este wiki es creado por su comunidad, y controlado por los administradores locales, no por FANDOM. Si deseas discutir sobre el contenido del wiki, lo mejor es que contactes primero a los administradores.
 
 Si piensas que el contenido viola nuestros Términos de uso, puedes contactarte con el equipo de soporte comunitario directamente.',
 	'specialcontact-label-bad-ad-help-page' => 'Ayuda:Anuncios inapropiados',
 	'specialcontact-label-bad-ad-url' => 'Por favor, envía la dirección correcta del enlace publicitario si es posible. Mira la [[{{int:specialcontact-label-bad-ad-help-page}}|página de ayuda]] para encontrar más información al respecto sobre este enlace.',
-	'specialcontact-desc' => 'Formulario de contacto [[{{#Special:Contact}}]] de Fandom',
+	'specialcontact-desc' => 'Formulario de contacto [[{{#Special:Contact}}]] de FANDOM',
 );
 
 $messages['fa'] = array(
@@ -797,7 +797,7 @@ $messages['fr'] = array(
 	'specialcontact-seclink-security' => 'Je pense avoir trouvé un problème de sécurité',
 	'specialcontact-seclink-dmca-request' => "Je souhaite déclarer une atteinte au droit d'auteur",
 	'specialcontact-sectitle-security' => 'Signaler un problème de sécurité',
-	'specialcontact-intro-security' => "Si vous trouvez ou pensez avoir trouvé un problème de sécurité dans le code de Fandom ou l'une des communautés de Fandom, veuillez nous en informer. Nous vous remercions de nous aider à assurer la protection du site Fandom en nous signalant les problèmes de sécurité [[wikipedia:Responsible disclosure|de façon responsable]].
+	'specialcontact-intro-security' => "Si vous trouvez ou pensez avoir trouvé un problème de sécurité dans le code de FANDOM ou l'une des communautés de FANDOM, veuillez nous en informer. Nous vous remercions de nous aider à assurer la protection du site FANDOM en nous signalant les problèmes de sécurité [[wikipedia:Responsible disclosure|de façon responsable]].
 
 Si vous souhaitez nous informer d'un bug général ou d'un autre type de problème, veuillez utiliser l'un des autres [[Special:Contact|formulaires de contact]].
 
@@ -815,7 +815,7 @@ Merci de fournir les détails complets du problème de sécurité, dont ce qui s
 ** En particulier en cas de XSS ou de vulnérabilités survenant avec un navigateur ou plug-in spécifique
 * Une brève description de l'impact potentiel de la vulnérabilité sur la sécurité
 
-Fandom traitera les problèmes de sécurité signalés via ce formulaire comme suit :
+FANDOM traitera les problèmes de sécurité signalés via ce formulaire comme suit :
 * La priorité sera donnée à la reproduction et à la confirmation des vulnérabilités.
 * Un temps de résolution raisonnable sera déterminé pour les vulnérabilités avérées.
 * Aucune poursuite en justice ne sera engagée envers les personnes ayant respecté toutes les instructions de test et de signalement des problèmes de sécurité.",
@@ -837,18 +837,18 @@ Navigateur/Système d'exploitation : ",
 	'specialcontact-security-issue-type-leak' => "Fuite d'informations",
 	'specialcontact-security-issue-type-redirect' => "Abus de redirection d'URL",
 	'specialcontact-security-issue-type-other' => 'Autre',
-	'specialcontact-form-header' => 'Contacter Fandom',
+	'specialcontact-form-header' => 'Contacter FANDOM',
 	'specialcontact-intro-adoption' => "Aimeriez-vous devenir administrateur de ce wiki ? Si oui, nous vous invitons à vérifier si les [[Special:Listusers/sysop|administrateurs locaux]] sont actifs. Si tel est le cas, transmettez-leur votre demande en leur laissant un message. Parler de votre demande avec d'autres utilisateurs est également un bon moyen d'obtenir leur soutien. Vous pouvez commencer par publier un message dans le forum de la communauté.
 
 Si les administrateurs locaux ne sont pas actifs, vous pouvez soumettre une demande de statut Administrateur. Pour plus d'informations, notamment sur les critères d'adoption et la page sur laquelle effectuer la demande, rendez-vous à la section [[w:c:adopt|Adoptions]]. N'oubliez pas de toujours fournir un lien vers la communauté que vous souhaitez adopter.
 
 Si la communauté d'utilisateurs du wiki qui vous intéresse est active, lancez une discussion sur ceux qui feraient de bons administrateurs et pourquoi vous aimeriez en devenir un. Fournissez un lien vers cette discussion au niveau de la [[w:c:communaute:Centre_des_communautés:Adoption|communauté d'adoption]]. Bonne chance et bonnes contributions !",
-	'specialcontact-intro-bad-ad' => "Nous sommes désolés que vous ayez vu une publicité offensante sur Fandom. Pourriez-vous nous fournir plus de détails ci-dessous afin que nous puissions les communiquer à notre reponsable de la publicité, qui vérifiera cette annonce et pourra peut-être la retirer du système.
+	'specialcontact-intro-bad-ad' => "Nous sommes désolés que vous ayez vu une publicité offensante sur FANDOM. Pourriez-vous nous fournir plus de détails ci-dessous afin que nous puissions les communiquer à notre reponsable de la publicité, qui vérifiera cette annonce et pourra peut-être la retirer du système.
 
 N'oubliez pas de nous dire sur quelle communauté vous vous trouvez, quelle publicité vous avez vue et pourquoi elle pose problème. Une capture d'écran et l'URL de la publicité nous seraient également utiles. Pour obtenir des instructions sur comment trouver l'URL d'une publicité, consultez cette page : http://communaute.wikia.com/wiki/Aide:Publicit%C3%A9s_offensantes
 
 Merci et bonnes contributions !",
-	'specialcontact-intro-bug' => "Nous sommes désolés que vous ayez rencontré un bug sur Fandom. Veuillez nous fournir plus de détails sur le problème en question ci-dessous, afin que nous puissions l'étudier de plus près. Détails importants à inclure :
+	'specialcontact-intro-bug' => "Nous sommes désolés que vous ayez rencontré un bug sur FANDOM. Veuillez nous fournir plus de détails sur le problème en question ci-dessous, afin que nous puissions l'étudier de plus près. Détails importants à inclure :
 *Votre nom d'utilisateur
 *Le lien vers votre communauté
 *Des informations sur votre navigateur dont le type et la version ([[w:fr:Aide:Navigateurs_pris_en_charge|voir la liste des navigateurs pris en charge]])
@@ -856,100 +856,100 @@ Merci et bonnes contributions !",
 
 Pour plus de conseils sur ce que doit contenir votre rapport, consultez notre [[w:c:communaute:Aide:Comment_signaler_des_bugs|page d'aide sur le signalement des bugs]].
 
-Merci encore de nous avoir signalé qu'il y avait un bug et d'utiliser Fandom.
+Merci encore de nous avoir signalé qu'il y avait un bug et d'utiliser FANDOM.
 
 Bonnes contributions !",
-	'specialcontact-intro-close-account' => "Nous sommes désolés que vous souhaitiez désactiver votre compte. Fandom a de nombreux wikis sur toutes sortes de sujets et nous aimerions que vous restiez et trouviez celui qui vous convient. Si vous avez un problème sur votre wiki, n'hésitez pas à demander de l'aide ou des conseils aux [[Special:Listusers/sysop|administrateurs locaux]].
+	'specialcontact-intro-close-account' => "Nous sommes désolés que vous souhaitiez désactiver votre compte. FANDOM a de nombreux wikis sur toutes sortes de sujets et nous aimerions que vous restiez et trouviez celui qui vous convient. Si vous avez un problème sur votre wiki, n'hésitez pas à demander de l'aide ou des conseils aux [[Special:Listusers/sysop|administrateurs locaux]].
 
-Si vous avez décidé que vous souhaitez vraiment désactiver votre compte, sachez que Fandom n'a pas la possibilité de retirer complètement les comptes, mais nous pouvons les désactiver. Cela permet de s'assurer que le compte est verrouillé et ne peut pas être utilisé. Cette opération n'est PAS réversible. Si vous souhaitez revenir sur Fandom, vous devrez créer un nouveau compte. Toutefois, cette opération ne retirera pas vos contributions d'un wiki car ces contributions appartiennent à la communauté, avec qui elles forment un tout.
+Si vous avez décidé que vous souhaitez vraiment désactiver votre compte, sachez que FANDOM n'a pas la possibilité de retirer complètement les comptes, mais nous pouvons les désactiver. Cela permet de s'assurer que le compte est verrouillé et ne peut pas être utilisé. Cette opération n'est PAS réversible. Si vous souhaitez revenir sur FANDOM, vous devrez créer un nouveau compte. Toutefois, cette opération ne retirera pas vos contributions d'un wiki car ces contributions appartiennent à la communauté, avec qui elles forment un tout.
 
 Si vous avez besoin de plus d'informations sur ce que signifie réellement la désactivation d'un compte, vous pouvez visiter notre [[w:fr:Aide:Fermer mon compte|page d'aide sur la désactivation des comptes]]. Pour confirmer la désactivation de votre compte, veuillez remplir le formulaire ci-dessous.",
-	'specialcontact-intro-close-wiki' => "Merci d'avoir contacté Fandom. Nous ne supprimons généralement pas les wikis qui ont été créés. Les wikis appartiennent aux communautés, et un wiki qui ne vous intéresse plus peut être repris plus tard par une autre personne souhaitant l'[[Special:Contact/adoption|adopter]].
+	'specialcontact-intro-close-wiki' => "Merci d'avoir contacté FANDOM. Nous ne supprimons généralement pas les wikis qui ont été créés. Les wikis appartiennent aux communautés, et un wiki qui ne vous intéresse plus peut être repris plus tard par une autre personne souhaitant l'[[Special:Contact/adoption|adopter]].
 
-Si vous voulez renommer votre wiki ou corriger des fautes d'orthographe ou de grammaire, veuillez d'abord consulter la section [[w:c:communaute:Aide:Renommer|Aide:Renommer]], pour renommer des pages, et la section [[w:c:communaute:Aide:Concepteur_de_thème|Aide:Concepteur de thème]], pour changer le titre de votre wiki. Il est facile de changer le nom des wikis sans avoir à tout recommencer. Si vous voulez changer d'URL de wiki, [[Special:Contact/general|écrivez-nous]]. Nous serions ravis de le faire pour vous, inutile de fermer votre Fandom.
+Si vous voulez renommer votre wiki ou corriger des fautes d'orthographe ou de grammaire, veuillez d'abord consulter la section [[w:c:communaute:Aide:Renommer|Aide:Renommer]], pour renommer des pages, et la section [[w:c:communaute:Aide:Concepteur_de_thème|Aide:Concepteur de thème]], pour changer le titre de votre wiki. Il est facile de changer le nom des wikis sans avoir à tout recommencer. Si vous voulez changer d'URL de wiki, [[Special:Contact/general|écrivez-nous]]. Nous serions ravis de le faire pour vous, inutile de fermer votre FANDOM.
 
 Si vous pensez que ce wiki parle d'un sujet qui n'intéresse aucun autre utilisateur (tel qu'un projet personnel), veuillez soumettre une demande via le formulaire ci-dessous. Cette demande doit être effectuée depuis le wiki à fermer.
 
-J'espère que vous trouverez un autre wiki parmi tous ceux qui existent sur Fandom et que vous participerez au développement de ressources extraordinaires au sujet de ce qui vous passionne.
+J'espère que vous trouverez un autre wiki parmi tous ceux qui existent sur FANDOM et que vous participerez au développement de ressources extraordinaires au sujet de ce qui vous passionne.
 
 Bonnes contributions !",
-	'specialcontact-intro-content-issue' => "Le contenu de ce wiki est créé par la communauté présente ici. Il n'est pas géré par Fandom, mais par les [[Special:ListAdmins|administrateurs locaux]]. Si vous souhaitez discuter du contenu, nous vous invitons à contacter les [[Special:ListAdmins|administrateurs du wiki ici]] dans un premier temps.
+	'specialcontact-intro-content-issue' => "Le contenu de ce wiki est créé par la communauté présente ici. Il n'est pas géré par FANDOM, mais par les [[Special:ListAdmins|administrateurs locaux]]. Si vous souhaitez discuter du contenu, nous vous invitons à contacter les [[Special:ListAdmins|administrateurs du wiki ici]] dans un premier temps.
 
-Si vous pensez que le contenu ne respecte pas nos [http://fr.wikia.com/Conditions_d%27utilisation Conditions d'utilisation], vous pouvez contacter le staff de Fandom directement [[Special:Contact/general|ici]].",
+Si vous pensez que le contenu ne respecte pas nos [http://fr.wikia.com/Conditions_d%27utilisation Conditions d'utilisation], vous pouvez contacter le staff de FANDOM directement [[Special:Contact/general|ici]].",
 	'specialcontact-intro-design' => "Les administrateurs locaux de votre communauté peuvent mettre à jour l'apparence d'un wiki via le [[w:c:communaute:Aide:Concepteur_de_thème|Aide:Concepteur de thème]]. Si vous n'êtes pas administrateur et souhaitez participer à cette mise à jour, veuillez d'abord contacter vos [[Special:ListAdmins|administrateurs locaux]].
 
-Si vous avez besoin d'aide pour créer un style plus personnalisé, vous pouvez soumettre une demande à l'équipe Contenu de Fandom [[w:c:communaute:Sous-forum:Demandes_de_ressources|ici]]. Veillez à lire attentivement les instructions avant d'envoyer la demande.
+Si vous avez besoin d'aide pour créer un style plus personnalisé, vous pouvez soumettre une demande à l'équipe Contenu de FANDOM [[w:c:communaute:Sous-forum:Demandes_de_ressources|ici]]. Veillez à lire attentivement les instructions avant d'envoyer la demande.
 
 Si vous pensez avoir trouvé un bug lors de la mise à jour de l'apparence de votre wiki, merci de nous transmettre un rapport détaillé [[Special:Contact/bug|ici]].
 
 Bonnes contributions !",
-	'specialcontact-intro-features' => "Fandom propose de nombreuses fonctionnalités, dont la plupart sont disponibles par défaut dans toutes les communautés à travers le site.
+	'specialcontact-intro-features' => "FANDOM propose de nombreuses fonctionnalités, dont la plupart sont disponibles par défaut dans toutes les communautés à travers le site.
 
 Si vous êtes administrateur et pensez qu'une fonctionnalité particulière ne fonctionne pas bien au sein de votre communauté, veuillez demander à la communauté de votre wiki si elle voudrait également la désactiver. Si tout le monde est d'accord, vous pouvez utiliser la section [[Special:WikiFeatures|Composants de wiki]] du [[Special:AdminDashboard|tableau de bord administrateur]] pour désactiver ou réactiver des fonctionnalités. Si la fonctionnalité ne figure pas dans la liste, veuillez [[Special:Contact/general|nous contacter]] afin de nous communiquer votre demande.
 
 Les administrateurs souhaitant tester de nouvelles fonctionnalités en développement peuvent consulter la section Incubateurs de la page [[Special:WikiFeatures|Composants de wiki]].
 
 Pour vous tenir informé des nouvelles fonctionnalités et des améliorations apportées à celles qui existent, suivez la [[w:c:communaute:Sous-forum:Nouvelles_fonctionnalités|liste des nouvelles fonctionnalités disponible ici]].",
-	'specialcontact-intro-feedback' => "Vous avez des commentaires ? Veuillez nous les laisser ci-dessous, en version détaillée. Nous serions ravis de les lire. Pour tout commentaire sur un produit appartenant à la section Incubateurs de Fandom, veuillez utiliser [[Special:WikiaLabs|cette page]] pour nous le transmettre.
+	'specialcontact-intro-feedback' => "Vous avez des commentaires ? Veuillez nous les laisser ci-dessous, en version détaillée. Nous serions ravis de les lire. Pour tout commentaire sur un produit appartenant à la section Incubateurs de FANDOM, veuillez utiliser [[Special:WikiaLabs|cette page]] pour nous le transmettre.
 
 Merci d'avance et bonnes contributions !",
-	'specialcontact-intro-main-head' => "<big>Besoin d'aide ? Ne vous inquiétez pas, la communauté Fandom est là pour vous aider !</big><br/>
-Suivez les liens ci-dessous pour en savoir plus sur l'utilisation du site, comment effectuer des changements au sein de votre Fandom ou comment modifier votre compte.",
-	'specialcontact-intro-rename-account' => "Il est possible de changer son nom d'utilisateur une seule fois sur Fandom. Vous devez donc être sûr de vouloir le changer avant de soumettre une demande. Cette opération est irréversible. Une fois qu'un nom d'utilisateur change, il ne peut plus être changé à nouveau. Nous vous invitons à lire attentivement cette page d'aide avant d'envoyer une demande : http://communaute.wikia.com/wiki/Aide:Modifier_votre_nom_d%27utilisateur.
+	'specialcontact-intro-main-head' => "<big>Besoin d'aide ? Ne vous inquiétez pas, la communauté FANDOM est là pour vous aider !</big><br/>
+Suivez les liens ci-dessous pour en savoir plus sur l'utilisation du site, comment effectuer des changements au sein de votre FANDOM ou comment modifier votre compte.",
+	'specialcontact-intro-rename-account' => "Il est possible de changer son nom d'utilisateur une seule fois sur FANDOM. Vous devez donc être sûr de vouloir le changer avant de soumettre une demande. Cette opération est irréversible. Une fois qu'un nom d'utilisateur change, il ne peut plus être changé à nouveau. Nous vous invitons à lire attentivement cette page d'aide avant d'envoyer une demande : http://communaute.wikia.com/wiki/Aide:Modifier_votre_nom_d%27utilisateur.
 
 Une fois que vous avez lu cette page d'aide et que vous êtes sûr de l'orthographe de votre nouveau nom d'utilisateur, soumettez une demande ci-dessous. Vous recevrez un e-mail de confirmation lorsque votre nom d'utilisateur aura été modifié. Vous pourrez ensuite vous connecter avec ce nouveau nom d'utilisateur et votre ancien mot de passe.
 
 Bonnes contributions !",
 	'specialcontact-intro-user-conflict' => "Les wikis sont des espaces communautaires où tout le monde doit travailler ensemble pour qu'ils soient réussis. Lorsque des conflits se produisent, ce qui arrive parfois, le meilleur moyen de les résoudre est de discuter du problème ouvertement et respectueusement au niveau de la communauté.
 
-Si vous avez besoin d'aide, contactez d'abord vos [[Special:ListAdmins|administrateurs locaux]]. Les administrateurs sont des experts du sujet abordé et de la communauté. Il est donc préférable de commencer par leur parler. S'ils ne sont pas en mesure de vous aider ou si vous pensez que l'utilisateur ne respecte pas les [http://fr.wikia.com/Conditions_d%27utilisation Conditions d'utilisation] de Wikia Inc., vous pouvez contacter le staff de Fandom directement [[Special:Contact/general|ici]].
+Si vous avez besoin d'aide, contactez d'abord vos [[Special:ListAdmins|administrateurs locaux]]. Les administrateurs sont des experts du sujet abordé et de la communauté. Il est donc préférable de commencer par leur parler. S'ils ne sont pas en mesure de vous aider ou si vous pensez que l'utilisateur ne respecte pas les [http://fr.wikia.com/Conditions_d%27utilisation Conditions d'utilisation] de Wikia Inc., vous pouvez contacter le staff de FANDOM directement [[Special:Contact/general|ici]].
 
 Bonnes contributions !",
-	'specialcontact-intro-using-fandom' => "Maintenant que vous faites partie de la communauté, vous pouvez apporter des modifications et contribuer à la plupart des pages de Fandom. Pour vos premiers pas, consultez [[w:fr:Aide:Commencer|ces pages d'aide]]. Vous y découvrirez les bases de la modification, de la mise en forme, et bien plus encore.
+	'specialcontact-intro-using-fandom' => "Maintenant que vous faites partie de la communauté, vous pouvez apporter des modifications et contribuer à la plupart des pages de FANDOM. Pour vos premiers pas, consultez [[w:fr:Aide:Commencer|ces pages d'aide]]. Vous y découvrirez les bases de la modification, de la mise en forme, et bien plus encore.
 
 Pour toute question sur cette communauté en particulier, commencez par [[Special:ListAdmins|contacter les administrateurs locaux]].
 Vous pouvez également poser des questions générales à d'autres membres de la communauté sur le [[w:c:communaute:Special:Forum|forum d'aide de notre communauté]].
 
-N'ayez pas peur de vous lancer, vous ne casserez aucune communauté sur Fandom. Bonnes contributions !",
-	'specialcontact-label-close-account-confirm' => 'Je confirme que je veux désactiver mon compte Fandom',
-	'specialcontact-pagetitle' => "Contacter l'équipe de support de Fandom",
-	'specialcontact-secheader-editing' => 'Participant sur Fandom',
+N'ayez pas peur de vous lancer, vous ne casserez aucune communauté sur FANDOM. Bonnes contributions !",
+	'specialcontact-label-close-account-confirm' => 'Je confirme que je veux désactiver mon compte FANDOM',
+	'specialcontact-pagetitle' => "Contacter l'équipe de support de FANDOM",
+	'specialcontact-secheader-editing' => 'Participant sur FANDOM',
 	'specialcontact-secheader-onwiki' => 'Questions sur ce wiki',
 	'specialcontact-secheader-setting' => 'Modifications sur ce wiki',
 	'specialcontact-seclink-close-wiki' => 'Fermer ce wiki',
 	'specialcontact-seclink-content-issue' => 'Problème avec le contenu du wiki',
-	'specialcontact-seclink-using-fandom' => 'Comment utiliser Fandom ?',
-	'specialcontact-sectitle' => 'Support de Fandom - $1',
+	'specialcontact-seclink-using-fandom' => 'Comment utiliser FANDOM ?',
+	'specialcontact-sectitle' => 'Support de FANDOM - $1',
 	'specialcontact-sectitle-close-wiki' => 'Fermer ce wiki',
 	'specialcontact-sectitle-design' => 'Apparence de la communauté',
-	'specialcontact-sectitle-features' => 'Fonctionnalités de Fandom',
-	'specialcontact-sectitle-using-fandom' => 'Utilisation de Fandom',
+	'specialcontact-sectitle-features' => 'Fonctionnalités de FANDOM',
+	'specialcontact-sectitle-using-fandom' => 'Utilisation de FANDOM',
 	'specialcontact-sectitle-wiki-name-change' => "Changement de nom d'une communauté",
-	'contact' => 'Contacter Fandom',
-	'specialcontact-ccheader' => 'Ceci est une copie de votre message envoyé au support de Fandom.',
-	'specialcontact-formtitle' => "Contacter l'équipe de support de Fandom",
-	'specialcontact-intro-blocked' => "Les blocages de compte sont généralement définis par les administrateurs locaux, et non par le staff de Fandom. Le nom de l'administrateur responsable du blocage doit se trouver sur l'avis de blocage que vous avez reçu. Vous pourrez peut-être le contacter en laissant un message sur la page de discussion utilisateur, qui peut toujours être utilisée par les utilisateurs bloqués (sur certains wikis). Les changements apportés sont généralement visibles par les autres contributeurs au wiki. Pour accéder à votre page de discussion utilisateur, suivez le lien \"Mes messages\" disponible en haut, à droite de chaque page.
+	'contact' => 'Contacter FANDOM',
+	'specialcontact-ccheader' => 'Ceci est une copie de votre message envoyé au support de FANDOM.',
+	'specialcontact-formtitle' => "Contacter l'équipe de support de FANDOM",
+	'specialcontact-intro-blocked' => "Les blocages de compte sont généralement définis par les administrateurs locaux, et non par le staff de FANDOM. Le nom de l'administrateur responsable du blocage doit se trouver sur l'avis de blocage que vous avez reçu. Vous pourrez peut-être le contacter en laissant un message sur la page de discussion utilisateur, qui peut toujours être utilisée par les utilisateurs bloqués (sur certains wikis). Les changements apportés sont généralement visibles par les autres contributeurs au wiki. Pour accéder à votre page de discussion utilisateur, suivez le lien \"Mes messages\" disponible en haut, à droite de chaque page.
 
 Toutefois, si cette option n'est pas disponible dans votre cas, vous pouvez attendre la fin du blocage ou rejoindre une autre communauté.
 
-Si vous souhaiter discuter de ce blocage plus en détails avec le staff de Fandom, vous pouvez nous contacter [[Special:Contact/general|ici]].",
-	'specialcontact-intro-content-issue-mobile' => "Le contenu de ce wiki est créé par la communauté présente ici. Il ne l'est pas par les administrateurs ni Fandom. Si vous souhaitez discuter du contenu, nous vous invitons à contacter les administrateurs du wiki dans un premier temps.
+Si vous souhaiter discuter de ce blocage plus en détails avec le staff de FANDOM, vous pouvez nous contacter [[Special:Contact/general|ici]].",
+	'specialcontact-intro-content-issue-mobile' => "Le contenu de ce wiki est créé par la communauté présente ici. Il ne l'est pas par les administrateurs ni FANDOM. Si vous souhaitez discuter du contenu, nous vous invitons à contacter les administrateurs du wiki dans un premier temps.
 
-Si vous pensez que le contenu ne respecte pas nos Conditions d'utilisation, vous pouvez contacter le staff de Fandom.",
-	'specialcontact-intro-general' => "Vous pouvez contacter le [[w:project:Staff|staff de Fandom]] à l'aide de ce formulaire. La liste des administrateurs de cette communauté est disponible [[Special:ListAdmins|ici]].
+Si vous pensez que le contenu ne respecte pas nos Conditions d'utilisation, vous pouvez contacter le staff de FANDOM.",
+	'specialcontact-intro-general' => "Vous pouvez contacter le [[w:project:Staff|staff de FANDOM]] à l'aide de ce formulaire. La liste des administrateurs de cette communauté est disponible [[Special:ListAdmins|ici]].
 
-Pour plus d'informations sur comment signaler des problèmes à Fandom, consultez [[w:project:Report_a_problem|cette page]]. Vous pouvez également publier un message dans les [[w:c:communaute:Special:Forum|forums de la communauté Fandom]] pour obtenir de l'aide auprès des autres utilisateurs.
+Pour plus d'informations sur comment signaler des problèmes à FANDOM, consultez [[w:project:Report_a_problem|cette page]]. Vous pouvez également publier un message dans les [[w:c:communaute:Special:Forum|forums de la communauté FANDOM]] pour obtenir de l'aide auprès des autres utilisateurs.
 
 Si vous préférez utiliser les e-mails traditionnels ou vous avez plusieurs pièces jointes, vous pouvez nous contacter à l'adresse [mailto:community@fandom.com community@fandom.com].",
-	'specialcontact-mail' => 'Envoyer à Fandom',
-	'specialcontact-mailsub' => 'Support de Fandom',
-	'specialcontact-mailsubcc' => "Copie de l'e-mail au contact de Fandom",
-	'specialcontact-submitcomplete' => "Merci d'avoir contacté Fandom. Nous passons en revue tous les messages soumis ici et ferons de notre mieux pour vous répondre d'ici 2 à 3 jours ouvrés. Nous vous remercions de votre patience.
+	'specialcontact-mail' => 'Envoyer à FANDOM',
+	'specialcontact-mailsub' => 'Support de FANDOM',
+	'specialcontact-mailsubcc' => "Copie de l'e-mail au contact de FANDOM",
+	'specialcontact-submitcomplete' => "Merci d'avoir contacté FANDOM. Nous passons en revue tous les messages soumis ici et ferons de notre mieux pour vous répondre d'ici 2 à 3 jours ouvrés. Nous vous remercions de votre patience.
 
-N'oubliez pas que vous pouvez également trouver de l'aide dans le [[w:c:communaute:Special:Forum|Forum du Centre des communautés]] et dans nos [[w:c:communaute:Aide:Index|pages d'aide]]. Pour vous tenir informé des dernières actualités de Fandom, rendez-vous [[w:c:communaute:Blog:Actualité_Fandom|ici]]. Bonnes contributions !",
-	'specialcontact-wikia' => 'Contacter Fandom',
+N'oubliez pas que vous pouvez également trouver de l'aide dans le [[w:c:communaute:Special:Forum|Forum du Centre des communautés]] et dans nos [[w:c:communaute:Aide:Index|pages d'aide]]. Pour vous tenir informé des dernières actualités de FANDOM, rendez-vous [[w:c:communaute:Blog:Actualité_Fandom|ici]]. Bonnes contributions !",
+	'specialcontact-wikia' => 'Contacter FANDOM',
 	'specialcontact-wikiname' => 'Quel wiki',
-	'specialcontact-desc' => 'Formulaire de contact de Fandom ([[Special:Contact]])',
+	'specialcontact-desc' => 'Formulaire de contact de FANDOM ([[Special:Contact]])',
 	'specialcontact-error-alreadyrenamed' => "Votre compte a été renommé auparavant, aussi vous ne pouvez pas demander un autre nom. Veuillez [[Special:Contact/general|contacter le staff]] si vous avez besoin de plus d'aide.",
 	'specialcontact-error-logintext' => 'Vous devez être connecté(e) pour faire cette demande. Veuillez [[Special:SignUp|vous connecter avec votre compte]] et réessayez.',
 	'specialcontact-error-message' => "Une erreur s'est produite en soumettant le formulaire. Veuillez réessayer plus tard.",
@@ -966,7 +966,7 @@ N'oubliez pas que vous pouvez également trouver de l'aide dans le [[w:c:communa
 Si vous avez tout vérifié et que vous n'arrivez toujours pas à vous connecter, veuillez nous envoyer un rapport détaillé ci-dessous. Nous vous répondrons dans les plus brefs délais pour vous aider à régler le problème.
 
 Bonnes contributions !",
-	'specialcontact-intro-main-foot' => "'''Cette page répond-elle à votre question ?''' Si ce n’est pas le cas, vous pouvez [[Special:contact/general|nous contacter]] pour parler de votre problème plus en détail. Rappelez-vous que vous pouvez toujours consulter nos '''[[w:c:communaute:Catégorie:Aide|pages d’aide]]''', l’[[w:c:communaute:Blog:Actualité Fandom|actualité Fandom]] ou poster sur le '''[[w:c:communaute:Special:Forum|forum de la communauté]]'''.",
+	'specialcontact-intro-main-foot' => "'''Cette page répond-elle à votre question ?''' Si ce n’est pas le cas, vous pouvez [[Special:contact/general|nous contacter]] pour parler de votre problème plus en détail. Rappelez-vous que vous pouvez toujours consulter nos '''[[w:c:communaute:Catégorie:Aide|pages d’aide]]''', l’[[w:c:communaute:Blog:Actualité FANDOM|actualité FANDOM]] ou poster sur le '''[[w:c:communaute:Special:Forum|forum de la communauté]]'''.",
 	'specialcontact-intro-wiki-name-change' => "Si vous êtes l'admin de ce wiki vous pouvez demander à changer le [[w:c:communaute:Aide:Sitename|nom du site]] ou l'[[w:c:communaute:Aide:URL|URL]] en remplissant le formulaire ci-dessous. Vérifiez bien l'orthographe, et soyez bien sûr de vous, car nous ne répondrons pas à de multiples requêtes. Si vous n'êtes pas l'admin de ce wiki, veuillez contacter les administrateurs locaux pour leur en faire la demande [[Special:ListAdmins|ici]].
 
 Bonnes contributions !",
@@ -986,7 +986,7 @@ Bonnes contributions !",
 	'specialcontact-label-screenshot' => "Avez-vous pris une capture ? Si tel est le cas, veuillez l'importer ici.",
 	'specialcontact-logged-in-as' => "Vous êtes connecté(e) en tant que $1. [[Special:UserLogout|Ce n'est pas vous ?]]",
 	'specialcontact-mail-on-file' => 'Votre adresse e-mail actuelle est $1. [[Special:Preferences|Vous souhaitez la changer ?]]',
-	'specialcontact-noform-footer' => "'''Cette page répond-elle à votre question ?''' Si ce n’est pas le cas, vous pouvez [[Special:contact/general|nous contacter]] pour parler de votre problème plus en détail. Rappelez-vous que vous pouvez toujours consulter nos '''[[w:c:communaute:Catégorie:Aide|pages d’aide]]''', l’[[w:c:communaute:Blog:Actualité Fandom|actualité Fandom]] ou poster sur nos '''[[w:c:communaute:Special:Forum|forums]]'''.",
+	'specialcontact-noform-footer' => "'''Cette page répond-elle à votre question ?''' Si ce n’est pas le cas, vous pouvez [[Special:contact/general|nous contacter]] pour parler de votre problème plus en détail. Rappelez-vous que vous pouvez toujours consulter nos '''[[w:c:communaute:Catégorie:Aide|pages d’aide]]''', l’[[w:c:communaute:Blog:Actualité FANDOM|actualité FANDOM]] ou poster sur nos '''[[w:c:communaute:Special:Forum|forums]]'''.",
 	'specialcontact-secheader-account' => 'Modifications de compte',
 	'specialcontact-seclink-account-issue' => 'Je n’arrive pas à accéder à mon compte',
 	'specialcontact-seclink-adoption' => 'Je souhaite avoir les droits administrateur ici',
@@ -1031,7 +1031,7 @@ $messages['it'] = array(
 	'specialcontact-seclink-security' => 'Penso di aver trovato un problema di sicurezza',
 	'specialcontact-seclink-dmca-request' => 'Ho un reclamo sul copyright',
 	'specialcontact-sectitle-security' => 'Segnalazione di problemi di sicurezza',
-	'specialcontact-intro-security' => "Se hai trovato o credi di aver trovato un problema di sicurezza nel codice di Fandom o in una delle comunità di Fandom, faccelo sapere. Apprezziamo il tuo aiuto nel mantenere Fandom un sito sicuro per tutti riportandolo in [[wikipedia:Responsible disclosure|maniera responsible]].
+	'specialcontact-intro-security' => "Se hai trovato o credi di aver trovato un problema di sicurezza nel codice di FANDOM o in una delle comunità di FANDOM, faccelo sapere. Apprezziamo il tuo aiuto nel mantenere FANDOM un sito sicuro per tutti riportandolo in [[wikipedia:Responsible disclosure|maniera responsible]].
 
 Se vuoi segnalare un bug generale o un altro tipo di problema, sei pregato di utilizzare uno degli [[Special: Contact|altri moduli di contatto]].
 
@@ -1049,7 +1049,7 @@ Quando segnali un problema di sicurezza, sei pregato di fornire tutti i dettagli
 ** In particolare per XSS o vulnerabilità che richiedono un browser specifico o plugin per la riproduzione
 * Una breve descrizione dell'impatto potenziale sulla sicurezza della vulnerabilità riscontrata
 
-In risposta ai report di sicurezza che utilizzano questo modulo, Fandom:
+In risposta ai report di sicurezza che utilizzano questo modulo, FANDOM:
 * Darà la priorità alla riproduzione e conferma di ogni vulnerabilità segnalata
 * Identificherà una tempistica ragionevole per correggere le vulnerabilità confermate
 * Non intraprenderà un'azione legale contro l'autore della segnalazione che ha agito in conformità a tutte le linee guida per il testing e la segnalazione di problemi di sicurezza",
@@ -1071,20 +1071,20 @@ Browser/Sistema Operativo: ',
 	'specialcontact-security-issue-type-leak' => 'Perdita di informazioni',
 	'specialcontact-security-issue-type-redirect' => 'Abuso di reindirizzamento URL',
 	'specialcontact-security-issue-type-other' => 'Altro',
-	'specialcontact-ccheader' => 'Questa è una copia del tuo messaggio inviato al supporto di Fandom',
-	'specialcontact-form-header' => 'Contatta Fandom',
-	'specialcontact-formtitle' => 'Contatta lo Staff di supporto di Fandom',
+	'specialcontact-ccheader' => 'Questa è una copia del tuo messaggio inviato al supporto di FANDOM',
+	'specialcontact-form-header' => 'Contatta FANDOM',
+	'specialcontact-formtitle' => 'Contatta lo Staff di supporto di FANDOM',
 	'specialcontact-intro-adoption' => 'Sei interessato a diventare un amministratore qui? Se sì, verifica prima se gli [[Special:Listusers/sysop|amministratori locali]] sono attivi. Se lo sono, lascia loro un messaggio con la tua richiesta. È inoltre una buona idea parlare con altri utenti della tua richiesta in modo da ottenere il loro supporto. Puoi voler iniziare postando nel forum della tua community.
 
 Se gli amministratori locali non sono attivi, puoi inviare una richiesta per ottenere i diritti di amministrazone. Visita la [[w:it:Project:Richieste di adozione|pagina delle richieste di adozione]] per ulteriori informazioni, tra cui i criteri di adozione. Ricorda di fornire sempre un link alla community che desideri adottare.
 
 Se è presente una comunità di utenti attiva nella wiki che desideri adottare, inizi una discussione lì su chi sarebbero i migliori amministratori e sul motivo per cui desideri diventare uno di loro. Includi un link a questa discussione nella [[w:it:Project:Richieste di adozione|tua richiesta]]. Buona fortuna e buone modifiche!',
-	'specialcontact-intro-bad-ad' => "Ci dispiace sentire che ti sei imbattuto in una cattiva pubblicità su Fandom. Se potessi fornire ulteriori dettagli qui di seguito, li condivideremo con il nostro responsabile per la pubblicità, il quale prenderà in esame l'annuncio e potrà essere in grado di rimuoverlo dal sistema.
+	'specialcontact-intro-bad-ad' => "Ci dispiace sentire che ti sei imbattuto in una cattiva pubblicità su FANDOM. Se potessi fornire ulteriori dettagli qui di seguito, li condivideremo con il nostro responsabile per la pubblicità, il quale prenderà in esame l'annuncio e potrà essere in grado di rimuoverlo dal sistema.
 
 Accertati di dirci su quale community di trovi, quale annuncio hai visto e il motivo per cui era un problema. Potrebbe inoltre aiutare se potessi includere uno screenshot e l'URL dell'annuncio. Le istruzioni su come trovare l'URL di un annuncio sono elencate qui: http://it.community.wikia.com/wiki/Aiuto:Pubblicità_non_consona
 
 Grazie e buone modifiche!",
-	'specialcontact-intro-bug' => "Siamo spiacenti di sentire che hai trovato un bug su Fandom. Ti preghiamo di fornire i dettagli completi del problema da te riscontrato qui di seguito, così che possiamo investigare ulteriormente. Dettagli importanti da includere sono:
+	'specialcontact-intro-bug' => "Siamo spiacenti di sentire che hai trovato un bug su FANDOM. Ti preghiamo di fornire i dettagli completi del problema da te riscontrato qui di seguito, così che possiamo investigare ulteriormente. Dettagli importanti da includere sono:
 * Il tuo nome utente
 * Il link alla tua community
 * Le informazioni sul tuo browser, tra cui il tipo e la versione ([[w:it:Aiuto:Browser supportati
@@ -1093,96 +1093,96 @@ Grazie e buone modifiche!",
 
 Per altri consigli su cosa includere nel tuo report, consulta la [[w:it:Aiuto:Segnalare_i_bug|nostra pagina sui report sui bug]].
 
-Grazie ancora per il report e per usare Fandom.
+Grazie ancora per il report e per usare FANDOM.
 
 Buone modifiche!",
-	'specialcontact-intro-close-account' => "Siamo spiacenti che tu voglia disattivare il tuo account. Fandom dispone di numerose comunità di tanti argomenti diversi e ci piacerebbe se tu rimanessi e trovassi quella giusta per te. Se hai un problema locale con la tua comunità, contatta pure gli [[Special:ListUsers/sysop|amministratori locali]] per assistenza e consigli.
+	'specialcontact-intro-close-account' => "Siamo spiacenti che tu voglia disattivare il tuo account. FANDOM dispone di numerose comunità di tanti argomenti diversi e ci piacerebbe se tu rimanessi e trovassi quella giusta per te. Se hai un problema locale con la tua comunità, contatta pure gli [[Special:ListUsers/sysop|amministratori locali]] per assistenza e consigli.
 
-Se hai deciso di disattivare il tuo account in modo permanente, tieni a mente che Fandom non può rimuovere del tutto gli account, ma possiamo disattivarli. Così facendo viene assicurato che l'account sia bloccato e che non possa essere usato. Questo processo NON è reversibile e dovrai crearti un nuovo account se deciderai di riunirti a Fandom. Tuttavia questo processo non rimuoverà i tuoi contributi da nessuna wiki in quanto essi appartengono alla community intera.
+Se hai deciso di disattivare il tuo account in modo permanente, tieni a mente che FANDOM non può rimuovere del tutto gli account, ma possiamo disattivarli. Così facendo viene assicurato che l'account sia bloccato e che non possa essere usato. Questo processo NON è reversibile e dovrai crearti un nuovo account se deciderai di riunirti a FANDOM. Tuttavia questo processo non rimuoverà i tuoi contributi da nessuna wiki in quanto essi appartengono alla community intera.
 
 Se hai bisogno di ulteriori informazioni su ciò che fa effettivamente la disattivazione di un account, puoi visitare la [[w:it:Aiuto:Chiudere un account|pagina d'aiuto]]. Per confermare e disabilitare il tuo account, compila il modulo qui sotto.",
-	'specialcontact-intro-close-wiki' => "Grazie per aver contattato Fandom. In genere, non eliminiamo le wiki una volta che sono state create. Le wiki sono progetti di proprietà delle community e una wiki a cui non sei più interessato può attendere l'arrivo di qualcun altro che [[Special:Contact/adoption|l'adotti]].
+	'specialcontact-intro-close-wiki' => "Grazie per aver contattato FANDOM. In genere, non eliminiamo le wiki una volta che sono state create. Le wiki sono progetti di proprietà delle community e una wiki a cui non sei più interessato può attendere l'arrivo di qualcun altro che [[Special:Contact/adoption|l'adotti]].
 
 Se desideri rinominare la tua wiki o correggere problemi di spelling o grammaticali, consulta prima [[w:it:Aiuto:Rinominare una pagina|Aiuto:Rinominare una pagina]] per rinominare le pagine, e [[w:it:Aiuto:Theme Designer|Aiuto:Theme designer]] per rinominare il titolo della wiki. È possibile modificare facilmente i nomi delle wiki, senza dover ricominciare daccapo. Se desideri modificare l'URL della tua wiki [[Special:Contact/general|scrivici]] e saremo lieti di farlo per te, in quanto non occorre chiudere il tuo fandom.
 
 Se ritieni che questa wiki sia su un argomento cui nessun altro utente potrà essere interessato (ad esempio, un progetto personale), invia una richiesta tramite il modulo qui di seguito. Invia la richiesta dalla wiki che occorre chiudere.
 
-Spero che troverai un'altra wiki tra le tante che fanno parte di Fandom e che tu prenda parte allo sviluppo di una risorsa fantastica su tutto ciò per cui nutri passione.
+Spero che troverai un'altra wiki tra le tante che fanno parte di FANDOM e che tu prenda parte allo sviluppo di una risorsa fantastica su tutto ciò per cui nutri passione.
 
 Buone modifiche!",
-	'specialcontact-intro-content-issue' => 'Il contenuto di questa wiki è creato dalla community qui e gestito dagli [[Special:ListAdmins|amministratori locali]], non da Fandom. Se desideri discutere questo contenuto, è meglio contattare prima gli [[Special:ListAdmins|amministratori della wiki qui]].
+	'specialcontact-intro-content-issue' => 'Il contenuto di questa wiki è creato dalla community qui e gestito dagli [[Special:ListAdmins|amministratori locali]], non da FANDOM. Se desideri discutere questo contenuto, è meglio contattare prima gli [[Special:ListAdmins|amministratori della wiki qui]].
 
-Se ritieni che il contenuto violi i nostri [[w:it:Wiki_della_Community:Termini_di_utilizzo|termini di utilizzo]], puoi contattare direttamente lo Staff di Fandom [[Special:Contact/general|qui]].',
+Se ritieni che il contenuto violi i nostri [[w:it:Wiki_della_Community:Termini_di_utilizzo|termini di utilizzo]], puoi contattare direttamente lo Staff di FANDOM [[Special:Contact/general|qui]].',
 	'specialcontact-intro-design' => "Il design di una wiki può essere aggiornato da un amministratore locale nella tua community tramite il [[w:it:Aiuto:Theme Designer|Theme Designer]]. Se non sei un amministratore e desideri contribuire al design della tua wiki, contatta prima i tuoi [[Special:ListAdmins|amministratori locali]].
 
-Se desideri contribuire alla creazione di un design più personalizzato, puoi inviare una richiesta al team Contenuti Fandom [[w:Community_Central:Content_Team/Requests|qui]]. Ti preghiamo di leggere le linee guida prima di inviare una richiesta qui.
+Se desideri contribuire alla creazione di un design più personalizzato, puoi inviare una richiesta al team Contenuti FANDOM [[w:Community_Central:Content_Team/Requests|qui]]. Ti preghiamo di leggere le linee guida prima di inviare una richiesta qui.
 
 Se credi di aver trovato un bug durante l'aggiornamento del design della tua wiki, inviaci un report dettagliato [[Special:Contact/bug|qui]].
 
 Buone modifiche!",
-	'specialcontact-intro-features' => "Fandom offre diverse funzioni, la maggior parte delle quali sono già attive su tutte le community del sito per impostazione predefinita.
+	'specialcontact-intro-features' => "FANDOM offre diverse funzioni, la maggior parte delle quali sono già attive su tutte le community del sito per impostazione predefinita.
 
 Se sei un amministratore e ritieni che una determinata funzionalità non funzioni bene per la tua community, parlane con la community della tua wiki per sapere se anche gli altri utenti desiderano che la funzionalità sia disattivata. Se tutti sono d'accordo, puoi usare la sezione [[Special:WikiFeatures|Wiki Funzioni]] del [[Special:AdminDashboard|Pannello di controllo Admin]] per disattivare o riattivare le funzioni. Se la funzione non è elencata lì, [[Special:Contact/general|contattaci]] con la tua richiesta.
 
 Gli amministratori interessati a testare nuove funzionalità ancora in fase di sviluppo possono dare un'occhiata alla sezione Laboratorio di [[Special:WikiFeatures|Wiki Funzioni]].
 
 Desideri stare aggiornato sugli annunci di nuove funzionalità o miglioramenti alle funzionalità correnti? Fai un salto e segui il [[w:it:Blog:Nuove funzioni|blog delle nuove funzioni]]",
-	'specialcontact-intro-feedback' => 'Hai feedback? Ci farebbe piacere conoscerlo! Fornisci le tue opinioni e dettagli qui di seguito. Se hai feedback su un prodotto nel Laboratorio Fandom, fornisci il feedback [[Special:WikiaLabs|lì]].
+	'specialcontact-intro-feedback' => 'Hai feedback? Ci farebbe piacere conoscerlo! Fornisci le tue opinioni e dettagli qui di seguito. Se hai feedback su un prodotto nel Laboratorio FANDOM, fornisci il feedback [[Special:WikiaLabs|lì]].
 
 Grazie in anticipo e buone modifiche!',
-	'specialcontact-intro-main-head' => '<big>Hai bisogno di aiuto? Non temere, la community di Fandom è qui per aiutarti!</big><br/>
-Segui i link seguenti per saperne di più su come usare Fandom, apportare modifiche al tua wiki o modificare il tuo account.',
-	'specialcontact-intro-rename-account' => "È possibile modificare il tuo nome utente su Fandom, ma solo una volta, per cui sii certo che desideri modificarlo prima di inviare una richiesta. Questo processo non è reversibile e una volta modificato il tuo nome utente non possiamo più modificarlo nuovamente. Accertati di aver letto questa pagina della Guida nella sua interezza prima di inviare una richiesta: http://it.community.wikia.com/wiki/Aiuto:Cambiare_username
+	'specialcontact-intro-main-head' => '<big>Hai bisogno di aiuto? Non temere, la community di FANDOM è qui per aiutarti!</big><br/>
+Segui i link seguenti per saperne di più su come usare FANDOM, apportare modifiche al tua wiki o modificare il tuo account.',
+	'specialcontact-intro-rename-account' => "È possibile modificare il tuo nome utente su FANDOM, ma solo una volta, per cui sii certo che desideri modificarlo prima di inviare una richiesta. Questo processo non è reversibile e una volta modificato il tuo nome utente non possiamo più modificarlo nuovamente. Accertati di aver letto questa pagina della Guida nella sua interezza prima di inviare una richiesta: http://it.community.wikia.com/wiki/Aiuto:Cambiare_username
 
 Una volta letta tale pagina e sei certo dello spelling del tuo nuovo nome utente, invia una richiesta qui di seguito. Una volta modificato il nome utente, riceverai un'e-mail di conferma. Potrai quindi accedere con il tuo nuovo nome utente e la tua vecchia password.
 
 Buone modifiche!",
 	'specialcontact-intro-user-conflict' => "Le wiki sono degli spazi comuni in cui ogni persona deve collaborare con altri affinché abbiano successo. Talvolta possono insorgere dei conflitti durante la collaborazione; il modo migliore per risolverli è tenere una conversazione aperta e rispettosa in merito al problema all'interno della community.
 
-Se hai bisogno di aiuto, contatta dapprima i tuoi [[Special:ListAdmins|amministratori locali]]. Gli amministratori sono gli esperti locali sull'argomento e la community, per cui è meglio parlare con loro per prima cosa. Se gli amministratori non sono in grado di aiutarti o se ritieni che l'utente stia violando i [[w:it:Wiki_della_Community:Termini_di_utilizzo|termini di utilizzo]], puoi contattare lo Staff di Fandom direttamente [[Special:Contact/general|qui]].
+Se hai bisogno di aiuto, contatta dapprima i tuoi [[Special:ListAdmins|amministratori locali]]. Gli amministratori sono gli esperti locali sull'argomento e la community, per cui è meglio parlare con loro per prima cosa. Se gli amministratori non sono in grado di aiutarti o se ritieni che l'utente stia violando i [[w:it:Wiki_della_Community:Termini_di_utilizzo|termini di utilizzo]], puoi contattare lo Staff di FANDOM direttamente [[Special:Contact/general|qui]].
 
 Buone modifiche!",
-	'specialcontact-intro-using-fandom' => "Ora che fai parte della community, potrai modificare e contribuire a quasi ogni pagina su Fandom. Per un aiuto introduttivo, dai un'occhiata alle nostre [[w:it:Aiuto:Nozioni di base|pagine d'aiuto]]. Sono un ottimo posto per imparare i fondamenti delle modifiche, formattazione e molto altro ancora.
+	'specialcontact-intro-using-fandom' => "Ora che fai parte della community, potrai modificare e contribuire a quasi ogni pagina su FANDOM. Per un aiuto introduttivo, dai un'occhiata alle nostre [[w:it:Aiuto:Nozioni di base|pagine d'aiuto]]. Sono un ottimo posto per imparare i fondamenti delle modifiche, formattazione e molto altro ancora.
 
 Se hai domande su questa community specifica, inizia con il [[Special:ListAdmins|contattare i tuoi amministratori locali]].
 Puoi anche porre domande generali ad altri membri della community nel [[w:it:Special:Forum|forum di aiuto della community]].
 
-Ricorda, non puoi rompere una community di Fandom, per cui non aver paura di iniziare. Buone modifiche!",
-	'specialcontact-label-close-account-confirm' => 'Confermo di voler disattivare il mio account Fandom',
-	'specialcontact-mailsubcc' => "Copia dell'e-mail di contatto Fandom",
-	'specialcontact-pagetitle' => 'Contatta il personale di supporto di Fandom',
-	'specialcontact-secheader-editing' => 'Partecipazione su Fandom',
+Ricorda, non puoi rompere una community di FANDOM, per cui non aver paura di iniziare. Buone modifiche!",
+	'specialcontact-label-close-account-confirm' => 'Confermo di voler disattivare il mio account FANDOM',
+	'specialcontact-mailsubcc' => "Copia dell'e-mail di contatto FANDOM",
+	'specialcontact-pagetitle' => 'Contatta il personale di supporto di FANDOM',
+	'specialcontact-secheader-editing' => 'Partecipazione su FANDOM',
 	'specialcontact-secheader-onwiki' => 'Domande su questa wiki',
 	'specialcontact-secheader-setting' => 'Modifiche a questa wiki',
 	'specialcontact-seclink-close-wiki' => 'Chiudi questa wiki',
 	'specialcontact-seclink-content-issue' => 'Problema con il contenuto della wiki',
-	'specialcontact-sectitle' => 'Supporto di Fandom - $1',
+	'specialcontact-sectitle' => 'Supporto di FANDOM - $1',
 	'specialcontact-sectitle-close-wiki' => 'Chiudi questa wiki',
 	'specialcontact-sectitle-design' => 'Design della community',
-	'specialcontact-sectitle-features' => 'Funzioni di Fandom',
-	'specialcontact-sectitle-using-fandom' => 'Utilizzo di Fandom',
+	'specialcontact-sectitle-features' => 'Funzioni di FANDOM',
+	'specialcontact-sectitle-using-fandom' => 'Utilizzo di FANDOM',
 	'specialcontact-sectitle-wiki-name-change' => 'Modifica del nome della community',
-	'specialcontact-wikia' => 'Contatta Fandom',
-	'contact' => 'Contatta Fandom',
-	'specialcontact-intro-blocked' => "I blocchi degli account sono generalmente creati dagli amministratori locali e non dallo Staff Fandom. Il nome dell'amministratore che blocca dovrebbe essere sull'avviso di blocco ricevuto. Puoi essere in grado di contattare l'amministratore che ti ha bloccato lasciando un messaggio sulla tua pagina di discussione utente la quale può ancora essere modificata dagli utenti bloccati (in alcune wiki) e le modifiche saranno generalmente viste dagli altri collaboratori della wiki. Per visualizzare la tua pagina di discussione utente, fai clic sul link \"Le mie discussioni\" in alto a destra nella pagina.
+	'specialcontact-wikia' => 'Contatta FANDOM',
+	'contact' => 'Contatta FANDOM',
+	'specialcontact-intro-blocked' => "I blocchi degli account sono generalmente creati dagli amministratori locali e non dallo Staff FANDOM. Il nome dell'amministratore che blocca dovrebbe essere sull'avviso di blocco ricevuto. Puoi essere in grado di contattare l'amministratore che ti ha bloccato lasciando un messaggio sulla tua pagina di discussione utente la quale può ancora essere modificata dagli utenti bloccati (in alcune wiki) e le modifiche saranno generalmente viste dagli altri collaboratori della wiki. Per visualizzare la tua pagina di discussione utente, fai clic sul link \"Le mie discussioni\" in alto a destra nella pagina.
 
-Tuttavia, se questa opzione della pagina di discussione non è disponibile nella tua situazione, il consiglio migliore che possiamo darti è attendere la scadenza del blocco o unirti a un'altra delle diverse migliaia di community Fandom disponibili.
+Tuttavia, se questa opzione della pagina di discussione non è disponibile nella tua situazione, il consiglio migliore che possiamo darti è attendere la scadenza del blocco o unirti a un'altra delle diverse migliaia di community FANDOM disponibili.
 
-Se ritieni di aver ancora bisogno di discutere ulteriormente su questo blocco con lo Staff Fandom, contattaci [[Special:Contact/general|qui]].",
-	'specialcontact-intro-content-issue-mobile' => 'Il contenuto di questa wiki è creato dalla community qui e non dagli amministratori, né da Fandom. Se desideri discutere questo contenuto, ti consigliamo di contattare prima gli amministratori della wiki.
+Se ritieni di aver ancora bisogno di discutere ulteriormente su questo blocco con lo Staff FANDOM, contattaci [[Special:Contact/general|qui]].",
+	'specialcontact-intro-content-issue-mobile' => 'Il contenuto di questa wiki è creato dalla community qui e non dagli amministratori, né da FANDOM. Se desideri discutere questo contenuto, ti consigliamo di contattare prima gli amministratori della wiki.
 
-Se ritieni che il contenuto violi i nostri Termini di utilizzo, puoi contattare lo Staff di Fandom.',
-	'specialcontact-intro-general' => "È possibile contattare lo [[w:project:Staff|Staff Fandom]] con questo modulo. Per trovare gli amministratori di questa community vai [[Special:ListAdmins|qui]].
+Se ritieni che il contenuto violi i nostri Termini di utilizzo, puoi contattare lo Staff di FANDOM.',
+	'specialcontact-intro-general' => "È possibile contattare lo [[w:project:Staff|Staff FANDOM]] con questo modulo. Per trovare gli amministratori di questa community vai [[Special:ListAdmins|qui]].
 
-Informazioni aggiuntive su come segnalare problemi a Fandom sono disponibili [[Special:Contact|qui]], oppure è possibile postare nel [[w:it:Special:Forum|Forum della Community]] per chiedere aiuto ad altri utenti.
+Informazioni aggiuntive su come segnalare problemi a FANDOM sono disponibili [[Special:Contact|qui]], oppure è possibile postare nel [[w:it:Special:Forum|Forum della Community]] per chiedere aiuto ad altri utenti.
 
 Se preferisci usare l'e-mail o disponi di multipli allegati, puoi contattarci all'indirizzo [mailto:community@fandom.com community@fandom.com].",
-	'specialcontact-mail' => 'Invia a Fandom',
-	'specialcontact-mailsub' => 'Supporto di Fandom',
-	'specialcontact-seclink-using-fandom' => 'Come posso usare Fandom?',
-	'specialcontact-submitcomplete' => "Grazie per aver contattato Fandom. Riceviamo e prendiamo in esame tutti i messaggi inviati qui. Faremo del nostro meglio per risponderti entro 2-3 giorni lavorativi, ma ti preghiamo di essere paziente mentre prendiamo in esame tutti i messaggi.
+	'specialcontact-mail' => 'Invia a FANDOM',
+	'specialcontact-mailsub' => 'Supporto di FANDOM',
+	'specialcontact-seclink-using-fandom' => 'Come posso usare FANDOM?',
+	'specialcontact-submitcomplete' => "Grazie per aver contattato FANDOM. Riceviamo e prendiamo in esame tutti i messaggi inviati qui. Faremo del nostro meglio per risponderti entro 2-3 giorni lavorativi, ma ti preghiamo di essere paziente mentre prendiamo in esame tutti i messaggi.
 
-Ricorda che puoi anche trovare aiuto nel nostro [[w:it:Special:Forum|Forum della community]] e nelle [[w:it:Aiuto:Contenuti|pagine d'aiuto]]. Puoi tenerti aggiornato in merito alle ultime novità Fandom nel nostro [[w:it:Blog:Blog ufficiale di Fandom Italia|blog]]. Buone modifiche!",
+Ricorda che puoi anche trovare aiuto nel nostro [[w:it:Special:Forum|Forum della community]] e nelle [[w:it:Aiuto:Contenuti|pagine d'aiuto]]. Puoi tenerti aggiornato in merito alle ultime novità FANDOM nel nostro [[w:it:Blog:Blog ufficiale di FANDOM Italia|blog]]. Buone modifiche!",
 	'specialcontact-wikiname' => 'Quale wiki',
 	'specialcontact-captchafail' => 'Codice di conferma incorretto o mancante.',
 	'specialcontact-captchainfo' => "Per favore inserisci il testo nell'immagine.",
@@ -1206,7 +1206,7 @@ Ricorda che puoi anche trovare aiuto nel nostro [[w:it:Special:Forum|Forum della
 Se hai provato a fare tutte queste cose, ma hai ancora problemi, inviaci per favore un rapporto dettagliato qui sotto. Ti contatteremo il prima possibile per aiutarti a risolvere il problema.
 
 Buone modifiche!',
-	'specialcontact-intro-main-foot' => "'''Hai trovato la risposta alla tua domanda in questa pagina?''' Se non l'hai trovata, per favore [[Special:contact/general|contattaci]] per discutere ulteriormente del tuo problema. Ricorda che puoi sempre dare un'occhiata alle '''[[w:it:Aiuto:Contenuti|pagine di aiuto]]''', al '''[[w:it:Blog:Blog ufficiale di Fandom Italia|Blog ufficiale di Fandom Italia]]'''  o scrivere nel '''[[w:it:Special:Forum|Forum della Community]]'''. Se hai bisogno di aiuto specifico come amministratore, puoi consultare anche l'[[w:it:Area_Admin:Pagina_principale|Area Amministratori e Fondatori]].",
+	'specialcontact-intro-main-foot' => "'''Hai trovato la risposta alla tua domanda in questa pagina?''' Se non l'hai trovata, per favore [[Special:contact/general|contattaci]] per discutere ulteriormente del tuo problema. Ricorda che puoi sempre dare un'occhiata alle '''[[w:it:Aiuto:Contenuti|pagine di aiuto]]''', al '''[[w:it:Blog:Blog ufficiale di FANDOM Italia|Blog ufficiale di FANDOM Italia]]'''  o scrivere nel '''[[w:it:Special:Forum|Forum della Community]]'''. Se hai bisogno di aiuto specifico come amministratore, puoi consultare anche l'[[w:it:Area_Admin:Pagina_principale|Area Amministratori e Fondatori]].",
 	'specialcontact-intro-wiki-name-change' => "Se sei un amministratore qui, puoi fare richiesta per cambiare il [[w:it:Aiuto:Sitename|nome della wiki]] o l'[[w:it:Aiuto:URL|URL]] compilando il modulo qui sotto. Per favore, controlla bene che non ci siano errori perché non accetteremo richieste multiple. Se non sei un amministratore invece, contatta gli [[Special:ListAdmins|amministratori locali]] per proporre loro la tua richiesta.
 
 Buone modifiche!",
@@ -1225,7 +1225,7 @@ Buone modifiche!",
 	'specialcontact-label-screenshot' => 'Hai fatto uno screenshot? Se la risposta è sì, per favore caricalo qui.',
 	'specialcontact-logged-in-as' => "Hai effettuato l'accesso come $1. [[Special:UserLogout|Non sei tu?]]",
 	'specialcontact-mail-on-file' => 'La tua email è impostata come $1. [[Special:Preferences|Vuoi cambiarla?]]',
-	'specialcontact-noform-footer' => "'''Hai trovato la risposta alla tua domanda in questa pagina?''' Se non l'hai trovata, per favore [[Special:contact/general|contattaci]] per discutere ulteriormente del tuo problema. Ricorda che puoi sempre dare un'occhiata alle '''[[w:it:Aiuto:Contenuti|pagine di aiuto]]''', al '''[[w:it:Blog:Blog ufficiale di Fandom Italia|Blog ufficiale di Fandom Italia]]''' o scrivere nel '''[[w:it:Special:Forum|Forum della Community]]'''. Se hai bisogno di aiuto specifico come amministratore, puoi consultare anche l'[[w:it:Area_Admin:Pagina_principale|Area Amministratori e Fondatori]].",
+	'specialcontact-noform-footer' => "'''Hai trovato la risposta alla tua domanda in questa pagina?''' Se non l'hai trovata, per favore [[Special:contact/general|contattaci]] per discutere ulteriormente del tuo problema. Ricorda che puoi sempre dare un'occhiata alle '''[[w:it:Aiuto:Contenuti|pagine di aiuto]]''', al '''[[w:it:Blog:Blog ufficiale di FANDOM Italia|Blog ufficiale di FANDOM Italia]]''' o scrivere nel '''[[w:it:Special:Forum|Forum della Community]]'''. Se hai bisogno di aiuto specifico come amministratore, puoi consultare anche l'[[w:it:Area_Admin:Pagina_principale|Area Amministratori e Fondatori]].",
 	'specialcontact-nomessage' => 'Per favore inserisci un messaggio',
 	'specialcontact-notyou' => 'Non sei tu?',
 	'specialcontact-problem' => 'Oggetto',
@@ -1257,7 +1257,7 @@ Buone modifiche!",
 	'specialcontact-sectitle-user-conflict' => 'Interazioni tra utenti',
 	'specialcontact-username' => 'Il tuo nome utente',
 	'specialcontact-yourmail' => 'Indirizzo email',
-	'specialcontact-desc' => 'Il modulo di [[Special:Contact|Speciale:Contatta]] per contattare Fandom',
+	'specialcontact-desc' => 'Il modulo di [[Special:Contact|Speciale:Contatta]] per contattare FANDOM',
 	'specialcontact-intro-main-local' => '',
 	'specialcontact-label-bad-ad-help-page' => 'w:it:Aiuto:Pubblicità non consona',
 );
@@ -1820,17 +1820,17 @@ Happy editing!',
 	'specialcontact-intro-wiki-name-change' => 'If you are an admin here, you can request to change your [[Help:Title for the wiki|sitename]] or [[Help:Domain name|URL]] by filling out the form below. Please double check the spelling, and be sure of your correction, as we will not honor multiple requests. If you are not an admin here, contact your local admins with your request [[Special:ListAdmins|here]].
 
 Happy editing!',
-	'specialcontact-intro-general' => 'You can contact [[w:project:Staff|Fandom Staff]] using this form. Admins of this community can be found [[Special:ListAdmins|here]].
+	'specialcontact-intro-general' => 'You can contact [[w:project:Staff|FANDOM Staff]] using this form. Admins of this community can be found [[Special:ListAdmins|here]].
 
-Additional information on how to report problems to Fandom can be found [[w:project:Report_a_problem|here]], or you can post on [[w:c:community:Special:Forum|Fandom Community Forums]] for user support.
+Additional information on how to report problems to FANDOM can be found [[w:project:Report_a_problem|here]], or you can post on [[w:c:community:Special:Forum|FANDOM Community Forums]] for user support.
 
 If you prefer to use regular e-mail or have multiple attachments, you can contact us at [mailto:community@fandom.com community@fandom.com].',
 	'specialcontact-desc' => "Wikia's contact [[Special:Contact]] form",
-	'contact' => 'Contact Fandom',
-	'specialcontact-wikia' => 'Contact Fandom',
-	'specialcontact-pagetitle' => 'Contact Fandom Support Staff',
-	'specialcontact-intro-main-head' => "<big>Need help? Don't worry, the Fandom community is here to help you!</big><br/>
-Follow the links below to learn more about how to use Fandom, make changes to your Fandom or modify your account.",
+	'contact' => 'Contact FANDOM',
+	'specialcontact-wikia' => 'Contact FANDOM',
+	'specialcontact-pagetitle' => 'Contact FANDOM Support Staff',
+	'specialcontact-intro-main-head' => "<big>Need help? Don't worry, the FANDOM community is here to help you!</big><br/>
+Follow the links below to learn more about how to use FANDOM, make changes to your FANDOM or modify your account.",
 	'specialcontact-intro-main-local' => '',
 	'specialcontact-intro-main-foot' => "'''Does this page answer your question?''' If not, please feel free to [[Special:contact/general|contact us]] to discuss your issue further. Remember you can always check out our '''[[w:c:community:Help:Index|help pages]]''', [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]]  or post on our '''[[w:c:community:Special:Forum|community help forums]]'''.",
 	'specialcontact-secheader-onwiki' => 'Questions about this wiki',
@@ -1842,8 +1842,8 @@ Follow the links below to learn more about how to use Fandom, make changes to yo
 	'specialcontact-seclink-close-account' => 'Disable my account',
 	'specialcontact-seclink-rename-account' => 'Rename my account',
 	'specialcontact-seclink-blocked' => 'My account is blocked',
-	'specialcontact-secheader-editing' => 'Participating on Fandom',
-	'specialcontact-seclink-using-fandom' => 'How do I use Fandom?',
+	'specialcontact-secheader-editing' => 'Participating on FANDOM',
+	'specialcontact-seclink-using-fandom' => 'How do I use FANDOM?',
 	'specialcontact-seclink-feedback' => 'I want to offer some feedback',
 	'specialcontact-seclink-bug' => 'I think I found a bug',
 	'specialcontact-seclink-bad-ad' => 'I see a broken or inappropriate ad',
@@ -1852,7 +1852,7 @@ Follow the links below to learn more about how to use Fandom, make changes to yo
 	'specialcontact-seclink-design' => 'Design',
 	'specialcontact-seclink-features' => 'Add or remove Features',
 	'specialcontact-seclink-close-wiki' => 'Close this wiki',
-	'specialcontact-sectitle' => 'Fandom Support - $1',
+	'specialcontact-sectitle' => 'FANDOM Support - $1',
 	'specialcontact-sectitle-general' => 'General support',
 	'specialcontact-sectitle-content-issue' => 'Content issue',
 	'specialcontact-sectitle-user-conflict' => 'User interactions',
@@ -1861,23 +1861,23 @@ Follow the links below to learn more about how to use Fandom, make changes to yo
 	'specialcontact-sectitle-close-account' => 'Disable my account',
 	'specialcontact-sectitle-rename-account' => 'Rename my account',
 	'specialcontact-sectitle-blocked' => 'Account blocked',
-	'specialcontact-sectitle-using-fandom' => 'Using Fandom',
+	'specialcontact-sectitle-using-fandom' => 'Using FANDOM',
 	'specialcontact-sectitle-feedback' => 'Feedback',
 	'specialcontact-sectitle-bug' => 'Bug Report',
 	'specialcontact-sectitle-bad-ad' => 'Ad report',
 	'specialcontact-sectitle-wiki-name-change' => 'Community name change',
 	'specialcontact-sectitle-design' => 'Community design',
-	'specialcontact-sectitle-features' => 'Fandom features',
+	'specialcontact-sectitle-features' => 'FANDOM features',
 	'specialcontact-sectitle-close-wiki' => 'Close this wiki',
-	'specialcontact-intro-content-issue' => "The content on this wiki is created by the community here, and managed by the [[Special:ListAdmins|local admins]], not Fandom. If you wish to discuss this content, it is best to first contact the [[Special:ListAdmins|wiki's admins here]].
+	'specialcontact-intro-content-issue' => "The content on this wiki is created by the community here, and managed by the [[Special:ListAdmins|local admins]], not FANDOM. If you wish to discuss this content, it is best to first contact the [[Special:ListAdmins|wiki's admins here]].
 
-If you feel the content violates our [http://www.wikia.com/Terms_of_Use Terms of Use], you can contact Fandom staff directly [[Special:Contact/general|here]].",
-	'specialcontact-intro-content-issue-mobile' => "The content on this wiki is created by the community here and not the admins, not Fandom. If you wish to discuss this content, it is best to first contact the wiki's admins.
+If you feel the content violates our [http://www.wikia.com/Terms_of_Use Terms of Use], you can contact FANDOM staff directly [[Special:Contact/general|here]].",
+	'specialcontact-intro-content-issue-mobile' => "The content on this wiki is created by the community here and not the admins, not FANDOM. If you wish to discuss this content, it is best to first contact the wiki's admins.
 
-If you feel the content violates our Terms of Use, you can contact Fandom staff.",
+If you feel the content violates our Terms of Use, you can contact FANDOM staff.",
 	'specialcontact-intro-user-conflict' => "Wikis are community spaces where each and every person needs to work together with others for it to be successful. Conflicts can sometimes arise while working together; the best way to solve them is to have an open and respectful conversation on your community about the issue.
 
-If you need help, first contact your [[Special:ListAdmins|local admins]]. Admins are the local experts on the topic and community, so best to first chat with them further. If the admins are not able to help, or you feel the user is violating Wikia Inc.'s [http://www.wikia.com/Terms_of_Use Terms of Use], you can contact Fandom staff directly [[Special:Contact/general|here]].
+If you need help, first contact your [[Special:ListAdmins|local admins]]. Admins are the local experts on the topic and community, so best to first chat with them further. If the admins are not able to help, or you feel the user is violating Wikia Inc.'s [http://www.wikia.com/Terms_of_Use Terms of Use], you can contact FANDOM staff directly [[Special:Contact/general|here]].
 
 Happy editing!",
 	'specialcontact-intro-adoption' => "Are you interested in becoming an admin here? If so, please first check if the [[Special:Listusers/sysop|local admins]] are active. If they are, leave them a message with your request. It is also a good idea to talk with fellow users about your request to gather their support. You may want to start by posting in your community forum.
@@ -1885,31 +1885,31 @@ Happy editing!",
 If the local admins are not active, you can submit a request for admin status. Please visit the [[w:c:adopt|adoption Adoptions]] for more information, including the adoption criteria and the request page. Please remember to always provide a link to the community you wish to adopt.
 
 If there's an active user community on the wiki you wish to adopt, please start a discussion on there about who would make the best admins, and why you would like to become one. Please provide a link to this discussion at the [[w:c:adopt|Adoption community]]. Best of luck and happy editing!",
-	'specialcontact-intro-close-account' => "We are sorry you want to disable your account. Fandom has many wikis on all sorts of subjects and we'd love for you to stick around and find the one that's right for you. If you are having a local problem with your wiki, please don't hesitate to contact your [[Special:Listusers/sysop|local admins]] for help and advice.
+	'specialcontact-intro-close-account' => "We are sorry you want to disable your account. FANDOM has many wikis on all sorts of subjects and we'd love for you to stick around and find the one that's right for you. If you are having a local problem with your wiki, please don't hesitate to contact your [[Special:Listusers/sysop|local admins]] for help and advice.
 
-If you have decided you definitely want to disable your account please be aware that Fandom does not have the ability to fully remove accounts, but we can disable them. This will ensure the account is locked and can't be used. This process is NOT reversible, and you will have to create a new account if you wish to rejoin Fandom. However, this process will not remove your contributions from a given wiki as these contributions belong to the community as a whole.
+If you have decided you definitely want to disable your account please be aware that FANDOM does not have the ability to fully remove accounts, but we can disable them. This will ensure the account is locked and can't be used. This process is NOT reversible, and you will have to create a new account if you wish to rejoin FANDOM. However, this process will not remove your contributions from a given wiki as these contributions belong to the community as a whole.
 
 If you need any more information on what an account disable actually does, you can visit our [[Help:Close_my_account|help page on disabling your account]]. To confirm and disable your account, please fill out the form below.",
-	'specialcontact-intro-rename-account' => 'Changing your username is possible on Fandom, but only once, so be sure you want to change it before you submit a request. This process cannot be reversed, and once we change your username, we cannot change it again. Please make sure you have fully read this help page before sending in a request: http://help.wikia.com/wiki/Help:Changing_your_username
+	'specialcontact-intro-rename-account' => 'Changing your username is possible on FANDOM, but only once, so be sure you want to change it before you submit a request. This process cannot be reversed, and once we change your username, we cannot change it again. Please make sure you have fully read this help page before sending in a request: http://help.wikia.com/wiki/Help:Changing_your_username
 
 Once you have read that help page and are positive on the spelling of your new username, please submit a request below. Once your username is changed, you will receive a confirmation email. You can then log in with your new user name using your old password.
 
 Happy editing!',
-	'specialcontact-intro-blocked' => 'Account blocks are usually set by the local admins, and not by the Fandom staff. The name of the blocking admin should be on the block notice you received.You may be able to contact the blocking admin by leaving a message on your user talk page. This is still editable for blocked users (on some wikis) and changes will usually be seen by the other contributors to the wiki. Your user talk page is found by following the "my talk" link at the top right of any page.
+	'specialcontact-intro-blocked' => 'Account blocks are usually set by the local admins, and not by the FANDOM staff. The name of the blocking admin should be on the block notice you received.You may be able to contact the blocking admin by leaving a message on your user talk page. This is still editable for blocked users (on some wikis) and changes will usually be seen by the other contributors to the wiki. Your user talk page is found by following the "my talk" link at the top right of any page.
 
-However, if this talk page option is not available in your situation, then the best advice we can give you is to wait the block out or join the community at another of the many thousand Fandom communities available.
+However, if this talk page option is not available in your situation, then the best advice we can give you is to wait the block out or join the community at another of the many thousand FANDOM communities available.
 
-If you feel you still need to discuss this block further with Fandom staff, please contact us [[Special:Contact/general|here]].',
-	'specialcontact-intro-using-fandom' => "Now that you are a part of the community, you are able to edit and contribute to almost any page across Fandom. For some introductory help, check out our [[Help:Getting_Started|help pages here]]. They are a great place to learn the basics of editing, formatting and much more.
+If you feel you still need to discuss this block further with FANDOM staff, please contact us [[Special:Contact/general|here]].',
+	'specialcontact-intro-using-fandom' => "Now that you are a part of the community, you are able to edit and contribute to almost any page across FANDOM. For some introductory help, check out our [[Help:Getting_Started|help pages here]]. They are a great place to learn the basics of editing, formatting and much more.
 
 If you have questions about this specific community, start by [[Special:ListAdmins|contacting your local admins]].
 You can also ask general questions to other community members on our [[w:c:community:Special:Forum|community help forum]].
 
-Remember, you can't break a community on Fandom, so don't be afraid to get started. Happy editing!",
-	'specialcontact-intro-feedback' => 'Got feedback? We would love to hear it! Please provide your thoughts and details below. If you have feedback on a Fandom Labs product, please provide feedback [[Special:WikiaLabs|there]].
+Remember, you can't break a community on FANDOM, so don't be afraid to get started. Happy editing!",
+	'specialcontact-intro-feedback' => 'Got feedback? We would love to hear it! Please provide your thoughts and details below. If you have feedback on a FANDOM Labs product, please provide feedback [[Special:WikiaLabs|there]].
 
 Thanks in advance and happy editing!',
-	'specialcontact-intro-bug' => 'We are sorry to hear that you found a bug on Fandom. Please provide full details of the issue you are seeing below so we can investigate further. Important details to include are:
+	'specialcontact-intro-bug' => 'We are sorry to hear that you found a bug on FANDOM. Please provide full details of the issue you are seeing below so we can investigate further. Important details to include are:
 *Your username
 *Link to your community
 *Your browser information including type and version ([[Help:Supported_browsers|click here for our supported browser list]])
@@ -1917,35 +1917,35 @@ Thanks in advance and happy editing!',
 
 For more advice on what to include in your report, please see [[w:c:community:Help:How to report bugs|our help page on bug reports]].
 
-Thanks again for the report and for using Fandom.
+Thanks again for the report and for using FANDOM.
 
 Happy editing!',
-	'specialcontact-intro-bad-ad' => "We are sorry to hear you encountered a bad advertisement on Fandom. If you could provide further details below we will share them with our advertising manager, who will review the ad and may be able to remove it from the system.
+	'specialcontact-intro-bad-ad' => "We are sorry to hear you encountered a bad advertisement on FANDOM. If you could provide further details below we will share them with our advertising manager, who will review the ad and may be able to remove it from the system.
 
 Be sure to tell us which community you're on, which ad you saw, and why it was a problem. It would also help if you could include a screenshot and the URL of the ad. Instructions for finding the URL of an ad are listed here: http://help.wikia.com/wiki/Help:Bad_advertisements
 
 Thank you and happy editing!",
 	'specialcontact-intro-design' => "A wiki's design can be updated by any local admin on your community by using the [[Help:Theme_designer|Theme designer]]. If you are not an admin and wish to help with your wiki's design, first contact your [[Special:ListAdmins|local admins]].
 
-If you would like help with creating a more customized design, you can submit a request to the Fandom Content team [[w:Community_Central:Content_Team/Requests|here]]. Please read through the guidelines before submitting a request there.
+If you would like help with creating a more customized design, you can submit a request to the FANDOM Content team [[w:Community_Central:Content_Team/Requests|here]]. Please read through the guidelines before submitting a request there.
 
 If you feel you have found a bug while updating your wiki's design, please provide us with a detailed report [[Special:Contact/bug|here]].
 
 Happy editing!",
-	'specialcontact-intro-features' => "Fandom offers many features, the majority of which are live on all communities across the site by default.
+	'specialcontact-intro-features' => "FANDOM offers many features, the majority of which are live on all communities across the site by default.
 
 If you are an admin and feel that specific feature is not working well for your community, please discuss with your wiki's community if they would also like the feature turned off. If everyone agrees, you can use the [[Special:WikiFeatures|Wiki Features]] section of the [[Special:AdminDashboard|Admin Dashboard]] to disable or re-enable features. If the feature is not list there, please [[Special:Contact/general|contact us]] with your request.
 
 Admins interested in testing out new features that are still in development can check out the Labs section of [[Special:WikiFeatures|Wiki Features]].
 
 Want to stay current on announcement of new features and improvements to current ones? Stop by and follow the [[w:c:community:Blog:Wikia_New_Features|staff blog new features list]]",
-	'specialcontact-intro-close-wiki' => "Thanks for contacting Fandom. We don't usually delete wikis once they have been created. Wikis are community-owned projects, and a wiki you are no longer interested in can wait for someone else to come along and [[Special:Contact/adoption|adopt it]].
+	'specialcontact-intro-close-wiki' => "Thanks for contacting FANDOM. We don't usually delete wikis once they have been created. Wikis are community-owned projects, and a wiki you are no longer interested in can wait for someone else to come along and [[Special:Contact/adoption|adopt it]].
 
-If you wish to rename your wiki or fix spelling or grammatical issues please first consult [[Help:Rename]] for renaming pages, and [[Help:Theme designer]] for renaming the title of your wiki. Wikis can easily have their names changed, without the hassle of starting over. If you wish to change your wiki's URL [[Special:Contact/general|please write to us]] as we'd be more than happy to do so for you as there is no need to close your Fandom.
+If you wish to rename your wiki or fix spelling or grammatical issues please first consult [[Help:Rename]] for renaming pages, and [[Help:Theme designer]] for renaming the title of your wiki. Wikis can easily have their names changed, without the hassle of starting over. If you wish to change your wiki's URL [[Special:Contact/general|please write to us]] as we'd be more than happy to do so for you as there is no need to close your FANDOM.
 
 If you feel this wiki is on a topic that no other users may be interested in (such as a personal project), please submit a request using the form below. Please make the request from the wiki that needs closing.
 
-I hope you find another wiki among the many that are part of Fandom, and join in building a fantastic resource about everything you are passionate about.
+I hope you find another wiki among the many that are part of FANDOM, and join in building a fantastic resource about everything you are passionate about.
 
 Happy editing!",
 	'specialcontact-noform-footer' => "'''Does this page answer your question?''' If not, please feel free to [[Special:contact/general|contact us]] to discuss your issue further. Remember you can always check out our '''[[w:c:community:Help:Index|help pages]]''', [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]],  or post on our '''[[w:c:community:Special:Forum|community help forums]]'''.",
@@ -1954,11 +1954,11 @@ Happy editing!",
 	'specialcontact-yourmail' => 'Your email',
 	'specialcontact-problem' => 'Subject',
 	'specialcontact-problemdesc' => 'Message',
-	'specialcontact-mail' => 'Send to Fandom',
+	'specialcontact-mail' => 'Send to FANDOM',
 	'specialcontact-ccme' => 'Send me a copy of this message',
 	'specialcontact-captchainfo' => 'Please enter the text in the image.',
 	'specialcontact-captchatitle' => 'Blurry word',
-	'specialcontact-formtitle' => 'Contact Fandom Support Staff',
+	'specialcontact-formtitle' => 'Contact FANDOM Support Staff',
 	'specialcontact-label-screenshot' => 'Did you take a screenshot? If so, please upload here.',
 	'specialcontact-label-additionalscreenshot' => 'If you have another screenshot please upload it here.',
 	'specialcontact-label-bad-ad-description' => 'Please describe the problem with the ad',
@@ -1968,13 +1968,13 @@ Happy editing!",
 	'specialcontact-label-bug-link' => 'Please provide the URL of the page where you are having the problem',
 	'specialcontact-label-bug-feature' => 'What feature is this related to?',
 	'specialcontact-label-bug-description' => 'Please describe the problem you are having',
-	'specialcontact-label-close-account-confirm' => 'I confirm that I want to disable my Fandom account',
+	'specialcontact-label-close-account-confirm' => 'I confirm that I want to disable my FANDOM account',
 	'specialcontact-label-close-account-read-help' => 'I have read the [[Help:Close_my_account|help page on closing your account]]',
 	'specialcontact-label-account-issue-description' => 'Please provide a detailed description of the issue you are having.',
 	'specialcontact-label-rename-newusername' => 'Please enter the new username',
 	'specialcontact-label-rename-account-confirm' => 'I confirm that the spelling and punctuation for my new name is correct',
 	'specialcontact-label-rename-account-read-help' => 'I have read the [[Help:Changing your username|help page on renaming my account]]',
-	'specialcontact-form-header' => 'Contact Fandom',
+	'specialcontact-form-header' => 'Contact FANDOM',
 	'specialcontact-logged-in-as' => 'You are logged in as $1. [[Special:UserLogout|Not you?]]',
 	'specialcontact-mail-on-file' => 'Your e-mail is set to $1. [[Special:Preferences|Do you wish to change it?]]',
 	'specialcontact-nomessage' => 'Please fill in a message',
@@ -1983,11 +1983,11 @@ Happy editing!",
 	'specialcontact-error-message' => 'Something went wrong while submitting your form. Please try again later.',
 	'specialcontact-error-logintext' => 'You must be logged in to make this request. Please [[Special:SignUp|login to your account]] and try again.',
 	'specialcontact-error-alreadyrenamed' => 'You have previously been renamed so you are not eligible for another one. Please [[Special:Contact/general|contact staff]] if you require further assistance.',
-	'specialcontact-mailsub' => 'Fandom Support',
-	'specialcontact-mailsubcc' => 'Copy of Fandom Contact Mail',
-	'specialcontact-submitcomplete' => 'Thank you for contacting Fandom. We receive and review all messages submitted here. We will do our best to get back to you in the next 2-3 business days, but please be patient as we work through all of the messages.
+	'specialcontact-mailsub' => 'FANDOM Support',
+	'specialcontact-mailsubcc' => 'Copy of FANDOM Contact Mail',
+	'specialcontact-submitcomplete' => 'Thank you for contacting FANDOM. We receive and review all messages submitted here. We will do our best to get back to you in the next 2-3 business days, but please be patient as we work through all of the messages.
 
-Remember, you can also find help in our [[w:c:community:Special:Forum|Community Forum]] and [[w:c:community:Help:Index|Help pages]]. You can keep up to date with the latest Fandom news on our [[w:c:community:Blog:Wikia_Staff_Blog |Staff Blog]]. Happy editing!',
+Remember, you can also find help in our [[w:c:community:Special:Forum|Community Forum]] and [[w:c:community:Help:Index|Help pages]]. You can keep up to date with the latest FANDOM news on our [[w:c:community:Blog:Wikia_Staff_Blog |Staff Blog]]. Happy editing!',
 );
 
 $messages['no'] = array(
@@ -2002,7 +2002,7 @@ $messages['pl'] = array(
 	'specialcontact-seclink-security' => 'Wydaje mi się, że {{GENDER:|znalazłem|znalazłam}} problem dotyczący zabezpieczeń',
 	'specialcontact-seclink-dmca-request' => 'Chcę zgłosić naruszenie praw autorskich',
 	'specialcontact-sectitle-security' => 'Raport dotyczący problemu z zabezpieczeniami',
-	'specialcontact-intro-security' => 'Jeśli {{GENDER:|znalazłeś|znalazłaś}} lub wydaje ci się, że {{GENDER:|zauważyłeś|zauważyłaś}} problem związany z zabezpieczeniami w kodzie portalu Fandom lub na jednej ze społeczności, poinformuj nas o tym. Fandom będzie bezpieczniejszy dla wszystkich dzięki twojej pomocy i [[wikipedia:Responsible disclosure|odpowiedzialnemu zgłaszaniu błędów]].
+	'specialcontact-intro-security' => 'Jeśli {{GENDER:|znalazłeś|znalazłaś}} lub wydaje ci się, że {{GENDER:|zauważyłeś|zauważyłaś}} problem związany z zabezpieczeniami w kodzie portalu FANDOM lub na jednej ze społeczności, poinformuj nas o tym. FANDOM będzie bezpieczniejszy dla wszystkich dzięki twojej pomocy i [[wikipedia:Responsible disclosure|odpowiedzialnemu zgłaszaniu błędów]].
 
 Jeśli chcesz zgłosić ogólny błąd lub innego rodzaju problem, skorzystaj z jednego z [[Special:Contact|innych formularzy kontaktu]].
 
@@ -2020,7 +2020,7 @@ Zgłaszając problem dotyczący zabezpieczeń podaj wszelkie szczegóły problem
 ** W szczególności w przypadku XSS lub luk, których odtworzenie wymaga użycia konkretnej przeglądarki lub wtyczki.
 * Krótki opis potencjalnych konsekwencji znalezionej luki.
 
-W odpowiedzi na otrzymany raport dotyczący zabezpieczeń, Fandom:
+W odpowiedzi na otrzymany raport dotyczący zabezpieczeń, FANDOM:
 * nada priorytet odtworzenia i potwierdzenia występowania zgłoszonej luki;
 * ustali termin usunięcia każdej potwierdzonej luki;
 * nie będzie wchodzić na drogę sądową wobec zgłaszających, którzy będą stosowali się do wskazówek dotyczących sprawdzania i raportowania błędów zabezpieczeń.',
@@ -2053,12 +2053,12 @@ Jeżeli żaden lokalny administrator nie jest aktywny, możesz wysłać prośbę
 Jeżeli dana wiki posiada aktywną społeczność użytkowników, polecamy rozpocząć dyskusję o tym, kto byłby dobrym administratorem – możesz tam wyjaśnić, dlaczego ty chcesz nim zostać. Pamiętaj, aby załączyć link do dyskusji na do prośby o adopcję.
 
 Powodzenia i miłego edytowania!',
-	'specialcontact-intro-bad-ad' => 'Przykro nam, że {{GENDER:|napotkałeś|napotkałaś}} wadliwą reklamę na portalu Fandom. Opisz dokładnie w czym rzecz, a my przekażemy informacje o problemie do właściwej osoby, która przyjrzy się reklamie i będzie mogła usunąć ją ze strony.
+	'specialcontact-intro-bad-ad' => 'Przykro nam, że {{GENDER:|napotkałeś|napotkałaś}} wadliwą reklamę na portalu FANDOM. Opisz dokładnie w czym rzecz, a my przekażemy informacje o problemie do właściwej osoby, która przyjrzy się reklamie i będzie mogła usunąć ją ze strony.
 
 Pamiętaj, żeby napisać, do której społeczności należysz, jaka reklama sprawiała problem i na czym polegał. Byłoby świetnie, gdybyś {{GENDER:|załączył|załączyła}} zrzut ekranu i adres URL reklamy. Nie wiesz jak znaleźć dokładny adres URL reklamy? Zobacz [[{{int:specialcontact-label-bad-ad-help-page}}|stronę pomocy]].
 
 Dziękujemy i życzymy miłego edytowania!',
-	'specialcontact-intro-bug' => 'Przykro nam, że {{GENDER:|napotkałeś|napotkałaś}} błąd na portalu Fandom. Będziemy wdzięczni za opisanie problemu poniżej – z chęcią bliżej mu się przyjrzymy. Pamiętaj, żeby zawrzeć następujące informacje:
+	'specialcontact-intro-bug' => 'Przykro nam, że {{GENDER:|napotkałeś|napotkałaś}} błąd na portalu FANDOM. Będziemy wdzięczni za opisanie problemu poniżej – z chęcią bliżej mu się przyjrzymy. Pamiętaj, żeby zawrzeć następujące informacje:
 * twoją nazwę użytkownika;
 * link do twojej społeczności;
 * informacje na temat twojej przeglądarki, w tym rodzaj i wersję ([[w:pl:Pomoc:Wspierane przeglądarki|tutaj znajdziesz listę wspieranych przeglądarek]]);
@@ -2066,12 +2066,12 @@ Dziękujemy i życzymy miłego edytowania!',
 
 Więcej informacji na temat tego, co warto zawrzeć w zgłoszeniu znajdziesz na [[w:Help:How to report bugs|stronie pomocy dotyczącej zgłaszania błędów]] (ang.).
 
-Jeszcze raz dziękujemy za zgłoszenie i korzystanie z portalu Fandom.
+Jeszcze raz dziękujemy za zgłoszenie i korzystanie z portalu FANDOM.
 
 Miłego edytowania!',
-	'specialcontact-intro-close-account' => 'Przykro nam, że chcesz wyłączyć swoje konto. Fandom posiada wiele wiki dotyczących przeróżnych tematów i bylibyśmy szczęśliwi, gdybyś został i znalazł jakąś dla siebie. Jeśli masz jakiś problem na swojej wiki, spróbuj skontaktować się z [[Special:ListUsers/sysop|lokalnymi administratorami]] aby uzyskać pomoc i wsparcie.
+	'specialcontact-intro-close-account' => 'Przykro nam, że chcesz wyłączyć swoje konto. FANDOM posiada wiele wiki dotyczących przeróżnych tematów i bylibyśmy szczęśliwi, gdybyś został i znalazł jakąś dla siebie. Jeśli masz jakiś problem na swojej wiki, spróbuj skontaktować się z [[Special:ListUsers/sysop|lokalnymi administratorami]] aby uzyskać pomoc i wsparcie.
 
-Jeśli zdecydowałeś się wyłączyć swoje konto, pamiętaj, że Fandom nie może w pełni usunąć konta, możemy je jednak wyłączyć. W ten sposób dostęp do konta zostanie zablokowany i nie będzie można go już używać. Proces wyłączenia konta jest nieodwracalny. Jeżeli zdecydujesz się na powrót do Fandomu, będziesz musiał stworzyć nowe konto. Wyłączenie konta nie usunie twojego wkładu z danej wiki – wszystkie edycje, których dokonałeś należą do ogółu społeczności.
+Jeśli zdecydowałeś się wyłączyć swoje konto, pamiętaj, że FANDOM nie może w pełni usunąć konta, możemy je jednak wyłączyć. W ten sposób dostęp do konta zostanie zablokowany i nie będzie można go już używać. Proces wyłączenia konta jest nieodwracalny. Jeżeli zdecydujesz się na powrót do Fandomu, będziesz musiał stworzyć nowe konto. Wyłączenie konta nie usunie twojego wkładu z danej wiki – wszystkie edycje, których dokonałeś należą do ogółu społeczności.
 
 Jeżeli chcesz dowiedzieć się więcej o tym, jakie skutki ma wyłączenie konta, odwiedź [[w:c:pomoc:Pomoc:Zamykanie konta|stronę pomocy na ten temat]]. Żeby potwierdzić wyłączenie konta, wypełnij formularz poniżej.',
 	'specialcontact-intro-close-wiki' => 'Dziękujemy za kontakt z Fandomem. Zazwyczaj nie usuwamy stworzonych przez użytkowników wiki. Każda wiki to projekt należący do społeczności, więc jeżeli nie jesteś nią już zainteresowany, pamiętaj, że może poczekać aż znajdzie się użytkownik, który [[Special:Contact/adoption|ją przygarnie]].
@@ -2080,20 +2080,20 @@ Jeżeli chcesz zmienić nazwę wiki, poprawić literówkę albo błąd, zajrzyj 
 
 Jeżeli uważasz, że temat tej wiki nie zainteresuje nikogo innego (np. to twój prywatny projekt), wyślij wniosek o zamknięcie wiki używając poniższego formularza. Pamiętaj, żeby zrobić to z poziomu wiki, którą chcesz zamknąć.
 
-Mamy nadzieję, że spośród tysięcy wiki składający się na Fandom znajdziesz coś dla siebie i zajmiesz się innym pasjonującym projektem. 
+Mamy nadzieję, że spośród tysięcy wiki składający się na FANDOM znajdziesz coś dla siebie i zajmiesz się innym pasjonującym projektem. 
 
 Miłego edytowania!',
-	'specialcontact-intro-content-issue' => 'Zawartość tej wiki jest tworzona przez jej społeczność i zarządzana przez [[Special:ListAdmins|lokalnych administratorów]], a nie przez Fandom. Jeżeli masz jakieś uwagi odnośnie treści, najlepiej najpierw skontaktować się z [[Special:ListAdmins|administratorami tej wiki]].
+	'specialcontact-intro-content-issue' => 'Zawartość tej wiki jest tworzona przez jej społeczność i zarządzana przez [[Special:ListAdmins|lokalnych administratorów]], a nie przez FANDOM. Jeżeli masz jakieś uwagi odnośnie treści, najlepiej najpierw skontaktować się z [[Special:ListAdmins|administratorami tej wiki]].
 
 Jeżeli uważasz, że treść tej wiki narusza nasze [[w:c:pl:Zasady Użytkowania|Zasady Użytkowania]], możesz skontaktować się bezpośrednio z pracownikami Fandomu [[Special:Contact/general|tutaj]].',
 	'specialcontact-intro-design' => 'Projekt wiki może zostać zmieniony za pomocą [[w:pl:Pomoc:Kreator motywu|kreatora motywu]] przez dowolnego lokalnego administratora w twojej społeczności. Jeżeli nie jesteś administratorem, ale chcesz pomóc w kreowaniu motywu twojej wiki, najpierw skontaktuj się z [[Special:ListAdmins|lokalnym administratorem]].
 
-Jeżeli chcesz wziąć udział w tworzeniu niestandardowego projektu dla swojej wiki, możesz skierować taką prośbę do zespołu zajmującego się treścią na portalu Fandom, klikając [[w:Community_Central:Content_Team/Requests|tutaj]]. Zanim to zrobisz, prosimy zapoznać się z zasadami.
+Jeżeli chcesz wziąć udział w tworzeniu niestandardowego projektu dla swojej wiki, możesz skierować taką prośbę do zespołu zajmującego się treścią na portalu FANDOM, klikając [[w:Community_Central:Content_Team/Requests|tutaj]]. Zanim to zrobisz, prosimy zapoznać się z zasadami.
 
 Uważasz, że {{GENDER:|trafiłeś|trafiłaś}} na błąd w trakcie aktualizacji projektu wiki? Będziemy wdzięczni, jeżeli zgłosisz ten problem [[Special:Contact/bug|tutaj]].
 
 Miłego edytowania!',
-	'specialcontact-intro-features' => 'Fandom umożliwia korzystanie z wielu rozszerzeń – większość z nich jest domyślnie włączona dla wszystkich społeczności.
+	'specialcontact-intro-features' => 'FANDOM umożliwia korzystanie z wielu rozszerzeń – większość z nich jest domyślnie włączona dla wszystkich społeczności.
 
 Jeżeli jesteś administratorem i uważasz, że któreś rozszerzenie nie nadaje się do twojej wiki, zapytaj społeczność czy podziela twoje zdanie. Gdy otrzymasz zgodę społeczności, możesz skorzystać z sekcji [[Special:WikiFeatures|rozszerzenia wiki]] w [[Special:AdminDashboard|panelu administratora]] i wyłączyć lub ponownie włączyć wybrane rozszerzenia. Jeżeli nie ma tam funkcji, którą chcesz wyłączyć, [[Special:Contact/general|skontaktuj się]] z nami w tej sprawie.
 
@@ -2105,9 +2105,9 @@ Chcesz być na bieżąco z najnowszymi rozszerzeniami wiki i usprawnieniami do j
 Z góry dziękujemy. Miłego edytowania!',
 	'specialcontact-intro-main-head' => '<big>Potrzebujesz pomocy? Nie przejmuj się, społeczność Fandomu jest tutaj, by ci pomóc!</big><br/>
 Kliknij na linki poniżej, aby dowiedzieć się więcej na temat użytkowania Fandomu, wprowadzania zmian na wiki i zmieniania ustawień konta.',
-	'specialcontact-intro-rename-account' => 'Zmiana nazwy użytkownika na portalu Fandom jest możliwa, ale tylko raz. Dobrze się zastanów, czy na pewno chcesz to zrobić, zanim prześlesz taką prośbę. Proces jest nieodwracalny – po zmianie nazwy użytkownika nie będzie można już wrócić do poprzedniej. Dokładnie przeczytaj tę [[w:pl:Pomoc:Zmiana nazwy użytkownika|stronę pomocy]], zanim się zdecydujesz.
+	'specialcontact-intro-rename-account' => 'Zmiana nazwy użytkownika na portalu FANDOM jest możliwa, ale tylko raz. Dobrze się zastanów, czy na pewno chcesz to zrobić, zanim prześlesz taką prośbę. Proces jest nieodwracalny – po zmianie nazwy użytkownika nie będzie można już wrócić do poprzedniej. Dokładnie przeczytaj tę [[w:pl:Pomoc:Zmiana nazwy użytkownika|stronę pomocy]], zanim się zdecydujesz.
 
-Jeżeli dokładnie {{GENDER:|przeczytałeś|przeczytałaś}} stronę pomocy i wciąż chcesz zmienić nazwę użytkownika, wypełnij poniższy formularz. Po zmianie nazwy użytkownika dostaniesz wiadomość z potwierdzeniem. Od tego momentu będziesz {{GENDER:|mógł|mogła}} logować się do portalu Fandom używając nowej nazwy użytkownika i starego hasła.
+Jeżeli dokładnie {{GENDER:|przeczytałeś|przeczytałaś}} stronę pomocy i wciąż chcesz zmienić nazwę użytkownika, wypełnij poniższy formularz. Po zmianie nazwy użytkownika dostaniesz wiadomość z potwierdzeniem. Od tego momentu będziesz {{GENDER:|mógł|mogła}} logować się do portalu FANDOM używając nowej nazwy użytkownika i starego hasła.
 
 Miłego edytowania!',
 	'specialcontact-intro-user-conflict' => 'Wiki to społeczności, których sukces zależy od tego, czy wszyscy ich członkowie potrafią pracować razem. Podczas wspólnej pracy czasami pojawiają się konflikty – najlepszym sposobem na ich rozwiązywanie jest zawsze otwarta, pełna wzajemnego szacunku dyskusja na dany temat wśród członków społeczności.
@@ -2115,46 +2115,46 @@ Miłego edytowania!',
 Jeżeli potrzebujesz pomocy, w pierwszej kolejności skontaktuj się z [[Special:ListAdmins|lokalnymi administratorami]]. Administratorzy są ekspertami w danej dziedzinie i społeczności, więc najlepiej zacząć od rozmowy z nimi. Jeżeli nie są w stanie ci pomóc lub uważasz, że inny użytkownik narusza [[w:c:pl:Zasady Użytkowania|Zasady Użytkowania]], skontaktuj się bezpośrednio z [[Special:Contact/general|pracownikami Fandomu]].
 
 Miłego edytowania!',
-	'specialcontact-intro-using-fandom' => 'Jesteś teraz członkiem społeczności. Możesz edytować i współtworzyć prawie każdą stronę na portalu Fandom. Żeby uzyskać pomoc na początku swojej przygody z Fandomem, zajrzyj na [[w:pl:Pomoc:Podstawy|strony pomocy]]. To doskonałe źródło informacji na temat podstaw edycji, formatowania i wielu innych.
+	'specialcontact-intro-using-fandom' => 'Jesteś teraz członkiem społeczności. Możesz edytować i współtworzyć prawie każdą stronę na portalu FANDOM. Żeby uzyskać pomoc na początku swojej przygody z Fandomem, zajrzyj na [[w:pl:Pomoc:Podstawy|strony pomocy]]. To doskonałe źródło informacji na temat podstaw edycji, formatowania i wielu innych.
 
 Jeżeli masz pytania dotyczące tej konkretnej społeczności, warto najpierw [[Special:ListAdmins|skontaktować się lokalnymi administratorami]].
 Możesz też zadawać ogólne pytania innym członkom społeczności na [[w:pl:Special:Forum|forum społeczności]].
 
 Pamiętaj, społeczność nie gryzie, więc nie bój się i zaczynaj swoją przygodę z Fandomem. Miłego edytowania!',
-	'specialcontact-label-close-account-confirm' => 'Potwierdzam, że chcę wyłączyć moje konto na portalu Fandom',
-	'specialcontact-mailsubcc' => 'Kopia wiadomości wysłanej do portalu Fandom',
+	'specialcontact-label-close-account-confirm' => 'Potwierdzam, że chcę wyłączyć moje konto na portalu FANDOM',
+	'specialcontact-mailsubcc' => 'Kopia wiadomości wysłanej do portalu FANDOM',
 	'specialcontact-pagetitle' => 'Skontaktuj się ze Wsparciem Fandomu',
 	'specialcontact-secheader-editing' => 'Uczestnictwo w Fandomie',
 	'specialcontact-secheader-onwiki' => 'Pytanie dotyczące tej wiki',
 	'specialcontact-secheader-setting' => 'Zmiany na tej wiki',
 	'specialcontact-seclink-close-wiki' => 'Zamknij tę wiki',
 	'specialcontact-seclink-content-issue' => 'Problem z treścią wiki',
-	'specialcontact-seclink-using-fandom' => 'Jak używać portalu Fandom?',
+	'specialcontact-seclink-using-fandom' => 'Jak używać portalu FANDOM?',
 	'specialcontact-sectitle' => 'Wsparcie Fandomu – $1',
 	'specialcontact-sectitle-close-wiki' => 'Zamknij tę wiki',
 	'specialcontact-sectitle-design' => 'Projektowanie społeczności',
 	'specialcontact-sectitle-features' => 'Rozszerzenia Fandomu',
-	'specialcontact-sectitle-using-fandom' => 'Użytkowanie portalu Fandom',
+	'specialcontact-sectitle-using-fandom' => 'Użytkowanie portalu FANDOM',
 	'specialcontact-sectitle-wiki-name-change' => 'Zmiana nazwy społeczności',
 	'specialcontact-wikia' => 'Skontaktuj się z Fandomem',
-	'specialcontact-intro-blocked' => 'Konta użytkowników najczęściej blokowane są przez lokalnych administratorów, a nie przez pracowników Fandomu. Dane administratora, który podjął tę decyzję powinny znajdować się w wysłanej do ciebie wiadomości o zablokowaniu konta. Jednym ze sposób skontaktowania się z administratorem, który zablokował twoje konto jest umieszczenie wiadomości na swojej stronie dyskusji lub tablicy. Na niektórych wiki zablokowani użytkownicy mogą edytować swoje strony dyskusji, a wprowadzane tam przez nich zmiany są widoczne dla innych użytkowników. Swoją stronę dyskusji znajdziesz klikając link „Moja dyskusja”, który znajdziesz w prawym górnym rogu każdej strony na portalu Fandom lub klikając [[Special:MyTalk|tutaj]].
+	'specialcontact-intro-blocked' => 'Konta użytkowników najczęściej blokowane są przez lokalnych administratorów, a nie przez pracowników Fandomu. Dane administratora, który podjął tę decyzję powinny znajdować się w wysłanej do ciebie wiadomości o zablokowaniu konta. Jednym ze sposób skontaktowania się z administratorem, który zablokował twoje konto jest umieszczenie wiadomości na swojej stronie dyskusji lub tablicy. Na niektórych wiki zablokowani użytkownicy mogą edytować swoje strony dyskusji, a wprowadzane tam przez nich zmiany są widoczne dla innych użytkowników. Swoją stronę dyskusji znajdziesz klikając link „Moja dyskusja”, który znajdziesz w prawym górnym rogu każdej strony na portalu FANDOM lub klikając [[Special:MyTalk|tutaj]].
 
-Jeżeli nie masz dostępu do swojej strony dyskusji, dobrym pomysłem jest po prostu poczekać, aż twoje konto zostanie odblokowane. Możesz również przyłączyć się do dowolnej z tysięcy innych społeczności na portalu Fandom.
+Jeżeli nie masz dostępu do swojej strony dyskusji, dobrym pomysłem jest po prostu poczekać, aż twoje konto zostanie odblokowane. Możesz również przyłączyć się do dowolnej z tysięcy innych społeczności na portalu FANDOM.
 
 Jeżeli chcesz uzyskać więcej informacji na temat blokady konta, skontaktuj się z pracownikami Fandomu [[Special:Contact/general|tutaj]].',
-	'specialcontact-intro-content-issue-mobile' => 'Zawartość tej wiki tworzona jest przez jej społeczność, nie administratorów i Fandom. Jeżeli masz jakieś uwagi odnośnie treści, najlepiej najpierw skontaktować się z administratorami tej wiki
+	'specialcontact-intro-content-issue-mobile' => 'Zawartość tej wiki tworzona jest przez jej społeczność, nie administratorów i FANDOM. Jeżeli masz jakieś uwagi odnośnie treści, najlepiej najpierw skontaktować się z administratorami tej wiki
 
-Jeżeli uważasz, że zawartość strony narusza nasze Zasady Użytkowania, możesz skontaktować się bezpośrednio z pracownikami portalu Fandom.',
+Jeżeli uważasz, że zawartość strony narusza nasze Zasady Użytkowania, możesz skontaktować się bezpośrednio z pracownikami portalu FANDOM.',
 	'specialcontact-intro-general' => 'Za pośrednictwem tego formularza możesz skontaktować się z [[w:pl:project:Staff|pracownikami Fandomu]]. Administratorów tej społeczności znajdziesz [[Special:ListAdmins|tutaj]].
 
-Dodatkowe informacje dotyczące zgłaszania problemów dotyczących portalu Fandom znajdziesz [[Special:Contact|tutaj]]. Możesz również opublikować post na [[w:pl:Specjalna:Forum|forum społeczności Fandomu]] w celu uzyskania pomocy.
+Dodatkowe informacje dotyczące zgłaszania problemów dotyczących portalu FANDOM znajdziesz [[Special:Contact|tutaj]]. Możesz również opublikować post na [[w:pl:Specjalna:Forum|forum społeczności Fandomu]] w celu uzyskania pomocy.
 
 Jeżeli wolisz skontaktować się z nami za pomocą normalnego e-maila lub chcesz wysłać kilka załączników, wyślij wiadomość pod adres [mailto:community@fandom.com community@fandom.com].',
 	'specialcontact-mail' => 'Wyślij do Fandomu',
 	'specialcontact-mailsub' => 'Wsparcie Fandomu',
 	'specialcontact-submitcomplete' => 'Dziękujemy za kontakt z Fandomem. Otrzymujemy i czytamy wszystkie wiadomości wysłane przez ten formularz. Postaramy się odpowiedzieć w ciągu 2-3 dni roboczych, ale prosimy o cierpliwość – musimy uważnie przeczytać wszystkie wiadomości, które dostajemy.
 
-Pamiętaj, że pomoc możesz znaleźć również na [[w:pl:Special:Forum|forum społeczności]] i [[w:pl:Pomoc:Zawartość|stronach pomocy]]. Bądź zawsze na bieżąco czytając najnowsze informacje ze świata Fandomu na [[w:pl:Blog:Fandom News|blogu Fandom News]]. Miłego edytowania!',
+Pamiętaj, że pomoc możesz znaleźć również na [[w:pl:Special:Forum|forum społeczności]] i [[w:pl:Pomoc:Zawartość|stronach pomocy]]. Bądź zawsze na bieżąco czytając najnowsze informacje ze świata Fandomu na [[w:pl:Blog:FANDOM News|blogu FANDOM News]]. Miłego edytowania!',
 	'specialcontact-wikiname' => 'Która wiki:',
 	'specialcontact-captchafail' => 'Brak lub błędny kod potwierdzający.',
 	'specialcontact-captchainfo' => 'Proszę podać tekst widoczny na obrazku',
@@ -2179,7 +2179,7 @@ Pamiętaj, że pomoc możesz znaleźć również na [[w:pl:Special:Forum|forum s
 Jeśli powyższe kroki nie przynoszą efektu, prześlij nam zgłoszenie korzystając z formularza poniżej. Możliwie szybko spróbujemy razem rozwiązać ten problem.
 
 Miłego edytowania!',
-	'specialcontact-intro-main-foot' => "'''Czy to jest dobra odpowiedź na twoje pytanie?''' Jeśli nie, [[Special:contact/general|skontaktuj się z nami]], aby omówić dalej sprawę. Możesz także odwiedzić '''[[w:pl:Pomoc:Zawartość|strony pomocy]]''', [[w:pl:Blog:Fandom News|blog z nowościami]] lub  zadaj pytanie na '''[[w:pl:Specjalna:Forum|forum społeczności]]'''.",
+	'specialcontact-intro-main-foot' => "'''Czy to jest dobra odpowiedź na twoje pytanie?''' Jeśli nie, [[Special:contact/general|skontaktuj się z nami]], aby omówić dalej sprawę. Możesz także odwiedzić '''[[w:pl:Pomoc:Zawartość|strony pomocy]]''', [[w:pl:Blog:FANDOM News|blog z nowościami]] lub  zadaj pytanie na '''[[w:pl:Specjalna:Forum|forum społeczności]]'''.",
 	'specialcontact-intro-wiki-name-change' => 'Jeśli jesteś administratorem tej wiki, możesz poprosić o zmianę [[w:pl:Pomoc:Tytuł_wiki|nazwy wiki]] lub [[w:pl:Pomoc:Domena|domeny]] wypełniając poniższy formularz kontaktowy. Upewnij się, że nowa nazwa jest poprawna i nie zawiera błędów – możemy zmienić nazwę lub domenę tylko raz. Jeśli nie jesteś administratorem [[Special:ListAdmins|skontaktuj się z jednym z nich]].',
 	'specialcontact-label-account-issue-description' => 'Podaj dokładny opis problemu:',
 	'specialcontact-label-additionalscreenshot' => 'Jeśli masz inny zrzut ekranu, prześlij go.',
@@ -2197,7 +2197,7 @@ Miłego edytowania!',
 	'specialcontact-label-screenshot' => 'Masz zrzut ekranu? Jeśli tak, prześlij go.',
 	'specialcontact-logged-in-as' => 'Jesteś {{GENDER:$1|zalogowany|zalogowana}} jako $1. [[Special:UserLogout|Nie ty?]]',
 	'specialcontact-mail-on-file' => 'Twój email to $1. [[Special:Preferences|Chcesz go zmienić?]]',
-	'specialcontact-noform-footer' => "'''Czy to jest dobra odpowiedź na twoje pytanie?''' Jeśli nie,  [[Special:contact/general|skontaktuj się z nami]], aby omówić dalej sprawę. Możesz także odwiedzić '''[[w:c:pomoc:Pomoc:Zawartość|strony pomocy]]''', [[w:c:spolecznosc:Blog:Fandom News|blog z nowościami]] lub  zadaj pytanie na '''[[w:c:spolecznosc:Specjalna:Forum|forum społeczności]]'''.",
+	'specialcontact-noform-footer' => "'''Czy to jest dobra odpowiedź na twoje pytanie?''' Jeśli nie,  [[Special:contact/general|skontaktuj się z nami]], aby omówić dalej sprawę. Możesz także odwiedzić '''[[w:c:pomoc:Pomoc:Zawartość|strony pomocy]]''', [[w:c:spolecznosc:Blog:FANDOM News|blog z nowościami]] lub  zadaj pytanie na '''[[w:c:spolecznosc:Specjalna:Forum|forum społeczności]]'''.",
 	'specialcontact-nomessage' => 'Proszę wypełnić wiadomość.',
 	'specialcontact-notyou' => 'Nie ty?',
 	'specialcontact-problem' => 'Temat:',
@@ -2233,10 +2233,10 @@ Miłego edytowania!',
 );
 
 $messages['pt'] = array(
-	'contact' => 'Entre em contato com o Fandom',
-	'specialcontact-wikia' => 'Entre em contato com o Fandom',
-	'specialcontact-pagetitle' => 'Entre em contato com a equipe de suporte do Fandom',
-	'specialcontact-intro-main-head' => '<big>Precisa de ajuda? Não se preocupe, a comunidade do Fandom está aqui para ajudá-lo!</big> <br/> Siga os links abaixo para saber mais sobre como usar o Fandom, fazer alterações em seu Fandom ou modificar sua conta.',
+	'contact' => 'Entre em contato com o FANDOM',
+	'specialcontact-wikia' => 'Entre em contato com o FANDOM',
+	'specialcontact-pagetitle' => 'Entre em contato com a equipe de suporte do FANDOM',
+	'specialcontact-intro-main-head' => '<big>Precisa de ajuda? Não se preocupe, a comunidade do FANDOM está aqui para ajudá-lo!</big> <br/> Siga os links abaixo para saber mais sobre como usar o FANDOM, fazer alterações em seu FANDOM ou modificar sua conta.',
 	'specialcontact-intro-main-local' => '',
 	'specialcontact-intro-main-foot' => "'''Essa página responde a sua pergunta?''' Se não, fique à vontade para [[Special:Contact/general|entrar em contato]] para nos contar mais sobre o seu problema. Lembre-se de que você pode sempre checar as nossas '''[[w:c:comunidade:Ajuda:Conteúdos|páginas de ajuda]]''', [[w:c:comunidade:Blog:Notícias_da_Comunidade|blog da equipe]] ou postar nos nossos '''[[w:c:comunidade:Special:Forum|fóruns de ajuda da comunidade]]'''.",
 	'specialcontact-secheader-onwiki' => 'Perguntas sobre esta wiki',
@@ -2248,8 +2248,8 @@ $messages['pt'] = array(
 	'specialcontact-seclink-close-account' => 'Desative a minha conta',
 	'specialcontact-seclink-rename-account' => 'Renomeie a minha conta',
 	'specialcontact-seclink-blocked' => 'Minha conta está bloqueada',
-	'specialcontact-secheader-editing' => 'Participando do Fandom',
-	'specialcontact-seclink-using-fandom' => 'Como utilizo o Fandom?',
+	'specialcontact-secheader-editing' => 'Participando do FANDOM',
+	'specialcontact-seclink-using-fandom' => 'Como utilizo o FANDOM?',
 	'specialcontact-seclink-feedback' => 'Eu quero dar a minha opinião',
 	'specialcontact-seclink-bug' => 'Encontrei um bug',
 	'specialcontact-seclink-bad-ad' => 'Eu vi um anúncio sem funcionar ou inapropriado',
@@ -2258,7 +2258,7 @@ $messages['pt'] = array(
 	'specialcontact-seclink-design' => 'Design',
 	'specialcontact-seclink-features' => 'Adicionar ou remover funções',
 	'specialcontact-seclink-close-wiki' => 'Fechar esta wiki',
-	'specialcontact-sectitle' => 'Suporte do Fandom - $1',
+	'specialcontact-sectitle' => 'Suporte do FANDOM - $1',
 	'specialcontact-sectitle-general' => 'Formulário de contato',
 	'specialcontact-sectitle-content-issue' => 'Problema com conteúdo',
 	'specialcontact-sectitle-user-conflict' => 'Interações de usuários',
@@ -2267,23 +2267,23 @@ $messages['pt'] = array(
 	'specialcontact-sectitle-close-account' => 'Desativar conta',
 	'specialcontact-sectitle-rename-account' => 'Renomear a minha conta',
 	'specialcontact-sectitle-blocked' => 'Conta bloqueada',
-	'specialcontact-sectitle-using-fandom' => 'Usando o Fandom',
+	'specialcontact-sectitle-using-fandom' => 'Usando o FANDOM',
 	'specialcontact-sectitle-feedback' => 'Comentários',
 	'specialcontact-sectitle-bug' => 'Relatório de Bug',
 	'specialcontact-sectitle-bad-ad' => 'Relatório de Anúncio',
 	'specialcontact-sectitle-wiki-name-change' => 'Mudança de nome da comunidade',
 	'specialcontact-sectitle-design' => 'Design da comunidade',
-	'specialcontact-sectitle-features' => 'Recursos do Fandom',
+	'specialcontact-sectitle-features' => 'Recursos do FANDOM',
 	'specialcontact-sectitle-close-wiki' => 'Fechar esta wiki',
-	'specialcontact-intro-content-issue' => 'O conteúdo desta wiki é criado pela comunidade aqui e gerenciado pelo [[Special:ListAdmins/sysop|administrador local]], não pelo Fandom. Se você deseja discutir este conteúdo, é melhor primeiro contatar o [[Special:ListAdmins|administrador da wiki aqui]].
+	'specialcontact-intro-content-issue' => 'O conteúdo desta wiki é criado pela comunidade aqui e gerenciado pelo [[Special:ListAdmins/sysop|administrador local]], não pelo FANDOM. Se você deseja discutir este conteúdo, é melhor primeiro contatar o [[Special:ListAdmins|administrador da wiki aqui]].
 
-Se você acha que o conteúdo viola nossos [http://pt-br.wikia.com/wiki/Termos_de_Uso Termos de uso], você pode contatar o staff do Fandom diretamente [[Special:Contact/general|aqui]].',
-	'specialcontact-intro-content-issue-mobile' => 'O conteúdo desta wiki é criado pela comunidade e não pelos administradores do Fandom. Se você deseja discutir este conteúdo, é melhor primeiro contatar os administradores das wikis.
+Se você acha que o conteúdo viola nossos [http://pt-br.wikia.com/wiki/Termos_de_Uso Termos de uso], você pode contatar o staff do FANDOM diretamente [[Special:Contact/general|aqui]].',
+	'specialcontact-intro-content-issue-mobile' => 'O conteúdo desta wiki é criado pela comunidade e não pelos administradores do FANDOM. Se você deseja discutir este conteúdo, é melhor primeiro contatar os administradores das wikis.
 
-Se você acha que o conteúdo viola nossos Termos de uso você pode contatar o staff do Fandom.',
+Se você acha que o conteúdo viola nossos Termos de uso você pode contatar o staff do FANDOM.',
 	'specialcontact-intro-user-conflict' => 'Wikis são espaços comunitários onde cada pessoa precisa trabalhar juntamente com os outros para ter sucesso. Conflitos podem surgir algumas vezes ao trabalhar juntos; a melhor maneira de resolvê-los é ter uma conversa aberta e respeitosa em sua comunidade sobre a questão.
 
-Se precisar de ajuda, primeiro entre em contato com seu [[Special:ListUsers/sysop|administrador local]]. Administradores são os especialistas locais sobre o tema e a comunidade, então é melhor conversar primeiro com eles. Se os administradores não podem ajudar, ou você acha que o usuário está violando os [http://comunidade.wikia.com/Termos_de_Uso Termos de uso], você pode contatar o staff do Fandom diretamente [[Special:Contact/general|aqui]].
+Se precisar de ajuda, primeiro entre em contato com seu [[Special:ListUsers/sysop|administrador local]]. Administradores são os especialistas locais sobre o tema e a comunidade, então é melhor conversar primeiro com eles. Se os administradores não podem ajudar, ou você acha que o usuário está violando os [http://comunidade.wikia.com/Termos_de_Uso Termos de uso], você pode contatar o staff do FANDOM diretamente [[Special:Contact/general|aqui]].
 
 Boas edições!',
 	'specialcontact-intro-adoption' => 'Você está interessado em tornar-se um administrador aqui? Caso afirmativo, por favor verifique primeiro se os [[Special:Listusers/sysop|administradores locais]] estão ativos. Se estiverem, envie-lhes uma mensagem com seu pedido. Também é uma boa ideia falar com outros usuários sobre seu pedido para ganhar apoio. Você pode querer começar com um post no fórum da sua comunidade.
@@ -2303,33 +2303,33 @@ Se há uma comunidade ativa na wiki que deseja adotar, por favor, inicie uma dis
 Se você seguiu todos esses passos e ainda está tendo problemas - por favor, envie-nos um relatório detalhado abaixo. Nós responderemos o mais rápido possível. 
 
 Boas edições!',
-	'specialcontact-intro-close-account' => 'Lamentamos que você deseje desativar sua conta. O Fandom tem muitas wikis sobre todos os tipos de assuntos e nós gostaríamos que você ficasse por aqui e encontrasse uma que é perfeita para você. Se você está tendo um problema local com a sua wiki, por favor não hesite em contatar seu [[Special:Listusers/sysop|administrador local]] para ajuda e conselhos. 
+	'specialcontact-intro-close-account' => 'Lamentamos que você deseje desativar sua conta. O FANDOM tem muitas wikis sobre todos os tipos de assuntos e nós gostaríamos que você ficasse por aqui e encontrasse uma que é perfeita para você. Se você está tendo um problema local com a sua wiki, por favor não hesite em contatar seu [[Special:Listusers/sysop|administrador local]] para ajuda e conselhos. 
 
-Se você decidiu que deseja desativar sua conta definitivamente, por favor, esteja ciente de que o Fandom não tem a capacidade de remover completamente as contas, mas pode desativá-las. Isto garante que a conta permaneça bloqueada e não possa ser usada. Este processo NÃO é reversível e você terá que criar uma nova conta se desejar juntar-se ao Fandom novamente.
+Se você decidiu que deseja desativar sua conta definitivamente, por favor, esteja ciente de que o FANDOM não tem a capacidade de remover completamente as contas, mas pode desativá-las. Isto garante que a conta permaneça bloqueada e não possa ser usada. Este processo NÃO é reversível e você terá que criar uma nova conta se desejar juntar-se ao FANDOM novamente.
 Entretanto, este processo não remove suas contribuições de uma determinada wiki, já que essas contribuições pertencem à comunidade como um todo.
 
 Se você precisar de mais alguma informação sobre desativação de contas, visite nossa [[w:c:comunidade:Ajuda:Fechando_uma_conta|página de ajuda sobre desativação de sua conta]]. Para confirmar e desativar sua conta, por favor preencha o formulário abaixo.',
-	'specialcontact-intro-rename-account' => 'A alteração de seu nome de usuário é possível no Fandom, mas apenas uma vez, então certifique-se bem antes de enviar uma solicitação. Este processo não pode ser revertido, e uma vez que nós mudamos seu nome de usuário, não podemos mudar novamente. Por favor certifique-se você leu totalmente esta página de ajuda antes de enviar um pedido: http://comunidade.wikia.com/Ajuda:Renomear_minha_conta
+	'specialcontact-intro-rename-account' => 'A alteração de seu nome de usuário é possível no FANDOM, mas apenas uma vez, então certifique-se bem antes de enviar uma solicitação. Este processo não pode ser revertido, e uma vez que nós mudamos seu nome de usuário, não podemos mudar novamente. Por favor certifique-se você leu totalmente esta página de ajuda antes de enviar um pedido: http://comunidade.wikia.com/Ajuda:Renomear_minha_conta
 
 Depois de ler a página de ajuda e estar seguro sobre a grafia de seu novo nome de usuário, por favor, envie uma solicitação abaixo. Uma vez que seu nome de usuário for alterado, você receberá um e-mail de confirmação. Você pode então fazer login com seu novo nome, usando sua senha antiga.
 
 Boas edições!',
-	'specialcontact-intro-blocked' => 'Bloqueios de conta são normalmente feitos pelos administradores locais e não pelo staff do Fandom. O nome do administrador deve constar na notificação de bloqueio que você recebeu. Você poderá contará-lo deixando uma mensagem na sua página de discussão. Isto pode ainda ser editado por usuários bloqueados (em algumas wikis) e alterações geralmente serão vistas pelos outros colaboradores da wiki. Sua página de discussão pode ser encontrada seguindo o link "minhas conversas" na parte superior direita de qualquer página.
+	'specialcontact-intro-blocked' => 'Bloqueios de conta são normalmente feitos pelos administradores locais e não pelo staff do FANDOM. O nome do administrador deve constar na notificação de bloqueio que você recebeu. Você poderá contará-lo deixando uma mensagem na sua página de discussão. Isto pode ainda ser editado por usuários bloqueados (em algumas wikis) e alterações geralmente serão vistas pelos outros colaboradores da wiki. Sua página de discussão pode ser encontrada seguindo o link "minhas conversas" na parte superior direita de qualquer página.
 
-No entanto, se essa página de conversas não estiver disponível, então o melhor conselho que podemos dar é para esperar o fim do bloqueio ou participar de outras comunidades Fandom disponíveis.
+No entanto, se essa página de conversas não estiver disponível, então o melhor conselho que podemos dar é para esperar o fim do bloqueio ou participar de outras comunidades FANDOM disponíveis.
 
-Se você pensa que ainda precisa discutir sobre este bloqueio com o staff do Fandom, entre em contato conosco [[Special:Contact/general|aqui]].',
-	'specialcontact-intro-using-fandom' => 'Agora que você é uma parte da comunidade, você pode editar e contribuir em quase todas as páginas do Fandom. Para ajudá-lo, confira nossas [[w:c:comunidade:Ajuda:Começando|páginas de ajuda aqui]]. Elas são um ótimo lugar para aprender as noções básicas de edição, formatação e muito mais.
+Se você pensa que ainda precisa discutir sobre este bloqueio com o staff do FANDOM, entre em contato conosco [[Special:Contact/general|aqui]].',
+	'specialcontact-intro-using-fandom' => 'Agora que você é uma parte da comunidade, você pode editar e contribuir em quase todas as páginas do FANDOM. Para ajudá-lo, confira nossas [[w:c:comunidade:Ajuda:Começando|páginas de ajuda aqui]]. Elas são um ótimo lugar para aprender as noções básicas de edição, formatação e muito mais.
 
 Se você tiver perguntas sobre esta comunidade específica, [[Special: ListAdmins|entre em contato com seu administrador local]]. 
 Você também pode fazer perguntas gerais para outros membros da comunidade em nosso [[w:c:comunidade:Especial:Forum|Fórum de ajuda da comunidade]].
 
-Lembre-se, você não tem como quebrar uma comunidade no Fandom, então não tenha medo de começar.
+Lembre-se, você não tem como quebrar uma comunidade no FANDOM, então não tenha medo de começar.
 Boas edições!',
-	'specialcontact-intro-feedback' => 'Você tem comentários? Nós adoraríamos saber! Forneça suas opiniões e detalhes abaixo. Se você tem uma opinião sobre um produto do laboratório do Fandom, por favor deixe seu comentário [[Special:WikiaLabs|aqui]].
+	'specialcontact-intro-feedback' => 'Você tem comentários? Nós adoraríamos saber! Forneça suas opiniões e detalhes abaixo. Se você tem uma opinião sobre um produto do laboratório do FANDOM, por favor deixe seu comentário [[Special:WikiaLabs|aqui]].
 
 Obrigado antecipadamente e boas edições!',
-	'specialcontact-intro-bug' => 'Lamentamos saber que você encontrou um bug no Fandom. Por favor dê maiores detalhes sobre o assunto abaixo para que possamos investigar mais. Detalhes importantes para incluir são:
+	'specialcontact-intro-bug' => 'Lamentamos saber que você encontrou um bug no FANDOM. Por favor dê maiores detalhes sobre o assunto abaixo para que possamos investigar mais. Detalhes importantes para incluir são:
 *Seu nome de usuário
 *O link para sua comunidade
 *Informações sobre seu navegador, incluindo o tipo e versão
@@ -2339,10 +2339,10 @@ Obrigado antecipadamente e boas edições!',
 
 Para mais conselhos sobre o que incluir no seu relatório, consulte [[w:c:comunidade:Especial:Contact/bug|nossa página de ajuda sobre os relatórios de bug]].
 
-Obrigado novamente pelo relatório e por usar o Fandom.
+Obrigado novamente pelo relatório e por usar o FANDOM.
 
 Boas edições!',
-	'specialcontact-intro-bad-ad' => 'Lamentamos saber que você encontrou um anúncio ruim no Fandom. Por favor, informe mais detalhes abaixo para que compartilhemos com nosso gerente de publicidade, que irá rever o anúncio e pode remover o mesmo do sistema.
+	'specialcontact-intro-bad-ad' => 'Lamentamos saber que você encontrou um anúncio ruim no FANDOM. Por favor, informe mais detalhes abaixo para que compartilhemos com nosso gerente de publicidade, que irá rever o anúncio e pode remover o mesmo do sistema.
 
 Não se esqueça de nos dizer de qual comunidade você é, qual anúncio que viu e qual era o problema. Também ajuda se você incluir um screenshot e o URL do anúncio. Instruções para encontrar o URL do anúncio estão listadas aqui: http://comunidade.wikia.com/wiki/Ajuda:Anúncios_ruins
 
@@ -2352,31 +2352,31 @@ Obrigado e boas edições!',
 Boas edições!',
 	'specialcontact-intro-design' => 'O design de uma wiki pode ser atualizado por qualquer administrador local na sua comunidade usando o [[w:c:comunidade:Ajuda:Designer de Temas|Designer de tema]]. Se você não é um administrador e deseja ajudar com o design de sua wiki, primeiro entre em contato com seu [[Special:ListAdmins|administrador local]].
 
-Se você quiser ajuda com a criação de um projeto mais personalizado, você pode enviar um pedido para a equipe de conteúdo do Fandom
+Se você quiser ajuda com a criação de um projeto mais personalizado, você pode enviar um pedido para a equipe de conteúdo do FANDOM
 [[w:c:comunidade:Ajuda:Peça_ao_ComDev|aqui]]. Por favor, leia as orientações antes de submeter um pedido.
 
 Se você acha que encontrou um bug ao atualizar o design de sua wiki, por favor envie-nos um relatório detalhado [[Special:Contact/bug|aqui]].
 
 Boas contribuições!',
-	'specialcontact-intro-features' => 'O Fandom oferece muitos recursos, a maioria dos quais é ao vivo em todas as comunidades do site, como padrão.
+	'specialcontact-intro-features' => 'O FANDOM oferece muitos recursos, a maioria dos quais é ao vivo em todas as comunidades do site, como padrão.
 
 Se você é um administrador e acha que um recurso específico não está funcionando bem para sua comunidade, por favor discuta com a sua comunidade para saber se ela também apoia o desligamento do recurso. Se todos concordam, você pode usar a página [[Special:WikiFeatures|Recursos da Wiki]] no [[Special:AdminDashboard|Painel de administração]] para desativar ou reativar recursos. Se o recurso não estiver listado, por favor, [[Special:Contact/general|contate-nos]] com seu pedido.
 
 Os administradores interessados em testar os novos recursos que ainda estão em desenvolvimento podem verificar a seção Labs na página [[Special:WikiFeatures|Recursos da wiki]].
 
 Você quer ficar atualizado sobre anúncios de novos recursos e melhorias para os atuais? Dê uma olhada e siga o [[w:c:comunidade:Categoria:Notícias_do_Fandom|lista de novos recursos no blog do staff]]',
-	'specialcontact-intro-close-wiki' => 'Obrigado por entrar em contato com o Fandom. Nós geralmente não excluímos wikis uma vez que elas foram criadas. Wikis são projetos de propriedade da comunidade e uma wiki pela qual você não está mais interessado pode esperar por alguém para [[Special:Contact|adotá-la]].
+	'specialcontact-intro-close-wiki' => 'Obrigado por entrar em contato com o FANDOM. Nós geralmente não excluímos wikis uma vez que elas foram criadas. Wikis são projetos de propriedade da comunidade e uma wiki pela qual você não está mais interessado pode esperar por alguém para [[Special:Contact|adotá-la]].
 
-Se você deseja renomear sua wiki ou corrigir a ortografia ou questões gramaticais, primeiro consulte [[w:c:comunidade:Ajuda:Conteúdos]] para renomeação de páginas e [[w:c:comunidade:Ajuda:Designer de temas]] para renomear sua wiki. Wikis podem facilmente ter seus nomes alterados, sem o incômodo de começar tudo de novo. Se você deseja mudar o URL de sua wiki [[Special:Contact/general|por favor, nos escreva]] pois teremos a satisfação de fazê-lo por você, sem a necessidade de fechar seu Fandom.
+Se você deseja renomear sua wiki ou corrigir a ortografia ou questões gramaticais, primeiro consulte [[w:c:comunidade:Ajuda:Conteúdos]] para renomeação de páginas e [[w:c:comunidade:Ajuda:Designer de temas]] para renomear sua wiki. Wikis podem facilmente ter seus nomes alterados, sem o incômodo de começar tudo de novo. Se você deseja mudar o URL de sua wiki [[Special:Contact/general|por favor, nos escreva]] pois teremos a satisfação de fazê-lo por você, sem a necessidade de fechar seu FANDOM.
 
 Se você acha que esta wiki é sobre um tema desinteressante para outros usuários, (como um projeto pessoal), por favor envie uma solicitação através do formulário abaixo. Por favor, faça o pedido a partir da wiki que precisa ser fechada.
 
-Espero que você encontre outra wiki entre as muitas que fazem parte do Fandom e participe da construção de um recurso fantástico sobre tudo o que você gosta.
+Espero que você encontre outra wiki entre as muitas que fazem parte do FANDOM e participe da construção de um recurso fantástico sobre tudo o que você gosta.
 
 Boas edições!',
-	'specialcontact-intro-general' => 'Você pode entrar em contato com [[w:c:comunidade:Especial:Contact/general|o Staff do Fandom]] usando este formulário. Os administradores desta comunidade podem ser encontrados [[Special:ListUsers/sysop|aqui]].
+	'specialcontact-intro-general' => 'Você pode entrar em contato com [[w:c:comunidade:Especial:Contact/general|o Staff do FANDOM]] usando este formulário. Os administradores desta comunidade podem ser encontrados [[Special:ListUsers/sysop|aqui]].
 
-Informações adicionais sobre como reportar problemas ao Fandom podem ser encontradas [[w:c:comunidade:Ajuda:Como_reportar_bugs|aqui]], ou você pode postar nos [[w:c:comunidade:Especial:Forum|Fóruns da comunidade Fandom]] para suporte ao usuário.
+Informações adicionais sobre como reportar problemas ao FANDOM podem ser encontradas [[w:c:comunidade:Ajuda:Como_reportar_bugs|aqui]], ou você pode postar nos [[w:c:comunidade:Especial:Forum|Fóruns da comunidade FANDOM]] para suporte ao usuário.
 
 Se você preferir usar e-mail regular ou tem vários anexos, você pode contatar-nos em [mailto:comunidade@wikia.com comunidade@wikia.com].',
 	'specialcontact-noform-footer' => "'''Essa página responde a sua pergunta?''' Se não, fique à vontade para [[Special:contact/general|entrar em contato]] para nos contar mais sobre o seu problema. Lembre-se de que você pode sempre checar as nossas '''[[w:c:comunidade:Ajuda:Conteúdos|páginas de ajuda]]''', [[w:c:comunidadeBlog:Notícias _do_Fandom|blog da equipe]] ou postar nos nossos '''[[w:c:comunidade:Special:Forum|fóruns de ajuda da comunidade]]'''.",
@@ -2386,14 +2386,14 @@ Se você preferir usar e-mail regular ou tem vários anexos, você pode contatar
 	'specialcontact-yourmail' => 'Seu email',
 	'specialcontact-problem' => 'Assunto',
 	'specialcontact-problemdesc' => 'Mensagem',
-	'specialcontact-mail' => 'Enviar para o Fandom',
+	'specialcontact-mail' => 'Enviar para o FANDOM',
 	'specialcontact-filledin' => 'Esta informação foi preenchida a partir das preferências da sua conta',
 	'specialcontact-ccme' => 'Envie-me uma cópia dessa mensagem',
 	'specialcontact-ccdisabled' => 'Erro: Por favor, [[Special:ConfirmEmail|confirme]] o seu email para usar essa função',
 	'specialcontact-notyou' => 'Não é você?',
 	'specialcontact-captchainfo' => 'Por favor, digite o texto da imagem.',
 	'specialcontact-captchatitle' => 'Palavra errada',
-	'specialcontact-formtitle' => 'Entre em contato com a equipe de suporte do Fandom',
+	'specialcontact-formtitle' => 'Entre em contato com a equipe de suporte do FANDOM',
 	'specialcontact-label-screenshot' => 'Você tem um prinstscreen? Se sim, carregue-o aqui.',
 	'specialcontact-label-additionalscreenshot' => 'Se você tiver outro printscreen, por favor, carregue-o aqui.',
 	'specialcontact-label-bad-ad-description' => 'Por favor, descreva o problema com o anúncio',
@@ -2403,13 +2403,13 @@ Se você preferir usar e-mail regular ou tem vários anexos, você pode contatar
 	'specialcontact-label-bug-link' => 'Por favor, providencie o endereço da página onde você está vendo o problema',
 	'specialcontact-label-bug-feature' => 'A qual produto isso se relaciona?',
 	'specialcontact-label-bug-description' => 'Por favor, descreva o problema',
-	'specialcontact-label-close-account-confirm' => 'Confirmo que quero desativar minha conta no Fandom',
+	'specialcontact-label-close-account-confirm' => 'Confirmo que quero desativar minha conta no FANDOM',
 	'specialcontact-label-close-account-read-help' => 'Eu li a [[w:c:comunidade:Ajuda:Fechando_uma_conta|página de ajuda sobre fechar contas]]',
 	'specialcontact-label-account-issue-description' => 'Por favor, escreva um descrição detalhada do problema que você está tendo.',
 	'specialcontact-label-rename-newusername' => 'Por favor, insira o novo nome de usuário',
 	'specialcontact-label-rename-account-confirm' => 'Eu confirmo que a ortografia e pontuação para o meu novo nome estão corretas',
 	'specialcontact-label-rename-account-read-help' => 'Eu li [[w:c:comunidade:Ajuda:Renomeando_minha_conta|a página sobre renomear a minha conta]]',
-	'specialcontact-form-header' => 'Entre em contato com o Fandom',
+	'specialcontact-form-header' => 'Entre em contato com o FANDOM',
 	'specialcontact-logged-in-as' => 'Você está usando o site como $1. [[Special:UserLogout|Não é você?]]',
 	'specialcontact-mail-on-file' => 'O seu email está configurado para $1. [[Special:Preferences|Você gostaria de mudá-lo?]]',
 	'specialcontact-nomessage' => 'Por favor, preencha a mensagem',
@@ -2418,17 +2418,17 @@ Se você preferir usar e-mail regular ou tem vários anexos, você pode contatar
 	'specialcontact-error-message' => 'Algo deu errado enquanto enviávamos o seu formulário. Por favor, tente mais tarde.',
 	'specialcontact-error-logintext' => 'Você precisa se conectar para fazer esse pedido. Por favor [[Special:SignUp|entre na sua conta]] e tente de novo.',
 	'specialcontact-error-alreadyrenamed' => 'Você já foi renomeado, então você não pode pedir outra nomeação. Por favor, entre [[Special:Contact/general|em contato com a equipe]] se você precisar de mais ajuda.',
-	'specialcontact-mailsub' => 'Suporte do Fandom',
-	'specialcontact-mailsubcc' => 'Cópia da mensagem enviada para o Fandom',
-	'specialcontact-ccheader' => 'Esta é uma cópia da sua mensagem que foi enviada para o suporte do Fandom',
-	'specialcontact-submitcomplete' => 'Obrigado por contatar o Fandom. Nós recebemos e analisamos todas as mensagens enviadas aqui. Nós faremos o melhor para responder dentro de 2-3 dias, mas por favor, seja paciente enquanto revemos todas as mensagens.
+	'specialcontact-mailsub' => 'Suporte do FANDOM',
+	'specialcontact-mailsubcc' => 'Cópia da mensagem enviada para o FANDOM',
+	'specialcontact-ccheader' => 'Esta é uma cópia da sua mensagem que foi enviada para o suporte do FANDOM',
+	'specialcontact-submitcomplete' => 'Obrigado por contatar o FANDOM. Nós recebemos e analisamos todas as mensagens enviadas aqui. Nós faremos o melhor para responder dentro de 2-3 dias, mas por favor, seja paciente enquanto revemos todas as mensagens.
 
-Lembre-se, você também pode encontrar ajuda no [[w:c:comunidade:Especial:Forum|Fórum da Comunidade]] e nas [[w:c:comunidade:Ajuda:Conteúdos|Páginas de ajuda]]. Fique atualizado com as últimas notícias do Fandom no [[w:c:comunidade:Categoria:Notícias_da_Comunidade|Blog do staff]].
+Lembre-se, você também pode encontrar ajuda no [[w:c:comunidade:Especial:Forum|Fórum da Comunidade]] e nas [[w:c:comunidade:Ajuda:Conteúdos|Páginas de ajuda]]. Fique atualizado com as últimas notícias do FANDOM no [[w:c:comunidade:Categoria:Notícias_da_Comunidade|Blog do staff]].
 Boas edições!',
 	'specialcontact-seclink-security' => 'Acho que encontrei um problema de segurança',
 	'specialcontact-seclink-dmca-request' => 'Tenho uma queixa sobre direitos autorais',
 	'specialcontact-sectitle-security' => 'Relatório de problema de segurança',
-	'specialcontact-intro-security' => 'Se você encontrou ou acredita ter encontrado um problema de segurança no código do Fandom ou em uma das comunidades do Fandom, por favor nos informe. Nós apreciamos sua ajuda em manter o Fandom seguro para todos através da divulgação [[wikipedia:Responsible disclosure|responsável]]. 
+	'specialcontact-intro-security' => 'Se você encontrou ou acredita ter encontrado um problema de segurança no código do FANDOM ou em uma das comunidades do FANDOM, por favor nos informe. Nós apreciamos sua ajuda em manter o FANDOM seguro para todos através da divulgação [[wikipedia:Responsible disclosure|responsável]]. 
 
 Se você quiser informar sobre um bug geral ou outro tipo de problema, use um dos [[Special:Contact|outros formulários para contato]]. 
 
@@ -2446,7 +2446,7 @@ Quando relatar um problema de segurança, forneça detalhes completos sobre o as
 ** Especialmente para XSS ou vulnerabilidades que exigem um navegador específico ou plugin para reproduzir
 * Uma breve descrição do impacto potencial da vulnerabilidade da segurança
 
-Em resposta aos relatórios de segurança usando este formulário, o Fandom compromete-se a:
+Em resposta aos relatórios de segurança usando este formulário, o FANDOM compromete-se a:
 * priorizar a reprodução e a confirmação de qualquer vulnerabilidade relatada
 * identificar um cronograma razoável para corrigir qualquer vulnerabilidade confirmada
 * não buscar ação judicial contra qualquer relator que cumpra com todas as diretrizes para testes e relatos de problemas de segurança',
@@ -2468,7 +2468,7 @@ Navegador/Sistema operacional: ',
 	'specialcontact-security-issue-type-leak' => 'Vazamento de informações',
 	'specialcontact-security-issue-type-redirect' => 'Abuso de redirecionamento de URL',
 	'specialcontact-security-issue-type-other' => 'Outros',
-	'specialcontact-desc' => 'Formulário de contato [[Special:Contact|Especial:Contact]] do Fandom',
+	'specialcontact-desc' => 'Formulário de contato [[Special:Contact|Especial:Contact]] do FANDOM',
 );
 
 $messages['ru'] = array(

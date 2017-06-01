@@ -7,7 +7,7 @@ $messages['en'] = [
 	'content-warning-title' => 'Content Warning',
 	'content-warning-body' => 'The wiki at $1 may contain objectionable content such as depictions of violence, sexual suggestion, dark humor parody, or other materials not intended for a general audience.
 
-In general, Fandom does not review nor do we endorse the content of this or any wiki. For more information about our policies, please visit [http://www.wikia.com/Terms_of_Use Wikia, Inc\'s Terms of Use].',
+In general, FANDOM does not review nor do we endorse the content of this or any wiki. For more information about our policies, please visit [http://www.wikia.com/Terms_of_Use Wikia, Inc\'s Terms of Use].',
 	'content-warning-button-continue' => 'I understand and I wish to continue',
 	'content-warning-button-cancel' => 'I do not wish to continue',
 	'content-warning-footnote' => '',
@@ -17,7 +17,7 @@ $messages['pl'] = [
 	'content-warning-title' => 'Ostrzeżenie o zawartości',
 	'content-warning-body' => 'Wiki znajdująca się po adresem $1 może zawierać treści nieodpowiednie dla niektórych osób, w tym przedstawiające przemoc, nawiązujące do seksu, wykorzystujące czarny humor lub inne materiały niewłaściwe dla wszystkich widzów.
 
-Fandom nie sprawdza ani nie wspiera treści dostępnych na tej lub jakiejkolwiek innej wiki. By dowiedzieć się więcej o polityce portalu, odwiedź stronę [http://pl.wikia.com/Zasady_U%C5%BCytkowania Zasady Użytkowania].',
+FANDOM nie sprawdza ani nie wspiera treści dostępnych na tej lub jakiejkolwiek innej wiki. By dowiedzieć się więcej o polityce portalu, odwiedź stronę [http://pl.wikia.com/Zasady_U%C5%BCytkowania Zasady Użytkowania].',
 	'content-warning-button-continue' => 'ROZUMIEM I CHCĘ PRZEJŚĆ DALEJ',
 	'content-warning-button-cancel' => 'Nie chcę przechodzić dalej',
 ];
@@ -26,7 +26,7 @@ $messages['de'] = [
 	'content-warning-title' => 'Warnung vor anstößigen Inhalten',
 	'content-warning-body' => 'Das Wiki unter $1 kann Inhalte wie Gewaltdarstellungen, sexuelle Anspielungen, schwarzen Humor oder andere Inhalte, die manche Menschen anstößig finden oder Inhalte, die nicht für die allgemeine Öffentlichkeit bestimmt sind, enthalten.
 
-Im Allgemeinen überprüft und kontrolliert Fandom die Inhalte dieses und anderer Wikis nicht. Weitere Informationen zu unseren Richtlinien findest du in den [http://www.de.wikia.com/Nutzungsbedingungen Nutzungsbedingungen von Fandom].',
+Im Allgemeinen überprüft und kontrolliert FANDOM die Inhalte dieses und anderer Wikis nicht. Weitere Informationen zu unseren Richtlinien findest du in den [http://www.de.wikia.com/Nutzungsbedingungen Nutzungsbedingungen von FANDOM].',
 	'content-warning-button-continue' => 'ICH HABE DIE WARNUNG VERSTANDEN UND MÖCHTE DEN INHALT SEHEN',
 	'content-warning-button-cancel' => 'Ich möchte diese Inhalte nicht sehen',
 ];
@@ -35,7 +35,7 @@ $messages['es'] = [
 	'content-warning-title' => 'Alerta de contenido',
 	'content-warning-body' => 'El wiki $1 puede contener contenido ofensivo como representaciones de violencia, sugerencia sexual, humor negro u otros materiales no destinados a un público general. 
 
-En general, Fandom no revisa ni está de acuerdo con el contenido de este o de cualquier wiki. Para obtener más información acerca de nuestras políticas, por favor visita los [http://es.wikia.com/T%C3%A9rminos_de_Uso términos de Uso].',
+En general, FANDOM no revisa ni está de acuerdo con el contenido de este o de cualquier wiki. Para obtener más información acerca de nuestras políticas, por favor visita los [http://es.wikia.com/T%C3%A9rminos_de_Uso términos de Uso].',
 	'content-warning-button-continue' => 'LO COMPRENDO Y DESEO CONTINUAR',
 	'content-warning-button-cancel' => 'No deseo continuar',
 ];
@@ -44,7 +44,7 @@ $messages['fr'] = [
 	'content-warning-title' => 'Avertissement sur le contenu',
 	'content-warning-body' => 'Le wiki $1 est susceptible d\'inclure du contenu répréhensible tel que de la violence, du contenu sexuel suggestif, de l\'humour noir ou d\'autres éléments non destinés au grand public.
 
-D\'une manière générale, Fandom ne vérifie pas ni n\'approuve le contenu de ce wiki ni de quelconque autre wiki. Pour plus d\'informations sur nos politiques, veuillez lire les [http://fr.wikia.com/Conditions_d%27utilisation Conditions d\'utilisation de Wikia, Inc.].',
+D\'une manière générale, FANDOM ne vérifie pas ni n\'approuve le contenu de ce wiki ni de quelconque autre wiki. Pour plus d\'informations sur nos politiques, veuillez lire les [http://fr.wikia.com/Conditions_d%27utilisation Conditions d\'utilisation de Wikia, Inc.].',
 	'content-warning-button-continue' => 'JE COMPRENDS ET JE SOUHAITE CONTINUER',
 	'content-warning-button-cancel' => 'Je ne souhaite pas continuer',
 ];
@@ -62,7 +62,7 @@ $messages['it'] = [
 	'content-warning-title' => 'Messaggio di avvertimento',
 	'content-warning-body' => 'La wiki di $1 può contenere contenuti discutibili, come immagini di violenza, allusioni sessuali, parodie di umorismo nero o altri materiali non destinati a un pubblico generale.
 
-In generale, Fandom non rivede né avvalla il contenuto di questa o di qualsiasi wiki. Per ulteriori informazioni sulle nostre politiche, visitare i [http://it.community.wikia.com/wiki/Wiki_della_Community:Termini_di_utilizzo Termini di utilizzo].',
+In generale, FANDOM non rivede né avvalla il contenuto di questa o di qualsiasi wiki. Per ulteriori informazioni sulle nostre politiche, visitare i [http://it.community.wikia.com/wiki/Wiki_della_Community:Termini_di_utilizzo Termini di utilizzo].',
 	'content-warning-button-continue' => 'HO CAPITO E INTENDO CONTINUARE',
 	'content-warning-button-cancel' => 'Non voglio continuare',
 ];
@@ -85,7 +85,7 @@ Fandomでは、いかなるwikiコンテンツに対する内容確認や承認�
 $messages['pt'] = [
 	'content-warning-body' => 'A wiki em $1 pode conter conteúdo censurável como representações de violência, sugestão sexual, paródia de humor negro ou outros materiais não destinados ao público em geral.
 
-Em geral, o Fandom não revê nem endossa o conteúdo desta ou de qualquer wiki. Para obter mais informações sobre as nossas políticas, visite nossos [http://comunidade.wikia.com/Termos_de_Uso Temos de Uso].',
+Em geral, o FANDOM não revê nem endossa o conteúdo desta ou de qualquer wiki. Para obter mais informações sobre as nossas políticas, visite nossos [http://comunidade.wikia.com/Termos_de_Uso Temos de Uso].',
 ];
 
 $messages['zh-hans'] = [
