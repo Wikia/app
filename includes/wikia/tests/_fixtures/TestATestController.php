@@ -5,8 +5,8 @@ use \TestController as BaseTestController;
 use \AnotherTestController as BaseAnotherTestController;
 
 global $wgAutoloadClasses;
-$wgAutoloadClasses['TestA\TestController'] = dirname(__FILE__) . '/TestATestController.php';
-$wgAutoloadClasses['TestA\AnotherTestController'] = dirname(__FILE__) . '/TestATestController.php';
+$wgAutoloadClasses['TestA\TestController'] = __DIR__ . '/TestATestController.php';
+$wgAutoloadClasses['TestA\AnotherTestController'] = __DIR__ . '/TestATestController.php';
 
 
 class TestController extends BaseTestController {
