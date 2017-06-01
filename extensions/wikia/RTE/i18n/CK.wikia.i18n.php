@@ -3020,6 +3020,23 @@ $messages['pt'] = array(
 	'rte-ck-widescreen-toggle' => 'Ativar ou desativar o modo panorâmico',
 	'rte-ck-spellchecker-moreSuggestions' => 'Mais sugestões',
 	'rte-ck-format-tag_p' => 'Texto normal',
+	'rte-ck-justify-center' => 'Align Center',
+	'rte-ck-photoGallery-slideshow' => 'Slideshow',
+	'rte-ck-photoGallery-slider' => 'Slider',
+	'rte-ck-photoGallery-addGallery' => 'Add a photo gallery',
+	'rte-ck-photoGallery-addSlideshow' => 'Add a slideshow',
+	'rte-ck-photoGallery-addSlider' => 'Add a slider',
+	'rte-ck-photoGallery-tooltipSlider' => 'This is a slider.',
+	'rte-ck-templateDropDown-showUsedList' => 'Show list of used templates',
+	'rte-ck-templateDropDown-makeLayout' => 'Make a layout from this page',
+	'rte-ck-templateEditor-usedTemplates-title' => 'List of used templates',
+	'rte-ck-pasteText-title' => 'Paste your text',
+	'rte-ck-clipboard-pasteMsg' => "For security reasons, the editor cannot access your paste directly. Please paste in the below box using keyboard shortcuts (Ctrl/Cmd+V) and hit 'OK'.<br /><br />Note: your text will be stripped of formatting to avoid creating complex wikitext.",
+	'rte-ck-format-tag_pre' => 'Code / preformatted',
+	'rte-ck-format-tag_h2' => 'Heading 2',
+	'rte-ck-format-tag_h3' => 'Heading 3',
+	'rte-ck-format-tag_h4' => 'Heading 4',
+	'rte-ck-format-tag_h5' => 'Heading 5',
 );
 
 $messages['qu'] = array(
@@ -4018,3 +4035,4 @@ $messages['zh-hant'] = array(
 	'rte-ck-format-tag_h4' => 'Heading 4',
 	'rte-ck-format-tag_h5' => 'Heading 5',
 );
+
