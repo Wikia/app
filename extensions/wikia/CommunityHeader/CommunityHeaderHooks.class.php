@@ -17,7 +17,7 @@ class CommunityHeaderHooks {
 	 * @param string $wikitext current wikitext from the editor
 	 * @return bool return true
 	 */
-	public static function onEditPageLayoutModifyPreview( Title $title, &$html, $wikitext ) {
+	public static function onEditPageLayoutModifyPreview( Title $title, string &$html, string $wikitext ): bool {
 		if ( NavigationModel::isWikiNavMessage( $title ) ) {
 			// render a preview
 			$html = F::app()->renderPartial(
