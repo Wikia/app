@@ -1099,27 +1099,6 @@ Inappropriate files will be deleted immediately, see the [[{{MediaWiki:Multipleu
 ];
 
 $messages['pt'] = [
-	'multipleupload' => 'Carregar vários ficheiros',
-	'multiupload-desc' => 'Permite aos utilizadores [[Special:MultipleUpload|carregar vários ficheiros de uma vez]]',
-	'multipleupload-ignoreallwarnings' => 'Ignorar \'\'\'todos os avisos\'\'\' e, mesmo assim, gravar os ficheiros.',
-	'multipleupload-saveallfiles' => 'Gravar todos os ficheiros',
-	'multipleupload-addresswarnings' => 'Por favor, trate quaisquer avisos antes de carregar novamente os ficheiros.',
-	'multipleupload-page' => '{{ns:project}}:Política de eliminação de ficheiros',
-	'multipleupload-text' => 'Carregue vários ficheiros aqui.
-
-Escolha \'Procurar\' e seleccione cada ficheiro que pretende carregar.
-Pode carregar entre 1 e $1 ficheiros de cada vez.
-
-Pode opcionalmente introduzir um \'\'\'Nome de ficheiro destino\'\'\' e fornecer um \'\'\'Resumo\'\'\' que descreva o seu ficheiro.
-
-Ficheiros impróprios serão eliminados imediatamente. Veja a [[{{MediaWiki:Multipleupload-page}}|política de eliminação de ficheiros]].',
-	'multiupload-fileuploaded' => 'Ficheiro carregado.',
-	'multiupload-toolbox' => 'Carregar vários ficheiros',
-	'multiupload-no-files' => 'Por favor, selecione pelo menos um ficheiro a carregar',
-	'multiupload-blank' => 'Nenhum ficheiro selecionado',
-];
-
-$messages['pt-br'] = [
 	'multipleupload' => 'Carregar múltiplos arquivos',
 	'multiupload-desc' => 'Permite aos usuários [[Special:MultipleUpload|carregar vários arquivos de uma vez]]',
 	'multipleupload-ignoreallwarnings' => 'Ignorar \'\'\'todos os avisos\'\'\' e gravar os arquivos.',
@@ -1605,46 +1584,3 @@ $messages['zh-hant'] = [
 	'multiupload-source' => '檔案來源',
 	'multiupload-successful-upload' => '上傳成功',
 ];
-
-$messages['zh'] = [
-	'multipleupload-text' => '大量上傳檔案！
-
-使用\'\'\'瀏覽\'\'\'按鈕選擇要上傳檔案的位置。可同時上傳1至$1個檔案。 你可以選擇輸入\'\'\'目標檔案名\'\'\'和\'\'\'檔案描述\'\'\'來簡述此檔案。不當的檔案將可能被刪除，詳見[[{{MediaWiki:Multipleupload-page}}|檔案刪除政策]]。',
-	'multiupload-description' => '档案描述',
-	'multiupload-options' => '上传选项',
-	'multiupload-source' => '档案来源',
-	'multiupload-successful-upload' => '上传成功',
-];
-
-$messages['zh-cn'] = [
-	'multipleupload-text' => '大量上传档案！
-
-使用\'\'\'浏览\'\'\'按钮选择要上传档案的位置。可同时上传1至$1个档案。 你可以选择输入\'\'\'目标档案名\'\'\'和\'\'\'档案描述\'\'\'来简述此档案。不当的档案将可能被刪除，详见[[{{MediaWiki:Multipleupload-page}}|档案刪除政策]]。',
-];
-
-$messages['zh-hk'] = [
-	'multipleupload-text' => '大量上傳檔案！
-
-使用\'\'\'瀏覽\'\'\'按鈕選擇要上傳檔案的位置。可同時上傳1至$1個檔案。 你可以選擇輸入\'\'\'目標檔案名\'\'\'和\'\'\'檔案描述\'\'\'來簡述此檔案。不當的檔案將可能被刪除，詳見[[{{MediaWiki:Multipleupload-page}}|檔案刪除政策]]。',
-	'multiupload-description' => '檔案描述',
-	'multiupload-options' => '上傳選項',
-	'multiupload-source' => '檔案來源',
-	'multiupload-successful-upload' => '上傳成功',
-];
-
-$messages['zh-sg'] = [
-	'multipleupload-text' => '大量上传档案！
-
-使用\'\'\'浏览\'\'\'按钮选择要上传档案的位置。可同时上传1至$1个档案。 你可以选择输入\'\'\'目标档案名\'\'\'和\'\'\'档案描述\'\'\'来简述此档案。不当的档案将可能被刪除，详见[[{{MediaWiki:Multipleupload-page}}|档案刪除政策]]。',
-];
-
-$messages['zh-tw'] = [
-	'multipleupload-text' => '大量上傳檔案！
-
-使用\'\'\'瀏覽\'\'\'按鈕選擇要上傳檔案的位置。可同時上傳1至$1個檔案。 你可以選擇輸入\'\'\'目標檔案名\'\'\'和\'\'\'檔案描述\'\'\'來簡述此檔案。不當的檔案將可能被刪除，詳見[[{{MediaWiki:Multipleupload-page}}|檔案刪除政策]]。',
-	'multiupload-description' => '檔案描述',
-	'multiupload-options' => '上傳選項',
-	'multiupload-source' => '檔案來源',
-	'multiupload-successful-upload' => '上傳成功',
-];
-

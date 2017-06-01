@@ -592,16 +592,6 @@ $messages['ps'] = [
 ];
 
 $messages['pt'] = [
-	'ajaxpoll-percentVotes' => '$1%&nbsp;de todos os votos',
-	'ajaxpoll-thankyou' => 'Obrigado pelo teu voto!',
-	'ajaxpoll-error' => 'Ocorreu um problema ao processar o teu voto, por favor, tenta-o de novo.',
-	'ajaxpoll-summary' => 'A votação foi criada às $1 de $2 e, até agora, $3 pessoas votaram.',
-	'ajaxpoll-submit' => 'Vota!',
-	'ajaxpoll-closed' => 'A votação foi encerrada. Desfruta dos resultados.',
-	'ajaxpoll-submitting' => 'Espera, por favor. A submeter o teu voto…',
-];
-
-$messages['pt-br'] = [
 	'ajaxpoll-desc' => 'Extensão de enquetes para MediaWiki dirigida por pedidos em Ajax',
 	'ajaxpoll-percentVotes' => '$1%&nbsp;de todos os votos',
 	'ajaxpoll-thankyou' => 'Obrigado pelo seu voto!',
@@ -746,13 +736,6 @@ $messages['vi'] = [
 	'ajaxpoll-submitting' => 'Xin vui lòng chờ, đang gửi bình chọn của bạn...',
 ];
 
-$messages['zh'] = [
-	'ajaxpoll-thankyou' => '感謝你的投票',
-	'ajaxpoll-error' => '投票過程發生問題，請再試一次',
-	'ajaxpoll-submit' => '投票',
-	'ajaxpoll-summary' => '该投票在$2的$1发起，目前为止有 $3 人参与了投票。',
-];
-
 $messages['zh-hans'] = [
 	'ajaxpoll-desc' => '基于AJAX请求面向MediaWiki的投票扩展',
 	'ajaxpoll-percentVotes' => '所有投票的 $1',
@@ -775,23 +758,9 @@ $messages['zh-hant'] = [
 	'ajaxpoll-submitting' => '請稍候，正送出您的投票...',
 ];
 
-$messages['zh-hk'] = [
-	'ajaxpoll-thankyou' => '感謝您的投票！',
-	'ajaxpoll-error' => '處理您的投票發生問題，請再試一次。',
-	'ajaxpoll-summary' => '這項投票在$2的$1發起，到目前為止有 $3 人投票。',
-	'ajaxpoll-submit' => '投票！',
-	'ajaxpoll-closed' => '投票現已封閉。享受結果。',
-	'ajaxpoll-submitting' => '請稍候，正提交您的投票...',
-];
-
 $messages['no'] = [
 	'ajaxpoll-error' => 'Det oppstod et problem under overføringen av stemmen din, vennligst prøv igjen.',
 	'ajaxpoll-percentVotes' => '$1%&nbsp;av alle stemmer',
 	'ajaxpoll-submit' => 'Stem!',
 	'ajaxpoll-thankyou' => 'Takk for din stemme!',
 ];
-
-$messages['zh-tw'] = [
-	'ajaxpoll-summary' => '這項投票在$2的$1發起，到目前為止有 $3 人投票。',
-];
-

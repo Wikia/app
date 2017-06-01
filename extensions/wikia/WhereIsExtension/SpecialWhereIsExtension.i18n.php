@@ -425,20 +425,6 @@ $messages['ps'] = [
 ];
 
 $messages['pt'] = [
-	'whereisextension' => 'Onde está a extensão',
-	'whereisextension-submit' => 'Pesquisar',
-	'whereisextension-list' => 'Lista de wikis que correspondem aos critérios',
-	'whereisextension-isset' => 'tem o valor',
-	'whereisextension-filter' => 'Filtro',
-	'whereisextension-all-groups' => 'Todos os grupos',
-	'whereisextension-name-contains' => 'nome da variável contém',
-	'whereisextension-search-like-value' => 'Semelhante a:',
-	'whereisextension-search-type' => 'Tipo:',
-	'whereisextension-search-type-bool' => 'Booleano',
-	'whereisextension-search-type-full' => 'Semelhante a',
-];
-
-$messages['pt-br'] = [
 	'whereisextension' => 'Extensão onde está',
 	'whereisextension-submit' => 'Pesquisar',
 	'whereisextension-list' => 'Lista de wikis com critério correspondente',
@@ -559,19 +545,6 @@ $messages['zh-hans'] = [
 	'whereisextension' => '扩展功能位置',
 ];
 
-$messages['zh'] = [
-	'whereisextension' => '扩展功能位置',
-];
-
 $messages['zh-hant'] = [
 	'whereisextension' => '擴展功能位置',
 ];
-
-$messages['zh-hk'] = [
-	'whereisextension' => '擴展功能位置',
-];
-
-$messages['zh-tw'] = [
-	'whereisextension' => '擴展功能位置',
-];
-

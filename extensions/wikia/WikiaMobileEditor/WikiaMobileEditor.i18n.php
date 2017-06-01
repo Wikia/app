@@ -132,28 +132,6 @@ $messages['zh-hant'] = [
 	'wikiamobileeditor-summary-placeholder' => '你主要修改了什麼（可選填）？',
 ];
 
-$messages['zh-hk'] = [
-	'wikiamobileeditor-cancel' => '取消',
-	'wikiamobileeditor-keep-editing' => '繼續編輯',
-	'wikiamobileeditor-licensing' => '貢獻內容授權方式為',
-	'wikiamobileeditor-on-new' => '您正在創建一篇新的文章或段落。',
-	'wikiamobileeditor-preview' => '預覽',
-	'wikiamobileeditor-publish' => '保存',
-	'wikiamobileeditor-saving' => '正在保存',
-	'wikiamobileeditor-summary-placeholder' => '你主要修改了什麼（可選填）？',
-];
-
-$messages['zh-tw'] = [
-	'wikiamobileeditor-cancel' => '取消',
-	'wikiamobileeditor-keep-editing' => '繼續編輯',
-	'wikiamobileeditor-licensing' => '貢獻內容授權方式為',
-	'wikiamobileeditor-on-new' => '您正在創建一篇新的文章或段落。',
-	'wikiamobileeditor-preview' => '預覽',
-	'wikiamobileeditor-publish' => '保存',
-	'wikiamobileeditor-saving' => '正在保存',
-	'wikiamobileeditor-summary-placeholder' => '你主要修改了什麼（可選填）？',
-];
-
 $messages['fr'] = [
 	'wikiamobileeditor-cancel' => 'Annuler',
 	'wikiamobileeditor-desc' => 'Améliorations de l\'éditeur mobile Wikia',
@@ -167,17 +145,6 @@ $messages['fr'] = [
 	'wikiamobileeditor-saving' => 'Enregistrement',
 	'wikiamobileeditor-summary-placeholder' => 'Qu\'avez-vous modifié (optionnel) ?',
 	'wikiamobileeditor-wrong' => 'Une erreur est survenue.',
-];
-
-$messages['zh'] = [
-	'wikiamobileeditor-cancel' => '取消',
-	'wikiamobileeditor-keep-editing' => '继续编辑',
-	'wikiamobileeditor-licensing' => '贡献内容授权方式为',
-	'wikiamobileeditor-on-new' => '您正在创建一篇新的文章或段落。',
-	'wikiamobileeditor-preview' => '预览',
-	'wikiamobileeditor-publish' => '保存',
-	'wikiamobileeditor-saving' => '正在保存',
-	'wikiamobileeditor-summary-placeholder' => '你主要修改了什么（可选填）？',
 ];
 
 $messages['zh-hans'] = [

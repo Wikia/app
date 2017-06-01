@@ -1455,24 +1455,6 @@ $messages['ps'] = [
 ];
 
 $messages['pt'] = [
-	'wikiamobile-search' => 'Pesquisar',
-	'wikiamobile-search-wiki' => 'Wiki',
-	'wikiamobile-search-wikia' => 'Wikia',
-	'wikiamobile-password' => 'Senha',
-	'wikiamobile-menu' => 'Menu',
-	'wikiamobile-article-categories' => 'Categorias',
-	'wikiamobile-back' => 'Voltar',
-	'wikiamobile-profile' => 'Perfil',
-	'wikiamobile-trending-articles-heading' => 'Artigos Populares',
-	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|artigo|artigos}}',
-	'wikiamobile-category-items-more' => 'Carregar mais',
-	'wikiamobile-sharing-page-text' => '$1 - $2',
-	'wikiamobile-media-group-footer' => '1 de $1',
-	'wikiamobile-videos' => 'Vídeos',
-	'wikiamobile-toc-header' => 'Índice',
-];
-
-$messages['pt-br'] = [
 	'wikiamobile-search' => 'Pesquisa',
 	'wikiamobile-search-wiki' => 'Wiki',
 	'wikiamobile-search-wikia' => 'Wikia',
@@ -2110,51 +2092,3 @@ $1',
 	'wikiasmartbanner-price' => '免費',
 	'wikiasmartbanner-view' => '檢視',
 ];
-
-$messages['zh-hk'] = [
-	'wikiamobile-search' => '搜尋',
-	'wikiamobile-search-this-wiki' => '在這個wiki上搜尋',
-	'wikiamobile-search-wiki' => 'Wiki',
-	'wikiamobile-search-wikia' => 'Wikia',
-	'wikiamobile-login' => '登入',
-	'wikiamobile-password' => '您的密碼',
-	'wikiamobile-login-submit' => '登入',
-	'wikiamobile-menu' => '選單',
-	'wikiamobile-article-categories' => '頁面分類',
-	'wikiamobile-feedback' => '您的意見',
-	'wikiamobile-back' => '回到上一進度',
-	'wikiamobile-hide-section' => '隱藏',
-	'wikiamobile-profile' => '基本資料',
-	'wikiamobile-footer-link-privacy' => '[[w:c:zh-tw:隱私權方針|隱私方針]]',
-	'mobile-full-site' => '完整的網站',
-	'wikiamobile-categories-tagline' => '分類頁',
-	'wikiamobile-category-items-more' => '載入更多',
-	'wikiamobile-category-items-prev' => '載入前一個',
-	'wikiamobile-categories-expand' => '顯示全部',
-	'wikiamobile-categories-collapse' => '隱藏全部',
-	'wikiamobile-categories-blogs' => '部落格帖',
-	'wikiamobile-sharing-media-image' => '相片',
-	'wikiasmartbanner-price' => '免費',
-	'wikiasmartbanner-view' => '檢視',
-	'wikiamobile-footer-link-entertainment' => '[[w:c:zh-tw.entertainmenthub|影音娛樂]]',
-	'wikiamobile-footer-link-licencing' => '[[w:c:zh-tw:內容授權方式|授權方式]]',
-	'wikiamobile-footer-link-lifestyle' => '[[w:c:zh-tw.lifestylehub|生活時尚]]',
-	'wikiamobile-footer-link-videogames' => '[[w:c:zh-tw.gameshub|電玩遊戲]]',
-];
-
-$messages['zh-tw'] = [
-	'wikiamobile-footer-link-entertainment' => '[[w:c:zh-tw.entertainmenthub|影音娛樂]]',
-	'wikiamobile-footer-link-licencing' => '[[w:c:zh-tw:內容授權方式|授權方式]]',
-	'wikiamobile-footer-link-lifestyle' => '[[w:c:zh-tw.lifestylehub|生活時尚]]',
-	'wikiamobile-footer-link-privacy' => '[[w:c:zh-tw:隱私權方針|隱私方針]]',
-	'wikiamobile-footer-link-videogames' => '[[w:c:zh-tw.gameshub|電玩遊戲]]',
-];
-
-$messages['zh'] = [
-	'wikiamobile-footer-link-entertainment' => '[[w:c:zh.entertainmenthub|影音娱乐]]',
-	'wikiamobile-footer-link-licencing' => '[[w:c:zh:内容授权方式|授权方式]]',
-	'wikiamobile-footer-link-lifestyle' => '[[w:c:zh.lifestylehub|生活时尚]]',
-	'wikiamobile-footer-link-privacy' => '[[w:c:zh:隐私权方针|隐私方针]]',
-	'wikiamobile-footer-link-videogames' => '[[w:c:zh.gameshub|电玩游戏]]',
-];
-

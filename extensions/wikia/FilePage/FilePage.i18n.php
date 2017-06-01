@@ -697,30 +697,6 @@ $messages['ps'] = [
 ];
 
 $messages['pt'] = [
-	'filepage-desc' => 'Modificação da página padrão do MediaWiki para suporte de vídeo',
-	'video-page-file-list-header' => 'Aparece nestas páginas',
-	'video-page-global-file-list-header' => 'Aparece nestas wikis',
-	'video-page-from-provider' => 'De $1',
-	'video-page-expires' => 'Conteúdo disponível até $1',
-	'video-page-regional-restrictions-viewable' => 'Este vídeo é restrito regionalmente',
-	'video-page-regional-restrictions-unviewable' => 'Este vídeo não é visível na sua região',
-	'video-page-views' => '$1 {{PLURAL:$1|Visionamento|Visionamentos}}',
-	'video-page-see-more-info' => 'Mostrar mais informações',
-	'video-page-see-less-info' => 'Mostrar menos informações',
-	'video-page-description-heading' => 'Descrição',
-	'video-page-description-zero-state' => 'Ainda não tem descrição.',
-	'video-page-add-description-link-text' => 'Inserir uma descrição.',
-	'video-page-default-description-header-and-text' => '==Descrição==
-Insira a descrição aqui.',
-	'video-page-file-list-pagination' => '$1 de $2',
-	'file-page-replace-button' => 'Substituir',
-	'file-page-tab-about' => 'Sobre',
-	'file-page-tab-history' => 'Histórico do ficheiro',
-	'file-page-tab-metadata' => 'Metadados',
-	'file-page-more-links' => 'Ver lista completa',
-];
-
-$messages['pt-br'] = [
 	'filepage-desc' => 'Modificação da página do arquivo MediaWiki padrão para suporte de vídeo',
 	'video-page-file-list-header' => 'Aparece nestas páginas',
 	'video-page-global-file-list-header' => 'Aparece nestas wikis',
@@ -989,9 +965,3 @@ $messages['zh-hant'] = [
 	'file-page-tab-metadata' => '後設資料',
 	'file-page-more-links' => '查看完整清單',
 ];
-
-$messages['zh-hk'] = [
-	'video-page-file-list-header' => '在以下頁面中出現',
-	'file-page-tab-history' => '檔案歷史',
-];
-

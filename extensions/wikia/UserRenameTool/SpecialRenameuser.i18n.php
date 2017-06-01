@@ -3032,70 +3032,6 @@ $messages['ps'] = [
 ];
 
 $messages['pt'] = [
-	'userrenametool' => 'Alterar o nome de um utilizador',
-	'renameuser' => 'Alterar o nome do utilizador',
-	'userrenametool-warning' => '<strong>Leia atentamente a seguinte informação</strong>:<p>Antes de alterar o nome de um utilizador, certifique-se de que <strong>toda a informação está correta</strong> e confime que o <strong>utilizador sabe que pode levar algum tempo a executar</strong>, por favor.
-<br />Saiba que devido a alguns fatores externos a primeira parte do processo <strong>pode resultar numa página vazia</strong>. Isto não significa que o processo não tenha sido devidamente concluído.</p><p>Pode monitorizar o progresso do processo através do [[Special:Stafflog|Registo da Equipa]] e <strong>o sistema envia-lhe uma mensagem quando todo o processo de alteração do nome estiver concluído</strong>.</p>',
-	'userrenametool-desc' => 'Adiciona uma [[Special:UserRenameTool|página especial]] para alterar o nome de um utilizador (requer o privilégio \'\'renameuser\'\') e processar todos os dados relacionados',
-	'userrenametool-old' => 'Nome de utilizador atual:',
-	'userrenametool-new' => 'Novo nome de utilizador:',
-	'userrenametool-reason' => 'Motivo da alteração do nome:',
-	'userrenametool-move' => 'Mover as páginas de utilizador e de discussão do utilizador (e as respectivas subpáginas) para o novo nome',
-	'userrenametool-reserve' => 'Impedir o reuso do antigo nome de utilizador',
-	'userrenametool-notify-renamed' => 'Quando terminar, notificar o utilizador por correio eletrónico',
-	'userrenametool-warnings' => 'Alertas:',
-	'userrenametool-confirm' => 'Sim, alterar o nome do utilizador',
-	'userrenametool-submit' => 'Alterar o nome do utilizador',
-	'userrenametool-errordoesnotexist' => 'Não existe um utilizador "<nowiki>$1</nowiki>".',
-	'userrenametool-errorexists' => 'Já existe um utilizador "<nowiki>$1</nowiki>".',
-	'userrenametool-errorinvalid' => 'O nome de utilizador "<nowiki>$1</nowiki>" é inválido.',
-	'userrenametool-errorinvalidnew' => '"<nowiki>$1</nowiki>" não é um nome de utilizador válido.',
-	'userrenametool-errortoomany' => 'O utilizador "<nowiki>$1</nowiki>" tem $2 {{PLURAL:$2|contribuição|contribuições}}. Alterar o nome de um utilizador com mais de $3 {{PLURAL:$3|contribuição|contribuições}} pode afetar o desempenho do site.',
-	'userrenametool-errorprocessing' => 'O processo de alteração do nome do utilizador <nowiki>$1</nowiki> para <nowiki>$2</nowiki> já está em progresso.',
-	'userrenametool-errorblocked' => 'O utilizador <nowiki>$1</nowiki> está bloqueado por <nowiki>$2</nowiki> por $3.',
-	'userrenametool-errorlocked' => 'O utilizador <nowiki>$1</nowiki> está bloqueado.',
-	'userrenametool-errorbot' => 'O utilizador <nowiki>$1</nowiki> é um robô.',
-	'userrenametool-error-request' => 'Ocorreu um problema ao receber este pedido.
-Volte atrás e tente novamente.',
-	'userrenametool-error-same-user' => 'Não pode alterar um nome de utilizador para o mesmo nome.',
-	'userrenametool-error-extension-abort' => 'Uma extensão impediu o processo de alteração do nome.',
-	'userrenametool-error-cannot-rename-account' => 'A alteração do nome da conta na base de dados partilhada global falhou.',
-	'userrenametool-error-cannot-create-block' => 'A criação de um bloqueio de Phalanx falhou.',
-	'userrenametool-warn-repeat' => 'Atenção! O nome do utilizador "<nowiki>$1</nowiki>" já foi alterado para "<nowiki>$2</nowiki>".
-Continue esta operação somente se necessita de actualizar alguma informação em falta.',
-	'userrenametool-warn-table-missing' => 'A tabela "<nowiki>$2</nowiki>" não existe na base de dados "<nowiki>$1</nowiki>."',
-	'userrenametool-info-started' => '$1 iniciou a alteração do nome: $2 para $3 (registos: $4).
-Motivo: "$5".',
-	'userrenametool-info-finished' => '$1 terminou a alteração do nome: $2 para $3 (registos: $4).
-Motivo: "$5".',
-	'userrenametool-info-failed' => '$1 FALHOU a alteração do nome: $2 para $3 (registos: $4).
-Motivo: "$5".',
-	'userrenametool-info-wiki-finished' => '$1 alterou o nome de $2 para $3 em $4.
-Motivo: "$5".',
-	'userrenametool-info-wiki-finished-problems' => '$1 alterou o nome de $2 para $3 em $4 com erros.
-Motivo: "$5".',
-	'userrenametool-info-in-progress' => 'O processo de alteração do nome está em progresso.
-O restante será executado como tarefa de segundo plano.
-Quando este terminar, receberá uma notificação por correio eletrónico.',
-	'userrenametool-success' => 'O nome do utilizador "<nowiki>$1</nowiki>" foi alterado para "<nowiki>$2</nowiki>".',
-	'userrenametool-confirm-intro' => 'Pretende realmente executar esta operação?',
-	'userrenametool-confirm-yes' => 'Sim',
-	'userrenametool-confirm-no' => 'Não',
-	'userrenametool-page-exists' => 'Já existe a página $1. Não é possível sobrescrever automaticamente.',
-	'userrenametool-page-moved' => 'A página $1 foi movida para $2.',
-	'userrenametool-page-unmoved' => 'Não foi possível mover a página $1 para $2.',
-	'userrenametool-finished-email-subject' => 'Terminou o processo de alteração do nome de [$1]',
-	'userrenametool-finished-email-body-text' => 'O processo de alteração de "<nowiki>$1</nowiki>" para "<nowiki>$2</nowiki>" terminou.',
-	'userrenametool-finished-email-body-html' => 'O processo de alteração de "<nowiki>$1</nowiki>" para "<nowiki>$2</nowiki>" terminou.',
-	'userrenametool-logpage' => 'Registo de alteração do nome de utilizador',
-	'userrenametool-logpagetext' => 'Este é um registo das alterações efetuadas a nomes de utilizador.',
-	'userrenametool-logentry' => 'alterou o nome de $1 para "$2"',
-	'userrenametool-log' => '{{PLURAL:$1|1 edição|$1 edições}}. Motivo: $2',
-	'userrenametool-move-log' => 'Página movida automaticamente ao alterar o nome do utilizador "[[User:$1|$1]]" para "[[User:$2|$2]]"',
-	'right-renameuser' => 'Alterar nomes de utilizadores',
-];
-
-$messages['pt-br'] = [
 	'userrenametool' => 'Alterar o nome de um usuário',
 	'renameuser' => 'Renomear usuário',
 	'userrenametool-warning' => 'Antes de alterar o nome de um utilizador, certifique-se de que todas as informações estão correctas e que o utilizador sabe que o processo pode demorar algum tempo.
@@ -4380,25 +4316,3 @@ $messages['zh-hant'] = [
 	'right-renameuser' => '重新命名使用者',
 	'action-renameuser' => '重新命名使用者',
 ];
-
-$messages['zh-hk'] = [
-	'renameuser' => '重新命名用戶',
-	'userrenametool-desc' => '加入一個[[Special:UserRenameTool|特殊頁面]]以重命名用戶 (需要 \'\'renameuser\'\' 權限)，并處理相關資料',
-	'userrenametool-new' => '新的用戶名稱：',
-	'right-renameuser' => '重新命名用戶',
-	'action-renameuser' => '重新命名用戶',
-	'userrenametool-success' => '使用者"$1"已經更名為"$2"',
-];
-
-$messages['zu'] = [
-	'userrenametool-submit' => 'Yisa',
-];
-
-$messages['zh'] = [
-	'userrenametool-success' => '用户"$1"已经更名为"$2"',
-];
-
-$messages['zh-tw'] = [
-	'userrenametool-success' => '使用者"$1"已經更名為"$2"',
-];
-

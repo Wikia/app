@@ -1011,15 +1011,6 @@ $messages['ps'] = [
 ];
 
 $messages['pt'] = [
-	'cite_article_desc' => '[[Special:Cite|Página especial]] que produz uma citação de qualquer outra página na wiki (em vários formatos) e adiciona um link na barra de ferramentas',
-	'cite_article_link' => 'Citar esta página',
-	'tooltip-cite-article' => 'Informação sobre como citar esta página',
-	'cite' => 'Citar',
-	'cite_page' => 'Página:',
-	'cite_submit' => 'Citar',
-];
-
-$messages['pt-br'] = [
 	'cite_article_desc' => 'Adiciona uma página especial de [[Special:Cite|citação]] e link para a caixa de ferramentas',
 	'cite_article_link' => 'Citar esta página',
 	'tooltip-cite-article' => 'Informação sobre como citar esta página',
@@ -1433,24 +1424,3 @@ $messages['zh-hant'] = [
 	'cite_page' => '頁面：',
 	'cite_submit' => '引用',
 ];
-
-$messages['zh'] = [
-	'cite' => '引用文章',
-];
-
-$messages['zh-cn'] = [
-	'cite' => '{{MediaWiki:Cite}}',
-];
-
-$messages['zh-hk'] = [
-	'cite' => '引用文章',
-];
-
-$messages['zh-sg'] = [
-	'cite' => '{{MediaWiki:Cite}}',
-];
-
-$messages['zh-tw'] = [
-	'cite' => '引用文章',
-];
-
