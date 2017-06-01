@@ -4,11 +4,11 @@ namespace Wikia\PageHeader;
 
 use Forum;
 use MediaQueryService;
+use ParserOptions;
 use RequestContext;
-use WikiaApp;
 
 class Counter {
-	public function __construct( WikiaApp $app ) {
+	public function __construct() {
 		$title = RequestContext::getMain()->getTitle();
 
 		if ( $title->isSpecial( 'Videos' ) ) {
@@ -16,7 +16,7 @@ class Counter {
 		} else if ( $title->isSpecial( 'Images' ) ) {
 			$this->message = $this->getMessageForSpecialImages();
 		} else if ( defined( 'NS_BLOG_LISTING' ) && $title->inNamespace( NS_BLOG_LISTING ) ) {
-			$this->message = $this->getMessageForBlogListing( $app );
+			$this->message = $this->getMessageForBlogListing();
 		} else if ( $title->isSpecial( 'Forum' ) ) {
 			$this->message = $this->getMessageForForum();
 		}
@@ -36,8 +36,12 @@ class Counter {
 		return wfMessage( 'page-header-counter-images', $count )->parse();
 	}
 
-	private function getMessageForBlogListing( WikiaApp $app ) {
-		$count = $app->wg->Parser->getOutput()->getProperty( 'blogPostCount' );
+	private function getMessageForBlogListing() {
+		$count = RequestContext::getMain()
+			->getWikiPage()
+			->getParserOutput( new ParserOptions() )
+			// It's set in Blogs/BlogTemplate.php
+			->getProperty( 'blogPostCount' );
 
 		return wfMessage( 'page-header-counter-blog-posts', $count )->parse();
 	}
