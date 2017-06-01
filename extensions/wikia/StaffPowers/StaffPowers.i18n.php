@@ -96,12 +96,8 @@ $messages['pms'] = [
 ];
 
 $messages['pt'] = [
-	'staffpowers-ipblock-abort' => 'Não é possível bloquear staff, ajudantes ou voluntários do Spam Task Force (VSTF) no FANDOM. Por favor, use o [[Especial:Contact|formulário de contato]] para relatar quaisquer questões ou problemas com a nossa equipe.',
-];
-
-$messages['pt-br'] = [
 	'staffpowers-desc' => 'Dar à Staff vários privilégios como não bloqueável.',
-	'staffpowers-ipblock-abort' => 'Não é possível bloquear a Staff da Wikia, Wikia Helpers ou membros da nossa equipe de Volunteer Spam Task Force (VSTF). Por favor, utilize o [[Special:Contact|formulário de contato]] para relatar quaisquer questões ou problemas com a nossa equipe.',
+	'staffpowers-ipblock-abort' => 'Não é possível bloquear staff, ajudantes ou voluntários do Spam Task Force (VSTF) no FANDOM. Por favor, use o [[Especial:Contact|formulário de contato]] para relatar quaisquer questões ou problemas com a nossa equipe.',
 ];
 
 $messages['roa-tara'] = [
@@ -133,14 +129,14 @@ $messages['vi'] = [
 
 $messages['zh-hans'] = [
 	'staffpowers-desc' => '向职员提供像是解封之类的能力。',
-	'staffpowers-ipblock-abort' => '封禁Fandom的员工、助手或我们的反破坏小组(VSTF)成员是无效的。请使用[[Special:Contact|联络表格]]报告任何与我们工作人员相关的问题。',
+	'staffpowers-ipblock-abort' => '封禁FANDOM的员工、助手或我们的反破坏小组(VSTF)成员是无效的。请使用[[Special:Contact|联络表格]]报告任何与我们工作人员相关的问题。',
 ];
 
 $messages['zh-hant'] = [
-	'staffpowers-ipblock-abort' => '封禁Fandom的員工、助手或我們的反破壞小組(VSTF)成員是無效的。請使用[[Special:Contact|聯絡表格]]報告任何與我們工作人員相關的問題。',
+	'staffpowers-ipblock-abort' => '封禁FANDOM的員工、助手或我們的反破壞小組(VSTF)成員是無效的。請使用[[Special:Contact|聯絡表格]]報告任何與我們工作人員相關的問題。',
 ];
 
 $messages['ja'] = [
-	'staffpowers-ipblock-abort' => 'Fandomスタッフ、Fandomヘルパー、ボランティア・スパム・タスク・フォース（VSTF）チームのメンバーをブロックすることはできません。スタッフに関する問題を報告する場合は、[[Special:Contact|お問い合わせフォーム]]をご利用ください。',
+	'staffpowers-ipblock-abort' => 'FANDOMスタッフ、FANDOMヘルパー、ボランティア・スパム・タスク・フォース（VSTF）チームのメンバーをブロックすることはできません。スタッフに関する問題を報告する場合は、[[Special:Contact|お問い合わせフォーム]]をご利用ください。',
 ];
 
