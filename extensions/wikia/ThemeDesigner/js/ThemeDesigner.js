@@ -294,24 +294,6 @@
 			});
 		},
 
-		wordmarkShield: function () {
-			var shield = $('#wordmark-shield'),
-				parent;
-
-			if (ThemeDesigner.settings['wordmark-type'] === 'graphic') {
-				parent = shield.parent();
-
-				shield
-					.css({
-						height: parent.outerHeight(true),
-						width: parent.outerWidth(true)
-					})
-					.show();
-			} else {
-				shield.hide();
-			}
-		},
-
 		toolBarInit: function () {
 			$('#Toolbar .history')
 				.click(function () {
@@ -754,11 +736,6 @@
 			clickedLink.parent().addClass('selected').siblings().removeClass('selected');
 			//show the correct panel
 			$('#' + command).show().siblings('section').hide();
-
-			//hide wordmark text side if necessary
-			if (command === 'WordmarkTab') {
-				ThemeDesigner.wordmarkShield();
-			}
 		},
 
 		resizeIframe: function () {
@@ -770,7 +747,12 @@
 		themes: false,
 
 		applySettings: function (reloadCSS, updateSkinPreview) {
-			var file, theme, settingsToLoad, wordmark;
+			var file,
+				theme,
+				settingsToLoad,
+				sitename,
+				wordmark,
+				previewFrameContent = this.previewFrame.contents();
 
 			/*** Theme Tab ***/
 			if (ThemeDesigner.settings.theme === 'custom') {
@@ -826,12 +808,10 @@
 				$('#WordmarkTab').find('.graphic')
 					.find('.preview').addClass('active')
 					.find('.wordmark').addClass('selected');
-				ThemeDesigner.wordmarkShield();
 			} else {
 				$('#WordmarkTab').find('.graphic')
 					.find('.preview').removeClass('active')
 					.find('.wordmark').removeClass('selected');
-				ThemeDesigner.wordmarkShield();
 			}
 
 			// favicon image
@@ -851,23 +831,21 @@
 			}
 
 			if (updateSkinPreview) {
-				wordmark = this.previewFrame.contents().find('#WikiHeader').find('.wordmark');
-
 				if (ThemeDesigner.settings['wordmark-type'] === 'text') {
-					wordmark.removeClass().addClass('wordmark').addClass(ThemeDesigner.settings['wordmark-font-size'])
-						.find('a').text(ThemeDesigner.settings['wordmark-text']);
+					sitename = previewFrameContent.find('.wds-community-header__sitename a');
+					sitename.text(ThemeDesigner.settings['wordmark-text']);
 				} else if (ThemeDesigner.settings['wordmark-type'] === 'graphic') {
-					wordmark.addClass('graphic')
-						.find('a').html('').append('<img src="' + ThemeDesigner.settings['wordmark-image-url'] + '">');
+					wordmark = previewFrameContent.find('.wds-community-header__wordmark a');
+					wordmark.html('<img src="' + ThemeDesigner.settings['wordmark-image-url'] + '">');
 				}
 
-				this.previewFrame.contents().find('#WikiaPageBackground')
+				previewFrameContent.find('#WikiaPageBackground')
 					.css('opacity', ThemeDesigner.settings['page-opacity'] / ThemeDesigner.maxPageOpacity);
 
 				if (ThemeDesigner.settings['page-opacity'] < ThemeDesigner.maxPageOpacity) {
-					this.previewFrame.contents().find('#WikiHeader .shadow-mask').hide();
+					previewFrameContent.find('#WikiHeader .shadow-mask').hide();
 				} else {
-					this.previewFrame.contents().find('#WikiHeader .shadow-mask').show();
+					previewFrameContent.find('#WikiHeader .shadow-mask').show();
 				}
 			}
 		},
