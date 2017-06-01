@@ -259,9 +259,14 @@
 
 			});
 
+			$('#WordmarkTab').find('.graphic').find('.preview').find('.wordmark').click(function () {
+				ThemeDesigner.set('wordmark-type', 'graphic');
+			});
+
 			//grapic wordmark button
 			$('#WordmarkTab').find('.graphic').find('.preview').find('a').click(function (event) {
 				event.preventDefault();
+				ThemeDesigner.set('wordmark-type', 'text');
 				ThemeDesigner.set('wordmark-image-url', window.wgBlankImgUrl);
 
 				// Can't use js to clear file input value so reseting form
@@ -598,9 +603,9 @@
 					window.alert(resp.errors.join('\n'));
 
 				} else {
-
 					ThemeDesigner.set('wordmark-image-name', resp.wordmarkImageName);
 					ThemeDesigner.set('wordmark-image-url', resp.wordmarkImageUrl);
+					ThemeDesigner.set('wordmark-type', 'graphic');
 				}
 			}
 		},
@@ -739,10 +744,6 @@
 		settings: false,
 		themes: false,
 
-		hasWordmarkImage: function () {
-			return ThemeDesigner.settings['wordmark-image-url'] && ThemeDesigner.settings['wordmark-image-url'] !== window.wgBlankImgUrl;
-		},
-
 		applySettings: function (reloadCSS, updateSkinPreview) {
 			var file,
 				theme,
@@ -801,7 +802,7 @@
 			// wordmark image
 			$('#WordmarkTab .graphic .wordmark').attr('src', ThemeDesigner.settings['wordmark-image-url']);
 
-			if (this.hasWordmarkImage()) {
+			if (ThemeDesigner.settings['wordmark-type'] === 'graphic') {
 				$('#WordmarkTab').find('.graphic')
 					.find('.preview').addClass('active')
 					.find('.wordmark').addClass('selected');
@@ -831,7 +832,7 @@
 				sitename = previewFrameContent.find('.wds-community-header__sitename a');
 				sitename.text(ThemeDesigner.settings['wordmark-text']);
 
-				if (!this.hasWordmarkImage()) {
+				if (ThemeDesigner.settings['wordmark-type'] !== 'graphic') {
 					previewFrameContent.find('.wds-community-header__wordmark').remove();
 				} else {
 					wordmark = previewFrameContent.find('.wds-community-header__wordmark a');
