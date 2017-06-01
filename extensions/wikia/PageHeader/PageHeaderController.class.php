@@ -12,4 +12,8 @@ class PageHeaderController extends \WikiaController {
 	public function subtitle() {
 		$this->setVal( 'subtitle', new Subtitle( $this->app ) );
 	}
+
+	public function editButton() {
+
+	}
 }

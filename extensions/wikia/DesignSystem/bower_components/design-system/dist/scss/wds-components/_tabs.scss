@@ -2,6 +2,7 @@
 	align-items: flex-end;
 	display: flex;
 	list-style: none;
+	margin: 0;
 	padding: 0;
 }
 
@@ -11,7 +12,7 @@
 	$tab-default-color: $wds-color-link;
 	$tab-hover-color: darken($tab-default-color, 20%);
 
-	cursor: pointer;
+	cursor: default;
 	line-height: 14px;
 	padding: 0 $tab-padding-horizontal;
 	position: relative;
@@ -29,7 +30,13 @@
 		transition: color .1s;
 
 		:not(:first-child):not(:only-child) {
-			margin: 0 4px;
+			margin-left: 4px;
+		}
+
+		> a {
+			align-items: center;
+			display: inline-flex;
+			text-decoration: none;
 		}
 	}
 
@@ -56,6 +63,10 @@
 	&:hover {
 		.wds-tabs__tab-label {
 			color: $tab-hover-color;
+
+			> a {
+				color: $tab-hover-color;
+			}
 		}
 
 		&.wds-is-current {
