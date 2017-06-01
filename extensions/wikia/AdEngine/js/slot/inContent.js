@@ -12,18 +12,21 @@ define('ext.wikia.adEngine.slot.inContent', [
 	var logGroup = 'ext.wikia.adEngine.slot.inContent',
 		selector = '#mw-content-text > h2';
 
-	function createInContentWrapper() {
-		var adHtml = doc.createElement('div');
+	function createInContentWrapper(slotName) {
+		var adHtml = doc.createElement('div'),
+			label = msg('adengine-advertisement');
 
 		adHtml.id = 'INCONTENT_WRAPPER';
-		adHtml.innerHTML = '<div id="' + slotName + '" class="wikia-ad default-height" data-label="' + msg('adengine-advertisement') + '"></div>';
+		adHtml.innerHTML = '<div id="' + slotName + '" class="wikia-ad default-height" data-label="' + label + '"></div>';
 		
 		return adHtml;
 	}
 	
 	function insertSlot(header, slotName, onSuccessCallback) {
+		var wrapper = createInContentWrapper(slotName);
+
 		log('insertSlot', 'debug', logGroup);
-		header.parentNode.insertBefore(createInContentWrapper(), header);
+		header.parentNode.insertBefore(wrapper, header);
 		win.adslots2.push({
 			slotName: slotName,
 			onSuccess: onSuccessCallback
