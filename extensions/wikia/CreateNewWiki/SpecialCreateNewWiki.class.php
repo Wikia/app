@@ -3,7 +3,7 @@
 class SpecialCreateNewWiki extends UnlistedSpecialPage {
 
 	public function __construct() {
-		parent::__construct('CreateNewWiki', 'createnewwiki');
+		parent::__construct( 'CreateNewWiki', 'createnewwiki' );
 	}
 
 	/**
@@ -18,7 +18,7 @@ class SpecialCreateNewWiki extends UnlistedSpecialPage {
 
 		if ( wfReadOnly() ) {
 			$out->readOnlyPage();
-			wfProfileOut(__METHOD__);
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 
