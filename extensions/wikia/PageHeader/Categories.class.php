@@ -13,6 +13,11 @@ use WikiaApp;
 use HtmlHelper;
 
 class Categories {
+	public $inCategoriesText;
+	public $moreCategoriesText;
+	public $moreCategoriesSeparator;
+	public $visibleCategories;
+
 	public function __construct( WikiaApp $app ) {
 		$context = RequestContext::getMain();
 		$categoryLinks = $context->getOutput()->getCategoryLinks();
@@ -27,7 +32,7 @@ class Categories {
 		$extendedCategories = array_slice( $normalCategoryLinks, $visibleCategoriesLimit );
 		$moreCategories = $this->extendWithTrackingAttribute( $extendedCategories, 'categories-top-more' );
 
-		$this->setMessagesForCategories($moreCategories);
+		$this->setTexts( $moreCategories );
 
 		$this->visibleCategories = $visibleCategories;
 
@@ -42,15 +47,15 @@ class Categories {
 	}
 
 	public function hasVisibleCategories() {
-
-		return count($this->visibleCategories) > 0;
+		return count( $this->visibleCategories ) > 0;
 	}
 
-	public function setMessagesForCategories($moreCategories) {
+	public function setTexts( $moreCategories ) {
 		$this->inCategoriesText = wfMessage( 'page-header-in-categories' )->escaped();
-		$this->moreCategoriesText = wfMessage( 'page-header-categories-more' )->numParams( count( $moreCategories ) )->text();
-		$this->moreCategoriesSeparator = wfMessage( 'page-header-categories-more-separator' )->text();
-
+		$this->moreCategoriesText = wfMessage( 'page-header-categories-more' )
+			->numParams( count( $moreCategories ) )
+			->escaped();
+		$this->moreCategoriesSeparator = wfMessage( 'page-header-categories-more-separator' )->escaped();
 	}
 
 	private function extendWithTrackingAttribute( $categories, $prefix ): array {
