@@ -1,6 +1,12 @@
 <?php
 
+
+
 class RTE {
+
+    const INIT_MODE_SOURCE = 0;
+    const INIT_MODE_WYSIWYG = 1;
+
 
 	// unique editor instance ID
 	private static $instanceId = null;
@@ -12,13 +18,13 @@ class RTE {
 	private static $useWysiwyg = true;
 
 	// reason of fallback to source mode
-	private static $wysiwygDisabledReason = false;
+	private static $wysiwygDisabledReason = '';
 
 	// are we using development version of CK?
 	private static $devMode;
 
 	// mode in which CK editor should be stared
-	private static $initMode = 'wysiwyg';
+	private static $initMode = self::INIT_MODE_WYSIWYG;
 
 	// list of edgecases which occurred in parsed wikitext
 	public static $edgeCases = array();
@@ -31,8 +37,8 @@ class RTE {
 	 *
 	 * @param EditPage $form
 	 */
-	public static function reverse($form,  $out = null) {
-		global $wgRequest;
+	public static function reverse($form,  $out = null): bool{
+        global $wgRequest;
 		wfProfileIn(__METHOD__);
 
 		if($wgRequest->wasPosted()) {
@@ -157,7 +163,7 @@ class RTE {
 		self::addTemporarySaveFields($out);
 
 		// let's parse wikitext (only for wysiwyg mode)
-		if (self::$initMode == 'wysiwyg') {
+		if (self::$initMode == self::INIT_MODE_WYSIWYG) {
 			$html = RTE::WikitextToHtml($form->textbox1);
 		}
 
@@ -176,7 +182,7 @@ class RTE {
 		}
 
 		// parse wikitext using RTEParser (only for wysiwyg mode)
-		if (self::$initMode == 'wysiwyg') {
+		if (self::$initMode == self::INIT_MODE_WYSIWYG) {
 			// set editor textarea content
 			$form->textbox1 = $html;
 		}
@@ -201,7 +207,7 @@ class RTE {
 
 		// reason why wysiwyg is disabled
 		if (self::$useWysiwyg === false) {
-			if (!empty(self::$wysiwygDisabledReason)) {
+			if (self::$wysiwygDisabledReason != '') {
 				$vars['RTEDisabledReason'] = self::$wysiwygDisabledReason;
 			}
 
@@ -219,7 +225,7 @@ class RTE {
 		}
 
 		// initial CK mode (wysiwyg / source)
-		$vars['RTEInitMode'] = self::$initMode;
+		$vars['RTEInitMode'] =  (self::$initMode == self::INIT_MODE_WYSIWYG) ? 'wysiwyg' : 'source';
 
 		// constants for regexp checking in links editor
 		$vars['RTEUrlProtocols'] = wfUrlProtocols();
@@ -427,7 +433,7 @@ HTML
 	/**
 	 * Disable CK editor - MediaWiki editor will be loaded
 	 */
-	public static function disableEditor($reason = false) {
+	public static function disableEditor(string $reason) {
 		self::$useWysiwyg = false;
 		self::$wysiwygDisabledReason = $reason;
 
@@ -438,8 +444,7 @@ HTML
 	 * Set init mode of CK editor
 	 */
 	public static function setInitMode($mode) {
-		self::$initMode = ($mode == 'wysiwyg') ? 'wysiwyg' : 'source';
-
+		self::$initMode = ($mode == self::INIT_MODE_WYSIWYG) ? 'wysiwyg' : 'source';
 		RTE::log(__METHOD__, self::$initMode);
 	}
 
@@ -579,7 +584,7 @@ HTML
 	/**
 	 * Return list of magic words ({{PAGENAME}}) and double underscores (__TOC__)
 	 */
-	public static function getMagicWords() {
+	public static function getMagicWords(): array {
 		wfProfileIn(__METHOD__);
 
 		// magic words list
@@ -626,7 +631,7 @@ HTML
 	/**
 	 * Get messages to be used in JS code
 	 */
-	static private function getMessages() {
+	static private function getMessages(): array {
 		/* @var $wgLang Language */
 		global $wgLang;
 
@@ -657,22 +662,22 @@ HTML
 	 * @return boolean true/false if we are in fancy edit mode
 	 */
 
-	static function isWysiwygModeEnabled() {
-		return (self::$useWysiwyg && self::$initMode == "wysiwyg");
+	static function isWysiwygModeEnabled(): bool {
+		return (self::$useWysiwyg && self::$initMode == self::INIT_MODE_WYSIWYG);
 	}
 
 	/**
 	 * This will be false if mediawiki editor is being used
 	 * @return boolean true/false if RTE is enabled
 	 */
-	static function isEnabled() {
+	static function isEnabled(): bool {
 		return self::$useWysiwyg;
 	}
 
 	/**
 	 * Add "Enable Rich Text Editing" as the first option in editing tab of user preferences
 	 */
-	static function onEditingPreferencesBefore($user, &$preferences) {
+	static function onEditingPreferencesBefore($user, &$preferences): bool  {
 		// add JS to hide certain switches when wysiwyg is enabled
 		global $wgOut, $wgJsMimeType, $wgExtensionsPath;
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/RTE/js/RTE.preferences.js\"></script>" );
@@ -682,7 +687,7 @@ HTML
 	/**
 	 * Modify values returned by User::getGlobalPreference() when wysiwyg is enabled
 	 */
-	static public function userGetOption($options, $name, &$value) {
+	static public function userGetOption($options, $name, &$value): bool {
 		global $wgRequest;
 		wfProfileIn(__METHOD__);
 
@@ -733,7 +738,7 @@ HTML
 	 * FCKeditor - The text editor for Internet - http://www.fckeditor.net
 	 * Copyright (C) 2003-2009 Frederico Caldeira Knabben
 	 */
-	private static function isCompatibleBrowser() {
+	private static function isCompatibleBrowser(): bool {
 		wfProfileIn(__METHOD__);
 
 		if ( isset( $_SERVER ) && isset($_SERVER['HTTP_USER_AGENT'])) {
