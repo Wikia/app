@@ -8,19 +8,23 @@ use CuratedContentHelper;
 class ActionButton {
 	private $contentActions;
 	private $buttonAction;
+	private $pageStatsService;
+	private $title;
 
-	public function __construct() {
+	public function __construct( \Title $title ) {
 		$skinVars = \F::app()->getSkinTemplateObj()->data;
 		$this->contentActions = $skinVars['content_actions'];
+		$this->pageStatsService = \PageStatsService::newFromTitle( $title );
+		$this->title = $title;
 
 		$this->prepareActionButton();
 	}
 
-	public function getButtonAction() {
+	public function getButtonAction(): array {
 		return $this->buttonAction;
 	}
 
-	public function getDropdownActions() {
+	public function getDropdownActions(): array {
 		global $wgEnableCuratedContentExt;
 
 		// items to be added to "edit" dropdown
@@ -41,6 +45,16 @@ class ActionButton {
 				'href' => '/main/edit?useskin=wikiamobile',
 				'text' => wfMessage( 'wikiacuratedcontent-edit-mobile-main-page' )->escaped(),
 				'id' => 'CuratedContentTool'
+			];
+		}
+
+		if ( !$this->isArticleCommentsEnabled()) {
+			$ret[] = [
+				'href' => $this->contentActions['talk']['href'],
+				'text' => wfMessage('page-header-action-button-talk')
+					->numParams( $this->pageStatsService->getCommentsCount() )
+					->escaped(),
+				'id' => 'TalkPageLink',
 			];
 		}
 
@@ -99,5 +113,9 @@ class ActionButton {
 			$this->buttonAction = $this->contentActions['viewsource'];
 			unset( $this->contentActions['ve-edit'], $this->contentActions['edit'] );
 		}
+	}
+
+	private function isArticleCommentsEnabled(): bool {
+		return class_exists( 'ArticleComment' ) && \ArticleCommentInit::ArticleCommentCheckTitle( $this->title );
 	}
 }

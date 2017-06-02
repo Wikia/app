@@ -7,6 +7,7 @@ $messages['en'] = array(
 	'page-header-counter-blog-posts' => '{{FORMATNUM:$1}} {{PLURAL:$1|post|posts}}',
 	'page-header-counter-forum-threads' => '{{FORMATNUM:$1}} {{PLURAL:$1|thread|threads}}',
 	'page-header-counter-forum-threads-with-active' => '{{FORMATNUM:$1}} {{PLURAL:$1|thread|threads}} | {{FORMATNUM:$2}} active',
+	'page-header-action-button-talk' => 'Talk ({{FORMATNUM:$1}})',
 );
 
 $messages['qqq'] = array(
@@ -15,4 +16,5 @@ $messages['qqq'] = array(
 	'page-header-counter-blog-posts' => 'Number of posts on the current blog',
 	'page-header-counter-forum-threads' => 'Number of forum threads',
 	'page-header-counter-forum-threads-with-active' => 'Number of active forum threads',
+	'page-header-action-button-talk' => 'Label for link to talk page, number of talk pages in parenthesis'
 );

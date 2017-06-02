@@ -20,7 +20,9 @@ class PageHeaderController extends \WikiaController {
 	}
 
 	public function actionButton() {
-		$button = new ActionButton();
+		global $wgTitle;
+
+		$button = new ActionButton( $wgTitle );
 
 		$this->setVal('buttonAction', $button->getButtonAction());
 		$this->setval('dropdownActions', $button->getDropdownActions());
