@@ -43,40 +43,7 @@ abstract class WikiaBaseTest extends TestCase {
 	private $mockProxy = null;
 	private $mockMessageCacheGet = null;
 
-	private static $testRunTime = 0;
 	private static $numberSlowTests = 0;
-
-	/**
-	 * Print out currently run test
-	 */
-	public static function setUpBeforeClass() {
-		global $wgAnnotateTestSpeed;
-
-		error_reporting(E_ALL);
-		$testClass = get_called_class();
-		echo "\nRunning '{$testClass}'...";
-
-		self::$testRunTime = microtime( true );
-		self::$numberSlowTests = 0;
-
-		if ($wgAnnotateTestSpeed) {
-			WikiaTestSpeedAnnotator::initialize();
-		}
-	}
-
-	/**
-	 * Print out time it took to run all tests from current test class
-	 */
-	public static function tearDownAfterClass() {
-		global $wgAnnotateTestSpeed;
-
-		$time = round( ( microtime( true ) - self::$testRunTime ) * 1000, 2 );
-		echo "done in {$time} ms [" . self::$numberSlowTests . ' slow tests]';
-
-		if ($wgAnnotateTestSpeed) {
-			WikiaTestSpeedAnnotator::execute();
-		}
-	}
 
 	protected function setUp() {
 		$this->startTime = microtime(true);
@@ -500,29 +467,6 @@ abstract class WikiaBaseTest extends TestCase {
 		}
 
 		return $this->callOriginalMethod( MessageCache::singleton(), 'get', func_get_args() );
-	}
-
-	/**
-	 * Mark this test as skipped. Puts extra information in the logs.
-	 *
-	 * @param string $message
-	 */
-	public static function markTestSkipped($message = '') {
-		$backtrace = wfDebugBacktrace(3);
-		$entry = $backtrace[1];
-
-		Wikia::log(wfFormatStackFrame($entry), false, "marked as skipped - $message");
-        parent::markTestSkipped($message);
-    }
-
-	/**
-	 * Mark this test as incomplete. Puts extra information in the logs.
-	 *
-	 * @param string $message
-	 */
-	public static function markTestIncomplete($message = '') {
-		Wikia::log(__METHOD__, '', $message);
-		parent::markTestIncomplete($message);
 	}
 
 	/**

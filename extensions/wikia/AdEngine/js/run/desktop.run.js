@@ -98,6 +98,7 @@ require([
 
 // Inject extra slots
 require([
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.slot.bottomLeaderboard',
 	'ext.wikia.adEngine.slot.highImpact',
@@ -106,6 +107,7 @@ require([
 	'wikia.document',
 	'wikia.window'
 ], function (
+	adContext,
 	slotsContext,
 	bottomLeaderboard,
 	highImpact,
@@ -115,6 +117,7 @@ require([
 	win
 ) {
 	'use strict';
+	var context = adContext.getContext();
 
 	function initDesktopSlots() {
 		var incontentPlayerSlotName = 'INCONTENT_PLAYER';
@@ -128,6 +131,9 @@ require([
 	}
 
 	win.addEventListener('wikia.uap', bottomLeaderboard.init);
+	if (context.opts.adMixExperimentEnabled && context.slots.adMixToUnblock.indexOf('BOTTOM_LEADERBOARD')) {
+		win.addEventListener('wikia.not_uap', bottomLeaderboard.init);
+	}
 
 	if (doc.readyState === 'complete') {
 		initDesktopSlots();

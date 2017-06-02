@@ -3261,6 +3261,14 @@ $config['community_header_js'] = [
 	],
 ];
 
+$config['page_header_scss'] = [
+    'type' => AssetsManager::TYPE_SCSS,
+    'skin' => [ 'oasis' ],
+    'assets' => [
+        '//extensions/wikia/PageHeader/styles/index.scss',
+    ],
+];
+
 $config['ad_mix_experiment_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
