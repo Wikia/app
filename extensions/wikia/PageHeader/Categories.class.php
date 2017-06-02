@@ -3,6 +3,7 @@
 namespace Wikia\PageHeader;
 
 use CategoryHelper;
+use Html;
 use RequestContext;
 use Title;
 
@@ -93,10 +94,14 @@ class Categories {
 		 * @var $category Title
 		 */
 		foreach ( $categoriesArray as $i => $category ) {
-			$categoriesLinks[] = '<a' .
-				' href="' . $category->getLocalURL() . '"' .
-				' data-tracking="categories-top-' . $i . '"' .
-				'>' . $category->getText() . '</a>';
+			$categoriesLinks[] = Html::element(
+				'a',
+				[
+					'href' => $category->getLocalURL(),
+					'data-tracking' => 'categories-top-' . $i
+				],
+				$category->getText()
+			);
 		}
 
 		$categoriesHTML = join( ', ', $categoriesLinks );

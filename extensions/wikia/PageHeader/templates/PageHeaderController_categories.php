@@ -9,7 +9,16 @@
 					<div class="wds-dropdown__content page-header__categories-dropdown-content">
 						<ul class="wds-list wds-is-linked">
 							<?php foreach ( $categories->moreCategories as $i => $category ): ?>
-								<li><a href="<?= $category->getLocalURL() ?>" data-tracking="categories-top-more-<?= $i ?>"><?= $category->getText(); ?></a></li>
+								<li>
+									<?= Html::element(
+										'a',
+										[
+											'href' => $category->getLocalURL(),
+											'data-tracking' => 'categories-top-more-' . $i
+										],
+										$category->getText()
+									) ?>
+								</li>
 							<?php endforeach; ?>
 						</ul>
 					</div>
