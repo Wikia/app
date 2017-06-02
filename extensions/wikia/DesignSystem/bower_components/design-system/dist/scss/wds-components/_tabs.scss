@@ -2,18 +2,18 @@
 	align-items: flex-end;
 	display: flex;
 	list-style: none;
+	margin: 0;
 	padding: 0;
 }
 
 .wds-tabs__tab {
-	$tab-padding-horizontal: 12px;
-	$tab-padding-vertical: 13px;
+	$tab-margin-horizontal: 12px;
 	$tab-default-color: $wds-color-link;
 	$tab-hover-color: darken($tab-default-color, 20%);
 
-	cursor: pointer;
+	cursor: default;
+	flex-shrink: 0;
 	line-height: 14px;
-	padding: 0 $tab-padding-horizontal;
 	position: relative;
 
 	&-label {
@@ -22,24 +22,29 @@
 		display: inline-flex;
 		font-size: $wds-typescale-size-minus-2;
 		font-weight: bold;
-		padding: $tab-padding-vertical 0;
+		height: 40px;
+		margin: 0 $tab-margin-horizontal;
 		text-align: center;
 		text-decoration: none;
 		text-transform: uppercase;
 		transition: color .1s;
+		white-space: nowrap;
 
 		:not(:first-child):not(:only-child) {
-			margin: 0 4px;
+			margin-left: 4px;
+		}
+
+		> a {
+			align-items: center;
+			display: inline-flex;
+			height: 100%;
+			text-decoration: none;
 		}
 	}
 
 	&.wds-is-current {
-		border-bottom: 2px solid $tab-default-color;
-		transition: border-color .1s;
-
-		.wds-tabs__tab-label {
-			padding-bottom: $tab-padding-vertical - 2px;
-		}
+		box-shadow: inset 0 -2px 0 0 $tab-default-color;
+		transition: box-shadow .1s;
 	}
 
 	&.wds-is-disabled {
@@ -48,7 +53,7 @@
 	}
 
 	.wds-dropdown__content {
-		left: -$wds-dropdown-padding;
+		left: -$wds-dropdown-padding + $tab-margin-horizontal;
 		transform: none;
 	}
 
@@ -56,10 +61,14 @@
 	&:hover {
 		.wds-tabs__tab-label {
 			color: $tab-hover-color;
+
+			> a {
+				color: $tab-hover-color;
+			}
 		}
 
 		&.wds-is-current {
-			border-color: $tab-hover-color;
+			box-shadow: inset 0 -2px 0 0 $tab-hover-color;
 		}
 	}
 }
