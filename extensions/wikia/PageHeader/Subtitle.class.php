@@ -16,11 +16,11 @@ class Subtitle {
 	/**
 	 * @var mixed|null
 	 */
-	public $supressPageSubtitle;
+	public $suppressPageSubtitle;
 
 	public function __construct( \WikiaApp $app ) {
-		$this->supressPageSubtitle = $app->wg->SupressPageSubtitle;
-		if ( !$this->supressPageSubtitle ) {
+		$this->suppressPageSubtitle = $app->wg->SuppressPageSubtitle;
+		if ( !$this->suppressPageSubtitle ) {
 			$this->subtitle = $this->getSubtitle();
 			//watch list uses that, pageSubject?
 			$this->pageSubtitle = $this->handlePageSubtitle();

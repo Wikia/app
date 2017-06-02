@@ -1,4 +1,4 @@
-<? if (!$subtitle->supressPageSubtitle): ?>
+<? if (!$subtitle->suppressPageSubtitle): ?>
 	<? if ( !empty( $subtitle->pageSubtitle ) ): ?>
 		<div class="page-header__page-subtitle"><?= $subtitle->pageSubtitle ?></div>
 	<? endif;
