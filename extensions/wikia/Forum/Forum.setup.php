@@ -106,6 +106,7 @@ $wgResourceModules['ext.wikia.forum'] = [
 	],
 	'dependencies' => [ 'ext.wikia.wall' ],
 	'source' => 'common',
+
 	'localBasePath' => __DIR__,
 	'remoteExtPath' => 'wikia/Forum',
 ];
@@ -116,6 +117,7 @@ $wgResourceModules['ext.wikia.forum.miniEditor'] = [
 	],
 	'dependencies' => [ 'ext.wikia.wall.miniEditor' ],
 	'source' => 'common',
-	'localBasePath' => 'MiniEditor',
+
+	'localBasePath' => __DIR__ . '/../MiniEditor',
 	'remoteExtPath' => 'wikia/MiniEditor',
 ];

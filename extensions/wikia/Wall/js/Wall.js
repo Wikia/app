@@ -1,4 +1,4 @@
-(function (window, $, mw) {
+require(['jquery', 'mw', 'wikia.window'], function ($, mw, window) {
 	'use strict';
 
 	var Wall = $.createClass(Object, {
@@ -933,4 +933,4 @@
 	// Exports
 	window.Wall = Wall;
 
-})(window, jQuery, mediaWiki);
+});

@@ -1,10 +1,10 @@
-/* global Wall:true, WikiaButtons */
-(function (window, $) {
+/* global require */
+require(['jquery', 'mw', 'wikia.window'], function ($, mw, context) {
 	'use strict';
 
-	Wall.NewMessageForm = $.createClass(Wall.MessageForm, {
+	context.Wall.NewMessageForm = $.createClass(context.Wall.MessageForm, {
 		constructor: function () {
-			Wall.NewMessageForm.superclass.constructor.apply(this, arguments);
+			context.Wall.NewMessageForm.superclass.constructor.apply(this, arguments);
 
 			this.initElements();
 
@@ -130,8 +130,8 @@
 				this.proxy(function (data) {
 					var dataJson = JSON.parse(data.responseText);
 
-					if (dataJson['reason'] == "badcontent") {
-						$.showModal($.msg('wall-posting-message-failed-filter-title'), $.msg('wall-posting-message-failed-filter-body') + "\n" + dataJson['blockInfo']);
+					if (dataJson.reason === "badcontent") {
+						$.showModal($.msg('wall-posting-message-failed-filter-title'), $.msg('wall-posting-message-failed-filter-body') + "\n" + dataJson.blockInfo);
 					} else {
 						$.showModal($.msg('wall-posting-message-failed-title'), $.msg('wall-posting-message-failed-body'));
 					}
@@ -171,8 +171,8 @@
 
 			newmsg.find('.msg-body').show();
 
-			if (window.skin && window.skin !== 'monobook') {
-				WikiaButtons.init(newmsg);
+			if (mw.config.get('skin') !== 'monobook') {
+				context.WikiaButtons.init(newmsg);
 			}
 
 			this.fire('afterNewMessagePost', newmsg);
@@ -259,6 +259,6 @@
 		}
 	});
 
-	Wall.settings.classBindings.newMessageForm = Wall.NewMessageForm;
+	context.Wall.settings.classBindings.newMessageForm = context.Wall.NewMessageForm;
 
-})(window, jQuery);
+});

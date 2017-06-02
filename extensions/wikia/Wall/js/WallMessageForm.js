@@ -1,11 +1,11 @@
-/* global Wall:true, UserLoginAjaxForm, UserLoginModal, Observable */
-(function (window, $, mw) {
+/* global require */
+require(['jquery', 'mw', 'wikia.window', 'wikia.ui.factory'], function ($, mw, context, uiFactory) {
 	'use strict';
 
-	Wall.MessageForm = $.createClass(Observable, {
-		bucky: window.Bucky('Wall.MessageForm'),
+	context.Wall.MessageForm = $.createClass(context.Observable, {
+		bucky: context.Bucky('Wall.MessageForm'),
 		constructor: function (page, model) {
-			Wall.MessageForm.superclass.constructor.apply(this, arguments);
+			context.Wall.MessageForm.superclass.constructor.apply(this, arguments);
 			this.model = model;
 			this.page = page;
 			this.wall = $('#Wall');
@@ -16,64 +16,62 @@
 
 			this.bucky.timer.start('showPreviewModal');
 
-			require(['wikia.ui.factory'], function (uiFactory) {
-				uiFactory.init(['modal']).then(function (uiModal) {
-					var previewModalConfig = {
-						vars: {
-							id: 'WallPreviewModal',
-							size: 'medium',
-							content: '<div class="WallPreview"><div class="WikiaArticle"></div></div>',
-							title: $.msg('preview'),
-							buttons: [{
-								vars: {
-									value: $.msg('savearticle'),
-									classes: ['normal', 'primary'],
-									data: [{
-										key: 'event',
-										value: 'publish'
-									}]
-								}
-							}, {
-								vars: {
-									value: $.msg('back'),
-									data: [{
-										key: 'event',
-										value: 'close'
-									}]
-								}
-							}]
-						}
-					};
-
-					uiModal.createComponent(previewModalConfig, function (previewModal) {
-
-						previewModal.bind('publish', function () {
-							previewModal.trigger('close');
-							publishCallback();
-						});
-
-						previewModal.show();
-						previewModal.deactivate();
-
-						$.nirvana.sendRequest({
-							controller: 'WallExternalController',
-							method: 'preview',
-							format: 'json',
-							data: {
-								convertToFormat: format,
-								metatitle: metatitle,
-								body: body
-							},
-							callback: function (data) {
-								var $content = previewModal.$content.find('.WallPreview .WikiaArticle');
-
-								$content.html(data.body);
-								mw.hook('wikipage.content').fire($content);
-								previewModal.activate();
-
-								self.bucky.timer.stop('showPreviewModal');
+			uiFactory.init(['modal']).then(function (uiModal) {
+				var previewModalConfig = {
+					vars: {
+						id: 'WallPreviewModal',
+						size: 'medium',
+						content: '<div class="WallPreview"><div class="WikiaArticle"></div></div>',
+						title: $.msg('preview'),
+						buttons: [{
+							vars: {
+								value: $.msg('savearticle'),
+								classes: ['normal', 'primary'],
+								data: [{
+									key: 'event',
+									value: 'publish'
+								}]
 							}
-						});
+						}, {
+							vars: {
+								value: $.msg('back'),
+								data: [{
+									key: 'event',
+									value: 'close'
+								}]
+							}
+						}]
+					}
+				};
+
+				uiModal.createComponent(previewModalConfig, function (previewModal) {
+
+					previewModal.bind('publish', function () {
+						previewModal.trigger('close');
+						publishCallback();
+					});
+
+					previewModal.show();
+					previewModal.deactivate();
+
+					$.nirvana.sendRequest({
+						controller: 'WallExternalController',
+						method: 'preview',
+						format: 'json',
+						data: {
+							convertToFormat: format,
+							metatitle: metatitle,
+							body: body
+						},
+						callback: function (data) {
+							var $content = previewModal.$content.find('.WallPreview .WikiaArticle');
+
+							$content.html(data.body);
+							mw.hook('wikipage.content').fire($content);
+							previewModal.activate();
+
+							self.bucky.timer.stop('showPreviewModal');
+						}
 					});
 				});
 			});
@@ -86,8 +84,8 @@
 		},
 
 		loginBeforeSubmit: function (action) {
-			if (window.wgDisableAnonymousEditing && !window.wgUserName) {
-				if (!Wall.isMonobook) {
+			if (mw.config.get('wgDisableAnonymousEditing') && !mw.config.get('wgUserName')) {
+				if (!context.Wall.isMonobook) {
 					window.wikiaAuthModal.load({
 						forceLogin: true,
 						origin: 'wall-and-forum',
@@ -97,7 +95,7 @@
 						}
 					});
 				} else {
-					Wall.showMonobookLoginPopup();
+					context.Wall.showMonobookLoginPopup();
 				}
 			} else {
 				action(true);
@@ -106,7 +104,7 @@
 		},
 
 		reloadAfterLogin: function () {
-			UserLoginAjaxForm.prototype.reloadPage();
+			context.UserLoginAjaxForm.prototype.reloadPage();
 		},
 
 		getFormat: function () {
@@ -119,4 +117,4 @@
 		}
 	});
 
-})(window, jQuery, mediaWiki);
+});

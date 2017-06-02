@@ -1,8 +1,8 @@
-/* global Wall:true, Observable */
-(function ($, mw) {
+/* global require */
+require(['jquery', 'mw', 'wikia.window'], function ($, mw, context) {
 	'use strict';
 
-	Wall.BackendBridge = $.createClass(Observable, {
+	context.Wall.BackendBridge = $.createClass(context.Observable, {
 		pageController: 'WallExternalController',
 		bucky: window.Bucky('Wall.BackendBridge'),
 
@@ -254,4 +254,4 @@
 			});
 		}
 	});
-})(jQuery, mediaWiki);
+});

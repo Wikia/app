@@ -206,7 +206,8 @@ $wgResourceModules['ext.wikia.wall.miniEditor'] = [
 	],
 	'dependencies' => [ 'ext.wikia.wall' ],
 	'source' => 'common',
-	'localBasePath' => 'MiniEditor',
+
+	'localBasePath' => __DIR__ . '/../MiniEditor',
 	'remoteExtPath' => 'wikia/MiniEditor',
 ];
 

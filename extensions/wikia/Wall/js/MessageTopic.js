@@ -1,4 +1,7 @@
-(function($) {
+/* global require */
+require(['jquery', 'mw'], function($, mw) {
+	'use strict';
+
 	var MessageTopic = function(el, options) {
 		this.el = el;
 		this.options = options;
@@ -66,7 +69,7 @@
 		handleKeypress: function(e) {
 			var code = e.keyCode || e.which,
 				query = this.input.val();
-			if (code == 13 && query) {
+			if (code === 13 && query) {
 				var self = this;
 				$.when(this.checkTopic(query)).done(function(exists) {
 					if(exists) {
@@ -82,7 +85,7 @@
 		getSuggestions: function(q) {
 			var d = $.Deferred();
 			$.ajax({
-				url: wgServer + wgScript,
+				url: mw.config.get('wgServer') + mw.config.get('wgScript'),
 				data: {
 					action: 'ajax',
 					rs: 'getLinkSuggest',
@@ -126,8 +129,8 @@
 				$.loadMustache()
 			).then(function() {
 				messageTopic.autocomplete = messageTopic.input.autocomplete({
-					serviceUrl: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json&nospecial=1&nsfilter=0',
-					onSelect: function(value, data) {
+					serviceUrl: mw.config.get('wgServer') + mw.config.get('wgScript') + '?action=ajax&rs=getLinkSuggest&format=json&nospecial=1&nsfilter=0',
+					onSelect: function(value) {
 						$().log("on select");
 						messageTopic.addSelection(value);
 						messageTopic.input.val('');
@@ -154,4 +157,4 @@
 			return messageTopic;
 		});
 	};
-})(jQuery);
+});
