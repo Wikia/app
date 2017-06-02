@@ -2,7 +2,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'multiwikifinder-desc' => 'Staff tool to search for a specific title across Fandom',
+	'multiwikifinder-desc' => 'Staff tool to search for a specific title across FANDOM',
 	'multidelete-desc' => 'Special Multi Wiki Delete',
 	'multiedit-desc' => 'Special Multi Wiki Edit',
 	'multitasks-link-back-label' => 'here',
@@ -110,7 +110,7 @@ $messages['en'] = array(
 	'multiwikienterpagename' => 'Enter a pagename:',
 	'multiwikirecords' => '$1 {{PLURAL:$1|wiki|wikis}} found',
 	'multiwikifinder-redirect' => 'redirect',
-	'action-multiwikifinder' => 'search for a specific title across Fandom',
+	'action-multiwikifinder' => 'search for a specific title across FANDOM',
 	'right-multidelete' => 'Delete many pages on a single wiki, or one page across many wikis',
 	'right-multiwikifinder' => 'Find pages on many wikis',
 	'right-multiwikiedit' => 'Edit a page on many wikis at once',
@@ -732,7 +732,7 @@ $messages['cy'] = array(
 );
 
 $messages['de'] = array(
-	'multiwikifinder-desc' => 'Staff tool to search for a specific title across Fandom',
+	'multiwikifinder-desc' => 'Staff tool to search for a specific title across FANDOM',
 	'multidelete-desc' => 'Spezielle Mehrfachwikilöschung',
 	'multiedit-desc' => 'Spezielle Mehrfachwikibearbeitung',
 	'multitasks-link-back-label' => 'hier',
@@ -840,7 +840,7 @@ $messages['de'] = array(
 	'multiwikienterpagename' => 'Gib einen Seitennamen an:',
 	'multiwikirecords' => '$1 {{PLURAL:$1|Wiki|Wikis}} gefunden',
 	'multiwikifinder-redirect' => 'weiterleiten',
-	'action-multiwikifinder' => 'Fandom nach einem bestimmten Titel durchsuchen',
+	'action-multiwikifinder' => 'FANDOM nach einem bestimmten Titel durchsuchen',
 	'right-multidelete' => 'Viele Seiten in einem einzigen Wiki oder eine Seite auf vielen Wikis löschen',
 	'right-multiwikifinder' => 'Seiten auf vielen Wikis finden',
 	'right-multiwikiedit' => 'Eine Seite auf vielen Wikis auf einmal bearbeiten',
@@ -925,7 +925,7 @@ $messages['eo'] = array(
 );
 
 $messages['es'] = array(
-	'multiwikifinder-desc' => 'Staff tool to search for a specific title across Fandom',
+	'multiwikifinder-desc' => 'Staff tool to search for a specific title across FANDOM',
 	'multidelete-desc' => 'Especial de Borrado múltiple',
 	'multiedit-desc' => 'Especial de Multiwiki Edit',
 	'multitasks-link-back-label' => 'aquí',
@@ -1033,7 +1033,7 @@ $messages['es'] = array(
 	'multiwikienterpagename' => 'Ingresa un nombre de página:',
 	'multiwikirecords' => '$1 {{PLURAL:$1|wiki encontrado|wikis encontrados}}',
 	'multiwikifinder-redirect' => 'redirección',
-	'action-multiwikifinder' => 'busca por un título en específico a través de Fandom',
+	'action-multiwikifinder' => 'busca por un título en específico a través de FANDOM',
 	'right-multidelete' => 'Borrar muchas páginas en un único wiki, o una página en muchos wikis',
 	'right-multiwikifinder' => 'Encontrar páginas en muchos wikis',
 	'right-multiwikiedit' => 'Editar una página en muchos wikis a la vez',
@@ -1123,7 +1123,7 @@ $messages['fi'] = array(
 );
 
 $messages['fr'] = array(
-	'multiwikifinder-desc' => 'Staff tool to search for a specific title across Fandom',
+	'multiwikifinder-desc' => 'Staff tool to search for a specific title across FANDOM',
 	'multidelete-desc' => 'Suppression sur plusieurs wikias',
 	'multiedit-desc' => 'Modification multi-wikis spéciale',
 	'multitasks-link-back-label' => 'ici',
@@ -1231,7 +1231,7 @@ $messages['fr'] = array(
 	'multiwikienterpagename' => 'Entrez un nom de page :',
 	'multiwikirecords' => '$1 {{PLURAL:$1|wiki trouvé|wikis trouvés}}',
 	'multiwikifinder-redirect' => 'redirection',
-	'action-multiwikifinder' => 'rechercher un titre spécifique sur Fandom',
+	'action-multiwikifinder' => 'rechercher un titre spécifique sur FANDOM',
 	'right-multidelete' => 'Supprimer plusieurs pages sur un wiki spécifique ou une page dans plusieurs wikis',
 	'right-multiwikifinder' => 'Trouver des pages sur plusieurs wikis',
 	'right-multiwikiedit' => 'Modifier une page sur plusieurs wikis à la fois',
@@ -1573,8 +1573,8 @@ $messages['it'] = array(
 	'multidelete_this_wiki' => 'questa wiki',
 	'multidelete_all_wikis' => 'Tutte le wiki',
 	'multidelete_selected_wikis' => 'wiki selezionate',
-	'action-multiwikifinder' => 'cerca un titolo specifico in Fandom',
-	'multiwikifinder-desc' => 'Staff tool to search for a specific title across Fandom',
+	'action-multiwikifinder' => 'cerca un titolo specifico in FANDOM',
+	'multiwikifinder-desc' => 'Staff tool to search for a specific title across FANDOM',
 	'multidelete-desc' => 'Special Multi Wiki Delete',
 	'multiedit-desc' => 'Special Multi Wiki Edit',
 	'multiwikiedit_confirm' => 'CONFIRM',
@@ -1781,7 +1781,7 @@ $messages['ja'] = array(
 	'multiwikirecords' => '$1 のウィキが見つかりました',
 	'multiwikifinder-redirect' => '転送',
 	'action-multiwikifinder' => 'Fandom全体で特定のタイトルを検索',
-	'multiwikifinder-desc' => 'Staff tool to search for a specific title across Fandom',
+	'multiwikifinder-desc' => 'Staff tool to search for a specific title across FANDOM',
 	'multidelete-desc' => 'Special Multi Wiki Delete',
 	'multiedit-desc' => 'Special Multi Wiki Edit',
 	'action-multiwikiedit' => 'edit a batch of pages',
@@ -2631,7 +2631,7 @@ $messages['pfl'] = array(
 );
 
 $messages['pl'] = array(
-	'multiwikifinder-desc' => 'Staff tool to search for a specific title across Fandom',
+	'multiwikifinder-desc' => 'Staff tool to search for a specific title across FANDOM',
 	'multitasks-link-back-label' => 'tutaj',
 	'multiwikiedit' => 'Zbiorowa edycja stron',
 	'multiwikiedit_button' => 'EDYTUJ',
@@ -2739,7 +2739,7 @@ Przesyłany plik powinien zawierać nazwę strony i opcjonalny powód, oddzielon
 	'multiwikienterpagename' => 'Wprowadź nazwę strony:',
 	'multiwikirecords' => 'znaleziono $1 {{PLURAL:$1|wiki}}',
 	'multiwikifinder-redirect' => 'przekierowanie',
-	'action-multiwikifinder' => 'szukaj tytułu strony w całym portalu Fandom',
+	'action-multiwikifinder' => 'szukaj tytułu strony w całym portalu FANDOM',
 	'multidelete-desc' => 'Special Multi Wiki Delete',
 	'multiedit-desc' => 'Special Multi Wiki Edit',
 	'right-multidelete' => 'Usuwanie wielu stron na jednej wiki lub jednej strony na wielu wiki',
@@ -2990,8 +2990,8 @@ $messages['pt'] = array(
 	'multiwikienterpagename' => 'Introduza um nome de página:',
 	'multiwikirecords' => '$1 wikia(s) encontrada(s)',
 	'multiwikifinder-redirect' => 'redirect',
-	'action-multiwikifinder' => 'search for a specific title across Fandom',
-	'multiwikifinder-desc' => 'Staff tool to search for a specific title across Fandom',
+	'action-multiwikifinder' => 'search for a specific title across FANDOM',
+	'multiwikifinder-desc' => 'Staff tool to search for a specific title across FANDOM',
 	'multidelete-desc' => 'Special Multi Wiki Delete',
 	'multiedit-desc' => 'Special Multi Wiki Edit',
 	'right-multidelete' => 'Delete várias páginas em uma única wiki, ou uma página por várias wikis',
@@ -3034,7 +3034,7 @@ $messages['roa-tara'] = array(
 );
 
 $messages['ru'] = array(
-	'multiwikifinder-desc' => 'Staff tool to search for a specific title across Fandom',
+	'multiwikifinder-desc' => 'Staff tool to search for a specific title across FANDOM',
 	'multitasks-link-back-label' => 'здесь',
 	'multiwikiedit' => 'Изменение набора страниц',
 	'multiwikiedit_button' => 'ПРАВИТЬ',
@@ -3751,7 +3751,7 @@ $messages['vi'] = array(
 );
 
 $messages['zh-hans'] = array(
-	'multiwikifinder-desc' => 'Staff tool to search for a specific title across Fandom',
+	'multiwikifinder-desc' => 'Staff tool to search for a specific title across FANDOM',
 	'multidelete-desc' => '特殊的多wiki删除',
 	'multiedit-desc' => '特殊的多wiki编辑',
 	'multitasks-link-back-label' => '这里',
@@ -3900,7 +3900,7 @@ $messages['zh-hant'] = array(
 	'multidelete_swedish_wikis' => '所有的瑞典語wiki',
 	'multidelete_german_wikis' => '所有的德語wiki',
 	'action-multiwikifinder' => '在Fandom上搜索特定標題',
-	'multiwikifinder-desc' => 'Staff tool to search for a specific title across Fandom',
+	'multiwikifinder-desc' => 'Staff tool to search for a specific title across FANDOM',
 	'multidelete-desc' => 'Special Multi Wiki Delete',
 	'multiedit-desc' => 'Special Multi Wiki Edit',
 	'multiwikiedit' => 'Edit batch of pages',

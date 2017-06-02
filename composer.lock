@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "454987dab34995a9def4da8e4938061c",
+    "content-hash": "5176437708b5c854d526a2f1b537afdd",
     "packages": [
         {
             "name": "composer/installers",
@@ -1047,11 +1047,11 @@
         },
         {
             "name": "mediawiki/semantic-media-wiki",
-            "version": "2.4.2.5",
+            "version": "2.4.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Wikia/SemanticMediaWiki",
-                "reference": "af1142bca840733c90c699a5c0bcc18a379d8b12"
+                "reference": "256773e5f3db4191cbc800841448b9a52aa11dcf"
             },
             "require": {
                 "composer/installers": "1.*,>=1.0.1",
@@ -1152,7 +1152,7 @@
                 "wiki": "https://www.semantic-mediawiki.org/wiki/",
                 "source": "https://github.com/SemanticMediaWiki/SemanticMediaWiki"
             },
-            "time": "2017-06-01T11:20:39+00:00"
+            "time": "2017-06-02T06:15:22+00:00"
         },
         {
             "name": "mediawiki/validator",

@@ -12,14 +12,14 @@ class WikiaTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @param LocalFile $fileMock
+	 * @param array $fileMockData
 	 * @param string $expectedUrl
 	 * @param string $expectedSize
 	 *
 	 * @dataProvider getWikiLogoMetadataDataProvider
 	 */
 	public function testGetWikiLogoMetadata( $fileMockData, $expectedUrl, $expectedSize ) {
-		$fileMock = $this->mockClassWithMethods( 'stdClass', $fileMockData );
+		$fileMock = $this->createConfiguredMock( LocalFile::class, $fileMockData );
 
 		$this->mockGlobalFunction( 'wfLocalFile', $fileMock );
 		$this->mockGlobalVariable( 'wgResourceBasePath', 'http://wikia.net/__cb123' );
