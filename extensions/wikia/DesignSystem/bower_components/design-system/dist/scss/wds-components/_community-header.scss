@@ -56,7 +56,7 @@
 		font-size: $wds-typescale-size-plus-3;
 		font-weight: 600;
 		line-height: 1;
-		margin: 28px 0 0 18px;
+		margin: 27px 0 0 18px;
 		overflow: hidden;
 
 		a {
@@ -65,6 +65,8 @@
 			@media #{$wds-breakpoint-l-up} {
 				display: block;
 				height: 100%;
+				// Safari cut bottom of letter, line-height set to 1.1 fixed it
+				line-height: 1.1;
 				overflow: hidden;
 				text-decoration: none;
 				text-overflow: ellipsis;
