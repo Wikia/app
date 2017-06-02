@@ -23,9 +23,7 @@
 		word-wrap: break-word;
 	}
 
-	&__dropdown-padding {
-		padding-bottom: 10px;
-	}
+
 
 	&__separator {
 		background-color: $color-page-border;
@@ -44,28 +42,31 @@
 	&__categories {
 		@include align-items(flex-start);
 		@include flexbox();
-		font-size: 12px;
+		font-size: $wds-typescale-size-minus-2;
 		padding-top: 12px;
 
-		&__in {
+		&-in {
 			font-weight: 600;
 			padding-right: 4px;
+		}
+
+		&-dropdown {
+			padding-bottom: 10px;
+
+			&-content {
+				font-style: normal;
+			}
 		}
 
 		&-links {
 			color: $color-links;
 			font-style: italic;
-			font-size: 12px;
 			line-height: 16px;
 			word-break: break-word;
 
 			> a:last-child {
 				padding-bottom: 10px;
 				display: inline-block;
-			}
-
-			> div > div {
-				font-style: normal;
 			}
 		}
 	}
