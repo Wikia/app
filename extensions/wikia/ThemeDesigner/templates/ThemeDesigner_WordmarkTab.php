@@ -1,45 +1,11 @@
 <section id="WordmarkTab" class="WordmarkTab">
 	<fieldset class="text">
-        <span id="or"><?= wfMsg('themedesigner-or') ?></span>
 		<h1><?= wfMsg('themedesigner-text-wordmark') ?></h1>
-
-		<ul class="controls">
-			<li>
-				<h2><?= wfMsg('themedesigner-font') ?></h2>
-				<select id="wordmark-font">
-					<option value="default"><?= wfMsg('themedesigner-default') ?></option>
-					<option value="cpmono">CP Mono</option>
-					<option value="fontin">Fontin</option>
-					<option value="garton">Garton</option>
-					<option value="idolwild">Idolwild</option>
-					<option value="imfell">IM Fell</option>
-					<option value="josefin">Josefin</option>
-					<option value="megalopolis">Megalopolis</option>
-					<option value="orbitron">Orbitron</option>
-					<option value="pixiefont">Pixiefont</option>
-					<option value="prociono">Prociono</option>
-					<option value="tangerine">Tangerine</option>
-					<option value="titillium">Titillium</option>
-					<option value="veggieburger">Veggieburger</option>
-					<option value="yanone">Yanone</option>
-				</select>
-			</li>
-			<li>
-				<h2><?= wfMsg('themedesigner-size') ?></h2>
-				<select id="wordmark-size">
-					<option value="small"><?= wfMsg('themedesigner-small') ?></option>
-					<option value="medium"><?= wfMsg('themedesigner-medium') ?></option>
-					<option value="large"><?= wfMsg('themedesigner-large') ?></option>
-				</select>
-			</li>
-		</ul>
 
 		<div id="wordmark-edit">
 			<input type="text">
 			<button><?= wfMsg('themedesigner-button-change-text') ?></button>
 		</div>
-
-		<div id="wordmark-shield"></div>
 
 	</fieldset>
 	<fieldset class="graphic">

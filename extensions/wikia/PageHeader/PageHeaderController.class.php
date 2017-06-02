@@ -6,7 +6,7 @@ class PageHeaderController extends \WikiaController {
 
 	public function index() {
 		$this->setVal( 'pageTitle', new PageTitle( $this->app ) );
-		$this->setVal( 'counter', new Counter( $this->app ) );
+		$this->setVal( 'counter', new Counter() );
 	}
 
 	public function subtitle() {

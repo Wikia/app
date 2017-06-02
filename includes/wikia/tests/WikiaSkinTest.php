@@ -30,9 +30,11 @@ class WikiaSkinTest extends \WikiaBaseTest {
 			$links .= \Html::linkedStyle($style);
 		}
 
-		$this->mockGlobalVariable('wgOut', $this->mockClassWithMethods('OutputPage', [
+		$outputPageMock = $this->createConfiguredMock( \OutputPage::class, [
 			'buildCssLinks' => $links
-		]));
+		] );
+
+		$this->mockGlobalVariable('wgOut', $outputPageMock );
 	}
 
 	/**

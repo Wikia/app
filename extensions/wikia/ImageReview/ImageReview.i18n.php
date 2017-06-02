@@ -4,7 +4,7 @@ $messages = [];
 
 $messages['en'] = [
 	'imagereview-desc' => 'Internal tool to help review images post-upload and remove Terms of Use violations',
-	'imagereview-reason' => 'Violation of Fandom\'s [[wikia:Terms of Use|Terms of Use]]',
+	'imagereview-reason' => 'Violation of FANDOM\'s [[wikia:Terms of Use|Terms of Use]]',
 	'imagereview-header' => 'Images awaiting review',
 	'imagereview-header-questionable' => 'Questionable images awaiting staff review',
 	'imagereview-header-rejected' => 'Rejected images awaiting staff review',
@@ -53,7 +53,7 @@ $messages['qqq'] = [
 ];
 
 $messages['pl'] = [
-	'imagereview-reason' => 'Naruszenie [[wikia:Terms of Use|Regulaminu]] portalu Fandom',
+	'imagereview-reason' => 'Naruszenie [[wikia:Terms of Use|Regulaminu]] portalu FANDOM',
 	'imagereview-header-questionable' => 'Wątpliwe obrazy czekające na przegląd',
 	'imagereview-header-rejected' => 'Odrzucone obrazy czekające na przegląd',
 	'imagereview-header' => 'Obrazy oczekujące na przegląd',
@@ -72,7 +72,7 @@ $messages['pl'] = [
 ];
 
 $messages['de'] = [
-	'imagereview-reason' => 'Verletzung der [http://de.wikia.com/Nutzungsbedingungen Nutzungsbedingungen] von Fandom',
+	'imagereview-reason' => 'Verletzung der [http://de.wikia.com/Nutzungsbedingungen Nutzungsbedingungen] von FANDOM',
 	'imagereview-header-questionable' => 'Fragwürdige Bilder, die von den Mitarbeitern noch geprüft werden müssen',
 	'imagereview-header-rejected' => 'Zurückgewiesene Bilder, die von Mitarbeitern noch überprüft werden müssen',
 	'imagereview-header' => 'Bilder, die noch nicht überprüft wurden',
@@ -91,7 +91,7 @@ $messages['de'] = [
 ];
 
 $messages['fr'] = [
-	'imagereview-reason' => 'Infraction aux [[wikia:Terms of Use|Conditions d\'utilisation]] de Fandom',
+	'imagereview-reason' => 'Infraction aux [[wikia:Terms of Use|Conditions d\'utilisation]] de FANDOM',
 	'imagereview-header-questionable' => 'Images discutables en attente de vérification par le staff',
 	'imagereview-header-rejected' => 'Images rejetées en attente de vérification par le staff',
 	'imagereview-header' => 'Images en attente de vérification',
@@ -115,11 +115,11 @@ $messages['ru'] = [
 ];
 
 $messages['es'] = [
-	'imagereview-reason' => 'Violación de los [[w:c:es:Términos de uso|Términos de uso]] de Fandom',
+	'imagereview-reason' => 'Violación de los [[w:c:es:Términos de uso|Términos de uso]] de FANDOM',
 ];
 
 $messages['it'] = [
-	'imagereview-reason' => 'Violazione dei [[w:it:Project:Termini di utilizzo|Termini di utilizzo]] di Fandom',
+	'imagereview-reason' => 'Violazione dei [[w:it:Project:Termini di utilizzo|Termini di utilizzo]] di FANDOM',
 ];
 
 $messages['ja'] = [
@@ -127,7 +127,7 @@ $messages['ja'] = [
 ];
 
 $messages['pt'] = [
-	'imagereview-reason' => 'Violação dos [[w:c:comunidade:Termos_de_uso|Termos de uso]] do Fandom',
+	'imagereview-reason' => 'Violação dos [[w:c:comunidade:Termos_de_uso|Termos de uso]] do FANDOM',
 ];
 
 $messages['zh-hans'] = [

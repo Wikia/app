@@ -444,7 +444,7 @@ $messages['el'] = array(
 );
 
 $messages['es'] = array(
-	'createpage-desc' => 'Permite crear una nueva página usando editor WYSIWYG de Fandom',
+	'createpage-desc' => 'Permite crear una nueva página usando editor WYSIWYG de FANDOM',
 	'createpage-sp-title' => 'Crea una nueva página',
 	'createpage_title' => 'Crea una nueva página',
 	'createpage_title_caption' => 'Título',
@@ -599,7 +599,7 @@ Kirjoita sivusi toinen osio tähän.',
 );
 
 $messages['fr'] = array(
-	'createpage-desc' => 'Permet de créer une nouvelle page en utilisant l’éditeur WYSIWYG de Fandom',
+	'createpage-desc' => 'Permet de créer une nouvelle page en utilisant l’éditeur WYSIWYG de FANDOM',
 	'createpage-sp-title' => 'Créer une nouvelle page',
 	'createpage_title' => 'Créer une nouvelle page',
 	'createpage_title_caption' => 'Titre',
@@ -898,7 +898,7 @@ Tulis bagian kedua dari halaman Anda di sini.',
 );
 
 $messages['it'] = array(
-	'createpage-desc' => "Permette di creare una nuova pagina utilizzando l'editor visuale di Fandom",
+	'createpage-desc' => "Permette di creare una nuova pagina utilizzando l'editor visuale di FANDOM",
 	'createpage-sp-title' => 'Crea una nuova pagina',
 	'createpage_title' => 'Crea una nuova pagina',
 	'createpage_title_caption' => 'Titolo',
@@ -1631,7 +1631,7 @@ $messages['ps'] = array(
 );
 
 $messages['pt'] = array(
-	'createpage-desc' => 'Permite criar uma página nova usando o editor WYSIWYG do Fandom',
+	'createpage-desc' => 'Permite criar uma página nova usando o editor WYSIWYG do FANDOM',
 	'createpage-sp-title' => 'Crie um novo artigo',
 	'createpage_title' => 'Crie um novo artigo',
 	'createpage_title_caption' => 'Título',

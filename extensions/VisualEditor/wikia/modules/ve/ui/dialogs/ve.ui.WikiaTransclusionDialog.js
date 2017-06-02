@@ -102,10 +102,6 @@ ve.ui.WikiaTransclusionDialog.prototype.getSetupProcess = function ( data ) {
 					// Overlay
 					this.setOverlayless();
 
-					// Focus
-					if ( this.selectedViewNode.getHorizontalBias() !== null ) {
-						this.surface.getFocusWidget().setNode( this.selectedViewNode );
-					}
 					this.surface.getModel().setSelection( new ve.dm.NullSelection( this.surface.getModel().getDocument() ) );
 
 					// Preview button
@@ -134,7 +130,6 @@ ve.ui.WikiaTransclusionDialog.prototype.getSetupProcess = function ( data ) {
 ve.ui.WikiaTransclusionDialog.prototype.getTeardownProcess = function ( data ) {
 	return ve.ui.WikiaTransclusionDialog.super.prototype.getTeardownProcess.call( this, data )
 		.first( function () {
-			this.surface.getFocusWidget().unsetNode();
 			if ( this.editFlow && ( !data || data.action !== 'apply' ) ) {
 				// update without wikitext passed in the config will just use original value
 				this.selectedViewNode.update();

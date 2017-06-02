@@ -5,15 +5,6 @@ $previewheight: 65px;
 $previewwidth: 250px;
 
 .WordmarkTab {
-	#or {
-		background: #FFF;
-		bottom: 1px;
-		display: block;
-		float: right;
-		position: relative;
-		right: -25px;
-		padding: 5px;
-	}
 	fieldset {
 		width: 260px;
 		height: 175px;
@@ -118,14 +109,6 @@ $previewwidth: 250px;
 	}
 	#wordmark-edit-button {
 		margin-top: 15px;
-	}
-	#wordmark-shield {
-		background: #FFF;
-		display: none;
-		left: 0;
-		opacity: .75;
-		position: absolute;
-		top: 0;
 	}
 
 	input.file-upload  {
