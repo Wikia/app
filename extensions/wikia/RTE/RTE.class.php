@@ -1,7 +1,5 @@
 <?php
 
-
-
 class RTE {
 
     const INIT_MODE_SOURCE = 0;
