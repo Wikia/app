@@ -100,7 +100,7 @@ define('ext.wikia.recirculation.utils', [
 			deferred = $.Deferred(),
 			args = Array.prototype.slice.call(arguments);
 
-		if ($rail.find('.loading').exists()) {
+		if ($rail.find('.loading').length) {
 			$rail.one('afterLoad.rail', function() {
 				deferred.resolve.apply(null, args);
 			});

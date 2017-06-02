@@ -26,7 +26,7 @@ $(function () {
 	// Add lifecycle event for beginning lazy load
 	rail.trigger('beginLoad.rail');
 
-	if (rail.find('.loading').exists()) {
+	if (rail.find('.loading').length) {
 		params = {
 			'articleTitle': window.wgTitle,
 			'namespace': window.wgNamespaceNumber,
