@@ -13,6 +13,18 @@
 	position: relative;
 	z-index: 4;
 
+	button {
+		background-image: none;
+	}
+
+	.wds-button {
+		@include button-theming($color-buttons, $color-button-text, $color-text);
+	}
+
+	.wds-dropdown {
+		@include dropdown-theming($color-page, $color-text, $color-links, $color-page-border);
+	}
+
 	&__contribution {
 		display: flex;
 		flex-direction: column;
@@ -28,19 +40,6 @@
 			padding-bottom: 10px;
 			text-align: right;
 		}
-
-		&-edit-button {
-			button {
-				background-image: none;
-			}
-			@include dropdown-theming($color-page, $color-text, $color-links, $color-page-border);
-		}
-
-		.wds-button {
-			@include button-theming($color-buttons, $color-button-text);
-		}
-
-		@include dropdown-theming($color-page, $color-text, $color-links, $color-page-border);
 	}
 
 	&__main {
