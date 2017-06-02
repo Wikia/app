@@ -65,13 +65,11 @@ JS
 			} else {
 				$this->feedSelected = 'watchlist';
 				$feedProxy = new WatchlistFeedAPIProxy();
-				new WatchlistFeedRenderer();
 			}
 		} else {
 			//for example: wiki-domain.com/wiki/Special:WikiActivity
 			$this->feedSelected = 'activity';
 			$feedProxy = new ActivityFeedAPIProxy();
-			new ActivityFeedRenderer();
 		}
 
 		$feedProvider = new DataFeedProvider( $feedProxy );
