@@ -20,6 +20,7 @@ class ActionButton {
 	}
 
 	public function getButtonAction(): array {
+		$this->buttonAction['data-tracking'] = $this->buttonAction['id'];
 		return $this->buttonAction;
 	}
 
@@ -47,6 +48,7 @@ class ActionButton {
 		foreach ( $actions as $action ) {
 			if ( isset( $this->contentActions[$action] ) ) {
 				$ret[$action] = $this->contentActions[$action];
+				$ret[$action]['data-tracking'] = $ret[$action]['id'] . '-dropdown';
 			}
 		}
 

@@ -2,6 +2,7 @@
 	<a href="<?= $buttonAction['href'] ?>"
 	   class="wds-is-squished wds-button"
 	   id="<?= $buttonAction['id'] ?>"
+	   data-tracking="<?= $buttonAction['data-tracking'] ?>"
 	   <?= empty( $buttonAction['accesskey'] ) ? '' : "accesskey=\"{$buttonAction['accesskey']}\"" ?>
 	>
 		<?= DesignSystemHelper::renderSvg( 'wds-icons-pencil-small', 'wds-icon wds-icon-small' ); ?>
@@ -17,6 +18,7 @@
 					<li>
 						<a id="<?= $action['id'] ?>"
 						   href="<?= $action['href'] ?>"
+						   data-tracking="<?= $action['data-tracking'] ?>"
 						   <?= empty( $action['accesskey'] ) ? '' : "accesskey=\"{$action['accesskey']}\"" ?>>
 							<?= $action['text'] ?>
 						</a>
