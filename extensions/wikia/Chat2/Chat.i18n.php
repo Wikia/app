@@ -73,7 +73,7 @@ $messages['en'] = array(
 	'right-chatmoderator' => 'Can kick/ban users from [[Help:Chat|Chat]]',
 	'right-chat' => 'Chat with other users, via [[Help:Chat|Chat]]',
 	'right-chatadmin' => 'User has chat admin rights on [[Help:Chat|Chat]]',
-	'right-chatstaff' => 'User has Fandom Staff rights on [[Help:Chat|Chat]]',
+	'right-chatstaff' => 'User has FANDOM Staff rights on [[Help:Chat|Chat]]',
 	'right-chatfailover' => 'Can access Special:Chatfailover',
 	'group-chatmoderator' => 'Chat moderators',
 	'group-chatmoderator-member' => 'Chat moderator',
@@ -747,7 +747,7 @@ Wenn du dies für einen Fehler hältst oder möchtest, dass die Entscheidung üb
 	'chat-message-was-too-long' => 'Die Nachricht war zu lang und konnte nicht angezeigt werden.',
 	'right-chat' => 'Unterhalte dich im [[Help:Chat|Chat]] mit anderen Benutzern',
 	'right-chatadmin' => 'Der Benutzer hat im [[Help:Chat|Chat]] Adminrechte',
-	'right-chatstaff' => 'Der Benutzer hat im [[Help:Chat|Chat]] Fandom-Mitarbeiterrechte',
+	'right-chatstaff' => 'Der Benutzer hat im [[Help:Chat|Chat]] FANDOM-Mitarbeiterrechte',
 	'right-chatfailover' => 'Kann auf Special:Chatfailover zugreifen',
 );
 
@@ -887,7 +887,7 @@ Si crees que ha sido un error o te gustaría reconsiderarlo, por favor contacta 
 	'chat-message-was-too-long' => 'El mensaje era demasiado largo y podría no visualizarse.',
 	'right-chat' => 'Chatea con otros usuarios a través del [[Ayuda:Chat|Chat]]',
 	'right-chatadmin' => 'El usuario tiene derechos de administrador en el [[Ayuda:Chat|Chat]]',
-	'right-chatstaff' => 'El usuario tiene derechos de Staff de Fandom en el [[Ayuda:Chat|Chat]]',
+	'right-chatstaff' => 'El usuario tiene derechos de Staff de FANDOM en el [[Ayuda:Chat|Chat]]',
 	'right-chatfailover' => 'Puede acceder a Special:Chatfailover',
 );
 
@@ -1232,7 +1232,7 @@ $messages['fr'] = array(
 	'chat-message-was-too-long' => "Le message n'a pas pu être affiché car il était trop long.",
 	'right-chat' => "Tchater avec d'autres utilisateurs via le [[Aide:Tchat|tchat]]",
 	'right-chatadmin' => "L'utilisateur a des droits d'administrateur de tchat sur le [[Aide:Tchat|tchat]]",
-	'right-chatstaff' => "L'utilisateur a les droits de staff de Fandom sur le [[Aide:Tchat|tchat]]",
+	'right-chatstaff' => "L'utilisateur a les droits de staff de FANDOM sur le [[Aide:Tchat|tchat]]",
 	'right-chatfailover' => 'Peut accéder à Special:Chatfailover',
 );
 
@@ -1694,7 +1694,7 @@ $1 è stato bannato da $2 $3.',
 	'chat-message-was-too-long' => 'Il messaggio era troppo lungo e non è stato possibile visualizzarlo.',
 	'right-chat' => 'Chattare con altri utenti tramite la [[w:it:Aiuto:Chat|Chat]]',
 	'right-chatadmin' => "L'utente ha i diritti di amministrazione della chat su [[w:it:Aiuto:Chat|Chat]]",
-	'right-chatstaff' => "L'utente ha i diritti dello Staff Fandom su [[Aiuto:Chat|Chat]]",
+	'right-chatstaff' => "L'utente ha i diritti dello Staff FANDOM su [[Aiuto:Chat|Chat]]",
 	'right-chatfailover' => 'Può accedere a Special:Chatfailover',
 	'grouppage-chatmoderator' => 'w:it:Aiuto:Chat',
 	'grouppage-bannedfromchat' => 'w:it:Aiuto:Chat',
@@ -2809,7 +2809,7 @@ $messages['pt'] = array(
 	'chat-message-was-too-long' => 'A mensagem era muito grande e não pôde ser exibida.',
 	'right-chat' => 'Converse com outros usuários via [[Help:Chat|chat]]',
 	'right-chatadmin' => 'O usuário tem direitos de administrador no [[Help:Chat|chat]]',
-	'right-chatstaff' => 'O usuário tem direitos como staff do Fandom no [[Help:Chat|chat]]',
+	'right-chatstaff' => 'O usuário tem direitos como staff do FANDOM no [[Help:Chat|chat]]',
 	'right-chatfailover' => 'Pode acessar Special:Chatfailover',
 	'grouppage-chatmoderator' => 'w:c:comunidade:Ajuda:Chat',
 	'grouppage-bannedfromchat' => 'w:c:comunidade:Ajuda:Chat',

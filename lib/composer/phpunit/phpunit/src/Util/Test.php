@@ -23,6 +23,7 @@ use ReflectionClass;
 use ReflectionException;
 use ReflectionFunction;
 use ReflectionMethod;
+use Traversable;
 
 /**
  * Test helpers.
@@ -347,7 +348,7 @@ class Test
      * @param string $className
      * @param string $methodName
      *
-     * @return array
+     * @return array|false
      */
     public static function getExpectedException($className, $methodName)
     {
@@ -517,7 +518,7 @@ class Test
                     $data = $dataProviderMethod->invoke($object, $methodName);
                 }
 
-                if ($data instanceof Iterator) {
+                if ($data instanceof Traversable) {
                     $data = \iterator_to_array($data);
                 }
 
@@ -742,7 +743,7 @@ class Test
      * @param string $className
      * @param string $methodName
      *
-     * @return bool
+     * @return ?bool
      */
     public static function getErrorHandlerSettings($className, $methodName)
     {
@@ -856,13 +857,27 @@ class Test
         return false;
     }
 
+    public static function getClassProcessIsolationSettings($className, $methodName)
+    {
+        $annotations = self::parseTestMethodAnnotations(
+            $className,
+            $methodName
+        );
+
+        if (isset($annotations['class']['runClassInSeparateProcess'])) {
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * Returns the preserve global state settings for a test.
      *
      * @param string $className
      * @param string $methodName
      *
-     * @return bool
+     * @return ?bool
      */
     public static function getPreserveGlobalStateSettings($className, $methodName)
     {
@@ -938,7 +953,7 @@ class Test
      * @param string $methodName
      * @param string $settingName
      *
-     * @return bool
+     * @return ?bool
      */
     private static function getBooleanAnnotationSetting($className, $methodName, $settingName)
     {
@@ -1103,12 +1118,14 @@ class Test
                 $result[$filename] = [];
             }
 
-            $result[$filename] = \array_unique(
-                \array_merge(
-                    $result[$filename],
-                    \range($reflector->getStartLine(), $reflector->getEndLine())
-                )
+            $result[$filename] = \array_merge(
+                $result[$filename],
+                \range($reflector->getStartLine(), $reflector->getEndLine())
             );
+        }
+
+        foreach ($result as $filename => $lineNumbers) {
+            $result[$filename] = \array_keys(\array_flip($lineNumbers));
         }
 
         return $result;
@@ -1131,7 +1148,7 @@ class Test
      */
     private static function isBeforeMethod(ReflectionMethod $method)
     {
-        return \preg_match('/@before\b/', $method->getDocComment());
+        return \preg_match('/@before\b/', $method->getDocComment()) > 0;
     }
 
     /**
@@ -1151,7 +1168,7 @@ class Test
      */
     private static function isAfterMethod(ReflectionMethod $method)
     {
-        return \preg_match('/@after\b/', $method->getDocComment());
+        return \preg_match('/@after\b/', $method->getDocComment()) > 0;
     }
 
     /**

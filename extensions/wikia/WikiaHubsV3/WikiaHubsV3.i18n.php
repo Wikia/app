@@ -5,7 +5,7 @@ $messages = [];
 $messages['en'] = [
 	'wikiahubs-v3-desc' => 'Wikia Hubs v3',
 	'wikiahubs-v3-button-cancel' => 'Cancel',
-	'wikiahubs-search-placeholder' => 'Search Fandom',
+	'wikiahubs-search-placeholder' => 'Search FANDOM',
 	'wikiahubs-v3-suggest-article-header' => 'Suggest an Article',
 	'wikiahubs-v3-suggest-article-submit-button' => 'Submit',
 	'wikiahubs-v3-suggest-article-close-button' => 'Close',
@@ -34,7 +34,7 @@ $messages['en'] = [
 
 $messages['de'] = [
 	'wikiahubs-v3-button-cancel' => 'Abbrechen',
-	'wikiahubs-search-placeholder' => 'Fandom durchsuchen',
+	'wikiahubs-search-placeholder' => 'FANDOM durchsuchen',
 	'wikiahubs-v3-suggest-article-header' => 'Artikel vorschlagen',
 	'wikiahubs-v3-suggest-article-submit-button' => 'Abschicken',
 	'wikiahubs-v3-suggest-article-what-article' => 'Was möchtest du teilen? (255 Zeichen maximal)',
@@ -62,7 +62,7 @@ $messages['de'] = [
 
 $messages['fr'] = [
 	'wikiahubs-v3-button-cancel' => 'Annuler',
-	'wikiahubs-search-placeholder' => 'Rechercher sur Fandom',
+	'wikiahubs-search-placeholder' => 'Rechercher sur FANDOM',
 	'wikiahubs-v3-suggest-article-header' => 'Suggérer un article',
 	'wikiahubs-v3-suggest-article-submit-button' => 'Suggérer',
 	'wikiahubs-v3-suggest-article-what-article' => 'Que souhaitez-vous partager ? (255 caractères max.)',
@@ -91,7 +91,7 @@ $messages['fr'] = [
 
 $messages['es'] = [
 	'wikiahubs-v3-button-cancel' => 'Cancelar',
-	'wikiahubs-search-placeholder' => 'Buscar en Fandom',
+	'wikiahubs-search-placeholder' => 'Buscar en FANDOM',
 	'wikiahubs-v3-suggest-article-header' => 'Sugerir un artículo',
 	'wikiahubs-v3-suggest-article-submit-button' => 'Enviar',
 	'wikiahubs-v3-suggest-article-what-article' => '¿Qué quieres compartir? (limitado a 255 caracteres)',
@@ -118,7 +118,7 @@ $messages['es'] = [
 
 $messages['pl'] = [
 	'wikiahubs-v3-button-cancel' => 'Anuluj',
-	'wikiahubs-search-placeholder' => 'Przeszukaj Fandom',
+	'wikiahubs-search-placeholder' => 'Przeszukaj FANDOM',
 	'wikiahubs-v3-suggest-article-header' => 'Zasugeruj artykuł',
 	'wikiahubs-v3-suggest-article-submit-button' => 'Prześlij',
 	'wikiahubs-v3-suggest-article-what-article' => 'Czym chcesz się podzielić? (link, maks. 255 znaków)',
@@ -221,11 +221,11 @@ $messages['ru'] = [
 ];
 
 $messages['it'] = [
-	'wikiahubs-search-placeholder' => 'Cerca in Fandom',
+	'wikiahubs-search-placeholder' => 'Cerca in FANDOM',
 ];
 
 $messages['pt'] = [
-	'wikiahubs-search-placeholder' => 'Pesquisar o Fandom',
+	'wikiahubs-search-placeholder' => 'Pesquisar o FANDOM',
 	'wikiahubs-v3-suggest-article-close-button' => 'Fechar',
 	'wikiahubs-v3-suggest-article-header' => 'Sugira um Artigo',
 	'wikiahubs-v3-suggest-article-reason' => 'Por que isso é legal? (limite de 140 caracteres)',

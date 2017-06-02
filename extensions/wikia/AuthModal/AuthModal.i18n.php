@@ -2,7 +2,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'authmodal-registration-success' => 'Welcome, $1! Your Fandom account has been successfully created.',
+	'authmodal-registration-success' => 'Welcome, $1! Your FANDOM account has been successfully created.',
 );
 
 $messages['qqq'] = array(
@@ -10,19 +10,19 @@ $messages['qqq'] = array(
 );
 
 $messages['de'] = array(
-	'authmodal-registration-success' => 'Herzlich Willkommen, $1! Dein Fandom-Benutzerkonto wurde erfolgreich erstellt.',
+	'authmodal-registration-success' => 'Herzlich Willkommen, $1! Dein FANDOM-Benutzerkonto wurde erfolgreich erstellt.',
 );
 
 $messages['es'] = array(
-	'authmodal-registration-success' => '¡Bienvenido, $1! Tu cuenta de Fandom ha sido creada exitosamente.',
+	'authmodal-registration-success' => '¡Bienvenido, $1! Tu cuenta de FANDOM ha sido creada exitosamente.',
 );
 
 $messages['fr'] = array(
-	'authmodal-registration-success' => 'Bienvenue, $1 ! Votre compte Fandom a été créé avec succès.',
+	'authmodal-registration-success' => 'Bienvenue, $1 ! Votre compte FANDOM a été créé avec succès.',
 );
 
 $messages['it'] = array(
-	'authmodal-registration-success' => 'Benvenuto, $1! Il tuo account Fandom è stato creato con successo.',
+	'authmodal-registration-success' => 'Benvenuto, $1! Il tuo account FANDOM è stato creato con successo.',
 );
 
 $messages['ja'] = array(
@@ -38,7 +38,7 @@ $messages['pl'] = array(
 );
 
 $messages['pt'] = array(
-	'authmodal-registration-success' => 'Bem-vindo, $1! Sua conta no Fandom foi criada com sucesso.',
+	'authmodal-registration-success' => 'Bem-vindo, $1! Sua conta no FANDOM foi criada com sucesso.',
 );
 
 $messages['ru'] = array(
