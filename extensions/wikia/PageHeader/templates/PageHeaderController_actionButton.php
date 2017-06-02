@@ -1,5 +1,9 @@
 <div class="wds-button-group page-header__edit-button">
-	<a href="<?= $buttonAction['href'] ?>" class="wds-is-squished wds-button" id="<?= $buttonAction['id'] ?>">
+	<a href="<?= $buttonAction['href'] ?>"
+	   class="wds-is-squished wds-button"
+	   id="<?= $buttonAction['id'] ?>"
+	   <?= empty( $buttonAction['accesskey'] ) ? '' : "accesskey=\"{$buttonAction['accesskey']}\"" ?>
+	>
 		<?= DesignSystemHelper::renderSvg( 'wds-icons-pencil-small', 'wds-icon wds-icon-small' ); ?>
 		<span><?= $buttonAction['text'] ?></span>
 	</a>
@@ -11,7 +15,9 @@
 			<ul class="wds-list wds-is-linked">
 				<? foreach( $dropdownActions as $action ): ?>
 					<li>
-						<a id="<?= $action['id'] ?>" href="<?= $action['href'] ?>">
+						<a id="<?= $action['id'] ?>"
+						   href="<?= $action['href'] ?>"
+						   <?= empty( $action['accesskey'] ) ? '' : "accesskey=\"{$action['accesskey']}\"" ?>>
 							<?= $action['text'] ?>
 						</a>
 					</li>
