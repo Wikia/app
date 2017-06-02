@@ -105,14 +105,9 @@ require([
 	var context = adContext.getContext();
 
 	function initDesktopSlots() {
-		var incontentPlayerSlotName = 'INCONTENT_PLAYER';
-
 		highImpact.init();
 		skyScraper3.init();
-
-		if (slotsContext.isApplicable(incontentPlayerSlotName)) {
-			inContent.init(incontentPlayerSlotName);
-		}
+		inContent.init('INCONTENT_PLAYER');
 	}
 
 	win.addEventListener('wikia.uap', bottomLeaderboard.init);
