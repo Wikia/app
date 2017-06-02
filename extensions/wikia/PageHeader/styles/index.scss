@@ -62,7 +62,7 @@
 			color: $color-links;
 			font-style: italic;
 			line-height: 16px;
-			word-break: break-word;
+			word-break: break-all;
 
 			> a:last-child {
 				padding-bottom: 10px;
