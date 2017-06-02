@@ -53,6 +53,7 @@
 		&-links {
 			color: $color-links;
 			font-style: italic;
+			font-size: 12px;
 			line-height: 16px;
 			word-break: break-word;
 
@@ -60,7 +61,11 @@
 				padding-bottom: 10px;
 				display: inline-block;
 			}
-		}
 
+			> div > div {
+				font-style: normal;
+			}
 		}
+	}
 }
+
