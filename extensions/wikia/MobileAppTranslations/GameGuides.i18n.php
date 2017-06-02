@@ -4,7 +4,7 @@ $messages = [];
 
 $messages['en'] = [
 	'activityindicator-message' => 'Loading...',
-	'window-wikis-title' => 'Fandom Game Guides',
+	'window-wikis-title' => 'FANDOM Game Guides',
 	'window-wikis-wikilist-search-hint' => 'Search our Top Games...',
 	'window-category-load-batch' => 'More',
 	'window-article-button-close' => 'Close',
@@ -142,7 +142,7 @@ $messages['cy'] = [
 
 $messages['de'] = [
 	'activityindicator-message' => 'Lade …',
-	'window-wikis-title' => 'Fandom Game Guides',
+	'window-wikis-title' => 'FANDOM Game Guides',
 	'window-wikis-wikilist-search-hint' => 'Suchen unsere beliebtesten Spiele...',
 	'window-category-load-batch' => 'Mehr',
 	'window-article-button-close' => 'Schließen',
@@ -180,7 +180,7 @@ $messages['diq'] = [
 
 $messages['es'] = [
 	'activityindicator-message' => 'Cargando...',
-	'window-wikis-title' => 'Guia de juegos de Fandom',
+	'window-wikis-title' => 'Guia de juegos de FANDOM',
 	'window-wikis-wikilist-search-hint' => 'Buscar nuestros mejores juegos...',
 	'window-category-load-batch' => 'Más',
 	'window-article-button-close' => 'Cerrar',
@@ -260,7 +260,7 @@ $messages['fo'] = [
 
 $messages['fr'] = [
 	'activityindicator-message' => 'Chargement...',
-	'window-wikis-title' => 'Fandom Game Guides',
+	'window-wikis-title' => 'FANDOM Game Guides',
 	'window-wikis-wikilist-search-hint' => 'Rechercher nos jeux préférés',
 	'window-category-load-batch' => 'Plus',
 	'window-article-button-close' => 'Fermer',
@@ -355,7 +355,7 @@ $messages['id'] = [
 
 $messages['it'] = [
 	'activityindicator-message' => 'Caricamento...',
-	'window-wikis-title' => 'Fandom Game Guides',
+	'window-wikis-title' => 'FANDOM Game Guides',
 	'window-wikis-wikilist-search-hint' => 'Cerca i nostri giochi migliori...',
 	'window-category-load-batch' => 'Altri',
 	'window-article-button-close' => 'Chiudi',
@@ -524,7 +524,7 @@ $messages['pfl'] = [
 
 $messages['pl'] = [
 	'activityindicator-message' => 'Ładowanie...',
-	'window-wikis-title' => 'Fandom Game Guides',
+	'window-wikis-title' => 'FANDOM Game Guides',
 	'window-wikis-wikilist-search-hint' => 'Nasze Najlepsze Gry',
 	'window-category-load-batch' => 'Więcej',
 	'window-article-button-close' => 'Zamknij',
@@ -578,7 +578,7 @@ $messages['ps'] = [
 
 $messages['pt'] = [
 	'activityindicator-message' => 'A carregar…',
-	'window-wikis-title' => 'Guias de jogos do Fandom',
+	'window-wikis-title' => 'Guias de jogos do FANDOM',
 	'window-wikis-wikilist-search-hint' => 'Os Melhores Jogos',
 	'window-category-load-batch' => 'Mais',
 	'window-article-button-close' => 'Fechar',
