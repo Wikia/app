@@ -17,6 +17,8 @@ class RailController extends WikiaController {
 		$this->isGridLayoutEnabled = BodyController::isGridLayoutEnabled();
 		$this->isAside = $this->wg->RailInAside;
 		$this->loadLazyRail = $railModules > $this->railModuleList;
+
+		$this->getContext()->getOutput()->addModules( 'ext.wikia.rail' );
 	}
 
 	/**
