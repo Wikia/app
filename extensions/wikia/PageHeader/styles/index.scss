@@ -44,7 +44,12 @@
 		button {
 			background-image: none;
 		}
+
+		.wds-button {
+			@include button-theming($color-buttons, $color-button-text);
+		}
 		@include dropdown-theming($color-page, $color-text, $color-links, $color-page-border);
+
 	}
 
 	&__categories {
