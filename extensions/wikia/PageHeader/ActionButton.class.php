@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Wikia\PageHeader;
 
 use CuratedContentHelper;
@@ -25,10 +24,21 @@ class ActionButton {
 	}
 
 	public function getDropdownActions(): array {
-		global $wgEnableCuratedContentExt;
-
 		// items to be added to "edit" dropdown
-		$actions = [ 'edit', 've-edit', 'formedit', 'history', 'move', 'protect', 'unprotect', 'delete', 'undelete', 'replace-file' ];
+		$actions = [
+			'edit',
+			've-edit',
+			'formedit',
+			'history',
+			'move',
+			'protect',
+			'unprotect',
+			'delete',
+			'undelete',
+			'replace-file',
+			'talk',
+			'edit-mobile-main-page'
+		];
 
 		// Enable to modify actions list on dropdown
 		wfRunHooks( 'PageHeaderDropdownActions', [ &$actions ] );
@@ -40,29 +50,11 @@ class ActionButton {
 			}
 		}
 
-		if ( !empty( $wgEnableCuratedContentExt ) && CuratedContentHelper::shouldDisplayToolButton() ) {
-			$ret[] = [
-				'href' => '/main/edit?useskin=wikiamobile',
-				'text' => wfMessage( 'wikiacuratedcontent-edit-mobile-main-page' )->escaped(),
-				'id' => 'CuratedContentTool'
-			];
-		}
-
-		if ( !$this->isArticleCommentsEnabled()) {
-			$ret[] = [
-				'href' => $this->contentActions['talk']['href'],
-				'text' => wfMessage('page-header-action-button-talk')
-					->numParams( $this->pageStatsService->getCommentsCount() )
-					->escaped(),
-				'id' => 'TalkPageLink',
-			];
-		}
-
 		return $ret;
 	}
 
 	private function prepareActionButton() {
-		global $wgTitle, $wgUser, $wgRequest;
+		global $wgTitle, $wgUser, $wgRequest, $wgEnableCuratedContentExt;
 
 		wfRunHooks( 'BeforePrepareActionButtons', [ $this, &$this->contentActions ] );
 
@@ -112,6 +104,20 @@ class ActionButton {
 		else if ( isset( $this->contentActions['viewsource'] ) ) {
 			$this->buttonAction = $this->contentActions['viewsource'];
 			unset( $this->contentActions['ve-edit'], $this->contentActions['edit'] );
+		}
+
+		if ( !empty( $wgEnableCuratedContentExt ) && CuratedContentHelper::shouldDisplayToolButton() ) {
+			$this->contentActions['edit-mobile-main-page'] = [
+				'href' => '/main/edit?useskin=wikiamobile',
+				'text' => wfMessage( 'wikiacuratedcontent-edit-mobile-main-page' )->escaped(),
+				'id' => 'CuratedContentTool'
+			];
+		}
+
+		if ( !$this->isArticleCommentsEnabled() ) {
+			$this->contentActions['talk']['text'] = wfMessage( 'page-header-action-button-talk' )
+				->numParams( $this->pageStatsService->getCommentsCount() )
+				->escaped();
 		}
 	}
 
