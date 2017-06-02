@@ -530,10 +530,7 @@ EOT
 		if (WikiFactory::getVarValueByName( 'wgEnableDiscussions', $siteId )) {
 			$posts = self::getDiscussionContributionApi()->getPosts($siteId, $targetUser->getId());
 			$count = $posts->getPostCount();
-			if ($count > 0) {
-				$halForumThreadEmbeddeds = $posts->getEmbedded();
-				$dsf = $halForumThreadEmbeddeds->getDocposts()[0]->getCreationDate()->getEpochSecond();
-			}
+
 			return [
 					"count" => $wg->ContLang->formatNum($count),
 					"date" => ($count > 0) ? $wg->Lang->timeanddate($posts->getEmbedded()->getDocposts()[0]->getCreationDate()->getEpochSecond(), true) : ""
