@@ -97,3 +97,25 @@ JSMessages::registerPackage( 'Forum', [
 	'forum-specialpage-policies-edit',
 	'forum-specialpage-policies'
 ] );
+
+$wgResourceModules['ext.wikia.forum'] = [
+	'scripts' => [
+		'js/Forum.js',
+		'js/ForumNewMessageForm.js',
+		'js/ForumSortingBar.js',
+	],
+	'dependencies' => [ 'ext.wikia.wall' ],
+	'source' => 'common',
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/Forum',
+];
+$wgResourceModules['ext.wikia.forum.miniEditor'] = [
+	'scripts' => [
+		'js/Forum/Forum.Setup.js',
+		'js/Forum/Forum.NewMessageForm.js',
+	],
+	'dependencies' => [ 'ext.wikia.wall.miniEditor' ],
+	'source' => 'common',
+	'localBasePath' => 'MiniEditor',
+	'remoteExtPath' => 'wikia/MiniEditor',
+];

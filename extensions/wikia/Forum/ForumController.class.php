@@ -355,20 +355,27 @@ class ForumController extends WallBaseController {
 
 	private function addAssets() {
 		JSMessages::enqueuePackage( 'Wall', JSMessages::EXTERNAL );
-		$this->response->addAsset( 'forum_js' );
 		$this->response->addAsset( 'extensions/wikia/Forum/css/ForumBoard.scss' );
 		$this->response->addAsset( 'extensions/wikia/Wall/css/MessageTopic.scss' );
 
+		$context = $this->getContext();
+		$out = $context->getOutput();
+		$skin = $context->getSkin();
+
+		$out->addModules( 'ext.wikia.forum' );
+
 		// VOLDEV-36: separate monobook styling
-		if ( $this->app->checkSkin( 'monobook' ) ) {
+		if ( $skin->getSkinName() === 'monobook' ) {
 			$this->response->addAsset( 'extensions/wikia/Forum/css/monobook/ForumMonobook.scss' );
 			$this->response->addAsset( 'extensions/wikia/Forum/css/monobook/ForumBoardMonobook.scss' );
 		}
 
-		if ( $this->wg->EnableMiniEditorExtForWall && $this->app->checkSkin( 'oasis' ) ) {
+		if ( $this->wg->EnableMiniEditorExtForWall && $skin->getSkinName() === 'oasis' ) {
 			$this->sendRequest( 'MiniEditor', 'loadAssets',
-				[ 'additionalAssets' => [ 'forum_mini_editor_js', 'extensions/wikia/MiniEditor/css/Wall/Wall.scss' ] ]
+				[ 'additionalAssets' => [ 'extensions/wikia/MiniEditor/css/Wall/Wall.scss' ] ]
 			);
+
+			$out->addModules( 'ext.wikia.forum.miniEditor' );
 		}
 	}
 }
