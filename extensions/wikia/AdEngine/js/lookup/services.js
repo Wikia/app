@@ -103,7 +103,7 @@ define('ext.wikia.adEngine.lookup.services', [
 		realSlotPrices[slotName] = getCurrentSlotPrices(slotName);
 	}
 
-	function getRealSlotPrices(slotName) {
+	function getDfpSlotPrices(slotName) {
 		return realSlotPrices[slotName];
 	}
 
@@ -111,6 +111,6 @@ define('ext.wikia.adEngine.lookup.services', [
 		extendSlotTargeting: extendSlotTargeting,
 		getCurrentSlotPrices: getCurrentSlotPrices,
 		storeRealSlotPrices: storeRealSlotPrices,
-		getRealSlotPrices: getRealSlotPrices
+		getDfpSlotPrices: getDfpSlotPrices
 	};
 });

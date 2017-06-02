@@ -8,7 +8,7 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 			getCurrentSlotPrices: function() {
 				return {};
 			},
-			getRealSlotPrices: function () {
+			getDfpSlotPrices: function () {
 				return {};
 			}
 		},

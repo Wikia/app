@@ -28,7 +28,7 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 			pageParams = JSON.parse(slotFirstChildData.gptPageParams),
 			slotParams = JSON.parse(slotFirstChildData.gptSlotParams),
 			slotPricesIgnoringTimeout = lookupServices.getCurrentSlotPrices(slot.name),
-			realSlotPrices = lookupServices.getRealSlotPrices(slot.name),
+			realSlotPrices = lookupServices.getDfpSlotPrices(slot.name),
 			slotSize = JSON.parse(slotFirstChildData.gptCreativeSize);
 
 		data = {
