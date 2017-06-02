@@ -9,40 +9,58 @@ use Title;
 class Categories {
 	const VISIBLE_CATEGORIES_LIMIT = 4;
 
-	public $categories = [];
+	/**
+	 * @var Title[]
+	 */
+	public $categories;
+
+	/**
+	 * @var string
+	 */
 	public $inCategoriesText;
+
+	/**
+	 * @var string
+	 */
 	public $moreCategoriesText;
-	public $moreCategoriesSeparator;
-	public $visibleCategories;
-	public $visibleCategoriesLength;
+
+	/**
+	 * @var string
+	 */
+	public $visibleCategoriesHTML;
 
 	public function __construct() {
 		$categories = $this->getCategories();
 
 		$this->categories = $categories;
-		$this->visibleCategories = $this->getVisibleCategories( $categories );
+		$this->visibleCategoriesHTML = $this->getVisibleCategoriesHTML( $categories );
 		$this->moreCategories = $this->getMoreCategories( $categories );
 
-		$this->setTexts();
-	}
-
-	public function hasVisibleCategories() {
-		return count( $this->categories ) > 0;
-	}
-
-	public function hasMoreCategories() {
-		return count( $this->categories ) > self::VISIBLE_CATEGORIES_LIMIT;
-	}
-
-	public function setTexts() {
 		$this->inCategoriesText = wfMessage( 'page-header-categories-in' )->escaped();
 		$this->moreCategoriesText = wfMessage( 'page-header-categories-more' )
 			->numParams( count( $this->moreCategories ) )
 			->escaped();
 	}
 
+	/**
+	 * @return bool
+	 */
+	public function hasVisibleCategories() {
+		return count( $this->categories ) > 0;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function hasMoreCategories() {
+		return count( $this->categories ) > self::VISIBLE_CATEGORIES_LIMIT;
+	}
+
+	/**
+	 * @return Title[]
+	 */
 	private function getCategories() {
-		$categories = [ ];
+		$categories = [];
 		$categoryNames = RequestContext::getMain()->getOutput()->getCategories();
 
 		foreach ( $categoryNames as $categoryName ) {
@@ -59,14 +77,15 @@ class Categories {
 	}
 
 	/**
-	 * Prepare the HTML here instead of the template so we can avoid having space before the commas
+	 * Prepare the HTML here instead of the template
+	 * so we can avoid having spaces before the commas
 	 * without using HTML comments or ugly formatting
 	 *
 	 * @param $categories Title[]
 	 *
 	 * @return string
 	 */
-	private function getVisibleCategories( $categories ) {
+	private function getVisibleCategoriesHTML( $categories ) {
 		$categoriesArray = array_slice( $categories, 0, self::VISIBLE_CATEGORIES_LIMIT - 1 );
 		$categoriesLinks = [];
 
@@ -80,15 +99,20 @@ class Categories {
 				'>' . $category->getText() . '</a>';
 		}
 
-		$categoriesText = join( ', ', $categoriesLinks );
+		$categoriesHTML = join( ', ', $categoriesLinks );
 
 		if ( $this->hasMoreCategories() ) {
-			$categoriesText .= wfMessage( 'page-header-categories-more-separator' )->escaped();
+			$categoriesHTML .= wfMessage( 'page-header-categories-more-separator' )->escaped();
 		}
 
-		return $categoriesText;
+		return $categoriesHTML;
 	}
 
+	/**
+	 * @param $categories Title[]
+	 *
+	 * @return array
+	 */
 	private function getMoreCategories( $categories ) {
 		return $this->hasMoreCategories() ? array_slice( $categories, self::VISIBLE_CATEGORIES_LIMIT - 1 ) : [];
 	}

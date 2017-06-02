@@ -2,7 +2,7 @@
 	<div class="page-header__categories">
 		<span class="page-header__categories__in" data-tracking="categories-top-in"><?= $categories->inCategoriesText ?>:</span>
 		<div class="page-header__categories-links">
-			<?= $categories->visibleCategories ?>
+			<?= $categories->visibleCategoriesHTML ?>
 			<?php if ( $categories->hasMoreCategories() ): ?>
 				<div class="wds-dropdown page-header__dropdown-padding">
 					<a class="push-dropdown-down wds-dropdown__toggle" data-tracking="categories-more"><?= $categories->moreCategoriesText ?></a>
