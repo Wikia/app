@@ -1,8 +1,11 @@
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index';
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-mixins/index';
-@import 'skins/shared/color.scss';
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/flexbox';
+@import 'skins/shared/mixins/transform';
+@import 'skins/oasis/css/core/breakpoints-variables';
 
-.page-header {
+.WikiaPage .page-header {
 	margin: 5px 0 18px;
 	padding-bottom: 12px;
 	position: relative;
@@ -13,10 +16,16 @@
 	&__title {
 		color: $color-text;
 		display: inline-block;
-		font-size: 28px;
+		font-size: $wds-typescale-size-plus-4;
 		font-weight: bold;
 		line-height: 1;
+		max-width: 100%;
 		padding-bottom: 12px;
+		word-wrap: break-word;
+	}
+
+	&__dropdown-padding {
+		padding-bottom: 10px;
 	}
 
 	&__separator {
@@ -39,4 +48,34 @@
 		}
 		@include dropdown-theming($color-page, $color-text, $color-links, $color-page-border);
 	}
+
+	&__categories {
+		@include align-items(flex-start);
+		@include flexbox();
+		font-size: 12px;
+		padding-top: 12px;
+
+		&__in {
+			font-weight: 600;
+			padding-right: 4px;
+		}
+
+		&-links {
+			color: $color-links;
+			font-style: italic;
+			font-size: 12px;
+			line-height: 16px;
+			word-break: break-word;
+
+			> a:last-child {
+				padding-bottom: 10px;
+				display: inline-block;
+			}
+
+			> div > div {
+				font-style: normal;
+			}
+		}
+	}
 }
+

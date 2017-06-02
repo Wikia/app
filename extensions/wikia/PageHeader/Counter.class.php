@@ -4,53 +4,67 @@ namespace Wikia\PageHeader;
 
 use Forum;
 use MediaQueryService;
+use ParserOptions;
 use RequestContext;
-use WikiaApp;
 
 class Counter {
-	public function __construct( WikiaApp $app ) {
+	/**
+	 * @var string
+	 */
+	public $text;
+
+	public function __construct() {
 		$title = RequestContext::getMain()->getTitle();
 
 		if ( $title->isSpecial( 'Videos' ) ) {
-			$this->message = $this->getMessageForSpecialVideos();
+			$this->text = $this->getTextForSpecialVideos();
 		} else if ( $title->isSpecial( 'Images' ) ) {
-			$this->message = $this->getMessageForSpecialImages();
+			$this->text = $this->getTextForSpecialImages();
 		} else if ( defined( 'NS_BLOG_LISTING' ) && $title->inNamespace( NS_BLOG_LISTING ) ) {
-			$this->message = $this->getMessageForBlogListing( $app );
+			$this->text = $this->getTextForBlogListing();
 		} else if ( $title->isSpecial( 'Forum' ) ) {
-			$this->message = $this->getMessageForForum();
+			$this->text = $this->getTextForForum();
 		}
 	}
 
-	private function getMessageForSpecialVideos() {
+	public function isNotEmpty() {
+		return !empty( $this->text );
+	}
+
+	private function getTextForSpecialVideos() {
 		$mediaService = ( new MediaQueryService );
 		$count = $mediaService->getTotalVideos();
 
-		return wfMessage( 'page-header-counter-videos', $count )->parse();
+		return wfMessage( 'page-header-counter-videos', $count )->escaped();
 	}
 
-	private function getMessageForSpecialImages() {
+	private function getTextForSpecialImages() {
 		$mediaService = ( new MediaQueryService );
 		$count = $mediaService->getTotalImages();
 
-		return wfMessage( 'page-header-counter-images', $count )->parse();
+		return wfMessage( 'page-header-counter-images', $count )->escaped();
 	}
 
-	private function getMessageForBlogListing( WikiaApp $app ) {
-		$count = $app->wg->Parser->getOutput()->getProperty( 'blogPostCount' );
+	private function getTextForBlogListing() {
+		$count = RequestContext::getMain()
+			->getWikiPage()
+			->getParserOutput( new ParserOptions() )
+			// It's set in Blogs/BlogTemplate.php
+			->getProperty( 'blogPostCount' );
 
-		return wfMessage( 'page-header-counter-blog-posts', $count )->parse();
+		return wfMessage( 'page-header-counter-blog-posts', $count )->escaped();
 	}
 
-	private function getMessageForForum() {
+	private function getTextForForum() {
 		$forum = new Forum();
 		$count = $forum->getTotalThreads();
 		$countActive = $forum->getTotalActiveThreads();
+		$text = wfMessage( 'page-header-counter-forum-threads', $count )->escaped();
 
 		if ( $countActive > 0 ) {
-			return wfMessage( 'page-header-counter-forum-threads-with-active', $count, $countActive )->parse();
-		} else {
-			return wfMessage( 'page-header-counter-forum-threads', $count )->parse();
+			$text .= ' | ' . wfMessage( 'page-header-counter-forum-active-threads', $countActive )->escaped();
 		}
+
+		return $text;
 	}
 }

@@ -12,7 +12,11 @@ class PageHeaderController extends \WikiaController {
 
 		$this->setVal( 'displayActionButton', $displayActionButton );
 		$this->setVal( 'pageTitle', new PageTitle( $this->app ) );
-		$this->setVal( 'counter', new Counter( $this->app ) );
+		$this->setVal( 'counter', new Counter() );
+	}
+
+	public function categories() {
+		$this->setVal( 'categories', new Categories() );
 	}
 
 	public function subtitle() {
