@@ -5,9 +5,14 @@ require(['wikia.window', 'jquery'], function (window, $) {
 
 	function firstMenuValidator() {
 		var $localNavPreview = $('.local-navigation-preview'),
-			$tabs = $localNavPreview.find('.wds-tabs');
+			$tabs = $localNavPreview.find('.wds-tabs__tab'),
+			tabsWidth = 0;
 
-		return $tabs.width() <= $localNavPreview.width();
+		$tabs.each(function () {
+			tabsWidth += $(this).outerWidth(true);
+		});
+
+		return tabsWidth <= $localNavPreview.width();
 	}
 
 	function initPreview() {
