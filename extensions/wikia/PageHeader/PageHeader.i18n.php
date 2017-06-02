@@ -18,7 +18,7 @@ $messages['qqq'] = array(
 	'page-header-counter-blog-posts' => 'Number of posts on the current blog',
 	'page-header-counter-forum-threads' => 'Number of forum threads',
 	'page-header-counter-forum-active-threads' => 'Number of active forum threads',
-	'page-header-title-prefix-preview' => 'Prefixed for preview page title',
+	'page-header-title-prefix-preview' => 'Prefix for preview page title',
 	'page-header-title-prefix-changes' => 'Prefix for diff (changes) page title',
 	'page-header-title-prefix-history' => 'Prefix for history page title',
 );
