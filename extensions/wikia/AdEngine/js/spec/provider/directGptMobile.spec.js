@@ -1,5 +1,5 @@
 /*global beforeEach, describe, it, modules, expect, spyOn*/
-describe('ext.wikia.adEngine.provider.directGptMobile', function () {
+describe('ext.wikia.adEngine.provider.directGpt', function () {
 	'use strict';
 
 	var noop = function () {},
@@ -14,19 +14,29 @@ describe('ext.wikia.adEngine.provider.directGptMobile', function () {
 
 				}
 			},
+			uapContext: {},
 			factory: {
 				createProvider: noop
 			},
 			defaultAdUnitBuilder: {name: 'defaultAdUnit'},
-			kiloAdUnitBuilder: {name: 'kiloAdUnit'}
+			kiloAdUnitBuilder: {name: 'kiloAdUnit'},
+			slotTweaker: {},
+			openXBidderHelper: {},
+			pageFairRecovery: {},
+			sourcePointRecovery: {}
 		};
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.provider.directGptMobile'](
+		return modules['ext.wikia.adEngine.provider.directGpt'](
 			mocks.adContext,
+			mocks.uapContext,
+			mocks.factory,
 			mocks.defaultAdUnitBuilder,
 			mocks.kiloAdUnitBuilder,
-			mocks.factory
+			mocks.slotTweaker,
+			mocks.openXBidderHelper,
+			mocks.pageFairRecovery,
+			mocks.sourcePointRecovery
 		);
 	}
 
