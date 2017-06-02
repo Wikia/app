@@ -43,7 +43,7 @@ define('ext.wikia.adEngine.slot.inContent', [
 			slotNameGA = slotName.toLowerCase();
 
 		if (!header) {
-			logMessage = 'no second section in the article ' + logWikiData;
+			logMessage = 'missing second section ' + logWikiData;
 			log(slotName + ' not added - ' + logMessage, 'debug', logGroup);
 			adTracker.track('slot/' + slotNameGA + '/failed', {'reason': logMessage});
 			return;
