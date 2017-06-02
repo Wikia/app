@@ -1,4 +1,4 @@
-/*global describe, it, expect, modules, spyOn*/
+/*global beforeEach, describe, it, expect, modules, spyOn*/
 describe('ext.wikia.adEngine.config.desktop', function () {
 	'use strict';
 
@@ -13,9 +13,7 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 	var mocks = {
 			adDecoratorPageDimensions: noop,
 			getAdContextOpts: function () {
-				return {
-					showAds: true
-				};
+				return mocks.opts;
 			},
 			getAdContextTargeting: returnEmpty,
 			getAdContextProviders: returnEmpty,
@@ -36,6 +34,10 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 				}
 			},
 			log: noop,
+			opts: {
+				showAds: true,
+				premiumOnly: false
+			},
 			providers: {
 				directGpt: {
 					name: 'direct'
@@ -92,8 +94,20 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 		return providerNames.join(',');
 	}
 
+	beforeEach(function () {
+		mocks.opts = {
+			showAds: true,
+			premiumOnly: false
+		};
+	});
+
 	it('default setup: Direct, Remnant', function () {
 		expect(getProviders('foo')).toEqual('direct,remnant');
+	});
+
+	it('only direct on premium-only page', function () {
+		mocks.opts.premiumOnly = true;
+		expect(getProviders('foo')).toEqual('direct');
 	});
 
 	it('non-Evolve country, Evolve slot: Direct, Remnant', function () {

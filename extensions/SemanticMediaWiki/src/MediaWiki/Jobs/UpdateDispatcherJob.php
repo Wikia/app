@@ -19,6 +19,11 @@ use Title;
 class UpdateDispatcherJob extends JobBase {
 
 	/**
+	 * Restrict dispatch process on available pool of data
+	 */
+	const RESTRICTED_DISPATCH_POOL = 'restricted.disp.pool';
+
+	/**
 	 * Size of chunks used when invoking the secondary dispatch run
 	 */
 	const CHUNK_SIZE = 500;
@@ -100,14 +105,17 @@ class UpdateDispatcherJob extends JobBase {
 	}
 
 	private function dispatchUpdateForSubject( DIWikiPage $subject ) {
+		if ( $this->getParameter( self::RESTRICTED_DISPATCH_POOL ) !== true ) {
 
-		$this->addUpdateJobsForProperties(
-			$this->store->getProperties( $subject )
-		);
+			$this->addUpdateJobsForProperties(
+				$this->store->getProperties( $subject )
+			);
 
-		$this->addUpdateJobsForProperties(
-			$this->store->getInProperties( $subject )
-		);
+			$this->addUpdateJobsForProperties(
+				$this->store->getInProperties( $subject )
+			);
+
+		}
 
 		$this->addUpdateJobsFromDeserializedSemanticData();
 	}

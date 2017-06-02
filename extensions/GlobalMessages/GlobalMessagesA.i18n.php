@@ -1,5 +1,4 @@
 <?php
-/** Internationalization file for /extensions/GlobalMessages/GlobalMessagesA extension. */
 $messages = [];
 
 $messages['en'] = [
@@ -98,7 +97,6 @@ Some IP addresses change periodically, and may be shared by several users. If yo
 	'alllogstext' => 'Combined display of all available logs of {{SITENAME}}.
 You can narrow down the view by selecting a log type, the username (case-sensitive), or the affected page (also case-sensitive).',
 	'allpages' => 'All pages',
-	'allpages-summary' => '',
 	'alphaindexline' => '$1 to $2',
 	'allpagesfrom' => 'Display pages starting at:',
 	'allpagesto' => 'Display pages ending at:',
@@ -6521,16 +6519,6 @@ Bitte wähle einen anderen Titel.',
 	'addsection' => 'Kommentieren',
 	'admin_skin' => 'Admin-Optionen',
 	'adminskin_ds' => 'Voreinstellung',
-	'allpages-summary' => '{| cellpadding="4px" style="width:100%; background-color:#f9f9f9; border-style:solid; border-color:#e9e9e9; border-width:4px; margin:auto; margin-top:4px; margin-bottom:4px; clear:both; position:relative; color:black;"
-|<div style="float:right">http://images.wikia.com/de/images/4/47/Allpages-summary-de.png</div>
-<span style="font-weight:bold; font-size:140%;">Inhalt von A–Z</span>
-
-Diese automatisch erstellte Spezialseite bietet eine \'\'\'alphabetische Übersicht aller Seiten\'\'\' in diesem Wiki. Aktuell gibt es bereits \'\'\'{{NUMBEROFARTICLES}} Seiten\'\'\', die als „Artikel“ gelten. 
-
-* Mit dem Auswahlfeld lassen sich Seiten in bestimmten [[w:c:hilfe:Hilfe:Namensräume|Namensräumen]] anzeigen.
-* \'\'Kursiv\'\' dargestellte Einträge sind Weiterleitungen auf andere Seitentitel. 
-* Alternativ zu dieser automatisch erstellten Auflistung gibt es noch die [[:Kategorie:Inhalt|\'\'\'Kategorienübersicht\'\'\' als thematisch gegliederten Einstieg]].
-|}',
 	'already_a_member' => 'Bereits Wikia-Nutzer?',
 	'ancientpages-summary' => 'Diese Spezialseite zeigt eine Liste von Artikeln, die sehr lange nicht mehr geändert wurden. Sie ist hilfreich, um Artikel zu finden, die gegebenenfalls aktualisiert werden müssen.',
 ];
@@ -6623,7 +6611,6 @@ Gön $1 od eines won anderes [[{{MediaWiki:Grouppage-sysop}}|Adminisdradores]] g
 	'all-logs-page' => 'Ales Logbüges',
 	'alllogstext' => 'Dose eines gombinärdes Anseig won ales Logbüges sei ,wo in dose {{SITENAME}} wühr. Dose Ausgab gön durg Auswähl won dose Logbugdyb, dose Benuds od dose Seidesdid einschräng.',
 	'allpages' => 'Ales Seides',
-	'allpages-summary' => 'Auw dose Schbesialseid ales Seides won dose {{SITENAME}} alwabedisches auwlisd. Bei dose Sordär suersd Sähles, dan Grosbugschdabes, Gleinbugschdabes und dan Sondseiges gom. \'\'A&nbsp;10\'\' wor dose \'\'AZ\'\' gom, dose \'\'Aal\'\' aba nag dose gom.',
 	'alphaindexline' => '$1 bis $2',
 	'allpagesfrom' => 'Seides anseig ab:',
 	'allarticles' => 'Ales Seides',
@@ -26494,189 +26481,6 @@ Ju lutemi vizitoni [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation
 	'api-error-uploaddisabled' => 'Ngarkimi është i çaktivizuar në këte wiki.',
 	'api-error-verification-error' => 'Skeda mund të jetë e korruptuar ose ka shtesë të gabuar.',
 	'addnewtalksection-link' => 'Fillo një temë të re diskutimi.',
-];
-
-$messages['sr'] = [
-	'april' => 'prill',
-	'august' => 'gusht',
-	'april-gen' => 'prill',
-	'august-gen' => 'gusht',
-	'apr' => 'Pri',
-	'aug' => 'Gush',
-	'about' => 'Rreth',
-	'article' => 'Artikulli',
-	'anontalk' => 'Diskutimet për këtë IP',
-	'and' => '&#32;dhe',
-	'actions' => 'Veprimet',
-	'aboutsite' => 'Rreth {{SITENAME}}',
-	'aboutpage' => 'Project:Rreth',
-	'actionthrottled' => 'Veprim u ndalua',
-	'actionthrottledtext' => 'Si masë sigurie anti-spam, është e ndaluar kryerja e shpeshtë e një veprimi brenda një hapësire kohore shumë të shkurtër. Ju kryet shumë herë të njëjtin veprim brenda një kohe shumë të shkurtër.
-Ju lutemi, provojeni përsëri pas disa minutash.',
-	'acct_creation_throttle_hit' => 'Nuk lejoheni të krijoni më llogari pasi keni krijuar {{PLURAL:$1|1|$1}}.',
-	'accountcreated' => 'Llogarija e Përdoruesit u krijua',
-	'accountcreatedtext' => 'Llogarija e Përdoruesit për $1 u krijua',
-	'anoneditwarning' => '\'\'\'Kujdes:\'\'\' Ju nuk jeni identifikuar.
-Adresa juaj IP do të regjistrohet në historinë e redaktimeve të kësaj faqeje.',
-	'anonpreviewwarning' => '"Ju nuk jeni identifikuar. Ruajtja e ndryshimeve do të bëjë që adresa juaj IP të regjistrohet në historikun e redaktimeve të kësaj faqeje."',
-	'autoblockedtext' => 'IP adresa juaj është bllokuar automatikisht sepse ishte përdorur nga një përdorues tjetër i cili ishte bllokuar nga $1.
-Arsyeja e dhënë për këtë është:
-
-:\'\'$2\'\'
-
-* Fillimi i bllokimit: $8
-* Kalimi i kohës së bllokimit: $6
-* Zgjatja e bllokimit: $7
-
-Ju mund të kontaktoni $1 ose një tjetër [[{{MediaWiki:Grouppage-sysop}}|administrues]] për ta diskutuar bllokimin.
-
-Vini re : që nuk mund ta përdorni mundësinë "dërgo porosi elektronike" përveç nëse keni një postë elektronike të vlefshme të regjistruar në [[Special:Preferences|preferencat tuaja]] dhe nuk jeni bllokuar nga përdorimi i saj.
-
-IP adresa juaj e tanishme është $3 dhe ID e bllokimit është #$5.
-Ju lutemi përfshini këto detaje në të gjitha kërkesat që i bëni.',
-	'accmailtitle' => 'Fjalëkalimi u dërgua.',
-	'accmailtext' => 'Një fjalëkalim i krijuar në mënyrë të rastësishme për [[User talk:$1|$1]] u dërgua në $2.
-
-Fjalëkalimi për këtë llogari mund të ndryshohet në faqen \'\'[[Special:ChangePassword|ndrysho fjalëkalimin]]\'\' pasi të jeni identifikuar.',
-	'anontalkpagetext' => '----\'\' Kjo është një faqe diskutimi për një përdorues anonim i cili nuk ka krijuar akoma një llogari, ose qe nuk e përdor atë.
- Prandaj, ne duhet të përdorim adresën IP numerike për identifikimin e tij.
-Kjo adresë IP mund të përdoret nga disa përdorues.
- Në qoftë se jeni një përdorues anonim dhe mendoni se ndaj jush janë bërë komente të parëndësishme, ju lutem [[Special:UserLogin/signup|krijoni një llogari]] ose [[Special:UserLogin|identifikohuni]] për të shmangur konfuzionin në të ardhmen me përdorues të tjerë anonim .\'\'',
-	'allowemail' => 'Lejo përdoruesit të më dërgojnë email',
-	'action-read' => 'lexo këtë faqe',
-	'action-edit' => 'redakto këtë faqe',
-	'action-createpage' => 'krijo faqe',
-	'action-createtalk' => 'krijo faqe diskutimi',
-	'action-createaccount' => 'krijo këtë llogari përdoruesi',
-	'action-minoredit' => 'shëno këtë redaktim si të vogël',
-	'action-move' => 'zhvendos këtë faqe',
-	'action-move-subpages' => 'zhvendos këtë faqe dhe nënfaqet e saj',
-	'action-move-rootuserpages' => 'lëviz rrënjët e faqeve të përdoruesve',
-	'action-movefile' => 'lëviz këtë skedë',
-	'action-upload' => 'ngarko këtë skedë',
-	'action-reupload' => 'rishkruaj këtë skedë ekzistuese',
-	'action-reupload-shared' => 'mbishkruaj këtë skedarë në një magazinë të përbashkët',
-	'action-upload_by_url' => 'ngarko këtë skedë nga një URL',
-	'action-writeapi' => 'përdor API-në e shkrimit',
-	'action-delete' => 'grise këtë faqe',
-	'action-deleterevision' => 'grise këtë revizion',
-	'action-deletedhistory' => 'shiko historinë e kësaj faqeje të grisur',
-	'action-browsearchive' => 'kërko faqe të grisura',
-	'action-undelete' => 'Restauro këtë faqe',
-	'action-suppressrevision' => 'rishiko dhe rikthe këtë revizion të fshehur',
-	'action-suppressionlog' => 'shiko këtë regjistër privat',
-	'action-block' => 'blloko përdoruesin',
-	'action-protect' => 'ndrysho nivelin e mbrojtjes për këtë faqe',
-	'action-rollback' => 'ritkthen shpejt redaktimet e përdoruesit të fundit që redaktoi një faqe të veçantë',
-	'action-import' => 'importo këtë faqe nga një wiki tjetër',
-	'action-importupload' => 'importo këtë faqe nga një ngarkim i një skedari',
-	'action-patrol' => 'shëno redaktimin e tjerëve si të patrulluar',
-	'action-autopatrol' => 'shëno redaktimet tua si të patrulluara',
-	'action-unwatchedpages' => 'shiko listën e faqeve të pa vrojtuara',
-	'action-mergehistory' => 'bashko historikun e kësaj faqeje',
-	'action-userrights' => 'ndrysho të gjitha të drejtat e përdoruesit',
-	'action-userrights-interwiki' => 'ndrysho të drejtat e përdoruesve në wiki-t tjera',
-	'action-siteadmin' => 'mbyll ose hap bazën e të dhënave',
-	'action-sendemail' => 'dërgo e-maile',
-	'ancientpages' => 'Artikuj më të vjetër',
-	'all-logs-page' => 'Të gjitha regjistrat',
-	'alllogstext' => 'Kjo faqe tregon të gjithë regjistrat e mundshëm të {{SITENAME}}.
-Ju mund të kufizoni pamje sipas tipit të regjistrit, emrit të përdoruesit (shumë i ndjeshëm), dhe faqes në çështje (edhe rastet e ndjeshme)',
-	'allpages' => 'Të gjitha faqet',
-	'alphaindexline' => '$1 deri në $2',
-	'allpagesfrom' => 'Trego faqet duke filluar nga:',
-	'allpagesto' => 'Shfaq faqet që mbarojnë në:',
-	'allarticles' => 'Të gjithë artikujt',
-	'allinnamespace' => 'Të gjitha faqet (hapësira $1)',
-	'allnotinnamespace' => 'Të gjitha faqet (jo në hapësirën $1)',
-	'allpagesprev' => 'Më para',
-	'allpagesnext' => 'Më pas',
-	'allpagessubmit' => 'Shko',
-	'allpagesprefix' => 'Trego faqet me parashtesë:',
-	'allpagesbadtitle' => 'Titulli i dhënë ishte i pavlefshë ose kishte një parashtesë ndër-gjuhe ose ndër-wiki.
-Mund të përmbajë një ose më shumë karktere të cilat nuk mund të përdoren në tituj.',
-	'allpages-bad-ns' => '{{SITENAME}} nuk ka hapësirë "$1".',
-	'activeusers' => 'Lista e përdoruesve aktivë',
-	'activeusers-intro' => 'Kjo është një listë e përdoruesve që kanë qenë aktivë për $1 {{PLURAL:$1|ditë|ditë}}.',
-	'activeusers-count' => '$1 {{PLURAL:$1|redaktim|redaktime}} në {{PLURAL:$3|ditën|$3 ditët}} e fundit',
-	'activeusers-from' => 'Trego përdoruesit duke filluar prej te:',
-	'activeusers-hidebots' => 'Fshih robotët',
-	'activeusers-hidesysops' => 'Fshih administratorët',
-	'activeusers-noresult' => 'Asnjë përdorues nuk u gjet.',
-	'addwatch' => 'Shto tek lista mbikqyrëse',
-	'addedwatchtext' => 'Faqja "[[:$1]]"  i është shtuar [[Special:Watchlist|listës mbikqyrëse]] tuaj. Ndryshimet e ardhshme të kësaj faqeje dhe faqes së diskutimit të saj do të jepen më poshtë, dhe emri i faqes do të duket i \'\'\'trashë\'\'\' në [[Special:RecentChanges|listën e ndryshimeve së fundmi]] për t\'i dalluar më kollaj.
-
-Në qoftë se dëshironi të hiqni një faqe nga lista mbikqyrëse më vonë, shtypni "çmbikqyre" në tabelën e sipërme.',
-	'actioncomplete' => 'Veprimi u krye',
-	'actionfailed' => 'Veprimi dështoi',
-	'alreadyrolled' => 'Nuk mund të rikthehej redaktimi i fundit i [[:$1]] nga [[User:$2|$2]] ([[User talk:$2|diskuto]]{{int:pipe-separator}}[[Special:Contributions/$2|{{int:contribslink}}]]); dikush tjetër e ka redaktuar ose rikthyer këtë faqe tashmë.
-
-Redaktimi i fundit është bërë nga [[User:$3|$3]] ([[User talk:$3|diskuto]]{{nt:pipe-separator}}[[Special:Contributions/$3|{{int:contribslink}}]]).',
-	'autoblockid' => 'Autobllokim #$1',
-	'anononlyblock' => 'vetëm anonimët',
-	'autoblocker' => 'Bllokuar automatikisht sepse adresa juaj IP është përdorur së fundmi nga "[[User:$1|$1]]".
-Arsyeja e dhënë për bllokimin e $1 është: "$2"',
-	'articleexists' => 'Një faqe me atë titull ekziston, ose titulli që zgjodhët nuk është i saktë. Ju lutem zgjidhni një tjetër.',
-	'allmessages' => 'Mesazhet e sistemit',
-	'allmessagesname' => 'Emri',
-	'allmessagesdefault' => 'Teksti i parazgjedhur',
-	'allmessagescurrent' => 'Teksti i tanishëshm',
-	'allmessagestext' => 'Kjo është një listë e të gjitha faqeve në hapësirën MediaWiki:
-Ju lutemi vizitoni [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] dhe [//translatewiki.net translatewiki.net] nëse dëshironi të kontribuoni në lokalizimin e përgjithshëm MediaWiki',
-	'allmessagesnotsupportedDB' => 'Kjo faqe nuk mund të përdoret sepse \'\'\'$wgUseDatabaseMessages\'\'\' është çaktivizuar.',
-	'allmessages-filter-legend' => 'Filtër',
-	'allmessages-filter' => 'Filtroni nga shteti',
-	'allmessages-filter-unmodified' => 'E pandryshuar',
-	'allmessages-filter-all' => 'Të gjithë',
-	'allmessages-filter-modified' => 'E ndryshuar',
-	'allmessages-prefix' => 'Filtroni nga parashtesat:',
-	'allmessages-language' => 'Gjuha:',
-	'allmessages-filter-submit' => 'Shko',
-	'anonymous' => '{{PLURAL:$1|Përdoruesi anonim|Përdoruesit anonimë}} të {{SITENAME}}',
-	'anonuser' => 'Përdorues anonim i {{SITENAME}} $1',
-	'anonusers' => '{{SITENAME}} {{PLURAL:$2|përdoruesi anonim|përdoruesit anonimë}} $1',
-	'ago' => '$1 më parë',
-	'ascending_abbrev' => 'ngritje',
-	'autosumm-blank' => 'U boshatis faqja',
-	'autosumm-replace' => 'Faqja u zëvendësua me \'$1\'',
-	'autoredircomment' => 'Përcjellim te [[$1]]',
-	'autosumm-new' => 'Krijoi faqen me "$1"',
-	'api-error-badaccess-groups' => 'Ju nuk lejoheni të ngarkoni skeda në këtë wiki.',
-	'api-error-badtoken' => 'Gabim i brendshëm: Shenjë e keqe.',
-	'api-error-copyuploaddisabled' => 'Ngarkimi nga URL-ja është çaktivizuar në këtë server.',
-	'api-error-duplicate' => '{{PLURAL:$1|Ekziston [$2 një skedë tjetër]|Ekzistojnë [$2 disa skeda të tjera]}} me të njëjtën përmbajtje.',
-	'api-error-duplicate-archive' => '{{Ekzistonte [$2 një skedë tjetër]|Ekzistonin [$2 disa skeda të tjera]}} me të njëjtën përmbajtje, por {{PLURAL:$1|u gris|u grisën}}.',
-	'api-error-duplicate-archive-popup-title' => 'Dublo {{PLURAL:$1|skedë|skeda}} që janë grisur tashmë',
-	'api-error-duplicate-popup-title' => 'Dublo {{PLURAL:$1|skedë|skeda}}',
-	'api-error-empty-file' => 'Skeda që paraqitët ishte bosh.',
-	'api-error-fetchfileerror' => 'Gabim i brendshëm: Diçka shkoi keq gjatë marrjes së skedës.',
-	'api-error-file-too-large' => 'Skeda që paraqitët ishte shumë e madhe.',
-	'api-error-filename-tooshort' => 'Emri i skedës është shumë i shkurtër.',
-	'api-error-filetype-banned' => 'Ky lloj i skedës është përjashtuar.',
-	'api-error-filetype-missing' => 'Skedës i mungon një shtesë.',
-	'api-error-hookaborted' => 'Modifikimi që provuat të bëni u ndërpre nga një goditje shtese.',
-	'api-error-http' => 'Gabim i brendshëm: Nuk mund të lidhet me serverin.',
-	'api-error-illegal-filename' => 'Emri i skedës nuk lejohet.',
-	'api-error-internal-error' => 'Gabim i brendshëm: Diçka shkoi keq me procesimin e ngarkimit tuaj në wiki.',
-	'api-error-invalid-file-key' => 'Gabim i brendshëm: Skeda nuk u gjet në ruajtjen e përkohshme.',
-	'api-error-missingparam' => 'Gabim i brendshëm: Mungesë e parametrave në kërkesë.',
-	'api-error-missingresult' => 'Gabim i brendshëm: Nuk mund të përcaktohet nëse kopjimi doli me sukses.',
-	'api-error-mustbeloggedin' => 'Ju duhet të identifikoheni për të ngarkuar skeda.',
-	'api-error-mustbeposted' => 'Gabim i brendshëm: Kërkesa kërkon HTTP POST.',
-	'api-error-noimageinfo' => 'Ngarkimi u krye me sukses, por serveri nuk na dha ndonjë informacion për këtë skedë.',
-	'api-error-nomodule' => 'Gabim i brendshëm: Nuk ka modul ngarkimi të vendosur.',
-	'api-error-ok-but-empty' => 'Gabim i brendshëm: Nuk ka përgjigje nga serveri.',
-	'api-error-overwrite' => 'Mbishkrimi i një skede ekzistuese nuk lejohet.',
-	'api-error-stashfailed' => 'Gabim i brendshëm: Serveri nuk arriti të ruajë skedën e përkohshme.',
-	'api-error-timeout' => 'Serveri nuk u përgjigj gjatës kohës që pritej.',
-	'api-error-unclassified' => 'Një gabim i panjohur ndodhi.',
-	'api-error-unknown-code' => 'Gabim i panjohur: "$1"',
-	'api-error-unknown-error' => 'Gabim i brendshëm: Diçka shkoi gabim kur provuat të ngarkoni skedën tuaj.',
-	'api-error-unknown-warning' => 'Paralajmërim i panjohur: $1',
-	'api-error-uploaddisabled' => 'Ngarkimi është i çaktivizuar në këte wiki.',
-	'api-error-verification-error' => 'Skeda mund të jetë e korruptuar ose ka shtesë të gabuar.',
-	'addnewtalksection-link' => 'Fillo një temë të re diskutimi.',
-	'add_comment' => 'Dodaj komentar',
 ];
 
 $messages['sr-ec'] = [

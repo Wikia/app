@@ -444,7 +444,7 @@ $messages['el'] = array(
 );
 
 $messages['es'] = array(
-	'createpage-desc' => 'Permite crear una nueva página usando editor WYSIWYG de Fandom',
+	'createpage-desc' => 'Permite crear una nueva página usando editor WYSIWYG de FANDOM',
 	'createpage-sp-title' => 'Crea una nueva página',
 	'createpage_title' => 'Crea una nueva página',
 	'createpage_title_caption' => 'Título',
@@ -599,7 +599,7 @@ Kirjoita sivusi toinen osio tähän.',
 );
 
 $messages['fr'] = array(
-	'createpage-desc' => 'Permet de créer une nouvelle page en utilisant l’éditeur WYSIWYG de Fandom',
+	'createpage-desc' => 'Permet de créer une nouvelle page en utilisant l’éditeur WYSIWYG de FANDOM',
 	'createpage-sp-title' => 'Créer une nouvelle page',
 	'createpage_title' => 'Créer une nouvelle page',
 	'createpage_title_caption' => 'Titre',
@@ -898,7 +898,7 @@ Tulis bagian kedua dari halaman Anda di sini.',
 );
 
 $messages['it'] = array(
-	'createpage-desc' => "Permette di creare una nuova pagina utilizzando l'editor visuale di Fandom",
+	'createpage-desc' => "Permette di creare una nuova pagina utilizzando l'editor visuale di FANDOM",
 	'createpage-sp-title' => 'Crea una nuova pagina',
 	'createpage_title' => 'Crea una nuova pagina',
 	'createpage_title_caption' => 'Titolo',
@@ -1631,7 +1631,7 @@ $messages['ps'] = array(
 );
 
 $messages['pt'] = array(
-	'createpage-desc' => 'Permite criar uma página nova usando o editor WYSIWYG do Fandom',
+	'createpage-desc' => 'Permite criar uma página nova usando o editor WYSIWYG do FANDOM',
 	'createpage-sp-title' => 'Crie um novo artigo',
 	'createpage_title' => 'Crie um novo artigo',
 	'createpage_title_caption' => 'Título',
@@ -1671,58 +1671,6 @@ Escreva a segunda seção do seu artigo aqui.',
 	'createpage-button-cancel' => 'Cancelar',
 	'createpage-dialog-redlinks-list-header' => 'Ou clique em um dos títulos abaixo e comece a escrever!',
 	'createpage-button-proceed' => 'Próximo',
-);
-
-$messages['pt-br'] = array(
-	'createpage-desc' => 'Permite criar uma página nova usando o editor WYSIWYG da Wikia',
-	'createpage-sp-title' => 'Crie um novo artigo',
-	'createpage_title' => 'Crie um novo artigo',
-	'createpage_title_caption' => 'Título',
-	'createpage_enter_text' => 'Texto:',
-	'createpage_empty_title_error' => 'Título requerido',
-	'createpage_empty_article_body_error' => 'Texto de artigo requerido',
-	'createpage_invalid_title_error' => 'Título inválido',
-	'createpage_article_already_exists' => 'Já existe um artigo com esse nome.
-Por favor, selecione um nome difetente.',
-	'createpage_spam' => 'Desculpe-nos, sua edição não pôde ser salva',
-	'createpage_cant_edit' => 'Não se pôde efetuar a edição',
-	'createpage-dialog-title' => 'Crie um novo artigo',
-	'createpage-dialog-message2' => 'Como gostaria de chamá-la?',
-	'createpage-dialog-choose' => 'Escolha um layout para a página:',
-	'createpage-dialog-format' => 'Layout padrão',
-	'createpage-dialog-blank' => 'Página em branco',
-	'createpage-error-empty-title' => 'Por favor, escreva um título pra seu artigo',
-	'createpage-error-invalid-title' => 'Desculpe-nos, o título do artigo era inválido.
-Por favor, use um título diferente.',
-	'createpage-error-article-exists' => 'Já existe um artigo com aquele título.
-Você pode ir a <a href="$1">$2</a>, ou renomear a sua página.',
-	'createpage-error-article-spam' => 'Desculpe-nos, o título do artigo foi rejeitado pelo nosso filtro de spam.
-Por favor, use um título diferente.',
-	'createpage-error-article-blocked' => 'Desculpe-nos, você está impossibilitado de criar aquele artigo agora.',
-	'tog-createpagedefaultblank' => 'Usar uma página em branco como padrão para criar uma nova página',
-	'tog-createpagepopupdisabled' => 'Desactivar a janela flutuante Criar Página',
-	'newpagelayout' => '[[File:Placeholder|right|300px]]
-Escreva o primeiro parágrafo do seu artigo aqui.
-
-==Cabeçalho de seção==
-
-Escreva a primeira seção do seu artigo aqui.
-
-==Cabeçalho de seção==
-
-Escreva a segunda seção do seu artigo aqui.',
-	'createpage-with-video' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
-Escreva o primeiro parágrafo do seu artigo aqui.
-
-==Cabeçalho de seção==
-
-Escreva a primeira seção do seu artigo aqui.
-
-==Cabeçalho de seção==
-
-Escreva a segunda seção do seu artigo aqui.',
-	'createpage-ve-body' => 'O artigo <b>$1</b> ainda não existe nesta wikia. Você pode ajudar adicionando algumas frases.',
-	'createpage-button-cancel' => 'Cancelar',
 );
 
 $messages['ro'] = array(
@@ -2130,26 +2078,6 @@ Viết cho đề mục 1 tại đây
 Viết cho đề mục 2 tại đây',
 );
 
-$messages['zh'] = array(
-	'createpage-sp-title' => '新增文章',
-	'createpage_title' => '發表新文章',
-	'createpage_title_caption' => '文章標題',
-	'createpage_enter_text' => '輸入文字',
-	'createpage-dialog-choose' => '选择一个页面布局：',
-	'createpage-error-article-spam' => '抱歉，这个页面标题被我们的防滥用过滤器拒绝。请使用其他的标题。',
-	'tog-createpagedefaultblank' => '
-预设使用空白页来创建页面',
-	'tog-createpagepopupdisabled' => '关闭 "创建新页面" 流程 (不建议)',
-	'createpage-button-proceed' => '添加页面',
-);
-
-$messages['zh-cn'] = array(
-	'createpage-sp-title' => '新增文章',
-	'createpage_title' => '发表新文章',
-	'createpage_title_caption' => '文章标题',
-	'createpage_enter_text' => '输入文字',
-);
-
 $messages['zh-hans'] = array(
 	'createpage-sp-title' => '创建新页面',
 	'createpage_title' => '创建新页面',
@@ -2236,65 +2164,5 @@ $messages['zh-hant'] = array(
 	'createpage-dialog-redlinks-list-header' => '也可以點擊以下其中一個標題並開始撰寫！',
 	'newpagelayout' => '[[File:Placeholder|right|300px]] 在這裡寫下文章的內容 ！',
 	'createpage-button-proceed' => '下一步',
-);
-
-$messages['zh-hk'] = array(
-	'createpage-sp-title' => '新增文章',
-	'createpage_title' => '發表新文章',
-	'createpage_title_caption' => '標題',
-	'createpage_enter_text' => '輸入文字',
-	'createpage-dialog-blank' => '空白頁面',
-	'createpage-dialog-choose' => '選擇一個頁面布局：',
-	'createpage-dialog-format' => '標準布局',
-	'createpage-error-article-exists' => '已存在同名頁面。
-您可以訪問<a href="$1">$2</a>，或重命名您的頁面。',
-	'createpage-error-article-spam' => '抱歉，這個頁面標題被我們的防濫用過濾器拒絕。請使用其他的標題。',
-	'createpage-error-empty-title' => '請為您的頁面添加標題',
-	'createpage-error-invalid-title' => '抱歉，條目名無效。請另行取名。',
-	'createpage-with-video' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
-在這裡撰寫第一段落。
-
-==標題項==
-
-在這裡撰寫第一項。
-
-==標題項==
-
-在這裡撰寫第二項。',
-	'tog-createpagedefaultblank' => '預設使用空白頁來創建頁面',
-	'tog-createpagepopupdisabled' => '關閉「創建新頁面」流程（不建議）',
-);
-
-$messages['zh-sg'] = array(
-	'createpage_title' => '发表新文章',
-	'createpage_title_caption' => '文章标题',
-	'createpage_enter_text' => '输入文字',
-);
-
-$messages['zh-tw'] = array(
-	'createpage-sp-title' => '新增文章',
-	'createpage_title' => '發表新文章',
-	'createpage_title_caption' => '文章標題',
-	'createpage_enter_text' => '輸入文字',
-	'createpage-dialog-blank' => '空白頁面',
-	'createpage-dialog-choose' => '選擇一個頁面布局：',
-	'createpage-dialog-format' => '標準布局',
-	'createpage-error-article-exists' => '已存在同名頁面。
-您可以訪問<a href="$1">$2</a>，或重命名您的頁面。',
-	'createpage-error-article-spam' => '抱歉，這個頁面標題被我們的防濫用過濾器拒絕。請使用其他的標題。',
-	'createpage-error-empty-title' => '請為您的頁面添加標題',
-	'createpage-error-invalid-title' => '抱歉，條目名無效。請另行取名。',
-	'createpage-with-video' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
-在這裡撰寫第一段落。
-
-==標題項==
-
-在這裡撰寫第一項。
-
-==標題項==
-
-在這裡撰寫第二項。',
-	'tog-createpagedefaultblank' => '預設使用空白頁來創建頁面',
-	'tog-createpagepopupdisabled' => '關閉「創建新頁面」流程（不建議）',
 );
 

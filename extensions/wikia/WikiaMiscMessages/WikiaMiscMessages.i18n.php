@@ -196,7 +196,7 @@ Wikia<br /><hr />
 The login password for user "$2" is now "$3".<br /><br />
 If you did not request a new password, don’t worry. The replacement password has been sent only to you at this e-mail address. Your account is secure and you can continue to use your old password.<br /><br />
 Thanks,<br /><br />
-The Fandom Community Team<br /><br />
+The FANDOM Community Team<br /><br />
 www.wikia.com<br /><hr />
 <ul>
 <li>To change your preferences or password, go to: <a href="http://community.wikia.com/wiki/Special:Preferences">User Preferences</a>.</li>
@@ -479,7 +479,7 @@ Bitte ignoriere diese E-Mail, falls du sie nicht selbst angefordert hast. Das al
 Das Passwort für Benutzer "$2" lautet jetzt "$3".<br /><br />
 Mach dir keine Sorgen, falls du kein neues Passwort angefordert hast. Das Ersatz-Passwort wurde nur an dich unter dieser E-Mail-Adresse geschickt. Dein Konto ist sicher und du kannst auch weiterhin dein altes Passwort benutzen.<br /><br />
 Vielen Dank,<br /><br />
-Dein Fandom Community-Team<br /><br />
+Dein FANDOM Community-Team<br /><br />
 www.wikia.com<br /><hr />
 <ul>
 <li>Deine Einstellungen oder dein Passwort kannst du in den <a href="http://de.community.wikia.com/wiki/Spezial:Einstellungen">Benutzereinstellungen</a> ändern.</li>
@@ -645,7 +645,7 @@ www.wikia.com
 La contraseña de inicio de sesión del usuario "$2" es ahora "$3".<br /><br />
 Si no has solicitado una nueva contraseña, ¡no te preocupes! La contraseña temporal ha sido enviada solamente a esta dirección de correo electrónico. Tu cuenta está segura y puedes acceder con tu antigua contraseña.<br /><br />
 Atentamente,<br /><br />
-El equipo comunitario de Fandom<br /><br />
+El equipo comunitario de FANDOM<br /><br />
 www.fandom.com<br /><hr />
 <ul>
 <li>Para cambiar tus preferencias o contraseña, ingresa a: <a href="http://www.fandom.com/wiki/Especial:Preferencias">Preferencias de usuario</a>.</li> 
@@ -851,7 +851,7 @@ pouvez ignorer ce message et continuer à utiliser votre ancien mot de passe.<br
 Le mot de passe de l\'utilisateur "$2" est désormais "$3".<br /><br />
 Si vous n\'avez pas demandé de nouveau mot de passe, ne vous inquiétez pas. Le mot de passe de substitution n\'a été envoyé qu\'à vous, à cette adresse e-mail. Votre compte est sain et sauf, et vous pouvez continuer à utiliser votre ancien mot de passe.<br /><br />
 Merci,<br /><br />
-L\'équipe de la communauté Fandom<br /><br />
+L\'équipe de la communauté FANDOM<br /><br />
 www.wikia.com<br /><hr />
 <ul>
 <li>Pour modifier vos préférences ou changer de mot de passe, accédez à la page des <a href="http://community.wikia.com/wiki/Special:Preferences">préférences utilisateur</a>.</li>
@@ -978,7 +978,7 @@ Se non sei stato tu a fare la richiesta, oppure hai ritrovato la password e non 
 La password di accesso per l\'utente "$2" è ora "$3".<br /><br />
 Se non hai richiesto una nuova password, non ti preoccupare. La password sostitutiva è stata inviata solo a te a questo indirizzo e-mail. Il tuo account è sicuro e puoi continuare a usare la tua vecchia password.<br /><br />
 Grazie,<br /><br />
-Il team della community di Fandom<br /><br />
+Il team della community di FANDOM<br /><br />
 www.wikia.com<br /><hr />
 <ul>
 <li>Per modificare le tue preferenze o la password, vai su: <a href="http://it.community.wikia.com/wiki/Speciale:Preferenze">Preferenze Utente</a>.</li>
@@ -1084,7 +1084,7 @@ Jeśli to nie Ty prosiłeś o przesłanie hasła lub przypomniałeś sobie hasł
 Hasło do konta użytkownika „$2” zostało zmienione na „$3”.<br /><br />
 Jeżeli nie prosiłeś o zmianę hasła, nie przejmuj się. Nowe hasło zostało wysłane do ciebie wyłącznie pod ten adres e-mail. Twoje konto jest bezpieczne i możesz nadal używać swojego starego hasła.<br /><br />
 Pozdrawiamy,<br /><br />
-Zespół Społeczności Fandom<br /><br />
+Zespół Społeczności FANDOM<br /><br />
 http://pl.wikia.com/Wikia<br /><hr />
 <ul>
 <li>Żeby zmienić hasło lub ustawienia konta, wejdź na stronę <a href="http://community.wikia.com/wiki/Special:Preferences">Preferencje Użytkownika</a>.</li>
@@ -1603,7 +1603,7 @@ $messages['pt'] = array(
 A senha do usuário "$2" é agora "$3".<br /><br />
 Se você não solicitou uma nova senha, não se preocupe. A senha de substituição foi enviada apenas para você neste endereço de e-mail. Sua conta é segura e você pode continuar a usar sua senha antiga.<br /><br />
 Obrigado,<br /><br />
-Equipe da comunidade Fandom<br /><br />
+Equipe da comunidade FANDOM<br /><br />
 www.wikia.com<br /><hr />
 <ul>
 <li>Para alterar suas preferências ou a senha, vá para <a href="http://comunidade.wikia.com/wiki/Especial:Preferências">Preferências</a>.</li>

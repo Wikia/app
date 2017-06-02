@@ -116,7 +116,7 @@ class MercuryApi {
 	 * @return mixed
 	 */
 	public function getWikiVariables() {
-		global $wgAnalyticsDriverIVW3Countries, $wgCacheBuster, $wgCityId, $wgContLang, $wgContentNamespaces, $wgDBname,
+		global $wgCacheBuster, $wgCityId, $wgContLang, $wgContentNamespaces, $wgDBname,
 		       $wgDefaultSkin, $wgDisableAnonymousEditing, $wgDisableAnonymousUploadForMercury,
 		       $wgDisableMobileSectionEditor, $wgEnableCommunityData, $wgEnableDiscussions,
 		       $wgEnableNewAuth, $wgLanguageCode, $wgSitename,
@@ -152,10 +152,6 @@ class MercuryApi {
 				'vertical' => HubService::getVerticalNameForComscore( $wgCityId ),
 				'comscore' => [
 					'c7Value' => AnalyticsProviderComscore::getC7Value(),
-				],
-				'ivw3' => [
-					'countries' => $wgAnalyticsDriverIVW3Countries,
-					'cmKey' => AnalyticsProviderIVW3::getCMKey()
 				],
 				'nielsen' => [
 					'enabled' => AnalyticsProviderNielsen::isEnabled(),

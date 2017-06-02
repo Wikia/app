@@ -73,7 +73,7 @@ $messages['en'] = array(
 	'right-chatmoderator' => 'Can kick/ban users from [[Help:Chat|Chat]]',
 	'right-chat' => 'Chat with other users, via [[Help:Chat|Chat]]',
 	'right-chatadmin' => 'User has chat admin rights on [[Help:Chat|Chat]]',
-	'right-chatstaff' => 'User has Fandom Staff rights on [[Help:Chat|Chat]]',
+	'right-chatstaff' => 'User has FANDOM Staff rights on [[Help:Chat|Chat]]',
 	'right-chatfailover' => 'Can access Special:Chatfailover',
 	'group-chatmoderator' => 'Chat moderators',
 	'group-chatmoderator-member' => 'Chat moderator',
@@ -747,7 +747,7 @@ Wenn du dies für einen Fehler hältst oder möchtest, dass die Entscheidung üb
 	'chat-message-was-too-long' => 'Die Nachricht war zu lang und konnte nicht angezeigt werden.',
 	'right-chat' => 'Unterhalte dich im [[Help:Chat|Chat]] mit anderen Benutzern',
 	'right-chatadmin' => 'Der Benutzer hat im [[Help:Chat|Chat]] Adminrechte',
-	'right-chatstaff' => 'Der Benutzer hat im [[Help:Chat|Chat]] Fandom-Mitarbeiterrechte',
+	'right-chatstaff' => 'Der Benutzer hat im [[Help:Chat|Chat]] FANDOM-Mitarbeiterrechte',
 	'right-chatfailover' => 'Kann auf Special:Chatfailover zugreifen',
 );
 
@@ -887,7 +887,7 @@ Si crees que ha sido un error o te gustaría reconsiderarlo, por favor contacta 
 	'chat-message-was-too-long' => 'El mensaje era demasiado largo y podría no visualizarse.',
 	'right-chat' => 'Chatea con otros usuarios a través del [[Ayuda:Chat|Chat]]',
 	'right-chatadmin' => 'El usuario tiene derechos de administrador en el [[Ayuda:Chat|Chat]]',
-	'right-chatstaff' => 'El usuario tiene derechos de Staff de Fandom en el [[Ayuda:Chat|Chat]]',
+	'right-chatstaff' => 'El usuario tiene derechos de Staff de FANDOM en el [[Ayuda:Chat|Chat]]',
 	'right-chatfailover' => 'Puede acceder a Special:Chatfailover',
 );
 
@@ -1232,7 +1232,7 @@ $messages['fr'] = array(
 	'chat-message-was-too-long' => "Le message n'a pas pu être affiché car il était trop long.",
 	'right-chat' => "Tchater avec d'autres utilisateurs via le [[Aide:Tchat|tchat]]",
 	'right-chatadmin' => "L'utilisateur a des droits d'administrateur de tchat sur le [[Aide:Tchat|tchat]]",
-	'right-chatstaff' => "L'utilisateur a les droits de staff de Fandom sur le [[Aide:Tchat|tchat]]",
+	'right-chatstaff' => "L'utilisateur a les droits de staff de FANDOM sur le [[Aide:Tchat|tchat]]",
 	'right-chatfailover' => 'Peut accéder à Special:Chatfailover',
 );
 
@@ -1694,7 +1694,7 @@ $1 è stato bannato da $2 $3.',
 	'chat-message-was-too-long' => 'Il messaggio era troppo lungo e non è stato possibile visualizzarlo.',
 	'right-chat' => 'Chattare con altri utenti tramite la [[w:it:Aiuto:Chat|Chat]]',
 	'right-chatadmin' => "L'utente ha i diritti di amministrazione della chat su [[w:it:Aiuto:Chat|Chat]]",
-	'right-chatstaff' => "L'utente ha i diritti dello Staff Fandom su [[Aiuto:Chat|Chat]]",
+	'right-chatstaff' => "L'utente ha i diritti dello Staff FANDOM su [[Aiuto:Chat|Chat]]",
 	'right-chatfailover' => 'Può accedere a Special:Chatfailover',
 	'grouppage-chatmoderator' => 'w:it:Aiuto:Chat',
 	'grouppage-bannedfromchat' => 'w:it:Aiuto:Chat',
@@ -2809,96 +2809,10 @@ $messages['pt'] = array(
 	'chat-message-was-too-long' => 'A mensagem era muito grande e não pôde ser exibida.',
 	'right-chat' => 'Converse com outros usuários via [[Help:Chat|chat]]',
 	'right-chatadmin' => 'O usuário tem direitos de administrador no [[Help:Chat|chat]]',
-	'right-chatstaff' => 'O usuário tem direitos como staff do Fandom no [[Help:Chat|chat]]',
+	'right-chatstaff' => 'O usuário tem direitos como staff do FANDOM no [[Help:Chat|chat]]',
 	'right-chatfailover' => 'Pode acessar Special:Chatfailover',
 	'grouppage-chatmoderator' => 'w:c:comunidade:Ajuda:Chat',
 	'grouppage-bannedfromchat' => 'w:c:comunidade:Ajuda:Chat',
-);
-
-$messages['pt-br'] = array(
-	'chat' => 'Bate-papo',
-	'chat-desc' => '[[Special:Chat|Chat ao vivo]]',
-	'chat-no-login' => 'Você precisa estar logado no chat.',
-	'chat-no-login-text' => 'Por favor, faça login para entrar no chat.',
-	'chat-welcome-message' => 'Bem-vindo ao chat da $1',
-	'chat-user-joined' => '$1 entrou no chat.',
-	'chat-read-only' => 'O chat está temporariamente indisponível porque a wiki está em modo de leitura.',
-	'chat-private-messages' => 'Mensagens Privadas',
-	'chat-user-parted' => '$1 saiu do chat.',
-	'chat-user-blocked' => '$1 bloqueou $2.',
-	'chat-user-allow' => '$1 permitiu $2.',
-	'chat-kick-you-need-permission' => 'Você não tem permissões para expulsar um usuário.',
-	'chat-kick-cant-kick-moderator' => 'Você não pode expulsar outro Moderador do Chat.',
-	'chat-user-was-kicked' => '$1 foi expulso por $2.',
-	'chat-you-were-kicked' => 'Você foi expulso por $1.',
-	'chat-user-was-banned' => '$1 foi banido por $2 $3',
-	'chat-you-were-banned' => 'Você foi banido por $1.',
-	'chat-user-was-unbanned' => '$2 terminou o Banimento do chat de $1.',
-	'chat-ban-cannt-undo' => 'O banimento já foi desfeito',
-	'chat-user-permanently-disconnected' => 'Você está desconectado, verifique sua conexão com a Internet e atualize a janela do seu navegador',
-	'chat-inlinealert-a-made-b-chatmod' => '$1 tornou <strong>$2</strong> um moderador do chat.',
-	'chat-err-connected-from-another-browser' => 'Você se conectou de outro navegador. Esta conexão será fechada.',
-	'chat-err-communicating-with-mediawiki' => 'Erro de comunicação com o servidor do MediaWiki.',
-	'chat-ban-contributions-heading' => 'Banir do chat',
-	'chat-ban-modal-heading' => 'Banir este usuário do chat',
-	'chat-ban-modal-label-expires' => 'Expira',
-	'chat-ban-modal-label-reason' => 'Motivo',
-	'chat-log-reason-banadd' => 'Mau comportamento no chat',
-	'chat-log-reason-undo' => 'desfazer',
-	'chat-ban-undolink' => 'desfazer',
-	'chat-ban-modal-button-ok' => 'Banir este usuário',
-	'chat-ban-modal-button-change-ban' => 'Mudar Banimento',
-	'chat-ban-modal-button-cancel' => 'Cancelar',
-	'chat-ban-modal-change-ban-heading' => 'Mudar o banimento de chat desse usuário',
-	'chat-ban-modal-change-ban-label' => 'Mudar para',
-	'chat-ban-modal-end-ban' => 'Terminar Banimento',
-	'chat-log-reason-banchange' => 'Nenhum motivo especificado',
-	'chat-log-reason-banremove' => 'Nenhum motivo especificado',
-	'chat-ban-cant-ban-moderator' => 'Você não pode expulsar/banir outro Moderador do Chat.',
-	'chat-ban-already-banned' => '$1 já está banido do chat nesta wiki.',
-	'chat-ban-you-need-permission' => 'Você não tem a permissão $1 que é necessária para expulsar/banir um usuário.',
-	'chat-missing-required-parameter' => "'$1' é necessário mas não foi encontrado no pedido.",
-	'chat-err-already-chatmod' => 'Erro: "$1" já está no grupo "$2".',
-	'chat-err-no-permission-to-add-chatmod' => 'Erro: Vpcê não tem permissões para colocar este usuário no grupo "$1".',
-	'chat-userrightslog-a-made-b-chatmod' => '$1 promoveu $2 para ser um moderador do chat nesta wiki.',
-	'chat-err-invalid-username-chatmod' => 'Erro: Não foi possível encontrar o usuário "$1"',
-	'chat-you-are-banned' => 'Erro de permissões.',
-	'chat-you-are-banned-text' => 'Desculpe, mas você não tem permissões para usar o chat nesta wiki. Se acredita que a falta de permissões resulta de um erro ou pretende que o assunto seja reconsiderado, contate um administrador, por favor.',
-	'chat-room-is-not-on-this-wiki' => 'O chat onde você está tentando entrar não parece existir nesta wiki.',
-	'chat-live2' => 'Chat ao vivo!',
-	'chat-start-a-chat' => 'Iniciar um Chat',
-	'chat-join-the-chat' => 'Entrar no chat',
-	'chat-edit-count' => '{{PLURAL:$1|$1 edição|$1 edições}}',
-	'chat-member-since' => 'Membro desde $1',
-	'chat-great-youre-logged-in' => 'Ótimo! Você está logado.',
-	'chat-user-menu-message-wall' => 'Mural de Mensagens',
-	'chat-user-menu-talk-page' => 'Página de Discussão',
-	'chat-user-menu-contribs' => 'Contribuições',
-	'chat-user-menu-private' => 'Mensagem Privada',
-	'chat-user-menu-give-chat-mod' => 'Dar Estado de Moderador do Chat',
-	'chat-user-menu-kick' => 'Expulsar',
-	'chat-user-menu-ban' => 'Banir',
-	'chat-user-menu-private-block' => 'Bloquear Mensagens Privadas',
-	'chat-user-menu-private-allow' => 'Permitir Mensagens Privadas',
-	'chat-user-menu-private-close' => 'Fechar Quarto Privado',
-	'chat-private-headline' => 'Chat privado com $1',
-	'right-chatmoderator' => 'Pode expulsar/banir usuários do [[Help:Chat|Chat]]',
-	'group-chatmoderator' => 'Moderadores do chat',
-	'group-chatmoderator-member' => 'Moderador do chat',
-	'group-bannedfromchat' => 'Banido do chat',
-	'group-bannedfromchat-member' => 'Banido do chat',
-	'chat-ban-option-list' => '2 horas:2 hours,1 dia:1 day,3 dias:3 days,1 semana:1 week,2 semanas:2 weeks,1 mês:1 month,3 meses:3 months,6 meses:6 months,1 ano:1 year,infinito:infinite',
-	'chat-ban-log-change-ban-link' => 'mudar ban',
-	'chat-chatconnect-log' => 'Log de conexão ao chat',
-	'chat-chatconnect-log-entry' => 'conectado a $1 desde o endereço $2',
-	'chat-chatban-log' => 'Log de banimentos do chat',
-	'chat-chatbanadd-log-entry' => 'banido $1 do chat com um tempo de expiração de $2, terminando $3',
-	'chat-chatbanremove-log-entry' => 'desbanido $1 do chat',
-	'chat-chatbanchange-log-entry' => 'mudou as configurações de banimento para $1 com um tempo de expiração de $2, terminando $3',
-	'chat-contributions-ban-notice' => '{{GENDER:$1|Este usuário}} está banido do chat. O último registro de ban do chat está sendo mostrado abaixo como referência:',
-	'chat-browser-is-notsupported' => 'Seu navegador não é compatível. Para uma experiência melhor, use um <a href="http://community.wikia.com/wiki/Help:Supported_browsers">navegador mais recente</a>.',
-	'chat-checkuser-join-action' => 'Uniu-se ao Chat',
-	'chat-status-away' => 'Ausente',
 );
 
 $messages['ro'] = array(
@@ -3614,10 +3528,6 @@ $messages['vi'] = array(
 	'grouppage-chatmoderator' => 'w:c:vi:Help:Tán gẫu',
 );
 
-$messages['zh'] = array(
-	'grouppage-chatmoderator' => 'w:c:zh.community:Help:Chat',
-);
-
 $messages['zh-hans'] = array(
 	'chat' => '聊天',
 	'chat-desc' => '[[Special:Chat|在线聊天]]',
@@ -3804,13 +3714,5 @@ $messages['zh-hant'] = array(
 	'right-chatstaff' => '使用者在[[Help:Chat|聊天]]中具有Fandom員工權限',
 	'right-chatfailover' => '可以訪問Special:Chatfailover',
 	'grouppage-bannedfromchat' => 'w:c:zh.community:Help:Chat',
-);
-
-$messages['zh-hk'] = array(
-	'grouppage-chatmoderator' => 'w:c:zh.community:Help:Chat',
-);
-
-$messages['zh-tw'] = array(
-	'grouppage-chatmoderator' => 'w:c:zh.community:Help:Chat',
 );
 

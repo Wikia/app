@@ -28,7 +28,6 @@ class WikiService extends WikiaModel {
 	const WIKIAGLOBAL_CITY_ID = 80433;
 
 	const FLAG_PROMOTED = 4;
-	const FLAG_BLOCKED = 8;
 	const FLAG_OFFICIAL = 16;
 
 	static $botGroups = [ 'bot', 'bot-global' ];
@@ -881,8 +880,7 @@ class WikiService extends WikiaModel {
 				),
 				array(
 					'city_list.city_public' => 1,
-					'city_list.city_id' => $wikiIds,
-					'((city_visualization.city_flags & ' . self::FLAG_BLOCKED . ') != ' . self::FLAG_BLOCKED . ' OR city_visualization.city_flags IS NULL)'
+					'city_list.city_id' => $wikiIds
 				),
 				__METHOD__,
 				array(),

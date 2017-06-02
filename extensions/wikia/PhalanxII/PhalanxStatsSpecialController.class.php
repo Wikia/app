@@ -92,7 +92,7 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 
 		// pull these out of the array, so they don't get used in the top rows
 		$row = $data->toArray();
-		unset( $row['text'], $row['reason'], $row['comment'], $row['ip_hex'] );
+		unset( $row['text'], $row['reason'], $row['comment']);
 
 		$this->response->setValues( [
 			'firstRow' => $row,

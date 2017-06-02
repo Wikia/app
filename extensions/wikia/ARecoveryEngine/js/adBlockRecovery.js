@@ -32,18 +32,9 @@ define('ext.wikia.aRecoveryEngine.adBlockRecovery', [
 		adBlockDetection.addOnNotBlockingCallback(callback);
 	}
 
-	function getSafeUri(url) {
-		if (adBlockDetection.isBlocking()) {
-			url = win._sp_.getSafeUri(url);
-		}
-
-		return url;
-	}
-
 	function isEnabled() {
 		var context = adContext.getContext(),
-			enabled = adBlockDetection.isEnabled() &&
-				(context.opts.sourcePointRecovery || context.opts.pageFairRecovery);
+			enabled = context.opts.sourcePointRecovery || context.opts.pageFairRecovery;
 
 		log(['isEnabled', enabled], log.levels.debug, logGroup);
 		return enabled;
@@ -93,7 +84,6 @@ define('ext.wikia.aRecoveryEngine.adBlockRecovery', [
 		addResponseListener: addResponseListener,
 		isEnabled: isEnabled,
 		getName: getName,
-		getSafeUri: getSafeUri,
 		track: track,
 		verifyContent: verifyContent,
 		wasCalled: isEnabled

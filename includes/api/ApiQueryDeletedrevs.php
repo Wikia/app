@@ -102,7 +102,7 @@ class ApiQueryDeletedrevs extends ApiQueryBase {
 
 		$this->addFieldsIf( 'ar_parent_id', $fld_parentid );
 		$this->addFieldsIf( 'ar_rev_id', $fld_revid );
-		$this->addFieldsIf( 'ar_user_text', $fld_user );
+		$this->addFieldsIf( [ 'ar_user', 'ar_user_text' ], $fld_user );
 		$this->addFieldsIf( 'ar_user', $fld_userid );
 		$this->addFieldsIf( 'ar_comment', $fld_comment || $fld_parsedcomment );
 		$this->addFieldsIf( 'ar_minor_edit', $fld_minor );

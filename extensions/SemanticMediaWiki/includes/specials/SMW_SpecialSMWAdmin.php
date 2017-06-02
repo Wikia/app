@@ -74,17 +74,18 @@ class SMWAdmin extends SpecialPage {
 
 		$this->messageBuilder = $this->htmlFormRenderer->getMessageBuilder();
 
-		#$jobQueueLookup = $mwCollaboratorFactory->newJobQueueLookup( $this->getStore()->getConnection( 'mw.db' ) );
-		#$row = $jobQueueLookup->selectJobRowFor( 'SMW\RefreshJob' );
-		#
-		#if ( $row !== false ) { // similar to Job::pop_type, but without deleting the job
-		#	$title = Title::makeTitleSafe( $row->job_namespace, $row->job_title );
-		#	$blob = (string)$row->job_params !== '' ? unserialize( $row->job_params ) : false;
-		#	$refreshjob = Job::factory( $row->job_cmd, $title, $blob, $row->job_id );
-		#} else {
-		#	$refreshjob = null;
-		#}
-		$refreshjob = null; // Wikia change - we do not use job DB table for handling tasks queue (SUS-1305)
+		// $jobQueueLookup = $mwCollaboratorFactory->newJobQueueLookup( $this->getStore()
+		//	->getConnection( 'mw.db' ) );
+		// $row = $jobQueueLookup->selectJobRowFor( 'SMW\RefreshJob' );
+
+		// if ( $row !== false ) { // similar to Job::pop_type, but without deleting the job
+		//	$title = Title::makeTitleSafe( $row->job_namespace, $row->job_title );
+		//	$blob = (string)$row->job_params !== '' ? unserialize( $row->job_params ) : false;
+		//	$refreshjob = Job::factory( $row->job_cmd, $title, $blob, $row->job_id );
+		//} else {
+		// Wikia change - we do not use job DB table for handling tasks queue (SUS-1305)
+			$refreshjob = null;
+		//}
 
 		/**** Execute actions if any ****/
 		switch ( $this->getRequest()->getText( 'action' ) ) {

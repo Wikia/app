@@ -34,12 +34,12 @@ $messages['en'] = array(
 	'lightbox-blog-link' => 'Blog link',
 	'lightbox-send' => 'Send',
 	'lightbox-share-description' => 'Photo in $1 on $2',
-	'lightbox-share-email-subject' => '$1 has sent you a photo on Fandom',
+	'lightbox-share-email-subject' => '$1 has sent you a photo on FANDOM',
 	'lightbox-share-salutation' => 'Hi,',
-	'lightbox-share-email-body' => 'Someone wanted to show you a photo on Fandom. Check it out:<br /><br />$1',
+	'lightbox-share-email-body' => 'Someone wanted to show you a photo on FANDOM. Check it out:<br /><br />$1',
 	'lightbox-share-description-video' => 'Video in $1 on $2',
-	'lightbox-share-email-subject-video' => '$1 has sent you a video on Fandom',
-	'lightbox-share-email-body-video' => 'Someone wanted to show you a video on Fandom. Check it out:<br /><br />$1',
+	'lightbox-share-email-subject-video' => '$1 has sent you a video on FANDOM',
+	'lightbox-share-email-body-video' => 'Someone wanted to show you a video on FANDOM. Check it out:<br /><br />$1',
 	'lightbox-share-button-email' => 'Email',
 	'lightbox-share-button-www' => 'Share',
 	'lightbox-share-button-embed' => 'Embed',
@@ -106,8 +106,8 @@ $messages['de'] = array(
 	'lightbox-blog-link' => 'Blog-Link',
 	'lightbox-send' => 'Senden',
 	'lightbox-share-description' => 'Bild auf $1 ($2)',
-	'lightbox-share-email-subject' => '$1 hat dir auf Fandom ein Bild geschickt',
-	'lightbox-share-email-body' => 'Jemand möchte dir auf Fandom ein Bild zeigen. Sieh es dir an:<br /><br />$1',
+	'lightbox-share-email-subject' => '$1 hat dir auf FANDOM ein Bild geschickt',
+	'lightbox-share-email-body' => 'Jemand möchte dir auf FANDOM ein Bild zeigen. Sieh es dir an:<br /><br />$1',
 	'lightbox-share-button-email' => 'E-Mail',
 	'lightbox-share-button-www' => 'Teilen',
 	'lightbox-share-button-embed' => 'Einbetten',
@@ -115,8 +115,8 @@ $messages['de'] = array(
 	'lightbox-share-email-page-label-address' => 'E-Mail-Adresse',
 	'lightbox-share-email-ok-content' => 'Die {{PLURAL:$1|E-Mail wurde|E-Mails wurden}} verschickt.',
 	'lightbox-share-email-error-noaddress' => 'Es wurde keine Adresse angegeben.',
-	'lightbox-share-email-body-video' => 'Jemand möchte dir auf Fandom ein Video zeigen. Sieh es dir an:<br /><br />$1',
-	'lightbox-share-email-subject-video' => '$1 hat dir auf Fandom ein Bild geschickt',
+	'lightbox-share-email-body-video' => 'Jemand möchte dir auf FANDOM ein Video zeigen. Sieh es dir an:<br /><br />$1',
+	'lightbox-share-email-subject-video' => '$1 hat dir auf FANDOM ein Bild geschickt',
 	'lightbox-carousel-more-items' => '<span>$1</span> {{PLURAL:$1|weiteres Element|weitere Medien}} in diesem Wiki',
 	'lightbox-carousel-progress' => '<b>$1-$2</b> von <b>$3</b>',
 	'lightbox-email-form-header' => 'E-Mail',
@@ -166,8 +166,8 @@ $messages['es'] = array(
 	'lightbox-blog-link' => 'Enlace de blog',
 	'lightbox-send' => 'Enviar',
 	'lightbox-share-description' => 'Imagen de $1 en $2',
-	'lightbox-share-email-subject' => '$1 te ha enviado una imagen en Fandom',
-	'lightbox-share-email-body' => 'Alguien quería mostrarte una imagen en Fandom. Mírala:<br /><br />$1',
+	'lightbox-share-email-subject' => '$1 te ha enviado una imagen en FANDOM',
+	'lightbox-share-email-body' => 'Alguien quería mostrarte una imagen en FANDOM. Mírala:<br /><br />$1',
 	'lightbox-share-button-email' => 'Correo electrónico',
 	'lightbox-share-button-www' => 'Compartir',
 	'lightbox-share-button-embed' => 'Insertar',
@@ -177,8 +177,8 @@ $messages['es'] = array(
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|correo ha|correos han}} sido enviado.',
 	'lightbox-share-email-error-noaddress' => 'No has especificado ninguna dirección.',
 	'lightbox-visit-the-wiki' => 'Visita el wiki:',
-	'lightbox-share-email-body-video' => 'Alguien quería mostrarte un video en Fandom. Mírala:<br /><br />$1',
-	'lightbox-share-email-subject-video' => '$1 te ha enviado un video en Fandom',
+	'lightbox-share-email-body-video' => 'Alguien quería mostrarte un video en FANDOM. Mírala:<br /><br />$1',
+	'lightbox-share-email-subject-video' => '$1 te ha enviado un video en FANDOM',
 	'lightbox-carousel-more-items' => "''' $1 ''' {{PLURAL:$1|artículo de más|artículos de más}} en este wiki",
 	'lightbox-carousel-progress' => "''' $1-$2 ''' de ''' $3 '''",
 	'lightbox-email-form-header' => 'Correo electrónico',
@@ -236,8 +236,8 @@ $messages['fr'] = array(
 	'lightbox-blog-link' => 'Lien de blog',
 	'lightbox-send' => 'Envoyer',
 	'lightbox-share-description' => 'Image de $1 sur $2',
-	'lightbox-share-email-subject' => '$1 vous a envoyé une photo sur Fandom',
-	'lightbox-share-email-body' => "Quelqu'un souhaite vous montrer une photo sur Fandom. Regardez-la :<br /><br />$1",
+	'lightbox-share-email-subject' => '$1 vous a envoyé une photo sur FANDOM',
+	'lightbox-share-email-body' => "Quelqu'un souhaite vous montrer une photo sur FANDOM. Regardez-la :<br /><br />$1",
 	'lightbox-share-button-email' => 'Envoyer',
 	'lightbox-share-button-www' => 'Partager',
 	'lightbox-share-button-embed' => 'Intégrer',
@@ -247,8 +247,8 @@ $messages['fr'] = array(
 	'lightbox-share-email-ok-content' => "{{PLURAL:$1|L'e-mail a été envoyé|Les e-mails ont été envoyés}}.",
 	'lightbox-share-email-error-noaddress' => 'Vous n’avez spécifié aucune adresse.',
 	'lightbox-visit-the-wiki' => 'Visiter le wiki :',
-	'lightbox-share-email-body-video' => "Quelqu'un souhaite vous montrer une vidéo sur Fandom. Regardez-la :<br /><br />$1",
-	'lightbox-share-email-subject-video' => '$1 vous a envoyé une vidéo sur Fandom',
+	'lightbox-share-email-body-video' => "Quelqu'un souhaite vous montrer une vidéo sur FANDOM. Regardez-la :<br /><br />$1",
+	'lightbox-share-email-subject-video' => '$1 vous a envoyé une vidéo sur FANDOM',
 	'lightbox-carousel-more-items' => '<span>$1</span> {{PLURAL:$1|autre|autres}} sur ce wiki',
 	'lightbox-carousel-progress' => '<b>$1-$2</b> de <b>$3</b>',
 	'lightbox-desc' => '&nbsp;',
@@ -320,10 +320,10 @@ $messages['ia'] = array(
 );
 
 $messages['it'] = array(
-	'lightbox-share-email-body' => "Qualcuno desiderava mostrarti un'immagine su Fandom. Dalle un'occhiata:<br /><br />$1",
-	'lightbox-share-email-body-video' => "Qualcuno desiderava mostrarti un video su Fandom. Dagli un'occhiata:<br /><br />$1",
-	'lightbox-share-email-subject' => "$1 ti ha inviato un'immagine su Fandom",
-	'lightbox-share-email-subject-video' => '$1 ti ha inviato un video su Fandom',
+	'lightbox-share-email-body' => "Qualcuno desiderava mostrarti un'immagine su FANDOM. Dalle un'occhiata:<br /><br />$1",
+	'lightbox-share-email-body-video' => "Qualcuno desiderava mostrarti un video su FANDOM. Dagli un'occhiata:<br /><br />$1",
+	'lightbox-share-email-subject' => "$1 ti ha inviato un'immagine su FANDOM",
+	'lightbox-share-email-subject-video' => '$1 ti ha inviato un video su FANDOM',
 	'lightbox-blog-link' => 'Link al blog',
 	'lightbox-carousel-more-items' => "{{PLURAL:$1|'''$1''' altro elemento|Altri '''$1''' elementi}} su questa wiki",
 	'lightbox-carousel-progress' => "'''$1-$2''' di '''$3'''",
@@ -577,8 +577,8 @@ $messages['nl'] = array(
 	'lightbox-carousel-more-items' => "'''$1''' {{PLURAL:$1|more item|more items}} on this wiki",
 	'lightbox-share-salutation' => 'Hi,',
 	'lightbox-share-description-video' => 'Video in $1 on $2',
-	'lightbox-share-email-subject-video' => '$1 has sent you a video on Fandom',
-	'lightbox-share-email-body-video' => 'Someone wanted to show you a video on Fandom. Check it out:<br /><br />$1',
+	'lightbox-share-email-subject-video' => '$1 has sent you a video on FANDOM',
+	'lightbox-share-email-body-video' => 'Someone wanted to show you a video on FANDOM. Check it out:<br /><br />$1',
 );
 
 $messages['pl'] = array(
@@ -588,8 +588,8 @@ $messages['pl'] = array(
 	'lightbox-blog-link' => 'Link do bloga',
 	'lightbox-send' => 'Wyślij',
 	'lightbox-share-description' => 'Obraz na stronie $1 na $2',
-	'lightbox-share-email-subject' => '{{GENDER:$1|$1 wysłał|$1 wysłała|Użytkownik $1 wysłał}} Ci zdjęcie na portalu Fandom',
-	'lightbox-share-email-body' => 'Ktoś chciał pokazać Ci obraz na portalu Fandom. Zobacz:<br /><br />$1',
+	'lightbox-share-email-subject' => '{{GENDER:$1|$1 wysłał|$1 wysłała|Użytkownik $1 wysłał}} Ci zdjęcie na portalu FANDOM',
+	'lightbox-share-email-body' => 'Ktoś chciał pokazać Ci obraz na portalu FANDOM. Zobacz:<br /><br />$1',
 	'lightbox-share-button-email' => 'E-mail',
 	'lightbox-share-button-www' => 'Podziel się',
 	'lightbox-share-button-embed' => 'Osadź',
@@ -599,8 +599,8 @@ $messages['pl'] = array(
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|E-mail został wysłany|E-maile zostały wysłane}}.',
 	'lightbox-share-email-error-noaddress' => 'Adresy nie zostały określone.',
 	'lightbox-visit-the-wiki' => 'Odwiedź wiki:',
-	'lightbox-share-email-body-video' => 'Ktoś chciał pokazać Ci film na portalu Fandom. Zobacz:<br /><br />$1',
-	'lightbox-share-email-subject-video' => '{{GENDER:$1|$1 wysłał|$1 wysłała|Użytkownik $1 wysłał}} Ci film na portalu Fandom',
+	'lightbox-share-email-body-video' => 'Ktoś chciał pokazać Ci film na portalu FANDOM. Zobacz:<br /><br />$1',
+	'lightbox-share-email-subject-video' => '{{GENDER:$1|$1 wysłał|$1 wysłała|Użytkownik $1 wysłał}} Ci film na portalu FANDOM',
 	'lightbox-carousel-more-items' => '<span>$1</span> {{PLURAL:$1|plik|pliki|plików}} więcej na tej wiki',
 	'lightbox-carousel-progress' => '<b>$1–$2</b> z <b>$3</b>',
 	'lightbox-email-form-header' => 'E-mail',
@@ -640,10 +640,10 @@ $messages['ps'] = array(
 );
 
 $messages['pt'] = array(
-	'lightbox-share-email-body' => 'Alguém queria te mostrar uma foto no Fandom. Confira:<br />< br />$1',
-	'lightbox-share-email-body-video' => 'Alguém queria te mostrar um vídeo no Fandom. Confira:<br />< br />$1',
-	'lightbox-share-email-subject' => '$1 enviou-lhe uma foto no Fandom',
-	'lightbox-share-email-subject-video' => '$1 enviou-lhe um vídeo no Fandom',
+	'lightbox-share-email-body' => 'Alguém queria te mostrar uma foto no FANDOM. Confira:<br />< br />$1',
+	'lightbox-share-email-body-video' => 'Alguém queria te mostrar um vídeo no FANDOM. Confira:<br />< br />$1',
+	'lightbox-share-email-subject' => '$1 enviou-lhe uma foto no FANDOM',
+	'lightbox-share-email-subject-video' => '$1 enviou-lhe um vídeo no FANDOM',
 	'lightbox-desc' => 'Lightbox extension',
 	'lightbox-header-more-info-button' => 'Mais informações',
 	'lightbox-header-share-button' => 'Compartilhar',
@@ -759,51 +759,6 @@ $messages['sv'] = array(
 	'lightbox-visit-the-wiki' => 'Besök wikin:',
 );
 
-$messages['zh'] = array(
-	'lightbox-share-email-body' => '您好！
-
-您的朋友想要让您看一张Wikia上的图片。请点击查看：
-
-$1
-
-- Wikia团队
-
-___________________________________________
-* 在社区中心寻求协助和建议：http://community.wikia.com',
-	'lightbox-share-email-body-video' => '您好！
-
-您的朋友想要讓您看一段Wikia上的視頻。請點擊查看：
-
-$1
-
-- Wikia團隊
-
-___________________________________________
-* 在社區中心尋求協助和建議：http://community.wikia.com',
-	'lightbox-share-email-subject' => '$1 从Wikia寄了一张图片给你',
-	'lightbox-share-email-subject-video' => '$1 从Wikia寄给您一段视频',
-	'lightbox-carousel-more-items' => "在这个Wiki上还有'''$1''' {{PLURAL:$1|件|件}}",
-	'lightbox-carousel-progress' => "'''$3'''个之中的'''$1-$2'''",
-	'lightbox-email-form-header' => '电子邮件',
-	'lightbox-email-label' => '寄给一个朋友',
-	'lightbox-email-placeholder' => '你的朋友的电子信箱',
-	'lightbox-email-submit' => '发送',
-	'lightbox-file-page-url' => '文件页网址',
-	'lightbox-header-added-by' => '由 $1 上传',
-	'lightbox-header-more-info-button' => '图片信息',
-	'lightbox-header-posted-in' => '张贴于 $1',
-	'lightbox-header-see-full-size-image' => '完整大小图片',
-	'lightbox-header-share-button' => '分享',
-	'lightbox-more-info-back-button' => '返回',
-	'lightbox-pin-carousel-tooltip' => '固定顶部和底部的横栏',
-	'lightbox-send' => '发送',
-	'lightbox-share-button-email' => '电子邮件',
-	'lightbox-share-email-error-noaddress' => '未填写电子邮件地址。',
-	'lightbox-standard-link' => '标准链接',
-	'lightbox-unpin-carousel-tooltip' => '解除固定顶部和底部的横栏',
-	'lightbox-urls-form-header' => '网址',
-);
-
 $messages['zh-hans'] = array(
 	'lightbox_details_tooltip' => '查看图片细节',
 	'lightbox-share-button-www' => '分享',
@@ -902,98 +857,5 @@ $messages['zh-hant'] = array(
 	'lightbox-share-email-page-label-address' => '電子郵件地址',
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|電子郵件|電子郵件}}已發送。',
 	'lightbox-visit-the-wiki' => '請訪問這個Wiki：',
-);
-
-$messages['zh-hk'] = array(
-	'lightbox-share-email-body' => '您好！
-
-您的朋友想要讓您看一張Wikia上的圖片。請點擊查看：
-
-$1
-
-- Wikia團隊
-
-___________________________________________
-* 在社區中心尋求協助和建議：http://community.wikia.com',
-	'lightbox-share-email-body-video' => '您好！
-
-您的朋友想要讓您看一段Wikia上的影片。請點擊查看：
-
-$1
-
-- Wikia團隊
-
-___________________________________________
-* 在社區中心尋求協助和建議：http://community.wikia.com',
-	'lightbox-share-email-subject' => '$1 從Wikia寄了一張圖片給你',
-	'lightbox-share-email-subject-video' => '$1 從Wikia寄給您一段影片',
-	'lightbox-carousel-more-items' => "在這個Wiki上還有'''$1''' {{PLURAL:$1|件|件}}",
-	'lightbox-carousel-progress' => "'''$3'''個之中的'''$1-$2'''",
-	'lightbox-email-form-header' => '電子郵件',
-	'lightbox-email-label' => '寄給一個朋友',
-	'lightbox-email-placeholder' => '你的朋友的電子信箱',
-	'lightbox-email-submit' => '發送',
-	'lightbox-file-page-url' => '檔案頁網址',
-	'lightbox-header-added-by' => '由 $1 上傳',
-	'lightbox-header-more-info-button' => '圖片訊息',
-	'lightbox-header-posted-in' => '張貼於 $1',
-	'lightbox-header-see-full-size-image' => '完整大小圖片',
-	'lightbox-header-share-button' => '分享',
-	'lightbox-more-info-back-button' => '返回',
-	'lightbox-pin-carousel-tooltip' => '固定頂部和底部的橫欄',
-	'lightbox-send' => '發送',
-	'lightbox-share-button-email' => '電子郵件',
-	'lightbox-share-email-error-noaddress' => '未填寫電子郵件地址',
-	'lightbox-share-email-page-label' => '寄給一個朋友',
-	'lightbox-standard-link' => '標準連結',
-	'lightbox-unpin-carousel-tooltip' => '解除固定頂部和底部的橫欄',
-	'lightbox-urls-form-header' => '網址',
-	'lightbox_details_tooltip' => '查看圖片細節',
-);
-
-$messages['zh-tw'] = array(
-	'lightbox-share-email-body' => '您好！
-
-您的朋友想要讓您看一張Wikia上的圖片。請點擊查看：
-
-$1
-
-- Wikia團隊
-
-___________________________________________
-* 在社區中心尋求協助和建議：http://community.wikia.com',
-	'lightbox-share-email-body-video' => '您好！
-
-您的朋友想要讓您看一段Wikia上的影片。請點擊查看：
-
-$1
-
-- Wikia團隊
-
-___________________________________________
-* 在社區中心尋求協助和建議：http://community.wikia.com',
-	'lightbox-share-email-subject' => '$1 從Wikia寄了一張圖片給你',
-	'lightbox-share-email-subject-video' => '$1 從Wikia寄給您一段影片',
-	'lightbox-carousel-more-items' => "在這個Wiki上還有'''$1''' {{PLURAL:$1|件|件}}",
-	'lightbox-carousel-progress' => "'''$3'''個之中的'''$1-$2'''",
-	'lightbox-email-form-header' => '電子郵件',
-	'lightbox-email-label' => '寄給一個朋友',
-	'lightbox-email-placeholder' => '你的朋友的電子信箱',
-	'lightbox-email-submit' => '發送',
-	'lightbox-file-page-url' => '檔案頁網址',
-	'lightbox-header-added-by' => '由 $1 上傳',
-	'lightbox-header-more-info-button' => '圖片訊息',
-	'lightbox-header-posted-in' => '張貼於 $1',
-	'lightbox-header-see-full-size-image' => '完整大小圖片',
-	'lightbox-header-share-button' => '分享',
-	'lightbox-more-info-back-button' => '返回',
-	'lightbox-pin-carousel-tooltip' => '固定頂部和底部的橫欄',
-	'lightbox-send' => '發送',
-	'lightbox-share-button-email' => '電子郵件',
-	'lightbox-share-email-error-noaddress' => '未填寫電子郵件地址',
-	'lightbox-standard-link' => '標準連結',
-	'lightbox-unpin-carousel-tooltip' => '解除固定頂部和底部的橫欄',
-	'lightbox-urls-form-header' => '網址',
-	'lightbox_details_tooltip' => '查看圖片細節',
 );
 

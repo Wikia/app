@@ -121,7 +121,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 			slots = veles.getSlots('oasis');
 
 		expect(Object.keys(slots).sort()).toEqual([
-			'TOP_LEADERBOARD', 'INCONTENT_PLAYER', 'INCONTENT_LEADERBOARD'
+			'TOP_LEADERBOARD', 'INCONTENT_PLAYER'
 		].sort());
 	});
 

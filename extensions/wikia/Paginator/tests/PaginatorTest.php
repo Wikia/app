@@ -291,7 +291,6 @@ class PaginatorTest extends \WikiaBaseTest {
 	 *
 	 * The following classes use the class without getting the currentPage slice:
 	 *
-	 *  * ManageWikiaHomeController
 	 *  * UserActivity\SpecialController
 	 *  * WhereIsExtension
 	 *  * WAMPageController

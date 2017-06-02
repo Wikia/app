@@ -15,7 +15,7 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 
 	/**
 	 * Mediawiki RequestContext object
-	 * @var $context RequestContext
+	 * @var IContextSource $context
 	 */
 	protected $context = null;
 
@@ -157,10 +157,10 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 
 	/**
 	 * set context
-	 * @param RequestContext $context
+	 * @param IContextSource $context
 	 */
 
-	public function setContext(RequestContext $context) {
+	public function setContext( IContextSource $context ) {
 		$this->context = $context;
 	}
 
