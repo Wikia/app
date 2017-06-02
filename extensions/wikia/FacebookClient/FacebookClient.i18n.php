@@ -6,8 +6,8 @@ $messages['en'] = array(
 	'fbconnect-wrong-pass-msg' => 'The password you have entered is incorrect',
 	'fbconnect-graphapi-not-configured' => 'Facebook App ID and App secret missing from configuration.',
 	'prefs-fbconnect-disconnect-prefstext' => 'Disconnect from Facebook',
-	'fbconnect-error-already-connected' => 'This Fandom account is already connected to Facebook. Please disconnect the original Facebook account prior to connecting another account.',
-	'fbconnect-error-fb-account-in-use' => 'This Facebook account is already connected to another Fandom user account. Please connect with a different account or log in with Facebook and disconnect the original Fandom account prior to connecting the $1 account.',
+	'fbconnect-error-already-connected' => 'This FANDOM account is already connected to Facebook. Please disconnect the original Facebook account prior to connecting another account.',
+	'fbconnect-error-fb-account-in-use' => 'This Facebook account is already connected to another FANDOM user account. Please connect with a different account or log in with Facebook and disconnect the original FANDOM account prior to connecting the $1 account.',
 	'fbconnect-error-fb-unavailable-title' => 'Error connecting to Facebook',
 	'fbconnect-error-fb-unavailable-text' => 'Facebook seems to be unavailable at this time. Please try again later.',
 	'fbconnect-desc' => 'Enables users to connect with their [http://www.facebook.com Facebook] accounts. Offers authentification based on Facebook groups and the use of FBML in wiki text.',
@@ -17,14 +17,14 @@ $messages['en'] = array(
 	'fbconnect-or' => 'OR',
 	'fbconnect-error' => 'Verification error',
 	'fbconnect-errortext' => "Yikes! It looks like that didn't work out. Please try again.",
-	'fbconnect-disconnect-account-link' => 'Your Fandom account is currently connected to Facebook. You can [[#|disconnect]] your Fandom account from Facebook. You will be able to continue using your Fandom account as usual, with your history (edits, points, achievements) intact.',
-	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Fandom account.',
+	'fbconnect-disconnect-account-link' => 'Your FANDOM account is currently connected to Facebook. You can [[#|disconnect]] your FANDOM account from Facebook. You will be able to continue using your FANDOM account as usual, with your history (edits, points, achievements) intact.',
+	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your FANDOM account.',
 	'fbconnect-disconnect-info-existing' => 'Disconnect complete. You can still log in using your user name and password, as usual.',
 	'fbconnect-unknown-error' => 'Unknown error, please try again.',
-	'fbconnect-passwordremindertitle' => 'Your Fandom account is now disconnected from Facebook!',
-	'fbconnect-passwordremindertitle-exist' => 'Your Fandom account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertitle' => 'Your FANDOM account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertitle-exist' => 'Your FANDOM account is now disconnected from Facebook!',
 	'fbconnect-passwordremindertext' => "Hi,
-It looks like you've just disconnected your Fandom account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
+It looks like you've just disconnected your FANDOM account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
 
 You can use the same username as before, and we've generated a new password for you to use. Here are your details:
 
@@ -35,22 +35,22 @@ The replacement password has been sent only to you at this email address.
 
 Thanks,
 
-The Fandom Community Team",
+The FANDOM Community Team",
 	'fbconnect-passwordremindertext-exist' => "Hi,
-It looks like you've just disconnected your Fandom account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
+It looks like you've just disconnected your FANDOM account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
 
 You can use the same username and password as you did before you connected.
 
 Thanks,
 
-The Fandom Community Team",
+The FANDOM Community Team",
 	'fbconnect-wikia-signup-w-facebook' => 'Sign up with Facebook',
 	'prefs-fbconnect-prefstext' => 'Facebook Connect',
 	'prefs-fbconnect-status-prefstext' => 'Status',
 	'fbconnect-cancel' => 'Action cancelled',
 	'fbconnect-canceltext' => 'The previous action was cancelled by the user.',
-	'fbconnect-preferences-connected' => 'Congratulations! Your Fandom and Facebook accounts are now connected.',
-	'fbconnect-connect-msg' => 'Congratulations! Your Fandom and Facebook accounts are now connected.',
+	'fbconnect-preferences-connected' => 'Congratulations! Your FANDOM and Facebook accounts are now connected.',
+	'fbconnect-connect-msg' => 'Congratulations! Your FANDOM and Facebook accounts are now connected.',
 );
 
 $messages['qqq'] = array(
@@ -97,8 +97,8 @@ $messages['de'] = array(
 	'fbconnect-wrong-pass-msg' => 'Das eingegebene Passwort ist nicht korrekt',
 	'fbconnect-graphapi-not-configured' => 'Die Facebook App ID und das App Geheimwort fehlt in der Konfiguration.',
 	'prefs-fbconnect-disconnect-prefstext' => 'Von Facebook trennen',
-	'fbconnect-error-already-connected' => 'Dieses Fandom-Konto ist bereits mit Facebook verbunden. Bitte trenne den ursprünglichen Facebook-Account bevor du ein weiteres Kontos damit verknüpfst.',
-	'fbconnect-error-fb-account-in-use' => 'Dieses Facebook-Konto ist bereits mit einem anderen Fandom-Benutzerkonto verbunden. Bitte melde dich mit einem anderen Konto an oder logge dich bei Facebook ein und trenne das ursprüngliche Fandom-Benutzerkonto davon bevor du stattdessen das Konto $1 verknüpfst.',
+	'fbconnect-error-already-connected' => 'Dieses FANDOM-Konto ist bereits mit Facebook verbunden. Bitte trenne den ursprünglichen Facebook-Account bevor du ein weiteres Kontos damit verknüpfst.',
+	'fbconnect-error-fb-account-in-use' => 'Dieses Facebook-Konto ist bereits mit einem anderen FANDOM-Benutzerkonto verbunden. Bitte melde dich mit einem anderen Konto an oder logge dich bei Facebook ein und trenne das ursprüngliche FANDOM-Benutzerkonto davon bevor du stattdessen das Konto $1 verknüpfst.',
 	'fbconnect-error-fb-unavailable-title' => 'Beim Verbinden mit Facebook ist ein Fehler aufgetreten.',
 	'fbconnect-error-fb-unavailable-text' => 'Facebook scheint im Moment nicht erreichbar zu sein. Bitte probiere es später noch ein mal.',
 	'fbconnect-desc' => 'Erlaubt Nutzern die [[Special:Connect|Verbindung]] mit ihren [http://www.facebook.com Facebook]-Benutzerkonten. Ermöglicht eine Authentifizierung auf Basis von Facebook-Gruppen und der Benutzung von FBML im Wikitext.',
@@ -108,14 +108,14 @@ $messages['de'] = array(
 	'fbconnect-or' => 'ODER',
 	'fbconnect-error' => 'Fehler bei der Überprüfung',
 	'fbconnect-errortext' => 'Hoppla! Das halt wohl nicht funktioniert. Bitte versuche es erneut.',
-	'fbconnect-disconnect-account-link' => 'Dein Fandom-Konto ist derzeit mit Facebook verbunden. Du kannst dein Fandom-Konto von Facebook [[#|trennen]] und es weiterhin wie gewohnt benutzen. Deine Verlaufsgeschichte (Bearbeitungen, Punkte, Abzeichen) bleibt intakt.',
-	'fbconnect-disconnect-info' => 'Dein Facebook-Konto wurde erfolgreich von deinem Fandom-Konto getrennt.',
+	'fbconnect-disconnect-account-link' => 'Dein FANDOM-Konto ist derzeit mit Facebook verbunden. Du kannst dein FANDOM-Konto von Facebook [[#|trennen]] und es weiterhin wie gewohnt benutzen. Deine Verlaufsgeschichte (Bearbeitungen, Punkte, Abzeichen) bleibt intakt.',
+	'fbconnect-disconnect-info' => 'Dein Facebook-Konto wurde erfolgreich von deinem FANDOM-Konto getrennt.',
 	'fbconnect-disconnect-info-existing' => 'Kontotrennung abgeschlossen. Du kannst dich nach wie vor mit deinem Benutzernamen und Passwort anmelden.',
 	'fbconnect-unknown-error' => 'Ein unbekannter Fehler ist aufgetreten. Bitte versuche es erneut.',
-	'fbconnect-passwordremindertitle' => 'Dein Fandom-Konto ist nun von Facebook getrennt!',
-	'fbconnect-passwordremindertitle-exist' => 'Dein Fandom-Konto ist nun von Facebook getrennt!',
+	'fbconnect-passwordremindertitle' => 'Dein FANDOM-Konto ist nun von Facebook getrennt!',
+	'fbconnect-passwordremindertitle-exist' => 'Dein FANDOM-Konto ist nun von Facebook getrennt!',
 	'fbconnect-passwordremindertext' => 'Hallo!
-Es scheint als hättest du gerade die Verbindung zwischen deinem Fandom-Konto und deinem Facebook-Konto gelöst. Keine Panik! Alle deine Fandom-Daten, darunter deine Bearbeitungen und deine verdienten Abzeichen sind intakt. 
+Es scheint als hättest du gerade die Verbindung zwischen deinem FANDOM-Konto und deinem Facebook-Konto gelöst. Keine Panik! Alle deine FANDOM-Daten, darunter deine Bearbeitungen und deine verdienten Abzeichen sind intakt. 
 
 Du kannst denselben Benutzernamen verwenden wie zuvor und wir haben ein neues Passwort für dich generiert. Hier sind deine Daten:
 
@@ -126,22 +126,22 @@ Das Ersatz-Passwort wurde nur an diese E-Mail-Adresse geschickt.
 
 Viele Spaß!
 
-Dein Fandom Community-Team',
+Dein FANDOM Community-Team',
 	'fbconnect-passwordremindertext-exist' => 'Hallo!
-Es scheint als hättest du gerade die Verbindung zwischen deinem Fandom-Konto und deinem Facebook-Konto gelöst. Keine Panik! Alle deine Fandom-Daten, darunter deine Bearbeitungen und deine verdienten Abzeichen sind intakt. 
+Es scheint als hättest du gerade die Verbindung zwischen deinem FANDOM-Konto und deinem Facebook-Konto gelöst. Keine Panik! Alle deine FANDOM-Daten, darunter deine Bearbeitungen und deine verdienten Abzeichen sind intakt. 
 
 Du kannst dich wie zuvor mit dem selben Benutzernamen und dem dazugehörigen Passwort anmelden. 
 
-Dein Fandom Community-Team',
+Dein FANDOM Community-Team',
 	'fbconnect-wikia-signup-w-facebook' => 'Über Facebook registrieren',
 	'fbconnect-logout-confirm' => 'Die Auswahl "Abbrechen" wird dich von Wikia und Facebook abmelden. Willst du fortfahren?',
 	'prefs-fbconnect-prefstext' => 'Facebook Connect',
 	'prefs-fbconnect-status-prefstext' => 'Status',
 	'fbconnect-cancel' => 'Aktion abgebrochen',
 	'fbconnect-canceltext' => 'Die vorherige Aktion wurde durch den Nutzer abgebrochen.',
-	'fbconnect-preferences-connected' => 'Herzlichen Glückwunsch! Deine Fandom- und Facebook-Benutzerkonten sind jetzt verknüpft.',
+	'fbconnect-preferences-connected' => 'Herzlichen Glückwunsch! Deine FANDOM- und Facebook-Benutzerkonten sind jetzt verknüpft.',
 	'fbconnect-preferences-connected-error' => 'Es tut uns leid, die Verbindung konnte nicht abgeschlossen werden. Bitte darauf achten, dass du mit dem Wikia-Konto angemeldet bist und Wikia die Erlaubnis für die Verbindung mit Facebook gegeben hast.',
-	'fbconnect-connect-msg' => 'Herzlichen Glückwunsch! Deine Fandom- und Facebook-Benutzerkonten sind jetzt verknüpft.',
+	'fbconnect-connect-msg' => 'Herzlichen Glückwunsch! Deine FANDOM- und Facebook-Benutzerkonten sind jetzt verknüpft.',
 );
 
 $messages['el'] = array(
@@ -156,8 +156,8 @@ $messages['es'] = array(
 	'fbconnect-wrong-pass-msg' => 'La contraseña introducida es incorrecta',
 	'fbconnect-graphapi-not-configured' => 'No está configurada la ID de la App de Facebook y la propia App.',
 	'prefs-fbconnect-disconnect-prefstext' => 'Desvincular de Facebook',
-	'fbconnect-error-already-connected' => 'Esta cuenta de Fandom ya está vinculada a Facebook. Por favor, desvincula la cuenta original de Facebook antes de vincular otra cuenta.',
-	'fbconnect-error-fb-account-in-use' => 'Esta cuenta de Facebook ya está vinculada a otra cuenta de Fandom. Por favor, vincúlala a una cuenta diferente o identifícate en Facebook y desvincula la cuenta original de Fandom antes de vincular la cuenta $1.',
+	'fbconnect-error-already-connected' => 'Esta cuenta de FANDOM ya está vinculada a Facebook. Por favor, desvincula la cuenta original de Facebook antes de vincular otra cuenta.',
+	'fbconnect-error-fb-account-in-use' => 'Esta cuenta de Facebook ya está vinculada a otra cuenta de FANDOM. Por favor, vincúlala a una cuenta diferente o identifícate en Facebook y desvincula la cuenta original de FANDOM antes de vincular la cuenta $1.',
 	'fbconnect-error-fb-unavailable-title' => 'Error de conexión con Facebook',
 	'fbconnect-error-fb-unavailable-text' => 'Parece que Facebook no está disponible en este momento. Inténtalo de nuevo más tarde.',
 	'fbconnect-desc' => 'Permite a los usuarios [[Special:Connect|conectarse]] con sus cuentas de [http://www.facebook.com Facebook]. Ofrece un sistema de identificación basado en los grupos de Facebook y el uso de FBML en el wikitexto.',
@@ -167,14 +167,14 @@ $messages['es'] = array(
 	'fbconnect-or' => 'O',
 	'fbconnect-error' => 'Error en la verificación',
 	'fbconnect-errortext' => '¡Rayos y centellas! Parece que no ha funcionado. Por favor, inténtalo de nuevo.',
-	'fbconnect-disconnect-account-link' => 'Tu cuenta de Fandom está vinculada a Facebook actualmente. Puedes [[#|desvincular]] tu cuenta en Fandom de Facebook. Podrás continuar usando tu cuenta de Fandom como siempre, con tu historial (ediciones, puntos, logros) intactos.',
-	'fbconnect-disconnect-info' => 'Tu cuenta de Facebook ha sido desvinculada satisfactoriamente de tu cuenta de Fandom.',
+	'fbconnect-disconnect-account-link' => 'Tu cuenta de FANDOM está vinculada a Facebook actualmente. Puedes [[#|desvincular]] tu cuenta en FANDOM de Facebook. Podrás continuar usando tu cuenta de FANDOM como siempre, con tu historial (ediciones, puntos, logros) intactos.',
+	'fbconnect-disconnect-info' => 'Tu cuenta de Facebook ha sido desvinculada satisfactoriamente de tu cuenta de FANDOM.',
 	'fbconnect-disconnect-info-existing' => 'Puedes seguir identificándote usando tu nombre de usuario y contraseña como siempre.',
 	'fbconnect-unknown-error' => 'Error desconocido, inténtalo de nuevo o ponte en contacto con nosotros.',
-	'fbconnect-passwordremindertitle' => '¡Tu cuenta de usuario en Fandom ya está desvinculada de Facebook!',
-	'fbconnect-passwordremindertitle-exist' => '¡Tu cuenta de usuario en Fandom ya está desvinculada de Facebook!',
+	'fbconnect-passwordremindertitle' => '¡Tu cuenta de usuario en FANDOM ya está desvinculada de Facebook!',
+	'fbconnect-passwordremindertitle-exist' => '¡Tu cuenta de usuario en FANDOM ya está desvinculada de Facebook!',
 	'fbconnect-passwordremindertext' => 'Hola, 
-Hemos visto que acabas de desvincular tu cuenta en Fandom de Facebook. Para tu tranquilidad, mantendremos todo tu historial, puntos y logros intactos, ¡no tienes por qué preocuparte! 
+Hemos visto que acabas de desvincular tu cuenta en FANDOM de Facebook. Para tu tranquilidad, mantendremos todo tu historial, puntos y logros intactos, ¡no tienes por qué preocuparte! 
 
 Puedes usar el mismo nombre de usuario que antes; hemos generado una contraseña aleatoria para que la uses. Aquí tienes los detalles: 
 
@@ -185,25 +185,25 @@ La contraseña de reemplazo solo te la hemos enviado a ti en esta dirección de 
 
 Gracias, 
 
-Equipo Comunitario de Fandom',
+Equipo Comunitario de FANDOM',
 	'fbconnect-passwordremindertext-exist' => 'Hola,
 
-Hemos visto que acabas de desvincular tu cuenta en Fandom de Facebook. Para tu tranquilidad, mantendremos todo tu historial, puntos de edición y logros intactos, ¡no tienes por qué preocuparte!
+Hemos visto que acabas de desvincular tu cuenta en FANDOM de Facebook. Para tu tranquilidad, mantendremos todo tu historial, puntos de edición y logros intactos, ¡no tienes por qué preocuparte!
 
 Puedes usar el mismo nombre de usuario y la misma contraseña que antes de que la vincularas a Facebook.
 
 Gracias,
 
-Equipo Comunitario de Fandom',
+Equipo Comunitario de FANDOM',
 	'fbconnect-wikia-signup-w-facebook' => 'Registrarse con Facebook',
 	'fbconnect-logout-confirm' => 'Al elegir cancelar la acción se cerrará sesión en Wikia y Facebook. ¿Quieres continuar?',
 	'prefs-fbconnect-prefstext' => 'Facebook Connect',
 	'prefs-fbconnect-status-prefstext' => 'Estado',
 	'fbconnect-cancel' => 'Acción cancelada',
 	'fbconnect-canceltext' => 'La acción anterior fue cancelada por el usuario.',
-	'fbconnect-preferences-connected' => '¡Felicidades! Tus cuentas en Fandom y Facebook ya están vinculadas.',
+	'fbconnect-preferences-connected' => '¡Felicidades! Tus cuentas en FANDOM y Facebook ya están vinculadas.',
 	'fbconnect-preferences-connected-error' => 'Lo sentimos, no pudimos completar el proceso. Asegúrate de estar identificado en tu cuenta de Wikia y de que has dado permiso a Wikia para vincularse a Facebook.',
-	'fbconnect-connect-msg' => '¡Felicidades! Tus cuentas en Fandom y Facebook ya están vinculadas.',
+	'fbconnect-connect-msg' => '¡Felicidades! Tus cuentas en FANDOM y Facebook ya están vinculadas.',
 );
 
 $messages['fi'] = array(
@@ -271,8 +271,8 @@ $messages['fr'] = array(
 	'fbconnect-wrong-pass-msg' => 'Le mot de passe que vous avez saisi est incorrect',
 	'fbconnect-graphapi-not-configured' => 'ID et mot de passe app Facebook non trouvés dans la configuration.',
 	'prefs-fbconnect-disconnect-prefstext' => 'Retirer le lien avec Facebook',
-	'fbconnect-error-already-connected' => 'Ce compte Fandom est déjà relié à Facebook. Veuillez retirer le lien avec le compte Facebook actuel avant de le relier à un autre compte Facebook.',
-	'fbconnect-error-fb-account-in-use' => 'Ce compte Facebook est déjà relié à un autre compte utilisateur Fandom. Veuillez le relier à un autre compte ou vous connecter avec Facebook et retirer le lien avec le compte Fandom actuel avant de relier le compte $1.',
+	'fbconnect-error-already-connected' => 'Ce compte FANDOM est déjà relié à Facebook. Veuillez retirer le lien avec le compte Facebook actuel avant de le relier à un autre compte Facebook.',
+	'fbconnect-error-fb-account-in-use' => 'Ce compte Facebook est déjà relié à un autre compte utilisateur FANDOM. Veuillez le relier à un autre compte ou vous connecter avec Facebook et retirer le lien avec le compte FANDOM actuel avant de relier le compte $1.',
 	'fbconnect-error-fb-unavailable-title' => 'Erreur lors de la connexion à Facebook',
 	'fbconnect-error-fb-unavailable-text' => 'Facebook semble indisponible actuellement. Veuillez réessayer ultérieurement.',
 	'fbconnect-desc' => "Permet aux utilisateurs de se connecter avec leur compte [http://www.facebook.com Facebook]. Apporte une authentification basée sur les groupes Facebook et l'utilisation de FBML dans le wikitexte.",
@@ -282,15 +282,15 @@ $messages['fr'] = array(
 	'fbconnect-or' => 'OU',
 	'fbconnect-error' => 'Erreur de vérification',
 	'fbconnect-errortext' => "Aïe ! On dirait que ça n'a pas fonctionné. Veuillez réessayer.",
-	'fbconnect-disconnect-account-link' => 'Votre compte Fandom est actuellement relié à Facebook. Vous pouvez [[#|supprimer le lien]] entre votre compte Fandom et Facebook. Vous pourrez continuer à utiliser votre compte Fandom normalement, avec votre historique (modifications, points, distinctions) préservé.',
-	'fbconnect-disconnect-info' => 'La liaison entre votre compte Facebook et votre compte Fandom a été retirée.',
+	'fbconnect-disconnect-account-link' => 'Votre compte FANDOM est actuellement relié à Facebook. Vous pouvez [[#|supprimer le lien]] entre votre compte FANDOM et Facebook. Vous pourrez continuer à utiliser votre compte FANDOM normalement, avec votre historique (modifications, points, distinctions) préservé.',
+	'fbconnect-disconnect-info' => 'La liaison entre votre compte Facebook et votre compte FANDOM a été retirée.',
 	'fbconnect-disconnect-info-existing' => "Le retrait de la liaison est terminé. Vous pouvez toujours vous connecter en utilisant votre nom d'utilisateur et mot de passe, comme d'habitude.",
 	'fbconnect-unknown-error' => 'Erreur inconnue, veuillez réessayer.',
-	'fbconnect-passwordremindertitle' => 'Compte Fandom déconnecté de Facebook !',
-	'fbconnect-passwordremindertitle-exist' => 'Compte Fandom déconnecté de Facebook !',
+	'fbconnect-passwordremindertitle' => 'Compte FANDOM déconnecté de Facebook !',
+	'fbconnect-passwordremindertitle-exist' => 'Compte FANDOM déconnecté de Facebook !',
 	'fbconnect-passwordremindertext' => "Bonjour,
 
-Il semble que vous ayez retiré la liaison entre votre compte Fandom et Facebook. Nous avons gardé tout votre historique, vos points de modification et vos distinctions intacts, ne vous inquiétez pas !
+Il semble que vous ayez retiré la liaison entre votre compte FANDOM et Facebook. Nous avons gardé tout votre historique, vos points de modification et vos distinctions intacts, ne vous inquiétez pas !
 
 Vous pouvez utiliser le même nom d'utilisateur qu'auparavant, et nous avons généré un nouveau mot de passe à utiliser. Voici les détails :
 
@@ -301,25 +301,25 @@ Le mot de passe de substitution n'a été envoyé qu'à vous, à cette adresse e
 
 Merci,
 
-L'équipe de la communauté Fandom",
+L'équipe de la communauté FANDOM",
 	'fbconnect-passwordremindertext-exist' => "Bonjour,
 
-Il semble que vous ayez retiré la liaison entre votre compte Fandom et Facebook. Nous avons gardé tout votre historique, vos points de modification et vos distinctions intacts, ne vous inquiétez pas !
+Il semble que vous ayez retiré la liaison entre votre compte FANDOM et Facebook. Nous avons gardé tout votre historique, vos points de modification et vos distinctions intacts, ne vous inquiétez pas !
 
 Vous pouvez utiliser le même nom d'utilisateur et mot de passe que ceux que vous utilisiez avant la liaison.
 
 Merci,
 
-L'équipe de la communauté Fandom",
+L'équipe de la communauté FANDOM",
 	'fbconnect-wikia-signup-w-facebook' => 'Se connecter avec Facebook',
 	'fbconnect-logout-confirm' => "Choisir d'annuler vous déconnectera de Wikia et Facebook. Souhaitez-vous continuer ?",
 	'prefs-fbconnect-prefstext' => 'Facebook Connect',
 	'prefs-fbconnect-status-prefstext' => 'État',
 	'fbconnect-cancel' => 'Action annulée',
 	'fbconnect-canceltext' => "L'action précédente a été annulée par l'utilisateur.",
-	'fbconnect-preferences-connected' => 'Félicitations ! Vos comptes Fandom et Facebook sont maintenant reliés.',
+	'fbconnect-preferences-connected' => 'Félicitations ! Vos comptes FANDOM et Facebook sont maintenant reliés.',
 	'fbconnect-preferences-connected-error' => "Nous sommes désolés, nous n'avons pas pu effectuer la liaison. Veuillez vous assurer que vous être connecté avec votre compte Wikia et que vous avez autorisé Wikia à se connecter à Facebook.",
-	'fbconnect-connect-msg' => 'Félicitations ! Vos comptes Fandom et Facebook sont maintenant reliés.',
+	'fbconnect-connect-msg' => 'Félicitations ! Vos comptes FANDOM et Facebook sont maintenant reliés.',
 );
 
 $messages['it'] = array(
@@ -330,8 +330,8 @@ $messages['it'] = array(
 	'fbconnect-wrong-pass-msg' => 'La password che hai inserito non è corretta',
 	'fbconnect-graphapi-not-configured' => 'Facebook App ID e App secret mancanti dalla configurazione.',
 	'prefs-fbconnect-disconnect-prefstext' => 'Disconnettiti da Facebook',
-	'fbconnect-error-already-connected' => "Questo account Fandom è già connesso a Facebook. Per favore, disconnetti l'account Facebook originale prima di connetterne un altro.",
-	'fbconnect-error-fb-account-in-use' => "Questo account Facebook è già connesso con un altro account utente Fandom. Per favore, connettiti con un account differente o accedi a Facebook e disconnetti l'account Fandom originale prima di connettere l'account $1.",
+	'fbconnect-error-already-connected' => "Questo account FANDOM è già connesso a Facebook. Per favore, disconnetti l'account Facebook originale prima di connetterne un altro.",
+	'fbconnect-error-fb-account-in-use' => "Questo account Facebook è già connesso con un altro account utente FANDOM. Per favore, connettiti con un account differente o accedi a Facebook e disconnetti l'account FANDOM originale prima di connettere l'account $1.",
 	'fbconnect-error-fb-unavailable-title' => 'Errore durante la connessione a Facebook',
 	'fbconnect-error-fb-unavailable-text' => 'Facebook sembra non essere disponibile al momento. Per favore, riprova più tardi.',
 	'fbconnect-desc' => "Consente gli utenti di [[Special:FacebookConnect|connettersi]] con i loro account di [http://www.facebook.com Facebook]. Offre l'autenticazione basata su gruppi Facebook e l'uso di FBML nel wiki text.",
@@ -341,14 +341,14 @@ $messages['it'] = array(
 	'fbconnect-or' => 'O',
 	'fbconnect-error' => 'Errore di verifica',
 	'fbconnect-errortext' => 'Ahia! Sembra che non abbia funzionato. Per favore, riprova.',
-	'fbconnect-disconnect-account-link' => 'Il tuo account Fandom è attualmente connesso a Facebook. Puoi [[#|disconnetterlo]] da Facebook e sarai in grado di continuare ad usarlo come sempre con i tuoi contributi (modifiche, punti, successi) intatti.',
-	'fbconnect-disconnect-info' => 'Il tuo account di Facebook è stato disconnesso con successo dal tuo account di Fandom.',
+	'fbconnect-disconnect-account-link' => 'Il tuo account FANDOM è attualmente connesso a Facebook. Puoi [[#|disconnetterlo]] da Facebook e sarai in grado di continuare ad usarlo come sempre con i tuoi contributi (modifiche, punti, successi) intatti.',
+	'fbconnect-disconnect-info' => 'Il tuo account di Facebook è stato disconnesso con successo dal tuo account di FANDOM.',
 	'fbconnect-disconnect-info-existing' => 'Disconnessione completata. Puoi ancora accedere usando il tuo nome utente e la tua password come al solito.',
 	'fbconnect-unknown-error' => 'Errore sconosciuto, riprova per favore.',
-	'fbconnect-passwordremindertitle' => 'Il tuo account Fandom adesso non è più collegato a Facebook!',
-	'fbconnect-passwordremindertitle-exist' => 'Il tuo account Fandom adesso non è più collegato a Facebook!',
+	'fbconnect-passwordremindertitle' => 'Il tuo account FANDOM adesso non è più collegato a Facebook!',
+	'fbconnect-passwordremindertitle-exist' => 'Il tuo account FANDOM adesso non è più collegato a Facebook!',
 	'fbconnect-passwordremindertext' => 'Ciao,
-Sembra che tu abbia appena disconnesso il tuo account Fandom da Facebook. Abbiamo mantenuto intatti tutta la tua cronologia, i punti di modifica e i successi, per cui non temere!
+Sembra che tu abbia appena disconnesso il tuo account FANDOM da Facebook. Abbiamo mantenuto intatti tutta la tua cronologia, i punti di modifica e i successi, per cui non temere!
 
 Puoi usare lo stesso nome utente di prima e abbiamo provveduto a generare una nuova password per te. Ecco i dettagli:
 
@@ -359,24 +359,24 @@ La password sostitutiva è stata inviata solo a te a questo indirizzo e-mail.
 
 Grazie,
 
-Il team della community di Fandom',
+Il team della community di FANDOM',
 	'fbconnect-passwordremindertext-exist' => 'Ciao,
-Sembra che tu abbia appena disconnesso il tuo account Fandom da Facebook. Abbiamo mantenuto intatti tutta la tua cronologia, i punti di modifica e i successi, per cui non temere!
+Sembra che tu abbia appena disconnesso il tuo account FANDOM da Facebook. Abbiamo mantenuto intatti tutta la tua cronologia, i punti di modifica e i successi, per cui non temere!
 
 Puoi usare lo stesso nome utente e la stessa password che usavi prima di connetterti.
 
 Grazie,
 
-Il team della community di Fandom',
+Il team della community di FANDOM',
 	'fbconnect-wikia-signup-w-facebook' => 'Iscriviti con Facebook',
 	'fbconnect-logout-confirm' => 'Scegliendo annulla ti disconnetterai da Wikia e Facebook. Desideri continuare?',
 	'prefs-fbconnect-prefstext' => 'Facebook Connect',
 	'prefs-fbconnect-status-prefstext' => 'Stato',
 	'fbconnect-cancel' => 'Azione annullata',
 	'fbconnect-canceltext' => "L'azione precedente è stata annullata dall'utente.",
-	'fbconnect-preferences-connected' => 'Congratulazioni! Il tuo account Fandom e quello di Facebook sono ora connessi.',
+	'fbconnect-preferences-connected' => 'Congratulazioni! Il tuo account FANDOM e quello di Facebook sono ora connessi.',
 	'fbconnect-preferences-connected-error' => "Siamo spiacenti, non siamo riusciti a completare la connessione. Per favore, assicurati di aver effettuato l'accesso al tuo account Wikia e che tu abbia permesso Wikia di connettersi con Facebook.",
-	'fbconnect-connect-msg' => 'Congratulazioni! Il tuo account Fandom e quello di Facebook sono ora connessi.',
+	'fbconnect-connect-msg' => 'Congratulazioni! Il tuo account FANDOM e quello di Facebook sono ora connessi.',
 );
 
 $messages['ja'] = array(
@@ -560,8 +560,8 @@ $messages['pl'] = array(
 	'fbconnect-wrong-pass-msg' => 'Podane hasło jest nieprawidłowe',
 	'fbconnect-graphapi-not-configured' => 'W konfiguracji brakuje App ID oraz App Secret Facebooka.',
 	'prefs-fbconnect-disconnect-prefstext' => 'Odłącz od Facebooka',
-	'fbconnect-error-already-connected' => 'To konto Fandom jest już połączone z Facebookiem. Odłącz poprzednie konto Facebooka przed połączeniem z kolejnym.',
-	'fbconnect-error-fb-account-in-use' => 'To konto Facebooka jest już połączone z innym kontem na portalu Fandom. Połącz się z innym kontem lub zaloguj się do Facebooka i odłącz obecnie podłączone konto zanim połączysz z kontem $1.',
+	'fbconnect-error-already-connected' => 'To konto FANDOM jest już połączone z Facebookiem. Odłącz poprzednie konto Facebooka przed połączeniem z kolejnym.',
+	'fbconnect-error-fb-account-in-use' => 'To konto Facebooka jest już połączone z innym kontem na portalu FANDOM. Połącz się z innym kontem lub zaloguj się do Facebooka i odłącz obecnie podłączone konto zanim połączysz z kontem $1.',
 	'fbconnect-error-fb-unavailable-title' => 'Wystąpił błąd przy łączeniu z Facebookiem',
 	'fbconnect-error-fb-unavailable-text' => 'Facebook wydaje się być obecnie niedostępny. Spróbuj ponownie później.',
 	'fbconnect-desc' => 'Pozwala użytkownikom na [[Special:FacebookConnect|połączenie]] z ich kontem na [http://www.facebook.com Facebooku]. Umożliwia potwierdzanie tożsamości przy wykorzystaniu grup na Facebooku i korzystanie FBML na wiki.',
@@ -571,14 +571,14 @@ $messages['pl'] = array(
 	'fbconnect-or' => 'LUB',
 	'fbconnect-error' => 'Błąd weryfikacji',
 	'fbconnect-errortext' => 'Wystąpił błąd. Spróbuj ponownie.',
-	'fbconnect-disconnect-account-link' => 'Twoje konto na portalu Fandom jest obecnie połączone z Facebookiem. Możesz zawsze [[#|odłączyć]] swoje konto Fandom od Facebooka. Jeżeli to zrobisz, dalej będzie można korzystać z konta Fandom, a twoja historia (edycje, punkty, odznaczenia) pozostanie bez zmian.',
+	'fbconnect-disconnect-account-link' => 'Twoje konto na portalu FANDOM jest obecnie połączone z Facebookiem. Możesz zawsze [[#|odłączyć]] swoje konto FANDOM od Facebooka. Jeżeli to zrobisz, dalej będzie można korzystać z konta FANDOM, a twoja historia (edycje, punkty, odznaczenia) pozostanie bez zmian.',
 	'fbconnect-disconnect-info' => 'Twoje konto na Facebooku zostało pomyślnie odłączone od konta na Fandomie.',
 	'fbconnect-disconnect-info-existing' => 'Odłączanie zakończone. Możesz nadal logować się wykorzystując obecną nazwę i hasło.',
 	'fbconnect-unknown-error' => 'Wystąpił nieznany błąd, spróbuj ponownie.',
-	'fbconnect-passwordremindertitle' => 'Twoje konto Fandom zostało odłączone od Facebooka!',
-	'fbconnect-passwordremindertitle-exist' => 'Twoje konto Fandom zostało odłączone od Facebooka!',
+	'fbconnect-passwordremindertitle' => 'Twoje konto FANDOM zostało odłączone od Facebooka!',
+	'fbconnect-passwordremindertitle-exist' => 'Twoje konto FANDOM zostało odłączone od Facebooka!',
 	'fbconnect-passwordremindertext' => 'Witaj,
-Twoje konto na portalu Fandom zostało odłączone od Facebooka. Bez obaw – zachowaliśmy całą historię Twoich edycji oraz otrzymane odznaczenia i punkty.
+Twoje konto na portalu FANDOM zostało odłączone od Facebooka. Bez obaw – zachowaliśmy całą historię Twoich edycji oraz otrzymane odznaczenia i punkty.
 
 Możesz używać tej samej nazwy użytkownika co wcześniej, ale utworzyliśmy dla Ciebie nowe hasło. Oto Twoje dane do logowania:
 
@@ -589,24 +589,24 @@ Zastępcze hasło zostało wysłane tylko do Ciebie na ten adres e-mail.
 
 Pozdrawiamy,
 
-Zespół Społeczności portalu Fandom',
+Zespół Społeczności portalu FANDOM',
 	'fbconnect-passwordremindertext-exist' => 'Witaj,
-Twoje konto na Fandom zostało odłączone od Facebooka. Bez obaw – zachowaliśmy całą historię Twoich edycji oraz otrzymane odznaczenia i punkty.
+Twoje konto na FANDOM zostało odłączone od Facebooka. Bez obaw – zachowaliśmy całą historię Twoich edycji oraz otrzymane odznaczenia i punkty.
 
 Możesz używać tej samej nazwy użytkownika i hasło co przed połączeniem.
 
 Pozdrawiamy,
 
-Zespół Społeczności Fandom',
+Zespół Społeczności FANDOM',
 	'fbconnect-wikia-signup-w-facebook' => 'Zarejestruj się poprzez Facebooka',
 	'fbconnect-logout-confirm' => 'Anulowanie spowoduje wylogowanie Cię z Wikii i Facebooka. Czy chcesz kontynuować?',
 	'prefs-fbconnect-prefstext' => 'Połącz z Facebookiem',
 	'prefs-fbconnect-status-prefstext' => 'Status',
 	'fbconnect-cancel' => 'Anulowano',
 	'fbconnect-canceltext' => 'Poprzedni wybór został anulowany przez użytkownika.',
-	'fbconnect-preferences-connected' => 'Gratulacje! Twoje konta na portalu Fandom i Facebooku zostały połączone.',
+	'fbconnect-preferences-connected' => 'Gratulacje! Twoje konta na portalu FANDOM i Facebooku zostały połączone.',
 	'fbconnect-preferences-connected-error' => 'Przykro nam, nie mogliśmy wykonać połączenia. Upewnij się, że zalogowałeś się do konta Wikia i posiadasz dostęp, aby połączyć konto Wikia z Facebookiem.',
-	'fbconnect-connect-msg' => 'Gratulacje! Twoje konta na portalu Fandom i Facebooku zostały połączone.',
+	'fbconnect-connect-msg' => 'Gratulacje! Twoje konta na portalu FANDOM i Facebooku zostały połączone.',
 );
 
 $messages['pt'] = array(
@@ -617,8 +617,8 @@ $messages['pt'] = array(
 	'fbconnect-wrong-pass-msg' => 'A senha que você digitou está incorreta',
 	'fbconnect-graphapi-not-configured' => 'Facebook App ID e App secret faltando na configuração.',
 	'prefs-fbconnect-disconnect-prefstext' => 'Desconectar do Facebook',
-	'fbconnect-error-already-connected' => 'Esta conta no Fandom já está conectada ao Facebook. Por favor, desconecte a conta original do Facebook antes de conectar outra conta.',
-	'fbconnect-error-fb-account-in-use' => 'Esta conta no Facebook já está conectada à outra conta de usuário do Fandom. Por favor, conecte-se com outra conta ou inicie sua sessão com o Facebook e desconecte a conta original do Fandom antes de conectar a conta $1.',
+	'fbconnect-error-already-connected' => 'Esta conta no FANDOM já está conectada ao Facebook. Por favor, desconecte a conta original do Facebook antes de conectar outra conta.',
+	'fbconnect-error-fb-account-in-use' => 'Esta conta no Facebook já está conectada à outra conta de usuário do FANDOM. Por favor, conecte-se com outra conta ou inicie sua sessão com o Facebook e desconecte a conta original do FANDOM antes de conectar a conta $1.',
 	'fbconnect-error-fb-unavailable-title' => 'Erro ao conectar com o Facebook',
 	'fbconnect-error-fb-unavailable-text' => 'O Facebook parece estar indisponível neste momento. Por favor, tente mais tarde.',
 	'fbconnect-desc' => 'Permite que os usuários conectem as suas contas do [http://www.facebook.com Facebook]. Oferece autenticação com base em grupos no Facebook e o uso de FBML no texto da wiki.',
@@ -628,15 +628,15 @@ $messages['pt'] = array(
 	'fbconnect-or' => 'OU',
 	'fbconnect-error' => 'Erro de verificação',
 	'fbconnect-errortext' => 'Eita! Parece que não deu certo. Por favor, tente novamente.',
-	'fbconnect-disconnect-account-link' => 'A sua conta no Fandom está conectada ao Facebook. Você pode [[#|desconectar]] a sua conta no Fandom do Facebook. Você poderá continuar usando a sua conta no Fandom como de costume, com o seu histórico (edições, pontos, medalhas) intacto.',
-	'fbconnect-disconnect-info' => 'Sua conta no Facebook foi desconectada com êxito da sua conta no Fandom.',
+	'fbconnect-disconnect-account-link' => 'A sua conta no FANDOM está conectada ao Facebook. Você pode [[#|desconectar]] a sua conta no FANDOM do Facebook. Você poderá continuar usando a sua conta no FANDOM como de costume, com o seu histórico (edições, pontos, medalhas) intacto.',
+	'fbconnect-disconnect-info' => 'Sua conta no Facebook foi desconectada com êxito da sua conta no FANDOM.',
 	'fbconnect-disconnect-info-existing' => 'A separação está completa. Você ainda pode efetuar o login usando o seu nome de usuário e senha, como de costume.',
 	'fbconnect-unknown-error' => 'Erro desconhecido, por favor tente novamente.',
-	'fbconnect-passwordremindertitle' => 'A sua conta no Fandom agora está desconectada do Facebook!',
-	'fbconnect-passwordremindertitle-exist' => 'A sua conta no Fandom agora está desconectada do Facebook!',
+	'fbconnect-passwordremindertitle' => 'A sua conta no FANDOM agora está desconectada do Facebook!',
+	'fbconnect-passwordremindertitle-exist' => 'A sua conta no FANDOM agora está desconectada do Facebook!',
 	'fbconnect-passwordremindertext' => 'Olá,
 
-Parece que você desconectou a sua conta no Fandom do Facebook. Nós salvamos toda a sua história, edições e conquistas, então não entre em pânico!
+Parece que você desconectou a sua conta no FANDOM do Facebook. Nós salvamos toda a sua história, edições e conquistas, então não entre em pânico!
 
 Você pode usar o mesmo nome de usuário que antes, e nós criamos uma nova senha para você usar. Aqui estão os detalhes: 
 
@@ -647,26 +647,26 @@ A sua nova senha só foi enviada a você neste email.
 
 Obrigado,
 
-Equipe da Comunidade Fandom',
+Equipe da Comunidade FANDOM',
 	'fbconnect-passwordremindertext-exist' => 'Olá,
 
-Parece que você desconectou a sua conta no Fandom do Facebook. Nós salvamos toda a sua história, edições e conquistas, então não entre em pânico!
+Parece que você desconectou a sua conta no FANDOM do Facebook. Nós salvamos toda a sua história, edições e conquistas, então não entre em pânico!
 
 Você pode usar o mesmo nome de usuário e senha como fez antes de conectar-se.
 
 
 Obrigado,
 
-Equipe da Comunidade Fandom',
+Equipe da Comunidade FANDOM',
 	'fbconnect-wikia-signup-w-facebook' => 'Cadastre-se com o Facebook',
 	'fbconnect-logout-confirm' => 'Escolher cancelar fará com que você seja desconectado da Wikia e do Facebook. Você quer continuar?',
 	'prefs-fbconnect-prefstext' => 'Facebook Connect',
 	'prefs-fbconnect-status-prefstext' => 'Status',
 	'fbconnect-cancel' => 'Ação cancelada',
 	'fbconnect-canceltext' => 'A ação anterior foi cancelada pelo usuário.',
-	'fbconnect-preferences-connected' => 'Parabéns! As suas contas no Fandom e no Facebook agora estão conectadas.',
+	'fbconnect-preferences-connected' => 'Parabéns! As suas contas no FANDOM e no Facebook agora estão conectadas.',
 	'fbconnect-preferences-connected-error' => 'Desculpe-nos, mas não podemos completar a sua conexão. Por favor, verifique que você está logado na sua conta da Wikia  e que a Wikia tem permissão para se conectar com o Facebook.',
-	'fbconnect-connect-msg' => 'Parabéns! As suas contas no Fandom e no Facebook agora estão conectadas.',
+	'fbconnect-connect-msg' => 'Parabéns! As suas contas no FANDOM e no Facebook agora estão conectadas.',
 );
 
 $messages['ru'] = array(
@@ -689,11 +689,11 @@ $messages['ru'] = array(
 	'fbconnect-error' => 'Ошибка проверки',
 	'fbconnect-errortext' => 'Похоже, что произошла ошибка. Пожалуйста, попробуйте ещё раз.',
 	'fbconnect-disconnect-account-link' => 'Ваша учётная запись на Фэндоме подключена к Facebook. Вы можете её [[#|отключить]] и продолжать использовать сервис Фэндома как обычно, при этом история ваших действий (правки, достижения) останется без изменений.',
-	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Fandom account.',
+	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your FANDOM account.',
 	'fbconnect-disconnect-info-existing' => 'Отключение завершено. Вы можете войти на Фэндом как обычно, используя имя участника и пароль.',
 	'fbconnect-unknown-error' => 'Неизвестная ошибка. Попробуйте ещё раз.',
-	'fbconnect-passwordremindertitle' => 'Your Fandom account is now disconnected from Facebook!',
-	'fbconnect-passwordremindertitle-exist' => 'Your Fandom account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertitle' => 'Your FANDOM account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertitle-exist' => 'Your FANDOM account is now disconnected from Facebook!',
 	'fbconnect-passwordremindertext' => 'Здравствуйте,
 Вы отключили вашу учётную запись на Фэндоме от Facebook. Не волнуйтесь: все ваши правки, история редактирования и достижения были сохранены.
 

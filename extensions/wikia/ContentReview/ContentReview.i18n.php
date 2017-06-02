@@ -148,7 +148,7 @@ $messages['de'] = array(
 	'content-review-status-live' => 'Live',
 	'content-review-status-autoapproved' => 'Automatisch zugelassen',
 	'content-review-rejection-explanation' => '==$1==
-Die kürzlich eingereichte Änderung dieser JavaScript-Seite (Überprüfung [$2 $3]) wurde im Fandom-Überprüfungsprozess abgelehnt. Stelle bitte sicher, dass du die [[w:c:de:Hilfe:JavaScript-Überprüfungsprozess|Richtlinien für angepasstes JavaScript]] erfüllst.--~~~~',
+Die kürzlich eingereichte Änderung dieser JavaScript-Seite (Überprüfung [$2 $3]) wurde im FANDOM-Überprüfungsprozess abgelehnt. Stelle bitte sicher, dass du die [[w:c:de:Hilfe:JavaScript-Überprüfungsprozess|Richtlinien für angepasstes JavaScript]] erfüllst.--~~~~',
 	'content-review-status-link-text' => 'Stand der Überprüfung',
 	'content-review-rejection-explanation-title' => 'Die eingereichte Skript-Änderung $1 wurde abgelehnt',
 	'content-review-special-js-pages-title' => 'JavaScript-Seiten',
@@ -212,7 +212,7 @@ $messages['es'] = array(
 	'content-review-status-live' => 'Activo',
 	'content-review-status-autoapproved' => 'Auto-aprobado',
 	'content-review-rejection-explanation' => '== $1== 
-El cambio recientemente presentado a esta página de JavaScript (revisión [$2 $3]) fue rechazado por el proceso de revisión de Fandom. Por favor, asegúrate de que cumple con las [[w:c:comunidad:Ayuda:Proceso de revisión de JavaScript|directrices de personalización de JavaScript]]. --~~~~',
+El cambio recientemente presentado a esta página de JavaScript (revisión [$2 $3]) fue rechazado por el proceso de revisión de FANDOM. Por favor, asegúrate de que cumple con las [[w:c:comunidad:Ayuda:Proceso de revisión de JavaScript|directrices de personalización de JavaScript]]. --~~~~',
 	'content-review-status-link-text' => 'Estado de la revisión',
 	'content-review-rejection-explanation-title' => 'El cambio de script $1 presentado ha sido rechazado',
 	'content-review-special-js-pages-title' => 'Páginas de JavaScript',
@@ -277,7 +277,7 @@ $messages['fr'] = array(
 	'content-review-status-live' => 'Publiée',
 	'content-review-status-autoapproved' => 'Approuvée automatiquement',
 	'content-review-rejection-explanation' => '==$1==
-Le processus de vérification Fandom a rejeté la modification soumise pour cette page JavaScript (révision [$2 $3]) . Assurez-vous de respecter les [[w:c:fr:Aide:Processus_de_vérification_du_JavaScript|instructions de personnalisation du JavaScript]]. --~~~~',
+Le processus de vérification FANDOM a rejeté la modification soumise pour cette page JavaScript (révision [$2 $3]) . Assurez-vous de respecter les [[w:c:fr:Aide:Processus_de_vérification_du_JavaScript|instructions de personnalisation du JavaScript]]. --~~~~',
 	'content-review-status-link-text' => 'État de la vérification',
 	'content-review-rejection-explanation-title' => 'Modification $1 soumise pour le script rejetée',
 	'content-review-special-js-pages-title' => 'Pages JavaScript',
@@ -341,7 +341,7 @@ $messages['it'] = array(
 	'content-review-status-live' => 'In uso',
 	'content-review-status-autoapproved' => 'Auto-approvata',
 	'content-review-rejection-explanation' => '== $1 ==
-La modifica inviata di recente per questa pagina in JavaScript (revisione [$2 $3]) è stata respinta dal processo di revisione di Fandom. Assicurati di seguire le [[w:it:Aiuto:Processo di revisione del JavaScript|Linee guida del JavaScript personalizzato]]. --~~~~',
+La modifica inviata di recente per questa pagina in JavaScript (revisione [$2 $3]) è stata respinta dal processo di revisione di FANDOM. Assicurati di seguire le [[w:it:Aiuto:Processo di revisione del JavaScript|Linee guida del JavaScript personalizzato]]. --~~~~',
 	'content-review-status-link-text' => 'Stato della revisione',
 	'content-review-rejection-explanation-title' => 'La modifica $1 inviata per lo script è stata respinta',
 	'content-review-special-js-pages-title' => 'Pagine JavaScript',
@@ -533,7 +533,7 @@ $messages['pl'] = array(
 	'content-review-status-live' => 'Aktywna',
 	'content-review-status-autoapproved' => 'Zatwierdzona automatycznie',
 	'content-review-rejection-explanation' => '==$1==
-Niedawno przesłana zmiana tej strony JavaScript (wersja [$2 $3]) została odrzucona przez Fandom. Proszę upewnij się, że spełniasz [[w:pl:Pomoc:Proces przeglądu kodu JavaScript|kryteria własnego kodu JavaScript]]. --~~~~',
+Niedawno przesłana zmiana tej strony JavaScript (wersja [$2 $3]) została odrzucona przez FANDOM. Proszę upewnij się, że spełniasz [[w:pl:Pomoc:Proces przeglądu kodu JavaScript|kryteria własnego kodu JavaScript]]. --~~~~',
 	'content-review-status-link-text' => 'Status przeglądu',
 	'content-review-rejection-explanation-title' => 'Przesłana modyfikacja skryptu $1 została odrzucona',
 	'content-review-special-js-pages-title' => 'Strony JavaScript',
@@ -597,7 +597,7 @@ $messages['pt'] = array(
 	'content-review-status-live' => 'Ao vivo',
 	'content-review-status-autoapproved' => 'Auto-aprovada',
 	'content-review-rejection-explanation' => '==$1==
-A recente alteração enviada para esta página JavaScript (revisão [$2 $3]) foi rejeitada pelo processo de revisão do Fandom. Por favor, certifique-se de estar seguindo [[w:c:pt.community:Ajuda:Processo_de_revisão_de_JavaScript|as diretrizes personalizadas JavaScript]]. --˜˜˜˜ ',
+A recente alteração enviada para esta página JavaScript (revisão [$2 $3]) foi rejeitada pelo processo de revisão do FANDOM. Por favor, certifique-se de estar seguindo [[w:c:pt.community:Ajuda:Processo_de_revisão_de_JavaScript|as diretrizes personalizadas JavaScript]]. --˜˜˜˜ ',
 	'content-review-status-link-text' => 'Status da revisão',
 	'content-review-rejection-explanation-title' => 'A alteração do script $1 enviado foi rejeitada',
 	'content-review-special-js-pages-title' => 'Páginas JavaScript',

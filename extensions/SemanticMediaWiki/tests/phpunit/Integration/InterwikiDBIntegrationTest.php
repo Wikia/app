@@ -52,8 +52,6 @@ class InterwikiDBIntegrationTest extends MwDBaseUnitTestCase {
 			$interwiki = array(
 				'iw_prefix' => 'iw-test',
 				'iw_url' => 'http://www.example.org/$1',
-				'iw_api' => false,
-				'iw_wikiid' => 'foo',
 				'iw_local' => true,
 				'iw_trans' => false,
 			);

@@ -65,7 +65,7 @@ $messages['en'] = array(
 	'special-templates-portable-infobox' => 'Portable',
 	'special-templates-non-portable-infobox' => 'Non-portable',
 	'logentry-templateclassification-tc-changed' => '$1 changed type of $3 from $5 to $4.',
-	'templates' => 'Templates on Fandom',
+	'templates' => 'Templates on FANDOM',
 	'right-template-bulk-classification' => 'Allows classifying multiple templates at once',
 );
 
@@ -135,7 +135,7 @@ $messages['qqq'] = array(
 );
 
 $messages['de'] = array(
-	'templates' => 'Vorlagen bei Fandom',
+	'templates' => 'Vorlagen bei FANDOM',
 	'template-classification-description' => 'Schnittstelle zur Klassifizierung von Vorlagen, um Inhalte besser zu verstehen.',
 	'template-classification-type-unclassified' => 'Nicht klassifiziert',
 	'template-classification-type-infobox' => 'Infobox',
@@ -203,7 +203,7 @@ $messages['de'] = array(
 );
 
 $messages['es'] = array(
-	'templates' => 'Plantillas en Fandom',
+	'templates' => 'Plantillas en FANDOM',
 	'template-classification-description' => 'Interfaz para clasificar plantillas para entender mejor el contenido.',
 	'template-classification-type-unclassified' => 'No clasificado',
 	'template-classification-type-infobox' => 'Infobox',
@@ -334,7 +334,7 @@ $messages['fr'] = array(
 	'template-classification-description-infoicon' => 'Permet de créer un lien avec une petite icône.',
 	'special-templates-portable-infobox' => 'Portable',
 	'special-templates-non-portable-infobox' => 'Non-portable',
-	'templates' => 'Modèles sur Fandom',
+	'templates' => 'Modèles sur FANDOM',
 	'right-template-bulk-classification' => 'Permet de classifier plusieurs modèles à la fois.',
 );
 
@@ -402,7 +402,7 @@ $messages['it'] = array(
 	'template-classification-description-infoicon' => "Questo template è usato per creare un link con un'icona di piccole dimensioni.",
 	'special-templates-portable-infobox' => 'Portatile',
 	'special-templates-non-portable-infobox' => 'Non portatile',
-	'templates' => 'Template su Fandom',
+	'templates' => 'Template su FANDOM',
 	'right-template-bulk-classification' => 'Consente la classificazione di multipli template contemporaneamente',
 );
 
@@ -605,7 +605,7 @@ $messages['pl'] = array(
 	'special-templates-portable-infobox' => 'Przenośne',
 	'special-templates-non-portable-infobox' => 'Nieprzenośne',
 	'template-classification-bulk-classification-hint' => 'Cześć $1! Pomóż nam zorganizować szablony w tej kategorii. Kliknij „Edycja zbiorcza typów szablonów” i wybierz jeden z typów. [[w:pl:Pomoc:Szablony|Dowiedz się więcej]].',
-	'templates' => 'Szablony na portalu Fandom',
+	'templates' => 'Szablony na portalu FANDOM',
 	'right-template-bulk-classification' => 'Umożliwia klasyfikowanie wielu szablonów na raz',
 );
 
@@ -673,7 +673,7 @@ $messages['pt'] = array(
 	'template-classification-description-infoicon' => 'Esta predefinição é usada para criar um link com um ícone pequeno.',
 	'special-templates-portable-infobox' => 'Portátil',
 	'special-templates-non-portable-infobox' => 'Não-portátil',
-	'templates' => 'Predefinições no Fandom',
+	'templates' => 'Predefinições no FANDOM',
 	'right-template-bulk-classification' => 'Permite classificar múltiplas predefinições de uma vez',
 );
 
