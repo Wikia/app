@@ -12,6 +12,7 @@
 	$tab-hover-color: darken($tab-default-color, 20%);
 
 	cursor: default;
+	flex-shrink: 0;
 	line-height: 14px;
 	position: relative;
 
