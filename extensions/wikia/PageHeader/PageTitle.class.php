@@ -30,6 +30,7 @@ class PageTitle {
 	public function __construct( WikiaApp $app ) {
 		$this->wg = $app->wg;
 		$this->MWTitle = RequestContext::getMain()->getTitle();
+		$this->request = $this->wg->Request;
 
 		$this->namespace = $this->MWTitle->getNamespace();
 		$this->title = $this->handleTitle( $app );
@@ -41,6 +42,16 @@ class PageTitle {
 			return $this->titleMainPage();
 		} else if ( $this->MWTitle->isTalkPage() || $this->shouldNotDisplayNamespacePrefix( $this->namespace ) ) {
 			return htmlspecialchars( $this->MWTitle->getText() );
+		} else if ( $this->request->getCheck( 'wpPreview' ) || $this->request->getCheck( 'wpLivePreview' ) ) {
+			return $this->prefixedTitle( 'oasis-page-header-preview' );
+		} else if ( $this->request->getCheck( 'wpDiff' ) ) {
+			return $this->prefixedTitle( 'oasis-page-header-changes' );
+		} else if ( $this->request->getCheck( 'diff' ) ) {
+			return $this->prefixedTitle( 'oasis-page-header-diff' );
+		} else if ( is_numeric( $this->request->getVal( 'section' ) ) ) {
+			return $this->prefixedTitle( 'oasis-page-header-editing-section' );
+		} else if ( $this->request->getVal( 'action', 'view' ) == 'history' ) {
+			return $this->prefixedTitle( 'oasis-page-header-history' );
 		}
 
 		return $app->getSkinTemplateObj()->data['title'];
@@ -62,5 +73,9 @@ class PageTitle {
 
 	private function titleMainPage(): string {
 		return wfMessage( 'oasis-home' )->escaped();
+	}
+
+	private function prefixedTitle( $prefixKey ): string {
+		return wfMessage( $prefixKey, htmlspecialchars( $this->MWTitle->getPrefixedText() ) )->text();
 	}
 }
