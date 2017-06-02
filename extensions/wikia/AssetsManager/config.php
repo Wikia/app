@@ -131,7 +131,6 @@ $config['adengine2_desktop_js'] = [
 		// was: late queue
 		'//extensions/wikia/AdEngine/js/OoyalaTracking.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
-		'//extensions/wikia/AdEngine/js/TaboolaHelper.js',
 		'//extensions/wikia/AdEngine/js/utils/scriptLoader.js',
 		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
 
@@ -179,22 +178,6 @@ $config['spotlights_js'] = [
 		// ads
 		'//extensions/wikia/Spotlights/js/AdProviderOpenX.js',
 		'//extensions/wikia/Spotlights/js/LazyLoadAds.js',
-	],
-];
-
-$config['adengine2_taboola_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/AdEngine/js/provider/taboola.js',
-	],
-];
-
-$config['adengine2_gcs_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/AdEngine/js/recovery/gcs.js',
 	],
 ];
 
