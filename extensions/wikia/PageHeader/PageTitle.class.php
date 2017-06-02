@@ -43,15 +43,11 @@ class PageTitle {
 		} else if ( $this->MWTitle->isTalkPage() || $this->shouldNotDisplayNamespacePrefix( $this->namespace ) ) {
 			return htmlspecialchars( $this->MWTitle->getText() );
 		} else if ( $this->request->getCheck( 'wpPreview' ) || $this->request->getCheck( 'wpLivePreview' ) ) {
-			return $this->prefixedTitle( 'oasis-page-header-preview' );
-		} else if ( $this->request->getCheck( 'wpDiff' ) ) {
-			return $this->prefixedTitle( 'oasis-page-header-changes' );
-		} else if ( $this->request->getCheck( 'diff' ) ) {
-			return $this->prefixedTitle( 'oasis-page-header-diff' );
-		} else if ( is_numeric( $this->request->getVal( 'section' ) ) ) {
-			return $this->prefixedTitle( 'oasis-page-header-editing-section' );
+			return $this->prefixedTitle( 'page-header-title-prefix-preview' );
+		} else if ( $this->request->getCheck( 'wpDiff' ) || $this->request->getCheck( 'diff' ) ) {
+			return $this->prefixedTitle( 'page-header-title-prefix-changes' );
 		} else if ( $this->request->getVal( 'action', 'view' ) == 'history' ) {
-			return $this->prefixedTitle( 'oasis-page-header-history' );
+			return $this->prefixedTitle( 'page-header-title-prefix-history' );
 		}
 
 		return $app->getSkinTemplateObj()->data['title'];
@@ -76,6 +72,6 @@ class PageTitle {
 	}
 
 	private function prefixedTitle( $prefixKey ): string {
-		return wfMessage( $prefixKey, htmlspecialchars( $this->MWTitle->getPrefixedText() ) )->text();
+		return wfMessage( $prefixKey, $this->MWTitle->getPrefixedText() )->escaped();
 	}
 }
