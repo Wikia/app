@@ -1,4 +1,5 @@
 <?php
+
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Rich Text Editor (Wysiwyg)',
 	'description' => 'CKeditor integration for MediaWiki',
@@ -7,21 +8,22 @@ $wgExtensionCredits['other'][] = array(
 	'author' => array('Inez Korczyński', 'Maciej Brencz')
 );
 
-$dir = dirname(__FILE__);
+
 
 // autoloaded classes
-$wgAutoloadClasses['RTE'] = "$dir/RTE.class.php";
-$wgAutoloadClasses['RTEAjax'] = "$dir/RTEAjax.class.php";
-$wgAutoloadClasses['RTEData'] = "$dir/RTEData.class.php";
-$wgAutoloadClasses['RTELang'] = "$dir/RTELang.class.php";
-$wgAutoloadClasses['RTELinkerHooks'] = "$dir/RTELinkerHooks.class.php";
-$wgAutoloadClasses['RTEMagicWord'] = "$dir/RTEMagicWord.class.php";
-$wgAutoloadClasses['RTEMarker'] = "$dir/RTEMarker.class.php";
-$wgAutoloadClasses['RTEParser'] = "$dir/RTEParser.class.php";
-$wgAutoloadClasses['RTEReverseParser'] = "$dir/RTEReverseParser.class.php";
-$wgAutoloadClasses['RTEController'] = "$dir/RTEController.class.php";
+$wgAutoloadClasses['RTE'] = __DIR__ . '/RTE.class.php';
+$wgAutoloadClasses['RTEAjax'] = __DIR__ . "/RTEAjax.class.php";
+$wgAutoloadClasses['RTEData'] = __DIR__ . "/RTEData.class.php";
+$wgAutoloadClasses['RTELang'] = __DIR__ . "/RTELang.class.php";
+$wgAutoloadClasses['RTELinkerHooks'] = __DIR__ . "/RTELinkerHooks.class.php";
+$wgAutoloadClasses['RTEMagicWord'] = __DIR__ . "/RTEMagicWord.class.php";
+$wgAutoloadClasses['RTEMarker'] = __DIR__ . "/RTEMarker.class.php";
+$wgAutoloadClasses['RTEParser'] = __DIR__ . "/RTEParser.class.php";
+$wgAutoloadClasses['RTEReverseParser'] = __DIR__ . "/RTEReverseParser.class.php";
+$wgAutoloadClasses['RTEController'] = __DIR__ . "/RTEController.class.php";
 
 // hooks
+
 $wgHooks['EditPage::showEditForm:initial'][] = 'RTE::init';
 $wgHooks['ParserMakeImageParams'][] = 'RTEParser::makeImageParams';
 $wgHooks['AlternateEdit'][] = 'RTE::reverse';
@@ -45,7 +47,7 @@ $wgHooks['LinkEnd'][] = 'RTELinkerHooks::onLinkEnd';
 $wgHooks['LinkerMakeExternalLink'][] = 'RTELinkerHooks::onLinkerMakeExternalLink';
 
 // i18n
-$wgExtensionMessagesFiles['RTE'] = $dir.'/i18n/RTE.i18n.php';
+$wgExtensionMessagesFiles['RTE'] = __DIR__ .'/i18n/RTE.i18n.php';
 
 // Ajax dispatcher
 $wgAjaxExportList[] = 'RTEAjax';
