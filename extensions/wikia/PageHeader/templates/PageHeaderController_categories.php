@@ -5,7 +5,7 @@
 			<?= $categories->visibleCategoriesHTML ?>
 			<?php if ( $categories->hasMoreCategories() ): ?>
 				<div class="wds-dropdown page-header__categories-dropdown">
-					<a class="push-dropdown-down wds-dropdown__toggle" data-tracking="categories-more"><?= $categories->moreCategoriesText ?></a>
+					<a class="wds-dropdown__toggle" data-tracking="categories-more"><?= $categories->moreCategoriesText ?></a>
 					<div class="wds-dropdown__content page-header__categories-dropdown-content">
 						<ul class="wds-list wds-is-linked">
 							<?php foreach ( $categories->moreCategories as $i => $category ): ?>
