@@ -168,6 +168,7 @@ define('ext.wikia.adEngine.adContext', [
 		}
 
 		context.opts.enableRemnantNewAdUnit = geo.isProperGeo(instantGlobals.wgAdDriverMEGACountries);
+		context.opts.enableKILOAdUnit = geo.isProperGeo(instantGlobals.wgAdDriverKILOCountries);
 
 		// INVISIBLE_HIGH_IMPACT slot
 		context.slots.invisibleHighImpact = (

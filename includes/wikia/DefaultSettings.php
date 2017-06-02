@@ -1427,6 +1427,13 @@ $wgAdDriverKikimoraTrackingCountries = [];
 $wgAdDriverSrcPremiumCountries = [];
 
 /**
+ * @name $wgAdDriverKILOCountries
+ * Enables transitional to MEGA way of building adUnits (for GPT provider, NOT ONLY REMNANT).
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverKILOCountries = null;
+
+/**
  * @name $wgAdDriverMEGACountries
  * Enables new way of building adUnits (currently limited for remnant).
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
