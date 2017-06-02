@@ -87,8 +87,10 @@ class Categories {
 	 * @return string
 	 */
 	private function getVisibleCategoriesHTML( $categories ) {
-		$categoriesArray = array_slice( $categories, 0, self::VISIBLE_CATEGORIES_LIMIT - 1 );
 		$categoriesLinks = [];
+		$categoriesArray = $this->hasMoreCategories() ?
+			array_slice( $categories, 0, self::VISIBLE_CATEGORIES_LIMIT - 1 ) :
+			$categories;
 
 		/**
 		 * @var $category Title
