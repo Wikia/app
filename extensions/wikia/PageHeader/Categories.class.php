@@ -1,77 +1,92 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jakubjastrzebski
- * Date: 31/05/2017
- * Time: 18:31
- */
 
 namespace Wikia\PageHeader;
 
+use CategoryHelper;
 use RequestContext;
-use WikiaApp;
-use HtmlHelper;
+use Title;
 
 class Categories {
+	const VISIBLE_CATEGORIES_LIMIT = 4;
+
+	public $categories = [];
 	public $inCategoriesText;
 	public $moreCategoriesText;
 	public $moreCategoriesSeparator;
 	public $visibleCategories;
+	public $visibleCategoriesLength;
 
-	public function __construct( WikiaApp $app ) {
-		$context = RequestContext::getMain();
-		$categoryLinks = $context->getOutput()->getCategoryLinks();
-		$normalCategoryLinks = $categoryLinks['normal'] ?? [];
+	public function __construct() {
+		$categories = $this->getCategories();
 
-		$visibleCategoriesLimit = 4;
-		if ( count( $normalCategoryLinks ) > 4 ) {
-			$visibleCategoriesLimit = 3;
-		}
-		$categories = array_slice( $normalCategoryLinks, 0, $visibleCategoriesLimit );
-		$visibleCategories = $this->extendWithTrackingAttribute( $categories, 'categories-top' );
-		$extendedCategories = array_slice( $normalCategoryLinks, $visibleCategoriesLimit );
-		$moreCategories = $this->extendWithTrackingAttribute( $extendedCategories, 'categories-top-more' );
+		$this->categories = $categories;
+		$this->visibleCategories = $this->getVisibleCategories( $categories );
+		$this->moreCategories = $this->getMoreCategories( $categories );
 
-		$this->setTexts( $moreCategories );
-
-		$this->visibleCategories = $visibleCategories;
-
-		$this->moreCategoriesLength = count( $moreCategories );
-		$this->moreCategories = $moreCategories;
-
-		//Not this class
-		//$this->setVal( 'curatedContentButton', $this->getEditMainPage() );
-		//$this->curatedContentButton = $this->getEditMainPage();
-		////$this->setVal( 'languageList', $this->getLanguages() );
-		//$this->languageList = $this->getLanguages();
+		$this->setTexts();
 	}
 
 	public function hasVisibleCategories() {
-		return count( $this->visibleCategories ) > 0;
+		return count( $this->categories ) > 0;
 	}
 
-	public function setTexts( $moreCategories ) {
-		$this->inCategoriesText = wfMessage( 'page-header-in-categories' )->escaped();
+	public function hasMoreCategories() {
+		return count( $this->categories ) > self::VISIBLE_CATEGORIES_LIMIT;
+	}
+
+	public function setTexts() {
+		$this->inCategoriesText = wfMessage( 'page-header-categories-in' )->escaped();
 		$this->moreCategoriesText = wfMessage( 'page-header-categories-more' )
-			->numParams( count( $moreCategories ) )
+			->numParams( count( $this->moreCategories ) )
 			->escaped();
-		$this->moreCategoriesSeparator = wfMessage( 'page-header-categories-more-separator' )->escaped();
 	}
 
-	private function extendWithTrackingAttribute( $categories, $prefix ): array {
-		return array_map(
-			function ( $link, $key ) use ( $prefix ) {
-				$domLink = HtmlHelper::createDOMDocumentFromText( $link );
-				$link = $domLink->getElementsByTagName( 'a' );
-				if ( $link->length >= 1 ) {
-					$link->item( 0 )->setAttribute( 'data-tracking', "{$prefix}-{$key}" );
-				}
+	private function getCategories() {
+		$categories = [ ];
+		$categoryNames = RequestContext::getMain()->getOutput()->getCategories();
 
-				return HtmlHelper::getBodyHtml( $domLink );
-			},
-			$categories,
-			array_keys( $categories )
-		);
+		foreach ( $categoryNames as $categoryName ) {
+			$categoryTitle = Title::newFromText( $categoryName, NS_CATEGORY );
+
+			if ( !$categoryTitle->isKnown() || CategoryHelper::getCategoryType( $categoryName ) === 'hidden' ) {
+				continue;
+			}
+
+			array_push( $categories, $categoryTitle );
+		}
+
+		return $categories;
 	}
 
+	/**
+	 * Prepare the HTML here instead of the template so we can avoid having space before the commas
+	 * without using HTML comments or ugly formatting
+	 *
+	 * @param $categories Title[]
+	 *
+	 * @return string
+	 */
+	private function getVisibleCategories( $categories ) {
+		$categoriesArray = array_slice( $categories, 0, self::VISIBLE_CATEGORIES_LIMIT - 1 );
+		$categoriesLinks = [];
+
+		/**
+		 * @var $category Title
+		 */
+		foreach ( $categoriesArray as $category ) {
+			$categoriesLinks[] = '<a href="' . $category->getLocalURL() . '">' . $category->getText() . '</a>';
+		}
+
+		$categoriesText = join( ', ', $categoriesLinks );
+
+		if ( $this->hasMoreCategories() ) {
+			$categoriesText .= wfMessage( 'page-header-categories-more-separator' )->escaped();
+		}
+
+		return $categoriesText;
+	}
+
+	private function getMoreCategories( $categories ) {
+		return $this->hasMoreCategories() ? array_slice( $categories, self::VISIBLE_CATEGORIES_LIMIT - 1 ) : [];
+	}
 }

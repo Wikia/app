@@ -10,6 +10,6 @@ class PageHeaderController extends \WikiaController {
 	}
 
 	public function categories() {
-		$this->setVal( 'categories', new Categories( $this->app ) );
+		$this->setVal( 'categories', new Categories() );
 	}
 }
