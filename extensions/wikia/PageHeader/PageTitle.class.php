@@ -30,7 +30,7 @@ class PageTitle {
 	public function __construct( WikiaApp $app ) {
 		$this->wg = $app->wg;
 		$this->MWTitle = RequestContext::getMain()->getTitle();
-		$this->request = $this->wg->Request;
+		$this->request = RequestContext::getMain()->getRequest();
 
 		$this->namespace = $this->MWTitle->getNamespace();
 		$this->title = $this->handleTitle( $app );
