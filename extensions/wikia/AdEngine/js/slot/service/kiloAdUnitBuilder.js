@@ -1,5 +1,5 @@
 /*global define*/
-define('ext.wikia.adEngine.slot.kiloAdUnitBuilder', [
+define('ext.wikia.adEngine.slot.service.kiloAdUnitBuilder', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams'
 ], function (adContext, page) {

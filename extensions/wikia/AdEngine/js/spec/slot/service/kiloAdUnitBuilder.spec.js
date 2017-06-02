@@ -1,5 +1,5 @@
 /*global describe, expect, it, modules, spyOn*/
-describe('ext.wikia.adEngine.slot.kiloadUnitBuilder', function () {
+describe('ext.wikia.adEngine.slot.service.kiloAdUnitBuilder', function () {
 	'use strict';
 
 	var noop = function () {},
@@ -22,7 +22,7 @@ describe('ext.wikia.adEngine.slot.kiloadUnitBuilder', function () {
 		};
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.slot.kiloAdUnitBuilder'](
+		return modules['ext.wikia.adEngine.slot.service.kiloAdUnitBuilder'](
 			mocks.adContext,
 			mocks.page
 		);
