@@ -13,6 +13,7 @@ class SpecialCreateNewWiki extends UnlistedSpecialPage {
 	public function execute( $par ) {
 		wfProfileIn( __METHOD__ );
 		$out = $this->getOutput();
+		$user = $this->getUser();
 
 		$this->checkPermissions();
 
@@ -23,7 +24,8 @@ class SpecialCreateNewWiki extends UnlistedSpecialPage {
 		}
 
 		// SUS-1182: CreateNewWiki should check for valid email before progressing to the second step
-		if ( !$this->getUser()->isEmailConfirmed() ) {
+		// but allow anons to pass this check
+		if ( $user->isLoggedIn() && !$user->isEmailConfirmed() ) {
 			throw new ErrorPageError( 'cnw-error-unconfirmed-email-header', 'cnw-error-unconfirmed-email' );
 		}
 
