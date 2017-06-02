@@ -6,6 +6,8 @@
 @import 'skins/oasis/css/core/breakpoints-variables';
 
 .WikiaPage .page-header {
+	@include dropdown-theming($color-page, $color-text, $color-links, $color-page-border);
+
 	@include flexbox();
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
@@ -19,10 +21,6 @@
 
 	.wds-button {
 		@include button-theming($color-buttons, $color-button-text, $color-text);
-	}
-
-	.wds-dropdown {
-		@include dropdown-theming($color-page, $color-text, $color-links, $color-page-border);
 	}
 
 	&__contribution {
