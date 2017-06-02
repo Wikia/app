@@ -3226,7 +3226,6 @@ $config['premium_page_header_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/PremiumPageHeader/scripts/banner-notifications-hack.js',
 		'//extensions/wikia/PremiumPageHeader/scripts/local-navigation.js',
 		'//extensions/wikia/PremiumPageHeader/scripts/old-nav-tracking-hack.js',
 		'//extensions/wikia/PremiumPageHeader/scripts/share-entry-point-hack.js',
@@ -3242,6 +3241,24 @@ $config['premium_page_header_curated_content_js'] = [
 	'assets' => [
 		'//extensions/wikia/PremiumPageHeader/scripts/curated-content-edit-hack.js',
 	]
+];
+
+$config['community_header_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/CommunityHeader/styles/index.scss',
+		'//extensions/wikia/CommunityHeader/styles/banner-notifications-hack.scss',
+	],
+];
+
+$config['community_header_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/CommunityHeader/scripts/tracking.js',
+		'//extensions/wikia/CommunityHeader/scripts/banner-notifications-hack.js',
+	],
 ];
 
 $config['page_header_js'] = [
@@ -3275,3 +3292,4 @@ $config['ad_mix_experiment_scss'] = [
 		'//extensions/wikia/AdMixExperiment/styles/recirculation.scss',
 	],
 ];
+

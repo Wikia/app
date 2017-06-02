@@ -27,11 +27,9 @@
 <div id="ad-skin" class="wikia-ad noprint"></div>
 
 <?= $app->renderView( 'DesignSystemGlobalNavigationService', 'index' ) ?>
-<? if ( !empty( $wg->EnablePremiumPageHeader ) && empty( $wg->SuppressWikiHeader ) ): ?>
-	<div class="banner-notifications-placeholder">
-		<?= $app->renderView( 'BannerNotifications', 'Confirmation' ) ?>
-	</div>
-<? endif; ?>
+<div class="banner-notifications-placeholder">
+	<?= $app->renderView( 'BannerNotifications', 'Confirmation' ) ?>
+</div>
 <?= $app->renderView( 'Ad', 'Top' ) ?>
 <?= empty( $wg->EnableEBS ) ? '' : $app->renderView( 'EmergencyBroadcastSystem', 'index' ); ?>
 
@@ -41,22 +39,13 @@
 
 <?= $beforeWikiaPageHtml ?>
 
+<? if ( empty( $wg->SuppressWikiHeader ) ) : ?>
+	<?= $app->renderView( 'CommunityHeader', 'index' ) ?>
+<? endif; ?>
+
 <section id="WikiaPage" class="WikiaPage<?= empty( $wg->OasisNavV2 ) ? '' : ' V2' ?><?= !empty( $isGridLayoutEnabled ) ? ' WikiaGrid' : '' ?>">
 	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
 	<div class="WikiaPageContentWrapper">
-
-		<? if ( !empty( $wg->EnablePremiumPageHeader ) && empty( $wg->SuppressWikiHeader ) ) : ?>
-			<div class="PremiumPageHeader">
-				<?= $app->renderView( 'PremiumPageHeader', 'wikiHeader' ) ?>
-			</div>
-		<? else: ?>
-			<?= $app->renderView( 'BannerNotifications', 'Confirmation' ) ?>
-		<? endif; ?>
-
-		<? if ( empty( $wg->SuppressWikiHeader ) ) : ?>
-			<?= $app->renderView( 'WikiHeader', 'Index' ) ?>
-		<? endif; ?>
-
 		<? if ( !empty( $wg->EnableWikiAnswers ) ) : ?>
 			<?= $app->renderView( 'WikiAnswers', 'QuestionBox' ) ?>
 		<? endif; ?>
