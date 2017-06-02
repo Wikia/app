@@ -1,0 +1,42 @@
+@mixin button-theming($color-primary, $color-secondary) {
+	$color-primary-active: darken($color-primary, 20%);
+
+	background-color: $color-primary;
+	border-color: $color-primary;
+	color: $color-secondary;
+
+	&:focus:not(:disabled),
+	&:hover:not(:disabled),
+	&:active,
+	&.wds-is-active {
+		background-color: $color-primary-active;
+		border-color: $color-primary-active;
+	}
+
+	&.wds-is-secondary {
+		background-color: transparent;
+		color: $color-primary;
+
+		&:focus:not(:disabled),
+		&:hover:not(:disabled),
+		&:active,
+		&.wds-is-active {
+			background-color: transparent;
+			color: $color-primary-active;
+		}
+	}
+
+	&.wds-is-text {
+		background-color: transparent;
+		border: 0;
+		color: $color-primary;
+
+		&:focus:not(:disabled),
+		&:hover:not(:disabled),
+		&:active,
+		&.wds-is-active {
+			background-color: transparent;
+			color: $color-primary-active;
+		}
+	}
+}
