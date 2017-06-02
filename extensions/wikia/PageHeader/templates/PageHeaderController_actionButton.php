@@ -12,7 +12,7 @@
 		<div class="wds-button wds-is-squished wds-dropdown__toggle">
 			<?= DesignSystemHelper::renderSvg( 'wds-icons-dropdown-tiny', 'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron' ); ?>
 		</div>
-		<div class="wds-dropdown__content wds-is-not-scrollable">
+		<div class="wds-dropdown__content wds-is-not-scrollable wds-is-right-aligned">
 			<ul class="wds-list wds-is-linked">
 				<? foreach( $dropdownActions as $action ): ?>
 					<li>
