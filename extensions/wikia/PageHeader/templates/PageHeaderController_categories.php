@@ -8,8 +8,8 @@
 					<a class="push-dropdown-down wds-dropdown__toggle" data-tracking="categories-more"><?= $categories->moreCategoriesText ?></a>
 					<div class="wds-dropdown__content">
 						<ul class="wds-list wds-is-linked">
-							<?php foreach ( $categories->moreCategories as $category ): ?>
-								<li><a href="<?= $category->getLocalURL() ?>"><?= $category->getText(); ?></a></li>
+							<?php foreach ( $categories->moreCategories as $i => $category ): ?>
+								<li><a href="<?= $category->getLocalURL() ?>" data-tracking="categories-top-more-<?= $i ?>"><?= $category->getText(); ?></a></li>
 							<?php endforeach; ?>
 						</ul>
 					</div>

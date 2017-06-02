@@ -73,8 +73,11 @@ class Categories {
 		/**
 		 * @var $category Title
 		 */
-		foreach ( $categoriesArray as $category ) {
-			$categoriesLinks[] = '<a href="' . $category->getLocalURL() . '">' . $category->getText() . '</a>';
+		foreach ( $categoriesArray as $i => $category ) {
+			$categoriesLinks[] = '<a' .
+				' href="' . $category->getLocalURL() . '"' .
+				' data-tracking="categories-top-' . $i . '"' .
+				'>' . $category->getText() . '</a>';
 		}
 
 		$categoriesText = join( ', ', $categoriesLinks );
