@@ -422,7 +422,6 @@ $config['oasis_jquery'] = [
 		// 3rd party plugins
 		'//resources/wikia/libraries/jquery/getcss/jquery.getcss.js',
 		'//resources/wikia/libraries/jquery/cookies/jquery.cookies.2.1.0.js',
-		'//resources/wikia/libraries/jquery/timeago/jquery.timeago.js',
 		'//resources/wikia/libraries/jquery/store/jquery.store.js',
 		'//resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js',
 		'//resources/wikia/libraries/jquery/floating-scrollbar/jquery.floating-scrollbar.js',
