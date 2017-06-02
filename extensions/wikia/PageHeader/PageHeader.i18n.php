@@ -10,6 +10,9 @@ $messages['en'] = array(
 	'page-header-categories-in' => 'in',
 	'page-header-categories-more-separator' => ', ',
 	'page-header-categories-more' => 'and {{FORMATNUM:$1}} more',
+	'page-header-title-prefix-preview' => 'Preview: $1',
+	'page-header-title-prefix-changes' => 'Changes: $1',
+	'page-header-title-prefix-history' => 'History: $1',
 );
 
 $messages['qqq'] = array(
@@ -21,4 +24,7 @@ $messages['qqq'] = array(
 	'page-header-categories-in' => 'Label displayed before list of categories that given article belongs to',
 	'page-header-categories-more-separator' => 'Separator between first couple of categories and "more categories" link',
 	'page-header-categories-more' => 'Link to more categories that are hidden by default',
+	'page-header-title-prefix-preview' => 'Prefix for preview page title',
+	'page-header-title-prefix-changes' => 'Prefix for diff (changes) page title',
+	'page-header-title-prefix-history' => 'Prefix for history page title',
 );
