@@ -134,7 +134,7 @@ $messages['vi'] = array(
 
 $messages['zh-hans'] = array(
 	'editor-preference-help' => '在这个维基上，传统编辑器被设定为默认编辑器。[[Help:Editing|点击这里了解更多]]。',
-	'option-ck-editor' => 'Fandom传统编辑器（如可用）',
+	'option-ck-editor' => 'FANDOM传统编辑器（如可用）',
 	'option-visual-editor' => '可视化编辑器',
 	'editor-preference' => '偏好的编辑器:',
 	'option-default-editor' => '预设',
@@ -144,7 +144,7 @@ $messages['zh-hans'] = array(
 
 $messages['zh-hant'] = array(
 	'editor-preference-help' => '在這個wiki上，傳統編輯器被設定為預設編輯器。[[Help:Editing|按這裡了解更多]]。',
-	'option-ck-editor' => 'Fandom傳統編輯器（如可用）',
+	'option-ck-editor' => 'FANDOM傳統編輯器（如可用）',
 	'option-visual-editor' => '視效編輯器',
 	'editor-preference' => '偏好的編輯器：',
 	'option-default-editor' => '預設',

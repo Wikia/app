@@ -1554,20 +1554,20 @@ $messages['ja'] = array(
 	'wikiadoption-welcome-header' => 'おめでとうございます！あなたは{{SITENAME}}を採用しました！',
 	'wikiadoption-mail-adoption-content' => '$1さん
 
-このたび、#WIKINAMEは譲渡されました。Fandomでは、既存のアドミン全員が60日以上活動を行わなかった場合、他のユーザーに引継ぎ可能な状態となります。
+このたび、#WIKINAMEは譲渡されました。FANDOMでは、既存のアドミン全員が60日以上活動を行わなかった場合、他のユーザーに引継ぎ可能な状態となります。
 
 #WIKINAMEの譲渡先のユーザーは、ビューロクラットとアドミンのステータスになりましたが、あなたも引続きこのコミュニティのアドミンステータスを保持しており、いつでも編集を再開していただけます。
 
-Fandomチーム
+FANDOMチーム
 
 次のページでメール設定を変更していただけます：$3',
 	'wikiadoption-mail-adoption-content-HTML' => '$1さん<br /><br />
 
-このたび、#WIKINAMEは譲渡されました。Fandomでは、既存のアドミン全員が60日以上活動を行わなかった場合、他のユーザーに引継ぎ可能な状態となります。<br /><br />
+このたび、#WIKINAMEは譲渡されました。FANDOMでは、既存のアドミン全員が60日以上活動を行わなかった場合、他のユーザーに引継ぎ可能な状態となります。<br /><br />
 
 #WIKINAMEの譲渡先のユーザーは、ビューロクラットとアドミンのステータスになりましたが、あなたも引続きこのコミュニティのアドミンステータスを保持しており、いつでも編集を再開していただけます。<br /><br />
 
-Fandomチーム<br /><br />
+FANDOMチーム<br /><br />
 
 <a href="$3">配信を停止</a>よりメール配信設定を変更することができます。',
 	'wikiadoption-mail-first-content' => '$1さん
@@ -1576,7 +1576,7 @@ Fandomチーム<br /><br />
 
 コミュニティ管理においてサポートが必要な場合、$2で他のコミュニティ・メンバーにもアドミンになってもらうこともできます。#WIKINAMEでのご活躍をお待ちしています。
 
-Fandomチーム
+FANDOMチーム
 
 メール設定は次のページで変更できます：$3',
 	'wikiadoption-mail-first-content-HTML' => '$1さん<br /><br />
@@ -1585,7 +1585,7 @@ Fandomチーム
 
 コミュニティ管理においてサポートが必要な場合、<a href="$2">ユーザー権限の管理</a>より他のコミュニティ・メンバーにもアドミンになってもらうこともできます。#WIKINAMEでのご活躍をお待ちしています。<br /><br />
 
-Fandomチーム<br /><br />
+FANDOMチーム<br /><br />
 
 <a href="$3">配信を停止</a>よりメール配信設定を変更することができます。',
 	'wikiadoption-mail-second-content' => '$1さん
@@ -1594,7 +1594,7 @@ Fandomチーム<br /><br />
 
 尚、既存アドミンによる最後の活動から時間が経ちましたため、#WIKINAMEは他ユーザーに譲渡可能な状態になりました。
 
-Fandomチーム
+FANDOMチーム
 
 メール設定は次のページで変更できます：$3',
 	'wikiadoption-mail-second-content-HTML' => '$1さん<br /><br />
@@ -1604,7 +1604,7 @@ Fandomチーム
 尚、既存アドミンによる最後の活動から時間が経ちましたため、#WIKINAMEは他ユーザーに譲渡可能な状態になりました。
 <br /><br />
 
-Fandomチーム<br /><br />
+FANDOMチーム<br /><br />
 
 <a href="$3">配信を停止</a>よりメール配信設定を変更することができます。',
 	'wikiadoption-desc' => 'An AutomaticWikiAdoption extension for MediaWiki',
@@ -1838,14 +1838,14 @@ $messages['lol'] = array(
 	'wikiadoption-log-reason' => 'crwdns65262:0crwdne65262:0',
 	'wikiadoption-notification' => 'crwdns65263:0{{SITENAME}}crwdne65263:0',
 	'wikiadoption-mail-first-subject' => 'crwdns65264:0crwdne65264:0',
-	'wikiadoption-mail-first-content' => 'crwdns65265:0crwdne65265:0',
-	'wikiadoption-mail-first-content-HTML' => 'crwdns65266:0crwdne65266:0',
+	'wikiadoption-mail-first-content' => 'crwdns66379:0crwdne66379:0',
+	'wikiadoption-mail-first-content-HTML' => 'crwdns66380:0crwdne66380:0',
 	'wikiadoption-mail-second-subject' => 'crwdns65267:0crwdne65267:0',
-	'wikiadoption-mail-second-content' => 'crwdns65268:0crwdne65268:0',
-	'wikiadoption-mail-second-content-HTML' => 'crwdns65269:0crwdne65269:0',
+	'wikiadoption-mail-second-content' => 'crwdns66381:0crwdne66381:0',
+	'wikiadoption-mail-second-content-HTML' => 'crwdns66382:0crwdne66382:0',
 	'wikiadoption-mail-adoption-subject' => 'crwdns65270:0crwdne65270:0',
-	'wikiadoption-mail-adoption-content' => 'crwdns65271:0crwdne65271:0',
-	'wikiadoption-mail-adoption-content-HTML' => 'crwdns65272:0crwdne65272:0',
+	'wikiadoption-mail-adoption-content' => 'crwdns66383:0crwdne66383:0',
+	'wikiadoption-mail-adoption-content-HTML' => 'crwdns66384:0crwdne66384:0',
 	'tog-adoptionmails' => 'crwdns65273:0crwdne65273:0',
 	'tog-adoptionmails-v2' => 'crwdns65274:0crwdne65274:0',
 	'wikiadoption-pref-label' => 'crwdns65275:0crwdne65275:0',

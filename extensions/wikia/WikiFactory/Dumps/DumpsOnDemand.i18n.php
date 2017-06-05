@@ -342,7 +342,7 @@ $messages['it'] = array(
 
 $messages['ja'] = array(
 	'dump-database' => 'データベースダンプ',
-	'dump-database-info' => 'データベースダンプは、個人的なバックアップ（ウィキアでは全てのウィキのバックアップを自動的に取っています）やメンテナンスボット用として利用できます。',
+	'dump-database-info' => 'データベースダンプは、個人的なバックアップ（FANDOMでは全てのウィキのバックアップを自動的に取っています）やメンテナンスボット用として利用できます。',
 	'dump-database-curr-pages' => '最新のページ',
 	'dump-database-curr-pages-info' => '（ボットで利用する場合に通常最も適したものとなります）',
 	'dump-database-full-pages' => '最新ページと履歴',
@@ -682,7 +682,7 @@ $messages['wuu'] = array(
 
 $messages['zh-hans'] = array(
 	'dump-database' => '数据库转储',
-	'dump-database-info' => '数据库转存可以作为个人的备份（Fandom会对所有wiki自动生成单独的备份）或用于维护类机器人',
+	'dump-database-info' => '数据库转存可以作为个人的备份（FANDOM会对所有wiki自动生成单独的备份）或用于维护类机器人',
 	'dump-database-curr-pages' => '当前页面',
 	'dump-database-curr-pages-info' => '（此版本通常最适合机器人使用）',
 	'dump-database-full-pages' => '当前和历史页面',
@@ -699,7 +699,7 @@ $messages['zh-hans'] = array(
 
 $messages['zh-hant'] = array(
 	'dump-database' => '資料庫轉存',
-	'dump-database-info' => '資料庫轉存可以作為個人的備份（Fandom會自動產生所有wiki個別的備份），或用於維護類機器人。',
+	'dump-database-info' => '資料庫轉存可以作為個人的備份（FANDOM會自動產生所有wiki個別的備份），或用於維護類機器人。',
 	'dump-database-curr-pages' => '目前頁面',
 	'dump-database-curr-pages-info' => '（此版本通常最適合機器人使用）',
 	'dump-database-full-pages' => '目前頁面和歷史記錄',

@@ -943,7 +943,7 @@ Scrivi qui la seconda sezione del tuo articolo.',
 );
 
 $messages['ja'] = array(
-	'createpage-desc' => 'FandomのWYSIWYGエディターを使って、新しいページを作成できるようにする',
+	'createpage-desc' => 'FANDOMのWYSIWYGエディターを使って、新しいページを作成できるようにする',
 	'createpage-sp-title' => '新しいページを作成',
 	'createpage_title' => '新しいページを作成',
 	'createpage_title_caption' => 'タイトル',
@@ -2110,7 +2110,7 @@ $messages['zh-hans'] = array(
 	'createpage-button-cancel' => '取消',
 	'createpage-dialog-choose' => '选择页面布局:',
 	'createpage-error-article-spam' => '此标题不恰当。请使用一个不同的标题。',
-	'createpage-desc' => '允许使用Fandom的所见即所得编辑器创建新的页面',
+	'createpage-desc' => '允许使用FANDOM的所见即所得编辑器创建新的页面',
 	'createpage_empty_title_error' => '请为您的新页面添加标题！',
 	'createpage_empty_article_body_error' => '请为您的新页面添加一些内容！',
 	'createpage_article_already_exists' => '此名称页面已存在。
@@ -2160,7 +2160,7 @@ $messages['zh-hant'] = array(
 
 在這裡寫頁面的第二節。',
 	'tog-createpagepopupdisabled' => '關閉「創建新頁面」流程（不建議）',
-	'createpage-desc' => '允許使用Fandom的所見即所得編輯器創建新的頁面',
+	'createpage-desc' => '允許使用FANDOM的所見即所得編輯器創建新的頁面',
 	'createpage-dialog-redlinks-list-header' => '也可以點擊以下其中一個標題並開始撰寫！',
 	'newpagelayout' => '[[File:Placeholder|right|300px]] 在這裡寫下文章的內容 ！',
 	'createpage-button-proceed' => '下一步',

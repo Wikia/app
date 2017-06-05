@@ -470,7 +470,7 @@ $messages['ja'] = array(
 	'template-classification-description-infoicon' => 'このテンプレートを使用すると、小さいアイコン付きのリンクを作成できます。',
 	'special-templates-portable-infobox' => 'ポータブル',
 	'special-templates-non-portable-infobox' => 'ポータブル化されてない',
-	'templates' => 'Fandomのテンプレート',
+	'templates' => 'FANDOMのテンプレート',
 	'right-template-bulk-classification' => '一度に複数のテンプレートを分類することができます。',
 );
 
@@ -808,7 +808,7 @@ $messages['zh-hans'] = array(
 	'template-classification-description-infoicon' => '此模板通过使用一个小图标进行创建链接。',
 	'special-templates-portable-infobox' => '移动式',
 	'special-templates-non-portable-infobox' => '非移动式',
-	'templates' => 'Fandom上的模板',
+	'templates' => 'FANDOM上的模板',
 	'right-template-bulk-classification' => '允许同时归类大量模版',
 );
 

@@ -111,7 +111,7 @@ $messages['ja'] = array(
 	'emailext-founder-digest-views-description-2' => 'この調子で、ページやトーク、写真、動画を追加していきましょう。',
 	'emailext-founder-digest-edits-header' => '投稿数：$1件',
 	'emailext-founder-digest-edits-description' => '投稿したユーザーには、ぜひ感謝の気持ちをお伝えください。',
-	'emailext-founder-digest-signature' => 'Fandomコミュニティ・チーム',
+	'emailext-founder-digest-signature' => 'FANDOMコミュニティ・チーム',
 	'emailext-founder-digest-users-header' => '$1人の新しいコミュニティメンバー ',
 	'emailext-founder-digest-users-description' => '新しいコミュニティメンバーに歓迎の気持ちを伝え、コミュニティの発展に協力してもらいましょう。',
 );
@@ -210,7 +210,7 @@ $messages['zh-hans'] = array(
 	'emailext-founder-digest-views-description-2' => '继续添加有趣的文章、讨论、照片和视频供大家欣赏。',
 	'emailext-founder-digest-edits-header' => '已编辑$1次',
 	'emailext-founder-digest-edits-description' => '请记得一定感谢那些为社区做出贡献的人。感谢他们的参与！',
-	'emailext-founder-digest-signature' => 'Fandom社区团队',
+	'emailext-founder-digest-signature' => 'FANDOM社区团队',
 	'emailext-founder-digest-users-header' => '$1个新社区成员',
 	'emailext-founder-digest-users-description' => '欢迎新用户访问您的社区！让他们一起参与到您的社区建设之中。',
 );
@@ -227,7 +227,7 @@ $messages['zh-hant'] = array(
 	'emailext-founder-digest-views-description-2' => '繼續添加有趣的文章、討論、圖片和影片供大家欣賞。',
 	'emailext-founder-digest-edits-header' => '已編輯$1次',
 	'emailext-founder-digest-edits-description' => '請記得一定要感謝那些為社群做出貢獻的人，讓他們的成果得到讚賞！',
-	'emailext-founder-digest-signature' => 'Fandon社區團隊',
+	'emailext-founder-digest-signature' => 'FANDOM社區團隊',
 	'emailext-founder-digest-users-header' => '$1個新的社區用戶',
 	'emailext-founder-digest-users-description' => '歡迎新用戶訪問你的社區！讓他們也參與你創建的精彩粉絲社區。',
 );

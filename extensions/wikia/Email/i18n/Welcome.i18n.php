@@ -50,13 +50,13 @@ $messages['de'] = array(
 	'emailext-welcome-basics-url' => 'http://de.community.wikia.com/wiki/Fandom_Universität',
 	'emailext-welcome-basics-header' => 'Lerne die Grundlagen',
 	'emailext-welcome-basics-description' => 'Brauchst du eine kurze Anleitung dazu, wie du eine Seite bearbeiten, eine Diskussion starten oder Sachen hochladen kannst? Informationen dazu findest du in diesen  [$1 hilfreichen Videos].',
-	'emailext-welcome-fandom-header' => 'Finde dein Lieblings-FANDOM',
+	'emailext-welcome-fandom-header' => 'Finde dein Lieblings-Fandom',
 	'emailext-welcome-fandom-description' => 'Entdecke Communitys für Filme, TV, Videospiele und mehr. Hinterlasse einen Kommentar oder folge deiner liebsten Diskussion.',
 	'emailext-welcome-footer-community' => 'Du suchst noch mehr Informationen? Weitere Anregungen, Antworten und freundliche Gesichter findest du in der [http://de.community.wikia.com FANDOM-Community Deutschland].',
 	'emailext-welcome-footer-closing' => 'Danke, dass du bei FANDOM mitmachst!',
 	'emailext-welcome-summary-extended-tips' => 'Hier sind 5 Möglichkeiten, wie du das Beste aus FANDOM herausholst:',
 	'emailext-welcome-fandom-connect-header' => 'Mit FANDOM verbinden',
-	'emailext-welcome-fandom-connect-description' => 'Folge @getfandom in deinem liebsten Sozialen Netzwerk für das beste aus der Popkultur, FANDOM und mehr.',
+	'emailext-welcome-fandom-connect-description' => 'Folge @getfandom in deinem liebsten Sozialen Netzwerk für das beste aus der Popkultur, Fandom und mehr.',
 );
 
 $messages['es'] = array(
@@ -88,7 +88,7 @@ $messages['fr'] = array(
 	'emailext-welcome-mobile-header' => 'Emportez FANDOM partout avec vous.',
 	'emailext-welcome-mobile-description' => 'Téléchargez les applications de vos communautés FANDOM préférées sur [$1 iOS] ou [$2 Android] afin de vous tenir informé à tout moment des sujets qui vous passionnent.',
 	'emailext-welcome-basics-url' => 'http://communaute.wikia.com/wiki/Universit%C3%A9_Fandom',
-	'emailext-welcome-basics-header' => 'Apprenez les bases de FANDOM',
+	'emailext-welcome-basics-header' => 'Apprenez les bases de Fandom',
 	'emailext-welcome-basics-description' => 'Vous souhaitez savoir comment modifier une page, lancer une discussion ou importer du contenu ? Consultez ces [$1 tutoriels] .',
 	'emailext-welcome-fandom-header' => 'Explorez votre univers de fans préféré',
 	'emailext-welcome-fandom-description' => 'Découvrez des communautés à travers des films, TV, jeux vidéo et plus encore. Laissez un commentaire ou suivez votre discussion préférée.',
@@ -120,23 +120,23 @@ $messages['it'] = array(
 );
 
 $messages['ja'] = array(
-	'emailext-welcome-subject' => '$1さん、Fandomへようこそ！',
-	'emailext-welcome-summary' => 'エンターテイメント・コミュニティが集結する世界最大のファンサイト、Fandomへようこそ！Fandomは、情熱あふれるファン達が、知識の共有や活発な会話を通じた交流で、新しい発見につながる場です。',
-	'emailext-welcome-summary-extended' => '今日からあなたもFandomの一員！',
+	'emailext-welcome-subject' => '$1さん、FANDOMへようこそ！',
+	'emailext-welcome-summary' => 'エンターテイメント・コミュニティが集結する世界最大のファンサイト、FANDOMへようこそ！FANDOMは、情熱あふれるファン達が、知識の共有や活発な会話を通じた交流で、新しい発見につながる場です。',
+	'emailext-welcome-summary-extended' => '今日からあなたもFANDOMの一員！',
 	'emailext-welcome-profile-header' => 'プロフィールを作成しよう',
 	'emailext-welcome-profile-description' => 'プロフィールページで自分の好きなトピックを発信し、他ユーザーとの交流のきっかけにしましょう。',
 	'emailext-welcome-mobile-header' => 'コミュニティアプリをダウンロード',
-	'emailext-welcome-mobile-description' => '[$1 iOS] 版または [$2 Android] 版のFandomコミュニティアプリをダウンロードすると、お気に入りのコミュニティにいつでもどこからでも簡単にアクセスできます。',
+	'emailext-welcome-mobile-description' => '[$1 iOS] 版または [$2 Android] 版のFANDOMコミュニティアプリをダウンロードすると、お気に入りのコミュニティにいつでもどこからでも簡単にアクセスできます。',
 	'emailext-welcome-basics-url' => 'http://ja.community.wikia.com/wiki/FANDOM%E3%83%A6%E3%83%8B%E3%83%90%E3%83%BC%E3%82%B7%E3%83%86%E3%82%A3',
 	'emailext-welcome-basics-header' => '基本を学ぼう',
 	'emailext-welcome-basics-description' => 'ページの編集、会話のはじめ方、画像や動画のアップロードなど、基本的な操作方法は[$1 こちらから]のガイドでご紹介しています。',
 	'emailext-welcome-fandom-header' => 'お気に入りのコミュニティを見つけよう',
 	'emailext-welcome-fandom-description' => '映画、テレビ、ゲームなど、様々なトピックのコミュニティからお気に入りを見つけて、トークにコメントしたりフォローしてみましょう。',
 	'emailext-welcome-footer-community' => 'さらに詳しいアドバイスやサポートが必要な場合は、[http://ja.community.wikia.com FANDOM コミュニティ・セントラル] をご利用ください。',
-	'emailext-welcome-footer-closing' => 'Fandomへのご参加ありがとうございます！',
-	'emailext-welcome-summary-extended-tips' => 'Fandomを最大限に活用する最初のステップとして、まずは次の5つを実践してみましょう。',
-	'emailext-welcome-fandom-connect-header' => 'Fandomをフォロー',
-	'emailext-welcome-fandom-connect-description' => '最新のポップカルチャーニュースやFandomの更新情報を発信しています。',
+	'emailext-welcome-footer-closing' => 'FANDOMへのご参加ありがとうございます！',
+	'emailext-welcome-summary-extended-tips' => 'FANDOMを最大限に活用する最初のステップとして、まずは次の5つを実践してみましょう。',
+	'emailext-welcome-fandom-connect-header' => 'FANDOMをフォロー',
+	'emailext-welcome-fandom-connect-description' => '最新のポップカルチャーニュースやFANDOMの更新情報を発信しています。',
 );
 
 $messages['ko'] = array(

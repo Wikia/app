@@ -123,22 +123,22 @@ $messages['it'] = array(
 
 $messages['ja'] = array(
 	'emailext-emailconfirmation-subject' => '次のボタンをクリックしてメールアドレスの認証を行ってください。',
-	'emailext-emailconfirmation-summary' => '登録完了まであと一歩です。Fandomの利用をはじめるには、次のリンクをクリックしてメールアドレスの認証を完了してください。',
-	'emailext-emailconfirmation-footer-1' => 'メールアドレスの認証を行うと、Fandomのさまざまな機能を活用できるようになります。例えば：',
-	'emailext-emailconfirmation-footer-2' => '今後ともFandomをよろしくお願いいたします。',
-	'emailext-emailconfirmation-reminder-subject' => '$1さん、Fandomアカウントの認証を完了してください。',
-	'emailext-emailconfirmation-reminder-summary' => '手続きを開始されてから数日経ちますが、Fandomでのアカウント登録が完了していないようです。次のリンクをクリックして認証完了してアカウントの認証を完了させてください。',
+	'emailext-emailconfirmation-summary' => '登録完了まであと一歩です。FANDOMの利用をはじめるには、次のリンクをクリックしてメールアドレスの認証を完了してください。',
+	'emailext-emailconfirmation-footer-1' => 'メールアドレスの認証を行うと、FANDOMのさまざまな機能を活用できるようになります。例えば：',
+	'emailext-emailconfirmation-footer-2' => '今後ともFANDOMをよろしくお願いいたします。',
+	'emailext-emailconfirmation-reminder-subject' => '$1さん、FANDOMアカウントの認証を完了してください。',
+	'emailext-emailconfirmation-reminder-summary' => '手続きを開始されてから数日経ちますが、FANDOMでのアカウント登録が完了していないようです。次のリンクをクリックして認証完了してアカウントの認証を完了させてください。',
 	'emailext-emailconfirmation-reminder-footer-1' => 'あと23日以内にアカウント登録が完了されない場合、ユーザー名「$1」は他のユーザーが使用できるようになります。「$1」でのアカウント登録を完了させるにはアカウントの認証を完了してください。',
-	'emailext-emailconfirmation-changed-subject' => 'Fandomから認証用のメールです',
-	'emailext-emailconfirmation-changed-summary' => 'Fandomでのメールアドレス変更を完了するには、次のリンクをクリックしてください。認証が完了することで、引続き様々な情報をメールでお受け取りいただけます。',
+	'emailext-emailconfirmation-changed-subject' => 'FANDOMから認証用のメールです',
+	'emailext-emailconfirmation-changed-summary' => 'FANDOMでのメールアドレス変更を完了するには、次のリンクをクリックしてください。認証が完了することで、引続き様々な情報をメールでお受け取りいただけます。',
 	'emailext-emailconfirmation-changed-footer-1' => 'こちらのメールアドレスの認証を行っていただくまでは、古いアドレスにもメールが送信されます。',
-	'emailext-emailconfirmation-changed-footer-2' => 'Fandomでお会いできるのを楽しみにしています！',
-	'emailext-emailconfirmation-community-team' => 'Fandomコミュニティ・チーム',
+	'emailext-emailconfirmation-changed-footer-2' => 'FANDOMでお会いできるのを楽しみにしています！',
+	'emailext-emailconfirmation-community-team' => 'FANDOMコミュニティ・チーム',
 	'emailext-emailconfirmation-button-text' => '認証を完了する',
 	'emailext-emailconfirmation-footer-list-1' => '自分のプロフィールページを作成',
 	'emailext-emailconfirmation-footer-list-2' => 'コミュニティやトークからの更新情報を受信',
 	'emailext-emailconfirmation-footer-list-3' => '画像や動画をコミュニティへ追加',
-	'emailext-emailconfirmation-footer-list-4' => 'お好きなFandomコミュニティへの参加',
+	'emailext-emailconfirmation-footer-list-4' => 'お好きなFANDOMコミュニティへの参加',
 );
 
 $messages['ko'] = array(

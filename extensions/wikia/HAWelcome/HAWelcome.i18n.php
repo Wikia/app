@@ -1058,13 +1058,13 @@ $messages['ja'] = array(
 ここは、「{{Pagename}}」さんのユーザーページです。上の「編集」ボタンをクリックしてこのページを編集し、{{Pagename}}さん自身のことについてコミュニティに紹介してみましょう！
 
 == お気に入りのページ ==
-* Fandom上にあるWikiの、お気に入りのページのリンクを追加してください！
+* FANDOM上にあるWikiの、お気に入りのページのリンクを追加してください！
 * お気に入りのページ #2
 * お気に入りのページ #3',
 	'welcome-message-user' => '==ようこそ==
 
 はじめまして、{{SITENAME}}コミュニティのアドミンです。[[:$1]]へようこそ！そして、ページ編集をありがとうございます！
-ご不明な点がございましたら、[[ヘルプ:始めよう|ヘルプページ]]をご覧になるか、私または[[Special:Listusers/sysop|他のアドミン]]までお問い合わせください。Fandomに関する全般的なヘルプは、[[w:c:ja.community:main page|コミュニティ・セントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]や[[w:c:ja.community:Blog:Wikiaスタッフブログ|ブログ]]もご利用ください。
+ご不明な点がございましたら、[[ヘルプ:始めよう|ヘルプページ]]をご覧になるか、私または[[Special:Listusers/sysop|他のアドミン]]までお問い合わせください。FANDOMに関する全般的なヘルプは、[[w:c:ja.community:main page|コミュニティ・セントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]や[[w:c:ja.community:Blog:Wikiaスタッフブログ|ブログ]]もご利用ください。
 
 私でお役に立てそうなことがございましたら、お気軽に[[$2|メッセージをお送りください]]。それでは、{{SITENAME}}をお楽しみください！
 
@@ -1074,19 +1074,19 @@ $2',
 はじめまして、{{SITENAME}}コミュニティのアドミンです。[[:$1]]へようこそ！そして、ページ編集をありがとうございます！
 '''[[Special:UserSignup|ログインしてユーザー名を作成]]'''していただくと、編集履歴を整理したり、他のコミュニティメンバーと交流できるようになります。
 
-ご不明な点がございましたら、[[ヘルプ:始めよう|ヘルプページ]]をご覧になるか、私または[[Special:Listusers/sysop|他のアドミン]]までお問い合わせください。Fandomに関する全般的なヘルプは、[[w:c:ja.community:main page|コミュニティ・セントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]や[[w:c:ja.community:Blog:Wikiaスタッフブログ|ブログ]]もご利用ください。
+ご不明な点がございましたら、[[ヘルプ:始めよう|ヘルプページ]]をご覧になるか、私または[[Special:Listusers/sysop|他のアドミン]]までお問い合わせください。FANDOMに関する全般的なヘルプは、[[w:c:ja.community:main page|コミュニティ・セントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]や[[w:c:ja.community:Blog:Wikiaスタッフブログ|ブログ]]もご利用ください。
 
 私でお役に立てそうなことがございましたら、お気軽に[[$2|メッセージをお送りください]]。それでは、{{SITENAME}}をお楽しみください！
 
 $2",
-	'welcome-message-log' => 'Fandomへようこそ！',
+	'welcome-message-log' => 'FANDOMへようこそ！',
 	'welcome-message-user-staff' => '==ようこそ==
 
-はじめまして、Fandomのコミュニティ・サポートチームです。このたびは、{{SITENAME}}へようこそ！そして、[[:$1]]に編集を加えていただきありがとうございます！
+はじめまして、FANDOMのコミュニティ・サポートチームです。このたびは、{{SITENAME}}へようこそ！そして、[[:$1]]に編集を加えていただきありがとうございます！
 
 このコミュニティではアクティブなアドミンは現在いないようですが、ご不明な点があれば、[[ヘルプ:コンテンツ|ヘルプページ]]をご覧いただくか、[[w:c:ja.community:main page|コミュニティ・セントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]をご利用ください。
 
-また、[[w:c:ja.community:Blog:Wikiaスタッフブログ|スタッフブログ]]ではFandomの最新情報やイベント情報を、[[w:c:ja.community:Wikia_University|Fandomユニバーシティ]]ではFandomの使い方を簡単な動画でご紹介しています。
+また、[[w:c:ja.community:Blog:Wikiaスタッフブログ|スタッフブログ]]ではFANDOMの最新情報やイベント情報を、[[w:c:ja.community:Wikia_University|FANDOMユニバーシティ]]ではFANDOMの使い方を簡単な動画でご紹介しています。
 
 私でお役に立てそうなことがございましたら、お気軽に[[$2|メッセージをお送りください]]。
 
@@ -1095,13 +1095,13 @@ $2",
 $2',
 	'welcome-message-anon-staff' => "==ようこそ==
 
-はじめまして、Fandomのコミュニティ・サポートチームです。このたびは、{{SITENAME}}へようこそ！そして、[[:$1]]に編集を加えていただきありがとうございます！
+はじめまして、FANDOMのコミュニティ・サポートチームです。このたびは、{{SITENAME}}へようこそ！そして、[[:$1]]に編集を加えていただきありがとうございます！
 
 '''[[Special:UserSignup|ログインしてユーザー名を作成]]''していただくと、編集履歴を整理したり、他のコミュニティメンバーと交流できるようになります。
 
 このコミュニティではアクティブなアドミンは現在いないようですが、ご不明な点があれば、[[ヘルプ:コンテンツ|ヘルプページ]]をご覧いただくか、[[w:c:ja.community:main page|コミュニティ・セントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]をご利用ください。
 
-また、[[w:c:ja.community:Blog:Wikiaスタッフブログ|スタッフブログ]]ではFandomの最新情報やイベント情報を、[[w:c:ja.community:Wikia_University|Fandomユニバーシティ]]ではFandomの使い方を簡単な動画でご紹介しています。
+また、[[w:c:ja.community:Blog:Wikiaスタッフブログ|スタッフブログ]]ではFANDOMの最新情報やイベント情報を、[[w:c:ja.community:Wikia_University|FANDOMユニバーシティ]]ではFANDOMの使い方を簡単な動画でご紹介しています。
 
 私でお役に立てそうなことがございましたら、お気軽に[[$2|メッセージをお送りください]]。
 
@@ -1112,28 +1112,28 @@ $2",
 
 '''[[Special:UserSignup|ログインしてユーザー名を作成]]'''していただくと、編集履歴を整理したり、他のコミュニティメンバーと交流できるようになります。
 
-ご不明な点がございましたら、[[ヘルプ:始めよう|ヘルプページ]]をご覧になるか、私または[[Special:Listusers/sysop|他のアドミン]]までお問い合わせください。Fandomに関する全般的なヘルプは、[[w:c:ja.community:main page|コミュニティ・セントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]や[[w:c:ja.community:Blog:Wikiaスタッフブログ|ブログ]]もご利用ください。
+ご不明な点がございましたら、[[ヘルプ:始めよう|ヘルプページ]]をご覧になるか、私または[[Special:Listusers/sysop|他のアドミン]]までお問い合わせください。FANDOMに関する全般的なヘルプは、[[w:c:ja.community:main page|コミュニティ・セントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]や[[w:c:ja.community:Blog:Wikiaスタッフブログ|ブログ]]もご利用ください。
 
 それでは、{{SITENAME}}をお楽しみください！",
-	'welcome-message-wall-anon-staff' => "はじめまして、Fandomのコミュニティ・サポートチームです。このたびは、{{SITENAME}}へようこそ！そして、[[:$1]]に編集を加えていただきありがとうございます！
+	'welcome-message-wall-anon-staff' => "はじめまして、FANDOMのコミュニティ・サポートチームです。このたびは、{{SITENAME}}へようこそ！そして、[[:$1]]に編集を加えていただきありがとうございます！
 
 '''[[Special:UserSignup|ログインしてユーザー名を作成]]''していただくと、編集履歴を整理したり、他のコミュニティメンバーと交流できるようになります。
 
 このコミュニティではアクティブなアドミンは現在いないようですが、ご不明な点があれば、[[ヘルプ:コンテンツ|ヘルプページ]]をご覧いただくか、[[w:c:ja.community:main page|コミュニティ・セントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]をご利用ください。
 
-また、[[w:c:ja.community:Blog:Wikiaスタッフブログ|スタッフブログ]]ではFandomの最新情報やイベント情報を、[[w:c:ja.community:Wikia_University|Fandomユニバーシティ]]ではFandomの使い方を簡単な動画でご紹介しています。
+また、[[w:c:ja.community:Blog:Wikiaスタッフブログ|スタッフブログ]]ではFANDOMの最新情報やイベント情報を、[[w:c:ja.community:Wikia_University|FANDOMユニバーシティ]]ではFANDOMの使い方を簡単な動画でご紹介しています。
 
 それでは、{{SITENAME}}をお楽しみください！",
 	'welcome-message-wall-user' => 'はじめまして、{{SITENAME}}コミュニティのアドミンです。[[:$1]]へようこそ！そして、ページ編集をありがとうございます！
 
-Fandomを利用をはじめるにあたりご不明な点がございましたら、[[ヘルプ:始めよう|ヘルプページ]]をご覧になるか、私または[[Special:Listusers/sysop|他のアドミン]]までお問い合わせください。Fandomに関する全般的なヘルプは、[[w:c:ja.community:main page|コミュニティ・セントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]や[[w:c:ja.community:Blog:Wikiaスタッフブログ|ブログ]]もご利用ください。
+FANDOMを利用をはじめるにあたりご不明な点がございましたら、[[ヘルプ:始めよう|ヘルプページ]]をご覧になるか、私または[[Special:Listusers/sysop|他のアドミン]]までお問い合わせください。FANDOMに関する全般的なヘルプは、[[w:c:ja.community:main page|コミュニティ・セントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]や[[w:c:ja.community:Blog:Wikiaスタッフブログ|ブログ]]もご利用ください。
 
 それでは、{{SITENAME}}をお楽しみください！',
-	'welcome-message-wall-user-staff' => 'はじめまして、Fandomのコミュニティ・サポートチームです。このたびは、{{SITENAME}}へようこそ！そして、[[:$1]]に編集を加えていただきありがとうございます！
+	'welcome-message-wall-user-staff' => 'はじめまして、FANDOMのコミュニティ・サポートチームです。このたびは、{{SITENAME}}へようこそ！そして、[[:$1]]に編集を加えていただきありがとうございます！
 
 このコミュニティではアクティブなアドミンは現在いないようですが、ご不明な点があれば、[[ヘルプ:コンテンツ|ヘルプページ]]をご覧いただくか、[[w:c:ja.community:main page|コミュニティ・セントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]をご利用ください。
 
-また、[[w:c:ja.community:Wikia_University|Fandomユニバーシティ]]ではFandomの使い方を簡単な動画でご紹介していますので、ぜひご覧ください。
+また、[[w:c:ja.community:Wikia_University|FANDOMユニバーシティ]]ではFANDOMの使い方を簡単な動画でご紹介していますので、ぜひご覧ください。
 
 それでは、{{SITENAME}}をお楽しみください！',
 	'welcome-description' => '初めて編集をしたユーザーにウェルカムメッセージを送信',
@@ -2311,8 +2311,8 @@ $messages['zh-hans'] = array(
 * 喜爱的页面 #3",
 	'welcome-message-user' => '==欢迎==
 
-您好，欢迎来到{{SITENAME}}！我们是Fandom社区支持团队。感谢您对页面[[:$1]]所作的编辑。
-如果您需要帮助，请访问[[Help:创建Fandom|帮助页面]]，或者联络我们以及[[Special:Listusers/sysop|另外一位管理员]]。如果您需要一般性的帮助，请访问[[w:c:zh.community|社区中心]]、[[w:c:zh.community:Special:Forum|中心论坛]]以及[[w:c:zh.community:Category:社区中心博客|员工博客]]了解更多内容。
+您好，欢迎来到{{SITENAME}}！我们是FANDOM社区支持团队。感谢您对页面[[:$1]]所作的编辑。
+如果您需要帮助，请访问[[Help:创建FANDOM|帮助页面]]，或者联络我们以及[[Special:Listusers/sysop|另外一位管理员]]。如果您需要一般性的帮助，请访问[[w:c:zh.community|社区中心]]、[[w:c:zh.community:Special:Forum|中心论坛]]以及[[w:c:zh.community:Category:社区中心博客|员工博客]]了解更多内容。
 
 如果需要其他帮助，请在[[$2|这里留言]]！希望您在{{SITENAME}}上玩的愉快！
 
@@ -2321,7 +2321,7 @@ $2',
 
 您好，我是{{SITENAME}}社区管理员。欢迎来到这个社区并且感谢您对[[:$1]]做出的编辑。'''[[Special:UserSignup|请您登录并创建一个用户名]]'''。这样会更方便来追踪您的贡献和帮助您与社区其他成员进行沟通。 
 
-如果您需要任何帮助，请访问[[Help:创建Fandom|帮助页]]或者联系我或者[[Special:Listusers/sysop|其它管理员]]。您也可以访问[[w:c:zh.community:Fandom_中文|社区中心]]查看[[w:c:zh.community:Special:Forum|论坛]]以及[[w:c:zh.community:博客:社区中心|员工博客]]。
+如果您需要任何帮助，请访问[[Help:创建FANDOM|帮助页]]或者联系我或者[[Special:Listusers/sysop|其它管理员]]。您也可以访问[[w:c:zh.community:FANDOM_中文|社区中心]]查看[[w:c:zh.community:Special:Forum|论坛]]以及[[w:c:zh.community:博客:社区中心|员工博客]]。
 
 如需其他帮助，请[[$2|给我留言]]。希望您在{{SITENAME}}玩的愉快！
 
@@ -2329,11 +2329,11 @@ $2",
 	'welcome-message-log' => '欢迎新贡献者',
 	'welcome-message-user-staff' => '==欢迎==
 
-您好，欢迎来到{{SITENAME}}！我们是Fandom社区支持团队。感谢您对页面[[:$1]]所作的编辑。
+您好，欢迎来到{{SITENAME}}！我们是FANDOM社区支持团队。感谢您对页面[[:$1]]所作的编辑。
 
 目前这个社区的管理员处于不活跃状态，如果您需要帮助，请访问[[Help:内容|帮助页面]]，或者访问[[w:c:zh.community|社区中心]]以及[[w:c:zh.community:Special:Forum|中心论坛]]了解更多内容。
 
-您也可以通过我们的[[w:c:zh.community:Category:社区中心博客|员工博客]]了解Fandom的最新信息和发展变化，观看我们的[[w:c:zh.community:Fandom课堂|Fandom课堂视频]]了解如何快速进行编辑。
+您也可以通过我们的[[w:c:zh.community:Category:社区中心博客|员工博客]]了解FANDOM的最新信息和发展变化，观看我们的[[w:c:zh.community:FANDOM课堂|FANDOM课堂视频]]了解如何快速进行编辑。
 
 如果需要其他帮助，请在[[$2|这里留言]]！
 
@@ -2342,13 +2342,13 @@ $2",
 $2',
 	'welcome-message-anon-staff' => "==欢迎==
 
-您好，欢迎来到{{SITENAME}}！我们是Fandom社区支持团队。感谢您对页面[[:$1]]所作的编辑。
+您好，欢迎来到{{SITENAME}}！我们是FANDOM社区支持团队。感谢您对页面[[:$1]]所作的编辑。
 
 '''[[Special:UserSignup|请登入并且创建一个用户名吧]]'''。这将方便您查询您所有的编辑纪录，和社区其他用户进行交流。
 
 目前这个社区的管理员处于不活跃状态，如果您需要帮助，请访问[[Help:内容|帮助页面]]，或者访问[[w:c:zh.community|社区中心]]以及[[w:c:zh.community:Special:Forum|中心论坛]]了解更多内容。
 
-您也可以通过我们的[[w:c:zh.community:Category:社区中心博客|员工博客]]了解Fandom的最新信息和发展变化，观看我们的[[w:c:zh.community:Fandom课堂|Fandom课堂视频]]了解如何快速进行编辑。
+您也可以通过我们的[[w:c:zh.community:Category:社区中心博客|员工博客]]了解FANDOM的最新信息和发展变化，观看我们的[[w:c:zh.community:FANDOM课堂|FANDOM课堂视频]]了解如何快速进行编辑。
 
 如果需要其他帮助，请在[[$2|这里留言]]！
 
@@ -2359,30 +2359,31 @@ $2",
 	'hawelcomeedit' => 'HA欢迎编辑',
 	'welcome-message-wall-user' => '您好，我是{{SITENAME}}的管理员！欢迎您参与这个社区，并且感谢您对页面[[:$1]]所作的编辑。
 
-如果您需要帮助，请访问[[Help:创建Fandom|帮助页面]]，或者联络我们以及[[Special:Listusers/sysop|另外一位管理员]]。如果您需要一般性的帮助，请访问[[w:c:zh.community|社区中心]]、[[w:c:zh.community:Special:Forum|中心论坛]]以及[[w:c:zh.community:Category:社区中心博客|员工博客]]了解更多内容。
+如果您需要帮助，请访问[[Help:创建FANDOM
+|帮助页面]]，或者联络我们以及[[Special:Listusers/sysop|另外一位管理员]]。如果您需要一般性的帮助，请访问[[w:c:zh.community|社区中心]]、[[w:c:zh.community:Special:Forum|中心论坛]]以及[[w:c:zh.community:Category:社区中心博客|员工博客]]了解更多内容。
 
 希望您在{{SITENAME}}上玩的愉快！',
-	'welcome-message-wall-user-staff' => '您好，欢迎来到{{SITENAME}}！我们是Fandom社区支持团队。感谢您对页面[[:$1]]所作的编辑。
+	'welcome-message-wall-user-staff' => '您好，欢迎来到{{SITENAME}}！我们是FANDOM社区支持团队。感谢您对页面[[:$1]]所作的编辑。
 
 目前这个社区的管理员处于不活跃状态，如果您需要帮助，请访问[[Help:内容|帮助页面]]，或者访问[[w:c:zh.community|社区中心]]以及[[w:c:zh.community:Special:Forum|中心论坛]]了解更多内容。
 
-不要忘记观看我们的[[w:c:zh.community:Fandom课堂|Fandom课堂视频]]了解如何快速进行编辑。
+不要忘记观看我们的[[w:c:zh.community:FANDOM课堂|FANDOM课堂视频]]了解如何快速进行编辑。
 
 希望您在{{SITENAME}}上玩的愉快！',
 	'welcome-message-wall-anon' => "您好，我是{{SITENAME}}的管理员！欢迎您参与这个社区，并且感谢您对页面[[:$1]]所作的编辑。
 
 '''[[Special:UserSignup|请您登录并创建一个用户名]]'''。这样会更方便来追踪您的贡献和帮助您与社区其他成员进行沟通。 
 
-如果您需要帮助，请访问[[Help:创建Fandom|帮助页面]]，或者联络我们以及[[Special:Listusers/sysop|另外一位管理员]]。如果您需要一般性的帮助，请访问[[w:c:zh.community|社区中心]]、[[w:c:zh.community:Special:Forum|中心论坛]]以及[[w:c:zh.community:Category:社区中心博客|员工博客]]了解更多内容。
+如果您需要帮助，请访问[[Help:创建FANDOM|帮助页面]]，或者联络我们以及[[Special:Listusers/sysop|另外一位管理员]]。如果您需要一般性的帮助，请访问[[w:c:zh.community|社区中心]]、[[w:c:zh.community:Special:Forum|中心论坛]]以及[[w:c:zh.community:Category:社区中心博客|员工博客]]了解更多内容。
 
 希望您在{{SITENAME}}上玩的愉快！",
-	'welcome-message-wall-anon-staff' => "您好，欢迎来到{{SITENAME}}！我们是Fandom社区支持团队。感谢您对页面[[:$1]]所作的编辑。
+	'welcome-message-wall-anon-staff' => "您好，欢迎来到{{SITENAME}}！我们是FANDOM社区支持团队。感谢您对页面[[:$1]]所作的编辑。
 
 '''[[Special:UserSignup|请登入并且创建一个用户名吧]]'''。这将方便您查询您所有的编辑纪录，和社区其他用户进行交流。
 
 目前这个社区的管理员处于不活跃状态，如果您需要帮助，请访问[[Help:内容|帮助页面]]，或者访问[[w:c:zh.community|社区中心]]以及[[w:c:zh.community:Special:Forum|中心论坛]]了解更多内容。
 
-您也可以通过我们的[[w:c:zh.community:Category:社区中心博客|员工博客]]了解Fandom的最新信息和发展变化，观看我们的[[w:c:zh.community:Fandom课堂|Fandom课堂视频]]了解如何快速进行编辑。
+您也可以通过我们的[[w:c:zh.community:Category:社区中心博客|员工博客]]了解FANDOM的最新信息和发展变化，观看我们的[[w:c:zh.community:FANDOM课堂|FANDOM课堂视频]]了解如何快速进行编辑。
 
 希望您在{{SITENAME}}上玩的愉快！",
 	'welcome-description' => '在用户初次贡献后发一条欢迎消息给他们',
@@ -2421,11 +2422,11 @@ $messages['zh-hant'] = array(
 	'welcome-message-log' => '歡迎新參與者',
 	'welcome-message-user-staff' => '==歡迎==
 
-您好，歡迎來到{{SITENAME}}！我是Fandom社區支援團隊成員。感謝您對頁面[[:$1]]所作的編輯。
+您好，歡迎來到{{SITENAME}}！我是FANDOM社區支援團隊成員。感謝您對頁面[[:$1]]所作的編輯。
 
 目前這個社區的管理員處於不活躍狀態，如果您需要幫助，請訪問[[Help:Contents|幫助頁面]]，或者訪問[[w:c:zh.community|社區中心]]以及[[w: c:zh.community:Special:Forum|中心論壇]]了解更多內容。
 
-您也可以通過我們的[[w:c:zh.community:博客:社区中心|員工網誌]]了解Fandom的最新消息和發展變化，觀看我們的[[w:c:zh.community:Fandom课堂|Fandom課堂影片]]了解如何快速進行編輯。
+您也可以通過我們的[[w:c:zh.community:博客:社区中心|員工網誌]]了解FANDOM的最新消息和發展變化，觀看我們的[[w:c:zh.community:FANDOM课堂|FANDOM課堂影片]]了解如何快速進行編輯。
 
 如果需要其他幫助，請在[[$2|這裡留言]]！
 
@@ -2434,13 +2435,13 @@ $messages['zh-hant'] = array(
 $2',
 	'welcome-message-anon-staff' => "==歡迎==
 
-您好，歡迎來到{{SITENAME}}！我是Fandom社區支援團隊成員。感謝您對頁面[[:$1]]所作的編輯。
+您好，歡迎來到{{SITENAME}}！我是FANDOM社區支援團隊成員。感謝您對頁面[[:$1]]所作的編輯。
 
 '''[[Special:UserSignup|請登入並且創建一個用戶名吧]]'''。這將方便您查詢您所有的編輯紀錄，和社區其他用戶進行交流。
 
 目前這個社區的管理員處於不活躍狀態，如果您需要幫助，請訪問[[Help:Contents|幫助頁面]]，或者訪問[[w:c:zh.community|社區中心]]以及[[w: c:zh.community:Special:Forum|中心論壇]]了解更多內容。
 
-您也可以通過我們的[[w:c:zh.community:博客:社区中心|員工網誌]]了解Fandom的最新信息和發展變化，觀看我們的[[w:c:zh.community:Fandom课堂|Fandom課堂影片]]了解如何快速進行編輯。
+您也可以通過我們的[[w:c:zh.community:博客:社区中心|員工網誌]]了解FANDOM的最新信息和發展變化，觀看我們的[[w:c:zh.community:FANDOM课堂|FANDOM課堂影片]]了解如何快速進行編輯。
 
 如果需要其他幫助，請在[[$2|這裡留言]]！
 
@@ -2454,11 +2455,11 @@ $2",
 如果您需要幫助，請訪問[[Help:Getting Started|幫助頁面]]，或者聯絡我們以及[[Special:Listusers/sysop|另外一位管理員]]。如果您需要一般性的幫助，請訪問[[w:c:zh.community|社區中心]]、[[w:c:zh.community:Special:Forum|中心論壇]]以及[[w:c:zh.community:博客:社区中心|員工網誌]]了解更多內容。
 
 希望您在{{SITENAME}}上玩的愉快！',
-	'welcome-message-wall-user-staff' => '您好，歡迎來到{{SITENAME}}！我是Fandom社區支援團隊的成員。感謝您對頁面[[:$1]]所作的編輯。
+	'welcome-message-wall-user-staff' => '您好，歡迎來到{{SITENAME}}！我是FANDOM社區支援團隊的成員。感謝您對頁面[[:$1]]所作的編輯。
 
 目前這個社群的管理員處於不活躍狀態，如果您需要幫助，請訪問[[Help:Contents|幫助頁面]]，或者訪問[[w:c:zh.community|社區中心]]以及[[w: c:zh.community:Special:Forum|中心論壇]]了解更多內容。
 
-不要忘記觀看我們的[[w:c:zh.community:Fandom课堂|Fandom課堂影片]]了解如何快速進行編輯。
+不要忘記觀看我們的[[w:c:zh.community:FANDOM课堂|FANDOM課堂影片]]了解如何快速進行編輯。
 
 希望您在{{SITENAME}}上玩的愉快！',
 	'welcome-message-wall-anon' => "您好，我是{{SITENAME}}的管理員！歡迎您參與這個社群，並且感謝您對頁面[[:$1]]所作的編輯。
@@ -2468,13 +2469,13 @@ $2",
 如果您需要幫助，請訪問[[Help:Getting Started|幫助頁面]]，或者聯絡我以及[[Special:Listusers/sysop|其他管理員]]。如果您需要一般性的幫助，請訪問[[w:c:zh.community|社區中心]]、[[w:c:zh.community:Special:Forum|中心論壇]]以及[[w:c:zh.community:博客:社区中心|員工網誌]]了解更多內容。
 
 希望您在{{SITENAME}}上玩的愉快！",
-	'welcome-message-wall-anon-staff' => "您好，歡迎來到{{SITENAME}}！我們是Fandom社區支援團隊。感謝您對頁面[[:$1]]所作的編輯。
+	'welcome-message-wall-anon-staff' => "您好，歡迎來到{{SITENAME}}！我們是FANDOM社區支援團隊。感謝您對頁面[[:$1]]所作的編輯。
 
 '''[[Special:UserSignup|請登入並且創建一個用戶名吧]]'''。這將方便您查詢您所有的編輯紀錄，和社群其他用戶進行交流。
 
 目前這個社群的管理員處於不活躍狀態，如果您需要幫助，請訪問[[Help:Contents|幫助頁面]]，或者訪問[[w:c:zh.community|社區中心]]以及[[w: c:zh.community:Special:Forum|中心論壇]]了解更多內容。
 
-您也可以通過我們的[[w:c:zh.community:博客:社区中心|員工網誌]]了解Fandom的最新信息和發展變化，觀看我們的[[w:c:zh.community:Fandom课堂|Fandom課堂視頻]]了解如何快速進行編輯。
+您也可以通過我們的[[w:c:zh.community:博客:社区中心|員工網誌]]了解FANDOM的最新信息和發展變化，觀看我們的[[w:c:zh.community:FANDOM课堂|FANDOM課堂視頻]]了解如何快速進行編輯。
 
 希望您在{{SITENAME}}上玩的愉快！",
 	'welcome-description' => '在用戶初次貢獻後發給他們歡迎訊息',
