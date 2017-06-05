@@ -45,8 +45,6 @@ class AssetsConfig {
 				$files[] = $path . '/ckeditor/' . $name;
 			}
 		}
-        var_dump($files);
-		exit;
 		return $files;
 	}
 
