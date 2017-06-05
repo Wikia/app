@@ -25,7 +25,7 @@ class PageTitle {
 	/* @var Title */
 	private $MWTitle;
 
-	const PREFIX_LESS_NAMESPACES = [ NS_MEDIAWIKI, NS_TEMPLATE, NS_CATEGORY, NS_FILE ];
+	const PREFIX_LESS_NAMESPACES = [ NS_MEDIAWIKI, NS_TEMPLATE, NS_CATEGORY, NS_FILE, NS_BLOG_LISTING ];
 
 	public function __construct( WikiaApp $app ) {
 		$this->wg = $app->wg;
@@ -46,6 +46,13 @@ class PageTitle {
 			return $this->prefixedTitle( 'page-header-title-prefix-changes' );
 		} else if ( $this->request->getVal( 'action', 'view' ) == 'history' ) {
 			return $this->prefixedTitle( 'page-header-title-prefix-history' );
+		} else if ( defined( 'NS_BLOG_ARTICLE' ) && $this->MWTitle->getNamespace() == NS_BLOG_ARTICLE &&
+		            $this->MWTitle->isSubpage()) {
+			// remove User_blog:xxx from title
+			$titleParts = explode( '/', $this->MWTitle->getText() );
+			array_shift( $titleParts );
+
+			return implode( '/', $titleParts );
 		}
 
 		return $app->getSkinTemplateObj()->data['title'];

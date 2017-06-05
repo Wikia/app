@@ -156,6 +156,10 @@ class Subtitle {
 			case NS_FORUM:
 				$pageType = wfMessage( 'page-header-subtitle-forum' )->escaped();
 				break;
+
+			case NS_BLOG_LISTING:
+				$pageType = wfMessage( 'page-header-subtitle-blog-category' )->escaped();
+				break;
 		}
 
 		return $pageType;
