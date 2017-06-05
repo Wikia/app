@@ -1,9 +1,9 @@
-/* global MiniEditor:true */
-(function () {
+/* global require */
+require(['wikia.window'], function (context) {
 	'use strict';
 
-	MiniEditor.Wall = MiniEditor.Wall || {};
-	MiniEditor.Wall.Animations = {
+	context.MiniEditor.Wall = context.MiniEditor.Wall || {};
+	context.MiniEditor.Wall.Animations = {
 		editorActivated: function (event, wikiaEditor) {
 			var element, wrapper, animation, hasContent, textarea;
 
@@ -108,4 +108,4 @@
 			});
 		}
 	};
-})();
+});

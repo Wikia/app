@@ -1,12 +1,11 @@
-/* global WikiaForm */
-
-(function (window, $) {
+/* global require */
+require(['jquery', 'wikia.window', 'wikia.ui.factory'], function ($, context, uiFactory) {
 	'use strict';
 
 	/* dom cache */
 	var createNewBoardButton = $('#CreateNewBoardButton'),
 		boardList = $('#ForumBoardEdit .boards'),
-		bucky = window.Bucky('ForumBoardEdit');
+		bucky = context.Bucky('ForumBoardEdit');
 
 	function makeBoardModal(modalMethod, modalData, submissionMethod, submissionData) {
 		var deferred = $.Deferred();
@@ -17,83 +16,83 @@
 			data: modalData,
 			callback: function (jsonResponse) {
 				bucky.timer.start('getBoardModalData');
-				require(['wikia.ui.factory'], function (uiFactory) {
-					uiFactory.init(['modal']).then(function (uiModal) {
-						var submitButton = {
-								vars: {
-									value: jsonResponse.submitLabel,
-									classes: ['normal', 'primary', 'submit'],
-									data: [{
-										key: 'event',
-										value: 'submit'
-									}]
-								}
-							},
-							cancelButton = {
-								vars: {
-									value: $.msg('cancel'),
-									data: [{
-										key: 'event',
-										value: 'close'
-									}]
-								}
-							},
-							forumModalConfig = {
-								vars: {
-									id: 'EditBoardModal',
-									size: 'small',
-									content: jsonResponse.html,
-									title: jsonResponse.title,
-									buttons: [
-										submitButton,
-										cancelButton
-									]
-								}
-							};
 
-						uiModal.createComponent(forumModalConfig, function (forumModal) {
-							bucky.timer.start('makeBoardModal');
-							forumModal.bind('submit', function () {
-								var forumModalForm = new WikiaForm(forumModal.$element.find('.WikiaForm'));
-								forumModal.deactivate();
-								$.nirvana.sendRequest({
-									controller: 'ForumExternalController',
-									method: submissionMethod,
-									format: 'json',
-									data: $.extend({
-										boardTitle: forumModal.$element
-											.find('input[name=boardTitle]').val(),
-										boardDescription: forumModal.$element
-											.find('input[name=boardDescription]').val(),
-										token: forumModal.$element
-											.find('input[name=token]').val()
-									}, typeof submissionData === 'function' ?
-										submissionData(forumModal) :
-										submissionData),
-									callback: function (json) {
-										if (json) {
-											if (json.status === 'ok') {
-												Wikia.Querystring().addCb().goTo();
-											} else if (json.status === 'error') {
-												forumModalForm.clearAllInputErrors();
-												if (json.errorfield) {
-													forumModalForm.showInputError(json.errorfield, json.errormsg);
-												} else {
-													forumModalForm.showGenericError(json.errormsg);
-												}
+				uiFactory.init(['modal']).then(function (uiModal) {
+					var submitButton = {
+							vars: {
+								value: jsonResponse.submitLabel,
+								classes: ['normal', 'primary', 'submit'],
+								data: [{
+									key: 'event',
+									value: 'submit'
+								}]
+							}
+						},
+						cancelButton = {
+							vars: {
+								value: $.msg('cancel'),
+								data: [{
+									key: 'event',
+									value: 'close'
+								}]
+							}
+						},
+						forumModalConfig = {
+							vars: {
+								id: 'EditBoardModal',
+								size: 'small',
+								content: jsonResponse.html,
+								title: jsonResponse.title,
+								buttons: [
+									submitButton,
+									cancelButton
+								]
+							}
+						};
 
-												forumModal.activate();
+					uiModal.createComponent(forumModalConfig, function (forumModal) {
+						bucky.timer.start('makeBoardModal');
+						forumModal.bind('submit', function () {
+							var forumModalForm = new context.WikiaForm(forumModal.$element.find('.WikiaForm'));
+							forumModal.deactivate();
+							$.nirvana.sendRequest({
+								controller: 'ForumExternalController',
+								method: submissionMethod,
+								format: 'json',
+								data: $.extend({
+									boardTitle: forumModal.$element
+										.find('input[name=boardTitle]').val(),
+									boardDescription: forumModal.$element
+										.find('input[name=boardDescription]').val(),
+									token: forumModal.$element
+										.find('input[name=token]').val()
+								}, typeof submissionData === 'function' ?
+									submissionData(forumModal) :
+									submissionData),
+								callback: function (json) {
+									if (json) {
+										if (json.status === 'ok') {
+											context.Wikia.Querystring().addCb().goTo();
+										} else if (json.status === 'error') {
+											forumModalForm.clearAllInputErrors();
+											if (json.errorfield) {
+												forumModalForm.showInputError(json.errorfield, json.errormsg);
+											} else {
+												forumModalForm.showGenericError(json.errormsg);
 											}
+
+											forumModal.activate();
 										}
-										bucky.timer.stop('makeBoardModal');
 									}
-								});
+									bucky.timer.stop('makeBoardModal');
+								}
 							});
-							forumModal.show();
 						});
-						bucky.timer.stop('getBoardModalData');
+						forumModal.show();
 					});
+					bucky.timer.stop('getBoardModalData');
 				});
+
 			}
 		});
 
@@ -131,7 +130,7 @@
 			callback: function (json) {
 				if (json.status === 'error') {
 					// critical error message that users should not see
-					window.alert('Something went wrong, please reload the page and try again');
+					context.alert('Something went wrong, please reload the page and try again');
 				}
 				bucky.timer.stop('swapBoards');
 			}
@@ -186,4 +185,4 @@
 		.on('click.editBoard', '.board .moveup', handleMoveUpClick)
 		.on('click.editBoard', '.board .movedown', handleMoveDownClick);
 
-})(window, jQuery);
+});

@@ -1,9 +1,9 @@
-/* global MiniEditor:true, Wall:true */
-(function ($) {
+/* global require */
+require(['jquery', 'wikia.window'], function ($, context) {
 	'use strict';
 
-	MiniEditor.Wall = MiniEditor.Wall || {};
-	MiniEditor.Wall.NewMessageForm = $.createClass(Wall.settings.classBindings.newMessageForm, {
+	context.MiniEditor.Wall = context.MiniEditor.Wall || {};
+	context.MiniEditor.Wall.NewMessageForm = $.createClass(context.Wall.settings.classBindings.newMessageForm, {
 		bucky: window.Bucky('MiniEditor.Wall.NewMessageForm'),
 		initEvents: function () {
 			var self = this;
@@ -18,7 +18,7 @@
 				self.initEditor(event);
 
 			}).one('editorAfterActivated', function () {
-				if (!MiniEditor.ckeditorEnabled) {
+				if (!context.MiniEditor.ckeditorEnabled) {
 					self.messageBody.autoResize({
 						min: 200
 					});
@@ -46,11 +46,11 @@
 
 			this.messageBody.miniEditor({
 				config: {
-					animations: MiniEditor.Wall.Animations
+					animations: context.MiniEditor.Wall.Animations
 				},
 				events: {
 					editorReady: function (event, wikiaEditor) {
-						if (!MiniEditor.ckeditorEnabled) {
+						if (!context.MiniEditor.ckeditorEnabled) {
 							wikiaEditor.getEditbox()
 								.placeholder()
 								.triggerHandler('focus.placeholder');
@@ -114,6 +114,6 @@
 	});
 
 	// Set as default class binding for NewMessageForm
-	Wall.settings.classBindings.newMessageForm = MiniEditor.Wall.NewMessageForm;
+	context.Wall.settings.classBindings.newMessageForm = context.MiniEditor.Wall.NewMessageForm;
 
-})(jQuery);
+});

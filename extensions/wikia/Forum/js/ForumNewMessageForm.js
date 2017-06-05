@@ -1,13 +1,12 @@
-/* global Forum, Wall */
-
-(function (window, $) {
+/* global require */
+require(['jquery', 'mw', 'wikia.window'], function ($, mw, context) {
 	'use strict';
-	var bucky = window.Bucky('ForumNewMessageForm');
+	var bucky = context.Bucky('ForumNewMessageForm');
 
-	Forum.NewMessageForm = $.createClass(Wall.settings.classBindings.newMessageForm, {
+	context.Forum.NewMessageForm = $.createClass(context.Wall.settings.classBindings.newMessageForm, {
 		constructor: function () {
-			Forum.NewMessageForm.superclass.constructor.apply(this, arguments);
-			if (Wikia.Querystring().getVal('openEditor')) {
+			context.Forum.NewMessageForm.superclass.constructor.apply(this, arguments);
+			if (context.Wikia.Querystring().getVal('openEditor')) {
 				this.messageTitleFocus();
 			}
 		},
@@ -34,14 +33,14 @@
 				this.page = {
 					namespace: $('#Wall').data('board-namespace')
 				};
-				topicOptions.topics = [window.wgTitle];
+				topicOptions.topics = [ mw.config.get('wgTitle') ];
 			}
 			this.messageTopic = this.message.find('.message-topic').messageTopic(topicOptions);
 			bucky.timer.stop('initElement');
 		},
 		afterPost: function (newmsg) {
 			// TODO: this is a hack. We should just be getting the ID back
-			window.location = newmsg.find('.msg-title a').attr('href');
+			context.location = newmsg.find('.msg-title a').attr('href');
 		},
 		messageTitleFocus: function () {
 			if (this.messageBodyContainer.is(':hidden')) {
@@ -54,19 +53,19 @@
 			this.buttons.attr('disabled', true);
 			var boardTitle = this.boardList.find('option:selected').val();
 			if (!this.boardList.exists()) {
-				Forum.NewMessageForm.superclass.doPostNewMessage.call(this, title);
+				context.Forum.NewMessageForm.superclass.doPostNewMessage.call(this, title);
 				bucky.timer.stop('doPostNewMessage');
 			} else if (boardTitle) {
 				this.page.title = boardTitle;
-				Forum.NewMessageForm.superclass.doPostNewMessage.call(this, title);
+				context.Forum.NewMessageForm.superclass.doPostNewMessage.call(this, title);
 				bucky.timer.stop('doPostNewMessage');
 			} else {
 				this.boardListError.fadeIn('slow');
 				this.buttons.removeAttr('disabled');
-			}	
+			}
 		}
 	});
 
-	Wall.settings.classBindings.newMessageForm = Forum.NewMessageForm;
+	context.Wall.settings.classBindings.newMessageForm = context.Forum.NewMessageForm;
 
-})(window, jQuery);
+});

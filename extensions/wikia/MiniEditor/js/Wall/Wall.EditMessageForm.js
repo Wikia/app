@@ -1,13 +1,12 @@
-/*global WikiaEditor, MiniEditor, Wall*/
-
-(function ($) {
+/* global require */
+require(['jquery', 'wikia.window'], function ($, context) {
 	'use strict';
 
-	MiniEditor.Wall = MiniEditor.Wall || {};
-	MiniEditor.Wall.EditMessageForm = $.createClass(Wall.settings.classBindings.editMessageForm, {
+	context.MiniEditor.Wall = context.MiniEditor.Wall || {};
+	context.MiniEditor.Wall.EditMessageForm = $.createClass(context.Wall.settings.classBindings.editMessageForm, {
 		oldTitle: {},
 		oldBody: {},
-		bucky: window.Bucky('MiniEditor.Wall.EditMessageForm'),
+		bucky: context.Bucky('MiniEditor.Wall.EditMessageForm'),
 
 		editMessage: function (e) {
 			var self, msg, body, wikiaEditor, id, bubble, animation;
@@ -35,8 +34,8 @@
 			body.closest('.speech-bubble-message').animate(animation, function () {
 
 				// We need to load assets first in order to determine the proper startup mode
-				if (!MiniEditor.assetsLoaded) {
-					MiniEditor.loadAssets(initEditor);
+				if (!context.MiniEditor.assetsLoaded) {
+					context.MiniEditor.loadAssets(initEditor);
 
 				} else {
 					initEditor();
@@ -56,8 +55,8 @@
 				// profile async editor initialization
 				self.bucky.timer.start('editMessage.initEditor');
 
-				mode = MiniEditor.getStartupMode(body);
-				format = WikiaEditor.modeToFormat(mode);
+				mode = context.MiniEditor.getStartupMode(body);
+				format = context.WikiaEditor.modeToFormat(mode);
 
 				// show message title textarea
 				msg.find('.msg-title').first()
@@ -85,10 +84,10 @@
 						}
 						body.miniEditor({
 							config: {
-								animations: MiniEditor.Wall.Animations,
+								animations: context.MiniEditor.Wall.Animations,
 
 								// Force source mode if edge cases are found.
-								mode: hasEdgeCases ? 'source' : MiniEditor.config.mode
+								mode: hasEdgeCases ? 'source' : context.MiniEditor.config.mode
 							}
 						});
 					}
@@ -108,7 +107,7 @@
 			// Format starts as wikitext, so let's check if we need to convert it to RTEHtml
 			// Return the desired message format or empty string if no conversion is necessary.
 			return (
-				MiniEditor.ckeditorEnabled &&
+				context.MiniEditor.ckeditorEnabled &&
 				(!wikiaEditor || (wikiaEditor && wikiaEditor.mode !== 'source'))
 			) ? 'richtext' : '';
 		},
@@ -158,6 +157,6 @@
 	});
 
 	// Set as default class binding for EditMessageForm
-	Wall.settings.classBindings.editMessageForm = MiniEditor.Wall.EditMessageForm;
+	context.Wall.settings.classBindings.editMessageForm = context.MiniEditor.Wall.EditMessageForm;
 
-})(jQuery);
+});
