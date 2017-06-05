@@ -31,4 +31,8 @@ class PageHeaderController extends \WikiaController {
 		$this->setVal('buttonAction', $button->getButtonAction());
 		$this->setval('dropdownActions', $button->getDropdownActions());
 	}
+
+	public function languages() {
+		$this->setVal( 'languages', new Language( $this->app ) );
+	}
 }
