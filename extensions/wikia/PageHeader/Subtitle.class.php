@@ -3,10 +3,8 @@
 namespace Wikia\PageHeader;
 
 use FakeSkin;
-use RequestContext;
-use Swagger\Client\ContentEntity\Models\Body;
-use Xml;
 use Html;
+use RequestContext;
 
 class Subtitle {
 	/**
@@ -159,8 +157,6 @@ class Subtitle {
 				$pageType = wfMessage( 'page-header-subtitle-forum' )->escaped();
 				break;
 		}
-		//Todo: do not pass $this, or maybe whole hook?
-		//wfRunHooks( 'PageHeaderPageTypePrepared', [ $this, $this->getContext()->getTitle() ] );
 
 		return $pageType;
 	}
