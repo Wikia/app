@@ -134,6 +134,13 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
     protected $runTestInSeparateProcess;
 
     /**
+     * Whether or not this class is to be run in a separate PHP process.
+     *
+     * @var bool
+     */
+    private $runClassInSeparateProcess;
+
+    /**
      * Whether or not this test should preserve the global state when
      * running in a separate PHP process.
      *
@@ -166,7 +173,7 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
     /**
      * The name of the expected Exception.
      *
-     * @var string
+     * @var null|string
      */
     private $expectedException;
 
@@ -187,7 +194,7 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
     /**
      * The code of the expected Exception.
      *
-     * @var int|string
+     * @var null|int|string
      */
     private $expectedExceptionCode;
 
@@ -525,7 +532,7 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
     }
 
     /**
-     * @return string
+     * @return null|string
      */
     public function getExpectedException()
     {
@@ -533,7 +540,7 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
     }
 
     /**
-     * @return int|string
+     * @return null|int|string
      */
     public function getExpectedExceptionCode()
     {
@@ -546,6 +553,14 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
     public function getExpectedExceptionMessage()
     {
         return $this->expectedExceptionMessage;
+    }
+
+    /**
+     * @return string
+     */
+    public function getExpectedExceptionMessageRegExp()
+    {
+        return $this->expectedExceptionMessageRegExp;
     }
 
     /**
@@ -756,14 +771,22 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
             return;
         }
 
-        if ($this->runTestInSeparateProcess === true &&
+        $runEntireClass =  $this->runClassInSeparateProcess && !$this->runTestInSeparateProcess;
+
+        if (($this->runTestInSeparateProcess === true || $this->runClassInSeparateProcess === true) &&
             $this->inIsolation !== true &&
             !$this instanceof PhptTestCase) {
             $class = new ReflectionClass($this);
 
-            $template = new Text_Template(
-                __DIR__ . '/../Util/PHP/Template/TestCaseMethod.tpl'
-            );
+            if ($runEntireClass) {
+                $template = new Text_Template(
+                    __DIR__ . '/../Util/PHP/Template/TestCaseClass.tpl'
+                );
+            } else {
+                $template = new Text_Template(
+                    __DIR__ . '/../Util/PHP/Template/TestCaseMethod.tpl'
+                );
+            }
 
             if ($this->preserveGlobalState) {
                 $constants     = GlobalState::getConstantsAsString();
@@ -821,30 +844,35 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
 
             $configurationFilePath = $GLOBALS['__PHPUNIT_CONFIGURATION_FILE'] ?? '';
 
+            $var = [
+                'composerAutoload'                           => $composerAutoload,
+                'phar'                                       => $phar,
+                'filename'                                   => $class->getFileName(),
+                'className'                                  => $class->getName(),
+                'collectCodeCoverageInformation'             => $coverage,
+                'data'                                       => $data,
+                'dataName'                                   => $dataName,
+                'dependencyInput'                            => $dependencyInput,
+                'constants'                                  => $constants,
+                'globals'                                    => $globals,
+                'include_path'                               => $includePath,
+                'included_files'                             => $includedFiles,
+                'iniSettings'                                => $iniSettings,
+                'isStrictAboutTestsThatDoNotTestAnything'    => $isStrictAboutTestsThatDoNotTestAnything,
+                'isStrictAboutOutputDuringTests'             => $isStrictAboutOutputDuringTests,
+                'enforcesTimeLimit'                          => $enforcesTimeLimit,
+                'isStrictAboutTodoAnnotatedTests'            => $isStrictAboutTodoAnnotatedTests,
+                'isStrictAboutResourceUsageDuringSmallTests' => $isStrictAboutResourceUsageDuringSmallTests,
+                'codeCoverageFilter'                         => $codeCoverageFilter,
+                'configurationFilePath'                      => $configurationFilePath
+            ];
+
+            if (!$runEntireClass) {
+                $var['methodName'] = $this->name;
+            }
+
             $template->setVar(
-                [
-                    'composerAutoload'                           => $composerAutoload,
-                    'phar'                                       => $phar,
-                    'filename'                                   => $class->getFileName(),
-                    'className'                                  => $class->getName(),
-                    'methodName'                                 => $this->name,
-                    'collectCodeCoverageInformation'             => $coverage,
-                    'data'                                       => $data,
-                    'dataName'                                   => $dataName,
-                    'dependencyInput'                            => $dependencyInput,
-                    'constants'                                  => $constants,
-                    'globals'                                    => $globals,
-                    'include_path'                               => $includePath,
-                    'included_files'                             => $includedFiles,
-                    'iniSettings'                                => $iniSettings,
-                    'isStrictAboutTestsThatDoNotTestAnything'    => $isStrictAboutTestsThatDoNotTestAnything,
-                    'isStrictAboutOutputDuringTests'             => $isStrictAboutOutputDuringTests,
-                    'enforcesTimeLimit'                          => $enforcesTimeLimit,
-                    'isStrictAboutTodoAnnotatedTests'            => $isStrictAboutTodoAnnotatedTests,
-                    'isStrictAboutResourceUsageDuringSmallTests' => $isStrictAboutResourceUsageDuringSmallTests,
-                    'codeCoverageFilter'                         => $codeCoverageFilter,
-                    'configurationFilePath'                      => $configurationFilePath
-                ]
+                $var
             );
 
             $this->prepareTemplate($template);
@@ -1070,8 +1098,7 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
                     )
                 );
 
-                if (\is_string($this->expectedExceptionMessage) &&
-                    !empty($this->expectedExceptionMessage)) {
+                if (!empty($this->expectedExceptionMessage)) {
                     $this->assertThat(
                         $e,
                         new ExceptionMessage(
@@ -1080,8 +1107,7 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
                     );
                 }
 
-                if (\is_string($this->expectedExceptionMessageRegExp) &&
-                    !empty($this->expectedExceptionMessageRegExp)) {
+                if (!empty($this->expectedExceptionMessageRegExp)) {
                     $this->assertThat(
                         $e,
                         new ExceptionMessageRegularExpression(
@@ -1236,6 +1262,22 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
         if (\is_bool($runTestInSeparateProcess)) {
             if ($this->runTestInSeparateProcess === null) {
                 $this->runTestInSeparateProcess = $runTestInSeparateProcess;
+            }
+        } else {
+            throw InvalidArgumentHelper::factory(1, 'boolean');
+        }
+    }
+
+    /**
+     * @param bool $runClassInSeparateProcess
+     *
+     * @throws Exception
+     */
+    public function setRunClassInSeparateProcess($runClassInSeparateProcess)
+    {
+        if (\is_bool($runClassInSeparateProcess)) {
+            if ($this->runClassInSeparateProcess === null) {
+                $this->runClassInSeparateProcess = $runClassInSeparateProcess;
             }
         } else {
             throw InvalidArgumentHelper::factory(1, 'boolean');

@@ -5,7 +5,10 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 
 	var mocks = {
 		lookupServices: {
-			getSlotPrices: function() {
+			getCurrentSlotPrices: function() {
+				return {};
+			},
+			getDfpSlotPrices: function () {
 				return {};
 			}
 		},

@@ -602,6 +602,7 @@ $wgAjaxAutoCompleteSearch = true;
  * Wikia custom extensions, enabled sitewide. Pre-required by some skins
  */
 include_once( "$IP/extensions/ExtensionFunctions.php" );
+include_once( "$IP/extensions/wikia/DesignSystem/DesignSystem.setup.php" );
 include_once( "$IP/extensions/wikia/AnalyticsEngine/AnalyticsEngine.setup.php" );
 include_once( "$IP/extensions/wikia/AjaxFunctions.php" );
 include_once( "$IP/extensions/wikia/DataProvider/DataProvider.php" );
@@ -1350,19 +1351,6 @@ $wgAdDriverEnableInvisibleHighImpactSlot = true;
 $wgAdDriverUseAdsAfterInfobox = false;
 
 /**
- * @name $wgAdDriverUseGoogleConsumerSurveys
- * Whether to enable Google Consumer Surveys
- */
-$wgAdDriverUseGoogleConsumerSurveys = true;
-
-/**
- * @name $wgAdDriverGoogleConsumerSurveysCountries
- * List of countries with enabled Google Consumer Surveys.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverGoogleConsumerSurveysCountries = null;
-
-/**
  * @name $wgAdDriverUseEvolve2
  * Whether to enable AdProviderEvolve2 (true) or not (false)
  */
@@ -1374,19 +1362,6 @@ $wgAdDriverUseEvolve2 = true;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverEvolve2Countries = null;
-
-/**
- * @name $wgAdDriverUseTaboola
- * Whether to enable AdProviderTaboola (true) or not (false)
- */
-$wgAdDriverUseTaboola = true;
-
-/**
- * @name $wgAdDriverTaboolaConfig
- * Config with list of countries with enabled Taboola module.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverTaboolaConfig = null;
 
 /** @name $wgSitewideDisableAdsOnMercury
  * Disable ads on Mercury if set to true.
@@ -1450,6 +1425,13 @@ $wgAdDriverKikimoraTrackingCountries = [];
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverSrcPremiumCountries = [];
+
+/**
+ * @name $wgAdDriverKILOCountries
+ * Enables transitional to MEGA way of building adUnits (for GPT provider, NOT ONLY REMNANT).
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverKILOCountries = null;
 
 /**
  * @name $wgAdDriverMEGACountries
@@ -1756,11 +1738,6 @@ $wgXhprofMinimumTime = 0.001;
  * Enables sending profiler reports via Scribe
  */
 $wgProfilerSendViaScribe = true;
-
-/* @name wgDisableWAMOnHubs
- * Disable WAM module on hub pages
- */
-$wgDisableWAMOnHubs = false;
 
 /**
  * Force ImageServing to return an empty list

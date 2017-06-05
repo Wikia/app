@@ -109,16 +109,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			],
 			[
 				'titleMockType' => 'article',
-				'flags' => [ 'wgEnableWikiaHubsV3Ext' ],
-				'expectedOpts' => [ 'pageType' => 'corporate' ],
-				'expectedTargeting' => [
-					'newWikiCategories' => [ 'test' ],
-					'pageIsHub' => true,
-					'wikiIsCorporate' => true
-				]
-			],
-			[
-				'titleMockType' => 'article',
 				'flags' => [ 'wgWikiDirectedAtChildrenByFounder' ],
 				'expectedOpts' => [ ],
 				'expectedTargeting' => [
@@ -291,11 +281,9 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgAdDriverEnableAdsInMaps', false );
 		$this->mockGlobalVariable( 'wgAdDriverEnableInvisibleHighImpactSlot', false );
 		$this->mockGlobalVariable( 'wgAdDriverTrackState', false );
-		$this->mockGlobalVariable( 'wgAdDriverUseTaboola', true );
 		$this->mockGlobalVariable( 'wgEnableAdsInContent', false );
 		$this->mockGlobalVariable( 'wgEnableKruxTargeting', false );
 		$this->mockGlobalVariable( 'wgEnableWikiaHomePageExt', false );
-		$this->mockGlobalVariable( 'wgEnableWikiaHubsV3Ext', false );
 		$this->mockGlobalVariable( 'wgWikiDirectedAtChildrenByFounder', false );
 		$this->mockGlobalVariable( 'wgWikiDirectedAtChildrenByStaff', false );
 
@@ -351,8 +339,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'delayBtf' => true,
 				'sourcePointMMSDomain' => 'mms.bre.wikia-dev.com',
 				'sourcePointRecovery' => true,
-				'pageFairRecovery' => true,
-				'useTaboola' => true
+				'pageFairRecovery' => true
 			],
 			'targeting' => [
 				'esrbRating' => 'teen',
@@ -388,10 +375,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 
 		foreach ( $expectedSlots as $var => $val ) {
 			$expected['slots'][$var] = $val;
-		}
-
-		if ( $expected['targeting']['pageType'] === 'article' ) {
-			$expected['providers']['taboola'] = true;
 		}
 
 		// Check for SourcePoint URL

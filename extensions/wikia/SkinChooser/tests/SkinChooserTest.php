@@ -14,14 +14,19 @@ class SkinChooserTest extends WikiaBaseTest {
 	 * @dataProvider onGetSkinProvider
 	 */
 	function testOnGetSkin( $headerValue, $expectedSkinClass ) {
-		$context = $this->mockClassWithMethods( 'RequestContext', [
-			'getRequest' => $this->mockClassWithMethods( 'WebRequest', [
-				'getHeader' => $headerValue
-			] ),
-			'getUser' => $this->mockClassWithMethods( 'User', [
-				'isLoggedIn' => false
-			] )
+		/** @var WebRequest $requestMock */
+		$requestMock = $this->createConfiguredMock( WebRequest::class, [
+			'getHeader' => $headerValue
 		] );
+
+		/** @var User $userMock */
+		$userMock = $this->createConfiguredMock( User::class, [
+			'isLoggedIn' => false
+		] );
+
+		$context = new RequestContext();
+		$context->setRequest( $requestMock );
+		$context->setUser( $userMock );
 
 		SkinChooser::onGetSkin( $context, $skin );
 

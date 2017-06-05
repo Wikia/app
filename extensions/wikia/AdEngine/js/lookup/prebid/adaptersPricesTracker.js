@@ -9,32 +9,36 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', [
 	var logGroup = 'ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker';
 
 	function getSlotBestPrice(slotName) {
-		var prebidCmd = prebid.get(),
-			slotBids = prebidCmd.getBidResponsesForAdUnitCode(slotName).bids || [],
+		var getBidResponsesFunction = prebid.get().getBidResponsesForAdUnitCode,
+			slotBids = [],
 			bestPrices = {};
 
-		adaptersRegistry.getAdapters().forEach(function(adapter) {
-			bestPrices[adapter.getName()] = '';
-		});
+		if (getBidResponsesFunction) {
+			slotBids = getBidResponsesFunction(slotName).bids || [];
 
-		log(['getSlotBestPrices slotBids', slotName, slotBids], 'debug', logGroup);
+			adaptersRegistry.getAdapters().forEach(function(adapter) {
+				bestPrices[adapter.getName()] = '';
+			});
 
-		slotBids.forEach(function(bid) {
-			if (isValidPrice(bid)) {
-				var bidderCode = bid.bidderCode,
-					cpmPrice = bidHelper.transformPriceFromBid(bid);
+			log(['getSlotBestPrices slotBids', slotName, slotBids], 'debug', logGroup);
 
-				bestPrices[bidderCode] = Math.max(bestPrices[bidderCode] || 0, parseFloat(cpmPrice)).toFixed(2).toString();
+			slotBids.forEach(function(bid) {
+				if (isValidPrice(bid)) {
+					var bidderCode = bid.bidderCode,
+						cpmPrice = bidHelper.transformPriceFromBid(bid);
 
-				if (bid.notInvolved) {
-					bestPrices[bidderCode] = 'NOT_INVOLVED';
-				} else if (bid.used) {
-					bestPrices[bidderCode] = 'USED';
+					bestPrices[bidderCode] = Math.max(bestPrices[bidderCode] || 0, parseFloat(cpmPrice)).toFixed(2).toString();
+
+					if (bid.notInvolved) {
+						bestPrices[bidderCode] = 'NOT_INVOLVED';
+					} else if (bid.used) {
+						bestPrices[bidderCode] = 'USED';
+					}
+
+					log(['getSlotBestPrices best price for slot', slotName, bidderCode, bestPrices[bidderCode]], 'debug', logGroup);
 				}
-
-				log(['getSlotBestPrices best price for slot', slotName, bidderCode, bestPrices[bidderCode]], 'debug', logGroup);
-			}
-		});
+			});
+		}
 
 		return bestPrices;
 	}

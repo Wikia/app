@@ -35,7 +35,7 @@ class WikiaPageTypeTest extends WikiaBaseTest {
 
 	public function testIsWikiaHubMain() {
 		/* @var Title $title */
-		$title = $this->mockClassWithMethods( 'Title', [
+		$title = $this->createConfiguredMock( Title::class, [
 			'getText' => 'Foo_Article',
 			'getNamespace' => NS_MAIN,
 		] );

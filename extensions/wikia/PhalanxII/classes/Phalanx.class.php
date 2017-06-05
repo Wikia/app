@@ -360,10 +360,7 @@ class Phalanx extends WikiaModel implements ArrayAccess {
 				// Don't allow to set blocks for trusted proxies or Wikia network hosts
 				return false;
 			}
-
-			$this->data['ip_hex'] = IP::toHex( $this->data['text'] );
 		}
-
 		return true;
 	}
 
