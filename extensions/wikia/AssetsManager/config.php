@@ -1371,8 +1371,6 @@ $config['mini_editor_rte_js'] = [
 $config['chat_js2'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
-		'#group_oasis_jquery',
-		'#group_oasis_shared_core_js',
 		'//skins/shared/scripts/onScroll.js',
 
 		// shared libraries

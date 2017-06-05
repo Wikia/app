@@ -15,7 +15,6 @@ class SpecialChat extends UnlistedSpecialPage {
 			if ( Chat::canChat( $wgUser ) ) {
 				Chat::info( __METHOD__ . ': Method called - success' );
 				Wikia::setVar( 'OasisEntryControllerName', 'Chat' );
-				$wgOut->addModules( 'ext.Chat2' );
 				Chat::addConnectionLogEntry();
 			} else {
 				Chat::info( __METHOD__ . ': Method called - banned' );

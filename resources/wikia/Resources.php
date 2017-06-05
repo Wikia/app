@@ -7,7 +7,9 @@
 return [
 	// AMD library
 	'amd' => [
-		'scripts' => 'resources/wikia/libraries/modil/modil.js',
+		'scripts' => [
+			'resources/wikia/libraries/modil/modil.js',
+		]
 	],
 
 	// shared AMD modules loaded on each page
@@ -259,6 +261,10 @@ return [
 
 	'jquery.dataTables' => [
 		'scripts' => 'resources/wikia/libraries/jquery/datatables/jquery.dataTables.min.js',
+	],
+
+	'jquery.wikia' => [
+		'scripts' => 'resources/wikia/jquery.wikia.js',
 	],
 
 	// moved here from AssetsManager by wladek

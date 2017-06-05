@@ -34,6 +34,9 @@ $wgAutoloadClasses['ChatServerApiClient'] = "$dir/ChatServerApiClient.class.php"
 $wgAutoloadClasses['ChatBanListSpecialController'] = "$dir/ChatBanListSpecialController.class.php";
 $wgAutoloadClasses['ChatBanData'] = "$dir/ChatBanListSpecial_helper.php";
 
+$wgAutoloadClasses['ResourceLoaderChatSiteModule'] = "$dir/resourceloader/ResourceLoaderChatSiteModule.php";
+$wgAutoloadClasses['ResourceLoaderChatUserModule'] = "$dir/resourceloader/ResourceLoaderChatUserModule.php";
+
 // special pages
 $wgSpecialPages['Chat'] = 'SpecialChat';
 $wgSpecialPages['ChatBanList'] = 'ChatBanListSpecialController';
@@ -191,7 +194,18 @@ $wgResourceModules['ext.Chat2'] = [
 		'chat-user-blocked',
 		'chat-user-allow',
 	],
-	'position' => 'top'
+	'dependencies' => [
+		'jquery.wikia',
+	]
+];
+
+// Resource Loader modules for site and user JS loaded in Chat
+$wgResourceModules['chat.site'] = [
+	'class' => ResourceLoaderChatSiteModule::class,
+];
+
+$wgResourceModules['chat.user'] = [
+	'class' => ResourceLoaderChatUserModule::class,
 ];
 
 

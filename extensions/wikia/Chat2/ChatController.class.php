@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Util\GlobalStateWrapper;
+
 class ChatController extends WikiaController {
 
 	const CHAT_WORDMARK_WIDTH = 115;
@@ -59,16 +61,37 @@ class ChatController extends WikiaController {
 		// set up global js variables just for the chat page
 		$wgHooks['MakeGlobalVariablesScript'][] = [ $this, 'onMakeGlobalVariablesScript' ];
 
-		$wgOut->getResourceLoader()->getModule( 'mediawiki' );
+		// SUS-2198: Start with a fresh OutputPage and discard any unneeded modules set by hooks.
+		$out = new OutputPage( $this->getContext() );
+		$out->topScripts = $this->getContext()->getOutput()->topScripts;
 
 		$ret = implode( "\n", [
-			$wgOut->getHeadLinks( null, true ),
-			$wgOut->buildCssLinks(),
-			$wgOut->getHeadScripts(),
-			$wgOut->getHeadItems()
+			$out->getHeadLinks( null, true ),
+			$out->buildCssLinks(),
+			$out->getHeadScripts(),
+			$out->getHeadItems()
 		] );
 
 		$this->globalVariablesScript = $ret;
+
+		// Load core chat frontend
+		$out->addModules( 'ext.Chat2' );
+
+		$this->addSiteJsCss( $out );
+		$this->addUserJsCss( $out );
+
+		// SUS-2198: Wrap invocation of OutputPage::getBottomScripts
+		// Otherwise, normal site and user JS/CSS is loaded when that stuff should not be in chat.
+		$wrapper = new GlobalStateWrapper( [
+			'wgUseSiteJs' => false,
+			'wgUseSiteCss' => false,
+			'wgAllowUserJs' => false,
+			'wgAllowUserCss' => false,
+		] );
+
+		$wrapper->wrap( function () use ( $out ) {
+			$this->bottomScripts = $out->getBottomScripts();
+		} );
 
 		// Theme Designer stuff
 		$themeSettingObj = new ThemeSettings();
@@ -91,6 +114,44 @@ class ChatController extends WikiaController {
 		Chat::purgeChattersCache();
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * Add MediaWiki:Chat.js and MediaWiki:Chat.css to output, respecting configuration
+	 * @param OutputPage $out
+	 */
+	private function addSiteJsCss( OutputPage $out ) {
+		switch ( true ) {
+			case ( $this->wg->UseSiteJs && $this->wg->UseSiteCss ):
+				$out->addModules( 'chat.site' );
+				break;
+			case $this->wg->UseSiteJs:
+				$out->addModuleScripts( 'chat.site' );
+				break;
+			case $this->wg->UseSiteCss:
+				$out->addModuleStyles( 'chat.site' );
+				break;
+			default:
+		}
+	}
+
+	/**
+	 * Add User:UserName/chat.js and User:UserName/chat.css to output, respecting configuration
+	 * @param OutputPage $out
+	 */
+	private function addUserJsCss( OutputPage $out ) {
+		switch ( true ) {
+			case ( $this->wg->AllowUserJs && $this->wg->AllowUserCss ):
+				$out->addModules( 'chat.user' );
+				break;
+			case $this->wg->AllowUserJs:
+				$out->addModuleScripts( 'chat.user' );
+				break;
+			case $this->wg->AllowUserCss:
+				$out->addModuleStyles( 'chat.user' );
+				break;
+			default:
+		}
 	}
 
 	/**
