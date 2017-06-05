@@ -2,6 +2,8 @@
 
 namespace Wikia\PageHeader;
 
+use Xml;
+
 class Subtitle {
 	/**
 	 * @var string
@@ -18,8 +20,14 @@ class Subtitle {
 	 */
 	public $suppressPageSubtitle;
 
+	/**
+	 * @var \SkinTemplate
+	 */
+	private $skinTemplate;
+
 	public function __construct( \WikiaApp $app ) {
 		$this->suppressPageSubtitle = $app->wg->SuppressPageSubtitle;
+		$this->skinTemplate = $app->getSkinTemplateObj();
 		if ( !$this->suppressPageSubtitle ) {
 			$this->subtitle = $this->getSubtitle();
 			//watch list uses that, pageSubject?
@@ -109,31 +117,21 @@ class Subtitle {
 	}
 
 	/**
-	 * support for language variants
-	 * this adds links which automatically convert the content to that variant
-	 *
-	 * @author tor@wikia-inc.com
-	 * @author macbre@wikia-inc.com
+	 * @return array
 	 */
 	private function languageVariants() {
-
 		$variants = $this->skinTemplate->get( 'content_navigation' )['variants'];
-
 		if ( !empty( $variants ) ) {
-			foreach ( $variants as $variant ) {
-				$subtitle[] = Xml::element(
-					'a',
-					[
-						'href' => $variant['href'],
-						'rel' => 'nofollow',
-						'id' => $variant['id'],
-					],
-					$variant['text']
-				);
-			}
+			return array_map( function ( $variant ) {
+				return Xml::element( 'a', [
+					'href' => $variant['href'],
+					'rel' => 'nofollow',
+					'id' => $variant['id'],
+				], $variant['text'] );
+			}, $variants );
 		}
 
-		return $variants;
+		return [];
 	}
 
 	private function getSubject() {
@@ -170,15 +168,17 @@ class Subtitle {
 	 */
 	private function handlePageSubtitle() {
 		$additional = '';
-		wfRunHooks('BeforePageHeaderSubtitle', [&$additional]);
+		wfRunHooks( 'BeforePageHeaderSubtitle', [ &$additional ] );
 
-		$subtitle = array_filter( [
+		$subtitle = [
 			$this->getPageType(),
 			$this->handleTalkPage(),
 			$this->getSubject(),
 			$this->getSubPageLinks(),
-			$additional
-		] );
+		];
+
+		$subtitle =
+			array_filter( array_merge( $subtitle, $this->languageVariants(), [ $additional ] ) );
 
 		$pipe = wfMessage( 'pipe-separator' )->escaped();
 
