@@ -14,11 +14,11 @@
     "ember-cli-shims": "0.1.1"
   },
   "homepage": "https://github.com/Wikia/design-system",
-  "_release": "0b7e425ec1",
+  "_release": "a7aa02015d",
   "_resolution": {
     "type": "branch",
     "branch": "dropdown-theming",
-    "commit": "0b7e425ec1f15350bfac96387639baf60785b2f5"
+    "commit": "a7aa02015dbbeb1732c02f4f97c8005a283c65ca"
   },
   "_source": "https://github.com/Wikia/design-system.git",
   "_target": "dropdown-theming",
