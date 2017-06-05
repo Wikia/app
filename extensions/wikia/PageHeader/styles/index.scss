@@ -23,6 +23,10 @@
 		@include button-theming($color-buttons, $color-button-text, $color-text);
 	}
 
+	.wds-button-group {
+		@include button-group-theming($color-button-text);
+	}
+
 	&__contribution {
 		display: flex;
 		flex-direction: column;
