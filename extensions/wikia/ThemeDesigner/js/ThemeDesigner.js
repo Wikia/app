@@ -781,6 +781,7 @@
 			// color swatches
 			$('#swatch-color-background').css('background-color', ThemeDesigner.settings['color-body']);
 			$('#swatch-color-background-middle').css('background-color', ThemeDesigner.settings['color-body-middle']);
+			$('#swatch-color-local-nav').css('background-color', ThemeDesigner.settings['color-local-nav']);
 			$('#swatch-color-buttons').css('background-color', ThemeDesigner.settings['color-buttons']);
 			$('#swatch-color-links').css('background-color', ThemeDesigner.settings['color-links']);
 			$('#swatch-color-page').css('background-color', ThemeDesigner.settings['color-page']);
@@ -967,8 +968,8 @@
 			// copy color-body swatches to color-body-middle
 			this.swatches['color-body-middle'] = this.swatches['color-body'];
 
-			// initialize color-button swatches
-			this.swatches['color-buttons'] = [
+			// initialize color-button and color-local-nav swatches
+			this.swatches['color-local-nav'] = this.swatches['color-buttons'] = [
 				'fec356',
 				'6699ff',
 				'6c93b1',

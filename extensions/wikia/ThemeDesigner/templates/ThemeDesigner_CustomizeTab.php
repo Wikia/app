@@ -43,6 +43,10 @@
 		<h1><?= wfMessage( 'themedesigner-page' )->plain() ?></h1>
 		<ul>
 			<li>
+				<h2><?= wfMessage( 'themedesigner-local-nav' )->plain() ?></h2>
+				<img src="<?= $wg->BlankImgUrl ?>" class="color-local-nav" id="swatch-color-local-nav">
+			</li>
+			<li>
 				<h2><?= wfMessage( 'themedesigner-buttons' )->plain() ?></h2>
 				<img src="<?= $wg->BlankImgUrl ?>" class="color-buttons" id="swatch-color-buttons">
 			</li>

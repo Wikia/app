@@ -21,6 +21,7 @@ $messages['en'] = [
 	'themedesigner-small' => 'Small',
 	'themedesigner-medium' => 'Medium',
 	'themedesigner-large' => 'Large',
+	'themedesigner-local-nav' => 'local nav',
 	'themedesigner-tile-background' => 'tile',
 	'themedesigner-fix-background' => 'fix',
 	'themedesigner-not-split-background' => 'no split',
