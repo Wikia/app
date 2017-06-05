@@ -11,14 +11,12 @@ require([
 	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.pageFairDetection',
-	'ext.wikia.adEngine.taboolaHelper',
 	'ext.wikia.adEngine.slot.service.actionHandler',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.sourcePointDetection',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.recovery.gcs'),
 	require.optional('ext.wikia.adEngine.template.floatingRail')
 ], function (
 	adContext,
@@ -31,14 +29,12 @@ require([
 	dartHelper,
 	messageListener,
 	pageFairDetection,
-	taboolaHelper,
 	actionHandler,
 	slotTracker,
 	slotTweaker,
 	sourcePointDetection,
 	adBlockDetection,
 	win,
-	gcs,
 	floatingRail
 ) {
 	'use strict';
@@ -82,17 +78,6 @@ require([
 
 		// Recovery & detection
 		adBlockDetection.initEventQueues();
-
-		// Taboola
-		if (context.opts.loadTaboolaLibrary) {
-			adBlockDetection.addOnBlockingCallback(function() {
-				taboolaHelper.loadTaboola();
-			});
-		}
-
-		if (context.opts.googleConsumerSurveys && gcs) {
-			gcs.addRecoveryCallback();
-		}
 	});
 });
 
@@ -104,7 +89,6 @@ require([
 	'ext.wikia.adEngine.slot.highImpact',
 	'ext.wikia.adEngine.slot.inContent',
 	'ext.wikia.adEngine.slot.skyScraper3',
-	'ext.wikia.adEngine.slotTweaker',
 	'wikia.document',
 	'wikia.window'
 ], function (
@@ -114,35 +98,22 @@ require([
 	highImpact,
 	inContent,
 	skyScraper3,
-	slotTweaker,
 	doc,
 	win
 ) {
 	'use strict';
-
 	var context = adContext.getContext();
 
 	function initDesktopSlots() {
-		var incontentLeaderboardSlotName = 'INCONTENT_LEADERBOARD',
-			incontentPlayerSlotName = 'INCONTENT_PLAYER';
-
 		highImpact.init();
 		skyScraper3.init();
-
-		if (slotsContext.isApplicable(incontentPlayerSlotName)) {
-			inContent.init(incontentPlayerSlotName);
-		}
-
-		if (slotsContext.isApplicable(incontentLeaderboardSlotName)) {
-			inContent.init(incontentLeaderboardSlotName, function () {
-				if (context.opts.incontentLeaderboardAsOutOfPage) {
-					slotTweaker.adjustIframeByContentSize(incontentLeaderboardSlotName);
-				}
-			});
-		}
+		inContent.init('INCONTENT_PLAYER');
 	}
 
 	win.addEventListener('wikia.uap', bottomLeaderboard.init);
+	if (context.opts.adMixExperimentEnabled && context.slots.adMixToUnblock.indexOf('BOTTOM_LEADERBOARD')) {
+		win.addEventListener('wikia.not_uap', bottomLeaderboard.init);
+	}
 
 	if (doc.readyState === 'complete') {
 		initDesktopSlots();

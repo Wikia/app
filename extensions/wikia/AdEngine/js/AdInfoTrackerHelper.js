@@ -27,7 +27,8 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 			slotFirstChildData = slot.container.firstChild.dataset,
 			pageParams = JSON.parse(slotFirstChildData.gptPageParams),
 			slotParams = JSON.parse(slotFirstChildData.gptSlotParams),
-			slotPrices = lookupServices.getSlotPrices(slot.name),
+			slotPricesIgnoringTimeout = lookupServices.getCurrentSlotPrices(slot.name),
+			realSlotPrices = lookupServices.getDfpSlotPrices(slot.name),
 			slotSize = JSON.parse(slotFirstChildData.gptCreativeSize);
 
 		data = {
@@ -49,21 +50,34 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 			'kv_ref': pageParams.ref || '',
 			'kv_top': pageParams.top || '',
 			'kv_ah': pageParams.ah || '',
-			'bidder_won': '',
-			'bidder_1': slotPrices.indexExchange || '',
-			'bidder_2': slotPrices.appnexus || '',
-			'bidder_3': slotPrices.fastlane || '',
-			'bidder_4': slotPrices.vulcan || '',
-			'bidder_5': slotPrices.fastlane_private || '',
-			'bidder_6': slotPrices.aol || '',
-			'bidder_7': slotPrices.audienceNetwork || '',
-			'bidder_8': slotPrices.veles || '',
+			'bidder_won': slotParams.hb_bidder || '',
+			'bidder_1': transformBidderPrice('indexExchange', realSlotPrices, slotPricesIgnoringTimeout),
+			'bidder_2': transformBidderPrice('appnexus', realSlotPrices, slotPricesIgnoringTimeout),
+			'bidder_3': transformBidderPrice('fastlane', realSlotPrices, slotPricesIgnoringTimeout),
+			'bidder_4': transformBidderPrice('rubicon', realSlotPrices, slotPricesIgnoringTimeout),
+			'bidder_5': transformBidderPrice('fastlane_private', realSlotPrices, slotPricesIgnoringTimeout),
+			'bidder_6': transformBidderPrice('aol', realSlotPrices, slotPricesIgnoringTimeout),
+			'bidder_7': transformBidderPrice('audienceNetwork', realSlotPrices, slotPricesIgnoringTimeout),
+			'bidder_8': transformBidderPrice('veles', realSlotPrices, slotPricesIgnoringTimeout),
+			'bidder_9': transformBidderPrice('openx', realSlotPrices, slotPricesIgnoringTimeout),
 			'product_chosen': '',
 			'product_lineitem_id': slotFirstChildData.gptLineItemId || '',
 			'product_label': ''
 		};
 
 		return data;
+	}
+
+	function transformBidderPrice(bidderName, realSlotPrices, slotPricesIgnoringTimeout) {
+		if (realSlotPrices[bidderName]) {
+			return realSlotPrices[bidderName];
+		}
+
+		if (slotPricesIgnoringTimeout[bidderName]) {
+			return slotPricesIgnoringTimeout[bidderName] + 'late';
+		}
+
+		return '';
 	}
 
 	function generateUUID() {

@@ -86,6 +86,42 @@ describe('AdContext', function () {
 		}
 	});
 
+	function enableSourcePointMMS(context) {
+		context.opts = context.opts || {};
+		context.opts.sourcePointMMS = true;
+	}
+
+	function enablePageFairDetection() {
+		mocks.instantGlobals.wgAdDriverPageFairDetectionCountries = ['CURRENT_COUNTRY'];
+		spyOn(mocks.sampler, 'sample').and.returnValue(true);
+	}
+
+	function enablePageFairRecovery(context) {
+		mocks.instantGlobals = mocks.instantGlobals || {};
+		mocks.instantGlobals.wgAdDriverPageFairRecoveryCountries = ['CURRENT_COUNTRY'];
+
+		context.opts = context.opts || {};
+		context.opts.pageFairRecovery = true;
+	}
+
+	function enableSourcePointDetection(context) {
+		context.opts = context.opts || {};
+		context.targeting = context.targeting || {};
+
+		context.opts.sourcePointDetectionUrl = 'url';
+		context.targeting.skin = 'oasis';
+
+		mocks.instantGlobals.wgAdDriverSourcePointDetectionCountries = ['CURRENT_COUNTRY'];
+	}
+
+	function enableSourcePointRecovery(context) {
+		context.opts = context.opts || {};
+		context.opts.sourcePointRecovery = true;
+
+		mocks.instantGlobals = mocks.instantGlobals || {};
+		mocks.instantGlobals.wgAdDriverSourcePointRecoveryCountries = ['CURRENT_COUNTRY'];
+	}
+
 	it(
 		'fills getContext() with context, targeting, providers and forcedProvider ' +
 		'even for empty (or missing) ads.context',
@@ -439,6 +475,92 @@ describe('AdContext', function () {
 		expect(getModule().getContext().opts.sourcePointDetection).toBeFalsy();
 	});
 
+	it('Should allow to enable PageFair recovery with detection', function () {
+		var context = {};
+
+		enablePageFairRecovery(context);
+		enablePageFairDetection();
+		getModule().setContext(context);
+
+		expect(context.opts.pageFairRecovery).toBeTruthy();
+		expect(context.opts.pageFairDetection).toBeTruthy();
+	});
+
+	it('Should allow to enable SourcePoint recovery with detection', function () {
+		var context = {};
+
+		enableSourcePointRecovery(context);
+		enableSourcePointDetection(context);
+		getModule().setContext(context);
+
+		expect(context.opts.sourcePointRecovery).toBeTruthy();
+		expect(context.opts.sourcePointDetection).toBeTruthy();
+	});
+
+	it('Should disable PageFair recovery if there is no correct geo', function () {
+		var context = {
+			opt: {
+				pageFairRecovery: true
+			}
+		};
+
+		mocks.instantGlobals = {
+			wgAdDriverPageFairRecoveryCountries: ['AA', 'BB']
+		};
+
+		getModule().setContext(context);
+
+		expect(context.opts.pageFairRecovery).toBeFalsy();
+	});
+
+	it('Should enable PageFair recovery if there is proper geo', function () {
+		var context = {
+			opts: {
+				pageFairRecovery: true
+			}
+		};
+
+		mocks.instantGlobals = {
+			wgAdDriverPageFairRecoveryCountries: ['AA', 'CURRENT_COUNTRY']
+		};
+
+		getModule().setContext(context);
+
+		expect(context.opts.pageFairRecovery).toBeTruthy();
+	});
+
+	it('Should disable PageFair recovery if there is proper geo but is disabled by backend (wgVariable)', function () {
+		var context = {
+			opts: {
+				pageFairRecovery: false
+			}
+		};
+
+		mocks.instantGlobals = {
+			wgAdDriverPageFairRecoveryCountries: ['AA', 'CURRENT_COUNTRY']
+		};
+
+		getModule().setContext(context);
+
+		expect(context.opts.pageFairRecovery).toBeFalsy();
+	});
+
+	it('Should disable PageFair recovery if there is no proper geo but its enabled by backend (wgVariable)', function () {
+		var context = {
+			opts: {
+				pageFairRecovery: true
+			}
+		};
+
+		mocks.instantGlobals = {
+			wgAdDriverPageFairRecoveryCountries: ['AA', 'BB']
+		};
+
+		getModule().setContext(context);
+
+		expect(context.opts.pageFairRecovery).toBeFalsy();
+	});
+
 	it('enables detection when url param pagefairdetection is set', function () {
 		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {
 			return param === 'pagefairdetection' ?  '1' : '0';
@@ -531,6 +653,66 @@ describe('AdContext', function () {
 
 		mocks.instantGlobals = {wgAdDriverSourcePointDetectionCountries: ['XX']};
 		expect(getModule().getContext().opts.sourcePointDetection).toBeTruthy();
+	});
+
+	it('Should enable PageFair Recovery', function () {
+		var context = {};
+
+		enablePageFairRecovery(context);
+		getModule().setContext(context);
+
+		expect(context.opts.pageFairRecovery).toBeTruthy();
+	});
+
+	it('Should enable SourcePoint Recovery', function () {
+		var context = {};
+
+		enableSourcePointRecovery(context);
+		getModule().setContext(context);
+
+		expect(context.opts.sourcePointRecovery).toBeTruthy();
+	});
+
+	it('Should enable SourcePoint MMS', function () {
+		var context = {};
+
+		enableSourcePointMMS(context);
+		getModule().setContext(context);
+
+		expect(context.opts.sourcePointMMS).toBeTruthy();
+	});
+
+	it('Should disable SourcePoint Recovery when PageFair recovery is enabled', function () {
+		var context = {};
+
+		enableSourcePointRecovery(context);
+		enablePageFairRecovery(context);
+		getModule().setContext(context);
+
+		expect(context.opts.sourcePointRecovery).toBeFalsy();
+		expect(context.opts.pageFairRecovery).toBeTruthy();
+	});
+
+	it('Should disable SourcePoint MMS when SourcePoint Recovery is enabled', function () {
+		var context = {};
+
+		enableSourcePointMMS(context);
+		enableSourcePointRecovery(context);
+		getModule().setContext(context);
+
+		expect(context.opts.sourcePointRecovery).toBeTruthy();
+		expect(context.opts.sourcePointMMS).toBeFalsy();
+	});
+
+	it('Should disable SourcePoint MMS when PageFair Recovery is enabled', function () {
+		var context = {};
+
+		enableSourcePointMMS(context);
+		enablePageFairRecovery(context);
+		getModule().setContext(context);
+
+		expect(context.opts.pageFairRecovery).toBeTruthy();
+		expect(context.opts.sourcePointMMS).toBeFalsy();
 	});
 
 	it('showcase is enabled if the cookie is set', function () {
@@ -698,5 +880,17 @@ describe('AdContext', function () {
 		};
 
 		expect(getModule().getContext().opts.overridyLeaderboardSizes).toBeFalsy();
+	});
+
+	it('Enable KILO ad unit builder', function () {
+		mocks.instantGlobals = {wgAdDriverKILOCountries: ['CURRENT_COUNTRY']};
+
+		expect(getModule().getContext().opts.enableKILOAdUnit).toBeTruthy();
+	});
+
+	it('Disable KILO ad unit builder', function () {
+		mocks.instantGlobals = {wgAdDriverKILOCountries: ['AA']};
+
+		expect(getModule().getContext().opts.enableKILOAdUnit).toBeFalsy();
 	});
 });

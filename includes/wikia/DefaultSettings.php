@@ -120,8 +120,6 @@ $wgAutoloadClasses['PermissionsException'] = "{$IP}/includes/wikia/nirvana/Wikia
 $wgAutoloadClasses['AssetsManager'] = $IP . '/extensions/wikia/AssetsManager/AssetsManager.class.php';
 $wgAutoloadClasses['AssetsConfig'] = $IP . '/extensions/wikia/AssetsManager/AssetsConfig.class.php';
 
-$wgAutoloadClasses['FlashMessages'] = "{$IP}/includes/wikia/FlashMessages.class.php";
-
 /**
  * Wikia API
  * (based on Nirvana)
@@ -343,7 +341,6 @@ $wgAutoloadClasses['RevisionService'] = $IP . '/includes/wikia/services/Revision
 $wgAutoloadClasses['InfoboxesService'] = $IP . '/includes/wikia/services/InfoboxesService.class.php';
 $wgAutoloadClasses['RenderContentOnlyHelper'] = $IP . '/includes/wikia/RenderContentOnlyHelper.class.php';
 $wgAutoloadClasses['SolrDocumentService'] = $IP . '/includes/wikia/services/SolrDocumentService.class.php';
-$wgAutoloadClasses['FormBuilderService']  =  $IP.'/includes/wikia/services/FormBuilderService.class.php';
 $wgAutoloadClasses['LicensedWikisService']  =  $IP.'/includes/wikia/services/LicensedWikisService.class.php';
 $wgAutoloadClasses['ArticleQualityService'] = $IP.'/includes/wikia/services/ArticleQualityService.php';
 $wgAutoloadClasses['PortableInfoboxDataService'] = $IP . '/extensions/wikia/PortableInfobox/services/PortableInfoboxDataService.class.php';
@@ -605,6 +602,7 @@ $wgAjaxAutoCompleteSearch = true;
  * Wikia custom extensions, enabled sitewide. Pre-required by some skins
  */
 include_once( "$IP/extensions/ExtensionFunctions.php" );
+include_once( "$IP/extensions/wikia/DesignSystem/DesignSystem.setup.php" );
 include_once( "$IP/extensions/wikia/AnalyticsEngine/AnalyticsEngine.setup.php" );
 include_once( "$IP/extensions/wikia/AjaxFunctions.php" );
 include_once( "$IP/extensions/wikia/DataProvider/DataProvider.php" );
@@ -1266,17 +1264,11 @@ $wgAdDriverRubiconFastlaneProviderCountries = null;
 $wgAdDriverRubiconFastlaneProviderSkipTier = 0;
 
 /**
- * @name $wgAdDriverEnableRubiconVulcan
- * Enables Rubicon Vulcan
- */
-$wgAdDriverEnableRubiconVulcan = true;
-
-/**
- * @name $wgAdDriverRubiconVulcanCountries
- * Enables RubiconVulcan in these countries (given wgAdDriverEnableRubiconVulcan is also true).
+ * @name $wgAdDriverRubiconPrebidCountries
+ * Enables Rubicon (Prebid) in these countries.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
-$wgAdDriverRubiconVulcanCountries = null;
+$wgAdDriverRubiconPrebidCountries = null;
 
 /**
  * @name $wgAdDriverPrebidBidderCountries
@@ -1312,6 +1304,13 @@ $wgAdDriverAudienceNetworkBidderCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverIndexExchangeBidderCountries = null;
+
+/**
+ * @name $wgAdDriverOpenXPrebidBidderCountries
+ * List of countries where OpenX prebid bidding platform is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverOpenXPrebidBidderCountries = null;
 
 /**
  * @name $wgAdDriverOverridePrefootersCountries
@@ -1352,19 +1351,6 @@ $wgAdDriverEnableInvisibleHighImpactSlot = true;
 $wgAdDriverUseAdsAfterInfobox = false;
 
 /**
- * @name $wgAdDriverUseGoogleConsumerSurveys
- * Whether to enable Google Consumer Surveys
- */
-$wgAdDriverUseGoogleConsumerSurveys = true;
-
-/**
- * @name $wgAdDriverGoogleConsumerSurveysCountries
- * List of countries with enabled Google Consumer Surveys.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverGoogleConsumerSurveysCountries = null;
-
-/**
  * @name $wgAdDriverUseEvolve2
  * Whether to enable AdProviderEvolve2 (true) or not (false)
  */
@@ -1376,19 +1362,6 @@ $wgAdDriverUseEvolve2 = true;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverEvolve2Countries = null;
-
-/**
- * @name $wgAdDriverUseTaboola
- * Whether to enable AdProviderTaboola (true) or not (false)
- */
-$wgAdDriverUseTaboola = true;
-
-/**
- * @name $wgAdDriverTaboolaConfig
- * Config with list of countries with enabled Taboola module.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverTaboolaConfig = null;
 
 /** @name $wgSitewideDisableAdsOnMercury
  * Disable ads on Mercury if set to true.
@@ -1406,24 +1379,6 @@ $wgSitewideDisableAdsOnMercury = false;
  * For more details consult https://wikia-inc.atlassian.net/wiki/display/ADEN/Disaster+Recovery
  */
 $wgSitewideDisableGpt = false;
-
-/**
- * @name $wgSitewideDisableIVW3
- * @link https://wikia-inc.atlassian.net/wiki/display/ADEN/Disaster+Recovery
- * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableIVW3
- *
- * Disable IVW3 Analytics pixel sitewide in case a disaster happens.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- * For more details consult https://wikia-inc.atlassian.net/wiki/display/ADEN/Disaster+Recovery
- */
-$wgSitewideDisableIVW3 = false;
-
-/**
- * @name $wgAnalyticsDriverIVW3Countries
- *
- * List of countries with enabled IVW3 tracking
- */
-$wgAnalyticsDriverIVW3Countries = ['AT', 'CH'];
 
 /**
  * @name $wgSitewideDisablePaidAssetDrop
@@ -1462,6 +1417,21 @@ $wgSitewideDisableKrux = false;
  * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgAdDriverKikimoraTrackingCountries
  */
 $wgAdDriverKikimoraTrackingCountries = [];
+
+/**
+ * @name $wgAdDriverSrcPremiumCountries
+ * Enables setting src=premium param for all ad slots on page, when premium video
+ * is present on that page.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverSrcPremiumCountries = [];
+
+/**
+ * @name $wgAdDriverKILOCountries
+ * Enables transitional to MEGA way of building adUnits (for GPT provider, NOT ONLY REMNANT).
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverKILOCountries = null;
 
 /**
  * @name $wgAdDriverMEGACountries
@@ -1769,11 +1739,6 @@ $wgXhprofMinimumTime = 0.001;
  */
 $wgProfilerSendViaScribe = true;
 
-/* @name wgDisableWAMOnHubs
- * Disable WAM module on hub pages
- */
-$wgDisableWAMOnHubs = false;
-
 /**
  * Force ImageServing to return an empty list
  * see PLATFORM-392
@@ -1827,20 +1792,6 @@ $wgAdDriverMobileTransitionInterstitialCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverMobileFloorAdhesionCountries = null;
-
-/**
- * @name $wgAdDriverIncontentLeaderboardSlotCountries
- * Enables INCONTENT_LEADERBOARD slot in these countries
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverIncontentLeaderboardSlotCountries = null;
-
-/**
- * @name $wgAdDriverIncontentLeaderboardOutOfPageSlotCountries
- * Enables INCONTENT_LEADERBOARD as out-of-page slot in these countries
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverIncontentLeaderboardOutOfPageSlotCountries = null;
 
 /**
  * @name $wgAdDriverIncontentPlayerSlotCountries
@@ -1912,3 +1863,5 @@ $wgReviveSpotlightsCountries = null;
 include_once("$IP/extensions/wikia/ARecoveryEngine/ARecoveryEngine.setup.php");
 
 require_once "$IP/extensions/wikia/ImageReview/ImageReviewEvents.setup.php";
+
+require_once("$IP/extensions/wikia/AdMixExperiment/AdMixExperiment.setup.php");

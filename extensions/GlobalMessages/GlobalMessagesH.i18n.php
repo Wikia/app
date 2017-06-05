@@ -1,5 +1,4 @@
 <?php
-/** Internationalization file for /extensions/GlobalMessages/GlobalMessagesH extension. */
 $messages = [];
 
 $messages['en'] = [
@@ -10415,60 +10414,6 @@ $messages['sq'] = [
 	'htmlform-submit' => 'Dërgo',
 	'htmlform-reset' => 'Zhbëj ndryshimin',
 	'htmlform-selectorother-other' => 'Gjitha',
-];
-
-$messages['sr'] = [
-	'hidden-categories' => '{{PLURAL:$1|Kategori e fshehur|Kategori të fshehura}}',
-	'hidden-category-category' => 'Kategori të fshehura',
-	'help' => 'Ndihmë',
-	'history' => 'Historiku i faqes',
-	'history_short' => 'Historiku',
-	'helppage' => 'Help:Përmbajtje',
-	'hidetoc' => 'fshih',
-	'headline_sample' => 'Titulli',
-	'headline_tip' => 'Titull i nivelit 2',
-	'hr_tip' => 'vijë horizontale (përdoreni rallë)',
-	'hiddencategories' => 'Kjo faqe është nën {{PLURAL:$1|një kategori të fshehur|$1 kategori të fshehura}}:',
-	'histlegend' => 'Legjenda: (tani) = ndryshimet me versionin e tanishëm,
-(fund) = ndryshimet me versionin e parardhshëm, V = redaktim i vogël',
-	'history-fieldset-title' => 'Shfleto historikun',
-	'history-show-deleted' => 'Vetëm versionet të grisur',
-	'histfirst' => 'Së pari',
-	'histlast' => 'Së fundmi',
-	'historysize' => '({{PLURAL:$1|1 B|$1 B}})',
-	'historyempty' => '(bosh)',
-	'history-feed-title' => 'Historiku i versioneve',
-	'history-feed-description' => 'Historiku i versioneve për këtë faqe në wiki',
-	'history-feed-item-nocomment' => '$1 tek $2',
-	'history-feed-empty' => 'Faqja që kërkuat nuk ekziston. Ajo mund të jetë grisur nga wiki ose mund të jetë zhvendosur nën një emër tjetër. Mund të provoni ta gjeni duke e [[Special:Search|kërkuar]].',
-	'history-title' => 'Historiku i redaktimeve te "$1"',
-	'hist' => 'hist',
-	'hide' => 'fshih',
-	'hookaborted' => 'Modifikimi që ju provuat ta bëni u ndërpre nga një goditje shtesë.',
-	'http-invalid-url' => 'Adresë URL e pavlefshme: $1',
-	'http-invalid-scheme' => 'Adresat URL me skemën "$1" nuk mbështeten.',
-	'http-request-error' => 'Kërkesa HTTP dështoi për shkak të një gabimi të panjohur.',
-	'http-read-error' => 'Gabim në leximin e HTTP.',
-	'http-timed-out' => 'Kërkesës HTTP i kaloi koha.',
-	'http-curl-error' => 'Gabim gjatë gjetjes së URL-së: $1',
-	'http-host-unreachable' => 'Nuk mund të lidheni me adresën URL.',
-	'http-bad-status' => 'Ndodhi një problem gjatë kërkesës HTTP: $1 $2',
-	'historywarning' => '\'\'\'Kujdes:\'\'\' Kjo faqe të cilën po e grisni ka histori me rreth $1
-{{PLURAL:$1|version|redaktime}}:',
-	'hours' => '{{PLURAL:$1|$1 orë|$1 orë}}',
-	'htmlform-invalid-input' => 'Ka probleme me disa kontribute tuaja',
-	'htmlform-select-badoption' => 'Vlera që ju e specifikuat nuk është një alternativë e vlefshme.',
-	'htmlform-int-invalid' => 'Vlera që ju e specifikuat nuk është numër i plotë.',
-	'htmlform-float-invalid' => 'Vlera që ju e specifikuat nuk është numër.',
-	'htmlform-int-toolow' => 'Vlera që ju e përcaktuat është nën minimumin e $1',
-	'htmlform-int-toohigh' => 'Vlera që ju e përcaktuat është mbi maksimumin e $1',
-	'htmlform-required' => 'Kjo vlerë është e nevojshme',
-	'htmlform-submit' => 'Dërgo',
-	'htmlform-reset' => 'Zhbëj ndryshimin',
-	'htmlform-selectorother-other' => 'Gjitha',
-	'home' => 'Početna strana',
-	'helpfaq' => 'Pomoć i česta pitanja',
-	'highest_ratings' => 'Najbolje ocene',
 ];
 
 $messages['sr-ec'] = [

@@ -5,26 +5,33 @@
 */
 class WikiaDataAccessTest extends WikiaBaseTest {
 
+	/** @var PHPUnit_Framework_MockObject_MockObject $memc */
+	private $memc;
+
+	protected function setUp() {
+		parent::setUp();
+
+		$this->memc = $this->getMockBuilder( MemcachedPhpBagOStuff::class )
+			->disableOriginalConstructor()
+			->getMock();
+
+		$this->mockGlobalVariable( 'wgMemc', $this->memc );
+	}
+
 	function testCacheMiss() {
 		$key = 'TESTKEY';
 		$value = 'TESTVALUE' . rand();
 		$ttl = 568;
-
-		// Mock our memcache class
-		$memc = $this->getMock( 'MemcachedPhpBagOStuff' );
-
 		// 'get' should be called and return null
-		$memc->expects( $this->once() )
+		$this->memc->expects( $this->once() )
 			->method( 'get' )
 			->willReturn( null );
 
 		// Our data should be accessed and passed to set
-		$memc->expects( $this->once() )
+		$this->memc->expects( $this->once() )
 			->method( 'set' )
 			->with( $this->equalTo( $key ), $this->equalTo( $value ), $this->equalTo( $ttl ) );
 
-		// Set the memc used to our mock object
-		$this->mockGlobalVariable( 'wgMemc', $memc );
 
 		// Cache backed data access
 		$returnValue = WikiaDataAccess::cache( $key, $ttl, function () use ( $value ) { return $value; } );
@@ -38,20 +45,14 @@ class WikiaDataAccessTest extends WikiaBaseTest {
 		$value = 'TESTVALUE' . rand();
 		$ttl = 568;
 
-		// Mock our memcache class
-		$memc = $this->getMock( 'MemcachedPhpBagOStuff' );
-
 		// 'get' should be called and return our value
-		$memc->expects( $this->once() )
+		$this->memc->expects( $this->once() )
 			->method( 'get' )
 			->willReturn( $value );
 
 		// 'set' should never be called
-		$memc->expects( $this->never() )
+		$this->memc->expects( $this->never() )
 			->method( 'set' );
-
-		// Set the memc used to our mock object
-		$this->mockGlobalVariable( 'wgMemc', $memc );
 
 		// Cache backed data access
 		$returnValue = WikiaDataAccess::cache( $key, $ttl, function () use ( $value ) { return $value; } );

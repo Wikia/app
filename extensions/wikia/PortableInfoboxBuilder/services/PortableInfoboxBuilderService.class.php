@@ -1,6 +1,6 @@
 <?php
 
-class PortableInfoboxBuilderService extends WikiaService {
+class PortableInfoboxBuilderService {
 	private $typesToCanonicals = [
 		'row' => 'data',
 		'section-header' => 'header'
@@ -113,8 +113,7 @@ class PortableInfoboxBuilderService extends WikiaService {
 	private function addGroupNode( $data, SimpleXMLElement $xml ) {
 		foreach ( $data as $item ) {
 			$type = $this->getCanonicalType( $item->type );
-
-			$child = $xml->addChild( $type, is_string( $item->data ) ? (string)$item->data : null );
+			$child = $xml->addChild( $type, isset( $item->data ) && is_string( $item->data ) ? (string) $item->data : null );
 			$this->addNode( $item, $child );
 		}
 	}

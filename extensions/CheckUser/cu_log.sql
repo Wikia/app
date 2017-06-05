@@ -23,7 +23,7 @@ CREATE TABLE /*$wgDBprefix*/cu_log (
   cul_target_id int unsigned not null default 0,
 
   -- Text target, interpretation depends on cul_type
-  cul_target_text blob not null default '',
+  cul_target_text blob not null,
 
   -- If the target was an IP address, this contains the hexadecimal form of the IP
   cul_target_hex varbinary(255) not null default '',

@@ -6,14 +6,11 @@
 class AdEngine2Hooks {
 	const ASSET_GROUP_ADENGINE_AMAZON_MATCH = 'adengine2_amazon_match_js';
 	const ASSET_GROUP_ADENGINE_DESKTOP = 'adengine2_desktop_js';
-	const ASSET_GROUP_ADENGINE_GCS = 'adengine2_gcs_js';
 	const ASSET_GROUP_ADENGINE_MOBILE = 'wikiamobile_ads_js';
 	const ASSET_GROUP_ADENGINE_OPENX_BIDDER = 'adengine2_ox_bidder_js';
 	const ASSET_GROUP_ADENGINE_PREBID = 'adengine2_prebid_js';
 	const ASSET_GROUP_ADENGINE_RUBICON_FASTLANE = 'adengine2_rubicon_fastlane_js';
-	const ASSET_GROUP_ADENGINE_RUBICON_VULCAN = 'adengine2_rubicon_vulcan_js';
-	const ASSET_GROUP_ADENGINE_TABOOLA = 'adengine2_taboola_js';
-	const ASSET_GROUP_ADENGINE_TRACKING = 'adengine2_tracking_js';
+	const ASSET_GROUP_ADENGINE_TOP = 'adengine2_top_js';
 
 	/**
 	 * Handle URL parameters and set proper global variables early enough
@@ -37,6 +34,8 @@ class AdEngine2Hooks {
 	 * @return bool
 	 */
 	public static function onInstantGlobalsGetVariables( array &$vars ) {
+		$vars[] = 'wgAdDriverAdMixCountries';
+		$vars[] = 'wgAdDriverAbTestIdTargeting';
 		$vars[] = 'wgAdDriverAolBidderCountries';
 		$vars[] = 'wgAdDriverAppNexusBidderCountries';
 		$vars[] = 'wgAdDriverAppNexusBidderPlacementsConfig';
@@ -44,20 +43,19 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverDelayCountries';
 		$vars[] = 'wgAdDriverDelayTimeout';
 		$vars[] = 'wgAdDriverEvolve2Countries';
-		$vars[] = 'wgAdDriverGoogleConsumerSurveysCountries';
 		$vars[] = 'wgAdDriverHighImpactSlotCountries';
 		$vars[] = 'wgAdDriverHighImpact2SlotCountries';
-		$vars[] = 'wgAdDriverIncontentLeaderboardSlotCountries';
-		$vars[] = 'wgAdDriverIncontentLeaderboardOutOfPageSlotCountries';
 		$vars[] = 'wgAdDriverIncontentPlayerSlotCountries';
 		$vars[] = 'wgAdDriverIndexExchangeBidderCountries';
 		$vars[] = 'wgAdDriverKikimoraTrackingCountries';
 		$vars[] = 'wgAdDriverKikimoraPlayerTrackingCountries';
 		$vars[] = 'wgAdDriverKruxCountries';
+		$vars[] = 'wgAdDriverKILOCountries';
 		$vars[] = 'wgAdDriverMEGACountries';
 		$vars[] = 'wgAdDriverNetzAthletenCountries';
 		$vars[] = 'wgAdDriverOpenXBidderCountries';
 		$vars[] = 'wgAdDriverOpenXBidderCountriesRemnant';
+		$vars[] = 'wgAdDriverOpenXPrebidBidderCountries';
 		$vars[] = 'wgAdDriverOverridePrefootersCountries';
 		$vars[] = 'wgAdDriverPageFairDetectionCountries';
 		$vars[] = 'wgAdDriverPrebidBidderCountries';
@@ -65,10 +63,10 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverRubiconFastlaneMercuryFixCountries';
 		$vars[] = 'wgAdDriverRubiconFastlaneProviderCountries';
 		$vars[] = 'wgAdDriverRubiconFastlaneProviderSkipTier';
-		$vars[] = 'wgAdDriverRubiconVulcanCountries';
+		$vars[] = 'wgAdDriverRubiconPrebidCountries';
 		$vars[] = 'wgAdDriverSourcePointDetectionCountries';
 		$vars[] = 'wgAdDriverSourcePointDetectionMobileCountries';
-		$vars[] = 'wgAdDriverTaboolaConfig';
+		$vars[] = 'wgAdDriverSrcPremiumCountries';
 		$vars[] = 'wgAdDriverTurtleCountries';
 		$vars[] = 'wgAdDriverVelesBidderCountries';
 		$vars[] = 'wgAdDriverVelesBidderConfig';
@@ -132,20 +130,7 @@ class AdEngine2Hooks {
 	 * @return bool
 	 */
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
-
-		global $wgAdDriverUseGoogleConsumerSurveys, $wgAdDriverUseTaboola;
-		$isArticle = WikiaPageType::getPageType() === 'article';
-
 		$jsAssets[] = static::ASSET_GROUP_ADENGINE_DESKTOP;
-
-		if ( $wgAdDriverUseGoogleConsumerSurveys && $isArticle ) {
-			$jsAssets[] = static::ASSET_GROUP_ADENGINE_GCS;
-		}
-
-		if ( $wgAdDriverUseTaboola && $isArticle ) {
-			$jsAssets[] = static::ASSET_GROUP_ADENGINE_TABOOLA;
-		}
-
 		$jsAssets[] = 'adengine2_interactive_maps_js';
 
 		return true;
@@ -161,7 +146,7 @@ class AdEngine2Hooks {
 	public static function onOasisSkinAssetGroupsBlocking( &$jsAssets ) {
 
 		// Tracking should be available very early, so we can track how lookup calls perform
-		$jsAssets[] = static::ASSET_GROUP_ADENGINE_TRACKING;
+		$jsAssets[] = static::ASSET_GROUP_ADENGINE_TOP;
 
 		if ( AnalyticsProviderAmazonMatch::isEnabled() ) {
 			$jsAssets[] = static::ASSET_GROUP_ADENGINE_AMAZON_MATCH;
@@ -177,10 +162,6 @@ class AdEngine2Hooks {
 
 		if ( AnalyticsProviderRubiconFastlane::isEnabled() ) {
 			$jsAssets[] = static::ASSET_GROUP_ADENGINE_RUBICON_FASTLANE;
-		}
-
-		if ( AnalyticsProviderRubiconVulcan::isEnabled() ) {
-			$jsAssets[] = static::ASSET_GROUP_ADENGINE_RUBICON_VULCAN;
 		}
 
 		return true;
@@ -222,35 +203,11 @@ class AdEngine2Hooks {
 	 * @return bool
 	 */
 	public static function onWikiaMobileAssetsPackages( array &$jsStaticPackages, array &$jsExtensionPackages, array &$scssPackages ) {
-
-		global $wgAdDriverUseTaboola;
-
 		$coreGroupIndex = array_search( static::ASSET_GROUP_ADENGINE_MOBILE, $jsStaticPackages );
 
 		if ( $coreGroupIndex === false ) {
 			// Do nothing. ASSET_GROUP_ADENGINE_MOBILE must be present for ads to work
 			return true;
-		}
-
-		if ( $wgAdDriverUseTaboola === true ) {
-			array_splice( $jsStaticPackages, $coreGroupIndex, 0, static::ASSET_GROUP_ADENGINE_TABOOLA );
-		}
-
-		return true;
-	}
-
-	public static function onSkinAfterContent( &$text ) {
-		global $wgTitle, $wgAdDriverUseTaboola;
-
-		if ( !$wgAdDriverUseTaboola ) {
-			return true;
-		}
-
-		$skin = RequestContext::getMain()->getSkin()->getSkinName();
-
-		// File pages handle their own rendering of related pages wrapper
-		if ( ($skin === 'oasis') && $wgTitle->getNamespace() !== NS_FILE ) {
-			$text = $text . F::app()->renderView( 'AdEmptyContainer', 'Index', [ 'slotName' => 'NATIVE_TABOOLA_ARTICLE' ] );
 		}
 
 		return true;

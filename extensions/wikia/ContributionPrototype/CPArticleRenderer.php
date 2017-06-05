@@ -52,6 +52,10 @@ class CPArticleRenderer {
 	 * @param OutputPage $output
 	 */
 	public function render(Title $title, OutputPage $output, $action='view') {
+		if ( $title->getPartialURL() == '' ) {
+			$output->redirect( '/wiki/Home' );
+		}
+
 		$output->setPageTitle($title->getPrefixedText());
 		$content = $this->getArticleContent($title->getPartialURL(), $action);
 		

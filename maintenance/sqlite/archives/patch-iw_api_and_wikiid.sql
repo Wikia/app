@@ -6,8 +6,6 @@
 CREATE TABLE /*_*/interwiki_tmp (
   iw_prefix TEXT NOT NULL,
   iw_url BLOB NOT NULL,
-  iw_api BLOB NOT NULL,
-  iw_wikiid TEXT NOT NULL,
   iw_local INTEGER NOT NULL,
   iw_trans INTEGER NOT NULL default 0
 ) /*$wgDBTableOptions*/;

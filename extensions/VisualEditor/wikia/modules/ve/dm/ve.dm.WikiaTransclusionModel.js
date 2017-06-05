@@ -149,11 +149,13 @@
 					};
 				}
 
+				/* jshint -W083 */
 				page.infoboxes.forEach( function ( infobox ) {
 					infobox.metadata.forEach( function ( node ) {
 						parseInfoboxMetadata( node, specs[page.title] );
 					} );
 				} );
+				/* jshint +W083 */
 			}
 			ve.extendObject( this.specCache, specs );
 		}

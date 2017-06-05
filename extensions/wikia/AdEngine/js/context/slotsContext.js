@@ -2,10 +2,11 @@
 define('ext.wikia.adEngine.context.slotsContext', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
+	'wikia.document',
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.log'
-], function (adContext, params, geo, instantGlobals, log) {
+], function (adContext, params, doc, geo, instantGlobals, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.context.slotsContext',
@@ -15,9 +16,16 @@ define('ext.wikia.adEngine.context.slotsContext', [
 		slots[slotName] = !!status;
 	}
 
+	function isInContentApplicable() {
+		var header = doc.querySelectorAll('#mw-content-text > h2')[1];
+
+		return header && header.offsetWidth >= header.parentNode.offsetWidth;
+	}
+
 	function setupSlots() {
 		var context = adContext.getContext(),
-			isHome = params.getPageType() === 'home';
+			isHome = params.getPageType() === 'home',
+			isOasis = context.targeting.skin === 'oasis';
 
 		setStatus('PREFOOTER_MIDDLE_BOXAD', isHome);
 
@@ -30,10 +38,9 @@ define('ext.wikia.adEngine.context.slotsContext', [
 		setStatus('INCONTENT_BOXAD_1', !isHome);
 
 		setStatus('INVISIBLE_HIGH_IMPACT_2', geo.isProperGeo(instantGlobals.wgAdDriverHighImpact2SlotCountries));
-		setStatus('INCONTENT_LEADERBOARD', geo.isProperGeo(instantGlobals.wgAdDriverIncontentLeaderboardSlotCountries));
-		setStatus('INCONTENT_PLAYER', geo.isProperGeo(instantGlobals.wgAdDriverIncontentPlayerSlotCountries));
-
 		setStatus('PREFOOTER_RIGHT_BOXAD', !context.opts.overridePrefootersSizes);
+
+		setStatus('INCONTENT_PLAYER', !isHome && isOasis && isInContentApplicable());
 
 		log(['Disabled slots:', slots], 'info', logGroup);
 	}

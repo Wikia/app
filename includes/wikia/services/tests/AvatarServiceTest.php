@@ -194,9 +194,11 @@ class AvatarServiceTest extends WikiaBaseTest {
 	function testGetVignetteUrl( $userAttr, $width, $expectedUrl ) {
 		$this->mockGlobalVariable( 'wgVignetteUrl', 'http://vignette.wikia-dev.com' );
 
-		$user = $this->mockClassWithMethods( 'User', [
+		/** @var User $user */
+		$user = $this->createConfiguredMock( User::class, [
 			'getGlobalAttribute' => $userAttr,
-		]);
+		] );
+
 		$masthead = Masthead::newFromUser( $user );
 		$url = AvatarService::getVignetteUrl( $masthead, $width, false );
 

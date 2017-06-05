@@ -334,27 +334,23 @@ class Wikia {
 		$name = strtolower( $name );
 
 		$parts = explode(".", trim($name));
-		Wikia::log( __METHOD__, "info", "$name $language $type" );
-		if( is_array( $parts ) ) {
-			if( count( $parts ) <= 2 ) {
-				$allowLang = true;
-				switch( $type ) {
-					case "answers":
-						$domains = self::getAnswersDomains();
-						if ( $language && isset($domains[$language]) && !empty($domains[$language]) ) {
-							$name =  sprintf("%s.%s.%s", $name, $domains[$language], $wgWikiaBaseDomain);
-							$allowLang = false;
-						} else {
-							$name =  sprintf("%s.%s.%s", $name, $domains["default"], $wgWikiaBaseDomain);
-						}
-						break;
+		if( is_array( $parts ) && count( $parts ) <= 2 ) {
+			$allowLang = true;
 
-					default:
-						$name = sprintf("%s.%s", $name, $wgWikiaBaseDomain);
+			if ( $type === 'answers' ) {
+				$domains = self::getAnswersDomains();
+				if ( $language && isset( $domains[$language] ) && !empty( $domains[$language] ) ) {
+					$name = sprintf( "%s.%s.%s", $name, $domains[$language], $wgWikiaBaseDomain );
+					$allowLang = false;
+				} else {
+					$name = sprintf( "%s.%s.%s", $name, $domains["default"], $wgWikiaBaseDomain );
 				}
-				if ( $language && $language != "en" && $allowLang ) {
-					$name = $language.".".$name;
-				}
+			} else {
+				$name = sprintf("%s.%s", $name, $wgWikiaBaseDomain);
+			}
+
+			if ( $language && $language != "en" && $allowLang ) {
+				$name = $language.".".$name;
 			}
 		}
 		return $name;
@@ -1485,11 +1481,6 @@ class Wikia {
 		}
 
 		if ( !User::isIP( $rc_ip ) ) {
-			// PLATFORM-1770: prevent multilookup.ml_ip column being set to zero (as INET_ATON fails to decode the IP)
-			Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . ' - rc_ip not valid', [
-				'rc_ip' => $rc_ip,
-				'request_ip' => $wgRequest->getIP()
-			] );
 			return true;
 		}
 
@@ -1986,7 +1977,15 @@ class Wikia {
 		$output = wfShellExec("identify -regard-warnings {$imageFile} 2>&1", $retVal);
 		wfDebug("Exit code #{$retVal}\n{$output}\n");
 
-		$isValid = ($retVal === 0);
+		/**
+		 * Let's ignore warnings reported by "identify" binary and focus on errors, examples:
+		 *
+		 * identify: Ignoring attempt to set negative chromaticity value `/tmp/Gree.png' @ warning/png.c/MagickPNGWarningHandler/1671.
+		 * identify.im6: no decode delegate for this image format `/tmp/UploadTestExwn06' @ error/constitute.c/ReadImage/544.
+		 *
+		 * @see SUS-1625
+		 */
+		$isValid = strpos( $output, ' @ error/' ) === false; /* no errors reported */
 
 		if (!$isValid) {
 			Wikia\Logger\WikiaLogger::instance()->warning( __METHOD__ . ' failed', [

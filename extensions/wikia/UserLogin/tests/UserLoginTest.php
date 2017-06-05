@@ -33,6 +33,7 @@ class UserLoginTest extends UserLoginBaseTest {
 
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.44648 ms
 	 * @dataProvider loginDataProvider
 	 */

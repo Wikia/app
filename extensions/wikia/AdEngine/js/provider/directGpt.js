@@ -1,13 +1,16 @@
 /*global define, require*/
 /*jshint maxlen: 150*/
 define('ext.wikia.adEngine.provider.directGpt', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.factory.wikiaGpt',
+	'ext.wikia.adEngine.slot.adUnitBuilder',
+	'ext.wikia.adEngine.slot.service.kiloAdUnitBuilder',
 	'ext.wikia.adEngine.slotTweaker',
 	require.optional('ext.wikia.adEngine.lookup.openx.openXBidderHelper'),
 	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery'),
 	require.optional('ext.wikia.aRecoveryEngine.sourcePoint.recovery')
-], function (uapContext, factory, slotTweaker, openXHelper, pageFair, sourcePoint) {
+], function (adContext, uapContext, factory, adUnitBuilder, kiloAdUnitBuilder, slotTweaker, openXHelper, pageFair, sourcePoint) {
 	'use strict';
 
 	return factory.createProvider(
@@ -19,7 +22,6 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			GPT_FLUSH:                  {flushOnly: true},
 			INCONTENT_BOXAD_1:          {size: '120x600,160x600,300x250,300x600', loc: 'hivi'},
 			INCONTENT_PLAYER:           {size: '1x1', loc: 'middle'},
-			INCONTENT_LEADERBOARD:      {size: '1x1,728x90,300x250,468x60', loc: 'hivi'},
 			INVISIBLE_HIGH_IMPACT_2:    {loc: 'hivi'},
 			INVISIBLE_SKIN:             {size: '1000x1000,1x1', loc: 'top'},
 			LEFT_SKYSCRAPER_2:          {size: '120x600,160x600,300x250,300x600,300x1050', loc: 'middle'},
@@ -47,7 +49,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 					slotTweaker.adjustLeaderboardSize(slotName);
 				}
 			},
-			beforeHop: function(slotName) {
+			beforeHop: function (slotName) {
 				openXHelper && openXHelper.addOpenXSlot(slotName);
 			},
 			isPageFairRecoverable: pageFair ? pageFair.isSlotRecoverable : false,
@@ -59,9 +61,9 @@ define('ext.wikia.adEngine.provider.directGpt', [
 				'TOP_RIGHT_BOXAD',
 				'GPT_FLUSH'
 			],
+			adUnitBuilder: adContext.getContext().opts.enableKILOAdUnit ? kiloAdUnitBuilder : adUnitBuilder,
 			highlyViewableSlots: [
 				'INCONTENT_BOXAD_1',
-				'INCONTENT_LEADERBOARD',
 				'INCONTENT_PLAYER',
 				'INVISIBLE_HIGH_IMPACT_2'
 			]

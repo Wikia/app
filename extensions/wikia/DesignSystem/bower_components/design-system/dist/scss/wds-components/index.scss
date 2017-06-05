@@ -1,6 +1,7 @@
 @import 'avatar';
 @import 'avatar-stack';
 @import 'buttons';
+@import 'button-groups';
 @import 'dropdowns';
 @import 'icons';
 @import 'is-hidden';
@@ -9,6 +10,7 @@
 @import 'notifications';
 @import 'spinner';
 @import 'sign-out';
+@import 'tabs';
 
 // Components using other components have to be at the end of file. We need atomic components defined to use them.
 @import 'global-footer';
