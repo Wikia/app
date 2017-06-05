@@ -23,67 +23,67 @@
 		@include button-theming($color-buttons, $color-button-text, $color-text);
 	}
 
+	&__counter {
+		color: $color-text;
+		float: right;
+		font-size: $wds-typescale-size-minus-1;
+		font-weight: bold;
+		padding-bottom: 10px;
+		text-align: right;
+	}
+
 	&__contribution {
 		display: flex;
 		flex-direction: column;
 		@include align-items(flex-end);
 		float: right;
 		justify-content: flex-end;
-
-		&-counter {
-			color: $color-text;
-			float: right;
-			font-size: $wds-typescale-size-minus-1;
-			font-weight: bold;
-			padding-bottom: 10px;
-			text-align: right;
-		}
 	}
 
 	&__main {
 		flex: 1;
+	}
 
-		&-categories {
-			@include align-items(flex-start);
-			@include flexbox();
-			font-size: $wds-typescale-size-minus-2;
+	&__categories {
+		@include align-items(flex-start);
+		@include flexbox();
+		font-size: $wds-typescale-size-minus-2;
+	}
 
-			&-in {
-				font-weight: 600;
-				padding-right: 4px;
-			}
+	&__categories-in {
+		font-weight: 600;
+		padding-right: 4px;
+	}
 
-			&-dropdown {
-				padding-bottom: 10px;
+	&__categories-dropdown {
+		padding-bottom: 10px;
 
-				&-content {
-					font-style: normal;
-				}
-			}
-
-			&-links {
-				color: $color-links;
-				font-style: italic;
-				line-height: 16px;
-				word-break: break-word;
-
-				> a:last-child {
-					display: inline-block;
-					padding-bottom: 10px;
-				}
-			}
+		&-content {
+			font-style: normal;
 		}
+	}
 
-		&-title {
-			@include align-items(flex-end);
-			color: $color-text;
+	&__categories-links {
+		color: $color-links;
+		font-style: italic;
+		line-height: 16px;
+		word-break: break-word;
+
+		> a:last-child {
 			display: inline-block;
-			font-size: $wds-typescale-size-plus-4;
-			font-weight: bold;
-			line-height: 1;
-			max-width: 100%;
-			word-wrap: break-word;
+			padding-bottom: 10px;
 		}
+	}
+
+	&__title {
+		@include align-items(flex-end);
+		color: $color-text;
+		display: inline-block;
+		font-size: $wds-typescale-size-plus-4;
+		font-weight: bold;
+		line-height: 1;
+		max-width: 100%;
+		word-wrap: break-word;
 	}
 
 	&__separator {
@@ -92,5 +92,6 @@
 		height: 1px;
 		margin-bottom: 18px;
 	}
+
 }
 
