@@ -18,35 +18,15 @@ class Language {
 
 	public function __construct( WikiaApp $app ) {
 		global $wgContLanguageCode, $wgTitle;
-		//$this->setVal( 'languageList', $this->getLanguages() );
 
 		$this->currentLangName = \Language::getLanguageName( $wgContLanguageCode );
-		$this->languageList = $this->handleLanguages($app);
-		//$this->languageList = $languageList;
-
-
-
-		//$language_urls = $this->app->getSkinTemplateObj()
-		//	? $this->app->getSkinTemplateObj()->data['language_urls']
-		//	: [];
+		$this->languageList = $this->handleLanguages( $app );
 
 		//$request_language_urls = $this->request->getVal( 'request_language_urls' );
 		//if ( !empty( $request_language_urls ) ) {
 		//	$language_urls = $request_language_urls;
 		//}
-
-		//$this->request_language_urls = $this->->getVal('request_language_urls' );
-		//if ( !empty( $request_language_urls ) ) {
-		//	$this->language_urls = $this->request_language_urls;
-		//};
 	}
-	//private function getLanguagesUrls( WikiaApp $app ) {
-	//	$language_urls = $app->getSkinTemplateObj()
-	//		? $app->getSkinTemplateObj()->data['language_urls']
-	//		: [];
-	//
-	//	return $language_urls;
-	//}
 
 	private function handleLanguages( WikiaApp $app ) {
 		global $wgTitle, $wgContLanguageCode;
@@ -55,7 +35,6 @@ class Language {
 			? $app->getSkinTemplateObj()->data['language_urls']
 			: [];
 
-		//$this->currentLangName = \Language::getLanguageName( $wgContLanguageCode );
 		$this->language_urls["interwiki-{$wgContLanguageCode}"] = [
 			'href' => $wgTitle->getFullURL(),
 			'text' => $this->currentLangName,
