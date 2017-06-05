@@ -82,6 +82,10 @@ define('ext.wikia.adEngine.template.floatingRail', [
 			isPageSupported = context.targeting.skin === 'oasis' &&
 				context.targeting.pageType === 'article';
 
+		if (context.opts.adMixExperimentEnabled) {
+			return;
+		}
+
 		if(!isPageSupported || getAvailableSpace() === 0) {
 			return;
 		}

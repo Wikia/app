@@ -18,14 +18,14 @@
 	}
 
 	$active-color: darken($wds-color-link, 20%);
-	$button-padding-horizontal: 18px;
 	$button-squished-padding-horizontal: 12px;
 	$line-height: 1.3em;
 
 	@include button-background-color($wds-color-link);
 
 	border-style: solid;
-	border-width: 1px;
+	border-width: $wds-button-border-width;
+	box-sizing: border-box;
 	color: $wds-color-white;
 	cursor: pointer;
 	display: inline-block;
@@ -33,8 +33,9 @@
 	font-weight: 600;
 	letter-spacing: .15px;
 	line-height: $line-height;
+	margin: 0;
 	outline: none;
-	padding: 16px $button-padding-horizontal 15px;
+	padding: 16px $wds-button-padding-horizontal 15px;
 	text-align: center;
 	text-decoration: none;
 	text-transform: uppercase;
@@ -66,6 +67,14 @@
 	&.wds-is-squished {
 		font-size: $wds-typescale-size-minus-3;
 		padding: 10px $button-squished-padding-horizontal 9px;
+
+		.wds-dropdown__toggle {
+			height: 13px;
+		}
+
+		.wds-dropdown__toggle-chevron {
+			margin: -2px 0;
+		}
 	}
 
 	&.wds-is-stretched {
@@ -73,7 +82,6 @@
 	}
 
 	&.wds-is-full-width {
-		box-sizing: border-box;
 		width: 100%;
 	}
 
@@ -84,6 +92,15 @@
 		display: inline-flex;
 		justify-content: center;
 		padding: 0;
+
+		// inline-flex does not work for button on safari
+		@at-root button#{&} {
+			display: inline-block;
+
+			.wds-icon {
+				margin: auto;
+			}
+		}
 	}
 
 	&.wds-is-text {
@@ -101,13 +118,13 @@
 	}
 
 	&.wds-has-icon {
-		padding-left: $button-padding-horizontal + $wds-icon-small-size + 6px;
+		padding-left: $wds-button-padding-horizontal + $wds-icon-small-size + 6px;
 		position: relative;
 
 		&.wds-is-squished {
 			padding-left: $button-squished-padding-horizontal + $wds-icon-tiny-size + 6px;
 
-			.wds-icon {
+			.wds-icon:first-child {
 				height: $wds-icon-tiny-size;
 				left: $button-squished-padding-horizontal;
 				margin-top: -$wds-icon-tiny-size / 2;
@@ -115,15 +132,31 @@
 			}
 		}
 
-		.wds-icon {
+		.wds-icon:first-child {
 			height: $wds-icon-small-size;
-			left: $button-padding-horizontal;
+			left: $wds-button-padding-horizontal;
 			margin-top: -$wds-icon-small-size / 2;
 			pointer-events: none;
 			position: absolute;
 			top: 50%;
 			width: $wds-icon-small-size;
 		}
+	}
+
+	.wds-list {
+		color: $wds-color-black;
+		font-weight: normal;
+		letter-spacing: normal;
+		text-transform: none;
+		text-align: left;
+	}
+
+	.wds-dropdown__toggle-chevron {
+		margin: -1px 0;
+	}
+
+	.wds-dropdown__content {
+		top: calc(100% + 1px);
 	}
 
 	$social-colors: (

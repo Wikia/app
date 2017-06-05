@@ -51,7 +51,7 @@ $messages['qqq'] = array(
 
 $messages['de'] = array(
 	'global-shortcuts-description' => '
-Einfacheres Stöbern und Bearbeiten auf Fandom mithilfe von Tastenkombinationen. 
+Einfacheres Stöbern und Bearbeiten auf FANDOM mithilfe von Tastenkombinationen. 
 
 Durch diese Erweiterung kannst du über Tastenkombinationen wichtige Seiten einfacher aufrufen und bestimmte Aktionen schneller ausführen. 
 ',
@@ -92,7 +92,7 @@ $messages['es'] = array(
 	'global-shortcuts-title-keyboard-shortcuts' => 'Atajos de teclado',
 	'global-shortcuts-press-to-explore-shortcuts' => 'Pulsa $1 para explorar atajos',
 	'global-shortcuts-description' => '
-Mejora tu experiencia en navegación y edición usando los atajos de teclado en Fandom.
+Mejora tu experiencia en navegación y edición usando los atajos de teclado en FANDOM.
 
 Esta extensión ofrece algunos atajos de teclado y un explorador de acciones para ayudar a los usuarios a navegar en páginas importantes o realizar ciertas acciones.
 ',
@@ -118,7 +118,7 @@ $messages['fr'] = array(
 	'global-shortcuts-title-keyboard-shortcuts' => 'Raccourcis clavier',
 	'global-shortcuts-press-to-explore-shortcuts' => 'Appuyer sur $1 pour explorer les raccourcis',
 	'global-shortcuts-description' => "
-Utilisez les raccourcis clavier de Fandom pour améliorer votre expérience de navigation et de modification.
+Utilisez les raccourcis clavier de FANDOM pour améliorer votre expérience de navigation et de modification.
 
 Cette extension fournit des raccourcis clavier ainsi qu'un explorateur d'actions permettant aux utilisateurs d'accéder aux pages importantes ou d'effectuer certaines actions.
 ",
@@ -144,7 +144,7 @@ $messages['it'] = array(
 	'global-shortcuts-title-keyboard-shortcuts' => 'Scorciatoie da tastiera',
 	'global-shortcuts-press-to-explore-shortcuts' => 'Premi $1 per scoprire le scorciatoie',
 	'global-shortcuts-description' => '
-Migliora la tua esperienza di navigazione e di modifica delle wiki utilizzando le scorciatoie da tastiera di Fandom.
+Migliora la tua esperienza di navigazione e di modifica delle wiki utilizzando le scorciatoie da tastiera di FANDOM.
 
 Questa estensione ti offre alcune scorciatoie da tastiera e un esploratore di azioni per aiutarti a navigare con facilità sulle pagine importanti e a svolgere certe azioni.
 ',
@@ -170,7 +170,7 @@ $messages['ja'] = array(
 	'global-shortcuts-title-keyboard-shortcuts' => 'キーボード・ショートカット',
 	'global-shortcuts-press-to-explore-shortcuts' => '$1キーを押すとショートカットを検索できます',
 	'global-shortcuts-description' => '
-Fandomでショートカットキーを使うと、閲覧や編集がしやすくなります。
+FANDOMでショートカットキーを使うと、閲覧や編集がしやすくなります。
 
 この拡張機能にはキーボード・ショートカットと操作検索ツールが組み込まれています。これらの機能は、重要なページにアクセスしたり特定の操作を実行したりする際に便利です。
 ',
@@ -299,7 +299,7 @@ $messages['zh-hans'] = array(
 	'global-shortcuts-title-help-entry-point' => '打开键盘快捷方式帮助对话框 (?)',
 	'global-shortcuts-title-keyboard-shortcuts' => '键盘快捷键',
 	'global-shortcuts-press-to-explore-shortcuts' => '点击$1查找快捷方式',
-	'global-shortcuts-description' => '使用Fandom上的快捷键提高您的浏览和编辑体验。
+	'global-shortcuts-description' => '使用FANDOM上的快捷键提高您的浏览和编辑体验。
 
 此项扩展提供了一些关键的快捷键和操作管理器，帮助用户管理重要的页面或执行某些操作。',
 	'global-shortcuts-name' => '快捷键',
@@ -323,7 +323,7 @@ $messages['zh-hant'] = array(
 	'global-shortcuts-title-help-entry-point' => '打開鍵盤快捷鍵幫助對話框 (?)',
 	'global-shortcuts-title-keyboard-shortcuts' => '鍵盤快速鍵',
 	'global-shortcuts-press-to-explore-shortcuts' => '按一下$1查找鍵盤快捷鍵',
-	'global-shortcuts-description' => '使用Fandom上的快速鍵提昇您的瀏覽和編輯體驗。
+	'global-shortcuts-description' => '使用FANDOM上的快速鍵提昇您的瀏覽和編輯體驗。
 
 此項擴展提供了一些關鍵的快速鍵和操作管理器，幫助使用者瀏覽重要的頁面或執行某些操作。',
 	'global-shortcuts-name' => '鍵盤快捷鍵',

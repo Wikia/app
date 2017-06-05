@@ -100,6 +100,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 
 		function setAdditionalTargeting(slotTargetingData) {
+			var abId;
+
 			if (shouldSetSrcPremium()) {
 				slotTargetingData.src = 'premium';
 			} else if (adShouldBeRecovered) {
@@ -109,6 +111,11 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			slotTargetingData.wsi = slotTargeting.getWikiaSlotId(slotName, slotTargetingData.src);
 			slotTargetingData.hb_si = slotTargeting.getPrebidSlotId(slotTargetingData);
 			slotTargetingData.uap = uapId ? uapId.toString() : 'none';
+
+			abId = slotTargeting.getAbTestId(slotTargetingData);
+			if (abId) {
+				slotTargetingData.abi = abId;
+			}
 		}
 
 		function onAdLoadCallback(slotElementId, gptEvent, iframe) {

@@ -2,8 +2,8 @@
 $messages = array();
 
 $messages['en'] = array(
-	'cookie-policy-description' => "In the EU, there is a law that users be notified of a web site's cookie usage upon arriving there for the first time. This extension allows Fandom to be in compliance with this law.",
-	'cookie-policy-notification-message' => 'Fandom uses cookies to give you the best experience on our websites. By continuing to use Fandom, we assume that you accept our use of cookies. [[homepage:Privacy_Policy#Cookies| Read more about cookies]]',
+	'cookie-policy-description' => "In the EU, there is a law that users be notified of a web site's cookie usage upon arriving there for the first time. This extension allows FANDOM to be in compliance with this law.",
+	'cookie-policy-notification-message' => 'FANDOM uses cookies to give you the best experience on our websites. By continuing to use FANDOM, we assume that you accept our use of cookies. [[homepage:Privacy_Policy#Cookies| Read more about cookies]]',
 );
 
 $messages['qqq'] = array(
@@ -12,28 +12,28 @@ $messages['qqq'] = array(
 );
 
 $messages['de'] = array(
-	'cookie-policy-description' => 'In der EU gibt es ein Gesetz, das von uns verlangt, Benutzer unserer Webseite bei ihrem ersten Besuch darüber zu informieren, dass wir Cookies einsetzen. Diese Erweiterung ermöglicht es Fandom, diesem Gesetz Folge zu leisten.',
-	'cookie-policy-notification-message' => 'Fandom verwendet Cookies, damit du den besten Nutzen aus unseren Websites ziehen kannst. Indem du Fandom weiter nutzt, erklärst du dich mit dem Einsatz von Cookies einverstanden. [http://de.wikia.com/Datenschutz#Cookies Weitere Informationen]',
+	'cookie-policy-description' => 'In der EU gibt es ein Gesetz, das von uns verlangt, Benutzer unserer Webseite bei ihrem ersten Besuch darüber zu informieren, dass wir Cookies einsetzen. Diese Erweiterung ermöglicht es FANDOM, diesem Gesetz Folge zu leisten.',
+	'cookie-policy-notification-message' => 'FANDOM verwendet Cookies, damit du den besten Nutzen aus unseren Websites ziehen kannst. Indem du FANDOM weiter nutzt, erklärst du dich mit dem Einsatz von Cookies einverstanden. [http://de.wikia.com/Datenschutz#Cookies Weitere Informationen]',
 );
 
 $messages['es'] = array(
-	'cookie-policy-description' => 'Según una ley de la Unión Europea, los usuarios de un sitio web deben ser notificados sobre el uso de cookies una vez llegan al sitio por primera vez. Esta extensión permite a Fandom estar en conformidad con la ley.',
-	'cookie-policy-notification-message' => 'Fandom utiliza cookies para darte la mejor experiencia posible en nuestros sitios web. Al continuar usando Fandom, asumimos que aceptas el uso de estas cookies. [[w:c:es:Política_de_Privacidad#Cookies|Lee más sobre el uso de cookies]].',
+	'cookie-policy-description' => 'Según una ley de la Unión Europea, los usuarios de un sitio web deben ser notificados sobre el uso de cookies una vez llegan al sitio por primera vez. Esta extensión permite a FANDOM estar en conformidad con la ley.',
+	'cookie-policy-notification-message' => 'FANDOM utiliza cookies para darte la mejor experiencia posible en nuestros sitios web. Al continuar usando FANDOM, asumimos que aceptas el uso de estas cookies. [[w:c:es:Política_de_Privacidad#Cookies|Lee más sobre el uso de cookies]].',
 );
 
 $messages['fr'] = array(
-	'cookie-policy-description' => "Dans l'Union européenne, une loi stipule que l'utilisateur doit être averti de l'utilisation des cookies sur un site lorsqu'il le visite pour la première fois. Cette extension permet à Fandom d'être en conformité avec cette loi.",
-	'cookie-policy-notification-message' => "Nous utilisons des cookies pour vous offrir la meilleure expérience possible. En continuant d'utiliser Fandom, vous acceptez que nous utilisions des cookies. [[homepage:fr:Politique de confidentialité#Cookies|En savoir plus sur les cookies]]",
+	'cookie-policy-description' => "Dans l'Union européenne, une loi stipule que l'utilisateur doit être averti de l'utilisation des cookies sur un site lorsqu'il le visite pour la première fois. Cette extension permet à FANDOM d'être en conformité avec cette loi.",
+	'cookie-policy-notification-message' => "Nous utilisons des cookies pour vous offrir la meilleure expérience possible. En continuant d'utiliser FANDOM, vous acceptez que nous utilisions des cookies. [[homepage:fr:Politique de confidentialité#Cookies|En savoir plus sur les cookies]]",
 );
 
 $messages['it'] = array(
-	'cookie-policy-description' => "Nell'Unione Europea vige una legge che stabilisce che gli utenti devono essere notificati dell'uso dei cookie su un sito Web durante la loro prima visita al sito stesso. Questa estensione permette a Fandom di essere conforme a questa legge.",
-	'cookie-policy-notification-message' => "Fandom utilizza cookie per garantirti la migliore esperienza sui nostri siti Web. Se continui ad usare Fandom, assumeremo che tu ci abbia dato il consenso all'uso dei cookie. [[w:it:Project:Privacy#Cookie|Ulteriori informazioni sui cookie]].",
+	'cookie-policy-description' => "Nell'Unione Europea vige una legge che stabilisce che gli utenti devono essere notificati dell'uso dei cookie su un sito Web durante la loro prima visita al sito stesso. Questa estensione permette a FANDOM di essere conforme a questa legge.",
+	'cookie-policy-notification-message' => "FANDOM utilizza cookie per garantirti la migliore esperienza sui nostri siti Web. Se continui ad usare FANDOM, assumeremo che tu ci abbia dato il consenso all'uso dei cookie. [[w:it:Project:Privacy#Cookie|Ulteriori informazioni sui cookie]].",
 );
 
 $messages['ja'] = array(
 	'cookie-policy-description' => 'EUでは、初めてサイトを訪れた際に、そのサイトでのCookie使用についてユーザーに通知することが法律で義務化されています。この拡張機能は、この法律に遵守するために使用されます。',
-	'cookie-policy-notification-message' => 'Fandomでは、サイト上で最適なサービスを提供するためにCookieを使用しています。Fandomの使用を続けることは、ユーザーがFandomのCookie使用について同意したことと見なされます。[[ja.wikia.com/Privacy_Policy#Cookies|Cookieについての詳細]]',
+	'cookie-policy-notification-message' => 'FANDOMでは、サイト上で最適なサービスを提供するためにCookieを使用しています。FANDOMの使用を続けることは、ユーザーがFANDOMのCookie使用について同意したことと見なされます。[[ja.wikia.com/Privacy_Policy#Cookies|Cookieについての詳細]]',
 );
 
 $messages['nl'] = array(
@@ -42,13 +42,13 @@ $messages['nl'] = array(
 );
 
 $messages['pl'] = array(
-	'cookie-policy-description' => 'Prawo europejskie wymaga, by użytkownik został poinformowany o sposobie wykorzystywania ciasteczek przez stronę przy pierwszej wizycie. To rozszerzenie pozwala portalowi Fandom na działanie w zgodzie z tym prawem.',
-	'cookie-policy-notification-message' => 'Fandom używa plików cookie, aby zwiększyć komfort korzystania z naszych stron. Dalsze korzystanie z portalu Fandom oznacza zgodę na używanie plików cookie. [[w:c:pl:Polityka prywatności#Cookies|Dowiedz się więcej]]',
+	'cookie-policy-description' => 'Prawo europejskie wymaga, by użytkownik został poinformowany o sposobie wykorzystywania ciasteczek przez stronę przy pierwszej wizycie. To rozszerzenie pozwala portalowi FANDOM na działanie w zgodzie z tym prawem.',
+	'cookie-policy-notification-message' => 'FANDOM używa plików cookie, aby zwiększyć komfort korzystania z naszych stron. Dalsze korzystanie z portalu FANDOM oznacza zgodę na używanie plików cookie. [[w:c:pl:Polityka prywatności#Cookies|Dowiedz się więcej]]',
 );
 
 $messages['pt'] = array(
-	'cookie-policy-description' => 'Na União Europeia, há uma lei que diz que os usuários devem ser notificados sobre o uso de cookies quando visitam um site pela primeira vez. Esta extensão permite que o Fandom esteja em conformidade com esta lei.',
-	'cookie-policy-notification-message' => 'O Fandom usa cookies para que você tenha uma boa experiência no nosso site. Ao continuar a usar o Fandom, nós supomos que você aceita a nossa utilização de cookies. [http://pt-br.wikia.com/wiki/Política_de_Privacidade#Cookies Leia mais sobre cookies]',
+	'cookie-policy-description' => 'Na União Europeia, há uma lei que diz que os usuários devem ser notificados sobre o uso de cookies quando visitam um site pela primeira vez. Esta extensão permite que o FANDOM esteja em conformidade com esta lei.',
+	'cookie-policy-notification-message' => 'O FANDOM usa cookies para que você tenha uma boa experiência no nosso site. Ao continuar a usar o FANDOM, nós supomos que você aceita a nossa utilização de cookies. [http://pt-br.wikia.com/wiki/Política_de_Privacidade#Cookies Leia mais sobre cookies]',
 );
 
 $messages['ru'] = array(

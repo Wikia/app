@@ -121,7 +121,7 @@ CREATE TABLE `city_list` (
   `city_flags` int(10) unsigned NOT NULL DEFAULT '0',
   `city_cluster` varchar(255) DEFAULT NULL,
   `city_last_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `city_founding_ip` int(10) unsigned NOT NULL DEFAULT '0',
+  `city_founding_ip_bin` varbinary(10),
   `city_vertical` int(11) NOT NULL DEFAULT '0',
   `city_founding_ip_bin` varbinary(16) DEFAULT NULL,
   PRIMARY KEY (`city_id`),
@@ -132,7 +132,7 @@ CREATE TABLE `city_list` (
   KEY `city_created` (`city_created`,`city_lang`),
   KEY `city_founding_user_inx` (`city_founding_user`),
   KEY `city_cluster` (`city_cluster`),
-  KEY `city_founding_ip` (`city_founding_ip`)
+  KEY `city_founding_ip_bin` (`city_founding_ip_bin`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -520,7 +520,6 @@ CREATE TABLE `phalanx` (
   `p_id` int(6) unsigned NOT NULL AUTO_INCREMENT,
   `p_author_id` int(6) NOT NULL,
   `p_text` blob NOT NULL,
-  `p_ip_hex` varchar(35) DEFAULT NULL,
   `p_type` smallint(1) unsigned NOT NULL,
   `p_timestamp` binary(14) NOT NULL DEFAULT '\0\0\0\0\0\0\0\0\0\0\0\0\0\0',
   `p_expire` binary(14) DEFAULT NULL,
@@ -531,7 +530,6 @@ CREATE TABLE `phalanx` (
   `p_lang` varchar(10) DEFAULT NULL,
   `p_comment` tinyblob NOT NULL,
   PRIMARY KEY (`p_id`),
-  KEY `p_ip_hex` (`p_ip_hex`),
   KEY `p_lang` (`p_lang`,`p_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

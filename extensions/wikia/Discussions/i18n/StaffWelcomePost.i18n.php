@@ -106,6 +106,7 @@ If you're an admin on this community, read more about how you can customize your
 
 Have fun!
 ",
+	'discussions-staff-welcome-title' => 'Welcome to Discussions!',
 );
 
 $messages['nl'] = array(
@@ -120,6 +121,7 @@ If you're an admin on this community, read more about how you can customize your
 
 Have fun!
 ",
+	'discussions-staff-welcome-title' => 'Welcome to Discussions!',
 );
 
 $messages['pl'] = array(
@@ -179,6 +181,7 @@ If you're an admin on this community, read more about how you can customize your
 
 Have fun!
 ",
+	'discussions-staff-welcome-title' => 'Welcome to Discussions!',
 );
 
 $messages['zh-hans'] = array(

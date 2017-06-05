@@ -3,8 +3,9 @@ define('ext.wikia.adEngine.slot.service.actionHandler',  [
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.slot.service.viewabilityHandler',
+	'wikia.abTest',
 	'wikia.log'
-], function (messageListener, slotTweaker, viewabilityHandler, log) {
+], function (messageListener, slotTweaker, viewabilityHandler, abTest, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.service.actionHandler';
@@ -31,7 +32,9 @@ define('ext.wikia.adEngine.slot.service.actionHandler',  [
 				slotTweaker.makeResponsive(data.slotName, data.aspectRatio);
 				break;
 			case 'refresh-on-view':
-				viewabilityHandler.refreshOnView(data.slotName, data.delay);
+				if (!abTest.getGroup('AD_MIX') || (abTest.getGroup('AD_MIX') && abTest.getGroup('AD_MIX').indexOf('AD_MIX_1') === 0)) { // Don't refresh ad by creative if in AD_MIX_1 and AD_MIX_1B AB test
+					viewabilityHandler.refreshOnView(data.slotName, data.delay);
+				}
 				break;
 			default:
 				log(['messageCallback: unknown action', data.action], log.levels.debug, logGroup);
