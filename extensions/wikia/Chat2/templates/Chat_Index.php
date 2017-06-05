@@ -11,8 +11,6 @@
 
 	<!-- CSS -->
 	<link rel="stylesheet" href="<?= AssetsManager::getInstance()->getSassCommonURL( '/extensions/wikia/Chat2/css/Chat.scss' )?>">
-	<link rel="stylesheet" href="/load.php?lang=en&mode=articles&articles=MediaWiki%3AChat.css%7CUser%3A<?php echo $wg->User->getName(); ?>%2Fchat.css&only=styles">
-
 	<!-- JS -->
 	<?php
 		$srcs = AssetsManager::getInstance()->getGroupCommonURL( 'oasis_blocking', array() );
@@ -191,6 +189,5 @@
 	<?php foreach ( $srcs as $src ): ?>
 		<script src="<?php echo $src ?>"></script>
 	<?php endforeach; ?>
-	<script type="text/javascript" src="/load.php?lang=en&mode=articles&articles=MediaWiki%3AChat.js%7CUser%3A<?php echo $wg->User->getName(); ?>%2Fchat.js&only=scripts"></script>
 </body>
 </html>

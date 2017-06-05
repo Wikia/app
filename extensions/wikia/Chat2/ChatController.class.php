@@ -59,8 +59,6 @@ class ChatController extends WikiaController {
 		// set up global js variables just for the chat page
 		$wgHooks['MakeGlobalVariablesScript'][] = [ $this, 'onMakeGlobalVariablesScript' ];
 
-		$wgOut->getResourceLoader()->getModule( 'mediawiki' );
-
 		$ret = implode( "\n", [
 			$wgOut->getHeadLinks( null, true ),
 			$wgOut->buildCssLinks(),
@@ -87,6 +85,11 @@ class ChatController extends WikiaController {
 				$this->wordmarkThumbnailUrl = WikiFactory::getLocalEnvURL( $themeSettings['wordmark-image-url'] );
 			}
 		}
+
+		$this->getContext()->getOutput()->addModules( [
+			'chat.site',
+			'chat.user',
+		] );
 
 		Chat::purgeChattersCache();
 
