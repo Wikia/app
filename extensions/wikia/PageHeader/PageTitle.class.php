@@ -25,7 +25,7 @@ class PageTitle {
 	/* @var Title */
 	private $MWTitle;
 
-	const PREFIX_LESS_NAMESPACES = [ NS_MEDIAWIKI, NS_TEMPLATE, NS_CATEGORY, NS_FILE, NS_BLOG_LISTING ];
+	const PREFIX_LESS_NAMESPACES = [ NS_MEDIAWIKI, NS_TEMPLATE, NS_CATEGORY, NS_FILE ];
 
 	public function __construct( WikiaApp $app ) {
 		$this->wg = $app->wg;
@@ -68,7 +68,11 @@ class PageTitle {
 
 	private function shouldNotDisplayNamespacePrefix( $namespace ): bool {
 		return in_array( $namespace,
-			array_merge( self::PREFIX_LESS_NAMESPACES, $this->wg->SuppressNamespacePrefix )
+			array_merge(
+				self::PREFIX_LESS_NAMESPACES,
+				defined( 'NS_BLOG_LISTING' ) ? [ NS_BLOG_LISTING ] : [],
+				$this->wg->SuppressNamespacePrefix
+			)
 		);
 	}
 
