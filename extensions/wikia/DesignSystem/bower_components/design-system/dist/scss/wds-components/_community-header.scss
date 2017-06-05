@@ -56,7 +56,7 @@
 		font-size: $wds-typescale-size-plus-3;
 		font-weight: 600;
 		line-height: 1;
-		margin: 28px 0 0 18px;
+		margin: 25px 0 0 18px;
 		overflow: hidden;
 
 		a {
@@ -64,6 +64,9 @@
 
 			@media #{$wds-breakpoint-l-up} {
 				display: block;
+				height: 100%;
+				// Safari cut bottom of letter, line-height set to 1.2 fixed it
+				line-height: 1.2;
 				overflow: hidden;
 				text-decoration: none;
 				text-overflow: ellipsis;
@@ -80,7 +83,7 @@
 		}
 	}
 
-	&__counter{
+	&__counter {
 		font-weight: 600;
 		text-align: right;
 		margin: 17px 0 20px 20px;
@@ -120,6 +123,10 @@
 		display: flex;
 		height: 46px;
 		padding-left: 6px;
+
+		a[href="#"] {
+			cursor: default;
+		}
 
 		.wds-dropdown__toggle-chevron {
 			opacity: .5;
