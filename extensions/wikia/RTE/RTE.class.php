@@ -35,7 +35,7 @@ class RTE {
 	 *
 	 * @param EditPage $form
 	 */
-	public static function reverse($form,  $out = null): bool{
+	public static function reverse($form,  $out = null): bool {
         global $wgRequest;
 		wfProfileIn(__METHOD__);
 
