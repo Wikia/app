@@ -14,11 +14,11 @@
     "ember-cli-shims": "0.1.1"
   },
   "homepage": "https://github.com/Wikia/design-system",
-  "_release": "e6623c05c5",
+  "_release": "1519179b82",
   "_resolution": {
     "type": "branch",
     "branch": "disabled-mixin",
-    "commit": "e6623c05c5d9b3ab44d58a64b6f47c5c997db0c2"
+    "commit": "1519179b82c4dddefad1080c5de8d7c1e71f41b1"
   },
   "_source": "https://github.com/Wikia/design-system.git",
   "_target": "disabled-mixin",

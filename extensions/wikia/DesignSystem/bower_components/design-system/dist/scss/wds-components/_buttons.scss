@@ -30,8 +30,7 @@
 		cursor: pointer;
 	}
 
-	&:disabled,
-	&.wds-is-disabled {
+	&:disabled {
 		cursor: default;
 		opacity: .5;
 	}

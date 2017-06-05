@@ -47,11 +47,6 @@
 		transition: box-shadow .1s;
 	}
 
-	&.wds-is-disabled {
-		opacity: .5;
-		pointer-events: none;
-	}
-
 	.wds-dropdown__content {
 		left: -$wds-dropdown-padding + $tab-margin-horizontal;
 		transform: none;
