@@ -2,9 +2,9 @@
 $messages = array();
 
 $messages['en'] = array(
-	'wikiacuratedcontent-desc' => 'Fandom Curated Content mobile app modules',
-	'wikiacuratedcontent-preview-description' => 'This is just a preview of how pages would look like in a Fandom Curated Content application.',
-	'wikiacuratedcontent-content-title' => 'Fandom Curated Content managment tool',
+	'wikiacuratedcontent-desc' => 'FANDOM Curated Content mobile app modules',
+	'wikiacuratedcontent-preview-description' => 'This is just a preview of how pages would look like in a FANDOM Curated Content application.',
+	'wikiacuratedcontent-content-title' => 'FANDOM Curated Content managment tool',
 	'wikiacuratedcontent-content-item' => 'Item',
 	'wikiacuratedcontent-content-section' => 'Item Section (optional)',
 	'wikiacuratedcontent-content-name' => 'Curated Content Name',
@@ -128,8 +128,8 @@ $messages['cs'] = array(
 );
 
 $messages['de'] = array(
-	'wikiacuratedcontent-desc' => 'Modul für Fandom Curated Content App',
-	'wikiacuratedcontent-preview-description' => 'Dies ist nur eine Vorschau, wie die erstellten Seiten in einer Fandom Curated Content App aussehen würden.',
+	'wikiacuratedcontent-desc' => 'Modul für FANDOM Curated Content App',
+	'wikiacuratedcontent-preview-description' => 'Dies ist nur eine Vorschau, wie die erstellten Seiten in einer FANDOM Curated Content App aussehen würden.',
 	'wikiacuratedcontent-content-title' => 'Fandoms Curated Content Managementoberfläche',
 	'wikiacuratedcontent-content-save' => 'Speichern',
 	'wikiacuratedcontent-content-duplicate-entry' => 'Dieser Eintrag ist bereits vorhanden.',
@@ -165,9 +165,9 @@ $messages['de'] = array(
 );
 
 $messages['es'] = array(
-	'wikiacuratedcontent-desc' => 'Módulos de Mantenimiento de contendido de la app para móviles de Fandom',
-	'wikiacuratedcontent-preview-description' => 'Esta es solo una previsualización de cómo se verían las páginas en la aplicación de Mantenimiento de contenido de Fandom.',
-	'wikiacuratedcontent-content-title' => 'Herramienta para la gestión del Mantenimiento de contenido de Fandom',
+	'wikiacuratedcontent-desc' => 'Módulos de Mantenimiento de contendido de la app para móviles de FANDOM',
+	'wikiacuratedcontent-preview-description' => 'Esta es solo una previsualización de cómo se verían las páginas en la aplicación de Mantenimiento de contenido de FANDOM.',
+	'wikiacuratedcontent-content-title' => 'Herramienta para la gestión del Mantenimiento de contenido de FANDOM',
 	'wikiacuratedcontent-content-save' => 'Guardar',
 	'wikiacuratedcontent-content-duplicate-entry' => 'Este valor está duplicado',
 	'wikiacuratedcontent-content-item' => 'Elemento',
@@ -241,8 +241,8 @@ $messages['fi'] = array(
 );
 
 $messages['fr'] = array(
-	'wikiacuratedcontent-desc' => 'Fandom Curated Content mobile app modules',
-	'wikiacuratedcontent-preview-description' => 'Ceci est un simple aperçu de ce à quoi ressembleront les pages dans une application communautaire de Fandom.',
+	'wikiacuratedcontent-desc' => 'FANDOM Curated Content mobile app modules',
+	'wikiacuratedcontent-preview-description' => 'Ceci est un simple aperçu de ce à quoi ressembleront les pages dans une application communautaire de FANDOM.',
 	'wikiacuratedcontent-content-title' => "Outil de gestion du contenu de l'application communautaire",
 	'wikiacuratedcontent-content-save' => 'Enregistrer',
 	'wikiacuratedcontent-content-duplicate-entry' => 'Cette valeur est dupliquée',
@@ -293,9 +293,9 @@ $messages['ia'] = array(
 );
 
 $messages['it'] = array(
-	'wikiacuratedcontent-desc' => 'Moduli dei contenuti curati per le app di Fandom mobile',
-	'wikiacuratedcontent-preview-description' => "Questa è solo un'anteprima di come le pagine verranno visualizzate nell'applicazione dei contenuti curati di Fandom.",
-	'wikiacuratedcontent-content-title' => 'Strumento di gestione dei contenuti curati di Fandom',
+	'wikiacuratedcontent-desc' => 'Moduli dei contenuti curati per le app di FANDOM mobile',
+	'wikiacuratedcontent-preview-description' => "Questa è solo un'anteprima di come le pagine verranno visualizzate nell'applicazione dei contenuti curati di FANDOM.",
+	'wikiacuratedcontent-content-title' => 'Strumento di gestione dei contenuti curati di FANDOM',
 	'wikiacuratedcontent-content-item' => 'Elemento',
 	'wikiacuratedcontent-content-section' => "Sezione dell'elemento (opzionale)",
 	'wikiacuratedcontent-content-name' => 'Nome del contenuto curato',
@@ -469,9 +469,9 @@ $messages['nl'] = array(
 );
 
 $messages['pl'] = array(
-	'wikiacuratedcontent-desc' => 'Moduły aplikacji mobilnej do selekcjonowania treści w Fandom',
-	'wikiacuratedcontent-preview-description' => 'To jest tylko podgląd tego, jak strony będą wyglądać w aplikacji do selekcjonowania treści w Fandom.',
-	'wikiacuratedcontent-content-title' => 'Narzędzie do selekcjonowania treści w Fandom',
+	'wikiacuratedcontent-desc' => 'Moduły aplikacji mobilnej do selekcjonowania treści w FANDOM',
+	'wikiacuratedcontent-preview-description' => 'To jest tylko podgląd tego, jak strony będą wyglądać w aplikacji do selekcjonowania treści w FANDOM.',
+	'wikiacuratedcontent-content-title' => 'Narzędzie do selekcjonowania treści w FANDOM',
 	'wikiacuratedcontent-content-save' => 'Zapisz',
 	'wikiacuratedcontent-content-duplicate-entry' => 'Ta wartość jest zduplikowana',
 	'wikiacuratedcontent-content-item' => 'Element',
@@ -517,9 +517,9 @@ $messages['ps'] = array(
 );
 
 $messages['pt'] = array(
-	'wikiacuratedcontent-desc' => 'Módulos de aplicativos móveis do conteúdo personalizado do Fandom',
-	'wikiacuratedcontent-preview-description' => 'Esta é apenas uma prévia de como as páginas serão mostradas em um aplicativo do conteúdo personalizado do Fandom.',
-	'wikiacuratedcontent-content-title' => 'Ferramenta de gerenciamento de conteúdo personalizado do Fandom',
+	'wikiacuratedcontent-desc' => 'Módulos de aplicativos móveis do conteúdo personalizado do FANDOM',
+	'wikiacuratedcontent-preview-description' => 'Esta é apenas uma prévia de como as páginas serão mostradas em um aplicativo do conteúdo personalizado do FANDOM.',
+	'wikiacuratedcontent-content-title' => 'Ferramenta de gerenciamento de conteúdo personalizado do FANDOM',
 	'wikiacuratedcontent-content-item' => 'Item',
 	'wikiacuratedcontent-content-section' => 'Seção do item (opcional)',
 	'wikiacuratedcontent-content-name' => 'Nome do Conteúdo Personalizado',

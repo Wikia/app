@@ -22,7 +22,7 @@
 	.wds-button {
 		@include button-theming($color-buttons, $color-button-text, $color-text);
 	}
-
+	
 	&__counter {
 		color: $color-text;
 		float: right;
