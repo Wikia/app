@@ -142,7 +142,6 @@ $wgIgnoredMessages = array(
 	'uploadfooter',
 	'listgrouprights-link',
 	'search-interwiki-custom',
-	'allpages-summary',
 	'booksources-summary',
 	'categories-summary',
 	'blocklist-summary',

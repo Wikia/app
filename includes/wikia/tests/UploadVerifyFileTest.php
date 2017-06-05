@@ -28,9 +28,9 @@ class UploadVerifyFile extends WikiaBaseTest {
 			file_put_contents($this->tmpPath, $uploadContent);
 		}
 
-		$uploadMock = $this->mockClassWithMethods('TestUploadClass', array(
-			'getTempPath' => $this->tmpPath
-		));
+		$uploadMock = $this->createConfiguredMock( TestUploadClass::class, [
+			'getTempPath' => $this->tmpPath,
+		] );
 
 		$status = array();
 		$ret = Wikia::onUploadVerifyFile($uploadMock, $mime, $status);

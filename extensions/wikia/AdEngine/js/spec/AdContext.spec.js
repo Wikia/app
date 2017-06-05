@@ -91,18 +91,6 @@ describe('AdContext', function () {
 		context.opts.sourcePointMMS = true;
 	}
 
-	function enableTaboola(context) {
-		mocks.instantGlobals = mocks.instantGlobals || {};
-		mocks.instantGlobals.wgAdDriverTaboolaConfig = {
-			SLOT: {
-				recovery: ['CURRENT_COUNTRY']
-			}
-		};
-
-		context.opts = context.opts || {};
-		context.opts.useTaboola = true;
-	}
-
 	function enablePageFairDetection() {
 		mocks.instantGlobals.wgAdDriverPageFairDetectionCountries = ['CURRENT_COUNTRY'];
 		spyOn(mocks.sampler, 'sample').and.returnValue(true);
@@ -132,18 +120,6 @@ describe('AdContext', function () {
 
 		mocks.instantGlobals = mocks.instantGlobals || {};
 		mocks.instantGlobals.wgAdDriverSourcePointRecoveryCountries = ['CURRENT_COUNTRY'];
-	}
-
-	function enableGCS(context) {
-		enableSourcePointDetection(context);
-		context.opts = context.opts || {};
-		context.opts.sourcePointDetection = true;
-		context.opts.showAds = true;
-
-		spyOn(mocks.abTesting, 'getGroup').and.returnValue('GROUP_5');
-
-		mocks.instantGlobals = mocks.instantGlobals || {};
-		mocks.instantGlobals.wgAdDriverGoogleConsumerSurveysCountries = ['CURRENT_COUNTRY'];
 	}
 
 	it(
@@ -706,53 +682,6 @@ describe('AdContext', function () {
 		expect(context.opts.sourcePointMMS).toBeTruthy();
 	});
 
-	it('Should enable Taboola', function () {
-		var context = {};
-
-		enableTaboola(context);
-		getModule().setContext(context);
-
-		expect(context.opts.loadTaboolaLibrary).toBeTruthy();
-	});
-
-	it('Should disable Taboola if useTaboola is false', function () {
-		var context = {};
-
-		enableTaboola(context);
-		context.opts = {
-			useTaboola: false,
-			disableTaboola: true
-		};
-
-		getModule().setContext(context);
-
-		expect(context.opts.loadTaboolaLibrary).toBeFalsy();
-	});
-
-	it('Should enable Taboola if there is no useTaboola variable (cache issue)', function () {
-		var context = {};
-
-		mocks.instantGlobals = mocks.instantGlobals || {};
-		mocks.instantGlobals.wgAdDriverTaboolaConfig = {
-			SLOT: {
-				recovery: ['CURRENT_COUNTRY']
-			}
-		};
-
-		getModule().setContext(context);
-
-		expect(context.opts.loadTaboolaLibrary).toBeTruthy();
-	});
-
-	it('Should enable GCS', function () {
-		var context = {};
-
-		enableGCS(context);
-		getModule().setContext(context);
-
-		expect(context.opts.googleConsumerSurveys).toBeTruthy();
-	});
-
 	it('Should disable SourcePoint Recovery when PageFair recovery is enabled', function () {
 		var context = {};
 
@@ -784,50 +713,6 @@ describe('AdContext', function () {
 
 		expect(context.opts.pageFairRecovery).toBeTruthy();
 		expect(context.opts.sourcePointMMS).toBeFalsy();
-	});
-
-	it('Should disable Taboola if SourcePoint Recovery is enabled', function () {
-		var context = {};
-
-		enableSourcePointMMS(context);
-		enableTaboola(context);
-		getModule().setContext(context);
-
-		expect(context.opts.sourcePointMMS).toBeTruthy();
-		expect(context.opts.loadTaboolaLibrary).toBeFalsy();
-	});
-
-	it('Should disable Taboola if PageFair Recovery is enabled', function () {
-		var context = {};
-
-		enablePageFairRecovery(context);
-		enableTaboola(context);
-		getModule().setContext(context);
-
-		expect(context.opts.pageFairRecovery).toBeTruthy();
-		expect(context.opts.loadTaboolaLibrary).toBeFalsy();
-	});
-
-	it('Should disable GCS if Taboola is enabled', function () {
-		var context = {};
-
-		enableTaboola(context);
-		enableGCS(context);
-		getModule().setContext(context);
-
-		expect(context.opts.loadTaboolaLibrary).toBeTruthy();
-		expect(context.opts.googleConsumerSurveys).toBeFalsy();
-	});
-
-	it('Should disable GCS if PageFair is enabled', function () {
-		var context = {};
-
-		enablePageFairRecovery(context);
-		enableGCS(context);
-		getModule().setContext(context);
-
-		expect(context.opts.pageFairRecovery).toBeTruthy();
-		expect(context.opts.googleConsumerSurveys).toBeFalsy();
 	});
 
 	it('showcase is enabled if the cookie is set', function () {
@@ -995,5 +880,17 @@ describe('AdContext', function () {
 		};
 
 		expect(getModule().getContext().opts.overridyLeaderboardSizes).toBeFalsy();
+	});
+
+	it('Enable KILO ad unit builder', function () {
+		mocks.instantGlobals = {wgAdDriverKILOCountries: ['CURRENT_COUNTRY']};
+
+		expect(getModule().getContext().opts.enableKILOAdUnit).toBeTruthy();
+	});
+
+	it('Disable KILO ad unit builder', function () {
+		mocks.instantGlobals = {wgAdDriverKILOCountries: ['AA']};
+
+		expect(getModule().getContext().opts.enableKILOAdUnit).toBeFalsy();
 	});
 });
