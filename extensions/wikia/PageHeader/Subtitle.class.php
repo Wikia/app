@@ -2,7 +2,7 @@
 
 namespace Wikia\PageHeader;
 
-use Xml;
+use Html;
 
 class Subtitle {
 	/**
@@ -31,7 +31,7 @@ class Subtitle {
 		if ( !$this->suppressPageSubtitle ) {
 			$this->subtitle = $this->getSubtitle();
 			//watch list uses that, pageSubject?
-			$this->pageSubtitle = $this->handlePageSubtitle();
+			$this->pageSubtitle = $this->getPageSubtitle();
 		}
 	}
 
@@ -41,7 +41,7 @@ class Subtitle {
 		return $wgOutput->getSubtitle();
 	}
 
-	private function handleTalkPage() {
+	private function getTalkPageBackLink() {
 		$title = \RequestContext::getMain()->getTitle();
 
 		if ( $title->isTalkPage() ) {
@@ -50,23 +50,23 @@ class Subtitle {
 			// back to subject article link
 			switch ( $namespace ) {
 				case NS_TEMPLATE_TALK:
-					$msgKey = 'oasis-page-header-back-to-template';
+					$msgKey = 'page-header-subtitle-back-to-template';
 					break;
 
 				case NS_MEDIAWIKI_TALK:
-					$msgKey = 'oasis-page-header-back-to-mediawiki';
+					$msgKey = 'page-header-subtitle-back-to-mediawiki';
 					break;
 
 				case NS_CATEGORY_TALK:
-					$msgKey = 'oasis-page-header-back-to-category';
+					$msgKey = 'page-header-subtitle-back-to-category';
 					break;
 
 				case NS_FILE_TALK:
-					$msgKey = 'oasis-page-header-back-to-file';
+					$msgKey = 'page-header-subtitle-back-to-file';
 					break;
 
 				default:
-					$msgKey = 'oasis-page-header-back-to-article';
+					$msgKey = 'page-header-subtitle-back-to-article';
 			}
 
 			return \Linker::link(
@@ -87,27 +87,28 @@ class Subtitle {
 		// render page type info
 		switch ( $namespace ) {
 			case NS_MEDIAWIKI:
-				$pageType = wfMessage( 'oasis-page-header-subtitle-mediawiki' )->escaped();
+				$pageType = wfMessage( 'page-header-subtitle-mediawiki' )->escaped();
 				break;
 
 			case NS_TEMPLATE:
-				$pageType = wfMessage( 'oasis-page-header-subtitle-template' )->escaped();
+				$pageType = wfMessage( 'page-header-subtitle-template' )->escaped();
 				break;
 
 			case NS_SPECIAL:
-				if ( !$title->isSpecial('Forum') &&
+				if (
+					!$title->isSpecial('Forum') &&
 					!$title->isSpecial('ThemeDesignerPreview')
 				) {
-					$pageType = wfMessage( 'oasis-page-header-subtitle-special' )->escaped();
+					$pageType = wfMessage( 'page-header-subtitle-special' )->escaped();
 				}
 				break;
 
 			case NS_CATEGORY:
-				$pageType = wfMessage( 'oasis-page-header-subtitle-category' )->escaped();
+				$pageType = wfMessage( 'page-header-subtitle-category' )->escaped();
 				break;
 
 			case NS_FORUM:
-				$pageType = wfMessage( 'oasis-page-header-subtitle-forum' )->escaped();
+				$pageType = wfMessage( 'page-header-subtitle-forum' )->escaped();
 				break;
 		}
 		//Todo: do not pass $this, or maybe whole hook?
@@ -123,7 +124,7 @@ class Subtitle {
 		$variants = $this->skinTemplate->get( 'content_navigation' )['variants'];
 		if ( !empty( $variants ) ) {
 			return array_map( function ( $variant ) {
-				return Xml::element( 'a', [
+				return Html::element( 'a', [
 					'href' => $variant['href'],
 					'rel' => 'nofollow',
 					'id' => $variant['id'],
@@ -148,7 +149,7 @@ class Subtitle {
 		//if ( !$isPreview && !$isShowChanges ) {
 			return \Wikia::link(
 				$title,
-				wfMessage( 'oasis-page-header-back-to-article' )->escaped(),
+				wfMessage( 'page-header-subtitle-back-to-article' )->escaped(),
 				[ 'accesskey' => 'c' ],
 				[ ],
 				'known'
@@ -166,13 +167,13 @@ class Subtitle {
 	 *
 	 * @return string
 	 */
-	private function handlePageSubtitle() {
+	private function getPageSubtitle() {
 		$additional = '';
 		wfRunHooks( 'BeforePageHeaderSubtitle', [ &$additional ] );
 
 		$subtitle = [
 			$this->getPageType(),
-			$this->handleTalkPage(),
+			$this->getTalkPageBackLink(),
 			$this->getSubject(),
 			$this->getSubPageLinks(),
 		];
