@@ -10,6 +10,7 @@
 namespace PHPUnit\Framework\Constraint;
 
 use Countable;
+use Iterator;
 use IteratorAggregate;
 use Traversable;
 use Generator;
@@ -44,9 +45,9 @@ class Count extends Constraint
     }
 
     /**
-     * @param mixed $other
+     * @param \Countable|\Traversable\|array $other
      *
-     * @return bool
+     * @return int
      */
     protected function getCountOf($other)
     {
@@ -55,14 +56,18 @@ class Count extends Constraint
         }
 
         if ($other instanceof Traversable) {
-            if ($other instanceof IteratorAggregate) {
-                $iterator = $other->getIterator();
-            } else {
-                $iterator = $other;
+            while ($other instanceof IteratorAggregate) {
+                $other = $other->getIterator();
             }
+
+            $iterator = $other;
 
             if ($iterator instanceof Generator) {
                 return $this->getCountOfGenerator($iterator);
+            }
+
+            if (!$iterator instanceof Iterator) {
+                return \iterator_count($iterator);
             }
 
             $key   = $iterator->key();

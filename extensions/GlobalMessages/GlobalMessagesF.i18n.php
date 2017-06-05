@@ -39,7 +39,8 @@ Permitted {{PLURAL:$3|file type is|file types are}} $2.',
 	'file-too-large' => 'The file you submitted was too large.',
 	'filename-tooshort' => 'The filename is too short.',
 	'filetype-banned' => 'This type of file is banned.',
-	'fileexists' => 'A photo with this name has already been uploaded to the wiki. Please check [[:$1]] if you\'re not sure if you want to change it. Once uploaded, this photo may take up to 2 minutes to be visible.',
+	'fileexists' => 'A photo with this name has already been uploaded to the wiki. Please check [[:$1]] if you\'re not sure if you want to change it. Once uploaded, this photo may take up to 2 minutes to be visible.
+[[$1|thumb]]',
 	'filepageexists' => 'The description page for this file has already been created at \'\'\'<tt>[[:$1]]</tt>\'\'\', but no file with this name currently exists.
 The summary you enter will not appear on the description page.
 To make your summary appear there, you will need to manually edit it.
@@ -5465,7 +5466,8 @@ $messages['de'] = [
 	'filename-tooshort' => 'Der Dateiname ist zu kurz',
 	'filetype-banned' => 'Diese Dateiendung ist gesperrt.',
 	'fileexists' => "Eine Datei mit diesem Namen existiert bereits.
-Bitte prüfe '''<tt>[[:$1]]</tt>''' (öffnet ein neues Fenster), wenn du dir nicht sicher bist, ob du sie ändern willst.",
+Bitte prüfe '''<tt>[[:$1]]</tt>''' (öffnet ein neues Fenster), wenn du dir nicht sicher bist, ob du sie ändern willst.
+[[$1|thumb]]",
 	'filepageexists' => 'Eine Beschreibungsseite wurde bereits als \'\'\'<tt>[[:$1]]</tt>\'\'\' erstellt, es ist aber keine Datei mit diesem Namen vorhanden.
 Die eingegebene Beschreibung wird nicht auf die Beschreibungsseite übernommen.
 Die Beschreibungsseite musst du nach dem Hochladen der Datei noch manuell bearbeiten.
@@ -5702,7 +5704,8 @@ $messages['de-weigsbrag'] = [
 	'filetype-unwanted-type' => '\'\'\'„.$1“\'\'\' eines noggserwünschdes Dadeiwormad sei. Erlaubdes sei: $2.',
 	'filetype-banned-type' => '\'\'\'„.$1“\'\'\' eines noggserlaubdes Dadeiwormad sei. Erlaubdes sei: $2.',
 	'filetype-missing' => 'Dose Dadei wo wol hoglad haddar noggs Erweid (s.B. „.jpg“).',
-	'fileexists' => 'Gebdar schon eines Dadei mid dose Nam. Wan auw „Dadei schbeig“ gligg, dose Dadei übschreib. Bid brüw <strong><tt>$1</tt></strong>, wan noggs sock sei.',
+	'fileexists' => 'Gebdar schon eines Dadei mid dose Nam. Wan auw „Dadei schbeig“ gligg, dose Dadei übschreib. Bid brüw <strong><tt>$1</tt></strong>, wan noggs sock sei.
+[[$1|thumb]]',
 	'filepageexists' => 'Haddar schon eines Beschreibseid als <strong><tt>$1</tt></strong> erschdel, gebdar aba noggs Dadei mid dose Nam. Dose Beschreib wo eingeb noggs übnehm auw dose Beschreibseid. Musdar dose Beschreibseid nag Hoglad won Dadei nog manueles bearbeid.',
 	'fileexists-extension' => 'Gebdar schon eines Dadei mid ähnliges Nam:<br />
 Nam won Dadei wo wol hoglad: <strong><tt>$1</tt></strong><br />

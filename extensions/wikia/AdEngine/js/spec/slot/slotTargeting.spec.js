@@ -3,20 +3,43 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 	'use strict';
 
 	function getModule(pageType, skin) {
-		var adContext = {
-			getContext: function() {
-				return {
-					targeting: {
-						pageType: pageType,
-						skin: skin
-					}
-				};
-			}
-		};
+		var abTest = {
+				getExperiments: function () {
+					return [
+						{
+							id: 1,
+							group: {
+								id: 15
+							}
+						},
+						{
+							id: 5,
+							group: {
+								id: 21
+							}
+						}
+					];
+				}
+			},
+			adContext = {
+				getContext: function() {
+					return {
+						targeting: {
+							pageType: pageType,
+							skin: skin
+						}
+					};
+				}
+			},
+			instantGlobals = {
+				wgAdDriverAbTestIdTargeting: 1
+			};
 
 		return modules['ext.wikia.adEngine.slot.slotTargeting'](
 			adContext,
-			modules['ext.wikia.adEngine.utils.math']()
+			modules['ext.wikia.adEngine.utils.math'](),
+			abTest,
+			instantGlobals
 		);
 	}
 
@@ -184,6 +207,14 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 
 			expect(hbSi).toBe(testCase.hb_si);
 		});
+	});
+
+	it('Generate correct ab slot id', function () {
+		var abi = getModule().getAbTestId({
+			wsi: 'ola1'
+		});
+
+		expect(abi).toBe('1_15ola1');
 	});
 
 });

@@ -10,6 +10,7 @@
 
 namespace PHPUnit\TextUI;
 
+use PHPUnit\Framework\Error\Deprecated;
 use PHPUnit\Framework\Error\Notice;
 use PHPUnit\Framework\Error\Warning;
 use PHPUnit\Framework\Exception;
@@ -222,6 +223,10 @@ class TestRunner extends BaseTestRunner
             $result->convertErrorsToExceptions(false);
         }
 
+        if (!$arguments['convertDeprecationsToExceptions']) {
+            Deprecated::$enabled = false;
+        }
+
         if (!$arguments['convertNoticesToExceptions']) {
             Notice::$enabled = false;
         }
@@ -324,64 +329,85 @@ class TestRunner extends BaseTestRunner
             }
         }
 
+        if ($this->runtime->discardsComments()) {
+            $this->writeMessage('Warning', 'opcache.save_comments=0 set; annotations will not work');
+        }
+
         foreach ($arguments['listeners'] as $listener) {
             $result->addListener($listener);
         }
 
         $result->addListener($this->printer);
 
-        if (isset($arguments['testdoxHTMLFile'])) {
-            $result->addListener(
-                new HtmlResultPrinter(
-                    $arguments['testdoxHTMLFile'],
-                    $arguments['testdoxGroups'],
-                    $arguments['testdoxExcludeGroups']
-                )
-            );
-        }
-
-        if (isset($arguments['testdoxTextFile'])) {
-            $result->addListener(
-                new TextResultPrinter(
-                    $arguments['testdoxTextFile'],
-                    $arguments['testdoxGroups'],
-                    $arguments['testdoxExcludeGroups']
-                )
-            );
-        }
-
-        if (isset($arguments['testdoxXMLFile'])) {
-            $result->addListener(
-                new XmlResultPrinter(
-                    $arguments['testdoxXMLFile']
-                )
-            );
-        }
-
         $codeCoverageReports = 0;
 
-        if (isset($arguments['coverageClover'])) {
-            $codeCoverageReports++;
-        }
+        if (!isset($arguments['noLogging'])) {
+            if (isset($arguments['testdoxHTMLFile'])) {
+                $result->addListener(
+                    new HtmlResultPrinter(
+                        $arguments['testdoxHTMLFile'],
+                        $arguments['testdoxGroups'],
+                        $arguments['testdoxExcludeGroups']
+                    )
+                );
+            }
 
-        if (isset($arguments['coverageCrap4J'])) {
-            $codeCoverageReports++;
-        }
+            if (isset($arguments['testdoxTextFile'])) {
+                $result->addListener(
+                    new TextResultPrinter(
+                        $arguments['testdoxTextFile'],
+                        $arguments['testdoxGroups'],
+                        $arguments['testdoxExcludeGroups']
+                    )
+                );
+            }
 
-        if (isset($arguments['coverageHtml'])) {
-            $codeCoverageReports++;
-        }
+            if (isset($arguments['testdoxXMLFile'])) {
+                $result->addListener(
+                    new XmlResultPrinter(
+                        $arguments['testdoxXMLFile']
+                    )
+                );
+            }
 
-        if (isset($arguments['coveragePHP'])) {
-            $codeCoverageReports++;
-        }
+            if (isset($arguments['teamcityLogfile'])) {
+                $result->addListener(
+                    new TeamCity($arguments['teamcityLogfile'])
+                );
+            }
 
-        if (isset($arguments['coverageText'])) {
-            $codeCoverageReports++;
-        }
+            if (isset($arguments['junitLogfile'])) {
+                $result->addListener(
+                    new JUnit(
+                        $arguments['junitLogfile'],
+                        $arguments['reportUselessTests']
+                    )
+                );
+            }
 
-        if (isset($arguments['coverageXml'])) {
-            $codeCoverageReports++;
+            if (isset($arguments['coverageClover'])) {
+                $codeCoverageReports++;
+            }
+
+            if (isset($arguments['coverageCrap4J'])) {
+                $codeCoverageReports++;
+            }
+
+            if (isset($arguments['coverageHtml'])) {
+                $codeCoverageReports++;
+            }
+
+            if (isset($arguments['coveragePHP'])) {
+                $codeCoverageReports++;
+            }
+
+            if (isset($arguments['coverageText'])) {
+                $codeCoverageReports++;
+            }
+
+            if (isset($arguments['coverageXml'])) {
+                $codeCoverageReports++;
+            }
         }
 
         if (isset($arguments['noCoverage'])) {
@@ -493,21 +519,6 @@ class TestRunner extends BaseTestRunner
             if ($codeCoverageReports > 1 && isset($arguments['cacheTokens'])) {
                 $codeCoverage->setCacheTokens($arguments['cacheTokens']);
             }
-        }
-
-        if (isset($arguments['teamcityLogfile'])) {
-            $result->addListener(
-                new TeamCity($arguments['teamcityLogfile'])
-            );
-        }
-
-        if (isset($arguments['junitLogfile'])) {
-            $result->addListener(
-                new JUnit(
-                    $arguments['junitLogfile'],
-                    $arguments['reportUselessTests']
-                )
-            );
         }
 
         $result->beStrictAboutTestsThatDoNotTestAnything($arguments['reportUselessTests']);
@@ -773,6 +784,10 @@ class TestRunner extends BaseTestRunner
                 $arguments['colors'] = $phpunitConfiguration['colors'];
             }
 
+            if (isset($phpunitConfiguration['convertDeprecationsToExceptions']) && !isset($arguments['convertDeprecationsToExceptions'])) {
+                $arguments['convertDeprecationsToExceptions'] = $phpunitConfiguration['convertDeprecationsToExceptions'];
+            }
+
             if (isset($phpunitConfiguration['convertErrorsToExceptions']) && !isset($arguments['convertErrorsToExceptions'])) {
                 $arguments['convertErrorsToExceptions'] = $phpunitConfiguration['convertErrorsToExceptions'];
             }
@@ -1032,6 +1047,7 @@ class TestRunner extends BaseTestRunner
         $arguments['cacheTokens']                                     = $arguments['cacheTokens'] ?? false;
         $arguments['colors']                                          = $arguments['colors'] ?? ResultPrinter::COLOR_DEFAULT;
         $arguments['columns']                                         = $arguments['columns'] ?? 80;
+        $arguments['convertDeprecationsToExceptions']                 = $arguments['convertDeprecationsToExceptions'] ?? true;
         $arguments['convertErrorsToExceptions']                       = $arguments['convertErrorsToExceptions'] ?? true;
         $arguments['convertNoticesToExceptions']                      = $arguments['convertNoticesToExceptions'] ?? true;
         $arguments['convertWarningsToExceptions']                     = $arguments['convertWarningsToExceptions'] ?? true;

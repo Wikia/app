@@ -1481,11 +1481,6 @@ class Wikia {
 		}
 
 		if ( !User::isIP( $rc_ip ) ) {
-			// PLATFORM-1770: prevent multilookup.ml_ip column being set to zero (as INET_ATON fails to decode the IP)
-			Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . ' - rc_ip not valid', [
-				'rc_ip' => $rc_ip,
-				'request_ip' => $wgRequest->getIP()
-			] );
 			return true;
 		}
 

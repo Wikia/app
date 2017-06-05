@@ -72,6 +72,8 @@ $messages['en'] = [
 	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
 	'group-content-moderator' => 'Content Moderators',
 	'group-content-moderator-member' => 'Content Moderator',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
 ];
 
 $messages['qqq'] = [
