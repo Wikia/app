@@ -1,0 +1,29 @@
+#!/bin/bash
+#
+# Update the stats table about discussion migration.  Run whenever migrations take place
+# Remove when migraitons are done.
+
+DATE=`date "+%Y-%m-%d"`
+LOG_DIR="/home/garth/update-forum-activity-logs/$DATE"
+
+APP_DIR="/usr/wikia/slot1/current/src"
+
+WIKIA_MAINTENANCE="$APP_DIR/maintenance/wikia"
+DISCUSSION_MAINTENANCE="$APP_DIR/extensions/wikia/Discussions/maintenance"
+
+RUNNER_SCRIPT="$WIKIA_MAINTENANCE/runOnCluster.php"
+RUNNER_FILE="$DISCUSSION_MAINTENANCE/SiteStatus.class.php"
+
+mkdir -p $LOG_DIR
+
+for cluster in $(seq 1 7); do
+	LOG_FILE="$LOG_DIR/c$cluster.log"
+	echo -e "Updating activity for cluster $cluster"
+	echo -e "\tWriting to log $LOG_FILE"
+
+	CMD="php $RUNNER_SCRIPT --file $RUNNER_FILE -c $cluster --filter all --no-db-check > $LOG_FILE"
+	echo -e "\t$CMD"	
+	$CMD 
+#	echo -e "\tStarted with PID $! ..."
+done
+

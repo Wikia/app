@@ -12,4 +12,8 @@ class PageHeaderController extends \WikiaController {
 	public function categories() {
 		$this->setVal( 'categories', new Categories() );
 	}
+
+	public function subtitle() {
+		$this->setVal( 'subtitle', new Subtitle( $this->app ) );
+	}
 }

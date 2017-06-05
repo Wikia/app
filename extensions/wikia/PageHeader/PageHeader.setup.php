@@ -8,6 +8,7 @@ $wgAutoloadClasses[ 'Wikia\PageHeader\PageHeaderController' ] = $dir . 'PageHead
 $wgAutoloadClasses[ 'Wikia\PageHeader\Categories' ] = $dir . 'Categories.class.php';
 $wgAutoloadClasses[ 'Wikia\PageHeader\Counter' ] = $dir . 'Counter.class.php';
 $wgAutoloadClasses[ 'Wikia\PageHeader\PageTitle' ] = $dir . 'PageTitle.class.php';
+$wgAutoloadClasses[ 'Wikia\PageHeader\Subtitle' ] = $dir . 'Subtitle.class.php';
 
 // Hooks
 $wgAutoloadClasses[ 'Wikia\PageHeader\Hooks' ] = $dir . 'Hooks.class.php';

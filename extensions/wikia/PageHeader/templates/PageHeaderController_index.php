@@ -4,5 +4,6 @@
 	<? if ( $counter->isNotEmpty() ) : ?>
 		<span class="page-header__counter"><?= $counter->text ?></span>
 	<? endif; ?>
+	<?= $app->renderView('Wikia\PageHeader\PageHeader', 'subtitle'); ?>
 	<hr class="page-header__separator">
 </header>
