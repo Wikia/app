@@ -118,7 +118,7 @@ class ResultWrapper implements Iterator {
 	 * Fetch the next row from the given result object, in associative array
 	 * form.  Fields are retrieved with $row['fieldname'].
 	 *
-	 * @return Array
+	 * @return object
 	 * @throws DBUnexpectedError Thrown if the database returns an error
 	 */
 	function fetchRow() {
@@ -159,7 +159,7 @@ class ResultWrapper implements Iterator {
 	}
 
 	/**
-	 * @return int
+	 * @return object
 	 */
 	function current() {
 		if ( is_null( $this->currentRow ) ) {
@@ -176,7 +176,7 @@ class ResultWrapper implements Iterator {
 	}
 
 	/**
-	 * @return int
+	 * @return object
 	 */
 	function next() {
 		$this->pos++;
