@@ -1,0 +1,11 @@
+packages :
+	[
+		{
+			output : 'ckeditor.js',
+
+			files :
+				[
+				]
+		}
+
+	]
