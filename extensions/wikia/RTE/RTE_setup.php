@@ -12,18 +12,17 @@ $wgExtensionCredits['other'][] = array(
 
 // autoloaded classes
 $wgAutoloadClasses['RTE'] = __DIR__ . '/RTE.class.php';
-$wgAutoloadClasses['RTEAjax'] = __DIR__ . "/RTEAjax.class.php";
-$wgAutoloadClasses['RTEData'] = __DIR__ . "/RTEData.class.php";
-$wgAutoloadClasses['RTELang'] = __DIR__ . "/RTELang.class.php";
-$wgAutoloadClasses['RTELinkerHooks'] = __DIR__ . "/RTELinkerHooks.class.php";
-$wgAutoloadClasses['RTEMagicWord'] = __DIR__ . "/RTEMagicWord.class.php";
-$wgAutoloadClasses['RTEMarker'] = __DIR__ . "/RTEMarker.class.php";
-$wgAutoloadClasses['RTEParser'] = __DIR__ . "/RTEParser.class.php";
-$wgAutoloadClasses['RTEReverseParser'] = __DIR__ . "/RTEReverseParser.class.php";
-$wgAutoloadClasses['RTEController'] = __DIR__ . "/RTEController.class.php";
+$wgAutoloadClasses['RTEAjax'] = __DIR__ . '/RTEAjax.class.php';
+$wgAutoloadClasses['RTEData'] = __DIR__ . '/RTEData.class.php';
+$wgAutoloadClasses['RTELang'] = __DIR__ . '/RTELang.class.php';
+$wgAutoloadClasses['RTELinkerHooks'] = __DIR__ . '/RTELinkerHooks.class.php';
+$wgAutoloadClasses['RTEMagicWord'] = __DIR__ . '/RTEMagicWord.class.php';
+$wgAutoloadClasses['RTEMarker'] = __DIR__ . '/RTEMarker.class.php';
+$wgAutoloadClasses['RTEParser'] = __DIR__ . '/RTEParser.class.php';
+$wgAutoloadClasses['RTEReverseParser'] = __DIR__ . '/RTEReverseParser.class.php';
+$wgAutoloadClasses['RTEController'] = __DIR__ . '/RTEController.class.php';
 
 // hooks
-
 $wgHooks['EditPage::showEditForm:initial'][] = 'RTE::init';
 $wgHooks['ParserMakeImageParams'][] = 'RTEParser::makeImageParams';
 $wgHooks['AlternateEdit'][] = 'RTE::reverse';

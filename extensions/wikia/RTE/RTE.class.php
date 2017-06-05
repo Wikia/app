@@ -3,8 +3,8 @@
 class RTE {
 	
 	//init modes
-	const INIT_MODE_SOURCE = 0;
-	const INIT_MODE_WYSIWYG = 1;
+	const INIT_MODE_SOURCE = 'source';
+	const INIT_MODE_WYSIWYG = 'wysiwyg';
 
 	// unique editor instance ID
 	private static $instanceId = null;
@@ -35,8 +35,8 @@ class RTE {
 	 *
 	 * @param EditPage $form
 	 */
-	public static function reverse($form,  $out = null): bool{
-        global $wgRequest;
+	public static function reverse($form,  $out = null): bool {
+        	global $wgRequest;
 		wfProfileIn(__METHOD__);
 
 		if($wgRequest->wasPosted()) {
@@ -167,7 +167,7 @@ class RTE {
 
 		// check for edgecases (found during parsing done above)
 		if (RTE::edgeCasesFound()) {
-			self::setInitMode('source');
+		 	self::$initMode = self::INIT_MODE_SOURCE; 
 
 			// get edgecase type and add it to JS variables
 			$edgeCaseType = Xml::encodeJsVar(self::getEdgeCaseType());
@@ -223,7 +223,7 @@ class RTE {
 		}
 
 		// initial CK mode (wysiwyg / source)
-		$vars['RTEInitMode'] =  (self::$initMode == self::INIT_MODE_WYSIWYG) ? 'wysiwyg' : 'source';
+		$vars['RTEInitMode'] = self::$initMode;
 
 		// constants for regexp checking in links editor
 		$vars['RTEUrlProtocols'] = wfUrlProtocols();
@@ -363,13 +363,13 @@ HTML
 					break;
 
 				case 'source':
-					self::setInitMode('source');
+		 			self::$initMode = self::INIT_MODE_SOURCE; 
 					break;
 
 				case 'wysiwyg':
 				case 'visual':
 					$forcedWysiwyg = true;
-					self::setInitMode('wysiwyg');
+					self::$initMode = self::INIT_MODE_WYSIWYG; 
 					break;
 			}
 		}
@@ -422,7 +422,7 @@ HTML
 		$mode = $wgRequest->getVal('RTEMode', false);
 		if ($action == 'submit' && $mode == 'source') {
 			RTE::log('POST triggered from source mode');
-			RTE::setInitMode('source');
+		 	self::$initMode = self::INIT_MODE_SOURCE;
 		}
 
 		wfProfileOut(__METHOD__);
@@ -436,14 +436,6 @@ HTML
 		self::$wysiwygDisabledReason = $reason;
 
 		RTE::log("CK editor disabled - the reason is '{$reason}'");
-	}
-
-	/**
-	 * Set init mode of CK editor
-	 */
-	public static function setInitMode($mode) {
-		self::$initMode = ($mode == self::INIT_MODE_WYSIWYG) ? 'wysiwyg' : 'source';
-		RTE::log(__METHOD__, self::$initMode);
 	}
 
 	/**
