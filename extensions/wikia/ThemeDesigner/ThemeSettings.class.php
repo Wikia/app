@@ -25,7 +25,7 @@ class ThemeSettings {
 		$adminSkin = explode( '-', $wgAdminSkin );
 
 		if ( count( $adminSkin ) == 2 ) {
-			$transition = array(
+			$transition = [
 				'sky' => 'oasis',
 				'sapphire' => 'oasis',
 				'spring' => 'jade',
@@ -33,7 +33,7 @@ class ThemeSettings {
 				'obsession' => 'carbon',
 				'moonlight' => 'bluesteel',
 				'beach' => 'creamsicle',
-			);
+			];
 
 			if ( isset( $transition[$adminSkin[1]] ) ) {
 				$themeName = $transition[$adminSkin[1]];
@@ -72,7 +72,7 @@ class ThemeSettings {
 		$settings = $this->defaultSettings;
 		if ( !empty( $GLOBALS[self::WikiFactorySettings] ) ) {
 			$settings = array_merge( $settings, $GLOBALS[self::WikiFactorySettings] );
-			$colorKeys = array( "color-body", "color-page", "color-buttons", "color-links", "color-header" );
+			$colorKeys = [ "color-body", "color-page", "color-buttons", "color-links", "color-header" ];
 
 			// if any of the user set colors are invalid, use default
 			foreach ( $colorKeys as $colorKey ) {
@@ -103,9 +103,11 @@ class ThemeSettings {
 		$title = Title::newFromText( $definedName, NS_FILE );
 		if ( $definedName != $name ) {
 			$file = OldLocalFile::newFromArchiveName( $title, RepoGroup::singleton()->getLocalRepo(), $name );
+
 			return wfReplaceImageServer( $file->getUrl() );
 		} else {
 			$file = new LocalFile( $title, RepoGroup::singleton()->getLocalRepo() );
+
 			return wfReplaceImageServer( $file->getUrl() );
 		}
 	}
@@ -117,7 +119,7 @@ class ThemeSettings {
 				$entry['settings'] = array_merge( $this->defaultSettings, $entry['settings'] );
 			}
 		} else {
-			$history = array();
+			$history = [];
 		}
 
 		foreach ( $history as $key => $val ) {
@@ -132,16 +134,16 @@ class ThemeSettings {
 		$cityId = empty( $cityId ) ? $wgCityId : $cityId;
 
 		// Verify wordmark length ( CONN-116 )
-		if ( !empty( $settings[ 'wordmark-text' ] ) ) {
-			$settings[ 'wordmark-text' ] = trim( $settings[ 'wordmark-text' ] );
+		if ( !empty( $settings['wordmark-text'] ) ) {
+			$settings['wordmark-text'] = trim( $settings['wordmark-text'] );
 		}
 
-		if ( empty( $settings[ 'wordmark-text' ] ) ) {
+		if ( empty( $settings['wordmark-text'] ) ) {
 			// Do not save wordmark if its empty.
-			unset( $settings[ 'wordmark-text' ] );
+			unset( $settings['wordmark-text'] );
 		} else {
-			if ( mb_strlen( $settings[ 'wordmark-text' ] ) > 50 ) {
-				$settings[ 'wordmark-text' ] = mb_substr( $settings[ 'wordmark-text' ], 0, 50 );
+			if ( mb_strlen( $settings['wordmark-text'] ) > 50 ) {
+				$settings['wordmark-text'] = mb_substr( $settings['wordmark-text'], 0, 50 );
 			}
 		}
 
@@ -158,7 +160,7 @@ class ThemeSettings {
 			$file->repo->forceMaster();
 			$history = $file->getHistory( 1 );
 			if ( count( $history ) == 1 ) {
-				$oldFaviconFile = array( 'url' => $history[0]->getURL(), 'name' => $history[0]->getArchiveName() );
+				$oldFaviconFile = [ 'url' => $history[0]->getURL(), 'name' => $history[0]->getArchiveName() ];
 			}
 		}
 
@@ -174,7 +176,7 @@ class ThemeSettings {
 			$file->repo->forceMaster();
 			$history = $file->getHistory( 1 );
 			if ( count( $history ) == 1 ) {
-				$oldFile = array( 'url' => $history[0]->getURL(), 'name' => $history[0]->getArchiveName() );
+				$oldFile = [ 'url' => $history[0]->getURL(), 'name' => $history[0]->getArchiveName() ];
 			}
 		}
 
@@ -189,14 +191,14 @@ class ThemeSettings {
 			$settings['background-image-width'] = $file->getWidth();
 			$settings['background-image-height'] = $file->getHeight();
 
-			$imageServing = new ImageServing( null, 120, array( "w" => "120", "h" => "65" ) );
+			$imageServing = new ImageServing( null, 120, [ "w" => "120", "h" => "65" ] );
 			$settings['user-background-image'] = $file->getURL();
 			$settings['user-background-image-thumb'] = wfReplaceImageServer( $file->getThumbUrl( $imageServing->getCut( $file->getWidth(), $file->getHeight(), "origin" ) . "-" . $file->getName() ) );
 
- 			$file->repo->forceMaster();
+			$file->repo->forceMaster();
 			$history = $file->getHistory( 1 );
 			if ( count( $history ) == 1 ) {
-				$oldBackgroundFile = array( 'url' => $history[0]->getURL(), 'name' => $history[0]->getArchiveName() );
+				$oldBackgroundFile = [ 'url' => $history[0]->getURL(), 'name' => $history[0]->getArchiveName() ];
 			}
 		}
 
@@ -208,7 +210,7 @@ class ThemeSettings {
 			$lastItem = end( $history );
 			$revisionId = intval( $lastItem['revision'] ) + 1;
 		} else {
-			$history = array();
+			$history = [];
 			$revisionId = 1;
 		}
 
@@ -216,8 +218,8 @@ class ThemeSettings {
 		// validation
 		// default color values
 		foreach ( ThemeDesignerHelper::getColorVars() as $sColorVar => $sDefaultValue ) {
-			if ( !isset( $settings[ $sColorVar ] ) || !ThemeDesignerHelper::isValidColor( $settings[ $sColorVar ] ) ) {
-				$settings[ $sColorVar ] = $sDefaultValue;
+			if ( !isset( $settings[$sColorVar] ) || !ThemeDesignerHelper::isValidColor( $settings[$sColorVar] ) ) {
+				$settings[$sColorVar] = $sDefaultValue;
 			}
 		}
 
@@ -225,12 +227,12 @@ class ThemeSettings {
 		WikiFactory::setVarByName( self::WikiFactorySettings, $cityId, $settings, $reason );
 
 		// add entry
-		$history[] = array(
+		$history[] = [
 			'settings' => $settings,
 			'author' => $wgUser->getName(),
-			'timestamp' =>  wfTimestampNow(),
+			'timestamp' => wfTimestampNow(),
 			'revision' => $revisionId,
-		);
+		];
 
 		// limit history size to last 10 changes
 		$history = array_slice( $history, -self::HistoryItemsLimit );

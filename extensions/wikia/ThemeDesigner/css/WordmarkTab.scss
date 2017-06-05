@@ -21,10 +21,10 @@ $previewwidth: 250px;
 	button, input[type='submit'] {
 		margin-top: 5px;
 	}
-	h2{
+	h2 {
 		margin-bottom: 5px;
 	}
-	.graphic{
+	.graphic {
 		padding: 0 15px;
 		.preview {
 			border: 1px solid #eaeaea;
@@ -45,17 +45,17 @@ $previewwidth: 250px;
 				background: #FFF;
 				color: #666;
 				display: none;
-				padding:2px;
+				padding: 2px;
 				position: absolute;
 				right: 0;
 				top: 0;
 			}
-			span{
+			span {
 				display: block;
 				text-align: center;
 				line-height: $previewheight;
 			}
-			&.active{
+			&.active {
 				border: 0;
 				float: left;
 				width: auto;
@@ -94,10 +94,10 @@ $previewwidth: 250px;
 				color: #666;
 				display: none;
 			}
-			&.active{
+			&.active {
 				border: 0;
 				width: $previewwidth;
-				span{
+				span {
 					display: none;
 				}
 				&:hover {
@@ -128,11 +128,12 @@ $previewwidth: 250px;
 		top: 0;
 	}
 
-	input.file-upload  {
+	input.file-upload {
 		width: 100%;
 	}
 
 }
+
 body .tooltip {
 	.tooltip-inner {
 		background-color: white;
