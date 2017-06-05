@@ -13,6 +13,13 @@
 	.wds-dropdown__content {
 		background-color: $dropdown-background-color;
 		border-color: $color-page-border;
+		color: $color-text;
+
+		&:not(.wds-is-not-scrollable) {
+			.wds-list {
+				@include scrollable-list(270px, $dropdown-background-color);
+			}
+		}
 
 		.wds-list.wds-is-linked li {
 			> a {
