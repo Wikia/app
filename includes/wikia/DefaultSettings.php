@@ -1460,6 +1460,13 @@ $wgAdDriverSrcPremiumCountries = [];
 $wgAdDriverMEGACountries = null;
 
 /**
+ * @name $wgAdDriverMoatTrackingForFeaturedVideoAdCountries
+ * Enables MOAT tracking for feature video ads.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverMoatTrackingForFeaturedVideoAdCountries = null;
+
+/**
  * @name $wgAdDriverTrackState
  * Enables GA tracking of state for ad slots on pages
  */

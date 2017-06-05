@@ -4359,8 +4359,14 @@ var globalRequire = require;
 					adsSettings.useStyledLinearAds = this.useGoogleAdUI;
 					_IMAAdsManager = adsManagerLoadedEvent.getAdsManager(_playheadTracker, adsSettings);
 
-					globalRequire(['ext.wikia.adEngine.video.player.porvata.moatVideoTracker'], function(moatVideoTracker) {
-						moatVideoTracker.init(_IMAAdsManager, _uiContainer, google.ima.ViewMode.NORMAL, 'ooyala', 'featured-video');
+					globalRequire([
+						'ext.wikia.adEngine.adContext',
+						'ext.wikia.adEngine.video.player.porvata.moatVideoTracker'
+					], function(adContext, moatVideoTracker) {
+
+						if (adContext.getContext().opts.isMoatTrackingForFeaturedVideoEnabled) {
+							moatVideoTracker.init(_IMAAdsManager, _uiContainer, google.ima.ViewMode.NORMAL, 'ooyala', 'featured-video');
+						}
 					});
 
 					// When the ads manager is ready, we are ready to apply css changes to the video element
