@@ -17,6 +17,7 @@ $messages['en'] = [
 	'themedesigner-header' => 'header',
 	'themedesigner-text-wordmark' => 'Text wordmark',
 	'themedesigner-graphic-wordmark' => 'Graphic wordmark',
+	'themedesigner-local-nav' => 'local nav',
 	'themedesigner-tile-background' => 'tile',
 	'themedesigner-fix-background' => 'fix',
 	'themedesigner-not-split-background' => 'no split',
