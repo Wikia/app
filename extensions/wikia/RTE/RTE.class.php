@@ -223,7 +223,7 @@ class RTE {
 		}
 
 		// initial CK mode (wysiwyg / source)
-		$vars['RTEInitMode'] =  (self::$initMode == self::INIT_MODE_WYSIWYG) ? self::INIT_MODE_WYSIWYG : self::INIT_MODE_SOURCE;
+		$vars['RTEInitMode'] = self::$initMode;
 
 		// constants for regexp checking in links editor
 		$vars['RTEUrlProtocols'] = wfUrlProtocols();
