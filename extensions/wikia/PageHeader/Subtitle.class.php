@@ -8,6 +8,7 @@ use Html;
 use PageStatsService;
 use RequestContext;
 use Title;
+use Wikia\TemplateClassification\View;
 use WikiaApp;
 
 class Subtitle {
@@ -36,20 +37,15 @@ class Subtitle {
 	 */
 	private $title;
 
-	/**
-	 * @var bool
-	 */
-	private static $onEditPage = false;
-
 	public function __construct( WikiaApp $app ) {
 		$this->suppressPageSubtitle = $app->wg->SuppressPageSubtitle;
+		$this->cityId = $app->wg->cityId;
 		$this->request = RequestContext::getMain()->getRequest();
 		$this->skinTemplate = $app->getSkinTemplateObj();
 		$this->title = RequestContext::getMain()->getTitle();
 
 		if ( !$this->suppressPageSubtitle ) {
 			$this->subtitle = $this->getSubtitle( $app );
-			//watch list uses that, pageSubject?
 			$this->pageSubtitle = $this->getPageSubtitle();
 		}
 	}
@@ -159,6 +155,12 @@ class Subtitle {
 			$pageType = wfMessage( 'page-header-subtitle-mediawiki' )->escaped();
 		} else if ( $namespace === NS_TEMPLATE ) {
 			$pageType = wfMessage( 'page-header-subtitle-template' )->escaped();
+			if ( $this->title->exists() ) {
+				$user = RequestContext::getMain()->getUser();
+				$view = new View();
+				$pageType =
+					$view->renderTemplateType( $this->cityId, $this->title, $user, $pageType );
+			}
 		} else if (
 			$namespace === NS_SPECIAL &&
 			!$this->title->isSpecial( 'Forum' ) &&
@@ -194,11 +196,6 @@ class Subtitle {
 		return [];
 	}
 
-	// FIXME
-	private function getSubject() {
-		return null;
-	}
-
 	/**
 	 * back to article link
 	 * @return string
@@ -229,7 +226,6 @@ class Subtitle {
 		$subtitle = [
 			$this->getPageType(),
 			$this->getTalkPageBackLink(),
-			$this->getSubject(),
 			$this->getSubPageLinks(),
 		];
 
@@ -245,7 +241,7 @@ class Subtitle {
 		$language = RequestContext::getMain()->getLanguage();
 
 		$userName = $this->title->getBaseText();
-		$avatar = AvatarService::renderAvatar( $userName, 30 );
+		$avatar = AvatarService::renderAvatar( $userName, 30, 'wds-avatar' );
 		$userPageUrl = AvatarService::getUrl( $userName );
 		$userBlogPageUrl = AvatarService::getUrl( $userName, NS_BLOG_ARTICLE );
 		$namespaceText = $language->getFormattedNsText( $this->title->getNamespace() );

@@ -1,5 +1,6 @@
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index';
 @import 'skins/shared/color.scss';
+@import 'skins/shared/mixins/flexbox';
 
 .WikiaPage .page-header {
 	margin: 0 0 18px;
@@ -32,5 +33,18 @@
 		font-size: $wds-typescale-size-minus-1;
 		font-weight: bold;
 		text-align: right;
+	}
+
+	&__subtitle {
+		@include align-items(center);
+		@include flexbox();
+	}
+
+	&__blog-post-details {
+		margin-left: 6px;
+	}
+
+	.wds-avatar {
+		border-color: $color-page-border;
 	}
 }
