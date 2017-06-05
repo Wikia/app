@@ -23,7 +23,6 @@ $wgAutoloadClasses['RTEReverseParser'] = __DIR__ . "/RTEReverseParser.class.php"
 $wgAutoloadClasses['RTEController'] = __DIR__ . "/RTEController.class.php";
 
 // hooks
-
 $wgHooks['EditPage::showEditForm:initial'][] = 'RTE::init';
 $wgHooks['ParserMakeImageParams'][] = 'RTEParser::makeImageParams';
 $wgHooks['AlternateEdit'][] = 'RTE::reverse';
