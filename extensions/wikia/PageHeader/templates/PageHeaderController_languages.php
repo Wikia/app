@@ -1,5 +1,5 @@
-<div class="wds-dropdown page-header__contribution-languages">
-	<div class="wds-dropdown__toggle <?= count( $languages->languageList ) <= 1 ? ' wds-is-disabled ' : '' ?>">
+<div class="wds-dropdown page-header__contribution-languages <?= count( $languages->languageList ) <= 1 ? 'wds-is-disabled' : '' ?>">
+	<div class="wds-dropdown__toggle">
 			<span class="" data-tracking="interwiki-dropdown">
 				<?= $languages->currentLangName ?>
 				<?= DesignSystemHelper::renderSvg(
