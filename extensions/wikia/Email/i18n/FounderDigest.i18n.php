@@ -13,7 +13,7 @@ $messages['en'] = array(
 	'emailext-founder-digest-views-description-2' => 'Keep up the great work adding interesting pages, discussions, photos and videos.',
 	'emailext-founder-digest-edits-header' => '$1 Contributions Made',
 	'emailext-founder-digest-edits-description' => 'Make sure to thank those who contribute so they feel the love!',
-	'emailext-founder-digest-signature' => 'The Fandom Community Team',
+	'emailext-founder-digest-signature' => 'The FANDOM Community Team',
 );
 
 $messages['qqq'] = array(
@@ -43,7 +43,7 @@ $messages['de'] = array(
 	'emailext-founder-digest-views-description-2' => 'Wir freuen uns, wenn du auch weiterhin so gute Arbeit leistest, interessante Seiten erstellst, zu Diskussionen beiträgst und Fotos und Videos bereitstellst.',
 	'emailext-founder-digest-edits-header' => '$1 Beiträge erstellt',
 	'emailext-founder-digest-edits-description' => 'Achte darauf, dich bei den Mitgliedern zu bedanken, die zur Community beitragen und lass sie wissen, wie wichtig sie sind!',
-	'emailext-founder-digest-signature' => 'Das Fandom Community-Team',
+	'emailext-founder-digest-signature' => 'Das FANDOM Community-Team',
 	'emailext-founder-digest-users-header' => '$1 neue Community-Mitglieder',
 	'emailext-founder-digest-users-description' => 'Heiße neue Leute in deiner Community willkommen! Lasse sie an der tollen Fan-Community teilhaben, die du erschaffen hast.',
 );
@@ -60,7 +60,7 @@ $messages['es'] = array(
 	'emailext-founder-digest-views-description-2' => 'Mantén el gran trabajo añadiendo artículos interesantes, debates, fotos y videos.',
 	'emailext-founder-digest-edits-header' => '$1 Contribuciones realizadas',
 	'emailext-founder-digest-edits-description' => '¡No te olvides de agradecer a quienes contribuyen en tu comunidad para que se sientan reconocidos!',
-	'emailext-founder-digest-signature' => 'El equipo comunitario de Fandom',
+	'emailext-founder-digest-signature' => 'El equipo comunitario de FANDOM',
 	'emailext-founder-digest-users-header' => '$1 nuevos miembros en la comunidad',
 	'emailext-founder-digest-users-description' => '¡Da la bienvenida a nuevos usuarios a tu wiki! Involúcralos en la gran comunidad de fanáticos que has creado.',
 );
@@ -77,7 +77,7 @@ $messages['fr'] = array(
 	'emailext-founder-digest-views-description-2' => 'Vous êtes sur la bonne voie ! Continuez à ajouter des pages, des discussions, des photos et des vidéos.',
 	'emailext-founder-digest-edits-header' => '$1 contributions',
 	'emailext-founder-digest-edits-description' => "Assurez-vous de remercier ceux qui contribuent afin qu'ils se sentent appréciés !",
-	'emailext-founder-digest-signature' => "L'équipe de la communauté Fandom",
+	'emailext-founder-digest-signature' => "L'équipe de la communauté FANDOM",
 	'emailext-founder-digest-users-header' => '$1 nouveaux membres dans la communauté',
 	'emailext-founder-digest-users-description' => 'Accueillez de nouveaux utilisateurs au sein de votre communauté ! Faites-les participer à la grande communauté de fans que vous avez créée.',
 );
@@ -94,7 +94,7 @@ $messages['it'] = array(
 	'emailext-founder-digest-views-description-2' => 'Stai lavorando bene! Aggiungi articoli interessanti, discussioni, foto e video per i tuoi lettori.',
 	'emailext-founder-digest-edits-header' => '$1 contributi',
 	'emailext-founder-digest-edits-description' => 'Assicurati di ringraziare chi contribuisce così che si senta apprezzato!',
-	'emailext-founder-digest-signature' => 'Il team della Community di Fandom',
+	'emailext-founder-digest-signature' => 'Il team della Community di FANDOM',
 	'emailext-founder-digest-users-header' => '$1 nuovi membri della comunità',
 	'emailext-founder-digest-users-description' => 'Dai il benvenuto ai nuovi visitatori della tua comunità! Incoraggiali a partecipare alla grande comunità di fan che hai creato.',
 );
@@ -142,7 +142,7 @@ $messages['nl'] = array(
 	'emailext-founder-digest-views-description-2' => 'Keep adding new stuff and promoting your wikia to encourage more people to read, contribute, and spread the word. Your community is looking great!',
 	'emailext-founder-digest-edits-header' => '$1 bijdragen gemaakt',
 	'emailext-founder-digest-edits-description' => 'Happy community members make happy wikias. Make sure to thank those who contribute so they feel the love!',
-	'emailext-founder-digest-signature' => 'The Fandom Community Team',
+	'emailext-founder-digest-signature' => 'The FANDOM Community Team',
 	'emailext-founder-digest-users-header' => '$1 New Wikians',
 	'emailext-founder-digest-users-description' => 'Welcome new people to your wikia! Get them involved in the great fan community you created.',
 );
@@ -159,7 +159,7 @@ $messages['pl'] = array(
 	'emailext-founder-digest-views-description-2' => 'Nie przestawaj dodawać interesujących stron, dyskusji, zdjęć i filmów. Robisz kawał dobrej roboty!',
 	'emailext-founder-digest-edits-header' => 'Dokonane edycje: $1',
 	'emailext-founder-digest-edits-description' => 'Pamiętaj, żeby podziękować innym współtwórcom za ich wkład – niech poczują miłość!',
-	'emailext-founder-digest-signature' => 'Zespół Społeczności portalu Fandom',
+	'emailext-founder-digest-signature' => 'Zespół Społeczności portalu FANDOM',
 	'emailext-founder-digest-users-header' => 'Nowi członkowie społeczności: $1',
 	'emailext-founder-digest-users-description' => 'Powitaj nowe osoby w Twojej wiki! Pomóż im zaangażować się w Twoją wspaniałą społeczność.',
 );
@@ -176,7 +176,7 @@ $messages['pt'] = array(
 	'emailext-founder-digest-views-description-2' => 'Continue o excelente trabalho adicionando páginas interessantes, discussões, fotos e vídeos.',
 	'emailext-founder-digest-edits-header' => '$1 contribuições feitas',
 	'emailext-founder-digest-edits-description' => 'Certifique-se de agradecer aqueles que fazem contribuições!',
-	'emailext-founder-digest-signature' => 'Equipe da Comunidade Fandom',
+	'emailext-founder-digest-signature' => 'Equipe da Comunidade FANDOM',
 	'emailext-founder-digest-users-header' => '$1 novos membros da comunidade',
 	'emailext-founder-digest-users-description' => 'Dê boas-vindas às novas pessoas na sua comunidade! Envolva-as na grande comunidade de fãs que você criou.',
 );

@@ -26,7 +26,8 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 			}
 		},
 		lookups: {
-			extendSlotTargeting: noop
+			extendSlotTargeting: noop,
+			storeRealSlotPrices: noop
 		},
 		passbackHandler: {
 			get: function () {

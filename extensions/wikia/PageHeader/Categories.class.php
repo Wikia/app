@@ -3,6 +3,7 @@
 namespace Wikia\PageHeader;
 
 use CategoryHelper;
+use Html;
 use RequestContext;
 use Title;
 
@@ -66,7 +67,7 @@ class Categories {
 		foreach ( $categoryNames as $categoryName ) {
 			$categoryTitle = Title::newFromText( $categoryName, NS_CATEGORY );
 
-			if ( !$categoryTitle->isKnown() || CategoryHelper::getCategoryType( $categoryName ) === 'hidden' ) {
+			if ( CategoryHelper::getCategoryType( $categoryName ) === 'hidden' ) {
 				continue;
 			}
 
@@ -86,17 +87,23 @@ class Categories {
 	 * @return string
 	 */
 	private function getVisibleCategoriesHTML( $categories ) {
-		$categoriesArray = array_slice( $categories, 0, self::VISIBLE_CATEGORIES_LIMIT - 1 );
 		$categoriesLinks = [];
+		$categoriesArray = $this->hasMoreCategories() ?
+			array_slice( $categories, 0, self::VISIBLE_CATEGORIES_LIMIT - 1 ) :
+			$categories;
 
 		/**
 		 * @var $category Title
 		 */
 		foreach ( $categoriesArray as $i => $category ) {
-			$categoriesLinks[] = '<a' .
-				' href="' . $category->getLocalURL() . '"' .
-				' data-tracking="categories-top-' . $i . '"' .
-				'>' . $category->getText() . '</a>';
+			$categoriesLinks[] = Html::element(
+				'a',
+				[
+					'href' => $category->getLocalURL(),
+					'data-tracking' => 'categories-top-' . $i
+				],
+				$category->getText()
+			);
 		}
 
 		$categoriesHTML = join( ', ', $categoriesLinks );

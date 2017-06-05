@@ -155,7 +155,7 @@ if ( !isset( $smwDefaults['smwgHistoricTypeNamespace'] ) ) {
 
 ###
 # If you already have custom namespaces on your site, insert
-#    $smwgNamespaceIndex = ???;
+#    $smwDefaults['smwgNamespaceIndex'] = ???;
 # into your LocalSettings.php *before* including this file. The number ??? must
 # be the smallest even namespace number that is not in use yet. However, it
 # must not be smaller than 100.

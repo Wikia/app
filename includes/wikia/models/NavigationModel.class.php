@@ -168,7 +168,8 @@ class NavigationModel extends WikiaModel {
 	}
 
 	public function getLocalNavigationTree( $messageName, $refreshCache = false ) {
-		return $this->getTree(
+		$this->setShouldTranslateContent( false );
+		$tree = $this->getTree(
 			NavigationModel::TYPE_MESSAGE,
 			$messageName,
 			[
@@ -178,6 +179,9 @@ class NavigationModel extends WikiaModel {
 			],
 			$refreshCache
 		);
+		$this->setShouldTranslateContent( true );
+
+		return $tree;
 	}
 
 	private function getTreeMemcKey( /* args */ ) {

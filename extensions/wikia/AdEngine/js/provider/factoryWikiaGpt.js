@@ -93,6 +93,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 			slotTargeting.rv = slotRegistry.getRefreshCount(slot.name).toString();
 
 			if (lookups) {
+				lookups.storeRealSlotPrices(slot.name);
 				lookups.extendSlotTargeting(slot.name, slotTargeting, providerName);
 			}
 

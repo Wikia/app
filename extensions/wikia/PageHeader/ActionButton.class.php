@@ -48,7 +48,9 @@ class ActionButton {
 		foreach ( $actions as $action ) {
 			if ( isset( $this->contentActions[$action] ) ) {
 				$ret[$action] = $this->contentActions[$action];
-				$ret[$action]['data-tracking'] = $ret[$action]['id'] . '-dropdown';
+				if ( isset( $ret[$action]['id'])) {
+					$ret[$action]['data-tracking'] = $ret[$action]['id'] . '-dropdown';
+				}
 			}
 		}
 
@@ -78,21 +80,21 @@ class ActionButton {
 		) {
 			// force login to edit page that is not protected
 			$this->contentActions['edit'] = $this->contentActions['viewsource'];
-			$this->contentActions['edit']['text'] = wfMessage( 'edit' )->escaped();
+			$this->contentActions['edit']['text'] = wfMessage( 'page-header-action-button-edit' )->escaped();
 			unset( $this->contentActions['viewsource'] );
 		}
 
 		// If cascade protected, show viewsource button - BugId:VE-89
 		if ( isset( $this->contentActions['edit'] ) && $wgTitle->isCascadeProtected() ) {
 			$this->contentActions['viewsource'] = $this->contentActions['edit'];
-			$this->contentActions['viewsource']['text'] = wfMessage( 'viewsource' )->escaped();
+			$this->contentActions['viewsource']['text'] = wfMessage( 'page-header-action-button-viewsource' )->escaped();
 			unset( $this->contentActions['edit'] );
 		}
 
 		// "Add topic"
 		if ( isset( $this->contentActions['addsection'] ) ) {
 			$action = $this->contentActions['addsection'];
-			$action['text'] = wfMsg( 'oasis-page-header-add-topic' );
+			$action['text'] = wfMessage( 'page-header-action-button-add-topic' )->escaped();
 			$this->buttonAction = $action;
 		}  // ve-edit
 		else if ( isset( $this->contentActions['ve-edit'] ) && $this->contentActions['ve-edit']['main'] ) {
@@ -111,7 +113,7 @@ class ActionButton {
 		if ( !empty( $wgEnableCuratedContentExt ) && CuratedContentHelper::shouldDisplayToolButton() ) {
 			$this->contentActions['edit-mobile-main-page'] = [
 				'href' => '/main/edit?useskin=wikiamobile',
-				'text' => wfMessage( 'wikiacuratedcontent-edit-mobile-main-page' )->escaped(),
+				'text' => wfMessage( 'page-header-action-button-edit-mobile-main-page' )->escaped(),
 				'id' => 'CuratedContentTool'
 			];
 		}
