@@ -17,7 +17,6 @@ class ThemeDesignerController extends WikiaController {
 	}
 
 	public function executeIndex() {
-		wfProfileIn( __METHOD__ );
 		global $wgLang, $wgOut;
 
 		// check rights
@@ -68,8 +67,6 @@ class ThemeDesignerController extends WikiaController {
 
 		$pageTitle = wfMessage( 'themedesigner-title' );
 		$this->pageTitle = ( new WikiaHtmlTitle() )->setParts( [ $pageTitle ] )->getTitle();
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	public function executeThemeTab() {
@@ -327,7 +324,6 @@ class ThemeDesignerController extends WikiaController {
 	}
 
 	public function executeSaveSettings() {
-		wfProfileIn( __METHOD__ );
 		global $wgRequest;
 
 		// check rights
@@ -341,7 +337,6 @@ class ThemeDesignerController extends WikiaController {
 			$themeSettings = new ThemeSettings();
 			$themeSettings->saveSettings($data);
 		}
-		wfProfileOut( __METHOD__ );
 	}
 
 
