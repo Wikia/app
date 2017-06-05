@@ -1,12 +1,10 @@
 <?php
 
-
-
 class RTE {
-
-    const INIT_MODE_SOURCE = 0;
-    const INIT_MODE_WYSIWYG = 1;
-
+	
+	//init modes
+	const INIT_MODE_SOURCE = 0;
+	const INIT_MODE_WYSIWYG = 1;
 
 	// unique editor instance ID
 	private static $instanceId = null;
