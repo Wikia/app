@@ -35,7 +35,7 @@ class WikiaNewFilesSpecialController extends WikiaSpecialPageController {
 		$output = $this->getContext()->getOutput();
 		$request = $this->getRequest();
 
-		$this->wg->SupressPageSubtitle = true;
+		$this->wg->SuppressPageSubtitle = true;
 
 		Wikia::addAssetsToOutput( 'upload_photos_dialog_js' );
 		Wikia::addAssetsToOutput( 'upload_photos_dialog_scss' );

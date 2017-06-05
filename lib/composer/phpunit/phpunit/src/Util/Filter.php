@@ -20,8 +20,8 @@ class Filter
     /**
      * Filters stack frames from PHPUnit classes.
      *
-     * @param Exception $e
-     * @param bool      $asString
+     * @param \Throwable $e
+     * @param bool       $asString
      *
      * @return string
      */

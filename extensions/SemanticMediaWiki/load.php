@@ -48,11 +48,11 @@ class SemanticMediaWiki {
 				'[http://korrekt.org Markus Krötzsch]',
 				'[https://www.mediawiki.org/wiki/User:Jeroen_De_Dauw Jeroen De Dauw]',
 				'James Hong Kong',
-				'[https://www.semantic-mediawiki.org/wiki/Contributors ...]'
+				'[https://www.semantic-mediawiki.org/wiki/Contributors ...]',
 				),
 			'url' => 'https://www.semantic-mediawiki.org',
 			'descriptionmsg' => 'smw-desc',
-			'license-name'   => 'GPL-2.0+'
+			'license-name'   => 'GPL-2.0+',
 		);
 
 		// A flag used to indicate SMW defines a semantic extension type for extension credits.
@@ -77,11 +77,10 @@ class SemanticMediaWiki {
 		// Wikia change - begin
 		// SUS-1232: allow SemanticMediaWiki config variables to be customized via WikiFactory
 
-		/* @var $smwDefaults Array */
-
-		foreach( $smwDefaults as $variableName => $variableDefaultValue ) {
+		/** @var array $smwDefaults */
+		foreach ( $smwDefaults as $variableName => $variableDefaultValue ) {
 			if ( !array_key_exists( $variableName, $GLOBALS ) ) {
-				// variable was not set via WikiFactory, so we can safely use a default comming from SMW's DefaultSettings.php (i.e. $smwDefaults)
+				// variable was not set via WikiFactory, so we can safely use a default coming from SMW's DefaultSettings.php (i.e. $smwDefaults)
 				$GLOBALS[ $variableName ] = $variableDefaultValue;
 			}
 		}
@@ -145,7 +144,7 @@ class SemanticMediaWiki {
 
 		return array(
 			'store' => $store,
-			'db'    => isset( $GLOBALS['wgDBtype'] ) ? $GLOBALS['wgDBtype'] : 'N/A'
+			'db'    => isset( $GLOBALS['wgDBtype'] ) ? $GLOBALS['wgDBtype'] : 'N/A',
 		);
 	}
 

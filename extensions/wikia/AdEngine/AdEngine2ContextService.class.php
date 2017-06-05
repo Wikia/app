@@ -53,9 +53,7 @@ class AdEngine2ContextService {
 					'sourcePointRecovery' => ARecoveryModule::isSourcePointRecoveryEnabled(),
 					'pageFairDetectionUrl' => $pageFairDetectionUrl,
 					'pageFairRecovery' => ARecoveryModule::isPageFairRecoveryEnabled(),
-					'prebidBidderUrl' => $prebidBidderUrl,
-					'useTaboola' => $wg->AdDriverUseTaboola,
-					'disableTaboola' => !$wg->AdDriverUseTaboola // TODO: remove after release ADEN-5094 cache walkaround
+					'prebidBidderUrl' => $prebidBidderUrl
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
 					'enableKruxTargeting' => AnalyticsProviderKrux::isEnabled(),
@@ -81,8 +79,7 @@ class AdEngine2ContextService {
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
 					'evolve2' => $wg->AdDriverUseEvolve2,
-					'rubiconFastlane' => AnalyticsProviderRubiconFastlane::isEnabled(),
-					'taboola' => $wg->AdDriverUseTaboola && $pageType === 'article',
+					'rubiconFastlane' => AnalyticsProviderRubiconFastlane::isEnabled()
 				] ),
 				'slots' => $this->filterOutEmptyItems( [
 					'invisibleHighImpact' => $wg->AdDriverEnableInvisibleHighImpactSlot,
