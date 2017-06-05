@@ -4,7 +4,6 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.provider.gpt.helper',
 	'ext.wikia.adEngine.slot.adUnitBuilder',
-	'ext.wikia.adEngine.slot.service.passbackHandler',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'wikia.log',
 	require.optional('ext.wikia.adEngine.lookup.services')
@@ -13,7 +12,6 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	btfBlocker,
 	gptHelper,
 	adUnitBuilder,
-	passbackHandler,
 	slotRegistry,
 	log,
 	lookups
@@ -71,7 +69,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 
 		function getAdUnit(slot) {
 			if (extra.adUnitBuilder) {
-				return extra.adUnitBuilder.build(slot.name, src, passbackHandler.get(slot.name));
+				return extra.adUnitBuilder.build(slot.name, src);
 			}
 
 			return adUnitBuilder.build(slot.name, src);
