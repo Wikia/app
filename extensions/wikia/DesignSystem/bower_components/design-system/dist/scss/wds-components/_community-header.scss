@@ -8,7 +8,7 @@
 	position: relative;
 	z-index: 1;
 
-	@media #{$wds-breakpoint-l-down} {
+	@media #{$wds-breakpoint-xl-down} {
 		height: 115px;
 	}
 
@@ -35,7 +35,7 @@
 			width: auto;
 		}
 
-		@media #{$wds-breakpoint-l-down} {
+		@media #{$wds-breakpoint-xl-down} {
 			height: 49px;
 			margin-bottom: 0;
 			max-width: 175px;
@@ -46,7 +46,7 @@
 		display: flex;
 		height: 59px;
 
-		@media #{$wds-breakpoint-l-down} {
+		@media #{$wds-breakpoint-xl-down} {
 			height: 69px;
 		}
 	}
@@ -62,7 +62,7 @@
 		a {
 			text-decoration: none;
 
-			@media #{$wds-breakpoint-l-up} {
+			@media #{$wds-breakpoint-xl-up} {
 				display: block;
 				height: 100%;
 				// Safari cut bottom of letter, line-height set to 1.2 fixed it
@@ -74,7 +74,7 @@
 			}
 		}
 
-		@media #{$wds-breakpoint-l-down} {
+		@media #{$wds-breakpoint-xl-down} {
 			font-size: $wds-typescale-size-plus-2;
 			margin-top: 20px;
 			max-height: 3*$wds-typescale-size-plus-2;
@@ -83,12 +83,12 @@
 		}
 	}
 
-	&__counter{
+	&__counter {
 		font-weight: 600;
 		text-align: right;
 		margin: 17px 0 20px 20px;
 
-		@media #{$wds-breakpoint-l-down} {
+		@media #{$wds-breakpoint-xl-down} {
 			margin-top: 22px;
 		}
 	}
@@ -98,7 +98,7 @@
 		font-size: $wds-typescale-size-plus-2;
 		line-height: 1;
 
-		@media #{$wds-breakpoint-l-down} {
+		@media #{$wds-breakpoint-xl-down} {
 			font-size: $wds-typescale-size-plus-1;
 		}
 	}
@@ -110,7 +110,7 @@
 		margin-top: 3px;
 		text-transform: uppercase;
 
-		@media #{$wds-breakpoint-l-down} {
+		@media #{$wds-breakpoint-xl-down} {
 			font-size: $wds-typescale-size-minus-3;
 		}
 	}
@@ -124,6 +124,10 @@
 		height: 46px;
 		padding-left: 6px;
 
+		a[href="#"] {
+			cursor: default;
+		}
+
 		.wds-dropdown__toggle-chevron {
 			opacity: .5;
 		}
@@ -134,8 +138,14 @@
 			}
 		}
 
-		@media #{$wds-breakpoint-l-down} {
+		@media #{$wds-breakpoint-xl-down} {
 			clear: both;
+		}
+
+		@media #{$wds-breakpoint-l-down} {
+			.wds-tabs__tab-label {
+				font-size: $wds-typescale-size-minus-3;
+			}
 		}
 	}
 }

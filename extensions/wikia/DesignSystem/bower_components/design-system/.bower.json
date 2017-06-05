@@ -14,13 +14,13 @@
     "ember-cli-shims": "0.1.1"
   },
   "homepage": "https://github.com/Wikia/design-system",
-  "_release": "5175050fac",
+  "_release": "f9d16c0887",
   "_resolution": {
     "type": "branch",
-    "branch": "XW-3300_ds-fixes",
-    "commit": "5175050fac40760fa994c2b00674abd1172cd133"
+    "branch": "XW-3318",
+    "commit": "f9d16c08877f40ea9d96e03783743d1b78f5b81a"
   },
   "_source": "git://github.com/Wikia/design-system.git",
-  "_target": "XW-3300_ds-fixes",
+  "_target": "XW-3318",
   "_originalSource": "Wikia/design-system"
 }
