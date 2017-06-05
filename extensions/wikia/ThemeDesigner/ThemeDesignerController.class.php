@@ -1,4 +1,5 @@
 <?php
+
 class ThemeDesignerController extends WikiaController {
 
 	public function init() {
@@ -9,7 +10,7 @@ class ThemeDesignerController extends WikiaController {
 		$this->backgroundImageHeight = null;
 		$this->wordmarkImageName = null;
 		$this->wordmarkImageUrl = null;
-		$this->errors = array();
+		$this->errors = [];
 
 		$this->dir = $this->wg->ContLang->getDir();
 		$this->mimetype = $this->wg->Mimetype;
@@ -33,22 +34,22 @@ class ThemeDesignerController extends WikiaController {
 		$this->applicationThemeSettings = SassUtil::getApplicationThemeSettings();
 
 		// recent versions
-		$themeHistory = array_reverse($themeSettings->getHistory());
+		$themeHistory = array_reverse( $themeSettings->getHistory() );
 
 		// format time (for edits older than 30 days - show timestamp)
-		foreach($themeHistory as &$entry) {
+		foreach ( $themeHistory as &$entry ) {
 			$diff = time() - strtotime( $entry['timestamp'] );
 
-			if($diff < 30 * 86400) {
-				$entry['timeago'] = wfTimeFormatAgo($entry['timestamp']);
+			if ( $diff < 30 * 86400 ) {
+				$entry['timeago'] = wfTimeFormatAgo( $entry['timestamp'] );
 			} else {
-				$entry['timeago'] = $wgLang->date($entry['timestamp']);
+				$entry['timeago'] = $wgLang->date( $entry['timestamp'] );
 			}
 		}
 		$this->themeHistory = $themeHistory;
 
 		// URL user should be redirected to when settings are saved
-		if(isset($_SERVER['HTTP_REFERER'])) {
+		if ( isset( $_SERVER['HTTP_REFERER'] ) ) {
 			$this->returnTo = $_SERVER['HTTP_REFERER'];
 		} else {
 			$this->returnTo = $this->wg->Script;
@@ -56,12 +57,12 @@ class ThemeDesignerController extends WikiaController {
 
 		$wgOut->getResourceLoader()->getModule( 'mediawiki' );
 
-		$ret = implode( "\n", array(
+		$ret = implode( "\n", [
 			$wgOut->getHeadLinks( null, true ),
 			$wgOut->buildCssLinks(),
 			$wgOut->getHeadScripts(),
 			$wgOut->getHeadItems()
-		) );
+		] );
 
 		$this->globalVariablesScript = $ret;
 
@@ -98,7 +99,7 @@ class ThemeDesignerController extends WikiaController {
 	private function getUploadErrorMessage( $status ) {
 		global $wgFileExtensions, $wgLang;
 
-		switch( $status[ 'status' ] ) {
+		switch ( $status['status'] ) {
 			case UploadBackgroundFromFile::FILESIZE_ERROR:
 				$msg = wfMsgHtml( 'themedesigner-size-error' );
 				break;
@@ -120,7 +121,7 @@ class ThemeDesignerController extends WikiaController {
 				);
 				break;
 			case UploadBase::OVERWRITE_EXISTING_FILE:
-				$msg =  wfMsgExt(
+				$msg = wfMsgExt(
 					$status['overwrite'],
 					'parseinline'
 				);
@@ -139,12 +140,12 @@ class ThemeDesignerController extends WikiaController {
 
 				$msg = wfMsgExt(
 					'filetype-banned-type',
-					array( 'parseinline' ),
+					[ 'parseinline' ],
 					htmlspecialchars( $finalExt ),
 					implode(
 						wfMsgExt(
 							'comma-separator',
-							array( 'escapenoentities' )
+							[ 'escapenoentities' ]
 						),
 						$wgFileExtensions
 					),
@@ -182,14 +183,14 @@ class ThemeDesignerController extends WikiaController {
 	 *
 	 * @author Federico "Lox" Lucignano
 	 */
-	private function getUploadWarningMessages( $warnings ){
-		$ret = array();
+	private function getUploadWarningMessages( $warnings ) {
+		$ret = [];
 
-		foreach( $warnings as $warning => $args ) {
+		foreach ( $warnings as $warning => $args ) {
 			if ( $args === true ) {
-				$args = array();
+				$args = [];
 			} elseif ( !is_array( $args ) ) {
-				$args = array( $args );
+				$args = [ $args ];
 			}
 
 			$ret[] = wfMsgExt( $warning, 'parseinline', $args );
@@ -206,20 +207,20 @@ class ThemeDesignerController extends WikiaController {
 
 		$upload = new UploadWordmarkFromFile();
 
-		$status = $this->uploadImage($upload);
+		$status = $this->uploadImage( $upload );
 
-		if($status['status'] === 'uploadattempted' && $status['isGood']) {
+		if ( $status['status'] === 'uploadattempted' && $status['isGood'] ) {
 			$file = $upload->getLocalFile();
 			$this->wordmarkImageUrl = wfReplaceImageServer( $file->getUrl() );
 			$this->wordmarkImageName = $file->getName();
 
 			// if wordmark url is not set then it means there was some problem
 			if ( $this->wordmarkImageUrl == null || $this->wordmarkImageName == null ) {
-				$this->errors = array( wfMsg( 'themedesigner-unknown-error' ) );
+				$this->errors = [ wfMsg( 'themedesigner-unknown-error' ) ];
 			}
 
-			wfRunHooks( 'UploadWordmarkComplete', array( &$upload ) );
-		} else if ($status['status'] === 'error') {
+			wfRunHooks( 'UploadWordmarkComplete', [ &$upload ] );
+		} else if ( $status['status'] === 'error' ) {
 			$this->errors = $status['errors'];
 		}
 
@@ -236,17 +237,18 @@ class ThemeDesignerController extends WikiaController {
 		$this->faviconImageName = '';
 		$this->faviconImageUrl = '';
 
-		$status = $this->uploadImage($upload);
-		if($status['status'] === 'uploadattempted' && $status['isGood']) {
-			$file = $upload->getLocalFile(); /* @var $file LocalFile */
+		$status = $this->uploadImage( $upload );
+		if ( $status['status'] === 'uploadattempted' && $status['isGood'] ) {
+			$file = $upload->getLocalFile();
+			/* @var $file LocalFile */
 			$this->faviconImageUrl = wfReplaceImageServer( $file->getUrl() );
 			$this->faviconImageName = $file->getName();
 
 			// if wordmark url is not set then it means there was some problem
 			if ( $this->faviconImageUrl == null ) {
-				$this->errors = array( wfMsg( 'themedesigner-unknown-error' ) );
+				$this->errors = [ wfMsg( 'themedesigner-unknown-error' ) ];
 			}
-		} else if ($status['status'] === 'error') {
+		} else if ( $status['status'] === 'error' ) {
 			$this->errors = $status['errors'];
 		}
 	}
@@ -259,25 +261,26 @@ class ThemeDesignerController extends WikiaController {
 
 		$upload = new UploadBackgroundFromFile();
 
-		$status = $this->uploadImage($upload);
+		$status = $this->uploadImage( $upload );
 
-		if($status['status'] === 'uploadattempted' && $status['isGood']) {
-			$file = $upload->getLocalFile(); /* @var $file LocalFile */
+		if ( $status['status'] === 'uploadattempted' && $status['isGood'] ) {
+			$file = $upload->getLocalFile();
+			/* @var $file LocalFile */
 			$this->backgroundImageUrl = wfReplaceImageServer( $file->getUrl() );
 			$this->backgroundImageName = $file->getName();
 			$this->backgroundImageHeight = $file->getHeight();
 			$this->backgroundImageWidth = $file->getWidth();
 
 			//get cropped URL
-			$is = new ImageServing( null, 120, array( "w"=>"120", "h"=>"100" ) );
+			$is = new ImageServing( null, 120, [ "w" => "120", "h" => "100" ] );
 			$this->backgroundImageThumb = wfReplaceImageServer( $file->getThumbUrl( $is->getCut( $file->width, $file->height, "origin" ) . "-" . $file->getName() ) );
 
 			// if background image url is not set then it means there was some problem
 			if ( $this->backgroundImageUrl == null ) {
-				$this->errors = array( wfMsg( 'themedesigner-unknown-error' ) );
+				$this->errors = [ wfMsg( 'themedesigner-unknown-error' ) ];
 			}
 
-		} else if ($status['status'] === 'error') {
+		} else if ( $status['status'] === 'error' ) {
 			$this->errors = $status['errors'];
 		}
 	}
@@ -286,24 +289,24 @@ class ThemeDesignerController extends WikiaController {
 	 * @param UploadBase $upload
 	 * @return array
 	 */
-	private function uploadImage($upload) {
+	private function uploadImage( $upload ) {
 		global $wgRequest, $wgUser, $wgEnableUploads;
 
-		$uploadStatus = array("status" => "error");
+		$uploadStatus = [ "status" => "error" ];
 
-		if ( empty( $wgEnableUploads )) {
+		if ( empty( $wgEnableUploads ) ) {
 			$uploadStatus["errors"] = [ wfMessage( 'themedesigner-upload-disabled' )->plain() ];
 		} else {
 			$upload->initializeFromRequest( $wgRequest );
 			$permErrors = $upload->verifyPermissions( $wgUser );
 
 			if ( $permErrors !== true ) {
-				$uploadStatus["errors"] = array( wfMsg( 'badaccess' ) );
+				$uploadStatus["errors"] = [ wfMsg( 'badaccess' ) ];
 			} else {
 				$details = $upload->verifyUpload();
 
-				if ( $details[ 'status' ] != UploadBase::OK ) {
-					$uploadStatus["errors"] = array( $this->getUploadErrorMessage( $details ) );
+				if ( $details['status'] != UploadBase::OK ) {
+					$uploadStatus["errors"] = [ $this->getUploadErrorMessage( $details ) ];
 				} else {
 					$warnings = $upload->checkWarnings();
 
@@ -335,7 +338,7 @@ class ThemeDesignerController extends WikiaController {
 
 		if ( $wgRequest->wasPosted() ) {
 			$themeSettings = new ThemeSettings();
-			$themeSettings->saveSettings($data);
+			$themeSettings->saveSettings( $data );
 		}
 	}
 

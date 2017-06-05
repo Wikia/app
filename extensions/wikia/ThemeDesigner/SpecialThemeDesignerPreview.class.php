@@ -12,6 +12,7 @@ class SpecialThemeDesignerPreview extends UnlistedSpecialPage {
 		// check rights
 		if ( !ThemeDesignerHelper::checkAccess() ) {
 			$this->displayRestrictionError();
+
 			return;
 		}
 
@@ -19,16 +20,16 @@ class SpecialThemeDesignerPreview extends UnlistedSpecialPage {
 
 		$this->setHeaders();
 
-		$wgOut->setPageTitle('Example Page Title');
+		$wgOut->setPageTitle( 'Example Page Title' );
 
-		$wgOut->addScript('<script src="'. $wgExtensionsPath .'/wikia/ThemeDesigner/js/ThemeDesignerPreview.js"></script>');
-		$wgOut->addLink(array(
+		$wgOut->addScript( '<script src="' . $wgExtensionsPath . '/wikia/ThemeDesigner/js/ThemeDesignerPreview.js"></script>' );
+		$wgOut->addLink( [
 			"type" => "text/css",
 			"rel" => "stylesheet",
-			"href" => AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/ThemeDesigner/css/ThemeDesignerPreview.scss'),
-		));
+			"href" => AssetsManager::getInstance()->getSassCommonURL( '/extensions/wikia/ThemeDesigner/css/ThemeDesignerPreview.scss' ),
+		] );
 
-		$wgOut->addHtml(F::app()->renderView('ThemeDesigner', 'Preview'));
+		$wgOut->addHtml( F::app()->renderView( 'ThemeDesigner', 'Preview' ) );
 
 		// page header: use static date
 		global $wgHooks;
