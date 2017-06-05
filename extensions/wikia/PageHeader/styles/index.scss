@@ -9,11 +9,12 @@
 	@include dropdown-theming($color-page, $color-text, $color-links, $color-page-border);
 
 	@include flexbox();
-	-moz-osx-font-smoothing: grayscale;
-	-webkit-font-smoothing: antialiased;
-	margin: 5px 0 12px;
+	margin: 0 0 18px;
+	padding: 12px 0;
 	position: relative;
 	z-index: 4;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
 
 	button {
 		background-image: none;
@@ -26,7 +27,7 @@
 	.wds-button-group {
 		@include button-group-theming($color-button-text);
 	}
-	
+
 	&__counter {
 		color: $color-text;
 		float: right;
@@ -56,30 +57,35 @@
 		@include align-items(flex-start);
 		@include flexbox();
 		font-size: $wds-typescale-size-minus-2;
-	}
 
-	&__categories-in {
-		font-weight: 600;
-		padding-right: 4px;
-	}
-
-	&__categories-dropdown {
-		padding-bottom: 10px;
-
-		&-content {
-			font-style: normal;
+		&-in {
+			font-weight: 600;
+			padding-right: 4px;
 		}
-	}
 
-	&__categories-links {
-		color: $color-links;
-		font-style: italic;
-		line-height: 16px;
-		word-break: break-word;
-
-		> a:last-child {
-			display: inline-block;
+		&-dropdown {
 			padding-bottom: 10px;
+
+			&-content {
+				font-style: normal;
+				width: 250px;
+				overflow-x: hidden;
+			}
+
+			li {
+				white-space: normal;
+			}
+		}
+
+		&-links {
+			color: $color-links;
+			font-style: italic;
+			line-height: 16px;
+
+			> a:last-child {
+				display: inline-block;
+				padding-bottom: 10px;
+			}
 		}
 	}
 
@@ -100,6 +106,5 @@
 		height: 1px;
 		margin-bottom: 18px;
 	}
-
 }
 
