@@ -48,7 +48,9 @@ class ActionButton {
 		foreach ( $actions as $action ) {
 			if ( isset( $this->contentActions[$action] ) ) {
 				$ret[$action] = $this->contentActions[$action];
-				$ret[$action]['data-tracking'] = $ret[$action]['id'] . '-dropdown';
+				if ( isset( $ret[$action]['id'])) {
+					$ret[$action]['data-tracking'] = $ret[$action]['id'] . '-dropdown';
+				}
 			}
 		}
 
