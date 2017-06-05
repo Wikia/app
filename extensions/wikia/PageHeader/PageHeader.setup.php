@@ -14,6 +14,7 @@ $wgAutoloadClasses[ 'Wikia\PageHeader\PageTitle' ] = $dir . 'PageTitle.class.php
 // Hooks
 $wgAutoloadClasses[ 'Wikia\PageHeader\Hooks' ] = $dir . 'Hooks.class.php';
 $wgHooks['BeforePageDisplay'][] = 'Wikia\PageHeader\Hooks::onBeforePageDisplay';
+$wgHooks['EditPage::showEditForm:initial'][] = 'Wikia\PageHeader\Hooks::onEditPageRender';
 
 // i18n
 $wgExtensionMessagesFiles[ 'PageHeader' ] = $dir . 'PageHeader.i18n.php';

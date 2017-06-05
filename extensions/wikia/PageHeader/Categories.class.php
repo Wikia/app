@@ -47,6 +47,10 @@ class Categories {
 	 * @return bool
 	 */
 	public function hasVisibleCategories() {
+		if ( RequestContext::getMain()->getWikiPage()->getTitle()->isMainPage() ) {
+			return false;
+		}
+
 		return count( $this->categories ) > 0;
 	}
 

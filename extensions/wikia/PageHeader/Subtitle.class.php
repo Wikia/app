@@ -2,7 +2,9 @@
 
 namespace Wikia\PageHeader;
 
+use FakeSkin;
 use Html;
+use RequestContext;
 
 class Subtitle {
 	/**
@@ -25,8 +27,14 @@ class Subtitle {
 	 */
 	private $skinTemplate;
 
+	/**
+	 * @var bool
+	 */
+	private static $onEditPage = false;
+
 	public function __construct( \WikiaApp $app ) {
 		$this->suppressPageSubtitle = $app->wg->SuppressPageSubtitle;
+		$this->request = RequestContext::getMain()->getRequest();
 		$this->skinTemplate = $app->getSkinTemplateObj();
 		if ( !$this->suppressPageSubtitle ) {
 			$this->subtitle = $this->getSubtitle();
@@ -35,10 +43,48 @@ class Subtitle {
 		}
 	}
 
+	/**
+	 * Detect we're on edit (or diff) page
+	 */
+	public static function isEditPage() {
+		$wg = \F::app()->wg;
+		return !empty( Hooks::$onEditPage ) ||
+		       !is_null( $wg->Request->getVal( 'diff' ) ) /* diff pages - RT #69931 */ ||
+		       in_array( $wg->Request->getVal( 'action', 'view' ), [ 'edit' /* view source page */, 'formedit' /* SMW edit pages */, 'history' /* history pages */, 'submit' /* conflicts, etc */ ] );
+	}
+
 	private function getSubtitle() {
 		$wgOutput = \RequestContext::getMain()->getOutput();
 
+		if(self::isEditPage()) {
+			return $this->getEditPageSubtitle();
+		}
+
 		return $wgOutput->getSubtitle();
+	}
+
+	private function getEditPageSubtitle() {
+		$wgOutput = \RequestContext::getMain()->getOutput();
+		$title = \RequestContext::getMain()->getTitle();
+
+		$subtitle = [
+			$this->getBackLink(),
+			$wgOutput->getSubtitle(),
+		];
+
+		if ( $this->request->getVal( 'action', 'view' ) === 'history' ) {
+			$sk = new FakeSkin();
+			$sk->setRelevantTitle( $title );
+
+			$undeleteLink = $sk->getUndeleteLink();
+			if ( $undeleteLink ) {
+				$subtitle[] = $undeleteLink;
+			}
+		}
+
+		$pipe = wfMessage( 'pipe-separator' )->escaped();
+
+		return implode( $pipe, $subtitle );
 	}
 
 	private function getTalkPageBackLink() {
@@ -110,9 +156,11 @@ class Subtitle {
 			case NS_FORUM:
 				$pageType = wfMessage( 'page-header-subtitle-forum' )->escaped();
 				break;
+
+			case NS_BLOG_LISTING:
+				$pageType = wfMessage( 'page-header-subtitle-blog-category' )->escaped();
+				break;
 		}
-		//Todo: do not pass $this, or maybe whole hook?
-		//wfRunHooks( 'PageHeaderPageTypePrepared', [ $this, $this->getContext()->getTitle() ] );
 
 		return $pageType;
 	}
@@ -146,16 +194,8 @@ class Subtitle {
 	private function getBackLink() {
 		$title = \RequestContext::getMain()->getTitle();
 
-		//if ( !$isPreview && !$isShowChanges ) {
-			return \Wikia::link(
-				$title,
-				wfMessage( 'page-header-subtitle-back-to-article' )->escaped(),
-				[ 'accesskey' => 'c' ],
-				[ ],
-				'known'
-			);
-		//}
-
+		return \Wikia::link( $title, wfMessage( 'oasis-page-header-back-to-article' )->escaped(),
+			[ 'accesskey' => 'c' ], [], 'known' );
 	}
 
 	private function getSubPageLinks() {

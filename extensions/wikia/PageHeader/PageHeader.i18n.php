@@ -28,6 +28,7 @@ $messages['en'] = array(
 	'page-header-subtitle-special' => 'Special page',
 	'page-header-subtitle-category' => 'Category page',
 	'page-header-subtitle-forum' => 'Forum page',
+	'page-header-subtitle-blog-category' => 'Blog posts',
 );
 
 $messages['qqq'] = array(
@@ -57,4 +58,5 @@ $messages['qqq'] = array(
 	'page-header-subtitle-special' => 'Subtitle prefix for Special page type',
 	'page-header-subtitle-category' => 'Subtitle prefix for Category page type',
 	'page-header-subtitle-forum' => 'Subtitle prefix for Forum page type',
+	'page-header-subtitle-blog-category' => 'Subtitle prefix for Blog posts',
 );
