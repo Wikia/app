@@ -130,36 +130,23 @@ class Subtitle {
 		$namespace = $title->getNamespace();
 
 		$pageType = null;
-		// render page type info
-		switch ( $namespace ) {
-			case NS_MEDIAWIKI:
-				$pageType = wfMessage( 'page-header-subtitle-mediawiki' )->escaped();
-				break;
 
-			case NS_TEMPLATE:
-				$pageType = wfMessage( 'page-header-subtitle-template' )->escaped();
-				break;
-
-			case NS_SPECIAL:
-				if (
-					!$title->isSpecial('Forum') &&
-					!$title->isSpecial('ThemeDesignerPreview')
-				) {
-					$pageType = wfMessage( 'page-header-subtitle-special' )->escaped();
-				}
-				break;
-
-			case NS_CATEGORY:
-				$pageType = wfMessage( 'page-header-subtitle-category' )->escaped();
-				break;
-
-			case NS_FORUM:
-				$pageType = wfMessage( 'page-header-subtitle-forum' )->escaped();
-				break;
-
-			case NS_BLOG_LISTING:
-				$pageType = wfMessage( 'page-header-subtitle-blog-category' )->escaped();
-				break;
+		if ( $namespace === NS_MEDIAWIKI ) {
+			$pageType = wfMessage( 'page-header-subtitle-mediawiki' )->escaped();
+		} else if ( $namespace === NS_TEMPLATE ) {
+			$pageType = wfMessage( 'page-header-subtitle-template' )->escaped();
+		} else if (
+			$namespace === NS_SPECIAL &&
+			!$title->isSpecial('Forum') &&
+			!$title->isSpecial('ThemeDesignerPreview')
+		) {
+			$pageType = wfMessage( 'page-header-subtitle-special' )->escaped();
+		} else if ( $namespace === NS_CATEGORY ) {
+			$pageType = wfMessage( 'page-header-subtitle-category' )->escaped();
+		} else if ( $namespace === NS_FORUM ) {
+			$pageType = wfMessage( 'page-header-subtitle-forum' )->escaped();
+		} else if ( defined( 'NS_BLOG_LISTING' ) && $namespace === NS_BLOG_LISTING ) {
+			$pageType = wfMessage( 'page-header-subtitle-blog-category' )->escaped();
 		}
 
 		return $pageType;
