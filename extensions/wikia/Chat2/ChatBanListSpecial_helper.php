@@ -9,8 +9,7 @@
 
 use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
 
-class ChatBanData extends WikiaModel
-{
+class ChatBanData extends ContextSource {
 	use PermissionsServiceAccessor;
 
 	/**
@@ -54,11 +53,11 @@ class ChatBanData extends WikiaModel
 	private $table;
 
 
-	function __construct( $city_id, $load = 1 ) {
-		parent::__construct();
+	public function __construct( int $cityId, $load = 1 ) {
+		global $wgExternalDatawareDB;
 
-		$this->cityId = $city_id;
-		$this->db = $this->getDatawareDB();
+		$this->cityId = $cityId;
+		$this->db = wfGetDB( DB_SLAVE, [], $wgExternalDatawareDB );
 		$this->table = 'chat_ban_users';
 
 		$this->orderOptions = [
@@ -73,19 +72,19 @@ class ChatBanData extends WikiaModel
 		}
 	}
 
-	function load() {
+	public function load() {
 		$this->setLimit();
 		$this->setOffset();
 		$this->setOrder();
 	}
 
-	function setUserName( $username = '' ) { $this->userName = $username; }
+	public function setUserName( $username = '' ) { $this->userName = $username; }
 
-	function setLimit( $limit = Listusers::DEF_LIMIT ) { $this->limit = $limit; }
+	public function setLimit( $limit = Listusers::DEF_LIMIT ) { $this->limit = $limit; }
 
-	function setOffset( $offset = 0 ) { $this->offset = $offset; }
+	public function setOffset( $offset = 0 ) { $this->offset = $offset; }
 
-	function setOrder( $order = '' ) {
+	public function setOrder( $order = '' ) {
 		if ( empty( $order ) ) {
 			// default order
 			$order = 'timestamp:desc';
@@ -102,13 +101,13 @@ class ChatBanData extends WikiaModel
 		}
 	}
 
-	function getUserName() { return $this->userName; }
+	public function getUserName() { return $this->userName; }
 
-	function getLimit() { return $this->limit; }
+	public function getLimit() { return $this->limit; }
 
-	function getOffset() { return $this->offset; }
+	public function getOffset() { return $this->offset; }
 
-	function getOrder() { return $this->order; }
+	public function getOrder() { return $this->order; }
 
 	public function loadData() {
 
@@ -169,22 +168,24 @@ class ChatBanData extends WikiaModel
 			);
 
 			$data['data'] = [ ];
-			while ( $row = $this->db->fetchObject( $oRes ) ) {
+			$lang = $this->getLanguage();
 
+			foreach ( $oRes as $row ) {
 				$user = User::newFromId( $row->cbu_user_id );
 				$admin = User::newFromId( $row->cbu_admin_user_id );
 
 				$data['data'][] = [
-					'timestamp'    => $this->wg->Lang->timeanddate( $row->start_date, true ),
+					'timestamp'    => $lang->timeanddate( $row->start_date, true ),
 					'user'         => Linker::link( $user->getUserPage(), $user->getName() ),
 					'user_actions' => $this->getUserLinks( $user ),
-					'expires'      => $this->wg->Lang->formatExpiry( $row->end_date, true ),
+					'expires'      => $lang->formatExpiry( $row->end_date, true ),
 					'admin_user'   => Linker::link( $admin->getUserPage(), $admin->getName() ),
 					'admin_links'  => $this->getUserLinks( $admin ),
 					'reason'       => Linker::commentBlock( $row->reason ),
 				];
 
 			}
+
 			$this->db->freeResult( $oRes );
 
 		}
@@ -194,42 +195,36 @@ class ChatBanData extends WikiaModel
 		return $data;
 	}
 
-	private function getUserLinks( $user ) {
+	private function getUserLinks( User $user ) {
+		$viewingUser = $this->getUser();
+		$userIsBlocked = $viewingUser->isBlocked( true, false );
+		$userName = $user->getName();
 
-		$userIsBlocked = $this->wg->User->isBlocked( true, false );
-		$oEncUserName = urlencode( $user->getName() );
-		$links = [
-			0 => "",
-			1 => Linker::link(
-				Title::newFromText( 'Contributions', NS_SPECIAL ),
-				$this->wg->Lang->ucfirst( wfMsg( 'contribslink' ) ),
-				[ 'target' => $oEncUserName]
-			),
-		];
+		$links = [];
 
-		if ( !empty( $this->wg->EnableWallExt ) ) {
-			$oUTitle = Title::newFromText( $user->getName(), NS_USER_WALL );
-			$msg = 'wall-message-wall-shorten';
-		} else {
-			$oUTitle = Title::newFromText( $user->getName(), NS_USER_TALK );
-			$msg = 'talkpagelinktext';
-		}
+		$talkPage = $user->getTalkPage();
+		$msg = $talkPage->inNamespace( NS_USER_TALK ) ? 'talkpagelinktext' : 'wall-message-wall-shorten';
+		$links[] = Linker::link(
+			$talkPage,
+			$this->msg( $msg )->escaped()
+		);
 
-		if ( $oUTitle instanceof Title ) {
-			$links[0] = Linker::link( $oUTitle, $this->wg->Lang->ucfirst( wfMsg( $msg ) ) );
-		}
+		$links[] = Linker::link(
+			SpecialPage::getSafeTitleFor( 'Contributions', $userName ),
+			$this->msg( 'contribslink' )->escaped()
+		);
 
-		if ( $this->wg->User->isAllowed( 'block' ) && ( !$userIsBlocked ) ) {
+		if ( !$userIsBlocked ) {
+			if ( $viewingUser->isAllowed( 'block' ) ) {
+				$links[] = Linker::link(
+					SpecialPage::getSafeTitleFor( 'Block', $userName ),
+					$this->msg( 'blocklink' )->escaped()
+				);
+			}
+
 			$links[] = Linker::link(
-				Title::newFromText( "BlockIP/{$user->getName()}", NS_SPECIAL ),
-				$this->wg->Lang->ucfirst( wfMsg( 'blocklink' ) )
-			);
-		}
-		if ( $this->wg->User->isAllowed( 'userrights' ) && ( !$userIsBlocked ) ) {
-			$links[] = Linker::link(
-				Title::newFromText( 'UserRights', NS_SPECIAL ),
-				$this->wg->Lang->ucfirst( wfMsg( 'listgrouprights-rights' ) ),
-				"user={$oEncUserName}"
+				SpecialPage::getSafeTitleFor( 'Userrights', $userName ),
+				$this->msg( 'listgrouprights-rights' )->escaped()
 			);
 		}
 
