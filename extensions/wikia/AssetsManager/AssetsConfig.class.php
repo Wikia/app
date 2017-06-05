@@ -31,7 +31,7 @@ class AssetsConfig {
 
 		$files = array(
 			// CK core entry point
-			$path . '/ckeditor/_source/core/ckeditor_base.js',
+			$path . '/ckeditor/ckeditor.js',
 		);
 
 		$input = file_get_contents( $IP . '/' . $path . '/ckeditor/ckeditor.wikia.pack' );
@@ -45,7 +45,8 @@ class AssetsConfig {
 				$files[] = $path . '/ckeditor/' . $name;
 			}
 		}
-
+        var_dump($files);
+		exit;
 		return $files;
 	}
 
