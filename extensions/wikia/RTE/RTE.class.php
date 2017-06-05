@@ -3,8 +3,8 @@
 class RTE {
 	
 	//init modes
-	const INIT_MODE_SOURCE = 0;
-	const INIT_MODE_WYSIWYG = 1;
+	const INIT_MODE_SOURCE = 'source';
+	const INIT_MODE_WYSIWYG = 'wysiwyg';
 
 	// unique editor instance ID
 	private static $instanceId = null;
@@ -223,7 +223,7 @@ class RTE {
 		}
 
 		// initial CK mode (wysiwyg / source)
-		$vars['RTEInitMode'] =  (self::$initMode == self::INIT_MODE_WYSIWYG) ? 'wysiwyg' : 'source';
+		$vars['RTEInitMode'] =  (self::$initMode == self::INIT_MODE_WYSIWYG) ? self::INIT_MODE_WYSIWYG : self::INIT_MODE_SOURCE;
 
 		// constants for regexp checking in links editor
 		$vars['RTEUrlProtocols'] = wfUrlProtocols();
@@ -442,7 +442,7 @@ HTML
 	 * Set init mode of CK editor
 	 */
 	public static function setInitMode($mode) {
-		self::$initMode = ($mode == self::INIT_MODE_WYSIWYG) ? 'wysiwyg' : 'source';
+		self::$initMode = ($mode == self::INIT_MODE_WYSIWYG) ? self::INIT_MODE_WYSIWYG : self::INIT_MODE_SOURCE;
 		RTE::log(__METHOD__, self::$initMode);
 	}
 
