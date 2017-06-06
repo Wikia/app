@@ -1,7 +1,7 @@
 require(['wikia.window', 'jquery'], function (window, $) {
 	'use strict';
 
-	var editformSubmitAllowed = false;
+
 
 	function firstMenuValidator() {
 		var $localNavPreview = $('.local-navigation-preview'),
@@ -17,19 +17,8 @@ require(['wikia.window', 'jquery'], function (window, $) {
 
 	function initPreview() {
 		if (window.wgIsWikiNavMessage) {
-			$('#wpSave').hide();
-			$('#editform').submit(function (ev) {
-				if (!editformSubmitAllowed) {
-					ev.stopImmediatePropagation();
-					return false;
-				}
-			});
-			$('#wpSummary').bind('keypress', function (ev) {
-				if (ev.keyCode === 13 /* enter */ && !editformSubmitAllowed) {
-					// prevent tracking
-					ev.stopImmediatePropagation();
-				}
-			});
+			var $saveButton = $('#wpSave');
+			$saveButton.hide().attr('disabled', true);
 
 			// preload messages
 			$.getMessages('Oasis-navigation-v2').done(function () {
@@ -58,7 +47,7 @@ require(['wikia.window', 'jquery'], function (window, $) {
 						).show();
 
 					} else {
-						editformSubmitAllowed = true;
+						$saveButton.attr('disabled', false);
 					}
 
 					previewNode.find('nav > ul a').click(function () {
@@ -76,7 +65,7 @@ require(['wikia.window', 'jquery'], function (window, $) {
 
 			// disable submit on editform when preview is closed
 			$(window).bind('EditPagePreviewClosed', function () {
-				editformSubmitAllowed = false;
+				$saveButton.attr('disabled', true);
 			});
 
 			$('#wpPreview').parent().removeClass('secondary');
