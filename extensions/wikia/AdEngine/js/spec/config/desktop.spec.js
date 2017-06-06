@@ -53,10 +53,6 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 					name: 'rpfl',
 					canHandleSlot: noop
 				},
-				taboola: {
-					name: 'taboola',
-					canHandleSlot: noop
-				},
 				turtle: {
 					name: 'turtle',
 					canHandleSlot: noop
@@ -80,8 +76,7 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 			mocks.providers.evolve2,
 			mocks.providers.remnantGpt,
 			mocks.providers.rubiconFastlane,
-			mocks.providers.turtle,
-			mocks.providers.taboola
+			mocks.providers.turtle
 		);
 	}
 
@@ -135,17 +130,6 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 		spyOn(mocks.providers.evolve2, 'canHandleSlot').and.returnValue(true);
 		spyOn(mocks, 'getAdContextProviders').and.returnValue({evolve2: true});
 		expect(getProviders('foo')).toEqual('evolve2,remnant');
-	});
-
-	it('any country, Taboola on, Taboola slot: Taboola', function () {
-		spyOn(mocks, 'getAdContextProviders').and.returnValue({taboola: true});
-		spyOn(mocks.providers.taboola, 'canHandleSlot').and.returnValue(true);
-		expect(getProviders('foo')).toEqual('taboola');
-	});
-
-	it('any country, Taboola on, non Taboola slot: not Taboola', function () {
-		spyOn(mocks, 'getAdContextProviders').and.returnValue({taboola: true});
-		expect(getProviders('foo')).not.toEqual('taboola');
 	});
 
 	it('Evolve country, wgSitewideDisableGpt on: Evolve', function () {

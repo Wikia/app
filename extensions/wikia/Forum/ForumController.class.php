@@ -19,7 +19,10 @@ class ForumController extends WallBaseController {
 	}
 
 	public function board() {
-		$ns = $this->wg->Title->getNamespace();
+		// VOLDEV-95: Use correct title from request
+		/** @var Title $title */
+		$title = $this->request->getVal( 'title' );
+		$ns = $title->getNamespace();
 
 		if ( $ns == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			$topicTitle = $this->getTopicTitle();
@@ -65,8 +68,6 @@ class ForumController extends WallBaseController {
 
 		// TODO: keep the varnish cache and do purging on post
 		$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
-
-		$this->app->wg->SuppressPageHeader = true;
 	}
 
 	protected function redirectToIndex() {
@@ -75,8 +76,9 @@ class ForumController extends WallBaseController {
 	}
 
 	protected function getTopicTitle() {
-		$text = $this->wg->Title->getText();
-		$topicTitle = Title::newFromText( $text );
+		/** @var Title $title */
+		$title = $this->request->getVal( 'title' );
+		$topicTitle = Title::newFromText( $title->getText() );
 		return $topicTitle;
 	}
 

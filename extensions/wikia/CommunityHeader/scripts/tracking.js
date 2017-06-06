@@ -28,13 +28,13 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 
 		$communityHeader.find('.wds-community-header__sitename a').on('click', function () {
 			track({
-				label: 'wordmark-text'
+				label: 'sitename'
 			});
 		});
 
 		$communityHeader.find('.wds-community-header__counter').on('click', function () {
 			track({
-				label: 'tally'
+				label: 'counter'
 			});
 		});
 

@@ -268,7 +268,6 @@ class BodyController extends WikiaController {
 		}
 
 		$railModuleList[1440] = [ 'Ad', 'Index', [ 'slotName' => 'TOP_RIGHT_BOXAD' ] ];
-		$railModuleList[1435] = [ 'AdEmptyContainer', 'Index', [ 'slotName' => 'NATIVE_TABOOLA_RAIL' ] ];
 		$railModuleList[1100] = [ 'Ad', 'Index', [ 'slotName' => 'LEFT_SKYSCRAPER_2' ] ];
 
 		wfRunHooks( 'GetRailModuleList', [ &$railModuleList ] );
@@ -419,11 +418,6 @@ class BodyController extends WikiaController {
 		// VOLDEV-125: Fix Special:AllMessages colors on dark wikis
 		if ( !empty( $this->wg->Title ) && $this->wg->Title->isSpecial( 'Allmessages' ) && SassUtil::isThemeDark() ) {
 			$this->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'skins/oasis/css/modules/SpecialAllMessages.scss' ) );
-		}
-
-		// Forum Extension
-		if ( !empty( $this->wg->EnableForumExt ) && ForumHelper::isForum() ) {
-			$this->wg->SuppressPageHeader = true;
 		}
 
 		$namespace = $this->wg->Title->getNamespace();
