@@ -2,7 +2,6 @@
 
 class RTE {
 	
-	//init modes
 	const INIT_MODE_SOURCE = 'source';
 	const INIT_MODE_WYSIWYG = 'wysiwyg';
 
@@ -35,7 +34,7 @@ class RTE {
 	 *
 	 * @param EditPage $form
 	 */
-	public static function reverse($form,  $out = null): bool {
+	public static function reverse( $form,  $out = null ): bool {
         	global $wgRequest;
 		wfProfileIn(__METHOD__);
 
@@ -61,7 +60,7 @@ class RTE {
 	 *
 	 * @author: Inez KorczyDski
 	 */
-	public static function replacePlaceholder($var) {
+	public static function replacePlaceholder( $var ) {
 		$data = RTEData::get('placeholder', intval($var[1]));
 
 		if($data) {
@@ -74,7 +73,7 @@ class RTE {
 	 *
 	 * @author: Macbre
 	 */
-	public static function renderPlaceholder($label, $data) {
+	public static function renderPlaceholder( $label, $data ) {
 		// this is placeholder
 		$data['placeholder'] = 1;
 
@@ -96,7 +95,7 @@ class RTE {
 	 *
 	 * @author Inez KorczyDski, Macbre
 	 */
-	public static function init(&$form) {
+	public static function init( &$form ) {
 		global $wgOut, $wgHooks, $wgAllInOne, $wgRequest;
 
 		wfProfileIn(__METHOD__);
@@ -151,7 +150,7 @@ class RTE {
 	/**
 	 * Parse wikitext of edited article, so CK can be provided with HTML
 	 */
-	public static function init2(&$form, OutputPage &$out) {
+	public static function init2( &$form, OutputPage &$out ) {
 		wfProfileIn(__METHOD__);
 
 		// add hidden edit form field
@@ -198,7 +197,7 @@ class RTE {
 	 *
 	 * @author Macbre
 	 */
-	public static function makeGlobalVariablesScript(&$vars) {
+	public static function makeGlobalVariablesScript( &$vars ) {
 		global $wgLegalTitleChars, $wgServer, $wgExtensionsPath;
 
 		wfProfileIn(__METHOD__);
@@ -275,7 +274,7 @@ class RTE {
 	/**
 	 * Add class to <body> tag
 	 */
-	public static function addBodyClass(&$classes) {
+	public static function addBodyClass( &$classes ) {
 		$classes .= ' rte';
 		return true;
 	}
@@ -283,7 +282,7 @@ class RTE {
 	/**
 	 * Removes default editor toolbar, so we can lazy load icons for source mode toolbar (RT #78393)
 	 */
-	public static function removeDefaultToolbar(&$toolbar) {
+	public static function removeDefaultToolbar( &$toolbar ) {
 		$toolbar = strtr($toolbar, array(
 			'<div id="toolbar">' => '',
 			'</div>' => '',
@@ -294,7 +293,7 @@ class RTE {
 	/**
 	 * Add fake form used by MW suggest in CK dialogs
 	 */
-	public static function onSkinAfterBottomScripts($skin, &$text) {
+	public static function onSkinAfterBottomScripts( $skin, &$text ) {
 		$text .= Xml::openElement('form', array('id' => 'RTEFakeForm')) . Xml::closeElement('form');
 		return true;
 	}
@@ -326,7 +325,7 @@ HTML
 	/**
 	 * Add fields to perform temporary save
 	 */
-	private static function addTemporarySaveFields(OutputPage $out) {
+	private static function addTemporarySaveFields( OutputPage $out ) {
 		$out->addHtml(
 			"\n".
 			Xml::element('input', array('type' => 'hidden', 'id' => 'RTETemporarySaveType', 'name' => 'RTETemporarySaveType')).
@@ -431,7 +430,7 @@ HTML
 	/**
 	 * Disable CK editor - MediaWiki editor will be loaded
 	 */
-	public static function disableEditor(string $reason) {
+	public static function disableEditor( string $reason ) {
 		self::$useWysiwyg = false;
 		self::$wysiwygDisabledReason = $reason;
 
@@ -441,7 +440,7 @@ HTML
 	/**
 	 * Add given edgecase to the list of found edgecases
 	 */
-	public static function edgeCasesPush($edgecase) {
+	public static function edgeCasesPush( $edgecase ) {
  		self::$edgeCases[] = $edgecase;
 	}
 
@@ -478,7 +477,7 @@ HTML
 	/**
 	 * Parse given wikitext to HTML for CK
 	 */
-	public static function WikitextToHtml($wikitext) {
+	public static function WikitextToHtml( $wikitext ) {
 		global $wgTitle;
 
 		wfProfileIn(__METHOD__);
@@ -501,7 +500,7 @@ HTML
 	/**
 	 * Parse given HTML from CK back to wikitext
 	 */
-	public static function HtmlToWikitext($html) {
+	public static function HtmlToWikitext( $html ) {
 		wfProfileIn(__METHOD__);
 
 		$RTEReverseParser = new RTEReverseParser();
@@ -517,7 +516,7 @@ HTML
 	 *
 	 * @author Macbre
 	 */
-	public static function log($msg, $var = NULL) {
+	public static function log( $msg, $var = NULL ) {
 		$debug = 'RTE: ';
 
 		if (is_string($msg)) {
@@ -539,7 +538,7 @@ HTML
 	 *
 	 * @author Macbre
 	 */
-	public static function hex($method, $string) {
+	public static function hex( $method, $string ) {
 		$debug = "RTE: {$method}\n" . Wikia::hex($string, false, false, true);
 
 		wfDebug("{$debug}\n");
@@ -652,8 +651,8 @@ HTML
 	 * @return boolean true/false if we are in fancy edit mode
 	 */
 
-	static function isWysiwygModeEnabled(): bool {
-		return (self::$useWysiwyg && self::$initMode == self::INIT_MODE_WYSIWYG);
+	static public function isWysiwygModeEnabled(): bool {
+		return ( self::$useWysiwyg && self::$initMode == self::INIT_MODE_WYSIWYG );
 	}
 
 	/**
@@ -667,7 +666,7 @@ HTML
 	/**
 	 * Add "Enable Rich Text Editing" as the first option in editing tab of user preferences
 	 */
-	static function onEditingPreferencesBefore($user, &$preferences): bool  {
+	static function onEditingPreferencesBefore( $user, &$preferences ): bool  {
 		// add JS to hide certain switches when wysiwyg is enabled
 		global $wgOut, $wgJsMimeType, $wgExtensionsPath;
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/RTE/js/RTE.preferences.js\"></script>" );
@@ -677,7 +676,7 @@ HTML
 	/**
 	 * Modify values returned by User::getGlobalPreference() when wysiwyg is enabled
 	 */
-	static public function userGetOption($options, $name, &$value): bool {
+	static public function userGetOption( $options, $name, &$value ): bool {
 		global $wgRequest;
 		wfProfileIn(__METHOD__);
 
