@@ -30,20 +30,6 @@
 		margin-top: 5px;
 	}
 
-	.BreadCrumbs {
-		@include clearfix;
-		padding-top: 3px;
-		.removed {
-			color: $color-alternate-text;
-			padding-left: 7px;
-		}
-		.separator {
-			padding: 0 3px;
-			position: relative;
-			top: -1px;
-		}
-	}
-
 	.DiscussionBox {
 		margin: 15px 0 20px 0;
 

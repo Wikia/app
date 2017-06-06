@@ -1,6 +1,7 @@
 <div class="WallHistory">
 <? if ( empty( $wallmessageNotFound ) ): ?>
 	<?= $app->renderView( 'Wall', 'brickHeader', [
+			'className' => 'BreadCrumbs',
 			'path' => $path
 		] );
 	?>

@@ -474,4 +474,14 @@ class ForumHooksHelper {
 		return true;
 	}
 
+	/**
+	 * @param string $pageSubtitle
+	 *
+	 * @return bool
+	 */
+	public static function onAfterPageHeaderPageSubtitle( &$pageSubtitle ): bool {
+		$pageSubtitle = F::app()->renderView( 'Wall', 'brickHeader' );
+
+		return true;
+	}
 }
