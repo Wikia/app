@@ -42,9 +42,9 @@ require(
 				this.unreadCount = parseInt(this.$notificationsCount.html(), 10);
 
 				this.$notificationsEntryPoint
-					.on('click', this.proxy(this.updateCounts))
-					.on('click', this.proxy(this.fetchForCurrentWiki))
-					.on('wds-dropdown-open', this.proxy(this.onNotificationsOpen));
+					.on('mouseenter', this.proxy(this.updateCounts))
+					.on('mouseenter', this.proxy(this.fetchForCurrentWiki))
+					.on('mouseenter', this.proxy(this.onNotificationsOpen));
 
 				this.$wallNotifications.add($('#pt-wall-notifications'))
 					.on('click', '.notifications-markasread', this.markAllAsReadAllWikis.bind(this));

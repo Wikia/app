@@ -30,6 +30,7 @@ use PHPUnit\TextUI\ResultPrinter;
  *          columns="80"
  *          colors="false"
  *          stderr="false"
+ *          convertDeprecationsToExceptions="true"
  *          convertErrorsToExceptions="true"
  *          convertNoticesToExceptions="true"
  *          convertWarningsToExceptions="true"
@@ -613,6 +614,13 @@ class Configuration
             );
         }
 
+        if ($root->hasAttribute('convertDeprecationsToExceptions')) {
+            $result['convertDeprecationsToExceptions'] = $this->getBoolean(
+                (string) $root->getAttribute('convertDeprecationsToExceptions'),
+                true
+            );
+        }
+
         if ($root->hasAttribute('convertErrorsToExceptions')) {
             $result['convertErrorsToExceptions'] = $this->getBoolean(
                 (string) $root->getAttribute('convertErrorsToExceptions'),
@@ -1016,10 +1024,14 @@ class Configuration
     }
 
     /**
-     * @param string $value
-     * @param bool   $default
+     * if $value is 'false' or 'true', this returns the value that $value represents.
+     * Otherwise, returns $default, which may be a string in rare cases.
+     * See PHPUnit\Util\ConfigurationTest::testPHPConfigurationIsReadCorrectly
      *
-     * @return bool
+     * @param string      $value
+     * @param string|bool $default
+     *
+     * @return string|bool
      */
     protected function getBoolean($value, $default)
     {
@@ -1036,9 +1048,9 @@ class Configuration
 
     /**
      * @param string $value
-     * @param bool   $default
+     * @param int    $default
      *
-     * @return bool
+     * @return int
      */
     protected function getInteger($value, $default)
     {

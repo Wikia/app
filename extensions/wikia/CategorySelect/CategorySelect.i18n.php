@@ -916,7 +916,7 @@ $messages['ru'] = array(
 	'categoryselect-error-article-doesnt-exist' => 'Статьи [id=$1] не существует.',
 	'categoryselect-error-category-name-length' => 'Была достигнута максимальная длина названия категории.',
 	'categoryselect-error-db-locked' => 'База данных заблокирована.',
-	'categoryselect-error-duplicate-category-name' => 'Категория "$1" уже добавлена.',
+	'categoryselect-error-duplicate-category-name' => 'Категория «$1» уже добавлена.',
 	'categoryselect-error-edit-abort' => 'Правка, которую вы пытались сделать, была отменена расширением.',
 	'categoryselect-error-empty-category-name' => 'Пожалуйста, укажите название категории.',
 	'categoryselect-error-user-rights' => 'Вы не имеете прав на выполнение этого действия.',

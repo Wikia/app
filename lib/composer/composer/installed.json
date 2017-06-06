@@ -2379,60 +2379,6 @@
         "homepage": "https://www.github.com/sebastianbergmann/resource-operations"
     },
     {
-        "name": "sebastian/diff",
-        "version": "1.4.1",
-        "version_normalized": "1.4.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/sebastianbergmann/diff.git",
-            "reference": "13edfd8706462032c2f52b4b862974dd46b71c9e"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/sebastianbergmann/diff/zipball/13edfd8706462032c2f52b4b862974dd46b71c9e",
-            "reference": "13edfd8706462032c2f52b4b862974dd46b71c9e",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.3"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "~4.8"
-        },
-        "time": "2015-12-08T07:14:41+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.4-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "src/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Kore Nordmann",
-                "email": "mail@kore-nordmann.de"
-            },
-            {
-                "name": "Sebastian Bergmann",
-                "email": "sebastian@phpunit.de"
-            }
-        ],
-        "description": "Diff implementation",
-        "homepage": "https://github.com/sebastianbergmann/diff",
-        "keywords": [
-            "diff"
-        ]
-    },
-    {
         "name": "doctrine/instantiator",
         "version": "1.0.5",
         "version_normalized": "1.0.5.0",
@@ -2887,117 +2833,6 @@
         "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock."
     },
     {
-        "name": "mediawiki/semantic-media-wiki",
-        "version": "2.4.2.3",
-        "version_normalized": "2.4.2.3",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/Wikia/SemanticMediaWiki",
-            "reference": "082a1f44947f5f53f10d20e46b3cf4205ea0226a"
-        },
-        "require": {
-            "composer/installers": "1.*,>=1.0.1",
-            "ext-mbstring": "*",
-            "mediawiki/parser-hooks": "~1.4",
-            "onoi/blob-store": "~1.2",
-            "onoi/cache": "~1.2",
-            "onoi/callback-container": "~1.0",
-            "onoi/event-dispatcher": "~1.0",
-            "onoi/http-request": "~1.1",
-            "onoi/message-reporter": "~1.0",
-            "param-processor/param-processor": "~1.2",
-            "php": ">=5.3.0",
-            "serialization/serialization": "~3.2"
-        },
-        "replace": {
-            "mediawiki/semantic-mediawiki": "*"
-        },
-        "require-dev": {
-            "phpmd/phpmd": "~2.1",
-            "squizlabs/php_codesniffer": "~2.1"
-        },
-        "suggest": {
-            "mediawiki/semantic-forms": "Easy creation of forms to add semantic data",
-            "mediawiki/semantic-result-formats": "Additional result formats for SMW queries"
-        },
-        "time": "2016-11-14T11:07:05+00:00",
-        "type": "mediawiki-extension",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.4.x-dev"
-            }
-        },
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "SMW\\": "src/",
-                "SMW\\Maintenance\\": "maintenance/"
-            },
-            "classmap": [
-                "includes/",
-                "languages/SMW_Language.php"
-            ]
-        },
-        "scripts": {
-            "phpunit": [
-                "php ../../tests/phpunit/phpunit.php -c phpunit.xml.dist"
-            ],
-            "unit": [
-                "composer dump-autoload",
-                "php ../../tests/phpunit/phpunit.php -c phpunit.xml.dist --testsuite=semantic-mediawiki-unit"
-            ],
-            "cs-standalone": [
-                "composer validate --no-interaction",
-                "vendor/bin/phpcs src/* includes/* tests/* --standard=phpcs.xml --extensions=php -sp"
-            ],
-            "cs": [
-                "composer cs-standalone",
-                "vendor/bin/phpmd src/,includes/,tests/ text phpmd.xml"
-            ],
-            "ci": [
-                "composer phpunit",
-                "composer cs"
-            ]
-        },
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "Markus Krötzsch",
-                "homepage": "http://korrekt.org",
-                "role": "Original author"
-            },
-            {
-                "name": "Jeroen De Dauw",
-                "email": "jeroendedauw@gmail.com",
-                "homepage": "http://jeroendedauw.com",
-                "role": "Core developer"
-            },
-            {
-                "name": "James Hong Kong",
-                "homepage": "https://www.semantic-mediawiki.org/wiki/User:MWJames",
-                "role": "Core developer"
-            }
-        ],
-        "description": "MediaWiki extension that lets you store and query structured data within wiki pages",
-        "homepage": "https://www.semantic-mediawiki.org/wiki/",
-        "keywords": [
-            "MediaWiki",
-            "SMW",
-            "Semantic MediaWiki",
-            "Wiki"
-        ],
-        "support": {
-            "email": "semediawiki-user@lists.sourceforge.net",
-            "issues": "https://github.com/SemanticMediaWiki/SemanticMediaWiki/issues",
-            "irc": "irc://irc.freenode.net/semantic-mediawiki",
-            "forum": "https://www.semantic-mediawiki.org/wiki/semantic-mediawiki.org_talk:Community_portal",
-            "wiki": "https://www.semantic-mediawiki.org/wiki/",
-            "source": "https://github.com/SemanticMediaWiki/SemanticMediaWiki"
-        }
-    },
-    {
         "name": "sebastian/recursion-context",
         "version": "3.0.0",
         "version_normalized": "3.0.0.0",
@@ -3268,58 +3103,6 @@
         "keywords": [
             "export",
             "exporter"
-        ]
-    },
-    {
-        "name": "sebastian/environment",
-        "version": "3.0.2",
-        "version_normalized": "3.0.2.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/sebastianbergmann/environment.git",
-            "reference": "11e7710b7724d42c62249b0e9d3030240398949d"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/11e7710b7724d42c62249b0e9d3030240398949d",
-            "reference": "11e7710b7724d42c62249b0e9d3030240398949d",
-            "shasum": ""
-        },
-        "require": {
-            "php": "^7.0"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "^6.1"
-        },
-        "time": "2017-04-21T14:40:32+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "3.0.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "src/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Sebastian Bergmann",
-                "email": "sebastian@phpunit.de"
-            }
-        ],
-        "description": "Provides functionality to handle HHVM/PHP environments",
-        "homepage": "http://www.github.com/sebastianbergmann/environment",
-        "keywords": [
-            "Xdebug",
-            "environment",
-            "hhvm"
         ]
     },
     {
@@ -3820,18 +3603,235 @@
         ]
     },
     {
-        "name": "phpunit/phpunit",
-        "version": "6.1.3",
-        "version_normalized": "6.1.3.0",
+        "name": "mediawiki/semantic-media-wiki",
+        "version": "2.4.2.6",
+        "version_normalized": "2.4.2.6",
         "source": {
             "type": "git",
-            "url": "https://github.com/sebastianbergmann/phpunit.git",
-            "reference": "824d02024916525a36b2db21847a5ef91db9e4a8"
+            "url": "https://github.com/Wikia/SemanticMediaWiki",
+            "reference": "256773e5f3db4191cbc800841448b9a52aa11dcf"
+        },
+        "require": {
+            "composer/installers": "1.*,>=1.0.1",
+            "ext-mbstring": "*",
+            "mediawiki/parser-hooks": "~1.4",
+            "onoi/blob-store": "~1.2",
+            "onoi/cache": "~1.2",
+            "onoi/callback-container": "~1.0",
+            "onoi/event-dispatcher": "~1.0",
+            "onoi/http-request": "~1.1",
+            "onoi/message-reporter": "~1.0",
+            "param-processor/param-processor": "~1.2",
+            "php": ">=5.3.0",
+            "serialization/serialization": "~3.2"
+        },
+        "replace": {
+            "mediawiki/semantic-mediawiki": "*"
+        },
+        "require-dev": {
+            "phpmd/phpmd": "~2.1",
+            "squizlabs/php_codesniffer": "~2.1"
+        },
+        "suggest": {
+            "mediawiki/semantic-forms": "Easy creation of forms to add semantic data",
+            "mediawiki/semantic-result-formats": "Additional result formats for SMW queries"
+        },
+        "time": "2017-06-02T06:15:22+00:00",
+        "type": "mediawiki-extension",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.4.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "SMW\\": "src/",
+                "SMW\\Maintenance\\": "maintenance/"
+            },
+            "classmap": [
+                "includes/",
+                "languages/SMW_Language.php"
+            ]
+        },
+        "scripts": {
+            "phpunit": [
+                "php ../../tests/phpunit/phpunit.php -c phpunit.xml.dist"
+            ],
+            "unit": [
+                "composer dump-autoload",
+                "php ../../tests/phpunit/phpunit.php -c phpunit.xml.dist --testsuite=semantic-mediawiki-unit"
+            ],
+            "cs-standalone": [
+                "composer validate --no-interaction",
+                "vendor/bin/phpcs src/* includes/* tests/* --standard=phpcs.xml --extensions=php -sp"
+            ],
+            "cs": [
+                "composer cs-standalone",
+                "vendor/bin/phpmd src/,includes/,tests/ text phpmd.xml"
+            ],
+            "ci": [
+                "composer phpunit",
+                "composer cs"
+            ]
+        },
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Markus Krötzsch",
+                "homepage": "http://korrekt.org",
+                "role": "Original author"
+            },
+            {
+                "name": "Jeroen De Dauw",
+                "email": "jeroendedauw@gmail.com",
+                "homepage": "http://jeroendedauw.com",
+                "role": "Core developer"
+            },
+            {
+                "name": "James Hong Kong",
+                "homepage": "https://www.semantic-mediawiki.org/wiki/User:MWJames",
+                "role": "Core developer"
+            }
+        ],
+        "description": "MediaWiki extension that lets you store and query structured data within wiki pages",
+        "homepage": "https://www.semantic-mediawiki.org/wiki/",
+        "keywords": [
+            "MediaWiki",
+            "SMW",
+            "Semantic MediaWiki",
+            "Wiki"
+        ],
+        "support": {
+            "email": "semediawiki-user@lists.sourceforge.net",
+            "issues": "https://github.com/SemanticMediaWiki/SemanticMediaWiki/issues",
+            "irc": "irc://irc.freenode.net/semantic-mediawiki",
+            "forum": "https://www.semantic-mediawiki.org/wiki/semantic-mediawiki.org_talk:Community_portal",
+            "wiki": "https://www.semantic-mediawiki.org/wiki/",
+            "source": "https://github.com/SemanticMediaWiki/SemanticMediaWiki"
+        }
+    },
+    {
+        "name": "sebastian/environment",
+        "version": "3.0.3",
+        "version_normalized": "3.0.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/sebastianbergmann/environment.git",
+            "reference": "02b6b2c7aefe2cdb1185b8dbf8718b0bcedf3ab3"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/824d02024916525a36b2db21847a5ef91db9e4a8",
-            "reference": "824d02024916525a36b2db21847a5ef91db9e4a8",
+            "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/02b6b2c7aefe2cdb1185b8dbf8718b0bcedf3ab3",
+            "reference": "02b6b2c7aefe2cdb1185b8dbf8718b0bcedf3ab3",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^7.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "^6.1"
+        },
+        "time": "2017-05-18T10:10:00+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "src/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Sebastian Bergmann",
+                "email": "sebastian@phpunit.de"
+            }
+        ],
+        "description": "Provides functionality to handle HHVM/PHP environments",
+        "homepage": "http://www.github.com/sebastianbergmann/environment",
+        "keywords": [
+            "Xdebug",
+            "environment",
+            "hhvm"
+        ]
+    },
+    {
+        "name": "sebastian/diff",
+        "version": "1.4.3",
+        "version_normalized": "1.4.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/sebastianbergmann/diff.git",
+            "reference": "7f066a26a962dbe58ddea9f72a4e82874a3975a4"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/sebastianbergmann/diff/zipball/7f066a26a962dbe58ddea9f72a4e82874a3975a4",
+            "reference": "7f066a26a962dbe58ddea9f72a4e82874a3975a4",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^5.3.3 || ^7.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.0"
+        },
+        "time": "2017-05-22T07:24:03+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.4-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "src/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Kore Nordmann",
+                "email": "mail@kore-nordmann.de"
+            },
+            {
+                "name": "Sebastian Bergmann",
+                "email": "sebastian@phpunit.de"
+            }
+        ],
+        "description": "Diff implementation",
+        "homepage": "https://github.com/sebastianbergmann/diff",
+        "keywords": [
+            "diff"
+        ]
+    },
+    {
+        "name": "phpunit/phpunit",
+        "version": "6.2.1",
+        "version_normalized": "6.2.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/sebastianbergmann/phpunit.git",
+            "reference": "16999a1e9a8a25d68f0ab8cc8ab818b043ad5374"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/16999a1e9a8a25d68f0ab8cc8ab818b043ad5374",
+            "reference": "16999a1e9a8a25d68f0ab8cc8ab818b043ad5374",
             "shasum": ""
         },
         "require": {
@@ -3851,8 +3851,8 @@
             "phpunit/php-timer": "^1.0.6",
             "phpunit/phpunit-mock-objects": "^4.0",
             "sebastian/comparator": "^2.0",
-            "sebastian/diff": "^1.2",
-            "sebastian/environment": "^3.0.1",
+            "sebastian/diff": "^1.4.3 || ^2.0",
+            "sebastian/environment": "^3.0.2",
             "sebastian/exporter": "^3.1",
             "sebastian/global-state": "^1.1 || ^2.0",
             "sebastian/object-enumerator": "^3.0.2",
@@ -3870,14 +3870,14 @@
             "ext-xdebug": "*",
             "phpunit/php-invoker": "^1.1"
         },
-        "time": "2017-04-29T10:40:17+00:00",
+        "time": "2017-06-02T12:24:37+00:00",
         "bin": [
             "phpunit"
         ],
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "6.1.x-dev"
+                "dev-master": "6.2.x-dev"
             }
         },
         "installation-source": "dist",
