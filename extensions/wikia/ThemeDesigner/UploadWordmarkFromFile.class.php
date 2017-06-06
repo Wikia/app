@@ -9,7 +9,8 @@ class UploadWordmarkFromFile extends UploadFromFile {
 	const FILETYPE_ERROR = 31;
 
 	public function verifyUpload() {
-		$this->getTitle(); //will fill in final destination and extension
+		//will fill in final destination and extension
+		$this->getTitle();
 		$details = parent::verifyUpload();
 
 		if ( $details['status'] == self::OK ) {
@@ -31,15 +32,17 @@ class UploadWordmarkFromFile extends UploadFromFile {
 
 
 	public function performUpload() {
-		global $wgUser;
+		$wgUser = RequestContext::getMain()->getUser();
 
 		return parent::performUpload( '', '', false, $wgUser );
 	}
 
 	public function getLocalFile() {
 		if ( is_null( $this->mLocalFile ) ) {
-			//TODO: find out what namespace constant 6 is
-			$this->mLocalFile = new FakeLocalFile( Title::newFromText( 'Temp_file_' . time(), 6 ), RepoGroup::singleton()->getLocalRepo() );
+			$this->mLocalFile = new FakeLocalFile(
+				Title::newFromText( 'Temp_file_' . time(), NS_FILE ),
+				RepoGroup::singleton()->getLocalRepo()
+			);
 		}
 
 		return $this->mLocalFile;

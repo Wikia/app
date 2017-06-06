@@ -154,7 +154,8 @@ class ThemeDesignerController extends WikiaController {
 				)->parse();
 				break;
 			case UploadBase::HOOK_ABORTED:
-				if ( is_array( $status['error'] ) ) { # allow hooks to return error details in an array
+				// allow hooks to return error details in an array
+				if ( is_array( $status['error'] ) ) {
 					$args = $status['error'];
 					$error = array_shift( $args );
 				} else {
@@ -265,7 +266,11 @@ class ThemeDesignerController extends WikiaController {
 
 			//get cropped URL
 			$is = new ImageServing( null, 120, [ "w" => "120", "h" => "100" ] );
-			$this->backgroundImageThumb = wfReplaceImageServer( $file->getThumbUrl( $is->getCut( $file->width, $file->height, "origin" ) . "-" . $file->getName() ) );
+			$this->backgroundImageThumb = wfReplaceImageServer(
+				$file->getThumbUrl(
+					$is->getCut( $file->width, $file->height, "origin" ) . "-" . $file->getName()
+				)
+			);
 
 			// if background image url is not set then it means there was some problem
 			if ( $this->backgroundImageUrl == null ) {
