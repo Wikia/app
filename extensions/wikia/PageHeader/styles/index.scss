@@ -45,6 +45,10 @@
 		float: right;
 	}
 
+	&__languages {
+		padding-bottom: 12px;
+	}
+
 	&__main {
 		@include flex(1);
 	}

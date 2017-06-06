@@ -20,7 +20,7 @@
     "branch": "dropdown-theming",
     "commit": "cf54877d02764e5c40cc3aa75bcd2b2af6b87dca"
   },
-  "_source": "https://github.com/Wikia/design-system.git",
-  "_target": "dropdown-theming",
+  "_source": "git://github.com/Wikia/design-system.git",
+  "_target": "disabled-mixin",
   "_originalSource": "Wikia/design-system"
 }

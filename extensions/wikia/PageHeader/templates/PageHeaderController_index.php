@@ -5,6 +5,7 @@
 		<?= $app->renderView( 'Wikia\PageHeader\PageHeader', 'subtitle' ); ?>
 	</div>
 	<div class="page-header__contribution">
+		<?= $app->renderView( 'Wikia\PageHeader\PageHeader', 'languages' ); ?>
 		<? if ( $counter->isNotEmpty() ) : ?>
 			<span class="page-header__counter"><?= $counter->text ?></span>
 		<? endif; ?>
