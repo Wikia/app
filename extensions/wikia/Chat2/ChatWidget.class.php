@@ -114,8 +114,7 @@ class ChatWidget {
 		$parser->getOutput()->addModuleMessages( 'ext.Chat2.ChatWidget' );
 
 		wfProfileOut( __METHOD__ );
-
-		return '<nowiki>' . $html . '</nowiki>';
+		return $html;
 	}
 
 	/**
