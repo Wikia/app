@@ -1,7 +1,7 @@
 <div class="lu_filter">
 	<label for="lu_search" class="lu_filter lu_first"><?= wfMessage( 'username' )->escaped() ?></label>
 	<span class="lu_filter">
-		<input type="text" name="lu_search" id="lu_search" size="30" >
+		<input type="text" name="lu_search" id="lu_search" size="30" autofocus>
 	</span>
 	<span class="lu_filter">
 		<input type="button" value="<?= wfMessage( 'ipblocklist-submit' )->escaped() ?>" id="lu-showusers">
