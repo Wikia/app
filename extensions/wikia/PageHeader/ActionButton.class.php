@@ -49,17 +49,16 @@ class ActionButton {
 		// Enable to modify actions list on dropdown
 		wfRunHooks( 'PageHeaderDropdownActions', [ &$actions ] );
 
-		$ret = [];
-		foreach ( $actions as $action ) {
-			if ( isset( $this->contentActions[$action] ) ) {
-				$ret[$action] = $this->contentActions[$action];
-				if ( isset( $ret[$action]['id'] ) ) {
-					$ret[$action]['data-tracking'] = $ret[$action]['id'] . '-dropdown';
-				}
+		return array_map( function( $action ) {
+			$ret = $this->contentActions[$action];
+			if ( isset( $ret['id'] ) ) {
+				$ret['data-tracking'] = $ret['id'] . '-dropdown';
 			}
-		}
 
-		return $ret;
+			return $ret;
+		}, array_filter( $actions, function( $action ) {
+			return isset( $this->contentActions[$action] );
+		}));
 	}
 
 	private function prepareActionButton() {
