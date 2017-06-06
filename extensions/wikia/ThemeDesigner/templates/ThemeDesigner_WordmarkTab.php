@@ -42,7 +42,7 @@
 				  title="<?= htmlspecialchars( wfMessage( 'themedesigner-rules-favicon' )->parse() ) ?>"></span>
 		</h2>
 		<?php if ( empty( $wg->EnableUploads ) ) { ?>
-			<p><?= wfMessage( 'themedesigner-upload-disabled' )->plain(); ?></p>
+			<p><?= wfMessage( 'themedesigner-upload-disabled' )->text(); ?></p>
 		<?php } else { ?>
 			<form id="FaviconUploadForm"
 				  action="<?= $wg->ScriptPath ?>/wikia.php?controller=ThemeDesigner&method=FaviconUpload&format=html"

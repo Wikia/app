@@ -58,7 +58,7 @@ class ThemeDesignerHooks {
 		$destName = strtolower( $destName );
 		if ( $destName == 'wiki-wordmark.png' || $destName == 'wiki-background' ) {
 			// BugId:983
-			$error = wfMessage( 'themedesigner-manual-upload-error' )->plain();
+			$error = wfMessage( 'themedesigner-manual-upload-error' )->text();
 
 			return false;
 		}
