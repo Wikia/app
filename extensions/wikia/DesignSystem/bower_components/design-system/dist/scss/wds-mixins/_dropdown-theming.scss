@@ -17,7 +17,7 @@
 
 		&:not(.wds-is-not-scrollable) {
 			.wds-list {
-				@include scrollable-list(270px, $dropdown-background-color);
+				@include scrollable-list($wds-dropdown-height, $dropdown-background-color);
 			}
 		}
 
