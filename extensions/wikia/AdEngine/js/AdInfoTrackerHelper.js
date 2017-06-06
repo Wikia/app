@@ -74,7 +74,7 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 		}
 
 		if (slotPricesIgnoringTimeout[bidderName]) {
-			return slotPricesIgnoringTimeout[bidderName] + 'late';
+			return slotPricesIgnoringTimeout[bidderName] + 'not_used';
 		}
 
 		return '';
