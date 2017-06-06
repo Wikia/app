@@ -56,6 +56,7 @@
 				<?php if( !empty($isStaff) ): ?>
 					<span class="stafflogo"></span>
 				<?php endif; ?>
+				<span class="subtle createtime" title="<?= $iso_timestamp ?>"><?= $fmt_timestamp ?></span>
 			</div>
 
 			<?php if($quote_of): ?>
@@ -80,14 +81,6 @@
 					<?php if($isEdited):?>
 						<?= wfMessage('wall-message-edited', [ '$1' => $editorUrl, '$2' => $editorName, '$3' => $historyUrl ] )->text(); ?>
 					<?php endif; ?>
-					<a href="<?= $fullpageurl; ?>" class="permalink" tabindex="-1">
-						<?php if (!is_null($iso_timestamp)): ?>
-						<span class="timeago abstimeago" title="<?= $iso_timestamp ?>" alt="<?= $fmt_timestamp ?>">&nbsp;</span>
-						<span class="timeago-fmt"><?= $fmt_timestamp ?></span>
-						<?php else: ?>
-							<span><?= $fmt_timestamp ?></span>
-						<?php endif; ?>
-					</a>
 				</div>
 				<div class="buttonswrapper">
 					<?= $app->renderView( 'WallController', 'messageButtons', [ 'comment' => $comment ] ); ?>

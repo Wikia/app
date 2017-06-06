@@ -916,19 +916,19 @@ function wfTimeFormatAgo( $stamp, $hideCurrentYear = true ) {
 		// format is date, with a year (July 26, 2008)
 		$res = $wgLang->date( wfTimestamp( TS_MW, $stamp ) );
 	} elseif ( $ago < 60 ) {
-		// Under 1 min: to the second (ex: 30 seconds ago)
+		// Under 1 min: to the second (ex: 30s)
 		$res = wfMsgExt( 'wikia-seconds-ago', array( 'parsemag' ), $ago );
 	}
 	else if ( $ago < 3600 ) {
-		// Under 1 hr: to the minute (3 minutes ago)
+		// Under 1 hr: to the minute (3m)
 		$res = wfMsgExt( 'wikia-minutes-ago', array( 'parsemag' ), floor( $ago / 60 ) );
 	}
 	else if ( $ago < 86400 ) {
-		// Under 24 hrs: to the hour (4 hours ago)
+		// Under 24 hrs: to the hour (4h)
 		$res = wfMsgExt( 'wikia-hours-ago', array( 'parsemag' ), floor( $ago / 3600 ) );
 	}
-	else if ( $ago < 30 * 86400 ) {
-		// Under 30 days: to the day (5 days ago)
+	else if ( $ago < 7 * 86400 ) {
+		// Under 7 days: to the day (5d)
 		$res = wfMsgExt( 'wikia-days-ago', array( 'parsemag' ), floor( $ago / 86400 ) );
 	}
 	else if ( $ago < 365 * 86400 ) {

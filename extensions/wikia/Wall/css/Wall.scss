@@ -549,9 +549,18 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 
 		.subtle {
 			color: $color-alternate-text;
-			font-weight: normal;
 			font-size: 12px;
+			font-weight: normal;
 			margin-left: 5px;
+		}
+
+		.createtime {
+			margin-left: 0;
+
+			&:before {
+				content: '\2022';
+				margin-right: 3px;
+			}
 		}
 	}
 
