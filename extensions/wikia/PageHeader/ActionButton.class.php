@@ -5,10 +5,16 @@ namespace Wikia\PageHeader;
 use CuratedContentHelper;
 
 class ActionButton {
+	const LOCK_ICON = 'wds-icons-lock-small';
+	const EDIT_ICON = 'wds-icons-pencil-small';
+
 	private $contentActions;
 	private $buttonAction;
 	private $pageStatsService;
 	private $title;
+	private $user;
+	private $request;
+	private $buttonIcon = self::EDIT_ICON;
 
 	public function __construct( \RequestContext $requestContext ) {
 		$skinVars = \F::app()->getSkinTemplateObj()->data;
@@ -25,6 +31,7 @@ class ActionButton {
 
 	public function getButtonAction(): array {
 		$this->buttonAction['data-tracking'] = $this->buttonAction['id'];
+		$this->buttonAction['icon'] = $this->buttonIcon;
 
 		return $this->buttonAction;
 	}
@@ -85,6 +92,7 @@ class ActionButton {
 			// force login to edit page that is not protected
 			$this->contentActions['edit'] = $this->contentActions['viewsource'];
 			$this->contentActions['edit']['text'] = wfMessage( 'page-header-action-button-edit' )->escaped();
+			$this->buttonIcon = self::LOCK_ICON;
 			unset( $this->contentActions['viewsource'] );
 		}
 
@@ -93,6 +101,7 @@ class ActionButton {
 			$this->contentActions['viewsource'] = $this->contentActions['edit'];
 			$this->contentActions['viewsource']['text'] =
 				wfMessage( 'page-header-action-button-viewsource' )->escaped();
+			$this->buttonIcon = self::LOCK_ICON;
 			unset( $this->contentActions['edit'] );
 		}
 
@@ -112,7 +121,12 @@ class ActionButton {
 		} // view source
 		else if ( isset( $this->contentActions['viewsource'] ) ) {
 			$this->buttonAction = $this->contentActions['viewsource'];
+			$this->buttonIcon = self::LOCK_ICON;
 			unset( $this->contentActions['ve-edit'], $this->contentActions['edit'] );
+		}
+		else if ( isset( $this->contentActions['theme-designer-edit'] ) ) {
+			$this->buttonAction = $this->contentActions['theme-designer-edit'];
+			unset( $this->contentActions['theme-designer-edit'] );
 		}
 
 		if ( !empty( $wgEnableCuratedContentExt ) && CuratedContentHelper::shouldDisplayToolButton() ) {

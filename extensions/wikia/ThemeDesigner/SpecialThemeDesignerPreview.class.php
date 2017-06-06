@@ -34,7 +34,7 @@ class SpecialThemeDesignerPreview extends UnlistedSpecialPage {
 	}
 
 	static function onBeforePrepareActionButtons( $actionButton, &$contentActions ) {
-		$contentActions['edit'] = [
+		$contentActions['theme-designer-edit'] = [
 			'text' => wfMessage( 'edit' )->text(),
 			'href' => '#',
 			'id' => 'ca-edit',

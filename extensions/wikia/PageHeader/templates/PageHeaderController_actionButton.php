@@ -5,7 +5,7 @@
 	   data-tracking="<?= $buttonAction['data-tracking'] ?>"
 	   <?= empty( $buttonAction['accesskey'] ) ? '' : "accesskey=\"{$buttonAction['accesskey']}\"" ?>
 	>
-		<?= DesignSystemHelper::renderSvg( 'wds-icons-pencil-small', 'wds-icon wds-icon-small' ); ?>
+		<?= DesignSystemHelper::renderSvg( $buttonAction['icon'], 'wds-icon wds-icon-small' ); ?>
 		<span><?= $buttonAction['text'] ?></span>
 	</a>
 	<div class="wds-dropdown">
