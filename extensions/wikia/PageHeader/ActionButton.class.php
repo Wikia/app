@@ -137,10 +137,15 @@ class ActionButton {
 			];
 		}
 
-		if ( !$this->isArticleCommentsEnabled() && isset( $this->contentActions['talk'] ) ) {
-			$this->contentActions['talk']['text'] = wfMessage( 'page-header-action-button-talk' )
-				->numParams( $this->pageStatsService->getCommentsCount() )
-				->escaped();
+		if ( !$this->isArticleCommentsEnabled() ) {
+			if ( isset( $this->contentActions['talk'] ) ) {
+				$this->contentActions['talk']['text'] = wfMessage( 'page-header-action-button-talk' )
+					->numParams( $this->pageStatsService->getCommentsCount() )
+					->escaped();
+			}
+		} else {
+			// when comments are enabled, we don't want to display "Discuss" in edit dropdown that is anchor to comments
+			unset( $this->contentActions['talk'] );
 		}
 	}
 
