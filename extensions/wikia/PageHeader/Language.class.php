@@ -52,6 +52,7 @@ class Language {
 			];
 		}
 
+		unset( $this->languages["interwiki-{$this->langCode}"] );
 		ksort( $this->languages );
 
 		return $this->languages;
