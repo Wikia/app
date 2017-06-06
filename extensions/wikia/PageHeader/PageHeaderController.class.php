@@ -9,6 +9,10 @@ class PageHeaderController extends \WikiaController {
 		$this->setVal( 'counter', new Counter() );
 	}
 
+	public function categories() {
+		$this->setVal( 'categories', new Categories() );
+	}
+
 	public function subtitle() {
 		$this->setVal( 'subtitle', new Subtitle( $this->app ) );
 	}

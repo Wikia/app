@@ -1,6 +1,8 @@
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index';
-@import 'skins/shared/color.scss';
+@import 'skins/shared/color';
 @import 'skins/shared/mixins/flexbox';
+@import 'skins/shared/mixins/transform';
+@import 'skins/oasis/css/core/breakpoints-variables';
 
 .WikiaPage .page-header {
 	margin: 0 0 18px;
@@ -36,6 +38,42 @@
 		text-align: right;
 	}
 
+	&__categories {
+		@include align-items(flex-start);
+		@include flexbox();
+		font-size: $wds-typescale-size-minus-2;
+
+		&-in {
+			font-weight: 600;
+			padding-right: 4px;
+		}
+
+		&-dropdown {
+			padding-bottom: 10px;
+
+			&-content {
+				font-style: normal;
+				width: 250px;
+				overflow-x: hidden;
+			}
+
+			li {
+				white-space: normal;
+			}
+		}
+
+		&-links {
+			color: $color-links;
+			font-style: italic;
+			line-height: 16px;
+
+			> a:last-child {
+				display: inline-block;
+				padding-bottom: 10px;
+			}
+		}
+	}
+
 	&__page-subtitle {
 		margin-bottom: 13px;
 	}
@@ -53,3 +91,4 @@
 		border-color: $color-page-border;
 	}
 }
+

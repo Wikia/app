@@ -3245,6 +3245,14 @@ $config['community_header_js'] = [
 	],
 ];
 
+$config['page_header_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/PageHeader/scripts/tracking.js',
+	],
+];
+
 $config['page_header_scss'] = [
     'type' => AssetsManager::TYPE_SCSS,
     'skin' => [ 'oasis' ],
