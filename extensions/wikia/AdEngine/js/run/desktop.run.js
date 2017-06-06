@@ -105,12 +105,12 @@ require([
 	var context = adContext.getContext();
 
 	function initDesktopSlots() {
-		highImpact.init();
 		skyScraper3.init();
 		inContent.init('INCONTENT_PLAYER');
 	}
 
 	win.addEventListener('wikia.uap', bottomLeaderboard.init);
+	win.addEventListener('wikia.not_uap', highImpact.init);
 	if (context.opts.adMixExperimentEnabled && context.slots.adMixToUnblock.indexOf('BOTTOM_LEADERBOARD')) {
 		win.addEventListener('wikia.not_uap', bottomLeaderboard.init);
 	}
