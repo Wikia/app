@@ -129,14 +129,6 @@ class ActionButton {
 			unset( $this->contentActions['ve-edit'], $this->contentActions['edit'] );
 		}
 
-		if ( !empty( $wgEnableCuratedContentExt ) && CuratedContentHelper::shouldDisplayToolButton() ) {
-			$this->contentActions['edit-mobile-main-page'] = [
-				'href' => '/main/edit?useskin=wikiamobile',
-				'text' => wfMessage( 'page-header-action-button-edit-mobile-main-page' )->escaped(),
-				'id' => 'CuratedContentTool'
-			];
-		}
-
 		if ( !$this->isArticleCommentsEnabled() ) {
 			if ( isset( $this->contentActions['talk'] ) ) {
 				$this->contentActions['talk']['text'] = wfMessage( 'page-header-action-button-talk' )
