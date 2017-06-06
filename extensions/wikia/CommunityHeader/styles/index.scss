@@ -42,3 +42,16 @@
 		}
 	}
 }
+
+.local-navigation-preview {
+	height: auto;
+	// this is max width of local navigation allowed
+	width: 755px;
+
+	// prevent changing font size in local nav preview
+	@media #{$breakpoint-below-small-plus} {
+		.wds-tabs__tab-label {
+			font-size: 12px;
+		}
+	}
+}
