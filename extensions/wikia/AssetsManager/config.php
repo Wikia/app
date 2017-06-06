@@ -531,7 +531,6 @@ $config['oasis_nojquery_shared_js'] = [
 		'//skins/oasis/js/Search.js',
 		'//skins/oasis/js/WikiaFooter.js',
 		'//skins/oasis/js/buttons.js',
-		'//skins/oasis/js/WikiHeader.js',
 		'//skins/oasis/js/WikiaNotifications.js',
 		'//skins/oasis/js/FirefoxFindFix.js',
 		'//skins/oasis/js/tabs.js',
@@ -1275,6 +1274,7 @@ $config['editpage_common_js'] = [
 		'//extensions/wikia/EditPageLayout/js/loaders/EditPageEditorLoader.js',
 		'//extensions/wikia/EditPreview/js/preview.js',
 		'#group_editpage_events_js',
+		'#group_design_system_js',
 	],
 ];
 
@@ -3113,7 +3113,6 @@ $config['oasislight_bottom_js'] = [
 	'assets' => [
 		# WikiHeader
 		'//skins/oasis/js/isTouchScreen.js',
-		'//skins/oasis/js/WikiHeader.js',
 
 		# ImageLazyLoad
 		'//resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js',
@@ -3242,6 +3241,7 @@ $config['community_header_js'] = [
 	'assets' => [
 		'//extensions/wikia/CommunityHeader/scripts/tracking.js',
 		'//extensions/wikia/CommunityHeader/scripts/banner-notifications-hack.js',
+		'//extensions/wikia/CommunityHeader/scripts/local-navigation-preview.js',
 	],
 ];
 
