@@ -159,7 +159,22 @@ class RepoGroup {
 
 		# Check the foreign repos
 		foreach ( $this->foreignRepos as $repo ) {
-			$image = $repo->findFile( $title, $options );
+
+			// Wikia change - begin
+			$image = false;
+
+			try {
+				$image = $repo->findFile( $title, $options );
+			}
+			catch( DBError $e ) {
+				// gracefully handle "Unknown database 'foobar'" errors (SUS-1397)
+				\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
+					'exception' => $e,
+					'repo_name' => $repo->getName()
+				] );
+			}
+			// Wikia change - end
+
 			if ( $image ) {
 				/* Wikia changes begin */
 				// check if the foreign repo allows local repo file blocking

@@ -3,23 +3,23 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.adTracker',
-	'ext.wikia.adEngine.lookup.prebid.bidHelper',
 	'ext.wikia.adEngine.slot.slotTargeting',
 	'wikia.browserDetect',
 	'wikia.geo',
 	'wikia.log',
 	'wikia.window',
+	require.optional('ext.wikia.adEngine.lookup.prebid.bidHelper'),
 	require.optional('ext.wikia.adEngine.video.player.porvata.floater')
 ], function (
 	adContext,
 	pageLevel,
 	adTracker,
-	bidHelper,
 	slotTargeting,
 	browserDetect,
 	geo,
 	log,
 	win,
+	bidHelper,
 	floater
 ) {
 	'use strict';
@@ -59,7 +59,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'additional_2': floatingState
 			};
 
-		if (params.bid && params.adProduct === 'rubicon') {
+		if (bidHelper && params.bid && params.adProduct === 'rubicon') {
 			trackingData['vast_id'] = [
 				params.bid.rubiconAdvertiserId || emptyValue.string,
 				params.bid.rubiconAdId || emptyValue.string
@@ -67,7 +67,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 			trackingData['price'] = bidHelper.transformPriceFromBid(params.bid);
 		}
 
-		if (params.bid && params.adProduct === 'veles') {
+		if (bidHelper && params.bid && params.adProduct === 'veles') {
 			trackingData['vast_id'] = params.bid.vastId || emptyValue.string;
 		}
 

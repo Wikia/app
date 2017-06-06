@@ -42,7 +42,8 @@ define('ext.wikia.adEngine.lookup.services', [
 				char: 'P'
 			}
 		},
-		bidMarker = ['x', 'x', 'x', 'x', 'x'];
+		bidMarker = ['x', 'x', 'x', 'x', 'x'],
+		realSlotPrices = {};
 
 
 	function addParameters(providerName, slotName, slotTargeting) {
@@ -82,7 +83,7 @@ define('ext.wikia.adEngine.lookup.services', [
 		addParameters(providerName, slotName, slotTargeting);
 	}
 
-	function getSlotPrices(slotName) {
+	function getCurrentSlotPrices(slotName) {
 		var slotPrices = {};
 
 		bidders.forEach(function (bidder) {
@@ -98,8 +99,18 @@ define('ext.wikia.adEngine.lookup.services', [
 		return slotPrices;
 	}
 
+	function storeRealSlotPrices(slotName) {
+		realSlotPrices[slotName] = getCurrentSlotPrices(slotName);
+	}
+
+	function getDfpSlotPrices(slotName) {
+		return realSlotPrices[slotName] || {};
+	}
+
 	return {
 		extendSlotTargeting: extendSlotTargeting,
-		getSlotPrices: getSlotPrices
+		getCurrentSlotPrices: getCurrentSlotPrices,
+		storeRealSlotPrices: storeRealSlotPrices,
+		getDfpSlotPrices: getDfpSlotPrices
 	};
 });

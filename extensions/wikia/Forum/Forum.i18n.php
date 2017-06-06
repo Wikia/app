@@ -27,14 +27,14 @@ Before contributing to the {{SITENAME}} Forums, please keep in mind a few best p
 :Please take a moment to sift through the {{SITENAME}} Forum boards to see if a discussion already exists about something you want to talk about. If you can't find what you're looking for, jump right in and start a new discussion!
 
 '''Ask for help.'''
-:Notice something that doesn't seem right? Or do you have a question? Ask for help here on the forums! If you need help from Fandom staff, please reach out on [[w:c:community|Community Central]] or via [[Special:Contact]].
+:Notice something that doesn't seem right? Or do you have a question? Ask for help here on the forums! If you need help from FANDOM staff, please reach out on [[w:c:community|Community Central]] or via [[Special:Contact]].
 
 '''Have fun!'''
 :The {{SITENAME}} community is happy to have you here. We look forward to seeing you around as we discuss this topic we all love.
 
 ==Forum FAQ==
 '''How do I stay on top of discussions I'm interested in?'''
-: With a Fandom user account, you can follow specific conversations and then receive notification messages (either on-site or via email) when a discussion has more activity. Be sure to [[Special:UserSignup|sign up for a Fandom account]] if you don't already have one.
+: With a FANDOM user account, you can follow specific conversations and then receive notification messages (either on-site or via email) when a discussion has more activity. Be sure to [[Special:UserSignup|sign up for a FANDOM account]] if you don't already have one.
 
 '''How do I remove vandalism?'''
 : If you notice some spam or vandalism on a thread, hover your mouse over the offending text. You'll see a \"More\" button appear. Inside the \"More\" menu, you'll find \"Remove\". This will allow you to remove the vandalism and optionally inform an admin.
@@ -945,14 +945,14 @@ Denke bitte daran, dich an die bestehenden Forenregeln zu halten, wenn du dich i
 :Nimm dir bitte einen Augenblick Zeit, um die verschiedenen Unterforen auf {{SITENAME}} durch zu gehen und herauszufinden, ob es bereits Diskussionen zu dem Thema gibt, über das du dich gerne austauschen möchtest! Wenn du das, was du suchst, nirgends finden kannst, springe einfach ins kalte Wasser und beginne eine neue Diskussion!
 
 '''Bitte um Hilfe.'''
-:Ist dir etwas aufgefallen, was so deiner Meinung nach nicht richtig ist? Oder hast du eine Frage? Bitte hier in den Foren um Hilfe! Wenn du Unterstützung von Fandom-Mitarbeitern brauchst, nimm in der [[w:c:de.community|Community Deutschland]] oder über [[Spezial:Kontakt]] Kontakt zu uns auf.
+:Ist dir etwas aufgefallen, was so deiner Meinung nach nicht richtig ist? Oder hast du eine Frage? Bitte hier in den Foren um Hilfe! Wenn du Unterstützung von FANDOM-Mitarbeitern brauchst, nimm in der [[w:c:de.community|Community Deutschland]] oder über [[Spezial:Kontakt]] Kontakt zu uns auf.
 
 '''Viel Spaß!'''
 :Die Community {{SITENAME}} freut sich total, dass du jetzt hier bist. Wir können es kaum erwarten, mehr von dir zu erfahren und mit dir die Themen zu diskutieren, die uns allen am Herzen liegen.
 
 ==Forum FAQ==
 '''Wie bleibe ich bei Diskussionen am Ball, die mich besonders interessieren?'''
-: Mit einem Benutzerkonto bei Fandom kannst du bestimmten Konversationen folgen und (entweder online oder per E-Mail) Benachrichtigungen erhalten, sobald die Diskussion weitergeht. [[Spezial:Anmelden|Melde sich also für ein Fandom-Benutzerkonto an]], falls du das nicht sowieso schon getan hast.
+: Mit einem Benutzerkonto bei FANDOM kannst du bestimmten Konversationen folgen und (entweder online oder per E-Mail) Benachrichtigungen erhalten, sobald die Diskussion weitergeht. [[Spezial:Anmelden|Melde sich also für ein FANDOM-Benutzerkonto an]], falls du das nicht sowieso schon getan hast.
 
 '''Wie entferne ich Vandalismus?'''
 : Wenn Du in einem Diskussionsfaden auf Spam oder Vandalismus triffst, kannst du deine Maus über den betreffenden Text bewegen, bis die Schaltfläche \"Mehr\" erscheint. Im Menü \"Mehr\" findest du den Menüpunkt \"Entfernen\". Darüber kannst du den betreffenden, unpassenden Text entfernen und optional auch gleich einen Admin darüber unterrichten.
@@ -1259,14 +1259,14 @@ Antes de contribuir en el foro de {{SITENAME}}, ten en cuenta las siguientes pr�
 :Por favor, tómate un momento para visitar los subforos de este wiki y ver si ya existe una discusión sobre lo que quieres hablar. Si no puedes encontrar lo que buscas, ¡comienza un nuevo tema!
 
 '''Pide ayuda.'''
-:¿Algo no se ve como debería? ¿Tienes alguna pregunta? ¡Pide ayuda aquí, en el foro! Si necesitas ayuda del Staff de Fandom, puedes ir a nuestra [[w:c:comunidad|Comunidad Central]] o preguntar a través de [[Especial:Contactar]].
+:¿Algo no se ve como debería? ¿Tienes alguna pregunta? ¡Pide ayuda aquí, en el foro! Si necesitas ayuda del Staff de FANDOM, puedes ir a nuestra [[w:c:comunidad|Comunidad Central]] o preguntar a través de [[Especial:Contactar]].
 
 '''¡Diviértete!'''
 La comunidad de {{SITENAME}} se alegra de que estés aquí. Queremos verte hablar sobre el tema que más nos gusta, adivina cuál...
 
 ==Preguntas frecuentes sobre el foro==
 '''¿Cómo puedo seguir las discusiones en las que estoy interesado?'''
-:Con una cuenta de usuario de Fandom puedes seguir conversaciones específicas y recibir notificaciones (a través del wiki o por correo) cuando un tema tenga más actividad. Crea una cuenta en Fandom si aún no lo hiciste.
+:Con una cuenta de usuario de FANDOM puedes seguir conversaciones específicas y recibir notificaciones (a través del wiki o por correo) cuando un tema tenga más actividad. Crea una cuenta en FANDOM si aún no lo hiciste.
 
 '''¿Cómo borro los vandalismos?'''
 :Si descubres mensajes inadecuados, o vandalismo en un hilo, pasa el cursor sobre el texto, verás que aparece un botón llamado \"Más acciones\". Dentro del menú que se despliega en \"Más acciones\", encontrarás \"Retirar\". Esa acción te permitirá retirar el vandalismo y avisar a un administrador si lo consideras necesario.
@@ -1658,14 +1658,14 @@ Avant de contribuer aux forums de {{SITENAME}}, veuillez garder à l'esprit quel
 :Veuillez prendre un peu de temps pour parcourir les sous-forums de {{SITENAME}} afin de voir si une discussion sur quelque chose dont vous souhaitez parler existe déjà. Si vous ne trouvez pas ce que vous cherchez, lancez une nouvelle discussion !
 
 '''Demandez de l'aide.'''
-:Vous avez remarqué quelque chose qui ne vous semble pas normal ? Ou vous avez une question ? Demandez de l'aide ici sur les forums ! Si vous avez besoin de l'aide de l'équipe Fandom, rendez-vous au [[w:fr:Accueil|Centre des communautés]] ou utilisez Special:Contact.
+:Vous avez remarqué quelque chose qui ne vous semble pas normal ? Ou vous avez une question ? Demandez de l'aide ici sur les forums ! Si vous avez besoin de l'aide de l'équipe FANDOM, rendez-vous au [[w:fr:Accueil|Centre des communautés]] ou utilisez Special:Contact.
 
 '''Amusez-vous !'''
 :La communauté {{SITENAME}} est heureuse que vous soyez là. Nous espérons vous voir régulièrement participer aux discussions sur le sujet que nous aimons tous.
 
 ==FAQ sur les forums==
 '''Comment suivre les discussions qui m'intéressent ?'''
-: Avec un compte utilisateur Fandom, vous pouvez suivre des conversations spécifiques et recevoir des notifications (soit sur le site soit par e-mail) lorsqu'une discussion enregistre plus d'activité. Si vous n'avez pas encore de compte Fandom, [[Special:UserSignup|créez-en un dès maintenant]].
+: Avec un compte utilisateur FANDOM, vous pouvez suivre des conversations spécifiques et recevoir des notifications (soit sur le site soit par e-mail) lorsqu'une discussion enregistre plus d'activité. Si vous n'avez pas encore de compte FANDOM, [[Special:UserSignup|créez-en un dès maintenant]].
 
 '''Comment puis-je retirer le vandalisme ?'''
 : Si vous remarquez du spam ou du vandalisme dans une discussion, placez votre souris sur le texte incriminé. Vous verrez un bouton Plus apparaître. Dans le menu Plus, vous trouverez l'option Retirer. Cela vous permettra de retirer le message et d'en informer éventuellement un administrateur.
@@ -2102,14 +2102,14 @@ Prima di contribuire ai Forum di {{SITENAME}}, tieni a mente alcune buone pratic
 : Dedica un momento per cercare tra i sottoforum di {{SITENAME}} per vedere se esiste già una discussione su qualcosa di cui vuoi parlare. Se non trovi ciò che stai cercando, buttati e avvia una nuova discussione!
 
 '''Chiedi aiuto.'''
-: Noti qualcosa che non sembra giusto? O hai una domanda? Chiedi aiuto qui nei forum! Se hai bisogno di assistenza da parte del personale Fandom, contattaci sulla [[w:it:|Wiki della Community]] o tramite [[Special:Contact]].
+: Noti qualcosa che non sembra giusto? O hai una domanda? Chiedi aiuto qui nei forum! Se hai bisogno di assistenza da parte del personale FANDOM, contattaci sulla [[w:it:|Wiki della Community]] o tramite [[Special:Contact]].
 
 '''Divertiti!'''
 : La comunità di {{SITENAME}} è lieta di averti qui. Non vediamo l'ora che partecipi alle discussioni di questo argomento che tutti amiamo.
 
 == Domande frequenti sui forum ==
 '''Come posso restare aggiornato sulle discussioni a cui sono interessato?'''
-: Con un account utente Fandom, puoi seguire conversazioni specifiche e ricevere messaggi di notifica (sul sito o per e-mail) quando una discussione contiene altre attività. Accertati di [[Special:UserSignup|registrarti a un account Fandom]] se non lo hai già fatto.
+: Con un account utente FANDOM, puoi seguire conversazioni specifiche e ricevere messaggi di notifica (sul sito o per e-mail) quando una discussione contiene altre attività. Accertati di [[Special:UserSignup|registrarti a un account FANDOM]] se non lo hai già fatto.
 
 '''Come posso rimuovere il vandalismo?'''
 : Se noti della spam o del vandalismo su un thread, passa il mouse sopra il testo offensivo. Sarà visualizzato un pulsante \"Altro\". All'interno del menu \"Altro\", troverai \"Rimuovi\". Ciò ti consentirà di rimuovere il vandalismo e, opzionalmente, di informare un amministratore.
@@ -2252,14 +2252,14 @@ $messages['ja'] = array(
 : 投稿したい話題について既にスレッドが存在しないか、まずは{{SITENAME}}のフォーラム内を探してみてください。見つからなかったときには、新しいスレッドを作成してみましょう。
 
 '''助けを求めましょう'''
-: 何かおかしなことに気付いた場合や質問がある場合は、フォーラムで助けを求めてみましょう。Fandomスタッフによるサポートが必要な場合は、[[w:c:ja.community|コミュニティ・セントラル]]または[[特別:お問い合わせ]]からご連絡ください。
+: 何かおかしなことに気付いた場合や質問がある場合は、フォーラムで助けを求めてみましょう。FANDOMスタッフによるサポートが必要な場合は、[[w:c:ja.community|コミュニティ・セントラル]]または[[特別:お問い合わせ]]からご連絡ください。
 
 '''楽しむことを大切に'''
 : {{SITENAME}}のコミュニティではメンバーを歓迎します。共通のテーマに強い関心を持つメンバーからの投稿をお待ちしています。
 
 ==フォーラムについてのよくある質問==
 '''関心のあるスレッドの最新情報を得るにはどうすればいいですか？'''
-: Fandomユーザーアカウントを作成すると、特定のスレッドをフォローして、そのスレッドが更新されたときにサイト上でまたはメールで通知を受け取ることができます。Fandomアカウントをまだお持ちでない場合は、この機会にぜひ[[Special:UserSignup|作成]]してください。
+: FANDOMユーザーアカウントを作成すると、特定のスレッドをフォローして、そのスレッドが更新されたときにサイト上でまたはメールで通知を受け取ることができます。FANDOMアカウントをまだお持ちでない場合は、この機会にぜひ[[Special:UserSignup|作成]]してください。
 
 '''荒らし行為を排除するにはどうすればいいですか？'''
 : スレッド内でスパムや荒らしを見つけた場合は、そのテキストにカーソルを合わせてください。表示された「その他」ボタンをクリックしてメニューから「除去」を選択すると、荒らし投稿を除去し、必要に応じてアドミンに報告することができます。
@@ -2395,8 +2395,8 @@ ___________________________________________<br />
 	'forum-related-discussion-see-more' => 'さらにスレッドを見る',
 	'forum-confirmation-board-deleted' => '「$1」を削除しました。',
 	'forum-token-mismatch' => 'おっと! トークンが一致しません',
-	'forum-desc' => 'Fandom の特別: フォーラム拡張',
-	'forum-disabled-desc' => 'Fandom の特別: フォーラム拡張;無効',
+	'forum-desc' => 'FANDOM の特別: フォーラム拡張',
+	'forum-disabled-desc' => 'FANDOM の特別: フォーラム拡張;無効',
 	'forum-specialpage-blurb' => '',
 	'right-forumadmin' => 'フォーラムでアドミンの権限を持つ',
 	'right-forumoldedit' => '旧フォーラムのアーカイブを編集することができます',
@@ -2617,6 +2617,120 @@ $messages['lb'] = array(
 	'forum-related-discussion-total-replies' => '$1 Messagen',
 	'forum-related-discussion-see-more' => 'Kuckt méi Diskussiounen',
 	'forum-confirmation-board-deleted' => '"$1" gouf geläscht.',
+);
+
+$messages['lol'] = array(
+	'forum-desc' => 'crwdns63259:0crwdne63259:0',
+	'forum-disabled-desc' => 'crwdns63260:0crwdne63260:0',
+	'forum-forum-title' => 'crwdns63261:0crwdne63261:0',
+	'forum-active-threads' => 'crwdns63262:0{PLURAL:$1|Active Discussion|Active Discussions}crwdne63262:0',
+	'forum-active-threads-on-topic' => 'crwdns63263:0{PLURAL:$1|Active Discussion|Active Discussions}crwdne63263:0',
+	'forum-header-total-threads' => 'crwdns63264:0crwdne63264:0',
+	'forum-header-active-threads' => 'crwdns63265:0crwdne63265:0',
+	'forum-specialpage-heading' => 'crwdns63266:0crwdne63266:0',
+	'forum-specialpage-blurb-heading' => 'crwdns63267:0crwdne63267:0',
+	'forum-specialpage-blurb' => 'crwdns63268:0crwdne63268:0',
+	'forum-specialpage-board-threads' => 'crwdns63269:0{PLURAL:$1|thread|threads}crwdne63269:0',
+	'forum-specialpage-board-posts' => 'crwdns63270:0{PLURAL:$1|post|posts}crwdne63270:0',
+	'forum-specialpage-board-lastpostby' => 'crwdns63271:0crwdne63271:0',
+	'forum-specialpage-policies-edit' => 'crwdns63272:0crwdne63272:0',
+	'forum-specialpage-policies' => 'crwdns63273:0crwdne63273:0',
+	'forum-policies-and-faq' => 'crwdns66313:0{{SITENAME}}crwdnd66313:0{{SITENAME}}crwdnd66313:0{{SITENAME}}crwdne66313:0',
+	'forum-board-title' => 'crwdns63275:0crwdne63275:0',
+	'forum-board-topic-title' => 'crwdns63276:0crwdne63276:0',
+	'forum-board-topics' => 'crwdns63277:0crwdne63277:0',
+	'forum-board-thread-follow' => 'crwdns63278:0crwdne63278:0',
+	'forum-board-thread-following' => 'crwdns63279:0crwdne63279:0',
+	'forum-board-thread-kudos' => 'crwdns63280:0crwdne63280:0',
+	'forum-board-thread-replies' => 'crwdns63281:0{PLURAL:$1|Message|Messages}crwdne63281:0',
+	'forum-board-new-message-heading' => 'crwdns63282:0crwdne63282:0',
+	'forum-no-board-selection-error' => 'crwdns63283:0crwdne63283:0',
+	'forum-thread-reply-placeholder' => 'crwdns63284:0crwdne63284:0',
+	'forum-thread-reply-post' => 'crwdns63285:0crwdne63285:0',
+	'forum-thread-deleted-return-to' => 'crwdns63286:0crwdne63286:0',
+	'forum-sorting-option-newest-replies' => 'crwdns63287:0crwdne63287:0',
+	'forum-sorting-option-popular-threads' => 'crwdns63288:0crwdne63288:0',
+	'forum-sorting-option-most-replies' => 'crwdns63289:0crwdne63289:0',
+	'forum-sorting-option-newest-threads' => 'crwdns63290:0crwdne63290:0',
+	'forum-sorting-option-oldest-threads' => 'crwdns63291:0crwdne63291:0',
+	'forum-discussion-post' => 'crwdns63292:0crwdne63292:0',
+	'forum-discussion-highlight' => 'crwdns63293:0crwdne63293:0',
+	'forum-discussion-placeholder-title' => 'crwdns63294:0crwdne63294:0',
+	'forum-discussion-placeholder-message' => 'crwdns63295:0crwdne63295:0',
+	'forum-discussion-placeholder-message-short' => 'crwdns63296:0crwdne63296:0',
+	'forum-notification-user1-reply-to-your' => 'crwdns63297:0{GENDER:$1|replied}crwdne63297:0',
+	'forum-notification-user2-reply-to-your' => 'crwdns63298:0crwdne63298:0',
+	'forum-notification-user3-reply-to-your' => 'crwdns63299:0crwdne63299:0',
+	'forum-notification-user1-reply-to-someone' => 'crwdns63300:0{GENDER:$1|replied}crwdne63300:0',
+	'forum-notification-user2-reply-to-someone' => 'crwdns63301:0crwdne63301:0',
+	'forum-notification-user3-reply-to-someone' => 'crwdns63302:0crwdne63302:0',
+	'forum-notification-newmsg-on-followed-wall' => 'crwdns63303:0{GENDER:$1|left}crwdne63303:0',
+	'forum-wiki-activity-msg' => 'crwdns63304:0crwdne63304:0',
+	'forum-wiki-activity-msg-name' => 'crwdns63305:0crwdne63305:0',
+	'forum-activity-module-heading' => 'crwdns63306:0crwdne63306:0',
+	'forum-related-module-heading' => 'crwdns63307:0crwdne63307:0',
+	'forum-activity-module-posted' => 'crwdns63308:0crwdne63308:0',
+	'forum-activity-module-started' => 'crwdns63309:0crwdne63309:0',
+	'forum-contributions-line' => 'crwdns63310:0crwdne63310:0',
+	'forum-recentchanges-new-message' => 'crwdns63311:0crwdne63311:0',
+	'forum-recentchanges-edit' => 'crwdns63312:0crwdne63312:0',
+	'forum-recentchanges-removed-thread' => 'crwdns63313:0crwdne63313:0',
+	'forum-recentchanges-removed-reply' => 'crwdns63314:0crwdne63314:0',
+	'forum-recentchanges-restored-thread' => 'crwdns63315:0crwdne63315:0',
+	'forum-recentchanges-restored-reply' => 'crwdns63316:0crwdne63316:0',
+	'forum-recentchanges-deleted-thread' => 'crwdns63317:0crwdne63317:0',
+	'forum-recentchanges-deleted-reply' => 'crwdns63318:0crwdne63318:0',
+	'forum-recentchanges-deleted-reply-title' => 'crwdns63319:0crwdne63319:0',
+	'forum-recentchanges-namespace-selector-message-wall' => 'crwdns63320:0crwdne63320:0',
+	'forum-recentchanges-thread-group' => 'crwdns63321:0crwdne63321:0',
+	'forum-recentchanges-history-link' => 'crwdns63322:0crwdne63322:0',
+	'forum-recentchanges-thread-history-link' => 'crwdns63323:0crwdne63323:0',
+	'forum-recentchanges-closed-thread' => 'crwdns63324:0crwdne63324:0',
+	'forum-recentchanges-reopened-thread' => 'crwdns63325:0crwdne63325:0',
+	'forum-board-history-title' => 'crwdns63326:0crwdne63326:0',
+	'forum-specialpage-oldforum-link' => 'crwdns63327:0crwdne63327:0',
+	'forum-admin-page-breadcrumb' => 'crwdns63328:0crwdne63328:0',
+	'forum-admin-create-new-board-label' => 'crwdns63329:0crwdne63329:0',
+	'forum-admin-create-new-board-modal-heading' => 'crwdns63330:0crwdne63330:0',
+	'forum-admin-create-new-board-title' => 'crwdns63331:0crwdne63331:0',
+	'forum-admin-create-new-board-description' => 'crwdns63332:0crwdne63332:0',
+	'forum-admin-edit-board-modal-heading' => 'crwdns63333:0crwdne63333:0',
+	'forum-admin-edit-board-title' => 'crwdns63334:0crwdne63334:0',
+	'forum-admin-edit-board-description' => 'crwdns63335:0crwdne63335:0',
+	'forum-admin-delete-and-merge-board-modal-heading' => 'crwdns63336:0crwdne63336:0',
+	'forum-admin-delete-board-title' => 'crwdns63337:0crwdne63337:0',
+	'forum-admin-merge-board-warning' => 'crwdns63338:0crwdne63338:0',
+	'forum-admin-merge-board-destination' => 'crwdns63339:0crwdne63339:0',
+	'forum-admin-delete-and-merge-button-label' => 'crwdns63340:0crwdne63340:0',
+	'forum-admin-link-label' => 'crwdns63341:0crwdne63341:0',
+	'forum-autoboard-title-1' => 'crwdns63342:0crwdne63342:0',
+	'forum-autoboard-body-1' => 'crwdns63343:0crwdne63343:0',
+	'forum-autoboard-title-2' => 'crwdns63344:0crwdne63344:0',
+	'forum-autoboard-body-2' => 'crwdns63345:0crwdne63345:0',
+	'forum-autoboard-title-3' => 'crwdns63346:0crwdne63346:0',
+	'forum-autoboard-body-3' => 'crwdns63347:0crwdne63347:0',
+	'forum-autoboard-title-4' => 'crwdns63348:0crwdne63348:0',
+	'forum-autoboard-body-4' => 'crwdns63349:0crwdne63349:0',
+	'forum-autoboard-title-5' => 'crwdns63350:0crwdne63350:0',
+	'forum-autoboard-body-5' => 'crwdns63351:0crwdne63351:0',
+	'forum-board-destination-empty' => 'crwdns63352:0crwdne63352:0',
+	'forum-board-title-validation-invalid' => 'crwdns63353:0crwdne63353:0',
+	'forum-board-title-validation-length' => 'crwdns63354:0crwdne63354:0',
+	'forum-board-title-validation-exists' => 'crwdns63355:0crwdne63355:0',
+	'forum-board-validation-count' => 'crwdns63356:0crwdne63356:0',
+	'forum-board-description-validation-length' => 'crwdns63357:0crwdne63357:0',
+	'forum-board-id-validation-missing' => 'crwdns63358:0crwdne63358:0',
+	'forum-board-no-board-warning' => 'crwdns63359:0crwdne63359:0',
+	'forum-related-discussion-heading' => 'crwdns63360:0crwdne63360:0',
+	'forum-related-discussion-new-post-button' => 'crwdns63361:0crwdne63361:0',
+	'forum-related-discussion-new-post-tooltip' => 'crwdns63362:0crwdne63362:0',
+	'forum-related-discussion-total-replies' => 'crwdns63363:0crwdne63363:0',
+	'forum-related-discussion-see-more' => 'crwdns63364:0crwdne63364:0',
+	'forum-confirmation-board-deleted' => 'crwdns63365:0crwdne63365:0',
+	'forum-token-mismatch' => 'crwdns63366:0crwdne63366:0',
+	'right-forumadmin' => 'crwdns63367:0crwdne63367:0',
+	'right-forumoldedit' => 'crwdns63368:0crwdne63368:0',
+	'right-boardedit' => 'crwdns63369:0crwdne63369:0',
 );
 
 $messages['lrc'] = array(
@@ -3078,14 +3192,14 @@ Zanim zaczniesz publikować na Forach {{SITENAME}}, pamiętaj o kilku ogólnych 
 :Poświęć chwilę na przejrzenie forum {{SITENAME}} i sprawdź, czy ktoś już nie pisał na temat, który chcesz poruszyć. Jeżeli nic takiego nie możesz znaleźć, śmiało rozpocznij nowy wątek!
 
 „Proś o pomoc.”
-:Zaważyłeś, że coś jest nie tak? Masz jakieś pytanie? Śmiało pytaj na forum! Jeżeli potrzebujesz pomocy pracowników portalu Fandom, skontaktuj się z nami przez [[w:c:community|Centrum Społeczności]] lub [[Special:Contact]].
+:Zaważyłeś, że coś jest nie tak? Masz jakieś pytanie? Śmiało pytaj na forum! Jeżeli potrzebujesz pomocy pracowników portalu FANDOM, skontaktuj się z nami przez [[w:c:community|Centrum Społeczności]] lub [[Special:Contact]].
 
 „Baw się dobrze!”
 :Społeczność {{SITENAME}} gości Cię z przyjemnością. Z radością zobaczymy Twój wkład w dyskusje prowadzone na tej wiki.
 
 ==FAQ==
 „W jaki sposób mogę być na bieżąco z dyskusjami, które mnie interesują?”
-: Posiadając konto użytkownika portalu Fandom, możesz obserwować konkretne rozmowy i otrzymywać wiadomości z powiadomieniami (na stronie lub przez e-mail) dotyczącymi aktywności w dyskusji. [[Special:UserSignup|Załóż konto w Fandom]], jeżeli jeszcze tego nie zrobiłeś.
+: Posiadając konto użytkownika portalu FANDOM, możesz obserwować konkretne rozmowy i otrzymywać wiadomości z powiadomieniami (na stronie lub przez e-mail) dotyczącymi aktywności w dyskusji. [[Special:UserSignup|Załóż konto w FANDOM]], jeżeli jeszcze tego nie zrobiłeś.
 
 „Jak mogę walczyć z wandalizmem?”
 : Jeżeli zauważysz w jakimś wątku spam lub wandalizm, najedź kursorem na problematyczny tekst. Powinien pojawić się przycisk „Więcej” – kliknij na niego i z menu rozwijanego wybierz „Usuń”. W ten sposób usuniesz dany tekst oraz będziesz miał możliwość poinformować o nim administratora.
@@ -3258,14 +3372,14 @@ Antes de contribuir para os fóruns de {{SITENAME}}, por favor, tenha em mente a
 : Por favor dê uma olhada nos fóruns de {{SITENAME}} para ver se uma discussão já existe sobre o tópico que você busca. Se você não encontrar o que procura, inicie uma nova discussão!
 
 '''Peça ajuda.'''
-Você vê algo que não está certo? Ou você tem uma pergunta? Peça ajuda aqui no fórum! Se precisar de ajuda do staff do Fandom, por favor entre em contato na [[w:c:comunidade |Central da comunidade]] ou através de [[Especial:Contact]].
+Você vê algo que não está certo? Ou você tem uma pergunta? Peça ajuda aqui no fórum! Se precisar de ajuda do staff do FANDOM, por favor entre em contato na [[w:c:comunidade |Central da comunidade]] ou através de [[Especial:Contact]].
 
 '''Divirta-se!'''
  A comunidade {{SITENAME}} está feliz em ter você aqui. Estamos ansiosos para vê-lo novamente para discutirmos este tópico que todos nós amamos.
 
 ==Perguntas frequentes do Fórum==
 '''Como eu permaneço atualizado sobre as discussões que me interessam?'''
-: Com uma conta de usuário do Fandom, você pode seguir conversas específicas e receber mensagens de notificação (no site ou via e-mail) quando uma discussão tem mais atividade. Certifique-se de [[Especial:Criar uma conta|registrar-se para uma conta no Fandom]] se você ainda não tem uma.
+: Com uma conta de usuário do FANDOM, você pode seguir conversas específicas e receber mensagens de notificação (no site ou via e-mail) quando uma discussão tem mais atividade. Certifique-se de [[Especial:Criar uma conta|registrar-se para uma conta no FANDOM]] se você ainda não tem uma.
 
 '''Como faço para remover vandalismo?'''
 : Se você notar algum spam ou vandalismo em uma discussão, passe o mouse sobre o texto ofensivo. Você verá um botão \"Mais\". Dentro do menu \"Mais\", você encontrará \"Remover\". Isso permite que você remova o vandalismo e, opcionalmente, informe a um administrador.
@@ -4311,14 +4425,14 @@ $messages['zh-hans'] = array(
 :请大致浏览{{SITENAME}}论坛版块，看看是不是已经有其他人发表过类似的话题。如果没有，那就赶快发起一个新的讨论吧！
 
 '''寻求帮助'''
-:发现有些地方不对劲？或是有问题要问？赶快来论坛看一下吧！如果你需要寻求Fandom员工的帮助，请访问[[w:c:zh.community|社区中心]]或者[[Special:Contact|发送邮件]]给我们。
+:发现有些地方不对劲？或是有问题要问？赶快来论坛看一下吧！如果你需要寻求FANDOM员工的帮助，请访问[[w:c:zh.community|社区中心]]或者[[Special:Contact|发送邮件]]给我们。
 
 '''畅所欲言'''
 :{{SITENAME}}社区非常高兴有你的参与！赶快发起你感兴趣的话题，让大家一起参与讨论吧！
 
 ==论坛问与答==
 '''我如何能够关注一个讨论？'''
-: 通过使用Fandom的帐户，你可以关注某个话题。当这个话题更新以后，你会通过邮件或者在线消息收到通知。请一定确定首先要[[Special:UserSignup|注册一个Fandom帐户]]。
+: 通过使用FANDOM的帐户，你可以关注某个话题。当这个话题更新以后，你会通过邮件或者在线消息收到通知。请一定确定首先要[[Special:UserSignup|注册一个FANDOM帐户]]。
 
 '''如何删除一些破坏内容?'''
 : 在讨论的页面上，你可以点击\"更多\"按钮，之后点击\"移除\"选项。这允许你删除某个讨论内容同时也会告知管理员这项操作。
@@ -4486,14 +4600,14 @@ $messages['zh-hant'] = array(
 :請大致瀏覽{{SITENAME}}社群的論壇版塊，看看是不是已經有其他人發表過類似的話題。如果沒有，那就趕快發起一個新的討論吧！
 
 '''尋求幫助'''
-:發現有些地方不對勁？或是有問題要問？趕快來論壇看一下吧！ 如果你需要尋求Fandom員工的幫助，請訪問[[w:c:zh.community|社區中心]]或者[[Special:Contact|發送郵件]]給我們。
+:發現有些地方不對勁？或是有問題要問？趕快來論壇看一下吧！ 如果你需要尋求FANDOM員工的幫助，請訪問[[w:c:zh.community|社區中心]]或者[[Special:Contact|發送郵件]]給我們。
 
 '''暢所欲言'''
 :{{SITENAME}}社群非常歡迎你的參與！趕快發起你感興趣的話題，讓大家一起參與討論吧！
 
 ==論壇問與答==
 '''我如何能夠關注一個討論？ '''
-: 通過使用Fandom的帳戶，你可以關注某個話題。當這個話題更新以後，你會通過郵件或者線上消息收到通知。請一定確定首先要[[Special:UserSignup|註冊一個Fandom帳戶]]。
+: 通過使用FANDOM的帳戶，你可以關注某個話題。當這個話題更新以後，你會通過郵件或者線上消息收到通知。請一定確定首先要[[Special:UserSignup|註冊一個FANDOM帳戶]]。
 
 '''如何刪除一些破壞內容?'''
 : 在討論頁面上，你可以按一下\"更多\"按鈕，之後選擇\"移除\"選項。這允許你刪除某個討論內容同時也會告知管理員這項操作。
