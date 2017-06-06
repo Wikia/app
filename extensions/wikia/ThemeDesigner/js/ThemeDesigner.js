@@ -576,9 +576,16 @@
 				reloadCSS = true;
 			}
 
-			if (setting === 'color-body' || setting === 'color-body-middle' || setting === 'color-page' ||
-				setting === 'color-buttons' || setting === 'color-links' || setting === 'background-image' ||
-				setting === 'color-header' || setting === 'wordmark-font') {
+			if (setting === 'color-body' ||
+				setting === 'color-body-middle' ||
+				setting === 'color-page' ||
+				setting === 'color-buttons' ||
+				setting === 'color-local-nav' ||
+				setting === 'color-links' ||
+				setting === 'background-image' ||
+				setting === 'color-header' ||
+				setting === 'wordmark-font'
+			) {
 				reloadCSS = true;
 			}
 

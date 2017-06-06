@@ -7,7 +7,7 @@ class SassUtil {
 
 	const DEFAULT_OASIS_THEME = 'oasis';
 	const HEX_REG_EXP = '/#([a-f0-9]{3,6})/i';
-	const THEME_DESIGNER_COLOR_KEYS = array('color-body', 'color-body-middle', 'color-page', 'color-buttons', 'color-links', 'color-header');
+	const THEME_DESIGNER_COLOR_KEYS = array('color-body', 'color-body-middle', 'color-page', 'color-buttons', 'color-links', 'color-local-nav', 'color-header');
 
 	/**
 	 * Returns complete set of sass parameters including theme settings set by user
@@ -76,9 +76,10 @@ class SassUtil {
 			$oasisSettings['color-body-middle'] = self::sanitizeColor($settings['color-body-middle']);
 			$oasisSettings['color-page'] = self::sanitizeColor($settings['color-page']);
 			$oasisSettings['color-buttons'] = self::sanitizeColor($settings['color-buttons']);
+			$oasisSettings['color-local-nav'] = self::sanitizeColor($settings['color-local-nav']);
 			$oasisSettings['color-links'] = self::sanitizeColor($settings['color-links']);
 			$oasisSettings['color-header'] = self::sanitizeColor($settings['color-header']);
-			$oasisSettings["background-image"] = $themeSettings->getBackgroundUrl();
+			$oasisSettings['background-image'] = $themeSettings->getBackgroundUrl();
 
 			// sending width and height of background image to SASS
 			if ( !empty($settings['background-image-width']) && !empty($settings['background-image-height']) ) {
