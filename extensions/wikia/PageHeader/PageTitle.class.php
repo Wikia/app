@@ -42,12 +42,17 @@ class PageTitle {
 			return $this->titleMainPage();
 		} else if ( $this->MWTitle->isTalkPage() || $this->shouldNotDisplayNamespacePrefix( $this->namespace ) ) {
 			return htmlspecialchars( $this->MWTitle->getText() );
-		} else if ( $this->request->getCheck( 'wpPreview' ) || $this->request->getCheck( 'wpLivePreview' ) ) {
-			return $this->prefixedTitle( 'page-header-title-prefix-preview' );
-		} else if ( $this->request->getCheck( 'wpDiff' ) || $this->request->getCheck( 'diff' ) ) {
+		} else if ( $this->request->getCheck( 'diff' ) ) {
 			return $this->prefixedTitle( 'page-header-title-prefix-changes' );
 		} else if ( $this->request->getVal( 'action', 'view' ) == 'history' ) {
 			return $this->prefixedTitle( 'page-header-title-prefix-history' );
+		} else if ( defined( 'NS_BLOG_ARTICLE' ) && $this->MWTitle->getNamespace() == NS_BLOG_ARTICLE &&
+		            $this->MWTitle->isSubpage()) {
+			// remove User_blog:xxx from title
+			$titleParts = explode( '/', $this->MWTitle->getText() );
+			array_shift( $titleParts );
+
+			return implode( '/', $titleParts );
 		}
 
 		return $app->getSkinTemplateObj()->data['title'];
@@ -63,7 +68,11 @@ class PageTitle {
 
 	private function shouldNotDisplayNamespacePrefix( $namespace ): bool {
 		return in_array( $namespace,
-			array_merge( self::PREFIX_LESS_NAMESPACES, $this->wg->SuppressNamespacePrefix )
+			array_merge(
+				self::PREFIX_LESS_NAMESPACES,
+				defined( 'NS_BLOG_LISTING' ) ? [ NS_BLOG_LISTING ] : [],
+				$this->wg->SuppressNamespacePrefix
+			)
 		);
 	}
 

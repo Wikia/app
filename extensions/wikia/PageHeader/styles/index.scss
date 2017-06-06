@@ -1,5 +1,6 @@
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index';
 @import 'skins/shared/color.scss';
+@import 'skins/shared/mixins/flexbox';
 
 .WikiaPage .page-header {
 	margin: 0 0 18px;
@@ -16,7 +17,7 @@
 		font-weight: bold;
 		line-height: 1;
 		max-width: 100%;
-		padding-bottom: 12px;
+		padding-bottom: 6px;
 		word-wrap: break-word;
 	}
 
@@ -24,6 +25,7 @@
 		background-color: $color-page-border;
 		border: 0;
 		height: 1px;
+		margin-top: 9px;
 	}
 
 	&__counter {
@@ -32,5 +34,22 @@
 		font-size: $wds-typescale-size-minus-1;
 		font-weight: bold;
 		text-align: right;
+	}
+
+	&__page-subtitle {
+		margin-bottom: 13px;
+	}
+
+	&__subtitle-blog-post {
+		@include align-items(center);
+		@include flexbox();
+	}
+
+	&__blog-post-details {
+		margin-left: 6px;
+	}
+
+	.wds-avatar {
+		border-color: $color-page-border;
 	}
 }

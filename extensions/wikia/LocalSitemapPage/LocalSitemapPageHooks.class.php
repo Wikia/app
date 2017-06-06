@@ -12,15 +12,4 @@ class LocalSitemapPageHooks {
 
 		return true;
 	}
-
-	/**
-	 * Don't display "talk" and "create" buttons on Local Sitemap
-	 */
-	public static function onPageHeaderPageTypePrepared( $pageHeaderController, $title ) {
-		if ( LocalSitemapPageHelper::isLocalSitemap( $title ) ) {
-			$pageHeaderController->comments = false;
-			$pageHeaderController->action = false;
-		}
-		return true;
-	}
 }

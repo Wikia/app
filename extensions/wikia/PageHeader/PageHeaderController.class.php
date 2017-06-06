@@ -8,4 +8,8 @@ class PageHeaderController extends \WikiaController {
 		$this->setVal( 'pageTitle', new PageTitle( $this->app ) );
 		$this->setVal( 'counter', new Counter() );
 	}
+
+	public function subtitle() {
+		$this->setVal( 'subtitle', new Subtitle( $this->app ) );
+	}
 }
