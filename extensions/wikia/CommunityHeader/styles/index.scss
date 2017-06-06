@@ -6,7 +6,7 @@
 
 .wds-community-header {
 	@include community-header-theming(
-		$color-buttons,
+		$color-local-nav,
 		$color-text,
 		$color-links,
 		$color-page,
