@@ -3,14 +3,14 @@
 class ThemeDesignerHelper {
 
 	public static function checkAccess() {
-		global $wgUser;
+		$wgUser = RequestContext::getMain()->getUser();
 
 		// @FIXME when we're out of beta editinterface needs to be removed and themedesgner set to true for sysops
 		return $wgUser->isAllowed( 'themedesigner' );
 	}
 
 	public static function parseText( $text = "" ) {
-		global $wgTitle;
+		$wgTitle = RequestContext::getMain()->getTitle();
 
 		return ParserPool::parse( $text, $wgTitle, new ParserOptions() )->getText();
 	}

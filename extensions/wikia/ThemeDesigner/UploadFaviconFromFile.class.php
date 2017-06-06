@@ -10,15 +10,15 @@ class UploadFaviconFromFile extends UploadFromFile {
 	const FILETYPE_ERROR = 31;
 
 	public function verifyUpload() {
-		$this->getTitle(); //will fill in final destination and extension
+		//will fill in final destination and extension
+		$this->getTitle();
 		$details = parent::verifyUpload();
 
-		if ( $details['status'] == self::OK ) {
-			// check file type (just by extension)
-
-			if ( !$this->checkFileExtension( $this->mFinalExtension, [ 'ico' ] ) ) {
-				$details['status'] = self::FILETYPE_ERROR;
-			}
+		// check file type (just by extension)
+		if ( $details['status'] == self::OK &&
+			!$this->checkFileExtension( $this->mFinalExtension, [ 'ico' ] )
+		) {
+			$details['status'] = self::FILETYPE_ERROR;
 		}
 
 		return $details;
@@ -26,15 +26,14 @@ class UploadFaviconFromFile extends UploadFromFile {
 
 
 	public function performUpload() {
-		global $wgUser;
+		$wgUser = RequestContext::getMain()->getUser();
 
 		return parent::performUpload( '', '', false, $wgUser );
 	}
 
 	public function getLocalFile() {
 		if ( is_null( $this->mLocalFile ) ) {
-			//TODO: find out what namespace constant 6 is
-			$this->mLocalFile = new FakeLocalFile( Title::newFromText( 'Temp_file_' . time() . '.ico', 6 ), RepoGroup::singleton()->getLocalRepo() );
+			$this->mLocalFile = new FakeLocalFile( Title::newFromText( 'Temp_file_' . time() . '.ico', NS_FILE ), RepoGroup::singleton()->getLocalRepo() );
 		}
 
 		return $this->mLocalFile;

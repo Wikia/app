@@ -576,15 +576,15 @@
 				reloadCSS = true;
 			}
 
-			if (setting === 'color-body' ||
-				setting === 'color-body-middle' ||
-				setting === 'color-page' ||
-				setting === 'color-buttons' ||
-				setting === 'color-local-nav' ||
-				setting === 'color-links' ||
-				setting === 'background-image' ||
-				setting === 'color-header' ||
-				setting === 'wordmark-font'
+			if (['color-body',
+				'color-body-middle',
+				'color-page',
+				'color-buttons',
+				'color-local-nav',
+				'color-links',
+				'background-image',
+				'color-header',
+				'wordmark-font'].indexOf(setting) > -1
 			) {
 				reloadCSS = true;
 			}

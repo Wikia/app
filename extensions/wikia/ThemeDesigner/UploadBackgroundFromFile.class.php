@@ -10,9 +10,9 @@ class UploadBackgroundFromFile extends UploadFromFile {
 	const FILETYPE_ERROR = 21;
 
 	public function verifyUpload() {
-		$this->getTitle(); //will fill in final destination and extension
+		//will fill in final destination and extension
+		$this->getTitle();
 		$details = parent::verifyUpload();
-
 
 		if ( $details['status'] == self::OK ) {
 			// check file type (just by extension)
@@ -34,7 +34,7 @@ class UploadBackgroundFromFile extends UploadFromFile {
 	}
 
 	public function performUpload() {
-		global $wgUser;
+		$wgUser = RequestContext::getMain()->getUser();
 
 		return parent::performUpload( '', '', false, $wgUser );
 	}

@@ -7,7 +7,9 @@ class SpecialThemeDesignerPreview extends UnlistedSpecialPage {
 	}
 
 	public function execute( $par ) {
-		global $wgOut, $wgExtensionsPath;
+		global $wgExtensionsPath;
+
+		$wgOut = RequestContext::getMain()->getOutput();
 
 		// check rights
 		if ( !ThemeDesignerHelper::checkAccess() ) {

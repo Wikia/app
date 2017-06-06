@@ -18,13 +18,13 @@ class ThemeDesignerController extends WikiaController {
 	}
 
 	public function executeIndex() {
-		global $wgLang, $wgOut;
-
 		// check rights
 		if ( !ThemeDesignerHelper::checkAccess() ) {
 			$this->displayRestrictionError( __METHOD__ );
 		}
 
+		$wgLang = RequestContext::getMain()->getLanguage();
+		$wgOut = RequestContext::getMain()->getOutput();
 		$themeSettings = new ThemeSettings();
 
 		// current settings
@@ -290,12 +290,15 @@ class ThemeDesignerController extends WikiaController {
 	 * @return array
 	 */
 	private function uploadImage( $upload ) {
-		global $wgRequest, $wgUser, $wgEnableUploads;
+		global $wgEnableUploads;
+
+		$wgRequest = RequestContext::getMain()->getRequest();
+		$wgUser = RequestContext::getMain()->getUser();
 
 		$uploadStatus = [ "status" => "error" ];
 
 		if ( empty( $wgEnableUploads ) ) {
-			$uploadStatus["errors"] = [ wfMessage( 'themedesigner-upload-disabled' )->plain() ];
+			$uploadStatus["errors"] = [ wfMessage( 'themedesigner-upload-disabled' )->escaped() ];
 		} else {
 			$upload->initializeFromRequest( $wgRequest );
 			$permErrors = $upload->verifyPermissions( $wgUser );
@@ -327,7 +330,7 @@ class ThemeDesignerController extends WikiaController {
 	}
 
 	public function executeSaveSettings() {
-		global $wgRequest;
+		$wgRequest = RequestContext::getMain()->getRequest();
 
 		// check rights
 		if ( !ThemeDesignerHelper::checkAccess() ) {
