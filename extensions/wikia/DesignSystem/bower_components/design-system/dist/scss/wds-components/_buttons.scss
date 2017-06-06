@@ -12,6 +12,7 @@
 	display: inline-flex;
 	font-size: $wds-typescale-size-minus-2;
 	font-weight: 600;
+	justify-content: center;
 	letter-spacing: .15px;
 	line-height: $line-height;
 	margin: 0;
@@ -56,7 +57,7 @@
 	}
 
 	&.wds-is-full-width {
-		width: 100%;
+		display: flex;
 	}
 
 	&.wds-is-square {
@@ -66,6 +67,10 @@
 		display: inline-flex;
 		justify-content: center;
 		padding: 0;
+	}
+
+	&.wds-is-text {
+		border: 0;
 	}
 
 	.wds-icon:first-child {

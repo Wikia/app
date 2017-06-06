@@ -6,9 +6,9 @@ namespace Wikia\PageHeader;
 class PageHeaderController extends \WikiaController {
 
 	public function index() {
-		global $wgTitle;
+		$title = \RequestContext::getMain()->getTitle();
 
-		$displayActionButton = !$wgTitle->isSpecialPage() || $wgTitle->isSpecial( 'ThemeDesignerPreview' );
+		$displayActionButton = !$title->isSpecialPage() || $title->isSpecial( 'ThemeDesignerPreview' );
 
 		$this->setVal( 'displayActionButton', $displayActionButton );
 		$this->setVal( 'pageTitle', new PageTitle( $this->app ) );
@@ -24,9 +24,7 @@ class PageHeaderController extends \WikiaController {
 	}
 
 	public function actionButton() {
-		global $wgTitle;
-
-		$button = new ActionButton( $wgTitle );
+		$button = new ActionButton( \RequestContext::getMain() );
 
 		$this->setVal('buttonAction', $button->getButtonAction());
 		$this->setval('dropdownActions', $button->getDropdownActions());

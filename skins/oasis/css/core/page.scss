@@ -240,7 +240,7 @@
 		.wds-button {
 			@include button-theming($color-buttons, $color-button-text);
 
-			.wds-is-secondary {
+			&.wds-is-secondary {
 				margin-left: 12px;
 			}
 		}

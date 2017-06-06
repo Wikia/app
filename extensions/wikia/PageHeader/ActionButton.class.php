@@ -10,17 +10,22 @@ class ActionButton {
 	private $pageStatsService;
 	private $title;
 
-	public function __construct( \Title $title ) {
+	public function __construct( \RequestContext $requestContext ) {
 		$skinVars = \F::app()->getSkinTemplateObj()->data;
 		$this->contentActions = $skinVars['content_actions'];
-		$this->pageStatsService = \PageStatsService::newFromTitle( $title );
-		$this->title = $title;
+
+		$this->title = $requestContext->getTitle();
+		$this->user = $requestContext->getUser();
+		$this->request = $requestContext->getRequest();
+
+		$this->pageStatsService = \PageStatsService::newFromTitle( $this->title );
 
 		$this->prepareActionButton();
 	}
 
 	public function getButtonAction(): array {
 		$this->buttonAction['data-tracking'] = $this->buttonAction['id'];
+
 		return $this->buttonAction;
 	}
 
@@ -44,25 +49,24 @@ class ActionButton {
 		// Enable to modify actions list on dropdown
 		wfRunHooks( 'PageHeaderDropdownActions', [ &$actions ] );
 
-		$ret = [];
-		foreach ( $actions as $action ) {
-			if ( isset( $this->contentActions[$action] ) ) {
-				$ret[$action] = $this->contentActions[$action];
-				if ( isset( $ret[$action]['id'])) {
-					$ret[$action]['data-tracking'] = $ret[$action]['id'] . '-dropdown';
-				}
+		return array_map( function( $action ) {
+			$ret = $this->contentActions[$action];
+			if ( isset( $ret['id'] ) ) {
+				$ret['data-tracking'] = $ret['id'] . '-dropdown';
 			}
-		}
 
-		return $ret;
+			return $ret;
+		}, array_filter( $actions, function( $action ) {
+			return isset( $this->contentActions[$action] );
+		}));
 	}
 
 	private function prepareActionButton() {
-		global $wgTitle, $wgUser, $wgRequest, $wgEnableCuratedContentExt;
+		global $wgEnableCuratedContentExt;
 
 		wfRunHooks( 'BeforePrepareActionButtons', [ $this, &$this->contentActions ] );
 
-		$isDiff = !is_null( $wgRequest->getVal( 'diff' ) );
+		$isDiff = !is_null( $this->request->getVal( 'diff' ) );
 
 		// "Add topic" action
 		if ( isset( $this->contentActions['addsection'] ) ) {
@@ -74,9 +78,9 @@ class ActionButton {
 
 		// handle protected pages (they should have viewsource link and lock icon) - BugId:9494
 		if ( isset( $this->contentActions['viewsource'] ) &&
-			!$wgTitle->isProtected() &&
-			!$wgTitle->isNamespaceProtected( $wgUser ) &&
-			!$wgUser->isLoggedIn() /* VOLDEV-74: logged in users should see the viewsource button, not edit */
+			!$this->title->isProtected() &&
+			!$this->title->isNamespaceProtected( $this->user ) &&
+			!$this->user->isLoggedIn() /* VOLDEV-74: logged in users should see the viewsource button, not edit */
 		) {
 			// force login to edit page that is not protected
 			$this->contentActions['edit'] = $this->contentActions['viewsource'];
@@ -85,9 +89,10 @@ class ActionButton {
 		}
 
 		// If cascade protected, show viewsource button - BugId:VE-89
-		if ( isset( $this->contentActions['edit'] ) && $wgTitle->isCascadeProtected() ) {
+		if ( isset( $this->contentActions['edit'] ) && $this->title->isCascadeProtected() ) {
 			$this->contentActions['viewsource'] = $this->contentActions['edit'];
-			$this->contentActions['viewsource']['text'] = wfMessage( 'page-header-action-button-viewsource' )->escaped();
+			$this->contentActions['viewsource']['text'] =
+				wfMessage( 'page-header-action-button-viewsource' )->escaped();
 			unset( $this->contentActions['edit'] );
 		}
 
@@ -118,7 +123,7 @@ class ActionButton {
 			];
 		}
 
-		if ( !$this->isArticleCommentsEnabled() ) {
+		if ( !$this->isArticleCommentsEnabled() && isset( $this->contentActions['talk'] ) ) {
 			$this->contentActions['talk']['text'] = wfMessage( 'page-header-action-button-talk' )
 				->numParams( $this->pageStatsService->getCommentsCount() )
 				->escaped();

@@ -15,5 +15,33 @@
 		&:hover {
 			z-index: 1;
 		}
+
+		&:not(.wds-is-secondary) {
+			&:not(:last-child) {
+				border-right-width: 1px;
+				border-right-style: solid;
+			}
+
+			&:not(:first-child) {
+				border-left-width: 1px;
+				border-left-style: solid;
+			}
+		}
+	}
+
+	> .wds-dropdown {
+		&:not(:last-child) {
+			.wds-button {
+				border-right-width: 1px;
+				border-right-style: solid;
+			}
+		}
+
+		&:not(:first-child) {
+			.wds-button {
+				border-left-width: 1px;
+				border-left-style: solid;
+			}
+		}
 	}
 }
