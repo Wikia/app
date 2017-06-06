@@ -2,9 +2,14 @@
 
 namespace Wikia\PageHeader;
 
+use AvatarService;
 use FakeSkin;
 use Html;
+use PageStatsService;
 use RequestContext;
+use Title;
+use Wikia\TemplateClassification\View;
+use WikiaApp;
 
 class Subtitle {
 	/**
@@ -28,44 +33,83 @@ class Subtitle {
 	private $skinTemplate;
 
 	/**
-	 * @var bool
+	 * @var Title
 	 */
-	private static $onEditPage = false;
+	private $title;
 
-	public function __construct( \WikiaApp $app ) {
+	/**
+	 * @var int
+	 */
+	private $cityId;
+
+	/**
+	 * @var \WebRequest
+	 */
+	private $request;
+
+	public function __construct( WikiaApp $app ) {
 		$this->suppressPageSubtitle = $app->wg->SuppressPageSubtitle;
+		$this->cityId = $app->wg->cityId;
 		$this->request = RequestContext::getMain()->getRequest();
 		$this->skinTemplate = $app->getSkinTemplateObj();
+		$this->title = RequestContext::getMain()->getTitle();
+
 		if ( !$this->suppressPageSubtitle ) {
-			$this->subtitle = $this->getSubtitle();
-			//watch list uses that, pageSubject?
+			$this->subtitle = $this->getSubtitle( $app );
 			$this->pageSubtitle = $this->getPageSubtitle();
 		}
 	}
 
 	/**
 	 * Detect we're on edit (or diff) page
+	 *
+	 * @return bool
 	 */
 	public static function isEditPage() {
-		$wg = \F::app()->wg;
+		$request = RequestContext::getMain()->getRequest();
+
 		return !empty( Hooks::$onEditPage ) ||
-		       !is_null( $wg->Request->getVal( 'diff' ) ) /* diff pages - RT #69931 */ ||
-		       in_array( $wg->Request->getVal( 'action', 'view' ), [ 'edit' /* view source page */, 'formedit' /* SMW edit pages */, 'history' /* history pages */, 'submit' /* conflicts, etc */ ] );
+			!is_null( $request->getVal( 'diff' ) ) ||
+			in_array(
+				$request->getVal( 'action', 'view' ),
+				[
+					/* view source page */
+					'edit',
+					/* SMW edit pages */
+					'formedit',
+					/* history pages */
+					'history',
+					/* conflicts, etc */
+					'submit'
+				]
+			);
 	}
 
-	private function getSubtitle() {
-		$wgOutput = \RequestContext::getMain()->getOutput();
+	private function getSubtitle( WikiaApp $app ) {
+		$output = RequestContext::getMain()->getOutput();
 
-		if(self::isEditPage()) {
+		if ( self::isEditPage() ) {
 			return $this->getEditPageSubtitle();
+		} else if ( defined( 'NS_BLOG_ARTICLE' ) && $this->title->getNamespace() === NS_BLOG_ARTICLE ) {
+			return $this->getBlogArticleSubtitle( $app );
 		}
 
-		return $wgOutput->getSubtitle();
+		$additional = [];
+		wfRunHooks( 'AfterPageHeaderSubtitle', [ &$additional ] );
+
+		return implode(
+			wfMessage( 'pipe-separator' )->escaped(),
+			array_filter(
+				array_merge(
+					[ $output->getSubtitle() ],
+					$additional
+				)
+			)
+		);
 	}
 
 	private function getEditPageSubtitle() {
-		$wgOutput = \RequestContext::getMain()->getOutput();
-		$title = \RequestContext::getMain()->getTitle();
+		$wgOutput = RequestContext::getMain()->getOutput();
 
 		$subtitle = [
 			$this->getBackLink(),
@@ -74,7 +118,7 @@ class Subtitle {
 
 		if ( $this->request->getVal( 'action', 'view' ) === 'history' ) {
 			$sk = new FakeSkin();
-			$sk->setRelevantTitle( $title );
+			$sk->setRelevantTitle( $this->title );
 
 			$undeleteLink = $sk->getUndeleteLink();
 			if ( $undeleteLink ) {
@@ -88,10 +132,8 @@ class Subtitle {
 	}
 
 	private function getTalkPageBackLink() {
-		$title = \RequestContext::getMain()->getTitle();
-
-		if ( $title->isTalkPage() ) {
-			$namespace = $title->getNamespace();
+		if ( $this->title->isTalkPage() ) {
+			$namespace = $this->title->getNamespace();
 
 			// back to subject article link
 			switch ( $namespace ) {
@@ -116,7 +158,7 @@ class Subtitle {
 			}
 
 			return \Linker::link(
-				$title->getSubjectPage(),
+				$this->title->getSubjectPage(),
 				wfMessage( $msgKey )->escaped(),
 				[ 'accesskey' => 'c' ]
 			);
@@ -126,10 +168,9 @@ class Subtitle {
 	}
 
 	private function getPageType() {
-		$title = \RequestContext::getMain()->getTitle();
-		$namespace = $title->getNamespace();
+		$namespace = $this->title->getNamespace();
 
-		$pageType = null;
+		$pageType = '';
 
 		if ( $namespace === NS_MEDIAWIKI ) {
 			$pageType = wfMessage( 'page-header-subtitle-mediawiki' )->escaped();
@@ -137,8 +178,9 @@ class Subtitle {
 			$pageType = wfMessage( 'page-header-subtitle-template' )->escaped();
 		} else if (
 			$namespace === NS_SPECIAL &&
-			!$title->isSpecial('Forum') &&
-			!$title->isSpecial('ThemeDesignerPreview')
+			!$this->title->isSpecial( 'Forum' ) &&
+			!$this->title->isSpecial( 'ThemeDesignerPreview' ) &&
+			!$this->title->isSpecial( 'WikiActivity' )
 		) {
 			$pageType = wfMessage( 'page-header-subtitle-special' )->escaped();
 		} else if ( $namespace === NS_CATEGORY ) {
@@ -148,6 +190,8 @@ class Subtitle {
 		} else if ( defined( 'NS_BLOG_LISTING' ) && $namespace === NS_BLOG_LISTING ) {
 			$pageType = wfMessage( 'page-header-subtitle-blog-category' )->escaped();
 		}
+
+		wfRunHooks( 'PageHeaderPageTypePrepared', [ $this->title, &$pageType ] );
 
 		return $pageType;
 	}
@@ -170,47 +214,70 @@ class Subtitle {
 		return [];
 	}
 
-	private function getSubject() {
-		return null;
-	}
-
 	/**
 	 * back to article link
 	 * @return string
 	 */
 	private function getBackLink() {
-		$title = \RequestContext::getMain()->getTitle();
-
-		return \Wikia::link( $title, wfMessage( 'oasis-page-header-back-to-article' )->escaped(),
-			[ 'accesskey' => 'c' ], [], 'known' );
+		return \Wikia::link(
+			$this->title,
+			wfMessage( 'oasis-page-header-back-to-article' )->escaped(),
+			[ 'accesskey' => 'c' ],
+			[],
+			'known'
+		);
 	}
 
 	private function getSubPageLinks() {
-		return \RequestContext::getMain()->getSkin()->subPageSubtitle();
+		return RequestContext::getMain()->getSkin()->subPageSubtitle();
 	}
 
 	/**
-	 * render pageType, pageSubject and pageSubtitle as one message
-	 *
 	 * @return string
 	 */
 	private function getPageSubtitle() {
-		$additional = '';
-		wfRunHooks( 'BeforePageHeaderSubtitle', [ &$additional ] );
-
 		$subtitle = [
 			$this->getPageType(),
 			$this->getTalkPageBackLink(),
-			$this->getSubject(),
 			$this->getSubPageLinks(),
 		];
 
+		$additional = [];
+		wfRunHooks( 'AfterPageHeaderPageSubtitle', [ &$additional ] );
+
 		$subtitle =
-			array_filter( array_merge( $subtitle, $this->languageVariants(), [ $additional ] ) );
+			array_filter( array_merge( $subtitle, $this->languageVariants(), $additional ) );
 
 		$pipe = wfMessage( 'pipe-separator' )->escaped();
 
 		return implode( " {$pipe} ", $subtitle );
 	}
 
+	private function getBlogArticleSubtitle( WikiaApp $app ) {
+		$language = RequestContext::getMain()->getLanguage();
+
+		$userName = $this->title->getBaseText();
+		$avatar = AvatarService::renderAvatar( $userName, 30, 'wds-avatar' );
+		$userPageUrl = AvatarService::getUrl( $userName );
+
+		$userBlogPageUrl = AvatarService::getUrl( $userName, NS_BLOG_ARTICLE );
+		$namespaceText = $language->getFormattedNsText( $this->title->getNamespace() );
+		$userBlogPageText = $namespaceText . ':' . $userName;
+
+		$pageStatsService = new PageStatsService( $this->title->getArticleId() );
+		$pageCreatedDate = $language->date( $pageStatsService->getFirstRevisionTimestamp() );
+
+		return $app->renderPartial(
+			'Wikia\PageHeader\PageHeader',
+			'subtitle_blogPost',
+			[
+				'avatar' => $avatar,
+				'pageCreatedDate' => $pageCreatedDate,
+				'userName' => $userName,
+				'userPageUrl' => $userPageUrl,
+				'userBlogPageUrl' => $userBlogPageUrl,
+				'userBlogPageText' => $userBlogPageText,
+			]
+		);
+	}
 }

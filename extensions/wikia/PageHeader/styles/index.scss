@@ -9,6 +9,7 @@
 	@include dropdown-theming($color-page, $color-text, $color-links, $color-page-border);
 
 	@include flexbox();
+	margin: 0 0 18px;
 	padding: 12px 0;
 	position: relative;
 	z-index: 4;
@@ -37,11 +38,11 @@
 	}
 
 	&__contribution {
-		display: flex;
-		flex-direction: column;
 		@include align-items(flex-end);
+		@include flexbox();
+		@include flex-direction(column);
+		@include justify-content(flex-end);
 		float: right;
-		justify-content: flex-end;
 	}
 
 	&__languages {
@@ -49,7 +50,7 @@
 	}
 
 	&__main {
-		flex: 1;
+		@include flex(1);
 	}
 
 	&__categories {
@@ -104,6 +105,23 @@
 		border: 0;
 		height: 1px;
 		margin-bottom: 18px;
+	}
+
+	&__page-subtitle {
+		margin-bottom: 13px;
+	}
+
+	&__subtitle-blog-post {
+		@include align-items(center);
+		@include flexbox();
+	}
+
+	&__blog-post-details {
+		margin-left: 6px;
+	}
+
+	.wds-avatar {
+		border-color: $color-page-border;
 	}
 }
 
