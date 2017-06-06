@@ -7,7 +7,7 @@ class ChatController extends WikiaController {
 	const CHAT_AVATAR_DIMENSION = 41;
 
 	public function executeIndex() {
-		global $wgUser, $wgFavicon, $wgOut, $wgHooks, $wgWikiaBaseDomain, $wgWikiaNocookieDomain;
+		global $wgUser, $wgFavicon, $wgHooks, $wgWikiaBaseDomain, $wgWikiaNocookieDomain;
 
 		Chat::info( __METHOD__ . ': Method called' );
 
@@ -59,16 +59,25 @@ class ChatController extends WikiaController {
 		// set up global js variables just for the chat page
 		$wgHooks['MakeGlobalVariablesScript'][] = [ $this, 'onMakeGlobalVariablesScript' ];
 
-		$wgOut->getResourceLoader()->getModule( 'mediawiki' );
+		// Don't load user or site JS in chat - there are separate modules for that.
+		global $wgUseSiteCss, $wgUseSiteJs, $wgAllowUserCss, $wgAllowUserJs;
+		$wgAllowUserCss = $wgAllowUserJs = $wgUseSiteJs = $wgUseSiteCss = false;
 
-		$ret = implode( "\n", [
-			$wgOut->getHeadLinks( null, true ),
-			$wgOut->buildCssLinks(),
-			$wgOut->getHeadScripts(),
-			$wgOut->getHeadItems()
+		// SUS-2191: Hack - Extension hooks do not perform enough sanity checks
+		// and they inject lots of useless assets into chat
+		Hooks::getHandlersArray()['SkinGetHeadScripts'] = [];
+
+		$out = new OutputPage( $this->getContext() );
+		$out->addModules( 'ext.Chat2' );
+
+		$headScripts = implode( "\n", [
+			$out->getHeadLinks( null, true ),
+			$out->getHeadScripts(),
 		] );
 
-		$this->globalVariablesScript = $ret;
+		$this->bottomScripts = $out->getBottomScripts();
+
+		$this->globalVariablesScript = $headScripts;
 
 		// Theme Designer stuff
 		$themeSettingObj = new ThemeSettings();

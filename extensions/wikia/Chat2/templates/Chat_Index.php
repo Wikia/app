@@ -4,28 +4,11 @@
 	<title><?= $pageTitle ?></title>
 	<link rel="shortcut icon" href="<?= $wg->Favicon ?>">
 
-	<!-- Make IE recognize HTML5 tags. -->
-	<!--[if IE]>
-		<script>/*@cc_on'abbr article aside audio canvas details figcaption figure footer header hgroup mark menu meter nav output progress section summary time video'.replace(/\w+/g,function(n){document.createElement(n)})@*/</script>
-	<![endif]-->
-
 	<!-- CSS -->
 	<link rel="stylesheet" href="<?= AssetsManager::getInstance()->getSassCommonURL( '/extensions/wikia/Chat2/css/Chat.scss' )?>">
 	<link rel="stylesheet" href="/load.php?lang=en&mode=articles&articles=MediaWiki%3AChat.css%7CUser%3A<?php echo $wg->User->getName(); ?>%2Fchat.css&only=styles">
 
-	<!-- JS -->
-	<?php
-		$srcs = AssetsManager::getInstance()->getGroupCommonURL( 'oasis_blocking', array() );
-	?>
-	<?php foreach ( $srcs as $src ): ?>
-		<script src="<?php echo $src ?>"></script>
-	<?php endforeach; ?>
-
-	<!-- temporary hack -->
-	<script src="<?= AssetsManager::getInstance()->getOneCommonURL( '/extensions/wikia/Chat2/js/lib/socket.io-1.3.5.js' ); ?>"></script>
 	<?= $globalVariablesScript ?>
-	<?php // TODO: use js var?>
-
 </head>
 <body class="<?= $bodyClasses ?> ChatWindow">
 
@@ -185,12 +168,7 @@
 	</script>
 
 	<!-- Load these after the DOM is built -->
-	<?php
-		$srcs = AssetsManager::getInstance()->getGroupCommonURL( 'chat_js2', array() );
-	?>
-	<?php foreach ( $srcs as $src ): ?>
-		<script src="<?php echo $src ?>"></script>
-	<?php endforeach; ?>
+	<?= $bottomScripts ?>
 	<script type="text/javascript" src="/load.php?lang=en&mode=articles&articles=MediaWiki%3AChat.js%7CUser%3A<?php echo $wg->User->getName(); ?>%2Fchat.js&only=scripts"></script>
 </body>
 </html>

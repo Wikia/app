@@ -12,6 +12,9 @@ return [
 
 	// shared AMD modules loaded on each page
 	'amd.shared' => [
+		'scripts' => [
+			'resources/wikia/modules/disable-amd-jquery.js',
+		],
 		'dependencies' => [
 			'wikia.instantGlobals',
 			'wikia.cache',
@@ -208,6 +211,11 @@ return [
 		'dependencies' => 'amd',
 	],
 
+	'wikia.onScroll' => [
+		'scripts' => 'skins/shared/scripts/onScroll.js',
+		'dependencies' => 'amd',
+	],
+
 	// libraries and jQuery plugins
 	'wikia.underscore' => [
 		'scripts' => 'resources/wikia/modules/underscore.js',
@@ -259,6 +267,15 @@ return [
 
 	'jquery.dataTables' => [
 		'scripts' => 'resources/wikia/libraries/jquery/datatables/jquery.dataTables.min.js',
+	],
+
+	'jquery.throttleDebounce' => [
+		'scripts' => 'resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js',
+	],
+
+	'jquery.wikia' => [
+		'scripts' => 'resources/wikia/jquery.wikia.js',
+		'dependencies' => [ 'jquery.throttleDebounce' ],
 	],
 
 	// moved here from AssetsManager by wladek

@@ -7,99 +7,94 @@
  * in MediaWiki Chat (specifically at Wikia... but it will almost certainly be reusable by
  * anyone using our Node.js Chat server).
  *
- * The
- *
  */
 
-'use strict';
+/* global define, $ */
+define('ChatEmoticons', [], function () {
+	'use strict';
 
-var WikiaEmoticons,
-	EmoticonMapping,
-	RegexSanitization = /[-[\]{}()*+?.,\\^$|#\s]/g,
-	RegexWikiaImageTag = /^(?:https?:)?\/\/(?:[^\/]+\.)*?wikia(?:-dev)?(?:\.com|\.nocookie\.net)\//,
-	RegexLineStartingByAsterisk = /^\*[ ]*([^*].*)/,
-	RegexLineStartingByTwoAsterisk = /^\*\* *([^*"][^"]*)/;
+	var WikiaEmoticons = {},
+		EmoticonMapping,
+		RegexSanitization = /[-[\]{}()*+?.,\\^$|#\s]/g,
+		RegexWikiaImageTag = /^(?:https?:)?\/\/(?:[^\/]+\.)*?wikia(?:-dev)?(?:\.com|\.nocookie\.net)\//,
+		RegexLineStartingByAsterisk = /^\*[ ]*([^*].*)/,
+		RegexLineStartingByTwoAsterisk = /^\*\* *([^*"][^"]*)/;
 
-// By explicitly setting the dimensions, this will make sure the feature stays as emoticons instead of getting
-// spammy or inviting disruptive vandalism (19px vandalism probably won't be AS offensive).
-if (typeof WikiaEmoticons === 'undefined'){
-	WikiaEmoticons = {};
-}
-WikiaEmoticons.EMOTICON_WIDTH = 19;
-WikiaEmoticons.EMOTICON_HEIGHT = 19;
+	// By explicitly setting the dimensions, this will make sure the feature stays as emoticons instead of getting
+	// spammy or inviting disruptive vandalism (19px vandalism probably won't be AS offensive).
+	WikiaEmoticons.EMOTICON_WIDTH = 19;
+	WikiaEmoticons.EMOTICON_HEIGHT = 19;
 
-/**
- * Takes in some chat text and an emoticonMapping (which strings should be replaced with images at which URL) and
- * returns the text modified so that the replacable text (eg ":)") is replaced with the HTML for the image of
- * that emoticon.
- */
-WikiaEmoticons.doReplacements = function (text, emoticonMapping) {
-	// This debug is probably noisy, but I added it here just in case all of these regexes turn out
-	// to be slow (so we could see that in the log & know that we need to make this function more efficient).
-	$().log('Processing any emoticons... ');
+	/**
+	 * Takes in some chat text and an emoticonMapping (which strings should be replaced with images at which URL) and
+	 * returns the text modified so that the replacable text (eg ":)") is replaced with the HTML for the image of
+	 * that emoticon.
+	 */
+	WikiaEmoticons.doReplacements = function (text, emoticonMapping) {
+		// This debug is probably noisy, but I added it here just in case all of these regexes turn out
+		// to be slow (so we could see that in the log & know that we need to make this function more efficient).
+		$().log('Processing any emoticons... ');
 
-	var imgUrlsByRegexString = emoticonMapping.getImgUrlsByRegexString(),
-		origText,
-		regex,
-		buildTagFunc,
-		maxEmoticons = 5,
-		combinedRegexStr = Object.keys(imgUrlsByRegexString)
-			.map(function (key) {
-				return key.replace(RegexSanitization, '\\$&');
-				}
-			).join('|');
+		var imgUrlsByRegexString = emoticonMapping.getImgUrlsByRegexString(),
+			origText,
+			regex,
+			buildTagFunc,
+			maxEmoticons = 5,
+			combinedRegexStr = Object.keys(imgUrlsByRegexString)
+				.map(function (key) {
+						return key.replace(RegexSanitization, '\\$&');
+					}
+				).join('|');
 
-	regex = new RegExp('(^|\\s)(' + combinedRegexStr + ')([^/]|$)', 'i');
+		regex = new RegExp('(^|\\s)(' + combinedRegexStr + ')([^/]|$)', 'i');
 
-	//return early if none match
-	if (!text.match(regex)) {
+		//return early if none match
+		if (!text.match(regex)) {
+			return text;
+		}
+
+		buildTagFunc = WikiaEmoticons.buildTagGenerator(imgUrlsByRegexString);
+
+		do {
+			origText = text;
+			text = text.replace(regex, buildTagFunc);
+		} while ((origText !== text) && --maxEmoticons > 0);
+
+		$().log('Done processing emoticons.');
 		return text;
-	}
+	};
 
-	buildTagFunc = WikiaEmoticons.buildTagGenerator(imgUrlsByRegexString);
+	WikiaEmoticons.buildTagGenerator = function (imgUrlsByRegexString) {
 
-	do {
-		origText = text;
-		text = text.replace(regex, buildTagFunc);
-	} while ((origText !== text) && --maxEmoticons > 0);
+		return function (match, leading, tag, trailing) {
+			var imgSrc = imgUrlsByRegexString[tag.toLowerCase()];
+			// If emoticon not found, return text version
+			if (typeof imgSrc === 'undefined') {
+				return match;
+			}
+			imgSrc = imgSrc.replace(/"/g, '%22'); // prevent any HTML-injection
 
-	$().log('Done processing emoticons.');
-	return text;
-};
+			// Don't return any img tag if this is an external image
+			if (!imgSrc.match(RegexWikiaImageTag)) {
+				return '';
+			}
 
-WikiaEmoticons.buildTagGenerator = function (imgUrlsByRegexString) {
+			tag = mw.html.escape(tag);
+			imgSrc = mw.html.escape(imgSrc);
 
-	return function (match, leading, tag, trailing) {
-		var imgSrc = imgUrlsByRegexString[tag.toLowerCase()];
-		// If emoticon not found, return text version
-		if (typeof imgSrc === 'undefined') {
-			return match;
-		}
-		imgSrc = imgSrc.replace(/"/g, '%22'); // prevent any HTML-injection
-
-		// Don't return any img tag if this is an external image
-		if (!imgSrc.match(RegexWikiaImageTag)) {
-			return '';
-		}
-
-		tag = mw.html.escape(tag);
-		imgSrc = mw.html.escape(imgSrc);
-
-		return (
-			leading +
-			' <img ' +
+			return (
+				leading +
+				' <img ' +
 				'src="' + imgSrc + '" ' +
 				'width="' + WikiaEmoticons.EMOTICON_WIDTH + '" ' +
 				'height="' + WikiaEmoticons.EMOTICON_HEIGHT + '" ' +
 				'alt="' + tag + '" ' +
 				'title="' + tag + '"/> ' +
-			trailing
-		);
+				trailing
+			);
+		};
 	};
-};
 
-// class EmoticonMapping
-if (typeof EmoticonMapping === 'undefined') {
 	EmoticonMapping = function () {
 		var self = this;
 		this._regexes = {
@@ -175,10 +170,10 @@ if (typeof EmoticonMapping === 'undefined') {
 				index;
 
 			// Object.keys() doesn't exist in IE 8, so do this the oldschool way.
-			for (keyName in self._settings){
+			for (keyName in self._settings) {
 				numSettings++;
 			}
-			for (regKeyName in self._regexes){
+			for (regKeyName in self._regexes) {
 				numRegexes++;
 			}
 
@@ -186,10 +181,10 @@ if (typeof EmoticonMapping === 'undefined') {
 				return self._regexes;
 			}
 
-			for (imgSrc in self._settings){
+			for (imgSrc in self._settings) {
 				codes = self._settings[imgSrc];
 				regexString = '';
-				for (index = 0; codes.length > index; index++){
+				for (index = 0; codes.length > index; index++) {
 					code = codes[index];
 					// Fix > and <
 					code = code.replace(/>/g, '&gt;').replace(/</g, '&lt;');
@@ -199,4 +194,9 @@ if (typeof EmoticonMapping === 'undefined') {
 			return self._regexes;
 		};
 	};
-}
+
+	return {
+		WikiaEmoticons: WikiaEmoticons,
+		EmoticonMapping: EmoticonMapping
+	};
+});

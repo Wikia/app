@@ -37,7 +37,6 @@ return array(
 		'skinScripts' => [
 			'default' => [
 				'resources/jquery/jquery-' . AssetsConfig::JQUERY_VERSION . '.js',
-				'resources/wikia/modules/disable-amd-jquery.js',
 			],
 		],
 		// Wikia change - end

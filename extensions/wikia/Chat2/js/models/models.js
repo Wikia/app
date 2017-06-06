@@ -1,21 +1,11 @@
 var STATUS_STATE_PRESENT = 'here'; // strings instead of ints just for easier debugging. always use the vars, don't hardcode strings w/these states elsewhere.
 var STATUS_STATE_AWAY = 'away';
 
-(function () {
-	var server = false, models;
-	if (typeof exports !== 'undefined') {
-		_ = require('underscore')._;
-		Backbone = require('backbone');
+/* global define, Backbone */
+define('ChatModels', ['underscore'], function (_) {
+	'use strict';
 
-		models = exports;
-		server = true;
-	} else {
-		models = this.models = {};
-	}
-
-	//
-	//models
-	//
+	var models = {};
 
 	models.AuthInfo = Backbone.Model.extend({
 		defaults: {
@@ -340,7 +330,7 @@ var STATUS_STATE_AWAY = 'away';
 				_.each(data.collections, function (collection, name) {
 					targetObj[name].id = collection.id;
 					_.each(collection.models, function (modelData, index) {
-						var newObj = targetObj[name]._add(modelData.attrs, {silent: silent});
+						var newObj = targetObj[name].add(modelData.attrs, {silent: silent});
 						process(newObj, modelData);
 					});
 				});
@@ -369,4 +359,6 @@ var STATUS_STATE_AWAY = 'away';
 		return this;
 	};
 
-})()
+
+	return models;
+});

@@ -1368,34 +1368,6 @@ $config['mini_editor_rte_js'] = [
 	],
 ];
 
-$config['chat_js2'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'#group_oasis_jquery',
-		'#group_oasis_shared_core_js',
-		'//skins/shared/scripts/onScroll.js',
-
-		// shared libraries
-		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
-
-		'//resources/wikia/modules/querystring.js',
-		'//resources/wikia/modules/history.js',
-		'//resources/wikia/modules/cookies.js',
-		//depends on querystring.js and cookies.js
-		'//resources/wikia/modules/log.js',
-
-		//'//extensions/wikia/Chat2/js/lib/socket.io.client.js',
-		// must be before controllers.js
-		'//extensions/wikia/Chat2/js/emoticons.js',
-		'//extensions/wikia/Chat2/js/lib/underscore.js',
-		'//extensions/wikia/Chat2/js/lib/backbone.js',
-		'//extensions/wikia/Chat2/js/models/models.js',
-		'//extensions/wikia/Chat2/js/controllers/controllers.js',
-		'//extensions/wikia/Chat2/js/views/views.js',
-		'//extensions/wikia/Chat2/js/views/ChatBanModal.js',
-	],
-];
-
 /** ThemeDesigner **/
 $config['theme_designer_js'] = [
 	'type' => AssetsManager::TYPE_JS,
