@@ -9,6 +9,7 @@
 	@include dropdown-theming($color-page, $color-text, $color-links, $color-page-border);
 
 	@include flexbox();
+	margin: 0 0 18px;
 	padding: 12px 0;
 	position: relative;
 	z-index: 4;
