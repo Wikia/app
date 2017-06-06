@@ -37,6 +37,16 @@ class Subtitle {
 	 */
 	private $title;
 
+	/**
+	 * @var int
+	 */
+	private $cityId;
+
+	/**
+	 * @var \WebRequest
+	 */
+	private $request;
+
 	public function __construct( WikiaApp $app ) {
 		$this->suppressPageSubtitle = $app->wg->SuppressPageSubtitle;
 		$this->cityId = $app->wg->cityId;
@@ -155,12 +165,6 @@ class Subtitle {
 			$pageType = wfMessage( 'page-header-subtitle-mediawiki' )->escaped();
 		} else if ( $namespace === NS_TEMPLATE ) {
 			$pageType = wfMessage( 'page-header-subtitle-template' )->escaped();
-			if ( $this->title->exists() ) {
-				$user = RequestContext::getMain()->getUser();
-				$view = new View();
-				$pageType =
-					$view->renderTemplateType( $this->cityId, $this->title, $user, $pageType );
-			}
 		} else if (
 			$namespace === NS_SPECIAL &&
 			!$this->title->isSpecial( 'Forum' ) &&
@@ -174,6 +178,8 @@ class Subtitle {
 		} else if ( defined( 'NS_BLOG_LISTING' ) && $namespace === NS_BLOG_LISTING ) {
 			$pageType = wfMessage( 'page-header-subtitle-blog-category' )->escaped();
 		}
+
+		wfRunHooks( 'PageHeaderPageTypePrepared', [ $this->title, &$pageType ] );
 
 		return $pageType;
 	}
@@ -215,8 +221,6 @@ class Subtitle {
 	}
 
 	/**
-	 * render pageType, pageSubject and pageSubtitle as one message
-	 *
 	 * @return string
 	 */
 	private function getPageSubtitle() {
@@ -243,19 +247,25 @@ class Subtitle {
 		$userName = $this->title->getBaseText();
 		$avatar = AvatarService::renderAvatar( $userName, 30, 'wds-avatar' );
 		$userPageUrl = AvatarService::getUrl( $userName );
+
 		$userBlogPageUrl = AvatarService::getUrl( $userName, NS_BLOG_ARTICLE );
 		$namespaceText = $language->getFormattedNsText( $this->title->getNamespace() );
 		$userBlogPageText = $namespaceText . ':' . $userName;
+
 		$pageStatsService = new PageStatsService( $this->title->getArticleId() );
 		$pageCreatedDate = $language->date( $pageStatsService->getFirstRevisionTimestamp() );
 
-		return $app->renderPartial('Wikia\PageHeader\PageHeader', 'subtitle_blogPost', [
-			'avatar' => $avatar,
-			'pageCreatedDate' => $pageCreatedDate,
-			'userName' => $userName,
-			'userPageUrl' => $userPageUrl,
-			'userBlogPageUrl' => $userBlogPageUrl,
-			'userBlogPageText' => $userBlogPageText,
-		] );
+		return $app->renderPartial(
+			'Wikia\PageHeader\PageHeader',
+			'subtitle_blogPost',
+			[
+				'avatar' => $avatar,
+				'pageCreatedDate' => $pageCreatedDate,
+				'userName' => $userName,
+				'userPageUrl' => $userPageUrl,
+				'userBlogPageUrl' => $userBlogPageUrl,
+				'userBlogPageText' => $userBlogPageText,
+			]
+		);
 	}
 }
