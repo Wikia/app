@@ -32,27 +32,16 @@ class Language {
 	 */
 	private function handleLanguages( WikiaApp $app ) {
 		$this->title = RequestContext::getMain()->getTitle();
-
-		$this->languageUrls = $app->getSkinTemplateObj()
-			? $app->getSkinTemplateObj()->data['language_urls']
-			: [];
-
-		$this->languageUrls["interwiki-{$this->langCode}"] = [
-			'href' => $this->title->getFullURL(),
-			'text' => $this->currentLangName,
-			'class' => "interwiki-{$this->langCode}",
-		];
-
+		$this->languageUrls = $app->getSkinTemplateObj()->data['language_urls'] ?: [];
 		$this->languages = [];
-		foreach ( $this->languageUrls as $val ) {
-			$this->languages[$val["class"]] = [
+
+		foreach ( $this->languageUrls as $key => $val ) {
+			$this->languages[$key] = [
 				'href' => $val['href'],
 				'name' => $val['text'],
-				'class' => $val['class'],
 			];
 		}
 
-		unset( $this->languages["interwiki-{$this->langCode}"] );
 		ksort( $this->languages );
 
 		return $this->languages;
