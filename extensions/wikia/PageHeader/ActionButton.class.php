@@ -73,8 +73,6 @@ class ActionButton {
 	}
 
 	private function prepareActionButton() {
-		global $wgEnableCuratedContentExt;
-
 		wfRunHooks( 'BeforePrepareActionButtons', [ $this, &$this->contentActions ] );
 
 		$isDiff = !is_null( $this->request->getVal( 'diff' ) );

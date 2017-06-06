@@ -8,7 +8,7 @@ class PageHeaderController extends \WikiaController {
 	public function index() {
 		$title = \RequestContext::getMain()->getTitle();
 
-		$displayActionButton = !$title->isSpecialPage();// || $title->isSpecial( 'ThemeDesignerPreview' );
+		$displayActionButton = !$title->isSpecialPage();
 
 		wfRunHooks( 'PageHeaderBeforeDisplay', [ $title, &$displayActionButton ] );
 
