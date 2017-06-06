@@ -179,7 +179,8 @@ class Subtitle {
 		} else if (
 			$namespace === NS_SPECIAL &&
 			!$this->title->isSpecial( 'Forum' ) &&
-			!$this->title->isSpecial( 'ThemeDesignerPreview' )
+			!$this->title->isSpecial( 'ThemeDesignerPreview' ) &&
+			!$this->title->isSpecial( 'WikiActivity' )
 		) {
 			$pageType = wfMessage( 'page-header-subtitle-special' )->escaped();
 		} else if ( $namespace === NS_CATEGORY ) {
