@@ -99,9 +99,11 @@ class Subtitle {
 
 		return implode(
 			wfMessage( 'pipe-separator' )->escaped(),
-			array_merge(
-				[ $output->getSubtitle() ],
-				$additional
+			array_filter(
+				array_merge(
+					[ $output->getSubtitle() ],
+					$additional
+				)
 			)
 		);
 	}
