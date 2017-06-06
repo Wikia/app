@@ -3,7 +3,7 @@
 		<h1><?= wfMessage( 'themedesigner-background' )->plain() ?></h1>
 		<ul>
 			<li class="wrap-color">
-				<h2><?= wfMsg( 'themedesigner-color' ) ?></h2>
+				<h2><?= wfMessage( 'themedesigner-color' )->text() ?></h2>
 				<img src="<?= $wg->BlankImgUrl ?>" class="color-body" id="swatch-color-background">
 			</li>
 			<? //TODO: Remove this after global release of responsive layout  ?>

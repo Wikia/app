@@ -101,65 +101,57 @@ class ThemeDesignerController extends WikiaController {
 
 		switch ( $status['status'] ) {
 			case UploadBackgroundFromFile::FILESIZE_ERROR:
-				$msg = wfMsgHtml( 'themedesigner-size-error' );
+				$msg = wfMessage( 'themedesigner-size-error' )->escaped();
 				break;
 			case UploadBackgroundFromFile::FILETYPE_ERROR:
 			case UploadWordmarkFromFile::FILETYPE_ERROR:
-				$msg = wfMsgHtml( 'themedesigner-type-error' );
+				$msg = wfMessage( 'themedesigner-type-error' )->escaped();
 				break;
 			case UploadWordmarkFromFile::FILEDIMENSIONS_ERROR:
-				$msg = wfMsgHtml( 'themedesigner-dimensions-error' );
+				$msg = wfMessage( 'themedesigner-dimensions-error' )->escaped();
 				break;
 			case UploadBase::MIN_LENGTH_PARTNAME:
-				$msg = wfMsgHtml( 'minlength1' );
+				$msg = wfMessage( 'minlength1' )->escaped();
 				break;
 			case UploadBase::ILLEGAL_FILENAME:
-				$msg = wfMsgExt(
+				$msg = wfMessage(
 					'illegalfilename',
-					'parseinline',
 					$status['filtered']
-				);
+				)->parse();
 				break;
 			case UploadBase::OVERWRITE_EXISTING_FILE:
-				$msg = wfMsgExt(
-					$status['overwrite'],
-					'parseinline'
-				);
+				$msg = wfMessage(
+					$status['overwrite']
+				)->parse();
 				break;
 			case UploadBase::FILETYPE_MISSING:
-				$msg = wfMsgExt(
-					'filetype-missing',
-					'parseinline'
-				);
+				$msg = wfMessage(
+					'filetype-missing'
+				)->parse();
 				break;
 			case UploadBase::EMPTY_FILE:
-				$msg = wfMsgHtml( 'emptyfile' );
+				$msg = wfMessage( 'emptyfile' )->escaped();
 				break;
 			case UploadBase::FILETYPE_BADTYPE:
 				$finalExt = $status['finalExt'];
 
-				$msg = wfMsgExt(
+				$msg = wfMessage(
 					'filetype-banned-type',
-					[ 'parseinline' ],
 					htmlspecialchars( $finalExt ),
 					implode(
-						wfMsgExt(
-							'comma-separator',
-							[ 'escapenoentities' ]
-						),
+						wfMessage( 'comma-separator' )->escaped(),
 						$wgFileExtensions
 					),
 					$wgLang->formatNum( count( $wgFileExtensions ) )
-				);
+				)->parse();
 				break;
 			case UploadBase::VERIFICATION_ERROR:
 				unset( $status['status'] );
 				$code = array_shift( $status['details'] );
-				$msg = wfMsgExt(
+				$msg = wfMessage(
 					$code,
-					'parseinline',
 					$status['details']
-				);
+				)->parse();
 				break;
 			case UploadBase::HOOK_ABORTED:
 				if ( is_array( $status['error'] ) ) { # allow hooks to return error details in an array
@@ -170,7 +162,7 @@ class ThemeDesignerController extends WikiaController {
 					$args = null;
 				}
 
-				$msg = wfMsgExt( $error, 'parseinline', $args );
+				$msg = wfMessage( $error, $args )->parse();
 				break;
 			default:
 				throw new MWException( __METHOD__ . ": Unknown value `{$status['status']}`" );
@@ -193,7 +185,7 @@ class ThemeDesignerController extends WikiaController {
 				$args = [ $args ];
 			}
 
-			$ret[] = wfMsgExt( $warning, 'parseinline', $args );
+			$ret[] = wfMessage( $warning, $args )->parse();
 		}
 
 		return $ret;
@@ -216,7 +208,7 @@ class ThemeDesignerController extends WikiaController {
 
 			// if wordmark url is not set then it means there was some problem
 			if ( $this->wordmarkImageUrl == null || $this->wordmarkImageName == null ) {
-				$this->errors = [ wfMsg( 'themedesigner-unknown-error' ) ];
+				$this->errors = [ wfMessage( 'themedesigner-unknown-error' )->text() ];
 			}
 
 			wfRunHooks( 'UploadWordmarkComplete', [ &$upload ] );
@@ -246,7 +238,7 @@ class ThemeDesignerController extends WikiaController {
 
 			// if wordmark url is not set then it means there was some problem
 			if ( $this->faviconImageUrl == null ) {
-				$this->errors = [ wfMsg( 'themedesigner-unknown-error' ) ];
+				$this->errors = [ wfMessage( 'themedesigner-unknown-error' )->text() ];
 			}
 		} else if ( $status['status'] === 'error' ) {
 			$this->errors = $status['errors'];
@@ -277,7 +269,7 @@ class ThemeDesignerController extends WikiaController {
 
 			// if background image url is not set then it means there was some problem
 			if ( $this->backgroundImageUrl == null ) {
-				$this->errors = [ wfMsg( 'themedesigner-unknown-error' ) ];
+				$this->errors = [ wfMessage( 'themedesigner-unknown-error' )->text() ];
 			}
 
 		} else if ( $status['status'] === 'error' ) {
@@ -304,7 +296,7 @@ class ThemeDesignerController extends WikiaController {
 			$permErrors = $upload->verifyPermissions( $wgUser );
 
 			if ( $permErrors !== true ) {
-				$uploadStatus["errors"] = [ wfMsg( 'badaccess' ) ];
+				$uploadStatus["errors"] = [ wfMessage( 'badaccess' )->text() ];
 			} else {
 				$details = $upload->verifyUpload();
 

@@ -1,16 +1,16 @@
 <aside class="ThemeDesignerPicker" id="ThemeDesignerPicker">
 	<div class="color">
-		<h1><?= wfMsg( 'themedesigner-pick-a-color' ) ?></h1>
+		<h1><?= wfMessage( 'themedesigner-pick-a-color' )->text() ?></h1>
 		<ul class="swatches"></ul>
-		<h1><?= wfMsg( 'themedesigner-enter-your-own' ) ?></h1>
+		<h1><?= wfMessage( 'themedesigner-enter-your-own' )->text() ?></h1>
 		<form id="ColorNameForm" class="ColorNameForm">
-			<input type="text" placeholder="<?= wfMsg( 'themedesigner-color-name-or-hex-code' ) ?>" id="color-name"
+			<input type="text" placeholder="<?= wfMessage( 'themedesigner-color-name-or-hex-code' )->text() ?>" id="color-name"
 				   class="color-name">
-			<input type="submit" value="<?= wfMsg( 'themedesigner-button-ok' ) ?>">
+			<input type="submit" value="<?= wfMessage( 'themedesigner-button-ok' )->text() ?>">
 		</form>
 	</div>
 	<div class="image">
-		<h1><?= wfMsg( 'themedesigner-pick-an-image' ) ?></h1>
+		<h1><?= wfMessage( 'themedesigner-pick-an-image' )->text() ?></h1>
 		<ul class="swatches">
 			<li>
 				<img src="<?= $wg->ExtensionsPath ?>/wikia/ThemeDesigner/images/pattern_dots_swatch.jpg"
@@ -85,19 +85,19 @@
 					 data-image="<?= $wg->CdnStylePath ?>/skins/oasis/images/themes/dragstrip.jpg">
 			</li>
 			<li class="no-image">
-				<?= wfMsg( 'themedesigner-dont-use-a-background' ) ?>
+				<?= wfMessage( 'themedesigner-dont-use-a-background' )->text() ?>
 			</li>
 		</ul>
 		<?php if ( !empty( $wg->EnableUploads ) ) { ?>
-			<h1><?= wfMsg( 'themedesigner-upload-your-own' ) ?></h1>
+			<h1><?= wfMessage( 'themedesigner-upload-your-own' )->text() ?></h1>
 
 			<form id="BackgroundImageForm" class="BackgroundImageForm"
 				  action="<?= $wg->ScriptPath ?>/wikia.php?controller=ThemeDesigner&method=BackgroundImageUpload&format=html"
 				  method="POST" enctype="multipart/form-data">
 				<input id="backgroundImageUploadFile" name="wpUploadFile" type="file">
-				<input type="submit" value="<?= wfMsg( 'themedesigner-button-upload' ) ?>"
+				<input type="submit" value="<?= wfMessage( 'themedesigner-button-upload' )->text() ?>"
 					   onclick="return ThemeDesigner.backgroundImageUpload(event);">
-				<?= wfMsgExt( 'themedesigner-rules-background', [ 'parsemag' ], UploadBackgroundFromFile::FILESIZE_LIMIT / 1024 ) ?>
+				<?= wfMessage( 'themedesigner-rules-background', UploadBackgroundFromFile::FILESIZE_LIMIT / 1024 )->text() ?>
 			</form>
 		<?php } ?>
 	</div>
