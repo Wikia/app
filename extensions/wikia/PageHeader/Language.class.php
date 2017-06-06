@@ -1,48 +1,50 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jakubjastrzebski
- * Date: 05/06/2017
- * Time: 10:36
- */
 
 namespace Wikia\PageHeader;
 
+use \RequestContext;
 use \WikiaApp;
 
 class Language {
 
 	public $currentLangName;
 	public $languages;
-	public $language_urls;
+	public $languageUrls;
+	private $langCode;
+	private $title;
 
+	/**
+	 * Language constructor.
+	 *
+	 * @param WikiaApp $app
+	 */
 	public function __construct( WikiaApp $app ) {
-		global $wgContLanguageCode, $wgTitle;
+		$this->langCode = RequestContext::getMain()->getLanguage()->getCode();
 
-		$this->currentLangName = \Language::getLanguageName( $wgContLanguageCode );
+		$this->currentLangName = \Language::getLanguageName( $this->langCode );
 		$this->languageList = $this->handleLanguages( $app );
-
-		//$request_language_urls = $this->request->getVal( 'request_language_urls' );
-		//if ( !empty( $request_language_urls ) ) {
-		//	$language_urls = $request_language_urls;
-		//}
 	}
 
+	/**
+	 * @param WikiaApp $app
+	 *
+	 * @return array
+	 */
 	private function handleLanguages( WikiaApp $app ) {
-		global $wgTitle, $wgContLanguageCode;
+		$this->title = RequestContext::getMain()->getTitle();
 
-		$this->language_urls = $app->getSkinTemplateObj()
+		$this->languageUrls = $app->getSkinTemplateObj()
 			? $app->getSkinTemplateObj()->data['language_urls']
 			: [];
 
-		$this->language_urls["interwiki-{$wgContLanguageCode}"] = [
-			'href' => $wgTitle->getFullURL(),
+		$this->languageUrls["interwiki-{$this->langCode}"] = [
+			'href' => $this->title->getFullURL(),
 			'text' => $this->currentLangName,
-			'class' => "interwiki-{$wgContLanguageCode}",
+			'class' => "interwiki-{$this->langCode}",
 		];
 
 		$this->languages = [];
-		foreach ( $this->language_urls as $val ) {
+		foreach ( $this->languageUrls as $val ) {
 			$this->languages[$val["class"]] = [
 				'href' => $val['href'],
 				'name' => $val['text'],
@@ -51,6 +53,7 @@ class Language {
 		}
 
 		ksort( $this->languages );
+
 		return $this->languages;
 	}
 }
