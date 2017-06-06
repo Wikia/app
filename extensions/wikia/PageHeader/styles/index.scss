@@ -38,15 +38,15 @@
 	}
 
 	&__contribution {
-		display: flex;
-		flex-direction: column;
 		@include align-items(flex-end);
+		@include flexbox();
+		@include flex-direction(column);
+		@include justify-content(flex-end);
 		float: right;
-		justify-content: flex-end;
 	}
 
 	&__main {
-		flex: 1;
+		@include flex(1);
 	}
 
 	&__categories {
