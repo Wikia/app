@@ -29,6 +29,10 @@ class ActionButton {
 		$this->prepareActionButton();
 	}
 
+	public function getTitle(): \Title {
+		return $this->title;
+	}
+
 	public function getButtonAction(): array {
 		$this->buttonAction['data-tracking'] = $this->buttonAction['id'];
 		$this->buttonAction['icon'] = $this->buttonIcon;
@@ -123,10 +127,6 @@ class ActionButton {
 			$this->buttonAction = $this->contentActions['viewsource'];
 			$this->buttonIcon = self::LOCK_ICON;
 			unset( $this->contentActions['ve-edit'], $this->contentActions['edit'] );
-		}
-		else if ( isset( $this->contentActions['theme-designer-edit'] ) ) {
-			$this->buttonAction = $this->contentActions['theme-designer-edit'];
-			unset( $this->contentActions['theme-designer-edit'] );
 		}
 
 		if ( !empty( $wgEnableCuratedContentExt ) && CuratedContentHelper::shouldDisplayToolButton() ) {
