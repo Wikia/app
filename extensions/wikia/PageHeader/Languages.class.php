@@ -42,10 +42,10 @@ class Languages {
 	}
 
 	public function isDisabled(): bool {
-		return $this->languageList < 0;
+		return count( $this->languageList ) <= 0;
 	}
 
 	public function hasMoreLanguages(): bool {
-		return $this->languageList > 0;
+		return count( $this->languageList ) > 0;
 	}
 }
