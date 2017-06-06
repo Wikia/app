@@ -25,6 +25,7 @@
 		background-color: $color-page-border;
 		border: 0;
 		height: 1px;
+		margin-top: 9px;
 	}
 
 	&__counter {
@@ -35,7 +36,11 @@
 		text-align: right;
 	}
 
-	&__subtitle {
+	&__page-subtitle {
+		margin-bottom: 13px;
+	}
+
+	&__subtitle-blog-post {
 		@include align-items(center);
 		@include flexbox();
 	}
