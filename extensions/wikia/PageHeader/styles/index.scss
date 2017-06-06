@@ -102,5 +102,22 @@
 		height: 1px;
 		margin-bottom: 18px;
 	}
+
+	&__page-subtitle {
+		margin-bottom: 13px;
+	}
+
+	&__subtitle-blog-post {
+		@include align-items(center);
+		@include flexbox();
+	}
+
+	&__blog-post-details {
+		margin-left: 6px;
+	}
+
+	.wds-avatar {
+		border-color: $color-page-border;
+	}
 }
 
