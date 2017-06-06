@@ -9,7 +9,7 @@ $wgExtensionCredits['other'][] = array(
 );
 
 // autoloaded classes
-$wgAutoloadClasses['RTE'] = __DIR__ . ' /RTE.class.php';
+$wgAutoloadClasses['RTE'] = __DIR__ . '/RTE.class.php';
 $wgAutoloadClasses['RTEAjax'] = __DIR__ . '/RTEAjax.class.php';
 $wgAutoloadClasses['RTEData'] = __DIR__ . '/RTEData.class.php';
 $wgAutoloadClasses['RTELang'] = __DIR__ . '/RTELang.class.php';
