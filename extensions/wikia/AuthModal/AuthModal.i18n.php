@@ -26,7 +26,7 @@ $messages['it'] = array(
 );
 
 $messages['ja'] = array(
-	'authmodal-registration-success' => 'ようこそ、$1さん！Fandomアカウントの作成が完了しました。',
+	'authmodal-registration-success' => 'ようこそ、$1さん！FANDOMアカウントの作成が完了しました。',
 );
 
 $messages['nl'] = array(
@@ -46,10 +46,10 @@ $messages['ru'] = array(
 );
 
 $messages['zh-hans'] = array(
-	'authmodal-registration-success' => '欢迎您，$1！您的Fandom帐户已成功创建。',
+	'authmodal-registration-success' => '欢迎您，$1！您的FANDOM帐户已成功创建。',
 );
 
 $messages['zh-hant'] = array(
-	'authmodal-registration-success' => '歡迎，$1！你的Fandom帳戶已成功創建。',
+	'authmodal-registration-success' => '歡迎，$1！你的FANDOM帳戶已成功創建。',
 );
 

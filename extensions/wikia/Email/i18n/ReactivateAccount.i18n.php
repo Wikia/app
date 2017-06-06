@@ -44,10 +44,10 @@ $messages['it'] = array(
 );
 
 $messages['ja'] = array(
-	'emailext-reactivate-account-subject' => 'Fandomアカウントの再開',
-	'emailext-reactivate-account-summary' => 'Fandomアカウントの再開を承認するには、下のリンクをクリックしてください。',
+	'emailext-reactivate-account-subject' => 'FANDOMアカウントの再開',
+	'emailext-reactivate-account-summary' => 'FANDOMアカウントの再開を承認するには、下のリンクをクリックしてください。',
 	'emailext-reactivate-account-button-text' => '今すぐ再開',
-	'emailext-reactivate-account-welcome-back' => '今後ともFandomをよろしくお願いいたします。',
+	'emailext-reactivate-account-welcome-back' => '今後ともFANDOMをよろしくお願いいたします。',
 );
 
 $messages['ko'] = array(

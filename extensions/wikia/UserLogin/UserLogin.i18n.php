@@ -563,7 +563,7 @@ Möchtest du deine E-Mail-Einstellungen ändern? Besuche {{fullurl:{{ns:special}
 	'wikiamobile-facebook-connect-fail' => 'Dein Facebook-Konto ist momentan nicht mit deinem Wikia-Benutzerkonto verbunden.',
 	'userlogin-logged-in-title' => 'Willkommen bei {{SITENAME}}, $1!',
 	'userlogin-logged-in-message' => 'Du bist angemeldet. Fahre mit der Maus über die [[$1|Homepage]], um das Neueste anzusehen oder kontrolliere dein [[$2|Profil]].',
-	'userlogin-account-admin-error' => 'Hoppla! Da ist was schief gelaufen. Schreibe an den [[Spezial:Kontakt|FANDOM-Support]]. Wir kümmern uns darum.',
+	'userlogin-account-admin-error' => 'Hoppla! Da ist was schief gelaufen. Schreibe an den [[Spezial:Kontakt|Fandom-Support]]. Wir kümmern uns darum.',
 	'userlogin-password-email-body-HTML' => '',
 	'userlogin-email-footer-line3' => '<a href="http://www.twitter.com/wikia" style="text-decoration:none">
 <img alt="twitter" src="http://images4.wikia.nocookie.net/wikianewsletter/images/f/f7/Twitter.png" style="border:none">
@@ -653,23 +653,23 @@ $messages['es'] = array(
 Si no solicitaste una nueva contraseña, ¡no te preocupes! Tu cuenta está segura. Puedes ignorar este mensaje y continuar iniciando sesión en Wikia con tu antigua contraseña.
 <br /><br />
 ¿Tienes preguntas o inquietudes? No dudes en ponerte en <a href="http://comunidad.wikia.com/wiki/Especial:Contactar/account-issue">contacto con nosotros</a>.',
-	'userlogin-password-email-signature' => 'Soporte comunitario de FANDOM',
+	'userlogin-password-email-signature' => 'Soporte comunitario de Fandom',
 	'userlogin-password-email-body' => 'Hola $2,
 
-Utiliza esta contraseña temporal para iniciar sesión en FANDOM: "$3"
+Utiliza esta contraseña temporal para iniciar sesión en Fandom: "$3"
 
 Si no solicitaste una nueva contraseña, ¡no te preocupes! Tu cuenta está segura. Puedes ignorar este mensaje y continuar iniciando sesión en Wikia con tu antigua contraseña.
 
 ¿Tienes preguntas o inquietudes? No dudes en contactarnos: http://comunidad.wikia.com/wiki/Especial:Contactar/account-issue
 
-Equipo Comunitario de FANDOM
+Equipo Comunitario de Fandom
 
 
 ___________________________________________
 
-Para comprobar los acontecimientos más recientes en FANDOM, visita http://comunidad.wikia.com
+Para comprobar los acontecimientos más recientes en Fandom, visita http://comunidad.wikia.com
 ¿Deseas controlar qué mensajes de correo electrónico recibes? Ve a: {{fullurl:{{ns:special}}:Preferences}}',
-	'userlogin-email-footer-line1' => 'Para comprobar las últimas novedades en FANDOM, visita <a style="color:#2a87d5;text-decoration:none;" href="http://es.wikia.com">es.wikia.com</a>',
+	'userlogin-email-footer-line1' => 'Para comprobar las últimas novedades en Fandom, visita <a style="color:#2a87d5;text-decoration:none;" href="http://es.wikia.com">es.wikia.com</a>',
 	'userlogin-email-footer-line2' => '¿Deseas controlar los correos electrónicos que recibes? Ve a tus <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">preferencias</a>',
 	'userlogin-provider-or' => 'o',
 	'userlogin-provider-tooltip-facebook' => 'Pulsa el botón para iniciar sesión con Facebook',
@@ -679,10 +679,10 @@ Para comprobar los acontecimientos más recientes en FANDOM, visita http://comun
 	'userlogin-loginreqlink' => 'iniciar sesión',
 	'userlogin-changepassword-needlogin' => 'Necesitas $1 para cambiar la contraseña.',
 	'wikiamobile-sendpassword-label' => 'Enviar una nueva contraseña',
-	'wikiamobile-facebook-connect-fail' => 'Lo sentimos, pero tu cuenta en Facebook no está actualmente vinculada con una cuenta de FANDOM.',
+	'wikiamobile-facebook-connect-fail' => 'Lo sentimos, pero tu cuenta en Facebook no está actualmente vinculada con una cuenta de Fandom.',
 	'userlogin-logged-in-title' => '¡Te damos la bienvenida a {{SITENAME}}, $1!',
 	'userlogin-logged-in-message' => 'Has iniciado sesión. Dirígete a la [[$1|portada]] para ver lo más reciente o revisa tu [[$2|perfil]].',
-	'userlogin-account-admin-error' => '¡Uy! Algo salió mal. Ponte en contacto con [[Especial:Contactar|FANDOM]] para recibir ayuda.',
+	'userlogin-account-admin-error' => '¡Uy! Algo salió mal. Ponte en contacto con [[Especial:Contactar|Fandom]] para recibir ayuda.',
 	'userlogin-password-email-body-HTML' => '',
 	'userlogin-email-footer-line3' => '<a href="http://www.twitter.com/es_fandom" style="text-decoration:none">
 <img alt="twitter" src="http://images4.wikia.nocookie.net/wikianewsletter/images/f/f7/Twitter.png" style="border:none">
@@ -912,7 +912,7 @@ Vous souhaitez contrôler les e-mails que vous recevez ? Allez sur : {{fullurl:{
 	'wikiamobile-facebook-connect-fail' => 'Désolé, votre compte Facebook n’est pour le moment pas relié à un compte Wikia.',
 	'userlogin-logged-in-title' => 'Bienvenue sur {{SITENAME}}, $1 !',
 	'userlogin-logged-in-message' => 'Vous êtes connecté. Allez sur la [[$1|page d’accueil]] pour voir les nouveautés ou vérifiez votre [[$2|profil]].',
-	'userlogin-account-admin-error' => 'Oups ! Un problème est survenu. Veuillez contacter le support de [[Special:Contact|FANDOM]].',
+	'userlogin-account-admin-error' => 'Oups ! Un problème est survenu. Veuillez contacter le support de [[Special:Contact|Fandom]].',
 	'userlogin-password-email-body-HTML' => '',
 	'userlogin-email-footer-line3' => '<a href="<a href="http://twitter.com/wikia_fr" style="text-decoration:none">
 <img alt="twitter" src="http://images4.wikia.nocookie.net/wikianewsletter/images/f/f7/Twitter.png" style="border:none">
@@ -1233,7 +1233,7 @@ Vuoi controllare quali email ricevi? Vai alle tue <a href="{{fullurl:{{ns:specia
 	'userlogin-error-wrongcredentials' => 'Questa combinazione di nome utente e password non è corretta. Riprova per favore.',
 	'userlogin-error-invalidfacebook' => 'Si è verificato un problema con il rilevamento del tuo account Facebook; accedi di nuovo a Facebook e riprova per favore.',
 	'userlogin-error-fbconnect' => 'Si è verificato un problema nel collegare il tuo FANDOM account con Facebook.',
-	'userlogin-account-admin-error' => 'Ops! Qualcosa è andato storto. Per favore, contatta [[Special:Contact|FANDOM]] per ricevere assistenza.',
+	'userlogin-account-admin-error' => 'Ops! Qualcosa è andato storto. Per favore, contatta [[Special:Contact|Fandom]] per ricevere assistenza.',
 	'userlogin-opt-in-label' => 'Inviami email su news ed eventi di FANDOM',
 	'userlogin-error-confirmation-reminder-already-sent' => "Il promemoria per la conferma dell'email è già stato inviato.",
 	'userlogin-password-email-body-HTML' => '',
@@ -1271,7 +1271,7 @@ $messages['ja'] = array(
 	'userlogin-error-resetpass_announce' => '仮パスワードを使用しました。こちらに新しいパスワードを入力してログインしてください。',
 	'userlogin-error-login-throttled' => '誤ったパスワードでログインを試みた回数が多すぎます。しばらく待ってから再度お試しください。',
 	'userlogin-error-login-userblocked' => 'このユーザー名はブロックされておりログインに使用できません。',
-	'userlogin-error-edit-account-closed-flag' => 'このアカウントはFandomにより無効化されています。',
+	'userlogin-error-edit-account-closed-flag' => 'このアカウントはFANDOMにより無効化されています。',
 	'userlogin-error-cantcreateaccount-text' => 'お使いのIPアドレスからのアカウント作成は許可されていません。',
 	'userlogin-error-userexists' => 'このユーザー名は既に使用されています。別のものをお試しください。',
 	'userlogin-error-invalidemailaddress' => '有効なメールアドレスを入力してください。',
@@ -1284,9 +1284,9 @@ $messages['ja'] = array(
 	'userlogin-error-externaldberror' => '申し訳ありません。現在サイトで問題が発生しています。しばらくしてからもう一度お試しください。',
 	'userlogin-error-noemailtitle' => '有効なメールアドレスを入力してください。',
 	'userlogin-error-acct_creation_throttle_hit' => 'お使いのIPアドレスからのアカウント作成が多すぎます。しばらくしてからお試しください。',
-	'userlogin-opt-in-label' => 'Fandomの最新情報やイベントに関するメールの受信を希望する',
+	'userlogin-opt-in-label' => 'FANDOMの最新情報やイベントに関するメールの受信を希望する',
 	'userlogin-error-resetpass_forbidden' => 'パスワードを変更できません。',
-	'userlogin-error-blocked-mailpassword' => 'お使いのIPアドレスがFandomによってブロックされているため、新しいパスワードをリクエストできません。',
+	'userlogin-error-blocked-mailpassword' => 'お使いのIPアドレスがFANDOMによってブロックされているため、新しいパスワードをリクエストできません。',
 	'userlogin-error-throttled-mailpassword' => '$1時間前に既にこのアカウントのパスワード復旧に関するメールを送信しました。メールを確認してください。',
 	'userlogin-error-mail-error' => 'メールの送信で問題が発生しました。[[w:ja:Forum:Index|サポート]]までご連絡ください。',
 	'userlogin-password-email-sent' => '「$1」のメールアドレス宛に新しいパスワードを送信しました。',
@@ -1328,7 +1328,7 @@ Wikiaの最新情報は http://ja.wikia.com/ で確認できます。
 	'wikiamobile-facebook-connect-fail' => 'あなたの Facebook アカウントは現在Wikiaのアカウントとリンクされていません。',
 	'userlogin-error-wrongcredentials' => 'このユーザー名とパスワードの組み合わせは正しくありません。再試行してください。',
 	'userlogin-error-invalidfacebook' => 'あなたの Facebook アカウントの検出に問題がありました。Facebook にログインして再試行してください。',
-	'userlogin-error-fbconnect' => 'FandomアカウントとFacebookを連携する際に問題が発生しました。',
+	'userlogin-error-fbconnect' => 'FANDOMアカウントとFacebookを連携する際に問題が発生しました。',
 	'userlogin-logged-in-title' => '{{SITENAME}}へようこそ、$1さん!',
 	'userlogin-logged-in-message' => 'ログイン状態です。[[$1|ホーム]]から最新情報を見つけたり、[[$2|プロフィール]]を確認してみましょう。',
 	'userlogin-desc' => 'ユーザー・ログイン拡張機能',
@@ -1351,7 +1351,7 @@ Wikiaの最新情報は http://ja.wikia.com/ で確認できます。
 </a>',
 	'userlogin-account-admin-error' => 'エラーが発生しました。申し訳ありませんが、[[特別:お問い合わせ|Wikiaにお問い合わせ]]ください。',
 	'userlogin-email-confirmation-banner-success-message' => 'ご利用のメールアドレスは正常に認証されました。',
-	'userlogin-email-confirmation-banner-error' => '認証用リンクの有効期限が切れたか、別のアカウントでFandomにログインしています。認証が必要なアカウントにログインするか[[特別:メールアドレスの確認|こちら]]から新しいリンクを発行してください。',
+	'userlogin-email-confirmation-banner-error' => '認証用リンクの有効期限が切れたか、別のアカウントでFANDOMにログインしています。認証が必要なアカウントにログインするか[[特別:メールアドレスの確認|こちら]]から新しいリンクを発行してください。',
 );
 
 $messages['ka'] = array(
@@ -2106,7 +2106,7 @@ $messages['pt'] = array(
 	'userlogin-error-wrongcredentials' => 'Esta combinação de nome de usuário e senha não está correta. Por favor, tente novamente.',
 	'userlogin-error-invalidfacebook' => 'Houve um problema ao detectar a sua conta do Facebook; faça login no Facebook e tente novamente.',
 	'userlogin-error-fbconnect' => 'Houve um problema ao conectar a sua conta do FANDOM ao Facebook.',
-	'userlogin-account-admin-error' => 'Opa! Algo deu errado. Por favor, entre em contato com [[Especial:Contact|o FANDOM]] para suporte.',
+	'userlogin-account-admin-error' => 'Opa! Algo deu errado. Por favor, entre em contato com [[Especial:Contact|o Fandom]] para suporte.',
 	'userlogin-error-userlogin-unable-info' => 'Desculpe, mas não somos capazes de registrar sua conta neste momento.',
 	'userlogin-error-captcha-createaccount-fail' => 'A palavra que você digitou não corresponde a palavra na caixa, tente novamente!',
 	'userlogin-error-userlogin-bad-birthday' => 'Ops, por favor preencha mês, dia e ano.',
@@ -2905,13 +2905,13 @@ $messages['zh-hans'] = array(
 	'userlogin-error-resetpass_announce' => '看来您在使用临时密码。请选择新的密码以继续登录。',
 	'userlogin-error-login-throttled' => '密码输入错误次数过多。请稍后再试。',
 	'userlogin-error-login-userblocked' => '您的用户名已被禁止使用。',
-	'userlogin-error-edit-account-closed-flag' => '您的帐户已被Fandom禁用。',
+	'userlogin-error-edit-account-closed-flag' => '您的帐户已被FANDOM禁用。',
 	'userlogin-error-cantcreateaccount-text' => '您的IP地址不能再次新建帐户。',
 	'userlogin-error-userexists' => '该用户名已使用，请选择其他用户名。',
 	'userlogin-error-invalidemailaddress' => '请输入有效的电子邮件地址。',
 	'userlogin-error-wrongcredentials' => '用户名与密码的组合不正确。请重试。',
 	'userlogin-error-invalidfacebook' => '检测您的Facebook帐户时出现问题；请登录Facebook然后重试。',
-	'userlogin-error-fbconnect' => '连接您的Fandom帐户到Facebook时出现问题。',
+	'userlogin-error-fbconnect' => '连接您的FANDOM帐户到Facebook时出现问题。',
 	'userlogin-get-account' => '没有账户？<a href="$1" tabindex="$2">注册</a>',
 	'userlogin-error-invalid-username' => '用户名无效',
 	'userlogin-error-userlogin-unable-info' => '抱歉，我们不能在这时等级您的帐户。',
@@ -2921,9 +2921,9 @@ $messages['zh-hans'] = array(
 	'userlogin-error-externaldberror' => '抱歉，目前系统出错，请稍后再试。',
 	'userlogin-error-noemailtitle' => '请输入有效的邮箱地址',
 	'userlogin-error-acct_creation_throttle_hit' => '抱歉，该IP地址今天新建帐户过多，请稍后再试。',
-	'userlogin-opt-in-label' => '请给我发电子邮件告知有关Fandom的新闻和活动',
+	'userlogin-opt-in-label' => '请给我发电子邮件告知有关FANDOM的新闻和活动',
 	'userlogin-error-resetpass_forbidden' => '无法更改密码',
-	'userlogin-error-blocked-mailpassword' => '该IP地址已被Fandom限制使用。不能申请新密码。',
+	'userlogin-error-blocked-mailpassword' => '该IP地址已被FANDOM限制使用。不能申请新密码。',
 	'userlogin-error-throttled-mailpassword' => '密码提醒已在{{PLURAL:$1|hour|$1hour}}内发送到该帐户，请查收您的电子邮件。',
 	'userlogin-error-mail-error' => '哦，关于错误的信息已发送至您的信箱，请[[Special:Contact/general|联系我们]]。',
 	'userlogin-password-email-sent' => '我们已将新密码寄至该邮箱$1。',
@@ -2985,7 +2985,7 @@ ___________________________________________
 <img alt="wikia" src="http://images1.wikia.nocookie.net/wikianewsletter/images/b/be/Wikia_blog.png" style="border:none">
 </a>',
 	'userlogin-email-confirmation-banner-success-message' => '您的电子邮件已成功确认了。',
-	'userlogin-email-confirmation-banner-error' => '此帐户确认链接已过期，或您正在使用其他Fandom帐户登入。请您登入到需要确认链接的帐户或者[[Special:ConfirmEmail|点击这里]]请求发送一个新的确认链接。',
+	'userlogin-email-confirmation-banner-error' => '此帐户确认链接已过期，或您正在使用其他FANDOM帐户登入。请您登入到需要确认链接的帐户或者[[Special:ConfirmEmail|点击这里]]请求发送一个新的确认链接。',
 );
 
 $messages['zh-hant'] = array(
@@ -3002,7 +3002,7 @@ $messages['zh-hant'] = array(
 	'userlogin-error-resetpass_announce' => '看起來您使用的是臨時密碼。選擇新的密碼繼續登錄。',
 	'userlogin-error-login-throttled' => '密碼輸入錯誤次數過多，請稍後再試。',
 	'userlogin-error-login-userblocked' => '您的使用者名稱已被封鎖，不能登入。',
-	'userlogin-error-edit-account-closed-flag' => '您的帳戶已被Fandom停用。',
+	'userlogin-error-edit-account-closed-flag' => '您的帳戶已被FANDOM停用。',
 	'userlogin-error-cantcreateaccount-text' => '您的 IP 位址不被允許建立新的帳號。',
 	'userlogin-error-userexists' => '此使用者名稱已有人使用，請嘗試其他名稱。',
 	'userlogin-error-invalidemailaddress' => '請輸入有效的電子郵件地址。',
@@ -3016,7 +3016,7 @@ $messages['zh-hant'] = array(
 	'userlogin-error-noemailtitle' => '請輸入有效的電子郵件地址。',
 	'userlogin-error-acct_creation_throttle_hit' => '抱歉，此 IP 位址今天已建立了太多帳戶。請稍後再試。',
 	'userlogin-error-resetpass_forbidden' => '無法更改密碼',
-	'userlogin-error-blocked-mailpassword' => '由於您的IP位址已經被Fandom封禁，您無法請求新密碼。',
+	'userlogin-error-blocked-mailpassword' => '由於您的IP位址已經被FANDOM封禁，您無法請求新密碼。',
 	'userlogin-error-throttled-mailpassword' => '我們已經在{{PLURAL:$1|1小時|$1小時}}前發送了此帳戶的密碼提示。請檢查您的電子郵件。',
 	'userlogin-error-mail-error' => '哎呀，在向您寄電子郵件的時候遇到了問題。請[[Special:Contact/general|聯絡我們]]。',
 	'userlogin-password-email-sent' => '我們已經向帳戶 $1 傳送了一封包含有該帳戶新密碼的電子郵件。',
@@ -3062,9 +3062,9 @@ ___________________________________________
 	'userlogin-desc' => '用戶登入擴展',
 	'userlogin-error-wrongcredentials' => '用戶名和密碼的搭配不正確。請再試一次。',
 	'userlogin-error-invalidfacebook' => '檢測您的Facebook帳戶時出現問題；請登入Facebook再重試。',
-	'userlogin-error-fbconnect' => '將您的Fandom帳戶連結到Facebook時出現問題。',
+	'userlogin-error-fbconnect' => '將您的FANDOM帳戶連結到Facebook時出現問題。',
 	'userlogin-account-admin-error' => '抱歉！出現問題。請聯繫[[Special:Contact|FANDOM]]以獲得幫助。',
-	'userlogin-opt-in-label' => '請給我發電子郵件告知有關Fandom的消息和活動',
+	'userlogin-opt-in-label' => '請給我發電子郵件告知有關FANDOM的消息和活動',
 	'userlogin-password-email-body-HTML' => '',
 	'userlogin-email-footer-line3' => '<a href="http://www.twitter.com/wikia" style="text-decoration:none">
 <img alt="twitter" src="http://images4.wikia.nocookie.net/wikianewsletter/images/f/f7/Twitter.png" style="border:none">
@@ -3084,6 +3084,6 @@ ___________________________________________
 	'userlogin-logged-in-title' => '歡迎來到{{SITENAME}}，$1！',
 	'userlogin-logged-in-message' => '您已經登入。進入[[$1|首頁]] 查看最新消息，或查看您的[[$2|個人資料]]。',
 	'userlogin-email-confirmation-banner-success-message' => '您的電子信箱已成功認證！',
-	'userlogin-email-confirmation-banner-error' => '這個認證連結已經過期或是您登入了另一個Fandom帳號，請登入您需要認證的帳號或[[Special:ConfirmEmail|點擊這裡]]以收到新的連結。',
+	'userlogin-email-confirmation-banner-error' => '這個認證連結已經過期或是您登入了另一個FANDOM帳號，請登入您需要認證的帳號或[[Special:ConfirmEmail|點擊這裡]]以收到新的連結。',
 );
 

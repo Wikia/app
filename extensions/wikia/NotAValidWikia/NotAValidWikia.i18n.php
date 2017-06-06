@@ -90,7 +90,7 @@ $messages['ja'] = array(
 
 
 {| style="margin: 1em auto 0; font-weight: bold; text-align: center" cellpadding="7" cellspacing="5"
-!colspan="3" style="font-size: 120%"|Fandomのサポートが必要な場合
+!colspan="3" style="font-size: 120%"|FANDOMのサポートが必要な場合
 |-
 |[[w:ja:ヘルプ:コンテンツ|ヘルプページで探す]]
 |
@@ -98,7 +98,7 @@ $messages['ja'] = array(
 |-
 |[[homepage:Special:CreateWiki|Wikiをはじめる]]
 |
-|[[w:ja:ブログ:Fandomスタッフブログ|Fandomの最新情報を読む]]
+|[[w:ja:ブログ:FANDOMスタッフブログ|FANDOMの最新情報を読む]]
 |}',
 );
 
@@ -153,7 +153,7 @@ $messages['zh-hans'] = array(
 	'not-a-valid-wikia' => '<div class="center" style="padding: 1em 0; font-weight:bold; font-size:120%; margin-bottom:1em">很抱歉，找不到您要查找的社区！您所提供的URL地址无效。</div>
 
 {| style="margin: 1em auto 0; font-weight: bold; text-align: center" cellpadding="7" cellspacing="5"
-!colspan="3" style="font-size: 120%"|在Fandom上寻求帮助？
+!colspan="3" style="font-size: 120%"|在FANDOM上寻求帮助？
 |-
 |[[w:c:zh.community:Help:内容|查看帮助中心]]
 |
@@ -161,7 +161,7 @@ $messages['zh-hans'] = array(
 |-
 |[[homepage:Special:CreateWiki|创建你的维基]]
 |
-|[[w:c:zh.community:博客:社区中心|查看Fandom新闻]]
+|[[w:c:zh.community:博客:社区中心|查看FANDOM新闻]]
 |}',
 );
 
@@ -169,7 +169,7 @@ $messages['zh-hant'] = array(
 	'not-a-valid-wikia' => '<div class="center" style="padding: 1em 0; font-weight:bold; font-size:120%; margin-bottom:1em">很抱歉，找不到您要查找的wiki！您所提供的URL網址無效。</div>
 
 {| style="margin: 1em auto 0; font-weight: bold; text-align: center" cellpadding="7" cellspacing="5"
-!colspan="3" style="font-size: 120%"|在Fandom上尋求幫助？
+!colspan="3" style="font-size: 120%"|在FANDOM上尋求幫助？
 |-
 |[[w:c:zh.community:Help:内容|查看幫助中心]]
 |
@@ -177,7 +177,7 @@ $messages['zh-hant'] = array(
 |-
 |[[homepage:Special:CreateWiki|創建你的wiki]]
 |
-|[[w:c:zh.community:博客:社区中心|查看最新Fandom訊息]]
+|[[w:c:zh.community:博客:社区中心|查看最新FANDOM訊息]]
 |}',
 );
 

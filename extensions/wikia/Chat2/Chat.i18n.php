@@ -1790,7 +1790,7 @@ $messages['ja'] = array(
 	'chat-message-was-too-long' => 'メッセージが長すぎるため、表示できませんでした。',
 	'right-chat' => '[[ヘルプ:チャット|チャット]]機能を使って他のユーザーとチャットする',
 	'right-chatadmin' => '[[ヘルプ:チャット|チャット]]でチャットアドミンの権限を持つ',
-	'right-chatstaff' => '[[ヘルプ:チャット|チャット]]でFandomスタッフの権限を持つ',
+	'right-chatstaff' => '[[ヘルプ:チャット|チャット]]でFANDOMスタッフの権限を持つ',
 	'right-chatfailover' => 'Special:Chatfailoverにアクセスする',
 );
 
@@ -3617,7 +3617,7 @@ $messages['zh-hans'] = array(
 	'chat-message-was-too-long' => '消息太长，无法显示。',
 	'right-chat' => '通过[[Help:Chat|聊天功能]]与其他用户聊天  ',
 	'right-chatadmin' => '用户在[[Help:Chat|聊天]]中具有管理员权限',
-	'right-chatstaff' => '用户在[[Help:Chat|聊天]]中具有Fandom员工权限',
+	'right-chatstaff' => '用户在[[Help:Chat|聊天]]中具有FANDOM员工权限',
 	'right-chatfailover' => '可以访问Special:Chatfailover',
 	'grouppage-bannedfromchat' => 'w:c:zh.community:Help:Chat',
 );
@@ -3711,7 +3711,7 @@ $messages['zh-hant'] = array(
 	'chat-message-was-too-long' => '訊息太長，無法顯示。',
 	'right-chat' => '通過[[Help:Chat|聊天功能]]與其他使用者聊天',
 	'right-chatadmin' => '使用者在[[Help:Chat|聊天]]中具有管理員權限',
-	'right-chatstaff' => '使用者在[[Help:Chat|聊天]]中具有Fandom員工權限',
+	'right-chatstaff' => '使用者在[[Help:Chat|聊天]]中具有FANDOM員工權限',
 	'right-chatfailover' => '可以訪問Special:Chatfailover',
 	'grouppage-bannedfromchat' => 'w:c:zh.community:Help:Chat',
 );

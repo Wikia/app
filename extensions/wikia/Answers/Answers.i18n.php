@@ -2760,7 +2760,7 @@ wop
 
 $messages['ja'] = array(
 	'research_this' => 'この質問について調べる',
-	'question_asked_by_a_wikia_user' => 'Fandomユーザーからの質問',
+	'question_asked_by_a_wikia_user' => 'FANDOMユーザーからの質問',
 	'a' => 'Answer:',
 	'anonymous_edit_points' => '$1 のヘルパー',
 	'answer_this' => '<a href="$1">この質問に回答する</a>。完璧な答えでなくてもかまいません。',
@@ -3541,7 +3541,7 @@ $messages['lol'] = array(
 	'ask_button' => 'crwdns65083:0crwdne65083:0',
 	'ask_thanks' => 'crwdns65084:0crwdne65084:0',
 	'question_asked_by' => 'crwdns65085:0crwdne65085:0',
-	'question_asked_by_a_wikia_user' => 'crwdns65086:0crwdne65086:0',
+	'question_asked_by_a_wikia_user' => 'crwdns66473:0crwdne66473:0',
 	'new_question_comment' => 'crwdns65087:0crwdne65087:0',
 	'answers_toolbox' => 'crwdns65088:0{{SITENAME}}crwdne65088:0',
 	'improve_this_answer' => 'crwdns65089:0crwdne65089:0',
@@ -6095,7 +6095,7 @@ $messages['zh-hans'] = array(
 	'next_page' => '下一页 &raquo;',
 	'prev_page' => '&laquo; 上一页',
 	'ads_by_google' => 'Google广告',
-	'question_asked_by_a_wikia_user' => 'Fandom用户的提问',
+	'question_asked_by_a_wikia_user' => 'FANDOM用户的提问',
 	'answers-desc' => "Wikia's Answer site extension",
 	'anonymous_edit_points' => '$1 {{PLURAL:$1|helper|helpers}}',
 	'edit_points' => '{{PLURAL:$1|edit point|edit points}}',
@@ -6450,7 +6450,7 @@ wop
 );
 
 $messages['zh-hant'] = array(
-	'question_asked_by_a_wikia_user' => ' Fandom用戶的提問',
+	'question_asked_by_a_wikia_user' => 'FANDOM用戶的提問',
 	'popular_categories' => '熱門分類',
 	'answers-desc' => "Wikia's Answer site extension",
 	'answer_title' => 'Answer',

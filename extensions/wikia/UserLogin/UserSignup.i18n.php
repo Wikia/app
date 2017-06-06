@@ -1786,7 +1786,7 @@ $messages['ja'] = array(
 	'usersignup-facebook-create-account' => 'アカウントを作成',
 	'usersignup-facebook-email-tooltip' => '別のメールアドレスの使用をご希望の場合には、個人設定で変更することができます。',
 	'usersignup-facebook-have-an-account-heading' => '既にアカウントをお持ちの方はログインしてください。',
-	'usersignup-facebook-have-an-account' => 'Facebookアカウントと既存のFandomユーザーネームを連携することもできます。',
+	'usersignup-facebook-have-an-account' => 'Facebookアカウントと既存のFANDOMユーザーネームを連携することもできます。',
 	'usersignup-facebook-proxy-email' => '匿名Facebookメール',
 	'usersignup-user-pref-emailconfirmlink' => '新しい認証メールをリクエストする',
 	'usersignup-user-pref-confirmemail_send' => '認証メールを再送信する',
@@ -1865,7 +1865,7 @@ ___________________________________________
 
 Wikiaの最新情報については http://community.wikia.com をご覧ください
 メール通知に関する設定は {{fullurl:{{ns:special}}:個人設定}} のページで行っていただけます',
-	'usersignup-heading' => 'Fandomに登録',
+	'usersignup-heading' => 'FANDOMに登録',
 	'usersignup-heading-byemail' => '他のユーザーのためにアカウントを作成する',
 	'usersignup-marketing-wikia' => ' ',
 	'usersignup-marketing-login' => '既にアカウントをお持ちの方はログインしてください。 [[Special:UserLogin|ログイン]]',
@@ -1875,7 +1875,7 @@ Wikiaの最新情報については http://community.wikia.com をご覧くだ�
 	'usersignup-marketing-global-heading' => ' ',
 	'usersignup-marketing-global' => ' ',
 	'usersignup-marketing-creativity-heading' => ' ',
-	'usersignup-marketing-creativity' => '写真ギャラリー、動画ギャラリー、アプリ、トーク機能など、Fandomの様々な機能で表現を楽しんでみませんか。',
+	'usersignup-marketing-creativity' => '写真ギャラリー、動画ギャラリー、アプリ、トーク機能など、FANDOMの様々な機能で表現を楽しんでみませんか。',
 	'usersignup-createaccount-byemail' => '他のユーザーのためにアカウントを作成する',
 	'usersignup-error-captcha' => '回答が違っています。もう一度お試しください。',
 	'usersignup-account-creation-heading' => '認証が完了しました。',

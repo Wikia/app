@@ -170,7 +170,7 @@ $messages['ja'] = array(
 	'global-shortcuts-title-keyboard-shortcuts' => 'キーボード・ショートカット',
 	'global-shortcuts-press-to-explore-shortcuts' => '$1キーを押すとショートカットを検索できます',
 	'global-shortcuts-description' => '
-Fandomでショートカットキーを使うと、閲覧や編集がしやすくなります。
+FANDOMでショートカットキーを使うと、閲覧や編集がしやすくなります。
 
 この拡張機能にはキーボード・ショートカットと操作検索ツールが組み込まれています。これらの機能は、重要なページにアクセスしたり特定の操作を実行したりする際に便利です。
 ',
@@ -299,7 +299,7 @@ $messages['zh-hans'] = array(
 	'global-shortcuts-title-help-entry-point' => '打开键盘快捷方式帮助对话框 (?)',
 	'global-shortcuts-title-keyboard-shortcuts' => '键盘快捷键',
 	'global-shortcuts-press-to-explore-shortcuts' => '点击$1查找快捷方式',
-	'global-shortcuts-description' => '使用Fandom上的快捷键提高您的浏览和编辑体验。
+	'global-shortcuts-description' => '使用FANDOM上的快捷键提高您的浏览和编辑体验。
 
 此项扩展提供了一些关键的快捷键和操作管理器，帮助用户管理重要的页面或执行某些操作。',
 	'global-shortcuts-name' => '快捷键',
@@ -323,7 +323,7 @@ $messages['zh-hant'] = array(
 	'global-shortcuts-title-help-entry-point' => '打開鍵盤快捷鍵幫助對話框 (?)',
 	'global-shortcuts-title-keyboard-shortcuts' => '鍵盤快速鍵',
 	'global-shortcuts-press-to-explore-shortcuts' => '按一下$1查找鍵盤快捷鍵',
-	'global-shortcuts-description' => '使用Fandom上的快速鍵提昇您的瀏覽和編輯體驗。
+	'global-shortcuts-description' => '使用FANDOM上的快速鍵提昇您的瀏覽和編輯體驗。
 
 此項擴展提供了一些關鍵的快速鍵和操作管理器，幫助使用者瀏覽重要的頁面或執行某些操作。',
 	'global-shortcuts-name' => '鍵盤快捷鍵',
