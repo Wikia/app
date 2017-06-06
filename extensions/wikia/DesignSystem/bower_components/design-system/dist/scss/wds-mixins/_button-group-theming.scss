@@ -2,11 +2,11 @@
 	> .wds-button {
 		&:not(.wds-is-secondary) {
 			&:not(:last-child) {
-				border-right: 1px solid $color-border;
+				border-right-color: $color-border;
 			}
 
 			&:not(:first-child) {
-				border-left: 1px solid $color-border;
+				border-left-color: $color-border;
 			}
 		}
 	}
@@ -14,13 +14,13 @@
 	> .wds-dropdown {
 		&:not(:last-child) {
 			.wds-button {
-				border-right: 1px solid $color-border;
+				border-right-color: $color-border;
 			}
 		}
 
 		&:not(:first-child) {
 			.wds-button {
-				border-left: 1px solid $color-border;
+				border-left-color: $color-border;
 			}
 		}
 	}

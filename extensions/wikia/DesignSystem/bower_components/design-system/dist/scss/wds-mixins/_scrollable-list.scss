@@ -19,7 +19,7 @@
 
 	&::after,
 	&::before {
-		background: linear-gradient(to bottom, $color-background, $color-background 30%, rgba(255, 255, 255, 0));
+		background-color: $color-background;
 		content: '';
 		display: block;
 		height: 30px;
@@ -29,7 +29,7 @@
 	}
 
 	&::after {
-		background: linear-gradient(to bottom, rgba(255, 255, 255, 0), $color-background 70%, $color-background);
+		background-color: $color-background;
 		margin: -29px 0 0;
 	}
 }
