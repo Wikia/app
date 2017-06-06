@@ -16,7 +16,6 @@ $wds-breakpoint-l-down: "#{$wds-screen} and (max-width:#{$wds-breakpoint-xl - 1}
 $wds-breakpoint-l-up: "#{$wds-screen} and (min-width:#{$wds-breakpoint-l})";
 $wds-breakpoint-l-only: "#{$wds-screen} and (min-width:#{$wds-breakpoint-l}) and (max-width:#{$wds-breakpoint-xl - 1})";
 
-$wds-breakpoint-xl-down: "#{$wds-screen} and (max-width:#{$wds-breakpoint-xxl - 1})";
 $wds-breakpoint-xl-up: "#{$wds-screen} and (min-width:#{$wds-breakpoint-xl})";
 $wds-breakpoint-xl-only: "#{$wds-screen} and (min-width:#{$wds-breakpoint-xl}) and (max-width:#{$wds-breakpoint-xxl - 1})";
 
