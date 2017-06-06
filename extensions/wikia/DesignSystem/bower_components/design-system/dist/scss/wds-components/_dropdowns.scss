@@ -42,7 +42,7 @@
 		// The default is to show scroll on long dropdowns
 		&:not(.wds-is-not-scrollable) {
 			.wds-list {
-				@include scrollable-list(270px);
+				@include scrollable-list($wds-dropdown-height);
 			}
 		}
 

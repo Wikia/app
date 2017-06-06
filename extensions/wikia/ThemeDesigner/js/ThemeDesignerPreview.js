@@ -24,6 +24,7 @@ var ThemeDesignerPreview = {
 			'/skins/oasis/css/oasis.scss',
 			'/extensions/wikia/PortableInfobox/styles/PortableInfobox.scss',
 			'/extensions/wikia/PortableInfobox/styles/PortableInfoboxEuropaTheme.scss',
+			'/extensions/wikia/PageHeader/styles/index.scss',
 			'/extensions/wikia/CommunityHeader/styles/index.scss'
 		], settings);
 

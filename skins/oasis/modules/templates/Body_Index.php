@@ -43,7 +43,8 @@
 	<?= $app->renderView( 'CommunityHeader', 'index' ) ?>
 <? endif; ?>
 
-<section id="WikiaPage" class="WikiaPage<?= empty( $wg->OasisNavV2 ) ? '' : ' V2' ?><?= !empty( $isGridLayoutEnabled ) ? ' WikiaGrid' : '' ?>">
+<!-- empty onclick event needs to be applied here to ensure that wds dropdowns work correctly on ios -->
+<section id="WikiaPage" class="WikiaPage<?= empty( $wg->OasisNavV2 ) ? '' : ' V2' ?><?= !empty( $isGridLayoutEnabled ) ? ' WikiaGrid' : '' ?>" onclick="">
 	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
 	<div class="WikiaPageContentWrapper">
 		<? if ( !empty( $wg->EnableWikiAnswers ) ) : ?>
@@ -63,12 +64,6 @@
 			<?= $app->renderView( 'AdminDashboard', 'Chrome' ) ?>
 		<? endif; ?>
 
-		<? if ( !empty( $wg->EnablePremiumPageHeader ) ) : ?>
-			<div class="PremiumPageArticleHeader">
-				<?= $app->renderView( 'PremiumPageHeader', 'articleHeader' ) ?>
-			</div>
-		<? endif; ?>
-
 		<? if ( empty( $wg->SuppressPageHeader ) ) : ?>
 			<?= $app->renderView('Wikia\PageHeader\PageHeaderController', 'index') ?>
 		<? endif; ?>
@@ -77,7 +72,7 @@
 			<div id="WikiaMainContentContainer" class="WikiaMainContentContainer">
 				<?php
 					// render UserPagesHeader or PageHeader or nothing...
-					if ( empty( $wg->SuppressPageHeader ) && $headerModuleName ) {
+					if ( $headerModuleName ) {
 						if ( $headerModuleName == 'UserPagesHeader' ) {
 							if ( $headerModuleAction !== 'BlogPost' && $headerModuleAction !== 'BlogListing' ) {
 								// Show just the edit button

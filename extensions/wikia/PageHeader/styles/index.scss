@@ -1,10 +1,14 @@
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-mixins/index';
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/flexbox';
 @import 'skins/shared/mixins/transform';
 @import 'skins/oasis/css/core/breakpoints-variables';
 
 .WikiaPage .page-header {
+	@include dropdown-theming($color-page, $color-text, $color-links, $color-page-border);
+
+	@include flexbox();
 	margin: 0 0 18px;
 	padding: 12px 0;
 	position: relative;
@@ -12,22 +16,16 @@
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
 
-	&__title {
-		color: $color-text;
-		display: inline-block;
-		font-size: $wds-typescale-size-plus-4;
-		font-weight: bold;
-		line-height: 1;
-		max-width: 100%;
-		padding-bottom: 6px;
-		word-wrap: break-word;
+	button {
+		background-image: none;
 	}
 
-	&__separator {
-		background-color: $color-page-border;
-		border: 0;
-		height: 1px;
-		margin-top: 9px;
+	.wds-button {
+		@include button-theming($color-buttons, $color-button-text, $color-text);
+	}
+
+	.wds-button-group {
+		@include button-group-theming($color-button-text);
 	}
 
 	&__counter {
@@ -35,7 +33,20 @@
 		float: right;
 		font-size: $wds-typescale-size-minus-1;
 		font-weight: bold;
+		padding-bottom: 10px;
 		text-align: right;
+	}
+
+	&__contribution {
+		@include align-items(flex-end);
+		@include flexbox();
+		@include flex-direction(column);
+		@include justify-content(flex-end);
+		float: right;
+	}
+
+	&__main {
+		@include flex(1);
 	}
 
 	&__categories {
@@ -72,6 +83,24 @@
 				padding-bottom: 10px;
 			}
 		}
+	}
+
+	&__title {
+		@include align-items(flex-end);
+		color: $color-text;
+		display: inline-block;
+		font-size: $wds-typescale-size-plus-4;
+		font-weight: bold;
+		line-height: 1;
+		max-width: 100%;
+		word-wrap: break-word;
+	}
+
+	&__separator {
+		background-color: $color-page-border;
+		border: 0;
+		height: 1px;
+		margin-bottom: 18px;
 	}
 
 	&__page-subtitle {

@@ -32,4 +32,25 @@ class SpecialThemeDesignerPreview extends UnlistedSpecialPage {
 
 		$wgOut->addHtml( F::app()->renderView( 'ThemeDesigner', 'Preview' ) );
 	}
+
+	static function onPageHeaderBeforeDisplay( \Title $title, bool &$shouldDisplayActionButton ) {
+		if ( $title->isSpecial( 'ThemeDesignerPreview' ) ) {
+			$shouldDisplayActionButton = true;
+		}
+
+		return true;
+	}
+
+	static function onBeforePrepareActionButtons( $actionButton, &$contentActions ) {
+		if ( $actionButton->getTitle()->isSpecial( 'ThemeDesignerPreview' ) ) {
+			$contentActions['edit'] = [
+				'text' => wfMessage( 'edit' )->text(),
+				'href' => '#',
+				'id' => 'ca-edit',
+				'main' => true
+			];
+		}
+
+		return true;
+	}
 }
