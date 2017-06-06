@@ -94,7 +94,16 @@ class Subtitle {
 			return $this->getBlogArticleSubtitle( $app );
 		}
 
-		return $output->getSubtitle();
+		$additional = [];
+		wfRunHooks( 'AfterPageHeaderSubtitle', [ &$additional ] );
+
+		return implode(
+			wfMessage( 'pipe-separator' )->escaped(),
+			array_merge(
+				[ $output->getSubtitle() ],
+				$additional
+			)
+		);
 	}
 
 	private function getEditPageSubtitle() {
@@ -224,17 +233,17 @@ class Subtitle {
 	 * @return string
 	 */
 	private function getPageSubtitle() {
-		$additional = '';
-		wfRunHooks( 'BeforePageHeaderSubtitle', [ &$additional ] );
-
 		$subtitle = [
 			$this->getPageType(),
 			$this->getTalkPageBackLink(),
 			$this->getSubPageLinks(),
 		];
 
+		$additional = [];
+		wfRunHooks( 'AfterPageHeaderPageSubtitle', [ &$additional ] );
+
 		$subtitle =
-			array_filter( array_merge( $subtitle, $this->languageVariants(), [ $additional ] ) );
+			array_filter( array_merge( $subtitle, $this->languageVariants(), $additional ) );
 
 		$pipe = wfMessage( 'pipe-separator' )->escaped();
 
