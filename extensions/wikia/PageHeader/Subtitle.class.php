@@ -159,7 +159,7 @@ class Subtitle {
 	private function getPageType() {
 		$namespace = $this->title->getNamespace();
 
-		$pageType = null;
+		$pageType = '';
 
 		if ( $namespace === NS_MEDIAWIKI ) {
 			$pageType = wfMessage( 'page-header-subtitle-mediawiki' )->escaped();
