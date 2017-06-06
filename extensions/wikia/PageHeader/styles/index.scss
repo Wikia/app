@@ -108,7 +108,10 @@
 	}
 
 	&__page-subtitle {
-		margin-bottom: 13px;
+		margin: {
+			bottom: 13px;
+			top: 6px;
+		}
 	}
 
 	&__subtitle-blog-post {
