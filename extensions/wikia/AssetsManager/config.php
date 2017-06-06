@@ -1290,6 +1290,7 @@ $config['editpage_common_js'] = [
 		'//extensions/wikia/EditPageLayout/js/loaders/EditPageEditorLoader.js',
 		'//extensions/wikia/EditPreview/js/preview.js',
 		'#group_editpage_events_js',
+		'#group_design_system_js',
 	],
 ];
 
