@@ -21,6 +21,7 @@ class ActionButton {
 
 	public function getButtonAction(): array {
 		$this->buttonAction['data-tracking'] = $this->buttonAction['id'];
+
 		return $this->buttonAction;
 	}
 
@@ -48,7 +49,7 @@ class ActionButton {
 		foreach ( $actions as $action ) {
 			if ( isset( $this->contentActions[$action] ) ) {
 				$ret[$action] = $this->contentActions[$action];
-				if ( isset( $ret[$action]['id'])) {
+				if ( isset( $ret[$action]['id'] ) ) {
 					$ret[$action]['data-tracking'] = $ret[$action]['id'] . '-dropdown';
 				}
 			}
@@ -87,7 +88,8 @@ class ActionButton {
 		// If cascade protected, show viewsource button - BugId:VE-89
 		if ( isset( $this->contentActions['edit'] ) && $wgTitle->isCascadeProtected() ) {
 			$this->contentActions['viewsource'] = $this->contentActions['edit'];
-			$this->contentActions['viewsource']['text'] = wfMessage( 'page-header-action-button-viewsource' )->escaped();
+			$this->contentActions['viewsource']['text'] =
+				wfMessage( 'page-header-action-button-viewsource' )->escaped();
 			unset( $this->contentActions['edit'] );
 		}
 
@@ -118,7 +120,7 @@ class ActionButton {
 			];
 		}
 
-		if ( !$this->isArticleCommentsEnabled() ) {
+		if ( !$this->isArticleCommentsEnabled() && isset( $this->contentActions['talk'] ) ) {
 			$this->contentActions['talk']['text'] = wfMessage( 'page-header-action-button-talk' )
 				->numParams( $this->pageStatsService->getCommentsCount() )
 				->escaped();
