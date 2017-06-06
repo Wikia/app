@@ -8,10 +8,8 @@ $wgExtensionCredits['other'][] = array(
 	'author' => array('Inez Korczyński', 'Maciej Brencz')
 );
 
-
-
 // autoloaded classes
-$wgAutoloadClasses['RTE'] = __DIR__ . '/RTE.class.php';
+$wgAutoloadClasses['RTE'] = __DIR__ . ' /RTE.class.php';
 $wgAutoloadClasses['RTEAjax'] = __DIR__ . '/RTEAjax.class.php';
 $wgAutoloadClasses['RTEData'] = __DIR__ . '/RTEData.class.php';
 $wgAutoloadClasses['RTELang'] = __DIR__ . '/RTELang.class.php';
@@ -46,7 +44,7 @@ $wgHooks['LinkEnd'][] = 'RTELinkerHooks::onLinkEnd';
 $wgHooks['LinkerMakeExternalLink'][] = 'RTELinkerHooks::onLinkerMakeExternalLink';
 
 // i18n
-$wgExtensionMessagesFiles['RTE'] = __DIR__ .'/i18n/RTE.i18n.php';
+$wgExtensionMessagesFiles['RTE'] = __DIR__ . '/i18n/RTE.i18n.php';
 
 // Ajax dispatcher
 $wgAjaxExportList[] = 'RTEAjax';
@@ -56,17 +54,17 @@ function RTEAjax() {
 
 	$ret = false;
 
-	$method = $wgRequest->getVal('method', false);
+	$method = $wgRequest->getVal( 'method', false );
 
-	if ($method && method_exists('RTEAjax', $method)) {
+	if ($method && method_exists( 'RTEAjax', $method )) {
 
 		$data = RTEAjax::$method();
 
-		if (is_array($data)) {
-			$json = json_encode($data);
+		if (is_array( $data )) {
+			$json = json_encode( $data );
 
-			$response = new AjaxResponse($json);
-			$response->setContentType('application/json; charset=utf-8');
+			$response = new AjaxResponse( $json );
+			$response->setContentType( 'application/json; charset=utf-8' );
 			$ret = $response;
 		}
 		else {
