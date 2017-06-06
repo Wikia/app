@@ -93,6 +93,11 @@ $messages['en'] = array(
 	'chat-browser-is-notsupported' => '	Your browser is not supported. For the best experience, use a <a href="http://community.wikia.com/wiki/Help:Supported_browsers">newer browser</a>.',
 	'chat-checkuser-join-action' => 'Joined Chat',
 	'chat-status-away' => 'Away',
+	'chat-blocklist-timestamp' => 'Timestamp',
+	'chat-blocklist-target' => 'Target',
+	'chat-blocklist-expiry' => 'Expires',
+	'chat-blocklist-by' => 'Blocking User',
+	'chat-blocklist-reason' => 'Reason',
 );
 
 $messages['qqq'] = array(
