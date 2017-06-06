@@ -79,10 +79,7 @@
 					// render UserPagesHeader or PageHeader or nothing...
 					if ( empty( $wg->SuppressPageHeader ) && $headerModuleName ) {
 						if ( $headerModuleName == 'UserPagesHeader' ) {
-							if ( $headerModuleAction == 'BlogPost' || $headerModuleAction == 'BlogListing' ) {
-								// Show blog post header
-								echo $app->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams );
-							} else {
+							if ( $headerModuleAction !== 'BlogPost' && $headerModuleAction !== 'BlogListing' ) {
 								// Show just the edit button
 								echo $app->renderView( 'UserProfilePage', 'renderActionButton', array() );
 							}

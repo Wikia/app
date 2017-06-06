@@ -112,7 +112,8 @@ JS
 
 		// page header: replace subtitle with navigation
 		global $wgHooks;
-		$wgHooks['BeforePageHeaderSubtitle'][] = [ $this, 'addNavigation' ];
+		$wgHooks['AfterPageHeaderPageSubtitle'][] = [ $this, 'addNavigationToPageHeader' ];
+		$wgHooks['AfterPageHeaderSubtitle'][] = [ $this, 'addCheckboxToPageHeader' ];
 
 		if ( $wgUser->isAnon() ) {
 			$this->getOutput()->setSquidMaxage( 3600 ); // 1 hour
@@ -125,28 +126,65 @@ JS
 	}
 
 	/**
-	 * Replaces page header's subtitle with navigation for WikiActivity
+	 * Adds navigation for WikiActivity to page header's page subtitle
 	 *
-	 * @author macbre
+	 * @param array $pageSubtitle
+	 *
+	 * @return bool
 	 */
-	function addNavigation( &$subtitle ) {
+	function addNavigationToPageHeader( &$pageSubtitle ) {
 		$wgUser = RequestContext::getMain()->getUser();
 
-		$template = new EasyTemplate( __DIR__ . '/templates' );
+		if ( $wgUser->isLoggedIn() ) {
+			if ( $this->feedSelected === 'watchlist' ) {
+				array_push(
+					$pageSubtitle,
+					Wikia::specialPageLink(
+						'WikiActivity/activity',
+						'myhome-activity-feed'
+					)
+				);
+			} else {
+				array_push(
+					$pageSubtitle,
+					Wikia::specialPageLink(
+						'WikiActivity/watchlist',
+						'oasis-button-wiki-activity-watchlist'
+					)
+				);
+			}
+		}
+
+		array_push(
+			$pageSubtitle,
+			Wikia::specialPageLink(
+				'RecentChanges',
+				'oasis-button-wiki-activity-feed'
+			)
+		);
+
+		return true;
+	}
+
+	/**
+	 * Adds checkbox to page header's subtitle
+	 *
+	 * @param array $subtitle
+	 *
+	 * @return bool
+	 */
+	function addCheckboxToPageHeader( &$subtitle ) {
+		$wgUser = RequestContext::getMain()->getUser();
 
 		// RT #68074: show default view checkbox for logged-in users only
-		$showDefaultViewSwitch = $wgUser->isLoggedIn() && ( $this->defaultView != $this->feedSelected );
+		if ( $wgUser->isLoggedIn() && ( $this->defaultView != $this->feedSelected ) ) {
+			$template = new EasyTemplate( __DIR__ . '/templates' );
+			$template->set_vars( [
+				'type' => $this->feedSelected
+			] );
 
-		$template->set_vars( [
-			'classWatchlist' => $this->classWatchlist,
-			'defaultView' => $this->defaultView,
-			'loggedIn' => $wgUser->isLoggedIn(),
-			'showDefaultViewSwitch' => $showDefaultViewSwitch,
-			'type' => $this->feedSelected,
-		] );
-
-		// replace subtitle with navigation for WikiActivity
-		$subtitle = $template->render( 'navigation.oasis' );
+			array_push( $subtitle, $template->render( 'page.header.checkbox' ) );
+		}
 
 		return true;
 	}
