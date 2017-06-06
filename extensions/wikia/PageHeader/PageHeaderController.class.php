@@ -31,6 +31,6 @@ class PageHeaderController extends \WikiaController {
 	}
 
 	public function languages() {
-		$this->setVal( 'languages', new Language( $this->app ) );
+		$this->setVal( 'languages', new Languages( $this->app ) );
 	}
 }
