@@ -8,8 +8,6 @@ $wgExtensionCredits['other'][] = array(
 	'author' => array('Inez Korczyński', 'Maciej Brencz')
 );
 
-
-
 // autoloaded classes
 $wgAutoloadClasses['RTE'] = __DIR__ . '/RTE.class.php';
 $wgAutoloadClasses['RTEAjax'] = __DIR__ . '/RTEAjax.class.php';
