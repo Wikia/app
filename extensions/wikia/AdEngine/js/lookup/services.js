@@ -104,7 +104,7 @@ define('ext.wikia.adEngine.lookup.services', [
 	}
 
 	function getDfpSlotPrices(slotName) {
-		return realSlotPrices[slotName];
+		return realSlotPrices[slotName] || {};
 	}
 
 	return {
