@@ -2,11 +2,11 @@
 	<div class="wds-dropdown__toggle">
 			<span class="" data-tracking="interwiki-dropdown">
 				<?= $languages->currentLangName ?>
-				<?= DesignSystemHelper::renderSvg(
-					'wds-icons-dropdown-tiny',
-					'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron'
-				) ?>
 			</span>
+			<?= DesignSystemHelper::renderSvg(
+				'wds-icons-dropdown-tiny',
+				'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron'
+			) ?>
 	</div>
 		<?php if ( count( $languages->languageList ) > 1 ): ?>
 			<div class="wds-dropdown__content">
