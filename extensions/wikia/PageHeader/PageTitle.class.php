@@ -105,5 +105,6 @@ class PageTitle {
 			$message->load();
 			return $message->getMetaTitle();
 		}
+		return '';
 	}
 }
