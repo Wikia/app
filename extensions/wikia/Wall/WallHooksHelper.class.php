@@ -77,12 +77,6 @@ class WallHooksHelper {
 				return true;
 			}
 
-			// article exists or existed
-			// FIXME wow this is ugly
-			if ( $mainTitle->getNamespace() !== NS_WIKIA_FORUM_BOARD_THREAD ) {
-				$app->wg->SuppressPageHeader = true;
-			}
-
 			$wallMessage = WallMessage::newFromTitle( $mainTitle );
 			$isDeleted = !$wallMessage->isVisible( $app->wg->User );
 			$showDeleted = ( $wallMessage->canViewDeletedMessage( $app->wg->User )
