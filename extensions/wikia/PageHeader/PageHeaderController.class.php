@@ -9,7 +9,7 @@ class PageHeaderController extends \WikiaController {
 	private $actionButton;
 
 	public function init() {
-		$this->actionButton = $button = new ActionButton( \RequestContext::getMain() );
+		$this->actionButton = new ActionButton( \RequestContext::getMain() );
 	}
 
 	public function index() {
