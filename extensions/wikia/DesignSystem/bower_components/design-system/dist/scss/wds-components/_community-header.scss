@@ -62,7 +62,7 @@
 		a {
 			text-decoration: none;
 
-			@media #{$wds-breakpoint-l-up} {
+			@media #{$wds-breakpoint-xl-up} {
 				display: block;
 				height: 100%;
 				// Safari cut bottom of letter, line-height set to 1.2 fixed it
@@ -140,6 +140,12 @@
 
 		@media #{$wds-breakpoint-l-down} {
 			clear: both;
+		}
+
+		@media #{$wds-breakpoint-m-down} {
+			.wds-tabs__tab-label {
+				font-size: $wds-typescale-size-minus-3;
+			}
 		}
 	}
 }
