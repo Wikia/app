@@ -42,6 +42,7 @@
 		@include flexbox();
 		@include flex-direction(column);
 		@include justify-content(space-between);
+		margin-left: 20px;
 
 	}
 
