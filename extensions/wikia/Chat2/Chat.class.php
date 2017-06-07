@@ -95,6 +95,10 @@ class Chat {
 			'reason' => $reason,
 		] );
 
+		if ( !PhalanxUserBlock::blockCheck( $adminUser ) ) {
+			return wfMessage( 'actionthrottled' )->text();
+		}
+
 		$subjectUser = User::newFromName( $subjectUserName );
 
 		// Make sure user doing the kick/ban has permission to do so
