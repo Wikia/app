@@ -5,13 +5,13 @@
 		<?= $app->renderView( 'Wikia\PageHeader\PageHeader', 'subtitle' ); ?>
 	</div>
 	<div class="page-header__contribution">
-		<? if ( $displayLanguageSelector ): ?>
+		<? if ( $languages->shouldDisplay() ): ?>
 			<?= $app->renderView( 'Wikia\PageHeader\PageHeader', 'languages' ); ?>
 		<? endif; ?>
 		<? if ( $counter->isNotEmpty() ) : ?>
 			<span class="page-header__counter"><?= $counter->text ?></span>
 		<? endif; ?>
-		<? if ( $displayActionButton ): ?>
+		<? if ( $actionButton->shouldDisplay() ): ?>
 			<?= $app->renderView( 'Wikia\PageHeader\PageHeader', 'actionButton' ); ?>
 		<? endif; ?>
 	</div>

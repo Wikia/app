@@ -7,21 +7,17 @@ class PageHeaderController extends \WikiaController {
 
 	/** @var  ActionButton */
 	private $actionButton;
+	/** @var  Languages */
+	private $languages;
 
 	public function init() {
 		$this->actionButton = new ActionButton( \RequestContext::getMain() );
+		$this->languages = new Languages( $this->app );
 	}
 
 	public function index() {
-		$title = \RequestContext::getMain()->getTitle();
-
-		$displayLanguageSelector = $title->isContentPage();
-		$displayActionButton = $this->actionButton->shouldDisplay();
-
-		wfRunHooks( 'PageHeaderBeforeDisplay', [ $title, &$displayActionButton ] );
-
-		$this->setVal( 'displayLanguageSelector', $displayLanguageSelector );
-		$this->setVal( 'displayActionButton', $displayActionButton );
+		$this->setVal( 'languages', $this->languages );
+		$this->setVal( 'actionButton', $this->actionButton );
 		$this->setVal( 'pageTitle', new PageTitle( $this->app ) );
 		$this->setVal( 'counter', new Counter() );
 	}
@@ -40,6 +36,6 @@ class PageHeaderController extends \WikiaController {
 	}
 
 	public function languages() {
-		$this->setVal( 'languages', new Languages( $this->app ) );
+		$this->setVal( 'languages', $this->languages );
 	}
 }

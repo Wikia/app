@@ -33,7 +33,7 @@ class SpecialThemeDesignerPreview extends UnlistedSpecialPage {
 		$wgOut->addHtml( F::app()->renderView( 'ThemeDesigner', 'Preview' ) );
 	}
 
-	static function onPageHeaderBeforeDisplay( \Title $title, bool &$shouldDisplayActionButton ) {
+	static function onActionButtonShouldDisplay( \Title $title, bool &$shouldDisplayActionButton ) {
 		if ( $title->isSpecial( 'ThemeDesignerPreview' ) ) {
 			$shouldDisplayActionButton = true;
 		}

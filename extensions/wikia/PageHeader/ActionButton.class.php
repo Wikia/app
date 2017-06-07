@@ -2,8 +2,6 @@
 
 namespace Wikia\PageHeader;
 
-use CuratedContentHelper;
-
 class ActionButton {
 	const LOCK_ICON = 'wds-icons-lock-small';
 	const EDIT_ICON = 'wds-icons-pencil-small';
@@ -15,6 +13,7 @@ class ActionButton {
 	private $user;
 	private $request;
 	private $buttonIcon = self::EDIT_ICON;
+	private $shouldDisplay;
 
 	public function __construct( \RequestContext $requestContext ) {
 		$skinVars = \F::app()->getSkinTemplateObj()->data;
@@ -27,6 +26,14 @@ class ActionButton {
 		$this->pageStatsService = \PageStatsService::newFromTitle( $this->title );
 
 		$this->prepareActionButton();
+
+		$shouldDisplay = !$this->title->isSpecialPage()
+			&& !empty( $this->buttonAction['href'] )
+			&& !empty( $this->buttonAction['text'] );
+
+		wfRunHooks( 'ActionButtonShouldDisplay', [ $this->title, &$shouldDisplay ] );
+
+		$this->shouldDisplay = $shouldDisplay;
 	}
 
 	public function getTitle(): \Title {
@@ -140,9 +147,7 @@ class ActionButton {
 	}
 
 	public function shouldDisplay(): bool {
-		return !$this->title->isSpecialPage()
-			&& !empty( $this->buttonAction['href'] )
-			&& !empty( $this->buttonAction['text'] );
+		return $this->shouldDisplay;
 	}
 
 	private function isArticleCommentsEnabled(): bool {
