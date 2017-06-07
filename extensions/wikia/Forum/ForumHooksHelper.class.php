@@ -481,8 +481,15 @@ class ForumHooksHelper {
 	 * @return bool
 	 */
 	public static function onAfterPageHeaderPageSubtitle( &$pageSubtitle, Title $title ): bool {
-		$pageSubtitle =
-			F::app()->renderView( 'Wall', 'brickHeader', [ 'id' => $title->getText() ] );
+		if ( in_array( $title->getNamespace(), [
+				NS_WIKIA_FORUM_BOARD,
+				NS_WIKIA_FORUM_BOARD_THREAD,
+				NS_WIKIA_FORUM_TOPIC_BOARD,
+			] ) && RequestContext::getMain()->getRequest()->getVal( 'action' ) !== 'history'
+		) {
+			$pageSubtitle =
+				F::app()->renderView( 'Wall', 'brickHeader', [ 'id' => $title->getText() ] );
+		}
 
 		return true;
 	}

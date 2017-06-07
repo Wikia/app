@@ -316,7 +316,6 @@ class WallHooksHelper {
 			}
 
 			if (  WallHelper::isWallNamespace( $title->getNamespace() ) && $title->isTalkPage() ) {
-				$app->wg->SuppressPageHeader = true;
 				$app->wg->Out->addHTML( $app->renderView( 'WallHistoryController', 'index', [ 'title' => $title, 'page' => $page, 'threadLevelHistory' => true ] ) );
 				return false;
 			}

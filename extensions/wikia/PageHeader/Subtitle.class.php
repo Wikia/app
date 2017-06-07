@@ -118,7 +118,7 @@ class Subtitle {
 
 		$pipe = wfMessage( 'pipe-separator' )->escaped();
 
-		return implode( $pipe, $subtitle );
+		return implode( $pipe, array_filter( $subtitle ) );
 	}
 
 	private function getTalkPageBackLink() {
