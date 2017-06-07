@@ -27,10 +27,10 @@ class ActionButton {
 
 		$this->prepareActionButton();
 
-		$shouldDisplay = $this->hasHrefAndText() &&
+		$shouldDisplay = $this->hasHrefAndText() && !$this->title->isSpecialPage() &&
 			(
-				( !$this->title->isSpecialPage() && !\WikiaPageType::isCorporatePage() ) ||
-				($this->canDisplayOnCorporatePage() )
+				!\WikiaPageType::isCorporatePage() ||
+				$this->canDisplayOnCorporatePage()
 			);
 
 		wfRunHooks( 'PageHeaderActionButtonShouldDisplay', [ $this->title, &$shouldDisplay ] );
