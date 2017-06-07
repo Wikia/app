@@ -15,10 +15,12 @@ class PageHeaderController extends \WikiaController {
 	public function index() {
 		$title = \RequestContext::getMain()->getTitle();
 
+		$displayLanguageSelector = $title->isContentPage();
 		$displayActionButton = $this->actionButton->shouldDisplay();
 
 		wfRunHooks( 'PageHeaderBeforeDisplay', [ $title, &$displayActionButton ] );
 
+		$this->setVal( 'displayLanguageSelector', $displayLanguageSelector );
 		$this->setVal( 'displayActionButton', $displayActionButton );
 		$this->setVal( 'pageTitle', new PageTitle( $this->app ) );
 		$this->setVal( 'counter', new Counter() );
