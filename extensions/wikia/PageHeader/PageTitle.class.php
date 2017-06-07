@@ -39,18 +39,20 @@ class PageTitle {
 	}
 
 	private function handleTitle( WikiaApp $app ): string {
+		$titleText = $app->getSkinTemplateObj()->data['title'];
+
 		if ( WikiaPageType::isMainPage() ) {
-			return $this->titleMainPage();
+			$titleText = $this->titleMainPage();
 		} else if ( $this->shouldNotDisplayNamespacePrefix( $this->namespace ) ) {
-			return htmlspecialchars( $this->MWTitle->getText() );
+			$titleText = htmlspecialchars( $this->MWTitle->getText() );
 		} else if ( $this->MWTitle->isTalkPage() ) {
-			return $this->isWallMessage() ?
+			$titleText = $this->isWallMessage() ?
 				$this->getTitleForWallMessage() :
 				htmlspecialchars( $this->MWTitle->getText() );
 		} else if ( $this->request->getCheck( 'diff' ) ) {
-			return $this->prefixedTitle( 'page-header-title-prefix-changes' );
+			$titleText = $this->prefixedTitle( 'page-header-title-prefix-changes' );
 		} else if ( $this->request->getVal( 'action', 'view' ) == 'history' ) {
-			return $this->prefixedTitle( 'page-header-title-prefix-history' );
+			$titleText = $this->prefixedTitle( 'page-header-title-prefix-history' );
 		} else if (
 			defined( 'NS_BLOG_ARTICLE' ) &&
 			$this->MWTitle->getNamespace() == NS_BLOG_ARTICLE &&
@@ -60,10 +62,10 @@ class PageTitle {
 			$titleParts = explode( '/', $this->MWTitle->getText() );
 			array_shift( $titleParts );
 
-			return implode( '/', $titleParts );
+			$titleText = implode( '/', $titleParts );
 		}
 
-		return $app->getSkinTemplateObj()->data['title'];
+		return $titleText;
 	}
 
 	private function handlePrefix() {
