@@ -84,12 +84,9 @@ class ActionButton {
 
 		$isDiff = !is_null( $this->request->getVal( 'diff' ) );
 
-		// "Add topic" action
-		if ( isset( $this->contentActions['addsection'] ) ) {
-			// remove on diff pages (RT #72666)
-			if ( $isDiff ) {
+		// "Add topic" action - remove on diff pages (RT #72666)
+		if ( isset( $this->contentActions['addsection'] ) && $isDiff ) {
 				unset( $this->contentActions['addsection'] );
-			}
 		}
 
 		// handle protected pages (they should have viewsource link and lock icon) - BugId:9494
