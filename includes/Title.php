@@ -755,19 +755,6 @@ class Title {
 	}
 
 	/**
-	 * Returns the DB name of the distant wiki which owns the object.
-	 *
-	 * @return String the DB name
-	 */
-	public function getTransWikiID() {
-		if ( $this->mInterwiki == '' ) {
-			return false;
-		}
-
-		return Interwiki::fetch( $this->mInterwiki )->getWikiID();
-	}
-
-	/**
 	 * Get the text form (spaces not underscores) of the main part
 	 *
 	 * @return String Main part of the title

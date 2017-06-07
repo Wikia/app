@@ -61,34 +61,34 @@ $messages['en'] = array(
 	'autocreatewiki-regex-error-comment' => 'used in wiki $1 (whole text: $2)',
 	'autocreatewiki-protect-reason' => 'Part of the official interface',
 	'autocreatewiki-welcometalk-wall-title' => 'Welcome!',
-	'autocreatewiki-welcometalk-wall' => "Hello, I'm a member of Fandom's Community Support team. We're excited to have {{subst:SITENAME}} as part of the Fandom community!
+	'autocreatewiki-welcometalk-wall' => "Hello, I'm a member of FANDOM's Community Support team. We're excited to have {{subst:SITENAME}} as part of the FANDOM community!
 
 It may seem like there’s a lot to do, but we’re here to help make getting started quick and easy. Here are some helpful tips and links to get your community going:
 
 *Check out [[Special:WikiFeatures|Wiki Features]] to turn on some special features including our popular community Chat.
 *Customize your community’s color and style by visiting the [[Special:ThemeDesigner|Theme Designer]].
 *Stop by [[w:c:community|Community Central]] to check out the [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]], and ask questions on our [[w:c:community:Special:Forum|community forum]].
-*Lastly, visit our [[Help:Contents|help pages]] to learn the ins and outs of using Fandom, or visit [[w:c:community:Wikia_University|Fandom University]] for quick how-to videos.
+*Lastly, visit our [[Help:Contents|help pages]] to learn the ins and outs of using FANDOM, or visit [[w:c:community:Wikia_University|FANDOM University]] for quick how-to videos.
 
 Have fun!",
 	'autocreatewiki-welcometalk' => "==Welcome!==
 Hey there!
 
-We're excited to have $4 as part of the Fandom community! There's still a lot to do; here are some helpful tips and links to get your wiki going:
+We're excited to have $4 as part of the FANDOM community! There's still a lot to do; here are some helpful tips and links to get your wiki going:
 
 *Check out [[Special:WikiFeatures|Wiki Features]] to see which features you can enable on your wiki, including chat, achievements and much more.
-*Stop by [[w:c:community|Community Central]] to stay informed through our [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]], ask questions on our [[w:c:community:Special:Forum|community forum]], watch videos on [[w:c:community:Wikia_university|Fandom University]], or chat live with fellow Fandom community members.
-*Lastly, visit our [[Help:Contents|help pages]] to learn the ins and outs of using Fandom.
+*Stop by [[w:c:community|Community Central]] to stay informed through our [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]], ask questions on our [[w:c:community:Special:Forum|community forum]], watch videos on [[w:c:community:Wikia_university|FANDOM University]], or chat live with fellow FANDOM community members.
+*Lastly, visit our [[Help:Contents|help pages]] to learn the ins and outs of using FANDOM.
 
 All of the above links are a great place to start exploring, and have fun!
 
 -- [[User:$2|$3]] <staff />",
 	'autocreatewiki-welcomebody-HTML' => '"<p>Hello $2,<br /><br />
 The wiki you created is now available at <a href="$1">$1</a>.  We hope to see you editing there soon!<br /><br />
-We have added some information and tips on your <a href="$5">user talk Page</a> to help you get started. If you have any questions, just reply to this e-mail or browse our help pages at <a href="http://help.wikia.com/">Fandom Help</a>.<br /><br />
+We have added some information and tips on your <a href="$5">user talk Page</a> to help you get started. If you have any questions, just reply to this e-mail or browse our help pages at <a href="http://help.wikia.com/">FANDOM Help</a>.<br /><br />
 Good luck with the project,<br /><br />
 <a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
-Fandom Community Team<br /></p>',
+FANDOM Community Team<br /></p>',
 );
 
 $messages['qqq'] = array(
@@ -705,33 +705,33 @@ $messages['de'] = array(
 	'autocreatewiki-regex-error-comment' => 'im Wiki $1 benutzt (kompletter Text: $2)',
 	'autocreatewiki-protect-reason' => 'Bestandteil der offiziellen Oberfläche',
 	'autocreatewiki-welcometalk-wall-title' => 'Willkommen!',
-	'autocreatewiki-welcometalk-wall' => 'Hallo, ich bin ein Mitglied des Community-Support-Teams von Fandom. Wir freuen uns sehr, dass {{subst:SITENAME}} jetzt ein Teil der Fandom-Community ist!
+	'autocreatewiki-welcometalk-wall' => 'Hallo, ich bin ein Mitglied des Community-Support-Teams von FANDOM. Wir freuen uns sehr, dass {{subst:SITENAME}} jetzt ein Teil der FANDOM-Community ist!
 
 Anfangs scheint es wahnsinnig viel zu tun zu geben, aber wir helfen dir gerne dabei, schnell und problemlos den Einstieg zu finden. Wir haben hier ein paar Tipps und hilfreiche Links zusammengestellt, damit du gleich mit deiner Community durchstarten kannst:
 
 *Unter [[Spezial:WikiFunktionen|Wiki-Funktionen]] kannst du Spezialfunktionen einschalten, wie zum Beispiel den allseits beliebten Community-Chat.
 *Im [[Spezial:ThemeDesigner|Theme-Designer]] kannst du das Farbschema und das Design deiner Community anpassen.
-*Schau auch mal in der [[w:c:de.community|Community Deutschland]] vorbei! Hier findest du den [[w:c:de.community:Blog:Fandom_Deutschland_News|Fandom-Blog]] und kannst in unserem [[w:c:de.community:Spezial:Forum|Community-Forum]] Fragen stellen.
-*Außerdem kannst du unsere [[w:c:de:Hilfe:Übersicht|Hilfeseiten]] durchstöbern, um zu sehen, was du auf Fandom alles machen kannst oder kurz in der [[w:c:de.community:Fandom-Universität|Fandom-Universität]] Halt machen und dir ein paar hilfreiche Videotutorials ansehen.
+*Schau auch mal in der [[w:c:de.community|Community Deutschland]] vorbei! Hier findest du den [[w:c:de.community:Blog:Fandom_Deutschland_News|FANDOM-Blog]] und kannst in unserem [[w:c:de.community:Spezial:Forum|Community-Forum]] Fragen stellen.
+*Außerdem kannst du unsere [[w:c:de:Hilfe:Übersicht|Hilfeseiten]] durchstöbern, um zu sehen, was du auf FANDOM alles machen kannst oder kurz in der [[w:c:de.community:FANDOM-Universität|FANDOM-Universität]] Halt machen und dir ein paar hilfreiche Videotutorials ansehen.
 
 Viel Spaß!',
 	'autocreatewiki-welcometalk' => '==Willkommen!==
 
-Hallo! Wir freuen uns, dass {{subst:SITENAME}} jetzt auch Teil der Fandom-Gemeinschaft ist! Es gibt noch einiges zu tun, deshalb sind hier ein paar hilfreiche Tipps und Links, damit du mit deinem Wiki gleich durchstarten kannst. 
+Hallo! Wir freuen uns, dass {{subst:SITENAME}} jetzt auch Teil der FANDOM-Gemeinschaft ist! Es gibt noch einiges zu tun, deshalb sind hier ein paar hilfreiche Tipps und Links, damit du mit deinem Wiki gleich durchstarten kannst. 
 
 * Schau dir unter [[Special:WikiFeatures|Spezial:WikiFunktionen]] an, welche Funktionen, wie zum Beispiel den Chat oder die Herausforderungen, du in deinem Wiki aktivieren kannst.
-* Besuche die [[w:c:de.community|Community Deutschland]], um über den [[w:c:de.community:Blog:Fandom_Deutschland_News|Fandom-Blog]] informiert zu bleiben, Fragen im [[w:c:de.community:Spezial:Forum|Community-Forum]] zu stellen, in der [[w:c:de.community:Fandom-Universität|Fandom-Universität]] Videos anzusehen oder mit anderen Mitgliedern der Fandom-Community zu chatten.
-* Außerdem kannst du alles zur Nutzung von Fandom auf unseren [[w:c:de:Hilfe:Übersicht|Hilfeseiten]] lernen.
+* Besuche die [[w:c:de.community|Community Deutschland]], um über den [[w:c:de.community:Blog:Fandom_Deutschland_News|FANDOM-Blog]] informiert zu bleiben, Fragen im [[w:c:de.community:Spezial:Forum|Community-Forum]] zu stellen, in der [[w:c:de.community:FANDOM-Universität|FANDOM-Universität]] Videos anzusehen oder mit anderen Mitgliedern der FANDOM-Community zu chatten.
+* Außerdem kannst du alles zur Nutzung von FANDOM auf unseren [[w:c:de:Hilfe:Übersicht|Hilfeseiten]] lernen.
 
 All diese Links sind gute Ausgangspunkte, um dich zurechtzufinden!
 
 -- [[User:$2|$3]] <staff />',
 	'autocreatewiki-welcomebody-HTML' => '"<p>Hallo $2,<br /><br />
 Das von dir erstellte Wiki steht nun unter <a href="$1">$1</a> bereit.  Wir freuen uns auf deine Beiträge dort!<br /><br />
-Wir haben dir auf deiner <a href="$5">Benutzer-Diskussionsseite</a> ein paar Informationen und Tipps hinterlassen, damit du gleich richtig durchstarten kannst. Wenn du Fragen hast, antworte einfach auf diese E-Mail oder schau dich auf unseren Hilfeseiten um. Hier findest du die <a href="http://help.wikia.com/">Fandom-Hilfe</a>.<br /><br />
+Wir haben dir auf deiner <a href="$5">Benutzer-Diskussionsseite</a> ein paar Informationen und Tipps hinterlassen, damit du gleich richtig durchstarten kannst. Wenn du Fragen hast, antworte einfach auf diese E-Mail oder schau dich auf unseren Hilfeseiten um. Hier findest du die <a href="http://help.wikia.com/">FANDOM-Hilfe</a>.<br /><br />
 Viel Glück mit deinem Projekt, <br /><br />
 <a href="http://de.community.wikia.com/wiki/User:$4">$3</a><br />
-Das Fandom-Community-Team<br /></p>',
+Das FANDOM-Community-Team<br /></p>',
 );
 
 $messages['de-formal'] = array(
@@ -907,7 +907,7 @@ $messages['es'] = array(
 	'autocreatewiki-regex-error-comment' => 'usados en $1 wiki (texto íntegro: $2)',
 	'autocreatewiki-protect-reason' => 'Parte de la interfaz oficial',
 	'autocreatewiki-welcometalk-wall-title' => '¡Uno más en la familia!',
-	'autocreatewiki-welcometalk-wall' => 'Hola, soy miembro del equipo de soporte comunitario de Fandom. ¡Estamos muy contentos de que {{subst:SITENAME}} forme parte de Fandom!
+	'autocreatewiki-welcometalk-wall' => 'Hola, soy miembro del equipo de soporte comunitario de FANDOM. ¡Estamos muy contentos de que {{subst:SITENAME}} forme parte de FANDOM!
 
 Puede parecer que hayan muchas cosas por hacer, es por ello que estamos aquí para ayudarte a empezar de una manera rápida y simple. Aquí tienes algunos consejos útiles y enlaces que te ayudarán a construir tu comunidad:
 
@@ -918,10 +918,10 @@ Puede parecer que hayan muchas cosas por hacer, es por ello que estamos aquí pa
 	'autocreatewiki-welcometalk' => "== ¡Recibe nuestra bienvenida! ==
 ¡Hola!
 
-¡Estamos muy contentos de que '''$4''' sea parte de la comunidad de Fandom! Puede parecer que hayan muchas cosas por hacer, es por ello que estamos aquí para ayudarte a empezar de una manera rápida y simple. Aquí tienes algunos consejos útiles y enlaces que te ayudarán a construir tu comunidad:
+¡Estamos muy contentos de que '''$4''' sea parte de la comunidad de FANDOM! Puede parecer que hayan muchas cosas por hacer, es por ello que estamos aquí para ayudarte a empezar de una manera rápida y simple. Aquí tienes algunos consejos útiles y enlaces que te ayudarán a construir tu comunidad:
 
 *Revisa las [[{{#Special:WikiFeatures}}|funcionalidades Wiki]] para ver cuales funcionalidades puedes habilitar en tu wiki, como el chat, logros y muchos más.
-*Visita [[w:c:comunidad|Comunidad Central]] para revisar [[w:c:comunidad:Blog:Noticias_de_Fandom|las entradas de blog publicadas por el staff]], hacer preguntas en el [[w:c:comunidad:Especial:Foro|foros de la comunidad]], ver videos educacionales en la [[w:c:comunidad:Universidad_de_Fandom|Universidad de FANDOM]] y chatear con miembros de Fandom.
+*Visita [[w:c:comunidad|Comunidad Central]] para revisar [[w:c:comunidad:Blog:Noticias_de_Fandom|las entradas de blog publicadas por el staff]], hacer preguntas en el [[w:c:comunidad:Especial:Foro|foros de la comunidad]], ver videos educacionales en la [[w:c:comunidad:Universidad_de_Fandom|Universidad de FANDOM]] y chatear con miembros de FANDOM.
 *Visita nuestras [[Ayuda:Contenidos|páginas de ayuda]] para entender mejor esta plataforma, o visita la para revisar videos educacionales.
 
 Todos los enlaces anteriores son un gran lugar para comenzar a explorar, ¡así que diviértete!
@@ -932,7 +932,7 @@ El wiki que has creado está disponible en <a href="$1">$1</a>. ¡Esperamos vert
 Hemos añadido cierta información y consejos en tu <a href="$5"> Página de discusión de usuario</a> para ayudarle a empezar. Si tienes alguna pregunta, responde a este correo electrónico o navega por nuestras páginas de ayuda en <a href="http://comunidad.wikia.com/wiki/Ayuda:Contenidos">Ayuda FANDOM</a>.< br /><br /> 
 Buena suerte con el proyecto, < br /><br /> 
 <a href="http://comunidad.wikia.com/wiki/Usuario:$4">$3</a>< br /> 
-Equipo comunitario de Fandom< br /></p>',
+Equipo comunitario de FANDOM< br /></p>',
 );
 
 $messages['et'] = array(
@@ -1156,40 +1156,40 @@ $messages['fr'] = array(
 	'autocreatewiki-regex-error-comment' => 'utilisé sur le wiki $1 (texte complet : $2)',
 	'autocreatewiki-protect-reason' => "Partie de l'interface officielle",
 	'autocreatewiki-welcometalk-wall-title' => 'Bienvenue !',
-	'autocreatewiki-welcometalk-wall' => "Bonjour, l'équipe de support souhaite la bienvenue à {{subst:SITENAME}} dans la communauté Fandom !
+	'autocreatewiki-welcometalk-wall' => "Bonjour, l'équipe de support souhaite la bienvenue à {{subst:SITENAME}} dans la communauté FANDOM !
 
 Voici quelques liens et astuces utiles qui vous permettront de dynamiser et gérer votre communauté :
 
 *Consultez la page [[Special:WikiFeatures|Composants de wiki]] pour découvrir quelles fonctionnalités spéciales vous pouvez activer, dont notre tchat communautaire très prisé.
 *Personnalisez l'apparence de votre communauté en visitant le [[Special:ThemeDesigner|Concepteur de thème]] : ajoutez des couleurs, choisissez un style, etc.
-*Accédez au [[w:fr:Accueil|Centre des communautés]] pour y lire l'[[w:fr:Blog:Actualité Fandom|actualité]] et poser des questions sur notre [[w:fr:Special:Forum|forum]].
-*Parcourez les [[Aide:Contenu|pages d'aide]] pour savoir comment utiliser Fandom ou visitez l'[[w:c:communaute:Université_Fandom|Université Fandom]] pour regarder de courtes vidéos de présentation.
+*Accédez au [[w:fr:Accueil|Centre des communautés]] pour y lire l'[[w:fr:Blog:Actualité FANDOM|actualité]] et poser des questions sur notre [[w:fr:Special:Forum|forum]].
+*Parcourez les [[Aide:Contenu|pages d'aide]] pour savoir comment utiliser FANDOM ou visitez l'[[w:c:communaute:Université_Fandom|Université FANDOM]] pour regarder de courtes vidéos de présentation.
 
 C'est parti !",
 	'autocreatewiki-welcometalk' => "==Bienvenue !==
 Bonjour !
 
-Nous sommes heureux d'accueillir $4 dans la communauté Fandom ! Voici quelques liens et astuces utiles qui vous permettront de dynamiser et gérer votre wiki :
+Nous sommes heureux d'accueillir $4 dans la communauté FANDOM ! Voici quelques liens et astuces utiles qui vous permettront de dynamiser et gérer votre wiki :
 
 *Vous n'êtes pas sûr de savoir par où commencer ? Allez sur le [[w:fr:Accueil|Centre des communautés]] et lisez le blog [[w:fr:Blog:Conseils pour fondateurs/administrateurs|Conseils pour fondateurs et administrateurs]]. Vous y trouverez des astuces pour démarrer votre wiki et le faire évoluer.
-*Consultez l'[[w:fr:Blog:Actualité Fandom|actualité]] pour vous tenir informé des derniers événements.
+*Consultez l'[[w:fr:Blog:Actualité FANDOM|actualité]] pour vous tenir informé des derniers événements.
 *Explorez le [[w:fr:Special:Forum|forum]] sur le Centre des communautés pour voir quelles questions posent les autres administrateurs.
-*Regardez les vidéos de l'[[w:c:communaute:Université_Fandom|Université Fandom]] pour vous former.
+*Regardez les vidéos de l'[[w:c:communaute:Université_Fandom|Université FANDOM]] pour vous former.
 *Personnalisez l'apparence de votre wiki en visitant le [[Special:ThemeDesigner|Concepteur de thème]] : ajoutez des couleurs, modifiez l'arrière-plan et le logo etc.
 *Consultez la page [[Special:WikiFeatures|Composants de wiki]] pour découvrir quelles fonctionnalités vous pouvez activer sur votre wiki.
 *Pour finir, parcourez les [[Aide:Contenu|pages d'aide]] pour trouver des réponses à vos questions.
 
-Tous les liens ci-dessus sont un bon moyen de commencer à naviguer sur Fandom. Si vous êtes bloqué ou si vous avez toujours des questions, [[Special:Contact|contactez-nous]]. Mais le plus important est que vous vous amusiez !
+Tous les liens ci-dessus sont un bon moyen de commencer à naviguer sur FANDOM. Si vous êtes bloqué ou si vous avez toujours des questions, [[Special:Contact|contactez-nous]]. Mais le plus important est que vous vous amusiez !
 
 Bonnes modifications !
 
 — [[User:$2|$3]] <staff /></div>",
 	'autocreatewiki-welcomebody-HTML' => '"<p>Bonjour $2,<br /><br />
 Le wiki que vous avez créé est disponible ici : <a href="$1">$1</a>.  Nous sommes impatients de voir vos prochaines contributions !<br /><br />
-Pour vous aider à vous lancer, nous avons ajouté des informations et des astuces sur votre <a href="$5">page de discussion utilisateur</a>. En cas de question, vous pouvez répondre à cet e-mail ou consulter les <a href="http://communaute.wikia.com/wiki/Aide:Contenu">pages d\'aide de Fandom</a>.<br /><br />
+Pour vous aider à vous lancer, nous avons ajouté des informations et des astuces sur votre <a href="$5">page de discussion utilisateur</a>. En cas de question, vous pouvez répondre à cet e-mail ou consulter les <a href="http://communaute.wikia.com/wiki/Aide:Contenu">pages d\'aide de FANDOM</a>.<br /><br />
 Bonne réussite dans votre projet,<br /><br />
 <a href="http://communaute.wikia.com/wiki/Utilisateur:$4">$3</a><br />
-L\'équipe de la communauté Fandom<br /></p>',
+L\'équipe de la communauté FANDOM<br /></p>',
 );
 
 $messages['fy'] = array(
@@ -1601,11 +1601,11 @@ $messages['it'] = array(
 	'autocreatewiki-welcometalk' => "== Benvenuto! ==
 Ciao!
 
-Siamo entusiasti che '''$4''' faccia parte della comunità di Fandom! C'è ancora molto da fare; ecco alcuni consigli e link utili per mettere in moto la tua wiki:
+Siamo entusiasti che '''$4''' faccia parte della comunità di FANDOM! C'è ancora molto da fare; ecco alcuni consigli e link utili per mettere in moto la tua wiki:
 
 * Dai un'occhiata a [[Special:WikiFeatures|Wiki Features]] per visualizzare le funzionalità che puoi attivare nella tua wiki, tra cui chat, successi e molto altro ancora.
-* Fai un salto sulla [[w:it:|Wiki della Community]] per restare informato tramite il nostro [[w:it:Blog:Blog ufficiale di Fandom Italia|blog ufficiale]] o porre domande nel nostro [[w:it:Special:Forum|forum]], guardare video su [[w:Fandom_University|Fandom University]] o chattare in tempo reale con altri membri della comunità Fandom.
-* Per finire, visita le nostre [[w:it:Aiuto:Contenuti|pagine d'aiuto]] per imparare al meglio come usare Fandom.
+* Fai un salto sulla [[w:it:|Wiki della Community]] per restare informato tramite il nostro [[w:it:Blog:Blog ufficiale di FANDOM Italia|blog ufficiale]] o porre domande nel nostro [[w:it:Special:Forum|forum]], guardare video su [[w:Fandom_University|FANDOM University]] o chattare in tempo reale con altri membri della comunità FANDOM.
+* Per finire, visita le nostre [[w:it:Aiuto:Contenuti|pagine d'aiuto]] per imparare al meglio come usare FANDOM.
 
 Tutti questi link sono un ottimo punto di partenza per iniziare ad esplorare e divertirsi!
 
@@ -1617,22 +1617,22 @@ Sembra che ci sia tanto da fare, ma siamo qui per aiutarti ad iniziare in modo r
 * Dai un'occhiata a [[Special:WikiFeatures|Wiki Features]] per attivare alcune funzionalità speciali, tra cui la nostra famosa [[w:it:Aiuto:Chat|Chat]] della comunità.
 * Personalizza il colore e lo stile della tua comunità, visitando [[Special:ThemeDesigner|Theme Designer]].
 * Passa sulla [[w:it:|Wiki della Community]] per dare un'occhiata al [[w:it:Blog:Blog_ufficiale_di_Fandom_Italia|blog dello staff]] e fare domande nel nostro [[w:it:Special:Forum|forum]].
-* Per finire, visita le nostre [[w:it:Aiuto:Contenuti|pagine d'aiuto]] per conoscere i segreti dell'utilizzo di Fandom o visita [[w:Fandom_University|Fandom University]] per visualizzare video tutorial rapidi.
+* Per finire, visita le nostre [[w:it:Aiuto:Contenuti|pagine d'aiuto]] per conoscere i segreti dell'utilizzo di FANDOM o visita [[w:Fandom_University|FANDOM University]] per visualizzare video tutorial rapidi.
 
 Buon divertimento!",
 	'autocreatewiki-welcomebody-HTML' => '<p>Ciao $2,<br /><br />
 La wiki che hai creato è ora disponibile su <a href="$1">$1</a>.  Ci auguriamo di vederti contribuire lì presto!<br /><br />
-Abbiamo aggiunto delle informazioni e suggerimenti nella tua <a href="$5">pagina di discussione utente</a> per aiutarti a iniziare. Se hai domande, rispondi semplicemente a questa e-mail o leggi le nostre guide sull\'<a href="http://it.community.wikia.com/wiki/Aiuto:Contenuti">Aiuto di Fandom</a>.<br /><br />
+Abbiamo aggiunto delle informazioni e suggerimenti nella tua <a href="$5">pagina di discussione utente</a> per aiutarti a iniziare. Se hai domande, rispondi semplicemente a questa e-mail o leggi le nostre guide sull\'<a href="http://it.community.wikia.com/wiki/Aiuto:Contenuti">Aiuto di FANDOM</a>.<br /><br />
 Buona fortuna con il tuo progetto,<br /><br />
 <a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
-Team della community di Fandom<br /></p>',
+Team della community di FANDOM<br /></p>',
 );
 
 $messages['ja'] = array(
 	'createnewwiki-desc' => 'Wiki作成ウィザード',
 	'cnw-next' => '次へ',
 	'cnw-back' => '戻る',
-	'cnw-title' => '新しいFandomコミュニティを作成する',
+	'cnw-title' => '新しいFANDOMコミュニティを作成する',
 	'cnw-name-wiki-headline' => 'Wikiをはじめる',
 	'cnw-name-wiki-creative' => '世界中で大人気のエンターテイメントに関するコミュニティでも、個人的なプロジェクトについてのコミュニティでも、そのコミュニティを適切に表す名称が必要です。',
 	'cnw-name-wiki-label' => 'Wikiの名称を入力してください',
@@ -1650,22 +1650,22 @@ $messages['ja'] = array(
 	'cnw-theme-instruction' => 'Wikiのデザインは、テーマデザイナーでいつでもカスタマイズできます。',
 	'cnw-welcome-headline' => '$1 が作成されました！',
 	'cnw-welcome-instruction1' => '下のボタンをクリックすると、新しいページを追加できます。',
-	'cnw-welcome-help' => '<a href="http://ja.community.wikia.com/">コミュニティセントラル</a> では、Fandomコミュニティ作成のヒントやアドバイスを見つけることができます。',
-	'cnw-error-general' => 'Fandomコミュニティの作成中に問題が発生しました。もう一度お試しいただくか、[[特別:Contact|こちら]]からご連絡ください。',
+	'cnw-welcome-help' => '<a href="http://ja.community.wikia.com/">コミュニティセントラル</a> では、FANDOMコミュニティ作成のヒントやアドバイスを見つけることができます。',
+	'cnw-error-general' => 'FANDOMコミュニティの作成中に問題が発生しました。もう一度お試しいただくか、[[特別:Contact|こちら]]からご連絡ください。',
 	'cnw-error-general-heading' => '申し訳ありません',
 	'cnw-error-blocked-header' => 'アカウントがブロックされています',
 	'cnw-error-anon-user-header' => 'ログインしてください',
-	'cnw-error-unconfirmed-email' => 'Fandomコミュニティを作成するには、メールの認証を行っていただく必要があります。',
+	'cnw-error-unconfirmed-email' => 'FANDOMコミュニティを作成するには、メールの認証を行っていただく必要があります。',
 	'cnw-name-wiki-language' => '',
 	'cnw-desc-select-vertical' => 'このWikiが属するハブ：',
 	'cnw-desc-select-categories' => '他にあてはまるカテゴリがあれば選んでください（複数可）。',
 	'cnw-badword-header' => '不適切な言葉です',
-	'cnw-badword-msg' => 'Fandomコミュニティの説明文での不適切な言葉、禁止されている言葉の使用はご遠慮ください：$1',
-	'cnw-error-wiki-limit-header' => 'Fandomコミュニティの上限に達しました',
-	'cnw-error-wiki-limit' => '1日に作成できるFandomコミュニティの数は{{PLURAL:$1|$1個|$1個}}までです。恐れ入りますが、新しいコミュニティを作成するには24時間お待ちください。',
+	'cnw-badword-msg' => 'FANDOMコミュニティの説明文での不適切な言葉、禁止されている言葉の使用はご遠慮ください：$1',
+	'cnw-error-wiki-limit-header' => 'FANDOMコミュニティの上限に達しました',
+	'cnw-error-wiki-limit' => '1日に作成できるFANDOMコミュニティの数は{{PLURAL:$1|$1個|$1個}}までです。恐れ入りますが、新しいコミュニティを作成するには24時間お待ちください。',
 	'cnw-error-blocked' => '$1さんによりブロックされています。理由：$2（参照用ブロックID：$3）。',
-	'cnw-error-anon-user' => '未登録ユーザーはFandomコミュニティを作成することができません。[[Special:UserLogin|ログイン]]してからもう一度お試しください。',
-	'cnw-error-torblock' => 'Torネットワーク経由でFandomコミュニティを作成することはできません。',
+	'cnw-error-anon-user' => '未登録ユーザーはFANDOMコミュニティを作成することができません。[[Special:UserLogin|ログイン]]してからもう一度お試しください。',
+	'cnw-error-torblock' => 'Torネットワーク経由でFANDOMコミュニティを作成することはできません。',
 	'cnw-error-unconfirmed-email-header' => 'メールの認証が完了していません',
 	'cnw-theme-loading-state' => 'Wikiを作成中です。この間に必要であればテーマを変更していただけます。',
 	'cnw-theme-show-wiki' => 'Wikiを表示',
@@ -1679,42 +1679,42 @@ $messages['ja'] = array(
 	'autocreatewiki-bad-name' => 'アドレスは、半角英数字の小文字のみを使用してください。¥や@などの記号、スペースは使用できません。',
 	'autocreatewiki-invalid-wikiname' => 'アドレスには、¥や@などの記号は使えません。また入力は必須になります。',
 	'autocreatewiki-violate-policy' => 'このコミュニティ名には、Wikiのポリシーに違反する単語が含まれています。',
-	'autocreatewiki-name-taken' => 'このアドレスのFandomコミュニティは既に存在します。まずは<a href="http://$1.wikia.com">http://$1.wikia.com</a> をチェックしてみましょう。',
+	'autocreatewiki-name-taken' => 'このアドレスのFANDOMコミュニティは既に存在します。まずは<a href="http://$1.wikia.com">http://$1.wikia.com</a> をチェックしてみましょう。',
 	'autocreatewiki-name-too-short' => 'アドレスが短すぎるようです。3文字以上のアドレスを指定してください。',
 	'autocreatewiki-name-too-long' => 'アドレスが長すぎるようです。50文字以下のアドレスを指定してください。',
-	'autocreatewiki-empty-wikiname' => 'Fandomコミュニティ名は入力が必須になります。',
+	'autocreatewiki-empty-wikiname' => 'FANDOMコミュニティ名は入力が必須になります。',
 	'autocreatewiki-category-label' => 'カテゴリ：',
 	'autocreatewiki-welcometalk-log' => 'ウェルカム・メッセージ',
-	'autocreatewiki-regex-error-comment' => 'Fandomコミュニティ「$1」で使用されています（全文：$2）',
+	'autocreatewiki-regex-error-comment' => 'FANDOMコミュニティ「$1」で使用されています（全文：$2）',
 	'autocreatewiki-protect-reason' => '公式インターフェースの一部です。',
 	'autocreatewiki-welcometalk' => '==ようこそ！==
 
-Fandomにて「$4」を立ち上げていただきありがとうございます！このメールでは、Wikiを盛り上げていくためのヒントやリンクをご紹介します。
+FANDOMにて「$4」を立ち上げていただきありがとうございます！このメールでは、Wikiを盛り上げていくためのヒントやリンクをご紹介します。
 
 *[[Special:WikiFeatures|Wikiフィーチャーズ]]では、あなたのWikiで有効にできる機能（チャット、アチーブメントなど）が確認できます。
-*Fandomの最新情報は、[[w:c:ja.communtiy|コミュニティ・セントラル]]の[[w:c:ja.communtiy:Blog:ウィキアスタッフブログ|スタッフブログ]]でご案内しています。わからないことがある時は、[[w:c:ja.communtiy:Special:Forum|コミュニティ・フォーラム]]で質問したり、[[w:c:ja.community:Wikia_ユニバーシティ|Fandomユニバーシティ]]で参考動画を見たり、Fandomのコミュニティ・メンバーとチャットしてみましょう。
-*[[ヘルプ:コンテンツ|ヘルプページ]]では、Fandomの活用法についてさまざまなヘルプ記事を掲載しています。
+*FANDOMの最新情報は、[[w:c:ja.communtiy|コミュニティ・セントラル]]の[[w:c:ja.communtiy:Blog:ウィキアスタッフブログ|スタッフブログ]]でご案内しています。わからないことがある時は、[[w:c:ja.communtiy:Special:Forum|コミュニティ・フォーラム]]で質問したり、[[w:c:ja.community:Wikia_ユニバーシティ|FANDOMユニバーシティ]]で参考動画を見たり、FANDOMのコミュニティ・メンバーとチャットしてみましょう。
+*[[ヘルプ:コンテンツ|ヘルプページ]]では、FANDOMの活用法についてさまざまなヘルプ記事を掲載しています。
 
-Fandomをお楽しみいただく上で、ぜひこれらの記事を役立てていただけると幸いです。
+FANDOMをお楽しみいただく上で、ぜひこれらの記事を役立てていただけると幸いです。
 
 -- [[ユーザー:$2|$3]]<staff />',
 	'autocreatewiki-welcometalk-wall-title' => 'ようこそ！',
-	'autocreatewiki-welcometalk-wall' => 'こんにちは、Fandomコミュニティ・サポートチームです。このたびは、Fandomにて「{{subst:SITENAME}}」を立ち上げていただきありがとうございます。
+	'autocreatewiki-welcometalk-wall' => 'こんにちは、FANDOMコミュニティ・サポートチームです。このたびは、FANDOMにて「{{subst:SITENAME}}」を立ち上げていただきありがとうございます。
 
 充実したWikiを作成するにあたり、コミュニティ・サポートチームでは様々なお手伝いをさせていただいております。下記にWikiを盛り上げていくためのヒントをご紹介しますので、ご参考にしていただけましたら幸いです。
 
 *[[Special:WikiFeatures|Wikiフィーチャーズ]]で、コミュニティチャットなど、有効にできる機能をチェックしてみましょう。
 *[[Special:ThemeDesigner|テーマデザイナー]]で、コミュニティの色やスタイルをカスタマイズしてみましょう。
 *[[w:c:ja.communtiy|コミュニティ・セントラル]]で[[w:c:ja.communtiy:Blog:ウィキアスタッフブログ|スタッフブログ]]を最新情報を収集したり、[[w:c:ja.communtiy:Special:Forum|コミュニティ・フォーラム]]でわからないことを質問したりしてみましょう。
-*[[ヘルプ:コンテンツ|ヘルプページ]]でFandomについての様々なヘルプ記事を読んだり、[[w:c:ja.community:Wikia_ユニバーシティ|Fandomユニバーシティ]]で使い方の動画をチェックしてみましょう。
+*[[ヘルプ:コンテンツ|ヘルプページ]]でFANDOMについての様々なヘルプ記事を読んだり、[[w:c:ja.community:Wikia_ユニバーシティ|FANDOMユニバーシティ]]で使い方の動画をチェックしてみましょう。
 
-今後ともFandomをよろしくお願いいたします。',
+今後ともFANDOMをよろしくお願いいたします。',
 	'autocreatewiki-welcomebody-HTML' => '<p>$2さん<br /><br />
 このたび作成されたWikiに、<a href="$1">$1</a>からアクセスしていただけるようになりました。さっそく、編集をお楽しみください。<br /><br />
-なお、<a href="$5">ユーザー・トークページ</a>にて基本情報やヒントをいくつかご紹介しています。その他ご不明な点がある場合、このメールにご返信いただくか、<a href="http://ja.community.wikia.com/wiki/ヘルプ:コンテンツ">Fandomヘルプページ</a>をご参照ください。<br /><br />
-今後ともFandomをよろしくお願いいたします。<br /><br />
+なお、<a href="$5">ユーザー・トークページ</a>にて基本情報やヒントをいくつかご紹介しています。その他ご不明な点がある場合、このメールにご返信いただくか、<a href="http://ja.community.wikia.com/wiki/ヘルプ:コンテンツ">FANDOMヘルプページ</a>をご参照ください。<br /><br />
+今後ともFANDOMをよろしくお願いいたします。<br /><br />
 <a href="http://ja.community.wikia.com/wiki/ユーザー:$4">$3</a><br />
-Fandomコミュニティ・チーム<br /></p>',
+FANDOMコミュニティ・チーム<br /></p>',
 );
 
 $messages['km'] = array(
@@ -2344,10 +2344,10 @@ Als je vragen hebt, e-mail ons dan via het [[Special:Contact|contactformulier]].
 -- [[User:\$2|\$3]] <staff /></div>",
 	'autocreatewiki-welcomebody-HTML' => '"<p>Hello $2,<br /><br />
 The wiki you created is now available at <a href="$1">$1</a>.  We hope to see you editing there soon!<br /><br />
-We have added some information and tips on your <a href="$5">user talk Page</a> to help you get started. If you have any questions, just reply to this e-mail or browse our help pages at <a href="http://help.wikia.com/">Fandom Help</a>.<br /><br />
+We have added some information and tips on your <a href="$5">user talk Page</a> to help you get started. If you have any questions, just reply to this e-mail or browse our help pages at <a href="http://help.wikia.com/">FANDOM Help</a>.<br /><br />
 Good luck with the project,<br /><br />
 <a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
-Fandom Community Team<br /></p>',
+FANDOM Community Team<br /></p>',
 );
 
 $messages['nl-informal'] = array(
@@ -2478,34 +2478,34 @@ $messages['pl'] = array(
 	'autocreatewiki-regex-error-comment' => 'wykorzystane na wiki $1 (pełny tekst: $2)',
 	'autocreatewiki-protect-reason' => 'Część oficjalnego interfejsu',
 	'autocreatewiki-welcometalk-wall-title' => 'Witaj!',
-	'autocreatewiki-welcometalk-wall' => 'Witaj, jestem członkiem zespołu Wsparcia Społeczności portalu Fandom. Bardzo cieszymy się, że {{subst:SITENAME}} stała się częścią społeczności Fandomu!
+	'autocreatewiki-welcometalk-wall' => 'Witaj, jestem członkiem zespołu Wsparcia Społeczności portalu FANDOM. Bardzo cieszymy się, że {{subst:SITENAME}} stała się częścią społeczności Fandomu!
 
 Może się wydawać, że przed Tobą jeszcze bardzo dużo pracy, ale jesteśmy tu po to, żeby ułatwić Ci postawienie pierwszych kroków w Fandomie. Oto przydatne wskazówki i linki, które pomogą Ci rozkręcić swoją społeczność:
 
 * Zobacz [[Special:WikiFeatures|rozszerzenia wiki]] i włącz dodatkowe funkcje, np. nasz popularny czat dla społeczności.
 * Odwiedź [[Special:ThemeDesigner|kreator motywu]] i dostosuj styl i kolor swojej wiki.
-* Zajrzyj do [[w:c:spolecznosc|Centrum Społeczności]] i zobacz co nowego w [[w:c:spolecznosc:Blog:Fandom News|Fandom News]] oraz zadawaj pytania na [[w:c:spolecznosc:Specjalna:Forum|forum społeczności]].
-* Nie zapomnij też odwiedzić [[Pomoc:Zawartość|stron pomocy]] by poznać Fandom od podszewki.
+* Zajrzyj do [[w:c:spolecznosc|Centrum Społeczności]] i zobacz co nowego w [[w:c:spolecznosc:Blog:FANDOM News|FANDOM News]] oraz zadawaj pytania na [[w:c:spolecznosc:Specjalna:Forum|forum społeczności]].
+* Nie zapomnij też odwiedzić [[Pomoc:Zawartość|stron pomocy]] by poznać FANDOM od podszewki.
 
 Miłej zabawy!',
 	'autocreatewiki-welcometalk' => '== Witaj! ==
 Cześć!
 
-Cieszymy się, że $4 dołączyła do społeczności portalu Fandom. Wciąż jednak zostało wiele do zrobienia. Oto kilka wskazówek i linków na dobry początek:
+Cieszymy się, że $4 dołączyła do społeczności portalu FANDOM. Wciąż jednak zostało wiele do zrobienia. Oto kilka wskazówek i linków na dobry początek:
 
 * Sprawdź [[Special:WikiFeatures|rozszerzenia wiki]], żeby zobaczyć, które funkcje (takie jak czat, odznaczenia i wiele innych) możesz włączyć na swojej wiki.
 * Zajrzyj do [[w:c:spolecznosc|Centrum Społeczności]] i bądź na bieżąco śledząc [[w:c:spolecznosc:Blog:Fandom_News|blog z nowościami]]. Zadawaj pytania na [[w:c:spolecznosc:Specjalna:Forum|forum społeczności]] i rozmawiaj na żywo z innymi członkami społeczności Fandomu na czacie.
-* Odwiedź też [[Pomoc:Zawartość|strony pomocy]], aby poznać tajniki korzystania z portalu Fandom.
+* Odwiedź też [[Pomoc:Zawartość|strony pomocy]], aby poznać tajniki korzystania z portalu FANDOM.
 
 Wszystkie powyższe linki to świetne miejsca, od których możesz rozpocząć swoją przygodę z Fandomem!
 
 — [[Użytkownik:$2|$3]] <staff />',
 	'autocreatewiki-welcomebody-HTML' => '"<p>Cześć $2,<br /><br />
 Wiki, którą stworzyłeś jest dostępna tutaj: <a href="$1">$1</a>. Mamy nadzieję już niedługo zobaczyć pierwsze efekty Twoich edycji!<br /><br />
-Dodaliśmy przydatne informacje i porady na Twojej <a href="$5">stronie dyskusji</a>. Pomogą Ci postawić pierwsze kroki na portalu Fandom. Jeżeli masz jakieś pytania, po prostu odpisz na ten e-mail lub poszukaj odpowiedzi na <a href="http://spolecznosc.wikia.com/wiki/Pomoc:Zawarto%C5%9B%C4%87">stronach pomocy</a>.<br /><br />
+Dodaliśmy przydatne informacje i porady na Twojej <a href="$5">stronie dyskusji</a>. Pomogą Ci postawić pierwsze kroki na portalu FANDOM. Jeżeli masz jakieś pytania, po prostu odpisz na ten e-mail lub poszukaj odpowiedzi na <a href="http://spolecznosc.wikia.com/wiki/Pomoc:Zawarto%C5%9B%C4%87">stronach pomocy</a>.<br /><br />
 Powodzenia,<br /><br />
 <a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
-Zespół ds. Społeczności portalu Fandom<br /></p>',
+Zespół ds. Społeczności portalu FANDOM<br /></p>',
 );
 
 $messages['pms'] = array(
@@ -2670,22 +2670,22 @@ $messages['pt'] = array(
 	'autocreatewiki-regex-error-comment' => 'usado na wiki $1 (texto completo: $2)',
 	'autocreatewiki-protect-reason' => 'Parte da interface oficial',
 	'autocreatewiki-welcometalk-wall-title' => 'Bem-vindo!',
-	'autocreatewiki-welcometalk-wall' => 'Olá, eu sou membro da equipe de suporte da comunidade do Fandom. Estamos felizes em ter {{subst:SITENAME}} como parte da comunidade Fandom!
+	'autocreatewiki-welcometalk-wall' => 'Olá, eu sou membro da equipe de suporte da comunidade do FANDOM. Estamos felizes em ter {{subst:SITENAME}} como parte da comunidade FANDOM!
 
 Pode parecer que há muito o que fazer, mas estamos aqui para ajudá-lo a começar rápida e facilmente. Aqui estão algumas dicas úteis e links para iniciar sua comunidade:
 
 *Confira os [[Special:WikiFeatures|Recursos da Wiki]] para ativar algumas funções especiais, incluindo o nosso popular bate-papo.
 *Personalize a cor e o estilo da sua comunidade, visitando o [[Special:ThemeDesigner|Designer de Temas]].
 *Visite a [[w:c:comunidade|Central da Comunidade]] para dar uma olhada no [[w:c:comunidade:Categoria:Notícias_da_Comunidade|blog do staff]] e fazer perguntas no [[w:c:comunidade:Especial:Forum|Fórum da Comunidade]].
-*Por último, visite nossas [[w:c:comunidade:Ajuda:Conteúdos|páginas de ajuda]] para aprender como utilizar o Fandom, ou visite [[w:c:comunidade:Universidade_Fandom|Universidade Fandom]] para assistir vídeos instrucionais. Divirta-se!',
+*Por último, visite nossas [[w:c:comunidade:Ajuda:Conteúdos|páginas de ajuda]] para aprender como utilizar o FANDOM, ou visite [[w:c:comunidade:Universidade_Fandom|Universidade FANDOM]] para assistir vídeos instrucionais. Divirta-se!',
 	'autocreatewiki-welcometalk' => '==Bem-vindo!==
 Olá!
 
-Estamos felizes em ter $4 como parte da comunidade Fandom! Ainda há muita coisa a fazer; aqui estão algumas dicas e links importantes para incrementar sua wiki:
+Estamos felizes em ter $4 como parte da comunidade FANDOM! Ainda há muita coisa a fazer; aqui estão algumas dicas e links importantes para incrementar sua wiki:
 
 *Confira os [[Special:WikiFeatures|Recursos da Wiki]] para ver quais recursos você pode ativar em sua wiki, incluindo chat, medalhas e muito mais.
-*Dê uma olhada na [[w:c:comunidade|Central da Comunidade]] para ficar informado através do nosso [[w:c:comunidade:Categoria:Notícias do Fandom|blog do staff]], tenha suas dúvidas respondidas no nosso [[w:c:comunidade:Especial:Forum|fórum da comunidade]], assista vídeos em [[w:c:comunidade:Universidade_Fandom|Universidade Fandom]], ou converse ao vivo com outros membros da comunidade Fandom.
-*Por último, visite nossas [[Ajuda:Conteúdos|páginas de ajuda]] para aprender mais sobre as manhas de como usar o Fandom.
+*Dê uma olhada na [[w:c:comunidade|Central da Comunidade]] para ficar informado através do nosso [[w:c:comunidade:Categoria:Notícias do FANDOM|blog do staff]], tenha suas dúvidas respondidas no nosso [[w:c:comunidade:Especial:Forum|fórum da comunidade]], assista vídeos em [[w:c:comunidade:Universidade_Fandom|Universidade FANDOM]], ou converse ao vivo com outros membros da comunidade FANDOM.
+*Por último, visite nossas [[Ajuda:Conteúdos|páginas de ajuda]] para aprender mais sobre as manhas de como usar o FANDOM.
 
 Todos os links acima são ótimos lugares para começar a explorar, divirta-se!
 
@@ -2693,10 +2693,10 @@ Todos os links acima são ótimos lugares para começar a explorar, divirta-se!
 	'autocreatewiki-welcomebody-HTML' => '<p>Olá $2,<br/><br /> 
 A wiki que você criou está disponível agora em <a href="$1">$1</a>. Esperamos vê-lo editando por lá em breve!
 <br />< br /> 
-Nós adicionamos algumas informações e dicas em seu <a href="$5">mural de mensagens </a> para ajudá-lo a começar. Se você tiver alguma dúvida, basta responder a este e-mail ou procurar em nossas páginas de ajuda em <a href="http://comunidade.wikia.com/Ajuda:Conteúdos"> Ajuda do Fandom</a>.< br /><br />
+Nós adicionamos algumas informações e dicas em seu <a href="$5">mural de mensagens </a> para ajudá-lo a começar. Se você tiver alguma dúvida, basta responder a este e-mail ou procurar em nossas páginas de ajuda em <a href="http://comunidade.wikia.com/Ajuda:Conteúdos"> Ajuda do FANDOM</a>.< br /><br />
 Boa sorte com o projeto, <br />< br / >
 <a href="http://comunidade.wikia.com/wiki/User:$4">$3</a><br />
- Equipe da comunidade Fandom <br /></p>',
+ Equipe da comunidade FANDOM <br /></p>',
 );
 
 $messages['ro'] = array(
@@ -3458,14 +3458,14 @@ $messages['zh-hans'] = array(
 	'autocreatewiki-regex-error-comment' => '已用于$1维基中（全文：$2）',
 	'autocreatewiki-protect-reason' => '属于官方界面的一部分',
 	'autocreatewiki-welcometalk-wall-title' => '欢迎光临！',
-	'autocreatewiki-welcometalk-wall' => '您好，我是Fandom社区支持团队的员工。我们非常高兴{{subst:SITENAME}}将成为Fandom社区中的新成员！
+	'autocreatewiki-welcometalk-wall' => '您好，我是FANDOM社区支持团队的员工。我们非常高兴{{subst:SITENAME}}将成为FANDOM社区中的新成员！
 
 看起来似乎有许多工作要做，我们将帮助您尽快地掌握一切。这里有一些有帮助的提示和链接，希望能帮助您的维基运转起来：
 
 *查看[[Special:WikiFeatures|维基功能]]，看看您可以在您的维基上开启哪些功能，包括社区聊天功能在内。
 *使用[[Special:ThemeDesigner|界面设计]]对您的社区进行定制化和独特设计。
 *到[[w:c:zh.community|社区中心]]来看看，通过我们的[[w:c:zh.community:Category:社区中心博客|社区中心博客]]了解最新信息，在我们的[[w:c:zh.community:Special:Forum|社区论坛]]进行提问。
-*最后，请访问我们的[[Help:Contents|帮助页面]]了解如何使用Fandom的所有功能或者观看我们的[[w:c:zh.community:Fandom课堂|Fandom课堂视频]]了解如何快速进行编辑。
+*最后，请访问我们的[[Help:Contents|帮助页面]]了解如何使用FANDOM的所有功能或者观看我们的[[w:c:zh.community:FANDOM课堂|FANDOM课堂视频]]了解如何快速进行编辑。
 
 祝你玩得开心！',
 	'autocreatewiki-name-taken' => '已有用此地址创建的维基。可在<a href="http://$1.wikia.com">http://$1.wikia.com</a>页面进行编辑或选择其他地址。',
@@ -3473,21 +3473,21 @@ $messages['zh-hans'] = array(
 
 您好！
 
-我们很高兴$4能成为Fandom社区的一部分！还有很多事情要做；这里有一些有用的提示和链接，希望能帮助您的维基运转起来：
+我们很高兴$4能成为FANDOM社区的一部分！还有很多事情要做；这里有一些有用的提示和链接，希望能帮助您的维基运转起来：
 
 *查看[[Special:WikiFeatures|维基功能]]，看看您可以在您的维基上开启哪些功能，包括聊天、成就及更多功能。
-*到[[w:c:zh.community|社区中心]]来看看，通过我们的[[w:c:zh.community:Category:社区中心博客|社区中心博客]]了解最新信息、在我们的[[w:c:zh.community:Special:Forum|社区论坛]]提问、观看我们的[[w:c:zh.community:Fandom课堂|Fandom课堂视频]]或与其他Fandom社区用户在线聊天。
-*最后，请访问我们的[[Help:Contents|帮助页面]]了解如何使用Fandom的所有功能。
+*到[[w:c:zh.community|社区中心]]来看看，通过我们的[[w:c:zh.community:Category:社区中心博客|社区中心博客]]了解最新信息、在我们的[[w:c:zh.community:Special:Forum|社区论坛]]提问、观看我们的[[w:c:zh.community:FANDOM课堂|FANDOM课堂视频]]或与其他FANDOM社区用户在线聊天。
+*最后，请访问我们的[[Help:Contents|帮助页面]]了解如何使用FANDOM的所有功能。
 
 上面列出的所有链接都是开始探索的好起点。祝你玩得开心！
 
 -- [[User:$2|$3]] <staff />',
 	'autocreatewiki-welcomebody-HTML' => '<p>您好$2,<br /><br />
 您所创建的维基已经存在于<a href="$1">$1</a>。我们希望您可以尽快去那里编辑！<br /><br />
-同时，我们已经在您的<a href="$5">用户对话页</a>添加了一些入门信息和技巧供您查看。如果您有任何问题，可以回复这封邮件或者访问<a href="http://zh.help.wikia.com/">Fandom帮助</a>查看所有帮助页。<br /><br />
+同时，我们已经在您的<a href="$5">用户对话页</a>添加了一些入门信息和技巧供您查看。如果您有任何问题，可以回复这封邮件或者访问<a href="http://zh.help.wikia.com/">FANDOM帮助</a>查看所有帮助页。<br /><br />
 祝您编辑一切顺利！<br /><br />
 <a href="http://zh.community.wikia.com/wiki/User:$4">$3</a><br />
-Fandom社区团队<br /></p>',
+FANDOM社区团队<br /></p>',
 );
 
 $messages['zh-hant'] = array(
@@ -3553,31 +3553,31 @@ $messages['zh-hant'] = array(
 
 您好！
 
-我們很高興$4能成為Fandom社群的一分子！接下來還有很多事情要做；這裡有一些有用的提示和連結，希望能幫助您的Wiki運轉起來：
+我們很高興$4能成為FANDOM社群的一分子！接下來還有很多事情要做；這裡有一些有用的提示和連結，希望能幫助您的Wiki運轉起來：
 
 *查看[[Special:WikiFeatures|Wiki功能]]，看看您可以在您的wiki上開啟哪些功能，包括聊天、成就及更多功能。
-*到[[w:c:zh.community|社區中心]]來看看，透過我們的[[w:c:zh.community:Category:社区中心博客|社區中心網誌]]來了解最新訊息、在我們的[[w:c:zh.community:Special:Forum|社區論壇]]提問、觀看我們的[[w:c:zh.community:Fandom课堂|Fandom課堂影片]]或與其他Fandom社群用戶線上聊天。
-*最後，請訪問我們的[[Help:Contents|幫助頁面]]了解如何使用Fandom的所有功能。
+*到[[w:c:zh.community|社區中心]]來看看，透過我們的[[w:c:zh.community:Category:社区中心博客|社區中心網誌]]來了解最新訊息、在我們的[[w:c:zh.community:Special:Forum|社區論壇]]提問、觀看我們的[[w:c:zh.community:FANDOM课堂|FANDOM課堂影片]]或與其他FANDOM社群用戶線上聊天。
+*最後，請訪問我們的[[Help:Contents|幫助頁面]]了解如何使用FANDOM的所有功能。
 
 上面列出的內容都是開始發展社區的好方法。祝您玩得開心！
 
 -- [[User:$2|$3]] <staff />',
-	'autocreatewiki-welcometalk-wall' => '您好，我是Fandom社區支援團隊的員工。我們非常高興{{subst:SITENAME}}成為Fandom社區中的新成員！
+	'autocreatewiki-welcometalk-wall' => '您好，我是FANDOM社區支援團隊的員工。我們非常高興{{subst:SITENAME}}成為FANDOM社區中的新成員！
 
 看起來似乎有許多工作要做，我們將幫助您盡快地掌握一切。這裡有一些有幫助的提示和連接，希望能幫助您的Wiki運轉起來：
 
 *查看[[Special:WikiFeatures|Wiki功能]]，看看您可以在您的Wiki上開啟哪些功能，包括社區聊天功能等。
 *使用[[Special:ThemeDesigner|主題設計器]]對自訂您的社區樣式並進行獨特設計。
 *到[[w:c:zh.community|社區中心]]來看看，透過我們的[[w:c:zh.community:Category:社區中心博客|社區中心網誌]]了解最新訊息，或在我們的[[w:c:zh.community:Special:Forum|社區論壇]]進行提問。
-*最後，請訪問我們的[[Help:Contents|幫助頁面]]了解如何使用Fandom的所有功能，或者觀看我們的[[w:c:zh.community:Fandom课堂|Fandom課堂影片]]了解如何快速進行編輯。
+*最後，請訪問我們的[[Help:Contents|幫助頁面]]了解如何使用FANDOM的所有功能，或者觀看我們的[[w:c:zh.community:FANDOM课堂|FANDOM課堂影片]]了解如何快速進行編輯。
 
 祝您玩得開心！',
 	'autocreatewiki-welcometalk-wall-title' => '歡迎你！',
 	'autocreatewiki-welcomebody-HTML' => '<p>您好$2，<br /><br />
 您所創建的Wiki已經存在於<a href="$1">$1</a>。我們希望看快能看到您在那裡編輯！<br /><br />
-同時，我們已經在您的<a href="$5">用戶對話頁</a>放了一些入門訊息和技巧供您查看。如果您有任何問題，可以回覆這封郵件或者訪問<a href="zh.community.wikia.com/wiki/Help:Contents/">Fandom幫助</a>瀏覽相關說明。<br /><br />
+同時，我們已經在您的<a href="$5">用戶對話頁</a>放了一些入門訊息和技巧供您查看。如果您有任何問題，可以回覆這封郵件或者訪問<a href="zh.community.wikia.com/wiki/Help:Contents/">FANDOM幫助</a>瀏覽相關說明。<br /><br />
 祝您編輯一切順利！<br /><br />
 <a href="http://zh.community.wikia.com/wiki/User:$4">$3</a><br />
-Fandom社區團隊<br /></p>',
+FANDOM社區團隊<br /></p>',
 );
 
