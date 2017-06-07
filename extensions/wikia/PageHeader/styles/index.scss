@@ -9,12 +9,13 @@
 	@include dropdown-theming($color-page, $color-text, $color-links, $color-page-border);
 
 	@include flexbox();
-	margin: 0 0 18px;
+	@include flex-wrap(wrap);
+	@include justify-content(flex-end);
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
 	padding: 12px 0;
 	position: relative;
 	z-index: 4;
-	-moz-osx-font-smoothing: grayscale;
-	-webkit-font-smoothing: antialiased;
 
 	button {
 		background-image: none;
@@ -42,7 +43,6 @@
 		@include flexbox();
 		@include flex-direction(column);
 		@include justify-content(flex-end);
-		float: right;
 	}
 
 	&__languages {
@@ -50,7 +50,8 @@
 	}
 
 	&__main {
-		@include flex(1);
+		@include flex-grow(1);
+		max-width: 100%;
 	}
 
 	&__categories {
@@ -68,8 +69,8 @@
 
 			&-content {
 				font-style: normal;
-				width: 250px;
 				overflow-x: hidden;
+				width: 250px;
 			}
 
 			li {
