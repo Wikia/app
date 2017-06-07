@@ -168,6 +168,11 @@ Parameters:
 	'chat-checkuser-join-action' => 'Shown in CheckUser extension for chat-join events',
 	'chat-status-away' => 'Display when user chnages his status to away.
 {{Identical|Away}}',
+	'chat-blocklist-timestamp' => 'Timestamp column header on Special:ChatBanList',
+	'chat-blocklist-target' => 'Target column header on Special:ChatBanList',
+	'chat-blocklist-expiry' => 'Expires column header on Special:ChatBanList',
+	'chat-blocklist-by' => 'Blocked by column header on Special:ChatBanList',
+	'chat-blocklist-reason' => 'Reason column header on Special:ChatBanList',
 );
 
 $messages['af'] = array(
