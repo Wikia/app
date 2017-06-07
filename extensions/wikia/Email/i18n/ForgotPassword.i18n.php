@@ -74,12 +74,12 @@ $messages['it'] = array(
 );
 
 $messages['ja'] = array(
-	'emailext-password-subject' => 'Fandomのパスワードリセットのお知らせ',
+	'emailext-password-subject' => 'FANDOMのパスワードリセットのお知らせ',
 	'emailext-password-summary' => 'ログインで問題が発生しているようです。申し訳ございませんが、セキュリティの関係上あなたのパスワードをお送りすることはできません。仮パスワードを使用してログインしてください。',
 	'emailext-password-intro' => '下記がお使いいただける仮パスワードです：',
-	'emailext-password-unrequested' => '新しいパスワードをリクエストしなかった場合でも、あなたのアカウントは安全に保護されています。その場合は、このメールを無視していただいて構いません。Fandomへのログインには、引続きこれまでと同じパスワードをご使用ください。',
+	'emailext-password-unrequested' => '新しいパスワードをリクエストしなかった場合でも、あなたのアカウントは安全に保護されています。その場合は、このメールを無視していただいて構いません。FANDOMへのログインには、引続きこれまでと同じパスワードをご使用ください。',
 	'emailext-password-questions' => 'ご質問やご不明な点がございましたら、お気軽に[http://ja.community.wikia.com/wiki/%E7%89%B9%E5%88%A5:Contact/account-issue お問い合わせ]ください。',
-	'emailext-password-signature' => 'Fandomコミュニティ・チーム',
+	'emailext-password-signature' => 'FANDOMコミュニティ・チーム',
 	'emailext-password-reset-link-intro' => '新しいパスワードを設定するには、以下のリンクをクリックしてください。',
 	'emailext-password-reset-link-summary' => 'ログインで問題が発生しているようです。申し訳ございませんが、セキュリティの関係上あなたのパスワードをお送りすることはできません。パスワードの再設定を行ってください。',
 	'emailext-password-reset-link-link-caption' => '新しいパスワードを設定する',

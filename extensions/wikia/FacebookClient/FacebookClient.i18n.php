@@ -380,15 +380,15 @@ Il team della community di FANDOM',
 );
 
 $messages['ja'] = array(
-	'fbconnect-connect-existing' => 'FandomアカウントとFacebookを連携する',
+	'fbconnect-connect-existing' => 'FANDOMアカウントとFacebookを連携する',
 	'fbconnect-connect-login-legend' => '既存のアカウントにログイン',
 	'fbconnect-connect-username-label' => 'ユーザー名:',
 	'fbconnect-connect-password-label' => 'パスワード:',
 	'fbconnect-wrong-pass-msg' => '入力したパスワードが正しくありません',
 	'fbconnect-graphapi-not-configured' => 'FacebookのアプリIDとアプリのシークレットキーが設定に入力されていません。',
 	'prefs-fbconnect-disconnect-prefstext' => 'Facebookとの連携を解除',
-	'fbconnect-error-already-connected' => 'このFandomアカウントは既にFacebookに連携されています。続けるには、まず元のFacebookアカウント連携を解除してください。',
-	'fbconnect-error-fb-account-in-use' => 'このFacebookアカウントは既に別のFandomアカウントに連携されています。$1さんのアカウントと連携させるには別のFacebookアカウントを使用するか、Facebookにログインして元のFandomアカウントとの連携を解除してください。',
+	'fbconnect-error-already-connected' => 'このFANDOMアカウントは既にFacebookに連携されています。続けるには、まず元のFacebookアカウント連携を解除してください。',
+	'fbconnect-error-fb-account-in-use' => 'このFacebookアカウントは既に別のFANDOMアカウントに連携されています。$1さんのアカウントと連携させるには別のFacebookアカウントを使用するか、Facebookにログインして元のFANDOMアカウントとの連携を解除してください。',
 	'fbconnect-error-fb-unavailable-title' => 'Facebookとの連携にエラーが発生しました',
 	'fbconnect-error-fb-unavailable-text' => '現在Facebookはご利用いただけないようです。しばらくしてからもう一度お試しください。',
 	'fbconnect-desc' => 'ユーザーは[http://www.facebook.com Facebook] アカウントと連携することができます。FacebookのグループとWikiテキストにおけるFBMLの使用に基づいて認証を提供します。',
@@ -398,15 +398,15 @@ $messages['ja'] = array(
 	'fbconnect-or' => 'または',
 	'fbconnect-error' => '認証エラー',
 	'fbconnect-errortext' => '連携できませんでした。もう一度お試しください。',
-	'fbconnect-disconnect-account-link' => 'お使いのFandomアカウントは現在、Facebookに連携されています。FandomアカウントとFacebookの[[#|コネクトを解除]] することもできます。連携を解除しても、Fandomアカウントは引き続き通常どおりにご利用いただけます。編集、ポイント、アチーブメントなどの履歴もそのまま残ります。',
-	'fbconnect-disconnect-info' => 'FacebookアカウントとFandomアカウントの連携が解除されました。',
+	'fbconnect-disconnect-account-link' => 'お使いのFANDOMアカウントは現在、Facebookに連携されています。FANDOMアカウントとFacebookの[[#|コネクトを解除]] することもできます。連携を解除しても、FANDOMアカウントは引き続き通常どおりにご利用いただけます。編集、ポイント、アチーブメントなどの履歴もそのまま残ります。',
+	'fbconnect-disconnect-info' => 'FacebookアカウントとFANDOMアカウントの連携が解除されました。',
 	'fbconnect-disconnect-info-existing' => '連携の解除が完了しました。今後も通常どおり、ユーザー名とパスワードを使用してログインしていただけます。',
 	'fbconnect-unknown-error' => '不明なエラーが発生しました。もう一度お試しください。',
-	'fbconnect-passwordremindertitle' => 'FandomアカウントとFacebookの連携を解除しました',
-	'fbconnect-passwordremindertitle-exist' => 'FandomアカウントとFacebookの連携を解除しました',
+	'fbconnect-passwordremindertitle' => 'FANDOMアカウントとFacebookの連携を解除しました',
+	'fbconnect-passwordremindertitle-exist' => 'FANDOMアカウントとFacebookの連携を解除しました',
 	'fbconnect-passwordremindertext' => 'こんにちは。
 
-FandomアカウントとFacebookの連携が解除されました。これまでの編集、ポイント、アチーブメントなどの履歴はすべて保持されていますので、ご安心ください。
+FANDOMアカウントとFacebookの連携が解除されました。これまでの編集、ポイント、アチーブメントなどの履歴はすべて保持されていますので、ご安心ください。
 
 ユーザー名は以前と同じものをお使いいただけますが、パスワードは新しくなります。詳細は次のとおりです。
 
@@ -415,27 +415,27 @@ FandomアカウントとFacebookの連携が解除されました。これまで
 
 新しいパスワードはこのメールアドレスにのみ送信されています。
 
-今後とも、Fandomをよろしくお願いいたします。
+今後とも、FANDOMをよろしくお願いいたします。
 
-Fandomコミュニティ・チーム',
+FANDOMコミュニティ・チーム',
 	'fbconnect-passwordremindertext-exist' => 'こんにちは。
 
-FandomアカウントとFacebookの連携が解除されました。これまでの編集、ポイント、アチーブメントなどの履歴はすべて保持されていますので、ご安心ください。
+FANDOMアカウントとFacebookの連携が解除されました。これまでの編集、ポイント、アチーブメントなどの履歴はすべて保持されていますので、ご安心ください。
 
 今後のログインにも、Facebook連携される前に使用されていたユーザー名とパスワードをお使いいただけます。
 
-今後とも、Fandomをよろしくお願いいたします。
+今後とも、FANDOMをよろしくお願いいたします。
 
-Fandomコミュニティ・チーム',
+FANDOMコミュニティ・チーム',
 	'fbconnect-wikia-signup-w-facebook' => 'Facebookコネクトでログイン',
 	'fbconnect-logout-confirm' => 'キャンセルすると、ウィキアとFacebookからログアウトされます。続行しますか？',
 	'prefs-fbconnect-prefstext' => 'Facebookコネクト',
 	'prefs-fbconnect-status-prefstext' => 'ステータス',
 	'fbconnect-cancel' => '操作を取り消しました',
 	'fbconnect-canceltext' => '直前に行われた操作はユーザーによって取り消されました。',
-	'fbconnect-preferences-connected' => 'FandomアカウントとFacebookアカウントの連携が完了しました。',
+	'fbconnect-preferences-connected' => 'FANDOMアカウントとFacebookアカウントの連携が完了しました。',
 	'fbconnect-preferences-connected-error' => '申し訳ありませんが、コネクトを完了できませんでした。ウィキアアカウントにログイン済みであることと、ウィキアのFacebookへのコネクトを許可していることをご確認ください。',
-	'fbconnect-connect-msg' => 'FandomアカウントとFacebookアカウントを連携しました。',
+	'fbconnect-connect-msg' => 'FANDOMアカウントとFacebookアカウントを連携しました。',
 );
 
 $messages['ko'] = array(

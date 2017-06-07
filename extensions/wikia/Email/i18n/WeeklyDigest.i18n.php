@@ -12,7 +12,7 @@ $messages['qqq'] = array(
 );
 
 $messages['de'] = array(
-	'emailext-weeklydigest-subject' => 'Das gibt es Neues diese Woche auf deinen Lieblingsseiten bei FANDOM',
+	'emailext-weeklydigest-subject' => 'Das gibt es Neues diese Woche auf deinen Lieblingsseiten bei Fandom',
 	'emailext-weeklydigest-summary' => 'Seit deinem letzten Besuch haben FANDOM-Benutzer Änderungen an Seiten vorgenommen, denen du folgst. Hier kannst du die Änderungen ansehen:',
 );
 
@@ -32,7 +32,7 @@ $messages['it'] = array(
 );
 
 $messages['ja'] = array(
-	'emailext-weeklydigest-subject' => 'お気に入りのFandomコミュニティの更新情報',
+	'emailext-weeklydigest-subject' => 'お気に入りのFANDOMコミュニティの更新情報',
 	'emailext-weeklydigest-summary' => 'あなたがフォローしているページに変更が加えられました。チェックしてみましょう！',
 );
 
@@ -63,11 +63,11 @@ $messages['ru'] = array(
 
 $messages['zh-hans'] = array(
 	'emailext-weeklydigest-subject' => '看看您最喜欢的社区本周都有哪些新内容',
-	'emailext-weeklydigest-summary' => '自您上次访问之后，Fandom用户已对您关注的页面进行了一些更改。赶快去查看一下吧︰',
+	'emailext-weeklydigest-summary' => '自您上次访问之后，FANDOM用户已对您关注的页面进行了一些更改。赶快去查看一下吧︰',
 );
 
 $messages['zh-hant'] = array(
 	'emailext-weeklydigest-subject' => '看看您喜歡的社區這週有什麼新內容',
-	'emailext-weeklydigest-summary' => '自您上次訪問之後，有Fandom用戶已對您關注的頁面進行了許多更改。趕快去看一下吧︰',
+	'emailext-weeklydigest-summary' => '自您上次訪問之後，有FANDOM用戶已對您關注的頁面進行了許多更改。趕快去看一下吧︰',
 );
 

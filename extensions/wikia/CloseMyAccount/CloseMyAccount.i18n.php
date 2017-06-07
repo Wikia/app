@@ -272,12 +272,12 @@ Per favore ricordati che hai $1 {{PLURAL:$1|giorno|giorni}} a disposizione da ad
 $messages['ja'] = array(
 	'closemyaccount' => 'アカウントを閉じる',
 	'closemyaccount-desc' => '自分のアカウントを閉じる',
-	'closemyaccount-intro-text' => '{{GENDER:$2|あなた}}のアカウントの無効化リクエストが送信されました。Fandomには様々なトピックのバラエティ豊かなコミュニティがありますので、今後もし興味のあるコミュニティがあればご参加いただけましたら幸いです。ご自身が関わっているコミュニティで問題が発生している場合には、お気軽に[[Special:ListUsers/sysop|アドミン]]にお知らせください。
+	'closemyaccount-intro-text' => '{{GENDER:$2|あなた}}のアカウントの無効化リクエストが送信されました。FANDOMには様々なトピックのバラエティ豊かなコミュニティがありますので、今後もし興味のあるコミュニティがあればご参加いただけましたら幸いです。ご自身が関わっているコミュニティで問題が発生している場合には、お気軽に[[Special:ListUsers/sysop|アドミン]]にお知らせください。
 
 アカウントを無効化する場合は、以下の点にご留意ください。
-* Fandomでは、アカウントを完全に削除することはできませんが、無効にすることはできます。この作業を行うとアカウントがロックされ、使用できなくなります。
-*無効化手続きは$1{{PLURAL:$1|日|日}}経過すると元に戻すことができなくなります。再度Fandomに参加される場合、新たにアカウントを作成していただく必要があります。
-*無効化手続きを行っても、これまでにFandomコミュニティに投稿された内容は削除されません。投稿はすべてコミュニティ全体の資産となります。
+* FANDOMでは、アカウントを完全に削除することはできませんが、無効にすることはできます。この作業を行うとアカウントがロックされ、使用できなくなります。
+*無効化手続きは$1{{PLURAL:$1|日|日}}経過すると元に戻すことができなくなります。再度FANDOMに参加される場合、新たにアカウントを作成していただく必要があります。
+*無効化手続きを行っても、これまでにFANDOMコミュニティに投稿された内容は削除されません。投稿はすべてコミュニティ全体の資産となります。
 
 アカウント無効化のさらなる詳細は、[[w:c:ja.community:ヘルプ:アカウントの利用を停止する|アカウントの無効化に関するヘルプページ]]をご参照ください。アカウントを無効化するには、次のボタンをクリックしてください。
 
@@ -285,11 +285,11 @@ $messages['ja'] = array(
 	'closemyaccount-unconfirmed-email' => '警告: このアカウントで承認されているメールアドレスがありません。あなたのアカウントを再有効化するには、承認済みのメールアドレスが必要です。手続きに入る前に[[Special:Preferences|個人設定]]にてメールアドレスを設定して下さい。',
 	'closemyaccount-logged-in-as' => 'あなたは {{GENDER:$1|$1}} としてログインしています。[[Special:UserLogout|別人ですか？]]',
 	'closemyaccount-current-email' => 'あなたの登録メールアドレスは $1 です。[[Special:Preferences|変更をご希望ですか？]]',
-	'closemyaccount-confirm' => '{{GENDER:$1|私}}は、[[w:c:ja.community:ヘルプ:アカウントの利用を停止する|アカウントを閉じる]]を読み、自身のFandomアカウントを無効化することに同意します。',
+	'closemyaccount-confirm' => '{{GENDER:$1|私}}は、[[w:c:ja.community:ヘルプ:アカウントの利用を停止する|アカウントを閉じる]]を読み、自身のFANDOMアカウントを無効化することに同意します。',
 	'closemyaccount-button-text' => 'アカウントを閉じる',
 	'closemyaccount-reactivate-button-text' => 'アカウントを再有効化する',
 	'closemyaccount-reactivate-page-title' => 'アカウントを再有効化する',
-	'closemyaccount-reactivate-intro' => 'Fandomでは、{{GENDER:$2|あなた}} からアカウント無効化リクエストを受け取りました。アカウントが完全に無効となるまであと$1{{PLURAL:$1|日間|日間}} あります。アカウントを完全に無効としたい場合、特に追加のアクションは必要ありません。アカウントを再開する場合は、下のボタンをクリックし、受信されたメールに記載の手順に従ってください。
+	'closemyaccount-reactivate-intro' => 'FANDOMでは、{{GENDER:$2|あなた}} からアカウント無効化リクエストを受け取りました。アカウントが完全に無効となるまであと$1{{PLURAL:$1|日間|日間}} あります。アカウントを完全に無効としたい場合、特に追加のアクションは必要ありません。アカウントを再開する場合は、下のボタンをクリックし、受信されたメールに記載の手順に従ってください。
 
 アカウントを再開しますか？',
 	'closemyaccount-reactivate-requested' => 'あなたのアカウントで設定されたアドレスに、メールが送信されました。アカウントを再有効化するにはメールにあるリンクをクリックして下さい。',
@@ -298,12 +298,12 @@ $messages['ja'] = array(
 	'closemyaccount-reactivate-error-not-scheduled' => 'アカウントを閉じる予定はありません。',
 	'closemyaccount-reactivate-error-invalid-code' => '有効期限が切れている承認コードを使用していると表示されています。メールにて送られた新しいコードを確認するか、[[Special:UserLogin|ログイン]] からアカウントを再有効化する新しいコードをリクエストし、手順を踏んで下さい。',
 	'closemyaccount-reactivate-error-empty-code' => 'あなたのアカウントを再有効化するのに必要な承認コードが指定されていません。アカウントの再有効化をしたい場合は、送信されたメール内にあるリンクをクリックして手続きを行って下さい。また承認コードをリクエストするためには、再有効化したいアカウントで[[Special:UserLogin|ログイン]]して下さい。',
-	'closemyaccount-reactivate-error-disabled' => 'このアカウントは無効化されています。ご不明な点は[[Special:Contact|Fandomにお問い合わせ]]ください。',
-	'closemyaccount-reactivate-error-failed' => 'このアカウントを有効化する際にエラーが発生しました。お手数ですが、もう一度お試しください。それでもこの問題が解決しない場合は、[[Special:Contact|Fandomにお問い合わせ]]ください。',
+	'closemyaccount-reactivate-error-disabled' => 'このアカウントは無効化されています。ご不明な点は[[Special:Contact|FANDOMにお問い合わせ]]ください。',
+	'closemyaccount-reactivate-error-failed' => 'このアカウントを有効化する際にエラーが発生しました。お手数ですが、もう一度お試しください。それでもこの問題が解決しない場合は、[[Special:Contact|FANDOMにお問い合わせ]]ください。',
 	'closemyaccount-scheduled' => 'あなたのアカウントを無効化する手続きをしています。
 
 今から$1 {{PLURAL:$1|day|days}} 日間は、[[Special:UserLogin|ログイン]]からあなたのアカウントの再有効化することができます。詳細は手順にてご確認ください。この期間を過ぎるとあなたのアカウントは永久に無効化され、再度有効化することはできません。',
-	'closemyaccount-scheduled-failed' => 'アカウントを無効化する際にエラーが発生しました。お手数ですが、[[Special:CloseMyAccount|もう一度お試しください]]。それでもこの問題が解決しない場合は、[[Special:Contact|Fandomにお問い合わせ]]ください。',
+	'closemyaccount-scheduled-failed' => 'アカウントを無効化する際にエラーが発生しました。お手数ですが、[[Special:CloseMyAccount|もう一度お試しください]]。それでもこの問題が解決しない場合は、[[Special:Contact|FANDOMにお問い合わせ]]ください。',
 	'closemyaccount-reactivate-error-fbconnect' => '{{GENDER:$1|あなた}}は、アカウントの無効化をリクエストされました。このアカウントの再開をご希望の場合は、[[特別:アカウント停止/reactivate|アカウントの再開ページ]]に移動して画面の手順に沿って行ってください。',
 	'closemyaccount-reactivate-success' => 'アカウントが再開されました。',
 );
@@ -485,11 +485,11 @@ $messages['ru'] = array(
 $messages['zh-hans'] = array(
 	'closemyaccount' => '关闭我的帐户',
 	'closemyaccount-desc' => '允许用户关闭其自己的帐户。',
-	'closemyaccount-intro-text' => '我们很抱歉您希望禁用您的帐户。Fandom拥有众多的流行话题，您在此可以不断查看新的主题社区。如果您在任何喜欢的维基上遇到了问题，您可以选择联系这个维基的[[Special:ListUsers/sysop|管理员]]获取建议和帮助。
+	'closemyaccount-intro-text' => '我们很抱歉您希望禁用您的帐户。FANDOM拥有众多的流行话题，您在此可以不断查看新的主题社区。如果您在任何喜欢的维基上遇到了问题，您可以选择联系这个维基的[[Special:ListUsers/sysop|管理员]]获取建议和帮助。
 
 如果您已经确定需要禁用帐户，您需要注意的是：
-* Fandom没有能力完全删除您的帐户，但是我们可以禁用您的帐户。这将确保此帐户被永久锁定，不能被再次使用。
-* 这个过程将在$1{{PLURAL:$1|天|天}}后不可逆。如果之后您希望重新加入Fandom，您必须重新创建一个新的帐户。
+* FANDOM没有能力完全删除您的帐户，但是我们可以禁用您的帐户。这将确保此帐户被永久锁定，不能被再次使用。
+* 这个过程将在$1{{PLURAL:$1|天|天}}后不可逆。如果之后您希望重新加入FANDOM，您必须重新创建一个新的帐户。
 * 禁用的过程不会删除您旧帐户的历史纪录，因为这些纪录属于您之前编辑过的维基社区的一部分。
 
 如果您希望了解更多关于禁用帐户的有关信息，请访问社区中心的[[Help:Close_my_account|帮助:关闭帐户]]。如果您确定需要关闭您的帐户，请点击下面的按钮。
@@ -498,7 +498,7 @@ $messages['zh-hans'] = array(
 	'closemyaccount-unconfirmed-email' => '警告: 您并没有任何和您帐户相连的注册邮件信息，因此我们将不能在有效时间内帮您重新激活帐户。请您在进行下一步之前，在[[Special:Preferences|个人设置]]中设置您的电子邮箱。',
 	'closemyaccount-logged-in-as' => '您将作为{{GENDER:$1|$1}}登陆。[[Special:UserLogout|非本人?]]',
 	'closemyaccount-current-email' => '{{GENDER:$2|您的}}电子邮箱将被设置为$1。[[Special:Preferences|还需要进行更改吗？]]',
-	'closemyaccount-confirm' => '{{GENDER:$1|我}}已经阅读了[[Help:Close_my_account|关闭帐户帮助页]]的相关条款并且同意禁用我的Fandom帐户。',
+	'closemyaccount-confirm' => '{{GENDER:$1|我}}已经阅读了[[Help:Close_my_account|关闭帐户帮助页]]的相关条款并且同意禁用我的FANDOM帐户。',
 	'closemyaccount-button-text' => '关闭我的帐户',
 	'closemyaccount-reactivate-button-text' => '重新激活我的帐户',
 	'closemyaccount-reactivate-page-title' => '重新激活我的帐户',
@@ -511,8 +511,8 @@ $messages['zh-hans'] = array(
 	'closemyaccount-reactivate-error-not-scheduled' => '帐户不能被成功关闭。',
 	'closemyaccount-reactivate-error-invalid-code' => '{{GENDER:$1|您}}似乎使用的是过期的验证码。请登陆您的邮箱查看最新的验证码，或者[[Special:UserLogin|登陆您之前要求封禁的帐户]]，按步骤重新进行激活。 ',
 	'closemyaccount-reactivate-error-empty-code' => '激活帐户的验证码不可用。您需要点击邮件中的链接地址重新激活您的帐户；或者，您可以[[Special:UserLogin|登入]]帐户重新发送验证码。',
-	'closemyaccount-reactivate-error-disabled' => '这个帐户已经被禁用。如果您有任何问题，请[[Special:Contact|联系Fandom]]。',
-	'closemyaccount-reactivate-error-failed' => '重新激活帐户出现错误，请再试一次。如果问题依然存在，请[[Special:Contact|联系Fandom]]。',
+	'closemyaccount-reactivate-error-disabled' => '这个帐户已经被禁用。如果您有任何问题，请[[Special:Contact|联系FANDOM]]。',
+	'closemyaccount-reactivate-error-failed' => '重新激活帐户出现错误，请再试一次。如果问题依然存在，请[[Special:Contact|联系FANDOM]]。',
 	'closemyaccount-scheduled' => '您的帐户已经成功被禁用。
 
 请注意，您还有$1{{PLURAL:$1|天|天}}时间重新激活您的帐户。请您[[Special:UserLogin|登入帐户]]进行激活。在这段时间之后，您的帐户将被永久禁用并且无法恢复。 ',
@@ -524,11 +524,11 @@ $messages['zh-hans'] = array(
 $messages['zh-hant'] = array(
 	'closemyaccount' => '關閉我的帳號',
 	'closemyaccount-desc' => '允許用戶關閉其帳號。',
-	'closemyaccount-intro-text' => '我們很遺憾您希望關閉您的帳號。Fandom擁有眾多流行主題的Wiki，我們很希望您能找到並持續參與您喜好的主題社區。如果您在任何喜歡的wiki上遇到了問題，您可以選擇聯絡這個wiki的[[Special:ListUsers/sysop|管理員]]獲取建議和幫助。
+	'closemyaccount-intro-text' => '我們很遺憾您希望關閉您的帳號。FANDOM擁有眾多流行主題的Wiki，我們很希望您能找到並持續參與您喜好的主題社區。如果您在任何喜歡的wiki上遇到了問題，您可以選擇聯絡這個wiki的[[Special:ListUsers/sysop|管理員]]獲取建議和幫助。
 
 如果您已經確定需要關閉帳號，您需要注意的是：
-* Fandom無法完全刪除您的帳號，但是我們可以關閉您的帳號。這將確保此帳號被永久鎖定，不能被再次使用。
-* 這個過程將在$1{{PLURAL:$1|天|天}}後無法恢復。之後如果您希望重新加入Fandom，您必須重新創建一個新的帳號。
+* FANDOM無法完全刪除您的帳號，但是我們可以關閉您的帳號。這將確保此帳號被永久鎖定，不能被再次使用。
+* 這個過程將在$1{{PLURAL:$1|天|天}}後無法恢復。之後如果您希望重新加入FANDOM，您必須重新創建一個新的帳號。
 * 關閉的過程不會刪除您舊帳號的歷史紀錄，因為這些紀錄屬於您之前編輯過的wiki社區的一部分。
 
 如果您希望了解更多關於關閉帳號的資訊，請訪問社區中心的[[Help:Close_my_account|幫助:關閉帳戶]]。如果您確定需要關閉您的帳號，請按下面的按鈕。
@@ -537,7 +537,7 @@ $messages['zh-hant'] = array(
 	'closemyaccount-unconfirmed-email' => '警告: 您並沒有任何和您帳號相連的電子郵件信箱，這我們將不能在及時內幫您重新啟動帳戶。請您在進行下一步之前，在[[Special:Preferences|個人設定]]中設置您的電子郵箱。',
 	'closemyaccount-logged-in-as' => '您將以{{GENDER:$1|$1}}登錄。[[Special:UserLogout|非本人?]]',
 	'closemyaccount-current-email' => '{{GENDER:$2|您的}}電子郵箱將設置為$1。[[Special:Preferences|您希望進行更改嗎?]]',
-	'closemyaccount-confirm' => '{{GENDER:$1|我}}已經閱讀了[[Help:Close_my_account|關閉帳號幫助頁面]]中的相關條款並且同意關閉我的Fandom帳號。',
+	'closemyaccount-confirm' => '{{GENDER:$1|我}}已經閱讀了[[Help:Close_my_account|關閉帳號幫助頁面]]中的相關條款並且同意關閉我的FANDOM帳號。',
 	'closemyaccount-button-text' => '關閉我的帳號',
 	'closemyaccount-reactivate-button-text' => '重新啟動我的帳號',
 	'closemyaccount-reactivate-page-title' => '重新啟動我的帳號',
@@ -551,7 +551,7 @@ $messages['zh-hant'] = array(
 	'closemyaccount-reactivate-error-not-scheduled' => '帳號未能成功關閉。',
 	'closemyaccount-reactivate-error-invalid-code' => '{{GENDER:$1|您}}似乎使用的是過期的驗證碼。請至您的郵箱查看最新的驗證碼，或者[[Special:UserLogin|登錄您之前要求關閉的帳號]]，按步驟進行重新啟用帳號。',
 	'closemyaccount-reactivate-error-empty-code' => '未提供重啟帳號所需要的驗證碼。如果您已申請帳號重啟，您需要點擊郵件中的鏈接以重新啟用您的帳號；或者，您可以[[Special:UserLogin|登錄]]想要重啟的帳號申請發送驗證碼。',
-	'closemyaccount-reactivate-error-disabled' => '這個帳號已經關閉。如果您有任何問題，請[[Special:Contact|聯絡Fandom]]。',
+	'closemyaccount-reactivate-error-disabled' => '這個帳號已經關閉。如果您有任何問題，請[[Special:Contact|聯絡FANDOM]]。',
 	'closemyaccount-reactivate-error-failed' => '重新啟用帳號出現錯誤，請再試一次。如果問題依然存在，請[[Special:Contact|聯絡我們]]。',
 	'closemyaccount-reactivate-success' => '您的帳號已經重新啟動了。',
 	'closemyaccount-scheduled' => '您的帳號已經成功關閉。

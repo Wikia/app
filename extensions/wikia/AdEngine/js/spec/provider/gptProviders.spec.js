@@ -16,11 +16,6 @@ describe('ext.wikia.adEngine.provider.*', function () {
 				return mocks.context;
 			}
 		},
-		passbackHandler: {
-			get: function () {
-				return null;
-			}
-		},
 		adUnitBuilder: {
 			build: function (slotName, src) {
 				return '/5441/wka.ent/_muppet//home/' + src + '/' + slotName;
@@ -78,7 +73,6 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			mocks.btfBlocker,
 			mocks.gptHelper,
 			mocks.adUnitBuilder,
-			mocks.passbackHandler,
 			mocks.slotRegistry,
 			mocks.log,
 			mocks.lookups

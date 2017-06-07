@@ -241,7 +241,7 @@ $messages['lol'] = array(
 	'sharedhelp-searchprofile' => 'crwdns65544:0crwdne65544:0',
 	'sharedhelp-searchprofile-tooltip' => 'crwdns65545:0crwdne65545:0',
 	'shared_help_info' => 'crwdns65546:0crwdne65546:0',
-	'shared_help_edit_info' => 'crwdns65547:0{{SITENAME}}crwdne65547:0',
+	'shared_help_edit_info' => 'crwdns66336:0{{SITENAME}}crwdne66336:0',
 	'shared_help_search_info' => 'crwdns65548:0crwdne65548:0',
 	'shared_help_was_redirect' => 'crwdns65549:0crwdne65549:0',
 );
@@ -438,9 +438,9 @@ $messages['zh-hans'] = array(
 	'sharedhelp-searchprofile' => '帮助页面',
 	'sharedhelp-searchprofile-tooltip' => '搜索帮助页面',
 	'shared_help_info' => '对帮助内容有疑问？赶快去[[w:zh:Special:Forum|社区论坛]]提问吧。',
-	'shared_help_edit_info' => "这里的帮助文字储存在Fandom$2的[[w:c:zh.community:Help:$1|帮助:$1]]页面。参见[[Help:Shared Help|帮助:共享帮助页面]] 获得更多信息。 
+	'shared_help_edit_info' => "这里的帮助文字储存在FANDOM$2的[[w:c:zh.community:Help:$1|帮助:$1]]页面。参见[[Help:Shared Help|帮助:共享帮助页面]] 获得更多信息。 
 
-任何会影响到''所有''维基的改变都要先经由Fandom$2，可至[[w:c:zh.community:Help_talk:$1|这里提出建议]]。
+任何会影响到''所有''维基的改变都要先经由FANDOM$2，可至[[w:c:zh.community:Help_talk:$1|这里提出建议]]。
 
 如果你希望解释适用于{{SITENAME}}的政策方针，可以在这里撰写内容。这里增加的内容会显示到下面的帮助文本中。",
 	'shared_help_search_info' => '要搜索编辑帮助，请访问[http://c.wikia.com/wiki/Special:Search?search=$1 社群中心]',
@@ -452,9 +452,9 @@ $messages['zh-hant'] = array(
 	'sharedhelp-autotalkcreate-summary' => '討論頁已自動建立',
 	'sharedhelp-searchprofile' => '幫助頁面',
 	'sharedhelp-searchprofile-tooltip' => '搜尋使用說明頁面',
-	'shared_help_edit_info' => "這裡的幫助文字存儲在Fandom$2的[[w:c:zh.community:Help:$1|幫助:$1]]頁面。參閱[[Help:Shared Help|幫助:共享幫助頁面]]獲得更多訊息。
+	'shared_help_edit_info' => "這裡的幫助文字存儲在FANDOM$2的[[w:c:zh.community:Help:$1|幫助:$1]]頁面。參閱[[Help:Shared Help|幫助:共享幫助頁面]]獲得更多訊息。
 
-任何會影響到''所有''wiki的改變都要先經由Fandom$2，可至[[w:c:zh.community:Help_talk:$1|這裡提出修改建議]]。
+任何會影響到''所有''wiki的改變都要先經由FANDOM$2，可至[[w:c:zh.community:Help_talk:$1|這裡提出修改建議]]。
 
 如果你希望解釋適用於{{SITENAME}}的政策方針，可以在這裡撰寫內容。這裡增加的內容會顯示到下面的幫助文本中。",
 	'shared_help_info' => '對幫助內容有疑問？趕快去[[w:zh:Special:Forum|社區論壇]]提問吧。',

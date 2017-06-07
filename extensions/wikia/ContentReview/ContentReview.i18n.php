@@ -405,7 +405,7 @@ $messages['ja'] = array(
 	'content-review-status-live' => '公開中',
 	'content-review-status-autoapproved' => '自動承認済み',
 	'content-review-rejection-explanation' => '==$1==
-最近申請したこのJavaScriptページへの変更（版[$2 $3]）は、Fandomの審査プロセスにおいて拒否されました。[[ヘルプ:JavaScriptの審査プロセス|カスタムJavaScriptのガイドライン]]を満たしていることをご確認ください。--~~~~',
+最近申請したこのJavaScriptページへの変更（版[$2 $3]）は、FANDOMの審査プロセスにおいて拒否されました。[[ヘルプ:JavaScriptの審査プロセス|カスタムJavaScriptのガイドライン]]を満たしていることをご確認ください。--~~~~',
 	'content-review-status-link-text' => '審査状況',
 	'content-review-rejection-explanation-title' => '申請したスクリプトの変更「$1」が拒否されました',
 	'content-review-special-js-pages-title' => 'JavaScriptページ',
@@ -723,7 +723,7 @@ $messages['zh-hans'] = array(
 	'content-review-status-live' => '已发布',
 	'content-review-status-autoapproved' => '自动批准',
 	'content-review-rejection-explanation' => '==$1==
-JavaScript页面最近提交的变更请求(版本[$2 $3]) 未通过Fandom审核。请确保您的变更符合[[Help:JavaScript review process|JavaScript审核流程]]。--~~~~',
+JavaScript页面最近提交的变更请求(版本[$2 $3]) 未通过FANDOM审核。请确保您的变更符合[[Help:JavaScript review process|JavaScript审核流程]]。--~~~~',
 	'content-review-status-link-text' => '审核状态',
 	'content-review-rejection-explanation-title' => '提交的脚本更改$1被拒绝',
 	'content-review-special-js-pages-title' => 'JavaScript页面',
@@ -785,7 +785,7 @@ $messages['zh-hant'] = array(
 	'content-review-status-live' => '已發佈',
 	'content-review-status-autoapproved' => '已自動批准',
 	'content-review-rejection-explanation' => '==$1==
-JavaScript頁最近提交的變更請求(版本[$2 $3]) 未通過Fandom的審核。 請確保您的變更符合[[Help:JavaScript review process|JavaScript審核規則]]。 --~~~~',
+JavaScript頁最近提交的變更請求(版本[$2 $3]) 未通過FANDOM的審核。 請確保您的變更符合[[Help:JavaScript review process|JavaScript審核規則]]。 --~~~~',
 	'content-review-status-link-text' => '審核狀態',
 	'content-review-rejection-explanation-title' => '提交的腳本更改$1未能通過',
 	'content-review-special-js-pages-title' => 'JavaScript頁面',
