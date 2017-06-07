@@ -534,8 +534,6 @@ var NodeChatController = $.createClass(NodeRoomController, {
 		this.viewUsers.bind('showPrivateMessage', $.proxy(this.privateMessage, this));
 		this.viewUsers.bind('kick', $.proxy(this.kick, this));
 		this.viewUsers.bind('ban', $.proxy(this.ban, this));
-		this.viewUsers.bind('giveChatMod', $.proxy(this.giveChatMod, this));
-
 
 		this.viewUsers.bind('blockPrivateMessage', $.proxy(this.blockPrivate, this));
 		this.viewUsers.bind('allowPrivateMessage', $.proxy(this.allowPrivate, this));
@@ -601,10 +599,6 @@ var NodeChatController = $.createClass(NodeRoomController, {
 			}
 		} else {
 			actions.regular.push('private-allow');
-		}
-
-		if (this.userMain.get('canPromoteModerator') === true && user.get('isModerator') === false) {
-			actions.admin.push('give-chat-mod');
 		}
 
 		if (this.userMain.get('isModerator') === true && user.get('isModerator') === false) {
@@ -840,14 +834,6 @@ var NodeChatController = $.createClass(NodeRoomController, {
 			var newChatEntry = new models.InlineAlert({text: mw.message('chat-ban-cannt-undo').escaped()});
 			this.model.chats.add(newChatEntry);
 		}
-	},
-
-	giveChatMod: function (user) {
-		$().log("Attempting to give chat mod to user: " + user.name);
-		var giveChatModCommand = new models.GiveChatModCommand({userToPromote: user.name});
-		this.socket.send(giveChatModCommand.xport());
-
-		this.viewUsers.hideMenu();
 	},
 
 	onUpdateUser: function (message) {

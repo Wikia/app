@@ -82,16 +82,6 @@ var STATUS_STATE_AWAY = 'away';
 		}
 	});
 
-	models.GiveChatModCommand = models.Command.extend({
-		initialize: function(options){
-			if(!options) return;
-			this.set({
-				command: 'givechatmod',
-				userToPromote: options.userToPromote
-			});
-		}
-	});
-
 	models.SetStatusCommand = models.Command.extend({
 		initialize: function(options){
 			if(!options) return;
