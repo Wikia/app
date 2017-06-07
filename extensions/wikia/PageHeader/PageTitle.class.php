@@ -67,7 +67,7 @@ class PageTitle {
 	}
 
 	private function handlePrefix() {
-		if ( $this->MWTitle->isTalkPage() ) {
+		if ( $this->MWTitle->isTalkPage() && !$this->isWallMessage() ) {
 			return $this->wg->ContLang->getNsText( NS_TALK );
 		}
 
@@ -97,8 +97,11 @@ class PageTitle {
 	}
 
 	private function getTitleForWallMessage(): string {
-		$wallMessageTitle = Title::newFromID( $this->MWTitle->getText() );
-
-		return WallMessage::newFromTitle( $wallMessageTitle )->getArticleTitle();
+		$messageKey = $this->MWTitle->getText();
+		$message = WallMessage::newFromId( $messageKey );
+		if ( !empty( $message ) ) {
+			$message->load();
+			return $message->getMetaTitle();
+		}
 	}
 }
