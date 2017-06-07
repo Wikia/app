@@ -121,6 +121,10 @@
 
 	&__page-subtitle {
 		margin-top: 6px;
+
+		.removed {
+			color: rgba($color-text, .6);
+		}
 	}
 
 	&__subtitle-blog-post {
