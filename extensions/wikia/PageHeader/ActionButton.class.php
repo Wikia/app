@@ -139,6 +139,12 @@ class ActionButton {
 		}
 	}
 
+	public function shouldDisplay(): bool {
+		return !$this->title->isSpecialPage()
+			&& !empty( $this->buttonAction['href'] )
+			&& !empty( $this->buttonAction['text'] );
+	}
+
 	private function isArticleCommentsEnabled(): bool {
 		return class_exists( 'ArticleComment' ) && \ArticleCommentInit::ArticleCommentCheckTitle( $this->title );
 	}

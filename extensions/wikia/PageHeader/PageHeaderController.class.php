@@ -5,10 +5,17 @@ namespace Wikia\PageHeader;
 
 class PageHeaderController extends \WikiaController {
 
+	/** @var  ActionButton */
+	private $actionButton;
+
+	public function init() {
+		$this->actionButton = $button = new ActionButton( \RequestContext::getMain() );
+	}
+
 	public function index() {
 		$title = \RequestContext::getMain()->getTitle();
 
-		$displayActionButton = !$title->isSpecialPage();
+		$displayActionButton = $this->actionButton->shouldDisplay();
 
 		wfRunHooks( 'PageHeaderBeforeDisplay', [ $title, &$displayActionButton ] );
 
@@ -26,10 +33,8 @@ class PageHeaderController extends \WikiaController {
 	}
 
 	public function actionButton() {
-		$button = new ActionButton( \RequestContext::getMain() );
-
-		$this->setVal( 'buttonAction', $button->getButtonAction());
-		$this->setval( 'dropdownActions', $button->getDropdownActions());
+		$this->setVal( 'buttonAction', $this->actionButton->getButtonAction());
+		$this->setval( 'dropdownActions', $this->actionButton->getDropdownActions());
 	}
 
 	public function languages() {
