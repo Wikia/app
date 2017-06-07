@@ -3,6 +3,7 @@
 namespace Wikia\PageHeader;
 
 use AvatarService;
+use DesignSystemHelper;
 use FakeSkin;
 use Html;
 use PageStatsService;
@@ -149,7 +150,7 @@ class Subtitle {
 
 			return \Linker::link(
 				$this->title->getSubjectPage(),
-				wfMessage( $msgKey )->escaped(),
+				$this->getBackArrow() . wfMessage( $msgKey )->escaped(),
 				[ 'accesskey' => 'c' ]
 			);
 		}
@@ -204,13 +205,20 @@ class Subtitle {
 	}
 
 	/**
+	 * @return string
+	 */
+	private function getBackArrow() {
+		return DesignSystemHelper::renderSvg( 'wds-icons-upvote-reply-tiny', 'wds-icon wds-icon-tiny page-header__subtitle-back-icon' );
+	}
+
+	/**
 	 * back to article link
 	 * @return string
 	 */
 	private function getBackLink() {
 		return \Wikia::link(
 			$this->title,
-			wfMessage( 'oasis-page-header-back-to-article' )->escaped(),
+			$this->getBackArrow() . wfMessage( 'oasis-page-header-back-to-article' )->escaped(),
 			[ 'accesskey' => 'c' ],
 			[],
 			'known'
