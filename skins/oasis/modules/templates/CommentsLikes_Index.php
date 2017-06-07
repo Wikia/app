@@ -13,17 +13,21 @@
 <? // show comments / talk button ?>
 <? elseif (isset($comments)):
 	$msg = $commentsEnabled ? 'oasis-page-header-comments' : 'oasis-page-header-talk';
+?>
+<!--	echo F::app()->renderView('MenuButton', 'Index', array(-->
+<!--		'action' => array(-->
+<!--			'text' => wfMessage( $msg, $comments )->text(),-->
+<!--			'html' => '<span class="commentsbubble">' . $formattedComments . '</span>',-->
+<!--			'href' => $commentsLink,-->
+<!--			// don't use MenuButton module magic to get accesskey for this item (BugId:15698 / 15685)-->
+<!--			'accesskey' => wfMsg( 'accesskey-ca-talk' ),-->
+<!--		),-->
+<!--		'name' => 'comment',-->
+<!--		'class' => 'comments secondary' . ( empty( $isArticleComments ) ? ' talk' : '' ),-->
+<!--		'nofollow' => true-->
+<!--	));-->
+	<a class="wds-button wds-is-squished wds-is-secondary" href="<?= $commentsLink ?>" accesskey="<?= wfMsg( 'accesskey-ca-talk' ) ?>">
+		<span><?= wfMessage( $msg, $comments )->text() ?> (<?= $formattedComments ?>)</span>
+	</a>
+<? endif; ?>
 
-	echo F::app()->renderView('MenuButton', 'Index', array(
-		'action' => array(
-			'text' => wfMessage( $msg, $comments )->text(),
-			'html' => '<span class="commentsbubble">' . $formattedComments . '</span>',
-			'href' => $commentsLink,
-			// don't use MenuButton module magic to get accesskey for this item (BugId:15698 / 15685)
-			'accesskey' => wfMsg( 'accesskey-ca-talk' ),
-		),
-		'name' => 'comment',
-		'class' => 'comments secondary' . ( empty( $isArticleComments ) ? ' talk' : '' ),
-		'nofollow' => true
-	));
-endif; ?>
