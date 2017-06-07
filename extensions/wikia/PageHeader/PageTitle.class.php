@@ -4,6 +4,7 @@ namespace Wikia\PageHeader;
 
 use \RequestContext;
 use \Title;
+use \WallMessage;
 use \WikiaGlobalRegistry;
 use \WikiaApp;
 use \WikiaPageType;
@@ -40,14 +41,21 @@ class PageTitle {
 	private function handleTitle( WikiaApp $app ): string {
 		if ( WikiaPageType::isMainPage() ) {
 			return $this->titleMainPage();
-		} else if ( $this->MWTitle->isTalkPage() || $this->shouldNotDisplayNamespacePrefix( $this->namespace ) ) {
+		} else if ( $this->shouldNotDisplayNamespacePrefix( $this->namespace ) ) {
 			return htmlspecialchars( $this->MWTitle->getText() );
+		} else if ( $this->MWTitle->isTalkPage() ) {
+			return $this->isWallMessage() ?
+				$this->getTitleForWallMessage() :
+				htmlspecialchars( $this->MWTitle->getText() );
 		} else if ( $this->request->getCheck( 'diff' ) ) {
 			return $this->prefixedTitle( 'page-header-title-prefix-changes' );
 		} else if ( $this->request->getVal( 'action', 'view' ) == 'history' ) {
 			return $this->prefixedTitle( 'page-header-title-prefix-history' );
-		} else if ( defined( 'NS_BLOG_ARTICLE' ) && $this->MWTitle->getNamespace() == NS_BLOG_ARTICLE &&
-		            $this->MWTitle->isSubpage()) {
+		} else if (
+			defined( 'NS_BLOG_ARTICLE' ) &&
+			$this->MWTitle->getNamespace() == NS_BLOG_ARTICLE &&
+            $this->MWTitle->isSubpage()
+		) {
 			// remove User_blog:xxx from title
 			$titleParts = explode( '/', $this->MWTitle->getText() );
 			array_shift( $titleParts );
@@ -59,7 +67,7 @@ class PageTitle {
 	}
 
 	private function handlePrefix() {
-		if ( $this->MWTitle->isTalkPage() ) {
+		if ( $this->MWTitle->isTalkPage() && !$this->isWallMessage() ) {
 			return $this->wg->ContLang->getNsText( NS_TALK );
 		}
 
@@ -76,11 +84,24 @@ class PageTitle {
 		);
 	}
 
+	private function isWallMessage(): bool {
+		return $this->MWTitle->getNamespace() === NS_USER_WALL_MESSAGE;
+	}
+
 	private function titleMainPage(): string {
 		return wfMessage( 'oasis-home' )->escaped();
 	}
 
 	private function prefixedTitle( $prefixKey ): string {
 		return wfMessage( $prefixKey, $this->MWTitle->getPrefixedText() )->escaped();
+	}
+
+	private function getTitleForWallMessage(): string {
+		$messageKey = $this->MWTitle->getText();
+		$message = WallMessage::newFromId( $messageKey );
+		if ( !empty( $message ) ) {
+			$message->load();
+			return $message->getMetaTitle();
+		}
 	}
 }

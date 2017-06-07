@@ -126,19 +126,20 @@ JS
 	}
 
 	/**
-	 * Adds navigation for WikiActivity to page header's page subtitle
+	 * Replaces page header's page subtitle with navigation for WikiActivity
 	 *
-	 * @param array $pageSubtitle
+	 * @param string $pageSubtitle
 	 *
 	 * @return bool
 	 */
 	function addNavigationToPageHeader( &$pageSubtitle ) {
 		$wgUser = RequestContext::getMain()->getUser();
+		$items = [];
 
 		if ( $wgUser->isLoggedIn() ) {
 			if ( $this->feedSelected === 'watchlist' ) {
 				array_push(
-					$pageSubtitle,
+					$items,
 					Wikia::specialPageLink(
 						'WikiActivity/activity',
 						'myhome-activity-feed'
@@ -146,7 +147,7 @@ JS
 				);
 			} else {
 				array_push(
-					$pageSubtitle,
+					$items,
 					Wikia::specialPageLink(
 						'WikiActivity/watchlist',
 						'oasis-button-wiki-activity-watchlist'
@@ -156,25 +157,28 @@ JS
 		}
 
 		array_push(
-			$pageSubtitle,
+			$items,
 			Wikia::specialPageLink(
 				'RecentChanges',
 				'oasis-button-wiki-activity-feed'
 			)
 		);
 
+		$pageSubtitle = implode( wfMessage( 'pipe-separator' )->escaped(), $items );
+
 		return true;
 	}
 
 	/**
-	 * Adds checkbox to page header's subtitle
+	 * Replaces page header's subtitle with a checkbox
 	 *
-	 * @param array $subtitle
+	 * @param string $subtitle
 	 *
 	 * @return bool
 	 */
 	function addCheckboxToPageHeader( &$subtitle ) {
 		$wgUser = RequestContext::getMain()->getUser();
+		$subtitle = '';
 
 		// RT #68074: show default view checkbox for logged-in users only
 		if ( $wgUser->isLoggedIn() && ( $this->defaultView != $this->feedSelected ) ) {
@@ -183,7 +187,7 @@ JS
 				'type' => $this->feedSelected
 			] );
 
-			array_push( $subtitle, $template->render( 'page.header.checkbox' ) );
+			$subtitle = $template->render( 'page.header.checkbox' );
 		}
 
 		return true;

@@ -8,7 +8,6 @@ use Html;
 use PageStatsService;
 use RequestContext;
 use Title;
-use Wikia\TemplateClassification\View;
 use WikiaApp;
 
 class Subtitle {
@@ -86,26 +85,17 @@ class Subtitle {
 	}
 
 	private function getSubtitle( WikiaApp $app ) {
-		$output = RequestContext::getMain()->getOutput();
-
 		if ( self::isEditPage() ) {
 			return $this->getEditPageSubtitle();
 		} else if ( defined( 'NS_BLOG_ARTICLE' ) && $this->title->getNamespace() === NS_BLOG_ARTICLE ) {
 			return $this->getBlogArticleSubtitle( $app );
 		}
 
-		$additional = [];
-		wfRunHooks( 'AfterPageHeaderSubtitle', [ &$additional ] );
+		$subtitle = RequestContext::getMain()->getOutput()->getSubtitle();
 
-		return implode(
-			wfMessage( 'pipe-separator' )->escaped(),
-			array_filter(
-				array_merge(
-					[ $output->getSubtitle() ],
-					$additional
-				)
-			)
-		);
+		wfRunHooks( 'AfterPageHeaderSubtitle', [ &$subtitle ] );
+
+		return $subtitle;
 	}
 
 	private function getEditPageSubtitle() {
@@ -132,7 +122,7 @@ class Subtitle {
 	}
 
 	private function getTalkPageBackLink() {
-		if ( $this->title->isTalkPage() ) {
+		if ( $this->title->isTalkPage() && $this->title->getNamespace() !== NS_USER_WALL_MESSAGE ) {
 			$namespace = $this->title->getNamespace();
 
 			// back to subject article link
@@ -179,8 +169,7 @@ class Subtitle {
 		} else if (
 			$namespace === NS_SPECIAL &&
 			!$this->title->isSpecial( 'Forum' ) &&
-			!$this->title->isSpecial( 'ThemeDesignerPreview' ) &&
-			!$this->title->isSpecial( 'WikiActivity' )
+			!$this->title->isSpecial( 'ThemeDesignerPreview' )
 		) {
 			$pageType = wfMessage( 'page-header-subtitle-special' )->escaped();
 		} else if ( $namespace === NS_CATEGORY ) {
@@ -242,15 +231,15 @@ class Subtitle {
 			$this->getSubPageLinks(),
 		];
 
-		$additional = [];
-		wfRunHooks( 'AfterPageHeaderPageSubtitle', [ &$additional ] );
-
-		$subtitle =
-			array_filter( array_merge( $subtitle, $this->languageVariants(), $additional ) );
+		$subtitle = array_filter( array_merge( $subtitle, $this->languageVariants() ) );
 
 		$pipe = wfMessage( 'pipe-separator' )->escaped();
 
-		return implode( " {$pipe} ", $subtitle );
+		$subtitleHTML = implode( " {$pipe} ", $subtitle );
+
+		wfRunHooks( 'AfterPageHeaderPageSubtitle', [ &$subtitleHTML, $this->title ] );
+
+		return $subtitleHTML;
 	}
 
 	private function getBlogArticleSubtitle( WikiaApp $app ) {
