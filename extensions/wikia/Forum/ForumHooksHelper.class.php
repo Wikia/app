@@ -78,7 +78,6 @@ class ForumHooksHelper {
 		if ( $title->getNamespace() === NS_WIKIA_FORUM_BOARD ) {
 			$path[] = static::getIndexPath();
 			$path[] = [ 'title' => wfMessage( 'forum-board-title', $title->getText() )->escaped(), ];
-
 		}
 		return true;
 	}
@@ -490,7 +489,7 @@ class ForumHooksHelper {
 			RequestContext::getMain()->getRequest()->getVal( 'action' ) !== 'history'
 		) {
 			$pageSubtitle = F::app()->renderView(
-				'Wall',
+				'Forum',
 				'brickHeader',
 				[
 					'id' => $title->getText()

@@ -192,6 +192,30 @@ class ForumController extends WallBaseController {
 		wfProfileOut( __METHOD__ );
 	}
 
+	public function brickHeader() {
+		if ( $this->app->wg->Title->getNamespace() == NS_WIKIA_FORUM_TOPIC_BOARD ) {
+			$indexPage = Title::newFromText( 'Forum', NS_SPECIAL );
+			$path = [ ];
+			$path[] = [ 'title' => wfMessage( 'forum-forum-title' )->escaped(), 'url' => $indexPage->getFullUrl() ];
+
+			$path[] = [ 'title' => wfMessage( 'forum-board-topics' )->escaped() ];
+
+			$topicTitle = Title::newFromURL( $this->app->wg->Title->getText() );
+
+			if ( !empty( $topicTitle ) ) {
+				$path[] = [ 'title' => $topicTitle->getPrefixedText() ];
+			}
+
+			$this->response->setVal( 'path', $path );
+		} else {
+			parent::brickHeader();
+		}
+
+		$this->getResponse()
+			->getView()
+			->setTemplatePath( 'extensions/wikia/Wall/templates/Wall_brickHeader.php' );
+	}
+
 	public function header() {
 		$forum = new Forum();
 		$this->response->setVal( 'threads', $forum->getTotalThreads() );
