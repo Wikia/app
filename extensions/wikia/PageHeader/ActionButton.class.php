@@ -31,7 +31,7 @@ class ActionButton {
 			&& !empty( $this->buttonAction['href'] )
 			&& !empty( $this->buttonAction['text'] );
 
-		wfRunHooks( 'ActionButtonShouldDisplay', [ $this->title, &$shouldDisplay ] );
+		wfRunHooks( 'PageHeaderActionButtonShouldDisplay', [ $this->title, &$shouldDisplay ] );
 
 		$this->shouldDisplay = $shouldDisplay;
 	}

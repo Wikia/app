@@ -35,5 +35,5 @@ $wgHooks['ArticleDeleteComplete'][] = 'ThemeDesignerHooks::onArticleDeleteComple
 $wgHooks['RevisionInsertComplete'][] = 'ThemeDesignerHooks::onRevisionInsertComplete';
 $wgHooks['UploadComplete'][] = 'ThemeDesignerHooks::onUploadComplete';
 $wgHooks['UploadVerification'][] = 'ThemeDesignerHooks::onUploadVerification';
-$wgHooks['ActionButtonShouldDisplay'][] = 'SpecialThemeDesignerPreview::onActionButtonShouldDisplay';
+$wgHooks['PageHeaderActionButtonShouldDisplay'][] = 'SpecialThemeDesignerPreview::onPageHeaderActionButtonShouldDisplay';
 $wgHooks['BeforePrepareActionButtons'][] = 'SpecialThemeDesignerPreview::onBeforePrepareActionButtons';

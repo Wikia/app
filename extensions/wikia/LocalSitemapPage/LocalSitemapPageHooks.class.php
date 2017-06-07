@@ -13,7 +13,7 @@ class LocalSitemapPageHooks {
 		return true;
 	}
 
-	public static function onActionButtonShouldDisplay( \Title $title, bool &$shouldDisplayActionButton ) {
+	public static function onPageHeaderActionButtonShouldDisplay( \Title $title, bool &$shouldDisplayActionButton ) {
 
 		if ( $title->getBaseText() === 'Local Sitemap' ) {
 			$shouldDisplayActionButton = false;
