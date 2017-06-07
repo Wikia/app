@@ -237,7 +237,7 @@ class Subtitle {
 
 		$subtitleHTML = implode( " {$pipe} ", $subtitle );
 
-		wfRunHooks( 'AfterPageHeaderPageSubtitle', [ &$subtitleHTML ] );
+		wfRunHooks( 'AfterPageHeaderPageSubtitle', [ &$subtitleHTML, $this->title ] );
 
 		return $subtitleHTML;
 	}

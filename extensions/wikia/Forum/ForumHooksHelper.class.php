@@ -477,10 +477,12 @@ class ForumHooksHelper {
 	/**
 	 * @param string $pageSubtitle
 	 *
+	 * @param Title $title
 	 * @return bool
 	 */
-	public static function onAfterPageHeaderPageSubtitle( &$pageSubtitle ): bool {
-		$pageSubtitle = F::app()->renderView( 'Wall', 'brickHeader' );
+	public static function onAfterPageHeaderPageSubtitle( &$pageSubtitle, Title $title ): bool {
+		$pageSubtitle =
+			F::app()->renderView( 'Wall', 'brickHeader', [ 'id' => $title->getText() ] );
 
 		return true;
 	}
