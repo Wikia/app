@@ -8,7 +8,6 @@ use Html;
 use PageStatsService;
 use RequestContext;
 use Title;
-use Wikia\TemplateClassification\View;
 use WikiaApp;
 
 class Subtitle {

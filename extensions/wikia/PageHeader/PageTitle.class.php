@@ -4,7 +4,7 @@ namespace Wikia\PageHeader;
 
 use \RequestContext;
 use \Title;
-use WallMessage;
+use \WallMessage;
 use \WikiaGlobalRegistry;
 use \WikiaApp;
 use \WikiaPageType;
