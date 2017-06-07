@@ -10,7 +10,7 @@
 	</div>
 	<?php if ( $languages->hasMoreLanguages() ): ?>
 		<div class="wds-dropdown__content wds-is-right-aligned">
-			<ul class="wds-list">
+			<ul class="wds-list wds-is-linked">
 				<?php foreach ( $languages->languageList as $key => $val ) : ?>
 					<li>
 						<a href="<?= Sanitizer::encodeAttribute( $val['href'] ); ?>"
