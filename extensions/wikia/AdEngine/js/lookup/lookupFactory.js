@@ -28,7 +28,6 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			} else {
 				adTracker.track(module.name + '/lookup_end', module.getPrices(), 0, 'nodata');
 			}
-
 		}
 
 		function addResponseListener(callback) {
@@ -115,9 +114,15 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			return module.isSlotSupported(slotName);
 		}
 
-		lazyQueue.makeQueue(onResponseCallbacks, function (callback) {
-			callback();
-		});
+		function initQueue() {
+			called = false;
+			onResponseCallbacks = [];
+			response = false;
+
+			lazyQueue.makeQueue(onResponseCallbacks, function (callback) {
+				callback();
+			});
+		}
 
 		return {
 			addResponseListener: addResponseListener,
@@ -128,7 +133,8 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			hasResponse: hasResponse,
 			isSlotSupported: isSlotSupported,
 			trackState: trackState,
-			wasCalled: wasCalled
+			wasCalled: wasCalled,
+			initQueue: initQueue
 		};
 	}
 

@@ -51,6 +51,9 @@ define('ext.wikia.adEngine.adEngineRunner', [
 			log(['Register modules', enabledModules.length], log.levels.debug, logGroup);
 			enabledModules.forEach(function (module) {
 				var name = module.getName();
+
+				// needed in SPAs to reset called modules queue
+				module.initQueue();
 				module.addResponseListener(function () {
 					markModule(name);
 				});
