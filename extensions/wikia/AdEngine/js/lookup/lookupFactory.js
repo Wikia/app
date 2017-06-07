@@ -114,7 +114,7 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			return module.isSlotSupported(slotName);
 		}
 
-		function initQueue() {
+		function resetState() {
 			called = false;
 			onResponseCallbacks = [];
 			response = false;
@@ -132,9 +132,9 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			getSlotParams: getSlotParams,
 			hasResponse: hasResponse,
 			isSlotSupported: isSlotSupported,
+			resetState: resetState,
 			trackState: trackState,
-			wasCalled: wasCalled,
-			initQueue: initQueue
+			wasCalled: wasCalled
 		};
 	}
 
