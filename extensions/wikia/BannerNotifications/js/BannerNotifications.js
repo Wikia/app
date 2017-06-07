@@ -23,7 +23,7 @@
 		},
 		classes = Object.keys(types).join(' '),
 		closeImageSource = window.stylepath + '/oasis/images/icon_close.png',
-		$pageContainer,
+		$container,
 		$header,
 		modal,
 		template = '<div class="banner-notification">' +
@@ -80,9 +80,6 @@
 		addToDOM(this.$element, this.$parent);
 
 		this.hidden = false;
-
-		// If the page is already scrolled, make sure we update our position
-		handleScrolling();
 
 		// Close notification after specified amount of time
 		if (typeof this.timeout === 'number') {
@@ -173,12 +170,11 @@
 		$header = $('#globalNavigation');
 
 		if (window.skin === 'monobook') {
-			$pageContainer = $('#content');
+			$container = $('#content');
 		} else {
-			$pageContainer = $('.WikiaPageContentWrapper');
-			require(['wikia.onScroll'], function (onScroll) {
-				onScroll.bind(handleScrolling);
-			});
+			$container = $('.banner-notifications-placeholder');
+			$container.find('.banner-notifications-wrapper').addClass('float');
+			updatePlaceholderHeight();
 		}
 
 		// SUS-726: hide notifications if VisualEditor is loaded and show them again once it's closed
@@ -194,6 +190,12 @@
 		createBackendNotifications();
 	}
 
+	function updatePlaceholderHeight() {
+		$('.banner-notifications-placeholder').height(
+			$('.banner-notifications-wrapper').height()
+		);
+	}
+
 	/**
 	 * Create instances of BannerNotification based on HTML
 	 * passed from the server on page load.
@@ -207,48 +209,18 @@
 	}
 
 	/**
-	 * Pins the notification to the top of the screen when scrolled down the page.
-	 */
-	function handleScrolling() {
-		var containerTop,
-			notificationWrapper = $pageContainer.children('.banner-notifications-wrapper'),
-			headerBottom;
-
-		if (!$pageContainer.length || !notificationWrapper.length) {
-			return;
-		}
-
-		// get the position of the wrapper element relative to the top of the viewport
-		containerTop = $pageContainer.get(0).getBoundingClientRect().top;
-		headerBottom = $header.length > 0 ? $header.get(0).getBoundingClientRect().bottom : 0;
-
-		if (containerTop < headerBottom) {
-			if (!notificationWrapper.hasClass('float')) {
-				notificationWrapper.addClass('float');
-
-				// if element has no inline top style let's put it to make sure container is positioned correctly
-				if (!notificationWrapper.prop('style').top) {
-					notificationWrapper.css('top', headerBottom);
-				}
-			}
-		} else {
-			notificationWrapper.removeClass('float');
-		}
-	}
-
-	/**
-	 * Obtains element wrapping contents of the page
+	 * Obtains element wrapping notifications
 	 * @returns {jQuery}
 	 */
-	function getPageContainer() {
-		if ($pageContainer.length) {
-			return $pageContainer;
+	function getNotificationsContainer() {
+		if ($container.length) {
+			return $container;
 		} else if (window.skin === 'monobook') {
-			$pageContainer = $('#content');
+			$container = $('#content');
 		} else {
-			$pageContainer = $('.WikiaPageContentWrapper');
+			$container = $('.banner-notifications-placeholder');
 		}
-		return $pageContainer;
+		return $container;
 	}
 
 	/**
@@ -273,15 +245,16 @@
 	 */
 	function addToDOM($element, $parentElement) {
 		// allow notification wrapper element to be passed by extension
-		var $parent = $parentElement || (isModalShown() ? modal : getPageContainer()),
+		var $parent = $parentElement || (isModalShown() ? modal : getNotificationsContainer()),
 			$bannerNotificationsWrapper = $parent.find('.banner-notifications-wrapper');
 		if (!$bannerNotificationsWrapper.length) {
 			$bannerNotificationsWrapper = $('<div></div>').addClass('banner-notifications-wrapper');
 			$parent.prepend($bannerNotificationsWrapper);
 		}
 		$bannerNotificationsWrapper.prepend($element);
+		$bannerNotificationsWrapper.addClass('float');
 
-		$element.fadeIn('slow');
+		$element.fadeIn('slow', updatePlaceholderHeight);
 	}
 
 	/**
@@ -337,6 +310,7 @@
 		} else {
 			$element.remove();
 		}
+		updatePlaceholderHeight();
 	}
 
 	// run when DOM is loaded

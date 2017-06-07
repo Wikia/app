@@ -1,3 +1,4 @@
+@import 'skins/oasis/css/core/layout';
 @import 'skins/shared/mixins/calc';
 @import 'breakpoints-variables';
 //todo remove styling by ID after cleanup after removal of responsive layout
@@ -219,7 +220,7 @@
 		&.float {
 			@media #{$breakpoint-small-only} {
 				margin-left: $page-width-small / -2;
-				width: $page-width-small;
+				width: $page-width-small - 2 * $content-border-width;
 			}
 
 			@media #{$breakpoint-small-plus} {
