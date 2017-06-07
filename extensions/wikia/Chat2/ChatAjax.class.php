@@ -57,6 +57,7 @@ class ChatAjax {
 		$res = [
 			'canChat' => Chat::canChat( $user ),
 			'isModerator' => $user->isAllowed( Chat::CHAT_MODERATOR ),
+			'isAdmin' => $user->isAllowed( Chat::CHAT_ADMIN ),
 			'isStaff' => $user->isAllowed( Chat::CHAT_STAFF ),
 			'username' => $user->getName(),
 			'username_encoded' => rawurlencode( $user->getName() ),
