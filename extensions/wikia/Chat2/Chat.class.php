@@ -220,95 +220,7 @@ class Chat {
 	}
 
 	/**
-	 * Attempts to add the 'chatmoderator' group to the subject user
-	 *
-	 * @param string $subjectUserName
-	 * @param User $adminUser
-	 *
-	 * @return bool true on success, returns an error message as a string on failure.
-	 */
-	public static function promoteModerator( $subjectUserName, $adminUser ) {
-		self::info( __METHOD__ . ': Method called', [
-			'subject_user_name' => $subjectUserName,
-			'admin_user' => $adminUser->getId()
-		] );
-
-		$subjectUser = User::newFromName( $subjectUserName );
-
-		if ( !( $subjectUser instanceof User ) ) {
-			$errorMsg = wfMessage( 'chat-err-invalid-username-chatmod', $subjectUserName )->text();
-
-			return $errorMsg;
-		}
-
-		// Check if the userToPromote is already in the chatmoderator group.
-		$errorMsg = '';
-		if ( in_array( self::CHAT_MODERATOR, $subjectUser->getEffectiveGroups() ) ) {
-			$errorMsg = wfMessage( "chat-err-already-chatmod", $subjectUserName, self::CHAT_MODERATOR )->text();
-		} else if ( self::canPromoteModerator( $subjectUser, $adminUser ) ) {
-			self::doPromoteModerator( $adminUser, $subjectUser );
-		} else {
-			$errorMsg = wfMessage( "chat-err-no-permission-to-add-chatmod", self::CHAT_MODERATOR )->text();
-		}
-
-		return ( $errorMsg == "" ? true : $errorMsg );
-	}
-
-	/**
-	 * Promote given user to moderator and log that action. No permission checks are done here.
-	 *
-	 * @param User $adminUser
-	 * @param User $subjectUser
-	 */
-	private static function doPromoteModerator( User $adminUser, User $subjectUser ) {
-		// Add group
-		$oldGroups = $subjectUser->getGroups();
-		self::permissionsService()->addToGroup( $adminUser, $subjectUser, self::CHAT_MODERATOR );
-
-		// Run UserRights hook
-		$removegroups = [ ];
-		$addgroups = [ self::CHAT_MODERATOR ];
-		wfRunHooks( 'UserRights', [ &$subjectUser, $addgroups, $removegroups ] );
-
-		// Update user-rights log.
-		$newGroups = array_merge( $oldGroups, [ self::CHAT_MODERATOR ] );
-
-		// Log the rights-change.
-		Chat::addLogEntry( $subjectUser, $adminUser, [
-			Chat::makeGroupNameListForLog( $oldGroups ),
-			Chat::makeGroupNameListForLog( $newGroups )
-		], self::CHAT_MODERATOR );
-	}
-
-	/**
-	 * @param array $ids
-	 *
-	 * @return string
-	 */
-	public static function makeGroupNameListForLog( $ids ) {
-		if ( empty( $ids ) ) {
-			return '';
-		} else {
-			return Chat::makeGroupNameList( $ids );
-		}
-	}
-
-	/**
-	 * @param array $ids
-	 *
-	 * @return string
-	 */
-	public static function makeGroupNameList( $ids ) {
-		if ( empty( $ids ) ) {
-			return wfMessage( 'rightsnone' )->inContentLanguage()->text();
-		} else {
-			return implode( ', ', $ids );
-		}
-	}
-
-	/**
 	 * Add a rights log entry for an action.
-	 * Partially copied from SpecialUserrights.php
 	 *
 	 * @param User $user
 	 * @param User $doer
@@ -321,17 +233,7 @@ class Chat {
 		$doerName = $doer->getName();
 
 		$subtype = '';
-		if ( $type === self::CHAT_MODERATOR ) {
-			if ( empty( $reason ) ) {
-				$reason = wfMessage(
-					'chat-userrightslog-a-made-b-chatmod',
-					$doerName,
-					$user->getName()
-				)->inContentLanguage()->text();
-			}
-			$type = 'rights';
-			$subtype = $type;
-		} else if ( strpos( $type, 'ban' ) === 0 ) {
+		if ( strpos( $type, 'ban' ) === 0 ) {
 			if ( empty( $reason ) ) {
 				// Possible keys: chat-log-reason-banadd, chat-log-reason-banchane, chat-log-reason-banremove
 				$reason = wfMessage( 'chat-log-reason-' . $type, $doerName )->inContentLanguage()->text();
@@ -468,21 +370,6 @@ class Chat {
 	 */
 	public static function canBan( User $subjectUser, User $adminUser ) {
 		return self::canKick( $subjectUser, $adminUser );
-	}
-
-	/**
-	 * Can given admin user promote subject user to become moderator?
-	 *
-	 * @param User $subjectUser
-	 * @param User $adminUser
-	 * @return bool
-	 */
-	public static function canPromoteModerator( User $subjectUser, User $adminUser ) {
-		$changeableGroups = $adminUser->changeableGroups();
-		$isSelf = ( $subjectUser->getName() == $adminUser->getName() );
-		$addableGroups = array_merge( $changeableGroups['add'], $isSelf ? $changeableGroups['add-self'] : [ ] );
-
-		return in_array( self::CHAT_MODERATOR, $addableGroups );
 	}
 
 	/**
