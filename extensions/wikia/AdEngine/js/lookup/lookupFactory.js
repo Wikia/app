@@ -9,9 +9,9 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 	'use strict';
 
 	function create(module) {
-		var called = false,
-			onResponseCallbacks = [],
-			response = false,
+		var called,
+			onResponseCallbacks,
+			response,
 			timing,
 			context = adContext.getContext();
 
@@ -123,6 +123,8 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 				callback();
 			});
 		}
+
+		resetState();
 
 		return {
 			addResponseListener: addResponseListener,

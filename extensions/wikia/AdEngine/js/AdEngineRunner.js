@@ -52,7 +52,9 @@ define('ext.wikia.adEngine.adEngineRunner', [
 			enabledModules.forEach(function (module) {
 				var name = module.getName();
 
-				module.resetState();
+				if (module.resetState) {
+					module.resetState();
+				}
 				module.addResponseListener(function () {
 					markModule(name);
 				});
