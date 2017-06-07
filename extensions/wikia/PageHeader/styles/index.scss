@@ -9,7 +9,6 @@
 	@include dropdown-theming($color-page, $color-text, $color-links, $color-page-border);
 
 	@include flexbox();
-	@include flex-wrap(wrap);
 	@include justify-content(flex-end);
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
@@ -42,7 +41,8 @@
 		@include align-items(flex-end);
 		@include flexbox();
 		@include flex-direction(column);
-		@include justify-content(flex-end);
+		@include justify-content(space-between);
+
 	}
 
 	&__languages {
@@ -52,6 +52,7 @@
 	&__main {
 		@include flex-grow(1);
 		max-width: 100%;
+		min-width: 50%;
 	}
 
 	&__categories {
@@ -82,6 +83,11 @@
 			color: $color-links;
 			font-style: italic;
 			line-height: 16px;
+			overflow-wrap: break-word;
+			word-wrap: break-word;
+			-ms-word-break: break-all;
+			word-break: break-word;
+
 
 			> a:last-child {
 				display: inline-block;
