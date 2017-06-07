@@ -77,9 +77,6 @@ class WallHooksHelper {
 				return true;
 			}
 
-			// article exists or existed
-			$app->wg->SuppressPageHeader = true;
-
 			$wallMessage = WallMessage::newFromTitle( $mainTitle );
 			$isDeleted = !$wallMessage->isVisible( $app->wg->User );
 			$showDeleted = ( $wallMessage->canViewDeletedMessage( $app->wg->User )

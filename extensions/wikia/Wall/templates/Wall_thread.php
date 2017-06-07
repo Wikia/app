@@ -4,7 +4,10 @@ if ($wg->EnableMiniEditorExtForWall) {
 }
 ?>
 
-<?= $app->renderView('WallController', 'brickHeader', [ 'id' => $title->getText() ] ); ?>
+<?= $app->renderView('WallController', 'brickHeader', [
+	'id' => $title->getText(),
+	'className' => 'BreadCrumbs'
+] ); ?>
 	
 <div class="Wall <?= $type ?>" id="Wall">
 	<ul class="comments">

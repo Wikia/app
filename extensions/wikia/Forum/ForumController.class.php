@@ -192,26 +192,6 @@ class ForumController extends WallBaseController {
 		wfProfileOut( __METHOD__ );
 	}
 
-	public function breadCrumbs() {
-		if ( $this->app->wg->Title->getNamespace() == NS_WIKIA_FORUM_TOPIC_BOARD ) {
-			$indexPage = Title::newFromText( 'Forum', NS_SPECIAL );
-			$path = [ ];
-			$path[] = [ 'title' => wfMessage( 'forum-forum-title' )->escaped(), 'url' => $indexPage->getFullUrl() ];
-
-			$path[] = [ 'title' => wfMessage( 'forum-board-topics' )->escaped() ];
-
-			$topicTitle = Title::newFromURL( $this->app->wg->Title->getText() );
-
-			if ( !empty( $topicTitle ) ) {
-				$path[] = [ 'title' => $topicTitle->getPrefixedText() ];
-			}
-
-			$this->response->setVal( 'path', $path );
-		} else {
-			parent::brickHeader();
-		}
-	}
-
 	public function header() {
 		$forum = new Forum();
 		$this->response->setVal( 'threads', $forum->getTotalThreads() );
