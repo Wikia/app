@@ -500,4 +500,25 @@ class ForumHooksHelper {
 
 		return true;
 	}
+
+	/**
+	 * @param Title $title
+	 * @param bool $shouldDisplayActionButton
+	 *
+	 * @return bool
+	 */
+	public static function onPageHeaderActionButtonShouldDisplay(
+		Title $title,
+		bool &$shouldDisplayActionButton
+	): bool {
+		if ( in_array( $title->getNamespace(), [
+			NS_WIKIA_FORUM_BOARD,
+			NS_WIKIA_FORUM_BOARD_THREAD,
+			NS_WIKIA_FORUM_TOPIC_BOARD,
+		] ) ) {
+			$shouldDisplayActionButton = false;
+		}
+
+		return true;
+	}
 }
