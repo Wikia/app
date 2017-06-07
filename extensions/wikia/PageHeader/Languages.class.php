@@ -17,9 +17,9 @@ class Languages {
 	 * @param WikiaApp $app
 	 */
 	public function __construct( WikiaApp $app ) {
-		$this->currentLangName = \Language::getLanguageName( RequestContext::getMain()->getLanguage()->getCode() );
-		$this->languageList = $this->handleLanguages( $app );
 		$this->title = \RequestContext::getMain()->getTitle();
+		$this->currentLangName = \Language::getLanguageName( $this->title->getPageLanguage()->getCode() );
+		$this->languageList = $this->handleLanguages( $app );
 	}
 
 	/**
