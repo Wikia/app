@@ -14,6 +14,7 @@ use PhpAmqpLib\Connection\AMQPConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Exception\AMQPRuntimeException;
 use PhpAmqpLib\Exception\AMQPExceptionInterface;
+use User;
 use Wikia\Logger\WikiaLogger;
 use Wikia\Tasks\Queues\ParsoidPurgePriorityQueue;
 use Wikia\Tasks\Queues\ParsoidPurgeQueue;
@@ -284,12 +285,14 @@ class AsyncTaskList {
 	 * @throws AMQPExceptionInterface
 	 */
 	public function queue( AMQPChannel $channel = null, $priority = null ) {
-		global $wgUser;
-
 		$this->initializeWorkId();
 
 		if ( $this->createdBy == null ) {
-			$this->createdBy( $wgUser );
+			global $wgUser, $wgRequest;
+
+			// SUS-1594: $wgUser might not yet be initialized
+			$user = $wgUser ?? User::newFromName( $wgRequest->getIP() );
+			$this->createdBy( $user );
 		}
 
 		if ( is_string( $priority ) ) {
