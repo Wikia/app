@@ -44,6 +44,7 @@
 		@include flexbox();
 		@include flex-direction(column);
 		@include justify-content(space-between);
+		@include flex-shrink(0);
 		margin-left: 20px;
 
 	}
