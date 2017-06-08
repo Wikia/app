@@ -153,4 +153,10 @@
 		border-color: $color-page-border;
 	}
 }
+//We allign article header on corporate pages with this one.
+.WikiaPage.WikiaGrid > div > header,
+.WikiaPage.WikiaGrid > div > hr  {
+	margin-left: 10px;
+	margin-right: 10px;
+}
 
