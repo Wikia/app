@@ -323,7 +323,7 @@ class ThemeSettings {
 	 * @return string background URL or empty string if not found
 	 */
 	public function getCommunityHeaderBackgroundUrl(): string {
-		return $this->getVignetteUrl( $this->getSettings()['community-header-background-image'] );
+		return $this->getSettings()['community-header-background-image'];
 	}
 
 	/**
