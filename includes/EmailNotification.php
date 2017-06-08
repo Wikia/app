@@ -544,7 +544,9 @@ class EmailNotification {
 				'exception' => new \Exception(),
 			];
 
-			if ( \F::app()->wg->DisableOldStyleEmail ) {
+			$isGenericChangeMessage = wfEmptyMsg( 'enotif_subject_' . strtolower( $this->action ) );
+
+			if ( \F::app()->wg->DisableOldStyleEmail && !$isGenericChangeMessage  ) {
 				$emailContext['issue'] = 'SOC-2290';
 				$logger->info( 'Skipped sending old style email', $emailContext );
 			} else {
