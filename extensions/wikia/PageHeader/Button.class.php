@@ -28,7 +28,7 @@ class Button {
 	 */
 	public $id;
 
-	public function __construct( string $label, string $icon, string $href, string $class = '', string $id = '') {
+	public function __construct( string $label, string $icon, string $href, string $class = '', string $id = '' ) {
 		$this->label = $label;
 		$this->icon = $icon;
 		$this->href = $href;

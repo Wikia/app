@@ -2,19 +2,14 @@
 
 namespace Wikia\PageHeader;
 
-
-use RequestContext;
 use Wikia;
 
 class PageHeaderController extends \WikiaController {
 
-	/** @var  ActionButton */
-	private $actionButton;
 	/** @var  Languages */
 	private $languages;
 
 	public function init() {
-		$this->actionButton = new ActionButton( \RequestContext::getMain() );
 		$this->languages = new Languages( $this->app );
 	}
 
@@ -33,8 +28,10 @@ class PageHeaderController extends \WikiaController {
 	}
 
 	public function actionButton() {
-		$this->setVal( 'buttonAction', $this->actionButton->getButtonAction());
-		$this->setval( 'dropdownActions', $this->actionButton->getDropdownActions());
+		$actionButton = $this->getVal( 'actionButton' );
+
+		$this->setVal( 'buttonAction', $actionButton->getButtonAction() );
+		$this->setval( 'dropdownActions', $actionButton->getDropdownActions() );
 	}
 
 	public function languages() {
@@ -42,20 +39,7 @@ class PageHeaderController extends \WikiaController {
 	}
 
 	public function buttons() {
-		$title = RequestContext::getMain()->getTitle();
-		$this->setVal( 'actionButton', $this->actionButton );
-
-		$buttons = [];
-
-		if ( $title->isSpecial( 'Images' ) && $this->app->wg->EnableUploads ) {
-			$label = wfMessage( 'page-header-action-button-add-new-image' )->escaped();
-			$buttons[] =
-				new Button( $label, 'wds-icons-image',
-					\SpecialPage::getTitleFor( 'Upload' )->getLocalURL(), '',
-					'page-header-add-new-photo' );
-		}
-
-		wfRunHooks( 'AfterPageHeaderButtons', [ &$buttons ] );
-		$this->setVal( 'buttons', $buttons );
+		$this->setVal( 'actionButton', new ActionButton( $this->app ) );
+		$this->setVal( 'buttons', new Buttons( $this->app ) );
 	}
 }

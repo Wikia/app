@@ -1,8 +1,10 @@
 <div>
 	<? if ( $actionButton->shouldDisplay() ): ?>
-		<?= $app->renderView( 'Wikia\PageHeader\PageHeader', 'actionButton' ); ?>
+		<?= $app->renderView( 'Wikia\PageHeader\PageHeader', 'actionButton', [
+			'actionButton' => $actionButton
+		] ); ?>
 	<? endif; ?>
-	<?php foreach ( $buttons as $button ): ?>
+	<?php foreach ( $buttons->buttons as $button ): ?>
 		<a class="wds-button wds-is-squished <?= $button->class ?>" href="<?= $button->href ?>"
 		   id="<?= $button->id ?>">
 			<? if ( !empty( $button->icon ) ): ?>
