@@ -26,6 +26,9 @@
 		$container,
 		$header,
 		modal,
+		fadeTime = 400,
+		wrapperClass = 'banner-notifications-wrapper',
+		wrapperSelector = '.' + wrapperClass,
 		template = '<div class="banner-notification">' +
 			'<button class="close wikia-chiclet-button"><img></button>' +
 			'<div class="msg">{{{content}}}</div>' +
@@ -168,32 +171,33 @@
 	 */
 	function init() {
 		$header = $('#globalNavigation');
+		$container = getNotificationsContainer();
 
-		if (window.skin === 'monobook') {
-			$container = $('#content');
-		} else {
-			$container = $('.banner-notifications-placeholder');
-			$container.find('.banner-notifications-wrapper').addClass('float');
-			updatePlaceholderHeight();
-		}
+		stickToGlobalNavigation();
 
-		// SUS-726: hide notifications if VisualEditor is loaded and show them again once it's closed
+		// SUS-729: hide notifications if VisualEditor is loaded and show them again once it's closed
 		if (mw.config.get('wgVisualEditor') && mw.config.get('wgIsArticle')) {
 			mw.hook('ve.activationComplete').add(function() {
-				$('.banner-notification').fadeOut(400);
+				$('.banner-notification').fadeOut(fadeTime);
+				stickToGlobalNavigation();
 			});
 
-			mw.hook('ve.cancelButton').add(function() {
-				$('.banner-notification').fadeIn(400);
+			mw.hook('ve.deactivate').add(function() {
+				$('.banner-notification').fadeIn(fadeTime);
+				stickToGlobalNavigation();
 			});
 		}
 		createBackendNotifications();
 	}
 
-	function updatePlaceholderHeight() {
-		$('.banner-notifications-placeholder').height(
-			$('.banner-notifications-wrapper').height()
-		);
+	function stickToGlobalNavigation() {
+		var $wrapper;
+
+		if (window.skin !== 'monobook') {
+			$wrapper = $container.find(wrapperSelector);
+			$wrapper.addClass('float');
+			$container.height($wrapper.height());
+		}
 	}
 
 	/**
@@ -213,7 +217,7 @@
 	 * @returns {jQuery}
 	 */
 	function getNotificationsContainer() {
-		if ($container.length) {
+		if ($container && $container.length) {
 			return $container;
 		} else if (window.skin === 'monobook') {
 			$container = $('#content');
@@ -246,15 +250,14 @@
 	function addToDOM($element, $parentElement) {
 		// allow notification wrapper element to be passed by extension
 		var $parent = $parentElement || (isModalShown() ? modal : getNotificationsContainer()),
-			$bannerNotificationsWrapper = $parent.find('.banner-notifications-wrapper');
+			$bannerNotificationsWrapper = $parent.find(wrapperSelector);
 		if (!$bannerNotificationsWrapper.length) {
-			$bannerNotificationsWrapper = $('<div></div>').addClass('banner-notifications-wrapper');
+			$bannerNotificationsWrapper = $('<div></div>').addClass(wrapperClass);
 			$parent.prepend($bannerNotificationsWrapper);
 		}
 		$bannerNotificationsWrapper.prepend($element);
-		$bannerNotificationsWrapper.addClass('float');
 
-		$element.fadeIn('slow', updatePlaceholderHeight);
+		$element.fadeIn(fadeTime, stickToGlobalNavigation);
 	}
 
 	/**
@@ -291,7 +294,7 @@
 				'height': 0,
 				'padding': 0,
 				'opacity': 0
-			}, 400, function () {
+			}, fadeTime, function () {
 				callback($element);
 			});
 		}
@@ -303,14 +306,17 @@
 	 */
 	function removeFromDOM($element) {
 		var $parent = $element.parent();
-		if ($parent.hasClass('.banner-notifications-wrapper') &&
-			$parent.children().length === 1) {
 
+		if (
+			$parent.hasClass(wrapperClass) &&
+			$parent.children().length === 1
+		) {
 			$parent.remove();
 		} else {
 			$element.remove();
 		}
-		updatePlaceholderHeight();
+
+		stickToGlobalNavigation();
 	}
 
 	// run when DOM is loaded
