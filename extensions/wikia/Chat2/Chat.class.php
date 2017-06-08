@@ -1,8 +1,5 @@
 <?php
 
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\User\Permissions\PermissionsService;
-
 /**
  * Class for managing a Chat (aka: chat-room)
  * This is for a demo & if the prototype works out, this will probably need to be thrown away and
@@ -35,22 +32,6 @@ class Chat {
 	 */
 	const CHAT_STAFF = 'chatstaff';
 	const CHAT_ADMIN = 'chatadmin';
-
-	/**
-	 * @var PermissionsService
-	 */
-	private static $permissionsService;
-
-	/**
-	 * @return PermissionsService
-	 */
-	private static function permissionsService() {
-		if ( is_null( self::$permissionsService ) ) {
-			self::$permissionsService = Injector::getInjector()->get( PermissionsService::class );
-		}
-
-		return self::$permissionsService;
-	}
 
 	/**
 	 * The return value of this method gets passed to Javascript as the global wgChatKey.  It then becomes the 'key'
@@ -108,8 +89,7 @@ class Chat {
 		if ( !self::canBan( $subjectUser, $adminUser ) ) {
 			return wfMessage( 'chat-ban-cant-ban-moderator' )->inContentLanguage()->text() . "\n";
 		}
-
-		$cityId = F::app()->wg->CityId;
+		
 		$action = $time != 0 ? self::BAN_ADD : self::BAN_REMOVE;
 
 		$subjectChatUser = new ChatUser( $subjectUser );
