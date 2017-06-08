@@ -63,7 +63,7 @@
 			// init Tool Bar
 			this.toolBarInit();
 
-			this.applySettings(false, false);
+			this.applySettings();
 
 			// init tooltips
 			this.initTooltips();
@@ -112,14 +112,15 @@
 
 		themeTabInit: function () {
 			var slideBy = ThemeDesigner.slideByDefaultWidth,
-				slideMax = -Math.floor($('#ThemeTab').find('.slider').find('ul').find('li').length /
+				$themeTab = $('#ThemeTab'),
+				slideMax = -Math.floor($themeTab.find('.slider').find('ul').find('li').length /
 					ThemeDesigner.slideByItems) * ThemeDesigner.slideByDefaultWidth;
 
 			// click handler for next and previous arrows in theme slider
-			$('#ThemeTab .previous, #ThemeTab .next').click(function (event) {
+			$themeTab.find('.previous, #ThemeTab .next').click(function (event) {
 				event.preventDefault();
 				if (!ThemeDesigner.isSliding) {
-					var list = $('#ThemeTab .slider ul'),
+					var list = $themeTab.find('.slider ul'),
 						arrow = $(this),
 						slideTo = null;
 
@@ -143,11 +144,11 @@
 
 					// calculate which buttons should be enabled
 					if (slideTo === slideMax) {
-						$('#ThemeTab .next').addClass('disabled');
-						$('#ThemeTab .previous').removeClass('disabled');
+						$themeTab.find('.next').addClass('disabled');
+						$themeTab.find('.previous').removeClass('disabled');
 					} else if (slideTo === 0) {
-						$('#ThemeTab .next').removeClass('disabled');
-						$('#ThemeTab .previous').addClass('disabled');
+						$themeTab.find('.next').removeClass('disabled');
+						$themeTab.find('.previous').addClass('disabled');
 					} else {
 						$('#ThemeTab .next, #ThemeTab .previous').removeClass('disabled');
 					}
@@ -155,23 +156,23 @@
 			});
 
 			// click handler for themes thumbnails
-			$('#ThemeTab').find('.slider').find('li').click(function () {
-				var targetObject = $(this);
+			$themeTab
+				.find('.slider').find('li').click(function () {
+					var targetObject = $(this);
 
-				// highlight selected theme
-				targetObject.parent().find('.selected').removeClass('selected').end().end().addClass('selected');
+					// highlight selected theme
+					targetObject.parent().find('.selected').removeClass('selected').end().end().addClass('selected');
 
-				ThemeDesigner.set('theme', targetObject.attr('data-theme'));
-				if (ThemeDesigner.checkBgImageIsSet()) {
-					ThemeDesigner.loadImage(ThemeDesigner.settings['background-image']);
-				} else {
-					ThemeDesigner.checkBgIsDynamic(0);
-				}
-				ThemeDesigner.resetPageOpacity();
-			});
-
-			// select current theme
-			$('#ThemeTab').find('[data-theme=' + ThemeDesigner.settings.theme + ']').addClass('selected');
+					ThemeDesigner.set('theme', targetObject.attr('data-theme'));
+					if (ThemeDesigner.checkBgImageIsSet()) {
+						ThemeDesigner.loadImage(ThemeDesigner.settings['background-image']);
+					} else {
+						ThemeDesigner.checkBgIsDynamic(0);
+					}
+					ThemeDesigner.resetPageOpacity();
+				})
+				// select current theme
+				.find('[data-theme=' + ThemeDesigner.settings.theme + ']').addClass('selected');
 		},
 
 		customizeTabInit: function () {
@@ -182,29 +183,30 @@
 				ThemeDesigner.showPicker(event, 'image');
 			});
 
-			$('#tile-background').change(function () {
-				ThemeDesigner.checkTiledBg(ThemeDesigner.splitOption);
-				ThemeDesigner.set('background-tiled', $(this).attr('checked') ? 'true' : 'false');
-			});
-			$('#fix-background').change(function () {
-				ThemeDesigner.set('background-fixed', $(this).attr('checked') ? 'true' : 'false');
+			$('#swatch-community-header-image-background').click(function (event) {
+				ThemeDesigner.showPicker(event, 'community-header');
 			});
 
-			$('#tile-background').attr('checked', ThemeDesigner.settings['background-tiled'] === 'true');
-			$('#fix-background').attr('checked', ThemeDesigner.settings['background-fixed'] === 'true');
+			$('#tile-background')
+				.change(function () {
+					ThemeDesigner.checkTiledBg(ThemeDesigner.splitOption);
+					ThemeDesigner.set('background-tiled', $(this).attr('checked') ? 'true' : 'false');
+				})
+				.attr('checked', ThemeDesigner.settings['background-tiled'] === 'true');
+			$('#fix-background')
+				.change(function () {
+					ThemeDesigner.set('background-fixed', $(this).attr('checked') ? 'true' : 'false');
+				})
+				.attr('checked', ThemeDesigner.settings['background-fixed'] === 'true');
 
 			// TODO: Remove IF statement after fluid layout global release
 			if (window.wgOasisResponsive || window.wgOasisBreakpoints) {
-				$('#not-split-background').change(function () {
-					ThemeDesigner.set('background-dynamic', $(this).attr('checked') ? 'false' : 'true');
-					if ($(this).attr('checked')) {
-						ThemeDesigner.splitOption = false;
-					} else {
-						ThemeDesigner.splitOption = true;
-					}
-				});
-
-				$('#not-split-background').attr('checked', ThemeDesigner.settings['background-dynamic'] === 'false');
+				$('#not-split-background')
+					.change(function () {
+						ThemeDesigner.set('background-dynamic', $(this).attr('checked') ? 'false' : 'true');
+						ThemeDesigner.splitOption = !$(this).attr('checked');
+					})
+					.attr('checked', ThemeDesigner.settings['background-dynamic'] === 'false');
 
 				ThemeDesigner.middleColorSelect(ThemeDesigner.settings['background-dynamic'] === 'true');
 				ThemeDesigner.checkBgIsDynamic(
@@ -220,9 +222,15 @@
 				$.AIM.submit(this, ThemeDesigner.backgroundImageUploadCallback);
 			});
 
+			// submit handler for uploading favicon image
+			$('#CommunityHeaderBackgroundUploadForm').submit(function () {
+				$.AIM.submit(this, ThemeDesigner.communityHeaderBackgroundUploadCallback);
+			});
+
 			var currentVal = ThemeDesigner.settings['page-opacity'],
 				base = ThemeDesigner.basePageOpacity,
 				max = ThemeDesigner.maxPageOpacity;
+
 			ThemeDesigner.$slider = $('#OpacitySlider').slider({
 				value: max - ((base - currentVal) * (max / (base - max))),
 				stop: function (e, ui) {
@@ -261,31 +269,29 @@
 
 			//graphic wordmark clicking
 			$('#WordmarkTab').find('.graphic').find('.preview').find('.wordmark').click(function () {
-				ThemeDesigner.set('wordmark-type', 'graphic');
-			});
+					ThemeDesigner.set('wordmark-type', 'graphic');
+				})
+				//grapic wordmark button
+				.find('.graphic').find('.preview').find('a').click(function (event) {
+					event.preventDefault();
+					ThemeDesigner.set('wordmark-type', 'text');
+					ThemeDesigner.set('wordmark-image-url', window.wgBlankImgUrl);
 
-			//grapic wordmark button
-			$('#WordmarkTab').find('.graphic').find('.preview').find('a').click(function (event) {
-				event.preventDefault();
-				ThemeDesigner.set('wordmark-type', 'text');
-				ThemeDesigner.set('wordmark-image-url', window.wgBlankImgUrl);
+					// Can't use js to clear file input value so reseting form
+					$('#WordMarkUploadForm')[0].reset();
+				})
+				//remove favicon link
+				.find('.favicon').find('.preview').find('a').click(function (event) {
+					event.preventDefault();
+					ThemeDesigner.set('favicon-image-url', window.wgBlankImgUrl);
 
-				// Can't use js to clear file input value so reseting form
-				$('#WordMarkUploadForm')[0].reset();
-			});
+					// Can't use js to clear file input value so reseting form
+					$('#FaviconUploadForm')[0].reset();
+				});
 
 			// submit handler for uploading custom logo image
 			$('#WordMarkUploadForm').submit(function () {
 				$.AIM.submit(this, ThemeDesigner.wordmarkUploadCallback);
-			});
-
-			//remove favicon link
-			$('#WordmarkTab').find('.favicon').find('.preview').find('a').click(function (event) {
-				event.preventDefault();
-				ThemeDesigner.set('favicon-image-url', window.wgBlankImgUrl);
-
-				// Can't use js to clear file input value so reseting form
-				$('#FaviconUploadForm')[0].reset();
 			});
 
 			// submit handler for uploading favicon image
@@ -306,8 +312,6 @@
 		},
 
 		showPicker: function (event, type) {
-			ThemeDesigner.hidePicker();
-			event.stopPropagation();
 			var swatch = $(event.currentTarget),
 				swatchName = event.currentTarget.className,
 				swatches,
@@ -316,6 +320,9 @@
 				expression,
 				i;
 
+			ThemeDesigner.hidePicker();
+			event.stopPropagation();
+debugger;
 			// check the type (color or image)
 			if (type === 'color') {
 
@@ -391,9 +398,9 @@
 
 				swatches = this.themeDesignerPicker.children('.image').find('.swatches');
 				// add admin background
-				if (ThemeDesigner.settings['user-background-image']) {
-					$('<li class="user"><img src="' + ThemeDesigner.settings['user-background-image-thumb'] +
-						'" data-image="' + ThemeDesigner.settings['user-background-image'] + '"></li>')
+				if (ThemeDesigner.settings['user-' + swatchName]) {
+					$('<li class="user"><img src="' + ThemeDesigner.settings['user-' + swatchName +'-thumb'] +
+						'" data-image="' + ThemeDesigner.settings['user-' + swatchName] + '"></li>')
 						.insertBefore(swatches.find('.no-image'));
 				}
 
@@ -402,10 +409,25 @@
 
 					//set correct image
 					if ($(this).attr('class') === 'no-image') {
-						ThemeDesigner.set('background-image', '');
+						ThemeDesigner.set(swatchName, '');
 						ThemeDesigner.changeDynamicBg(false);
 					} else {
-						ThemeDesigner.loadImage($(this).children('img').attr('data-image'));
+						ThemeDesigner.loadImage($(this).children('img').attr('data-image'), swatchName);
+					}
+
+					ThemeDesigner.hidePicker();
+				});
+			} else if (type === 'community-header') {
+				swatches = this.themeDesignerPicker.children('.image').find('.swatches');
+
+				// click handling
+				this.themeDesignerPicker.children('.image').find('.swatches').find('li').click(function () {
+
+					//set correct image
+					if ($(this).attr('class') === 'no-image') {
+						ThemeDesigner.set(swatchName, '');
+					} else {
+						ThemeDesigner.loadImage($(this).children('img').attr('data-image'), swatchName);
 					}
 
 					ThemeDesigner.hidePicker();
@@ -418,7 +440,7 @@
 					top: swatch.offset().top + 10,
 					left: swatch.offset().left + 10
 				})
-				.removeClass('color image')
+				.removeClass('color image community-header')
 				.addClass(type);
 
 			// clicking away will close picker
@@ -493,17 +515,18 @@
 			}
 		},
 
-		loadImage: function (src) {
+		loadImage: function (src, name) {
 			var img = new Image();
 
 			img.onload = function () {
 				if (img.width && img.height) {
-					ThemeDesigner.set('background-image-width', img.width);
-					ThemeDesigner.set('background-image-height', img.height);
-					ThemeDesigner.set('background-image', src);
+					ThemeDesigner.set(name + '-width', img.width);
+					ThemeDesigner.set(name + '-height', img.height);
+					ThemeDesigner.set(name, src);
 					ThemeDesigner.checkBgIsDynamic(img.width, true);
 				}
 			};
+
 			img.src = src;
 		},
 
@@ -519,15 +542,19 @@
 
 		middleColorSelect: function (enable) {
 			if (enable) {
-				$('#CustomizeTab').find('.wrap-middle-color').css({
-					opacity: 1
-				});
-				$('#CustomizeTab').find('.middle-color-mask').hide();
+				$('#CustomizeTab')
+					.find('.wrap-middle-color').css({
+						opacity: 1
+					})
+					.find('.middle-color-mask')
+					.hide();
 			} else {
-				$('#CustomizeTab').find('.wrap-middle-color').css({
-					opacity: 0.3
-				});
-				$('#CustomizeTab').find('.middle-color-mask').show();
+				$('#CustomizeTab')
+					.find('.wrap-middle-color').css({
+						opacity: 0.3
+					})
+					.find('.middle-color-mask')
+					.show();
 			}
 		},
 
@@ -541,9 +568,7 @@
 				return;
 			}
 
-			var body = ThemeDesigner.previewFrame.contents().find('body'),
-				reloadCSS = false,
-				updateSkinPreview = false;
+			var body = ThemeDesigner.previewFrame.contents().find('body');
 
 			if (setting === 'background-tiled') {
 				if (newValue === 'true') {
@@ -573,7 +598,7 @@
 
 			if (setting === 'theme' && newValue !== 'custom') {
 				$.extend(ThemeDesigner.settings, ThemeDesigner.themes[newValue]);
-				reloadCSS = true;
+				ThemeDesigner.reloadCSS = true;
 			}
 
 			if (['color-body',
@@ -586,15 +611,22 @@
 				'color-header',
 				'wordmark-font'].indexOf(setting) > -1
 			) {
-				reloadCSS = true;
+				ThemeDesigner.reloadCSS = true;
 			}
 
-			if (setting === 'wordmark-font-size' || setting === 'wordmark-text' || setting === 'wordmark-type' ||
-				setting === 'page-opacity') {
-				updateSkinPreview = true;
+			if (['community-header-background-image',
+				'wordmark-font-size',
+				'page-opacity',
+				'wordmark-text',
+				'wordmark-type'].indexOf(setting) > -1
+			) {
+				ThemeDesigner.updateSkinPreview = true;
 			}
 
-			ThemeDesigner.applySettings(reloadCSS, updateSkinPreview);
+			//set function is run multiple times, we don't need to apply settings all the time
+			$.debounce(50, function () {
+				ThemeDesigner.applySettings();
+			})();
 		},
 
 		/**
@@ -656,6 +688,38 @@
 		backgroundImageUploadCallback: {
 			onComplete: function (response) {
 				var resp = JSON.parse(response);
+
+				if (resp.errors && resp.errors.length > 0) {
+
+					window.alert(resp.errors.join('\n'));
+
+				} else {
+					$('#backgroundImageUploadFile').val('');
+					ThemeDesigner.hidePicker();
+
+					ThemeDesigner.set('user-background-image', resp.backgroundImageUrl);
+					ThemeDesigner.set('user-background-image-thumb', resp.backgroundImageThumb);
+
+					ThemeDesigner.set('theme', 'custom');
+					ThemeDesigner.set('background-image-name', resp.backgroundImageName);
+					ThemeDesigner.set('background-image-width', resp.backgroundImageWidth);
+					ThemeDesigner.set('background-image-height', resp.backgroundImageHeight);
+
+					// This should be last, it triggers a CSS reload
+					ThemeDesigner.set('background-image', resp.backgroundImageUrl);
+					ThemeDesigner.checkBgIsDynamic(resp.backgroundImageWidth, true);
+				}
+			}
+		},
+
+		/**
+		 * Async callback for uploading community header background image
+		 */
+		communityHeaderBackgroundUploadCallback: {
+			onComplete: function (response) {
+				debugger;
+				var resp = JSON.parse(response);
+
 				if (resp.errors && resp.errors.length > 0) {
 
 					window.alert(resp.errors.join('\n'));
@@ -686,16 +750,20 @@
 		 */
 		backgroundImageUpload: function () {
 			return $('#BackgroundImageForm').find('input[type="file"]').val() !== '';
-
 		},
 
+		communityHeaderBackgroundImageUpload: function () {
+			return $('#CommunityHeaderBackgroundImageForm').find('input[type="file"]').val() !== '';
+		},
 
 		revertToPreviousTheme: function (event) {
 			event.preventDefault();
 			event.stopPropagation();
 			ThemeDesigner.settings = ThemeDesigner.history[$(this).index()].settings;
 
-			ThemeDesigner.applySettings(true, true);
+			ThemeDesigner.reloadCSS = true;
+			ThemeDesigner.updateSkinPreview = true;
+			ThemeDesigner.applySettings();
 		},
 
 		cancelClick: function (event) {
@@ -750,7 +818,7 @@
 		settings: false,
 		themes: false,
 
-		applySettings: function (reloadCSS, updateSkinPreview) {
+		applySettings: function () {
 			var file,
 				theme,
 				settingsToLoad,
@@ -828,13 +896,13 @@
 				$('#WordmarkTab').find('.favicon').find('.preview').addClass('active');
 			}
 
-			if (reloadCSS) {
+			if (ThemeDesigner.reloadCSS) {
 				settingsToLoad = $.extend({}, ThemeDesigner.settings, window.applicationThemeSettings);
 
 				document.getElementById('PreviewFrame').contentWindow.ThemeDesignerPreview.loadSASS(settingsToLoad);
 			}
 
-			if (updateSkinPreview) {
+			if (ThemeDesigner.updateSkinPreview) {
 				previewFrameContent.find('.wds-community-header__sitename a').text(ThemeDesigner.settings['wordmark-text']);
 
 				if (ThemeDesigner.settings['wordmark-type'] !== 'graphic') {
@@ -849,6 +917,9 @@
 					}
 				}
 
+				previewFrameContent.find('header.wds-community-header').attr('style',
+					'background-image: url(' + ThemeDesigner.settings['community-header-background-image'] + ');'
+				);
 
 				previewFrameContent.find('#WikiaPageBackground')
 					.css('opacity', ThemeDesigner.settings['page-opacity'] / ThemeDesigner.maxPageOpacity);
@@ -859,6 +930,10 @@
 					previewFrameContent.find('#WikiHeader .shadow-mask').show();
 				}
 			}
+
+			//reset
+			ThemeDesigner.reloadCSS = false;
+			ThemeDesigner.updateSkinPreview = false;
 		},
 
 		/**

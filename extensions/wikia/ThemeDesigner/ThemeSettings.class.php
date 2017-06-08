@@ -13,6 +13,7 @@ class ThemeSettings {
 
 	const WordmarkImageName = 'Wiki-wordmark.png';
 	const BackgroundImageName = 'Wiki-background';
+	const CommunityHeaderBackgroundImageName = 'Community-header-background';
 	const FaviconImageName = 'Favicon.ico';
 
 	private $defaultSettings;
@@ -66,6 +67,12 @@ class ThemeSettings {
 		$this->defaultSettings['background-tiled'] = false;
 		$this->defaultSettings['background-fixed'] = false;
 		$this->defaultSettings['background-dynamic'] = true;
+
+		//community header background
+		$this->defaultSettings['community-header-background-image'] = '';
+		$this->defaultSettings['community-header-background-image-height'] = null;
+		$this->defaultSettings['community-header-background-image-name'] = '';
+		$this->defaultSettings['community-header-background-image-width'] = null;
 	}
 
 	public function getSettings() {
@@ -102,15 +109,14 @@ class ThemeSettings {
 
 	public function getFreshURL( $name, $definedName ) {
 		$title = Title::newFromText( $definedName, NS_FILE );
+
 		if ( $definedName != $name ) {
 			$file = OldLocalFile::newFromArchiveName( $title, RepoGroup::singleton()->getLocalRepo(), $name );
-
-			return wfReplaceImageServer( $file->getUrl() );
 		} else {
 			$file = new LocalFile( $title, RepoGroup::singleton()->getLocalRepo() );
-
-			return wfReplaceImageServer( $file->getUrl() );
 		}
+
+		return wfReplaceImageServer( $file->getUrl() );
 	}
 
 	public function getHistory() {
@@ -124,10 +130,57 @@ class ThemeSettings {
 		}
 
 		foreach ( $history as $key => $val ) {
-			$history[$key]['settings']['background-image'] = $this->getFreshURL( $val['settings']['background-image-name'], ThemeSettings::BackgroundImageName );
+			$history[$key]['settings']['background-image'] = $this->getFreshURL(
+				$val['settings']['background-image-name'],
+				ThemeSettings::BackgroundImageName
+			);
+			$history[$key]['settings']['community-header-background-image'] = $this->getFreshURL(
+				$val['settings']['community-header-background-image'],
+				ThemeSettings::CommunityHeaderBackgroundImageName
+			);
 		}
 
 		return $history;
+	}
+
+	private function saveImage(string $name, string $title, bool $setSize = false, bool $setUserImage = false) {
+		if ( isset( $settings["${$name}-name"] ) && strpos( $settings["${$name}-name"], 'Temp_file_' ) === 0 ) {
+			$temp_file = new LocalFile( Title::newFromText( $settings["${$name}-name"], NS_FILE ), RepoGroup::singleton()->getLocalRepo() );
+			$file = new LocalFile( Title::newFromText( $title, NS_FILE ), RepoGroup::singleton()->getLocalRepo() );
+			$file->upload( $temp_file->getPath(), '', '' );
+			$temp_file->delete( '' );
+
+			$settings["${$name}"] = $file->getURL();
+			$settings["${$name}-name"] = $file->getName();
+
+			if ($setSize) {
+				$settings["${$name}-width"] = $file->getWidth();
+				$settings["${$name}-height"] = $file->getHeight();
+			}
+
+			if ($setUserImage) {
+				$imageServing = new ImageServing( null, 120, [ "w" => "120", "h" => "65" ] );
+				$settings["user-${$name}"] = $file->getURL();
+				$settings["user-${$name}-thumb"] = wfReplaceImageServer(
+					$file->getThumbUrl(
+						$imageServing->getCut(
+							$file->getWidth(),
+							$file->getHeight(),
+							"origin"
+						) . "-" . $file->getName()
+					)
+				);
+			}
+
+			$file->repo->forceMaster();
+			$history = $file->getHistory( 1 );
+
+			if ( count( $history ) == 1 ) {
+				return [ 'url' => $history[0]->getURL(), 'name' => $history[0]->getArchiveName() ];
+			}
+		}
+
+		return null;
 	}
 
 	public function saveSettings( $settings, $cityId = null ) {
@@ -148,60 +201,12 @@ class ThemeSettings {
 			}
 		}
 
-		if ( isset( $settings['favicon-image-name'] ) && strpos( $settings['favicon-image-name'], 'Temp_file_' ) === 0 ) {
-			$temp_file = new LocalFile( Title::newFromText( $settings['favicon-image-name'], 6 ), RepoGroup::singleton()->getLocalRepo() );
-			$file = new LocalFile( Title::newFromText( self::FaviconImageName, 6 ), RepoGroup::singleton()->getLocalRepo() );
-			$file->upload( $temp_file->getPath(), '', '' );
-			$temp_file->delete( '' );
-			Wikia::invalidateFavicon();
 
-			$settings['favicon-image-url'] = $file->getURL();
-			$settings['favicon-image-name'] = $file->getName();
-
-			$file->repo->forceMaster();
-			$history = $file->getHistory( 1 );
-			if ( count( $history ) == 1 ) {
-				$oldFaviconFile = [ 'url' => $history[0]->getURL(), 'name' => $history[0]->getArchiveName() ];
-			}
-		}
-
-		if ( isset( $settings['wordmark-image-name'] ) && strpos( $settings['wordmark-image-name'], 'Temp_file_' ) === 0 ) {
-			$temp_file = new LocalFile( Title::newFromText( $settings['wordmark-image-name'], 6 ), RepoGroup::singleton()->getLocalRepo() );
-			$file = new LocalFile( Title::newFromText( self::WordmarkImageName, 6 ), RepoGroup::singleton()->getLocalRepo() );
-			$file->upload( $temp_file->getPath(), '', '' );
-			$temp_file->delete( '' );
-
-			$settings['wordmark-image-url'] = $file->getURL();
-			$settings['wordmark-image-name'] = $file->getName();
-
-			$file->repo->forceMaster();
-			$history = $file->getHistory( 1 );
-			if ( count( $history ) == 1 ) {
-				$oldFile = [ 'url' => $history[0]->getURL(), 'name' => $history[0]->getArchiveName() ];
-			}
-		}
-
-		if ( isset( $settings['background-image-name'] ) && strpos( $settings['background-image-name'], 'Temp_file_' ) === 0 ) {
-			$temp_file = new LocalFile( Title::newFromText( $settings['background-image-name'], 6 ), RepoGroup::singleton()->getLocalRepo() );
-			$file = new LocalFile( Title::newFromText( self::BackgroundImageName, 6 ), RepoGroup::singleton()->getLocalRepo() );
-			$file->upload( $temp_file->getPath(), '', '' );
-			$temp_file->delete( '' );
-
-			$settings['background-image'] = $file->getURL();
-			$settings['background-image-name'] = $file->getName();
-			$settings['background-image-width'] = $file->getWidth();
-			$settings['background-image-height'] = $file->getHeight();
-
-			$imageServing = new ImageServing( null, 120, [ "w" => "120", "h" => "65" ] );
-			$settings['user-background-image'] = $file->getURL();
-			$settings['user-background-image-thumb'] = wfReplaceImageServer( $file->getThumbUrl( $imageServing->getCut( $file->getWidth(), $file->getHeight(), "origin" ) . "-" . $file->getName() ) );
-
-			$file->repo->forceMaster();
-			$history = $file->getHistory( 1 );
-			if ( count( $history ) == 1 ) {
-				$oldBackgroundFile = [ 'url' => $history[0]->getURL(), 'name' => $history[0]->getArchiveName() ];
-			}
-		}
+		$oldBackgroundFile = $this->saveImage('background-image', self::BackgroundImageName, true, true);
+		$oldCommunityHeaderFile = $this->saveImage('community-header-background-image', self::CommunityHeaderBackgroundImageName, true, true);
+		$oldWordmarkFile = $this->saveImage('wordmark-image', self::WordmarkImageName);
+		$oldFaviconFile = $this->saveImage('favicon-image', self::FaviconImageName);
+		Wikia::invalidateFavicon();
 
 		$reason = wfMessage( 'themedesigner-reason', $wgUser->getName() )->text();
 
@@ -246,15 +251,20 @@ class ThemeSettings {
 						$history[$i]['settings']['favicon-image-url'] = $oldFaviconFile['url'];
 					}
 				}
-				if ( isset( $oldFile ) && isset( $history[$i]['settings']['wordmark-image-name'] ) ) {
+				if ( isset( $oldWordmarkFile ) && isset( $history[$i]['settings']['wordmark-image-name'] ) ) {
 					if ( $history[$i]['settings']['wordmark-image-name'] == self::WordmarkImageName ) {
-						$history[$i]['settings']['wordmark-image-name'] = $oldFile['name'];
-						$history[$i]['settings']['wordmark-image-url'] = $oldFile['url'];
+						$history[$i]['settings']['wordmark-image-name'] = $oldWordmarkFile['name'];
+						$history[$i]['settings']['wordmark-image-url'] = $oldWordmarkFile['url'];
 					}
 				}
 				if ( isset( $oldBackgroundFile ) && isset( $history[$i]['settings']['background-image-name'] ) ) {
 					if ( $history[$i]['settings']['background-image-name'] == self::BackgroundImageName ) {
 						$history[$i]['settings']['background-image-name'] = $oldBackgroundFile['name'];
+					}
+				}
+				if ( isset( $oldCommunityHeaderFile ) && isset( $history[$i]['settings']['community-header-background-image-name'] ) ) {
+					if ( $history[$i]['settings']['community-header-background-image-name'] == self::CommunityHeaderBackgroundImageName ) {
+						$history[$i]['settings']['community-header-background-image-name'] = $oldCommunityHeaderFile['name'];
 					}
 				}
 			}
@@ -307,10 +317,27 @@ class ThemeSettings {
 	 * @author macbre
 	 * @return string background URL or empty string if not found
 	 */
-	public function getBackgroundUrl() {
-		global $wgUploadPath;
+	public function getBackgroundUrl(): string {
+		return $this->getVignetteUrl( $this->getSettings()['background-image'] );
+	}
 
-		$backgroundUrl = $this->getSettings()['background-image'];
+	/**
+	 * Get community header background full, up-to-date URL
+	 *
+	 * This method returns URL based on "community-header-background-image"
+	 *
+	 * @return string background URL or empty string if not found
+	 */
+	public function getCommunityHeaderBackgroundUrl(): string {
+		return $this->getVignetteUrl( $this->getSettings()['community-header-background-image'] );
+	}
+
+	/**
+	 * @param string $backgroundUrl
+	 * @return string
+	 */
+	private function getVignetteUrl( string $backgroundUrl ): string {
+		global $wgUploadPath;
 
 		if ( !VignetteRequest::isVignetteUrl( $backgroundUrl ) ) {
 			if ( empty( $backgroundUrl ) ) {
@@ -327,9 +354,9 @@ class ThemeSettings {
 				);
 			}
 
-			$backgroundUrl = wfReplaceImageServer( $backgroundUrl, SassUtil::getCacheBuster() );
+			return wfReplaceImageServer( $backgroundUrl, SassUtil::getCacheBuster() );
 		}
 
-		return $backgroundUrl;
+		return '';
 	}
 }

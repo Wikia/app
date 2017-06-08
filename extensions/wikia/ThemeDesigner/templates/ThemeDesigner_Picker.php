@@ -101,4 +101,24 @@
 			</form>
 		<?php } ?>
 	</div>
+	<div class="community-header">
+		<h1><?= wfMessage( 'themedesigner-pick-an-image' )->text() ?></h1>
+		<ul class="swatches">
+			<li class="no-image">
+				<?= wfMessage( 'themedesigner-dont-use-a-background' )->text() ?>
+			</li>
+		</ul>
+		<?php if ( !empty( $wg->EnableUploads ) ) { ?>
+			<h1><?= wfMessage( 'themedesigner-upload-your-own' )->text() ?></h1>
+
+			<form id="CommunityHeaderBackgroundImageForm" class="CommunityHeaderBackgroundImageForm"
+				  action="<?= $wg->ScriptPath ?>/wikia.php?controller=ThemeDesigner&method=CommunityHeaderBackgroundImageUpload&format=html"
+				  method="POST" enctype="multipart/form-data">
+				<input id="backgroundImageUploadFile" name="wpUploadFile" type="file">
+				<input type="submit" value="<?= wfMessage( 'themedesigner-button-upload' )->text() ?>"
+					   onclick="return ThemeDesigner.communityHeaderBackgroundImageUpload(event);">
+				<?= wfMessage( 'themedesigner-rules-background', UploadBackgroundFromFile::FILESIZE_LIMIT / 1024 )->text() ?>
+			</form>
+		<?php } ?>
+	</div>
 </aside>

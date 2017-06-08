@@ -37,6 +37,10 @@
 					</span>
 				<? endif ?>
 			</li>
+			<li class="wrap-background">
+				<h2><?= wfMessage( 'themedesigner-graphic' )->text() ?></h2>
+				<img src="<?= $wg->BlankImgUrl ?>" class="community-header-background-image" id="swatch-community-header-image-background">
+			</li>
 		</ul>
 	</fieldset>
 	<fieldset class="page">

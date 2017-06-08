@@ -246,7 +246,7 @@ class ThemeDesignerController extends WikiaController {
 		}
 	}
 
-	public function executeBackgroundImageUpload() {
+	public function executeCommunityHeaderBackgroundImageUpload() {
 		// check rights
 		if ( !ThemeDesignerHelper::checkAccess() ) {
 			$this->displayRestrictionError( __METHOD__ );
@@ -282,11 +282,46 @@ class ThemeDesignerController extends WikiaController {
 		}
 	}
 
+	public function executeBackgroundImageUpload() {
+		// check rights
+		if ( !ThemeDesignerHelper::checkAccess() ) {
+			$this->displayRestrictionError( __METHOD__ );
+		}
+
+		$upload = new UploadBackgroundFromFile();
+
+		$status = $this->uploadImage( $upload );
+
+		if ( $status['status'] === 'uploadattempted' && $status['isGood'] ) {
+			$file = $upload->getLocalFile();
+			$this->backgroundImageUrl = wfReplaceImageServer( $file->getUrl() );
+			$this->backgroundImageName = $file->getName();
+			$this->backgroundImageHeight = $file->getHeight();
+			$this->backgroundImageWidth = $file->getWidth();
+
+			//get cropped URL
+			$is = new ImageServing( null, 120, [ "w" => "120", "h" => "100" ] );
+			$this->backgroundImageThumb = wfReplaceImageServer(
+				$file->getThumbUrl(
+					$is->getCut( $file->width, $file->height, "origin" ) . "-" . $file->getName()
+				)
+			);
+
+			// if background image url is not set then it means there was some problem
+			if ( $this->backgroundImageUrl == null ) {
+				$this->errors = [ wfMessage( 'themedesigner-unknown-error' )->text() ];
+			}
+
+		} else if ( $status['status'] === 'error' ) {
+			$this->errors = $status['errors'];
+		}
+	}
+
 	/**
-	 * @param UploadBase $upload
+	 * @param UploadBackgroundFromFile|UploadFaviconFromFile|UploadWordmarkFromFile $upload
 	 * @return array
 	 */
-	private function uploadImage( $upload ) {
+	private function uploadImage( $upload ): array {
 		global $wgEnableUploads;
 
 		$wgRequest = RequestContext::getMain()->getRequest();
@@ -314,7 +349,7 @@ class ThemeDesignerController extends WikiaController {
 						$uploadStatus["errors"] = $this->getUploadWarningMessages( $warnings );
 					} else {
 						//save temp file
-						$status = $upload->performUpload();
+						$status = $upload->performUpload('', '', false, $wgUser);
 
 						$uploadStatus["status"] = "uploadattempted";
 						$uploadStatus["isGood"] = $status->isGood();
