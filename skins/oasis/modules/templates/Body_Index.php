@@ -39,7 +39,7 @@
 
 <?= $beforeWikiaPageHtml ?>
 
-<? if ( empty( $wg->SuppressWikiHeader ) && !WikiaPageType::isCorporatePage() ) : ?>
+<? if ( empty( $wg->SuppressWikiHeader ) ) : ?>
 	<?= $app->renderView( 'CommunityHeader', 'index' ) ?>
 <? endif; ?>
 
