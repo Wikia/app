@@ -143,7 +143,7 @@ class ThemeSettings {
 		return $history;
 	}
 
-	private function saveImage( array $settings, string $name, string $title, bool $setSize = false, bool $setUserImage = false ) {
+	private function saveImage( array &$settings, string $name, string $title, bool $setUserImage = false ) {
 		if ( isset( $settings["{$name}-name"] ) && strpos( $settings["{$name}-name"], 'Temp_file_' ) === 0 ) {
 			$temp_file = new LocalFile( Title::newFromText( $settings["{$name}-name"], NS_FILE ), RepoGroup::singleton()->getLocalRepo() );
 			$file = new LocalFile( Title::newFromText( $title, NS_FILE ), RepoGroup::singleton()->getLocalRepo() );
@@ -152,11 +152,6 @@ class ThemeSettings {
 
 			$settings["{$name}"] = $file->getURL();
 			$settings["{$name}-name"] = $file->getName();
-
-			if ( $setSize ) {
-				$settings["{$name}-width"] = $file->getWidth();
-				$settings["{$name}-height"] = $file->getHeight();
-			}
 
 			if ( $setUserImage ) {
 				$imageServing = new ImageServing( null, 120, [ "w" => "120", "h" => "65" ] );
@@ -201,8 +196,8 @@ class ThemeSettings {
 			}
 		}
 
-		$oldBackgroundFile = $this->saveImage( $settings, 'background-image', self::BackgroundImageName, true, true);
-		$oldCommunityHeaderFile = $this->saveImage( $settings, 'community-header-background-image', self::CommunityHeaderBackgroundImageName, true, true);
+		$oldBackgroundFile = $this->saveImage( $settings, 'background-image', self::BackgroundImageName, true);
+		$oldCommunityHeaderFile = $this->saveImage( $settings, 'community-header-background-image', self::CommunityHeaderBackgroundImageName, true);
 		$oldWordmarkFile = $this->saveImage( $settings, 'wordmark-image', self::WordmarkImageName);
 		$oldFaviconFile = $this->saveImage( $settings, 'favicon-image', self::FaviconImageName);
 		Wikia::invalidateFavicon();
