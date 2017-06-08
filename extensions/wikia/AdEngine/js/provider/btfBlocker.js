@@ -35,15 +35,23 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 		});
 
 		function processBtfSlot(slot) {
+			var context = adContext.getContext();
 			log(['processBtfSlot', slot.name], 'debug', logGroup);
 
-			if (win.ads.runtime.unblockHighlyViewableSlots && config.highlyViewableSlots) {
-				config.highlyViewableSlots.map(unblock);
-			}
+			if (context.opts.adMixExperimentEnabled) {
+				if (context.slots.adMixToUnblock.indexOf(slot.name) !== -1) {
+					fillInSlot(slot);
+					return;
+				}
+			} else {
+				if (win.ads.runtime.unblockHighlyViewableSlots && config.highlyViewableSlots) {
+					config.highlyViewableSlots.map(unblock);
+				}
 
-			if (unblockedSlots.indexOf(slot.name) > -1 || !win.ads.runtime.disableBtf) {
-				fillInSlot(slot);
-				return;
+				if (unblockedSlots.indexOf(slot.name) > -1 || !win.ads.runtime.disableBtf) {
+					fillInSlot(slot);
+					return;
+				}
 			}
 
 			slot.collapse({adType: 'blocked'});
@@ -59,7 +67,6 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 
 			if (context.opts.adMixExperimentEnabled) {
 				win.ads.runtime.disableBtf = true;
-				context.slots.adMixToUnblock.map(unblock);
 			}
 
 			lazyQueue.makeQueue(btfQueue, processBtfSlot);
