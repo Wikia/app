@@ -2,15 +2,15 @@
 <? if ($commentsBubble): ?>
 	<div class="commentslikes">
 		<a href="<?= htmlspecialchars($commentsLink) ?>"
-		   class="comments<?= empty($isArticleComments) ? ' talk' : '' ?>"
-		   data-id="comment"
-		   title="<?= htmlspecialchars($commentsTooltip) ?>"<?= $commentsAccesskey ?>>
+			class="comments<?= empty($isArticleComments) ? ' talk' : '' ?>"
+			data-id="comment"
+			title="<?= htmlspecialchars($commentsTooltip) ?>"<?= $commentsAccesskey ?>>
 
 			<span class="commentsbubble"><?= $formattedComments ?></span>
 		</a>
 	</div>
 
-	<? // show comments / talk button ?>
+<? // show comments / talk button ?>
 <? elseif (isset($comments)):
 	$msg = $commentsEnabled ? 'oasis-page-header-comments' : 'oasis-page-header-talk';
 

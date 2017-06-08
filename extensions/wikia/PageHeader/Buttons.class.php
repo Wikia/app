@@ -3,6 +3,7 @@
 namespace Wikia\PageHeader;
 
 use RequestContext;
+use SpecialPage;
 use WikiaApp;
 
 class Buttons {
@@ -18,10 +19,13 @@ class Buttons {
 
 		if ( $title->isSpecial( 'Images' ) && $app->wg->EnableUploads ) {
 			$label = wfMessage( 'page-header-action-button-add-new-image' )->escaped();
-			$buttons[] =
-				new Button( $label, 'wds-icons-image',
-					\SpecialPage::getTitleFor( 'Upload' )->getLocalURL(), '',
-					'page-header-add-new-photo' );
+			$buttons[] = new Button(
+				$label,
+				'wds-icons-image',
+				SpecialPage::getTitleFor( 'Upload' )->getLocalURL(),
+				'',
+				'page-header-add-new-photo'
+			);
 		}
 
 		wfRunHooks( 'AfterPageHeaderButtons', [ $title, &$buttons ] );

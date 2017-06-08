@@ -199,8 +199,12 @@ class BlogsHelper {
 	public static function onAfterPageHeaderButtons( \Title $title, array &$buttons ): bool {
 		if ( $title->getNamespace() === NS_BLOG_LISTING ) {
 			$label = wfMessage( 'blog-create-post-label' )->escaped();
-			array_unshift( $buttons, new Button( $label, 'wds-icons-plus',
-					SpecialPage::getTitleFor( 'CreateBlogPage' )->getLocalUrl() ) );
+			array_unshift(
+				$buttons,
+				new Button(
+					$label, 'wds-icons-plus', SpecialPage::getTitleFor( 'CreateBlogPage' )->getLocalUrl()
+				)
+			);
 		}
 
 		return true;

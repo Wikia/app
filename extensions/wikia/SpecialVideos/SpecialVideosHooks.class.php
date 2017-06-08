@@ -15,7 +15,7 @@ class SpecialVideosHooks {
 		if (
 			$title->isSpecial( 'Videos' ) &&
 			\F::app()->wg->EnableUploads &&
-		     $user->isAllowed( 'videoupload' )
+			$user->isAllowed( 'videoupload' )
 		) {
 			$label = wfMessage( 'special-videos-add-video' )->escaped();
 			$buttons[] = new Button( $label, 'wds-icons-video-camera', '#', 'addVideo' );

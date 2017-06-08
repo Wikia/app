@@ -13,7 +13,7 @@ class PageShareHooks {
 		if (
 			$title->isContentPage() &&
 			$title->exists() &&
-		     !F::app()->checkSkin( 'oasislight' )
+			!F::app()->checkSkin( 'oasislight' )
 		) {
 			$label = wfMessage( 'page-share-entry-point-label' )->escaped();
 			$buttons[] = new Button( $label, 'wds-icons-share', '#', 'wds-is-secondary', 'ShareEntryPoint' );
