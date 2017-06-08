@@ -180,7 +180,7 @@ class BlogsHelper {
 	 *
 	 * @return bool
 	 */
-	public static function onPageHeaderActionButtonShouldDisplay( \Title $title, array &$shouldDisplayActionButton ): bool {
+	public static function onPageHeaderActionButtonShouldDisplay( \Title $title, bool &$shouldDisplayActionButton ): bool {
 		if ( $title->getNamespace() === NS_BLOG_LISTING ) {
 			$shouldDisplayActionButton = false;
 		} else if ( $title->getNamespace() === NS_BLOG_ARTICLE && !$title->userCan( 'edit' ) ) {
