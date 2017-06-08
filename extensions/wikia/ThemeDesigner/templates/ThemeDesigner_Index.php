@@ -97,7 +97,5 @@
 <iframe frameborder=0 id="PreviewFrame" class="PreviewFrame"
 		src="<?= str_replace( '$1', 'Special:ThemeDesignerPreview', $wg->ArticlePath ) ?>?noexternals=1"></iframe>
 
-<?= $analytics ?>
-
 </body>
 </html>
