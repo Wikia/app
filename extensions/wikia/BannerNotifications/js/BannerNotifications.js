@@ -84,6 +84,9 @@
 
 		this.hidden = false;
 
+		// If the page is already scrolled, make sure we update our position
+		handleScrolling();
+
 		// Close notification after specified amount of time
 		if (typeof this.timeout === 'number') {
 			setTimeout(function () {
@@ -171,32 +174,34 @@
 	 */
 	function init() {
 		$header = $('#globalNavigation');
-		$container = getNotificationsContainer();
+		$container = getContainer();
 
-		stickToGlobalNavigation();
+		if (window.skin !== 'monobook') {
+			require(['wikia.onScroll'], function (onScroll) {
+				onScroll.bind(handleScrolling);
+			});
+		}
+
+		updatePlaceholderHeight();
 
 		// SUS-729: hide notifications if VisualEditor is loaded and show them again once it's closed
 		if (mw.config.get('wgVisualEditor') && mw.config.get('wgIsArticle')) {
 			mw.hook('ve.activationComplete').add(function() {
 				$('.banner-notification').fadeOut(fadeTime);
-				stickToGlobalNavigation();
+				updatePlaceholderHeight();
 			});
 
 			mw.hook('ve.deactivate').add(function() {
 				$('.banner-notification').fadeIn(fadeTime);
-				stickToGlobalNavigation();
+				updatePlaceholderHeight();
 			});
 		}
 		createBackendNotifications();
 	}
 
-	function stickToGlobalNavigation() {
-		var $wrapper;
-
+	function updatePlaceholderHeight() {
 		if (window.skin !== 'monobook') {
-			$wrapper = $container.find(wrapperSelector);
-			$wrapper.addClass('float');
-			$container.height($wrapper.height());
+			$container.height($container.find(wrapperSelector).height());
 		}
 	}
 
@@ -213,10 +218,40 @@
 	}
 
 	/**
+	 * Pins the notification to the top of the screen when scrolled down the page.
+	 */
+	function handleScrolling() {
+		var containerTop,
+			notificationWrapper = getContainer().children(wrapperSelector),
+			headerBottom;
+
+		if (!$container.length || !notificationWrapper.length) {
+			return;
+		}
+
+		// get the position of the wrapper element relative to the top of the viewport
+		containerTop = $container.get(0).getBoundingClientRect().top;
+		headerBottom = $header.length > 0 ? $header.get(0).getBoundingClientRect().bottom : 0;
+
+		if (containerTop < headerBottom) {
+			if (!notificationWrapper.hasClass('float')) {
+				notificationWrapper.addClass('float');
+
+				// if element has no inline top style let's put it to make sure container is positioned correctly
+				if (!notificationWrapper.prop('style').top) {
+					notificationWrapper.css('top', headerBottom);
+				}
+			}
+		} else {
+			notificationWrapper.removeClass('float');
+		}
+	}
+
+	/**
 	 * Obtains element wrapping notifications
 	 * @returns {jQuery}
 	 */
-	function getNotificationsContainer() {
+	function getContainer() {
 		if ($container && $container.length) {
 			return $container;
 		} else if (window.skin === 'monobook') {
@@ -249,15 +284,17 @@
 	 */
 	function addToDOM($element, $parentElement) {
 		// allow notification wrapper element to be passed by extension
-		var $parent = $parentElement || (isModalShown() ? modal : getNotificationsContainer()),
+		var $parent = $parentElement || (isModalShown() ? modal : getContainer()),
 			$bannerNotificationsWrapper = $parent.find(wrapperSelector);
+
 		if (!$bannerNotificationsWrapper.length) {
 			$bannerNotificationsWrapper = $('<div></div>').addClass(wrapperClass);
 			$parent.prepend($bannerNotificationsWrapper);
 		}
+
 		$bannerNotificationsWrapper.prepend($element);
 
-		$element.fadeIn(fadeTime, stickToGlobalNavigation);
+		$element.fadeIn(fadeTime, updatePlaceholderHeight);
 	}
 
 	/**
@@ -308,7 +345,7 @@
 		var $parent = $element.parent();
 
 		if (
-			$parent.hasClass(wrapperClass) &&
+			$parent.hasClass(wrapperSelector) &&
 			$parent.children().length === 1
 		) {
 			$parent.remove();
@@ -316,7 +353,7 @@
 			$element.remove();
 		}
 
-		stickToGlobalNavigation();
+		updatePlaceholderHeight();
 	}
 
 	// run when DOM is loaded
