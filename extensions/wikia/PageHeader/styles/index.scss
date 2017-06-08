@@ -6,6 +6,8 @@
 @import 'skins/oasis/css/core/breakpoints-variables';
 
 .WikiaPage .page-header {
+	$text-dropdown-padding-bottom: 10px;
+
 	@include dropdown-theming($color-page, $color-text, $color-links, $color-page-border);
 
 	@include align-items(flex-start);
@@ -47,6 +49,10 @@
 
 	&__languages {
 		margin-bottom: 12px;
+
+		.wds-dropdown__toggle-chevron {
+			vertical-align: text-top;
+		}
 	}
 
 	&__main {
@@ -67,7 +73,7 @@
 		}
 
 		&-dropdown {
-			padding-bottom: 10px;
+			padding-bottom: $text-dropdown-padding-bottom;
 
 			&-content {
 				font-style: normal;
@@ -147,5 +153,11 @@
 	.wds-avatar {
 		border-color: $color-page-border;
 	}
+}
+//We allign article header on corporate pages with this one.
+.WikiaPage.WikiaGrid > div > header,
+.WikiaPage.WikiaGrid > div > hr  {
+	margin-left: 10px;
+	margin-right: 10px;
 }
 
