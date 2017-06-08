@@ -203,7 +203,7 @@ class ThemeSettings {
 			}
 		}
 
-		$reason = wfMessage( 'themedesigner-reason', $wgUser->getName() )->text();
+		$reason = wfMessage( 'themedesigner-reason', $wgUser->getName() )->escaped();
 
 		// update history
 		if ( !empty( $GLOBALS[self::WikiFactoryHistory] ) ) {

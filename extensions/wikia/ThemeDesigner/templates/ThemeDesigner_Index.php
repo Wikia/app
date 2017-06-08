@@ -47,13 +47,13 @@
 	<nav id="Navigation" class="Navigation">
 		<ul>
 			<li>
-				<a href="#" rel="ThemeTab"><?= wfMessage( 'themedesigner-tab-theme' )->text() ?></a>
+				<a href="#" rel="ThemeTab"><?= wfMessage( 'themedesigner-tab-theme' )->escaped() ?></a>
 			</li>
 			<li>
-				<a href="#" rel="CustomizeTab"><?= wfMessage( 'themedesigner-tab-customize' )->text() ?></a>
+				<a href="#" rel="CustomizeTab"><?= wfMessage( 'themedesigner-tab-customize' )->escaped() ?></a>
 			</li>
 			<li>
-				<a href="#" rel="WordmarkTab"><?= wfMessage( 'themedesigner-tab-wordmark' )->text() ?></a>
+				<a href="#" rel="WordmarkTab"><?= wfMessage( 'themedesigner-tab-wordmark' )->escaped() ?></a>
 			</li>
 		</ul>
 	</nav>
@@ -62,13 +62,13 @@
 	<?= F::app()->renderView( 'ThemeDesigner', 'WordmarkTab' ) ?>
 	<div id="Toolbar" class="Toolbar">
 		<div class="inner">
-			<span class="mode"><?= wfMessage( 'themedesigner-preview-mode' )->text() ?></span>
+			<span class="mode"><?= wfMessage( 'themedesigner-preview-mode' )->escaped() ?></span>
 			<?php
 			if ( count( $themeHistory ) > 0 ) {
 				?>
 				<span class="history">
 					<span class="revisions"><?= count( $themeHistory ) ?></span>
-					<?= wfMessage( 'themedesigner-previous-versions' )->text() ?>
+					<?= wfMessage( 'themedesigner-previous-versions' )->escaped() ?>
 					<img class="chevron" src="<?= $wg->BlankImgUrl ?>">
 					<ul>
 					<?php
@@ -76,7 +76,7 @@
 						?>
 						<li>
 							<?= Wikia::specialPageLink( '#', null, 'wikia-chiclet-button', 'blank.gif', 'recycle' ); ?>
-							<?= wfMessage( 'themedesigner-history-item', $themeHistoryItem['timeago'], $themeHistoryItem['author'] )->text() ?>
+							<?= wfMessage( 'themedesigner-history-item', $themeHistoryItem['timeago'], $themeHistoryItem['author'] )->escaped() ?>
 						</li>
 						<?php
 					}
@@ -86,8 +86,8 @@
 				<?php
 			} //end if
 			?>
-			<button class="save"><?= wfMessage( 'themedesigner-button-save-im-done' )->text() ?></button>
-			<button class="cancel secondary"><?= wfMessage( 'themedesigner-button-cancel' )->text() ?></button>
+			<button class="save"><?= wfMessage( 'themedesigner-button-save-im-done' )->escaped() ?></button>
+			<button class="cancel secondary"><?= wfMessage( 'themedesigner-button-cancel' )->escaped() ?></button>
 		</div>
 	</div>
 </div>

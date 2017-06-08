@@ -209,7 +209,7 @@ class ThemeDesignerController extends WikiaController {
 
 			// if wordmark url is not set then it means there was some problem
 			if ( $this->wordmarkImageUrl == null || $this->wordmarkImageName == null ) {
-				$this->errors = [ wfMessage( 'themedesigner-unknown-error' )->text() ];
+				$this->errors = [ wfMessage( 'themedesigner-unknown-error' )->escaped() ];
 			}
 
 			wfRunHooks( 'UploadWordmarkComplete', [ &$upload ] );
@@ -239,7 +239,7 @@ class ThemeDesignerController extends WikiaController {
 
 			// if wordmark url is not set then it means there was some problem
 			if ( $this->faviconImageUrl == null ) {
-				$this->errors = [ wfMessage( 'themedesigner-unknown-error' )->text() ];
+				$this->errors = [ wfMessage( 'themedesigner-unknown-error' )->escaped() ];
 			}
 		} else if ( $status['status'] === 'error' ) {
 			$this->errors = $status['errors'];
@@ -274,7 +274,7 @@ class ThemeDesignerController extends WikiaController {
 
 			// if background image url is not set then it means there was some problem
 			if ( $this->backgroundImageUrl == null ) {
-				$this->errors = [ wfMessage( 'themedesigner-unknown-error' )->text() ];
+				$this->errors = [ wfMessage( 'themedesigner-unknown-error' )->escaped() ];
 			}
 
 		} else if ( $status['status'] === 'error' ) {
@@ -301,7 +301,7 @@ class ThemeDesignerController extends WikiaController {
 			$permErrors = $upload->verifyPermissions( $wgUser );
 
 			if ( $permErrors !== true ) {
-				$uploadStatus["errors"] = [ wfMessage( 'badaccess' )->text() ];
+				$uploadStatus["errors"] = [ wfMessage( 'badaccess' )->escaped() ];
 			} else {
 				$details = $upload->verifyUpload();
 
