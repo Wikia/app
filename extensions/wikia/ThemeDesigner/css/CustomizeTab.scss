@@ -54,9 +54,20 @@
 			width: 50px;
 		}
 
+		.background-image, .community-header-background-image {
+			width: 120px;
+		}
+
 		.background-image {
 			height: 65px;
-			width: 120px;
+		}
+
+		.community-header-background-image {
+			height: 33px;
+		}
+
+		input {
+			vertical-align: middle;
 		}
 	}
 
@@ -68,4 +79,9 @@
 .OpacitySlider {
 	margin-top: 12px;
 	width: 84px;
+}
+
+.community-header-size-text {
+	font-style: italic;
+	text-align: center;
 }

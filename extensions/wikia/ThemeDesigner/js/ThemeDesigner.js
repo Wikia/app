@@ -851,6 +851,7 @@
 			$('#swatch-color-page').css('background-color', ThemeDesigner.settings['color-page']);
 			$('#swatch-color-header').css('background-color', ThemeDesigner.settings['color-header']);
 
+			//Background image
 			if (ThemeDesigner.settings['background-image'] === '') {
 				//no background image
 				$('#swatch-image-background').attr('src', window.wgBlankImgUrl);
@@ -864,6 +865,16 @@
 			} else {
 				//admin background image
 				$('#swatch-image-background').attr('src', ThemeDesigner.settings['user-background-image-thumb']);
+			}
+
+			//Community header background image
+			if (ThemeDesigner.settings['community-header-background-image'] === '') {
+				//no background image
+				$('#swatch-community-header-image-background')
+					.attr('src', window.wgBlankImgUrl);
+			} else {
+				$('#swatch-community-header-image-background')
+					.attr('src', ThemeDesigner.settings['user-community-header-background-image-thumb']);
 			}
 
 			/*** Wordmark Tab ***/
