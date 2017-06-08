@@ -8,11 +8,12 @@
 .WikiaPage .page-header {
 	@include dropdown-theming($color-page, $color-text, $color-links, $color-page-border);
 
+	@include align-items(flex-end);
 	@include flexbox();
 	@include justify-content(flex-end);
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
-	padding: 12px 0;
+	padding: 16px 0 12px;
 	position: relative;
 	z-index: 4;
 
@@ -113,6 +114,7 @@
 		border: 0;
 		height: 1px;
 		margin-bottom: 18px;
+		margin-top: 0;
 	}
 
 	&__subtitle {
