@@ -59,7 +59,9 @@ class WikiaUpdater {
 			array( 'WikiaUpdater::do_drop_table', 'user_board' ),
 			array( 'WikiaUpdater::do_drop_table', 'watchlist_old' ),
 			array( 'WikiaUpdater::do_clean_math_table' ),
-			array( 'WikiaUpdater::do_transcache_update' )
+			array( 'WikiaUpdater::do_transcache_update' ),
+			array( 'dropField', 'interwiki', 'iw_api', $dir . 'patch-drop-iw_api.sql', true ),
+			array( 'dropField', 'interwiki', 'iw_wikiid', $dir . 'patch-drop-wikiid.sql', true ),
 		);
 
 		if ( $wgDBname === $wgExternalSharedDB ) {
