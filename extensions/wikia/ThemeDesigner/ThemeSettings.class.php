@@ -144,24 +144,24 @@ class ThemeSettings {
 	}
 
 	private function saveImage( array $settings, string $name, string $title, bool $setSize = false, bool $setUserImage = false ) {
-		if ( isset( $settings["${$name}-name"] ) && strpos( $settings["${$name}-name"], 'Temp_file_' ) === 0 ) {
-			$temp_file = new LocalFile( Title::newFromText( $settings["${$name}-name"], NS_FILE ), RepoGroup::singleton()->getLocalRepo() );
+		if ( isset( $settings["{$name}-name"] ) && strpos( $settings["{$name}-name"], 'Temp_file_' ) === 0 ) {
+			$temp_file = new LocalFile( Title::newFromText( $settings["{$name}-name"], NS_FILE ), RepoGroup::singleton()->getLocalRepo() );
 			$file = new LocalFile( Title::newFromText( $title, NS_FILE ), RepoGroup::singleton()->getLocalRepo() );
 			$file->upload( $temp_file->getPath(), '', '' );
 			$temp_file->delete( '' );
 
-			$settings["${$name}"] = $file->getURL();
-			$settings["${$name}-name"] = $file->getName();
+			$settings["{$name}"] = $file->getURL();
+			$settings["{$name}-name"] = $file->getName();
 
-			if ($setSize) {
-				$settings["${$name}-width"] = $file->getWidth();
-				$settings["${$name}-height"] = $file->getHeight();
+			if ( $setSize ) {
+				$settings["{$name}-width"] = $file->getWidth();
+				$settings["{$name}-height"] = $file->getHeight();
 			}
 
-			if ($setUserImage) {
+			if ( $setUserImage ) {
 				$imageServing = new ImageServing( null, 120, [ "w" => "120", "h" => "65" ] );
-				$settings["user-${$name}"] = $file->getURL();
-				$settings["user-${$name}-thumb"] = wfReplaceImageServer(
+				$settings["user-{$name}"] = $file->getURL();
+				$settings["user-{$name}-thumb"] = wfReplaceImageServer(
 					$file->getThumbUrl(
 						$imageServing->getCut(
 							$file->getWidth(),
