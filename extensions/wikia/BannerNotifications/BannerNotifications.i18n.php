@@ -109,7 +109,7 @@ $messages['it'] = array(
 
 $messages['ja'] = array(
 	'bannernotifications-desc' => 'AJAXエラーなどのイベントに関するシステム通知を表示します',
-	'bannernotifications-general-ajax-failure' => 'Fandomに接続できませんでした。しばらくしてから再度お試しください。',
+	'bannernotifications-general-ajax-failure' => 'FANDOMに接続できませんでした。しばらくしてから再度お試しください。',
 	'bannernotifications-not-confirmed-email' => 'メールアドレスの認証が完了していないようです。受信トレイの確認メールをチェックしてみてください。確認メールが見つからない場合は、[[特別:ConfirmEmail|ここをクリック]]すると新しい確認メールが送信されます。メールアドレスを変更する必要がある場合は、[[特別:Preferences#mw-prefsection-emailv2|「個人設定」ページ]]にアクセスしてください。',
 	'bannernotifications-no-email' => 'メールアドレスが設定されていないようです。メールアドレスを設定するには、[[特別:Preferences#mw-prefsection-emailv2|「個人設定」ページ]]にアクセスしてください。',
 );
@@ -203,13 +203,13 @@ $messages['vi'] = array(
 
 $messages['zh-hans'] = array(
 	'bannernotifications-desc' => '显示一些如AJAX失败类似事件的系统通知',
-	'bannernotifications-general-ajax-failure' => '浏览器无法连接到Fandom。请稍后再试。',
+	'bannernotifications-general-ajax-failure' => '浏览器无法连接到FANDOM。请稍后再试。',
 	'bannernotifications-not-confirmed-email' => '您的电子邮件地址尚未得到验证。您的收件箱里应该已经收到了一封确认邮件。没有收到？[[Special:ConfirmEmail|单击此处，我们会重新发送一封邮件]]。如需更改您的邮件地址，请前往[[Special:Preferences#mw-prefsection-emailv2|个人设定]]页面。',
 	'bannernotifications-no-email' => '哎呀！很抱歉，我们没有您的电子邮件地址。请点击[[Special:Preferences#mw-prefsection-emailv2|用户设定]]设置您的电子邮箱。',
 );
 
 $messages['zh-hant'] = array(
-	'bannernotifications-general-ajax-failure' => '瀏覽器無法連接到Fandom。請稍後再試。',
+	'bannernotifications-general-ajax-failure' => '瀏覽器無法連接到FANDOM。請稍後再試。',
 	'bannernotifications-desc' => '顯示一個如AJAX失敗類似事件的系統通知',
 	'bannernotifications-not-confirmed-email' => '你的電子郵件地址尚未獲得到認證。你的收件匣中應該已經收到了認證訊息。沒有收到？[[Special:ConfirmEmail|按一下此處，我們會重新發送一個郵件]]。如需更改地址，請至[[Special:Preferences#mw-prefsection-emailv2|個人設定頁面]]。',
 	'bannernotifications-no-email' => '哎呀！很抱歉，我們沒有您的電子郵件地址。請點擊[[Special:Preferences#mw-prefsection-emailv2|用戶設定]]設置您的電子郵箱。',

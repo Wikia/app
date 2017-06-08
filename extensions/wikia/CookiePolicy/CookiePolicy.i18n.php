@@ -33,7 +33,7 @@ $messages['it'] = array(
 
 $messages['ja'] = array(
 	'cookie-policy-description' => 'EUでは、初めてサイトを訪れた際に、そのサイトでのCookie使用についてユーザーに通知することが法律で義務化されています。この拡張機能は、この法律に遵守するために使用されます。',
-	'cookie-policy-notification-message' => 'Fandomでは、サイト上で最適なサービスを提供するためにCookieを使用しています。Fandomの使用を続けることは、ユーザーがFandomのCookie使用について同意したことと見なされます。[[ja.wikia.com/Privacy_Policy#Cookies|Cookieについての詳細]]',
+	'cookie-policy-notification-message' => 'FANDOMでは、サイト上で最適なサービスを提供するためにCookieを使用しています。FANDOMの使用を続けることは、ユーザーがFANDOMのCookie使用について同意したことと見なされます。[[ja.wikia.com/Privacy_Policy#Cookies|Cookieについての詳細]]',
 );
 
 $messages['nl'] = array(

@@ -44,10 +44,10 @@ $messages['it'] = array(
 );
 
 $messages['ja'] = array(
-	'emailext-fbdisconnect-subject' => 'FandomアカウントとFacebookとの連携が解除されました',
-	'emailext-fbdisconnect-summary' => 'FandomアカウントとFacebookアカウントの連携が解除されました。Fandomコミュニティ上での履歴・メッセージ・プロフィールなど、大切な情報はすべて保持されていますので、ご安心ください。',
+	'emailext-fbdisconnect-subject' => 'FANDOMアカウントとFacebookとの連携が解除されました',
+	'emailext-fbdisconnect-summary' => 'FANDOMアカウントとFacebookアカウントの連携が解除されました。FANDOMコミュニティ上での履歴・メッセージ・プロフィールなど、大切な情報はすべて保持されていますので、ご安心ください。',
 	'emailext-fbdisconnect-intro' => '同じユーザー名を継続してご使用される場合、以下のリンクから新しいパスワードを設定していただく必要があります。',
-	'emailext-fbdisconnect-instructions' => '該当のアカウントにパスワードを設定されている場合は再設定の必要はありません。引き続き、設定済みのパスワードでFandomをご利用いただけます。パスワードの設定を行っていない場合はお手数ですが、上記のリンクからパスワードを設定してください。',
+	'emailext-fbdisconnect-instructions' => '該当のアカウントにパスワードを設定されている場合は再設定の必要はありません。引き続き、設定済みのパスワードでFANDOMをご利用いただけます。パスワードの設定を行っていない場合はお手数ですが、上記のリンクからパスワードを設定してください。',
 );
 
 $messages['ko'] = array(

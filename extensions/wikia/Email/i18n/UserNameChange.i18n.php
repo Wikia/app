@@ -62,13 +62,13 @@ $messages['it'] = array(
 );
 
 $messages['ja'] = array(
-	'emailext-usernamechange-subject' => 'Fandomユーザー名の変更が完了しました',
-	'emailext-usernamechange-summary' => 'Fandomでのユーザー名変更が完了しました。',
+	'emailext-usernamechange-subject' => 'FANDOMユーザー名の変更が完了しました',
+	'emailext-usernamechange-summary' => 'FANDOMでのユーザー名変更が完了しました。',
 	'emailext-usernamechange-changed' => "ユーザー名'''「$1」'''は'''「$2」'''に変更されました。",
-	'emailext-usernamechange-closing' => '引続きFandomをお楽しみください。',
-	'emailext-usernamechange-signature' => 'Fandomコミュニティ・チーム',
+	'emailext-usernamechange-closing' => '引続きFANDOMをお楽しみください。',
+	'emailext-usernamechange-signature' => 'FANDOMコミュニティ・チーム',
 	'emailext-usernamechange-profile-page' => 'プロフィールページ',
-	'emailext-usernamechange-check-out' => 'Fandomを見る',
+	'emailext-usernamechange-check-out' => 'FANDOMを見る',
 );
 
 $messages['ko'] = array(
@@ -118,22 +118,22 @@ $messages['ru'] = array(
 );
 
 $messages['zh-hans'] = array(
-	'emailext-usernamechange-subject' => '您的Fandom用户名已更改！',
-	'emailext-usernamechange-summary' => '您的Fandom用户名更改已完成。',
+	'emailext-usernamechange-subject' => '您的FANDOM用户名已更改！',
+	'emailext-usernamechange-summary' => '您的FANDOM用户名更改已完成。',
 	'emailext-usernamechange-changed' => "用户名已由'''$1'''更改为'''$2'''",
 	'emailext-usernamechange-closing' => '期待再次见到您。',
-	'emailext-usernamechange-signature' => 'Fandom社区团队',
+	'emailext-usernamechange-signature' => 'FANDOM社区团队',
 	'emailext-usernamechange-profile-page' => '个人主页',
-	'emailext-usernamechange-check-out' => '查看Fandom',
+	'emailext-usernamechange-check-out' => '查看FANDOM',
 );
 
 $messages['zh-hant'] = array(
-	'emailext-usernamechange-subject' => '你的Fandom用戶名更改已完成！',
-	'emailext-usernamechange-summary' => '你的Fandom用戶名更改已完成！',
+	'emailext-usernamechange-subject' => '你的FANDOM用戶名更改已完成！',
+	'emailext-usernamechange-summary' => '你的FANDOM用戶名更改已完成！',
 	'emailext-usernamechange-changed' => "用戶名已由'''$1'''更改為'''$2'''了。",
 	'emailext-usernamechange-closing' => '期待見到你！',
-	'emailext-usernamechange-signature' => 'Fandom社區團隊',
+	'emailext-usernamechange-signature' => 'FANDOM社區團隊',
 	'emailext-usernamechange-profile-page' => '用戶資料頁',
-	'emailext-usernamechange-check-out' => '查看Fandom',
+	'emailext-usernamechange-check-out' => '查看FANDOM',
 );
 

@@ -847,12 +847,12 @@ Consultez « $PAGETITLE_URL » pour la nouvelle page.
 
 Merci de visiter ce site et de le modifier régulièrement...
 
-— L’équipe FANDOM
+— L’équipe Fandom
 
 ___________________________________________
-* Pour voir les derniers événements sur FANDOM, rendez-vous sur http://communaute.wikia.com
+* Pour voir les derniers événements sur Fandom, rendez-vous sur http://communaute.wikia.com
 * Vous souhaitez contrôler les e-mails que vous recevez ? Allez dans vos : {{fullurl:{{ns:special}}:Preferences}}.
-* Cliquez sur le lien suivant pour ne plus recevoir d\'e-mails de FANDOM : $UNSUBSCRIBEURL',
+* Cliquez sur le lien suivant pour ne plus recevoir d\'e-mails de Fandom : $UNSUBSCRIBEURL',
 	'enotif_body_categoryadd-HTML' => '<p>
 $WATCHINGUSERNAME,
 <br /><br />
@@ -862,15 +862,15 @@ Consultez <a href="$PAGETITLE_URL">$PAGETITLE</a> pour la nouvelle page.
 <br /><br />
 Merci de visiter ce site et de le modifier régulièrement...
 <br /><br />
-L’équipe FANDOM</p>
+L’équipe Fandom</p>
 <br /><hr />
 <p>
 <ul>
-<li><a href="http://communaute.wikia.com">Venez voir les derniers événements sur FANDOM !</a></li>
+<li><a href="http://communaute.wikia.com">Venez voir les derniers événements sur Fandom !</a></li>
 <li>Vous souhaitez contrôler les e-mails que vous recevez ? Allez dans vos <a href="{{fullurl:{{ns:special}}:Preferences}}">préférences</a></li>
 </ul>
 </p>
-<div style="font-size: 70%;margin-top: 25px;text-align: center;">Cliquez <a href="$UNSUBSCRIBEURL">ici</a> pour vous ne plus recevoir d\'e-mails de FANDOM.</div>',
+<div style="font-size: 70%;margin-top: 25px;text-align: center;">Cliquez <a href="$UNSUBSCRIBEURL">ici</a> pour vous ne plus recevoir d\'e-mails de Fandom.</div>',
 	'enotif_subject_blogpost' => 'Un nouveau billet de blog, $PAGETITLE, a été ajouté dans $BLOGLISTING sur {{SITENAME}} par $PAGEEDITOR',
 	'enotif_body_blogpost' => '$WATCHINGUSERNAME,
 
@@ -880,12 +880,12 @@ Consultez « $PAGETITLE_URL » pour lire ce nouveau billet.
 
 Merci de visiter ce site et de le modifier régulièrement...
 
-— L\'équipe de la communauté FANDOM
+— L\'équipe de la communauté Fandom
 
 ___________________________________________
-* Pour voir les derniers événements sur FANDOM, rendez-vous sur http://communaute.wikia.com
+* Pour voir les derniers événements sur Fandom, rendez-vous sur http://communaute.wikia.com
 * Vous souhaitez contrôler les e-mails que vous recevez ? Allez dans vos : {{fullurl:{{ns:special}}:Preferences}}.
-* Cliquez sur le lien suivant pour ne plus recevoir d\'e-mails de FANDOM : $UNSUBSCRIBEURL',
+* Cliquez sur le lien suivant pour ne plus recevoir d\'e-mails de Fandom : $UNSUBSCRIBEURL',
 	'enotif_body_blogpost-HTML' => '<p>
 $WATCHINGUSERNAME,
 <br /><br />
@@ -895,15 +895,15 @@ Consultez <a href="$PAGETITLE_URL">$PAGETITLE</a> pour ce nouveau billet.
 <br /><br />
 Merci de visiter ce site et de le modifier régulièrement...
 <br /><br />
-— L’équipe de la communauté FANDOM</p>
+— L’équipe de la communauté Fandom</p>
 <br /><hr />
 <p>
 <ul>
-<li><a href="http://communaute.wikia.com">Venez voir les derniers événements sur FANDOM !</a></li>
+<li><a href="http://communaute.wikia.com">Venez voir les derniers événements sur Fandom !</a></li>
 <li>Vous souhaitez contrôler les e-mails que vous recevez ? Allez dans vos <a href="{{fullurl:{{ns:special}}:Preferences}}">préférences</a></li>
 </ul>
 </p>
-<div style="font-size: 70%;margin-top: 25px;text-align: center;">Cliquez <a href="$UNSUBSCRIBEURL">ici</a> pour ne plus recevoir d\'e-mails de FANDOM.</div>',
+<div style="font-size: 70%;margin-top: 25px;text-align: center;">Cliquez <a href="$UNSUBSCRIBEURL">ici</a> pour ne plus recevoir d\'e-mails de Fandom.</div>',
 	'wikiafollowedpages-special-board' => 'sur le sous-forum $1',
 );
 
@@ -2395,7 +2395,7 @@ Uma nova página foi adicionada à categoria $CATEGORY, que você está seguindo
 
 Confira a página: "$PAGETITLE_URL".
 
-- Equipe de Suporte FANDOM
+- Equipe de Suporte Fandom
 
 ___________________________________________
 * Encontre conselhos e a ajuda que precisa na Central da Comunidade: http://comunidade.wikia.com
@@ -2406,7 +2406,7 @@ Uma nova página foi adicionada à categoria <a href="$CATEGORY_URL">$CATEGORY</
 <br /><br />
 Confira a página: <a href="$PAGETITLE_URL">$PAGETITLE</a>.
 <br /><br />
-- Equipe de Suporte FANDOM
+- Equipe de Suporte Fandom
 <br /><hr />
 <p>
 <ul>
@@ -2422,7 +2422,7 @@ Um novo post de blogue foi adicionado à lista $BLOGLISTING, que você está seg
 
 Confira o blogue em: "$PAGETITLE_URL".
 
-Equipe de Suporte FANDOM
+Equipe de Suporte Fandom
 
 ___________________________________________
 * Encontre conselhos e a ajuda que precisa na Central da Comunidade: http://comunidade.wikia.com
@@ -2433,7 +2433,7 @@ Um novo post de blogue foi adicionado à lista <a href="$BLOGLISTING_URL">$BLOGL
 <br /><br />
 Confira o blogue em: <a href="$PAGETITLE_URL">$PAGETITLE</a>.
 <br /><br />
-- Equipe de Suporte FANDOM
+- Equipe de Suporte Fandom
 <br /><hr />
 <p>
 <ul>

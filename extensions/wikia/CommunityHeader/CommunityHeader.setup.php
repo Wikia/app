@@ -4,6 +4,7 @@ $dir = dirname( __FILE__ ) . '/';
 // Hooks
 $wgAutoloadClasses[ 'CommunityHeaderHooks' ] = $dir . 'CommunityHeaderHooks.class.php';
 $wgHooks[ 'BeforePageDisplay' ][] = 'CommunityHeaderHooks::onBeforePageDisplay';
+$wgHooks[ 'EditPageLayoutModifyPreview' ][] = 'CommunityHeaderHooks::onEditPageLayoutModifyPreview';
 
 // Controllers
 $wgAutoloadClasses[ 'CommunityHeaderController' ] = $dir . 'CommunityHeaderController.class.php';

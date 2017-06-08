@@ -1,33 +1,13 @@
 .wds-button {
-	@mixin button-background-color($background-color, $border-color:"") {
-		@if $border-color == "" {
-			$border-color: $background-color;
-		}
-		$active-color: darken($background-color, 20%);
-
-		background-color: $background-color;
-		border-color: $border-color;
-
-		&:focus:not(:disabled),
-		&:hover:not(:disabled),
-		&:active,
-		&.wds-is-active {
-			background-color: $active-color;
-			border-color: $active-color;
-		}
-	}
-
-	$active-color: darken($wds-color-link, 20%);
 	$button-squished-padding-horizontal: 12px;
 	$line-height: 1.3em;
 
-	@include button-background-color($wds-color-link);
+	@include button-theming($wds-color-link, $wds-color-white);
 
 	align-items: center;
 	border-style: solid;
 	border-width: $wds-button-border-width;
 	box-sizing: content-box;
-	color: $wds-color-white;
 	cursor: default;
 	display: inline-flex;
 	font-size: $wds-typescale-size-minus-2;
@@ -51,10 +31,8 @@
 		cursor: pointer;
 	}
 
-	&:disabled,
-	&.wds-is-disabled {
-		cursor: default;
-		opacity: .5;
+	&:disabled {
+		@include is-disabled();
 	}
 
 	&:focus:not(:disabled),
@@ -62,19 +40,6 @@
 	&:active,
 	&.wds-is-active {
 		text-decoration: none;
-	}
-
-	&.wds-is-secondary {
-		background-color: transparent;
-		color: $wds-color-link;
-
-		&:focus:not(:disabled),
-		&:hover:not(:disabled),
-		&:active,
-		&.wds-is-active {
-			background-color: transparent;
-			color: $active-color;
-		}
 	}
 
 	&.wds-is-squished {
@@ -104,17 +69,7 @@
 	}
 
 	&.wds-is-text {
-		background-color: transparent;
 		border: 0;
-		color: $wds-color-link;
-
-		&:focus:not(:disabled),
-		&:hover:not(:disabled),
-		&:active,
-		&.wds-is-active {
-			background-color: transparent;
-			color: $active-color;
-		}
 	}
 
 	.wds-icon:first-child {
@@ -158,7 +113,7 @@
 
 	@each $social-name, $social-color in $social-colors {
 		&.wds-is-#{$social-name}-color {
-			@include button-background-color($social-color);
+			@include button-theming($social-color, $wds-color-white);
 		}
 	}
 }

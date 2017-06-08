@@ -236,7 +236,7 @@ $messages['it'] = array(
 );
 
 $messages['ja'] = array(
-	'specialvideos-sort-featured' => '出典：Fandomライブラリ',
+	'specialvideos-sort-featured' => '出典：FANDOMライブラリ',
 	'special-videos-add-video' => '動画を追加',
 	'specialvideos-filter-entertainment' => 'エンターテインメントのトレンディング',
 	'specialvideos-filter-games' => 'ゲームのトレンディング',
@@ -307,7 +307,7 @@ $messages['lol'] = array(
 	'specialvideos-sort-latest' => 'crwdns65698:0crwdne65698:0',
 	'specialvideos-sort-most-popular' => 'crwdns65699:0crwdne65699:0',
 	'specialvideos-sort-trending' => 'crwdns65700:0crwdne65700:0',
-	'specialvideos-sort-featured' => 'crwdns65701:0crwdne65701:0',
+	'specialvideos-sort-featured' => 'crwdns66472:0crwdne66472:0',
 	'specialvideos-uploadby' => 'crwdns65702:0crwdne65702:0',
 	'specialvideos-posted-in' => 'crwdns65703:0crwdne65703:0',
 	'special-videos-add-video' => 'crwdns65704:0crwdne65704:0',
@@ -508,7 +508,7 @@ $messages['vi'] = array(
 );
 
 $messages['zh-hans'] = array(
-	'specialvideos-sort-featured' => '资料来源：Fandom资料库',
+	'specialvideos-sort-featured' => '资料来源：FANDOM资料库',
 	'specialvideos-filter-entertainment' => '娱乐流行内容',
 	'specialvideos-filter-games' => '游戏流行内容',
 	'specialvideos-filter-lifestyle' => '生活流行内容',
@@ -539,7 +539,7 @@ $messages['zh-hans'] = array(
 );
 
 $messages['zh-hant'] = array(
-	'specialvideos-sort-featured' => '資料來源: Fandom資料庫',
+	'specialvideos-sort-featured' => '資料來源: FANDOM資料庫',
 	'videos' => 'Videos',
 	'specialvideos-desc' => 'Implements [[Special:Videos]]',
 	'specialvideos-html-title' => 'Videos on this wiki',

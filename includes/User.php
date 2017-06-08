@@ -947,45 +947,35 @@ class User implements JsonSerializable {
 	 */
 	public static function edits( $uid ) {
 		wfProfileIn( __METHOD__ );
-		$dbr = wfGetDB( DB_SLAVE );
-		// check if the user_editcount field has been initialized
-		$field = $dbr->selectField(
-			'user', 'user_editcount',
-			array( 'user_id' => $uid ),
+		global $wgExternalSharedDB;
+
+		// check if the user_editcount field has been initialized on shared DB
+		$wikiCitiesDb = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+		$count = $wikiCitiesDb->selectField(
+			'`user`', 'user_editcount',
+			[ 'user_id' => $uid ],
 			__METHOD__
 		);
 
-		if( $field === null ) { // it has not been initialized. do so.
-			$dbw = wfGetDB( DB_MASTER );
+		// it has not been initialized. do so.
+		if ( $count === null ) {
+			$dbr = wfGetDB( DB_SLAVE );
 			$count = $dbr->selectField(
 				'revision', 'count(*)',
-				array( 'rev_user' => $uid ),
+				[ 'rev_user' => $uid ],
 				__METHOD__
 			);
 
-			// Wikia change - begin
-			try {
-				$dbw->update(
-					'user',
-					[ 'user_editcount' => $count ],
-					[ 'user_id' => $uid ],
-					__METHOD__
-				);
-			} catch ( DBQueryError $dbQueryError ) {
-				// Wikia change
-				// SUS-1221: Some of these UPDATE queries are failing
-				// If this happens let's log exception details to try to identify root cause
-				Wikia\Logger\WikiaLogger::instance()->error( 'SUS-1221 - User::edits failed', [
-					'exception' => $dbQueryError,
-					'userId' => $uid,
-					'editCount' => $count
-				] );
-			}
-			// Wikia change - end
+			// SUS-1594: Defer updating edit count to offline task
+			global $wgCityId;
 
-		} else {
-			$count = $field;
+			$task = ( new \Wikia\Tasks\Tasks\UserEditCountInitTask() )
+				->wikiId( $wgCityId );
+
+			$task->call( 'initEditCount', $uid, $count );
+			$task->queue();
 		}
+
 		wfProfileOut( __METHOD__ );
 		return $count;
 	}
@@ -2920,19 +2910,28 @@ class User implements JsonSerializable {
 	 * the next change of the page if it's watched etc.
 	 * @param $title Title of the article to look at
 	 */
-	public function clearNotification( &$title ) {
-		global $wgUseEnotif, $wgShowUpdatedMarker;
+	public function clearNotification( Title $title ) {
+		global $wgUseEnotif, $wgShowUpdatedMarker, $wgCityId;
 
 		# Do nothing if the database is locked to writes
 		if( wfReadOnly() ) {
 			return;
 		}
 
-		if( $title->getNamespace() == NS_USER_TALK &&
-			$title->getText() == $this->getName() ) {
-			if( !wfRunHooks( 'UserClearNewTalkNotification', array( &$this ) ) )
+		if ( $title->getNamespace() == NS_USER_TALK && $title->getText() == $this->getName() ) {
+			if ( !Hooks::run( 'UserClearNewTalkNotification', [ $this ] ) ) {
 				return;
-			$this->setNewtalk( false );
+			}
+
+			// SUS-2161: Only schedule a notification update if there are new messages
+			if ( $this->getNewtalk() ) {
+				$task = ( new \Wikia\Tasks\Tasks\WatchlistUpdateTask() )
+					->title( $title )
+					->wikiId( $wgCityId );
+
+				$task->call( 'clearMessageNotification', $this->getName() );
+				$task->queue();
+			}
 		}
 
 		if( !$wgUseEnotif && !$wgShowUpdatedMarker ) {
@@ -2959,8 +2958,13 @@ class User implements JsonSerializable {
 		// If the page is watched by the user (or may be watched), update the timestamp on any
 		// any matching rows
 		if ( $watched ) {
-			$wl = WatchedItem::fromUserTitle( $this, $title );
-			$wl->clearWatch();
+			// SUS-2161: Use a background task for watchlist update
+			$task = ( new \Wikia\Tasks\Tasks\WatchlistUpdateTask() )
+				->title( $title )
+				->wikiId( $wgCityId );
+
+			$task->call( 'clearWatch', $this->getId() );
+			$task->queue();
 		}
 	}
 

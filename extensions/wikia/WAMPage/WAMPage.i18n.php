@@ -93,7 +93,7 @@ $messages['de'] = array(
 Die WAM-Punktzahl ist eine Kombination aus Netzverkehr, Aktivitätsgrad und Wachstumsrate. Wir können die genaue Zusammensetzung nicht offenlegen, da Wikis dies sonst ausnutzen könnten, um ihre Platzierung zu manipulieren. Du kannst dir sicher sein, dass wir alle wichtigen Daten miteinbezogen haben, die ein aktives, erfolgreiches Wiki ausmachen.
 
 ===Warum sollte mir die WAM-Punktzahl nicht egal sein?===
-Wir von FANDOM glauben daran, dass Wissen Macht ist. Wir gehen offen im Bezug auf Daten und Statistiken um, und WAM ist ein großer Schritt nach vorne beim Messen von Online-Gemeinschaften. Die WAM-Punktzahl ist ein Wert, mit dem Wiki-Gründer, -Administratoren und -Benutzer direkte Rückmeldung darüber haben, wo ihr Wiki momentan steht und welchen Unterschied ihre Arbeit macht.
+Wir von Fandom glauben daran, dass Wissen Macht ist. Wir gehen offen im Bezug auf Daten und Statistiken um, und WAM ist ein großer Schritt nach vorne beim Messen von Online-Gemeinschaften. Die WAM-Punktzahl ist ein Wert, mit dem Wiki-Gründer, -Administratoren und -Benutzer direkte Rückmeldung darüber haben, wo ihr Wiki momentan steht und welchen Unterschied ihre Arbeit macht.
 
 ===Wie kann ich meine WAM-Punktzahl verbessern?===
 WAM ist ein komplexer Algorithmus und es gibt keine schnelle Möglichkeit, deine Platzierung oder Punktzahl umgehend zu verbessern. Es gibt jedoch Dinge, die du tun kannst [[w:c:de:hilfe:Benutzer_begeistern|um die Platzierung deines Wikis zu verbessern]]. Wikis mit einer großen Anzahl an Benutzern haben in der Regel eine relativ gute Platzierung. Dennoch kann man damit das System nicht austricksen - je authentischer und sinnvoller der Inhalt ist, desto eher wird er Leser ansprechen.
@@ -155,7 +155,7 @@ $messages['es'] = array(
 La puntuación WAM es una combinación de tráfico, compromiso y crecimiento. No podemos decirte los detalles concretos porque no queremos que los wikis intenten manipular las valoraciones. Pero ten por seguro que hemos incluido todos los ingredientes esenciales para valorar qué wikis son exitosos.
 
 ===¿Por qué debería vigilar el WAM?===
-En FANDOM creemos que el conocimiento es poder. Aunque siempre hemos estado abiertos a datos y estadísticas, el WAM representa un gran paso adelante en la medición del éxito de las comunidades online. El WAM es una forma de evaluación para los fundadores, administradores y editores que quieran entender mejor cómo se sitúan sus wikis en cuanto a actividad con respecto a otras comunidades.
+En Fandom creemos que el conocimiento es poder. Aunque siempre hemos estado abiertos a datos y estadísticas, el WAM representa un gran paso adelante en la medición del éxito de las comunidades online. El WAM es una forma de evaluación para los fundadores, administradores y editores que quieran entender mejor cómo se sitúan sus wikis en cuanto a actividad con respecto a otras comunidades.
 
 ===¿Cómo puedo mejorar mi puntuación en el WAM?===
 El WAM tiene un algoritmo algo complejo, no hay una forma simple de mejorar instantáneamente tus resultados en la clasificación. Como dijimos, hay algunos pasos que se pueden realizar para mejorar la posición del wiki y moverla hacia arriba en la clasificación. Primero y ante todo, sugerimos [[w:c:comunidad:Ayuda:Construyendo_una_comunidad#Atrayendo_editores|fomentar la participación en sus wikis]]. Los wikis con un mayor número de editores activos funcionan mejor en la puntuación. Pero es importante recordar que no puedes jugar con el sistema. El contenido más auténtico y relevante es el que gusta a tus lectores.
@@ -166,7 +166,7 @@ También recomendamos hablar con algunos editores del wiki [[w:c:comunidad:Ayuda
 El WAM es capaz de retroceder hasta el 1 de enero de 2012.
 
 ===¿Dónde se muestra el WAM actualmente?===
-Puedes encontrar el Monitor de Actividad Wiki en esta página, la cual puede ser accedida por el footer global que se encuentra al final de cada página en FANDOM.
+Puedes encontrar el Monitor de Actividad Wiki en esta página, la cual puede ser accedida por el footer global que se encuentra al final de cada página en Fandom.
 
 ===¿Puedo mostrar mi puntuación en el WAM en mi wiki?===
 Por supuesto, es más, te animamos a mostrar la puntuación en tu wiki, pero pedimos que enlaces hacia la página directamente.
@@ -280,7 +280,7 @@ $messages['it'] = array(
 La classificazione WAM è una combinazione di traffico, coinvolgimento e crescita. Non possiamo fornirvi i dettagli perché non vogliamo che le wiki cerchino di manipolare i punteggi. Ma state tranquilli: abbiamo incluso tutti gli ingredienti essenziali per verificare quali sono le wiki di successo.
 
 === Perché dovrei interessarmi al WAM? ===
-Noi di FANDOM crediamo che la conoscenza sia potere. Anche se siamo sempre stati aperti a dati e statistiche, il WAM rappresenta un grande passo avanti nella misurazione delle community online. Il WAM è un prezioso feedback continuo per i fondatori, gli amministratori e i collaboratori che cercano di capire meglio in che posizione si situa la loro wiki e come la loro attività può incidere sul punteggio.
+Noi di Fandom crediamo che la conoscenza sia potere. Anche se siamo sempre stati aperti a dati e statistiche, il WAM rappresenta un grande passo avanti nella misurazione delle community online. Il WAM è un prezioso feedback continuo per i fondatori, gli amministratori e i collaboratori che cercano di capire meglio in che posizione si situa la loro wiki e come la loro attività può incidere sul punteggio.
 
 === Come posso migliorare il mio punteggio WAM? ===
 Il WAM è un algoritmo complesso e non esiste un modo semplice per migliorare istantaneamente il tuo punteggio e la tua posizione. Detto ciò, ci sono alcuni passi da seguire per favorire l'ascesa della classifica. Innanzitutto, ti suggeriamo di [[w:it:Aiuto:Costruire una community|incoraggiare la partecipazione nella tua wiki]]. Le wiki che hanno un gran numero di contributi e di collaboratori attivi hanno più probabilità di posizionarsi bene nella classifica WAM. Ma è importante ricordare che non si può imbrogliare il sistema. Più i contenuti sono autentici e rilevanti, più è probabile che facciano colpo sui tuoi lettori.
@@ -322,7 +322,7 @@ $messages['ja'] = array(
 	'wampage-header' => 'Wam',
 	'wampage-header-faq' => 'よくある質問',
 	'wampage-header-wam' => 'WAMスコア',
-	'wampage-content' => 'WAMは上位5,000のwikiサイトに対し毎日計算されており、0～100の点数と、全体ランキング、ジャンル別ランキングが提供されています。WAMランキングは、世界で起こっているリアルタイムな出来事に応じて随時変動するので、定期的にWAMをチェックすることで、Fandomコミュニティの最新トレンドを追うことができます。',
+	'wampage-content' => 'WAMは上位5,000のwikiサイトに対し毎日計算されており、0～100の点数と、全体ランキング、ジャンル別ランキングが提供されています。WAMランキングは、世界で起こっているリアルタイムな出来事に応じて随時変動するので、定期的にWAMをチェックすることで、FANDOMコミュニティの最新トレンドを追うことができます。',
 	'wampage-faq' => '__NOTOC____NOEDITSECTION__===WAMはどうやって計算されているんですか？===
 WAMのランキングはトラフィック、活動、成長の組み合わせによって計算されます。申し訳ございませんが、ランキング操作の防止のため、詳細の公表はさせていただくことができませんが、ウィキアを盛り上げ、成功させるためにご活用いただける大切な要素は全て含まれています。
 ===なぜWAMを気にする必要があるんですか？===
@@ -351,7 +351,7 @@ WAMスコアやランキングをウィキ上にのせることは、ウィキ�
 	'wam-index-header-admins' => 'アドミン(管理者)',
 	'wampage-breadcrumb-back-to-wam' => 'WAMスコアに戻る',
 	'wam-index-header-peak-rank' => 'ピークランキング',
-	'wam-index-no-results' => '検索されたwikiは、選択された期間の上位5,000 wikiに含まれていませんでした。WAMランキングは毎日更新されていますので、定期的にご確認ください。ご不明な点については、[mailto:support@wikia-inc.com Fandomコミュニティ・サポート] までお問い合わせください。',
+	'wam-index-no-results' => '検索されたwikiは、選択された期間の上位5,000 wikiに含まれていませんでした。WAMランキングは毎日更新されていますので、定期的にご確認ください。ご不明な点については、[mailto:support@wikia-inc.com FANDOMコミュニティ・サポート] までお問い合わせください。',
 	'wam-index-filter-search-placeholder' => '検索',
 	'wam-index-filter-sort-label' => 'ジャンル',
 	'wam-index-filter-date-label' => '日付',
@@ -367,7 +367,7 @@ WAMスコアやランキングをウィキ上にのせることは、ウィキ�
 	'wam-music' => '音楽',
 	'wam-movies' => '映画',
 	'wampage-top-gainers-header' => '人気上昇コミュニティ',
-	'wampage-subheader-wam' => 'Wikiアクティビティ・モニター（WAM）スコアは、Fandomコミュニティの活発度と勢いを示す指標です。',
+	'wampage-subheader-wam' => 'Wikiアクティビティ・モニター（WAM）スコアは、FANDOMコミュニティの活発度と勢いを示す指標です。',
 	'wampage-content-faq-link' => '[[$1|よくある質問]]',
 	'wam-page-desc' => 'WAM Page',
 );
@@ -559,7 +559,7 @@ $messages['pt'] = array(
 	'wampage-faq' => '__NOTOC____NOEDITSECTION__===Como o WAM é calculado?===
 A pontuação WAM é uma combinação de tráfego, contribuição e crescimento. Nós não podemos fornecer os detalhes, porque  não queremos que as wikis tentem manipular a classificação. Mas nós garantimos que incluímos os ingredientes essenciais para uma wiki próspera e bem-sucedida. 
 ===Por que eu devo me importar com o WAM?===
-No FANDOM, nós acreditamos que conhecimento é poder. Enquanto nós sempre fomos sinceros sobre informações e estatísticas, o WAM representa um grande passo na avaliação das comunidades online. O WAM é uma ferramenta valiosa para fundadores, administradores e contribuidores para que eles possam entender a pontuação de suas wikis e como a sua atividade faz diferença. 
+No Fandom, nós acreditamos que conhecimento é poder. Enquanto nós sempre fomos sinceros sobre informações e estatísticas, o WAM representa um grande passo na avaliação das comunidades online. O WAM é uma ferramenta valiosa para fundadores, administradores e contribuidores para que eles possam entender a pontuação de suas wikis e como a sua atividade faz diferença. 
 ===Como eu posso melhorar a minha pontuação WAM?===
 O WAM é um algoritmo complexo, e não há um maneira simples de melhorar a sua pontuação. Dessa maneira, há passos que você tomar que o ajudarão a obter uma classificação melhor. Primeiramente, nós sugerimos que você [[w:c:pt:ajuda:Atraindo_contribuidores|incentive a participação na sua wiki]]. Comunidades com várias contribuições e com um número alto de contribuidores ativos terá uma pontuação WAM melhor. Mas é importante lembrar que você não pode ganhar do sistema. Quanto mais autêntico e relevante o seu conteúdo for, mais provável será que você ganhará mais leitores. 
 

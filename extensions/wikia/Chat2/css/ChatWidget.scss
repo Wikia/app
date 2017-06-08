@@ -123,15 +123,11 @@ body.skin-oasis .ChatMonobookWidget {
 		font-size: $wds-typescale-size-minus-2;
 	}
 
-	.wds-button.wds-is-secondary {
-		border-color: $color-links;
-		color: $color-links;
-		margin-left: 12px;
+	.wds-button {
+		@include button-theming($color-buttons, $color-button-text);
 
-		&:hover {
-			border-color: rgba($color-links, .75);
-			color: rgba($color-links, .75);
-			text-decoration: none;
+		&.wds-is-secondary {
+			margin-left: 12px;
 		}
 	}
 }
