@@ -83,6 +83,7 @@ class Subtitle {
 					'submit',
 					/* action=protect */
 					'protect',
+					/* action=unprotect */
 					'unprotect'
 				]
 			);
@@ -104,14 +105,14 @@ class Subtitle {
 
 	private function getEditPageSubtitle() {
 		$wgOutput = RequestContext::getMain()->getOutput();
+		$subtitle = [ $this->getBackLink() ];
+		$actionVal = $this->request->getVal( 'action', 'view' );
 
-		$subtitle = [$this->getBackLink()];
-
-		if (!in_array($this->request->getVal( 'action', 'view' ), ['protect', 'unprotect'])) {
-			array_push($subtitle, $wgOutput->getSubtitle() );
+		if ( !in_array( $actionVal, [ 'protect', 'unprotect' ] ) ) {
+			array_push( $subtitle, $wgOutput->getSubtitle() );
 		}
 
-		if ( $this->request->getVal( 'action', 'view' ) === 'history' ) {
+		if ( $actionVal === 'history' ) {
 			$sk = new FakeSkin();
 			$sk->setRelevantTitle( $this->title );
 
