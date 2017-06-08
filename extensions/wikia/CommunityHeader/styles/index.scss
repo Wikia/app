@@ -6,7 +6,7 @@
 
 .wds-community-header {
 	@include community-header-theming(
-		$color-local-nav,
+		$color-community-header,
 		$color-text,
 		$color-links,
 		$color-page,
@@ -39,6 +39,19 @@
 
 		@media #{$breakpoint-large-up} {
 			width: $page-width-large + $padding-width-large * 2 + $content-border-width * 2;
+		}
+	}
+}
+
+.local-navigation-preview {
+	height: auto;
+	// this is max width of local navigation allowed
+	width: 755px;
+
+	// prevent changing font size in local nav preview
+	@media #{$breakpoint-below-small-plus} {
+		.wds-tabs__tab-label {
+			font-size: 12px;
 		}
 	}
 }

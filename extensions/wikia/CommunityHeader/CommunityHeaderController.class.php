@@ -13,13 +13,15 @@ class CommunityHeaderController extends WikiaController {
 		$this->setVal( 'wordmark', new Wordmark() );
 		$this->setVal( 'counter', new Counter() );
 		$this->setVal( 'wikiButtons', new WikiButtons() );
-		$this->setVal( 'navigation', new Navigation() );
 		$this->setVal(
 			'backgroundImageUrl',
 			(new ThemeSettings())->getCommunityHeaderBackgroundUrl() );
 	}
 
 	public function localNavigation() {
-		$this->setVal( 'navigation', $this->getVal( 'navigation' ) );
+		// wikiText variable is used for local navigation preview
+		$wikiText = $this->getVal( 'wikiText', null );
+		$this->setVal( 'navigation', new Navigation( $wikiText ) );
+		$this->setVal( 'isPreview', $this->getVal( 'isPreview' ) );
 	}
 }

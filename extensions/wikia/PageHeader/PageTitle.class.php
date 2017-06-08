@@ -4,6 +4,7 @@ namespace Wikia\PageHeader;
 
 use \RequestContext;
 use \Title;
+use \WallMessage;
 use \WikiaGlobalRegistry;
 use \WikiaApp;
 use \WikiaPageType;
@@ -38,23 +39,37 @@ class PageTitle {
 	}
 
 	private function handleTitle( WikiaApp $app ): string {
+		$titleText = $app->getSkinTemplateObj()->data['title'];
+
 		if ( WikiaPageType::isMainPage() ) {
-			return $this->titleMainPage();
-		} else if ( $this->MWTitle->isTalkPage() || $this->shouldNotDisplayNamespacePrefix( $this->namespace ) ) {
-			return htmlspecialchars( $this->MWTitle->getText() );
-		} else if ( $this->request->getCheck( 'wpPreview' ) || $this->request->getCheck( 'wpLivePreview' ) ) {
-			return $this->prefixedTitle( 'page-header-title-prefix-preview' );
-		} else if ( $this->request->getCheck( 'wpDiff' ) || $this->request->getCheck( 'diff' ) ) {
-			return $this->prefixedTitle( 'page-header-title-prefix-changes' );
+			$titleText = $this->titleMainPage();
+		} else if ( $this->shouldNotDisplayNamespacePrefix( $this->namespace ) ) {
+			$titleText = htmlspecialchars( $this->MWTitle->getText() );
+		} else if ( $this->MWTitle->isTalkPage() ) {
+			$titleText = $this->isWallMessage() ?
+				$this->getTitleForWallMessage() :
+				htmlspecialchars( $this->MWTitle->getText() );
+		} else if ( $this->request->getCheck( 'diff' ) ) {
+			$titleText = $this->prefixedTitle( 'page-header-title-prefix-changes' );
 		} else if ( $this->request->getVal( 'action', 'view' ) == 'history' ) {
-			return $this->prefixedTitle( 'page-header-title-prefix-history' );
+			$titleText = $this->prefixedTitle( 'page-header-title-prefix-history' );
+		} else if (
+			defined( 'NS_BLOG_ARTICLE' ) &&
+			$this->MWTitle->getNamespace() == NS_BLOG_ARTICLE &&
+            $this->MWTitle->isSubpage()
+		) {
+			// remove User_blog:xxx from title
+			$titleParts = explode( '/', $this->MWTitle->getText() );
+			array_shift( $titleParts );
+
+			$titleText = implode( '/', $titleParts );
 		}
 
-		return $app->getSkinTemplateObj()->data['title'];
+		return $titleText;
 	}
 
 	private function handlePrefix() {
-		if ( $this->MWTitle->isTalkPage() ) {
+		if ( $this->MWTitle->isTalkPage() && !$this->isWallMessage() ) {
 			return $this->wg->ContLang->getNsText( NS_TALK );
 		}
 
@@ -63,8 +78,16 @@ class PageTitle {
 
 	private function shouldNotDisplayNamespacePrefix( $namespace ): bool {
 		return in_array( $namespace,
-			array_merge( self::PREFIX_LESS_NAMESPACES, $this->wg->SuppressNamespacePrefix )
+			array_merge(
+				self::PREFIX_LESS_NAMESPACES,
+				defined( 'NS_BLOG_LISTING' ) ? [ NS_BLOG_LISTING ] : [],
+				$this->wg->SuppressNamespacePrefix
+			)
 		);
+	}
+
+	private function isWallMessage(): bool {
+		return $this->MWTitle->getNamespace() === NS_USER_WALL_MESSAGE;
 	}
 
 	private function titleMainPage(): string {
@@ -73,5 +96,15 @@ class PageTitle {
 
 	private function prefixedTitle( $prefixKey ): string {
 		return wfMessage( $prefixKey, $this->MWTitle->getPrefixedText() )->escaped();
+	}
+
+	private function getTitleForWallMessage(): string {
+		$messageKey = $this->MWTitle->getText();
+		$message = WallMessage::newFromId( $messageKey );
+		if ( !empty( $message ) ) {
+			$message->load();
+			return $message->getMetaTitle();
+		}
+		return '';
 	}
 }

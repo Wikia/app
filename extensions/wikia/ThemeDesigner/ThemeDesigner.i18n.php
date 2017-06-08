@@ -12,12 +12,15 @@ $messages['en'] = [
 	'themedesigner-color-middle' => 'middle',
 	'themedesigner-rules-color-middle' => 'Different color for middle of the page',
 	'themedesigner-graphic' => 'graphic',
+	'themedesigner-local-nav-graphic' => 'local nav graphic',
+	'themedesigner-local-nav-color' => 'local nav',
+	'themedesigner-toolbar-color' => 'toolbar',
 	'themedesigner-buttons' => 'buttons',
 	'themedesigner-links' => 'links',
 	'themedesigner-header' => 'header',
 	'themedesigner-text-wordmark' => 'Text wordmark',
 	'themedesigner-graphic-wordmark' => 'Graphic wordmark',
-	'themedesigner-local-nav' => 'local nav',
+	'themedesigner-community-header' => 'local nav',
 	'themedesigner-tile-background' => 'tile',
 	'themedesigner-fix-background' => 'fix',
 	'themedesigner-not-split-background' => 'no split',
@@ -91,6 +94,9 @@ $messages['qqq'] = [
 	'themedesigner-wordmark-preview-error' => 'Validation error on attempt to save empty text wordmark',
 	'themedesigner-upload-disabled' => 'Message shown when file uploads are disabled',
 	'themedesigner-title' => 'Missing documentation',
+	'themedesigner-local-nav-graphic' => 'Image file placed in local nav background (in Community Header)',
+	'themedesigner-local-nav-color' => 'Background color for local nav (in Community Header)',
+	'themedesigner-toolbar-color' => 'Background color for WikiaBar toolbar',
 ];
 
 $messages['af'] = [

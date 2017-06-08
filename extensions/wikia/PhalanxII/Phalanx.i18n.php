@@ -1261,19 +1261,19 @@ $messages['ja'] = array(
 	'phalanx-stats-table-wiki-name' => 'ウィキ名',
 	'phalanx-stats-table-wiki-url' => 'ウィキの URL',
 	'phalanx-stats-table-wiki-last-edited' => '最終編集',
-	'phalanx-sp-contributions-blocked-globally' => 'このユーザーは現在、Fandom全体でブロックされています。',
+	'phalanx-sp-contributions-blocked-globally' => 'このユーザーは現在、FANDOM全体でブロックされています。',
 	'phalanx-user-block-reason-exact' => 'このユーザー名またはIPアドレスは、荒らし行為またはその他の不適切な行為のためにFandom全体で編集が禁止されています。
 こちらについて間違いであると思われる場合は、[[Special:Contact|Fandomにお問い合わせ]]ください。',
-	'phalanx-user-block-reason-ip' => 'あなたとIPアドレスを共有する別のユーザー、もしくはあなた自身による荒らし行為またはその他の不適切な行為により、このIPアドレスからの編集はFandom全体で禁止されています。
-これについて間違いであると思われる場合は、[[Special:Contact|Fandomにお問い合わせ]]ください。',
-	'phalanx-user-block-reason-similar' => 'このユーザーは、類似したユーザー名を持つ別ユーザーによる荒らし行為、またはその他の不適切な行為のために、Fandom全体での編集が禁止されています。
-この問題については、[[Special:Contact|Fandomにお問い合わせ]]ください。',
-	'phalanx-user-block-withreason-exact' => 'このユーザー名またはIPアドレスは、荒らし行為またはその他の不適切な行為のためにFandom全体で編集が禁止されています。
-こちらが間違いであると思われる場合は、[[Special:Contact|Fandomにお問い合わせ]]ください。<br />なお、ブロックしたユーザーから次の理由も報告されています：$1',
-	'phalanx-user-block-withreason-ip' => 'あなたとIPアドレスを共有する別のユーザー、もしくはあなた自身による荒らし行為またはその他の不適切な行為により、このIPアドレスからの編集はFandom全体で禁止されています。
-こちらについて間違いであると思われる場合は、[[Special:Contact|Fandomにお問い合わせ]]ください。<br />なお、ブロックしたユーザーから次の理由も報告されています：$1',
-	'phalanx-user-block-withreason-similar' => 'このユーザーは、類似したユーザー名を持つ別ユーザーによる荒らし行為またはその他の不適切な行為のために、Fandom全体での編集が禁止されています。
-この問題については[[Special:Contact|Fandomにお問い合わせ]]ください。<br />なお、ブロックしたユーザーから次の理由も報告されています：$1',
+	'phalanx-user-block-reason-ip' => 'あなたとIPアドレスを共有する別のユーザー、もしくはあなた自身による荒らし行為またはその他の不適切な行為により、このIPアドレスからの編集はFANDOM全体で禁止されています。
+これについて間違いであると思われる場合は、[[Special:Contact|FANDOMにお問い合わせ]]ください。',
+	'phalanx-user-block-reason-similar' => 'このユーザーは、類似したユーザー名を持つ別ユーザーによる荒らし行為、またはその他の不適切な行為のために、FANDOM全体での編集が禁止されています。
+この問題については、[[Special:Contact|FANDOMにお問い合わせ]]ください。',
+	'phalanx-user-block-withreason-exact' => 'このユーザー名またはIPアドレスは、荒らし行為またはその他の不適切な行為のためにFANDOM全体で編集が禁止されています。
+こちらが間違いであると思われる場合は、[[Special:Contact|FANDOMにお問い合わせ]]ください。<br />なお、ブロックしたユーザーから次の理由も報告されています：$1',
+	'phalanx-user-block-withreason-ip' => 'あなたとIPアドレスを共有する別のユーザー、もしくはあなた自身による荒らし行為またはその他の不適切な行為により、このIPアドレスからの編集はFANDOM全体で禁止されています。
+こちらについて間違いであると思われる場合は、[[Special:Contact|FANDOMにお問い合わせ]]ください。<br />なお、ブロックしたユーザーから次の理由も報告されています：$1',
+	'phalanx-user-block-withreason-similar' => 'このユーザーは、類似したユーザー名を持つ別ユーザーによる荒らし行為またはその他の不適切な行為のために、FANDOM全体での編集が禁止されています。
+この問題については[[Special:Contact|FANDOMにお問い合わせ]]ください。<br />なお、ブロックしたユーザーから次の理由も報告されています：$1',
 	'phalanx-email-rule-log-name' => 'ファランクス・メール・ルールのログ',
 	'phalanx-rule-log-name' => 'ファランクス・ルールのログ',
 	'phalanx-desc' => 'ファランクスは、包括的なスパム防御ツールです',

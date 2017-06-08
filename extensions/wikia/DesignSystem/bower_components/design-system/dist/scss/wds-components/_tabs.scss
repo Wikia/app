@@ -7,7 +7,7 @@
 }
 
 .wds-tabs__tab {
-	$tab-margin-horizontal: 12px;
+	$tab-margin-horizontal: 11px;
 	$tab-default-color: $wds-color-link;
 	$tab-hover-color: darken($tab-default-color, 20%);
 
@@ -45,11 +45,6 @@
 	&.wds-is-current {
 		box-shadow: inset 0 -2px 0 0 $tab-default-color;
 		transition: box-shadow .1s;
-	}
-
-	&.wds-is-disabled {
-		opacity: .5;
-		pointer-events: none;
 	}
 
 	.wds-dropdown__content {

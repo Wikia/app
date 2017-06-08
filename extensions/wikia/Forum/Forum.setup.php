@@ -55,6 +55,8 @@ $wgHooks['WallMessageDeleted'][] = 'ForumHooksHelper::onWallMessageDeleted';
 $wgHooks['ContributionsLineEnding'][] = 'ForumHooksHelper::onContributionsLineEnding';
 $wgHooks['OasisAddPageDeletedConfirmationMessage'][] = 'ForumHooksHelper::onOasisAddPageDeletedConfirmationMessage';
 $wgHooks['FilePageImageUsageSingleLink'][] = 'ForumHooksHelper::onFilePageImageUsageSingleLink';
+$wgHooks['AfterPageHeaderPageSubtitle'][] = 'ForumHooksHelper::onAfterPageHeaderPageSubtitle';
+$wgHooks['PageHeaderActionButtonShouldDisplay'][] = 'ForumHooksHelper::onPageHeaderActionButtonShouldDisplay';
 
 // notification hooks
 $wgHooks['NotificationGetNotificationMessage'][] = 'ForumNotificationPlugin::onGetNotificationMessage';

@@ -7,23 +7,13 @@
 	$color-page,
 	$color-page-border
 ) {
-
-	// the same logic as $is-dark-wiki in oasis
-	$is-dark-theme: lightness($color-page) < 50;
+	@include dropdown-theming($color-page, $color-text, $color-links, $color-page-border);
 
 	$text-color: $wds-color-white;
 	@if luminance($header-background-color) > .3 {
 		$text-color: $wds-color-black;
 	}
 	$text-hover-color: rgba($text-color, .8);
-
-	$dropdown-background-color: mix($color-page, #000, 90%);
-	@if $is-dark-theme {
-		$dropdown-background-color: mix($color-page, #fff, 90%);
-	}
-	@if luminance($color-page) > .9 {
-		$dropdown-background-color: $wds-color-white;
-	}
 
 	margin-top: luminance($color-page);
 	background-color: $header-background-color;
@@ -85,37 +75,5 @@
 
 	.wds-community-header__counter {
 		color: $text-color;
-	}
-
-	.wds-dropdown__content {
-		background-color: $dropdown-background-color;
-		border-color: $color-page-border;
-
-		.wds-list.wds-is-linked li {
-			> a {
-				color: $color-text;
-			}
-
-			&:hover {
-				> a {
-					background-color: rgba($color-links, .1);
-					color: $color-links;
-				}
-			}
-		}
-
-		.wds-list.wds-is-linked .wds-dropdown-level-2 .wds-dropdown-level-2__content {
-			background-color: $dropdown-background-color;
-			border-color: $color-page-border;
-			color: $color-text;
-		}
-	}
-
-	.wds-dropdown::after {
-		border-bottom-color: $dropdown-background-color;
-	}
-
-	.wds-dropdown::before {
-		border-bottom-color: $color-page-border;
 	}
 }

@@ -688,7 +688,9 @@ class WikiService extends WikiaModel {
 				}
 			}
 
-			$this->wg->Memc->set( $cacheKey, $results, 86400 /* 24h */ );
+			if ( !empty( $results ) ) {
+				$this->wg->Memc->set( $cacheKey, $results, 86400 /* 24h */ );
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
