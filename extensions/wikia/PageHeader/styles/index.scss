@@ -8,7 +8,7 @@
 .WikiaPage .page-header {
 	@include dropdown-theming($color-page, $color-text, $color-links, $color-page-border);
 
-	@include align-items(flex-end);
+	@include align-items(flex-start);
 	@include flexbox();
 	@include justify-content(flex-end);
 	-moz-osx-font-smoothing: grayscale;
@@ -31,10 +31,8 @@
 
 	&__counter {
 		color: $color-text;
-		float: right;
 		font-size: $wds-typescale-size-minus-1;
 		font-weight: bold;
-		padding-bottom: 10px;
 		text-align: right;
 	}
 
@@ -48,10 +46,11 @@
 	}
 
 	&__languages {
-		padding-bottom: 12px;
+		margin-bottom: 12px;
 	}
 
 	&__main {
+		@include align-self(flex-end);
 		@include flex-grow(1);
 		max-width: 100%;
 		min-width: 0;
@@ -121,10 +120,10 @@
 		margin-top: 6px;
 
 		&-back-icon {
-			transform: rotate(270deg);
-			vertical-align: text-top;
 			fill: $color-links;
 			padding-right: 2px;
+			transform: rotate(270deg);
+			vertical-align: text-top;
 		}
 	}
 
