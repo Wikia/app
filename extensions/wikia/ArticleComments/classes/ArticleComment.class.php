@@ -16,9 +16,6 @@ class ArticleComment {
 
 	const LOG_ACTION_COMMENT = 'article_comment';
 
-	/** @var Bool (for blogs only) */
-	private $mProps;
-
 	public $mLastRevId;
 	public $mFirstRevId;
 	public $mNamespace;
@@ -60,7 +57,6 @@ class ArticleComment {
 		$this->mTitle = $title;
 		$this->mNamespace = $title->getNamespace();
 		$this->mNamespaceTalk = MWNamespace::getTalk( $this->mNamespace );
-		$this->mProps = false;
 	}
 
 	/**
@@ -579,8 +575,7 @@ class ArticleComment {
 		// this is for blogs we want to know if commenting on it is enabled
 		// we cannot check it using $title->getBaseText, as this returns main namespace title
 		// the subjectpage for $parts title is something like 'User blog comment:SomeUser/BlogTitle' which is fine
-		$articleTitle = Title::makeTitle( MWNamespace::getSubject( $this->mNamespace ), $parts['title'] );
-		$commentingAllowed = ArticleComment::userCanCommentOn( $articleTitle );
+		$commentingAllowed = $title->userCan( 'create' );
 
 		if ( ( count( $parts['partsStripped'] ) == 1 ) && $commentingAllowed ) {
 			$replyButton = '<button type="button" class="article-comm-reply wikia-button secondary actionButton">' . wfMsg( 'article-comments-reply' ) . '</button>';
@@ -1491,33 +1486,6 @@ class ArticleComment {
 		return true;
 	}
 
-	// Blog post only functions
-
-	/**
-	 * setProps -- change props for comment article
-	 *
-	 * @param $props
-	 * @param bool $update
-	 */
-	public function setProps( $props, $update = false ) {
-
-		if ( $update && class_exists( 'BlogArticle' ) ) {
-			BlogArticle::setProps( $this->mTitle->getArticleID(), $props );
-		}
-		$this->mProps = $props;
-	}
-
-	/**
-	 * getProps -- get props for comment article
-	 *
-	 */
-	public function getProps() {
-		if ( ( !$this->mProps || !is_array( $this->mProps ) ) && class_exists( 'BlogArticle' ) ) {
-			$this->mProps = BlogArticle::getProps( $this->mTitle->getArticleID() );
-		}
-		return $this->mProps;
-	}
-
 	// Voting functions
 
 	public function getVotesCount() {
@@ -1641,146 +1609,5 @@ class ArticleComment {
 	static public function isMiniEditorEnabled() {
 		$app = F::app();
 		return $app->wg->EnableMiniEditorExtForArticleComments && $app->checkSkin( [ 'oasis' ] );
-	}
-
-	/**
-	 * Helper method returning true or false depending on fact if ArticleComments or Blogs are enabled
-	 *
-	 * @return bool
-	 */
-	static private function isCommentingEnabled() {
-		global $wgEnableArticleCommentsExt, $wgEnableBlogArticles;
-
-		return !empty( $wgEnableArticleCommentsExt ) || !empty( $wgEnableBlogArticles );
-	}
-
-	/**
-	 * Enables article and blog comments deletion for users who have commentdelete right but don't have delete
-	 *
-	 * @param Article $article
-	 * @param Title $title
-	 * @param User $user
-	 * @param array $permission_errors
-	 *
-	 * @return boolean because it's a hook
-	 */
-	static public function onBeforeDeletePermissionErrors( &$article, &$title, &$user, &$permission_errors ) {
-		if ( self::isCommentingEnabled() &&
-			$user->isAllowed( 'commentdelete' ) &&
-			ArticleComment::isTitleComment( $title )
-		) {
-			foreach ( $permission_errors as $key => $errorArr ) {
-				if ( self::isBadAccessError( $errorArr ) ) {
-					unset( $permission_errors[$key] );
-				}
-			}
-		}
-
-		return true;
-	}
-
-	/**
-	 * Checks if $errors array have badaccess-groups or badaccess-group0 string
-	 *
-	 * @param array $errors
-	 *
-	 * @return bool
-	 */
-	static private function isBadAccessError( $errors ) {
-		return in_array( 'badaccess-groups', $errors ) || in_array( 'badaccess-group0', $errors );
-	}
-
-	/**
-	 * Manages permissions related to article and blog comments
-	 * Hook: userCan
-	 *
-	 * @param Title $title
-	 * @param User $user
-	 * @param string $action
-	 * @param bool $result Whether $user can perform $action on $title
-	 * @return bool Whether to continue checking hooks
-	 */
-	static public function userCan( Title &$title, User &$user, $action, &$result ) {
-		$wg = F::app()->wg;
-		$commentsNS = $wg->ArticleCommentsNamespaces;
-		$ns = $title->getNamespace();
-
-		// Only handle article and blog comments
-		if ( !in_array( MWNamespace::getSubject( $ns ), $commentsNS ) ||
-			!ArticleComment::isTitleComment( $title ) ) {
-			return true;
-		}
-
-		wfProfileIn( __METHOD__ );
-
-		$comment = ArticleComment::newFromTitle( $title );
-		$isBlog = ( $wg->EnableBlogArticles && ArticleComment::isBlog( $title ) );
-
-		switch ( $action ) {
-			// Creating article comments requires 'commentcreate' permission
-			// For blogs, additionally check if the owner has enabled commenting+
-			case 'create':
-				// We have to check these permissions on the parent article
-				// due to the chicken-and-egg problem inherent in the design
-				$result = self::userCanCommentOn( $comment->getArticleTitle(), $user );
-				$return = false;
-				break;
-			// Article and blog comments can only be edited by their author,
-			// or an user with 'commentedit' permission
-			case 'edit':
-				// Prepopulate the object with revision data
-				// required by ArticleComment::isAuthor
-				$result = ( $comment->isAuthor( $user ) || $user->isAllowed( 'commentedit' ) );
-				$return = false;
-				break;
-
-			case 'move':
-			case 'move-target':
-				$result = $user->isAllowed( 'commentmove' );
-				$return = false;
-				break;
-
-			case 'delete':
-			case 'undelete':
-				$result = ( ArticleComment::isTitleComment( $title ) &&
-					( $user->isAllowed( 'commentdelete' ) || $isBlog && $user->isAllowed( 'blog-comments-delete' ) )
-				);
-				$return = false;
-				break;
-			default:
-				$result = $return = true;
-		}
-
-		wfProfileOut( __METHOD__ );
-		return $return;
-	}
-
-	/**
-	 * Check if user can add a comment to the current article
-	 * We must perform this check on the article
-	 * because of the chicken-and-egg problem inherent in the design
-	 *
-	 * @param Title $title Article title
-	 * @param User|null $user Current user
-	 * @return bool Whether $user can add a comment to $title
-	 */
-	static public function userCanCommentOn( Title $title, User $user = null ) {
-		$wg = F::app()->wg;
-		if ( !( $user instanceof User ) ) {
-			$user = $wg->User;
-		}
-
-		if ( wfReadOnly() ) {
-			return false;
-		}
-
-		$isBlog = ( $wg->EnableBlogArticles && ArticleComment::isBlog( $title ) );
-		if ( $isBlog ) {
-			$props = BlogArticle::getProps( $title->getArticleID() );
-			$commentingEnabled = isset( $props[ 'commenting' ] ) ? (bool) $props[ 'commenting' ] : true;
-			return ( $user->isAllowedAll( 'commentcreate', 'edit' ) && $commentingEnabled );
-		} else {
-			return ( $user->isAllowedAll( 'commentcreate', 'edit' ) && ArticleCommentInit::ArticleCommentCheckTitle( $title ) );
-		}
 	}
 }

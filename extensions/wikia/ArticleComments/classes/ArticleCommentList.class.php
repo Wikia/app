@@ -408,11 +408,18 @@ class ArticleCommentList {
 		$this->preloadFirstRevId( $comments );
 		$pagination = $this->doPagination( $countComments, count( $comments ), $page );
 
+		$commentTitle = Title::makeTitle(
+			MWNamespace::getTalk( $this->mTitle->getNamespace() ),
+			$this->mTitle->getDBkey() . '/' . ARTICLECOMMENT_PREFIX
+		);
+
+		$canComment = $commentTitle->userCan( 'create' );
+
 		return [
 			'avatar' => AvatarService::renderAvatar( $wg->User->getName(), 50 ),
 			'userurl' => AvatarService::getUrl( $wg->User->getName() ),
 			'commentListRaw' => $comments,
-			'commentingAllowed' => ArticleComment::userCanCommentOn( $this->mTitle ),
+			'commentingAllowed' => $canComment,
 			'commentsPerPage' => $this->mMaxPerPage,
 			'countComments' => $countComments,
 			'countCommentsNested' => $countCommentsNested,

@@ -325,6 +325,23 @@ class BlogArticle extends Article {
 	}
 
 	/**
+	 * Instance method to return page properties for current blog page
+	 *
+	 * @see BlogArticle::getProps()
+	 * @return array
+	 */
+	public function getPageProps(): array {
+		$pageId = $this->mTitle->getArticleID();
+		$props = [];
+
+		foreach ( static::getPropsList() as $propName => $propId ) {
+			$props[$propName] = wfGetWikiaPageProp( $propId, $pageId );
+		}
+
+		return $props;
+	}
+
+	/**
 	 * get properties for page, maybe it should be cached?
 	 *
 	 * @access public

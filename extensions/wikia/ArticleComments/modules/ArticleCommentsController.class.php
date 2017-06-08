@@ -1,4 +1,7 @@
 <?php
+use Extensions\Wikia\ArticleComments\Hooks\UserCan\Check\CreateActionCheck;
+use Extensions\Wikia\ArticleComments\Hooks\UserCan\DependencyFactory;
+
 class ArticleCommentsController extends WikiaController {
 	use Wikia\Logger\Loggable;
 
@@ -25,7 +28,13 @@ class ArticleCommentsController extends WikiaController {
 						$this->wg->Out->redirect( $oTitle->getLocalURL() );
 					} else {
 						$result = [ ];
-						$canComment = ArticleCommentInit::userCanComment( $result, $oTitle );
+
+						$commentTitle = Title::makeTitle(
+							MWNamespace::getTalk( $oTitle->getNamespace() ),
+								$oTitle->getDBkey() . '/' . ARTICLECOMMENT_PREFIX
+						);
+
+						$canComment = $commentTitle->userCan( 'create' );
 
 						//this check should be done for all the skins and before calling ArticleComment::doPost but that requires a good bit of refactoring
 						//and some design review as the OAsis/Monobook template doesn't handle error feedback from this code

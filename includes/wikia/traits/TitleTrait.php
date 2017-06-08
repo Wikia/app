@@ -11,6 +11,21 @@ trait TitleTrait {
 	abstract function getDBkey();
 
 	/**
+	 * Whether this title is currently being undeleted.
+	 * @var bool $undeleting
+	 */
+	private $undeleting = false;
+
+
+	public function isUndeleting(): bool {
+		return $this->undeleting;
+	}
+
+	public function setUndeleting( bool $value ) {
+		$this->undeleting = $value;
+	}
+
+	/**
 	 * Returns a list of pages that link to that Title. It is based on the method used in
 	 * Special:WhatLinksHere but returns raw results instead of a ready (and useless) HTML markup.
 	 *

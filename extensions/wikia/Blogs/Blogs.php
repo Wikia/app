@@ -24,6 +24,8 @@ define( "NS_BLOG_LISTING", 502 );
 define( "NS_BLOG_LISTING_TALK", 503 );
 define( "BLOGTPL_TAG", "bloglist" );
 
+require_once __DIR__ . '/src/autoload.php';
+
 $wgExtraNamespaces[ NS_BLOG_ARTICLE ] = "User_blog";
 $wgExtraNamespaces[ NS_BLOG_ARTICLE_TALK ] = "User_blog_comment";
 $wgExtraNamespaces[ NS_BLOG_LISTING ] = "Blog";
@@ -110,15 +112,22 @@ $wgHooks[ 'TitleMoveComplete' ][] = 'BlogsHelper::onTitleMoveComplete';
 // Usages of images on blogs on file pages
 $wgHooks['FilePageImageUsageSingleLink'][] = 'BlogsHelper::onFilePageImageUsageSingleLink';
 
-// Checking that user is permitted to delete blog articles
-$wgHooks['BeforeDeletePermissionErrors'][] = 'BlogLockdown::onBeforeDeletePermissionErrors';
-
-// SUS-260: Prevent moving pages into or out of Forum namespaces
+// SUS-260: Prevent moving pages into or out of Blog namespaces
 $wgHooks['AbortMove'][] = 'BlogsHelper::onAbortMove';
+
+$wgHooks['userCan'][] = function ( Title $title, User $user, string $action, &$result ): bool {
+	static $userCan;
+
+	if ( !isset( $userCan ) ) {
+		$factory = new \Extensions\Wikia\Blogs\DependencyFactory();
+		$userCan = new \Extensions\Wikia\Blogs\Hooks\UserCan( $factory );
+	}
+
+	return $userCan->process( $title, $user, $action, $result );
+};
 
 /**
  * load other parts
  */
 include( __DIR__ . "/BlogTemplate.php" );
 include( __DIR__ . "/BlogArticle.php" );
-include( __DIR__ . "/BlogLockdown.php" );
