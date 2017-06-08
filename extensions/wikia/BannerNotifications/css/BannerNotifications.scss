@@ -107,7 +107,6 @@
 	margin: 0 auto;
 	transition: top 200ms linear;
 	width: 958px;
-	z-index: $zTop + 1;
 
 	&.float {
 		left: 50%;
@@ -116,3 +115,7 @@
 	}
 }
 
+.banner-notifications-placeholder {
+	position: relative;
+	z-index: $zTop;
+}
