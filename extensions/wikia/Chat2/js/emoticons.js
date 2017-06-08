@@ -111,12 +111,11 @@ if (typeof EmoticonMapping === 'undefined') {
 
 		// Since the values in here are processed and then cached, don't modify this directly.  Use mutators
 		// (which can invalidate the cached data such as self._regexes).
-		// TODO: fetch emoticons from nocookie domain
-		// https://wikia-inc.atlassian.net/browse/SUS-449
-		this._settings = {
-			'http://images.wikia.com/lyricwiki/images/6/67/Smile001.gif': [':)', ':-)', '(smile)'],
-			'http://images3.wikia.nocookie.net/__cb20100822133322/lyricwiki/images/d/d8/Sad.png': [':(', ':-(', ':|']
-		};
+		var emoticonsPath = window.wgExtensionsPath + '/wikia/Chat2/images/emoticons';
+
+		this._settings = {};
+		this._settings[emoticonsPath + '/smile.png'] = [':)', ':-)', '(smile)'];
+		this._settings[emoticonsPath + '/sad.png'] = [':(', ':-(', ':|'];
 
 		/**
 		 * Convert our specific wikitext format into the hash of emoticons settings.  Overwrites all
