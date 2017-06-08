@@ -246,41 +246,6 @@ class ThemeDesignerController extends WikiaController {
 		}
 	}
 
-	public function executeCommunityHeaderBackgroundImageUpload() {
-		// check rights
-		if ( !ThemeDesignerHelper::checkAccess() ) {
-			$this->displayRestrictionError( __METHOD__ );
-		}
-
-		$upload = new UploadBackgroundFromFile();
-
-		$status = $this->uploadImage( $upload );
-
-		if ( $status['status'] === 'uploadattempted' && $status['isGood'] ) {
-			$file = $upload->getLocalFile();
-			$this->backgroundImageUrl = wfReplaceImageServer( $file->getUrl() );
-			$this->backgroundImageName = $file->getName();
-			$this->backgroundImageHeight = $file->getHeight();
-			$this->backgroundImageWidth = $file->getWidth();
-
-			//get cropped URL
-			$is = new ImageServing( null, 120, [ "w" => "120", "h" => "100" ] );
-			$this->backgroundImageThumb = wfReplaceImageServer(
-				$file->getThumbUrl(
-					$is->getCut( $file->width, $file->height, "origin" ) . "-" . $file->getName()
-				)
-			);
-
-			// if background image url is not set then it means there was some problem
-			if ( $this->backgroundImageUrl == null ) {
-				$this->errors = [ wfMessage( 'themedesigner-unknown-error' )->escaped() ];
-			}
-
-		} else if ( $status['status'] === 'error' ) {
-			$this->errors = $status['errors'];
-		}
-	}
-
 	public function executeBackgroundImageUpload() {
 		// check rights
 		if ( !ThemeDesignerHelper::checkAccess() ) {
@@ -317,7 +282,7 @@ class ThemeDesignerController extends WikiaController {
 	}
 
 	/**
-	 * @param UploadCommunityHeaderBackgroundFromFile|UploadBackgroundFromFile|UploadFaviconFromFile|UploadWordmarkFromFile $upload
+	 * @param UploadBackgroundFromFile|UploadFaviconFromFile|UploadWordmarkFromFile $upload
 	 * @return array
 	 */
 	private function uploadImage( $upload ): array {

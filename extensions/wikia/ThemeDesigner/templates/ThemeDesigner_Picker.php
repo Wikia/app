@@ -112,7 +112,7 @@
 			<h1><?= wfMessage( 'themedesigner-upload-your-own' )->text() ?></h1>
 
 			<form id="CommunityHeaderBackgroundImageForm" class="CommunityHeaderBackgroundImageForm"
-				  action="<?= $wg->ScriptPath ?>/wikia.php?controller=ThemeDesigner&method=CommunityHeaderBackgroundImageUpload&format=html"
+				  action="<?= $wg->ScriptPath ?>/wikia.php?controller=ThemeDesigner&method=BackgroundImageUpload&format=html"
 				  method="POST" enctype="multipart/form-data">
 				<input id="CommunityHeaderBackgroundImageUploadFile" name="wpUploadFile" type="file">
 				<input type="submit" value="<?= wfMessage( 'themedesigner-button-upload' )->text() ?>"
