@@ -344,13 +344,13 @@ class Chat {
 	}
 
 	/**
-	 * Can given admin user kick subject user from chat?
+	 * Can given admin user ban subject user from chat?
 	 *
 	 * @param User $subjectUser
 	 * @param User $adminUser
 	 * @return bool
 	 */
-	public static function canKick( User $subjectUser, User $adminUser ) {
+	public static function canBan( User $subjectUser, User $adminUser ) {
 		return (
 			// must be a chat moderator
 			$adminUser->isAllowed( self::CHAT_MODERATOR )
@@ -359,17 +359,6 @@ class Chat {
 				// moderators can be kicked only by chat staff/admins
 				|| $adminUser->isAllowedAny( self::CHAT_STAFF, self::CHAT_ADMIN )
 			) );
-	}
-
-	/**
-	 * Can given admin user ban subject user from chat?
-	 *
-	 * @param User $subjectUser
-	 * @param User $adminUser
-	 * @return bool
-	 */
-	public static function canBan( User $subjectUser, User $adminUser ) {
-		return self::canKick( $subjectUser, $adminUser );
 	}
 
 	/**
