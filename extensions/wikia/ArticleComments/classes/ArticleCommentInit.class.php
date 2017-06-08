@@ -285,4 +285,15 @@ class ArticleCommentInit {
 
 		return self::$commentByAnonMsg;
 	}
+
+	public static function getCommentsLink( $contextTitle ) {
+		$title = RequestContext::getMain()->getTitle();
+		$isHistory = RequestContext::getMain()->getRequest()->getVal( 'action' ) == 'history';
+		// link to article comments section
+		if ( $contextTitle != $title || $isHistory ) {
+			return $contextTitle->getLocalUrl() . '#WikiaArticleComments';
+		}
+
+		return '#WikiaArticleComments';
+	}
 }

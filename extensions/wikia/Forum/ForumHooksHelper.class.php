@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\PageHeader\Button;
+
 class ForumHooksHelper {
 	/**
 	 * Render the alternative version of thread page
@@ -516,6 +518,17 @@ class ForumHooksHelper {
 			NS_WIKIA_FORUM_TOPIC_BOARD,
 		] ) ) {
 			$shouldDisplayActionButton = false;
+		}
+
+		return true;
+	}
+
+	public static function onAfterPageHeaderButtons( &$buttons ) {
+		$title = RequestContext::getMain()->getTitle();
+
+		if ( $title->isSpecial( 'Forum' ) ) {
+			$label = wfMessage( 'forum-specialpage-policies' )->escaped();
+			$buttons[] = new Button( $label, 'wds-icons-clipboard-small', '#', 'policies-link' );
 		}
 
 		return true;

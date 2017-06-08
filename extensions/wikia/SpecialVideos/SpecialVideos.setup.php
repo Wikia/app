@@ -16,6 +16,7 @@ $dir = dirname(__FILE__) . '/';
 //classes
 $wgAutoloadClasses[ 'SpecialVideosSpecialController'] =  $dir.'SpecialVideosSpecialController.class.php' ;
 $wgAutoloadClasses[ 'SpecialVideosHelper'] =  $dir.'SpecialVideosHelper.class.php' ;
+$wgAutoloadClasses[ 'SpecialVideosHooks'] =  $dir.'SpecialVideosHooks.class.php' ;
 
 // i18n mapping
 $wgExtensionMessagesFiles['SpecialVideos'] = $dir.'SpecialVideos.i18n.php' ;
@@ -23,6 +24,8 @@ $wgExtensionMessagesFiles['SpecialVideosAliases'] = $dir.'SpecialVideos.alias.ph
 
 // special pages
 $wgSpecialPages[ 'Videos' ] =  'SpecialVideosSpecialController';
+
+$wgHooks['AfterPageHeaderButtons'][] = 'SpecialVideosHooks::onAfterPageHeaderButtons';
 
 JSMessages::registerPackage('SpecialVideos', array(
 	'specialvideos-remove-modal-title',

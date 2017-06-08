@@ -1,4 +1,6 @@
 <?php
+use Wikia\PageHeader\Button;
+
 /**
  * Created by JetBrains PhpStorm.
  * User: mech
@@ -167,6 +169,16 @@ class BlogsHelper {
 		if ( $targetTitle->inNamespace( NS_BLOG_ARTICLE_TALK ) && !$sourceTitle->inNamespace( $targetTitle->getNamespace() ) ) {
 			$err = wfMessage( 'immobile-target-namespace', $targetTitle->getNsText() )->escaped();
 			return false;
+		}
+
+		return true;
+	}
+
+	public static function onAfterPageHeaderButtons( &$buttons ) {
+		if ( F::app()->wg->Title->getNamespace() == NS_BLOG_LISTING ) {
+			$label = wfMessage( 'blog-create-post-label' )->escaped();
+			array_unshift( $buttons, new Button( $label, 'wds-icons-plus',
+					SpecialPage::getTitleFor( 'CreateBlogPage' )->getLocalUrl() ) );
 		}
 
 		return true;

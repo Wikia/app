@@ -1,4 +1,6 @@
 <?php
+use Wikia\PageHeader\Button;
+
 class WikiaMapsHooks {
 
 	/**
@@ -92,6 +94,17 @@ class WikiaMapsHooks {
 		if ( self::isSpecialMapsPage() && self::isSingleMapPage() ) {
 			$out->addMeta( 'fragment', '!' );
 		}
+		return true;
+	}
+
+	public static function onAfterPageHeaderButtons( &$buttons ) {
+		$title = RequestContext::getMain()->getTitle();
+
+		if ( $title->isSpecial( 'Maps' ) ) {
+			$label = wfMessage( 'wikia-interactive-maps-create-a-map' )->escaped();
+			$buttons[] = new Button( $label, '', '#', '', 'createMap' );
+		}
+
 		return true;
 	}
 }

@@ -42,17 +42,20 @@ class PageHeaderController extends \WikiaController {
 	}
 
 	public function buttons() {
-		$user = RequestContext::getMain()->getUser();
 		$title = RequestContext::getMain()->getTitle();
 		$this->setVal( 'actionButton', $this->actionButton );
-		$this->setVal( 'shouldDisplayShareButton',
-			Wikia::isContentNamespace() && $title->exists() &&
-			!$this->app->checkSkin( 'oasislight' ) );
-		$this->setVal( 'shouldDisplayAddNewImageButton',
-			$title->isSpecial( 'Images' ) && $this->app->wg->EnableUploads );
-		$this->setVal( 'shouldDisplayAddNewVideoButton',
-			$title->isSpecial( 'Videos' ) && $this->app->wg->EnableUploads &&
-			$user->isAllowed( 'videoupload' ) );
-		$this->setVal( 'buttons', [] );
+
+		$buttons = [];
+
+		if ( $title->isSpecial( 'Images' ) && $this->app->wg->EnableUploads ) {
+			$label = wfMessage( 'page-header-action-button-add-new-image' )->escaped();
+			$buttons[] =
+				new Button( $label, 'wds-icons-image',
+					\SpecialPage::getTitleFor( 'Upload' )->getLocalURL(), '',
+					'page-header-add-new-photo' );
+		}
+
+		wfRunHooks( 'AfterPageHeaderButtons', [ &$buttons ] );
+		$this->setVal( 'buttons', $buttons );
 	}
 }

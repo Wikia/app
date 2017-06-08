@@ -49,6 +49,8 @@ $wgHooks[ 'BeforePageDisplay' ][] = 'WikiaMapsHooks::onBeforePageDisplay';
 // mobile
 $wgHooks['WikiaMobileAssetsPackages'][] = 'WikiaMapsHooks::onWikiaMobileAssetsPackages';
 
+$wgHooks['AfterPageHeaderButtons'][] = 'WikiaMapsHooks::onAfterPageHeaderButtons';
+
 /**
  * Register resource loader packega for parser tag
  */
