@@ -171,4 +171,14 @@ class BlogsHelper {
 
 		return true;
 	}
+
+	public static function onPageHeaderActionButtonShouldDisplay( \Title $title, &$shouldDisplayActionButton ) {
+		if ( $title->getNamespace() === NS_BLOG_LISTING ) {
+			$shouldDisplayActionButton = false;
+		} else if ( $title->getNamespace() === NS_BLOG_ARTICLE && !$title->userCan( 'edit' ) ) {
+			$shouldDisplayActionButton = false;
+		}
+
+		return true;
+	}
 }

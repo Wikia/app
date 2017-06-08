@@ -25,7 +25,7 @@
 	}
 
 	.wds-button-group {
-		@include button-group-theming($color-button-text);
+		@include button-group-theming($color-page);
 	}
 
 	&__counter {

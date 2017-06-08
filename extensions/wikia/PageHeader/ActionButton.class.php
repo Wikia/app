@@ -27,9 +27,11 @@ class ActionButton {
 
 		$this->prepareActionButton();
 
-		$shouldDisplay = !$this->title->isSpecialPage()
-			&& !empty( $this->buttonAction['href'] )
-			&& !empty( $this->buttonAction['text'] );
+		$shouldDisplay = $this->hasHrefAndText() && !$this->title->isSpecialPage() &&
+			(
+				!\WikiaPageType::isCorporatePage() ||
+				$this->canDisplayOnCorporatePage()
+			);
 
 		wfRunHooks( 'PageHeaderActionButtonShouldDisplay', [ $this->title, &$shouldDisplay ] );
 
@@ -149,5 +151,13 @@ class ActionButton {
 
 	private function isArticleCommentsEnabled(): bool {
 		return class_exists( 'ArticleComment' ) && \ArticleCommentInit::ArticleCommentCheckTitle( $this->title );
+	}
+
+	private function canDisplayOnCorporatePage() {
+		return \WikiaPageType::isCorporatePage() && $this->user->isAllowed( 'edit' );
+	}
+
+	private function hasHrefAndText() {
+		return !empty( $this->buttonAction['href'] ) && !empty( $this->buttonAction['text'] );
 	}
 }
