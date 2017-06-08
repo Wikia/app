@@ -111,7 +111,7 @@ require([
 	}
 
 	win.addEventListener('wikia.uap', bottomLeaderboard.init);
-	if (context.opts.adMixExperimentEnabled && context.slots.adMixToUnblock.indexOf('BOTTOM_LEADERBOARD') >= 0) {
+	if (context.opts.adMixExperimentEnabled && context.slots.adMixToUnblock.indexOf('BOTTOM_LEADERBOARD')) {
 		win.addEventListener('wikia.not_uap', bottomLeaderboard.init);
 	}
 
