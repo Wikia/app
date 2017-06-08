@@ -174,6 +174,16 @@ class BlogsHelper {
 		return true;
 	}
 
+	public static function onPageHeaderActionButtonShouldDisplay( \Title $title, &$shouldDisplayActionButton ) {
+		if ( $title->getNamespace() === NS_BLOG_LISTING ) {
+			$shouldDisplayActionButton = false;
+		} else if ( $title->getNamespace() === NS_BLOG_ARTICLE && !$title->userCan( 'edit' ) ) {
+			$shouldDisplayActionButton = false;
+		}
+
+		return true;
+	}
+
 	public static function onAfterPageHeaderButtons( &$buttons ) {
 		if ( F::app()->wg->Title->getNamespace() == NS_BLOG_LISTING ) {
 			$label = wfMessage( 'blog-create-post-label' )->escaped();

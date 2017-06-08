@@ -3232,7 +3232,6 @@ $config['community_header_scss'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/CommunityHeader/styles/index.scss',
-		'//extensions/wikia/CommunityHeader/styles/banner-notifications-hack.scss',
 	],
 ];
 
@@ -3241,7 +3240,6 @@ $config['community_header_js'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/CommunityHeader/scripts/tracking.js',
-		'//extensions/wikia/CommunityHeader/scripts/banner-notifications-hack.js',
 		'//extensions/wikia/CommunityHeader/scripts/local-navigation-preview.js',
 	],
 ];
