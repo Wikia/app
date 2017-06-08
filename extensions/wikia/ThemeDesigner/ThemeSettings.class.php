@@ -75,6 +75,12 @@ class ThemeSettings {
 			$settings = array_merge( $settings, $GLOBALS[self::WikiFactorySettings] );
 			$colorKeys = [ "color-body", "color-page", "color-community-header", "color-buttons", "color-links", "color-header" ];
 
+			// if user didn't define community header background color, but defined buttons color, we use buttons color
+			// as default for community header background
+			if ( !isset($GLOBALS[self::WikiFactorySettings]["color-community-header"]) && isset($GLOBALS[self::WikiFactorySettings]["color-buttons"]) ) {
+				$settings["color-community-header"] = $settings["color-buttons"];
+			}
+
 			// if any of the user set colors are invalid, use default
 			foreach ( $colorKeys as $colorKey ) {
 				if ( !ThemeDesignerHelper::isValidColor( $settings[$colorKey] ) ) {
