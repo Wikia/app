@@ -574,7 +574,11 @@
 		set: function (setting, newValue) {
 			ThemeDesigner.settings[setting] = newValue;
 
-			if (setting === 'wordmark-image-name' || setting === 'background-image-name') {
+			if (
+				setting === 'wordmark-image-name' ||
+				setting === 'background-image-name' ||
+				setting === 'community-header-background-image-name'
+			) {
 				return;
 			}
 
