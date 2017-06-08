@@ -43,8 +43,8 @@
 		<h1><?= wfMessage( 'themedesigner-page' )->text() ?></h1>
 		<ul>
 			<li>
-				<h2><?= wfMessage( 'themedesigner-local-nav' )->text() ?></h2>
-				<img src="<?= $wg->BlankImgUrl ?>" class="color-local-nav" id="swatch-color-local-nav">
+				<h2><?= wfMessage( 'themedesigner-community-header' )->text() ?></h2>
+				<img src="<?= $wg->BlankImgUrl ?>" class="color-community-header" id="swatch-color-community-header">
 			</li>
 			<li>
 				<h2><?= wfMessage( 'themedesigner-buttons' )->text() ?></h2>
