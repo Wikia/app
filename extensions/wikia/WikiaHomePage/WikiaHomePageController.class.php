@@ -703,7 +703,6 @@ class WikiaHomePageController extends WikiaController {
 			$text = '';
 			$out->clearHTML();
 			$out->addHTML(F::app()->sendRequest('WikiaHomePageController', 'index')->toString());
-			F::app()->wg->SuppressWikiHeader = true;
 		}
 		return $out;
 	}
