@@ -99,11 +99,9 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.adMix1Enabled = context.opts.adMixExperimentEnabled && abTest.getGroup('AD_MIX').indexOf('AD_MIX_1') === 0;
 		context.opts.adMix3Enabled = context.opts.adMixExperimentEnabled && abTest.getGroup('AD_MIX').indexOf('AD_MIX_3') === 0;
 
-		context.slots.adMixToUnblock = [];
-
-		if (!(context.opts.adMix1Enabled && context.targeting.hasFeaturedVideo)) {
-			context.slots.adMixToUnblock.push('INCONTENT_BOXAD_1');
-		}
+		context.slots.adMixToUnblock = [
+			'INCONTENT_BOXAD_1'
+		];
 
 		if (context.opts.adMix3Enabled) {
 			context.slots.adMixToUnblock.push('BOTTOM_LEADERBOARD');
