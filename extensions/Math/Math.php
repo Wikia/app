@@ -109,6 +109,11 @@ $wgHooks['LoadExtensionSchemaUpdates'][] = 'MathHooks::onLoadExtensionSchemaUpda
 $wgHooks['ParserTestTables'][] = 'MathHooks::onParserTestTables';
 $wgHooks['ParserTestParser'][] = 'MathHooks::onParserTestParser';
 
+// Wikia change - begin - @author: TK-999
+// VOLDEV-59: Fix Math colorization issues across skins
+$wgHooks['UpdateThemeSettings'][] = 'MathHooks::onUpdateThemeSettings';
+// Wikia change - end
+
 $dir = dirname( __FILE__ ) . '/';
 $wgAutoloadClasses['MathHooks'] = $dir . 'Math.hooks.php';
 $wgAutoloadClasses['MathRenderer'] = $dir . 'Math.body.php';
