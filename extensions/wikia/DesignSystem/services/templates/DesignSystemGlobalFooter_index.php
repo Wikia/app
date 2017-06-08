@@ -23,6 +23,8 @@
 					'parentName' => 'fandom'
 				]
 			); ?>
+			
+			
 			<?= $app->renderView(
 				'DesignSystemGlobalFooterService',
 				'section',
