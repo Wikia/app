@@ -32,10 +32,6 @@ class SpecialThemeDesignerPreview extends UnlistedSpecialPage {
 		] );
 
 		$wgOut->addHtml( F::app()->renderView( 'ThemeDesigner', 'Preview' ) );
-
-		// page header: use static date
-		global $wgHooks;
-		$wgHooks['PageHeaderIndexAfterExecute'][] = 'SpecialThemeDesignerPreview::modifyHeaderData';
 	}
 
 	/**
