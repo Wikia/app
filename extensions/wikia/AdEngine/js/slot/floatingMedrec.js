@@ -198,11 +198,6 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 				return;
 			}
 
-			if (context.opts.adMix1Enabled && context.targeting.hasFeaturedVideo) {
-				log(['init', 'Floating medrec disabled: admix1 on featured video page'], 'debug', logGroup);
-				return;
-			}
-
 			win.addEventListener('scroll', throttle(handleFloatingMedrec));
 			win.addEventListener('resize', throttle(handleFloatingMedrec));
 		}
