@@ -222,7 +222,7 @@
 	 */
 	function handleScrolling() {
 		var containerTop,
-			notificationWrapper = getContainer().children(wrapperSelector),
+			notificationWrapper = $container.children(wrapperSelector),
 			headerBottom;
 
 		if (!$container.length || !notificationWrapper.length) {
