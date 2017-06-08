@@ -56,7 +56,12 @@ class ThemeDesignerHooks {
 	 */
 	public static function onUploadVerification( $destName, $tempPath, &$error ) {
 		$destName = strtolower( $destName );
-		if ( $destName == 'wiki-wordmark.png' || $destName == 'wiki-background' ) {
+
+		if (
+			$destName == strtolower( ThemeSettings::WordmarkImageName ) ||
+			$destName == strtolower( ThemeSettings::BackgroundImageName ) ||
+			$destName == strtolower( ThemeSettings::CommunityHeaderBackgroundImageName )
+		) {
 			// BugId:983
 			$error = wfMessage( 'themedesigner-manual-upload-error' )->escaped();
 
@@ -70,18 +75,12 @@ class ThemeDesignerHooks {
 	 * @param $title Title
 	 * @return bool
 	 */
-	private static function isFavicon( $title ) {
-		if ( $title->getText() == 'Favicon.ico' ) {
-			$isFavicon = true;
-		} else {
-			$isFavicon = false;
-		}
-
-		return $isFavicon;
+	private static function isFavicon( Title $title ): bool {
+		return $title->getText() == 'Favicon.ico';
 	}
 
 	/**
-	 * @param $title Title
+	 * @param Title $title
 	 * @param bool $isArticleDeleted
 	 */
 	private static function resetThemeBackgroundSettings( $title, $isArticleDeleted = false ) {
@@ -89,15 +88,18 @@ class ThemeDesignerHooks {
 		if ( $title instanceof Title && $title->getText() == ThemeSettings::BackgroundImageName ) {
 			$themeSettings = new ThemeSettings();
 			$settings = $themeSettings->getSettings();
+
 			if ( strpos( $settings['background-image'], ThemeSettings::BackgroundImageName ) !== false ) {
 				$settings['background-image-width'] = null;
 				$settings['background-image-height'] = null;
+
 				if ( $isArticleDeleted ) {
 					$settings['background-image'] = '';
 					$settings['user-background-image'] = '';
 					$settings['user-background-image-thumb'] = '';
 				}
 			}
+
 			$themeSettings->saveSettings( $settings );
 		}
 	}

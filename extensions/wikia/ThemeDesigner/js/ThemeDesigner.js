@@ -38,12 +38,17 @@
 			this.backgroundType = 0;
 
 			// handle navigation clicks - switching between tabs
-			$('#Navigation a').click(that.navigationClick);
+			$('#Navigation')
+				.find('a')
+				.click(that.navigationClick);
 
 			// handle "Save" and "Cancel" button clicks
-			$('#Toolbar').find('.save').click(that.saveClick)
-				.end().find('.cancel').click(that.cancelClick);
-
+			$('#Toolbar')
+				.find('.save')
+				.click(that.saveClick)
+				.end()
+				.find('.cancel')
+				.click(that.cancelClick);
 
 			this.checkBgImageIsSet();
 
@@ -80,6 +85,10 @@
 			if (ThemeDesigner.settings['background-image'] === false) {
 				ThemeDesigner.settings['background-image'] = '';
 			}
+
+			if (ThemeDesigner.settings['community-header-background-image'] === false) {
+				ThemeDesigner.settings['community-header-background-image'] = '';
+			}
 		},
 
 		initTooltips: function () {
@@ -114,7 +123,7 @@
 			var slideBy = ThemeDesigner.slideByDefaultWidth,
 				$themeTab = $('#ThemeTab'),
 				slideMax = -Math.floor($themeTab.find('.slider').find('ul').find('li').length /
-					ThemeDesigner.slideByItems) * ThemeDesigner.slideByDefaultWidth;
+						ThemeDesigner.slideByItems) * ThemeDesigner.slideByDefaultWidth;
 
 			// click handler for next and previous arrows in theme slider
 			$themeTab.find('.previous, #ThemeTab .next').click(function (event) {
@@ -157,7 +166,9 @@
 
 			// click handler for themes thumbnails
 			$themeTab
-				.find('.slider').find('li').click(function () {
+				.find('.slider')
+				.find('li')
+				.click(function () {
 					var targetObject = $(this);
 
 					// highlight selected theme
@@ -172,13 +183,17 @@
 					ThemeDesigner.resetPageOpacity();
 				})
 				// select current theme
-				.find('[data-theme=' + ThemeDesigner.settings.theme + ']').addClass('selected');
+				.find('[data-theme=' + ThemeDesigner.settings.theme + ']')
+				.addClass('selected');
 		},
 
 		customizeTabInit: function () {
-			$('#CustomizeTab').find('li').find('img[id*="color"]').click(function (event) {
-				ThemeDesigner.showPicker(event, 'color');
-			});
+			$('#CustomizeTab')
+				.find('li img[id*="color"]')
+				.click(function (event) {
+					ThemeDesigner.showPicker(event, 'color');
+				});
+
 			$('#swatch-image-background').click(function (event) {
 				ThemeDesigner.showPicker(event, 'image');
 			});
@@ -193,6 +208,7 @@
 					ThemeDesigner.set('background-tiled', $(this).attr('checked') ? 'true' : 'false');
 				})
 				.attr('checked', ThemeDesigner.settings['background-tiled'] === 'true');
+
 			$('#fix-background')
 				.change(function () {
 					ThemeDesigner.set('background-fixed', $(this).attr('checked') ? 'true' : 'false');
@@ -223,7 +239,7 @@
 			});
 
 			// submit handler for uploading favicon image
-			$('#CommunityHeaderBackgroundUploadForm').submit(function () {
+			$('#CommunityHeaderBackgroundImageForm').submit(function () {
 				$.AIM.submit(this, ThemeDesigner.communityHeaderBackgroundUploadCallback);
 			});
 
@@ -269,25 +285,25 @@
 
 			//graphic wordmark clicking
 			$('#WordmarkTab').find('.graphic').find('.preview').find('.wordmark').click(function () {
-					ThemeDesigner.set('wordmark-type', 'graphic');
-				})
-				//grapic wordmark button
+				ThemeDesigner.set('wordmark-type', 'graphic');
+			})
+			//grapic wordmark button
 				.find('.graphic').find('.preview').find('a').click(function (event) {
-					event.preventDefault();
-					ThemeDesigner.set('wordmark-type', 'text');
-					ThemeDesigner.set('wordmark-image-url', window.wgBlankImgUrl);
+				event.preventDefault();
+				ThemeDesigner.set('wordmark-type', 'text');
+				ThemeDesigner.set('wordmark-image-url', window.wgBlankImgUrl);
 
-					// Can't use js to clear file input value so reseting form
-					$('#WordMarkUploadForm')[0].reset();
-				})
-				//remove favicon link
+				// Can't use js to clear file input value so reseting form
+				$('#WordMarkUploadForm')[0].reset();
+			})
+			//remove favicon link
 				.find('.favicon').find('.preview').find('a').click(function (event) {
-					event.preventDefault();
-					ThemeDesigner.set('favicon-image-url', window.wgBlankImgUrl);
+				event.preventDefault();
+				ThemeDesigner.set('favicon-image-url', window.wgBlankImgUrl);
 
-					// Can't use js to clear file input value so reseting form
-					$('#FaviconUploadForm')[0].reset();
-				});
+				// Can't use js to clear file input value so reseting form
+				$('#FaviconUploadForm')[0].reset();
+			});
 
 			// submit handler for uploading custom logo image
 			$('#WordMarkUploadForm').submit(function () {
@@ -306,8 +322,8 @@
 					$(this).find('ul').show();
 				})
 				.find('ul').mouseleave(function () {
-					$(this).hide();
-				})
+				$(this).hide();
+			})
 				.find('li').click(ThemeDesigner.revertToPreviousTheme);
 		},
 
@@ -322,7 +338,7 @@
 
 			ThemeDesigner.hidePicker();
 			event.stopPropagation();
-debugger;
+
 			// check the type (color or image)
 			if (type === 'color') {
 
@@ -399,7 +415,7 @@ debugger;
 				swatches = this.themeDesignerPicker.children('.image').find('.swatches');
 				// add admin background
 				if (ThemeDesigner.settings['user-' + swatchName]) {
-					$('<li class="user"><img src="' + ThemeDesigner.settings['user-' + swatchName +'-thumb'] +
+					$('<li class="user"><img src="' + ThemeDesigner.settings['user-' + swatchName + '-thumb'] +
 						'" data-image="' + ThemeDesigner.settings['user-' + swatchName] + '"></li>')
 						.insertBefore(swatches.find('.no-image'));
 				}
@@ -418,20 +434,14 @@ debugger;
 					ThemeDesigner.hidePicker();
 				});
 			} else if (type === 'community-header') {
-				swatches = this.themeDesignerPicker.children('.image').find('.swatches');
-
 				// click handling
-				this.themeDesignerPicker.children('.image').find('.swatches').find('li').click(function () {
-
-					//set correct image
-					if ($(this).attr('class') === 'no-image') {
+				this.themeDesignerPicker
+					.children('.community-header')
+					.find('.no-image')
+					.click(function () {
 						ThemeDesigner.set(swatchName, '');
-					} else {
-						ThemeDesigner.loadImage($(this).children('img').attr('data-image'), swatchName);
-					}
-
-					ThemeDesigner.hidePicker();
-				});
+						ThemeDesigner.hidePicker();
+					});
 			}
 
 			// show picker
@@ -454,7 +464,7 @@ debugger;
 			$('body').unbind('.picker');
 			$('#ColorNameForm').unbind();
 			this.themeDesignerPicker
-				.removeClass('color image')
+				.removeClass('color image community-header')
 				.find('.user').remove().end()
 				.find('.color li').remove().end()
 				.find('.image li').unbind('click');
@@ -498,7 +508,7 @@ debugger;
 		},
 
 		changeDynamicBg: function (value) {
-			var val = !! value,
+			var val = !!value,
 				el = $('#not-split-background');
 
 			if (el.prop('checked') === val) {
@@ -544,15 +554,15 @@ debugger;
 			if (enable) {
 				$('#CustomizeTab')
 					.find('.wrap-middle-color').css({
-						opacity: 1
-					})
+					opacity: 1
+				})
 					.find('.middle-color-mask')
 					.hide();
 			} else {
 				$('#CustomizeTab')
 					.find('.wrap-middle-color').css({
-						opacity: 0.3
-					})
+					opacity: 0.3
+				})
 					.find('.middle-color-mask')
 					.show();
 			}
@@ -602,29 +612,30 @@ debugger;
 			}
 
 			if (['color-body',
-				'color-body-middle',
-				'color-page',
-				'color-buttons',
-				'color-community-header',
-				'color-links',
-				'background-image',
-				'color-header',
-				'wordmark-font'].indexOf(setting) > -1
+					'color-body-middle',
+					'color-page',
+					'color-buttons',
+					'color-community-header',
+					'color-links',
+					'background-image',
+					'color-header',
+					'wordmark-font'].indexOf(setting) > -1
 			) {
 				ThemeDesigner.reloadCSS = true;
 			}
 
-			if (['community-header-background-image',
-				'wordmark-font-size',
-				'page-opacity',
-				'wordmark-text',
-				'wordmark-type'].indexOf(setting) > -1
+			if ([
+				'community-header-background-image',
+					'wordmark-font-size',
+					'page-opacity',
+					'wordmark-text',
+					'wordmark-type'].indexOf(setting) > -1
 			) {
 				ThemeDesigner.updateSkinPreview = true;
 			}
 
 			//set function is run multiple times, we don't need to apply settings all the time
-			$.debounce(50, function () {
+			$.debounce(100, function () {
 				ThemeDesigner.applySettings();
 			})();
 		},
@@ -717,7 +728,6 @@ debugger;
 		 */
 		communityHeaderBackgroundUploadCallback: {
 			onComplete: function (response) {
-				debugger;
 				var resp = JSON.parse(response);
 
 				if (resp.errors && resp.errors.length > 0) {
@@ -725,20 +735,17 @@ debugger;
 					window.alert(resp.errors.join('\n'));
 
 				} else {
-					$('#backgroundImageUploadFile').val('');
+					$('#CommunityHeaderBackgroundImageUploadFile').val('');
 					ThemeDesigner.hidePicker();
 
-					ThemeDesigner.set('user-background-image', resp.backgroundImageUrl);
-					ThemeDesigner.set('user-background-image-thumb', resp.backgroundImageThumb);
+					ThemeDesigner.set('user-community-header-background-image', resp.backgroundImageUrl);
+					ThemeDesigner.set('user-community-header-background-image-thumb', resp.backgroundImageThumb);
 
-					ThemeDesigner.set('theme', 'custom');
-					ThemeDesigner.set('background-image-name', resp.backgroundImageName);
-					ThemeDesigner.set('background-image-width', resp.backgroundImageWidth);
-					ThemeDesigner.set('background-image-height', resp.backgroundImageHeight);
+					ThemeDesigner.set('community-header-background-image-name', resp.backgroundImageName);
+					ThemeDesigner.set('community-header-background-image-width', resp.backgroundImageWidth);
+					ThemeDesigner.set('community-header-background-image-height', resp.backgroundImageHeight);
 
-					// This should be last, it triggers a CSS reload
-					ThemeDesigner.set('background-image', resp.backgroundImageUrl);
-					ThemeDesigner.checkBgIsDynamic(resp.backgroundImageWidth, true);
+					ThemeDesigner.set('community-header-background-image', resp.backgroundImageUrl);
 				}
 			}
 		},
@@ -824,18 +831,21 @@ debugger;
 				settingsToLoad,
 				wordmark,
 				wordmarkImg,
-				previewFrameContent = this.previewFrame.contents();
+				previewFrameContent = this.previewFrame.contents(),
+				$WordmarkTab = $('#WordmarkTab'),
+				isWordmarkGraphic = ThemeDesigner.settings['wordmark-type'] === 'graphic';
 
 			/*** Theme Tab ***/
 			if (ThemeDesigner.settings.theme === 'custom') {
-				$('#ThemeTab').find('.slider').find('.selected').removeClass('selected');
+				$('#ThemeTab').find('.slider .selected').removeClass('selected');
 			}
 
 			/*** Customize Tab ***/
 			// color swatches
 			$('#swatch-color-background').css('background-color', ThemeDesigner.settings['color-body']);
 			$('#swatch-color-background-middle').css('background-color', ThemeDesigner.settings['color-body-middle']);
-			$('#swatch-color-community-header').css('background-color', ThemeDesigner.settings['color-community-header']);
+			$('#swatch-color-community-header')
+				.css('background-color', ThemeDesigner.settings['color-community-header']);
 			$('#swatch-color-buttons').css('background-color', ThemeDesigner.settings['color-buttons']);
 			$('#swatch-color-links').css('background-color', ThemeDesigner.settings['color-links']);
 			$('#swatch-color-page').css('background-color', ThemeDesigner.settings['color-page']);
@@ -858,43 +868,42 @@ debugger;
 
 			/*** Wordmark Tab ***/
 			// style wordmark preview
-			$('#wordmark').removeClass().addClass(ThemeDesigner.settings['wordmark-font'])
-				.addClass(ThemeDesigner.settings['wordmark-font-size']).text(ThemeDesigner.settings['wordmark-text']);
+			$('#wordmark')
+				.removeClass()
+				.addClass(ThemeDesigner.settings['wordmark-font'])
+				.addClass(ThemeDesigner.settings['wordmark-font-size'])
+				.text(ThemeDesigner.settings['wordmark-text']);
 
 			// populate wordmark editor
-			$('#wordmark-edit').find('input[type="text"]')
+			$('#wordmark-edit')
+				.find('input[type="text"]')
 				.val(ThemeDesigner.settings['wordmark-text']);
 
 			// select current font
-			$('#wordmark-font').find('[value="' + ThemeDesigner.settings['wordmark-font'] + '"]')
+			$('#wordmark-font')
+				.find('[value="' + ThemeDesigner.settings['wordmark-font'] + '"]')
 				.attr('selected', 'selected');
 
 			// select current size
-			$('#wordmark-size').find('[value="' + ThemeDesigner.settings['wordmark-font-size'] + '"]')
+			$('#wordmark-size')
+				.find('[value="' + ThemeDesigner.settings['wordmark-font-size'] + '"]')
 				.attr('selected', 'selected');
 
-			// wordmark image
-			$('#WordmarkTab .graphic .wordmark').attr('src', ThemeDesigner.settings['wordmark-image-url']);
 
-			if (ThemeDesigner.settings['wordmark-type'] === 'graphic') {
-				$('#WordmarkTab').find('.graphic')
-					.find('.preview').addClass('active')
-					.find('.wordmark').addClass('selected');
-			} else {
-				$('#WordmarkTab').find('.graphic')
-					.find('.preview').removeClass('active')
-					.find('.wordmark').removeClass('selected');
-			}
+			$WordmarkTab
+				.find('.graphic .preview').toggleClass('active', isWordmarkGraphic)
+				.find('.wordmark').toggleClass('selected', isWordmarkGraphic)
+				.attr('src', ThemeDesigner.settings['wordmark-image-url']);
 
-			// favicon image
-			$('#WordmarkTab').find('.favicon').find('.preview').find('img')
+			$WordmarkTab
+				.find('.favicon .preview')
+				.toggleClass('active',
+					ThemeDesigner.settings['favicon-image-url'] !== window.wgBlankImgUrl
+				)
+				// favicon image
+				.find('img')
 				.attr('src', ThemeDesigner.settings['favicon-image-url']);
 
-			if (ThemeDesigner.settings['favicon-image-url'] === window.wgBlankImgUrl) {
-				$('#WordmarkTab').find('.favicon').find('.preview').removeClass('active');
-			} else {
-				$('#WordmarkTab').find('.favicon').find('.preview').addClass('active');
-			}
 
 			if (ThemeDesigner.reloadCSS) {
 				settingsToLoad = $.extend({}, ThemeDesigner.settings, window.applicationThemeSettings);
@@ -903,7 +912,8 @@ debugger;
 			}
 
 			if (ThemeDesigner.updateSkinPreview) {
-				previewFrameContent.find('.wds-community-header__sitename a').text(ThemeDesigner.settings['wordmark-text']);
+				previewFrameContent.find('.wds-community-header__sitename a')
+					.text(ThemeDesigner.settings['wordmark-text']);
 
 				if (ThemeDesigner.settings['wordmark-type'] !== 'graphic') {
 					previewFrameContent.find('.wds-community-header__wordmark').remove();
@@ -913,7 +923,8 @@ debugger;
 					if (wordmark.length) {
 						wordmark.html(wordmarkImg);
 					} else {
-						previewFrameContent.find('.wds-community-header').prepend('<div class="wds-community-header__wordmark"><a href="#">' + wordmarkImg + '</a></div>');
+						previewFrameContent.find('.wds-community-header')
+							.prepend('<div class="wds-community-header__wordmark"><a href="#">' + wordmarkImg + '</a></div>');
 					}
 				}
 

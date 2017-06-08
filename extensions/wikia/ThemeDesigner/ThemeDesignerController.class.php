@@ -258,7 +258,6 @@ class ThemeDesignerController extends WikiaController {
 
 		if ( $status['status'] === 'uploadattempted' && $status['isGood'] ) {
 			$file = $upload->getLocalFile();
-			/* @var $file LocalFile */
 			$this->backgroundImageUrl = wfReplaceImageServer( $file->getUrl() );
 			$this->backgroundImageName = $file->getName();
 			$this->backgroundImageHeight = $file->getHeight();
@@ -318,7 +317,7 @@ class ThemeDesignerController extends WikiaController {
 	}
 
 	/**
-	 * @param UploadBackgroundFromFile|UploadFaviconFromFile|UploadWordmarkFromFile $upload
+	 * @param UploadCommunityHeaderBackgroundFromFile|UploadBackgroundFromFile|UploadFaviconFromFile|UploadWordmarkFromFile $upload
 	 * @return array
 	 */
 	private function uploadImage( $upload ): array {
