@@ -10,7 +10,9 @@ class PageShareHooks {
 	 * @return bool
 	 */
 	public static function onAfterPageHeaderButtons( \Title $title, array &$buttons ): bool {
-		if ( Wikia::isContentNamespace() && $title->exists() &&
+		if (
+			$title->isContentPage() &&
+			$title->exists() &&
 		     !F::app()->checkSkin( 'oasislight' )
 		) {
 			$label = wfMessage( 'page-share-entry-point-label' )->escaped();
