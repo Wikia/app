@@ -3,11 +3,18 @@
 use Wikia\PageHeader\Button;
 
 class SpecialVideosHooks {
-	public static function onAfterPageHeaderButtons( &$buttons ) {
+	/**
+	 * @param Title $title
+	 * @param array $buttons
+	 *
+	 * @return bool
+	 */
+	public static function onAfterPageHeaderButtons( \Title $title, array &$buttons ): bool {
 		$user = RequestContext::getMain()->getUser();
-		$title = RequestContext::getMain()->getTitle();
 
-		if ( $title->isSpecial( 'Videos' ) && \F::app()->wg->EnableUploads &&
+		if (
+			$title->isSpecial( 'Videos' ) &&
+			\F::app()->wg->EnableUploads &&
 		     $user->isAllowed( 'videoupload' )
 		) {
 			$label = wfMessage( 'special-videos-add-video' )->escaped();

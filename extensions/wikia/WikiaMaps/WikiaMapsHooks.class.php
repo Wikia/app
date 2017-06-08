@@ -97,9 +97,13 @@ class WikiaMapsHooks {
 		return true;
 	}
 
-	public static function onAfterPageHeaderButtons( &$buttons ) {
-		$title = RequestContext::getMain()->getTitle();
-
+	/**
+	 * @param Title $title
+	 * @param array $buttons
+	 *
+	 * @return bool
+	 */
+	public static function onAfterPageHeaderButtons( \Title $title, array &$buttons ): bool {
 		if ( $title->isSpecial( 'Maps' ) ) {
 			$label = wfMessage( 'wikia-interactive-maps-create-a-map' )->escaped();
 			$buttons[] = new Button( $label, '', '#', '', 'createMap' );

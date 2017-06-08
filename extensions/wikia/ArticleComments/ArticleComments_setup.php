@@ -88,8 +88,6 @@ if (!empty($wgEnableWallEngine) || !empty($wgEnableArticleCommentsExt) || !empty
 	$wgHooks['AfterPageHeaderButtons'][] = 'ArticleCommentsHooks::onAfterPageHeaderButtons';
 }
 
-//$wgHooks['BeforeDeletePermissionErrors'][] = 'ArticleComment::onBeforeDeletePermissionErrors';
-
 //JSMEssages setup
 JSMessages::registerPackage( 'ArticleCommentsCounter', [
 	'oasis-comments-header',

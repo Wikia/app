@@ -24,7 +24,7 @@ class Buttons {
 					'page-header-add-new-photo' );
 		}
 
-		wfRunHooks( 'AfterPageHeaderButtons', [ &$buttons ] );
+		wfRunHooks( 'AfterPageHeaderButtons', [ $title, &$buttons ] );
 
 		$this->buttons = $buttons;
 	}

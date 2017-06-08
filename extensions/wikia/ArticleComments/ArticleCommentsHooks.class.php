@@ -3,8 +3,13 @@
 use Wikia\PageHeader\Button;
 
 class ArticleCommentsHooks {
-	public static function onAfterPageHeaderButtons( &$buttons ) {
-		$title = RequestContext::getMain()->getTitle();
+	/**
+	 * @param Title $title
+	 * @param array $buttons
+	 *
+	 * @return bool
+	 */
+	public static function onAfterPageHeaderButtons( \Title $title, array &$buttons ): bool {
 		$service = PageStatsService::newFromTitle( $title );
 		$comments = $service->getCommentsCount();
 

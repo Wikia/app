@@ -174,7 +174,13 @@ class BlogsHelper {
 		return true;
 	}
 
-	public static function onPageHeaderActionButtonShouldDisplay( \Title $title, &$shouldDisplayActionButton ) {
+	/**
+	 * @param Title $title
+	 * @param bool $shouldDisplayActionButton
+	 *
+	 * @return bool
+	 */
+	public static function onPageHeaderActionButtonShouldDisplay( \Title $title, array &$shouldDisplayActionButton ): bool {
 		if ( $title->getNamespace() === NS_BLOG_LISTING ) {
 			$shouldDisplayActionButton = false;
 		} else if ( $title->getNamespace() === NS_BLOG_ARTICLE && !$title->userCan( 'edit' ) ) {
@@ -184,8 +190,14 @@ class BlogsHelper {
 		return true;
 	}
 
-	public static function onAfterPageHeaderButtons( &$buttons ) {
-		if ( F::app()->wg->Title->getNamespace() == NS_BLOG_LISTING ) {
+	/**
+	 * @param Title $title
+	 * @param array $buttons
+	 *
+	 * @return bool
+	 */
+	public static function onAfterPageHeaderButtons( \Title $title, array &$buttons ): bool {
+		if ( $title->getNamespace() == NS_BLOG_LISTING ) {
 			$label = wfMessage( 'blog-create-post-label' )->escaped();
 			array_unshift( $buttons, new Button( $label, 'wds-icons-plus',
 					SpecialPage::getTitleFor( 'CreateBlogPage' )->getLocalUrl() ) );
