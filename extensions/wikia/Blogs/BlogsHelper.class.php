@@ -175,9 +175,7 @@ class BlogsHelper {
 	public static function onPageHeaderActionButtonShouldDisplay( \Title $title, &$shouldDisplayActionButton ) {
 		if ( $title->getNamespace() === NS_BLOG_LISTING ) {
 			$shouldDisplayActionButton = false;
-		}
-
-		if ( $title->getNamespace() === NS_BLOG_ARTICLE && !$title->userCan( 'edit' ) ) {
+		} else if ( $title->getNamespace() === NS_BLOG_ARTICLE && !$title->userCan( 'edit' ) ) {
 			$shouldDisplayActionButton = false;
 		}
 
