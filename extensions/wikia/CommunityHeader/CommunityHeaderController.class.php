@@ -15,7 +15,7 @@ class CommunityHeaderController extends WikiaController {
 		$this->setVal( 'wikiButtons', new WikiButtons() );
 		$this->setVal(
 			'backgroundImageUrl',
-			(new ThemeSettings())->getCommunityHeaderBackgroundUrl() );
+			( new ThemeSettings() )->getCommunityHeaderBackgroundUrl() );
 	}
 
 	public function localNavigation() {
