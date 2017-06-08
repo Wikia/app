@@ -212,7 +212,7 @@ class WAMApiController extends WikiaApiController {
 				$options['currentTimestamp'] = $wamDates['min_date'];
 
 				$this->warning( __METHOD__ . " - current timestamp below minimum", [
-					'wam_last_entry_date' => wfTimestamp( TS_DB, $wamDates['max_date'] ), // e.g. 2016-11-01 00:00:00
+					'wam_first_entry_date' => wfTimestamp( TS_DB, $wamDates['min_date'] ), // e.g. 2016-11-01 00:00:00
 					'wam_requested_entry_date' => wfTimestamp( TS_DB, $options['currentTimestamp'] ),
 					'exception' => new Exception(),
 				] );
