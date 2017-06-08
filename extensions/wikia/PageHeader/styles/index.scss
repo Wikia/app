@@ -43,8 +43,8 @@
 		@include align-items(flex-end);
 		@include flexbox();
 		@include flex-direction(column);
-		@include justify-content(space-between);
 		@include flex-shrink(0);
+		@include justify-content(space-between);
 		margin-left: 20px;
 
 	}
