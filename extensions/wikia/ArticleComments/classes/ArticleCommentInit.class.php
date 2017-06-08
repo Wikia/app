@@ -288,9 +288,10 @@ class ArticleCommentInit {
 
 	public static function getCommentsLink( $contextTitle ) {
 		$title = RequestContext::getMain()->getTitle();
-		$isHistory = RequestContext::getMain()->getRequest()->getVal( 'action' ) == 'history';
+		$isHistory = RequestContext::getMain()->getRequest()->getVal( 'action' ) === 'history';
+
 		// link to article comments section
-		if ( $contextTitle != $title || $isHistory ) {
+		if ( $contextTitle !== $title || $isHistory ) {
 			return $contextTitle->getLocalUrl() . '#WikiaArticleComments';
 		}
 
