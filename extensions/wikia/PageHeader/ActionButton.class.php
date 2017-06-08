@@ -2,6 +2,13 @@
 
 namespace Wikia\PageHeader;
 
+use ArticleCommentInit;
+use PageStatsService;
+use RequestContext;
+use Title;
+use WikiaApp;
+use WikiaPageType;
+
 class ActionButton {
 	const LOCK_ICON = 'wds-icons-lock-small';
 	const EDIT_ICON = 'wds-icons-pencil-small';
@@ -15,30 +22,34 @@ class ActionButton {
 	private $buttonIcon = self::EDIT_ICON;
 	private $shouldDisplay;
 
-	public function __construct( \RequestContext $requestContext ) {
-		$skinVars = \F::app()->getSkinTemplateObj()->data;
+	public function __construct( WikiaApp $app ) {
+		$requestContext = RequestContext::getMain();
+		$skinVars = $app->getSkinTemplateObj()->data;
 		$this->contentActions = $skinVars['content_actions'];
 
 		$this->title = $requestContext->getTitle();
 		$this->user = $requestContext->getUser();
 		$this->request = $requestContext->getRequest();
 
-		$this->pageStatsService = \PageStatsService::newFromTitle( $this->title );
+		$this->pageStatsService = PageStatsService::newFromTitle( $this->title );
 
 		$this->prepareActionButton();
 
-		$shouldDisplay = $this->hasHrefAndText() && !$this->title->isSpecialPage() &&
+		$shouldDisplay = (
+			$this->hasHrefAndText() &&
+			!$this->title->isSpecialPage() &&
 			(
-				!\WikiaPageType::isCorporatePage() ||
+				!WikiaPageType::isCorporatePage() ||
 				$this->canDisplayOnCorporatePage()
-			);
+			)
+		);
 
 		wfRunHooks( 'PageHeaderActionButtonShouldDisplay', [ $this->title, &$shouldDisplay ] );
 
 		$this->shouldDisplay = $shouldDisplay;
 	}
 
-	public function getTitle(): \Title {
+	public function getTitle(): Title {
 		return $this->title;
 	}
 
@@ -150,11 +161,12 @@ class ActionButton {
 	}
 
 	private function isArticleCommentsEnabled(): bool {
-		return class_exists( 'ArticleComment' ) && \ArticleCommentInit::ArticleCommentCheckTitle( $this->title );
+		return class_exists( 'ArticleComment' ) &&
+			ArticleCommentInit::ArticleCommentCheckTitle( $this->title );
 	}
 
 	private function canDisplayOnCorporatePage() {
-		return \WikiaPageType::isCorporatePage() && $this->user->isAllowed( 'edit' );
+		return WikiaPageType::isCorporatePage() && $this->user->isAllowed( 'edit' );
 	}
 
 	private function hasHrefAndText() {

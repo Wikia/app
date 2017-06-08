@@ -18,7 +18,7 @@ require(
 			.on('change', '#orderMapList', function (event) {
 				sortMapList(event.target.value);
 			})
-			.on('click', 'button#createMap', function () {
+			.on('click', '#createMap', function () {
 				utils.triggerAction(utils.getActionConfig('createMap', config));
 				utils.track(utils.trackerActions.CLICK_LINK_BUTTON, 'create-map-clicked', 0);
 			})

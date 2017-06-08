@@ -13,9 +13,7 @@
 			<span class="page-header__counter"><?= $counter->text ?></span>
 		<? endif; ?>
 		</div>
-		<? if ( $actionButton->shouldDisplay() ): ?>
-			<?= $app->renderView( 'Wikia\PageHeader\PageHeader', 'actionButton' ); ?>
-		<? endif; ?>
+		<?= $app->renderView( 'Wikia\PageHeader\PageHeader', 'buttons' ); ?>
 	</div>
 </header>
 <hr class="page-header__separator">

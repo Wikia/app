@@ -1,4 +1,6 @@
 <?php
+use Wikia\PageHeader\Button;
+
 /**
  * Created by JetBrains PhpStorm.
  * User: mech
@@ -172,11 +174,37 @@ class BlogsHelper {
 		return true;
 	}
 
-	public static function onPageHeaderActionButtonShouldDisplay( \Title $title, &$shouldDisplayActionButton ) {
+	/**
+	 * @param Title $title
+	 * @param bool $shouldDisplayActionButton
+	 *
+	 * @return bool
+	 */
+	public static function onPageHeaderActionButtonShouldDisplay( \Title $title, bool &$shouldDisplayActionButton ): bool {
 		if ( $title->getNamespace() === NS_BLOG_LISTING ) {
 			$shouldDisplayActionButton = false;
 		} else if ( $title->getNamespace() === NS_BLOG_ARTICLE && !$title->userCan( 'edit' ) ) {
 			$shouldDisplayActionButton = false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * @param Title $title
+	 * @param array $buttons
+	 *
+	 * @return bool
+	 */
+	public static function onAfterPageHeaderButtons( \Title $title, array &$buttons ): bool {
+		if ( $title->getNamespace() === NS_BLOG_LISTING ) {
+			$label = wfMessage( 'blog-create-post-label' )->escaped();
+			array_unshift(
+				$buttons,
+				new Button(
+					$label, 'wds-icons-plus', SpecialPage::getTitleFor( 'CreateBlogPage' )->getLocalUrl()
+				)
+			);
 		}
 
 		return true;
