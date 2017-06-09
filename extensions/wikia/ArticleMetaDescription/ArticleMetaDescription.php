@@ -35,7 +35,7 @@ $wgHooks['OutputPageBeforeHTML'][] = 'wfArticleMetaDescription';
  * @param string $text
  * @return bool
  */
-function wfArticleMetaDescription( &$out, &$text ) {
+function wfArticleMetaDescription( OutputPage $out, &$text ) {
 	wfProfileIn( __METHOD__ );
 
 	$wg = F::app()->wg;

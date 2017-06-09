@@ -112,10 +112,11 @@ class TemplateTypesParser {
 	 *
 	 * @param string $templateTitle
 	 * @param string $templateWikitext
+	 * @param Parser $parser
 	 *
 	 * @return bool
 	 */
-	public static function onEndBraceSubstitution( $templateTitle, &$templateWikitext, &$parser ) {
+	public static function onEndBraceSubstitution( $templateTitle, &$templateWikitext, Parser $parser ) {
 		global $wgEnableContextLinkTemplateParsing, $wgEnableInfoIconTemplateParsing, $wgEnableNavigationTemplateParsing;
 		wfProfileIn( __METHOD__ );
 

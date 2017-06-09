@@ -697,7 +697,7 @@ class WikiaHomePageController extends WikiaController {
 		return true;
 	}
 
-	public static function onOutputPageBeforeHTML(OutputPage &$out, &$text) {
+	public static function onOutputPageBeforeHTML(OutputPage $out, &$text) {
 		Wikia\Logger\WikiaLogger::instance()->debug( 'SUS-1276', [ 'method' => __METHOD__ ] );
 		if (WikiaPageType::isMainPage() && !(F::app()->checkSkin('wikiamobile'))) {
 			$text = '';

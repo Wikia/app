@@ -1700,7 +1700,7 @@ class ArticleComment {
 	 * @param bool $result Whether $user can perform $action on $title
 	 * @return bool Whether to continue checking hooks
 	 */
-	static public function userCan( Title &$title, User &$user, $action, &$result ) {
+	static public function userCan( Title $title, User $user, $action, &$result ) {
 		$wg = F::app()->wg;
 		$commentsNS = $wg->ArticleCommentsNamespaces;
 		$ns = $title->getNamespace();

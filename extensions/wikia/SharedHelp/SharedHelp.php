@@ -126,7 +126,7 @@ class SharedHttp {
  * @param $text
  * @return bool
  */
-function SharedHelpHook(&$out, &$text) {
+function SharedHelpHook(OutputPage $out, &$text) {
 	global $wgTitle, $wgOut, $wgMemc, $wgCityId, $wgHelpWikiId, $wgContLang, $wgLanguageCode, $wgArticlePath;
 
 	/* Insurance that hook will be called only once #BugId:  */
@@ -358,7 +358,7 @@ function SharedHelpHook(&$out, &$text) {
 	return true;
 }
 
-function SharedHelpEditPageHook(&$editpage) {
+function SharedHelpEditPageHook(EditPage $editpage) {
 	global $wgTitle, $wgCityId, $wgHelpWikiId;
 
 	// do not show this message on the help wiki
