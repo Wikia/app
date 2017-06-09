@@ -4,8 +4,8 @@ use \Wikia\Logger\WikiaLogger;
 
 class RTE {
 
-    const INIT_MODE_SOURCE = 0;
-    const INIT_MODE_WYSIWYG = 1;
+    const INIT_MODE_SOURCE = 'source';
+    const INIT_MODE_WYSIWYG = 'wysiwyg';
 
     private static	$useWysiwyg = true;
 
