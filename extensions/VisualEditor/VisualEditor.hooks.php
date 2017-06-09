@@ -450,7 +450,7 @@ class VisualEditorHooks {
 	 * @param ResourceLoader $resourceLoader
 	 * @return boolean true
 	 */
-	public static function onResourceLoaderRegisterModules( ResourceLoader &$resourceLoader ) {
+	public static function onResourceLoaderRegisterModules( ResourceLoader $resourceLoader ) {
 		global $wgResourceModules;
 
 		$veResourceTemplate = ConfigFactory::getDefaultInstance()
