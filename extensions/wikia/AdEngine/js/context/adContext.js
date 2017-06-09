@@ -131,7 +131,8 @@ define('ext.wikia.adEngine.adContext', [
 	function setContext(newContext) {
 		var i,
 			len,
-			noExternals = w.wgNoExternals || isUrlParamSet('noexternals');
+			noExternals = w.wgNoExternals || isUrlParamSet('noexternals'),
+			samplingMOATForFV = instantGlobals.wgAdDriverMoatTrackingForFeaturedVideoAdSampling || 1;
 
 		// Note: consider copying the value, not the reference
 		context = newContext;
@@ -156,8 +157,9 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.premiumOnly = context.targeting.hasFeaturedVideo &&
 			geo.isProperGeo(instantGlobals.wgAdDriverSrcPremiumCountries);
 
-		context.opts.isMoatTrackingForFeaturedVideoEnabled = sampler.sample('moatTrackingForFeaturedVideo', 1, 100) &&
-				geo.isProperGeo(instantGlobals.wgAdDriverMoatTrackingForFeaturedVideoAdCountries);
+		context.opts.isMoatTrackingForFeaturedVideoEnabled =
+			sampler.sample('moatTrackingForFeaturedVideo', samplingMOATForFV, 100) &&
+			geo.isProperGeo(instantGlobals.wgAdDriverMoatTrackingForFeaturedVideoAdCountries);
 
 		updateDetectionServicesAdContext(context, noExternals);
 		updateAdContextRecoveryServices(context, noExternals);

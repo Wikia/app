@@ -1029,4 +1029,31 @@ describe('AdContext', function () {
 			expect(getModule().getContext().opts.isMoatTrackingForFeaturedVideoEnabled).toEqual(testCase.expectedResult);
 		});
 	});
+
+	it('Should set by default sampling for MOAT FV on 1% of traffic', function () {
+		mocks.instantGlobals = {wgAdDriverMoatTrackingForFeaturedVideoAdCountries: ['CURRENT_COUNTRY']};
+		spyOn(mocks.sampler, 'sample');
+
+		getModule().getContext();
+
+		var moatSamplerArgs = mocks.sampler.sample.calls.allArgs()[0];
+
+		expect(moatSamplerArgs[0]).toEqual('moatTrackingForFeaturedVideo');
+		expect(moatSamplerArgs[1]).toEqual(1);
+	});
+
+	it('Should set sampling for MOAT FV based on wgVar', function () {
+		mocks.instantGlobals = {
+			wgAdDriverMoatTrackingForFeaturedVideoAdCountries: ['CURRENT_COUNTRY'],
+			wgAdDriverMoatTrackingForFeaturedVideoAdSampling: 25
+		};
+		spyOn(mocks.sampler, 'sample');
+
+		getModule().getContext();
+
+		var moatSamplerArgs = mocks.sampler.sample.calls.allArgs()[0];
+
+		expect(moatSamplerArgs[0]).toEqual('moatTrackingForFeaturedVideo');
+		expect(moatSamplerArgs[1]).toEqual(25);
+	});
 });

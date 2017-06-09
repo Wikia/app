@@ -1467,6 +1467,13 @@ $wgAdDriverMEGACountries = null;
 $wgAdDriverMoatTrackingForFeaturedVideoAdCountries = null;
 
 /**
+ * @name $wgAdDriverMoatTrackingForFeaturedVideoAdSampling
+ * Percentage value of users with MOAT tracking for featured video.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverMoatTrackingForFeaturedVideoAdSampling = null;
+
+/**
  * @name $wgAdDriverTrackState
  * Enables GA tracking of state for ad slots on pages
  */
