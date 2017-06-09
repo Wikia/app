@@ -165,4 +165,78 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 		expect(data.kv_top).toBe('top');
 		expect(data.kv_ah).toBe('ah');
 	});
+
+	it('prepareData correctly calculates bidder_won for no bidders', function () {
+		var data,
+			slot = getTopLeaderboardSlotWithPageParams(fakeJSONString);
+
+		slot.container.firstChild.dataset.gptSlotParams = fakeJSONString;
+		slot.container.firstChild.dataset.gptCreativeSize = fakeJSONString;
+
+		data = getModule().prepareData(slot);
+
+		expect(data.bidder_won).toBe('');
+	});
+
+	it('prepareData correctly calculates bidder_won for bidders', function () {
+		var data,
+			slot = getTopLeaderboardSlotWithPageParams(fakeJSONString);
+
+		slot.container.firstChild.dataset.gptSlotParams = JSON.stringify({foo: 1, rpfl_7450: 1});
+		slot.container.firstChild.dataset.gptCreativeSize = fakeJSONString;
+
+		mocks.lookupServices.getDfpSlotPrices = function() {
+			return {
+				fastlane_private: '2.50',
+				openx: '1.30',
+				rubicon: '0.75'
+			};
+		};
+
+		data = getModule().prepareData(slot);
+
+		expect(data.bidder_won).toBe('fastlane_private');
+	});
+
+	it('prepareData correctly calculates bidder_won for bidders', function () {
+		var data,
+			slot = getTopLeaderboardSlotWithPageParams(fakeJSONString);
+
+		slot.container.firstChild.dataset.gptSlotParams = JSON.stringify({foo: 1, hb_bidder: 'openx'});
+		slot.container.firstChild.dataset.gptCreativeSize = fakeJSONString;
+
+		mocks.lookupServices.getDfpSlotPrices = function() {
+			return {
+				fastlane_private: '2.50',
+				openx: '3.30',
+				rubicon: '0.75'
+			};
+		};
+
+		data = getModule().prepareData(slot);
+
+
+		expect(data.bidder_won).toBe('openx');
+	});
+
+	it('prepareData correctly calculates bidder_won when bids aren\'t used for targeting', function () {
+		var data,
+			slot = getTopLeaderboardSlotWithPageParams(fakeJSONString);
+
+		slot.container.firstChild.dataset.gptSlotParams = JSON.stringify(fakeJSONString);
+		slot.container.firstChild.dataset.gptCreativeSize = fakeJSONString;
+
+		mocks.lookupServices.getDfpSlotPrices = function() {
+			return {
+				fastlane_private: '2.50',
+				openx: '3.30',
+				rubicon: '0.75'
+			};
+		};
+
+		data = getModule().prepareData(slot);
+
+
+		expect(data.bidder_won).toBe('');
+	});
 });

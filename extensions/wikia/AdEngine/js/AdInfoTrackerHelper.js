@@ -50,7 +50,7 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 			'kv_ref': pageParams.ref || '',
 			'kv_top': pageParams.top || '',
 			'kv_ah': pageParams.ah || '',
-			'bidder_won': slotParams.hb_bidder || '',
+			'bidder_won': getBidderWon(slotParams, realSlotPrices),
 			'bidder_1': transformBidderPrice('indexExchange', realSlotPrices, slotPricesIgnoringTimeout),
 			'bidder_2': transformBidderPrice('appnexus', realSlotPrices, slotPricesIgnoringTimeout),
 			'bidder_3': transformBidderPrice('fastlane', realSlotPrices, slotPricesIgnoringTimeout),
@@ -75,6 +75,24 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 
 		if (slotPricesIgnoringTimeout[bidderName]) {
 			return slotPricesIgnoringTimeout[bidderName] + 'not_used';
+		}
+
+		return '';
+	}
+
+	function getBidderWon(slotParams, realSlotPrices) {
+		var realSlotPricesKeys = Object.keys(realSlotPrices),
+			highestPriceBidder = realSlotPricesKeys.length === 0 ? null : realSlotPricesKeys.reduce(function(a, b) {
+				return parseFloat(realSlotPrices[a]) > parseFloat(realSlotPrices[b]) ? a : b;
+		});
+
+		// We need to check targeting because it's possible that bids won't be used for targeting
+		if (slotParams.hb_bidder && highestPriceBidder === slotParams.hb_bidder) {
+			return slotParams.hb_bidder;
+		}
+
+		if (slotParams.rpfl_7450 && ['fastlane', 'fastlane_private'].indexOf(highestPriceBidder) >= 0) {
+			return highestPriceBidder;
 		}
 
 		return '';
