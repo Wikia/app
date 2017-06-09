@@ -48,15 +48,7 @@ class Languages {
 		return $languages;
 	}
 
-	public function isDisabled(): bool {
-		return count( $this->languageList ) <= 0;
-	}
-
-	public function hasMoreLanguages(): bool {
-		return count( $this->languageList ) > 0;
-	}
-
 	public function shouldDisplay(): bool {
-		return $this->shouldDisplay;
+		return $this->shouldDisplay && count( $this->languageList ) > 0;
 	}
 }
