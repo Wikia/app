@@ -4,8 +4,9 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.lazyqueue',
-	'wikia.log'
-], function (adContext, adTracker, adBlockDetection, lazyQueue, log) {
+	'wikia.log',
+	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
+], function (adContext, adTracker, adBlockDetection, lazyQueue, log, mercuryListener) {
 	'use strict';
 
 	function create(module) {
@@ -15,9 +16,9 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			timing,
 			context = adContext.getContext();
 
+
 		function onResponse() {
 			log('onResponse', 'debug', module.logGroup);
-
 			timing.measureDiff({}, 'end').track();
 			module.calculatePrices();
 			response = true;
@@ -36,7 +37,6 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 
 		function call() {
 			log('call', 'debug', module.logGroup);
-
 			response = false;
 
 			if (!Object.keys) {
@@ -124,7 +124,13 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			});
 		}
 
-		resetState();
+		if (mercuryListener) {
+			mercuryListener.onEveryPageChange(function() {
+				resetState()
+			});
+		} else {
+			resetState();
+		}
 
 		return {
 			addResponseListener: addResponseListener,
