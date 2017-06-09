@@ -16,7 +16,6 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			timing,
 			context = adContext.getContext();
 
-
 		function onResponse() {
 			log('onResponse', 'debug', module.logGroup);
 			timing.measureDiff({}, 'end').track();
@@ -50,7 +49,6 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			// in mercury ad context is being reloaded after XHR call that's why at this point we don't have skin
 			module.call(context.targeting.skin || 'mercury', onResponse);
 			called = true;
-
 			adBlockDetection.addOnBlockingCallback(onResponseCallbacks.start);
 		}
 
@@ -124,12 +122,10 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			});
 		}
 
+		resetState();
+
 		if (mercuryListener) {
-			mercuryListener.onEveryPageChange(function() {
-				resetState()
-			});
-		} else {
-			resetState();
+			mercuryListener.onEveryPageChange(resetState);
 		}
 
 		return {
@@ -140,7 +136,6 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			getSlotParams: getSlotParams,
 			hasResponse: hasResponse,
 			isSlotSupported: isSlotSupported,
-			resetState: resetState,
 			trackState: trackState,
 			wasCalled: wasCalled
 		};
