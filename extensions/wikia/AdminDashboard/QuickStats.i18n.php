@@ -225,7 +225,7 @@ $messages['de'] = array(
 	'quickstats-header-photos' => 'Bilder',
 	'quickstats-totals-label' => 'Gesamt',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Weitere Statistiken]]',
-	'quickstats-date-format' => 'd M',
+	'quickstats-date-format' => 'd.m.',
 	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1M',
 	'quickstats-number-shortening-billions' => '$1B',
@@ -277,7 +277,7 @@ $messages['es'] = array(
 	'quickstats-header-photos' => 'Imágenes',
 	'quickstats-totals-label' => 'Total',
 	'quickstats-see-more-stats-link' => '[[{{#Special:Insights}}|Ver más estadísticas]]',
-	'quickstats-date-format' => 'M d',
+	'quickstats-date-format' => 'j / n',
 	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1M',
 	'quickstats-number-shortening-billions' => '$1B',
@@ -339,7 +339,7 @@ $messages['fr'] = array(
 	'quickstats-header-photos' => 'Images',
 	'quickstats-totals-label' => 'Totaux',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Voir plus de stats]]',
-	'quickstats-date-format' => 'd M',
+	'quickstats-date-format' => 'd/m',
 	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1M',
 	'quickstats-number-shortening-billions' => '$1 Mrd',
@@ -458,7 +458,7 @@ $messages['it'] = array(
 	'quickstats-header-photos' => 'Immagini',
 	'quickstats-totals-label' => 'Totale',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Vedi altre statistiche]]',
-	'quickstats-date-format' => 'd M',
+	'quickstats-date-format' => 'd/m',
 	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1 mln',
 	'quickstats-number-shortening-billions' => '$1B',
@@ -704,7 +704,7 @@ $messages['pl'] = array(
 	'quickstats-header-views' => 'Odwiedziny',
 	'quickstats-header-edits' => 'Edycje',
 	'quickstats-header-photos' => 'Obrazy',
-	'quickstats-date-format' => 'd M',
+	'quickstats-date-format' => 'j / n',
 	'quickstats-totals-label' => 'Łącznie',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Więcej statystyk]]',
 	'quickstats-number-shortening' => '$1 tys.',
@@ -740,20 +740,7 @@ $messages['pt'] = array(
 	'quickstats-header-photos' => 'Fotos',
 	'quickstats-totals-label' => 'Totais',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Ver mais estatísticas]]',
-	'quickstats-date-format' => 'd M',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
-);
-
-$messages['pt-br'] = array(
-	'quickstats-header-label' => 'Estatísticas Rápidas',
-	'quickstats-header-date' => 'Data',
-	'quickstats-header-views' => 'Visualizações',
-	'quickstats-header-edits' => 'Edições',
-	'quickstats-header-photos' => 'Fotos',
-	'quickstats-totals-label' => 'Totais',
-	'quickstats-see-more-stats-link' => '[[Special:Insights|Ver mais estatísticas]]',
+	'quickstats-date-format' => 'd / n',
 );
 
 $messages['roa-tara'] = array(
@@ -774,7 +761,7 @@ $messages['ru'] = array(
 	'quickstats-header-photos' => 'Фото',
 	'quickstats-totals-label' => 'Итого',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Ещё статистика]]',
-	'quickstats-date-format' => 'М д',
+	'quickstats-date-format' => 'd.m',
 	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1милл.',
 	'quickstats-number-shortening-billions' => '$1миллиард',
@@ -975,14 +962,6 @@ $messages['war'] = array(
 	'quickstats-header-photos' => 'Mga hulagway',
 );
 
-$messages['zh'] = array(
-	'quickstats-header-label' => '統計快訊',
-	'quickstats-header-date' => '日期',
-	'quickstats-header-views' => '點閱數',
-	'quickstats-header-edits' => '編輯數',
-	'quickstats-header-photos' => '照片',
-);
-
 $messages['zh-hans'] = array(
 	'quickstats-header-label' => '简明统计',
 	'quickstats-header-date' => '日期',
@@ -1009,15 +988,5 @@ $messages['zh-hant'] = array(
 	'quickstats-number-shortening' => '$1千',
 	'quickstats-number-shortening-millions' => '$1百萬',
 	'quickstats-number-shortening-billions' => '$10億',
-);
-
-$messages['zh-hk'] = array(
-	'quickstats-header-label' => '快速統計資訊',
-	'quickstats-header-date' => '日期',
-	'quickstats-header-views' => '瀏覽次數',
-	'quickstats-header-edits' => '編輯次數',
-	'quickstats-header-photos' => '圖片數',
-	'quickstats-totals-label' => '總計',
-	'quickstats-see-more-stats-link' => '[[Special:Insights|查看更多統計]]',
 );
 

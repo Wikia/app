@@ -58,14 +58,14 @@ class CPArticleRenderer {
 
 		$output->setPageTitle($title->getPrefixedText());
 		$content = $this->getArticleContent($title->getPartialURL(), $action);
+		$this->addStyles($output);
 		
 		if ($content === false) {
-			// TODO: what do we want to show here?
+			$output->addHTML("<p>We're currently experiencing some technical difficulties. Hang tight, we're working to fix these ASAP.</p>");
 			return;
 		}
 
 		$output->addHTML($content);
-		$this->addStyles($output);
 		$this->addScripts($output);
 	}
 
@@ -113,7 +113,7 @@ class CPArticleRenderer {
 				]
 		);
 
-		if ($response->getStatus() >= 500) {
+		if (!$response->status->isOK()) {
 			// Http::request logs when http status > 399
 			return false;
 		}

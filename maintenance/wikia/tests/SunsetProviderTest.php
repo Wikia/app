@@ -141,10 +141,10 @@ class SunsetProviderTest extends WikiaBaseTest {
 		$this->mockClass( Language::class, $languageMock, 'factory' );
 
 		// Wiki content language is Polish
-		$this->mockGlobalVariable( 'wgContLang', $this->mockClassWithMethods( Language::class, [
+		$this->mockGlobalVariable( 'wgContLang', $this->createConfiguredMock( Language::class, [
 			'getCode' => 'pl',
 			'getNsText' => 'Plik',
-		]));
+		] ) );
 
 		$this->mockStaticMethod( Hooks::class, 'run', true );
 	}
