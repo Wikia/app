@@ -12,6 +12,8 @@ Fixed Issues:
 * [#415](https://github.com/ckeditor/ckeditor-dev/issues/415): Fixed: [Firefox] Enter key breaks table structure when pressed in a table selection.
 * [#457](https://github.com/ckeditor/ckeditor-dev/issues/457): Fixed: Error thrown when deleting content from the editor with no selection.
 * [#450](https://github.com/ckeditor/ckeditor-dev/issues/450): Fixed: [`CKEDITOR.filter`](http://docs.ckeditor.com/#!/api/CKEDITOR.filter) incorrectly transforms `margin` CSS property.
+* [#478](https://github.com/ckeditor/ckeditor-dev/issues/478): Fixed: [Chrome] Error thrown by [Enter Key](http://ckeditor.com/addon/enterkey) plugin when pressing enter with no selection.
+* [#417](https://github.com/ckeditor/ckeditor-dev/issues/417): Fixed: [Table Resize](http://ckeditor.com/addon/tableresize) plugin throws an error when used with a table with only header or footer rows.
 
 ## CKEditor 4.7
 
