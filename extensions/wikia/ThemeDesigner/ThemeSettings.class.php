@@ -77,7 +77,11 @@ class ThemeSettings {
 
 			// if user didn't define community header background color, but defined buttons color, we use buttons color
 			// as default for community header background
-			if ( !isset($GLOBALS[self::WikiFactorySettings]["color-community-header"]) && isset($GLOBALS[self::WikiFactorySettings]["color-buttons"]) ) {
+			if (
+				!isset( $GLOBALS[self::WikiFactorySettings]["color-community-header"] ) &&
+				isset( $GLOBALS[self::WikiFactorySettings]["color-buttons"]
+				)
+			) {
 				$settings["color-community-header"] = $settings["color-buttons"];
 			}
 
