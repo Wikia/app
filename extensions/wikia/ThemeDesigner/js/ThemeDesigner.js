@@ -746,9 +746,6 @@
 					ThemeDesigner.set('user-community-header-background-image-thumb', resp.backgroundImageThumb);
 
 					ThemeDesigner.set('community-header-background-image-name', resp.backgroundImageName);
-					ThemeDesigner.set('community-header-background-image-width', resp.backgroundImageWidth);
-					ThemeDesigner.set('community-header-background-image-height', resp.backgroundImageHeight);
-
 					ThemeDesigner.set('community-header-background-image', resp.backgroundImageUrl);
 				}
 			}

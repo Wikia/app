@@ -75,9 +75,7 @@ class ThemeSettings {
 
 		//community header background
 		$this->defaultSettings['community-header-background-image'] = '';
-		$this->defaultSettings['community-header-background-image-height'] = null;
 		$this->defaultSettings['community-header-background-image-name'] = '';
-		$this->defaultSettings['community-header-background-image-width'] = null;
 	}
 
 	public function getSettings() {
@@ -158,7 +156,14 @@ class ThemeSettings {
 		return $history;
 	}
 
-	private function saveImage( array &$settings, string $name, string $title, bool $setUserImage = false ) {
+	private function saveImage(
+		array &$settings,
+		string $name,
+		string $title,
+		array $previewThumbnailDimensions = [],
+		bool $setDimensions = false,
+		callable $callback = null
+	) {
 		if ( isset( $settings["{$name}-name"] ) && strpos( $settings["{$name}-name"], 'Temp_file_' ) === 0 ) {
 			$temp_file = new LocalFile( Title::newFromText( $settings["{$name}-name"], NS_FILE ), RepoGroup::singleton()->getLocalRepo() );
 			$file = new LocalFile( Title::newFromText( $title, NS_FILE ), RepoGroup::singleton()->getLocalRepo() );
@@ -168,18 +173,34 @@ class ThemeSettings {
 			$settings["{$name}"] = $file->getURL();
 			$settings["{$name}-name"] = $file->getName();
 
-			if ( $setUserImage ) {
-				$imageServing = new ImageServing( null, 120, [ "w" => "120", "h" => "65" ] );
+			if ( $setDimensions ) {
+				$settings["${name}-height"] = $file->getHeight();
+				$settings["${name}-width"] = $file->getWidth();
+			}
+
+			if ( !empty( $previewThumbnailDimensions ) ) {
+				$imageServing = new ImageServing(
+					null,
+					$previewThumbnailDimensions['width'],
+					[
+						'w' => $previewThumbnailDimensions['width'],
+						'h' => $previewThumbnailDimensions['height']
+					]
+				);
 				$settings["user-{$name}"] = $file->getURL();
 				$settings["user-{$name}-thumb"] = wfReplaceImageServer(
 					$file->getThumbUrl(
 						$imageServing->getCut(
 							$file->getWidth(),
 							$file->getHeight(),
-							"origin"
-						) . "-" . $file->getName()
+							'origin'
+						) . '-' . $file->getName()
 					)
 				);
+			}
+
+			if ( is_callable( $callback ) ) {
+				$callback();
 			}
 
 			$file->repo->forceMaster();
@@ -211,11 +232,43 @@ class ThemeSettings {
 			}
 		}
 
-		$oldBackgroundFile = $this->saveImage( $settings, 'background-image', self::BackgroundImageName, true);
-		$oldCommunityHeaderFile = $this->saveImage( $settings, 'community-header-background-image', self::CommunityHeaderBackgroundImageName, true);
-		$oldWordmarkFile = $this->saveImage( $settings, 'wordmark-image', self::WordmarkImageName);
-		$oldFaviconFile = $this->saveImage( $settings, 'favicon-image', self::FaviconImageName);
-		Wikia::invalidateFavicon();
+		$oldBackgroundFile = $this->saveImage(
+			$settings,
+			'background-image',
+			self::BackgroundImageName,
+			[
+				'width' => 120,
+				'height' => 65
+			],
+			true
+		);
+
+		$oldCommunityHeaderFile = $this->saveImage(
+			$settings,
+			'community-header-background-image',
+			self::CommunityHeaderBackgroundImageName,
+			[
+				'width' => 120,
+				'height' => 33
+			]
+		);
+
+		$oldWordmarkFile = $this->saveImage(
+			$settings,
+			'wordmark-image',
+			self::WordmarkImageName,
+			[],
+			false,
+			function () {
+				Wikia::invalidateFavicon();
+			}
+		);
+
+		$oldFaviconFile = $this->saveImage(
+			$settings,
+			'favicon-image',
+			self::FaviconImageName
+		);
 
 		$reason = wfMessage( 'themedesigner-reason', $wgUser->getName() )->escaped();
 
