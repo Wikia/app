@@ -2,22 +2,19 @@
 
 namespace Wikia\PageHeader;
 
+use Wikia;
 
 class PageHeaderController extends \WikiaController {
 
-	/** @var  ActionButton */
-	private $actionButton;
 	/** @var  Languages */
 	private $languages;
 
 	public function init() {
-		$this->actionButton = new ActionButton( \RequestContext::getMain() );
 		$this->languages = new Languages( $this->app );
 	}
 
 	public function index() {
 		$this->setVal( 'languages', $this->languages );
-		$this->setVal( 'actionButton', $this->actionButton );
 		$this->setVal( 'pageTitle', new PageTitle( $this->app ) );
 		$this->setVal( 'counter', new Counter() );
 	}
@@ -31,11 +28,18 @@ class PageHeaderController extends \WikiaController {
 	}
 
 	public function actionButton() {
-		$this->setVal( 'buttonAction', $this->actionButton->getButtonAction());
-		$this->setval( 'dropdownActions', $this->actionButton->getDropdownActions());
+		$actionButton = $this->getVal( 'actionButton' );
+
+		$this->setVal( 'buttonAction', $actionButton->getButtonAction() );
+		$this->setval( 'dropdownActions', $actionButton->getDropdownActions() );
 	}
 
 	public function languages() {
 		$this->setVal( 'languages', $this->languages );
+	}
+
+	public function buttons() {
+		$this->setVal( 'actionButton', new ActionButton( $this->app ) );
+		$this->setVal( 'buttons', new Buttons( $this->app ) );
 	}
 }

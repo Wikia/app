@@ -117,6 +117,8 @@ $wgHooks['BeforeDeletePermissionErrors'][] = 'BlogLockdown::onBeforeDeletePermis
 // SUS-260: Prevent moving pages into or out of Forum namespaces
 $wgHooks['AbortMove'][] = 'BlogsHelper::onAbortMove';
 
+$wgHooks['AfterPageHeaderButtons'][] = 'BlogsHelper::onAfterPageHeaderButtons';
+
 /**
  * load other parts
  */

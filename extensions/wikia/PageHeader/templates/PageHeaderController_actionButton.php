@@ -1,4 +1,4 @@
-<div class="wds-button-group page-header__edit-button">
+<div class="wds-button-group">
 	<a href="<?= $buttonAction['href'] ?>"
 	   class="wds-is-squished wds-button"
 	   id="<?= $buttonAction['id'] ?>"

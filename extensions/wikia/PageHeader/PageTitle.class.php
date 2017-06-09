@@ -87,7 +87,9 @@ class PageTitle {
 	}
 
 	private function isWallMessage(): bool {
-		return $this->MWTitle->getNamespace() === NS_USER_WALL_MESSAGE;
+		//It's needed to check if WallMessage is a number to prevent loading new header on single thread comment page.
+		//Example: community.wikia.com/wiki/Thread:PyroNacht/@comment-A_Google_User-20170607070811/@comment-C.Syde65-20170607082828?oldid=2213679
+		return $this->MWTitle->getNamespace() === NS_USER_WALL_MESSAGE && is_numeric( $this->MWTitle->getText() );
 	}
 
 	private function titleMainPage(): string {

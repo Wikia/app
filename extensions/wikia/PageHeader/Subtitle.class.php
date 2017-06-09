@@ -80,7 +80,11 @@ class Subtitle {
 					/* history pages */
 					'history',
 					/* conflicts, etc */
-					'submit'
+					'submit',
+					/* action=protect */
+					'protect',
+					/* action=unprotect */
+					'unprotect'
 				]
 			);
 	}
@@ -101,13 +105,14 @@ class Subtitle {
 
 	private function getEditPageSubtitle() {
 		$wgOutput = RequestContext::getMain()->getOutput();
+		$subtitle = [ $this->getBackLink() ];
+		$actionVal = $this->request->getVal( 'action', 'view' );
 
-		$subtitle = [
-			$this->getBackLink(),
-			$wgOutput->getSubtitle(),
-		];
+		if ( !in_array( $actionVal, [ 'protect', 'unprotect' ] ) ) {
+			array_push( $subtitle, $wgOutput->getSubtitle() );
+		}
 
-		if ( $this->request->getVal( 'action', 'view' ) === 'history' ) {
+		if ( $actionVal === 'history' ) {
 			$sk = new FakeSkin();
 			$sk->setRelevantTitle( $this->title );
 
@@ -238,7 +243,6 @@ class Subtitle {
 			$this->getTalkPageBackLink(),
 			$this->getSubPageLinks(),
 		];
-
 		$subtitle = array_filter( array_merge( $subtitle, $this->languageVariants() ) );
 
 		$pipe = wfMessage( 'pipe-separator' )->escaped();

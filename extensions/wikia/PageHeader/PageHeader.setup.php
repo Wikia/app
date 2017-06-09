@@ -6,6 +6,8 @@ $wgAutoloadClasses[ 'Wikia\PageHeader\PageHeaderController' ] = $dir . 'PageHead
 
 // Classes
 $wgAutoloadClasses[ 'Wikia\PageHeader\ActionButton' ] = $dir . 'ActionButton.class.php';
+$wgAutoloadClasses[ 'Wikia\PageHeader\Button' ] = $dir . 'Button.class.php';
+$wgAutoloadClasses[ 'Wikia\PageHeader\Buttons' ] = $dir . 'Buttons.class.php';
 $wgAutoloadClasses[ 'Wikia\PageHeader\Categories' ] = $dir . 'Categories.class.php';
 $wgAutoloadClasses[ 'Wikia\PageHeader\Counter' ] = $dir . 'Counter.class.php';
 $wgAutoloadClasses[ 'Wikia\PageHeader\Languages' ] = $dir . 'Languages.class.php';

@@ -87,6 +87,8 @@ $wgHooks['ArticleDeleteComplete'][] = 'ForumHooksHelper::onArticleDeleteComplete
 // SUS-260: Prevent moving pages within, into or out of Forum namespaces
 $wgHooks['MWNamespace:isMovable'][] = 'ForumHooksHelper::onNamespaceIsMovable';
 
+$wgHooks['AfterPageHeaderButtons'][] = 'ForumHooksHelper::onAfterPageHeaderButtons';
+
 include ( $dir . '/Forum.namespace.setup.php' );
 
 // add this namespace to list of wall namespaces
