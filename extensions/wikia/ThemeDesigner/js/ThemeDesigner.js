@@ -126,7 +126,7 @@
 						ThemeDesigner.slideByItems) * ThemeDesigner.slideByDefaultWidth;
 
 			// click handler for next and previous arrows in theme slider
-			$themeTab.find('.previous, #ThemeTab .next').click(function (event) {
+			$themeTab.find('.previous, .next').click(function (event) {
 				event.preventDefault();
 				if (!ThemeDesigner.isSliding) {
 					var list = $themeTab.find('.slider ul'),
