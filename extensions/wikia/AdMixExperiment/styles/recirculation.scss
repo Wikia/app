@@ -1,21 +1,25 @@
 @import 'skins/shared/mixins/flexbox';
 
-#WikiaAdInContentPlaceHolder.ad-mix-experiment-enabled .premium-recirculation-rail {
-	.item.is-video .image-thumbnail::after {
-		bottom: 6px;
-		height: 20px;
-		right: 6px;
-		width: 20px;
-	}
+#WikiaAdInContentPlaceHolder.ad-mix-experiment-enabled {
+	width: 300px;
 
-	.content {
-		font-size: 12px;
-		line-height: inherit;
-		margin-left: 12px;
-		margin-top: 3px;
-	}
+	.premium-recirculation-rail {
+		.item.is-video .image-thumbnail::after {
+			bottom: 6px;
+			height: 20px;
+			right: 6px;
+			width: 20px;
+		}
 
-	a {
-		@include flex-direction(row);
+		.content {
+			font-size: 12px;
+			line-height: inherit;
+			margin-left: 12px;
+			margin-top: 3px;
+		}
+
+		a {
+			@include flex-direction(row);
+		}
 	}
 }
