@@ -1,4 +1,4 @@
-<div>
+<div class="page-header__contribution-buttons">
 	<? if ( $actionButton->shouldDisplay() ): ?>
 		<?= $app->renderView( 'Wikia\PageHeader\PageHeader', 'actionButton', [
 			'actionButton' => $actionButton

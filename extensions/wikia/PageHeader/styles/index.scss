@@ -6,8 +6,6 @@
 @import 'skins/oasis/css/core/breakpoints-variables';
 
 .WikiaPage .page-header {
-	$text-dropdown-padding-bottom: 10px;
-
 	@include dropdown-theming($color-page, $color-text, $color-links, $color-page-border);
 
 	@include align-items(flex-start);
@@ -15,7 +13,7 @@
 	@include justify-content(flex-end);
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
-	padding: 16px 0 12px;
+	padding: 16px 0 6px;
 	position: relative;
 	z-index: 4;
 
@@ -33,6 +31,7 @@
 
 	&__counter {
 		color: $color-text;
+		padding-bottom: 12px;
 		font-size: $wds-typescale-size-minus-1;
 		font-weight: bold;
 		text-align: right;
@@ -40,6 +39,7 @@
 
 	&__contribution {
 		@include align-items(flex-end);
+		@include align-self(stretch);
 		@include flexbox();
 		@include flex-direction(column);
 		@include flex-shrink(0);
@@ -48,8 +48,14 @@
 
 	}
 
+	&__contribution-buttons {
+		> *:not(:last-child) {
+			margin-right: 3px;
+		}
+	}
+
 	&__languages {
-		margin-bottom: 12px;
+		padding-bottom: 12px;
 
 		.wds-dropdown__toggle-chevron {
 			vertical-align: text-top;
@@ -74,7 +80,7 @@
 		}
 
 		&-dropdown {
-			padding-bottom: $text-dropdown-padding-bottom;
+			padding-bottom: 12px;
 
 			&-content {
 				font-style: normal;

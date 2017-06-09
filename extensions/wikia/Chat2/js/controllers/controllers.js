@@ -59,13 +59,13 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 
 			socket.on('message', this.proxy(this.onMsgReceived, this));
 			socket.on('connect', this.proxy(function () {
-				this.onConnect(socket, ['xhr-polling']);
+				this.onConnect(socket);
 			}, this));
 			socket.on('reconnecting', connectionFail);
 		});
 	},
 
-	onConnect: function (socket, transport) {
+	onConnect: function (socket) {
 		this.socket = socket;
 
 		if (!this.firstConnected) {
