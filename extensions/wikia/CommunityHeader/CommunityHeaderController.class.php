@@ -13,9 +13,7 @@ class CommunityHeaderController extends WikiaController {
 		$this->setVal( 'wordmark', new Wordmark() );
 		$this->setVal( 'counter', new Counter() );
 		$this->setVal( 'wikiButtons', new WikiButtons() );
-		$this->setVal(
-			'backgroundImageUrl',
-			( new ThemeSettings() )->getCommunityHeaderBackgroundUrl() );
+		$this->setVal( 'backgroundImageUrl', ( new ThemeSettings() )->getCommunityHeaderBackgroundUrl() );
 	}
 
 	public function localNavigation() {

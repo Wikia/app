@@ -11,6 +11,11 @@ class ThemeSettings {
 	const MIN_WIDTH_FOR_SPLIT = 1030;
 	const MIN_WIDTH_FOR_NO_SPLIT = 2000;
 
+	// Keep in sync with $wds-community-header-background-height-small-breakpoint
+	const COMMUNITY_HEADER_BACKGROUND_HEIGHT = 115;
+	// Keep in sync with $wds-community-header-background-width-small-breakpoint
+	const COMMUNITY_HEADER_BACKGROUND_WIDTH = 471;
+
 	const WordmarkImageName = 'Wiki-wordmark.png';
 	const BackgroundImageName = 'Wiki-background';
 	const CommunityHeaderBackgroundImageName = 'Community-header-background';
@@ -333,7 +338,18 @@ class ThemeSettings {
 	 * @return string background URL or empty string if not found
 	 */
 	public function getCommunityHeaderBackgroundUrl(): string {
-		return $this->getSettings()['community-header-background-image'];
+		$thumbnailUrl = '';
+		$originalUrl = $this->getSettings()['community-header-background-image'];
+
+		if ( VignetteRequest::isVignetteUrl( $originalUrl ) ) {
+			$thumbnailUrl = VignetteRequest::fromUrl( $originalUrl )
+				->zoomCrop()
+				->width( self::COMMUNITY_HEADER_BACKGROUND_WIDTH )
+				->height( self::COMMUNITY_HEADER_BACKGROUND_HEIGHT )
+				->url();
+		}
+
+		return $thumbnailUrl;
 	}
 
 	/**
