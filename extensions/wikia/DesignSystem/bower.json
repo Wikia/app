@@ -3,6 +3,6 @@
   "private": true,
 
   "dependencies": {
-    "design-system": "Wikia/design-system#master"
+    "design-system": "Wikia/design-system#8.2.0"
   }
 }
