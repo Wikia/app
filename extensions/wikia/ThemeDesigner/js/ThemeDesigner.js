@@ -233,12 +233,10 @@
 				ThemeDesigner.setSplitOption();
 			}
 
-			// submit handler for uploading custom background image
 			$('#BackgroundImageForm').submit(function () {
 				$.AIM.submit(this, ThemeDesigner.backgroundImageUploadCallback);
 			});
 
-			// submit handler for uploading favicon image
 			$('#CommunityHeaderBackgroundImageForm').submit(function () {
 				$.AIM.submit(this, ThemeDesigner.communityHeaderBackgroundUploadCallback);
 			});
