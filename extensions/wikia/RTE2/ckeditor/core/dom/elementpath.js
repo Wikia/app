@@ -84,7 +84,7 @@
 						block = e;
 
 					if ( pathBlockLimitElements[ elementName ] ) {
-						// End level DIV is considered as the block, if no block is available. (#525)
+						// End level DIV is considered as the block, if no block is available. (http://dev.ckeditor.com/ticket/525)
 						// But it must NOT be the root element (checked above).
 						if ( !block && elementName == 'div' && !checkHasBlock( e ) )
 							block = e;
@@ -217,16 +217,7 @@ CKEDITOR.dom.elementPath.prototype = {
 
 		return null;
 	},
-	
-	isContentEditable : function() {
-		var e = this.elements;
-		var state = 'true';
-		for ( var i = e.length - 1; i >= 0; i--) {
-			if ( e[i].$.contentEditable != 'inherit' )
-				state = e[i].$.ontentEditable;
-		}
-		return state == 'true';
-	},
+
 	/**
 	 * Check whether the elements path is the proper context for the specified
 	 * tag name in the DTD.
