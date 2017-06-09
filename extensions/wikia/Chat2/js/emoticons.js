@@ -101,7 +101,9 @@ WikiaEmoticons.buildTagGenerator = function (imgUrlsByRegexString) {
 // class EmoticonMapping
 if (typeof EmoticonMapping === 'undefined') {
 	EmoticonMapping = function () {
-		var self = this;
+		var self = this,
+			emoticonsPath = window.wgExtensionsPath + '/wikia/Chat2/images/emoticons';
+
 		this._regexes = {
 			// EXAMPLE DATA ONLY: This is what the generated text will look like... but it's loaded from ._settings
 			// on-demand:
@@ -111,8 +113,6 @@ if (typeof EmoticonMapping === 'undefined') {
 
 		// Since the values in here are processed and then cached, don't modify this directly.  Use mutators
 		// (which can invalidate the cached data such as self._regexes).
-		var emoticonsPath = window.wgExtensionsPath + '/wikia/Chat2/images/emoticons';
-
 		this._settings = {};
 		this._settings[emoticonsPath + '/smile.png'] = [':)', ':-)', '(smile)'];
 		this._settings[emoticonsPath + '/sad.png'] = [':(', ':-(', ':|'];
