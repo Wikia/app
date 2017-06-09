@@ -7,13 +7,13 @@ class SpecialThemeDesignerPreview extends UnlistedSpecialPage {
 	}
 
 	public function execute( $par ) {
-		global $wgOut, $wgExtensionsPath;
+		global $wgExtensionsPath;
+
+		$wgOut = RequestContext::getMain()->getOutput();
 
 		// check rights
 		if ( !ThemeDesignerHelper::checkAccess() ) {
 			$this->displayRestrictionError();
-			wfProfileOut( __METHOD__ );
-
 			return;
 		}
 

@@ -6,12 +6,14 @@
 	</div>
 	<div class="page-header__contribution">
 		<div> <!--Empty div to ensure $actionButton is always pushed to bottom of the container-->
-		<? if ( $languages->shouldDisplay() ): ?>
-			<?= $app->renderView( 'Wikia\PageHeader\PageHeader', 'languages' ); ?>
-		<? endif; ?>
-		<? if ( $counter->isNotEmpty() ) : ?>
-			<span class="page-header__counter"><?= $counter->text ?></span>
-		<? endif; ?>
+			<? if ( $languages->shouldDisplay() ): ?>
+				<?= $app->renderView( 'Wikia\PageHeader\PageHeader', 'languages' ); ?>
+			<? endif; ?>
+			<? if ( $counter->isNotEmpty() ) : ?>
+				<div class="page-header__counter">
+					<span><?= $counter->text ?></span>
+				</div>
+			<? endif; ?>
 		</div>
 		<?= $app->renderView( 'Wikia\PageHeader\PageHeader', 'buttons' ); ?>
 	</div>
