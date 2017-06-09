@@ -25,14 +25,13 @@ class AssetsConfig {
 
 		if ( $wgRTEVersion == 2) {
 			$path = "extensions/wikia/RTE2";
+            $files = [ $path . '/ckeditor/ckeditor.js' ];
 		} else {
 			$path = "extensions/wikia/RTE";
+            $files = [ $path . '/ckeditor/_source/core/ckeditor_base.js' ];
 		}
 
-		$files = array(
-			// CK core entry point
-			$path . '/ckeditor/ckeditor.js',
-		);
+
 
 		$input = file_get_contents( $IP . '/' . $path . '/ckeditor/ckeditor.wikia.pack' );
 		$input = substr( $input, strpos( $input, 'files :' ) + 7 );
