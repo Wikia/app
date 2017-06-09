@@ -120,7 +120,9 @@ $image-width: 430px;
 
 			img {
 				height: auto;
-				width: 175px;
+				max-height: 45px;
+				max-width: 175px;
+				width: auto;
 			}
 		}
 	}
