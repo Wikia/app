@@ -134,12 +134,12 @@ final class MapsHooks {
 	 *
 	 * @since 3.0
 	 *
-	 * @param Parser &$parser
-	 * @param string &$text
+	 * @param Parser $parser
+	 * @param string $text
 	 *
 	 * @return true
 	 */
-	public static function onParserAfterTidy( Parser &$parser, &$text ) {
+	public static function onParserAfterTidy( Parser $parser, &$text ) {
 
 		$title = $parser->getTitle();
 
@@ -211,7 +211,7 @@ final class MapsHooks {
 	 *
 	 * @return true
 	 */
-	public static function onParserClearState( Parser &$parser ) {
+	public static function onParserClearState( Parser $parser ) {
 		$parser->getOutput()->mExtMapsLayers = null;
 		return true;
 	}
