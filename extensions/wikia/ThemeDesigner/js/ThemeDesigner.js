@@ -1,5 +1,6 @@
-/* global $ */
-(function (window) {
+require(
+	['jquery', 'mw', 'wikia.nirvana', 'wikia.fluidlayout', 'wikia.window'],
+	function($, mw, nirvana, fluidlayout, window) {
 	'use strict';
 	var ThemeDesigner = {
 		slideByDefaultWidth: 760,
@@ -29,8 +30,7 @@
 			this.previewFrame = $('#PreviewFrame');
 
 			// min width for dynamic is equal to our breakpoint
-			// TODO: When refactoring ThemeDesigner into AMD module, use wikia.fluidlayout.getBreakpointContent
-			this.minWidthForDynamicBackground = 1030;
+			this.minWidthForDynamicBackground = fluidlayout.getBreakpointContent();
 			// TODO: when using wikia.fluidlayout for minWidthForDynamicBackground, we need to add following variable to
 			// wikia.fluidlayout and reference it here too.
 			this.minWidthNotSplitBackground = 2000;
@@ -726,11 +726,12 @@
 		save: function () {
 			// send current settings to backend
 
-			$.nirvana.sendRequest({
+			nirvana.sendRequest({
 				controller: 'ThemeDesigner',
 				method: 'SaveSettings',
 				data: {
-					settings: ThemeDesigner.settings
+					settings: ThemeDesigner.settings,
+					token: mw.user.tokens.get('editToken')
 				},
 				callback: function () {
 					// BugId:1349
@@ -1065,9 +1066,9 @@
 
 	};
 	window.ThemeDesigner = ThemeDesigner;
-})(window);
 
-$(function () {
-	'use strict';
-	window.ThemeDesigner.init();
+	$(function () {
+		'use strict';
+		window.ThemeDesigner.init();
+	});
 });

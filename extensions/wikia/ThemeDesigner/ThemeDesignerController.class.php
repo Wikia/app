@@ -16,15 +16,9 @@ class ThemeDesignerController extends WikiaController {
 		$this->charset = $this->wg->OutputEncoding;
 	}
 
-	public function executeIndex() {
+	public function index() {
 		wfProfileIn( __METHOD__ );
-		global $wgLang, $wgOut;
-
-		// check rights
-		if ( !ThemeDesignerHelper::checkAccess() ) {
-			$this->displayRestrictionError( __METHOD__ );
-		}
-
+		
 		$themeSettings = new ThemeSettings();
 
 		// current settings
@@ -43,7 +37,7 @@ class ThemeDesignerController extends WikiaController {
 			if($diff < 30 * 86400) {
 				$entry['timeago'] = wfTimeFormatAgo($entry['timestamp']);
 			} else {
-				$entry['timeago'] = $wgLang->date($entry['timestamp']);
+				$entry['timeago'] = $this->wg->Lang->date($entry['timestamp']);
 			}
 		}
 		$this->themeHistory = $themeHistory;
@@ -55,14 +49,14 @@ class ThemeDesignerController extends WikiaController {
 			$this->returnTo = $this->wg->Script;
 		}
 
-		$wgOut->getResourceLoader()->getModule( 'mediawiki' );
+		$this->wg->Out->getResourceLoader()->getModule( 'mediawiki' );
 
-		$ret = implode( "\n", array(
-			$wgOut->getHeadLinks( null, true ),
-			$wgOut->buildCssLinks(),
-			$wgOut->getHeadScripts(),
-			$wgOut->getHeadItems()
-		) );
+		$ret = implode( "\n", [
+			$this->wg->Out->getHeadLinks( null, true ),
+			$this->wg->Out->buildCssLinks(),
+			$this->wg->Out->getHeadScripts(),
+			$this->wg->Out->getHeadItems()
+		] );
 
 		$this->globalVariablesScript = $ret;
 
@@ -72,26 +66,28 @@ class ThemeDesignerController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
-	public function executeThemeTab() {
+	public function themeTab() {
 
 	}
 
-	public function executeCustomizeTab() {
+	public function customizeTab() {
 
 	}
 
-	public function executeWordmarkTab() {
-		$this->faviconUrl = Wikia::getFaviconFullUrl();
+	public function wordmarkTab() {
+		$this->response->setData( [
+			'faviconUrl' => Wikia::getFaviconFullUrl(),
+			'token' => $this->wg->User->getEditToken(),
+		] );
 	}
 
-	public function executePicker() {
-
+	public function picker() {
+		// SUS-797: Add edit token for background image upload
+		$this->response->setVal( 'token', $this->wg->User->getEditToken() );
 	}
 
-	public function executePreview() {
-		global $wgEnablePortableInfoboxEuropaTheme;
-
-		$this->infoboxTheme = $wgEnablePortableInfoboxEuropaTheme ? 'theme="europa"' : '';
+	public function preview() {
+		$this->infoboxTheme = $this->wg->EnablePortableInfoboxEuropaTheme ? 'theme="europa"' : '';
 	}
 
 	/**
@@ -99,8 +95,6 @@ class ThemeDesignerController extends WikiaController {
 	 * @author Federico "Lox" Lucignano
 	 */
 	private function getUploadErrorMessage( $status ) {
-		global $wgFileExtensions, $wgLang;
-
 		switch( $status[ 'status' ] ) {
 			case UploadBackgroundFromFile::FILESIZE_ERROR:
 				$msg = wfMsgHtml( 'themedesigner-size-error' );
@@ -149,9 +143,9 @@ class ThemeDesignerController extends WikiaController {
 							'comma-separator',
 							array( 'escapenoentities' )
 						),
-						$wgFileExtensions
+						$this->wg->FileExtensions
 					),
-					$wgLang->formatNum( count( $wgFileExtensions ) )
+					$this->wg->Lang->formatNum( count( $this->wg->FileExtensions ) )
 				);
 				break;
 			case UploadBase::VERIFICATION_ERROR:
@@ -201,11 +195,11 @@ class ThemeDesignerController extends WikiaController {
 		return $ret;
 	}
 
-	public function executeWordmarkUpload() {
-		// check rights
-		if ( !ThemeDesignerHelper::checkAccess() ) {
-			$this->displayRestrictionError( __METHOD__ );
-		}
+	public function wordmarkUpload() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
+		// SUS-797: Validate edit token and POST request for external requests
+		$this->checkWriteRequest();
 
 		$upload = new UploadWordmarkFromFile();
 
@@ -213,52 +207,72 @@ class ThemeDesignerController extends WikiaController {
 
 		if($status['status'] === 'uploadattempted' && $status['isGood']) {
 			$file = $upload->getLocalFile();
-			$this->wordmarkImageUrl = wfReplaceImageServer( $file->getUrl() );
-			$this->wordmarkImageName = $file->getName();
+			$wordmarkImageUrl = wfReplaceImageServer( $file->getUrl() );
+			$wordmarkImageName = $file->getName();
 
 			// if wordmark url is not set then it means there was some problem
-			if ( $this->wordmarkImageUrl == null || $this->wordmarkImageName == null ) {
-				$this->errors = array( wfMsg( 'themedesigner-unknown-error' ) );
+			if ( $wordmarkImageUrl == null || $wordmarkImageName == null ) {
+				$this->response->setData( [
+					'errors' => [ wfMessage( 'themedesigner-unknown-error' )->escaped() ]
+				] );
 			}
 
-			wfRunHooks( 'UploadWordmarkComplete', array( &$upload ) );
-		} else if ($status['status'] === 'error') {
-			$this->errors = $status['errors'];
+			Hooks::run( 'UploadWordmarkComplete', [ &$upload ] );
+
+			$this->response->setData( [
+				'wordmarkImageUrl' => $wordmarkImageUrl,
+				'wordmarkImageName' => $wordmarkImageName
+			] );
+			return;
 		}
 
+		if ( $status['status'] === 'error' ) {
+			$this->response->setData( [
+				'errors' => $status['errors']
+			] );
+		}
 	}
 
-	public function executeFaviconUpload() {
-		// check rights
-		if ( !ThemeDesignerHelper::checkAccess() ) {
-			$this->displayRestrictionError( __METHOD__ );
-		}
+	public function faviconUpload() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		
+		// SUS-797: Validate edit token and POST request for external requests
+		$this->checkWriteRequest();
 
 		$upload = new UploadFaviconFromFile();
-
-		$this->faviconImageName = '';
-		$this->faviconImageUrl = '';
 
 		$status = $this->uploadImage($upload);
 		if($status['status'] === 'uploadattempted' && $status['isGood']) {
 			$file = $upload->getLocalFile(); /* @var $file LocalFile */
-			$this->faviconImageUrl = wfReplaceImageServer( $file->getUrl() );
-			$this->faviconImageName = $file->getName();
+			$faviconImageUrl = wfReplaceImageServer( $file->getUrl() );
 
 			// if wordmark url is not set then it means there was some problem
-			if ( $this->faviconImageUrl == null ) {
-				$this->errors = array( wfMsg( 'themedesigner-unknown-error' ) );
+			if ( $faviconImageUrl == null ) {
+				$this->response->setData( [
+					'errors' => [ wfMessage( 'themedesigner-unknown-error' )->escaped() ]
+				] );
+				return;
 			}
-		} else if ($status['status'] === 'error') {
-			$this->errors = $status['errors'];
+			
+			$this->response->setData( [
+				'faviconImageUrl' => $faviconImageUrl,
+				'faviconImageName' => $file->getName()
+			] );
+			return;
 		}
+		
+		if ($status['status'] === 'error') {
+			$this->response->setData( [
+				'errors' => $status['errors']
+			] );
+		}		
 	}
 
-	public function executeBackgroundImageUpload() {
-		// check rights
-		if ( !ThemeDesignerHelper::checkAccess() ) {
-			$this->displayRestrictionError( __METHOD__ );
-		}
+	public function backgroundImageUpload() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		
+		// SUS-797: Validate edit token and POST request for external requests
+		$this->checkWriteRequest();
 
 		$upload = new UploadBackgroundFromFile();
 
@@ -266,22 +280,33 @@ class ThemeDesignerController extends WikiaController {
 
 		if($status['status'] === 'uploadattempted' && $status['isGood']) {
 			$file = $upload->getLocalFile(); /* @var $file LocalFile */
-			$this->backgroundImageUrl = wfReplaceImageServer( $file->getUrl() );
-			$this->backgroundImageName = $file->getName();
-			$this->backgroundImageHeight = $file->getHeight();
-			$this->backgroundImageWidth = $file->getWidth();
+			$backgroundImageUrl = wfReplaceImageServer( $file->getUrl() );
+
+			// if background image url is not set then it means there was some problem
+			if ( $backgroundImageUrl == null ) {
+				$this->response->setData( [
+					'errors' => [ wfMessage( 'themedesigner-unknown-error' )->escaped() ]
+				] );
+				return;
+			}
 
 			//get cropped URL
 			$is = new ImageServing( null, 120, array( "w"=>"120", "h"=>"100" ) );
-			$this->backgroundImageThumb = wfReplaceImageServer( $file->getThumbUrl( $is->getCut( $file->width, $file->height, "origin" ) . "-" . $file->getName() ) );
-
-			// if background image url is not set then it means there was some problem
-			if ( $this->backgroundImageUrl == null ) {
-				$this->errors = array( wfMsg( 'themedesigner-unknown-error' ) );
-			}
-
-		} else if ($status['status'] === 'error') {
-			$this->errors = $status['errors'];
+			
+			$this->response->setData( [
+				'backgroundImageUrl' => $backgroundImageUrl,
+				'backgroundImageName' => $file->getName(),
+				'backgroundImageHeight' => $file->getHeight(),
+				'backgroundImageWidth' => $file->getWidth(),
+				'backgroundImageThumb' => wfReplaceImageServer( $file->getThumbUrl( $is->getCut( $file->width, $file->height, "origin" ) . "-" . $file->getName() ) )
+			] );
+			return;
+		}
+		
+		if ($status['status'] === 'error') {
+			$this->response->setData( [
+				'errors' => $status['errors']
+			] );
 		}
 	}
 
@@ -290,15 +315,13 @@ class ThemeDesignerController extends WikiaController {
 	 * @return array
 	 */
 	private function uploadImage($upload) {
-		global $wgRequest, $wgUser, $wgEnableUploads;
-
 		$uploadStatus = array("status" => "error");
 
-		if ( empty( $wgEnableUploads )) {
+		if ( empty( $this->wg->EnableUploads ) ) {
 			$uploadStatus["errors"] = [ wfMessage( 'themedesigner-upload-disabled' )->plain() ];
 		} else {
-			$upload->initializeFromRequest( $wgRequest );
-			$permErrors = $upload->verifyPermissions( $wgUser );
+			$upload->initializeFromRequest( $this->wg->Request );
+			$permErrors = $upload->verifyPermissions( $this->wg->User );
 
 			if ( $permErrors !== true ) {
 				$uploadStatus["errors"] = array( wfMsg( 'badaccess' ) );
@@ -326,26 +349,24 @@ class ThemeDesignerController extends WikiaController {
 		return $uploadStatus;
 	}
 
-	public function executeSaveSettings() {
-		wfProfileIn( __METHOD__ );
-		global $wgRequest;
+	public function saveSettings() {
+		// SUS-797: Validate edit token and POST request for external requests
+		$this->checkWriteRequest();
+		
+		$data = $this->request->getArray( 'settings' );
 
-		// check rights
-		if ( !ThemeDesignerHelper::checkAccess() ) {
-			$this->displayRestrictionError( __METHOD__ );
-		}
-
-		$data = $wgRequest->getArray( 'settings' );
-
-		if ( $wgRequest->wasPosted() ) {
-			$themeSettings = new ThemeSettings();
-			$themeSettings->saveSettings($data);
-		}
-		wfProfileOut( __METHOD__ );
+		$themeSettings = new ThemeSettings();
+		$themeSettings->saveSettings( $data );
 	}
 
 
-	private function displayRestrictionError( $method ) {
-		throw new PermissionsError( $method );
+	/**
+	 * SUS-797: This function is called automatically by WikiaDispatcher for every request
+	 * @param User $user user trying to call the controller
+	 * @param string $method controller method
+	 * @return bool True if the user should NOT be allowed access
+	 */
+	public function userAllowedRequirementCheck( $user, $method ) {
+		return !ThemeDesignerHelper::checkAccess();
 	}
 }
