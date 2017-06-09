@@ -430,6 +430,6 @@ class ThemeSettings {
 			return wfReplaceImageServer( $backgroundUrl, SassUtil::getCacheBuster() );
 		}
 
-		return '';
+		return $backgroundUrl;
 	}
 }
