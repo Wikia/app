@@ -7,14 +7,12 @@ class ThemeDesignerHooks {
 	 * @return bool
 	 */
 	public static function onRevisionInsertComplete( $revision ) {
-		wfProfileIn( __METHOD__ );
 
 		if ( $revision instanceof Revision ) {
 			$title = $revision->getTitle( true );
 			self::resetThemeBackgroundSettings( $title );
 		}
 
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -23,7 +21,6 @@ class ThemeDesignerHooks {
 	 * @return bool true
 	 */
 	public static function onArticleDeleteComplete( $article ) {
-		wfProfileIn( __METHOD__ );
 
 		if ( $article instanceof WikiFilePage ) {
 			$title = $article->getTitle();
@@ -33,7 +30,6 @@ class ThemeDesignerHooks {
 			}
 		}
 
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -42,13 +38,11 @@ class ThemeDesignerHooks {
 	 * @return bool
 	 */
 	public static function onUploadComplete( $image ) {
-		wfProfileIn( __METHOD__ );
 
 		if ( self::isFavicon( $image->getTitle() ) ) {
 			Wikia::invalidateFavicon();
 		}
 
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -61,12 +55,14 @@ class ThemeDesignerHooks {
 	 * @return bool return false to prevent the upload
 	 */
 	public static function onUploadVerification( $destName, $tempPath, &$error ) {
-		$destName = strtolower($destName);
+		$destName = strtolower( $destName );
 		if ( $destName == 'wiki-wordmark.png' || $destName == 'wiki-background' ) {
 			// BugId:983
-			$error = wfMessage( 'themedesigner-manual-upload-error' )->plain();
+			$error = wfMessage( 'themedesigner-manual-upload-error' )->escaped();
+
 			return false;
 		}
+
 		return true;
 	}
 
@@ -75,13 +71,12 @@ class ThemeDesignerHooks {
 	 * @return bool
 	 */
 	private static function isFavicon( $title ) {
-		wfProfileIn( __METHOD__ );
 		if ( $title->getText() == 'Favicon.ico' ) {
 			$isFavicon = true;
 		} else {
 			$isFavicon = false;
 		}
-		wfProfileOut( __METHOD__ );
+
 		return $isFavicon;
 	}
 
@@ -90,7 +85,6 @@ class ThemeDesignerHooks {
 	 * @param bool $isArticleDeleted
 	 */
 	private static function resetThemeBackgroundSettings( $title, $isArticleDeleted = false ) {
-		wfProfileIn( __METHOD__ );
 
 		if ( $title instanceof Title && $title->getText() == ThemeSettings::BackgroundImageName ) {
 			$themeSettings = new ThemeSettings();
@@ -106,7 +100,5 @@ class ThemeDesignerHooks {
 			}
 			$themeSettings->saveSettings( $settings );
 		}
-
-		wfProfileOut( __METHOD__ );
 	}
 }

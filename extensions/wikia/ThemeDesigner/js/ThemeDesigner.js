@@ -576,9 +576,16 @@
 				reloadCSS = true;
 			}
 
-			if (setting === 'color-body' || setting === 'color-body-middle' || setting === 'color-page' ||
-				setting === 'color-buttons' || setting === 'color-links' || setting === 'background-image' ||
-				setting === 'color-header' || setting === 'wordmark-font') {
+			if (['color-body',
+				'color-body-middle',
+				'color-page',
+				'color-buttons',
+				'color-community-header',
+				'color-links',
+				'background-image',
+				'color-header',
+				'wordmark-font'].indexOf(setting) > -1
+			) {
 				reloadCSS = true;
 			}
 
@@ -760,6 +767,7 @@
 			// color swatches
 			$('#swatch-color-background').css('background-color', ThemeDesigner.settings['color-body']);
 			$('#swatch-color-background-middle').css('background-color', ThemeDesigner.settings['color-body-middle']);
+			$('#swatch-color-community-header').css('background-color', ThemeDesigner.settings['color-community-header']);
 			$('#swatch-color-buttons').css('background-color', ThemeDesigner.settings['color-buttons']);
 			$('#swatch-color-links').css('background-color', ThemeDesigner.settings['color-links']);
 			$('#swatch-color-page').css('background-color', ThemeDesigner.settings['color-page']);
@@ -948,8 +956,8 @@
 			// copy color-body swatches to color-body-middle
 			this.swatches['color-body-middle'] = this.swatches['color-body'];
 
-			// initialize color-button swatches
-			this.swatches['color-buttons'] = [
+			// initialize color-button and color-community-header swatches
+			this.swatches['color-community-header'] = this.swatches['color-buttons'] = [
 				'fec356',
 				'6699ff',
 				'6c93b1',
