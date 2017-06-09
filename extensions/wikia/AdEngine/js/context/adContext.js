@@ -114,11 +114,17 @@ define('ext.wikia.adEngine.adContext', [
 		return doc && doc.referrer && doc.referrer.match(/info\.tvsideview\.sony\.net/);
 	}
 
+	function isMOATTrackingForFVEnabled() {
+		var samplingForMoatFV = instantGlobals.wgAdDriverMoatTrackingForFeaturedVideoAdSampling || 1;
+
+		return sampler.sample('moatTrackingForFeaturedVideo', samplingForMoatFV, 100) &&
+			geo.isProperGeo(instantGlobals.wgAdDriverMoatTrackingForFeaturedVideoAdCountries);
+	}
+
 	function setContext(newContext) {
 		var i,
 			len,
-			noExternals = w.wgNoExternals || isUrlParamSet('noexternals'),
-			samplingMOATForFV = instantGlobals.wgAdDriverMoatTrackingForFeaturedVideoAdSampling || 1;
+			noExternals = w.wgNoExternals || isUrlParamSet('noexternals');
 
 		// Note: consider copying the value, not the reference
 		context = newContext;
@@ -143,9 +149,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.premiumOnly = context.targeting.hasFeaturedVideo &&
 			geo.isProperGeo(instantGlobals.wgAdDriverSrcPremiumCountries);
 
-		context.opts.isMoatTrackingForFeaturedVideoEnabled =
-			sampler.sample('moatTrackingForFeaturedVideo', samplingMOATForFV, 100) &&
-			geo.isProperGeo(instantGlobals.wgAdDriverMoatTrackingForFeaturedVideoAdCountries);
+		context.opts.isMoatTrackingForFeaturedVideoEnabled = isMOATTrackingForFVEnabled();
 
 		updateDetectionServicesAdContext(context, noExternals);
 		updateAdContextRecoveryServices(context, noExternals);
