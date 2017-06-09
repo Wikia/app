@@ -434,7 +434,7 @@ class CheckStorage {
 
 		$source = new ImportStreamSource( $file );
 		$importer = new WikiImporter( $source );
-		$importer->setRevisionCallback( array( &$this, 'importRevision' ) );
+		$importer->setRevisionCallback( array( $this, 'importRevision' ) );
 		$importer->doImport();
 	}
 

@@ -623,7 +623,7 @@ class ContribsPager extends ReverseChronologicalPager {
 			$this->tagFilter
 		);
 
-		wfRunHooks( 'ContribsPager::getQueryInfo', array( &$this, &$queryInfo ) );
+		wfRunHooks( 'ContribsPager::getQueryInfo', array( $this, &$queryInfo ) );
 		return $queryInfo;
 	}
 
@@ -871,7 +871,7 @@ class ContribsPager extends ReverseChronologicalPager {
 		$ret .= " $tagSummary";
 
 		// Let extensions add data
-		wfRunHooks( 'ContributionsLineEnding', array( &$this, &$ret, $row ) );
+		wfRunHooks( 'ContributionsLineEnding', array( $this, &$ret, $row ) );
 
 		$classes = implode( ' ', $classes );
 		$ret = "<li class=\"$classes\">$ret</li>\n";

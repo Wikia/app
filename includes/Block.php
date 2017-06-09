@@ -638,7 +638,7 @@ class Block {
 		}
 
 		# Allow hooks to cancel the autoblock.
-		if ( !wfRunHooks( 'AbortAutoblock', array( $autoblockIP, &$this ) ) ) {
+		if ( !wfRunHooks( 'AbortAutoblock', array( $autoblockIP, $this ) ) ) {
 			wfDebug( "Autoblock aborted by hook.\n" );
 			return false;
 		}

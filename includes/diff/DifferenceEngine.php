@@ -670,7 +670,7 @@ class DifferenceEngine extends ContextSource {
 		$difftext = $this->generateDiffBody( $this->mOldtext, $this->mNewtext );
 
 		// Save to cache for 7 days
-		if ( !wfRunHooks( 'AbortDiffCache', array( &$this ) ) ) {
+		if ( !wfRunHooks( 'AbortDiffCache', array( $this ) ) ) {
 			wfIncrStats( 'diff_uncacheable' );
 		} elseif ( $key !== false && $difftext !== false ) {
 			wfIncrStats( 'diff_cache_miss' );
@@ -820,7 +820,7 @@ class DifferenceEngine extends ContextSource {
 	 */
 	function localiseLineNumbers( $text ) {
 		return preg_replace_callback( '/<!--LINE (\d+)-->/',
-		array( &$this, 'localiseLineNumbersCb' ), $text );
+		array( $this, 'localiseLineNumbersCb' ), $text );
 	}
 
 	function localiseLineNumbersCb( $matches ) {

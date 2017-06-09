@@ -183,7 +183,7 @@ class PEAR_Remote extends PEAR
             return $this->cache['content'];
         }
         if (extension_loaded("xmlrpc")) {
-            $result = call_user_func_array(array(&$this, 'call_epi'), $args);
+            $result = call_user_func_array(array($this, 'call_epi'), $args);
             if (!PEAR::isError($result)) {
                 $this->saveCache($_args, $result);
             }

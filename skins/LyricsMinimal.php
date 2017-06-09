@@ -71,7 +71,7 @@ class SkinLyricsMinimal extends SkinTemplate {
 		$this->template  = 'LyricsMinimalTemplate';
 
 		// Function addVariables will be called to populate all needed data to render skin
-		$wgHooks['SkinTemplateOutputPageBeforeExec'][] = array(&$this, 'addVariables');
+		$wgHooks['SkinTemplateOutputPageBeforeExec'][] = array($this, 'addVariables');
 
 		wfProfileOut(__METHOD__);
 	}

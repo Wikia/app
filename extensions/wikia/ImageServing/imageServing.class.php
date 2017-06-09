@@ -180,7 +180,7 @@ class ImageServing {
 
 			if( empty( $out ) ) {
 				// Hook for finding fallback images if there were no matches. - NOTE: should this fallback any time (count($out) < $limit)? Seems like overkill.
-				wfRunHooks( 'ImageServing::fallbackOnNoResults', array( &$this, $limit, &$out ) );
+				wfRunHooks( 'ImageServing::fallbackOnNoResults', array( $this, $limit, &$out ) );
 			}
 
 			// apply limiting

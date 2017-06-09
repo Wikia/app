@@ -521,7 +521,7 @@ class NewPagesPager extends ReverseChronologicalPager {
 		$join_conds = array( 'page' => array( 'INNER JOIN', 'page_id=rc_cur_id' ) );
 
 		wfRunHooks( 'SpecialNewpagesConditions',
-			array( &$this, $this->opts, &$conds, &$tables, &$fields, &$join_conds ) );
+			array( $this, $this->opts, &$conds, &$tables, &$fields, &$join_conds ) );
 
 		$info = array(
 			'tables' 	 => $tables,

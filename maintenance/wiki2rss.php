@@ -197,9 +197,9 @@ class BackupReader {
 		$source = new ImportStreamSource( $handle );
 		$importer = new WikiImporter( $source );
 
-		$importer->setPageCallback( array( &$this, 'reportPage' ) );
+		$importer->setPageCallback( array( $this, 'reportPage' ) );
 		$this->importCallback =  $importer->setRevisionCallback(
-			array( &$this, 'handleRevision' ) );
+			array( $this, 'handleRevision' ) );
 
 		return $importer->doImport();
 	}

@@ -40,7 +40,7 @@ class FakeImageGalleryImageServing extends ImageGallery {
 
 		# Give extensions a chance to select the file revision for us
 		$time = $descQuery = false;
-		wfRunHooks( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
+		wfRunHooks( 'BeforeGalleryFindFile', array( $this, &$nt, &$time, &$descQuery ) );
 
 		# Render image thumbnail
 		$img = wfFindFile( $nt, array('time' => $time) );

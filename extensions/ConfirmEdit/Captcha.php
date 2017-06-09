@@ -305,7 +305,7 @@ class SimpleCaptcha {
 				$newLinks = $this->findLinks( $editPage, $newtext );
 			}
 
-			$unknownLinks = array_filter( $newLinks, array( &$this, 'filterLink' ) );
+			$unknownLinks = array_filter( $newLinks, array( $this, 'filterLink' ) );
 			$addedLinks = array_diff( $unknownLinks, $oldLinks );
 			$numLinks = count( $addedLinks );
 
@@ -475,13 +475,13 @@ class SimpleCaptcha {
 		
 		#<Wikia>
 		$result = null;                                                                                                                                                                  
-		if( !wfRunHooks( 'ConfirmEdit::onConfirmEdit', array( &$this, &$editPage, $newtext, $section, $merged, &$result ) ) ) {                                                          
+		if( !wfRunHooks( 'ConfirmEdit::onConfirmEdit', array( $this, &$editPage, $newtext, $section, $merged, &$result ) ) ) {
 			return $result;                                                                                                                                                          
 		}
 		#</Wikia>
                 
 		if ( !$this->doConfirmEdit( $editPage, $newtext, $section, $merged ) ) {
-			$editPage->showEditForm( array( &$this, 'editCallback' ) );
+			$editPage->showEditForm( array( $this, 'editCallback' ) );
 			return false;
 		}
 		return true;

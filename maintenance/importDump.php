@@ -261,13 +261,13 @@ TEXT;
 		if ( $this->hasOption( 'no-updates' ) ) {
 			$importer->setNoUpdates( true );
 		}
-		$importer->setPageCallback( array( &$this, 'reportPage' ) );
+		$importer->setPageCallback( array( $this, 'reportPage' ) );
 		$this->importCallback =  $importer->setRevisionCallback(
-			array( &$this, 'handleRevision' ) );
+			array( $this, 'handleRevision' ) );
 		$this->uploadCallback = $importer->setUploadCallback(
-			array( &$this, 'handleUpload' ) );
+			array( $this, 'handleUpload' ) );
 		$this->logItemCallback = $importer->setLogItemCallback(
-			array( &$this, 'handleLogItem' ) );
+			array( $this, 'handleLogItem' ) );
 		if ( $this->uploads ) {
 			$importer->setImportUploads( true );
 		}

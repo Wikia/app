@@ -211,9 +211,9 @@ related to a particular event, like so:
 		# ...
 		function protect() {
 			global $wgUser;
-			if (wfRunHooks('ArticleProtect', array(&$this, &$wgUser))) {
+			if (wfRunHooks('ArticleProtect', array($this, &$wgUser))) {
 				# protect the article
-				wfRunHooks('ArticleProtectComplete', array(&$this, &$wgUser));
+				wfRunHooks('ArticleProtectComplete', array($this, &$wgUser));
 			}
 		}
 	}

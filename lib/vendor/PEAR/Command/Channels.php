@@ -164,7 +164,7 @@ Initialize a Channel from its server and creates the local channel.xml.
     {
         $reg = &$this->config->getRegistry();
         $registered = $reg->getChannels();
-        usort($registered, array(&$this, '_sortchannels'));
+        usort($registered, array($this, '_sortchannels'));
         $i = $j = 0;
         $data = array(
             'caption' => 'Registered Channels:',

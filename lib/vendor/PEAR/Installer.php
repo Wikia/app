@@ -1311,7 +1311,7 @@ class PEAR_Installer extends PEAR_Downloader
         $this->log(1, "$this->source_files source files, building");
         $bob = new PEAR_Builder($this->ui);
         $bob->debug = $this->debug;
-        $built = $bob->build($filelist, array(&$this, '_buildCallback'));
+        $built = $bob->build($filelist, array($this, '_buildCallback'));
         if (PEAR::isError($built)) {
             $this->rollbackFileTransaction();
             $this->configSet('default_channel', $savechannel);
@@ -1524,7 +1524,7 @@ class PEAR_Installer extends PEAR_Downloader
         if (PEAR::isError($this->_dependencyDB)) {
             return $this->_dependencyDB;
         }
-        usort($packages, array(&$this, '_sortUninstall'));
+        usort($packages, array($this, '_sortUninstall'));
     }
 
     function _sortUninstall($a, $b)

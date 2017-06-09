@@ -61,9 +61,9 @@ class ExtensionHasCategory {
 	function RegisterParser( &$parser ) {
 		if ( defined( get_class( $parser ) . '::SFH_OBJECT_ARGS' ) ) {
 			// These functions accept DOM-style arguments
-			$parser->setFunctionHook( 'ifhascat', array( &$this, 'IfhascatPfObj' ), SFH_OBJECT_ARGS );
+			$parser->setFunctionHook( 'ifhascat', array( $this, 'IfhascatPfObj' ), SFH_OBJECT_ARGS );
 		} else {
-			$parser->setFunctionHook( 'ifhascat', array( &$this, 'IfhascatPf' ) );
+			$parser->setFunctionHook( 'ifhascat', array( $this, 'IfhascatPf' ) );
 		}
 
 		return true;

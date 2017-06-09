@@ -370,7 +370,7 @@ class HistoryPager extends ReverseChronologicalPager {
 			$queryInfo['options'],
 			$this->tagFilter
 		);
-		wfRunHooks( 'PageHistoryPager::getQueryInfo', array( &$this, &$queryInfo ) );
+		wfRunHooks( 'PageHistoryPager::getQueryInfo', array( $this, &$queryInfo ) );
 		return $queryInfo;
 	}
 

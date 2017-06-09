@@ -331,7 +331,7 @@ class PEAR_ErrorStack {
     function setMessageCallback($msgCallback)
     {
         if (!$msgCallback) {
-            $this->_msgCallback = array(&$this, 'getErrorMessage');
+            $this->_msgCallback = array($this, 'getErrorMessage');
         } else {
             if (is_callable($msgCallback)) {
                 $this->_msgCallback = $msgCallback;
@@ -383,7 +383,7 @@ class PEAR_ErrorStack {
             return $this->_contextCallback = false;
         }
         if (!$contextCallback) {
-            $this->_contextCallback = array(&$this, 'getFileLine');
+            $this->_contextCallback = array($this, 'getFileLine');
         } else {
             if (is_callable($contextCallback)) {
                 $this->_contextCallback = $contextCallback;
@@ -534,7 +534,7 @@ class PEAR_ErrorStack {
         // set up the error message, if necessary
         if ($this->_msgCallback) {
             $msg = call_user_func_array($this->_msgCallback,
-                                        array(&$this, $err));
+                                        array($this, $err));
             $err['message'] = $msg;
         }        
         $push = $log = true;

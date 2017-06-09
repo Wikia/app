@@ -506,7 +506,7 @@ class PageHeaderController extends WikiaController {
 			$this->comments = $service->getCommentsCount();
 		}
 
-		wfRunHooks( 'PageHeaderEditPage', [ &$this, $ns, $isPreview, $isShowChanges, $isDiff, $isEdit, $isHistory ] );
+		wfRunHooks( 'PageHeaderEditPage', [ $this, $ns, $isPreview, $isShowChanges, $isDiff, $isEdit, $isHistory ] );
 		wfProfileOut( __METHOD__ );
 	}
 

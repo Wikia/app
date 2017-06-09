@@ -197,7 +197,7 @@ class PEAR_Downloader extends PEAR_Common
     {
         $this->log(1, 'Attempting to discover channel "' . $channel . '"...');
         PEAR::pushErrorHandling(PEAR_ERROR_RETURN);
-        $callback = $this->ui ? array(&$this, '_downloadCallback') : null;
+        $callback = $this->ui ? array($this, '_downloadCallback') : null;
         if (!class_exists('System')) {
             require_once 'System.php';
         }
@@ -1240,7 +1240,7 @@ class PEAR_Downloader extends PEAR_Common
             $this->_getDepTreeDP($packages[$i], $packages, $deps, $checked);
             $this->_depTree[$package->getChannel()][$package->getPackage()] = $deps;
         }
-        usort($packages, array(&$this, '_sortInstall'));
+        usort($packages, array($this, '_sortInstall'));
     }
 
     function _dependsOn($a, $b)

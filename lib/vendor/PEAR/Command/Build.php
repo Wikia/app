@@ -82,7 +82,7 @@ Builds one or more extensions contained in a package.'
         }
         $builder = new PEAR_Builder($this->ui);
         $this->debug = $this->config->get('verbose');
-        $err = $builder->build($params[0], array(&$this, 'buildCallback'));
+        $err = $builder->build($params[0], array($this, 'buildCallback'));
         if (PEAR::isError($err)) {
             return $err;
         }

@@ -229,7 +229,7 @@ class CF_Http
 		curl_setopt( $curl_ch, CURLOPT_HTTPHEADER, $headers );
 		curl_setopt( $curl_ch, CURLOPT_USERAGENT, USER_AGENT );
 		curl_setopt( $curl_ch, CURLOPT_RETURNTRANSFER, TRUE );
-		curl_setopt( $curl_ch, CURLOPT_HEADERFUNCTION, array( &$this, '_auth_hdr_cb' ) );
+		curl_setopt( $curl_ch, CURLOPT_HEADERFUNCTION, array( $this, '_auth_hdr_cb' ) );
 		curl_setopt( $curl_ch, CURLOPT_CONNECTTIMEOUT, 10 );
 		curl_setopt( $curl_ch, CURLOPT_TIMEOUT, 10 );
 		curl_setopt( $curl_ch, CURLOPT_URL, $url );
@@ -1319,15 +1319,15 @@ class CF_Http
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
         curl_setopt($ch, CURLOPT_MAXREDIRS, 4);
         curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_HEADERFUNCTION, array(&$this, '_header_cb'));
+        curl_setopt($ch, CURLOPT_HEADERFUNCTION, array($this, '_header_cb'));
 
         if ($conn_type == "GET_CALL") {
-            curl_setopt($ch, CURLOPT_WRITEFUNCTION, array(&$this, '_write_cb'));
+            curl_setopt($ch, CURLOPT_WRITEFUNCTION, array($this, '_write_cb'));
         }
 
         if ($conn_type == "PUT_OBJ") {
             curl_setopt($ch, CURLOPT_PUT, 1);
-            curl_setopt($ch, CURLOPT_READFUNCTION, array(&$this, '_read_cb'));
+            curl_setopt($ch, CURLOPT_READFUNCTION, array($this, '_read_cb'));
 	    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         }
         if ($conn_type == "HEAD") {
