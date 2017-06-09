@@ -323,9 +323,10 @@
 				.click(function () {
 					$(this).find('ul').show();
 				})
-				.find('ul').mouseleave(function () {
-				$(this).hide();
-			})
+				.find('ul')
+				.mouseleave(function () {
+					$(this).hide();
+				})
 				.find('li').click(ThemeDesigner.revertToPreviousTheme);
 		},
 
@@ -554,15 +555,13 @@
 
 		middleColorSelect: function (enable) {
 			if (enable) {
-				$('#CustomizeTab')
-					.find('.wrap-middle-color').css({
+				$('#CustomizeTab').find('.wrap-middle-color').css({
 					opacity: 1
 				})
 					.find('.middle-color-mask')
 					.hide();
 			} else {
-				$('#CustomizeTab')
-					.find('.wrap-middle-color').css({
+				$('#CustomizeTab').find('.wrap-middle-color').css({
 					opacity: 0.3
 				})
 					.find('.middle-color-mask')
@@ -942,7 +941,8 @@
 					}
 				}
 
-				previewFrameContent.find('header.wds-community-header').attr('style',
+				previewFrameContent.find('header.wds-community-header').attr(
+					'style',
 					'background-image: url(' + ThemeDesigner.settings['community-header-background-image'] + ');'
 				);
 
