@@ -258,8 +258,36 @@ class ThemeDesignerController extends WikiaController {
 
 		if ( $status['status'] === 'uploadattempted' && $status['isGood'] ) {
 			$file = $upload->getLocalFile();
+
+			$this->setBackgroundDetails( $file, $this->getVal( 'type', 'background' ) );
+
+			// if background image url is not set then it means there was some problem
+			if ( $this->backgroundImageUrl == null ) {
+				$this->errors = [ wfMessage( 'themedesigner-unknown-error' )->text() ];
+			}
+
+		} else if ( $status['status'] === 'error' ) {
+			$this->errors = $status['errors'];
+		}
+	}
+
+	private function setBackgroundDetails( File $file, string $type ) {
+		$this->backgroundImageName = $file->getName();
+
+		if ( $type === 'community-header-background' ) {
+			$this->backgroundImageUrl = VignetteRequest::fromUrl( $file->getUrl() )
+				->zoomCrop()
+				->width( ThemeSettings::COMMUNITY_HEADER_BACKGROUND_WIDTH )
+				->height( ThemeSettings::COMMUNITY_HEADER_BACKGROUND_HEIGHT )
+				->url();
+
+			$this->backgroundImageThumb = VignetteRequest::fromUrl( $file->getUrl() )
+				->zoomCrop()
+				->width( 120 )
+				->height( 33 )
+				->url();
+		} else if ( $type === 'background' ) {
 			$this->backgroundImageUrl = wfReplaceImageServer( $file->getUrl() );
-			$this->backgroundImageName = $file->getName();
 			$this->backgroundImageHeight = $file->getHeight();
 			$this->backgroundImageWidth = $file->getWidth();
 
@@ -270,14 +298,6 @@ class ThemeDesignerController extends WikiaController {
 					$is->getCut( $file->width, $file->height, "origin" ) . "-" . $file->getName()
 				)
 			);
-
-			// if background image url is not set then it means there was some problem
-			if ( $this->backgroundImageUrl == null ) {
-				$this->errors = [ wfMessage( 'themedesigner-unknown-error' )->text() ];
-			}
-
-		} else if ( $status['status'] === 'error' ) {
-			$this->errors = $status['errors'];
 		}
 	}
 
