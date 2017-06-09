@@ -163,8 +163,7 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 			var topAdHeight = $('#WikiaTopAds').outerHeight(true);
 			var adAndRecircWrapperStyles = {
 				bottom: '',
-				position: 'absolute',
-				width: '300px'
+				position: 'absolute'
 			};
 
 			if (recircEnabled) {
@@ -217,8 +216,7 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 			$adAndRecircWrapper.css({
 				bottom: '',
 				position: '',
-				top: '',
-				width: ''
+				top: ''
 			});
 		}
 
