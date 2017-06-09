@@ -1,10 +1,11 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.btfBlocker', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.context.uapContext',
 	'wikia.lazyqueue',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, lazyQueue, log, win) {
+], function (adContext, uapContext, lazyQueue, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.btfBlocker',
@@ -38,7 +39,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 			var context = adContext.getContext();
 			log(['processBtfSlot', slot.name], 'debug', logGroup);
 
-			if (context.opts.adMixExperimentEnabled) {
+			if (context.opts.adMixExperimentEnabled && !uapContext.isUapLoaded()) {
 				if (context.slots.adMixToUnblock.indexOf(slot.name) !== -1) {
 					fillInSlot(slot);
 					return;
@@ -67,6 +68,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 
 			if (context.opts.adMixExperimentEnabled) {
 				win.ads.runtime.disableBtf = true;
+				context.slots.adMixToUnblock.map(unblock);
 			}
 
 			lazyQueue.makeQueue(btfQueue, processBtfSlot);
