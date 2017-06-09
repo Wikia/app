@@ -546,7 +546,7 @@ function efSharedHelpGetMagicWord(&$magicWords, $langCode) {
 	return true;
 }
 
-function efSharedHelpRemoveMagicWord(&$parser, &$text, &$strip_state) {
+function efSharedHelpRemoveMagicWord($parser, &$text, &$strip_state) {
 	$found = MagicWord::get('MAG_NOSHAREDHELP')->matchAndRemove($text);
 	if ( $found ) {
 		$text .= NOSHAREDHELP_MARKER;

@@ -423,7 +423,7 @@ class SDUtils {
 	 * Set values in the page_props table based on the presence of the
 	 * 'HIDEFROMDRILLDOWN' and 'SHOWINDRILLDOWN' magic words in a page
 	 */
-	static function handleShowAndHide( &$parser, &$text ) {
+	static function handleShowAndHide( $parser, &$text ) {
 		global $wgOut, $wgAction;
 		$mw_hide = MagicWord::get( 'MAG_HIDEFROMDRILLDOWN' );
 		if ( $mw_hide->matchAndRemove( $text ) ) {

@@ -274,7 +274,7 @@ abstract class MapsLayer {
 	 *
 	 * @return array
 	 */
-	public function getPropertiesHtmlRepresentation( &$parser ) {
+	public function getPropertiesHtmlRepresentation( $parser ) {
 		$this->validate(); // make sure properties are available!
 		$transformed = array();
 		foreach( $this->properties as $property => $value ) {

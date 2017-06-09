@@ -18,7 +18,7 @@ $wgExtensionMessagesFiles['QuickCreate'] = dirname(__FILE__) . '/QuickCreate.i18
 
 $wgHooks['ParserFirstCallInit'][] = 'wfQuickCreate';
 
-function wfQuickCreate( &$parser ) {
+function wfQuickCreate( $parser ) {
 	$parser->setHook( 'quickcreate', 'wfQuickCreateButton' );
 	return true;
 }

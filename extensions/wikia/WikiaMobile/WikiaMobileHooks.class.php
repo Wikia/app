@@ -17,7 +17,7 @@ class WikiaMobileHooks {
 	 * @param $strip_state
 	 * @return bool
 	 */
-	static public function onParserBeforeStrip( &$parser, &$text, &$strip_state ) {
+	static public function onParserBeforeStrip( $parser, &$text, &$strip_state ) {
 		global $wgWikiaMobileDisableMediaGrouping;
 		wfProfileIn( __METHOD__ );
 
@@ -118,7 +118,7 @@ class WikiaMobileHooks {
 	 * @param $text String
 	 * @return bool
 	 */
-	static public function onParserAfterTidy( &$parser, &$text ){
+	static public function onParserAfterTidy( $parser, &$text ){
 		wfProfileIn( __METHOD__ );
 
 		if ( F::app()->checkSkin( 'wikiamobile' ) ) {

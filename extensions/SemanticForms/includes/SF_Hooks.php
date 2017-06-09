@@ -162,7 +162,7 @@ class SFHooks {
 		return true;
 	}
 
-	static function registerFunctions( &$parser ) {
+	static function registerFunctions( $parser ) {
 		$parser->setFunctionHook( 'default_form', array( 'SFParserFunctions', 'renderDefaultForm' ) );
 		$parser->setFunctionHook( 'forminput', array( 'SFParserFunctions', 'renderFormInput' ) );
 		$parser->setFunctionHook( 'formlink', array( 'SFParserFunctions', 'renderFormLink' ) );

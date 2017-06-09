@@ -745,7 +745,7 @@ class ExtArrays {
 	 *    {{#arraymerge:arrayid_new |array1 |array2 |... |array n}}
 	 *    See: http://www.php.net/manual/en/function.array-merge.php
 	 */
-	static function pfObj_arraymerge( &$parser, $frame, $args) {
+	static function pfObj_arraymerge( $parser, $frame, $args) {
 		self::get( $parser )->multiArrayOperation( $frame, $args, __FUNCTION__, false );
 		return '';
 	}
@@ -761,7 +761,7 @@ class ExtArrays {
 	 *    Set operation, {red, white} = {red, white} union {red}
 	 *    Similar to arraymerge but with unique values. This union works on values.
 	 */
-	static function pfObj_arrayunion( &$parser, $frame, $args) {
+	static function pfObj_arrayunion( $parser, $frame, $args) {
 		self::get( $parser )->multiArrayOperation( $frame, $args, __FUNCTION__, false );
 		return '';
 	}
@@ -777,7 +777,7 @@ class ExtArrays {
 	 *    Set operation, {red} = {red, white} intersect {red,black}
 	 *    See: http://www.php.net/manual/en/function.array-intersect.php
 	 */
-	static function pfObj_arrayintersect( &$parser, $frame, $args) {
+	static function pfObj_arrayintersect( $parser, $frame, $args) {
 		self::get( $parser )->multiArrayOperation( $frame, $args, __FUNCTION__, false );
 		return '';
 	}
@@ -794,7 +794,7 @@ class ExtArrays {
 	 *    Set operation, {white} = {red, white} - {red}
 	 *    See: http://www.php.net/manual/en/function.array-diff.php
 	 */
-	static function pfObj_arraydiff( &$parser, $frame, $args) {
+	static function pfObj_arraydiff( $parser, $frame, $args) {
 		self::get( $parser )->multiArrayOperation( $frame, $args, __FUNCTION__, false );
 		return '';
 	}

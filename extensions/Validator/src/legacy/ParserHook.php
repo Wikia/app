@@ -323,7 +323,7 @@ abstract class ParserHook {
 		$this->frame = $frame;
 		
 		// create non-object args for old style 'renderFunction()'
-		$oldStyleArgs = array( &$parser );
+		$oldStyleArgs = array( $parser );
 		
 		foreach( $args as $arg ) {
 			$oldStyleArgs[] = trim( $frame->expand( $arg ) );

@@ -452,7 +452,7 @@ class ExtRegexFun {
 	 * 
 	* @return String result of all matching text parts separated by a string
 	*/
-	public static function pf_regexall( &$parser , $subject = '' , $pattern = '' , $separator = ', ' , $offset = 0 , $length = '' ) {
+	public static function pf_regexall( $parser , $subject = '' , $pattern = '' , $separator = ', ' , $offset = 0 , $length = '' ) {
 		// check whether limit exceeded:
 		if( self::limitExceeded( $parser ) ) {
 			return self::msgLimitExceeded();
@@ -596,7 +596,7 @@ class ExtRegexFun {
 	 * 
 	 * @return String Returns the quoted string
 	 */
-	public static function pf_regexquote( &$parser, $str = null, $delimiter = '/' ) {		
+	public static function pf_regexquote( $parser, $str = null, $delimiter = '/' ) {
 		if( $str === null ) {
 			return '';
 		}		
@@ -685,7 +685,7 @@ class ExtRegexFun {
 		self::setLastSubject( $frame, $subject );
 	}
 	
-	public static function onParserClearState( &$parser ) {
+	public static function onParserClearState( $parser ) {
 		//cleanup to avoid conflicts with job queue or Special:Import
 		/*
 		$parser->mExtRegexFun = array();

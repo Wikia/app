@@ -90,7 +90,7 @@ class ImageLazyLoad  {
 
 	}
 
-	public static function onParserClearState( &$parser ) {
+	public static function onParserClearState( $parser ) {
 		if ( !empty( $parser->lazyLoadedImagesCount ) ) {
 			$parser->lazyLoadedImagesCount = 0;
 		}

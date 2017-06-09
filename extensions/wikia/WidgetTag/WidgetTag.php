@@ -41,7 +41,7 @@ function efWidgetTagRender( $input, $args, $parser ) {
 	return $widgetTagRenderer->renderTag( $input, $args, $parser );
 }
 
-function efWidgetTagReplaceMarkers(&$parser, &$text) {
+function efWidgetTagReplaceMarkers($parser, &$text) {
 	$widgetTagRenderer = WidgetTagRenderer::getInstance();
 	$text = $widgetTagRenderer->replaceMarkers($text);
 	return true;

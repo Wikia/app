@@ -26,7 +26,7 @@ interface iMappingService {
 	 * 
 	 * @param mixed $parserOrOut
 	 */
-	public function addDependencies( &$parserOrOut );
+	public function addDependencies( $parserOrOut );
 	
 	/**
 	 * Adds service-specific parameter definitions to the provided parameter list.

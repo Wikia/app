@@ -116,7 +116,7 @@ class HookRegistry {
 		 *
 		 * @see https://www.mediawiki.org/wiki/Manual:Hooks/ParserAfterTidy
 		 */
-		$this->handlers['ParserAfterTidy'] = function ( &$parser, &$text ) {
+		$this->handlers['ParserAfterTidy'] = function ( $parser, &$text ) {
 
 			$parserAfterTidy = new ParserAfterTidy(
 				$parser,
@@ -194,7 +194,7 @@ class HookRegistry {
 		 *
 		 * @see https://www.mediawiki.org/wiki/Manual:Hooks/InternalParseBeforeLinks
 		 */
-		$this->handlers['InternalParseBeforeLinks'] = function ( &$parser, &$text ) {
+		$this->handlers['InternalParseBeforeLinks'] = function ( $parser, &$text ) {
 
 			$internalParseBeforeLinks = new InternalParseBeforeLinks(
 				$parser,
@@ -545,7 +545,7 @@ class HookRegistry {
 		/**
 		 * @see https://www.mediawiki.org/wiki/Manual:Hooks/ParserFirstCallInit
 		 */
-		$this->handlers['ParserFirstCallInit'] = function ( &$parser ) use( $applicationFactory ) {
+		$this->handlers['ParserFirstCallInit'] = function ( $parser ) use( $applicationFactory ) {
 
 			$parserFunctionFactory = $applicationFactory->newParserFunctionFactory( $parser );
 

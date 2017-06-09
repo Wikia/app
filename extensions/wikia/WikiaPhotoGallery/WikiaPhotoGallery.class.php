@@ -166,7 +166,7 @@ class WikiaPhotoGallery extends ImageGallery {
 	 *
 	 * @param $parser Parser
 	 */
-	public function recordParserOption( &$parser ) {
+	public function recordParserOption( $parser ) {
 		if ( $this->mType == self::WIKIA_PHOTO_SLIDER ) {
 			/**
 			 * because slider tag contains elements of interface we need to
@@ -383,7 +383,7 @@ class WikiaPhotoGallery extends ImageGallery {
 	/**
 	 * Parse content of <gallery> tag (add images with captions and links provided)
 	 */
-	public function parse( &$parser = null ) {
+	public function parse( $parser = null ) {
 		wfProfileIn( __METHOD__ );
 
 		// use images passed inside <gallery> tag

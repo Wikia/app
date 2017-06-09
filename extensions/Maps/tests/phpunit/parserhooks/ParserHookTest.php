@@ -45,7 +45,7 @@ abstract class ParserHookTest extends \PHPUnit_Framework_TestCase {
 
 		$renderResult = call_user_func_array(
 			array( $parserHook, 'renderFunction' ),
-			array_merge( array( &$parser ), $parameters )
+			array_merge( array( $parser ), $parameters )
 		);
 
 		if ( is_string( $renderResult ) ) {

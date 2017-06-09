@@ -38,7 +38,7 @@ $wgMainPageTag_count = 0;
  * Set hooks for each of the three parser tags
  * @param Parser $parser reference to MediaWiki Parser object
  */
-function wfMainPageTag( &$parser ) {
+function wfMainPageTag( $parser ) {
 	$parser->setHook( 'mainpage-rightcolumn-start', 'wfMainPageTag_rcs' );
 	$parser->setHook( 'mainpage-leftcolumn-start', 'wfMainPageTag_lcs' );
 	$parser->setHook( 'mainpage-endcolumn', 'wfMainPageTag_ec' );

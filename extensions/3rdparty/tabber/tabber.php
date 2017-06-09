@@ -16,7 +16,7 @@ $wgHooks['ParserFirstCallInit'][] = 'wfTabber';
  * @param Parser $parser
  * @return bool
  */
-function wfTabber(&$parser) {
+function wfTabber($parser) {
 	$parser->setHook( 'tabber', 'renderTabber' );
 	return true;
 }
