@@ -1061,9 +1061,9 @@ function wfLoadExtensionNamespaces( $extensionName, $nsList ) {
  * @author uberfuzzy
  * @return string
  */
-function wfGenerateUnsubToken( $email, $timestamp ) {
+function wfGenerateUnsubToken( $email ) {
 	global $wgUnsubscribeSalt;
-	$token = sha1( $timestamp . $email . $wgUnsubscribeSalt );
+	$token = sha1( $email . $wgUnsubscribeSalt );
 	return $token;
 }
 

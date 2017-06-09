@@ -1210,11 +1210,9 @@ class Wikia {
 			return false;
 		}
 
-		$ts = time();
 		$params = array(
 			'user' 			=> (string) $username,
-			'signature1' 	=> (string) $ts,
-			'token'			=> (string) wfGenerateUnsubToken( $email, $ts ),
+			'token'			=> (string) wfGenerateUnsubToken( $email ),
 		);
 
 		// Generate content verification signature
@@ -1224,7 +1222,7 @@ class Wikia {
 		$signature = hash_hmac( $hash_algorithm, $data, $wgWikiaAuthTokenKeys[ 'private' ] );
 
 		// encode public information
-		$public_information = array( $username, $ts, $signature, $wgWikiaAuthTokenKeys[ 'public' ] );
+		$public_information = array( $username, $signature, $wgWikiaAuthTokenKeys[ 'public' ] );
 		$result = strtr( base64_encode( implode( "|", $public_information ) ), '+/=', '-_,' );
 
 		wfProfileOut( __METHOD__ );
@@ -1264,9 +1262,9 @@ class Wikia {
 		global $wgWikiaAuthTokenKeys;
 		wfProfileIn( __METHOD__ );
 
-		@list( $user, $signature1, $signature2, $public_key ) = explode("|", base64_decode( strtr($url, '-_,', '+/=') ));
+		@list( $user, $signature2, $public_key ) = explode("|", base64_decode( strtr($url, '-_,', '+/=') ));
 
-		if ( empty( $user ) || empty( $signature1 ) || empty( $signature2 ) || empty ( $public_key) ) {
+		if ( empty( $user ) || empty( $signature2 ) || empty ( $public_key) ) {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
@@ -1289,8 +1287,7 @@ class Wikia {
 		$email = $oUser->getEmail();
 		$params = array(
 			'user'			=> (string) $user,
-			'signature1'	=> (string) $signature1,
-			'token'			=> (string) wfGenerateUnsubToken( $email, $signature1 )
+			'token'			=> (string) wfGenerateUnsubToken( $email )
 		);
 
 		// message to hash
