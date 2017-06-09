@@ -62,7 +62,7 @@ class ExtRegexFun {
 	/**
 	 * Sets up parser functions
 	 */
-	public static function init( Parser &$parser ) {
+	public static function init( Parser $parser ) {
 		self::initFunction( $parser, 'regex', SFH_OBJECT_ARGS );
 		self::initFunction( $parser, 'regex_var', SFH_OBJECT_ARGS );
 		self::initFunction( $parser, 'regexquote' );
@@ -70,7 +70,7 @@ class ExtRegexFun {
 		
 		return true;		
 	}	
-	private static function initFunction( Parser &$parser, $name, $flags = 0 ) {		
+	private static function initFunction( Parser $parser, $name, $flags = 0 ) {
 		global $egRegexFunDisabledFunctions;
 		
 		// only register function if not disabled by configuration
@@ -195,7 +195,7 @@ class ExtRegexFun {
 		return false;
 	}
 	
-	private static function limitHandler( Parser &$parser ) {		
+	private static function limitHandler( Parser $parser ) {
 		// is the limit exceeded for this parsers parse() process?
 		if( self::limitExceeded( $parser ) ) {
 			return false;
@@ -255,8 +255,8 @@ class ExtRegexFun {
 	 * 
 	 * @return String Result of replacing pattern with replacement in string, or matching text if replacement was omitted
 	 */
-    //public static function pf_regex( Parser &$parser, $subject = '', $pattern = '', $replacement = null, $limit = -1 ) {		
-	public static function pfObj_regex( Parser &$parser, PPFrame $frame, array $args ) {
+    //public static function pf_regex( Parser $parser, $subject = '', $pattern = '', $replacement = null, $limit = -1 ) {
+	public static function pfObj_regex( Parser $parser, PPFrame $frame, array $args ) {
 		// Get Parameters
 		$subject     = isset( $args[0] ) ? trim( $frame->expand( $args[0] ) ) : '';
 		$pattern     = isset( $args[1] ) ? trim( $frame->expand( $args[1] ) ) : '';
@@ -496,7 +496,7 @@ class ExtRegexFun {
 	 * @param $index Integer index of the last match which should be returnd or a string containing $n as indexes to be replaced
 	 * @param $defaultVal Integer default value which will be returned when the result with the given index doesn't exist or is a void string
 	 */
-	public static function pfObj_regex_var( Parser &$parser, PPFrame $frame, array $args ) {		
+	public static function pfObj_regex_var( Parser $parser, PPFrame $frame, array $args ) {
 		$index      = isset( $args[0] ) ? trim( $frame->expand( $args[0] ) ) : 0;
 		$defaultVal = isset( $args[1] ) ? trim( $frame->expand( $args[1] ) ) : '';
 		
@@ -704,7 +704,7 @@ class ExtRegexFun {
 	 * 
 	 * @return boolean
 	 */
-	public static function limitExceeded( Parser &$parser ) {		
+	public static function limitExceeded( Parser $parser ) {
 		global $egRegexFunMaxRegexPerParse;
 		return (
 			$egRegexFunMaxRegexPerParse !== -1
@@ -712,14 +712,14 @@ class ExtRegexFun {
 		);
 	}
 	
-	public static function getLimitCount( Parser &$parser ) {
+	public static function getLimitCount( Parser $parser ) {
 		if( isset( $parser->mExtRegexFun['counter'] ) ) {
 			return $parser->mExtRegexFun['counter'];
 		}
 		return 0;
 	}
 	
-	private static function increaseRegexCount( Parser &$parser ) {
+	private static function increaseRegexCount( Parser $parser ) {
 		$parser->mExtRegexFun['counter']++;		
 	}
 	

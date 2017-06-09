@@ -168,7 +168,7 @@ abstract class ParserHook {
 	 *
 	 * @return true
 	 */
-	public function init( Parser &$parser ) {
+	public function init( Parser $parser ) {
 		$className = get_class( $this );
 		$first = true;
 
@@ -281,12 +281,12 @@ abstract class ParserHook {
 	 *
 	 * @since 0.4
 	 *
-	 * @param Parser &$parser
+	 * @param Parser $parser
 	 * ... further arguments ...
 	 *
 	 * @return array
 	 */
-	public function renderFunction( Parser &$parser /*, n args */ ) {
+	public function renderFunction( Parser $parser /*, n args */ ) {
 		$args = func_get_args();
 		
 		$this->parser = array_shift( $args );
@@ -314,12 +314,12 @@ abstract class ParserHook {
 	 *
 	 * @since 0.4.13
 	 * 
-	 * @param Parser &$parser
+	 * @param Parser $parser
 	 * @param PPFrame $frame
 	 * @param type $args
 	 * @return array 
 	 */
-	public function renderFunctionObj( Parser &$parser, PPFrame $frame, $args ) {		
+	public function renderFunctionObj( Parser $parser, PPFrame $frame, $args ) {
 		$this->frame = $frame;
 		
 		// create non-object args for old style 'renderFunction()'
@@ -599,13 +599,13 @@ class ParserHookCaller {
 		return $obj->{$this->method}( $input, $args, $parser, $frame );
 	}
 	
-	public function runFunctionHook( Parser &$parser /*, n args */ ) {
+	public function runFunctionHook( Parser $parser /*, n args */ ) {
 		$args = func_get_args();
 		$args[0] = &$parser; // with '&' becaus call_user_func_array is being used
 		return call_user_func_array( array( new $this->class(), $this->method ), $args );
 	}
 	
-	public function runFunctionHookObj( Parser &$parser, PPFrame $frame, array $args ) {
+	public function runFunctionHookObj( Parser $parser, PPFrame $frame, array $args ) {
 		$obj = new $this->class();		
 		return $obj->{$this->method}( $parser, $frame, $args );
 	}

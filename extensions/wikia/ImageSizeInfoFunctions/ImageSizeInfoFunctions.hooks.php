@@ -6,7 +6,7 @@
 
 class ExtImageSizeInfoFunctionsHooks {
 
-	static public function parserFirstCallInit( Parser &$parser ) {
+	static public function parserFirstCallInit( Parser $parser ) {
 		$parser->setFunctionHook( 'imgw', array( 'ExtImageSizeInfoFunctionsHooks', 'imageWidth' ) );
 		$parser->setFunctionHook( 'imgh', array( 'ExtImageSizeInfoFunctionsHooks', 'imageHeight' ) );
 		return true;
