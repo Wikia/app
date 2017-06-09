@@ -1,9 +1,7 @@
 <div class="wds-dropdown page-header__languages <?= $languages->isDisabled() ? 'wds-is-disabled' : '' ?>">
 	<div class="wds-dropdown__toggle">
-			<span class="" data-tracking="interwiki-dropdown">
-				<?= $languages->currentLangName ?>
-			</span>
-		<?= DesignSystemHelper::renderSvg(
+		<? // There is intentionally no new line between span and svg to not render additional space between text na svg icon ?>
+		<span data-tracking="interwiki-dropdown"><?= $languages->currentLangName ?></span><?= DesignSystemHelper::renderSvg(
 			'wds-icons-dropdown-tiny',
 			'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron'
 		) ?>

@@ -6,13 +6,16 @@
 @import 'skins/oasis/css/core/breakpoints-variables';
 
 .WikiaPage .page-header {
+	$text-dropdown-padding-bottom: 10px;
+
 	@include dropdown-theming($color-page, $color-text, $color-links, $color-page-border);
 
+	@include align-items(flex-start);
 	@include flexbox();
 	@include justify-content(flex-end);
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
-	padding: 12px 0;
+	padding: 16px 0 12px;
 	position: relative;
 	z-index: 4;
 
@@ -25,15 +28,13 @@
 	}
 
 	.wds-button-group {
-		@include button-group-theming($color-button-text);
+		@include button-group-theming($color-page);
 	}
 
 	&__counter {
 		color: $color-text;
-		float: right;
 		font-size: $wds-typescale-size-minus-1;
 		font-weight: bold;
-		padding-bottom: 10px;
 		text-align: right;
 	}
 
@@ -41,16 +42,22 @@
 		@include align-items(flex-end);
 		@include flexbox();
 		@include flex-direction(column);
+		@include flex-shrink(0);
 		@include justify-content(space-between);
 		margin-left: 20px;
 
 	}
 
 	&__languages {
-		padding-bottom: 12px;
+		margin-bottom: 12px;
+
+		.wds-dropdown__toggle-chevron {
+			vertical-align: text-top;
+		}
 	}
 
 	&__main {
+		@include align-self(flex-end);
 		@include flex-grow(1);
 		max-width: 100%;
 		min-width: 0;
@@ -67,7 +74,7 @@
 		}
 
 		&-dropdown {
-			padding-bottom: 10px;
+			padding-bottom: $text-dropdown-padding-bottom;
 
 			&-content {
 				font-style: normal;
@@ -113,16 +120,17 @@
 		border: 0;
 		height: 1px;
 		margin-bottom: 18px;
+		margin-top: 0;
 	}
 
 	&__subtitle {
 		margin-top: 6px;
 
 		&-back-icon {
-			transform: rotate(270deg);
-			vertical-align: text-top;
 			fill: $color-links;
 			padding-right: 2px;
+			transform: rotate(270deg);
+			vertical-align: text-top;
 		}
 	}
 
@@ -146,5 +154,11 @@
 	.wds-avatar {
 		border-color: $color-page-border;
 	}
+}
+//It's needed to add margin to allign article header with content on corporate pages with this one.
+.WikiaPage.WikiaGrid > div > header,
+.WikiaPage.WikiaGrid > div > hr  {
+	margin-left: 10px;
+	margin-right: 10px;
 }
 
