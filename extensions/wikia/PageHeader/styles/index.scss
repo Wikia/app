@@ -47,6 +47,12 @@
 
 	}
 
+	&__contribution-buttons {
+		> *:not(:last-child) {
+			margin-right: 3px;
+		}
+	}
+
 	&__languages {
 		padding-bottom: 12px;
 
