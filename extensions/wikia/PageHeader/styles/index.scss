@@ -39,6 +39,7 @@
 
 	&__contribution {
 		@include align-items(flex-end);
+		@include align-self(stretch);
 		@include flexbox();
 		@include flex-direction(column);
 		@include flex-shrink(0);
