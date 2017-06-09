@@ -40,7 +40,10 @@
 			<li class="wrap-background">
 				<h2><?= wfMessage( 'themedesigner-community-header-graphic' )->escaped() ?></h2>
 				<img src="<?= $wg->BlankImgUrl ?>" class="community-header-background-image" id="swatch-community-header-image-background">
-				<div class="community-header-size-text">430px x 105px</div>
+				<div class="community-header-size-text">
+					<?= ThemeSettings::COMMUNITY_HEADER_BACKGROUND_WIDTH ?>px x
+					<?= ThemeSettings::COMMUNITY_HEADER_BACKGROUND_HEIGHT ?>px
+				</div>
 			</li>
 		</ul>
 	</fieldset>
