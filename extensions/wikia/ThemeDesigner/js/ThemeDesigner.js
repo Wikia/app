@@ -254,6 +254,8 @@
 		},
 
 		wordmarkTabInit: function () {
+			var $wordmarkTab = $('#WordmarkTab');
+
 			// handle font family and font size menu change
 			$('#wordmark-font').change(function () {
 				ThemeDesigner.set('wordmark-font', $(this).val());
@@ -282,20 +284,22 @@
 			});
 
 			//graphic wordmark clicking
-			$('#WordmarkTab').find('.graphic').find('.preview').find('.wordmark').click(function () {
+			$wordmarkTab.find('.graphic').find('.preview').find('.wordmark').click(function () {
 				ThemeDesigner.set('wordmark-type', 'graphic');
-			})
+			});
+
 			//grapic wordmark button
-				.find('.graphic').find('.preview').find('a').click(function (event) {
+			$wordmarkTab.find('.graphic').find('.preview').find('a').click(function (event) {
 				event.preventDefault();
 				ThemeDesigner.set('wordmark-type', 'text');
 				ThemeDesigner.set('wordmark-image-url', window.wgBlankImgUrl);
 
 				// Can't use js to clear file input value so reseting form
 				$('#WordMarkUploadForm')[0].reset();
-			})
+			});
+
 			//remove favicon link
-				.find('.favicon').find('.preview').find('a').click(function (event) {
+			$wordmarkTab.find('.favicon').find('.preview').find('a').click(function (event) {
 				event.preventDefault();
 				ThemeDesigner.set('favicon-image-url', window.wgBlankImgUrl);
 
