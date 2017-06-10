@@ -13,10 +13,15 @@ class ArticleCommentsHooks {
 		$service = PageStatsService::newFromTitle( $title );
 		$comments = $service->getCommentsCount();
 
-		if ( $comments && ArticleCommentInit::ArticleCommentCheckTitle( $title ) ) {
-			$label = wfMessage( 'article-comments-comments' )
+		if ( ArticleCommentInit::ArticleCommentCheckTitle( $title ) ) {
+			if ( $comments > 0 ) {
+				$label = wfMessage( 'article-comments-comments' )
 					->params( CommentsLikesController::formatCount( $comments ) )
 					->escaped();
+			} else {
+				$label = wfMessage( 'article-comments-no-comments' )
+					->escaped();
+			}
 
 			array_unshift(
 				$buttons,

@@ -7,7 +7,9 @@
 	<div class="page-header__contribution">
 		<div> <!--Empty div to ensure $actionButton is always pushed to bottom of the container-->
 			<? if ( $languages->shouldDisplay() ): ?>
-				<?= $app->renderView( 'Wikia\PageHeader\PageHeader', 'languages' ); ?>
+				<?= $app->renderView( 'Wikia\PageHeader\PageHeader', 'languages', [
+					'languages' => $languages
+				] ); ?>
 			<? endif; ?>
 			<? if ( $counter->isNotEmpty() ) : ?>
 				<div class="page-header__counter">

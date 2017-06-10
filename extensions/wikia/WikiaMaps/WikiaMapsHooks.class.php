@@ -111,4 +111,12 @@ class WikiaMapsHooks {
 
 		return true;
 	}
+
+	public static function onPageHeaderPageTypePrepared( \Title $title, string &$pageType ) {
+		if ( $title->isSpecial( 'Maps' ) ) {
+			$pageType = '';
+		}
+
+		return true;
+	}
 }

@@ -6,17 +6,10 @@ use Wikia;
 
 class PageHeaderController extends \WikiaController {
 
-	/** @var  Languages */
-	private $languages;
-
-	public function init() {
-		$this->languages = new Languages( $this->app );
-	}
-
 	public function index() {
-		$this->setVal( 'languages', $this->languages );
-		$this->setVal( 'pageTitle', new PageTitle( $this->app ) );
 		$this->setVal( 'counter', new Counter() );
+		$this->setVal( 'languages', new Languages( $this->app ) );
+		$this->setVal( 'pageTitle', new PageTitle( $this->app ) );
 	}
 
 	public function categories() {
@@ -35,7 +28,7 @@ class PageHeaderController extends \WikiaController {
 	}
 
 	public function languages() {
-		$this->setVal( 'languages', $this->languages );
+		$this->setVal( 'languages', $this->getVal( 'languages' ) );
 	}
 
 	public function buttons() {
