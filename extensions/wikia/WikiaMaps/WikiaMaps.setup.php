@@ -45,6 +45,7 @@ $wgHooks[ 'ParserFirstCallInit' ][] = 'WikiaMapsParserTagController::onParserFir
 $wgHooks[ 'OasisSkinAssetGroups' ][] = 'WikiaMapsHooks::onOasisSkinAssetGroups';
 $wgHooks[ 'SkinAfterBottomScripts' ][] = 'WikiaMapsHooks::onSkinAfterBottomScripts';
 $wgHooks[ 'BeforePageDisplay' ][] = 'WikiaMapsHooks::onBeforePageDisplay';
+$wgHooks[ 'PageHeaderPageTypePrepared' ][] = 'WikiaMapsHooks::onPageHeaderPageTypePrepared';
 
 // mobile
 $wgHooks['WikiaMobileAssetsPackages'][] = 'WikiaMapsHooks::onWikiaMobileAssetsPackages';
