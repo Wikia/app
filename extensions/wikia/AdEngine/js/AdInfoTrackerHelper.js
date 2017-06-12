@@ -50,7 +50,7 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 			'kv_ref': pageParams.ref || '',
 			'kv_top': pageParams.top || '',
 			'kv_ah': pageParams.ah || '',
-			'bidder_won': getBidderWon(slotParams, realSlotPrices),
+			'bidder_won': getBidderWon(realSlotPrices),
 			'bidder_1': transformBidderPrice('indexExchange', realSlotPrices, slotPricesIgnoringTimeout),
 			'bidder_2': transformBidderPrice('appnexus', realSlotPrices, slotPricesIgnoringTimeout),
 			'bidder_3': transformBidderPrice('fastlane', realSlotPrices, slotPricesIgnoringTimeout),
@@ -80,7 +80,7 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 		return '';
 	}
 
-	function getBidderWon(slotParams, realSlotPrices) {
+	function getBidderWon(realSlotPrices) {
 		var realSlotPricesKeys = Object.keys(realSlotPrices),
 			highestPriceBidder = realSlotPricesKeys.length === 0 ? null : realSlotPricesKeys.reduce(function(a, b) {
 				return parseFloat(realSlotPrices[a]) > parseFloat(realSlotPrices[b]) ? a : b;
