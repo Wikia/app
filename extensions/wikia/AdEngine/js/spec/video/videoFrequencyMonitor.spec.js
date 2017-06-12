@@ -13,6 +13,14 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 		}
 	};
 
+	beforeEach(function () {
+		jasmine.clock().install();
+	});
+
+	afterEach(function () {
+		jasmine.clock().uninstall();
+	});
+
 	function getModule() {
 		return modules['ext.wikia.adEngine.video.videoFrequencyMonitor'](
 			mocks.adLogicPageViewCounter,
@@ -26,15 +34,19 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 
 		spyOn(mocks.store, 'save');
 		spyOn(mocks.adLogicPageViewCounter, 'get').and.returnValue(10);
-		spyOn(window, 'Date').and.returnValue(currentDate);
+		jasmine.clock().mockDate(currentDate);
 
 		getModule().registerLaunchedVideo();
 
 		callArguments = mocks.store.save.calls.all()[0].args[0];
 
-		expect(window.Date).toHaveBeenCalled();
 		expect(callArguments.date).toEqual(currentDate.getTime());
 		expect(callArguments.pv).toEqual(10);
 	});
+
+	it('Should enable video for no previous videos play registered', function () {
+		expect(getModule().videoCanBeLaunched()).toBeTruthy();
+	});
+
 });
 
