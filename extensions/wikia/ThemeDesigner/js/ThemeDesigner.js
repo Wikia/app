@@ -1,4 +1,4 @@
-/* global $ */
+/* global $, Vignette */
 (function (window) {
 	'use strict';
 	var ThemeDesigner = {
@@ -943,7 +943,14 @@
 
 				previewFrameContent.find('header.wds-community-header').attr(
 					'style',
-					'background-image: url(' + ThemeDesigner.settings['community-header-background-image'] + ');'
+					'background-image: url(' + Vignette.getThumbURL(
+						ThemeDesigner.settings['community-header-background-image'],
+						{
+							mode: Vignette.mode.zoomCrop,
+							width: 471,
+							height: 115
+						}
+					) + ');'
 				);
 
 				previewFrameContent.find('#WikiaPageBackground')

@@ -1410,6 +1410,7 @@ $config['theme_designer_js'] = [
 		'//resources/wikia/modules/aim.js',
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
 		'//resources/wikia/libraries/bootstrap/popover.js',
+		'//resources/wikia/libraries/vignette/vignette.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		'//extensions/wikia/ThemeDesigner/js/ThemeDesigner.js',
 	],
@@ -3005,6 +3006,7 @@ $config['create_new_wiki_js'] = [
 		'//extensions/wikia/CreateNewWiki/js/CreateNewWikiThemeDesignerOverrides.js',
 		'//extensions/wikia/CreateNewWiki/js/WikiBuilder.js',
 		'//extensions/wikia/CreateNewWiki/js/CreateNewWikiHelper.js',
+		'//resources/wikia/libraries/vignette/vignette.js',
 	],
 ];
 
