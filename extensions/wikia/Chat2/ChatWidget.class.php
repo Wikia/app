@@ -189,7 +189,7 @@ class ChatWidget {
 				// get stats for edit count and member since
 				$user = User::newFromName( $userName );
 
-				if ( $user instanceof User && $user->isLoggedIn() ) {
+				if ( $user instanceof User && !$user->isAnon() ) {
 					$userStatsService = new UserStatsService( $user->getId() );
 					$stats = $userStatsService->getStats();
 
