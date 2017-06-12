@@ -140,8 +140,6 @@ class ChatWidget {
 	 * * username - chatter login
 	 * * avatarUrl - chatter avatar url
 	 * * editCount - number of chatter's edits
-	 * * showSince - flag indicating if we can display the information when the chatter joined the wiki
-	 * * since_year && since_month - month and year, when chatter joined this wiki
 	 * * since - since year and month in the form of string "MMM YYYY". Months are in wgLang and abbreviated
 	 * * profileUrl - link to chatter talk page (or message wall, if it's enabled)
 	 * * contribsUrl - link to chatter contribution page
@@ -182,6 +180,7 @@ class ChatWidget {
 			self::getUserInfoMemcKey( $userName ),
 			self::CHAT_USER_INFO_CACHE_TTL,
 			function () use ( $userName ) {
+				/* @var Language $wgLang */
 				global $wgEnableWallExt, $wgLang;
 
 				$chatter = [
@@ -200,15 +199,9 @@ class ChatWidget {
 					$chatter['editCount'] = $stats['editcount'];
 
 					// member since
-					$chatter['showSince'] = $chatter['editCount'] != 0;
-					if ( $chatter['showSince'] ) {
-						$months = $wgLang->getMonthAbbreviationsArray();
-						$date = getdate( strtotime( $stats['firstContributionTimestamp'] ) );
-
-						$chatter['since_year'] = $date['year'];
-						$chatter['since_month'] = $date['mon'];
-						$chatter['since'] = sprintf( '%s %s', $months[$chatter['since_month']], $chatter['since_year'] );
-					}
+					$months = $wgLang->getMonthAbbreviationsArray();
+					$date = getdate( strtotime( $stats['firstContributionTimestamp'] ) );
+					$chatter['since'] = sprintf( '%s %s', $months[$date['mon']], $chatter['since_year'] );
 
 					$profileUrlNs = !empty( $wgEnableWallExt ) ? NS_USER_WALL : NS_USER_TALK;
 					$chatter['profileUrl'] = Title::makeTitle( $profileUrlNs, $chatter['username'] )->getFullURL();
