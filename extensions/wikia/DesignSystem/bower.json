@@ -3,6 +3,6 @@
   "private": true,
 
   "dependencies": {
-    "design-system": "Wikia/design-system#dropdown-theming"
+    "design-system": "Wikia/design-system#XW-3590"
   }
 }

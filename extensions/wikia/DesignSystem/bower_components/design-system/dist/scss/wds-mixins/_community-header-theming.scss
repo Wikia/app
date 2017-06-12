@@ -19,7 +19,11 @@
 	background-color: $header-background-color;
 
 	&::before {
-		background: linear-gradient(to right, rgba($header-background-color, .5), rgba($header-background-color, .5)), linear-gradient(to left, rgba($header-background-color, 0) 200px, $header-background-color 430px);
+		background: linear-gradient(to right, rgba($header-background-color, .5), rgba($header-background-color, .5)), linear-gradient(to left, rgba($header-background-color, 0) 200px, $header-background-color $wds-community-header-background-width);
+
+		@media #{$wds-breakpoint-l-down} {
+			background: linear-gradient(to right, rgba($header-background-color, .5), rgba($header-background-color, .5)), linear-gradient(to left, rgba($header-background-color, 0) 200px, $header-background-color $wds-community-header-background-width-small-breakpoint);
+		}
 	}
 
 	.wds-button.wds-is-secondary {
