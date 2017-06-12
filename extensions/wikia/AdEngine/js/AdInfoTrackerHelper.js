@@ -83,7 +83,9 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 	}
 
 	function getBidderWon(realSlotPrices) {
-		var realSlotPricesKeys = Object.keys(realSlotPrices),
+		var realSlotPricesKeys = Object.keys(realSlotPrices).filter(function(key) {
+				return parseFloat(realSlotPrices[key]) > 0;
+			}),
 			highestPriceBidder = realSlotPricesKeys.length === 0 ? null : realSlotPricesKeys.reduce(function(a, b) {
 				return parseFloat(realSlotPrices[a]) > parseFloat(realSlotPrices[b]) ? a : b;
 			});
