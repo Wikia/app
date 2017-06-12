@@ -6,8 +6,15 @@ describe('ext.wikia.adEngine.video.videoFrequencyStore', function () {
 		mocks = {
 			pageViewCounter: {
 				get: noop
-			}
+			},
+			cache: {
+				get: noop,
+				set: noop
+			},
+			log: noop
 		};
+
+	mocks.log.levels = {};
 
 	beforeEach(function () {
 		jasmine.clock().install();
@@ -19,7 +26,9 @@ describe('ext.wikia.adEngine.video.videoFrequencyStore', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.video.videoFrequencyStore'](
-			mocks.pageViewCounter
+			mocks.pageViewCounter,
+			mocks.cache,
+			mocks.log
 		);
 	}
 

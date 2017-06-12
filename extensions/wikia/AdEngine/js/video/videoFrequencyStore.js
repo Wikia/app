@@ -1,13 +1,24 @@
 /*global define*/
 define('ext.wikia.adEngine.video.videoFrequencyStore', [
-	'ext.wikia.adEngine.adLogicPageViewCounter'
-], function (pageViewCounter) {
+	'ext.wikia.adEngine.adLogicPageViewCounter',
+	'wikia.cache',
+	'wikia.log'
+], function (pageViewCounter, cache, log) {
 	'use strict';
 
-	var store = [];
+	var logGroup = 'ext.wikia.adEngine.video.videoFrequencyStore',
+		cacheKey = 'adEngine_outstreamVideoFrequency',
+		cacheTtl = cache.CACHE_STANDARD, // 24h
+		store = [];
 
 	function save(data) {
+		store = cache.get(cacheKey) || store;
+		log(['Data retrived from cache', store], log.levels.debug, logGroup);
+
 		store.push(data);
+
+		cache.set(cacheKey, store, cacheTtl);
+		log(['Data saved in cache', store, cacheKey, cacheTtl], log.levels.debug, logGroup);
 	}
 
 	function countAll(filterFunction) {
