@@ -12,8 +12,8 @@ class StaffWelcomePoster {
 		'ko' => 24883131,      // Miri-Nae
 		'nl' => 4142476,       // Yatalu
 		'pl' => 1117661,       // Nanaki
-		'pt' => 24005296,      // Macherie ana
-		'ru' => 26457441,      // Vlazovskiy
+		'pt' => 5653518,       // Ultragustavo25
+		'ru' => 1121346,       // Kuzura
 		'vi' => 26041741,      // KhangND
 		'zh-hans' => 11909873, // Cal-Boy
 		'zh-hant' => 56584     // Ffaarr
