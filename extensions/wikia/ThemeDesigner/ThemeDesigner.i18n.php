@@ -1011,7 +1011,7 @@ $messages['ja'] = array(
 	'themedesigner-rules-color-middle' => '中央の背景色を変更',
 	'themedesigner-community-header-graphic' => 'ヘッダー背景画像',
 	'themedesigner-community-header-color' => 'ヘッダー',
-	'themedesigner-toolbar-color' => 'ツールバーの背景色',
+	'themedesigner-toolbar-color' => 'ツールバー',
 	'themedesigner-wordmark-preview-error' => 'Wikiの名前は空欄にできません。
 名前を入力して保存してください。',
 	'themedesigner-upload-disabled' => '申し訳ありません。現在アップロードが無効になっています。しばらく経ってから再度お試しください。',
