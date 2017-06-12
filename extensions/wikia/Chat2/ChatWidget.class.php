@@ -203,7 +203,7 @@ class ChatWidget {
 
 					// SUS-1994 - fallback to user registration date if he has no contributions yet
 					$date = getdate( strtotime( $stats['firstContributionTimestamp'] ?: $user->getRegistration() ) );
-					$chatter['since'] = sprintf( '%s %s', $months[$date['mon']], $chatter['since_year'] );
+					$chatter['since'] = sprintf( '%s %s', $months[$date['mon']], $date['year'] );
 
 					$profileUrlNs = !empty( $wgEnableWallExt ) ? NS_USER_WALL : NS_USER_TALK;
 					$chatter['profileUrl'] = Title::makeTitle( $profileUrlNs, $chatter['username'] )->getFullURL();
