@@ -178,11 +178,11 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 		expect(data.bidder_won).toBe('');
 	});
 
-	it('prepareData correctly calculates bidder_won for bidders', function () {
+	it('prepareData correctly calculates bidder_won for bidders - fastlane_private', function () {
 		var data,
 			slot = getTopLeaderboardSlotWithPageParams(fakeJSONString);
 
-		slot.container.firstChild.dataset.gptSlotParams = JSON.stringify({foo: 1, rpfl_7450: 1});
+		slot.container.firstChild.dataset.gptSlotParams = JSON.stringify(fakeJSONString);
 		slot.container.firstChild.dataset.gptCreativeSize = fakeJSONString;
 
 		mocks.lookupServices.getDfpSlotPrices = function() {
@@ -198,28 +198,7 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 		expect(data.bidder_won).toBe('fastlane_private');
 	});
 
-	it('prepareData correctly calculates bidder_won for bidders', function () {
-		var data,
-			slot = getTopLeaderboardSlotWithPageParams(fakeJSONString);
-
-		slot.container.firstChild.dataset.gptSlotParams = JSON.stringify({foo: 1, hb_bidder: 'openx'});
-		slot.container.firstChild.dataset.gptCreativeSize = fakeJSONString;
-
-		mocks.lookupServices.getDfpSlotPrices = function() {
-			return {
-				fastlane_private: '2.50',
-				openx: '3.30',
-				rubicon: '0.75'
-			};
-		};
-
-		data = getModule().prepareData(slot);
-
-
-		expect(data.bidder_won).toBe('openx');
-	});
-
-	it('prepareData correctly calculates bidder_won when bids aren\'t used for targeting', function () {
+	it('prepareData correctly calculates bidder_won for bidders - openx', function () {
 		var data,
 			slot = getTopLeaderboardSlotWithPageParams(fakeJSONString);
 
@@ -237,6 +216,6 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 		data = getModule().prepareData(slot);
 
 
-		expect(data.bidder_won).toBe('');
+		expect(data.bidder_won).toBe('openx');
 	});
 });

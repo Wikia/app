@@ -84,23 +84,14 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 		var realSlotPricesKeys = Object.keys(realSlotPrices),
 			highestPriceBidder = realSlotPricesKeys.length === 0 ? null : realSlotPricesKeys.reduce(function(a, b) {
 				return parseFloat(realSlotPrices[a]) > parseFloat(realSlotPrices[b]) ? a : b;
-		});
+			});
 
-		// We need to check targeting because it's possible that bids won't be used for targeting
-		if (slotParams.hb_bidder && highestPriceBidder === slotParams.hb_bidder) {
-			return slotParams.hb_bidder;
-		}
-
-		if (slotParams.rpfl_7450 && ['fastlane', 'fastlane_private'].indexOf(highestPriceBidder) >= 0) {
-			return highestPriceBidder;
-		}
-
-		return '';
+		return highestPriceBidder || '';
 	}
 
 	function generateUUID() {
 		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-			var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+			var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
 			return v.toString(16);
 		});
 	}
