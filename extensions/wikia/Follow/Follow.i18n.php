@@ -2157,10 +2157,10 @@ Dodaj strony do listy klikając „{{int:watch}}“ na dole strony.',
 	'wikiafollowedpages-userpage-hide' => 'ukryj',
 	'wikiafollowedpages-userpage-empty' => 'Lista stron obserwowanych przez tego użytkownika jest pusta.
 Dodaj strony do tej listy klikając „{{int:watch}}” u góry strony.',
-	'enotif_subject_categoryadd' => 'Strona $PAGETITLE na {{GRAMMAR:locative|{{SITENAME}}}} została dodana do kategorii $CATEGORYNAME przez użytkownika $PAGEEDITOR',
+	'enotif_subject_categoryadd' => 'Strona $PAGETITLE na {{GRAMMAR:MS.lp|{{SITENAME}}}} została dodana do kategorii $CATEGORYNAME przez użytkownika $PAGEEDITOR',
 	'enotif_body_categoryadd' => 'Witaj $WATCHINGUSERNAME,
 
-Strona została dodana do kategorii $CATEGORY na {{GRAMMAR:locative|{{SITENAME}}}}.
+Strona została dodana do kategorii $CATEGORY na {{GRAMMAR:MS.lp|{{SITENAME}}}}.
 
 Przejdź na „$PAGETITLE_URL”, by obejrzeć nową stronę.
 
@@ -2172,7 +2172,7 @@ ___________________________________________
 Przejdź na: http://spolecznosc.wikia.com/Specjalna:Preferencje',
 	'enotif_body_categoryadd-HTML' => 'Witaj $WATCHINGUSERNAME.
 <br /><br />
-Strona została dodana do kategorii <a href="$CATEGORY_URL">$CATEGORY</a> na {{GRAMMAR:locative|{{SITENAME}}}}.
+Strona została dodana do kategorii <a href="$CATEGORY_URL">$CATEGORY</a> na {{GRAMMAR:MS.lp|{{SITENAME}}}}.
 <br /><br />
 Przejdź na <a href="$PAGETITLE_URL">$PAGETITLE</a>, by obejrzeć nową stronę.
 <br /><br />
@@ -2184,10 +2184,10 @@ Przejdź na <a href="$PAGETITLE_URL">$PAGETITLE</a>, by obejrzeć nową stronę.
 <li>Chcesz kontrolować otrzymywane wiadomości? Przejdź do <a href="http://spolecznosc.wikia.com/Specjalna:Preferencje">preferencji użytkownika</a></li>
 </ul>
 </p>',
-	'enotif_subject_blogpost' => 'Strona $PAGETITLE na {{GRAMMAR:locative|{{SITENAME}}}} została dodana do listy $BLOGLISTINGNAME przez użytkownika $PAGEEDITOR',
+	'enotif_subject_blogpost' => 'Strona $PAGETITLE na {{GRAMMAR:MS.lp|{{SITENAME}}}} została dodana do listy $BLOGLISTINGNAME przez użytkownika $PAGEEDITOR',
 	'enotif_body_blogpost' => 'Witaj $WATCHINGUSERNAME.
 
-Dodano nowy wpis na śledzonym przez Ciebie blogu $BLOGLISTING na {{GRAMMAR:locative|{{SITENAME}}}}.
+Dodano nowy wpis na śledzonym przez Ciebie blogu $BLOGLISTING na {{GRAMMAR:MS.lp|{{SITENAME}}}}.
 
 Przejdź na „$PAGETITLE_URL”, by obejrzeć nowy wpis.
 
@@ -2199,7 +2199,7 @@ ___________________________________________
 Przejdź na: http://spolecznosc.wikia.com/Specjalna:Preferencje',
 	'enotif_body_blogpost-HTML' => 'Witaj $WATCHINGUSERNAME.
 <br /><br />
-Dodano nowy wpis na śledzonym przez Ciebie blogu $BLOGLISTING na {{GRAMMAR:locative|{{SITENAME}}}}.
+Dodano nowy wpis na śledzonym przez Ciebie blogu $BLOGLISTING na {{GRAMMAR:MS.lp|{{SITENAME}}}}.
 <br /><br />
 Przejdź na <a href="$PAGETITLE_URL">$PAGETITLE</a>, by obejrzeć nowy wpis.
 <br /><br />
