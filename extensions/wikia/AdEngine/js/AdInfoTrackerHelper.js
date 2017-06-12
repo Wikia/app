@@ -29,7 +29,8 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 			slotParams = JSON.parse(slotFirstChildData.gptSlotParams),
 			slotPricesIgnoringTimeout = lookupServices.getCurrentSlotPrices(slot.name),
 			realSlotPrices = lookupServices.getDfpSlotPrices(slot.name),
-			slotSize = JSON.parse(slotFirstChildData.gptCreativeSize);
+			slotSize = JSON.parse(slotFirstChildData.gptCreativeSize),
+			bidderWon = getBidderWon(realSlotPrices);
 
 		data = {
 			'pv': pageParams.pv || '',
@@ -50,7 +51,8 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 			'kv_ref': pageParams.ref || '',
 			'kv_top': pageParams.top || '',
 			'kv_ah': pageParams.ah || '',
-			'bidder_won': getBidderWon(realSlotPrices),
+			'bidder_won': bidderWon,
+			'bidder_won_price': bidderWon ? realSlotPrices[bidderWon] : '',
 			'bidder_1': transformBidderPrice('indexExchange', realSlotPrices, slotPricesIgnoringTimeout),
 			'bidder_2': transformBidderPrice('appnexus', realSlotPrices, slotPricesIgnoringTimeout),
 			'bidder_3': transformBidderPrice('fastlane', realSlotPrices, slotPricesIgnoringTimeout),
