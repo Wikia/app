@@ -33,7 +33,7 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 		callArguments = mocks.store.save.calls.all()[0].args[0];
 
 		expect(window.Date).toHaveBeenCalled();
-		expect(callArguments.date).toEqual(currentDate);
+		expect(callArguments.date).toEqual(currentDate.getTime());
 		expect(callArguments.pv).toEqual(10);
 	});
 });

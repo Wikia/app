@@ -7,7 +7,7 @@ define('ext.wikia.adEngine.video.videoFrequencyMonitor', [
 
 	function prepareData() {
 		return {
-			date: new Date(),
+			date: new Date().getTime(),
 			pv: pageViewCounter.get()
 		};
 	}
