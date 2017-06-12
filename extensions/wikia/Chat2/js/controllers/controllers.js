@@ -165,7 +165,7 @@ var NodeRoomController = $.createClass(Observable, {
 		this.socket.bind('longMessage', $.proxy(this.onLongMessage, this));
 
 		this.socket.bind('logout', $.proxy(this.onLogout, this));
-		this.socket.bind('freeze', this.onFreeze.bind(this));
+		this.socket.bind('freeze', $.proxy(this.onFreeze, this));
 
 		this.viewDiscussion = new NodeChatDiscussion({model: this.model, el: $('body'), roomId: roomId});
 		this.viewDiscussion.bind('clickAnchor', $.proxy(this.clickAnchor, this));
