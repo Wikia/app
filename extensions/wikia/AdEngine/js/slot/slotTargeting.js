@@ -4,7 +4,7 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 	'ext.wikia.adEngine.utils.math',
 	'ext.wikia.adEngine.wrappers.prebid',
 	'wikia.abTest',
-	'wikia.instantGlobals',
+	'wikia.instantGlobals'
 ], function (adContext, math, prebid, abTest, instantGlobals) {
 	'use strict';
 
@@ -112,7 +112,7 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 			videoTargeting = getVideoTargeting && getVideoTargeting('INCONTENT_PLAYER');
 
 		if (videoTargeting) {
-			return videoTargeting.hb_bidder.substr(0, 2) + parseFloat(videoTargeting.hb_pb) * 100;
+			return videoTargeting.hb_bidder.substr(0, 2) + math.leftPad(parseFloat(videoTargeting.hb_pb) * 100, 4);
 		}
 	}
 
