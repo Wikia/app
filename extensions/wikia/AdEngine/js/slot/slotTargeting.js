@@ -2,9 +2,10 @@
 define('ext.wikia.adEngine.slot.slotTargeting', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.utils.math',
+	'ext.wikia.adEngine.wrappers.prebid',
 	'wikia.abTest',
-	'wikia.instantGlobals'
-], function (adContext, math, abTest, instantGlobals) {
+	'wikia.instantGlobals',
+], function (adContext, math, prebid, abTest, instantGlobals) {
 	'use strict';
 
 	var skins = {
@@ -106,8 +107,18 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 		}
 	}
 
+	function getOutstreamData() {
+		var getVideoTargeting = prebid.get().getAdserverTargetingForAdUnitCode,
+			videoTargeting = getVideoTargeting && getVideoTargeting('INCONTENT_PLAYER');
+
+		if (videoTargeting) {
+			return videoTargeting.hb_bidder.substr(0, 2) + parseFloat(videoTargeting.hb_pb) * 100;
+		}
+	}
+
 	return {
 		getAbTestId: getAbTestId,
+		getOutstreamData: getOutstreamData,
 		getPrebidSlotId: getPrebidSlotId,
 		getWikiaSlotId: getWikiaSlotId
 	};
