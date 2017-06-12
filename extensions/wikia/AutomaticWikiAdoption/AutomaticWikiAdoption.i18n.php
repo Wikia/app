@@ -3342,7 +3342,7 @@ $messages['zh-hans'] = array(
 
 如果您需要帮助照顾此维基社区，您还可以前往$2查看如何设置其他社群成员加入管理员团队。我们期待您很快重新活跃在#WIKINAME上！
 
-Fandom团队
+FANDOM团队
 
 您可以单击这里取消邮件订阅：$3',
 	'wikiadoption-mail-first-content-HTML' => '您好，$1！<br /><br />
@@ -3351,7 +3351,7 @@ Fandom团队
 
 如果您需要帮助照顾此维基社区，您还可以前往<a href="$2">用户权限管理</a>查看如何设置其他社群成员加入管理员团队。我们期待您很快重新活跃在#WIKINAME上！<br /><br />
 
-Fandom团队<br /><br />
+FANDOM团队<br /><br />
 
 您可以单击此处<a href="$3">取消邮件订阅</a>。',
 	'wikiadoption-mail-second-subject' => '#WIKINAME 将很快被公示认领',
@@ -3361,7 +3361,7 @@ Fandom团队<br /><br />
 
 由于这个社区长期没有活跃的管理员，#WIKINAME将被开放认领，以允许其他用户成为管理员。
 
-Fandom团队
+FANDOM团队
 
 您可以单击这里取消邮件订阅：$3',
 	'wikiadoption-mail-second-content-HTML' => '您好，$1！<br /><br />
@@ -3370,7 +3370,7 @@ Fandom团队
 
 由于这个社区长期没有活跃的管理员，#WIKINAME将被开放认领，以允许其他用户成为管理员。<br /><br />
 
-Fandom团队<br /><br />
+FANDOM团队<br /><br />
 
 您可以单击这里 <a href="$3">取消邮件订阅</a>。',
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME已被认领',
@@ -3380,7 +3380,7 @@ Fandom团队<br /><br />
 
 #WIKINAME的代管用户将拥有行政员与管理员权限。别担心，您还可以随时重新取得您在此社区上的管理员权限并继续做出贡献。
 
-Fandom团队
+FANDOM团队
 
 您可以更改这个列表来取消订阅信息：$3
 ',
@@ -3390,7 +3390,7 @@ Fandom团队
 
 #WIKINAME的代管用户将拥有行政员与管理员权限。别担心，您还可以随时重新取得您在此社区上的管理员权限并继续做出贡献。<br /><br />
 
-Fandom团队<br /><br />
+FANDOM团队<br /><br />
 
 您可以更改这个列表<a href="$3">取消订阅</a>。',
 	'tog-adoptionmails' => '当$1可以被其他用户认领时邮件通知我',
@@ -3433,7 +3433,7 @@ $messages['zh-hant'] = array(
 
 #WIKINAME的領養用戶將擁有行政員與管理員權限。別擔心，您還可以隨時重新取得您在此社區上的管理員權限並繼續做出貢獻。
 
-Fandom團隊
+FANDOM團隊
 
 您可以更改這個表單取消訂閱訊息：$3',
 	'wikiadoption-mail-adoption-content-HTML' => '您好，$1！<br /><br />
@@ -3442,7 +3442,7 @@ Fandom團隊
 
 #WIKINAME的領養用戶將擁有行政員與管理員權限。別擔心，您還可以隨時重新取得您在此社區上的管理員權限並繼續做出貢獻。<br /><br />
 
-Fandom團隊<br /><br />
+FANDOM團隊<br /><br />
 
 您可以更改這個表單<a href="$3">取消訂閱</a>。',
 	'wikiadoption-mail-first-content' => '您好，$1！
@@ -3451,7 +3451,7 @@ Fandom團隊<br /><br />
 
 如果您需要幫助照顧此wiki社區，您還可以前往$2查看如何設置其他社群成員加入管理員團隊。我們期待您很快重新活躍在#WIKINAME上！
 
-Fandom團隊
+FANDOM團隊
 
 您可以按這裡取消郵件訂閱：$3',
 	'wikiadoption-mail-first-content-HTML' => '您好，$1！<br /><br />
@@ -3460,7 +3460,7 @@ Fandom團隊
 
 如果您需要幫助照顧此wiki社區，您還可以前往<a href="$2">用戶權限管理</a>查看如何設置其他社群成員加入管理員團隊。我們期待您很快重新活躍在#WIKINAME上！<br /><br />
 
-Fandom團隊<br /><br />
+FANDOM團隊<br /><br />
 
 您可以按此處<a href="$3">取消郵件訂閱</a>。',
 	'wikiadoption-mail-second-content' => '您好，$1！
@@ -3469,7 +3469,7 @@ Fandom團隊<br /><br />
 
 由於這個社群長期沒有活躍的管理員，#WIKINAME將被開放認領，以允許其他用戶成為管理員。
 
-Fandom團隊
+FANDOM團隊
 
 您可以按這裡取消郵件訂閱：$3',
 	'wikiadoption-mail-second-content-HTML' => '您好，$1！<br /><br />
@@ -3478,7 +3478,7 @@ Fandom團隊
 
 由於這個社群長期沒有活躍的管理員，#WIKINAME將被開放認領，以允許其他用戶成為管理員。<br /><br />
 
-Fandom團隊<br /><br />
+FANDOM團隊<br /><br />
 
 您可以按這裡<a href="$3">取消郵件訂閱</a>。
 ',

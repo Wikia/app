@@ -682,8 +682,8 @@ $messages['zh-hans'] = array(
 	'wam-movies' => '电影',
 	'wampage-top-gainers-header' => '排行榜',
 	'wampage-header-wam' => 'WAM分数',
-	'wampage-subheader-wam' => '维基活动监视器(WAM)分数是一个Fandom社区的发展和流行指标。',
-	'wampage-content' => 'WAM用来每日计算排名前5000的维基社区，包括所有社区和分类社区以及其0 -100的排名分数。WAM的排名每日都将按照社区的发展趋势不断变化，所以记得时常浏览一下Fandom上最新Wiki的流行趋势。',
+	'wampage-subheader-wam' => '维基活动监视器(WAM)分数是一个FANDOM社区的发展和流行指标。',
+	'wampage-content' => 'WAM用来每日计算排名前5000的维基社区，包括所有社区和分类社区以及其0 -100的排名分数。WAM的排名每日都将按照社区的发展趋势不断变化，所以记得时常浏览一下FANDOM上最新Wiki的流行趋势。',
 	'wampage-content-faq-link' => '[[$1|常见问题]]',
 	'wampage-faq' => '__NOTOC____NOEDITSECTION__ 
 === 如何计算WAM分数? === 
@@ -714,7 +714,7 @@ WAM上的数据最早可以追溯到2012年1月1日
 	'wam-index-header-admins' => '管理员',
 	'wampage-breadcrumb-back-to-wam' => '返回WAM分数',
 	'wam-index-header-peak-rank' => '顶尖排名',
-	'wam-index-no-results' => '您所查找的社区并不在WAM排名前5000之内。WAM排名每日都在不断更新，您可以随后重新访问这个页面。如果您有任何问题，欢迎发送邮件至[mailto:support@wikia-inc.com Fandom社区支持团队]。',
+	'wam-index-no-results' => '您所查找的社区并不在WAM排名前5000之内。WAM排名每日都在不断更新，您可以随后重新访问这个页面。如果您有任何问题，欢迎发送邮件至[mailto:support@wikia-inc.com FANDOM社区支持团队]。',
 	'wam-index-filter-search-placeholder' => '搜索',
 	'wam-index-filter-sort-label' => '主题社区',
 	'wam-index-filter-date-label' => '日期',
@@ -725,16 +725,16 @@ WAM上的数据最早可以追溯到2012年1月1日
 );
 
 $messages['zh-hant'] = array(
-	'wampage-content' => 'WAM用來每日計算排名前5000的Wiki社區，包括所有社區和分類社區以及其0 -100的分數。WAM的排名常會跟隨現實世界的流行發展趨勢不斷變化，所以記得時常瀏覽Fandom的Wiki以了解流行趨勢。',
+	'wampage-content' => 'WAM用來每日計算排名前5000的Wiki社區，包括所有社區和分類社區以及其0 -100的分數。WAM的排名常會跟隨現實世界的流行發展趨勢不斷變化，所以記得時常瀏覽FANDOM的Wiki以了解流行趨勢。',
 	'wam-html-title' => 'Wiki活動監視器 (WAM)',
 	'wam-index-header-wiki-name' => 'URL',
-	'wam-index-no-results' => '您所查找的社群並不在WAM排名前5000之內。WAM排名每日都在不斷更新，您可以隨後重新訪問這個頁面。如果您有任何問題，歡迎發送郵件至[mailto:support@wikia-inc.com Fandom社區支援團隊]。',
-	'wampage-subheader-wam' => 'Wiki活動監視器(WAM) 分數是Fandom社區的動能和活躍程度指標。',
+	'wam-index-no-results' => '您所查找的社群並不在WAM排名前5000之內。WAM排名每日都在不斷更新，您可以隨後重新訪問這個頁面。如果您有任何問題，歡迎發送郵件至[mailto:support@wikia-inc.com FANDOM社區支援團隊]。',
+	'wampage-subheader-wam' => 'Wiki活動監視器(WAM) 分數是FANDOM社區的動能和活躍程度指標。',
 	'wampage-faq' => '__NOTOC____NOEDITSECTION__
 === 如何計算WAM分數?？===
 WAM的排名是根據網頁流量、社區參與度和社區增長進行的資料整合分析。我們不能提供如何整個資料的具體細節，因為我們不想讓任何社區試圖以此操控排名，這對社區發展不利也不公平。我們將保證所有活躍和成功的Wiki社區都將被WAM納入其中。
 ===為什麼WAM非常重要？===
-Fandom一直都認為知識就是力量。我們一直試圖讓相關資料和統計數字非常透明，WAM對線上社區的發展的資料化呈現也是一大進步。WAM的資料回饋對社區的創始人、管理員和貢獻者都非常有意義，因為他們可以更加輕鬆簡單地瞭解到所在社區發展的近況和活躍程度，並更加宏觀地把握社區的整體發展。
+FANDOM一直都認為知識就是力量。我們一直試圖讓相關資料和統計數字非常透明，WAM對線上社區的發展的資料化呈現也是一大進步。WAM的資料回饋對社區的創始人、管理員和貢獻者都非常有意義，因為他們可以更加輕鬆簡單地瞭解到所在社區發展的近況和活躍程度，並更加宏觀地把握社區的整體發展。
 ===如何提高WAM分數？===
 WAM使用複雜的計算方法，並沒有一種簡單的方式可以迅速提高社區的分數和排名。儘管如此，這裡還是有一些方法可以幫到你提高WAM分數。首先，我們建議您查看[[w:c:zh:help:Attracting_contributors|説明:吸引參與者]]頁面。非常活躍或者每日編輯數量非常多的Wiki社區一般在WAM上排名都會比較靠前。請記住，不要試圖和系統耍花招。只有與主題相關和可信的社區內容才能讓你的社區和讀者產生共鳴。
 
