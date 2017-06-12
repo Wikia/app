@@ -305,7 +305,7 @@
 				array( $reqParams16, $mockUserParams1, $mockUserLoginForm1, 'error', $expMsg16, $expErrParam16 ),
 				'error - not empty fake password' =>
 				array( $reqParams17, $mockUserParams1, $mockUserLoginForm1, 'error', $expMsg16, $expErrParam16 ),
-				'error - invalid user name with semicolon' =>
+				'error - invalid user name with colon' =>
 					array( $reqParams18, $mockUserParams3, $mockUserLoginForm1, 'error', $expMsg4, $expErrParam1 ),
 			);
 		}
