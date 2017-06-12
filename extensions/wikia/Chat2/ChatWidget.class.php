@@ -68,7 +68,7 @@ class ChatWidget {
 		$usersCount = count( $usersInfo );
 		$buttonMessage = $usersCount ? 'chat-join-the-chat' : 'chat-start-a-chat';
 
-		$vars = [
+		return [
 			'blankImgUrl' => $wgBlankImgUrl,
 			'buttonText' => wfMessage( $buttonMessage )->text(),
 			'buttonIcon' => DesignSystemHelper::renderSvg( 'wds-icons-reply-tiny' ),
@@ -85,8 +85,6 @@ class ChatWidget {
 			'hasUsers' => $usersCount > 0,
 			'moreUsersCount' => $usersCount - self::CHAT_AVATARS_LIMIT > 0 ? $usersCount - self::CHAT_AVATARS_LIMIT : null,
 		];
-
-		return $vars;
 	}
 
 	/**
