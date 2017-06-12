@@ -33,15 +33,12 @@ class UploadBackgroundFromFile extends UploadFromFile {
 		return $details;
 	}
 
-	public function performUpload() {
-		$wgUser = RequestContext::getMain()->getUser();
-
-		return parent::performUpload( '', '', false, $wgUser );
-	}
-
 	public function getLocalFile() {
 		if ( is_null( $this->mLocalFile ) ) {
-			$this->mLocalFile = new FakeLocalFile( Title::newFromText( 'Temp_file_' . time(), NS_FILE ), RepoGroup::singleton()->getLocalRepo() );
+			$this->mLocalFile = new FakeLocalFile(
+				Title::newFromText( 'Temp_file_' . time(), NS_FILE ),
+				RepoGroup::singleton()->getLocalRepo()
+			);
 		}
 
 		return $this->mLocalFile;

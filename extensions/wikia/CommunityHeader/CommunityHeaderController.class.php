@@ -9,18 +9,11 @@ use \Wikia\CommunityHeader\Navigation;
 class CommunityHeaderController extends WikiaController {
 
 	public function index() {
-		global $wgCityId;
-
 		$this->setVal( 'sitename', new Sitename() );
 		$this->setVal( 'wordmark', new Wordmark() );
 		$this->setVal( 'counter', new Counter() );
 		$this->setVal( 'wikiButtons', new WikiButtons() );
-		$this->setVal(
-			'backgroundImageUrl',
-			( new SiteAttributeService() )
-				->getApiClient()
-				->getAttribute( $wgCityId, 'pageHeaderImage' )
-				->getValue() );
+		$this->setVal( 'backgroundImageUrl', ( new ThemeSettings() )->getCommunityHeaderBackgroundUrl() );
 	}
 
 	public function localNavigation() {
