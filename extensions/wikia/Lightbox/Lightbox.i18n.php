@@ -619,7 +619,7 @@ $messages['pl'] = array(
 	'lightbox-more-info-description-heading' => 'Opis:',
 	'lightbox-more-info-filelinks-heading' => 'Linkujące:',
 	'lightbox-no-media-error-header' => 'Ups.',
-	'lightbox-no-media-error' => 'Ten plik nie jest już dostępny, odwiedź inne artykuły na {{GRAMMAR:locative|$1}}.',
+	'lightbox-no-media-error' => 'Ten plik nie jest już dostępny, odwiedź inne artykuły na {{GRAMMAR:MS.lp|$1}}.',
 	'lightbox-pin-carousel-tooltip' => 'Zablokuj narzędzia nawigacyjne',
 	'lightbox-unpin-carousel-tooltip' => 'Odblokuj narzędzia nawigacyjne',
 	'lightbox-urls-form-header' => 'Adresy URL',
@@ -628,7 +628,7 @@ $messages['pl'] = array(
 	'lightbox-no-media-error-close' => 'Ok',
 	'lightbox-no-permission-error' => 'Nie posiadasz uprawnień do wyświetlenia tego pliku',
 	'lightbox-share-salutation' => 'Hej.',
-	'lightbox-share-description-video' => 'Film w $1 na {{GRAMMAR:locative|$2}}',
+	'lightbox-share-description-video' => 'Film w $1 na {{GRAMMAR:MS.lp|$2}}',
 );
 
 $messages['ps'] = array(
@@ -762,10 +762,10 @@ $messages['sv'] = array(
 $messages['zh-hans'] = array(
 	'lightbox_details_tooltip' => '查看图片细节',
 	'lightbox-share-button-www' => '分享',
-	'lightbox-share-email-body' => '有人想要给你展示一张Fandom上的图片。去看一下吧：<br /><br />$1',
-	'lightbox-share-email-body-video' => '有人想要给你展示一段Fandom上的视频。去看一下吧：<br /><br />$1',
-	'lightbox-share-email-subject' => '$1给你发送了一张Fandom上的图片',
-	'lightbox-share-email-subject-video' => '$1给你发送了一段Fandom上的视频',
+	'lightbox-share-email-body' => '有人想要给你展示一张FANDOM上的图片。去看一下吧：<br /><br />$1',
+	'lightbox-share-email-body-video' => '有人想要给你展示一段FANDOM上的视频。去看一下吧：<br /><br />$1',
+	'lightbox-share-email-subject' => '$1给你发送了一张FANDOM上的图片',
+	'lightbox-share-email-subject-video' => '$1给你发送了一段FANDOM上的视频',
 	'lightbox-carousel-more-items' => "在这个Wiki上还有'''$1''' {{PLURAL:$1|件|件}}",
 	'lightbox-carousel-progress' => "'''$3'''个之中的'''$1-$2'''",
 	'lightbox-email-form-header' => '电子邮件',
@@ -810,10 +810,10 @@ $messages['zh-hans'] = array(
 );
 
 $messages['zh-hant'] = array(
-	'lightbox-share-email-body' => '有人想要向你展示一張Fandom上的照片。去看一下吧：<br /><br />$1',
-	'lightbox-share-email-body-video' => '有人想要向你展示一段Fandom上的影片。去看一下吧：<br /><br />$1',
-	'lightbox-share-email-subject' => '$1給你發送了一張Fandom上的圖片',
-	'lightbox-share-email-subject-video' => '$1給你發送了一個Fandom上的影片',
+	'lightbox-share-email-body' => '有人想要向你展示一張FANDOM上的照片。去看一下吧：<br /><br />$1',
+	'lightbox-share-email-body-video' => '有人想要向你展示一段FANDOM上的影片。去看一下吧：<br /><br />$1',
+	'lightbox-share-email-subject' => '$1給你發送了一張FANDOM上的圖片',
+	'lightbox-share-email-subject-video' => '$1給你發送了一個FANDOM上的影片',
 	'lightbox-carousel-more-items' => "在這個Wiki上還有'''$1''' {{PLURAL:$1|件|件}}",
 	'lightbox-carousel-progress' => "'''$3'''個之中的'''$1-$2'''",
 	'lightbox-email-form-header' => '電子郵件',

@@ -754,6 +754,7 @@ Wenn du dies für einen Fehler hältst oder möchtest, dass die Entscheidung üb
 	'chat-blocklist-expiry' => 'Sperrdauer bis',
 	'chat-blocklist-by' => 'Benutzer gesperrt',
 	'chat-blocklist-reason' => 'Grund',
+	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
 );
 
 $messages['de-formal'] = array(
@@ -899,6 +900,7 @@ Si crees que ha sido un error o te gustaría reconsiderarlo, por favor contacta 
 	'chat-blocklist-expiry' => 'Caduca',
 	'chat-blocklist-by' => 'Usuario Bloqueador',
 	'chat-blocklist-reason' => 'Motivo',
+	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
 );
 
 $messages['eu'] = array(
@@ -1249,6 +1251,7 @@ $messages['fr'] = array(
 	'chat-blocklist-expiry' => 'Date d’expiration',
 	'chat-blocklist-by' => 'Blocking User',
 	'chat-blocklist-reason' => 'Motif',
+	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
 );
 
 $messages['fy'] = array(
@@ -1718,6 +1721,7 @@ $1 è stato bannato da $2 $3.',
 	'chat-blocklist-expiry' => 'Scade',
 	'chat-blocklist-by' => 'Blocco utente',
 	'chat-blocklist-reason' => 'Motivo',
+	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
 );
 
 $messages['ja'] = array(
@@ -1817,6 +1821,7 @@ $messages['ja'] = array(
 	'chat-blocklist-expiry' => '期限',
 	'chat-blocklist-by' => 'ブロックしたユーザー',
 	'chat-blocklist-reason' => '理由',
+	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
 );
 
 $messages['ka'] = array(
@@ -2106,6 +2111,7 @@ $messages['lol'] = array(
 	'chat-blocklist-expiry' => 'crwdns66516:0crwdne66516:0',
 	'chat-blocklist-by' => 'crwdns66517:0crwdne66517:0',
 	'chat-blocklist-reason' => 'crwdns66518:0crwdne66518:0',
+	'chat-user-throttled' => 'crwdns66798:0{PLURAL:$1|second|seconds}crwdne66798:0',
 );
 
 $messages['lrc'] = array(
@@ -2724,6 +2730,7 @@ $messages['pl'] = array(
 	'chat-blocklist-expiry' => 'Upływa',
 	'chat-blocklist-by' => 'Użytkownik nakładający blokadę',
 	'chat-blocklist-reason' => 'Powód',
+	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
 );
 
 $messages['pms'] = array(
@@ -2947,6 +2954,7 @@ $messages['pt'] = array(
 	'chat-blocklist-expiry' => 'Expira',
 	'chat-blocklist-by' => 'Usuário bloqueado por',
 	'chat-blocklist-reason' => 'Motivo',
+	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
 );
 
 $messages['ro'] = array(
@@ -3085,6 +3093,7 @@ $messages['ru'] = array(
 	'chat-blocklist-expiry' => 'Истекает',
 	'chat-blocklist-by' => 'Blocking User',
 	'chat-blocklist-reason' => 'Причина',
+	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
 );
 
 $messages['sa'] = array(
@@ -3764,6 +3773,7 @@ $messages['zh-hans'] = array(
 	'chat-blocklist-expiry' => '过期',
 	'chat-blocklist-by' => '封禁的用户',
 	'chat-blocklist-reason' => '原因',
+	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
 );
 
 $messages['zh-hant'] = array(
@@ -3863,5 +3873,6 @@ $messages['zh-hant'] = array(
 	'chat-blocklist-expiry' => '過期',
 	'chat-blocklist-by' => '封禁的用戶',
 	'chat-blocklist-reason' => '原因',
+	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
 );
 

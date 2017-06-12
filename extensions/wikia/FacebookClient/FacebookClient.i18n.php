@@ -837,14 +837,14 @@ FANDOM社区团队',
 );
 
 $messages['zh-hant'] = array(
-	'fbconnect-connect-msg' => '恭喜 ！您的Fandom和Facebook帳號已經連結。',
-	'fbconnect-disconnect-account-link' => '你的Fandom帳號現在已連結到Facebook。你可以選擇[[#|中斷]] 這個連結，之後你仍然可以繼續使用你的Fandom帳號，編輯歷史、成就等都不會改變。',
-	'fbconnect-disconnect-info' => '您的Facebook帳號已成功中斷與Fandom帳號的連結。',
-	'fbconnect-preferences-connected' => '恭喜 ！您的Fandom和Facebook帳號已經連結。',
-	'fbconnect-error-already-connected' => '這個Fandom帳號已經連結到Facebook。如要連結到另一個帳號，請先中斷原本的帳號連結。',
-	'fbconnect-error-fb-account-in-use' => '這個Facebook帳號已經連結到另一個Fandom帳號。請連結到另一個帳號，或者先登入Facebook並中斷原本與帳號$1的連結。',
+	'fbconnect-connect-msg' => '恭喜 ！您的FANDOM和Facebook帳號已經連結。',
+	'fbconnect-disconnect-account-link' => '你的FANDOM帳號現在已連結到Facebook。你可以選擇[[#|中斷]] 這個連結，之後你仍然可以繼續使用你的FANDOM帳號，編輯歷史、成就等都不會改變。',
+	'fbconnect-disconnect-info' => '您的Facebook帳號已成功中斷與FANDOM帳號的連結。',
+	'fbconnect-preferences-connected' => '恭喜 ！您的FANDOM和Facebook帳號已經連結。',
+	'fbconnect-error-already-connected' => '這個FANDOM帳號已經連結到Facebook。如要連結到另一個帳號，請先中斷原本的帳號連結。',
+	'fbconnect-error-fb-account-in-use' => '這個Facebook帳號已經連結到另一個FANDOM帳號。請連結到另一個帳號，或者先登入Facebook並中斷原本與帳號$1的連結。',
 	'fbconnect-passwordremindertext' => '您好，
-您剛才中斷了您Fandom帳號和Facebook的連結。我們已經保留了您所有的編輯紀錄、編輯點數、成就等，因此不用擔心！
+您剛才中斷了您FANDOM帳號和Facebook的連結。我們已經保留了您所有的編輯紀錄、編輯點數、成就等，因此不用擔心！
 
 您仍可以像以前一樣使用同個用戶名，我們也給了您一個新的密碼。以下是詳細資訊：
 
@@ -855,17 +855,17 @@ $messages['zh-hant'] = array(
 
 謝謝，
 
-Fandom社區團隊',
+FANDOM社區團隊',
 	'fbconnect-passwordremindertext-exist' => '您好，
-您剛才中斷了您Fandom帳號和Facebook的連結。我們已經保留了您所有的編輯紀錄、編輯點數、成就等，因此不用擔心！
+您剛才中斷了您FANDOM帳號和Facebook的連結。我們已經保留了您所有的編輯紀錄、編輯點數、成就等，因此不用擔心！
 
 您仍可以像連結以前一樣，使用同個用戶名和密碼。
 
 謝謝，
 
-Fandom社區團隊',
-	'fbconnect-passwordremindertitle' => '您的Fandom帳號已中斷和 Facebook的連結！',
-	'fbconnect-passwordremindertitle-exist' => '您的Fandom帳號已中斷和 Facebook的連結！',
+FANDOM社區團隊',
+	'fbconnect-passwordremindertitle' => '您的FANDOM帳號已中斷和 Facebook的連結！',
+	'fbconnect-passwordremindertitle-exist' => '您的FANDOM帳號已中斷和 Facebook的連結！',
 	'fbconnect-wikia-signup-w-facebook' => '用Facebook註冊',
 	'fbconnect-wrong-pass-msg' => '您輸入的密碼不正確',
 	'prefs-fbconnect-disconnect-prefstext' => '中斷Facebook連結',
