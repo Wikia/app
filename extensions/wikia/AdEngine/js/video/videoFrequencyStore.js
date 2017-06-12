@@ -10,24 +10,24 @@ define('ext.wikia.adEngine.video.videoFrequencyStore', [
 		store.push(data);
 	}
 
-	function getAll() {
-		return store;
+	function countAll(filterFunction) {
+		return (filterFunction ? store.filter(filterFunction) : store).length;
 	}
 
 	function numberOfVideosSeenInLastPageViews(numberOfCheckedPageViews) {
 		var minPV = pageViewCounter.get() - numberOfCheckedPageViews;
 
-		return getAll()
-			.filter(function (item) { return item.pv >= minPV; })
-			.length;
+		return countAll(function (item) {
+			return item.pv >= minPV;
+		});
 	}
 
 	function numberOfVideosSeenInLast(value, unit) {
 		var minDate = (new Date()).getTime() - getInterval(value, unit);
 
-		return getAll()
-			.filter(function (item) { return item.date >= minDate; })
-			.length;
+		return countAll(function (item) {
+			return item.date >= minDate;
+		});
 	}
 
 	function getMultiplier(unit) {
