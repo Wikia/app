@@ -1664,63 +1664,6 @@ por favor, escreva o nome da wiki para salvar.',
 	'right-themedesigner' => 'Crie um tema para a sua wiki em [[Special:ThemeDesigner]]',
 );
 
-$messages['pt-br'] = array(
-	'action-themedesigner' => 'acessar o Designer de Temas',
-	'themedesigner-desc' => 'Permite aos administradores compor um tema visual para a wiki',
-	'themedesigner-title' => 'Designer de Temas da Wikia',
-	'themedesigner-background' => 'Fundo',
-	'themedesigner-page' => 'Página',
-	'themedesigner-color' => 'principal',
-	'themedesigner-color-middle' => 'meio',
-	'themedesigner-rules-color-middle' => 'Cor diferente para o meio da página',
-	'themedesigner-graphic' => 'imagem',
-	'themedesigner-buttons' => 'botões',
-	'themedesigner-links' => 'links',
-	'themedesigner-header' => 'cabeçalho',
-	'themedesigner-text-wordmark' => 'Símbolo textual',
-	'themedesigner-graphic-wordmark' => 'Símbolo gráfico',
-	'themedesigner-tile-background' => 'repetir',
-	'themedesigner-fix-background' => 'fixar',
-	'themedesigner-not-split-background' => 'sem divisão',
-	'themedesigner-rules-not-split-background' => "Se seu gráfico de fundo é maior que $1px você tem uma opção de ''não'' dividir uma imagem.",
-	'themedesigner-transparency' => 'transparência',
-	'themedesigner-tab-theme' => 'Tema',
-	'themedesigner-tab-customize' => 'Personalizar',
-	'themedesigner-tab-wordmark' => 'Símbolo',
-	'themedesigner-preview-mode' => 'Modo pré-visualização...',
-	'themedesigner-previous-versions' => 'Versões anteriores',
-	'themedesigner-button-save-im-done' => 'Pronto, salvar',
-	'themedesigner-button-cancel' => 'Cancelar',
-	'themedesigner-pick-a-color' => 'Escolher uma cor',
-	'themedesigner-enter-your-own' => 'Introduzir',
-	'themedesigner-color-name-or-hex-code' => 'Nome ou código hexadecimal da cor',
-	'themedesigner-button-ok' => 'Ok',
-	'themedesigner-pick-an-image' => 'Escolher uma imagem',
-	'themedesigner-dont-use-a-background' => 'Não usar imagem de fundo',
-	'themedesigner-upload-your-own' => 'Faça o upload de uma',
-	'themedesigner-button-upload' => 'Enviar',
-	'themedesigner-button-upload-wordmark' => 'Enviar',
-	'themedesigner-rules-background' => 'jpg, gif ou png. Máximo: {{PLURAL:$1|$1 kilobyte|$1 kilobytes}}',
-	'themedesigner-button-save' => 'Salvar',
-	'themedesigner-upload-a-graphic' => 'upload de um padrão gráfico',
-	'themedesigner-rules-wordmark' => 'Carregar um arquivo .png que de 250 x 65 pixels ou menos.',
-	'themedesigner-rules-favicon' => 'Envie um arquivo .ico 16x16 pixel. Um favicon é um pequeno ícone que aparece na aba do navegador da sua wikia. [http://comunidade.wikia.com/wiki/Ajuda:Favicon Leia mais.]',
-	'themedesigner-dont-use-a-graphic' => 'remover',
-	'themedesigner-history-item' => '$1 de $2',
-	'themedesigner-button-change-text' => 'Alterar texto',
-	'themedesigner-reason' => 'Designer de Temas - salvo por $1',
-	'themedesigner-size-error' => 'Tamanho de arquivo incorreto',
-	'themedesigner-dimensions-error' => 'A imagem excede os limites de tamanho',
-	'themedesigner-type-error' => 'Tipo de arquivo incorreto',
-	'themedesigner-unknown-error' => 'Ocorreu um erro que não é possível identificar. Por favor, tente novamente.',
-	'themedesigner-manual-upload-error' => 'Use o Designer de Temas para fazer o upload do wordmark ou fundo da wikia',
-	'themedesigner-favicon-heading' => 'Favicon',
-	'themedesigner-wodmark-preview' => 'Pré-visualizar',
-	'themedesigner-wordmark-preview-error' => 'Ops! O nome da wikia não pode ficar em branco, 
-digite o nome da wikia para salvar.',
-	'themedesigner-upload-disabled' => 'Desculpe, nós desativamos os uploads temporariamente. Volte em breve para fazer mudanças',
-);
-
 $messages['ro'] = array(
 	'themedesigner-page' => 'Pagină',
 	'themedesigner-color' => 'culoare',
@@ -2086,14 +2029,6 @@ $messages['vi'] = array(
 
 $messages['wuu'] = array(
 	'themedesigner-wordmark-preview-error' => '皇天！wiki個名字嘸處空起，打進去再保存。',
-);
-
-$messages['zh'] = array(
-	'themedesigner-color-middle' => '中间背景颜色',
-	'themedesigner-color' => '背景主色',
-	'themedesigner-favicon-heading' => '网页图标',
-	'themedesigner-graphic' => '背景图案',
-	'themedesigner-tile-background' => '平铺',
 );
 
 $messages['zh-hans'] = array(
