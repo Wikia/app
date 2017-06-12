@@ -12,7 +12,7 @@ define('ext.wikia.adEngine.video.videoFrequencyStore', [
 		store = [];
 
 	function save(data) {
-		store = cache.get(cacheKey) || store;
+		store = getAll();
 		log(['Data retrived from cache', store], log.levels.debug, logGroup);
 
 		store.push(data);
@@ -27,6 +27,7 @@ define('ext.wikia.adEngine.video.videoFrequencyStore', [
 
 	function numberOfVideosSeenInLastPageViews(numberOfCheckedPageViews) {
 		var minPV = pageViewCounter.get() - numberOfCheckedPageViews;
+		log(['minPV calculated', minPV], log.levels.debug, logGroup);
 
 		return countAll(function (item) {
 			return item.pv >= minPV;
@@ -35,6 +36,7 @@ define('ext.wikia.adEngine.video.videoFrequencyStore', [
 
 	function numberOfVideosSeenInLast(value, unit) {
 		var minDate = (new Date()).getTime() - getInterval(value, unit);
+		log(['minDate calculated', minDate], log.levels.debug, logGroup);
 
 		return countAll(function (item) {
 			return item.date >= minDate;
@@ -62,9 +64,14 @@ define('ext.wikia.adEngine.video.videoFrequencyStore', [
 		return value * getMultiplier(unit);
 	}
 
+	function getAll() {
+		return cache.get(cacheKey) || store;
+	}
+
 	return {
-		save: save,
+		getAll: getAll,
 		numberOfVideosSeenInLast: numberOfVideosSeenInLast,
-		numberOfVideosSeenInLastPageViews: numberOfVideosSeenInLastPageViews
+		numberOfVideosSeenInLastPageViews: numberOfVideosSeenInLastPageViews,
+		save: save
 	};
 });
