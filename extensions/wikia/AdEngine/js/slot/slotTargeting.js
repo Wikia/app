@@ -49,6 +49,10 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 			MOBILE_IN_CONTENT: 'i',
 			MOBILE_PREFOOTER: 'p',
 			MOBILE_BOTTOM_LEADERBOARD: 'b'
+		},
+		videoSlots = {
+			oasis: 'INCONTENT_PLAYER',
+			mercury: 'MOBILE_IN_CONTENT'
 		};
 
 	function valueOrX(map, key) {
@@ -108,8 +112,9 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 	}
 
 	function getOutstreamData() {
-		var getVideoTargeting = prebid.get().getAdserverTargetingForAdUnitCode,
-			videoTargeting = getVideoTargeting && getVideoTargeting('INCONTENT_PLAYER');
+        var context = adContext.getContext(),
+            getAdserverTargeting = prebid.get().getAdserverTargetingForAdUnitCode,
+			videoTargeting = getAdserverTargeting && getAdserverTargeting(videoSlots[context.targeting.skin]);
 
 		if (videoTargeting) {
 			return videoTargeting.hb_bidder.substr(0, 2) + math.leftPad(parseFloat(videoTargeting.hb_pb) * 100, 4);
