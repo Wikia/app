@@ -1,5 +1,7 @@
 /*global define*/
-define('ext.wikia.adEngine.video.videoFrequencyStore', [], function () {
+define('ext.wikia.adEngine.video.videoFrequencyStore', [
+	'ext.wikia.adEngine.adLogicPageViewCounter'
+], function (pageViewCounter) {
 	'use strict';
 
 	var store = [];
@@ -10,6 +12,14 @@ define('ext.wikia.adEngine.video.videoFrequencyStore', [], function () {
 
 	function getAll() {
 		return store;
+	}
+
+	function numberOfVideosSeenInLastPageViews(numberOfCheckedPageViews) {
+		var minPV = pageViewCounter.get() - numberOfCheckedPageViews;
+
+		return getAll()
+			.filter(function (item) { return item.pv >= minPV; })
+			.length;
 	}
 
 	function numberOfVideosSeenInLast(value, unit) {
@@ -43,6 +53,7 @@ define('ext.wikia.adEngine.video.videoFrequencyStore', [], function () {
 
 	return {
 		save: save,
-		numberOfVideosSeenInLast: numberOfVideosSeenInLast
+		numberOfVideosSeenInLast: numberOfVideosSeenInLast,
+		numberOfVideosSeenInLastPageViews: numberOfVideosSeenInLastPageViews
 	};
 });
