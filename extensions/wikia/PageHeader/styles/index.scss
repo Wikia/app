@@ -13,7 +13,7 @@
 	@include justify-content(flex-end);
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
-	padding: 16px 0 6px;
+	padding: 16px 0 12px;
 	position: relative;
 	z-index: 4;
 
@@ -134,7 +134,7 @@
 
 		&-back-icon {
 			fill: $color-links;
-			padding-right: 2px;
+			padding-right: 6px;
 			transform: rotate(270deg);
 			vertical-align: text-top;
 		}
