@@ -959,7 +959,7 @@ per favore immetti il nome della wiki per salvare.',
 
 $messages['ja'] = array(
 	'action-themedesigner' => 'テーマデザイナーへのアクセス',
-	'themedesigner-desc' => 'アドミンにWikiのテーマのデザイン変更を許可する',
+	'themedesigner-desc' => 'アドミンにWikiのテーマデザイナー変更を許可する',
 	'themedesigner-title' => 'テーマデザイナー',
 	'themedesigner-background' => '背景',
 	'themedesigner-page' => 'ページ',
@@ -967,7 +967,7 @@ $messages['ja'] = array(
 	'themedesigner-graphic' => '画像',
 	'themedesigner-buttons' => 'ボタン',
 	'themedesigner-links' => 'リンク',
-	'themedesigner-header' => 'ヘッダ',
+	'themedesigner-header' => 'ヘッダー',
 	'themedesigner-text-wordmark' => 'コミュニティの名前',
 	'themedesigner-graphic-wordmark' => 'ロゴ',
 	'themedesigner-tile-background' => '画像を並べる',
@@ -1014,7 +1014,7 @@ $messages['ja'] = array(
 	'themedesigner-toolbar-color' => 'ツールバー',
 	'themedesigner-wordmark-preview-error' => 'Wikiの名前は空欄にできません。
 名前を入力して保存してください。',
-	'themedesigner-upload-disabled' => '申し訳ありません。現在アップロードが無効になっています。しばらく経ってから再度お試しください。',
+	'themedesigner-upload-disabled' => '申し訳ありません、現在アップロードが無効になっています。しばらく経ってから再度お試しください。',
 	'right-themedesigner' => '[[Special:ThemeDesigner]]でWikiのテーマを指定する',
 );
 
@@ -1484,7 +1484,7 @@ $messages['pl'] = array(
 	'themedesigner-title' => 'Kreator motywu',
 	'themedesigner-background' => 'Tło',
 	'themedesigner-page' => 'Strona',
-	'themedesigner-color' => 'kolor',
+	'themedesigner-color' => 'główny',
 	'themedesigner-color-middle' => 'środek',
 	'themedesigner-rules-color-middle' => 'Inny kolor środka strony',
 	'themedesigner-graphic' => 'obraz',
@@ -1533,7 +1533,7 @@ $messages['pl'] = array(
 	'themedesigner-wordmark-preview-error' => 'Błąd – nazwa wiki nie może być pusta, wprowadź nazwę wiki, aby zapisać.',
 	'themedesigner-upload-disabled' => 'Przepraszamy, przesyłanie plików jest tymczasowo niedostępne. Spróbuj ponownie później.',
 	'right-themedesigner' => 'Edycja wyglądu wiki przy użyciu Kreatora motywu.',
-	'themedesigner-community-header-graphic' => 'grafika nagłówka',
+	'themedesigner-community-header-graphic' => 'grafika w nagłówku',
 	'themedesigner-community-header-color' => 'nagłówek',
 	'themedesigner-toolbar-color' => 'pasek narzędzi',
 );
