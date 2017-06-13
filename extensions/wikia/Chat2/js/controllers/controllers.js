@@ -217,7 +217,7 @@ var NodeRoomController = $.createClass(Observable, {
 			this.model.mport(message.data);
 
 			this.isInitialized = true;
-			$().log(this.isInitialized, "isInitialized");
+			$().log("onInitial", "chat:controllers");
 			if (this.isMain()) {
 				var newChatEntry = new models.InlineAlert({text: mw.message('chat-welcome-message', wgSiteName).escaped()});
 				this.model.chats.add(newChatEntry);
@@ -650,7 +650,7 @@ var NodeChatController = $.createClass(NodeRoomController, {
 	},
 
 	showRoom: function (roomId) {
-		$().log(roomId);
+		$().log(roomId, 'chat:showRoom');
 		if (this.activeRoom == roomId) {
 			return false;
 		}
