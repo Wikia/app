@@ -112,23 +112,23 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 		}
 	}
 
-    function getOutstreamData() {
-        var context = adContext.getContext(),
+	function getOutstreamData() {
+		var context = adContext.getContext(),
 			getAdserverTargeting = prebid.get().getAdserverTargetingForAdUnitCode,
 			videoTargeting = getAdserverTargeting && getAdserverTargeting(videoSlots[context.targeting.skin]);
 
-        if (videoTargeting) {
+		if (videoTargeting) {
 			return constructOutstreamString(videoTargeting);
-        }
-    }
+		}
+    	}
 
-    function constructOutstreamString(videoTargeting) {
-        var bidderName = videoTargeting.hb_bidder,
+	function constructOutstreamString(videoTargeting) {
+		var bidderName = videoTargeting.hb_bidder,
 			isVideoProvider = videoProviders.indexOf(bidderName) > -1;
 
-        if (isVideoProvider && videoTargeting.hb_pb) {
+		if (isVideoProvider && videoTargeting.hb_pb) {
 			return bidderName.substr(0, 2) + math.leftPad(parseFloat(videoTargeting.hb_pb) * 100, 4);
-        }
+		}
 	}
 
 	return {
