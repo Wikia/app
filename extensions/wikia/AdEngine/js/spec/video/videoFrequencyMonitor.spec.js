@@ -205,9 +205,5 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 			expect(getModule().videoCanBeLaunched()).toEqual(testCase.result);
 		});
 	});
-
-	//
-	// it('Should decide about launch video based on time limiters and pv', function () {
-	// });
 });
 
