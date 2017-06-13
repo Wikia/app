@@ -30,6 +30,28 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 		jasmine.clock().uninstall();
 	});
 
+	function mockContext(data) {
+		spyOn(mocks.adContext, 'getContext').and.returnValue(data);
+	}
+
+	function mockWgVar(wgVar) {
+		mockContext({
+			opts: {
+				outstreamVideoFrequencyCapping: wgVar
+			}
+		});
+	}
+
+	function mockVideosOnPageViews(data) {
+		if (!mocks.store.numberOfVideosSeenInLastPageViews.and) {
+			spyOn(mocks.store, 'numberOfVideosSeenInLastPageViews');
+		}
+
+		mocks.store.numberOfVideosSeenInLastPageViews.and.callFake(function (i) {;
+			return data[i];
+		});
+	}
+
 	function getModule() {
 		return modules['ext.wikia.adEngine.video.videoFrequencyMonitor'](
 			mocks.adContext,
@@ -60,11 +82,7 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 
 	it('Should ask for correct number of PV and return positive result', function () {
 		spyOn(mocks.store, 'numberOfVideosSeenInLastPageViews').and.returnValue(4);
-		spyOn(mocks.adContext, 'getContext').and.returnValue({
-			opts: {
-				outstreamVideoFrequencyCapping: ['5/30pv']
-			}
-		});
+		mockWgVar(['5/30pv']);
 
 		expect(getModule().videoCanBeLaunched()).toBeTruthy();
 		expect(mocks.store.numberOfVideosSeenInLastPageViews.calls.first().args[0]).toEqual(30);
@@ -72,22 +90,46 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 
 	it('Should ask for correct number of PV and return negative result', function () {
 		spyOn(mocks.store, 'numberOfVideosSeenInLastPageViews').and.returnValue(5);
-		spyOn(mocks.adContext, 'getContext').and.returnValue({
-			opts: {
-				outstreamVideoFrequencyCapping: ['5/10pv']
-			}
-		});
+		mockWgVar(['5/10pv']);
 
 		expect(getModule().videoCanBeLaunched()).toBeFalsy();
 		expect(mocks.store.numberOfVideosSeenInLastPageViews.calls.first().args[0]).toEqual(10);
 	});
 
-	// it('Should decide about launch video based on real pv limiter', function () {
-	// });
-	//
-	// it('Should decide about launch video based on few pv limiters', function () {
-	// });
-	//
+	[
+		{
+			videosSeen: {
+				10: 3,
+				100: 10
+			},
+			wgVar: ['5/10pv', '10/100pv'],
+			result: false
+		},
+		{
+			videosSeen: {
+				10: 3,
+				100: 9
+			},
+			wgVar: ['5/10pv', '10/100pv'],
+			result: true
+		},
+		{
+			videosSeen: {
+				10: 5,
+				100: 10
+			},
+			wgVar: ['5/10pv', '10/100pv'],
+			result: false
+		}
+	].forEach(function (testCase) {
+		it('Should return about launch video based on few pv limiters', function () {
+			mockVideosOnPageViews(testCase.videosSeen);
+			mockWgVar(testCase.wgVar);
+
+			expect(getModule().videoCanBeLaunched()).toEqual(testCase.result);
+		});
+	});
+
 	// it('Should decide about launch video based on time limiter', function () {
 	// });
 	//
