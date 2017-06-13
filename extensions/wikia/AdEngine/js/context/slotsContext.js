@@ -2,11 +2,12 @@
 define('ext.wikia.adEngine.context.slotsContext', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
+	'ext.wikia.adEngine.video.videoFrequencyMonitor',
 	'wikia.document',
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.log'
-], function (adContext, params, doc, geo, instantGlobals, log) {
+], function (adContext, params, videoFrequencyMonitor, doc, geo, instantGlobals, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.context.slotsContext',
@@ -40,7 +41,10 @@ define('ext.wikia.adEngine.context.slotsContext', [
 		setStatus('INVISIBLE_HIGH_IMPACT_2', geo.isProperGeo(instantGlobals.wgAdDriverHighImpact2SlotCountries));
 		setStatus('PREFOOTER_RIGHT_BOXAD', !context.opts.overridePrefootersSizes);
 
-		setStatus('INCONTENT_PLAYER', !isHome && isOasis && isInContentApplicable());
+		setStatus(
+			'INCONTENT_PLAYER',
+			!isHome && isOasis && isInContentApplicable() && videoFrequencyMonitor.videoCanBeLaunched()
+		);
 
 		log(['Disabled slots:', slots], 'info', logGroup);
 	}
