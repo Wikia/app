@@ -81,5 +81,20 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 		expect(getModule().videoCanBeLaunched()).toBeFalsy();
 		expect(mocks.store.numberOfVideosSeenInLastPageViews.calls.first().args[0]).toEqual(10);
 	});
+
+	// it('Should decide about launch video based on real pv limiter', function () {
+	// });
+	//
+	// it('Should decide about launch video based on few pv limiters', function () {
+	// });
+	//
+	// it('Should decide about launch video based on time limiter', function () {
+	// });
+	//
+	// it('Should decide about launch video based on few time limiters', function () {
+	// });
+	//
+	// it('Should decide about launch video based on time limiters and pv', function () {
+	// });
 });
 
