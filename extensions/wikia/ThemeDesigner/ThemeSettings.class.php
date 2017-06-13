@@ -398,12 +398,17 @@ class ThemeSettings {
 		$thumbnailUrl = '';
 		$originalUrl = $this->getSettings()['community-header-background-image'];
 
-		if ( VignetteRequest::isVignetteUrl( $originalUrl ) ) {
-			$thumbnailUrl = VignetteRequest::fromUrl( $originalUrl )
-				->zoomCrop()
-				->width( self::COMMUNITY_HEADER_BACKGROUND_WIDTH )
-				->height( self::COMMUNITY_HEADER_BACKGROUND_HEIGHT )
-				->url();
+		// @todo fix the issue with vignette urls without /latest and remove try-catch
+		try {
+			if ( VignetteRequest::isVignetteUrl( $originalUrl ) ) {
+				$thumbnailUrl = VignetteRequest::fromUrl( $originalUrl )
+					->zoomCrop()
+					->width( self::COMMUNITY_HEADER_BACKGROUND_WIDTH )
+					->height( self::COMMUNITY_HEADER_BACKGROUND_HEIGHT )
+					->url();
+			}
+		} catch (Exception $e) {
+
 		}
 
 		return $thumbnailUrl;
