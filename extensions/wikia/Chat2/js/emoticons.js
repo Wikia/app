@@ -36,7 +36,7 @@ WikiaEmoticons.EMOTICON_HEIGHT = 19;
 WikiaEmoticons.doReplacements = function (text, emoticonMapping) {
 	// This debug is probably noisy, but I added it here just in case all of these regexes turn out
 	// to be slow (so we could see that in the log & know that we need to make this function more efficient).
-	$().log('Processing any emoticons... ');
+	$().log('Processing any emoticons... ', 'chat:emoticons');
 
 	var imgUrlsByRegexString = emoticonMapping.getImgUrlsByRegexString(),
 		origText,
@@ -63,7 +63,7 @@ WikiaEmoticons.doReplacements = function (text, emoticonMapping) {
 		text = text.replace(regex, buildTagFunc);
 	} while ((origText !== text) && --maxEmoticons > 0);
 
-	$().log('Done processing emoticons.');
+	$().log('Done processing emoticons.', 'chat:emoticons');
 	return text;
 };
 
