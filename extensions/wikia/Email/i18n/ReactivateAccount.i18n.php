@@ -86,16 +86,16 @@ $messages['ru'] = array(
 );
 
 $messages['zh-hans'] = array(
-	'emailext-reactivate-account-subject' => '重新激活您的Fandom帐户',
-	'emailext-reactivate-account-summary' => '您只差一步就可以重新激活您的Fandom帐户了。请点击下面的链接确认您的申请并开始使用。',
+	'emailext-reactivate-account-subject' => '重新激活您的FANDOM帐户',
+	'emailext-reactivate-account-summary' => '您只差一步就可以重新激活您的FANDOM帐户了。请点击下面的链接确认您的申请并开始使用。',
 	'emailext-reactivate-account-button-text' => '现在就重新激活',
-	'emailext-reactivate-account-welcome-back' => '欢迎回到Fandom！',
+	'emailext-reactivate-account-welcome-back' => '欢迎回到FANDOM！',
 );
 
 $messages['zh-hant'] = array(
-	'emailext-reactivate-account-subject' => '重新開啟您的Fandom帳戶',
-	'emailext-reactivate-account-summary' => '你只差一步就可重新啓動你的Fandom帳戶了。請按一下下面的連接確認你的請求並開始使用。',
+	'emailext-reactivate-account-subject' => '重新開啟您的FANDOM帳戶',
+	'emailext-reactivate-account-summary' => '你只差一步就可重新啓動你的FANDOM帳戶了。請按一下下面的連接確認你的請求並開始使用。',
 	'emailext-reactivate-account-button-text' => '現在就重新啟動',
-	'emailext-reactivate-account-welcome-back' => '歡迎回到Fandom！',
+	'emailext-reactivate-account-welcome-back' => '歡迎回到FANDOM！',
 );
 

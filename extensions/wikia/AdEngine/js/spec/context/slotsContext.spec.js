@@ -34,6 +34,8 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 		log: noop
 	};
 
+	mocks.log.levels = {};
+
 	function getContext() {
 		return modules['ext.wikia.adEngine.context.slotsContext'](
 			mocks.adContext,

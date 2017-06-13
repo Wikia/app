@@ -158,20 +158,23 @@ class Hooks {
 	}
 
 	/**
-	 * @param \PageHeaderController $pageHeaderController
 	 * @param \Title $title
+	 * @param string $pageType
+	 *
 	 * @return bool
 	 */
-	public function onPageHeaderPageTypePrepared( \PageHeaderController $pageHeaderController, \Title $title ) {
+	public function onPageHeaderPageTypePrepared( \Title $title, string &$pageType ) {
 		global $wgCityId;
 
-		$user = $pageHeaderController->getContext()->getUser();
+		$user = \RequestContext::getMain()->getUser();
+
 		if ( $title->inNamespace( NS_TEMPLATE ) && $title->exists() ) {
 			$view = new View();
-			$pageHeaderController->pageType = $view->renderTemplateType(
-				$wgCityId, $title, $user, $pageHeaderController->pageType
+			$pageType = $view->renderTemplateType(
+				$wgCityId, $title, $user, $pageType
 			);
 		}
+
 		return true;
 	}
 

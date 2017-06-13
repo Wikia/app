@@ -273,12 +273,12 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 
 			node.parentNode.insertBefore(rubicon, node);
 			context = adContext.getContext();
-			configureSlots(skin);
 			prefetchDNS();
 
 			rubiconLoaded = true;
 		}
 
+		configureSlots(skin);
 		defineSlots(skin, function () {
 			response = true;
 			priceMap = {};

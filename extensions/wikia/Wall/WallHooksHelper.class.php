@@ -77,9 +77,6 @@ class WallHooksHelper {
 				return true;
 			}
 
-			// article exists or existed
-			$app->wg->SuppressPageHeader = true;
-
 			$wallMessage = WallMessage::newFromTitle( $mainTitle );
 			$isDeleted = !$wallMessage->isVisible( $app->wg->User );
 			$showDeleted = ( $wallMessage->canViewDeletedMessage( $app->wg->User )
@@ -313,13 +310,11 @@ class WallHooksHelper {
 
 		if ( !empty( $title ) ) {
 			if (  WallHelper::isWallNamespace( $title->getNamespace() )  && !$title->isTalkPage() && !$title->isSubpage() ) {
-				$app->wg->SuppressPageHeader = true;
 				$app->wg->Out->addHTML( $app->renderView( 'WallHistoryController', 'index', [ 'title' => $title, 'page' => $page ] ) );
 				return false;
 			}
 
 			if (  WallHelper::isWallNamespace( $title->getNamespace() ) && $title->isTalkPage() ) {
-				$app->wg->SuppressPageHeader = true;
 				$app->wg->Out->addHTML( $app->renderView( 'WallHistoryController', 'index', [ 'title' => $title, 'page' => $page, 'threadLevelHistory' => true ] ) );
 				return false;
 			}
