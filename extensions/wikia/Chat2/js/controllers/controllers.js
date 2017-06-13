@@ -73,7 +73,7 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 					}
 			}, this));
 			socket.on('error', this.proxy(function (err) {
-				this.log('socket.onerror: ' + err);
+				this.log('socket.onerror: ' + err + ' - ' + err.code);
 			}, this));
 		});
 	},
