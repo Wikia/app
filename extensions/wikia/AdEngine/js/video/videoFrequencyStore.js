@@ -1,15 +1,17 @@
 /*global define*/
 define('ext.wikia.adEngine.video.videoFrequencyStore', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageViewCounter',
 	'wikia.cache',
 	'wikia.log'
-], function (pageViewCounter, cache, log) {
+], function (adContext, pageViewCounter, cache, log) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.video.videoFrequencyStore',
-		cacheKey = 'adEngine_outstreamVideoFrequency',
+	var cacheKey = 'adEngine_outstreamVideoFrequency',
 		cacheTtl = cache.CACHE_LONG, // 1 month
-		store = [];
+		context = adContext.getContext(),
+		store = [],
+		logGroup = 'ext.wikia.adEngine.video.videoFrequencyStore';
 
 	function save(data) {
 		store = getAll();

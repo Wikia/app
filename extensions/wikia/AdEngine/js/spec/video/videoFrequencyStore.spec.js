@@ -4,14 +4,23 @@ describe('ext.wikia.adEngine.video.videoFrequencyStore', function () {
 
 	var noop = function () {},
 		mocks = {
-			pageViewCounter: {
-				get: noop
+			adContext: {
+				getContext: function () {
+					return {
+						opts: {
+							outstreamVideoFrequencyCapping: ['3/10pv', '5/10min']
+						}
+					};
+				}
 			},
 			cache: {
 				get: noop,
 				set: noop
 			},
-			log: noop
+			log: noop,
+			pageViewCounter: {
+				get: noop
+			}
 		};
 
 	mocks.log.levels = {};
@@ -26,6 +35,7 @@ describe('ext.wikia.adEngine.video.videoFrequencyStore', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.video.videoFrequencyStore'](
+			mocks.adContext,
 			mocks.pageViewCounter,
 			mocks.cache,
 			mocks.log
