@@ -84,6 +84,7 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 		if (!this.firstConnected) {
 			var InitqueryCommand = new models.InitqueryCommand();
 			setTimeout($.proxy(function () {
+				this.log('Sending "initquery" command...');
 				this.socket.send(InitqueryCommand.xport());
 			}, this), 500);
 		}
@@ -102,6 +103,9 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 	},
 
 	onMsgReceived: function (message) {
+		this.log('Message received: ' + message.event);
+		this.log(message);
+
 		switch (message.event) {
 			case 'disableReconnect':
 				this.autoReconnect = false;
