@@ -64,8 +64,14 @@ define('ext.wikia.adEngine.video.videoFrequencyStore', [
 		return value * getMultiplier(unit);
 	}
 
+	function isValidData (value) {
+		return value.date && value.pv;
+	}
+
 	function getAll() {
-		return cache.get(cacheKey) || store;
+		var cachedData = cache.get(cacheKey) || store;
+
+		return cachedData.filter(isValidData);
 	}
 
 	return {
