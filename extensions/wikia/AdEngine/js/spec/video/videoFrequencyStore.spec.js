@@ -8,7 +8,7 @@ describe('ext.wikia.adEngine.video.videoFrequencyStore', function () {
 				getContext: function () {
 					return {
 						opts: {
-							outstreamVideoFrequencyCapping: ['3/10pv', '5/10min']
+							outstreamVideoFrequencyCapping: []
 						}
 					};
 				}
@@ -87,6 +87,29 @@ describe('ext.wikia.adEngine.video.videoFrequencyStore', function () {
 		store.save({date: 'abc', pv: 'def'});
 
 		expect(store.getAll()).toEqual([{date: 2999, pv: 3}]);
+	});
+
+	it('Should keep limited amount of entries', function () {
+		spyOn(mocks.adContext, 'getContext').and.returnValue({
+			opts: {
+				outstreamVideoFrequencyCapping: ['3/10pv', '5/10min']
+			}
+		});
+		var store = getModule();
+
+		store.save({pv: 1});
+		store.save({irrelevant: true});
+		store.save({date: 500, pv: 1});
+		store.save({date: 2999});
+		store.save({date: 'abc', pv: 'def'});
+		store.save({date: 1000, pv: 2});
+		store.save({date: 2000, pv: 3});
+		store.save({date: 2999, pv: 4});
+		store.save({date: 3000, pv: 5});
+		store.save({date: 4000, pv: 6});
+		store.save({date: 5000, pv: 7});
+
+		expect(store.getAll().length).toEqual(5);
 	});
 });
 
