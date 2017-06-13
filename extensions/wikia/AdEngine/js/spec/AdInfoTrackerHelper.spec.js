@@ -215,7 +215,6 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 
 		data = getModule().prepareData(slot);
 
-
 		expect(data.bidder_won).toBe('openx');
 	});
 
@@ -235,7 +234,6 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 		};
 
 		data = getModule().prepareData(slot);
-
 
 		expect(data.bidder_won).toBe('rubicon');
 	});
