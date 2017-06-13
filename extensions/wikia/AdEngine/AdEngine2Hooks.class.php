@@ -58,6 +58,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverOpenXBidderCountries';
 		$vars[] = 'wgAdDriverOpenXBidderCountriesRemnant';
 		$vars[] = 'wgAdDriverOpenXPrebidBidderCountries';
+		$vars[] = 'wgAdDriverOutstreamVideoFrequencyCapping';
 		$vars[] = 'wgAdDriverOverridePrefootersCountries';
 		$vars[] = 'wgAdDriverPageFairDetectionCountries';
 		$vars[] = 'wgAdDriverPrebidBidderCountries';

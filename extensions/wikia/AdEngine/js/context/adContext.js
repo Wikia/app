@@ -209,6 +209,9 @@ define('ext.wikia.adEngine.adContext', [
 			geo.isProperGeo(instantGlobals.wgAdDriverOverridePrefootersCountries) && !isPageType('home')
 		);
 
+		context.opts.outstreamVideoFrequencyCapping =
+			geo.isProperGeo(instantGlobals.wgAdDriverOutstreamVideoFrequencyCapping);
+
 		enableAdMixExperiment(context);
 
 		// OpenX for remnant slot enabled

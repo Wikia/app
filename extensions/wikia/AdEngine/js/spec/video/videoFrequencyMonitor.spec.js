@@ -2,16 +2,25 @@
 describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 	'use strict';
 
-	var mocks = {
-		store: {
-			save: function () {}
-		},
-		adLogicPageViewCounter: {
-			get: function () {
-				return 1;
+	var noop = function () {},
+		mocks = {
+			adContext: {
+				getContext: function () {
+					return {
+						opts: {}
+					};
+				}
+			},
+			store: {
+				save: noop,
+				numberOfVideosSeenInLastPageViews: noop
+			},
+			adLogicPageViewCounter: {
+				get: function () {
+					return 1;
+				}
 			}
-		}
-	};
+		};
 
 	beforeEach(function () {
 		jasmine.clock().install();
@@ -23,6 +32,7 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.video.videoFrequencyMonitor'](
+			mocks.adContext,
 			mocks.adLogicPageViewCounter,
 			mocks.store
 		);
@@ -48,5 +58,28 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 		expect(getModule().videoCanBeLaunched()).toBeTruthy();
 	});
 
+	it('Should ask for correct number of PV and return positive result', function () {
+		spyOn(mocks.store, 'numberOfVideosSeenInLastPageViews').and.returnValue(4);
+		spyOn(mocks.adContext, 'getContext').and.returnValue({
+			opts: {
+				outstreamVideoFrequencyCapping: ['5/30pv']
+			}
+		});
+
+		expect(getModule().videoCanBeLaunched()).toBeTruthy();
+		expect(mocks.store.numberOfVideosSeenInLastPageViews.calls.first().args[0]).toEqual(30);
+	});
+
+	it('Should ask for correct number of PV and return negative result', function () {
+		spyOn(mocks.store, 'numberOfVideosSeenInLastPageViews').and.returnValue(5);
+		spyOn(mocks.adContext, 'getContext').and.returnValue({
+			opts: {
+				outstreamVideoFrequencyCapping: ['5/10pv']
+			}
+		});
+
+		expect(getModule().videoCanBeLaunched()).toBeFalsy();
+		expect(mocks.store.numberOfVideosSeenInLastPageViews.calls.first().args[0]).toEqual(10);
+	});
 });
 
