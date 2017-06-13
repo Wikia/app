@@ -249,17 +249,17 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 				},
 				{
 					targeting: {
-						hb_bidder: 'vulcan',
+						hb_bidder: 'rubicon',
 						hb_pb: '0000'
 					},
-					outstream: 'vu0000'
+					outstream: 'ru0000'
 				},
 				{
 					targeting: {
-						hb_bidder: 'vulcan',
+						hb_bidder: 'rubicon',
 						hb_pb: '12.50'
 					},
-					outstream: 'vu1250'
+					outstream: 'ru1250'
 				},
 				{
 				    targeting: {

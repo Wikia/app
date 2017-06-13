@@ -50,7 +50,7 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 			MOBILE_PREFOOTER: 'p',
 			MOBILE_BOTTOM_LEADERBOARD: 'b'
 		},
-		videoProviders = ['veles', 'vulcan'],
+		videoProviders = ['veles', 'rubicon'],
 		videoSlots = {
 			oasis: 'INCONTENT_PLAYER',
 			mercury: 'MOBILE_IN_CONTENT'
@@ -127,7 +127,7 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 			isVideoProvider = videoProviders.indexOf(bidderName) > -1;
 
 		if (isVideoProvider && videoTargeting.hb_pb) {
-			return bidderName.substr(0, 2) + math.leftPad(parseFloat(videoTargeting.hb_pb) * 100, 4);
+			return prebidIds[bidderName] + math.leftPad(parseFloat(videoTargeting.hb_pb) * 100, 4);
 		}
 	}
 
