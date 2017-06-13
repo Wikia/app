@@ -261,19 +261,19 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 					},
 					outstream: 'vu1250'
 				},
-                {
-                    targeting: {
-                        hb_bidder: 'indexExchange',
-                        hb_pb: '12.50'
-                    },
-                    outstream: undefined
-                },
-                {
-                    targeting: {
-                        hb_bidder: 'indexExchange'
-                    },
-                    outstream: undefined
-                }
+				{
+				    targeting: {
+					hb_bidder: 'indexExchange',
+					hb_pb: '12.50'
+				    },
+				    outstream: undefined
+				},
+				{
+				    targeting: {
+					hb_bidder: 'indexExchange'
+				    },
+				    outstream: undefined
+				}
 			],
 			getAdserverTargetingForAdUnitCodeSpy = spyOn(mocks.pbjs, 'getAdserverTargetingForAdUnitCode');
 
