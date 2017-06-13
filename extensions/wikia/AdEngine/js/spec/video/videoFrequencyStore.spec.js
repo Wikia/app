@@ -20,6 +20,9 @@ describe('ext.wikia.adEngine.video.videoFrequencyStore', function () {
 			log: noop,
 			pageViewCounter: {
 				get: noop
+			},
+			time: {
+				getInterval: noop
 			}
 		};
 
@@ -37,12 +40,14 @@ describe('ext.wikia.adEngine.video.videoFrequencyStore', function () {
 		return modules['ext.wikia.adEngine.video.videoFrequencyStore'](
 			mocks.adContext,
 			mocks.pageViewCounter,
+			mocks.time,
 			mocks.cache,
 			mocks.log
 		);
 	}
 
 	it('Should return correct number of elements based on date', function () {
+		spyOn(mocks.time, 'getInterval').and.returnValue(3000);
 		var store = getModule();
 		jasmine.clock().mockDate(new Date(6 * 1000));
 

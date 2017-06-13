@@ -2,9 +2,10 @@
 define('ext.wikia.adEngine.video.videoFrequencyStore', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageViewCounter',
+	'ext.wikia.adEngine.utils.time',
 	'wikia.cache',
 	'wikia.log'
-], function (adContext, pageViewCounter, cache, log) {
+], function (adContext, pageViewCounter, timeUtil, cache, log) {
 	'use strict';
 
 	var cacheKey = 'adEngine_outstreamVideoFrequency',
@@ -46,38 +47,12 @@ define('ext.wikia.adEngine.video.videoFrequencyStore', [
 	}
 
 	function numberOfVideosSeenInLast(value, unit) {
-		var minDate = (new Date()).getTime() - getInterval(value, unit);
+		var minDate = (new Date()).getTime() - timeUtil.getInterval(value, unit);
 		log(['minDate calculated', minDate], log.levels.debug, logGroup);
 
 		return countAll(function (item) {
 			return item.date >= minDate;
 		});
-	}
-
-	function getMultiplier(unit) {
-		var s = 1000;
-		switch (unit) {
-			case 's':
-			case 'sec':
-			case 'second':
-			case 'seconds':
-				return s;
-			case 'm':
-			case 'min':
-			case 'minute':
-			case 'minutes':
-				return s * 60;
-			case 'h':
-			case 'hour':
-			case 'hours':
-				return s * 60 * 60;
-			default:
-				throw 'Unsupported time unit';
-		}
-	}
-
-	function getInterval(value, unit) {
-		return value * getMultiplier(unit);
 	}
 
 	function isValidData (value) {
