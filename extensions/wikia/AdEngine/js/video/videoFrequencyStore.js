@@ -8,7 +8,7 @@ define('ext.wikia.adEngine.video.videoFrequencyStore', [
 
 	var logGroup = 'ext.wikia.adEngine.video.videoFrequencyStore',
 		cacheKey = 'adEngine_outstreamVideoFrequency',
-		cacheTtl = cache.CACHE_STANDARD, // 24h
+		cacheTtl = cache.CACHE_LONG, // 1 month
 		store = [];
 
 	function save(data) {
