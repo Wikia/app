@@ -47,14 +47,27 @@ define('ext.wikia.adEngine.lookup.services', [
 
 
 	function addParameters(providerName, slotName, slotTargeting) {
-		var params = {};
+		var params = {},
+			floorPrice = 0,
+			prebidPrices;
+
+		if (prebid && prebid.wasCalled()) {
+			prebidPrices = prebid.getBestSlotPrice(slotName);
+			// promote prebid on a tie
+			floorPrice = Math.max(
+				Object.keys(prebidPrices).filter(function(key) {
+					return parseFloat(prebidPrices[key]) > 0;
+				}).map(function (key) { return parseFloat(prebidPrices[key]); })
+			);
+		}
+
 		if (!Object.keys) {
 			return;
 		}
 
 		bidders.forEach(function (bidder) {
 			if (bidder && bidder.wasCalled()) {
-				params = bidder.getSlotParams(slotName);
+				params = bidder.getSlotParams(slotName, floorPrice);
 				bidder.trackState(providerName, slotName, params);
 				Object.keys(params).forEach(function (key) {
 					slotTargeting[key] = params[key];

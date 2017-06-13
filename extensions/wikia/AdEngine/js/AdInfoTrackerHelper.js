@@ -30,7 +30,7 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 			slotPricesIgnoringTimeout = lookupServices.getCurrentSlotPrices(slot.name),
 			realSlotPrices = lookupServices.getDfpSlotPrices(slot.name),
 			slotSize = JSON.parse(slotFirstChildData.gptCreativeSize),
-			bidderWon = getBidderWon(realSlotPrices);
+			bidderWon = getBidderWon(slotParams, realSlotPrices);
 
 		data = {
 			'pv': pageParams.pv || '',
@@ -82,15 +82,39 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 		return '';
 	}
 
-	function getBidderWon(realSlotPrices) {
-		var realSlotPricesKeys = Object.keys(realSlotPrices).filter(function(key) {
+	function getBidderWon(slotParams, realSlotPrices) {
+		var slotPricesKeys = Object.keys(realSlotPrices).filter(function(key) {
 				return parseFloat(realSlotPrices[key]) > 0;
 			}),
-			highestPriceBidder = realSlotPricesKeys.length === 0 ? null : realSlotPricesKeys.reduce(function(a, b) {
-				return parseFloat(realSlotPrices[a]) > parseFloat(realSlotPrices[b]) ? a : b;
-			});
+			highestPrice = Math.max.apply(
+				null,
+				slotPricesKeys.map(function(key) { return parseFloat(realSlotPrices[key]); })
+			),
+			highestPriceBidders = [];
 
-		return highestPriceBidder || '';
+		slotPricesKeys.forEach(function(key) {
+			if (parseFloat(realSlotPrices[key]) === highestPrice) {
+				highestPriceBidders.push(key);
+			}
+		});
+
+		// In case of a tie in prebid bidders prebid.js picks the fastest bidder.
+		// In case of a tie with prebid and rubiconFastlane we promote prebid
+		if (slotParams.hb_bidder && highestPriceBidders.indexOf(slotParams.hb_bidder) >= 0) {
+			return slotParams.hb_bidder;
+		}
+
+		if (slotParams.rpfl_7450) {
+			if (highestPriceBidders.indexOf('fastlane') >= 0) {
+				return 'fastlane';
+			}
+
+			if (highestPriceBidders.indexOf('fastlane_private') >= 0) {
+				return 'fastlane_private'
+			}
+		}
+
+		return '';
 	}
 
 	function generateUUID() {
