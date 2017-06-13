@@ -108,7 +108,7 @@ class DesignSystemHelper {
 	 *
 	 * @return string
 	 */
-	public static function renderText( $fields, $recursionDepth = 0 ) {
+	public static function renderText( $fields, $inContentLang = false, $recursionDepth = 0 ) {
 		if ( $recursionDepth > static::MAX_RECURSION_DEPTH ) {
 			WikiaLogger::instance()->error( 'Recursion depth maximum reached' );
 
@@ -118,44 +118,51 @@ class DesignSystemHelper {
 		if ( $fields['type'] === 'text' ) {
 			return htmlspecialchars( $fields['value'] );
 		} elseif ( $fields['type'] === 'translatable-text' ) {
-			if ( isset( $fields['params'] ) ) {
-				$paramsRendered = [ ];
-
-				if ( !array_key_exists( $fields['key'], static::MESSAGE_PARAMS_ORDER ) ) {
-					WikiaLogger::instance()->error(
-						'Design System tried to render a message with params that we don\'t support, ignore params',
-						[
-							'messageKey' => $fields['key'],
-							'params' => $fields['params']
-						]
-					);
-				} else {
-					foreach ( static::MESSAGE_PARAMS_ORDER[$fields['key']] as $paramKey ) {
-						$paramsRendered[] = static::renderText( $fields['params'][$paramKey], $recursionDepth + 1 );
-					}
-				}
-
-				return wfMessage( $fields['key'] )->rawParams( $paramsRendered )->escaped();
-			} else {
-				return wfMessage( $fields['key'] )->escaped();
-			}
+			return self::renderTranslatableText( $fields, $inContentLang, $recursionDepth );
 		} elseif ( $fields['type'] === 'link-text' ) {
-			return Html::rawElement(
-				'a',
-				[
-					'href' => $fields['href']
-				],
-				static::renderText( $fields['title'], $recursionDepth + 1 )
-			);
+			return Html::rawElement( 'a', [
+				'href' => $fields['href'],
+			], static::renderText( $fields['title'], false, $recursionDepth + 1 ) );
 		} else {
-			WikiaLogger::instance()->error(
-				'Design System tried to render a text of unsupported type',
-				[
-					'fields' => $fields
-				]
-			);
+			WikiaLogger::instance()
+				->error( 'Design System tried to render a text of unsupported type', [
+					'fields' => $fields,
+				] );
 
 			return '';
 		}
+	}
+
+	public static function renderTranslatableText(
+		$fields, $inContentLang = false, $recursionDepth = 0
+	) {
+		$message = wfMessage( $fields['key'] );
+
+		if ( isset( $fields['params'] ) ) {
+			$paramsRendered = [];
+
+			if ( !array_key_exists( $fields['key'], static::MESSAGE_PARAMS_ORDER ) ) {
+				WikiaLogger::instance()
+					->error( 'Design System tried to render a message with params that we don\'t support, ignore params',
+						[
+							'messageKey' => $fields['key'],
+							'params' => $fields['params'],
+						] );
+			} else {
+				foreach ( static::MESSAGE_PARAMS_ORDER[$fields['key']] as $paramKey ) {
+					$paramsRendered[] =
+						static::renderText( $fields['params'][$paramKey], false,
+							$recursionDepth + 1 );
+				}
+			}
+
+			$message = $message->rawParams( $paramsRendered );
+		}
+
+		if ( $inContentLang ) {
+			$message = $message->inContentLanguage();
+		}
+
+		return $message->escaped();
 	}
 }

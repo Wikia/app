@@ -68,8 +68,6 @@ class ForumController extends WallBaseController {
 
 		// TODO: keep the varnish cache and do purging on post
 		$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
-
-		$this->app->wg->SuppressPageHeader = true;
 	}
 
 	protected function redirectToIndex() {
@@ -194,7 +192,7 @@ class ForumController extends WallBaseController {
 		wfProfileOut( __METHOD__ );
 	}
 
-	public function breadCrumbs() {
+	public function brickHeader() {
 		if ( $this->app->wg->Title->getNamespace() == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			$indexPage = Title::newFromText( 'Forum', NS_SPECIAL );
 			$path = [ ];
@@ -212,6 +210,10 @@ class ForumController extends WallBaseController {
 		} else {
 			parent::brickHeader();
 		}
+
+		$this->getResponse()
+			->getView()
+			->setTemplatePath( 'extensions/wikia/Wall/templates/Wall_brickHeader.php' );
 	}
 
 	public function header() {
