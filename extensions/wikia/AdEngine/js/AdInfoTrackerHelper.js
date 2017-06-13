@@ -50,7 +50,7 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 			'kv_ref': pageParams.ref || '',
 			'kv_top': pageParams.top || '',
 			'kv_ah': pageParams.ah || '',
-			'bidder_won': slotParams.hb_bidder || '',
+			'bidder_won': getBidderWon(slotParams, realSlotPrices),
 			'bidder_1': transformBidderPrice('indexExchange', realSlotPrices, slotPricesIgnoringTimeout),
 			'bidder_2': transformBidderPrice('appnexus', realSlotPrices, slotPricesIgnoringTimeout),
 			'bidder_3': transformBidderPrice('fastlane', realSlotPrices, slotPricesIgnoringTimeout),
@@ -81,9 +81,44 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 		return '';
 	}
 
+	function getBidderWon(slotParams, realSlotPrices) {
+		var slotPricesKeys = Object.keys(realSlotPrices).filter(function(key) {
+				return parseFloat(realSlotPrices[key]) > 0;
+			}),
+			highestPrice = Math.max.apply(
+				null,
+				slotPricesKeys.map(function(key) { return parseFloat(realSlotPrices[key]); })
+			),
+			highestPriceBidders = [];
+
+		slotPricesKeys.forEach(function(key) {
+			if (parseFloat(realSlotPrices[key]) === highestPrice) {
+				highestPriceBidders.push(key);
+			}
+		});
+
+		// In case of a tie in prebid bidders prebid.js picks the fastest bidder.
+		// In case of a tie with prebid and rubiconFastlane we promote prebid
+		if (slotParams.hb_bidder && highestPriceBidders.indexOf(slotParams.hb_bidder) >= 0) {
+			return slotParams.hb_bidder;
+		}
+
+		if (slotParams.rpfl_7450) {
+			if (highestPriceBidders.indexOf('fastlane') >= 0) {
+				return 'fastlane';
+			}
+
+			if (highestPriceBidders.indexOf('fastlane_private') >= 0) {
+				return 'fastlane_private'
+			}
+		}
+
+		return '';
+	}
+
 	function generateUUID() {
 		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-			var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+			var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
 			return v.toString(16);
 		});
 	}

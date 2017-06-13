@@ -35,6 +35,7 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 			trackState: noop,
 			wasCalled: noop,
 			getSlotParams: noop,
+			getBestSlotPrice: function() { return { aol: '0.00' }; },
 			getName: function () { return 'prebid'; },
 			hasResponse: function () { return true; }
 		},
@@ -44,6 +45,7 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 	it('extends slot targeting for Amazon', function () {
 		var lookup = modules['ext.wikia.adEngine.lookup.services'](
 				mocks.log,
+				undefined,
 				mocks.amazon
 			),
 			slotTargetingMock = {a: 'b'},
@@ -109,7 +111,6 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 	it('extends slot targeting for Prebid.js', function () {
 		var lookup = modules['ext.wikia.adEngine.lookup.services'](
 			mocks.log,
-			undefined,
 			mocks.prebid
 			),
 			slotTargetingMock = {a: 'b'},
