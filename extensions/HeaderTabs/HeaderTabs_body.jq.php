@@ -17,7 +17,7 @@ class HeaderTabs {
 		return '<div id="nomoretabs"></div>';
 	}
 
-	public static function replaceFirstLevelHeaders( &$parser, &$text ) {
+	public static function replaceFirstLevelHeaders( $parser, &$text ) {
 		global $htRenderSingleTab, $htAutomaticNamespaces, $htDefaultFirstTab, $htDisableDefaultToc, $htGenerateTabTocs, $htStyle, $htEditTabLink;
 		global $htTabIndexes;
 
@@ -290,7 +290,7 @@ class HeaderTabs {
 		return true;
 	}
 
-	public static function renderSwitchTabLink( &$parser, $tabName, $linkText, $anotherTarget = '' ) {
+	public static function renderSwitchTabLink( $parser, $tabName, $linkText, $anotherTarget = '' ) {
 		// The cache unfortunately needs to be disabled for the
 		// Javascript for such links to work.
 		$parser->disableCache();

@@ -1130,7 +1130,7 @@ abstract class DatabaseBase implements DatabaseType {
 		$this->preparedArgs =& $args;
 
 		return preg_replace_callback( '/(\\\\[?!&]|[?!&])/',
-			array( &$this, 'fillPreparedArg' ), $preparedQuery );
+			array( $this, 'fillPreparedArg' ), $preparedQuery );
 	}
 
 	/**
@@ -2745,7 +2745,7 @@ abstract class DatabaseBase implements DatabaseType {
 		list( $startOpts, $useIndex, $tailOpts ) = $this->makeSelectOptions( $selectOptions );
 
 		if ( is_array( $srcTable ) ) {
-			$srcTable =  implode( ',', array_map( array( &$this, 'tableName' ), $srcTable ) );
+			$srcTable =  implode( ',', array_map( array( $this, 'tableName' ), $srcTable ) );
 		} else {
 			$srcTable = $this->tableName( $srcTable );
 		}

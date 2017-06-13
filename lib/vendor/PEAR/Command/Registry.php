@@ -140,7 +140,7 @@ installed package.'
             $channel = $this->config->get('default_channel');
         }
         $installed = $reg->packageInfo(null, null, $channel);
-        usort($installed, array(&$this, '_sortinfo'));
+        usort($installed, array($this, '_sortinfo'));
         $i = $j = 0;
         $data = array(
             'caption' => 'Installed packages, channel ' .

@@ -207,7 +207,7 @@ class RecentChange {
 
 		/* Wikia change begin - @author: Macbre */
 		/* Wysiwyg: add extra data before row is added */
-		wfRunHooks( 'RecentChange_beforeSave', array( &$this ) );
+		wfRunHooks( 'RecentChange_beforeSave', array( $this ) );
 		/* Wikia change end */
 
 		# Insert new row
@@ -217,7 +217,7 @@ class RecentChange {
 		$this->mAttribs['rc_id'] = $dbw->insertId();
 
 		# Notify extensions
-		wfRunHooks( 'RecentChange_save', array( &$this ) );
+		wfRunHooks( 'RecentChange_save', array( $this ) );
 
 		# Notify external application via UDP
 		if ( !$noudp ) {

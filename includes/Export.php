@@ -559,7 +559,7 @@ class XmlDumpWriter {
 				"" ) . "\n";
 		}
 
-		wfRunHooks( 'XmlDumpWriterWriteRevision', array( &$this, &$out, $row, $text ) );
+		wfRunHooks( 'XmlDumpWriterWriteRevision', array( $this, &$out, $row, $text ) );
 
 		$out .= "    </revision>\n";
 

@@ -570,7 +570,7 @@ class LinkHolderArray {
 
 		$text = preg_replace_callback(
 			'/<!--(LINK|IWLINK) (.*?)-->/',
-			array( &$this, 'replaceTextCallback' ),
+			array( $this, 'replaceTextCallback' ),
 			$text );
 
 		wfProfileOut( __METHOD__ );

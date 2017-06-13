@@ -79,7 +79,7 @@ function wfCOCategorySelectArticlePage() {
 	return !wfCOCheck();
 }
 
-function wfCOQuestionBox(Parser &$parser) {
+function wfCOQuestionBox(Parser $parser) {
 	$parser->setHook('questionbox', 'wfCOQuestionBoxRender');
 	return true;
 }

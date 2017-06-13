@@ -62,7 +62,7 @@
 		/**
 		 * Hook entry for removing the magic words from displayed text
 		 */
-		static public function onInternalParseBeforeLinks(&$parser, &$text, &$strip_state) {
+		static public function onInternalParseBeforeLinks($parser, &$text, &$strip_state) {
 			global $wgRTEParserEnabled;
 			if (empty($wgRTEParserEnabled)) {
 				MagicWord::get('CATGALLERY_ENABLED')->matchAndRemove($text);

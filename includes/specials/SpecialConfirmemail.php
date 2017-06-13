@@ -67,7 +67,7 @@ class EmailConfirmation extends UnlistedSpecialPage {
 			if( $this->getUser()->isLoggedIn() ) {
 				/* Wikia change - begin */
 				$show = true;
-				wfRunHooks( 'ConfirmEmailShowRequestForm', array( &$this, &$show ) );
+				wfRunHooks( 'ConfirmEmailShowRequestForm', array( $this, &$show ) );
 				if ( $show ) {
 					if( Sanitizer::validateEmail( $this->getUser()->getEmail() ) ) {
 						$this->showRequestForm();

@@ -90,7 +90,7 @@ class LinksUpdateConstructed {
 	 * @note Parsing is expensive but it is more expensive to loose data or to
 	 * expect that an external process adheres the object contract
 	 */
-	private function updateEmptySemanticData( &$parserData, $title ) {
+	private function updateEmptySemanticData( $parserData, $title ) {
 
 		wfDebug( __METHOD__ . ' Empty SemanticData : ' . $title->getPrefixedDBkey() . "\n" );
 

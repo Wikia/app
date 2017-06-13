@@ -20,7 +20,7 @@ class LandingPagesParser {
 		return true;
 	}
 
-	static public function onInternalParseBeforeLinksHook( &$parser, &$text, &$strip_state ) {
+	static public function onInternalParseBeforeLinksHook( $parser, &$text, &$strip_state ) {
 		global $wgLandingPagesAsContentMagicWords, $wgRTEParserEnabled;
 		if ( empty( $wgRTEParserEnabled ) ) {
 			$magicWords = array_keys( $wgLandingPagesAsContentMagicWords );

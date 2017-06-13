@@ -1572,7 +1572,7 @@ abstract class Skin extends ContextSource {
 			$attribs = " title=\"$attribs\"";
 		}
 		$result = null;
-		wfRunHooks( 'EditSectionLink', array( &$this, $nt, $section, $attribs, $link, &$result, $lang ) );
+		wfRunHooks( 'EditSectionLink', array( $this, $nt, $section, $attribs, $link, &$result, $lang ) );
 		if ( !is_null( $result ) ) {
 			# For reverse compatibility, add the brackets *after* the hook is
 			# run, and even add them to hook-provided text.  (This is the main

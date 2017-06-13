@@ -24,7 +24,7 @@ class ChatWidget {
 	/**
 	 * @brief This function set parseTag hook
 	 */
-	public static function onParserFirstCallInit( Parser &$parser ) {
+	public static function onParserFirstCallInit( Parser $parser ) {
 		wfProfileIn( __METHOD__ );
 		$parser->setHook( CHAT_TAG, [ __CLASS__, "parseTag" ] );
 		wfProfileOut( __METHOD__ );

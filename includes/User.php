@@ -1362,7 +1362,7 @@ class User implements JsonSerializable {
 
 		# Extensions
 		/* Wikia change begin - SUS-92 */
-		wfRunHooks( 'GetBlockedStatus', array( &$this, $shouldLogBlockInStats, $global ) );
+		wfRunHooks( 'GetBlockedStatus', array( $this, $shouldLogBlockInStats, $global ) );
 		/* Wikia change end */
 
 		if ( !empty($this->mBlockedby) ) {
@@ -1517,7 +1517,7 @@ class User implements JsonSerializable {
 	public function pingLimiter( $action = 'edit' ) {
 		# Call the 'PingLimiter' hook
 		$result = false;
-		if( !wfRunHooks( 'PingLimiter', array( &$this, $action, $result ) ) ) {
+		if( !wfRunHooks( 'PingLimiter', array( $this, $action, $result ) ) ) {
 			return $result;
 		}
 
@@ -1703,7 +1703,7 @@ class User implements JsonSerializable {
 			$ip = $this->getRequest()->getIP();
 		}
 		$blocked = false;
-		wfRunHooks( 'UserIsBlockedGlobally', array( &$this, $ip, &$blocked ) );
+		wfRunHooks( 'UserIsBlockedGlobally', array( $this, $ip, &$blocked ) );
 		$this->mBlockedGlobally = (bool)$blocked;
 		return $this->mBlockedGlobally;
 	}
@@ -1857,7 +1857,7 @@ class User implements JsonSerializable {
 	 */
 	public function getNewMessageLinks() {
 		$talks = array();
-		wfRunHooks( 'UserRetrieveNewTalks', array( &$this, &$talks) );
+		wfRunHooks( 'UserRetrieveNewTalks', array( $this, &$talks) );
 
 		/* Wikia change begin - @author: XXX */
 		if( $this->getNewtalk() ) {
@@ -3133,7 +3133,7 @@ class User implements JsonSerializable {
 	 * Log this user out.
 	 */
 	public function logout() {
-		if ( wfRunHooks( 'UserLogout', array( &$this ) ) ) {
+		if ( wfRunHooks( 'UserLogout', array( $this ) ) ) {
 			$this->doLogout();
 		}
 	}
@@ -3660,7 +3660,7 @@ class User implements JsonSerializable {
 		}
 
 		$priority = 0;
-		wfRunHooks( 'UserSendConfirmationMail' , array( &$this, &$args, &$priority, &$url, $token, $ip_arg, $type ) );
+		wfRunHooks( 'UserSendConfirmationMail' , array( $this, &$args, &$priority, &$url, $token, $ip_arg, $type ) );
 
 		$emailController = $this->getEmailController( $mailtype );
 		if ( !empty( $emailController ) ) {
@@ -3929,7 +3929,7 @@ class User implements JsonSerializable {
 			return false;
 		}
 		$canSend = $this->isEmailConfirmed();
-		wfRunHooks( 'UserCanSendEmail', array( &$this, &$canSend ) );
+		wfRunHooks( 'UserCanSendEmail', array( $this, &$canSend ) );
 		return $canSend;
 	}
 
@@ -3956,7 +3956,7 @@ class User implements JsonSerializable {
 		global $wgEmailAuthentication;
 		$this->load();
 		$confirmed = true;
-		if ( wfRunHooks( 'EmailConfirmed', array( &$this, &$confirmed ) ) ) {
+		if ( wfRunHooks( 'EmailConfirmed', array( $this, &$confirmed ) ) ) {
 			if( $this->isAnon() ) {
 				return false;
 			}

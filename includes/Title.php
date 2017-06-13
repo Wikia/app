@@ -1415,7 +1415,7 @@ class Title {
 		# Finally, add the fragment.
 		$url .= $this->getFragmentForURL();
 
-		wfRunHooks( 'GetFullURL', array( &$this, &$url, $query ) );
+		wfRunHooks( 'GetFullURL', array( $this, &$url, $query ) );
 		return $url;
 	}
 
@@ -1456,7 +1456,7 @@ class Title {
 			$dbkey = wfUrlencode( $this->getPrefixedDBkey() );
 			if ( $query == '' ) {
 				$url = str_replace( '$1', $dbkey, $wgArticlePath );
-				wfRunHooks( 'GetLocalURL::Article', array( &$this, &$url ) );
+				wfRunHooks( 'GetLocalURL::Article', array( $this, &$url ) );
 			} else {
 				global $wgVariantArticlePath, $wgActionPaths;
 				$url = false;
@@ -1508,7 +1508,7 @@ class Title {
 				}
 			}
 
-			wfRunHooks( 'GetLocalURL::Internal', array( &$this, &$url, $query ) );
+			wfRunHooks( 'GetLocalURL::Internal', array( $this, &$url, $query ) );
 
 			// @todo FIXME: This causes breakage in various places when we
 			// actually expected a local URL and end up with dupe prefixes.
@@ -1516,7 +1516,7 @@ class Title {
 				$url = $wgServer . $url;
 			}
 		}
-		wfRunHooks( 'GetLocalURL', array( &$this, &$url, $query ) );
+		wfRunHooks( 'GetLocalURL', array( $this, &$url, $query ) );
 		return $url;
 	}
 
@@ -1595,7 +1595,7 @@ class Title {
 		$query = self::fixUrlQueryArgs( $query, $query2 );
 		$server = $wgInternalServer !== false ? $wgInternalServer : $wgServer;
 		$url = wfExpandUrl( $server . $this->getLocalURL( $query ), PROTO_HTTP );
-		wfRunHooks( 'GetInternalURL', array( &$this, &$url, $query ) );
+		wfRunHooks( 'GetInternalURL', array( $this, &$url, $query ) );
 		return $url;
 	}
 
@@ -1615,7 +1615,7 @@ class Title {
 	public function getCanonicalURL( $query = '', $query2 = false ) {
 		$query = self::fixUrlQueryArgs( $query, $query2 );
 		$url = wfExpandUrl( $this->getLocalURL( $query ) . $this->getFragmentForURL(), PROTO_CANONICAL );
-		wfRunHooks( 'GetCanonicalURL', array( &$this, &$url, $query ) );
+		wfRunHooks( 'GetCanonicalURL', array( $this, &$url, $query ) );
 		return $url;
 	}
 
@@ -1844,16 +1844,16 @@ class Title {
 	private function checkPermissionHooks( $action, $user, $errors, $doExpensiveQueries, $short ) {
 		// Use getUserPermissionsErrors instead
 		$result = '';
-		if ( !wfRunHooks( 'userCan', array( &$this, &$user, $action, &$result ) ) ) {
+		if ( !wfRunHooks( 'userCan', array( $this, &$user, $action, &$result ) ) ) {
 			return $result ? array() : array( array( 'badaccess-group0' ) );
 		}
 		// Check getUserPermissionsErrors hook
-		if ( !wfRunHooks( 'getUserPermissionsErrors', array( &$this, &$user, $action, &$result ) ) ) {
+		if ( !wfRunHooks( 'getUserPermissionsErrors', array( $this, &$user, $action, &$result ) ) ) {
 			$errors = $this->resultToError( $errors, $result );
 		}
 		// Check getUserPermissionsErrorsExpensive hook
 		if ( $doExpensiveQueries && !( $short && count( $errors ) > 0 ) &&
-			 !wfRunHooks( 'getUserPermissionsErrorsExpensive', array( &$this, &$user, $action, &$result ) ) ) {
+			 !wfRunHooks( 'getUserPermissionsErrorsExpensive', array( $this, &$user, $action, &$result ) ) ) {
 			$errors = $this->resultToError( $errors, $result );
 		}
 
@@ -3758,7 +3758,7 @@ class Title {
 
 		$dbw->commit();
 
-		wfRunHooks( 'TitleMoveComplete', array( &$this, &$nt, &$wgUser, $pageid, $redirid ) );
+		wfRunHooks( 'TitleMoveComplete', array( $this, &$nt, &$wgUser, $pageid, $redirid ) );
 		return true;
 	}
 

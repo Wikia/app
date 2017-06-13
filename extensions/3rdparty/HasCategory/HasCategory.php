@@ -58,12 +58,12 @@ class ExtensionHasCategory {
 	 *
 	 * @param Parser $parser
 	 */
-	function RegisterParser( &$parser ) {
+	function RegisterParser( $parser ) {
 		if ( defined( get_class( $parser ) . '::SFH_OBJECT_ARGS' ) ) {
 			// These functions accept DOM-style arguments
-			$parser->setFunctionHook( 'ifhascat', array( &$this, 'IfhascatPfObj' ), SFH_OBJECT_ARGS );
+			$parser->setFunctionHook( 'ifhascat', array( $this, 'IfhascatPfObj' ), SFH_OBJECT_ARGS );
 		} else {
-			$parser->setFunctionHook( 'ifhascat', array( &$this, 'IfhascatPf' ) );
+			$parser->setFunctionHook( 'ifhascat', array( $this, 'IfhascatPf' ) );
 		}
 
 		return true;
@@ -75,7 +75,7 @@ class ExtensionHasCategory {
 	 * @param Parser $parser
 	 * @param PPFrame $frame
 	 */
-	function IfhascatPfObj( &$parser, $frame, $args ) {
+	function IfhascatPfObj( $parser, $frame, $args ) {
 		$page     = isset($args[0]) ? trim($frame->expand($args[0])) : '';
 		$category = isset($args[1]) ? trim($frame->expand($args[1])) : '';
 		$then     = isset($args[2]) ? trim($frame->expand($args[2])) : '1';
@@ -94,7 +94,7 @@ class ExtensionHasCategory {
 	 * Here we find out whether the page is really contained in the category.
 	 * If yes return $then (default: 1) else return $else (default: 0).
 	 */
-	function IfhascatPf( &$parser, $page = '', $category = '', $then = '1', $else = '0' ) {
+	function IfhascatPf( $parser, $page = '', $category = '', $then = '1', $else = '0' ) {
 		// Connect to the database
 		$dbr = wfGetDB( DB_SLAVE );
 

@@ -27,7 +27,7 @@ function number_format_Setup( Parser $parser )	 {
 
 class NumberFormart {
 
-	public static function number_format_Render( &$parser ) {
+	public static function number_format_Render( $parser ) {
 		wfProfileIn(__METHOD__);
 		// {{#number_format:number|decimals|dec_point|thousands_sep}}
 

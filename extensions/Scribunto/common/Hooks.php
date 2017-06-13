@@ -29,7 +29,7 @@ class ScribuntoHooks {
 	 * @param $parser Parser
 	 * @return bool
 	 */
-	public static function setupParserHook( &$parser ) {
+	public static function setupParserHook( $parser ) {
 		$parser->setFunctionHook( 'invoke', 'ScribuntoHooks::invokeHook', SFH_OBJECT_ARGS );
 		return true;
 	}
@@ -40,7 +40,7 @@ class ScribuntoHooks {
 	 * @param $parser Parser
 	 * @return bool
 	 */
-	public static function clearState( &$parser ) {
+	public static function clearState( $parser ) {
 		Scribunto::resetParserEngine( $parser );
 		return true;
 	}
@@ -66,7 +66,7 @@ class ScribuntoHooks {
 	 * @throws ScribuntoException
 	 * @return string
 	 */
-	public static function invokeHook( &$parser, $frame, $args ) {
+	public static function invokeHook( $parser, $frame, $args ) {
 		if ( !@constant( get_class( $frame ) . '::SUPPORTS_INDEX_OFFSET' ) ) {
 			throw new MWException(
 				'Scribunto needs MediaWiki 1.20 or later (Preprocessor::SUPPORTS_INDEX_OFFSET)' );

@@ -106,7 +106,7 @@ class PEAR_Builder extends PEAR_Common
         $command = 'msdev '.$dsp.' /MAKE "'.$info['package']. ' - Release"';
 
         $this->current_callback = $callback;
-        $err = $this->_runCommand($command, array(&$this, 'msdevCallback'));
+        $err = $this->_runCommand($command, array($this, 'msdevCallback'));
         if (PEAR::isError($err)) {
             return $err;
         }
@@ -270,7 +270,7 @@ class PEAR_Builder extends PEAR_Common
         $this->log(2, "building in $dir");
         $this->current_callback = $callback;
         putenv('PATH=' . $this->config->get('bin_dir') . ':' . getenv('PATH'));
-        $err = $this->_runCommand("phpize", array(&$this, 'phpizeCallback'));
+        $err = $this->_runCommand("phpize", array($this, 'phpizeCallback'));
         if (PEAR::isError($err)) {
             return $err;
         }

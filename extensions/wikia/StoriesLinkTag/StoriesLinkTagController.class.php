@@ -74,7 +74,7 @@ class StoriesLinkTagController extends WikiaController {
 	 * @param string $text
 	 * @return bool
 	 */
-	public static function onParserAfterTidy( Parser &$parser, &$text ) {
+	public static function onParserAfterTidy( Parser $parser, &$text ) {
 		if ( empty( F::app()->wg->ArticleAsJson ) ) {
 			$text = static::getInstance()->replaceMarkers( $text );
 		}

@@ -48,7 +48,7 @@ class CategoryPage extends Article {
 			return;
 		}
 
-		if ( !wfRunHooks( 'CategoryPageView', array( &$this ) ) ) {
+		if ( !wfRunHooks( 'CategoryPageView', array( $this ) ) ) {
 			return;
 		}
 

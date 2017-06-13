@@ -161,7 +161,7 @@ class CiteOutput {
 		return false;
 	}
 
-	function timestamp( &$parser, &$ts ) {
+	function timestamp( $parser, &$ts ) {
 		if ( isset( $parser->mTagHooks['citation'] ) ) {
 			$ts = wfTimestamp( TS_UNIX, $this->mArticle->getTimestamp() );
 		}

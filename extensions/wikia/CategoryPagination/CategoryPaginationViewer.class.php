@@ -65,7 +65,7 @@ class CategoryPaginationViewer extends CategoryViewer {
 		 * @see answerCategoryOtherSection
 		 */
 		$answersSection = '';
-		wfRunHooks( 'CategoryViewer::getOtherSection', [ &$this, &$answersSection ] );
+		wfRunHooks( 'CategoryViewer::getOtherSection', [ $this, &$answersSection ] );
 
 		/**
 		 * Hook for category galleries to add the top pages at the top
@@ -115,7 +115,7 @@ class CategoryPaginationViewer extends CategoryViewer {
 		// Get pages
 		$this->processSection( self::TYPE_PAGE, function ( $title, $humanSortkey, $row ) {
 			/** @see answerAddCategoryPage */
-			if ( wfRunHooks( 'CategoryViewer::addPage', array( &$this, &$title, &$row, $humanSortkey ) ) ) {
+			if ( wfRunHooks( 'CategoryViewer::addPage', array( $this, &$title, &$row, $humanSortkey ) ) ) {
 				$this->addPage( $title, $humanSortkey, $row->page_len, $row->page_is_redirect );
 				return true;
 			}

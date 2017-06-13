@@ -1034,7 +1034,7 @@ class Cite {
 	 *
 	 * @return bool
 	 */
-	function clearState( &$parser ) {
+	function clearState( $parser ) {
 		if ( $parser->extCite !== $this ) {
 			return $parser->extCite->clearState( $parser );
 		}
@@ -1065,7 +1065,7 @@ class Cite {
 	 *
 	 * @return bool
 	 */
-	function checkRefsNoReferences( &$parser, &$text ) {
+	function checkRefsNoReferences( $parser, &$text ) {
 		if ( $parser->extCite !== $this ) {
 			return $parser->extCite->checkRefsNoReferences( $parser, $text );
 		}

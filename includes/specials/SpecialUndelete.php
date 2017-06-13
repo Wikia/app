@@ -385,7 +385,7 @@ class PageArchive {
 
 		/* Wikia change begin - @author: Andrzej 'nAndy' Lukaszewski */
 		$hookAddedLogEntry = false;
-		wfRunHooks('PageArchiveUndeleteBeforeLogEntry', array(&$this, &$log, &$this->title, $reason, &$hookAddedLogEntry));
+		wfRunHooks('PageArchiveUndeleteBeforeLogEntry', array($this, &$log, &$this->title, $reason, &$hookAddedLogEntry));
 		if( !$hookAddedLogEntry ) {
 			//if hook above didn't log anything log it as default
 			$log->addEntry( 'restore', $this->title, $reason );

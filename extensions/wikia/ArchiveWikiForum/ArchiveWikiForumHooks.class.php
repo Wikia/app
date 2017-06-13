@@ -57,7 +57,7 @@ class ArchiveWikiForumHooks {
      * @param $result
      * @return bool
      */
-    public static function onGetUserPermissionsErrors( Title &$title, User &$user, $action, &$result ) {
+    public static function onGetUserPermissionsErrors( Title $title, User $user, $action, &$result ) {
         if ( $action == 'read' ) {
             return true;
         }

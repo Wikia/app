@@ -63,7 +63,7 @@ class WikiaPhotoGalleryHelper {
 	/**
 	 * Allow this extension to use its own "parser" for <gallery> tag content
 	 */
-	static public function beforeRenderImageGallery(&$parser, &$ig) {
+	static public function beforeRenderImageGallery($parser, &$ig) {
 		$ig->parse($parser);
 		// by returning false we're telling MW parser to return gallery's HTML immediatelly
 		return false;
@@ -184,7 +184,7 @@ class WikiaPhotoGalleryHelper {
 	/**
 	 * Parse given link and return link tag attributes
 	 */
-	static public function parseLink(&$parser, $url, $text, $link) {
+	static public function parseLink($parser, $url, $text, $link) {
 		// fallback: link to image page + lightbox
 		$linkAttribs = array(
 			'class' => 'image lightbox',

@@ -36,7 +36,7 @@ $wgHooks['ParserFirstCallInit'][] = 'efCentralHelpSearchSetup';
  * @param Parser $parser
  * @return bool
  */
-function efCentralHelpSearchSetup( Parser &$parser ) {
+function efCentralHelpSearchSetup( Parser $parser ) {
 	$parser->setHook( 'centralhelpsearch', 'efCreateSearchForm' );
 
 	return true;

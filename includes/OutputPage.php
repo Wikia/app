@@ -1221,7 +1221,7 @@ class OutputPage extends ContextSource {
 		}
 
 		# Add the remaining categories to the skin
-		if ( wfRunHooks( 'OutputPageMakeCategoryLinks', array( &$this, $categories, &$this->mCategoryLinks ) ) ) {
+		if ( wfRunHooks( 'OutputPageMakeCategoryLinks', array( $this, $categories, &$this->mCategoryLinks ) ) ) {
 			foreach ( $categories as $category => $type ) {
 				$origcategory = $category;
 				$title = Title::makeTitleSafe( NS_CATEGORY, $category );
@@ -1641,7 +1641,7 @@ class OutputPage extends ContextSource {
 			}
 		}
 
-		wfRunHooks( 'OutputPageParserOutput', array( &$this, $parserOutput ) );
+		wfRunHooks( 'OutputPageParserOutput', array( $this, $parserOutput ) );
 	}
 
 	/**
@@ -1653,7 +1653,7 @@ class OutputPage extends ContextSource {
 		$this->addParserOutputNoText( $parserOutput );
 		$text = $parserOutput->getText();
 
-		wfRunHooks( 'OutputPageBeforeHTML', array( &$this, &$text ) );
+		wfRunHooks( 'OutputPageBeforeHTML', array( $this, &$text ) );
 
 		$this->addHTML( $text );
 	}
@@ -2127,14 +2127,14 @@ class OutputPage extends ContextSource {
 
 			// Hook that allows last minute changes to the output page, e.g.
 			// adding of CSS or Javascript by extensions.
-			wfRunHooks( 'BeforePageDisplay', array( &$this, &$sk ) );
+			wfRunHooks( 'BeforePageDisplay', array( $this, &$sk ) );
 
 			wfProfileIn( 'Output-skin' );
 			$sk->outputPage();
 			wfProfileOut( 'Output-skin' );
 		}
 
-		wfRunHooks( 'BeforeSendCacheControl', array( &$this ) ); // Wikia change
+		wfRunHooks( 'BeforeSendCacheControl', array( $this ) ); // Wikia change
 
 		$this->sendCacheControl();
 		ob_end_flush();
@@ -2635,7 +2635,7 @@ $templates
 
 			$this->addModules( 'mediawiki.legacy.ajax' );
 
-			wfRunHooks( 'AjaxAddScript', array( &$this ) );
+			wfRunHooks( 'AjaxAddScript', array( $this ) );
 
 
 			if( $wgAjaxWatch && $this->getUser()->isLoggedIn() ) {

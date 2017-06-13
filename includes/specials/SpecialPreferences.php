@@ -53,7 +53,7 @@ class SpecialPreferences extends SpecialPage {
 
 		/* Wikia change begin - @author: macbre */
 		/* Enable custom notifications handling */
-		wfRunHooks('SpecialPreferencesOnRender', array(&$this));
+		wfRunHooks('SpecialPreferencesOnRender', array($this));
 		/* Wikia change end */
 
 		if ( $this->getRequest()->getCheck( 'success' ) ) {

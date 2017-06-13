@@ -486,7 +486,7 @@ class EditPageLayout extends EditPage {
 	 * If you want to use another entry point to this function, be careful.
 	 */
 	protected function showConflict() {
-		if ( wfRunHooks( 'EditPageBeforeConflictDiff', array( &$this, &$this->out ) ) ) {
+		if ( wfRunHooks( 'EditPageBeforeConflictDiff', array( $this, &$this->out ) ) ) {
 			// diff
 			$this->out->addHtml('<div id="diff">');
 			$this->out->wrapWikiMsg( '<h2>$1</h2>', 'editpagelayout-diff-header' );

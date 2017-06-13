@@ -372,7 +372,7 @@ class ImagePage extends Article {
 
 			$longDesc = wfMessage( 'parentheses', $this->displayImg->getLongDesc() )->escaped();
 
-			wfRunHooks( 'ImageOpenShowImageInlineBefore', array( &$this, &$wgOut ) );
+			wfRunHooks( 'ImageOpenShowImageInlineBefore', array( $this, &$wgOut ) );
 
 			if ( $this->displayImg->allowInlineDisplay() ) {
 				# image

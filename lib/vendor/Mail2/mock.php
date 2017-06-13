@@ -122,7 +122,7 @@ class Mail2_mock extends Mail2 {
     {
         if ($this->_preSendCallback) {
             call_user_func_array($this->_preSendCallback,
-                                 array(&$this, $recipients, $headers, $body));
+                                 array($this, $recipients, $headers, $body));
         }
 
         $entry = array('recipients' => $recipients, 'headers' => $headers, 'body' => $body);
@@ -130,7 +130,7 @@ class Mail2_mock extends Mail2 {
 
         if ($this->_postSendCallback) {
             call_user_func_array($this->_postSendCallback,
-                                 array(&$this, $recipients, $headers, $body));
+                                 array($this, $recipients, $headers, $body));
         }
 
         return true;

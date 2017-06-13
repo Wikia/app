@@ -90,7 +90,7 @@ class Unit_Test
 				}
 			}
 			closedir($dh);
-			usort($files, array(&$this, 'sort_files'));
+			usort($files, array($this, 'sort_files'));
 			foreach ($files as $file)
 			{
 				if (is_dir($file))

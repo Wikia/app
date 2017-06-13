@@ -80,7 +80,7 @@ class VideoHandlerHooks {
 	 * @param Parser $parser
 	 * @return bool
 	 */
-	static public function initParserHook( &$parser ) {
+	static public function initParserHook( $parser ) {
 		$parser->setHook( 'videogallery', [ 'CoreTagHooks', 'gallery' ] );
 		return true;
 	}
@@ -138,7 +138,7 @@ class VideoHandlerHooks {
 		return false;
 	}
 
-	static public function convertOldInterwikiToNewInterwiki( &$parser, &$text ) {
+	static public function convertOldInterwikiToNewInterwiki( $parser, &$text ) {
 		global $wgRTEParserEnabled;
 		if ( $wgRTEParserEnabled ) {
 			return true;

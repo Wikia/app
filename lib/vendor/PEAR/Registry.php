@@ -987,7 +987,7 @@ class PEAR_Registry extends PEAR
             if (!count($ps)) {
                 return array();
             }
-            return array_map(array(&$this, '_packageInfo'),
+            return array_map(array($this, '_packageInfo'),
                              $ps, array_fill(0, count($ps), null),
                              array_fill(0, count($ps), $channel));
         }

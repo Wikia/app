@@ -21,13 +21,13 @@
 
 class SDParserFunctions {
 
-	static function registerFunctions( &$parser ) {
+	static function registerFunctions( $parser ) {
 		$parser->setFunctionHook( 'drilldowninfo', array( 'SDParserFunctions', 'renderDrilldownInfo' ) );
 		$parser->setFunctionHook( 'drilldownlink', array( 'SDParserFunctions', 'renderDrilldownLink' ) );
 		return true;
 	}
 
-	static function renderDrilldownInfo( &$parser ) {
+	static function renderDrilldownInfo( $parser ) {
 		$curTitle = $parser->getTitle();
 		if ( $curTitle->getNamespace() != NS_CATEGORY ) {
 			return '<div class="error">Error: #drilldowninfo can only be called in category pages.</div>';
@@ -149,7 +149,7 @@ class SDParserFunctions {
 	}
 
 
-	static function renderDrilldownLink( &$parser ) {
+	static function renderDrilldownLink( $parser ) {
 		$params = func_get_args();
 		array_shift( $params );
 

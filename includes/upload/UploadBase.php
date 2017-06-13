@@ -633,7 +633,7 @@ abstract class UploadBase {
 				$user->addWatch( $this->getLocalFile()->getTitle() );
 			}
 
-			wfRunHooks( 'UploadComplete', array( &$this ) );
+			wfRunHooks( 'UploadComplete', array( $this ) );
 		}
 
 		return $status;

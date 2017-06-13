@@ -9,7 +9,7 @@ class ContentDisplayController extends WikiaController {
 	/**
 	 * Show section edit link for anons (RT #79897)
 	 */
-	static function onShowEditLink(&$parser, &$showEditLink) {
+	static function onShowEditLink($parser, &$showEditLink) {
 		global $wgUser;
 		wfProfileIn(__METHOD__);
 

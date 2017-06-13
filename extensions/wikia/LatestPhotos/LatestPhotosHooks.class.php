@@ -13,7 +13,7 @@ class LatestPhotosHooks {
 		return true;
 	}
 
-	public static function onImageRenameCompleated( &$this , &$ot , &$nt ){
+	public static function onImageRenameCompleated( $this , &$ot , &$nt ){
 		global $wgMemc;
 		if ( $nt->getNamespace() == NS_FILE ) {
 			wfDebug(__METHOD__ . ": photo renamed\n");

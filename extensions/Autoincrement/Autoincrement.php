@@ -42,7 +42,7 @@ class Autoincrement {
 		return true;
 	}
 
-	function wfAutoincrementHookSwitch( &$parser, &$varCache, &$index, &$ret ) {
+	function wfAutoincrementHookSwitch( $parser, &$varCache, &$index, &$ret ) {
 		if ( $index === 'autoincrement' )
 			$ret = ++$this->mCount; // No formatNum() just like url autonumbering
 

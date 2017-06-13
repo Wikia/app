@@ -2335,7 +2335,7 @@ class Wikia {
 	 * usually return true to allow processing other hooks
 	 * return false stops permissions processing and we are totally decided (nothing later can override)
 	 */
-	static function canEditInterfaceWhitelist ( &$title, &$wgUser, $action, &$result ) {
+	static function canEditInterfaceWhitelist ( Title $title, User $wgUser, $action, &$result ) {
 		global $wgEditInterfaceWhitelist;
 
 		// Allowed actions at this point

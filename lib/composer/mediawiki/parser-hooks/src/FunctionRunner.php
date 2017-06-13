@@ -42,7 +42,7 @@ class FunctionRunner extends Runner {
 	 *
 	 * @return array
 	 */
-	public function run( Parser &$parser, array $arguments, PPFrame $frame ) {
+	public function run( Parser $parser, array $arguments, PPFrame $frame ) {
 		$resultText = $this->handler->handle(
 			$parser,
 			$this->getProcessedParams( $this->getExpandedParams( $arguments, $frame ) )

@@ -275,7 +275,7 @@ class AppPromoLandingController extends WikiaController {
 	 * to be done by a specific Oasis module.  However, instead of being located inside of
 	 * a special page, we are doing this by stealing the "Community_App" article title.
 	 */
-	public static function onOutputPageBeforeHTML( OutputPage &$out, &$text ) {
+	public static function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
 		$title = $out->getTitle();
 		$origTitle = $title->getDBkey();
 

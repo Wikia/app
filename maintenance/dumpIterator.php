@@ -66,7 +66,7 @@ abstract class DumpIterator extends Maintenance {
 		$importer = new WikiImporter( $source );
 
 		$importer->setRevisionCallback(
-			array( &$this, 'handleRevision' ) );
+			array( $this, 'handleRevision' ) );
 
 		$this->from = $this->getOption( 'from', null );
 		$this->count = 0;

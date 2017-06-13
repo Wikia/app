@@ -27,7 +27,7 @@ class HeaderTabs {
 		return '<div id="nomoretabs"></div>';
 	}
 
-	public static function replaceFirstLevelHeaders( &$parser, &$text ) {
+	public static function replaceFirstLevelHeaders( $parser, &$text ) {
 		global $htUseHistory, $htScriptPath, $wgVersion;
 
 		$aboveandbelow = explode( '<div id="nomoretabs"></div>', $text, 2 );
@@ -129,7 +129,7 @@ class HeaderTabs {
 		return true;
 	}
 
-	public static function renderSwitchTabLink( &$parser, $tabName, $linkText, $anotherTarget = '' ) {
+	public static function renderSwitchTabLink( $parser, $tabName, $linkText, $anotherTarget = '' ) {
 		$tabTitle = Title::newFromText( $tabName );
 		$tabKey = $tabTitle->getDBkey();
 		$sanitizedLinkText = $parser->recursiveTagParse( $linkText );

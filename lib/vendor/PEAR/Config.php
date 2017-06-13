@@ -607,7 +607,7 @@ class PEAR_Config extends PEAR
         $this->_registry['default'] = new PEAR_Registry($this->configuration['default']['php_dir']);
         $this->_registry['default']->setConfig($this);
         $this->_regInitialized['default'] = false;
-        //$GLOBALS['_PEAR_Config_instance'] = &$this;
+        //$GLOBALS['_PEAR_Config_instance'] = $this;
     }
 
     // }}}

@@ -162,7 +162,7 @@ class ForumHooksHelper {
 	 * @param $result
 	 * @return bool
 	 */
-	static public function getUserPermissionsErrors( &$title, &$user, $action, &$result ) {
+	static public function getUserPermissionsErrors( Title $title, $user, $action, &$result ) {
 		$result = null;
 
 		if ( Forum::$allowToEditBoard == true ) {
@@ -381,8 +381,11 @@ class ForumHooksHelper {
 
 	/**
 	 * Create a tag for including the Forum Activity Module on pages
+	 *
+	 * @param Parser $parser
+	 * @return bool
 	 */
-	static public function onParserFirstCallInit( Parser &$parser ) {
+	static public function onParserFirstCallInit( Parser $parser ) {
 		$parser->setHook( 'wikiaforum', [ __CLASS__, 'parseForumActivityTag' ] );
 		return true;
 	}

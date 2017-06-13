@@ -102,7 +102,7 @@ class PEAR_Task_Common
         $this->logger = &$logger;
         $this->installphase = $phase;
         if ($this->type == 'multiple') {
-            $GLOBALS['_PEAR_TASK_POSTINSTANCES'][get_class($this)][] = &$this;
+            $GLOBALS['_PEAR_TASK_POSTINSTANCES'][get_class($this)][] = $this;
         }
     }
 

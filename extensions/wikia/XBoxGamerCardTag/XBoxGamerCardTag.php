@@ -15,7 +15,7 @@ $wgHooks['ParserFirstCallInit'][] = 'wfXBCardTagSetup';
  * @param Parser $parser
  * @return bool
  */
-function wfXBCardTagSetup(&$parser) {
+function wfXBCardTagSetup($parser) {
 	$parser->setHook( 'xboxcard', 'wfMakeXboxCard' );
 	return true;
 }

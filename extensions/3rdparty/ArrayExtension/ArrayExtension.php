@@ -142,7 +142,7 @@ class ArrayExtension {
 * http://us2.php.net/manual/en/book.pcre.php
 * see also: http://us2.php.net/manual/en/function.preg-split.php
 */
-    function arraydefine( &$parser, $arrayid, $value='', $delimiter = '/\s*,\s*/', $options = '') {
+    function arraydefine( $parser, $arrayid, $value='', $delimiter = '/\s*,\s*/', $options = '') {
         if (!isset($arrayid))
 	   return '';
 
@@ -206,7 +206,7 @@ class ArrayExtension {
 *    {{#arrayprint:b|<br/>|@@@|{{f.tag{{f.print.vbar}}prop{{f.print.vbar}}@@@}} }}   -- embed template function
 *    {{#arrayprint:b|<br/>|@@@|[[name::@@@]]}}   -- make SMW links
 */
-    function arrayprint( &$parser, $arrayid , $delimiter = ', ', $search='@@@@', $subject='@@@@', $frame=null) {
+    function arrayprint( $parser, $arrayid , $delimiter = ', ', $search='@@@@', $subject='@@@@', $frame=null) {
 	$ret = $this->validate_array_by_arrayid($arrayid);
 	if (true!==$ret){
 	   return $ret;
@@ -240,7 +240,7 @@ class ArrayExtension {
 * usage
 *   {{#arrayindex:arrayid|index}}
 */
-    function arrayindex( &$parser, $arrayid , $index , $options='') {
+    function arrayindex( $parser, $arrayid , $index , $options='') {
 	// now parse the options, and do posterior process on the created array
 	$ary_option = $this->parse_options($options);
 
@@ -265,7 +265,7 @@ class ArrayExtension {
 *
 *  See: http://www.php.net/manual/en/function.count.php
 */
-    function arraysize( &$parser, $arrayid) {
+    function arraysize( $parser, $arrayid) {
  	$ret = $this->validate_array_by_arrayid($arrayid);
 	if (true!==$ret){
 	   return '';
@@ -287,7 +287,7 @@ class ArrayExtension {
 *   See: http://www.php.net/manual/en/function.array-search.php
 *   note it is extended to support regular expression match and index
 */
-    function arraysearch( &$parser, $arrayid, $needle, $index=0, $yes=null, $no=null) {
+    function arraysearch( $parser, $arrayid, $needle, $index=0, $yes=null, $no=null) {
  	$ret = $this->validate_array_by_arrayid($arrayid);
 	if (true!==$ret){
 		$ret = -1;
@@ -355,7 +355,7 @@ class ArrayExtension {
 *    {{#arrayreset:}}
 *    {{#arrayreset:arrayid1,arrayid2,...arrayidn}}
 */
-   function arrayreset( &$parser, $arrayids) {
+   function arrayreset( $parser, $arrayids) {
         if (!$this->is_non_empty($arrayids)){
 	    //reset all
 	    $this->mArrayExtension = array();
@@ -380,7 +380,7 @@ class ArrayExtension {
 *
 *   see: http://www.php.net/manual/en/function.array-unique.php
 */
-    function arrayunique( &$parser, $arrayid ) {
+    function arrayunique( $parser, $arrayid ) {
 	$ret = $this->validate_array_by_arrayid($arrayid);
 	if (true!==$ret){
 	   return '';
@@ -411,7 +411,7 @@ class ArrayExtension {
 *          http://www.php.net/manual/en/function.shuffle.php
 *          http://us3.php.net/manual/en/function.array-reverse.php
 */
-    function arraysort( &$parser, $arrayid , $sort = 'none') {
+    function arraysort( $parser, $arrayid , $sort = 'none') {
 	$ret = $this->validate_array_by_arrayid($arrayid);
 	if (true!==$ret){
 	   return '';
@@ -442,7 +442,7 @@ class ArrayExtension {
 *  merge values two arrayes identified by arrayid1 and arrayid2 into a new array identified by arrayid_new.
 *  this merge differs from array_merge of php because it merges values.
 */
-    function arraymerge( &$parser, $arrayid_new, $arrayid1, $arrayid2='' ) {
+    function arraymerge( $parser, $arrayid_new, $arrayid1, $arrayid2='' ) {
         if (!isset($arrayid_new) )
 	   return '';
 
@@ -481,7 +481,7 @@ class ArrayExtension {
 *    extract a slice from an  array
 *    see: http://www.php.net/manual/en/function.array-slice.php
 */
-    function arrayslice( &$parser, $arrayid_new , $arrayid , $offset, $length='') {
+    function arrayslice( $parser, $arrayid_new , $arrayid , $offset, $length='') {
         if (!isset($arrayid_new) )
 	   return '';
 
@@ -519,7 +519,7 @@ class ArrayExtension {
 *    {{#arrayintersect:arrayid_new|arrayid1|arrayid2}}
 *   See: http://www.php.net/manual/en/function.array-intersect.php
 */
-    function arrayintersect( &$parser, $arrayid_new , $arrayid1 , $arrayid2 ) {
+    function arrayintersect( $parser, $arrayid_new , $arrayid1 , $arrayid2 ) {
         if (!isset($arrayid_new) )
 	   return '';
 
@@ -547,7 +547,7 @@ class ArrayExtension {
 *    similar to arraymerge, this union works on values.
 */
 
-    function arrayunion( &$parser, $arrayid_new , $arrayid1 , $arrayid2 ) {
+    function arrayunion( $parser, $arrayid_new , $arrayid1 , $arrayid2 ) {
         if (!isset($arrayid_new) )
 	   return '';
 
@@ -575,7 +575,7 @@ class ArrayExtension {
 *    see: http://www.php.net/manual/en/function.array-diff.php
 */
 
-    function arraydiff( &$parser, $arrayid_new , $arrayid1 , $arrayid2 ) {
+    function arraydiff( $parser, $arrayid_new , $arrayid1 , $arrayid2 ) {
         if (!isset($arrayid_new) )
 	   return '';
 

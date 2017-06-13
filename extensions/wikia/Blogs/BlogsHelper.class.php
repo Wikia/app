@@ -42,9 +42,9 @@ class BlogsHelper {
 	 * The method checks for usage of the bloglist tag and sets the page_props
 	 * accordingly.
 	 *
-	 * @param $oParser Object The Parser instance being used.
+	 * @param $oParser Parser The Parser instance being used.
 	 * @param $sText String The new content.
-	 * @param $oStringState Object The StripState instance being used.
+	 * @param $oStripState StripState The StripState instance being used.
 	 *
 	 * @return Boolean True so the calling function would continue.
 	 *
@@ -54,7 +54,7 @@ class BlogsHelper {
 	 * @see grep -r 'BugId:25123' *
 	 * @see doc/hooks.txt
 	 */
-	public static function OnParserBeforeInternalParse( &$oParser, &$sText, &$oStripState ) {
+	public static function OnParserBeforeInternalParse( Parser $oParser, &$sText, &$oStripState ) {
 		wfProfileIn( __METHOD__ );
 		// The name of the bloglist tag is defined in a constant.
 		$sRegExp = sprintf( '/<%s[^>]*>(.*)<\/%s>/siU', BLOGTPL_TAG, BLOGTPL_TAG );

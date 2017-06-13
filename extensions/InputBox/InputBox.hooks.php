@@ -12,7 +12,7 @@ class InputBoxHooks {
 	/* Functions */
 
 	// Initialization
-	public static function register( &$parser ) {
+	public static function register( $parser ) {
 		// Register the hook with the parser
 		$parser->setHook( 'inputbox', array( 'InputBoxHooks', 'render' ) );
 

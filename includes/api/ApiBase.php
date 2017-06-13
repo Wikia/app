@@ -558,7 +558,7 @@ abstract class ApiBase extends ContextSource {
 	 */
 	public function getFinalParams() {
 		$params = $this->getAllowedParams();
-		wfRunHooks( 'APIGetAllowedParams', array( &$this, &$params ) );
+		wfRunHooks( 'APIGetAllowedParams', array( $this, &$params ) );
 		return $params;
 	}
 
@@ -570,7 +570,7 @@ abstract class ApiBase extends ContextSource {
 	 */
 	public function getFinalParamDescription() {
 		$desc = $this->getParamDescription();
-		wfRunHooks( 'APIGetParamDescription', array( &$this, &$desc ) );
+		wfRunHooks( 'APIGetParamDescription', array( $this, &$desc ) );
 		return $desc;
 	}
 
@@ -582,7 +582,7 @@ abstract class ApiBase extends ContextSource {
 	 */
 	public function getFinalDescription() {
 		$desc = $this->getDescription();
-		wfRunHooks( 'APIGetDescription', array( &$this, &$desc ) );
+		wfRunHooks( 'APIGetDescription', array( $this, &$desc ) );
 		return $desc;
 	}
 

@@ -695,7 +695,7 @@ END;
 			'user_email_token'         => MW_UPGRADE_NULL,
 			'user_email_token_expires' => MW_UPGRADE_NULL );
 		$this->copyTable( 'user', $tabledef, $fields,
-			array( &$this, 'userCallback' ) );
+			array( $this, 'userCallback' ) );
 	}
 
 	function userCallback( $row, $copy ) {
@@ -742,7 +742,7 @@ END;
 			'img_user_text'   => MW_UPGRADE_ENCODE,
 			'img_timestamp'   => MW_UPGRADE_COPY );
 		$this->copyTable( 'image', $tabledef, $fields,
-			array( &$this, 'imageCallback' ) );
+			array( $this, 'imageCallback' ) );
 	}
 
 	function imageCallback( $row, $copy ) {
@@ -875,7 +875,7 @@ END;
 			'oi_user_text'    => MW_UPGRADE_ENCODE,
 			'oi_timestamp'    => MW_UPGRADE_COPY );
 		$this->copyTable( 'oldimage', $tabledef, $fields,
-			array( &$this, 'oldimageCallback' ) );
+			array( $this, 'oldimageCallback' ) );
 	}
 
 	function oldimageCallback( $row, $copy ) {

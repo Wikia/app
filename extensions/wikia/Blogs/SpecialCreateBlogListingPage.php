@@ -25,7 +25,7 @@ class CreateBlogListingPage extends SpecialPage {
 	public function execute( $par ) {
 		global $wgOut, $wgUser, $wgRequest, $wgTitle;
 
-		wfRunHooks( 'beforeBlogListingForm', array( &$this, $wgRequest->getVal( 'article' ) ) );
+		wfRunHooks( 'beforeBlogListingForm', array( $this, $wgRequest->getVal( 'article' ) ) );
 
 		if ( !$wgUser->isLoggedIn() ) {
 			$wgOut->showErrorPage( 'create-blog-no-login', 'create-blog-login-required', array( wfGetReturntoParam() ) );

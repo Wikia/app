@@ -53,7 +53,7 @@ class HookRunner extends Runner {
 	 *
 	 * @return mixed
 	 */
-	public function run( $text, array $arguments, Parser &$parser, PPFrame $frame ) {
+	public function run( $text, array $arguments, Parser $parser, PPFrame $frame ) {
 		$this->parser = $parser;
 		$this->frame = $frame;
 

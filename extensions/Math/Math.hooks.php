@@ -147,7 +147,7 @@ class MathHooks {
 	 * @param Parser $parser
 	 * @return bool
 	 */
-	static function onParserTestParser( &$parser ) {
+	static function onParserTestParser( $parser ) {
 		global $wgMathPath;
 		$wgMathPath = '/images/math';
 		return true;

@@ -101,7 +101,7 @@ class SpecialStatistics extends SpecialPage {
 		$text .= Xml::closeElement( 'table' );
 
 		#<Wikia>
-		wfRunHooks( "CustomSpecialStatistics", array( &$this, &$text ) );
+		wfRunHooks( "CustomSpecialStatistics", array( $this, &$text ) );
 		#</Wikia>
 
 		# Customizable footer
