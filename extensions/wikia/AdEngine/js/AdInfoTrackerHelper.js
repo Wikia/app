@@ -81,7 +81,9 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 	}
 
 	function getBidderWon(slotParams, realSlotPrices) {
-		var slotPricesKeys = Object.keys(realSlotPrices),
+		var slotPricesKeys = Object.keys(realSlotPrices).filter(function(key) {
+				return parseFloat(realSlotPrices[key]) > 0;
+			}),
 			highestPrice = Math.max.apply(
 				null,
 				slotPricesKeys.map(function(key) { return parseFloat(realSlotPrices[key]); })
