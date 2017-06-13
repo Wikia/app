@@ -74,6 +74,7 @@ describe('ext.wikia.adEngine.video.videoFrequencyStore', function () {
 		store.save({irrelevant: true});
 		store.save({date: 2999, pv: 3});
 		store.save({date: 2999});
+		store.save({date: 'abc', pv: 'def'});
 
 		expect(store.getAll()).toEqual([{date: 2999, pv: 3}]);
 	});
