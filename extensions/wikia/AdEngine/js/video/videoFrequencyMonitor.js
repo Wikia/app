@@ -37,8 +37,25 @@ define('ext.wikia.adEngine.video.videoFrequencyMonitor', [
 			});
 	}
 
+	function hasTimeUnit(item) {
+		return item.indexOf('min') > -1; // TODO add support for all time units
+	}
+
 	function parseTime() {
-		return [];
+		if (!context.opts.outstreamVideoFrequencyCapping) {
+			return [];
+		}
+
+		return context.opts.outstreamVideoFrequencyCapping
+			.filter(hasTimeUnit)
+			.map(function (item) {
+				var data = item.replace('min', '').split('/'); // TODO replace with others time units
+				return {
+					frequency: parseInt(data[0]),
+					limit: parseInt(data[1]),
+					unit: 'min'
+				};
+			});
 	}
 
 	function parseLimits() {
@@ -54,6 +71,10 @@ define('ext.wikia.adEngine.video.videoFrequencyMonitor', [
 
 		limits.pv.map(function (rule) {
 			result = result && store.numberOfVideosSeenInLastPageViews(rule.limit) < rule.frequency;
+		});
+
+		limits.time.map(function (rule) {
+			result = result && store.numberOfVideosSeenInLast(rule.limit, rule.unit) < rule.frequency;
 		});
 
 		return result;

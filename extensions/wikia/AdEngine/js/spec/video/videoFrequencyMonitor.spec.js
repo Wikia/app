@@ -13,7 +13,8 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 			},
 			store: {
 				save: noop,
-				numberOfVideosSeenInLastPageViews: noop
+				numberOfVideosSeenInLastPageViews: noop,
+				numberOfVideosSeenInLast: noop
 			},
 			adLogicPageViewCounter: {
 				get: function () {
@@ -47,8 +48,18 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 			spyOn(mocks.store, 'numberOfVideosSeenInLastPageViews');
 		}
 
-		mocks.store.numberOfVideosSeenInLastPageViews.and.callFake(function (i) {;
+		mocks.store.numberOfVideosSeenInLastPageViews.and.callFake(function (i) {
 			return data[i];
+		});
+	}
+
+	function mockVideosInTime(data) {
+		if (!mocks.store.numberOfVideosSeenInLast.and) {
+			spyOn(mocks.store, 'numberOfVideosSeenInLast');
+		}
+
+		mocks.store.numberOfVideosSeenInLast.and.callFake(function (value, unit) {
+			return data[value + unit];
 		});
 	}
 
@@ -98,43 +109,59 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 
 	[
 		{
-			videosSeen: {
+			videosSeenInPV: {
 				10: 3,
 				100: 10
 			},
+			videosSeenInTime: {},
 			wgVar: ['5/10pv', '10/100pv'],
 			result: false
 		},
 		{
-			videosSeen: {
+			videosSeenInPV: {
 				10: 3,
 				100: 9
 			},
+			videosSeenInTime: {},
 			wgVar: ['5/10pv', '10/100pv'],
 			result: true
 		},
 		{
-			videosSeen: {
+			videosSeenInPV: {
 				10: 5,
 				100: 10
 			},
+			videosSeenInTime: {},
 			wgVar: ['5/10pv', '10/100pv'],
 			result: false
+		},
+		{
+			videosSeenInPV: {},
+			videosSeenInTime: {
+				'5min': 2
+			},
+			wgVar: ['2/5min'],
+			result: false
+		},
+		{
+			videosSeenInPV: {},
+			videosSeenInTime: {
+				'15min': 4
+			},
+			wgVar: ['5/15min'],
+			result: true
 		}
 	].forEach(function (testCase) {
-		it('Should return about launch video based on few pv limiters', function () {
-			mockVideosOnPageViews(testCase.videosSeen);
+		var resultTxt = testCase.result ? 'allow' : 'dont\'t allow';
+		it('Should ' + resultTxt + ' to launch video based on pv (' + JSON.stringify(testCase.videosSeenInPV) + ') and time (' + JSON.stringify(testCase.videosSeenInTime) + ') limits', function () {
+			mockVideosOnPageViews(testCase.videosSeenInPV);
+			mockVideosInTime(testCase.videosSeenInTime);
 			mockWgVar(testCase.wgVar);
 
 			expect(getModule().videoCanBeLaunched()).toEqual(testCase.result);
 		});
 	});
 
-	// it('Should decide about launch video based on time limiter', function () {
-	// });
-	//
-	// it('Should decide about launch video based on few time limiters', function () {
-	// });
 	//
 	// it('Should decide about launch video based on time limiters and pv', function () {
 	// });
