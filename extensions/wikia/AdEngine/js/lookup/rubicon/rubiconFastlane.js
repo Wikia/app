@@ -174,6 +174,18 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 		});
 	}
 
+	function handleFloorPrice(floorPrice, slotName, parameters) {
+		if (
+			typeof floorPrice !== 'undefined' &&
+			parameters[rubiconTierKey] && typeof parameters[rubiconTierKey].map === 'function' &&
+			bestPrices[slotName] <= floorPrice && bestPricesPrivate[slotName] <= floorPrice
+		) {
+			parameters[rubiconTierKey] = parameters[rubiconTierKey].map(function (tier) {
+				return tier.replace(/tier\d+/, 'tierPREBID');
+			});
+		}
+	}
+
 	function saveBestPrice(slotName, tiers) {
 		tiers.forEach(function (tier) {
 			bestPrices[slotName] = Math.max(rubiconTier.parseOpenMarketPrice(tier), bestPrices[slotName] || 0);
@@ -213,16 +225,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 			}
 		});
 
-		if (
-			typeof floorPrice !== 'undefined' &&
-			bestPrices[slotName] <= floorPrice && bestPricesPrivate[slotName] <= floorPrice
-		) {
-			if (parameters[rubiconTierKey] && typeof parameters[rubiconTierKey].map === 'function') {
-				parameters[rubiconTierKey] = parameters[rubiconTierKey].map(function(tier) {
-					return tier.replace(/tier\d+/, 'tierPREBID');
-				});
-			}
-		}
+		handleFloorPrice(floorPrice, slotName, parameters);
 
 		fillInWithMissingTiers(slotName, parameters);
 		if (parameters[rubiconTierKey] && typeof parameters[rubiconTierKey].sort === 'function') {

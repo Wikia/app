@@ -182,7 +182,7 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 		var data,
 			slot = getTopLeaderboardSlotWithPageParams(fakeJSONString);
 
-		slot.container.firstChild.dataset.gptSlotParams = JSON.stringify(fakeJSONString);
+		slot.container.firstChild.dataset.gptSlotParams = JSON.stringify({foo: 1, rpfl_7450: 1});
 		slot.container.firstChild.dataset.gptCreativeSize = fakeJSONString;
 
 		mocks.lookupServices.getDfpSlotPrices = function() {
@@ -202,7 +202,7 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 		var data,
 			slot = getTopLeaderboardSlotWithPageParams(fakeJSONString);
 
-		slot.container.firstChild.dataset.gptSlotParams = JSON.stringify(fakeJSONString);
+		slot.container.firstChild.dataset.gptSlotParams = JSON.stringify({foo: 1, hb_bidder: 'openx'});
 		slot.container.firstChild.dataset.gptCreativeSize = fakeJSONString;
 
 		mocks.lookupServices.getDfpSlotPrices = function() {
@@ -217,5 +217,26 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 
 
 		expect(data.bidder_won).toBe('openx');
+	});
+
+	it('prepareData correctly calculates bidder_won for bidders - tie (we promote prebid.js)', function () {
+		var data,
+			slot = getTopLeaderboardSlotWithPageParams(fakeJSONString);
+
+		slot.container.firstChild.dataset.gptSlotParams = JSON.stringify({foo: 1, hb_bidder: 'rubicon', rpfl_7450: 1});
+		slot.container.firstChild.dataset.gptCreativeSize = fakeJSONString;
+
+		mocks.lookupServices.getDfpSlotPrices = function() {
+			return {
+				fastlane_private: '2.60',
+				openx: '2.60',
+				rubicon: '2.60'
+			};
+		};
+
+		data = getModule().prepareData(slot);
+
+
+		expect(data.bidder_won).toBe('rubicon');
 	});
 });
