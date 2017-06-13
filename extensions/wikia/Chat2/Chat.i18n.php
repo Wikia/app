@@ -93,6 +93,11 @@ $messages['en'] = array(
 	'chat-browser-is-notsupported' => '	Your browser is not supported. For the best experience, use a <a href="http://community.wikia.com/wiki/Help:Supported_browsers">newer browser</a>.',
 	'chat-checkuser-join-action' => 'Joined Chat',
 	'chat-status-away' => 'Away',
+	'chat-blocklist-timestamp' => 'Timestamp',
+	'chat-blocklist-target' => 'Target',
+	'chat-blocklist-expiry' => 'Expires',
+	'chat-blocklist-by' => 'Blocking User',
+	'chat-blocklist-reason' => 'Reason',
 );
 
 $messages['qqq'] = array(
@@ -163,6 +168,11 @@ Parameters:
 	'chat-checkuser-join-action' => 'Shown in CheckUser extension for chat-join events',
 	'chat-status-away' => 'Display when user chnages his status to away.
 {{Identical|Away}}',
+	'chat-blocklist-timestamp' => 'Timestamp column header on Special:ChatBanList',
+	'chat-blocklist-target' => 'Target column header on Special:ChatBanList',
+	'chat-blocklist-expiry' => 'Expires column header on Special:ChatBanList',
+	'chat-blocklist-by' => 'Blocked by column header on Special:ChatBanList',
+	'chat-blocklist-reason' => 'Reason column header on Special:ChatBanList',
 );
 
 $messages['af'] = array(
