@@ -1217,26 +1217,6 @@ $wgAmazonMatchCountries = null;
 $wgAmazonMatchCountriesMobile = null;
 
 /**
- * @name $wgAdDriverEnableOpenXBidder
- * Enables OpenX bidder
- */
-$wgAdDriverEnableOpenXBidder = true;
-
-/**
- * @name $wgAdDriverOpenXBidderCountries
- * Enables OpenX bidder in these countries (given wgAdDriverEnableOpenXBidder is also true).
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverOpenXBidderCountries = null;
-
-/**
- * @name $wgAdDriverOpenXBidderCountriesRemnant
- * Enables OpenX bidder in these countries (given wgAdDriverEnableOpenXBidder is also true) in remnant slots.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverOpenXBidderCountriesRemnant = null;
-
-/**
  * @name $wgAdDriverEnableRubiconFastlane
  * Enables Rubicon Fastlane
  */
