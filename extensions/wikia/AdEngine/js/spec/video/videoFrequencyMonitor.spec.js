@@ -150,6 +150,50 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 			},
 			wgVar: ['5/15min'],
 			result: true
+		},
+		{
+			videosSeenInPV: {
+				100: 3
+			},
+			videosSeenInTime: {
+				'15min': 4
+			},
+			wgVar: ['5/15min', '3/100pv'],
+			result: false
+		},
+		{
+			videosSeenInPV: {},
+			videosSeenInTime: {
+				'1h': 1
+			},
+			wgVar: ['5/1h'],
+			result: true
+		},
+		{
+			videosSeenInPV: {},
+			videosSeenInTime: {
+				'1h': 5
+			},
+			wgVar: ['5/1h'],
+			result: false
+		},
+		{
+			videosSeenInPV: {},
+			videosSeenInTime: {
+				'1h': 2,
+				'1/10minutes': 1
+			},
+			wgVar: ['5/1h', '1/10minutes'],
+			result: false
+		},
+		{
+			videosSeenInPV: {},
+			videosSeenInTime: {
+				'1h': 2,
+				'3/10minutes': 2
+			},
+			wgVar: ['5/1h', '3/10minutes'],
+			result: false
 		}
 	].forEach(function (testCase) {
 		var resultTxt = testCase.result ? 'allow' : 'dont\'t allow';

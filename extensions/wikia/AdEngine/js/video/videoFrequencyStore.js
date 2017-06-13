@@ -52,9 +52,14 @@ define('ext.wikia.adEngine.video.videoFrequencyStore', [
 			case 'seconds':
 				return s;
 			case 'm':
+			case 'min':
 			case 'minute':
 			case 'minutes':
 				return s * 60;
+			case 'h':
+			case 'hour':
+			case 'hours':
+				return s * 60 * 60;
 			default:
 				throw 'Unsupported time unit';
 		}

@@ -6,7 +6,11 @@ define('ext.wikia.adEngine.video.videoFrequencyMonitor', [
 ], function (adContext, pageViewCounter, store) {
 	'use strict';
 
-	var context = adContext.getContext();
+	var context = adContext.getContext(),
+		supportedTimeUnits = ['s', 'sec', 'second', 'seconds',
+			'm', 'min', 'minute', 'minutes',
+			'h', 'hour', 'hours'
+		];
 
 	function prepareData() {
 		return {
@@ -37,8 +41,27 @@ define('ext.wikia.adEngine.video.videoFrequencyMonitor', [
 			});
 	}
 
+	function guessTimeUnit(txt) {
+		var possibleResults = supportedTimeUnits
+			.filter(function (unit) {
+				return txt.indexOf(unit) > -1;
+			});
+
+		return possibleResults.length > 0 ? possibleResults[possibleResults.length - 1] : null;
+	}
+
 	function hasTimeUnit(item) {
-		return item.indexOf('min') > -1; // TODO add support for all time units
+		return guessTimeUnit(item) !== null;
+	}
+
+	 function parseTimeRule(item) {
+		var unit = guessTimeUnit(item);
+		var data = item.replace(unit, '').split('/');
+		return {
+			frequency: parseInt(data[0]),
+			limit: parseInt(data[1]),
+			unit: unit
+		};
 	}
 
 	function parseTime() {
@@ -48,14 +71,7 @@ define('ext.wikia.adEngine.video.videoFrequencyMonitor', [
 
 		return context.opts.outstreamVideoFrequencyCapping
 			.filter(hasTimeUnit)
-			.map(function (item) {
-				var data = item.replace('min', '').split('/'); // TODO replace with others time units
-				return {
-					frequency: parseInt(data[0]),
-					limit: parseInt(data[1]),
-					unit: 'min'
-				};
-			});
+			.map(parseTimeRule);
 	}
 
 	function parseLimits() {
