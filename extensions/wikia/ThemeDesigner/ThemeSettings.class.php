@@ -170,6 +170,7 @@ class ThemeSettings {
 			$file->upload( $temp_file->getPath(), '', '' );
 			$temp_file->delete( '' );
 
+			// FIXME: XW-3596 - this is hack
 			if ( $name === 'wordmark-image' ) {
 				$settings["{$name}-url"] = $file->getURL();
 			} else {
