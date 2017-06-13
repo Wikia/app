@@ -170,7 +170,12 @@ class ThemeSettings {
 			$file->upload( $temp_file->getPath(), '', '' );
 			$temp_file->delete( '' );
 
-			$settings["{$name}"] = $file->getURL();
+			// FIXME: XW-3596 - this is hack
+			if ( $name === 'wordmark-image' ) {
+				$settings["{$name}-url"] = $file->getURL();
+			} else {
+				$settings["{$name}"] = $file->getURL();
+			}
 			$settings["{$name}-name"] = $file->getName();
 
 			if ( $setDimensions ) {
@@ -263,7 +268,6 @@ class ThemeSettings {
 				Wikia::invalidateFavicon();
 			}
 		);
-
 		$oldFaviconFile = $this->saveImage(
 			$settings,
 			'favicon-image',
