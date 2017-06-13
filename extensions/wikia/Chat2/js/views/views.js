@@ -617,16 +617,6 @@ var NodeChatUsers = Backbone.View.extend({
 				$('body').unbind('.menuclose');
 			};
 		});
-
-		// Handle clicking the profile and contrib links
-		menu.find('.talk-page').add('.contribs').add('.message-wall').click(function(event) {
-			event.preventDefault();
-			var target = $(event.currentTarget),
-				location = target.find('a').attr('href');
-
-			window.open(location);
-			menu.hide();
-		});
 	},
 	hideMenu: function() {
 		$("#UserStatsMenu").hide();
