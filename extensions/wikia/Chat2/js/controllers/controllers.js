@@ -70,7 +70,7 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 						socket.disconnect();
 					}
 					this.fire("reConnectFail", {});
-					}
+				}
 			}, this));
 			socket.on('error', this.proxy(function (err) {
 				this.log('socket.onerror: ' + err + ' - ' + err.code);
