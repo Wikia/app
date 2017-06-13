@@ -65,7 +65,18 @@ define('ext.wikia.adEngine.video.videoFrequencyStore', [
 	}
 
 	function isValidData (value) {
-		return value.date && value.pv;
+		var date, pv;
+
+		if(value.date && value.pv) {
+			date = parseInt(value.date, 10);
+			pv = parseInt(value.pv, 10);
+
+			if(date > 0 && pv > 0) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	function getAll() {
