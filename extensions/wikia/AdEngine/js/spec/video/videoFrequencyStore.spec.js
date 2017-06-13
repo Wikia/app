@@ -66,5 +66,16 @@ describe('ext.wikia.adEngine.video.videoFrequencyStore', function () {
 		mocks.pageViewCounter.get.and.returnValue(7);
 		expect(store.numberOfVideosSeenInLastPageViews(4)).toEqual(3);
 	});
+
+	it('Should not add invalid data', function () {
+		var store = getModule();
+
+		store.save({pv: 1});
+		store.save({irrelevant: true});
+		store.save({date: 2999, pv: 3});
+		store.save({date: 2999});
+
+		expect(store.getAll()).toEqual([{date: 2999, pv: 3}]);
+	});
 });
 
