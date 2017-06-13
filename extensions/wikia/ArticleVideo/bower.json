@@ -1,0 +1,8 @@
+{
+	"name": "article-video",
+	"private": true,
+
+	"dependencies": {
+		"html5-skin": "Wikia/html5-skin#XW-3359-2"
+	}
+}
