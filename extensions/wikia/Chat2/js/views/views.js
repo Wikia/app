@@ -619,19 +619,10 @@ var NodeChatUsers = Backbone.View.extend({
 		});
 
 		// Handle clicking the profile and contrib links
-
 		menu.find('.talk-page').add('.contribs').add('.message-wall').click(function(event) {
 			event.preventDefault();
 			var target = $(event.currentTarget),
-				menu = target.closest('.UserStatsMenu'),
-				username = menu.find('.username').data('name'),
-				location = '';
-
-			if (target.hasClass('talk-page') || target.hasClass('message-wall')) {
-				location = window.wgChatPathToProfilePage.replace('$1', username);
-			} else if (target.hasClass('contribs')) {
-				location = window.wgChatPathToContribsPage.replace('$1', username);
-			}
+				location = target.find('a').attr('href');
 
 			window.open(location);
 			menu.hide();
