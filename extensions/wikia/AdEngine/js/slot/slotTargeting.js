@@ -50,6 +50,7 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 			MOBILE_PREFOOTER: 'p',
 			MOBILE_BOTTOM_LEADERBOARD: 'b'
 		},
+		videoProviders = ['veles', 'vulcan'],
 		videoSlots = {
 			oasis: 'INCONTENT_PLAYER',
 			mercury: 'MOBILE_IN_CONTENT'
@@ -112,12 +113,20 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 	}
 
 	function getOutstreamData() {
-        var context = adContext.getContext(),
+        var bidderName,
+			context = adContext.getContext(),
             getAdserverTargeting = prebid.get().getAdserverTargetingForAdUnitCode,
+            isVideoProvider,
 			videoTargeting = getAdserverTargeting && getAdserverTargeting(videoSlots[context.targeting.skin]);
 
 		if (videoTargeting) {
-			return videoTargeting.hb_bidder.substr(0, 2) + math.leftPad(parseFloat(videoTargeting.hb_pb) * 100, 4);
+			bidderName = videoTargeting.hb_bidder;
+            isVideoProvider = videoProviders.indexOf(bidderName) > -1;
+
+            if (isVideoProvider && videoTargeting.hb_pb) {
+				return bidderName.substr(0, 2) + math.leftPad(parseFloat(videoTargeting.hb_pb) * 100, 4);
+            }
+
 		}
 	}
 
