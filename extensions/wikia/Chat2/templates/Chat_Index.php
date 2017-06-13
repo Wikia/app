@@ -21,8 +21,8 @@
 		<script src="<?php echo $src ?>"></script>
 	<?php endforeach; ?>
 
-	<!-- temporary hack (who are you kidding?) -->
-	<script src="<?= AssetsManager::getInstance()->getOneCommonURL( '/extensions/wikia/Chat2/js/lib/socket.io.js' ); ?>"></script>
+	<!-- temporary hack -->
+	<script src="<?= AssetsManager::getInstance()->getOneCommonURL( '/extensions/wikia/Chat2/js/lib/socket.io-1.3.5.js' ); ?>"></script>
 	<?= $globalVariablesScript ?>
 	<?php // TODO: use js var?>
 
