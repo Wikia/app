@@ -14,21 +14,27 @@ define('ext.wikia.adEngine.video.videoFrequencyStore', [
 		store = [],
 		logGroup = 'ext.wikia.adEngine.video.videoFrequencyStore';
 
-	function save(data) {
+	function removeNotNeededData(data) {
 		var requiredNoOfItems = getRequiredNoOfItems();
 
+		data.sort(function (a, b) {
+			return a.date - b.date;
+		});
+
+		if (data.length > requiredNoOfItems) {
+			data = data.slice(-requiredNoOfItems);
+		}
+
+		return data;
+	}
+
+	function save(data) {
 		store = getAll();
 		log(['Data retrived from cache', store], log.levels.debug, logGroup);
 
 		store.push(data);
-		store.sort(function (a, b) {
-			return a.date - b.date;
-		});
 
-		if(store.length > requiredNoOfItems) {
-			store = store.slice(-requiredNoOfItems);
-		}
-
+		store = removeNotNeededData(store);
 		cache.set(cacheKey, store, cacheTtl);
 		log(['Data saved in cache', store, cacheKey, cacheTtl], log.levels.debug, logGroup);
 	}
@@ -58,11 +64,11 @@ define('ext.wikia.adEngine.video.videoFrequencyStore', [
 	function isValidData (value) {
 		var date, pv;
 
-		if(value.date && value.pv) {
+		if (value.date && value.pv) {
 			date = parseInt(value.date, 10);
 			pv = parseInt(value.pv, 10);
 
-			if(date > 0 && pv > 0) {
+			if (date > 0 && pv > 0) {
 				return true;
 			}
 		}
@@ -71,12 +77,12 @@ define('ext.wikia.adEngine.video.videoFrequencyStore', [
 	}
 
 	function getRequiredNoOfItems() {
-		if(!context.opts.outstreamVideoFrequencyCapping || context.opts.outstreamVideoFrequencyCapping.length === 0) {
+		if (!context.opts.outstreamVideoFrequencyCapping || context.opts.outstreamVideoFrequencyCapping.length === 0) {
 			return 0;
 		}
 
-		var max = Math.max.apply(null, context.opts.outstreamVideoFrequencyCapping.map(function(value) {
-			return parseInt(value.split("/")[0], 10);
+		var max = Math.max.apply(null, context.opts.outstreamVideoFrequencyCapping.map(function (value) {
+			return parseInt(value.split('/')[0], 10);
 		}));
 
 		return max ? max : 0;

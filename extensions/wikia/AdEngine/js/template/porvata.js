@@ -100,8 +100,6 @@ define('ext.wikia.adEngine.template.porvata', [
 					adsManager.setVolume(0);
 				});
 			}
-
-			videoFrequencyMonitor.registerLaunchedVideo();
 		});
 
 		video.addEventListener('start', function () {
@@ -202,6 +200,10 @@ define('ext.wikia.adEngine.template.porvata', [
 			} else {
 				onReady(video, params);
 			}
+
+			video.addEventListener('loaded', function () {
+				videoFrequencyMonitor.registerLaunchedVideo();
+			});
 
 			return video;
 		}).then(function (video) {
