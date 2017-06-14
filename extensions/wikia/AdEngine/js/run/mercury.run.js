@@ -31,17 +31,16 @@ require([
 	win
 ) {
 	'use strict';
-
 	messageListener.init();
 
 	// Custom ads (skins, footer, etc)
 	win.loadCustomAd = customAdsLoader.loadCustomAd;
 
-	if (geo.isProperGeo(instantGlobals.wgAmazonMatchCountriesMobile)) {
-		amazon.call();
-	}
-
 	mercuryListener.onLoad(function () {
+		if (geo.isProperGeo(instantGlobals.wgAmazonMatchCountriesMobile)) {
+			amazon.call();
+		}
+
 		if (geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries)) {
 			rubiconFastlane.call();
 		}
@@ -63,18 +62,16 @@ require([
 		actionHandler.registerMessageListener();
 	});
 
-	if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
-		mercuryListener.onEveryPageChange(function () {
+	mercuryListener.onEveryPageChange(function () {
+		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
 			prebid.call();
-		});
-	}
+		}
 
-	if (
-		geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) &&
-		geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneMercuryFixCountries)
-	) {
-		mercuryListener.onEveryPageChange(function () {
+		if (
+			geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) &&
+			geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneMercuryFixCountries)
+		) {
 			rubiconFastlane.call();
-		});
-	}
+		}
+	});
 });

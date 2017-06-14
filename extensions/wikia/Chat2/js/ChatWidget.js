@@ -183,8 +183,7 @@ var ChatWidget = {
 			}
 		}).on('mouseenter', function () {
 			clearTimeout(popoverTimeout);
-			// this will remove all elements that has popover class, ticket created to fix it SUS-1993
-			$('.popover').remove();
+			$('body > .popover').remove();
 			$el.find('.UserStatsMenu img[data-src]').each(function () {
 				var image = $(this);
 				image.attr('src', image.attr('data-src')).removeAttr('data-src');

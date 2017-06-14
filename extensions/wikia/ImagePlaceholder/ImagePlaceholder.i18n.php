@@ -111,11 +111,11 @@ $messages['eo'] = array(
 $messages['es'] = array(
 	'imgplc-desc' => 'Crea marcadores de posición de imagen/video',
 	'imgplc-add-image' => 'Añadir imagen',
-	'imgplc-add-video' => 'Añadir un vídeo',
+	'imgplc-add-video' => 'Añadir video',
 	'imgplc-placeholder' => 'Posicionador',
 	'imgplc-image' => 'Imagen',
 	'imgplc-notinhistory' => 'No puedes añadir una imagen en modo historial',
-	'imgplc-notinhistory-video' => 'No puedes añadir un vídeo en el modo de historial.',
+	'imgplc-notinhistory-video' => 'No puedes añadir un video en el modo de historial.',
 );
 
 $messages['eu'] = array(
