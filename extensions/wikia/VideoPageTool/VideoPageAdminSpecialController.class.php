@@ -48,7 +48,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 			return false;
 		}
 
-		$this->wg->SupressPageSubtitle = true;
+		$this->wg->SuppressPageSubtitle = true;
 
 		JSMessages::enqueuePackage( 'VideoPageTool', JSMessages::EXTERNAL );
 

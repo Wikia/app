@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\PageHeader\Button;
+
 class ForumHooksHelper {
 	/**
 	 * Render the alternative version of thread page
@@ -78,7 +80,6 @@ class ForumHooksHelper {
 		if ( $title->getNamespace() === NS_WIKIA_FORUM_BOARD ) {
 			$path[] = static::getIndexPath();
 			$path[] = [ 'title' => wfMessage( 'forum-board-title', $title->getText() )->escaped(), ];
-
 		}
 		return true;
 	}
@@ -474,4 +475,66 @@ class ForumHooksHelper {
 		return true;
 	}
 
+	/**
+	 * @param string $pageSubtitle
+	 *
+	 * @param Title $title
+	 * @return bool
+	 */
+	public static function onAfterPageHeaderPageSubtitle( &$pageSubtitle, Title $title ): bool {
+		if (
+			in_array( $title->getNamespace(), [
+				NS_WIKIA_FORUM_BOARD,
+				NS_WIKIA_FORUM_TOPIC_BOARD,
+				NS_USER_WALL_MESSAGE,
+			] ) &&
+			RequestContext::getMain()->getRequest()->getVal( 'action' ) !== 'history'
+		) {
+			$pageSubtitle = F::app()->renderView(
+				'Forum',
+				'brickHeader',
+				[
+					'id' => $title->getText()
+				]
+			);
+		}
+
+		return true;
+	}
+
+	/**
+	 * @param Title $title
+	 * @param bool $shouldDisplayActionButton
+	 *
+	 * @return bool
+	 */
+	public static function onPageHeaderActionButtonShouldDisplay(
+		Title $title,
+		bool &$shouldDisplayActionButton
+	): bool {
+		if ( in_array( $title->getNamespace(), [
+			NS_WIKIA_FORUM_BOARD,
+			NS_WIKIA_FORUM_BOARD_THREAD,
+			NS_WIKIA_FORUM_TOPIC_BOARD,
+		] ) ) {
+			$shouldDisplayActionButton = false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * @param Title $title
+	 * @param array $buttons
+	 *
+	 * @return bool
+	 */
+	public static function onAfterPageHeaderButtons( \Title $title, array &$buttons ): bool {
+		if ( $title->isSpecial( 'Forum' ) ) {
+			$label = wfMessage( 'forum-specialpage-policies' )->escaped();
+			$buttons[] = new Button( $label, 'wds-icons-clipboard-small', '#', 'policies-link' );
+		}
+
+		return true;
+	}
 }

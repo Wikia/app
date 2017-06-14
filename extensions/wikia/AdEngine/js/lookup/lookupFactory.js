@@ -4,20 +4,20 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.lazyqueue',
-	'wikia.log'
-], function (adContext, adTracker, adBlockDetection, lazyQueue, log) {
+	'wikia.log',
+	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
+], function (adContext, adTracker, adBlockDetection, lazyQueue, log, mercuryListener) {
 	'use strict';
 
 	function create(module) {
-		var called = false,
-			onResponseCallbacks = [],
-			response = false,
+		var called,
+			onResponseCallbacks,
+			response,
 			timing,
 			context = adContext.getContext();
 
 		function onResponse() {
 			log('onResponse', 'debug', module.logGroup);
-
 			timing.measureDiff({}, 'end').track();
 			module.calculatePrices();
 			response = true;
@@ -28,7 +28,6 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			} else {
 				adTracker.track(module.name + '/lookup_end', module.getPrices(), 0, 'nodata');
 			}
-
 		}
 
 		function addResponseListener(callback) {
@@ -37,7 +36,6 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 
 		function call() {
 			log('call', 'debug', module.logGroup);
-
 			response = false;
 
 			if (!Object.keys) {
@@ -51,7 +49,6 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			// in mercury ad context is being reloaded after XHR call that's why at this point we don't have skin
 			module.call(context.targeting.skin || 'mercury', onResponse);
 			called = true;
-
 			adBlockDetection.addOnBlockingCallback(onResponseCallbacks.start);
 		}
 
@@ -115,9 +112,21 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			return module.isSlotSupported(slotName);
 		}
 
-		lazyQueue.makeQueue(onResponseCallbacks, function (callback) {
-			callback();
-		});
+		function resetState() {
+			called = false;
+			onResponseCallbacks = [];
+			response = false;
+
+			lazyQueue.makeQueue(onResponseCallbacks, function (callback) {
+				callback();
+			});
+		}
+
+		resetState();
+
+		if (mercuryListener) {
+			mercuryListener.onEveryPageChange(resetState);
+		}
 
 		return {
 			addResponseListener: addResponseListener,
