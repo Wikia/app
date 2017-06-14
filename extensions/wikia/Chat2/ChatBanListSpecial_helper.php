@@ -202,7 +202,7 @@ class ChatBanData extends WikiaModel
 			0 => "",
 			1 => Linker::link(
 				SpecialPage::getSafeTitleFor( 'Contributions', $username ),
-				$this->wg->Lang->ucfirst( wfMsg( 'contribslink' ) )
+				wfMessage( 'contribslink' )->text()
 			),
 		];
 
@@ -215,19 +215,19 @@ class ChatBanData extends WikiaModel
 		}
 
 		if ( $oUTitle instanceof Title ) {
-			$links[0] = Linker::link( $oUTitle, $this->wg->Lang->ucfirst( wfMsg( $msg ) ) );
+			$links[0] = Linker::link( $oUTitle, wfMessage( $msg )->text() );
 		}
 
 		if ( $this->wg->User->isAllowed( 'block' ) && ( !$userIsBlocked ) ) {
 			$links[] = Linker::link(
 				SpecialPage::getSafeTitleFor( 'Block', $username ),
-				$this->wg->Lang->ucfirst( wfMsg( 'blocklink' ) )
+				wfMessage( 'blocklink' )->text()
 			);
 		}
 		if ( $this->wg->User->isAllowed( 'userrights' ) && ( !$userIsBlocked ) ) {
 			$links[] = Linker::link(
 				SpecialPage::getSafeTitleFor( 'UserRights', $username ),
-				$this->wg->Lang->ucfirst( wfMsg( 'listgrouprights-rights' ) )
+				wfMessage( 'listgrouprights-rights' )->text()
 			);
 		}
 
