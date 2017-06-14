@@ -484,6 +484,7 @@ class WallBaseController extends WikiaService {
 
 		$path = [ ];
 		$this->response->setVal( 'path', $path );
+		$this->response->setVal( 'className', $this->request->getVal( 'className' ) );
 
 		$title = Title::newFromId( $this->request->getVal( 'id' ) );
 		if ( empty( $title ) ) {

@@ -57,12 +57,12 @@ $messages['ru'] = array(
 );
 
 $messages['zh-hans'] = array(
-	'cookie-policy-description' => '在欧盟国家，法律规定网络站点在对第一次进行网络访问的用户记录cookie的时候，需要对其进行告知。这项扩展功能允许Fandom符合相关的法律规定。',
-	'cookie-policy-notification-message' => 'Fandom使用cookie提供最好的用户使用经验。通过不断地访问Fandom，您将同意接受使用我们的cookie。[http://zh.wikia.com/wiki/%E9%9A%90%E7%A7%81%E6%9D%83%E6%96%B9%E9%92%88 了解更多cookie的相关内容]',
+	'cookie-policy-description' => '在欧盟国家，法律规定网络站点在对第一次进行网络访问的用户记录cookie的时候，需要对其进行告知。这项扩展功能允许FANDOM符合相关的法律规定。',
+	'cookie-policy-notification-message' => 'FANDOM使用cookie提供最好的用户使用经验。通过不断地访问FANDOM，您将同意接受使用我们的cookie。[http://zh.wikia.com/wiki/%E9%9A%90%E7%A7%81%E6%9D%83%E6%96%B9%E9%92%88 了解更多cookie的相关内容]',
 );
 
 $messages['zh-hant'] = array(
-	'cookie-policy-description' => '在歐盟國家，法律規定網站在對第一次進行網路訪問的使用者記錄cookie的時候，需要先告知。這項擴展功能使Fandom能符合相關的法律規定。',
-	'cookie-policy-notification-message' => 'Fandom使用cookie以便能提供最好的用戶使用體驗。訪問Fandom，即代表您同意接受使用我們的cookie。[http://zh-tw.wikia.com/wiki/%E9%9A%B1%E7%A7%81%E6%AC%8A%E6%96%B9%E9%87%9D#Cookies 了解更多cookie的相關內容]',
+	'cookie-policy-description' => '在歐盟國家，法律規定網站在對第一次進行網路訪問的使用者記錄cookie的時候，需要先告知。這項擴展功能使FANDOM能符合相關的法律規定。',
+	'cookie-policy-notification-message' => 'FANDOM使用cookie以便能提供最好的用戶使用體驗。訪問FANDOM，即代表您同意接受使用我們的cookie。[http://zh-tw.wikia.com/wiki/%E9%9A%B1%E7%A7%81%E6%AC%8A%E6%96%B9%E9%87%9D#Cookies 了解更多cookie的相關內容]',
 );
 

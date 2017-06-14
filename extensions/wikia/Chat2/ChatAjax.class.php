@@ -103,8 +103,7 @@ class ChatAjax {
 				? getdate( wfTimestamp( TS_UNIX, $stats['firstContributionTimestamp'] ) )
 				: '';
 
-			// NOTE: This is attached to the user so it will be in the wiki's content language instead of wgLang (which it normally will).
-			$res['editCount'] = $wgContLang->formatNum( $stats['editcount'] );
+			$res['editCount'] = (int) $stats['editcount'];
 		}
 
 		wfProfileOut( __METHOD__ );

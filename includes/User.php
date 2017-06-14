@@ -680,10 +680,11 @@ class User implements JsonSerializable {
 		if ( $name == ''
 			|| User::isIP( $name )
 			|| strpos( $name, '/' ) !== false
+			|| strpos( $name, ':') !== false
 			|| strlen( $name ) > $wgMaxNameChars
 			|| $name != $wgContLang->ucfirst( $name ) ) {
 			wfDebugLog( 'username', __METHOD__ .
-				": '$name' invalid due to empty, IP, slash, length, or lowercase" );
+				": '$name' invalid due to empty, IP, slash, colon, length, or lowercase" );
 			return false;
 		}
 

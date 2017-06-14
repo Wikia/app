@@ -3942,7 +3942,7 @@ Ahiver on novea conte',
 );
 
 $messages['zh-hans'] = array(
-	'usersignup-page-title' => '加入Fandom',
+	'usersignup-page-title' => '加入FANDOM',
 	'usersignup-page-title-wikiamobile' => '创建帐户',
 	'usersignup-page-captcha-label' => '挑战',
 	'usersignup-error-username-length' => '很抱歉，您的用户名不能超过 {{PLURAL:$1|1个字符|$1个字符}}.',
@@ -3960,7 +3960,7 @@ $messages['zh-hans'] = array(
 	'usersignup-facebook-create-account' => '创建帐户',
 	'usersignup-facebook-email-tooltip' => '如果您想要使用一个不同的电子邮件地址，可以稍后在个人设置中进行更改。',
 	'usersignup-facebook-have-an-account-heading' => '已经有一个帐户了？',
-	'usersignup-facebook-have-an-account' => '将您现有的Fandom帐户和Facebook进行连接。',
+	'usersignup-facebook-have-an-account' => '将您现有的FANDOM帐户和Facebook进行连接。',
 	'usersignup-facebook-proxy-email' => '匿名的Facebook电子邮件',
 	'usersignup-user-pref-emailconfirmlink' => '要求发送新的电子邮件进行确认',
 	'usersignup-user-pref-confirmemail_send' => '重新发送电子邮件进行确认',
@@ -4037,7 +4037,7 @@ Wikia团队
 ___________________________________________
 想了解Wikia最近发生了什么？请访问http://zh.community.wikia.com 
 点击以下链接操作邮件获取方式: {{fullurl:{{ns:special}}:Preferences}}',
-	'usersignup-heading' => '今天加入Fandom',
+	'usersignup-heading' => '今天加入FANDOM',
 	'usersignup-heading-byemail' => '为其他人创建帐户',
 	'usersignup-marketing-wikia' => '开始和全球成千上万的在线用户共同分享所知所感。',
 	'usersignup-marketing-login' => '已经是Wikia的用户？ [[Special:UserLogin|登录]]',
@@ -4047,7 +4047,7 @@ ___________________________________________
 	'usersignup-marketing-global-heading' => '创建',
 	'usersignup-marketing-global' => '开始一个维基。从基础开始，通过所有人共同努力不断成长。',
 	'usersignup-marketing-creativity-heading' => '原创性',
-	'usersignup-marketing-creativity' => '使用图片、视频册、App和讨论版在Fandom上传达你的创意。',
+	'usersignup-marketing-creativity' => '使用图片、视频册、App和讨论版在FANDOM上传达你的创意。',
 	'usersignup-createaccount-byemail' => '为其他人创建帐户',
 	'usersignup-error-captcha' => '输入的字符不匹配，请重新输入！',
 	'usersignup-account-creation-heading' => '操作成功！',
@@ -4085,7 +4085,7 @@ ___________________________________________
 );
 
 $messages['zh-hant'] = array(
-	'usersignup-page-title' => '加入Fandom',
+	'usersignup-page-title' => '加入FANDOM',
 	'usersignup-page-captcha-label' => '問題',
 	'usersignup-error-username-length' => '很抱歉，您的用戶名不能超過 {{PLURAL:$1|1個字符|$1個字符}}.',
 	'usersignup-error-invalid-user' => '無效的用戶。請先登入。',
@@ -4102,9 +4102,9 @@ $messages['zh-hant'] = array(
 	'usersignup-confirmation-heading-email-resent' => '新的電子郵件已寄出',
 	'usersignup-confirmation-subheading' => '請檢查您的電子郵件',
 	'usersignup-marketing-global-heading' => '創建',
-	'usersignup-facebook-have-an-account' => '選擇將您已有的Fandom帳戶與Facebook進行連結',
-	'usersignup-heading' => '立刻加入Fandom',
-	'usersignup-marketing-creativity' => '使用圖片、影片、App和討論版在Fandom上傳達你的創意。',
+	'usersignup-facebook-have-an-account' => '選擇將您已有的FANDOM帳戶與Facebook進行連結',
+	'usersignup-heading' => '立刻加入FANDOM',
+	'usersignup-marketing-creativity' => '使用圖片、影片、App和討論版在FANDOM上傳達你的創意。',
 	'usersignup-error-captcha' => '輸入的字符不匹配，請重新輸入！',
 	'usersignup-facebook-login-header' => '已經擁有一個帳戶了嗎？',
 	'usersignup-facebook-signup-header' => '要創建新的帳戶嗎？',

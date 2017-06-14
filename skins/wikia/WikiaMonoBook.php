@@ -58,7 +58,7 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 		$this->setupAds( $tpl );
 
 		// setup footer links
-		$tpl->set( 'footerlinks', $this->msg( 'Shared-Monobook-footer-wikia-links' )->parse() );
+		$tpl->set( 'footerlinks', $this->msg( 'shared-Monobook-footer-wikia-links' )->parse() );
 
 		# rt33045
 		$tpl->set( 'contact', '<a href="' . $this->makeUrl( 'Special:Contact' ) . '" title="Contact Wikia">Contact Wikia</a>' );

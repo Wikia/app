@@ -3,7 +3,6 @@
 <? endif ?>
 <div id="Wall" data-board-namespace="<?= $boardNamespace ?>">
 	<section id="Forum" class="Forum Board .comments">
-		<?= $app->renderView( 'ForumController', 'breadCrumbs' ) ?>
 		<div class="board-description">
 			<?= $description ?>
 		</div>
