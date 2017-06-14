@@ -413,7 +413,7 @@ class ThemeSettings {
 			}
 		} catch ( InvalidArgumentException $e ) {
 			\Wikia\Logger\WikiaLogger::instance()
-				->warning("Wrong url to community-header-background-image", [ 'orginalUrl' => $originalUrl ] );
+				->warning("Wrong url to community-header-background-image", [ 'originalUrl' => $originalUrl ] );
 		}
 
 		return $thumbnailUrl;
