@@ -15,7 +15,7 @@ define('ext.wikia.adEngine.video.videoFrequencyStore', [
 		logGroup = 'ext.wikia.adEngine.video.videoFrequencyStore';
 
 	function removeNotNeededData(data) {
-		var requiredNoOfItems = getRequiredNoOfItems();
+		var requiredNoOfItems = getRequiredNumberOfItems();
 
 		data.sort(function (a, b) {
 			return a.date - b.date;
@@ -76,7 +76,7 @@ define('ext.wikia.adEngine.video.videoFrequencyStore', [
 		return false;
 	}
 
-	function getRequiredNoOfItems() {
+	function getRequiredNumberOfItems() {
 		if (!context.opts.outstreamVideoFrequencyCapping || context.opts.outstreamVideoFrequencyCapping.length === 0) {
 			return 0;
 		}
