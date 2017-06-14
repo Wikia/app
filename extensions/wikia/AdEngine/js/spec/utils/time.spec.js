@@ -34,10 +34,14 @@ describe('ext.wikia.adEngine.utils.time', function () {
 
 	it('Should recognize if it is time unit in string', function () {
 		var timeUtil = getModule();
-		expect(timeUtil.guessTimeUnit('12min')).toEqual('min');
-		expect(timeUtil.guessTimeUnit('66h6')).toEqual('h');
-		expect(timeUtil.guessTimeUnit('1 minute')).toEqual('minute');
-		expect(timeUtil.guessTimeUnit('3 sec')).toEqual('sec');
+		expect(timeUtil.hasTimeUnit('12min')).toBeTruthy();
+		expect(timeUtil.hasTimeUnit('66h6')).toBeTruthy();
+		expect(timeUtil.hasTimeUnit('1 minute')).toBeTruthy();
+		expect(timeUtil.hasTimeUnit('3 sec')).toBeTruthy();
+
+		expect(timeUtil.hasTimeUnit('3 xyz')).toBeFalsy();
+		expect(timeUtil.hasTimeUnit('333')).toBeFalsy();
+		expect(timeUtil.hasTimeUnit('45 qqq')).toBeFalsy();
 	});
 
 });
