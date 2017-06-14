@@ -201,7 +201,7 @@ define('ext.wikia.adEngine.template.porvata', [
 				onReady(video, params);
 			}
 
-			video.addEventListener('loaded', function () {
+			video.addEventListener('start', function () {
 				videoFrequencyMonitor.registerLaunchedVideo();
 			});
 
