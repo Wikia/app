@@ -122,9 +122,9 @@
 				<img src="<%= avatarSrc %>"/>
 				<ul>
 					<li class="username"><%= name %></li>
-					<li class="edits"><?= wfMessage( 'chat-edit-count' )->rawParams("<%= editCount %>")->escaped() ?></li>
+					<li class="edits"><%= editCount %></li>
 					<% if (since) { %>
-						<li class="since"><?= wfMessage( 'chat-member-since' )->rawParams("<%= since %>")->escaped() ?></li>
+						<li class="since"><%= since %></li>
 					<% } %>
 				</ul>
 			</div>
