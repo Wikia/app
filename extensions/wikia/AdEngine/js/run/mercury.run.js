@@ -4,7 +4,6 @@ require([
 	'ext.wikia.adEngine.adInfoTracker',
 	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.lookup.amazonMatch',
-	'ext.wikia.adEngine.lookup.openXBidder',
 	'ext.wikia.adEngine.lookup.prebid',
 	'ext.wikia.adEngine.lookup.rubicon.rubiconFastlane',
 	'ext.wikia.adEngine.customAdsLoader',
@@ -19,7 +18,6 @@ require([
 	adInfoTracker,
 	slotStateMonitor,
 	amazon,
-	oxBidder,
 	prebid,
 	rubiconFastlane,
 	customAdsLoader,
@@ -43,14 +41,6 @@ require([
 
 		if (geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries)) {
 			rubiconFastlane.call();
-		}
-
-		// TODO ADEN-5170 remove one condition or old OXBidder when we decide which way we go
-		if (
-			geo.isProperGeo(instantGlobals.wgAdDriverOpenXBidderCountries) &&
-			!geo.isProperGeo(instantGlobals.wgAdDriverOpenXPrebidBidderCountries)
-		) {
-			oxBidder.call();
 		}
 
 		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
