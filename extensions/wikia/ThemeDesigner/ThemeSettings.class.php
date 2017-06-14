@@ -144,7 +144,7 @@ class ThemeSettings {
 
 		foreach ( $history as $key => $val ) {
 			if ( !empty( $val['settings']['background-image-name'] ) ) {
-				$history[$key]['settings']['background-image'] = $this->getFreshURL(
+				$val['settings']['background-image'] = $this->getFreshURL(
 					$val['settings']['background-image-name'],
 					ThemeSettings::BackgroundImageName
 				);
