@@ -48,7 +48,7 @@ describe('ext.wikia.adEngine.video.videoFrequencySettings', function () {
 	});
 
 	it('Should correctly parse pv settings', function () {
-		mockWgVar(['1/3min', '3/8pv']);
+		mockWgVar(['1/3min', '3/8pv', '12pv']);
 		spyOn(mocks.time, 'hasTimeUnit').and.returnValues([true, false]);
 		spyOn(mocks.time, 'guessTimeUnit').and.returnValue('min');
 

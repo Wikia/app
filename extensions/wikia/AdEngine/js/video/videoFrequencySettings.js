@@ -20,8 +20,14 @@ define('ext.wikia.adEngine.video.videoFrequencySettings', [
 		}
 
 		return context.opts.outstreamVideoFrequencyCapping
-			.filter(timeUtil.hasTimeUnit)
+			.filter(function (item) {
+				return timeUtil.hasTimeUnit(item) && validate(item);
+			})
 			.map(parseTimeRule);
+	}
+
+	function validate(item) {
+		return item.match('^[0-9]+\/[0-9]+[a-z]+$');
 	}
 
 	function parsePV() {
@@ -31,7 +37,7 @@ define('ext.wikia.adEngine.video.videoFrequencySettings', [
 
 		return context.opts.outstreamVideoFrequencyCapping
 			.filter(function (item) {
-				return item.indexOf('pv') > -1;
+				return item.indexOf('pv') > -1 && validate(item);
 			})
 			.map(function (item) {
 				var data = item.replace('pv', '').split('/');
