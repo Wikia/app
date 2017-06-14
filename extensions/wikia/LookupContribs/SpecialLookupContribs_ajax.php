@@ -131,7 +131,7 @@ class LookupContribsAjax {
 
 		$rows = [];
 		foreach ( $activityData as $row ) {
-			$discussionActivity = LookupUserPage::fetchDiscussionPostCountAndDate($username, $row['id']);
+			$discussionActivity = DiscussionsActivity::fetchDiscussionPostCountAndDate( $username, $row['id'] );
 			$rows[] = [
 				$row['id'], // wiki Id
 				$row['title'], // wiki title
