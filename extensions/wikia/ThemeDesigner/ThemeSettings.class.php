@@ -143,14 +143,19 @@ class ThemeSettings {
 		}
 
 		foreach ( $history as $key => $val ) {
-			$history[$key]['settings']['background-image'] = $this->getFreshURL(
-				$val['settings']['background-image-name'],
-				ThemeSettings::BackgroundImageName
-			);
-			$history[$key]['settings']['community-header-background-image'] = $this->getFreshURL(
-				$val['settings']['community-header-background-image-name'],
-				ThemeSettings::CommunityHeaderBackgroundImageName
-			);
+			if ( !empty( $val['settings']['background-image-name'] ) ) {
+				$history[$key]['settings']['background-image'] = $this->getFreshURL(
+					$val['settings']['background-image-name'],
+					ThemeSettings::BackgroundImageName
+				);
+			}
+
+			if ( !empty( $val['settings']['community-header-background-image-name'] ) ) {
+				$val['settings']['community-header-background-image'] = $this->getFreshURL(
+					$val['settings']['community-header-background-image-name'],
+					ThemeSettings::CommunityHeaderBackgroundImageName
+				);
+			}
 		}
 
 		return $history;
