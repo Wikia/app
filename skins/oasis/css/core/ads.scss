@@ -14,7 +14,6 @@
 @import '../../../../extensions/wikia/ArticleVideo/styles/video-shared-variables';
 
 $wikia-top-ads-index: 2;
-$taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 
 $uap-progress-bar-color: #b7b7b7;
 $uap-progress-bar-current-time-color: #666;
@@ -187,7 +186,7 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 		}
 	}
 
-	#WikiaPage {
+	.wds-community-header {
 		margin-top: 20px;
 	}
 }
@@ -331,12 +330,6 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 	@media #{$breakpoint-large-up} {
 		#TOP_LEADERBOARD_AB {
 			width: $page-width-large;
-		}
-	}
-
-	@media #{$taboola-small-breakpoint} {
-		#TOP_LEADERBOARD_AB {
-			width: auto;
 		}
 	}
 }
@@ -512,27 +505,6 @@ body > a > img[src$="noad.gif"] {
 		position: relative;
 		text-align: center;
 		width: 300px;
-	}
-}
-
-#NATIVE_TABOOLA_ARTICLE {
-	max-width: 700px;
-}
-
-#NATIVE_TABOOLA_ARTICLE, #NATIVE_TABOOLA_RAIL, #TOP_LEADERBOARD_AB, #RECIRCULATION_RAIL {
-	.trc_rbox_header .trc_rbox_header_span {
-		color: $color-page-opposite;
-	}
-	.trc_header_ext, .trc-widget-footer {
-		.logoDiv a span {
-			color: $color-links;
-		}
-	}
-	.trc_rbox_div .video-label-box .video-title {
-		color: $color-text;
-	}
-	.trc_rbox_div .video-label-box .branding {
-		color: $color-alternate-text;
 	}
 }
 

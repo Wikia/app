@@ -444,7 +444,7 @@ $messages['el'] = array(
 );
 
 $messages['es'] = array(
-	'createpage-desc' => 'Permite crear una nueva página usando editor WYSIWYG de Fandom',
+	'createpage-desc' => 'Permite crear una nueva página usando editor WYSIWYG de FANDOM',
 	'createpage-sp-title' => 'Crea una nueva página',
 	'createpage_title' => 'Crea una nueva página',
 	'createpage_title_caption' => 'Título',
@@ -599,7 +599,7 @@ Kirjoita sivusi toinen osio tähän.',
 );
 
 $messages['fr'] = array(
-	'createpage-desc' => 'Permet de créer une nouvelle page en utilisant l’éditeur WYSIWYG de Fandom',
+	'createpage-desc' => 'Permet de créer une nouvelle page en utilisant l’éditeur WYSIWYG de FANDOM',
 	'createpage-sp-title' => 'Créer une nouvelle page',
 	'createpage_title' => 'Créer une nouvelle page',
 	'createpage_title_caption' => 'Titre',
@@ -898,7 +898,7 @@ Tulis bagian kedua dari halaman Anda di sini.',
 );
 
 $messages['it'] = array(
-	'createpage-desc' => "Permette di creare una nuova pagina utilizzando l'editor visuale di Fandom",
+	'createpage-desc' => "Permette di creare una nuova pagina utilizzando l'editor visuale di FANDOM",
 	'createpage-sp-title' => 'Crea una nuova pagina',
 	'createpage_title' => 'Crea una nuova pagina',
 	'createpage_title_caption' => 'Titolo',
@@ -943,7 +943,7 @@ Scrivi qui la seconda sezione del tuo articolo.',
 );
 
 $messages['ja'] = array(
-	'createpage-desc' => 'FandomのWYSIWYGエディターを使って、新しいページを作成できるようにする',
+	'createpage-desc' => 'FANDOMのWYSIWYGエディターを使って、新しいページを作成できるようにする',
 	'createpage-sp-title' => '新しいページを作成',
 	'createpage_title' => '新しいページを作成',
 	'createpage_title_caption' => 'タイトル',
@@ -1518,7 +1518,7 @@ Wybierz inną nazwę.',
 	'createpage_cant_edit' => 'Nie można wykonać edycji',
 	'createpage-dialog-title' => 'Utwórz nowy artykuł',
 	'createpage-dialog-message2' => 'Jak chcesz ją nazwać?',
-	'createpage-dialog-message3' => 'Mamy obecnie $1 {{PLURAL:$1|stronę|strony|stron}} na {{GRAMMAR:locative|{{SITENAME}}}}. Musimy sprawdzić, czy nazwa jest dostępna.',
+	'createpage-dialog-message3' => 'Mamy obecnie $1 {{PLURAL:$1|stronę|strony|stron}} na {{GRAMMAR:MS.lp|{{SITENAME}}}}. Musimy sprawdzić, czy nazwa jest dostępna.',
 	'createpage-dialog-choose' => 'Wybierz układ strony:',
 	'createpage-dialog-format' => 'Standardowy układ',
 	'createpage-dialog-blank' => 'Pusta strona',
@@ -1631,7 +1631,7 @@ $messages['ps'] = array(
 );
 
 $messages['pt'] = array(
-	'createpage-desc' => 'Permite criar uma página nova usando o editor WYSIWYG do Fandom',
+	'createpage-desc' => 'Permite criar uma página nova usando o editor WYSIWYG do FANDOM',
 	'createpage-sp-title' => 'Crie um novo artigo',
 	'createpage_title' => 'Crie um novo artigo',
 	'createpage_title_caption' => 'Título',
@@ -2110,7 +2110,7 @@ $messages['zh-hans'] = array(
 	'createpage-button-cancel' => '取消',
 	'createpage-dialog-choose' => '选择页面布局:',
 	'createpage-error-article-spam' => '此标题不恰当。请使用一个不同的标题。',
-	'createpage-desc' => '允许使用Fandom的所见即所得编辑器创建新的页面',
+	'createpage-desc' => '允许使用FANDOM的所见即所得编辑器创建新的页面',
 	'createpage_empty_title_error' => '请为您的新页面添加标题！',
 	'createpage_empty_article_body_error' => '请为您的新页面添加一些内容！',
 	'createpage_article_already_exists' => '此名称页面已存在。
@@ -2160,7 +2160,7 @@ $messages['zh-hant'] = array(
 
 在這裡寫頁面的第二節。',
 	'tog-createpagepopupdisabled' => '關閉「創建新頁面」流程（不建議）',
-	'createpage-desc' => '允許使用Fandom的所見即所得編輯器創建新的頁面',
+	'createpage-desc' => '允許使用FANDOM的所見即所得編輯器創建新的頁面',
 	'createpage-dialog-redlinks-list-header' => '也可以點擊以下其中一個標題並開始撰寫！',
 	'newpagelayout' => '[[File:Placeholder|right|300px]] 在這裡寫下文章的內容 ！',
 	'createpage-button-proceed' => '下一步',

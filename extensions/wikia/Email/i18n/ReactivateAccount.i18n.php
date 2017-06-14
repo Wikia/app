@@ -2,10 +2,10 @@
 $messages = array();
 
 $messages['en'] = array(
-	'emailext-reactivate-account-subject' => 'Reactivate Your Fandom Account',
-	'emailext-reactivate-account-summary' => "You're one step away from reactivating your account on Fandom. Click the link below to confirm your request and get started.",
+	'emailext-reactivate-account-subject' => 'Reactivate Your FANDOM Account',
+	'emailext-reactivate-account-summary' => "You're one step away from reactivating your account on FANDOM. Click the link below to confirm your request and get started.",
 	'emailext-reactivate-account-button-text' => 'Reactivate Now',
-	'emailext-reactivate-account-welcome-back' => 'Welcome back to Fandom!',
+	'emailext-reactivate-account-welcome-back' => 'Welcome back to FANDOM!',
 );
 
 $messages['qqq'] = array(
@@ -16,38 +16,38 @@ $messages['qqq'] = array(
 );
 
 $messages['de'] = array(
-	'emailext-reactivate-account-subject' => 'Benutzerkonto bei Fandom reaktivieren',
-	'emailext-reactivate-account-summary' => 'Du bist nur noch einen Schritt davon entfernt, dein Konto bei Fandom zu reaktivieren. Klicke auf den folgenden Link, um den Antrag zu bestätigen und weiterzumachen.',
+	'emailext-reactivate-account-subject' => 'Benutzerkonto bei FANDOM reaktivieren',
+	'emailext-reactivate-account-summary' => 'Du bist nur noch einen Schritt davon entfernt, dein Konto bei FANDOM zu reaktivieren. Klicke auf den folgenden Link, um den Antrag zu bestätigen und weiterzumachen.',
 	'emailext-reactivate-account-button-text' => 'Jetzt reaktivieren',
-	'emailext-reactivate-account-welcome-back' => 'Willkommen zurück bei Fandom!',
+	'emailext-reactivate-account-welcome-back' => 'Willkommen zurück bei FANDOM!',
 );
 
 $messages['es'] = array(
-	'emailext-reactivate-account-subject' => 'Reactivar tu cuenta en Fandom',
-	'emailext-reactivate-account-summary' => 'Estás a un paso de reactivar tu cuenta en Fandom. Haz clic en el enlace de abajo para confirmar tu solicitud y comenzar.',
+	'emailext-reactivate-account-subject' => 'Reactivar tu cuenta en FANDOM',
+	'emailext-reactivate-account-summary' => 'Estás a un paso de reactivar tu cuenta en FANDOM. Haz clic en el enlace de abajo para confirmar tu solicitud y comenzar.',
 	'emailext-reactivate-account-button-text' => 'Reactivar ahora',
-	'emailext-reactivate-account-welcome-back' => '¡Bienvenido de nuevo a Fandom!',
+	'emailext-reactivate-account-welcome-back' => '¡Bienvenido de nuevo a FANDOM!',
 );
 
 $messages['fr'] = array(
-	'emailext-reactivate-account-subject' => 'Réactivation de votre compte Fandom',
-	'emailext-reactivate-account-summary' => 'Vous vous apprêtez à réactiver votre compte Fandom. Veuillez cliquer sur le lien ci-dessous pour confirmer.',
+	'emailext-reactivate-account-subject' => 'Réactivation de votre compte FANDOM',
+	'emailext-reactivate-account-summary' => 'Vous vous apprêtez à réactiver votre compte FANDOM. Veuillez cliquer sur le lien ci-dessous pour confirmer.',
 	'emailext-reactivate-account-button-text' => 'Réactiver',
-	'emailext-reactivate-account-welcome-back' => 'Heureux de vous revoir sur Fandom !',
+	'emailext-reactivate-account-welcome-back' => 'Heureux de vous revoir sur FANDOM !',
 );
 
 $messages['it'] = array(
-	'emailext-reactivate-account-subject' => 'Riattiva il tuo account Fandom',
-	'emailext-reactivate-account-summary' => 'Ti manca poco per riattivare il tuo account su Fandom. Clicca sul link di seguito per confermare la tua richiesta e ripartire.',
+	'emailext-reactivate-account-subject' => 'Riattiva il tuo account FANDOM',
+	'emailext-reactivate-account-summary' => 'Ti manca poco per riattivare il tuo account su FANDOM. Clicca sul link di seguito per confermare la tua richiesta e ripartire.',
 	'emailext-reactivate-account-button-text' => 'Riattiva ora',
-	'emailext-reactivate-account-welcome-back' => 'Bentornato in Fandom!',
+	'emailext-reactivate-account-welcome-back' => 'Bentornato in FANDOM!',
 );
 
 $messages['ja'] = array(
-	'emailext-reactivate-account-subject' => 'Fandomアカウントの再開',
-	'emailext-reactivate-account-summary' => 'Fandomアカウントの再開を承認するには、下のリンクをクリックしてください。',
+	'emailext-reactivate-account-subject' => 'FANDOMアカウントの再開',
+	'emailext-reactivate-account-summary' => 'FANDOMアカウントの再開を承認するには、下のリンクをクリックしてください。',
 	'emailext-reactivate-account-button-text' => '今すぐ再開',
-	'emailext-reactivate-account-welcome-back' => '今後ともFandomをよろしくお願いいたします。',
+	'emailext-reactivate-account-welcome-back' => '今後ともFANDOMをよろしくお願いいたします。',
 );
 
 $messages['ko'] = array(
@@ -65,17 +65,17 @@ $messages['nl'] = array(
 );
 
 $messages['pl'] = array(
-	'emailext-reactivate-account-subject' => 'Reaktywuj swoje konto na portalu Fandom',
-	'emailext-reactivate-account-summary' => 'Jesteś o krok od ponownego aktywowania konta na Fandom. Kliknij poniższy link, aby potwierdzić swoje prośbę i wrócić do akcji.',
+	'emailext-reactivate-account-subject' => 'Reaktywuj swoje konto na portalu FANDOM',
+	'emailext-reactivate-account-summary' => 'Jesteś o krok od ponownego aktywowania konta na FANDOM. Kliknij poniższy link, aby potwierdzić swoje prośbę i wrócić do akcji.',
 	'emailext-reactivate-account-button-text' => 'Ponownie uaktywnij konto',
-	'emailext-reactivate-account-welcome-back' => 'Witaj z powrotem w Fandom!',
+	'emailext-reactivate-account-welcome-back' => 'Witaj z powrotem w FANDOM!',
 );
 
 $messages['pt'] = array(
-	'emailext-reactivate-account-subject' => 'Reativar a sua conta no Fandom',
-	'emailext-reactivate-account-summary' => 'Você está a um passo de reativar sua conta no Fandom. Clique no link abaixo para confirmar seu pedido e começar.',
+	'emailext-reactivate-account-subject' => 'Reativar a sua conta no FANDOM',
+	'emailext-reactivate-account-summary' => 'Você está a um passo de reativar sua conta no FANDOM. Clique no link abaixo para confirmar seu pedido e começar.',
 	'emailext-reactivate-account-button-text' => 'Reativar agora',
-	'emailext-reactivate-account-welcome-back' => 'Bem-vindo de volta ao Fandom!',
+	'emailext-reactivate-account-welcome-back' => 'Bem-vindo de volta ao FANDOM!',
 );
 
 $messages['ru'] = array(
@@ -86,16 +86,16 @@ $messages['ru'] = array(
 );
 
 $messages['zh-hans'] = array(
-	'emailext-reactivate-account-subject' => '重新激活您的Fandom帐户',
-	'emailext-reactivate-account-summary' => '您只差一步就可以重新激活您的Fandom帐户了。请点击下面的链接确认您的申请并开始使用。',
+	'emailext-reactivate-account-subject' => '重新激活您的FANDOM帐户',
+	'emailext-reactivate-account-summary' => '您只差一步就可以重新激活您的FANDOM帐户了。请点击下面的链接确认您的申请并开始使用。',
 	'emailext-reactivate-account-button-text' => '现在就重新激活',
-	'emailext-reactivate-account-welcome-back' => '欢迎回到Fandom！',
+	'emailext-reactivate-account-welcome-back' => '欢迎回到FANDOM！',
 );
 
 $messages['zh-hant'] = array(
-	'emailext-reactivate-account-subject' => '重新開啟您的Fandom帳戶',
-	'emailext-reactivate-account-summary' => '你只差一步就可重新啓動你的Fandom帳戶了。請按一下下面的連接確認你的請求並開始使用。',
+	'emailext-reactivate-account-subject' => '重新開啟您的FANDOM帳戶',
+	'emailext-reactivate-account-summary' => '你只差一步就可重新啓動你的FANDOM帳戶了。請按一下下面的連接確認你的請求並開始使用。',
 	'emailext-reactivate-account-button-text' => '現在就重新啟動',
-	'emailext-reactivate-account-welcome-back' => '歡迎回到Fandom！',
+	'emailext-reactivate-account-welcome-back' => '歡迎回到FANDOM！',
 );
 

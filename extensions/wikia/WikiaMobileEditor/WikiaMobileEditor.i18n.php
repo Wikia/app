@@ -1,8 +1,7 @@
 <?php
-/** Internationalization file for /extensions/wikia/WikiaMobileEditor/WikiaMobileEditor extension. */
-$messages = [];
+$messages = array();
 
-$messages['en'] = [
+$messages['en'] = array(
 	'tag-mobileedit' => 'Mobile',
 	'tag-mobileedit-description' => 'Edit made using mobile skin',
 	'wikiamobileeditor-desc' => 'WikiaMobile Editor enhancements',
@@ -17,9 +16,9 @@ $messages['en'] = [
 	'wikiamobileeditor-on-new' => 'You are starting a brand new article (section).',
 	'wikiamobileeditor-wrong' => 'Something went wrong.',
 	'wikiamobileeditor-internet' => 'Do you have internet connection?',
-];
+);
 
-$messages['qqq'] = [
+$messages['qqq'] = array(
 	'tag-mobileedit' => 'Shown on lists of changes (history, recentchanges, etc.) for each edit made using mobile skin.',
 	'tag-mobileedit-description' => 'Long description of the mobileedit tag.',
 	'wikiamobileeditor-desc' => '{{desc}}',
@@ -34,9 +33,111 @@ $messages['qqq'] = [
 	'wikiamobileeditor-on-new' => 'Massage displayed in a toast pop up, explaining that user is creating a new article',
 	'wikiamobileeditor-wrong' => 'Message displaed in a toast, indicating to user that something went wrong with displaying a preview',
 	'wikiamobileeditor-internet' => 'If no Internet connection is detected, this question is displaed next to wikiamobileeditor-wrong message',
-];
+);
 
-$messages['ko'] = [
+$messages['de'] = array(
+	'wikiamobileeditor-cancel' => 'Abbrechen',
+	'wikiamobileeditor-internet' => 'Hast du eine Internet-Verbindung?',
+	'wikiamobileeditor-licensing' => 'Bearbeitungen lizenziert unter',
+	'wikiamobileeditor-on-new' => 'Du startest einen neuen Artikel (oder Abschnitt).',
+	'wikiamobileeditor-on-save' => 'Juchu! Deine Bearbeitung wurde veröffentlicht.',
+	'wikiamobileeditor-preview' => 'Vorschau',
+	'wikiamobileeditor-publish' => 'Speichern',
+	'wikiamobileeditor-saving' => 'Speichern...',
+	'wikiamobileeditor-summary-placeholder' => 'Was hast du geändert (optional)?',
+	'wikiamobileeditor-wrong' => 'Irgendwas lief falsch.',
+	'tag-mobileedit' => 'Mobile',
+	'tag-mobileedit-description' => 'Edit made using mobile skin',
+	'wikiamobileeditor-desc' => 'WikiaMobile Editor enhancements',
+	'wikiamobileeditor-keep-editing' => 'Keep Editing',
+);
+
+$messages['es'] = array(
+	'tag-mobileedit' => 'Mobile',
+	'tag-mobileedit-description' => 'Edit made using mobile skin',
+	'wikiamobileeditor-desc' => 'WikiaMobile Editor enhancements',
+	'wikiamobileeditor-cancel' => 'Cancel',
+	'wikiamobileeditor-publish' => 'Publish',
+	'wikiamobileeditor-preview' => 'Preview',
+	'wikiamobileeditor-summary-placeholder' => 'What did you change (Optional)?',
+	'wikiamobileeditor-licensing' => 'Contributions licensed as',
+	'wikiamobileeditor-keep-editing' => 'Keep Editing',
+	'wikiamobileeditor-on-save' => 'Success! Your edit was published.',
+	'wikiamobileeditor-saving' => 'Saving',
+	'wikiamobileeditor-on-new' => 'You are starting a brand new article (section).',
+	'wikiamobileeditor-wrong' => 'Something went wrong.',
+	'wikiamobileeditor-internet' => 'Do you have internet connection?',
+);
+
+$messages['fi'] = array(
+	'tag-mobileedit' => 'Mobile',
+	'tag-mobileedit-description' => 'Edit made using mobile skin',
+	'wikiamobileeditor-desc' => 'WikiaMobile Editor enhancements',
+	'wikiamobileeditor-cancel' => 'Cancel',
+	'wikiamobileeditor-publish' => 'Publish',
+	'wikiamobileeditor-preview' => 'Preview',
+	'wikiamobileeditor-summary-placeholder' => 'What did you change (Optional)?',
+	'wikiamobileeditor-licensing' => 'Contributions licensed as',
+	'wikiamobileeditor-keep-editing' => 'Keep Editing',
+	'wikiamobileeditor-on-save' => 'Success! Your edit was published.',
+	'wikiamobileeditor-saving' => 'Saving',
+	'wikiamobileeditor-on-new' => 'You are starting a brand new article (section).',
+	'wikiamobileeditor-wrong' => 'Something went wrong.',
+	'wikiamobileeditor-internet' => 'Do you have internet connection?',
+);
+
+$messages['fr'] = array(
+	'wikiamobileeditor-cancel' => 'Annuler',
+	'wikiamobileeditor-desc' => "Améliorations de l'éditeur mobile Wikia",
+	'wikiamobileeditor-internet' => 'Êtes-vous connecté à Internet ?',
+	'wikiamobileeditor-keep-editing' => 'Continuer à modifier',
+	'wikiamobileeditor-licensing' => 'Contributions sous licence',
+	'wikiamobileeditor-on-new' => 'Vous commencez un tout nouvel article (section).',
+	'wikiamobileeditor-on-save' => 'Votre modification a été publiée avec succès !',
+	'wikiamobileeditor-preview' => 'Aperçu',
+	'wikiamobileeditor-publish' => 'Publier',
+	'wikiamobileeditor-saving' => 'Enregistrement',
+	'wikiamobileeditor-summary-placeholder' => "Qu'avez-vous modifié (optionnel) ?",
+	'wikiamobileeditor-wrong' => 'Une erreur est survenue.',
+	'tag-mobileedit' => 'Mobile',
+	'tag-mobileedit-description' => 'Edit made using mobile skin',
+);
+
+$messages['it'] = array(
+	'wikiamobileeditor-cancel' => 'Annulla',
+	'wikiamobileeditor-desc' => "Miglioramenti dell'editor WikiaMobile",
+	'wikiamobileeditor-internet' => 'Possiedi una connessione internet?',
+	'wikiamobileeditor-keep-editing' => 'Continua a modificare',
+	'wikiamobileeditor-licensing' => 'Contributi licenziati come',
+	'wikiamobileeditor-on-new' => 'Stai creando un nuovo articolo (sezione).',
+	'wikiamobileeditor-on-save' => 'Successo! La tua modifica è stata pubblicata.',
+	'wikiamobileeditor-preview' => 'Anteprima',
+	'wikiamobileeditor-publish' => 'Pubblica',
+	'wikiamobileeditor-saving' => 'Salvataggio',
+	'wikiamobileeditor-summary-placeholder' => 'Che cosa hai cambiato (opzionale)?',
+	'wikiamobileeditor-wrong' => 'Qualcosa è andato storto.',
+	'tag-mobileedit' => 'Mobile',
+	'tag-mobileedit-description' => 'Edit made using mobile skin',
+);
+
+$messages['ja'] = array(
+	'wikiamobileeditor-cancel' => '中止',
+	'wikiamobileeditor-keep-editing' => '編集を続ける',
+	'wikiamobileeditor-licensing' => '投稿内容は次のライセンス下に置かれます:',
+	'wikiamobileeditor-preview' => 'プレビュー',
+	'wikiamobileeditor-publish' => '保存',
+	'wikiamobileeditor-summary-placeholder' => '変更内容を記入（オプション）',
+	'tag-mobileedit' => 'Mobile',
+	'tag-mobileedit-description' => 'Edit made using mobile skin',
+	'wikiamobileeditor-desc' => 'WikiaMobile Editor enhancements',
+	'wikiamobileeditor-on-save' => 'Success! Your edit was published.',
+	'wikiamobileeditor-saving' => 'Saving',
+	'wikiamobileeditor-on-new' => 'You are starting a brand new article (section).',
+	'wikiamobileeditor-wrong' => 'Something went wrong.',
+	'wikiamobileeditor-internet' => 'Do you have internet connection?',
+);
+
+$messages['ko'] = array(
 	'tag-mobileedit-description' => '모바일 스킨에서의 편집',
 	'tag-mobileedit' => '모바일',
 	'wikiamobileeditor-cancel' => '취소',
@@ -49,9 +150,45 @@ $messages['ko'] = [
 	'wikiamobileeditor-saving' => '저장 중',
 	'wikiamobileeditor-summary-placeholder' => '무엇을 변경하셨나요? (선택 사항)',
 	'wikiamobileeditor-wrong' => '무언가 잘못되었습니다.',
-];
+	'wikiamobileeditor-desc' => 'WikiaMobile Editor enhancements',
+	'wikiamobileeditor-on-save' => 'Success! Your edit was published.',
+);
 
-$messages['pl'] = [
+$messages['lol'] = array(
+	'tag-mobileedit' => 'crwdns66006:0crwdne66006:0',
+	'tag-mobileedit-description' => 'crwdns66007:0crwdne66007:0',
+	'wikiamobileeditor-desc' => 'crwdns66008:0crwdne66008:0',
+	'wikiamobileeditor-cancel' => 'crwdns66009:0crwdne66009:0',
+	'wikiamobileeditor-publish' => 'crwdns66010:0crwdne66010:0',
+	'wikiamobileeditor-preview' => 'crwdns66011:0crwdne66011:0',
+	'wikiamobileeditor-summary-placeholder' => 'crwdns66012:0crwdne66012:0',
+	'wikiamobileeditor-licensing' => 'crwdns66013:0crwdne66013:0',
+	'wikiamobileeditor-keep-editing' => 'crwdns66014:0crwdne66014:0',
+	'wikiamobileeditor-on-save' => 'crwdns66015:0crwdne66015:0',
+	'wikiamobileeditor-saving' => 'crwdns66016:0crwdne66016:0',
+	'wikiamobileeditor-on-new' => 'crwdns66017:0crwdne66017:0',
+	'wikiamobileeditor-wrong' => 'crwdns66018:0crwdne66018:0',
+	'wikiamobileeditor-internet' => 'crwdns66019:0crwdne66019:0',
+);
+
+$messages['nl'] = array(
+	'tag-mobileedit' => 'Mobile',
+	'tag-mobileedit-description' => 'Edit made using mobile skin',
+	'wikiamobileeditor-desc' => 'WikiaMobile Editor enhancements',
+	'wikiamobileeditor-cancel' => 'Cancel',
+	'wikiamobileeditor-publish' => 'Publish',
+	'wikiamobileeditor-preview' => 'Preview',
+	'wikiamobileeditor-summary-placeholder' => 'What did you change (Optional)?',
+	'wikiamobileeditor-licensing' => 'Contributions licensed as',
+	'wikiamobileeditor-keep-editing' => 'Keep Editing',
+	'wikiamobileeditor-on-save' => 'Success! Your edit was published.',
+	'wikiamobileeditor-saving' => 'Saving',
+	'wikiamobileeditor-on-new' => 'You are starting a brand new article (section).',
+	'wikiamobileeditor-wrong' => 'Something went wrong.',
+	'wikiamobileeditor-internet' => 'Do you have internet connection?',
+);
+
+$messages['pl'] = array(
 	'tag-mobileedit-description' => 'Edycja wykonana przy użyciu mobilnej skórki',
 	'wikiamobileeditor-cancel' => 'Anuluj',
 	'wikiamobileeditor-desc' => 'Ulepszenia edytora mobilnego',
@@ -65,9 +202,27 @@ $messages['pl'] = [
 	'wikiamobileeditor-saving' => 'Zapisywanie',
 	'wikiamobileeditor-summary-placeholder' => 'Co zostało zmienione? (opcjonalne)',
 	'wikiamobileeditor-wrong' => 'Coś poszło nie tak.',
-];
+	'tag-mobileedit' => 'Mobile',
+);
 
-$messages['ru'] = [
+$messages['pt'] = array(
+	'tag-mobileedit' => 'Mobile',
+	'tag-mobileedit-description' => 'Edit made using mobile skin',
+	'wikiamobileeditor-desc' => 'WikiaMobile Editor enhancements',
+	'wikiamobileeditor-cancel' => 'Cancel',
+	'wikiamobileeditor-publish' => 'Publish',
+	'wikiamobileeditor-preview' => 'Preview',
+	'wikiamobileeditor-summary-placeholder' => 'What did you change (Optional)?',
+	'wikiamobileeditor-licensing' => 'Contributions licensed as',
+	'wikiamobileeditor-keep-editing' => 'Keep Editing',
+	'wikiamobileeditor-on-save' => 'Success! Your edit was published.',
+	'wikiamobileeditor-saving' => 'Saving',
+	'wikiamobileeditor-on-new' => 'You are starting a brand new article (section).',
+	'wikiamobileeditor-wrong' => 'Something went wrong.',
+	'wikiamobileeditor-internet' => 'Do you have internet connection?',
+);
+
+$messages['ru'] = array(
 	'tag-mobileedit-description' => 'Правка сделана из мобильного скина',
 	'tag-mobileedit' => 'С мобильного',
 	'wikiamobileeditor-cancel' => 'Отмена',
@@ -82,72 +237,26 @@ $messages['ru'] = [
 	'wikiamobileeditor-saving' => 'Сохранить',
 	'wikiamobileeditor-summary-placeholder' => 'Опишите ваши правки (необязательно)',
 	'wikiamobileeditor-wrong' => 'Произошла ошибка.',
-];
+);
 
-$messages['de'] = [
-	'wikiamobileeditor-cancel' => 'Abbrechen',
-	'wikiamobileeditor-internet' => 'Hast du eine Internet-Verbindung?',
-	'wikiamobileeditor-licensing' => 'Bearbeitungen lizenziert unter',
-	'wikiamobileeditor-on-new' => 'Du startest einen neuen Artikel (oder Abschnitt).',
-	'wikiamobileeditor-on-save' => 'Juchu! Deine Bearbeitung wurde veröffentlicht.',
-	'wikiamobileeditor-preview' => 'Vorschau',
-	'wikiamobileeditor-publish' => 'Speichern',
-	'wikiamobileeditor-saving' => 'Speichern...',
-	'wikiamobileeditor-summary-placeholder' => 'Was hast du geändert (optional)?',
-	'wikiamobileeditor-wrong' => 'Irgendwas lief falsch.',
-];
+$messages['vi'] = array(
+	'tag-mobileedit' => 'Mobile',
+	'tag-mobileedit-description' => 'Edit made using mobile skin',
+	'wikiamobileeditor-desc' => 'WikiaMobile Editor enhancements',
+	'wikiamobileeditor-cancel' => 'Cancel',
+	'wikiamobileeditor-publish' => 'Publish',
+	'wikiamobileeditor-preview' => 'Preview',
+	'wikiamobileeditor-summary-placeholder' => 'What did you change (Optional)?',
+	'wikiamobileeditor-licensing' => 'Contributions licensed as',
+	'wikiamobileeditor-keep-editing' => 'Keep Editing',
+	'wikiamobileeditor-on-save' => 'Success! Your edit was published.',
+	'wikiamobileeditor-saving' => 'Saving',
+	'wikiamobileeditor-on-new' => 'You are starting a brand new article (section).',
+	'wikiamobileeditor-wrong' => 'Something went wrong.',
+	'wikiamobileeditor-internet' => 'Do you have internet connection?',
+);
 
-$messages['it'] = [
-	'wikiamobileeditor-cancel' => 'Annulla',
-	'wikiamobileeditor-desc' => 'Miglioramenti dell\'editor WikiaMobile',
-	'wikiamobileeditor-internet' => 'Possiedi una connessione internet?',
-	'wikiamobileeditor-keep-editing' => 'Continua a modificare',
-	'wikiamobileeditor-licensing' => 'Contributi licenziati come',
-	'wikiamobileeditor-on-new' => 'Stai creando un nuovo articolo (sezione).',
-	'wikiamobileeditor-on-save' => 'Successo! La tua modifica è stata pubblicata.',
-	'wikiamobileeditor-preview' => 'Anteprima',
-	'wikiamobileeditor-publish' => 'Pubblica',
-	'wikiamobileeditor-saving' => 'Salvataggio',
-	'wikiamobileeditor-summary-placeholder' => 'Che cosa hai cambiato (opzionale)?',
-	'wikiamobileeditor-wrong' => 'Qualcosa è andato storto.',
-];
-
-$messages['ja'] = [
-	'wikiamobileeditor-cancel' => '中止',
-	'wikiamobileeditor-keep-editing' => '編集を続ける',
-	'wikiamobileeditor-licensing' => '投稿内容は次のライセンス下に置かれます:',
-	'wikiamobileeditor-preview' => 'プレビュー',
-	'wikiamobileeditor-publish' => '保存',
-	'wikiamobileeditor-summary-placeholder' => '変更内容を記入（オプション）',
-];
-
-$messages['zh-hant'] = [
-	'wikiamobileeditor-cancel' => '取消',
-	'wikiamobileeditor-keep-editing' => '繼續編輯',
-	'wikiamobileeditor-licensing' => '貢獻內容授權方式為',
-	'wikiamobileeditor-on-new' => '您正在創建一篇新的文章或段落。',
-	'wikiamobileeditor-preview' => '預覽',
-	'wikiamobileeditor-publish' => '保存',
-	'wikiamobileeditor-saving' => '正在保存',
-	'wikiamobileeditor-summary-placeholder' => '你主要修改了什麼（可選填）？',
-];
-
-$messages['fr'] = [
-	'wikiamobileeditor-cancel' => 'Annuler',
-	'wikiamobileeditor-desc' => 'Améliorations de l\'éditeur mobile Wikia',
-	'wikiamobileeditor-internet' => 'Êtes-vous connecté à Internet ?',
-	'wikiamobileeditor-keep-editing' => 'Continuer à modifier',
-	'wikiamobileeditor-licensing' => 'Contributions sous licence',
-	'wikiamobileeditor-on-new' => 'Vous commencez un tout nouvel article (section).',
-	'wikiamobileeditor-on-save' => 'Votre modification a été publiée avec succès !',
-	'wikiamobileeditor-preview' => 'Aperçu',
-	'wikiamobileeditor-publish' => 'Publier',
-	'wikiamobileeditor-saving' => 'Enregistrement',
-	'wikiamobileeditor-summary-placeholder' => 'Qu\'avez-vous modifié (optionnel) ?',
-	'wikiamobileeditor-wrong' => 'Une erreur est survenue.',
-];
-
-$messages['zh-hans'] = [
+$messages['zh-hans'] = array(
 	'wikiamobileeditor-cancel' => '取消',
 	'wikiamobileeditor-keep-editing' => '继续编辑',
 	'wikiamobileeditor-licensing' => '贡献内容授权方式为',
@@ -156,5 +265,28 @@ $messages['zh-hans'] = [
 	'wikiamobileeditor-publish' => '保存',
 	'wikiamobileeditor-saving' => '正在保存',
 	'wikiamobileeditor-summary-placeholder' => '你主要修改了什么（可选填）？',
-];
+	'tag-mobileedit' => 'Mobile',
+	'tag-mobileedit-description' => 'Edit made using mobile skin',
+	'wikiamobileeditor-desc' => 'WikiaMobile Editor enhancements',
+	'wikiamobileeditor-on-save' => 'Success! Your edit was published.',
+	'wikiamobileeditor-wrong' => 'Something went wrong.',
+	'wikiamobileeditor-internet' => 'Do you have internet connection?',
+);
+
+$messages['zh-hant'] = array(
+	'wikiamobileeditor-cancel' => '取消',
+	'wikiamobileeditor-keep-editing' => '繼續編輯',
+	'wikiamobileeditor-licensing' => '貢獻內容授權方式為',
+	'wikiamobileeditor-on-new' => '您正在創建一篇新的文章或段落。',
+	'wikiamobileeditor-preview' => '預覽',
+	'wikiamobileeditor-publish' => '保存',
+	'wikiamobileeditor-saving' => '正在保存',
+	'wikiamobileeditor-summary-placeholder' => '你主要修改了什麼（可選填）？',
+	'tag-mobileedit' => 'Mobile',
+	'tag-mobileedit-description' => 'Edit made using mobile skin',
+	'wikiamobileeditor-desc' => 'WikiaMobile Editor enhancements',
+	'wikiamobileeditor-on-save' => 'Success! Your edit was published.',
+	'wikiamobileeditor-wrong' => 'Something went wrong.',
+	'wikiamobileeditor-internet' => 'Do you have internet connection?',
+);
 

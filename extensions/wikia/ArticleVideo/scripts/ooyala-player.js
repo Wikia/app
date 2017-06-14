@@ -129,6 +129,7 @@ define('ooyala-player', function () {
 				],
 				useGoogleCountdown: true
 			};
+			params.replayAds = false;
 		}
 
 		html5Player = new OoyalaHTML5Player(document.getElementById(videoElementId), params, onCreate);

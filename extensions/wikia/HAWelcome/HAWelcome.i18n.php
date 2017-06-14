@@ -35,11 +35,11 @@ $2",
 	'welcome-message-log' => 'Welcome to {{SITENAME}}!',
 	'welcome-message-user-staff' => "==Welcome==
 
-Hi, welcome to {{SITENAME}}! I'm a member of Fandom's Community Support team. Thank you for your edit to [[:$1]]!
+Hi, welcome to {{SITENAME}}! I'm a member of FANDOM's Community Support team. Thank you for your edit to [[:$1]]!
 
 It looks as though none of the admins for this community are active right now, but if you need help, check out [[Help:Contents|help pages]] or stop by [[w:c:community:main page|Community Central]] to explore our [[w:c:community:Special:Forum|forums]].
 
-You can also follow the [[w:c:community:Blog:Wikia_Staff_Blog|Staff blog]] to keep up-to-date with the latest news and events around Wikia. And don't forget to check out [[w:c:community:Wikia_University|Fandom University]] for quick how-to videos.
+You can also follow the [[w:c:community:Blog:Wikia_Staff_Blog|Staff blog]] to keep up-to-date with the latest news and events around Wikia. And don't forget to check out [[w:c:community:Wikia_University|FANDOM University]] for quick how-to videos.
 
 Please [[$2|leave me a message]] if I can help with anything.
 
@@ -48,13 +48,13 @@ Enjoy your time at {{SITENAME}}!
 $2",
 	'welcome-message-anon-staff' => "==Welcome==
 
-Hi, welcome to {{SITENAME}}! I'm a member of Fandom's Community Support team. Thank you for your edit to [[:$1]]!
+Hi, welcome to {{SITENAME}}! I'm a member of FANDOM's Community Support team. Thank you for your edit to [[:$1]]!
 
 '''[[Special:UserSignup|Please sign in and create a user name]]''. It's an easy way to keep track of your contributions and helps you communicate with the rest of the community.
 
 It looks as though none of the admins for this community are active right now, but if you need help, you can look at our [[Help:Contents|help pages]] or stop by [[w:c:community:main page|Community Central]] to check out our [[w:c:community:Special:Forum|forums]].
 
-You can also follow the [[w:c:community:Blog:Wikia_Staff_Blog|Staff blog]] to keep up-to-date with the latest news and events around Fandom. And don't forget to check out [[w:c:community:Wikia_University|Fandom University]] for quick how-to videos.
+You can also follow the [[w:c:community:Blog:Wikia_Staff_Blog|Staff blog]] to keep up-to-date with the latest news and events around FANDOM. And don't forget to check out [[w:c:community:Wikia_University|FANDOM University]] for quick how-to videos.
 
 Please [[$2|leave me a message]] if I can help with anything.
 
@@ -68,11 +68,11 @@ $2",
 If you need help getting started, check out our [[Help:Getting Started|help pages]] or contact me or [[Special:Listusers/sysop|another admin]] here. For general help, you could also stop by [[w:c:community:main page|Community Central]] to explore the [[w:c:community:Special:Forum|forums]] and [[w:c:community:Blog:Wikia_Staff_Blog|blogs]].
 
 Enjoy your time at {{SITENAME}}!",
-	'welcome-message-wall-user-staff' => "Hi, welcome to {{SITENAME}}! I'm a member of Fandom's Community Support team. Thank you for your edit to [[:$1]]!
+	'welcome-message-wall-user-staff' => "Hi, welcome to {{SITENAME}}! I'm a member of FANDOM's Community Support team. Thank you for your edit to [[:$1]]!
 
 It looks as though none of the admins for this community are active right now, but if you need help, check out our [[Help:Contents|help pages]] or stop by [[w:c:community:main page|Community Central]] to explore our [[w:c:community:Special:Forum|forums]].
 
-And don't forget to check out [[w:c:community:Wikia_University|Fandom University]] for quick how-to videos.
+And don't forget to check out [[w:c:community:Wikia_University|FANDOM University]] for quick how-to videos.
 
 Enjoy your time at {{SITENAME}}!",
 	'welcome-message-wall-anon' => "Hi, I'm an admin for the {{SITENAME}} community. Welcome and thank you for your edit to [[:$1]]!
@@ -82,13 +82,13 @@ Enjoy your time at {{SITENAME}}!",
 If you need help getting started, check out our [[Help:Getting Started|help pages]] or contact me or [[Special:Listusers/sysop|another admin]] here. For general help, you could also stop by [[w:c:community:main page|Community Central]] to explore the [[w:c:community:Special:Forum|forums]] and [[w:c:community:Blog:Wikia_Staff_Blog|blogs]].
 
 Enjoy your time at {{SITENAME}}!",
-	'welcome-message-wall-anon-staff' => "Hi, welcome to {{SITENAME}}! I'm a member of Fandom's Community Support team. Thank you for your edit to [[:$1]]!
+	'welcome-message-wall-anon-staff' => "Hi, welcome to {{SITENAME}}! I'm a member of FANDOM's Community Support team. Thank you for your edit to [[:$1]]!
 
 '''[[Special:UserSignup|Please sign in and create a user name]]'''. It's an easy way to keep track of your contributions and helps you communicate with the rest of the community.
 
 It looks as though none of the admins for this community are active right now, but if you need help, you can look at our [[Help:Contents|help pages]] or stop by [[w:c:community:main page|Community Central]] to check out their [[w:c:community:Special:Forum|forums]].
 
-You can also follow the [[w:c:community:Blog:Wikia_Staff_Blog|Staff blog]] to keep up-to-date with the latest news and events around Wikia. And don't forget to check out [[w:c:community:Wikia_University|Fandom University]] for quick how-to videos.
+You can also follow the [[w:c:community:Blog:Wikia_Staff_Blog|Staff blog]] to keep up-to-date with the latest news and events around Wikia. And don't forget to check out [[w:c:community:Wikia_University|FANDOM University]] for quick how-to videos.
 
 Enjoy your time at {{SITENAME}}!",
 	'welcome-description' => 'Sends a welcome message to users after their first edits',
@@ -341,11 +341,11 @@ $2",
 	'welcome-message-log' => 'Begrüßung eines neuen Autors',
 	'welcome-message-user-staff' => '==Herzlich WIllkommen== 
 
-Hallo und willkommen bei {{SITENAME}}! Ich bin ein Mitglied des Community Support-Teams bei Fandom. Vielen Dank, dass du [[:$1]] bearbeitet hast!
+Hallo und willkommen bei {{SITENAME}}! Ich bin ein Mitglied des Community Support-Teams bei FANDOM. Vielen Dank, dass du [[:$1]] bearbeitet hast!
 
 Momentan scheint in dieser Community kein Admin aktiv zu sein, aber wenn du Hilfe brauchst, kannst du dir unsere [[Hilfe:Einführung|Hilfeseiten]] ansehen oder in der [[w:c:de.community|Community Deutschland]] vorbei schauen und dort die [[w:de.c:community:Spezial:Forum|Foren]] durchforsten.
 
-Du kannst außerdem dem [[w:c:de.community:Blog:Fandom_Deutschland_News|Fandom-Blog]] folgen, um immer darüber auf dem Laufenden zu bleiben, was bei Fandom so passiert. Und vergiss auf keinen Fall die [[w:c:de.community:Wikia_Universität|Fandom-Universität]]! Dort findest du kurze Videos zu Nutzung von Fandom.
+Du kannst außerdem dem [[w:c:de.community:Blog:Fandom_Deutschland_News|FANDOM-Blog]] folgen, um immer darüber auf dem Laufenden zu bleiben, was bei FANDOM so passiert. Und vergiss auf keinen Fall die [[w:c:de.community:Wikia_Universität|FANDOM-Universität]]! Dort findest du kurze Videos zu Nutzung von FANDOM.
 
 [[$2|Hinterlasse mir bitte eine Nachricht]], wenn ich dir bei irgendeinem Problem behilflich sein kann.
 
@@ -354,13 +354,13 @@ Viel Spaß bei {{SITENAME}}!
 $2',
 	'welcome-message-anon-staff' => "==Herzlich Willkommen==
 
-Hallo und willkommen bei {{SITENAME}}! Ich bin ein Mitglied des Community Support-Teams bei Fandom. Vielen Dank, dass du [[:$1]] bearbeitet hast!
+Hallo und willkommen bei {{SITENAME}}! Ich bin ein Mitglied des Community Support-Teams bei FANDOM. Vielen Dank, dass du [[:$1]] bearbeitet hast!
 
 '''[[Spezial:Anmelden|Bitte melde dich an und erstelle einen Benutzernamen]]'''. Dadurch kannst du deine Beiträge problemlos nachverfolgen und einfacher mit den anderen Mitgliedern der Community ins Gespräch kommen.
 
 Momentan scheint in dieser Community kein Admin aktiv zu sein, aber wenn du Hilfe brauchst, kannst du dir unsere [[Hilfe:Einführung|Hilfeseiten]] ansehen oder in der [[w:c:de.community|Community Deutschland]] vorbei schauen und dort die [[w:c:de.community:Spezial:Forum|Foren]] durchforsten.
 
-Du kannst außerdem dem [[w:c:de.community:Blog:Fandom_Deutschland_News|Fandom-Blog]] folgen, um immer darüber auf dem Laufenden zu bleiben, was bei Fandom so passiert. Und vergiss auf keinen Fall die [[w:c:de.community:Fandom_Universität|Fandom-Universität]]! Dort findest du kurze Videos zu Nutzung von Fandom.
+Du kannst außerdem dem [[w:c:de.community:Blog:Fandom_Deutschland_News|FANDOM-Blog]] folgen, um immer darüber auf dem Laufenden zu bleiben, was bei FANDOM so passiert. Und vergiss auf keinen Fall die [[w:c:de.community:Fandom_Universität|FANDOM-Universität]]! Dort findest du kurze Videos zu Nutzung von FANDOM.
 
 [[$2|Hinterlasse mir bitte eine Nachricht]], wenn ich dir bei irgendeinem Problem behilflich sein kann.
 
@@ -374,11 +374,11 @@ $2",
 Wenn du Hilfe brauchst, um loszulegen, sieh dir am besten erst einmal unsere [[Hilfe:Einführung|Hilfeseiten]] an oder nimm hier Kontakt zu mir oder einem [[Spezial:Benutzer/sysop|anderen Admin]] auf. Allgemeine Unterstützung erhältst du auch in der [[w:c:de.community|Community Deutschland]], wo du die [[w:c:de.community:Spezial:Forum|Foren]] und [[w:c:de.community:Blog:Fandom_Deutschland_News|Blogs]] durchforsten kannst.
 
 Viel Spaß bei {{SITENAME}}!',
-	'welcome-message-wall-user-staff' => 'Hallo und willkommen bei {{SITENAME}}! Ich bin ein Mitglied des Community Support-Teams bei Fandom. Vielen Dank, dass du [[:$1]] bearbeitet hast!
+	'welcome-message-wall-user-staff' => 'Hallo und willkommen bei {{SITENAME}}! Ich bin ein Mitglied des Community Support-Teams bei FANDOM. Vielen Dank, dass du [[:$1]] bearbeitet hast!
 
 Momentan scheint in dieser Community kein Admin aktiv zu sein, aber wenn du Hilfe brauchst, kannst du dir unsere [[Hilfe:Einführung|Hilfeseiten]] ansehen oder in der [[w:c:de.community|Community Deutschland]] vorbei schauen und dort die [[w:c:de.community:Spezial:Forum|Foren]] durchforsten.
 
-Und vergiss auf keinen Fall die [[w:c:de.community:Wikia_Universität|Fandom-Universität]]! Dort findest du kurze Videos zu Nutzung von Fandom.
+Und vergiss auf keinen Fall die [[w:c:de.community:Wikia_Universität|FANDOM-Universität]]! Dort findest du kurze Videos zu Nutzung von FANDOM.
 
 Viel Spaß bei {{SITENAME}}!',
 	'welcome-message-wall-anon' => "Hallo, ich bin einer der Admins der {{SITENAME}} Community. Herzlich willkommen und vielen Dank, dass du [[:$1]] bearbeitet hast!
@@ -388,13 +388,13 @@ Viel Spaß bei {{SITENAME}}!',
 Wenn du Hilfe brauchst, um loszulegen, sieh dir am besten erst einmal unsere [[Hilfe:Einführung|Hilfeseiten]] an oder nimm hier Kontakt zu mir oder einem [[Spezial:Benutzer/sysop|anderen Admin]] auf. Allgemeine Unterstützung erhältst du auch in der [[w:c:de.community|Community Deutschland]], wo du die [[w:c:de.community:Spezial:Forum|Foren]] und [[w:c:de.community:Blog:Wikia_Deutschland_News|Blogs]] durchforsten kannst.
 
 Viel Spaß bei {{SITENAME}}!",
-	'welcome-message-wall-anon-staff' => "Hallo und willkommen bei {{SITENAME}}! Ich bin ein Mitglied des Community Support-Teams bei Fandom. Vielen Dank, dass du [[:$1]] bearbeitet hast!
+	'welcome-message-wall-anon-staff' => "Hallo und willkommen bei {{SITENAME}}! Ich bin ein Mitglied des Community Support-Teams bei FANDOM. Vielen Dank, dass du [[:$1]] bearbeitet hast!
 
 '''[[Spezial:Anmelden|Bitte melde dich an und erstelle einen Benutzernamen]]'''. Dadurch kannst du deine Beiträge problemlos nachverfolgen und einfacher mit den anderen Mitgliedern der Community ins Gespräch kommen.
 
 Momentan scheint in dieser Community kein Admin aktiv zu sein, aber wenn du Hilfe brauchst, kannst du dir unsere [[Hilfe:Einführung|Hilfeseiten]] ansehen oder in der [[w:c:de.community|Community Deutschland]] vorbei schauen und dort die [[w:c:de.community:Spezial:Forum|Foren]] durchforsten.
 
-Du kannst außerdem dem [[w:c:de.community:Blog:Fandom_Deutschland_News|Fandom-Blog]] folgen, um immer darüber auf dem Laufenden zu bleiben, was bei Fandom so passiert. Und vergiss auf keinen Fall die [[w:c:de.community:Wikia_Universität|Fandom-Universität]]! Dort findest du kurze Videos zu Nutzung von Fandom.
+Du kannst außerdem dem [[w:c:de.community:Blog:Fandom_Deutschland_News|FANDOM-Blog]] folgen, um immer darüber auf dem Laufenden zu bleiben, was bei FANDOM so passiert. Und vergiss auf keinen Fall die [[w:c:de.community:Wikia_Universität|FANDOM-Universität]]! Dort findest du kurze Videos zu Nutzung von FANDOM.
 
 Viel Spaß bei {{SITENAME}}!",
 	'welcome-description' => 'Sendet eine Willkommensnachricht an Benutzer nach ihren ersten Bearbeitungen',
@@ -484,11 +484,11 @@ $2",
 	'welcome-message-log' => 'Bienvenida',
 	'welcome-message-user-staff' => '==Bienvenido==
 
-¡Hola, bienvenido a {{SITENAME}}! Soy un miembro del equipo de soporte comunitario de Fandom. ¡Muchas gracias por tu edición en [[:$1]]! 
+¡Hola, bienvenido a {{SITENAME}}! Soy un miembro del equipo de soporte comunitario de FANDOM. ¡Muchas gracias por tu edición en [[:$1]]! 
 
 Parece que ninguno de los administradores de esta comunidad se encuentra activo en estos momentos, pero si necesitas ayuda para comenzar revisa nuestras [[Ayuda:Contenido|páginas de ayuda]] o ingresa a [[w:c:comunidad|Comunidad Central]] y explora nuestro [[w:c:comunidad:Especial:Foro|foro]].
 
-También te sugiero revisar las [[w:c:comunidad:Blog:Noticias_de_Fandom|entradas de blog del staff]] para estar al día sobre las noticias relacionadas a Fandom. Y no te olvides de revisar [[w:c:comunidad:Universidad_de_Fandom]] para videos educativos.
+También te sugiero revisar las [[w:c:comunidad:Blog:Noticias_de_Fandom|entradas de blog del staff]] para estar al día sobre las noticias relacionadas a FANDOM. Y no te olvides de revisar [[w:c:comunidad:Universidad_de_Fandom]] para videos educativos.
 
 Si necesitas ayuda no dejes de [[$2|enviarme un mensaje]].
 
@@ -497,13 +497,13 @@ Si necesitas ayuda no dejes de [[$2|enviarme un mensaje]].
 $2',
 	'welcome-message-anon-staff' => "==Bienvenido==
 
-¡Hola, bienvenido a {{SITENAME}}! Soy un miembro del equipo de soporte comunitario de Fandom. ¡Muchas gracias por tu edición en [[:$1]]! 
+¡Hola, bienvenido a {{SITENAME}}! Soy un miembro del equipo de soporte comunitario de FANDOM. ¡Muchas gracias por tu edición en [[:$1]]! 
 
 Si deseas puedes '''[[Special:UserSignup|crearte una cuenta de usuario]]''', esta es una manera fácil de revisar las contribuciones que has hecho además de ayudarte a comunicarte con el resto de la comunidad. 
 
 Parece que ninguno de los administradores de esta comunidad se encuentra activo en estos momentos, pero si necesitas ayuda para comenzar revisa nuestras [[Ayuda:Contenido|páginas de ayuda]] o ingresa a [[w:c:comunidad|Comunidad Central]] y explora nuestro [[w:c:comunidad:Especial:Foro|foro]].
 
-También te sugiero revisar las [[w:c:comunidad:Blog:Noticias_de_Fandom|entradas de blog del staff]] para estar al día sobre las noticias relacionadas a Fandom. Y no te olvides de revisar [[w:c:comunidad:Universidad_de_Fandom]] para videos educativos.
+También te sugiero revisar las [[w:c:comunidad:Blog:Noticias_de_Fandom|entradas de blog del staff]] para estar al día sobre las noticias relacionadas a FANDOM. Y no te olvides de revisar [[w:c:comunidad:Universidad_de_Fandom]] para videos educativos.
 
 Si necesitas ayuda no dejes de [[$2|enviarme un mensaje]].
 
@@ -517,7 +517,7 @@ $2",
  Si necesitas ayuda para comenzar, revisa nuestras [[Ayuda:Contenido|páginas de ayuda]] o [[$2|contáctame a mi]] o a [[Special:Listusers/sysop|otro administrador de la comunidad]]. Si necesitas ayuda general, ingresa a [[w:c:comunidad|Comunidad Central]] y explora nuestro [[w:c:comunidad:Especial:Foro|foro]] y [[w:c:comunidad:Blog:Noticias_de_Fandom|entradas de blog]].
 
 ¡Diviértete dentro de {{SITENAME}}!',
-	'welcome-message-wall-user-staff' => '¡Hola, bienvenido a {{SITENAME}}! Soy un miembro del equipo de soporte comunitario de Fandom. ¡Muchas gracias por tu edición en [[:$1]]! 
+	'welcome-message-wall-user-staff' => '¡Hola, bienvenido a {{SITENAME}}! Soy un miembro del equipo de soporte comunitario de FANDOM. ¡Muchas gracias por tu edición en [[:$1]]! 
 
 Parece que ninguno de los administradores de esta comunidad se encuentra activo en estos momentos, pero si necesitas ayuda para comenzar revisa nuestras [[Ayuda:Contenido|páginas de ayuda]] o ingresa a [[w:c:comunidad|Comunidad Central]] y explora nuestro [[w:c:comunidad:Especial:Foro|foro]].
 
@@ -531,13 +531,13 @@ Si deseas puedes '''[[Special:UserSignup|crearte una cuenta de usuario]]''', est
 Si necesitas ayuda para comenzar, revisa nuestras [[Ayuda:Contenido|páginas de ayuda]] o [[$2|contáctame a mi]] o a [[Special:Listusers/sysop|otro administrador de la comunidad]]. Si necesitas ayuda general, ingresa a [[w:c:comunidad|Comunidad Central]] y explora nuestro [[w:c:comunidad:Especial:Foro|foro]] y [[w:c:comunidad:Blog:Noticias_de_Fandom|entradas de blog]].
 
 ¡Diviértete dentro de {{SITENAME}}!",
-	'welcome-message-wall-anon-staff' => "¡Hola, bienvenido a {{SITENAME}}! Soy un miembro del equipo de soporte comunitario de Fandom. ¡Muchas gracias por tu edición en [[:$1]]! 
+	'welcome-message-wall-anon-staff' => "¡Hola, bienvenido a {{SITENAME}}! Soy un miembro del equipo de soporte comunitario de FANDOM. ¡Muchas gracias por tu edición en [[:$1]]! 
 
 Si deseas puedes '''[[Special:UserSignup|crearte una cuenta de usuario]]''', esta es una manera fácil de revisar las contribuciones que has hecho además de ayudarte a comunicarte con el resto de la comunidad. 
 
 Parece que ninguno de los administradores de esta comunidad se encuentra activo en estos momentos, pero si necesitas ayuda para comenzar revisa nuestras [[Ayuda:Contenido|páginas de ayuda]] o ingresa a [[w:c:comunidad|Comunidad Central]] y explora nuestro [[w:c:comunidad:Especial:Foro|foro]].
 
-También te sugiero revisar las [[w:c:comunidad:Blog:Noticias_de_Fandom|entradas de blog del staff]] para estar al día sobre las noticias relacionadas a Fandom. Y no te olvides de revisar [[w:c:comunidad:Universidad_de_Fandom]] para videos educativos.
+También te sugiero revisar las [[w:c:comunidad:Blog:Noticias_de_Fandom|entradas de blog del staff]] para estar al día sobre las noticias relacionadas a FANDOM. Y no te olvides de revisar [[w:c:comunidad:Universidad_de_Fandom]] para videos educativos.
 
 ¡Diviértete dentro de {{SITENAME}}!",
 	'welcome-description' => 'Envía un mensaje a todos los usuarios después de realizar su primera edición.',
@@ -665,11 +665,11 @@ $2",
 	'welcome-message-log' => 'Bienvenue sur {{SITENAME}} !',
 	'welcome-message-user-staff' => "==Bienvenue==
 
-Bonjour et bienvenue à {{SITENAME}} ! Je suis membre de l'équipe de support de la communauté Fandom. Merci pour votre contribution à [[:$1]] !
+Bonjour et bienvenue à {{SITENAME}} ! Je suis membre de l'équipe de support de la communauté FANDOM. Merci pour votre contribution à [[:$1]] !
 
 Il semble qu'aucun des administrateurs de cette communauté ne soit actif en ce moment, mais si vous avez besoin d'aide, vous pouvez consulter nos [[Aide:Contenu|pages d'aide]] ou vous rendre dans le [[w:c:communaute|Centre des communautés]] pour explorer nos [[w:c:communaute:Special:Forum|forums]].
 
-Vous pouvez également suivre [[w:c:communaute:Blog:Actualité_Wikia|ce blog]] afin de vous tenir informé des dernières actualités et événements ayant trait à Fandom. Et n'oubliez pas de visiter l'[[w:c:communaute:Université_Wikia|Université Fandom]] pour y voir de courtes vidéos d'utilisation.
+Vous pouvez également suivre [[w:c:communaute:Blog:Actualité_Wikia|ce blog]] afin de vous tenir informé des dernières actualités et événements ayant trait à FANDOM. Et n'oubliez pas de visiter l'[[w:c:communaute:Université_Wikia|Université FANDOM]] pour y voir de courtes vidéos d'utilisation.
 
 Veuillez [[$2|me laisser un message]] si vous avez besoin d'aide supplémentaire.
 
@@ -678,13 +678,13 @@ Passez un bon moment sur {{SITENAME}} !
 $2",
 	'welcome-message-anon-staff' => "==Bienvenue==
 
-Bonjour et bienvenue à {{SITENAME}} ! Je suis membre de l'équipe de support de la communauté Fandom. Merci pour votre contribution à [[:$1]] !
+Bonjour et bienvenue à {{SITENAME}} ! Je suis membre de l'équipe de support de la communauté FANDOM. Merci pour votre contribution à [[:$1]] !
 
 '''[[Special:UserSignup|Inscrivez-vous et créez un nom d'utilisateur]]'''. Cela permettra de mieux suivre vos contributions et facilitera votre communication avec le reste de la communauté.
 
 Il semble qu'aucun des administrateurs de cette communauté ne soit actif en ce moment, mais si vous avez besoin d'aide, vous pouvez consulter nos [[Aide:Contenu|pages d'aide]] ou vous rendre dans le [[w:c:communaute|Centre des communautés]] pour accéder aux [[w:c:communaute:Special:Forum|forums]].
 
-Vous pouvez également suivre [[w:c:communaute:Blog:Actualité_Wikia|ce blog]] afin de vous tenir informé des dernières actualités et événements ayant trait à Fandom. Et n'oubliez pas de visiter l'[[w:c:communaute:Université_Wikia|Université Fandom]] pour y voir de courtes vidéos d'utilisation.
+Vous pouvez également suivre [[w:c:communaute:Blog:Actualité_Wikia|ce blog]] afin de vous tenir informé des dernières actualités et événements ayant trait à FANDOM. Et n'oubliez pas de visiter l'[[w:c:communaute:Université_Wikia|Université FANDOM]] pour y voir de courtes vidéos d'utilisation.
 
 Veuillez [[$2|me laisser un message]] si vous avez besoin d'aide supplémentaire.
 
@@ -698,11 +698,11 @@ $2",
 Si vous avez besoin d'aide pour vous lancer, consultez nos [[Aide:Commencer|pages d'aide]]. Vous pouvez également me contacter ou contacter un [[Special:Listusers/sysop|autre administrateur]] de la communauté. Pour obtenir de l'aide d'ordre général, rendez-vous sur la page du [[w:c:communaute|Centre des communautés]], d'où vous pourrez explorer les [[w:c:communaute:Special:Forum|forums]] et les [[w:c:communaute:Blog:Actualité_Wikia|blogs]].
 
 Passez un bon moment sur {{SITENAME}} !",
-	'welcome-message-wall-user-staff' => "Bonjour et bienvenue à {{SITENAME}} ! Je suis membre de l'équipe de support de la communauté Fandom. Merci pour votre contribution à [[:$1]] !
+	'welcome-message-wall-user-staff' => "Bonjour et bienvenue à {{SITENAME}} ! Je suis membre de l'équipe de support de la communauté FANDOM. Merci pour votre contribution à [[:$1]] !
 
 Il semble qu'aucun des administrateurs de cette communauté ne soit actif en ce moment, mais si vous avez besoin d'aide, vous pouvez consulter nos [[Aide:Contenu|pages d'aide]] ou vous rendre dans le [[w:c:communaute|Centre des communautés]] pour explorer nos [[w:c:communaute:Special:Forum|forums]].
 
-Et n'oubliez pas de visiter l'[[w:c:communaute:Université_Wikia|Université Fandom]] pour y voir de courtes vidéos d'utilisation.
+Et n'oubliez pas de visiter l'[[w:c:communaute:Université_Wikia|Université FANDOM]] pour y voir de courtes vidéos d'utilisation.
 
 Passez un bon moment sur {{SITENAME}} !",
 	'welcome-message-wall-anon' => "Bonjour, je suis administrateur de la communauté {{SITENAME}}. Bienvenue et merci pour votre contribution à [[:$1]] !
@@ -712,13 +712,13 @@ Passez un bon moment sur {{SITENAME}} !",
 Si vous avez besoin d'aide pour vous lancer, consultez nos [[Aide:Commencer|pages d'aide]]. Vous pouvez également me contacter ou contacter un [[Special:Listusers/sysop|autre administrateur]] de la communauté. Pour obtenir de l'aide d'ordre général, rendez-vous sur la page du [[w:c:communaute|Centre des communautés]], d'où vous pourrez explorer les [[w:c:communaute:Special:Forum|forums]] et les [[w:c:communaute:Blog:Actualité_Wikia|blogs]].
 
 Passez un bon moment sur {{SITENAME}} !",
-	'welcome-message-wall-anon-staff' => "Bonjour et bienvenue à {{SITENAME}} ! Je suis membre de l'équipe de support de la communauté Fandom. Merci pour votre contribution à [[:$1]] !
+	'welcome-message-wall-anon-staff' => "Bonjour et bienvenue à {{SITENAME}} ! Je suis membre de l'équipe de support de la communauté FANDOM. Merci pour votre contribution à [[:$1]] !
 
 '''[[Special:UserSignup|Inscrivez-vous et créez un nom d'utilisateur]]'''. Cela permettra de mieux suivre vos contributions et facilitera votre communication avec le reste de la communauté.
 
 Il semble qu'aucun des administrateurs de cette communauté ne soit actif en ce moment, mais si vous avez besoin d'aide, vous pouvez consulter nos [[Aide:Contenu|pages d'aide]] ou vous rendre dans le [[w:c:communaute|Centre des communautés]] pour accéder aux [[w:c:communaute:Special:Forum|forums]] .
 
-Vous pouvez également suivre [[w:c:communaute:Blog:Actualité_Wikia|ce blog]] afin de vous tenir informé des dernières actualités et événements ayant trait à Fandom. Et n'oubliez pas de visiter l'[[w:c:communaute:Université_Wikia|Université Fandom]] pour y voir de courtes vidéos d'utilisation.
+Vous pouvez également suivre [[w:c:communaute:Blog:Actualité_Wikia|ce blog]] afin de vous tenir informé des dernières actualités et événements ayant trait à FANDOM. Et n'oubliez pas de visiter l'[[w:c:communaute:Université_Wikia|Université FANDOM]] pour y voir de courtes vidéos d'utilisation.
 
 Passez un bon moment sur {{SITENAME}} !",
 	'welcome-description' => 'Envoie un message d’accueil aux utilisateurs après leur première modification',
@@ -971,7 +971,7 @@ $messages['it'] = array(
 	'welcome-message-user' => "== Benvenuto ==
 
 Ciao, sono un amministratore della community {{SITENAME}}. Benvenuto e grazie per le modifiche apportate a [[:$1]]!
-Se hai bisogno di aiuto per iniziare, dai un'occhiata alle nostre [[Aiuto:Nozioni di base|pagine d'aiuto]] o contatta me o un [[Special:Listusers/sysop|altro amministratore]] qui. Per un aiuto generico, puoi anche dare un'occhiata alla [[w:it:|Wiki della Community]] per esplorare il [[w:it:Special:Forum|forum]] e il [[w:it:Blog:Blog ufficiale di Fandom Italia|blog dello Staff]].
+Se hai bisogno di aiuto per iniziare, dai un'occhiata alle nostre [[Aiuto:Nozioni di base|pagine d'aiuto]] o contatta me o un [[Special:Listusers/sysop|altro amministratore]] qui. Per un aiuto generico, puoi anche dare un'occhiata alla [[w:it:|Wiki della Community]] per esplorare il [[w:it:Special:Forum|forum]] e il [[w:it:Blog:Blog ufficiale di FANDOM Italia|blog dello Staff]].
 
 [[$2|Lasciami un messaggio]] se posso aiutarti con qualcosa. Divertiti su {{SITENAME}}!
 
@@ -981,7 +981,7 @@ $2",
 Ciao, sono un amministratore della community {{SITENAME}}. Benvenuto e grazie per le modifiche apportate a [[:$1]]!
 '''[[Special:UserSignup|Accedi e crea un nome utente]]'''. È un modo facile per tenere traccia dei tuoi contributi e ti aiuta a comunicare con il resto della community.
 
-Se hai bisogno di aiuto per iniziare, dai un'occhiata alle nostre [[Aiuto:Nozioni di base|pagine d'aiuto]] o contatta me o [[Special:Listusers/sysop|un altro amministratore]] qui. Per aiuto generico, puoi anche dare un'occhiata alla [[w:it:|Wiki della Community]] per esplorare il [[w:it:Special:Forum|forum]] e il [[w:it:Blog:Blog ufficiale di Fandom Italia|blog dello Staff]].
+Se hai bisogno di aiuto per iniziare, dai un'occhiata alle nostre [[Aiuto:Nozioni di base|pagine d'aiuto]] o contatta me o [[Special:Listusers/sysop|un altro amministratore]] qui. Per aiuto generico, puoi anche dare un'occhiata alla [[w:it:|Wiki della Community]] per esplorare il [[w:it:Special:Forum|forum]] e il [[w:it:Blog:Blog ufficiale di FANDOM Italia|blog dello Staff]].
 
 [[$2|Lasciami un messaggio]] se posso aiutarti con qualcosa. Divertiti su {{SITENAME}}!
 
@@ -989,11 +989,11 @@ $2",
 	'welcome-message-log' => 'Benvenuto a un nuovo collaboratore',
 	'welcome-message-user-staff' => "== Benvenuto ==
 
-Ciao, benvenuto su {{SITENAME}}! Sono un membro del team di supporto della community di Fandom. Grazie per le modifiche apportate a [[:$1]]!
+Ciao, benvenuto su {{SITENAME}}! Sono un membro del team di supporto della community di FANDOM. Grazie per le modifiche apportate a [[:$1]]!
 
 Sembra che nessuno degli amministratori di questa community sia attivo al momento; tuttavia, se hai bisogno di aiuto, puoi dare un'occhiata alle nostre [[Aiuto:Contenuti|pagine di aiuto]] o andare sulla [[w:it:|Wiki della Community]] per dare un'occhiata al nostro [[w:it:Special:Forum|forum]].
 
-Puoi anche seguire il [[w:it:Blog:Blog ufficiale di Fandom Italia|blog dello Staff]] per tenerti aggiornato circa le ultime novità ed eventi su Fandom. E non dimenticare di dare un'occhiata alla [[w:c:community:Wikia_University|Università Fandom]] per visualizzare brevi guide video.
+Puoi anche seguire il [[w:it:Blog:Blog ufficiale di FANDOM Italia|blog dello Staff]] per tenerti aggiornato circa le ultime novità ed eventi su FANDOM. E non dimenticare di dare un'occhiata alla [[w:c:community:Wikia_University|Università FANDOM]] per visualizzare brevi guide video.
 
 [[$2|Lasciami un messaggio]] se posso aiutarti con qualcosa.
 
@@ -1002,13 +1002,13 @@ Divertiti su {{SITENAME}}!
 $2",
 	'welcome-message-anon-staff' => "== Benvenuto ==
 
-Ciao, benvenuto su {{SITENAME}}! Sono un membro del team di supporto della community di Fandom. Grazie per le modifiche apportate a [[:$1]]!
+Ciao, benvenuto su {{SITENAME}}! Sono un membro del team di supporto della community di FANDOM. Grazie per le modifiche apportate a [[:$1]]!
 
 '''[[Special:UserSignup|Accedi e crea un nome utente]]''. È un modo facile per tenere traccia dei tuoi contributi e ti aiuta a comunicare con il resto della community.
 
 Sembra che nessuno degli amministratori di questa community sia attivo al momento; tuttavia, se hai bisogno di aiuto, puoi dare un'occhiata alle nostre [[Aiuto:Contenuti|pagine di aiuto]] o andare sulla [[w:it:|Wiki della Community]] per dare un'occhiata al nostro [[w:it:Special:Forum|forum]].
 
-Puoi anche seguire il [[w:it:Blog:Blog ufficiale di Fandom Italia|blog dello Staff]] per tenerti aggiornato circa le ultime novità ed eventi su Fandom. E non dimenticare di dare un'occhiata alla [[w:c:community:Wikia_University|Università Fandom]] per visualizzare brevi guide video.
+Puoi anche seguire il [[w:it:Blog:Blog ufficiale di FANDOM Italia|blog dello Staff]] per tenerti aggiornato circa le ultime novità ed eventi su FANDOM. E non dimenticare di dare un'occhiata alla [[w:c:community:Wikia_University|Università FANDOM]] per visualizzare brevi guide video.
 
 [[$2|Lasciami un messaggio]] se posso aiutarti con qualcosa.
 
@@ -1018,30 +1018,30 @@ $2",
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|forum di supporto]] | [[w:sblog|blog]])</small>',
 	'welcome-message-wall-user' => "Ciao, sono un amministratore della community {{SITENAME}}. Benvenuto e grazie per le modifiche apportate a [[:$1]]!
 
-Se hai bisogno di aiuto per iniziare, dai un'occhiata alle nostre [[Aiuto:Nozioni di base|pagine d'aiuto]] o contatta me o un [[Special:Listusers/sysop|altro amministratore]] qui. Per un aiuto generico, puoi anche dare un'occhiata alla [[w:it:|Wiki della Community]] per esplorare il [[w:it:Special:Forum|forum]] e il [[w:it:Blog:Blog ufficiale di Fandom Italia|blog dello Staff]].
+Se hai bisogno di aiuto per iniziare, dai un'occhiata alle nostre [[Aiuto:Nozioni di base|pagine d'aiuto]] o contatta me o un [[Special:Listusers/sysop|altro amministratore]] qui. Per un aiuto generico, puoi anche dare un'occhiata alla [[w:it:|Wiki della Community]] per esplorare il [[w:it:Special:Forum|forum]] e il [[w:it:Blog:Blog ufficiale di FANDOM Italia|blog dello Staff]].
 
 Divertiti su {{SITENAME}}!",
-	'welcome-message-wall-user-staff' => "Ciao, benvenuto su {{SITENAME}}! Sono un membro del team di supporto della community di Fandom. Grazie per le modifiche apportate a [[:$1]]!
+	'welcome-message-wall-user-staff' => "Ciao, benvenuto su {{SITENAME}}! Sono un membro del team di supporto della community di FANDOM. Grazie per le modifiche apportate a [[:$1]]!
 
 Sembra che nessuno degli amministratori di questa community sia attivo al momento; tuttavia, se hai bisogno di aiuto, puoi dare un'occhiata alle nostre [[Aiuto:Contenuti|pagine di aiuto]] o andare sulla [[w:it:|Wiki della Community]] per dare un'occhiata al nostro [[w:it:Special:Forum|forum]].
 
-E non dimenticare di dare un'occhiata alla [[w:c:community:Wikia_University|Università Fandom]] per visualizzare brevi guide video.
+E non dimenticare di dare un'occhiata alla [[w:c:community:Wikia_University|Università FANDOM]] per visualizzare brevi guide video.
 
 Divertiti su {{SITENAME}}!",
 	'welcome-message-wall-anon' => "Ciao, sono un amministratore della community {{SITENAME}}. Benvenuto e grazie per le modifiche apportate a [[:$1]]!
 
 '''[[Special:UserSignup|Accedi e crea un nome utente]]'''. È un modo facile per tenere traccia dei tuoi contributi e ti aiuta a comunicare con il resto della community.
 
-Se hai bisogno di aiuto per iniziare, dai un'occhiata alle nostre [[Aiuto:Nozioni di base|pagine d'aiuto]] o contatta me o un [[Special:Listusers/sysop|altro amministratore]] qui. Per un aiuto generico, puoi anche dare un'occhiata alla [[w:it:|Wiki della Community]] per esplorare il [[w:it:Special:Forum|forum]] e il [[w:it:Blog:Blog ufficiale di Fandom Italia|blog dello Staff]].
+Se hai bisogno di aiuto per iniziare, dai un'occhiata alle nostre [[Aiuto:Nozioni di base|pagine d'aiuto]] o contatta me o un [[Special:Listusers/sysop|altro amministratore]] qui. Per un aiuto generico, puoi anche dare un'occhiata alla [[w:it:|Wiki della Community]] per esplorare il [[w:it:Special:Forum|forum]] e il [[w:it:Blog:Blog ufficiale di FANDOM Italia|blog dello Staff]].
 
 Divertiti su {{SITENAME}}!",
-	'welcome-message-wall-anon-staff' => "Ciao, benvenuto su {{SITENAME}}! Sono un membro del team di supporto della community di Fandom. Grazie per le modifiche apportate a [[:$1]]!
+	'welcome-message-wall-anon-staff' => "Ciao, benvenuto su {{SITENAME}}! Sono un membro del team di supporto della community di FANDOM. Grazie per le modifiche apportate a [[:$1]]!
 
 '''[[Special:UserSignup|Accedi e crea un nome utente]]'''. È un modo facile per tenere traccia dei tuoi contributi e ti aiuta a comunicare con il resto della community.
 
 Sembra che nessuno degli amministratori di questa community sia attivo al momento; tuttavia, se hai bisogno di aiuto, puoi dare un'occhiata alle nostre [[Aiuto:Contenuti|pagine di aiuto]] o andare sulla [[w:it:|Wiki della Community]] per dare un'occhiata al nostro [[w:it:Special:Forum|forum]].
 
-Puoi anche seguire il [[w:it:Blog:Blog ufficiale di Fandom Italia|blog dello Staff]] per tenerti aggiornato circa le ultime novità ed eventi su Fandom. E non dimenticare di dare un'occhiata alla [[w:c:community:Wikia_University|Università Fandom]] per visualizzare brevi guide video.
+Puoi anche seguire il [[w:it:Blog:Blog ufficiale di FANDOM Italia|blog dello Staff]] per tenerti aggiornato circa le ultime novità ed eventi su FANDOM. E non dimenticare di dare un'occhiata alla [[w:c:community:Wikia_University|Università FANDOM]] per visualizzare brevi guide video.
 
 Divertiti su {{SITENAME}}!",
 	'welcome-user' => '@latest',
@@ -1058,13 +1058,13 @@ $messages['ja'] = array(
 ここは、「{{Pagename}}」さんのユーザーページです。上の「編集」ボタンをクリックしてこのページを編集し、{{Pagename}}さん自身のことについてコミュニティに紹介してみましょう！
 
 == お気に入りのページ ==
-* Fandom上にあるWikiの、お気に入りのページのリンクを追加してください！
+* FANDOM上にあるWikiの、お気に入りのページのリンクを追加してください！
 * お気に入りのページ #2
 * お気に入りのページ #3',
 	'welcome-message-user' => '==ようこそ==
 
 はじめまして、{{SITENAME}}コミュニティのアドミンです。[[:$1]]へようこそ！そして、ページ編集をありがとうございます！
-ご不明な点がございましたら、[[ヘルプ:始めよう|ヘルプページ]]をご覧になるか、私または[[Special:Listusers/sysop|他のアドミン]]までお問い合わせください。Fandomに関する全般的なヘルプは、[[w:c:ja.community:main page|コミュニティ・セントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]や[[w:c:ja.community:Blog:Wikiaスタッフブログ|ブログ]]もご利用ください。
+ご不明な点がございましたら、[[ヘルプ:始めよう|ヘルプページ]]をご覧になるか、私または[[Special:Listusers/sysop|他のアドミン]]までお問い合わせください。FANDOMに関する全般的なヘルプは、[[w:c:ja.community:main page|コミュニティ・セントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]や[[w:c:ja.community:Blog:Wikiaスタッフブログ|ブログ]]もご利用ください。
 
 私でお役に立てそうなことがございましたら、お気軽に[[$2|メッセージをお送りください]]。それでは、{{SITENAME}}をお楽しみください！
 
@@ -1074,19 +1074,19 @@ $2',
 はじめまして、{{SITENAME}}コミュニティのアドミンです。[[:$1]]へようこそ！そして、ページ編集をありがとうございます！
 '''[[Special:UserSignup|ログインしてユーザー名を作成]]'''していただくと、編集履歴を整理したり、他のコミュニティメンバーと交流できるようになります。
 
-ご不明な点がございましたら、[[ヘルプ:始めよう|ヘルプページ]]をご覧になるか、私または[[Special:Listusers/sysop|他のアドミン]]までお問い合わせください。Fandomに関する全般的なヘルプは、[[w:c:ja.community:main page|コミュニティ・セントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]や[[w:c:ja.community:Blog:Wikiaスタッフブログ|ブログ]]もご利用ください。
+ご不明な点がございましたら、[[ヘルプ:始めよう|ヘルプページ]]をご覧になるか、私または[[Special:Listusers/sysop|他のアドミン]]までお問い合わせください。FANDOMに関する全般的なヘルプは、[[w:c:ja.community:main page|コミュニティ・セントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]や[[w:c:ja.community:Blog:Wikiaスタッフブログ|ブログ]]もご利用ください。
 
 私でお役に立てそうなことがございましたら、お気軽に[[$2|メッセージをお送りください]]。それでは、{{SITENAME}}をお楽しみください！
 
 $2",
-	'welcome-message-log' => 'Fandomへようこそ！',
+	'welcome-message-log' => 'FANDOMへようこそ！',
 	'welcome-message-user-staff' => '==ようこそ==
 
-はじめまして、Fandomのコミュニティ・サポートチームです。このたびは、{{SITENAME}}へようこそ！そして、[[:$1]]に編集を加えていただきありがとうございます！
+はじめまして、FANDOMのコミュニティ・サポートチームです。このたびは、{{SITENAME}}へようこそ！そして、[[:$1]]に編集を加えていただきありがとうございます！
 
 このコミュニティではアクティブなアドミンは現在いないようですが、ご不明な点があれば、[[ヘルプ:コンテンツ|ヘルプページ]]をご覧いただくか、[[w:c:ja.community:main page|コミュニティ・セントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]をご利用ください。
 
-また、[[w:c:ja.community:Blog:Wikiaスタッフブログ|スタッフブログ]]ではFandomの最新情報やイベント情報を、[[w:c:ja.community:Wikia_University|Fandomユニバーシティ]]ではFandomの使い方を簡単な動画でご紹介しています。
+また、[[w:c:ja.community:Blog:Wikiaスタッフブログ|スタッフブログ]]ではFANDOMの最新情報やイベント情報を、[[w:c:ja.community:Wikia_University|FANDOMユニバーシティ]]ではFANDOMの使い方を簡単な動画でご紹介しています。
 
 私でお役に立てそうなことがございましたら、お気軽に[[$2|メッセージをお送りください]]。
 
@@ -1095,13 +1095,13 @@ $2",
 $2',
 	'welcome-message-anon-staff' => "==ようこそ==
 
-はじめまして、Fandomのコミュニティ・サポートチームです。このたびは、{{SITENAME}}へようこそ！そして、[[:$1]]に編集を加えていただきありがとうございます！
+はじめまして、FANDOMのコミュニティ・サポートチームです。このたびは、{{SITENAME}}へようこそ！そして、[[:$1]]に編集を加えていただきありがとうございます！
 
 '''[[Special:UserSignup|ログインしてユーザー名を作成]]''していただくと、編集履歴を整理したり、他のコミュニティメンバーと交流できるようになります。
 
 このコミュニティではアクティブなアドミンは現在いないようですが、ご不明な点があれば、[[ヘルプ:コンテンツ|ヘルプページ]]をご覧いただくか、[[w:c:ja.community:main page|コミュニティ・セントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]をご利用ください。
 
-また、[[w:c:ja.community:Blog:Wikiaスタッフブログ|スタッフブログ]]ではFandomの最新情報やイベント情報を、[[w:c:ja.community:Wikia_University|Fandomユニバーシティ]]ではFandomの使い方を簡単な動画でご紹介しています。
+また、[[w:c:ja.community:Blog:Wikiaスタッフブログ|スタッフブログ]]ではFANDOMの最新情報やイベント情報を、[[w:c:ja.community:Wikia_University|FANDOMユニバーシティ]]ではFANDOMの使い方を簡単な動画でご紹介しています。
 
 私でお役に立てそうなことがございましたら、お気軽に[[$2|メッセージをお送りください]]。
 
@@ -1112,28 +1112,28 @@ $2",
 
 '''[[Special:UserSignup|ログインしてユーザー名を作成]]'''していただくと、編集履歴を整理したり、他のコミュニティメンバーと交流できるようになります。
 
-ご不明な点がございましたら、[[ヘルプ:始めよう|ヘルプページ]]をご覧になるか、私または[[Special:Listusers/sysop|他のアドミン]]までお問い合わせください。Fandomに関する全般的なヘルプは、[[w:c:ja.community:main page|コミュニティ・セントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]や[[w:c:ja.community:Blog:Wikiaスタッフブログ|ブログ]]もご利用ください。
+ご不明な点がございましたら、[[ヘルプ:始めよう|ヘルプページ]]をご覧になるか、私または[[Special:Listusers/sysop|他のアドミン]]までお問い合わせください。FANDOMに関する全般的なヘルプは、[[w:c:ja.community:main page|コミュニティ・セントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]や[[w:c:ja.community:Blog:Wikiaスタッフブログ|ブログ]]もご利用ください。
 
 それでは、{{SITENAME}}をお楽しみください！",
-	'welcome-message-wall-anon-staff' => "はじめまして、Fandomのコミュニティ・サポートチームです。このたびは、{{SITENAME}}へようこそ！そして、[[:$1]]に編集を加えていただきありがとうございます！
+	'welcome-message-wall-anon-staff' => "はじめまして、FANDOMのコミュニティ・サポートチームです。このたびは、{{SITENAME}}へようこそ！そして、[[:$1]]に編集を加えていただきありがとうございます！
 
 '''[[Special:UserSignup|ログインしてユーザー名を作成]]''していただくと、編集履歴を整理したり、他のコミュニティメンバーと交流できるようになります。
 
 このコミュニティではアクティブなアドミンは現在いないようですが、ご不明な点があれば、[[ヘルプ:コンテンツ|ヘルプページ]]をご覧いただくか、[[w:c:ja.community:main page|コミュニティ・セントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]をご利用ください。
 
-また、[[w:c:ja.community:Blog:Wikiaスタッフブログ|スタッフブログ]]ではFandomの最新情報やイベント情報を、[[w:c:ja.community:Wikia_University|Fandomユニバーシティ]]ではFandomの使い方を簡単な動画でご紹介しています。
+また、[[w:c:ja.community:Blog:Wikiaスタッフブログ|スタッフブログ]]ではFANDOMの最新情報やイベント情報を、[[w:c:ja.community:Wikia_University|FANDOMユニバーシティ]]ではFANDOMの使い方を簡単な動画でご紹介しています。
 
 それでは、{{SITENAME}}をお楽しみください！",
 	'welcome-message-wall-user' => 'はじめまして、{{SITENAME}}コミュニティのアドミンです。[[:$1]]へようこそ！そして、ページ編集をありがとうございます！
 
-Fandomを利用をはじめるにあたりご不明な点がございましたら、[[ヘルプ:始めよう|ヘルプページ]]をご覧になるか、私または[[Special:Listusers/sysop|他のアドミン]]までお問い合わせください。Fandomに関する全般的なヘルプは、[[w:c:ja.community:main page|コミュニティ・セントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]や[[w:c:ja.community:Blog:Wikiaスタッフブログ|ブログ]]もご利用ください。
+FANDOMを利用をはじめるにあたりご不明な点がございましたら、[[ヘルプ:始めよう|ヘルプページ]]をご覧になるか、私または[[Special:Listusers/sysop|他のアドミン]]までお問い合わせください。FANDOMに関する全般的なヘルプは、[[w:c:ja.community:main page|コミュニティ・セントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]や[[w:c:ja.community:Blog:Wikiaスタッフブログ|ブログ]]もご利用ください。
 
 それでは、{{SITENAME}}をお楽しみください！',
-	'welcome-message-wall-user-staff' => 'はじめまして、Fandomのコミュニティ・サポートチームです。このたびは、{{SITENAME}}へようこそ！そして、[[:$1]]に編集を加えていただきありがとうございます！
+	'welcome-message-wall-user-staff' => 'はじめまして、FANDOMのコミュニティ・サポートチームです。このたびは、{{SITENAME}}へようこそ！そして、[[:$1]]に編集を加えていただきありがとうございます！
 
 このコミュニティではアクティブなアドミンは現在いないようですが、ご不明な点があれば、[[ヘルプ:コンテンツ|ヘルプページ]]をご覧いただくか、[[w:c:ja.community:main page|コミュニティ・セントラル]]の[[w:c:ja.community:Special:Forum|フォーラム]]をご利用ください。
 
-また、[[w:c:ja.community:Wikia_University|Fandomユニバーシティ]]ではFandomの使い方を簡単な動画でご紹介していますので、ぜひご覧ください。
+また、[[w:c:ja.community:Wikia_University|FANDOMユニバーシティ]]ではFANDOMの使い方を簡単な動画でご紹介していますので、ぜひご覧ください。
 
 それでは、{{SITENAME}}をお楽しみください！',
 	'welcome-description' => '初めて編集をしたユーザーにウェルカムメッセージを送信',
@@ -1552,11 +1552,11 @@ $2",
 	'welcome-message-log' => 'Witaj na {{SITENAME}}!',
 	'welcome-message-user-staff' => '== Witaj ==
 
-Cześć, witaj na {{SITENAME}}! Jestem członkiem Zespołu Wsparcia Społeczności portalu Fandom. Dziękujemy za edycję w [[:$1]]!
+Cześć, witaj na {{SITENAME}}! Jestem członkiem Zespołu Wsparcia Społeczności portalu FANDOM. Dziękujemy za edycję w [[:$1]]!
 
 Wygląda na to, że żaden z administratorów tej społeczności nie jest w tym momencie aktywny. Jeżeli potrzebujesz pomocy, zajrzyj na [[Pomoc:Zawartość|strony pomocy]] lub odwiedź [[w:c:spolecznosc|Centrum Społeczności]], gdzie znajdziesz pomoc na [[w:c:spolecznosc:Specjalna:Forum|forum społeczności]].
 
-Możesz również obserwować [[w:c:spolecznosc:Blog:Wikia News|Fandom News]], żeby być na bieżąco z najnowszymi wydarzeniami na portalu Fandom.
+Możesz również obserwować [[w:c:spolecznosc:Blog:Wikia News|FANDOM News]], żeby być na bieżąco z najnowszymi wydarzeniami na portalu FANDOM.
 
 Jeżeli mogę Ci w czymś pomóc, [[$2|wyślij do mnie wiadomość]].
 
@@ -1565,13 +1565,13 @@ Miłego pobytu na {{SITENAME}}!
 $2',
 	'welcome-message-anon-staff' => "== Witaj ==
 
-Cześć, witaj na {{SITENAME}}! Jestem członkiem Zespołu Wsparcia Społeczności portalu Fandom. Dziękujemy za edycję w [[:$1]]!
+Cześć, witaj na {{SITENAME}}! Jestem członkiem Zespołu Wsparcia Społeczności portalu FANDOM. Dziękujemy za edycję w [[:$1]]!
 
 '''[[Special:UserSignup|Zaloguj się i utwórz nazwę użytkownika]]'''. Dzięki temu zyskasz wgląd w historię swoich edycji i z łatwością nawiążesz kontakt z resztą społeczności.
 
 Wygląda na to, że żaden z administratorów tej społeczności nie jest w tym momencie aktywny. Jeżeli potrzebujesz pomocy, zajrzyj na [[Pomoc:Zawartość|strony pomocy]] lub odwiedź [[w:c:spolecznosc|Centrum Społeczności]], gdzie znajdziesz pomoc na [[w:c:spolecznosc:Specjalna:Forum|forum społeczności]].
 
-Możesz również obserwować [[w:c:spolecznosc:Blog:Wikia News|Fandom News]], żeby być na bieżąco z najnowszymi wydarzeniami na portalu Fandom.
+Możesz również obserwować [[w:c:spolecznosc:Blog:Wikia News|FANDOM News]], żeby być na bieżąco z najnowszymi wydarzeniami na portalu FANDOM.
 
 Jeżeli mogę Ci w czymś pomóc, [[$2|wyślij do mnie wiadomość]].
 
@@ -1587,11 +1587,11 @@ Jeżeli potrzebujesz pomocy na początku przygody z Fandomem, zajrzyj na [[Pomoc
 Jeżeli mogę Ci w czymś pomóc, [[$2|wyślij do mnie wiadomość]].
 
 Miłego pobytu na {{SITENAME}}!',
-	'welcome-message-wall-user-staff' => 'Cześć, witaj na {{SITENAME}}! Jestem członkiem Zespołu Wsparcia Społeczności portalu Fandom. Dziękujemy za edycję w [[:$1]]!
+	'welcome-message-wall-user-staff' => 'Cześć, witaj na {{SITENAME}}! Jestem członkiem Zespołu Wsparcia Społeczności portalu FANDOM. Dziękujemy za edycję w [[:$1]]!
 
 Wygląda na to, że żaden z administratorów tej społeczności nie jest w tym momencie aktywny. Jeżeli potrzebujesz pomocy, zajrzyj na [[Pomoc:Zawartość|strony pomocy]] lub odwiedź [[w:c:spolecznosc|Centrum Społeczności]], gdzie znajdziesz pomoc na [[w:c:spolecznosc:Specjalna:Forum|forum społeczności]].
 
-Możesz również obserwować [[w:c:spolecznosc:Blog:Wikia News|Fandom News]], żeby być na bieżąco z najnowszymi wydarzeniami na portalu Fandom.
+Możesz również obserwować [[w:c:spolecznosc:Blog:Wikia News|FANDOM News]], żeby być na bieżąco z najnowszymi wydarzeniami na portalu FANDOM.
 
 Jeżeli mogę Ci w czymś pomóc, [[$2|wyślij do mnie wiadomość]].
 
@@ -1605,13 +1605,13 @@ Jeżeli potrzebujesz pomocy na początku przygody z Fandomem, zajrzyj na [[Pomoc
 Jeżeli mogę Ci w czymś pomóc, [[$2|wyślij do mnie wiadomość]].
 
 Miłego pobytu na {{SITENAME}}!",
-	'welcome-message-wall-anon-staff' => "Cześć, witaj na {{SITENAME}}! Jestem członkiem Zespołu Wsparcia Społeczności portalu Fandom. Dziękujemy za edycję w [[:$1]]!
+	'welcome-message-wall-anon-staff' => "Cześć, witaj na {{SITENAME}}! Jestem członkiem Zespołu Wsparcia Społeczności portalu FANDOM. Dziękujemy za edycję w [[:$1]]!
 
 '''[[Special:UserSignup|Zaloguj się i utwórz nazwę użytkownika]]'''. Dzięki temu zyskasz wgląd w historię swoich edycji i z łatwością nawiążesz kontakt z resztą społeczności.
 
 Wygląda na to, że żaden z administratorów tej społeczności nie jest w tym momencie aktywny. Jeżeli potrzebujesz pomocy, zajrzyj na [[Pomoc:Zawartość|strony pomocy]] lub odwiedź [[w:c:spolecznosc|Centrum Społeczności]], gdzie znajdziesz pomoc na [[w:c:spolecznosc:Specjalna:Forum|forum społeczności]].
 
-Możesz również obserwować [[w:c:spolecznosc:Blog:Wikia News|Fandom News]], żeby być na bieżąco z najnowszymi wydarzeniami na portalu Fandom.
+Możesz również obserwować [[w:c:spolecznosc:Blog:Wikia News|FANDOM News]], żeby być na bieżąco z najnowszymi wydarzeniami na portalu FANDOM.
 
 Jeżeli mogę Ci w czymś pomóc, [[$2|wyślij do mnie wiadomość]].
 
@@ -1726,12 +1726,12 @@ $2",
 	'welcome-message-log' => 'bem vindo novo contribuidor',
 	'welcome-message-user-staff' => '==Bem-vindo==
 
-Olá, bem-vindo a {{SITENAME}}! Eu sou um membro da equipe de suporte à comunidade Fandom. Obrigado por sua edição em[[:$1]]!
+Olá, bem-vindo a {{SITENAME}}! Eu sou um membro da equipe de suporte à comunidade FANDOM. Obrigado por sua edição em[[:$1]]!
 
 Parece que nenhum administrador desta comunidade está ativo no momento, mas se precisar de ajuda, você pode visitar nossas [[Ajuda:Conteúdo|páginas de ajuda]] 
 ou visite a [[w:c:comunidade|Central da comunidade]] para explorar nossos [[w:c:comunidade:Especial:Forum|fóruns]].
 
-Você lambem pode seguir o [[w:c:community:Categoria:Notícias_da_Comunidade|blog do staff]] para saber das últimas notícias e eventos no Fandom. E não se esqueça de dar uma olhada na [[w:c:comunidade:Univerdade Fandom|Universidade Fandom]] para assistir vídeos informativos.
+Você lambem pode seguir o [[w:c:community:Categoria:Notícias_da_Comunidade|blog do staff]] para saber das últimas notícias e eventos no FANDOM. E não se esqueça de dar uma olhada na [[w:c:comunidade:Univerdade FANDOM|Universidade FANDOM]] para assistir vídeos informativos.
 
 Por favor [[$2| deixe uma mensagem]] se eu puder ajudar em algo.
 
@@ -1740,14 +1740,14 @@ Divirta-se em {{SITENAME}}
 $2',
 	'welcome-message-anon-staff' => "==Bem-vindo==
 
-Olá, bem-vindo a {{SITENAME}}! Eu sou um membro da equipe de suporte à comunidade Fandom. Obrigado por sua edição de [[:$1]]!
+Olá, bem-vindo a {{SITENAME}}! Eu sou um membro da equipe de suporte à comunidade FANDOM. Obrigado por sua edição de [[:$1]]!
 
 '''[[Especial:Criar uma conta|Por favor inicie sua sessão e crie um nome de usuário]]'''. É uma maneira fácil de manter o controle de suas contribuições e ajuda você a comunicar-se com o resto da comunidade.
 
 Parece que nenhum administrador desta comunidade está ativo agora, mas se precisar de ajuda, você pode visitar nossas [[Ajuda:Conteúdos|páginas de ajuda]] 
 ou visitar a [[w:c:comunidadea|Central da comunidade]] para checar nossos [[w:c:communidade:Especial:Forum|fóruns]].
 
-Você também pode seguir o [[w:c:comunidade:Categoria:Notícias_da_Comunidade|blog do staff]] para saber das últimas notícias e eventos no Fandom. E não se esqueça de dar uma olhada na [[w:c:comunidade:Universidade Fandom|Universidade Fandom]] para assistir vídeos informativos.
+Você também pode seguir o [[w:c:comunidade:Categoria:Notícias_da_Comunidade|blog do staff]] para saber das últimas notícias e eventos no FANDOM. E não se esqueça de dar uma olhada na [[w:c:comunidade:Universidade FANDOM|Universidade FANDOM]] para assistir vídeos informativos.
 
 Por favor [[$2]]| deixe uma mensagem]] se eu puder ajudar em algo.
 
@@ -1763,11 +1763,11 @@ $2",
 Se precisar de ajuda para começar, confira nossas [[Ajuda:Começando|páginas de ajuda]] ou entre em contato comigo ou [[Especial:Lista_de_utilizadores/sysop|outro administrador]] aqui. Para obter ajuda geral, você pode visitar a [[w:c:comunidade|Central da comunidade]] para explorar os [[w:c:comunidade:Especial:Forum|fóruns]] e os [[w:c:comunidade:Categoria:Notícias_da_Comunidade|blogs]].
 
 Divirta-se em {{SITENAME}}!",
-	'welcome-message-wall-user-staff' => 'Olá, bem-vindo a {{SITENAME}}! Eu sou um membro da equipe de suporte à comunidade Fandom. Obrigado por sua edição de [[:$1]]!
+	'welcome-message-wall-user-staff' => 'Olá, bem-vindo a {{SITENAME}}! Eu sou um membro da equipe de suporte à comunidade FANDOM. Obrigado por sua edição de [[:$1]]!
 
 Parece que nenhum dos administradores da comunidade está disponível agora, mas se precisar de ajuda, confira nossas [[Ajuda:Conteúdos|páginas de ajuda]] ou dê uma olhada na [[w:c:communidade|Central da comunidade]] para explorar nossos [[w:c:comunidade:Especial:Forum|fóruns]].
 
-E não se esqueça de checar a [[w:c:comunidade:Universidade Fandom|Universidade Fandom]] para assistir vídeos informativos.
+E não se esqueça de checar a [[w:c:comunidade:Universidade FANDOM|Universidade FANDOM]] para assistir vídeos informativos.
 
 Divirta-se na {{SITENAME}}!',
 	'welcome-message-wall-anon' => "Olá, eu sou um administrador da comunidade {{SITENAME}}. Bem-vindo e obrigado por sua edição de [[: $1]]!
@@ -1784,7 +1784,7 @@ Divirta-se em {{SITENAME}}!",
 Parece que nenhum administrador desta comunidade está ativo no momento, mas se precisar de ajuda, você pode visitar nossas [[Ajuda:Conteúdo|páginas de ajuda]] 
 ou visite a [[w:c:comunidade|Central da comunidade]] para explorar nossos [[w:c:comunidade:Especial:Forum|fóruns]].
 
-Você lambem pode seguir o [[w:c:community:Categoria:Notícias_da_Comunidade|blog do staff]] para saber das últimas notícias e eventos no Fandom. E não se esqueça de dar uma olhada na [[w:c:comunidade:Univerdade Fandom|Universidade Fandom]] para assistir vídeos informativos.
+Você lambem pode seguir o [[w:c:community:Categoria:Notícias_da_Comunidade|blog do staff]] para saber das últimas notícias e eventos no FANDOM. E não se esqueça de dar uma olhada na [[w:c:comunidade:Univerdade FANDOM|Universidade FANDOM]] para assistir vídeos informativos.
 
 Divirta-se em {{SITENAME}}!",
 	'welcome-description' => 'Envie uma mensagem de boas-vindas para usuários depois das suas primeiras edições',
@@ -2311,8 +2311,8 @@ $messages['zh-hans'] = array(
 * 喜爱的页面 #3",
 	'welcome-message-user' => '==欢迎==
 
-您好，欢迎来到{{SITENAME}}！我们是Fandom社区支持团队。感谢您对页面[[:$1]]所作的编辑。
-如果您需要帮助，请访问[[Help:创建Fandom|帮助页面]]，或者联络我们以及[[Special:Listusers/sysop|另外一位管理员]]。如果您需要一般性的帮助，请访问[[w:c:zh.community|社区中心]]、[[w:c:zh.community:Special:Forum|中心论坛]]以及[[w:c:zh.community:Category:社区中心博客|员工博客]]了解更多内容。
+您好，欢迎来到{{SITENAME}}！我们是FANDOM社区支持团队。感谢您对页面[[:$1]]所作的编辑。
+如果您需要帮助，请访问[[Help:创建FANDOM|帮助页面]]，或者联络我们以及[[Special:Listusers/sysop|另外一位管理员]]。如果您需要一般性的帮助，请访问[[w:c:zh.community|社区中心]]、[[w:c:zh.community:Special:Forum|中心论坛]]以及[[w:c:zh.community:Category:社区中心博客|员工博客]]了解更多内容。
 
 如果需要其他帮助，请在[[$2|这里留言]]！希望您在{{SITENAME}}上玩的愉快！
 
@@ -2321,7 +2321,7 @@ $2',
 
 您好，我是{{SITENAME}}社区管理员。欢迎来到这个社区并且感谢您对[[:$1]]做出的编辑。'''[[Special:UserSignup|请您登录并创建一个用户名]]'''。这样会更方便来追踪您的贡献和帮助您与社区其他成员进行沟通。 
 
-如果您需要任何帮助，请访问[[Help:创建Fandom|帮助页]]或者联系我或者[[Special:Listusers/sysop|其它管理员]]。您也可以访问[[w:c:zh.community:Fandom_中文|社区中心]]查看[[w:c:zh.community:Special:Forum|论坛]]以及[[w:c:zh.community:博客:社区中心|员工博客]]。
+如果您需要任何帮助，请访问[[Help:创建FANDOM|帮助页]]或者联系我或者[[Special:Listusers/sysop|其它管理员]]。您也可以访问[[w:c:zh.community:FANDOM_中文|社区中心]]查看[[w:c:zh.community:Special:Forum|论坛]]以及[[w:c:zh.community:博客:社区中心|员工博客]]。
 
 如需其他帮助，请[[$2|给我留言]]。希望您在{{SITENAME}}玩的愉快！
 
@@ -2329,11 +2329,11 @@ $2",
 	'welcome-message-log' => '欢迎新贡献者',
 	'welcome-message-user-staff' => '==欢迎==
 
-您好，欢迎来到{{SITENAME}}！我们是Fandom社区支持团队。感谢您对页面[[:$1]]所作的编辑。
+您好，欢迎来到{{SITENAME}}！我们是FANDOM社区支持团队。感谢您对页面[[:$1]]所作的编辑。
 
 目前这个社区的管理员处于不活跃状态，如果您需要帮助，请访问[[Help:内容|帮助页面]]，或者访问[[w:c:zh.community|社区中心]]以及[[w:c:zh.community:Special:Forum|中心论坛]]了解更多内容。
 
-您也可以通过我们的[[w:c:zh.community:Category:社区中心博客|员工博客]]了解Fandom的最新信息和发展变化，观看我们的[[w:c:zh.community:Fandom课堂|Fandom课堂视频]]了解如何快速进行编辑。
+您也可以通过我们的[[w:c:zh.community:Category:社区中心博客|员工博客]]了解FANDOM的最新信息和发展变化，观看我们的[[w:c:zh.community:FANDOM课堂|FANDOM课堂视频]]了解如何快速进行编辑。
 
 如果需要其他帮助，请在[[$2|这里留言]]！
 
@@ -2342,13 +2342,13 @@ $2",
 $2',
 	'welcome-message-anon-staff' => "==欢迎==
 
-您好，欢迎来到{{SITENAME}}！我们是Fandom社区支持团队。感谢您对页面[[:$1]]所作的编辑。
+您好，欢迎来到{{SITENAME}}！我们是FANDOM社区支持团队。感谢您对页面[[:$1]]所作的编辑。
 
 '''[[Special:UserSignup|请登入并且创建一个用户名吧]]'''。这将方便您查询您所有的编辑纪录，和社区其他用户进行交流。
 
 目前这个社区的管理员处于不活跃状态，如果您需要帮助，请访问[[Help:内容|帮助页面]]，或者访问[[w:c:zh.community|社区中心]]以及[[w:c:zh.community:Special:Forum|中心论坛]]了解更多内容。
 
-您也可以通过我们的[[w:c:zh.community:Category:社区中心博客|员工博客]]了解Fandom的最新信息和发展变化，观看我们的[[w:c:zh.community:Fandom课堂|Fandom课堂视频]]了解如何快速进行编辑。
+您也可以通过我们的[[w:c:zh.community:Category:社区中心博客|员工博客]]了解FANDOM的最新信息和发展变化，观看我们的[[w:c:zh.community:FANDOM课堂|FANDOM课堂视频]]了解如何快速进行编辑。
 
 如果需要其他帮助，请在[[$2|这里留言]]！
 
@@ -2359,30 +2359,31 @@ $2",
 	'hawelcomeedit' => 'HA欢迎编辑',
 	'welcome-message-wall-user' => '您好，我是{{SITENAME}}的管理员！欢迎您参与这个社区，并且感谢您对页面[[:$1]]所作的编辑。
 
-如果您需要帮助，请访问[[Help:创建Fandom|帮助页面]]，或者联络我们以及[[Special:Listusers/sysop|另外一位管理员]]。如果您需要一般性的帮助，请访问[[w:c:zh.community|社区中心]]、[[w:c:zh.community:Special:Forum|中心论坛]]以及[[w:c:zh.community:Category:社区中心博客|员工博客]]了解更多内容。
+如果您需要帮助，请访问[[Help:创建FANDOM
+|帮助页面]]，或者联络我们以及[[Special:Listusers/sysop|另外一位管理员]]。如果您需要一般性的帮助，请访问[[w:c:zh.community|社区中心]]、[[w:c:zh.community:Special:Forum|中心论坛]]以及[[w:c:zh.community:Category:社区中心博客|员工博客]]了解更多内容。
 
 希望您在{{SITENAME}}上玩的愉快！',
-	'welcome-message-wall-user-staff' => '您好，欢迎来到{{SITENAME}}！我们是Fandom社区支持团队。感谢您对页面[[:$1]]所作的编辑。
+	'welcome-message-wall-user-staff' => '您好，欢迎来到{{SITENAME}}！我们是FANDOM社区支持团队。感谢您对页面[[:$1]]所作的编辑。
 
 目前这个社区的管理员处于不活跃状态，如果您需要帮助，请访问[[Help:内容|帮助页面]]，或者访问[[w:c:zh.community|社区中心]]以及[[w:c:zh.community:Special:Forum|中心论坛]]了解更多内容。
 
-不要忘记观看我们的[[w:c:zh.community:Fandom课堂|Fandom课堂视频]]了解如何快速进行编辑。
+不要忘记观看我们的[[w:c:zh.community:FANDOM课堂|FANDOM课堂视频]]了解如何快速进行编辑。
 
 希望您在{{SITENAME}}上玩的愉快！',
 	'welcome-message-wall-anon' => "您好，我是{{SITENAME}}的管理员！欢迎您参与这个社区，并且感谢您对页面[[:$1]]所作的编辑。
 
 '''[[Special:UserSignup|请您登录并创建一个用户名]]'''。这样会更方便来追踪您的贡献和帮助您与社区其他成员进行沟通。 
 
-如果您需要帮助，请访问[[Help:创建Fandom|帮助页面]]，或者联络我们以及[[Special:Listusers/sysop|另外一位管理员]]。如果您需要一般性的帮助，请访问[[w:c:zh.community|社区中心]]、[[w:c:zh.community:Special:Forum|中心论坛]]以及[[w:c:zh.community:Category:社区中心博客|员工博客]]了解更多内容。
+如果您需要帮助，请访问[[Help:创建FANDOM|帮助页面]]，或者联络我们以及[[Special:Listusers/sysop|另外一位管理员]]。如果您需要一般性的帮助，请访问[[w:c:zh.community|社区中心]]、[[w:c:zh.community:Special:Forum|中心论坛]]以及[[w:c:zh.community:Category:社区中心博客|员工博客]]了解更多内容。
 
 希望您在{{SITENAME}}上玩的愉快！",
-	'welcome-message-wall-anon-staff' => "您好，欢迎来到{{SITENAME}}！我们是Fandom社区支持团队。感谢您对页面[[:$1]]所作的编辑。
+	'welcome-message-wall-anon-staff' => "您好，欢迎来到{{SITENAME}}！我们是FANDOM社区支持团队。感谢您对页面[[:$1]]所作的编辑。
 
 '''[[Special:UserSignup|请登入并且创建一个用户名吧]]'''。这将方便您查询您所有的编辑纪录，和社区其他用户进行交流。
 
 目前这个社区的管理员处于不活跃状态，如果您需要帮助，请访问[[Help:内容|帮助页面]]，或者访问[[w:c:zh.community|社区中心]]以及[[w:c:zh.community:Special:Forum|中心论坛]]了解更多内容。
 
-您也可以通过我们的[[w:c:zh.community:Category:社区中心博客|员工博客]]了解Fandom的最新信息和发展变化，观看我们的[[w:c:zh.community:Fandom课堂|Fandom课堂视频]]了解如何快速进行编辑。
+您也可以通过我们的[[w:c:zh.community:Category:社区中心博客|员工博客]]了解FANDOM的最新信息和发展变化，观看我们的[[w:c:zh.community:FANDOM课堂|FANDOM课堂视频]]了解如何快速进行编辑。
 
 希望您在{{SITENAME}}上玩的愉快！",
 	'welcome-description' => '在用户初次贡献后发一条欢迎消息给他们',
@@ -2421,11 +2422,11 @@ $messages['zh-hant'] = array(
 	'welcome-message-log' => '歡迎新參與者',
 	'welcome-message-user-staff' => '==歡迎==
 
-您好，歡迎來到{{SITENAME}}！我是Fandom社區支援團隊成員。感謝您對頁面[[:$1]]所作的編輯。
+您好，歡迎來到{{SITENAME}}！我是FANDOM社區支援團隊成員。感謝您對頁面[[:$1]]所作的編輯。
 
 目前這個社區的管理員處於不活躍狀態，如果您需要幫助，請訪問[[Help:Contents|幫助頁面]]，或者訪問[[w:c:zh.community|社區中心]]以及[[w: c:zh.community:Special:Forum|中心論壇]]了解更多內容。
 
-您也可以通過我們的[[w:c:zh.community:博客:社区中心|員工網誌]]了解Fandom的最新消息和發展變化，觀看我們的[[w:c:zh.community:Fandom课堂|Fandom課堂影片]]了解如何快速進行編輯。
+您也可以通過我們的[[w:c:zh.community:博客:社区中心|員工網誌]]了解FANDOM的最新消息和發展變化，觀看我們的[[w:c:zh.community:FANDOM课堂|FANDOM課堂影片]]了解如何快速進行編輯。
 
 如果需要其他幫助，請在[[$2|這裡留言]]！
 
@@ -2434,13 +2435,13 @@ $messages['zh-hant'] = array(
 $2',
 	'welcome-message-anon-staff' => "==歡迎==
 
-您好，歡迎來到{{SITENAME}}！我是Fandom社區支援團隊成員。感謝您對頁面[[:$1]]所作的編輯。
+您好，歡迎來到{{SITENAME}}！我是FANDOM社區支援團隊成員。感謝您對頁面[[:$1]]所作的編輯。
 
 '''[[Special:UserSignup|請登入並且創建一個用戶名吧]]'''。這將方便您查詢您所有的編輯紀錄，和社區其他用戶進行交流。
 
 目前這個社區的管理員處於不活躍狀態，如果您需要幫助，請訪問[[Help:Contents|幫助頁面]]，或者訪問[[w:c:zh.community|社區中心]]以及[[w: c:zh.community:Special:Forum|中心論壇]]了解更多內容。
 
-您也可以通過我們的[[w:c:zh.community:博客:社区中心|員工網誌]]了解Fandom的最新信息和發展變化，觀看我們的[[w:c:zh.community:Fandom课堂|Fandom課堂影片]]了解如何快速進行編輯。
+您也可以通過我們的[[w:c:zh.community:博客:社区中心|員工網誌]]了解FANDOM的最新信息和發展變化，觀看我們的[[w:c:zh.community:FANDOM课堂|FANDOM課堂影片]]了解如何快速進行編輯。
 
 如果需要其他幫助，請在[[$2|這裡留言]]！
 
@@ -2454,11 +2455,11 @@ $2",
 如果您需要幫助，請訪問[[Help:Getting Started|幫助頁面]]，或者聯絡我們以及[[Special:Listusers/sysop|另外一位管理員]]。如果您需要一般性的幫助，請訪問[[w:c:zh.community|社區中心]]、[[w:c:zh.community:Special:Forum|中心論壇]]以及[[w:c:zh.community:博客:社区中心|員工網誌]]了解更多內容。
 
 希望您在{{SITENAME}}上玩的愉快！',
-	'welcome-message-wall-user-staff' => '您好，歡迎來到{{SITENAME}}！我是Fandom社區支援團隊的成員。感謝您對頁面[[:$1]]所作的編輯。
+	'welcome-message-wall-user-staff' => '您好，歡迎來到{{SITENAME}}！我是FANDOM社區支援團隊的成員。感謝您對頁面[[:$1]]所作的編輯。
 
 目前這個社群的管理員處於不活躍狀態，如果您需要幫助，請訪問[[Help:Contents|幫助頁面]]，或者訪問[[w:c:zh.community|社區中心]]以及[[w: c:zh.community:Special:Forum|中心論壇]]了解更多內容。
 
-不要忘記觀看我們的[[w:c:zh.community:Fandom课堂|Fandom課堂影片]]了解如何快速進行編輯。
+不要忘記觀看我們的[[w:c:zh.community:FANDOM课堂|FANDOM課堂影片]]了解如何快速進行編輯。
 
 希望您在{{SITENAME}}上玩的愉快！',
 	'welcome-message-wall-anon' => "您好，我是{{SITENAME}}的管理員！歡迎您參與這個社群，並且感謝您對頁面[[:$1]]所作的編輯。
@@ -2468,13 +2469,13 @@ $2",
 如果您需要幫助，請訪問[[Help:Getting Started|幫助頁面]]，或者聯絡我以及[[Special:Listusers/sysop|其他管理員]]。如果您需要一般性的幫助，請訪問[[w:c:zh.community|社區中心]]、[[w:c:zh.community:Special:Forum|中心論壇]]以及[[w:c:zh.community:博客:社区中心|員工網誌]]了解更多內容。
 
 希望您在{{SITENAME}}上玩的愉快！",
-	'welcome-message-wall-anon-staff' => "您好，歡迎來到{{SITENAME}}！我們是Fandom社區支援團隊。感謝您對頁面[[:$1]]所作的編輯。
+	'welcome-message-wall-anon-staff' => "您好，歡迎來到{{SITENAME}}！我們是FANDOM社區支援團隊。感謝您對頁面[[:$1]]所作的編輯。
 
 '''[[Special:UserSignup|請登入並且創建一個用戶名吧]]'''。這將方便您查詢您所有的編輯紀錄，和社群其他用戶進行交流。
 
 目前這個社群的管理員處於不活躍狀態，如果您需要幫助，請訪問[[Help:Contents|幫助頁面]]，或者訪問[[w:c:zh.community|社區中心]]以及[[w: c:zh.community:Special:Forum|中心論壇]]了解更多內容。
 
-您也可以通過我們的[[w:c:zh.community:博客:社区中心|員工網誌]]了解Fandom的最新信息和發展變化，觀看我們的[[w:c:zh.community:Fandom课堂|Fandom課堂視頻]]了解如何快速進行編輯。
+您也可以通過我們的[[w:c:zh.community:博客:社区中心|員工網誌]]了解FANDOM的最新信息和發展變化，觀看我們的[[w:c:zh.community:FANDOM课堂|FANDOM課堂視頻]]了解如何快速進行編輯。
 
 希望您在{{SITENAME}}上玩的愉快！",
 	'welcome-description' => '在用戶初次貢獻後發給他們歡迎訊息',

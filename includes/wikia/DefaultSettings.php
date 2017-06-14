@@ -601,6 +601,7 @@ $wgAjaxAutoCompleteSearch = true;
 /**
  * Wikia custom extensions, enabled sitewide. Pre-required by some skins
  */
+
 include_once( "$IP/extensions/ExtensionFunctions.php" );
 include_once( "$IP/extensions/wikia/DesignSystem/DesignSystem.setup.php" );
 include_once( "$IP/extensions/wikia/AnalyticsEngine/AnalyticsEngine.setup.php" );
@@ -635,6 +636,8 @@ include_once( "$IP/extensions/wikia/PageShare/PageShare.setup.php" );
 include_once( "$IP/extensions/wikia/PaidAssetDrop/PaidAssetDrop.setup.php" );
 include_once( "$IP/extensions/wikia/CreateNewWiki/CreateNewWiki_global_setup.php" );
 include_once( "$IP/extensions/wikia/Security/Security.setup.php" );
+include_once( "$IP/extensions/wikia/CommunityHeader/CommunityHeader.setup.php" );
+include_once( "$IP/extensions/wikia/PageHeader/PageHeader.setup.php" );
 
 /**
  * @name $wgSkipSkins
@@ -1217,26 +1220,6 @@ $wgAmazonMatchCountries = null;
 $wgAmazonMatchCountriesMobile = null;
 
 /**
- * @name $wgAdDriverEnableOpenXBidder
- * Enables OpenX bidder
- */
-$wgAdDriverEnableOpenXBidder = true;
-
-/**
- * @name $wgAdDriverOpenXBidderCountries
- * Enables OpenX bidder in these countries (given wgAdDriverEnableOpenXBidder is also true).
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverOpenXBidderCountries = null;
-
-/**
- * @name $wgAdDriverOpenXBidderCountriesRemnant
- * Enables OpenX bidder in these countries (given wgAdDriverEnableOpenXBidder is also true) in remnant slots.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverOpenXBidderCountriesRemnant = null;
-
-/**
  * @name $wgAdDriverEnableRubiconFastlane
  * Enables Rubicon Fastlane
  */
@@ -1351,19 +1334,6 @@ $wgAdDriverEnableInvisibleHighImpactSlot = true;
 $wgAdDriverUseAdsAfterInfobox = false;
 
 /**
- * @name $wgAdDriverUseGoogleConsumerSurveys
- * Whether to enable Google Consumer Surveys
- */
-$wgAdDriverUseGoogleConsumerSurveys = true;
-
-/**
- * @name $wgAdDriverGoogleConsumerSurveysCountries
- * List of countries with enabled Google Consumer Surveys.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverGoogleConsumerSurveysCountries = null;
-
-/**
  * @name $wgAdDriverUseEvolve2
  * Whether to enable AdProviderEvolve2 (true) or not (false)
  */
@@ -1375,19 +1345,6 @@ $wgAdDriverUseEvolve2 = true;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverEvolve2Countries = null;
-
-/**
- * @name $wgAdDriverUseTaboola
- * Whether to enable AdProviderTaboola (true) or not (false)
- */
-$wgAdDriverUseTaboola = true;
-
-/**
- * @name $wgAdDriverTaboolaConfig
- * Config with list of countries with enabled Taboola module.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverTaboolaConfig = null;
 
 /** @name $wgSitewideDisableAdsOnMercury
  * Disable ads on Mercury if set to true.
@@ -1453,11 +1410,32 @@ $wgAdDriverKikimoraTrackingCountries = [];
 $wgAdDriverSrcPremiumCountries = [];
 
 /**
+ * @name $wgAdDriverKILOCountries
+ * Enables transitional to MEGA way of building adUnits (for GPT provider, NOT ONLY REMNANT).
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverKILOCountries = null;
+
+/**
  * @name $wgAdDriverMEGACountries
  * Enables new way of building adUnits (currently limited for remnant).
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverMEGACountries = null;
+
+/**
+ * @name $wgAdDriverMoatTrackingForFeaturedVideoAdCountries
+ * Enables MOAT tracking for feature video ads.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverMoatTrackingForFeaturedVideoAdCountries = null;
+
+/**
+ * @name $wgAdDriverMoatTrackingForFeaturedVideoAdSampling
+ * Percentage value of users with MOAT tracking for featured video.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverMoatTrackingForFeaturedVideoAdSampling = null;
 
 /**
  * @name $wgAdDriverTrackState

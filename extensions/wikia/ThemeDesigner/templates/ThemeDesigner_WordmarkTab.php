@@ -1,87 +1,61 @@
 <section id="WordmarkTab" class="WordmarkTab">
 	<fieldset class="text">
-        <span id="or"><?= wfMsg('themedesigner-or') ?></span>
-		<h1><?= wfMsg('themedesigner-text-wordmark') ?></h1>
-
-		<ul class="controls">
-			<li>
-				<h2><?= wfMsg('themedesigner-font') ?></h2>
-				<select id="wordmark-font">
-					<option value="default"><?= wfMsg('themedesigner-default') ?></option>
-					<option value="cpmono">CP Mono</option>
-					<option value="fontin">Fontin</option>
-					<option value="garton">Garton</option>
-					<option value="idolwild">Idolwild</option>
-					<option value="imfell">IM Fell</option>
-					<option value="josefin">Josefin</option>
-					<option value="megalopolis">Megalopolis</option>
-					<option value="orbitron">Orbitron</option>
-					<option value="pixiefont">Pixiefont</option>
-					<option value="prociono">Prociono</option>
-					<option value="tangerine">Tangerine</option>
-					<option value="titillium">Titillium</option>
-					<option value="veggieburger">Veggieburger</option>
-					<option value="yanone">Yanone</option>
-				</select>
-			</li>
-			<li>
-				<h2><?= wfMsg('themedesigner-size') ?></h2>
-				<select id="wordmark-size">
-					<option value="small"><?= wfMsg('themedesigner-small') ?></option>
-					<option value="medium"><?= wfMsg('themedesigner-medium') ?></option>
-					<option value="large"><?= wfMsg('themedesigner-large') ?></option>
-				</select>
-			</li>
-		</ul>
+        <h1><?= wfMessage('themedesigner-text-wordmark')->escaped() ?></h1>
 
 		<div id="wordmark-edit">
 			<input type="text">
-			<button><?= wfMsg('themedesigner-button-change-text') ?></button>
+			<button><?= wfMessage( 'themedesigner-button-change-text' )->escaped() ?></button>
 		</div>
-
-		<div id="wordmark-shield"></div>
 
 	</fieldset>
 	<fieldset class="graphic">
-		<h1><?= wfMsg('themedesigner-graphic-wordmark') ?></h1>
-		<h2><?= wfMsg('themedesigner-upload-a-graphic') ?> <span class="form-questionmark" rel="tooltip" title="<?= wfMsg('themedesigner-rules-wordmark') ?>"></span></h2>
+		<h1><?= wfMessage( 'themedesigner-graphic-wordmark' )->escaped() ?></h1>
+		<h2><?= wfMessage( 'themedesigner-upload-a-graphic' )->escaped() ?> <span class="form-questionmark" rel="tooltip"
+																   title="<?= wfMessage( 'themedesigner-rules-wordmark' )->escaped() ?>"></span>
+		</h2>
 		<?php if ( empty( $wg->EnableUploads ) ) { ?>
-			<p><?= wfMessage( 'themedesigner-upload-disabled' )->plain(); ?></p>
+			<p><?= wfMessage( 'themedesigner-upload-disabled' )->escaped(); ?></p>
 		<?php } else { ?>
-			<form id="WordMarkUploadForm" action="<?= $wg->ScriptPath ?>/wikia.php?controller=ThemeDesigner&method=WordmarkUpload&format=html" method="POST" enctype="multipart/form-data">
-				<input id="WordMarkUploadFile" name="wpUploadFile" class="file-upload" type="file" />
-				<br />
-				<input type="submit" value="<?= wfMsg( 'themedesigner-button-upload-wordmark' ) ?>" onclick="return ThemeDesigner.wordmarkUpload(event);"/>
+			<form id="WordMarkUploadForm"
+				  action="<?= $wg->ScriptPath ?>/wikia.php?controller=ThemeDesigner&method=WordmarkUpload&format=html"
+				  method="POST" enctype="multipart/form-data">
+				<input id="WordMarkUploadFile" name="wpUploadFile" class="file-upload" type="file"/>
+				<br/>
+				<input type="submit" value="<?= wfMessage( 'themedesigner-button-upload-wordmark' )->escaped() ?>"
+					   onclick="return ThemeDesigner.wordmarkUpload(event);"/>
 			</form>
 		<?php } ?>
 
 
 		<div class="preview">
-			<span><?= wfMsg( 'themedesigner-wodmark-preview' ) ?></span>
+			<span><?= wfMessage( 'themedesigner-wodmark-preview' )->escaped() ?></span>
 			<img src="<?= $wg->BlankImgUrl ?>" class="wordmark">
-			<a href="#"><?= wfMsg('themedesigner-dont-use-a-graphic') ?></a>
+			<a href="#"><?= wfMessage( 'themedesigner-dont-use-a-graphic' )->escaped() ?></a>
 		</div>
 
 	</fieldset>
 	<fieldset class="favicon">
-		<h1><?= wfMsg('themedesigner-favicon-heading') ?></h1>
+		<h1><?= wfMessage( 'themedesigner-favicon-heading' )->escaped() ?></h1>
 		<h2>
-			<?= wfMsg('themedesigner-upload-a-graphic') ?>
-			<span class="form-questionmark" rel="tooltip" title="<?= htmlspecialchars( wfMessage( 'themedesigner-rules-favicon' )->parse() ) ?>"></span>
+			<?= wfMessage( 'themedesigner-upload-a-graphic' )->escaped() ?>
+			<span class="form-questionmark" rel="tooltip"
+				  title="<?= htmlspecialchars( wfMessage( 'themedesigner-rules-favicon' )->parse() ) ?>"></span>
 		</h2>
 		<?php if ( empty( $wg->EnableUploads ) ) { ?>
-			<p><?= wfMessage( 'themedesigner-upload-disabled' )->plain(); ?></p>
+			<p><?= wfMessage( 'themedesigner-upload-disabled' )->escaped(); ?></p>
 		<?php } else { ?>
-			<form id="FaviconUploadForm" action="<?= $wg->ScriptPath ?>/wikia.php?controller=ThemeDesigner&method=FaviconUpload&format=html" method="POST" enctype="multipart/form-data">
-				<input id="FaviconUploadFile" name="wpUploadFile" class="file-upload" type="file" />
-				<input type="submit" value="<?= wfMsg( 'themedesigner-button-upload-wordmark' ) ?>" />
+			<form id="FaviconUploadForm"
+				  action="<?= $wg->ScriptPath ?>/wikia.php?controller=ThemeDesigner&method=FaviconUpload&format=html"
+				  method="POST" enctype="multipart/form-data">
+				<input id="FaviconUploadFile" name="wpUploadFile" class="file-upload" type="file"/>
+				<input type="submit" value="<?= wfMessage( 'themedesigner-button-upload-wordmark' )->escaped() ?>"/>
 			</form>
 		<?php } ?>
 
 		<div class="preview">
-			<span><?= wfMsg('themedesigner-wodmark-preview') ?></span>
+			<span><?= wfMessage( 'themedesigner-wodmark-preview' )->escaped() ?></span>
 			<img src="<?= $faviconUrl ?>">
-			<a href="#"><?= wfMsg('themedesigner-dont-use-a-graphic') ?></a>
+			<a href="#"><?= wfMessage( 'themedesigner-dont-use-a-graphic' )->escaped() ?></a>
 		</div>
 	</fieldset>
 </section>

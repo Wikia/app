@@ -280,6 +280,18 @@ class CreateNewWikiController extends WikiaController {
 			return;
 		}
 
+		//check if description content pass phalanx blocks
+		$description = $params[ 'wDescription' ];
+		if ( !empty( $description ) ) {
+			$blockedKeyword = '';
+			wfRunHooks( 'CheckContent', array( $description, &$blockedKeyword ) );
+			if ( !empty( $blockedKeyword ) ) {
+				$this->setContentBlockedByPhalanxErrorResponse( $description, $blockedKeyword );
+				wfProfileOut( __METHOD__ );
+				return;
+			}
+		}
+
 		// check if user created more wikis than we allow per day
 		$numWikis = $this->countCreatedWikis($wgUser->getId());
 		if($numWikis >= self::DAILY_USER_LIMIT && $wgUser->isPingLimitable() && !$wgUser->isAllowed( 'createwikilimitsexempt' ) ) {
@@ -362,9 +374,7 @@ class CreateNewWikiController extends WikiaController {
 		wfRunHooks( 'CheckContent', array( $text, &$blockedKeyword ) );
 
 		if ( !empty( $blockedKeyword ) ) {
-			$this->info( __METHOD__ . ": keyword blocked by Phalanx '" . $text . "'': " . $blockedKeyword );
-			$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage('cnw-badword-header')->text() );
-			$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage('cnw-badword-msg', $blockedKeyword)->text() );
+			$this->setContentBlockedByPhalanxErrorResponse( $text, $blockedKeyword );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -458,5 +468,12 @@ class CreateNewWikiController extends WikiaController {
 		$this->response->setVal( self::STATUS_FIELD, self::STATUS_CREATION_LIMIT );
 		$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-wiki-limit', self::DAILY_USER_LIMIT )->parse() );
 		$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-wiki-limit-header' )->text());
+	}
+
+	private function setContentBlockedByPhalanxErrorResponse( $description, $blockedKeyword ) {
+		$this->info( __METHOD__ . ": keyword blocked by Phalanx '" . $description . "'': " . $blockedKeyword );
+		$this->response->setCode( 400 );
+		$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-badword-msg', $blockedKeyword )->text() );
+		$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-badword-header' )->text() );
 	}
 }
