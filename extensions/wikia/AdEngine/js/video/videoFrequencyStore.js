@@ -1,21 +1,20 @@
 /*global define*/
 define('ext.wikia.adEngine.video.videoFrequencyStore', [
-	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageViewCounter',
 	'ext.wikia.adEngine.utils.time',
+	'ext.wikia.adEngine.video.videoFrequencySettings',
 	'wikia.cache',
 	'wikia.log'
-], function (adContext, pageViewCounter, timeUtil, cache, log) {
+], function (pageViewCounter, timeUtil, settings, cache, log) {
 	'use strict';
 
 	var cacheKey = 'adEngine_outstreamVideoFrequency',
 		cacheTtl = cache.CACHE_LONG, // 1 month
-		context = adContext.getContext(),
 		store = [],
 		logGroup = 'ext.wikia.adEngine.video.videoFrequencyStore';
 
 	function removeNotNeededData(data) {
-		var requiredNoOfItems = getRequiredNumberOfItems();
+		var requiredNoOfItems = settings.getRequiredNumberOfItems();
 
 		data.sort(function (a, b) {
 			return a.date - b.date;
@@ -74,18 +73,6 @@ define('ext.wikia.adEngine.video.videoFrequencyStore', [
 		}
 
 		return false;
-	}
-
-	function getRequiredNumberOfItems() {
-		if (!context.opts.outstreamVideoFrequencyCapping || context.opts.outstreamVideoFrequencyCapping.length === 0) {
-			return 0;
-		}
-
-		var max = Math.max.apply(null, context.opts.outstreamVideoFrequencyCapping.map(function (value) {
-			return parseInt(value.split('/')[0], 10);
-		}));
-
-		return max ? max : 0;
 	}
 
 	function getAll() {

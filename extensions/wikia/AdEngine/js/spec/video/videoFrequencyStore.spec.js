@@ -23,6 +23,11 @@ describe('ext.wikia.adEngine.video.videoFrequencyStore', function () {
 			},
 			time: {
 				getInterval: noop
+			},
+			settings: {
+				getRequiredNumberOfItems: function () {
+					return 100;
+				}
 			}
 		};
 
@@ -38,9 +43,9 @@ describe('ext.wikia.adEngine.video.videoFrequencyStore', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.video.videoFrequencyStore'](
-			mocks.adContext,
 			mocks.pageViewCounter,
 			mocks.time,
+			mocks.settings,
 			mocks.cache,
 			mocks.log
 		);
@@ -94,12 +99,8 @@ describe('ext.wikia.adEngine.video.videoFrequencyStore', function () {
 		expect(store.getAll()).toEqual([{date: 2999, pv: 3}]);
 	});
 
-	it('Should keep limited amount of entries', function () {
-		spyOn(mocks.adContext, 'getContext').and.returnValue({
-			opts: {
-				outstreamVideoFrequencyCapping: ['3/10pv', '5/10min']
-			}
-		});
+	it('Should keep limited amount of entries based on settings', function () {
+		spyOn(mocks.settings, 'getRequiredNumberOfItems').and.returnValue(5);
 		var store = getModule();
 
 		store.save({pv: 1});

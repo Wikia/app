@@ -57,5 +57,21 @@ describe('ext.wikia.adEngine.video.videoFrequencySettings', function () {
 			time: [{frequency: 1, limit: 3, unit: 'min'}]
 		});
 	});
+
+	[
+		{
+			wgVar: ['1/3min', '3/8pv', '5/20h'],
+			result: 5
+		},
+		{
+			wgVar: ['13/30min', '4/6pv', '10/2h'],
+			result: 13
+		}
+	].forEach(function (testCase) {
+		it('Should return correct number (' + testCase.result + ') of items needed for config: ' + JSON.stringify(testCase.wgVar), function () {
+			mockWgVar(testCase.wgVar);
+			expect(getModule().getRequiredNumberOfItems()).toEqual(testCase.result);
+		});
+	});
 });
 

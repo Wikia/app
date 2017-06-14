@@ -52,7 +52,20 @@ define('ext.wikia.adEngine.video.videoFrequencySettings', [
 		};
 	}
 
+	function getRequiredNumberOfItems() {
+		if (!context.opts.outstreamVideoFrequencyCapping || context.opts.outstreamVideoFrequencyCapping.length === 0) {
+			return 0;
+		}
+
+		var max = Math.max.apply(null, context.opts.outstreamVideoFrequencyCapping.map(function (value) {
+			return parseInt(value.split('/')[0], 10);
+		}));
+
+		return max ? max : 0;
+	}
+
 	return {
-		get: get
+		get: get,
+		getRequiredNumberOfItems: getRequiredNumberOfItems
 	};
 });
