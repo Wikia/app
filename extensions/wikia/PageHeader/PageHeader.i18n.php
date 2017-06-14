@@ -68,7 +68,7 @@ $messages['de'] = array(
 	'page-header-counter-images' => '{{FORMATNUM:$1}} {{PLURAL:$1|Bild|Bilder}}',
 	'page-header-counter-blog-posts' => '{{FORMATNUM:$1}} {{PLURAL:$1|Beitrag|Beiträge}}',
 	'page-header-counter-forum-threads' => '{{FORMATNUM:$1}} {{PLURAL:$1|Diskussionsfaden|Diskussionsfäden}}',
-	'page-header-counter-forum-active-threads' => '{{FORMATNUM:$1}}{PLURAL:$1|aktiv|aktiv}',
+	'page-header-counter-forum-active-threads' => '{{FORMATNUM:$1}}{{PLURAL:$1|aktiv|aktiv}}',
 	'page-header-categories-in' => 'in',
 	'page-header-categories-more-separator' => ', ',
 	'page-header-categories-more' => 'und {{FORMATNUM:$1}} weiteren',
@@ -157,11 +157,11 @@ $messages['fr'] = array(
 );
 
 $messages['it'] = array(
-	'page-header-counter-videos' => '{{FORMATNUM:$1}} {{PLURAL:$1|video|video}}',
+	'page-header-counter-videos' => '{{FORMATNUM:$1}} video',
 	'page-header-counter-images' => '{{FORMATNUM:$1}} {{PLURAL:$1|immagine|immagini}}',
-	'page-header-counter-blog-posts' => '{{FORMATNUM:$1}} {{PLURAL:$1|post|post}}',
-	'page-header-counter-forum-threads' => '{{FORMATNUM:$1}} {{PLURAL:$1|thread|thread}}',
-	'page-header-counter-forum-active-threads' => '{{FORMATNUM:$1}} {{PLURAL:$1|attivi|attivi}}',
+	'page-header-counter-blog-posts' => '{{FORMATNUM:$1}} post',
+	'page-header-counter-forum-threads' => '{{FORMATNUM:$1}} {{PLURAL:$1|discussione|discussioni}}',
+	'page-header-counter-forum-active-threads' => '{{FORMATNUM:$1}} attivi',
 	'page-header-categories-in' => 'in',
 	'page-header-categories-more-separator' => '&nbsp;',
 	'page-header-categories-more' => 'e altre {{FORMATNUM:$1}}',
@@ -183,7 +183,7 @@ $messages['it'] = array(
 	'page-header-subtitle-special' => 'Pagina speciale',
 	'page-header-subtitle-category' => 'Pagina della categoria',
 	'page-header-subtitle-forum' => 'Pagina del forum',
-	'page-header-subtitle-blog-category' => 'Blog',
+	'page-header-subtitle-blog-category' => 'Post dei blog',
 	'page-header-action-button-add-new-image' => 'Aggiungi una nuova immagine',
 );
 

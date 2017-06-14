@@ -908,7 +908,7 @@ Si crees que ha sido un error o te gustaría reconsiderarlo, por favor contacta 
 	'chat-blocklist-timestamp' => 'Fecha y hora',
 	'chat-blocklist-target' => 'Destinatario',
 	'chat-blocklist-expiry' => 'Caduca',
-	'chat-blocklist-by' => 'Usuario Bloqueador',
+	'chat-blocklist-by' => 'Usuario bloqueado por',
 	'chat-blocklist-reason' => 'Motivo',
 	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
 );
@@ -1259,7 +1259,7 @@ $messages['fr'] = array(
 	'chat-blocklist-timestamp' => 'Date et heure',
 	'chat-blocklist-target' => 'Cible',
 	'chat-blocklist-expiry' => 'Date d’expiration',
-	'chat-blocklist-by' => 'Blocking User',
+	'chat-blocklist-by' => 'Utilisateur ayant effectué le blocage',
 	'chat-blocklist-reason' => 'Motif',
 	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
 );
@@ -3101,7 +3101,7 @@ $messages['ru'] = array(
 	'chat-blocklist-timestamp' => 'Время',
 	'chat-blocklist-target' => 'Целевая аудитория',
 	'chat-blocklist-expiry' => 'Истекает',
-	'chat-blocklist-by' => 'Blocking User',
+	'chat-blocklist-by' => 'Заблокировал',
 	'chat-blocklist-reason' => 'Причина',
 	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
 );
