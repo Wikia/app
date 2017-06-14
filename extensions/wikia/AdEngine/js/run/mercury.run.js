@@ -36,6 +36,19 @@ require([
 	// Custom ads (skins, footer, etc)
 	win.loadCustomAd = customAdsLoader.loadCustomAd;
 
+	function callBiddersOnConsecutivePageView() {
+		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
+			prebid.call();
+		}
+
+		if (
+			geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) &&
+			geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneMercuryFixCountries)
+		) {
+			rubiconFastlane.call();
+		}
+	}
+
 	mercuryListener.onLoad(function () {
 		if (geo.isProperGeo(instantGlobals.wgAmazonMatchCountriesMobile)) {
 			amazon.call();
@@ -62,16 +75,15 @@ require([
 		actionHandler.registerMessageListener();
 	});
 
-	mercuryListener.afterPageWithAdsRender(function () {
-		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
-			prebid.call();
-		}
-
-		if (
-			geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) &&
-			geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneMercuryFixCountries)
-		) {
-			rubiconFastlane.call();
-		}
-	});
+	// TODO: Remove else statement, this step is required in order to keep bidders working during cache invalidation
+	// Why checking getSlots method - because this method has been removed in PR with required changes
+	if (!win.Mercury.Modules.Ads.getInstance().getSlots) {
+		mercuryListener.afterPageWithAdsRender(function () {
+			callBiddersOnConsecutivePageView();
+		});
+	} else {
+		mercuryListener.onEveryPageChange(function () {
+			callBiddersOnConsecutivePageView();
+		});
+	}
 });
