@@ -60,11 +60,11 @@ define('ext.wikia.adEngine.mobile.mercuryListener', [
 
 	return {
 		afterPageWithAdsRender: afterPageWithAdsRender,
+		onEveryPageChange: onEveryPageChange,
 		onLoad: onLoad,
 		onPageChange: onPageChange,
-		onEveryPageChange: onEveryPageChange,
-		runOnPageChangeCallbacks: runOnPageChangeCallbacks,
 		runAfterPageWithAdsRenderCallbacks: runAfterPageWithAdsRenderCallbacks,
+		runOnPageChangeCallbacks: runOnPageChangeCallbacks,
 		startOnLoadQueue: startOnLoadQueue
 	};
 });
