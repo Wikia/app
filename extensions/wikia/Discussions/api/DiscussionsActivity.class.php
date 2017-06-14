@@ -2,6 +2,7 @@
 
 use Wikia\DependencyInjection\Injector;
 use Wikia\Service\Swagger\ApiProvider;
+use Swagger\Client\Discussion\Api\ContributionApi;
 
 class DiscussionsActivity {
 
