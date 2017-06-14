@@ -209,8 +209,7 @@ define('ext.wikia.adEngine.adContext', [
 			geo.isProperGeo(instantGlobals.wgAdDriverOverridePrefootersCountries) && !isPageType('home')
 		);
 
-		context.opts.outstreamVideoFrequencyCapping =
-			geo.isProperGeo(instantGlobals.wgAdDriverOutstreamVideoFrequencyCapping);
+		context.opts.outstreamVideoFrequencyCapping = instantGlobals.wgAdDriverOutstreamVideoFrequencyCapping;
 
 		enableAdMixExperiment(context);
 
