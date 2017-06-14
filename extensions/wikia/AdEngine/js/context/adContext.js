@@ -211,9 +211,6 @@ define('ext.wikia.adEngine.adContext', [
 
 		enableAdMixExperiment(context);
 
-		// OpenX for remnant slot enabled
-		context.opts.openXRemnantEnabled = geo.isProperGeo(instantGlobals.wgAdDriverOpenXBidderCountriesRemnant);
-
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
 		if (w.ads && w.ads.context) {
