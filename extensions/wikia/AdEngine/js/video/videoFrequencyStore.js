@@ -51,7 +51,7 @@ define('ext.wikia.adEngine.video.videoFrequencyStore', [
 		});
 	}
 
-	function numberOfVideosSeenInLast(value, unit) {
+	function numberOfVideosSeenInTime(value, unit) {
 		var minDate = (new Date()).getTime() - timeUtil.getInterval(value, unit);
 		log(['minDate calculated', minDate], log.levels.debug, logGroup);
 
@@ -83,7 +83,7 @@ define('ext.wikia.adEngine.video.videoFrequencyStore', [
 
 	return {
 		getAll: getAll,
-		numberOfVideosSeenInLast: numberOfVideosSeenInLast,
+		numberOfVideosSeenInTime: numberOfVideosSeenInTime,
 		numberOfVideosSeenInLastPageViews: numberOfVideosSeenInLastPageViews,
 		save: save
 	};

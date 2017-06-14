@@ -63,7 +63,7 @@ describe('ext.wikia.adEngine.video.videoFrequencyStore', function () {
 		store.save({date: 4000, pv: 5});
 		store.save({date: 5000, pv: 6});
 
-		expect(store.numberOfVideosSeenInLast(3, 'sec')).toEqual(3);
+		expect(store.numberOfVideosSeenInTime(3, 'sec')).toEqual(3);
 	});
 
 	it('Should return correct number of elements based on pv if there is no stored item', function () {
