@@ -8,6 +8,7 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 
 	var mocks = {
 		context: {
+			targeting: {},
 			opts: {}
 		},
 		adContext: {
@@ -21,6 +22,9 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 				return mocks.context.pageType;
 			}
 		},
+		doc: {
+			querySelectorAll: noop
+		},
 		geo: {
 			isProperGeo: function (countries) {
 				return countries && countries.indexOf('XX') !== -1;
@@ -30,10 +34,13 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 		log: noop
 	};
 
+	mocks.log.levels = {};
+
 	function getContext() {
 		return modules['ext.wikia.adEngine.context.slotsContext'](
 			mocks.adContext,
 			mocks.adLogicZoneParams,
+			mocks.doc,
 			mocks.geo,
 			mocks.instantGlobals,
 			mocks.log

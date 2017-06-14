@@ -161,11 +161,6 @@ $messages['pms'] = [
 ];
 
 $messages['pt'] = [
-	'centralhelpsearch-desc' => 'Permite a inclusão de um formulário para procura na Central de Ajuda da Comunidade',
-	'centralhelpsearch-placeholder' => 'Procurar Ajuda...',
-];
-
-$messages['pt-br'] = [
 	'centralhelpsearch-desc' => 'Permitir a inclusão de um formulário para pesquisar ajuda na Central da Comunidade',
 	'centralhelpsearch-placeholder' => 'Procurar em Ajuda...',
 ];

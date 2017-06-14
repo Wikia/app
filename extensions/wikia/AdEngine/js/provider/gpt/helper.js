@@ -7,6 +7,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.adEngine.provider.gpt.adDetect',
 	'ext.wikia.adEngine.provider.gpt.adElement',
 	'ext.wikia.adEngine.provider.gpt.googleTag',
+	'ext.wikia.adEngine.slot.service.passbackHandler',
 	'ext.wikia.adEngine.slot.slotTargeting',
 	'ext.wikia.aRecoveryEngine.sourcePoint.recovery',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
@@ -22,6 +23,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	adDetect,
 	AdElement,
 	googleTag,
+	passbackHandler,
 	slotTargeting,
 	sourcePoint,
 	adBlockDetection,
@@ -100,15 +102,23 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 
 		function setAdditionalTargeting(slotTargetingData) {
+			var abId;
+
 			if (shouldSetSrcPremium()) {
 				slotTargetingData.src = 'premium';
 			} else if (adShouldBeRecovered) {
 				slotTargetingData.src = 'rec';
 			}
 
+			slotTargetingData.passback = passbackHandler.get(slotName) || 'none';
 			slotTargetingData.wsi = slotTargeting.getWikiaSlotId(slotName, slotTargetingData.src);
 			slotTargetingData.hb_si = slotTargeting.getPrebidSlotId(slotTargetingData);
 			slotTargetingData.uap = uapId ? uapId.toString() : 'none';
+
+			abId = slotTargeting.getAbTestId(slotTargetingData);
+			if (abId) {
+				slotTargetingData.abi = abId;
+			}
 		}
 
 		function onAdLoadCallback(slotElementId, gptEvent, iframe) {

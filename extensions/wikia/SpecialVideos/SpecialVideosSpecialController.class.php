@@ -25,7 +25,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string message
 	 */
 	public function index() {
-		$this->wg->SupressPageSubtitle = true;
+		$this->wg->SuppressPageSubtitle = true;
 
 		$scriptsStr = 'special_videos_js';
 		$stylesStr = 'special_videos_css';

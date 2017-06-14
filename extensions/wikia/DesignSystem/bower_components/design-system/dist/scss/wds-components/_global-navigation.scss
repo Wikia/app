@@ -52,22 +52,9 @@
 	}
 
 	&__dropdown-content {
+		border-top: 1px solid $wds-color-light-c4;
 		color: $wds-color-dark-blue-gray;
 		min-width: 190px;
-		top: calc(100% + 1px);
-		z-index: -1;
-	}
-
-	&__dropdown-link {
-		color: $wds-color-dark-blue-gray;
-		text-decoration: none;
-		transition: color $search-transition-duration;
-
-		&:active,
-		&:hover,
-		&.wds-is-active {
-			color: $wds-color-link;
-		}
 	}
 
 	&__content-bar {
@@ -114,7 +101,8 @@
 		}
 
 		&:active,
-		&.wds-is-active {
+		&.wds-is-active,
+		&:hover {
 			background-color: $wds-color-slate-gray;
 			border-color: darken($wds-color-slate-gray, 20%);
 			color: $wds-color-white;
@@ -225,6 +213,21 @@
 		flex: 1 1 auto;
 		height: 28px;
 		transition: border-bottom-color $search-transition-duration;
+
+		// Strenghten selector to hide dropdown's arrow
+		&.wds-dropdown {
+			&::after,
+			&::before {
+				display: none;
+			}
+		}
+
+		// Override default dropdowns behaviour which open on hover
+		&:hover:not(.wds-is-active) {
+			.wds-dropdown__content {
+				display: none;
+			}
+		}
 	}
 
 	&__search-label {
@@ -321,8 +324,13 @@
 	}
 
 	&__search-suggestions {
+		border-top: 0;
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+		left: 0;
 		right: 0;
 		top: calc(100% + 1px);
+		transform: none;
 	}
 
 	&__account-menu-caption {
@@ -489,7 +497,7 @@
 		}
 
 		.wds-global-navigation__start-a-wiki-icon {
-			display: block;
+			display: inline;
 		}
 	}
 

@@ -1655,7 +1655,6 @@ $wgMessageStructure = array(
 	),
 	'allpages' => array(
 		'allpages',
-		'allpages-summary',
 		'alphaindexline',
 		'nextpage',
 		'prevpage',

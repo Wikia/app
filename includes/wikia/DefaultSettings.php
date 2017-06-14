@@ -601,7 +601,9 @@ $wgAjaxAutoCompleteSearch = true;
 /**
  * Wikia custom extensions, enabled sitewide. Pre-required by some skins
  */
+
 include_once( "$IP/extensions/ExtensionFunctions.php" );
+include_once( "$IP/extensions/wikia/DesignSystem/DesignSystem.setup.php" );
 include_once( "$IP/extensions/wikia/AnalyticsEngine/AnalyticsEngine.setup.php" );
 include_once( "$IP/extensions/wikia/AjaxFunctions.php" );
 include_once( "$IP/extensions/wikia/DataProvider/DataProvider.php" );
@@ -634,6 +636,8 @@ include_once( "$IP/extensions/wikia/PageShare/PageShare.setup.php" );
 include_once( "$IP/extensions/wikia/PaidAssetDrop/PaidAssetDrop.setup.php" );
 include_once( "$IP/extensions/wikia/CreateNewWiki/CreateNewWiki_global_setup.php" );
 include_once( "$IP/extensions/wikia/Security/Security.setup.php" );
+include_once( "$IP/extensions/wikia/CommunityHeader/CommunityHeader.setup.php" );
+include_once( "$IP/extensions/wikia/PageHeader/PageHeader.setup.php" );
 
 /**
  * @name $wgSkipSkins
@@ -1350,19 +1354,6 @@ $wgAdDriverEnableInvisibleHighImpactSlot = true;
 $wgAdDriverUseAdsAfterInfobox = false;
 
 /**
- * @name $wgAdDriverUseGoogleConsumerSurveys
- * Whether to enable Google Consumer Surveys
- */
-$wgAdDriverUseGoogleConsumerSurveys = true;
-
-/**
- * @name $wgAdDriverGoogleConsumerSurveysCountries
- * List of countries with enabled Google Consumer Surveys.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverGoogleConsumerSurveysCountries = null;
-
-/**
  * @name $wgAdDriverUseEvolve2
  * Whether to enable AdProviderEvolve2 (true) or not (false)
  */
@@ -1374,19 +1365,6 @@ $wgAdDriverUseEvolve2 = true;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverEvolve2Countries = null;
-
-/**
- * @name $wgAdDriverUseTaboola
- * Whether to enable AdProviderTaboola (true) or not (false)
- */
-$wgAdDriverUseTaboola = true;
-
-/**
- * @name $wgAdDriverTaboolaConfig
- * Config with list of countries with enabled Taboola module.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverTaboolaConfig = null;
 
 /** @name $wgSitewideDisableAdsOnMercury
  * Disable ads on Mercury if set to true.
@@ -1452,11 +1430,32 @@ $wgAdDriverKikimoraTrackingCountries = [];
 $wgAdDriverSrcPremiumCountries = [];
 
 /**
+ * @name $wgAdDriverKILOCountries
+ * Enables transitional to MEGA way of building adUnits (for GPT provider, NOT ONLY REMNANT).
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverKILOCountries = null;
+
+/**
  * @name $wgAdDriverMEGACountries
  * Enables new way of building adUnits (currently limited for remnant).
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverMEGACountries = null;
+
+/**
+ * @name $wgAdDriverMoatTrackingForFeaturedVideoAdCountries
+ * Enables MOAT tracking for feature video ads.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverMoatTrackingForFeaturedVideoAdCountries = null;
+
+/**
+ * @name $wgAdDriverMoatTrackingForFeaturedVideoAdSampling
+ * Percentage value of users with MOAT tracking for featured video.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverMoatTrackingForFeaturedVideoAdSampling = null;
 
 /**
  * @name $wgAdDriverTrackState
@@ -1556,20 +1555,6 @@ $wgAdDriverPageFairRecoveryCountries = null;
  * Enable PageFair Recovery per wiki
  */
 $wgAdDriverEnablePageFairRecovery = true;
-
-/**
- * @name $wgAdDriverPageFairConditionalAdRendering
- * Flag to enable PF conditionalAdRendering, more in PF docs
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverPageFairConditionalAdRendering = false;
-
-/**
- * @name $wgAdDriverPageFairConditionalIframeRendering
- * Flag to enable PF conditionalIframeRendering, more in PF docs
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverPageFairConditionalIframeRendering = false;
 
 /**
  * trusted proxy service registry
@@ -1771,11 +1756,6 @@ $wgXhprofMinimumTime = 0.001;
  */
 $wgProfilerSendViaScribe = true;
 
-/* @name wgDisableWAMOnHubs
- * Disable WAM module on hub pages
- */
-$wgDisableWAMOnHubs = false;
-
 /**
  * Force ImageServing to return an empty list
  * see PLATFORM-392
@@ -1900,3 +1880,5 @@ $wgReviveSpotlightsCountries = null;
 include_once("$IP/extensions/wikia/ARecoveryEngine/ARecoveryEngine.setup.php");
 
 require_once "$IP/extensions/wikia/ImageReview/ImageReviewEvents.setup.php";
+
+require_once("$IP/extensions/wikia/AdMixExperiment/AdMixExperiment.setup.php");

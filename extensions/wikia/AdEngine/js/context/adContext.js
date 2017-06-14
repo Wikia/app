@@ -47,11 +47,6 @@ define('ext.wikia.adEngine.adContext', [
 		return isUrlParamSet('pagefairdetection') || (isSupportedGeo && sampler.sample('pageFairDetection', 1, 10));
 	}
 
-	function isGSCEnabled() {
-		return abTest.getGroup('PROJECT_43') === 'GROUP_5' &&
-			geo.isProperGeo(instantGlobals.wgAdDriverGoogleConsumerSurveysCountries);
-	}
-
 	function isSourcePointDetectionDesktopEnabled(context) {
 		return context.opts.sourcePointDetectionUrl && context.targeting.skin === 'oasis' &&
 			geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionCountries);
@@ -72,8 +67,7 @@ define('ext.wikia.adEngine.adContext', [
 	}
 
 	function updateAdContextRecoveryServices(context, noExternals) {
-		var taboolaConfig = instantGlobals.wgAdDriverTaboolaConfig || {},
-			isRecoveryServiceAlreadyEnabled = false,
+		var isRecoveryServiceAlreadyEnabled = false,
 			serviceCanBeEnabled = !noExternals && context.opts.showAds !== false; // showAds is undefined by default
 
 		// PageFair recovery
@@ -88,22 +82,43 @@ define('ext.wikia.adEngine.adContext', [
 
 		// SourcePoint MMS
 		context.opts.sourcePointMMS = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled && context.opts.sourcePointMMS;
-		isRecoveryServiceAlreadyEnabled |= context.opts.sourcePointMMS;
 
 		context.opts.sourcePointBootstrap = context.opts.sourcePointMMS || context.opts.sourcePointRecovery;
+	}
 
-		// Taboola
-		context.opts.loadTaboolaLibrary = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
-			(context.opts.useTaboola || !context.opts.disableTaboola) && shouldLoadTaboolaOnBlockingTraffic(taboolaConfig);
-		isRecoveryServiceAlreadyEnabled |= context.opts.loadTaboolaLibrary;
+	function enableAdMixExperiment(context) {
+		var group = abTest.getGroup('AD_MIX') || '';
 
-		// Google Consumer Surveys
-		context.opts.googleConsumerSurveys = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
-			context.opts.sourcePointDetection && isGSCEnabled();
+		context.opts.adMixExperimentEnabled = !!(
+			group.indexOf('AD_MIX_') === 0 &&
+			isPageType('article') &&
+			context.targeting.skin === 'oasis' &&
+			geo.isProperGeo(instantGlobals.wgAdDriverAdMixCountries)
+		);
+
+		context.opts.adMix1Enabled = context.opts.adMixExperimentEnabled && abTest.getGroup('AD_MIX').indexOf('AD_MIX_1') === 0;
+		context.opts.adMix3Enabled = context.opts.adMixExperimentEnabled && abTest.getGroup('AD_MIX').indexOf('AD_MIX_3') === 0;
+
+		context.slots.adMixToUnblock = [];
+
+		if (!(context.opts.adMix1Enabled && context.targeting.hasFeaturedVideo)) {
+			context.slots.adMixToUnblock.push('INCONTENT_BOXAD_1');
+		}
+
+		if (context.opts.adMix3Enabled) {
+			context.slots.adMixToUnblock.push('BOTTOM_LEADERBOARD');
+		}
 	}
 
 	function referrerIsSonySite() {
 		return doc && doc.referrer && doc.referrer.match(/info\.tvsideview\.sony\.net/);
+	}
+
+	function isMOATTrackingForFVEnabled() {
+		var samplingForMoatFV = instantGlobals.wgAdDriverMoatTrackingForFeaturedVideoAdSampling || 1;
+
+		return sampler.sample('moatTrackingForFeaturedVideo', samplingForMoatFV, 100) &&
+			geo.isProperGeo(instantGlobals.wgAdDriverMoatTrackingForFeaturedVideoAdCountries);
 	}
 
 	function setContext(newContext) {
@@ -134,6 +149,8 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.premiumOnly = context.targeting.hasFeaturedVideo &&
 			geo.isProperGeo(instantGlobals.wgAdDriverSrcPremiumCountries);
 
+		context.opts.isMoatTrackingForFeaturedVideoEnabled = isMOATTrackingForFVEnabled();
+
 		updateDetectionServicesAdContext(context, noExternals);
 		updateAdContextRecoveryServices(context, noExternals);
 
@@ -162,6 +179,7 @@ define('ext.wikia.adEngine.adContext', [
 		}
 
 		context.opts.enableRemnantNewAdUnit = geo.isProperGeo(instantGlobals.wgAdDriverMEGACountries);
+		context.opts.enableKILOAdUnit = geo.isProperGeo(instantGlobals.wgAdDriverKILOCountries);
 
 		// INVISIBLE_HIGH_IMPACT slot
 		context.slots.invisibleHighImpact = (
@@ -191,6 +209,8 @@ define('ext.wikia.adEngine.adContext', [
 			geo.isProperGeo(instantGlobals.wgAdDriverOverridePrefootersCountries) && !isPageType('home')
 		);
 
+		enableAdMixExperiment(context);
+
 		// OpenX for remnant slot enabled
 		context.opts.openXRemnantEnabled = geo.isProperGeo(instantGlobals.wgAdDriverOpenXBidderCountriesRemnant);
 
@@ -203,21 +223,6 @@ define('ext.wikia.adEngine.adContext', [
 		for (i = 0, len = callbacks.length; i < len; i += 1) {
 			callbacks[i](context);
 		}
-	}
-
-	function shouldLoadTaboolaOnBlockingTraffic(taboolaConfig) {
-		var i, taboolaSlot;
-
-		for (taboolaSlot in taboolaConfig) {
-			if (taboolaConfig.hasOwnProperty(taboolaSlot) && taboolaConfig[taboolaSlot].recovery) {
-				for (i = 0; i < taboolaConfig[taboolaSlot].recovery.length; i++) {
-					if (geo.isProperGeo(taboolaConfig[taboolaSlot].recovery[i])) {
-						return true;
-					}
-				}
-			}
-		}
-		return false;
 	}
 
 	function addCallback(callback) {

@@ -16,8 +16,8 @@ $messages['en'] = array(
 	'wam-movies' => 'Movies',
 	'wampage-top-gainers-header' => 'Top Gainers',
 	'wampage-header-wam' => 'WAM Score',
-	'wampage-subheader-wam' => 'Wiki Activity Monitor (WAM) Score is an indicator of the strength and momentum of a Fandom community.',
-	'wampage-content' => "The WAM is calculated daily for the top 5,000 wiki sites and includes an overall rank, a vertical rank, and a score from 0 to 100. The WAM rankings are sensitive to real-world events and change frequently, capturing the latest trends from Fandom's wikis.",
+	'wampage-subheader-wam' => 'Wiki Activity Monitor (WAM) Score is an indicator of the strength and momentum of a FANDOM community.',
+	'wampage-content' => "The WAM is calculated daily for the top 5,000 wiki sites and includes an overall rank, a vertical rank, and a score from 0 to 100. The WAM rankings are sensitive to real-world events and change frequently, capturing the latest trends from FANDOM's wikis.",
 	'wampage-content-faq-link' => '[[$1|Frequently Asked Questions]]',
 	'wampage-faq' => '__NOTOC____NOEDITSECTION__===How is the WAM calculated?===
 	The WAM rank is a combination of traffic, engagement and growth. We are not able to provide the specifics because we do not want Wikis attempting to manipulate the rankings. But rest assured, we have included all the essential ingredients for a successful and thriving Wiki.
@@ -48,7 +48,7 @@ Please contact community support at [mailto:support@wikia-inc.com support@wikia-
 	'wam-index-header-admins' => 'Admins',
 	'wampage-breadcrumb-back-to-wam' => 'Back to WAM Score',
 	'wam-index-header-peak-rank' => 'Peak Rank',
-	'wam-index-no-results' => 'The wiki you searched for is not in the top 5000 for the date you selected. WAM rankings are updated daily, so please check back. [mailto:support@wikia-inc.com Contact Fandom Community Support] if you have any questions.',
+	'wam-index-no-results' => 'The wiki you searched for is not in the top 5000 for the date you selected. WAM rankings are updated daily, so please check back. [mailto:support@wikia-inc.com Contact FANDOM Community Support] if you have any questions.',
 	'wam-index-filter-search-placeholder' => 'Search',
 	'wam-index-filter-sort-label' => 'Vertical',
 	'wam-index-filter-date-label' => 'Date',
@@ -86,7 +86,7 @@ $messages['de'] = array(
 	'wampage-header' => 'WAM',
 	'wampage-header-wam' => 'WAM-Punktzahl',
 	'wampage-header-faq' => 'Häufig gestellte Fragen',
-	'wampage-content' => 'Der WAM-Rang wird täglich für die 5.000 Top-Wikis berechnet und beinhaltet eine Platzierung innerhalb aller Top-Wikis, innerhalb der zugehörigen Kategorie und eine Punktzahl von 0 bis 100. Die WAM-Punktezahl reagiert auf aktuelle Themen, ändert sich oft und bildet die neuesten Trends auf Fandom-Wikis ab.',
+	'wampage-content' => 'Der WAM-Rang wird täglich für die 5.000 Top-Wikis berechnet und beinhaltet eine Platzierung innerhalb aller Top-Wikis, innerhalb der zugehörigen Kategorie und eine Punktzahl von 0 bis 100. Die WAM-Punktezahl reagiert auf aktuelle Themen, ändert sich oft und bildet die neuesten Trends auf FANDOM-Wikis ab.',
 	'wampage-faq' => '__NOTOC____NOEDITSECTION__
 ===Wie wird die WAM-Punktzahl ermittelt?===
 
@@ -123,7 +123,7 @@ Dem Community-Team unter [mailto:support@fancom.com support@fancom.com].',
 	'wam-index-header-admins' => 'Admins',
 	'wampage-breadcrumb-back-to-wam' => 'Zurück zur WAM-Punktezahl',
 	'wam-index-header-peak-rank' => 'Höchster Rang',
-	'wam-index-no-results' => 'Das von dir gesuchte Wiki ist für das von dir ausgewählte Datum nicht unter den Top 5000. Der WAM-Wert wird täglich aktualisiert - also schau bald wieder vorbei! Bei Fragen wende dich bitte an den [mailto:support@fandom.com Fandom-Support].',
+	'wam-index-no-results' => 'Das von dir gesuchte Wiki ist für das von dir ausgewählte Datum nicht unter den Top 5000. Der WAM-Wert wird täglich aktualisiert - also schau bald wieder vorbei! Bei Fragen wende dich bitte an den [mailto:support@fandom.com FANDOM-Support].',
 	'wam-index-filter-search-placeholder' => 'Suche',
 	'wam-index-filter-sort-label' => 'Hub',
 	'wam-index-filter-date-label' => 'Datum',
@@ -139,7 +139,7 @@ Dem Community-Team unter [mailto:support@fancom.com support@fancom.com].',
 	'wam-music' => 'Musik',
 	'wam-movies' => 'Filme',
 	'wampage-top-gainers-header' => 'Aufsteiger',
-	'wampage-subheader-wam' => 'Die Wiki-Aktivitätsmonitor-Punktezahl (WAM) zeigt an, wie aktiv und bekannt eine Fandom-Community ist.',
+	'wampage-subheader-wam' => 'Die Wiki-Aktivitätsmonitor-Punktezahl (WAM) zeigt an, wie aktiv und bekannt eine FANDOM-Community ist.',
 	'wampage-content-faq-link' => '[[$1|Häufig gestellte Fragen]]',
 	'wam-page-desc' => 'WAM Page',
 );
@@ -149,7 +149,7 @@ $messages['es'] = array(
 	'wampage-header' => 'WAM',
 	'wampage-header-wam' => 'Puntuación WAM',
 	'wampage-header-faq' => 'Preguntas frecuentes',
-	'wampage-content' => 'El WAM calcula diariamente las puntuaciones para las 5.000 comunidades de Fandom más visitadas y hace una clasificación general y vertical con puntuaciones del 0 al 100. La clasificación del WAM es sensible a los eventos del mundo real y cambia frecuentemente, aseguraros de comprobar regularmente los resultados de las últimas tendencias.',
+	'wampage-content' => 'El WAM calcula diariamente las puntuaciones para las 5.000 comunidades de FANDOM más visitadas y hace una clasificación general y vertical con puntuaciones del 0 al 100. La clasificación del WAM es sensible a los eventos del mundo real y cambia frecuentemente, aseguraros de comprobar regularmente los resultados de las últimas tendencias.',
 	'wampage-faq' => '__NOTOC____NOEDITSECTION__
 ===¿Cómo hace los cálculos del WAM?===
 La puntuación WAM es una combinación de tráfico, compromiso y crecimiento. No podemos decirte los detalles concretos porque no queremos que los wikis intenten manipular las valoraciones. Pero ten por seguro que hemos incluido todos los ingredientes esenciales para valorar qué wikis son exitosos.
@@ -181,7 +181,7 @@ Por favor, ponte en contacto con el equipo de soporte comunitario en [mailto:sup
 	'wam-index-header-admins' => 'Administradores',
 	'wampage-breadcrumb-back-to-wam' => 'Puntuación WAM',
 	'wam-index-header-peak-rank' => 'Puesto más alto',
-	'wam-index-no-results' => 'El wiki que buscas no se encuentra entre los 5000 mejores wikis en la fecha que seleccionaste. La puntuación en WAM se actualiza diariamente, así que no olvides revisarla con frecuencia. [mailto:support@wikia-inc.com Contacta con el equipo de soporte comunitario de Fandom] si tienes alguna pregunta.',
+	'wam-index-no-results' => 'El wiki que buscas no se encuentra entre los 5000 mejores wikis en la fecha que seleccionaste. La puntuación en WAM se actualiza diariamente, así que no olvides revisarla con frecuencia. [mailto:support@wikia-inc.com Contacta con el equipo de soporte comunitario de FANDOM] si tienes alguna pregunta.',
 	'wam-index-filter-search-placeholder' => 'Buscar',
 	'wam-index-filter-sort-label' => 'Categoría',
 	'wam-index-filter-date-label' => 'Fecha',
@@ -197,7 +197,7 @@ Por favor, ponte en contacto con el equipo de soporte comunitario en [mailto:sup
 	'wam-music' => 'Música',
 	'wam-movies' => 'Películas',
 	'wampage-top-gainers-header' => 'Los que más ganan',
-	'wampage-subheader-wam' => 'El monitor de actividad wiki (WAM) es un indicador que mide la importancia de una comunidad de Fandom.',
+	'wampage-subheader-wam' => 'El monitor de actividad wiki (WAM) es un indicador que mide la importancia de una comunidad de FANDOM.',
 	'wampage-content-faq-link' => '[[$1|Preguntas frecuentes]]',
 	'wam-page-desc' => 'WAM Page',
 );
@@ -207,7 +207,7 @@ $messages['fr'] = array(
 	'wampage-header' => 'Wam',
 	'wampage-header-wam' => 'Score WAM',
 	'wampage-header-faq' => 'Foire Aux Questions',
-	'wampage-content' => "Le WAM est calculé chaque jour pour les 5&nbsp;000 meilleurs wikis et inclut un classement global et par thème ainsi qu'une note comprise entre 0 et 100. Le classement WAM est sensible aux événements du monde réel et varie souvent, capturant les dernières tendances des wikis de Fandom.",
+	'wampage-content' => "Le WAM est calculé chaque jour pour les 5&nbsp;000 meilleurs wikis et inclut un classement global et par thème ainsi qu'une note comprise entre 0 et 100. Le classement WAM est sensible aux événements du monde réel et varie souvent, capturant les dernières tendances des wikis de FANDOM.",
 	'wampage-faq' => "__NOTOC____NOEDITSECTION__===Comment le WAM est-il calculé ?===
 Le classement WAM est une combinaison du trafic, de l'engagement et de la croissance. Nous ne pouvons pas rentrer dans les détails car nous ne voulons pas que les wikias essaient de manipuler le classement. Mais soyez sûr que nous avons intégré tous les ingrédients essentiels pour un wikia réussi et prospère.
 
@@ -238,7 +238,7 @@ Veuillez contacter le support de la communauté via [mailto:support@wikia-inc.co
 	'wam-index-header-admins' => 'Administrateurs',
 	'wampage-breadcrumb-back-to-wam' => 'Revenir au classement WAM',
 	'wam-index-header-peak-rank' => 'Pos. max. atteinte',
-	'wam-index-no-results' => 'Le wiki que vous recherchez ne se trouve pas parmi les 5&nbsp;000 meilleurs à la date indiquée. Le classement WAM est actualisé tous les jours, nous vous invitons donc à revenir vérifier régulièrement. Si vous avez des questions, [mailto:support@wikia-inc.com contactez le support de la communauté Fandom].',
+	'wam-index-no-results' => 'Le wiki que vous recherchez ne se trouve pas parmi les 5&nbsp;000 meilleurs à la date indiquée. Le classement WAM est actualisé tous les jours, nous vous invitons donc à revenir vérifier régulièrement. Si vous avez des questions, [mailto:support@wikia-inc.com contactez le support de la communauté FANDOM].',
 	'wam-index-filter-search-placeholder' => 'Rechercher',
 	'wam-index-filter-sort-label' => 'Thème',
 	'wam-index-filter-date-label' => 'Date',
@@ -254,7 +254,7 @@ Veuillez contacter le support de la communauté via [mailto:support@wikia-inc.co
 	'wam-music' => 'Musique',
 	'wam-movies' => 'Cinéma',
 	'wampage-top-gainers-header' => 'Meilleure progression',
-	'wampage-subheader-wam' => "Le score WAM est un indicateur de la santé et de la vitalité d'une communauté de Fandom.",
+	'wampage-subheader-wam' => "Le score WAM est un indicateur de la santé et de la vitalité d'une communauté de FANDOM.",
 	'wampage-content-faq-link' => '[[$1|Foire Aux Questions]]',
 	'wam-page-desc' => 'WAM Page',
 );
@@ -273,8 +273,8 @@ $messages['it'] = array(
 	'wam-movies' => 'Cinema',
 	'wampage-top-gainers-header' => 'Top in crescita',
 	'wampage-header-wam' => 'Punteggio WAM',
-	'wampage-subheader-wam' => 'Il punteggio WAM è un indicatore della forza e dello slancio di una community di Fandom.',
-	'wampage-content' => 'Il punteggio WAM è calcolato giornalmente per le prime 5.000 wiki e include una posizione globale, una di categoria nonché un punteggio da 0 a 100. Le posizioni WAM sono sensibili ad eventi del mondo reale e cambiano frequentemente stando al passo con gli ultimi trend delle wiki di Fandom.',
+	'wampage-subheader-wam' => 'Il punteggio WAM è un indicatore della forza e dello slancio di una community di FANDOM.',
+	'wampage-content' => 'Il punteggio WAM è calcolato giornalmente per le prime 5.000 wiki e include una posizione globale, una di categoria nonché un punteggio da 0 a 100. Le posizioni WAM sono sensibili ad eventi del mondo reale e cambiano frequentemente stando al passo con gli ultimi trend delle wiki di FANDOM.',
 	'wampage-content-faq-link' => '[[$1|Domande frequenti]]',
 	'wampage-faq' => "=== Com'è calcolato il punteggio WAM? ===
 La classificazione WAM è una combinazione di traffico, coinvolgimento e crescita. Non possiamo fornirvi i dettagli perché non vogliamo che le wiki cerchino di manipolare i punteggi. Ma state tranquilli: abbiamo incluso tutti gli ingredienti essenziali per verificare quali sono le wiki di successo.
@@ -307,7 +307,7 @@ __NOTOC____NOEDITSECTION__",
 	'wam-index-header-admins' => 'Amministratori',
 	'wampage-breadcrumb-back-to-wam' => 'Torna al punteggio WAM',
 	'wam-index-header-peak-rank' => 'Picco di posizione',
-	'wam-index-no-results' => "La wiki cercata non rientra tra le prime 5000 nella data selezionata. La classifica WAM è aggiornata giornalmente, per cui controlla un'altra volta. [mailto:support@fandom.com Contatta il supporto della community di Fandom] se hai ulteriori domande.",
+	'wam-index-no-results' => "La wiki cercata non rientra tra le prime 5000 nella data selezionata. La classifica WAM è aggiornata giornalmente, per cui controlla un'altra volta. [mailto:support@fandom.com Contatta il supporto della community di FANDOM] se hai ulteriori domande.",
 	'wam-index-filter-search-placeholder' => 'Cerca',
 	'wam-index-filter-sort-label' => 'Categoria',
 	'wam-index-filter-date-label' => 'Data',
@@ -322,7 +322,7 @@ $messages['ja'] = array(
 	'wampage-header' => 'Wam',
 	'wampage-header-faq' => 'よくある質問',
 	'wampage-header-wam' => 'WAMスコア',
-	'wampage-content' => 'WAMは上位5,000のwikiサイトに対し毎日計算されており、0～100の点数と、全体ランキング、ジャンル別ランキングが提供されています。WAMランキングは、世界で起こっているリアルタイムな出来事に応じて随時変動するので、定期的にWAMをチェックすることで、Fandomコミュニティの最新トレンドを追うことができます。',
+	'wampage-content' => 'WAMは上位5,000のwikiサイトに対し毎日計算されており、0～100の点数と、全体ランキング、ジャンル別ランキングが提供されています。WAMランキングは、世界で起こっているリアルタイムな出来事に応じて随時変動するので、定期的にWAMをチェックすることで、FANDOMコミュニティの最新トレンドを追うことができます。',
 	'wampage-faq' => '__NOTOC____NOEDITSECTION__===WAMはどうやって計算されているんですか？===
 WAMのランキングはトラフィック、活動、成長の組み合わせによって計算されます。申し訳ございませんが、ランキング操作の防止のため、詳細の公表はさせていただくことができませんが、ウィキアを盛り上げ、成功させるためにご活用いただける大切な要素は全て含まれています。
 ===なぜWAMを気にする必要があるんですか？===
@@ -351,7 +351,7 @@ WAMスコアやランキングをウィキ上にのせることは、ウィキ�
 	'wam-index-header-admins' => 'アドミン(管理者)',
 	'wampage-breadcrumb-back-to-wam' => 'WAMスコアに戻る',
 	'wam-index-header-peak-rank' => 'ピークランキング',
-	'wam-index-no-results' => '検索されたwikiは、選択された期間の上位5,000 wikiに含まれていませんでした。WAMランキングは毎日更新されていますので、定期的にご確認ください。ご不明な点については、[mailto:support@wikia-inc.com Fandomコミュニティ・サポート] までお問い合わせください。',
+	'wam-index-no-results' => '検索されたwikiは、選択された期間の上位5,000 wikiに含まれていませんでした。WAMランキングは毎日更新されていますので、定期的にご確認ください。ご不明な点については、[mailto:support@wikia-inc.com FANDOMコミュニティ・サポート] までお問い合わせください。',
 	'wam-index-filter-search-placeholder' => '検索',
 	'wam-index-filter-sort-label' => 'ジャンル',
 	'wam-index-filter-date-label' => '日付',
@@ -367,7 +367,7 @@ WAMスコアやランキングをウィキ上にのせることは、ウィキ�
 	'wam-music' => '音楽',
 	'wam-movies' => '映画',
 	'wampage-top-gainers-header' => '人気上昇コミュニティ',
-	'wampage-subheader-wam' => 'Wikiアクティビティ・モニター（WAM）スコアは、Fandomコミュニティの活発度と勢いを示す指標です。',
+	'wampage-subheader-wam' => 'Wikiアクティビティ・モニター（WAM）スコアは、FANDOMコミュニティの活発度と勢いを示す指標です。',
 	'wampage-content-faq-link' => '[[$1|よくある質問]]',
 	'wam-page-desc' => 'WAM Page',
 );
@@ -518,7 +518,7 @@ Skontaktuj się z nami poprzez [mailto:support@wikia-inc.com support@wikia-inc.c
 	'wam-index-header-admins' => 'Administratorzy',
 	'wampage-breadcrumb-back-to-wam' => 'Punktacja WAM',
 	'wam-index-header-peak-rank' => 'Najwyższa pozycja',
-	'wam-index-no-results' => 'Wiki, której szukasz, nie znajduje się w pierwszych 5000 społeczności w podanym dniu. Ranking WAM jest aktualizowany codziennie, więc możesz spróbować ponownie później. [mailto:support@wikia-inc.com Skontaktuj się ze Wsparciem Społeczności portalu Fandom], jeżeli masz jakieś pytania.',
+	'wam-index-no-results' => 'Wiki, której szukasz, nie znajduje się w pierwszych 5000 społeczności w podanym dniu. Ranking WAM jest aktualizowany codziennie, więc możesz spróbować ponownie później. [mailto:support@wikia-inc.com Skontaktuj się ze Wsparciem Społeczności portalu FANDOM], jeżeli masz jakieś pytania.',
 	'wam-index-filter-search-placeholder' => 'Szukaj',
 	'wam-index-filter-sort-label' => 'Kategoria',
 	'wam-index-filter-date-label' => 'Data',
@@ -553,8 +553,8 @@ $messages['pt'] = array(
 	'wam-movies' => 'Filmes',
 	'wampage-top-gainers-header' => 'Maiores Destaques',
 	'wampage-header-wam' => 'Pontuação WAM',
-	'wampage-subheader-wam' => 'A pontuação WAM é um indicador de força e dinamismo de uma comunidade do Fandom.',
-	'wampage-content' => 'A pontuação WAM é calculada diariamente para os 5.000 sites mais populares e inclui uma classificação geral, uma classificação vertical e uma pontuação de 0 a 100. A pontuação WAM é sensível aos acontecimentos do mundo real e muda com frequência, captando as tendências mais recentes das wikis do Fandom.',
+	'wampage-subheader-wam' => 'A pontuação WAM é um indicador de força e dinamismo de uma comunidade do FANDOM.',
+	'wampage-content' => 'A pontuação WAM é calculada diariamente para os 5.000 sites mais populares e inclui uma classificação geral, uma classificação vertical e uma pontuação de 0 a 100. A pontuação WAM é sensível aos acontecimentos do mundo real e muda com frequência, captando as tendências mais recentes das wikis do FANDOM.',
 	'wampage-content-faq-link' => '[[$1|Perguntas frequentes]]',
 	'wampage-faq' => '__NOTOC____NOEDITSECTION__===Como o WAM é calculado?===
 A pontuação WAM é uma combinação de tráfego, contribuição e crescimento. Nós não podemos fornecer os detalhes, porque  não queremos que as wikis tentem manipular a classificação. Mas nós garantimos que incluímos os ingredientes essenciais para uma wiki próspera e bem-sucedida. 
@@ -585,7 +585,7 @@ Por favor, entre em contato com a equipe de apoio através da [[w:c:comunidade:S
 	'wam-index-header-admins' => 'Administradores',
 	'wampage-breadcrumb-back-to-wam' => 'Voltar à pontuação WAM',
 	'wam-index-header-peak-rank' => 'Melhor Classificação',
-	'wam-index-no-results' => 'A wiki que você pesquisou não está no topo das 5000 para a data selecionada. A pontuação WAM é atualizada diariamente, então cheque frequentemente. [mailto:suporte@wikia-inc.com Entre em contato com a Equipe de suporte da comunidade Fandom] se você tiver alguma dúvida.',
+	'wam-index-no-results' => 'A wiki que você pesquisou não está no topo das 5000 para a data selecionada. A pontuação WAM é atualizada diariamente, então cheque frequentemente. [mailto:suporte@wikia-inc.com Entre em contato com a Equipe de suporte da comunidade FANDOM] se você tiver alguma dúvida.',
 	'wam-index-filter-search-placeholder' => 'Pesquisar',
 	'wam-index-filter-sort-label' => 'Categoria',
 	'wam-index-filter-date-label' => 'Data',
@@ -682,8 +682,8 @@ $messages['zh-hans'] = array(
 	'wam-movies' => '电影',
 	'wampage-top-gainers-header' => '排行榜',
 	'wampage-header-wam' => 'WAM分数',
-	'wampage-subheader-wam' => '维基活动监视器(WAM)分数是一个Fandom社区的发展和流行指标。',
-	'wampage-content' => 'WAM用来每日计算排名前5000的维基社区，包括所有社区和分类社区以及其0 -100的排名分数。WAM的排名每日都将按照社区的发展趋势不断变化，所以记得时常浏览一下Fandom上最新Wiki的流行趋势。',
+	'wampage-subheader-wam' => '维基活动监视器(WAM)分数是一个FANDOM社区的发展和流行指标。',
+	'wampage-content' => 'WAM用来每日计算排名前5000的维基社区，包括所有社区和分类社区以及其0 -100的排名分数。WAM的排名每日都将按照社区的发展趋势不断变化，所以记得时常浏览一下FANDOM上最新Wiki的流行趋势。',
 	'wampage-content-faq-link' => '[[$1|常见问题]]',
 	'wampage-faq' => '__NOTOC____NOEDITSECTION__ 
 === 如何计算WAM分数? === 
@@ -714,7 +714,7 @@ WAM上的数据最早可以追溯到2012年1月1日
 	'wam-index-header-admins' => '管理员',
 	'wampage-breadcrumb-back-to-wam' => '返回WAM分数',
 	'wam-index-header-peak-rank' => '顶尖排名',
-	'wam-index-no-results' => '您所查找的社区并不在WAM排名前5000之内。WAM排名每日都在不断更新，您可以随后重新访问这个页面。如果您有任何问题，欢迎发送邮件至[mailto:support@wikia-inc.com Fandom社区支持团队]。',
+	'wam-index-no-results' => '您所查找的社区并不在WAM排名前5000之内。WAM排名每日都在不断更新，您可以随后重新访问这个页面。如果您有任何问题，欢迎发送邮件至[mailto:support@wikia-inc.com FANDOM社区支持团队]。',
 	'wam-index-filter-search-placeholder' => '搜索',
 	'wam-index-filter-sort-label' => '主题社区',
 	'wam-index-filter-date-label' => '日期',
@@ -725,16 +725,16 @@ WAM上的数据最早可以追溯到2012年1月1日
 );
 
 $messages['zh-hant'] = array(
-	'wampage-content' => 'WAM用來每日計算排名前5000的Wiki社區，包括所有社區和分類社區以及其0 -100的分數。WAM的排名常會跟隨現實世界的流行發展趨勢不斷變化，所以記得時常瀏覽Fandom的Wiki以了解流行趨勢。',
+	'wampage-content' => 'WAM用來每日計算排名前5000的Wiki社區，包括所有社區和分類社區以及其0 -100的分數。WAM的排名常會跟隨現實世界的流行發展趨勢不斷變化，所以記得時常瀏覽FANDOM的Wiki以了解流行趨勢。',
 	'wam-html-title' => 'Wiki活動監視器 (WAM)',
 	'wam-index-header-wiki-name' => 'URL',
-	'wam-index-no-results' => '您所查找的社群並不在WAM排名前5000之內。WAM排名每日都在不斷更新，您可以隨後重新訪問這個頁面。如果您有任何問題，歡迎發送郵件至[mailto:support@wikia-inc.com Fandom社區支援團隊]。',
-	'wampage-subheader-wam' => 'Wiki活動監視器(WAM) 分數是Fandom社區的動能和活躍程度指標。',
+	'wam-index-no-results' => '您所查找的社群並不在WAM排名前5000之內。WAM排名每日都在不斷更新，您可以隨後重新訪問這個頁面。如果您有任何問題，歡迎發送郵件至[mailto:support@wikia-inc.com FANDOM社區支援團隊]。',
+	'wampage-subheader-wam' => 'Wiki活動監視器(WAM) 分數是FANDOM社區的動能和活躍程度指標。',
 	'wampage-faq' => '__NOTOC____NOEDITSECTION__
 === 如何計算WAM分數?？===
 WAM的排名是根據網頁流量、社區參與度和社區增長進行的資料整合分析。我們不能提供如何整個資料的具體細節，因為我們不想讓任何社區試圖以此操控排名，這對社區發展不利也不公平。我們將保證所有活躍和成功的Wiki社區都將被WAM納入其中。
 ===為什麼WAM非常重要？===
-Fandom一直都認為知識就是力量。我們一直試圖讓相關資料和統計數字非常透明，WAM對線上社區的發展的資料化呈現也是一大進步。WAM的資料回饋對社區的創始人、管理員和貢獻者都非常有意義，因為他們可以更加輕鬆簡單地瞭解到所在社區發展的近況和活躍程度，並更加宏觀地把握社區的整體發展。
+FANDOM一直都認為知識就是力量。我們一直試圖讓相關資料和統計數字非常透明，WAM對線上社區的發展的資料化呈現也是一大進步。WAM的資料回饋對社區的創始人、管理員和貢獻者都非常有意義，因為他們可以更加輕鬆簡單地瞭解到所在社區發展的近況和活躍程度，並更加宏觀地把握社區的整體發展。
 ===如何提高WAM分數？===
 WAM使用複雜的計算方法，並沒有一種簡單的方式可以迅速提高社區的分數和排名。儘管如此，這裡還是有一些方法可以幫到你提高WAM分數。首先，我們建議您查看[[w:c:zh:help:Attracting_contributors|説明:吸引參與者]]頁面。非常活躍或者每日編輯數量非常多的Wiki社區一般在WAM上排名都會比較靠前。請記住，不要試圖和系統耍花招。只有與主題相關和可信的社區內容才能讓你的社區和讀者產生共鳴。
 

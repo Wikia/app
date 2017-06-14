@@ -16,16 +16,14 @@ describe('ext.wikia.adEngine.provider.*', function () {
 				return mocks.context;
 			}
 		},
-		passbackHandler: {
-			get: function () {
-				return null;
-			}
-		},
 		adUnitBuilder: {
 			build: function (slotName, src) {
 				return '/5441/wka.ent/_muppet//home/' + src + '/' + slotName;
 			},
 			buildNew: noop
+		},
+		kiloAdUnitBuilder: {
+			build: function () {}
 		},
 		gptHelper: {
 			pushAd: function (slotName, slotElement, slotPath, slotTargeting, extra) {
@@ -34,7 +32,8 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			}
 		},
 		lookups: {
-			extendSlotTargeting: noop
+			extendSlotTargeting: noop,
+			storeRealSlotPrices: noop
 		},
 		slotRegistry: {
 			getRefreshCount: function () {
@@ -74,7 +73,6 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			mocks.btfBlocker,
 			mocks.gptHelper,
 			mocks.adUnitBuilder,
-			mocks.passbackHandler,
 			mocks.slotRegistry,
 			mocks.log,
 			mocks.lookups
@@ -85,8 +83,11 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		switch (providerName) {
 			case 'directGpt':
 				return modules['ext.wikia.adEngine.provider.' + providerName](
+					mocks.adContext,
 					mocks.uapContext,
 					getFactory(),
+					mocks.adUnitBuilder,
+					mocks.kiloAdUnitBuilder,
 					mocks.slotTweaker,
 					mocks.adUnitBuilder
 				);
@@ -100,6 +101,9 @@ describe('ext.wikia.adEngine.provider.*', function () {
 				);
 			case 'directGptMobile':
 				return modules['ext.wikia.adEngine.provider.' + providerName](
+					mocks.adContext,
+					mocks.defaultAdUnitBuilder,
+					mocks.kiloAdUnitBuilder,
 					getFactory()
 				);
 			case 'remnantGptMobile':
