@@ -31,7 +31,7 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 
 	connect: function () {
 		// Global vars from env
-		var url = 'http://' + window.wgChatHost + ':' + window.wgChatPort;
+		var url = 'https://' + window.wgChatHost;
 		this.log('Connecting to chat server: ' + url + ' ...');
 
 		if (this.socket) {
@@ -52,7 +52,8 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 					'connect timeout': false,
 					'query': data,
 					'max reconnection attempts': 8,
-					'reconnect': true
+					'reconnect': true,
+					'path' : '/dev-chat/socket.io'
 				});
 
 			// set up socket events
@@ -80,13 +81,15 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 
 	onConnect: function (socket, transport) {
 		this.socket = socket;
-
+		alert('ok');
 		if (!this.firstConnected) {
+			alert('lets go');
 			var InitqueryCommand = new models.InitqueryCommand();
 			setTimeout($.proxy(function () {
 				this.log('Sending "initquery" command...');
 				this.socket.send(InitqueryCommand.xport());
 			}, this), 500);
+			alert('yep');
 		}
 	},
 
@@ -206,6 +209,7 @@ var NodeRoomController = $.createClass(Observable, {
 	},
 
 	onInitial: function (message) {
+		alert('hello');
 		if (!this.isInitialized) {
 
 			_.each(this.model.chats.models, $.proxy(function (data) {

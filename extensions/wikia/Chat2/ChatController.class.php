@@ -36,7 +36,7 @@ class ChatController extends WikiaController {
 		$chathost = ChatConfig::getPublicHost();
 		$server = explode( ":", $chathost );
 		$this->chatServerHost = $server[0];
-		$this->chatServerPort = $server[1];
+		//$this->chatServerPort = $server[1];
 
 		// Some building block for URLs that the UI needs.
 		$this->pathToProfilePage = Title::makeTitle( !empty( $this->wg->EnableWallExt ) ? NS_USER_WALL : NS_USER_TALK, '$1' )->getFullURL();
