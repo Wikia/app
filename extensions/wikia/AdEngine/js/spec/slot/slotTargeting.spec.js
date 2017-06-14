@@ -51,10 +51,10 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 		return modules['ext.wikia.adEngine.slot.slotTargeting'](
 			adContext,
 			modules['ext.wikia.adEngine.utils.math'](),
-			prebid,
 			abTest,
-			instantGlobals
-		);
+			instantGlobals,
+            prebid
+        );
 	}
 
 	it('Generate correct wikia slot id', function () {
