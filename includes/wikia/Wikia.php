@@ -1262,9 +1262,9 @@ class Wikia {
 		global $wgWikiaAuthTokenKeys;
 		wfProfileIn( __METHOD__ );
 
-		@list( $user, $signature2, $public_key ) = explode("|", base64_decode( strtr($url, '-_,', '+/=') ));
+		@list( $username, $signature, $public_key ) = explode("|", base64_decode( strtr($url, '-_,', '+/=') ));
 
-		if ( empty( $user ) || empty( $signature2 ) || empty ( $public_key) ) {
+		if ( empty( $username ) || empty( $signature ) || empty ( $public_key ) ) {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
@@ -1277,7 +1277,7 @@ class Wikia {
 			return false;
 		}
 
-		$oUser = User::newFromName( $user );
+		$oUser = User::newFromName( $username );
 		if ( !is_object($oUser) ) {
 			wfProfileOut( __METHOD__ );
 			return false;
@@ -1286,7 +1286,7 @@ class Wikia {
 		// verify params
 		$email = $oUser->getEmail();
 		$params = array(
-			'user'			=> (string) $user,
+			'user'			=> (string) $username,
 			'token'			=> (string) wfGenerateUnsubToken( $email )
 		);
 
@@ -1297,7 +1297,7 @@ class Wikia {
 		$hash = hash_hmac( $hash_algorithm, $message, $private_key );
 
 		// compare values
-		if ( $hash != $signature2 ) {
+		if ( $hash != $signature ) {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}

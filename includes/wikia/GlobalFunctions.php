@@ -49,7 +49,7 @@ function GetLinksArrayFromMessage( $messagename ) { // feel free to suggest bett
 					$text = $line[1];
 				if ( wfEmptyMsg( $line[0], $link ) )
 					$link = $line[0];
-					if ( preg_match( '/^(?:' . wfUrlProtocols() . ')/', $link ) ) {
+				if ( preg_match( '/^(?:' . wfUrlProtocols() . ')/', $link ) ) {
 					$href = $link;
 				} else {
 					$title = Title::newFromText( $link );
