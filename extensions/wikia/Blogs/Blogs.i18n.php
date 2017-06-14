@@ -1350,7 +1350,7 @@ Crea estos listados de blogs de temas (categorías) como "Barack Obama", "Humor"
 	'blog-nopostfound' => 'No se encontraron entradas.',
 	'blog-writeone' => '¡Escribe uno!',
 	'blog-empty-user-blog' => "<h1>¿Qué es una entrada de blog?</h1>
-Los blogs (o bitácoras) son usados por la comunidad dentro de un wiki para crear ''[[wikipedia:es:Fanfiction|fan fiction]]'' o trabajos originales, noticias o anuncios, preguntas o recomendaciones para la comunidad, o revisiones u opiniones editoriales. Revisa por ejemplo el [[w:c:comunidad:Blog:Noticias_de_Wikia|blog de noticias de Wikia en español]] para ver cómo funcionan los blogs y estar al tanto de las últimas noticias de Wikia.",
+Los blogs (o bitácoras) son usados por la comunidad dentro de un wiki para crear ''[[wikipedia:es:Fanfiction|fan fiction]]'' o trabajos originales, noticias o anuncios, preguntas o recomendaciones para la comunidad, o revisiones u opiniones editoriales. Revisa por ejemplo el [[w:c:comunidad:Blog:Noticias_de_Fandom|blog de noticias de FANDOM en español]] para ver cómo funcionan los blogs y estar al tanto de las últimas noticias de FANDOM.",
 	'blog-added' => 'agregado',
 	'blog-edited' => 'editado',
 	'blog-page' => 'Blog',
