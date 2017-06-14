@@ -58,7 +58,7 @@
     "showTitle": true,
     "showDescription": false,
     "infoPanelPosition": "topLeft",
-    "screenToShowOnPause": "default"
+    "screenToShowOnPause": "discovery"
   },
   "endScreen": {
     "screenToShowOnEnd": "discovery",
@@ -135,6 +135,7 @@
       {"name":"share", "location":"controlBar", "whenDoesNotFit":"moveToMoreOptions", "minWidth":45 },
       {"name":"logo", "location":"controlBar", "whenDoesNotFit":"keep", "minWidth":125 },
       {"name":"fullscreen", "location":"controlBar", "whenDoesNotFit":"keep", "minWidth":45 }
+      {"name":"discovery", "location":"controlBar", "whenDoesNotFit":"keep", "minWidth":45 }
     ]
   },
   "icons": {

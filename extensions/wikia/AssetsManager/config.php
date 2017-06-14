@@ -3161,6 +3161,7 @@ $config['ooyala_js'] = [
 		'//extensions/wikia/ArticleVideo/scripts/ooyala/youtube.js',
 		'//extensions/wikia/ArticleVideo/scripts/ooyala-player.js',
 		'//extensions/wikia/ArticleVideo/scripts/ooyala/google_ima.js',
+		'//extensions/wikia/ArticleVideo/scripts/ooyala/discovery_api.min.js',
 	],
 ];
 
