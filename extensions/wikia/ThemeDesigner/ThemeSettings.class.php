@@ -148,7 +148,7 @@ class ThemeSettings {
 				ThemeSettings::BackgroundImageName
 			);
 			$history[$key]['settings']['community-header-background-image'] = $this->getFreshURL(
-				$val['settings']['community-header-background-image'],
+				$val['settings']['community-header-background-image-name'],
 				ThemeSettings::CommunityHeaderBackgroundImageName
 			);
 		}
