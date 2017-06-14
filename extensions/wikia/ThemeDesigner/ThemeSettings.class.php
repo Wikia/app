@@ -403,12 +403,17 @@ class ThemeSettings {
 		$thumbnailUrl = '';
 		$originalUrl = $this->getSettings()['community-header-background-image'];
 
-		if ( VignetteRequest::isVignetteUrl( $originalUrl ) ) {
-			$thumbnailUrl = VignetteRequest::fromUrl( $originalUrl )
-				->zoomCrop()
-				->width( self::COMMUNITY_HEADER_BACKGROUND_WIDTH )
-				->height( self::COMMUNITY_HEADER_BACKGROUND_HEIGHT )
-				->url();
+		try {
+			if ( VignetteRequest::isVignetteUrl( $originalUrl ) ) {
+				$thumbnailUrl = VignetteRequest::fromUrl( $originalUrl )
+					->zoomCrop()
+					->width( self::COMMUNITY_HEADER_BACKGROUND_WIDTH )
+					->height( self::COMMUNITY_HEADER_BACKGROUND_HEIGHT )
+					->url();
+			}
+		} catch ( InvalidArgumentException $e ) {
+			\Wikia\Logger\WikiaLogger::instance()
+				->warning("Wrong url to community-header-background-image", [ 'orginalUrl' => $originalUrl ] );
 		}
 
 		return $thumbnailUrl;
