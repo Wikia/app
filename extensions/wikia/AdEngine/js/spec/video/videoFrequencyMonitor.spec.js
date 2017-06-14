@@ -33,9 +33,7 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 	});
 
 	function mockVideosOnPageViews(data) {
-		if (!mocks.store.numberOfVideosSeenInLastPageViews.and) {
-			spyOn(mocks.store, 'numberOfVideosSeenInLastPageViews');
-		}
+		spyOn(mocks.store, 'numberOfVideosSeenInLastPageViews');
 
 		mocks.store.numberOfVideosSeenInLastPageViews.and.callFake(function (i) {
 			return data[i];
