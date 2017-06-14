@@ -29,6 +29,11 @@ class SpecialCreateNewWiki extends UnlistedSpecialPage {
 			throw new ErrorPageError( 'cnw-error-unconfirmed-email-header', 'cnw-error-unconfirmed-email' );
 		}
 
+		// SUS-352: check local and global user blocks before progressing to the second step
+		if ( $user->isBlocked() ) {
+			throw new UserBlockedError( $user->getBlock() );
+		}
+
 		$out->setPageTitle( wfMessage( 'cnw-title' ) );
 
 		$out->addHtml( F::app()->renderView( 'CreateNewWiki', 'Index' ) );

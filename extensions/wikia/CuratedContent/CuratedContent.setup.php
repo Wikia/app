@@ -46,6 +46,7 @@ JSMessages::registerPackage( 'CuratedContentMsg', [
 $wgHooks['CuratedContentSave'][] = 'CuratedContentHooks::onCuratedContentSave';
 $wgHooks['SkinAfterBottomScripts'][] = 'CuratedContentHooks::onSkinAfterBottomScripts';
 $wgHooks['OutputPageBeforeHTML'][] = 'CuratedContentHooks::onOutputPageBeforeHTML';
+$wgHooks['BeforePrepareActionButtons'][] = 'CuratedContentHooks::onBeforePrepareActionButtons';
 
 // minimal package of messages in CuratedContent
 JSMessages::registerPackage( 'CuratedContent', [
