@@ -62,7 +62,7 @@ require([
 		actionHandler.registerMessageListener();
 	});
 
-	mercuryListener.onEveryPageChange(function () {
+	mercuryListener.afterPageWithAdsRender(function () {
 		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
 			prebid.call();
 		}
