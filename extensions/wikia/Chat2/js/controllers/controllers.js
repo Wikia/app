@@ -91,7 +91,7 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 	},
 
 	authRequestWithMW: function (callback) {
-		this.proxy(callback, this)('name=' + encodeURIComponent(wgUserName) + '&key=' + window.wgChatKey + '&roomId=' + this.roomId);
+		this.proxy(callback, this)('name=' + encodeURIComponent(wgUserName) + '&key=' + window.wgChatKey + '&roomId=' + this.roomId + '&serverId=' + this.wikiId );
 	},
 
 
