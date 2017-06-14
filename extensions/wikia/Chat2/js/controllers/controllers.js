@@ -17,8 +17,13 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 		this.wikiId = window.wgCityId;
 	},
 
+	log: function(msg, group) {
+		group = group || 'chat';
+		window.Wikia.log(msg, window.Wikia.log.levels.info, group);
+	},
+
 	send: function ($msg) {
-		$().log($msg, 'message');
+		this.log('Sending a message: ' + $msg);
 		if (this.socket) {
 			this.socket.emit('message', $msg);
 		}
@@ -27,8 +32,7 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 	connect: function () {
 		// Global vars from env
 		var url = 'http://' + window.wgChatHost + ':' + window.wgChatPort;
-		$().log(url, 'Chat server');
-		console.log("connecting to url: " + url);
+		this.log('Connecting to chat server: ' + url + ' ...');
 
 		if (this.socket) {
 			if (this.socket.connected) {
@@ -40,6 +44,8 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 			}
 		}
 		this.authRequestWithMW(function (data) {
+			this.log('Authenticating using MediaWiki: ' + data);
+
 			var socket = io.connect(url, {
 					'force new connection': true,
 					'try multiple transports': true,
@@ -47,35 +53,41 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 					'query': data,
 					'max reconnection attempts': 8,
 					'reconnect': true
-				}),
-				connectionFail = this.proxy(function (delay, count) {
-					if (count === 8) {
-						if (socket) {
-							socket.disconnect();
-						}
-						this.fire("reConnectFail", {});
-					}
-				}, this);
+				});
 
+			// set up socket events
+			// @see https://socket.io/docs/server-api/#event-disconnect
 			socket.on('message', this.proxy(this.onMsgReceived, this));
 			socket.on('connect', this.proxy(function () {
-				this.onConnect(socket);
+				this.log('Connected to Chat server at ' + url);
+				this.onConnect(socket, ['xhr-polling']);
 			}, this));
-			socket.on('reconnecting', connectionFail);
+			socket.on('reconnecting', this.proxy(function (delay, count) {
+				this.log('Reconnecting...');
+
+				if (count === 8) {
+					if (socket) {
+						socket.disconnect();
+					}
+					this.fire("reConnectFail", {});
+				}
+			}, this));
+			socket.on('error', this.proxy(function (err) {
+				this.log('socket.onerror: ' + err + ' - ' + err.code);
+			}, this));
 		});
 	},
 
-	onConnect: function (socket) {
+	onConnect: function (socket, transport) {
 		this.socket = socket;
 
 		if (!this.firstConnected) {
 			var InitqueryCommand = new models.InitqueryCommand();
 			setTimeout($.proxy(function () {
+				this.log('Sending "initquery" command...');
 				this.socket.send(InitqueryCommand.xport());
 			}, this), 500);
 		}
-
-		$().log("connected.");
 	},
 
 	authRequestWithMW: function (callback) {
@@ -91,6 +103,9 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 	},
 
 	onMsgReceived: function (message) {
+		this.log('Message received: ' + message.event);
+		this.log(message);
+
 		switch (message.event) {
 			case 'disableReconnect':
 				this.autoReconnect = false;
@@ -202,7 +217,7 @@ var NodeRoomController = $.createClass(Observable, {
 			this.model.mport(message.data);
 
 			this.isInitialized = true;
-			$().log(this.isInitialized, "isInitialized");
+			$().log("onInitial", "chat:controllers");
 			if (this.isMain()) {
 				var newChatEntry = new models.InlineAlert({text: mw.message('chat-welcome-message', wgSiteName).escaped()});
 				this.model.chats.add(newChatEntry);
@@ -635,7 +650,7 @@ var NodeChatController = $.createClass(NodeRoomController, {
 	},
 
 	showRoom: function (roomId) {
-		$().log(roomId);
+		$().log(roomId, 'chat:showRoom');
 		if (this.activeRoom == roomId) {
 			return false;
 		}

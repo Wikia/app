@@ -1,10 +1,5 @@
 <div class="WallHistory">
 <? if ( empty( $wallmessageNotFound ) ): ?>
-	<?= $app->renderView( 'Wall', 'brickHeader', [
-			'path' => $path
-		] );
-	?>
-
 	<div class="SortingBar">
 		<div id="pageTitle">
 			<?= $pageTitle; ?>

@@ -8,6 +8,7 @@ $wds-screen: 'only screen';
 $wds-breakpoint-s-up: "#{$wds-screen}";
 $wds-breakpoint-s-only: "#{$wds-screen} and (max-width:#{$wds-breakpoint-m - 1})";
 
+$wds-breakpoint-m-down: "#{$wds-screen} and (max-width:#{$wds-breakpoint-l - 1})";
 $wds-breakpoint-m-up: "#{$wds-screen} and (min-width:#{$wds-breakpoint-m})";
 $wds-breakpoint-m-only: "#{$wds-screen} and (min-width:#{$wds-breakpoint-m}) and (max-width:#{$wds-breakpoint-l - 1})";
 

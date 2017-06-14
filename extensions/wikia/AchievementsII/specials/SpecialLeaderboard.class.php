@@ -9,9 +9,9 @@ class SpecialLeaderboard extends SpecialPage {
 	function execute($user_id) {
 		wfProfileIn(__METHOD__);
 
-		global $wgOut, $wgExtensionsPath, $wgStylePath, $wgSupressPageSubtitle, $wgUser, $wgResourceBasePath, $wgJsMimeType;
+		global $wgOut, $wgExtensionsPath, $wgStylePath, $wgSuppressPageSubtitle, $wgUser, $wgResourceBasePath, $wgJsMimeType;
 
-		$wgSupressPageSubtitle = true;
+		$wgSuppressPageSubtitle = true;
 		$rankingService = new AchRankingService();
 
 		$this->setHeaders();
