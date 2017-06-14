@@ -21,11 +21,11 @@ define('ext.wikia.adEngine.video.videoFrequencyMonitor', [
 		var limits = settings.get(),
 			result = true;
 
-		limits.pv.map(function (rule) {
+		limits.pv.forEach(function (rule) {
 			result = result && store.numberOfVideosSeenInLastPageViews(rule.limit) < rule.frequency;
 		});
 
-		limits.time.map(function (rule) {
+		limits.time.forEach(function (rule) {
 			result = result && store.numberOfVideosSeenInLast(rule.limit, rule.unit) < rule.frequency;
 		});
 
