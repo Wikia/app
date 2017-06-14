@@ -2,10 +2,10 @@
 define('ext.wikia.adEngine.slot.slotTargeting', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.utils.math',
-	'ext.wikia.adEngine.wrappers.prebid',
 	'wikia.abTest',
-	'wikia.instantGlobals'
-], function (adContext, math, prebid, abTest, instantGlobals) {
+	'wikia.instantGlobals',
+	require.optional('ext.wikia.adEngine.wrappers.prebid')
+], function (adContext, math, abTest, instantGlobals, prebid) {
 	'use strict';
 
 	var skins = {
@@ -114,12 +114,12 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 
 	function getOutstreamData() {
 		var context = adContext.getContext(),
-			getAdserverTargeting = prebid.get().getAdserverTargetingForAdUnitCode,
+			getAdserverTargeting = prebid && prebid.get().getAdserverTargetingForAdUnitCode,
 			videoTargeting = getAdserverTargeting && getAdserverTargeting(videoSlots[context.targeting.skin]);
 
-		if (videoTargeting) {
-			return constructOutstreamString(videoTargeting);
-		}
+			if (videoTargeting) {
+				return constructOutstreamString(videoTargeting);
+			}
     	}
 
 	function constructOutstreamString(videoTargeting) {
