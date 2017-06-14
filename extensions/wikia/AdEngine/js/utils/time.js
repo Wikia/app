@@ -27,7 +27,27 @@ define('ext.wikia.adEngine.utils.time', [], function () {
 		return value * getMultiplier(unit);
 	}
 
+	function getSupportedUnits() {
+		return UNITS.SECOND.concat(UNITS.MINUTE, UNITS.HOUR);
+	}
+
+	function guessTimeUnit(txt) {
+		var possibleResults = getSupportedUnits()
+			.filter(function (unit) {
+				return txt.indexOf(unit) > -1;
+			});
+
+		return possibleResults.length > 0 ? possibleResults[possibleResults.length - 1] : null;
+	}
+
+	function hasTimeUnit(txt) {
+		return guessTimeUnit(txt) !== null;
+	}
+
 	return {
-		getInterval: getInterval
+		getInterval: getInterval,
+		getSupportedUnits: getSupportedUnits,
+		guessTimeUnit: guessTimeUnit,
+		hasTimeUnit: hasTimeUnit
 	};
 });

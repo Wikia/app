@@ -4,13 +4,6 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 
 	var noop = function () {},
 		mocks = {
-			adContext: {
-				getContext: function () {
-					return {
-						opts: {}
-					};
-				}
-			},
 			store: {
 				save: noop,
 				numberOfVideosSeenInLastPageViews: noop,
@@ -19,6 +12,14 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 			adLogicPageViewCounter: {
 				get: function () {
 					return 1;
+				}
+			},
+			settings: {
+				get: function () {
+					return {
+						pv: [],
+						time: []
+					};
 				}
 			}
 		};
@@ -30,18 +31,6 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 	afterEach(function () {
 		jasmine.clock().uninstall();
 	});
-
-	function mockContext(data) {
-		spyOn(mocks.adContext, 'getContext').and.returnValue(data);
-	}
-
-	function mockWgVar(wgVar) {
-		mockContext({
-			opts: {
-				outstreamVideoFrequencyCapping: wgVar
-			}
-		});
-	}
 
 	function mockVideosOnPageViews(data) {
 		if (!mocks.store.numberOfVideosSeenInLastPageViews.and) {
@@ -65,8 +54,8 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.video.videoFrequencyMonitor'](
-			mocks.adContext,
 			mocks.adLogicPageViewCounter,
+			mocks.settings,
 			mocks.store
 		);
 	}
@@ -93,7 +82,7 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 
 	it('Should ask for correct number of PV and return positive result', function () {
 		spyOn(mocks.store, 'numberOfVideosSeenInLastPageViews').and.returnValue(4);
-		mockWgVar(['5/30pv']);
+		spyOn(mocks.settings, 'get').and.returnValue({pv: [{frequency: 5, limit: 30}], time:[]});
 
 		expect(getModule().videoCanBeLaunched()).toBeTruthy();
 		expect(mocks.store.numberOfVideosSeenInLastPageViews.calls.first().args[0]).toEqual(30);
@@ -101,7 +90,7 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 
 	it('Should ask for correct number of PV and return negative result', function () {
 		spyOn(mocks.store, 'numberOfVideosSeenInLastPageViews').and.returnValue(5);
-		mockWgVar(['5/10pv']);
+		spyOn(mocks.settings, 'get').and.returnValue({pv: [{frequency: 5, limit: 10}], time:[]});
 
 		expect(getModule().videoCanBeLaunched()).toBeFalsy();
 		expect(mocks.store.numberOfVideosSeenInLastPageViews.calls.first().args[0]).toEqual(10);
@@ -114,7 +103,15 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 				100: 10
 			},
 			videosSeenInTime: {},
-			wgVar: ['5/10pv', '10/100pv'],
+			settings: {
+				pv: [{
+					frequency: 5,
+					limit: 10
+				}, {
+					frequency: 10,
+					limit: 100
+				}], time: []
+			},
 			result: false
 		},
 		{
@@ -123,7 +120,15 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 				100: 9
 			},
 			videosSeenInTime: {},
-			wgVar: ['5/10pv', '10/100pv'],
+			settings: {
+				pv: [{
+					frequency: 5,
+					limit: 10
+				}, {
+					frequency: 10,
+					limit: 100
+				}], time: []
+			},
 			result: true
 		},
 		{
@@ -132,7 +137,15 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 				100: 10
 			},
 			videosSeenInTime: {},
-			wgVar: ['5/10pv', '10/100pv'],
+			settings: {
+				pv: [{
+					frequency: 5,
+					limit: 10
+				}, {
+					frequency: 10,
+					limit: 100
+				}], time: []
+			},
 			result: false
 		},
 		{
@@ -140,7 +153,13 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 			videosSeenInTime: {
 				'5min': 2
 			},
-			wgVar: ['2/5min'],
+			settings: {
+				pv: [], time: [{
+					frequency: 2,
+					limit: 5,
+					unit: 'min'
+				}]
+			},
 			result: false
 		},
 		{
@@ -148,7 +167,13 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 			videosSeenInTime: {
 				'15min': 4
 			},
-			wgVar: ['5/15min'],
+			settings: {
+				pv: [], time: [{
+					frequency: 5,
+					limit: 15,
+					unit: 'min'
+				}]
+			},
 			result: true
 		},
 		{
@@ -158,7 +183,16 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 			videosSeenInTime: {
 				'15min': 4
 			},
-			wgVar: ['5/15min', '3/100pv'],
+			settings: {
+				pv: [{
+					frequency: 3,
+					limit: 100
+				}], time: [{
+					frequency: 5,
+					limit: 15,
+					unit: 'min'
+				}]
+			},
 			result: false
 		},
 		{
@@ -166,7 +200,13 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 			videosSeenInTime: {
 				'1h': 1
 			},
-			wgVar: ['5/1h'],
+			settings: {
+				pv: [], time: [{
+					frequency: 5,
+					limit: 1,
+					unit: 'h'
+				}]
+			},
 			result: true
 		},
 		{
@@ -174,7 +214,13 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 			videosSeenInTime: {
 				'1h': 5
 			},
-			wgVar: ['5/1h'],
+			settings: {
+				pv: [{}], time: [{
+					frequency: 5,
+					limit: 1,
+					unit: 'h'
+				}]
+			},
 			result: false
 		},
 		{
@@ -183,7 +229,17 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 				'1h': 2,
 				'1/10minutes': 1
 			},
-			wgVar: ['5/1h', '1/10minutes'],
+			settings: {
+				pv: [{}], time: [{
+					frequency: 5,
+					limit: 1,
+					unit: 'h'
+				}, {
+					frequency: 1,
+					limit: 10,
+					unit: 'minutes'
+				}]
+			},
 			result: false
 		},
 		{
@@ -192,7 +248,17 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 				'1h': 2,
 				'3/10minutes': 2
 			},
-			wgVar: ['5/1h', '3/10minutes'],
+			settings: {
+				pv: [{}], time: [{
+					frequency: 5,
+					limit: 1,
+					unit: 'h'
+				}, {
+					frequency: 3,
+					limit: 10,
+					unit: 'min'
+				}]
+			},
 			result: false
 		}
 	].forEach(function (testCase) {
@@ -200,7 +266,7 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 		it('Should ' + resultTxt + ' to launch video based on pv (' + JSON.stringify(testCase.videosSeenInPV) + ') and time (' + JSON.stringify(testCase.videosSeenInTime) + ') limits', function () {
 			mockVideosOnPageViews(testCase.videosSeenInPV);
 			mockVideosInTime(testCase.videosSeenInTime);
-			mockWgVar(testCase.wgVar);
+			spyOn(mocks.settings, 'get').and.returnValue(testCase.settings);
 
 			expect(getModule().videoCanBeLaunched()).toEqual(testCase.result);
 		});
