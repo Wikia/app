@@ -1,6 +1,7 @@
 <?php
 
 use Wikia\Security\CSRFDetector;
+use Email\EmailController;
 
 /**
  * Provides the special page for single point unsubscribe.
@@ -44,7 +45,7 @@ class UnsubscribePage extends UnlistedSpecialPage {
 		$email = $token = null;
 		if ( !empty( $hash_key ) ) {
 			#$hask_key = urldecode ( $hash_key );
-			$data = Wikia::verifyUserSecretKey( $hash_key, 'sha256' );
+			$data = EmailController::verifyUserSecretKey( $hash_key, 'sha256' );
 			error_log( "data = " . print_r($data, true) );
 			if ( !empty( $data ) ) {
 				$username 	= ( isset( $data['user'] ) ) ? $data['user'] : null;
