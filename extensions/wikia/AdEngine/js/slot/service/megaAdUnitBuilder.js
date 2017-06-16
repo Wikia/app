@@ -72,7 +72,7 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 			provider + '.' + getGroup(slotName),
 			slotName.toLowerCase(),
 			device,
-			skin + '-' + pageType,
+			skin + '-' + (getContextTargeting().hasFeaturedVideo ? 'fv-' : '') + pageType,
 			wikiName + '-' + vertical
 		];
 
