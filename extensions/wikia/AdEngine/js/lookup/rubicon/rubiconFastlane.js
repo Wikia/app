@@ -178,7 +178,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 		if (
 			typeof floorPrice !== 'undefined' &&
 			parameters[rubiconTierKey] && typeof parameters[rubiconTierKey].map === 'function' &&
-			bestPrices[slotName] <= floorPrice && bestPricesPrivate[slotName] <= floorPrice
+			bestPrices[slotName] / 100 <= floorPrice && bestPricesPrivate[slotName] / 100 <= floorPrice
 		) {
 			parameters[rubiconTierKey] = parameters[rubiconTierKey].map(function (tier) {
 				return tier.replace(/tier\d+/, 'tierPREBID');
