@@ -21,10 +21,7 @@ class Languages {
 		$this->title = \RequestContext::getMain()->getTitle();
 		$this->currentLangName = \Language::getLanguageName( $this->title->getPageLanguage()->getCode() );
 		$this->languageList = $this->handleLanguages( $app );
-
-		$shouldDisplay = $this->title->isContentPage();
-		wfRunHooks( 'PageHeaderLanguageSelectorShouldDisplay', [$this->title, &$shouldDisplay] );
-		$this->shouldDisplay = $shouldDisplay;
+		$this->shouldDisplay = count( $this->languageList ) > 0;
 	}
 
 	/**
