@@ -26,7 +26,7 @@ define('ext.wikia.adEngine.video.videoFrequencyMonitor', [
 		});
 
 		limits.time.forEach(function (rule) {
-			result = result && store.numberOfVideosSeenInLast(rule.limit, rule.unit) < rule.frequency;
+			result = result && store.numberOfVideosSeenInTime(rule.limit, rule.unit) < rule.frequency;
 		});
 
 		return result;
