@@ -206,10 +206,6 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		return params;
 	}
 
-	if (skin && skin !== 'mercury') {
-		pvCounter.increment();
-	}
-
 	updateContext();
 	adContext.addCallback(updateContext);
 
