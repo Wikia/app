@@ -485,8 +485,7 @@ class ForumHooksHelper {
 		if (
 			in_array( $title->getNamespace(), [
 				NS_WIKIA_FORUM_BOARD,
-				NS_WIKIA_FORUM_TOPIC_BOARD,
-				NS_USER_WALL_MESSAGE,
+				NS_WIKIA_FORUM_TOPIC_BOARD
 			] ) &&
 			RequestContext::getMain()->getRequest()->getVal( 'action' ) !== 'history'
 		) {

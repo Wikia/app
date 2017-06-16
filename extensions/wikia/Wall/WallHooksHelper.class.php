@@ -2325,4 +2325,27 @@ class WallHooksHelper {
 
 		return $allow;
 	}
+
+	/**
+	 * @param string $pageSubtitle
+	 *
+	 * @param Title $title
+	 * @return bool
+	 */
+	public static function onAfterPageHeaderPageSubtitle( &$pageSubtitle, Title $title ): bool {
+		if (
+			$title->getNamespace() === NS_USER_WALL_MESSAGE &&
+			RequestContext::getMain()->getRequest()->getVal( 'action' ) !== 'history'
+		) {
+			$pageSubtitle = F::app()->renderView(
+				'Wall',
+				'brickHeader',
+				[
+					'id' => $title->getText()
+				]
+			);
+		}
+
+		return true;
+	}
 }
