@@ -214,10 +214,6 @@ define('ext.wikia.adEngine.adContext', [
 
 		enableAdMixExperiment(context);
 
-		if (context.targeting.skin && context.targeting.skin !== 'mercury') {
-			pvCounter.increment();
-		}
-
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
 		if (w.ads && w.ads.context) {
@@ -234,6 +230,10 @@ define('ext.wikia.adEngine.adContext', [
 	}
 
 	setContext(w.ads ? w.ads.context : {});
+
+	if (context.targeting.skin && context.targeting.skin !== 'mercury') {
+		pvCounter.increment();
+	}
 
 	return {
 		addCallback: addCallback,
