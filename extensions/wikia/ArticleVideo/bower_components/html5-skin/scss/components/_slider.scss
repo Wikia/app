@@ -1,0 +1,196 @@
+.oo-slider {
+  width: #{$slider-width};
+  @extend .oo-center-vertical-horizontal;
+}
+
+.oo-slider[type=range] {
+    -webkit-appearance: none;
+
+    //increases the clickable area for webkit sliders
+    border-top: solid 20px transparent;
+    border-bottom: solid 20px transparent;
+    background-clip: content-box;
+
+    //passing colors to use for coloring the progress/track in browsers other than IE
+    border-right-color: #{$track-color};
+    border-left-color:#{$progress-color};
+    border-left-style: hidden;
+
+    /*required for proper track sizing in FF*/
+    width: #{$slider-width};
+}
+
+.oo-slider[type=range]::-webkit-slider-runnable-track {
+    height: #{$slider-height};
+    border: none;
+}
+
+.oo-slider[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: #{$slider-thumb-diameter};
+    width: #{$slider-thumb-diameter};
+    border-radius: 50%;
+    background: #{$thumb-color};
+    margin-top: -($slider-thumb-diameter - $slider-height)/2;
+}
+
+// IE Edge only
+@supports (-ms-accelerator:true) {
+    .oo-slider[type=range]::-webkit-slider-thumb {
+        margin-top: 0;
+    }
+}
+
+.oo-slider[type=range]:focus {
+    outline: none;
+}
+
+//moz
+.oo-slider[type=range]::-moz-range-track {
+    width: #{$slider-width};
+    height: #{$slider-height};
+    background: #{$track-color};
+}
+
+.oo-slider[type=range]::-moz-range-thumb {
+    border: none;
+    height: #{$slider-thumb-diameter};
+    width: #{$slider-thumb-diameter};
+    border-radius: 50%;
+    background: #{$thumb-color};
+}
+
+.oo-slider[type=range]:focus::-moz-range-track {
+    background: #{$track-color};
+}
+
+.oo-slider[type=range]::-moz-range-progress {
+    background: #{$progress-color};
+}
+
+.oo-slider-volume[type=range]::-moz-range-progress {
+    background: #{$slider-volume-progress-color};
+}
+
+//ms
+.oo-slider[type=range]::-ms-track {
+    width: #{$slider-width};
+    height: #{$slider-height};
+
+    /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
+    background: transparent;
+
+    /*leave room for the larger thumb to overflow with a transparent border */
+    border-color: transparent;
+    border-width: $slider-thumb-diameter/2 0;
+
+    /*remove default tick marks*/
+    color: transparent;
+}
+
+.oo-slider[type=range]::-ms-fill-lower {
+    background: #{$progress-color};
+}
+
+.oo-slider[type=range]::-ms-fill-upper {
+    background: #{$track-color};
+}
+
+//Generic slider
+.oo-slider[type=range]::-ms-thumb {
+    border: none;
+    height: #{$slider-thumb-diameter};
+    width: #{$slider-thumb-diameter};
+    border-radius: 50%;
+    background: #{$thumb-color};
+}
+
+.oo-slider[type=range]:focus::-ms-fill-lower {
+    background: #{$progress-color};
+}
+
+.oo-slider[type=range]:focus::-ms-fill-upper {
+    background: #{$track-color};
+}
+
+.oo-slider[type=range]::-ms-tooltip {
+    display: none;
+}
+
+//Volume slider
+
+.oo-slider-volume {
+  width: #{$slider-volume-width};
+}
+
+.oo-slider-volume[type=range] {
+    //passing colors to use for coloring the progress/track in browsers other than IE
+    border-right-color: #{$slider-volume-track-color};
+    border-left-color:#{$slider-volume-progress-color};
+
+    /*required for proper track sizing in FF*/
+    width: #{$slider-volume-width};
+}
+
+.oo-slider-volume[type=range]::-webkit-slider-runnable-track {
+    height: #{$slider-volume-height};
+}
+
+.oo-slider-volume[type=range]::-webkit-slider-thumb {
+    height: #{$slider-volume-thumb-diameter};
+    width: #{$slider-volume-thumb-diameter};
+    background: #{$slider-volume-thumb-color};
+    margin-top: -($slider-volume-thumb-diameter - $slider-volume-height)/2;
+}
+
+// IE Edge only
+@supports (-ms-accelerator:true) {
+    .oo-slider-volume[type=range]::-webkit-slider-thumb {
+        margin-top: 0;
+    }
+}
+
+.oo-slider-volume[type=range]::-moz-range-track {
+    width: #{$slider-volume-width};
+    height: #{$slider-volume-height};
+    background: #{$slider-volume-track-color};
+}
+
+.oo-slider-volume[type=range]::-moz-range-thumb {
+    height: #{$slider-volume-thumb-diameter};
+    width: #{$slider-volume-thumb-diameter};
+    background: #{$slider-volume-thumb-color};
+}
+
+.oo-slider-volume[type=range]:focus::-moz-range-track {
+    background: #{$slider-volume-track-color};
+}
+
+.oo-slider-volume[type=range]::-ms-track {
+    width: #{$slider-volume-width};
+    height: #{$slider-volume-height};
+    border-width: $slider-volume-thumb-diameter/2 0;
+}
+
+.oo-slider-volume[type=range]::-ms-fill-lower {
+    background: #{$slider-volume-progress-color};
+}
+
+.oo-slider-volume[type=range]::-ms-fill-upper {
+    background: #{$slider-volume-track-color};
+}
+
+.oo-slider-volume[type=range]::-ms-thumb {
+    height: #{$slider-volume-thumb-diameter};
+    width: #{$slider-volume-thumb-diameter};
+    background: #{$slider-volume-thumb-color};
+}
+
+.oo-slider-volume[type=range]:focus::-ms-fill-lower {
+    background: #{$slider-volume-progress-color};
+}
+
+.oo-slider-volume[type=range]:focus::-ms-fill-upper {
+    background: #{$slider-volume-track-color};
+}
