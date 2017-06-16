@@ -39,6 +39,8 @@ define('ext.wikia.adEngine.video.videoFrequencyStore', [
 	}
 
 	function countAll(filterFunction) {
+		store = getAll();
+
 		return (filterFunction ? store.filter(filterFunction) : store).length;
 	}
 
