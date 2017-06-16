@@ -49,7 +49,7 @@ define('ext.wikia.adEngine.video.videoFrequencyStore', [
 		log(['minPV calculated', minPV], log.levels.debug, logGroup);
 
 		return countAll(function (item) {
-			return item.pv >= minPV;
+			return item.pv > minPV;
 		});
 	}
 
@@ -58,7 +58,7 @@ define('ext.wikia.adEngine.video.videoFrequencyStore', [
 		log(['minDate calculated', minDate], log.levels.debug, logGroup);
 
 		return countAll(function (item) {
-			return item.date >= minDate;
+			return item.date > minDate;
 		});
 	}
 

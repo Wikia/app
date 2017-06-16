@@ -63,7 +63,7 @@ describe('ext.wikia.adEngine.video.videoFrequencyStore', function () {
 		store.save({date: 4000, pv: 5});
 		store.save({date: 5000, pv: 6});
 
-		expect(store.numberOfVideosSeenInTime(3, 'sec')).toEqual(3);
+		expect(store.numberOfVideosSeenInTime(3, 'sec')).toEqual(2);
 	});
 
 	it('Should return correct number of elements based on pv if there is no stored item', function () {
@@ -84,7 +84,7 @@ describe('ext.wikia.adEngine.video.videoFrequencyStore', function () {
 		store.save({date: 3000, pv: 4});
 		store.save({date: 5000, pv: 6});
 		mocks.pageViewCounter.get.and.returnValue(7);
-		expect(store.numberOfVideosSeenInLastPageViews(4)).toEqual(3);
+		expect(store.numberOfVideosSeenInLastPageViews(4)).toEqual(2);
 	});
 
 	it('Should not add invalid data', function () {
