@@ -276,7 +276,7 @@ class SiteStatus {
 
 	private function findLastEdit() {
 		if ( $this->dbMissing ) {
-			return '';
+			return;
 		}
 
 		$date = ( new \WikiaSQL() )
@@ -297,8 +297,12 @@ class SiteStatus {
 				''
 			);
 
-		$this->debug("\tfound $date as most recent edit" );
-		$this->lastPageEdit = new \DateTime( $date );
+		if ( empty( $date ) ) {
+			$this->debug("\tCould not determine date of most recent edit" );
+		} else {
+			$this->debug("\tfound $date as most recent edit" );
+			$this->lastPageEdit = new \DateTime( $date );
+		}
 	}
 
 	private function findExistingPosts() {
@@ -310,7 +314,7 @@ class SiteStatus {
 
 	private function findExistingThreadedForumPosts() {
 		if ( $this->dbMissing ) {
-			return 0;
+			return;
 		}
 
 		$num = ( new \WikiaSQL() )
@@ -343,7 +347,7 @@ class SiteStatus {
 
 	private function findExistingWikiForumPosts() {
 		if ( $this->dbMissing ) {
-			return 0;
+			return;
 		}
 
 		$num = ( new \WikiaSQL() )
