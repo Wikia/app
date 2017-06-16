@@ -38,8 +38,7 @@ class DiscussionsActivity {
 	 * @param $siteId
 	 * @return boolean
 	 */
-	public static function discussionsIsActive( $siteId )
-	{
+	public static function discussionsIsActive( $siteId ) {
 		return WikiFactory::getVarValueByName( 'wgEnableDiscussions', $siteId );
 	}
 }

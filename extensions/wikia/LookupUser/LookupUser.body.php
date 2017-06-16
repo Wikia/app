@@ -1,7 +1,4 @@
 <?php
-use \Wikia\DependencyInjection\Injector;
-use \Wikia\Service\Swagger\ApiProvider;
-use \Swagger\Client\Discussion\Api\ContributionApi;
 
 /**
  * Provides the special page to look up user info
