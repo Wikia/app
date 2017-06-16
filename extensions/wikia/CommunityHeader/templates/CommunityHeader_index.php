@@ -21,7 +21,7 @@
 		</div>
 		<div class="wds-community-header__wiki-buttons wds-button-group">
 			<?php foreach ( $wikiButtons as $wikiButton ): ?>
-				<a class="wds-button wds-is-squished wds-is-secondary"
+				<a class="wds-button wds-is-squished wds-is-secondary<?= empty( $wikiButton->additionalClasses ) ? '' : ' ' . $wikiButton->additionalClasses ?>"
 				   href="<?= $wikiButton->href ?>"
 				   data-tracking="<?= $wikiButton->tracking ?>"<?php if ( !empty( $wikiButton->title ) ): ?> title="<?= $wikiButton->title->render() ?>"<?php endif; ?>>
 					<?= DesignSystemHelper::renderSvg( $wikiButton->icon, 'wds-icon wds-icon-small' ) ?>

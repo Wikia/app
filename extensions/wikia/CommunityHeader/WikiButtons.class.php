@@ -28,7 +28,7 @@ class WikiButtons implements \Iterator {
 			new WikiButton( $this->getAddNewPageURL(),
 				new Label( 'community-header-add-new-page', Label::TYPE_TRANSLATABLE_TEXT ),
 				new Label( 'community-header-add-new-page', Label::TYPE_TRANSLATABLE_TEXT ),
-				'wds-icons-add-new-page-small', 'add-new-page' );
+				'wds-icons-add-new-page-small', 'add-new-page', 'createpage' );
 
 		return [ $addNewPageButton ];
 	}
@@ -38,7 +38,7 @@ class WikiButtons implements \Iterator {
 			new WikiButton( $this->getAddNewPageURL(),
 				new Label( 'community-header-add', Label::TYPE_TRANSLATABLE_TEXT ),
 				new Label( 'community-header-add-new-page', Label::TYPE_TRANSLATABLE_TEXT ),
-				'wds-icons-add-new-page-small', 'add-new-page' );
+				'wds-icons-add-new-page-small', 'add-new-page', 'createpage' );
 
 		$wikiActivityButton =
 			new WikiButton( $this->getWikiActivityURL(), null,
@@ -52,7 +52,7 @@ class WikiButtons implements \Iterator {
 		$addNewPageButton =
 			new WikiButton( $this->getAddNewPageURL(), null,
 				new Label( 'community-header-add-new-page', Label::TYPE_TRANSLATABLE_TEXT ),
-				'wds-icons-add-new-page-small', 'add-new-page' );
+				'wds-icons-add-new-page-small', 'add-new-page', 'createpage' );
 
 		$wikiActivityButton =
 			new WikiButton( $this->getWikiActivityURL(), null,
