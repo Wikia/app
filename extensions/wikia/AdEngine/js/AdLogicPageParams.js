@@ -16,8 +16,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 
 	var context = {},
 		logGroup = 'ext.wikia.adEngine.adLogicPageParams',
-		runtimeParams = {},
-		skin = adContext.getContext().targeting.skin;
+		runtimeParams = {};
 
 	function updateContext() {
 		context = adContext.getContext();
