@@ -34,7 +34,7 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 		var topRightAdFixed = abTest.getGroup('AD_MIX') === 'AD_MIX_2' || abTest.getGroup('AD_MIX') === 'AD_MIX_2B';
 		var recircEnabled = abTest.getGroup('AD_MIX') !== 'CONTROL';
 
-		if (context.opts.adMix3Enabled) {
+		if (context.opts.adMix3Enabled || context.opts.adMix5Enabled) {
 			gapSize = 0;
 		}
 
@@ -316,7 +316,10 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 			viewportHeight = $window.height();
 			viewportWidth = $window.width();
 
-			$('#WikiaArticleBottomAd').hide();
+
+			if (!context.opts.adMix5Enabled) {
+				$('#WikiaArticleBottomAd').hide();
+			}
 
 			if ($adAndRecircWrapper.offset().top + $adAndRecircWrapper.height() >= $footer.offset().top) {
 				$adAndRecircWrapper.css('position', 'static');

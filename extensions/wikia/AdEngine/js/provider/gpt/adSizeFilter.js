@@ -50,7 +50,8 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 				footerSize = doc.getElementById('WikiaFooter').offsetWidth;
 				return getNewSizes(slotSizes, footerSize, [[728, 90]]);
 			case slotName === 'INCONTENT_BOXAD_1' &&
-				(context.opts.adMix1Enabled || (context.opts.adMix3Enabled && context.targeting.hasFeaturedVideo)):
+				(context.opts.adMix1Enabled ||
+				((context.opts.adMix3Enabled || context.opts.adMix5Enabled) && context.targeting.hasFeaturedVideo)):
 			case slotName === 'TOP_RIGHT_BOXAD' && context.opts.adMix1Enabled:
 				return [ [300, 250] ];
 			default:

@@ -98,6 +98,7 @@ define('ext.wikia.adEngine.adContext', [
 
 		context.opts.adMix1Enabled = context.opts.adMixExperimentEnabled && abTest.getGroup('AD_MIX').indexOf('AD_MIX_1') === 0;
 		context.opts.adMix3Enabled = context.opts.adMixExperimentEnabled && abTest.getGroup('AD_MIX').indexOf('AD_MIX_3') === 0;
+		context.opts.adMix5Enabled = context.opts.adMixExperimentEnabled && abTest.getGroup('AD_MIX').indexOf('AD_MIX_5') === 0;
 
 		context.slots.adMixToUnblock = [];
 
@@ -107,6 +108,11 @@ define('ext.wikia.adEngine.adContext', [
 
 		if (context.opts.adMix3Enabled) {
 			context.slots.adMixToUnblock.push('BOTTOM_LEADERBOARD');
+		}
+
+		if (context.opts.adMix5Enabled) {
+			context.slots.adMixToUnblock.push('PREFOOTER_LEFT_BOXAD');
+			context.slots.adMixToUnblock.push('PREFOOTER_RIGHT_BOXAD');
 		}
 	}
 

@@ -43,7 +43,8 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 				lastRefreshTime: new Date(),
 				refreshNumber: 0,
 				adVisible: true,
-			};
+			},
+			admix3or5Enabled = context.opts.adMix3Enabled || context.opts.adMix5Enabled;
 
 		function getStartPosition(placeHolder) {
 			return parseInt(placeHolder.offset().top, 10) -
@@ -93,7 +94,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 					refreshAdIfPossible();
 				}
 
-				if (context.opts.adMix3Enabled && shouldChangeSlot($adSlot.offset().top, 6)) {
+				if (admix3or5Enabled && shouldChangeSlot($adSlot.offset().top, 6)) {
 					if (refresh.adVisible) {
 						$adSlot.addClass('hidden');
 						$recirculationRail.show();
@@ -159,9 +160,9 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 			if (!enabled && isEnoughSpace && scrollTop >= startPosition) {
 					log(['handleFloatingMedrec', 'Enabling floating medrec'], 'debug', logGroup);
 
-					enabled = !context.opts.adMix3Enabled;
+					enabled = !admix3or5Enabled;
 
-					if (!adPushed && (!context.opts.adMix3Enabled || shouldChangeSlot(scrollTop, 6))) {
+					if (!adPushed && (!admix3or5Enabled || shouldChangeSlot(scrollTop, 6))) {
 						$placeHolder.append($adSlot);
 						win.adslots2.push({
 							slotName: slotName,
@@ -175,7 +176,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 						});
 						adPushed = true;
 
-						if (context.opts.adMix3Enabled) {
+						if (admix3or5Enabled) {
 							$recirculationRail.hide();
 						}
 					}
