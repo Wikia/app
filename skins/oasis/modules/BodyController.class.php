@@ -111,12 +111,17 @@ class BodyController extends WikiaController {
 		// perform namespace and special page check
 		$isUserPage = in_array( $wg->Title->getNamespace(), self::getUserPagesNamespaces() );
 
-		$ret = ( $isUserPage && !$wg->Title->isSubpage() )
-			|| $wg->Title->isSpecial( 'Following' )
-			|| $wg->Title->isSpecial( 'Contributions' )
-			|| $wg->Title->isSpecial( 'UserActivity' )
-			|| ( defined( 'NS_BLOG_LISTING' ) && $wg->Title->getNamespace() == NS_BLOG_LISTING )
-			|| ( defined( 'NS_BLOG_ARTICLE' ) && $wg->Title->getNamespace() == NS_BLOG_ARTICLE );
+		$ret =
+			( $isUserPage && !$wg->Title->isSubpage() ) ||
+			$wg->Title->isSpecial( 'Following' ) ||
+			$wg->Title->isSpecial( 'Contributions' ) ||
+			$wg->Title->isSpecial( 'UserActivity' ) ||
+			(
+				defined( 'NS_BLOG_ARTICLE' ) &&
+				$wg->Title->getNamespace() == NS_BLOG_ARTICLE &&
+				// show user pages header only on user blog listing
+		        !$wg->Title->isSubpage()
+			);
 
 		return $ret;
 	}
@@ -315,14 +320,7 @@ class BodyController extends WikiaController {
 		// show user pages header on this page?
 		if ( self::showUserPagesHeader() ) {
 			$this->headerModuleName = 'UserPagesHeader';
-			// is this page a blog post?
-			if ( self::isBlogPost() ) {
-				$this->headerModuleAction = 'BlogPost';
-			} // is this page a blog listing?
-			else if ( self::isBlogListing() ) {
-				$this->headerModuleAction = 'BlogListing';
-			}
-			// show corporate header on this page?
+		// show corporate header on this page?
 		} else if ( WikiaPageType::isCorporatePage() || WikiaPageType::isWikiaHub() ) {
 			$this->headerModuleName = 'PageHeader';
 
