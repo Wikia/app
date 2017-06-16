@@ -119,6 +119,10 @@
 		line-height: 1;
 		max-width: 100%;
 		word-wrap: break-word;
+
+		i {
+			font-style: italic;
+		}
 	}
 
 	&__separator {
