@@ -14,14 +14,15 @@ define('ext.wikia.adEngine.utils.time', [], function () {
 		};
 
 	function getMultiplier(unit) {
-		var keys = Object.keys(UNITS);
-		for (var i = 0; i < keys.length; i++) {
-			if (UNITS[keys[i]].indexOf(unit) > -1) {
-				return MULTIPLIER[keys[i]];
-			}
+		if (getSupportedUnits().indexOf(unit) === -1) {
+			throw 'Unsupported time unit';
 		}
 
-		throw 'Unsupported time unit';
+		var unitName = Object.keys(UNITS).filter(function (unitName) {
+			return UNITS[unitName].indexOf(unit) > -1;
+		})[0];
+
+		return MULTIPLIER[unitName];
 	}
 
 	function getInterval(value, unit) {

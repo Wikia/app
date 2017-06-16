@@ -49,8 +49,9 @@ define('ext.wikia.adEngine.video.videoFrequencySettings', [
 	}
 
 	function parseTimeRule(item) {
-		var unit = timeUtil.guessTimeUnit(item);
-		var data = item.replace(unit, '').split('/');
+		var unit = timeUtil.guessTimeUnit(item),
+			data = item.replace(unit, '').split('/');
+
 		return {
 			frequency: parseInt(data[0]),
 			limit: parseInt(data[1]),

@@ -26,7 +26,9 @@ define('ext.wikia.adEngine.context.slotsContext', [
 	function setupSlots() {
 		var context = adContext.getContext(),
 			isHome = params.getPageType() === 'home',
-			isOasis = context.targeting.skin === 'oasis';
+			isOasis = context.targeting.skin === 'oasis',
+			isIncontentEnabled = !isHome && isOasis && isInContentApplicable() &&
+				videoFrequencyMonitor.videoCanBeLaunched();
 
 		setStatus('PREFOOTER_MIDDLE_BOXAD', isHome);
 
@@ -41,10 +43,7 @@ define('ext.wikia.adEngine.context.slotsContext', [
 		setStatus('INVISIBLE_HIGH_IMPACT_2', geo.isProperGeo(instantGlobals.wgAdDriverHighImpact2SlotCountries));
 		setStatus('PREFOOTER_RIGHT_BOXAD', !context.opts.overridePrefootersSizes);
 
-		setStatus(
-			'INCONTENT_PLAYER',
-			!isHome && isOasis && isInContentApplicable() && videoFrequencyMonitor.videoCanBeLaunched()
-		);
+		setStatus('INCONTENT_PLAYER', isIncontentEnabled);
 
 		log(['Disabled slots:', slots], 'info', logGroup);
 	}
