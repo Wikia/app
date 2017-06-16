@@ -7,7 +7,7 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 			store: {
 				save: noop,
 				numberOfVideosSeenInLastPageViews: noop,
-				numberOfVideosSeenInLast: noop
+				numberOfVideosSeenInTime: noop
 			},
 			adLogicPageViewCounter: {
 				get: function () {
@@ -41,11 +41,11 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 	}
 
 	function mockVideosInTime(data) {
-		if (!mocks.store.numberOfVideosSeenInLast.and) {
-			spyOn(mocks.store, 'numberOfVideosSeenInLast');
+		if (!mocks.store.numberOfVideosSeenInTime.and) {
+			spyOn(mocks.store, 'numberOfVideosSeenInTime');
 		}
 
-		mocks.store.numberOfVideosSeenInLast.and.callFake(function (value, unit) {
+		mocks.store.numberOfVideosSeenInTime.and.callFake(function (value, unit) {
 			return data[value + unit];
 		});
 	}
