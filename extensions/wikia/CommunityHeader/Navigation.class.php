@@ -27,7 +27,7 @@ class Navigation {
 	}
 
 	private function getExploreItems(): array {
-		global $wgEnableCommunityPageExt, $wgEnableForumExt, $wgEnableDiscussions;
+		global $wgEnableCommunityPageExt, $wgEnableForumExt, $wgEnableDiscussions, $wgEnableSpecialVideosExt;
 
 		$exploreItems = [
 			[
@@ -52,7 +52,7 @@ class Navigation {
 				'title' => 'Videos',
 				'key' => 'community-header-videos',
 				'tracking' => 'explore-videos',
-				'include' => true,
+				'include' => !empty( $wgEnableSpecialVideosExt ),
 			],
 			[
 				'title' => 'Images',
