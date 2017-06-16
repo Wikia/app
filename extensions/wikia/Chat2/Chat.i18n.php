@@ -93,6 +93,11 @@ $messages['en'] = array(
 	'chat-browser-is-notsupported' => '	Your browser is not supported. For the best experience, use a <a href="http://community.wikia.com/wiki/Help:Supported_browsers">newer browser</a>.',
 	'chat-checkuser-join-action' => 'Joined Chat',
 	'chat-status-away' => 'Away',
+	'chat-blocklist-timestamp' => 'Timestamp',
+	'chat-blocklist-target' => 'Target',
+	'chat-blocklist-expiry' => 'Expires',
+	'chat-blocklist-by' => 'Blocking User',
+	'chat-blocklist-reason' => 'Reason',
 );
 
 $messages['qqq'] = array(
@@ -163,6 +168,11 @@ Parameters:
 	'chat-checkuser-join-action' => 'Shown in CheckUser extension for chat-join events',
 	'chat-status-away' => 'Display when user chnages his status to away.
 {{Identical|Away}}',
+	'chat-blocklist-timestamp' => 'Timestamp column header on Special:ChatBanList',
+	'chat-blocklist-target' => 'Target column header on Special:ChatBanList',
+	'chat-blocklist-expiry' => 'Expires column header on Special:ChatBanList',
+	'chat-blocklist-by' => 'Blocked by column header on Special:ChatBanList',
+	'chat-blocklist-reason' => 'Reason column header on Special:ChatBanList',
 );
 
 $messages['af'] = array(
@@ -898,7 +908,7 @@ Si crees que ha sido un error o te gustaría reconsiderarlo, por favor contacta 
 	'chat-blocklist-timestamp' => 'Fecha y hora',
 	'chat-blocklist-target' => 'Destinatario',
 	'chat-blocklist-expiry' => 'Caduca',
-	'chat-blocklist-by' => 'Usuario Bloqueador',
+	'chat-blocklist-by' => 'Usuario bloqueado por',
 	'chat-blocklist-reason' => 'Motivo',
 	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
 );
@@ -1249,7 +1259,7 @@ $messages['fr'] = array(
 	'chat-blocklist-timestamp' => 'Date et heure',
 	'chat-blocklist-target' => 'Cible',
 	'chat-blocklist-expiry' => 'Date d’expiration',
-	'chat-blocklist-by' => 'Blocking User',
+	'chat-blocklist-by' => 'Utilisateur ayant effectué le blocage',
 	'chat-blocklist-reason' => 'Motif',
 	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
 );
@@ -3091,7 +3101,7 @@ $messages['ru'] = array(
 	'chat-blocklist-timestamp' => 'Время',
 	'chat-blocklist-target' => 'Целевая аудитория',
 	'chat-blocklist-expiry' => 'Истекает',
-	'chat-blocklist-by' => 'Blocking User',
+	'chat-blocklist-by' => 'Заблокировал',
 	'chat-blocklist-reason' => 'Причина',
 	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
 );

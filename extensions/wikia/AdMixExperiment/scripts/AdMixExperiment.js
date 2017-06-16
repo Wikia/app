@@ -16,6 +16,7 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 		var bottomMargin = 20;
 		var breakpointSmall = 1023;
 		var globalNavigationHeight = $('#globalNavigation').outerHeight(true);
+		var communityHeaderHeight = $('.wds-community-header').height();
 		var gapSize = 200;
 		var firstAdTopSpace = 10;
 		var noRecircAdBottomSpace = 30;
@@ -175,7 +176,7 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 					width: ''
 				});
 
-				adAndRecircWrapperStyles.top = (stopPosition - topAdHeight) + 'px';
+				adAndRecircWrapperStyles.top = (stopPosition - topAdHeight - communityHeaderHeight) + 'px';
 			} else {
 				adAndRecircWrapperStyles.top = (stopPosition - topAdHeight - globalNavigationHeight + viewportHeight - adMixRecircWrapperHeight - noRecircAdBottomSpace) + 'px';
 			}

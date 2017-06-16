@@ -1,0 +1,51 @@
+.oo-watermark-container {
+  position: absolute;
+  max-height: 100%;
+  max-width: 100%;
+  pointer-events: auto;
+  outline: none !important;
+  @include vendor-prefixes (transition, bottom .3s ease-in-out);
+}
+
+.oo-watermark-no-clickURL {
+  pointer-events: none;
+}
+
+.oo-watermark {
+  width: auto;
+  height: auto;
+}
+
+.oo-watermark-top {
+  top: $watermark-margin;
+}
+.oo-watermark-bottom {
+  bottom: $watermark-margin;
+}
+
+.oo-watermark-center-horizontal {
+  @include horizontal-center;
+}
+
+.oo-watermark-center-vertical {
+  @include vertical-center;
+}
+
+.oo-watermark-left {
+  left: $watermark-margin;
+
+  img {
+    float: left;
+  }
+}
+.oo-watermark-right {
+  right: $watermark-margin;
+
+  img {
+    float: right;
+  }
+}
+
+.oo-watermark-bottom.oo-watermark-bottom-cb {
+  bottom: $control-bar-height;
+}

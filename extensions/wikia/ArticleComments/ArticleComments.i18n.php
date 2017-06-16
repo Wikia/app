@@ -7,6 +7,7 @@ $messages['en'] = array(
 	'article-blog-comments-file-page' => "[[$1|Comment from $2]] on [[$3|$4]] post on [[$5|$6's]] blog",
 	'article-comments-anonymous' => 'Anonymous user',
 	'article-comments-comments' => 'Comments ($1)',
+	'article-comments-no-comments' => 'Comments',
 	'article-comments-post' => 'Post comment',
 	'article-comments-cancel' => 'Cancel',
 	'article-comments-delete' => 'delete',
@@ -91,6 +92,7 @@ Parameters:
 	'article-comments-anonymous' => 'Anonymous users are logged out / un-authenticated users.
 {{Identical|Anonymous user}}',
 	'article-comments-comments' => '{{Identical|Comment}}',
+	'article-comments-no-comments' => 'Label on button that links to comments if there is no comments yet',
 	'article-comments-post' => 'This is the text of a submit button to post a new article comment.
 {{Identical|Post comment}}',
 	'article-comments-cancel' => 'Cancel/stop editing an article comment.

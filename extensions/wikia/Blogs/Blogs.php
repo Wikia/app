@@ -106,6 +106,7 @@ $wgHooks[ 'SpecialSearchProfiles' ][] = 'BlogsHelper::OnSpecialSearchProfiles';
 $wgHooks[ 'ParserBeforeInternalParse' ][] = 'BlogsHelper::OnParserBeforeInternalParse';
 $wgHooks[ 'ArticleInsertComplete' ][] = 'BlogsHelper::OnArticleInsertComplete';
 $wgHooks[ 'TitleMoveComplete' ][] = 'BlogsHelper::onTitleMoveComplete';
+$wgHooks[ 'PageHeaderActionButtonShouldDisplay' ][] = 'BlogsHelper::onPageHeaderActionButtonShouldDisplay';
 
 // Usages of images on blogs on file pages
 $wgHooks['FilePageImageUsageSingleLink'][] = 'BlogsHelper::onFilePageImageUsageSingleLink';
@@ -115,6 +116,8 @@ $wgHooks['BeforeDeletePermissionErrors'][] = 'BlogLockdown::onBeforeDeletePermis
 
 // SUS-260: Prevent moving pages into or out of Forum namespaces
 $wgHooks['AbortMove'][] = 'BlogsHelper::onAbortMove';
+
+$wgHooks['AfterPageHeaderButtons'][] = 'BlogsHelper::onAfterPageHeaderButtons';
 
 /**
  * load other parts

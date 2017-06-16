@@ -136,15 +136,15 @@ define('wikia.preview', [
 					addEditSummary($article, editPageOptions.width, data.summary);
 				}
 
-				// fire an event once preview is rendered
-				$(window).trigger('EditPageAfterRenderPreview', [$article]);
-
 				// fire event when new article comment is/will be added to DOM
 				mw.hook('wikipage.content').fire($article);
 			} else if (previousType === previewTypes.mobile.name) {
 				// always fire event when switching out of mobile preview
 				mw.hook('wikipage.content').fire($article);
 			}
+
+			// fire an event once preview is rendered
+			$(window).trigger('EditPageAfterRenderPreview', [$article]);
 
 			previousType = type;
 

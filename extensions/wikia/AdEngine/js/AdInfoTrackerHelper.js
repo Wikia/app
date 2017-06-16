@@ -50,6 +50,7 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 			'kv_ref': pageParams.ref || '',
 			'kv_top': pageParams.top || '',
 			'kv_ah': pageParams.ah || '',
+			'kv_abi': slotParams.abi || '',
 			'bidder_won': slotParams.hb_bidder || '',
 			'bidder_1': transformBidderPrice('indexExchange', realSlotPrices, slotPricesIgnoringTimeout),
 			'bidder_2': transformBidderPrice('appnexus', realSlotPrices, slotPricesIgnoringTimeout),
@@ -62,7 +63,8 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 			'bidder_9': transformBidderPrice('openx', realSlotPrices, slotPricesIgnoringTimeout),
 			'product_chosen': '',
 			'product_lineitem_id': slotFirstChildData.gptLineItemId || '',
-			'product_label': ''
+			'product_label': '',
+			'ad_status': status || 'unknown'
 		};
 
 		return data;

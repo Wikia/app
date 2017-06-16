@@ -14,6 +14,7 @@ define('ext.wikia.adEngine.context.slotsContext', [
 		slots = {};
 
 	function setStatus(slotName, status) {
+		log(['setStatus', slotName, status], log.levels.info, logGroup);
 		slots[slotName] = !!status;
 	}
 
@@ -69,12 +70,10 @@ define('ext.wikia.adEngine.context.slotsContext', [
 	}
 
 	setupSlots();
-	adContext.addCallback(function () {
-		setupSlots();
-	});
 
 	return {
 		filterSlotMap: filterSlotMap,
-		isApplicable: isApplicable
+		isApplicable: isApplicable,
+		setStatus: setStatus
 	};
 });
