@@ -174,6 +174,9 @@ class SiteStatus {
 			$statement
 				->INSERT( self::TABLE_STATUS )
 				->SET( 'site_id', $this->siteId );
+		} else {
+			// If we don't meet either above conditions, skip writing this record.
+			return;
 		}
 
 		// Conditionally set these date columns only if we've found something
@@ -308,8 +311,12 @@ class SiteStatus {
 	private function findExistingPosts() {
 		$this->debug( "Finding existing posts" );
 
-		$this->findExistingThreadedForumPosts();
-		$this->findExistingWikiForumPosts();
+		try {
+			$this->findExistingThreadedForumPosts();
+			$this->findExistingWikiForumPosts();
+		} catch(\Exception $e) {
+			$this->debug("\tError finding existing posts: " . $e->getMessage() );
+		}
 	}
 
 	private function findExistingThreadedForumPosts() {
