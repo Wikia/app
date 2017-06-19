@@ -7,13 +7,13 @@ define('ext.wikia.adEngine.adEngineRunner', [
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.lookup.amazonMatch'),
 	require.optional('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane'),
-	require.optional('ext.wikia.aRecoveryEngine.recovery.sourcePointRecovery'),
+	require.optional('ext.wikia.aRecoveryEngine.adBlockRecovery'),
 	require.optional('ext.wikia.adEngine.lookup.prebid')
-], function (adEngine, adTracker, instantGlobals, log, win, amazonMatch, rubiconFastlane, spRecovery, prebid) {
+], function (adEngine, adTracker, instantGlobals, log, win, amazonMatch, rubiconFastlane, adBlockRecovery, prebid) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adEngineRunner',
-		supportedModules = [amazonMatch, rubiconFastlane, spRecovery, prebid],
+		supportedModules = [amazonMatch, rubiconFastlane, adBlockRecovery, prebid],
 		timeout = instantGlobals.wgAdDriverDelayTimeout || 2000;
 
 	/**
@@ -32,12 +32,13 @@ define('ext.wikia.adEngine.adEngineRunner', [
 		 * @param {string} name
 		 */
 		function markModule(name) {
-			log(name + ' responded', 'debug', logGroup);
+			log(name + ' responded', log.levels.debug, logGroup);
+
 			if (modulesQueue.indexOf(name) === -1) {
 				modulesQueue.push(name);
 			}
 			if (modulesQueue.length === enabledModules.length) {
-				log('All modules responded', 'info', logGroup);
+				log('All modules responded', log.levels.info, logGroup);
 				startedByModules = true;
 				adTracker.measureTime('adengine_runner/modules_responded', modulesQueue.join(',')).track();
 				runAdEngine();
@@ -48,9 +49,11 @@ define('ext.wikia.adEngine.adEngineRunner', [
 		 * Add module listener to mark module on response
 		 */
 		function registerModules() {
-			log(['Register modules', enabledModules.length], 'debug', logGroup);
+			log(['Register modules', enabledModules.length], log.levels.debug, logGroup);
+
 			enabledModules.forEach(function (module) {
 				var name = module.getName();
+
 				module.addResponseListener(function () {
 					markModule(name);
 				});
@@ -77,13 +80,13 @@ define('ext.wikia.adEngine.adEngineRunner', [
 		});
 
 		if (enabledModules.length === 0) {
-			log('All modules are disabled', 'info', logGroup);
+			log('All modules are disabled', log.levels.info, logGroup);
 			runAdEngine();
 		} else {
 			registerModules();
 			win.setTimeout(function () {
 				if (!startedByModules) {
-					log(['Timeout exceeded', timeout], 'info', logGroup);
+					log(['Timeout exceeded', timeout], log.levels.info, logGroup);
 					adTracker.measureTime('adengine_runner/modules_timeout', getTimeoutModules()).track();
 					runAdEngine();
 				}
@@ -110,7 +113,7 @@ define('ext.wikia.adEngine.adEngineRunner', [
 				return;
 			}
 			engineStarted = true;
-			log('Running AdEngine', 'info', logGroup);
+			log('Running AdEngine', log.levels.info, logGroup);
 			adTracker.measureTime('adengine.init', queueName).track();
 			adEngine.run(config, slots, queueName);
 		}
@@ -118,7 +121,7 @@ define('ext.wikia.adEngine.adEngineRunner', [
 		if (delayEnabled) {
 			delayRun(runAdEngine);
 		} else {
-			log('Run AdEngine without delay', 'info', logGroup);
+			log('Run AdEngine without delay', log.levels.info, logGroup);
 			runAdEngine();
 		}
 	}

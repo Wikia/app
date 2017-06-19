@@ -1,5 +1,4 @@
 <?php
-/** Internationalization file for /extensions/GlobalMessages/GlobalMessagesOTHER extension. */
 $messages = [];
 
 $messages['en'] = [

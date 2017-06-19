@@ -1,13 +1,15 @@
 /*global define, require*/
 /*jshint maxlen: 150*/
 define('ext.wikia.adEngine.provider.directGpt', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.factory.wikiaGpt',
+	'ext.wikia.adEngine.slot.adUnitBuilder',
+	'ext.wikia.adEngine.slot.service.kiloAdUnitBuilder',
 	'ext.wikia.adEngine.slotTweaker',
-	require.optional('ext.wikia.adEngine.lookup.openx.openXBidderHelper'),
-	require.optional('ext.wikia.aRecoveryEngine.recovery.pageFair'),
-	require.optional('ext.wikia.aRecoveryEngine.recovery.sourcePoint')
-], function (uapContext, factory, slotTweaker, openXHelper, pageFair, sourcePoint) {
+	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery'),
+	require.optional('ext.wikia.aRecoveryEngine.sourcePoint.recovery')
+], function (adContext, uapContext, factory, adUnitBuilder, kiloAdUnitBuilder, slotTweaker, pageFair, sourcePoint) {
 	'use strict';
 
 	return factory.createProvider(
@@ -16,11 +18,9 @@ define('ext.wikia.adEngine.provider.directGpt', [
 		'gpt',
 		{
 			BOTTOM_LEADERBOARD:         {size: '728x90', loc: 'footer'},
-			EXIT_STITIAL_BOXAD_1:       {size: '300x250,600x400,800x450,550x480', loc: 'exit'},
 			GPT_FLUSH:                  {flushOnly: true},
 			INCONTENT_BOXAD_1:          {size: '120x600,160x600,300x250,300x600', loc: 'hivi'},
 			INCONTENT_PLAYER:           {size: '1x1', loc: 'middle'},
-			INCONTENT_LEADERBOARD:      {size: '1x1,728x90,300x250,468x60', loc: 'hivi'},
 			INVISIBLE_HIGH_IMPACT_2:    {loc: 'hivi'},
 			INVISIBLE_SKIN:             {size: '1000x1000,1x1', loc: 'top'},
 			LEFT_SKYSCRAPER_2:          {size: '120x600,160x600,300x250,300x600,300x1050', loc: 'middle'},
@@ -48,9 +48,6 @@ define('ext.wikia.adEngine.provider.directGpt', [
 					slotTweaker.adjustLeaderboardSize(slotName);
 				}
 			},
-			beforeHop: function(slotName) {
-				openXHelper && openXHelper.addOpenXSlot(slotName);
-			},
 			isPageFairRecoverable: pageFair ? pageFair.isSlotRecoverable : false,
 			isSourcePointRecoverable: sourcePoint ? sourcePoint.isSlotRecoverable : false,
 			sraEnabled: true,
@@ -60,9 +57,9 @@ define('ext.wikia.adEngine.provider.directGpt', [
 				'TOP_RIGHT_BOXAD',
 				'GPT_FLUSH'
 			],
+			adUnitBuilder: adContext.getContext().opts.enableKILOAdUnit ? kiloAdUnitBuilder : adUnitBuilder,
 			highlyViewableSlots: [
 				'INCONTENT_BOXAD_1',
-				'INCONTENT_LEADERBOARD',
 				'INCONTENT_PLAYER',
 				'INVISIBLE_HIGH_IMPACT_2'
 			]

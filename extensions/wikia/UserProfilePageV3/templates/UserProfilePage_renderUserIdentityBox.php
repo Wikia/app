@@ -68,7 +68,7 @@
 				<? else: ?>
 					<?php if ( $user['edits'] >= 0 ): ?>
 						<a href="<?= Sanitizer::encodeAttribute( $user['contributionsURL'] ) ?>">
-							<?= wfMessage( 'user-identity-box-edits', $user['edits'] )->plain(); ?>
+							<?= wfMessage( 'user-identity-box-edits', $user['edits'] )->text(); ?>
 						</a>
 					<?php else: ?>
 						<br/>

@@ -1,6 +1,6 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.adUnitBuilder', [
-	'ext.wikia.adEngine.adLogicPageParams',
+	'ext.wikia.adEngine.adLogicPageParams'
 ], function (page) {
 	'use strict';
 
@@ -18,7 +18,12 @@ define('ext.wikia.adEngine.slot.adUnitBuilder', [
 		].join('/');
 	}
 
+	function getShortSlotName(adUnit) {
+		return adUnit.replace(/^.*\/([^\/]*)$/, '$1');
+	}
+
 	return {
-		build: build
+		build: build,
+		getShortSlotName: getShortSlotName
 	};
 });

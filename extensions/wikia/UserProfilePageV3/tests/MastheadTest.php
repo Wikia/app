@@ -9,12 +9,13 @@ class MastheadTest extends WikiaBaseTest {
 	 * @param string $avatarOption
 	 * @return Masthead
 	 */
-	private function getMastheadWithAvatar($avatarOption) {
-		$user = $this->mockClassWithMethods('User', [
-			'getGlobalAttribute' => $avatarOption
-		]);
+	private function getMastheadWithAvatar( $avatarOption ) {
+		/** @var User $user */
+		$user = $this->createConfiguredMock( User::class, [
+			'getGlobalAttribute' => $avatarOption,
+		] );
 
-		return Masthead::newFromUser($user);
+		return Masthead::newFromUser( $user );
 	}
 
 	/**

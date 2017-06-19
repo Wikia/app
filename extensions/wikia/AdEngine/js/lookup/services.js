@@ -13,42 +13,31 @@ define('ext.wikia.adEngine.lookup.services', [
 	'wikia.log',
 	require.optional('ext.wikia.adEngine.lookup.prebid'),
 	require.optional('ext.wikia.adEngine.lookup.amazonMatch'),
-	require.optional('ext.wikia.adEngine.lookup.openXBidder'),
-	require.optional('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane'),
-	require.optional('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan')
-], function (log, prebid, amazonMatch, oxBidder, rubiconFastlane, rubiconVulcan) {
+	require.optional('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane')
+], function (log, prebid, amazonMatch, rubiconFastlane) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.lookup.services',
 		bidders = [
 			amazonMatch,
-			oxBidder,
 			rubiconFastlane,
-			prebid,
-			rubiconVulcan
+			prebid
 		],
 		bidIndex = {
 			'rubicon_fastlane': {
 				pos: 0,
 				char: 'R'
 			},
-			'ox_bidder': {
-				pos: 1,
-				char: 'O'
-			},
 			amazon: {
 				pos: 2,
 				char: 'A'
-			},
-			'rubicon_vulcan': {
-				pos: 3,
-				char: 'V'
 			},
 			prebid: {
 				pos: 4,
 				char: 'P'
 			}
 		},
-		bidMarker = ['x', 'x', 'x', 'x', 'x'];
+		bidMarker = ['x', 'x', 'x', 'x', 'x'],
+		realSlotPrices = {};
 
 
 	function addParameters(providerName, slotName, slotTargeting) {
@@ -88,7 +77,7 @@ define('ext.wikia.adEngine.lookup.services', [
 		addParameters(providerName, slotName, slotTargeting);
 	}
 
-	function getSlotPrices(slotName) {
+	function getCurrentSlotPrices(slotName) {
 		var slotPrices = {};
 
 		bidders.forEach(function (bidder) {
@@ -104,8 +93,18 @@ define('ext.wikia.adEngine.lookup.services', [
 		return slotPrices;
 	}
 
+	function storeRealSlotPrices(slotName) {
+		realSlotPrices[slotName] = getCurrentSlotPrices(slotName);
+	}
+
+	function getDfpSlotPrices(slotName) {
+		return realSlotPrices[slotName] || {};
+	}
+
 	return {
 		extendSlotTargeting: extendSlotTargeting,
-		getSlotPrices: getSlotPrices
+		getCurrentSlotPrices: getCurrentSlotPrices,
+		storeRealSlotPrices: storeRealSlotPrices,
+		getDfpSlotPrices: getDfpSlotPrices
 	};
 });

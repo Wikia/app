@@ -5,6 +5,7 @@ namespace ContributionPrototype;
 use Http;
 use MWHttpRequest;
 use OutputPage;
+use Title;
 use Wikia;
 use Wikia\Logger\Loggable;
 use Wikia\Service\Gateway\UrlProvider;
@@ -42,19 +43,24 @@ class CPArticleRenderer {
 	}
 
 	/**
-	 * @param string $title
+	 * @param Title $title
 	 * @param OutputPage $output
 	 */
-	public function render($title, OutputPage $output, $action='view') {
-		$content = $this->getArticleContent($title, $action);
+	public function render(Title $title, OutputPage $output, $action='view') {
+		if ( $title->getPartialURL() == '' ) {
+			$output->redirect( '/wiki/Home' );
+		}
+
+		$output->setPageTitle($title->getPrefixedText());
+		$content = $this->getArticleContent($title->getPartialURL(), $action);
+		$this->addStyles($output);
 		
 		if ($content === false) {
-			// TODO: what do we want to show here?
+			$output->addHTML("<p>We're currently experiencing some technical difficulties. Hang tight, we're working to fix these ASAP.</p>");
 			return;
 		}
 
 		$output->addHTML($content);
-		$this->addStyles($output);
 		$this->addScripts($output);
 	}
 
@@ -91,16 +97,18 @@ class CPArticleRenderer {
 				'GET',
 				"{$internalHost}/{$path}",
 				[
+					'userAgent' => $_SERVER['HTTP_USER_AGENT'],
 					'noProxy' => true,
 					'returnInstance' => true,
 					'followRedirects'=> true,
 					'headers' => [
 						'X-Wikia-Community' => $this->dbName,
+						'X-Wikia-PremiumHeader' => true
 					]
 				]
 		);
 
-		if ($response->getStatus() >= 500) {
+		if (!$response->status->isOK()) {
 			// Http::request logs when http status > 399
 			return false;
 		}

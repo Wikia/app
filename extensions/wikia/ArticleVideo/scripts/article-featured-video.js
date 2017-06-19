@@ -1,4 +1,24 @@
-require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wikia.abTest', 'wikia.articleVideo.videoFeedbackBox'], function (window, onScroll, tracker, OoyalaPlayer, abTest, VideoFeedbackBox) {
+require([
+	'wikia.window',
+	'wikia.onScroll',
+	'wikia.tracker',
+	'ooyala-player',
+	'wikia.abTest',
+	'wikia.articleVideo.videoFeedbackBox',
+	require.optional('ext.wikia.adEngine.adContext'),
+	require.optional('ext.wikia.adEngine.video.player.ooyala.ooyalaTracker'),
+	require.optional('ext.wikia.adEngine.video.vastUrlBuilder')
+], function (
+	window,
+	onScroll,
+	tracker,
+	OoyalaPlayer,
+	abTest,
+	VideoFeedbackBox,
+	adContext,
+	playerTracker,
+	vastUrlBuilder
+) {
 
 	$(function () {
 		var $video = $('#article-video'),
@@ -12,6 +32,11 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 			collapsingDisabled = false,
 			playTime = -1,
 			percentagePlayTime = -1,
+			prerollSlotName = 'FEATURED_VIDEO',
+			playerTrackerParams = {
+				adProduct: 'featured-video-preroll',
+				slotName: prerollSlotName
+			},
 			track = tracker.buildTrackingFunction({
 				category: 'article-video',
 				trackingMethod: 'analytics'
@@ -25,9 +50,30 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 		function initVideo(onCreate) {
 			var ooyalaVideoId = window.wgFeaturedVideoId,
 				playerParams = window.wgOoyalaParams,
-				autoplay = abTest.inGroup('FEATURED_VIDEO_AUTOPLAY', 'AUTOPLAY');
+				autoplay = abTest.inGroup('FEATURED_VIDEO_AUTOPLAY', 'AUTOPLAY') && window.OO.allowAutoPlay,
+				vastUrl;
 
-			ooyalaVideoController = OoyalaPlayer.initHTML5Player(ooyalaVideoElementId, playerParams, ooyalaVideoId, onCreate, autoplay);
+			if (vastUrlBuilder && adContext && adContext.getContext().opts.showAds) {
+				vastUrl = vastUrlBuilder.build(640/480, {
+					pos: prerollSlotName,
+					src: 'premium'
+				});
+			} else {
+				playerTrackerParams.adProduct = 'featured-video-no-preroll';
+			}
+
+			if (playerTracker) {
+				playerTracker.track(playerTrackerParams, 'init');
+			}
+
+			ooyalaVideoController = OoyalaPlayer.initHTML5Player(
+				ooyalaVideoElementId,
+				playerParams,
+				ooyalaVideoId,
+				onCreate,
+				autoplay,
+				vastUrl
+			);
 		}
 
 		function collapseVideo(videoOffset, videoHeight) {
@@ -37,7 +83,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 
 			collapsingDisabled = false;
 			videoCollapsed = true;
-			$video.addClass('collapsed-ready');
+			$video.addClass('is-collapsed-ready');
 			if (ooyalaVideoController) {
 				updatePlayerControls(true);
 			}
@@ -50,7 +96,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 			$ooyalaVideo.css('height', videoHeight);
 			setTimeout(function () {
 				if (videoCollapsed) { // we need to be sure video has not been uncollapsed yet
-					$video.addClass('collapsed');
+					$video.addClass('is-collapsed');
 				}
 			}, 0);
 		}
@@ -67,7 +113,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 			});
 			$videoThumbnail.css('height', '');
 			$ooyalaVideo.css('height', '');
-			$video.removeClass('collapsed collapsed-ready');
+			$video.removeClass('is-collapsed is-collapsed-ready');
 			if (ooyalaVideoController) {
 				updatePlayerControls(false);
 			}
@@ -135,14 +181,37 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 			}
 		}
 
+		function initAttributionTracking() {
+			$('.featured-video__attribution-container a').click(function () {
+				track({
+					action: tracker.ACTIONS.CLICK,
+					label: 'attribution'
+				});
+			});
+		}
+
 		initVideo(function (player) {
 			$video.addClass('ready-to-play');
+
+			if (playerTracker) {
+				playerTracker.register(player, playerTrackerParams);
+			}
 
 			player.mb.subscribe(OO.EVENTS.INITIAL_PLAY, 'featured-video', function () {
 				track({
 					action: tracker.ACTIONS.PLAY_VIDEO,
 					label: 'featured-video'
 				});
+			});
+
+			player.mb.subscribe(OO.EVENTS.VOLUME_CHANGED, 'featured-video', function (eventName, volume) {
+				if (volume > 0) {
+					track({
+						action: tracker.ACTIONS.CLICK,
+						label: 'featured-video-unmuted'
+					});
+					player.mb.unsubscribe(OO.EVENTS.VOLUME_CHANGED, 'featured-video');
+				}
 			});
 
 			player.mb.subscribe(OO.EVENTS.PLAY, 'featured-video', function () {
@@ -229,6 +298,8 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 		$closeBtn.click(closeButtonClicked);
 
 		onScroll.bind(toggleCollapse);
+
+		initAttributionTracking();
 	});
 
 });

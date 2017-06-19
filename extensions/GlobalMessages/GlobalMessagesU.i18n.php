@@ -1,5 +1,4 @@
 <?php
-/** Internationalization file for /extensions/GlobalMessages/GlobalMessagesU extension. */
 $messages = [];
 
 $messages['en'] = [
@@ -90,6 +89,7 @@ See the [[Special:NewFiles|gallery of new files]] for a more visual overview.',
 	'uploadfromurl-queued' => 'Your upload has been queued.',
 	'uploaddisabledtext' => 'Unfortunately photo uploading is temporarily disabled while we work on our servers. Sorry for this inconvenience and please try again in a few hours.',
 	'uploadscripted' => 'This file contains HTML or script code that may be erroneously interpreted by a web browser.',
+	'upload-scripted-dtd' => 'Cannot upload SVG files that contain a non-standard DTD declaration.',
 	'uploadscriptednamespace' => 'This SVG file contains an illegal namespace \'$1\'',
 	'uploadinvalidxml' => 'The XML in the uploaded file could not be parsed.',
 	'uploadvirus' => 'The file may contain a virus! Details: $1',
@@ -221,6 +221,8 @@ It may have already been undeleted.',
 $1',
 	'undelete-show-file-confirm' => 'Are you sure you want to view the deleted revision of the file "<nowiki>$1</nowiki>" from $2 at $3?',
 	'undelete-show-file-submit' => 'Yes',
+	'undelete-cantedit' => 'You cannot undelete this page as you are not allowed to edit this page.',
+	'undelete-cantcreate' => 'You cannot undelete this page as there is no existing page with this name and you are not allowed to create this page.',
 	'uctop' => '(top)',
 	'unblock' => 'Unblock user',
 	'unblockip' => 'Unblock user',
@@ -368,6 +370,7 @@ See also:
 $1 is the value in KB/MB/GB',
 	'upload-description' => 'Caption above a section of the [[Special:Upload]] page',
 	'upload-options' => 'Caption above a section of the [[Special:Upload]] page',
+	'upload-scripted-dtd' => 'Used as an error message when uploading an svg file that contains a DTD declaration where the system identifier of the DTD is for something other than the standard SVG DTDS, or it is a SYSTEM DTD, or the public identifier does not start with -//W3C//. Note that errors related to the internal dtd subset do not use this error message.',
 	'upload-proto-error-text' => '"Remote upload" is explained on [http://en.wikipedia.org/wiki/Uploading_and_downloading#Remote_upload Wikipedia].',
 	'upload-file-error' => 'Unused on core [http://svn.wikimedia.org/viewvc/mediawiki/trunk/phase3/includes/specials/SpecialUpload.php?r1=53161&r2=53282].
 
@@ -427,6 +430,8 @@ Extensions making use of it:
 
 {{identical|Are you sure you want to view the deleted revision of the file...}}',
 	'undelete-show-file-submit' => '{{Identical|Yes}}',
+	'undelete-cantedit' => 'Shown if the user tries to undelete a page that they cannot edit.',
+	'undelete-cantcreate' => 'Shown if the user tries to undelete a page which currently does not exist, and they are not allowed to create it. This could for example happen on a wiki with custom protection levels where the page name has been create-protected and the user has the right to undelete but not the right to edit protected pages.',
 	'uctop' => 'This message is used in [[Special:Contributions]]. It is used to show that a particular edit was the last made to a page. Example: 09:57, 11 February 2008 (hist) (diff) Pagename‎ (edit summary) (top)',
 	'unblocked' => 'Do not translate the namespace "User:".',
 	'unblocklogentry' => 'This is the text of an entry in the Block log (and Recent Changes), after hour (and date, only in the Block log) and sysop name:
@@ -7249,7 +7254,7 @@ Es folgt ein Auszug aus dem Lösch- und Verschiebungs-Logbuch dieser Datei.',
 
 Mit diesem Formular kannst du Dateien hochladen. Mögliche Dateiformate sind für Bilder \'\'jpg, jpeg, png, gif, svg\'\' und für Ton- bzw. Videodateien \'\'ogg\'\'.
 
-Wie du hochgeladene Bilder in Seiten einbaust, steht unter \'\'\'[[w:c:hilfe:Hilfe:Bilder|Hilfe „Bilder“]]\'\'\'. 
+Wie du hochgeladene Bilder in Seiten einbaust, steht unter \'\'\'[[w:c:hilfe:Hilfe:Bilder|Hilfe „Bilder“]]\'\'\'.
 
 === Kurzanleitung ([[w:c:hilfe:Hilfe:Hochladen|ausführliche Anleitung]]) ===
 
@@ -7271,10 +7276,10 @@ Wie du hochgeladene Bilder in Seiten einbaust, steht unter \'\'\'[[w:c:hilfe:Hil
 &#125;&#125;</nowiki></pre>
 | width="80%" |
 * \'\'\'Beschreibung:\'\'\' Was ist dargestellt, worum handelt es sich?
-* \'\'\'Datum:\'\'\' Wann ist die Datei entstanden? 
+* \'\'\'Datum:\'\'\' Wann ist die Datei entstanden?
 * \'\'\'Autor:\'\'\' Wer ist der Urheber (Fotograf/Zeichner)? (ggf. mit 3 Tilden <nowiki>~~~</nowiki> signieren)
-* \'\'\'Quelle:\'\'\' Woher genau stammt die Datei? (exakte URL oder ggf. \'\'selbst fotografiert\'\') 
-* \'\'\'Lizenz:\'\'\' Unter welcher freien Lizenz steht die Datei? Dokumentiere ggf. die genaue Freigabe-Genehmigung. 
+* \'\'\'Quelle:\'\'\' Woher genau stammt die Datei? (exakte URL oder ggf. \'\'selbst fotografiert\'\')
+* \'\'\'Lizenz:\'\'\' Unter welcher freien Lizenz steht die Datei? Dokumentiere ggf. die genaue Freigabe-Genehmigung.
 * \'\'\'Sonstiges:\'\'\' Feld für Anmerkungen (kann frei- oder weggelassen werden)
 |}
 
@@ -16668,7 +16673,7 @@ $messages['kaa'] = [
 	'unexpected' => 'Ku\'tilmegen ma\'nis: "$1" = "$2".',
 	'userlogin' => 'Kiriw / akkaunt jaratıw',
 	'userlogout' => 'Shıg\'ıw',
-	'userexists' => 'Kiritken paydalanıwshı atı ba\'nt. 
+	'userexists' => 'Kiritken paydalanıwshı atı ba\'nt.
 İltimas, basqa at saylan\'.',
 	'userpage-userdoesnotexist' => '"<nowiki>$1</nowiki>" paydalanıwshı akkauntı registratsiya qılınbag\'an. Bul betti jaratqın\'ız yamasa o\'zgertkin\'iz kelse tekserip ko\'rin\'.',
 	'updated' => '(Jan\'alang\'an)',
@@ -31686,231 +31691,6 @@ një përdoruesi ose IP adreseje të bllokuar.',
 	'unknown_extension_tag' => 'Etiketë shtesë e panjohur "$1"',
 ];
 
-$messages['sr'] = [
-	'underline-always' => 'Gjithmonë',
-	'underline-never' => 'Asnjëherë',
-	'underline-default' => 'Sipas rregullit në shfletues',
-	'updatedmarker' => 'përditësuar që nga vizita ime e fundit',
-	'undelete_short' => 'Anullo fshirjen {{PLURAL:$1|një redaktim|$1 redaktime}}',
-	'unprotect' => 'Ndrysho mbrojtjen',
-	'unprotectthispage' => 'Ndrysho mbrojtjen e kësaj faqeje',
-	'unexpected' => 'Vlerë e papritur: "$1"="$2".',
-	'userlogin' => 'Hyni / hapni llogari',
-	'userloginnocreate' => 'Hyni',
-	'userlogout' => 'Dalje',
-	'userlogin-resetlink' => 'Keni harruar të dhënat tuaja të identifikimit?',
-	'userexists' => 'Emri i përdoruesit që kërkuat është në përdorim.
-Zgjidhni një emër tjetër.',
-	'usernamehasherror' => 'Emri i përdoruesit nuk mund të përmbajë karaktere',
-	'user-mail-no-addy' => 'Provuat të dërgoni një korrespondencë pa adresë elektronike',
-	'userpage-userdoesnotexist' => 'Llogaria e përdoruesit "<nowiki>$1</nowiki>" nuk është e regjistruar.
-Ju lutem kontrolloni nëse dëshironi të krijoni/redaktoni këtë faqe.',
-	'userpage-userdoesnotexist-view' => 'Llogaria i përdoruesit "$1" nuk është e regjistruar.',
-	'usercssyoucanpreview' => '\'\'\'Këshillë:\'\'\' Përdorni butonin \'{{int:showpreview}}\' për të testuar CSS-në e re para se të ruani ndryshimet e kryera.',
-	'userjsyoucanpreview' => '\'\'\'Këshillë:\'\'\' Përdorni butonin \'{{int:showpreview}}\' për të testuar JavaScripting e ri para se të ruani ndryshimet e kryera.',
-	'usercsspreview' => '\'\'\'Vini re! Ju jeni duke inspektuar CSS-në si përdorues!\'\'\'
-\'\'\'Nuk është ruajtur ende!\'\'\'',
-	'userjspreview' => '\'\'\'Vini re se kjo është vetëm një provë ose parapamje e faqes tuaj JavaScript, ajo nuk është ruajtur akoma!\'\'\'',
-	'updated' => '(E ndryshuar)',
-	'undo-success' => 'Redaktimi nuk mund të zhbëhet.
-Ju lutemi, kontrolloni krahasimin e mëposhtëm për të vërtetuar nëse kjo është ajo që dëshironi dhe pastaj kryeni ndryshimet për të plotësuar zhbërjen e redaktimit.',
-	'undo-failure' => 'Redaktimi nuk mund të zhbëhet për shkak të redaktimeve konfliktuese të ndërmjetshme.',
-	'undo-norev' => 'Redaktimi nuk mund të zhbëhet sepse nuk ekziston ose është fshirë.',
-	'undo-summary' => 'Zhbëje versionin $1 i bërë nga [[Special:Contributions/$2|$2]] ([[User talk:$2|ligjëratë]])',
-	'username' => 'Nofka e përdoruesit:',
-	'uid' => 'Nr. i identifikimit:',
-	'userrights' => 'Ndrysho privilegjet e përdoruesve',
-	'userrights-lookup-user' => 'Ndrysho grupet e përdoruesit',
-	'userrights-user-editname' => 'Fusni emrin e përdoruesit:',
-	'userrights-editusergroup' => 'Anëtarësimi tek grupet',
-	'userrights-groupsmember' => 'Anëtar i:',
-	'userrights-groupsmember-auto' => 'Anëtar implicit i:',
-	'userrights-groups-help' => 'Mund të ndryshoni anëtarësimin e këtij përdoruesi në grupe:
-* Kutia e zgjedhur shënon që përdoruesi është anëtar në atë grup
-* Kutia e pazgjedhur shënon që përdoruesi nuk është anëtar në atë grup
-* Një * shënon që nuk mund ta hiqni grupin pasi ta keni shtuar (dhe anasjelltas).',
-	'userrights-reason' => 'Arsyeja:',
-	'userrights-no-interwiki' => 'Nuk keni leje për të ndryshuar privilegjet e përdoruesve në wiki të tjera.',
-	'userrights-nodatabase' => 'Regjistri $1 nuk ekziston ose nuk është vendor.',
-	'userrights-nologin' => 'Duhet të [[Special:UserLogin|hyni brenda]] me një llogari administrative për të ndryshuar privilegjet e përdoruesve.',
-	'userrights-notallowed' => 'llogaria juaj nuk ka leje për të shtuar ose hequr privilegjet e përdoruesve.',
-	'userrights-changeable-col' => 'Grupe që mund të ndryshoni',
-	'userrights-unchangeable-col' => 'Grupe që s\'mund të ndryshoni',
-	'upload' => 'Ngarkoni skeda',
-	'uploadbtn' => 'Ngarkoje',
-	'upload-tryagain' => 'Dërgo përshkrimin e modifikuar të skedarit',
-	'uploadnologin' => 'Nuk keni hyrë brënda',
-	'uploadnologintext' => 'Duhet të keni [[Special:UserLogin|hyrë brenda]] për të dhënë skeda.',
-	'upload_directory_missing' => 'Direktoriumi ($1) i ngarkimit po mungon dhe nuk është arritur që të krijohet nga webserveri.',
-	'upload_directory_read_only' => 'Skedari i ngarkimit ($1) nuk mund të shkruhet nga shërbyesi.',
-	'uploaderror' => 'Gabim dhënie',
-	'upload-recreate-warning' => '\'\'\'Kujdes: Një skedarë me atë emër është fshirë apo lëvizur.\'\'\'
-
-Regjistri i fshirjes dhe lëvizjes për këtë faqe për lehtësim ofrohen këtu:',
-	'uploadtext' => 'Përdorni formularin e mëposhtëm për të ngarkuar skeda.
-Për të parë ose kërkuar skeda të ngarkuara më parë, shkoni tek [[Special:FileList|lista e ngarkimeve të skedave]],
-(ri)ngarkimet janë gjithashtu të regjistruara tek [[Special:Log/upload|regjistri i ngarkimeve]], grisjet tek [[Special:Log/delete|regjistri i grisjeve]].
-
-Për të përfshirë një skedë në një faqe, përdorni një nga format e mëposhtme:
-* \'\'\'<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:Skeda.jpg]]</nowiki></tt>\'\'\' për të përdorur versionin e plotë të skedës
-* \'\'\'<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:Skeda.png|200px|thumb|left|alt text]]</nowiki></tt>\'\'\' për të përdorur nje interpretim prej 200 piksel në të majtë me \'alt tekst\' si përshkrim
-* \'\'\'<tt><nowiki>[[</nowiki>{{ns:media}}<nowiki>:Skeda.ogg]]</nowiki></tt>\'\'\' për të lidhur skedën direkt, pa e shfaqur atë',
-	'upload-permitted' => 'Llojet e lejuara të skedave: $1.',
-	'upload-preferred' => 'Llojet e parapëlqyera të skedave: $1.',
-	'upload-prohibited' => 'Llojet e ndaluara të skedave: $1.',
-	'uploadlog' => 'regjistër dhënjesh',
-	'uploadlogpage' => 'Regjistri i ngarkimeve',
-	'uploadlogpagetext' => 'Më poshtë është një listë e skedave më të reja që janë ngarkuar.
-Të gjithë orët janë me orën e shërbyesit.',
-	'uploadedfiles' => 'Ngarkoni skeda',
-	'unknown-error' => 'Një gabim i panjohur.',
-	'uploadwarning' => 'Kujdes dhënie',
-	'uploadwarning-text' => 'Ju lutemi modifikoni përshkrimin e skedës dhe provojen përsëri.',
-	'uploadedimage' => 'dha "[[$1]]"',
-	'uploaddisabled' => 'Ndjesë, dhëniet janë bllokuar në këtë shërbyes dhe nuk është gabimi juaj.',
-	'uploadfromurl-queued' => 'Ngarkimi juaj ka qenë në radhë.',
-	'uploaddisabledtext' => 'Ngarkimi i skedave është i ndaluar.',
-	'uploadscripted' => 'Skeda përmban HTML ose kode të tjera që mund të interpretohen gabimisht nga një shfletues.',
-	'uploadvirus' => 'Skeda përmban një virus! Detaje: $1',
-	'uploadjava' => 'Dokumenti është në formatin ZIP i cili përmban Java. class dokumente.
-Ngarkimi i Java dokumenteve nuk është i lejuar, sepse ato mund të shkaktojnë kufizime të sigurisë për ti anashkaluar.',
-	'upload-source' => 'Burimi i skedës',
-	'upload-maxfilesize' => 'Madhësia maksimale e skedave: $1',
-	'upload-description' => 'Përshkrimi i skedës',
-	'upload-options' => 'Opsionet e ngarkimit',
-	'upload-success-subj' => 'Dhënie e sukseshme',
-	'upload-success-msg' => 'Ngarkimi juaj nga [$2] ishte i suksesshëm. Mund të gjendet këtu: [[:{{ns:file}}:$1]]',
-	'upload-failure-subj' => 'Problem gjatë ngarkimit',
-	'upload-failure-msg' => 'Kishte një problem me ngarkimin tuaj nga [$2]:
-
-$1',
-	'upload-warning-subj' => 'Paralajmërim për ngarkimin',
-	'upload-warning-msg' => 'Kishte një problem me ngarkimin tuaj nga [$2]. Ju mund të ktheheni tek [[Special:Upload/stash/$1|forma e ngarkimit]] për të korrgjuar këtë problem.',
-	'upload-proto-error' => 'Protokoll i gabuar',
-	'upload-proto-error-text' => 'Ngarkimet nga rrjeti kërkojnë që adresa URL të fillojë me <code>http://</code> ose <code>ftp://</code>.',
-	'upload-file-error' => 'Gabim i brendshëm',
-	'upload-file-error-text' => 'Ka ndodhur një gabim i brendshëm gjatë krijimit të skedës së përkohshme nga shërbyesi.
-Ju lutemi kontaktoni një [[Special:ListUsers/sysop|administrator]].',
-	'upload-misc-error' => 'Gabim i panjohur ngarkimi',
-	'upload-misc-error-text' => 'Një gabim i panjohur ka ndodhur gjatë ngarkimit.
-Ju lutemi kontrolloni që adresa URL të jetë e vlefshme dhe e kapshme dhe provoni përsëri.
-Nëse problemi vazhdon atëherë kontaktoni një [[Special:ListUsers/sysop|administrator]].',
-	'upload-too-many-redirects' => 'Adresa URL përmbante shumë përcjellime.',
-	'upload-unknown-size' => 'Madhësia e panjohur',
-	'upload-http-error' => 'Ndodhi një gabim HTTP: $1',
-	'uploadstash' => 'Fshehje ngarkimi',
-	'uploadstash-summary' => 'Kjo faqe ofron qasje tek skedat të cilat janë ngarkuar (ose janë në proçes ngarkimi) por që nuk janë publikuat akoma në wiki. Këto skeda nuk janë të dukshme për këdo përveç për përdoruesin që i ka ngarkuar ato.',
-	'uploadstash-clear' => 'Spastro skedat e fshehura',
-	'uploadstash-nofiles' => 'Ju nuk keni skeda të fshehura.',
-	'uploadstash-badtoken' => 'Kryerja e këtij veprimi ishte e pasuksesshme, ndoshta sepse kredencialet redaktuese tuaja kanë skaduar. Provoni përsëri.',
-	'uploadstash-errclear' => 'Spastrimi i skedave ishte i pasuksesshëm.',
-	'uploadstash-refresh' => 'Rifreskoni listën e skedave',
-	'upload-curl-error6' => 'S\'munda të lidhem me adresën URL',
-	'upload-curl-error6-text' => 'Adresa e dhënë URL nuk mund të arrihej.
-Ju lutem kontrollojeni nëse është e saktë dhe nëse faqja punon.',
-	'upload-curl-error28' => 'Mbaroi koha e ngarkimit',
-	'upload-curl-error28-text' => 'Ka kaluar shumë kohë pa përgjigje.
-Ju lutem kontrolloni nëse faqja është në rrjet, prisni pak dhe provojeni përsëri.
-Këshillohet që ta provoni kur të jetë më pak e zënë.',
-	'upload_source_url' => ' (URL e vlefshme, publikisht e përdorshme)',
-	'upload_source_file' => ' (skeda në kompjuterin tuaj)',
-	'uploadnewversion-linktext' => 'Ngarkoni një version të ri për këtë skedë',
-	'unwatchedpages' => 'Faqe të pambikqyrura',
-	'unusedtemplates' => 'Stampa të papërdorura',
-	'unusedtemplatestext' => 'Kjo faqe radhitë të gjitha faqet në {{ns:template}} që nuk janë të përfshira në faqe tjera.
-Mos harroni të shihni nyje tjera të stampave para grisjes së tyre.',
-	'unusedtemplateswlh' => 'lidhje',
-	'uncategorizedpages' => 'Artikuj të pakategorizuar',
-	'uncategorizedcategories' => 'Kategori të pakategorizuara',
-	'uncategorizedimages' => 'Figura pa kategori',
-	'uncategorizedtemplates' => 'Stampa të pakategorizuara',
-	'unusedcategories' => 'Kategori të papërdorura',
-	'unusedimages' => 'Figura të papërdorura',
-	'usereditcount' => '$1 {{PLURAL:$1|redaktim|redaktime}}',
-	'usercreated' => '{{GENDER:$3|Krijuar}} më $1 në $2',
-	'unusedimagestext' => 'Skedat e mëposhtme ekzistojnë por nuk janë të përdorura në një ndonjë faqe.
-Ju lutemi, vini re se faqe të tjera në rrjet si mund të lidhin një figurë me një URL në mënyrë direkte, kështuqë ka mundësi që këto figura të rreshtohen këtu megjithëse janë në përdorim.',
-	'unusedcategoriestext' => 'Kategoritë në vazhdim ekzistojnë edhe pse asnjë artikull ose kategori nuk i përdor ato.',
-	'usermailererror' => 'Objekti postal ktheu gabimin:',
-	'usermaildisabled' => 'Email-i i përdoruesit çaktivizua',
-	'usermaildisabledtext' => 'Ju nuk mund të dërgoni e-mail tek përdoruesit e tjerë në këtë wiki',
-	'usermessage-summary' => 'Lënia e mesazhit të sistemit.',
-	'usermessage-editor' => 'I dërguari i sistemit',
-	'unwatch' => 'Çmbikqyre',
-	'unwatchthispage' => 'Mos e mbikqyr',
-	'unwatching' => 'Duke çmbikqyrur...',
-	'unprotectedarticle' => 'Largo mbrojtjen nga " [[$1]] "',
-	'undelete' => 'Restauroni faqet e grisura',
-	'undeletepage' => 'Shikoni ose restauroni faqet e grisura',
-	'undeletepagetitle' => '\'\'\'Në vazhdim janë versionet e grisura të [[:$1|$1]]\'\'\'.',
-	'undeletepagetext' => '{{PLURAL:$1|Faqja në vazhdim është grisur, por akoma është|$1 Faqet në vazhdim janë grisur, por akoma janë}} në arkiv dhe mund të rikthehen.
-Arkivi, kohëpaskohe është e mundur të pastrohet.',
-	'undelete-fieldset-title' => 'Rikthe revizionet',
-	'undeleteextrahelp' => 'Per tu rregeluar histori, zbardh gjith kutit \'\'\'\'\'{{int:undeletebtn}}\'\'\'\'\'.
-To perform a selective restoration, check the boxes corresponding to the revisions to be restored, and click \'\'\'\'\'{{int:undeletebtn}}\'\'\'\'\'.',
-	'undeleterevisions' => '$1 {{PLURAL:$1|version u fut|versione u futën}} në arkiv',
-	'undeletehistory' => 'Nëse restauroni një faqe, të gjitha versionet do të restaurohen në histori.
-Nëse një faqe e re me të njëjtin titull është krijuar pas grisjes, versionet e restauruara do të paraqiten më mbrapa në histori.',
-	'undeleterevdel' => 'Restaurimi nuk do të performohet n.q.s. do të rezultojë në majë të versioneve të faqes apo skedës duke u grisur pjesërisht.
-Në raste të tilla, ju duhet të çzgjidhni ose shfaqni versionet më të reja të grisura.',
-	'undeletehistorynoadmin' => 'Kjo faqe është grisur. Arsyeja për grisjen është dhënë tek përmbledhja më poshtë bashkë me hollësitë e përdoruesve që e kanë redaktuar.',
-	'undelete-revision' => 'Revizioni i grisur i $1 (nga $4, në $5) nga $3:',
-	'undeleterevision-missing' => 'Version i humbur ose i pavlefshëm.
-Ju mund të keni një lidhje të keqe, ose versioni mund të jetë restauruar ose larguar nga arkivi.',
-	'undelete-nodiff' => 'Nuk u gjetën revizione të mëparshme.',
-	'undeletebtn' => 'Restauro!',
-	'undeletelink' => 'shiko/rikthe',
-	'undeleteviewlink' => 'Pamje',
-	'undeletereset' => 'Boshatis',
-	'undeleteinvert' => 'Selektim anasjelltas',
-	'undeletecomment' => 'Arsyeja:',
-	'undeletedrevisions' => '$1 {{PLURAL:$1|version u restaurua|versione u restauruan}}',
-	'undeletedrevisions-files' => '$1 {{PLURAL:$1|version|versione}} dhe $2 {{PLURAL:$2|skedë|skeda}} janë restauruar',
-	'undeletedfiles' => '$1 {{PLURAL:$1|skedë u restaurua|skeda u restauruan}}',
-	'undeletedpage' => '\'\'\'$1 është restauruar\'\'\'
-
-Shikoni [[Special:Log/delete|regjistrin e grisjeve]] për grisjet dhe restaurimet së fundmi.',
-	'undelete-header' => 'Shikoni [[Special:Log/delete|regjistrin e grisjeve]] për faqet e grisura së fundmi.',
-	'undelete-search-title' => 'Kërko faqet e grisura',
-	'undelete-search-box' => 'Kërko faqet e grisura',
-	'undelete-search-prefix' => 'Trego faqet duke filluar nga:',
-	'undelete-search-submit' => 'Kërko',
-	'undelete-no-results' => 'Nuk u gjet asnjë faqe përputhëse tek arkivi i grisjeve.',
-	'undelete-filename-mismatch' => 'Nuk mund të restauroni skeda me timestamp $1: filename mismatch',
-	'undelete-bad-store-key' => 'Nuk mund të restauroni versionin e skedës me timestamp $1: skeda mungonte para grisjes.',
-	'undelete-cleanup-error' => 'Gabim në grisjen e skedës "$1" të pa përdorur të arkivit .',
-	'undelete-missing-filearchive' => 'Nuk mund të restaurohet arkivi ID i skedës $1 sepse nuk është në bazën të dhënave.
-Mund të jetë restauruar një herë.',
-	'undelete-error' => 'Gabim gjatë restaurimit të faqes',
-	'undelete-error-short' => 'Gabim në rikthimin e skedës: $1',
-	'undelete-error-long' => 'U hasën gabime gjatë restaurimit të skedës:
-
-$1',
-	'undelete-show-file-confirm' => 'Jeni të sigurt se dëshironi të shihni redaktimin e grisur të skedës "<nowiki>$1</nowiki>" nga $2 në $3?',
-	'undelete-show-file-submit' => 'Po',
-	'uctop' => ' (sipër)',
-	'unblock' => 'Zhblloko përdoruesin',
-	'unblockip' => 'Çblloko përdoruesin',
-	'unblockiptext' => 'Përdor formularin e më poshtëm për t\'i ridhënë leje shkrimi
-një përdoruesi ose IP adreseje të bllokuar.',
-	'unblocked' => '[[User:$1|$1]] është çbllokuar',
-	'unblocked-range' => '$1 është zhbllokuar',
-	'unblocked-id' => 'Bllokimi $1 është hequr',
-	'unblocklink' => 'çblloko',
-	'unblocklogentry' => 'çbllokoi "$1"',
-	'unblock-hideuser' => 'Ju nuk mund të zhbllokoni këtë përdorues, përderisa nofka e tij është fshehur.',
-	'unlockdb' => 'Çblloko regjistrin',
-	'unlockdbtext' => 'Çbllokimi i regjistrit do të lejojë mundësinë e të gjithë përdoruesve për të redaktuar faqe, për të ndryshuar parapëlqimet e tyre, për të ndryshuar listat mbikqyrëse të tyre, dhe gjëra të tjera për të cilat nevojiten shkrime në regjistër. Ju lutem konfirmoni që dëshironi me të vërtetë të kryeni këtë veprim.',
-	'unlockconfirm' => 'Po, dëshiroj me të vërtetë të çbllokoj regjistrin',
-	'unlockbtn' => 'Çblloko regjistrin',
-	'unlockdbsuccesssub' => 'Regjistri u çbllokua me sukses',
-	'unlockdbsuccesstext' => 'Regjistri i {{SITENAME}} është çbllokuar.',
-	'unknown_extension_tag' => 'Etiketë shtesë e panjohur "$1"',
-	'unrate_it' => 'Poništite ocenu',
-	'use_old_formatting' => 'Prebacite na Monobook izgled',
-	'use_new_formatting' => 'Proverite novi izgled',
-];
-
 $messages['sr-ec'] = [
 	'underline-always' => 'увек подвлачи',
 	'underline-never' => 'никад не подвлачи',
@@ -36071,7 +35851,7 @@ Totes les hores són les del servidor (UTC).',
 	'unusedtemplatestext' => 'Esta pàgina mostra les pàgines en l\'espai de noms de plantilles, que no estan incloses en cap atra pàgina. Enecorda\'t de comprovar les pàgines que hi enllacen abans d\'esborrar-les.',
 	'unusedtemplateswlh' => 'atres enllaços',
 	'userstats' => 'Estadístiques d\'usuari',
-	'userstatstext' => 'Hi ha \'\'\'$1\'\'\' usuaris registrats, dels quals 
+	'userstatstext' => 'Hi ha \'\'\'$1\'\'\' usuaris registrats, dels quals
 {{PLURAL:$2|un (el \'\'\'$4%\'\'\') n\'és $5|\'\'\'$2\'\'\' (el \'\'\'$4%\'\'\') en són $5}}.',
 	'uncategorizedpages' => 'Pàgines sense categoria',
 	'uncategorizedcategories' => 'Categories sense categoria',

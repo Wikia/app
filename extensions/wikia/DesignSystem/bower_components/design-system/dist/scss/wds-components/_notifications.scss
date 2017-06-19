@@ -5,7 +5,9 @@
 	&__unread-mark {
 		align-items: center;
 		background-color: $wds-color-link;
-		border-radius: 50%;
+		//border-radius needs to be in pixels
+		//to handle 3 and more digits situation correctly
+		border-radius: 18px;
 		border: 1px solid $wds-color-white;
 		color: $wds-color-white;
 		display: flex;
@@ -13,17 +15,16 @@
 		height: 18px;
 		justify-content: center;
 		left: -2px;
+		min-width: 18px - 8px;
+		padding: 0 4px;
 		position: absolute;
 		top: 7px;
-		width: 18px;
 	}
 
 	&__mark-all-as-read-button {
-		box-shadow: 0 -1px 10px 0 rgba(0, 0, 0, 0.1);
 		display: flex;
 		justify-content: flex-start;
-		min-height: 44px;
-		padding: 0;
+		margin-top: -7px;
 		width: 100%;
 	}
 
@@ -32,7 +33,8 @@
 		cursor: pointer;
 		font-size: $wds-typescale-size-minus-2;
 		font-weight: bold;
-		padding: $content-padding;
+		line-height: 14px;
+		padding: 20px $content-padding $content-padding;
 		text-transform: uppercase;
 	}
 
@@ -45,15 +47,22 @@
 		max-width: $content-padding * 2 + 320px;
 		min-height: 80px;
 		min-width: $content-padding * 2 + 320px;
-		white-space: normal;
 		width: 100%;
 	}
 
 	&__notification-list {
 		box-sizing: border-box;
-		max-height: 420px;
 		overflow-y: auto;
 		width: 100%;
+
+		.wds-notifications__dropdown-content &.wds-list {
+			// notifications list has to be higher than dropdowns lists to show more notifications
+			max-height: 420px;
+		}
+
+		> li.wds-notification-card {
+			white-space: normal;
+		}
 	}
 
 	&__zero-state {

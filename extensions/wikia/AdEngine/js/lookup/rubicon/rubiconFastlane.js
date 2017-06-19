@@ -87,7 +87,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 			'970x250': 57,
 			'320x480': 67
 		},
-		slots;
+		slots = {};
 
 	function compareTiers(a,b) {
 		var aMatches = /^(\d+)/.exec(a),
@@ -258,12 +258,12 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 
 			node.parentNode.insertBefore(rubicon, node);
 			context = adContext.getContext();
-			configureSlots(skin);
 			prefetchDNS();
 
 			rubiconLoaded = true;
 		}
 
+		configureSlots(skin);
 		defineSlots(skin, function () {
 			response = true;
 			priceMap = {};

@@ -5,7 +5,7 @@ define('ext.wikia.adEngine.video.player.porvata', [
 	'ext.wikia.adEngine.video.player.porvata.porvataTracker',
 	'wikia.log',
 	'wikia.viewportObserver',
-	require.optional('ext.wikia.adEngine.video.player.porvata.floater'),
+	require.optional('ext.wikia.adEngine.video.player.porvata.floater')
 ], function (googleIma, porvataPlayerFactory, tracker, log, viewportObserver, floater) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata';
@@ -46,10 +46,10 @@ define('ext.wikia.adEngine.video.player.porvata', [
 		tracker.track(params, 'init');
 
 		params.vastTargeting = params.vastTargeting || {
-				src: params.src,
-				pos: params.slotName,
-				passback: 'porvata'
-			};
+			src: params.src,
+			pos: params.slotName,
+			passback: 'porvata'
+		};
 
 		return googleIma.load()
 			.then(function () {
@@ -131,10 +131,6 @@ define('ext.wikia.adEngine.video.player.porvata', [
 
 				if (videoSettings.isAutoPlay()) {
 					muteFirstPlay(video);
-				}
-
-				if (params.onReady) {
-					params.onReady(video);
 				}
 
 				viewportListener = viewportObserver.addListener(params.container, inViewportCallback);

@@ -16,6 +16,9 @@ class UserPagesHeaderController extends WikiaController {
 		$this->actionMenu = array();
 		$this->comments = null;
 		$this->editTimestamp = null;
+
+		//User pages have custom page header
+		$this->wg->SuppressPageHeader = true;
 	}
 
 	/**
@@ -168,7 +171,7 @@ class UserPagesHeaderController extends WikiaController {
 	public function executeIndex() {
 		wfProfileIn( __METHOD__ );
 
-		global $wgTitle, $wgRequest, $wgUser, $wgOut, $wgCityId, $wgIsPrivateWiki;
+		global $wgTitle, $wgUser, $wgCityId, $wgIsPrivateWiki;
 
 		//fb#1090
 		$this->isInternalWiki = empty( $wgCityId );

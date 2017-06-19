@@ -12,7 +12,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 	'wikia.log',
 	'wikia.throttle',
 	'wikia.window',
-	require.optional('ext.wikia.aRecoveryEngine.recovery.tweaker')
+	require.optional('ext.wikia.aRecoveryEngine.tweaker')
 ], function (uapContext,
 			 btfBlocker,
 			 googleSlots,

@@ -87,37 +87,25 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			],
 			[
 				'titleMockType' => 'article',
-				'flags' => [ 'wgEnableOutboundScreenExt' ],
+				'flags' => [ ],
 				'expectedOpts' => [ ],
 				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ] ],
 				'expectedProviders' => [ ],
-				'expectedForceProviders' => null,
-				'expectedSlots' => [ 'exitstitial' => true ]
+				'expectedForceProviders' => null
 			],
 			[
 				'titleMockType' => 'article',
-				'flags' => [ 'wgOutboundScreenRedirectDelay' ],
+				'flags' => [ ],
 				'expectedOpts' => [ ],
 				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ] ],
 				'expectedProviders' => [ ],
-				'expectedForceProviders' => null,
-				'expectedSlots' => [ 'exitstitialRedirectDelay' => true ]
+				'expectedForceProviders' => null
 			],
 			[
 				'titleMockType' => 'article',
 				'flags' => [ 'wgEnableWikiaHomePageExt' ],
 				'expectedOpts' => [ 'pageType' => 'corporate' ],
 				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ], 'wikiIsCorporate' => true ]
-			],
-			[
-				'titleMockType' => 'article',
-				'flags' => [ 'wgEnableWikiaHubsV3Ext' ],
-				'expectedOpts' => [ 'pageType' => 'corporate' ],
-				'expectedTargeting' => [
-					'newWikiCategories' => [ 'test' ],
-					'pageIsHub' => true,
-					'wikiIsCorporate' => true
-				]
 			],
 			[
 				'titleMockType' => 'article',
@@ -296,9 +284,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgEnableAdsInContent', false );
 		$this->mockGlobalVariable( 'wgEnableKruxTargeting', false );
 		$this->mockGlobalVariable( 'wgEnableWikiaHomePageExt', false );
-		$this->mockGlobalVariable( 'wgEnableWikiaHubsV3Ext', false );
-		$this->mockGlobalVariable( 'wgEnableOutboundScreenExt', false );
-		$this->mockGlobalVariable( 'wgOutboundScreenRedirectDelay', false );
 		$this->mockGlobalVariable( 'wgWikiDirectedAtChildrenByFounder', false );
 		$this->mockGlobalVariable( 'wgWikiDirectedAtChildrenByStaff', false );
 
@@ -324,10 +309,13 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			->method( 'getWikiVertical' )
 			->willReturn( [ 'short' => $verticals['newVertical'] ] );
 
-		if ( !empty($categories['old']) || !empty($categories['new']) ) {
+		if ( !empty( $categories['old'] ) || !empty( $categories['new'] ) ) {
 			$wikiFactoryHubMock->expects( $this->any() )
 				->method( 'getWikiCategoryNames' )
-				->will( $this->onConsecutiveCalls( $categories['old'], $categories['new'] ) );
+				->will( $this->onConsecutiveCalls(
+						empty( $categories['old'] ) ? [] : $categories['old'],
+						empty( $categories['new'] ) ? [] : $categories['new'] )
+					);
 		} else {
 			$wikiFactoryHubMock->expects( $this->any() )
 				->method( 'getWikiCategoryNames' )
@@ -349,11 +337,9 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'pageType' => 'all_ads',
 				'showAds' => true,
 				'delayBtf' => true,
-				'sourcePointRecovery' => false,
-				'sourcePointMMS' => false,
 				'sourcePointMMSDomain' => 'mms.bre.wikia-dev.com',
-				// if skin name different than oasis, disable PF recovery
-				'pageFairRecovery' => false
+				'sourcePointRecovery' => true,
+				'pageFairRecovery' => true
 			],
 			'targeting' => [
 				'esrbRating' => 'teen',
@@ -391,10 +377,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			$expected['slots'][$var] = $val;
 		}
 
-		if ( $expected['targeting']['pageType'] === 'article' ) {
-			$expected['providers']['taboola'] = true;
-		}
-
 		// Check for SourcePoint URL
 		$this->assertStringMatchesFormat( $expectedAdEngineResourceURLFormat, $result['opts']['sourcePointDetectionUrl'] );
 		unset($result['opts']['sourcePointDetectionUrl']);
@@ -403,15 +385,11 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$this->assertStringMatchesFormat( $expectedAdEngineResourceURLFormat, $result['opts']['pageFairDetectionUrl'] );
 		unset($result['opts']['pageFairDetectionUrl']);
 
-		// Check for PageFair URL
+		// Check for Prebid.js URL
 		$this->assertEquals( $expectedPrebidBidderUrl, $result['opts']['prebidBidderUrl'] );
 		unset($result['opts']['prebidBidderUrl']);
 
 		$expected['providers']['rubiconFastlane'] = true;
-
-		// Check Yavli URL format
-		$this->assertStringMatchesFormat( $expectedAdEngineResourceURLFormat, $result['opts']['yavliUrl'] );
-		unset($result['opts']['yavliUrl']);
 
 		$this->assertEquals( $expected, $result );
 	}

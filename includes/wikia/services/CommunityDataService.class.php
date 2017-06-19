@@ -224,14 +224,13 @@ class CommunityDataService extends WikiaService {
 	 * @return bool
 	 */
 	private function isCommunityDataEmpty( $data ) {
-		return !isset( $data[ self::COMMUNITY_DATA_SECTION ] ) ||
+		return empty( $data[ self::COMMUNITY_DATA_SECTION ] ) ||
 			   ( empty( $data[ self::COMMUNITY_DATA_SECTION ][ 'description' ] ) &&
-				 $data[ self::COMMUNITY_DATA_SECTION ][ 'image_id' ] == 0 );
+				 empty( $data[ self::COMMUNITY_DATA_SECTION ][ 'image_id' ] ) );
 	}
 
 	private function isSectionEmpty( $data, $section ) {
-		return !isset( $data[ $section ] ) ||
-			   empty( $data[ $section ] );
+		return empty( $data[ $section ] );
 	}
 
 	private function getSection( $section ) {

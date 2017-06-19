@@ -9,6 +9,7 @@
  * @method bool getShouldLogInStats
  * @method User getUser
  * @method PhalanxModel setUser( User $user )
+ * @method PhalanxModel setService( PhalanxService $service )
  */
 abstract class PhalanxModel extends WikiaObject {
 	/** @var string $text */

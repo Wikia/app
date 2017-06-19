@@ -46,6 +46,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 		'//extensions/wikia/AdEngine/js/AdEngineRunner.js',
 		'//extensions/wikia/AdEngine/js/AdInfoTracker.js',
+		'//extensions/wikia/AdEngine/js/AdInfoTrackerHelper.js',
 		'//extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
@@ -79,15 +80,18 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/provider/remnantGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/rubiconFastlane.js',
 		'//extensions/wikia/AdEngine/js/provider/turtle.js',
-		'//extensions/wikia/AdEngine/js/provider/yavliTag.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/slot/bottomLeaderboard.js',
 		'//extensions/wikia/AdEngine/js/slot/floatingMedrec.js',
 		'//extensions/wikia/AdEngine/js/slot/highImpact.js',
 		'//extensions/wikia/AdEngine/js/slot/inContent.js',
 		'//extensions/wikia/AdEngine/js/slot/resolvedState.js',
-		'//extensions/wikia/AdEngine/js/slot/scrollHandler.js',
 		'//extensions/wikia/AdEngine/js/slot/skyScraper3.js',
+		'//extensions/wikia/AdEngine/js/slot/service/actionHandler.js',
+		'//extensions/wikia/AdEngine/js/slot/service/passbackHandler.js',
+		'//extensions/wikia/AdEngine/js/slot/service/slotRegistry.js',
+		'//extensions/wikia/AdEngine/js/slot/service/stateMonitor.js',
+		'//extensions/wikia/AdEngine/js/slot/service/viewabilityHandler.js',
 		'//extensions/wikia/AdEngine/js/template/bfaa.js',
 		'//extensions/wikia/AdEngine/js/template/bfaaDesktop.js',
 		'//extensions/wikia/AdEngine/js/template/bfab.js',
@@ -106,18 +110,19 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/utils/eventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/utils/hooks.js',
 		'//extensions/wikia/AdEngine/js/utils/math.js',
+		'//extensions/wikia/AdEngine/js/video/player/ooyala/ooyalaTracker.js',
 		'//extensions/wikia/AdEngine/js/video/player/playerTracker.js',
 		'#group_adengine2_playwire_js',
 		'#group_adengine2_porvata_js',
 		'#group_adengine2_video_ui_js',
 		'//extensions/wikia/AdEngine/js/video/uapVideo.js',
 		'//extensions/wikia/AdEngine/js/video/videoSettings.js',
-		'//extensions/wikia/ARecoveryEngine/js/sourcePoint.js',
-		'//extensions/wikia/ARecoveryEngine/js/sourcePoint.old.js',
-		'//extensions/wikia/ARecoveryEngine/js/slotFinder.js',
-		'//extensions/wikia/ARecoveryEngine/js/recovery/tweaker.js',
-		'//extensions/wikia/ARecoveryEngine/js/sourcePointRecovery.js',
-		'//extensions/wikia/ARecoveryEngine/js/PageFair/pageFair.js',
+		'//extensions/wikia/ARecoveryEngine/js/adBlockDetection.js',
+		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.js',
+		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/recovery.js',
+		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/slotFinder.js',
+		'//extensions/wikia/ARecoveryEngine/js/tweaker.js',
+		'//extensions/wikia/ARecoveryEngine/js/PageFair/recovery.js',
 		'//resources/wikia/modules/domCalculator.js',
 		'//resources/wikia/modules/krux.js',
 		'//resources/wikia/modules/throttle.js',
@@ -126,7 +131,6 @@ $config['adengine2_desktop_js'] = [
 		// was: late queue
 		'//extensions/wikia/AdEngine/js/OoyalaTracking.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
-		'//extensions/wikia/AdEngine/js/TaboolaHelper.js',
 		'//extensions/wikia/AdEngine/js/utils/scriptLoader.js',
 		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
 
@@ -138,23 +142,16 @@ $config['recirculation_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/Recirculation/js/helpers/GoogleMatchHelper.js',
 		'//extensions/wikia/Recirculation/js/tracker.js',
 		'//extensions/wikia/Recirculation/js/utils.js',
-		'//extensions/wikia/Recirculation/js/helpers/ContentLinksHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/FandomHelper.js',
-		'//extensions/wikia/Recirculation/js/helpers/DataHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/DiscussionsHelper.js',
-		'//extensions/wikia/Recirculation/js/helpers/CakeRelatedContentHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/CuratedContentHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/LiftigniterHelper.js',
-		'//extensions/wikia/Recirculation/js/views/incontent.js',
-		'//extensions/wikia/Recirculation/js/views/rail.js',
+		'//extensions/wikia/Recirculation/js/views/premiumRail.js',
 		'//extensions/wikia/Recirculation/js/views/footer.js',
-		'//extensions/wikia/Recirculation/js/views/scroller.js',
 		'//extensions/wikia/Recirculation/js/views/impactFooter.js',
-		'//extensions/wikia/Recirculation/js/experiments/mix.js',
-		'//extensions/wikia/Recirculation/js/libs/perfect-scrollbar.js',
+		'//extensions/wikia/Recirculation/js/recirculation.js',
 		'//extensions/wikia/Recirculation/js/discussions.js',
 	],
 ];
@@ -184,31 +181,6 @@ $config['spotlights_js'] = [
 	],
 ];
 
-$config['adengine2_taboola_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/AdEngine/js/provider/taboola.js',
-	],
-];
-
-$config['adengine2_revcontent_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/AdEngine/js/provider/revcontent.js',
-		'//extensions/wikia/AdEngine/js/slot/revcontentSlots.js',
-	],
-];
-
-$config['adengine2_gcs_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/AdEngine/js/recovery/gcs.js',
-	],
-];
-
 $config['adengine2_interactive_maps_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
@@ -216,17 +188,8 @@ $config['adengine2_interactive_maps_js'] = [
 	],
 ];
 
-$config['adengine2_oasis_exitstitial_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'oasis',
-	'assets' => [
-		'//extensions/wikia/AdEngine/js/slot/exitstitial.js',
-	],
-];
-
 // TODO
-// release n+1 Change group name in AdEngine2Hooks (use adengine2_top_js)
-// release n+2 Remove adengine2_tracking_js group
+// release n+1 Remove adengine2_tracking_js group
 $config['adengine2_tracking_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis', 'wikiamobile' ],
@@ -242,10 +205,14 @@ $config['adengine2_tracking_js'] = [
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/slot/adUnitBuilder.js',
 		'//extensions/wikia/AdEngine/js/slot/slotTargeting.js',
+		'//extensions/wikia/AdEngine/js/slot/service/kiloAdUnitBuilder.js',
+		'//extensions/wikia/AdEngine/js/slot/service/megaAdUnitBuilder.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/AdEngine/js/video/vastUrlBuilder.js',
-		'//extensions/wikia/ARecoveryEngine/js/sourcePoint.js',
-		'//extensions/wikia/ARecoveryEngine/js/sourcePoint.old.js',
+		'//extensions/wikia/ARecoveryEngine/js/adBlockDetection.js',
+		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.js',
+		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/recovery.js',
+		'//resources/wikia/modules/browserDetect.js',
 		'//resources/wikia/modules/krux.js'
 	],
 ];
@@ -264,11 +231,15 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/lookupFactory.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/slot/adUnitBuilder.js',
+		'//extensions/wikia/AdEngine/js/slot/service/kiloAdUnitBuilder.js',
+		'//extensions/wikia/AdEngine/js/slot/service/megaAdUnitBuilder.js',
 		'//extensions/wikia/AdEngine/js/slot/slotTargeting.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/AdEngine/js/video/vastUrlBuilder.js',
-		'//extensions/wikia/ARecoveryEngine/js/sourcePoint.js',
-		'//extensions/wikia/ARecoveryEngine/js/sourcePoint.old.js',
+		'//extensions/wikia/ARecoveryEngine/js/adBlockDetection.js',
+		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.js',
+		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/recovery.js',
+		'//resources/wikia/modules/browserDetect.js',
 		'//resources/wikia/modules/krux.js'
 	],
 ];
@@ -281,15 +252,6 @@ $config['adengine2_amazon_match_js'] = [
 	],
 ];
 
-$config['adengine2_ox_bidder_js'] = [
-	'skin' => [ 'oasis' ],
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/AdEngine/js/lookup/openx/openXBidderHelper.js',
-		'//extensions/wikia/AdEngine/js/lookup/openXBidder.js',
-	],
-];
-
 $config['adengine2_rubicon_fastlane_js'] = [
 	'skin' => [ 'oasis' ],
 	'type' => AssetsManager::TYPE_JS,
@@ -297,16 +259,6 @@ $config['adengine2_rubicon_fastlane_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconTargeting.js',
 		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconTier.js',
 		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconFastlane.js',
-	],
-];
-
-$config['adengine2_rubicon_vulcan_js'] = [
-	'skin' => [ 'oasis' ],
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconTargeting.js',
-		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconTier.js',
-		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconVulcan.js',
 		'//extensions/wikia/AdEngine/js/utils/math.js',
 	],
 ];
@@ -315,6 +267,7 @@ $config['adengine2_prebid_js'] = [
 	'skin' => [ 'oasis' ],
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
+		'//extensions/wikia/AdEngine/js/lookup/prebid/bidHelper.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/prebid.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/prebidHelper.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/prebidSettings.js',
@@ -328,6 +281,8 @@ $config['adengine2_prebid_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexusPlacements.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/audienceNetwork.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/indexExchange.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/openx.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/rubicon.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/wikia.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/veles.js',
 
@@ -568,7 +523,6 @@ $config['oasis_nojquery_shared_js'] = [
 		'//skins/oasis/js/Search.js',
 		'//skins/oasis/js/WikiaFooter.js',
 		'//skins/oasis/js/buttons.js',
-		'//skins/oasis/js/WikiHeader.js',
 		'//skins/oasis/js/WikiaNotifications.js',
 		'//skins/oasis/js/FirefoxFindFix.js',
 		'//skins/oasis/js/tabs.js',
@@ -929,6 +883,7 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 		'//extensions/wikia/AdEngine/js/AdEngineRunner.js',
 		'//extensions/wikia/AdEngine/js/AdInfoTracker.js',
+		'//extensions/wikia/AdEngine/js/AdInfoTrackerHelper.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdTracker.js',
 		'//extensions/wikia/AdEngine/js/utils/timeBuckets.js',
@@ -944,10 +899,7 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/context/uapContext.js',
 		'//extensions/wikia/AdEngine/js/lookup/amazonMatch.js',
 		'//extensions/wikia/AdEngine/js/lookup/lookupFactory.js',
-		'//extensions/wikia/AdEngine/js/lookup/openx/openXBidderHelper.js',
-		'//extensions/wikia/AdEngine/js/lookup/openXBidder.js',
 		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconFastlane.js',
-		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconVulcan.js',
 		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconTargeting.js',
 		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconTier.js',
 		'//extensions/wikia/AdEngine/js/lookup/services.js',
@@ -968,6 +920,12 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/slot/adUnitBuilder.js',
 		'//extensions/wikia/AdEngine/js/slot/slotTargeting.js',
+		'//extensions/wikia/AdEngine/js/slot/service/kiloAdUnitBuilder.js',
+		'//extensions/wikia/AdEngine/js/slot/service/megaAdUnitBuilder.js',
+		'//extensions/wikia/AdEngine/js/slot/service/passbackHandler.js',
+		'//extensions/wikia/AdEngine/js/slot/service/slotRegistry.js',
+		'//extensions/wikia/AdEngine/js/slot/service/stateMonitor.js',
+		'//extensions/wikia/AdEngine/js/slot/service/viewabilityHandler.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/AdEngine/js/utils/eventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/utils/hooks.js',
@@ -975,8 +933,9 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/video/vastUrlBuilder.js',
 
 		// Recovery
-		'//extensions/wikia/ARecoveryEngine/js/sourcePoint.js',
-		'//extensions/wikia/ARecoveryEngine/js/sourcePoint.old.js',
+		'//extensions/wikia/ARecoveryEngine/js/adBlockDetection.js',
+		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.js',
+		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/recovery.js',
 
 		// Video ads
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
@@ -1017,9 +976,8 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/SourcePointDetection.js',
 		'//extensions/wikia/AdEngine/js/pageFairDetection.js',
 		'//extensions/wikia/AdEngine/js/mobile/mercuryListener.js',
-		'//extensions/wikia/AdEngine/js/provider/yavliTag.js',
+		'//extensions/wikia/AdEngine/js/slot/service/actionHandler.js',
 		'//extensions/wikia/AdEngine/js/slot/resolvedState.js',
-		'//extensions/wikia/AdEngine/js/slot/scrollHandler.js',
 		'//extensions/wikia/AdEngine/js/template/bfaa.js',
 		'//extensions/wikia/AdEngine/js/template/bfaaMobile.js',
 		'//extensions/wikia/AdEngine/js/template/bfab.js',
@@ -1032,6 +990,7 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/template/playwire.js',
 		'//extensions/wikia/AdEngine/js/template/porvata.js',
 		'//extensions/wikia/AdEngine/js/utils/scriptLoader.js',
+		'//extensions/wikia/AdEngine/js/video/player/ooyala/ooyalaTracker.js',
 		'//extensions/wikia/AdEngine/js/video/player/playerTracker.js',
 		'#group_adengine2_playwire_js',
 		'#group_adengine2_porvata_js',
@@ -1079,8 +1038,9 @@ $config['interactivemaps_ads_js'] = [
 		'//extensions/wikia/AdEngine/InteractiveMaps/ads.js',
 
 		// RecoveryEngine
-		'//extensions/wikia/ARecoveryEngine/js/sourcePoint.js',
-		'//extensions/wikia/ARecoveryEngine/js/sourcePoint.old.js',
+		'//extensions/wikia/ARecoveryEngine/js/adBlockDetection.js',
+		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.js',
+		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/recovery.js',
 	],
 ];
 
@@ -1304,6 +1264,7 @@ $config['editpage_common_js'] = [
 		'//extensions/wikia/EditPageLayout/js/loaders/EditPageEditorLoader.js',
 		'//extensions/wikia/EditPreview/js/preview.js',
 		'#group_editpage_events_js',
+		'#group_design_system_js',
 	],
 ];
 
@@ -1438,6 +1399,7 @@ $config['theme_designer_js'] = [
 		'//resources/wikia/modules/aim.js',
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
 		'//resources/wikia/libraries/bootstrap/popover.js',
+		'//resources/wikia/libraries/vignette/vignette.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		'//extensions/wikia/ThemeDesigner/js/ThemeDesigner.js',
 	],
@@ -2057,16 +2019,6 @@ $config['LyricsFindTracking'] = [
 	'assets' => [
 		'//extensions/3rdparty/LyricWiki/LyricFind/js/modules/LyricFind.Tracker.js',
 		'//extensions/3rdparty/LyricWiki/LyricFind/js/tracking.js',
-	],
-];
-
-/* ManageWikiaHome */
-$config['manage_wikia_home_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/SpecialManageWikiaHome/js/ManageWikiaHome.js',
-		'//extensions/wikia/SpecialManageWikiaHome/js/CollectionsSetup.js',
-		'//extensions/wikia/SpecialManageWikiaHome/js/CollectionsNavigation.js',
 	],
 ];
 
@@ -3043,6 +2995,7 @@ $config['create_new_wiki_js'] = [
 		'//extensions/wikia/CreateNewWiki/js/CreateNewWikiThemeDesignerOverrides.js',
 		'//extensions/wikia/CreateNewWiki/js/WikiBuilder.js',
 		'//extensions/wikia/CreateNewWiki/js/CreateNewWikiHelper.js',
+		'//resources/wikia/libraries/vignette/vignette.js',
 	],
 ];
 
@@ -3152,7 +3105,6 @@ $config['oasislight_bottom_js'] = [
 	'assets' => [
 		# WikiHeader
 		'//skins/oasis/js/isTouchScreen.js',
-		'//skins/oasis/js/WikiHeader.js',
 
 		# ImageLazyLoad
 		'//resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js',
@@ -3184,7 +3136,6 @@ $config['ooyala_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/ArticleVideo/styles/ooyala/html5-skin.scss',
 		'//extensions/wikia/ArticleVideo/styles/wikia-ooyala-skin.scss',
 	],
 ];
@@ -3193,10 +3144,6 @@ $config['ooyala_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/ArticleVideo/scripts/ooyala/core.js',
-		'//extensions/wikia/ArticleVideo/scripts/ooyala/main_html5.js',
-		'//extensions/wikia/ArticleVideo/scripts/ooyala/html5-skin.js',
-		'//extensions/wikia/ArticleVideo/scripts/ooyala/youtube.js',
 		'//extensions/wikia/ArticleVideo/scripts/ooyala-player.js',
 	],
 ];
@@ -3207,6 +3154,7 @@ $config['article_featured_video_scss'] = [
 	'assets' => [
 		'//extensions/wikia/ArticleVideo/styles/article-featured-video.scss',
 		'//extensions/wikia/ArticleVideo/styles/video-feedback.scss',
+		'//extensions/wikia/ArticleVideo/styles/video-attribution.scss',
 	],
 ];
 
@@ -3235,32 +3183,52 @@ $config['article_related_video_js'] = [
 	],
 ];
 
-$config['premium_page_header_scss'] = [
+$config['community_header_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/PremiumPageHeader/styles/index.scss',
+		'//extensions/wikia/CommunityHeader/styles/index.scss',
 	],
 ];
 
-$config['premium_page_header_js'] = [
+$config['community_header_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/PremiumPageHeader/scripts/banner-notifications-hack.js',
-		'//extensions/wikia/PremiumPageHeader/scripts/local-navigation.js',
-		'//extensions/wikia/PremiumPageHeader/scripts/old-nav-tracking-hack.js',
-		'//extensions/wikia/PremiumPageHeader/scripts/share-entry-point-hack.js',
-		'//extensions/wikia/PremiumPageHeader/scripts/wiki-header.js',
-		'//extensions/wikia/PremiumPageHeader/scripts/article-header.js',
-		'//extensions/wikia/PremiumPageHeader/scripts/bottom-categories-interlang-hack.js',
+		'//extensions/wikia/CommunityHeader/scripts/tracking.js',
+		'//extensions/wikia/CommunityHeader/scripts/local-navigation-preview.js',
+	],
+];
+
+$config['page_header_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/PageHeader/scripts/tracking.js',
+	],
+];
+
+$config['page_header_scss'] = [
+    'type' => AssetsManager::TYPE_SCSS,
+    'skin' => [ 'oasis' ],
+    'assets' => [
+        '//extensions/wikia/PageHeader/styles/index.scss',
+    ],
+];
+
+$config['ad_mix_experiment_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/AdMixExperiment/scripts/AdMixExperiment.js',
 	]
 ];
 
-$config['premium_page_header_curated_content_js'] = [
-	'type' => AssetsManager::TYPE_JS,
+$config['ad_mix_experiment_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/PremiumPageHeader/scripts/curated-content-edit-hack.js',
-	]
+		'//extensions/wikia/AdMixExperiment/styles/recirculation.scss',
+	],
 ];
+

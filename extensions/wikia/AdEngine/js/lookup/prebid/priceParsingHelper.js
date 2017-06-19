@@ -3,8 +3,9 @@ define('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', [
 	'ext.wikia.adEngine.utils.sampler',
 	'wikia.geo',
 	'wikia.instantGlobals',
-	'wikia.log'
-], function (sampler, geo, instantGlobals, log) {
+	'wikia.log',
+	'wikia.window'
+], function (sampler, geo, instantGlobals, log, win) {
 	'use strict';
 
 	/**
@@ -20,6 +21,7 @@ define('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', [
 			price: 0
 		},
 		invalidResult = {
+			moatTracking: 1,
 			position: defaults.position,
 			price: defaults.price,
 			valid: false
@@ -76,6 +78,10 @@ define('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', [
 		return position;
 	}
 
+	function extractMoatTrackingSampling(input) {
+		return input.indexOf('+100%') !== -1 ? 100 : 1;
+	}
+
 	/**
 	 * For given input, if contains string in form like:
 	 * ve6749ic
@@ -97,6 +103,7 @@ define('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', [
 			price = extractPriceFrom(regexpResult);
 
 			result = {
+				moatTracking: extractMoatTrackingSampling(input),
 				position: extractPositionFrom(regexpResult),
 				price: price,
 				valid: Boolean(price)
@@ -107,9 +114,8 @@ define('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', [
 	}
 
 	// config format 'wgAdDriverVelesBidderConfig' => ['353663292' => 've1500XX', 'AdSense/AdX'=> 've1123LB'],
-	function analyzeConfigFor(ad) {
-		var id = ad.getAttribute('id'),
-			result = invalidResult;
+	function analyzeConfigFor(id) {
+		var result = invalidResult;
 
 		if (id && instantGlobals.wgAdDriverVelesBidderConfig[id]) {
 			result = parse(instantGlobals.wgAdDriverVelesBidderConfig[id]);
@@ -120,16 +126,12 @@ define('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', [
 		return result;
 	}
 
-	function analyzeConfigForAdSystemIn(ad) {
+	function analyzeConfigForAdSystemIn(adSystem) {
 		var adConfigPrice = instantGlobals.wgAdDriverVelesBidderConfig[adxAdSystem],
-			adSystem,
 			result = invalidResult;
 
-		if (adConfigPrice) {
-			adSystem = ad.querySelector('AdSystem');
-			if (adSystem && adSystem.textContent === adxAdSystem) {
-				result = parse(adConfigPrice);
-			}
+		if (adConfigPrice && adSystem === adxAdSystem) {
+			result = parse(adConfigPrice);
 		}
 
 		return result;
@@ -144,21 +146,35 @@ define('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', [
 		}
 	}
 
-	function analyzeResponse(responseXML) {
-		var ad,
-			result = invalidResult;
+	function analyzeResponse(vastInfo) {
+		var result = invalidResult;
 
-		ad = responseXML.documentElement.querySelector('Ad');
-
-		if (ad && instantGlobals.wgAdDriverVelesBidderConfig) {
-			result = analyzeConfigFor(ad);
+		if (vastInfo.id && instantGlobals.wgAdDriverVelesBidderConfig) {
+			result = analyzeConfigFor(vastInfo.id);
 
 			if (!result.valid) {
-				result = analyzeConfigForAdSystemIn(ad);
+				result = analyzeConfigForAdSystemIn(vastInfo.adSystem);
 			}
 		}
 
 		return result;
+	}
+
+	function getVastId(responseXML) {
+		var ad = responseXML.documentElement.querySelector('Ad'),
+			adSystem,
+			vastInfo = {};
+
+		if (ad) {
+			vastInfo.id = ad.getAttribute('id');
+
+			adSystem = ad.querySelector('AdSystem');
+			if (adSystem) {
+				vastInfo.adSystem = adSystem.textContent;
+			}
+		}
+
+		return vastInfo;
 	}
 
 	/**
@@ -169,10 +185,17 @@ define('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', [
 	 * @returns {VelesParams}
 	 */
 	function analyze(vastRequest) {
-		var result = invalidResult;
+		var result = invalidResult,
+			vastInfo;
 
 		if (vastRequest.responseXML) {
-			result = analyzeResponse(vastRequest.responseXML);
+			vastInfo = getVastId(vastRequest.responseXML);
+			result = analyzeResponse(vastInfo);
+			result.vastId = [
+				vastInfo.adSystem,
+				vastInfo.id
+			].join(':');
+
 			logInvalidResponse(result, vastRequest);
 		}
 

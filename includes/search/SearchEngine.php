@@ -918,6 +918,10 @@ class SearchNearMatchResultSet extends SearchResultSet {
 class SearchHighlighter {
 	var $mCleanWikitext = true;
 
+	/**
+	 * @warning If you pass false to this constructor, then
+	 *  the caller is responsible for HTML escaping.
+	 */
 	function __construct( $cleanupWikitext = true ) {
 		$this->mCleanWikitext = $cleanupWikitext;
 	}
@@ -1326,6 +1330,11 @@ class SearchHighlighter {
 		$text = preg_replace( "/'''''/", "", $text );
 		$text = preg_replace( "/('''|<\/?[iIuUbB]>)/", "", $text );
 		$text = preg_replace( "/''/", "", $text );
+
+		// Note, the previous /<\/?[^>]+>/ is insufficient
+		// for XSS safety as the HTML tag can span multiple
+		// search results (T144845).
+		$text = Sanitizer::escapeHtmlAllowEntities( $text );
 
 		wfProfileOut( $fname );
 		return $text;

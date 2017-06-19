@@ -63,25 +63,6 @@ CREATE TABLE /*_*/user (
   -- Optional 'real name' to be displayed in credit listings
   user_real_name varchar(255) binary NOT NULL default '',
 
-  -- Password hashes, see User::crypt() and User::comparePasswords()
-  -- in User.php for the algorithm
-  user_password tinyblob NOT NULL,
-
-  -- When using 'mail me a new password', a random
-  -- password is generated and the hash stored here.
-  -- The previous password is left in place until
-  -- someone actually logs in with the new password,
-  -- at which point the hash is moved to user_password
-  -- and the old password is invalidated.
-  user_newpassword tinyblob NOT NULL,
-
-  -- Timestamp of the last time when a new password was
-  -- sent, for throttling and expiring purposes
-  -- Emailed passwords will expire $wgNewPasswordExpiry
-  -- (a week) after being set. If user_newpass_time is NULL
-  -- (eg. created by mail) it doesn't expire.
-  user_newpass_time binary(14),
-
   -- Note: email should be restricted, not public info.
   -- Same with passwords.
   user_email tinytext NOT NULL,
@@ -268,7 +249,9 @@ CREATE UNIQUE INDEX /*i*/name_title ON /*_*/page (page_namespace,page_title);
 CREATE INDEX /*i*/page_random ON /*_*/page (page_random);
 CREATE INDEX /*i*/page_len ON /*_*/page (page_len);
 CREATE INDEX /*i*/page_redirect_namespace_len ON /*_*/page (page_is_redirect, page_namespace, page_len);
-CREATE INDEX /*i*/page_ns_latest_idx ON /*_*/page (page_namespace, page_latest); -- SUS-1928
+
+-- SUS-1928
+CREATE INDEX /*i*/page_ns_latest_idx ON /*_*/page (page_namespace, page_latest);
 
 --
 -- Every edit of a page creates also a revision row.
@@ -779,7 +762,7 @@ CREATE TABLE /*_*/ipblocks (
 
 -- Unique index to support "user already blocked" messages
 -- Any new options which prevent collisions should be included
-CREATE UNIQUE INDEX /*i*/ipb_address ON /*_*/ipblocks (ipb_address(255), ipb_user, ipb_auto, ipb_anon_only);
+CREATE UNIQUE INDEX /*i*/ipb_address_unique ON /*_*/ipblocks (ipb_address(255), ipb_user, ipb_auto);
 
 CREATE INDEX /*i*/ipb_user ON /*_*/ipblocks (ipb_user);
 CREATE INDEX /*i*/ipb_range ON /*_*/ipblocks (ipb_range_start(8), ipb_range_end(8));
@@ -1114,12 +1097,6 @@ CREATE TABLE /*_*/interwiki (
   -- Any spaces in the name will be transformed to underscores before
   -- insertion.
   iw_url blob NOT NULL,
-
-  -- The URL of the file api.php
-  iw_api blob NOT NULL,
-
-  -- The name of the database (for a connection to be established with wfGetLB( 'wikiid' ))
-  iw_wikiid varchar(64) NOT NULL,
 
   -- A boolean value indicating whether the wiki is in this project
   -- (used, for example, to detect redirect loops)

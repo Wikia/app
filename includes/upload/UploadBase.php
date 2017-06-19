@@ -169,7 +169,8 @@ abstract class UploadBase {
 	 * @param $tempPath string the temporary path
 	 * @param $fileSize int the file size
 	 * @param $removeTempFile bool (false) remove the temporary file?
-	 * @return null
+	 *
+	 * @throws MWException
 	 */
 	public function initializePathInfo( $name, $tempPath, $fileSize, $removeTempFile = false ) {
 		$this->mDesiredDestName = $name;
@@ -1059,7 +1060,10 @@ abstract class UploadBase {
 		$check = new XmlTypeCheck(
 			$filename,
 			array( $this, 'checkSvgScriptCallback' ),
-			array( 'processing_instruction_handler' => 'UploadBase::checkSvgPICallback' )
+			array(
+				'processing_instruction_handler' => 'UploadBase::checkSvgPICallback',
+				'external_dtd_handler' => 'UploadBase::checkSvgExternalDTD',
+			)
 		);
 		if ( $check->wellFormed !== true ) {
 			// Invalid xml (bug 58553)
@@ -1126,6 +1130,34 @@ abstract class UploadBase {
 			}
 		}
 
+		return false;
+	}
+
+	/**
+	 * Verify that DTD urls referenced are only the standard dtds
+	 *
+	 * Browsers seem to ignore external dtds. However just to be on the
+	 * safe side, only allow dtds from the svg standard.
+	 *
+	 * @param string $type PUBLIC or SYSTEM
+	 * @param string $publicId The well-known public identifier for the dtd
+	 * @param string $systemId The url for the external dtd
+	 */
+	public static function checkSvgExternalDTD( $type, $publicId, $systemId ) {
+		// This doesn't include the XHTML+MathML+SVG doctype since we don't
+		// allow XHTML anyways.
+		$allowedDTDs = array(
+			'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd',
+			'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd',
+			'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-basic.dtd',
+			'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd'
+		);
+		if ( $type !== 'PUBLIC'
+			|| !in_array( $systemId, $allowedDTDs )
+			|| strpos( $publicId, "-//W3C//" ) !== 0
+		) {
+			return array( 'upload-scripted-dtd' );
+		}
 		return false;
 	}
 

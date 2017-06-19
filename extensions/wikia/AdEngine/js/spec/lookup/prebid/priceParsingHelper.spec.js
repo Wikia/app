@@ -62,6 +62,13 @@ describe('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', function () {
 			isValid: true
 		},
 		{
+			configPrice: 've0031LB+100%',
+			expectedPrice: 0.31,
+			expectedPosition: 'LB',
+			expectedMoatTracking: 100,
+			isValid: true
+		},
+		{
 			configPrice: 've0000xx',
 			expectedPrice: DEFAULT_PRICE,
 			expectedPosition: DEFAULT_POS,
@@ -71,6 +78,13 @@ describe('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', function () {
 			configPrice: 've0001xx',
 			expectedPrice: 0.01,
 			expectedPosition: 'XX',
+			isValid: true
+		},
+		{
+			configPrice: 've0001xx+100%',
+			expectedPrice: 0.01,
+			expectedPosition: 'XX',
+			expectedMoatTracking: 100,
 			isValid: true
 		},
 		{
@@ -135,6 +149,8 @@ describe('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', function () {
 		var ad = document.createElement('Ad');
 		ad.setAttribute('id', adId);
 		ad.appendChild(document.createElement('AdParameters'));
+		ad.appendChild(document.createElement('AdSystem'))
+			.appendChild(document.createTextNode('DFP'));
 
 		return getResponseObject(ad);
 	}
@@ -163,16 +179,23 @@ describe('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', function () {
 			expect(result.price).toEqual(testCase.expectedPrice);
 			expect(result.position).toEqual(testCase.expectedPosition);
 			expect(result.valid).toEqual(testCase.isValid);
+			expect(result.vastId).toEqual('DFP:' + adId);
+			if (testCase.expectedMoatTracking) {
+				expect(result.moatTracking).toEqual(testCase.expectedMoatTracking);
+			} else {
+				expect(result.moatTracking).toEqual(1);
+			}
 		});
 	});
 
 	it('Should parse price form AdX config', function () {
 		mocks.instantGlobals.wgAdDriverVelesBidderConfig['AdSense/AdX'] = 've1123LB';
 
-		result = getParsingHelper().analyze(mockAdXVastResponse());
+		result = getParsingHelper().analyze(mockAdXVastResponse('123'));
 		expect(result.price).toEqual(11.23);
 		expect(result.position).toEqual('LB');
 		expect(result.valid).toEqual(true);
+		expect(result.vastId).toEqual('AdSense/AdX:123');
 	});
 
 	it('Should get price from id if exists, before AdX', function () {
@@ -183,6 +206,7 @@ describe('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', function () {
 		expect(result.price).toEqual(66.77);
 		expect(result.position).toEqual('LB');
 		expect(result.valid).toEqual(true);
+		expect(result.vastId).toEqual('AdSense/AdX:666');
 	});
 
 });

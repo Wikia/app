@@ -24,7 +24,7 @@ class WikiaMapsMapControllerTest extends WikiaBaseTest {
 		$userMock->expects( $this->never() )
 			->method( 'isLoggedIn' );
 
-		$controllerMock->wg->User = $userMock;
+		$controllerMock->getApp()->wg->User = $userMock;
 
 		$controllerMock->createMap();
 	}
@@ -39,7 +39,7 @@ class WikiaMapsMapControllerTest extends WikiaBaseTest {
 		$userMock->expects( $this->never() )
 			->method( 'isLoggedIn' );
 
-		$controllerMock->wg->User = $userMock;
+		$controllerMock->getApp()->wg->User = $userMock;
 
 		$controllerMock->createMap();
 	}
@@ -60,7 +60,7 @@ class WikiaMapsMapControllerTest extends WikiaBaseTest {
 			->method( 'isBlocked' );
 
 		$this->mockGetDataForUserTests( $controllerMock );
-		$controllerMock->wg->User = $userMock;
+		$controllerMock->getApp()->wg->User = $userMock;
 
 		$controllerMock->createMap();
 	}
@@ -82,7 +82,7 @@ class WikiaMapsMapControllerTest extends WikiaBaseTest {
 			->willReturn( true );
 
 		$this->mockGetDataForUserTests( $controllerMock );
-		$controllerMock->wg->User = $userMock;
+		$controllerMock->getApp()->wg->User = $userMock;
 
 		$controllerMock->createMap();
 	}
@@ -108,7 +108,7 @@ class WikiaMapsMapControllerTest extends WikiaBaseTest {
 		$controllerMock->expects( $this->never() )
 			->method( 'getModel' );
 		$controllerMock->request = $requestMock;
-		$controllerMock->wg->User = $userMock;
+		$controllerMock->getApp()->wg->User = $userMock;
 
 		$controllerMock->updateMapDeletionStatus();
 	}
@@ -151,7 +151,7 @@ class WikiaMapsMapControllerTest extends WikiaBaseTest {
 		$controllerMock->expects( $this->never() )
 			->method( 'isUserMapCreator' );
 		$controllerMock->request = $requestMock;
-		$controllerMock->wg->User = $userMock;
+		$controllerMock->getApp()->wg->User = $userMock;
 
 		$controllerMock->updateMapDeletionStatus();
 	}
@@ -194,7 +194,7 @@ class WikiaMapsMapControllerTest extends WikiaBaseTest {
 			->method( 'isUserMapCreator' )
 			->willReturn( false );
 		$controllerMock->request = $requestMock;
-		$controllerMock->wg->User = $userMock;
+		$controllerMock->getApp()->wg->User = $userMock;
 
 		/** @var WikiaMapsMapController $controllerMock */
 		$controllerMock->updateMapDeletionStatus();
@@ -221,11 +221,10 @@ class WikiaMapsMapControllerTest extends WikiaBaseTest {
 	private function getWikiaMapsMapControllerMock() {
 		$controllerMock = $this->getMockBuilder( 'WikiaMapsMapController' )
 			->setMethods( [ 'getData', 'getModel', 'canUserDelete', 'isUserMapCreator' ] )
-			->disableOriginalConstructor()
 			->getMock();
 
 		$controllerMock->request = $this->getWikiaRequestMock();
-		$controllerMock->wg->CityId = 123;
+		$controllerMock->setApp( new WikiaApp( new WikiaLocalRegistry() ) );
 
 		return $controllerMock;
 	}
