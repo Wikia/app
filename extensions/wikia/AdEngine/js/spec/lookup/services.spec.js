@@ -24,13 +24,6 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 			hasResponse: function () { return true; }
 		},
 		log: noop,
-		oxBidder: {
-			trackState: noop,
-			wasCalled: noop,
-			getSlotParams: noop,
-			getName: function () { return 'ox_bidder'; },
-			hasResponse: function () { return true; }
-		},
 		prebid: {
 			trackState: noop,
 			wasCalled: noop,
@@ -62,28 +55,6 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 		lookup.extendSlotTargeting('TOP_LEADERBOARD', slotTargetingMock, 'RemnantGpt');
 		expect(slotTargetingMock).toEqual(expectedSlotTargeting);
 		expect(mocks.amazon.trackState).toHaveBeenCalled();
-	});
-
-	it('extends slot targeting for OpenX', function () {
-		var lookup = modules['ext.wikia.adEngine.lookup.services'](
-			mocks.log,
-			undefined,
-			mocks.oxBidder
-			),
-			slotTargetingMock = {a: 'b'},
-			expectedSlotTargeting = {
-				a: 'b',
-				oxslots: ['ox1x6p5', 'ox3x2p9', 'ox7x9p5'],
-				bid: 'xOxxx'
-			};
-
-		spyOn(mocks.oxBidder, 'trackState');
-		spyOn(mocks.oxBidder, 'wasCalled').and.returnValue(true);
-		spyOn(mocks.oxBidder, 'getSlotParams').and.returnValue({oxslots: ['ox1x6p5', 'ox3x2p9', 'ox7x9p5']});
-
-		lookup.extendSlotTargeting('TOP_LEADERBOARD', slotTargetingMock, 'DirectGpt');
-		expect(slotTargetingMock).toEqual(expectedSlotTargeting);
-		expect(mocks.oxBidder.trackState).toHaveBeenCalled();
 	});
 
 	it('extends slot targeting for RubiconFastlane', function () {
@@ -134,16 +105,15 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 			mocks.log,
 			mocks.prebid,
 			mocks.amazon,
-			mocks.oxBidder,
 			mocks.fastlane
 			),
 			slotTargetingMock = {a: 'b'},
 			expectedSlotTargeting = {
 				a: 'b',
 				slots: ['va1s', 'va2s', 'va3s'],
-				bid: 'ROAxP'
+				bid: 'RxAxP'
 			},
-			testedProviders = [mocks.amazon, mocks.prebid, mocks.oxBidder, mocks.fastlane];
+			testedProviders = [mocks.amazon, mocks.prebid, mocks.fastlane];
 
 		testedProviders.forEach(function(provider) {
 			spyOn(provider, 'wasCalled').and.returnValue(true);

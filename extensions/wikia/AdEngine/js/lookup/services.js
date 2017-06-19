@@ -13,14 +13,12 @@ define('ext.wikia.adEngine.lookup.services', [
 	'wikia.log',
 	require.optional('ext.wikia.adEngine.lookup.prebid'),
 	require.optional('ext.wikia.adEngine.lookup.amazonMatch'),
-	require.optional('ext.wikia.adEngine.lookup.openXBidder'),
 	require.optional('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane')
-], function (log, prebid, amazonMatch, oxBidder, rubiconFastlane) {
+], function (log, prebid, amazonMatch, rubiconFastlane) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.lookup.services',
 		bidders = [
 			amazonMatch,
-			oxBidder,
 			rubiconFastlane,
 			prebid
 		],
@@ -28,10 +26,6 @@ define('ext.wikia.adEngine.lookup.services', [
 			'rubicon_fastlane': {
 				pos: 0,
 				char: 'R'
-			},
-			'ox_bidder': {
-				pos: 1,
-				char: 'O'
 			},
 			amazon: {
 				pos: 2,

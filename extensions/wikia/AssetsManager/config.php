@@ -252,15 +252,6 @@ $config['adengine2_amazon_match_js'] = [
 	],
 ];
 
-$config['adengine2_ox_bidder_js'] = [
-	'skin' => [ 'oasis' ],
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/AdEngine/js/lookup/openx/openXBidderHelper.js',
-		'//extensions/wikia/AdEngine/js/lookup/openXBidder.js',
-	],
-];
-
 $config['adengine2_rubicon_fastlane_js'] = [
 	'skin' => [ 'oasis' ],
 	'type' => AssetsManager::TYPE_JS,
@@ -908,8 +899,6 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/context/uapContext.js',
 		'//extensions/wikia/AdEngine/js/lookup/amazonMatch.js',
 		'//extensions/wikia/AdEngine/js/lookup/lookupFactory.js',
-		'//extensions/wikia/AdEngine/js/lookup/openx/openXBidderHelper.js',
-		'//extensions/wikia/AdEngine/js/lookup/openXBidder.js',
 		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconFastlane.js',
 		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconTargeting.js',
 		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconTier.js',
@@ -3147,7 +3136,6 @@ $config['ooyala_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/ArticleVideo/styles/ooyala/html5-skin.scss',
 		'//extensions/wikia/ArticleVideo/styles/wikia-ooyala-skin.scss',
 	],
 ];
@@ -3156,12 +3144,7 @@ $config['ooyala_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/ArticleVideo/scripts/ooyala/core.js',
-		'//extensions/wikia/ArticleVideo/scripts/ooyala/main_html5.js',
-		'//extensions/wikia/ArticleVideo/scripts/ooyala/html5-skin.js',
-		'//extensions/wikia/ArticleVideo/scripts/ooyala/youtube.js',
 		'//extensions/wikia/ArticleVideo/scripts/ooyala-player.js',
-		'//extensions/wikia/ArticleVideo/scripts/ooyala/google_ima.js',
 	],
 ];
 

@@ -64,7 +64,8 @@ class WikiButtonsTest extends \WikiaBaseTest {
 				),
 				new Label( $rawItem['title']['key'], $rawItem['title']['type'] ),
 				$rawItem['icon'],
-				$rawItem['tracking']
+				$rawItem['tracking'],
+				$rawItem['additionalClasses']
 			);
 		}, $raw );
 	}
@@ -89,6 +90,7 @@ class WikiButtonsTest extends \WikiaBaseTest {
 						],
 						'icon' => 'wds-icons-add-new-page-small',
 						'tracking' => 'add-new-page',
+						'additionalClasses' => 'createpage',
 					],
 				] ),
 			],
@@ -108,6 +110,7 @@ class WikiButtonsTest extends \WikiaBaseTest {
 						],
 						'icon' => 'wds-icons-add-new-page-small',
 						'tracking' => 'add-new-page',
+						'additionalClasses' => 'createpage',
 					],
 					[
 						'href' => '/wiki/Special:WikiActivity',
@@ -118,6 +121,7 @@ class WikiButtonsTest extends \WikiaBaseTest {
 						],
 						'icon' => 'wds-icons-activity-small',
 						'tracking' => 'wiki-activity',
+						'additionalClasses' => '',
 					],
 				] ),
 			],
@@ -134,6 +138,7 @@ class WikiButtonsTest extends \WikiaBaseTest {
 						],
 						'icon' => 'wds-icons-add-new-page-small',
 						'tracking' => 'add-new-page',
+						'additionalClasses' => 'createpage',
 					],
 					[
 						'href' => '/wiki/Special:WikiActivity',
@@ -144,6 +149,7 @@ class WikiButtonsTest extends \WikiaBaseTest {
 						],
 						'icon' => 'wds-icons-activity-small',
 						'tracking' => 'wiki-activity',
+						'additionalClasses' => '',
 					],
 					[
 						'href' => '/wiki/Special:AdminDashboard',
@@ -154,6 +160,7 @@ class WikiButtonsTest extends \WikiaBaseTest {
 						],
 						'icon' => 'wds-icons-dashboard-small',
 						'tracking' => 'admin-dashboard',
+						'additionalClasses' => '',
 					],
 				] ),
 			],
