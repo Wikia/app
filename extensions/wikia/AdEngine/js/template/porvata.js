@@ -6,6 +6,7 @@ define('ext.wikia.adEngine.template.porvata', [
 	'ext.wikia.adEngine.video.player.porvata',
 	'ext.wikia.adEngine.video.player.uiTemplate',
 	'ext.wikia.adEngine.video.player.ui.videoInterface',
+	'ext.wikia.adEngine.video.videoFrequencyMonitor',
 	'ext.wikia.adEngine.video.videoSettings',
 	'ext.wikia.adEngine.wrappers.prebid',
 	'wikia.browserDetect',
@@ -21,6 +22,7 @@ define('ext.wikia.adEngine.template.porvata', [
 	porvata,
 	uiTemplate,
 	videoInterface,
+	videoFrequencyMonitor,
 	videoSettings,
 	prebid,
 	browserDetect,
@@ -198,6 +200,10 @@ define('ext.wikia.adEngine.template.porvata', [
 			} else {
 				onReady(video, params);
 			}
+
+			video.addEventListener('start', function () {
+				videoFrequencyMonitor.registerLaunchedVideo();
+			});
 
 			return video;
 		}).then(function (video) {
