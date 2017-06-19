@@ -139,6 +139,12 @@ describe('AdLogicPageParams', function () {
 		expect(params.geo).toBe('PL');
 	});
 
+	it('getPageLevelParams s2 is correct for featured video page', function () {
+		var params = getParams({hasFeaturedVideo: true});
+
+		expect(params.s2).toBe('fv-zone_page_type');
+	});
+
 	it('getPageLevelParams wpage param', function () {
 		var params;
 
