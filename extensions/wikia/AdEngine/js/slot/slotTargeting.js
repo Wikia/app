@@ -51,7 +51,7 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 			MOBILE_PREFOOTER: 'p',
 			MOBILE_BOTTOM_LEADERBOARD: 'b'
 		},
-		videoProviders = ['veles', 'rubicon'],
+		videoProviders = ['appnexusAst', 'veles', 'rubicon'],
 		videoSlots = {
 			oasis: 'INCONTENT_PLAYER',
 			mercury: 'MOBILE_IN_CONTENT'
