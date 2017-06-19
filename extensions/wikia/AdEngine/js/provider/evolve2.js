@@ -6,8 +6,7 @@ define('ext.wikia.adEngine.provider.evolve2', [
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'ext.wikia.adEngine.utils.eventDispatcher',
 	'wikia.log',
-	require.optional('ext.wikia.adEngine.lookup.openx.openXBidderHelper')
-], function (adContext, gptHelper, slotTweaker, zoneParams, eventDispatcher, log, openXHelper) {
+], function (adContext, gptHelper, slotTweaker, zoneParams, eventDispatcher, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.evolve2',
@@ -94,9 +93,6 @@ define('ext.wikia.adEngine.provider.evolve2', [
 			slotTweaker.removeDefaultHeight(slot.name);
 			slotTweaker.removeTopButtonIfNeeded(slot.name);
 			slotTweaker.adjustLeaderboardSize(slot.name);
-		});
-		slot.pre('hop', function() {
-			openXHelper && openXHelper.addOpenXSlot(slot.name);
 		});
 		gptHelper.pushAd(
 			slot,

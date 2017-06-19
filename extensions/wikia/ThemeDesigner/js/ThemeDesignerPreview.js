@@ -23,7 +23,9 @@ var ThemeDesignerPreview = {
 		var sassUrl = $.getSassesURL([
 			'/skins/oasis/css/oasis.scss',
 			'/extensions/wikia/PortableInfobox/styles/PortableInfobox.scss',
-			'/extensions/wikia/PortableInfobox/styles/PortableInfoboxEuropaTheme.scss'
+			'/extensions/wikia/PortableInfobox/styles/PortableInfoboxEuropaTheme.scss',
+			'/extensions/wikia/PageHeader/styles/index.scss',
+			'/extensions/wikia/CommunityHeader/styles/index.scss'
 		], settings);
 
 		$("#clickmask").animate({"opacity": 0.65}, "fast", function() {

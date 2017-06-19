@@ -71,4 +71,16 @@ class CuratedContentHooks {
 		}
 		return true;
 	}
+
+	public static function onBeforePrepareActionButtons( $actionButton, &$contentActions ) {
+		if ( CuratedContentHelper::shouldDisplayToolButton() ) {
+			$contentActions['edit-mobile-main-page'] = [
+				'href' => '/main/edit?useskin=wikiamobile',
+				'text' => wfMessage( 'page-header-action-button-edit-mobile-main-page' )->escaped(),
+				'id' => 'CuratedContentTool'
+			];
+		}
+
+		return true;
+	}
 }
