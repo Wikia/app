@@ -169,6 +169,7 @@ var NodeRoomController = $.createClass(Observable, {
 
 		this.socket.bind('join', $.proxy(this.onJoin, this));
 		this.socket.bind('initial', $.proxy(this.onInitial, this));
+		this.socket.bind('meta', $.proxy(this.onMeta, this));
 		this.socket.bind('chat:add', $.proxy(this.onChatAdd, this));
 
 		this.socket.bind('reConnectFail', $.proxy(this.onReConnectFail, this));
@@ -247,6 +248,14 @@ var NodeRoomController = $.createClass(Observable, {
 		}
 
 		this.afterInitQueue = [];
+	},
+
+	// log server information useful when debugging
+	onMeta: function (message) {
+		var meta = message['data'];
+
+		// e.g. chat:meta:  Connected to dev-macbre running chat@0.10.3
+		this.socket.log('Connected to ' + meta['serverHostname'] + ' running chat@' + meta['serverVersion'], 'chat:meta');
 	},
 
 	setActive: function (status) {
