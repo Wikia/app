@@ -4,7 +4,7 @@ $messages = [];
 $messages['en'] = [
 	'realmap-deprecated-info' => 'Real world maps have been discontinued by Wikia. For more information, see: $1',
 	'returnto' => 'Return to $1.',
-	'redirectedfrom' => '(Redirected from $1)',
+	'redirectedfrom' => 'Redirected from $1',
 	'redirectpagesub' => 'Redirect page',
 	'retrievedfrom' => 'Retrieved from "$1"',
 	'restorelink' => '{{PLURAL:$1|one deleted edit|$1 deleted edits}}',
@@ -760,7 +760,7 @@ $messages['ab'] = [
 
 $messages['ace'] = [
 	'returnto' => 'Gisa u $1.',
-	'redirectedfrom' => '(Geupeupinah nibak $1)',
+	'redirectedfrom' => 'Geupeupinah nibak $1',
 	'redirectpagesub' => 'Ôn peupinah',
 	'retrievedfrom' => 'Meurumpok nibak "$1"',
 	'red-link-title' => '$1 (ôn goh na)',
@@ -811,7 +811,7 @@ Nyoë pat nakeuh log seunampôh nibak ôn nyoë:',
 
 $messages['af'] = [
 	'returnto' => 'Keer terug na $1.',
-	'redirectedfrom' => '(Aangestuur vanaf $1)',
+	'redirectedfrom' => 'Aangestuur vanaf $1',
 	'redirectpagesub' => 'Aanstuurblad',
 	'retrievedfrom' => 'Ontsluit van "$1"',
 	'restorelink' => '{{PLURAL:$1|die geskrapte wysiging|$1 geskrapte wysigings}}',
@@ -1086,7 +1086,7 @@ $messages['ak'] = [
 
 $messages['aln'] = [
 	'returnto' => 'Kthehu te $1.',
-	'redirectedfrom' => '(Përcjellë nga $1)',
+	'redirectedfrom' => 'Përcjellë nga $1',
 	'redirectpagesub' => 'Faqe përcjellëse',
 	'retrievedfrom' => 'Marrë nga "$1"',
 	'restorelink' => '{{PLURAL:$1|nji redaktim i fshimë|$1 redaktime të fshime}}',
@@ -1237,7 +1237,7 @@ Faqet në [[Special:Watchlist|listën tuej të mbikëqyrjes]] janë \'\'\'të th
 
 $messages['als'] = [
 	'returnto' => 'Kthehu te $1.',
-	'redirectedfrom' => '(Përcjellë nga $1)',
+	'redirectedfrom' => 'Përcjellë nga $1',
 	'redirectpagesub' => 'Faqe përcjellëse',
 	'retrievedfrom' => 'Marrë nga "$1"',
 	'restorelink' => '{{PLURAL:$1|nji redaktim i fshimë|$1 redaktime të fshime}}',
@@ -1388,7 +1388,7 @@ Faqet në [[Special:Watchlist|listën tuej të mbikëqyrjes]] janë \'\'\'të th
 
 $messages['am'] = [
 	'returnto' => '(ወደ $1 ለመመለስ)',
-	'redirectedfrom' => '(ከ$1 የተዛወረ)',
+	'redirectedfrom' => 'ከ$1 የተዛወረ',
 	'redirectpagesub' => 'መምሪያ መንገድ',
 	'retrievedfrom' => 'ከ «$1» የተወሰደ',
 	'restorelink' => '{{PLURAL:$1|የጠፋ ዕትም|$1 የጠፉት ዕትሞች}}',
@@ -1528,7 +1528,7 @@ $messages['am'] = [
 
 $messages['an'] = [
 	'returnto' => 'Tornar ta $1.',
-	'redirectedfrom' => '(Reendrezato dende $1)',
+	'redirectedfrom' => 'Reendrezato dende $1',
 	'redirectpagesub' => 'Pachina reendrezata',
 	'retrievedfrom' => 'Obtenito de "$1"',
 	'restorelink' => '{{PLURAL:$1|una edición borrata|$1 edicions borratas}}',
@@ -1794,7 +1794,7 @@ No tien acceso a ell.',
 
 $messages['ang'] = [
 	'returnto' => 'Ȝā eft tō $1',
-	'redirectedfrom' => '(Edlǣded fram $1)',
+	'redirectedfrom' => 'Edlǣded fram $1',
 	'redirectpagesub' => 'Edlǣdsīde',
 	'retrievedfrom' => 'Fram "$1" beȝieten',
 	'restorelink' => '{{PLURAL:$1|ān āfeorsed ādiht|$1 āfeorsed ādihtas}}',
@@ -1872,7 +1872,7 @@ $messages['ang'] = [
 
 $messages['anp'] = [
 	'returnto' => 'लौटॊ $1.',
-	'redirectedfrom' => '($1 सॆं भेजनॊ गेलॊ)',
+	'redirectedfrom' => '$1 सॆं भेजनॊ गेलॊ',
 	'redirectpagesub' => 'पुन: निर्देशित पन्ना',
 	'retrievedfrom' => '"$1" सॆं लेलॊ गेलॊ',
 	'red-link-title' => '$1 (पृष्ठ मौजूद नै छै)',
@@ -1925,7 +1925,7 @@ $2 द्वारा संपादित आखिरी अवतरण क�
 
 $messages['ar'] = [
 	'returnto' => 'ارجع إلى $1.',
-	'redirectedfrom' => '(تم التحويل من $1)',
+	'redirectedfrom' => 'تم التحويل من $1',
 	'redirectpagesub' => 'صفحة تحويل',
 	'retrievedfrom' => 'تم الاسترجاع من "$1"',
 	'restorelink' => '{{PLURAL:$1|$1 تعديل محذوف|تعديلا واحدا محذوفا|تعديلين محذوفين|$1 تعديلات محذوفة|$1 تعديلا محذوفا|$1 تعديلا محذوفا}}',
@@ -2195,7 +2195,7 @@ $1',
 
 $messages['arc'] = [
 	'returnto' => 'ܕܥܘܪ ܠ$1.',
-	'redirectedfrom' => '(ܨܝܒ ܡܢ $1)',
+	'redirectedfrom' => 'ܨܝܒ ܡܢ $1',
 	'redirectpagesub' => 'ܦܐܬܐ ܕܨܘܝܒܐ',
 	'restorelink' => '{{PLURAL:$1|ܚܕ ܫܘܚܠܦܐ ܫܝܦܐ|$1 ܫܘܚܠܦ̈ܐ ܫܝܦ̈ܐ}}',
 	'red-link-title' => '$1 (ܦܐܬܐ ܗܕܐ ܠܝܬ)',
@@ -2291,7 +2291,7 @@ $messages['arc'] = [
 
 $messages['arn'] = [
 	'returnto' => 'Amutun $1 püle.',
-	'redirectedfrom' => '(Wüñogünegey $1 mew)',
+	'redirectedfrom' => 'Wüñogünegey $1 mew',
 	'redirectpagesub' => 'Wüñongünenielu wülngiñ',
 	'retrievedfrom' => 'Nentungey "$1" mew',
 	'restorelink' => '{{PLURAL:$1|kiñe wirin ñamümgün|$1 wirin ñamümün}}',
@@ -2358,7 +2358,7 @@ Nagpüle wirintukuy chumngely tüfachi wülngiñ liftungey kam nengümngey.',
 
 $messages['ary'] = [
 	'returnto' => 'Rjeĝ le $1',
-	'redirectedfrom' => '(Ṫḫowwlaṫ men $1)',
+	'redirectedfrom' => 'Ṫḫowwlaṫ men $1',
 	'redirectpagesub' => 'Ṣefḫa dyal ṫ-ṫeḫwil',
 	'retrievedfrom' => 'Mrejjĝa men "$1"',
 	'restorelink' => '{{PLURAL:$1|wahd taadil tmsh|$1 taadilat tmshat}}',
@@ -2559,7 +2559,7 @@ $1',
 
 $messages['arz'] = [
 	'returnto' => 'ارجع ل $1.',
-	'redirectedfrom' => '(تحويل من $1)',
+	'redirectedfrom' => 'تحويل من $1',
 	'redirectpagesub' => 'صفحة تحويل',
 	'retrievedfrom' => 'اتجابت من "$1"',
 	'restorelink' => '{{PLURAL:$1|تعديل واحد ملغي|تعديلين ملغيين|$1 تعديلات ملغية|$1 تعديل ملغي|$1 تعديل ملغي}}',
@@ -2813,7 +2813,7 @@ $1',
 
 $messages['as'] = [
 	'returnto' => '$1 লৈ ঘূৰি যাওক ।',
-	'redirectedfrom' => '($1 ৰ পৰা পুনঃনিৰ্দেশিত)',
+	'redirectedfrom' => '$1 ৰ পৰা পুনঃনিৰ্দেশিত',
 	'redirectpagesub' => 'পুনঃনিৰ্দেশিত পৃষ্ঠা',
 	'retrievedfrom' => '"$1" -ৰ পৰা সংকলিত',
 	'restorelink' => '{{PLURAL:$1| এটা বিলুপ্ত সম্পাদনা|$1 টা বিলুপ্ত সম্পাদনা}}',
@@ -3083,7 +3083,7 @@ $1',
 
 $messages['ast'] = [
 	'returnto' => 'Tornar a $1.',
-	'redirectedfrom' => '(Redirixío dende $1)',
+	'redirectedfrom' => 'Redirixío dende $1',
 	'redirectpagesub' => 'Páxina de redireición',
 	'retrievedfrom' => 'Sacáu de "$1"',
 	'restorelink' => '{{PLURAL:$1|una edición desaniciada|$1 ediciones desaniciaes}}',
@@ -3366,7 +3366,7 @@ $messages['av'] = [
 
 $messages['avk'] = [
 	'returnto' => 'Dimgrablera va $1 bu.',
-	'redirectedfrom' => '(Graskan mal $1)',
+	'redirectedfrom' => 'Graskan mal $1',
 	'redirectpagesub' => 'Bugraskara',
 	'retrievedfrom' => 'Dimnarin mal « $1 »',
 	'restorelink' => '{{PLURAL:$1|1|$1}} sulayan betaks',
@@ -3546,7 +3546,7 @@ $messages['ay'] = [
 
 $messages['az'] = [
 	'returnto' => '$1 səhifəsinə qayıt.',
-	'redirectedfrom' => '($1 səhifəsindən yönləndirilmişdir)',
+	'redirectedfrom' => '$1 səhifəsindən yönləndirilmişdir',
 	'redirectpagesub' => 'Yönləndirmə səhifəsi',
 	'retrievedfrom' => 'Mənbə — "$1"',
 	'restorelink' => '{{PLURAL:$1|bir silinmiş redaktəyə|$1 silinmiş redaktəyə}}',
@@ -3764,7 +3764,7 @@ $1',
 
 $messages['ba'] = [
 	'returnto' => '$1 битенә ҡайтыу.',
-	'redirectedfrom' => '($1 битенән йүнәлтелде)',
+	'redirectedfrom' => '$1 битенән йүнәлтелде',
 	'redirectpagesub' => 'Йүнәлтеү бите',
 	'retrievedfrom' => 'Сығанағы — «$1»',
 	'restorelink' => '{{PLURAL:$1|1 юйылған үҙгәртеүҙе|$1 юйылған үҙгәртеүҙе}}',
@@ -4033,7 +4033,7 @@ $2 өлгөһөнә ҡайтыу.',
 
 $messages['bar'] = [
 	'returnto' => 'Zruck zua da Seiten $1.',
-	'redirectedfrom' => '(Weidergloatt voh $1)',
+	'redirectedfrom' => 'Weidergloatt voh $1',
 	'redirectpagesub' => 'Weiderloatung',
 	'retrievedfrom' => 'Voh „$1“',
 	'restorelink' => '$1 gléschde {{PLURAL:$1|Versión|Versiónen}}',
@@ -4120,7 +4120,7 @@ Details stehen im [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} 
 
 $messages['bat-smg'] = [
 	'returnto' => 'Zruck zua da Seiten $1.',
-	'redirectedfrom' => '(Weidergloatt voh $1)',
+	'redirectedfrom' => 'Weidergloatt voh $1',
 	'redirectpagesub' => 'Weiderloatung',
 	'retrievedfrom' => 'Voh „$1“',
 	'restorelink' => '$1 gléschde {{PLURAL:$1|Versión|Versiónen}}',
@@ -4207,7 +4207,7 @@ Details stehen im [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} 
 
 $messages['bcc'] = [
 	'returnto' => 'تررگ به $1.',
-	'redirectedfrom' => '(غیر مستقیم بوتگ چه $1)',
+	'redirectedfrom' => 'غیر مستقیم بوتگ چه $1',
 	'redirectpagesub' => 'صفحه غیر مستقیم',
 	'retrievedfrom' => 'درگیجگ بیت چه  "$1"',
 	'restorelink' => '{{PLURAL:$1|یک حذف اصلاح|$1 حذف اصلاح}}',
@@ -4420,7 +4420,7 @@ $messages['bcc'] = [
 
 $messages['bcl'] = [
 	'returnto' => 'Magbwelta sa $1.',
-	'redirectedfrom' => '(Piglikay halì sa $1)',
+	'redirectedfrom' => 'Piglikay halì sa $1',
 	'redirectpagesub' => 'Ilikáy an pahina',
 	'retrievedfrom' => 'Pigkua sa "$1"',
 	'restorelink' => '{{PLURAL:$1|sarong pinarang paghirá|$1 na pinarang paghirá}}',
@@ -4541,7 +4541,7 @@ An ibang mga administrador sa ining wiki pwede pang maghiling kan mga nakatagong
 
 $messages['be'] = [
 	'returnto' => 'Вярнуцца да $1.',
-	'redirectedfrom' => '(Пасля перасылкі з $1)',
+	'redirectedfrom' => 'Пасля перасылкі з $1',
 	'redirectpagesub' => 'Старонка-перасылка',
 	'retrievedfrom' => 'Узята з "$1"',
 	'restorelink' => '{{PLURAL:$1|адна сцёртая праўка|$1 сцёртых правак}}',
@@ -4807,7 +4807,7 @@ $1',
 
 $messages['be-tarask'] = [
 	'returnto' => 'Вярнуцца да старонкі $1.',
-	'redirectedfrom' => '(Перанакіравана з $1)',
+	'redirectedfrom' => 'Перанакіравана з $1',
 	'redirectpagesub' => 'Старонка-перанакіраваньне',
 	'retrievedfrom' => 'Атрымана з «$1»',
 	'restorelink' => '$1 {{PLURAL:$1|выдаленую зьмену|выдаленыя зьмены|выдаленых зьменаў}}',
@@ -5075,7 +5075,7 @@ $1',
 
 $messages['be-x-old'] = [
 	'returnto' => 'Вярнуцца да старонкі $1.',
-	'redirectedfrom' => '(Перанакіравана з $1)',
+	'redirectedfrom' => 'Перанакіравана з $1',
 	'redirectpagesub' => 'Старонка-перанакіраваньне',
 	'retrievedfrom' => 'Атрымана з «$1»',
 	'restorelink' => '$1 {{PLURAL:$1|выдаленую зьмену|выдаленыя зьмены|выдаленых зьменаў}}',
@@ -5343,7 +5343,7 @@ $1',
 
 $messages['bg'] = [
 	'returnto' => 'Обратно към $1.',
-	'redirectedfrom' => '(пренасочване от $1)',
+	'redirectedfrom' => 'пренасочване от $1',
 	'redirectpagesub' => 'Пренасочваща страница',
 	'retrievedfrom' => 'Взето от „$1“.',
 	'restorelink' => '{{PLURAL:$1|една изтрита редакция|$1 изтрити редакции}}',
@@ -5610,7 +5610,7 @@ $1',
 
 $messages['bh'] = [
 	'returnto' => 'Обратно към $1.',
-	'redirectedfrom' => '(пренасочване от $1)',
+	'redirectedfrom' => 'пренасочване от $1',
 	'redirectpagesub' => 'Пренасочваща страница',
 	'retrievedfrom' => 'Взето от „$1“.',
 	'restorelink' => '{{PLURAL:$1|една изтрита редакция|$1 изтрити редакции}}',
@@ -5877,7 +5877,7 @@ $1',
 
 $messages['bho'] = [
 	'returnto' => 'जाईं $1 पर।',
-	'redirectedfrom' => '($1 द्वारा पुन: निर्देशित)',
+	'redirectedfrom' => '$1 द्वारा पुन: निर्देशित',
 	'redirectpagesub' => 'पुन: निर्देशित पन्ना',
 	'retrievedfrom' => '"$1" से लियल गईल',
 	'red-link-title' => '$1 (पन्ना मौजूद नईखे)।',
@@ -5914,7 +5914,7 @@ $messages['bi'] = [
 
 $messages['bjn'] = [
 	'returnto' => 'Bulik ka $1.',
-	'redirectedfrom' => '(Diugahakan matan $1)',
+	'redirectedfrom' => 'Diugahakan matan $1',
 	'redirectpagesub' => 'Tungkaran paugahan',
 	'retrievedfrom' => 'Dijumput matan "$1"',
 	'restorelink' => '$1 {{PLURAL:$1|babakan|babakan}} nang sudah dihapus',
@@ -6188,7 +6188,7 @@ $messages['bm'] = [
 
 $messages['bn'] = [
 	'returnto' => '$1 শিরোনামের পাতায় ফেরত যান।',
-	'redirectedfrom' => '($1 থেকে ঘুরে এসেছে)',
+	'redirectedfrom' => '$1 থেকে ঘুরে এসেছে',
 	'redirectpagesub' => 'পুনর্নির্দেশ পাতা',
 	'retrievedfrom' => '\'$1\' থেকে আনীত',
 	'restorelink' => '{{PLURAL:$1|একটি মুছে ফেলা সম্পাদনা|$1টি মুছে ফেলা সম্পাদনা}}',
@@ -6461,7 +6461,7 @@ $messages['bo'] = [
 
 $messages['bpy'] = [
 	'returnto' => '$1-ত আলথকে যাগা।',
-	'redirectedfrom' => '($1 -ত্ত পাকদিয়া আহিল)',
+	'redirectedfrom' => '$1 -ত্ত পাকদিয়া আহিল',
 	'redirectpagesub' => 'কুইপা পাতা',
 	'retrievedfrom' => '\'$1\' -ত্ত আনানি অসে',
 	'restorelink' => '{{PLURAL:$1|পতা আহান পুসিসি|$1হান পতা পুসিসি}}',
@@ -6565,7 +6565,7 @@ $messages['bpy'] = [
 
 $messages['bqi'] = [
 	'returnto' => 'بازگشت به $1.',
-	'redirectedfrom' => '(تصحیح مجدداز$1)',
+	'redirectedfrom' => 'تصحیح مجدداز$1',
 	'redirectpagesub' => 'صفحه تصحیح وهدایت مجدد',
 	'retrievedfrom' => 'بازیافت از"$1"',
 	'restorelink' => '{{PLURAL:$1|پاک کردن یه اصلاح|$1 پاک کردن اصلاحات}}',
@@ -6605,7 +6605,7 @@ $messages['bqi'] = [
 
 $messages['br'] = [
 	'returnto' => 'Distreiñ d\'ar bajenn $1.',
-	'redirectedfrom' => '(Adkaset eus $1)',
+	'redirectedfrom' => 'Adkaset eus $1',
 	'redirectpagesub' => 'Pajenn adkas',
 	'retrievedfrom' => 'Adtapet diwar « $1 »',
 	'restorelink' => '{{PLURAL:$1|ur c\'hemm diverket|$1 kemm diverket}}',
@@ -6870,7 +6870,7 @@ E \'\'\'tev\'\'\' emañ ar pajennoù zo war ho [[Special:Watchlist|roll evezhia�
 
 $messages['brh'] = [
 	'returnto' => '$1 á aŕseng.',
-	'redirectedfrom' => '($1 án aŕsok)',
+	'redirectedfrom' => '$1 án aŕsok',
 	'redirectpagesub' => 'Aŕsengoká panna',
 	'retrievedfrom' => '"$1" án alok',
 	'red-link-title' => '$1 (panna káŧum án aff)',
@@ -6912,7 +6912,7 @@ $messages['brh'] = [
 
 $messages['bs'] = [
 	'returnto' => 'Povratak na $1.',
-	'redirectedfrom' => '(Preusmjereno sa $1)',
+	'redirectedfrom' => 'Preusmjereno sa $1',
 	'redirectpagesub' => 'Preusmjeri stranicu',
 	'retrievedfrom' => 'Dobavljeno iz "$1"',
 	'restorelink' => '{{PLURAL:$1|$1 izbrisana izmjena|$1 izbrisanih izmjena}}',
@@ -7180,7 +7180,7 @@ vraćeno na posljednju verziju koju je sačuvao $2.',
 
 $messages['bug'] = [
 	'returnto' => 'Lisu ri $1.',
-	'redirectedfrom' => '(Riredirect polé $1)',
+	'redirectedfrom' => 'Riredirect polé $1',
 	'redirectpagesub' => 'Leppa redirect',
 	'readonly' => 'Databése rikonci',
 	'rev-deleted-comment' => '(komentar ripeddé)',
@@ -7207,7 +7207,7 @@ $messages['bug'] = [
 
 $messages['ca'] = [
 	'returnto' => 'Torna cap a $1.',
-	'redirectedfrom' => '(S\'ha redirigit des de: $1)',
+	'redirectedfrom' => 'S\'ha redirigit des de: $1',
 	'redirectpagesub' => 'Pàgina de redirecció',
 	'retrievedfrom' => 'Obtingut de «$1»',
 	'restorelink' => '{{PLURAL:$1|una versió esborrada|$1 versions esborrades}}',
@@ -7490,7 +7490,7 @@ $messages['cbk-zam'] = [
 
 $messages['cdo'] = [
 	'returnto' => 'Duōng kó̤ $1.',
-	'redirectedfrom' => '(Iù $1 dêng-hióng lì gì)',
+	'redirectedfrom' => 'Iù $1 dêng-hióng lì gì',
 	'redirectpagesub' => 'Dṳ̀ng-sĭng dêng-hióng hiĕk',
 	'restorelink' => '{{PLURAL:$1|Ék|$1}} bĭk ké̤ṳk chēng lâi gì siŭ-gāi',
 	'readonly' => 'Só-gé̤ṳ-kó ké̤ṳk sō̤ kī',
@@ -7542,7 +7542,7 @@ Nṳ̄ găi-dŏng sṳ̆-liòng lâ, sié lŏ̤h piĕng-cĭk ciā hiĕk-miêng �
 
 $messages['ce'] = [
 	'returnto' => 'Юхагlо оцу агlоне $1.',
-	'redirectedfrom' => '(Дlасахьажийна кху $1)',
+	'redirectedfrom' => 'Дlасахьажийна кху $1',
 	'redirectpagesub' => 'Агlо-дlасахьажайар',
 	'retrievedfrom' => 'Хьост — «$1»',
 	'restorelink' => '{{PLURAL:$1|$1 дlайайина йолу нисйинарг|$1 дlайайина йолу нисйинарш|$1 дlайайина йолу нисйинарш}}',
@@ -7613,7 +7613,7 @@ $messages['ce'] = [
 
 $messages['ceb'] = [
 	'returnto' => 'Balik sa $1.',
-	'redirectedfrom' => '(Naredirek gikan sa $1)',
+	'redirectedfrom' => 'Naredirek gikan sa $1',
 	'redirectpagesub' => 'Panid sa redirekta',
 	'retrievedfrom' => 'Gikuha gikan sa "$1"',
 	'restorelink' => '{{PLURAL:$1|usa ka napapas nga pag-usab|$1 mga napapas nga pag-usab}}',
@@ -7730,7 +7730,7 @@ Ang mga panid sa [[Special:Watchlist|imong gibantayan]] \'\'\'nakalugom\'\'\'.',
 
 $messages['ch'] = [
 	'returnto' => 'Hånao tåtte para $1.',
-	'redirectedfrom' => '(Madirihi ginen $1)',
+	'redirectedfrom' => 'Madirihi ginen $1',
 	'redirectpagesub' => 'Na\'dirihi i påhina',
 	'retrievedfrom' => 'Ginen "$1"',
 	'restorelink' => '{{PLURAL:$1|unu na tinilaika mafnas|$1 na tinilaika siha manmafnas}}',
@@ -7810,7 +7810,7 @@ $messages['chr'] = [
 
 $messages['ckb'] = [
 	'returnto' => 'بگەڕێوە بۆ $1.',
-	'redirectedfrom' => '(ڕەوانەکراوە لە $1 ەوە)',
+	'redirectedfrom' => 'ڕەوانەکراوە لە $1 ەوە',
 	'redirectpagesub' => 'پەڕەی ڕەوانەکردن',
 	'retrievedfrom' => 'وەرگیراو لە «$1»',
 	'restorelink' => '{{PLURAL:$1|گۆڕانکاریی سڕاو|$1 یەک گۆڕانکاریی سڕاو}}',
@@ -8088,7 +8088,7 @@ $messages['co'] = [
 
 $messages['cps'] = [
 	'returnto' => 'Balik sa $1.',
-	'redirectedfrom' => '(Gindirekta liwat halin sa $1)',
+	'redirectedfrom' => 'Gindirekta liwat halin sa $1',
 	'redirectpagesub' => 'Pahina sang pagdirekta',
 	'retrievedfrom' => 'Nakuha halin sa "$1"',
 	'restorelink' => '{{PLURAL:$1|isa ka|$1}} pinanas nga ginbag-o',
@@ -8147,7 +8147,7 @@ Naghatag sang mini nga rason ang tagadumala nga nagkandado sini: $1',
 
 $messages['crh'] = [
 	'returnto' => 'Balik sa $1.',
-	'redirectedfrom' => '(Gindirekta liwat halin sa $1)',
+	'redirectedfrom' => 'Gindirekta liwat halin sa $1',
 	'redirectpagesub' => 'Pahina sang pagdirekta',
 	'retrievedfrom' => 'Nakuha halin sa "$1"',
 	'restorelink' => '{{PLURAL:$1|isa ka|$1}} pinanas nga ginbag-o',
@@ -8206,7 +8206,7 @@ Naghatag sang mini nga rason ang tagadumala nga nagkandado sini: $1',
 
 $messages['crh-cyrl'] = [
 	'returnto' => '$1.',
-	'redirectedfrom' => '($1 саифесинден ёлланды)',
+	'redirectedfrom' => '$1 саифесинден ёлланды',
 	'redirectpagesub' => 'Ёллама саифеси',
 	'retrievedfrom' => 'Менба – "$1"',
 	'restorelink' => 'ёкъ этильген {{PLURAL:$1|1|$1}} денъишмеси',
@@ -8313,7 +8313,7 @@ $messages['crh-cyrl'] = [
 
 $messages['crh-latn'] = [
 	'returnto' => '$1.',
-	'redirectedfrom' => '($1 saifesinden yollandı)',
+	'redirectedfrom' => '$1 saifesinden yollandı',
 	'redirectpagesub' => 'Yollama saifesi',
 	'retrievedfrom' => 'Menba – "$1"',
 	'restorelink' => 'yoq etilgen {{PLURAL:$1|1|$1}} deñişmesi',
@@ -8420,7 +8420,7 @@ Saifeniñ yoq etilüv ve avuştırıluv qaydları mında berilgen:',
 
 $messages['cs'] = [
 	'returnto' => 'Návrat na stránku „$1“.',
-	'redirectedfrom' => '(Přesměrováno z $1)',
+	'redirectedfrom' => 'Přesměrováno z $1',
 	'redirectpagesub' => 'Přesměrování',
 	'retrievedfrom' => 'Citováno z „$1“',
 	'restorelink' => '{{PLURAL:$1|smazanou editaci|$1 smazané editace|$1 smazaných editací}}',
@@ -8690,7 +8690,7 @@ $3',
 
 $messages['csb'] = [
 	'returnto' => 'Nazôd do starnë $1.',
-	'redirectedfrom' => '(Przeczerowóné z $1)',
+	'redirectedfrom' => 'Przeczerowóné z $1',
 	'redirectpagesub' => 'Przeczerëjë starnã',
 	'retrievedfrom' => 'Z "$1"',
 	'restorelink' => '{{PLURAL:$1|jednô rëmniãtô wersëjô|$1 rëmniãté wersëje|$1 rëmniãtich wersëjów}}',
@@ -8780,7 +8780,7 @@ Starnë z [[Special:Watchlist|lëstë ùzérónëch artiklów]] są \'\'\'pògr�
 ];
 
 $messages['cu'] = [
-	'redirectedfrom' => '(прѣнаправлѥниѥ отъ ⁖ $1 ⁖)',
+	'redirectedfrom' => 'прѣнаправлѥниѥ отъ ⁖ $1 ⁖',
 	'redirectpagesub' => 'прѣнаправлѥниѥ',
 	'retrievedfrom' => 'поѩто иꙁ ⁖ $1 ⁖',
 	'red-link-title' => '$1 (си страницѧ нѣстъ)',
@@ -8823,7 +8823,7 @@ $messages['cu'] = [
 
 $messages['cv'] = [
 	'returnto' => '$1 страницăна таврăн.',
-	'redirectedfrom' => '($1 çинчен куçарнă)',
+	'redirectedfrom' => '$1 çинчен куçарнă',
 	'redirectpagesub' => 'Куçаракан страница',
 	'retrievedfrom' => 'Çăлкуç — «$1»',
 	'restorelink' => '$1 кăларса пăрахнă тӳрлетĕве',
@@ -8887,7 +8887,7 @@ $1',
 
 $messages['cy'] = [
 	'returnto' => 'Dychwelyd at $1.',
-	'redirectedfrom' => '(Ailgyfeiriad oddi wrth $1)',
+	'redirectedfrom' => 'Ailgyfeiriad oddi wrth $1',
 	'redirectpagesub' => 'Tudalen ailgyfeirio',
 	'retrievedfrom' => 'Wedi dod o "$1"',
 	'restorelink' => '$1 {{PLURAL:$1|golygiad sydd wedi\'i ddileu|golygiad sydd wedi\'i ddileu|olygiad sydd wedi\'u dileu|golygiad sydd wedi\'u dileu|golygiad sydd wedi\'u dileu|golygiad sydd wedi\'u dileu}}',
@@ -9153,7 +9153,7 @@ wedi gwrthdroi i\'r golygiad olaf gan $2.',
 
 $messages['da'] = [
 	'returnto' => 'Tilbage til $1.',
-	'redirectedfrom' => '(Omdirigeret fra $1)',
+	'redirectedfrom' => 'Omdirigeret fra $1',
 	'redirectpagesub' => 'Omdirigering',
 	'retrievedfrom' => 'Hentet fra "$1"',
 	'restorelink' => '{{PLURAL:$1|en slettet ændring|$1 slettede ændringer}}',
@@ -9420,7 +9420,7 @@ og den seneste version af $2 er gendannet.',
 $messages['de'] = [
 	'realmap-deprecated-info' => 'Die realen Weltkarten wurden von Wikia eingestellt. Weitere Informationen dazu findest du hier: $1',
 	'returnto' => 'Zurück zur Seite $1.',
-	'redirectedfrom' => '(Weitergeleitet von $1)',
+	'redirectedfrom' => 'Weitergeleitet von $1',
 	'redirectpagesub' => 'Weiterleitung',
 	'retrievedfrom' => 'Von „$1“',
 	'restorelink' => '$1 {{PLURAL:$1|gelöschte Version|gelöschte Versionen}}',
@@ -9843,7 +9843,7 @@ Seiten auf Ihrer [[Special:Watchlist|Beobachtungsliste]] sind \'\'\'fett\'\'\' d
 
 $messages['de-weigsbrag'] = [
 	'returnto' => 'Surüg su Seid $1.',
-	'redirectedfrom' => '(Weidleid won $1)',
+	'redirectedfrom' => 'Weidleid won $1',
 	'redirectpagesub' => 'Weidleid',
 	'retrievedfrom' => 'Won dose „$1“',
 	'restorelink' => '$1 {{PLURAL:$1|gelöschdes Wersion|gelöschdes Wersiones}}',
@@ -10030,7 +10030,7 @@ Näheres Angabes su Löschworgang und eines Begründ gön wend in dose [{{fullur
 
 $messages['diq'] = [
 	'returnto' => 'Peyser şo $1.',
-	'redirectedfrom' => '($1 ra neqıl bi)',
+	'redirectedfrom' => '$1 ra neqıl bi',
 	'redirectpagesub' => 'Pela berdışi',
 	'retrievedfrom' => '"$1" ra ard',
 	'restorelink' => '{{PLURAL:$1|yew vurnayışo esterıte|$1 vurnayışê esterıtey}}',
@@ -10286,7 +10286,7 @@ $2 kesi ra cıwa ver o ke revizyon biyo no revizyon tepiya anciyayo.',
 
 $messages['dsb'] = [
 	'returnto' => 'Slědk k bokoju $1.',
-	'redirectedfrom' => '(pósrědnjone z boka „$1”)',
+	'redirectedfrom' => 'pósrědnjone z boka „$1”',
 	'redirectpagesub' => 'Dalejpósrědnjenje',
 	'retrievedfrom' => 'Z {{GRAMMAR:genitiw|$1}}',
 	'restorelink' => '{{PLURAL:$1|1 wulašowana wersija|$1 wulašowanej wersiji|$1 wulašowane wersije}}',
@@ -10552,7 +10552,7 @@ Boki na [[Special:Watchlist|wobglědowańce]] su \'\'\'tucne\'\'\'.',
 
 $messages['dtp'] = [
 	'returnto' => 'Gumuli hilo $1.',
-	'redirectedfrom' => '(Pinotilombus mantad $1)',
+	'redirectedfrom' => 'Pinotilombus mantad $1',
 	'redirectpagesub' => 'Bolikon pinotilombus',
 	'retrievedfrom' => 'Naanu mantad "$1"',
 	'restorelink' => '{{PLURAL:$1|iso niditan pinugas|$1 niniditan nopinpugasan}}',
@@ -10694,7 +10694,7 @@ Bobolikon id [[Special:Watchlist|lis pintangannu]] nopo nga \'\'\'pinakapal\'\'\
 
 $messages['dv'] = [
 	'returnto' => 'އަނބުރާ $1 އަށް ވަޑައިގަންނަވާ!',
-	'redirectedfrom' => '(މިސްރާބުކުރެވުނީ $1 އިން)',
+	'redirectedfrom' => 'މިސްރާބުކުރެވުނީ $1 އިން',
 	'redirectpagesub' => 'ޞަފްޙާގެ މިސްރާބު އައުކުރައްވާ',
 	'recentchanges' => 'ފަހު ބަދަލުތައް',
 	'recentchangestext' => 'މި ވިކިޕީޑިޔާ އަށް ގެނެވިފައިވާ އެންމެ ފަހުގެ ބަދަލުތައް މި ޞަފްހާ އިން ބައްލަވާ!',
@@ -10707,7 +10707,7 @@ $messages['dv'] = [
 
 $messages['dz'] = [
 	'returnto' => '$1 ལུ་ལོག།',
-	'redirectedfrom' => '($1 ལས་ ལོག་བཏང་ཡོདཔ་)',
+	'redirectedfrom' => '$1 ལས་ ལོག་བཏང་ཡོདཔ་',
 	'redirectpagesub' => 'ཤོག་ལེབ་སླར་ལོག་འབད།',
 	'retrievedfrom' => '"$1" ལས་ སླར་འདྲེན་འབད་ཡོདཔ།',
 	'remembermypassword' => 'གློག་རིག་དེ་གུར་ ངེ་གི་ནང་བསྐྱོད་སེམས་ཁར་བཞག (for a maximum of $1 {{PLURAL:$1|day|days}})',
@@ -10749,7 +10749,7 @@ $messages['dz'] = [
 
 $messages['ee'] = [
 	'returnto' => 'Gbugbɔ yi $1.',
-	'redirectedfrom' => '(Woɖo wò ɖe afii tso $1)',
+	'redirectedfrom' => 'Woɖo wò ɖe afii tso $1',
 	'retrievedfrom' => 'Nuŋɔŋlɔ sia tso "$1"',
 	'red-link-title' => '$1 (womeŋlɔ axa sia haɖeke o)',
 	'remembermypassword' => 'Ɖo ŋku nyeƒe dzesi ŋkɔ dzi le mɔ sia dzi (vaseɖe {{PLURAL:$1|ŋkeke|ŋkeke}} $1 megbe)',
@@ -10786,7 +10786,7 @@ $messages['ee'] = [
 
 $messages['el'] = [
 	'returnto' => 'Επιστροφή στη σελίδα $1.',
-	'redirectedfrom' => '(Ανακατεύθυνση από $1)',
+	'redirectedfrom' => 'Ανακατεύθυνση από $1',
 	'redirectpagesub' => 'Σελίδα ανακατεύθυνσης',
 	'retrievedfrom' => 'Ανακτήθηκε από το "$1".',
 	'restorelink' => '{{PLURAL:$1|μίας διαγραμμένης επεξεργασίας|$1 διαγραμμένων επεξεργασιών}}',
@@ -11056,7 +11056,7 @@ $messages['eml'] = [
 
 $messages['eo'] = [
 	'returnto' => 'Reiri al $1.',
-	'redirectedfrom' => '(Alidirektita el $1)',
+	'redirectedfrom' => 'Alidirektita el $1',
 	'redirectpagesub' => 'Alidirektilo',
 	'retrievedfrom' => 'Elŝutita el  "$1"',
 	'restorelink' => '{{PLURAL:$1|unu forigitan version|$1 forigitajn versiojn}}',
@@ -11329,7 +11329,7 @@ Paĝoj en [[Special:Watchlist|via atentaro]] estas \'\'\'grasaj\'\'\'.',
 $messages['es'] = [
 	'realmap-deprecated-info' => 'Mapas del mundo real han sido descontinuados por Wikia. Para obtener más información, revisa: $1',
 	'returnto' => 'Volver a $1.',
-	'redirectedfrom' => '(Redirigido desde $1)',
+	'redirectedfrom' => 'Redirigido desde $1',
 	'redirectpagesub' => 'Página redirigida',
 	'retrievedfrom' => 'Obtenido de «$1»',
 	'restorelink' => '{{PLURAL:$1|una edición borrada|$1 ediciones borradas}}',
@@ -11683,7 +11683,7 @@ ___________________________________________
 
 $messages['et'] = [
 	'returnto' => 'Naase lehele $1',
-	'redirectedfrom' => '(Ümber suunatud leheküljelt $1)',
+	'redirectedfrom' => 'Ümber suunatud leheküljelt $1',
 	'redirectpagesub' => 'Ümbersuunamisleht',
 	'retrievedfrom' => 'Välja otsitud andmebaasist "$1"',
 	'restorelink' => '{{PLURAL:$1|üht|$1}} kustutatud versiooni',
@@ -11953,7 +11953,7 @@ pöörduti tagasi viimasele muudatusele, mille tegi $2.',
 
 $messages['eu'] = [
 	'returnto' => '$1(e)ra itzuli.',
-	'redirectedfrom' => '($1(e)tik birzuzenduta)',
+	'redirectedfrom' => '$1(e)tik birzuzenduta',
 	'redirectpagesub' => 'Birzuzenketa orrialdea',
 	'retrievedfrom' => '"$1"(e)tik jasota',
 	'restorelink' => '{{PLURAL:$1|ezabatutako aldaketa bat|ezabatutako $1 aldaketa}}',
@@ -12209,7 +12209,7 @@ edukia $2 wikilariaren azken bertsiora itzuli da.',
 
 $messages['ext'] = [
 	'returnto' => 'Gorvel a $1.',
-	'redirectedfrom' => '(Rederihiu dendi $1)',
+	'redirectedfrom' => 'Rederihiu dendi $1',
 	'redirectpagesub' => 'Rederihil páhina',
 	'retrievedfrom' => 'Arrecuperau dendi "$1"',
 	'restorelink' => '{{PLURAL:$1|una eición esborrá|$1 eicionis esborrás}}',
@@ -12370,7 +12370,7 @@ Las páhinas de la tu [[Special:Watchlist|lista e seguimientu]] están en \'\'\'
 
 $messages['fa'] = [
 	'returnto' => 'بازگشت به $1.',
-	'redirectedfrom' => '(تغییرمسیر از $1)',
+	'redirectedfrom' => 'تغییرمسیر از $1',
 	'redirectpagesub' => 'صفحهٔ تغییرمسیر',
 	'retrievedfrom' => 'برگرفته از «$1»',
 	'restorelink' => '{{PLURAL:$1|یک|$1}} ویرایش حذف‌شده',
@@ -13220,7 +13220,7 @@ $messages['fj'] = [
 
 $messages['fo'] = [
 	'returnto' => 'Vend aftur til $1.',
-	'redirectedfrom' => '(Ávíst frá $1)',
+	'redirectedfrom' => 'Ávíst frá $1',
 	'redirectpagesub' => 'Ávísingarsíða',
 	'retrievedfrom' => 'Heinta frá "$1"',
 	'restorelink' => '{{PLURAL:$1|strikaða rætting|$1 strikaðar rættingar}}',
@@ -13385,7 +13385,7 @@ Síður á [[Special:Watchlist|tínum eftiransingarlista]] eru skrivaðar við \
 $messages['fr'] = [
 	'realmap-deprecated-info' => 'Les cartes du monde réel ont été retirées par Wikia. Pour plus d’informations, voir : $1',
 	'returnto' => 'Revenir à la page $1.',
-	'redirectedfrom' => '(Redirigé depuis $1)',
+	'redirectedfrom' => 'Redirigé depuis $1',
 	'redirectpagesub' => 'Page de redirection',
 	'retrievedfrom' => 'Récupérée de « $1 »',
 	'restorelink' => '{{PLURAL:$1|la modification effacée|les $1 modifications effacées}}',
@@ -13733,7 +13733,7 @@ www.wikia.com
 
 $messages['frc'] = [
 	'returnto' => 'Retourner back à la page $1.',
-	'redirectedfrom' => '(Envoyé ici de la page $1)',
+	'redirectedfrom' => 'Envoyé ici de la page $1',
 	'redirectpagesub' => 'Page de redirection',
 	'retrievedfrom' => 'Pris de "$1"',
 	'restorelink' => '{{PLURAL:$1|1 changement ôté|$1 changements ôtés}}',
@@ -13807,7 +13807,7 @@ Trouvez les changements les plus récents du wiki sur cette page.
 
 $messages['frp'] = [
 	'returnto' => 'Tornar a la pâge $1.',
-	'redirectedfrom' => '(Redirigiê dês $1)',
+	'redirectedfrom' => 'Redirigiê dês $1',
 	'redirectpagesub' => 'Pâge de redirèccion',
 	'retrievedfrom' => 'Rècupèrâ de « $1 »',
 	'restorelink' => '{{PLURAL:$1|yon changement suprimâ|$1 changements suprimâs}}',
@@ -14079,7 +14079,7 @@ rètablissement de la dèrriére vèrsion per $2.',
 
 $messages['frr'] = [
 	'returnto' => 'Tubääg tu jü side $1.',
-	'redirectedfrom' => '(Widerliidjet foon $1)',
+	'redirectedfrom' => 'Widerliidjet foon $1',
 	'redirectpagesub' => 'Widerliidjing',
 	'retrievedfrom' => 'Foon „$1“',
 	'restorelink' => '$1 {{PLURAL:$1|sträägen Färsjoon|sträägene Färsjoone}}',
@@ -14227,7 +14227,7 @@ Dü heest deeraw nåån tugraawe.',
 
 $messages['fur'] = [
 	'returnto' => 'Torne a $1.',
-	'redirectedfrom' => '(Inviât ca di $1)',
+	'redirectedfrom' => 'Inviât ca di $1',
 	'redirectpagesub' => 'Pagjine di redirezion',
 	'retrievedfrom' => 'Cjapât fûr di $1',
 	'restorelink' => '{{PLURAL:$1|une modifiche eliminade|$1 modifichis eliminadis}}',
@@ -14315,7 +14315,7 @@ Ve ca par comoditât la liste des eliminazions e dai moviments par cheste pagjin
 
 $messages['fy'] = [
 	'returnto' => 'Werom nei "$1".',
-	'redirectedfrom' => '(Trochwiisd fan "$1")',
+	'redirectedfrom' => 'Trochwiisd fan "$1"',
 	'redirectpagesub' => 'Trochferwiis-side',
 	'retrievedfrom' => 'Untfongen fan "$1"',
 	'restorelink' => '$1 wiske {{PLURAL:$1|ferzje|ferzjes}}',
@@ -14508,7 +14508,7 @@ Oare behearders fan {{SITENAME}} kinne de ferburgen ynhâld benaderje en it fuor
 
 $messages['ga'] = [
 	'returnto' => 'Fill ar ais go $1.',
-	'redirectedfrom' => '(Athsheolta ó $1)',
+	'redirectedfrom' => 'Athsheolta ó $1',
 	'redirectpagesub' => 'Lch athdhírithe',
 	'retrievedfrom' => 'Aisghabháil ó "$1"',
 	'restorelink' => '{{PLURAL:$1|athrú scriosta amháin|$1 athruithe scriosta}}',
@@ -14617,7 +14617,7 @@ Tá na leathanaigh ar do [[Special:Watchlist|liosta faire]] i \'\'\'gcló trom\'
 
 $messages['gag'] = [
 	'returnto' => '$1 dön.',
-	'redirectedfrom' => '($1 sayfasınnan yönnendirildi)',
+	'redirectedfrom' => '$1 sayfasınnan yönnendirildi',
 	'redirectpagesub' => 'Yönnendirme sayfası',
 	'retrievedfrom' => 'Alındı "$1"dän',
 	'restorelink' => 'silinmiş $1 diişmäk',
@@ -14924,7 +14924,7 @@ $messages['gan-hant'] = [
 
 $messages['gd'] = [
 	'returnto' => 'Till dhan duilleag a leanas: $1',
-	'redirectedfrom' => '(Air ath-sheòladh o $1)',
+	'redirectedfrom' => 'Air ath-sheòladh o $1',
 	'redirectpagesub' => 'Ath-sheòl an duilleag',
 	'retrievedfrom' => 'Air a tharraing à "$1"',
 	'restorelink' => '{{PLURAL:$1|aon deasachadh|$1 dheasachadh|$1 deasachadh|$1 dheasachadh|$1 deasachaidhean|$1 deasachadh}} a chaidh a sguabadh às',
@@ -15005,7 +15005,7 @@ Tha duilleagan air [[Special:Watchlist|do chlàr-faire]] ann an litrichean \'\'\
 
 $messages['gl'] = [
 	'returnto' => 'Volver a "$1".',
-	'redirectedfrom' => '(Redirixido desde "$1")',
+	'redirectedfrom' => 'Redirixido desde "$1"',
 	'redirectpagesub' => 'Páxina de redirección',
 	'retrievedfrom' => 'Traído desde "$1"',
 	'restorelink' => '{{PLURAL:$1|unha edición borrada|$1 edicións borradas}}',
@@ -15278,7 +15278,7 @@ $messages['glk'] = [
 ];
 
 $messages['gn'] = [
-	'redirectedfrom' => '(Oñembohapejeýva $1)',
+	'redirectedfrom' => 'Oñembohapejeýva $1',
 	'restorelink' => '$1 ediciones borradas',
 	'red-link-title' => '$1 (ndaipóri ko togue)',
 	'remembermypassword' => 'Aipota chemomandu\'ajepi amba\'apo jave (for a maximum of $1 {{PLURAL:$1|day|days}})',
@@ -15302,7 +15302,7 @@ $messages['gn'] = [
 
 $messages['got'] = [
 	'returnto' => '𐌲𐌰𐍅𐌰𐌽𐌳𐌾𐌰𐌽 𐌰𐍄 $1.',
-	'redirectedfrom' => '(Náuþjan framis $1)',
+	'redirectedfrom' => 'Náuþjan framis $1',
 	'redirectpagesub' => '𐍄𐌰𐌹𐌺𐌾𐌰𐍃𐌴𐌹𐌳𐍉',
 	'retrievedfrom' => 'Niman fram "$1"',
 	'revisionasof' => '𐌲𐌰𐌼𐌴𐌻𐌹𐌳𐍉 𐌿𐍃 $1',
@@ -15328,7 +15328,7 @@ $messages['got'] = [
 
 $messages['grc'] = [
 	'returnto' => 'Ἐπανιέναι εἰς $1.',
-	'redirectedfrom' => '(Ἀποσταλτὸν ἀπὸ $1)',
+	'redirectedfrom' => 'Ἀποσταλτὸν ἀπὸ $1',
 	'redirectpagesub' => 'Ἐπανάγειν δέλτον',
 	'retrievedfrom' => 'Ἀνακτηθεῖσα ὑπὸ "$1"',
 	'restorelink' => '{{PLURAL:$1|μία διαγεγραμμένη μεταγραφή|$1 διαγεγραμμέναι μεταγραφαί}}',
@@ -15543,7 +15543,7 @@ $1',
 
 $messages['gsw'] = [
 	'returnto' => 'Zruck zur Syte $1.',
-	'redirectedfrom' => '(Witergleitet vun $1)',
+	'redirectedfrom' => 'Witergleitet vun $1',
 	'redirectpagesub' => 'Umgleiteti Syte',
 	'retrievedfrom' => 'Vun "$1"',
 	'restorelink' => '{{PLURAL:$1|gleschti Änderig|$1 gleschti Ändrige}}',
@@ -15809,7 +15809,7 @@ Sytene, wo zu dyre [[Special:Watchlist|Beobachtigslischte]] ghöre, erschyne \'\
 
 $messages['gu'] = [
 	'returnto' => '$1 પર પાછા જાઓ.',
-	'redirectedfrom' => '($1 થી અહીં વાળેલું)',
+	'redirectedfrom' => '$1 થી અહીં વાળેલું',
 	'redirectpagesub' => 'પાનું અન્યત્ર વાળો',
 	'retrievedfrom' => '"$1"થી લીધેલું',
 	'restorelink' => '{{PLURAL:$1|એક ભુસીનાખેલો ફેરફાર|$1 ભુસીનાખેલા ફેરફારો}}',
@@ -16080,7 +16080,7 @@ $1',
 
 $messages['gv'] = [
 	'returnto' => 'Goll er ash gys $1.',
-	'redirectedfrom' => '(Aa-enmyssit ass $1)',
+	'redirectedfrom' => 'Aa-enmyssit ass $1',
 	'redirectpagesub' => 'Duillag aa-enmys',
 	'retrievedfrom' => 'Feddynit ass "$1"',
 	'red-link-title' => '$1 (cha nel y duillag shoh ayn)',
@@ -16154,7 +16154,7 @@ Ta duillagyn er [[Special:Watchlist|dty rolley arrey]] ayns \'\'\'clou trome\'\'
 
 $messages['ha'] = [
 	'returnto' => 'Koma $1',
-	'redirectedfrom' => '(an turo daga $1)',
+	'redirectedfrom' => 'an turo daga $1',
 	'redirectpagesub' => 'Shafin turawa',
 	'retrievedfrom' => 'Daga "$1"',
 	'red-link-title' => '$1 (babu wannan shafi)',
@@ -16311,7 +16311,7 @@ Chhai [[Special:Watchlist|ngì-ke kam-sṳ lie̍t-péu]] chûng ke ya̍p fi hié
 
 $messages['haw'] = [
 	'returnto' => 'Ho‘i iā $1.',
-	'redirectedfrom' => '(Hoʻoili mai $1)',
+	'redirectedfrom' => 'Hoʻoili mai $1',
 	'redirectpagesub' => '‘Ao‘ao e alaka‘i ai',
 	'retrievedfrom' => 'Kiʻi ʻia mai "$1"',
 	'restorelink' => '{{PLURAL:$1|kekahi ho‘opololei kāpae|nā ho‘opololei kāpae $1}}',
@@ -16347,7 +16347,7 @@ $messages['haw'] = [
 
 $messages['he'] = [
 	'returnto' => 'חזרה לדף $1.',
-	'redirectedfrom' => '(הופנה מהדף $1)',
+	'redirectedfrom' => 'הופנה מהדף $1',
 	'redirectpagesub' => 'דף הפניה',
 	'retrievedfrom' => 'מקור: $1',
 	'restorelink' => '{{PLURAL:$1|גרסה מחוקה אחת|$1 גרסאות מחוקות}}',
@@ -16619,7 +16619,7 @@ $1',
 
 $messages['hi'] = [
 	'returnto' => 'लौटें $1.',
-	'redirectedfrom' => '($1 से भेजा गया)',
+	'redirectedfrom' => '$1 से भेजा गया',
 	'redirectpagesub' => 'पुनर्निर्देश पृष्ठ',
 	'retrievedfrom' => '"$1" से लिया गया',
 	'restorelink' => '{{PLURAL:$1|एक हटाया हुआ|$1 हटाये हुए}} बदलाव',
@@ -16888,7 +16888,7 @@ $2 द्वारा संपादित आखिरी अवतरण क�
 
 $messages['hif'] = [
 	'returnto' => 'लौटें $1.',
-	'redirectedfrom' => '($1 से भेजा गया)',
+	'redirectedfrom' => '$1 से भेजा गया',
 	'redirectpagesub' => 'पुनर्निर्देश पृष्ठ',
 	'retrievedfrom' => '"$1" से लिया गया',
 	'restorelink' => '{{PLURAL:$1|एक हटाया हुआ|$1 हटाये हुए}} बदलाव',
@@ -17157,7 +17157,7 @@ $2 द्वारा संपादित आखिरी अवतरण क�
 
 $messages['hif-latn'] = [
 	'returnto' => '$1 pe lauto.',
-	'redirectedfrom' => '($1 se bheja gais)',
+	'redirectedfrom' => '$1 se bheja gais',
 	'redirectpagesub' => 'Panna ke redirect karo',
 	'retrievedfrom' => '"$1" se lawa gais hae',
 	'restorelink' => '{{PLURAL:$1|ek mitawal badlao|$1 mitawal badlao}}',
@@ -17430,7 +17430,7 @@ badal ke $2 ke aakhri version kar dewa gais hai.',
 
 $messages['hil'] = [
 	'returnto' => 'Balik sa $1.',
-	'redirectedfrom' => '(Gindirek liwat halin $1)',
+	'redirectedfrom' => 'Gindirek liwat halin $1',
 	'redirectpagesub' => 'I-direktahon ang pahina',
 	'retrievedfrom' => 'Ginkuha halin sa "$1"',
 	'restorelink' => '{{PLURAL:$1|isa ka ginpanas nga pag-ilis|$1 ka ginpanas nga pag-ilis}}',
@@ -17603,7 +17603,7 @@ Mga Pahina sa [[Special:Watchlist|imo lista-lantaw]] ay \'\'\'dukot\'\'\'.',
 
 $messages['hr'] = [
 	'returnto' => 'Vrati se na $1.',
-	'redirectedfrom' => '(Preusmjereno s $1)',
+	'redirectedfrom' => 'Preusmjereno s $1',
 	'redirectpagesub' => 'Preusmjeravanje',
 	'retrievedfrom' => 'Dobavljeno iz "$1"',
 	'restorelink' => '{{PLURAL:$1|$1 pobrisanu izmjenu|$1 pobrisane izmjene|$1 pobrisanih izmjena}}',
@@ -17872,7 +17872,7 @@ Provjerite evidencije.',
 
 $messages['hsb'] = [
 	'returnto' => 'Wróćo k stronje $1.',
-	'redirectedfrom' => '(ze strony $1 sposrědkowany)',
+	'redirectedfrom' => 'ze strony $1 sposrědkowany',
 	'redirectpagesub' => 'Daleposrědkowanje',
 	'retrievedfrom' => 'Z "$1"',
 	'restorelink' => '{{PLURAL:$1|1 wušmórnjenu wersiju|$1 wušmórnjenej wersiji|$1 wušmórnjene wersije|$1 wušmórnjenych wersijow}}',
@@ -18139,7 +18139,7 @@ Strony na [[Special:Watchlist|wobkedźbowankach]] su \'\'\'tučne\'\'\'.',
 
 $messages['ht'] = [
 	'returnto' => 'Ritounen nan paj $1.',
-	'redirectedfrom' => '(Redirije depi $1)',
+	'redirectedfrom' => 'Redirije depi $1',
 	'redirectpagesub' => 'Paj pou redireksyon',
 	'retrievedfrom' => 'Rekipere depi « $1 »',
 	'restorelink' => '{{PLURAL:$1|yon revizion efase|$1 revizion efase yo}}',
@@ -18232,7 +18232,7 @@ Mande ou byen si ou ap byen fè kreye li ankò.  Gade jounal paj sa a pou konnen
 
 $messages['hu'] = [
 	'returnto' => 'Vissza a(z) $1 laphoz.',
-	'redirectedfrom' => '($1 szócikkből átirányítva)',
+	'redirectedfrom' => '$1 szócikkből átirányítva',
 	'redirectpagesub' => 'Átirányító lap',
 	'retrievedfrom' => 'A lap eredeti címe: „$1”',
 	'restorelink' => '{{PLURAL:$1|Egy|$1}} törölt szerkesztés',
@@ -18497,7 +18497,7 @@ A [[Special:Watchlist|figyelőlistádon]] szereplő lapok \'\'\'félkövérrel\'
 
 $messages['hy'] = [
 	'returnto' => 'Վերադառնալ $1։',
-	'redirectedfrom' => '(Վերահղված է $1-ից)',
+	'redirectedfrom' => 'Վերահղված է $1-ից',
 	'redirectpagesub' => 'Վերահղման էջ',
 	'retrievedfrom' => 'Ստացված է «$1» էջից',
 	'restorelink' => '{{PLURAL:$1|մեկ ջնջված խմբագրում|$1 ջնջված խմբագրում}}',
@@ -18644,7 +18644,7 @@ $1',
 
 $messages['ia'] = [
 	'returnto' => 'Retornar a $1.',
-	'redirectedfrom' => '(Redirigite ab $1)',
+	'redirectedfrom' => 'Redirigite ab $1',
 	'redirectpagesub' => 'Pagina de redirection',
 	'retrievedfrom' => 'Obtenite de "$1"',
 	'restorelink' => '{{PLURAL:$1|un modification|$1 modificationes}} delite',
@@ -18915,7 +18915,7 @@ retornava al version per $2.',
 
 $messages['id'] = [
 	'returnto' => 'Kembali ke $1.',
-	'redirectedfrom' => '(Dialihkan dari $1)',
+	'redirectedfrom' => 'Dialihkan dari $1',
 	'redirectpagesub' => 'Halaman pengalihan',
 	'retrievedfrom' => 'Diperoleh dari "$1"',
 	'restorelink' => '$1 {{PLURAL:$1|suntingan|suntingan}} yang telah dihapus',
@@ -19180,7 +19180,7 @@ Silakan periksa catatan log.',
 
 $messages['ie'] = [
 	'returnto' => 'Retornar a $1.',
-	'redirectedfrom' => '(Redirectet de $1)',
+	'redirectedfrom' => 'Redirectet de $1',
 	'redirectpagesub' => 'Págine de redirecterion',
 	'retrievedfrom' => 'Recuperat de "$1"',
 	'red-link-title' => '$1 (págine ne existe)',
@@ -19238,7 +19238,7 @@ Págines in [[Special:Watchlist|tui liste de págines vigilat]] es \'\'\'nigri\'
 
 $messages['ig'] = [
 	'returnto' => 'Ganata na $1.',
-	'redirectedfrom' => '(Kufùrù shi $1)',
+	'redirectedfrom' => 'Kufùrù shi $1',
 	'redirectpagesub' => 'Kufù ebe ihü nka na ga',
 	'retrievedfrom' => 'Wefụtàrà ya shí \'\'$1\'\'',
 	'restorelink' => '{{PLURAL:$1|orü otụ bakashịrị|orü $1 bakashịrị}}',
@@ -19331,7 +19331,7 @@ Ihü nọr na [[Special:Watchlist|ndétu ihe Í ne lé]] di na mkpụrụ edemed
 ];
 
 $messages['ike-cans'] = [
-	'redirectedfrom' => '(ᖃᓂᖓᓂ ᑲᒪᒋᔭᖅ ᐋᓯᑦ ᓇᑭᑦ $1)',
+	'redirectedfrom' => 'ᖃᓂᖓᓂ ᑲᒪᒋᔭᖅ ᐋᓯᑦ ᓇᑭᑦ $1',
 	'redirectpagesub' => 'ᖃᓂᖓᓂ ᑲᒪᒋᔭᖅ ᐋᓯᑦ ᓇᑭᑦ ᒪᑉᐱᑕᖅ',
 	'remembermypassword' => 'ᐃᖅᑑ ᐅᐃᑭᐱᑎᐊ ᐊᑎᖅ ᖃᑯᒍᖅ ᐊᑐᐃᓐᓇᓯᕗᖅ ᐅᕙᓗᒪᔪᖅ ᖃᕆᑕᐅᔭᖅ (for a maximum of $1 {{PLURAL:$1|day|days}})',
 	'recentchanges' => 'ᐱᒋᕗᖅ ᐊᓯᐊᙳᑐᖅ',
@@ -19345,7 +19345,7 @@ $messages['ike-cans'] = [
 ];
 
 $messages['ike-latn'] = [
-	'redirectedfrom' => '(qaningani kamagijaq aasit nakit $1)',
+	'redirectedfrom' => 'qaningani kamagijaq aasit nakit $1',
 	'redirectpagesub' => 'aningani kamagijaq aasit nakit mappitaq',
 	'remembermypassword' => 'iqtuu uikipitia atiq qakakuq atuinnasivuq uvalumajuq qaritaujaq (for a maximum of $1 {{PLURAL:$1|day|days}})',
 	'recentchanges' => 'pigivuq asianngutuq',
@@ -19361,7 +19361,7 @@ $messages['ike-latn'] = [
 
 $messages['ilo'] = [
 	'returnto' => 'Agsubli idiay $1.',
-	'redirectedfrom' => '(Naibaw-ing manipud idiay $1)',
+	'redirectedfrom' => 'Naibaw-ing manipud idiay $1',
 	'redirectpagesub' => 'Ibaw-ing ti panid',
 	'retrievedfrom' => 'Naala manipud iti "$1"',
 	'restorelink' => '{{PLURAL:$1|maysa a naikkat a naurnos|$1 dagiti naikkat a naurnos}}',
@@ -19633,7 +19633,7 @@ naisubli manen iti naudi a panagbaliw ni $2.',
 
 $messages['inh'] = [
 	'returnto' => '$1 оагӀув тӀа юхавалар',
-	'redirectedfrom' => '($1 тӀера хьадейта да)',
+	'redirectedfrom' => '$1 тӀера хьадейта да',
 	'redirectpagesub' => 'ДӀа-хьа дайта оагӀув',
 	'retrievedfrom' => '"$1" ГӀувам',
 	'restorelink' => '{{PLURAL:$1|дӀаяккха хувцам|$1 дӀаяккха хувцамаш}}',
@@ -19707,7 +19707,7 @@ $messages['inh'] = [
 
 $messages['io'] = [
 	'returnto' => 'Retrovenar a $1.',
-	'redirectedfrom' => '(Ridirektita de $1)',
+	'redirectedfrom' => 'Ridirektita de $1',
 	'redirectpagesub' => 'Ridirektanta pagino',
 	'retrievedfrom' => 'Obtenita de "$1"',
 	'restorelink' => '{{PLURAL:$1|1 redakto efacita|$1 redakti efacita}}',
@@ -19804,7 +19804,7 @@ restauris ad lasta versiono da $2.',
 
 $messages['is'] = [
 	'returnto' => 'Aftur á: $1.',
-	'redirectedfrom' => '(Tilvísað frá $1)',
+	'redirectedfrom' => 'Tilvísað frá $1',
 	'redirectpagesub' => 'Tilvísunarsíða',
 	'retrievedfrom' => 'Sótt frá „$1“',
 	'restorelink' => '{{PLURAL:$1|eina eydda breytingu|$1 eyddar breytingar}}',
@@ -20069,7 +20069,7 @@ Síður á [[Special:Watchlist|vaktlistanum þínum]] eru \'\'\'feitletraðar\'\
 $messages['it'] = [
 	'realmap-deprecated-info' => 'Le mappe del mondo reale sono state interrotte da Wikia. Per ulteriori informazioni, vedere: $1',
 	'returnto' => 'Torna a $1.',
-	'redirectedfrom' => '(Reindirizzamento da <b>$1</b>)',
+	'redirectedfrom' => 'Reindirizzamento da <b>$1</b>',
 	'redirectpagesub' => 'Pagina di reindirizzamento',
 	'retrievedfrom' => 'Estratto da "$1"',
 	'restorelink' => '{{PLURAL:$1|una modifica cancellata|$1 modifiche cancellate}}',
@@ -20412,7 +20412,7 @@ www.wikia.com
 
 $messages['iu'] = [
 	'returnto' => 'Torna a $1.',
-	'redirectedfrom' => '(Reindirizzamento da <b>$1</b>)',
+	'redirectedfrom' => 'Reindirizzamento da <b>$1</b>',
 	'redirectpagesub' => 'Pagina di reindirizzamento',
 	'retrievedfrom' => 'Estratto da "$1"',
 	'restorelink' => '{{PLURAL:$1|una modifica cancellata|$1 modifiche cancellate}}',
@@ -21014,7 +21014,7 @@ ___________________________________________
 
 $messages['jam'] = [
 	'returnto' => 'Ritoern a $1',
-	'redirectedfrom' => '(Riidirek frahn $1)',
+	'redirectedfrom' => 'Riidirek frahn $1',
 	'redirectpagesub' => 'Riidirek piej',
 	'retrievedfrom' => 'Richriiv frahn "$1"',
 	'restorelink' => '{{PLURAL:$1|wan diliitid edit|$1 diliitid edit}}',
@@ -21090,7 +21090,7 @@ $messages['jbo'] = [
 
 $messages['jut'] = [
 	'returnto' => 'Tilbage til $1.',
-	'redirectedfrom' => '(Åmstyret frå $1)',
+	'redirectedfrom' => 'Åmstyret frå $1',
 	'redirectpagesub' => 'Åmstyrenge',
 	'retrievedfrom' => 'Hæntet frå "$1"',
 	'restorelink' => '{{PLURAL:$1|en slettet ændrenge|$1 slettede ændrenger}}',
@@ -21138,7 +21138,7 @@ denne side er vest nedenfør:',
 
 $messages['jv'] = [
 	'returnto' => 'Bali menyang $1.',
-	'redirectedfrom' => '(Dialihkan dari $1)',
+	'redirectedfrom' => 'Dialihkan dari $1',
 	'redirectpagesub' => 'Kaca pangalihan',
 	'retrievedfrom' => 'Sumber artikel iki saka kaca situs web: "$1"',
 	'restorelink' => '$1 {{PLURAL:$1|suntingan|suntingan}} sing wis kabusak',
@@ -21392,7 +21392,7 @@ diowahi bali menyang vèrsi pungkasan déning $2.',
 
 $messages['ka'] = [
 	'returnto' => 'დაბრუნდი $1-ზე.',
-	'redirectedfrom' => '(გადმომისამართდა $1-დან)',
+	'redirectedfrom' => 'გადმომისამართდა $1-დან',
 	'redirectpagesub' => 'გადამისამართება გვერდზე',
 	'retrievedfrom' => 'მოძიებულია "$1"-დან',
 	'restorelink' => '{{PLURAL:$1|ერთი წაშლილი რედაქტირება|$1 წაშლილი რედაქტირება}}',
@@ -21667,7 +21667,7 @@ $1',
 
 $messages['kaa'] = [
 	'returnto' => '$1 betine qaytıw.',
-	'redirectedfrom' => '($1 degennen burılg\'an)',
+	'redirectedfrom' => '$1 degennen burılg\'an',
 	'redirectpagesub' => 'Burıwshı bet',
 	'retrievedfrom' => '"$1" saytınan alıng\'an',
 	'restorelink' => '{{PLURAL:$1|bir o\'shirilgen o\'zgeris|$1 o\'shirilgen o\'zgeris}}',
@@ -21823,7 +21823,7 @@ Qolaylıq ushın to\'mende o\'shiriw jurnalı keltirilgen:',
 
 $messages['kab'] = [
 	'returnto' => 'Uɣal ar $1.',
-	'redirectedfrom' => '(Yettusmimeḍ seg $1)',
+	'redirectedfrom' => 'Yettusmimeḍ seg $1',
 	'redirectpagesub' => 'Asebter usemmimeḍ',
 	'retrievedfrom' => 'Yettwaddem seg "$1"',
 	'restorelink' => '{{PLURAL:$1|Yiwen abeddel yettumḥan|$1 Ibeddlen yettumḥan}}',
@@ -21919,7 +21919,7 @@ Inedbalen wiyaḍ deg wiki-yagi zemren ad ẓren imuren i yettwafren u zemren a 
 
 $messages['kbd'] = [
 	'returnto' => 'Uɣal ar $1.',
-	'redirectedfrom' => '(Yettusmimeḍ seg $1)',
+	'redirectedfrom' => 'Yettusmimeḍ seg $1',
 	'redirectpagesub' => 'Asebter usemmimeḍ',
 	'retrievedfrom' => 'Yettwaddem seg "$1"',
 	'restorelink' => '{{PLURAL:$1|Yiwen abeddel yettumḥan|$1 Ibeddlen yettumḥan}}',
@@ -22015,7 +22015,7 @@ Inedbalen wiyaḍ deg wiki-yagi zemren ad ẓren imuren i yettwafren u zemren a 
 
 $messages['kbd-cyrl'] = [
 	'returnto' => '$1 напэкӀуэцӀым гъэзэжын.',
-	'redirectedfrom' => '($1 мыбы къыхэкIащ)',
+	'redirectedfrom' => '$1 мыбы къыхэкIащ',
 	'redirectpagesub' => 'НапэкӀуэцӀ-егъэкӀуэкӀа',
 	'retrievedfrom' => 'Къыздырахар: "$1"',
 	'restorelink' => '{{PLURAL:$1|$1 гъэтэрэзыгъуэ ихар|$1 гъэтэрэзыгъуэ ихахэр|$1 гъэтэрэзыгъуэ ихыжахэр}}',
@@ -22171,7 +22171,7 @@ $1',
 
 $messages['kg'] = [
 	'returnto' => 'Vutukila $1',
-	'redirectedfrom' => '(Balulama tuka $1)',
+	'redirectedfrom' => 'Balulama tuka $1',
 	'retrievedfrom' => 'Receptum de "$1"',
 	'red-link-title' => '$1 (mukanda kele ve)',
 	'recentchanges' => 'Bansoba ya yimpa',
@@ -22260,7 +22260,7 @@ $1 (صفحہ موجود نیکی)',
 
 $messages['kiu'] = [
 	'returnto' => 'Peyser so $1.',
-	'redirectedfrom' => '($1 ra ard)',
+	'redirectedfrom' => '$1 ra ard',
 	'redirectpagesub' => 'Pela ardene',
 	'retrievedfrom' => '"$1" ra ard',
 	'restorelink' => '{{PLURAL:$1|jü vurnaiso esterıte|$1 vurnaisê esterıtey}}',
@@ -22402,7 +22402,7 @@ Eke şertê ilawekerdey ke niyê ro, idarekerê bini {{SITENAME}} de nêşikinê
 
 $messages['kk-arab'] = [
 	'returnto' => '$1 دەگەنگە قايتا كەلۋ.',
-	'redirectedfrom' => '($1 بەتىنەن ايداتىلعان)',
+	'redirectedfrom' => '$1 بەتىنەن ايداتىلعان',
 	'redirectpagesub' => 'ايداتۋ بەتى',
 	'retrievedfrom' => '«$1» بەتىنەن الىنعان',
 	'restorelink' => 'جويىلعان $1 وڭدەمەنى',
@@ -22580,7 +22580,7 @@ $2 سوڭعى نۇسقاسىنا وزگەرتتى.',
 
 $messages['kk-cn'] = [
 	'returnto' => '$1 دەگەنگە قايتا كەلۋ.',
-	'redirectedfrom' => '($1 بەتىنەن ايداتىلعان)',
+	'redirectedfrom' => '$1 بەتىنەن ايداتىلعان',
 	'redirectpagesub' => 'ايداتۋ بەتى',
 	'retrievedfrom' => '«$1» بەتىنەن الىنعان',
 	'restorelink' => 'جويىلعان $1 وڭدەمەنى',
@@ -22758,7 +22758,7 @@ $2 سوڭعى نۇسقاسىنا وزگەرتتى.',
 
 $messages['kk-cyrl'] = [
 	'returnto' => '$1 дегенге қайта келу.',
-	'redirectedfrom' => '($1 бетінен айдатылған)',
+	'redirectedfrom' => '$1 бетінен айдатылған',
 	'redirectpagesub' => 'Айдату беті',
 	'retrievedfrom' => '«$1» бетінен алынған',
 	'restorelink' => 'Жойылған $1 өңдемені',
@@ -22940,7 +22940,7 @@ $2 соңғы нұсқасына өзгертті.',
 
 $messages['kk-kz'] = [
 	'returnto' => '$1 дегенге қайта келу.',
-	'redirectedfrom' => '($1 бетінен айдатылған)',
+	'redirectedfrom' => '$1 бетінен айдатылған',
 	'redirectpagesub' => 'Айдату беті',
 	'retrievedfrom' => '«$1» бетінен алынған',
 	'restorelink' => 'Жойылған $1 өңдемені',
@@ -23122,7 +23122,7 @@ $2 соңғы нұсқасына өзгертті.',
 
 $messages['kk-latn'] = [
 	'returnto' => '$1 degenge qaýta kelw.',
-	'redirectedfrom' => '($1 betinen aýdatılğan)',
+	'redirectedfrom' => '$1 betinen aýdatılğan',
 	'redirectpagesub' => 'Aýdatw beti',
 	'retrievedfrom' => '«$1» betinen alınğan',
 	'restorelink' => 'Joýılğan $1 öñdemeni',
@@ -23300,7 +23300,7 @@ $2 soñğı nusqasına özgertti.',
 
 $messages['kk-tr'] = [
 	'returnto' => '$1 degenge qaýta kelw.',
-	'redirectedfrom' => '($1 betinen aýdatılğan)',
+	'redirectedfrom' => '$1 betinen aýdatılğan',
 	'redirectpagesub' => 'Aýdatw beti',
 	'retrievedfrom' => '«$1» betinen alınğan',
 	'restorelink' => 'Joýılğan $1 öñdemeni',
@@ -23478,7 +23478,7 @@ $2 soñğı nusqasına özgertti.',
 
 $messages['kl'] = [
 	'returnto' => '$1 -mut uterit',
-	'redirectedfrom' => '($1-mit nuunneq)',
+	'redirectedfrom' => '$1-mit nuunneq',
 	'retrievedfrom' => 'Uannga aaneqartoq "$1"',
 	'red-link-title' => '$1 (Qupperneq suli allaffigineqanngilaq)',
 	'remembermypassword' => 'Iserfiga tullissaanut eqqaamalara (for a maximum of $1 {{PLURAL:$1|day|days}})',
@@ -23507,7 +23507,7 @@ $messages['kl'] = [
 
 $messages['km'] = [
 	'returnto' => 'ត្រឡប់ទៅ $1 វិញ ។',
-	'redirectedfrom' => '(ត្រូវបានបញ្ជូនបន្តពី $1)',
+	'redirectedfrom' => 'ត្រូវបានបញ្ជូនបន្តពី $1',
 	'redirectpagesub' => 'ទំព័របញ្ជូនបន្ត',
 	'retrievedfrom' => 'បានពី "$1"',
 	'restorelink' => '{{PLURAL:$1|កំណែប្រែមួយត្រូវបានលុបចោល|កំណែប្រែចំនួន $1 ត្រូវបានលុបចោល}}',
@@ -23749,7 +23749,7 @@ $1',
 
 $messages['kn'] = [
 	'returnto' => '$1 ಗೆ ಹಿಂತಿರುಗಿ.',
-	'redirectedfrom' => '($1 ಇಂದ ಪುನರ್ನಿರ್ದೇಶಿತ)',
+	'redirectedfrom' => '$1 ಇಂದ ಪುನರ್ನಿರ್ದೇಶಿತ',
 	'redirectpagesub' => 'ಪುನರ್ನಿರ್ದೇಶನ ಪುಟ',
 	'retrievedfrom' => '"$1" ಇಂದ ಪಡೆಯಲ್ಪಟ್ಟಿದೆ',
 	'restorelink' => '{{PLURAL:$1|೧ ಅಳಿಸಲ್ಪಟ್ಟ ಸಂಪಾದನೆ|$1 ಅಳಿಸಲ್ಪಟ್ಟ ಸಂಪಾದನೆಗಳು}}',
@@ -23880,7 +23880,7 @@ $messages['kn'] = [
 
 $messages['ko'] = [
 	'returnto' => '$1(으)로 돌아갑니다.',
-	'redirectedfrom' => '($1에서 넘어옴)',
+	'redirectedfrom' => '$1에서 넘어옴',
 	'redirectpagesub' => '넘겨주기 문서',
 	'retrievedfrom' => '원본 주소 ‘$1’',
 	'restorelink' => '삭제된 편집 $1 개',
@@ -24183,7 +24183,7 @@ ___________________________________________
 
 $messages['ko-kp'] = [
 	'returnto' => '$1(으)로 돌아갑니다.',
-	'redirectedfrom' => '($1에서 넘어옴)',
+	'redirectedfrom' => '$1에서 넘어옴',
 	'redirectpagesub' => '넘겨주기 문서',
 	'retrievedfrom' => '원본 주소 ‘$1’',
 	'restorelink' => '삭제된 편집 $1 개',
@@ -24450,7 +24450,7 @@ $1',
 
 $messages['koi'] = [
 	'returnto' => 'Бертны $1-öдз.',
-	'redirectedfrom' => '(Вештöм татчö  $1 вылiсь)',
+	'redirectedfrom' => 'Вештöм татчö  $1 вылiсь',
 	'redirectpagesub' => 'Мöдлаö иньдöтан листбок',
 	'retrievedfrom' => 'Öшмöс "$1"',
 	'red-link-title' => '$1 (листбокыс абу на)',
@@ -24494,7 +24494,7 @@ $messages['koi'] = [
 
 $messages['krc'] = [
 	'returnto' => '«$1» бетге къайт',
-	'redirectedfrom' => '(«$1» бетден джиберилгенди)',
+	'redirectedfrom' => '«$1» бетден джиберилгенди',
 	'redirectpagesub' => 'Башха бетге джибериучю бет',
 	'retrievedfrom' => 'Чыкъгъаны — «$1»',
 	'restorelink' => 'кетерилген {{PLURAL:$1|1|$1}} тюрлендириу',
@@ -24792,7 +24792,7 @@ $messages['ks-deva'] = [
 
 $messages['ksh'] = [
 	'returnto' => 'Jangk widder noh: „$1“.',
-	'redirectedfrom' => '(Ömjeleit vun $1)',
+	'redirectedfrom' => 'Ömjeleit vun $1',
 	'redirectpagesub' => 'Ömleitungssigg',
 	'retrievedfrom' => 'Di Sigg heh stamp vun „$1“.',
 	'restorelink' => '{{PLURAL:$1|eijn fottjeschmesse Änderung|$1 fottjeschmesse Änderunge|keij fottjeschmesse Änderunge}}',
@@ -25060,7 +25060,7 @@ Sigge uß Dinge [[Special:Watchlist|Opaßleß]] sin \'\'\'fett\'\'\' jeschrevve.
 
 $messages['ku'] = [
 	'returnto' => 'Jangk widder noh: „$1“.',
-	'redirectedfrom' => '(Ömjeleit vun $1)',
+	'redirectedfrom' => 'Ömjeleit vun $1',
 	'redirectpagesub' => 'Ömleitungssigg',
 	'retrievedfrom' => 'Di Sigg heh stamp vun „$1“.',
 	'restorelink' => '{{PLURAL:$1|eijn fottjeschmesse Änderung|$1 fottjeschmesse Änderunge|keij fottjeschmesse Änderunge}}',
@@ -25332,7 +25332,7 @@ $messages['ku-arab'] = [
 
 $messages['ku-latn'] = [
 	'returnto' => 'Bizîvire $1.',
-	'redirectedfrom' => '(ji $1 hate beralîkirin)',
+	'redirectedfrom' => 'ji $1 hate beralîkirin',
 	'redirectpagesub' => 'Rûpelê beralî bike',
 	'retrievedfrom' => 'Ji "$1" hatiye standin.',
 	'restorelink' => '{{PLURAL:$1|guherandineke|$1 guherandinên}} jêbirî',
@@ -25460,7 +25460,7 @@ $messages['kv'] = [
 
 $messages['kw'] = [
 	'returnto' => 'Dewheles dhe $1.',
-	'redirectedfrom' => '(Daswedyes dhort $1)',
+	'redirectedfrom' => 'Daswedyes dhort $1',
 	'redirectpagesub' => 'Folen daswedyans',
 	'retrievedfrom' => 'Daskevys dhort "$1"',
 	'restorelink' => '{{PLURAL:$1|udn janj dileys|$1 chanj dileys}}',
@@ -25517,7 +25517,7 @@ En \'\'\'tew\'\'\' ew folednow eus war agas [[Special:Watchlist|rol golyas]].',
 
 $messages['ky'] = [
 	'returnto' => '$1 барагына кайт.',
-	'redirectedfrom' => '($1 барагындан багытталды)',
+	'redirectedfrom' => '$1 барагындан багытталды',
 	'retrievedfrom' => '"$1" булагындан алынды',
 	'red-link-title' => '$1 (мындай барак жок)',
 	'remembermypassword' => 'Бул браузерде каттоо жазуумду эсте тут (эң көп $1 {{PLURAL:$1|күн|күн}})',
@@ -25569,7 +25569,7 @@ $messages['ky'] = [
 
 $messages['la'] = [
 	'returnto' => 'Redire ad $1.',
-	'redirectedfrom' => '(Redirectum de $1)',
+	'redirectedfrom' => 'Redirectum de $1',
 	'redirectpagesub' => 'Pagina redirectionis',
 	'retrievedfrom' => 'Receptum de "$1"',
 	'restorelink' => '{{PLURAL:$1|unam emendationem deletam|$1 emendationes deletas}}',
@@ -25713,7 +25713,7 @@ ad emendationem proximam ab $2.',
 
 $messages['lad'] = [
 	'returnto' => 'Tornar a $1.',
-	'redirectedfrom' => '(Redirigido desde $1)',
+	'redirectedfrom' => 'Redirigido desde $1',
 	'redirectpagesub' => 'Hoja redirigida',
 	'retrievedfrom' => 'Tomado del addresso "$1"',
 	'red-link-title' => '$1 (esta hoja no egziste)',
@@ -25770,7 +25770,7 @@ Las hojas en tu [[Special:Watchlist|lista de akavidamiento]] son escritas \'\'\'
 
 $messages['lb'] = [
 	'returnto' => 'Zréck op $1.',
-	'redirectedfrom' => '(Virugeleet vu(n) $1)',
+	'redirectedfrom' => 'Virugeleet vu(n) $1',
 	'redirectpagesub' => 'Viruleedungssäit',
 	'retrievedfrom' => 'Vun „$1“',
 	'restorelink' => '$1 geläscht {{PLURAL:$1|Versioun|Versiounen}}',
@@ -26042,7 +26042,7 @@ $messages['lbe'] = [
 
 $messages['lez'] = [
 	'returnto' => '$1 ччиниз элкъвена хтун',
-	'redirectedfrom' => '($1-кай рахкъурнава )',
+	'redirectedfrom' => '$1-кай рахкъурнава ',
 	'redirectpagesub' => 'Рахкъурунин ччин',
 	'retrievedfrom' => 'Чешне "$1" я',
 	'red-link-title' => '$1 (ихьтин ччин авайд туш)',
@@ -26110,7 +26110,7 @@ $messages['lez'] = [
 
 $messages['lfn'] = [
 	'returnto' => 'Restora a $1.',
-	'redirectedfrom' => '(Redirijeda de $1)',
+	'redirectedfrom' => 'Redirijeda de $1',
 	'redirectpagesub' => 'Redireta la paje',
 	'retrievedfrom' => 'Retraeda de "$1"',
 	'red-link-title' => '$1 (paje no esiste)',
@@ -26161,7 +26161,7 @@ Pajes a [[Special:Watchlist|tu lista de pajes oservada]] es en leteras \'\'\'for
 
 $messages['lg'] = [
 	'returnto' => 'Dda ku $1.',
-	'redirectedfrom' => '(Oleetedwa wano okuva ku $1)',
+	'redirectedfrom' => 'Oleetedwa wano okuva ku $1',
 	'redirectpagesub' => 'Olupapula luno lukutwalabutwazi ku lunnaalwo',
 	'retrievedfrom' => 'Bino bigyidwa ku "$1"',
 	'restorelink' => '{{PLURAL:$1|oluwandika olwagyibwawo olumu|empandika ezagyibwawo $1}}',
@@ -26242,7 +26242,7 @@ Ebifa ku kugyibwawo kw\'olupapula luno bye bino:',
 
 $messages['li'] = [
 	'returnto' => 'Truuk nao $1.',
-	'redirectedfrom' => '(Doorverweze van $1)',
+	'redirectedfrom' => 'Doorverweze van $1',
 	'redirectpagesub' => 'Doorverwiespazjena',
 	'retrievedfrom' => 'Aafkómstig van "$1"',
 	'restorelink' => '{{PLURAL:$1|ein eweggesjafde versie|$1 eweggesjafde versies}}',
@@ -26510,7 +26510,7 @@ Controleer de logbeuk.',
 
 $messages['lij'] = [
 	'returnto' => 'Tornâ a $1.',
-	'redirectedfrom' => '(Rediritto da $1)',
+	'redirectedfrom' => 'Rediritto da $1',
 	'redirectpagesub' => 'Paggina de rindirissamento',
 	'retrievedfrom' => 'Estræto da "$1"',
 	'red-link-title' => '$1 (ancon da scrîve)',
@@ -26577,7 +26577,7 @@ E pàgine che t\'æ in oservaçion inti [[Special:Watchlist|oservæ speciâli]] 
 
 $messages['liv'] = [
 	'returnto' => 'Li tāgiž līed $1 jūrõ.',
-	'redirectedfrom' => '(Jeddõpēḑõn sōtõd līedstõ $1)',
+	'redirectedfrom' => 'Jeddõpēḑõn sōtõd līedstõ $1',
 	'redirectpagesub' => 'Jeddõpēḑõn sōtimiz lēḑ',
 	'retrievedfrom' => 'Ulzõ vȯtštõd "$1"',
 	'red-link-title' => '$1 äb ūo vel kēratõd',
@@ -26629,7 +26629,7 @@ Mõtlõgid, kas līed ūtstõ lūomi um jõvā mõtk. Līed jedmõlizt jarā ki�
 
 $messages['lmo'] = [
 	'returnto' => 'Turna indré a $1.',
-	'redirectedfrom' => '(Rimandaa da $1)',
+	'redirectedfrom' => 'Rimandaa da $1',
 	'redirectpagesub' => 'Pagina de redirezión',
 	'retrievedfrom' => 'Utegnüü de "$1"',
 	'restorelink' => '{{PLURAL:$1|1 mudifega scancelada|$1 mudifegh scancelaa}}',
@@ -26700,7 +26700,7 @@ I paginn dent in [[Special:Watchlist|la lista ch\'it ten-e sot euj]] i resten ma
 
 $messages['ln'] = [
 	'returnto' => 'Kozóngisa na $1.',
-	'redirectedfrom' => '(Eyendísí útá $1)',
+	'redirectedfrom' => 'Eyendísí útá $1',
 	'redirectpagesub' => 'Lonkásá la boyendisi',
 	'retrievedfrom' => 'Ezwámí úta «$1»',
 	'red-link-title' => '$1 (lonkásá  ezalí tɛ̂)',
@@ -26740,7 +26740,7 @@ $messages['ln'] = [
 
 $messages['lo'] = [
 	'returnto' => 'ກັບໄປ  $1.',
-	'redirectedfrom' => '(ໂອນມາຈາກ $1)',
+	'redirectedfrom' => 'ໂອນມາຈາກ $1',
 	'redirectpagesub' => 'ໜ້າໂອນ',
 	'retrievedfrom' => 'ຖອນມາຈາກ "$1"',
 	'red-link-title' => '$1 (ຍັງບໍ່ໄດ້ສ້າງ)',
@@ -26785,7 +26785,7 @@ $messages['lo'] = [
 
 $messages['loz'] = [
 	'returnto' => 'Kutezi $1.',
-	'redirectedfrom' => '(Petulo abezi di $1)',
+	'redirectedfrom' => 'Petulo abezi di $1',
 	'redirectpagesub' => 'Petulo abezi',
 	'retrievedfrom' => 'Bulukezi ye ng\'i di "$1"',
 	'restorelink' => '{{PLURAL:$1|1 afi bye sa afi kulobala|$1 afina bye sa afi kulobala}}',
@@ -26846,7 +26846,7 @@ Desu dafi kulobala di petulo sa gi di informasi:',
 
 $messages['lt'] = [
 	'returnto' => 'Grįžti į $1.',
-	'redirectedfrom' => '(Nukreipta iš $1)',
+	'redirectedfrom' => 'Nukreipta iš $1',
 	'redirectpagesub' => 'Nukreipimo puslapis',
 	'retrievedfrom' => 'Gauta iš „$1“',
 	'restorelink' => '$1 {{PLURAL:$1|ištrintą keitimą|ištrintus keitimus|ištrintų keitimų}}',
@@ -27111,7 +27111,7 @@ grąžinta prieš tai buvusi $2 versija.',
 
 $messages['ltg'] = [
 	'returnto' => 'Grīztīs da puslopys $1.',
-	'redirectedfrom' => '(Puoradresēts nu $1)',
+	'redirectedfrom' => 'Puoradresēts nu $1',
 	'redirectpagesub' => 'Puoradresiešonys puslopa',
 	'retrievedfrom' => 'Atdabuot nu "$1"',
 	'red-link-title' => '$1 (itaidys puslopys navā)',
@@ -27162,7 +27162,7 @@ Lopys, kas ir tovā [[Special:Watchlist|puorraugamūs rokstu sarokstā]] ir \'\'
 
 $messages['lv'] = [
 	'returnto' => 'Atgriezties: $1.',
-	'redirectedfrom' => '(Pāradresēts no $1)',
+	'redirectedfrom' => 'Pāradresēts no $1',
 	'redirectpagesub' => 'Pāradresācijas lapa',
 	'retrievedfrom' => 'Saturs iegūts no "$1"',
 	'restorelink' => '$1 {{PLURAL:$1|dzēsto versiju|dzēstās versijas}}',
@@ -27614,7 +27614,7 @@ $1',
 
 $messages['lzz'] = [
 	'returnto' => '$1 butʼkʼaşa goikti.',
-	'redirectedfrom' => '($1 butʼkʼaşen moxtu)',
+	'redirectedfrom' => '$1 butʼkʼaşen moxtu',
 	'redirectpagesub' => 'Redirektʼiş butʼkʼa',
 	'retrievedfrom' => '"$1" adresişen eizdinu',
 	'red-link-title' => '$1 (Ak butʼkʼa va ren)',
@@ -27657,7 +27657,7 @@ $messages['lzz'] = [
 
 $messages['mai'] = [
 	'returnto' => '$1 पर घुरु।',
-	'redirectedfrom' => '(एतयसँ बहटारल $1)',
+	'redirectedfrom' => 'एतयसँ बहटारल $1',
 	'redirectpagesub' => 'पन्नाकेँ पठाउ',
 	'retrievedfrom' => 'प्राप्ति स्थल "$1"',
 	'restorelink' => '{{PLURAL:$1|एकटा मेटाएल सम्पादन|$1 मेटाएल सम्पादन सभ}}',
@@ -27929,7 +27929,7 @@ $2 केर संपादित आखिरी अवतरण क पुन
 
 $messages['map-bms'] = [
 	'returnto' => 'Bali maring $1.',
-	'redirectedfrom' => '(Dialihna sekang $1)',
+	'redirectedfrom' => 'Dialihna sekang $1',
 	'redirectpagesub' => 'Kaca pangalihan',
 	'retrievedfrom' => 'Ditampa sekang "$1"',
 	'restorelink' => '{{PLURAL:$1|siji suntingan|$1 suntingan}} sing wis dibusak',
@@ -28134,7 +28134,7 @@ dibalekna ming revisi pungkasan sekang $2.',
 
 $messages['mdf'] = [
 	'returnto' => 'Мърдамс $1-с.',
-	'redirectedfrom' => '(Шашфтф $1ста)',
+	'redirectedfrom' => 'Шашфтф $1ста',
 	'redirectpagesub' => 'Шашфтф лопа',
 	'retrievedfrom' => '"$1"ста сявф',
 	'restorelink' => '{{PLURAL:$1|нардаф петнема|$1 нардаф петнемат}}',
@@ -28323,7 +28323,7 @@ $messages['mdf'] = [
 
 $messages['mg'] = [
 	'returnto' => 'Hiverina any amin\'ny $1.',
-	'redirectedfrom' => '(tonga teto avy amin\'ny $1)',
+	'redirectedfrom' => 'tonga teto avy amin\'ny $1',
 	'redirectpagesub' => 'Pejy fihodinana',
 	'retrievedfrom' => 'Hita tao amin\'ny "$1"',
 	'restorelink' => 'ny fanovàna voafafa $1{{PLURAL:}}',
@@ -28584,7 +28584,7 @@ miverina any amin\'ny santiôna farany nataon\'i $2.',
 
 $messages['mhr'] = [
 	'returnto' => '$1 деке пӧртылаш.',
-	'redirectedfrom' => '(Колтымо $1 гыч)',
+	'redirectedfrom' => 'Колтымо $1 гыч',
 	'redirectpagesub' => 'Вес вереш колтышо лаштык',
 	'retrievedfrom' => 'Налме вер — "$1"',
 	'red-link-title' => '$1 (тыгай лаштык уке)',
@@ -28651,7 +28651,7 @@ $messages['mi'] = [
 
 $messages['min'] = [
 	'returnto' => 'Baliak ka $1',
-	'redirectedfrom' => '(Dialiahkan dari $1)',
+	'redirectedfrom' => 'Dialiahkan dari $1',
 	'redirectpagesub' => 'Laman pengalihan',
 	'retrievedfrom' => 'Diperoleh dari "$1"',
 	'restorelink' => 'Caliak {{PLURAL:$1|ciek suntiangan|$1 suntiangan}} nan dihapuih',
@@ -28728,7 +28728,7 @@ Laman pado [[Special:Watchlist|Senarai pantauan]] ditandoi \'\'\'cetak taba\'\'\
 
 $messages['mk'] = [
 	'returnto' => 'Назад на $1.',
-	'redirectedfrom' => '(Пренасочено од $1)',
+	'redirectedfrom' => 'Пренасочено од $1',
 	'redirectpagesub' => 'Страница за пренасочување',
 	'retrievedfrom' => 'Преземено од „$1“',
 	'restorelink' => '{{PLURAL:$1|едно избришано уредување|$1 избришани уредувања}}',
@@ -28991,7 +28991,7 @@ $1',
 
 $messages['ml'] = [
 	'returnto' => '$1 എന്ന താളിലേക്ക് തിരിച്ചുപോവുക.',
-	'redirectedfrom' => '($1 എന്ന താളിൽ നിന്നും തിരിച്ചുവിട്ടതു പ്രകാരം)',
+	'redirectedfrom' => '$1 എന്ന താളിൽ നിന്നും തിരിച്ചുവിട്ടതു പ്രകാരം',
 	'redirectpagesub' => 'തിരിച്ചുവിടൽ താൾ',
 	'retrievedfrom' => '"$1" എന്ന താളിൽനിന്നു ശേഖരിച്ചത്',
 	'restorelink' => '{{PLURAL:$1|നീക്കംചെയ്ത ഒരു തിരുത്തൽ|നീക്കംചെയ്ത $1 തിരുത്തലുകൾ}}',
@@ -29257,7 +29257,7 @@ $1',
 
 $messages['mn'] = [
 	'returnto' => '$1 руу буцах.',
-	'redirectedfrom' => '($1-с чиглүүлэгдэв)',
+	'redirectedfrom' => '$1-с чиглүүлэгдэв',
 	'redirectpagesub' => 'Хуудсыг чиглүүлэх',
 	'retrievedfrom' => '"$1" хуудаснаас авсан',
 	'restorelink' => '{{PLURAL:$1|арилгасан засвар|арилгасан $1 засварууд}}',
@@ -29520,7 +29520,7 @@ $1',
 
 $messages['mo'] = [
 	'returnto' => 'Ынапой ла $1.',
-	'redirectedfrom' => '(Редирекционат де ла $1)',
+	'redirectedfrom' => 'Редирекционат де ла $1',
 	'redirectpagesub' => 'Паӂинэ де редирекционаре',
 	'retrievedfrom' => 'Адус де ла «$1»',
 	'red-link-title' => '$1 (паӂина ну егзистэ)',
@@ -29557,7 +29557,7 @@ $messages['mo'] = [
 
 $messages['mr'] = [
 	'returnto' => '$1 कडे परत चला.',
-	'redirectedfrom' => '($1 पासून पुनर्निर्देशित)',
+	'redirectedfrom' => '$1 पासून पुनर्निर्देशित',
 	'redirectpagesub' => 'पुनर्निर्देशनाचे पान',
 	'retrievedfrom' => '"$1" पासून मिळविले',
 	'restorelink' => '{{PLURAL:$1|एक वगळलेले संपादन|$1 वगळलेली संपादने}}',
@@ -29827,7 +29827,7 @@ $1',
 
 $messages['mrj'] = [
 	'returnto' => 'Мӹнгеш ӹлӹштӓшӹш $1.',
-	'redirectedfrom' => '($1 гӹц колтымы)',
+	'redirectedfrom' => '$1 гӹц колтымы',
 	'redirectpagesub' => 'Вес вӓр гӹц колтымы ӹлӹштӓш',
 	'retrievedfrom' => 'Кышец нӓлмӹ «$1»',
 	'red-link-title' => '$1 (техень ӹлӹштӓш уке)',
@@ -29866,7 +29866,7 @@ $messages['mrj'] = [
 
 $messages['ms'] = [
 	'returnto' => 'Kembali ke $1.',
-	'redirectedfrom' => '(Dilencongkan dari $1)',
+	'redirectedfrom' => 'Dilencongkan dari $1',
 	'redirectpagesub' => 'Laman lencongan',
 	'retrievedfrom' => 'Diambil daripada "$1"',
 	'restorelink' => '{{PLURAL:$1|satu|$1}} suntingan dihapuskan',
@@ -30134,7 +30134,7 @@ Mohon semak log.',
 
 $messages['mt'] = [
 	'returnto' => 'Erġa\' lura lejn $1.',
-	'redirectedfrom' => '(Riindirizzat minn $1)',
+	'redirectedfrom' => 'Riindirizzat minn $1',
 	'redirectpagesub' => 'Paġna ta\' rindirizz',
 	'retrievedfrom' => 'Miġjub minn "$1"',
 	'restorelink' => '{{PLURAL:$1|waħda mill-modifiki mħassra|$1 modifiki mħassra}}',
@@ -30390,7 +30390,7 @@ Modifikata lura għall-aħħar verżjoni ta\' $2.',
 
 $messages['mwl'] = [
 	'returnto' => 'Retornar pa $1.',
-	'redirectedfrom' => '(Ancaminamiento de <b>$1</b>)',
+	'redirectedfrom' => 'Ancaminamiento de <b>$1</b>',
 	'redirectpagesub' => 'Páigina de ancaminamiento',
 	'retrievedfrom' => 'Sacado an "$1"',
 	'restorelink' => '{{PLURAL:$1|ua eidiçon apagada|$1 eidiçones apagadas}}',
@@ -30452,7 +30452,7 @@ Páiginas que steian ne ls [[Special:Watchlist|tous begiados]] son amostradas an
 
 $messages['my'] = [
 	'returnto' => '$1 သို့ ပြန်သွားရန်။',
-	'redirectedfrom' => '($1 မှ ပြန်ညွှန်းထားသည်)',
+	'redirectedfrom' => '$1 မှ ပြန်ညွှန်းထားသည်',
 	'redirectpagesub' => 'ပြန်ညွှန်းသော စာမျက်နှာ',
 	'retrievedfrom' => '"$1" မှ ရယူရန်',
 	'restorelink' => '{{PLURAL:$1|ဖျက်လိုက်သည့်တည်းဖြတ်မှုတစ်ခု|ဖျက်လိုက်သည့် တည်းဖြတ်မှု $1 ခု}}',
@@ -30606,7 +30606,7 @@ $messages['my'] = [
 
 $messages['myv'] = [
 	'returnto' => 'Велявтомс $1 лопантень.',
-	'redirectedfrom' => '(Ютавтозь $1 вельде)',
+	'redirectedfrom' => 'Ютавтозь $1 вельде',
 	'redirectpagesub' => 'Лиясто ютавтозь лопа',
 	'retrievedfrom' => 'Лисмапрясь "$1"-сто',
 	'restorelink' => '{{PLURAL:$1|нардазь вейке витнема-петнема|нардазь $1 витнемат-петнемат}}',
@@ -30740,7 +30740,7 @@ $messages['myv'] = [
 
 $messages['mzn'] = [
 	'returnto' => 'بردگستن تا $1',
-	'redirectedfrom' => '($1 جه بموئه)',
+	'redirectedfrom' => '$1 جه بموئه',
 	'redirectpagesub' => 'گجگی‌بَیتـِن',
 	'retrievedfrom' => '"$1" جه بیته بیّه',
 	'restorelink' => '{{PLURAL:$1|$1|$1}} دچی‌ین پاک بیّه',
@@ -30792,7 +30792,7 @@ $messages['na'] = [
 
 $messages['nah'] = [
 	'returnto' => 'Timocuepāz īhuīc $1.',
-	'redirectedfrom' => '(Ōmotlacuep īhuīcpa $1)',
+	'redirectedfrom' => 'Ōmotlacuep īhuīcpa $1',
 	'redirectpagesub' => 'Ōmotlacuep zāzanilli',
 	'retrievedfrom' => 'Īhuīcpa "$1"',
 	'restorelink' => '{{PLURAL:$1|cē tlapatlaliztli polotic|$1 tlapatlaliztli polotic}}',
@@ -30884,7 +30884,7 @@ $messages['nah'] = [
 
 $messages['nan'] = [
 	'returnto' => 'Tò-tńg khì $1.',
-	'redirectedfrom' => '(Tùi $1 choán--lâi)',
+	'redirectedfrom' => 'Tùi $1 choán--lâi',
 	'redirectpagesub' => 'Choán-ia̍h',
 	'retrievedfrom' => 'Lâi-goân: "$1"',
 	'restorelink' => '{{PLURAL:$1|chi̍t ê thâi-tiàu ê pian-chi̍p|$1 thâi-tiàu ê pian-chi̍p}}',
@@ -31140,7 +31140,7 @@ $1',
 
 $messages['nap'] = [
 	'returnto' => 'Torna a $1.',
-	'redirectedfrom' => '(Redirect \'a $1)',
+	'redirectedfrom' => 'Redirect \'a $1',
 	'remembermypassword' => 'Allicuordate d"a password (for a maximum of $1 {{PLURAL:$1|day|days}})',
 	'rev-delundel' => 'faje vedé/annascunne',
 	'rightsnone' => '(nisciuno)',
@@ -31166,7 +31166,7 @@ $messages['nap'] = [
 
 $messages['nb'] = [
 	'returnto' => 'Tilbake til $1.',
-	'redirectedfrom' => '(Omdirigert fra $1)',
+	'redirectedfrom' => 'Omdirigert fra $1',
 	'redirectpagesub' => 'Omdirigeringsside',
 	'retrievedfrom' => 'Hentet fra «$1»',
 	'restorelink' => '{{PLURAL:$1|én slettet revisjon|$1 slettede revisjoner}}',
@@ -31436,7 +31436,7 @@ Sider på [[Special:Watchlist|overvåkningslisten din]] er i \'\'\'fet skrift\'\
 
 $messages['nds'] = [
 	'returnto' => 'Trüch to $1.',
-	'redirectedfrom' => '(wiederwiest vun $1)',
+	'redirectedfrom' => 'wiederwiest vun $1',
 	'redirectpagesub' => 'Redirectsiet',
 	'retrievedfrom' => 'Vun „$1“',
 	'restorelink' => '{{PLURAL:$1|ene löschte Version|$1 löschte Versionen}}',
@@ -31658,7 +31658,7 @@ $1',
 
 $messages['nds-nl'] = [
 	'returnto' => 'Weerumme naor $1.',
-	'redirectedfrom' => '(deurestuurd vanaof "$1")',
+	'redirectedfrom' => 'deurestuurd vanaof "$1"',
 	'redirectpagesub' => 'Deurstuurpagina',
 	'retrievedfrom' => 'Van "$1"',
 	'restorelink' => '{{PLURAL:$1|versie die vortedaon is|versies die vortedaon bin}}',
@@ -31923,7 +31923,7 @@ Kiek de logboeken nao.',
 
 $messages['ne'] = [
 	'returnto' => '$1 मा फर्कनुहोस् ।',
-	'redirectedfrom' => '($1 बाट पठाइएको)',
+	'redirectedfrom' => '$1 बाट पठाइएको',
 	'redirectpagesub' => 'रिडाइरेक्ट पृष्ठ',
 	'retrievedfrom' => ' "$1" बाट निकालिएको',
 	'restorelink' => '{{PLURAL:$1|एक मेटिएको सम्पादन |$1 मेटिएका सम्पादनहरू}}',
@@ -32147,7 +32147,7 @@ $messages['niu'] = [
 
 $messages['nl'] = [
 	'returnto' => 'Terug naar $1.',
-	'redirectedfrom' => '(Doorverwezen vanaf $1)',
+	'redirectedfrom' => 'Doorverwezen vanaf $1',
 	'redirectpagesub' => 'Doorverwijspagina',
 	'retrievedfrom' => 'Overgenomen van "$1"',
 	'restorelink' => '$1 verwijderde {{PLURAL:$1|versie|versies}}',
@@ -32558,7 +32558,7 @@ Pagina\'s die op [[Special:Watchlist|je volglijst]] staan worden \'\'\'vet\'\'\'
 
 $messages['nn'] = [
 	'returnto' => 'Attende til $1.',
-	'redirectedfrom' => '(Omdirigert frå $1)',
+	'redirectedfrom' => 'Omdirigert frå $1',
 	'redirectpagesub' => 'Omdirigeringsside',
 	'retrievedfrom' => 'Henta frå «$1»',
 	'restorelink' => '{{PLURAL:$1|Éin sletta versjon|$1 sletta versjonar}}',
@@ -32819,7 +32819,7 @@ Sjekk gjerne loggføringa.',
 
 $messages['no'] = [
 	'returnto' => 'Attende til $1.',
-	'redirectedfrom' => '(Omdirigert frå $1)',
+	'redirectedfrom' => 'Omdirigert frå $1',
 	'redirectpagesub' => 'Omdirigeringsside',
 	'retrievedfrom' => 'Henta frå «$1»',
 	'restorelink' => '{{PLURAL:$1|Éin sletta versjon|$1 sletta versjonar}}',
@@ -33156,7 +33156,7 @@ $messages['nov'] = [
 
 $messages['nso'] = [
 	'returnto' => 'Boela go $1.',
-	'redirectedfrom' => '(\'\'Redirect\'\' go tšwa $1)',
+	'redirectedfrom' => '\'\'Redirect\'\' go tšwa $1',
 	'redirectpagesub' => '\'\'Redirect\'\' letlakala',
 	'retrievedfrom' => 'Le tšwa go "$1"',
 	'restorelink' => '{{PLURAL:$1|e tee phetogo ye phumutšwego|phetogo tše $1 tše phumutšwego}}',
@@ -33221,7 +33221,7 @@ Matlakala ago ba [[Special:Watchlist|lenanong la gago la matlakala ditlhapetšo]
 ];
 
 $messages['nv'] = [
-	'redirectedfrom' => '("$1"dę́ę́ʼ)',
+	'redirectedfrom' => '"$1"dę́ę́ʼ',
 	'redirectpagesub' => 'dah astsihígíí',
 	'retrievedfrom' => '"$1" bitsʼą́ą́dę́ę́ʼ',
 	'red-link-title' => '$1 (ádin)',
@@ -33250,7 +33250,7 @@ $messages['ny'] = [
 
 $messages['oc'] = [
 	'returnto' => 'Tornar a la pagina $1.',
-	'redirectedfrom' => '(Redirigit dempuèi $1)',
+	'redirectedfrom' => 'Redirigit dempuèi $1',
 	'redirectpagesub' => 'Pagina de redireccion',
 	'retrievedfrom' => 'Recuperada de « $1 »',
 	'restorelink' => '{{PLURAL:$1|una edicion escafada|$1 edicions escafadas}}',
@@ -33507,7 +33507,7 @@ Verificatz los jornals.',
 
 $messages['or'] = [
 	'returnto' => '$1କୁ ଫେରିଯାନ୍ତୁ ।',
-	'redirectedfrom' => '($1 ରୁ ଲେଉଟି ଆସିଛି)',
+	'redirectedfrom' => '$1 ରୁ ଲେଉଟି ଆସିଛି',
 	'redirectpagesub' => 'ଆଉଥରେ ଫେରିବା ପୃଷ୍ଠା',
 	'retrievedfrom' => '"$1" ରୁ ଅଣାଯାଇଅଛି',
 	'restorelink' => '{{PLURAL:$1|ଗୋଟିଏ ଲିଭାଯାଇଥିବା ବଦଳ|$1ଟି ଲିଭାଯାଇଥିବା ବଦଳ}}',
@@ -33776,7 +33776,7 @@ $2ଙ୍କ ଦେଇ ଶେଷଥର ହୋଇଥିବା ସଂସ୍କର�
 
 $messages['os'] = [
 	'returnto' => 'Фæстæмæ $1 фарсмæ.',
-	'redirectedfrom' => '(Ацы статьяйæ æрвыст: «$1»)',
+	'redirectedfrom' => 'Ацы статьяйæ æрвыст: «$1»',
 	'redirectpagesub' => 'Рарвысты фарс',
 	'retrievedfrom' => 'Ратæдзæн: «$1»',
 	'red-link-title' => '$1 (фыст нæу)',
@@ -33850,7 +33850,7 @@ $3',
 
 $messages['pa'] = [
 	'returnto' => '$1 ਤੇ ਵਾਪਸ ਜਾਓ',
-	'redirectedfrom' => '($1 ਤੋਂ ਰੀ-ਡਿਰੈਕਟ)',
+	'redirectedfrom' => '$1 ਤੋਂ ਰੀ-ਡਿਰੈਕਟ',
 	'redirectpagesub' => 'ਰੀ-ਡਿਰੈਕਟ ਪੇਜ',
 	'retrievedfrom' => '"$1" ਤੋਂ ਲਿਆ',
 	'red-link-title' => '$1 (ਇਸ ਨਾਂ ਦਾ ਪੇਜ ਨਹੀਂ ਹੈ)',
@@ -33942,7 +33942,7 @@ $messages['pag'] = [
 
 $messages['pam'] = [
 	'returnto' => 'Magbalik king $1.',
-	'redirectedfrom' => '(Miyalis direksiun manibat king $1)',
+	'redirectedfrom' => 'Miyalis direksiun manibat king $1',
 	'redirectpagesub' => 'Bulung ning pamanaliling direksiun (redirect)',
 	'retrievedfrom' => 'Mekua ya king "$1"',
 	'restorelink' => '{{PLURAL:$1|metung a edit a mebura|$1 edit a mebura}}',
@@ -34121,7 +34121,7 @@ binalik nong $2 king sadiang bersion.',
 
 $messages['pap'] = [
 	'returnto' => 'Bai bèk $1.',
-	'redirectedfrom' => '(Bo a yega akinan pa via di e página $1)',
+	'redirectedfrom' => 'Bo a yega akinan pa via di e página $1',
 	'redirectpagesub' => 'Página ku ta sirbi komo portal',
 	'remembermypassword' => 'Kordá mi (for a maximum of $1 {{PLURAL:$1|day|days}})',
 	'recentchanges' => 'Kambionan resien',
@@ -34135,7 +34135,7 @@ $messages['pap'] = [
 
 $messages['pcd'] = [
 	'returnto' => 'Értrouve $1.',
-	'redirectedfrom' => '(Érdirection édpis $1)',
+	'redirectedfrom' => 'Érdirection édpis $1',
 	'redirectpagesub' => 'Pache érdérivée',
 	'retrievedfrom' => 'Érprind din  "$1"',
 	'restorelink' => '{{PLURAL:$1|eune édition défacée|$1 chés éditions défacées}}',
@@ -34179,7 +34179,7 @@ $messages['pcd'] = [
 
 $messages['pdc'] = [
 	'returnto' => 'Zerick zum Blatt $1.',
-	'redirectedfrom' => '(Weiterleitung vun $1)',
+	'redirectedfrom' => 'Weiterleitung vun $1',
 	'redirectpagesub' => 'Weiderleiding',
 	'retrievedfrom' => 'Vun „$1“',
 	'red-link-title' => '$1 (Blatt gebt es net)',
@@ -34239,7 +34239,7 @@ $messages['pdc'] = [
 
 $messages['pdt'] = [
 	'returnto' => 'Trigj no $1.',
-	'redirectedfrom' => '(wieda jeleidt von $1)',
+	'redirectedfrom' => 'wieda jeleidt von $1',
 	'redirectpagesub' => 'Sied tom Wiedaleide',
 	'retrievedfrom' => 'Von "$1"',
 	'red-link-title' => '$1 (Sied noch nich jemoakt)',
@@ -34270,7 +34270,7 @@ $messages['pdt'] = [
 
 $messages['pfl'] = [
 	'returnto' => 'Zrick zu $1.',
-	'redirectedfrom' => '(Wairrerglaidet vun $1)',
+	'redirectedfrom' => 'Wairrerglaidet vun $1',
 	'redirectpagesub' => 'Wairerlaidungssaid',
 	'retrievedfrom' => 'Vun "$1"',
 	'red-link-title' => '$1 (Said gebbt s nid)',
@@ -34325,7 +34325,7 @@ $messages['pih'] = [
 $messages['pl'] = [
 	'realmap-deprecated-info' => 'Funkcja tworzenia map rzeczywistych miejsc została wycofana przez Wikię. Aby uzyskać więcej informacji zobacz: $1',
 	'returnto' => 'Wróć do strony $1.',
-	'redirectedfrom' => '(Przekierowano z $1)',
+	'redirectedfrom' => 'Przekierowano z $1',
 	'redirectpagesub' => 'Strona przekierowująca',
 	'retrievedfrom' => 'Źródło „$1”',
 	'restorelink' => '{{PLURAL:$1|jedną usuniętą wersję|$1 usunięte wersje|$1 usuniętych wersji}}',
@@ -34699,7 +34699,7 @@ www.wikia.com
 
 $messages['pms'] = [
 	'returnto' => 'Torna andré a $1.',
-	'redirectedfrom' => '(Ridiression da $1)',
+	'redirectedfrom' => 'Ridiression da $1',
 	'redirectpagesub' => 'Pàgina ëd ridiression',
 	'retrievedfrom' => 'Pijàit da  "$1"',
 	'restorelink' => '{{PLURAL:$1|na modìfica scancelà|$1 modìfiche scancelà}}',
@@ -34965,7 +34965,7 @@ Le pàgine dzora a [[Special:Watchlist|la lista ëd lòn ch\'as ten sot-euj]] a 
 
 $messages['pnb'] = [
 	'returnto' => 'واپس $1 چلو',
-	'redirectedfrom' => '(لیایا گیا $1)',
+	'redirectedfrom' => 'لیایا گیا $1',
 	'redirectpagesub' => 'صفحہ ریڈائریکٹ کرو',
 	'retrievedfrom' => 'توں لیا "$1"',
 	'restorelink' => '{{PLURAL:$1|اک مٹائی گئی تبدیلی|$1 مٹائیاں گئیاں تبدیلیاں}}',
@@ -35233,7 +35233,7 @@ $2 نے آخری ریوین تک واپس کیتا۔',
 
 $messages['pnt'] = [
 	'returnto' => 'Επιστροφήν σο $1.',
-	'redirectedfrom' => '(Έρτεν ασό $1)',
+	'redirectedfrom' => 'Έρτεν ασό $1',
 	'redirectpagesub' => 'Σελίδαν διπλού σύνδεσμονος',
 	'retrievedfrom' => 'Ασο "$1"',
 	'red-link-title' => '$1 (\'κ εγράφτεν ακόμαν)',
@@ -35323,7 +35323,7 @@ $messages['pnt'] = [
 
 $messages['prg'] = [
 	'returnto' => 'Etwartinnais si en pāusan $1.',
-	'redirectedfrom' => '(Prawestan iz $1)',
+	'redirectedfrom' => 'Prawestan iz $1',
 	'redirectpagesub' => 'Prawesnas pāusan',
 	'retrievedfrom' => 'Aps: "$1"',
 	'restorelink' => '$1 {{PLURAL:$1|āupausintan wersiōnin|āupausintans wersiōnins}}',
@@ -35516,7 +35516,7 @@ Etwārtai wartinnā di panzdauman wersiōnin, kawīdse autōrs ast $2.',
 
 $messages['ps'] = [
 	'returnto' => 'بېرته $1 ته وګرځه.',
-	'redirectedfrom' => '(له $1 نه مخ ګرځېدلی)',
+	'redirectedfrom' => 'له $1 نه مخ ګرځېدلی',
 	'redirectpagesub' => 'د مخ ګرځونې مخ',
 	'retrievedfrom' => '"$1" نه اخيستل شوی',
 	'restorelink' => '{{PLURAL:$1|يو ړنګ شوی سمون|$1 ړنګ شوي سمونونه}}',
@@ -35664,7 +35664,7 @@ $messages['ps'] = [
 
 $messages['pt'] = [
 	'returnto' => 'Retornar para $1.',
-	'redirectedfrom' => '(Redirecionado de $1)',
+	'redirectedfrom' => 'Redirecionado de $1',
 	'redirectpagesub' => 'Página de redirecionamento',
 	'retrievedfrom' => 'Disponível em "$1"',
 	'restorelink' => '{{PLURAL:$1|uma edição eliminada|$1 edições eliminadas}}',
@@ -36021,7 +36021,7 @@ www.wikia.com
 $messages['pt-br'] = [
 	'realmap-deprecated-info' => 'Os mapas do mundo foram suspensos pela Wikia. Para obter mais informações, consulte: $1',
 	'returnto' => 'Retornar para $1.',
-	'redirectedfrom' => '(Redirecionado de $1)',
+	'redirectedfrom' => 'Redirecionado de $1',
 	'redirectpagesub' => 'Página de redirecionamento',
 	'retrievedfrom' => 'Disponível em "$1"',
 	'restorelink' => '{{PLURAL:$1|uma edição eliminada|$1 edições eliminadas}}',
@@ -36291,7 +36291,7 @@ Páginas de sua [[Special:Watchlist|lista de páginas vigiadas]] são exibidas e
 
 $messages['qu'] = [
 	'returnto' => '$1-man kutimuy.',
-	'redirectedfrom' => '($1-manta pusampusqa)',
+	'redirectedfrom' => '$1-manta pusampusqa',
 	'redirectpagesub' => 'Pusampusqa p\'anqa',
 	'retrievedfrom' => '"$1" p\'anqamanta chaskisqa (Qhichwa / Quechua)',
 	'restorelink' => '{{PLURAL:$1|qullusqa hukchasqa|$1 qullusqa hukchasqa}}',
@@ -36559,7 +36559,7 @@ Ama hina kaspa, hallch\'akunapi qhaway.',
 
 $messages['qug'] = [
 	'returnto' => '$1-man tikramuna.',
-	'redirectedfrom' => '($1-manta pushashka)',
+	'redirectedfrom' => '$1-manta pushashka',
 	'redirectpagesub' => 'pushashka panka',
 	'retrievedfrom' => '$1 pankamanta hapishka',
 	'restorelink' => '{{PLURAL:$1|shuk pichashka killkayta|$1 pichashka killkaykunata}} rikuna',
@@ -36613,7 +36613,7 @@ Uraypi apakunakunapa pichanakunapa kamuta rikuchiwanchik:',
 
 $messages['rgn'] = [
 	'returnto' => 'Torna indrì a $1.',
-	'redirectedfrom' => '(Ri-direziòn da <b>$1</b>)',
+	'redirectedfrom' => 'Ri-direziòn da <b>$1</b>',
 	'redirectpagesub' => 'Pàgina d\'re-indirezzament',
 	'retrievedfrom' => 'Tiré fora da "$1"',
 	'red-link-title' => 'Ciò! $1 (sta pàgina la n\'esèst incora)',
@@ -36651,7 +36651,7 @@ Al pàgin int\'la lèsta dal [[Special:Watchlist|pàgin tnudi sot occ]] l\' è s
 
 $messages['rif'] = [
 	'returnto' => 'Dwl ghar $1.',
-	'redirectedfrom' => '(Itwasnnmd-d zi $1)',
+	'redirectedfrom' => 'Itwasnnmd-d zi $1',
 	'redirectpagesub' => 'Tasna n (Redirect)',
 	'retrievedfrom' => 'Itwarr-d zi "$1"',
 	'red-link-title' => '$1 (tasna ur telli)',
@@ -36696,7 +36696,7 @@ Tasniwin di [[Special:Watchlist|your watchlist]] d \'\'\'tizurarin\'\'\'.',
 
 $messages['rm'] = [
 	'returnto' => 'Enavos tar $1.',
-	'redirectedfrom' => '(renvià da $1)',
+	'redirectedfrom' => 'renvià da $1',
 	'redirectpagesub' => 'questa pagina renviescha tar in\'auter artitgel',
 	'retrievedfrom' => 'Da "$1"',
 	'restorelink' => '{{PLURAL:$1|ina modificaziun stizzada|$1 modificaziuns stizzadas}}',
@@ -36944,7 +36944,7 @@ $messages['rmy'] = [
 
 $messages['ro'] = [
 	'returnto' => 'Înapoi la $1.',
-	'redirectedfrom' => '(Redirecționat de la $1)',
+	'redirectedfrom' => 'Redirecționat de la $1',
 	'redirectpagesub' => 'Pagină de redirecționare',
 	'retrievedfrom' => 'Adus de la „$1”',
 	'restorelink' => '{{PLURAL:$1|o modificare ștearsă|$1 modificări șterse|$1 de modificări șterse}}',
@@ -37231,7 +37231,7 @@ $messages['roa-rup'] = [
 
 $messages['roa-tara'] = [
 	'returnto' => 'Tuerne a $1.',
-	'redirectedfrom' => '(Riderette da $1)',
+	'redirectedfrom' => 'Riderette da $1',
 	'redirectpagesub' => 'Pàgene de redirezione',
 	'retrievedfrom' => 'Pigghjete da "$1"',
 	'restorelink' => '{{PLURAL:$1|\'nu cangiamende scangellete|$1 cangiaminde scangellete}}',
@@ -37502,7 +37502,7 @@ turnate rete a l\'urtema versione da $2.',
 $messages['ru'] = [
 	'realmap-deprecated-info' => 'Создание физических карт мира больше не поддерживается на Викия. Узнайте больше здесь: $1',
 	'returnto' => 'Возврат к странице $1.',
-	'redirectedfrom' => '(перенаправлено с «$1»)',
+	'redirectedfrom' => 'перенаправлено с «$1»',
 	'redirectpagesub' => 'Страница-перенаправление',
 	'retrievedfrom' => 'Источник — «$1»',
 	'restorelink' => '{{PLURAL:$1|$1 удалённую правку|$1 удалённые правки|$1 удалённых правок}}',
@@ -37856,7 +37856,7 @@ www.wikia.com
 
 $messages['rue'] = [
 	'returnto' => 'Навернутя до сторінкы «$1».',
-	'redirectedfrom' => '(Напрямленый з $1)',
+	'redirectedfrom' => 'Напрямленый з $1',
 	'redirectpagesub' => 'Сторінка-напрямлїня',
 	'retrievedfrom' => 'Обтримане з "$1"',
 	'restorelink' => '{{PLURAL:$1|змазанов едітаціёв|$1 змазаны едітації|$1 змазаных едітацій}}',
@@ -38139,7 +38139,7 @@ $messages['ruq'] = [
 ];
 
 $messages['ruq-cyrl'] = [
-	'redirectedfrom' => '(Редирецћионат де ла $1)',
+	'redirectedfrom' => 'Редирецћионат де ла $1',
 	'retrievedfrom' => 'адусе де "$1"',
 	'revisionasof' => 'Верцион де дата $1',
 	'recentchanges' => 'шумбајрае рецентае',
@@ -38160,7 +38160,7 @@ $3',
 ];
 
 $messages['ruq-latn'] = [
-	'redirectedfrom' => '(Redirecţionat de la $1)',
+	'redirectedfrom' => 'Redirecţionat de la $1',
 	'retrievedfrom' => 'Aduse de "$1"',
 	'revisionasof' => 'Vercion de data $1',
 	'recentchanges' => 'şumbărae recentae',
@@ -38182,7 +38182,7 @@ $3',
 
 $messages['sa'] = [
 	'returnto' => '$1 इत्येतद् प्रति निवर्तताम्।',
-	'redirectedfrom' => '($1 इत्यस्मात् पुनर्निर्दिष्टम्)',
+	'redirectedfrom' => '$1 इत्यस्मात् पुनर्निर्दिष्टम्',
 	'redirectpagesub' => 'अनुप्रेषण-पृष्ठम्',
 	'retrievedfrom' => '"$1" इत्यस्माद् उद्धृतम्',
 	'restorelink' => '{{PLURAL:$1|एकम् अपाकृतं संपादनम्  |$1 अपाकृतानि संपादनानि}}',
@@ -38299,7 +38299,7 @@ $messages['sa'] = [
 
 $messages['sah'] = [
 	'returnto' => 'Төттөрү $1 сирэйгэ.',
-	'redirectedfrom' => '(Мантан: $1  көстө)',
+	'redirectedfrom' => 'Мантан: $1  көстө',
 	'redirectpagesub' => 'Утаарар сирэй',
 	'retrievedfrom' => '"$1" -н кэллэ',
 	'restorelink' => '{{PLURAL:$1|биир сотторуллубут көннөрүү|$1 сотторуллубут көннөрүүлэр}}',
@@ -38568,7 +38568,7 @@ $1',
 
 $messages['sc'] = [
 	'returnto' => 'Torra a $1.',
-	'redirectedfrom' => '(Reindiritzadu dae $1)',
+	'redirectedfrom' => 'Reindiritzadu dae $1',
 	'redirectpagesub' => 'Pàgina de reindiritzadura',
 	'retrievedfrom' => 'Bogau dae  "$1"',
 	'restorelink' => '{{PLURAL:$1|unu acontzu burradu|$1 acontzos burrados}}',
@@ -38668,7 +38668,7 @@ Is pàginas de sa [[Special:Watchlist|watchlist tua]] sunt in \'\'\'grassu\'\'\'
 
 $messages['scn'] = [
 	'returnto' => 'Ritorna a $1.',
-	'redirectedfrom' => '(Rinnirizzata di $1)',
+	'redirectedfrom' => 'Rinnirizzata di $1',
 	'redirectpagesub' => 'Pàggina di rinnirizzamentu',
 	'retrievedfrom' => 'Estrattu di "$1"',
 	'restorelink' => '{{PLURAL:$1|nu canciamentu annullatu|$1 canciamenti annullati}}',
@@ -38897,7 +38897,7 @@ Cuntrolla lu log.',
 
 $messages['sco'] = [
 	'returnto' => 'Return tae $1.',
-	'redirectedfrom' => '(Reguidit frae $1)',
+	'redirectedfrom' => 'Reguidit frae $1',
 	'redirectpagesub' => 'Redirect page',
 	'retrievedfrom' => 'Taen frae "$1"',
 	'restorelink' => '{{PLURAL:$1|one delete edit|$1 delete edits}}',
@@ -38997,7 +38997,7 @@ Pages on [[Special:Watchlist|your watchleet]] are \'\'\'bold\'\'\'.',
 
 $messages['sd'] = [
 	'returnto' => '$1 ڏانهن وَرو.',
-	'redirectedfrom' => '($1 کان چوريل)',
+	'redirectedfrom' => '$1 کان چوريل',
 	'redirectpagesub' => 'چوريل صفحو',
 	'retrievedfrom' => '"$1" تان ورتل',
 	'red-link-title' => '$1 (اڃا لکيل ناهي)',
@@ -39041,7 +39041,7 @@ $messages['sd'] = [
 
 $messages['sdc'] = [
 	'returnto' => 'Turra a $1.',
-	'redirectedfrom' => '(Rinviu da $1)',
+	'redirectedfrom' => 'Rinviu da $1',
 	'redirectpagesub' => 'Pàgina di rinviu',
 	'retrievedfrom' => 'Buggaddu da "$1"',
 	'restorelink' => '{{PLURAL:$1|una mudìfigga canzilladda|$1 mudìfigghi canzilladdi}}',
@@ -39252,7 +39252,7 @@ Eará bajasdoallit sáhtet lohkat čihkojuvvon sisdoalu ja máhcahit dan.',
 
 $messages['sei'] = [
 	'returnto' => 'Jumpöx $1.',
-	'redirectedfrom' => '(Meniitomöxde $1)',
+	'redirectedfrom' => 'Meniitomöxde $1',
 	'redirectpagesub' => 'Meniitomöx páhina',
 	'retrievedfrom' => 'Paluatlde "$1"',
 	'restorelink' => '{{PLURAL:$1|1 ticpatlöx delatöx|$1 ticpatlöx delatöx}}',
@@ -39328,7 +39328,7 @@ $messages['sg'] = [
 
 $messages['sgs'] = [
 	'returnto' => 'Grīžtė i $1.',
-	'redirectedfrom' => '(Nokreipta ėš $1)',
+	'redirectedfrom' => 'Nokreipta ėš $1',
 	'redirectpagesub' => 'Nokreipėma poslapis',
 	'retrievedfrom' => 'Gautė ėš „$1“',
 	'restorelink' => '$1 {{PLURAL:$1|ėštrinta keitėma|ėštrintos keitėmos|ėštrintū keitėmu}}',
@@ -39437,7 +39437,7 @@ Kėtė admėnėstratuorē šėtom pruojekte vėsdar galės pasėiktė pasliepta 
 
 $messages['sh'] = [
 	'returnto' => 'Povratak na $1.',
-	'redirectedfrom' => '(Preusmjereno sa $1)',
+	'redirectedfrom' => 'Preusmjereno sa $1',
 	'redirectpagesub' => 'Preusmjeri stranicu',
 	'retrievedfrom' => 'Dobavljeno iz "$1"',
 	'restorelink' => '{{PLURAL:$1|$1 izbrisana izmjena|$1 izbrisanih izmjena}}',
@@ -39707,7 +39707,7 @@ vraćeno na posljednju verziju koju je snimio $2.',
 
 $messages['shi'] = [
 	'returnto' => 'Urri s $1.',
-	'redirectedfrom' => '(Tmmuttid z $1)',
+	'redirectedfrom' => 'Tmmuttid z $1',
 	'redirectpagesub' => 'Tasna n-usmmattay',
 	'retrievedfrom' => 'Yurrid z "$1"',
 	'restorelink' => '{{PLURAL:$1|Ambddel lli imḥin|imbddel lli imḥin}}',
@@ -39791,7 +39791,7 @@ Mel imbddeln z tisniwin li ittuyzdayni bla tasna li trit.',
 
 $messages['si'] = [
 	'returnto' => '$1 ට නැවත යන්න.',
-	'redirectedfrom' => '($1 වෙතින් යළි-යොමු කරන ලදි)',
+	'redirectedfrom' => '$1 වෙතින් යළි-යොමු කරන ලදි',
 	'redirectpagesub' => 'පිටුව යළි-යොමු කරන්න',
 	'retrievedfrom' => '"$1" වෙතින් නැවත ලබාගන්නා ලදි',
 	'restorelink' => 'මකා දමනු ලැබූ {{PLURAL:$1| එක් සංස්කරණයක්| සංස්කරණ $1  ක්}}',
@@ -40061,7 +40061,7 @@ $2 ගේ අවසන් අනුවාදය වෙතට යළි වෙන
 
 $messages['sk'] = [
 	'returnto' => 'Späť na $1.',
-	'redirectedfrom' => '(Presmerované z $1)',
+	'redirectedfrom' => 'Presmerované z $1',
 	'redirectpagesub' => 'Presmerovacia stránka',
 	'retrievedfrom' => 'Zdroj: „$1“',
 	'restorelink' => '{{PLURAL:$1|jednu zmazanú úpravu|$1 zmazané úpravy|$1 zmazaných úprav}}',
@@ -40331,7 +40331,7 @@ Stránky, ktoré sa nachádzajú vo vašom [[Special:Watchlist|zozname sledovan�
 
 $messages['sl'] = [
 	'returnto' => 'Vrnite se na $1.',
-	'redirectedfrom' => '(Preusmerjeno z $1)',
+	'redirectedfrom' => 'Preusmerjeno z $1',
 	'redirectpagesub' => 'Preusmeritvena stran',
 	'retrievedfrom' => 'Vzpostavljeno iz »$1«',
 	'restorelink' => '$1 {{PLURAL:$1|izbrisano redakcijo|izbrisani redakciji|izbrisane redakcije|izbrisanih redakcij}}',
@@ -40607,7 +40607,7 @@ vrnjeno na urejanje uporabnika $2.',
 
 $messages['sli'] = [
 	'returnto' => 'Zurück zur Seite $1.',
-	'redirectedfrom' => '(Weitergeleitet vo $1)',
+	'redirectedfrom' => 'Weitergeleitet vo $1',
 	'retrievedfrom' => 'voo "$1"',
 	'restorelink' => '$1 {{PLURAL:$1|gelöschte Version|gelöschte Versiona}}',
 	'red-link-title' => '$1 (Seite ies nich doo)',
@@ -40811,7 +40811,7 @@ $messages['sm'] = [
 
 $messages['sma'] = [
 	'returnto' => 'Bååstide gåajkoe $1.',
-	'redirectedfrom' => '(Bïjre-dirisjovne raejeste $1)',
+	'redirectedfrom' => 'Bïjre-dirisjovne raejeste $1',
 	'redirectpagesub' => 'Bïjre-dirisjovne bielie',
 	'retrievedfrom' => 'Raejeste "$1" vïedtjeme',
 	'readonly' => 'Daatabaase steegkeldahkesne',
@@ -40887,7 +40887,7 @@ $messages['so'] = [
 
 $messages['sq'] = [
 	'returnto' => 'Kthehuni tek $1',
-	'redirectedfrom' => '(Përcjellë nga $1)',
+	'redirectedfrom' => 'Përcjellë nga $1',
 	'redirectpagesub' => 'Faqe përcjellëse',
 	'retrievedfrom' => 'Marrë nga "$1"',
 	'restorelink' => '{{PLURAL:$1|një redaktim i fshirë|$1 redaktime të fshira}}',
@@ -41153,7 +41153,7 @@ Faqet [[Special:Watchlist|nën mbikqyrjen tuaj]] duken të \'\'\'theksuara\'\'\'
 
 $messages['sr-ec'] = [
 	'returnto' => 'Назад на $1.',
-	'redirectedfrom' => '(преусмерено са $1)',
+	'redirectedfrom' => 'преусмерено са $1',
 	'redirectpagesub' => 'Преусмерење',
 	'retrievedfrom' => 'Преузето из „$1“',
 	'restorelink' => '{{PLURAL:$1|обрисану измену|$1 обрисане измене|$1 обрисаних измена}}',
@@ -41426,7 +41426,7 @@ $1',
 
 $messages['sr-el'] = [
 	'returnto' => 'Povratak na $1.',
-	'redirectedfrom' => '(Preusmereno sa $1)',
+	'redirectedfrom' => 'Preusmereno sa $1',
 	'redirectpagesub' => 'Stranica preusmerenja',
 	'retrievedfrom' => 'Dobavljeno iz "$1"',
 	'restorelink' => '{{PLURAL:$1|jedna obrisana izmena|$1 obrisane izmene|$1 obrisanih izmena}}',
@@ -41675,7 +41675,7 @@ Stranice sa [[Special:Watchlist|vašeg spiska nadgledanja]] su \'\'\'podebljane\
 
 $messages['srn'] = [
 	'returnto' => 'Drai baka go na $1.',
-	'redirectedfrom' => '(Seni komopo fu $1)',
+	'redirectedfrom' => 'Seni komopo fu $1',
 	'redirectpagesub' => 'Seni doro papira',
 	'retrievedfrom' => 'Teki baka fu "$1"',
 	'restorelink' => '$1 taki de ben puru',
@@ -41734,7 +41734,7 @@ Papira ini [[Special:Watchlist|yu Tan Luku réy]] \'\'\'fatu\'\'\'.',
 
 $messages['ss'] = [
 	'returnto' => 'Buyela ku $1.',
-	'redirectedfrom' => '(Utfunyelelwe likhasi $1)',
+	'redirectedfrom' => 'Utfunyelelwe likhasi $1',
 	'redirectpagesub' => 'Likhasi lekutfumela',
 	'retrievedfrom' => 'Kutsatfwe ku "$1"',
 	'restriction-edit' => 'Hlela',
@@ -41752,7 +41752,7 @@ $messages['st'] = [
 
 $messages['stq'] = [
 	'returnto' => 'Tourääch tou Siede $1.',
-	'redirectedfrom' => '(Fäärelaited fon $1)',
+	'redirectedfrom' => 'Fäärelaited fon $1',
 	'redirectpagesub' => 'Fäärelaitenge',
 	'retrievedfrom' => 'Fon "$1"',
 	'restorelink' => '{{PLURAL:$1|1 läskede Beoarbaidengsfoargang|$1 läskede Beoarbaidengsfoargange}}',
@@ -42011,7 +42011,7 @@ Wröigje do Logbouke.',
 
 $messages['su'] = [
 	'returnto' => 'Balik deui ka $1.',
-	'redirectedfrom' => '(dipindahkeun ti $1)',
+	'redirectedfrom' => 'dipindahkeun ti $1',
 	'redirectpagesub' => 'Kaca alihan',
 	'retrievedfrom' => 'Disalin ti "$1"',
 	'restorelink' => '$1 {{PLURAL:$1|éditan|éditan}} dihapus',
@@ -42247,7 +42247,7 @@ Anjeun teu diwenangkeun asup.',
 
 $messages['sv'] = [
 	'returnto' => 'Tillbaka till $1.',
-	'redirectedfrom' => '(Omdirigerad från $1)',
+	'redirectedfrom' => 'Omdirigerad från $1',
 	'redirectpagesub' => 'Omdirigeringssida',
 	'retrievedfrom' => 'Hämtad från "$1"',
 	'restorelink' => '{{PLURAL:$1|en raderad version|$1 raderade versioner}}',
@@ -42539,7 +42539,7 @@ www.wikia.com',
 
 $messages['sw'] = [
 	'returnto' => 'Rudia $1.',
-	'redirectedfrom' => '(Elekezwa kutoka $1)',
+	'redirectedfrom' => 'Elekezwa kutoka $1',
 	'redirectpagesub' => 'Ukurasa wa kuelekeza',
 	'retrievedfrom' => 'Rudishwa kutoka "$1"',
 	'restorelink' => '{{PLURAL:$1|sahihisho lililofutwa moja|masahihisho yaliyofutwa $1}}',
@@ -42756,7 +42756,7 @@ Haliwezi kufichwa.',
 
 $messages['szl'] = [
 	'returnto' => 'Nazod do zajty $1.',
-	'redirectedfrom' => '(Punkńyńto s $1)',
+	'redirectedfrom' => 'Punkńyńto s $1',
 	'redirectpagesub' => 'Zajta překerowujůnco',
 	'retrievedfrom' => 'Zdrzůdło "$1"',
 	'restorelink' => '{{PLURAL:$1|jedna wyćepano wersyjo|$1 wyćepane wersyje|$1 wyćepanych wersyjůw}}',
@@ -42971,7 +42971,7 @@ Přiwrůcůno uostatńo wersyja autorstwa  $2.',
 
 $messages['ta'] = [
 	'returnto' => '$1 பக்கத்துக்குத் திரும்பு.',
-	'redirectedfrom' => '($1 இலிருந்து வழிமாற்றப்பட்டது)',
+	'redirectedfrom' => '$1 இலிருந்து வழிமாற்றப்பட்டது',
 	'redirectpagesub' => 'பக்கவழிமாற்றுப் பக்கம்',
 	'retrievedfrom' => '"$1" இருந்து மீள்விக்கப்பட்டது',
 	'restorelink' => '{{PLURAL:$1|ஒரு நீக்கப்பட்ட தொகுப்பை|$1 நீக்கப்பட்ட தொகுப்புகளை}}',
@@ -43236,7 +43236,7 @@ $1',
 
 $messages['tcy'] = [
 	'returnto' => '$1 ಗ್ ಪಿರ ಪೋಲೆ.',
-	'redirectedfrom' => '($1 ರ್ದ್ ಪುನರ್ನಿರ್ದೇಶಿತ)',
+	'redirectedfrom' => '$1 ರ್ದ್ ಪುನರ್ನಿರ್ದೇಶಿತ',
 	'redirectpagesub' => 'ಪುನರ್ನಿರ್ದೇಶನ ಪುಟ',
 	'retrievedfrom' => '"$1" ರ್ದ್ ದೆತ್ತಿನಂಚಿನ',
 	'restorelink' => '{{PLURAL:$1|1 ಡಿಲೀಟ್ ಆತಿನ ಸಂಪಾದನೆ|$1 ಡಿಲೀಟ್ ಆತಿನ ಸಂಪಾದನೆಲು}}',
@@ -43307,7 +43307,7 @@ $messages['tcy'] = [
 
 $messages['te'] = [
 	'returnto' => 'తిరిగి $1కి.',
-	'redirectedfrom' => '($1 నుండి మళ్ళించబడింది)',
+	'redirectedfrom' => '$1 నుండి మళ్ళించబడింది',
 	'redirectpagesub' => 'దారిమార్పు పుట',
 	'retrievedfrom' => '"$1" నుండి వెలికితీశారు',
 	'restorelink' => '{{PLURAL:$1|ఒక తొలగించిన మార్పు|$1 తొలగించిన మార్పులు}}',
@@ -43663,7 +43663,7 @@ $messages['tg'] = [
 
 $messages['tg-cyrl'] = [
 	'returnto' => 'Бозгашт ба $1.',
-	'redirectedfrom' => '(Тағйири масир аз $1)',
+	'redirectedfrom' => 'Тағйири масир аз $1',
 	'redirectpagesub' => 'Саҳифаи равонакунӣ',
 	'retrievedfrom' => 'Баргирифта аз "$1"',
 	'restorelink' => '{{PLURAL:$1|вироиши ҳазфшуда|$1 вироишоти ҳазфшудаҳо}}',
@@ -43830,7 +43830,7 @@ $messages['tg-cyrl'] = [
 
 $messages['tg-latn'] = [
 	'returnto' => 'Bozgaşt ba $1.',
-	'redirectedfrom' => '(Taƣjiri masir az $1)',
+	'redirectedfrom' => 'Taƣjiri masir az $1',
 	'redirectpagesub' => 'Sahifai ravonakunī',
 	'retrievedfrom' => 'Bargirifta az "$1"',
 	'restorelink' => '{{PLURAL:$1|viroişi hazfşuda|$1 viroişoti hazfşudaho}}',
@@ -43982,7 +43982,7 @@ Sahifahoi dar [[Special:Watchlist|fehristi nazaroti şumo]] buda  \'\'\'purrang\
 
 $messages['th'] = [
 	'returnto' => 'กลับไป $1',
-	'redirectedfrom' => '(เปลี่ยนทางจาก $1)',
+	'redirectedfrom' => 'เปลี่ยนทางจาก $1',
 	'redirectpagesub' => 'หน้าเปลี่ยนทาง',
 	'retrievedfrom' => 'รับข้อมูลจาก "$1"',
 	'restorelink' => '{{PLURAL:$1|1 การแก้ไขที่ถูกลบ|$1 การแก้ไขที่ถูกลบ}}',
@@ -44239,7 +44239,7 @@ $1',
 
 $messages['tk'] = [
 	'returnto' => '$1.',
-	'redirectedfrom' => '($1 sahypasyndan gönükdirildi)',
+	'redirectedfrom' => '$1 sahypasyndan gönükdirildi',
 	'redirectpagesub' => 'Gönükdirme sahypasy',
 	'retrievedfrom' => '"$1" adresinden alyndy.',
 	'restorelink' => '{{PLURAL:$1|bir öçürilen özgerdişi|$1 öçürilen özgerdişi}}',
@@ -44498,7 +44498,7 @@ $2 tarapyndan edilen soňky wersiýa gaýdyp gelindi.',
 
 $messages['tl'] = [
 	'returnto' => 'Bumalik sa $1.',
-	'redirectedfrom' => '(Ikinarga mula sa $1)',
+	'redirectedfrom' => 'Ikinarga mula sa $1',
 	'redirectpagesub' => 'Pahina ng pagkarga',
 	'retrievedfrom' => 'Ikinuha mula sa "$1"',
 	'restorelink' => '{{PLURAL:$1|isang binurang pagbabagp|$1 binurang pagbabago}}',
@@ -44765,7 +44765,7 @@ $messages['tn'] = [
 
 $messages['to'] = [
 	'returnto' => 'Foki ki he $1',
-	'redirectedfrom' => '(Kuo leʻei mei $1)',
+	'redirectedfrom' => 'Kuo leʻei mei $1',
 	'redirectpagesub' => 'Peesi leʻei',
 	'restorelink' => 'ko e fatu ʻosi tāmateʻi ʻe $1',
 	'red-link-title' => '$1 (ʻoku ʻikai moʻui ʻa e pēsí)',
@@ -44829,7 +44829,7 @@ Ko e ʻuhinga loka ko e $1 ia.',
 ];
 
 $messages['tokipona'] = [
-	'redirectedfrom' => '(tan $1)',
+	'redirectedfrom' => 'tan $1',
 	'retrievedfrom' => 'tan $1',
 	'recentchanges' => 'lipu seme li ante?',
 	'recentchangeslinked' => 'ante sama',
@@ -44840,7 +44840,7 @@ $messages['tokipona'] = [
 
 $messages['tpi'] = [
 	'returnto' => 'Go bek long $1',
-	'redirectedfrom' => '(Nupela rot i pinis long $1)',
+	'redirectedfrom' => 'Nupela rot i pinis long $1',
 	'redirectpagesub' => 'Nupela rot',
 	'retrievedfrom' => 'Ikam long "$1"',
 	'restorelink' => '{{PLURAL:$1|wanpela senis i raus pinis|$1 senis i raus pinis}}',
@@ -44883,7 +44883,7 @@ $messages['tpi'] = [
 
 $messages['tr'] = [
 	'returnto' => '$1 sayfasına dön.',
-	'redirectedfrom' => '($1 sayfasından yönlendirildi)',
+	'redirectedfrom' => '$1 sayfasından yönlendirildi',
 	'redirectpagesub' => 'Yönlendirme sayfası',
 	'retrievedfrom' => '"$1" adresinden alındı.',
 	'restorelink' => '{{PLURAL:$1|bir silinmiş değişikliği|$1 silinmiş değişikliği}}',
@@ -45172,7 +45172,7 @@ $messages['ts'] = [
 
 $messages['tt-cyrl'] = [
 	'returnto' => '$1 битенә кайту.',
-	'redirectedfrom' => '($1 битеннән юнәлтелде)',
+	'redirectedfrom' => '$1 битеннән юнәлтелде',
 	'redirectpagesub' => 'Башка биткә юнәлтү бите',
 	'retrievedfrom' => 'Чыганагы — "$1"',
 	'restorelink' => '{{PLURAL:$1|1 бетерелгән үзгәртүне|$1 бетерелгән үзгәртүне}}',
@@ -45337,7 +45337,7 @@ $1',
 
 $messages['tt-latn'] = [
 	'returnto' => '$1 bitenä qaytu.',
-	'redirectedfrom' => '($1 bitennän yünältelde)',
+	'redirectedfrom' => '$1 bitennän yünältelde',
 	'redirectpagesub' => 'Başqa bitkä yünältü bite',
 	'retrievedfrom' => 'Çığanağı — "$1"',
 	'restorelink' => '{{PLURAL:$1|1 beterelgän üzgärtüne|$1 beterelgän üzgärtüne}}',
@@ -45569,7 +45569,7 @@ $messages['ug'] = [
 
 $messages['ug-arab'] = [
 	'returnto' => '$1 غا قايت.',
-	'redirectedfrom' => '(قايتا نىشان بەلگىلەش ئورنى $1)',
+	'redirectedfrom' => 'قايتا نىشان بەلگىلەش ئورنى $1',
 	'redirectpagesub' => 'قايتا نىشان بەلگىلەنگەن بەت',
 	'retrievedfrom' => '"$1" دىن ئېرىشكەن',
 	'restorelink' => '{{PLURAL:$1|بىر ئۆچۈرۈلگەن نەشرى|$1 ئۆچۈرۈلگەن نەشرى}}',
@@ -45841,7 +45841,7 @@ $messages['ug-latn'] = [
 
 $messages['uk'] = [
 	'returnto' => 'Повернення до сторінки «$1».',
-	'redirectedfrom' => '(Перенаправлено з $1)',
+	'redirectedfrom' => 'Перенаправлено з $1',
 	'redirectpagesub' => 'Сторінка-перенаправлення',
 	'retrievedfrom' => 'Отримано з $1',
 	'restorelink' => '$1 {{PLURAL:$1|вилучене редагування|вилучених редагування|вилучених редагувань}}',
@@ -46118,7 +46118,7 @@ $1',
 
 $messages['ur'] = [
 	'returnto' => 'واپس $1۔',
-	'redirectedfrom' => '($1 سے پلٹایا گیا)',
+	'redirectedfrom' => '$1 سے پلٹایا گیا',
 	'redirectpagesub' => 'لوٹایا گیا صفحہ',
 	'retrievedfrom' => '‘‘$1’’ مستعادہ منجانب',
 	'restorelink' => '{{PLURAL:$1|ایک ترمیم حذف ہوچکی|$1 ترامیم حذف ہوچکیں}}',
@@ -46220,7 +46220,7 @@ $messages['ur'] = [
 
 $messages['uz'] = [
 	'returnto' => '$1 sahifasiga qaytish.',
-	'redirectedfrom' => '($1dan yoʻnaltirildi)',
+	'redirectedfrom' => '$1dan yoʻnaltirildi',
 	'redirectpagesub' => 'Yoʻnaltiruvchi sahifa',
 	'retrievedfrom' => ' "$1" dan olindi',
 	'red-link-title' => '$1 (sahifa yaratilmagan)',
@@ -46257,7 +46257,7 @@ Qulaylik uchun quyida yoʻqotilish qaydlari keltirilgan:',
 
 $messages['val'] = [
 	'returnto' => 'Torna cap a $1.',
-	'redirectedfrom' => '(S\'ha redirigit des de $1)',
+	'redirectedfrom' => 'S\'ha redirigit des de $1',
 	'redirectpagesub' => 'Pàgina de redireccionament',
 	'retrievedfrom' => 'Obtingut de "$1"',
 	'restorelink' => '{{PLURAL:$1|una versió borrada|$1 versions borrades}}',
@@ -46364,7 +46364,7 @@ Atres administradors de la uep basada en wiki encara podrien accedir al contingu
 
 $messages['vec'] = [
 	'returnto' => 'Torna a $1.',
-	'redirectedfrom' => '(Rimando da <b>$1</b>)',
+	'redirectedfrom' => 'Rimando da <b>$1</b>',
 	'redirectpagesub' => 'Pagina de rimando',
 	'retrievedfrom' => 'Cavà fora da "$1"',
 	'restorelink' => '{{PLURAL:$1|un canbiamento scanselà|$1 canbiamenti scanselà}}',
@@ -46622,7 +46622,7 @@ Le pagine [[Special:Watchlist|tegnùe d\'ocio]] le xe in \'\'\'grosso\'\'\'.',
 
 $messages['vep'] = [
 	'returnto' => 'Pörttas lehtpolele $1.',
-	'redirectedfrom' => '(Oigetud lehtpolelpäi $1)',
+	'redirectedfrom' => 'Oigetud lehtpolelpäi $1',
 	'redirectpagesub' => 'Oigendai lehtpol\'',
 	'retrievedfrom' => 'Purde - "$1"',
 	'restorelink' => '{{PLURAL:$1|čutud redakcii|$1 čutud redakcijad}}',
@@ -46839,7 +46839,7 @@ Tö ei voigoi kävutada sidä.',
 
 $messages['vi'] = [
 	'returnto' => 'Quay lại $1.',
-	'redirectedfrom' => '(đổi hướng từ $1)',
+	'redirectedfrom' => 'đổi hướng từ $1',
 	'redirectpagesub' => 'Trang đổi hướng',
 	'retrievedfrom' => 'Lấy từ “$1”',
 	'restorelink' => '{{PLURAL:$1|một|$1}} sửa đổi đã xóa',
@@ -47114,7 +47114,7 @@ $messages['vls'] = [
 
 $messages['vmf'] = [
 	'returnto' => 'Dsrig dsur sajdn $1.',
-	'redirectedfrom' => '(Wajdagschigd fo $1)',
+	'redirectedfrom' => 'Wajdagschigd fo $1',
 	'redirectpagesub' => 'Wajdalajdungs-sajdn',
 	'retrievedfrom' => 'Fon „$1“ ghold',
 	'restorelink' => '$1 {{PLURAL:$1|gleschde wärsjoon|gleschde wärsjoon}}',
@@ -47166,7 +47166,7 @@ Gschbärd is se desdâweechn: $1',
 
 $messages['vo'] = [
 	'returnto' => 'Geikön lü $1.',
-	'redirectedfrom' => '(Pelüodükon de pad: $1)',
+	'redirectedfrom' => 'Pelüodükon de pad: $1',
 	'redirectpagesub' => 'Lüodükömapad',
 	'retrievedfrom' => 'Pekopiedon se „$1“',
 	'restorelink' => '{{PLURAL:$1|redakama bal|redakamas $1}}',
@@ -47388,7 +47388,7 @@ Pads [[Special:Watchlist|galädaliseda olik]] \'\'\'pakazetons\'\'\'.',
 
 $messages['vot'] = [
 	'returnto' => 'Mee takaz tšüľľelle $1.',
-	'redirectedfrom' => '(Mešaitõttu tšüľľeltä $1)',
+	'redirectedfrom' => 'Mešaitõttu tšüľľeltä $1',
 	'redirectpagesub' => 'Mešaituztšültši',
 	'retrievedfrom' => 'Jältšinnü adresissa "$1"',
 	'red-link-title' => '$1 (tšültšiä ebõõ)',
@@ -47426,7 +47426,7 @@ Tšüľľed, kummad õmad teďďellä [[Special:Watchlist|kattsõspiizgalla]] on
 
 $messages['vro'] = [
 	'returnto' => 'Tagasi lehe manoq $1.',
-	'redirectedfrom' => '(Ümbre saadõt artiklist $1)',
+	'redirectedfrom' => 'Ümbre saadõt artiklist $1',
 	'redirectpagesub' => 'Ümbresaatmislehekülg',
 	'retrievedfrom' => 'Vällä otsit teedüskogost "$1"',
 	'restorelink' => '{{PLURAL:$1|üts kistutõt muutminõ|$1 kustutõdut muutmist}}',
@@ -47588,7 +47588,7 @@ Lisateedüst või ollaq [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAME
 
 $messages['wa'] = [
 	'returnto' => 'Rivni al pådje «$1».',
-	'redirectedfrom' => '(Redjiblé di $1)',
+	'redirectedfrom' => 'Redjiblé di $1',
 	'redirectpagesub' => 'Pådje di redjiblaedje',
 	'retrievedfrom' => 'Prin del pådje «$1»',
 	'restorelink' => '{{PLURAL:$1|on candjmint disfacé|$1 candjmints disfacés}}',
@@ -47662,7 +47662,7 @@ Les ôtes manaedjeus so ç\' wiki ci pôront todi vey li contnou catchî eyet l\
 
 $messages['war'] = [
 	'returnto' => 'Balik ngadto ha $1.',
-	'redirectedfrom' => '(Ginredirekta tikang ha $1)',
+	'redirectedfrom' => 'Ginredirekta tikang ha $1',
 	'redirectpagesub' => 'Redirek nga pakli',
 	'retrievedfrom' => 'Ginkuha tikang ha "$1"',
 	'restorelink' => '{{PLURAL:$1|usa nga ginpara nga pagliwat|$1 ka ginpara nga mga pagliwat}}',
@@ -47756,7 +47756,7 @@ Mga pakli ha [[Special:Watchlist|imo angay timan-an]] in naka-\'\'\'bold\'\'\'.'
 
 $messages['wo'] = [
 	'returnto' => 'Dellu ci wii xët $1.',
-	'redirectedfrom' => '(Yoonalaat gu jóge $1)',
+	'redirectedfrom' => 'Yoonalaat gu jóge $1',
 	'redirectpagesub' => 'Xëtu yoonalaat',
 	'retrievedfrom' => 'Ci « $1 » lañ ko jële',
 	'restorelink' => '{{PLURAL:$1|1 coppite lañ far |$1 ciy coppite lañ far}}',
@@ -48145,7 +48145,7 @@ $1',
 
 $messages['xal'] = [
 	'returnto' => '«$1» тал хәрү ирх.',
-	'redirectedfrom' => '($1 гидг һазрас авч одсмн)',
+	'redirectedfrom' => '$1 гидг һазрас авч одсмн',
 	'redirectpagesub' => 'Авч оддг халх',
 	'retrievedfrom' => '"$1" гидг халхас йовулсн',
 	'restorelink' => '{{PLURAL:$1|$1 һарһсн сольлһн|$1 һарһсн сольлһн}}',
@@ -48218,7 +48218,7 @@ $messages['xh'] = [
 
 $messages['xmf'] = [
 	'returnto' => 'დირთი $1-შა',
-	'redirectedfrom' => '(გინოწურაფილი რე $1-შე)',
+	'redirectedfrom' => 'გინოწურაფილი რე $1-შე',
 	'redirectpagesub' => 'ხასჷლაშა გინოწურაფა',
 	'retrievedfrom' => 'გორილ რე "$1"-იშე',
 	'red-link-title' => '$1 (ხასჷლა ვა რე)',
@@ -48273,7 +48273,7 @@ $messages['xmf'] = [
 
 $messages['yi'] = [
 	'returnto' => 'צוריקקערן צו $1.',
-	'redirectedfrom' => '(אַריבערגעפֿירט פון $1)',
+	'redirectedfrom' => 'אַריבערגעפֿירט פון $1',
 	'redirectpagesub' => 'ווייטערפירן בלאט',
 	'retrievedfrom' => 'גענומען פֿון "$1"',
 	'restorelink' => '{{PLURAL:$1|איין געמעקטע ענדערונג|$1 געמעקטע ענדערונגען}}',
@@ -48527,7 +48527,7 @@ $1',
 
 $messages['yo'] = [
 	'returnto' => 'Padà sí $1.',
-	'redirectedfrom' => '(Àtúnjúwe láti $1)',
+	'redirectedfrom' => 'Àtúnjúwe láti $1',
 	'redirectpagesub' => 'Ojúewé àtúnjúwe',
 	'retrievedfrom' => 'Jẹ́ kíkójáde láti "$1"',
 	'restorelink' => '{{PLURAL:$1|àtúnṣe ajẹ́píparẹ́ kan|àwọn àtúnṣe ajẹ́píparẹ́ $1}}',
@@ -48717,7 +48717,7 @@ Gẹ́gẹ́ bíi olùmójútó ẹ ṣì le wo ìyàtọ̀ yìí; ẹ̀kúnrẹ
 
 $messages['yue'] = [
 	'returnto' => '返去$1 。',
-	'redirectedfrom' => '(由$1跳轉過來)',
+	'redirectedfrom' => '由$1跳轉過來',
 	'redirectpagesub' => '跳轉頁',
 	'retrievedfrom' => '由 "$1" 收',
 	'restorelink' => '$1次已刪除嘅編輯',
@@ -48981,7 +48981,7 @@ $messages['za'] = [
 
 $messages['zea'] = [
 	'returnto' => 'Trug nae $1.',
-	'redirectedfrom' => '(Deurverwezen vanaf $1)',
+	'redirectedfrom' => 'Deurverwezen vanaf $1',
 	'redirectpagesub' => 'Deurverwiespagina',
 	'retrievedfrom' => 'Truggeplekt van "$1"',
 	'restorelink' => '$1 verwiederde {{PLURAL:$1|versie|versies}}',

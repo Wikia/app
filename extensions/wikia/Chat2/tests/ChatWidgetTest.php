@@ -124,6 +124,7 @@ class ChatWidgetTest extends WikiaBaseTest {
 					'viewedUsersInfo' => [ 'User1', 'User2' ],
 					'moreUsersCount' => null,
 					'hasUsers' => true,
+					'chatLiveText' => 'message',
 				]
 			],
 			'user from rail without message wall (null)' => [
@@ -146,6 +147,7 @@ class ChatWidgetTest extends WikiaBaseTest {
 					'viewedUsersInfo' => [ 'User1', 'User2' ],
 					'moreUsersCount' => null,
 					'hasUsers' => true,
+					'chatLiveText' => 'message',
 				]
 			],
 			'user from rail without message wall (false)' => [
@@ -168,6 +170,7 @@ class ChatWidgetTest extends WikiaBaseTest {
 					'viewedUsersInfo' => [ 'User1', 'User2' ],
 					'moreUsersCount' => null,
 					'hasUsers' => true,
+					'chatLiveText' => 'message',
 				]
 			],
 			'anon from parser tag with message wall' => [
@@ -196,6 +199,7 @@ class ChatWidgetTest extends WikiaBaseTest {
 					],
 					'moreUsersCount' => null,
 					'hasUsers' => false,
+					'chatLiveText' => 'message',
 				]
 			],
 			'anon from parser tag with no users' => [
@@ -224,6 +228,7 @@ class ChatWidgetTest extends WikiaBaseTest {
 					],
 					'moreUsersCount' => null,
 					'hasUsers' => false,
+					'chatLiveText' => 'message',
 				]
 			],
 			'user from parser tag with no users' => [
@@ -252,6 +257,7 @@ class ChatWidgetTest extends WikiaBaseTest {
 					],
 					'moreUsersCount' => null,
 					'hasUsers' => false,
+					'chatLiveText' => 'message',
 				]
 			]
 		];

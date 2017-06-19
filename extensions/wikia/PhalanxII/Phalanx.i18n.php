@@ -2797,18 +2797,18 @@ $messages['zh-hans'] = array(
 	'phalanx-stats-table-wiki-id' => '维基 ID',
 	'phalanx-stats-table-wiki-name' => '维基名字',
 	'phalanx-stats-table-wiki-url' => '维基 URL',
-	'phalanx-sp-contributions-blocked-globally' => '此用户被Fandom网站封禁。',
-	'phalanx-user-block-reason-exact' => '由于发布垃圾信息以及破坏行为，此用户名或IP已经被整个Fandom网站封禁。
+	'phalanx-sp-contributions-blocked-globally' => '此用户被FANDOM网站封禁。',
+	'phalanx-user-block-reason-exact' => '由于发布垃圾信息以及破坏行为，此用户名或IP已经被整个FANDOM网站封禁。
 如果您认为有任何问题，请[[Special:Contact|联系我们]]。',
-	'phalanx-user-block-reason-ip' => '由于你或者使用你IP的用户发布大量垃圾信息对网站造成破坏，此IP地址已经被Fandom全域封禁。
+	'phalanx-user-block-reason-ip' => '由于你或者使用你IP的用户发布大量垃圾信息对网站造成破坏，此IP地址已经被FANDOM全域封禁。
 如果您有任何问题，请[[Special:Contact|联系我们]]。',
-	'phalanx-user-block-reason-similar' => '由于使用类似名称的用户发布大量垃圾信息对网站造成破坏，此用户名已经被Fandom全域封禁并且中断编辑。
+	'phalanx-user-block-reason-similar' => '由于使用类似名称的用户发布大量垃圾信息对网站造成破坏，此用户名已经被FANDOM全域封禁并且中断编辑。
 如果您有任何问题，请[[Special:Contact|联系我们]]。',
-	'phalanx-user-block-withreason-exact' => '由于发布垃圾信息以及破坏行为，此用户名或IP已经被整个Fandom网站封禁。
+	'phalanx-user-block-withreason-exact' => '由于发布垃圾信息以及破坏行为，此用户名或IP已经被整个FANDOM网站封禁。
 如果您认为有任何问题，请[[Special:Contact|联系我们]]。<br/>封禁原因如下：$1。',
-	'phalanx-user-block-withreason-ip' => '由于你或者使用你IP的用户发布大量垃圾信息对网站造成破坏，此IP地址已经被Fandom全域封禁，中断编辑。
+	'phalanx-user-block-withreason-ip' => '由于你或者使用你IP的用户发布大量垃圾信息对网站造成破坏，此IP地址已经被FANDOM全域封禁，中断编辑。
 如果您有任何问题，请[[Special:Contact|联系我们]]。<br/>封禁原因如下：$1。',
-	'phalanx-user-block-withreason-similar' => '由于使用类似名称的用户发布大量垃圾信息对网站造成破坏，此用户名已经被Fandom全域封禁并且中断编辑。
+	'phalanx-user-block-withreason-similar' => '由于使用类似名称的用户发布大量垃圾信息对网站造成破坏，此用户名已经被FANDOM全域封禁并且中断编辑。
 如果您有任何问题，请[[Special:Contact|联系我们]]。<br/>封禁原因如下：$1。',
 	'phalanx-desc' => 'Phalanx是一种综合的垃圾信息防御机制',
 	'phalanx' => 'Phalanx',
@@ -2923,18 +2923,18 @@ $messages['zh-hans'] = array(
 );
 
 $messages['zh-hant'] = array(
-	'phalanx-sp-contributions-blocked-globally' => '此用戶已被Fandom全域封禁。',
-	'phalanx-user-block-reason-exact' => '由於發布垃圾訊息以及破壞行為，此用戶名或IP已經被Fandom全域封禁。
+	'phalanx-sp-contributions-blocked-globally' => '此用戶已被FANDOM全域封禁。',
+	'phalanx-user-block-reason-exact' => '由於發布垃圾訊息以及破壞行為，此用戶名或IP已經被FANDOM全域封禁。
 如果您認為這個封禁有問題，請[[Special:Contact|聯絡我們]]。',
-	'phalanx-user-block-reason-ip' => '由於你或者使用你IP的用戶發布大量垃圾訊息對網站造成破壞，此IP地址已經被Fandom全域封禁。
+	'phalanx-user-block-reason-ip' => '由於你或者使用你IP的用戶發布大量垃圾訊息對網站造成破壞，此IP地址已經被FANDOM全域封禁。
 如果您認為這個封禁有誤，請[[Special:Contact|聯繫我們]]。',
-	'phalanx-user-block-reason-similar' => '由於使用類似名稱的用戶發布大量垃圾訊息對網站造成破壞，此用戶名已經被Fandom全域封禁而禁止編輯。
+	'phalanx-user-block-reason-similar' => '由於使用類似名稱的用戶發布大量垃圾訊息對網站造成破壞，此用戶名已經被FANDOM全域封禁而禁止編輯。
 如果您有任何問題，請[[Special:Contact|聯繫我們]]。',
-	'phalanx-user-block-withreason-exact' => '由於發布垃圾訊息以及破壞行為，此用戶名或IP已經被Fandom全域封禁。
+	'phalanx-user-block-withreason-exact' => '由於發布垃圾訊息以及破壞行為，此用戶名或IP已經被FANDOM全域封禁。
 如果您認為封禁有問題，請[[Special:Contact|聯繫我們]]。 <br/>封禁原因如下：$1。',
-	'phalanx-user-block-withreason-ip' => '由於您或者使用您IP的用戶發布大量垃圾訊息對網站造成破壞，此IP位址已經被Fandom全域封禁，無法編輯。
+	'phalanx-user-block-withreason-ip' => '由於您或者使用您IP的用戶發布大量垃圾訊息對網站造成破壞，此IP位址已經被FANDOM全域封禁，無法編輯。
 如果您認為這封禁有問題，請[[Special:Contact|聯繫我們]]。 <br/>封禁原因如下：$1。',
-	'phalanx-user-block-withreason-similar' => '由於使用類似名稱的用戶發布大量垃圾訊息對網站造成破壞，此用戶名已經被Fandom全域封禁而禁止編輯。
+	'phalanx-user-block-withreason-similar' => '由於使用類似名稱的用戶發布大量垃圾訊息對網站造成破壞，此用戶名已經被FANDOM全域封禁而禁止編輯。
 如果您有任何問題，請[[Special:Contact|聯三我們]]。 <br/>封禁原因如下：$1。',
 	'phalanx-desc' => 'Phalanx是一種綜合的垃圾訊息防禦機制',
 	'phalanx' => 'Phalanx',

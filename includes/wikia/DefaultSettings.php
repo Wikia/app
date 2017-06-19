@@ -601,6 +601,7 @@ $wgAjaxAutoCompleteSearch = true;
 /**
  * Wikia custom extensions, enabled sitewide. Pre-required by some skins
  */
+
 include_once( "$IP/extensions/ExtensionFunctions.php" );
 include_once( "$IP/extensions/wikia/DesignSystem/DesignSystem.setup.php" );
 include_once( "$IP/extensions/wikia/AnalyticsEngine/AnalyticsEngine.setup.php" );
@@ -635,6 +636,8 @@ include_once( "$IP/extensions/wikia/PageShare/PageShare.setup.php" );
 include_once( "$IP/extensions/wikia/PaidAssetDrop/PaidAssetDrop.setup.php" );
 include_once( "$IP/extensions/wikia/CreateNewWiki/CreateNewWiki_global_setup.php" );
 include_once( "$IP/extensions/wikia/Security/Security.setup.php" );
+include_once( "$IP/extensions/wikia/CommunityHeader/CommunityHeader.setup.php" );
+include_once( "$IP/extensions/wikia/PageHeader/PageHeader.setup.php" );
 
 /**
  * @name $wgSkipSkins
@@ -1217,26 +1220,6 @@ $wgAmazonMatchCountries = null;
 $wgAmazonMatchCountriesMobile = null;
 
 /**
- * @name $wgAdDriverEnableOpenXBidder
- * Enables OpenX bidder
- */
-$wgAdDriverEnableOpenXBidder = true;
-
-/**
- * @name $wgAdDriverOpenXBidderCountries
- * Enables OpenX bidder in these countries (given wgAdDriverEnableOpenXBidder is also true).
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverOpenXBidderCountries = null;
-
-/**
- * @name $wgAdDriverOpenXBidderCountriesRemnant
- * Enables OpenX bidder in these countries (given wgAdDriverEnableOpenXBidder is also true) in remnant slots.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverOpenXBidderCountriesRemnant = null;
-
-/**
  * @name $wgAdDriverEnableRubiconFastlane
  * Enables Rubicon Fastlane
  */
@@ -1311,6 +1294,13 @@ $wgAdDriverIndexExchangeBidderCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverOpenXPrebidBidderCountries = null;
+
+/**
+ * @name $wgAdDriverOutstreamVideoFrequencyCapping
+ * Supported values 1/4pv, 2/5min
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverOutstreamVideoFrequencyCapping = null;
 
 /**
  * @name $wgAdDriverOverridePrefootersCountries
@@ -1439,6 +1429,20 @@ $wgAdDriverKILOCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverMEGACountries = null;
+
+/**
+ * @name $wgAdDriverMoatTrackingForFeaturedVideoAdCountries
+ * Enables MOAT tracking for feature video ads.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverMoatTrackingForFeaturedVideoAdCountries = null;
+
+/**
+ * @name $wgAdDriverMoatTrackingForFeaturedVideoAdSampling
+ * Percentage value of users with MOAT tracking for featured video.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverMoatTrackingForFeaturedVideoAdSampling = null;
 
 /**
  * @name $wgAdDriverTrackState

@@ -1,0 +1,72 @@
+.oo-scrubber-thumbnail-container {
+  position: absolute;
+  bottom: 112px;
+}
+
+.oo-scrubber-carousel-container {
+  position: absolute;
+  bottom: 138px;
+}
+
+.oo-thumbnail-carousel-center-image {
+  position: absolute;
+  width: 154px;
+  height: 102px;
+  border-radius: 4px;
+  box-shadow: 0px 0px 33px 7px rgba(0,0,0,0.54);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% 50%;
+}
+
+.oo-thumbnail-carousel-image {
+  position: absolute; 
+  width: 93px;
+  height: 63px;
+  padding: 6px;
+  border-radius: 2px;
+  box-shadow: 0px 0px 39px -4px rgba(0,0,0,0.26);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% 50%;
+}
+
+.oo-thumbnail-carousel-time {
+  position: absolute;
+  bottom: 10%;
+  background-color: rgba(26,26,26,0.8);
+  border-radius: 12px;
+  color: white;
+  padding-left: 8%;
+  padding-right: 8%;
+  font-size: 16px;
+  font-family: $font-family-roboto-condensed;
+  left: 50%;
+  @include vendor-prefixes(transform, translateX(-50%));
+}
+
+.oo-thumbnail {
+  position: absolute;
+  width: 119px;
+  height: 74px;
+  border-radius: 4px;
+  box-shadow: rgba(0,0,0,0.5) 0 6px 18px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% 50%;
+  @include vendor-prefixes(transform, translateX(-50%));
+}
+
+.oo-thumbnail-time {
+  position: absolute;
+  bottom: 7%;
+  background-color: rgba(26,26,26,0.8);
+  border-radius: 10px;
+  color: white;
+  padding-left: 8%;
+  padding-right: 8%;
+  font-size: 14px;
+  font-family: $font-family-roboto-condensed;
+  left: 50%;
+  @include vendor-prefixes(transform, translateX(-50%));
+}

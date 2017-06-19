@@ -3,8 +3,7 @@ define('ext.wikia.adEngine.provider.turtle', [
 	'wikia.log',
 	'ext.wikia.adEngine.provider.gpt.helper',
 	'ext.wikia.adEngine.slotTweaker',
-	require.optional('ext.wikia.adEngine.lookup.openx.openXBidderHelper')
-], function (log, gptHelper, slotTweaker, openXHelper) {
+], function (log, gptHelper, slotTweaker) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.turtle',
@@ -31,9 +30,6 @@ define('ext.wikia.adEngine.provider.turtle', [
 			slotTweaker.removeDefaultHeight(slot.name);
 			slotTweaker.removeTopButtonIfNeeded(slot.name);
 			slotTweaker.adjustLeaderboardSize(slot.name);
-		});
-		slot.pre('hop', function() {
-			openXHelper && openXHelper.addOpenXSlot(slot.name);
 		});
 		gptHelper.pushAd(
 			slot,

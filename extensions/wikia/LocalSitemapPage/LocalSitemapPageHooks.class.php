@@ -13,14 +13,20 @@ class LocalSitemapPageHooks {
 		return true;
 	}
 
-	/**
-	 * Don't display "talk" and "create" buttons on Local Sitemap
-	 */
-	public static function onPageHeaderPageTypePrepared( $pageHeaderController, $title ) {
-		if ( LocalSitemapPageHelper::isLocalSitemap( $title ) ) {
-			$pageHeaderController->comments = false;
-			$pageHeaderController->action = false;
+	public static function onPageHeaderActionButtonShouldDisplay( \Title $title, bool &$shouldDisplayActionButton ) {
+
+		if ( $title->getBaseText() === 'Local Sitemap' ) {
+			$shouldDisplayActionButton = false;
 		}
+
+		return true;
+	}
+
+	public static function onPageHeaderLanguageSelectorShouldDisplay( \Title $title, bool &$shouldDisplayLangSelector) {
+		if ( $title->getBaseText() === 'Local Sitemap' ) {
+			$shouldDisplayLangSelector = false;
+		}
+
 		return true;
 	}
 }
