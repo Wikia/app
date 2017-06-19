@@ -610,10 +610,10 @@ class FounderTipsThreeDaysController extends FounderTipsController {
 		$discussionsEnabled =
 			\WikiFactory::getVarValueByName( 'wgEnableDiscussions', $this->wikiId );
 		if ( $discussionsEnabled ) {
-			$safeWikiUrl = rtrim( $this->wikiUrl, "/" );
+			$wikiUrlNoEndSlash = rtrim( $this->wikiUrl, "/" );
 			array_push( $detailsList, [
 					"iconSrc" => Email\ImageHelper::getFileUrl( "StartADiscussion.png" ),
-					"iconLink" => "{$safeWikiUrl}/d",
+					"iconLink" => "{$wikiUrlNoEndSlash}/d",
 					"detailsHeader" => $this->getMessage( "emailext-founder-3-days-discussion-header" )
 						->text(),
 					"details" => $this->getMessage( "emailext-founder-3-days-discussion-details" )
