@@ -481,7 +481,6 @@ ve.init.mw.ViewPageTarget.prototype.afterHideSpinner = function ( surfaceReadyTi
 	this.hidePageContent();
 
 	this.toolbar.initialize();
-	this.surface.getFocusWidget().$element.show();
 
 	this.surface.getView().focus();
 

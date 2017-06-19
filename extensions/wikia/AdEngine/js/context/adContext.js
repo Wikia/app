@@ -3,6 +3,7 @@
  * The AMD module to hold all the context needed for the client-side scripts to run.
  */
 define('ext.wikia.adEngine.adContext', [
+	'ext.wikia.adEngine.adLogicPageViewCounter',
 	'wikia.abTest',
 	'wikia.cookies',
 	'wikia.document',
@@ -11,7 +12,7 @@ define('ext.wikia.adEngine.adContext', [
 	'ext.wikia.adEngine.utils.sampler',
 	'wikia.window',
 	'wikia.querystring'
-], function (abTest, cookies, doc, geo, instantGlobals, sampler, w, Querystring) {
+], function (pvCounter, abTest, cookies, doc, geo, instantGlobals, sampler, w, Querystring) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
@@ -99,9 +100,11 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.adMix1Enabled = context.opts.adMixExperimentEnabled && abTest.getGroup('AD_MIX').indexOf('AD_MIX_1') === 0;
 		context.opts.adMix3Enabled = context.opts.adMixExperimentEnabled && abTest.getGroup('AD_MIX').indexOf('AD_MIX_3') === 0;
 
-		context.slots.adMixToUnblock = [
-			'INCONTENT_BOXAD_1'
-		];
+		context.slots.adMixToUnblock = [];
+
+		if (!(context.opts.adMix1Enabled && context.targeting.hasFeaturedVideo)) {
+			context.slots.adMixToUnblock.push('INCONTENT_BOXAD_1');
+		}
 
 		if (context.opts.adMix3Enabled) {
 			context.slots.adMixToUnblock.push('BOTTOM_LEADERBOARD');
@@ -110,6 +113,13 @@ define('ext.wikia.adEngine.adContext', [
 
 	function referrerIsSonySite() {
 		return doc && doc.referrer && doc.referrer.match(/info\.tvsideview\.sony\.net/);
+	}
+
+	function isMOATTrackingForFVEnabled() {
+		var samplingForMoatFV = instantGlobals.wgAdDriverMoatTrackingForFeaturedVideoAdSampling || 1;
+
+		return sampler.sample('moatTrackingForFeaturedVideo', samplingForMoatFV, 100) &&
+			geo.isProperGeo(instantGlobals.wgAdDriverMoatTrackingForFeaturedVideoAdCountries);
 	}
 
 	function setContext(newContext) {
@@ -139,6 +149,8 @@ define('ext.wikia.adEngine.adContext', [
 
 		context.opts.premiumOnly = context.targeting.hasFeaturedVideo &&
 			geo.isProperGeo(instantGlobals.wgAdDriverSrcPremiumCountries);
+
+		context.opts.isMoatTrackingForFeaturedVideoEnabled = isMOATTrackingForFVEnabled();
 
 		updateDetectionServicesAdContext(context, noExternals);
 		updateAdContextRecoveryServices(context, noExternals);
@@ -198,10 +210,9 @@ define('ext.wikia.adEngine.adContext', [
 			geo.isProperGeo(instantGlobals.wgAdDriverOverridePrefootersCountries) && !isPageType('home')
 		);
 
-		enableAdMixExperiment(context);
+		context.opts.outstreamVideoFrequencyCapping = instantGlobals.wgAdDriverOutstreamVideoFrequencyCapping;
 
-		// OpenX for remnant slot enabled
-		context.opts.openXRemnantEnabled = geo.isProperGeo(instantGlobals.wgAdDriverOpenXBidderCountriesRemnant);
+		enableAdMixExperiment(context);
 
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
@@ -219,6 +230,10 @@ define('ext.wikia.adEngine.adContext', [
 	}
 
 	setContext(w.ads ? w.ads.context : {});
+
+	if (context.targeting.skin && context.targeting.skin !== 'mercury') {
+		pvCounter.increment();
+	}
 
 	return {
 		addCallback: addCallback,

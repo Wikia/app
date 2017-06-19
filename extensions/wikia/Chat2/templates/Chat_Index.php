@@ -133,7 +133,7 @@
 	</script>
 	<script type='text/template' id='user-action-profile-template'>
 		<li class="<%= actionName %>">
-			<a href="<%= actionUrl %>">
+			<a href="<%= actionUrl %>" target="_blank">
 				<?= DesignSystemHelper::renderSvg( 'wds-icons-reply-small', 'wds-icon wds-icon-small' ) ?>
 				<span class="label"><%= actionDesc %></span>
 			</a>
@@ -141,7 +141,7 @@
 	</script>
 	<script type='text/template' id='user-action-contribs-template'>
 		<li class="<%= actionName %>">
-			<a href="<%= actionUrl %>">
+			<a href="<%= actionUrl %>" target="_blank">
 				<?= DesignSystemHelper::renderSvg( 'wds-icons-pencil-small', 'wds-icon wds-icon-small' ) ?>
 				<span class="label"><%= actionDesc %></span>
 			</a>

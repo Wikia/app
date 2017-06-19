@@ -680,10 +680,11 @@ class User implements JsonSerializable {
 		if ( $name == ''
 			|| User::isIP( $name )
 			|| strpos( $name, '/' ) !== false
+			|| strpos( $name, ':') !== false
 			|| strlen( $name ) > $wgMaxNameChars
 			|| $name != $wgContLang->ucfirst( $name ) ) {
 			wfDebugLog( 'username', __METHOD__ .
-				": '$name' invalid due to empty, IP, slash, length, or lowercase" );
+				": '$name' invalid due to empty, IP, slash, colon, length, or lowercase" );
 			return false;
 		}
 
@@ -947,35 +948,45 @@ class User implements JsonSerializable {
 	 */
 	public static function edits( $uid ) {
 		wfProfileIn( __METHOD__ );
-		global $wgExternalSharedDB;
-
-		// check if the user_editcount field has been initialized on shared DB
-		$wikiCitiesDb = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
-		$count = $wikiCitiesDb->selectField(
-			'`user`', 'user_editcount',
-			[ 'user_id' => $uid ],
+		$dbr = wfGetDB( DB_SLAVE );
+		// check if the user_editcount field has been initialized
+		$field = $dbr->selectField(
+			'user', 'user_editcount',
+			array( 'user_id' => $uid ),
 			__METHOD__
 		);
 
-		// it has not been initialized. do so.
-		if ( $count === null ) {
-			$dbr = wfGetDB( DB_SLAVE );
+		if( $field === null ) { // it has not been initialized. do so.
+			$dbw = wfGetDB( DB_MASTER );
 			$count = $dbr->selectField(
 				'revision', 'count(*)',
-				[ 'rev_user' => $uid ],
+				array( 'rev_user' => $uid ),
 				__METHOD__
 			);
 
-			// SUS-1594: Defer updating edit count to offline task
-			global $wgCityId;
+			// Wikia change - begin
+			try {
+				$dbw->update(
+					'user',
+					[ 'user_editcount' => $count ],
+					[ 'user_id' => $uid ],
+					__METHOD__
+				);
+			} catch ( DBQueryError $dbQueryError ) {
+				// Wikia change
+				// SUS-1221: Some of these UPDATE queries are failing
+				// If this happens let's log exception details to try to identify root cause
+				Wikia\Logger\WikiaLogger::instance()->error( 'SUS-1221 - User::edits failed', [
+					'exception' => $dbQueryError,
+					'userId' => $uid,
+					'editCount' => $count
+				] );
+			}
+			// Wikia change - end
 
-			$task = ( new \Wikia\Tasks\Tasks\UserEditCountInitTask() )
-				->wikiId( $wgCityId );
-
-			$task->call( 'initEditCount', $uid, $count );
-			$task->queue();
+		} else {
+			$count = $field;
 		}
-
 		wfProfileOut( __METHOD__ );
 		return $count;
 	}

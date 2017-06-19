@@ -1,5 +1,4 @@
 <section id="Forum" class="Forum">
-		<a class="button policies-link" href="#"><?= wfMessage( 'forum-specialpage-policies' )->escaped() ?></a>
 	<!-- Admin Edit here -->
 	<?= $app->renderPartial( 'ForumSpecial', 'boards', [ 'boards' => $boards, 'lastPostByMsg' => $lastPostByMsg, 'isEditMode' => false ] ) ?>
 

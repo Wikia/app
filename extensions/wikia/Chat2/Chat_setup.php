@@ -97,7 +97,6 @@ $wgResourceModules['ext.Chat2.ChatWidget'] = [
 		'chat-user-menu-message-wall',
 		'chat-user-menu-talk-page',
 		'chat-user-menu-contribs',
-		'chat-live2',
 		'chat-edit-count',
 		'chat-member-since',
 	],
