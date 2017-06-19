@@ -55,7 +55,7 @@
 			<?= $app->renderView( 'ArticleInterlang', 'Index' ) ?>
 		<? endif; ?>
 
-		<? if ( $headerModuleName == 'UserPagesHeader' && ( $headerModuleAction != 'BlogPost' && $headerModuleAction != 'BlogListing' ) ) : ?>
+		<? if ( $headerModuleName == 'UserPagesHeader' ) : ?>
 			<?= $app->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams ) ?>
 		<? endif; ?>
 
