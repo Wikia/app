@@ -10,7 +10,6 @@ class Languages {
 	public $languageList;
 
 	private $title;
-	private $shouldDisplay;
 
 	/**
 	 * Language constructor.
@@ -21,10 +20,6 @@ class Languages {
 		$this->title = \RequestContext::getMain()->getTitle();
 		$this->currentLangName = \Language::getLanguageName( $this->title->getPageLanguage()->getCode() );
 		$this->languageList = $this->handleLanguages( $app );
-
-		$shouldDisplay = $this->title->isContentPage();
-		wfRunHooks( 'PageHeaderLanguageSelectorShouldDisplay', [$this->title, &$shouldDisplay] );
-		$this->shouldDisplay = $shouldDisplay;
 	}
 
 	/**
@@ -49,6 +44,6 @@ class Languages {
 	}
 
 	public function shouldDisplay(): bool {
-		return $this->shouldDisplay && count( $this->languageList ) > 0;
+		return count( $this->languageList ) > 0;
 	}
 }
