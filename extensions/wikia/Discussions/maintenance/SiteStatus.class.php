@@ -40,12 +40,12 @@ class SiteStatus {
 	private $cityInfo;
 
 	private $status;
-	private $siteAvailable;
-	private $discussionsEnabled;
-	private $navigationEnabled;
-	private $forumsEnabled;
-	private $numThreadedForumPosts;
-	private $numWikiForumPosts;
+	private $siteAvailable = false;
+	private $discussionsEnabled = false;
+	private $navigationEnabled = false;
+	private $forumsEnabled = false;
+	private $numThreadedForumPosts = 0;
+	private $numWikiForumPosts = 0;
 
 	/** @var \DateTime */
 	private $lastPageEdit;
