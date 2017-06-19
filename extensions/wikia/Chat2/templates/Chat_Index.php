@@ -22,7 +22,7 @@
 	<?php endforeach; ?>
 
 	<!-- temporary hack (who are you kidding?) -->
-	<script src="<?= AssetsManager::getInstance()->getOneCommonURL( '/extensions/wikia/Chat2/js/lib/socket.io.js' ); ?>"></script>
+	<script src="<?= AssetsManager::getInstance()->getOneCommonURL( '/extensions/wikia/Chat2/js/lib/socket.io-2.0.3.js' ); ?>"></script>
 	<?= $globalVariablesScript ?>
 	<?php // TODO: use js var?>
 
