@@ -128,7 +128,7 @@ class Subtitle {
 	}
 
 	private function getTalkPageBackLink() {
-		if ( $this->title->isTalkPage() && $this->title->getNamespace() !== NS_USER_WALL_MESSAGE ) {
+		if ( $this->title->isTalkPage() && $this->title->getNamespace() !== NS_USER_WALL_MESSAGE && !self::isEditPage() ) {
 			$namespace = $this->title->getNamespace();
 
 			// back to subject article link
