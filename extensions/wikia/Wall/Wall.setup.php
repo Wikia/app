@@ -170,6 +170,8 @@ $wgHooks['MWNamespace:isMovable'][] = 'WallHooksHelper::onNamespaceIsMovable';
 $wgHooks['ArticleDoDeleteArticleBeforeLogEntry'][] = 'CommentsIndexHooks::onArticleDoDeleteArticleBeforeLogEntry';
 $wgHooks['ArticleUndelete'][] = 'CommentsIndexHooks::onArticleUndelete';
 
+$wgHooks['AfterPageHeaderPageSubtitle'][] = 'WallHooksHelper::onAfterPageHeaderPageSubtitle';
+
 JSMessages::registerPackage( 'Wall', [
 	'wall-notifications',
 	'wall-notifications-reminder',
