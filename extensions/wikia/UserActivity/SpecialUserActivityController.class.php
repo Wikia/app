@@ -37,7 +37,7 @@ class SpecialController extends \WikiaSpecialPageController {
 	private function setTitle() {
 		$this->getContext()->getOutput()->setHTMLTitle( self::PAGE_TITLE );
 		$this->getContext()->getOutput()->setPageTitle( self::PAGE_TITLE );
-		$this->wg->SupressPageSubtitle = true;
+		$this->wg->SuppressPageSubtitle = true;
 	}
 
 	private function addAssets() {

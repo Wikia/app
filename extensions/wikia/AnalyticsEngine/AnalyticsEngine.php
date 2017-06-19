@@ -49,8 +49,6 @@ class AnalyticsEngine {
 				return new AnalyticsProviderAmazonMatch();
 			case 'Nielsen':
 				return new AnalyticsProviderNielsen();
-			case 'OpenXBidder':
-				return new AnalyticsProviderOpenXBidder();
 			case 'Prebid':
 				return new AnalyticsProviderPrebid();
 			case 'RubiconFastlane':

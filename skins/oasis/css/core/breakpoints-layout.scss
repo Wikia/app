@@ -1,3 +1,4 @@
+@import 'skins/oasis/css/core/layout';
 @import 'skins/shared/mixins/calc';
 @import 'breakpoints-variables';
 //todo remove styling by ID after cleanup after removal of responsive layout
@@ -214,27 +215,35 @@
 	}
 
 	.banner-notifications-wrapper {
-		width: auto;
+		@media #{$breakpoint-small-only} {
+			width: $page-width-small - 2 * $content-border-width;
 
-		&.float {
-			@media #{$breakpoint-small-only} {
+			&.float {
 				margin-left: $page-width-small / -2;
-				width: $page-width-small;
 			}
+		}
 
-			@media #{$breakpoint-small-plus} {
+		@media #{$breakpoint-small-plus} {
+			width: $page-width-small-plus;
+
+			&.float {
 				margin-left: $page-width-small-plus / -2;
-				width: $page-width-small-plus;
 			}
+		}
 
-			@media #{$breakpoint-medium-only} {
+		@media #{$breakpoint-medium-only} {
+			width: $page-width-medium;
+
+			&.float {
 				margin-left: $page-width-medium / -2;
-				width: $page-width-medium;
 			}
+		}
 
-			@media #{$breakpoint-large-up} {
+		@media #{$breakpoint-large-up} {
+			width: $page-width-large;
+
+			&.float {
 				margin-left: $page-width-large / -2;
-				width: $page-width-large;
 			}
 		}
 	}
@@ -324,12 +333,6 @@ body.ve {
 
 	.ve-ui-overlay {
 		pointer-events: all;
-	}
-
-	// do not show VE overlay
-	//TODO: XW-179 | Remove this overlay from VE code
-	.ve-ui-wikiaFocusWidget {
-		display: none !important;
 	}
 
 	.WikiaPageHeader {
