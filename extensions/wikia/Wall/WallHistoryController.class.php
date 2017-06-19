@@ -120,7 +120,6 @@ class WallHistoryController extends WallController {
 		$output = $this->getContext()->getOutput();
 		if ( $this->isThreadLevel ) {
 			$output->setPageTitle( wfMessage( 'wall-thread-history-title' )->text() );
-			$this->wg->SuppressPageHeader = true;
 		} else {
 			$output->setPageTitle( wfMessage( 'wall-history-title' )->text() );
 		}

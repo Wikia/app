@@ -63,7 +63,6 @@ $wgHooks['BeforePageDisplay'][] = 'PlacesHooks::onBeforePageDisplay';
 $wgHooks['ArticleSaveComplete'][] = 'PlacesHooks::onArticleSaveComplete';
 $wgHooks['RTEUseDefaultPlaceholder'][] = 'PlacesHooks::onRTEUseDefaultPlaceholder';
 $wgHooks['OutputPageBeforeHTML'][] = 'PlacesHooks::onOutputPageBeforeHTML';
-$wgHooks['PageHeaderIndexExtraButtons'][] = 'PlacesHooks::onPageHeaderIndexExtraButtons';
 $wgHooks['EditPage::showEditForm:initial'][] = 'PlacesHooks::onShowEditForm';
 
 // for later
