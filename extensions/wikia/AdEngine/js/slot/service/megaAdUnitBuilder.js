@@ -60,8 +60,6 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 		var adUnitElements,
 			params = page.getPageLevelParams(),
 			device = getDevice(params),
-			skin = params.skin,
-			pageType = params.s2,
 			provider = src.indexOf('remnant') === -1 ? 'wka1a' : 'wka2a',
 			wikiName = getContextTargeting().wikiIsTop1000 ? params.s1 : '_not_a_top1k_wiki',
 			vertical = params.s0;
@@ -72,11 +70,15 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 			provider + '.' + getGroup(slotName),
 			slotName.toLowerCase(),
 			device,
-			skin + '-' + (getContextTargeting().hasFeaturedVideo ? 'fv-' : '') + pageType,
+			getAdLayout(params),
 			wikiName + '-' + vertical
 		];
 
 		return adUnitElements.join('/');
+	}
+
+	function getAdLayout(params) {
+		return params.skin + '-' + (getContextTargeting().hasFeaturedVideo ? 'fv-' : '') + params.s2;
 	}
 
 	function isValid(adUnit) {
