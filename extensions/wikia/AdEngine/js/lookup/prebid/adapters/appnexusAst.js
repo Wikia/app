@@ -30,7 +30,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst',[
 	}
 
 	function prepareAdUnit(slotName, config) {
-		var isDebugMode = loc.href.search('appnexusast_debug_mode=1') >= 0;
+		var isDebugMode = loc.href.indexOf('appnexusast_debug_mode=1') >= 0;
 
 		return {
 			code: slotName,
