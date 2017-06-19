@@ -16,8 +16,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 
 	var context = {},
 		logGroup = 'ext.wikia.adEngine.adLogicPageParams',
-		runtimeParams = {},
-		skin = adContext.getContext().targeting.skin;
+		runtimeParams = {};
 
 	function updateContext() {
 		context = adContext.getContext();
@@ -204,10 +203,6 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 
 		log(params, 9, logGroup);
 		return params;
-	}
-
-	if (skin && skin !== 'mercury') {
-		pvCounter.increment();
 	}
 
 	updateContext();
