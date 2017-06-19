@@ -50,7 +50,7 @@ define('ext.wikia.adEngine.lookup.services', [
 			// promote prebid on a tie
 			floorPrice = Math.max(
 				Object.keys(prebidPrices).filter(function(key) {
-					return parseFloat(prebidPrices[key]) > 0;
+					return prebidPrices[key] !== '' && parseFloat(prebidPrices[key]) > 0;
 				}).map(function (key) { return parseFloat(prebidPrices[key]); })
 			);
 		}
