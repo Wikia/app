@@ -8,6 +8,9 @@ describe('AdContext', function () {
 	}
 
 	var mocks = {
+			pvCounter: {
+				increment: noop
+			},
 			abTesting: {
 				getGroup: function () {
 					return 'group';
@@ -67,6 +70,7 @@ describe('AdContext', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.adContext'](
+			mocks.pvCounter,
 			mocks.abTesting,
 			mocks.wikiaCookies,
 			mocks.doc,
@@ -941,7 +945,7 @@ describe('AdContext', function () {
 		expect(moatSamplerArgs[0]).toEqual('moatTrackingForFeaturedVideo');
 		expect(moatSamplerArgs[1]).toEqual(25);
 	});
-    
+
 	it('Enable KILO ad unit builder', function () {
 		mocks.instantGlobals = {wgAdDriverKILOCountries: ['CURRENT_COUNTRY']};
 

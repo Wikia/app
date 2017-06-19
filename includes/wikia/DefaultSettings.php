@@ -1296,6 +1296,13 @@ $wgAdDriverIndexExchangeBidderCountries = null;
 $wgAdDriverOpenXPrebidBidderCountries = null;
 
 /**
+ * @name $wgAdDriverOutstreamVideoFrequencyCapping
+ * Supported values 1/4pv, 2/5min
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverOutstreamVideoFrequencyCapping = null;
+
+/**
  * @name $wgAdDriverOverridePrefootersCountries
  * Enables overriding prefooters sizes on Oasis in these countries.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
