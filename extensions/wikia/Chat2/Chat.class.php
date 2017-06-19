@@ -95,7 +95,7 @@ class Chat {
 			'reason' => $reason,
 		] );
 
-		if ( !PhalanxUserBlock::blockCheck( $adminUser ) ) {
+		if ( $adminUser->isBlocked() ) {
 			return wfMessage( 'actionthrottled' )->text();
 		}
 
