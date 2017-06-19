@@ -159,6 +159,7 @@ define('ext.wikia.adEngine.template.porvata', [
 
 		if (params.hbAdId) {
 			params.bid = prebid.getBidByAdId(params.hbAdId);
+			params.vastResponse = params.bid.vastContent || null;
 			params.vastUrl = params.bid.vastUrl;
 		}
 
