@@ -12,15 +12,15 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst',[
 		slots = {
 			oasis: {
 				TOP_LEADERBOARD: {
-					placementId: '5768085' // FIXME
+					placementId: '11543171'
 				},
 				INCONTENT_PLAYER: {
-					placementId: '5768085' // FIXME
+					placementId: '11543172'
 				}
 			},
 			mercury: {
 				MOBILE_IN_CONTENT: {
-					placementId: '5768085' // FIXME
+					placementId: '11543173'
 				}
 			}
 		};
