@@ -18,6 +18,7 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 		prebidIds = {
 			aol: 'ao',
 			appnexus: 'an',
+			appnexusAst: 'aa',
 			audienceNetwork: 'fb',
 			indexExchange: 'ie',
 			openx: 'ox',
