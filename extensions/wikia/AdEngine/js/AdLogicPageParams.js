@@ -167,7 +167,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			s0v: zoneParams.getVertical(),
 			s0c: zoneParams.getWikiCategories(),
 			s1: zoneParams.getName(),
-			s2: zoneParams.getPageType(),
+			s2: (targeting.hasFeaturedVideo ? 'fv-' : '') + zoneParams.getPageType(),
 			ab: getAb(),
 			ar: getAspectRatio(),
 			artid: targeting.pageArticleId && targeting.pageArticleId.toString(),
