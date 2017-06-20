@@ -14,6 +14,11 @@ class ArticleVideoHooks {
 			$out->addScriptFile(
 				'/extensions/wikia/ArticleVideo/bower_components/html5-skin/build/all-with-bitmovin.js'
 			);
+
+			$out->addScriptFile(
+				'/extensions/wikia/ArticleVideo/scripts/ooyala/google_ima.js'
+			);
+
 			// html5-skin has hardcoded, relative path to fonts so we can't use the AssetsManager
 			$out->addExtensionStyle(
 				'/extensions/wikia/ArticleVideo/bower_components/html5-skin/build/html5-skin.css'
