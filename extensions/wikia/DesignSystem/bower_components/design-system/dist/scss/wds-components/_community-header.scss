@@ -63,14 +63,11 @@
 			text-decoration: none;
 
 			@media #{$wds-breakpoint-xl-up} {
-				display: block;
+				display: inline-block;
 				height: 100%;
 				// Safari cut bottom of letter, line-height set to 1.2 fixed it
 				line-height: 1.2;
-				overflow: hidden;
 				text-decoration: none;
-				text-overflow: ellipsis;
-				white-space: nowrap;
 			}
 		}
 
@@ -80,6 +77,11 @@
 			max-height: 3*$wds-typescale-size-plus-2;
 			white-space: normal;
 			word-wrap: break-word;
+		}
+
+		@media #{$wds-breakpoint-xl-up} {
+			text-overflow: ellipsis;
+			white-space: nowrap;
 		}
 	}
 
