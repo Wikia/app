@@ -26,7 +26,7 @@
  * Do not edit the class manually.
  */
 
-namespace Swagger\Client\Swagger\Client\CurationCMS\Api;
+namespace Swagger\Client\CurationCMS\Api;
 
 use \Swagger\Client\ApiClient;
 use \Swagger\Client\ApiException;

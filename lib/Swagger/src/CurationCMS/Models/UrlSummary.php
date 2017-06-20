@@ -27,7 +27,7 @@
  * Do not edit the class manually.
  */
 
-namespace Swagger\Client\Swagger\Client\CurationCMS\Models;
+namespace Swagger\Client\CurationCMS\Models;
 
 use \ArrayAccess;
 
