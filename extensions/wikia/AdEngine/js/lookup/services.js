@@ -48,9 +48,10 @@ define('ext.wikia.adEngine.lookup.services', [
 		if (prebid && prebid.wasCalled()) {
 			prebidPrices = prebid.getBestSlotPrice(slotName);
 			// promote prebid on a tie
-			floorPrice = Math.max(
+			floorPrice = Math.max.apply(
+				null,
 				Object.keys(prebidPrices).filter(function(key) {
-					return prebidPrices[key] !== '' && parseFloat(prebidPrices[key]) > 0;
+					return !isNaN(parseFloat(prebidPrices[key])) && parseFloat(prebidPrices[key]) > 0;
 				}).map(function (key) { return parseFloat(prebidPrices[key]); })
 			);
 		}
