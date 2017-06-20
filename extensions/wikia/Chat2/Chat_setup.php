@@ -148,13 +148,13 @@ $wgResourceModules[ 'ext.Chat2.ChatBanList' ] = [
  */
 $wgResourceModules['ext.Chat2'] = [
 	'scripts' => [
-		'js/emoticons.js',
 		'js/lib/underscore.js',
 		'js/lib/backbone.js',
+		'js/emoticons.js',
 		'js/models/models.js',
-		'js/controllers/controllers.js',
 		'js/views/views.js',
 		'js/views/ChatBanModal.js',
+		'js/controllers/controllers.js',
 	],
 	'messages' => [
 		// Inline alerts
@@ -211,7 +211,6 @@ $wgResourceModules['ext.Chat2'] = [
 		'wikia.cookies',
 		'wikia.history',
 		'wikia.querystring',
-		'underscore',
 	],
 	'localBasePath' => __DIR__,
 	'remoteExtPath' => 'wikia/Chat2'
