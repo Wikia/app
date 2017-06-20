@@ -54,7 +54,7 @@ class TopicsResponse implements ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'topics' => '\Swagger\Client\Swagger\Client\CurationCMS\Models\TopicResponse[]',
+        'topics' => '\Swagger\Client\CurationCMS\Models\TopicResponse[]',
         '_links' => 'map[string,string]'
     ];
 
@@ -168,7 +168,7 @@ class TopicsResponse implements ArrayAccess
 
     /**
      * Gets topics
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\TopicResponse[]
+     * @return \Swagger\Client\CurationCMS\Models\TopicResponse[]
      */
     public function getTopics()
     {
@@ -177,7 +177,7 @@ class TopicsResponse implements ArrayAccess
 
     /**
      * Sets topics
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\TopicResponse[] $topics
+     * @param \Swagger\Client\CurationCMS\Models\TopicResponse[] $topics
      * @return $this
      */
     public function setTopics($topics)

@@ -59,16 +59,16 @@ class StoriesPostResponse implements ArrayAccess
         'slug' => 'string',
         'headline' => 'string',
         'supporting_text' => 'string',
-        'tags' => '\Swagger\Client\Swagger\Client\CurationCMS\Models\EmbeddedTagResponse[]',
+        'tags' => '\Swagger\Client\CurationCMS\Models\EmbeddedTagResponse[]',
         'source_attribution' => 'string',
         'source_url' => 'string',
-        'attribution' => '\Swagger\Client\Swagger\Client\CurationCMS\Models\Attribution',
-        'created_at' => '\Swagger\Client\Swagger\Client\CurationCMS\Models\LocalDateTime',
-        'content' => '\Swagger\Client\Swagger\Client\CurationCMS\Models\StoriesPostResponse[]',
+        'attribution' => '\Swagger\Client\CurationCMS\Models\Attribution',
+        'created_at' => '\Swagger\Client\CurationCMS\Models\LocalDateTime',
+        'content' => '\Swagger\Client\CurationCMS\Models\StoriesPostResponse[]',
         'theme_id' => 'string',
-        'image' => '\Swagger\Client\Swagger\Client\CurationCMS\Models\Image',
+        'image' => '\Swagger\Client\CurationCMS\Models\Image',
         'fandom_url' => 'string',
-        'video' => '\Swagger\Client\Swagger\Client\CurationCMS\Models\Video',
+        'video' => '\Swagger\Client\CurationCMS\Models\Video',
         'pinned' => 'bool'
     ];
 
@@ -357,7 +357,7 @@ class StoriesPostResponse implements ArrayAccess
 
     /**
      * Gets tags
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\EmbeddedTagResponse[]
+     * @return \Swagger\Client\CurationCMS\Models\EmbeddedTagResponse[]
      */
     public function getTags()
     {
@@ -366,7 +366,7 @@ class StoriesPostResponse implements ArrayAccess
 
     /**
      * Sets tags
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\EmbeddedTagResponse[] $tags
+     * @param \Swagger\Client\CurationCMS\Models\EmbeddedTagResponse[] $tags
      * @return $this
      */
     public function setTags($tags)
@@ -420,7 +420,7 @@ class StoriesPostResponse implements ArrayAccess
 
     /**
      * Gets attribution
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\Attribution
+     * @return \Swagger\Client\CurationCMS\Models\Attribution
      */
     public function getAttribution()
     {
@@ -429,7 +429,7 @@ class StoriesPostResponse implements ArrayAccess
 
     /**
      * Sets attribution
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\Attribution $attribution
+     * @param \Swagger\Client\CurationCMS\Models\Attribution $attribution
      * @return $this
      */
     public function setAttribution($attribution)
@@ -441,7 +441,7 @@ class StoriesPostResponse implements ArrayAccess
 
     /**
      * Gets created_at
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\LocalDateTime
+     * @return \Swagger\Client\CurationCMS\Models\LocalDateTime
      */
     public function getCreatedAt()
     {
@@ -450,7 +450,7 @@ class StoriesPostResponse implements ArrayAccess
 
     /**
      * Sets created_at
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\LocalDateTime $created_at
+     * @param \Swagger\Client\CurationCMS\Models\LocalDateTime $created_at
      * @return $this
      */
     public function setCreatedAt($created_at)
@@ -462,7 +462,7 @@ class StoriesPostResponse implements ArrayAccess
 
     /**
      * Gets content
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\StoriesPostResponse[]
+     * @return \Swagger\Client\CurationCMS\Models\StoriesPostResponse[]
      */
     public function getContent()
     {
@@ -471,7 +471,7 @@ class StoriesPostResponse implements ArrayAccess
 
     /**
      * Sets content
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\StoriesPostResponse[] $content
+     * @param \Swagger\Client\CurationCMS\Models\StoriesPostResponse[] $content
      * @return $this
      */
     public function setContent($content)
@@ -504,7 +504,7 @@ class StoriesPostResponse implements ArrayAccess
 
     /**
      * Gets image
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\Image
+     * @return \Swagger\Client\CurationCMS\Models\Image
      */
     public function getImage()
     {
@@ -513,7 +513,7 @@ class StoriesPostResponse implements ArrayAccess
 
     /**
      * Sets image
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\Image $image
+     * @param \Swagger\Client\CurationCMS\Models\Image $image
      * @return $this
      */
     public function setImage($image)
@@ -546,7 +546,7 @@ class StoriesPostResponse implements ArrayAccess
 
     /**
      * Gets video
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\Video
+     * @return \Swagger\Client\CurationCMS\Models\Video
      */
     public function getVideo()
     {
@@ -555,7 +555,7 @@ class StoriesPostResponse implements ArrayAccess
 
     /**
      * Sets video
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\Video $video
+     * @param \Swagger\Client\CurationCMS\Models\Video $video
      * @return $this
      */
     public function setVideo($video)

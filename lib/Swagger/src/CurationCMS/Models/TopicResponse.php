@@ -57,8 +57,8 @@ class TopicResponse implements ArrayAccess
         'id' => 'string',
         'name' => 'string',
         'rank' => 'int',
-        'last_update' => '\Swagger\Client\Swagger\Client\CurationCMS\Models\LocalDateTime',
-        'image' => '\Swagger\Client\Swagger\Client\CurationCMS\Models\Image',
+        'last_update' => '\Swagger\Client\CurationCMS\Models\LocalDateTime',
+        'image' => '\Swagger\Client\CurationCMS\Models\Image',
         'items' => 'int'
     ];
 
@@ -255,7 +255,7 @@ class TopicResponse implements ArrayAccess
 
     /**
      * Gets last_update
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\LocalDateTime
+     * @return \Swagger\Client\CurationCMS\Models\LocalDateTime
      */
     public function getLastUpdate()
     {
@@ -264,7 +264,7 @@ class TopicResponse implements ArrayAccess
 
     /**
      * Sets last_update
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\LocalDateTime $last_update
+     * @param \Swagger\Client\CurationCMS\Models\LocalDateTime $last_update
      * @return $this
      */
     public function setLastUpdate($last_update)
@@ -276,7 +276,7 @@ class TopicResponse implements ArrayAccess
 
     /**
      * Gets image
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\Image
+     * @return \Swagger\Client\CurationCMS\Models\Image
      */
     public function getImage()
     {
@@ -285,7 +285,7 @@ class TopicResponse implements ArrayAccess
 
     /**
      * Sets image
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\Image $image
+     * @param \Swagger\Client\CurationCMS\Models\Image $image
      * @return $this
      */
     public function setImage($image)

@@ -67,10 +67,10 @@ class UrlSummary implements ArrayAccess
         'image_url' => 'string',
         'image_height' => 'int',
         'image_width' => 'int',
-        'date_retrieved' => '\Swagger\Client\Swagger\Client\CurationCMS\Models\Instant',
+        'date_retrieved' => '\Swagger\Client\CurationCMS\Models\Instant',
         'source_attribution' => 'string',
         'source_url' => 'string',
-        'attribution' => '\Swagger\Client\Swagger\Client\CurationCMS\Models\Attribution'
+        'attribution' => '\Swagger\Client\CurationCMS\Models\Attribution'
     ];
 
     /**
@@ -572,7 +572,7 @@ class UrlSummary implements ArrayAccess
 
     /**
      * Gets date_retrieved
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\Instant
+     * @return \Swagger\Client\CurationCMS\Models\Instant
      */
     public function getDateRetrieved()
     {
@@ -581,7 +581,7 @@ class UrlSummary implements ArrayAccess
 
     /**
      * Sets date_retrieved
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\Instant $date_retrieved
+     * @param \Swagger\Client\CurationCMS\Models\Instant $date_retrieved
      * @return $this
      */
     public function setDateRetrieved($date_retrieved)
@@ -635,7 +635,7 @@ class UrlSummary implements ArrayAccess
 
     /**
      * Gets attribution
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\Attribution
+     * @return \Swagger\Client\CurationCMS\Models\Attribution
      */
     public function getAttribution()
     {
@@ -644,7 +644,7 @@ class UrlSummary implements ArrayAccess
 
     /**
      * Sets attribution
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\Attribution $attribution
+     * @param \Swagger\Client\CurationCMS\Models\Attribution $attribution
      * @return $this
      */
     public function setAttribution($attribution)

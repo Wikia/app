@@ -58,8 +58,8 @@ class PostListElementResponse implements ArrayAccess
         'url' => 'string',
         'type' => 'string',
         'headline' => 'string',
-        'tags' => '\Swagger\Client\Swagger\Client\CurationCMS\Models\Tag[]',
-        'created_at' => '\Swagger\Client\Swagger\Client\CurationCMS\Models\LocalDateTime',
+        'tags' => '\Swagger\Client\CurationCMS\Models\Tag[]',
+        'created_at' => '\Swagger\Client\CurationCMS\Models\LocalDateTime',
         'image' => 'string',
         'pinned' => 'bool',
         'deleted' => 'bool',
@@ -300,7 +300,7 @@ class PostListElementResponse implements ArrayAccess
 
     /**
      * Gets tags
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\Tag[]
+     * @return \Swagger\Client\CurationCMS\Models\Tag[]
      */
     public function getTags()
     {
@@ -309,7 +309,7 @@ class PostListElementResponse implements ArrayAccess
 
     /**
      * Sets tags
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\Tag[] $tags
+     * @param \Swagger\Client\CurationCMS\Models\Tag[] $tags
      * @return $this
      */
     public function setTags($tags)
@@ -321,7 +321,7 @@ class PostListElementResponse implements ArrayAccess
 
     /**
      * Gets created_at
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\LocalDateTime
+     * @return \Swagger\Client\CurationCMS\Models\LocalDateTime
      */
     public function getCreatedAt()
     {
@@ -330,7 +330,7 @@ class PostListElementResponse implements ArrayAccess
 
     /**
      * Sets created_at
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\LocalDateTime $created_at
+     * @param \Swagger\Client\CurationCMS\Models\LocalDateTime $created_at
      * @return $this
      */
     public function setCreatedAt($created_at)

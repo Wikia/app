@@ -54,7 +54,7 @@ class AddTagsResponse implements ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'tags' => '\Swagger\Client\Swagger\Client\CurationCMS\Models\Tag[]'
+        'tags' => '\Swagger\Client\CurationCMS\Models\Tag[]'
     ];
 
     /**
@@ -162,7 +162,7 @@ class AddTagsResponse implements ArrayAccess
 
     /**
      * Gets tags
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\Tag[]
+     * @return \Swagger\Client\CurationCMS\Models\Tag[]
      */
     public function getTags()
     {
@@ -171,7 +171,7 @@ class AddTagsResponse implements ArrayAccess
 
     /**
      * Sets tags
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\Tag[] $tags
+     * @param \Swagger\Client\CurationCMS\Models\Tag[] $tags
      * @return $this
      */
     public function setTags($tags)

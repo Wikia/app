@@ -64,7 +64,7 @@ class LocalDateTime implements ArrayAccess
         'day_of_month' => 'int',
         'year' => 'int',
         'month_value' => 'int',
-        'chronology' => '\Swagger\Client\Swagger\Client\CurationCMS\Models\Chronology'
+        'chronology' => '\Swagger\Client\CurationCMS\Models\Chronology'
     ];
 
     /**
@@ -532,7 +532,7 @@ class LocalDateTime implements ArrayAccess
 
     /**
      * Gets chronology
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\Chronology
+     * @return \Swagger\Client\CurationCMS\Models\Chronology
      */
     public function getChronology()
     {
@@ -541,7 +541,7 @@ class LocalDateTime implements ArrayAccess
 
     /**
      * Sets chronology
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\Chronology $chronology
+     * @param \Swagger\Client\CurationCMS\Models\Chronology $chronology
      * @return $this
      */
     public function setChronology($chronology)

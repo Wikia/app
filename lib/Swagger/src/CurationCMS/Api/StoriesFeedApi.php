@@ -97,7 +97,7 @@ class StoriesFeedApi
      * @param string $story_slug  (optional)
      * @param string $paging_timestamp  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\FeedResponse
+     * @return \Swagger\Client\CurationCMS\Models\FeedResponse
      */
     public function getMainFeed($limit = '10', $page = '1', $story_slug = null, $paging_timestamp = null)
     {
@@ -115,7 +115,7 @@ class StoriesFeedApi
      * @param string $story_slug  (optional)
      * @param string $paging_timestamp  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return array of \Swagger\Client\Swagger\Client\CurationCMS\Models\FeedResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\CurationCMS\Models\FeedResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getMainFeedWithHttpInfo($limit = '10', $page = '1', $story_slug = null, $paging_timestamp = null)
     {
@@ -162,15 +162,15 @@ class StoriesFeedApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\Swagger\Client\CurationCMS\Models\FeedResponse',
+                '\Swagger\Client\CurationCMS\Models\FeedResponse',
                 '/stories/feed/main'
             );
 
-            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Swagger\Client\CurationCMS\Models\FeedResponse', $httpHeader), $statusCode, $httpHeader];
+            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\CurationCMS\Models\FeedResponse', $httpHeader), $statusCode, $httpHeader];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Swagger\Client\CurationCMS\Models\FeedResponse', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\CurationCMS\Models\FeedResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
@@ -189,7 +189,7 @@ class StoriesFeedApi
      * @param string $story_slug  (optional)
      * @param string $paging_timestamp  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\FeedResponse
+     * @return \Swagger\Client\CurationCMS\Models\FeedResponse
      */
     public function getMockFeed($limit = '10', $page = '1', $story_slug = null, $paging_timestamp = null)
     {
@@ -207,7 +207,7 @@ class StoriesFeedApi
      * @param string $story_slug  (optional)
      * @param string $paging_timestamp  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return array of \Swagger\Client\Swagger\Client\CurationCMS\Models\FeedResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\CurationCMS\Models\FeedResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getMockFeedWithHttpInfo($limit = '10', $page = '1', $story_slug = null, $paging_timestamp = null)
     {
@@ -254,15 +254,15 @@ class StoriesFeedApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\Swagger\Client\CurationCMS\Models\FeedResponse',
+                '\Swagger\Client\CurationCMS\Models\FeedResponse',
                 '/stories/feed/mocked'
             );
 
-            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Swagger\Client\CurationCMS\Models\FeedResponse', $httpHeader), $statusCode, $httpHeader];
+            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\CurationCMS\Models\FeedResponse', $httpHeader), $statusCode, $httpHeader];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Swagger\Client\CurationCMS\Models\FeedResponse', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\CurationCMS\Models\FeedResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
@@ -280,9 +280,9 @@ class StoriesFeedApi
      * @param int $page  (optional, default to 1)
      * @param string $story_slug  (optional)
      * @param string $paging_timestamp  (optional)
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\AuthenticatedUser $body  (optional)
+     * @param \Swagger\Client\CurationCMS\Models\AuthenticatedUser $body  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\FeedResponse
+     * @return \Swagger\Client\CurationCMS\Models\FeedResponse
      */
     public function getPersonalFeed($limit = '10', $page = '1', $story_slug = null, $paging_timestamp = null, $body = null)
     {
@@ -299,9 +299,9 @@ class StoriesFeedApi
      * @param int $page  (optional, default to 1)
      * @param string $story_slug  (optional)
      * @param string $paging_timestamp  (optional)
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\AuthenticatedUser $body  (optional)
+     * @param \Swagger\Client\CurationCMS\Models\AuthenticatedUser $body  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return array of \Swagger\Client\Swagger\Client\CurationCMS\Models\FeedResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\CurationCMS\Models\FeedResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getPersonalFeedWithHttpInfo($limit = '10', $page = '1', $story_slug = null, $paging_timestamp = null, $body = null)
     {
@@ -353,15 +353,15 @@ class StoriesFeedApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\Swagger\Client\CurationCMS\Models\FeedResponse',
+                '\Swagger\Client\CurationCMS\Models\FeedResponse',
                 '/stories/feed/personal'
             );
 
-            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Swagger\Client\CurationCMS\Models\FeedResponse', $httpHeader), $statusCode, $httpHeader];
+            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\CurationCMS\Models\FeedResponse', $httpHeader), $statusCode, $httpHeader];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Swagger\Client\CurationCMS\Models\FeedResponse', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\CurationCMS\Models\FeedResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
@@ -381,7 +381,7 @@ class StoriesFeedApi
      * @param string $story_slug  (optional)
      * @param string $paging_timestamp  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\FeedResponse
+     * @return \Swagger\Client\CurationCMS\Models\FeedResponse
      */
     public function getTopicFeed($slug, $limit = '10', $page = '1', $story_slug = null, $paging_timestamp = null)
     {
@@ -400,7 +400,7 @@ class StoriesFeedApi
      * @param string $story_slug  (optional)
      * @param string $paging_timestamp  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return array of \Swagger\Client\Swagger\Client\CurationCMS\Models\FeedResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\CurationCMS\Models\FeedResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getTopicFeedWithHttpInfo($slug, $limit = '10', $page = '1', $story_slug = null, $paging_timestamp = null)
     {
@@ -459,15 +459,15 @@ class StoriesFeedApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\Swagger\Client\CurationCMS\Models\FeedResponse',
+                '\Swagger\Client\CurationCMS\Models\FeedResponse',
                 '/stories/feed/slug/{slug}'
             );
 
-            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Swagger\Client\CurationCMS\Models\FeedResponse', $httpHeader), $statusCode, $httpHeader];
+            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\CurationCMS\Models\FeedResponse', $httpHeader), $statusCode, $httpHeader];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Swagger\Client\CurationCMS\Models\FeedResponse', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\CurationCMS\Models\FeedResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }

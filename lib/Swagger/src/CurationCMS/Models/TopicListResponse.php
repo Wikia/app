@@ -54,7 +54,7 @@ class TopicListResponse implements ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'topics' => '\Swagger\Client\Swagger\Client\CurationCMS\Models\Topic[]'
+        'topics' => '\Swagger\Client\CurationCMS\Models\Topic[]'
     ];
 
     /**
@@ -162,7 +162,7 @@ class TopicListResponse implements ArrayAccess
 
     /**
      * Gets topics
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\Topic[]
+     * @return \Swagger\Client\CurationCMS\Models\Topic[]
      */
     public function getTopics()
     {
@@ -171,7 +171,7 @@ class TopicListResponse implements ArrayAccess
 
     /**
      * Sets topics
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\Topic[] $topics
+     * @param \Swagger\Client\CurationCMS\Models\Topic[] $topics
      * @return $this
      */
     public function setTopics($topics)

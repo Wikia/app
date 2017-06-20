@@ -58,7 +58,7 @@ class Topic implements ArrayAccess
         'name' => 'string',
         'slug' => 'string',
         'color' => 'string',
-        'image' => '\Swagger\Client\Swagger\Client\CurationCMS\Models\Image',
+        'image' => '\Swagger\Client\CurationCMS\Models\Image',
         'followers_count' => 'int',
         'is_followed' => 'bool'
     ];
@@ -282,7 +282,7 @@ class Topic implements ArrayAccess
 
     /**
      * Gets image
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\Image
+     * @return \Swagger\Client\CurationCMS\Models\Image
      */
     public function getImage()
     {
@@ -291,7 +291,7 @@ class Topic implements ArrayAccess
 
     /**
      * Sets image
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\Image $image
+     * @param \Swagger\Client\CurationCMS\Models\Image $image
      * @return $this
      */
     public function setImage($image)

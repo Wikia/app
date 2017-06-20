@@ -55,7 +55,7 @@ class PostListResponse implements ArrayAccess
       */
     protected static $swaggerTypes = [
         '_links' => 'map[string,string]',
-        'items' => '\Swagger\Client\Swagger\Client\CurationCMS\Models\PostListElementResponse[]'
+        'items' => '\Swagger\Client\CurationCMS\Models\PostListElementResponse[]'
     ];
 
     /**
@@ -189,7 +189,7 @@ class PostListResponse implements ArrayAccess
 
     /**
      * Gets items
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\PostListElementResponse[]
+     * @return \Swagger\Client\CurationCMS\Models\PostListElementResponse[]
      */
     public function getItems()
     {
@@ -198,7 +198,7 @@ class PostListResponse implements ArrayAccess
 
     /**
      * Sets items
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\PostListElementResponse[] $items
+     * @param \Swagger\Client\CurationCMS\Models\PostListElementResponse[] $items
      * @return $this
      */
     public function setItems($items)

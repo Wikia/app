@@ -94,7 +94,7 @@ class StoriesApi
      *
      * @param string $slug  (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\PostResponse
+     * @return \Swagger\Client\CurationCMS\Models\PostResponse
      */
     public function getById($slug)
     {
@@ -109,7 +109,7 @@ class StoriesApi
      *
      * @param string $slug  (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return array of \Swagger\Client\Swagger\Client\CurationCMS\Models\PostResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\CurationCMS\Models\PostResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getByIdWithHttpInfo($slug)
     {
@@ -152,15 +152,15 @@ class StoriesApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\Swagger\Client\CurationCMS\Models\PostResponse',
+                '\Swagger\Client\CurationCMS\Models\PostResponse',
                 '/stories/posts/{slug}'
             );
 
-            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Swagger\Client\CurationCMS\Models\PostResponse', $httpHeader), $statusCode, $httpHeader];
+            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\CurationCMS\Models\PostResponse', $httpHeader), $statusCode, $httpHeader];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Swagger\Client\CurationCMS\Models\PostResponse', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\CurationCMS\Models\PostResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }

@@ -59,16 +59,16 @@ class PostResponse implements ArrayAccess
         'type' => 'string',
         'headline' => 'string',
         'supporting_text' => 'string',
-        'tags' => '\Swagger\Client\Swagger\Client\CurationCMS\Models\Tag[]',
-        'story_streams' => '\Swagger\Client\Swagger\Client\CurationCMS\Models\StoryStream[]',
+        'tags' => '\Swagger\Client\CurationCMS\Models\Tag[]',
+        'story_streams' => '\Swagger\Client\CurationCMS\Models\StoryStream[]',
         'attribution' => 'string',
         'source_attribution' => 'string',
-        'created_at' => '\Swagger\Client\Swagger\Client\CurationCMS\Models\LocalDateTime',
+        'created_at' => '\Swagger\Client\CurationCMS\Models\LocalDateTime',
         'author' => 'string',
         'image' => 'string',
         'pinned' => 'bool',
         'deleted' => 'bool',
-        'editable_fields' => '\Swagger\Client\Swagger\Client\CurationCMS\Models\EditablePostFields'
+        'editable_fields' => '\Swagger\Client\CurationCMS\Models\EditablePostFields'
     ];
 
     /**
@@ -351,7 +351,7 @@ class PostResponse implements ArrayAccess
 
     /**
      * Gets tags
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\Tag[]
+     * @return \Swagger\Client\CurationCMS\Models\Tag[]
      */
     public function getTags()
     {
@@ -360,7 +360,7 @@ class PostResponse implements ArrayAccess
 
     /**
      * Sets tags
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\Tag[] $tags
+     * @param \Swagger\Client\CurationCMS\Models\Tag[] $tags
      * @return $this
      */
     public function setTags($tags)
@@ -372,7 +372,7 @@ class PostResponse implements ArrayAccess
 
     /**
      * Gets story_streams
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\StoryStream[]
+     * @return \Swagger\Client\CurationCMS\Models\StoryStream[]
      */
     public function getStoryStreams()
     {
@@ -381,7 +381,7 @@ class PostResponse implements ArrayAccess
 
     /**
      * Sets story_streams
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\StoryStream[] $story_streams
+     * @param \Swagger\Client\CurationCMS\Models\StoryStream[] $story_streams
      * @return $this
      */
     public function setStoryStreams($story_streams)
@@ -435,7 +435,7 @@ class PostResponse implements ArrayAccess
 
     /**
      * Gets created_at
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\LocalDateTime
+     * @return \Swagger\Client\CurationCMS\Models\LocalDateTime
      */
     public function getCreatedAt()
     {
@@ -444,7 +444,7 @@ class PostResponse implements ArrayAccess
 
     /**
      * Sets created_at
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\LocalDateTime $created_at
+     * @param \Swagger\Client\CurationCMS\Models\LocalDateTime $created_at
      * @return $this
      */
     public function setCreatedAt($created_at)
@@ -540,7 +540,7 @@ class PostResponse implements ArrayAccess
 
     /**
      * Gets editable_fields
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\EditablePostFields
+     * @return \Swagger\Client\CurationCMS\Models\EditablePostFields
      */
     public function getEditableFields()
     {
@@ -549,7 +549,7 @@ class PostResponse implements ArrayAccess
 
     /**
      * Sets editable_fields
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\EditablePostFields $editable_fields
+     * @param \Swagger\Client\CurationCMS\Models\EditablePostFields $editable_fields
      * @return $this
      */
     public function setEditableFields($editable_fields)

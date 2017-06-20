@@ -95,7 +95,7 @@ class TagsApi
      * @param string $q  (optional)
      * @param string $type  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\TagsResponse
+     * @return \Swagger\Client\CurationCMS\Models\TagsResponse
      */
     public function getTags($q = null, $type = null)
     {
@@ -111,7 +111,7 @@ class TagsApi
      * @param string $q  (optional)
      * @param string $type  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return array of \Swagger\Client\Swagger\Client\CurationCMS\Models\TagsResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\CurationCMS\Models\TagsResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getTagsWithHttpInfo($q = null, $type = null)
     {
@@ -160,15 +160,15 @@ class TagsApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\Swagger\Client\CurationCMS\Models\TagsResponse',
+                '\Swagger\Client\CurationCMS\Models\TagsResponse',
                 '/curation/tags'
             );
 
-            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Swagger\Client\CurationCMS\Models\TagsResponse', $httpHeader), $statusCode, $httpHeader];
+            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\CurationCMS\Models\TagsResponse', $httpHeader), $statusCode, $httpHeader];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Swagger\Client\CurationCMS\Models\TagsResponse', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\CurationCMS\Models\TagsResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }

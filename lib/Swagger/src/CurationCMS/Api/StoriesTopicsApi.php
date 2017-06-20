@@ -95,7 +95,7 @@ class StoriesTopicsApi
      * @param string $sort_by  (optional, default to rank)
      * @param string $sort_direction  (optional, default to desc)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\TopicListResponse
+     * @return \Swagger\Client\CurationCMS\Models\TopicListResponse
      */
     public function getTopicsForUser($sort_by = 'rank', $sort_direction = 'desc')
     {
@@ -111,7 +111,7 @@ class StoriesTopicsApi
      * @param string $sort_by  (optional, default to rank)
      * @param string $sort_direction  (optional, default to desc)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return array of \Swagger\Client\Swagger\Client\CurationCMS\Models\TopicListResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\CurationCMS\Models\TopicListResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getTopicsForUserWithHttpInfo($sort_by = 'rank', $sort_direction = 'desc')
     {
@@ -150,15 +150,15 @@ class StoriesTopicsApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\Swagger\Client\CurationCMS\Models\TopicListResponse',
+                '\Swagger\Client\CurationCMS\Models\TopicListResponse',
                 '/stories/topics/personal'
             );
 
-            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Swagger\Client\CurationCMS\Models\TopicListResponse', $httpHeader), $statusCode, $httpHeader];
+            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\CurationCMS\Models\TopicListResponse', $httpHeader), $statusCode, $httpHeader];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Swagger\Client\CurationCMS\Models\TopicListResponse', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\CurationCMS\Models\TopicListResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }

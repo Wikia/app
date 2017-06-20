@@ -56,7 +56,7 @@ class FeedResponse implements ArrayAccess
     protected static $swaggerTypes = [
         'url_prefix' => 'string',
         '_links' => 'map[string,string]',
-        'feed' => '\Swagger\Client\Swagger\Client\CurationCMS\Models\StoriesPostResponse[]'
+        'feed' => '\Swagger\Client\CurationCMS\Models\StoriesPostResponse[]'
     ];
 
     /**
@@ -216,7 +216,7 @@ class FeedResponse implements ArrayAccess
 
     /**
      * Gets feed
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\StoriesPostResponse[]
+     * @return \Swagger\Client\CurationCMS\Models\StoriesPostResponse[]
      */
     public function getFeed()
     {
@@ -225,7 +225,7 @@ class FeedResponse implements ArrayAccess
 
     /**
      * Sets feed
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\StoriesPostResponse[] $feed
+     * @param \Swagger\Client\CurationCMS\Models\StoriesPostResponse[] $feed
      * @return $this
      */
     public function setFeed($feed)

@@ -92,9 +92,9 @@ class TopicsApi
      *
      * Create Topic
      *
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\TopicCreate $body  (optional)
+     * @param \Swagger\Client\CurationCMS\Models\TopicCreate $body  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\TopicResponse
+     * @return \Swagger\Client\CurationCMS\Models\TopicResponse
      */
     public function create($body = null)
     {
@@ -107,9 +107,9 @@ class TopicsApi
      *
      * Create Topic
      *
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\TopicCreate $body  (optional)
+     * @param \Swagger\Client\CurationCMS\Models\TopicCreate $body  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return array of \Swagger\Client\Swagger\Client\CurationCMS\Models\TopicResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\CurationCMS\Models\TopicResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function createWithHttpInfo($body = null)
     {
@@ -155,15 +155,15 @@ class TopicsApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\Swagger\Client\CurationCMS\Models\TopicResponse',
+                '\Swagger\Client\CurationCMS\Models\TopicResponse',
                 '/curation/topics'
             );
 
-            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Swagger\Client\CurationCMS\Models\TopicResponse', $httpHeader), $statusCode, $httpHeader];
+            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\CurationCMS\Models\TopicResponse', $httpHeader), $statusCode, $httpHeader];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Swagger\Client\CurationCMS\Models\TopicResponse', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\CurationCMS\Models\TopicResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
@@ -266,7 +266,7 @@ class TopicsApi
      * @param string $sort_by  (optional, default to rank)
      * @param string $sort_direction  (optional, default to desc)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\TopicsResponse
+     * @return \Swagger\Client\CurationCMS\Models\TopicsResponse
      */
     public function getAll($limit = '100', $page = '1', $sort_by = 'rank', $sort_direction = 'desc')
     {
@@ -284,7 +284,7 @@ class TopicsApi
      * @param string $sort_by  (optional, default to rank)
      * @param string $sort_direction  (optional, default to desc)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return array of \Swagger\Client\Swagger\Client\CurationCMS\Models\TopicsResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\CurationCMS\Models\TopicsResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getAllWithHttpInfo($limit = '100', $page = '1', $sort_by = 'rank', $sort_direction = 'desc')
     {
@@ -341,15 +341,15 @@ class TopicsApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\Swagger\Client\CurationCMS\Models\TopicsResponse',
+                '\Swagger\Client\CurationCMS\Models\TopicsResponse',
                 '/curation/topics'
             );
 
-            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Swagger\Client\CurationCMS\Models\TopicsResponse', $httpHeader), $statusCode, $httpHeader];
+            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\CurationCMS\Models\TopicsResponse', $httpHeader), $statusCode, $httpHeader];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Swagger\Client\CurationCMS\Models\TopicsResponse', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\CurationCMS\Models\TopicsResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
@@ -365,7 +365,7 @@ class TopicsApi
      *
      * @param string $topic_id  (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\TopicResponse
+     * @return \Swagger\Client\CurationCMS\Models\TopicResponse
      */
     public function getAll_0($topic_id)
     {
@@ -380,7 +380,7 @@ class TopicsApi
      *
      * @param string $topic_id  (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return array of \Swagger\Client\Swagger\Client\CurationCMS\Models\TopicResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\CurationCMS\Models\TopicResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getAll_0WithHttpInfo($topic_id)
     {
@@ -433,15 +433,15 @@ class TopicsApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\Swagger\Client\CurationCMS\Models\TopicResponse',
+                '\Swagger\Client\CurationCMS\Models\TopicResponse',
                 '/curation/topics/{topicId}'
             );
 
-            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Swagger\Client\CurationCMS\Models\TopicResponse', $httpHeader), $statusCode, $httpHeader];
+            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\CurationCMS\Models\TopicResponse', $httpHeader), $statusCode, $httpHeader];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Swagger\Client\CurationCMS\Models\TopicResponse', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\CurationCMS\Models\TopicResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
@@ -456,9 +456,9 @@ class TopicsApi
      * Update Topic
      *
      * @param string $topic_id  (required)
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\TopicUpdate $body  (optional)
+     * @param \Swagger\Client\CurationCMS\Models\TopicUpdate $body  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\TopicResponse
+     * @return \Swagger\Client\CurationCMS\Models\TopicResponse
      */
     public function update($topic_id, $body = null)
     {
@@ -472,9 +472,9 @@ class TopicsApi
      * Update Topic
      *
      * @param string $topic_id  (required)
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\TopicUpdate $body  (optional)
+     * @param \Swagger\Client\CurationCMS\Models\TopicUpdate $body  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return array of \Swagger\Client\Swagger\Client\CurationCMS\Models\TopicResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\CurationCMS\Models\TopicResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function updateWithHttpInfo($topic_id, $body = null)
     {
@@ -532,15 +532,15 @@ class TopicsApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\Swagger\Client\CurationCMS\Models\TopicResponse',
+                '\Swagger\Client\CurationCMS\Models\TopicResponse',
                 '/curation/topics/{topicId}'
             );
 
-            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Swagger\Client\CurationCMS\Models\TopicResponse', $httpHeader), $statusCode, $httpHeader];
+            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\CurationCMS\Models\TopicResponse', $httpHeader), $statusCode, $httpHeader];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Swagger\Client\CurationCMS\Models\TopicResponse', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\CurationCMS\Models\TopicResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }

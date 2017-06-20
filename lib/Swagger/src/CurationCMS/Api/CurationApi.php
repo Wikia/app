@@ -93,9 +93,9 @@ class CurationApi
      * Add tags to a post
      *
      * @param string $id  (required)
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\PostAddTags $body  (optional)
+     * @param \Swagger\Client\CurationCMS\Models\PostAddTags $body  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\AddTagsResponse
+     * @return \Swagger\Client\CurationCMS\Models\AddTagsResponse
      */
     public function addTags($id, $body = null)
     {
@@ -109,9 +109,9 @@ class CurationApi
      * Add tags to a post
      *
      * @param string $id  (required)
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\PostAddTags $body  (optional)
+     * @param \Swagger\Client\CurationCMS\Models\PostAddTags $body  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return array of \Swagger\Client\Swagger\Client\CurationCMS\Models\AddTagsResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\CurationCMS\Models\AddTagsResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function addTagsWithHttpInfo($id, $body = null)
     {
@@ -159,15 +159,15 @@ class CurationApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\Swagger\Client\CurationCMS\Models\AddTagsResponse',
+                '\Swagger\Client\CurationCMS\Models\AddTagsResponse',
                 '/curation/posts/{id}/add-tags'
             );
 
-            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Swagger\Client\CurationCMS\Models\AddTagsResponse', $httpHeader), $statusCode, $httpHeader];
+            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\CurationCMS\Models\AddTagsResponse', $httpHeader), $statusCode, $httpHeader];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Swagger\Client\CurationCMS\Models\AddTagsResponse', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\CurationCMS\Models\AddTagsResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
@@ -181,7 +181,7 @@ class CurationApi
      *
      * Create a post
      *
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\PostCreate $body  (optional)
+     * @param \Swagger\Client\CurationCMS\Models\PostCreate $body  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @return string
      */
@@ -196,7 +196,7 @@ class CurationApi
      *
      * Create a post
      *
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\PostCreate $body  (optional)
+     * @param \Swagger\Client\CurationCMS\Models\PostCreate $body  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @return array of string, HTTP status code, HTTP response headers (array of strings)
      */
@@ -256,7 +256,7 @@ class CurationApi
      *
      * Create new story stream
      *
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\StoryStreamCreate $body  (optional)
+     * @param \Swagger\Client\CurationCMS\Models\StoryStreamCreate $body  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @return void
      */
@@ -271,7 +271,7 @@ class CurationApi
      *
      * Create new story stream
      *
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\StoryStreamCreate $body  (optional)
+     * @param \Swagger\Client\CurationCMS\Models\StoryStreamCreate $body  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
@@ -409,7 +409,7 @@ class CurationApi
      * @param int $page  (optional, default to 1)
      * @param string $topic  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\PostListResponse
+     * @return \Swagger\Client\CurationCMS\Models\PostListResponse
      */
     public function findPosts($limit = '50', $page = '1', $topic = null)
     {
@@ -426,7 +426,7 @@ class CurationApi
      * @param int $page  (optional, default to 1)
      * @param string $topic  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return array of \Swagger\Client\Swagger\Client\CurationCMS\Models\PostListResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\CurationCMS\Models\PostListResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function findPostsWithHttpInfo($limit = '50', $page = '1', $topic = null)
     {
@@ -469,15 +469,15 @@ class CurationApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\Swagger\Client\CurationCMS\Models\PostListResponse',
+                '\Swagger\Client\CurationCMS\Models\PostListResponse',
                 '/curation/posts'
             );
 
-            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Swagger\Client\CurationCMS\Models\PostListResponse', $httpHeader), $statusCode, $httpHeader];
+            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\CurationCMS\Models\PostListResponse', $httpHeader), $statusCode, $httpHeader];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Swagger\Client\CurationCMS\Models\PostListResponse', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\CurationCMS\Models\PostListResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
@@ -493,7 +493,7 @@ class CurationApi
      *
      * @param string $id  (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\PostResponse
+     * @return \Swagger\Client\CurationCMS\Models\PostResponse
      */
     public function getById($id)
     {
@@ -508,7 +508,7 @@ class CurationApi
      *
      * @param string $id  (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return array of \Swagger\Client\Swagger\Client\CurationCMS\Models\PostResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\CurationCMS\Models\PostResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getByIdWithHttpInfo($id)
     {
@@ -551,15 +551,15 @@ class CurationApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\Swagger\Client\CurationCMS\Models\PostResponse',
+                '\Swagger\Client\CurationCMS\Models\PostResponse',
                 '/curation/posts/{id}'
             );
 
-            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Swagger\Client\CurationCMS\Models\PostResponse', $httpHeader), $statusCode, $httpHeader];
+            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\CurationCMS\Models\PostResponse', $httpHeader), $statusCode, $httpHeader];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Swagger\Client\CurationCMS\Models\PostResponse', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\CurationCMS\Models\PostResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
@@ -575,7 +575,7 @@ class CurationApi
      *
      * @param string $q  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\StoryStream[]
+     * @return \Swagger\Client\CurationCMS\Models\StoryStream[]
      */
     public function search($q = null)
     {
@@ -590,7 +590,7 @@ class CurationApi
      *
      * @param string $q  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return array of \Swagger\Client\Swagger\Client\CurationCMS\Models\StoryStream[], HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\CurationCMS\Models\StoryStream[], HTTP status code, HTTP response headers (array of strings)
      */
     public function searchWithHttpInfo($q = null)
     {
@@ -625,15 +625,15 @@ class CurationApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\Swagger\Client\CurationCMS\Models\StoryStream[]',
+                '\Swagger\Client\CurationCMS\Models\StoryStream[]',
                 '/curation/posts/story-streams/search'
             );
 
-            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Swagger\Client\CurationCMS\Models\StoryStream[]', $httpHeader), $statusCode, $httpHeader];
+            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\CurationCMS\Models\StoryStream[]', $httpHeader), $statusCode, $httpHeader];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Swagger\Client\CurationCMS\Models\StoryStream[]', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\CurationCMS\Models\StoryStream[]', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
@@ -648,7 +648,7 @@ class CurationApi
      * Update a story stream
      *
      * @param string $id  (required)
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\StoryStreamUpdate $body  (optional)
+     * @param \Swagger\Client\CurationCMS\Models\StoryStreamUpdate $body  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @return void
      */
@@ -664,7 +664,7 @@ class CurationApi
      * Update a story stream
      *
      * @param string $id  (required)
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\StoryStreamUpdate $body  (optional)
+     * @param \Swagger\Client\CurationCMS\Models\StoryStreamUpdate $body  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
@@ -733,7 +733,7 @@ class CurationApi
      * Update a post
      *
      * @param string $id  (required)
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\PostUpdate $body  (optional)
+     * @param \Swagger\Client\CurationCMS\Models\PostUpdate $body  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @return void
      */
@@ -749,7 +749,7 @@ class CurationApi
      * Update a post
      *
      * @param string $id  (required)
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\PostUpdate $body  (optional)
+     * @param \Swagger\Client\CurationCMS\Models\PostUpdate $body  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
@@ -819,7 +819,7 @@ class CurationApi
      *
      * @param \SplFileObject $data  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\ImageUploadResponse
+     * @return \Swagger\Client\CurationCMS\Models\ImageUploadResponse
      */
     public function uploadImage($data = null)
     {
@@ -834,7 +834,7 @@ class CurationApi
      *
      * @param \SplFileObject $data  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return array of \Swagger\Client\Swagger\Client\CurationCMS\Models\ImageUploadResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\CurationCMS\Models\ImageUploadResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function uploadImageWithHttpInfo($data = null)
     {
@@ -875,15 +875,15 @@ class CurationApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\Swagger\Client\CurationCMS\Models\ImageUploadResponse',
+                '\Swagger\Client\CurationCMS\Models\ImageUploadResponse',
                 '/curation/images'
             );
 
-            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Swagger\Client\CurationCMS\Models\ImageUploadResponse', $httpHeader), $statusCode, $httpHeader];
+            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\CurationCMS\Models\ImageUploadResponse', $httpHeader), $statusCode, $httpHeader];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Swagger\Client\CurationCMS\Models\ImageUploadResponse', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\CurationCMS\Models\ImageUploadResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }

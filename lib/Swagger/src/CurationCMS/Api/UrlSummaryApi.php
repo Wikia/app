@@ -92,9 +92,9 @@ class UrlSummaryApi
      *
      * Request URL summary
      *
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\UrlSummaryRequest $body  (optional)
+     * @param \Swagger\Client\CurationCMS\Models\UrlSummaryRequest $body  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return \Swagger\Client\Swagger\Client\CurationCMS\Models\UrlSummary
+     * @return \Swagger\Client\CurationCMS\Models\UrlSummary
      */
     public function requestUrlSummary($body = null)
     {
@@ -107,9 +107,9 @@ class UrlSummaryApi
      *
      * Request URL summary
      *
-     * @param \Swagger\Client\Swagger\Client\CurationCMS\Models\UrlSummaryRequest $body  (optional)
+     * @param \Swagger\Client\CurationCMS\Models\UrlSummaryRequest $body  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return array of \Swagger\Client\Swagger\Client\CurationCMS\Models\UrlSummary, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\CurationCMS\Models\UrlSummary, HTTP status code, HTTP response headers (array of strings)
      */
     public function requestUrlSummaryWithHttpInfo($body = null)
     {
@@ -145,15 +145,15 @@ class UrlSummaryApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\Swagger\Client\CurationCMS\Models\UrlSummary',
+                '\Swagger\Client\CurationCMS\Models\UrlSummary',
                 '/curation/url-summary'
             );
 
-            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Swagger\Client\CurationCMS\Models\UrlSummary', $httpHeader), $statusCode, $httpHeader];
+            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\CurationCMS\Models\UrlSummary', $httpHeader), $statusCode, $httpHeader];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Swagger\Client\CurationCMS\Models\UrlSummary', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\CurationCMS\Models\UrlSummary', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
