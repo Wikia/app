@@ -173,6 +173,22 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 			}
 		});
 	}
+	
+	function shouldHandleFloorPrice(floorPrice, slotName, rubiconTierKeyParam) {
+		return typeof floorPrice !== 'undefined' &&
+			rubiconTierKeyParam && typeof rubiconTierKeyParam.map === 'function' &&
+			bestPrices[slotName] / 100 <= floorPrice &&
+			bestPricesPrivate[slotName] / 100 <= floorPrice
+		
+	}
+
+	function handleFloorPrice(floorPrice, slotName, parameters) {
+		if (shouldHandleFloorPrice(floorPrice, slotName, parameters[rubiconTierKey])) {
+			parameters[rubiconTierKey] = parameters[rubiconTierKey].map(function (tier) {
+				return tier.replace(/tier\d+/, 'tierPREBID');
+			});
+		}
+	}
 
 	function saveBestPrice(slotName, tiers) {
 		tiers.forEach(function (tier) {
@@ -198,7 +214,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 		return price;
 	}
 
-	function getSlotParams(slotName) {
+	function getSlotParams(slotName, floorPrice) {
 		var targeting,
 			parameters = {};
 
@@ -212,6 +228,9 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 				parameters[params.key] = params.values;
 			}
 		});
+
+		handleFloorPrice(floorPrice, slotName, parameters);
+
 		fillInWithMissingTiers(slotName, parameters);
 		if (parameters[rubiconTierKey] && typeof parameters[rubiconTierKey].sort === 'function') {
 			parameters[rubiconTierKey].sort(compareTiers);

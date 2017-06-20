@@ -184,6 +184,20 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 		expect(getTrackedValue('price')).toEqual('1.20');
 	});
 
+	it('Track data with AppNexus data for appnexusAst ad product', function () {
+		tracker.track({
+			adProduct: 'appnexusAst',
+			slotName: 'TOP_LEADERBOARD',
+			bid: {
+				creative_id: '87765',
+				cpm: 1.20
+			}
+		}, 'fooPlayer', 'barEvent');
+
+		expect(getTrackedValue('vast_id')).toEqual('87765');
+		expect(getTrackedValue('price')).toEqual('1.20');
+	});
+
 	it('Track data with wsi when src is available', function () {
 		tracker.track({
 			adProduct: 'uap',

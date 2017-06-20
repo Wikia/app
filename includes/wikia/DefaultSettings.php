@@ -1830,6 +1830,27 @@ $wgARecoveryEngineCustomLog = null;
 $wgLogRestrictions['piggyback'] = 'piggyback';
 
 /**
+ * Protect chatconnect logs even if the extension is disabled
+ */
+$wgLogRestrictions["chatconnect"] = 'checkuser';
+
+/**
+ * Protect editaccnt logs even if the extension is disabled
+ */
+$wgLogRestrictions['editaccnt'] = 'editaccount';
+
+/**
+ * Protect phalanx logs even if the extension is disabled
+ */
+$wgLogRestrictions['phalanx'] = 'phalanx';
+$wgLogRestrictions['phalanxemail'] = 'phalanxemailblock';
+
+/**
+ * Protect StaffLog even if the extension is disabled
+ */
+$wgLogRestrictions['StaffLog'] = 'StaffLog';
+
+/**
  * Reject attempts to fall back to the MediaWiki session for authentication.
  */
 $wgRejectAuthenticationFallback = true;
