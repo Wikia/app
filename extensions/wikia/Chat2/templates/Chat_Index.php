@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="<?= AssetsManager::getInstance()->getSassCommonURL( '/extensions/wikia/Chat2/css/Chat.scss' )?>">
 	<!-- JS -->
 	<!-- temporary hack (who are you kidding?) -->
-	<script src="<?= AssetsManager::getInstance()->getOneCommonURL( '/extensions/wikia/Chat2/js/lib/socket.io.js' ); ?>"></script>
+	<script src="<?= AssetsManager::getInstance()->getOneCommonURL( '/extensions/wikia/Chat2/js/lib/socket.io-2.0.3.js' ); ?>"></script>
 	<?= $globalVariablesScript ?>
 	<?php // TODO: use js var?>
 
@@ -108,9 +108,9 @@
 				<img src="<%= avatarSrc %>"/>
 				<ul>
 					<li class="username"><%= name %></li>
-					<li class="edits"><?= wfMessage( 'chat-edit-count' )->rawParams("<%= editCount %>")->escaped() ?></li>
+					<li class="edits"><%= editCount %></li>
 					<% if (since) { %>
-						<li class="since"><?= wfMessage( 'chat-member-since' )->rawParams("<%= since %>")->escaped() ?></li>
+						<li class="since"><%= since %></li>
 					<% } %>
 				</ul>
 			</div>
@@ -119,7 +119,7 @@
 	</script>
 	<script type='text/template' id='user-action-profile-template'>
 		<li class="<%= actionName %>">
-			<a href="<%= actionUrl %>">
+			<a href="<%= actionUrl %>" target="_blank">
 				<?= DesignSystemHelper::renderSvg( 'wds-icons-reply-small', 'wds-icon wds-icon-small' ) ?>
 				<span class="label"><%= actionDesc %></span>
 			</a>
@@ -127,7 +127,7 @@
 	</script>
 	<script type='text/template' id='user-action-contribs-template'>
 		<li class="<%= actionName %>">
-			<a href="<%= actionUrl %>">
+			<a href="<%= actionUrl %>" target="_blank">
 				<?= DesignSystemHelper::renderSvg( 'wds-icons-pencil-small', 'wds-icon wds-icon-small' ) ?>
 				<span class="label"><%= actionDesc %></span>
 			</a>

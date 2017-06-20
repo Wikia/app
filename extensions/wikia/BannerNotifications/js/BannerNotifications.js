@@ -23,9 +23,12 @@
 		},
 		classes = Object.keys(types).join(' '),
 		closeImageSource = window.stylepath + '/oasis/images/icon_close.png',
-		$pageContainer,
+		$container,
 		$header,
 		modal,
+		fadeTime = 400,
+		wrapperClass = 'banner-notifications-wrapper',
+		wrapperSelector = '.' + wrapperClass,
 		template = '<div class="banner-notification">' +
 			'<button class="close wikia-chiclet-button"><img></button>' +
 			'<div class="msg">{{{content}}}</div>' +
@@ -171,27 +174,35 @@
 	 */
 	function init() {
 		$header = $('#globalNavigation');
+		$container = getContainer();
 
-		if (window.skin === 'monobook') {
-			$pageContainer = $('#content');
-		} else {
-			$pageContainer = $('.WikiaPageContentWrapper');
+		if (window.skin !== 'monobook') {
 			require(['wikia.onScroll'], function (onScroll) {
 				onScroll.bind(handleScrolling);
 			});
 		}
 
-		// SUS-726: hide notifications if VisualEditor is loaded and show them again once it's closed
+		updatePlaceholderHeight();
+
+		// SUS-729: hide notifications if VisualEditor is loaded and show them again once it's closed
 		if (mw.config.get('wgVisualEditor') && mw.config.get('wgIsArticle')) {
 			mw.hook('ve.activationComplete').add(function() {
-				$('.banner-notification').fadeOut(400);
+				$('.banner-notification').fadeOut(fadeTime);
+				updatePlaceholderHeight();
 			});
 
-			mw.hook('ve.cancelButton').add(function() {
-				$('.banner-notification').fadeIn(400);
+			mw.hook('ve.deactivate').add(function() {
+				$('.banner-notification').fadeIn(fadeTime);
+				updatePlaceholderHeight();
 			});
 		}
 		createBackendNotifications();
+	}
+
+	function updatePlaceholderHeight() {
+		if (window.skin !== 'monobook') {
+			$container.height($container.find(wrapperSelector).height());
+		}
 	}
 
 	/**
@@ -211,15 +222,15 @@
 	 */
 	function handleScrolling() {
 		var containerTop,
-			notificationWrapper = $pageContainer.children('.banner-notifications-wrapper'),
+			notificationWrapper = $container.children(wrapperSelector),
 			headerBottom;
 
-		if (!$pageContainer.length || !notificationWrapper.length) {
+		if (!$container.length || !notificationWrapper.length) {
 			return;
 		}
 
 		// get the position of the wrapper element relative to the top of the viewport
-		containerTop = $pageContainer.get(0).getBoundingClientRect().top;
+		containerTop = $container.get(0).getBoundingClientRect().top;
 		headerBottom = $header.length > 0 ? $header.get(0).getBoundingClientRect().bottom : 0;
 
 		if (containerTop < headerBottom) {
@@ -237,18 +248,18 @@
 	}
 
 	/**
-	 * Obtains element wrapping contents of the page
+	 * Obtains element wrapping notifications
 	 * @returns {jQuery}
 	 */
-	function getPageContainer() {
-		if ($pageContainer.length) {
-			return $pageContainer;
+	function getContainer() {
+		if ($container && $container.length) {
+			return $container;
 		} else if (window.skin === 'monobook') {
-			$pageContainer = $('#content');
+			$container = $('#content');
 		} else {
-			$pageContainer = $('.WikiaPageContentWrapper');
+			$container = $('.banner-notifications-placeholder');
 		}
-		return $pageContainer;
+		return $container;
 	}
 
 	/**
@@ -273,15 +284,17 @@
 	 */
 	function addToDOM($element, $parentElement) {
 		// allow notification wrapper element to be passed by extension
-		var $parent = $parentElement || (isModalShown() ? modal : getPageContainer()),
-			$bannerNotificationsWrapper = $parent.find('.banner-notifications-wrapper');
+		var $parent = $parentElement || (isModalShown() ? modal : getContainer()),
+			$bannerNotificationsWrapper = $parent.find(wrapperSelector);
+
 		if (!$bannerNotificationsWrapper.length) {
-			$bannerNotificationsWrapper = $('<div></div>').addClass('banner-notifications-wrapper');
+			$bannerNotificationsWrapper = $('<div></div>').addClass(wrapperClass);
 			$parent.prepend($bannerNotificationsWrapper);
 		}
+
 		$bannerNotificationsWrapper.prepend($element);
 
-		$element.fadeIn('slow');
+		$element.fadeIn(fadeTime, updatePlaceholderHeight);
 	}
 
 	/**
@@ -318,7 +331,7 @@
 				'height': 0,
 				'padding': 0,
 				'opacity': 0
-			}, 400, function () {
+			}, fadeTime, function () {
 				callback($element);
 			});
 		}
@@ -330,13 +343,17 @@
 	 */
 	function removeFromDOM($element) {
 		var $parent = $element.parent();
-		if ($parent.hasClass('.banner-notifications-wrapper') &&
-			$parent.children().length === 1) {
 
+		if (
+			$parent.hasClass(wrapperSelector) &&
+			$parent.children().length === 1
+		) {
 			$parent.remove();
 		} else {
 			$element.remove();
 		}
+
+		updatePlaceholderHeight();
 	}
 
 	// run when DOM is loaded

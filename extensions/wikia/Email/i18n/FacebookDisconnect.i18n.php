@@ -86,16 +86,16 @@ $messages['ru'] = array(
 );
 
 $messages['zh-hans'] = array(
-	'emailext-fbdisconnect-subject' => '您的Fandom帐户与Facebook的连结现已断开！',
-	'emailext-fbdisconnect-summary' => '您好像已经断开了Fandom帐户与Facebook的连接。由于您是Fandom社区的重要一员，我们依然为您保存所有完整的历史记录、留言信息以及个人资料信息。',
-	'emailext-fbdisconnect-intro' => '您可以使用同样的用户名，但是我们需要您首先点击下面的链接，重新设定在Fandom上的密码：',
-	'emailext-fbdisconnect-instructions' => '如果您之前在Fandom上设置了密码，您不需要做任何事情。您可以忽略这条信息，并继续使用旧的密码进行登录。否则，您需要点击上方的链接在Fandom上设置新的密码。',
+	'emailext-fbdisconnect-subject' => '您的FANDOM帐户与Facebook的连结现已断开！',
+	'emailext-fbdisconnect-summary' => '您好像已经断开了FANDOM帐户与Facebook的连接。由于您是FANDOM社区的重要一员，我们依然为您保存所有完整的历史记录、留言信息以及个人资料信息。',
+	'emailext-fbdisconnect-intro' => '您可以使用同样的用户名，但是我们需要您首先点击下面的链接，重新设定在FANDOM上的密码：',
+	'emailext-fbdisconnect-instructions' => '如果您之前在FANDOM上设置了密码，您不需要做任何事情。您可以忽略这条信息，并继续使用旧的密码进行登录。否则，您需要点击上方的链接在FANDOM上设置新的密码。',
 );
 
 $messages['zh-hant'] = array(
-	'emailext-fbdisconnect-subject' => '您的Fandom帳戶現已中斷與Facebook的連結！',
-	'emailext-fbdisconnect-summary' => '您好像剛剛斷開了您的Fandom帳戶與Facebook的連結。由於您是Fandom社群的重要一員，我們已經保存了您所有的歷史記錄、留言訊息和用戶資料。',
-	'emailext-fbdisconnect-intro' => '您可以使用相同的用戶名，但是我們需要您按下面的連結，重新設置在Fandom上的密碼：',
-	'emailext-fbdisconnect-instructions' => '如果您之前在Fandom上設置了密碼，您不需要做任何事情。 您可以忽略這條訊息，並繼續使用舊的密碼登入帳戶。 否則，您需要按上方的連結在Fandom上設置新的密碼。',
+	'emailext-fbdisconnect-subject' => '您的FANDOM帳戶現已中斷與Facebook的連結！',
+	'emailext-fbdisconnect-summary' => '您好像剛剛斷開了您的FANDOM帳戶與Facebook的連結。由於您是FANDOM社群的重要一員，我們已經保存了您所有的歷史記錄、留言訊息和用戶資料。',
+	'emailext-fbdisconnect-intro' => '您可以使用相同的用戶名，但是我們需要您按下面的連結，重新設置在FANDOM上的密碼：',
+	'emailext-fbdisconnect-instructions' => '如果您之前在FANDOM上設置了密碼，您不需要做任何事情。 您可以忽略這條訊息，並繼續使用舊的密碼登入帳戶。 否則，您需要按上方的連結在FANDOM上設置新的密碼。',
 );
 

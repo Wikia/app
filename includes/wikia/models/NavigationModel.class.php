@@ -168,7 +168,8 @@ class NavigationModel extends WikiaModel {
 	}
 
 	public function getLocalNavigationTree( $messageName, $refreshCache = false ) {
-		return $this->getTree(
+		$this->setShouldTranslateContent( false );
+		$tree = $this->getTree(
 			NavigationModel::TYPE_MESSAGE,
 			$messageName,
 			[
@@ -178,6 +179,9 @@ class NavigationModel extends WikiaModel {
 			],
 			$refreshCache
 		);
+		$this->setShouldTranslateContent( true );
+
+		return $tree;
 	}
 
 	private function getTreeMemcKey( /* args */ ) {
@@ -214,6 +218,24 @@ class NavigationModel extends WikiaModel {
 			},
 			( $refreshCache === true ) ? WikiaDataAccess::REFRESH_CACHE : WikiaDataAccess::USE_CACHE
 		);
+
+		return $menuData;
+	}
+
+	public function getTreeFromText( string $wikiText ): array {
+		$this->setShouldTranslateContent( false );
+		$menuData = [];
+
+		$this->menuNodes = $this->parseText( $wikiText, [
+			$this->wg->maxLevelOneNavElements,
+			$this->wg->maxLevelTwoNavElements,
+			$this->wg->maxLevelThreeNavElements,
+		], true );
+
+		foreach ( $this->menuNodes[0][self::CHILDREN] as $id ) {
+			$menuData[] = $this->recursiveConvertMenuNodeToArray( $id );
+		}
+		$this->setShouldTranslateContent( true );
 
 		return $menuData;
 	}

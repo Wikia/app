@@ -42,8 +42,7 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 	 * Wikia Maps special page
 	 */
 	public function index() {
-		$this->wg->SuppressPageHeader = true;
-		$this->wg->out->setHTMLTitle( wfMessage( 'wikia-interactive-maps-title' )->escaped() );
+		RequestContext::getMain()->getOutput()->setPageTitle( wfMessage( 'wikia-interactive-maps-title' )->escaped() );
 
 		if ( is_numeric( $this->getPar() ) ) {
 			if ( $this->getRequest()->getVal( '_escaped_fragment_' ) === null ) {
@@ -182,7 +181,7 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 		$this->response->setVal( 'mapCityId', $mapCityId );
 
 		$this->redirectIfForeignWiki( $mapCityId, $this->response->getVal( 'mapId' ) );
-		$this->wg->out->setHTMLTitle( $mapData->title );
+		RequestContext::getMain()->getOutput()->setPageTitle( $mapData->title );
 
 		$mapDeleted = $mapData->deleted == WikiaMaps::MAP_DELETED;
 

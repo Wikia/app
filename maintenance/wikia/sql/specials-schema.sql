@@ -77,7 +77,6 @@ CREATE TABLE `events_local_users` (
   `wiki_id` int(8) unsigned NOT NULL,
   `user_id` int(10) unsigned NOT NULL,
   `user_name` varchar(255) NOT NULL DEFAULT '',
-  `last_ip` int(10) unsigned NOT NULL DEFAULT '0',
   `edits` int(11) unsigned NOT NULL DEFAULT '0',
   `editdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `last_revision` int(11) NOT NULL DEFAULT '0',

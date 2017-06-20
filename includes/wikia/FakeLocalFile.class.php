@@ -2,12 +2,7 @@
 
 class FakeLocalFile extends LocalFile {
 
-	function recordUpload2( $oldver, $comment, $pageText, $props = false, $timestamp = false ) {
-		global $wgUser;
-
-		wfProfileIn(__METHOD__);
-
-		$dbw = $this->repo->getMasterDB();
+	function recordUpload2( $oldver, $comment, $pageText, $props = false, $timestamp = false, $user = null ) {
 		if (!$props) {
 			$props = $this->repo->getFileProps($this->getVirtualUrl());
 		}
@@ -16,7 +11,6 @@ class FakeLocalFile extends LocalFile {
 		$this->purgeThumbnails();
 		$this->saveToCache();
 
-		wfProfileOut(__METHOD__);
 		return true;
 	}
 

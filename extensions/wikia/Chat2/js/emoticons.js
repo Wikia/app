@@ -36,7 +36,7 @@ WikiaEmoticons.EMOTICON_HEIGHT = 19;
 WikiaEmoticons.doReplacements = function (text, emoticonMapping) {
 	// This debug is probably noisy, but I added it here just in case all of these regexes turn out
 	// to be slow (so we could see that in the log & know that we need to make this function more efficient).
-	$().log('Processing any emoticons... ');
+	$().log('Processing any emoticons... ', 'chat:emoticons');
 
 	var imgUrlsByRegexString = emoticonMapping.getImgUrlsByRegexString(),
 		origText,
@@ -63,7 +63,7 @@ WikiaEmoticons.doReplacements = function (text, emoticonMapping) {
 		text = text.replace(regex, buildTagFunc);
 	} while ((origText !== text) && --maxEmoticons > 0);
 
-	$().log('Done processing emoticons.');
+	$().log('Done processing emoticons.', 'chat:emoticons');
 	return text;
 };
 
@@ -101,7 +101,9 @@ WikiaEmoticons.buildTagGenerator = function (imgUrlsByRegexString) {
 // class EmoticonMapping
 if (typeof EmoticonMapping === 'undefined') {
 	EmoticonMapping = function () {
-		var self = this;
+		var self = this,
+			emoticonsPath = window.wgExtensionsPath + '/wikia/Chat2/images/emoticons';
+
 		this._regexes = {
 			// EXAMPLE DATA ONLY: This is what the generated text will look like... but it's loaded from ._settings
 			// on-demand:
@@ -111,12 +113,9 @@ if (typeof EmoticonMapping === 'undefined') {
 
 		// Since the values in here are processed and then cached, don't modify this directly.  Use mutators
 		// (which can invalidate the cached data such as self._regexes).
-		// TODO: fetch emoticons from nocookie domain
-		// https://wikia-inc.atlassian.net/browse/SUS-449
-		this._settings = {
-			'http://images.wikia.com/lyricwiki/images/6/67/Smile001.gif': [':)', ':-)', '(smile)'],
-			'http://images3.wikia.nocookie.net/__cb20100822133322/lyricwiki/images/d/d8/Sad.png': [':(', ':-(', ':|']
-		};
+		this._settings = {};
+		this._settings[emoticonsPath + '/smile.png'] = [':)', ':-)', '(smile)'];
+		this._settings[emoticonsPath + '/sad.png'] = [':(', ':-(', ':|'];
 
 		/**
 		 * Convert our specific wikitext format into the hash of emoticons settings.  Overwrites all

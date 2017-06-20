@@ -1,8 +1,13 @@
 // scrollable list with shadow
-@mixin scrollable-list($max-height) {
+@mixin scrollable-list($max-height, $color-background: $wds-color-white) {
+	$color-shadow: rgba($wds-color-black, .12);
+	@if luminance($color-background) < .3 {
+		$color-shadow: rgba($wds-color-white, .4);
+	}
+
 	background: {
-		image: radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, 0.12), transparent),
-		radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, 0.12), transparent);
+		image: radial-gradient(farthest-side at 50% 0, $color-shadow, transparent),
+		radial-gradient(farthest-side at 50% 100%, $color-shadow, transparent);
 		position: 0 0, 0 100%;
 		repeat: no-repeat;
 		size: 100% 9px;
@@ -14,7 +19,7 @@
 
 	&::after,
 	&::before {
-		background: linear-gradient(to bottom, $wds-color-white, $wds-color-white 30%, rgba(255, 255, 255, 0));
+		background-color: $color-background;
 		content: '';
 		display: block;
 		height: 30px;
@@ -24,7 +29,7 @@
 	}
 
 	&::after {
-		background: linear-gradient(to bottom, rgba(255, 255, 255, 0), $wds-color-white 70%, $wds-color-white);
+		background-color: $color-background;
 		margin: -29px 0 0;
 	}
 }

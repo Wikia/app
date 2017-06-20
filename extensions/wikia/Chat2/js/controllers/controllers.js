@@ -17,8 +17,13 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 		this.wikiId = window.wgCityId;
 	},
 
+	log: function(msg, group) {
+		group = group || 'chat';
+		window.Wikia.log(msg, window.Wikia.log.levels.info, group);
+	},
+
 	send: function ($msg) {
-		$().log($msg, 'message');
+		this.log('Sending a message: ' + $msg);
 		if (this.socket) {
 			this.socket.emit('message', $msg);
 		}
@@ -27,8 +32,7 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 	connect: function () {
 		// Global vars from env
 		var url = 'http://' + window.wgChatHost + ':' + window.wgChatPort;
-		$().log(url, 'Chat server');
-		console.log("connecting to url: " + url);
+		this.log('Connecting to chat server: ' + url + ' ...');
 
 		if (this.socket) {
 			if (this.socket.connected) {
@@ -40,6 +44,8 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 			}
 		}
 		this.authRequestWithMW(function (data) {
+			this.log('Authenticating using MediaWiki: ' + data);
+
 			var socket = io.connect(url, {
 					'force new connection': true,
 					'try multiple transports': true,
@@ -47,21 +53,28 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 					'query': data,
 					'max reconnection attempts': 8,
 					'reconnect': true
-				}),
-				connectionFail = this.proxy(function (delay, count) {
-					if (count === 8) {
-						if (socket) {
-							socket.disconnect();
-						}
-						this.fire("reConnectFail", {});
-					}
-				}, this);
+				});
 
+			// set up socket events
+			// @see https://socket.io/docs/server-api/#event-disconnect
 			socket.on('message', this.proxy(this.onMsgReceived, this));
 			socket.on('connect', this.proxy(function () {
+				this.log('Connected to Chat server at ' + url);
 				this.onConnect(socket);
 			}, this));
-			socket.on('reconnecting', connectionFail);
+			socket.on('reconnecting', this.proxy(function (delay, count) {
+				this.log('Reconnecting...');
+
+				if (count === 8) {
+					if (socket) {
+						socket.disconnect();
+					}
+					this.fire("reConnectFail", {});
+				}
+			}, this));
+			socket.on('error', this.proxy(function (err) {
+				this.log('socket.onerror: ' + err + ' - ' + err.code);
+			}, this));
 		});
 	},
 
@@ -71,16 +84,14 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 		if (!this.firstConnected) {
 			var InitqueryCommand = new models.InitqueryCommand();
 			setTimeout($.proxy(function () {
+				this.log('Sending "initquery" command...');
 				this.socket.send(InitqueryCommand.xport());
 			}, this), 500);
 		}
-
-		$().log("connected.");
 	},
 
 	authRequestWithMW: function (callback) {
-		this.proxy(callback, this)('name=' + encodeURIComponent(wgUserName) + '&key=' + wgChatKey + '&roomId=' + this.roomId
-			+ '&serverId=' + this.wikiId + '&wikiId=' + this.wikiId);
+		this.proxy(callback, this)('name=' + encodeURIComponent(wgUserName) + '&key=' + window.wgChatKey + '&roomId=' + this.roomId + '&serverId=' + this.wikiId );
 	},
 
 
@@ -91,6 +102,9 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 	},
 
 	onMsgReceived: function (message) {
+		this.log('Message received: ' + message.event);
+		this.log(message);
+
 		switch (message.event) {
 			case 'disableReconnect':
 				this.autoReconnect = false;
@@ -155,6 +169,7 @@ var NodeRoomController = $.createClass(Observable, {
 
 		this.socket.bind('join', $.proxy(this.onJoin, this));
 		this.socket.bind('initial', $.proxy(this.onInitial, this));
+		this.socket.bind('meta', $.proxy(this.onMeta, this));
 		this.socket.bind('chat:add', $.proxy(this.onChatAdd, this));
 
 		this.socket.bind('reConnectFail', $.proxy(this.onReConnectFail, this));
@@ -202,7 +217,7 @@ var NodeRoomController = $.createClass(Observable, {
 			this.model.mport(message.data);
 
 			this.isInitialized = true;
-			$().log(this.isInitialized, "isInitialized");
+			$().log("onInitial", "chat:controllers");
 			if (this.isMain()) {
 				var newChatEntry = new models.InlineAlert({text: mw.message('chat-welcome-message', wgSiteName).escaped()});
 				this.model.chats.add(newChatEntry);
@@ -233,6 +248,14 @@ var NodeRoomController = $.createClass(Observable, {
 		}
 
 		this.afterInitQueue = [];
+	},
+
+	// log server information useful when debugging
+	onMeta: function (message) {
+		var meta = message['data'];
+
+		// e.g. chat:meta:  Connected to dev-macbre running chat@0.10.3
+		this.socket.log('Connected to ' + meta['serverHostname'] + ' running chat@' + meta['serverVersion'], 'chat:meta');
 	},
 
 	setActive: function (status) {
@@ -635,7 +658,7 @@ var NodeChatController = $.createClass(NodeRoomController, {
 	},
 
 	showRoom: function (roomId) {
-		$().log(roomId);
+		$().log(roomId, 'chat:showRoom');
 		if (this.activeRoom == roomId) {
 			return false;
 		}

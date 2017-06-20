@@ -8,6 +8,9 @@ describe('AdContext', function () {
 	}
 
 	var mocks = {
+			pvCounter: {
+				increment: noop
+			},
 			abTesting: {
 				getGroup: function () {
 					return 'group';
@@ -67,6 +70,7 @@ describe('AdContext', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.adContext'](
+			mocks.pvCounter,
 			mocks.abTesting,
 			mocks.wikiaCookies,
 			mocks.doc,
@@ -880,6 +884,66 @@ describe('AdContext', function () {
 		};
 
 		expect(getModule().getContext().opts.overridyLeaderboardSizes).toBeFalsy();
+	});
+
+	[
+		{
+			wgCountry: ['CURRENT_COUNTRY'],
+			sampler: true,
+			expectedResult: true
+		},
+		{
+			wgCountry: ['CURRENT_COUNTRY'],
+			sampler: false,
+			expectedResult: false
+		},
+		{
+			wgCountry: ['OTHER_COUNTRY'],
+			sampler: true,
+			expectedResult: false
+		},
+		{
+			wgCountry: ['OTHER_COUNTRY'],
+			sampler: false,
+			expectedResult: false
+		}
+	].forEach(function (testCase) {
+		var description = 'MOAT for featured video should be ' + (testCase.expectedResult ? 'enabled' : 'disabled') +
+			' for countries: '  + JSON.stringify(testCase.wgCountry) + ' and sampling: ' + testCase.sampler;
+
+		it(description, function () {
+			mocks.instantGlobals = {wgAdDriverMoatTrackingForFeaturedVideoAdCountries: testCase.wgCountry};
+			spyOn(mocks.sampler, 'sample').and.returnValue(testCase.sampler);
+
+			expect(getModule().getContext().opts.isMoatTrackingForFeaturedVideoEnabled).toEqual(testCase.expectedResult);
+		});
+	});
+
+	it('Should set by default sampling for MOAT FV on 1% of traffic', function () {
+		mocks.instantGlobals = {wgAdDriverMoatTrackingForFeaturedVideoAdCountries: ['CURRENT_COUNTRY']};
+		spyOn(mocks.sampler, 'sample');
+
+		getModule().getContext();
+
+		var moatSamplerArgs = mocks.sampler.sample.calls.allArgs()[0];
+
+		expect(moatSamplerArgs[0]).toEqual('moatTrackingForFeaturedVideo');
+		expect(moatSamplerArgs[1]).toEqual(1);
+	});
+
+	it('Should set sampling for MOAT FV based on wgVar', function () {
+		mocks.instantGlobals = {
+			wgAdDriverMoatTrackingForFeaturedVideoAdCountries: ['CURRENT_COUNTRY'],
+			wgAdDriverMoatTrackingForFeaturedVideoAdSampling: 25
+		};
+		spyOn(mocks.sampler, 'sample');
+
+		getModule().getContext();
+
+		var moatSamplerArgs = mocks.sampler.sample.calls.allArgs()[0];
+
+		expect(moatSamplerArgs[0]).toEqual('moatTrackingForFeaturedVideo');
+		expect(moatSamplerArgs[1]).toEqual(25);
 	});
 
 	it('Enable KILO ad unit builder', function () {

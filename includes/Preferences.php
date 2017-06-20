@@ -289,7 +289,7 @@ class Preferences {
 
 		// Language
 		/** WIKIA CHANGE BEGIN **/
-		$languages = wfGetFixedLanguageNames();
+		$languages = WikiaLanguage::getRequestSupportedLanguages();
 		/** WIKIA CHANGE END **/
 		if ( !array_key_exists( $wgLanguageCode, $languages ) ) {
 			$languages[$wgLanguageCode] = $wgLanguageCode;

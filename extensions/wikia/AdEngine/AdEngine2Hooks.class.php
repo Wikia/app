@@ -7,7 +7,6 @@ class AdEngine2Hooks {
 	const ASSET_GROUP_ADENGINE_AMAZON_MATCH = 'adengine2_amazon_match_js';
 	const ASSET_GROUP_ADENGINE_DESKTOP = 'adengine2_desktop_js';
 	const ASSET_GROUP_ADENGINE_MOBILE = 'wikiamobile_ads_js';
-	const ASSET_GROUP_ADENGINE_OPENX_BIDDER = 'adengine2_ox_bidder_js';
 	const ASSET_GROUP_ADENGINE_PREBID = 'adengine2_prebid_js';
 	const ASSET_GROUP_ADENGINE_RUBICON_FASTLANE = 'adengine2_rubicon_fastlane_js';
 	const ASSET_GROUP_ADENGINE_TOP = 'adengine2_top_js';
@@ -37,6 +36,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverAdMixCountries';
 		$vars[] = 'wgAdDriverAbTestIdTargeting';
 		$vars[] = 'wgAdDriverAolBidderCountries';
+		$vars[] = 'wgAdDriverAppNexusAstBidderCountries';
 		$vars[] = 'wgAdDriverAppNexusBidderCountries';
 		$vars[] = 'wgAdDriverAppNexusBidderPlacementsConfig';
 		$vars[] = 'wgAdDriverAudienceNetworkBidderCountries';
@@ -52,10 +52,11 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverKruxCountries';
 		$vars[] = 'wgAdDriverKILOCountries';
 		$vars[] = 'wgAdDriverMEGACountries';
+		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdCountries';
+		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdSampling';
 		$vars[] = 'wgAdDriverNetzAthletenCountries';
-		$vars[] = 'wgAdDriverOpenXBidderCountries';
-		$vars[] = 'wgAdDriverOpenXBidderCountriesRemnant';
 		$vars[] = 'wgAdDriverOpenXPrebidBidderCountries';
+		$vars[] = 'wgAdDriverOutstreamVideoFrequencyCapping';
 		$vars[] = 'wgAdDriverOverridePrefootersCountries';
 		$vars[] = 'wgAdDriverPageFairDetectionCountries';
 		$vars[] = 'wgAdDriverPrebidBidderCountries';
@@ -154,10 +155,6 @@ class AdEngine2Hooks {
 
 		if ( AnalyticsProviderPrebid::isEnabled() ) {
 			$jsAssets[] = static::ASSET_GROUP_ADENGINE_PREBID;
-		}
-
-		if ( AnalyticsProviderOpenXBidder::isEnabled() ) {
-			$jsAssets[] = static::ASSET_GROUP_ADENGINE_OPENX_BIDDER;
 		}
 
 		if ( AnalyticsProviderRubiconFastlane::isEnabled() ) {
