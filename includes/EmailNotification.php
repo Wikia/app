@@ -544,10 +544,8 @@ class EmailNotification {
 				'exception' => new \Exception(),
 			];
 
-			$isGenericChangeMessage = wfEmptyMsg( 'enotif_subject_' . strtolower( $this->action ) );
-
-			if ( \F::app()->wg->DisableOldStyleEmail && !$isGenericChangeMessage  ) {
-				$emailContext['issue'] = 'SOC-2290';
+			if ( !F::app()->wg->Title->inNamespace(NS_FILE) || $this->action !== "overwrite" ) {
+				$emailContext['issue'] = 'SOC-2924';
 				$logger->info( 'Skipped sending old style email', $emailContext );
 			} else {
 				$logger->notice( 'Sending via UserMailer', $emailContext );
