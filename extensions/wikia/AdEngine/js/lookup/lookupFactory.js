@@ -79,7 +79,7 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			}
 		}
 
-		function getSlotParams(slotName) {
+		function getSlotParams(slotName, floorPrice) {
 			log(['getSlotParams', slotName, called, response], 'debug', module.logGroup);
 
 			if (!called || !module.isSlotSupported(slotName)) {
@@ -87,7 +87,7 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 				return {};
 			}
 
-			return module.getSlotParams(slotName);
+			return module.getSlotParams(slotName, floorPrice);
 		}
 
 		function getBestSlotPrice(slotName) {
