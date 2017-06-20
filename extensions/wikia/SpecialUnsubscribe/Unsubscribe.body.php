@@ -66,15 +66,6 @@ class UnsubscribePage extends UnlistedSpecialPage {
 			return;
 		}
 
-		#validate timestamp isnt spoiled (you only have 7 days)
-		$timeCutoff = strtotime("7 days ago");
-		if( $timestamp !== '' && $timestamp <= $timeCutoff ) {
-			$wgOut->addWikiMsg( 'unsubscribe-badtime' );
-			// $wgOut->addHTML("timestamp={$timestamp}\n"); #DEVL (remove before release)
-			// $wgOut->addHTML("timeCutoff={$timeCutoff}\n"); #DEVL (remove before release)
-			return;
-		}
-
 		#generate what the token SHOULD be
 		$shouldToken = wfGenerateUnsubToken($email, $timestamp);
 		if( !hash_equals( $shouldToken, $token ) ) {
