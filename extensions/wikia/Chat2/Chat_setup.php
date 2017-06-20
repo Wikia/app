@@ -195,8 +195,9 @@ $wgResourceModules['ext.Chat2'] = [
 		'chat-user-blocked',
 		'chat-user-allow',
 	],	
-	'dependencies' => [ 'mediawiki.jqueryMsg' ],
-	'position' => 'top'
+	'dependencies' => [
+		'jquery.wikia'
+	],
 ];
 
 // Resource Loader modules for site and user JS loaded in Chat
