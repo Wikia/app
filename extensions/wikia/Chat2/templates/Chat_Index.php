@@ -172,11 +172,5 @@
 
 	<!-- Load these after the DOM is built -->
 	<?= $bottomScripts ?>
-	<?php
-		$srcs = AssetsManager::getInstance()->getGroupCommonURL( 'chat_js2', array() );
-	?>
-	<?php foreach ( $srcs as $src ): ?>
-		<script src="<?php echo $src ?>"></script>
-	<?php endforeach; ?>
 </body>
 </html>

@@ -147,6 +147,15 @@ $wgResourceModules[ 'ext.Chat2.ChatBanList' ] = [
  * ResourceLoader module
  */
 $wgResourceModules['ext.Chat2'] = [
+	'scripts' => [
+		'js/emoticons.js',
+		'js/lib/underscore.js',
+		'js/lib/backbone.js',
+		'js/models/models.js',
+		'js/controllers/controllers.js',
+		'js/views/views.js',
+		'js/views/ChatBanModal.js',
+	],
 	'messages' => [
 		// Inline alerts
 		'chat-user-permanently-disconnected',
@@ -196,8 +205,16 @@ $wgResourceModules['ext.Chat2'] = [
 		'chat-user-allow',
 	],	
 	'dependencies' => [
-		'jquery.wikia'
+		'jquery.wikia',
+		'jquery.onscroll',
+		'wikia.log',
+		'wikia.cookies',
+		'wikia.history',
+		'wikia.querystring',
+		'underscore',
 	],
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/Chat2'
 ];
 
 // Resource Loader modules for site and user JS loaded in Chat

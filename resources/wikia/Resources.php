@@ -264,7 +264,14 @@ return [
 	],
 
 	'jquery.wikia' => [
-		'scripts' => 'resources/wikia/jquery.wikia.js',
+		'scripts' => [
+			'resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js',
+			'resources/wikia/jquery.wikia.js',
+		],
+	],
+
+	'jquery.onscroll' => [
+		'scripts' => 'skins/shared/scripts/onScroll.js',
 	],
 
 	// moved here from AssetsManager by wladek
