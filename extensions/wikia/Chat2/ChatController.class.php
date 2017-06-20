@@ -9,11 +9,13 @@ class ChatController extends WikiaController {
 	const CHAT_AVATAR_DIMENSION = 41;
 
 	public function executeIndex() {
-		global $wgUser, $wgFavicon, $wgOut, $wgHooks, $wgWikiaBaseDomain, $wgWikiaNocookieDomain;
+		global $wgFavicon, $wgHooks, $wgWikiaBaseDomain, $wgWikiaNocookieDomain;
 
 		Chat::info( __METHOD__ . ': Method called' );
 
 		wfProfileIn( __METHOD__ );
+
+		$user = $this->getContext()->getUser();
 
 		// String replacement logic taken from includes/Skin.php
 		$this->wgFavicon = str_replace( "images.{$wgWikiaBaseDomain}", "images1.{$wgWikiaNocookieDomain}", $wgFavicon );
@@ -21,7 +23,7 @@ class ChatController extends WikiaController {
 		$this->mainPageURL = Title::newMainPage()->getLocalURL();
 
 		// Variables for this user
-		$this->username = $wgUser->getName();
+		$this->username = $user->getName();
 		$this->avatarUrl = AvatarService::getAvatarUrl( $this->username, ChatController::CHAT_AVATAR_DIMENSION );
 
 		// Find the chat for this wiki (or create it, if it isn't there yet).
@@ -45,7 +47,7 @@ class ChatController extends WikiaController {
 		$this->pathToContribsPage = SpecialPage::getTitleFor( 'Contributions', '$1' )->getFullURL();
 
 		$this->bodyClasses = "";
-		if ( $wgUser->isAllowed( Chat::CHAT_MODERATOR ) ) {
+		if ( $user->isAllowed( Chat::CHAT_MODERATOR ) ) {
 			$this->isModerator = 1;
 			$this->bodyClasses .= ' chatmoderator ';
 		} else {
@@ -53,7 +55,7 @@ class ChatController extends WikiaController {
 		}
 
 		// Adding chatmoderator group for other users. CSS classes added to body tag to hide/show option in menu.
-		$userChangeableGroups = $wgUser->changeableGroups();
+		$userChangeableGroups = $user->changeableGroups();
 		if ( in_array( Chat::CHAT_MODERATOR, $userChangeableGroups['add'] ) ) {
 			$this->bodyClasses .= ' can-give-chat-mod ';
 		}
