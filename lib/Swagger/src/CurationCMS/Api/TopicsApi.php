@@ -555,7 +555,7 @@ class TopicsApi
      * Update Topic Rank
      *
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return void
+     * @return array
      */
     public function updateRank()
     {
