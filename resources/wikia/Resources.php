@@ -229,6 +229,10 @@ return [
 		]
 	],
 
+	'wikia.throttle' => [
+		'scripts' => 'resources/wikia/modules/throttle.js',
+	],
+
 	// module loaded via $.loadjQuery UI and is a wrapper for MediaWiki jQuery UI modules
 	// this used to be static file located in /skins/common/jquery/jquery-ui-1.8.14.custom.js
 	'wikia.jquery.ui' => [
@@ -272,6 +276,7 @@ return [
 
 	'jquery.onscroll' => [
 		'scripts' => 'skins/shared/scripts/onScroll.js',
+		'dependencies' => 'wikia.throttle',
 	],
 
 	// moved here from AssetsManager by wladek
