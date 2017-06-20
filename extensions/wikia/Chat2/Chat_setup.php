@@ -194,8 +194,8 @@ $wgResourceModules['ext.Chat2'] = [
 		'chat-private-headline',
 		'chat-user-blocked',
 		'chat-user-allow',
-	],
-  'dependencies' => [ 'mediawiki.jqueryMsg' ],
+	],	
+	'dependencies' => [ 'mediawiki.jqueryMsg' ],
 	'position' => 'top'
 ];
 
