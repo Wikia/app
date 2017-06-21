@@ -323,16 +323,15 @@ class RunOnCluster extends Maintenance {
 		} catch ( Exception $e ) {
 			fwrite( STDERR, "ERROR: ".$e->getMessage()."\n" );
 		}
-		if ( empty( $result ) ) {
-			$this->dbMissing = true;
 
-			if ( $this->dbCheck ) {
-				$this->debug( "Could not find DB to use\n" );
-				return false;
-			}
-		} else {
-			$this->dbMissing = false;
+		$this->dbMissing = empty( $result );
+
+		// If the db can't be found and we care about that, return now.
+		if ( $this->dbMissing && $this->dbCheck ) {
+			$this->debug( "Could not find DB to use\n" );
+			return false;
 		}
+
 		$this->debug( "Processing: $dbName\n" );
 
 		return true;
