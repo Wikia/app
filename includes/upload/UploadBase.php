@@ -169,7 +169,8 @@ abstract class UploadBase {
 	 * @param $tempPath string the temporary path
 	 * @param $fileSize int the file size
 	 * @param $removeTempFile bool (false) remove the temporary file?
-	 * @return null
+	 *
+	 * @throws MWException
 	 */
 	public function initializePathInfo( $name, $tempPath, $fileSize, $removeTempFile = false ) {
 		$this->mDesiredDestName = $name;

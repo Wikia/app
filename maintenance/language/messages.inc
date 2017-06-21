@@ -2100,7 +2100,6 @@ $wgMessageStructure = array(
 		'blocklogtext',
 		'unblocklogentry',
 		'block-log-flags-anononly',
-		'block-log-flags-nocreate',
 		'block-log-flags-noautoblock',
 		'block-log-flags-noemail',
 		'block-log-flags-nousertalk',

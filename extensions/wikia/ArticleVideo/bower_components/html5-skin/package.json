@@ -1,0 +1,93 @@
+{
+  "name": "html5-skin",
+  "version": "0.0.1",
+  "description": "HTML5 skin over an Ooyala video player",
+  "keywords": [
+    "html5",
+    "react",
+    "ooyala",
+    "video",
+    "player"
+  ],
+  "main": "html5-skin.js",
+  "scripts": {
+    "build": "",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ooyala/html5-skin.git"
+  },
+  "dependencies": {
+    "classnames": "*",
+    "lodash.debounce": "4.0.3",
+    "lodash.values": "4.1.0",
+    "react": "0.14.7",
+    "react-dom": "0.14.7",
+    "react-scrollbar": "0.4.0",
+    "screenfull": "3.0.0"
+  },
+  "devDependencies": {
+    "browserify": "13.0.0",
+    "bulk-require": "^1.0.0",
+    "bulkify": "^1.4.2",
+    "git-rev": "0.2.1",
+    "graceful-fs": "*",
+    "gulp": "3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-connect": "^2.3.1",
+    "gulp-open": "^1.0.0",
+    "gulp-rename": "*",
+    "gulp-replace": "0.5.4",
+    "gulp-sass": "2.0.4",
+    "gulp-shell": "0.4.2",
+    "gulp-sourcemaps": "1.5.2",
+    "gulp-uglify": "1.1.0",
+    "gulp-util": "3.0.7",
+    "jest-cli": "0.4.18",
+    "jquery": "1.8.3",
+    "jsdoc": "^3.3.3",
+    "jsdoc-jsx": "^0.1.0",
+    "react-addons-test-utils": "0.14.7",
+    "react-tools": "*",
+    "reactify": "1.1.1",
+    "underscore": "1.3.3",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.0.0",
+    "watchify": "3.7.0"
+  },
+  "author": "Ooyala",
+  "contributors": [
+    "Aldi Gunawan <agunawan@ooyala.com>",
+    "Timothy Chang <tchang@ooyala.com>",
+    "Jeoffrey Mendez <jmendez@ooyala.com>",
+    "Dustin Preuss <dustin@ooyala.com"
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ooyala/html5-skin/issues"
+  },
+  "homepage": "https://github.com/ooyala/html5-skin",
+  "jest": {
+    "modulePathIgnorePatterns": [
+      "/build/",
+      "/node_modules/"
+    ],
+    "persistModuleRegistryBetweenSpecs": true,
+    "preprocessorIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "rootDir": "",
+    "scriptPreprocessor": "scripts/jest/preprocessor.js",
+    "setupEnvScriptFile": "scripts/jest/environment.js",
+    "unmockedModulePathPatterns": [
+      "<rootDir>/node_modules/react",
+      "react"
+    ],
+    "testPathDirs": [
+      "<rootDir>"
+    ],
+    "testDirectoryName": "tests",
+    "collectCoverage": true
+  }
+}

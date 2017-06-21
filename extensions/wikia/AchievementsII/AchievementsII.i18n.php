@@ -8497,9 +8497,9 @@ $messages['ru'] = array(
 	'leaderboard-intro-hide' => 'свернуть',
 	'leaderboard-intro-open' => 'развернуть',
 	'leaderboard-intro-headline' => 'Что такое достижения?',
-	'leaderboard-intro' => "Вы можете зарабатывать значки на этой вики, редактируя страницы, загружая фотографии и оставляя комментарии. Каждый значок даёт очки: чем больше очков вы получите, тем выше вы будете в таблице лидеров! Значки, которые вы заработали, можно просмотреть на [[$1|вашей странице]].
+	'leaderboard-intro' => "Вы можете зарабатывать значки на этой вики, редактируя страницы, загружая изображения и оставляя комментарии. Каждый значок даёт очки: чем больше очков вы получите, тем выше вы будете в таблице лидеров! Значки, которые вы заработали, можно просмотреть на [[$1|вашей странице]].
 
-	''Как оцениваются значки?'''",
+	'''Как оцениваются значки?'''",
 	'leaderboard' => 'Лидеры по наградам',
 	'achievements-title' => 'Достижения',
 	'leaderboard-title' => 'Таблица лидеров',
@@ -8507,11 +8507,11 @@ $messages['ru'] = array(
 	'achievements-recent-info' => '<a href="$1">$2</a> заработал(а) <strong>$3</strong><br />$4<br />$5',
 	'achievements-activityfeed-info' => 'заработал(а) значок <a href="$3" class="badgeName"><strong>$1</strong></a> за <br /> $2',
 	'achievements-leaderboard-disclaimer' => 'Таблица лидеров показывает изменения со вчерашнего дня',
-	'achievements-leaderboard-rank-label' => 'Рейтинг',
+	'achievements-leaderboard-rank-label' => 'Позиция',
 	'achievements-leaderboard-member-label' => 'Участник',
-	'achievements-leaderboard-points-label' => 'Очков',
-	'achievements-leaderboard-points' => '$1 {{PLURAL:$1|очко|очка|очков}}',
-	'achievements-leaderboard-most-recently-earned-label' => 'Недавно заработанные',
+	'achievements-leaderboard-points-label' => 'Очки',
+	'achievements-leaderboard-points' => '{{PLURAL:$1|очко|очка|очков}}',
+	'achievements-leaderboard-most-recently-earned-label' => 'Последний полученный',
 	'achievements-send' => 'Сохранить изображение',
 	'achievements-save' => 'Сохранить изменения',
 	'achievements-reverted' => 'Значок возвращён к исходной версии.',
@@ -8670,7 +8670,7 @@ $5',
 	'achievements-badge-to-get-welcome-details' => 'Нажмите на кнопку «{{int:oasis-signup}}» в правом верхнем углу, чтобы присоединиться к сообществу.
 Вы можете начать зарабатывать собственные значки!',
 	'achievements-badge-to-get-introduction-details' => 'На вашей личной странице пусто? 
-Нажмите на имя аватар в верхней части экрана, чтобы открыть меню и перейти к вашей странице.
+Нажмите на аватар в верхней части экрана, чтобы открыть меню и перейти к вашей странице.
 Нажмите «{{int:edit}}», чтобы добавить информацию о себе.',
 	'achievements-badge-to-get-sayhi-details' => 'Вы можете оставить сообщения другим пользователям, нажав на кнопку «{{int:addsection}}» на их страницах обсуждения.
 Попросите их о помощи, поблагодарите их за работу или просто поздоровайтесь.',
@@ -8727,7 +8727,7 @@ $5',
 	'achievements-badge-desc-caffeinated' => 'Награда за 100 правок на страницах за один день.',
 	'achievements-badge-desc-luckyedit' => 'Награда за счастливую правку номер $1 на вики.',
 	'achievements-userprofile-title-no' => 'Заработанных участником $1 значков',
-	'achievements-userprofile-title' => '$1 заработал(а) {{PLURAL:$2|значок|значка|значков}} ($2)',
+	'achievements-userprofile-title' => '$1 заработал(а) $2 {{PLURAL:$2|значок|значка|значков}}',
 	'achievements-userprofile-no-badges-owner' => 'Просмотрите список, чтобы увидеть значки, которые можно заработать в этой вики!',
 	'achievements-userprofile-no-badges-visitor' => 'Этот участник ещё не заработал ни одного значка.',
 	'achievements-userprofile-profile-score' => '<em>$1</em>очков<br />достижений',

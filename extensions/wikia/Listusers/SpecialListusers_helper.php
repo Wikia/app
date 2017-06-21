@@ -494,7 +494,6 @@ class ListusersData {
 					"wiki_id"        => $this->mCityId,
 					"user_id"        => $user_id,
 					"user_name"  	 => $user->getName(),
-					"last_ip"		 => 0,
 					"edits"			 => $edits,
 					"editdate"		 => $editdate,
 					"last_revision"  => intval($lastrev),

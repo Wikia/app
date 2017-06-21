@@ -7,45 +7,6 @@ class PlacesHooks {
 		self::$modelToSave = $model;
 	}
 
-	static public function onPageHeaderIndexExtraButtons( $response ){
-		$app = F::app();
-		$extraButtons = $response->getVal('extraButtons');
-
-		if (	( $app->wg->title->getNamespace() == NS_CATEGORY ) &&
-			$app->wg->user->isAllowed('places-enable-category-geolocation') ){
-
-			$isGeotaggingEnabled =
-				PlaceCategory::newFromTitle($app->wg->title->getFullText() )->isGeoTaggingEnabled();
-
-			$commonClasses = 'secondary geoEnableButton';
-			$extraButtons[] = F::app()->renderView( 'MenuButton',
-				'Index',
-				array(
-					'action' => array(
-						"href" => "#",
-						"text" => wfMsg('places-category-switch')
-					),
-					'class' =>  !$isGeotaggingEnabled ? $commonClasses.' disabled': $commonClasses,
-					'name' => 'places-category-switch-on'
-				)
-			);
-			$extraButtons[] = F::app()->renderView('MenuButton',
-				'Index',
-				array(
-					'action' => array(
-						"href" => "#",
-						"text" => wfMsg('places-category-switch-off')
-					),
-					'class' => $isGeotaggingEnabled ? $commonClasses.' disabled': $commonClasses,
-					'name' => 'places-category-switch-off'
-				)
-			);
-		}
-		$response->setVal('extraButtons', $extraButtons);
-
-		return true;
-	}
-
 	static public function onParserFirstCallInit( Parser $parser ){
 		$parser->setHook( 'place', 'PlacesParserHookHandler::renderPlaceTag' );
 		$parser->setHook( 'places', 'PlacesParserHookHandler::renderPlacesTag' );

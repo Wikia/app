@@ -1,0 +1,138 @@
+//
+// Textual form controls
+//
+
+.oo-form-control {
+  display: block;
+  width: 100%;
+  // // Make inputs at least the height of their button counterpart (base line-height + padding + border)
+  // height: $input-height;
+  padding: $input-padding-y $input-padding-x;
+  font-size: $font-size-base;
+  line-height: $line-height;
+  color: $input-color;
+  background-color: $input-bg;
+  // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214.
+  background-image: none;
+  border: $border-width solid $input-border;
+  // Note: This has no effect on <select>s in some browsers, due to the limited stylability of `<select>`s in CSS.
+  @include border-radius($input-border-radius);
+  @include box-shadow($input-box-shadow);
+  @include transition(border-color ease-in-out .15s, box-shadow ease-in-out .15s);
+
+  // Placeholder
+  &::placeholder {
+    color: $input-color-placeholder;
+    // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526.
+    opacity: 1;
+  }
+
+  // Disabled and read-only inputs
+  //
+  // HTML5 says that controls under a fieldset > legend:first-child won't be
+  // disabled if the fieldset is disabled. Due to implementation difficulty, we
+  // don't honor that edge case; we style them as disabled anyway.
+  &:disabled,
+  &[readonly] {
+    background-color: $input-bg-disabled;
+    // iOS fix for unreadable disabled content; see https://github.com/twbs/bootstrap/issues/11655.
+    opacity: 1;
+    //outline:0;
+  }
+
+  &:disabled {
+    cursor: $cursor-disabled;
+  }
+}
+//
+////
+//// Labels
+////
+//
+// For use with horizontal and inline forms, when you need the label text to
+// align with the form controls.
+.oo-form-control-label {
+  padding: $input-padding-y $input-padding-x;
+  margin-bottom: 0; // Override the `<label>` default
+}
+//
+// Inline forms
+//
+.oo-form-inline {
+
+  // Kick in the inline
+  //@include media-breakpoint-up(sm) {
+    // Inline-block all the things for "inline"
+    .oo-form-group {
+      display: inline-block;
+      margin-bottom: 0;
+      vertical-align: middle;
+    }
+
+    // In navbar-form, allow folks to *not* use `.form-group`
+    .oo-form-control {
+      display: inline-block;
+      width: auto; // Prevent labels from stacking above inputs in `.form-group`
+      vertical-align: middle;
+    }
+
+    .oo-form-control-label {
+      margin-bottom: 0;
+      vertical-align: middle;
+    }
+
+    label.oo-checkbox-inline {
+      padding-left: 10px;
+      padding-right: 10px;
+      & > span {
+        margin-left: 6px;
+      }
+    }
+
+    // emove default margin on radios/checkboxes that were used for stacking, and
+    // then undo the floating of radios and checkboxes to match.
+    .radio,
+    .checkbox {
+      display: inline-block;
+      margin-top: 0;
+      margin-bottom: 0;
+      vertical-align: middle;
+
+      label {
+        padding-left: 0;
+      }
+    }
+    .radio input[type="radio"],
+    input[type="checkbox"] {
+      position: relative;
+      margin-left: 0;
+    }
+}
+
+.oo-form-horizontal {
+  label {
+    float: left;
+    padding-top: 7px;
+    margin-bottom: 0;
+    text-align: right;
+  }
+  .oo-form-group {
+    margin-bottom: 15px;
+    div.oo-col-sm-10 {
+      float: left;
+      position: relative;
+      min-height: 1px;
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+  }
+}
+
+.oo-has-error .oo-form-control {
+  border-color: $state-danger-text;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+}
+.oo-has-error .oo-form-control-label {
+  color: $state-danger-text;
+}

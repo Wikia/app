@@ -143,24 +143,24 @@ $messages['ru'] = array(
 );
 
 $messages['zh-hans'] = array(
-	'emailext-password-subject' => '请重置您的Fandom密码',
+	'emailext-password-subject' => '请重置您的FANDOM密码',
 	'emailext-password-summary' => '看来您好像无法登入帐户。真抱歉！尽管我们希望将您的密码发送给您，但是为了安全考虑，我们需要您使用一个临时密码进行登录。',
 	'emailext-password-intro' => '请在下方查看临时密码：',
-	'emailext-password-unrequested' => '如果您没有申请新密码，不用担心！您的帐户非常安全。您可以忽略此邮件并用您的旧密码登入Fandom帐户。',
+	'emailext-password-unrequested' => '如果您没有申请新密码，不用担心！您的帐户非常安全。您可以忽略此邮件并用您的旧密码登入FANDOM帐户。',
 	'emailext-password-questions' => '有疑问或顾虑？请随时[http://zh.community.wikia.com/wiki/Special:Contact/account-issue 联系我们]。',
-	'emailext-password-signature' => 'Fandom社区团队',
+	'emailext-password-signature' => 'FANDOM社区团队',
 	'emailext-password-reset-link-intro' => '请点击下面的链接设置您的新密码︰',
-	'emailext-password-reset-link-summary' => '看来您好像无法登入帐户。真抱歉！尽管我们希望将您的密码发送给您，但是为了安全考虑，我们需要您在Fandom上设置一个新密码。',
+	'emailext-password-reset-link-summary' => '看来您好像无法登入帐户。真抱歉！尽管我们希望将您的密码发送给您，但是为了安全考虑，我们需要您在FANDOM上设置一个新密码。',
 	'emailext-password-reset-link-link-caption' => '设置新密码',
 );
 
 $messages['zh-hant'] = array(
-	'emailext-password-subject' => '請重新設定你的Fandom密碼',
+	'emailext-password-subject' => '請重新設定你的FANDOM密碼',
 	'emailext-password-summary' => '看來您好像無法登入帳戶。真抱歉！儘管我們希望將您的密碼發送給您，但是為了安全考慮，我們只能發送給您一個臨時密碼，您可以使用這個臨時密碼登入。',
 	'emailext-password-intro' => '請查看下面的臨時密碼：',
-	'emailext-password-unrequested' => '如果你沒有申請新的密碼，不要擔心！你的帳戶是安全的。你可以忽略這封電子郵件，並用你的舊密碼登入Fandom帳戶。',
+	'emailext-password-unrequested' => '如果你沒有申請新的密碼，不要擔心！你的帳戶是安全的。你可以忽略這封電子郵件，並用你的舊密碼登入FANDOM帳戶。',
 	'emailext-password-questions' => '有問題或疑慮？請隨時[http://zh.community.wikia.com/wiki/Special:Contact/account-issue 聯繫我們]。',
-	'emailext-password-signature' => 'Fandom社區團隊',
+	'emailext-password-signature' => 'FANDOM社區團隊',
 	'emailext-password-reset-link-intro' => '請點擊下方連結來設定你的新密碼：',
 	'emailext-password-reset-link-summary' => '看來您好像無法登入帳戶。真抱歉！儘管我們希望將您的密碼發送給您，但是為了安全考慮，我們只能發送給您一個臨時密碼，您可以使用這個臨時密碼登入。',
 	'emailext-password-reset-link-link-caption' => '設定新密碼',
