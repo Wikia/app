@@ -1610,7 +1610,7 @@ Siamo entusiasti che '''$4''' faccia parte della comunità di FANDOM! C'è ancor
 Tutti questi link sono un ottimo punto di partenza per iniziare ad esplorare e divertirsi!
 
 -- [[User:$2|$3]] <staff />",
-	'autocreatewiki-welcometalk-wall' => "Ciao, sono un membro del team supporto della community di Fandom. Siamo entusiasti di avere '''{{subst:SITENAME}}''' come parte della comunità di Fandom!
+	'autocreatewiki-welcometalk-wall' => "Ciao, sono un membro del team supporto della community di FANDOM. Siamo entusiasti di avere '''{{subst:SITENAME}}''' come parte della comunità di FANDOM!
 
 Sembra che ci sia tanto da fare, ma siamo qui per aiutarti ad iniziare in modo rapido e semplice. Ecco alcuni consigli e link utili per mettere in moto la tua comunità:
 
