@@ -1115,13 +1115,6 @@ $wgWikiaIsCentralWiki = false;
 $wgEnableMemcachedBulkMode = false;
 
 /**
- * WikiaSeasons flags
- */
-$wgWikiaSeasonsGlobalHeader = false;
-$wgWikiaSeasonsWikiaBar = false;
-$wgWikiaSeasonsPencilUnit = false;
-
-/**
  * @name $wgEnableWAMPageExt
  * Enables WAMPage extension (corporate pages extension)
  */
