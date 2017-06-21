@@ -203,6 +203,9 @@ $wgResourceModules['ext.Chat2'] = [
 		'chat-private-headline',
 		'chat-user-blocked',
 		'chat-user-allow',
+
+    // misc
+		'chat-user-throttled',
 	],	
 	'dependencies' => [
 		'jquery.wikia',
