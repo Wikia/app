@@ -51,36 +51,4 @@ class WikiHeaderController extends WikiaController {
 			'recentchanges' => SpecialPage::getTitleFor( 'RecentChanges' )->getLocalURL(),
 		];
 	}
-
-	public function Wordmark() {
-		$themeSettings = new ThemeSettings();
-		$settings = $themeSettings->getSettings();
-
-		$this->wordmarkText = $settings['wordmark-text'];
-		$this->wordmarkType = $settings['wordmark-type'];
-		$this->wordmarkSize = $settings['wordmark-font-size'];
-		$this->wordmarkFont = $settings['wordmark-font'];
-		$this->wordmarkFontClass = !empty( $settings["wordmark-font"] ) ? "font-{$settings['wordmark-font']}" : '';
-		$this->wordmarkUrl = '';
-		if ( $this->wordmarkType == self::WORDMARK_TYPE_GRAPHIC ) {
-			wfProfileIn( __METHOD__ . 'graphicWordmark' );
-			$this->wordmarkUrl = $themeSettings->getWordmarkUrl();
-			$imageTitle = Title::newFromText( $themeSettings::WordmarkImageName, NS_IMAGE );
-			if ( $imageTitle instanceof Title ) {
-				$attributes = [ ];
-				$file = wfFindFile( $imageTitle );
-				if ( $file instanceof File ) {
-					$attributes [] = 'width="' . $file->width . '"';
-					$attributes [] = 'height="' . $file->height . '"';
-
-					if ( !empty( $attributes ) ) {
-						$this->wordmarkStyle = ' ' . implode( ' ', $attributes ) . ' ';
-					}
-				}
-			}
-			wfProfileOut( __METHOD__ . 'graphicWordmark' );
-		}
-
-		$this->mainPageURL = Title::newMainPage()->getLocalURL();
-	}
 }

@@ -1,4 +1,5 @@
 <?php
+use Wikia\CommunityHeader\Wordmark;
 
 /**
  * Oasis module for EditPageLayout
@@ -120,7 +121,7 @@ class EditPageLayoutController extends WikiaController {
 		}
 
 		// render WikiLogo
-		$response = $this->app->sendRequest( 'WikiHeader', 'Wordmark' );
+		$response = $this->app->sendRequest( 'EditPageLayout', 'wordmark' );
 
 		// move wordmark data
 		$this->wordmark = $response->getData();
@@ -221,6 +222,38 @@ class EditPageLayoutController extends WikiaController {
 		wfRunHooks( 'EditPageLayoutExecute', array( $this ) );
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	public function wordmark() {
+		$themeSettings = new ThemeSettings();
+		$settings = $themeSettings->getSettings();
+
+		$this->wordmarkText = $settings['wordmark-text'];
+		$this->wordmarkType = $settings['wordmark-type'];
+		$this->wordmarkSize = $settings['wordmark-font-size'];
+		$this->wordmarkFont = $settings['wordmark-font'];
+		$this->wordmarkFontClass = !empty( $settings["wordmark-font"] ) ? "font-{$settings['wordmark-font']}" : '';
+		$this->wordmarkUrl = '';
+		if ( $this->wordmarkType == Wordmark::WORDMARK_TYPE_GRAPHIC ) {
+			wfProfileIn( __METHOD__ . 'graphicWordmark' );
+			$this->wordmarkUrl = $themeSettings->getWordmarkUrl();
+			$imageTitle = Title::newFromText( $themeSettings::WordmarkImageName, NS_IMAGE );
+			if ( $imageTitle instanceof Title ) {
+				$attributes = [ ];
+				$file = wfFindFile( $imageTitle );
+				if ( $file instanceof File ) {
+					$attributes [] = 'width="' . $file->width . '"';
+					$attributes [] = 'height="' . $file->height . '"';
+
+					if ( !empty( $attributes ) ) {
+						$this->wordmarkStyle = ' ' . implode( ' ', $attributes ) . ' ';
+					}
+				}
+			}
+			wfProfileOut( __METHOD__ . 'graphicWordmark' );
+		}
+
+		$this->mainPageURL = Title::newMainPage()->getLocalURL();
 	}
 
 	public function addExtraHeaderHtml( $html ) {
