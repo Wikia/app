@@ -2,17 +2,19 @@
 define('ext.wikia.adEngine.context.slotsContext', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
+	'ext.wikia.adEngine.video.videoFrequencyMonitor',
 	'wikia.document',
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.log'
-], function (adContext, params, doc, geo, instantGlobals, log) {
+], function (adContext, params, videoFrequencyMonitor, doc, geo, instantGlobals, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.context.slotsContext',
 		slots = {};
 
 	function setStatus(slotName, status) {
+		log(['setStatus', slotName, status], log.levels.info, logGroup);
 		slots[slotName] = !!status;
 	}
 
@@ -25,7 +27,9 @@ define('ext.wikia.adEngine.context.slotsContext', [
 	function setupSlots() {
 		var context = adContext.getContext(),
 			isHome = params.getPageType() === 'home',
-			isOasis = context.targeting.skin === 'oasis';
+			isOasis = context.targeting.skin === 'oasis',
+			isIncontentEnabled = !isHome && isOasis && isInContentApplicable() &&
+				videoFrequencyMonitor.videoCanBeLaunched();
 
 		setStatus('PREFOOTER_MIDDLE_BOXAD', isHome);
 
@@ -40,7 +44,7 @@ define('ext.wikia.adEngine.context.slotsContext', [
 		setStatus('INVISIBLE_HIGH_IMPACT_2', geo.isProperGeo(instantGlobals.wgAdDriverHighImpact2SlotCountries));
 		setStatus('PREFOOTER_RIGHT_BOXAD', !context.opts.overridePrefootersSizes);
 
-		setStatus('INCONTENT_PLAYER', !isHome && isOasis && isInContentApplicable());
+		setStatus('INCONTENT_PLAYER', isIncontentEnabled);
 
 		log(['Disabled slots:', slots], 'info', logGroup);
 	}
@@ -66,12 +70,10 @@ define('ext.wikia.adEngine.context.slotsContext', [
 	}
 
 	setupSlots();
-	adContext.addCallback(function () {
-		setupSlots();
-	});
 
 	return {
 		filterSlotMap: filterSlotMap,
-		isApplicable: isApplicable
+		isApplicable: isApplicable,
+		setStatus: setStatus
 	};
 });

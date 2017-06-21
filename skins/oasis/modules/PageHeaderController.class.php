@@ -351,12 +351,12 @@ class PageHeaderController extends WikiaController {
 			$this->subtitle = '';
 		}
 
-		if ( !empty( $this->wg->SupressPageTitle ) ) {
+		if ( !empty( $this->wg->SuppressPageTitle ) ) {
 			$this->title = '';
 			$this->subtitle = '';
 		}
 
-		if ( !empty( $this->wg->SupressPageSubtitle ) ) {
+		if ( !empty( $this->wg->SuppressPageSubtitle ) ) {
 			$this->subtitle = '';
 			$this->pageSubtitle = '';
 		} else {

@@ -94,6 +94,11 @@ $messages['en'] = array(
 	'chat-checkuser-join-action' => 'Joined Chat',
 	'chat-status-away' => 'Away',
 	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
+	'chat-blocklist-timestamp' => 'Timestamp',
+	'chat-blocklist-target' => 'Target',
+	'chat-blocklist-expiry' => 'Expires',
+	'chat-blocklist-by' => 'Blocking User',
+	'chat-blocklist-reason' => 'Reason',
 );
 
 $messages['qqq'] = array(
@@ -165,6 +170,11 @@ Parameters:
 	'chat-status-away' => 'Display when user chnages his status to away.
 {{Identical|Away}}',
 	'chat-user-throttled' => 'Error message shown to user as message form placeholder text if they exceeded the rate limit',
+	'chat-blocklist-timestamp' => 'Timestamp column header on Special:ChatBanList',
+	'chat-blocklist-target' => 'Target column header on Special:ChatBanList',
+	'chat-blocklist-expiry' => 'Expires column header on Special:ChatBanList',
+	'chat-blocklist-by' => 'Blocked by column header on Special:ChatBanList',
+	'chat-blocklist-reason' => 'Reason column header on Special:ChatBanList',
 );
 
 $messages['af'] = array(
@@ -751,6 +761,12 @@ Wenn du dies für einen Fehler hältst oder möchtest, dass die Entscheidung üb
 	'right-chatadmin' => 'Der Benutzer hat im [[Help:Chat|Chat]] Adminrechte',
 	'right-chatstaff' => 'Der Benutzer hat im [[Help:Chat|Chat]] FANDOM-Mitarbeiterrechte',
 	'right-chatfailover' => 'Kann auf Special:Chatfailover zugreifen',
+	'chat-blocklist-timestamp' => 'Zeitstempel',
+	'chat-blocklist-target' => 'Ziel',
+	'chat-blocklist-expiry' => 'Sperrdauer bis',
+	'chat-blocklist-by' => 'Benutzer gesperrt',
+	'chat-blocklist-reason' => 'Grund',
+	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
 );
 
 $messages['de-formal'] = array(
@@ -891,6 +907,12 @@ Si crees que ha sido un error o te gustaría reconsiderarlo, por favor contacta 
 	'right-chatadmin' => 'El usuario tiene derechos de administrador en el [[Ayuda:Chat|Chat]]',
 	'right-chatstaff' => 'El usuario tiene derechos de Staff de FANDOM en el [[Ayuda:Chat|Chat]]',
 	'right-chatfailover' => 'Puede acceder a Special:Chatfailover',
+	'chat-blocklist-timestamp' => 'Fecha y hora',
+	'chat-blocklist-target' => 'Destinatario',
+	'chat-blocklist-expiry' => 'Caduca',
+	'chat-blocklist-by' => 'Usuario bloqueado por',
+	'chat-blocklist-reason' => 'Motivo',
+	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
 );
 
 $messages['eu'] = array(
@@ -1236,6 +1258,12 @@ $messages['fr'] = array(
 	'right-chatadmin' => "L'utilisateur a des droits d'administrateur de tchat sur le [[Aide:Tchat|tchat]]",
 	'right-chatstaff' => "L'utilisateur a les droits de staff de FANDOM sur le [[Aide:Tchat|tchat]]",
 	'right-chatfailover' => 'Peut accéder à Special:Chatfailover',
+	'chat-blocklist-timestamp' => 'Date et heure',
+	'chat-blocklist-target' => 'Cible',
+	'chat-blocklist-expiry' => 'Date d’expiration',
+	'chat-blocklist-by' => 'Utilisateur ayant effectué le blocage',
+	'chat-blocklist-reason' => 'Motif',
+	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
 );
 
 $messages['fy'] = array(
@@ -1700,6 +1728,12 @@ $1 è stato bannato da $2 $3.',
 	'right-chatfailover' => 'Può accedere a Special:Chatfailover',
 	'grouppage-chatmoderator' => 'w:it:Aiuto:Chat',
 	'grouppage-bannedfromchat' => 'w:it:Aiuto:Chat',
+	'chat-blocklist-timestamp' => 'Timestamp',
+	'chat-blocklist-target' => 'Destinatario',
+	'chat-blocklist-expiry' => 'Scade',
+	'chat-blocklist-by' => 'Blocco utente',
+	'chat-blocklist-reason' => 'Motivo',
+	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
 );
 
 $messages['ja'] = array(
@@ -1794,6 +1828,12 @@ $messages['ja'] = array(
 	'right-chatadmin' => '[[ヘルプ:チャット|チャット]]でチャットアドミンの権限を持つ',
 	'right-chatstaff' => '[[ヘルプ:チャット|チャット]]でFANDOMスタッフの権限を持つ',
 	'right-chatfailover' => 'Special:Chatfailoverにアクセスする',
+	'chat-blocklist-timestamp' => 'タイムスタンプ',
+	'chat-blocklist-target' => 'ターゲット',
+	'chat-blocklist-expiry' => '期限',
+	'chat-blocklist-by' => 'ブロックしたユーザー',
+	'chat-blocklist-reason' => '理由',
+	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
 );
 
 $messages['ka'] = array(
@@ -1984,6 +2024,106 @@ $messages['lb'] = array(
 	'chat-user-menu-private-allow' => 'Privat Messagen erlaben',
 	'chat-ban-option-list' => '2 Stonnen:2 hours,1 Dag:1 day,3 Deeg:3 days,1 Woch:1 week,2 Wochen:2 weeks,1 Mount:1 month,3 Méint:3 months,6 Méint:6 months,1 Joer:1 year,onbegrenzt:infinite',
 	'chat-status-away' => 'Net do',
+);
+
+$messages['lol'] = array(
+	'chat' => 'crwdns61265:0crwdne61265:0',
+	'chatbanlist' => 'crwdns61266:0crwdne61266:0',
+	'chat-desc' => 'crwdns61267:0crwdne61267:0',
+	'chat-no-login' => 'crwdns61268:0crwdne61268:0',
+	'chat-no-login-text' => 'crwdns61269:0crwdne61269:0',
+	'chat-welcome-message' => 'crwdns61270:0crwdne61270:0',
+	'chat-user-joined' => 'crwdns61271:0crwdne61271:0',
+	'chat-read-only' => 'crwdns61272:0crwdne61272:0',
+	'chat-private-messages' => 'crwdns61273:0crwdne61273:0',
+	'chat-user-parted' => 'crwdns61274:0crwdne61274:0',
+	'chat-user-blocked' => 'crwdns61275:0crwdne61275:0',
+	'chat-user-allow' => 'crwdns61276:0crwdne61276:0',
+	'chat-kick-you-need-permission' => 'crwdns61277:0crwdne61277:0',
+	'chat-kick-cant-kick-moderator' => 'crwdns61278:0crwdne61278:0',
+	'chat-user-was-kicked' => 'crwdns61279:0crwdne61279:0',
+	'chat-you-were-kicked' => 'crwdns61280:0crwdne61280:0',
+	'chat-user-was-banned' => 'crwdns61281:0crwdne61281:0',
+	'chat-you-were-banned' => 'crwdns61282:0crwdne61282:0',
+	'chat-user-was-unbanned' => 'crwdns61283:0crwdne61283:0',
+	'chat-ban-cannt-undo' => 'crwdns61284:0crwdne61284:0',
+	'chat-user-permanently-disconnected' => 'crwdns61285:0crwdne61285:0',
+	'chat-message-was-too-long' => 'crwdns61286:0crwdne61286:0',
+	'chat-inlinealert-a-made-b-chatmod' => 'crwdns61287:0crwdne61287:0',
+	'chat-err-connected-from-another-browser' => 'crwdns61288:0crwdne61288:0',
+	'chat-err-communicating-with-mediawiki' => 'crwdns61289:0crwdne61289:0',
+	'chat-ban-contributions-heading' => 'crwdns61290:0crwdne61290:0',
+	'chat-ban-modal-heading' => 'crwdns61291:0crwdne61291:0',
+	'chat-ban-modal-label-expires' => 'crwdns61292:0crwdne61292:0',
+	'chat-ban-modal-label-reason' => 'crwdns61293:0crwdne61293:0',
+	'chat-log-reason-banadd' => 'crwdns61294:0crwdne61294:0',
+	'chat-log-reason-undo' => 'crwdns61295:0crwdne61295:0',
+	'chat-ban-undolink' => 'crwdns61296:0crwdne61296:0',
+	'chat-ban-modal-button-ok' => 'crwdns61297:0crwdne61297:0',
+	'chat-ban-modal-button-change-ban' => 'crwdns61298:0crwdne61298:0',
+	'chat-ban-modal-button-cancel' => 'crwdns61299:0crwdne61299:0',
+	'chat-ban-modal-change-ban-heading' => 'crwdns61300:0crwdne61300:0',
+	'chat-ban-modal-change-ban-label' => 'crwdns61301:0crwdne61301:0',
+	'chat-ban-modal-end-ban' => 'crwdns61302:0crwdne61302:0',
+	'chat-log-reason-banchange' => 'crwdns61303:0crwdne61303:0',
+	'chat-log-reason-banremove' => 'crwdns61304:0crwdne61304:0',
+	'chat-ban-cant-ban-moderator' => 'crwdns61305:0crwdne61305:0',
+	'chat-ban-already-banned' => 'crwdns61306:0crwdne61306:0',
+	'chat-ban-you-need-permission' => 'crwdns61307:0crwdne61307:0',
+	'chat-missing-required-parameter' => 'crwdns61308:0crwdne61308:0',
+	'chat-err-already-chatmod' => 'crwdns61309:0crwdne61309:0',
+	'chat-err-no-permission-to-add-chatmod' => 'crwdns61310:0crwdne61310:0',
+	'chat-userrightslog-a-made-b-chatmod' => 'crwdns61311:0crwdne61311:0',
+	'chat-err-invalid-username-chatmod' => 'crwdns61312:0crwdne61312:0',
+	'chat-you-are-banned' => 'crwdns61313:0crwdne61313:0',
+	'chat-you-are-banned-text' => 'crwdns61314:0crwdne61314:0',
+	'chat-room-is-not-on-this-wiki' => 'crwdns61315:0crwdne61315:0',
+	'chat-live2' => 'crwdns61316:0crwdne61316:0',
+	'chat-start-a-chat' => 'crwdns61317:0crwdne61317:0',
+	'chat-join-the-chat' => 'crwdns61318:0crwdne61318:0',
+	'chat-edit-count' => 'crwdns61319:0{PLURAL:$1|$1 edit|$1 edits}crwdne61319:0',
+	'chat-member-since' => 'crwdns61320:0crwdne61320:0',
+	'chat-great-youre-logged-in' => 'crwdns61321:0crwdne61321:0',
+	'chat-user-menu-message-wall' => 'crwdns61322:0crwdne61322:0',
+	'chat-user-menu-talk-page' => 'crwdns61323:0crwdne61323:0',
+	'chat-user-menu-contribs' => 'crwdns61324:0crwdne61324:0',
+	'chat-user-menu-private' => 'crwdns61325:0crwdne61325:0',
+	'chat-user-menu-give-chat-mod' => 'crwdns61326:0crwdne61326:0',
+	'chat-user-menu-kick' => 'crwdns61327:0crwdne61327:0',
+	'chat-user-menu-ban' => 'crwdns61328:0crwdne61328:0',
+	'chat-user-menu-private-block' => 'crwdns61329:0crwdne61329:0',
+	'chat-user-menu-private-allow' => 'crwdns61330:0crwdne61330:0',
+	'chat-user-menu-private-close' => 'crwdns61331:0crwdne61331:0',
+	'chat-private-headline' => 'crwdns61332:0crwdne61332:0',
+	'right-chatmoderator' => 'crwdns61333:0crwdne61333:0',
+	'right-chat' => 'crwdns61334:0crwdne61334:0',
+	'right-chatadmin' => 'crwdns61335:0crwdne61335:0',
+	'right-chatstaff' => 'crwdns66385:0crwdne66385:0',
+	'right-chatfailover' => 'crwdns61337:0crwdne61337:0',
+	'group-chatmoderator' => 'crwdns61338:0crwdne61338:0',
+	'group-chatmoderator-member' => 'crwdns61339:0crwdne61339:0',
+	'grouppage-chatmoderator' => 'crwdns61340:0crwdne61340:0',
+	'group-bannedfromchat' => 'crwdns61341:0crwdne61341:0',
+	'group-bannedfromchat-member' => 'crwdns61342:0crwdne61342:0',
+	'grouppage-bannedfromchat' => 'crwdns61343:0crwdne61343:0',
+	'chat-ban-option-list' => 'crwdns61344:0crwdne61344:0',
+	'chat-ban-log-change-ban-link' => 'crwdns61345:0crwdne61345:0',
+	'chat-chatconnect-log' => 'crwdns61346:0crwdne61346:0',
+	'chat-chatconnect-log-entry' => 'crwdns61347:0crwdne61347:0',
+	'chat-chatban-log' => 'crwdns61348:0crwdne61348:0',
+	'chat-chatbanadd-log-entry' => 'crwdns61349:0crwdne61349:0',
+	'chat-chatbanremove-log-entry' => 'crwdns61350:0crwdne61350:0',
+	'chat-chatbanchange-log-entry' => 'crwdns61351:0crwdne61351:0',
+	'chat-contributions-ban-notice' => 'crwdns61352:0{GENDER:$1|This user}crwdne61352:0',
+	'chat-browser-is-notsupported' => 'crwdns61353:0crwdne61353:0',
+	'chat-checkuser-join-action' => 'crwdns61354:0crwdne61354:0',
+	'chat-status-away' => 'crwdns61355:0crwdne61355:0',
+	'chat-blocklist-timestamp' => 'crwdns66514:0crwdne66514:0',
+	'chat-blocklist-target' => 'crwdns66515:0crwdne66515:0',
+	'chat-blocklist-expiry' => 'crwdns66516:0crwdne66516:0',
+	'chat-blocklist-by' => 'crwdns66517:0crwdne66517:0',
+	'chat-blocklist-reason' => 'crwdns66518:0crwdne66518:0',
+	'chat-user-throttled' => 'crwdns66798:0{PLURAL:$1|second|seconds}crwdne66798:0',
 );
 
 $messages['lrc'] = array(
@@ -2597,6 +2737,12 @@ $messages['pl'] = array(
 	'right-chatadmin' => 'Użytkownik ma prawa administratora na [[w:pl:Pomoc:Czat|czacie]]',
 	'right-chatstaff' => 'Użytkownik ma prawa pracownika Fandomu na [[w:pl:Pomoc:Czat|czacie]]',
 	'right-chatfailover' => 'Udostępnia Special:Chatfailover',
+	'chat-blocklist-timestamp' => 'Sygnatura czasowa',
+	'chat-blocklist-target' => 'Grupa docelowa',
+	'chat-blocklist-expiry' => 'Upływa',
+	'chat-blocklist-by' => 'Użytkownik nakładający blokadę',
+	'chat-blocklist-reason' => 'Powód',
+	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
 );
 
 $messages['pms'] = array(
@@ -2815,6 +2961,12 @@ $messages['pt'] = array(
 	'right-chatfailover' => 'Pode acessar Special:Chatfailover',
 	'grouppage-chatmoderator' => 'w:c:comunidade:Ajuda:Chat',
 	'grouppage-bannedfromchat' => 'w:c:comunidade:Ajuda:Chat',
+	'chat-blocklist-timestamp' => 'Data e Hora',
+	'chat-blocklist-target' => 'Audiência',
+	'chat-blocklist-expiry' => 'Expira',
+	'chat-blocklist-by' => 'Usuário bloqueado por',
+	'chat-blocklist-reason' => 'Motivo',
+	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
 );
 
 $messages['ro'] = array(
@@ -2948,6 +3100,12 @@ $messages['ru'] = array(
 	'right-chatstaff' => 'Участник обладает правами сотрудника Фэндома в [[Справка:Чат|чате]]',
 	'right-chatfailover' => 'Разрешён доступ к Служебная:Chatfailover',
 	'grouppage-bannedfromchat' => 'w:c:ru.community:Справка:Чат',
+	'chat-blocklist-timestamp' => 'Время',
+	'chat-blocklist-target' => 'Целевая аудитория',
+	'chat-blocklist-expiry' => 'Истекает',
+	'chat-blocklist-by' => 'Заблокировал',
+	'chat-blocklist-reason' => 'Причина',
+	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
 );
 
 $messages['sa'] = array(
@@ -3622,6 +3780,12 @@ $messages['zh-hans'] = array(
 	'right-chatstaff' => '用户在[[Help:Chat|聊天]]中具有FANDOM员工权限',
 	'right-chatfailover' => '可以访问Special:Chatfailover',
 	'grouppage-bannedfromchat' => 'w:c:zh.community:Help:Chat',
+	'chat-blocklist-timestamp' => '时间',
+	'chat-blocklist-target' => '目标用户群',
+	'chat-blocklist-expiry' => '过期',
+	'chat-blocklist-by' => '封禁的用户',
+	'chat-blocklist-reason' => '原因',
+	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
 );
 
 $messages['zh-hant'] = array(
@@ -3716,5 +3880,11 @@ $messages['zh-hant'] = array(
 	'right-chatstaff' => '使用者在[[Help:Chat|聊天]]中具有FANDOM員工權限',
 	'right-chatfailover' => '可以訪問Special:Chatfailover',
 	'grouppage-bannedfromchat' => 'w:c:zh.community:Help:Chat',
+	'chat-blocklist-timestamp' => '時間',
+	'chat-blocklist-target' => '目標用戶群',
+	'chat-blocklist-expiry' => '過期',
+	'chat-blocklist-by' => '封禁的用戶',
+	'chat-blocklist-reason' => '原因',
+	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
 );
 

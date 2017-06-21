@@ -2,11 +2,12 @@
 define('ext.wikia.adEngine.slot.inContent', [
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.context.slotsContext',
+	'ext.wikia.adEngine.video.videoFrequencyMonitor',
 	'JSMessages',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adTracker, slotsContext, msg, doc, log, win) {
+], function (adTracker, slotsContext, videoFrequencyMonitor, msg, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.inContent',
@@ -18,10 +19,10 @@ define('ext.wikia.adEngine.slot.inContent', [
 
 		adHtml.id = 'INCONTENT_WRAPPER';
 		adHtml.innerHTML = '<div id="' + slotName + '" class="wikia-ad default-height" data-label="' + label + '"></div>';
-		
+
 		return adHtml;
 	}
-	
+
 	function insertSlot(header, slotName, onSuccessCallback) {
 		var wrapper = createInContentWrapper(slotName);
 
@@ -44,13 +45,17 @@ define('ext.wikia.adEngine.slot.inContent', [
 
 		if (!header) {
 			logMessage = 'missing second section ' + logWikiData;
-			log(slotName + ' not added - ' + logMessage, 'debug', logGroup);
-			adTracker.track('slot/' + slotNameGA + '/failed', {'reason': logMessage});
-			return;
 		}
 
 		if (!slotsContext.isApplicable(slotName)) {
 			logMessage = '2nd section in the article is not full width ' + logWikiData;
+		}
+
+		if (!videoFrequencyMonitor.videoCanBeLaunched()) {
+			logMessage = 'video frequency capping ' + logWikiData;
+		}
+
+		if (logMessage) {
 			log(slotName + ' not added - ' + logMessage, 'debug', logGroup);
 			adTracker.track('slot/' + slotNameGA + '/failed', {'reason': logMessage});
 			return;

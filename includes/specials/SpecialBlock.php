@@ -150,11 +150,6 @@ class SpecialBlock extends FormSpecialPage {
 				'label-message' => 'ipbreason',
 				'options-message' => 'ipbreason-dropdown',
 			),
-			'CreateAccount' => array(
-				'type' => 'check',
-				'label-message' => 'ipbcreateaccount',
-				'default' => true,
-			),
 		);
 
 		if( self::canBlockEmail( $user ) ) {
@@ -248,7 +243,6 @@ class SpecialBlock extends FormSpecialPage {
 			)
 		{
 			$fields['HardBlock']['default'] = $block->isHardblock();
-			$fields['CreateAccount']['default'] = $block->prevents( 'createaccount' );
 			$fields['AutoBlock']['default'] = $block->isAutoblocking();
 
 			if( isset( $fields['DisableEmail'] ) ){
@@ -645,7 +639,6 @@ class SpecialBlock extends FormSpecialPage {
 		$block->setBlocker( $performer );
 		$block->mReason = $data['Reason'][0];
 		$block->mExpiry = self::parseExpiryInput( $data['Expiry'] );
-		$block->prevents( 'createaccount', $data['CreateAccount'] );
 		$block->prevents( 'editownusertalk', ( !$wgBlockAllowsUTEdit || $data['DisableUTEdit'] ) );
 		$block->prevents( 'sendemail', $data['DisableEmail'] );
 		$block->isHardblock( $data['HardBlock'] );
@@ -854,11 +847,6 @@ class SpecialBlock extends FormSpecialPage {
 		if( !$data['HardBlock'] && $type != Block::TYPE_USER ){
 			// For grepping: message block-log-flags-anononly
 			$flags[] = 'anononly';
-		}
-
-		if( $data['CreateAccount'] ){
-			// For grepping: message block-log-flags-nocreate
-			$flags[] = 'nocreate';
 		}
 
 		# Same as anononly, this is not displayed when blocking an IP address

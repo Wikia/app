@@ -60,8 +60,14 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			uapContext: {
 				getUapId: noop
 			},
+			passbackHandler: {
+				get: function() {
+					return 'unknown';
+				}
+			},
 			slotTargetingHelper: {
 				getAbTestId: noop,
+				getOutstreamData: noop,
 				getPrebidSlotId: noop,
 				getWikiaSlotId: noop
 			},
@@ -93,6 +99,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			mocks.adDetect,
 			AdElement,
 			mocks.googleTag,
+			mocks.passbackHandler,
 			mocks.slotTargetingHelper,
 			mocks.sourcePoint,
 			mocks.adBlockDetection,

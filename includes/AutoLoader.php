@@ -912,6 +912,7 @@ $wgAutoloadLocalClasses = array(
 	'FakeConverter' => 'languages/Language.php',
 	'Language' => 'languages/Language.php',
 	'LanguageConverter' => 'languages/LanguageConverter.php',
+	'WikiaLanguage' => 'languages/WikiaLanguage.php',
 
 	# maintenance
 	'ConvertLinks' => 'maintenance/convertLinks.php',

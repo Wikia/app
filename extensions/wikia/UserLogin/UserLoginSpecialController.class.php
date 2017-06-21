@@ -115,7 +115,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 */
 	public function loggedIn() {
 		// don't show "special page" text
-		$this->wg->SupressPageSubtitle = true;
+		$this->wg->SuppressPageSubtitle = true;
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
 		$userName = $this->wg->user->getName();

@@ -108,7 +108,6 @@ The suppress log is provided below for reference:',
 Automatically blocked IP addresses are not listed.
 See the [[Special:BlockList|IP block list]] for the list of currently operational bans and blocks.',
 	'block-log-flags-anononly' => 'anonymous users only',
-	'block-log-flags-nocreate' => 'account creation disabled',
 	'block-log-flags-noautoblock' => 'autoblock disabled',
 	'block-log-flags-noemail' => 'e-mail blocked',
 	'block-log-flags-nousertalk' => 'cannot edit own talk page',
@@ -264,7 +263,6 @@ Alamat IP Droëneuh nakeuh $3, ngön ID neutheun nakeuh $5. Tulông peuseureuta 
 	'blocklink' => 'theun',
 	'blocklogpage' => 'Log peutheun',
 	'blocklogentry' => 'theun [[$1]] ngön watèë maté tanggay $2 $3',
-	'block-log-flags-nocreate' => 'pumeugöt nan geupumaté',
 	'bad_image_list' => 'Beuntukjih lagèë di miyub nyoë:
 
 Cit buté dapeuta (baréh nyang geupeuphôn ngon tanda *) nyang geukira. Hubông phôn bak saboh baréh beukeu hubông u beureukah nyang brôk.
@@ -364,7 +362,6 @@ Die verbergingslogboek word hieronder ter verwysing weergegee:',
 	'blocklogtext' => 'Hier is \'n lys van onlangse blokkeer en deblokkeer aksies. Outomaties geblokkeerde IP-adresse word nie vertoon nie.
 Sien die [[Special:BlockList|IP-bloklys]] vir geblokkeerde adresse.',
 	'block-log-flags-anononly' => 'anonieme gebruikers alleenlik',
-	'block-log-flags-nocreate' => 'registrasie van gebruikers geblokkeer',
 	'block-log-flags-noautoblock' => 'outoblokkering is afgeskakel',
 	'block-log-flags-noemail' => 'e-pos versper',
 	'block-log-flags-nousertalk' => 'kan nie eie besprekingsblad wysig nie',
@@ -418,7 +415,6 @@ Ju lutemi përfshini këto shenime në të gjitha shkresat që i bâni.',
 	'blocklink' => 'bllokoje',
 	'blocklogpage' => 'Regjistri i bllokimeve',
 	'blocklogentry' => 'bllokue [[$1]] për kohëzgjatje prej $2 $3',
-	'block-log-flags-nocreate' => 'krijimi i llogarive âsht pamundësue',
 	'bad_image_list' => 'Formati âsht si vijon:
 
 Vetëm elementet listë (rreshtat që fillojnë me *) merren parasysh.
@@ -464,7 +460,6 @@ Ju lutemi përfshini këto shenime në të gjitha shkresat që i bâni.',
 	'blocklink' => 'bllokoje',
 	'blocklogpage' => 'Regjistri i bllokimeve',
 	'blocklogentry' => 'bllokue [[$1]] për kohëzgjatje prej $2 $3',
-	'block-log-flags-nocreate' => 'krijimi i llogarive âsht pamundësue',
 	'bad_image_list' => 'Formati âsht si vijon:
 
 Vetëm elementet listë (rreshtat që fillojnë me *) merren parasysh.
@@ -522,7 +517,6 @@ $1ን ወይም ማንም ሌላ [[{{MediaWiki:Grouppage-sysop}}|መጋቢ]] ስ
 	'blocklogentry' => 'እስከ $2 ድረስ [[$1]] አገዳ $3',
 	'blocklogtext' => 'ይህ መዝገብ ተጠቃሚዎች መቸም ሲታገዱ ወይም ማገጃ ሲነሣ የሚዘረዝር ነው። ለአሁኑ የታገዱት ሰዎች [[Special:BlockList|በአሁኑ ማገጃዎች ዝርዝር]] ይታያሉ።',
 	'block-log-flags-anononly' => 'ያልገቡት የቁ. አድራሻዎች ብቻ',
-	'block-log-flags-nocreate' => 'አዲስ ብዕር ስም ከማውጣት ተከለከለ',
 	'block-log-flags-noautoblock' => 'የቀጥታ ማገጃ እንዳይሠራ ተደረገ',
 	'block-log-flags-noemail' => 'ኢ-ሜል ታገደ',
 	'block-log-flags-nousertalk' => 'የገዛ ውይይት ገጹን ማዘጋጀት አይችልም',
@@ -632,7 +626,6 @@ Ta más detalles, debaixo s\'amuestra o rechistro de supresions:',
 	'blocklogentry' => 'S\'ha bloqueyato a [[$1]] con una durada de $2 $3',
 	'blocklogtext' => 'Isto ye un rechistro de bloqueyos y desbloqueyos d\'usuarios. As adrezas bloqueyatas automaticament no amaneixen aquí. Mire-se a [[Special:BlockList|lista d\'adrezas IP bloqueyatas]] ta veyer a lista actual de vedas y bloqueyos.',
 	'block-log-flags-anononly' => 'nomás os usuarios anonimos',
-	'block-log-flags-nocreate' => 's\'ha desactivato a creyación de cuentas',
 	'block-log-flags-noautoblock' => 's\'ha desactivato o bloqueyo automatico',
 	'block-log-flags-noemail' => 's\'ha desactivato o ninvío de mensaches por correu electronico',
 	'block-log-flags-nousertalk' => 'no puet editar a suya pachina de descusión',
@@ -670,7 +663,6 @@ $messages['ang'] = [
 	'blanknamespace' => '(Hēafod)',
 	'blockip' => 'Brūcend fortȳnan',
 	'blocklink' => 'fortȳnan',
-	'block-log-flags-nocreate' => 'Hordcleofan scieppende forboden',
 	'bydate' => 'be tælmearce',
 	'blankpage' => 'Blæċu sīde',
 ];
@@ -689,7 +681,6 @@ $messages['anp'] = [
 	'blocklink' => 'अवरोधित करॊ',
 	'blocklogpage' => 'ब्लॉक सूची',
 	'blocklogentry' => '"[[$1]]" कॆ $2 $3 तलक बदलाव करै सॆं रोकी देलॊ गेलॊ छै.',
-	'block-log-flags-nocreate' => 'खाता निर्माण पर रोक',
 	'bad_image_list' => 'फोर्मेट निम्न अनुसार छै:
 खाली सूची सामग्री (* सॆं शुरु होय वाला पंक्ति ) चुनलॊ जैतै.
 पंक्ति पर पहिला लिंक एगो खराब फाईल के साथ जुड़ल होना चाहियॊ.
@@ -778,7 +769,6 @@ $messages['ar'] = [
 عناوين الأيبي الممنوعة تلقائيا ليست معروضة.
 انظر [[Special:BlockList|عناوين الأيبي الممنوعة]] لرؤية عمليات المنع المفعلة حاليا.',
 	'block-log-flags-anononly' => 'المستخدمون المجهولون فقط',
-	'block-log-flags-nocreate' => 'إنشاء الحسابات ممنوع',
 	'block-log-flags-noautoblock' => 'المنع التلقائي معطل',
 	'block-log-flags-noemail' => 'البريد الإلكتروني ممنوع',
 	'block-log-flags-nousertalk' => 'لا يمكن تعديل صفحة النقاش الخاصة',
@@ -844,7 +834,6 @@ Nieafuy falinochi wirin püñamtuam wülngiñ ñi üy.',
 	'blocklink' => 'Katrütukun',
 	'blocklogpage' => 'Katrüntukun ñi wirintukun',
 	'blocklogentry' => 'Katrüntukufi [[$1]] $2 antü/ora mew, $3',
-	'block-log-flags-nocreate' => 'Pepi dewmangelay konün',
 	'block-log-flags-hiddenname' => 'Üy kellufe ellkan',
 	'bad_image_list' => 'Feychi chumkünuwe ta femngechi:
 
@@ -914,7 +903,6 @@ aĥir mdĥl f-sijill l-blok mĝti lṫḫṫ:',
 	'blocklogpage' => 'Ṫariĥ l-blokajaṫ',
 	'blocklogentry' => 'bloka [[$1]] limoddaṫ $2 $3',
 	'block-log-flags-anononly' => 'Ġir l-mosṫeĥdimin li ma mċejjlinċ',
-	'block-log-flags-nocreate' => 'mmnoĝ ṫsayeb ċi ḫsab',
 	'block-log-flags-noautoblock' => 'blokaj otomaṫiki dyal l-ĝanawin IP mḫiyyed',
 	'block-log-flags-noemail' => 'imayl mbloki',
 	'block-log-flags-nousertalk' => 'ma ymken loċ yṣayeb ṣfeḫṫo dyal n-niqaċ',
@@ -996,7 +984,6 @@ $messages['arz'] = [
 عناوين الأيبى اللى اتمنعت اوتوماتيكى مش معروضة.
 شوف [[Special:BlockList|عناوين الأيبى الممنوعة]] علشان تشوف عمليات المنع الشغالة دلوقتي.',
 	'block-log-flags-anononly' => 'اليوزرز المجهولين  بس',
-	'block-log-flags-nocreate' => ' فتح الحسابات ممنوع',
 	'block-log-flags-noautoblock' => 'المنع التلقائى متعطل',
 	'block-log-flags-noemail' => 'الإيميل ممنوع',
 	'block-log-flags-nousertalk' => 'لا يمكن تعديل صفحة النقاش الخاصة',
@@ -1106,7 +1093,6 @@ $1ৰ দ্বাৰা এই অৱৰোধ কৰা হৈছে ।
 স্বয়ংক্ৰিয়ভাৱে প্ৰতিবন্ধক পোৱা আই.পি. ঠিকনাবোৰ ইয়াত তালিকাভুক্ত কৰা হোৱা নাই ।
 সাম্প্ৰতিক কাৰ্যৰত নিষেধ আৰু প্ৰতিবন্ধকৰ বাবে [[Special:BlockList|আই.পি. প্ৰতিবন্ধক তালিকা]] চাওক ।',
 	'block-log-flags-anononly' => 'কেৱল বেনামী সদস্য',
-	'block-log-flags-nocreate' => 'একাউন্ট সৃষ্টি নিষ্ক্ৰিয় কৰা হৈছে',
 	'block-log-flags-noautoblock' => 'স্বয়ংক্ৰিয়-প্ৰতিবন্ধক নিষ্ক্ৰিয় কৰা হৈছে',
 	'block-log-flags-noemail' => 'ই-মেইল অৱৰোধ কৰা হৈছে',
 	'block-log-flags-nousertalk' => 'নিজৰ কথা-বতৰা পৃষ্ঠা সম্পাদনা কৰিব নোৱাৰি',
@@ -1223,7 +1209,6 @@ El rexistru de desanicios s\'ufre darréu pa referencia:',
 Les direcciones IP bloquiaes automáticamente nun salen equí.
 Pa ver los bloqueos qu\'hai agora mesmo, mira na [[Special:BlockList|llista d\'IP bloquiaes]].',
 	'block-log-flags-anononly' => 'namái usuarios anónimos',
-	'block-log-flags-nocreate' => 'creación de cuentes desactivada',
 	'block-log-flags-noautoblock' => 'bloquéu automáticu deshabilitáu',
 	'block-log-flags-noemail' => 'corréu electrónicu bloquiáu',
 	'block-log-flags-nousertalk' => 'nun pue editar la páxina d\'alderique propia',
@@ -1293,7 +1278,6 @@ Va lazavanha (tulon ozwason va cidayanu bu se) vlevon bazel !',
 	'blocklogentry' => 'Elekan [[$1]] kali $2 ke $3 evledja',
 	'blocklogtext' => 'Ceci est la trace des blocages et déblocages des utilisateurs. Les adresses IP automatiquement bloquées ne sont pas listées. Consultez la [[Special:IPBlockList|liste des utilisateurs bloqués]] pour voir qui est actuellement effectivement bloqué.',
 	'block-log-flags-anononly' => 'anton yoltiskaf favesik',
-	'block-log-flags-nocreate' => 'Pataredura gritegirana',
 	'block-log-flags-noemail' => 'e-mail elekan',
 	'blockme' => 'Zo eleká !',
 	'bydate' => 'kan evla',
@@ -1369,7 +1353,6 @@ Bax [[Special:BlockList|IP blok siyahısı]] bloklanmış IP-lər.',
 Avtomatik bloklanmış IP-ünvanlar burada göstərilmir.
 Hal-hazırkı [[Special:BlockList|qadağaların və bloklamaların siyahısı]]na bax.',
 	'block-log-flags-anononly' => 'yalnız qeydiyyatsız istifadəçilər',
-	'block-log-flags-nocreate' => 'Yeni hesab yaratma bloklanıb',
 	'block-log-flags-noautoblock' => 'avtobloklama qeyri-mümkündür',
 	'block-log-flags-noemail' => 'E-mail bloklanıb',
 	'block-log-flags-nousertalk' => 'Müzakirə səhifəsini redaktə edə bilməz.',
@@ -1478,7 +1461,6 @@ $messages['ba'] = [
 Авто бикләнеүсе IP адрестар бында күрһәтелмәй.
 [[Special:BlockList|Ғәмәлдәге тыйыуҙырҙы һәм бикләүҙәрҙе]] ҡарай алаһығыҙ.',
 	'block-log-flags-anononly' => 'танылмаған ҡатнашыусылар ғына',
-	'block-log-flags-nocreate' => 'иҫәп яҙыуҙарын теркәү тыйылған',
 	'block-log-flags-noautoblock' => 'авто бикләү һүндерелгән',
 	'block-log-flags-noemail' => 'электрон хат ебәреү тыйылған',
 	'block-log-flags-nousertalk' => 'үҙенең фекер алышыу битен мөхәррирләй алмай',
@@ -1533,7 +1515,6 @@ Zur da Aufheewung vo da Sperrn schau unter da [[Special:BlockList|Listen vo olle
 	'blocklog-showsuppresslog' => '{{GENDER:$1|Der Benutzer|Dé Benutzerrin|Der Benutzer}} do is schoh friarer gsperrd und vastéckt worn. Es fóigt a Eihtrog aus\'m Benutzersperrlogbiaché:',
 	'blocklogentry' => 'hod „[[$1]]“ fyrn fóigenden Zeidraum gsperrd: $2; $3',
 	'block-log-flags-anononly' => 'netter Anónyme',
-	'block-log-flags-nocreate' => '\'s erstön voh Benutzerkontós is gsperrd',
 	'block-log-flags-noautoblock' => 'Autóblóck deaktivierd',
 	'block-log-flags-noemail' => 'E-Post vaschicka gspead',
 	'bad_image_list' => 'Formaat:
@@ -1582,7 +1563,6 @@ Zur da Aufheewung vo da Sperrn schau unter da [[Special:BlockList|Listen vo olle
 	'blocklog-showsuppresslog' => '{{GENDER:$1|Der Benutzer|Dé Benutzerrin|Der Benutzer}} do is schoh friarer gsperrd und vastéckt worn. Es fóigt a Eihtrog aus\'m Benutzersperrlogbiaché:',
 	'blocklogentry' => 'hod „[[$1]]“ fyrn fóigenden Zeidraum gsperrd: $2; $3',
 	'block-log-flags-anononly' => 'netter Anónyme',
-	'block-log-flags-nocreate' => '\'s erstön voh Benutzerkontós is gsperrd',
 	'block-log-flags-noautoblock' => 'Autóblóck deaktivierd',
 	'block-log-flags-noemail' => 'E-Post vaschicka gspead',
 	'bad_image_list' => 'Formaat:
@@ -1650,7 +1630,6 @@ $messages['bcc'] = [
 اتوماتیکی محدود بوتگین آدرس آی پی ادان لیست نهنت.
 بچار [[Special:BlockList|لیست محدودیت آی پی]] په لیست هنوکین عملی محدودیتان و بند کتان.',
 	'block-log-flags-anononly' => 'ناشناس کابران فقط',
-	'block-log-flags-nocreate' => 'شرکتن حساب غیر فعال',
 	'block-log-flags-noautoblock' => 'اتوماتیکی محدوددیت غیر فعال',
 	'block-log-flags-noemail' => 'ایمیل محدودانت',
 	'block-log-flags-nousertalk' => 'نه تونیت صفحه بحثء وتیء اصلاح کنیت',
@@ -1717,7 +1696,6 @@ Magkaag nin espisipikong rason (halimbawa, magtao nin ehemplo kan mga páhinang 
 	'blocklogtext' => 'Ini an historial kan pagbagat asin pagbawi sa pagbagat nin mga paragamit. An mga enseguidang binagat na direccion nin
 IP dai nakalista digdi. Hilingon an [[Special:BlockList|IP lista nin mga binagat]] para sa lista nin mga nakaandar na mga pagpangalad buda mga pagbagat.',
 	'block-log-flags-anononly' => 'Mga paragamit na anónimo sana',
-	'block-log-flags-nocreate' => 'pigpopondohán an paggibo nin \'\'account\'',
 	'block-log-flags-noautoblock' => 'pigpopondo an enseguidang pagbagat',
 	'block-log-flags-noemail' => 'binagát an e-surat',
 	'bydate' => 'sa petsa',
@@ -1823,7 +1801,6 @@ $messages['be'] = [
 	'blocklogentry' => 'пастаўлены блок на "[[$1]]", з часам трывання $2 $3',
 	'blocklogtext' => 'Журнал пастаноўкі і здымання блокаў. Аўтаматычна блакаваныя адрасы IP тут не паказваюцца. Спіс актуальных забарон і блокаў бач у [[Special:BlockList|спісе блокаў IP]].',
 	'block-log-flags-anononly' => 'толькі ананімныя ўдзельнікі',
-	'block-log-flags-nocreate' => 'стварэнне рахунку не дазволена',
 	'block-log-flags-noautoblock' => 'аўта-блок не дазволены',
 	'block-log-flags-noemail' => 'пастаўлены блок на эл.пошту',
 	'block-log-flags-nousertalk' => 'нельга правіць уласную размову',
@@ -1932,7 +1909,6 @@ $messages['be-tarask'] = [
 	'blocklogentry' => 'заблякаваны [[$1]] на тэрмін: $2 $3',
 	'blocklogtext' => 'Гэта журнал уліку блякаваньняў і разблякаваньняў удзельнікаў. Аўтаматычна заблякаваныя IP-адрасы не пазначаныя. Глядзіце [[Special:BlockList|сьпіс заблякаваных IP-адрасоў]], каб пабачыць дзейныя ў гэты момант блякаваньні.',
 	'block-log-flags-anononly' => 'толькі ананімныя ўдзельнікі',
-	'block-log-flags-nocreate' => 'стварэньне рахункаў забароненае',
 	'block-log-flags-noautoblock' => 'аўтаматычнае блякаваньне адключанае',
 	'block-log-flags-noemail' => 'электронная пошта заблякаваная',
 	'block-log-flags-nousertalk' => 'ня можа рэдагаваць уласную старонку гутарак',
@@ -2040,7 +2016,6 @@ $messages['be-x-old'] = [
 	'blocklogentry' => 'заблякаваны [[$1]] на тэрмін: $2 $3',
 	'blocklogtext' => 'Гэта журнал уліку блякаваньняў і разблякаваньняў удзельнікаў. Аўтаматычна заблякаваныя IP-адрасы не пазначаныя. Глядзіце [[Special:BlockList|сьпіс заблякаваных IP-адрасоў]], каб пабачыць дзейныя ў гэты момант блякаваньні.',
 	'block-log-flags-anononly' => 'толькі ананімныя ўдзельнікі',
-	'block-log-flags-nocreate' => 'стварэньне рахункаў забароненае',
 	'block-log-flags-noautoblock' => 'аўтаматычнае блякаваньне адключанае',
 	'block-log-flags-noemail' => 'электронная пошта заблякаваная',
 	'block-log-flags-nousertalk' => 'ня можа рэдагаваць уласную старонку гутарак',
@@ -2143,7 +2118,6 @@ $messages['bg'] = [
 Автоматично блокираните IP-адреси не са показани.
 Вижте [[Special:BlockList|списъка на блокираните IP-адреси]] за текущото състояние на блокиранията.',
 	'block-log-flags-anononly' => 'само анонимни потребители',
-	'block-log-flags-nocreate' => 'създаването на сметки е изключено',
 	'block-log-flags-noautoblock' => 'автоблокировката е изключена',
 	'block-log-flags-noemail' => 'е-пощенската услуга е блокирана',
 	'block-log-flags-nousertalk' => 'забрана за редактиране на личната беседа',
@@ -2246,7 +2220,6 @@ $messages['bh'] = [
 Автоматично блокираните IP-адреси не са показани.
 Вижте [[Special:BlockList|списъка на блокираните IP-адреси]] за текущото състояние на блокиранията.',
 	'block-log-flags-anononly' => 'само анонимни потребители',
-	'block-log-flags-nocreate' => 'създаването на сметки е изключено',
 	'block-log-flags-noautoblock' => 'автоблокировката е изключена',
 	'block-log-flags-noemail' => 'е-пощенската услуга е блокирана',
 	'block-log-flags-nousertalk' => 'забрана за редактиране на личната беседа',
@@ -2374,7 +2347,6 @@ Log panikinan disadiakan di bawah gasan rujukan:',
 Blukir alamat IP utumatis kada didaptar.
 Janaki [[Special:BlockList|daptar IP diblukir]] gasan daptar oparasi diikat wan diblukir tadamini.',
 	'block-log-flags-anononly' => 'papamuruk kada bangaran haja',
-	'block-log-flags-nocreate' => 'Paulahan akun dipajahakan',
 	'block-log-flags-noautoblock' => 'pamblukiran utumatis dipajahakan',
 	'block-log-flags-noemail' => 'suril diblukir',
 	'block-log-flags-nousertalk' => 'kada kawa mambabak tungkaran pamandiran surang',
@@ -2467,7 +2439,6 @@ $1 নিষেধাজ্ঞা আরোপ করেছেন। নিষ�
 	'blocklogentry' => '[[$1]]এর উপর $2 $3 মেয়াদের জন্য নিষেধাজ্ঞা আরোপিত হয়েছে।',
 	'blocklogtext' => 'এটি ব্যবহারকারীদেরকে বাধা দানের বা বাধা তুলে নেওয়ার লগ। স্বয়ংক্রিয়ভাবে বাধাদানকৃত আইপি ঠিকানাগুলি এখানে তালিকাবদ্ধ করা হয়নি। বর্তমানে সক্রিয় নিষিদ্ধকরণ ও বাধাদানের তালিকার জন্য [[Special:BlockList|আইপি বাধাদান তালিকা]] দেখুন।',
 	'block-log-flags-anononly' => 'কেবল বেনামী ব্যবহারকারীরা',
-	'block-log-flags-nocreate' => 'অ্যাকাউন্ট সৃষ্টি নিষ্ক্রিয় করা হয়েছে',
 	'block-log-flags-noautoblock' => 'স্বয়ংক্রিয় বাধাদান নিষ্ক্রিয়',
 	'block-log-flags-noemail' => 'ই-মেইলে বাধা আছে',
 	'block-log-flags-nousertalk' => 'নিজের আলাপের পাতা সম্পাদনা করতে পারবে না',
@@ -2546,7 +2517,6 @@ $messages['bpy'] = [
 	'blocklink' => 'থেপ কর',
 	'blocklogpage' => 'থেপকরানির log',
 	'blocklogentry' => '"[[$1]]"-রে $2 মেয়াদর কা থেপকরানি অসে। $3',
-	'block-log-flags-nocreate' => 'অ্যাকাউন্ট হঙকরানিহান থেপকরিয়া থনা অসে',
 	'bydate' => 'তারিখর সিজিলন',
 	'bad_image_list' => 'ফরমেটহান তলর সাদে:
 
@@ -2692,7 +2662,6 @@ Sellit ouzh [[Special:BlockList|roll ar chomlec\'hioù IP ha kontoù stanket]] e
 	'blocklogentry' => 'en/he deus stanket [[$1]] betek an $2 $3',
 	'blocklogtext' => 'Setu roud stankadennoù ha distankadennoù an implijerien. N\'eo ket bet rollet ar chomlec\'hioù IP bet stanket outo ent emgefre. Sellet ouzh [[Special:BlockList|roll an implijerien stanket]] evit gwelet piv zo stanket e gwirionez.',
 	'block-log-flags-anononly' => 'implijerien dizanv hepken',
-	'block-log-flags-nocreate' => 'berzet eo krouiñ kontoù',
 	'block-log-flags-noautoblock' => 'Emstankañ diweredekaet',
 	'block-log-flags-noemail' => 'postel stanket',
 	'block-log-flags-nousertalk' => 'n\'hall ket kemmañ e bajenn gaozeal dezhañ e-unan',
@@ -2719,7 +2688,6 @@ $messages['brh'] = [
 	'blockip' => 'Kárband á rok xaļ',
 	'blocklink' => 'rok xaļ',
 	'blocklogpage' => 'Rok hisáb',
-	'block-log-flags-nocreate' => 'pinváxubí á rok xallingá',
 ];
 
 $messages['bs'] = [
@@ -2799,7 +2767,6 @@ Mora biti manji od $1 {{PLURAL:$1|znaka|znaka|znakova}}.',
 Automatsko blokirane IP adrese nisu uspisane ovde.
 Pogledajte [[Special:BlockList|blokirane IP adrese]] za spisak trenutnih zabrana i blokiranja.',
 	'block-log-flags-anononly' => 'samo anonimni korisnici',
-	'block-log-flags-nocreate' => 'pravljenje računa onemogućeno',
 	'block-log-flags-noautoblock' => 'automatsko blokiranje onemogućeno',
 	'block-log-flags-noemail' => 'e-mail je blokiran',
 	'block-log-flags-nousertalk' => 'ne može uređivati vlastitu stranicu za razgovor',
@@ -2928,7 +2895,6 @@ Per més detalls, a sota es mostra el registre de supressions:',
 	'blocklogentry' => 'ha blocat l\'{{GENDER:$1|usuari|usuària}} [[$1]] per un període de: $2 $3',
 	'blocklogtext' => 'Això és una relació de accions de bloqueig i desbloqueig. Les adreces IP bloquejades automàticament no apareixen. Vegeu la [[Special:BlockList|llista d\'usuaris actualment bloquejats]].',
 	'block-log-flags-anononly' => 'només els usuaris anònims',
-	'block-log-flags-nocreate' => 's\'ha desactivat la creació de comptes',
 	'block-log-flags-noautoblock' => 'sense bloqueig automàtic',
 	'block-log-flags-noemail' => 'correu-e blocat',
 	'block-log-flags-nousertalk' => 'no podeu modificar la pàgina de discussió pròpia',
@@ -2969,7 +2935,6 @@ $messages['cdo'] = [
 	'blocklogpage' => 'Hŭng-sō̤ nĭk-cé',
 	'blocklogentry' => 'hŭng-sō̤ [[$1]], gáu $2 hâiu guó-gĭ, $3',
 	'block-log-flags-anononly' => 'nâ mò̤-miàng ê̤ṳng-hô',
-	'block-log-flags-nocreate' => 'huòng-cī kŭi dióng-hô̤',
 	'bydate' => 'áng nĭk-gĭ',
 ];
 
@@ -2997,7 +2962,6 @@ $messages['ce'] = [
 	'blocklink' => 'сацаве',
 	'blocklogpage' => 'Сацораш долу тептар',
 	'blocklogentry' => 'сацийна [[$1]] цхьана ханна $2 $3',
-	'block-log-flags-nocreate' => 'цамагдо дlаязвалар дlаязбаларшца',
 	'bad_image_list' => 'Барам хила беза ишта:
 
 Лораш хира йу могlамяхь йолу хlумнаш (могlийн, йола луш йолу сабол тlира *).
@@ -3030,7 +2994,6 @@ Dili kini puyde molapas sa $1 {{PLURAL:$1|ka karakter|ka mga karakter}}.',
 	'blocklink' => 'i-block',
 	'blocklogpage' => 'Log sa block',
 	'blocklogentry' => 'na-block si [[$1]] nga may expiry time nga $2 $3',
-	'block-log-flags-nocreate' => 'ang paghimo\'g akawnt gipugngan',
 	'bad_image_list' => 'Ang pormat mao ang mosunod:
 
 Ang mga list items (mga linya nga nagsugod sa*) ang gikonsiderar.
@@ -3141,7 +3104,6 @@ $messages['ckb'] = [
 بەربەست‌کرانی خۆکاری ئای‌پی لەم لیستەدا نەهاتوون.
 بۆ دیتنی ئەو بەربەستانە ئێستە لە ئارادان چاو لە [[Special:IPBlockList|لیستی بەربەستی ئای‌پی]] بکە.',
 	'block-log-flags-anononly' => 'تەنها بەکارهێنەرە نەناسراوەکان',
-	'block-log-flags-nocreate' => 'دروستکردنی هەژمار ناچالاککراوە',
 	'block-log-flags-noautoblock' => 'بەربست‌کردنی خۆکار لە کار خسترا',
 	'block-log-flags-noemail' => 'ئی‌مەیل بەربەست‌کراوە',
 	'block-log-flags-nousertalk' => 'دەستکاری لاپەڕەی وتووێژی خۆ ناکرێت',
@@ -3163,7 +3125,6 @@ $messages['co'] = [
 	'blocklist-reason' => 'Mutivu',
 	'blocklink' => 'bluccà',
 	'block-log-flags-anononly' => 'solu cuntributori anonimi',
-	'block-log-flags-nocreate' => 'registramentu pruibitu',
 	'bydate' => 'per data',
 ];
 
@@ -3188,7 +3149,6 @@ Pwede nga naga-unod mini sang isa ukon madamo pa nga mga karakter nga indi pwede
 	'blocklink' => 'lipdan/banggaan',
 	'blocklogpage' => 'Lista sang pagbangal',
 	'blocklogentry' => 'nabangga-an nga [[$1]] nga magatapos sa $2 $3',
-	'block-log-flags-nocreate' => 'pag-ubra sang account ginbawalan',
 	'bad_image_list' => 'Ang dagway amo ang mga nagasunod:
 
 Mga nakalista nga bagay lang gid (mga linya nga nagasugod sa *) ang ginatagaan sang pagtalupangod.
@@ -3217,7 +3177,6 @@ Pwede nga naga-unod mini sang isa ukon madamo pa nga mga karakter nga indi pwede
 	'blocklink' => 'lipdan/banggaan',
 	'blocklogpage' => 'Lista sang pagbangal',
 	'blocklogentry' => 'nabangga-an nga [[$1]] nga magatapos sa $2 $3',
-	'block-log-flags-nocreate' => 'pag-ubra sang account ginbawalan',
 	'bad_image_list' => 'Ang dagway amo ang mga nagasunod:
 
 Mga nakalista nga bagay lang gid (mga linya nga nagasugod sa *) ang ginatagaan sang pagtalupangod.
@@ -3276,7 +3235,6 @@ $messages['crh-cyrl'] = [
 	'blocklogpage' => 'Блок этюв журналы',
 	'blocklogentry' => '"[[$1]]" иришими $2 $3 токътатылды. Себеп',
 	'blocklogtext' => 'Мында къулланыджы иришимине ёнелик блок этюв ве блок чыкъарув къайдлары косьтериле. Автоматик IP адреси блок этювлери джедвельге кирсетильмеди. Шимди иришими токътатылгъан къулланыджыларны [[Special:BlockList|IP блок этюв джедвели]] саифесинден корип оласынъыз.',
-	'block-log-flags-nocreate' => 'янъы эсап ачмакъ ясакъ этильди',
 	'block-log-flags-noemail' => 'e-mail блок этильди',
 	'bydate' => 'хронологик сыранен',
 	'bad_image_list' => 'Формат бойле олмалы:
@@ -3337,7 +3295,6 @@ Blok etmelerni közden keçirmek içün [[Special:BlockList|IP adresi blok etilg
 	'blocklogpage' => 'Blok etüv jurnalı',
 	'blocklogentry' => '"[[$1]]" irişimi $2 $3 toqtatıldı. Sebep',
 	'blocklogtext' => 'Mında qullanıcı irişimine yönelik blok etüv ve blok çıqaruv qaydları kösterile. Avtomatik IP adresi blok etüvleri cedvelge kirsetilmedi. Şimdi irişimi toqtatılğan qullanıcılarnı [[Special:BlockList|IP blok etüv cedveli]] saifesinden körip olasıñız.',
-	'block-log-flags-nocreate' => 'yañı esap açmaq yasaq etildi',
 	'block-log-flags-noemail' => 'e-mail blok etildi',
 	'bydate' => 'hronologik sıranen',
 	'bad_image_list' => 'Format böyle olmalı:
@@ -3446,7 +3403,6 @@ Zde je pro přehled zobrazen výpis z knihy zablokování:',
 Automaticky blokované IP adresy nejsou vypsány.
 Vizte též [[Special:BlockList|seznam všech probíhajících bloků]].',
 	'block-log-flags-anononly' => 'pouze anonymní uživatelé',
-	'block-log-flags-nocreate' => 'vytváření účtů zablokováno',
 	'block-log-flags-noautoblock' => 'automatické blokování vypnuto',
 	'block-log-flags-noemail' => 'e-maily zablokovány',
 	'block-log-flags-nousertalk' => 'nemůže editovat svou diskusní stránku',
@@ -3503,7 +3459,6 @@ Biéj do [[Special:BlockList|lëstë zascëgónëch adresów IP]] abë òbaczëc
 	'blocklink' => 'blokùjë',
 	'blocklogpage' => 'Historëjô blokòwaniô',
 	'blocklogentry' => 'zablokòwôł [[$1]], czas blokadë: $2 $3',
-	'block-log-flags-nocreate' => 'blokada ùsôdzaniô kònta',
 	'bydate' => 'wedle datumù',
 	'bad_image_list' => 'Fòrmat do wpisaniô je jakno niżi:
 
@@ -3569,7 +3524,6 @@ $1 хутшăнакан патне, е ытти [[{{MediaWiki:Grouppage-sysop}}|
 	'blocklink' => 'ĕçлеме чар',
 	'blocklogpage' => 'Ĕçлеме чарнисен журналĕ',
 	'block-log-flags-anononly' => 'анонимлă хутшăнакансем кăна',
-	'block-log-flags-nocreate' => 'хутшăнакансене регистрациленме чарнă',
 	'block-log-flags-noemail' => 'çыру яма чарнă',
 	'bydate' => 'дата тăрăх',
 ];
@@ -3665,7 +3619,6 @@ Dyma\'r lòg cuddio perthnasol:',
 	'blocklogentry' => 'wedi rhwystro "[[$1]]" sy\'n dod i\'w ben ar $2 $3',
 	'blocklogtext' => 'Dyma lòg o\'r holl weithredoedd rhwystro a dadrwystro. Nid yw\'r cyfeiriadau IP sydd wedi cael ei rwystro\'n awtomatig ar y rhestr. Gweler y [[Special:BlockList|rhestr rhwystrau IP]] am restr y rhwystrau a\'r gwaharddiadau sydd yn weithredol ar hyn o bryd.',
 	'block-log-flags-anononly' => 'defnyddwyr anhysbys yn unig',
-	'block-log-flags-nocreate' => 'analluogwyd creu cyfrif',
 	'block-log-flags-noautoblock' => 'analluogwyd rhwystro awtomatig',
 	'block-log-flags-noemail' => 'analluogwyd e-bostio',
 	'block-log-flags-nousertalk' => 'ni all olygu ei dudalen/ei thudalen sgwrs ei hunan',
@@ -3780,7 +3733,6 @@ Skjulningsloggen vises nedenfor som reference:',
 	'blocklogentry' => 'blokerede [[$1]] med en varighed på $2 $3',
 	'blocklogtext' => 'Dette er en liste med blokerede brugere og ophævede blokeringer af brugere. Automatisk blokerede IP-adresser er ikke anført her. Se [[Special:BlockList|blokeringslisten]] for den nuværende liste med blokerede brugere.',
 	'block-log-flags-anononly' => 'kun anonyme',
-	'block-log-flags-nocreate' => 'Oprettelse af brugerkonti blokeret',
 	'block-log-flags-noautoblock' => 'Autoblok deaktiveret',
 	'block-log-flags-noemail' => 'e-mail blokeret',
 	'block-log-flags-nousertalk' => 'kan ikke redigere egen diskussionsside',
@@ -3885,7 +3837,6 @@ Es folgt der Eintrag aus dem Unterdrückungs-Logbuch:',
 	'blocklogentry' => 'sperrte „[[$1]]“ für den Zeitraum: $2 $3',
 	'blocklogtext' => 'Dies ist das Logbuch über Sperrungen und Entsperrungen von Benutzern und IP-Adressen. Die Spezialseite [[Special:Ipblocklist|Liste gesperrter Benutzer/IP-Adressen]] führt alle aktuell gesperrten Benutzer auf, einschließlich automatisch geblockter IP-Adressen.',
 	'block-log-flags-anononly' => 'nur Anonyme',
-	'block-log-flags-nocreate' => 'Erstellung von Benutzerkonten gesperrt',
 	'block-log-flags-noautoblock' => 'Autoblock deaktiviert',
 	'block-log-flags-noemail' => 'E-Mail-Versand gesperrt',
 	'block-log-flags-nousertalk' => 'darf eigene Diskussionsseite nicht bearbeiten',
@@ -3996,7 +3947,6 @@ Wür Auwheb won Schber seddar dose [[{{ns:special}}:Ipblocklist|Lisd won ales ag
 	'blocklogentry' => 'haddar schber dose „[[$1]]“ wür dose Dseidraum: $2 $3',
 	'blocklogtext' => 'Dose dose Logbug sei üb Schberes und Endschberes won Benudses und IB-Adreses. Audomadisches geschberdes IB-Adreses dose noggs erwas. Seddar dose [[{{ns:special}}:Ipblocklist|{{int:ipblocklist}}]] wür ales agdiwes Schberes.',
 	'block-log-flags-anononly' => 'nur Anonymes',
-	'block-log-flags-nocreate' => 'Erschdel won Benudsesgondes geschberdes',
 	'block-log-flags-noautoblock' => 'Audoblogg deagdiwärdes',
 	'block-log-flags-noemail' => 'I-Mehl-Wersand geschberdes',
 	'blockme' => 'Schber mig',
@@ -4073,7 +4023,6 @@ $1 gani bınê no {{PLURAL:$1|karakter|karakter}}de bıbo.',
 Adresê IPyê ke otomatikmen kılit biyê lista de çıniyê.
 Seba lista karberanê ke heta nıka kılit biyê [[Special:BlockList|lista kılitkerdışê IPy]] bıvênên.',
 	'block-log-flags-anononly' => 'teyna karberê anonîmî',
-	'block-log-flags-nocreate' => 'akerdışê hesabi qapan bi',
 	'block-log-flags-noautoblock' => 'otoblok wedariyo',
 	'block-log-flags-noemail' => 'e-mail blok biyo',
 	'block-log-flags-nousertalk' => 'ti nieşkena pela minaqeşe xo bivurne',
@@ -4184,7 +4133,6 @@ Glědaj do [[Special:BlockList|lisćiny blokěrowanjow]], aby blokěrowanja pśe
 	'blocklogentry' => '[[$1]] blokěrujo se na $2 $3',
 	'blocklogtext' => 'To jo protokol blokěrowanja a wótblokěrowanja wužywarjow. Awtomatiski blokěrowane IP-adrese se njenalistuju. Glědaj [[Special:BlockList|lisćinu blokěrowanjow]] za lisćinu tuchylnych wugnanjow a blokěrowanjow.',
 	'block-log-flags-anononly' => 'jano anonymne',
-	'block-log-flags-nocreate' => 'stwórjenje konta jo se znjemóžniło',
 	'block-log-flags-noautoblock' => 'awtomatiske blokěrowanje jo deaktiwěrowane',
 	'block-log-flags-noemail' => 'e-mailowanje jo blokěrowane',
 	'block-log-flags-nousertalk' => 'njejo móžno swójski diskusijny bok wobźěłaś',
@@ -4237,7 +4185,6 @@ Riporon id siriba kokomoi nantaban di tohuri no:',
 	'blocklink' => 'antabai',
 	'blocklogpage' => 'Antabai log',
 	'blocklogentry' => 'naantaban [[$1]] gisom $2 $3',
-	'block-log-flags-nocreate' => 'awu milo momonsoi akaun',
 	'bad_image_list' => 'Kouludan nopo nga miagal dilo siriba:
 
 Iri ahal poinlis (baris di tumimpuun *) maan pitimbango.
@@ -4321,7 +4268,6 @@ $messages['ee'] = [
 	'blockipsuccesssub' => 'Mɔxexea dze edzi',
 	'blocklink' => 'xemɔ',
 	'blocklogentry' => 'xemɔ na [[$1]] vaseɖe $2 megbe $3',
-	'block-log-flags-nocreate' => 'wo xemɔ na ŋkɔ ŋɔŋlɔ',
 ];
 
 $messages['el'] = [
@@ -4415,7 +4361,6 @@ $messages['el'] = [
 Δεν συμπεριλαμβάνονται οι διευθύνσεις IP που υπέστησαν αυτόματα φραγή.
 Δείτε τον [[Special:BlockList|κατάλογο φραγμένων διευθύνσεων IP]] για τη λίστα των τρεχόντων ενεργών αποκλεισμών και φραγών.',
 	'block-log-flags-anononly' => 'μόνο ανώνυμοι χρήστες',
-	'block-log-flags-nocreate' => 'δημιουργία λογαριασμού απενεργοποιημένη',
 	'block-log-flags-noautoblock' => 'αυτόματη φραγή απενεργοποιημένη',
 	'block-log-flags-noemail' => 'Το ηλεκτρονικό ταχυδρομείο έχει φραγεί',
 	'block-log-flags-nousertalk' => 'δεν μπορεί να επεξεργαστεί τη σελίδα συζήτησής του',
@@ -4540,7 +4485,6 @@ Vidu la [[Special:BlockList|liston de IP-forbaroj]] por kontroli.',
 	'blocklogentry' => 'forbaris [[$1]] por daŭro de $2 $3',
 	'blocklogtext' => 'Ĉi tio estas protokolo pri forbaraj kaj malforbaraj agoj. Aŭtomate forbaritaj IP adresoj ne estas listigitaj. Vidu la [[Special:BlockList|IP forbarliston]] por ĉi-momente fobaritaj uzantoj kaj IP-adresoj.',
 	'block-log-flags-anononly' => 'nur anonimaj uzantoj',
-	'block-log-flags-nocreate' => 'kreado de kontoj malebligita',
 	'block-log-flags-noautoblock' => 'aŭtomata forbaro malŝaltita',
 	'block-log-flags-noemail' => 'retpoŝto blokita',
 	'block-log-flags-nousertalk' => 'ne povas redakti propran diskuto-paĝon',
@@ -4655,7 +4599,6 @@ Véase la [[Special:BlockList|lista de bloqueos]] para revisarlo.',
 Las direcciones bloqueadas automáticamente no aparecen aquí.
 Consulte la [[Special:BlockList|lista de direcciones IP bloqueadas]] para ver la lista de bloqueos vigente.',
 	'block-log-flags-anononly' => 'sólo anónimos',
-	'block-log-flags-nocreate' => 'desactivada la creación de cuentas',
 	'block-log-flags-noautoblock' => 'bloqueo automático desactivado',
 	'block-log-flags-noemail' => 'correo electrónico deshabilitado',
 	'block-log-flags-nousertalk' => 'no puede editar su propia página de discusión',
@@ -4777,7 +4720,6 @@ Kehtivaid blokeeringuid vaata [[Special:BlockList|blokeerimisnimekirjast]].',
 Automaatselt blokeeritud IP-aadresse siin ei näidata.
 Praegu jõus olevad blokeeringud ja redigeerimiskeelud leiad [[Special:BlockList|blokeerimisnimekirjast]].',
 	'block-log-flags-anononly' => 'ainult anonüümsed kasutajad',
-	'block-log-flags-nocreate' => 'kontode loomine on blokeeritud',
 	'block-log-flags-noautoblock' => 'ei blokeerita automaatselt',
 	'block-log-flags-noemail' => 'e-kirjade saatmine keelatud',
 	'block-log-flags-nousertalk' => 'ei saa muuta enda arutelulehte',
@@ -4857,7 +4799,6 @@ Erregistroa ematen da azpian erreferentziarako:',
 	'blocklogentry' => '"[[$1]]" wikilariari blokeoa ezarri zaio. Blokeoaldia: $2 $3',
 	'blocklogtext' => 'Erabiltzaileen blokeoen ezarpen eta ezabaketen erregistroa da hau. Ez dira automatikoki blokeatutako IP helbideak zerrendatzen. Ikus [[Special:BlockList|IP blokeoen zerrenda]] aktibo dauden blokeoak aztertzeko.',
 	'block-log-flags-anononly' => 'erabiltzaile anonimoak bakarrik',
-	'block-log-flags-nocreate' => 'kontuak sortzea ezgaituta',
 	'block-log-flags-noautoblock' => 'auto-blokeaketa ezgaitu da',
 	'block-log-flags-noemail' => 'e-posta blokeatuta',
 	'block-log-flags-nousertalk' => 'ezin da aldatu norbere eztabaida-orria',
@@ -4923,7 +4864,6 @@ Escrebi una razón concreta embahu (pol sabulugal, almientandu páhinas qu\'aiga
 	'blocklogpage' => 'Rustrihu e tarugus',
 	'blocklogentry' => 'atarugó a "[[$1]]" $3 duranti un praçu e "$2"',
 	'block-log-flags-anononly' => 'sólu usuárius anónimus',
-	'block-log-flags-nocreate' => 'Desativau el criaeru e cuentas',
 	'block-log-flags-noautoblock' => 'autu-tarugu esativau',
 	'block-log-flags-noemail' => 'email atarugau',
 	'block-log-flags-hiddenname' => 'nombri d\'ussuáriu açonchau.',
@@ -5040,7 +4980,6 @@ $messages['fa'] = [
 نشانی‌های آی‌پی که به طور خودکار بسته شده‌اند فهرست نشده‌اند.
 برای فهرست محرومیت‌ها و بسته‌شدن‌های فعال در لحظهٔ حاضر، به [[Special:BlockList|فهرست آی‌پی‌های بسته]] مراجعه کنید.',
 	'block-log-flags-anononly' => 'فقط کاربران گمنام',
-	'block-log-flags-nocreate' => 'قابلیت ایجاد حساب غیرفعال شد',
 	'block-log-flags-noautoblock' => 'قطع دسترسی خودکار غیرفعال شد',
 	'block-log-flags-noemail' => 'پست الکترونیکی مسدود شد',
 	'block-log-flags-nousertalk' => 'صفحهٔ بحث خود را نمی‌تواند ویرایش کند',
@@ -5146,7 +5085,6 @@ Alla on ote häivytyslokista.',
 	'blocklogentry' => 'esti käyttäjän tai IP-osoitteen [[$1]]. Eston kesto $2 $3',
 	'blocklogtext' => 'Tämä on loki muokkausestoista ja niiden purkamisista. Automaattisesti estettyjä IP-osoitteita ei kirjata. Tutustu [[Special:BlockList|estolistaan]] nähdäksesi listan tällä hetkellä voimassa olevista estoista.',
 	'block-log-flags-anononly' => 'vain kirjautumattomat käyttäjät',
-	'block-log-flags-nocreate' => 'tunnusten luonti estetty',
 	'block-log-flags-noautoblock' => 'ei automaattista IP-osoitteiden estoa',
 	'block-log-flags-noemail' => 'sähköpostin lähettäminen estetty',
 	'block-log-flags-nousertalk' => 'oman keskustelusivun muokkaaminen estetty',
@@ -5253,7 +5191,6 @@ Alla on ote häivytyslokista.',
 	'blocklogentry' => 'esti käyttäjän tai IP-osoitteen [[$1]]. Eston kesto $2 $3',
 	'blocklogtext' => 'Tämä on loki muokkausestoista ja niiden purkamisista. Automaattisesti estettyjä IP-osoitteita ei kirjata. Tutustu [[Special:BlockList|estolistaan]] nähdäksesi listan tällä hetkellä voimassa olevista estoista.',
 	'block-log-flags-anononly' => 'vain kirjautumattomat käyttäjät',
-	'block-log-flags-nocreate' => 'tunnusten luonti estetty',
 	'block-log-flags-noautoblock' => 'ei automaattista IP-osoitteiden estoa',
 	'block-log-flags-noemail' => 'sähköpostin lähettäminen estetty',
 	'block-log-flags-nousertalk' => 'oman keskustelusivun muokkaaminen estetty',
@@ -5333,7 +5270,6 @@ Tann seinasti sperringar gerðalistin er her niðanfyri fyri ávísing:',
 	'blocklink' => 'banna',
 	'blocklogpage' => 'Bannagerðabók',
 	'blocklogentry' => 'sperring [[$1]]  sum varir til $2 $3',
-	'block-log-flags-nocreate' => 'upprætting av brúkarakonto er sperrað',
 	'bydate' => 'eftir dato',
 	'bad_image_list' => 'Støddin er soleiðis:
 
@@ -5442,7 +5378,6 @@ Consultez la [[Special:BlockList|liste des adresses IP et comptes bloqués]] pou
 Les adresses IP automatiquement bloquées ne sont pas listées.
 Consultez la [[Special:BlockList|liste des IP bloquées]] pour voir les bannissements et blocages effectivement en cours.',
 	'block-log-flags-anononly' => 'utilisateurs anonymes seulement',
-	'block-log-flags-nocreate' => 'création de compte interdite',
 	'block-log-flags-noautoblock' => 'autoblocage des IP désactivé',
 	'block-log-flags-noemail' => 'envoi d\'e-mails interdit',
 	'block-log-flags-nousertalk' => 'ne peut modifier sa propre page de discussion',
@@ -5484,7 +5419,6 @@ Vous pouvez contacter $1 ou un autre [[{{MediaWiki:Grouppage-sysop}}|administrat
 	'badsiglength' => 'Votre \'tit nom est trop long.  Il faut que ça soye moins que $1 caractères.',
 	'blanknamespace' => '(Principal)',
 	'blocklink' => 'bloquer',
-	'block-log-flags-nocreate' => 'création de compte interdite',
 	'bad_image_list' => 'Le format est le suivant :
 
 Seules les listes d’énumération (commençant par *) sont prises en compte. Le premier lien d’une ligne doit être celui d’une mauvaise image.
@@ -5588,7 +5522,6 @@ Lo jornal de les suprèssions est disponiblo ce-desot :',
 Les adrèces IP blocâs ôtomaticament sont pas listâs.
 Vêde la [[Special:BlockList|lista des blocâjos]] por vêre los banissements et los blocâjos que sont ora opèracionèls.',
 	'block-log-flags-anononly' => 'solament los usanciérs pas encartâs',
-	'block-log-flags-nocreate' => 'crèacion de compto dèfendua',
 	'block-log-flags-noautoblock' => 'ôtoblocâjo a les adrèces IP dèsactivâ',
 	'block-log-flags-noemail' => 'èxpèdicion de mèssâjo dèfendua',
 	'block-log-flags-nousertalk' => 'pôt pas changiér sa prôpra pâge de discussion',
@@ -5634,7 +5567,6 @@ For informasjoon füliet di leeste üttooch üt dåt benjüterspär-logbök:',
 Automatisch spärd IP-adräse wårde ai footed.
 Sii jü [[Special:BlockList|list foon da spärd IP-adräse än brükernoome]] for ål da aktive späre.',
 	'block-log-flags-anononly' => 'bloot anonyme',
-	'block-log-flags-nocreate' => 'Måågen foon brükerkonte spärd',
 	'block-log-flags-noautoblock' => 'autoblock deaktiviird',
 	'block-log-flags-noemail' => 'e-mail-fersiinjing spärd',
 	'block-log-flags-nousertalk' => 'mötj äine diskusjoonssid ai beårbe',
@@ -5686,7 +5618,6 @@ Par plasê inclût la to direzion IP atuâl ($3) o il numar dal bloc (ID #$5) in
 	'blocklink' => 'bloche',
 	'blocklogpage' => 'Regjistri dai blocs',
 	'blocklogentry' => 'al à blocât "[[$1]]"; scjadence $2 $3',
-	'block-log-flags-nocreate' => 'creazion identitât blocade',
 	'bydate' => 'par date',
 	'bad_image_list' => 'Il formât al è cussi:
 
@@ -5814,7 +5745,6 @@ leathanaigh áirithe a rinne an duine damáiste ar).',
 seoltaí IP a raibh coiscthe go huathoibríoch ar an liosta seo. Féach ar an
 [[Special:BlockList|Liosta coisc IP]] chun
 liosta a fháil de coisc atá i bhfeidhm faoi láthair.',
-	'block-log-flags-nocreate' => 'cuntas chruthú díchumasaithe',
 	'block-log-flags-noemail' => 'cosc ar ríomhphost',
 	'bydate' => 'de réir dáta',
 	'bad_image_list' => 'An formáid ná a leanas:
@@ -5858,7 +5788,6 @@ Herliim girmediniz [[Special:Preferences|seçimner]] bölümünde geçerli bir e
 	'blocklink' => 'köstek ol',
 	'blocklogpage' => 'Köstek jurnalı',
 	'blocklogentry' => '[[$1]] sebep $2 $3 durduruldu',
-	'block-log-flags-nocreate' => 'esap yaratmaa kösteklendi',
 	'bad_image_list' => 'Bu format läazım olsun sansın aşaada:
 
 Sadä listadaki êlementlarä (* nışannan çekedän liniyalar) bakılacêk. 
@@ -5911,7 +5840,6 @@ $messages['gan-hans'] = [
 	'blocklogentry' => '[[$1]]拖封到$3 ，结束时间到$2',
 	'blocklogtext' => '个系用户封锁同解封操作𠮶日志。拖自动封锁𠮶IP冇列出。请参看[[Special:BlockList|拖封IP地址列表]]。',
 	'block-log-flags-anononly' => '单限制匿名用户',
-	'block-log-flags-nocreate' => '禁止个只IP/用户新开帐户',
 	'block-log-flags-noautoblock' => '禁用自动封禁',
 	'block-log-flags-noemail' => '禁止email',
 	'blockme' => '封吥偶去',
@@ -5968,7 +5896,6 @@ $messages['gan-hant'] = [
 	'blocklogentry' => '[[$1]]拕封到$3 ，結束時間到$2',
 	'blocklogtext' => '箇係用戶封鎖同解封操作嗰日誌。拕自動封鎖嗰IP冇列出。請參看[[Special:BlockList|拕封IP地址列表]]。',
 	'block-log-flags-anononly' => '單限制匿名用戶',
-	'block-log-flags-nocreate' => '禁止箇隻IP/用戶新開帳戶',
 	'block-log-flags-noautoblock' => '禁用自動封禁',
 	'block-log-flags-noemail' => '禁止email',
 	'blockme' => '封吥我去',
@@ -6009,7 +5936,6 @@ Faodaidh gu bheil aon no barrachd charactairean ann nach urrainn dhut a chleachd
 	'blocklink' => 'bac',
 	'blocklogpage' => 'Loga nam bacadh',
 	'blocklogentry' => 'Chaidh bacadh a chrìochnaicheas ann an $2 a chur air [[$1]] $3',
-	'block-log-flags-nocreate' => 'cruthachadh de chunntasan ùra à comas',
 	'bydate' => 'air ceann-latha',
 	'bad_image_list' => 'Seo mar a tha am fòrmat:
 
@@ -6117,7 +6043,6 @@ Olle a [[Special:BlockList|lista de enderezos IP e usuarios bloqueados]] para re
 Non se listan os enderezos IP bloqueados automaticamente.
 Olle a [[Special:BlockList|lista de enderezos IP e usuarios bloqueados]] se quere comprobar a lista cos bloqueos vixentes.',
 	'block-log-flags-anononly' => 'só os usuarios anónimos',
-	'block-log-flags-nocreate' => 'desactivada a creación de contas',
 	'block-log-flags-noautoblock' => 'bloqueo automático deshabilitado',
 	'block-log-flags-noemail' => 'correo electrónico bloqueado',
 	'block-log-flags-nousertalk' => 'desactivada a edición da súa conversa',
@@ -6216,7 +6141,6 @@ $messages['grc'] = [
 	'blocklogpage' => 'Αἱ ἀποκλῄσεις',
 	'blocklogentry' => 'Κεκλῃμένος [[$1]] μέχρι οὗ $2 $3',
 	'block-log-flags-anononly' => 'μόνον ἀνώνυμοι χρώμενοι',
-	'block-log-flags-nocreate' => 'ποίησις λογισμοῦ κατεσταλμένη',
 	'block-log-flags-noautoblock' => 'αὐτόματος φραγὴ κατεσταλμένη',
 	'block-log-flags-noemail' => 'ἠλ-ταχυδρομεῖον πεφραγμένον',
 	'block-log-flags-nousertalk' => 'μὴ δυναμένη ἡ μεταγραφή τῆς δέλτου σου ἐστίν',
@@ -6305,7 +6229,6 @@ Go d Sperri ufhebe lueg d [[Special:BlockList|Lisch vu allene aktive Sperrine]].
 	'blocklogentry' => 'sperrt [[$1]] für d Ziit vo: $2 $3',
 	'blocklogtext' => 'Des isch s Logbuech iber Sperrige un Entsperrige vu Benutzer. Automatisch blockierti IP-Adrässe wäre nit erfasst. Lueg au [[Special:BlockList|IP-Block Lischt]] fir e Lischt vu gsperrte Benutzer.',
 	'block-log-flags-anononly' => 'nume Anonymi',
-	'block-log-flags-nocreate' => 'Aalege vu Benutzerchonte gsperrt',
 	'block-log-flags-noautoblock' => 'Autoblock deaktiviert',
 	'block-log-flags-noemail' => 'E-Mail-Versand gsperrt',
 	'block-log-flags-nousertalk' => 'derf di eigene Diskussionssyte nit bearbeite',
@@ -6425,7 +6348,6 @@ HTML નાકું ચકાસો',
 સ્વયંચાલિત રીતે રોક લગાવાયેલ IP સરનામાની યાદિ અહીં નથી આપી.
 હાલમાં પ્રવર્તમાન રોક ની યાદિ અહીં જુઓ [[Special:BlockList|IP block list]].',
 	'block-log-flags-anononly' => 'માત્ર અજ્ઞાત સભ્ય',
-	'block-log-flags-nocreate' => 'ખાતું ખોલવા પર પ્રતિબંધ છે',
 	'block-log-flags-noautoblock' => 'સ્વયંચાલિત પ્રતિબંધ ક્રિયા નિષ્ક્રીય કરાઈ',
 	'block-log-flags-noemail' => 'ઇ-મેલ પ્ર પ્રતિબંધ મુકાયો',
 	'block-log-flags-nousertalk' => 'તમે પોતાનું ચર્ચા પાનામાં ફેરફાર ન કરી શકો.',
@@ -6478,7 +6400,6 @@ She $3 dt\'enmys IP roie, as she dt\'enney ghlass na #$5. Cur ad lesh dagh ooill
 	'blocklogpage' => 'Lioar chooishyn ghlassaghyn magh',
 	'blocklogentry' => 'er nglassey magh [[$1]] rish/derrey $2 $3',
 	'block-log-flags-anononly' => 'ymmydeyryn neuenmyssit ynrican',
-	'block-log-flags-nocreate' => 'gyn kiart coontyssyn y chroo',
 	'bydate' => 'rere date',
 	'bad_image_list' => 'Shoh yn aght:
 
@@ -6503,7 +6424,6 @@ Tana yiyuwa yana da harafi ko haruffa da ba su karɓuwa cikin kanu.',
 	'blocklink' => 'Hanawa',
 	'blocklogpage' => 'Rajistan hani',
 	'blocklogentry' => 'an hana [[$1]] da wa\'adin $2 $3',
-	'block-log-flags-nocreate' => 'babu damar buɗa sabon akwanti',
 	'bad_image_list' => 'Fasalin yana kamar haka:
 
 Za a lura da layukan jeri kawai (masu farawa da *).
@@ -6550,7 +6470,6 @@ Tshòng-tón pit-sî chhai $1-ke sṳ-ngièn yî-ha.',
 	'blocklogentry' => '"[[$1]]" yí-kîn pûn chhà-fûng $3, chûng-chṳ́ sṳ̀-kiên he $2',
 	'blocklogtext' => 'Liá-he kôan-yî yung-fu fûng-kim lâu kié-chhù fûng-kim chhâu-chok ke ki-liu̍k. Pûn chhṳ-thung fûng-kim ke IP thi-tiám mò-yû lie̍t-chhut. Chhiáng chhâm-kháu [[Special:BlockList|Pûn chhà-fûng ke IP thi-tiám lâu yung-fu lie̍t-péu]].',
 	'block-log-flags-anononly' => 'Han-chṳ ngia̍k-miàng ke yung-fu',
-	'block-log-flags-nocreate' => 'Kim-chṳ́ chhṳ́ IP/Yung-fu kien-li̍p sîn chong-fu',
 	'block-log-flags-noautoblock' => 'Thìn-chṳ́ yung chhṳ-thung fûng-kim',
 	'bydate' => 'on-cheu ngit-khì',
 	'bad_image_list' => 'Chhiáng on-cheu yî-ha kiet-sṳt phiên-siá：
@@ -6683,7 +6602,6 @@ $messages['he'] = [
 כתובות IP שנחסמו אוטומטית אינן מופיעות.
 ראו גם את [[Special:BlockList|רשימת החסומים]] לרשימה של החרמות וחסימות פעילות כעת.',
 	'block-log-flags-anononly' => 'משתמשים אנונימיים בלבד',
-	'block-log-flags-nocreate' => 'יצירת חשבונות נחסמה',
 	'block-log-flags-noautoblock' => 'חסימה אוטומטית מבוטלת',
 	'block-log-flags-noemail' => 'שליחת דוא"ל נחסמה',
 	'block-log-flags-nousertalk' => 'עריכת דף השיחה האישי נחסמה',
@@ -6763,7 +6681,6 @@ $messages['hi'] = [
 स्वत: बाधित होने वाले IP पते इस सूची में उपलब्ध नहीं है।
 वर्त्तमान में क्रियाशील प्रतिबंधों और बाध्यों की सूची के लिए [[Special:IPBlockList|IP बाधित सूची]] देखें।',
 	'block-log-flags-anononly' => 'सिर्फ अनामक सदस्य',
-	'block-log-flags-nocreate' => 'खाता निर्माण पर रोक',
 	'block-log-flags-noautoblock' => 'ऑटोब्लॉक बंद हैं',
 	'block-log-flags-noemail' => 'इ-मेल बंद हैं',
 	'block-log-flags-nousertalk' => 'अपना वार्ता पन्ना भी नहीं बदल सकते हैं',
@@ -6843,7 +6760,6 @@ $messages['hif'] = [
 स्वत: बाधित होने वाले IP पते इस सूची में उपलब्ध नहीं है।
 वर्त्तमान में क्रियाशील प्रतिबंधों और बाध्यों की सूची के लिए [[Special:IPBlockList|IP बाधित सूची]] देखें।',
 	'block-log-flags-anononly' => 'सिर्फ अनामक सदस्य',
-	'block-log-flags-nocreate' => 'खाता निर्माण पर रोक',
 	'block-log-flags-noautoblock' => 'ऑटोब्लॉक बंद हैं',
 	'block-log-flags-noemail' => 'इ-मेल बंद हैं',
 	'block-log-flags-nousertalk' => 'अपना वार्ता पन्ना भी नहीं बदल सकते हैं',
@@ -6927,7 +6843,6 @@ Iske suchi ke niche dekhawa jaawe hae aap ke jankari ke khatir.',
 Apne se rokaa gais IP adress ii suchi me nai hai.
 Abhi ke rukawat ke dekhe ke khatir meharbani kar ke [[Special:IPBlockList|IP block list]] ke dekho.',
 	'block-log-flags-anononly' => 'khaali bina naam ke sadasya',
-	'block-log-flags-nocreate' => 'nawaa account banae ke nai hai',
 	'block-log-flags-noautoblock' => 'apne se block kare ke ijajat nai hai',
 	'block-log-flags-noemail' => 'e-mail ke rok dewa gais hai',
 	'block-log-flags-nousertalk' => 'aapan baat waala panna ke apne se nai badle sakta hai',
@@ -6987,7 +6902,6 @@ Ini indi dapat nga magsobra sa $1 {{PLURAL:$1|ka karakter|ka mga karakter}} ang 
 	'blocklink' => 'harang',
 	'blocklogpage' => 'Pugong log',
 	'blocklogentry' => 'napunggan [[$1]] nga may-ara oras nga pag-ekspayr na $2 $3',
-	'block-log-flags-nocreate' => 'paghimo sang akawnt ay gin untat',
 	'bad_image_list' => 'Ang sulundan nga sulundon:
 
 Amo lang gid nga lista sang mga gamit (mga linya nga gasugod sa *)ang ginapasugtan.
@@ -7074,7 +6988,6 @@ Zapisnik skrivanja je prikazan ispod kao napomena:',
 	'blocklogentry' => 'Blokiran je "[[$1]]" na rok $2 $3',
 	'blocklogtext' => 'Ovo je evidencija blokiranja i deblokiranja. Na popisu nema automatski blokiranih IP adresa. Za popis trenutačnih zabrana i blokiranja vidi [[Special:BlockList|popis IP blokiranja]].',
 	'block-log-flags-anononly' => 'samo za neprijavljene suradnike',
-	'block-log-flags-nocreate' => 'otvaranje novih suradničkih imena nije moguće',
 	'block-log-flags-noautoblock' => 'autoblok je onemogućen',
 	'block-log-flags-noemail' => 'e-mail je blokiran',
 	'block-log-flags-nousertalk' => 'bez uređivanja vlastite stranice za razgovor',
@@ -7181,7 +7094,6 @@ Smě mjenje hač $1 {{PLURAL:$1|znamješko|znamješce|znamješka|znamješkow}} d
 	'blocklogentry' => 'je wužiwarja [[$1]] zablokował z časom spadnjenja $2 $3',
 	'blocklogtext' => 'To je protokol blokowanja a wotblokowanja wužiwarjow. Awtomatisce blokowane IP-adresy so njenalistuja. Hlej [[Special:BlockList|lisćinu zablokowanych IP-adresow]] za lisćinu tuchwilnych wuhnaćow a zablokowanjow.',
 	'block-log-flags-anononly' => 'jenož anonymnych',
-	'block-log-flags-nocreate' => 'wutworjenje wužiwarskich kontow znjemóžnjene',
 	'block-log-flags-noautoblock' => 'awtomatiske zablokowanje znjemóžnjene',
 	'block-log-flags-noemail' => 'wotpósłanje mejlkow bu znjemóžnjene',
 	'block-log-flags-nousertalk' => 'njeje móžno swójsku diskusijnu stronu wobdźěłać',
@@ -7234,7 +7146,6 @@ Dènye jounal pou blokaj yo parèt anba kòm referans:',
 	'blocklink' => 'Bloke',
 	'blocklogpage' => 'Istorik blokaj yo',
 	'blocklogentry' => 'te bloke « [[$1]] » - rive : $2 $3',
-	'block-log-flags-nocreate' => 'kreyasyon kont pa otorize',
 	'bad_image_list' => 'Fòma la se konsa :
 
 Se itèm ki nan lis sèlman (liy ki kòmanse ak *) ki konsidere.
@@ -7340,7 +7251,6 @@ Add meg a blokkolás okát is (például idézd a blokkolandó személy által v
 	'blocklogentry' => '„[[$1]]” blokkolva $2 $3 időtartamra',
 	'blocklogtext' => 'Ez a felhasználókra helyezett blokkoknak és azok feloldásának listája. Az IP-autoblokkok nem szerepelnek a listában. Lásd még [[Special:BlockList|a jelenleg életben lévő blokkok listáját]].',
 	'block-log-flags-anononly' => 'csak anonok',
-	'block-log-flags-nocreate' => 'nem hozhat létre új fiókot',
 	'block-log-flags-noautoblock' => 'autoblokk kikapcsolva',
 	'block-log-flags-noemail' => 'e-mail blokkolva',
 	'block-log-flags-nousertalk' => 'saját vitalapját sem szerkesztheti',
@@ -7415,7 +7325,6 @@ $messages['hy'] = [
 Ավտոմատիկ արգելափակված IP-հասցեները ընդգրկված չեն այստեղ։
 Տես [[Special:BlockList|նաերկայումս գործող արգելափակումների ցանկը]]։',
 	'block-log-flags-anononly' => 'միայն անանուն մասնակիցներ',
-	'block-log-flags-nocreate' => 'մասնակցային հաշվի ստեղծումը արգելված է',
 	'block-log-flags-noautoblock' => 'ավտոմատ արգելափակումը անջատված է',
 	'block-log-flags-noemail' => 'էլ-փոստը արգելափակված է',
 	'bydate' => 'ըստ ամսաթվի',
@@ -7530,7 +7439,6 @@ Vide le [[Special:BlockList|lista de adresses IP blocate]] pro revider le blocad
 Le adresses IP automaticamente blocate non es includite.
 Vide le [[Special:BlockList|lista de blocadas IP]] pro le lista de bannimentos e blocadas actualmente in operation.',
 	'block-log-flags-anononly' => 'usatores anonyme solmente',
-	'block-log-flags-nocreate' => 'creation de contos disactivate',
 	'block-log-flags-noautoblock' => 'autoblocadas disactivate',
 	'block-log-flags-noemail' => 'e-mail blocate',
 	'block-log-flags-nousertalk' => 'non pote modificar su proprie pagina de discussion',
@@ -7632,7 +7540,6 @@ Lihat [[Special:BlockList|Daftar IP]] untuk meninjau kembali pemblokiran.',
 Alamat IP yang diblokir secara otomatis tidak terdapat di dalam daftar ini.
 Lihat [[Special:BlockList|daftar alamat IP yang diblokir]] untuk daftar pemblokiran terkini.',
 	'block-log-flags-anononly' => 'hanya pengguna anonim',
-	'block-log-flags-nocreate' => 'pembuatan akun dimatikan',
 	'block-log-flags-noautoblock' => 'pemblokiran otomatis dimatikan',
 	'block-log-flags-noemail' => 'surel diblokir',
 	'block-log-flags-nousertalk' => 'tidak dapat menyunting halaman pembicaraan sendiri',
@@ -7666,7 +7573,6 @@ It posse contene un o plu carácteres quel ne posse esser usat in titules.',
 	'blocklink' => 'blocar',
 	'blocklogpage' => 'Diarium de bloc',
 	'blocklogentry' => '"[[$1]]" hat blocat che un témpor de expiration de $2 $3',
-	'block-log-flags-nocreate' => 'creation de conto debilisat',
 	'bad_image_list' => 'Li formate es quam seque:
 
 Solmen listar detallies (lineas comensant che *) es considerat.
@@ -7704,7 +7610,6 @@ Ndetu nchèta mbgàchì ǹkè ógè nso di na àlà màkà ádià má àmá:',
 	'blocklink' => 'mèché',
 	'blocklogpage' => 'Ndetù échìchè nke mbàchì',
 	'blocklogentry' => 'kwụchi [[$1]] jí ógè ne $2 $3',
-	'block-log-flags-nocreate' => 'Í ké ọ\'bànifé bàchìrì',
 	'block-log-flags-noemail' => 'ha kwàchịrị e-mail',
 	'blockme' => 'Kwàchím',
 	'bydate' => 'shi afọ',
@@ -7733,7 +7638,6 @@ $messages['ike-cans'] = [
 	'blocklink' => 'ᐃᖅ',
 	'blocklogpage' => 'ᐅᒥᙵᓯᓯᔪᖅ/ᐃᖅ ᑎᑎᖅᑲᖁᑎᑦ ᑐᖅᑯᖅᓯᒪᔭᐃᑦ',
 	'block-log-flags-anononly' => 'ᐃᓕᓴᕐᓇᙱᑎᑦᑐᖅ ᐋᖅᑭᒃᓱᐃᔨ ᑭᓯᐊᓂ',
-	'block-log-flags-nocreate' => 'ᑮᓇᐅᔭᖃᕐᕕᒃ ᐃᓄᐃᕈᑎᕚ ᐃᓂᖅᑎᐹ ᐱᒋᕗᖅ',
 	'block-log-flags-noemail' => 'ᑭᒍᑎᐅᑉ ᓯᑎᓂᖅᐹᖓ',
 	'bydate' => 'ᐱᑖᕈᑦᑐᖅ ᐃᓅᓕᕐᕕᒃ',
 ];
@@ -7754,7 +7658,6 @@ $messages['ike-latn'] = [
 	'blocklink' => 'iq',
 	'blocklogpage' => 'uminngasisijuq/iq titiqqaqutit tuqquqsimajait',
 	'block-log-flags-anononly' => 'ilisarnanngitittuq aaqqiksuiji kisiani',
-	'block-log-flags-nocreate' => 'kiinaujaqarvik inuirutivaa iniqtipaa pigivuq',
 	'block-log-flags-noemail' => 'kigutiup sitiniqpaanga uminngasisijuq',
 	'bydate' => 'pitaaruttuq inuulirvik',
 ];
@@ -7859,7 +7762,6 @@ Ti listaan ti napasardeng ket naikabil dita baba tapno mausar a reperensia:',
 Dagiti na-automatiko a panakaserra ti IP a pagtaengan ket saan a nailista.
 Kitaen ti [[Special:BlockList|Listaan ti serra ti IP]] ti listaan kadagiti agdama a naiparit a pagpataray ken dagiti serra.',
 	'block-log-flags-anononly' => 'dagiti di am-ammo nga agar-aramat laeng',
-	'block-log-flags-nocreate' => 'naisardeng ti pinagaramid iti pakabilangan',
 	'block-log-flags-noautoblock' => 'naiddep ti auto-serra',
 	'block-log-flags-noemail' => 'naserraan ti e-surat',
 	'block-log-flags-nousertalk' => 'saan na a mabalin nga urnosen ti kapatang na a panid',
@@ -7897,7 +7799,6 @@ $messages['inh'] = [
 	'blocklink' => 'чIегa тоха',
 	'blocklogpage' => 'ЧIегаш тoха таптар',
 	'blocklogentry' => '[[$1]] чIега белаб,  $2 $3 ха ялалца',
-	'block-log-flags-nocreate' => 'Лархамий дагарчена цIи яккхар пурам янза я.',
 	'blockme' => 'ЧIега бола сона',
 	'bad_image_list' => 'Бустам цу тайпара хила беза:
 
@@ -8040,7 +7941,6 @@ Síðasta færsla notandans úr bælingarskrá er sýnd hér fyrir neðan til sk
 Vistföng sem sett hafa verið í bann sjálfvirkt birtast ekki hér.
 Sjá [[Special:BlockList|ítarlegri lista]] fyrir öll núgildandi bönn.',
 	'block-log-flags-anononly' => 'bara ónefndir notendur',
-	'block-log-flags-nocreate' => 'gerð aðganga bönnuð',
 	'block-log-flags-noautoblock' => 'sjálfkrafa bann óvirkt',
 	'block-log-flags-noemail' => 'netfang bannað',
 	'block-log-flags-nousertalk' => 'getur ekki breytt eigin spjallsíðu',
@@ -8153,7 +8053,6 @@ Consultare la [[Special:BlockList|lista degli IP bloccati]] per vedere i blocchi
 	'blocklogentry' => 'ha bloccato [[$1]] per un periodo di $2 $3',
 	'blocklogtext' => 'Di seguito sono elencate le azioni di blocco e sblocco utenti. Gli indirizzi IP bloccati automaticamente non sono elencati. Consultare l\'[[Special:BlockList|elenco IP bloccati]] per l\'elenco degli indirizzi e nomi utente il cui blocco è operativo.',
 	'block-log-flags-anononly' => 'solo utenti anonimi',
-	'block-log-flags-nocreate' => 'creazione account bloccata',
 	'block-log-flags-noautoblock' => 'blocco automatico disattivato',
 	'block-log-flags-noemail' => 'e-mail bloccate',
 	'block-log-flags-nousertalk' => 'non può modificare la propria pagina di discussione',
@@ -8272,7 +8171,6 @@ Consultare la [[Special:BlockList|lista degli IP bloccati]] per vedere i blocchi
 	'blocklogentry' => 'ha bloccato [[$1]] per un periodo di $2 $3',
 	'blocklogtext' => 'Di seguito sono elencate le azioni di blocco e sblocco utenti. Gli indirizzi IP bloccati automaticamente non sono elencati. Consultare l\'[[Special:BlockList|elenco IP bloccati]] per l\'elenco degli indirizzi e nomi utente il cui blocco è operativo.',
 	'block-log-flags-anononly' => 'solo utenti anonimi',
-	'block-log-flags-nocreate' => 'creazione account bloccata',
 	'block-log-flags-noautoblock' => 'blocco automatico disattivato',
 	'block-log-flags-noemail' => 'e-mail bloccate',
 	'block-log-flags-nousertalk' => 'non può modificare la propria pagina di discussione',
@@ -8384,7 +8282,6 @@ HTMLタグを見直してください。',
 自動的にブロックされたIPアドレスは表示されていません。
 現時点で有効なブロックは[[Special:BlockList|ブロックの一覧]]をご覧ください。',
 	'block-log-flags-anononly' => '匿名利用者のみ',
-	'block-log-flags-nocreate' => 'アカウント作成のブロック',
 	'block-log-flags-noautoblock' => '自動ブロック無効',
 	'block-log-flags-noemail' => 'メール送信のブロック',
 	'block-log-flags-nousertalk' => '自身のトークページの編集禁止',
@@ -8445,7 +8342,6 @@ Di lietis blak lag enchri provaid biluo fi refrans:',
 	'blocklink' => 'blak',
 	'blocklogpage' => 'Blak lag',
 	'blocklogentry' => 'blak [[$1]] wid expairi taim a $2 $3',
-	'block-log-flags-nocreate' => 'akount krieshan disiebl',
 	'bad_image_list' => 'Di faamat go so:
 
 Onggl lis aitem (lain taat wid *) wi kansida.
@@ -8557,7 +8453,6 @@ Pirsani [[Special:IPBlockList|Daftar blokir IP]] kanggo ninjo ulang pamblokiran.
 Alamat IP sing diblokir sacara otomatis ora ana ing daftar iki.
 Mangga mirsani [[Special:IPBlockList|daftar alamat IP sing diblokir]] kanggo daftar blokir pungkasan.',
 	'block-log-flags-anononly' => 'namung panganggo anonim waé',
-	'block-log-flags-nocreate' => 'opsi nggawé akun utawa rékening dipatèni',
 	'block-log-flags-noautoblock' => 'blokir otomatis dipatèni',
 	'block-log-flags-noemail' => 'e-mail diblokir',
 	'block-log-flags-nousertalk' => 'ora éntuk nyunting kaca gunemané dhéwé',
@@ -8641,7 +8536,6 @@ $messages['ka'] = [
 	'blocklogentry' => '"[[$1]]" ბლოკირების ვადის გასვლის თარიღი $2 $3.',
 	'blocklogtext' => 'ეს არის მომხმარებლების დაბლოკვის და განბლოკვის ჟურნალი. ავტომატურად დაბლოკილი IP მისამართები არაა ჩამოთვლილი. იხილეთ [[Special:IPBlockList|IP ბლოკირების სია]] მიმდინარე დაბლოკვებისთვის.',
 	'block-log-flags-anononly' => 'მხოლოდ ანონიმური მომხმარებლები',
-	'block-log-flags-nocreate' => 'ანგარიშის შექმნა გამორთულია',
 	'block-log-flags-noautoblock' => 'ავტობლოკირება გათიშულია',
 	'block-log-flags-noemail' => 'დაიბლოკა ელ. ფოსტა',
 	'block-log-flags-nousertalk' => 'ვერ შეასწორებს განხილვის გვერდს',
@@ -8706,7 +8600,6 @@ Basqa bloklawlar ushın [[Special:BlockList|IP bloklaw dizimin]] ko\'rip shıg\'
 	'blocklogpage' => 'Bloklaw jurnalı',
 	'blocklogentry' => '[[$1]] $2 waqıt aralıg\'ına bloklandı $3',
 	'block-log-flags-anononly' => 'tek anonim paydalanıwshılar',
-	'block-log-flags-nocreate' => 'Akkaunt jaratıw o\'shirilgen',
 	'block-log-flags-noautoblock' => 'Avtoqulplaw o\'shirilgen',
 	'block-log-flags-noemail' => 'e-mail bloklang\'an',
 	'bydate' => 'sa\'ne boyınsha',
@@ -8828,7 +8721,6 @@ $messages['kbd-cyrl'] = [
 	'blocklink' => 'гъэбыдэн',
 	'blocklogpage' => 'Теубыдыныгъэхэм я тхылъ',
 	'blocklogentry' => 'Триубыда [[$1]] $2 $3 нэгъунэ',
-	'block-log-flags-nocreate' => 'аккаунт регистрациэхэр теубыдауэ щытщ',
 	'bad_image_list' => 'Форматыр зэрщытын хуэр:
 
 Гулытэ зиӀэнур тхылъым и дэмыгъэхэм (сатыр дэмыгъэ * къежьэхэр).
@@ -8863,7 +8755,6 @@ HTML tags لوڑے.\',',
 	'blocklink' => 'پاوبندی لیگاوے',
 	'blocklogpage' => 'نوشتۂ پاوبندی',
 	'blocklogentry' => 'بلاک[[$1]] وختہ پت $2 $3',
-	'block-log-flags-nocreate' => 'کھاتہ کھولاو کوریکو سورا پاوپندی شیر',
 	'bad_image_list' => 'شکلبند درج ذیل شیر:
 
 صرف فہرستی عناصرار (* شروع باک لکیر) شامل کورونو بونیان
@@ -8911,7 +8802,6 @@ Gunê $1 {{PLURAL:$1|herfe|herfun}} ra senık bo.',
 Otomatikmen kilıt biyaiyê adresê \'\'IP\'\'y lista de çinê.
 Serba men- u kilıt-biyaene nıkaêne qaytê [[Special:BlockList|lista kilıt-kerdena \'\'IP\'\'y]] ke.',
 	'block-log-flags-anononly' => 'teyna karberê bênamey',
-	'block-log-flags-nocreate' => 'afernaena hesabi qapan biye',
 	'block-log-flags-noautoblock' => 'kilıto otomatik qapan bi',
 	'block-log-flags-noemail' => 'e-mail kilıt bi',
 	'block-log-flags-nousertalk' => 'pela hurênaişi ho nêşikina bıvurnê',
@@ -8979,7 +8869,6 @@ $messages['kk-arab'] = [
 وزدىكتىك بۇعاتتالعان IP مەكەنجايلار وسىندا تىزىمدەلگەمەگەن.
 اعىمداعى بەلسەندى تىيىمدار مەن بۇعاتتاۋلاردى [[{{#special:Ipblocklist}}|IP بۇعاتتاۋ تىزىمىنەن]] قاراڭىز.',
 	'block-log-flags-anononly' => 'تەك تىركەلگىسىزدەر',
-	'block-log-flags-nocreate' => 'تىركەلۋ وشىرىلگەن',
 	'block-log-flags-noautoblock' => 'وزبۇعاتتاۋ وشىرىلگەن',
 	'block-log-flags-noemail' => 'ە-پوشتا بۇعاتتالعان',
 	'blockme' => 'وزدىكتىك_بۇعاتتاۋ',
@@ -9046,7 +8935,6 @@ $messages['kk-cn'] = [
 وزدىكتىك بۇعاتتالعان IP مەكەنجايلار وسىندا تىزىمدەلگەمەگەن.
 اعىمداعى بەلسەندى تىيىمدار مەن بۇعاتتاۋلاردى [[{{#special:Ipblocklist}}|IP بۇعاتتاۋ تىزىمىنەن]] قاراڭىز.',
 	'block-log-flags-anononly' => 'تەك تىركەلگىسىزدەر',
-	'block-log-flags-nocreate' => 'تىركەلۋ وشىرىلگەن',
 	'block-log-flags-noautoblock' => 'وزبۇعاتتاۋ وشىرىلگەن',
 	'block-log-flags-noemail' => 'ە-پوشتا بۇعاتتالعان',
 	'blockme' => 'وزدىكتىك_بۇعاتتاۋ',
@@ -9115,7 +9003,6 @@ $messages['kk-cyrl'] = [
 Өздіктік бұғатталған IP мекенжайлар осында тізімделгемеген.
 Ағымдағы белсенді тиымдар мен бұғаттауларды [[{{#special:Ipblocklist}}|IP бұғаттау тізімінен]] қараңыз.',
 	'block-log-flags-anononly' => 'тек тіркелгісіздер',
-	'block-log-flags-nocreate' => 'тіркелу өшірілген',
 	'block-log-flags-noautoblock' => 'өзбұғаттау өшірілген',
 	'block-log-flags-noemail' => 'е-пошта бұғатталған',
 	'blockme' => 'Өздіктік_бұғаттау',
@@ -9185,7 +9072,6 @@ $messages['kk-kz'] = [
 Өздіктік бұғатталған IP мекенжайлар осында тізімделгемеген.
 Ағымдағы белсенді тиымдар мен бұғаттауларды [[{{#special:Ipblocklist}}|IP бұғаттау тізімінен]] қараңыз.',
 	'block-log-flags-anononly' => 'тек тіркелгісіздер',
-	'block-log-flags-nocreate' => 'тіркелу өшірілген',
 	'block-log-flags-noautoblock' => 'өзбұғаттау өшірілген',
 	'block-log-flags-noemail' => 'е-пошта бұғатталған',
 	'blockme' => 'Өздіктік_бұғаттау',
@@ -9253,7 +9139,6 @@ Buğattardı şolıp şığw üşin [[{{#special:Ipblocklist}}|IP buğattaw tizi
 Özdiktik buğattalğan IP mekenjaýlar osında tizimdelgemegen.
 Ağımdağı belsendi tïımdar men buğattawlardı [[{{#special:Ipblocklist}}|IP buğattaw tiziminen]] qarañız.',
 	'block-log-flags-anononly' => 'tek tirkelgisizder',
-	'block-log-flags-nocreate' => 'tirkelw öşirilgen',
 	'block-log-flags-noautoblock' => 'özbuğattaw öşirilgen',
 	'block-log-flags-noemail' => 'e-poşta buğattalğan',
 	'blockme' => 'Özdiktik_buğattaw',
@@ -9320,7 +9205,6 @@ Buğattardı şolıp şığw üşin [[{{#special:Ipblocklist}}|IP buğattaw tizi
 Özdiktik buğattalğan IP mekenjaýlar osında tizimdelgemegen.
 Ağımdağı belsendi tïımdar men buğattawlardı [[{{#special:Ipblocklist}}|IP buğattaw tiziminen]] qarañız.',
 	'block-log-flags-anononly' => 'tek tirkelgisizder',
-	'block-log-flags-nocreate' => 'tirkelw öşirilgen',
 	'block-log-flags-noautoblock' => 'özbuğattaw öşirilgen',
 	'block-log-flags-noemail' => 'e-poşta buğattalğan',
 	'blockme' => 'Özdiktik_buğattaw',
@@ -9422,7 +9306,6 @@ $messages['km'] = [
 	'blocklogentry' => 'បានហាមឃាត់ [[$1]]​ដោយរយៈពេលផុតកំណត់$2 $3',
 	'blocklogtext' => 'នេះជាកំណត់ហេតុនៃការហាមឃាត់និងឈប់ហាមឃាត់អ្នកប្រើប្រាស់។ អាសយដ្ឋានIPដែលត្រូវបានហាមឃាត់ដោយស្វ័យប្រវត្តិមិនត្រូវបានដាក់ក្នុងបញ្ជីនេះទេ។ សូមមើល[[Special:BlockList|បញ្ជីនៃការហាមឃាត់IP]]ចំពោះបញ្ជីនៃហាមឃាត់នាថ្មីៗ។',
 	'block-log-flags-anononly' => 'សម្រាប់​តែ​អ្នកប្រើប្រាស់​អនាមិក​ប៉ុណ្ណោះ',
-	'block-log-flags-nocreate' => 'ការបង្កើតគណនីត្រូវបានហាមឃាត់',
 	'block-log-flags-noautoblock' => 'ការហាមឃាត់ដោយស្វ័យប្រវត្តិមិនត្រូវបានអនុញ្ញាតទេ',
 	'block-log-flags-noemail' => 'អ៊ីមែលត្រូវបានហាមឃាត់',
 	'block-log-flags-nousertalk' => 'មិនអាចកែប្រែទំព័រពិភាក្សាផ្ទាល់ខ្លួនទេ',
@@ -9485,7 +9368,6 @@ $1 ಅವರು ಈ ನಿರ್ಬಂಧನೆಯನ್ನು ಒಡ್ಡಿ�
 	'blocklogpage' => 'ತಡೆಹಿಡಿದ ಸದಸ್ಯರ ದಿನಚರಿ',
 	'blocklogentry' => '[[$1]] ಖಾತೆಯನ್ನು $2 $3 ಸಮಯದವರೆಗೆ ತಡೆಹಿಡಿಯಲಾಗಿದೆ',
 	'block-log-flags-anononly' => 'ಅನಾಮಧೇಯ ಬಳಕೆದಾರರು ಮಾತ್ರ',
-	'block-log-flags-nocreate' => 'ಖಾತೆ ಸೃಷ್ಟಿ ತಡೆಹಿಡಿಯಲಾಗಿದೆ',
 	'block-log-flags-noemail' => 'ಇ-ಅಂಚೆ ತಡೆಹಿಡಿಯಲಾಗಿದೆ',
 	'blockme' => 'ನನ್ನನ್ನು ತಡೆಹಿಡಿ',
 	'bydate' => 'ದಿನಾಂಕಕ್ಕನುಗುಣವಾಗಿ',
@@ -9590,7 +9472,6 @@ $1, 또는 [[{{MediaWiki:Grouppage-sysop}}|다른 관리자]]에게 차단에 �
 	'blocklogentry' => '[[$1]] 사용자를 $2 차단함 $3',
 	'blocklogtext' => '이 목록은 사용자 차단/차단 해제 기록입니다. 자동으로 차단된 IP 주소는 여기에 나오지 않습니다. [[Special:BlockList|여기]]에서 현재 차단된 사용자 목록을 볼 수 있습니다.',
 	'block-log-flags-anononly' => 'IP만 막음',
-	'block-log-flags-nocreate' => '계정 생성 막음',
 	'block-log-flags-noautoblock' => '자동 차단 비활성화됨',
 	'block-log-flags-noemail' => '이메일 막음',
 	'block-log-flags-nousertalk' => '자신의 토론 문서 편집 불가',
@@ -9701,7 +9582,6 @@ $1, 또는 [[{{MediaWiki:Grouppage-sysop}}|다른 관리자]]에게 차단에 �
 	'blocklogentry' => '[[$1]] 사용자를 $2 차단함 $3',
 	'blocklogtext' => '이 목록은 사용자 차단/차단 해제 기록입니다. 자동으로 차단된 IP 주소는 여기에 나오지 않습니다. [[Special:BlockList|여기]]에서 현재 차단된 사용자 목록을 볼 수 있습니다.',
 	'block-log-flags-anononly' => 'IP만 막음',
-	'block-log-flags-nocreate' => '계정 생성 막음',
 	'block-log-flags-noautoblock' => '자동 차단 비활성화됨',
 	'block-log-flags-noemail' => '이메일 막음',
 	'block-log-flags-nousertalk' => '자신의 토론 문서 편집 불가',
@@ -9736,7 +9616,6 @@ $messages['koi'] = [
 	'blocklink' => 'падмöтны',
 	'blocklogpage' => 'Падмöтаннэз сьöртi журнал',
 	'blocklogentry' => 'падмöтiс  [[$1]]-сö   $3 $2 -öдз',
-	'block-log-flags-nocreate' => 'виль уджкерисьöн лоны оз позь',
 	'bad_image_list' => 'Формат лöсьöтiкö видз тöд вылын: Уджавны пондасö токö нимлёдзись визёккез (кöдналöн пондöтчанын эм *). Визёклöн медодзза ыстöт ась лоö йитöм неуджалан файлкöт.  Мöдiк ыстöттэз сiя жö визёкын огö пыртö сы лыдö,  м.ш. гижöттэз, кытчö медиа-файл позьö пыртны.',
 ];
 
@@ -9805,7 +9684,6 @@ $1 {{PLURAL:$1|символдан|символладан}} кеб болургъ
 Автомат халда тыйылгъан IP-адресле былайда кёргюзюлмейдиле.
 Банла бла блокланы кёрюр ючюн [[Special:BlockList|IP блок списогуна]] къарагъыз.',
 	'block-log-flags-anononly' => 'джангыз аноним къошулуучула',
-	'block-log-flags-nocreate' => 'Тергеу джазыуланы (аккаунтланы) регистрациялары тыйылыбды',
 	'block-log-flags-noautoblock' => 'автоблок джукъланыбды',
 	'block-log-flags-noemail' => 'e-mail джибериу амал блокга салыннганды',
 	'block-log-flags-nousertalk' => 'кесини сюзюу бетин тюрлендирелмейди',
@@ -9952,7 +9830,6 @@ un och wann De se ändere wells.',
 	'blocklogtext' => 'Heh es dat Logboch för et Metmaacher Sperre un Freijevve.
 Automatich jesperrte IP-Adresse sin nit heh, ävver en de [[Special:BlockList|{{int:ipblocklist}}]] ze finge.',
 	'block-log-flags-anononly' => 'nor de namelose Metmaacher sperre',
-	'block-log-flags-nocreate' => 'neu Metmaacher aanlääje es verbodde',
 	'block-log-flags-noautoblock' => 'nit automatesch all däm sing IP-Adresse sperre',
 	'block-log-flags-noemail' => 'och et E-Mail Verschecke sperre',
 	'block-log-flags-nousertalk' => 'kann de eije Klaafsigg nit ändere',
@@ -10077,7 +9954,6 @@ un och wann De se ändere wells.',
 	'blocklogtext' => 'Heh es dat Logboch för et Metmaacher Sperre un Freijevve.
 Automatich jesperrte IP-Adresse sin nit heh, ävver en de [[Special:BlockList|{{int:ipblocklist}}]] ze finge.',
 	'block-log-flags-anononly' => 'nor de namelose Metmaacher sperre',
-	'block-log-flags-nocreate' => 'neu Metmaacher aanlääje es verbodde',
 	'block-log-flags-noautoblock' => 'nit automatesch all däm sing IP-Adresse sperre',
 	'block-log-flags-noemail' => 'och et E-Mail Verschecke sperre',
 	'block-log-flags-nousertalk' => 'kann de eije Klaafsigg nit ändere',
@@ -10157,7 +10033,6 @@ Sedemekê binivîse!',
 	'blocklogentry' => '"[[$1]]" ji bo dema $2 $3 hatîye asteng kirin',
 	'blocklogtext' => 'Ev reşahîyek ji astengkirinên û rakirina astengkirinên bikarhêneran ra ye. Adrêsên IP\'yan, yê otomatîk hatine astengkirin, nehatine nivîsandin. [[Special:BlockList|Lîsteya IP\'yên astengkirî]] bibîne ji bo dîtina astengkirinên IP\'yan.',
 	'block-log-flags-anononly' => 'bes bikarhênerên neqeydkirî',
-	'block-log-flags-nocreate' => 'çêkirina hesaban hate qedexekirin',
 	'block-log-flags-noautoblock' => 'astengkirina otomatik tune',
 	'block-log-flags-noemail' => 'Şandina e-nameyan hatîye qedexekirin',
 	'block-log-flags-nousertalk' => 'nikare guftûgoyê xwe biguherîne',
@@ -10206,7 +10081,6 @@ $messages['ky'] = [
 	'blocklink' => 'тосмоло',
 	'blocklogpage' => 'Тосмоолордун тизмеси',
 	'blocklogentry' => '[[$1]] тосмолонду, тосмолоо мөөнөтү: $2 $3',
-	'block-log-flags-nocreate' => 'Каттоо мүмкүн эмес',
 	'bydate' => 'Күнү боюнча',
 	'bad_image_list' => 'Төмөнкү калыпта болуш керек:
 
@@ -10270,7 +10144,6 @@ Commodule notatio obstructionum subter datur.',
 	'blocklogentry' => 'obstruxit [[$1]], exire $2 $3',
 	'blocklogtext' => 'Hic est index actorum obstructionis deobstructionisque. Loci IP qui automatice obstructi sunt non enumerantur. Vide [[Special:BlockList|indicem usorum locorumque IP obstructorum]] pro indice toto.',
 	'block-log-flags-anononly' => 'solum usores anonymi',
-	'block-log-flags-nocreate' => 'creatio rationum prohibita',
 	'block-log-flags-noautoblock' => 'obstructio automatica prohibita',
 	'block-log-flags-noemail' => 'Litterae electronicae obstructae',
 	'block-log-flags-nousertalk' => 'non potest paginam disputationis suam recensere',
@@ -10298,7 +10171,6 @@ Puede ser que contiene uno o más caracteres que no se pueden usar en los títul
 	'blocklink' => 'blokea',
 	'blocklogpage' => 'Bloqueos de usuarios',
 	'blocklogentry' => 'bloqueó a [[$1]] $3 durante un tiempo de $2',
-	'block-log-flags-nocreate' => 'desactivada la creación de cuentos',
 	'bad_image_list' => 'El formato es ańsina:
 
 Cale akavidar sólo elementos de lista (quere dezir: shurás/satires qu\'empeçan con *).
@@ -10401,7 +10273,6 @@ Kuckt d\'[[Special:BlockList|IP Spär-Lëscht]] fir all Spären ze gesin.',
 Automatesch gespaarten IP-Adresse sinn hei net opgelëscht.
 Kuckt d\'[[Special:BlockList|IP Spärlëscht]] fir déi aktuell Spären.',
 	'block-log-flags-anononly' => 'Nëmmen anonym Benotzer',
-	'block-log-flags-nocreate' => 'Schafe vu Benotzerkonte gespaart',
 	'block-log-flags-noautoblock' => 'Autoblock deaktivéiert',
 	'block-log-flags-noemail' => 'E-Mail gespaart',
 	'block-log-flags-nousertalk' => 'däerf seng Diskussiounssäiten net änneren',
@@ -10434,7 +10305,6 @@ $messages['lez'] = [
 	'blocklink' => 'Блок авун',
 	'blocklogpage' => 'Блокарунин журнал',
 	'blocklogentry' => '[[$1]] блокарна,  $2 $3 чIав кьван',
-	'block-log-flags-nocreate' => 'Аккаунт туькIуьрдай ихтияр авач',
 	'bad_image_list' => 'Формат икl хьана кlанзава:
 
 Анжах сиягьда авай (* лишандихъ галаз эгеч!завай ц!арариз) зат!ариз килигда.
@@ -10520,7 +10390,6 @@ Bino ebiddako bye ebikwata ku nsonga eyo mu lukalala lw\'ebifuddeyo mu by\'okuga
 	'blocklink' => 'Ono agaanibwe okuwandika',
 	'blocklogpage' => 'Abagaanidwa',
 	'blocklogentry' => '[[$1]] agaanidwa. Obuyinza bumuddizibwa ku $2 $3',
-	'block-log-flags-nocreate' => 'okukolawo akawunti empya kusibidwa',
 	'bad_image_list' => 'Empandika entuufu:
 
 Ennyiriri ezikola lukalala (ezitandika ne *) ze zokka ezikola.
@@ -10622,7 +10491,6 @@ Zuug de [[Special:BlockList|lies van geblokkeerde IP-adresse]].',
 	'blocklogentry' => '"[[$1]]" is geblokkeerd veur d\'n tied van $2 $3',
 	'blocklogtext' => 'Dit is \'n log van blokkades van gebroekers. Automatisch geblokkeerde IP-adresse sjtoon hie neet bie. Zuug de [[Special:BlockList|Lies van geblokkeerde IP-adresse]] veur de lies van op dit mement wèrkende blokkades.',
 	'block-log-flags-anononly' => 'allein anoniem',
-	'block-log-flags-nocreate' => 'aanmake gebroekers geblokkeerd',
 	'block-log-flags-noautoblock' => 'autoblok ongedaon gemaak',
 	'block-log-flags-noemail' => 'e-mail geblokkeerd',
 	'block-log-flags-nousertalk' => 'kan eige euverlèkpagina neet bewèrke',
@@ -10687,7 +10555,6 @@ Pe piaxei mettighe ûn di doî in tûtte e domande che ti fæ.',
 I indirissi IP affermæ automaticamente non son  consideræ.
 Veddi a [[Special:BlockList|Lista de i indirissi IP affermæ]] pe e informaçioin neuve.',
 	'block-log-flags-anononly' => 'Utenti anonimmi soö',
-	'block-log-flags-nocreate' => 'Neuve registrascioin non son permisse',
 	'block-log-flags-noautoblock' => 'O blocco automatego o non l\'è attïvo',
 	'block-log-flags-noemail' => 'A posta elettronega a non l\'è attïva',
 	'bydate' => 'pe dâta',
@@ -10712,7 +10579,6 @@ $messages['liv'] = [
 	'blocklink' => 'blokīer',
 	'blocklogpage' => 'Blokīerimiz log',
 	'blocklogentry' => 'Blokīerimiz kȭlbatijiz [[$1]], jarā loppõmiz āiga um $2 $3',
-	'block-log-flags-nocreate' => 'kontod lūomi um kīeldtõd',
 	'bad_image_list' => 'Tǟdõl panābõd setku nimkēra elementõd ( rīndad, mis irgõbõd simbōlõks *) . Ežmi siḑīm rīndas um kilāb siḑīm äbkȭlbatõb fail jūrõ. Sīel īž rīndas vȯlbiži pierrõ tulbiži siḑīmḑi vaņtlõbõd nemē mūšti ulzõ võtāmiži, se tǟntõb kēratõkši, mis jūrõ failõ võib pānda.',
 ];
 
@@ -10765,7 +10631,6 @@ Varda [[Special:BlockList|lista di IP blucaa]] per vidè anmò i bloch.',
 I indirizz IP che i henn staa blucaa utumaticament i henn mía cumpres int la lista.
 Varda el [[Special:BlockList|register di IP blucaa]] per la lista de tüt i bloch uperaziunaj ativ.',
 	'block-log-flags-anononly' => 'dumà druvadur anònim',
-	'block-log-flags-nocreate' => 'blucada la creazión de cünt növ',
 	'bad_image_list' => 'El furmaa a l\'è quest chì:
 
 Se tegnen bón dumà i list póntaa (i righ che scumincen per *).
@@ -10783,7 +10648,6 @@ $messages['ln'] = [
 	'blocklink' => 'kotɛ́lɛmisa',
 	'blocklogpage' => 'Zuluná ya botɛ́lɛmisi',
 	'blocklogentry' => '[[$1]] atɛ́lɛ́mísámí ; bosílisi : $2 $3',
-	'block-log-flags-nocreate' => 'bokeli bwa konti botendísámí',
 ];
 
 $messages['lo'] = [
@@ -10948,7 +10812,6 @@ Pateikiamas paskutinis blokavimo istorijos įrašas.',
 Automatiškai blokuoti IP adresai neišvardinti.
 Jei norite pamatyti dabar blokuojamus adresus, žiūrėkite [[Special:BlockList|IP blokavimų sąrašą]].',
 	'block-log-flags-anononly' => 'tik anoniminiai naudotojai',
-	'block-log-flags-nocreate' => 'paskyrų kūrimas išjungtas',
 	'block-log-flags-noautoblock' => 'automatinis blokavimas išjungtas',
 	'block-log-flags-noemail' => 'el. paštas užblokuotas',
 	'block-log-flags-nousertalk' => 'negali redaguoti savo naudotojo aptarimo puslapio',
@@ -10978,7 +10841,6 @@ $messages['ltg'] = [
 	'blocklink' => 'nūblokēt',
 	'blocklogpage' => 'Blokiejumu registris',
 	'blocklogentry' => 'noblokieja [[$1]] iz $2 $3',
-	'block-log-flags-nocreate' => 'Kontu radeišonys atslāga',
 	'bad_image_list' => 'Formats ir taids: tikai saroksta elementi (ryndys, suocūt ar *), ir skaitams par failu. Pyrmuo saite iz ryndys ir saite uz nalobu failu. Sevkurys vāluokys saitis tymā pošā ryndā tīk skaiteitys par izjāmumim, t.i., lopom, kur fails var atsarast ryndys vydā.',
 ];
 
@@ -11066,7 +10928,6 @@ Te apakšā var apskatīties bloķēšanas reģistru:',
 Te neparādās automātiski nobloķētās IP adreses.
 Šobrīd aktīvos blokus var apskatīties bloķēto lietotāju [[Special:BlockList|IP adrešu sarakstā]].',
 	'block-log-flags-anononly' => 'tikai anonīmiem lietotājiem',
-	'block-log-flags-nocreate' => 'kontu veidošana atslēgta',
 	'block-log-flags-noautoblock' => 'automātiskā bloķēšana atslēgta',
 	'block-log-flags-noemail' => 'e-pasts bloķēts',
 	'block-log-flags-nousertalk' => 'nevar izmainīt savu diskusiju lapu',
@@ -11132,7 +10993,6 @@ $messages['lzh'] = [
 	'blocklogentry' => '禁[[$1]]屆$2$3',
 	'blocklogtext' => '此誌禁赦；自禁不示。見[[Special:BlockList|此]]列今禁者。',
 	'block-log-flags-anononly' => '惟禁匿',
-	'block-log-flags-nocreate' => '禁增簿',
 	'block-log-flags-noautoblock' => '止自禁',
 	'block-log-flags-noemail' => '郵禁焉',
 	'block-log-flags-nousertalk' => '禁己議',
@@ -11163,7 +11023,6 @@ Dudicoxopes oxmaruşi yasaği na ren ar, varna daha dido kʼarakʼtʼeri uğun.'
 	'blocklink' => 'bloği qʼvi',
 	'blocklogpage' => 'Bloğiş kʼayitʼepe',
 	'blocklogentry' => ', [[$1]] maxmare kododginu, dodginuşi ora: $2 $3',
-	'block-log-flags-nocreate' => 'hesabi okʼidu geinkʼilu',
 	'bad_image_list' => 'Formatʼi aşo ren:
 
 Xvala listeşi dudi ondepe (* kʼala na gyoçʼkʼaps ondepe) beciti ren.
@@ -11252,7 +11111,6 @@ $messages['mai'] = [
 स्वचालित रूपेँ प्रतिबन्धित कएल अनिकेत एतए दर्ज नै अछि।
 देखू [[Special:BlockList|IP block list]] अखन लागू क्रियाशील बन्द आ प्रतिबन्ध सूची लेल।',
 	'block-log-flags-anononly' => 'गुप्त प्रयोक्ता मात्र',
-	'block-log-flags-nocreate' => 'लेखा निर्माण अशक्त कएल',
 	'block-log-flags-noautoblock' => 'स्वचालित प्रतिबन्ध अशक्त',
 	'block-log-flags-noemail' => 'ई-मेल अवरुद्ध',
 	'block-log-flags-nousertalk' => 'अपन वार्ता पन्ना सम्पादित नै कऽ सकब',
@@ -11303,7 +11161,6 @@ Aja lewih sekang $1 {{PLURAL:$1|karakter|karakter}} dawane.',
 	'blocklink' => 'blokir',
 	'blocklogpage' => 'Log pamblokiran',
 	'blocklogentry' => 'mblokir [[$1]] nganti gutul $2 $3',
-	'block-log-flags-nocreate' => 'opsi nggawé akun dipatèni (\'\'disabled\'\')',
 	'bad_image_list' => 'Formate kaya kiye:
 
 Mung butir daftar (baris sing diawali karo tanda*) sing melu diitung.
@@ -11369,7 +11226,6 @@ $messages['mdf'] = [
 Эсь сёлгови IP адресне тязк аф сувсихть.
 Ванк [[Special:BlockList|IP пякстаматнень лувомать]] тяниень якамань кардафкснень ди пякстаматнень мархта.',
 	'block-log-flags-anononly' => 'аньцек лемфтома тиихне',
-	'block-log-flags-nocreate' => 'од сёрматфтомась аф тиеви',
 	'block-log-flags-noautoblock' => 'эсь тиеви пякстама аф тиеви',
 	'block-log-flags-noemail' => 'электрононь адрессь пякстазь',
 	'block-log-flags-nousertalk' => 'аш кода петнемс эсь корхнема лопанц',
@@ -11462,7 +11318,6 @@ Eo ambany ny laogim-pamafana.',
 Ireo adiresy IP voasakana ho azy dia tsy miseho eto. Jereo ao amin\'ny [[Special:BlockList|lisitry ny IP voasakana]]
 ny lisitry ny fisakanana sy fandrarana na tanteraka misy ankehitriny.',
 	'block-log-flags-anononly' => 'mpikambana tsy nisoratra anarana ihany',
-	'block-log-flags-nocreate' => 'tsy mahazo manokatra kaonty',
 	'block-log-flags-noautoblock' => 'fanakanana ny IP nesorina',
 	'block-log-flags-noemail' => 'voarara ny fandefasana imailaka',
 	'block-log-flags-nousertalk' => 'tsy azo ovainy ny pejin-dresany',
@@ -11496,7 +11351,6 @@ $messages['mhr'] = [
 	'blocklink' => 'йӧным петыраш',
 	'blocklogpage' => 'Йӧным вашталтыме журнал',
 	'blocklogentry' => '[[$1]] лан йӧным петрен $2 $3 мучашлалтеш',
-	'block-log-flags-nocreate' => 'у пайдаланыше-влаклан регистрацийым чактарыме',
 	'bad_image_list' => 'Формат тыгай лийшаш:
 
 Лӱмерын ужашыже-влак гына шотыш налалташ тӱналалтыт (* дене туҥалше корно-влак).
@@ -11544,7 +11398,6 @@ Entri log pamblokiran tabaharu iko disadioan di bawah iko untuak referensi:',
 	'blocklink' => 'blokir',
 	'blocklogpage' => 'Log pemblokiran',
 	'blocklogentry' => 'memblokir [[$1]] dalam maso berlaku $2 $3',
-	'block-log-flags-nocreate' => 'cipta akun dimatikan',
 	'bad_image_list' => 'Formatnyo sabagai berikut:
 
 Hanyo butir senarai (barih diawali jo tando *) yang dihituang.
@@ -11653,7 +11506,6 @@ $messages['mk'] = [
 Автоматски блокираните IP-адреси не се наведени.
 Видете го [[Special:BlockList|списокот на блокирани IP-адреси]].',
 	'block-log-flags-anononly' => 'само анонимни корисници',
-	'block-log-flags-nocreate' => 'оневозможено создавање кориснички сметки',
 	'block-log-flags-noautoblock' => 'автоблокирање исклучено',
 	'block-log-flags-noemail' => 'блокирана е-поштенска адреса',
 	'block-log-flags-nousertalk' => 'без можност за уредување на својата страница за разговор',
@@ -11755,7 +11607,6 @@ $1 ആണ് ഈ തടയൽ നടത്തിയത്. \'\'$2\'\' എന്�
 	'blocklogentry' => '$2 കാലത്തേക്കു [[$1]] എന്ന അംഗത്വത്തെ തടഞ്ഞിരിക്കുന്നു $3',
 	'blocklogtext' => '{{SITENAME}} സംരംഭത്തിൽ പ്രവർത്തിക്കുന്നതിൽ നിന്ന് ഉപയോക്താക്കളെ തടഞ്ഞതിന്റേയും, പുനഃപ്രവർത്തനാനുമതി നൽകിയതിന്റേയും രേഖകൾ താഴെ കാണാം. {{SITENAME}} സംരംഭം സ്വയം  തടയുന്ന ഐ.പി. വിലാസങ്ങൾ ഈ പട്ടികയിലില്ല. [[Special:BlockList|തടയപ്പെട്ടിട്ടുള്ള ഐ.പി. വിലാസങ്ങളുടെ പട്ടിക]] എന്ന താളിൽ നിലവിലുള്ള നിരോധനങ്ങളേയും തടയലുകളേയും കാണാവുന്നതാണ്.',
 	'block-log-flags-anononly' => 'അജ്ഞാത ഉപയോക്താക്കളെ മാത്രം',
-	'block-log-flags-nocreate' => 'അംഗത്വം സൃഷ്ടിക്കുന്നതും തടഞ്ഞിരിക്കുന്നു',
 	'block-log-flags-noautoblock' => 'യാന്ത്രികതടയൽ സജ്ജമല്ലാതാക്കിയിരിക്കുന്നു',
 	'block-log-flags-noemail' => 'ഇമെയിൽ അയയ്ക്കുന്നത് തടഞ്ഞിരിക്കുന്നു',
 	'block-log-flags-nousertalk' => 'സ്വന്തം സംവാദം താളിൽ തിരുത്താനനുവാദമില്ല',
@@ -11849,7 +11700,6 @@ $1 тэмдэгтээс богино байх ёстой.',
 Автоматаар түгжигдсэн IP хаягууд жагсаагдаагүй.
 [[Special:BlockList|IP хаягийн түгжээний жагсаалтыг]] харж одоо түгжигдсэн хаягуудыг харна уу.',
 	'block-log-flags-anononly' => 'зөвхөн нэргүй хэрэглэгчид',
-	'block-log-flags-nocreate' => 'Бүртгэл үүсгэх боломжгүй',
 	'block-log-flags-noautoblock' => 'автотүгжээ зогсоогдсон',
 	'block-log-flags-noemail' => 'и-мэйл түгжигдсэн',
 	'block-log-flags-nousertalk' => 'өөрийн ярианы хуудсыг засварлах боломжгүй байна',
@@ -11876,7 +11726,6 @@ $messages['mo'] = [
 	'blockip' => 'Блокязэ утилизатор',
 	'blocklink' => 'блокязэ',
 	'blocklogpage' => 'Журнал блокэрь',
-	'block-log-flags-nocreate' => 'креаря де контурь дезактиватэ',
 	'bad_image_list' => 'Форматул есте умэторул:
 
 Нумай елементеле уней листе (линий че ынчеп ку *) сынт луате ын консидераре.
@@ -11984,7 +11833,6 @@ $messages['mr'] = [
 आपोआप प्रतिबंधीत केलेले अंकपत्ते नमूद केलेले नाहीत.
 सध्या लागू असलेली बंदी व प्रतिबंधनांच्या यादीकरिता [[Special:BlockList|अंकपत्ता प्रतिबंधन सूची]] पहा.',
 	'block-log-flags-anononly' => 'केवळ अनामिक सदस्य',
-	'block-log-flags-nocreate' => 'खाते तयारकरणे अवरूद्ध केले',
 	'block-log-flags-noautoblock' => 'स्वयंचलित प्रतिबंधन अवरूद्ध केले',
 	'block-log-flags-noemail' => 'विपत्र अवरूद्ध केले',
 	'block-log-flags-nousertalk' => 'ला स्वतःचे चर्चापान संपादता येत नाही',
@@ -12013,7 +11861,6 @@ $messages['mrj'] = [
 	'blocklink' => 'блокируяш',
 	'blocklogpage' => 'Блокировкывлӓн журналышты',
 	'blocklogentry' => 'периодеш [[$1]] блокируйымы$2 $3',
-	'block-log-flags-nocreate' => 'учётный сирмӓшвлӓн регистрацим запрещӓйӹмӹ',
 	'bad_image_list' => 'Техень форматан лишӓшлык:
 
 Лач списокын элементвлӓжӹм веле шотыш нӓлмӹ лиэш (* пӓлӹк доно тӹнгӓлӓлтшӹ символвлӓ)
@@ -12124,7 +11971,6 @@ Log sekatan disediakan di bawah sebagai rujukan:',
 Alamat IP yang disekat secara automatik tidak disenaraikan di sini.
 Sila lihat juga [[Special:BlockList|senarai sekatan IP]] yang sedang berkuatkuasa.',
 	'block-log-flags-anononly' => 'pengguna tanpa nama sahaja',
-	'block-log-flags-nocreate' => 'pembukaan akaun dimatikan',
 	'block-log-flags-noautoblock' => 'sekatan automatik dimatikan',
 	'block-log-flags-noemail' => 'e-mail disekat',
 	'block-log-flags-nousertalk' => 'tidak boleh menyunting laman perbincangan sendiri',
@@ -12213,7 +12059,6 @@ Ara l-[[Special:BlockList|lista tal-IP imblukkati]] biex tara l-blokki attivi.',
 	'blocklogentry' => 'imblokka lil "[[$1]]" għal perjodu ta\' $2 $3',
 	'blocklogtext' => 'Dan huwa log tal-azzjonijiet tal-blokkar u sblokkar ta\' utent. Indirizzi tal-IP blokkati awtomatikament m\'humiex fil-lista. Ara l-[[Special:BlockList|lista tal-IP blokkati]] għal lista tal-blokki attivi bħalissa.',
 	'block-log-flags-anononly' => 'utenti anonimi biss',
-	'block-log-flags-nocreate' => 'ħolqien tal-kont imblukkat',
 	'block-log-flags-noautoblock' => 'blokkar awtomatiku disattivat',
 	'block-log-flags-noemail' => 'posta elettronika imblukkata',
 	'block-log-flags-nousertalk' => 'ma jistax jimmodifika l-paġna ta\' diskussjoni personali',
@@ -12262,7 +12107,6 @@ La tue morada de IP atual ye $3 i l ID de l bloqueio ye $5. Por fabor, anclui un
 	'blocklink' => 'bloquiar',
 	'blocklogpage' => 'Registro de l bloqueio',
 	'blocklogentry' => '"[[$1]]" fui bloquiado cun un tiempo de balidade de $2 $3',
-	'block-log-flags-nocreate' => 'criaçon de cuontas zatibada',
 	'bad_image_list' => 'L formato ye l seguinte:
 
 Solo son cunsiderados cousas de la lista (lhinhas ampeçadas por *). La purmeira lhigaçon nua lhinha debe ser ua lhigaçon pa ua "bad image".
@@ -12303,7 +12147,6 @@ HTML tags ကို စစ်ဆေးပါ။',
 	'blocklogpage' => 'ပိတ်ပင်တားဆီးမှု မှတ်တမ်း',
 	'blocklogentry' => '[[$1]] ကို $2 ကြာအောင် ပိတ်ပင် တားဆီးလိုက်သည် $3',
 	'block-log-flags-anononly' => 'အမည်မသိ အသုံးပြုသူများသာ',
-	'block-log-flags-nocreate' => 'အကောင့်ဖန်တီးခြင်းကို ပိတ်ထားသည်',
 	'block-log-flags-noautoblock' => 'အလိုအလျောက်ပိတ်ပင်ခြင်းကို ပိတ်ထားသည်',
 	'block-log-flags-noemail' => 'အီးမေးကို ပိတ်ပင်ထားသည်',
 	'block-log-flags-nousertalk' => 'မိမိ၏ဆွေးနွေးချက်စာမျက်နှာကို တည်းဖြတ်မရနိုင်ပါ',
@@ -12365,7 +12208,6 @@ IP-тешкстэть — $3, саймас совавтоманть ID-сь — 
 	'blocklogpage' => 'Пекстамонь журналось',
 	'blocklogentry' => 'пектстамонзо [[$1]]  ютазь шканть марто $2 $3',
 	'block-log-flags-anononly' => 'ансяк лемтеме теицятненень',
-	'block-log-flags-nocreate' => 'од теицянь тарканть шкамось-теемась лоткавтозь',
 	'block-log-flags-noemail' => 'е-сёрма озавтозь саймес',
 	'block-log-flags-hiddenname' => 'лисиенть-совиенть лемезэ кекшезь',
 	'blockme' => 'Озавтомак саймес',
@@ -12526,7 +12368,6 @@ $messages['nan'] = [
 	'blocklogentry' => 'hong-só [[$1]], siat kî-hān chì $2 $3',
 	'blocklogtext' => 'Chit-ê log lia̍t-chhut block/unblock ê tōng-chok. Chū-tōng block ê IP chū-chí bô lia̍t--chhut-lâi ([[Special:BlockList]] ū hiān-chú-sî ū-hāu ê block/ban o·-miâ-toaⁿ).',
 	'block-log-flags-anononly' => '只會當是無名氏用者',
-	'block-log-flags-nocreate' => 'Khui kháu-chō thêng-iōng ah',
 	'block-log-flags-noautoblock' => '自動封鎖袂當用',
 	'block-log-flags-noemail' => '電子批封鎖牢咧',
 	'block-log-flags-nousertalk' => '袂當改家己的討論頁',
@@ -12648,7 +12489,6 @@ Skjulingsloggen vises nedenfor.',
 	'blocklogentry' => 'blokkerte [[$1]] med en varighet på $2 $3',
 	'blocklogtext' => 'Dette er en logg som viser hvilke brukere som har blitt blokkert og avblokkert. Automatisk blokkerte IP-adresser vises ikke. Se [[Special:BlockList|blokkeringslisten]] for en liste over IP-adresser som er blokkert akkurat nå.',
 	'block-log-flags-anononly' => 'kun uregistrerte brukere',
-	'block-log-flags-nocreate' => 'kontooppretting deaktivert',
 	'block-log-flags-noautoblock' => 'autoblokkering slått av',
 	'block-log-flags-noemail' => 'e-post blokkert',
 	'block-log-flags-nousertalk' => 'kan ikke redigere egen diskusjonsside',
@@ -12725,7 +12565,6 @@ Op de [[Special:BlockList|IP-Blocklist]] is en List vun alle Blocks to finnen.',
 	'blocklogtext' => 'Dit is en Logbook över Blocks un Freegaven vun Brukern. Automatisch blockte IP-Adressen sünd nich opföhrt.
 Kiek [[Special:BlockList|IP-Blocklist]] för en List vun den blockten Brukern.',
 	'block-log-flags-anononly' => 'blots anonyme Brukers',
-	'block-log-flags-nocreate' => 'Brukerkonten opstellen sperrt',
 	'block-log-flags-noautoblock' => 'Autoblock utschalt',
 	'block-log-flags-noemail' => 'E-Mail schrieven sperrt',
 	'block-log-flags-nousertalk' => 'kann de egene Diskuschoonssied nich ännern',
@@ -12836,7 +12675,6 @@ t Logboek mit onderdrokten versies steet hieronder as referensie:',
 	'blocklogentry' => 'blokkeren "[[$1]]" veur $2 $3',
 	'blocklogtext' => 'Hier zie\'j n lieste van de leste blokkeringen en deblokkeringen. Automatiese blokkeringen en deblokkeringen koemen niet in t logboek te staon. Zie de [[Special:BlockList|IP-blokkeerlieste]] veur de lieste van adressen die noen eblokkeerd bin.',
 	'block-log-flags-anononly' => 'allinnig anoniemen',
-	'block-log-flags-nocreate' => 'anmaken van gebrukersprofielen uuteschakeld',
 	'block-log-flags-noautoblock' => 'autoblokkeren uuteschakeld',
 	'block-log-flags-noemail' => 't versturen van berichten is eblokkeerd',
 	'block-log-flags-nousertalk' => 'kan zien eigen overlegpagina niet bewarken',
@@ -12919,7 +12757,6 @@ HTML ट्यागहरु जाँच्नुहोस् ।',
 स्वतः रोकिएका IP ठेगानाहरु सूचीमा छैनन्।
 वर्तमानका चालू रोक र प्रतिबन्धहरुको सूचीकोलागि हेर्नुहोस् [[Special:IPBlockList|IP रोकावट सूची]]।',
 	'block-log-flags-anononly' => 'अज्ञात प्रयोगकर्तामात्र',
-	'block-log-flags-nocreate' => 'खाता खोल्न निस्क्रिय पारिएको',
 	'block-log-flags-noautoblock' => 'स्वत रोक निस्कृय पारिएको',
 	'block-log-flags-noemail' => 'इमेल रोकियो',
 	'block-log-flags-nousertalk' => 'आफ्नै वार्तालाप पृष्ठ सम्पादन गर्न सकिंदैन',
@@ -13047,7 +12884,6 @@ Het verbergingslogboek wordt hieronder ter referentie weergegeven:',
 Automatische blokkeringen en deblokkeringen komen niet in het logboek.
 Zie ook [[Special:BlockList|Geblokkeerde IP-adressen en gebruikers]].',
 	'block-log-flags-anononly' => 'alleen anoniemen',
-	'block-log-flags-nocreate' => 'registreren gebruikers geblokkeerd',
 	'block-log-flags-noautoblock' => 'autoblokkeren is uitgeschakeld',
 	'block-log-flags-noemail' => 'e-mail geblokkeerd',
 	'block-log-flags-nousertalk' => 'kan eigen overlegpagina niet bewerken',
@@ -13158,7 +12994,6 @@ Loggføringa er synt nedanfor som referanse:',
 	'blocklogtext' => 'Dette er ein logg over blokkeringar og oppheving av blokkeringar gjorde.
 IP-adresser som blir automatisk blokkerte er ikkje lista her. Sjå [[Special:BlockList|blokkeringslista]] for alle aktive blokkeringar.',
 	'block-log-flags-anononly' => 'berre anonyme brukarar',
-	'block-log-flags-nocreate' => 'kontooppretting slått av',
 	'block-log-flags-noautoblock' => 'automatisk blokkering slått av',
 	'block-log-flags-noemail' => 'sending av e-post blokkert',
 	'block-log-flags-nousertalk' => 'kan ikkje endre eiga diskusjonsside',
@@ -13247,7 +13082,6 @@ Loggføringa er synt nedanfor som referanse:',
 	'blocklogtext' => 'Dette er ein logg over blokkeringar og oppheving av blokkeringar gjorde.
 IP-adresser som blir automatisk blokkerte er ikkje lista her. Sjå [[Special:BlockList|blokkeringslista]] for alle aktive blokkeringar.',
 	'block-log-flags-anononly' => 'berre anonyme brukarar',
-	'block-log-flags-nocreate' => 'kontooppretting slått av',
 	'block-log-flags-noautoblock' => 'automatisk blokkering slått av',
 	'block-log-flags-noemail' => 'sending av e-post blokkert',
 	'block-log-flags-nousertalk' => 'kan ikkje endre eiga diskusjonsside',
@@ -13322,7 +13156,6 @@ Le swanela goba fase ga $1 {{PLURAL:$1|ya tlhaka|tša ditlhaka}}',
 	'blocklink' => 'thibela',
 	'blocklogpage' => '\'\'log\'\' yago Thiba',
 	'blocklogentry' => 'Thibela [[$1]] ka fetšatši ya $2 $3',
-	'block-log-flags-nocreate' => 'Go hloma tšhupaleloko gago dumelege',
 	'block-log-flags-noemail' => 'e-mail e thibilwe',
 	'bydate' => 'ka letšatšikgwedi',
 	'bad_image_list' => '\'\'Format\'\' e ka mokgwa wo o latelago:
@@ -13402,7 +13235,6 @@ Podètz consultar la [[Special:BlockList|lista dels comptes e de las adreças IP
 	'blocklogentry' => 'a blocat « [[$1]] » - durada : $2 $3',
 	'blocklogtext' => 'Aquò es l\'istoric dels blocatges e desblocatges dels utilizaires. Las adreças IP automaticament blocadas son pas listadas. Consultatz la [[Special:BlockList|lista dels utilizaires blocats]] per veire qui es actualament efectivament blocat.',
 	'block-log-flags-anononly' => 'utilizaires anonims solament',
-	'block-log-flags-nocreate' => 'creacion de compte interdicha',
 	'block-log-flags-noautoblock' => 'autoblocatge de las IP desactivat',
 	'block-log-flags-noemail' => 'Mandadís de corrièr electronic blocat',
 	'block-log-flags-nousertalk' => 'pòt pas modificar sa pròpria pagina de discussion',
@@ -13513,7 +13345,6 @@ HTML ଟାଗ ପରଖିନିଅନ୍ତୁ ।',
 ଆପେଆପେ ଅଟକାଯାଇଥିବା IP ଠିକଣା ଏଠାରେ ସ୍ଥାନିତ ହୋଇନାହିଁ ।
 ଏବେ ସଚଳ କରାଯାଇଥିବା ଅଟକ ଓ ବାରଣସବୁ ଦେଖବା ନିମନ୍ତେ [[Special:BlockList|IP ଅଟକ ତାଲିକା]] ଦେଖନ୍ତୁ ।',
 	'block-log-flags-anononly' => 'କେବଳ ବେନାମି ସଭ୍ୟ',
-	'block-log-flags-nocreate' => 'ନୂଆ ଖାତା ଖୋଲିବା ଅଚଳ କରାଯାଇଅଛି',
 	'block-log-flags-noautoblock' => 'ଆପେଆପେ କରାଯାଇଥିବା ଅଟକ ଅଚଳ କରାଗଲା',
 	'block-log-flags-noemail' => 'ଇ-ମେଲ ଅଟକାଗଲା',
 	'block-log-flags-nousertalk' => 'ଆପଣା ଆଲୋଚନା ପୃଷ୍ଠାକୁ ବଦଳାଇ ପାରିବେ ନାହିଁ',
@@ -13555,7 +13386,6 @@ $messages['os'] = [
 	'blocklink' => 'бахъоды кæн',
 	'blocklogpage' => 'Хъодыты лог',
 	'blocklogentry' => 'бахъоды кодта [[$1]] $2 æмгъуыдмæ $3',
-	'block-log-flags-nocreate' => 'аккаунт аразæн нал ис',
 	'bydate' => 'рæстæгмæ гæсгæ',
 	'bad_image_list' => 'Формат у ахæм:
 
@@ -13665,7 +13495,6 @@ mu nung sanu retang bulung a sinira da).',
 E la makabili deng IP address a tambing nang makasabat.
 Lon me ing [[Special:BlockList|IP block list]] para king tala da reng kasalungsungan a makabawal o makasabat.',
 	'block-log-flags-anononly' => 'den mung gagamit a e pepakilala',
-	'block-log-flags-nocreate' => 'pamilalang account e malyari',
 	'block-log-flags-noautoblock' => 'makapatda ya ing tambing a pangasabat (autoblock)',
 	'block-log-flags-noemail' => 'makasabat ing e-mail',
 	'blockme' => 'Sabatan muku',
@@ -13720,7 +13549,6 @@ Donner apré ch\'motif  (pèr egzimpe chiter chés paches qu\'ont té vindalisé
 	'blocklink' => 'blotcher',
 	'blocklogpage' => 'jornal éd chés paches blotchées',
 	'blocklogentry' => '[[$1]] est blotché aveuc eune durèe éd $2 $3',
-	'block-log-flags-nocreate' => 'créhachon d\'conpte intérdite',
 	'bad_image_list' => 'Ch\'format ch\'est:
 
 In érbéye seulemint chés lisses éd limérachon (aveuc * al copéte). <br /> Ech preumié loïen d\'eune line i doét éte échti d\'eune méchante image. <br /> Chés eutes loïens su el méme line s\'ront érbéyés conme des éssékcions, pèr eximpe des paches où l\'image put aparoète.',
@@ -13776,7 +13604,6 @@ S kann sai, dass es ää odder meh Zaiche drin hot, wu im Titel vun de Said nid 
 	'blocklink' => 'sperre',
 	'blocklogpage' => 'Sperrlogbuch',
 	'blocklogentry' => 'hot [[$1]] gsperrt fer e Zaidraum vun $2 $3',
-	'block-log-flags-nocreate' => 'Aaleche vun Benutzerkonte isch gsperrt',
 	'bad_image_list' => 'Format:
 
 nur Zaile, die wu mit eme * aafange werre bericksichticht.
@@ -13885,7 +13712,6 @@ Przejdź do [[Special:BlockList|listy zablokowanych adresów IP]], by przejrzeć
 Na liście nie znajdą się adresy IP, które zablokowano w sposób automatyczny.
 By przejrzeć listę obecnie aktywnych blokad, przejdź na stronę [[Special:BlockList|zablokowanych adresów i użytkowników]].',
 	'block-log-flags-anononly' => 'tylko anonimowi',
-	'block-log-flags-nocreate' => 'blokada tworzenia konta',
 	'block-log-flags-noautoblock' => 'automatyczne blokowanie wyłączone',
 	'block-log-flags-noemail' => 'e‐mail zablokowany',
 	'block-log-flags-nousertalk' => 'nie może edytować własnej strony dyskusji',
@@ -14004,7 +13830,6 @@ a son ëstàite blocà n\'automàtich ambelessì a së s-ciàiro nen.
 Che a varda la [[Special:BlockList|lista dj\'adrësse IP blocà]] për vëdde
 coj che sio ij blocagi ativ al dì d\'ancheuj.',
 	'block-log-flags-anononly' => 'mach utent anònim',
-	'block-log-flags-nocreate' => 'creassion ëd cont neuv blocà',
 	'block-log-flags-noautoblock' => 'blocagi n\'autòmatich dësmòrt',
 	'block-log-flags-noemail' => 'pòsta eletrònica blocà',
 	'block-log-flags-nousertalk' => 'a peul nen modifiché soa pàgina ëd discussion',
@@ -14121,7 +13946,6 @@ $messages['pnb'] = [
 
 [[Special:BlockList|IP block lis]] ویکھو ہن دے روکے گۓ یا بند کیتے پتیاں دی لسٹ لئی۔',
 	'block-log-flags-anononly' => 'گم نام ورتن آلا',
-	'block-log-flags-nocreate' => 'کھاتا کھولنے تے پابندی اے',
 	'block-log-flags-noautoblock' => 'اپنے آپ روک نکارہ',
 	'block-log-flags-noemail' => 'ای میل روکی گئی اے',
 	'block-log-flags-nousertalk' => 'اپنا گل بات والا صفہ آپ تبدیل نئیں کرسکدا۔',
@@ -14177,7 +14001,6 @@ $messages['pnt'] = [
 	'blocklink' => 'Ασπάλιγμαν',
 	'blocklogpage' => 'Αρχείον ασπαλιγματίων',
 	'blocklogentry' => 'εσπάλισεν [[$1]] για $2 $3',
-	'block-log-flags-nocreate' => 'ποίσιμον λογαρίας \'κ ίνεται',
 	'blockme' => 'Ασπάλισον με',
 	'bydate' => 'ημερομηνίας',
 	'bad_image_list' => 'Η σύνταξην εν αέτς:
@@ -14246,7 +14069,6 @@ Jaīs en [[Special:BlockList|listin stēisan IP adressin]] kai widālai blōkise
 Autōmatiskai blōkitas IP adressis ni ast waidīntan.
 Jaīs en [[Special:BlockList|IP blōkisenin listin]] ki widālai wissans tēnti aktīwans blōkisenins.',
 	'block-log-flags-anononly' => 'tēr anōnimai tērpautajai',
-	'block-log-flags-nocreate' => 'rekkenas teiksnā izklaūtan',
 	'block-log-flags-noautoblock' => 'autōmatiska blōkisna izklaūtan',
 	'block-log-flags-noemail' => 'e-mail blōkitan',
 	'block-log-flags-nousertalk' => 'ni mazzi redigītun swajjan diskusiōnis pāusan',
@@ -14324,7 +14146,6 @@ $messages['ps'] = [
 	'blocklogpage' => 'د مخنيوي يادښت',
 	'blocklogentry' => 'په [[$1]] بنديز لګېدلی چې د بنديز د پای وخت يې $2 $3 دی',
 	'block-log-flags-anononly' => 'يواځې ورکنومي کارنان',
-	'block-log-flags-nocreate' => 'د ګڼون جوړول ناچارن شوی',
 	'block-log-flags-noemail' => 'ددې برېښليک مخه نيول شوی',
 	'block-log-flags-hiddenname' => 'پټ کارن-نوم',
 	'blockme' => 'پر ما بنديز لګول',
@@ -14433,7 +14254,6 @@ O registo de supressão é fornecido abaixo para referência:',
 Endereços IP sujeitos a bloqueio automático não são listados.
 Consulte a [[Special:BlockList|lista de IPs bloqueados]] para obter a lista de bloqueios e banimentos actualmente válidos.',
 	'block-log-flags-anononly' => 'apenas utilizadores anónimos',
-	'block-log-flags-nocreate' => 'criação de contas impossibilitada',
 	'block-log-flags-noautoblock' => 'bloqueio automático desactivado',
 	'block-log-flags-noemail' => 'correio electrónico bloqueado',
 	'block-log-flags-nousertalk' => 'impossibilitado de editar a própria página de discussão',
@@ -14557,7 +14377,6 @@ O registro de supressão é fornecido abaixo para referência:',
 Endereços IP sujeitos a bloqueio automático não são listados.
 Consulte a [[Special:BlockList|lista de bloqueios]] para obter a lista de bloqueios e banimentos em efeito neste momento.',
 	'block-log-flags-anononly' => 'apenas usuários anônimos',
-	'block-log-flags-nocreate' => 'criação de contas desabilitada',
 	'block-log-flags-noautoblock' => 'bloqueio automático desabilitado',
 	'block-log-flags-noemail' => 'impedido de enviar e-mail',
 	'block-log-flags-nousertalk' => 'impossibilitado de editar a própria página de discussão',
@@ -14668,7 +14487,6 @@ Willariy imaraykum hark\'anki (ahinataq: sapaq wandaluchasqa p\'anqakunamanta wi
 	'blocklogentry' => 'hark\'an [[$1]]-ta kay pachakama: $2 $3',
 	'blocklogtext' => 'Kayqa ruraqta hark\'asqakunap qispichisqakunappas hallch\'anmi. Kikinmanta hark\'asqa tiyaykunataqa manam kaypi rikunkichu. [[Special:BlockList|Hark\'ay sutisuyuta]] qhaway kunan hark\'asqakunata rikunaykipaq.',
 	'block-log-flags-anononly' => 'sutinnaqlla',
-	'block-log-flags-nocreate' => 'rakiquna kichariyman ama nisqa',
 	'block-log-flags-noautoblock' => 'kikinmanta hark\'ayman ama nisqa',
 	'block-log-flags-noemail' => 'e-chaskiman ama nisqa',
 	'block-log-flags-nousertalk' => 'kikinpa rimanakuy p\'anqanta manam hukchayta atinchu',
@@ -14702,7 +14520,6 @@ $messages['qug'] = [
 	'blocklink' => 'Wichkana',
 	'blocklogpage' => 'Wichkaykunapa kamu',
 	'blocklogentry' => '[[$1]]-ta chay pachakaman wichkarka: $2 $3',
-	'block-log-flags-nocreate' => 'Mushuk rurak shutipa kamayta wichkashkami',
 	'bad_image_list' => 'Kay shina killkanami kapanki:
 Tukuy aspikunaka kuyllurwan (*) kallarinami kan
 Shuk aspipi, shukniki tinkika ima tinkita wichkashkami kanka nin, kay aspipi shuk tinkikunapi ima pankakunapi wichkashka tinkita charinata ushanmi nin.',
@@ -14722,7 +14539,6 @@ $messages['rgn'] = [
 	'blocklink' => 'Met-j é carnaz',
 	'blocklogpage' => 'Regèstar d\'j blocch',
 	'blocklogentry' => '"[[$1]]" l\'è sté bluché par $2 $3',
-	'block-log-flags-nocreate' => 'Un\' s\'pò brisa registrès un\'étra volta',
 	'bad_image_list' => 'E\' quèdar l\'è quest\'aquè:
 
 As t\'nèn bon sol j elemént dal lèsti (al righ chj cmènza par *)
@@ -14760,7 +14576,6 @@ maṛṛa manaya deg ujenna eggit di tabrat i ɣ-ad tsekked.',
 	'blocklink' => 'Sbedd',
 	'blocklogpage' => 'Ẓareqq aɣmis',
 	'blocklogentry' => 'ibloka [[$1]] ar $2 $3',
-	'block-log-flags-nocreate' => 'timggit n imiḍanen imaynutn ttwasbdd',
 	'bad_image_list' => 'Tameslayt amya :
 
 imagraden n tebdart (ɣarsent * deg umzwaru) ig iteten waha.
@@ -14841,7 +14656,6 @@ Qua il log da bloccaziun sco infurmaziun:',
 Quai è il log da supprimer sco infurmaziun:',
 	'blocklogentry' => 'bloccà [[$1]] per $2. Motiv: $3',
 	'block-log-flags-anononly' => 'be utilisaders anonims',
-	'block-log-flags-nocreate' => 'deactivà la creaziun da contos',
 	'block-log-flags-noautoblock' => 'deactivà la bloccada automatica',
 	'block-log-flags-noemail' => 'bloccà la spediziun d\'e-mails',
 	'block-log-flags-nousertalk' => 'na po betg modifitgar l\'atgna pagina da discussiun',
@@ -14958,7 +14772,6 @@ Jurnalul suprimărilor este indicat mai jos:',
 	'blocklogentry' => 'a blocat utilizatorul „[[$1]]” pe o perioadă de $2 $3',
 	'blocklogtext' => 'Acest jurnal cuprinde acțiunile de blocare și deblocare. Adresele IP blocate automat nu sunt afișate. Vizitați [[Special:BlockList|lista de adrese blocate]] pentru o listă explicită a adreselor blocate în acest moment.',
 	'block-log-flags-anononly' => 'doar utilizatorii anonimi',
-	'block-log-flags-nocreate' => 'crearea de conturi dezactivată',
 	'block-log-flags-noautoblock' => 'autoblocarea dezactivată',
 	'block-log-flags-noemail' => 'e-mail blocat',
 	'block-log-flags-nousertalk' => 'nu poate edita propria pagină de discuție',
@@ -15081,7 +14894,6 @@ L\'archivije de le soppressiune \'u puè acchià aqquà sotte pe riferimende:',
 L\'indirizze IP automaticamende bloccate non ge stonne jndr\'à liste.
 Vide \'a [[Special:BlockList|liste de le IP bloccate]] pa liste de le operaziune de ban e blocche ca stonne attive mò.',
 	'block-log-flags-anononly' => 'sulamende l\'utinde anonime',
-	'block-log-flags-nocreate' => 'ccreazione de le cunde utinde disabbilitete',
 	'block-log-flags-noautoblock' => 'auto blocche disabbilitete',
 	'block-log-flags-noemail' => 'e-mail blocchete',
 	'block-log-flags-nousertalk' => 'non ge puè cangià \'a pàgene de le \'ngazzaminde toje',
@@ -15195,7 +15007,6 @@ $messages['ru'] = [
 	'blocklogentry' => 'заблокировал [[$1]] на период $2 $3',
 	'blocklogtext' => 'Журнал блокировок и разблокировок участников. Автоматически блокируемые IP-адреса здесь не указываются. См. [[Special:BlockList|список текущих блокировок]].',
 	'block-log-flags-anononly' => 'только анонимные пользователи',
-	'block-log-flags-nocreate' => 'запрещена регистрация учётных записей',
 	'block-log-flags-noautoblock' => 'автоблокировка отключена',
 	'block-log-flags-noemail' => 'запрещена отправка писем',
 	'block-log-flags-nousertalk' => 'не может править свою страницу обсуждения',
@@ -15301,7 +15112,6 @@ $messages['rue'] = [
 	'blocklogentry' => 'заблокoвав [[$1]] на термін $2 $3',
 	'blocklogtext' => 'Тото є книга блокованя і одблокованя хоснователїв. Автоматічно блокованы IP-адресы не суть выписаны. Попозерайте ся на  [[Special:BlockList|список блокованя IP]] з выписом актуалный заказів і блоковань.',
 	'block-log-flags-anononly' => 'лем анонімны хоснователї',
-	'block-log-flags-nocreate' => 'вытваряня конт не поволене',
 	'block-log-flags-noautoblock' => 'автоматічне блокованя выпнуте',
 	'block-log-flags-noemail' => 'е-маіл блокованый',
 	'block-log-flags-nousertalk' => 'не може едітовати властну сторінку діскузії',
@@ -15394,7 +15204,6 @@ $messages['sa'] = [
 	'blocklink' => 'अवरोधः क्रियताम्',
 	'blocklogpage' => 'अवरोधानां सूची',
 	'blocklogentry' => '[[$1]] इत्येतद् अवरुद्धम्, $2 $3 इति अवसान-समयेन सह',
-	'block-log-flags-nocreate' => 'सदस्यता प्राप्तिः अवरुद्धा अस्ति',
 	'bad_image_list' => 'रूपम् एवम् अस्ति -
 
 केवलं सूच्यन्तर्गताः विषयाः (* इति चिन्हात् आरभमाणाः पंक्तयः)परामृष्टाः।
@@ -15500,7 +15309,6 @@ $1 {{PLURAL:$1|бэлиэттэн|бэлиэттэн (буукубаттан)}} 
 Аптамаатынан хааччахтаммыт IP-лар манна көстүбэттэр.
 [[Special:BlockList|Билигин баар хааччахтаныылар испииһэктэрин]] көр.',
 	'block-log-flags-anononly' => 'ааттамматах кыттааччылар эрэ',
-	'block-log-flags-nocreate' => 'саҥа бэлиэтэнии бобуллубут',
 	'block-log-flags-noautoblock' => 'аптаамаатынан хааччахтааһын араарыллыбыт',
 	'block-log-flags-noemail' => 'суруктар бобуллубуттар',
 	'block-log-flags-nousertalk' => 'бэйэтин ырытар сирэйин уларытар кыаҕа суох',
@@ -15561,7 +15369,6 @@ Abbàida sa [[Special:BlockList|lista de IP bloccados]] pro bìder sas bloccadur
 	'blocklink' => 'blocca',
 	'blocklogpage' => 'Bloccos de usuàrios',
 	'blocklogentry' => 'bloccau [[$1]] pro unu tempu de $2 $3',
-	'block-log-flags-nocreate' => 'creatzione account bloccada',
 	'blockme' => 'Blocca·mi',
 	'bydate' => 'data',
 	'bad_image_list' => 'Su formau est su chi sighit:
@@ -15628,7 +15435,6 @@ Pi maggiuri nfurmazzioni, talìa la [[Special:BlockList|lista di l\'IP bluccati]
 	'blocklogentry' => 'hà bluccatu [[$1]]; scadenza $2 $3',
 	'blocklogtext' => 'Chistu è l\'alencu di l\'azzioni di bloccu e sbloccu utenti. Li ndirizzi IP bluccati automaticamenti nun sunu alincati. Cunzurtari l\'[[Special:BlockList|alencu IP bluccati]] pi l\'alencu dî ndirizzi e noma utenti lu cui bloccu è opirativu.',
 	'block-log-flags-anononly' => 'sulu utenti anònimi',
-	'block-log-flags-nocreate' => 'criazzioni account bluccata',
 	'block-log-flags-noautoblock' => 'bloccu automàticu disattivatu',
 	'block-log-flags-noemail' => 'email bluccati',
 	'block-log-flags-nousertalk' => 'nun pò mudificari la sò pròpia pàggina di discussioni',
@@ -15690,7 +15496,6 @@ Yer IP address is $3, and the block ID is #$5. Please include this address in on
 	'blocklogpage' => 'Block log',
 	'blocklogentry' => 'blockit [[$1]] wi an expiry time o $2 $3',
 	'blocklogtext' => 'This is a log o uiser blockin an unblockin actions. Autaematically blockit IP addresses isna leetit. See the [[Special:BlockList|IP block leet]] for the leet o bans and blocks on the gae the nou.',
-	'block-log-flags-nocreate' => 'accoont-makkin blockit',
 	'bydate' => 'bi date',
 	'bad_image_list' => 'Th\' format is as follows:
 
@@ -15781,7 +15586,6 @@ Si vói ciaramiddanne, pa piazeri prizzisa sempri lu nùmaru di lu broccu (ID #$
 	'blocklogentry' => 'à broccaddu [[$1]] cu\' l\'ischadènzia $2 $3',
 	'blocklogtext' => 'Chisthu è l\'erencu di l\'azioni di broccu e ibbruccu utenti. Li indirizzi IP broccaddi automatiggamenti nò so erencaddi. Cunsulthà la [[Special:BlockList|listha di l\'IP broccaddi]] pa l\'erencu di l\'indirizzi e innòmmi utenti chi so broccaddi abà.',
 	'block-log-flags-anononly' => 'soru utenti anònimi',
-	'block-log-flags-nocreate' => 'criazioni registhrazioni broccadda',
 	'block-log-flags-noautoblock' => 'broccu otomàtiggu',
 	'block-log-flags-noemail' => 'postha erettrònica broccadda',
 	'blockme' => 'Broccami',
@@ -15915,7 +15719,6 @@ Ana gal sodarītė ne daugiau kāp $1 {{PLURAL:$1|sėmbuolis|sėmbuolē|sėmbuol
 	'blocklogentry' => 'ožblokava „[[$1]]“, blokavėma čiesos - $2 $3',
 	'blocklogtext' => 'Čė īr nauduotuoju blokavėma ėr atblokavėma sārašos. Autuomatėškā blokoutė IP adresā nier ėšvardėntė. Jeigu nuorėt paveizėtė nūnā blokoujamus adresus, veizėkėt [[Special:BlockList|IP ožbluokavėmu istuorėjė]].',
 	'block-log-flags-anononly' => 'vėn anonėmėnē nauduotuojē',
-	'block-log-flags-nocreate' => 'privėlėju kūrėms ėšjungts',
 	'block-log-flags-noautoblock' => 'automatėnis blokavėms ėšjungts',
 	'block-log-flags-noemail' => 'e-pašts bluokouts īr',
 	'bydate' => 'palē data',
@@ -16029,7 +15832,6 @@ Evidencija sakrivanja je prikazana ispod kao referenca:',
 Automatsko blokirane IP adrese nisu uspisane ovde.
 Pogledajte [[Special:BlockList|blokirane IP adrese]] za spisak trenutnih zabrana i blokiranja.',
 	'block-log-flags-anononly' => 'samo anonimni korisnici',
-	'block-log-flags-nocreate' => 'pravljenje računa onemogućeno',
 	'block-log-flags-noautoblock' => 'automatsko blokiranje onemogućeno',
 	'block-log-flags-noemail' => 'e-mail je blokiran',
 	'block-log-flags-nousertalk' => 'ne može uređivati vlastitu stranicu za razgovor',
@@ -16071,7 +15873,6 @@ $messages['shi'] = [
 	'blocklog-showlog' => '↓ Amsqdac ikkattin ittuyqqan. anɣmis n willi ttuyqqanin  ɣid:',
 	'blocklog-showsuppresslog' => '↓ Amsqdac ikkattin ittuyqqan d iḥba. Anɣmis n willi ttuyqqanin  ɣid:',
 	'blocklogentry' => '↓ tqn [[$1]] s tizi izrin n $2 $3',
-	'block-log-flags-nocreate' => '↓ Ammurzm n umiḍan urak ittuyskar',
 	'bad_image_list' => 'zud ghikad :
 
 ghir lhwayj n lista (stour libdounin s *) karaytyo7asab',
@@ -16175,7 +15976,6 @@ HTML ටැගයන් පිරික්සන්න.',
 ස්වයංක්‍රීයව වාරණය කල අන්තර්ජාල ලිපිනයන් ලැයිස්තුගත කොට නොමැත.
 වර්තමානයෙහි ක්‍රියාත්මක වන තහනම් හා වාරණ සඳහා [[Special:BlockList|අන්තර්ජාල ලිපිනයන් වාරණ ලැයිස්තුව]] බලන්න.',
 	'block-log-flags-anononly' => 'නිර්නාමික පරිශීලකයන් පමණි',
-	'block-log-flags-nocreate' => 'ගිණුම් තැනීම අක්‍රීය කර ඇත',
 	'block-log-flags-noautoblock' => 'ස්වයංක්‍රීය වාරණය අක්‍රීය කොට ඇත',
 	'block-log-flags-noemail' => 'විද්‍යුත්-තැපෑල වාරණය කොට ඇත',
 	'block-log-flags-nousertalk' => 'ස්වීය සාකච්ඡා පිටුව සංස්කරණය කල නොහැක',
@@ -16290,7 +16090,6 @@ Nižšie uveďte konkrétny dôvod (napríklad uveďte konkrétne stránky, ktor
 blokované IP adresy nie sú zahrnuté. Pozri zoznam
 [[Special:BlockList|aktuálnych blokovaní]].',
 	'block-log-flags-anononly' => 'iba anonymní používatelia',
-	'block-log-flags-nocreate' => 'možnosť vytvoriť si účet bola vypnutá',
 	'block-log-flags-noautoblock' => 'autoblokovanie vypnuté',
 	'block-log-flags-noemail' => 'email blokovaný',
 	'block-log-flags-nousertalk' => 'nemôže upravovať vlastnú diskusnú stránku',
@@ -16404,7 +16203,6 @@ Dnevnik skrivanja je na voljo spodaj:',
 	'blocklogentry' => '[[$1]] blokiran s časom poteka blokade $2 $3',
 	'blocklogtext' => 'Prikazan je dnevnik blokiranja in deblokiranja uporabnikov. Samodejno blokirani IP-naslovi niso navedeni. Trenutno veljavna blokiranja so navedena na [[Special:BlockList|seznamu blokiranih IP-naslovov]].',
 	'block-log-flags-anononly' => 'samo za brezimne uporabnike',
-	'block-log-flags-nocreate' => 'ustvarjanje uporabniških računov onemogočeno',
 	'block-log-flags-noautoblock' => 'samodejno blokiranje onemogočeno',
 	'block-log-flags-noemail' => 'e-naslov blokiran',
 	'block-log-flags-nousertalk' => 'prepreči urejanje lastne pogovorne strani',
@@ -16475,7 +16273,6 @@ Zur Uffhebung dar Sperre siehe ie [[Special:BlockList|Liste oller aktiven Sperra
 Automatisch gesperrte IP-Atressa waan ne erfasst.
 Siehe de [[Special:BlockList|Liste dar gesperrta IP-Atressa und Nutzernoama]] fier olle aktiven Sperra.',
 	'block-log-flags-anononly' => 'ock Anonyme',
-	'block-log-flags-nocreate' => 'Erstellung voo Benutzerkonta gesperrt',
 	'block-log-flags-nousertalk' => 'darf eegne Dischkurseite nee beoarbta',
 	'block-log-flags-hiddenname' => 'Nutzernoame versteckt',
 	'blockme' => 'Sperre miech',
@@ -16522,7 +16319,6 @@ Waa in aysan ka badanin $1 {{PLURAL:$1|eray|erayo}}.',
 	'brokenredirects-delete' => 'tirtir',
 	'booksources-go' => 'Soco',
 	'block-log-flags-anononly' => 'Isticmaalayaasha aanan la\'aqoonsanin oo kaliya',
-	'block-log-flags-nocreate' => 'sameynta gudagalah lamaogola',
 	'bydate' => 'hab taariikheed',
 ];
 
@@ -16619,7 +16415,6 @@ Regjistri i bllokimeve është poshtë për referncë:',
 	'blocklogentry' => 'bllokoi [[$1]] për një kohë prej: $2 $3',
 	'blocklogtext' => 'Ky është një regjistër bllokimesh dhe çbllokimesh të përdoruesve. IP-të e bllokuara automatikisht nuk janë të dhëna. Shikoni dhe [[Special:BlockList|listën e IP-ve të bllokuara]] për një listë të bllokimeve të tanishme.',
 	'block-log-flags-anononly' => 'vetëm anonimët',
-	'block-log-flags-nocreate' => 'krijimi i kontove është pamundësuar',
 	'block-log-flags-noautoblock' => 'vetëbllokimi është pamundësuar',
 	'block-log-flags-noemail' => 'posta elektronike është e bllokuar',
 	'block-log-flags-nousertalk' => 'nuk mund të redaktojë faqen e tij të diskutimit',
@@ -16739,7 +16534,6 @@ $messages['sr-ec'] = [
 Аутоматски блокиране ИП адресе нису наведене.
 Погледајте [[Special:BlockList|списак блокираних ИП адреса]].',
 	'block-log-flags-anononly' => 'само анонимни корисници',
-	'block-log-flags-nocreate' => 'онемогућено отварање налога',
 	'block-log-flags-noautoblock' => 'аутоматско блокирање је онемогућено',
 	'block-log-flags-noemail' => 'е-пошта је блокирана',
 	'block-log-flags-nousertalk' => 'забрањено уређивање сопствене странице за разговор',
@@ -16822,7 +16616,6 @@ Dnevnik blokiranja je ponuđen ispod  kao referenca:',
 	'blocklogtext' => 'Ovo je istorija blokiranja i odblokiranja korisnika. Automatski
 blokirane IP adrese nisu navedene. Pogledajte [[{{ns:special}}:Ipblocklist|spisak blokiranih IP adresa]] za spisak trenutnih zabrana i blokiranja.',
 	'block-log-flags-anononly' => 'samo anonimni korisnici',
-	'block-log-flags-nocreate' => 'zabranjeno pravljenje naloga',
 	'block-log-flags-noautoblock' => 'isključeno automatsko blokiranje',
 	'block-log-flags-noemail' => 'blokirano slanje e-pošte',
 	'block-log-flags-nousertalk' => 'ne može da izmeni sopstvenu stranu za razgovor',
@@ -16969,7 +16762,6 @@ Hier foulget die Iendraach uut dät Unnerdrukkengs-Logbouk:',
 Automatisk speerde IP-Adrässe sunt nit apnuumen.
 Sjuch ju [[Special:BlockList|Lieste fon de speerde IP-Adrässe un Benutsernoomen]] foar aal aktive Speeren.',
 	'block-log-flags-anononly' => 'bloot Anonyme',
-	'block-log-flags-nocreate' => 'Dät Moakjen fon Benutserkonten speerd',
 	'block-log-flags-noautoblock' => 'Autoblock deaktivierd',
 	'block-log-flags-noemail' => 'E-Mail-Fersoand speerd',
 	'block-log-flags-nousertalk' => 'duur oaine Diskussionssiede nit beoarbaidje',
@@ -17065,7 +16857,6 @@ Pikeun rujukan, logna dipidangkeun di handap ieu:',
 	'blocklogentry' => 'meungpeuk [[$1]] nepi ka $2 $3',
 	'blocklogtext' => 'Ieu mangrupa log peta meungpeuk jeung muka peungpeuk pamaké, teu kaasup alamat IP nu dipeungpeukna otomatis. Tempo [[Special:BlockList|daptar peungpeuk IP]] pikeun daptar cegahan jeung peungpeuk.',
 	'block-log-flags-anononly' => 'pamaké anonim wungkul',
-	'block-log-flags-nocreate' => 'teu bisa nyieun akun',
 	'block-log-flags-noautoblock' => 'meungpeuk otomatis dipaéhan',
 	'block-log-flags-noemail' => 'surélek di peungpeuk',
 	'block-log-flags-nousertalk' => 'teu bisa ngédit kaca obrolan sorangan',
@@ -17181,7 +16972,6 @@ Undanhållandeloggen visas nedan för referens:',
 Automatiskt blockerade IP-adresser listas ej.
 I [[Special:BlockList|blockeringslistan]] listas alla IP-adresser och användare som är blockerade för närvarande.',
 	'block-log-flags-anononly' => 'bara oinloggade',
-	'block-log-flags-nocreate' => 'hindrar kontoregistrering',
 	'block-log-flags-noautoblock' => 'utan automatblockering',
 	'block-log-flags-noemail' => 'e-post blockerad',
 	'block-log-flags-nousertalk' => 'kan inte redigera sin diskussionssida',
@@ -17264,7 +17054,6 @@ Andika sababu ya kuzuia chini (kwa mfano, kwa kutaja mifano ya kurasa zilizohari
 	'blocklink' => 'zuia',
 	'blocklogpage' => 'Kumbukumbu ya uzuio',
 	'blocklogentry' => 'amemzuia [[$1]] mpaka $2 $3',
-	'block-log-flags-nocreate' => 'uwezo wa kuunda akaunti imesitishwa',
 	'block-log-flags-noemail' => 'barua pepe imezuiliwa',
 	'block-log-flags-hiddenname' => 'jina la mtumiaji limefichwa',
 	'blockme' => 'Unizuishe',
@@ -17333,7 +17122,6 @@ Přyńdź do [[Special:BlockList|listy zawartych adresůw IP]] coby přejřeć z
 Na li\'śće ńy mo adresůw IP, kere zawarto w sposůb autůmatyčny.
 Coby přejřeć lista uobecńy aktywnych zawarć, přyńdź na zajta [[Special:BlockList|zawartych adresůw i užytkowńikůw]].',
 	'block-log-flags-anononly' => 'ino anůnimowi',
-	'block-log-flags-nocreate' => 'tworzińy kůnta je zawrzite',
 	'block-log-flags-noautoblock' => 'autůmatyčne zawjerańy uod sprawjyń wůuůnčůne',
 	'block-log-flags-noemail' => 'e-brif zawarty',
 	'block-log-flags-nousertalk' => 'ńy może sprowjać włosnyj zajty godki',
@@ -17436,7 +17224,6 @@ $1 பயனரையோ அல்லது வேறு [[{{MediaWiki:Grouppage
 	'blocklogentry' => '$2, $3 அன்று காலாவதியாகும் வகையில் [[$1]] தடுக்கப்பட்டது',
 	'blocklogtext' => 'இது ஒரு பயனரின் தடுப்பு தடை நீக்கல் செயற்பாடுகளுக்கான பதிவாகும். தானியங்கி முறையில் தடுக்கப்படும் ஐபி முகவரிகள் இப்பட்டியலில் இடம்பெறா.  தற்போது செயற்பாட்டிலுள்ள தடைகளையும் முடக்கங்களையும் [[Special:BlockList|ஐ.பி. தடுப்பு பட்டியலில்]] பார்க்க.',
 	'block-log-flags-anononly' => 'அடையாளம் காட்டாத பயனர் மட்டும்',
-	'block-log-flags-nocreate' => 'கணக்கு தொடக்கம் முடக்கப்பட்டுள்ளது',
 	'block-log-flags-noautoblock' => 'தானியக்கமான தடை முடக்கப்பட்டுள்ளது',
 	'block-log-flags-noemail' => 'மின்னஞ்சல் தடுக்கப்பட்டது',
 	'block-log-flags-nousertalk' => 'சொந்த உரையாடல் பக்கத்தை திருத்த முடியாது.',
@@ -17474,7 +17261,6 @@ $messages['tcy'] = [
 	'blocklink' => 'ಅಡ್ಡ ಪತ್ತ್’ಲೆ',
 	'blocklogpage' => 'ತಡೆಪತ್ತ್’ದ್’ನ ಸದಸ್ಯೆರ್ನ ದಿನಚರಿ',
 	'blocklogentry' => '[[$1]] ಖಾತೆನ್ $2 $3 ಮುಟ್ಟ ತಡೆಪತ್ತ್’ದ್’ನ್ಡ್',
-	'block-log-flags-nocreate' => 'ಖಾತೆ ಸೃಷ್ಟಿನ್ ತಡೆಪತ್ತ್’ದ್’ನ್ಡ್',
 	'bad_image_list' => 'ವ್ಯವಸ್ಥೆದ ಆಕಾರ ಈ ರೀತಿ ಉಂಡು:
 
 ಪಟ್ಟಿಡುಪ್ಪುನಂಚಿನ ದಾಖಲೆಲೆನ್ (* ರ್ದ್ ಶುರು ಆಪುನ ಸಾಲ್’ಲು) ಮಾತ್ರ ಪರಿಗಣನೆಗ್ ದೆತೊನೆರಾಪುಂಡು.
@@ -17562,7 +17348,6 @@ $messages['te'] = [
 	'blocklogentry' => '"[[$1]]" పై నిరోధం అమలయింది. నిరోధ కాలం $2 $3',
 	'blocklogtext' => 'వాడుకరుల నిరోధాలు, పునస్థాపనల చిట్టా ఇది. ఆటోమాటిక్‌గా నిరోధానికి గురైన ఐ.పి. చిరునామాలు ఈ జాబితాలో ఉండవు. ప్రస్తుతం అమల్లో ఉన్న నిరోధాలు, నిషేధాల కొరకు [[Special:BlockList|ఐ.పి. నిరోధాల జాబితా]]ను చూడండి.',
 	'block-log-flags-anononly' => 'అజ్ఞాత వాడుకర్లు మాత్రమే',
-	'block-log-flags-nocreate' => 'ఖాతా సృష్టించడాన్ని అశక్తం చేసాం',
 	'block-log-flags-noautoblock' => 'ఆటోమాటిక్ నిరోధాన్ని అశక్తం చేసాం',
 	'block-log-flags-noemail' => 'ఈ-మెయిలుని నిరోధించాం',
 	'block-log-flags-nousertalk' => 'తమ చర్చాపేజీని మార్చలేరు',
@@ -17592,7 +17377,6 @@ $messages['tet'] = [
 	'blockip-legend' => 'Blokeiu uza-na\'in',
 	'blocklist-reason' => 'Razaun',
 	'blocklink' => 'blokeiu',
-	'block-log-flags-nocreate' => 'la bele kria konta foun',
 	'block-log-flags-noemail' => 'korreiu eletróniku blokeiu',
 	'blankpage' => 'Pájina mamuk',
 ];
@@ -17612,7 +17396,6 @@ $messages['tg'] = [
 	'blockip-legend' => 'Blokeiu uza-na\'in',
 	'blocklist-reason' => 'Razaun',
 	'blocklink' => 'blokeiu',
-	'block-log-flags-nocreate' => 'la bele kria konta foun',
 	'block-log-flags-noemail' => 'korreiu eletróniku blokeiu',
 	'blankpage' => 'Pájina mamuk',
 ];
@@ -17673,7 +17456,6 @@ $messages['tg-cyrl'] = [
 Нишонаҳои IP-и бо таври худкор баста шуда, феҳрист нашудаанд.
 Барои феҳристи маҳрумиятҳо ва баста шуданҳои амалиёти кунунӣ ба [[Special:BlockList|феҳристи IP-ҳои баста]] муроҷиат кунед.',
 	'block-log-flags-anononly' => 'фақат корбарони гумном',
-	'block-log-flags-nocreate' => 'қобилияти эҷоди ҳисоб ғайрифаъол шуд',
 	'block-log-flags-noautoblock' => 'қатъи дастрасии худкор ғайрифаъол шуд',
 	'block-log-flags-noemail' => 'почтаи электронӣ баста шуд',
 	'blockme' => 'Дастрасии манро қать кун',
@@ -17739,7 +17521,6 @@ Baroi barrasī ba [[Special:BlockList|fehristi nişonahoi IP va nomhoi korbariji
 Nişonahoi IP-i bo tavri xudkor basta şuda, fehrist naşudaand.
 Baroi fehristi mahrumijatho va basta şudanhoi amalijoti kununī ba [[Special:BlockList|fehristi IP-hoi basta]] muroçiat kuned.',
 	'block-log-flags-anononly' => 'faqat korbaroni gumnom',
-	'block-log-flags-nocreate' => 'qobilijati eçodi hisob ƣajrifa\'ol şud',
 	'block-log-flags-noautoblock' => 'qat\'i dastrasiji xudkor ƣajrifa\'ol şud',
 	'block-log-flags-noemail' => 'poctai elektronī basta şud',
 	'blockme' => 'Dastrasiji manro qatь kun',
@@ -17829,7 +17610,6 @@ $1 เป็นผู้ดำเนินการบล็อกในคร�
 	'blocklogentry' => 'บล็อก "[[$1]]" หมดอายุ $2 $3',
 	'blocklogtext' => 'ด้านล่างเป็นบันทึกการบล็อกและการเลิกบล็อก  ส่วนการบล็อกอัตโนมัติจะไม่ถูกรวมอยู่ในรายการนี้ ดู [[Special:BlockList|รายการบล็อกไอพี]] สำหรับการบล็อกทั้งหมด',
 	'block-log-flags-anononly' => 'ผู้ใช้นิรนามเท่านั้น',
-	'block-log-flags-nocreate' => 'ห้ามสร้างบัญชีผู้ใช้',
 	'block-log-flags-noautoblock' => 'ยกเลิกการบล็อกอัตโนมัติ',
 	'block-log-flags-noemail' => 'บล็อกการส่งอีเมล',
 	'block-log-flags-nousertalk' => 'ไม่สามารถแก้ไขหน้าอภิปรายของตนเอง',
@@ -17912,7 +17692,6 @@ Bökdeme gündeligi salgylanmak üçin aşakda berilýär:',
 Awtomatik usulda blokirlenen IP adresleri sanawda görkezilmeýär.
 Häzirki wagtda blokirlengi duran ulanyjylary [[Special:BlockList|IP blokirleme sanawyndan]] görüp bilersiňiz.',
 	'block-log-flags-anononly' => 'diňe anonim ulanyjylar',
-	'block-log-flags-nocreate' => 'hasap açmaklyk blokirlendi',
 	'block-log-flags-noautoblock' => 'awtoblokirleme ýapyk',
 	'block-log-flags-noemail' => 'e-poçta blokirlendi',
 	'block-log-flags-nousertalk' => 'öz pikir alyşma sahypasyny redaktirläp bilmeýär',
@@ -18006,7 +17785,6 @@ Ang tala ng pagpigil ay ibinigay sa ibaba upang mapagsanggunian:',
 Hindi nakatala rito ang mga awtomatiko/kusang hinarang/hinadlangang mga adres ng IP.
 Tingnan ang [[Special:BlockList|talaan ng mga hinarang na/hinadlangang IP]] para sa talaan ng pangkasalukuyang gumagana pang mga pinagbabawalan at mga pagharang/paghadlang.',
 	'block-log-flags-anononly' => 'mga di-kilalang tagagamit lamang',
-	'block-log-flags-nocreate' => 'Nakapatay ang paglikha ng akawnt',
 	'block-log-flags-noautoblock' => 'Nakapatay ang awtomatikong pagharang',
 	'block-log-flags-noemail' => 'hinadlangan/hinarang ang e-liham',
 	'block-log-flags-nousertalk' => 'hindi mo mababago ang iyong pansariling pahina ng usapan',
@@ -18146,7 +17924,6 @@ Gizleme günlüğü referans için aşağıda sağlanmıştır:',
 	'blocklogentry' => ', [[$1]] kullanıcısını engelledi, engelleme süresi: $2 $3',
 	'blocklogtext' => 'Burada kullanıcı erişimine yönelik engelleme ya da engelleme kaldırma kayıtları listelenmektedir. Otomatik  IP adresi engellemeleri listeye dahil değildir. Şu anda erişimi durdurulmuş kullanıcıları [[Special:BlockList|IP engelleme listesi]] sayfasından görebilirsiniz.',
 	'block-log-flags-anononly' => 'sadece anonim kullanıcılar',
-	'block-log-flags-nocreate' => 'hesap yaratımı engellendi',
 	'block-log-flags-noautoblock' => 'Otomatik engelleme iptal edildi',
 	'block-log-flags-noemail' => 'e-posta engellendi',
 	'block-log-flags-nousertalk' => 'kendi tartışma sayfasını değiştiremez',
@@ -18220,7 +17997,6 @@ $messages['tt-cyrl'] = [
 	'blocklink' => 'тыю',
 	'blocklogpage' => 'Тыю көндәлеге',
 	'blocklogentry' => '[[$1]] $2 вакытка тыелды $3',
-	'block-log-flags-nocreate' => 'яңа хисап язмасы теркәү тыелган',
 	'block-log-flags-noemail' => 'хат җибәрү тыелган',
 	'block-log-flags-hiddenname' => 'кулланучының исеме яшерелгән',
 	'bad_image_list' => 'Киләчәк рәвеш кирәк:
@@ -18282,7 +18058,6 @@ Ul $1 {{PLURAL:$1|xäreftän}} kübräk bulırğa tieş tügel.',
 	'blocklink' => 'tıyu',
 	'blocklogpage' => 'Tıyu köndälege',
 	'blocklogentry' => '[[$1]] $2 waqıtqa tıyıldı $3',
-	'block-log-flags-nocreate' => 'yaña xisap yazması terkäw tıyılğan',
 	'block-log-flags-noemail' => 'xat cibärü tıyılğan',
 	'block-log-flags-hiddenname' => 'qullanuçınıñ iseme yäşerelgän',
 	'bydate' => 'waqıt buyınça',
@@ -18390,7 +18165,6 @@ HTML بەلگىسىنى تەكشۈرۈڭ.',
 ئۆزلۈكىدىن چەكلەنگەن IP ئادرېس كۆرسىتىلمىدى.
  [[Special:BlockList|چەكلەنگەنIP تىزىملىكى]] دىن كۆرۈڭ.',
 	'block-log-flags-anononly' => 'ئىمزاسىز ئىشلەتكۈچىلا',
-	'block-log-flags-nocreate' => 'ھېسابات قۇرۇش چەكلەنگەن',
 	'block-log-flags-noautoblock' => 'ئۆزلۈكىدىن چەكلەشنى چەكلە',
 	'block-log-flags-noemail' => 'ئېلخەت چەكلەنگەن',
 	'block-log-flags-nousertalk' => 'شەخسىي مۇنازىرە بېتىنى تەھرىرلىگىلى بولمايدۇ',
@@ -18515,7 +18289,6 @@ $messages['uk'] = [
 IP-адреси, що блокуються автоматично тут не вказуються. Див.
 [[Special:BlockList|список поточних заборон і блокувань]].',
 	'block-log-flags-anononly' => 'тільки анонімні користувачі',
-	'block-log-flags-nocreate' => 'заборонена реєстрація облікових записів',
 	'block-log-flags-noautoblock' => 'автоблокування вимкнене',
 	'block-log-flags-noemail' => 'електронні листи заборонені',
 	'block-log-flags-nousertalk' => 'не може редагувати власну сторінку обговорення',
@@ -18572,7 +18345,6 @@ HTML tags جانچئے.',
 	'blockip' => 'داخلہ ممنوع براۓ صارف',
 	'blocklink' => 'پابندی لگائیں',
 	'blocklogpage' => 'نوشتۂ پابندی',
-	'block-log-flags-nocreate' => 'کھاتے کی تخلیق غیرفعال',
 	'bydate' => 'بالحاظ تاریخ',
 	'bad_image_list' => 'شکلبند درج ذیل ہے:
 
@@ -18664,7 +18436,6 @@ quines pàgines en concret estan sent vandalisades).',
 	'blocklogentry' => 's\'ha bloquejat "[[$1]]" per a un periodo de $2 $3',
 	'blocklogtext' => 'Això es una relació de accions de bloqueig i desbloqueig. Les direccions IP bloquejades automàticament no apareixen. mira la [[Special:Ipblocklist|llista d\'usuaris actualment bloquejats]].',
 	'block-log-flags-anononly' => 'només els usuaris anònims',
-	'block-log-flags-nocreate' => 's\'ha desactivat la creació de contes',
 ];
 
 $messages['vec'] = [
@@ -18730,7 +18501,6 @@ Qua soto ghe xe el registro de le sopression:',
 	'blocklogentry' => 'ga blocà [[$1]] par un periodo de $2 $3',
 	'blocklogtext' => 'Sto qua xè un elenco de azioni de bloco e sbloco dei indirizi IP. I indirizi blocai in automatico no i xè mìa elencai. Varda l\'[[Special:BlockList|elenco dei IP blocà]] par la lista dei indirizi el cui bloco el xè operativo.',
 	'block-log-flags-anononly' => 'solo utenti anonimi',
-	'block-log-flags-nocreate' => 'creasion acount blocà',
 	'block-log-flags-noautoblock' => 'bloco automatico disativà',
 	'block-log-flags-noemail' => 'e-mail blocàe',
 	'block-log-flags-nousertalk' => 'no\'l pode scrìvar su la so pàxena de discussion',
@@ -18823,7 +18593,6 @@ Kc. [[Special:BlockList|blokiruidud IP-adresoiden nimikirjuteshe]].',
 Alemba om anttud blokiruindaiglehtez:',
 	'blocklogentry' => 'blokiruidihe [[$1]] pordoks $2 $3',
 	'block-log-flags-anononly' => 'vaiše anonimižed kävutajad',
-	'block-log-flags-nocreate' => 'uziden kävutajiden registracii om kel\'tud',
 	'block-log-flags-noautoblock' => 'avtoblokiruind ei ole kävutamas',
 	'block-log-flags-noemail' => 'e-počtan oigendamine om kel\'tud',
 	'block-log-flags-nousertalk' => 'ei voi redaktiruida ičeze lodulehtpol\'t',
@@ -18934,7 +18703,6 @@ Nó không được dài quá $1 ký tự.',
 	'blocklogentry' => 'đã cấm [[$1]] với thời hạn là $2 $3',
 	'blocklogtext' => 'Đây là nhật trình ghi lại những lần cấm và bỏ cấm. Các địa chỉ IP bị cấm tự động không được liệt kê ở đây. Xem thêm [[Special:BlockList|danh sách cấm]] để có danh sách cấm và cấm hẳn hiện tại.',
 	'block-log-flags-anononly' => 'chỉ cấm người dùng vô danh',
-	'block-log-flags-nocreate' => 'cấm mở tài khoản',
 	'block-log-flags-noautoblock' => 'tắt tự động cấm',
 	'block-log-flags-noemail' => 'cấm thư điện tử',
 	'block-log-flags-nousertalk' => 'không được sửa trang thảo luận của mình',
@@ -18985,7 +18753,6 @@ Schrajb des bide als dâdsu, wen De Dich meldsd.',
 	'blocklink' => 'Schbärn',
 	'blocklogpage' => 'Benudsär-Schbärr-Logbuch',
 	'blocklogentry' => 'had „[[$1]]“ gschbärd fir dii dsajd: $2 wii genau un wesweechn: $3',
-	'block-log-flags-nocreate' => 'Naj ôôdsmeldn is gschbärd.',
 	'bad_image_list' => 'Fôrmaad:
 
 Bloos  dsajln, dii mi´m dsajchn * ôôfanga, wärn berigsichdichd. Un dä ärschde linggh af dr dsajln mus dan af â uubasnde dadaj saj. Wen dahindâr noch meâ linggs ghuma, dan geldn dii als ausnôma, wo dâgeechn des - dsum bajschbiil  - bild schdeen däf.',
@@ -19047,7 +18814,6 @@ Muton labön {{PLURAL:$1|malati|malatis}} läs $1.',
 	'blocklogentry' => '"[[$1]]" peblokon dü: $2 $3',
 	'blocklogtext' => 'Is binon lised gebanablokamas e gebanasäblokamas. Ladets-IP itjäfidiko pebloköls no pajonons. Logolös blokamis e xilis anu lonöfölis in [[Special:IPBlockList|lised IP-blokamas]].',
 	'block-log-flags-anononly' => 'te gebans nennemik',
-	'block-log-flags-nocreate' => 'kalijaf penemögükon',
 	'block-log-flags-noautoblock' => 'blokam itjäfidik penemögükon',
 	'block-log-flags-noemail' => 'ladet leäktronik peblokon',
 	'block-log-flags-nousertalk' => 'no dalon redakön bespikapadi okik',
@@ -19075,7 +18841,6 @@ $messages['vot'] = [
 	'blocklink' => 'piättee',
 	'blocklogpage' => 'Piätüzlogi',
 	'blocklogentry' => 'piätteli tšäüttijää vai IP-tšislaa [[$1]]. Piättelemin lõpub $2 $3',
-	'block-log-flags-nocreate' => 'lukuloomin piäteltü',
 	'bad_image_list' => 'Spiizgaa formatti on:
 
 Ainult viirud, kummad alkõa merkiigaa * leeväd pantu panõlõõ.
@@ -19134,7 +18899,6 @@ Taa tohe-i ollaq rohkõmb ku $1 {{PLURAL:$1|märk|märki}}.',
 	'blocklogentry' => 'pidi kinniq pruukja vai puutri võrgoaadrõsi "[[$1]]". Kinniqpidämise tähtaig $2 $3',
 	'blocklogtext' => 'Taa om kinniqpidämiisi ja naidõ maahavõtmiisi nimekiri. Automaatsõhe kinniqpeetüisi puutridõ võrgoaadrõssiid tan näüdätä-i, noid kaeq [[Special:BlockList|puutridõ võrgoaadrõssidõ kinniqpidämise nimekiräst]].',
 	'block-log-flags-anononly' => 'õnnõ nimeldä pruukjaq',
-	'block-log-flags-nocreate' => 'pruukjanime luuminõ kinniq peet',
 	'block-log-flags-noautoblock' => 'automaatnõ kinniqpidämine maaha võet',
 	'block-log-flags-noemail' => 'e-post kinniq peet',
 	'bydate' => 'kuupäävä perrä',
@@ -19216,7 +18980,6 @@ Dapat diri malabaw ha $1 {{PLURAL:$1|agi|mga agi}} nga kahilaba.',
 	'blocklink' => 'igpugong',
 	'blocklogpage' => 'Talaan han pagpugong',
 	'blocklogentry' => 'ginpugngan hi [[$1]] nga natatapos ha takna hin $2 $3',
-	'block-log-flags-nocreate' => 'diri gintutugutan an paghimo hin akawnt',
 	'bad_image_list' => 'An kabutangan in masunod:
 
 An nakatalala la nga mga butang (mga bagis nga nagtitikang hin *) in mahiuupod paglabot.
@@ -19278,7 +19041,6 @@ Xoolal [[Special:BlockList|limu IP yees téye]] ngir gis ñees téye ñépp.',
 	'blocklogentry' => 'moo téye « [[$1]] » - ci diirub : $2 $3',
 	'blocklogtext' => 'Lii ab lim la ci téye ak téyedi yu jëfandikukat yi. Màkkaani IP yi ñu téye cig boppal limuñu leen fi. yëral [[Special:BlockList|limu jëfandikukat yiñ téye]] ngi gis ñi ñu téye nii-nii.',
 	'block-log-flags-anononly' => 'jëfandikukat yi binduwul rek',
-	'block-log-flags-nocreate' => 'Tere nañ sa sosum sàq',
 	'block-log-flags-noautoblock' => 'Téye gu boppu yu IP yi doxadi na',
 	'block-log-flags-noemail' => 'm-bataaxal yi téye nañ leen',
 	'block-log-flags-nousertalk' => 'Du man a soppi xëtu waxtaanuwaayam',
@@ -19334,7 +19096,6 @@ $messages['wuu'] = [
 	'blocklogpage' => '封禁日志',
 	'blocklogentry' => '“[[$1]]”拨查封拉许，终止辰光为$2 $3',
 	'blocklogtext' => '该个是用户封禁搭仔解禁操作个记录。自动封禁个IP地址弗会列勒该答。到[[Special:BlockList|IP 封禁列表]]去看当前生效个封禁列表。',
-	'block-log-flags-nocreate' => '开户已经拨禁用',
 	'bad_image_list' => '格式如下：
 
 只列出项目（线开始* ）的审议。
@@ -19362,7 +19123,6 @@ $messages['xal'] = [
 	'blocklink' => 'бүслх',
 	'blocklogpage' => 'Бүсллһнә сеткүл',
 	'blocklogentry' => '[[$1]] бүслсн $2 күртл, $3 учрта',
-	'block-log-flags-nocreate' => 'бичгдлһиг бүтәҗ болшго',
 	'blockme' => 'Намаг бүслчк',
 	'bad_image_list' => 'Эн темдглһн кергтә:
 
@@ -19401,7 +19161,6 @@ $messages['xmf'] = [
 	'blocklink' => 'ბლოკირაფა',
 	'blocklogpage' => 'ბლოკირეფიშ ერკებულ',
 	'blocklogentry' => 'ბლოკირ რე [[$1]] ბლოკირაფაშ ვადაშ ათე გულა ბორჯით: $2 $3.',
-	'block-log-flags-nocreate' => 'ანგარიშიშ გონწყუმა მეჭყვადილ რე',
 	'bad_image_list' => 'ფორმატ რე უკულიანიშნერო:\n\n ხვალე ერკებულშე გიშნაგორეფ (ლაწკარეფ, ნამუთ იჭყაფუ *-ით) ისხუნუ.
 ლაწკარიშ პირველ რცხი ოკო რდას რცხი გლახა ფაილშა.
 კინ თი ლაწკარს რინელ ნამდგაინ უკულიან რცხი კილესხუნუ მუჭოთ გიმნარკეში, ნამუთ ნიშნენს  ხასილეფს, სოდგა ფაილეფ შილებე რდას ღოზეფს შკას დინოხუნაფილ.',
@@ -19494,7 +19253,6 @@ $messages['yi'] = [
 	'blocklogtext' => 'דאס איז א לאג בוך פון אלע בלאקירונגען און באפרייונגען פֿון באניצערס. איי פי אדרעסן וואס זענען בלאקירט אויטאמאטיש ווערן נישט אויסגערעכענט דא.
 זעט די איצטיגע [[Special:BlockList|ליסטע פון בלאקירטע באניצערס]].',
 	'block-log-flags-anononly' => 'בלויז אַנאנימע באַניצער',
-	'block-log-flags-nocreate' => 'קאָנטע שאַפֿן איז פֿאַרשפּאַרט',
 	'block-log-flags-noautoblock' => 'אויטא-בלאקיר איז בטל',
 	'block-log-flags-noemail' => 'שיקן ע-פאסט  בלאקירט',
 	'block-log-flags-nousertalk' => 'ענדערן אייגן שמועס בלאט בלאקירט',
@@ -19566,7 +19324,6 @@ Kò gbodọ̀ ju $1 {{PLURAL:$1|àmìlẹ́tà|àwọn àmìlẹ́tà}} lọ.',
 	'blocklogpage' => 'Àkosílẹ̀ ìdínà',
 	'blocklogentry' => 'ìdínà [[$1]] yíò parí ní $2 $3',
 	'block-log-flags-anononly' => 'àwọn oníṣe aláìlórúkọ nìkan',
-	'block-log-flags-nocreate' => 'ìdálẹ́kun ṣíṣèdá àkópamọ́',
 	'block-log-flags-noautoblock' => 'dídálẹ́kun ìdínà fúnrararẹ̀',
 	'block-log-flags-noemail' => 'e-mail jẹ́ dídílọ́nà',
 	'block-log-flags-hiddenname' => 'orúkọ oníṣe jẹ́ bíbòmọ́lẹ̀',
@@ -19639,7 +19396,6 @@ $messages['yue'] = [
 	'blocklogentry' => '已封鎖[[$1]]，到期時間為$2 $3',
 	'blocklogtext' => '呢個係封鎖同埋解封動作嘅日誌。自動封鎖IP地址嘅動作冇列出嚟。去[[Special:BlockList|IP封鎖名單]]睇現時生效嘅封鎖名單',
 	'block-log-flags-anononly' => '只限匿名用戶',
-	'block-log-flags-nocreate' => '停用開新戶口',
 	'block-log-flags-noautoblock' => '停用自動封鎖器',
 	'block-log-flags-noemail' => '封咗電郵',
 	'block-log-flags-nousertalk' => '唔可以編輯自己嘅討論版',
@@ -19711,7 +19467,6 @@ Ziet de [[Special:BlockList|IP-blokliest]] vo \'n overzicht van blokkaodes.',
 Automaotisch geblokte ip-adressen stae d\'r nie bie.
 Ziet de [[Special:BlockList|Lieste van ip-blokkeriengen]] vò blokkaodes die op dit moment in werkienge bin.',
 	'block-log-flags-anononly' => 'allene anonieme gebrukers',
-	'block-log-flags-nocreate' => 'uutgeslote van anmaeken gebrukersnaemen',
 	'block-log-flags-noautoblock' => 'gin autoblokkaode',
 	'bad_image_list' => 'De opmaek is as vogt:
 
@@ -19812,7 +19567,6 @@ $messages['zh-hans'] = [
 	'blocklogentry' => '封禁[[$1]]，终止时间为$2$3',
 	'blocklogtext' => '此处给出了封禁和解封用户的操作日志，被自动封禁的IP地址不在此表。请查看[[Special:BlockList|封禁列表]]获知当前被封禁的用户和IP地址。',
 	'block-log-flags-anononly' => '仅限匿名用户',
-	'block-log-flags-nocreate' => '停用账户创建',
 	'block-log-flags-noautoblock' => '禁用自动封禁',
 	'block-log-flags-noemail' => '禁止电子邮件',
 	'block-log-flags-nousertalk' => '禁止编辑自己的用户讨论页',
@@ -19923,7 +19677,6 @@ $messages['zh-hant'] = [
 	'blocklogentry' => '已封禁“[[$1]]” $3而終止時間為$2',
 	'blocklogtext' => '這是關於用戶封禁和解除封禁操作的記錄。被自動封禁的IP地址沒有被列出。請參閱[[Special:BlockList|被查封的IP地址和用戶列表]]。',
 	'block-log-flags-anononly' => '僅限匿名用戶',
-	'block-log-flags-nocreate' => '建立帳號已禁用',
 	'block-log-flags-noautoblock' => '停用自動封禁',
 	'block-log-flags-noemail' => '禁止電子郵件',
 	'block-log-flags-nousertalk' => '禁止編輯自己的用戶討論頁',
@@ -19955,7 +19708,6 @@ $messages['zh-tw'] = [
 	'blocklogentry' => '[[$1]]已被封鎖 $3 ，終止時間為$2',
 	'blocklogtext' => '這是關於使用者封鎖和解除封鎖操作的記錄。被自動封鎖的IP地址沒有被列出。請參閱[[Special:BlockList|被封鎖的IP地址和使用者列表]]。',
 	'block-log-flags-anononly' => '僅匿名用戶',
-	'block-log-flags-nocreate' => '禁止此IP/使用者建立新帳號',
 	'block-log-flags-noautoblock' => '停用自動封鎖',
 	'blockme' => '封鎖我',
 	'bad_image_list' => '請根據以下的格式去編寫:
@@ -19983,7 +19735,6 @@ $messages['zh-yue'] = [
 	'blocklogentry' => '[[$1]]已被封鎖 $3 ，終止時間為$2',
 	'blocklogtext' => '這是關於使用者封鎖和解除封鎖操作的記錄。被自動封鎖的IP地址沒有被列出。請參閱[[Special:BlockList|被封鎖的IP地址和使用者列表]]。',
 	'block-log-flags-anononly' => '僅限匿名使用者',
-	'block-log-flags-nocreate' => '禁止此IP/使用者建立新帳號',
 	'block-log-flags-noautoblock' => '停用自動封鎖',
 	'blockme' => '封鎖我',
 	'bad_image_list' => '請根據以下的格式去編寫:
@@ -20002,7 +19753,6 @@ $messages['zh'] = [
 	'badaccess' => '拒绝访问',
 	'badsig' => '错误的原始签名；请检查HTML标签。',
 	'block-log-flags-anononly' => '仅匿名用戶',
-	'block-log-flags-nocreate' => '创建账户已禁用',
 	'blocked-mailpassword' => '你的IP地址已经被查封而无法编辑，为了防止滥用而停用了你的密码恢复功能。',
 	'blocklogtext' => '这是关于用户查封和解封操作的日志。 
 被自动查封的IP地址没有被列出。请参看[[Special:Ipblocklist|被查封的IP地址和用户列表]]。',
