@@ -204,7 +204,7 @@ $wgResourceModules['ext.Chat2'] = [
 		'chat-user-blocked',
 		'chat-user-allow',
 
-    // misc
+		// misc
 		'chat-user-throttled',
 	],	
 	'dependencies' => [
