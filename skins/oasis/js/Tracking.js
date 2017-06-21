@@ -11,7 +11,6 @@ jQuery(function ($) {
 	var $body = $('body'),
 		$wikiaArticle = $('#WikiaArticle'),
 		$wikiaRail = $('#WikiaRail'),
-		$wikiHeader = $('#WikiHeader'),
 		$interlang = $('.WikiaArticleInterlang'),
 		rHrefDiff = /&diff=\d+/,
 		rHrefHistory = /&action=history/,
@@ -228,45 +227,6 @@ jQuery(function ($) {
 
 	/** contribute **/
 
-	$wikiHeader.find('.buttons .contribute').on('mousedown', 'a', function (event) {
-		var label,
-			el = $(event.target),
-			id = el.data('id');
-
-		// Primary mouse button only
-		if (event.which !== 1) {
-			return;
-		}
-
-		switch (id) {
-			case 'createpage':
-				label = 'add-a-page';
-				break;
-			case 'edit':
-				label = 'edit-a-page';
-				break;
-			case 'upload':
-				label = 'add-a-photo';
-				break;
-			case 'wikiavideoadd':
-				label = 'add-a-video';
-				break;
-			case 'wikiactivity':
-				label = 'wiki-activity';
-				break;
-			case 'wikinavedit':
-				label = 'edit-wiki-navigation';
-				break;
-		}
-
-		if (label !== undefined) {
-			track({
-				browserEvent: event,
-				category: 'contribute',
-				label: label
-			});
-		}
-	});
 
 	/** recent-changes **/
 
@@ -651,64 +611,6 @@ jQuery(function ($) {
 			}
 		});
 	}
-
-	/** wiki-nav **/
-
-	$wikiHeader.on('mousedown', 'a', function (event) {
-		var label,
-			el = $(event.target),
-			canonical;
-
-		// Primary mouse button only
-		if (event.which !== 1) {
-			return;
-		}
-
-		if (el.closest('.wordmark').length > 0) {
-			label = 'wordmark';
-		} else if (el.closest('.WikiNav').length > 0) {
-			canonical = el.data('canonical');
-			if (canonical !== undefined) {
-				switch (canonical) {
-					case 'wikiactivity':
-						label = 'on-the-wiki-activity';
-						break;
-					case 'random':
-						label = 'on-the-wiki-random';
-						break;
-					case 'newfiles':
-					case 'images':
-						label = 'on-the-wiki-new-photos';
-						break;
-					case 'chat':
-						label = 'on-the-wiki-chat';
-						break;
-					case 'forum':
-						label = 'on-the-wiki-forum';
-						break;
-					case 'videos':
-						label = 'on-the-wiki-videos';
-						break;
-				}
-			} else if (el.attr('href') === '/d/f') {
-				label = 'on-the-wiki-discussions'
-			} else if (el.parent().hasClass('nav-item')) {
-				label = 'custom-level-1';
-			} else if (el.hasClass('subnav-2a')) {
-				label = 'custom-level-2';
-			} else if (el.hasClass('subnav-3a')) {
-				label = 'custom-level-3';
-			}
-		}
-
-		if (label !== undefined) {
-			track({
-				browserEvent: event,
-				category: 'wiki-nav',
-				label: label
-			});
-		}
-	});
 
 	/** interwiki links **/
 	$interlang.on('click', 'a', function () {
