@@ -77,7 +77,8 @@ class ChatController extends WikiaController {
 		$this->globalVariablesScript = $ret;
 
 		// Load core chat frontend
-		$out->addModules( 'ext.Chat2' );
+		// emitting <script> makes sure that ext.Chat2 loads before site/user CSS&JS
+		$out->addModuleScripts( 'ext.Chat2' );
 
 		$this->addSiteJsCss( $out );
 		$this->addUserJsCss( $out );
