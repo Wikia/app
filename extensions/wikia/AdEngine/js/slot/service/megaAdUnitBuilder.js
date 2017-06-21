@@ -10,10 +10,8 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 		context;
 
 	function getContextTargeting() {
-		if (!context) {
-			context = adContext.getContext();
-		}
-
+		context = adContext.getContext();
+		
 		return context.targeting;
 	}
 
