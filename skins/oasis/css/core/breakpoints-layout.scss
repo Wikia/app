@@ -83,30 +83,12 @@
 			width: 100%;
 		}
 
-		.WikiHeader {
-			min-height: 145px;
-
-			> nav {
-				left: 0;
-				top: 90px;
-			}
-
-			.buttons {
-				top: 57px;
-			}
-		}
-
 		.WikiNav li.nav-item:first-child {
 			margin-left: 10px;
 		}
 
 		.wikinav2.oasis-one-column .WikiaPageHeader {
 			padding: 0;
-		}
-
-		.WikiHeader > nav.WikiNav .navbackground {
-			left: -24px;
-			width: 771px;
 		}
 	}
 
@@ -118,24 +100,6 @@
 
 		.main-page-tag-rcs {
 			width: 300px;
-		}
-
-		.WikiHeader > nav.WikiNav {
-			@include width-calc('100% - 250px');
-
-			.navbackground {
-				width: 100%;
-			}
-
-			.subnav-2 {
-				width: auto;
-			}
-		}
-	}
-
-	@media #{$breakpoint-large-up} {
-		.WikiHeader > nav.WikiNav .navbackground {
-			@include width-calc('100% + 10px');
 		}
 	}
 
@@ -248,11 +212,6 @@
 		}
 	}
 
-	.WikiHeader {
-		padding-left: 0;
-		padding-right: 0;
-	}
-
 	.WikiaPageHeader {
 		margin-left: 0;
 		margin-right: 0;
@@ -276,49 +235,12 @@
 			// right rail width
 			width: 300px;
 		}
-
-		.WikiHeader {
-			// values here are mostly copied from WikiHeader.scss
-			// so it will override small breakpoint's values
-			min-height: 69px;
-
-			.buttons {
-				top: 22px;
-			}
-
-			> nav.WikiNav {
-				// we need to accomodate for additional space while having to count scrollbar
-				@include width-calc('100% - 265px');
-
-				left: 275px;
-				top: 20px;
-
-				.subnav-2 {
-					left: 10px;
-					width: auto;
-				}
-
-				.navbackground {
-					left: 10px;
-					// it's content width minus wordmark and padding plus space that ribbon occupies outside of the page
-					width: 714px;
-				 }
-			}
-		}
 	}
 
 	@media #{$breakpoint-not-supported} {
 		body {
 			//This has to be visible to allow for zooming out
 			overflow: visible;
-		}
-
-		.WikiHeader > nav.WikiNav .navbackground {
-			width: $content-width-small - $content-border-width;
-
-			img {
-				display: none;
-			}
 		}
 	}
 }
