@@ -140,6 +140,20 @@ var STATUS_STATE_AWAY = 'away';
 		}
 	});
 
+	models.FrozenEvent = Backbone.Model.extend({
+		defaults: {
+			freezeDuration: 0
+		},
+
+		initialize: function (info) {
+			if (info) {
+				this.set({
+					freezeDuration: info.freezeDuration
+				});
+			}
+		}
+	});
+
 	/** ChatEntries (messages, alerts) **/
 	models.ChatEntry = Backbone.Model.extend({
 		defaults: {
