@@ -211,7 +211,14 @@ $wgResourceModules['ext.Chat2'] = [
 		'wikia.cookies',
 		'wikia.history',
 		'wikia.querystring',
+		'ext.Chat2.socket.io'
 	],
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/Chat2'
+];
+
+$wgResourceModules['ext.Chat2.socket.io'] = [
+	'scripts' => 'js/lib/socket.io-2.0.3.js',
 	'localBasePath' => __DIR__,
 	'remoteExtPath' => 'wikia/Chat2'
 ];
