@@ -131,7 +131,6 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 				$this->setMapOnMobile();
 			} else {
 				$this->setVal( 'title', $map->title );
-				$this->setVal( 'menu', $this->getMenuMarkup() );
 			}
 
 			$this->setVal( 'mapFound', true );
@@ -159,8 +158,6 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 			$this->prepareSingleMapPage( $mapData );
 
 			$this->setVal( 'title', $mapData->title );
-			$this->setVal( 'menu', $this->getMenuMarkup() );
-
 			$this->setVal( 'mapFound', true );
 
 			$this->prepareListOfPois( $mapData );
@@ -244,32 +241,6 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 		// skip rendering parts of Wikia page
 		WikiaMobileFooterService::setSkipRendering( true );
 		WikiaMobilePageHeaderService::setSkipRendering( true );
-	}
-
-	/**
-	 * Renders the menu markup for the map page from mustache
-	 * @return string
-	 */
-	function getMenuMarkup() {
-		$actionButtonArray = [
-			'action' => [
-				'text' => wfMessage( 'wikia-interactive-maps-actions' )->escaped(),
-			],
-			'dropdown' => [],
-		];
-		if ( $this->response->getVal( 'deleted' ) ) {
-			$actionButtonArray[ 'dropdown' ][ 'undeleteMap' ] = [
-				'text' => wfMessage( 'wikia-interactive-maps-undelete-map' )->escaped(),
-				'id' => 'undeleteMap'
-			];
-		} else {
-			$actionButtonArray[ 'dropdown' ][ 'deleteMap' ] = [
-				'text' => wfMessage( 'wikia-interactive-maps-delete-map' )->escaped(),
-				'id' => 'deleteMap'
-			];
-		}
-
-		return $this->app->renderView( 'MenuButton', 'index', $actionButtonArray );
 	}
 
 	/**

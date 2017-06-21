@@ -104,9 +104,21 @@ class WikiaMapsHooks {
 	 * @return bool
 	 */
 	public static function onAfterPageHeaderButtons( \Title $title, array &$buttons ): bool {
-		if ( $title->isSpecial( 'Maps' ) ) {
+		if ( self::isSpecialMapsPage() ) {
 			$label = wfMessage( 'wikia-interactive-maps-create-a-map' )->escaped();
 			$buttons[] = new Button( $label, '', '#', '', 'createMap' );
+
+			if ( self::isSingleMapPage() ) {
+				$request = RequestContext::getMain()->getRequest();
+
+				if ( $request->getVal( 'deleted' ) ) {
+					$label = wfMessage( 'wikia-interactive-maps-undelete-map' )->escaped();
+					$buttons[] = new Button( $label, '', '#', 'wds-is-secondary', 'undeleteMap' );
+				} else {
+					$label = wfMessage( 'wikia-interactive-maps-delete-map' )->escaped();
+					$buttons[] = new Button( $label, '', '#', 'wds-is-secondary', 'deleteMap' );
+				}
+			}
 		}
 
 		return true;
