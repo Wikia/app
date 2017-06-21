@@ -11,7 +11,7 @@ class ResourceLoaderChatUserModule extends ResourceLoaderUserModule {
 			$userPageTitle = Title::makeTitleSafe( NS_USER, $userName );
 			$userPageText = $userPageTitle->getPrefixedDBkey();
 
-			$pages = [
+			return [
 				"$userPageText/chat.js" => [
 					'type' => 'script',
 				],
@@ -19,8 +19,6 @@ class ResourceLoaderChatUserModule extends ResourceLoaderUserModule {
 					'type' => 'style',
 				],
 			];
-
-			return $pages;
 		}
 
 		return [];

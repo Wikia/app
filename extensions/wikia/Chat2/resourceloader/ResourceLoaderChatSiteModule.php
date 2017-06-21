@@ -6,7 +6,7 @@
 class ResourceLoaderChatSiteModule extends ResourceLoaderSiteModule {
 
 	protected function getPages( ResourceLoaderContext $context ) {
-		$pages = [
+		return [
 			'MediaWiki:Chat.js' => [
 				'type' => 'script',
 			],
@@ -14,7 +14,5 @@ class ResourceLoaderChatSiteModule extends ResourceLoaderSiteModule {
 				'type' => 'style',
 			],
 		];
-
-		return $pages;
 	}
 }
