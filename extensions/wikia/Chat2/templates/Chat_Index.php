@@ -2,9 +2,7 @@
 <html lang="en">
 <head>
 	<title><?= $pageTitle ?></title>
-	<link rel="shortcut icon" href="<?= $wg->Favicon ?>">
 
-	<!-- CSS -->
 	<link rel="stylesheet" href="<?= AssetsManager::getInstance()->getSassCommonURL( '/extensions/wikia/Chat2/css/Chat.scss' )?>">
 	<?= $globalVariablesScript ?>
 
