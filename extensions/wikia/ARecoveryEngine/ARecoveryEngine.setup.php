@@ -17,6 +17,9 @@ $wgAutoloadClasses['ARecoveryModule'] = __DIR__ . '/ARecoveryModule.class.php';
 $wgAutoloadClasses['ResourceLoaderAdEnginePageFairDetectionModule'] = __DIR__ . '/ResourceLoaders/PageFair/ResourceLoaderAdEnginePageFairDetectionModule.php';
 $wgAutoloadClasses['ResourceLoaderAdEnginePageFairRecoveryModule'] = __DIR__ . '/ResourceLoaders/PageFair/ResourceLoaderAdEnginePageFairRecoveryModule.php';
 
+$wgAutoloadClasses['ResourceLoaderAdEngineInstartLogicModule'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineInstartLogicModule.php';
+
+
 $wgHooks['InstantGlobalsGetVariables'][] = 'ARecoveryEngineHooks::onInstantGlobalsGetVariables';
 
 // i18n

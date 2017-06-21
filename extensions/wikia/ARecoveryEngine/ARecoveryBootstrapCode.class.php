@@ -27,6 +27,12 @@ class ARecoveryBootstrapCode {
 			static::getBootstrapDisabledMessage();
 	}
 
+	public static function getInstartLogicBootstrapCode() {
+        return ARecoveryModule::shouldLoadInstartLogicBootstrap() ?
+            F::app()->sendRequest( 'ARecoveryEngineApiController', 'getInstartLogicBootstrap' ) :
+            static::getBootstrapDisabledMessage();
+    }
+
 	private static function getBootstrapDisabledMessage( $placement = '' ) {
 		return PHP_EOL .
 			'<!-- Recovery disabled. ' .

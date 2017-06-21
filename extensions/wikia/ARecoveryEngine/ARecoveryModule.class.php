@@ -43,6 +43,15 @@ class ARecoveryModule {
 		return self::isSourcePointRecoveryEnabled() || self::isSourcePointMessagingEnabled();
 	}
 
+    /**
+     * Checks whether should load InstartLogic bootstrap
+     *
+     * @return bool
+     */
+    public static function shouldLoadInstartLogicBootstrap() {
+        return true;
+    }
+
 	public static function isRecoverablePage() {
 		global $wgUser;
 

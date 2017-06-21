@@ -1,0 +1,15 @@
+<script type="text/javascript">
+	require([
+		'ext.wikia.adEngine.adContext'
+	], function (adContext) {
+		var context = adContext.getContext();
+
+		console.log("Inserting Instart Logic code!");
+
+		// context.opts.pageFairRecovery
+
+		if (!window.wgUserName) {
+			{{{code}}}
+		}
+	});
+</script>
