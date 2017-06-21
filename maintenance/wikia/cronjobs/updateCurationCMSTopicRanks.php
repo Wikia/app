@@ -14,7 +14,6 @@ class updateCurationCMSTopicRanks extends Maintenance {
 
 	const SERVICE_NAME = "curation-cms";
 	const TIMEOUT = 60;
-	const NO_CONTENT = 204;
 
 	const SUCCESS_MESSAGE = "Updated topic ranks in the Curation CMS";
 	const EXCEPTION_MESSAGE = "An unknown error occurred while updating topic ranks";
