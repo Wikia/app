@@ -17,6 +17,7 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 				isMobile: noop
 			},
 			adContext: {
+				addCallback: noop,
 				getContext: noop
 			}
 		},

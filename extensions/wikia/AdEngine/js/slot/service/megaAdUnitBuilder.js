@@ -9,8 +9,12 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 	var dfpId = '5441',
 		context;
 
-	function updateContext() {
-		context = adContext.getContext();
+	function getContextTargeting() {
+		if (!context) {
+			context = adContext.getContext();
+		}
+
+		return context.targeting;
 	}
 
 	function findSlotGroup(map, slotName) {
@@ -56,7 +60,7 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 			params = page.getPageLevelParams(),
 			device = getDevice(params),
 			provider = src.indexOf('remnant') === -1 ? 'wka1a' : 'wka2a',
-			wikiName = context.wikiIsTop1000 ? params.s1 : '_not_a_top1k_wiki',
+			wikiName = getContextTargeting().wikiIsTop1000 ? params.s1 : '_not_a_top1k_wiki',
 			vertical = params.s0;
 
 		adUnitElements = [
@@ -73,7 +77,7 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 	}
 
 	function getAdLayout(params) {
-		return params.skin + '-' + (context.hasFeaturedVideo ? 'fv-' : '') + params.s2;
+		return params.skin + '-' + (getContextTargeting().hasFeaturedVideo ? 'fv-' : '') + params.s2;
 	}
 
 	function isValid(adUnit) {
@@ -88,8 +92,9 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 		});
 	}
 
-	updateContext();
-	adContext.addCallback(updateContext);
+	adContext.addCallback(function () {
+		context = null;
+	});
 
 	return {
 		build: build,
