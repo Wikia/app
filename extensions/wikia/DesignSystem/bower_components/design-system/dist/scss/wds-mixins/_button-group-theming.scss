@@ -1,0 +1,27 @@
+@mixin button-group-theming($color-border) {
+	> .wds-button {
+		&:not(.wds-is-secondary) {
+			&:not(:last-child) {
+				border-right-color: $color-border;
+			}
+
+			&:not(:first-child) {
+				border-left-color: $color-border;
+			}
+		}
+	}
+
+	> .wds-dropdown {
+		&:not(:last-child) {
+			.wds-button {
+				border-right-color: $color-border;
+			}
+		}
+
+		&:not(:first-child) {
+			.wds-button {
+				border-left-color: $color-border;
+			}
+		}
+	}
+}

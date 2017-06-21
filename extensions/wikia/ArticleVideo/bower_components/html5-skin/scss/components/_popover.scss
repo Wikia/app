@@ -1,0 +1,58 @@
+.oo-popover {
+  position: absolute;
+  background-color: $popover-bg;
+  bottom: $popover-height;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 5px 10px;
+  border: 0;
+  border-radius: 4px;
+  z-index: $zindex-popover;
+  @include horizontal-center;
+
+  &.oo-popover-pull-right {
+    left: auto;
+    right: 0;
+    @include vendor-prefixes(transform, none);
+  }
+
+  ul.oo-popover-horizontal {
+    display: inline-block;
+    padding:0;
+    margin:13px;
+    list-style: none;
+    white-space:nowrap;
+    position: relative;
+
+    li {
+      float: none;
+      position: relative;
+      display: inline-block;
+      margin: 0 12.5px;
+      vertical-align: middle;
+
+      &:first-child {
+        margin-left: 0 !important;
+      }
+
+      &:last-child {
+        margin-right:0 !important;
+      }
+
+      .oo-switch-container {
+        margin-left:0;
+        display:block;
+      }
+
+      a.oo-more-captions {
+        border: 1px solid grey;
+        border-radius: 4px;
+        padding: 4px 10px;
+        color:$white;
+        background-color: #333;
+        text-transform: capitalize;
+        font-size:12px;
+        font-weight:bold;
+      }
+    }
+
+  }
+}
