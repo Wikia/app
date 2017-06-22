@@ -173,6 +173,19 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 		expect(getModule().build('TOP_LEADERBOARD', 'gpt')).toContain('/oasis-article-ic/');
 	});
 
+	it('Should build new ad unit with FV and IC info', function () {
+		mockPageParams({
+			's0': 'gaming',
+			's1': '_godofwar',
+			's2': 'article',
+			'skin': 'oasis'
+		});
+		mockTargeting(true, true);
+		spyOn(mocks.slotsContext, 'isApplicable').and.returnValue(true);
+
+		expect(getModule().build('TOP_LEADERBOARD', 'gpt')).toContain('/oasis-fv-article-ic/');
+	});
+
 	it('Should build new ad unit for wiki not in top 1000', function () {
 		mockPageParams(DEFAULT_PAGE_PARAMS);
 		mockTargeting(false, false);
