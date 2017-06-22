@@ -8,50 +8,50 @@ class ResourceLoaderAdEngineInstartLogicModule extends ResourceLoaderAdEngineBas
 	// increase this any time the local files change
 	const CACHE_BUSTER = 0;
 	const REQUEST_TIMEOUT = 30;
-    const REMOTE_FILE_URL = 'https://www.nanovisor.io/@p1/client/abd/instart.js?token=';
-    const LOCAL_FILE_PATH = __DIR__ . '/../js/InstartLogic/code.js';
+	const REMOTE_FILE_URL = 'https://www.nanovisor.io/@p1/client/abd/instart.js?token=';
+	const LOCAL_FILE_PATH = __DIR__ . '/../js/InstartLogic/code.js';
 
-    protected function getMemcKey() {
-        return wfSharedMemcKey( 'adengine', get_class( $this ) . __FUNCTION__, static::CACHE_BUSTER );
-    }
+	protected function getMemcKey() {
+		return wfSharedMemcKey( 'adengine', get_class( $this ) . __FUNCTION__, static::CACHE_BUSTER );
+	}
 
-    /**
-     * Configure scripts that should be loaded when cache miss
-     * @return array of ResourceLoaderScript
-     */
-    protected function getScripts() {
-        global $wgInstartLogicApiToken;
+	/**
+	 * Configure scripts that should be loaded when cache miss
+	 * @return array of ResourceLoaderScript
+	 */
+	protected function getScripts() {
+		global $wgInstartLogicApiToken;
 
-        $script = ( new ResourceLoaderScript() )
-            ->setTypeRemote()
-            ->setValue( self::REMOTE_FILE_URL . $wgInstartLogicApiToken );
+		$script = ( new ResourceLoaderScript() )
+			->setTypeRemote()
+			->setValue( self::REMOTE_FILE_URL . $wgInstartLogicApiToken );
 
-        return [ $script ];
-    }
+		return [ $script ];
+	}
 
-    /**
-     * Fallback data when request to external script and cache fails
-     * @return array ["script" => '', "modTitme" => '', "ttl" => '']
-     */
-    protected function getFallbackDataWhenRequestFails() {
-        return [
-            'script' => $this->getDataFromLocalFile( self::LOCAL_FILE_PATH ),
-            'modTime' => $this->getCurrentTimestamp(),
-            'ttl' => self::TTL_GRACE
-        ];
-    }
+	/**
+	 * Fallback data when request to external script and cache fails
+	 * @return array ["script" => '', "modTitme" => '', "ttl" => '']
+	 */
+	protected function getFallbackDataWhenRequestFails() {
+		return [
+			'script' => $this->getDataFromLocalFile( self::LOCAL_FILE_PATH ),
+			'modTime' => $this->getCurrentTimestamp(),
+			'ttl' => self::TTL_GRACE
+		];
+	}
 
-    /**
-     * @param string $filePath
-     * @return bool|string
-     */
-    protected function getDataFromLocalFile( $filePath ) {
-        $scripts = [
-            ( new ResourceLoaderScript() )
-                ->setTypeLocal()
-                ->setValue( $filePath )
-        ];
+	/**
+	 * @param string $filePath
+	 * @return bool|string
+	 */
+	protected function getDataFromLocalFile( $filePath ) {
+		$scripts = [
+			( new ResourceLoaderScript() )
+				->setTypeLocal()
+				->setValue( $filePath )
+		];
 
-        return $this->generateData( $scripts );
-    }
+		return $this->generateData( $scripts );
+	}
 }

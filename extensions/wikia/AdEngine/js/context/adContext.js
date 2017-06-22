@@ -71,10 +71,10 @@ define('ext.wikia.adEngine.adContext', [
 		var isRecoveryServiceAlreadyEnabled = false,
 			serviceCanBeEnabled = !noExternals && context.opts.showAds !== false; // showAds is undefined by default
 
-        // InstartLogic recovery
-        context.opts.instartLogicRecovery = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
-            context.opts.instartLogicRecovery && geo.isProperGeo(instantGlobals.wgAdDriverInstartLogicRecoveryRecoveryCountries);
-        isRecoveryServiceAlreadyEnabled |= context.opts.instartLogicRecovery;
+		// InstartLogic recovery
+		context.opts.instartLogicRecovery = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
+			context.opts.instartLogicRecovery && geo.isProperGeo(instantGlobals.wgAdDriverInstartLogicRecoveryRecoveryCountries);
+		isRecoveryServiceAlreadyEnabled |= context.opts.instartLogicRecovery;
 
 		// PageFair recovery
 		context.opts.pageFairRecovery = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&

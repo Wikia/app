@@ -23,16 +23,16 @@ class ARecoveryModule {
 		return static::isRecoverablePage() && $wgAdDriverEnableSourcePointRecovery;
 	}
 
-    /**
-     * Checks whether InstartLogic recovery is enabled
-     *
-     * @return bool
-     */
-    public static function isInstartLogicRecoveryEnabled() {
-        global $wgAdDriverEnableInstartLogicRecovery;
+	/**
+	 * Checks whether InstartLogic recovery is enabled
+	 *
+	 * @return bool
+	 */
+	public static function isInstartLogicRecoveryEnabled() {
+		global $wgAdDriverEnableInstartLogicRecovery;
 
-        return static::isRecoverablePage() && $wgAdDriverEnableInstartLogicRecovery;
-    }
+		return static::isRecoverablePage() && $wgAdDriverEnableInstartLogicRecovery;
+	}
 
 	/**
 	 * Checks whether SourcePoint MMS is enabled (on current wiki)

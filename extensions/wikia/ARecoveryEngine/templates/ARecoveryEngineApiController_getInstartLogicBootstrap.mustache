@@ -1,10 +1,10 @@
 <script type="text/javascript">
 	require([
 		'ext.wikia.adEngine.adContext',
-        'wikia.browserDetect'
+		'wikia.browserDetect'
 	], function (adContext, browserDetect) {
 		var context = adContext.getContext(),
-                isSupportedBrowser = browserDetect.isChrome() && browserDetect.getBrowserVersion() > 45;
+			isSupportedBrowser = browserDetect.isChrome() && browserDetect.getBrowserVersion() > 45;
 
 		if (context.opts.instartLogicRecovery && !window.wgUserName && isSupportedBrowser) {
 			{{{code}}}

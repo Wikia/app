@@ -262,8 +262,8 @@ class OasisController extends WikiaController {
 			$this->prebid = AnalyticsEngine::track('Prebid', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->rubiconFastlane = AnalyticsEngine::track('RubiconFastlane', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->sourcePoint = ARecoveryBootstrapCode::getSourcePointBootstrapCode();
-            $this->instartLogic = ARecoveryBootstrapCode::getInstartLogicBootstrapCode();
-            $this->dynamicYield = AnalyticsEngine::track('DynamicYield', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->instartLogic = ARecoveryBootstrapCode::getInstartLogicBootstrapCode();
+			$this->dynamicYield = AnalyticsEngine::track('DynamicYield', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->krux = AnalyticsEngine::track('Krux', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->netzathleten = AnalyticsEngine::track('NetzAthleten', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->recoveryHeadBootstrapCode = ARecoveryBootstrapCode::getHeadBootstrapCode();
