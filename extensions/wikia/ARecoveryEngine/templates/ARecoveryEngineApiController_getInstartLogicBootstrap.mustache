@@ -6,7 +6,7 @@
 		var context = adContext.getContext(),
 			isSupportedBrowser = browserDetect.isChrome() && browserDetect.getBrowserVersion() > 45;
 
-		if (context.opts.instartLogicRecovery && !window.wgUserName && isSupportedBrowser) {
+		if (context.opts.instartLogicRecovery && isSupportedBrowser) {
 			{{{code}}}
 		}
 	});
