@@ -155,6 +155,7 @@ $wgResourceModules['ext.Chat2'] = [
 		'js/views/views.js',
 		'js/views/ChatBanModal.js',
 		'js/controllers/controllers.js',
+		'js/site_user.js',
 	],
 	'messages' => [
 		// Inline alerts
