@@ -15,6 +15,7 @@ class CPArticleRenderer {
 	use Loggable;
 
 	const SERVICE_NAME = "structdata";
+	const CP_TITLE_HEADER = 'X-Page-Title';
 
 	/** @var string */
 	private $publicHost;
@@ -52,15 +53,19 @@ class CPArticleRenderer {
 		}
 
 		$output->setPageTitle($title->getPrefixedText());
-		$content = $this->getArticleContent($title->getPartialURL(), $action);
+		$cpArticle = $this->getArticle($title->getPartialURL(), $action);
 		$this->addStyles($output);
-		
-		if ($content === false) {
+
+		if ($cpArticle === false) {
 			$output->addHTML("<p>We're currently experiencing some technical difficulties. Hang tight, we're working to fix these ASAP.</p>");
 			return;
 		}
 
-		$output->addHTML($content);
+		$output->addHTML($cpArticle->getContent());
+		if (!empty($cpArticle->getTitle())) {
+			$output->setPageTitle($cpArticle->getTitle());
+		}
+
 		$this->addScripts($output);
 	}
 
@@ -101,7 +106,7 @@ class CPArticleRenderer {
 		return "wiki/{$id}/{$slug}";
 	}
 
-	private function getArticleContent($title, $action) {
+	private function getArticle($title, $action) {
 		$internalHost = $this->publicHost;
 
 		$path = $this->getFCRequestPath($title);
@@ -131,6 +136,6 @@ class CPArticleRenderer {
 			return false;
 		}
 
-		return $response->getContent();
+		return new CPArticle($response->getContent(), $response->getResponseHeader(self::CP_TITLE_HEADER));
 	}
 }
