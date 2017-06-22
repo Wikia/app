@@ -46,7 +46,7 @@ class updateCurationCMSTopicRanks extends Maintenance {
 		WikiaLogger::instance()->error( self::EXCEPTION_MESSAGE,
 			[
 				'exception_message' => $e->getMessage(),
-			    'exception' => $e,
+				'exception' => $e,
 			]
 		);
 	}
