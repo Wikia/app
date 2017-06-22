@@ -21,11 +21,10 @@ class ResourceLoaderAdEngineInstartLogicModule extends ResourceLoaderAdEngineBas
      */
     protected function getScripts() {
         global $wgInstartLogicApiToken;
-        $key = $wgInstartLogicApiToken || '';
 
         $script = ( new ResourceLoaderScript() )
             ->setTypeRemote()
-            ->setValue( self::REMOTE_FILE_URL . $key );
+            ->setValue( self::REMOTE_FILE_URL . $wgInstartLogicApiToken );
 
         return [ $script ];
     }

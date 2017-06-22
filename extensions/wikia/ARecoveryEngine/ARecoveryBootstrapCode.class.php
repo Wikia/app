@@ -28,7 +28,7 @@ class ARecoveryBootstrapCode {
 	}
 
 	public static function getInstartLogicBootstrapCode() {
-        return ARecoveryModule::shouldLoadInstartLogicBootstrap() ?
+        return ARecoveryModule::isInstartLogicRecoveryEnabled() ?
             F::app()->sendRequest( 'ARecoveryEngineApiController', 'getInstartLogicBootstrap' ) :
             static::getBootstrapDisabledMessage();
     }

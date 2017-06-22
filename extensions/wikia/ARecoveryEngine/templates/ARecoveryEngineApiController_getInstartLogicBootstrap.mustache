@@ -4,11 +4,8 @@
 	], function (adContext) {
 		var context = adContext.getContext();
 
-		console.log("Inserting Instart Logic code!");
-
-		// context.opts.pageFairRecovery
-
-		if (!window.wgUserName) {
+		if (context.opts.instartLogicRecovery && !window.wgUserName) {
+            console.log("Inserting Instart Logic code!");
 			{{{code}}}
 		}
 	});

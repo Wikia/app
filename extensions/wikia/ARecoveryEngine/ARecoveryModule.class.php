@@ -18,10 +18,21 @@ class ARecoveryModule {
 	 * @return bool
 	 */
 	public static function isSourcePointRecoveryEnabled() {
-		global $wgUser, $wgAdDriverEnableSourcePointRecovery;
+		global $wgAdDriverEnableSourcePointRecovery;
 
 		return static::isRecoverablePage() && $wgAdDriverEnableSourcePointRecovery;
 	}
+
+    /**
+     * Checks whether InstartLogic recovery is enabled
+     *
+     * @return bool
+     */
+    public static function isInstartLogicRecoveryEnabled() {
+        global $wgAdDriverEnableInstartLogicRecovery;
+
+        return static::isRecoverablePage() && $wgAdDriverEnableInstartLogicRecovery;
+    }
 
 	/**
 	 * Checks whether SourcePoint MMS is enabled (on current wiki)
@@ -42,15 +53,6 @@ class ARecoveryModule {
 	public static function shouldLoadSourcePointBootstrap() {
 		return self::isSourcePointRecoveryEnabled() || self::isSourcePointMessagingEnabled();
 	}
-
-    /**
-     * Checks whether should load InstartLogic bootstrap
-     *
-     * @return bool
-     */
-    public static function shouldLoadInstartLogicBootstrap() {
-        return true;
-    }
 
 	public static function isRecoverablePage() {
 		global $wgUser;
