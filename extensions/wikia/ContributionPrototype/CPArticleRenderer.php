@@ -136,6 +136,6 @@ class CPArticleRenderer {
 			return false;
 		}
 
-		return new CPArticle($response->getContent(), $response->getResponseHeader(CP_TITLE_HEADER));
+		return new CPArticle($response->getContent(), $response->getResponseHeader(self::CP_TITLE_HEADER));
 	}
 }
