@@ -217,6 +217,7 @@ $wgResourceModules['ext.Chat2'] = [
 		'wikia.querystring',
 		'ext.Chat2.socket.io',
 		'mediawiki.legacy.wikibits', // will make importScriptPage() available, used heavily by custom Chat.js
+		'jquery.modal', // will make $.makeModal available, used heavily by custom Chat.js
 	],
 	'localBasePath' => __DIR__,
 	'remoteExtPath' => 'wikia/Chat2'

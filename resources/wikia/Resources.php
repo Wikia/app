@@ -279,6 +279,12 @@ return [
 		'dependencies' => 'wikia.throttle',
 	],
 
+	'jquery.modal' => [
+		'scripts' => 'resources/wikia/libraries/jquery/modal/jquery.wikia.modal.js',
+		'dependencies' => 'amd'
+	],
+
+
 	// moved here from AssetsManager by wladek
 	'wikia.yui' => [
 		'scripts' => [
