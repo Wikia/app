@@ -143,11 +143,11 @@ class ChatController extends WikiaController {
 	 */
 	private function addSiteAndUserJs( OutputPage $out ) {
 		if ( $this->wg->UseSiteJs ) {
-			$out->addModuleScripts('chat.site');
+			$out->addModules('chat.site');
 		}
 
-		if ( $this->wg->UseSiteCss ) {
-			$out->addModuleScripts( 'chat.user' );
+		if ( $this->wg->AllowUserJs ) {
+			$out->addModules( 'chat.user' );
 		}
 	}
 
