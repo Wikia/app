@@ -83,10 +83,28 @@ class CPArticleRenderer {
 		$output->addHTML(\DesignSystemHelper::renderSvg('sprite'));
 	}
 
+	private function splitArticleIdAndTitle($title) {
+		if (preg_match('/^(\d+)\/(.*$)$/', urldecode($title), $matches) == 1) {
+			return [$matches[1], rawurlencode($matches[2])];
+		}
+
+		return false;
+	}
+
+	private function getFCRequestPath($title) {
+		$parts = $this->splitArticleIdAndTitle($title);
+		if ($parts === false) {
+			return "wiki/{$title}";
+		}
+
+		list($id, $slug) = $parts;
+		return "wiki/{$id}/{$slug}";
+	}
+
 	private function getArticleContent($title, $action) {
-//		$internalHost = $this->urlProvider->getUrl(self::SERVICE_NAME);
 		$internalHost = $this->publicHost;
-		$path = "wiki/{$title}";
+
+		$path = $this->getFCRequestPath($title);
 
 		if ($action != 'view') {
 			$path .= "/${action}";
