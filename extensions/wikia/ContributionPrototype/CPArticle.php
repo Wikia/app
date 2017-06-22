@@ -5,18 +5,18 @@ namespace ContributionPrototype;
 class CPArticle {
 
 	private $content;
-	private $entityName;
+	private $title;
 
-	function __construct($content, $entityName) {
+	function __construct($content, $title) {
 		$this->content = $content;
-		$this->entityName = $entityName;
+		$this->title = $title;
 	}
 
 	public function getContent() {
 		return $this->content;
 	}
 
-	public function getEntityName() {
-		return $this->entityName;
+	public function getTitle() {
+		return $this->title;
 	}
 }

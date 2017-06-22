@@ -15,6 +15,7 @@ class CPArticleRenderer {
 	use Loggable;
 
 	const SERVICE_NAME = "structdata";
+	const CP_TITLE_HEADER = 'X-Page-Title';
 
 	/** @var string */
 	private $publicHost;
@@ -61,8 +62,8 @@ class CPArticleRenderer {
 		}
 
 		$output->addHTML($cpArticle->getContent());
-		if (!empty($cpArticle->getEntityName())) {
-			$output->setPageTitle($cpArticle->getEntityName());
+		if (!empty($cpArticle->getTitle())) {
+			$output->setPageTitle($cpArticle->getTitle());
 		}
 
 		$this->addScripts($output);
@@ -135,6 +136,6 @@ class CPArticleRenderer {
 			return false;
 		}
 
-		return new CPArticle($response->getContent(), $response->getResponseHeader('X-Page-Title'));
+		return new CPArticle($response->getContent(), $response->getResponseHeader(CP_TITLE_HEADER));
 	}
 }
