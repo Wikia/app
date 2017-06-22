@@ -1,11 +1,12 @@
 <script type="text/javascript">
 	require([
-		'ext.wikia.adEngine.adContext'
-	], function (adContext) {
-		var context = adContext.getContext();
+		'ext.wikia.adEngine.adContext',
+        'wikia.browserDetect'
+	], function (adContext, browserDetect) {
+		var context = adContext.getContext(),
+                isSupportedBrowser = browserDetect.isChrome() && browserDetect.getBrowserVersion() > 45;
 
-		if (context.opts.instartLogicRecovery && !window.wgUserName) {
-            console.log("Inserting Instart Logic code!");
+		if (context.opts.instartLogicRecovery && !window.wgUserName && isSupportedBrowser) {
 			{{{code}}}
 		}
 	});
