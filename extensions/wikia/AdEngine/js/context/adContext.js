@@ -73,7 +73,7 @@ define('ext.wikia.adEngine.adContext', [
 
 		// InstartLogic recovery
 		context.opts.instartLogicRecovery = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
-			context.opts.instartLogicRecovery && geo.isProperGeo(instantGlobals.wgAdDriverInstartLogicRecoveryRecoveryCountries);
+			context.opts.instartLogicRecovery && geo.isProperGeo(instantGlobals.wgAdDriverInstartLogicRecoveryCountries);
 		isRecoveryServiceAlreadyEnabled |= context.opts.instartLogicRecovery;
 
 		// PageFair recovery
