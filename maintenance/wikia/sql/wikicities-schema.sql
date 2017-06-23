@@ -560,21 +560,6 @@ CREATE TABLE `revision` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `shared_newtalks`
---
-
-DROP TABLE IF EXISTS `shared_newtalks`;
-CREATE TABLE `shared_newtalks` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `sn_user_id` int(5) unsigned DEFAULT NULL,
-  `sn_user_ip` varchar(255) DEFAULT '',
-  `sn_wiki` varchar(31) DEFAULT NULL,
-  `sn_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `sn_user_id_sn_user_ip_sn_wiki_idx` (`sn_user_id`,`sn_user_ip`,`sn_wiki`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `spoofuser`
 --
 

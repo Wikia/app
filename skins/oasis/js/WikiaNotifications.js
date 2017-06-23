@@ -21,14 +21,6 @@ var WikiaNotificationsApp = {
 			var notificationType = parseInt(notification.attr('data-type'));
 
 			switch (notificationType) {
-				// dismiss talk page message notification
-				case 1:
-					$.post(wgScript, {action: 'ajax', rs: 'wfDismissWikiaNewtalks'}, WikiaNotificationsApp.purgeCurrentPage);
-
-					// remove wrapping <li>
-					notification.parent().remove();
-					break;
-
 				// dismiss community message notification
 				case 2:
 					$.post(wgScript, {action: 'ajax', rs: 'CommunityMessagesAjax', method: 'dismissMessage'}, WikiaNotificationsApp.purgeCurrentPage);
