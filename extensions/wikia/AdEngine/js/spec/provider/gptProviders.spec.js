@@ -16,16 +16,14 @@ describe('ext.wikia.adEngine.provider.*', function () {
 				return mocks.context;
 			}
 		},
-		passbackHandler: {
-			get: function () {
-				return null;
-			}
-		},
 		adUnitBuilder: {
 			build: function (slotName, src) {
 				return '/5441/wka.ent/_muppet//home/' + src + '/' + slotName;
 			},
 			buildNew: noop
+		},
+		kiloAdUnitBuilder: {
+			build: function () {}
 		},
 		gptHelper: {
 			pushAd: function (slotName, slotElement, slotPath, slotTargeting, extra) {
@@ -34,7 +32,8 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			}
 		},
 		lookups: {
-			extendSlotTargeting: noop
+			extendSlotTargeting: noop,
+			storeRealSlotPrices: noop
 		},
 		slotRegistry: {
 			getRefreshCount: function () {
@@ -74,7 +73,6 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			mocks.btfBlocker,
 			mocks.gptHelper,
 			mocks.adUnitBuilder,
-			mocks.passbackHandler,
 			mocks.slotRegistry,
 			mocks.log,
 			mocks.lookups
@@ -85,8 +83,11 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		switch (providerName) {
 			case 'directGpt':
 				return modules['ext.wikia.adEngine.provider.' + providerName](
+					mocks.adContext,
 					mocks.uapContext,
 					getFactory(),
+					mocks.adUnitBuilder,
+					mocks.kiloAdUnitBuilder,
 					mocks.slotTweaker,
 					mocks.adUnitBuilder
 				);
@@ -100,6 +101,9 @@ describe('ext.wikia.adEngine.provider.*', function () {
 				);
 			case 'directGptMobile':
 				return modules['ext.wikia.adEngine.provider.' + providerName](
+					mocks.adContext,
+					mocks.defaultAdUnitBuilder,
+					mocks.kiloAdUnitBuilder,
 					getFactory()
 				);
 			case 'remnantGptMobile':
@@ -145,14 +149,12 @@ describe('ext.wikia.adEngine.provider.*', function () {
 
 	beforeEach(function () {
 		mocks.context.opts.overridePrefootersSizes = false;
-		mocks.context.opts.incontentLeaderboardAsOutOfPage = false;
 	});
 
 	it('directGpt: Push ad with specific slot sizes', function () {
 		var expectedSizes = {
 			BOTTOM_LEADERBOARD: '728x90',
 			INCONTENT_BOXAD_1: '120x600,160x600,300x250,300x600',
-			INCONTENT_LEADERBOARD: '1x1,728x90,300x250,468x60',
 			INCONTENT_PLAYER: '1x1',
 			INVISIBLE_HIGH_IMPACT_2: 'out-of-page',
 			INVISIBLE_SKIN: '1000x1000,1x1',
@@ -177,20 +179,10 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		assertProviderSlotMap(getProvider('directGpt'), expectedSizes);
 	});
 
-	it('directGpt: Push ad with overridden incontent leaderboard', function () {
-		mocks.context.opts.incontentLeaderboardAsOutOfPage = true;
-		var expectedSizes = {
-			INCONTENT_LEADERBOARD: 'out-of-page'
-		};
-
-		assertProviderSlotMap(getProvider('directGpt'), expectedSizes);
-	});
-
 	it('remnantGpt: Push ad with specific slot sizes', function () {
 		var expectedSizes = {
 			BOTTOM_LEADERBOARD: '728x90',
 			INCONTENT_BOXAD_1: '120x600,160x600,300x250,300x600',
-			INCONTENT_LEADERBOARD: '1x1,728x90,300x250,468x60',
 			INCONTENT_PLAYER: null,
 			INVISIBLE_HIGH_IMPACT_2: 'out-of-page',
 			INVISIBLE_SKIN: '1000x1000,1x1',
@@ -210,15 +202,6 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		var expectedSizes = {
 			PREFOOTER_LEFT_BOXAD: '300x250,468x60,728x90',
 			PREFOOTER_RIGHT_BOXAD: null
-		};
-
-		assertProviderSlotMap(getProvider('remnantGpt'), expectedSizes);
-	});
-
-	it('remnantGpt: Push ad with overridden incontent leaderboard', function () {
-		mocks.context.opts.incontentLeaderboardAsOutOfPage = true;
-		var expectedSizes = {
-			INCONTENT_LEADERBOARD: 'out-of-page'
 		};
 
 		assertProviderSlotMap(getProvider('remnantGpt'), expectedSizes);

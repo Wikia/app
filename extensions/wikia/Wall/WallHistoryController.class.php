@@ -7,7 +7,7 @@ class WallHistoryController extends WallController {
 		parent::__construct();
 	}
 
-	public function index() {
+	public function index( $wallMessagesPerPage = null ) {
 		JSMessages::enqueuePackage( 'Wall', JSMessages::EXTERNAL );
 		$title = $this->getContext()->getTitle();
 
@@ -120,7 +120,6 @@ class WallHistoryController extends WallController {
 		$output = $this->getContext()->getOutput();
 		if ( $this->isThreadLevel ) {
 			$output->setPageTitle( wfMessage( 'wall-thread-history-title' )->text() );
-			$this->wg->SuppressPageHeader = true;
 		} else {
 			$output->setPageTitle( wfMessage( 'wall-history-title' )->text() );
 		}

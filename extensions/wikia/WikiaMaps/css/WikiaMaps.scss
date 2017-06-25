@@ -6,7 +6,7 @@
 .maps-controls {
 	position: absolute;
 	right: 0;
-	top: -6px;
+	top: -24px;
 
 	> button,
 	> form,
@@ -51,6 +51,7 @@
 }
 
 .wikia-interactive-maps {
+	margin-top: 24px;
 	position: relative;
 
 	.wikia-menu-button {

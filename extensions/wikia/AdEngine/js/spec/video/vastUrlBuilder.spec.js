@@ -122,5 +122,21 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 
 		expect(vastUrl).toMatch('&iu=my\/ad\/unit&');
 	});
+
+	it('Build VAST URL with restricted number of ads', function () {
+		var vastUrl = getModule().build(1, mocks.slotParams, {
+			numberOfAds: 1
+		});
+
+		expect(vastUrl).toMatch(/&pmad=1/);
+	});
+
+	it('Build VAST URL with restricted ads position', function () {
+		var vastUrl = getModule().build(1, mocks.slotParams, {
+			prerollOnly: true
+		});
+
+		expect(vastUrl).toMatch(/&vpos=preroll/);
+	});
 });
 

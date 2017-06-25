@@ -33,6 +33,7 @@ define('ext.wikia.adEngine.adEngineRunner', [
 		 */
 		function markModule(name) {
 			log(name + ' responded', log.levels.debug, logGroup);
+
 			if (modulesQueue.indexOf(name) === -1) {
 				modulesQueue.push(name);
 			}
@@ -49,8 +50,10 @@ define('ext.wikia.adEngine.adEngineRunner', [
 		 */
 		function registerModules() {
 			log(['Register modules', enabledModules.length], log.levels.debug, logGroup);
+
 			enabledModules.forEach(function (module) {
 				var name = module.getName();
+
 				module.addResponseListener(function () {
 					markModule(name);
 				});

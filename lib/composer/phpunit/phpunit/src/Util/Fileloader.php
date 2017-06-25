@@ -28,11 +28,17 @@ class Fileloader
      */
     public static function checkAndLoad($filename)
     {
-        $includePathFilename = stream_resolve_include_path($filename);
+        $includePathFilename = \stream_resolve_include_path($filename);
 
-        if (!$includePathFilename || !is_readable($includePathFilename)) {
+        //As a fallback, PHP looks in the directory of the file executing the stream_resolve_include_path function.
+        //We don't want to load the Test.php file here, so skip it if it found that.
+        //PHP prioritizes the include_path setting, so if the current directory is in there, it will first look in the
+        //current working directory.
+        $localFile = __DIR__ . DIRECTORY_SEPARATOR . $filename;
+
+        if (!$includePathFilename || !\is_readable($includePathFilename) || $includePathFilename === $localFile) {
             throw new Exception(
-                sprintf('Cannot open file "%s".' . "\n", $filename)
+                \sprintf('Cannot open file "%s".' . "\n", $filename)
             );
         }
 
@@ -50,13 +56,13 @@ class Fileloader
      */
     public static function load($filename)
     {
-        $oldVariableNames = array_keys(get_defined_vars());
+        $oldVariableNames = \array_keys(\get_defined_vars());
 
         include_once $filename;
 
-        $newVariables     = get_defined_vars();
-        $newVariableNames = array_diff(
-            array_keys($newVariables),
+        $newVariables     = \get_defined_vars();
+        $newVariableNames = \array_diff(
+            \array_keys($newVariables),
             $oldVariableNames
         );
 

@@ -128,8 +128,7 @@ class Phalanx extends WikiaModel implements ArrayAccess {
 				'regex'     => $row->p_regex,
 				'case'      => $row->p_case,
 				'reason'    => $row->p_reason,
-				'comment'   => $row->p_comment,
-				'ip_hex'    => $row->p_ip_hex
+				'comment'   => $row->p_comment
 			];
 		}
 
@@ -361,10 +360,7 @@ class Phalanx extends WikiaModel implements ArrayAccess {
 				// Don't allow to set blocks for trusted proxies or Wikia network hosts
 				return false;
 			}
-
-			$this->data['ip_hex'] = IP::toHex( $this->data['text'] );
 		}
-
 		return true;
 	}
 

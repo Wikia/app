@@ -77,9 +77,6 @@ class WallHooksHelper {
 				return true;
 			}
 
-			// article exists or existed
-			$app->wg->SuppressPageHeader = true;
-
 			$wallMessage = WallMessage::newFromTitle( $mainTitle );
 			$isDeleted = !$wallMessage->isVisible( $app->wg->User );
 			$showDeleted = ( $wallMessage->canViewDeletedMessage( $app->wg->User )
@@ -302,18 +299,22 @@ class WallHooksHelper {
 
 	static public function onBeforePageHistory( &$article ) {
 		$title = $article->getTitle();
+
+		// Skip remaining logic if this is a Forum Thread and we are doing Discussion redirects
+		if ( self::isRedirectableForumThread( $article ) ) {
+			return true;
+		}
+
 		$app = F::App();
 		$page = $app->wg->Request->getVal( 'page', 1 );
 
 		if ( !empty( $title ) ) {
 			if (  WallHelper::isWallNamespace( $title->getNamespace() )  && !$title->isTalkPage() && !$title->isSubpage() ) {
-				$app->wg->SuppressPageHeader = true;
 				$app->wg->Out->addHTML( $app->renderView( 'WallHistoryController', 'index', [ 'title' => $title, 'page' => $page ] ) );
 				return false;
 			}
 
 			if (  WallHelper::isWallNamespace( $title->getNamespace() ) && $title->isTalkPage() ) {
-				$app->wg->SuppressPageHeader = true;
 				$app->wg->Out->addHTML( $app->renderView( 'WallHistoryController', 'index', [ 'title' => $title, 'page' => $page, 'threadLevelHistory' => true ] ) );
 				return false;
 			}
@@ -321,6 +322,30 @@ class WallHooksHelper {
 
 		static::doSelfRedirect();
 		return true;
+	}
+
+	/**
+	 * Check to see if this is an article that will be redirected by the
+	 * SpecialForumRedirectController.  Since the hook handler in this class returns false and
+	 * renders its own page, it stops the hook handling and the hook
+	 * in SpecialForumRedirectController is never called.
+	 *
+	 * @param $article
+	 *
+	 * @return bool
+	 */
+	static public function isRedirectableForumThread( $article ) {
+		$wg = F::app()->wg;
+
+		// Make sure discussions are active but forums are not
+		if ( !empty( $wg->EnableDiscussions ) && empty( $wg->EnableForumExt ) ) {
+			$title = SpecialForumRedirectController::getRedirectableForumTitle( $article );
+			if ( !empty( $title ) ) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
@@ -2249,6 +2274,9 @@ class WallHooksHelper {
 			switch ( $action ) {
 				// don't let user create Message Wall page, or bogus Thread
 				case 'create':
+				case 'edit':
+				case 'move':
+				case 'move-target':
 					$allow = false;
 					$result = [ 'badtitle' ];
 
@@ -2256,7 +2284,6 @@ class WallHooksHelper {
 
 				// don't let user edit or delete Message Wall page
 				case 'delete':
-				case 'edit':
 					if ( $ns === NS_USER_WALL ) {
 						$allow = false;
 						$result = [ 'badtitle' ];
@@ -2299,4 +2326,26 @@ class WallHooksHelper {
 		return $allow;
 	}
 
+	/**
+	 * @param string $pageSubtitle
+	 *
+	 * @param Title $title
+	 * @return bool
+	 */
+	public static function onAfterPageHeaderPageSubtitle( &$pageSubtitle, Title $title ): bool {
+		if (
+			$title->getNamespace() === NS_USER_WALL_MESSAGE &&
+			RequestContext::getMain()->getRequest()->getVal( 'action' ) !== 'history'
+		) {
+			$pageSubtitle = F::app()->renderView(
+				'Wall',
+				'brickHeader',
+				[
+					'id' => $title->getText()
+				]
+			);
+		}
+
+		return true;
+	}
 }

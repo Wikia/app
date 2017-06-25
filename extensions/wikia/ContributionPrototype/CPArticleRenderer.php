@@ -28,23 +28,18 @@ class CPArticleRenderer {
 	/** @var UrlProvider */
 	private $urlProvider;
 
-	/** @var bool */
-	private $premiumHeaderEnabled;
-
 	/**
 	 * CPArticleRenderer constructor.
 	 * @param string $publicHost
 	 * @param int $wikiId
 	 * @param string $dbName
 	 * @param UrlProvider $urlProvider
-	 * @param bool $premiumHeaderEnabled
 	 */
-	public function __construct($publicHost, $wikiId, $dbName, $urlProvider, $premiumHeaderEnabled) {
+	public function __construct($publicHost, $wikiId, $dbName, $urlProvider) {
 		$this->publicHost = $publicHost;
 		$this->wikiId = $wikiId;
 		$this->dbName = $dbName;
 		$this->urlProvider = $urlProvider;
-		$this->premiumHeaderEnabled = $premiumHeaderEnabled;
 	}
 
 	/**
@@ -52,16 +47,20 @@ class CPArticleRenderer {
 	 * @param OutputPage $output
 	 */
 	public function render(Title $title, OutputPage $output, $action='view') {
+		if ( $title->getPartialURL() == '' ) {
+			$output->redirect( '/wiki/Home' );
+		}
+
 		$output->setPageTitle($title->getPrefixedText());
 		$content = $this->getArticleContent($title->getPartialURL(), $action);
+		$this->addStyles($output);
 		
 		if ($content === false) {
-			// TODO: what do we want to show here?
+			$output->addHTML("<p>We're currently experiencing some technical difficulties. Hang tight, we're working to fix these ASAP.</p>");
 			return;
 		}
 
 		$output->addHTML($content);
-		$this->addStyles($output);
 		$this->addScripts($output);
 	}
 
@@ -104,12 +103,12 @@ class CPArticleRenderer {
 					'followRedirects'=> true,
 					'headers' => [
 						'X-Wikia-Community' => $this->dbName,
-						'X-Wikia-PremiumHeader' => $this->premiumHeaderEnabled
+						'X-Wikia-PremiumHeader' => true
 					]
 				]
 		);
 
-		if ($response->getStatus() >= 500) {
+		if (!$response->status->isOK()) {
 			// Http::request logs when http status > 399
 			return false;
 		}

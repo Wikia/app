@@ -58,6 +58,10 @@ define('ext.wikia.adEngine.config.mobile', [
 			providerList.push(evolve2);
 		} else if (gptEnabled) {
 			providerList.push(directGptMobile);
+
+			if (context.opts.premiumOnly) {
+				return providerList;
+			}
 		}
 
 		if (gptEnabled) {

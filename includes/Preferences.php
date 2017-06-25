@@ -85,10 +85,14 @@ class Preferences {
 			}
 		}
 
+		## Make sure that form fields have their parent set. See SUS-1853
+		$dummyForm = new HTMLForm( array(), $context );
+
 		## Prod in defaults from the user
 		foreach ( $defaultPreferences as $name => &$info ) {
 			$prefFromUser = self::getUserProperty( $name, $info, $user );
 			$field = HTMLForm::loadInputFromParameters( $name, $info ); // For validation
+			$field->mParent = $dummyForm; // SUS-1853
 			$defaultOptions = User::getDefaultOptions();
 			$globalDefault = isset( $defaultOptions[$name] )
 				? $defaultOptions[$name]
@@ -285,7 +289,7 @@ class Preferences {
 
 		// Language
 		/** WIKIA CHANGE BEGIN **/
-		$languages = wfGetFixedLanguageNames();
+		$languages = WikiaLanguage::getRequestSupportedLanguages();
 		/** WIKIA CHANGE END **/
 		if ( !array_key_exists( $wgLanguageCode, $languages ) ) {
 			$languages[$wgLanguageCode] = $wgLanguageCode;

@@ -1,7 +1,7 @@
 /*global define*/
 define('ext.wikia.adEngine.video.player.porvata.googleImaSetup', [
 	'ext.wikia.adEngine.video.vastUrlBuilder',
-	'ext.wikia.aRecoveryEngine.adBlockRecovery',
+	'ext.wikia.aRecoveryEngine.sourcePoint.recovery',
 	'wikia.browserDetect',
 	'wikia.log',
 	'wikia.window'

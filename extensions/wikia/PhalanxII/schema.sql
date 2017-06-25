@@ -5,8 +5,6 @@ CREATE TABLE IF NOT EXISTS `phalanx` (
   `p_author_id` int(6) NOT NULL,
 -- block content (plain text or regex)
   `p_text` blob NOT NULL,
--- Hexadecimal representation of IP blocks
-  `p_ip_hex` VARCHAR(35) default NULL,
 -- block type (mask of 16 bits determining which module will use that block)
   `p_type` smallint(1) unsigned NOT NULL,
 -- date of creation or last edit of this block
@@ -26,7 +24,6 @@ CREATE TABLE IF NOT EXISTS `phalanx` (
 -- internal comments for each block (BAC-534)
   `p_comment` tinyblob NOT NULL,
   PRIMARY KEY (`p_id`),
-  KEY (`p_ip_hex`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `phalanx_stats` (

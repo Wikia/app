@@ -28,9 +28,9 @@ class UploadVerifyFile extends WikiaBaseTest {
 			file_put_contents($this->tmpPath, $uploadContent);
 		}
 
-		$uploadMock = $this->mockClassWithMethods('TestUploadClass', array(
-			'getTempPath' => $this->tmpPath
-		));
+		$uploadMock = $this->createConfiguredMock( TestUploadClass::class, [
+			'getTempPath' => $this->tmpPath,
+		] );
 
 		$status = array();
 		$ret = Wikia::onUploadVerifyFile($uploadMock, $mime, $status);
@@ -48,6 +48,7 @@ class UploadVerifyFile extends WikiaBaseTest {
 				'uploadContent' => base64_decode('R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D'), // blank 1x1 gif
 			),
 			// invalid image
+			// identify.im6: no decode delegate for this image format `/tmp/UploadTestBUg4ue' @ error/constitute.c/ReadImage/544
 			array(
 				'mime' => 'image/gif',
 				'expectedReturnVal' => false,

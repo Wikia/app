@@ -111,12 +111,17 @@ class BodyController extends WikiaController {
 		// perform namespace and special page check
 		$isUserPage = in_array( $wg->Title->getNamespace(), self::getUserPagesNamespaces() );
 
-		$ret = ( $isUserPage && !$wg->Title->isSubpage() )
-			|| $wg->Title->isSpecial( 'Following' )
-			|| $wg->Title->isSpecial( 'Contributions' )
-			|| $wg->Title->isSpecial( 'UserActivity' )
-			|| ( defined( 'NS_BLOG_LISTING' ) && $wg->Title->getNamespace() == NS_BLOG_LISTING )
-			|| ( defined( 'NS_BLOG_ARTICLE' ) && $wg->Title->getNamespace() == NS_BLOG_ARTICLE );
+		$ret =
+			( $isUserPage && !$wg->Title->isSubpage() ) ||
+			$wg->Title->isSpecial( 'Following' ) ||
+			$wg->Title->isSpecial( 'Contributions' ) ||
+			$wg->Title->isSpecial( 'UserActivity' ) ||
+			(
+				defined( 'NS_BLOG_ARTICLE' ) &&
+				$wg->Title->getNamespace() == NS_BLOG_ARTICLE &&
+				// show user pages header only on user blog listing
+		        !$wg->Title->isSubpage()
+			);
 
 		return $ret;
 	}
@@ -141,13 +146,16 @@ class BodyController extends WikiaController {
 	}
 
 	public function getRailModuleList() {
-		$namespace = $this->wg->Title->getNamespace();
+		$title = $this->getContext()->getTitle();
+		$user = $this->getContext()->getUser();
+		
+		$namespace = $title->getNamespace();
 		$subjectNamespace = MWNamespace::getSubject( $namespace );
 
 		$railModuleList = [ ];
 
-		$latestActivityKey = $this->wg->User->isAnon() ? 1250 : 1300;
-		$huluVideoPanelKey = $this->wg->User->isAnon() ? 1390 : 1280;
+		$latestActivityKey = $user->isAnon() ? 1250 : 1300;
+		$huluVideoPanelKey = $user->isAnon() ? 1390 : 1280;
 
 		// Forum Extension
 		if ( $this->wg->EnableForumExt && ForumHelper::isForum() ) {
@@ -175,19 +183,19 @@ class BodyController extends WikiaController {
 						}
 					}
 				}
-			} else if ( $this->wg->Title->isSpecial( 'Leaderboard' ) ) {
+			} else if ( $title->isSpecial( 'Leaderboard' ) ) {
 				$railModuleList = [
 					$latestActivityKey => [ 'LatestActivity', 'Index', null ],
 					1290               => [ 'LatestEarnedBadges', 'Index', null ],
 				];
-			} else if ( $this->wg->Title->isSpecial( 'WikiActivity' ) ) {
+			} else if ( $title->isSpecial( 'WikiActivity' ) ) {
 				$railModuleList = [
 					1102 => [ 'HotSpots', 'Index', null ],
 					1101 => [ 'CommunityCorner', 'Index', null ],
 				];
-			} else if ( $this->wg->Title->isSpecial( 'Following' ) || $this->wg->Title->isSpecial( 'Contributions' ) ) {
+			} else if ( $title->isSpecial( 'Following' ) || $title->isSpecial( 'Contributions' ) ) {
 				// intentional nothing here
-			} else if ( $this->wg->Title->isSpecial( 'ThemeDesignerPreview' ) ) {
+			} else if ( $title->isSpecial( 'ThemeDesignerPreview' ) ) {
 				$railModuleList = [
 					$latestActivityKey => [ 'LatestActivity', 'Index', null ],
 				];
@@ -206,7 +214,7 @@ class BodyController extends WikiaController {
 		}
 
 		// Content, category and forum namespaces.  FB:1280 Added file,video,mw,template
-		if ( $this->wg->Title->isSubpage() && $this->wg->Title->getNamespace() == NS_USER ||
+		if ( $title->isSubpage() && $title->getNamespace() == NS_USER ||
 			in_array( $subjectNamespace, [ NS_CATEGORY, NS_CATEGORY_TALK, NS_FORUM, NS_PROJECT, NS_FILE, NS_MEDIAWIKI, NS_TEMPLATE, NS_HELP ] ) ||
 			in_array( $subjectNamespace, $this->wg->ContentNamespaces ) ||
 			array_key_exists( $subjectNamespace, $this->wg->ExtraNamespaces )
@@ -223,8 +231,8 @@ class BodyController extends WikiaController {
 		}
 
 		// User page namespaces
-		if ( in_array( $this->wg->Title->getNamespace(), self::getUserPagesNamespaces() ) ) {
-			$page_owner = User::newFromName( $this->wg->Title->getText() );
+		if ( in_array( $title->getNamespace(), self::getUserPagesNamespaces() ) ) {
+			$page_owner = User::newFromName( $title->getText() );
 
 			if ( $page_owner ) {
 				if ( !$page_owner->getGlobalPreference( 'hidefollowedpages' ) ) {
@@ -260,12 +268,11 @@ class BodyController extends WikiaController {
 			return [ ];
 		}
 		// If the entire page is non readable due to permissions, don't display the rail either RT#75600
-		if ( !$this->wg->Title->userCan( 'read' ) ) {
+		if ( !$title->userCan( 'read' ) ) {
 			return [ ];
 		}
 
 		$railModuleList[1440] = [ 'Ad', 'Index', [ 'slotName' => 'TOP_RIGHT_BOXAD' ] ];
-		$railModuleList[1435] = [ 'AdEmptyContainer', 'Index', [ 'slotName' => 'NATIVE_TABOOLA_RAIL' ] ];
 		$railModuleList[1100] = [ 'Ad', 'Index', [ 'slotName' => 'LEFT_SKYSCRAPER_2' ] ];
 
 		wfRunHooks( 'GetRailModuleList', [ &$railModuleList ] );
@@ -313,14 +320,7 @@ class BodyController extends WikiaController {
 		// show user pages header on this page?
 		if ( self::showUserPagesHeader() ) {
 			$this->headerModuleName = 'UserPagesHeader';
-			// is this page a blog post?
-			if ( self::isBlogPost() ) {
-				$this->headerModuleAction = 'BlogPost';
-			} // is this page a blog listing?
-			else if ( self::isBlogListing() ) {
-				$this->headerModuleAction = 'BlogListing';
-			}
-			// show corporate header on this page?
+		// show corporate header on this page?
 		} else if ( WikiaPageType::isCorporatePage() || WikiaPageType::isWikiaHub() ) {
 			$this->headerModuleName = 'PageHeader';
 
@@ -416,11 +416,6 @@ class BodyController extends WikiaController {
 		// VOLDEV-125: Fix Special:AllMessages colors on dark wikis
 		if ( !empty( $this->wg->Title ) && $this->wg->Title->isSpecial( 'Allmessages' ) && SassUtil::isThemeDark() ) {
 			$this->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'skins/oasis/css/modules/SpecialAllMessages.scss' ) );
-		}
-
-		// Forum Extension
-		if ( !empty( $this->wg->EnableForumExt ) && ForumHelper::isForum() ) {
-			$this->wg->SuppressPageHeader = true;
 		}
 
 		$namespace = $this->wg->Title->getNamespace();

@@ -197,39 +197,37 @@ class ChatBanData extends WikiaModel
 	private function getUserLinks( $user ) {
 
 		$userIsBlocked = $this->wg->User->isBlocked( true, false );
-		$oEncUserName = urlencode( $user->getName() );
+		$username = $user->getName();
 		$links = [
 			0 => "",
 			1 => Linker::link(
-				Title::newFromText( 'Contributions', NS_SPECIAL ),
-				$this->wg->Lang->ucfirst( wfMsg( 'contribslink' ) ),
-				[ 'target' => $oEncUserName]
+				SpecialPage::getSafeTitleFor( 'Contributions', $username ),
+				wfMessage( 'contribslink' )->text()
 			),
 		];
 
 		if ( !empty( $this->wg->EnableWallExt ) ) {
-			$oUTitle = Title::newFromText( $user->getName(), NS_USER_WALL );
+			$oUTitle = Title::newFromText( $username, NS_USER_WALL );
 			$msg = 'wall-message-wall-shorten';
 		} else {
-			$oUTitle = Title::newFromText( $user->getName(), NS_USER_TALK );
+			$oUTitle = Title::newFromText( $username, NS_USER_TALK );
 			$msg = 'talkpagelinktext';
 		}
 
 		if ( $oUTitle instanceof Title ) {
-			$links[0] = Linker::link( $oUTitle, $this->wg->Lang->ucfirst( wfMsg( $msg ) ) );
+			$links[0] = Linker::link( $oUTitle, wfMessage( $msg )->text() );
 		}
 
 		if ( $this->wg->User->isAllowed( 'block' ) && ( !$userIsBlocked ) ) {
 			$links[] = Linker::link(
-				Title::newFromText( "BlockIP/{$user->getName()}", NS_SPECIAL ),
-				$this->wg->Lang->ucfirst( wfMsg( 'blocklink' ) )
+				SpecialPage::getSafeTitleFor( 'Block', $username ),
+				wfMessage( 'blocklink' )->text()
 			);
 		}
 		if ( $this->wg->User->isAllowed( 'userrights' ) && ( !$userIsBlocked ) ) {
 			$links[] = Linker::link(
-				Title::newFromText( 'UserRights', NS_SPECIAL ),
-				$this->wg->Lang->ucfirst( wfMsg( 'listgrouprights-rights' ) ),
-				"user={$oEncUserName}"
+				SpecialPage::getSafeTitleFor( 'UserRights', $username ),
+				wfMessage( 'listgrouprights-rights' )->text()
 			);
 		}
 

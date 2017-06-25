@@ -68,13 +68,10 @@
 <?= $quantServe ?>
 <?= $rubiconFastlane ?>
 <?= $amazonMatch ?>
-<?= $openXBidder ?>
 <?= $prebid ?>
-<?= $rubiconVulcan ?>
 <?= $krux ?>
 <?= $netzathleten ?>
 <?= $dynamicYield ?>
-<?= $ivw3 ?>
 <?= $sourcePoint ?>
 <?= $gfc ?>
 

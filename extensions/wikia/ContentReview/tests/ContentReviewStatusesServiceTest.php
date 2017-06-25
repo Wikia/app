@@ -157,31 +157,62 @@ class ContentReviewStatusesServiceTest extends WikiaBaseTest {
 			$jsPage['latestRevision']['statusKey'],
 			$this->getMessage( $message, 'Compare latest revision status keys')
 		);
-		$this->assertEquals(
-			$expectedPage['latestReviewed']['revisionId'],
-			$jsPage['latestReviewed']['revisionId'],
-			$this->getMessage( $message, 'Compare latest reviewed revision ids')
-		);
+
 		$this->assertEquals(
 			$expectedPage['latestReviewed']['statusKey'],
 			$jsPage['latestReviewed']['statusKey'],
 			$this->getMessage( $message, 'Compare latest reviviewed status keys')
 		);
-		$this->assertEquals(
-			$expectedPage['liveRevision']['revisionId'],
-			$jsPage['liveRevision']['revisionId'],
-			$this->getMessage( $message, 'Compare live revision ids')
-		);
+
+		if ( isset( $expectedPage['latestReviewed']['revisionId'] ) ) {
+			$this->assertEquals(
+				$expectedPage['latestReviewed']['revisionId'],
+				$jsPage['latestReviewed']['revisionId'],
+				$this->getMessage( $message, 'Compare latest reviewed revision ids' )
+			);
+		} else {
+			$this->assertArrayNotHasKey(
+				'revisionId',
+				$jsPage['latestReviewed'],
+				$this->getMessage( $message, 'Compare latest reviewed revision ids' )
+			);
+		}
+
+
 		$this->assertEquals(
 			$expectedPage['liveRevision']['statusKey'],
 			$jsPage['liveRevision']['statusKey'],
-			$this->getMessage( $message, 'Compare live revision status keys')
+			$this->getMessage( $message, 'Compare live revision status keys' )
 		);
-		$this->assertEquals(
-			$expectedPage['submit'],
-			$jsPage['submit'],
-			$this->getMessage( $message, 'Compare is submit button present')
-		);
+
+		if ( isset( $expectedPage['liveRevision']['revisionId'] ) ) {
+			$this->assertEquals(
+				$expectedPage['liveRevision']['revisionId'],
+				$jsPage['liveRevision']['revisionId'],
+				$this->getMessage( $message, 'Compare live revision ids' )
+			);
+
+		} else {
+			$this->assertArrayNotHasKey(
+				'revisionId',
+				$jsPage['liveRevision'],
+				$this->getMessage( $message, 'Compare live revision ids' )
+			);
+		}
+
+		if ( isset( $expectedPage['submit'] ) ) {
+			$this->assertEquals(
+				$expectedPage['submit'],
+				$jsPage['submit'],
+				$this->getMessage( $message, 'Compare is submit button present' )
+			);
+		} else {
+			$this->assertArrayNotHasKey(
+				'submit',
+				$jsPage,
+				$this->getMessage( $message, 'Compare is submit button present' )
+			);
+		}
 	}
 
 	private function getMessage( $message, $assertion ) {
@@ -240,7 +271,7 @@ class ContentReviewStatusesServiceTest extends WikiaBaseTest {
 					'liveRevision' => [
 						'statusKey' => 'none'
 					],
-					'submit' => true
+				    'submit' => true,
 				]
 			],
 			#2 test case
@@ -273,7 +304,7 @@ class ContentReviewStatusesServiceTest extends WikiaBaseTest {
 					],
 					'liveRevision' => [
 						'statusKey' => 'none'
-					]
+					],
 				]
 			],
 			#3 test case

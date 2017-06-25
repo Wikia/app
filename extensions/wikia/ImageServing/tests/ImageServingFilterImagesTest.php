@@ -8,7 +8,7 @@
 // proxy class to allow unit testing of ImageServingDriverMainNS class
 class ImageServingDriverMainNSProxy extends ImageServingDriverMainNS {
 
-	protected function getImagesPopularity($images) {
+	protected function getImagesPopularity( array $images, $limit ) {
 		$res = [];
 
 		foreach($images as $image) {
@@ -51,9 +51,10 @@ class ImageServingFilterImagesTest extends WikiaBaseTest {
 			'img_width' => 100,
 			'img_minor_mime' => $mime
 		];
-		$db = $this->mockClassWithMethods('DatabaseMysqli', [
-			'select' => new FakeResultWrapper([$row])
-		]);
+		/** @var DatabaseMysqli $db */
+		$db = $this->createConfiguredMock( DatabaseMysqli::class, [
+			'select' => new FakeResultWrapper( [ $row ] ),
+		] );
 
 		// run ImageServing
 		$driver = new ImageServingDriverMainNSProxy($db, $this->im, null);

@@ -99,7 +99,6 @@ class CreateWikiChecks {
 			$sName[0] == '-' || $sName[$sNameLength - 1] == '-'
 		) {
 			#-- invalid name
-			Wikia::log( __METHOD__, $sNameLength, "{$sName} {$sName[$sNameLength -1]}" );
 			$message = wfMessage( 'autocreatewiki-bad-name' );
 		} elseif ( in_array( $sName, array_keys( static::getLanguageNames() ) ) ) {
 			#-- invalid name

@@ -17,6 +17,10 @@ define('ooyala-player', function () {
 		this.params.skin = {
 			config: baseJSONSkinUrl
 		};
+		this.params.initialBitrate = {
+			level: 0.8,
+			duration: 2
+		};
 
 		this.containerId = container.id;
 		this.player = null;
@@ -111,14 +115,29 @@ define('ooyala-player', function () {
 		$('.oo-state-screen-info').css('display', '');
 	};
 
-	OoyalaHTML5Player.initHTML5Player = function (videoElementId, playerParams, videoId, onCreate, autoplay) {
+	OoyalaHTML5Player.initHTML5Player = function (videoElementId, playerParams, videoId, onCreate, autoplay, vastUrl) {
 		var params = {
 				videoId: videoId,
 				autoplay: autoplay,
 				pcode: playerParams.ooyalaPCode,
-				playerBrandingId: playerParams.ooyalaPlayerBrandingId
+				playerBrandingId: playerParams.ooyalaPlayerBrandingId,
+				platform: 'html5'
 			},
-			html5Player = new OoyalaHTML5Player(document.getElementById(videoElementId), params, onCreate);
+			html5Player;
+
+		if (vastUrl) {
+			params['google-ima-ads-manager'] = {
+				all_ads: [
+					{
+						tag_url: vastUrl
+					}
+				],
+				useGoogleCountdown: true
+			};
+			params.replayAds = false;
+		}
+
+		html5Player = new OoyalaHTML5Player(document.getElementById(videoElementId), params, onCreate);
 		html5Player.setUpPlayer();
 
 		return html5Player;
