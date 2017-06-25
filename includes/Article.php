@@ -348,6 +348,9 @@ class Article extends Page {
 		// @todo FIXME: Horrible, horrible! This content-loading interface just plain sucks.
 		// We should instead work with the Revision object when we need it...
 		$this->mContent = $this->mRevision->getText( Revision::FOR_THIS_USER ); // Loads if user is allowed
+
+		print $this->mContent;die;
+
 		$this->mRevIdFetched = $this->mRevision->getId();
 
 		wfRunHooks( 'ArticleAfterFetchContent', array( &$this, &$this->mContent ) );
