@@ -61,7 +61,7 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 
 			socket.on('connect', this.proxy(function () {
 				this.log('Connected to Chat server at ' + url);
-				this.onConnect(socket, ['xhr-polling']);
+				this.onConnect(socket);
 			}, this));
 
 			// SUS-2245: when re-connections limit is reached reload the page.
@@ -80,7 +80,7 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 		});
 	},
 
-	onConnect: function (socket, transport) {
+	onConnect: function (socket) {
 		this.socket = socket;
 
 		if (!this.firstConnected) {
