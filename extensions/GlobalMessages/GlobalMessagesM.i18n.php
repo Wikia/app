@@ -370,6 +370,233 @@ Forum:Help_desk|User Support Forums',
 	'mobile-hide' => 'Hide',
 );
 
+/*** Bold 'edit this page' link to encourage newcomers ***/
+
+#ca-edit a { 
+    font-weight: bold !important; 
+}
+
+/* Infobox template style */
+.infobox {
+   border: 1px solid #aaaaaa;
+   background-color: #f9f9f9;
+   color: black;
+   margin-bottom: 0.5em;
+   margin-left: 1em;
+   padding: 0.2em;
+   float: right;
+   clear: right;
+}
+.infobox td,
+.infobox th {
+   vertical-align: top;
+}
+.infobox caption {
+   font-size: larger;
+   margin-left: inherit;
+}
+.infobox.bordered {
+   border-collapse: collapse;
+}
+.infobox.bordered td,
+.infobox.bordered th {
+   border: 1px solid #aaaaaa;
+}
+.infobox.bordered .borderless td,
+.infobox.bordered .borderless th {
+   border: 0;
+}
+
+/* Forum formatting (by -Algorithm & -Splaka) */
+.forumheader {
+   border: 1px solid #aaa;
+   margin-top: 1em;
+   padding: 12px;
+}
+.forumlist td.forum_edited a {
+   color: black;
+   text-decoration: none;
+}
+.forumlist td.forum_title a {
+   padding-left: 20px;
+}
+.forumlist td.forum_title a.forum_new {
+   font-weight: bold;
+   background: url(/images/4/4e/Forum_new.gif) center left no-repeat;
+   padding-left: 20px;
+}
+.forumlist td.forum_title a.forum_new:visited {
+   font-weight: normal;
+   background: none;
+   padding-left: 20px;
+}
+.forumlist th.forum_title {
+   padding-left: 20px;
+}
+
+/* Recent changes byte indicators */
+.mw-plusminus-pos {
+   color: #006500;
+}
+.mw-plusminus-neg {
+   color: #8B0000;
+}
+
+/* Image frame fix */
+div.tright, div.tleft {
+   border: 1px solid silver;
+}
+
+div.thumbinner {
+   background: inherit;
+   border: none;
+   color: inherit;
+}
+#article div.thumb {
+   color:inherit;
+}
+
+/* === Babel === */
+
+div.babelbox {
+   float: right;
+   margin-left: 1em;
+   margin-bottom: 0.5em;
+   width: 246px;
+   border: 1px solid #99B3FF;
+   padding: 2px 0 2px 0;
+}
+.lang-blockN, .lang-block0, .lang-block1, .lang-block2, .lang-block3 {
+   margin: 2px 4px 2px 4px; /* t, l, b, r */
+   width:238px;
+   border-collapse: collapse;
+}
+td.lang-codeN, td.lang-code0, td.lang-code1, td.lang-code2, td.lang-code3 {
+   text-align:center;
+   font-size:14pt;
+   width:45px;
+   height:45px;
+}
+td.lang-descriptionN, td.lang-description0, td.lang-description1,
+td.lang-description2, td.lang-description3 {
+  font-size:8pt;
+  padding:4pt;
+  line-height:1.25em;
+}
+
+.lang-block0 {
+   border:1px solid #FFB3B3;
+}
+td.lang-code0 {
+  background-color: #FFB3B3;
+  color: black;
+}
+td.lang-description0 {
+  background-color: #FFE0E8;
+  color: black;
+}
+
+.lang-block1,  .lang-block2, .lang-block3  {
+   border:1px solid #99B3FF;
+}
+td.lang-code1, td.lang-code2, td.lang-code3 {
+  background-color: #99B3FF;
+  color: black;
+}
+td.lang-description1,  td.lang-description2, td.lang-description3 {
+  background-color: #E0E8FF;
+  color: black;
+}
+
+.lang-blockN {
+   border:1px solid #6EF7A7;
+}
+td.lang-codeN {
+  background-color: #6EF7A7;
+  color: black;
+}
+td.lang-descriptionN {
+  background-color: #C5FCDC;
+  color: black;
+}",
+	'monobook.js' => '/* Any JavaScript here will be loaded for users using the MonoBook skin */',
+	'markaspatrolleddiff' => 'Mark as patrolled',
+	'markaspatrolledlink' => '[$1]',
+	'markaspatrolledtext' => 'Mark this page as patrolled',
+	'markedaspatrolled' => 'Marked as patrolled',
+	'markedaspatrolledtext' => 'The selected revision of [[:$1]] has been marked as patrolled.',
+	'markedaspatrollederror' => 'Cannot mark as patrolled',
+	'markedaspatrollederrortext' => 'You need to specify a revision to mark as patrolled.',
+	'markedaspatrollederror-noautopatrol' => 'You are not allowed to mark your own changes as patrolled.',
+	'mediawarning' => "'''Warning''': This file type may contain malicious code.
+By executing it, your system may be compromised.",
+	'minutes-abbrev' => '$1m',
+	'minutes' => '{{PLURAL:$1|$1 minute|$1 minutes}}',
+	'metadata' => 'Metadata',
+	'metadata-help' => 'This file contains additional information, probably added from the digital camera or scanner used to create or digitize it.
+If the file has been modified from its original state, some details may not fully reflect the modified file.',
+	'metadata-expand' => 'Show extended details',
+	'metadata-collapse' => 'Hide extended details',
+	'metadata-fields' => 'Image metadata fields listed in this message will be included on image page display when the metadata table is collapsed.
+Others will be hidden by default.
+* make
+* model
+* datetimeoriginal
+* exposuretime
+* fnumber
+* isospeedratings
+* focallength
+* artist
+* copyright
+* imagedescription
+* gpslatitude
+* gpslongitude
+* gpsaltitude',
+	'metadata-langitem' => "'''$2:''' $1",
+	'metadata-langitem-default' => '$1',
+	'monthsall' => 'all',
+	'move-redirect-suppressed' => 'redirect suppressed',
+	'monaco-sidebar' => '*mainpage|{{SITENAME}}
+*randompage-url|randompage
+*mainpage|TopContent
+**#visited#|most_visited
+**#newlychanged#|newly_changed
+* newfiles-url|NewPictures
+*blogs-recent-url|blogs-recent-url-text
+*#category1#
+*#category2#
+*portal-url|community
+**portal-url|portal
+**forum-url|forum',
+	'mu_login' => 'You must be logged in to upload files.',
+	'mycontributions' => 'My contributions',
+	'multiplefileuploadsummary' => 'Summary:',
+	'mwlink_tip' => 'Internal link',
+	'most_popular_articles' => 'Wikia:Community Portal|Community Portal
+
+Special:CreateWiki|Start a new Wikia
+
+Hub:Big_wikis|Big wikis
+
+Gaming
+
+Entertainment
+
+Blog:Wikia_Staff_Blog|Staff Blogs
+
+Forum:Help_desk|User Support Forums',
+	'messagebar_mess' => 'Did you know you can <a href="$1">edit this page</a> or <a href="$2">create a new one</a>? <a href="$3">Find out how</a> this works.',
+	'my_stuff' => 'my stuff',
+	'most_popular' => "Editor's pick",
+	'most_visited' => 'Most visited',
+	'most_emailed' => 'Most emailed',
+	'manage_widgets' => 'Manage widgets',
+	'magicfooterlinks' => '<b>Featured pages</b>',
+	'masthead-anonymous-user' => 'A Fandom user',
+	'mobile-show' => 'Show',
+	'mobile-hide' => 'Hide',
+);
+
 $messages['qqq'] = array(
 	'monday' => 'Name of the day of the week.',
 	'mon' => 'Abbreviation for Monday, a day of the week.',
@@ -7062,6 +7289,40 @@ Du kan beskadige dit system hvis du udfører den.",
 	'monthsall' => 'alle',
 );
 
+/** CSS inkluderet her vil være aktivt for brugere af Monobook-temaet . */',
+	'monobook.js' => '/* JavaScript i denne fil vil indlæses for brugere af udseendet MonoBook */',
+	'markaspatrolleddiff' => 'Markér som patruljeret',
+	'markaspatrolledtext' => 'Markér denne side som patruljeret',
+	'markedaspatrolled' => 'Markeret som patruljeret',
+	'markedaspatrolledtext' => 'Den valgte redigering af [[:$1]] er nu markeret som patruljeret.',
+	'markedaspatrollederror' => 'Markering som „kontrolleret“ ikke mulig.',
+	'markedaspatrollederrortext' => 'Du skal vælge en sideændring.',
+	'markedaspatrollederror-noautopatrol' => 'Du må ikke markere dine egne ændringer som kontrolleret.',
+	'mediawarning' => "'''Advarsel''': Denne filtype kan muligvis indeholde skadelig kode.
+Du kan beskadige dit system hvis du udfører den.",
+	'minutes' => '{{PLURAL: $1|$1 minut|$1 minutter}}',
+	'metadata' => 'Metadata',
+	'metadata-help' => 'Denne fil indeholder yderligere informationer, der som regel stammer fra digitalkameraet eller den brugte scanner. Ved en efterfølgende bearbejdning kan nogle data være ændret.',
+	'metadata-expand' => 'Vis udvidede data',
+	'metadata-collapse' => 'Skjul udvidede data',
+	'metadata-fields' => 'Metadatafelter inkluderet i denne MediaWiki-systemtekst vises på billedbeskrivelsessider når metadatatabellen er slået sammen.
+Øvrige felter vil være skjult som standard.
+* make
+* model
+* datetimeoriginal
+* exposuretime
+* fnumber
+* isospeedratings
+* focallength
+* artist
+* copyright
+* imagedescription
+* gpslatitude
+* gpslongitude
+* gpsaltitude',
+	'monthsall' => 'alle',
+);
+
 $messages['de'] = array(
 	'monday' => 'Montag',
 	'mon' => 'Mo',
@@ -7302,6 +7563,112 @@ Bitte den '''neuen''' Titel unter '''Ziel''' eintragen, darunter die Umbenennung
 .hellklick a:hover, .hellklick a:active { 
      color: #9ad9ff !important;
 }
+
+/*** font class für 'hellklick2' in Tutorial ***/
+
+.hellklick2 a, .hellklick2 a:visited { 
+     text-decoration: none; color: #fefefe !important;
+}
+.hellklick2 a:hover, .hellklick2 a:active { 
+     color: #9ad9ff !important; text-decoration: underline;
+}
+
+/* Ausklappen per Mauklick (s.a. [[MediaWiki:Common.js]]  */
+ 
+ .klapp {
+      cursor: pointer;
+ }
+ span.klapp {
+      text-decoration: none;
+      color: #002bb8;
+      background: none;
+      }
+ 
+ span.klapp:hover {
+      text-decoration: underline;
+      }
+ 
+ /* Drag & Drop */
+ .jstest{
+      position:relative;
+      cursor:move;
+      z-index: 100;
+      padding:20px 45px 20px 0px;
+      border-width:1px;
+      }
+/* </nowiki></pre> */",
+	'monobook.js' => '/* Veraltet; benutze stattdessen [[MediaWiki:common.js]] */',
+	'markaspatrolleddiff' => 'Als kontrolliert markieren',
+	'markaspatrolledtext' => 'Diese Seite als kontrolliert markieren',
+	'markedaspatrolled' => 'Als kontrolliert markiert',
+	'markedaspatrolledtext' => 'Die ausgewählte Version von [[:$1]] wurde als kontrolliert markiert.',
+	'markedaspatrollederror' => 'Markierung als „kontrolliert“ nicht möglich.',
+	'markedaspatrollederrortext' => 'Du musst eine Seitenänderung auswählen.',
+	'markedaspatrollederror-noautopatrol' => 'Es ist nicht erlaubt, eigene Bearbeitungen als kontrolliert zu markieren.',
+	'mediawarning' => "'''Warnung:''' Dieser Dateityp kann böswilligen Programmcode enthalten.
+Durch das Herunterladen und Öffnen der Datei kann dein Computer beschädigt werden.",
+	'minutes' => '{{PLURAL:$1|$1 Minute|$1 Minuten}}',
+	'metadata' => 'Metadaten',
+	'metadata-help' => 'Diese Datei enthält weitere Informationen, die in der Regel von der Digitalkamera oder dem verwendeten Scanner stammen. Durch nachträgliche Bearbeitung der Originaldatei können einige Details verändert worden sein.',
+	'metadata-expand' => 'Erweiterte Details einblenden',
+	'metadata-collapse' => 'Erweiterte Details ausblenden',
+	'metadata-fields' => 'Die folgenden Felder der EXIF-Metadaten, die in diesem MediaWiki-Systemtext angegeben sind, werden auf Bildbeschreibungsseiten mit eingeklappter Metadatentabelle angezeigt.
+Weitere werden standardmäßig nicht angezeigt.
+* make
+* model
+* datetimeoriginal
+* exposuretime
+* fnumber
+* isospeedratings
+* focallength
+* artist
+* copyright
+* imagedescription
+* gpslatitude
+* gpslongitude
+* gpsaltitude',
+	'monthsall' => 'alle',
+	'most_popular_articles' => 'Beliebteste Seiten',
+	'my_stuff' => 'Meine Sachen',
+	'most_popular' => 'Am beliebtesten',
+	'most_visited' => 'Am häufigsten besucht',
+	'most_emailed' => 'Am häufigsten verschickt',
+	'magicfooterlinks' => '<b>Vorgestellte Seiten</b>',
+	'manage_widgets' => 'Widgets verwalten',
+	'masthead-anonymous-user' => 'Ein Fandom-Benutzer',
+	'messagebar_mess' => 'Wusstest du, dass du <a href="$1">diese Seite bearbeiten</a> und <a href="$2">eine neue Seite erstellen</a> kannst? <a href="$3">Finde heraus</a> wie das funktioniert.',
+	'mobile-hide' => 'ausblenden',
+	'mobile-show' => 'anzeigen',
+	'monaco-sidebar' => '*mainpage|{{SITENAME}}
+*mainpage|Top-Inhalte
+**#popular#|Ausgewählte Artikel
+**#visited#|Am häufigsten besucht
+**#voted#|Am besten bewertet
+**#newlychanged#|Zuletzt geändert
+*portal-url|Community
+**#topusers#|Top-Benutzer
+**{{SITENAME}}:Community Portal|Community-Portal
+**blogs-recent-url|Letzte Blog-Beiträge
+**Forum:Index|Forum
+*#category1#
+*#category2#',
+	'move-redirect-suppressed' => 'Weiterleitung unterdrückt',
+	'mu_login' => 'Du musst angemeldet sein um Dateien hochladen zu können.',
+	'multiplefileuploadsummary' => 'Zusammenfassung:',
+	'mwlink_tip' => 'Interner Link',
+	'mycontributions' => 'Meine Beiträge',
+	'mainpage-nstab' => '',
+	'mostlinked-summary' => '',
+	'mostlinkedcategories-summary' => '',
+	'mostlinkedtemplates-summary' => '',
+	'mostcategories-summary' => '',
+	'mostimages-summary' => '',
+	'mostrevisions-summary' => '',
+	'markaspatrolledlink' => '[$1]',
+	'minutes-abbrev' => '$1m',
+	'metadata-langitem' => "'''$2:''' $1",
+	'metadata-langitem-default' => '$1',
+);
 
 /*** font class für 'hellklick2' in Tutorial ***/
 
@@ -13351,6 +13718,44 @@ ako to želite.",
 	'move-over-sharedrepo' => '== Datoteka postoji ==
 [[:$1]] postoji na zajednički korištenom repozitoriju. Premještanje datoteke na ovaj naslov će prepisati zajednički korištenu datoteku.',
 	'monobook.css' => '/** Ovdje idu izmjene monobook stylesheeta */',
+	'monobook.js' => '/* Ne rabi se više; molimo rabite [[MediaWiki:common.js]] */',
+	'markaspatrolleddiff' => 'Označi za pregledano',
+	'markaspatrolledtext' => 'Označi ovaj članak pregledanim',
+	'markedaspatrolled' => 'Pregledano',
+	'markedaspatrolledtext' => 'Odabrana promjena [[:$1]] označena je pregledanom.',
+	'markedaspatrollederror' => 'Ne mogu označiti za pregledano',
+	'markedaspatrollederrortext' => 'Morate odabrati inačicu koju treba označiti za pregledanu.',
+	'markedaspatrollederror-noautopatrol' => 'Ne možete vlastite promjene označiti patroliranima.',
+	'mediawarning' => "'''Upozorenje''': Ova datoteka možda sadrži štetan kod.
+Njegovim izvršavanjem mogli biste oštetiti svoj sustav.",
+	'minutes' => '{{PLURAL:$1|$1 minuta|$1 minute|$1 minuta}}',
+	'metadata' => 'Metapodaci',
+	'metadata-help' => 'Ova datoteka sadržava dodatne podatke koje je vjerojatno dodala digitalna kamera ili skener u procesu snimanja odnosno digitalizacije. Ako je datoteka mijenjana, podatci možda nisu u skladu sa stvarnim stanjem.',
+	'metadata-expand' => 'Pokaži sve podatke',
+	'metadata-collapse' => 'Sakrij dodatne podatke',
+	'metadata-fields' => 'EXIF polja metapodataka pobrojana u ovoj poruci bit će prikazani na stranici s prikazom slike kada je tablica s metapodacima sakrivena. Ostali će biti uobičajeno sakriveni.
+* make
+* model
+* datetimeoriginal
+* exposuretime
+* fnumber
+* isospeedratings
+* focallength
+* artist
+* copyright
+* imagedescription
+* gpslatitude
+* gpslongitude
+* gpsaltitude',
+	'monthsall' => 'sve',
+	'most_popular_articles' => 'Najpopularniji članci',
+	'my_stuff' => 'moje stvari',
+	'most_popular' => 'Najpopularnije',
+	'most_visited' => 'Najposjećenije',
+	'most_emailed' => 'Najviše emailano',
+);
+
+/** Ovdje idu izmjene monobook stylesheeta */',
 	'monobook.js' => '/* Ne rabi se više; molimo rabite [[MediaWiki:common.js]] */',
 	'markaspatrolleddiff' => 'Označi za pregledano',
 	'markaspatrolledtext' => 'Označi ovaj članak pregledanim',
