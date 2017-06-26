@@ -268,9 +268,9 @@
 				'password' => '123',
 			);
 
-			$reqParams18 = [
+			$reqParams18 = array(
 				'userloginext01' => self::TEST_USERNAME . ':test',
-			];
+			);
 
 			return array(
 				'error - empty username' =>
