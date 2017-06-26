@@ -58,20 +58,22 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 			// set up socket events
 			// @see https://socket.io/docs/server-api/#event-disconnect
 			socket.on('message', this.proxy(this.onMsgReceived, this));
+
 			socket.on('connect', this.proxy(function () {
 				this.log('Connected to Chat server at ' + url);
 				this.onConnect(socket, ['xhr-polling']);
 			}, this));
-			socket.on('reconnecting', this.proxy(function (delay, count) {
-				this.log('Reconnecting...');
 
-				if (count === 8) {
-					if (socket) {
-						socket.disconnect();
-					}
-					this.fire("reConnectFail", {});
+			// SUS-2245: when re-connections limit is reached reload the page.
+			socket.on('reconnecting', this.proxy(function (attemptNumber) {
+				this.log('reconnecting: attempt #' + attemptNumber);
+
+				if (attemptNumber > window.wgChatReconnectMaxTries) {
+					this.log('reconnect_attempt: limit reached, reload the page');
+					window.location.reload();
 				}
 			}, this));
+
 			socket.on('error', this.proxy(function (err) {
 				this.log('socket.onerror: ' + err + ' - ' + err.code);
 			}, this));

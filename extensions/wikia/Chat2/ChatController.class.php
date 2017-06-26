@@ -6,6 +6,13 @@ class ChatController extends WikiaController {
 	const CHAT_WORDMARK_HEIGHT = 30;
 	const CHAT_AVATAR_DIMENSION = 41;
 
+	/**
+	 * @see SUS-2245
+	 *
+	 * Do not try more than given amount of re-connections. When limit is reached, reload the page.
+	 */
+	const SOCKET_IO_RECONNECT_MAX_TRIES = 4;
+
 	public function executeIndex() {
 		global $wgUser, $wgFavicon, $wgOut, $wgHooks, $wgWikiaBaseDomain, $wgWikiaNocookieDomain;
 
@@ -101,6 +108,7 @@ class ChatController extends WikiaController {
 
 		$vars['wgChatKey'] = $this->chatkey;
 		$vars['wgChatRoomId'] = $this->roomId;
+		$vars['wgChatReconnectMaxTries'] = self::SOCKET_IO_RECONNECT_MAX_TRIES;
 
 		$vars['wgChatHost'] = $this->chatServerHost;
 		$vars['wgChatPort'] = $this->chatServerPort;
