@@ -174,8 +174,6 @@ $wgResourceModules['ext.Chat2'] = [
 		'chat-ban-modal-button-change-ban',
 		'close',
 		// User menu options
-		'chat-member-since',
-		'chat-edit-count',
 		'chat-user-menu-message-wall',
 		'chat-user-menu-talk-page',
 		'chat-user-menu-contribs',
@@ -195,7 +193,6 @@ $wgResourceModules['ext.Chat2'] = [
 		// misc
 		'chat-user-throttled',
 	],
-	'dependencies' => [ 'mediawiki.jqueryMsg' ],
 	'position' => 'top'
 ];
 
