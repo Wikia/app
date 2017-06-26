@@ -39,8 +39,7 @@ class ChatController extends WikiaController {
 		try {
 			Assert::true( is_int( $this->roomId ), 'We could not contact Chat\'s backend to get a valid roomId' );
 			Assert::true( is_string( $this->chatkey ), 'We were not able to generate a valid session key for Chat' );
-		}
-		catch( AssertionException $ex ) {
+		} catch ( AssertionException $ex ) {
 			$this->errorMsg = $ex->getMessage();
 			$this->overrideTemplate( 'error' );
 
