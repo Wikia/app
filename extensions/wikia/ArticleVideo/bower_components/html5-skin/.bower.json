@@ -1,13 +1,13 @@
 {
   "name": "html5-skin",
   "homepage": "https://github.com/Wikia/html5-skin",
-  "_release": "d341e208b9",
+  "_release": "9419e06605",
   "_resolution": {
     "type": "branch",
-    "branch": "ADEN-5412",
-    "commit": "d341e208b9a4f72b3d0964ee860e9409174f8646"
+    "branch": "XW-3303",
+    "commit": "9419e0660595a9f48177ccf8671aeb45caa60350"
   },
-  "_source": "https://github.com/Wikia/html5-skin.git",
-  "_target": "ADEN-5412",
+  "_source": "git://github.com/Wikia/html5-skin.git",
+  "_target": "XW-3303",
   "_originalSource": "Wikia/html5-skin"
 }

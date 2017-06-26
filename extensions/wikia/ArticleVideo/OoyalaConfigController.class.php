@@ -163,6 +163,11 @@ class OoyalaConfigController extends WikiaController {
 				'scrubberHandleBorderColor' => 'rgba(255,255,255,1)',
 				'thumbnailPreview' => true,
 			],
+		    // to show autoplayToggle use:
+		    // 'autoplayToggle' => true/false,
+
+			// to set autoplay cookie name use:
+		    // 'autoplayCookieName': 'cookie-name'
 		],
 		'buttons' => [
 			'desktopContent' => [
