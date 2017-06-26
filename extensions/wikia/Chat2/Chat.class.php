@@ -58,14 +58,14 @@ class Chat {
 	 *
 	 * The key is then used by ChatAjax::getUserInfo() to load the info back from memcached.
 	 *
-	 * @return string
+	 * @return null|string
 	 */
 	public static function getSessionKey() {
 		self::info( __METHOD__ . ': Method called' );
 		$wg = F::app()->wg;
 
 		if ( !$wg->User->isLoggedIn() ) {
-			return '';
+			return null;
 		}
 		$key = 'Chat::cookies::' . sha1( $wg->User->getId() . "_" . microtime() . '_' . mt_rand() );
 		$wg->Memc->set( $key, [
