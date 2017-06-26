@@ -60,7 +60,7 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 			socket.on('message', this.proxy(this.onMsgReceived, this));
 			socket.on('connect', this.proxy(function () {
 				this.log('Connected to Chat server at ' + url);
-				this.onConnect(socket);
+				this.onConnect(socket, ['xhr-polling']);
 			}, this));
 			socket.on('reconnecting', this.proxy(function (delay, count) {
 				this.log('Reconnecting...');
@@ -78,7 +78,7 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 		});
 	},
 
-	onConnect: function (socket) {
+	onConnect: function (socket, transport) {
 		this.socket = socket;
 
 		if (!this.firstConnected) {
