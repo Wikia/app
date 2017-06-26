@@ -1126,9 +1126,8 @@ $messages['ps'] = array(
 
 $messages['pt'] = array(
 	'qbfind' => 'Procurar',
-	'querypage-no-updates' => 'As actualizações estão presentemente desactivadas para esta página.
-Por enquanto, os dados aqui presentes não poderão ser actualizados.',
-	'querypage-disabled' => 'Esta página especial está desactivada para não prejudicar o desempenho.',
+	'querypage-no-updates' => 'Momentaneamente as atualizações para esta página estão desativadas. Por enquanto, os dados aqui presentes não poderão ser atualizados.',
+	'querypage-disabled' => 'Esta página especial está desativada para não prejudicar o desempenho.',
 );
 
 $messages['pt-br'] = array(

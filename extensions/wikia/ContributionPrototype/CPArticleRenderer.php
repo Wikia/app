@@ -15,6 +15,7 @@ class CPArticleRenderer {
 	use Loggable;
 
 	const SERVICE_NAME = "structdata";
+	const CP_TITLE_HEADER = 'X-Page-Title';
 
 	/** @var string */
 	private $publicHost;
@@ -52,15 +53,19 @@ class CPArticleRenderer {
 		}
 
 		$output->setPageTitle($title->getPrefixedText());
-		$content = $this->getArticleContent($title->getPartialURL(), $action);
+		$cpArticle = $this->getArticle($title->getPartialURL(), $action);
 		$this->addStyles($output);
-		
-		if ($content === false) {
+
+		if ($cpArticle === false) {
 			$output->addHTML("<p>We're currently experiencing some technical difficulties. Hang tight, we're working to fix these ASAP.</p>");
 			return;
 		}
 
-		$output->addHTML($content);
+		$output->addHTML($cpArticle->getContent());
+		if (!empty($cpArticle->getTitle())) {
+			$output->setPageTitle($cpArticle->getTitle());
+		}
+
 		$this->addScripts($output);
 	}
 
@@ -83,10 +88,28 @@ class CPArticleRenderer {
 		$output->addHTML(\DesignSystemHelper::renderSvg('sprite'));
 	}
 
-	private function getArticleContent($title, $action) {
-//		$internalHost = $this->urlProvider->getUrl(self::SERVICE_NAME);
+	private function splitArticleIdAndTitle($title) {
+		if (preg_match('/^(\d+)\/(.*$)$/', urldecode($title), $matches) == 1) {
+			return [$matches[1], rawurlencode($matches[2])];
+		}
+
+		return false;
+	}
+
+	private function getFCRequestPath($title) {
+		$parts = $this->splitArticleIdAndTitle($title);
+		if ($parts === false) {
+			return "wiki/{$title}";
+		}
+
+		list($id, $slug) = $parts;
+		return "wiki/{$id}/{$slug}";
+	}
+
+	private function getArticle($title, $action) {
 		$internalHost = $this->publicHost;
-		$path = "wiki/{$title}";
+
+		$path = $this->getFCRequestPath($title);
 
 		if ($action != 'view') {
 			$path .= "/${action}";
@@ -113,6 +136,6 @@ class CPArticleRenderer {
 			return false;
 		}
 
-		return $response->getContent();
+		return new CPArticle($response->getContent(), $response->getResponseHeader(self::CP_TITLE_HEADER));
 	}
 }

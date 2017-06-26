@@ -60,7 +60,7 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 			socket.on('message', this.proxy(this.onMsgReceived, this));
 			socket.on('connect', this.proxy(function () {
 				this.log('Connected to Chat server at ' + url);
-				this.onConnect(socket);
+				this.onConnect(socket, ['xhr-polling']);
 			}, this));
 			socket.on('reconnecting', this.proxy(function (delay, count) {
 				this.log('Reconnecting...');
@@ -78,7 +78,7 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 		});
 	},
 
-	onConnect: function (socket) {
+	onConnect: function (socket, transport) {
 		this.socket = socket;
 
 		if (!this.firstConnected) {
@@ -180,6 +180,7 @@ var NodeRoomController = $.createClass(Observable, {
 		this.socket.bind('longMessage', $.proxy(this.onLongMessage, this));
 
 		this.socket.bind('logout', $.proxy(this.onLogout, this));
+		this.socket.bind('freeze', this.onFreeze.bind(this));
 
 		this.viewDiscussion = new NodeChatDiscussion({model: this.model, el: $('body'), roomId: roomId});
 		this.viewDiscussion.bind('clickAnchor', $.proxy(this.clickAnchor, this));
@@ -198,6 +199,37 @@ var NodeRoomController = $.createClass(Observable, {
 
 	isMain: function () {
 		return this.mainController == null;
+	},
+
+	/**
+	 * Disable the input form for some time if the user exceeded the rate limit and was throttled
+	 * @param message
+	 */
+	onFreeze: function (message) {
+		var $input = $('#Write textarea');
+
+		if (!$input.prop('disabled')) {
+			var frozenEvent = new models.FrozenEvent(),
+				freezeDuration;
+
+			frozenEvent.mport(message.data);
+			freezeDuration = frozenEvent.get('freezeDuration');
+
+			$input.prop('disabled', true);
+			$input.val('');
+			$input.attr('placeholder', mw.message('chat-user-throttled', freezeDuration / 1000).text());
+
+			setTimeout(this.onFreezeFinish.bind(this, $input), freezeDuration);
+		}
+	},
+
+	/**
+	 * Reenable the input field after the throttle time expired
+	 * @param $input
+	 */
+	onFreezeFinish: function ($input) {
+		$input.prop('disabled', false);
+		$input.removeAttr('placeholder');
 	},
 
 	onReConnectFail: function () {
