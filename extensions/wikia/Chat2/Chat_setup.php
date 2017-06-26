@@ -97,7 +97,6 @@ $wgResourceModules['ext.Chat2.ChatWidget'] = [
 		'chat-user-menu-message-wall',
 		'chat-user-menu-talk-page',
 		'chat-user-menu-contribs',
-		'chat-live2',
 		'chat-edit-count',
 		'chat-member-since',
 	],
@@ -190,6 +189,9 @@ $wgResourceModules['ext.Chat2'] = [
 		'chat-private-headline',
 		'chat-user-blocked',
 		'chat-user-allow',
+
+		// misc
+		'chat-user-throttled',
 	],
 	'position' => 'top'
 ];

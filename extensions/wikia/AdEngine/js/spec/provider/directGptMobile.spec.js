@@ -21,7 +21,6 @@ describe('ext.wikia.adEngine.provider.directGpt', function () {
 			defaultAdUnitBuilder: {name: 'defaultAdUnit'},
 			kiloAdUnitBuilder: {name: 'kiloAdUnit'},
 			slotTweaker: {},
-			openXBidderHelper: {},
 			pageFairRecovery: {},
 			sourcePointRecovery: {}
 		};
@@ -34,7 +33,6 @@ describe('ext.wikia.adEngine.provider.directGpt', function () {
 			mocks.defaultAdUnitBuilder,
 			mocks.kiloAdUnitBuilder,
 			mocks.slotTweaker,
-			mocks.openXBidderHelper,
 			mocks.pageFairRecovery,
 			mocks.sourcePointRecovery
 		);

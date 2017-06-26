@@ -67,6 +67,11 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 			trackingData['price'] = bidHelper.transformPriceFromBid(params.bid);
 		}
 
+		if (bidHelper && params.bid && params.adProduct === 'appnexusAst') {
+			trackingData['vast_id'] = params.bid.creative_id || emptyValue.string;
+			trackingData['price'] = bidHelper.transformPriceFromBid(params.bid);
+		}
+
 		if (bidHelper && params.bid && params.adProduct === 'veles') {
 			trackingData['vast_id'] = params.bid.vastId || emptyValue.string;
 		}

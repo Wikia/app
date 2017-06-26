@@ -1,0 +1,13 @@
+{
+  "name": "html5-skin",
+  "homepage": "https://github.com/Wikia/html5-skin",
+  "_release": "d341e208b9",
+  "_resolution": {
+    "type": "branch",
+    "branch": "ADEN-5412",
+    "commit": "d341e208b9a4f72b3d0964ee860e9409174f8646"
+  },
+  "_source": "https://github.com/Wikia/html5-skin.git",
+  "_target": "ADEN-5412",
+  "_originalSource": "Wikia/html5-skin"
+}

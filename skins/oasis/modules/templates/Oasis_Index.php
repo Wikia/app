@@ -68,7 +68,6 @@
 <?= $quantServe ?>
 <?= $rubiconFastlane ?>
 <?= $amazonMatch ?>
-<?= $openXBidder ?>
 <?= $prebid ?>
 <?= $krux ?>
 <?= $netzathleten ?>

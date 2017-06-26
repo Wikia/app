@@ -453,7 +453,6 @@ var NodeChatUsers = Backbone.View.extend({
 	triggerEvents: {
 			"click .kick": "kick",
 			"click .ban": "ban",
-			"click .give-chat-mod": "giveChatMod",
 			"click .private-block": "blockPrivateMessage",
 			"click .private-allow": "allowPrivateMessage",
 			"click .private": "showPrivateMessage",
@@ -616,25 +615,6 @@ var NodeChatUsers = Backbone.View.extend({
 				$('#UserStatsMenu').hide();
 				$('body').unbind('.menuclose');
 			};
-		});
-
-		// Handle clicking the profile and contrib links
-
-		menu.find('.talk-page').add('.contribs').add('.message-wall').click(function(event) {
-			event.preventDefault();
-			var target = $(event.currentTarget),
-				menu = target.closest('.UserStatsMenu'),
-				username = menu.find('.username').data('name'),
-				location = '';
-
-			if (target.hasClass('talk-page') || target.hasClass('message-wall')) {
-				location = window.wgChatPathToProfilePage.replace('$1', username);
-			} else if (target.hasClass('contribs')) {
-				location = window.wgChatPathToContribsPage.replace('$1', username);
-			}
-
-			window.open(location);
-			menu.hide();
 		});
 	},
 	hideMenu: function() {

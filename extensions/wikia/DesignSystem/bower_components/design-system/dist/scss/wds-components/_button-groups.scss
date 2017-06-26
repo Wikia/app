@@ -1,4 +1,6 @@
 .wds-button-group {
+	@include button-group-theming($wds-color-white);
+
 	align-items: stretch;
 	display: inline-flex;
 	justify-content: flex-start;
@@ -14,32 +16,32 @@
 			z-index: 1;
 		}
 
-		//For primary buttons add white border between buttons
 		&:not(.wds-is-secondary) {
 			&:not(:last-child) {
-				border-right: 1px solid $wds-color-white;
+				border-right-width: 1px;
+				border-right-style: solid;
 			}
 
 			&:not(:first-child) {
-				border-left: 1px solid $wds-color-white;
+				border-left-width: 1px;
+				border-left-style: solid;
 			}
 		}
-
 	}
 
 	> .wds-dropdown {
 		&:not(:last-child) {
 			.wds-button {
-				border-right: 1px solid $wds-color-white;
+				border-right-width: 1px;
+				border-right-style: solid;
 			}
 		}
 
 		&:not(:first-child) {
 			.wds-button {
-				border-left: 1px solid $wds-color-white;
+				border-left-width: 1px;
+				border-left-style: solid;
 			}
 		}
-
 	}
-
 }

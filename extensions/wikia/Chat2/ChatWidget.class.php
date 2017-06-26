@@ -71,6 +71,7 @@ class ChatWidget {
 		return [
 			'blankImgUrl' => $wgBlankImgUrl,
 			'buttonText' => wfMessage( $buttonMessage )->text(),
+			'chatLiveText' => wfMessage( 'chat-live2' )->text(),
 			'buttonIcon' => DesignSystemHelper::renderSvg( 'wds-icons-reply-tiny' ),
 			'guidelinesText' => $guidelinesText->exists() ? $guidelinesText->parse() : null,
 			'fromParserTag' => $fromParserTag,
@@ -112,8 +113,7 @@ class ChatWidget {
 		$parser->getOutput()->addModuleMessages( 'ext.Chat2.ChatWidget' );
 
 		wfProfileOut( __METHOD__ );
-
-		return '<nowiki>' . $html . '</nowiki>';
+		return $html;
 	}
 
 	/**

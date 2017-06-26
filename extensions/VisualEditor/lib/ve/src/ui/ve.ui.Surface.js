@@ -62,9 +62,6 @@ ve.ui.Surface = function VeUiSurface( dataOrDoc, config, target ) {
 	this.debugBar = null;
 
 	this.target = target || null;
-	if ( config.focusMode ) {
-		this.focusWidget = new ve.ui.WikiaFocusWidget( this );
-	}
 
 	this.toolbarHeight = 0;
 	this.toolbarDialogs = new ve.ui.ToolbarDialogWindowManager( {
@@ -135,12 +132,6 @@ ve.ui.Surface.prototype.destroy = function () {
  */
 ve.ui.Surface.prototype.initialize = function () {
 	var $body = $( 'body' );
-
-	if ( this.focusWidget ) {
-		this.focusWidget.$element
-			.hide()
-			.appendTo( $body );
-	}
 
 	// Attach globalOverlay to the global <body>, not the local frame's <body>
 	$body.append( this.globalOverlay.$element );
@@ -280,14 +271,6 @@ ve.ui.Surface.prototype.getGlobalOverlay = function () {
  */
 ve.ui.Surface.prototype.getTarget = function () {
 	return this.target;
-};
-
-/**
- * @method
- * @returns {ve.ui.WikiaFocusWidget}
- */
-ve.ui.Surface.prototype.getFocusWidget = function () {
-	return this.focusWidget;
 };
 
 /**

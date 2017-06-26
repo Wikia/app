@@ -133,7 +133,7 @@
 	</script>
 	<script type='text/template' id='user-action-profile-template'>
 		<li class="<%= actionName %>">
-			<a href="<%= actionUrl %>">
+			<a href="<%= actionUrl %>" target="_blank">
 				<?= DesignSystemHelper::renderSvg( 'wds-icons-reply-small', 'wds-icon wds-icon-small' ) ?>
 				<span class="label"><%= actionDesc %></span>
 			</a>
@@ -141,7 +141,7 @@
 	</script>
 	<script type='text/template' id='user-action-contribs-template'>
 		<li class="<%= actionName %>">
-			<a href="<%= actionUrl %>">
+			<a href="<%= actionUrl %>" target="_blank">
 				<?= DesignSystemHelper::renderSvg( 'wds-icons-pencil-small', 'wds-icon wds-icon-small' ) ?>
 				<span class="label"><%= actionDesc %></span>
 			</a>
@@ -150,12 +150,6 @@
 	<script type='text/template' id='user-action-private-template'>
 		<li class="<%= actionName %>">
 			<?= DesignSystemHelper::renderSvg( 'wds-icons-user', 'wds-icon wds-icon-small' ) ?>
-			<span class="label"><%= actionDesc %></span>
-		</li>
-	</script>
-	<script type='text/template' id='user-action-give-chat-mod-template'>
-		<li class="<%= actionName %>">
-			<?= DesignSystemHelper::renderSvg( 'wds-icons-plus', 'wds-icon wds-icon-small' ) ?>
 			<span class="label"><%= actionDesc %></span>
 		</li>
 	</script>

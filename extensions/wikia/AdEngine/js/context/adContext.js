@@ -3,6 +3,7 @@
  * The AMD module to hold all the context needed for the client-side scripts to run.
  */
 define('ext.wikia.adEngine.adContext', [
+	'ext.wikia.adEngine.adLogicPageViewCounter',
 	'wikia.abTest',
 	'wikia.cookies',
 	'wikia.document',
@@ -11,7 +12,7 @@ define('ext.wikia.adEngine.adContext', [
 	'ext.wikia.adEngine.utils.sampler',
 	'wikia.window',
 	'wikia.querystring'
-], function (abTest, cookies, doc, geo, instantGlobals, sampler, w, Querystring) {
+], function (pvCounter, abTest, cookies, doc, geo, instantGlobals, sampler, w, Querystring) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
@@ -209,10 +210,9 @@ define('ext.wikia.adEngine.adContext', [
 			geo.isProperGeo(instantGlobals.wgAdDriverOverridePrefootersCountries) && !isPageType('home')
 		);
 
-		enableAdMixExperiment(context);
+		context.opts.outstreamVideoFrequencyCapping = instantGlobals.wgAdDriverOutstreamVideoFrequencyCapping;
 
-		// OpenX for remnant slot enabled
-		context.opts.openXRemnantEnabled = geo.isProperGeo(instantGlobals.wgAdDriverOpenXBidderCountriesRemnant);
+		enableAdMixExperiment(context);
 
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
@@ -230,6 +230,10 @@ define('ext.wikia.adEngine.adContext', [
 	}
 
 	setContext(w.ads ? w.ads.context : {});
+
+	if (context.targeting.skin && context.targeting.skin !== 'mercury') {
+		pvCounter.increment();
+	}
 
 	return {
 		addCallback: addCallback,
