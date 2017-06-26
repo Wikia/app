@@ -544,7 +544,7 @@ class EmailNotification {
 				'exception' => new \Exception(),
 			];
 
-			if ( !F::app()->wg->Title->isSpecial( "upload" ) || $this->action !== "overwrite" ) {
+			if ( !F::app()->wg->Title->isSpecial( "Upload" ) || $this->action !== "overwrite" ) {
 				$emailContext['issue'] = 'SOC-2924';
 				$logger->info( 'Skipped sending old style email', $emailContext );
 			} else {
