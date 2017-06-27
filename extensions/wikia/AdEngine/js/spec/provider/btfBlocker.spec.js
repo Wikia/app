@@ -22,12 +22,14 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 			}
 		},
 		adBlockDetection: {
-			isBlocking: noop
+			isBlocking: function () {
+				return false;
+			}
 		},
 		win: {}
 	};
 
-	mocks.log.levels = {debug: ''};
+	mocks.log.levels = {};
 	beforeEach(function () {
 		mocks.context.opts.delayBtf = true;
 		spyOn(mocks, 'methodCalledInsideFillInSlot');
@@ -88,6 +90,22 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 				slot.success();
 			};
 		mocks.context.opts.delayBtf = false;
+
+		fillInSlot = btfBlocker.decorate(fakeFillInSlot);
+		fillInSlot(slot);
+
+		expect(slot.success).toHaveBeenCalled();
+	});
+
+	it('Do not change fillInSlot method when user is blocking ads', function () {
+		var fillInSlot,
+			btfBlocker = getBtfBlocker(),
+			slot = getFakeSlot('BTF_SLOT'),
+			fakeFillInSlot = function (slot) {
+				slot.success();
+			};
+		mocks.context.opts.delayBtf = true;
+		spyOn(mocks.adBlockDetection, 'isBlocking').and.returnValue(true);
 
 		fillInSlot = btfBlocker.decorate(fakeFillInSlot);
 		fillInSlot(slot);
