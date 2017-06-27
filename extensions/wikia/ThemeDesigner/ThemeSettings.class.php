@@ -143,14 +143,19 @@ class ThemeSettings {
 		}
 
 		foreach ( $history as $key => $val ) {
-			$history[$key]['settings']['background-image'] = $this->getFreshURL(
-				$val['settings']['background-image-name'],
-				ThemeSettings::BackgroundImageName
-			);
-			$history[$key]['settings']['community-header-background-image'] = $this->getFreshURL(
-				$val['settings']['community-header-background-image'],
-				ThemeSettings::CommunityHeaderBackgroundImageName
-			);
+			if ( !empty( $val['settings']['background-image-name'] ) ) {
+				$val['settings']['background-image'] = $this->getFreshURL(
+					$val['settings']['background-image-name'],
+					ThemeSettings::BackgroundImageName
+				);
+			}
+
+			if ( !empty( $val['settings']['community-header-background-image-name'] ) ) {
+				$val['settings']['community-header-background-image'] = $this->getFreshURL(
+					$val['settings']['community-header-background-image-name'],
+					ThemeSettings::CommunityHeaderBackgroundImageName
+				);
+			}
 		}
 
 		return $history;
@@ -398,7 +403,6 @@ class ThemeSettings {
 		$thumbnailUrl = '';
 		$originalUrl = $this->getSettings()['community-header-background-image'];
 
-		// @todo fix the issue with vignette urls without /latest and remove try-catch
 		try {
 			if ( VignetteRequest::isVignetteUrl( $originalUrl ) ) {
 				$thumbnailUrl = VignetteRequest::fromUrl( $originalUrl )
@@ -407,8 +411,9 @@ class ThemeSettings {
 					->height( self::COMMUNITY_HEADER_BACKGROUND_HEIGHT )
 					->url();
 			}
-		} catch (Exception $e) {
-
+		} catch ( InvalidArgumentException $e ) {
+			\Wikia\Logger\WikiaLogger::instance()
+				->warning("Wrong url to community-header-background-image", [ 'originalUrl' => $originalUrl ] );
 		}
 
 		return $thumbnailUrl;

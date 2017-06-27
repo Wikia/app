@@ -21,8 +21,8 @@
 		<script src="<?php echo $src ?>"></script>
 	<?php endforeach; ?>
 
-	<!-- temporary hack (who are you kidding?) -->
-	<script src="<?= AssetsManager::getInstance()->getOneCommonURL( '/extensions/wikia/Chat2/js/lib/socket.io-2.0.3.js' ); ?>"></script>
+	<!-- temporary hack -->
+	<script src="<?= AssetsManager::getInstance()->getOneCommonURL( '/extensions/wikia/Chat2/js/lib/socket.io-1.3.5.js' ); ?>"></script>
 	<?= $globalVariablesScript ?>
 	<?php // TODO: use js var?>
 
@@ -122,9 +122,9 @@
 				<img src="<%= avatarSrc %>"/>
 				<ul>
 					<li class="username"><%= name %></li>
-					<li class="edits"><%= editCount %></li>
+					<li class="edits"><?= wfMessage( 'chat-edit-count' )->rawParams("<%= editCount %>")->escaped() ?></li>
 					<% if (since) { %>
-						<li class="since"><%= since %></li>
+						<li class="since"><?= wfMessage( 'chat-member-since' )->rawParams("<%= since %>")->escaped() ?></li>
 					<% } %>
 				</ul>
 			</div>
@@ -150,12 +150,6 @@
 	<script type='text/template' id='user-action-private-template'>
 		<li class="<%= actionName %>">
 			<?= DesignSystemHelper::renderSvg( 'wds-icons-user', 'wds-icon wds-icon-small' ) ?>
-			<span class="label"><%= actionDesc %></span>
-		</li>
-	</script>
-	<script type='text/template' id='user-action-give-chat-mod-template'>
-		<li class="<%= actionName %>">
-			<?= DesignSystemHelper::renderSvg( 'wds-icons-plus', 'wds-icon wds-icon-small' ) ?>
 			<span class="label"><%= actionDesc %></span>
 		</li>
 	</script>
