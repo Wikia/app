@@ -262,7 +262,6 @@ function CommunityWidgetAjax() {
 	global $wgRequest, $wgLang, $wgLanguageCode, $wgContentNamespaces;
 	wfProfileIn(__METHOD__);
 
-	//this should be the same as in /extensions/wikia/WidgetFramework/Widgets/WidgetCommunity/WidgetCommunity.php
 	$parameters = array(
 		'type' => 'widget',
 		'maxElements' => 5,
