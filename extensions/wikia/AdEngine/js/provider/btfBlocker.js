@@ -2,10 +2,11 @@
 define('ext.wikia.adEngine.provider.btfBlocker', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.uapContext',
+	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.lazyqueue',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, uapContext, lazyQueue, log, win) {
+], function (adContext, uapContext, adBlockDetection, lazyQueue, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.btfBlocker',
@@ -94,6 +95,10 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 			}
 		}
 
+		function shouldDelaySlotFillIn() {
+			return adContext.getContext().opts.delayBtf && !adBlockDetection.isBlocking()
+		}
+
 		function fillInSlotWithDelay(slot) {
 			log(['fillInSlotWithDelay', slot.name], 'debug', logGroup);
 
@@ -101,7 +106,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 				onSlotResponse(slot.name);
 			}
 
-			if (!adContext.getContext().opts.delayBtf) {
+			if (!shouldDelaySlotFillIn()) {
 				fillInSlot(slot);
 				return;
 			}
