@@ -7,7 +7,6 @@ $wgAutoloadClasses['OoyalaBacklotApiService'] = __DIR__ . '/OoyalaBacklotApiServ
 $wgAutoloadClasses['OoyalaConfigController'] = __DIR__ . '/OoyalaConfigController.class.php';
 
 $wgHooks['BeforePageDisplay'][] = 'ArticleVideoHooks::onBeforePageDisplay';
-$wgHooks['MakeGlobalVariablesScript'][] = 'ArticleVideoHooks::onMakeGlobalVariablesScript';
 
 $wgResourceModules['ext.ArticleVideo'] = [
 	'messages' => [

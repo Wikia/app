@@ -9,11 +9,13 @@ class ArticleVideoContext {
 	 * @return bool
 	 */
 	public static function isFeaturedVideoEmbedded( $title ) {
-		return !empty( self::getFeaturedVideoData( $title ) );
-	}
+		$wg = F::app()->wg;
 
-	private static function isFeaturedVideosValid( $featuredVideo ) {
-		return isset( $featuredVideo['videoId'], $featuredVideo['thumbnailUrl'] );
+		return $wg->enableArticleFeaturedVideo &&
+			isset( $wg->articleVideoFeaturedVideos[$title] ) &&
+			self::isFeaturedVideosValid( $wg->articleVideoFeaturedVideos[$title] ) &&
+			// Prevents to show video on ?action=history etc.
+			!WikiaPageType::isActionPage();
 	}
 
 	/**
@@ -25,13 +27,7 @@ class ArticleVideoContext {
 	public static function getFeaturedVideoData( $title ) {
 		$wg = F::app()->wg;
 
-		if (
-			$wg->enableArticleFeaturedVideo &&
-			isset( $wg->articleVideoFeaturedVideos[$title] ) &&
-			self::isFeaturedVideosValid( $wg->articleVideoFeaturedVideos[$title] ) &&
-			// Prevents to show video on ?action=history etc.
-			!WikiaPageType::isActionPage()
-		) {
+		if ( self::isFeaturedVideoEmbedded( $title ) ) {
 			$videoData = $wg->articleVideoFeaturedVideos[$title];
 			$labels = self::getVideoLabels( $videoData['videoId'] );
 
@@ -43,6 +39,10 @@ class ArticleVideoContext {
 		}
 
 		return [];
+	}
+
+	private static function isFeaturedVideosValid( $featuredVideo ) {
+		return isset( $featuredVideo['videoId'], $featuredVideo['thumbnailUrl'] );
 	}
 
 	private static function getVideoLabels( $videoId ) {
@@ -74,15 +74,5 @@ class ArticleVideoContext {
 		}
 
 		return [];
-	}
-
-	/**
-	 * Checks if related video is embedded on given article
-	 *
-	 * @param string $title Prefixed article title (see: Title::getPrefixedDBkey)
-	 * @return bool
-	 */
-	public static function isRelatedVideoEmbedded( $title ) {
-		return !empty( self::getRelatedVideoData( $title ) );
 	}
 }
