@@ -41,24 +41,26 @@ class ArticleVideoHooks {
 		return true;
 	}
 
-	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
+	public static function onMakeGlobalVariablesScript( array &$vars/*, OutputPage $out*/ ) {
 		$wg = F::app()->wg;
 		$title = $wg->Title->getPrefixedDBkey();
 
-		if ( ArticleVideoContext::isFeaturedVideoEmbedded( $title ) ) {
+		$featuredVideo = ArticleVideoContext::getFeaturedVideoData( $title );
+		$relatedVideo = ArticleVideoContext::getRelatedVideoData( $title );
+
+		if ( !empty( $featuredVideo ) || !empty( $relatedVideo ) ) {
 			$vars['wgOoyalaParams'] = [
 				'ooyalaPCode' => $wg->ooyalaApiConfig['pcode'],
 				'ooyalaPlayerBrandingId' => $wg->ooyalaApiConfig['playerBrandingId'],
 			];
-			$vars['wgFeaturedVideoId'] = $wg->articleVideoFeaturedVideos[$title]['videoId'];
 		}
 
-		$relatedVideo = ArticleVideoContext::getRelatedVideoData( $title );
+		if ( !empty( $featuredVideo ) ) {
+			$vars['wgFeaturedVideoId'] = $featuredVideo['videoId'];
+			$vars['wgFeaturedVideoLabels'] = $featuredVideo['labels'];
+		}
+
 		if ( !empty( $relatedVideo ) ) {
-			$vars['wgOoyalaParams'] = [
-				'ooyalaPCode' => $wg->ooyalaApiConfig['pcode'],
-				'ooyalaPlayerBrandingId' => $wg->ooyalaApiConfig['playerBrandingId'],
-			];
 			$vars['wgRelatedVideoId'] = $relatedVideo['videoId'];
 		}
 
