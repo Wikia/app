@@ -2,8 +2,7 @@
 describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 	'use strict';
 
-	function noop() {
-	}
+	function noop() {}
 
 	var mocks = {
 		log: noop,
@@ -22,6 +21,9 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 				return false;
 			}
 		},
+		adBlockDetection: {
+			isBlocking: noop
+		},
 		win: {}
 	};
 
@@ -35,6 +37,7 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 		return modules['ext.wikia.adEngine.provider.btfBlocker'](
 			mocks.adContext,
 			mocks.uapContext,
+			mocks.adBlockDetection,
 			modules['wikia.lazyqueue'](),
 			mocks.log,
 			mocks.win
