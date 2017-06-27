@@ -5613,7 +5613,7 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
 
   if (OO.publicApi && OO.publicApi.VERSION) {
     // This variable gets filled in by the build script
-    OO.publicApi.VERSION.skin = {"releaseVersion": "4.10.4", "rev": "c67d7ea027229c3dd991eeaa95c9272d385f1c92"};
+    OO.publicApi.VERSION.skin = {"releaseVersion": "4.10.4", "rev": "3557a78de2401498a9b3700d1e1ddf42b86885b0"};
   }
 
   OO.EVENTS.WIKIA = {
@@ -5630,8 +5630,6 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
         "playerParam": {},
         "persistentSettings": {
           "closedCaptionOptions": {},
-          "autoPlay": {}
-
         },
         "assetId": null,
         "contentTree": {},
@@ -6991,7 +6989,6 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
 
     toggleAutoPlayEnabled: function() {
       this.state.autoPlay.enabled = !this.state.autoPlay.enabled;
-      this.state.persistentSettings.autoPlay['enabled'] = !!this.state.autoPlay.enabled;
       this.renderSkin();
       Cookies.set(autoplayCookieName, this.state.autoPlay.enabled ? 1 : 0, { expires: autoplayCookieExpireDays });
       this.mb.publish(OO.EVENTS.WIKIA.AUTOPLAY_TOGGLED, this.state.autoPlay.enabled);

@@ -555,14 +555,6 @@
     -ms-transform: none;
     -o-transform: none;
     transform: none; }
-  .oo-player-container .oo-popover.oo-popover-pull-autoplay {
-    left: auto;
-    right: 0;
-    -webkit-transform: none;
-    -moz-transform: none;
-    -ms-transform: none;
-    -o-transform: none;
-    transform: none; }
   .oo-player-container .oo-popover ul.oo-popover-horizontal {
     display: inline-block;
     padding: 0;

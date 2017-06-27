@@ -39,8 +39,6 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
         "playerParam": {},
         "persistentSettings": {
           "closedCaptionOptions": {},
-          "autoPlay": {}
-
         },
         "assetId": null,
         "contentTree": {},
@@ -1400,7 +1398,6 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
 
     toggleAutoPlayEnabled: function() {
       this.state.autoPlay.enabled = !this.state.autoPlay.enabled;
-      this.state.persistentSettings.autoPlay['enabled'] = !!this.state.autoPlay.enabled;
       this.renderSkin();
       Cookies.set(autoplayCookieName, this.state.autoPlay.enabled ? 1 : 0, { expires: autoplayCookieExpireDays });
       this.mb.publish(OO.EVENTS.WIKIA.AUTOPLAY_TOGGLED, this.state.autoPlay.enabled);
