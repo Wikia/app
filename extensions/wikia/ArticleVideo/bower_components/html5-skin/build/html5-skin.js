@@ -760,8 +760,6 @@ module.exports={
 
 },{}],6:[function(require,module,exports){
 var React = require('react'),
-    Utils = require('./utils'),
-    CONSTANTS = require('../constants/constants'),
     ClassNames = require('classnames');
 
 var AutoplaySwitch = React.createClass({displayName: "AutoplaySwitch",
@@ -780,24 +778,24 @@ var AutoplaySwitch = React.createClass({displayName: "AutoplaySwitch",
             'oo-switch-body-autoplay': true,
             'oo-switch-body-off-autoplay': !this.props.autoPlay.enabled
         });
-        var onCaptionClassName = ClassNames({
+        var onAutoplayClassName = ClassNames({
             'oo-switch-autoplay oo-switch-autoplay-on': true,
             'oo-switch-autoplay-active': this.props.autoPlay.enabled
         });
-        var offCaptionClassName = ClassNames({
+        var offAutoplayClassName = ClassNames({
             'oo-switch-autoplay oo-switch-autoplay-off': true,
             'oo-switch-autoplay-active': !this.props.autoPlay.enabled
         });
-        var ccOnStyle =  {backgroundColor: this.props.autoPlay.enabled && this.props.skinConfig.general.accentColor ? this.props.skinConfig.general.accentColor : null};
+        var autoplayOnStyle =  {backgroundColor: this.props.autoPlay.enabled && this.props.skinConfig.general.accentColor ? this.props.skinConfig.general.accentColor : null};
 
         return (
             React.createElement("div", {className: "oo-switch-container-autoplay", onClick: this.handleAutoPlaySwitch}, 
-                React.createElement("span", {className: offCaptionClassName}), 
+                React.createElement("span", {className: offAutoplayClassName}), 
                 React.createElement("div", {className: "oo-switch-element-autoplay"}, 
-                    React.createElement("span", {className: switchBodyClassName, style: ccOnStyle}), 
+                    React.createElement("span", {className: switchBodyClassName, style: autoplayOnStyle}), 
                     React.createElement("span", {className: switchThumbClassName})
                 ), 
-                React.createElement("span", {className: onCaptionClassName}), 
+                React.createElement("span", {className: onAutoplayClassName}), 
                 React.createElement("a", {className: "oo-switch-container-selectable", onClick: this.handleOnOffSwitch})
             )
         );
@@ -806,7 +804,7 @@ var AutoplaySwitch = React.createClass({displayName: "AutoplaySwitch",
 
 module.exports = AutoplaySwitch;
 
-},{"../constants/constants":45,"./utils":42,"classnames":60,"react":222}],7:[function(require,module,exports){
+},{"classnames":60,"react":222}],7:[function(require,module,exports){
 var CONSTANTS = require('./../constants/constants');
 
 var AccessibilityControls = function (controller) {
@@ -1105,8 +1103,6 @@ module.exports = AdPanel;
 
 },{"../components/icon":30,"../constants/constants":45,"./spinner":36,"./utils":42,"classnames":60,"react":222}],10:[function(require,module,exports){
 var React = require('react'),
-    Utils = require('./utils'),
-    CONSTANTS = require('../constants/constants'),
     ClassNames = require('classnames');
 
 var AutoplaySwitch = React.createClass({displayName: "AutoplaySwitch",
@@ -1125,24 +1121,24 @@ var AutoplaySwitch = React.createClass({displayName: "AutoplaySwitch",
             'oo-switch-body-autoplay': true,
             'oo-switch-body-off-autoplay': !this.props.autoPlay.enabled
         });
-        var onCaptionClassName = ClassNames({
+        var onAutoplayClassName = ClassNames({
             'oo-switch-autoplay oo-switch-autoplay-on': true,
             'oo-switch-autoplay-active': this.props.autoPlay.enabled
         });
-        var offCaptionClassName = ClassNames({
+        var offAutoplayClassName = ClassNames({
             'oo-switch-autoplay oo-switch-autoplay-off': true,
             'oo-switch-autoplay-active': !this.props.autoPlay.enabled
         });
-        var ccOnStyle =  {backgroundColor: this.props.autoPlay.enabled && this.props.skinConfig.general.accentColor ? this.props.skinConfig.general.accentColor : null};
+        var autoplayOnStyle =  {backgroundColor: this.props.autoPlay.enabled && this.props.skinConfig.general.accentColor ? this.props.skinConfig.general.accentColor : null};
 
         return (
             React.createElement("div", {className: "oo-switch-container-autoplay", onClick: this.handleAutoPlaySwitch}, 
-                React.createElement("span", {className: offCaptionClassName}), 
+                React.createElement("span", {className: offAutoplayClassName}), 
                 React.createElement("div", {className: "oo-switch-element-autoplay"}, 
-                    React.createElement("span", {className: switchBodyClassName, style: ccOnStyle}), 
+                    React.createElement("span", {className: switchBodyClassName, style: autoplayOnStyle}), 
                     React.createElement("span", {className: switchThumbClassName})
                 ), 
-                React.createElement("span", {className: onCaptionClassName}), 
+                React.createElement("span", {className: onAutoplayClassName}), 
                 React.createElement("a", {className: "oo-switch-container-selectable", onClick: this.handleOnOffSwitch})
             )
         );
@@ -1151,7 +1147,7 @@ var AutoplaySwitch = React.createClass({displayName: "AutoplaySwitch",
 
 module.exports = AutoplaySwitch;
 
-},{"../constants/constants":45,"./utils":42,"classnames":60,"react":222}],11:[function(require,module,exports){
+},{"classnames":60,"react":222}],11:[function(require,module,exports){
 var React = require('react'),
     Icon = require('../components/icon');
 
@@ -5619,8 +5615,13 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
 
 	if (OO.publicApi && OO.publicApi.VERSION) {
     // This variable gets filled in by the build script
-    OO.publicApi.VERSION.skin = {"releaseVersion": "4.10.4", "rev": "4126cf147e74562933273b8d5b93efc717c59df2"};
+    OO.publicApi.VERSION.skin = {"releaseVersion": "4.10.4", "rev": "200bc16bbf5c67c2d7da6ab6c26229d69deb214c"};
   }
+
+  OO.EVENTS.WIKIA = {
+    AUTOPLAY_TOGGLED: 'wikia.autoplayToggled'
+  };
+  OO.exposeStaticApi('EVENTS', OO.EVENTS);
 
 	var autoplayCookieName = 'html5-skin.autoplay',
     Html5Skin = function (mb, id) {
@@ -6989,6 +6990,7 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
       this.state.persistentSettings.autoPlay['enabled'] = !!this.state.autoPlay.enabled;
       this.renderSkin();
       Cookies.set(autoplayCookieName, this.state.autoPlay.enabled ? 1 : 0, { expires: 14 });
+      this.mb.publish(OO.EVENTS.WIKIA.AUTOPLAY_TOGGLED, this.state.autoPlay.enabled);
     },
 
     upNextDismissButtonClicked: function() {

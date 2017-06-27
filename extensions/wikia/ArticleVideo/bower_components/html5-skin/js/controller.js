@@ -25,6 +25,11 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
     OO.publicApi.VERSION.skin = {"releaseVersion": "4.10.4", "rev": "<SKIN_REV>"};
   }
 
+  OO.EVENTS.WIKIA = {
+    AUTOPLAY_TOGGLED: 'wikia.autoplayToggled'
+  };
+  OO.exposeStaticApi('EVENTS', OO.EVENTS);
+
 	var autoplayCookieName = 'html5-skin.autoplay',
     Html5Skin = function (mb, id) {
       this.mb = mb;
@@ -1392,6 +1397,7 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
       this.state.persistentSettings.autoPlay['enabled'] = !!this.state.autoPlay.enabled;
       this.renderSkin();
       Cookies.set(autoplayCookieName, this.state.autoPlay.enabled ? 1 : 0, { expires: 14 });
+      this.mb.publish(OO.EVENTS.WIKIA.AUTOPLAY_TOGGLED, this.state.autoPlay.enabled);
     },
 
     upNextDismissButtonClicked: function() {

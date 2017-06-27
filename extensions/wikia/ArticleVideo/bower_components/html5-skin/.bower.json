@@ -1,11 +1,11 @@
 {
   "name": "html5-skin",
   "homepage": "https://github.com/Wikia/html5-skin",
-  "_release": "d1455d83ba",
+  "_release": "4c6001a505",
   "_resolution": {
     "type": "branch",
     "branch": "XW-3303",
-    "commit": "d1455d83ba60e31163f821582560274a4a8675fc"
+    "commit": "4c6001a5053149bd96463a9de39efd0b136b6e8d"
   },
   "_source": "git://github.com/Wikia/html5-skin.git",
   "_target": "XW-3303",

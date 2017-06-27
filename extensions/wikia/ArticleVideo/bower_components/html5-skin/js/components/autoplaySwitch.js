@@ -1,6 +1,4 @@
 var React = require('react'),
-    Utils = require('./utils'),
-    CONSTANTS = require('../constants/constants'),
     ClassNames = require('classnames');
 
 var AutoplaySwitch = React.createClass({
@@ -19,24 +17,24 @@ var AutoplaySwitch = React.createClass({
             'oo-switch-body-autoplay': true,
             'oo-switch-body-off-autoplay': !this.props.autoPlay.enabled
         });
-        var onCaptionClassName = ClassNames({
+        var onAutoplayClassName = ClassNames({
             'oo-switch-autoplay oo-switch-autoplay-on': true,
             'oo-switch-autoplay-active': this.props.autoPlay.enabled
         });
-        var offCaptionClassName = ClassNames({
+        var offAutoplayClassName = ClassNames({
             'oo-switch-autoplay oo-switch-autoplay-off': true,
             'oo-switch-autoplay-active': !this.props.autoPlay.enabled
         });
-        var ccOnStyle =  {backgroundColor: this.props.autoPlay.enabled && this.props.skinConfig.general.accentColor ? this.props.skinConfig.general.accentColor : null};
+        var autoplayOnStyle =  {backgroundColor: this.props.autoPlay.enabled && this.props.skinConfig.general.accentColor ? this.props.skinConfig.general.accentColor : null};
 
         return (
             <div className="oo-switch-container-autoplay" onClick={this.handleAutoPlaySwitch}>
-                <span className={offCaptionClassName}></span>
+                <span className={offAutoplayClassName}></span>
                 <div className="oo-switch-element-autoplay">
-                    <span className={switchBodyClassName} style={ccOnStyle}></span>
+                    <span className={switchBodyClassName} style={autoplayOnStyle}></span>
                     <span className={switchThumbClassName}></span>
                 </div>
-                <span className={onCaptionClassName}></span>
+                <span className={onAutoplayClassName}></span>
                 <a className="oo-switch-container-selectable" onClick={this.handleOnOffSwitch}></a>
             </div>
         );
