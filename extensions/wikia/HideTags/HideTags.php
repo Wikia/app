@@ -31,6 +31,7 @@ function efHideTagsSetup(Parser $parser) {
 
 	$parser->setHook( 'loggedin', 'efJustPrintTags' );
 	$parser->setHook( 'loggedout', 'efJustPrintTags' );
+	$parser->setHook( 'widget', 'efJustPrintTags' ); // SUS-1365
 	/* copy above line and change tag name to just print additional tags */
 
 	return true;
