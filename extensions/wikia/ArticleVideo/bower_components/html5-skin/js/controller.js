@@ -20,7 +20,7 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
     return null;
   }
 
-	if (OO.publicApi && OO.publicApi.VERSION) {
+  if (OO.publicApi && OO.publicApi.VERSION) {
     // This variable gets filled in by the build script
     OO.publicApi.VERSION.skin = {"releaseVersion": "4.10.4", "rev": "<SKIN_REV>"};
   }
@@ -31,6 +31,7 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
   OO.exposeStaticApi('EVENTS', OO.EVENTS);
 
 	var autoplayCookieName = 'html5-skin.autoplay',
+    autoplayCookieExpireDays = 14,
     Html5Skin = function (mb, id) {
       this.mb = mb;
       this.id = id;
@@ -832,10 +833,15 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
         React.createElement(Skin, {skinConfig: SkinJSON, localizableStrings: Localization.languageFiles, language: Utils.getLanguageToUse(SkinJSON), controller: this, closedCaptionOptions: this.state.closedCaptionOptions, pauseAnimationDisabled: this.state.pauseAnimationDisabled}), document.querySelector("#" + this.state.elementId + " .oo-player-skin")
       );
 
-      if (this.skin.props.skinConfig.controlBar && this.skin.props.skinConfig.controlBar.autoplayCookieName) {
-				autoplayCookieName = this.skin.props.skinConfig.controlBar.autoplayCookieName;
-			}
-			this.state.autoPlay.enabled = Cookies.get(autoplayCookieName) !== '0';
+      if (this.skin.props.skinConfig.controlBar) {
+        if(this.skin.props.skinConfig.controlBar.autoplayCookieName) {
+          autoplayCookieName = this.skin.props.skinConfig.controlBar.autoplayCookieName;
+        }
+        if(this.skin.props.skinConfig.controlBar.autoplayCookieExpireDays) {
+          autoplayCookieExpireDays = this.skin.props.skinConfig.controlBar.autoplayCookieExpireDays;
+        }
+      }
+      this.state.autoPlay.enabled = Cookies.get(autoplayCookieName) !== '0';
       this.state.configLoaded = true;
       this.renderSkin();
       this.createPluginElements();
@@ -1396,7 +1402,7 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
       this.state.autoPlay.enabled = !this.state.autoPlay.enabled;
       this.state.persistentSettings.autoPlay['enabled'] = !!this.state.autoPlay.enabled;
       this.renderSkin();
-      Cookies.set(autoplayCookieName, this.state.autoPlay.enabled ? 1 : 0, { expires: 14 });
+      Cookies.set(autoplayCookieName, this.state.autoPlay.enabled ? 1 : 0, { expires: autoplayCookieExpireDays });
       this.mb.publish(OO.EVENTS.WIKIA.AUTOPLAY_TOGGLED, this.state.autoPlay.enabled);
     },
 

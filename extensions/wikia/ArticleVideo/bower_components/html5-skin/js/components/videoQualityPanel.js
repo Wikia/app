@@ -32,7 +32,7 @@ var VideoQualityPanel = React.createClass({
   },
 
     handleBackClick: function() {
-        this.props.toggleVideoQualityPanel();
+        this.props.toggleVideoQualityPopOver();
     },
 
   render: function() {
