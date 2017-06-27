@@ -28,7 +28,6 @@ class OoyalaConfigController extends WikiaController {
 			'availableLanguageFile' => [
 				0 => [
 					'language' => 'en',
-					'languageFile' => '//player.ooyala.com/static/v4/stable/4.6.9/skin-plugin/en.json',
 					'androidResource' => 'skin-config/en.json',
 					'iosResource' => 'en',
 				],
@@ -325,6 +324,9 @@ class OoyalaConfigController extends WikiaController {
 		$config['icons']['shareFacebook']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-facebook' );
 		$config['icons']['shareGoogle']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-googleplus' );
 		$config['icons']['shareMail']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-mail' );
+
+		$config['localization']['availableLanguageFile'][0]['languageFile'] =
+			'/extensions/wikia/ArticleVideo/bower_components/skin-config/languageFiles/en.json';
 
 		if ( $this->getVal( 'isMobile' ) ) {
 			$config['controlBar']['volumeControl']['sliderVisible'] = false;

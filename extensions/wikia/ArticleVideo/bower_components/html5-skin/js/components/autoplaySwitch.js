@@ -20,12 +20,12 @@ var AutoplaySwitch = React.createClass({
             'oo-switch-body-off-autoplay': !this.props.autoPlay.enabled
         });
         var onCaptionClassName = ClassNames({
-            'oo-switch-captions oo-switch-captions-on': true,
-            'oo-switch-captions-active': this.props.autoPlay.enabled
+            'oo-switch-autoplay oo-switch-autoplay-on': true,
+            'oo-switch-autoplay-active': this.props.autoPlay.enabled
         });
         var offCaptionClassName = ClassNames({
-            'oo-switch-captions oo-switch-captions-off': true,
-            'oo-switch-captions-active': !this.props.autoPlay.enabled
+            'oo-switch-autoplay oo-switch-autoplay-off': true,
+            'oo-switch-autoplay-active': !this.props.autoPlay.enabled
         });
         var ccOnStyle =  {backgroundColor: this.props.autoPlay.enabled && this.props.skinConfig.general.accentColor ? this.props.skinConfig.general.accentColor : null};
 

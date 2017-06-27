@@ -13,7 +13,7 @@
     li {
       display: inline-flex;
 
-      &:first-child {
+      &:not(:last-child) {
         margin-bottom: 12px;
       }
 

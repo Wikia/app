@@ -16,20 +16,20 @@
     opacity: 0;
     filter: alpha(opacity=1);
   }
-  .oo-switch-captions {
+  .oo-switch-autoplay {
     position: absolute;
     display: inline-block;
     color: $gray;
     font-size: $font-size-base;
     font-family: $font-family-roboto-condensed;
   }
-  .oo-switch-captions-on {
+  .oo-switch-autoplay-on {
     right: 0;
   }
-  .oo-switch-captions-off {
+  .oo-switch-autoplay-off {
     left: 0;
   }
-  .oo-switch-captions-active {
+  .oo-switch-autoplay-active {
     color: $white;
     font-family: $font-family-roboto-condensed-bold;
   }

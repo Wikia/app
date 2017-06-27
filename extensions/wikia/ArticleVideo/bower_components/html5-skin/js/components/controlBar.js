@@ -422,8 +422,8 @@ var ControlBar = React.createClass({
         continue;
       }
 
-      //do not show quality button if no bitrates available
-      if (!this.props.controller.state.videoQualityOptions.availableBitrates && (defaultItems[k].name === "quality")){
+      //do not show quality button if no bitrates available or autoplay toggle is off
+      if (!this.props.skinConfig.controlBar.autoplayToggle && !this.props.controller.state.videoQualityOptions.availableBitrates && (defaultItems[k].name === "quality")) {
         continue;
       }
 

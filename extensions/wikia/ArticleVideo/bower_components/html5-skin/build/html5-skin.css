@@ -607,17 +607,17 @@
     background-color: #fff;
     opacity: 0;
     filter: alpha(opacity=1); }
-  .oo-player-container .oo-switch-container-autoplay .oo-switch-captions {
+  .oo-player-container .oo-switch-container-autoplay .oo-switch-autoplay {
     position: absolute;
     display: inline-block;
     color: #55595c;
     font-size: 1em;
     font-family: "Roboto Condensed", sans-serif; }
-  .oo-player-container .oo-switch-container-autoplay .oo-switch-captions-on {
+  .oo-player-container .oo-switch-container-autoplay .oo-switch-autoplay-on {
     right: 0; }
-  .oo-player-container .oo-switch-container-autoplay .oo-switch-captions-off {
+  .oo-player-container .oo-switch-container-autoplay .oo-switch-autoplay-off {
     left: 0; }
-  .oo-player-container .oo-switch-container-autoplay .oo-switch-captions-active {
+  .oo-player-container .oo-switch-container-autoplay .oo-switch-autoplay-active {
     color: #fff;
     font-family: "Roboto Condensed Bold", sans-serif; }
   .oo-player-container .oo-switch-container-autoplay .oo-switch-element-autoplay {
@@ -721,7 +721,7 @@
     font-size: 12px; }
     .oo-player-container .oo-config-panel ul li {
       display: inline-flex; }
-      .oo-player-container .oo-config-panel ul li:first-child {
+      .oo-player-container .oo-config-panel ul li:not(:last-child) {
         margin-bottom: 12px; }
       .oo-player-container .oo-config-panel ul li a {
         color: #fff;
