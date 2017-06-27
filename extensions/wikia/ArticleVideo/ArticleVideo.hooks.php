@@ -3,7 +3,7 @@
 class ArticleVideoHooks {
 	public static function onBeforePageDisplay( \OutputPage $out/*, \Skin $skin*/ ) {
 		$wg = F::app()->wg;
-		$title = $wg->Title->getPrefixedDBkey();
+		$title = RequestContext::getMain()->getTitle()->getPrefixedDBkey();
 
 		$featuredVideo = ArticleVideoContext::getFeaturedVideoData( $title );
 		$relatedVideo = ArticleVideoContext::getRelatedVideoData( $title );
