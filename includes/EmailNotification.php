@@ -545,7 +545,7 @@ class EmailNotification {
 			];
 
 			if ( !F::app()->wg->Title->isSpecial( "Upload" ) || $this->action !== "overwrite" ) {
-				$emailContext['issue'] = 'SOC-2924';
+				$emailContext['issue'] = 'IRIS-2924';
 				$logger->info( 'Skipped sending old style email', $emailContext );
 			} else {
 				$logger->notice( 'Sending via UserMailer', $emailContext );
