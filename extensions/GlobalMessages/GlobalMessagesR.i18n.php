@@ -37631,9 +37631,7 @@ $1",
 	'rightsnone' => '(нет)',
 	'recentchanges' => 'Свежие правки',
 	'recentchanges-legend' => 'Настройки свежих правок',
-	'recentchangestext' => '<div id="wikia-mediawiki-recentchangestext" style="border:2px solid #e9e9e9; margin-bottom:0.3em; padding:0.2em 0.5em;"><span style="float:left;">Ниже в хронологическом порядке идёт список \'\'\'свежих правок\'\'\' на этой вики. 
-
-[[Special:Newpages|Новые страницы]] – [[Special:NewFiles|Новые файлы]] – [[Special:Log|Журналы]] – [[Special:Insights|Исследования]]</span><span style="float:right;">[[Справка:Свежие правки|]]</span><div style="clear:both;"></div></div>',
+	'recentchangestext' => '<div id="wikia-mediawiki-recentchangestext" style="border:2px solid #e9e9e9; margin-bottom:0.3em; padding:0.2em 0.5em;"><span style="float:left;">Ниже в хронологическом порядке идёт список \'\'\'свежих правок\'\'\' на этой вики.<br>[[Special:Newpages|Новые страницы]] – [[Special:NewFiles|Новые файлы]] – [[Special:Log|Журналы]] – [[Special:Insights|Исследования]]</span><span style="float:right;">[[Справка:Свежие правки]]</span><div style="clear:both;"></div></div>',
 	'recentchanges-feed-description' => 'Отслеживать свежие правки вики в этой ленте.',
 	'recentchanges-label-newpage' => 'Этой правкой создана новая страница',
 	'recentchanges-label-minor' => 'Это малая правка',

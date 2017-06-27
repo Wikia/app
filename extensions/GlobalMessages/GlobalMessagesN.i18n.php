@@ -12065,10 +12065,7 @@ Assicurati di avere attivato i cookie, ricarica questa pagina e riprova.",
 	'nosuchsectiontext' => 'Si è tentato di modificare una sezione inesistente.
 Potrebbe essere stata spostata o eliminata mentre si stava visionando la pagina.',
 	'newarticle' => '(Nuovo)',
-	'newarticletext' => "Il link appena aperto corrisponde a una pagina non ancora esistente.
-Se vuoi creare la pagina ora, basta cominciare a scrivere il testo nella casella qui sotto
-(vedi le [[{{MediaWiki:Helppage/it}}|pagine di aiuto]] per maggiori informazioni).
-Se il link è stato aperto per errore, è sufficiente fare clic sul pulsante '''Indietro''' del proprio browser.",
+	'newarticletext' => '<div style="margin-top: 0px;" class="emptymwmsg mediawiki_newarticletext"></div>',
 	'noarticletext' => "<p style=\"font-size:140%;text-align: center\">'''Questa pagina ha bisogno di contenuti. Puoi contribuire inserendo una frase o un'immagine!'''</p>
 
 <center><span class=\"wikia-button big plainlinks\">[{{fullurl:{{FULLPAGENAMEE}}|action=edit&redlink=1}} <span>Modifica questa pagina</span>]<br />oppure<br />[[Special:Search/{{PAGENAME}}|cerca \"{{PAGENAME}}\"]]</span></center>  

@@ -8289,7 +8289,7 @@ $messages['ja'] = array(
 *ブロックID: #$5
 *現在のIPアドレス: $3
 
-このブロックについて、$1もしくは他の[[Special:ListUsers{{MediaWiki:Grouppage-sysop}}|管理者]]に問い合わせることができます。
+このブロックについて、$1もしくは他の[[Special:ListUsers|{{MediaWiki:Grouppage-sysop}}]]に問い合わせることができます。
 問い合わせを行う際には、上記のボックスに詳細を記入してください。",
 	'blockednoreason' => '理由が設定されていません',
 	'blocked-notice-logextract' => 'この利用者は現在ブロックされています。
