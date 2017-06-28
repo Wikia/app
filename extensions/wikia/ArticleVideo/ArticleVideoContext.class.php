@@ -33,6 +33,7 @@ class ArticleVideoContext {
 			$videoData = $wg->articleVideoFeaturedVideos[$title];
 			$videoData['title'] = $api->getTitle( $videoData['videoId'] );
 			$videoData['labels'] = $api->getLabels( $videoData['videoId'] );
+			$videoData['duration'] = $api->getDuration( $videoData['videoId'] );
 
 			return $videoData;
 		}

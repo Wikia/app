@@ -31,6 +31,17 @@ class OoyalaBacklotApiService {
 		return $title;
 	}
 
+	public function getDuration( string $videoId ): int {
+		$data = $this->getData( $videoId );
+		$duration = 0;
+
+		if ( !empty( $data ) ) {
+			$duration = $data->duration;
+		}
+
+		return $duration;
+	}
+
 	public function getLabels( string $videoId ): array {
 		$data = $this->getData( $videoId );
 		$labels = [];

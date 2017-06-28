@@ -14,7 +14,7 @@
 			<div id="ooyala-article-video" class="ooyala-article-video"></div>
 			<div class="video-details">
 				<div class="video-label"><?= wfMessage( 'articlevideo-watch' )->escaped() ?>
-					<span class="video-time"></span>
+					<span class="video-time"><?= WikiaFileHelper::formatDuration( $videoDetails['duration'] / 1000 ) ?></span>
 				</div>
 				<div class="video-title"><?= htmlspecialchars( $videoDetails['title'] ) ?></div>
 				<?= $app->renderPartial( 'ArticleVideo', 'attribution', [ 'videoDetails' => $videoDetails ] ) ?>

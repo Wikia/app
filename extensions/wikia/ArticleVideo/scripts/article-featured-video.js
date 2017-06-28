@@ -270,12 +270,6 @@ require([
 				});
 			});
 
-			player.mb.subscribe(window.OO.EVENTS.PLAYBACK_READY, 'ui-duration-update', function () {
-				var videoTime = ooyalaVideoController.getFormattedDuration(player.getDuration());
-
-				$videoContainer.find('.video-time').text(videoTime);
-			});
-
 			player.mb.subscribe(window.OO.EVENTS.PLAYHEAD_TIME_CHANGED, 'featured-video', function (eventName, time, totalTime) {
 				var secondsPlayed = Math.floor(time),
 					percentage = Math.round(time / totalTime * 100);

@@ -5,14 +5,14 @@ class ArticleVideoController extends WikiaController {
 		$wg = $this->getApp()->wg;
 		$title = $wg->Title->getPrefixedDBkey();
 
-		$enableArticleFeaturedVideo = ArticleVideoContext::isFeaturedVideoEmbedded( $title );
+		$featuredVideoData = ArticleVideoContext::getFeaturedVideoData( $title );
 
-		if ( $enableArticleFeaturedVideo ) {
+		if ( !empty( $featuredVideoData ) ) {
 			$wg->Out->addModules( 'ext.ArticleVideo' );
 
 			// TODO: replace it with DS icon when it's ready (XW-2824)
 			$this->setVal( 'closeIconUrl', $wg->extensionsPath . '/wikia/ArticleVideo/images/close.svg' );
-			$this->setVal( 'videoDetails', $wg->articleVideoFeaturedVideos[$title] );
+			$this->setVal( 'videoDetails', $featuredVideoData );
 		} else {
 			$this->skipRendering();
 		}
