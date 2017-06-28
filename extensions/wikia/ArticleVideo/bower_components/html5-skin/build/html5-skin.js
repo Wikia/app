@@ -5613,7 +5613,7 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
 
   if (OO.publicApi && OO.publicApi.VERSION) {
     // This variable gets filled in by the build script
-    OO.publicApi.VERSION.skin = {"releaseVersion": "4.10.4", "rev": "3557a78de2401498a9b3700d1e1ddf42b86885b0"};
+    OO.publicApi.VERSION.skin = {"releaseVersion": "4.10.4", "rev": "323fc0a01c0e2300b763b8b52733d68f45e6f3cc"};
   }
 
   OO.EVENTS.WIKIA = {
@@ -6889,6 +6889,7 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
 
     toggleConfigPanelPopover: function() {
       this.state.configPanelOptions.showConfigPanelPopover = !this.state.configPanelOptions.showConfigPanelPopover;
+      this.state.configPanelOptions.showVideoQualityPanel = false;
       this.renderSkin();
     },
 

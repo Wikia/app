@@ -1298,6 +1298,7 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
 
     toggleConfigPanelPopover: function() {
       this.state.configPanelOptions.showConfigPanelPopover = !this.state.configPanelOptions.showConfigPanelPopover;
+      this.state.configPanelOptions.showVideoQualityPanel = false;
       this.renderSkin();
     },
 
