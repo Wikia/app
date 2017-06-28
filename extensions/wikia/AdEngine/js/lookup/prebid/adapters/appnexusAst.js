@@ -43,7 +43,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst',[
 						placementId: isDebugMode ? debugPlacementId : config.placementId,
 						video: {
 							skippable: false,
-							playback_method: [ 'auto_play_sound_off' ]
+							playback_method: [ 'auto_play_sound_on' ]
 						}
 					}
 				}
