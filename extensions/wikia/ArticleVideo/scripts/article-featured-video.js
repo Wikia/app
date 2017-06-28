@@ -45,8 +45,10 @@ require([
 				width: 300,
 				height: 169
 			},
-			videoId = window.wgFeaturedVideoId,
-			videoLabels = (window.wgFeaturedVideoLabels || '').join(','),
+			videoData = window.wgFeaturedVideoData,
+			videoId = videoData.videoId,
+			videoTitle = videoData.title,
+			videoLabels = (videoData.labels || '').join(','),
 			videoFeedbackBox,
 			autoplayCookieName = 'featuredVideoAutoplay';
 
@@ -199,6 +201,10 @@ require([
 			});
 		}
 
+		window.guaSetCustomDimension(34, videoId);
+		window.guaSetCustomDimension(35, videoTitle);
+		window.guaSetCustomDimension(36, videoLabels);
+
 		initVideo(function (player) {
 			$video.addClass('ready-to-play');
 
@@ -264,22 +270,10 @@ require([
 				});
 			});
 
-			player.mb.subscribe(window.OO.EVENTS.PLAYBACK_READY, 'ui-title-update', function () {
-				var videoTitle = player.getTitle(),
-					videoTime = ooyalaVideoController.getFormattedDuration(player.getDuration());
+			player.mb.subscribe(window.OO.EVENTS.PLAYBACK_READY, 'ui-duration-update', function () {
+				var videoTime = ooyalaVideoController.getFormattedDuration(player.getDuration());
 
-				$videoContainer.find('.video-title').text(videoTitle);
 				$videoContainer.find('.video-time').text(videoTime);
-
-				// We need the title for custom dimensions, so wait with the tracking until we have it
-				window.guaSetCustomDimension(34, videoId);
-				window.guaSetCustomDimension(35, videoTitle);
-				window.guaSetCustomDimension(36, videoLabels);
-
-				track({
-					action: tracker.ACTIONS.IMPRESSION,
-					label: 'featured-video'
-				});
 			});
 
 			player.mb.subscribe(window.OO.EVENTS.PLAYHEAD_TIME_CHANGED, 'featured-video', function (eventName, time, totalTime) {
@@ -313,6 +307,11 @@ require([
 					action: tracker.ACTIONS.CLICK,
 					label: enabled ? 'featured-video-autoplay-enabled' : 'featured-video-autoplay-disabled'
 				});
+			});
+
+			track({
+				action: tracker.ACTIONS.IMPRESSION,
+				label: 'featured-video'
 			});
 		});
 

@@ -28,12 +28,11 @@ class ArticleVideoContext {
 		$wg = F::app()->wg;
 
 		if ( self::isFeaturedVideoEmbedded( $title ) ) {
-			$videoData = $wg->articleVideoFeaturedVideos[$title];
-			$labels = self::getVideoLabels( $videoData['videoId'] );
+			$api = OoyalaBacklotApiService::getInstance();
 
-			if ( !empty( $labels ) ) {
-				$videoData['labels'] = $labels;
-			}
+			$videoData = $wg->articleVideoFeaturedVideos[$title];
+			$videoData['title'] = $api->getTitle( $videoData['videoId'] );
+			$videoData['labels'] = $api->getLabels( $videoData['videoId'] );
 
 			return $videoData;
 		}
@@ -43,10 +42,6 @@ class ArticleVideoContext {
 
 	private static function isFeaturedVideosValid( $featuredVideo ) {
 		return isset( $featuredVideo['videoId'], $featuredVideo['thumbnailUrl'] );
-	}
-
-	private static function getVideoLabels( $videoId ) {
-		return ( new OoyalaBacklotApiService() )->getLabels( $videoId );
 	}
 
 	/**

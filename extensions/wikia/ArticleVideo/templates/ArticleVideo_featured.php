@@ -16,7 +16,7 @@
 				<div class="video-label"><?= wfMessage( 'articlevideo-watch' )->escaped() ?>
 					<span class="video-time"></span>
 				</div>
-				<div class="video-title"></div>
+				<div class="video-title"><?= htmlspecialchars( $videoDetails['title'] ) ?></div>
 				<?= $app->renderPartial( 'ArticleVideo', 'attribution', [ 'videoDetails' => $videoDetails ] ) ?>
 			</div>
 			<?= $app->renderPartial( 'ArticleVideo', 'feedback' ) ?>

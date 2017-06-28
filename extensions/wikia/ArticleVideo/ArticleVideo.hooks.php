@@ -5,10 +5,10 @@ class ArticleVideoHooks {
 		$wg = F::app()->wg;
 		$title = RequestContext::getMain()->getTitle()->getPrefixedDBkey();
 
-		$featuredVideo = ArticleVideoContext::getFeaturedVideoData( $title );
-		$relatedVideo = ArticleVideoContext::getRelatedVideoData( $title );
+		$featuredVideoData = ArticleVideoContext::getFeaturedVideoData( $title );
+		$relatedVideoData = ArticleVideoContext::getRelatedVideoData( $title );
 
-		if ( !empty( $featuredVideo ) || !empty( $relatedVideo ) ) {
+		if ( !empty( $featuredVideoData ) || !empty( $relatedVideoData ) ) {
 			// Bitmovin plugin loads additional files which have to be accessible on the same path as plugin
 			// AssetsManager produces a custom path based on the group name, so we can't use it here
 			$out->addScriptFile(
@@ -35,22 +35,21 @@ class ArticleVideoHooks {
 			] );
 		}
 
-		if ( !empty( $featuredVideo ) ) {
+		if ( !empty( $featuredVideoData ) ) {
 			\Wikia::addAssetsToOutput( 'article_featured_video_scss' );
 			\Wikia::addAssetsToOutput( 'article_featured_video_js' );
 
 			$out->addJsConfigVars( [
-				'wgFeaturedVideoId' => $featuredVideo['videoId'],
-				'wgFeaturedVideoLabels' => $featuredVideo['labels'],
+				'wgFeaturedVideoData' => $featuredVideoData
 			] );
 		}
 
-		if ( !empty( $relatedVideo ) ) {
+		if ( !empty( $relatedVideoData ) ) {
 			\Wikia::addAssetsToOutput( 'article_related_video_scss' );
 			\Wikia::addAssetsToOutput( 'article_related_video_js' );
 
 			$out->addJsConfigVars( [
-				'wgRelatedVideoId' => $relatedVideo['videoId'],
+				'wgRelatedVideoId' => $relatedVideoData['videoId'],
 			] );
 		}
 
