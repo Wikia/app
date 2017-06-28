@@ -8,7 +8,6 @@ class ResourceLoaderAdEngineInstartLogicModule extends ResourceLoaderAdEngineBas
 	// increase this any time the local files change
 	const CACHE_BUSTER = 0;
 	const REQUEST_TIMEOUT = 30;
-	const REMOTE_FILE_URL = 'https://www.nanovisor.io/@p1/client/abd/instart.js?token=';
 	const LOCAL_FILE_PATH = __DIR__ . '/../js/InstartLogic/code.js';
 
 	protected function getMemcKey() {
@@ -20,11 +19,11 @@ class ResourceLoaderAdEngineInstartLogicModule extends ResourceLoaderAdEngineBas
 	 * @return array of ResourceLoaderScript
 	 */
 	protected function getScripts() {
-		global $wgInstartLogicApiToken;
+		global $wgInstartLogicApiUrl;
 
 		$script = ( new ResourceLoaderScript() )
 			->setTypeRemote()
-			->setValue( self::REMOTE_FILE_URL . $wgInstartLogicApiToken );
+			->setValue( $wgInstartLogicApiUrl );
 
 		return [ $script ];
 	}
