@@ -3,7 +3,7 @@ require([
 	'wikia.onScroll',
 	'wikia.tracker',
 	'ooyala-player',
-	'wikia.abTest',
+	'wikia.cookies',
 	'wikia.articleVideo.videoFeedbackBox',
 	require.optional('ext.wikia.adEngine.adContext'),
 	require.optional('ext.wikia.adEngine.video.player.ooyala.ooyalaTracker'),
@@ -13,7 +13,7 @@ require([
 	onScroll,
 	tracker,
 	OoyalaPlayer,
-	abTest,
+	cookies,
 	VideoFeedbackBox,
 	adContext,
 	playerTracker,
@@ -45,13 +45,20 @@ require([
 				width: 300,
 				height: 169
 			},
-			videoFeedbackBox;
+			videoFeedbackBox,
+			autoplayCookieName = 'featuredVideoAutoplay';
 
 		function initVideo(onCreate) {
 			var ooyalaVideoId = window.wgFeaturedVideoId,
 				playerParams = window.wgOoyalaParams,
-				autoplay = abTest.inGroup('FEATURED_VIDEO_AUTOPLAY', 'AUTOPLAY') && window.OO.allowAutoPlay,
-				vastUrl;
+				autoplay = cookies.get(autoplayCookieName) !== '0' && window.OO.allowAutoPlay,
+				vastUrl,
+				inlineSkinConfig = {
+					controlBar: {
+						autoplayToggle: true,
+						autoplayCookieName: autoplayCookieName
+					}
+				};
 
 			if (vastUrlBuilder && adContext && adContext.getContext().opts.showAds) {
 				vastUrl = vastUrlBuilder.build(640/480, {
@@ -72,7 +79,8 @@ require([
 				ooyalaVideoId,
 				onCreate,
 				autoplay,
-				vastUrl
+				vastUrl,
+				inlineSkinConfig
 			);
 		}
 
@@ -287,6 +295,13 @@ require([
 					videoFeedbackBox = new VideoFeedbackBox();
 					videoFeedbackBox.init();
 				}
+			});
+
+			player.mb.subscribe(window.OO.EVENTS.WIKIA.AUTOPLAY_TOGGLED, 'featured-video', function (eventName, enabled) {
+				track({
+					action: tracker.ACTIONS.CLICK,
+					label: enabled ? 'featured-video-autoplay-enabled' : 'featured-video-autoplay-disabled'
+				});
 			});
 
 			track({
