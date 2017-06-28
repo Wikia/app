@@ -799,11 +799,14 @@ $messages['de'] = array(
 	'photosblacklist' => '* example-blacklist.png',
 	'categoryblacklist' => '* stub',
 	'wiki-navigation' => '*#|Beliebte Seiten
-**#besucht#
-**#Kategorie1#
-**#Kategorie2#
-*Projekt:Community-Portal|Community-Portal
-**Blog:Letzte_Beiträge|Letzte Blog-Beiträge',
+**#visited#
+**#category1#
+**Blog:Letzte_Beiträge|Letzte Blog-Beiträge
+*Hilfe:Übersicht|Hilfe
+**Hilfe:FAQ|Wiki-Grundlagen
+**Hilfe:Tipps_und_Tricks|Tipps und Tricks
+**Hilfe:Erweiterte_Funktionen|Erweiterte Funktionen
+**Hilfe:Administratoren-Handbuch|Admin-Handbuch',
 	'oasis-upload-photos-overwrite-file' => 'Datei überschreiben',
 	'oasis-label-wiki-vertical-id-0' => 'Andere',
 	'oasis-label-wiki-vertical-id-1' => 'TV',
@@ -1445,7 +1448,7 @@ $messages['fr'] = array(
 	'photosblacklist' => '* exemple-liste-noire.png',
 	'categoryblacklist' => '* ébauche',
 	'wiki-navigation' => '*#|Pages populaires
-**#visited#|Les plus consultées
+**#visited#
 **#category2#
 **#category3#
 *project:À propos|Communauté
@@ -2001,7 +2004,7 @@ $messages['it'] = array(
 	'oasis-comments-added-by' => '$1 da $2',
 	'oasis-random-wiki' => 'Wiki casuale',
 	'oasis-add-photo' => 'Aggiungi una foto',
-	'oasis-anon-user' => 'Un utente FANDOM',
+	'oasis-anon-user' => 'Un utente di FANDOM',
 	'oasis-create-page' => 'Crea una nuova pagina su questa wiki',
 	'oasis-add-page' => 'Aggiungi una pagina',
 	'oasis-section-edit' => 'Modifica',
@@ -2057,7 +2060,7 @@ $messages['it'] = array(
 **#category1#
 **#category2#
 *Project:Portale della community|Community
-**{{int:Blogs-recent-url}}|Recent blog posts',
+**{{int:Blogs-recent-url}}|Post recenti dei blog',
 	'oasis-upload-photos-overwrite-file' => 'Sovrascrivi il file',
 	'oasis-navigation-v2-level1-validation' => 'Ops! Il menù di Livello 1 è troppo largo. Per favore adattalo allo spazio disponibile. <a href="http://it.community.wikia.com/wiki/Aiuto:Men%C3%B9_di_navigazione">Serve aiuto?</a>',
 	'oasis-navigation-v2-level2-validation' => 'Ops! Il menù di Livello 2 è troppo largo. Per favore adattalo allo spazio disponibile. <a href="http://it.community.wikia.com/wiki/Aiuto:Men%C3%B9_di_navigazione">Serve aiuto?</a>',
@@ -2232,12 +2235,12 @@ $messages['ja'] = array(
 	'oasis-add-photo-to-wiki' => 'このWikiに写真を追加',
 	'photosblacklist' => '* example-blacklist.png',
 	'categoryblacklist' => '* スタブ',
-	'wiki-navigation' => '*#visited#|人気のコンテンツ
-*#category1#
-*#category2#
-*portal-url|コミュニティ
-**blogs-recent-url|最近のブログ
-**forum-url|フォーラム',
+	'wiki-navigation' => '*#|人気のページ
+**#visited#|人気のページ一覧
+**#category1#
+**#category2#
+*Project:Community Portal|コミュニティ
+**Blog:Recent_postsl|最近の投稿',
 	'oasis-related-video-by-5min' => '提供: 5min Video',
 	'oasis-editpage-readonlywarning' => '<h2>申し訳ありません。</h2>
 <p>現在、このページは編集できなくなっています。間もなく復旧予定ですので、しばらくお待ちください。原因:<br /><em>$1</em></p>
@@ -3856,12 +3859,13 @@ $messages['ru'] = array(
 	'oasis-add-photo-to-wiki' => 'Добавить фото на эту вики',
 	'photosblacklist' => '* example-blacklist.png',
 	'categoryblacklist' => '* stub',
-	'wiki-navigation' => '*#|Популярные страницы
+	'wiki-navigation' => '*#|Лучшее
 **#visited#
 **#category1#
 **#category2#
-*Project:Community Portal|Сообщество
-**Blog:Recent_posts|Последние записи в блоге',
+*#|Сообщество
+**Blog:Recent_posts|Последние записи в блоге
+**Справка:Содержание|Справка',
 	'oasis-upload-photos-overwrite-file' => 'Перезаписать файл',
 	'oasis-label-wiki-vertical-id-0' => 'Другое',
 	'oasis-label-wiki-vertical-id-1' => 'ТВ',
@@ -4704,7 +4708,7 @@ $messages['zh-hans'] = array(
 	'oasis-button-add-video' => '添加视频',
 	'oasis-button-add-photo' => '添加图片',
 	'oasis-button-edit-wikia-local-menu' => '编辑本地社区菜单',
-	'oasis-button-edit-wikia-global-menu' => '编辑全网FANDOM菜单',
+	'oasis-button-edit-wikia-global-menu' => '编辑全站FANDOM菜单',
 	'oasis-community-social-twitter-link' => 'https://twitter.com/getfandom',
 	'oasis-community-social-facebook-link' => 'https://www.facebook.com/fandom.zh',
 	'oasis-community-social-googleplus-link' => 'http://gplus.to/wikia',
@@ -4731,11 +4735,14 @@ $messages['zh-hans'] = array(
 	'photosblacklist' => '* example-blacklist.png',
 	'categoryblacklist' => '* 标签',
 	'wiki-navigation' => '*#|流行页面
-**#visited#|访问次数最多页面
-**#category1#|类别1
-**#category2#|类别2
-*Project:Community Portal|社区
-**Blog:Recent_posts|最新博客',
+**#newlychanged#|最近更新
+**Blog:Recent_posts|最新博客
+*#|文章分类
+**#category1#|文章分类1
+**#category2#|文章分类2
+*#|社区
+**Help:內容|帮助中心
+**w:c:zh.community:FANDOM课堂|FANDOM课堂',
 	'imageseo-featured-on' => '功能存在于:',
 	'imageseo-featured-more' => '更多...',
 	'oasis-related-video-by-5min' => '由5min网站提供',
@@ -4754,7 +4761,7 @@ $messages['zh-hans'] = array(
 	'oasis-wiki-navigation' => '$1导航',
 	'oasis-navigation-v2-add-video' => '添加视频',
 	'oasis-navigation-v2-edit-wikia-local-menu' => '编辑本地社区菜单',
-	'oasis-navigation-v2-edit-wikia-global-menu' => '编辑全网FANDOM菜单',
+	'oasis-navigation-v2-edit-wikia-global-menu' => '编辑全站FANDOM菜单',
 	'oasis-navigation-v2-edit-this-menu' => '编辑维基导航',
 	'oasis-navigation-v2-level1-validation' => '很抱歉，您的1级菜单太宽了。请根据需要缩短菜单。<a href="http://zh.community.wikia.com/wiki/Help:Navigation">需要更多帮助吗？</a>',
 	'oasis-navigation-v2-level2-validation' => '很抱歉，您的2级菜单文字内容过多。请适当调整减少文字使用。<a href="http://community.wikia.com/wiki/Help:Navigation">需要更多帮助？</a>',
@@ -4938,7 +4945,7 @@ $messages['zh-hant'] = array(
 	'photosblacklist' => '* example-blacklist.png',
 	'categoryblacklist' => '* 小作品',
 	'wiki-navigation' => '*#|熱門頁面
-**#visited#|訪問次数最多頁面
+**#newlychanged#最近更新頁面
 **#category1#
 **#category1#
 *Project:Community Portal|社區

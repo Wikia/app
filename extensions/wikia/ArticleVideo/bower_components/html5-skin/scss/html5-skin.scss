@@ -31,8 +31,10 @@
 
   // Components
   //@import "components/discovery-panel";
+  @import "components/autoplay";
   @import "components/share-panel";
-  //@import "components/closed-captions";
+  @import "components/config-panel";
+  @import "components/closed-captions";
   @import "components/scrollbar";
   //@import "components/webvtt";
   @import "components/buttons";

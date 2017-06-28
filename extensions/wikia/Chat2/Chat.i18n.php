@@ -1,5 +1,6 @@
 <?php
 $messages = array();
+
 $messages['en'] = array(
 	'chat' => 'Chat',
 	'chatbanlist' => 'Chat Ban List',
@@ -91,6 +92,7 @@ $messages['en'] = array(
 	'chat-blocklist-by' => 'Blocking User',
 	'chat-blocklist-reason' => 'Reason',
 );
+
 $messages['qqq'] = array(
 	'chat' => 'shown in Special:Specialpages as the link label.
 {{Identical|Chat}}',
@@ -162,9 +164,11 @@ Parameters:
 	'chat-blocklist-by' => 'Blocked by column header on Special:ChatBanList',
 	'chat-blocklist-reason' => 'Reason column header on Special:ChatBanList',
 );
+
 $messages['af'] = array(
 	'chat-no-login-text' => 'Meld asseblief aan om te klets.',
 );
+
 $messages['ar'] = array(
 	'chat' => 'دردشة',
 	'chat-desc' => '[[Special:Chat|دردشة مباشرة]]',
@@ -243,6 +247,7 @@ $messages['ar'] = array(
 	'chat-checkuser-join-action' => 'انضممت للدردشة',
 	'chat-status-away' => 'مشغول',
 );
+
 $messages['ast'] = array(
 	'chat' => 'Chat',
 	'chat-desc' => '[[Special:Chat|Charra en vivu]]',
@@ -283,6 +288,7 @@ $messages['ast'] = array(
 	'group-chatmoderator' => 'Moderadores del chat',
 	'group-chatmoderator-member' => 'Moderador del chat',
 );
+
 $messages['az'] = array(
 	'chat' => 'Söhbət',
 	'chat-desc' => '[[Special:Chat|Söhbət]]',
@@ -327,6 +333,7 @@ $messages['az'] = array(
 	'chat-checkuser-join-action' => 'Söhbətə Qoşuldu',
 	'chat-status-away' => 'Kənar',
 );
+
 $messages['azb'] = array(
 	'chat-ban-modal-label-reason' => 'ندن',
 	'chat-log-reason-undo' => 'قایتار',
@@ -336,6 +343,7 @@ $messages['azb'] = array(
 	'chat-user-menu-contribs' => 'چالیشمالار',
 	'chat-status-away' => 'اوزاق',
 );
+
 $messages['bg'] = array(
 	'chat-desc' => '[[Special:Chat|Чат]]',
 	'chat-ban-modal-label-reason' => 'Причина',
@@ -344,6 +352,7 @@ $messages['bg'] = array(
 	'chat-log-reason-banremove' => 'Не е указана причина.',
 	'chat-edit-count' => '{{PLURAL:$1|$1 редакция|$1 редакции}}',
 );
+
 $messages['bgn'] = array(
 	'chat' => 'چت وهبر',
 	'chat-ban-modal-label-reason' => 'دلیل',
@@ -351,6 +360,7 @@ $messages['bgn'] = array(
 	'chat-ban-undolink' => 'بیئرگردینتین',
 	'chat-ban-modal-button-cancel' => 'کنسیل',
 );
+
 $messages['bn'] = array(
 	'chat' => 'আড্ডা',
 	'chat-desc' => '[[Special:Chat|সরাসরি আড্ডা]]',
@@ -367,6 +377,7 @@ $messages['bn'] = array(
 	'chat-user-menu-talk-page' => 'আলাপ পাতা',
 	'chat-user-menu-contribs' => 'অবদান',
 );
+
 $messages['br'] = array(
 	'chat' => 'Flap',
 	'chat-desc' => '[[Special:Chat|Flapiñ war-eeun]]',
@@ -443,6 +454,7 @@ Ma soñj deoc'h ez eo dre fazi pe mar fell deoc'h e vefe distroet war an diviz e
 	'chat-checkuser-join-action' => 'A zo deuet er flap',
 	'chat-status-away' => 'Ezvezant',
 );
+
 $messages['bs'] = array(
 	'chat-desc' => '[[Special:Chat|Razgovor uživo]]',
 	'chat-no-login' => 'Morate biti prijavljeni da biste chatali',
@@ -451,10 +463,12 @@ $messages['bs'] = array(
 	'chat-you-are-banned-text' => 'Zabranjen vam je chat.
 Ako mislite da je to greška ili želite da se ponovo razmotri, molimo kontaktirajte administratora.',
 );
+
 $messages['bto'] = array(
 	'chat-log-reason-undo' => 'ibalik',
 	'chat-ban-undolink' => 'ibalik',
 );
+
 $messages['ca'] = array(
 	'chat' => 'Xat',
 	'chat-desc' => '[[Special:Chat|Xat en directe]]',
@@ -533,11 +547,13 @@ $messages['ca'] = array(
 	'chat-checkuser-join-action' => "S'ha unit al xat",
 	'chat-status-away' => 'Absent',
 );
+
 $messages['ce'] = array(
 	'chat-ban-modal-label-expires' => 'Чекхйолу',
 	'chat-user-menu-talk-page' => 'Декъашхочун дийцаре',
 	'chat-ban-option-list' => '2 сахьат:2 hours,1 де:1 day,3 де:3 days,1 кӀиран:1 week,2 кӀиран:2 weeks,1 бутт:1 month,3 бутт:3 months,6 бутт:6 months,1 шо:1 year,цlкъа:infinite',
 );
+
 $messages['cs'] = array(
 	'chat' => 'Chat',
 	'chat-desc' => '[[Special:Chat|Chat na živo]]',
@@ -604,9 +620,11 @@ $messages['cs'] = array(
 	'chat-checkuser-join-action' => 'Připojen k chatu',
 	'chat-status-away' => 'Pryč',
 );
+
 $messages['cy'] = array(
 	'chat-start-a-chat' => 'Dechrau Sgwrs',
 );
+
 $messages['de'] = array(
 	'chat' => 'Chat',
 	'chat-desc' => '[[Special:Chat|Chat]]',
@@ -698,10 +716,20 @@ Wenn du dies für einen Fehler hältst oder möchtest, dass die Entscheidung üb
 	'chat-blocklist-by' => 'Benutzer gesperrt',
 	'chat-blocklist-reason' => 'Grund',
 	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
+	'chat-inlinealert-a-made-b-chatmod' => '$1 hat <strong>$2</strong> zum Chat-Moderator ernannt.',
+	'chat-err-already-chatmod' => 'Fehler: "$1" ist bereits in der "$2" Gruppe.',
+	'chat-err-no-permission-to-add-chatmod' => 'Fehler: Du hast keine Berechtigung, die "$1" Gruppe diesem Benutzer hinzuzufügen.',
+	'chat-userrightslog-a-made-b-chatmod' => '$1 hat $2 zum Chat-Moderator in diesem Wiki befördert.',
+	'chat-err-invalid-username-chatmod' => 'Fehler: Benutzer "$1" konnte nicht gefunden werden',
+	'group-bannedfromchat' => 'Aus dem Chat verbannt',
+	'group-bannedfromchat-member' => 'Aus dem Chat verbannt',
+	'grouppage-bannedfromchat' => 'w:c:de.community:Hilfe:Chat',
 );
+
 $messages['de-formal'] = array(
 	'chat-user-permanently-disconnected' => 'Die Verbindung wurde getrennt. Überprüfen Sie ihre Internet-Verbindung und aktualisieren Sie das Browser-Fenster.',
 );
+
 $messages['diq'] = array(
 	'chat' => 'Mıhebet',
 	'chat-desc' => '[[Special:Chat|Live chat]]',
@@ -717,6 +745,7 @@ $messages['diq'] = array(
 	'chat-checkuser-join-action' => 'Chat Kewê',
 	'chat-status-away' => 'Duri de',
 );
+
 $messages['el'] = array(
 	'chat-ban-modal-label-expires' => 'Λήγει',
 	'chat-ban-modal-label-reason' => 'Λόγος',
@@ -741,6 +770,7 @@ $messages['el'] = array(
 	'chat-ban-already-banned' => 'Ο $1 είναι ήδη αποκλεισμένος από το chat σε αυτό το wiki.',
 	'chat-ban-cannt-undo' => 'Ο αποκλεισμός έχει ήδη αποσυρθεί',
 );
+
 $messages['es'] = array(
 	'chat' => 'Chat',
 	'chat-desc' => '[[Special:Chat|Chat en directo]]',
@@ -832,7 +862,16 @@ Si crees que ha sido un error o te gustaría reconsiderarlo, por favor contacta 
 	'chat-blocklist-by' => 'Usuario bloqueado por',
 	'chat-blocklist-reason' => 'Motivo',
 	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
+	'chat-inlinealert-a-made-b-chatmod' => '$1 ha convertido a <strong>$2</strong> en moderador del chat.',
+	'chat-err-already-chatmod' => 'Error: "$1" ya está en el grupo "$2".',
+	'chat-err-no-permission-to-add-chatmod' => 'Error: No tienes permiso para agregar el grupo $1 a este usuario.',
+	'chat-userrightslog-a-made-b-chatmod' => '$1 promovió a $2 para ser moderador del chat en este wiki.',
+	'chat-err-invalid-username-chatmod' => 'Error: No se pudo encontrar al usuario "$1"',
+	'group-bannedfromchat' => 'Bloqueado del chat',
+	'group-bannedfromchat-member' => 'Bloqueado del chat',
+	'grouppage-bannedfromchat' => 'w:c:comunidad:Ayuda:Chat',
 );
+
 $messages['eu'] = array(
 	'chat-private-messages' => 'Mezu pribatuak',
 	'chat-user-was-kicked' => '$2(e)k $1 kanporatu du.',
@@ -845,6 +884,7 @@ $messages['eu'] = array(
 	'chat-user-menu-kick' => 'Kanporatu',
 	'chat-chatbanchange-log-entry' => 'administratzaileak $1 wikilariaren blokeoa aldatu du. Blokeoaldia: $2. Bukaera: $3',
 );
+
 $messages['fa'] = array(
 	'chat' => 'چت',
 	'chat-desc' => '[[ویژه:Chat|گفتگوی زنده]]',
@@ -922,6 +962,7 @@ $messages['fa'] = array(
 	'chat-checkuser-join-action' => 'به گپ پیوست',
 	'chat-status-away' => 'دور',
 );
+
 $messages['fi'] = array(
 	'chat' => 'Chatti',
 	'chat-desc' => '[[Special:Chat|Suora chat]]',
@@ -1001,6 +1042,7 @@ $messages['fi'] = array(
 	'chat-checkuser-join-action' => 'Liittyi keskusteluun',
 	'chat-status-away' => 'Poissa',
 );
+
 $messages['fo'] = array(
 	'chat' => 'Kjatt',
 	'chat-desc' => '[[Special:Chat|Beinleiðis kjatt]]',
@@ -1063,6 +1105,7 @@ $messages['fo'] = array(
 	'chat-ban-option-list' => '2 tímar:2 hours,1 dag:1 day,3 dagar:3 days,1 viku:1 week,2 vikur:2 weeks,1 mánað:1 month,3 mánaðir:3 months,6 mánaðir:6 months,1 ár:1 year,fyri altíð:infinite',
 	'chat-ban-log-change-ban-link' => 'broyt sperring',
 );
+
 $messages['fr'] = array(
 	'chat' => 'Tchat',
 	'chat-desc' => '[[Special:Chat|Tchater en direct]]',
@@ -1153,13 +1196,23 @@ $messages['fr'] = array(
 	'chat-blocklist-by' => 'Utilisateur ayant effectué le blocage',
 	'chat-blocklist-reason' => 'Motif',
 	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
+	'chat-inlinealert-a-made-b-chatmod' => '$1 a promu <strong>$2</strong> au rang de modérateur du tchat.',
+	'chat-err-already-chatmod' => 'Erreur : « $1 » est déjà dans le groupe « $2 ».',
+	'chat-err-no-permission-to-add-chatmod' => "Erreur : Vous n'avez pas la permission d'ajouter cet utilisateur au groupe « $1 ».",
+	'chat-userrightslog-a-made-b-chatmod' => '$1 a promu $2 au rang de modérateur du tchat sur ce wiki.',
+	'chat-err-invalid-username-chatmod' => 'Erreur : Impossible de trouver l’utilisateur « $1 »',
+	'group-bannedfromchat' => 'Bannis du tchat',
+	'group-bannedfromchat-member' => '{{GENDER:$1|banni du tchat|bannie du tchat}}',
+	'grouppage-bannedfromchat' => 'w:c:communaute:Aide:Tchat',
 );
+
 $messages['fy'] = array(
 	'chat' => 'Petear',
 	'chat-ban-modal-label-reason' => 'Reden',
 	'chat-ban-modal-button-cancel' => 'Annulearje',
 	'chat-ban-option-list' => '2 oeren:2 hours,1 dei:1 day,3 dagen:3 days,1 wike:1 week,2 wiken:2 weeks,1 moanne:1 month,3 moannen:3 months,6 moannen:6 months,1 jier:1 year,ûnbeheind:infinite',
 );
+
 $messages['gl'] = array(
 	'chat' => 'Chat',
 	'chat-desc' => '[[Special:Chat|Conversación en vivo]]',
@@ -1238,6 +1291,7 @@ $messages['gl'] = array(
 	'chat-checkuser-join-action' => 'Chat unido',
 	'chat-status-away' => 'Ausente',
 );
+
 $messages['he'] = array(
 	'chat' => "צ'אט",
 	'chat-no-login' => "עליך להיכנס לחשבון על מנת להשתתף בצ'אט.",
@@ -1277,6 +1331,7 @@ $messages['he'] = array(
 	'chat-checkuser-join-action' => "{{GENDER:הצטרף|הצטרפה}} לצ'אט",
 	'chat-status-away' => 'לא זמין',
 );
+
 $messages['hu'] = array(
 	'chat' => 'Csevegés',
 	'chat-desc' => '[[Special:Chat|Élő csevegés]]',
@@ -1336,6 +1391,7 @@ $messages['hu'] = array(
 	'chat-browser-is-notsupported' => 'A böngésződet nem támogatjuk. A legjobb élményért használj egy <a href="http://community.wikia.com/wiki/Help:Supported_browsers">újabbat</a>.',
 	'chat-status-away' => 'Távol',
 );
+
 $messages['ia'] = array(
 	'chat' => 'Chat',
 	'chat-desc' => '[[Special:Chat|Live chat]]',
@@ -1415,6 +1471,7 @@ Si tu pensa que isto es un error o si tu vole esser reconsiderate, per favor con
 	'chat-checkuser-join-action' => 'Entrava in chat',
 	'chat-status-away' => 'Absente',
 );
+
 $messages['id'] = array(
 	'chat' => 'Obrolan',
 	'chat-desc' => '[[Special:Chat|Obrolan langsung]]',
@@ -1493,6 +1550,7 @@ $messages['id'] = array(
 	'chat-checkuser-join-action' => 'Bergabung dengan Obrolan',
 	'chat-status-away' => 'Pergi',
 );
+
 $messages['it'] = array(
 	'chat' => 'Chat',
 	'chat-desc' => '[[Special:Chat|Chat dal vivo]]',
@@ -1584,7 +1642,16 @@ $1 è stato bannato da $2 $3.',
 	'chat-blocklist-by' => 'Blocco utente',
 	'chat-blocklist-reason' => 'Motivo',
 	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
+	'chat-inlinealert-a-made-b-chatmod' => '$1 ha nominato <strong>$2</strong> moderatore della chat.',
+	'chat-err-already-chatmod' => 'Errore: "$1" è già nel gruppo "$2".',
+	'chat-err-no-permission-to-add-chatmod' => 'Errore: Non hai il permesso per aggiungere questo utente al gruppo "$1".',
+	'chat-userrightslog-a-made-b-chatmod' => '$1 ha nominato $2 moderatore della chat di questa wiki.',
+	'chat-err-invalid-username-chatmod' => 'Errore: Impossibile trovare l\'utente "$1"',
+	'group-bannedfromchat' => 'Bannati dalla chat',
+	'group-bannedfromchat-member' => 'Bannato dalla chat',
+	'grouppage-bannedfromchat' => 'w:it:Aiuto:Chat',
 );
+
 $messages['ja'] = array(
 	'chat' => 'チャット',
 	'chat-desc' => '[[Special:Chat|ライブチャット]]',
@@ -1675,7 +1742,16 @@ $messages['ja'] = array(
 	'chat-blocklist-by' => 'ブロックしたユーザー',
 	'chat-blocklist-reason' => '理由',
 	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
+	'chat-inlinealert-a-made-b-chatmod' => '$1 が <strong>$2</strong> をチャットモデレータにしました。',
+	'chat-err-already-chatmod' => 'エラー: 「$1」は既に「$2」グループの一員です。',
+	'chat-err-no-permission-to-add-chatmod' => 'エラー: あなたにはこのユーザーを「$1」グループに追加する権限がありません。',
+	'chat-userrightslog-a-made-b-chatmod' => '$1 が $2 をこのWikiのチャットモデレータにしました。',
+	'chat-err-invalid-username-chatmod' => 'エラー: ユーザー「$1」は見つかりませんでした。',
+	'group-bannedfromchat' => 'チャットから追放されたユーザー',
+	'group-bannedfromchat-member' => 'チャットから追放されたユーザー',
+	'grouppage-bannedfromchat' => 'w:c:ja.community:ヘルプ:チャット',
 );
+
 $messages['ka'] = array(
 	'chat' => 'სტატისტიკა',
 	'chat-desc' => '[[Special:Chat|სტატისტიკა]]',
@@ -1684,9 +1760,11 @@ $messages['ka'] = array(
 	'chat-ban-modal-button-cancel' => 'გაუქმება',
 	'chat-you-are-banned' => 'ნებართვის შეცდომა.',
 );
+
 $messages['khw'] = array(
 	'chat-desc' => '[[Special:Chat|لایو چیٹنگ]]',
 );
+
 $messages['kn'] = array(
 	'chat' => 'ಸಂಭಾಷಣೆ',
 	'chat-desc' => '[[Special:Chat|ನೇರ ಸಂಭಾಷಣೆ]]',
@@ -1726,6 +1804,7 @@ $messages['kn'] = array(
 	'chat-checkuser-join-action' => 'ಸಂಭಾಷಣೆಗೆ ಸೇರಿಕೊಳ್ಳು',
 	'chat-status-away' => 'ದೂರದಲ್ಲಿ',
 );
+
 $messages['ko'] = array(
 	'chat' => '채팅',
 	'chat-desc' => '[[Special:Chat|실시간 채팅]]',
@@ -1804,12 +1883,14 @@ $messages['ko'] = array(
 	'chat-checkuser-join-action' => '참여한 채팅방',
 	'chat-status-away' => '부재중',
 );
+
 $messages['ku-latn'] = array(
 	'chat' => 'Çet',
 	'chat-ban-modal-label-reason' => 'Sedem',
 	'chat-ban-modal-button-cancel' => 'Betal bike',
 	'chat-start-a-chat' => 'Çetek bide destpêkirin',
 );
+
 $messages['ky'] = array(
 	'chat' => 'Чат',
 	'chat-ban-modal-label-reason' => 'Себеп',
@@ -1818,6 +1899,7 @@ $messages['ky'] = array(
 	'chat-ban-modal-button-cancel' => 'Жокко чыгаруу',
 	'chat-user-menu-ban' => 'Бан кылуу',
 );
+
 $messages['lb'] = array(
 	'chat' => 'Chat',
 	'chat-desc' => '[[Special:Chat|Live chat]]',
@@ -1848,6 +1930,7 @@ $messages['lb'] = array(
 	'chat-ban-option-list' => '2 Stonnen:2 hours,1 Dag:1 day,3 Deeg:3 days,1 Woch:1 week,2 Wochen:2 weeks,1 Mount:1 month,3 Méint:3 months,6 Méint:6 months,1 Joer:1 year,onbegrenzt:infinite',
 	'chat-status-away' => 'Net do',
 );
+
 $messages['lol'] = array(
 	'chat' => 'crwdns61265:0crwdne61265:0',
 	'chatbanlist' => 'crwdns61266:0crwdne61266:0',
@@ -1938,7 +2021,16 @@ $messages['lol'] = array(
 	'chat-blocklist-by' => 'crwdns66517:0crwdne66517:0',
 	'chat-blocklist-reason' => 'crwdns66518:0crwdne66518:0',
 	'chat-user-throttled' => 'crwdns66798:0{PLURAL:$1|second|seconds}crwdne66798:0',
+	'chat-inlinealert-a-made-b-chatmod' => 'crwdns61287:0crwdne61287:0',
+	'chat-err-already-chatmod' => 'crwdns61309:0crwdne61309:0',
+	'chat-err-no-permission-to-add-chatmod' => 'crwdns61310:0crwdne61310:0',
+	'chat-userrightslog-a-made-b-chatmod' => 'crwdns61311:0crwdne61311:0',
+	'chat-err-invalid-username-chatmod' => 'crwdns61312:0crwdne61312:0',
+	'group-bannedfromchat' => 'crwdns61341:0crwdne61341:0',
+	'group-bannedfromchat-member' => 'crwdns61342:0crwdne61342:0',
+	'grouppage-bannedfromchat' => 'crwdns61343:0crwdne61343:0',
 );
+
 $messages['lrc'] = array(
 	'chat' => 'انجوماگپ',
 	'chat-no-login' => 'شما سی انجوماگپ روئیت وامین',
@@ -1966,6 +2058,7 @@ $messages['lrc'] = array(
 	'chat-checkuser-join-action' => 'اومائه د انجوماگپ',
 	'chat-status-away' => 'دير',
 );
+
 $messages['lt'] = array(
 	'chat' => 'Pokalbiai',
 	'chat-desc' => '[[Special:Chat|Tiesioginiai pokalbiai]]',
@@ -2017,9 +2110,11 @@ $messages['lt'] = array(
 	'group-chatmoderator-member' => 'Pokalbių moderatorius',
 	'chat-browser-is-notsupported' => '	Jūsų naršyklė nepalaiko. Geriausiam patyrimui, naudokitės <a href="http://community.wikia.com/wiki/Help:Supported_browsers">naujesnę naršyklė</a>.',
 );
+
 $messages['lv'] = array(
 	'chat-user-menu-message-wall' => 'Lietotāja diskusija',
 );
+
 $messages['mk'] = array(
 	'chat' => 'Разговори',
 	'chat-desc' => '[[Special:Chat|Разговори во живо]]',
@@ -2099,9 +2194,11 @@ $messages['mk'] = array(
 	'chat-checkuser-join-action' => 'Се приклучил во разговорот',
 	'chat-status-away' => 'Отсутен',
 );
+
 $messages['ml'] = array(
 	'chat-edit-count' => '$1 തിരുത്തലുകൾ',
 );
+
 $messages['ms'] = array(
 	'chat' => 'Sembang',
 	'chat-desc' => '[[Special:Chat|Sembang secara langsung]]',
@@ -2182,6 +2279,7 @@ Jika anda rasa ini kesilapan atau ingin merayu untuk dibenarkan semula, sila hub
 	'chat-checkuser-join-action' => 'Menyertai Sembang',
 	'chat-status-away' => 'Keluar',
 );
+
 $messages['nb'] = array(
 	'chat' => 'Chat',
 	'chat-desc' => '[[Special:Chat|Chat]]',
@@ -2261,6 +2359,7 @@ $messages['nb'] = array(
 	'chat-checkuser-join-action' => 'Ble med i chatten',
 	'chat-status-away' => 'Borte',
 );
+
 $messages['ne'] = array(
 	'chat' => 'कुराकानी',
 	'chat-ban-modal-label-reason' => 'कारण',
@@ -2270,6 +2369,7 @@ $messages['ne'] = array(
 	'chat-log-reason-banchange' => 'कारण दिइएको छैन',
 	'chat-log-reason-banremove' => 'कारण दिइएको छैन',
 );
+
 $messages['nl'] = array(
 	'chat' => 'Chatten',
 	'chat-desc' => '[[Special:Chat|Livechat]]',
@@ -2349,6 +2449,7 @@ De laatste regel uit het logboek chatverbanningen wordt hieronder ter referentie
 	'chat-checkuser-join-action' => 'Verbonden met chat',
 	'chat-status-away' => 'Weg',
 );
+
 $messages['nl-informal'] = array(
 	'chat-no-login' => 'Je moet aangemeld zijn om deel te nemen aan de chat',
 	'chat-no-login-text' => 'Meld je aan om deel te nemen aan de chat.',
@@ -2357,6 +2458,7 @@ $messages['nl-informal'] = array(
 	'chat-you-are-banned-text' => 'Je mag niet langer deelnemen aan de chat. Als je denkt dat dit niet klopt, of als je wilt vragen uw blokkade op te heffen, neem dan contact op met een beheerder.',
 	'chat-room-is-not-on-this-wiki' => 'De chatroom waar je probeert binnen te komen bestaat niet op deze wiki.',
 );
+
 $messages['oc'] = array(
 	'chat' => 'Chat',
 	'chat-desc' => '[[Special:Chat|Charrar en dirècte]]',
@@ -2412,6 +2514,7 @@ $messages['oc'] = array(
 	'chat-checkuser-join-action' => 'A rejunt lo Chat',
 	'chat-status-away' => 'Absent',
 );
+
 $messages['pl'] = array(
 	'chat' => 'Czat',
 	'chat-desc' => '[[Special:Chat|Czat na żywo]]',
@@ -2502,7 +2605,16 @@ $messages['pl'] = array(
 	'chat-blocklist-by' => 'Użytkownik nakładający blokadę',
 	'chat-blocklist-reason' => 'Powód',
 	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
+	'chat-inlinealert-a-made-b-chatmod' => '$1 nadał(a) <strong>$2</strong> uprawnienia moderatora czatu.',
+	'chat-err-already-chatmod' => 'Błąd: „$1” jest już w grupie „$2”.',
+	'chat-err-no-permission-to-add-chatmod' => 'Błąd: Nie masz uprawnień do dodania tego użytkownika do grupy „$1”.',
+	'chat-userrightslog-a-made-b-chatmod' => '$1 {{GENDER:$1|awansował|awansowała}} $2 na moderatora czatu tej wiki.',
+	'chat-err-invalid-username-chatmod' => 'Błąd: Nie dało się odnaleźć użytkownika „$1”',
+	'group-bannedfromchat' => 'Zablokowani na czacie',
+	'group-bannedfromchat-member' => '{{GENDER:$1|zablokowany|zablokowana}} na czacie',
+	'grouppage-bannedfromchat' => 'w:pl:Pomoc:Czat',
 );
+
 $messages['pms'] = array(
 	'chat' => 'Ciaciaré',
 	'chat-desc' => '[[Special:Chat|Ciaciaré dal viv]]',
@@ -2581,6 +2693,7 @@ $messages['pms'] = array(
 	'chat-checkuser-join-action' => "A l'é intrà ant la ciaciarada dal viv",
 	'chat-status-away' => 'Assent',
 );
+
 $messages['ps'] = array(
 	'chat' => 'بانډار',
 	'chat-no-login-text' => 'د بانډار لپاره غونډال ته ورننوځۍ.',
@@ -2618,6 +2731,7 @@ $messages['ps'] = array(
 	'chat-checkuser-join-action' => 'بانډار کې ورگډ شو',
 	'chat-status-away' => 'ليرې دی',
 );
+
 $messages['pt'] = array(
 	'chat' => 'Chat',
 	'chat-desc' => '[[Special:Chat|Chat ao vivo]]',
@@ -2708,7 +2822,16 @@ $messages['pt'] = array(
 	'chat-blocklist-by' => 'Usuário bloqueado por',
 	'chat-blocklist-reason' => 'Motivo',
 	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
+	'chat-inlinealert-a-made-b-chatmod' => '$1 tornou <strong>$2</strong> um moderador do chat.',
+	'chat-err-already-chatmod' => 'Erro: "$1" já está no grupo "$2".',
+	'chat-err-no-permission-to-add-chatmod' => 'Erro: Você não tem permissões para colocar este usuário no grupo "$1".',
+	'chat-userrightslog-a-made-b-chatmod' => '$1 promoveu $2 para ser um moderador do chat nesta wiki.',
+	'chat-err-invalid-username-chatmod' => 'Erro: Não foi possível encontrar o usuário "$1"',
+	'group-bannedfromchat' => 'Banido do chat',
+	'group-bannedfromchat-member' => 'Banido do chat',
+	'grouppage-bannedfromchat' => 'w:c:comunidade:Ajuda:Chat',
 );
+
 $messages['ro'] = array(
 	'chat-desc' => '[[Special:Chat|Chat live]]',
 	'chat-no-login' => 'Trebuie să fii autentificat pentru a intra pe chat.',
@@ -2717,6 +2840,7 @@ $messages['ro'] = array(
 	'chat-join-the-chat' => 'Alăturaţi-vă chat-ului',
 	'chat-member-since' => 'Membru din $1',
 );
+
 $messages['roa-tara'] = array(
 	'chat' => 'Ciat',
 	'chat-desc' => "[[Special:Chat|Ciat da 'u vive]]",
@@ -2744,6 +2868,7 @@ $messages['roa-tara'] = array(
 	'chat-join-the-chat' => "Tràse jndr'à Chat",
 	'chat-edit-count' => '{{PLURAL: $1|$1 cangiamende|$1 cangiaminde}}',
 );
+
 $messages['ru'] = array(
 	'chat' => 'Чат',
 	'chat-desc' => '[[Special:Chat|Чат]]',
@@ -2834,7 +2959,16 @@ $messages['ru'] = array(
 	'chat-blocklist-by' => 'Заблокировал',
 	'chat-blocklist-reason' => 'Причина',
 	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
+	'chat-inlinealert-a-made-b-chatmod' => '$1 сделал(а) <strong>$2</strong> модератором чата.',
+	'chat-err-already-chatmod' => 'Ошибка: "$1" уже находится в группе "$2".',
+	'chat-err-no-permission-to-add-chatmod' => 'Ошибка: у вас нет разрешения на добавление этого участника в группу "$1".',
+	'chat-userrightslog-a-made-b-chatmod' => '$1 присвоил(а) $2 статус модератора чата на этой вики.',
+	'chat-err-invalid-username-chatmod' => 'Ошибка: не удалось найти участника "$1"',
+	'group-bannedfromchat' => 'Забанен(а) в чате',
+	'group-bannedfromchat-member' => 'Забанен(а) в чате',
+	'grouppage-bannedfromchat' => 'w:c:ru.community:Справка:Чат',
 );
+
 $messages['sa'] = array(
 	'chat-ban-modal-label-reason' => 'कारणम्',
 	'chat-log-reason-undo' => 'पूर्ववत्',
@@ -2847,6 +2981,7 @@ $messages['sa'] = array(
 	'chat-user-menu-contribs' => 'योगदानानि',
 	'chat-user-menu-private' => 'वैय्यक्तिकसन्देशाः',
 );
+
 $messages['sco'] = array(
 	'chat' => 'Bleather',
 	'chat-desc' => '[[Special:Chat|Live bleather]]',
@@ -2925,6 +3060,7 @@ $messages['sco'] = array(
 	'chat-checkuser-join-action' => 'Jyned Bleather',
 	'chat-status-away' => 'Awa',
 );
+
 $messages['sr-ec'] = array(
 	'chat-desc' => '[[Special:Chat|Ћаскање]]',
 	'chat-no-login' => 'Морате бити пријављени да бисте ћаскали.',
@@ -3116,10 +3252,12 @@ $messages['sv'] = array(
 	'chat-checkuser-join-action' => 'Gick med i chatten',
 	'chat-status-away' => 'Borta',
 );
+
 $messages['ta'] = array(
 	'chat' => 'அரட்டை',
 	'chat-you-are-banned' => 'அனுமதிப் பிழை',
 );
+
 $messages['te'] = array(
 	'chat' => 'బాతాఖానీ',
 	'chat-desc' => '[[Special:Chat|లైవు బాతాఖానీ]]',
@@ -3167,6 +3305,7 @@ $messages['te'] = array(
 	'chat-user-menu-private-allow' => 'గోప్య సందేశాలను అనుమతించు',
 	'chat-status-away' => 'ఇక్కడ లేరు',
 );
+
 $messages['th'] = array(
 	'chat-desc' => '[[Special:Chat|Live chat]]',
 	'chat-no-login' => 'คุณต้องล็อกอินในการสนทนา',
@@ -3186,6 +3325,7 @@ $messages['th'] = array(
 	'chat-edit-count' => '$1 การแก้ไข',
 	'chat-member-since' => 'เป็นสมาชิกตั้งแต่ $1',
 );
+
 $messages['tl'] = array(
 	'chat' => 'Makipagtalastasan',
 	'chat-desc' => '[[Special:Chat|Buhay na satsatan]]',
@@ -3266,6 +3406,7 @@ Kung iniisip mong isa itong pagkakamali o nais mong muling maisaalang-alang, man
 	'chat-checkuser-join-action' => 'Sumali sa Satsatan',
 	'chat-status-away' => 'Nasa malayo',
 );
+
 $messages['tr'] = array(
 	'chat' => 'Sohbet',
 	'chat-private-messages' => 'Özel Mesajlar',
@@ -3283,15 +3424,19 @@ $messages['tr'] = array(
 	'chat-user-menu-private-allow' => 'Özel Mesajlara İzin Ver',
 	'chat-user-menu-private-close' => 'Özel Odayı Kapat',
 );
+
 $messages['tt-cyrl'] = array(
 	'chat-great-youre-logged-in' => 'Шәп! Сез системага кердегез.',
 );
+
 $messages['tyv'] = array(
 	'chat-welcome-message' => '$1 деп чугаа-соотче кирип моорлаңар',
 );
+
 $messages['tzm'] = array(
 	'chat-ban-modal-button-cancel' => 'ⵓⵖⴰⵍ',
 );
+
 $messages['uk'] = array(
 	'chat' => 'Чат',
 	'chat-desc' => '[[Special:Chat|Чат]]',
@@ -3370,12 +3515,14 @@ $messages['uk'] = array(
 	'chat-checkuser-join-action' => 'Приєднатися',
 	'chat-status-away' => 'Відсутній',
 );
+
 $messages['vep'] = array(
 	'chat' => 'Čat',
 	'chat-start-a-chat' => 'Zavottä čat',
 	'group-chatmoderator' => 'Čatan moderatorad',
 	'group-chatmoderator-member' => 'Čatan moderator',
 );
+
 $messages['vi'] = array(
 	'chat' => 'Tán gẫu',
 	'chat-desc' => '[[Special:Chat|Tán gẫu trực tuyến]]',
@@ -3455,6 +3602,7 @@ $messages['vi'] = array(
 	'chat-status-away' => 'Vắng',
 	'grouppage-chatmoderator' => 'w:c:vi:Help:Tán gẫu',
 );
+
 $messages['zh-hans'] = array(
 	'chat' => '聊天',
 	'chat-desc' => '[[Special:Chat|在线聊天]]',
@@ -3545,7 +3693,16 @@ $messages['zh-hans'] = array(
 	'chat-blocklist-by' => '封禁的用户',
 	'chat-blocklist-reason' => '原因',
 	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
+	'chat-inlinealert-a-made-b-chatmod' => '$1已经提升<strong>$2</strong>为聊天主持人。',
+	'chat-err-already-chatmod' => '错误："$1" 已经在 "$2" 组。',
+	'chat-err-no-permission-to-add-chatmod' => '错误：您不具备给此用户添加 "$1" 组的权限。',
+	'chat-userrightslog-a-made-b-chatmod' => '$1 推举 $2 为本维基上的聊天主持人。',
+	'chat-err-invalid-username-chatmod' => '错误：找不到用户"$1"',
+	'group-bannedfromchat' => '从聊天中禁止',
+	'group-bannedfromchat-member' => '从聊天中禁止',
+	'grouppage-bannedfromchat' => 'w:c:zh.community:Help:Chat',
 );
+
 $messages['zh-hant'] = array(
 	'chat' => '聊天室',
 	'chat-desc' => '[[Special:Chat|線上聊天室]]',
@@ -3636,4 +3793,13 @@ $messages['zh-hant'] = array(
 	'chat-blocklist-by' => '封禁的用戶',
 	'chat-blocklist-reason' => '原因',
 	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
+	'chat-inlinealert-a-made-b-chatmod' => '$1 設定 <strong>$2</strong> 為聊天主持人。',
+	'chat-err-already-chatmod' => '錯誤："$1" 已經在 "$2" 群組。',
+	'chat-err-no-permission-to-add-chatmod' => '錯誤：您沒有將使用者加至 "$1" 群組的權限。',
+	'chat-userrightslog-a-made-b-chatmod' => '$1 推舉 $2 成為此 Wiki 的聊天室主持人。',
+	'chat-err-invalid-username-chatmod' => '錯誤：找不到使用者 "$1"',
+	'group-bannedfromchat' => '被禁止進入聊天室',
+	'group-bannedfromchat-member' => '被禁止進入聊天室',
+	'grouppage-bannedfromchat' => 'w:c:zh.community:Help:Chat',
 );
+
