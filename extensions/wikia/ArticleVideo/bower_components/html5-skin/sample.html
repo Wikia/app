@@ -2,13 +2,15 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <!-- this is just for having Cookies helper as a global variable -->
+  <script src="https://cdn.rawgit.com/js-cookie/js-cookie/8b702508/src/js.cookie.js"></script>
   <script src="//player.ooyala.com/static/v4/stable/4.10.6/core.min.js"></script>
   <script src="//player.ooyala.com/static/v4/stable/4.10.6/video-plugin/main_html5.min.js"></script>
   <script src="//player.ooyala.com/static/v4/stable/4.10.6/video-plugin/osmf_flash.min.js"></script>
   <script src="//player.ooyala.com/static/v4/stable/4.10.6/video-plugin/bit_wrapper.min.js"></script>
   <script src="//player.ooyala.com/static/v4/stable/4.10.6/other-plugin/discovery_api.min.js"></script>
-  <script src="//player.ooyala.com/static/v4/stable/4.10.6/skin-plugin/html5-skin.min.js"></script>
-  <link rel="stylesheet" href="//player.ooyala.com/static/v4/stable/4.10.6/skin-plugin/html5-skin.min.css"/>
+  <script src="/build/html5-skin.min.js"></script>
+  <link rel="stylesheet" href="/build/html5-skin.min.css"/>
 </head>
 
 <body>
@@ -19,12 +21,12 @@
     "playerBrandingId": "26e2e3c1049c4e70ae08a242638b5c40",
     'debug':true,
     "skin": {
-      "config": "",
-      "inline": {"shareScreen": {"embed": {"source": "<iframe width='640' height='480' frameborder='0' allowfullscreen src='//player.ooyala.com/static/v4/stable/4.10.6/skin-plugin/iframe.html?ec=<ASSET_ID>&pbid=<PLAYER_ID>&pcode=<PUBLISHER_ID>'></iframe>"}}}
-    }
+      "config": "wikia.json"
+    },
+    "autoplay": Cookies.get('html5-skin.autoplay') !== '0'
   };
   OO.ready(function() {
-    window.pp = OO.Player.create('container', 'RmZW4zcDo6KqkTIhn1LnowEZyUYn5Tb2', playerParam);
+    window.pp = OO.Player.create('container', '51ZmdxYTE6oaO5aQo9Hqt31Nn9Nave4e', playerParam);
   });
 </script>
 
