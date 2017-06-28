@@ -212,9 +212,12 @@ var UserView = Backbone.View.extend({
 		var model = this.model.toJSON(),
 			groups = this.model.get('groups');
 
-		if(model['since']) {
-			model['since'] = window.wgChatLangMonthAbbreviations[model['since']['mon']] + ' ' + model['since']['year'];
+		if (model.since) {
+			model.since = window.wgChatLangMonthAbbreviations[model.since.mon] + ' ' + model.since.year
+			model.since = mw.message('chat-member-since', model.since).escaped();
 		}
+
+		model.editCount = mw.message('chat-edit-count', model.editCount).escaped();
 
 		$(this.el).html( this.template(model) );
 
