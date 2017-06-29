@@ -1,7 +1,6 @@
 <?php
 
 class ArticleVideoContextTest extends WikiaBaseTest {
-	// FIXME add tests for new methods
 
 	/**
 	 * @param $expected
