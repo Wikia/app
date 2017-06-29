@@ -508,6 +508,12 @@ body > a > img[src$="noad.gif"] {
 	}
 }
 
+#WikiaAdInContentPlaceHolder.wikia-ad-in-content-placeholder {
+	// TODO mixin
+	position: sticky;
+	top: 100px;
+}
+
 .wikia-ad-interactive-map {
 	height: 50px;
 	position: absolute;

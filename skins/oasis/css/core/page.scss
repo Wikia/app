@@ -132,6 +132,11 @@
 		padding-top: 10px;
 	}
 
+	.loaded {
+		// TODO make it the same height as article
+		height: 5000px;
+	}
+
 	.module {
 		@include clearfix;
 		background: $color-page;
