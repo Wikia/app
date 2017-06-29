@@ -2794,13 +2794,6 @@ $config['template_classification_scss'] = [
 	],
 ];
 
-$config['special_broken_rename_fix'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'assets' => [
-		'//extensions/wikia/BrokenRenameFix/styles/SpecialBrokenRenameFix.scss',
-	],
-];
-
 $config['insights_module_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
