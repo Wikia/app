@@ -1,0 +1,13 @@
+{
+    "name": "ooyala/v2-api",
+    "description": "Ooyala's V2 API PHP SDK",
+    "license": "proprietary",
+    "autoload": {
+        "files": ["OoyalaApi.php"]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}

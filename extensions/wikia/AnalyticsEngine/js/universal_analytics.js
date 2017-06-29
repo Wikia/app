@@ -263,12 +263,12 @@
 
 		return rating;
 	}
-	
+
 	function hasPortableInfobox() {
 		if (window.ads && window.ads.context.targeting.hasPortableInfobox) {
 			return 'Yes';
 		}
-		
+
 		return 'No';
 	}
 
@@ -603,5 +603,15 @@
 		var nsPrefix = (opt_namespace) ? opt_namespace + '.' : '';
 		_gaWikiaPush([nsPrefix + 'send', 'pageview', fakePage]);
 	};
+
+	/**
+	 * Set Custom Dimension
+	 *
+	 * @param {number|string} index
+	 * @param {string} value
+	 */
+	window.guaSetCustomDimension = function (index, value) {
+		_gaWikiaPush(['set', 'dimension' + index, value]);
+	}
 
 }(window));
