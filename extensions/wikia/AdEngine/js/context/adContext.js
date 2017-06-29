@@ -87,7 +87,7 @@ define('ext.wikia.adEngine.adContext', [
 	}
 
 	function enableAdMixExperiment(context) {
-		context.opts.adMixExperimentEnabled = !!(
+		context.opts.adMix3Enabled = !!(
 			isPageType('article') &&
 			context.targeting.skin === 'oasis' &&
 			context.targeting.hasFeaturedVideo &&
@@ -100,13 +100,7 @@ define('ext.wikia.adEngine.adContext', [
 			geo.isProperGeo(instantGlobals.wgAdDriverPremiumAdLayoutCountries)
 		);
 
-		context.opts.adMix3Enabled = context.opts.adMixExperimentEnabled;
-
-		context.slots.adMixToUnblock = ['INCONTENT_BOXAD_1'];
-
-		if (context.opts.adMix3Enabled) {
-			context.slots.adMixToUnblock.push('BOTTOM_LEADERBOARD');
-		}
+		context.slots.premiumAdLayoutSlotsToUnblock = ['INCONTENT_BOXAD_1', 'BOTTOM_LEADERBOARD', 'INCONTENT_PLAYER'];
 	}
 
 	function referrerIsSonySite() {

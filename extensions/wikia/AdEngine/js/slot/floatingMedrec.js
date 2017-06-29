@@ -71,7 +71,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 				});
 			}
 
-			if (!context.opts.adMixExperimentEnabled) {
+			if (!context.opts.adMix3Enabled) {
 				if ($win.scrollTop() > startPosition && $win.scrollTop() < stopPosition) {
 					$adSlot.css({
 						position: 'fixed',
@@ -142,7 +142,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 				win.removeEventListener('scroll', update);
 				win.removeEventListener('resize', update);
 
-				if (!context.opts.adMixExperimentEnabled) {
+				if (!context.opts.adMix3Enabled) {
 					$adSlot.css({
 						visibility: 'hidden'
 					});

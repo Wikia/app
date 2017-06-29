@@ -37,7 +37,8 @@ $(function () {
 			params.excludeScss = window.wgSassLoadedScss;
 		}
 
-		params.isAdMixExperimentEnabled = window.ads.context.opts.adMixExperimentEnabled;
+		// TODO rethink changes in RR
+		params.isAdMixExperimentEnabled = window.ads.context.opts.adMix3Enabled;
 
 		$.extend(params, getParamsFromUrl());
 

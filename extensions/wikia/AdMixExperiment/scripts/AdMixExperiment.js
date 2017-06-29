@@ -330,7 +330,7 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.throttle'], func
 			update();
 		}
 
-		if (context.opts.adMixExperimentEnabled) {
+		if (context.opts.adMix3Enabled) {
 			if ($rail.find('.loading').exists()) {
 				$rail.one('afterLoad.rail', onRightRailReady);
 			} else {
