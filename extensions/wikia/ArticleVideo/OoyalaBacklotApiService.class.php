@@ -31,12 +31,12 @@ class OoyalaBacklotApiService {
 		return $title;
 	}
 
-	public function getDuration( string $videoId ): int {
+	public function getDuration( string $videoId ): string {
 		$data = $this->getData( $videoId );
 		$duration = 0;
 
 		if ( !empty( $data ) ) {
-			$duration = $data->duration;
+			$duration = WikiaFileHelper::formatDuration( $data->duration / 1000 );
 		}
 
 		return $duration;
