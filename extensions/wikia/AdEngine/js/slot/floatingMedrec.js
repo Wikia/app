@@ -88,11 +88,6 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 					});
 				}
 			}
-
-				if (context.opts.adMix1Enabled) {
-					refreshAdIfPossible();
-				}
-
 				if (context.opts.adMix3Enabled && shouldChangeSlot($adSlot.offset().top, 6)) {
 					if (refresh.adVisible) {
 						$adSlot.addClass('hidden');

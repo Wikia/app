@@ -94,8 +94,12 @@ define('ext.wikia.adEngine.adContext', [
 			geo.isProperGeo(instantGlobals.wgAdDriverAdMixCountries)
 		);
 
-		// TODO remove admix1 in ADEN-5443
-		context.opts.adMix1Enabled = false;
+		context.opts.premiumAdLayoutEnabled = !!(
+			isPageType('article') &&
+			context.targeting.skin === 'oasis' &&
+			geo.isProperGeo(instantGlobals.wgAdDriverPremiumAdLayoutCountries)
+		);
+
 		context.opts.adMix3Enabled = context.opts.adMixExperimentEnabled;
 
 		context.slots.adMixToUnblock = ['INCONTENT_BOXAD_1'];
