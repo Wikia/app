@@ -1,17 +1,13 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.floatingMedrec', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.slot.service.viewabilityHandler',
 	'jquery',
-	'wikia.abTest',
 	'wikia.log',
 	'wikia.throttle',
 	'wikia.window'
 ], function (
 	adContext,
-	viewabilityHandler,
 	$,
-	abTest,
 	log,
 	throttle,
 	win
@@ -35,15 +31,8 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 			stopPosition,
 			$adSlot = $('<div class="wikia-ad"></div>').attr('id', slotName),
 			$footer = $('#WikiaFooter'),
-			$recirculationRail = $('#recirculation-rail'),
 			$placeHolder = $('#WikiaAdInContentPlaceHolder'),
-			$win = $(win),
-			refresh = {
-				refreshAdPos: 0,
-				lastRefreshTime: new Date(),
-				refreshNumber: 0,
-				adVisible: true,
-			};
+			$win = $(win);
 
 		function getStartPosition(placeHolder) {
 			return parseInt(placeHolder.offset().top, 10) -
@@ -62,7 +51,6 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 		}
 
 		function update() {
-
 			if ($win.scrollTop() <= startPosition) {
 				$adSlot.css({
 					position: 'relative',
@@ -71,53 +59,21 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 				});
 			}
 
-			if (!context.opts.adMix3Enabled) {
-				if ($win.scrollTop() > startPosition && $win.scrollTop() < stopPosition) {
-					$adSlot.css({
-						position: 'fixed',
-						top: globalNavigationHeight + margin + 'px',
-						visibility: 'visible'
-					});
-				}
-
-				if ($win.scrollTop() >= stopPosition) {
-					$adSlot.css({
-						position: 'absolute',
-						top: stopPosition - startPosition + 'px',
-						visibility: 'visible'
-					});
-				}
-			}
-				if (context.opts.adMix3Enabled && shouldChangeSlot($adSlot.offset().top, 6)) {
-					if (refresh.adVisible) {
-						$adSlot.addClass('hidden');
-						$recirculationRail.show();
-					} else {
-						viewabilityHandler.refreshOnView(slotName, 0);
-						$recirculationRail.hide();
-					}
-
-					refresh.adVisible = !refresh.adVisible;
-				}
-
-		}
-
-		function getDifference(currentAdPos) {
-			return currentAdPos > refresh.refreshAdPos ? currentAdPos - refresh.refreshAdPos : refresh.refreshAdPos - currentAdPos;
-		}
-
-		function shouldChangeSlot(currentAdPos, maxChanges) {
-			var heightScrolled = getDifference(currentAdPos),
-				timeDifference = (new Date()) - refresh.lastRefreshTime,
-				result = heightScrolled > 10 && timeDifference > 10000 && refresh.refreshNumber < maxChanges;
-
-			if (result) {
-				refresh.lastRefreshTime = new Date();
-				refresh.refreshAdPos = currentAdPos;
-				refresh.refreshNumber++;
+			if ($win.scrollTop() > startPosition && $win.scrollTop() < stopPosition) {
+				$adSlot.css({
+					position: 'fixed',
+					top: globalNavigationHeight + margin + 'px',
+					visibility: 'visible'
+				});
 			}
 
-			return result;
+			if ($win.scrollTop() >= stopPosition) {
+				$adSlot.css({
+					position: 'absolute',
+					top: stopPosition - startPosition + 'px',
+					visibility: 'visible'
+				});
+			}
 		}
 
 		function handleFloatingMedrec() {
@@ -134,11 +90,9 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 				win.removeEventListener('scroll', update);
 				win.removeEventListener('resize', update);
 
-				if (!context.opts.adMix3Enabled) {
-					$adSlot.css({
-						visibility: 'hidden'
-					});
-				}
+				$adSlot.css({
+					visibility: 'hidden'
+				});
 
 				enabled = false;
 			}
@@ -146,9 +100,9 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 			if (!enabled && isEnoughSpace && scrollTop >= startPosition) {
 					log(['handleFloatingMedrec', 'Enabling floating medrec'], 'debug', logGroup);
 
-					enabled = !context.opts.adMix3Enabled;
+					enabled = true;
 
-					if (!adPushed && (!context.opts.adMix3Enabled || shouldChangeSlot(scrollTop, 6))) {
+					if (!adPushed) {
 						$placeHolder.append($adSlot);
 						win.adslots2.push({
 							slotName: slotName,
@@ -156,15 +110,9 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 								win.addEventListener('scroll', update);
 								win.addEventListener('resize', update);
 
-								refresh.refreshAdPos = $adSlot.offset().top;
-								refresh.lastRefreshTime = new Date();
 							}
 						});
 						adPushed = true;
-
-						if (context.opts.adMix3Enabled) {
-							$recirculationRail.hide();
-						}
 					}
 			}
 		}
