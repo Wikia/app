@@ -398,7 +398,6 @@ $wgAutoloadClasses['CommunityCornerController'] = $IP.'/skins/oasis/modules/Comm
 $wgAutoloadClasses['PopularBlogPostsController'] = $IP.'/skins/oasis/modules/PopularBlogPostsController.class.php';
 $wgAutoloadClasses['RandomWikiController'] = $IP.'/skins/oasis/modules/RandomWikiController.class.php';
 $wgAutoloadClasses['ArticleInterlangController'] = $IP.'/skins/oasis/modules/ArticleInterlangController.class.php';
-$wgAutoloadClasses['ContributeMenuController'] = $IP.'/skins/oasis/modules/ContributeMenuController.class.php';
 $wgAutoloadClasses['UploadPhotosController'] = $IP.'/skins/oasis/modules/UploadPhotosController.class.php';
 $wgAutoloadClasses['WikiaTempFilesUpload'] = $IP.'/includes/wikia/WikiaTempFilesUpload.class.php';
 $wgAutoloadClasses['ThemeSettings'] = $IP.'/extensions/wikia/ThemeDesigner/ThemeSettings.class.php';
