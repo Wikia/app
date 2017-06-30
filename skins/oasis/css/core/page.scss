@@ -125,10 +125,7 @@
 }
 
 .WikiaRail {
-	@include flexbox();
 	float: right;
-	// TODO disable on tablet
-	margin-left: 20px;
 	padding: 0 $width-gutter;
 	width: $width-rail;
 	&.grid-2 {

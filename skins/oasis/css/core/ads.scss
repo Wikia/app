@@ -6,6 +6,7 @@
 @import 'skins/shared/mixins/clearfix';
 @import 'skins/shared/mixins/flexbox';
 @import 'skins/shared/mixins/gradient';
+@import 'skins/shared/mixins/sticky';
 @import 'skins/shared/mixins/transform';
 @import 'ads-floor';
 @import 'ads-in-content';
@@ -509,9 +510,8 @@ body > a > img[src$="noad.gif"] {
 }
 
 #WikiaAdInContentPlaceHolder.wikia-ad-in-content-placeholder {
-	// TODO mixin
-	position: sticky;
-	top: 100px;
+	@include sticky();
+	top: 65px;
 }
 
 .wikia-ad-interactive-map {

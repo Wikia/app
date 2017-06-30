@@ -1,5 +1,6 @@
 @import 'skins/oasis/css/core/layout';
 @import 'skins/shared/mixins/calc';
+@import 'skins/shared/mixins/flexbox';
 @import 'breakpoints-variables';
 //todo remove styling by ID after cleanup after removal of responsive layout
 
@@ -151,6 +152,11 @@
 				display: inline-block;
 				width: 330px;
 			}
+		}
+
+		@media #{$breakpoint-small-plus-up} {
+			@include flexbox();
+			margin-left: 20px;
 		}
 	}
 
