@@ -106,14 +106,6 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 			return currentAdPos > refresh.refreshAdPos ? currentAdPos - refresh.refreshAdPos : refresh.refreshAdPos - currentAdPos;
 		}
 
-		function refreshAdIfPossible() {
-			var currentAdPos = $adSlot.offset().top;
-
-			if (shouldChangeSlot(currentAdPos, 3)) {
-				viewabilityHandler.refreshOnView(slotName, 0);
-			}
-		}
-
 		function shouldChangeSlot(currentAdPos, maxChanges) {
 			var heightScrolled = getDifference(currentAdPos),
 				timeDifference = (new Date()) - refresh.lastRefreshTime,
