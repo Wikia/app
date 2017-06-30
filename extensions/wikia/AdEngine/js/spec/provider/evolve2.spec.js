@@ -25,8 +25,7 @@ describe('Evolve2 Provider targeting', function () {
 				getVertical: function () {
 					return mocks.vertical;
 				}
-			},
-			openXHelper: {}
+			}
 		};
 
 	function getEvolve2Provider() {
@@ -36,8 +35,7 @@ describe('Evolve2 Provider targeting', function () {
 			mocks.slotTweaker,
 			mocks.zoneParams,
 			mocks.eventDispatcher,
-			mocks.log,
-			mocks.openXHelper
+			mocks.log
 		);
 	}
 

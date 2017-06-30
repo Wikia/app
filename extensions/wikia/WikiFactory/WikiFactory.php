@@ -2474,7 +2474,7 @@ class WikiFactory {
 					"city_description"       => $wiki->city_description,
 					"city_title"             => $wiki->city_title,
 					"city_founding_email"    => $wiki->city_founding_email,
-					"city_founding_ip"       => $wiki->city_founding_ip,
+					"city_founding_ip_bin"   => $wiki->city_founding_ip_bin,
 					"city_lang"              => $wiki->city_lang,
 					"city_special_config"    => $wiki->city_special_config,
 					"city_umbrella"          => $wiki->city_umbrella,

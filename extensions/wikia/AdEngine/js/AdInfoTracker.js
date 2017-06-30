@@ -6,7 +6,7 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
-], function (adInfoTrackerHelper,adTracker, adContext, log, win, mercuryListener) {
+], function (adInfoTrackerHelper, adTracker, adContext, log, win, mercuryListener) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adInfoTracker',
@@ -19,7 +19,6 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 			LEFT_SKYSCRAPER_2: true,
 			LEFT_SKYSCRAPER_3: true,
 			INCONTENT_BOXAD_1: true,
-			INCONTENT_LEADERBOARD: true,
 			INCONTENT_PLAYER: true,
 			BOTTOM_LEADERBOARD: true,
 			MOBILE_TOP_LEADERBOARD: true,

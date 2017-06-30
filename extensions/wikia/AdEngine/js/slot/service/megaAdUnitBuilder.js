@@ -1,11 +1,22 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
+	'ext.wikia.adEngine.context.slotsContext',
 	'wikia.browserDetect'
-], function (page, browserDetect) {
+], function (adContext, page, slotsContext, browserDetect) {
 	'use strict';
 
-	var dfpId = '5441';
+	var dfpId = '5441',
+		context;
+
+	function getContextTargeting() {
+		if (!context) {
+			context = adContext.getContext();
+		}
+
+		return context.targeting;
+	}
 
 	function findSlotGroup(map, slotName) {
 		var result = Object.keys(map).filter(function (name) {
@@ -25,7 +36,7 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 			'HiVi': ['INCONTENT_BOXAD_1', 'MOBILE_IN_CONTENT']
 		};
 
-		// OTHER: 'BOTTOM_LEADERBOARD', 'MOBILE_BOTTOM_LEADERBOARD', 'INCONTENT_LEADERBOARD'
+		// OTHER: 'BOTTOM_LEADERBOARD', 'MOBILE_BOTTOM_LEADERBOARD', 'INCONTENT_PLAYER'
 		return findSlotGroup(map, slotName) || 'OTHER';
 	}
 
@@ -45,14 +56,12 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 		return result;
 	}
 
-	function build(slotName, src, passback) {
+	function build(slotName, src) {
 		var adUnitElements,
 			params = page.getPageLevelParams(),
 			device = getDevice(params),
-			skin = params.skin,
-			pageType = params.s2,
-			provider = src.indexOf('remnant') === -1 ? 'wka1' : 'wka2',
-			wikiName = params.s1,
+			provider = src.indexOf('remnant') === -1 ? 'wka1a' : 'wka2a',
+			wikiName = getContextTargeting().wikiIsTop1000 ? params.s1 : '_not_a_top1k_wiki',
 			vertical = params.s0;
 
 		adUnitElements = [
@@ -61,28 +70,43 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 			provider + '.' + getGroup(slotName),
 			slotName.toLowerCase(),
 			device,
-			skin + '-' + pageType,
+			params.skin + '-' + getAdLayout(params),
 			wikiName + '-' + vertical
 		];
-
-		if (passback) {
-			adUnitElements.push(passback);
-		}
 
 		return adUnitElements.join('/');
 	}
 
+	function getAdLayout(params) {
+		var layout = params.s2,
+			incontentSlotName = params.skin === 'oasis' ? 'INCONTENT_PLAYER' : 'MOBILE_IN_CONTENT';
+
+		if (getContextTargeting().hasFeaturedVideo) {
+			layout = 'fv-' + layout;
+		}
+
+		if (slotsContext.isApplicable(incontentSlotName)) {
+			layout = layout + '-ic';
+		}
+
+		return layout;
+	}
+
 	function isValid(adUnit) {
-		return adUnit.indexOf('wka1.') !== -1 || adUnit.indexOf('wka2.') !== -1;
+		return adUnit.indexOf('wka1a.') !== -1 || adUnit.indexOf('wka2a.') !== -1;
 	}
 
 	function getShortSlotName(adUnit) {
-		return adUnit.replace(/^.*\/(wka1|wka2)\.[\w]+\/([^\/]*)\/.*$/, function () {
+		return adUnit.replace(/^.*\/(wka1a|wka2a)\.[\w]+\/([^\/]*)\/.*$/, function () {
 			if (arguments[2]) {
 				return arguments[2].toUpperCase();
 			}
 		});
 	}
+
+	adContext.addCallback(function () {
+		context = null;
+	});
 
 	return {
 		build: build,

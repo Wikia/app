@@ -18,11 +18,11 @@ class ImageHelper {
 			'extension' => 'png'
 		],
 		'FandomLogoHeader' => [
-			'name' => 'Hero-Logo-2x',
+			'name' => 'Hero-Logo-v3',
 			'extension' => 'png'
 		],
 		'FandomLogoFooter' => [
-			'name' => 'Footer-logo-2x',
+			'name' => 'Footer-logo-v3',
 			'extension' => 'png'
 		],
 		'Wikia' => [

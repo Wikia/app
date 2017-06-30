@@ -2,22 +2,34 @@
 define('ext.wikia.adEngine.context.slotsContext', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
+	'ext.wikia.adEngine.video.videoFrequencyMonitor',
+	'wikia.document',
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.log'
-], function (adContext, params, geo, instantGlobals, log) {
+], function (adContext, params, videoFrequencyMonitor, doc, geo, instantGlobals, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.context.slotsContext',
 		slots = {};
 
 	function setStatus(slotName, status) {
+		log(['setStatus', slotName, status], log.levels.info, logGroup);
 		slots[slotName] = !!status;
+	}
+
+	function isInContentApplicable() {
+		var header = doc.querySelectorAll('#mw-content-text > h2')[1];
+
+		return header && header.offsetWidth >= header.parentNode.offsetWidth;
 	}
 
 	function setupSlots() {
 		var context = adContext.getContext(),
-			isHome = params.getPageType() === 'home';
+			isHome = params.getPageType() === 'home',
+			isOasis = context.targeting.skin === 'oasis',
+			isIncontentEnabled = !isHome && isOasis && isInContentApplicable() &&
+				videoFrequencyMonitor.videoCanBeLaunched();
 
 		setStatus('PREFOOTER_MIDDLE_BOXAD', isHome);
 
@@ -30,10 +42,9 @@ define('ext.wikia.adEngine.context.slotsContext', [
 		setStatus('INCONTENT_BOXAD_1', !isHome);
 
 		setStatus('INVISIBLE_HIGH_IMPACT_2', geo.isProperGeo(instantGlobals.wgAdDriverHighImpact2SlotCountries));
-		setStatus('INCONTENT_LEADERBOARD', geo.isProperGeo(instantGlobals.wgAdDriverIncontentLeaderboardSlotCountries));
-		setStatus('INCONTENT_PLAYER', geo.isProperGeo(instantGlobals.wgAdDriverIncontentPlayerSlotCountries));
-
 		setStatus('PREFOOTER_RIGHT_BOXAD', !context.opts.overridePrefootersSizes);
+
+		setStatus('INCONTENT_PLAYER', isIncontentEnabled);
 
 		log(['Disabled slots:', slots], 'info', logGroup);
 	}
@@ -59,12 +70,10 @@ define('ext.wikia.adEngine.context.slotsContext', [
 	}
 
 	setupSlots();
-	adContext.addCallback(function () {
-		setupSlots();
-	});
 
 	return {
 		filterSlotMap: filterSlotMap,
-		isApplicable: isApplicable
+		isApplicable: isApplicable,
+		setStatus: setStatus
 	};
 });

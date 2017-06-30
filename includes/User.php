@@ -130,11 +130,17 @@ class User implements JsonSerializable {
 	/** @name Cache variables */
 	//@{
 	var $mId, $mName, $mRealName,
-		$mEmail, $mTouched, $mToken, $mEmailAuthenticated,
+		$mEmail, $mToken, $mEmailAuthenticated,
 		$mEmailToken, $mEmailTokenExpires, $mRegistration, $mGroups, $mOptionOverrides,
 		$mCookiePassword, $mEditCount, $mAllowUsertalk;
 	var $mBirthDate; // Wikia. Added to reflect our user table layout.
 	//@}
+
+	/** @var string TS_MW timestamp from the DB */
+	public $mTouched;
+
+	/** @var string TS_MW timestamp from cache */
+	protected $mQuickTouched;
 
 	/**
 	 * Bool Whether the cache variables have been loaded.
@@ -677,7 +683,7 @@ class User implements JsonSerializable {
 			|| strlen( $name ) > $wgMaxNameChars
 			|| $name != $wgContLang->ucfirst( $name ) ) {
 			wfDebugLog( 'username', __METHOD__ .
-				": '$name' invalid due to empty, IP, slash, length, or lowercase" );
+				": '$name' invalid due to empty, IP, slash, colon, length, or lowercase" );
 			return false;
 		}
 
@@ -2001,51 +2007,42 @@ class User implements JsonSerializable {
 
 	/**
 	 * Immediately touch the user data cache for this account.
-	 * Updates user_touched field, and removes account data from memcached
-	 * for reload on the next hit.
+	 *
+	 * Calls touch() and removes account data from memcached
+	 *
+	 * @see SUS-1620
 	 */
 	public function invalidateCache() {
-		#<Wikia>
-		global $wgLogUserInvalidateCache;
-		if ( !empty( $wgLogUserInvalidateCache ) ) {
-			$e = new Exception;
-			$this->error( 'SUS-546', [ 'traceBack' => $e->getTraceAsString() ] );
-		}
-		#</Wikia>
-		if( wfReadOnly() ) {
-			return;
-		}
+		$this->touch();
+		$this->clearSharedCache();
+
+		// Wikia change
+		self::permissionsService()->invalidateCache( $this );
+	}
+
+	/**
+	 * Update the "touched" timestamp for the user
+	 *
+	 * This is useful on various login/logout events when making sure that
+	 * a browser or proxy that has multiple tenants does not suffer cache
+	 * pollution where the new user sees the old users content. The value
+	 * of getTouched() is checked when determining 304 vs 200 responses.
+	 * Unlike invalidateCache(), this preserves the User object cache and
+	 * avoids database writes.
+	 *
+	 * @@see SUS-1620
+	 * @since 1.25
+	 */
+	public function touch() {
+		global $wgMemc;
+
 		$this->load();
-		if ( wfReadOnly() ) {
-			return;
-		}
-		if( $this->mId ) {
-			$this->mTouched = self::newTouchedTimestamp();
 
-			#<Wikia>
-			global $wgExternalSharedDB, $wgSharedDB;
-			if( isset( $wgSharedDB ) ) {
-				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-			}
-			else {
-				$dbw = wfGetDB( DB_MASTER );
-			}
-			#</Wikia>
-
-			$touched = $dbw->timestamp( $this->mTouched );
-			$needsPurge =  $dbw->selectField(
-				'`user`', '1',
-				array( 'user_id' => $this->mId, 'user_touched < ' . $dbw->addQuotes( $touched ) ),
-				__METHOD__ );
-
-			if ( $needsPurge ) {
-				$dbw->update( '`user`',
-					array( 'user_touched' => $touched ), array( 'user_id' => $this->mId ),
-					__METHOD__ );
-			}
-			self::permissionsService()->invalidateCache( $this );
-
-			$this->clearSharedCache();
+		if ( $this->mId ) {
+			$key = wfSharedMemcKey( 'user-quicktouched', 'id', $this->mId );
+			$timestamp = self::newTouchedTimestamp();
+			$wgMemc->set( $key, $timestamp );
+			$this->mQuickTouched = $timestamp;
 		}
 	}
 
@@ -2062,10 +2059,26 @@ class User implements JsonSerializable {
 
 	/**
 	 * Get the user touched timestamp
-	 * @return String timestamp
+	 * @return string TS_MW Timestamp
 	 */
 	public function getTouched() {
+		global $wgMemc;
+
 		$this->load();
+
+		if ( $this->mId ) {
+			if ( $this->mQuickTouched === null ) {
+				$key = wfSharedMemcKey( 'user-quicktouched', 'id', $this->mId );
+				$timestamp = $wgMemc->get( $key );
+				if ( !$timestamp ) {
+					# Set the timestamp to get HTTP 304 cache hits
+					$this->touch();
+				}
+			}
+
+			return max( $this->mTouched, $this->mQuickTouched );
+		}
+
 		return $this->mTouched;
 	}
 
@@ -2907,19 +2920,28 @@ class User implements JsonSerializable {
 	 * the next change of the page if it's watched etc.
 	 * @param $title Title of the article to look at
 	 */
-	public function clearNotification( &$title ) {
-		global $wgUseEnotif, $wgShowUpdatedMarker;
+	public function clearNotification( Title $title ) {
+		global $wgUseEnotif, $wgShowUpdatedMarker, $wgCityId;
 
 		# Do nothing if the database is locked to writes
 		if( wfReadOnly() ) {
 			return;
 		}
 
-		if( $title->getNamespace() == NS_USER_TALK &&
-			$title->getText() == $this->getName() ) {
-			if( !wfRunHooks( 'UserClearNewTalkNotification', array( &$this ) ) )
+		if ( $title->getNamespace() == NS_USER_TALK && $title->getText() == $this->getName() ) {
+			if ( !Hooks::run( 'UserClearNewTalkNotification', [ $this ] ) ) {
 				return;
-			$this->setNewtalk( false );
+			}
+
+			// SUS-2161: Only schedule a notification update if there are new messages
+			if ( $this->getNewtalk() ) {
+				$task = ( new \Wikia\Tasks\Tasks\WatchlistUpdateTask() )
+					->title( $title )
+					->wikiId( $wgCityId );
+
+				$task->call( 'clearMessageNotification', $this->getName() );
+				$task->queue();
+			}
 		}
 
 		if( !$wgUseEnotif && !$wgShowUpdatedMarker ) {
@@ -2946,8 +2968,13 @@ class User implements JsonSerializable {
 		// If the page is watched by the user (or may be watched), update the timestamp on any
 		// any matching rows
 		if ( $watched ) {
-			$wl = WatchedItem::fromUserTitle( $this, $title );
-			$wl->clearWatch();
+			// SUS-2161: Use a background task for watchlist update
+			$task = ( new \Wikia\Tasks\Tasks\WatchlistUpdateTask() )
+				->title( $title )
+				->wikiId( $wgCityId );
+
+			$task->call( 'clearWatch', $this->getId() );
+			$task->queue();
 		}
 	}
 
@@ -4638,7 +4665,8 @@ class User implements JsonSerializable {
 			if( $dbName !== $name ) {
 				WikiaLogger::instance()->debug( "Default name different than lookup", [
 					"user_id" => $userId,
-					"username_db" => $dbName,
+					// SUS-2008, always log username_db as string
+					"username_db" => $dbName ?: '',
 					"username_default" => $name,
 					"caller" => $callerFunction
 				] );

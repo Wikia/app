@@ -4,7 +4,6 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.provider.gpt.helper',
 	'ext.wikia.adEngine.slot.adUnitBuilder',
-	'ext.wikia.adEngine.slot.service.passbackHandler',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'wikia.log',
 	require.optional('ext.wikia.adEngine.lookup.services')
@@ -13,7 +12,6 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	btfBlocker,
 	gptHelper,
 	adUnitBuilder,
-	passbackHandler,
 	slotRegistry,
 	log,
 	lookups
@@ -26,10 +24,6 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 		if (context.opts.overridePrefootersSizes) {
 			slotMap.PREFOOTER_LEFT_BOXAD.size = '300x250,468x60,728x90';
 			delete slotMap.PREFOOTER_RIGHT_BOXAD;
-		}
-
-		if (!!slotMap.INCONTENT_LEADERBOARD && context.opts.incontentLeaderboardAsOutOfPage) {
-			delete slotMap.INCONTENT_LEADERBOARD.size;
 		}
 	}
 
@@ -75,7 +69,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 
 		function getAdUnit(slot) {
 			if (extra.adUnitBuilder) {
-				return extra.adUnitBuilder.build(slot.name, src, passbackHandler.get(slot.name));
+				return extra.adUnitBuilder.build(slot.name, src);
 			}
 
 			return adUnitBuilder.build(slot.name, src);
@@ -97,6 +91,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 			slotTargeting.rv = slotRegistry.getRefreshCount(slot.name).toString();
 
 			if (lookups) {
+				lookups.storeRealSlotPrices(slot.name);
 				lookups.extendSlotTargeting(slot.name, slotTargeting, providerName);
 			}
 

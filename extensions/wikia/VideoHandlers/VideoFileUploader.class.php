@@ -551,6 +551,13 @@ class VideoFileUploader {
 				return $oTitle;
 			}
 		}
+
+		\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . ' - video upload failed', [
+			'video_url' => (string) $url,
+			'provider_name' => (string) $oUploader->sProvider,
+			'upload_status' => isset( $status ) ? $status : Status::newFatal( 'api-wrapper-not-found' )
+		] );
+
 		wfProfileOut( __METHOD__ );
 		return null;
 	}

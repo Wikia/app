@@ -1,0 +1,22 @@
+<!-- Begin PageFair recovery -->
+<script type="text/javascript">
+	require([
+		'ext.wikia.adEngine.adContext',
+		'wikia.instantGlobals',
+		'wikia.window'
+	], function (adContext, instantGlobals, win) {
+		var context = adContext.getContext();
+
+		if (context.opts.pageFairRecovery === true) {
+			var adonis = win.adonis || {};
+
+			adonis.ENABLE_SLOT_CACHE = true;
+			adonis.conditionalAdRendering = true;
+			adonis.conditionalIframeRendering = true;
+			adonis.transport = 'https://9k6y.b2rrns9dgbx56tf5kc.agency/http';
+
+			{{{code}}}
+		}
+	});
+</script>
+<!-- End PageFair recovery-->

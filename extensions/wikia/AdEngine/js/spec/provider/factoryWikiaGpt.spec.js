@@ -26,12 +26,8 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 			}
 		},
 		lookups: {
-			extendSlotTargeting: noop
-		},
-		passbackHandler: {
-			get: function () {
-				return 'foo';
-			}
+			extendSlotTargeting: noop,
+			storeRealSlotPrices: noop
 		},
 		slotRegistry: {
 			getRefreshCount: function () {
@@ -64,7 +60,6 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 			mocks.btfBlocker,
 			mocks.gptHelper,
 			mocks.adUnitBuilder,
-			mocks.passbackHandler,
 			mocks.slotRegistry,
 			mocks.log,
 			mocks.lookups

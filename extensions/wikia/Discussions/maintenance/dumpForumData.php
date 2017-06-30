@@ -97,7 +97,14 @@ class DumpForumData extends Maintenance {
 		          " VALUES (" . \F::app()->wg->CityId;
 
 		foreach ( $cols as $col ) {
-			$insert .= ', ' . $db->addQuotes( $data[$col] );
+			// Truncate long titles if necessary
+			if ( $col == "title" ) {
+				$value = mb_substr( $data[$col], 0, 512 );
+			} else {
+				$value = $data[$col];
+			}
+
+			$insert .= ', ' . $db->addQuotes( $value );
 		}
 
 		$insert .= ');';

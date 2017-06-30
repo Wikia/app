@@ -16,8 +16,7 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 				LEFT_SKYSCRAPER_2: ['1x6', '3x2', '3x6'],
 				LEFT_SKYSCRAPER_3: ['1x6', '3x2', '3x6'],
 				TOP_LEADERBOARD: ['7x9', '9x2'],
-				TOP_RIGHT_BOXAD: ['3x2', '3x6'],
-				INCONTENT_LEADERBOARD: ['7x9','3x2']
+				TOP_RIGHT_BOXAD: ['3x2', '3x6']
 			},
 			mercury: {
 				MOBILE_IN_CONTENT: ['3x2'],

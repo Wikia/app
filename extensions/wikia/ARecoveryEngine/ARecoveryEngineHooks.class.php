@@ -6,6 +6,7 @@ class ARecoveryEngineHooks {
 		$vars[] = 'wgARecoveryEngineCustomLog';
 		$vars[] = 'wgAdDriverSourcePointRecoveryCountries';
 		$vars[] = 'wgAdDriverPageFairRecoveryCountries';
+
 		return true;
 	}
 }

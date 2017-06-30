@@ -87,6 +87,7 @@ Configuration Options:
   -c|--configuration <file>   Read configuration from XML file.
   --no-configuration          Ignore default configuration file (phpunit.xml).
   --no-coverage               Ignore code coverage configuration.
+  --no-logging                Ignore logging configuration.
   --no-extensions             Do not load PHPUnit extensions.
   --include-path <path(s)>    Prepend PHP's include_path with given path(s).
   -d key[=value]              Sets a php.ini value.
@@ -97,3 +98,4 @@ Miscellaneous Options:
   -h|--help                   Prints this usage information.
   --version                   Prints the version and exits.
   --atleast-version <min>     Checks that version is greater than min and exits.
+  --check-version             Check whether PHPUnit is the latest version.
