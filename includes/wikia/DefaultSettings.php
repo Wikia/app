@@ -1888,5 +1888,3 @@ $wgReviveSpotlightsCountries = null;
 include_once("$IP/extensions/wikia/ARecoveryEngine/ARecoveryEngine.setup.php");
 
 require_once "$IP/extensions/wikia/ImageReview/ImageReviewEvents.setup.php";
-
-require_once("$IP/extensions/wikia/AdMixExperiment/AdMixExperiment.setup.php");

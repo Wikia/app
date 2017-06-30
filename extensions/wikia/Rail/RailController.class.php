@@ -35,6 +35,10 @@ class RailController extends WikiaController {
 		$this->getLazyRail();
 	}
 
+	public function stickyModule() {
+
+	}
+
 	/**
 	 * Get lazy right rail modules
 	 */
@@ -85,7 +89,7 @@ class RailController extends WikiaController {
 			$recirculationModulePosition = $context->getUser()->isAnon() ? 1305 : 1285;
 			unset( $railModules[$recirculationModulePosition] );
 
-			array_push( $railModules, [ 'AdMixExperiment', 'recirculationAndAdPlaceholder', [] ] );
+			array_push( $railModules, [ 'Rail', 'stickyModule', [] ] );
 		}
 
 		$wrapper->wrap( function () use ( $railModules, &$railLazyContent ) {

@@ -3226,19 +3226,3 @@ $config['page_header_scss'] = [
     ],
 ];
 
-$config['ad_mix_experiment_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/AdMixExperiment/scripts/AdMixExperiment.js',
-	]
-];
-
-$config['ad_mix_experiment_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/AdMixExperiment/styles/recirculation.scss',
-	],
-];
-

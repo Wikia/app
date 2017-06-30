@@ -1,4 +1,4 @@
-<div id="WikiaAdInContentPlaceHolder" class="wikia-ad-in-content-placeholder">
+<div id="WikiaAdInContentPlaceHolder" class="rail-sticky-module">
 	<?= $app->renderView(
 		'Recirculation',
 		'container',
