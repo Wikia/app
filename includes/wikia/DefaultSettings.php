@@ -682,7 +682,6 @@ $wgSkipSkins = array(
 		'answers',
 		'campfire',
 		'wikiamobile',
-		'oasislight'
 );
 
 /**
