@@ -2042,20 +2042,6 @@ $config['ui_repo_api_js'] = [
 	],
 ];
 
-$config['touchstorm_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'assets' => [
-		'//extensions/wikia/TouchStorm/css/TouchStorm.scss',
-	],
-];
-
-$config['touchstorm_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/TouchStorm/js/TouchStorm.js',
-	],
-];
-
 $config['toc_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
