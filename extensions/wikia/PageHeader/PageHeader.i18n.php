@@ -218,6 +218,37 @@ $messages['ja'] = array(
 	'page-header-action-button-add-new-image' => '画像を追加',
 );
 
+$messages['ko'] = array(
+	'page-header-counter-videos' => '{{PLURAL:$1|동영상|동영상}} {{FORMATNUM:$1}}개',
+	'page-header-counter-images' => '{{PLURAL:$1|그림|그림}} {{FORMATNUM:$1}}개',
+	'page-header-counter-blog-posts' => '{{PLURAL:$1|블로그 글|블로그 글}} {{FORMATNUM:$1}}개',
+	'page-header-counter-forum-threads' => '{{PLURAL:$1|포럼 글|포럼 글}} {{FORMATNUM:$1}}개',
+	'page-header-counter-forum-active-threads' => '{{PLURAL:$1|최근 활동 글|최근 활동 글}} {{FORMATNUM:$1}}개',
+	'page-header-categories-in' => '분류',
+	'page-header-categories-more-separator' => ', ',
+	'page-header-categories-more' => '그 외 {{FORMATNUM:$1}}개',
+	'page-header-action-button-talk' => '토론 ({{FORMATNUM:$1}}개)',
+	'page-header-action-button-add-topic' => '새 토론 생성',
+	'page-header-action-button-viewsource' => '소스 보기',
+	'page-header-action-button-edit-mobile-main-page' => '모바일 대문 편집',
+	'page-header-action-button-edit' => '편집',
+	'page-header-action-button-add-new-image' => '새 그림 올리기',
+	'page-header-title-prefix-preview' => '미리 보기: $1',
+	'page-header-title-prefix-changes' => '변경점: $1',
+	'page-header-title-prefix-history' => '역사: $1',
+	'page-header-subtitle-back-to-template' => '돌아가기',
+	'page-header-subtitle-back-to-mediawiki' => '돌아가기',
+	'page-header-subtitle-back-to-category' => '돌아가기',
+	'page-header-subtitle-back-to-file' => '돌아가기',
+	'page-header-subtitle-back-to-article' => '돌아가기',
+	'page-header-subtitle-mediawiki' => '미디어위키 문서',
+	'page-header-subtitle-template' => '틀 문서',
+	'page-header-subtitle-special' => '특수 문서',
+	'page-header-subtitle-category' => '분류 문서',
+	'page-header-subtitle-forum' => '포럼 페이지',
+	'page-header-subtitle-blog-category' => '블로그 글',
+);
+
 $messages['lol'] = array(
 	'page-header-counter-videos' => 'crwdns64455:0{{FORMATNUM:$1}}crwdnd64455:0{PLURAL:$1|video|videos}crwdne64455:0',
 	'page-header-counter-images' => 'crwdns64456:0{{FORMATNUM:$1}}crwdnd64456:0{PLURAL:$1|image|images}crwdne64456:0',

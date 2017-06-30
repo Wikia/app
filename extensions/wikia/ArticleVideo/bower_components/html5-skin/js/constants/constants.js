@@ -27,6 +27,8 @@ module.exports = {
   },
 
   SKIN_TEXT: {
+    AUTOPLAY_VIDEOS: "Autoplay Videos",
+    BACK: "Back",
     LEARN_MORE: "Learn More",
     CLOSED_CAPTION_PREVIEW: "CLOSED CAPTION PREVIEW",
     SAMPLE_TEXT: "Sample Text",
