@@ -680,7 +680,6 @@ class User implements JsonSerializable {
 		if ( $name == ''
 			|| User::isIP( $name )
 			|| strpos( $name, '/' ) !== false
-			|| strpos( $name, ':') !== false
 			|| strlen( $name ) > $wgMaxNameChars
 			|| $name != $wgContLang->ucfirst( $name ) ) {
 			wfDebugLog( 'username', __METHOD__ .

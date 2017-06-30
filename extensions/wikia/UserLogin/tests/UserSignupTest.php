@@ -269,7 +269,7 @@
 			);
 
 			$reqParams18 = array(
-				'userloginext01' => self::TEST_USERNAME . ':test' ,
+				'userloginext01' => self::TEST_USERNAME . ':test',
 			);
 
 			return array(
@@ -306,7 +306,7 @@
 				'error - not empty fake password' =>
 				array( $reqParams17, $mockUserParams1, $mockUserLoginForm1, 'error', $expMsg16, $expErrParam16 ),
 				'error - invalid user name with colon' =>
-					array( $reqParams18, $mockUserParams3, $mockUserLoginForm1, 'error', $expMsg4, $expErrParam1 ),
+					array ( $reqParams18, $mockUserParams3, $mockUserLoginForm1, 'error', $expMsg4, $expErrParam1 ),
 			);
 		}
 

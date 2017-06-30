@@ -1,8 +1,5 @@
 <?php
 
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\User\Permissions\PermissionsService;
-
 /**
  * Class for managing a Chat (aka: chat-room)
  * This is for a demo & if the prototype works out, this will probably need to be thrown away and
@@ -37,35 +34,19 @@ class Chat {
 	const CHAT_ADMIN = 'chatadmin';
 
 	/**
-	 * @var PermissionsService
-	 */
-	private static $permissionsService;
-
-	/**
-	 * @return PermissionsService
-	 */
-	private static function permissionsService() {
-		if ( is_null( self::$permissionsService ) ) {
-			self::$permissionsService = Injector::getInjector()->get( PermissionsService::class );
-		}
-
-		return self::$permissionsService;
-	}
-
-	/**
 	 * The return value of this method gets passed to Javascript as the global wgChatKey.  It then becomes the 'key'
 	 * parameter sent with every chat request to the Node.js server.
 	 *
 	 * The key is then used by ChatAjax::getUserInfo() to load the info back from memcached.
 	 *
-	 * @return string
+	 * @return null|string
 	 */
 	public static function getSessionKey() {
 		self::info( __METHOD__ . ': Method called' );
 		$wg = F::app()->wg;
 
 		if ( !$wg->User->isLoggedIn() ) {
-			return '';
+			return null;
 		}
 		$key = 'Chat::cookies::' . sha1( $wg->User->getId() . "_" . microtime() . '_' . mt_rand() );
 		$wg->Memc->set( $key, [
@@ -112,8 +93,7 @@ class Chat {
 		if ( !self::canBan( $subjectUser, $adminUser ) ) {
 			return wfMessage( 'chat-ban-cant-ban-moderator' )->inContentLanguage()->text() . "\n";
 		}
-
-		$cityId = F::app()->wg->CityId;
+		
 		$action = $time != 0 ? self::BAN_ADD : self::BAN_REMOVE;
 
 		$subjectChatUser = new ChatUser( $subjectUser );
@@ -224,95 +204,7 @@ class Chat {
 	}
 
 	/**
-	 * Attempts to add the 'chatmoderator' group to the subject user
-	 *
-	 * @param string $subjectUserName
-	 * @param User $adminUser
-	 *
-	 * @return bool true on success, returns an error message as a string on failure.
-	 */
-	public static function promoteModerator( $subjectUserName, $adminUser ) {
-		self::info( __METHOD__ . ': Method called', [
-			'subject_user_name' => $subjectUserName,
-			'admin_user' => $adminUser->getId()
-		] );
-
-		$subjectUser = User::newFromName( $subjectUserName );
-
-		if ( !( $subjectUser instanceof User ) ) {
-			$errorMsg = wfMessage( 'chat-err-invalid-username-chatmod', $subjectUserName )->text();
-
-			return $errorMsg;
-		}
-
-		// Check if the userToPromote is already in the chatmoderator group.
-		$errorMsg = '';
-		if ( in_array( self::CHAT_MODERATOR, $subjectUser->getEffectiveGroups() ) ) {
-			$errorMsg = wfMessage( "chat-err-already-chatmod", $subjectUserName, self::CHAT_MODERATOR )->text();
-		} else if ( self::canPromoteModerator( $subjectUser, $adminUser ) ) {
-			self::doPromoteModerator( $adminUser, $subjectUser );
-		} else {
-			$errorMsg = wfMessage( "chat-err-no-permission-to-add-chatmod", self::CHAT_MODERATOR )->text();
-		}
-
-		return ( $errorMsg == "" ? true : $errorMsg );
-	}
-
-	/**
-	 * Promote given user to moderator and log that action. No permission checks are done here.
-	 *
-	 * @param User $adminUser
-	 * @param User $subjectUser
-	 */
-	private static function doPromoteModerator( User $adminUser, User $subjectUser ) {
-		// Add group
-		$oldGroups = $subjectUser->getGroups();
-		self::permissionsService()->addToGroup( $adminUser, $subjectUser, self::CHAT_MODERATOR );
-
-		// Run UserRights hook
-		$removegroups = [ ];
-		$addgroups = [ self::CHAT_MODERATOR ];
-		wfRunHooks( 'UserRights', [ &$subjectUser, $addgroups, $removegroups ] );
-
-		// Update user-rights log.
-		$newGroups = array_merge( $oldGroups, [ self::CHAT_MODERATOR ] );
-
-		// Log the rights-change.
-		Chat::addLogEntry( $subjectUser, $adminUser, [
-			Chat::makeGroupNameListForLog( $oldGroups ),
-			Chat::makeGroupNameListForLog( $newGroups )
-		], self::CHAT_MODERATOR );
-	}
-
-	/**
-	 * @param array $ids
-	 *
-	 * @return string
-	 */
-	public static function makeGroupNameListForLog( $ids ) {
-		if ( empty( $ids ) ) {
-			return '';
-		} else {
-			return Chat::makeGroupNameList( $ids );
-		}
-	}
-
-	/**
-	 * @param array $ids
-	 *
-	 * @return string
-	 */
-	public static function makeGroupNameList( $ids ) {
-		if ( empty( $ids ) ) {
-			return wfMessage( 'rightsnone' )->inContentLanguage()->text();
-		} else {
-			return implode( ', ', $ids );
-		}
-	}
-
-	/**
 	 * Add a rights log entry for an action.
-	 * Partially copied from SpecialUserrights.php
 	 *
 	 * @param User $user
 	 * @param User $doer
@@ -325,17 +217,7 @@ class Chat {
 		$doerName = $doer->getName();
 
 		$subtype = '';
-		if ( $type === self::CHAT_MODERATOR ) {
-			if ( empty( $reason ) ) {
-				$reason = wfMessage(
-					'chat-userrightslog-a-made-b-chatmod',
-					$doerName,
-					$user->getName()
-				)->inContentLanguage()->text();
-			}
-			$type = 'rights';
-			$subtype = $type;
-		} else if ( strpos( $type, 'ban' ) === 0 ) {
+		if ( strpos( $type, 'ban' ) === 0 ) {
 			if ( empty( $reason ) ) {
 				// Possible keys: chat-log-reason-banadd, chat-log-reason-banchane, chat-log-reason-banremove
 				$reason = wfMessage( 'chat-log-reason-' . $type, $doerName )->inContentLanguage()->text();
@@ -446,13 +328,13 @@ class Chat {
 	}
 
 	/**
-	 * Can given admin user kick subject user from chat?
+	 * Can given admin user ban subject user from chat?
 	 *
 	 * @param User $subjectUser
 	 * @param User $adminUser
 	 * @return bool
 	 */
-	public static function canKick( User $subjectUser, User $adminUser ) {
+	public static function canBan( User $subjectUser, User $adminUser ) {
 		return (
 			// must be a chat moderator
 			$adminUser->isAllowed( self::CHAT_MODERATOR )
@@ -461,32 +343,6 @@ class Chat {
 				// moderators can be kicked only by chat staff/admins
 				|| $adminUser->isAllowedAny( self::CHAT_STAFF, self::CHAT_ADMIN )
 			) );
-	}
-
-	/**
-	 * Can given admin user ban subject user from chat?
-	 *
-	 * @param User $subjectUser
-	 * @param User $adminUser
-	 * @return bool
-	 */
-	public static function canBan( User $subjectUser, User $adminUser ) {
-		return self::canKick( $subjectUser, $adminUser );
-	}
-
-	/**
-	 * Can given admin user promote subject user to become moderator?
-	 *
-	 * @param User $subjectUser
-	 * @param User $adminUser
-	 * @return bool
-	 */
-	public static function canPromoteModerator( User $subjectUser, User $adminUser ) {
-		$changeableGroups = $adminUser->changeableGroups();
-		$isSelf = ( $subjectUser->getName() == $adminUser->getName() );
-		$addableGroups = array_merge( $changeableGroups['add'], $isSelf ? $changeableGroups['add-self'] : [ ] );
-
-		return in_array( self::CHAT_MODERATOR, $addableGroups );
 	}
 
 	/**

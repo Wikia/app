@@ -19,6 +19,9 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 			adContext: {
 				addCallback: noop,
 				getContext: noop
+			},
+			slotsContext: {
+				isApplicable: noop
 			}
 		},
 		testCases = [
@@ -88,9 +91,11 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.slot.service.megaAdUnitBuilder'](
+			mocks.adContext,
 			mocks.page,
-			mocks.browserDetect,
-			mocks.adContext);
+			mocks.slotsContext,
+			mocks.browserDetect
+		);
 	}
 
 	function mockPageParams(params) {
@@ -153,6 +158,32 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 
 		expect(getModule().build('MOBILE_PREFOOTER', 'mobile_remnant'))
 			.toEqual('/5441/wka2a.PF/mobile_prefooter/desktop/oasis-fv-article/_godofwar-gaming');
+	});
+
+	it('Should build new ad unit with IC info', function () {
+		mockPageParams({
+			's0': 'gaming',
+			's1': '_godofwar',
+			's2': 'article',
+			'skin': 'oasis'
+		});
+		mockTargeting(true, false);
+		spyOn(mocks.slotsContext, 'isApplicable').and.returnValue(true);
+
+		expect(getModule().build('TOP_LEADERBOARD', 'gpt')).toContain('/oasis-article-ic/');
+	});
+
+	it('Should build new ad unit with FV and IC info', function () {
+		mockPageParams({
+			's0': 'gaming',
+			's1': '_godofwar',
+			's2': 'article',
+			'skin': 'oasis'
+		});
+		mockTargeting(true, true);
+		spyOn(mocks.slotsContext, 'isApplicable').and.returnValue(true);
+
+		expect(getModule().build('TOP_LEADERBOARD', 'gpt')).toContain('/oasis-fv-article-ic/');
 	});
 
 	it('Should build new ad unit for wiki not in top 1000', function () {

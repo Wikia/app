@@ -5147,17 +5147,10 @@ Bitte die normale Vorschau nutzen.',
 	'logentry-newusers-autocreate' => 'Benutzerkonto $1 wurde automatisch erstellt',
 	'login_greeting' => 'Willkommen!',
 	'login_as_another' => 'Als anderer Benutzer anmelden',
-	'licenses' => '* Fair use: 
-** Fairuse | Das Bild wird in einer Weise genutzt, die gemäß US-amerikanischen Rechts den "Fair Use"-Regeln entspricht
-* Eigenes Bild: ** Eigenes Bild | Ich habe dieses Bild selbst gemacht. 
-* Wikimedia: 
-** Von Wikimedia | Ich habe dieses Bild von Wikipedia oder einem anderen Wikimedia-Projekt. 
-* Freie Lizenzen: 
-** CC-BY-SA | Das Bild unterliegt der "Creative Commons Attribution-Share Alike"-Lizenz 
-** Sonstige freie Lizenz | Das Bild unterliegt einer anderen freien Lizenz.
-* Sonstige 
-** Öffentliches Eigentum | Das Bild ist öffentliches Eigentum.
-** Berechtigung | Das Bild ist urheberrechtlich geschützt, aber dessen Nutzung ist durch den Urheberrechtsinhaber gestattet',
+	'licenses' => '* LU|Lizenz unbekannt (ich weiß nicht genau)
+* PD|gemeinfrei (public domain)
+* CC-by-sa|CC-BY-SA: Creative Commons Attribution-ShareAlike
+* Bildzitat|Das Bild wird ausschließlich zur inhaltlichen Erläuterung genutzt',
 	'lockdb-wikifactory-error' => 'Ein Fehler ist aufgetreten: Konnte nicht speichern oder den Cache leeren. Die Datenbank ist unter Umständen nicht gesperrt. Bitte versuche es nochmal oder kontaktiere das Technik-Team.',
 	'locked' => 'gesperrt',
 	'log-in-new' => 'Du hast schon ein Konto? Melde dich an!',
