@@ -2,7 +2,6 @@ var InWikiGameEntryPointTracker = {
 	ENTRY_POINT_STORAGE_KEY: 'IN_WIKI_GAME_ENTRY_POINT',
 	init: function() {
 		$('.InWikiGameRailModule a').click(this.onEntryPointClick);
-		$('.WikiNav .subnav-2a').click(this.onEntryPointClick);
 		$('.InWikiGameMainPageRailModule').click(this.onEntryPointClick);
 	},
 	onEntryPointClick: function(event) {

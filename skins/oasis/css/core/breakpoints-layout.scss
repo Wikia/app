@@ -66,12 +66,6 @@
 		width: 100%;
 	}
 
-	.wikinav2.oasis-one-column .WikiaPageHeader .tally {
-		@media #{$breakpoint-small-only} {
-			right: 0;
-		}
-	}
-
 	@media #{$breakpoint-small-only} {
 		.wikia-main-page-tag-lcs,
 		.main-page-tag-lcs-exploded {
@@ -81,14 +75,6 @@
 		//Center ads on small breakpoint
 		.WikiaTopAds {
 			width: 100%;
-		}
-
-		.WikiNav li.nav-item:first-child {
-			margin-left: 10px;
-		}
-
-		.wikinav2.oasis-one-column .WikiaPageHeader {
-			padding: 0;
 		}
 	}
 

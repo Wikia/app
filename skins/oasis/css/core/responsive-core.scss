@@ -13,13 +13,11 @@
 	}
 
 	.skin-oasis > .banner-notifications-wrapper,
-	.WikiaHeader .page-width-container,
 	.WikiaPage {
 		max-width: $width-outside-max;
 	}
 
-	.banner-notifications-wrapper,
-	.WikiaHeader .page-width-container {
+	.banner-notifications-wrapper {
 		box-sizing: border-box;
 		width: $width-outside;
 	}
@@ -37,10 +35,6 @@
 	.WikiaArticle,
 	.WikiaArticleFooter {
 		padding: 0;
-	}
-
-	.WikiaHeader {
-		min-width: 0;
 	}
 
 	.WikiaMainContent {
@@ -66,8 +60,7 @@
 		}
 	}
 
-	.WikiaPageHeader,
-	.wikinav2 .WikiaPageHeader {
+	.WikiaPageHeader {
 		margin: 0 0 $width-padding;
 		padding-bottom: $width-padding / 2;
 
@@ -130,24 +123,6 @@
 			}
 		}
 
-		.WikiaHeader .start-a-wiki {
-			display: none;
-		}
-
-		.WikiNav li.nav-item:first-child {
-			margin-left: 10px;
-		}
-
-		// TODO: clean up all the wikinav2/oasis-one-column styles...
-		.wikinav2.oasis-one-column .WikiaPageHeader {
-			padding-right: 0;
-
-			.tally {
-				right: 0;
-			}
-		}
-
-		.WikiaSearchHeader .WikiaSearch,
 		.WikiaRail .WikiaSearch,
 		.WikiaRail .search-suggest,
 		.WikiaPageHeader .WikiaSearch {
@@ -177,7 +152,6 @@
 	}
 
 	@media screen and (min-width: $breakpoint-fluid) {
-		.WikiaHeader .page-width-container,
 		.WikiaPage {
 			margin: 0 $width-adskin;
 			width: auto;
@@ -185,7 +159,6 @@
 	}
 
 	@media screen and (min-width: $breakpoint-max) {
-		.WikiaHeader .page-width-container,
 		.WikiaPage {
 			margin: 0 auto;
 		}
