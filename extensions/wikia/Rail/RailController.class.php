@@ -81,7 +81,7 @@ class RailController extends WikiaController {
 
 		krsort( $railModules );
 
-		// TODO XW-2760 remove after experiment is done
+		// TODO ADEN-5481 remove after experiment is done
 		$isPremiumAdLayoutEnabled = $this->request->getBool( 'isPremiumAdLayoutEnabled', false );
 
 		if ( $isPremiumAdLayoutEnabled ) {
