@@ -78,9 +78,9 @@ class RailController extends WikiaController {
 		krsort( $railModules );
 
 		// TODO XW-2760 remove after experiment is done
-		$isNewAdLayoutEnabled = $this->request->getBool( 'isNewAdLayoutEnabled', false );
+		$isPremiumAdLayoutEnabled = $this->request->getBool( 'isPremiumAdLayoutEnabled', false );
 
-		if ( $isNewAdLayoutEnabled ) {
+		if ( $isPremiumAdLayoutEnabled ) {
 			// copied from RecirculationHooks::onGetRailModuleList
 			$recirculationModulePosition = $context->getUser()->isAnon() ? 1305 : 1285;
 			unset( $railModules[$recirculationModulePosition] );
@@ -99,7 +99,7 @@ class RailController extends WikiaController {
 		} );
 
 		// ad mix experiment uses a wrapper to group recirculation and ad placeholder
-		if ( !$isNewAdLayoutEnabled ) {
+		if ( !$isPremiumAdLayoutEnabled ) {
 			$railLazyContent .= Html::element( 'div', [ 'id' => 'WikiaAdInContentPlaceHolder' ] );
 		}
 

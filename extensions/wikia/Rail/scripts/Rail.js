@@ -37,7 +37,7 @@ $(function () {
 			params.excludeScss = window.wgSassLoadedScss;
 		}
 
-		params.isNewAdLayoutEnabled = window.ads.context.opts.adMix3Enabled ||
+		params.isPremiumAdLayoutEnabled = window.ads.context.opts.adMix3Enabled ||
 			window.ads.context.opts.premiumAdLayoutEnabled;
 
 		$.extend(params, getParamsFromUrl());
