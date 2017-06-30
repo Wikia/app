@@ -100,7 +100,11 @@ define('ext.wikia.adEngine.adContext', [
 			geo.isProperGeo(instantGlobals.wgAdDriverPremiumAdLayoutCountries)
 		);
 
-		context.slots.premiumAdLayoutSlotsToUnblock = ['INCONTENT_BOXAD_1', 'BOTTOM_LEADERBOARD', 'INCONTENT_PLAYER'];
+		context.slots.premiumAdLayoutSlotsToUnblock = ['INCONTENT_BOXAD_1', 'BOTTOM_LEADERBOARD'];
+
+		if (!context.targeting.hasFeaturedVideo) {
+			context.slots.premiumAdLayoutSlotsToUnblock.push('INCONTENT_PLAYER');
+		}
 	}
 
 	function referrerIsSonySite() {
