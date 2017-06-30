@@ -13,7 +13,7 @@ class VideoPageToolHooks {
 
 		if ( $title->isMainPage() && $app->checkSkin( 'oasis' ) ) {
 			$app->wg->SuppressPageHeader = true;
-			$app->wg->SuppressWikiHeader = true;
+			$app->wg->SuppressCommunityHeader = true;
 			$app->wg->SuppressRail = true;
 			$app->wg->SuppressFooter = true;
 			if ( !$app->wg->request->wasPosted() ) {

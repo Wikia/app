@@ -65,7 +65,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->response->addAsset( 'userlogin_scss_wikiamobile' );
 
 		// hide things in the skin
-		$this->wg->SuppressWikiHeader = false;
+		$this->wg->SuppressCommunityHeader = false;
 		$this->wg->SuppressPageHeader = false;
 		$this->wg->SuppressFooter = false;
 		$this->wg->SuppressAds = true;
