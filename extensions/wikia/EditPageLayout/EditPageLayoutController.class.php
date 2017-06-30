@@ -86,8 +86,6 @@ class EditPageLayoutController extends WikiaController {
 	 * Render template for <body> tag content
 	 */
 	public function executeEditPage() {
-		wfProfileIn( __METHOD__ );
-
 		$helper = EditPageLayoutHelper::getInstance();
 		$editPage = $helper->getEditPage();
 
@@ -220,8 +218,6 @@ class EditPageLayoutController extends WikiaController {
 		$this->hideTitle = $editPage->hideTitle;
 
 		wfRunHooks( 'EditPageLayoutExecute', array( $this ) );
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	public function wordmark() {
@@ -235,7 +231,6 @@ class EditPageLayoutController extends WikiaController {
 		$this->wordmarkFontClass = !empty( $settings["wordmark-font"] ) ? "font-{$settings['wordmark-font']}" : '';
 		$this->wordmarkUrl = '';
 		if ( $this->wordmarkType == Wordmark::WORDMARK_TYPE_GRAPHIC ) {
-			wfProfileIn( __METHOD__ . 'graphicWordmark' );
 			$this->wordmarkUrl = $themeSettings->getWordmarkUrl();
 			$imageTitle = Title::newFromText( $themeSettings::WordmarkImageName, NS_IMAGE );
 			if ( $imageTitle instanceof Title ) {
@@ -250,7 +245,6 @@ class EditPageLayoutController extends WikiaController {
 					}
 				}
 			}
-			wfProfileOut( __METHOD__ . 'graphicWordmark' );
 		}
 
 		$this->mainPageURL = Title::newMainPage()->getLocalURL();
