@@ -1,0 +1,17 @@
+.oo-action-icon-pause {
+  @extend .oo-center-vertical-horizontal;
+  opacity: 1;
+  font-size:24px;
+
+  span.oo-icon {
+    color: #FFF;
+    opacity: 1;
+  }
+}
+
+.oo-action-icon-pause.oo-animate-pause {
+  @extend .oo-center-vertical-horizontal;
+  opacity: 0;
+  font-size:72px;
+  @include vendor-prefixes(transition, all 1s ease);
+}

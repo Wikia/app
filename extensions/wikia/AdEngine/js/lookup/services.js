@@ -13,14 +13,12 @@ define('ext.wikia.adEngine.lookup.services', [
 	'wikia.log',
 	require.optional('ext.wikia.adEngine.lookup.prebid'),
 	require.optional('ext.wikia.adEngine.lookup.amazonMatch'),
-	require.optional('ext.wikia.adEngine.lookup.openXBidder'),
 	require.optional('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane')
-], function (log, prebid, amazonMatch, oxBidder, rubiconFastlane) {
+], function (log, prebid, amazonMatch, rubiconFastlane) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.lookup.services',
 		bidders = [
 			amazonMatch,
-			oxBidder,
 			rubiconFastlane,
 			prebid
 		],
@@ -28,10 +26,6 @@ define('ext.wikia.adEngine.lookup.services', [
 			'rubicon_fastlane': {
 				pos: 0,
 				char: 'R'
-			},
-			'ox_bidder': {
-				pos: 1,
-				char: 'O'
 			},
 			amazon: {
 				pos: 2,
@@ -47,14 +41,28 @@ define('ext.wikia.adEngine.lookup.services', [
 
 
 	function addParameters(providerName, slotName, slotTargeting) {
-		var params = {};
+		var params = {},
+			floorPrice = 0,
+			prebidPrices;
+
+		if (prebid && prebid.wasCalled()) {
+			prebidPrices = prebid.getBestSlotPrice(slotName);
+			// promote prebid on a tie
+			floorPrice = Math.max.apply(
+				null,
+				Object.keys(prebidPrices).filter(function(key) {
+					return !isNaN(parseFloat(prebidPrices[key])) && parseFloat(prebidPrices[key]) > 0;
+				}).map(function (key) { return parseFloat(prebidPrices[key]); })
+			);
+		}
+
 		if (!Object.keys) {
 			return;
 		}
 
 		bidders.forEach(function (bidder) {
 			if (bidder && bidder.wasCalled()) {
-				params = bidder.getSlotParams(slotName);
+				params = bidder.getSlotParams(slotName, floorPrice);
 				bidder.trackState(providerName, slotName, params);
 				Object.keys(params).forEach(function (key) {
 					slotTargeting[key] = params[key];

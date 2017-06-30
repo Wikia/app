@@ -5,6 +5,7 @@
 @import 'skins/shared/mixins/flexbox';
 @import "skins/shared/mixins/gradient";
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-mixins/index';
 
 .full-screen-page {
 	&,
@@ -236,15 +237,11 @@
 			}
 		}
 
-		.wds-button.wds-is-secondary {
-			border-color: $color-links;
-			color: $color-links;
-			margin-left: 12px;
+		.wds-button {
+			@include button-theming($color-buttons, $color-button-text);
 
-			&:hover {
-				border-color: rgba($color-links, .75);
-				color: rgba($color-links, .75);
-				text-decoration: none;
+			&.wds-is-secondary {
+				margin-left: 12px;
 			}
 		}
 	}

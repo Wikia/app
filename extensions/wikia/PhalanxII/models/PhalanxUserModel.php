@@ -64,10 +64,6 @@ class PhalanxUserModel extends PhalanxModel {
 		$this->user->mBlock->mTimestamp = ( isset( $this->block->timestamp ) ? $this->block->timestamp : wfTimestampNow() );
 		$this->user->mBlock->mAddress = $this->block->text;
 
-		if ( $type == 'ip' ) {
-			$this->user->mBlock->setCreateAccount( 1 );
-		}
-
 		wfProfileOut( __METHOD__ );
 		return $this;
 	}

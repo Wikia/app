@@ -40,12 +40,12 @@ class SiteStatus {
 	private $cityInfo;
 
 	private $status;
-	private $siteAvailable;
-	private $discussionsEnabled;
-	private $navigationEnabled;
-	private $forumsEnabled;
-	private $numThreadedForumPosts;
-	private $numWikiForumPosts;
+	private $siteAvailable = false;
+	private $discussionsEnabled = false;
+	private $navigationEnabled = false;
+	private $forumsEnabled = false;
+	private $numThreadedForumPosts = 0;
+	private $numWikiForumPosts = 0;
 
 	/** @var \DateTime */
 	private $lastPageEdit;
@@ -174,6 +174,9 @@ class SiteStatus {
 			$statement
 				->INSERT( self::TABLE_STATUS )
 				->SET( 'site_id', $this->siteId );
+		} else {
+			// If we don't meet either above conditions, skip writing this record.
+			return;
 		}
 
 		// Conditionally set these date columns only if we've found something
@@ -276,7 +279,7 @@ class SiteStatus {
 
 	private function findLastEdit() {
 		if ( $this->dbMissing ) {
-			return '';
+			return;
 		}
 
 		$date = ( new \WikiaSQL() )
@@ -297,20 +300,28 @@ class SiteStatus {
 				''
 			);
 
-		$this->debug("\tfound $date as most recent edit" );
-		$this->lastPageEdit = new \DateTime( $date );
+		if ( empty( $date ) ) {
+			$this->debug("\tCould not determine date of most recent edit" );
+		} else {
+			$this->debug("\tfound $date as most recent edit" );
+			$this->lastPageEdit = new \DateTime( $date );
+		}
 	}
 
 	private function findExistingPosts() {
 		$this->debug( "Finding existing posts" );
 
-		$this->findExistingThreadedForumPosts();
-		$this->findExistingWikiForumPosts();
+		try {
+			$this->findExistingThreadedForumPosts();
+			$this->findExistingWikiForumPosts();
+		} catch(\Exception $e) {
+			$this->debug("\tError finding existing posts: " . $e->getMessage() );
+		}
 	}
 
 	private function findExistingThreadedForumPosts() {
 		if ( $this->dbMissing ) {
-			return 0;
+			return;
 		}
 
 		$num = ( new \WikiaSQL() )
@@ -343,7 +354,7 @@ class SiteStatus {
 
 	private function findExistingWikiForumPosts() {
 		if ( $this->dbMissing ) {
-			return 0;
+			return;
 		}
 
 		$num = ( new \WikiaSQL() )

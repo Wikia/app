@@ -6,40 +6,40 @@
  * @ingroup Extensions
  */
 
-$specialPageAliases = array();
+$specialPageAliases = [];
 
 /**
  * English (English)
  */
-$specialPageAliases['en'] = array(
-	'ThemeDesigner'		=> array( 'ThemeDesigner' ),
-	'ThemeDesignerPreview'	=> array( 'ThemeDesignerPreview' ),
-);
+$specialPageAliases['en'] = [
+	'ThemeDesigner' => [ 'ThemeDesigner' ],
+	'ThemeDesignerPreview' => [ 'ThemeDesignerPreview' ],
+];
 
 /**
  * Korean (한국어)
  */
-$specialPageAliases['ko'] = array(
-	'ThemeDesigner'		=> array( '테마디자이너' ),
-	'ThemeDesignerPreview'	=> array( '테마디자이너미리보기' ),
-);
+$specialPageAliases['ko'] = [
+	'ThemeDesigner' => [ '테마디자이너' ],
+	'ThemeDesignerPreview' => [ '테마디자이너미리보기' ],
+];
 
 /**
  * Polish (Polski)
  */
-$specialPageAliases['pl'] = array(
-	'ThemeDesigner'		=> array( 'Kreator motywu' ),
-);
+$specialPageAliases['pl'] = [
+	'ThemeDesigner' => [ 'Kreator motywu' ],
+];
 
 /**
  * Vietnamese (Tiếng Việt)
  */
-$specialPageAliases['vi'] = array(
-	'ThemeDesigner'		=> array( 'Thiết_kế_chủ_đề' ),
-	'ThemeDesignerPreview'	=> array( 'Mẫu_chủ_đề' ),
-);
+$specialPageAliases['vi'] = [
+	'ThemeDesigner' => [ 'Thiết_kế_chủ_đề' ],
+	'ThemeDesignerPreview' => [ 'Mẫu_chủ_đề' ],
+];
 
 /** Japanese (日本語) */
-$specialPageAliases['ja'] = array(
-	'ThemeDesigner' => array( 'テーマデザイナー' )
-);
+$specialPageAliases['ja'] = [
+	'ThemeDesigner' => [ 'テーマデザイナー' ]
+];

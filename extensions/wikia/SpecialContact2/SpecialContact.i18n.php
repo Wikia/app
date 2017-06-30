@@ -412,7 +412,7 @@ Wenn du ein Admin bist und denkst, dass eine der Funktionen nicht zu deiner Comm
 
 Admins, die Interesse daran haben, neue Funktionen in der Entwicklung zu testen, können diese im FANDOM-Labs-Menü in den [[Special:WikiFeatures|Wiki-Funktionen]] ansehen.
 
-Wenn du über neue Funktionen auf dem Laufenden bleiben möchtest, folge einfach unserem [w:c:de.community.wikia.com/wiki/Blog:Fandom_Deutschland_News|Blog über neue Funktionen]]',
+Wenn du über neue Funktionen auf dem Laufenden bleiben möchtest, folge einfach unserem [[w:c:de.community.wikia.com/wiki/Blog:Fandom_Deutschland_News|Blog über neue Funktionen]]',
 	'specialcontact-intro-close-wiki' => 'Danke, dass du FANDOM kontaktiert hast. Üblicherweise löschen wir keine Wikis, nachdem sie erstellt wurden. Wiki-Projekte gehören der Community, und falls du nicht länger an einem Wiki interessiert bist, gibt es vielleicht jemand anderen, der es [[Special:Contact/adoption|adoptieren möchte]].
 
 Falls du den Namen deines Wikis ändern möchtest oder einen Rechtschreib- oder Grammatikfehler korrigieren möchtest, informiere dich bitte zuerst unter [[w:c:de:Hilfe:Verschieben]], wie du eine Seite umbenennen kannst, und unter [[w:c:de:Hilfe:Projektname]], um den Namen des Wikis zu ändern. Der Name eines Wikis kann geändert werden, ohne dass du komplett von vorne beginnen musst. Falls du die URL deines Wikis ändern möchtest, dann [[Special:Contact/general|schreib uns]]. Wir übernehmen das gerne für dich und du musst deswegen deine Community nicht schließen.
