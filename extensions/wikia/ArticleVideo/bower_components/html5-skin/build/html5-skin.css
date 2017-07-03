@@ -532,6 +532,22 @@
       font-family: 'Open Sans', sans-serif;
       font-size: 1em; }
 
+.oo-player-container .oo-wikia-ad-screen {
+  z-index: 100000; }
+
+.oo-player-container .oo-player-skin-plugins iframe {
+  z-index: -1 !important; }
+
+.oo-player-container .oo-wikia-ad-screen-top-bar {
+  position: relative;
+  height: 60px;
+  width: 100%; }
+
+.oo-player-container .oo-wikia-ad-screen-learn-more {
+  position: absolute;
+  right: 10px;
+  top: 10px; }
+
 .oo-player-container .oo-popover {
   position: absolute;
   background-color: rgba(26, 26, 26, 0.8);
@@ -1567,6 +1583,9 @@
   margin-left: 6px;
   height: 20px;
   width: 200px; }
+
+.oo-player-container .oo-volume .oo-volume-bar, .oo-player-container .oo-volume .oo-volume-slider {
+  display: none; }
 
 @media all and (-ms-high-contrast: none) {
   .oo-player-container *::-ms-backdrop, .oo-player-container .oo-volume-slider {

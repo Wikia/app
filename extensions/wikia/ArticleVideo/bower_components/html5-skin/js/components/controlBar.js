@@ -208,6 +208,17 @@ var ControlBar = React.createClass({
     });
   },
 
+  formatSecondsWithoutLeadingZero: function (timeInSeconds) {
+    var seconds = parseInt(timeInSeconds,10) % 60;
+    var minutes = parseInt(timeInSeconds / 60, 10);
+
+    if (seconds < 10) {
+      seconds = '0' + seconds;
+    }
+
+    return minutes + ":" + seconds;
+  },
+
   populateControlBar: function() {
     var dynamicStyles = this.setupItemStyle();
     var playIcon = "";
@@ -277,6 +288,8 @@ var ControlBar = React.createClass({
     var liveClick = isLiveNow ? null : this.handleLiveClick;
     var playheadTimeContent = isLiveStream ? (isLiveNow ? null : Utils.formatSeconds(timeShift)) : playheadTime;
     var totalTimeContent = isLiveStream ? null : <span className="oo-total-time">{totalTime}</span>;
+    var timeLeft = this.formatSecondsWithoutLeadingZero(Math.abs(timeShift));
+    var timeLeftContent = <span className="oo-ad-time-left">Ad • {timeLeft}</span>;
 
     // TODO: Update when implementing localization
     var liveText = Utils.getLocalizedString(this.props.language, CONSTANTS.SKIN_TEXT.LIVE, this.props.localizableStrings);
@@ -330,6 +343,8 @@ var ControlBar = React.createClass({
       "timeDuration": <a className="oo-time-duration oo-control-bar-duration" style={durationSetting} key="timeDuration">
         <span>{playheadTimeContent}</span>{totalTimeContent}
       </a>,
+
+      "adTimeLeft": timeLeftContent,
 
       "flexibleSpace": <div className="oo-flexible-space oo-control-bar-flex-space" key="flexibleSpace"></div>,
 
@@ -385,7 +400,7 @@ var ControlBar = React.createClass({
     };
 
     var controlBarItems = [];
-    var defaultItems = this.props.controller.state.isPlayingAd ? this.props.skinConfig.buttons.desktopAd : this.props.skinConfig.buttons.desktopContent;
+    var defaultItems = this.props.controller.state.isPlayingAd && false ? this.props.skinConfig.buttons.desktopAd : this.props.skinConfig.buttons.desktopContent;
 
     //if mobile and not showing the slider or the icon, extra space can be added to control bar width. If volume bar is shown instead of slider, add some space as well:
     var volumeItem = null;
@@ -402,7 +417,6 @@ var ControlBar = React.createClass({
         break;
       }
     }
-
 
     //if no hours, add extra space to control bar width:
     var hours = parseInt(this.props.duration / 3600, 10);
@@ -437,14 +451,19 @@ var ControlBar = React.createClass({
         continue;
       }
 
-      if (Utils.isIos() && (defaultItems[k].name === "volume")){
-        continue;
-      }
-
       // Not sure what to do when there are multi streams
       if (defaultItems[k].name === "live" &&
         (typeof this.props.isLiveStream === 'undefined' ||
         !(this.props.isLiveStream))) {
+        continue;
+      }
+
+      if (!this.props.isWikiaAdScreen && defaultItems[k].name === "adTimeLeft"){
+        continue;
+      }
+
+      // hide timeDuration, quality and share icon on wikia ad screen
+      if (this.props.isWikiaAdScreen && ['timeDuration', 'quality', 'share'].indexOf(defaultItems[k].name) > -1) {
         continue;
       }
 

@@ -1,0 +1,23 @@
+.oo-wikia-ad-screen {
+  z-index: 100000;
+
+  .oo-scrubber-bar-container {
+    visibility: hidden;
+  }
+}
+
+.oo-player-skin-plugins iframe {
+  z-index: -1 !important;
+}
+
+.oo-wikia-ad-screen-top-bar {
+  position: relative;
+  height: 60px;
+  width: 100%;
+}
+
+.oo-wikia-ad-screen-learn-more {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}

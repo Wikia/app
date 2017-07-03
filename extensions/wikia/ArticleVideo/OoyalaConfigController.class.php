@@ -106,7 +106,7 @@ class OoyalaConfigController extends WikiaController {
 		'adScreen' => [
 			'showAdMarquee' => true,
 			'showAdCountDown' => true,
-			'showControlBar' => false,
+			'showControlBar' => true,
 		],
 		'shareScreen' => [
 			'shareContent' => [

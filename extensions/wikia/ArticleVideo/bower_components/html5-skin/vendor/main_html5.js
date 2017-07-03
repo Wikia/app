@@ -3441,6 +3441,11 @@
 				var video = $("<video>");
 				video.attr("class", "video");
 				video.attr("id", domId);
+				if (parentContainer.attr('data-autoplay')) {
+					video.attr("playsinline", true);
+					video[0].autoplay = true;
+					video[0].muted = true;
+				}
 
 				// [PBW-5470] On Safari, when preload is set to 'none' and the user switches to a
 				// different tab while the video is about to auto play, the browser stops playback but
@@ -4443,7 +4448,11 @@
 			 * @param {object} event The event raised by the video.
 			 */
 			var raiseVolumeEvent = _.bind(function(event) {
-				this.controller.notify(this.controller.EVENTS.VOLUME_CHANGE, { volume: event.target.volume });
+				var volume = event.target.volume;
+				if (event.target.muted) {
+					volume = 0;
+				}
+				this.controller.notify(this.controller.EVENTS.VOLUME_CHANGE, { volume: volume });
 			}, this);
 
 			/**

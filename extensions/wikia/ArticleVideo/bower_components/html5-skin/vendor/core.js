@@ -17030,7 +17030,7 @@ try {
 						(this.playerParams.autoPlay === 'true' || this.playerParams.autoPlay === true ||
 						this.playerParams.autoplay === 'true' || this.playerParams.autoplay === true);
 
-					if (this.playedAtLeastOnce == false && autoPlay && OO.allowAutoPlay) {
+					if (this.playedAtLeastOnce == false && autoPlay) {
 						this.mb.publish(OO.EVENTS.INITIAL_PLAY, Date.now());
 					}
 				},

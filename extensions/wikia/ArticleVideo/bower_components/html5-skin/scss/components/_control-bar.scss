@@ -180,6 +180,12 @@ a.oo-volume-bar {
   width: $slider-volume-width;
 }
 
+.oo-volume {
+  .oo-volume-bar, .oo-volume-slider {
+    display: none;
+  }
+}
+
 // IE 11 only
 @include apply-to-ie11-only ('.oo-volume-slider') {
   height: auto;
