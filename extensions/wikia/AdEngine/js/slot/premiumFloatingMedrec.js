@@ -78,9 +78,6 @@ define('ext.wikia.adEngine.slot.premiumFloatingMedrec', [
 				placeHolder.appendChild(adSlot);
 				recirculation.style.display = 'none';
 
-				win.addEventListener('scroll', throttle(swapRecirculationAndAd));
-				win.addEventListener('resize', throttle(swapRecirculationAndAd));
-
 				refresh.refreshAdPos = placeHolder.offsetTop;
 				// Give add some time to call success. Otherwise swap with recirculation
 				refresh.lastRefreshTime = new Date() + refresh.refreshDelay;
@@ -93,7 +90,6 @@ define('ext.wikia.adEngine.slot.premiumFloatingMedrec', [
 				});
 
 				win.removeEventListener('scroll', onScroll);
-				win.removeEventListener('resize', onScroll);
 			}
 		});
 
@@ -114,7 +110,7 @@ define('ext.wikia.adEngine.slot.premiumFloatingMedrec', [
 			}
 
 			win.addEventListener('scroll', onScroll);
-			win.addEventListener('resize', onScroll);
+			win.addEventListener('scroll', swapRecirculationAndAd);
 		}
 
 		start();
