@@ -13128,7 +13128,7 @@ l'utente che le ha effettuate è l'unico ad aver contribuito alla pagina.",
 	'cantmove-titleprotected' => 'Lo spostamento della pagina non è possibile in quanto il nuovo titolo è stato protetto per impedirne la creazione',
 	'common.css' => '/* Gli stili CSS inseriti qui saranno applicati su tutto il sito e in tutte le skin */
 
-	/** Evidenzia i redirect su Special:Allpages e Special:Watchlist **/
+/* Evidenzia i redirect su Special:Allpages e Special:Watchlist */
 .allpagesredirect {
 	font-style: italic;
 }
@@ -22502,7 +22502,7 @@ Upewnij się, czy na pewno chcesz to zrobić, że rozumiesz konsekwencje. Zobacz
 	'cantrollback' => 'Nie można cofnąć edycji, ponieważ jest tylko jedna wersja tej strony.',
 	'cannotundelete' => 'Odtworzenie nie powiodło się.
 Ktoś inny prawdopodobnie odtworzył już tę stronę.',
-	'contributions' => 'Edycje',
+	'contributions' => 'Wkład użytkownika',
 	'contributions-title' => 'Wkład {{GENDER:$1|użytkownika|użytkowniczki}} $1',
 	'contribsub2' => 'Dla użytkownika $1 ($2)',
 	'createaccountblock' => 'blokada tworzenia kont',

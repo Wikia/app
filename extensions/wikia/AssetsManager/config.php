@@ -373,8 +373,6 @@ $config['oasis_noads_extensions_js'] = [
 		// Chat is enabled sitewide
 		'//extensions/wikia/Chat2/js/ChatWidget.js',
 		'//extensions/wikia/VideoEmbedTool/js/VET_Loader.js',
-		// Survey for first time editors
-		'//extensions/wikia/EditorSurvey/js/EditorSurvey.js',
 		// Image and video thumbnail mustache templates
 		'//extensions/wikia/Thumbnails/scripts/templates.mustache.js',
 		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
@@ -586,7 +584,6 @@ $config['oasis_user_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'#group_design_system_user_js',
-		'//extensions/wikia/EmergencyBroadcastSystem/js/EmergencyBroadcastSystem.js',
 	],
 ];
 
@@ -2042,20 +2039,6 @@ $config['ui_repo_api_js'] = [
 	],
 ];
 
-$config['touchstorm_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'assets' => [
-		'//extensions/wikia/TouchStorm/css/TouchStorm.scss',
-	],
-];
-
-$config['touchstorm_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/TouchStorm/js/TouchStorm.js',
-	],
-];
-
 $config['toc_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
@@ -2794,13 +2777,6 @@ $config['template_classification_scss'] = [
 	],
 ];
 
-$config['special_broken_rename_fix'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'assets' => [
-		'//extensions/wikia/BrokenRenameFix/styles/SpecialBrokenRenameFix.scss',
-	],
-];
-
 $config['insights_module_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
@@ -3109,7 +3085,9 @@ $config['ooyala_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/ArticleVideo/scripts/ooyala-player.js',
+		'//extensions/wikia/ArticleVideo/bower_components/html5-skin/build/all.js',
+		'//extensions/wikia/ArticleVideo/scripts/ooyala/google_ima.js',
+		'//extensions/wikia/ArticleVideo/scripts/ooyala-player.js'
 	],
 ];
 

@@ -49,6 +49,7 @@ class WikiaUpdater {
 			array( 'WikiaUpdater::do_drop_table', 'validate' ),
 			array( 'WikiaUpdater::do_drop_table', 'cur' ),
 			array( 'WikiaUpdater::do_drop_table', 'searchindex', !empty( $wgCityId ) ),
+			array( 'WikiaUpdater::do_drop_table', 'spam_regex' ),
 			array( 'WikiaUpdater::do_drop_table', 'page_stats' ),
 			array( 'WikiaUpdater::do_drop_table', 'user_board' ),
 			array( 'WikiaUpdater::do_drop_table', 'user_points_monthly' ),

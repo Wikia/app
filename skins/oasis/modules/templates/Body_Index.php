@@ -26,7 +26,6 @@
 	<?= $app->renderView( 'BannerNotifications', 'Confirmation' ) ?>
 </div>
 <?= $app->renderView( 'Ad', 'Top' ) ?>
-<?= empty( $wg->EnableEBS ) ? '' : $app->renderView( 'EmergencyBroadcastSystem', 'index' ); ?>
 
 <?= $app->renderView('AdEmptyContainer', 'Index', ['slotName' => 'TOP_LEADERBOARD_AB']); ?>
 
