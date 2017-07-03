@@ -3088,7 +3088,9 @@ $config['ooyala_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/ArticleVideo/scripts/ooyala-player.js',
+		'//extensions/wikia/ArticleVideo/bower_components/html5-skin/build/all.js',
+		'//extensions/wikia/ArticleVideo/scripts/ooyala/google_ima.js',
+		'//extensions/wikia/ArticleVideo/scripts/ooyala-player.js'
 	],
 ];
 
