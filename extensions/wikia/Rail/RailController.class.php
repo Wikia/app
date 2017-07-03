@@ -104,7 +104,10 @@ class RailController extends WikiaController {
 
 		// ad mix experiment uses a wrapper to group recirculation and ad placeholder
 		if ( !$isPremiumAdLayoutEnabled ) {
-			$railLazyContent .= Html::element( 'div', [ 'id' => 'WikiaAdInContentPlaceHolder' ] );
+			$railLazyContent .= Html::element( 'div', [
+				'id' => 'WikiaAdInContentPlaceHolder',
+				'class' => 'rail-sticky-module'
+			] );
 		}
 
 		$this->railLazyContent = $railLazyContent;

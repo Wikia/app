@@ -20,6 +20,8 @@ define('ext.wikia.adEngine.slot.premiumFloatingMedrec', [
 	function init() {
 		var adSlot = doc.createElement('div'),
 			context = adContext.getContext(),
+			maxChanges = 6,
+			onScroll,
 			placeHolder = doc.getElementById('WikiaAdInContentPlaceHolder'),
 			recirculation = doc.getElementById('recirculation-rail'),
 			refresh = {
@@ -31,37 +33,46 @@ define('ext.wikia.adEngine.slot.premiumFloatingMedrec', [
 				refreshDelay: 10000
 			},
 			slotName = 'INCONTENT_BOXAD_1',
-			startPosition = placeHolder.offsetTop;
+			startPosition = placeHolder.offsetTop,
+			swapRecirculationAndAd;
 
 		adSlot.className = 'wikia-ad';
 		adSlot.setAttribute('id', slotName);
 
-		function start() {
-			if (!context.opts.floatingMedrec) {
-				log(['init', 'Floating medrec disabled: ad context returns false'], 'debug', logGroup);
-				return;
+		function shouldSwitchModules(currentHightPosition) {
+			var heightScrolled = Math.abs(currentHightPosition - refresh.refreshAdPos),
+				timeDifference = (new Date()) - refresh.lastRefreshTime,
+				result = heightScrolled > refresh.heightScrolledTreshold &&
+					timeDifference > refresh.refreshDelay &&
+					refresh.refreshNumber < maxChanges;
+
+			if (result) {
+				refresh.lastRefreshTime = new Date();
+				refresh.refreshAdPos = currentHightPosition;
+				refresh.refreshNumber++;
 			}
 
-			if (!win.wgIsContentNamespace) {
-				log(['init', 'Floating medrec disabled: $wgIsContentNamespace equals false'], 'debug', logGroup);
-				return;
-			}
-
-			if (!placeHolder) {
-				log(['init', 'Floating medrec disabled: no placeHolder'], 'debug', logGroup);
-				return;
-			}
-
-			win.addEventListener('scroll', onScroll);
-			win.addEventListener('resize', onScroll);
+			return result;
 		}
 
-		function onScroll() {
-			throttle(checkAndPushAd)();
-		}
+		swapRecirculationAndAd = throttle(function swapRecirculationAndAd() {
+			if (shouldSwitchModules(placeHolder.offsetTop)) {
+				if (refresh.adVisible) {
+					log(['swapRecirculationAndAd', 'Hide ad, show recirculation '], 'debug', logGroup);
+					adSlot.classList.add('hidden');
+					recirculation.style.display = 'block';
+				} else {
+					log(['swapRecirculationAndAd', 'Show ad, hide recirculation '], 'debug', logGroup);
+					viewabilityHandler.refreshOnView(slotName, 0);
+					recirculation.style.display = 'none';
+				}
 
-		function checkAndPushAd() {
-			if (startPosition < placeHolder.offsetTop && shouldModules(placeHolder.offsetTop, 6)) {
+				refresh.adVisible = !refresh.adVisible;
+			}
+		});
+
+		onScroll = throttle(function () {
+			if (startPosition < placeHolder.offsetTop && shouldSwitchModules(placeHolder.offsetTop)) {
 				log(['checkAndPushAd', 'Enabling floating medrec'], 'debug', logGroup);
 
 				placeHolder.appendChild(adSlot);
@@ -85,38 +96,26 @@ define('ext.wikia.adEngine.slot.premiumFloatingMedrec', [
 				win.removeEventListener('scroll', onScroll);
 				win.removeEventListener('resize', onScroll);
 			}
-		}
+		});
 
-		function swapRecirculationAndAd() {
-			if (shouldModules(placeHolder.offsetTop, 6)) {
-				if (refresh.adVisible) {
-					log(['swapRecirculationAndAd', 'Hide ad, show recirculation '], 'debug', logGroup);
-					adSlot.classList.add('hidden');
-					recirculation.style.display = 'block';
-				} else {
-					log(['swapRecirculationAndAd', 'Show ad, hide recirculation '], 'debug', logGroup);
-					viewabilityHandler.refreshOnView(slotName, 0);
-					recirculation.style.display = 'none';
-				}
-
-				refresh.adVisible = !refresh.adVisible;
-			}
-		}
-
-		function shouldModules(currentHightPosition, maxChanges) {
-			var heightScrolled = Math.abs(currentHightPosition - refresh.refreshAdPos),
-				timeDifference = (new Date()) - refresh.lastRefreshTime,
-				result = heightScrolled > refresh.heightScrolledTreshold &&
-					timeDifference > refresh.refreshDelay &&
-					refresh.refreshNumber < maxChanges;
-
-			if (result) {
-				refresh.lastRefreshTime = new Date();
-				refresh.refreshAdPos = currentHightPosition;
-				refresh.refreshNumber++;
+		function start() {
+			if (!context.opts.floatingMedrec) {
+				log(['init', 'Floating medrec disabled: ad context returns false'], 'debug', logGroup);
+				return;
 			}
 
-			return result;
+			if (!win.wgIsContentNamespace) {
+				log(['init', 'Floating medrec disabled: $wgIsContentNamespace equals false'], 'debug', logGroup);
+				return;
+			}
+
+			if (!placeHolder) {
+				log(['init', 'Floating medrec disabled: no placeHolder'], 'debug', logGroup);
+				return;
+			}
+
+			win.addEventListener('scroll', onScroll);
+			win.addEventListener('resize', onScroll);
 		}
 
 		start();

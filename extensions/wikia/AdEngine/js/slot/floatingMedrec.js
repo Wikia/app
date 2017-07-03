@@ -22,6 +22,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 			enabled = false,
 			adPushed = false,
 			globalNavigationHeight = $('#globalNavigation').outerHeight(true),
+			handleFloatingMedrec,
 			margin = 10,
 			minDistance = 800,
 			leftSkyscraper3Selector = '#LEFT_SKYSCRAPER_3',
@@ -29,15 +30,13 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 			startPosition,
 			stopPoint,
 			stopPosition,
-			$adSlot = $('<div class="wikia-ad"></div>').attr('id', slotName),
+			$adSlot = $('<div class="wikia-ad "></div>').attr('id', slotName),
 			$footer = $('#WikiaFooter'),
 			$placeHolder = $('#WikiaAdInContentPlaceHolder'),
 			$win = $(win);
 
 		function getStartPosition(placeHolder) {
-			return parseInt(placeHolder.offset().top, 10) -
-					// TODO understand when palceholder height is required
-				globalNavigationHeight - margin;
+			return parseInt(placeHolder.offset().top, 10) - globalNavigationHeight - margin;
 		}
 
 		function getStopPosition(ad, footer, leftSkyscraper3) {
@@ -50,33 +49,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 			return stopPoint - globalNavigationHeight - 2 * margin - ad.height();
 		}
 
-		function update() {
-			if ($win.scrollTop() <= startPosition) {
-				$adSlot.css({
-					position: 'relative',
-					top: '0px',
-					visibility: 'visible'
-				});
-			}
-
-			if ($win.scrollTop() > startPosition && $win.scrollTop() < stopPosition) {
-				$adSlot.css({
-					position: 'fixed',
-					top: globalNavigationHeight + margin + 'px',
-					visibility: 'visible'
-				});
-			}
-
-			if ($win.scrollTop() >= stopPosition) {
-				$adSlot.css({
-					position: 'absolute',
-					top: stopPosition - startPosition + 'px',
-					visibility: 'visible'
-				});
-			}
-		}
-
-		function handleFloatingMedrec() {
+		handleFloatingMedrec = throttle(function () {
 			var scrollTop = $win.scrollTop();
 
 			startPosition = getStartPosition($placeHolder);
@@ -87,8 +60,6 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 				log(['handleFloatingMedrec',
 					'Disabling floating medrec: not enough space in right rail'], 'debug', logGroup);
 
-				win.removeEventListener('scroll', update);
-				win.removeEventListener('resize', update);
 
 				$adSlot.css({
 					visibility: 'hidden'
@@ -104,18 +75,13 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 
 					if (!adPushed) {
 						$placeHolder.append($adSlot);
-						win.adslots2.push({
-							slotName: slotName,
-							onSuccess: function () {
-								win.addEventListener('scroll', update);
-								win.addEventListener('resize', update);
-
-							}
-						});
+						win.adslots2.push({ slotName: slotName });
 						adPushed = true;
+
+						win.removeEventListener('scroll', handleFloatingMedrec);
 					}
 			}
-		}
+		});
 
 		function start() {
 			if (!context.opts.floatingMedrec) {
@@ -133,8 +99,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 				return;
 			}
 
-			win.addEventListener('scroll', throttle(handleFloatingMedrec));
-			win.addEventListener('resize', throttle(handleFloatingMedrec));
+			win.addEventListener('scroll', handleFloatingMedrec);
 		}
 
 		start();
