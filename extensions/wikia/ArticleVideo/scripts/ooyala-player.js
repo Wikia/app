@@ -18,10 +18,6 @@ define('ooyala-player', function () {
 			config: baseJSONSkinUrl,
 			inline: inlineSkinConfig
 		};
-		this.params.initialBitrate = {
-			level: 0.8,
-			duration: 2
-		};
 
 		this.containerId = container.id;
 		this.player = null;
@@ -43,9 +39,6 @@ define('ooyala-player', function () {
 			self = this;
 
 		this.onPlayerCreate(player);
-		if (this.params.autoplay) {
-			player.setVolume(0);
-		}
 
 		messageBus.subscribe(window.OO.EVENTS.PLAYBACK_READY, 'ui-update', function () {
 			self.onPlaybackReady();
@@ -120,9 +113,9 @@ define('ooyala-player', function () {
 		var params = {
 				videoId: videoId,
 				autoplay: autoplay,
+				initialVolume: autoplay ? 0 : 1,
 				pcode: playerParams.ooyalaPCode,
-				playerBrandingId: playerParams.ooyalaPlayerBrandingId,
-				platform: 'html5'
+				playerBrandingId: playerParams.ooyalaPlayerBrandingId
 			},
 			html5Player;
 
