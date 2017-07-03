@@ -127,8 +127,7 @@ define('ooyala-player', function () {
 					}
 				],
 				useGoogleAdUI: true,
-				useGoogleCountdown: false,
-				vpaidMode: 'insecure'
+				useGoogleCountdown: false
 			};
 			params.replayAds = false;
 		}
