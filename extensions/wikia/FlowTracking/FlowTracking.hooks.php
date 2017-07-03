@@ -77,20 +77,6 @@ class FlowTrackingHooks {
 		return true;
 	}
 
-	public static function onContributeMenuAfterDropdownItems( &$dropdownItems ) {
-		foreach ( $dropdownItems as $specialPageName => &$item ) {
-			if ( $specialPageName === 'createpage' ) {
-				$item['href'] = http_build_url(
-					$item['href'],
-					[ 'query' => 'flow=' . static::CREATE_PAGE_CONTRIBUTE_BUTTON ],
-					HTTP_URL_JOIN_QUERY
-				);
-			}
-		}
-
-		return true;
-	}
-
 	public static function onPageHeaderAfterAddNewPageButton( &$href ) {
 		$href = wfAppendQuery( $href, [
 			'flow' => static::CREATE_PAGE_CONTRIBUTE_BUTTON

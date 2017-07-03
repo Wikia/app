@@ -40,7 +40,7 @@ class WAMPageHooks {
 
 		if( self::$model->isWAMPage($title) ) {
 			self::$app->wg->SuppressPageHeader = true;
-			self::$app->wg->SuppressWikiHeader = true;
+			self::$app->wg->SuppressCommunityHeader = true;
 			self::$app->wg->SuppressRail = true;
 			self::$app->wg->SuppressFooter = true;
 			$article = new WAMPageArticle( $title );

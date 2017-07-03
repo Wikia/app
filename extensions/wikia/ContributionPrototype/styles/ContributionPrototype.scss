@@ -51,15 +51,6 @@ body {
   position: fixed !important;
 }
 
-#WikiHeader .buttons {
-  .wds-button {
-    background-image: none;
-    height: auto;
-    position: relative;
-    top: -10px;
-  }
-}
-
 .related-entities {
   display: none;
 }
@@ -74,10 +65,6 @@ body {
 
 i.fa {
   font-style: normal !important;
-}
-
-.WikiHeader > nav.WikiNav .subnav-2 {
-  width: 729px !important;
 }
 
 .table-of-contents {

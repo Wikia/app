@@ -21,38 +21,6 @@ $wikiahubs-line-height: 16px;
 	padding-bottom: 70px;
 }
 
-.wikinav2 .WikiaPageContentWrapper .WikiaMainContentContainer  {
-	.wikia-page-header {
-		border-bottom: solid 1px $color-page-border;
-	}
-
-	.WikiaPageHeader {
-		padding: 15px 0;
-		h1 {
-			display: block;
-			font-size: 28px;
-			font-weight: inherit;
-			line-height: 32px;
-		}
-
-		.tally {
-			position: relative;
-			float: right;
-			right: 0;
-			margin-right:20px;
-		}
-
-		.WikiaSearchHeader {
-			.WikiaSearch {
-				position: relative;
-			}
-			float: right;
-			position: relative;
-			right: 0;
-		}
-	}
-}
-
 .WikiaPageHeader {
 	p {
 		display: none;
