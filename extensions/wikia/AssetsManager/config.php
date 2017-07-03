@@ -584,7 +584,6 @@ $config['oasis_user_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'#group_design_system_user_js',
-		'//extensions/wikia/EmergencyBroadcastSystem/js/EmergencyBroadcastSystem.js',
 	],
 ];
 
