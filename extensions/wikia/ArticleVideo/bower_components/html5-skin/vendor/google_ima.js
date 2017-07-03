@@ -4170,8 +4170,7 @@
 
 						//for IMA, we always want to use the plugins element to house the IMA UI. This allows it to behave
 						//properly with the Alice skin.
-						_IMAAdDisplayContainer = new google.ima.AdDisplayContainer(_uiContainer,
-							this.sharedVideoElement);
+						_IMAAdDisplayContainer = new google.ima.AdDisplayContainer(_uiContainer, this.sharedVideoElement);
 
 						_trySetAdManagerToReady();
 
@@ -4348,6 +4347,7 @@
 					var adsSettings = new google.ima.AdsRenderingSettings();
 					adsSettings.restoreCustomPlaybackStateOnAdBreakComplete = false;
 					adsSettings.useStyledNonLinearAds = true;
+					adsSettings.uiElements = [];
 					if (this.useGoogleCountdown)
 					{
 						//both COUNTDOWN and AD_ATTRIBUTION are required as per

@@ -108,7 +108,7 @@ define('ooyala-player', function () {
 		$('.oo-action-icon').css('display', '');
 		$('.oo-state-screen-info').css('display', '');
 	};
-	
+
 	OoyalaHTML5Player.initHTML5Player = function (videoElementId, playerParams, videoId, onCreate, autoplay, vastUrl, inlineSkinConfig) {
 		var params = {
 				videoId: videoId,
@@ -126,7 +126,9 @@ define('ooyala-player', function () {
 						tag_url: vastUrl
 					}
 				],
-				useGoogleCountdown: true
+				useGoogleAdUI: true,
+				useGoogleCountdown: false,
+				vpaidMode: 'insecure'
 			};
 			params.replayAds = false;
 		}

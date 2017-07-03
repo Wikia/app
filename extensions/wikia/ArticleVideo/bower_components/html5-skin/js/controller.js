@@ -868,11 +868,6 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
           this.startHideControlBarTimer();
         }.bind(this)
       );
-      this.state.pluginsElement.mouseout(
-        function() {
-          this.hideControlBar();
-        }.bind(this)
-      );
       this.state.pluginsClickElement.click(
         function() {
           this.state.pluginsClickElement.removeClass("oo-showing");

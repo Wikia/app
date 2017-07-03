@@ -7,6 +7,7 @@ main_html5.js and `all-with-youtube.js` which contains youtube plugin.
 * added support for svg icons
 * some of imports that we don't use are commented out in `html5-skin.scss` to make styles file smaller
 * we currently use v.4.10.6 of Ooyala Player
+* custom ad screen with player controls
 
 ## High Level Overview
 `html5-skin` is a JS file that is made available externally to Ooyala core V4 player. It accepts and triggers general Ooyala Message Bus events from and to core player to change the behavior of video playback. All static files necessary to create and run video playback are hosted and can be accessed publicly. This skin repo are available to be git cloned or forked and be modified by developers (terms and condition apply).
