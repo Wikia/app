@@ -2488,7 +2488,7 @@ $messages['de'] = array(
 	'hidden-category-category' => 'Versteckte Kategorien',
 	'help' => 'Hilfe',
 	'history' => 'Versionsgeschichte',
-	'history_short' => 'Verlauf',
+	'history_short' => 'Versionen',
 	'helppage' => 'Hilfe:Übersicht',
 	'hidetoc' => 'Ausblenden',
 	'headline_sample' => 'Überschriftstext',
@@ -9820,7 +9820,7 @@ $messages['ru'] = array(
 Она была удалена или переименована.
 Попробуйте [[Special:Search|найти]] похожие страницы.',
 	'history-title' => '$1 — история изменений',
-	'hist' => 'ист.',
+	'hist' => 'история',
 	'hide' => 'Скрыть',
 	'hookaborted' => 'Изменение, которые вы пытались сделать, было прервано обработчиком расширения.',
 	'http-invalid-url' => 'Ошибочный адрес: $1',

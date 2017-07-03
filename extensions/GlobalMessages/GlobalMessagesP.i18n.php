@@ -31353,7 +31353,7 @@ L'urteme archivije de le trasute ha state mise aqquà sotte pe referimende:",
 );
 
 $messages['ru'] = array(
-	'pagecategories' => '{{PLURAL:$1|Категория|Категории|Категорий}}',
+	'pagecategories' => '{{PLURAL:$1|Категория|Категории}}',
 	'printableversion' => 'Версия для печати',
 	'permalink' => 'Постоянная ссылка',
 	'print' => 'Печать',

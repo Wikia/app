@@ -106,7 +106,7 @@ $messages['ja'] = array(
 	'1movedto2_redir' => '[[$1]]を、[[$2]]へ移動し転送を上書き',
 	'#voted#' => '得票数トップの記事',
 	'#popular#' => '最も人気のある記事',
-	'#visited#' => '最も閲覧回数の多い記事',
+	'#visited#' => '最も閲覧回数の多い記事一覧',
 	'#newlychanged#' => '新しく変更された記事',
 	'#topusers#' => 'トップユーザー',
 );
@@ -227,7 +227,7 @@ $messages['zh-hans'] = array(
 $messages['zh-hant'] = array(
 	'1movedto2' => '移動[[$1]]至[[$2]]',
 	'1movedto2_redir' => '透過重定向移動[[$1]]至[[$2]]',
-	'#voted#' => '票選最多的文章',
+	'#voted#' => '得票數最多的文章',
 	'#popular#' => '最受歡迎的文章',
 	'#visited#' => '最多訪問的文章',
 	'#newlychanged#' => '最新更改的文章',

@@ -1381,7 +1381,7 @@ Los blogs (o bitácoras) son usados por la comunidad dentro de un wiki para crea
 	'blug-cut-sign' => '…',
 	'blog-avatar-preferences-title' => 'Avatar',
 	'blog-page-rate' => 'Califica esta entrada:',
-	'blog-create-post-label' => 'Crear nueva entrada de blog',
+	'blog-create-post-label' => 'Crear nueva entrada',
 	'blog-create-label' => 'Crea artículo de blog',
 	'blog-create-next-label' => 'Crea nuevo artículo de blog',
 	'blog-create-listing-label' => 'Crear lista de blogs',

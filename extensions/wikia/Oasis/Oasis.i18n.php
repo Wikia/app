@@ -4698,7 +4698,7 @@ $messages['zh-hans'] = array(
 	'oasis-search-results-from' => '显示来自$1的所有查询结果',
 	'oasis-search-results-from-all-wikis' => '显示来自所有FANDOM的查询结果',
 	'oasis-content-picture-added-by' => '添加者：$1',
-	'oasis-confirmation-page-deleted' => '"$1" 已被删除。([[Special:Undelete/$1|未删除]])',
+	'oasis-confirmation-page-deleted' => '"$1" 已被删除。([[Special:Undelete/$1|撤销删除]])',
 	'oasis-confirmation-comment-deleted' => '此评论已被删除。',
 	'oasis-confirmation-page-undeleted' => '此页面已被恢复。',
 	'oasis-confirmation-user-logout' => '您已经登出帐户。',
@@ -4945,11 +4945,12 @@ $messages['zh-hant'] = array(
 	'photosblacklist' => '* example-blacklist.png',
 	'categoryblacklist' => '* 小作品',
 	'wiki-navigation' => '*#|熱門頁面
-**#newlychanged#最近更新頁面
-**#category1#
-**#category1#
+**#newlychanged#|最近更新頁面
+**#category1#|分類1
+**#category2#|分類2
 *Project:Community Portal|社區
-**Blog:Recent_posts|最新網誌',
+**Blog:Recent_posts|最新網誌
+**Help:內容|幫助中心',
 	'imageseo-featured-on' => '功能：',
 	'oasis-related-video-by-5min' => '由5min網站提供',
 	'oasis-editpage-readonlywarning' => '<h2>很抱歉！</h2>
