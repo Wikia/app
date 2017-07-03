@@ -55,7 +55,7 @@ define('ext.wikia.adEngine.slot.premiumFloatingMedrec', [
 			return result;
 		}
 
-		swapRecirculationAndAd = throttle(function swapRecirculationAndAd() {
+		swapRecirculationAndAd = throttle(function () {
 			if (shouldSwitchModules(placeHolder.offsetTop)) {
 				if (refresh.adVisible) {
 					log(['swapRecirculationAndAd', 'Hide ad, show recirculation '], 'debug', logGroup);
