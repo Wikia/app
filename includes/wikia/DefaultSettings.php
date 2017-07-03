@@ -605,7 +605,6 @@ $wgAjaxAutoCompleteSearch = true;
 include_once( "$IP/extensions/ExtensionFunctions.php" );
 include_once( "$IP/extensions/wikia/DesignSystem/DesignSystem.setup.php" );
 include_once( "$IP/extensions/wikia/AnalyticsEngine/AnalyticsEngine.setup.php" );
-include_once( "$IP/extensions/wikia/AjaxFunctions.php" );
 include_once( "$IP/extensions/wikia/DataProvider/DataProvider.php" );
 include_once( "$IP/extensions/wikia/StaffSig/StaffSig.php" );
 include_once( "$IP/extensions/wikia/TagCloud/TagCloudClass.php" );
