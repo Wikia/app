@@ -30,7 +30,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 			startPosition,
 			stopPoint,
 			stopPosition,
-			$adSlot = $('<div class="wikia-ad "></div>').attr('id', slotName),
+			$adSlot = $('<div class="wikia-ad"></div>').attr('id', slotName),
 			$footer = $('#WikiaFooter'),
 			$placeHolder = $('#WikiaAdInContentPlaceHolder'),
 			$win = $(win);
