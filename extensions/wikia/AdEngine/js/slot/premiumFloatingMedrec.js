@@ -78,7 +78,6 @@ define('ext.wikia.adEngine.slot.premiumFloatingMedrec', [
 				placeHolder.appendChild(adSlot);
 				recirculation.style.display = 'none';
 
-
 				win.addEventListener('scroll', throttle(swapRecirculationAndAd));
 				win.addEventListener('resize', throttle(swapRecirculationAndAd));
 

@@ -36,7 +36,7 @@ class RailController extends WikiaController {
 	}
 
 	public function stickyModule() {
-
+		// It loads Rail_stickyModule.php
 	}
 
 	/**

@@ -2,6 +2,9 @@
 @import 'skins/shared/mixins/transform';
 @import 'skins/shared/mixins/flexbox';
 
+$recirculation-thumbnail-margin: 6px;
+$recirculation-thumbnail-size: 20px;
+
 // TODO ADEN-5481 remove unused styles after premiumAdLayout rollout
 .WikiaRail .premium-recirculation-rail {
 
@@ -51,10 +54,10 @@
 .rail-sticky-module {
 	.premium-recirculation-rail {
 		.item.is-video .image-thumbnail::after {
-			bottom: 6px;
-			height: 20px;
-			right: 6px;
-			width: 20px;
+			bottom: $recirculation-thumbnail-margin;
+			height: $recirculation-thumbnail-size;
+			right: $recirculation-thumbnail-margin;
+			width: $recirculation-thumbnail-size;
 		}
 
 		.content {
