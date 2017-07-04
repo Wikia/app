@@ -128,6 +128,7 @@ define('ooyala-player', function () {
 				],
 				useGoogleAdUI: true,
 				useGoogleCountdown: false,
+				vpaidMode: 'insecure',
 				// This is a hack for XW-3684 P2, please don't reuse
 				onAdRequestSuccess: function (IMAAdsManager) {
 					IMAAdsManager.addEventListener('loaded', function (eventData) {
