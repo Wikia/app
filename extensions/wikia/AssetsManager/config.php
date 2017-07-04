@@ -7,7 +7,6 @@ $config = [];
 $config['oasis_shared_core_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
-		'#group_oasis_wikia_js',
 		'//resources/wikia/libraries/sloth/sloth.js',
 		'//resources/wikia/libraries/mustache/mustache.js',
 		'//resources/wikia/modules/browserDetect.js',
@@ -457,15 +456,6 @@ $config['oasis_jquery'] = [
 		'#group_rail_js',
 
 		'#group_page_share_js',
-	],
-];
-
-/** Wikia **/
-$config['oasis_wikia_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		// classes
-		'//resources/wikia/libraries/my.class/my.class.js',
 	],
 ];
 
@@ -1395,7 +1385,6 @@ $config['chat_js2'] = [
 $config['theme_designer_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
-		'#group_oasis_wikia_js',
 		'#group_oasis_jquery',
 
 		'//resources/jquery.ui/jquery.ui.widget.js',
