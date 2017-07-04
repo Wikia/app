@@ -29,7 +29,7 @@ define('ext.wikia.adEngine.slot.premiumFloatingMedrec', [
 				lastRefreshTime: new Date(),
 				refreshNumber: 0,
 				adVisible: true,
-				heightScrolledTreshold: 10,
+				heightScrolledThreshold: 10,
 				refreshDelay: 10000
 			},
 			slotName = 'INCONTENT_BOXAD_1',
@@ -39,16 +39,16 @@ define('ext.wikia.adEngine.slot.premiumFloatingMedrec', [
 		adSlot.className = 'wikia-ad';
 		adSlot.setAttribute('id', slotName);
 
-		function shouldSwitchModules(currentHightPosition) {
-			var heightScrolled = Math.abs(currentHightPosition - refresh.refreshAdPos),
+		function shouldSwitchModules(currentHeightPosition) {
+			var heightScrolled = Math.abs(currentHeightPosition - refresh.refreshAdPos),
 				timeDifference = (new Date()) - refresh.lastRefreshTime,
-				result = heightScrolled > refresh.heightScrolledTreshold &&
+				result = heightScrolled > refresh.heightScrolledThreshold &&
 					timeDifference > refresh.refreshDelay &&
 					refresh.refreshNumber < maxChanges;
 
 			if (result) {
 				refresh.lastRefreshTime = new Date();
-				refresh.refreshAdPos = currentHightPosition;
+				refresh.refreshAdPos = currentHeightPosition;
 				refresh.refreshNumber++;
 			}
 
@@ -105,7 +105,7 @@ define('ext.wikia.adEngine.slot.premiumFloatingMedrec', [
 				log(['init', 'Floating medrec disabled: $wgIsContentNamespace equals false'], 'debug', logGroup);
 				return;
 			}
-
+ 
 			if (!placeHolder) {
 				log(['init', 'Floating medrec disabled: no placeHolder'], 'debug', logGroup);
 				return;
