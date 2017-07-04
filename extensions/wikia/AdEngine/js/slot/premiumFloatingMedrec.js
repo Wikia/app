@@ -105,7 +105,7 @@ define('ext.wikia.adEngine.slot.premiumFloatingMedrec', [
 				log(['init', 'Floating medrec disabled: $wgIsContentNamespace equals false'], 'debug', logGroup);
 				return;
 			}
- 
+
 			if (!placeHolder) {
 				log(['init', 'Floating medrec disabled: no placeHolder'], 'debug', logGroup);
 				return;
