@@ -17,12 +17,22 @@ class TransactionTraceNewrelic {
 		'PhpAmqpLib\Wire\IO\StreamIO::read',
 
 		# PLATFORM-1694: HTTP requests
-		'Wikia\Service\Helios\HeliosClientImpl::request', # Helios
-		'PhalanxService::sendToPhalanxDaemon', # Phalanx
-		'Wikia\Persistence\User\Preferences\PreferencePersistenceSwaggerService::get', # Preferences
-		'TemplateClassificationService::getType', # Template classification
-		'UserMailer::send', # emails
-		'ForeignAPIRepo::httpGet', # calls to upload.wikimedia.org and commons.wikimedia.org
+		# Helios
+		'Wikia\Service\Helios\HeliosClientImpl::request',
+		# Phalanx
+		'PhalanxService::sendToPhalanxDaemon',
+
+		# Preferences
+		'Wikia\Persistence\User\Preferences\PreferencePersistenceSwaggerService::get',
+
+		# Template classification
+		'TemplateClassificationService::getType',
+
+		# emails
+		'UserMailer::send',
+
+		# calls to upload.wikimedia.org and commons.wikimedia.org
+		'ForeignAPIRepo::httpGet',
 	];
 
 	/**
