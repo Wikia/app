@@ -23,7 +23,6 @@ class TransactionTraceNewrelic {
 		'TemplateClassificationService::getType', # Template classification
 		'UserMailer::send', # emails
 		'ForeignAPIRepo::httpGet', # calls to upload.wikimedia.org and commons.wikimedia.org
-		'LillyHooks::processLink',
 	];
 
 	/**
