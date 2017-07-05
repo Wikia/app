@@ -474,7 +474,7 @@ var ControlBar = React.createClass({
         continue;
       }
 
-      if (!this.props.showFullScreenToggle && defaultItems[k].name === "fullscreen") {
+      if (this.props.isWikiaAdScreen && !this.props.showAdFullScreenToggle && defaultItems[k].name === "fullscreen") {
         continue;
       }
 

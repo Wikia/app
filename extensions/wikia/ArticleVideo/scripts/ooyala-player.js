@@ -134,7 +134,7 @@ define('ooyala-player', function () {
 
 						if (eventData.A.vpaid === true) {
 							player.mb.publish(OO.EVENTS.WIKIA.SHOW_AD_TIME_LEFT, false);
-							player.mb.publish(OO.EVENTS.WIKIA.SHOW_FULLSCREEN_TOGGLE, false);
+							player.mb.publish(OO.EVENTS.WIKIA.SHOW_AD_FULLSCREEN_TOGGLE, false);
 						}
 					}, false, this);
 				}
