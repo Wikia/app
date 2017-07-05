@@ -1112,6 +1112,48 @@ abstract class Maintenance {
 	}
 
 	/**
+	 * Begin a transcation on a DB
+	 *
+	 * This method makes it clear that begin() is called from a maintenance script,
+	 * which has outermost scope. This is safe, unlike $dbw->begin() called in other places.
+	 *
+	 * @param DatabaseBase $dbw
+	 * @param string $fname Caller name
+	 * @since 1.27
+	 */
+	protected function beginTransaction( DatabaseBase $dbw, string $fname ) {
+		$dbw->begin( $fname );
+	}
+
+	/**
+	 * Commit the transcation on a DB handle and wait for replica DBs to catch up
+	 *
+	 * This method makes it clear that commit() is called from a maintenance script,
+	 * which has outermost scope. This is safe, unlike $dbw->commit() called in other places.
+	 *
+	 * @param DatabaseBase $dbw
+	 * @param string $fname Caller name
+	 * @since 1.27
+	 */
+	protected function commitTransaction( DatabaseBase $dbw, string $fname ) {
+		$dbw->commit( $fname );
+	}
+
+	/**
+	 * Rollback the transcation on a DB handle
+	 *
+	 * This method makes it clear that rollback() is called from a maintenance script,
+	 * which has outermost scope. This is safe, unlike $dbw->rollback() called in other places.
+	 *
+	 * @param DatabaseBase $dbw
+	 * @param string $fname Caller name
+	 * @since 1.27
+	 */
+	protected function rollbackTransaction( DatabaseBase $dbw, string $fname ) {
+		$dbw->rollback( $fname );
+	}
+
+	/**
 	 * Lock the search index
 	 * @param &$db Database object
 	 */

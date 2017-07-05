@@ -159,8 +159,8 @@ class MigrateOversightRevisions extends Maintenance {
 
 				$rev = Revision::newFromRow( $hiddenRow );
 
-				$insertData[$fieldPrefix . 'len'] = $rev->getContent( Revision::RAW )->getSize();
-				$insertData[$fieldPrefix . 'sha1'] = Revision::base36Sha1( $rev->getSerializedData() );
+				$insertData[$fieldPrefix . 'len'] = $rev->getSize();
+				$insertData[$fieldPrefix . 'sha1'] = $rev->getSha1();
 
 				if ( $dbw->selectField(
 					'archive',
@@ -185,7 +185,7 @@ class MigrateOversightRevisions extends Maintenance {
 					$parentIdFromTables = array(
 						$dbw->selectRow(
 							'revision',
-							array( 'rev_id', 'timestamp' => 'rev_timestamp' ),
+							array( 'rev_id', 'rev_timestamp AS timestamp' ),
 							array(
 								'rev_page' => $hiddenRow->hidden_page,
 								'rev_timestamp < ' . $dbw->addQuotes( $hiddenRow->hidden_timestamp ),
@@ -196,7 +196,7 @@ class MigrateOversightRevisions extends Maintenance {
 						),
 						$dbw->selectRow(
 							'hidden',
-							array( 'rev_id' => 'hidden_rev_id', 'timestamp' => 'hidden_timestamp' ),
+							array( 'hidden_rev_id AS rev_id', 'hidden_timestamp AS timestamp' ),
 							array(
 								'hidden_page' => $hiddenRow->hidden_page,
 								'hidden_timestamp < ' . $dbw->addQuotes( $hiddenRow->hidden_timestamp ),
@@ -207,7 +207,7 @@ class MigrateOversightRevisions extends Maintenance {
 						),
 						$dbw->selectRow(
 							'archive',
-							array( 'rev_id' => 'ar_rev_id', 'timestamp' => 'ar_timestamp' ),
+							array( 'ar_rev_id AS rev_id', 'ar_timestamp AS timestamp' ),
 							array(
 								'ar_page_id' => $hiddenRow->hidden_page,
 								'ar_timestamp < ' . $dbw->addQuotes( $hiddenRow->hidden_timestamp ),
