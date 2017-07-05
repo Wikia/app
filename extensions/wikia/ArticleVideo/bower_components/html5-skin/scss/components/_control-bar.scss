@@ -5,6 +5,7 @@
   width: 100%;
   height: $control-bar-height;
   position: relative;
+  // WIKIA CHANGE
   margin: 0 0 -35px;
   padding: 0 15px;
   list-style: none;
@@ -163,8 +164,10 @@ a.oo-volume-bar {
 .oo-on{
   background-color: rgba($blue-light, 1.0);
   height: 17px;
+  // WIKIA CHANGE - START
   padding-bottom: 0;
   margin-bottom: 0;
+  // WIKIA CHANGE - END
 }
 
 .oo-volume:hover .oo-volume-bar {

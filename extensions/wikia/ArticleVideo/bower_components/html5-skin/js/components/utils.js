@@ -3,9 +3,10 @@
 *
 * @module Utils
 */
+// WIKIA CHANGE - START
 require('./deepMerge');
-
 var DeepMerge = window.ooyalaDeepMerge;
+// WIKIA CHANGE - END
 
 var Utils = {
   /**

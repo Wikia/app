@@ -11,6 +11,7 @@ var React = require('react'),
     VideoQualityPanel = require('./components/videoQualityPanel'),
     SharePanel = require('./components/sharePanel'),
     MoreOptionsPanel = require('./components/moreOptionsPanel'),
+    // WIKIA CHANGE
     WikiaAdScreen = require('./views/wikiaAdScreen'),
     EndScreen = require('./views/endScreen'),
     StartScreen = require('./views/startScreen'),
@@ -171,6 +172,7 @@ var Skin = React.createClass({
           );
           break;
         case CONSTANTS.SCREEN.AD_SCREEN:
+          // WIKIA CHANGE
           screen = (
             <WikiaAdScreen {...this.props}
               contentTree={this.state.contentTree}

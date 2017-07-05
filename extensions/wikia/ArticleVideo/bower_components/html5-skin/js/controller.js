@@ -1,14 +1,16 @@
 /********************************************************************
  CONTROLLER
  *********************************************************************/
+// WIKIA CHANGE - START
 require('./components/deepMerge');
+var DeepMerge = window.ooyalaDeepMerge;
+// WIKIA CHANGE - END
 
 var React = require('react'),
     ReactDOM = require('react-dom'),
     Utils = require('./components/utils'),
     CONSTANTS = require('./constants/constants'),
     AccessibilityControls = require('./components/accessibilityControls'),
-    DeepMerge = window.ooyalaDeepMerge,
     Fullscreen = require('screenfull'),
     Skin = require('./skin'),
     SkinJSON = require('../config/skin'),
@@ -28,14 +30,16 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
     OO.publicApi.VERSION.skin = {"releaseVersion": "4.14.8", "rev": "<SKIN_REV>"};
   }
 
+  // WIKIA CHANGE - START
   OO.EVENTS.WIKIA = {
     AUTOPLAY_TOGGLED: 'wikia.autoplayToggled',
     SHOW_AD_TIME_LEFT: 'wikia.showAdTimeLeft',
     SHOW_AD_FULLSCREEN_TOGGLE: 'wikia.showAdFullScreenToggle',
   };
   OO.exposeStaticApi('EVENTS', OO.EVENTS);
+  // WIKIA CHANGE - END
 
-	var autoplayCookieName = 'html5-skin.autoplay',
+  var autoplayCookieName = 'html5-skin.autoplay',
     autoplayCookieExpireDays = 14,
     Html5Skin = function (mb, id) {
       this.mb = mb;
@@ -121,6 +125,7 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
           "showVideoQualityPopover":false
         },
 
+        // WIKIA CHANGE - START
         "autoPlay": {
           "enabled": false
         },
@@ -131,6 +136,7 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
             "showVideoQualityPanel":false,
             "showConfigPanelPopover": false
         },
+        // WIKIA CHANGE - END
 
         "volumeState": {
           "volume": 1,
@@ -164,8 +170,10 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
         "isVideoFullScreenSupported": false,
         "isFullWindow": false,
         "autoPauseDisabled": false,
+        // WIKIA CHANGE - START
         "showAdTimeLeft": true,
         "showAdFullScreenToggle": true
+        // WIKIA CHANGE - END
       };
 
       this.init();
@@ -235,8 +243,10 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
           this.mb.subscribe(OO.EVENTS.SHOW_AD_SKIP_BUTTON, "customerUi", _.bind(this.onShowAdSkipButton, this));
           this.mb.subscribe(OO.EVENTS.SHOW_AD_CONTROLS, "customerUi", _.bind(this.onShowAdControls, this));
           this.mb.subscribe(OO.EVENTS.SHOW_AD_MARQUEE, "customerUi", _.bind(this.onShowAdMarquee, this));
+          // WIKIA CHANGE - START
           this.mb.subscribe(OO.EVENTS.WIKIA.SHOW_AD_TIME_LEFT, "customerUi", _.bind(this.onShowAdTimeLeft, this));
           this.mb.subscribe(OO.EVENTS.WIKIA.SHOW_AD_FULLSCREEN_TOGGLE, "customerUi", _.bind(this.onShowAdFullScreenToggle, this));
+          // WIKIA CHANGE - END
         }
       }
       this.state.isSubscribed = true;
@@ -266,6 +276,7 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
 
       //initial DOM manipulation
       this.state.mainVideoContainer.addClass('oo-player-container');
+      // WIKIA CHANGE - START
       if (params.autoplay && this.state.isMobile) {
         // set autoplay data attribute which is read by main_html5 plugin
         this.state.mainVideoInnerWrapper.attr('data-autoplay', 'autoplay');
@@ -274,6 +285,7 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
         this.state.volumeState.oldVolume = 1;
         this.setVolume(0);
       }
+      // WIKIA CHANGE - END
       this.state.mainVideoInnerWrapper.addClass('oo-player');
       this.state.mainVideoInnerWrapper.append("<div class='oo-player-skin'></div>");
 
@@ -785,6 +797,7 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
       this.renderSkin();
     },
 
+    // WIKIA CHANGE - START
     onShowAdTimeLeft: function (event, showAdTimeLeft) {
       this.state.showAdTimeLeft = showAdTimeLeft;
       this.renderSkin();
@@ -794,6 +807,7 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
       this.state.showAdFullScreenToggle = showAdFullScreenToggle;
       this.renderSkin();
     },
+    // WIKIA CHANGE - END
 
     onSkipAdClicked: function(event) {
       this.state.isSkipAdClicked = true;
@@ -1322,6 +1336,7 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
     },
 
     setVolume: function(volume){
+      // WIKIA CHANGE - START
       if (this.state.isMobile && this.state.mainVideoElement) {
         if (volume > 0) {
           this.state.mainVideoElement[0].muted = false;
@@ -1329,6 +1344,7 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
           this.state.mainVideoElement[0].muted = true;
         }
       }
+      // WIKIA CHANGE - END
       this.mb.publish(OO.EVENTS.CHANGE_VOLUME, volume);
     },
 

@@ -208,6 +208,7 @@ var ControlBar = React.createClass({
     });
   },
 
+  // WIKIA CHANGE
   formatSecondsWithoutLeadingZero: function (timeInSeconds) {
     var seconds = parseInt(timeInSeconds,10) % 60;
     var minutes = parseInt(timeInSeconds / 60, 10);
@@ -288,8 +289,10 @@ var ControlBar = React.createClass({
     var liveClick = isLiveNow ? null : this.handleLiveClick;
     var playheadTimeContent = isLiveStream ? (isLiveNow ? null : Utils.formatSeconds(timeShift)) : playheadTime;
     var totalTimeContent = isLiveStream ? null : <span className="oo-total-time">{totalTime}</span>;
+    // WIKIA CHANGE - START
     var timeLeft = this.formatSecondsWithoutLeadingZero(Math.abs(timeShift));
     var timeLeftContent = <span className="oo-ad-time-left">Ad • {timeLeft}</span>;
+    // WIKIA CHANGE - END
 
     // TODO: Update when implementing localization
     var liveText = Utils.getLocalizedString(this.props.language, CONSTANTS.SKIN_TEXT.LIVE, this.props.localizableStrings);
@@ -344,7 +347,9 @@ var ControlBar = React.createClass({
         <span>{playheadTimeContent}</span>{totalTimeContent}
       </a>,
 
+      // WIKIA CHANGE - START
       "adTimeLeft": timeLeftContent,
+      // WIKIA CHANGE - END
 
       "flexibleSpace": <div className="oo-flexible-space oo-control-bar-flex-space" key="flexibleSpace"></div>,
 
@@ -400,7 +405,8 @@ var ControlBar = React.createClass({
     };
 
     var controlBarItems = [];
-    var defaultItems = this.props.controller.state.isPlayingAd && false ? this.props.skinConfig.buttons.desktopAd : this.props.skinConfig.buttons.desktopContent;
+    // WIKIA CHANGE
+    var defaultItems = this.props.skinConfig.buttons.desktopContent;
 
     //if mobile and not showing the slider or the icon, extra space can be added to control bar width. If volume bar is shown instead of slider, add some space as well:
     var volumeItem = null;
@@ -474,6 +480,7 @@ var ControlBar = React.createClass({
         continue;
       }
 
+      // WIKIA CHANGE - START
       if (this.props.isWikiaAdScreen && !this.props.showAdFullScreenToggle && defaultItems[k].name === "fullscreen") {
         continue;
       }
@@ -486,6 +493,7 @@ var ControlBar = React.createClass({
       if (this.props.isWikiaAdScreen && ['timeDuration', 'quality', 'share'].indexOf(defaultItems[k].name) > -1) {
         continue;
       }
+      // WIKIA CHANGE - END
 
       controlBarItems.push(defaultItems[k]);
     }

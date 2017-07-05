@@ -3277,6 +3277,7 @@
           this.useGoogleCountdown = false;
           this.useInsecureVpaidMode = false;
           this.imaIframeZIndex = DEFAULT_IMA_IFRAME_Z_INDEX;
+          // WIKIA CHANGE
           this.onAdRequestSuccess = function () {};
 
           //flag to track whether ad rules failed to load
@@ -3418,11 +3419,13 @@
             this.imaIframeZIndex = metadata.iframeZIndex;
           }
 
+          // WIKIA CHANGE - START
           this.onAdRequestSuccess = function () {};
           if (metadata.hasOwnProperty("onAdRequestSuccess"))
           {
             this.onAdRequestSuccess = metadata.onAdRequestSuccess;
           }
+          // WIKIA CHANGE - END
 
           //On second video playthroughs, we will not be initializing the ad manager again.
           //Attempt to create the ad display container here instead of after the sdk has loaded
@@ -4369,6 +4372,8 @@
           var adsSettings = new google.ima.AdsRenderingSettings();
           adsSettings.restoreCustomPlaybackStateOnAdBreakComplete = false;
           adsSettings.useStyledNonLinearAds = true;
+          // WIKIA CHANGE
+          adsSettings.uiElements = [];
           if (this.useGoogleCountdown)
           {
             //both COUNTDOWN and AD_ATTRIBUTION are required as per
@@ -4378,6 +4383,7 @@
           adsSettings.useStyledLinearAds = this.useGoogleAdUI;
           _IMAAdsManager = adsManagerLoadedEvent.getAdsManager(_playheadTracker, adsSettings);
 
+          // WIKIA CHANGE
           this.onAdRequestSuccess(_IMAAdsManager);
 
           // When the ads manager is ready, we are ready to apply css changes to the video element

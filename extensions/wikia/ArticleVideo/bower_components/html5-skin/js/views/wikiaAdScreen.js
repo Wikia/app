@@ -39,7 +39,8 @@ var WikiaAdScreen = React.createClass({
     return playbackControlItems;
   },
 
-  // FIXME move this to controller.js (?) so the first click shows controls, not toggles play/pause
+  // FIXME XW-3636 move this to controller.js (?) so the first click shows controls, not toggles
+  // play/pause
   // onClick: function (e) {
   //   if (!this.state.controlBarVisible && this.props.playerState !== CONSTANTS.STATE.PAUSE) {
   //     this.props.controller.startHideControlBarTimer();
