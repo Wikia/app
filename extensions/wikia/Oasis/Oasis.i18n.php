@@ -830,6 +830,12 @@ $messages['de'] = array(
 	'oasis-social-reddit-link' => 'https://www.reddit.com/r/wikia',
 	'oasis-social-instagram' => 'Instagram',
 	'oasis-social-instagram-link' => 'https://www.instagram.com/getfandom/',
+	'oasis-skip-to-content' => 'Weiter zum Inhalt',
+	'oasis-skip-to-wiki-navigation' => 'Weiter zur Wiki-Navigation',
+	'oasis-skip-to-site-navigation' => 'Weiter zur Seitennavigation',
+	'oasis-wiki-navigation' => '$1 Navigation',
+	'oasis-navigation-v2-edit-page' => 'Seite bearbeiten',
+	'oasis-navigation-v2-edit-this-menu' => 'Wiki-Navigation bearbeiten',
 );
 
 $messages['de-formal'] = array(
@@ -1050,6 +1056,12 @@ $messages['es'] = array(
 	'oasis-social-reddit-link' => 'https://www.reddit.com/r/wikia',
 	'oasis-social-instagram' => 'Instagram',
 	'oasis-social-instagram-link' => 'https://www.instagram.com/es_fandom/',
+	'oasis-skip-to-content' => 'Ir al contenido',
+	'oasis-skip-to-wiki-navigation' => 'Ir al panel de navegación del wiki',
+	'oasis-skip-to-site-navigation' => 'Ir al panel de navegación del sitio',
+	'oasis-wiki-navigation' => 'Navegación de $1',
+	'oasis-navigation-v2-edit-page' => 'Editar esta página',
+	'oasis-navigation-v2-edit-this-menu' => 'Editar la navegación del wiki',
 );
 
 $messages['fa'] = array(
@@ -1459,6 +1471,12 @@ $messages['fr'] = array(
 	'oasis-social-reddit-link' => 'https://www.reddit.com/r/wikia',
 	'oasis-social-instagram' => 'Instagram',
 	'oasis-social-instagram-link' => 'https://www.instagram.com/getfandom/',
+	'oasis-skip-to-content' => 'Passer au contenu',
+	'oasis-skip-to-wiki-navigation' => 'Passer à la navigation sur le wiki',
+	'oasis-skip-to-site-navigation' => 'Passer à la navigation sur le site',
+	'oasis-wiki-navigation' => 'Navigation sur $1',
+	'oasis-navigation-v2-edit-page' => 'Modifier cette page',
+	'oasis-navigation-v2-edit-this-menu' => 'Modifier la navigation',
 );
 
 $messages['gl'] = array(
@@ -2055,6 +2073,12 @@ $messages['it'] = array(
 	'oasis-social-reddit-link' => 'https://www.reddit.com/r/wikia',
 	'oasis-social-instagram' => 'Instagram',
 	'oasis-social-instagram-link' => 'https://www.instagram.com/getfandom/',
+	'oasis-skip-to-content' => 'Vai al contenuto',
+	'oasis-skip-to-wiki-navigation' => 'Vai alla navigazione della wiki',
+	'oasis-skip-to-site-navigation' => 'Vai alla navigazione del sito',
+	'oasis-wiki-navigation' => 'Navigazione di $1',
+	'oasis-navigation-v2-edit-page' => 'Modifica questa pagina',
+	'oasis-navigation-v2-edit-this-menu' => 'Modifica la navigazione della wiki',
 );
 
 $messages['ja'] = array(
@@ -2244,6 +2268,12 @@ $messages['ja'] = array(
 	'oasis-social-reddit-link' => 'https://www.reddit.com/r/wikia',
 	'oasis-social-instagram' => 'Instagram',
 	'oasis-social-instagram-link' => 'https://www.instagram.com/getfandom/',
+	'oasis-skip-to-content' => 'コンテンツへ飛ぶ',
+	'oasis-skip-to-wiki-navigation' => 'ウィキナビゲーションへ飛ぶ',
+	'oasis-skip-to-site-navigation' => 'サイトナビゲーションへ飛ぶ',
+	'oasis-wiki-navigation' => '$1のナビゲーション',
+	'oasis-navigation-v2-edit-page' => 'このページを編集',
+	'oasis-navigation-v2-edit-this-menu' => 'ウィキナビゲーションを編集',
 );
 
 $messages['jp'] = array(
@@ -2448,6 +2478,9 @@ $messages['ko'] = array(
 	'oasis-social-reddit-link' => 'https://www.reddit.com/r/wikia',
 	'oasis-social-instagram' => 'Instagram',
 	'oasis-social-instagram-link' => 'https://www.instagram.com/getfandom/',
+	'oasis-wiki-navigation' => '$1 Navigation',
+	'oasis-navigation-v2-edit-page' => 'Edit this Page',
+	'oasis-navigation-v2-edit-this-menu' => 'Edit Wiki Navigation',
 );
 
 $messages['ku-latn'] = array(
@@ -3325,12 +3358,12 @@ $messages['pl'] = array(
 	'oasis-add-photo-to-wiki' => 'Dodaj obraz',
 	'photosblacklist' => '* przykład-czarnej-listy.png',
 	'categoryblacklist' => '* zalążek',
-	'wiki-navigation' => '* <nowiki>Artykuły</nowiki>
+	'wiki-navigation' => '* <nowiki>Popularne strony</nowiki>
+** #visited#
 ** #category1#
 ** #category2#
-** #category3# 
 * <nowiki>Społeczność</nowiki>
-** blogs-recent-url|blogs-recent-url-text
+** blogs-recent-url|Ostatnie wpisy na blogach
 * Pomoc:Zawartość|Pomoc
 ** Pomoc:Podstawy|Podstawy
 ** Pomoc:Edycja|Edycja
@@ -3387,6 +3420,12 @@ $messages['pl'] = array(
 	'oasis-social-reddit-link' => 'https://www.reddit.com/r/wikia',
 	'oasis-social-instagram' => 'Instagram',
 	'oasis-social-instagram-link' => 'https://www.instagram.com/getfandom/',
+	'oasis-skip-to-content' => 'Przejdź do treści',
+	'oasis-skip-to-wiki-navigation' => 'Przejdź do nawigacji wiki',
+	'oasis-skip-to-site-navigation' => 'Przejdź do nawigacji strony',
+	'oasis-wiki-navigation' => 'Nawigacja $1',
+	'oasis-navigation-v2-edit-page' => 'Edytuj tę stronę',
+	'oasis-navigation-v2-edit-this-menu' => 'Edytuj nawigację',
 );
 
 $messages['pms'] = array(
@@ -3611,6 +3650,12 @@ $messages['pt'] = array(
 	'oasis-social-reddit-link' => 'https://www.reddit.com/r/wikia',
 	'oasis-social-instagram' => 'Instagram',
 	'oasis-social-instagram-link' => 'https://www.instagram.com/getfandom/',
+	'oasis-skip-to-content' => 'Prosseguir para o conteúdo',
+	'oasis-skip-to-wiki-navigation' => 'Prosseguir para a navegação da wiki',
+	'oasis-skip-to-site-navigation' => 'Prosseguir para a navegação do site',
+	'oasis-wiki-navigation' => 'Navegação da $1',
+	'oasis-navigation-v2-edit-page' => 'Editar esta página',
+	'oasis-navigation-v2-edit-this-menu' => 'Editar a navegação da wiki',
 );
 
 $messages['ru'] = array(
@@ -3801,6 +3846,12 @@ $messages['ru'] = array(
 	'oasis-social-reddit-link' => 'https://www.reddit.com/r/wikia',
 	'oasis-social-instagram' => 'Instagram',
 	'oasis-social-instagram-link' => 'https://www.instagram.com/getfandom',
+	'oasis-skip-to-content' => 'Перейти к содержанию',
+	'oasis-skip-to-wiki-navigation' => 'Перейти к меню вики',
+	'oasis-skip-to-site-navigation' => 'Перейти к навигации по сайту',
+	'oasis-wiki-navigation' => 'Навигация по «$1»',
+	'oasis-navigation-v2-edit-page' => 'Редактировать страницу',
+	'oasis-navigation-v2-edit-this-menu' => 'Править меню вики',
 );
 
 $messages['sr-ec'] = array(
@@ -4685,6 +4736,12 @@ $messages['zh-hans'] = array(
 	'oasis-social-reddit-link' => 'https://www.reddit.com/r/wikia',
 	'oasis-social-instagram' => 'Instagram',
 	'oasis-social-instagram-link' => 'https://www.instagram.com/getfandom/',
+	'oasis-skip-to-content' => '跳至内容区',
+	'oasis-skip-to-wiki-navigation' => '跳至维基导航',
+	'oasis-skip-to-site-navigation' => '跳至站点导航',
+	'oasis-wiki-navigation' => '$1导航',
+	'oasis-navigation-v2-edit-page' => '编辑此页面',
+	'oasis-navigation-v2-edit-this-menu' => '编辑维基导航',
 );
 
 $messages['zh-hant'] = array(
@@ -4876,5 +4933,10 @@ $messages['zh-hant'] = array(
 	'oasis-social-reddit-link' => 'https://www.reddit.com/r/wikia',
 	'oasis-social-instagram' => 'Instagram',
 	'oasis-social-instagram-link' => 'https://www.instagram.com/getfandom/',
+	'oasis-skip-to-content' => '跳轉到內容',
+	'oasis-skip-to-wiki-navigation' => '跳轉到Wiki導航',
+	'oasis-wiki-navigation' => '$1導航',
+	'oasis-navigation-v2-edit-page' => '編輯此頁',
+	'oasis-navigation-v2-edit-this-menu' => '編輯Wiki導航',
 );
 
