@@ -45,7 +45,7 @@ define('ext.wikia.adEngine.slot.premiumFloatingMedrec', [
 				result = heightScrolled > refresh.heightScrolledThreshold &&
 					timeDifference > refresh.refreshDelay &&
 					refresh.refreshNumber < maxChanges;
-
+console.log(timeDifference);
 			if (result) {
 				refresh.lastRefreshTime = new Date();
 				refresh.refreshAdPos = currentHeightPosition;
@@ -55,16 +55,27 @@ define('ext.wikia.adEngine.slot.premiumFloatingMedrec', [
 			return result;
 		}
 
+		function showRecirculation() {
+			recirculation.style.display = 'block';
+		}
+
+		function hideRecirculation() {
+			recirculation.style.display = 'none';
+		}
+
 		swapRecirculationAndAd = throttle(function () {
 			if (shouldSwitchModules(placeHolder.offsetTop)) {
 				if (refresh.adVisible) {
 					log(['swapRecirculationAndAd', 'Hide ad, show recirculation '], 'debug', logGroup);
 					adSlot.classList.add('hidden');
-					recirculation.style.display = 'block';
+					showRecirculation();
 				} else {
 					log(['swapRecirculationAndAd', 'Show ad, hide recirculation '], 'debug', logGroup);
-					viewabilityHandler.refreshOnView(slotName, 0);
-					recirculation.style.display = 'none';
+					viewabilityHandler.refreshOnView(slotName, 0, {
+						onSuccess: function () {
+							hideRecirculation();
+						}
+					});
 				}
 
 				refresh.adVisible = !refresh.adVisible;
@@ -76,18 +87,17 @@ define('ext.wikia.adEngine.slot.premiumFloatingMedrec', [
 				log(['checkAndPushAd', 'Enabling floating medrec'], 'debug', logGroup);
 
 				placeHolder.appendChild(adSlot);
-				recirculation.style.display = 'none';
 
 				win.addEventListener('scroll', swapRecirculationAndAd);
 
 				refresh.refreshAdPos = placeHolder.offsetTop;
 				// Give add some time to call success. Otherwise swap with recirculation
-				refresh.lastRefreshTime = new Date() + refresh.refreshDelay;
+				refresh.lastRefreshTime = (new Date()).getTime() + refresh.refreshDelay;
 
 				win.adslots2.push({
 					slotName: slotName,
 					onSuccess: function () {
-						refresh.lastRefreshTime = new Date();
+						hideRecirculation();
 					}
 				});
 
