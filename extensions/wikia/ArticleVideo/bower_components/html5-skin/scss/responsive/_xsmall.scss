@@ -321,6 +321,7 @@
   .oo-control-bar {
     height: $control-bar-height-small !important;
     font-size: 25px * $xsmall-multiple;
+    margin: 0;
 
     .oo-control-bar-items-wrapper {
       .oo-control-bar-item {

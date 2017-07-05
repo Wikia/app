@@ -2263,7 +2263,8 @@
 
 .oo-player-container .oo-xsmall .oo-control-bar {
   height: 57px !important;
-  font-size: 17.5px; }
+  font-size: 17.5px;
+  margin: 0; }
   .oo-player-container .oo-xsmall .oo-control-bar .oo-control-bar-items-wrapper .oo-control-bar-item {
     font-size: 17.5px;
     padding: 0 5.95px; }
