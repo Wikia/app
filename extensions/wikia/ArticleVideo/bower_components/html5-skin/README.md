@@ -6,7 +6,7 @@ An open-source HTML5 UI skin based on [React.js](https://github.com/facebook/rea
 main_html5.js and `all-with-youtube.js` which contains youtube plugin.
 * added support for svg icons
 * some of imports that we don't use are commented out in `html5-skin.scss` to make styles file smaller
-* we currently use v.4.10.6 of Ooyala Player
+* we currently use v.4.14.8 of Ooyala Player
 * custom ad screen with player controls
 
 ## High Level Overview

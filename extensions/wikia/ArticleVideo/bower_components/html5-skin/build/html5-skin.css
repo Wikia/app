@@ -538,6 +538,10 @@
 .oo-player-container .oo-player-skin-plugins-click-layer.oo-showing {
   display: none !important; }
 
+.oo-player-container .oo-ad-time-left {
+  font-size: 12px;
+  margin-left: 6px; }
+
 .oo-player-container .oo-popover {
   position: absolute;
   background-color: rgba(26, 26, 26, 0.8);
