@@ -7,7 +7,6 @@ $config = [];
 $config['oasis_shared_core_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
-		'#group_oasis_wikia_js',
 		'//resources/wikia/libraries/sloth/sloth.js',
 		'//resources/wikia/libraries/mustache/mustache.js',
 		'//resources/wikia/modules/browserDetect.js',
@@ -373,8 +372,6 @@ $config['oasis_noads_extensions_js'] = [
 		// Chat is enabled sitewide
 		'//extensions/wikia/Chat2/js/ChatWidget.js',
 		'//extensions/wikia/VideoEmbedTool/js/VET_Loader.js',
-		// Survey for first time editors
-		'//extensions/wikia/EditorSurvey/js/EditorSurvey.js',
 		// Image and video thumbnail mustache templates
 		'//extensions/wikia/Thumbnails/scripts/templates.mustache.js',
 		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
@@ -459,15 +456,6 @@ $config['oasis_jquery'] = [
 		'#group_rail_js',
 
 		'#group_page_share_js',
-	],
-];
-
-/** Wikia **/
-$config['oasis_wikia_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		// classes
-		'//resources/wikia/libraries/my.class/my.class.js',
 	],
 ];
 
@@ -586,7 +574,6 @@ $config['oasis_user_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'#group_design_system_user_js',
-		'//extensions/wikia/EmergencyBroadcastSystem/js/EmergencyBroadcastSystem.js',
 	],
 ];
 
@@ -1398,7 +1385,6 @@ $config['chat_js2'] = [
 $config['theme_designer_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
-		'#group_oasis_wikia_js',
 		'#group_oasis_jquery',
 
 		'//resources/jquery.ui/jquery.ui.widget.js',
@@ -2039,20 +2025,6 @@ $config['ui_repo_api_js'] = [
 		'//resources/wikia/modules/nirvana.js',
 		'//resources/wikia/modules/uifactory.js',
 		'//resources/wikia/modules/uicomponent.js',
-	],
-];
-
-$config['touchstorm_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'assets' => [
-		'//extensions/wikia/TouchStorm/css/TouchStorm.scss',
-	],
-];
-
-$config['touchstorm_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/TouchStorm/js/TouchStorm.js',
 	],
 ];
 
@@ -2794,13 +2766,6 @@ $config['template_classification_scss'] = [
 	],
 ];
 
-$config['special_broken_rename_fix'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'assets' => [
-		'//extensions/wikia/BrokenRenameFix/styles/SpecialBrokenRenameFix.scss',
-	],
-];
-
 $config['insights_module_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
@@ -3097,50 +3062,6 @@ $config['storieslink_tag_js'] = [
 	],
 ];
 
-$config['oasislight_top_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasislight' ],
-	'assets' => [
-		'//resources/wikia/libraries/modil/modil.js',
-		'//resources/wikia/modules/lazyqueue.js',
-		'//extensions/wikia/OasisLight/scripts/jquery-3.1.1.slim.min.js',
-		'//extensions/wikia/OasisLight/scripts/jquery-extra.js',
-	],
-];
-
-$config['oasislight_bottom_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasislight' ],
-	'assets' => [
-		# WikiHeader
-		'//skins/oasis/js/isTouchScreen.js',
-
-		# ImageLazyLoad
-		'//resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js',
-		'//resources/wikia/modules/browserDetect.js',
-		'//resources/wikia/modules/location.js',
-		'//resources/wikia/modules/log.js',
-		'//resources/wikia/modules/querystring.js',
-		'//resources/wikia/modules/thumbnailer.js',
-		'//resources/wikia/modules/window.js',
-		'//extensions/wikia/ImageLazyLoad/js/ImgLzy.module.js',
-		'//extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
-
-		# Header, Footer
-		'//resources/wikia/modules/history.js',
-		'#group_tracker_js',
-		'#group_design_system_js',
-
-		# TOC
-		'//resources/jquery/jquery.cookie.js',
-		'//extensions/wikia/TOC/js/modules/toc.mustache.js',
-		'#group_toc_js',
-
-		# Lightbox
-		'//extensions/wikia/OasisLight/scripts/heavybox.js',
-	],
-];
-
 $config['ooyala_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
@@ -3153,7 +3074,9 @@ $config['ooyala_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/ArticleVideo/scripts/ooyala-player.js',
+		'//extensions/wikia/ArticleVideo/bower_components/html5-skin/build/all.js',
+		'//extensions/wikia/ArticleVideo/scripts/ooyala/google_ima.js',
+		'//extensions/wikia/ArticleVideo/scripts/ooyala-player.js'
 	],
 ];
 

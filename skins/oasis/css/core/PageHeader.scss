@@ -107,69 +107,6 @@
 	}
 }
 
-// WikiaNav - begin
-.wikinav2 {
-	.WikiaPageHeader {
-		margin-bottom: 10px;
-		padding-bottom: 7px;
-		word-wrap: break-word;
-
-		> .comments {
-			margin: 2px 10px 0;
-		}
-
-		> .tally {
-			position: absolute;
-			right: 0;
-			top: 0;
-
-			&.mainpage-tally {
-				position: static;
-			}
-		}
-	}
-
-	&.oasis-one-column {
-		.WikiaPageHeader {
-			&.WikiaPageHeaderDiffHistory {
-				margin-right: 10px;
-				padding-right: 320px;
-			}
-
-			.tally {
-				right: 330px;
-			}
-		}
-
-		.WikiaSearchHeader {
-			position: absolute;
-			right: 10px;
-			top: 0;
-			width: $wikia-search-base-width + 100px;
-			z-index: 3;
-
-			form {
-				border-bottom: 0;
-				margin-bottom: 0;
-				padding-bottom: 0;
-			}
-		}
-
-		// temp grid transition code - integrate into main, then remove after grid is fully rolled out
-		.WikiaGrid {
-			.WikiaPageHeader .tally {
-				right: 340px;
-			}
-
-			.WikiaSearchHeader {
-				right: 0;
-			}
-		}
-		// temp grid transition code
-	}
-}
-// WikiaNav - end
-
 // main page
 .oasis-one-column .WikiaPageHeader {
 	position: relative;

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "6020b3e041b68dafd595f01af9cd43cd",
+    "content-hash": "1f2de05ffbcaa0213b6405d84fa34126",
     "packages": [
         {
             "name": "composer/installers",
@@ -1674,6 +1674,38 @@
                 "messages"
             ],
             "time": "2016-08-02T04:16:55+00:00"
+        },
+        {
+            "name": "ooyala/v2-api",
+            "version": "v2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ooyala/php-v2-sdk.git",
+                "reference": "cbe7d28bd31133daa6cd1b59919fac055629312f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ooyala/php-v2-sdk/zipball/cbe7d28bd31133daa6cd1b59919fac055629312f",
+                "reference": "cbe7d28bd31133daa6cd1b59919fac055629312f",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "OoyalaApi.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Ooyala's V2 API PHP SDK",
+            "time": "2016-06-27T16:45:25+00:00"
         },
         {
             "name": "param-processor/param-processor",

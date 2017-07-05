@@ -45,12 +45,15 @@ require([
 				width: 300,
 				height: 169
 			},
+			videoData = window.wgFeaturedVideoData,
+			videoId = videoData.videoId,
+			videoTitle = videoData.title,
+			videoLabels = (videoData.labels || '').join(','),
 			videoFeedbackBox,
 			autoplayCookieName = 'featuredVideoAutoplay';
 
 		function initVideo(onCreate) {
-			var ooyalaVideoId = window.wgFeaturedVideoId,
-				playerParams = window.wgOoyalaParams,
+			var playerParams = window.wgOoyalaParams,
 				autoplay = cookies.get(autoplayCookieName) !== '0' && window.OO.allowAutoPlay,
 				vastUrl,
 				inlineSkinConfig = {
@@ -76,7 +79,7 @@ require([
 			ooyalaVideoController = OoyalaPlayer.initHTML5Player(
 				ooyalaVideoElementId,
 				playerParams,
-				ooyalaVideoId,
+				videoId,
 				onCreate,
 				autoplay,
 				vastUrl,
@@ -198,6 +201,10 @@ require([
 			});
 		}
 
+		window.guaSetCustomDimension(34, videoId);
+		window.guaSetCustomDimension(35, videoTitle);
+		window.guaSetCustomDimension(36, videoLabels);
+
 		initVideo(function (player) {
 			$video.addClass('ready-to-play');
 
@@ -261,14 +268,6 @@ require([
 					action: tracker.ACTIONS.CLICK,
 					label: 'featured-video-replay'
 				});
-			});
-
-			player.mb.subscribe(window.OO.EVENTS.PLAYBACK_READY, 'ui-title-update', function () {
-				var videoTitle = player.getTitle(),
-					videoTime = ooyalaVideoController.getFormattedDuration(player.getDuration());
-
-				$videoContainer.find('.video-title').text(videoTitle);
-				$videoContainer.find('.video-time').text(videoTime);
 			});
 
 			player.mb.subscribe(window.OO.EVENTS.PLAYHEAD_TIME_CHANGED, 'featured-video', function (eventName, time, totalTime) {

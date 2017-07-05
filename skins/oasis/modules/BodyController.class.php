@@ -336,7 +336,7 @@ class BodyController extends WikiaController {
 				$this->wg->SuppressFooter = true;
 				$this->wg->SuppressArticleCategories = true;
 				$this->wg->SuppressPageHeader = true;
-				$this->wg->SuppressWikiHeader = true;
+				$this->wg->SuppressCommunityHeader = true;
 				$this->wg->SuppressSlider = true;
 			}
 		} else {

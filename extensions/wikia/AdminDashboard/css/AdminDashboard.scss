@@ -369,36 +369,6 @@ $color-highlight-column: rgba($color-page, 0);
 	}
 }
 
-.WikiHeader {
-	height: 75px;
-	margin-bottom: 10px;
-	padding-bottom: 0;
-	h1:before {
-		display: none;
-	}
-	.shadow-mask {
-		display: none;
-	}
-	@if ( not $responsive-or-breakpoints-layout-enabled ) {
-		>.buttons {
-			bottom: auto;
-			top: 15px;
-		}
-		.WikiaSearch {
-			bottom: 0;
-			position: absolute;
-			right: 10px;
-			input[type=text] {
-				width: 250px;
-			}
-		}
-		.wordmark {
-			bottom: 0;
-			position: absolute;
-		}
-	}
-}
-
 // Module overwrites
 // ListUser overwrite
 .WikiaArticle .lu_fieldset {
