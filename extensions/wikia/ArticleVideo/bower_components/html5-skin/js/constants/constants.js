@@ -119,7 +119,9 @@ module.exports = {
 
   MEDIA_TYPE: {
     HTML5: "html5",
-    FLASH: "flash"
+    FLASH: "flash",
+    VIDEO: "video",
+    OBJECT: "object"
   },
 
   ERROR_MESSAGE: {

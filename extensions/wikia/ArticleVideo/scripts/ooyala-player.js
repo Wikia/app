@@ -128,14 +128,13 @@ define('ooyala-player', function () {
 				],
 				useGoogleAdUI: true,
 				useGoogleCountdown: false,
-				vpaidMode: 'insecure',
-				// This is a hack for XW-3684 P2, please don't reuse
 				onAdRequestSuccess: function (IMAAdsManager) {
 					IMAAdsManager.addEventListener('loaded', function (eventData) {
-						var ad = eventData.A;
+						var player = html5Player.player;
 
-						if (ad.adId === '4356634943') {
-							html5Player.player.setVolume(1);
+						if (eventData.A.vpaid === true) {
+							player.mb.publish(OO.EVENTS.WIKIA.SHOW_AD_TIME_LEFT, false);
+							player.mb.publish(OO.EVENTS.WIKIA.SHOW_FULLSCREEN_TOGGLE, false);
 						}
 					}, false, this);
 				}

@@ -12,7 +12,7 @@ var React = require('react'),
     VideoQualityPanel = require('./videoQualityPanel'),
     ClosedCaptionPopover = require('./closed-caption/closedCaptionPopover'),
     ConfigPanel = require('./configPanel'),
-    Logo = require('./logo');
+    Logo = require('./logo'),
     Icon = require('./icon');
 
 var ControlBar = React.createClass({
@@ -426,23 +426,39 @@ var ControlBar = React.createClass({
 
     for (var k = 0; k < defaultItems.length; k++) {
 
-      // filter out unrecognized button names
+      //filter out unrecognized button names
       if (typeof controlItemTemplates[defaultItems[k].name] === "undefined") {
         continue;
       }
 
+      //filter out disabled buttons
+      if (defaultItems[k].location === "none") {
+        continue;
+      }
+
+      //do not show share button if not share options are available
+      if (defaultItems[k].name === "share") {
+        var shareContent = Utils.getPropertyValue(this.props.skinConfig, 'shareScreen.shareContent', []);
+        var socialContent = Utils.getPropertyValue(this.props.skinConfig, 'shareScreen.socialContent', []);
+        var onlySocialTab = shareContent.length === 1 && shareContent[0] === 'social';
+        //skip if no tabs were specified or if only the social tab is present but no social buttons are specified
+        if (this.props.controller.state.isOoyalaAds || !shareContent.length || (onlySocialTab && !socialContent.length)) {
+          continue;
+        }
+      }
+
       //do not show CC button if no CC available
-      if (!this.props.controller.state.closedCaptionOptions.availableLanguages && (defaultItems[k].name === "closedCaption")){
+      if ((this.props.controller.state.isOoyalaAds || !this.props.controller.state.closedCaptionOptions.availableLanguages) && (defaultItems[k].name === "closedCaption")){
         continue;
       }
 
       //do not show quality button if no bitrates available or autoplay toggle is off
-      if (!this.props.skinConfig.controlBar.autoplayToggle && !this.props.controller.state.videoQualityOptions.availableBitrates && (defaultItems[k].name === "quality")) {
+      if ((this.props.controller.state.isOoyalaAds || !this.props.skinConfig.controlBar.autoplayToggle && !this.props.controller.state.videoQualityOptions.availableBitrates) && (defaultItems[k].name === "quality")) {
         continue;
       }
 
       //do not show discovery button if no related videos available
-      if (!this.props.controller.state.discoveryData && (defaultItems[k].name === "discovery")){
+      if ((this.props.controller.state.isOoyalaAds || !this.props.controller.state.discoveryData) && (defaultItems[k].name === "discovery")){
         continue;
       }
 
@@ -451,14 +467,18 @@ var ControlBar = React.createClass({
         continue;
       }
 
-      // Not sure what to do when there are multi streams
+      //not sure what to do when there are multi streams
       if (defaultItems[k].name === "live" &&
         (typeof this.props.isLiveStream === 'undefined' ||
         !(this.props.isLiveStream))) {
         continue;
       }
 
-      if (!this.props.isWikiaAdScreen && defaultItems[k].name === "adTimeLeft"){
+      if (!this.props.showFullScreenToggle && defaultItems[k].name === "fullscreen") {
+        continue;
+      }
+
+      if ((!this.props.isWikiaAdScreen || !this.props.showAdTimeLeft) && defaultItems[k].name === "adTimeLeft"){
         continue;
       }
 
@@ -478,7 +498,7 @@ var ControlBar = React.createClass({
     finalControlBarItems = [];
 
     for (var k = 0; k < collapsedControlBarItems.length; k++) {
-      if (collapsedControlBarItems[k].name === "moreOptions" && collapsedMoreOptionsItems.length === 0) {
+      if (collapsedControlBarItems[k].name === "moreOptions" && (this.props.controller.state.isOoyalaAds || collapsedMoreOptionsItems.length === 0)) {
         continue;
       }
 

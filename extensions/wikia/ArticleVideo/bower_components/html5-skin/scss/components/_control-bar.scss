@@ -86,6 +86,8 @@
       text-align: left;
       position: relative;
       top:-2px;
+      cursor: auto;
+      @include vendor-prefixes(user-select, text);
 
       .oo-total-time {
         color: $white;

@@ -703,6 +703,8 @@
     background-repeat: no-repeat;
     background-position: center;
     border-radius: 6px; }
+    .oo-player-container .oo-share-tab-panel .oo-social-icon:last-child, .oo-player-container .oo-share-tab-panel .oo-facebook:last-child, .oo-player-container .oo-share-tab-panel .oo-twitter:last-child, .oo-player-container .oo-share-tab-panel .oo-google-plus:last-child, .oo-player-container .oo-share-tab-panel .oo-email-share:last-child {
+      margin-right: 0; }
   .oo-player-container .oo-share-tab-panel .oo-embed-form {
     resize: none;
     height: calc(15vh); }
@@ -1247,6 +1249,14 @@
   .oo-player-container .scrollarea:hover .scrollbar-container {
     opacity: 0.8; }
 
+.oo-player-container video::-webkit-media-controls-panel {
+  display: none !important;
+  -webkit-appearance: none; }
+
+.oo-player-container video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  -webkit-appearance: none; }
+
 .oo-player-container button.oo-close-button {
   position: absolute;
   color: #fff;
@@ -1501,7 +1511,13 @@
       padding-right: 7.5px;
       text-align: left;
       position: relative;
-      top: -2px; }
+      top: -2px;
+      cursor: auto;
+      -webkit-user-select: text;
+      -moz-user-select: text;
+      -ms-user-select: text;
+      -o-user-select: text;
+      user-select: text; }
       .oo-player-container .oo-control-bar .oo-control-bar-items-wrapper .oo-control-bar-duration .oo-total-time {
         color: #fff; }
         .oo-player-container .oo-control-bar .oo-control-bar-items-wrapper .oo-control-bar-duration .oo-total-time:before {
@@ -2717,12 +2733,7 @@
   padding: 0;
   width: 100%;
   height: 0;
-  padding-top: 56.25%;
-  -webkit-transition: padding-top 0.5s ease;
-  -moz-transition: padding-top 0.5s ease;
-  -ms-transition: padding-top 0.5s ease;
-  -o-transition: padding-top 0.5s ease;
-  transition: padding-top 0.5s ease; }
+  padding-top: 56.25%; }
   .oo-player-container .oo-player:-moz-full-screen {
     position: absolute;
     width: 100% !important;
@@ -2747,6 +2758,10 @@
 .oo-player-container .oo-player-skin {
   overflow: hidden;
   z-index: 11000; }
+
+@-moz-document url-prefix() {
+  .oo-player-container .oo-anamorphic video {
+    object-fit: fill !important; } }
 
 .oo-player-container .oo-blur {
   -webkit-filter: blur(3px);

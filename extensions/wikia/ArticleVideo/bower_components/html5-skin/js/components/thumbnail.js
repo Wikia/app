@@ -17,7 +17,9 @@ var Thumbnail = React.createClass({
 
     var thumbnailStyle = {};
     thumbnailStyle.left = this.props.hoverPosition;
-    thumbnailStyle.backgroundImage = "url("+thumbnail.url+")";
+    if (Utils.isValidString(thumbnail.url)) {
+      thumbnailStyle.backgroundImage = "url('" + thumbnail.url + "')";
+    }
 
     return (
       <div className="oo-scrubber-thumbnail-container">
