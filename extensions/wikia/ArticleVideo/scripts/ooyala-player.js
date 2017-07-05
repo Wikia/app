@@ -132,7 +132,7 @@ define('ooyala-player', function () {
 					IMAAdsManager.addEventListener('loaded', function (eventData) {
 						var player = html5Player.player;
 
-						if (eventData.A.vpaid === true) {
+						if (eventData.getData().vpaid === true) {
 							player.mb.publish(OO.EVENTS.WIKIA.SHOW_AD_TIME_LEFT, false);
 							player.mb.publish(OO.EVENTS.WIKIA.SHOW_AD_FULLSCREEN_TOGGLE, false);
 						}
