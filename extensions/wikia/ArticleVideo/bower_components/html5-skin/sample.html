@@ -59,7 +59,7 @@
       useGoogleCountdown: false,
       onAdRequestSuccess: function (IMAAdsManager) {
         IMAAdsManager.addEventListener('loaded', function (eventData) {
-          if (eventData.A.vpaid === true) {
+          if (eventData.getAdData().vpaid === true) {
             window.pp.mb.publish(OO.EVENTS.WIKIA.SHOW_AD_TIME_LEFT, false);
             window.pp.mb.publish(OO.EVENTS.WIKIA.SHOW_AD_FULLSCREEN_TOGGLE, false);
           }

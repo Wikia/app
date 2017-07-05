@@ -539,7 +539,8 @@
   display: none !important; }
 
 .oo-player-container .oo-ad-time-left {
-  font-size: 12px;
+  font-size: 13px;
+  font-weight: bold;
   margin-left: 6px; }
 
 .oo-player-container .oo-popover {
