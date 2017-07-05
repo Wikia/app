@@ -10,7 +10,7 @@ try {
 			"core_version" : 4,
 			"vast_proxy_url" : "http://player.ooyala.com/adinsertion/vast_proxy"
 		};
-
+karamba sasasdsdfnd blabla
 
 		OO.publicApi = OO.publicApi || {};
 
