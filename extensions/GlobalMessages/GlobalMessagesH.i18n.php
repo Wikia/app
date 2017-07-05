@@ -9399,58 +9399,6 @@ Tente [[Special:Pesquisa|pesquisar na wiki]] por páginas relevantes.',
 	'hub-Food_and_Drink' => 'Comida e bebida',
 );
 
-$messages['pt-br'] = array(
-	'hidden-categories' => '{{PLURAL:$1|Categoria oculta|Categorias ocultas}}',
-	'hidden-category-category' => 'Categorias ocultas',
-	'help' => 'Ajuda',
-	'history' => 'Histórico da página',
-	'history_short' => 'Histórico',
-	'helppage' => 'Help:Conteúdos',
-	'hidetoc' => 'ocultar',
-	'headline_sample' => 'Conteúdo do cabeçalho',
-	'headline_tip' => 'Seção de nível 2',
-	'hr_tip' => 'Linha horizontal (use de forma moderada)',
-	'hiddencategories' => 'Esta página pertence a {{PLURAL:$1|uma categoria oculta|$1 categorias ocultas}}:',
-	'histlegend' => "Como selecionar: marque as caixas de seleção das versões que deseja comparar e pressione enter ou clique no botão na parte inferior do formulário.<br />
-Legenda: '''({{int:cur}})''' = diferenças em relação a última versão, '''({{int:last}})''' = diferenças em relação a versão anterior, '''{{int:minoreditletter}}''' = edição menor.",
-	'history-fieldset-title' => 'Navegar pelo histórico',
-	'history-show-deleted' => 'Apenas as eliminadas',
-	'histfirst' => 'Mais antigas',
-	'histlast' => 'Mais recentes',
-	'historysize' => '({{PLURAL:$1|1 byte|$1 bytes}})',
-	'historyempty' => '(vazio)',
-	'history-feed-title' => 'Histórico de revisão',
-	'history-feed-description' => 'Histórico de revisões para esta página neste wiki',
-	'history-feed-item-nocomment' => '$1 em $2',
-	'history-feed-empty' => 'A página requisitada não existe.
-Poderá ter sido eliminada do wiki ou renomeada.
-Tente [[Special:Search|pesquisar no wiki]] por páginas relevantes.',
-	'history-title' => 'Histórico de edições de "$1"',
-	'hist' => 'hist',
-	'hide' => 'Ocultar',
-	'hookaborted' => 'A modificação que você tentou realizar foi abortada por uma extensão.',
-	'http-invalid-url' => 'URL inválida: $1',
-	'http-invalid-scheme' => 'URLs que iniciam com o prefixo "$1" não são aceitas.',
-	'http-request-error' => 'A requisição HTTP falhou devido a um erro desconhecido.',
-	'http-read-error' => 'Erro de leitura HTTP.',
-	'http-timed-out' => 'Esgotado o tempo de espera da requisição HTTP.',
-	'http-curl-error' => 'Erro ao requisitar a URL: $1',
-	'http-host-unreachable' => 'Não foi possível atingir a URL.',
-	'http-bad-status' => 'Ocorreu um problema durante a requisição HTTP: $1 $2',
-	'historywarning' => "'''Atenção:''' A página que você está prestes a eliminar possui um histórico com aproximadamente $1 {{PLURAL:$1|revisão|revisões}}:",
-	'hours' => '{{PLURAL:$1|uma hora|$1 horas}}',
-	'htmlform-invalid-input' => 'Existem problemas com alguns dos dados introduzidos',
-	'htmlform-select-badoption' => 'O valor que você especificou não é uma opção válida.',
-	'htmlform-int-invalid' => 'O valor que você especificou não é um número inteiro.',
-	'htmlform-float-invalid' => 'O valor que você especificou não é um número.',
-	'htmlform-int-toolow' => 'O valor que você especificou está abaixo do mínimo de $1',
-	'htmlform-int-toohigh' => 'O valor que você especificou está acima do máximo de $1',
-	'htmlform-required' => 'Este valor é necessário',
-	'htmlform-submit' => 'Enviar',
-	'htmlform-reset' => 'Desfazer alterações',
-	'htmlform-selectorother-other' => 'Outros',
-);
-
 $messages['qu'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Pakasqa katiguriya|Pakasqa katiguriyakuna}}',
 	'hidden-category-category' => 'Pakasqa katiguriyakuna',
@@ -12718,15 +12666,6 @@ Misschien is een verwiederd of hernoemd.
 	'hide' => 'Verberge',
 );
 
-$messages['zh'] = array(
-	'history_short' => '历史纪录',
-	'hookaborted' => '您所尝试的修改已经不被扩展功能支持。',
-);
-
-$messages['zh-cn'] = array(
-	'history_short' => '沿革',
-);
-
 $messages['zh-hans'] = array(
 	'hidden-categories' => '$1个隐藏分类',
 	'hidden-category-category' => '隐藏分类',
@@ -12942,42 +12881,6 @@ $messages['zh-hant'] = array(
 	'hub-Videospiele' => 'Videospiele',
 	'hub-Lifestyle' => '生活',
 	'hub-Food_and_Drink' => '飲食',
-);
-
-$messages['zh-tw'] = array(
-	'help' => '使用說明',
-	'history' => '修訂記錄',
-	'history_short' => '歷史',
-	'hidetoc' => '隱藏',
-	'histlegend' => '差異選擇: 標記要比較版本的單選按鈕並點擊底部的按鈕進行比較。<br />
-說明: (目前) 指與目前版本比較，(先前) 指與前一個修訂版本比較，小 = 細微修改。',
-	'history-feed-title' => '修訂沿革',
-	'history-feed-description' => '本站上此頁的修訂沿革',
-	'history-feed-empty' => '所請求的頁面不存在。它可能已被刪除或重新命名。
-嘗試[[Special:Search|搜尋本站]]獲得相關的新建頁面。',
-	'history-title' => '「$1」的修訂沿革',
-	'hookaborted' => '您所嘗試的修改被擴展鉤捨棄。',
-	'home' => '主頁',
-	'helpfaq' => '幫助與常見問題',
-	'highest_ratings' => '得分最高',
-);
-
-$messages['zh-yue'] = array(
-	'help' => '使用說明',
-	'history' => '修訂記錄',
-	'history_short' => '歷史',
-	'hidetoc' => '隱藏',
-	'histlegend' => '差異選擇: 標記要比較版本的單選按鈕並點擊底部的按鈕進行比較。<br />
-說明: (目前) 指與目前版本比較，(先前) 指與前一個修訂版本比較，小 = 細微修改。',
-	'history-feed-title' => '修訂沿革',
-	'history-feed-description' => '本站上此頁的修訂沿革',
-	'history-feed-empty' => '所請求的頁面不存在。它可能已被刪除或重新命名。
-嘗試[[Special:Search|搜尋本站]]獲得相關的新建頁面。',
-	'history-title' => '「$1」的修訂沿革',
-	'hookaborted' => '您所嘗試的修改被擴展鉤捨棄。',
-	'home' => '主頁',
-	'helpfaq' => '幫助與常見問題',
-	'highest_ratings' => '得分最高',
 );
 
 $messages['zu'] = array(
