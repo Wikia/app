@@ -3018,15 +3018,6 @@ $config['special_admindashboard_js'] = [
 	],
 ];
 
-/* CrosslinkModule */
-$config['crosslink_module_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/CrosslinkModule/styles/CrosslinkModule.scss',
-	],
-];
-
 /* Flow tracking */
 $config['flow_tracking_js'] = [
 	'type' => AssetsManager::TYPE_JS,
