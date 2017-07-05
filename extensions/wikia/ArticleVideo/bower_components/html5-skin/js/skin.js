@@ -11,8 +11,9 @@ var React = require('react'),
     VideoQualityPanel = require('./components/videoQualityPanel'),
     SharePanel = require('./components/sharePanel'),
     MoreOptionsPanel = require('./components/moreOptionsPanel'),
-    // WIKIA CHANGE
+    // WIKIA CHANGE - START
     WikiaAdScreen = require('./views/wikiaAdScreen'),
+    // WIKIA CHANGE - END
     EndScreen = require('./views/endScreen'),
     StartScreen = require('./views/startScreen'),
     PauseScreen = require('./views/pauseScreen'),

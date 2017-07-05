@@ -1987,8 +1987,8 @@ var ControlBar = React.createClass({displayName: "ControlBar",
     });
   },
 
-  // WIKIA CHANGE
-  formatSecondsWithoutLeadingZero: function (timeInSeconds) {
+  // WIKIA CHANGE - START
+  formatAdCountdown: function (timeInSeconds) {
     var seconds = parseInt(timeInSeconds,10) % 60;
     var minutes = parseInt(timeInSeconds / 60, 10);
 
@@ -1998,6 +1998,7 @@ var ControlBar = React.createClass({displayName: "ControlBar",
 
     return minutes + ":" + seconds;
   },
+  // WIKIA CHANGE - END
 
   populateControlBar: function() {
     var dynamicStyles = this.setupItemStyle();
@@ -2069,7 +2070,7 @@ var ControlBar = React.createClass({displayName: "ControlBar",
     var playheadTimeContent = isLiveStream ? (isLiveNow ? null : Utils.formatSeconds(timeShift)) : playheadTime;
     var totalTimeContent = isLiveStream ? null : React.createElement("span", {className: "oo-total-time"}, totalTime);
     // WIKIA CHANGE - START
-    var timeLeft = this.formatSecondsWithoutLeadingZero(Math.abs(timeShift));
+    var timeLeft = this.formatAdCountdown(Math.abs(timeShift));
     var timeLeftContent = React.createElement("span", {className: "oo-ad-time-left"}, "Ad • ", timeLeft);
     // WIKIA CHANGE - END
 
@@ -2184,8 +2185,9 @@ var ControlBar = React.createClass({displayName: "ControlBar",
     };
 
     var controlBarItems = [];
-    // WIKIA CHANGE
+    // WIKIA CHANGE - START
     var defaultItems = this.props.skinConfig.buttons.desktopContent;
+    // WIKIA CHANGE - END
 
     //if mobile and not showing the slider or the icon, extra space can be added to control bar width. If volume bar is shown instead of slider, add some space as well:
     var volumeItem = null;
@@ -2682,7 +2684,7 @@ module.exports = DataSelector;
 
 },{"./icon":29,"classnames":59,"react":221}],26:[function(require,module,exports){
 /**
- * WIKIA CHANGE
+ * Added by Wikia
  * Credit: https://github.com/KyleAMathews/deepmerge
  */
 
@@ -5723,7 +5725,7 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
 
   if (OO.publicApi && OO.publicApi.VERSION) {
     // This variable gets filled in by the build script
-    OO.publicApi.VERSION.skin = {"releaseVersion": "4.14.8", "rev": "92e5bb7041fe71c38ed51ecb81c20932c04af4ff"};
+    OO.publicApi.VERSION.skin = {"releaseVersion": "4.14.8", "rev": "dd0d283415cd46a7f36c8d747025f083eb64b3dd"};
   }
 
   // WIKIA CHANGE - START
@@ -7627,8 +7629,9 @@ var React = require('react'),
     VideoQualityPanel = require('./components/videoQualityPanel'),
     SharePanel = require('./components/sharePanel'),
     MoreOptionsPanel = require('./components/moreOptionsPanel'),
-    // WIKIA CHANGE
+    // WIKIA CHANGE - START
     WikiaAdScreen = require('./views/wikiaAdScreen'),
+    // WIKIA CHANGE - END
     EndScreen = require('./views/endScreen'),
     StartScreen = require('./views/startScreen'),
     PauseScreen = require('./views/pauseScreen'),

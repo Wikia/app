@@ -208,8 +208,8 @@ var ControlBar = React.createClass({
     });
   },
 
-  // WIKIA CHANGE
-  formatSecondsWithoutLeadingZero: function (timeInSeconds) {
+  // WIKIA CHANGE - START
+  formatAdCountdown: function (timeInSeconds) {
     var seconds = parseInt(timeInSeconds,10) % 60;
     var minutes = parseInt(timeInSeconds / 60, 10);
 
@@ -219,6 +219,7 @@ var ControlBar = React.createClass({
 
     return minutes + ":" + seconds;
   },
+  // WIKIA CHANGE - END
 
   populateControlBar: function() {
     var dynamicStyles = this.setupItemStyle();
@@ -290,7 +291,7 @@ var ControlBar = React.createClass({
     var playheadTimeContent = isLiveStream ? (isLiveNow ? null : Utils.formatSeconds(timeShift)) : playheadTime;
     var totalTimeContent = isLiveStream ? null : <span className="oo-total-time">{totalTime}</span>;
     // WIKIA CHANGE - START
-    var timeLeft = this.formatSecondsWithoutLeadingZero(Math.abs(timeShift));
+    var timeLeft = this.formatAdCountdown(Math.abs(timeShift));
     var timeLeftContent = <span className="oo-ad-time-left">Ad • {timeLeft}</span>;
     // WIKIA CHANGE - END
 
@@ -405,8 +406,9 @@ var ControlBar = React.createClass({
     };
 
     var controlBarItems = [];
-    // WIKIA CHANGE
+    // WIKIA CHANGE - START
     var defaultItems = this.props.skinConfig.buttons.desktopContent;
+    // WIKIA CHANGE - END
 
     //if mobile and not showing the slider or the icon, extra space can be added to control bar width. If volume bar is shown instead of slider, add some space as well:
     var volumeItem = null;

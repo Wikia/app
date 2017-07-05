@@ -3277,8 +3277,9 @@
           this.useGoogleCountdown = false;
           this.useInsecureVpaidMode = false;
           this.imaIframeZIndex = DEFAULT_IMA_IFRAME_Z_INDEX;
-          // WIKIA CHANGE
+          // WIKIA CHANGE - START
           this.onAdRequestSuccess = function () {};
+          // WIKIA CHANGE - END
 
           //flag to track whether ad rules failed to load
           this.adRulesLoadError = false;
@@ -4372,8 +4373,9 @@
           var adsSettings = new google.ima.AdsRenderingSettings();
           adsSettings.restoreCustomPlaybackStateOnAdBreakComplete = false;
           adsSettings.useStyledNonLinearAds = true;
-          // WIKIA CHANGE
+          // WIKIA CHANGE - START
           adsSettings.uiElements = [];
+          // WIKIA CHANGE - END
           if (this.useGoogleCountdown)
           {
             //both COUNTDOWN and AD_ATTRIBUTION are required as per
@@ -4383,8 +4385,9 @@
           adsSettings.useStyledLinearAds = this.useGoogleAdUI;
           _IMAAdsManager = adsManagerLoadedEvent.getAdsManager(_playheadTracker, adsSettings);
 
-          // WIKIA CHANGE
+          // WIKIA CHANGE - START
           this.onAdRequestSuccess(_IMAAdsManager);
+          // WIKIA CHANGE - END
 
           // When the ads manager is ready, we are ready to apply css changes to the video element
           // If the sharedVideoElement is not used, mark it as null before applying css

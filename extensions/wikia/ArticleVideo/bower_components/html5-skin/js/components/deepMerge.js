@@ -1,5 +1,5 @@
 /**
- * WIKIA CHANGE
+ * Added by Wikia
  * Credit: https://github.com/KyleAMathews/deepmerge
  */
 
