@@ -6,7 +6,7 @@
   height: $control-bar-height;
   position: relative;
   margin: 0;
-  padding: 0 15px;
+  padding: 35px 15px 0;
   list-style: none;
   font-size: 18px;
   -webkit-user-select: none;
@@ -157,13 +157,14 @@ a.oo-volume-bar {
 
 .oo-volume-bar:hover{
   height: 17px;
+  margin-bottom: 0;
 }
 
 .oo-on{
   background-color: rgba($blue-light, 1.0);
   height: 17px;
-  padding-bottom: 0px;
-  margin-bottom: 4px;
+  padding-bottom: 0;
+  margin-bottom: 0;
 }
 
 .oo-volume:hover .oo-volume-bar {
@@ -180,12 +181,6 @@ a.oo-volume-bar {
   margin-left: 6px;
   height: 20px;
   width: $slider-volume-width;
-}
-
-.oo-volume {
-  .oo-volume-bar, .oo-volume-slider {
-    display: none;
-  }
 }
 
 // IE 11 only
