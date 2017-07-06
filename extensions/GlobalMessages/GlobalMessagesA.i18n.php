@@ -32205,25 +32205,6 @@ Kiest 'n aore naem.",
 	'autosumm-new' => 'Nieuwe bladzie mee as inoud: $1',
 );
 
-$messages['zh'] = array(
-	'achievements-leaderboard-navigation-item' => '维基排行榜',
-	'accountcreated' => '账户已创建',
-	'accountcreatedtext' => '已创建账户 $1 。',
-	'add_comment' => '留言',
-	'addsection' => '留言',
-	'admin_skin' => '管理员功能',
-	'adminskin_ds' => '默认',
-	'allmessagesdefault' => '缺省的翻译',
-	'allnotinnamespace' => '所有页面 (不包括 $1 名字空间)',
-	'allowemail' => '允许其他用户给您发送电子邮件',
-	'allpagesfrom' => '显示页面开始自:',
-	'anoneditwarning' => "'''注意:''' 你尚未登入本站，你的IP位置會被記錄在本頁的修訂歷史頁中。",
-	'article' => '文章',
-	'autoredircomment' => '[[WP:AES|←]]重定向到[[$1]]',
-	'autosumm-blank' => '清空全部内容',
-	'autosumm-new' => '新頁面: $1',
-);
-
 $messages['zh-hans'] = array(
 	'april' => '4月',
 	'august' => '8月',

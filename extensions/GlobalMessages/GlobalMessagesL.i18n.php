@@ -25298,24 +25298,6 @@ Opslaene is nie meuhlijk.'''",
 	'linkshere' => "De volhende pagina's verwieze nir '''[[:$1]]''':",
 );
 
-$messages['zh'] = array(
-	'licenses' => '* 合理使用:
-** fairuse|需要符合合理使用原则
-* 拥有版权:
-** Self|我拥有图片或视频的版权
-* 维基媒体基金会:
-** From Wikimedia|我从维基百科或其他维基媒体基金会计划取得图片或视频
-* 自由版权:
-** CC-BY-SA|以创作共用-署名-相同方式分享发布
-** Other free|以其他自由版权发布（于叙述中说明）
-* 其他
-** PD|版权属公共领域 
-** Permission|版权所有者愿意让本站使用',
-	'listredirects' => '重定向页面列表',
-	'listusers-blocked' => '被封禁',
-	'listusers' => '用户列表',
-);
-
 $messages['zh-hans'] = array(
 	'listingcontinuesabbrev' => '续',
 	'lastmodifiedat' => '本页面最后修订于$1 $2。',
