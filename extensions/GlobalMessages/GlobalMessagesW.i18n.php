@@ -13284,89 +13284,6 @@ Estamos trabalhando para corrigir o problema, obrigado por sua paciência! Se is
 	'wikia-pagetitle-sitename' => '{{SITENAME}}',
 );
 
-$messages['pt-br'] = array(
-	'wednesday' => 'quarta-feira',
-	'wed' => 'qua',
-	'wrong_wfQuery_params' => 'Parâmetros incorretos para wfQuery()<br />
-Função: $1<br />
-Consulta: $2',
-	'welcomecreation' => '== Bem-vindo(a), $1! ==
-A sua conta foi criada.
-Não se esqueça de personalizar as suas [[Special:Preferences|preferências no wiki {{SITENAME}}]].',
-	'wrongpassword' => 'A senha que introduziu é inválida. Por favor, tente novamente.',
-	'wrongpasswordempty' => 'Foi fornecida uma senha em branco.
-Tente novamente.',
-	'watchthis' => 'Vigiar esta página',
-	'whitelistedittext' => 'Você precisa $1 para poder editar páginas.',
-	'windows-nonascii-filename' => 'O wiki não aceita nomes de arquivos com caracteres especiais.',
-	'watchthisupload' => 'Vigiar este arquivo',
-	'withoutinterwiki' => 'Páginas sem interwikis de idiomas',
-	'withoutinterwiki-summary' => 'As seguintes páginas não possuem links para versões em outros idiomas:',
-	'withoutinterwiki-legend' => 'Prefixo',
-	'withoutinterwiki-submit' => 'Exibir',
-	'wantedcategories' => 'Categorias pedidas',
-	'wantedpages' => 'Páginas pedidas',
-	'wantedpages-badtitle' => 'Título inválido no conjunto de resultados: $1',
-	'wantedfiles' => 'Arquivos pedidos',
-	'wantedfiletext-cat' => 'Os seguintes arquivos são usados, mas não existem. Arquivos de repositórios externos podem acabar sendo listados apesar de existirem. Esses falsos positivos aparecerão <del>riscados</del>. As páginas que incluem arquivos inexistentes são listadas em [[:$1]].',
-	'wantedfiletext-nocat' => 'Os seguintes arquivos são usados, mas não existem. Arquivos de repositórios externos podem acabar sendo listados apesar de existirem. Esses falsos positivos aparecerão <del>riscados</del>.',
-	'wantedtemplates' => 'Predefinições pedidas',
-	'watchlist' => 'Páginas vigiadas',
-	'watchlistfor2' => 'Para $1 $2',
-	'watchlistanontext' => 'Por favor $1 para ver ou editar os itens na sua lista de páginas vigiadas.',
-	'watchnologin' => 'Não está autenticado',
-	'watchnologintext' => 'Você precisa estar [[Special:UserLogin|autenticado]] para modificar a sua lista de páginas vigiadas.',
-	'watch' => 'Vigiar',
-	'watchthispage' => 'Vigiar esta página',
-	'watchnochange' => 'Nenhuma das páginas vigiadas foi editada no período exibido.',
-	'watchlist-details' => '{{PLURAL:$1|$1 página|$1 páginas}} na sua lista de páginas vigiadas, excluindo páginas de discussão.',
-	'wlheader-enotif' => '* A notificação por email encontra-se ativada.',
-	'wlheader-showupdated' => "* As páginas modificadas desde a sua última visita são mostradas em '''negrito'''",
-	'watchmethod-recent' => 'verificando edições recentes para as páginas vigiadas',
-	'watchmethod-list' => 'verificando páginas vigiadas para edições recentes',
-	'watchlistcontains' => 'Sua lista de páginas vigiadas contém $1 {{PLURAL:$1|página|páginas}}.',
-	'wlnote' => "A seguir {{PLURAL:$1|está a última alteração ocorrida|estão as últimas '''$1''' alterações ocorridas}} {{PLURAL:$2|na última hora|nas últimas '''$2''' horas}} a partir de $3, $4.",
-	'wlshowlast' => 'Ver últimas $1 horas $2 dias $3',
-	'watchlist-options' => 'Opções da lista de páginas vigiadas',
-	'watching' => 'Vigiando...',
-	'watcherrortext' => 'Ocorreu um erro ao alterar a configuração da sua lista de páginas vigiadas para "$1".',
-	'whatlinkshere' => 'Páginas afluentes',
-	'whatlinkshere-title' => 'Páginas que têm links para "$1"',
-	'whatlinkshere-page' => 'Página:',
-	'whatlinkshere-prev' => '{{PLURAL:$1|anterior|$1 anteriores}}',
-	'whatlinkshere-next' => '{{PLURAL:$1|próximo|próximos $1}}',
-	'whatlinkshere-links' => '← links',
-	'whatlinkshere-hideredirs' => '$1 redirecionamentos',
-	'whatlinkshere-hidetrans' => '$1 transclusões',
-	'whatlinkshere-hidelinks' => '$1 links',
-	'whatlinkshere-hideimages' => '$1 links de imagens',
-	'whatlinkshere-filters' => 'Filtros',
-	'widthheightpage' => '$1 × $2, $3 {{PLURAL:$3|página|páginas}}',
-	'watchlistall2' => 'todas',
-	'watchlistedit-numitems' => 'A sua lista de páginas vigiadas possui {{PLURAL:$1|um título|$1 títulos}}, além das respectivas páginas de discussão.',
-	'watchlistedit-noitems' => 'A sua lista de páginas vigiadas não possui títulos.',
-	'watchlistedit-normal-title' => 'Editar lista de páginas vigiadas',
-	'watchlistedit-normal-legend' => 'Remover títulos da lista de páginas vigiadas',
-	'watchlistedit-normal-explain' => 'Os títulos das páginas de sua lista de vigiadas são exibidos abaixo.
-Para remover um título, marque a caixa ao lado do mesmo e clique "{{int:Watchlistedit-normal-submit}}".
-Você pode também [[Special:EditWatchlist/raw|editar a lista de páginas vigiadas em forma de texto]].',
-	'watchlistedit-normal-submit' => 'Remover Títulos',
-	'watchlistedit-normal-done' => '{{PLURAL:$1|um título foi removido|$1 títulos foram removidos}} de sua lista de páginas vigiadas:',
-	'watchlistedit-raw-title' => 'Edição crua da lista de páginas vigiadas',
-	'watchlistedit-raw-legend' => 'Edição crua da lista de páginas vigiadas',
-	'watchlistedit-raw-explain' => 'A lista de páginas vigiadas é apresentada abaixo. Você pode adicionar novas linhas ou remover linhas para aumentar ou reduzir a lista, desde que mantenha uma única página por linha.
-Quando terminar, clique "{{int:Watchlistedit-raw-submit}}".
-Você também pode [[Special:EditWatchlist|editar a lista da maneira convencional]].',
-	'watchlistedit-raw-titles' => 'Títulos:',
-	'watchlistedit-raw-submit' => 'Atualizar a lista de páginas vigiadas',
-	'watchlistedit-raw-done' => 'Sua lista de páginas vigiadas foi atualizada.',
-	'watchlistedit-raw-added' => '{{PLURAL:$1|Foi adicionado um título|Foram adicionados $1 títulos}}:',
-	'watchlistedit-raw-removed' => '{{PLURAL:$1|Foi removido um título|Foram removidos $1 títulos}}:',
-	'watchlisttools-view' => 'Ver alterações relevantes',
-	'watchlisttools-edit' => 'Ver e editar a lista de páginas vigiadas',
-	'watchlisttools-raw' => 'Edição crua da lista de páginas vigiadas',
-);
-
 $messages['qu'] = array(
 	'wednesday' => 'Quyllurchaw',
 	'wed' => 'Quy',
@@ -18100,18 +18017,6 @@ Vergeet nie je [[Special:Preferences|vòkeuren voe {{SITENAME}}]] an te passen.'
 	'watchlisttools-raw' => "Rieuwe volglieste bewark'n",
 );
 
-$messages['zh'] = array(
-	'watch' => '关注',
-	'widgets' => 'Widgets列表',
-	'wikia-days-ago' => '$1 {{PLURAL:$1|天|天}}前',
-	'wikia-hours-ago' => '于$1{{PLURAL:$1|小时|小时}}之前',
-);
-
-$messages['zh-cn'] = array(
-	'wantedcategories' => '需要的分类',
-	'widgets' => 'Widgets列表',
-);
-
 $messages['zh-hans'] = array(
 	'wednesday' => '星期三',
 	'wed' => '三',
@@ -18366,45 +18271,6 @@ $messages['zh-hant'] = array(
 	'wikia-pagination-next' => 'Next',
 	'wikia-pagetitle-brand' => 'Fandom powered by Wikia',
 	'wikia-pagetitle-sitename' => '{{SITENAME}}',
-);
-
-$messages['zh-hk'] = array(
-	'wantedcategories' => '需要的分類',
-	'watch' => '關注',
-	'widgets' => 'Widgets列表',
-	'wikia-days-ago' => '$1 {{PLURAL:$1|天|天}} 以前',
-	'wikia-hours-ago' => '$1小時前',
-	'wikia-language-top-list' => 'zh,zh-hans,zh-hk,zh-tw',
-	'wikicitieshome-url' => 'http://zh-tw.wikia.com/',
-);
-
-$messages['zh-tw'] = array(
-	'wed' => '三',
-	'welcomecreation' => '== 歡迎，$1！ ==
-您的帳號已經建立。
-請不要忘記設定[[Special:Preferences|{{SITENAME}}的個人參數]]。',
-	'watchthisupload' => '監視此頁',
-	'withoutinterwiki-summary' => '以下的頁面是未有語言鏈接到其它語言版本:',
-	'watchlist-details' => '不包含討論頁，您的監視列表共有 $1 頁。',
-	'whatlinkshere-title' => '鏈接到$1的頁面',
-	'wantedcategories' => '需要的分類',
-	'watch' => '關注',
-	'widgets' => 'Widgets列表',
-	'wikia-days-ago' => '$1 {{PLURAL:$1|天|天}}前',
-	'wikia-hours-ago' => '$1小時前',
-	'wikia-language-top-list' => 'zh,zh-hans,zh-hk,zh-tw',
-	'wlshowlast' => '顯示最近$1小時；$2天；$3的修改。',
-);
-
-$messages['zh-yue'] = array(
-	'wed' => '三',
-	'welcomecreation' => '== 歡迎，$1！ ==
-您的帳號已經建立。
-請不要忘記設定[[Special:Preferences|{{SITENAME}}的個人參數]]。',
-	'watchthisupload' => '監視此頁',
-	'withoutinterwiki-summary' => '以下的頁面是未有語言鏈接到其它語言版本:',
-	'watchlist-details' => '不包含討論頁，您的監視列表共有 $1 頁。',
-	'whatlinkshere-title' => '鏈接到$1的頁面',
 );
 
 $messages['zu'] = array(

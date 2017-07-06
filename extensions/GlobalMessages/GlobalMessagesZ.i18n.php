@@ -611,15 +611,6 @@ A sua segurança não pode ser devidamente verificada.',
 A sua segurança não pode ser devidamente verificada.',
 );
 
-$messages['pt-br'] = array(
-	'zip-file-open-error' => 'Foi encontrado um erro ao abrir o arquivo ZIP para verificação.',
-	'zip-wrong-format' => 'O arquivo especificado não é um arquivo ZIP.',
-	'zip-bad' => 'O arquivo ZIP se encontra corrompido ou não é legível.
-A sua segurança não pode ser devidamente verificada.',
-	'zip-unsupported' => 'Este arquivo ZIP usa funcionalidades ZIP não suportadas pelo MediaWiki.
-A sua segurança não pode ser devidamente verificada.',
-);
-
 $messages['qu'] = array(
 	'zip-file-open-error' => 'Willañiqita ZIP-kama llanchispa pantasqatam tarini.',
 	'zip-wrong-format' => 'Akllasqa willañiqiqa manam ZIP willañiqichu.',

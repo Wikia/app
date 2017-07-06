@@ -5368,36 +5368,6 @@ $messages['pt'] = array(
 	'grouppage-voldev' => 'w:c:dev:Desenvolvedores_voluntários',
 );
 
-$messages['pt-br'] = array(
-	'go' => 'Ir',
-	'gotaccount' => "Já possui uma conta? '''$1'''.",
-	'gotaccountlink' => 'Autenticar-se',
-	'guesstimezone' => 'Preencher a partir do navegador',
-	'gender-unknown' => 'Não especificado',
-	'gender-male' => 'Masculino',
-	'gender-female' => 'Feminino',
-	'group' => 'Grupo:',
-	'group-user' => 'Usuários',
-	'group-autoconfirmed' => 'Usuários auto-confirmados',
-	'group-bot' => 'Robôs',
-	'group-sysop' => 'Administradores',
-	'group-bureaucrat' => 'Burocratas',
-	'group-suppress' => 'Oversights',
-	'group-all' => '(todos)',
-	'group-user-member' => '{{GENDER:$1|usuário|usuária}}',
-	'group-autoconfirmed-member' => '{{GENDER:$1|usuário autoconfirmado|usuária autoconfirmada}}',
-	'group-bot-member' => 'robô',
-	'group-sysop-member' => '{{GENDER:$1|administrador|administradora}}',
-	'group-bureaucrat-member' => 'burocrata',
-	'group-suppress-member' => '{{GENDER:$1|supressor|supressora}}',
-	'grouppage-user' => '{{ns:project}}:Usuários',
-	'grouppage-autoconfirmed' => '{{ns:project}}:Auto-confirmados',
-	'grouppage-bot' => '{{ns:project}}:Robôs',
-	'grouppage-sysop' => '{{ns:project}}:Administradores',
-	'grouppage-bureaucrat' => '{{ns:project}}:Burocratas',
-	'grouppage-suppress' => '{{ns:project}}:Oversight',
-);
-
 $messages['qu'] = array(
 	'go' => 'Riy',
 	'gotaccount' => "Rakiqunaykiñachu kachkan? '''$1'''.",
@@ -7478,44 +7448,6 @@ $messages['zh-hant'] = array(
 	'group-voldev' => '志願開發者',
 	'group-voldev-member' => '志願開發者',
 	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
-);
-
-$messages['zh-hk'] = array(
-	'group-bot' => '機械人',
-	'group-bot-member' => '機械人',
-	'grouppage-bot' => '{{ns:project}}:機械人',
-);
-
-$messages['zh-min-nan'] = array(
-	'group-bot' => '機械人',
-	'group-bot-member' => '機械人',
-	'grouppage-bot' => '{{ns:project}}:機械人',
-);
-
-$messages['zh-mo'] = array(
-	'group-bot' => '機械人',
-	'group-bot-member' => '機械人',
-	'grouppage-bot' => '{{ns:project}}:機械人',
-);
-
-$messages['zh-my'] = array(
-	'group-bot' => '機械人',
-	'group-bot-member' => '機械人',
-	'grouppage-bot' => '{{ns:project}}:機械人',
-);
-
-$messages['zh-tw'] = array(
-	'gotaccount' => '已經擁有帳號？$1。',
-	'group-autoconfirmed' => '自動確認使用者',
-	'group-autoconfirmed-member' => '自動確認使用者',
-	'grouppage-autoconfirmed' => '{{ns:project}}:自動確認使用者',
-);
-
-$messages['zh-yue'] = array(
-	'gotaccount' => '已經擁有帳號？$1。',
-	'group-autoconfirmed' => '自動確認使用者',
-	'group-autoconfirmed-member' => '自動確認使用者',
-	'grouppage-autoconfirmed' => '{{ns:project}}:自動確認使用者',
 );
 
 $messages['zu'] = array(
