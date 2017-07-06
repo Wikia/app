@@ -3279,7 +3279,10 @@ var globalRequire = require;
 					this.useGoogleCountdown = false;
 					this.useInsecureVpaidMode = false;
 					this.imaIframeZIndex = DEFAULT_IMA_IFRAME_Z_INDEX;
+					// WIKIA CHANGE - START
 					this.onAdRequestSuccess = function () {};
+					this.onBeforeAdsManagerStart = function () {};
+					// WIKIA CHANGE - END
 
 					//flag to track whether ad rules failed to load
 					this.adRulesLoadError = false;
@@ -3420,11 +3423,19 @@ var globalRequire = require;
 						this.imaIframeZIndex = metadata.iframeZIndex;
 					}
 
+					// WIKIA CHANGE - START
 					this.onAdRequestSuccess = function () {};
 					if (metadata.hasOwnProperty("onAdRequestSuccess"))
 					{
 						this.onAdRequestSuccess = metadata.onAdRequestSuccess;
 					}
+
+					this.onBeforeAdsManagerStart = function () {};
+					if (metadata.hasOwnProperty("onBeforeAdsManagerStart"))
+					{
+						this.onBeforeAdsManagerStart = metadata.onBeforeAdsManagerStart;
+					}
+					// WIKIA CHANGE - END
 
 					//On second video playthroughs, we will not be initializing the ad manager again.
 					//Attempt to create the ad display container here instead of after the sdk has loaded
@@ -3914,6 +3925,10 @@ var globalRequire = require;
 								_endCurrentAd(true);
 							}
 							_IMAAdsManager.init(_uiContainer.clientWidth, _uiContainer.clientHeight, google.ima.ViewMode.NORMAL);
+							// WIKIA CHANGE - START
+							this.onBeforeAdsManagerStart(_IMAAdsManager);
+							// WIKIA CHANGE - END
+
 							// PBW-6610
 							// Traditionally we have relied on the LOADED ad event before calling adsManager.start.
 							// This may have worked accidentally.
@@ -4371,7 +4386,9 @@ var globalRequire = require;
 					var adsSettings = new google.ima.AdsRenderingSettings();
 					adsSettings.restoreCustomPlaybackStateOnAdBreakComplete = false;
 					adsSettings.useStyledNonLinearAds = true;
+					// WIKIA CHANGE - START
 					adsSettings.uiElements = [];
+					// WIKIA CHANGE - END
 					if (this.useGoogleCountdown)
 					{
 						//both COUNTDOWN and AD_ATTRIBUTION are required as per
@@ -4380,6 +4397,9 @@ var globalRequire = require;
 					}
 					adsSettings.useStyledLinearAds = this.useGoogleAdUI;
 					_IMAAdsManager = adsManagerLoadedEvent.getAdsManager(_playheadTracker, adsSettings);
+
+					// WIKIA CHANGE - START
+					this.onAdRequestSuccess(_IMAAdsManager);
 
 					globalRequire([
 						'ext.wikia.adEngine.adContext',
@@ -4390,8 +4410,7 @@ var globalRequire = require;
 							moatVideoTracker.init(_IMAAdsManager, _uiContainer, google.ima.ViewMode.NORMAL, 'ooyala', 'featured-video');
 						}
 					});
-
-					this.onAdRequestSuccess(_IMAAdsManager);
+					// WIKIA CHANGE - END
 
 					// When the ads manager is ready, we are ready to apply css changes to the video element
 					// If the sharedVideoElement is not used, mark it as null before applying css

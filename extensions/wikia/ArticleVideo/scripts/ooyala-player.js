@@ -128,6 +128,11 @@ define('ooyala-player', function () {
 				],
 				useGoogleAdUI: true,
 				useGoogleCountdown: false,
+				onBeforeAdsManagerStart: function (IMAAdsManager) {
+					// mutes VAST ads from the very beginning
+					// FIXME with VPAID it causes volume controls to be in incorrect state
+					IMAAdsManager.setVolume(params.initialVolume);
+				},
 				onAdRequestSuccess: function (IMAAdsManager) {
 					IMAAdsManager.addEventListener('loaded', function (eventData) {
 						var player = html5Player.player;
