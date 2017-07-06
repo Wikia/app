@@ -45,7 +45,7 @@ define('ext.wikia.adEngine.slot.premiumFloatingMedrec', [
 				result = heightScrolled > refresh.heightScrolledThreshold &&
 					timeDifference > refresh.refreshDelay &&
 					refresh.refreshNumber < maxChanges;
-console.log(timeDifference);
+
 			if (result) {
 				refresh.lastRefreshTime = new Date();
 				refresh.refreshAdPos = currentHeightPosition;
