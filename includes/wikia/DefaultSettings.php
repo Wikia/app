@@ -634,6 +634,7 @@ include_once( "$IP/extensions/wikia/CreateNewWiki/CreateNewWiki_global_setup.php
 include_once( "$IP/extensions/wikia/Security/Security.setup.php" );
 include_once( "$IP/extensions/wikia/CommunityHeader/CommunityHeader.setup.php" );
 include_once( "$IP/extensions/wikia/PageHeader/PageHeader.setup.php" );
+include_once( "$IP/extensions/wikia/Bucky/Bucky.setup.php" );
 
 /**
  * @name $wgSkipSkins
@@ -1680,12 +1681,6 @@ $wgLyricsItunesAffiliateToken = '';
  * Enables caching of search results on CDN
  */
 $wgEnableSpecialSearchCaching = true;
-
-/**
- * @name wgEnableBuckyExt
- * Enables real user performance reporting via Bucky
- */
-$wgEnableBuckyExt = true;
 
 /**
  * @name wgBuckySampling
