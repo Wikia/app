@@ -2262,6 +2262,10 @@ var ControlBar = React.createClass({displayName: "ControlBar",
       }
 
       // WIKIA CHANGE - START
+      if (Utils.isIos() && defaultItems[k].name === "volume") {
+        continue;
+      }
+
       if (this.props.isWikiaAdScreen && !this.props.showAdFullScreenToggle && defaultItems[k].name === "fullscreen") {
         continue;
       }
@@ -5725,7 +5729,7 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
 
   if (OO.publicApi && OO.publicApi.VERSION) {
     // This variable gets filled in by the build script
-    OO.publicApi.VERSION.skin = {"releaseVersion": "4.14.8", "rev": "e9659b2fd82698ce072ad2125f5258cedd3a5e83"};
+    OO.publicApi.VERSION.skin = {"releaseVersion": "4.14.8", "rev": "2e8a6c36285380a7fbbe62d91930009910f1a3a7"};
   }
 
   // WIKIA CHANGE - START

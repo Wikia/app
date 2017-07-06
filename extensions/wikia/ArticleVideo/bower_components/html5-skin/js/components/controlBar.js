@@ -483,6 +483,10 @@ var ControlBar = React.createClass({
       }
 
       // WIKIA CHANGE - START
+      if (Utils.isIos() && defaultItems[k].name === "volume") {
+        continue;
+      }
+
       if (this.props.isWikiaAdScreen && !this.props.showAdFullScreenToggle && defaultItems[k].name === "fullscreen") {
         continue;
       }
