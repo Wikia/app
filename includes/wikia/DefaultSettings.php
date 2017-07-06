@@ -634,6 +634,7 @@ include_once( "$IP/extensions/wikia/CreateNewWiki/CreateNewWiki_global_setup.php
 include_once( "$IP/extensions/wikia/Security/Security.setup.php" );
 include_once( "$IP/extensions/wikia/CommunityHeader/CommunityHeader.setup.php" );
 include_once( "$IP/extensions/wikia/PageHeader/PageHeader.setup.php" );
+include_once( "$IP/extensions/wikia/QuickTools/QuickTools.setup.php" );
 
 /**
  * @name $wgSkipSkins
@@ -1136,12 +1137,6 @@ $wgWAMPageConfig = array(
 		'Top lifestyle wikis',
 	),
 );
-
-/**
- * @name $wgEnableQuickToolsExt
- * Enables QuickTools extension
- */
-$wgEnableQuickToolsExt = true;
 
 /**
  * @name $wgPhalanxService
