@@ -5725,7 +5725,7 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
 
   if (OO.publicApi && OO.publicApi.VERSION) {
     // This variable gets filled in by the build script
-    OO.publicApi.VERSION.skin = {"releaseVersion": "4.14.8", "rev": "6e7d061652bae347bf514b7d9218903eb7940e94"};
+    OO.publicApi.VERSION.skin = {"releaseVersion": "4.14.8", "rev": "e9659b2fd82698ce072ad2125f5258cedd3a5e83"};
   }
 
   // WIKIA CHANGE - START
@@ -7035,11 +7035,11 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
 
     setVolume: function(volume){
       // WIKIA CHANGE - START
-      if (this.state.isMobile && this.state.mainVideoElement) {
+      if (this.state.isMobile && !Utils.isIos() && this.state.mainVideoElement) {
         if (volume > 0) {
-          this.state.mainVideoElement[0].muted = false;
+          this.state.mainVideoElement.muted = false;
         } else {
-          this.state.mainVideoElement[0].muted = true;
+          this.state.mainVideoElement.muted = true;
         }
       }
       // WIKIA CHANGE - END
