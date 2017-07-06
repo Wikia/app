@@ -634,6 +634,7 @@ include_once( "$IP/extensions/wikia/CreateNewWiki/CreateNewWiki_global_setup.php
 include_once( "$IP/extensions/wikia/Security/Security.setup.php" );
 include_once( "$IP/extensions/wikia/CommunityHeader/CommunityHeader.setup.php" );
 include_once( "$IP/extensions/wikia/PageHeader/PageHeader.setup.php" );
+include_once( "$IP/extensions/ApiExplorer/SpecialApiExplorer.php" );
 
 /**
  * @name $wgSkipSkins
@@ -1006,12 +1007,6 @@ $wgEnableNirvanaAPI = true;
  * Array of disabled article actions which will fallback to "view" action (BugId:9964)
  */
 $wgDisabledActionsWithViewFallback = array();
-
-/**
- * Variable for enabling Special:ApiExplorer which lets users browse the documentation for the API
- * on that specific wiki (uses the actual API to build the documentation).
- */
-$wgEnableApiExplorerExt = true;
 
 /**
  * Disable the slow updating of MySQL search index. We use Lucene/Solr.
