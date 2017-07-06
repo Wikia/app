@@ -932,12 +932,6 @@ $wgMaxCommentsToMove = 50;
 $smwgUseExternalDB = false;
 
 /**
- * Show the performance-stats from 'loadtime' cookie in the footer-toolbar
- * in the new skin for Staff.
- */
-$wgEnableShowPerformanceStatsExt = true;
-
-/**
  * Default value for AB testing array
  */
 
