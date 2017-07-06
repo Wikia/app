@@ -107,6 +107,9 @@ var ControlBar = React.createClass({
     this.props.controller.toggleShareScreen();
   },
 
+  // FIXME it looks like we've lost quality choosing functionality while updating ooyala, this
+  // function is not used anywhere but I leave it here cause it may be useful when we will be
+  // able to enable quality controls
   handleQualityClick: function() {
     if(this.props.responsiveView == this.props.skinConfig.responsive.breakpoints.xs.id) {
       this.props.controller.toggleScreen(CONSTANTS.SCREEN.VIDEO_QUALITY_SCREEN);
@@ -200,14 +203,6 @@ var ControlBar = React.createClass({
     this.removeHighlight({target: ReactDOM.findDOMNode(this.refs.volumeIcon)});
   },
 
-  changeVolumeSlider: function(event) {
-    var newVolume = parseFloat(event.target.value);
-    this.props.controller.setVolume(newVolume);
-    this.setState({
-      volumeSliderValue: event.target.value
-    });
-  },
-
   // WIKIA CHANGE - START
   formatAdCountdown: function (timeInSeconds) {
     var seconds = parseInt(timeInSeconds,10) % 60;
@@ -265,20 +260,11 @@ var ControlBar = React.createClass({
         onClick={this.handleVolumeClick}></a>);
     }
 
-    var volumeSlider = <div className="oo-volume-slider"><Slider value={parseFloat(this.props.controller.state.volumeState.volume)}
-                        onChange={this.changeVolumeSlider}
-                        className={"oo-slider oo-slider-volume"}
-                        itemRef={"volumeSlider"}
-                        minValue={"0"}
-                        maxValue={"1"}
-                        step={"0.1"}/></div>;
-
     var volumeControls;
-    if (!this.isMobile){
-      volumeControls = volumeBars;
-    }
-    else {
-      volumeControls = this.props.controller.state.volumeState.volumeSliderVisible ? volumeSlider : null;
+    if (!this.props.isWikiaAdScreen) {
+      if (!this.isMobile) {
+        volumeControls = volumeBars;
+      }
     }
 
     var playheadTime = isFinite(parseInt(this.props.currentPlayhead)) ? Utils.formatSeconds(parseInt(this.props.currentPlayhead)) : null;
