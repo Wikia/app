@@ -3,7 +3,7 @@
 /**
  * Provides an API for tracking page views on Lyrics Wiki
  */
-class LyricFindTrackingService {
+class LyricFindTrackingService extends WikiaObject {
 
 	use Wikia\Logger\Loggable;
 
