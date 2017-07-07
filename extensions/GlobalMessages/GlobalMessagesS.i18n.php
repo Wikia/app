@@ -272,7 +272,7 @@ If you think this is wrong, please contact us [[w:c:vstf:Report:Spam filter prob
 	'send' => 'Send',
 	'save' => 'Save',
 	'searchtype' => 'Search frontend type',
-	'specialpages-group-wikia' => 'Fandom pages',
+	'specialpages-group-wikia' => 'FANDOM pages',
 	'seeeditcount' => 'See edit count',
 	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
 * [http://www.wikia.com/wiki/Wikia:About About Wikia]
@@ -8350,7 +8350,7 @@ Das liegt wahrscheinlich an einem Link auf eine externe Seite.',
 * [http://de.wikia.com/Nutzungsbedingungen Nutzungsbedingungen]
 * [[Special:Contact|Kontakt]]
 * [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Auf Wikia werben]',
-	'specialpages-group-wikia' => 'Fandom-Seiten',
+	'specialpages-group-wikia' => 'FANDOM-Seiten',
 	'save' => 'Speichern',
 	'searchsuggest' => 'Suchvorschläge',
 	'searchtype' => 'Such-Frontend',
@@ -9881,7 +9881,7 @@ Si crees que está mal, por favor contáctanos haciendo clic [[w:c:vstf:Report:S
 * [http://es.wikia.com/T%C3%A9rminos_de_Uso Términos de Uso]
 * [[Special:Contact|Contactar]]
 * [http://mediakit.wikia.com/wiki/Contact Publicidad]',
-	'specialpages-group-wikia' => 'Páginas de Fandom',
+	'specialpages-group-wikia' => 'Páginas de FANDOM',
 	'save' => 'Guardar',
 	'searchsuggest' => 'Búsquedas sugeridas',
 	'seeeditcount' => 'Ver contador de ediciones',
@@ -11524,7 +11524,7 @@ impossible de renommer une page sur elle-même.',
 * [http://fr.wikia.com/Conditions_d'utilisation Conditions d'utilisation]
 * [[Special:Contact|Nous contacter]]
 * [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Publicité]",
-	'specialpages-group-wikia' => 'Pages Fandom',
+	'specialpages-group-wikia' => 'Pages FANDOM',
 	'save' => 'Enregistrer',
 	'searchsuggest' => 'Suggestions de recherche',
 	'seeeditcount' => 'Voir le nombre de modifications',
@@ -17300,7 +17300,7 @@ Se pensi ci sia un errore, contattaci su [[w:c:vstf:Report:Spam filter problems|
 * [http://it.community.wikia.com/wiki/Wiki_della_Community:Termini_di_utilizzo Termini di utilizzo]<span style="color: #ff0000"> (Aggiornati)</span>
 * [[Special:Contact|Contact]]
 * [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
-	'specialpages-group-wikia' => 'Pagine di Fandom',
+	'specialpages-group-wikia' => 'Pagine di FANDOM',
 	'signup-mail' => 'E-mail - ',
 	'signup-moreinfo' => 'Perché è necessario?',
 	'signup-password' => 'Password - ',
@@ -27850,7 +27850,7 @@ Some IP addresses change periodically, and may be shared by several users. If yo
 	'send' => 'Send',
 	'save' => 'Save',
 	'searchtype' => 'Search frontend type',
-	'specialpages-group-wikia' => 'Fandom pages',
+	'specialpages-group-wikia' => 'FANDOM pages',
 	'seeeditcount' => 'See edit count',
 	'scarytranscludebadinterwiki' => 'Non-transcludable interwiki provided.',
 	'shared-News_box' => '[http://www.wikia.com/Hiring Wikia is now hiring for several open positions]<br>',
@@ -30759,7 +30759,7 @@ Tal bloqueio foi provavelmente causado por uma ligação para um ''website'' ext
 * [http://www.wikia.com/wiki/Wikia:Termos_de_uso Termos de uso]
 * [[Special:Contact|Contato]]
 * [http://www.wikia.com/wiki/Wikia:Publicidade_na_Wikia Publicidade]',
-	'specialpages-group-wikia' => 'Páginas do Fandom',
+	'specialpages-group-wikia' => 'Páginas do FANDOM',
 	'signup-password' => 'Senha - ',
 	'sidebar' => '* Content Navigation
 ** mainpage|mainpage

@@ -335,7 +335,7 @@ ___________________________________________
 	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
-	'registerintro-title' => 'When you create an account on Fandom, you become a part of the community!',
+	'registerintro-title' => 'When you create an account on FANDOM, you become a part of the community!',
 	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
 	'rcshowhidelogs' => '$1 logs',
 );
@@ -9751,7 +9751,7 @@ de.wikia.com',
 	'related_wiki' => 'Füge hier Links im Listenformat ein um ähnliche Wikis zu diesem im "Related Wikis" [[Special:Widgets|Widget]] anzuzeigen.
 
 * [{{FULLURL:MediaWiki:Related wiki}} Bisher wurde kein ähnliches Wiki eingetragen.]',
-	'registerintro-title' => 'Sobald du bei Fandom ein Konto erstellt hast, bist du Teil der Community!',
+	'registerintro-title' => 'Sobald du bei FANDOM ein Konto erstellt hast, bist du Teil der Community!',
 	'registerintro-text' => 'Alle deine Beiträge werden dir zugeordnet und du kannst dein eigenes Benutzerprofil erstellen, interessante Artikel beobachen und hast du Zugriff auf weitere nützliche Tools.',
 	'rcshowhidelogs' => 'Logbücher $1',
 	'right-hideblockername' => 'Verhindert, dass der Benutzername in Sperrbenachrichtigungen angezeigt wird',
@@ -11309,7 +11309,7 @@ Paĝoj en [[Special:Watchlist|via atentaro]] estas '''grasaj'''.",
 );
 
 $messages['es'] = array(
-	'realmap-deprecated-info' => 'Mapas del mundo real han sido descontinuados por Fandom. Para obtener más información, revisa: $1',
+	'realmap-deprecated-info' => 'Mapas del mundo real han sido descontinuados por FANDOM. Para obtener más información, revisa: $1',
 	'returnto' => 'Volver a $1.',
 	'redirectedfrom' => '(Redirigido desde $1)',
 	'redirectpagesub' => 'Página redirigida',
@@ -11600,7 +11600,7 @@ No tiene acceso a él.',
 	'revdelete-hid' => 'ocultó $1',
 	'revdelete-unhid' => 'dejó de ocultar $1',
 	'revdelete-log-message' => '$1 para $2 {{PLURAL:$2|revisión|revisiones}}',
-	'reconfirmemail_subject' => 'Por favor, confirma de nuevo tu cuenta de Fandom',
+	'reconfirmemail_subject' => 'Por favor, confirma de nuevo tu cuenta de FANDOM',
 	'reconfirmemail_body' => 'Hola $2,
 
 Gracias por actualizar tu dirección de email en tu cuenta de Wikia Por favor, confirma que esta es la dirección de correo electrónico correcta haciendo clic en el siguiente enlace, solo te tomará un minuto: $3
@@ -11636,7 +11636,7 @@ ___________________________________________
 	'return_to_special' => 'Volver a la página especial',
 	'related_wiki' => 'Añadir enlaces aquí para mostrar wiki relacionados a este en el [[{{#Special:Widgets|widget}}]] del wiki relacionado. 
 * [{{FULLURL:MediaWiki:Related wiki}} todavía no ha sido seleccionado wiki relacionado.]',
-	'registerintro-title' => '¡Cuando creas una cuenta en Fandom, te conviertes en parte de la comunidad!',
+	'registerintro-title' => '¡Cuando creas una cuenta en FANDOM, te conviertes en parte de la comunidad!',
 	'registerintro-text' => 'Dale crédito a todas tus contribuciones, y también podrás crear tu propio perfil de usuario, lista de seguimiento con tus páginas favoritas y tendrás acceso a una gran variedad de herramientas continuamente actualizadas.',
 	'rcshowhidelogs' => '$1 registros',
 	'right-hideblockername' => 'No mostrar nombre de usuario en avisos de bloqueo',
@@ -13687,7 +13687,7 @@ www.wikia.com
 	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
-	'registerintro-title' => 'Lorsque vous créez un compte sur Fandom, vous devenez membre de la communauté !',
+	'registerintro-title' => 'Lorsque vous créez un compte sur FANDOM, vous devenez membre de la communauté !',
 	'registerintro-text' => "Vous comptabilisez toutes vos contributions et vous pouvez créer votre propre profil utilisateur, liste de suivi de vos pages favorites et avoir accès à toute sorte d'outils sympas. Vos contributions sont davantage prises au sérieux.",
 	'rcshowhidelogs' => '$1 les journaux',
 	'right-hideblockername' => "Ne pas afficher leur nom d'utilisateur dans les avis de blocage",
@@ -20370,7 +20370,7 @@ www.wikia.com
 	'related_wiki' => 'Aggiungi link puntati qui per visualizzare la wiki correlata alla presente nella wiki correlata [[Special:Widget|widget]].
 
 * [{{FULLURL:MediaWiki:Related wiki}} Non è stata ancora selezionata alcuna wiki correlata.]',
-	'registerintro-title' => 'Quando crei un account su Fandom, diventi parte della comunità!',
+	'registerintro-title' => 'Quando crei un account su FANDOM, diventi parte della comunità!',
 	'registerintro-text' => 'Ricevi il riconoscimento per tutte le tue collaborazioni, crea il tuo profilo utente personale, segui gli sviluppi delle tue pagine preferite e utilizza tutti i pratici strumenti disponibili.',
 	'rcshowhidelogs' => '$1 registri',
 	'right-hideblockername' => "Non hanno il loro nome utente visualizzato nell'avviso di blocco",
@@ -32462,7 +32462,7 @@ www.wikia.com
 	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
-	'registerintro-title' => 'When you create an account on Fandom, you become a part of the community!',
+	'registerintro-title' => 'When you create an account on FANDOM, you become a part of the community!',
 	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
 	'rcshowhidelogs' => '$1 logs',
 	'right-hideblockername' => 'Not have their user name show up in block notices',
@@ -35947,7 +35947,7 @@ ___________________________________________
 	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
-	'registerintro-title' => 'Quando você cria uma conta no Fandom, você se torna parte da comunidade!',
+	'registerintro-title' => 'Quando você cria uma conta no FANDOM, você se torna parte da comunidade!',
 	'registerintro-text' => 'Você recebe crédito por todas as suas contribuições, e também pode criar seu próprio perfil de usuário, marcar suas páginas favoritas e obter acesso a todos os tipos de ferramentas interessantes.',
 	'rcshowhidelogs' => '$1 registros',
 	'right-hideblockername' => 'Não exibir o nome do usuário em notificações de bloqueio',

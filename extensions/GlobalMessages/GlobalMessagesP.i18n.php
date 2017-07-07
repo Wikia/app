@@ -31,14 +31,14 @@ $messages['en'] = array(
 	'passwordtooshort' => 'Passwords must be at least {{PLURAL:$1|1 character|$1 characters}}.',
 	'password-name-match' => 'Your password must be different from your username.',
 	'password-login-forbidden' => 'The use of this username and password has been forbidden.',
-	'passwordremindertitle' => 'Password reminder from Fandom',
+	'passwordremindertitle' => 'Password reminder from FANDOM',
 	'passwordremindertext' => 'Hi,
 The login password for user "$2" is now "$3".
 If you did not request a new password, don’t worry. The replacement password has been sent only to you at this email address. Your account is secure and you can continue to use your old password.
 
 Thanks,
 
-The Fandom Community Team
+The FANDOM Community Team
 
 www.wikia.com
 ___________________________________________________________
@@ -249,7 +249,7 @@ The latest log entry is provided below for reference:",
 	'prefs-help-terms' => "By creating an account, you agree to the [[homepage:Terms of use|Wikia, Inc's Terms of Use]]",
 	'prefs-help-birthday' => 'Why do I need to provide this?',
 	'prefs-help-birthmesg' => 'Why do I need to provide my birthday?',
-	'prefs-help-birthinfo' => 'Fandom requires all users to provide their real date of birth as both a safety precaution and as a means of preserving the integrity of the site while complying with federal regulations.',
+	'prefs-help-birthinfo' => 'FANDOM requires all users to provide their real date of birth as both a safety precaution and as a means of preserving the integrity of the site while complying with federal regulations.',
 	'popular-articles' => 'Popular Pages',
 	'popular-wikis' => 'Popular Wikis',
 	'preferences_s' => 'Preferences',
@@ -8020,14 +8020,14 @@ $messages['de'] = array(
 	'passwordtooshort' => 'Passwörter müssen mindestens {{PLURAL:$1|1 Zeichen|$1 Zeichen}} lang sein.',
 	'password-name-match' => 'Dein Passwort muss sich von deinem Benutzernamen unterscheiden.',
 	'password-login-forbidden' => 'Die Verwendung dieses Benutzernamens und Passwortes ist nicht erlaubt.',
-	'passwordremindertitle' => 'Passwort-Erinnerung von Fandom',
+	'passwordremindertitle' => 'Passwort-Erinnerung von FANDOM',
 	'passwordremindertext' => 'Hallo!
 Das Passwort für Benutzer "$2" lautet jetzt "$3".
 Mach dir keine Sorgen, falls du kein neues Passwort angefordert hast. Das Ersatz-Passwort wurde nur an dich unter dieser E-Mail-Adresse geschickt. Dein Konto ist sicher und du kannst auch weiterhin dein altes Passwort benutzen.
 
 Vielen Dank,
 
-Dein Fandom Community-Team
+Dein FANDOM Community-Team
 
 www.wikia.com
 ___________________________________________________________
@@ -8212,8 +8212,8 @@ Zur Information folgt der aktuelle Logbucheintrag:",
 	'patrol-log-header' => 'Dies ist das Kontroll-Logbuch.',
 	'previousdiff' => '← Zum vorherigen Versionsunterschied',
 	'percent' => '$1%',
-	'prefs-help-birthinfo' => 'Fandom verlangt von allen Nutzern, ihr tatsächliches Geburtsdatum anzugeben, sowohl als Sicherheitsmaßnahme, als auch als Mittel zur Wahrung der Integrität der Website unter Einhaltung der behördlichen Vorschriften.',
-	'prefs-help-terms' => 'Mit der Erstellung eines Benutzerkontos stimmst du den [[w:c:de:Nutzungsbedingungen|Nutzungsbedingungen]] von Fandom zu',
+	'prefs-help-birthinfo' => 'FANDOM verlangt von allen Nutzern, ihr tatsächliches Geburtsdatum anzugeben, sowohl als Sicherheitsmaßnahme, als auch als Mittel zur Wahrung der Integrität der Website unter Einhaltung der behördlichen Vorschriften.',
+	'prefs-help-terms' => 'Mit der Erstellung eines Benutzerkontos stimmst du den [[w:c:de:Nutzungsbedingungen|Nutzungsbedingungen]] von FANDOM zu',
 	'patrol-log-auto' => '(automatisch)',
 	'patrol-log-diff' => 'Version $1',
 	'patrol-log-line' => 'markierte $1 von $2 als patrouilliert $3',
@@ -9467,14 +9467,14 @@ $messages['es'] = array(
 	'passwordtooshort' => 'Las contraseñas deben tener al menos {{PLURAL:$1|1 caracter|$1 caracteres}}.',
 	'password-name-match' => 'Tu contraseña debe ser diferente de tu nombre de usuario.',
 	'password-login-forbidden' => 'El uso de este nombre de usuario y contraseña han sido prohibidos.',
-	'passwordremindertitle' => 'Recordatorio de la contraseña en Fandom',
+	'passwordremindertitle' => 'Recordatorio de la contraseña en FANDOM',
 	'passwordremindertext' => 'Hola,
 La contraseña de inicio de sesión del usuario "$2" es ahora "$3".
 Si no has solicitado una nueva contraseña, ¡no te preocupes! La contraseña temporal ha sido enviada solamente a esta dirección de correo electrónico. Tu cuenta está segura y puedes acceder con tu antigua contraseña.
 
 Atentamente,
 
-El equipo comunitario de Fandom
+El equipo comunitario de FANDOM
 
 www.es.fandom.com
 ___________________________________________________________
@@ -9660,8 +9660,8 @@ A continuación se muestra la última entrada de registro para referencia:",
 	'patrol-log-page' => 'Registro de patrullaje',
 	'patrol-log-header' => 'Este es un registro de revisiones patrulladas.',
 	'previousdiff' => '← Edición anterior',
-	'prefs-help-birthinfo' => 'Fandom solicita a todos los usuarios que pongan su fecha real de nacimiento como medida de seguridad y como forma de preservar la integridad del sitio mientras cumples con las regulaciones federales.',
-	'prefs-help-terms' => 'Al crear una cuenta de usuario, aceptas los [[w:c:es:Términos de uso|términos de uso de Fandom]]',
+	'prefs-help-birthinfo' => 'FANDOM solicita a todos los usuarios que pongan su fecha real de nacimiento como medida de seguridad y como forma de preservar la integridad del sitio mientras cumples con las regulaciones federales.',
+	'prefs-help-terms' => 'Al crear una cuenta de usuario, aceptas los [[w:c:es:Términos de uso|términos de uso de FANDOM]]',
 	'popular-articles' => 'Páginas populares',
 	'popular-wikis' => 'Wikis populares',
 	'preferences_s' => 'Preferencias',
@@ -11064,14 +11064,14 @@ $messages['fr'] = array(
 	'passwordtooshort' => 'Votre mot de passe doit contenir au moins $1 caractère{{PLURAL:$1||s}}.',
 	'password-name-match' => 'Votre mot de passe doit être différent de votre nom d’utilisateur.',
 	'password-login-forbidden' => 'L’utilisation de ce nom d’utilisateur et de ce mot de passe a été interdite.',
-	'passwordremindertitle' => 'Rappel de mot de passe de Fandom',
+	'passwordremindertitle' => 'Rappel de mot de passe de FANDOM',
 	'passwordremindertext' => 'Bonjour,
 Le mot de passe de l\'utilisateur "$2" est désormais "$3".
 Si vous n\'avez pas demandé de nouveau mot de passe, ne vous inquiétez pas. Le mot de passe de substitution n\'a été envoyé qu\'à vous, à cette adresse e-mail. Votre compte est sain et sauf, et vous pouvez continuer à utiliser votre ancien mot de passe.
 
 Merci,
 
-L\'équipe de la communauté Fandom
+L\'équipe de la communauté FANDOM
 
 www.wikia.com
 ___________________________________________________________
@@ -11253,7 +11253,7 @@ Veuillez contacter votre fournisseur d’accès Internet ou votre support techni
 	'patrol-log-header' => 'Voici l’historique des versions relues.',
 	'previousdiff' => '← Modification précédente',
 	'percent' => '$1&nbsp;%',
-	'prefs-help-birthinfo' => "Fandom requiert que tous les utilisateurs fournissent leur date de naissance réelle ; ceci est une mesure de sécurité et permet également de préserver l'intégrité du site tout en respectant les lois fédérales américaines.",
+	'prefs-help-birthinfo' => "FANDOM requiert que tous les utilisateurs fournissent leur date de naissance réelle ; ceci est une mesure de sécurité et permet également de préserver l'intégrité du site tout en respectant les lois fédérales américaines.",
 	'prefs-help-terms' => "En créant un compte, vous acceptez les [[homepage:fr:Conditions d'utilisation|Conditions d'utilisation]]",
 	'pipe-separator' => '&#32;•&#32;',
 	'preferences_s' => 'Préférences',
@@ -16690,14 +16690,14 @@ $messages['it'] = array(
 	'passwordtooshort' => 'Le password devono contenere almeno {{PLURAL:$1|1 carattere|$1 caratteri}}.',
 	'password-name-match' => 'La password deve essere diversa dal nome utente.',
 	'password-login-forbidden' => "L'uso di questo nome utente e password è stato proibito.",
-	'passwordremindertitle' => 'Promemoria sulla password da Fandom',
+	'passwordremindertitle' => 'Promemoria sulla password da FANDOM',
 	'passwordremindertext' => 'Ciao,
 La password di accesso per l\'utente "$2" è ora "$3".
 Se non hai richiesto una nuova password, non preoccuparti. La password sostitutiva è stata inviata solo a te a questo indirizzo e-mail. Il tuo account è sicuro e puoi continuare a usare la tua vecchia password.
 
 Grazie,
 
-Il team della community di Fandom
+Il team della community di FANDOM
 
 www.wikia.com
 ___________________________________________________________
@@ -16879,8 +16879,8 @@ L'ultimo elemento del registro è riportato di seguito per informazione:",
 	'patrol-log-page' => 'Modifiche verificate',
 	'patrol-log-header' => 'Di seguito sono elencate le verifiche delle modifiche.',
 	'previousdiff' => '← Differenza precedente',
-	'prefs-help-birthinfo' => "Fandom chiede a tutti gli utenti di fornire la loro data di nascita reale sia quale precauzione di sicurezza, sia quale mezzo per preservare l'integrità del sito rispettando al contempo le disposizioni federali.",
-	'prefs-help-terms' => 'Con la creazione di un account, accetti i [[w:it:Project:Termini di utilizzo|Termini di utilizzo di Fandom]]',
+	'prefs-help-birthinfo' => "FANDOM chiede a tutti gli utenti di fornire la loro data di nascita reale sia quale precauzione di sicurezza, sia quale mezzo per preservare l'integrità del sito rispettando al contempo le disposizioni federali.",
+	'prefs-help-terms' => 'Con la creazione di un account, accetti i [[w:it:Project:Termini di utilizzo|Termini di utilizzo di FANDOM]]',
 	'preferences_s' => 'Preferenze',
 	'prefs-help-birthday' => 'Perché devo fornire questo dato?',
 	'prefs-help-birthmesg' => 'Perché è necessario indicare la mia data di nascita?',
@@ -27172,7 +27172,7 @@ De laatste logboekregel staat hieronder:",
 	'prefs-help-terms' => "By creating an account, you agree to the [[homepage:Terms of use|Wikia, Inc's Terms of Use]]",
 	'prefs-help-birthday' => 'Why do I need to provide this?',
 	'prefs-help-birthmesg' => 'Why do I need to provide my birthday?',
-	'prefs-help-birthinfo' => 'Fandom requires all users to provide their real date of birth as both a safety precaution and as a means of preserving the integrity of the site while complying with federal regulations.',
+	'prefs-help-birthinfo' => 'FANDOM requires all users to provide their real date of birth as both a safety precaution and as a means of preserving the integrity of the site while complying with federal regulations.',
 	'popular-articles' => 'Popular Pages',
 	'popular-wikis' => 'Popular Wikis',
 	'preferences_s' => 'Preferences',
@@ -28739,7 +28739,7 @@ $messages['pl'] = array(
 	'passwordtooshort' => 'Hasło musi mieć co najmniej $1 {{PLURAL:$1|znak|znaki|znaków}}.',
 	'password-name-match' => 'Hasło musi być inne niż nazwa użytkownika.',
 	'password-login-forbidden' => 'Wykorzystanie tej nazwy użytkownika lub hasła zostało zabronione.',
-	'passwordremindertitle' => 'Przypomnienie hasła od portalu Fandom',
+	'passwordremindertitle' => 'Przypomnienie hasła od portalu FANDOM',
 	'passwordremindertext' => 'Cześć,
 Hasło do konta użytkownika „$2” zostało zmienione na „$3”.
 Jeżeli nie prosiłeś o zmianę hasła, nie przejmuj się. Nowe hasło zostało wysłane do ciebie wyłącznie pod ten adres e-mail. Twoje konto jest bezpieczne i możesz nadal używać swojego starego hasła.
@@ -28933,7 +28933,7 @@ Ostatni wpis z rejestru jest pokazany poniżej.",
 	'patrol-log-header' => 'Poniżej znajduje się dziennik patrolowania stron.',
 	'previousdiff' => '← poprzednia edycja',
 	'percent' => '$1%',
-	'prefs-help-birthinfo' => 'Fandom wymaga od wszystkich użytkowników podania rzeczywistej daty urodzenia ze względów bezpieczeństwa oraz dla zachowania spójności strony, przy zapewnieniu zgodności z przepisami federalnymi.',
+	'prefs-help-birthinfo' => 'FANDOM wymaga od wszystkich użytkowników podania rzeczywistej daty urodzenia ze względów bezpieczeństwa oraz dla zachowania spójności strony, przy zapewnieniu zgodności z przepisami federalnymi.',
 	'prefs-help-terms' => 'Tworząc konto użytkownika, akceptujesz [[w:c:pl:Zasady_Użytkowania|Zasady Użytkowania]]',
 	'pipe-separator' => '&#32;•&#32;',
 	'prefs-help-birthday' => 'Dlaczego mam podać te informacje?',
@@ -29848,7 +29848,7 @@ $messages['pt'] = array(
 	'passwordtooshort' => 'As senhas devem ter no mínimo {{PLURAL:$1|1 caractere|$1 caracteres}}.',
 	'password-name-match' => 'A sua senha deve ser diferente do seu nome de usuário.',
 	'password-login-forbidden' => 'O uso deste nome de usuário e senha foi desautorizado.',
-	'passwordremindertitle' => 'Lembrete de senha do Fandom',
+	'passwordremindertitle' => 'Lembrete de senha do FANDOM',
 	'passwordremindertext' => 'Olá,
 
 A senha para o usuário "$2" agora é "$3". 
@@ -29856,7 +29856,7 @@ Se você não pediu uma senha nova, não se preocupe. A senha temporária foi en
 
 Obrigado,
 
-Equipe da Comunidade do Fandom
+Equipe da Comunidade do FANDOM
 
 http://www.wikia.com/explore-pt-br
 ___________________________________________________________
@@ -30040,7 +30040,7 @@ A última entrada no histórico é fornecida abaixo para referência:",
 	'patrol-log-page' => 'Registro de edições patrulhadas',
 	'patrol-log-header' => 'Este é um registro de edições patrulhadas.',
 	'previousdiff' => '← Edição anterior',
-	'prefs-help-birthinfo' => 'O Fandom exige que todos os usuários forneçam suas datas de nascimento verdadeiras como medida de segurança e para preservar a integridade do site, mantendo conformidade com os regulamentos federais.',
+	'prefs-help-birthinfo' => 'O FANDOM exige que todos os usuários forneçam suas datas de nascimento verdadeiras como medida de segurança e para preservar a integridade do site, mantendo conformidade com os regulamentos federais.',
 	'prefs-help-terms' => 'Ao criar uma conta, você concorda com os [[w:c:pt:Termos de Uso|Termos de Uso da Wikia, Inc]]',
 	'pagecategorieslink' => 'Especial:Categorias',
 	'pagetitle' => '$1 - {{SITENAME}}',
