@@ -5,7 +5,7 @@ class SiteWideMessagesController extends WikiaController {
 	const CACHE_VALIDITY_VARNISH = 10800; // 3 hours
 	const CACHE_VALIDITY_BROWSER = 3600; // 1 hour
 
-	private function shouldShowSiteWideMessage() {
+	private function shouldSkipSiteWideMessages() {
 		global $wgEnableArticleFeaturedVideo;
 
 		$title = Title::newFromID( $this->getVal( 'articleId' ) );
@@ -21,7 +21,7 @@ class SiteWideMessagesController extends WikiaController {
 
 	public function getAnonMessages() {
 
-		if ( $this->shouldShowSiteWideMessage() ) {
+		if ( $this->shouldSkipSiteWideMessages() ) {
 			// Don't return anything if this happens
 			$this->skipRendering();
 
