@@ -2473,8 +2473,7 @@ $messages['ru'] = array(
 	'wikiafollowedpages-special-heading-media' => 'Изображения и видео ($1)',
 	'wikiafollowedpages-special-namespace' => '($1 cтраница)',
 	'wikiafollowedpages-special-heading-wall' => 'Стены обсуждения ( $1 )',
-	'wikiafollowedpages-special-empty' => 'Ваш список отслеживаемых страинц пуст.
-Добавьте страницы в список, нажав «{{int:watch}}» наверху страницы.',
+	'wikiafollowedpages-special-empty' => 'Ваш список отслеживаемых страниц пуст. Добавьте страницы в список, нажав «{{int:watch}}» на панели Мои инструменты внизу страницы.',
 	'wikiafollowedpages-special-anon' => 'Пожалуйста, [[Special:Signup|представьтесь]] системе для создания или просмотра своего списка отслеживаемых страниц.',
 	'oasis-wikiafollowedpages-special-seeall' => 'Показать все >',
 	'wikiafollowedpages-special-seeall' => 'Показать все >',

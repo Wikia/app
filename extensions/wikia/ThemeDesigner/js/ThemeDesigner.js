@@ -956,11 +956,6 @@
 				previewFrameContent.find('#WikiaPageBackground')
 					.css('opacity', ThemeDesigner.settings['page-opacity'] / ThemeDesigner.maxPageOpacity);
 
-				if (ThemeDesigner.settings['page-opacity'] < ThemeDesigner.maxPageOpacity) {
-					previewFrameContent.find('#WikiHeader .shadow-mask').hide();
-				} else {
-					previewFrameContent.find('#WikiHeader .shadow-mask').show();
-				}
 			}
 
 			//reset

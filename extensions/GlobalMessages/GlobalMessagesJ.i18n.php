@@ -3864,30 +3864,6 @@ $messages['pt'] = array(
 	'javascripttest-qunit-heading' => 'Suíte de ferramentas de teste JavaScript QUnit para MediaWiki',
 );
 
-$messages['pt-br'] = array(
-	'january' => 'janeiro',
-	'june' => 'junho',
-	'july' => 'julho',
-	'january-gen' => 'janeiro',
-	'june-gen' => 'junho',
-	'july-gen' => 'julho',
-	'jan' => 'jan.',
-	'jun' => 'jun.',
-	'jul' => 'jul.',
-	'jumpto' => 'Ir para:',
-	'jumptonavigation' => 'navegação',
-	'jumptosearch' => 'pesquisa',
-	'javascripttest' => 'Teste de JavaScript',
-	'javascripttest-disabled' => 'Essa função não foi habilitada neste wiki.',
-	'javascripttest-title' => 'Executando testes para $1',
-	'javascripttest-pagetext-noframework' => 'Esta página é exclusiva para testes de JavaScript.',
-	'javascripttest-pagetext-unknownframework' => 'A estrutura de testes "$1" é desconhecida.',
-	'javascripttest-pagetext-frameworks' => 'Escolha uma das seguintes estruturas de teste: $1',
-	'javascripttest-pagetext-skins' => 'Escolha o tema para executar os testes:',
-	'javascripttest-qunit-intro' => 'Veja a [$1 documentação de testes] no mediawiki.org.',
-	'javascripttest-qunit-heading' => 'Suíte de ferramentas de teste JavaScript QUnit para MediaWiki',
-);
-
 $messages['qu'] = array(
 	'january' => 'iniru',
 	'june' => 'hunyu',
@@ -5421,66 +5397,6 @@ $messages['zh-hant'] = array(
 	'javascripttest-backlink' => '< $1',
 	'javascripttest-qunit-name' => 'QUnit',
 	'joinnow' => 'join now',
-);
-
-$messages['zh-hk'] = array(
-	'january' => '一月',
-	'june' => '六月',
-	'july' => '七月',
-	'jumpto' => '跳到：',
-	'jumptosearch' => '搜尋',
-);
-
-$messages['zh-min-nan'] = array(
-	'january' => '一月',
-	'june' => '六月',
-	'july' => '七月',
-	'jumpto' => '跳到：',
-	'jumptosearch' => '搜尋',
-);
-
-$messages['zh-mo'] = array(
-	'january' => '一月',
-	'june' => '六月',
-	'july' => '七月',
-	'jumpto' => '跳到：',
-	'jumptosearch' => '搜尋',
-);
-
-$messages['zh-my'] = array(
-	'january' => '一月',
-	'june' => '六月',
-	'july' => '七月',
-	'jumpto' => '跳到：',
-	'jumptosearch' => '搜尋',
-);
-
-$messages['zh-tw'] = array(
-	'january' => '一月',
-	'june' => '六月',
-	'july' => '七月',
-	'january-gen' => '一月',
-	'june-gen' => '六月',
-	'july-gen' => '七月',
-	'jan' => '1月',
-	'jun' => '6月',
-	'jul' => '7月',
-	'jumptosearch' => '搜尋',
-	'joinnow' => '立即加入',
-);
-
-$messages['zh-yue'] = array(
-	'january' => '一月',
-	'june' => '六月',
-	'july' => '七月',
-	'january-gen' => '一月',
-	'june-gen' => '六月',
-	'july-gen' => '七月',
-	'jan' => '1月',
-	'jun' => '6月',
-	'jul' => '7月',
-	'jumptosearch' => '搜尋',
-	'joinnow' => '立即加入',
 );
 
 $messages['zu'] = array(

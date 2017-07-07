@@ -17,11 +17,6 @@
 <? if ( $displayHeader ): ?>
 	<h2><?= wfMessage( 'oasis-global-page-header' )->escaped(); ?></h2>
 <? endif; ?>
-<div class="skiplinkcontainer">
-<a class="skiplink" rel="nofollow" href="#WikiaArticle"><?= wfMessage( 'oasis-skip-to-content' )->escaped(); ?></a>
-<a class="skiplink wikinav" rel="nofollow" href="#WikiHeader"><?= wfMessage( 'oasis-skip-to-wiki-navigation' )->escaped(); ?></a>
-<a class="skiplink sitenav" rel="nofollow" href="#GlobalNavigation"><?= wfMessage( 'oasis-skip-to-site-navigation' )->escaped(); ?></a>
-</div>
 <?= $afterBodyHtml ?>
 
 <div id="ad-skin" class="wikia-ad noprint"></div>
@@ -31,7 +26,6 @@
 	<?= $app->renderView( 'BannerNotifications', 'Confirmation' ) ?>
 </div>
 <?= $app->renderView( 'Ad', 'Top' ) ?>
-<?= empty( $wg->EnableEBS ) ? '' : $app->renderView( 'EmergencyBroadcastSystem', 'index' ); ?>
 
 <?= $app->renderView('AdEmptyContainer', 'Index', ['slotName' => 'TOP_LEADERBOARD_AB']); ?>
 
@@ -39,7 +33,7 @@
 
 <?= $beforeWikiaPageHtml ?>
 
-<? if ( empty( $wg->SuppressWikiHeader ) && !WikiaPageType::isCorporatePage() ) : ?>
+<? if ( empty( $wg->SuppressCommunityHeader ) && !WikiaPageType::isCorporatePage() ) : ?>
 	<?= $app->renderView( 'CommunityHeader', 'index' ) ?>
 <? endif; ?>
 

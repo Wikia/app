@@ -175,9 +175,9 @@ class ThemeSettings {
 			$file->upload( $temp_file->getPath(), '', '' );
 			$temp_file->delete( '' );
 
-			// FIXME: XW-3596 - this is hack
+			// For legacy reasons wordmark-image has other convention than the rest
 			if ( $name === 'wordmark-image' ) {
-				$settings["{$name}-url"] = $file->getURL();
+				$settings['wordmark-image-url'] = $file->getURL();
 			} else {
 				$settings["{$name}"] = $file->getURL();
 			}
@@ -266,17 +266,18 @@ class ThemeSettings {
 		$oldWordmarkFile = $this->saveImage(
 			$settings,
 			'wordmark-image',
-			self::WordmarkImageName,
+			self::WordmarkImageName
+		);
+
+		$oldFaviconFile = $this->saveImage(
+			$settings,
+			'favicon-image',
+			self::FaviconImageName,
 			[],
 			false,
 			function () {
 				Wikia::invalidateFavicon();
 			}
-		);
-		$oldFaviconFile = $this->saveImage(
-			$settings,
-			'favicon-image',
-			self::FaviconImageName
 		);
 
 		$reason = wfMessage( 'themedesigner-reason', $wgUser->getName() )->escaped();

@@ -54,4 +54,10 @@
 			font-size: 12px;
 		}
 	}
+
+	.editpage-sourcewidemode-on {
+		.editpage-wikianavmode #EditPageToolbar:after {
+			height: 25px;
+		}
+	}
 }

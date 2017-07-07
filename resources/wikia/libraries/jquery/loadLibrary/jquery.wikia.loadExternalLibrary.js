@@ -58,20 +58,14 @@
 
 	/**
 	 * Load the facebook JS library v2.x
-	 * @param {function} [callback] (Deprecated) Function to be executed when library is loaded.
-	 * Prefer using the returned deferred object.
+	 *
 	 * @returns {jQuery} Returns a jQuery promise
 	 * @see https://developers.facebook.com/docs/javascript/quickstart/v2.2
 	 */
-	$.loadFacebookSDK = function (callback) {
+	$.loadFacebookSDK = function () {
 		// create our own deferred object to resolve after FB.init finishes
 		var $deferred = $.Deferred(),
 			url = window.fbScript || window.Wikia.fbLocale.getSdkUrl(window.wgUserLanguage);
-
-		// ShareButton code still uses the callback, but it's deprecated.
-		if (typeof callback === 'function') {
-			$deferred.done(callback);
-		}
 
 		// If the FB SDK successfully loads, show the fb login button
 		$deferred.done(function () {

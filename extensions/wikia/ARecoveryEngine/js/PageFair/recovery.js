@@ -9,7 +9,9 @@ define('ext.wikia.aRecoveryEngine.pageFair.recovery', [
 		context = adContext.getContext(),
 		recoverableSlots = [
 			'TOP_LEADERBOARD',
-			'TOP_RIGHT_BOXAD'
+			'TOP_RIGHT_BOXAD',
+			'LEFT_SKYSCRAPER_2',
+			'LEFT_SKYSCRAPER_3'
 		];
 
 	function isEnabled() {
