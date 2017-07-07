@@ -3758,15 +3758,6 @@
         {
           if (_IMAAdsManager && this.adPlaybackStarted)
           {
-            //On iPhone, just calling _IMAAdsManager.resume doesn't resume the video
-            //We want to force the video to reenter fullscreen and play
-            if (OO.isIphone && this.sharedVideoElement)
-            {
-              //resumeAd will only be called if we have exited fullscreen
-              //so this is safe to call
-              this.sharedVideoElement.webkitEnterFullscreen();
-              this.sharedVideoElement.play();
-            }
             _IMAAdsManager.resume();
           }
         };

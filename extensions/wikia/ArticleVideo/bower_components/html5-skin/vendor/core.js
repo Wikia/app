@@ -17151,7 +17151,7 @@ try {
             mobileContinuousPlay = !mobileContinuousPlayDisabled && autoPlay && !OO.allowAutoPlay && this.hasPlayed;
           }
 
-          if ((this.playedAtLeastOnce == false && autoPlay && OO.allowAutoPlay) || mobileContinuousPlay) {
+          if ((this.playedAtLeastOnce == false && autoPlay) || mobileContinuousPlay) {
             this.mb.publish(OO.EVENTS.INITIAL_PLAY, Date.now());
           }
         },
