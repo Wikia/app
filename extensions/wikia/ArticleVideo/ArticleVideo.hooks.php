@@ -11,7 +11,7 @@ class ArticleVideoHooks {
 		if ( !empty( $featuredVideoData ) || !empty( $relatedVideoData ) ) {
 			// html5-skin has hardcoded, relative path to fonts so we can't use the AssetsManager
 			$out->addExtensionStyle(
-				'/extensions/wikia/ArticleVideo/bower_components/html5-skin/build/html5-skin.css'
+				"{$wg->extensionsPath}/wikia/ArticleVideo/bower_components/html5-skin/build/html5-skin.css"
 			);
 
 			\Wikia::addAssetsToOutput( 'ooyala_scss' );

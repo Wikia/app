@@ -7,9 +7,7 @@ var React = require('react'),
     ScrollArea = require('react-scrollbar/dist/no-css'),
 	  CONSTANTS = require('../constants/constants'),
 	  Utils = require('./utils'),
-    ClassNames = require('classnames'),
-    AutoplaySwitch = require('./AutoplaySwitch'),
-    Icon = require('../components/icon');
+    ClassNames = require('classnames');
 
 var VideoQualityPanel = React.createClass({
   getInitialState: function() {

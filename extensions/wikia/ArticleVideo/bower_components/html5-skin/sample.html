@@ -3,30 +3,85 @@
 <head>
   <meta charset="utf-8">
   <!-- this is just for having Cookies helper as a global variable -->
+  <script
+          src="https://code.jquery.com/jquery-2.2.4.js"
+          integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+          crossorigin="anonymous"></script>
   <script src="https://cdn.rawgit.com/js-cookie/js-cookie/8b702508/src/js.cookie.js"></script>
-  <script src="//player.ooyala.com/static/v4/stable/4.10.6/core.min.js"></script>
-  <script src="//player.ooyala.com/static/v4/stable/4.10.6/video-plugin/main_html5.min.js"></script>
-  <script src="//player.ooyala.com/static/v4/stable/4.10.6/video-plugin/osmf_flash.min.js"></script>
-  <script src="//player.ooyala.com/static/v4/stable/4.10.6/video-plugin/bit_wrapper.min.js"></script>
-  <script src="//player.ooyala.com/static/v4/stable/4.10.6/other-plugin/discovery_api.min.js"></script>
-  <script src="/build/html5-skin.min.js"></script>
+  <script src="/vendor/core.js"></script>
+  <script src="/vendor/main_html5.js"></script>
+  <script src="/vendor/google_ima.js"></script>
+  <script src="/build/html5-skin.js"></script>
   <link rel="stylesheet" href="/build/html5-skin.min.css"/>
+  <style>
+    div.oo-player-container .oo-control-bar .oo-icon-svg svg {
+      fill: #fff;
+      filter: none !important
+    }
+
+    div.oo-player-container .oo-icon-svg {
+      font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important
+    }
+  </style>
 </head>
 
 <body>
 <div id='container'></div>
 <script>
+  var vpaidUrl2 =
+	'http://public.adeng.wikia-dev.pl/rubicon-video-mock/vast.php?res=eyeview';
+  var vpaidUrl =
+	'https://pubads.g.doubleclick.net/gampad/ads?output=xml_vast3&env=vp&gdfp_req=1&unviewed_position_start=1&iu=%2F5441%2Fwka.life%2F_project43%2F%2Farticle%2Fpremium%2FFEATURED_VIDEO&sz=640x480&url=http%3A%2F%2Fpreview.project43.wikia.com%2Fwiki%2FDevTemplates%2FPremium%2FFeaturedVideo%2FWithSound&correlator=3343569300699169&cust_params=wsi%3Doxap%26s0%3Dlife%26s0v%3Dlifestyle%26s0c%3Dtech%26s1%3D_project43%26s2%3Darticle%26ab%3D49_162%2C52_170%26ar%3D3%3A4%26artid%3D369%26dmn%3Dwikiacom%26hostpre%3Dpreview%26skin%3Doasis%26lang%3Den%26wpage%3Ddevtemplates%2Fpremium%2Ffeaturedvideo%2Fwithsound%26ref%3Ddirect%26esrb%3Dteen%26geo%3DDE%26pv%3D5%26u%3Dry690akip%26ksgmnt%3D%26top%3D1k%26ah%3D9000%26pos%3DFEATURED_VIDEO%26src%3Dpremium&eid=324123020&sdkv=h.3.173.0&sdki=3c0d&scor=1618551238041221&adk=3826960879&osd=2&frm=0&sdr=1&mpt=Ooyala&mpv=1.0&afvsz=200x200%2C250x250%2C300x250%2C336x280%2C450x50%2C468x60%2C480x70&ged=ve4_td11_tt2_pd11_la11000_er435.102.590.402_vi0.0.927.921_vp100_eb24171';
+  var vastUrl4 =
+    'https://pubads.g.doubleclick.net/gampad/ads?output=xml_vast3&env=vp&gdfp_req=1&unviewed_position_start=1&iu=%2F5441%2Fwka.life%2F_project43%2F%2Farticle%2Fpremium%2FFEATURED_VIDEO&sz=640x480&url=http%3A%2F%2Fsandbox-content.project43.wikia.com%2Fwiki%2FDevTemplates%2FPremium%2FFeaturedVideo%2FWithSound%2FSquareEnixFFXIV&correlator=2851777733645002&cust_params=wsi%3Doxap%26s0%3Dlife%26s0v%3Dlifestyle%26s0c%3Dtech%26s1%3D_project43%26s2%3Darticle%26ab%3D49_162%2C52_170%26ar%3D4%3A3%26artid%3D377%26dmn%3Dwikiacom%26hostpre%3Dsandbox-content%26skin%3Doasis%26lang%3Den%26wpage%3Ddevtemplates%2Fpremium%2Ffeaturedvideo%2Fwithsound%2Fsquareenixffxiv%26ref%3Ddirect%26esrb%3Dteen%26geo%3DDE%26pv%3D8%26u%3Drzhcv5cah%26ksgmnt%3D%26top%3D1k%26ah%3D9000%26pos%3DFEATURED_VIDEO%26src%3Dpremium&sdkv=h.3.173.0&sdki=3c0d&scor=2549233140716982&adk=3826960879&osd=2&frm=0&sdr=1&mpt=Ooyala&mpv=1.0&afvsz=200x200%2C250x250%2C300x250%2C336x280%2C450x50%2C468x60%2C480x70&ged=ve4_td5_tt2_pd5_la5000_er409.49.564.349_vi0.0.927.1121_vp100_eb24171';
+  var vastUrl3 =
+    'https://pubads.g.doubleclick.net/gampad/ads?output=xml_vast3&env=vp&gdfp_req=1&unviewed_position_start=1&iu=%2F5441%2Fwka.life%2F_project43%2F%2Farticle%2Fpremium%2FFEATURED_VIDEO&sz=640x480&url=http%3A%2F%2Fsandbox-content.project43.wikia.com%2Fwiki%2FDevTemplates%2FPremium%2FFeaturedVideo%2FWithSound%2FTruTV1&correlator=1197431428663638&cust_params=wsi%3Doxap%26s0%3Dlife%26s0v%3Dlifestyle%26s0c%3Dtech%26s1%3D_project43%26s2%3Darticle%26ab%3D49_162%2C52_170%26ar%3D4%3A3%26artid%3D375%26dmn%3Dwikiacom%26hostpre%3Dsandbox-content%26skin%3Doasis%26lang%3Den%26wpage%3Ddevtemplates%2Fpremium%2Ffeaturedvideo%2Fwithsound%2Ftrutv1%26ref%3Ddirect%26esrb%3Dteen%26geo%3DDE%26pv%3D2%26u%3Drzhcv5cah%26ksgmnt%3D%26top%3D1k%26ah%3D9000%26pos%3DFEATURED_VIDEO%26src%3Dpremium&sdkv=h.3.173.1&sdki=3c0d&scor=2867217895143347&adk=3826960879&osd=2&frm=0&sdr=1&mpt=Ooyala&mpv=1.0&afvsz=200x200%2C250x250%2C300x250%2C336x280%2C450x50%2C468x60%2C480x70&ged=ve4_td5_tt1_pd5_la5000_er409.49.564.349_vi0.0.927.1121_vp100_eb24171';
+  var vastUrl2 =
+    'https://pubads.g.doubleclick.net/gampad/ads?output=vast&env=vp&gdfp_req=1&impl=s&unviewed_position_start=1&iu=/5441/wka.life/_project43//article/gpt/INCONTENT_PLAYER&sz=640x480&url=http://project43.wikia.com/wiki/SyntheticTests/Video/Porvata&correlator=${Math.floor((Math.random() * 1000000))}&cust_params=wsi%3Doxa1%26s0%3Dlife%26s0v%3Dlifestyle%26s0c%3Dtech%26s1%3D_project43%26s2%3Darticle%26ab%3D49_162%2C52_170%2C78_336%26ar%3D4%3A3%26artid%3D292%26dmn%3Dwikiacom%26hostpre%3Dproject43%26skin%3Doasis%26lang%3Den%26wpage%3Dsynthetictests%2Fvideo%2Fporvata%26ref%3Dwiki%26esrb%3Dteen%26geo%3DPL%26pv%3D18%26u%3Drt7bytiv6%26ksgmnt%3Dojafo8ved%2Cq4i8qs3r8%2Cq30duxjde%2Cq3zprgbkx%2Cqyxhylhrf%2Craidhedna%2Cpu414twb1%2Crr46t9an5%2Crl2hegui5%2Crr5poc67j%2Cqvdwmo61o%2Cqvdw49jg2%2Cqprfa8p3p%2Covdzqycj7%2Cprwz2kv5s%2Cpcm9gcgzz%2Cop7aq2zfx%2Cpd9ev7exz%2Cqs66vni8f%2Cpqaalghgj%2Cpkrshnoxu%2Cpf38wg6re%2Cpf4sbfrh0%2Cp2hq1k779%2Cpvospraqc%2Cp029uyk0h%2Cqtis30s8u%2Cqcyzovv17%2Criy2il967%2Crhsmho8sq%2Cpjzlx7tni%2Cpne63xve2%2Cribpzl54g%2Cqkc5d50sz%2Cpf44o8nke%2Cpfk6l29xp%2Crtscx1q0o%2Crtr88fh0g%2Cpdxhi3xue%2Cp2v8szq5t%2Cqagmtuvug%2Cpx0dmwhg1%2Cphzuuluma%2Cpi75qll5n%2Cpne2mgm0r%2Cpfk7e853z%2Crts5wveys%2Crtr9nihqc%2Cpifwpn5ms%2Cl6dwvwk4q%26top%3D1k%26pos%3DINCONTENT_PLAYER%2CTOP_LEADERBOARD%26src%3Dgpt%26passback%3Dveles&pmad=1&vpos=preroll';
+  var vastUrl =
+    'https://pubads.g.doubleclick.net/gampad/ads?output=xml_vast3&env=vp&gdfp_req=1&unviewed_position_start=1&iu=%2F5441%2Fwka.life%2F_project43%2F%2Farticle%2Fpremium%2FFEATURED_VIDEO&sz=640x480&url=http%3A%2F%2Fproject43.wikia.com%2Fwiki%2FSyntheticTests%2FPremium%2FFeaturedVideo%3FAbTest.FEATURED_VIDEO_AUTOPLAY%3DCONTROL&correlator=1927378681583883&cust_params=wsi%3Doxap%26s0%3Dlife%26s0v%3Dlifestyle%26s0c%3Dtech%26s1%3D_project43%26s2%3Darticle%26ab%3D49_162%2C52_170%2C78_336%26ar%3D4%3A3%26artid%3D355%26dmn%3Dwikiacom%26hostpre%3Dproject43%26skin%3Doasis%26lang%3Den%26wpage%3Dsynthetictests%2Fpremium%2Ffeaturedvideo%26ref%3Ddirect%26esrb%3Dteen%26geo%3DPL%26pv%3D6%26u%3Dryo8cyllq%26ksgmnt%3D%26top%3D1k%26ah%3D9000%26pos%3DFEATURED_VIDEO%26src%3Dpremium&eid=41351088&sdkv=h.3.173.0&sdki=3c0d&scor=264486118542786&adk=3826960879&osd=2&frm=0&sdr=1&mpt=Ooyala&mpv=1.0&afvsz=200x200%2C250x250%2C300x250%2C336x280%2C450x50%2C468x60%2C480x70&ged=ve4_td164_tt158_pd164_la0_er419.141.574.441_vi0.0.941.1000_vp100_eb24171';
   var playerParam = {
     "pcode": "5zb2wxOlZcNCe_HVT3a6cawW298X",
     "playerBrandingId": "26e2e3c1049c4e70ae08a242638b5c40",
     'debug':true,
     "skin": {
-      "config": "wikia.json"
+      "config": "wikia.json",
+      inline: {
+        adScreen: {
+          showControlBar: true,
+          forceShowAdControls: true
+        }
+      }
     },
-    "autoplay": Cookies.get('html5-skin.autoplay') !== '0'
+    "autoplay": Cookies.get('html5-skin.autoplay') !== '0',
+    "google-ima-ads-manager": {
+      all_ads: [
+        {
+          tag_url: vpaidUrl
+        }
+      ],
+      useGoogleAdUI: true,
+      useGoogleCountdown: false,
+      onBeforeAdsManagerStart: function (IMAAdsManager) {
+        // mutes VAST ads from the very beginning
+        // FIXME with VPAID it causes volume controls to be in incorrect state
+        IMAAdsManager.setVolume(0);
+      },
+      onAdRequestSuccess: function (IMAAdsManager) {
+        IMAAdsManager.addEventListener('loaded', function (eventData) {
+          if (eventData.getAdData().vpaid === true) {
+            window.pp.mb.publish(OO.EVENTS.WIKIA.SHOW_AD_TIME_LEFT, false);
+            window.pp.mb.publish(OO.EVENTS.WIKIA.SHOW_AD_FULLSCREEN_TOGGLE, false);
+          }
+        }, false, this);
+      }
+    },
+    "replayAds": false,
+	'initialVolume': 0
   };
   OO.ready(function() {
     window.pp = OO.Player.create('container', '51ZmdxYTE6oaO5aQo9Hqt31Nn9Nave4e', playerParam);
+
   });
 </script>
 

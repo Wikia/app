@@ -63,6 +63,9 @@
     background-repeat: no-repeat;
     background-position: center;
     border-radius: 6px;
+    &:last-child {
+      margin-right: 0;
+    }
   }
 
   .oo-facebook {

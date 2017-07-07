@@ -108,7 +108,7 @@ define('ooyala-player', function () {
 		$('.oo-action-icon').css('display', '');
 		$('.oo-state-screen-info').css('display', '');
 	};
-	
+
 	OoyalaHTML5Player.initHTML5Player = function (videoElementId, playerParams, videoId, onCreate, autoplay, vastUrl, inlineSkinConfig) {
 		var params = {
 				videoId: videoId,
@@ -126,7 +126,23 @@ define('ooyala-player', function () {
 						tag_url: vastUrl
 					}
 				],
-				useGoogleCountdown: true
+				useGoogleAdUI: true,
+				useGoogleCountdown: false,
+				onBeforeAdsManagerStart: function (IMAAdsManager) {
+					// mutes VAST ads from the very beginning
+					// FIXME with VPAID it causes volume controls to be in incorrect state
+					IMAAdsManager.setVolume(params.initialVolume);
+				},
+				onAdRequestSuccess: function (IMAAdsManager) {
+					IMAAdsManager.addEventListener('loaded', function (eventData) {
+						var player = html5Player.player;
+
+						if (eventData.getAdData().vpaid === true) {
+							player.mb.publish(OO.EVENTS.WIKIA.SHOW_AD_TIME_LEFT, false);
+							player.mb.publish(OO.EVENTS.WIKIA.SHOW_AD_FULLSCREEN_TOGGLE, false);
+						}
+					}, false, this);
+				}
 			};
 			params.replayAds = false;
 		}

@@ -17,7 +17,7 @@ var DiscoveryPanel = React.createClass({
 
   getInitialState: function() {
     return {
-      showDiscoveryCountDown: this.props.skinConfig.discoveryScreen.showCountDownTimerOnEndScreen,
+      showDiscoveryCountDown: this.props.skinConfig.discoveryScreen.showCountDownTimerOnEndScreen || this.props.forceCountDownTimer,
       currentPage: 1,
       componentHeight: null
     };
@@ -120,7 +120,7 @@ var DiscoveryPanel = React.createClass({
       'oo-right-button': true,
       'oo-hidden': endAt >= relatedVideos.length
     });
-    var countDownClock = (
+    var countDownClock = this.shouldShowCountdownTimer() ? (
       <div className={discoveryCountDownWrapperStyle}>
         <a className="oo-discovery-count-down-icon-style" onClick={this.handleDiscoveryCountDownClick}>
           <CountDownClock {...this.props} timeToShow={this.props.skinConfig.discoveryScreen.countDownTime}
@@ -128,7 +128,7 @@ var DiscoveryPanel = React.createClass({
           <Icon {...this.props} icon="pause"/>
         </a>
       </div>
-    );
+    ) : null;
 
     // Build discovery content blocks
     var discoveryContentBlocks = [];
@@ -141,7 +141,7 @@ var DiscoveryPanel = React.createClass({
           contentTitleClassName={discoveryContentName}
           onClickAction={this.handleDiscoveryContentClick.bind(this, videosPerPage * (this.state.currentPage - 1) + i)}
         >
-          {(this.shouldShowCountdownTimer() && i === 0 && this.state.currentPage <= 1) ? countDownClock : null}
+          {(countDownClock && i === 0 && this.state.currentPage <= 1) ? countDownClock : null}
         </DiscoverItem>
       );
     }
@@ -175,7 +175,7 @@ DiscoveryPanel.propTypes = {
   skinConfig: React.PropTypes.shape({
     discoveryScreen: React.PropTypes.shape({
       showCountDownTimerOnEndScreen: React.PropTypes.bool,
-      countDownTime: React.PropTypes.string,
+      countDownTime: React.PropTypes.number,
       contentTitle: React.PropTypes.shape({
         show: React.PropTypes.bool
       })
@@ -197,7 +197,7 @@ DiscoveryPanel.defaultProps = {
   skinConfig: {
     discoveryScreen: {
       showCountDownTimerOnEndScreen: true,
-      countDownTime: "10",
+      countDownTime: 10,
       contentTitle: {
         show: true
       }

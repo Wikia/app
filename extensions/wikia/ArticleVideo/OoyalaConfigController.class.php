@@ -106,7 +106,7 @@ class OoyalaConfigController extends WikiaController {
 		'adScreen' => [
 			'showAdMarquee' => true,
 			'showAdCountDown' => true,
-			'showControlBar' => false,
+			'showControlBar' => true,
 		],
 		'shareScreen' => [
 			'shareContent' => [
@@ -183,6 +183,12 @@ class OoyalaConfigController extends WikiaController {
 					'minWidth' => 240,
 				],
 				[
+					'name' => 'adTimeLeft',
+					'location' => 'controlBar',
+					'whenDoesNotFit' => 'keep',
+					'minWidth' => 100,
+				],
+				[
 					'name' => 'live',
 					'location' => 'controlBar',
 					'whenDoesNotFit' => 'keep',
@@ -217,7 +223,7 @@ class OoyalaConfigController extends WikiaController {
 					'location' => 'controlBar',
 					'whenDoesNotFit' => 'keep',
 					'minWidth' => 45,
-				],
+				]
 			],
 		],
 		'icons' => [

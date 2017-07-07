@@ -100,6 +100,21 @@ var globalRequire = require;
 			SET_EMBED_CODE : 'setEmbedCode',
 
 			/**
+			 * An attempt has been made to set the embed code by Ooyala Ads.
+			 * If you are developing a plugin, reset the internal state since the player is switching to a new asset.
+			 * Depending on the context, the handler is called with:
+			 *   <ul>
+			 *     <li>The ID (embed code) of the asset.</li>
+			 *     <li>The ID (embed code) of the asset, with options.</li>
+			 *   </ul>
+			 *
+			 *
+			 * @event OO.EVENTS#SET_EMBED_CODE_AFTER_OOYALA_AD
+			 * @private
+			 */
+			SET_EMBED_CODE_AFTER_OOYALA_AD : 'setEmbedCodeAfterOoyalaAd',
+
+			/**
 			 * The player's embed code has changed. The handler is called with two parameters:
 			 * <ul>
 			 *    <li>The ID (embed code) of the asset.</li>
@@ -260,6 +275,15 @@ var globalRequire = require;
 			 * @event OO.EVENTS#METADATA_FETCHED
 			 */
 			METADATA_FETCHED: 'metadataFetched',
+
+			/**
+			 * The skin metadata, which is set in Backlot, has been retrieved.
+			 * The handler is called with the JSON object containing metadata set in Backlot for the current asset.
+			 * This is used by the skin plug-in to deep merge with the embedded skin config.<br/><br/>
+			 *
+			 * @event OO.EVENTS#SKIN_METADATA_FETCHED
+			 */
+			SKIN_METADATA_FETCHED: 'skinMetadataFetched',
 
 			/**
 			 * The thumbnail metadata needed for thumbnail previews while seeking has been fetched and will be
@@ -3150,6 +3174,7 @@ var globalRequire = require;
 				var _linearAdIsPlaying;
 				var _timeUpdater = null;
 				var _uiContainer = null;
+				var _uiContainerPrevStyle = null;
 
 				//Constants
 				var DEFAULT_IMA_IFRAME_Z_INDEX = 10004;
@@ -3230,6 +3255,7 @@ var globalRequire = require;
 					this.additionalAdTagParameters = null;
 					this.adsRequested = false;
 					this.adsRequestTimeoutRef = null;
+					this.disableFlashAds = false;
 					this.contentEnded = false;
 					this.pauseAdOnClick = null;
 					this.isFullscreen = false;
@@ -3247,13 +3273,16 @@ var globalRequire = require;
 					this.hasPreroll = false;
 
 					this.adPlaybackStarted = false;
-					this.vcPlayRequested = false;
 					this.savedVolume = -1;
 					this.showAdControls = false;
 					this.useGoogleAdUI = false;
 					this.useGoogleCountdown = false;
 					this.useInsecureVpaidMode = false;
 					this.imaIframeZIndex = DEFAULT_IMA_IFRAME_Z_INDEX;
+					// WIKIA CHANGE - START
+					this.onAdRequestSuccess = function () {};
+					this.onBeforeAdsManagerStart = function () {};
+					// WIKIA CHANGE - END
 
 					//flag to track whether ad rules failed to load
 					this.adRulesLoadError = false;
@@ -3382,11 +3411,31 @@ var globalRequire = require;
 						this.useInsecureVpaidMode = metadata.vpaidMode === "insecure";
 					}
 
+					this.disableFlashAds = false;
+					if (metadata.hasOwnProperty("disableFlashAds"))
+					{
+						this.disableFlashAds = metadata.disableFlashAds;
+					}
+
 					this.imaIframeZIndex = DEFAULT_IMA_IFRAME_Z_INDEX;
 					if (metadata.hasOwnProperty("iframeZIndex"))
 					{
 						this.imaIframeZIndex = metadata.iframeZIndex;
 					}
+
+					// WIKIA CHANGE - START
+					this.onAdRequestSuccess = function () {};
+					if (metadata.hasOwnProperty("onAdRequestSuccess"))
+					{
+						this.onAdRequestSuccess = metadata.onAdRequestSuccess;
+					}
+
+					this.onBeforeAdsManagerStart = function () {};
+					if (metadata.hasOwnProperty("onBeforeAdsManagerStart"))
+					{
+						this.onBeforeAdsManagerStart = metadata.onBeforeAdsManagerStart;
+					}
+					// WIKIA CHANGE - END
 
 					//On second video playthroughs, we will not be initializing the ad manager again.
 					//Attempt to create the ad display container here instead of after the sdk has loaded
@@ -3586,6 +3635,18 @@ var globalRequire = require;
 						_throwError("playAd() called but amcAdPod.ad is null.");
 					}
 
+					/*
+					 Set the z-index of IMA's iframe, where IMA ads are displayed, to 10004.
+					 This puts IMA ads in front of the main content element, but under the control bar.
+					 This fixes issues where overlays appear behind the video and for iOS it fixes
+					 video ads not showing.
+					 */
+					var IMAiframe = $("iframe[src^='http://imasdk.googleapis.com/']")[0];
+					if (IMAiframe && IMAiframe.style)
+					{
+						IMAiframe.style.zIndex = this.imaIframeZIndex;
+					}
+
 					if(_usingAdRules && this.currentAMCAdPod.adType == _amc.ADTYPE.UNKNOWN_AD_REQUEST)
 					{
 						//we started our placeholder ad
@@ -3604,7 +3665,7 @@ var globalRequire = require;
 						_amc.ui.adVideoElement.css(INVISIBLE_CSS);
 					}
 
-					if(_usingAdRules)
+					if(_usingAdRules && this.currentAMCAdPod.ad.forced_ad_type !== _amc.ADTYPE.NONLINEAR_OVERLAY)
 					{
 						_tryStartAd();
 					}
@@ -3683,7 +3744,7 @@ var globalRequire = require;
 				 */
 				this.pauseAd = function(ad)
 				{
-					if (_IMAAdsManager)
+					if (_IMAAdsManager && this.adPlaybackStarted)
 					{
 						_IMAAdsManager.pause();
 					}
@@ -3697,52 +3758,18 @@ var globalRequire = require;
 				 */
 				this.resumeAd = function(ad)
 				{
-					if (_IMAAdsManager)
+					if (_IMAAdsManager && this.adPlaybackStarted)
 					{
-						if(this.adPlaybackStarted)
+						//On iPhone, just calling _IMAAdsManager.resume doesn't resume the video
+						//We want to force the video to reenter fullscreen and play
+						if (OO.isIphone && this.sharedVideoElement)
 						{
-							//On iPhone, just calling _IMAAdsManager.resume doesn't resume the video
-							//We want to force the video to reenter fullscreen and play
-							if (OO.isIphone && this.sharedVideoElement)
-							{
-								//resumeAd will only be called if we have exited fullscreen
-								//so this is safe to call
-								this.sharedVideoElement.webkitEnterFullscreen();
-								this.sharedVideoElement.play();
-							}
-							_IMAAdsManager.resume();
+							//resumeAd will only be called if we have exited fullscreen
+							//so this is safe to call
+							this.sharedVideoElement.webkitEnterFullscreen();
+							this.sharedVideoElement.play();
 						}
-						else
-						{
-							_IMAAdsManager.start();
-							this.adPlaybackStarted = true;
-						}
-					}
-				};
-
-				this.requestPause = function()
-				{
-					if (this.adPlaybackStarted)
-					{
-						this.pauseAd();
-					}
-					else
-					{
-						//remove any play requests
-						this.vcPlayRequested = false;
-					}
-				};
-
-				this.requestPlay = function()
-				{
-					if (_IMAAdsManagerInitialized)
-					{
-						this.resumeAd();
-					}
-					else
-					{
-						//store the play command
-						this.vcPlayRequested = true;
+						_IMAAdsManager.resume();
 					}
 				};
 
@@ -3797,7 +3824,7 @@ var globalRequire = require;
 
 				this.adVideoFocused = function()
 				{
-					this.resumeAd();
+					//Required for plugin
 				};
 
 				/**
@@ -3898,11 +3925,18 @@ var globalRequire = require;
 								_endCurrentAd(true);
 							}
 							_IMAAdsManager.init(_uiContainer.clientWidth, _uiContainer.clientHeight, google.ima.ViewMode.NORMAL);
+							// WIKIA CHANGE - START
+							this.onBeforeAdsManagerStart(_IMAAdsManager);
+							// WIKIA CHANGE - END
+
+							// PBW-6610
+							// Traditionally we have relied on the LOADED ad event before calling adsManager.start.
+							// This may have worked accidentally.
+							// IMA Guides and the video suite inspector both call adsManager.start immediately after
+							// adsManager.init
+							// Furthermore, some VPAID ads do not fire LOADED event until adsManager.start is called
+							_IMAAdsManager.start();
 							_IMAAdsManagerInitialized = true;
-							if(this.vcPlayRequested)
-							{
-								this.resumeAd();
-							}
 							OO.log("tryInitadsManager successful: adsManager started")
 						}
 						catch (adError)
@@ -4052,6 +4086,13 @@ var globalRequire = require;
 						return;
 					}
 
+					//at this point we are guaranteed that metadata has been received and the sdk is loaded.
+					//so now we can set whether to disable flash ads or not.
+					if (google && google.ima && google.ima.settings)
+					{
+						google.ima.settings.setDisableFlashAds(this.disableFlashAds);
+					}
+
 					var adsRequest = new google.ima.AdsRequest();
 					if (this.additionalAdTagParameters)
 					{
@@ -4125,6 +4166,7 @@ var globalRequire = require;
 					//These are required by Google for tracking purposes.
 					google.ima.settings.setPlayerVersion(PLUGIN_VERSION);
 					google.ima.settings.setPlayerType(PLAYER_TYPE);
+					google.ima.settings.setLocale(OO.getLocale());
 					if (this.useInsecureVpaidMode)
 					{
 						google.ima.settings.setVpaidMode(google.ima.ImaSdkSettings.VpaidMode.INSECURE);
@@ -4136,15 +4178,6 @@ var globalRequire = require;
 
 					_IMA_SDK_tryInitAdContainer();
 					_trySetupAdsRequest();
-
-					/*
-					 Set the z-index of IMA's iframe, where IMA ads are displayed, to 10004.
-					 This puts IMA ads in front of the main content element, but under the control bar.
-					 This fixes issues where overlays appear behind the video and for iOS it fixes
-					 video ads not showing.
-					 */
-					var IMAiframe = $("iframe[src^='http://imasdk.googleapis.com/']")[0];
-					IMAiframe.style.zIndex = this.imaIframeZIndex;
 				});
 
 				/**
@@ -4192,6 +4225,9 @@ var globalRequire = require;
 					var adErrorEvent = google.ima.AdErrorEvent.Type;
 					_IMA_SDK_destroyAdsLoader();
 					_IMAAdsLoader = new google.ima.AdsLoader(_IMAAdDisplayContainer);
+					// This will enable notifications whenever ad rules or VMAP ads are scheduled
+					// for playback, it has no effect on regular ads
+					_IMAAdsLoader.getSettings().setAutoPlayAdBreaks(false);
 					_IMAAdsLoader.addEventListener(adsManagerEvents.ADS_MANAGER_LOADED, _onAdRequestSuccess, false);
 					_IMAAdsLoader.addEventListener(adErrorEvent.AD_ERROR, _onImaAdError, false);
 				});
@@ -4350,6 +4386,9 @@ var globalRequire = require;
 					var adsSettings = new google.ima.AdsRenderingSettings();
 					adsSettings.restoreCustomPlaybackStateOnAdBreakComplete = false;
 					adsSettings.useStyledNonLinearAds = true;
+					// WIKIA CHANGE - START
+					adsSettings.uiElements = [];
+					// WIKIA CHANGE - END
 					if (this.useGoogleCountdown)
 					{
 						//both COUNTDOWN and AD_ATTRIBUTION are required as per
@@ -4358,6 +4397,9 @@ var globalRequire = require;
 					}
 					adsSettings.useStyledLinearAds = this.useGoogleAdUI;
 					_IMAAdsManager = adsManagerLoadedEvent.getAdsManager(_playheadTracker, adsSettings);
+
+					// WIKIA CHANGE - START
+					this.onAdRequestSuccess(_IMAAdsManager);
 
 					globalRequire([
 						'ext.wikia.adEngine.adContext',
@@ -4368,6 +4410,7 @@ var globalRequire = require;
 							moatVideoTracker.init(_IMAAdsManager, _uiContainer, google.ima.ViewMode.NORMAL, 'ooyala', 'featured-video');
 						}
 					});
+					// WIKIA CHANGE - END
 
 					// When the ads manager is ready, we are ready to apply css changes to the video element
 					// If the sharedVideoElement is not used, mark it as null before applying css
@@ -4390,7 +4433,8 @@ var globalRequire = require;
 					var eventType = google.ima.AdEvent.Type;
 					// Add listeners to the required events.
 					_IMAAdsManager.addEventListener(eventType.CLICK, _IMA_SDK_onAdClicked, false, this);
-					_IMAAdsManager.addEventListener(eventType.AD_ERROR, _onImaAdError, false, this);
+					_IMAAdsManager.addEventListener(google.ima.AdErrorEvent.Type.AD_ERROR, _onImaAdError, false, this);
+					_IMAAdsManager.addEventListener(google.ima.AdEvent.Type.AD_BREAK_READY, _IMA_SDK_onAdBreakReady);
 					_IMAAdsManager.addEventListener(eventType.CONTENT_PAUSE_REQUESTED, _IMA_SDK_pauseMainContent, false, this);
 					_IMAAdsManager.addEventListener(eventType.CONTENT_RESUME_REQUESTED, _IMA_SDK_resumeMainContent, false, this);
 
@@ -4425,6 +4469,41 @@ var globalRequire = require;
 				});
 
 				/**
+				 * Fired when IMA SDK has a VMAP or Ad Rules ad that is ready for playback.
+				 * @private
+				 * @method GoogleIMA#_IMA_SDK_onAdBreakReady
+				 * @param adEvent - Event data from IMA SDK.
+				 */
+				var _IMA_SDK_onAdBreakReady = privateMember(function(adEvent)
+				{
+					OO.log("GOOGLE_IMA:: Ad Rules ad break ready!", adEvent);
+					// Proceed as usual if we're not using ad rules
+					if (!_usingAdRules)
+					{
+						_IMAAdsManager.start();
+						return;
+					}
+					// Mimic AMC behavior and cancel any existing non-linear ads before playing the next ad.
+					// Note that there is a known issue in the IMA SDK that prevents the COMPLETE
+					// event from being fired when a non-linear ad is removed. This is also a workaround
+					// for that issue.
+					if (this.currentAMCAdPod && this.currentNonLinearIMAAd)
+					{
+						this.cancelAd(this.currentAMCAdPod);
+					}
+					// [PLAYER-319]
+					// IMA will not initialize ad rules overlays unless the ad container is already rendered and
+					// has enough room for the overlay by the time the ad is ready to play. As a workaround, we expand
+					// the ad container and make sure it's rendered, while at the same time hiding it visually.
+					// We store the element's current style in order to restore it afterwards.
+					_uiContainerPrevStyle = _uiContainer.getAttribute("style") || "";
+					_uiContainer.setAttribute("style", "display: block; width: 100%; height: 100%; visibility: hidden; pointer-events: none;");
+					_onSizeChanged();
+					// Resume ads manager operation
+					_IMAAdsManager.start();
+				});
+
+				/**
 				 * Callback when IMA SDK detect an ad click. This relays it to the Ad Manager Controller.
 				 * @private
 				 * @method GoogleIMA#_IMA_SDK_onAdClicked
@@ -4449,10 +4528,10 @@ var globalRequire = require;
 					if (_usingAdRules)
 					{
 						var adData =
-						{
-							position_type: AD_RULES_POSITION_TYPE,
-							forced_ad_type: _amc.ADTYPE.LINEAR_VIDEO
-						};
+							{
+								position_type: AD_RULES_POSITION_TYPE,
+								forced_ad_type: _amc.ADTYPE.LINEAR_VIDEO
+							};
 						//we do not want to force an ad play with preroll ads
 						if(_playheadTracker.currentTime > 0)
 						{
@@ -4543,16 +4622,15 @@ var globalRequire = require;
 					switch (adEvent.type)
 					{
 						case eventType.LOADED:
+							_resetUIContainerStyle();
+
 							if (ad.isLinear())
 							{
 								_amc.focusAdVideo();
 							}
-							else
-							{
-								this.resumeAd();
-							}
 							break;
 						case eventType.STARTED:
+							this.adPlaybackStarted = true;
 							if(ad.isLinear())
 							{
 								_linearAdIsPlaying = true;
@@ -4580,6 +4658,13 @@ var globalRequire = require;
 								this.videoControllerWrapper.raiseTimeUpdate(this.getCurrentTime(), this.getDuration());
 								_startTimeUpdater();
 							}
+							// Non-linear ad rules or VMAP ads will not be started by _tryStartAd()
+							// because there'll be no AMC ad pod. We start them here after the time update event
+							// in order to prevent the progress bar from flashing
+							if (_usingAdRules && !ad.isLinear())
+							{
+								_startNonLinearAdRulesOverlay();
+							}
 							break;
 						case eventType.RESUMED:
 							if (this.videoControllerWrapper)
@@ -4593,6 +4678,7 @@ var globalRequire = require;
 						case eventType.USER_CLOSE:
 						case eventType.SKIPPED:
 						case eventType.COMPLETE:
+							this.adPlaybackStarted = false;
 							if (this.videoControllerWrapper && (ad && ad.isLinear()))
 							{
 								_stopTimeUpdater();
@@ -4664,6 +4750,21 @@ var globalRequire = require;
 						default:
 							break;
 					}
+				});
+
+				/**
+				 * Will restore the original style of the UI container if one exists.
+				 * This is used in a workaround for PLAYER-319.
+				 * @private
+				 * @method GoogleIMA#_resetUIContainerStyle
+				 */
+				var _resetUIContainerStyle = privateMember(function()
+				{
+					if (_uiContainer && typeof _uiContainerPrevStyle !== 'undefined' && _uiContainerPrevStyle !== null)
+					{
+						_uiContainer.setAttribute("style", _uiContainerPrevStyle);
+					}
+					_uiContainerPrevStyle = null;
 				});
 
 				/**
@@ -4872,6 +4973,24 @@ var globalRequire = require;
 				});
 
 				/**
+				 * Should be called when IMA has shown a non-linear ad rules ad.
+				 * Forcing this dummy ad through the AMC queue will raise the necessary
+				 * events for Ad Impression and it will also let the skin know that it
+				 * needs to show the ads container.
+				 * @private
+				 * @method GoogleIMA#_startNonLinearAdRulesOverlay
+				 */
+				var _startNonLinearAdRulesOverlay = privateMember(function()
+				{
+					var adData = {
+						position_type: AD_RULES_POSITION_TYPE,
+						forced_ad_type: _amc.ADTYPE.NONLINEAR_OVERLAY
+					};
+					_checkCompanionAds(this.currentIMAAd);
+					_amc.forceAdToPlay(this.name, adData, _amc.ADTYPE.NONLINEAR_OVERLAY);
+				});
+
+				/**
 				 * Stop overlay and prepare the ad manager to be able to request another ad.
 				 * @private
 				 * @method GoogleIMA#_stopNonLinearOverlay
@@ -4880,8 +4999,11 @@ var globalRequire = require;
 				var _stopNonLinearOverlay = privateMember(function(adId)
 				{
 					_amc.notifyNonlinearAdEnded(adId);
-					_resetAdsState();
 
+					if (!_usingAdRules)
+					{
+						_resetAdsState();
+					}
 				});
 
 				/**
@@ -4965,6 +5087,7 @@ var globalRequire = require;
 						}
 					}
 
+					_resetUIContainerStyle();
 					this.currentIMAAd = null;
 					this.adPlaybackStarted = false;
 				});
@@ -5164,7 +5287,7 @@ var globalRequire = require;
 			 */
 			this.play = function()
 			{
-				_ima.requestPlay();
+				_ima.resumeAd();
 			};
 
 			/**
@@ -5174,7 +5297,7 @@ var globalRequire = require;
 			 */
 			this.pause = function()
 			{
-				_ima.requestPause();
+				_ima.pauseAd();
 			};
 
 			/**
