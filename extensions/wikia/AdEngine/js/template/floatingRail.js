@@ -18,7 +18,7 @@ define('ext.wikia.adEngine.template.floatingRail', [
 		adsInRail = 2,
 		biggestAdSize = 600,
 		globalNavHeight = $('#globalNavigation').height(),
-		margin = 10,
+		margin = 15,
 		medrecDefaultSize = 250,
 		logGroup = 'ext.wikia.adEngine.template.floatingRail',
 		railWidth = 300,

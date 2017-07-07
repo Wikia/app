@@ -340,7 +340,10 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 /** Skyscrapers **/
 @media #{$breakpoint-small-plus-up} {
 	#WikiaRail.left-skyscraper-3-present {
-		padding-bottom: 660px;
+		padding-bottom: 610px;
+	}
+	#WikiaRail.small-left-skyscraper-3-present {
+		padding-bottom: 260px;
 	}
 }
 
