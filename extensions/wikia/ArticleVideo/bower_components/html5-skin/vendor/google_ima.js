@@ -3279,6 +3279,7 @@
           this.imaIframeZIndex = DEFAULT_IMA_IFRAME_Z_INDEX;
           // WIKIA CHANGE - START
           this.onAdRequestSuccess = function () {};
+          this.onBeforeAdsManagerStart = function () {};
           // WIKIA CHANGE - END
 
           //flag to track whether ad rules failed to load
@@ -3425,6 +3426,12 @@
           if (metadata.hasOwnProperty("onAdRequestSuccess"))
           {
             this.onAdRequestSuccess = metadata.onAdRequestSuccess;
+          }
+
+          this.onBeforeAdsManagerStart = function () {};
+          if (metadata.hasOwnProperty("onBeforeAdsManagerStart"))
+          {
+            this.onBeforeAdsManagerStart = metadata.onBeforeAdsManagerStart;
           }
           // WIKIA CHANGE - END
 
@@ -3916,6 +3923,10 @@
                 _endCurrentAd(true);
               }
               _IMAAdsManager.init(_uiContainer.clientWidth, _uiContainer.clientHeight, google.ima.ViewMode.NORMAL);
+              // WIKIA CHANGE - START
+              this.onBeforeAdsManagerStart(_IMAAdsManager);
+              // WIKIA CHANGE - END
+
               // PBW-6610
               // Traditionally we have relied on the LOADED ad event before calling adsManager.start.
               // This may have worked accidentally.

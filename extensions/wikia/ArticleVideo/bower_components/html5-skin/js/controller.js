@@ -675,8 +675,6 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
     },
 
     onPlaybackReady: function(event) {
-      var adVideo = this.state.mainVideoInnerWrapper.find('video[title=Advertisement]');
-      adVideo.attr({ muted: 'muted', autoplay: 'autoplay' });
       if (this.state.afterOoyalaAd) {
         this.state.screenToShow = CONSTANTS.SCREEN.LOADING_SCREEN;
       } else {
