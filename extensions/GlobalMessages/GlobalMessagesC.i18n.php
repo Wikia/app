@@ -329,7 +329,7 @@ Please confirm that you really want to recreate this article.",
 	'community' => 'Community',
 	'contris_s' => 'Contributions',
 	'cockpit_hide' => 'Hide cockpit',
-	'create-account-new' => 'Create your Fandom Account',
+	'create-account-new' => 'Create your FANDOM Account',
 );
 
 $messages['qqq'] = array(
@@ -6239,7 +6239,7 @@ Bitte bestätige, dass du diese Seite tatsächlich neu anlegen möchtest.",
 	'createpage' => 'Neue Seite anlegen',
 	'choose_reason' => 'Wähle einen Grund',
 	'community' => 'Community',
-	'create-account-new' => 'Benutzerkonto bei Fandom erstellen',
+	'create-account-new' => 'Benutzerkonto bei FANDOM erstellen',
 	'cockpit_hide' => 'Cockpit verstecken',
 	'corporatepage-company-info-headline' => 'Firmeninformationen',
 	'corporatepage-create-button' => 'Starte ein Wiki',
@@ -7480,16 +7480,16 @@ Ahora puedes [[Special:UserLogin|iniciar sesión]] y colaborar en el wiki.',
 
 ¡Bienvenido!
 
-Con miles de comunidades en Fandom, hay varias formas de divertirte.
+Con miles de comunidades en FANDOM, hay varias formas de divertirte.
 
 Pasa algún tiempo conociendo la plataforma, leyendo páginas interesantes, escribiendo contenido sobre tus temas favoritos o conociendo a otros miembros de la comunidad.
 
-El equipo comunitario de Fandom",
+El equipo comunitario de FANDOM",
 	'confirmemail_error' => 'Algo salió mal al guardar su confirmación.',
-	'confirmemail_subject' => 'Por favor, confirma tu cuenta de Fandom',
+	'confirmemail_subject' => 'Por favor, confirma tu cuenta de FANDOM',
 	'confirmemail_body' => 'Hola $2,
 
-¡Te damos la bienvenida a Fandom!
+¡Te damos la bienvenida a FANDOM!
 
 Por favor, tómate un minuto para activar tu nueva cuenta: $3
 
@@ -7499,10 +7499,10 @@ Echa un vistazo a la actividad reciente de la comunidad en la que acabas de part
 
 Explora nuestras comunidades sobre videojuegos, entretenimiento o cualquier otro tema y diviértete descubriendo cosas nuevas.
 
-Descubre qué sucede en Fandom y conoce a otros usuarios en nuestra Comunidad Central.
+Descubre qué sucede en FANDOM y conoce a otros usuarios en nuestra Comunidad Central.
 
 ¡Diviértete!
-- Equipo comunitario de Fandom
+- Equipo comunitario de FANDOM
 
 ___________________________________________
 * Si necesitas ayuda o consejos, visita nuestra Comunidad Central http://comunidad.wikia.com
@@ -7555,7 +7555,7 @@ Este código de confirmación expirará el $4.',
 	'create_an_account' => 'Crear una cuenta',
 	'createpage' => 'Crea una página',
 	'choose_reason' => 'Elegir el motivo',
-	'create-account-new' => 'Crea tu cuenta de Fandom',
+	'create-account-new' => 'Crea tu cuenta de FANDOM',
 	'cockpit_hide' => 'Ocultar cabina',
 	'community' => 'Comunidad',
 	'corporatepage-company-info-headline' => 'Información de la compañía',
@@ -8886,10 +8886,10 @@ Un nouveau code peut être envoyé via [[Special:ConfirmEmail|cette page]].',
 	'confirmemail_success' => 'Votre adresse e-mail a été confirmée. Vous pouvez maintenant vous [[Special:UserLogin|connecter]] et profiter du wiki.',
 	'confirmemail_loggedin' => 'Votre adresse e-mail est maintenant confirmée.',
 	'confirmemail_error' => 'Un problème est survenu lors de l’enregistrement de votre confirmation.',
-	'confirmemail_subject' => 'Veuillez confirmer votre compte Fandom',
+	'confirmemail_subject' => 'Veuillez confirmer votre compte FANDOM',
 	'confirmemail_body' => "Bonjour $2,
 
-Merci de vous êtes inscrit sur Fandom !
+Merci de vous êtes inscrit sur FANDOM !
 
 Veuillez prendre une minute pour activer votre nouveau compte en confirmant votre adresse e-mail : $3.
 
@@ -8899,14 +8899,14 @@ Regardez l'activité récente de la communauté que vous venez de rejoindre ! Co
 
 Découvrez quelques wikis de jeux vidéo, divertissement et mode de vie sur http://fr.wikia.com/explore-fr.
 
-Rencontrez la communauté Fandom, restez informé des derniers événements et trouvez de l'aide, tout cela sur le Centre des communautés (http://communaute.wikia.com/wiki/Centre_des_communautés).
+Rencontrez la communauté FANDOM, restez informé des derniers événements et trouvez de l'aide, tout cela sur le Centre des communautés (http://communaute.wikia.com/wiki/Centre_des_communautés).
 
 Bonnes modifications !
 
-— L’équipe Fandom
+— L’équipe FANDOM
 
 ___________________________________________
-* Pour voir les derniers événements sur Fandom, rendez-vous sur http://communaute.wikia.com
+* Pour voir les derniers événements sur FANDOM, rendez-vous sur http://communaute.wikia.com
 * Vous souhaitez contrôler les e-mails que vous recevez ? Rendez-vous sur : {{fullurl:{{ns:special}}:Preferences}}.",
 	'confirmemail_body_changed' => 'Quelqu’un, probablement vous, à partir de l’adresse IP $1,
 a modifié l’adresse e-mail associée au compte « $2 » de {{SITENAME}}
@@ -8962,7 +8962,7 @@ Veuillez confirmer que vous désirez réellement recréer cette page.",
 	'create_an_account' => "S'inscrire",
 	'createpage' => 'Créer une nouvelle page',
 	'choose_reason' => 'Choisissez la raison',
-	'create-account-new' => 'Créer un compte Fandom',
+	'create-account-new' => 'Créer un compte FANDOM',
 	'cockpit_hide' => 'Masquer cockpit',
 	'community' => 'Communauté',
 	'corporatepage-company-info-headline' => 'Informations sur la société',
@@ -13065,7 +13065,7 @@ Per favore, accedi a $4
 
 Se non hai bisogno di questo account, puoi ignorare questo messaggio o contattare community@fandom.com per qualsiasi domanda.
 
-- Supporto della community di Fandom
+- Supporto della community di FANDOM
 
 ___________________________________________
 * Trova aiuto e consigli sulla Wiki della Community: http://it.community.wikia.com/
@@ -13164,13 +13164,13 @@ Dovrai ricevere un nuovo codice per poter confermare il tuo account.
 
 Benvenuto!
 
-Con migliaia di wiki su Fandom, ci sono molti modi per divertirsi qui.
+Con migliaia di wiki su FANDOM, ci sono molti modi per divertirsi qui.
 
-Passa un po' di tempo per conoscere Fandom sfogliando le nostre [[w:it:Aiuto:Contenuti|pagine d'aiuto]], leggendo pagine interessanti, scrivendo dei tuoi argomenti preferiti o facendo la conoscenza degli altri utenti.
+Passa un po' di tempo per conoscere FANDOM sfogliando le nostre [[w:it:Aiuto:Contenuti|pagine d'aiuto]], leggendo pagine interessanti, scrivendo dei tuoi argomenti preferiti o facendo la conoscenza degli altri utenti.
 
-Il team della community di Fandom",
+Il team della community di FANDOM",
 	'confirmemail_error' => 'Qualcosa è andato storto durante il salvataggio della tua conferma.',
-	'confirmemail_subject' => 'Conferma il tuo account Fandom, per favore',
+	'confirmemail_subject' => 'Conferma il tuo account FANDOM, per favore',
 	'confirmemail_body' => 'Qualcuno, probabilmente tu stesso, dall\'indirizzo IP $1, ha registrato l\'account "$2" su {{SITENAME}} indicando questo indirizzo e-mail.
 
 Per confermare che l\'account ti appartiene veramente e attivare le funzioni relative all\'invio di e-mail su {{SITENAME}}, apri il collegamento seguente con il tuo browser:
@@ -13234,7 +13234,7 @@ Per favore, conferma che desideri veramente ricreare questa pagina.",
 	'compare-revision-not-exists' => 'La revisione che hai specificato non esiste.',
 	'createpage' => 'Crea una nuova pagina',
 	'create_an_account' => 'Registrati',
-	'create-account-new' => 'Crea il tuo account Fandom',
+	'create-account-new' => 'Crea il tuo account FANDOM',
 	'community' => 'Community',
 	'contris' => 'Contributi',
 	'contris_s' => 'Contributi',
@@ -13671,7 +13671,7 @@ Fandomにある何千ものコミュニティでは、様々な体験を楽し�
 
 ウィキア・コミュニティ・チーム",
 	'confirmemail_error' => '確認情報を保存する際にエラーが発生しました。',
-	'confirmemail_subject' => 'Fandom アカウントの確認をお願いします',
+	'confirmemail_subject' => 'FANDOM アカウントの確認をお願いします',
 	'confirmemail_body' => 'こんにちは、$2 さん
 
 Fandomへご登録いただき、ありがとうございます！
@@ -21205,7 +21205,7 @@ Bevestig dat u de pagina opnieuw wilt aanmaken.',
 	'community' => 'Community',
 	'contris_s' => 'Contributions',
 	'cockpit_hide' => 'Hide cockpit',
-	'create-account-new' => 'Create your Fandom Account',
+	'create-account-new' => 'Create your FANDOM Account',
 );
 
 $messages['nl-informal'] = array(
@@ -23495,13 +23495,13 @@ O mailer retornou: $1',
 
 Bem-vindo!
 
-Com milhares de comunidades no Fandom, existem muitas maneiras de se divertir por aqui. 
+Com milhares de comunidades no FANDOM, existem muitas maneiras de se divertir por aqui. 
 
-Passe um tempo conhecendo melhor o Fandom visitando nossas [[w:c:help:Ajuda:Conteúdos|páginas de ajuda]], lendo artigos interessantes, escrevendo sobre seus assuntos favoritos, ou conhecendo outros membros da comunidade.
+Passe um tempo conhecendo melhor o FANDOM visitando nossas [[w:c:help:Ajuda:Conteúdos|páginas de ajuda]], lendo artigos interessantes, escrevendo sobre seus assuntos favoritos, ou conhecendo outros membros da comunidade.
 
-Time de Comunidade Fandom",
+Time de Comunidade FANDOM",
 	'confirmemail_error' => 'Alguma coisa correu mal ao guardar a sua confirmação.',
-	'confirmemail_subject' => 'Por favor confirme sua conta Fandom',
+	'confirmemail_subject' => 'Por favor confirme sua conta FANDOM',
 	'confirmemail_body' => 'Alguém, provavelmente você, com o endereço de IP $1,
 registrou uma conta "$2" com este endereço de e-mail em {{SITENAME}}.
 
@@ -23572,7 +23572,7 @@ Por favor, confirme que realmente deseja recriar esta página.",
 	'create_an_account' => 'Inscrever-se',
 	'createpage' => 'Crie um novo artigo',
 	'choose_reason' => 'Escolha o motivo',
-	'create-account-new' => 'Crie a sua conta no Fandom',
+	'create-account-new' => 'Crie a sua conta no FANDOM',
 	'contris_s' => 'Contribuições',
 	'categories-summary' => '',
 	'comma-separator' => ',&#32;',
