@@ -110,8 +110,13 @@ require([
 		inContent.init('INCONTENT_PLAYER');
 	}
 
+	function premiumLayoutEnabled() {
+		return (context.opts.adMix3Enabled || context.opts.premiumAdLayoutEnabled);
+	}
+
 	win.addEventListener('wikia.uap', bottomLeaderboard.init);
-	if (context.opts.adMix3Enabled && context.slots.adMixToUnblock.indexOf('BOTTOM_LEADERBOARD') >= 0) {
+
+	if (premiumLayoutEnabled() && context.slots.premiumAdLayoutSlotsToUnblock.indexOf('BOTTOM_LEADERBOARD') >= 0) {
 		win.addEventListener('wikia.not_uap', bottomLeaderboard.init);
 	}
 
