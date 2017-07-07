@@ -114,11 +114,11 @@ class WikiaMapsHooks {
 			if ( self::isSingleMapPage() ) {
 				global $wgIntMapConfig;
 
-				$mapId = explode( '/', $title->getText() )[1];
+				$mapId = explode( '/', $title->getText() )[1]; // the page name (without ns prefix) is build like this: Maps/23414
 				$model = new WikiaMaps( $wgIntMapConfig );
 				$map = $model->getMapByIdFromApi( $mapId );
 
-				if ( $map->deleted == WikiaMaps::MAP_DELETED ) {
+				if ( $map->deleted === WikiaMaps::MAP_DELETED ) {
 					$label = wfMessage( 'wikia-interactive-maps-undelete-map' )->escaped();
 					$buttons[] = new Button( $label, '', '#', 'wds-is-secondary', 'undeleteMap' );
 				} else {
