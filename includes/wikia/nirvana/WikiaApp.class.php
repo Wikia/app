@@ -65,12 +65,6 @@ class WikiaApp {
 	public $wg = null;
 
 	/**
-	 * global MW functions helper accessor
-	 * @var $wf WikiaFunctionWrapper
-	 */
-	public $wf = null;
-
-	/**
 	 * this variable is use for local cache of view. Used by getViewOnce, renderViewOnce
 	 */
 
@@ -81,10 +75,9 @@ class WikiaApp {
 	 * @param WikiaRegistry $globalRegistry
 	 * @param WikiaRegistry $localRegistry
 	 * @param WikiaHookDispatcher $hookDispatcher
-	 * @param WikiaFunctionWrapper $functionWrapper
 	 */
 
-	public function __construct(WikiaRegistry $globalRegistry = null, WikiaRegistry $localRegistry = null, WikiaHookDispatcher $hookDispatcher = null, WikiaFunctionWrapper $functionWrapper = null) {
+	public function __construct( WikiaRegistry $globalRegistry = null, WikiaRegistry $localRegistry = null, WikiaHookDispatcher $hookDispatcher = null ) {
 
 		if(!is_object($globalRegistry)) {
 			$globalRegistry = (new WikiaGlobalRegistry);
@@ -98,16 +91,11 @@ class WikiaApp {
 			$hookDispatcher = (new WikiaHookDispatcher);
 		}
 
-		if(!is_object($functionWrapper)) {
-			$functionWrapper = (new WikiaFunctionWrapper);
-		}
-
 		$this->localRegistry = $localRegistry;
 		$this->hookDispatcher = $hookDispatcher;
 
 		// set helper accessors
 		$this->wg = $globalRegistry;
-		$this->wf = $functionWrapper;
 
 		if ( !is_object( $this->wg ) ) {
 			// can't use Wikia::log or wfDebug or wfBacktrace at this point (not defined yet)
@@ -243,22 +231,6 @@ class WikiaApp {
 	 */
 	public function getLocalRegistry() {
 		return $this->localRegistry;
-	}
-
-	/**
-	 * get global function wrapper
-	 * @return WikiaFunctionWrapper
-	 */
-	public function getFunctionWrapper() {
-		return $this->wf;
-	}
-
-	/**
-	 * set global function wrapper
-	 * @param WikiaFunctionWrapper $functionWrapper
-	 */
-	public function setFunctionWrapper(WikiaFunctionWrapper $functionWrapper) {
-		$this->wf = $functionWrapper;
 	}
 
 	/**

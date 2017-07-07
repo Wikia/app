@@ -1,7 +1,6 @@
 <?
 /**
  * @var $wg WikiaGlobalRegistry
- * @var $wf WikiaFunctionWrapper
  * @var $parseErrors array
  * @var $wikiaMenuNodes array
  * @var $wikiMenuNodes array
@@ -10,10 +9,10 @@
  * @var $showVideoLink boolean
  */
 ?>
-<header class="wkPrfHead up"><?= wfMessage('wikiamobile-menu')->escaped() ?></header>
+<header class="wkPrfHead up"><?= wfMessage( 'wikiamobile-menu' )->escaped(); ?></header>
 <nav id=wkNavMenu<? if ( !empty( $parseErrors ) ) :?> data-error="<?= implode( '; ', $parseErrors ) ;?>"<? endif ;?>>
 	<header>
-		<button id=wkNavBack class=wkBtn><?= wfMessage( 'wikiamobile-back' )->text(); ?></button>
+		<button id=wkNavBack class=wkBtn><?= wfMessage( 'wikiamobile-back' )->escaped(); ?></button>
 		<h1 class='collSec addChev'>
 			<a id=wkNavLink></a>
 			<span class=cld></span>
