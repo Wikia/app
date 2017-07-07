@@ -38,33 +38,47 @@ define('ext.wikia.adEngine.template.floatingRail', [
 			// Check if medrec has hidden class for handling tablet mode
 			if (scrollTop <= startPosition || $medrec.hasClass('hidden')) {
 				$rail.css({
-					position: 'relative',
+					position: 'static',
+					paddingTop: '0px',
 					top: '0px',
 					width: railWidth + 'px'
 				});
 			} else if (scrollTop > startPosition && scrollTop < stopPosition) {
 				$rail.css({
 					position: 'fixed',
+					paddingTop: '0px',
 					top: globalNavHeight + margin + 'px',
 					width: railWidth + 'px'
 				});
 			} else if (scrollTop >= stopPosition) {
 				$rail.css({
-					position: 'absolute',
-					top: floatingSpace + 2 * globalNavHeight + 'px',
+					position: 'static',
+					paddingTop: floatingSpace + 'px',
+					top: '0px',
 					width: railWidth + 'px'
 				});
 			}
 		}, 50);
 
+	function getChildrenHeight() {
+		var height = 0;
+
+		$rail.children().each(function () {
+			height += $(this).height();
+		});
+
+		return height;
+	}
+
 	function getAvailableSpace() {
 		if (!availableSpace) {
 			availableSpace =
-				$wikiaMainContent.height() - $railWrapper.height() + medrecDefaultSize - adsInRail * biggestAdSize;
+				$wikiaMainContent.height() - getChildrenHeight() + medrecDefaultSize - adsInRail * biggestAdSize;
 			availableSpace = Math.max(0, availableSpace);
 
 			log(['getAvailableSpace', availableSpace], 'debug', logGroup);
 		}
+
 		return availableSpace;
 	}
 
