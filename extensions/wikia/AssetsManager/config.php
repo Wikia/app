@@ -2545,41 +2545,6 @@ $config['portable_infobox_builder_preview_scss'] = [
 	],
 ];
 
-$config['flags_view_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis', 'monobook' ],
-	'assets' => [
-		'//extensions/wikia/Flags/styles/Flags.scss',
-		'//extensions/wikia/Flags/styles/FlagsViewEditEntryPoint.scss',
-	],
-];
-
-$config['flags_editform_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'monobook' ],
-	'assets' => [
-		'//extensions/wikia/Flags/scripts/FlagsGlobalShortcuts.js',
-		'//extensions/wikia/Flags/scripts/FlagsModal.js',
-	],
-];
-
-$config['flags_special_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis', 'monobook' ],
-	'assets' => [
-		'//extensions/wikia/Flags/specials/styles/SpecialFlags.scss',
-	],
-];
-
-$config['flags_special_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'monobook' ],
-	'assets' => [
-		'//extensions/wikia/Flags/specials/scripts/SpecialFlags.js',
-		'//extensions/wikia/Flags/specials/scripts/FlagEditForm.js',
-	],
-];
-
 $config['paid_asset_drop_desktop_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
