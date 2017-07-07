@@ -10,11 +10,11 @@ class JsonFormatService extends WikiaObject {
 	private $htmlParser;
 	private $requestContext;
 
-	public function __construct( HtmlParser $htmlParser = null ) {
+	public function __construct() {
 		parent::__construct();
 
 		$this->requestContext = new RequestContext();
-		$this->htmlParser = $htmlParser ?? new HtmlParser();
+		$this->htmlParser = new HtmlParser();
 	}
 
 	/**
