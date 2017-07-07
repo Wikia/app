@@ -307,7 +307,6 @@ $wgHooks['ResourceLoaderMakeQuery'][]                    = "ResourceLoaderHooks:
 $wgHooks['ResourceLoaderModifyMaxAge'][]                 = "ResourceLoaderHooks::onResourceLoaderModifyMaxAge";
 
 // services
-$wgAutoloadClasses['Service']  =  $IP.'/includes/wikia/services/Service.php';
 $wgAutoloadClasses['ApiService']  =  $IP.'/includes/wikia/services/ApiService.class.php';
 $wgAutoloadClasses['ArticleService'] = $IP.'/includes/wikia/services/ArticleService.class.php';
 $wgAutoloadClasses['AvatarService'] = $IP.'/includes/wikia/services/AvatarService.class.php';

@@ -4,7 +4,7 @@
 	 * Category service
 	 * @author wladek
 	 */
-	class CategoryService extends Service {
+	class CategoryService {
 		const CACHE_VERSION = 1;
 
 		/**

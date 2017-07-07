@@ -1,5 +1,5 @@
 <?php
-class UserContribsProviderService extends Service {
+class UserContribsProviderService {
 
 	public function get( $limit = 10, User $user = null ) {
 		wfProfileIn(__METHOD__);

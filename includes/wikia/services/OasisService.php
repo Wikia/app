@@ -1,5 +1,5 @@
 <?php
-class OasisService extends Service {
+class OasisService {
 
 	public function getRandomData($howMany = 1000) {
 		$data = array();
