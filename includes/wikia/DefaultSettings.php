@@ -635,6 +635,7 @@ include_once( "$IP/extensions/wikia/Security/Security.setup.php" );
 include_once( "$IP/extensions/wikia/CommunityHeader/CommunityHeader.setup.php" );
 include_once( "$IP/extensions/wikia/PageHeader/PageHeader.setup.php" );
 include_once( "$IP/extensions/wikia/Bucky/Bucky.setup.php" );
+include_once( "$IP/extensions/wikia/QuickTools/QuickTools.setup.php" );
 
 /**
  * @name $wgSkipSkins
@@ -933,12 +934,6 @@ $wgMaxCommentsToMove = 50;
 $smwgUseExternalDB = false;
 
 /**
- * Show the performance-stats from 'loadtime' cookie in the footer-toolbar
- * in the new skin for Staff.
- */
-$wgEnableShowPerformanceStatsExt = true;
-
-/**
  * Default value for AB testing array
  */
 
@@ -1137,12 +1132,6 @@ $wgWAMPageConfig = array(
 		'Top lifestyle wikis',
 	),
 );
-
-/**
- * @name $wgEnableQuickToolsExt
- * Enables QuickTools extension
- */
-$wgEnableQuickToolsExt = true;
 
 /**
  * @name $wgPhalanxService
