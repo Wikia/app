@@ -18,6 +18,8 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 
 	const WIKIA_MOBILE_SKIN_NAME = 'wikiamobile';
 
+	// yes, it is ugly, but we need this information in hooks where we don't have access to this controller or response
+	// and we don't want to do separate call to api to get this information from model
 	public static $mapDeleted = false;
 
 	/**
