@@ -8,10 +8,10 @@ class SiteWideMessagesController extends WikiaController {
 	private function shouldShowSiteWideMessage() {
 		global $wgEnableArticleFeaturedVideo;
 
-		$articleTitle = Title::newFromID( $this->getVal( 'articleId' ) );
-		if ( !is_null( $articleTitle ) ) {
+		$title = Title::newFromID( $this->getVal( 'articleId' ) );
+		if ( !is_null( $title ) ) {
 			$isFeaturedVideoEmbedded = !empty( $wgEnableArticleFeaturedVideo ) &&
-				ArticleVideoContext::isFeaturedVideoEmbedded( $articleTitle->getPrefixedDBkey() );
+				ArticleVideoContext::isFeaturedVideoEmbedded( $title->getPrefixedDBkey() );
 		} else {
 			$isFeaturedVideoEmbedded = false;
 		}
