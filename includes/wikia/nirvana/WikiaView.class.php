@@ -312,7 +312,6 @@ class WikiaView {
 
 				$data['app'] = F::app();
 				$data['wg'] = F::app()->wg;
-				$data['wf'] = F::app()->wf;
 
 				if ( !empty( $data ) ) {
 					extract( $data );

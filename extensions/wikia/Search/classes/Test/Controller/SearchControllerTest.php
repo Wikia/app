@@ -356,13 +356,8 @@ class SearchControllerTest extends BaseTest {
 		                    ->setMethods( [ 'getTitle' ] )
 		                    ->getMock();
 		$mockResponse = $this->getMock( 'WikiaResponse', [ 'redirect' ], [ 'html' ] );
-		$mockWrapper = $this->getMockBuilder( 'WikiaFunctionWrapper' )
-		                    ->disableOriginalConstructor()
-		                    ->setMethods( [ 'RunHooks' ] )
-		                    ->getMock();
 
 		$originalQuery = 'foo';
-		$redirectUrl = 'http://foo.wikia.com/Wiki/foo';
 
 		$searchConfig
 			->expects( $this->once() )
@@ -400,10 +395,6 @@ class SearchControllerTest extends BaseTest {
 		$responserefl = new ReflectionProperty( 'WikiaSearchController', 'response' );
 		$responserefl->setAccessible( true );
 		$responserefl->setValue( $mockController, $mockResponse );
-
-		$wfrefl = new ReflectionProperty( 'WikiaSearchController', 'wf' );
-		$wfrefl->setAccessible( true );
-		$wfrefl->setValue( $mockController, $mockWrapper );
 
 		$this->mockClass( 'Article', $mockArticle, 'newFromID' );
 

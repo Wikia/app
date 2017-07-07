@@ -15,7 +15,6 @@ abstract class WikiaSkin extends SkinTemplate {
 
 	protected $app = null;
 	protected $wg = null;
-	protected $wf = null;
 
 	//strict mode for checking if an asset's URL is registered for the current skin
 	//@see AssetsManager::checkAssetUrlForSkin
@@ -34,7 +33,6 @@ abstract class WikiaSkin extends SkinTemplate {
 	function __construct( $templateClassName = null, $skinName = null, $themeName = null, $styleName = null ) {
 		$this->app = F::app();
 		$this->wg = $this->app->wg;
-		$this->wf = $this->app->wf;
 
 		$this->assetsManager = AssetsManager::getInstance();
 
@@ -367,7 +365,6 @@ abstract class WikiaSkin extends SkinTemplate {
 	}
 
 	static function makeInlineVariablesScript( $data ) {
-		$wf = F::app()->wf;
 		wfProfileIn( __METHOD__ );
 
 		if( $data ) {
