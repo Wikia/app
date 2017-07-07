@@ -45,49 +45,7 @@ $wgSpecialPageGroups['HideRevision'] = 'pagetools';
 $wgSpecialPages['Oversight'] = 'SpecialOversight';
 $wgSpecialPageGroups['Oversight'] = 'pagetools';
 
-$wgHooks['ArticleViewHeader'][] = 'hrArticleViewHeaderHook';
-$wgHooks['DiffViewHeader'][] = 'hrDiffViewHeaderHook';
-$wgHooks['UndeleteShowRevision'][] = 'hrUndeleteShowRevisionHook';
 $wgHooks['UserRename::Local'][] = 'hrUserRenameLocalHook';
-
-/**
- * Hook for article view, giving us a chance to insert a removal
- * tab on old version views.
- */
-function hrArticleViewHeaderHook( $article ) {
-	$oldid = intval( $article->mOldId );
-	if( $oldid ) {
-		hrInstallTab( $oldid );
-	}
-	return true;
-}
-
-/**
- * Hook for diff view, giving us a chance to insert a removal
- * tab on old version views.
- *
- * @param $diff
- * @param $oldRev
- * @param Revision $newRev
- */
-function hrDiffViewHeaderHook( $diff, $oldRev, $newRev ) {
-	if( !empty( $newRev ) && $newRev->getId() ) {
-		hrInstallTab( $newRev->getId() );
-	}
-	return true;
-}
-
-/**
- * Hook for deletion archive revision view, giving us a chance to
- * insert a removal tab for a deleted revision.
- *
- * @param $title
- * @param Revision $rev
- */
-function hrUndeleteShowRevisionHook( $title, $rev ) {
-	hrInstallArchiveTab( $title, $rev->getTimestamp() );
-	return true;
-}
 
 /**
  * Register tables that need to be updated when a user is renamed
@@ -96,7 +54,7 @@ function hrUndeleteShowRevisionHook( $title, $rev ) {
  * @param int $userId
  * @param string $oldUsername
  * @param string $newUsername
- * @param UserRenameProcess $process
+ * @param RenameUserProcess $process
  * @param int $wgCityId
  * @param array $tasks
  * @return bool
@@ -109,51 +67,4 @@ function hrUserRenameLocalHook( $dbw, $userId, $oldUsername, $newUsername, $proc
 	);
 
 	return true;
-}
-
-class HideRevisionTabInstaller {
-	function __construct( $linkParam ) {
-		$this->mLinkParam = $linkParam;
-	}
-
-	function insertTab( $skin, &$content_actions ) {
-		$special = Title::makeTitle( NS_SPECIAL, 'HideRevision' );
-		$content_actions['hiderevision'] = array(
-			'class' => false,
-			'text' => wfMsgHTML( 'hiderevision-tab' ),
-			'href' => $special->getLocalUrl( $this->mLinkParam ) );
-		return true;
-	}
-}
-
-/**
- * If the user is allowed, installs a tab hook on the skin
- * which links to a handy permanent removal thingy.
- */
-function hrInstallTab( $id ) {
-	global $wgUser;
-	if( $wgUser->isAllowed( 'hiderevision' ) ) {
-		global $wgHooks;
-		$tab = new HideRevisionTabInstaller( 'revision[]=' . $id );
-		$wgHooks['SkinTemplateTabs'][] = array( $tab, 'insertTab' );
-	}
-}
-
-/**
- * If the user is allowed, installs a tab hook on the skin
- * which links to a handy permanent removal thingy for
- * archived (deleted) pages.
- *
- * @param Title $target
- */
-function hrInstallArchiveTab( $target, $timestamp ) {
-	global $wgUser;
-	if( $wgUser->isAllowed( 'hiderevision' ) ) {
-		global $wgHooks;
-		$tab = new HideRevisionTabInstaller(
-			'target=' . $target->getPrefixedUrl() .
-			'&timestamp[]=' . $timestamp );
-		$wgHooks['SkinTemplateBuildContentActionUrlsAfterSpecialPage'][] =
-			array( $tab, 'insertTab' );
-	}
 }
