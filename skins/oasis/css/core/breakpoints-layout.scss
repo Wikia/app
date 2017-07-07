@@ -170,7 +170,6 @@
 		}
 
 		@media #{$breakpoint-small-plus-up} {
-			@include flexbox();
 			margin-left: 20px;
 		}
 	}
