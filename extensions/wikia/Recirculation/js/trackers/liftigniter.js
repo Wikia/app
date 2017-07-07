@@ -48,10 +48,10 @@ $p("init", "l9ehhrb6mtv75bp2", {
             queryServer: "//query.fandommetrics.com"
         },
         activity: {
-            activityServer: "//api.fandommetrics.com"
+            activityServer: "//query.fandommetrics.com"
         },
         inventory: {
-            inventoryServer: "//api.fandommetrics.com"
+            inventoryServer: "//query.fandommetrics.com"
         },
         globalCtx: getLiftIgniterGlobalContext()
     }
