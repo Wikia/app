@@ -3,7 +3,7 @@
 	"private": true,
 
 	"dependencies": {
-		"html5-skin": "Wikia/html5-skin#XW-3684",
+		"html5-skin": "Wikia/html5-skin#1e7e624795984dd016704235b454d39f62815453",
 		"skin-config": "Wikia/skin-config#master"
 	}
 }
