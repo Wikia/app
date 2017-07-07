@@ -4,7 +4,7 @@
  * Retrieves information on number of items on Insights lists.
  */
 
-class InsightsCountService extends WikiaService {
+class InsightsCountService {
 
 	/**
 	 * Returns a count of items on a given Insights list based on a passed type.

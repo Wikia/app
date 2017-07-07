@@ -5,7 +5,7 @@ use \Wikia\Cache\AsyncCache;
 /**
  * This service provides methods for querying for media
  */
-class MediaQueryService extends WikiaService {
+class MediaQueryService {
 
 	const MEDIA_TYPE_VIDEO = 'video';
 	const MEDIA_TYPE_IMAGE = 'image';

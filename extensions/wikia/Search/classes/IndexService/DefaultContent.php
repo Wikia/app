@@ -6,9 +6,8 @@
  */
 namespace Wikia\Search\IndexService;
 
-use JsonFormatService;
-use Wikia\JsonFormat\JsonFormatSimplifier;
-use Wikia\Search\Utilities, simple_html_dom;
+use Wikia\Search\Utilities;
+use simple_html_dom;
 
 /**
  * This is intended to provide core article content

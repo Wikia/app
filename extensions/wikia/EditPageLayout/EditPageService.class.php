@@ -4,7 +4,7 @@
  * Service providing interface for generating previews and diffs
  */
 
-class EditPageService extends Service {
+class EditPageService {
 
 	private $app;
 
