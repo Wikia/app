@@ -1213,9 +1213,7 @@ class WikiFactory {
 	 * @return string url pointing to local env
 	 * @throws \Exception
 	 */
-	static public function getLocalEnvURL( $url, $forcedEnv = null ) {
-		global $wgWikiaEnvironment, $wgWikiaBaseDomain, $wgDevDomain;
-
+	public static function getLocalEnvURL( $url, $forcedEnv = null ) {
 		// first - normalize URL
 		$regexp = '/^(https?):\/\/([^\/]+)\/?(.*)?$/';
 		$wikiaDomainsRegexp = '/(wikia\.com|wikia-staging\.com|wikia-dev\.(com|us|pl))$/';
@@ -1225,50 +1223,78 @@ class WikiFactory {
 			// on fail at least return original url
 			return $url;
 		}
+
 		$protocol = $groups[1];
 		$server = $groups[2];
-		$address = $groups[3];
+		$path = $groups[3];
 
-		if ( !empty( $address ) ) {
-			$address = '/' . $address;
+		if ( !empty( $path ) ) {
+			$path = '/' . $path;
 		}
 
+		$localServer = self::getLocalEnvServer( $server, $forcedEnv );
+
+		if ( !self::environmentSupportsHttps( $forcedEnv ) ) {
+			// Force HTTP in non-production environments
+			$protocol = 'http';
+		}
+
+		return $protocol . '://' . $localServer . $path;
+	}
+
+	public static function getCurrentEnvironment( $forcedEnv = false ) {
+		if ( $forcedEnv &&
+		     $forcedEnv !== WIKIA_ENV_DEV &&
+		     $forcedEnv !== WIKIA_ENV_SANDBOX ) {
+			return $forcedEnv;
+		} else {
+			return F::app()->wg->WikiaEnvironment;
+		}
+	}
+
+	public static function environmentSupportsHttps( $forcedEnv ) {
+		$currentEnv = self::getCurrentEnvironment( $forcedEnv );
+		return $currentEnv == WIKIA_ENV_PROD || $currentEnv == WIKIA_ENV_STAGING;
+	}
+
+	public static function getLocalEnvServer( $server, $forcedEnv = null ) {
 		// strip env-specific pre- and suffixes for staging environment
 		$server = preg_replace( '/^(stable|preview|verify|sandbox-[a-z0-9]+)\./', '', $server );
-		if ( !empty( $wgDevDomain ) ) {
-			$server = str_replace( ".{$wgDevDomain}", '', $server );
+
+		$devboxRegex = '/\.([^\.]+)\.wikia-dev\.(us|pl|com)$/';
+		if ( preg_match( $devboxRegex, $server, $groups ) === 1 ) {
+			$devBox = $groups[1];
+		} else {
+			$devBox = '';
 		}
+
+		$server = str_replace( '.' . $devBox . '.wikia-dev.com', '', $server );
 		$server = str_replace( static::WIKIA_TOP_DOMAIN, '', $server );
-		$server = str_replace( '.' . $wgWikiaBaseDomain, '', $server ); // PLATFORM-2400: make WF redirects work on staging
 
-		// determine the environment we want to get url for
-		$environment = (
-			$forcedEnv &&
-			$forcedEnv !== WIKIA_ENV_DEV &&
-			$forcedEnv !== WIKIA_ENV_SANDBOX
-		) ? $forcedEnv : $wgWikiaEnvironment;
+		// PLATFORM-2400: make WF redirects work on staging
+		$server = str_replace( '.' . F::app()->wg->WikiaBaseDomain, '', $server );
 
-		// put the address back into shape and return
-		// we need to change 'https' to 'http' for stable/preview/verify/sandbox environments cause
-		// we do not have valid ssl certificate for these subdomains
-		switch ( $environment ) {
-			case WIKIA_ENV_PREVIEW:
-				return 'http://preview.' . $server . static::WIKIA_TOP_DOMAIN . $address;
-			case WIKIA_ENV_VERIFY:
-				return 'http://verify.' . $server . static::WIKIA_TOP_DOMAIN . $address;
-			case WIKIA_ENV_STABLE:
-				return 'http://stable.' . $server . static::WIKIA_TOP_DOMAIN . $address;
-			case WIKIA_ENV_STAGING:
-			case WIKIA_ENV_PROD:
-				return sprintf( '%s://%s.%s%s', $protocol, $server, $wgWikiaBaseDomain, $address );
-			case WIKIA_ENV_SANDBOX:
-				return 'http://' . static::getExternalHostName() . '.' . $server .
-				       static::WIKIA_TOP_DOMAIN . $address;
-			case WIKIA_ENV_DEV:
-				return 'http://' . $server . '.' . $wgDevDomain . $address;
+		// Determine the environment we want to get url for
+		$environment = self::getCurrentEnvironment( $forcedEnv );
+
+		// put the path back into shape and return
+		if ( $environment == WIKIA_ENV_PREVIEW ) {
+			$fullName = 'preview.' . $server . static::WIKIA_TOP_DOMAIN;
+		} elseif ( $environment == WIKIA_ENV_VERIFY ) {
+			$fullName = 'verify.' . $server . static::WIKIA_TOP_DOMAIN;
+		} elseif ( $environment == WIKIA_ENV_STABLE ) {
+			$fullName = 'stable.' . $server . static::WIKIA_TOP_DOMAIN;
+		} elseif ( $environment == WIKIA_ENV_PROD || $environment == WIKIA_ENV_STAGING ) {
+			$fullName = $server . '.' . F::app()->wg->WikiaBaseDomain;
+		} elseif ( $environment == WIKIA_ENV_SANDBOX ) {
+			$fullName = static::getExternalHostName() . '.' . $server . static::WIKIA_TOP_DOMAIN;
+		} elseif ( $environment == WIKIA_ENV_DEV) {
+			$fullName = $server . '.' . F::app()->wg->DevDomain;
+		} else {
+			throw new Exception( sprintf( '%s: %s', __METHOD__, 'unknown env detected' ) );
 		}
 
-		throw new Exception( sprintf( '%s: %s', __METHOD__, 'unknown env detected' ) );
+		return $fullName;
 	}
 
 	/**
@@ -2216,39 +2242,6 @@ class WikiFactory {
 		wfProfileOut( __METHOD__ );
 		return $loop;
 	}
-
-	/**
-	 * getTiedVariables
-	 *
-	 * return variables connected somehow to given variable. Used
-	 * for displaying hints after saving variable ("you should edit these
-	 * variables as well"), Ticket #3387. So far it uses hardcoded
-	 * values.
-	 *
-	 * @todo Move hardcoded values to MediaWiki message.
-	 *
-	 * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
-	 * @access public
-	 * @static
-	 *
-	 * @param string	$cv_name	variable name
-	 *
-	 * @return array: names of tied variables or false if nothing matched
-	 */
-	static public function getTiedVariables( $cv_name ) {
-		$tied = [
-			#"wgExtraNamespacesLocal|wgContentNamespaces|wgNamespacesWithSubpagesLocal|wgNamespacesToBeSearchedDefault"
-		];
-		foreach ( $tied as $group ) {
-			$pattern = "/\b{$cv_name}\b/";
-			if ( preg_match( $pattern, $group ) ) {
-				return explode( "|", $group );
-			}
-		}
-
-		return false;
-	}
-
 
 	/**
 	 * log
@@ -3434,7 +3427,7 @@ class WikiFactory {
 	 *
 	 * @return string
 	 */
-	static private function parseValue( $value, $type ) {
+	static public function parseValue( $value, $type ) {
 		if ( $type == "string" || $type == "integer"  ) {
 			return $value;
 		}

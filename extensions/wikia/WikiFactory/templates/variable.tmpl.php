@@ -50,11 +50,13 @@
 
 <div style="width: 45%; float: left">
 Current value:
+	<div id="variable-value">
 <?php if( !isset( $variable->cv_value ) || is_null( $variable->cv_value ) ): ?>
     <strong>Value is not set</strong>
 <?php else: ?>
     <pre><?php echo WikiFactory::renderValue( $variable ) ?></pre>
 <?php endif ?>
+	</div>
 </div>
 
 <div style="width: 45%; float: right">
