@@ -33,7 +33,8 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 	}
 
 	function filterSizes(slotName, slotSizes) {
-		var footerSize;
+		var isPremiumLayout = context.opts.premiumAdLayoutEnabled,
+			footerSize;
 		log(['filterSizes', slotName, slotSizes], 'debug', logGroup);
 
 		switch (true) {
@@ -43,13 +44,13 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 				return doc.documentElement.offsetWidth >= minSkinWidth ? slotSizes : [[1, 1]];
 			case slotName === 'PREFOOTER_LEFT_BOXAD' && context.opts.overridePrefootersSizes:
 				return isLargeBreakpoints() ? slotSizes : getNewSizes(slotSizes, maxAdSize, [[300, 250]]);
-			case slotName === 'BOTTOM_LEADERBOARD' && context.opts.adMix3Enabled:
+			case slotName === 'BOTTOM_LEADERBOARD' && isPremiumLayout:
 				footerSize = doc.getElementById('WikiaFooter').offsetWidth;
 				return getNewSizes([[970, 250], [728, 90]], footerSize, [[728, 90]]);
 			case slotName === 'BOTTOM_LEADERBOARD':
 				footerSize = doc.getElementById('WikiaFooter').offsetWidth;
 				return getNewSizes(slotSizes, footerSize, [[728, 90]]);
-			case slotName === 'INCONTENT_BOXAD_1' && context.opts.adMix3Enabled && context.targeting.hasFeaturedVideo:
+			case slotName === 'INCONTENT_BOXAD_1' && isPremiumLayout && context.targeting.hasFeaturedVideo:
 				return [ [300, 250] ];
 			default:
 				return slotSizes;

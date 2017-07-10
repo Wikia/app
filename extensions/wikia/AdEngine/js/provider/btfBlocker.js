@@ -39,7 +39,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 			var context = adContext.getContext();
 			log(['processBtfSlot', slot.name], 'debug', logGroup);
 
-			if ((context.opts.adMix3Enabled || context.opts.premiumAdLayoutEnabled) && !uapContext.isUapLoaded()) {
+			if (context.opts.premiumAdLayoutEnabled && !uapContext.isUapLoaded()) {
 				if (context.slots.premiumAdLayoutSlotsToUnblock.indexOf(slot.name) !== -1) {
 					fillInSlot(slot);
 					return;
@@ -66,7 +66,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 				return;
 			}
 
-			if (context.opts.adMix3Enabled || context.opts.premiumAdLayoutEnabled) {
+			if (context.opts.premiumAdLayoutEnabled) {
 				win.ads.runtime.disableBtf = true;
 				context.slots.premiumAdLayoutSlotsToUnblock.map(unblock);
 			}
