@@ -157,9 +157,10 @@ class MigrateOversightRevisions extends Maintenance {
 				$insertData[$fieldPrefix . 'deleted'] = Revision::DELETED_TEXT | Revision::DELETED_COMMENT | Revision::DELETED_USER | Revision::DELETED_RESTRICTED;
 
 				$rev = Revision::newFromRow( $hiddenRow );
+				$text = $rev->getRawText();
 
-				$insertData[$fieldPrefix . 'len'] = $rev->getSize();
-				$insertData[$fieldPrefix . 'sha1'] = $rev->getSha1();
+				$insertData[$fieldPrefix . 'len'] = strlen( $text );
+				$insertData[$fieldPrefix . 'sha1'] = Revision::base36Sha1( $text );
 
 				if ( $dbw->selectField(
 					'archive',
