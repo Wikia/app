@@ -9,18 +9,6 @@ class EditPageLayoutAjax {
 		global $wgRequest, $wgTitle, $wgOut, $wgEnableSlowPagesBlacklistExt;
 		wfProfileIn(__METHOD__);
 
-		if ( !empty( $wgEnableSlowPagesBlacklistExt) ) {
-			global $wgSlowPagesBlacklist;
-			if ( in_array( $wgTitle->getFullURL(), $wgSlowPagesBlacklist ) ) {
-				wfProfileOut( __METHOD__ );
-				return [
-					'html' => wfMessage( 'slowpagesblacklist-preview-unavailable' )->plain(),
-					'catbox' => '',
-					'interlanglinks' => ''
-				];
-			}
-		}
-
 		if($wgTitle && class_exists($page)) {
 			$pageObj = new $page();
 			if(is_a( $pageObj, 'SpecialCustomEditPage' )) {
