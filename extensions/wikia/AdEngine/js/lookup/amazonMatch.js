@@ -12,6 +12,7 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 	var logGroup = 'ext.wikia.adEngine.lookup.amazonMatch',
 		config = {
 			oasis: {
+				BOTTOM_LEADERBOARD: ['7x9'],
 				INCONTENT_BOXAD_1: ['3x2', '1x6', '3x6'],
 				LEFT_SKYSCRAPER_2: ['1x6', '3x2', '3x6'],
 				LEFT_SKYSCRAPER_3: ['1x6', '3x2', '3x6'],

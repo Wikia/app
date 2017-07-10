@@ -72,6 +72,13 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 					],
 					id: '9',
 					siteID: 185049
+				},
+				BOTTOM_LEADERBOARD: {
+					sizes: [
+						[728, 90]
+					],
+					id: '12',
+					siteID: 999999
 				}
 			},
 			mercury: {
