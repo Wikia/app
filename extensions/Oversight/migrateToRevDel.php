@@ -41,7 +41,6 @@ class MigrateOversightRevisions extends Maintenance {
 		$this->setBatchSize( 20 );
 		$this->mDescription = "Migrate revisions hidden with the Oversight extension to revdel.";
 		$this->addOption( 'migrate', "Turn off dry-run mode and actually insert OS data into revision/archive table." );
-		$this->addOption( 'max', "Maximum number of revisions to migrate at a time.", true );
 	}
 
 	/**
@@ -270,7 +269,7 @@ class MigrateOversightRevisions extends Maintenance {
 				$dbw->insert( 'logging', $insertLoggingData, __METHOD__ );
 				$this->commitTransaction( $dbw, __METHOD__ );
 			}
-		} while ( $hiddenRows->numRows() === $this->mBatchSize && $count < $this->getOption( 'max' ) );
+		} while ( $hiddenRows->numRows() === $this->mBatchSize );
 
 		$this->output( "Done! $count oversighted revision(s) are now converted to suppressed revisions.\n" );
 	}
