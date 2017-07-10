@@ -34,7 +34,10 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork',[
 		};
 
 	function isEnabled() {
+		var isAudienceNetworkAvailable = adContext.getContext().providers.audienceNetwork;
+
 		return adContext.getContext().targeting.skin === 'mercury' &&
+			isAudienceNetworkAvailable &&
 			geo.isProperGeo(instantGlobals.wgAdDriverAudienceNetworkBidderCountries);
 	}
 
