@@ -215,7 +215,7 @@ class OoyalaConfigController extends WikiaController {
 				[
 					'name' => 'quality',
 					'location' => 'controlBar',
-					'whenDoesNotFit' => 'drop',
+					'whenDoesNotFit' => 'keep',
 					'minWidth' => 45,
 				],
 				[
