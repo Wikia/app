@@ -534,13 +534,10 @@ $config['user_login_js_anon'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/UserLogin/js/FacebookLogin.js',
 		'//extensions/wikia/UserLogin/js/MarketingOptIn.js',
 		'//extensions/wikia/UserLogin/js/UserBaseAjaxForm.js',
 		'//extensions/wikia/UserLogin/js/mixins/UserSignup.mixin.js',
 		'//extensions/wikia/UserLogin/js/UserSignupAjaxValidation.js',
-		'//extensions/wikia/UserLogin/js/FacebookFormCreateUser.js',
-		'//extensions/wikia/UserLogin/js/FacebookFormConnectUser.js',
 		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js',
 		'//extensions/wikia/UserLogin/js/UserLoginModal.js',
 	],
@@ -1638,14 +1635,6 @@ $config['userlogin_js_wikiamobile'] = [
 	'skin' => 'wikiamobile',
 	'assets' => [
 		'//extensions/wikia/UserLogin/js/UserLoginSpecial.wikiamobile.js',
-	],
-];
-
-$config['userlogin_facebook_js_wikiamobile'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'wikiamobile',
-	'assets' => [
-		'//extensions/wikia/UserLogin/js/UserLoginFacebook.wikiamobile.js',
 	],
 ];
 

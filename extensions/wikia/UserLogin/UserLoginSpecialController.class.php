@@ -48,19 +48,11 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	}
 
 	private function initializeTemplate() {
-		// Load Facebook JS if extension is enabled and skin supports it
-		if ( !empty( $this->wg->EnableFacebookClientExt ) && !$this->isMonobookOrUncyclo ) {
-			$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js' );
-		}
 
 		$this->response->addAsset( 'extensions/wikia/UserLogin/css/UserLogin.scss' );
 
 		// Assets including 'wikiamobile' in the name will be included by AssetsManager when showing the mobile skin
 		$this->response->addAsset( 'userlogin_js_wikiamobile' );
-
-		if ( $this->wg->EnableFacebookClientExt ) {
-			$this->response->addAsset( 'userlogin_facebook_js_wikiamobile' );
-		}
 
 		$this->response->addAsset( 'userlogin_scss_wikiamobile' );
 
@@ -361,34 +353,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		// Ignore the title parameter as it would either be used by the returnto or blacklisted
 		unset( $query['title'] );
 		return wfArrayToCGI( $query );
-	}
-
-	public function providers() {
-		$this->response->setVal( 'requestType',  $this->request->getVal( 'requestType', '' ) );
-
-		// don't render FBconnect button when the extension is disabled
-		if ( empty( $this->wg->EnableFacebookClientExt ) ) {
-			$this->skipRendering();
-		}
-
-		$this->tabindex = $this->request->getVal( 'tabindex', null );
-
-		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
-			$this->overrideTemplate( 'WikiaMobileProviders' );
-		}
-	}
-
-	public function providersTop() {
-		$this->response->setVal( 'requestType',  $this->request->getVal( 'requestType', '' ) );
-
-		// don't render FBconnect button when the extension is disabled
-		if ( empty( $this->wg->EnableFacebookClientExt ) ) {
-			$this->skipRendering();
-		}
-
-		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
-			$this->overrideTemplate( 'WikiaMobileProviders' );
-		}
 	}
 
 	public function modal() {

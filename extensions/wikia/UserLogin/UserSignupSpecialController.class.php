@@ -91,15 +91,6 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			$this->response->addAsset( 'user_signup_js' );
 		}
 
-		// We're not supporting connecting with facebook from this page while logged in
-		if (
-			!empty( $this->wg->EnableFacebookClientExt ) &&
-			!$this->wg->User->isLoggedIn() &&
-			!$this->isMonobookOrUncyclo
-		) {
-			$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js' );
-		}
-
 		// hide things in the skin
 		$this->wg->SuppressCommunityHeader = true;
 		$this->wg->SuppressPageHeader = true;
