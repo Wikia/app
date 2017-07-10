@@ -6,7 +6,7 @@ class EditPageLayoutAjax {
 	 * Perform reverse parsing on given HTML (when needed)
 	 */
 	static private function resolveWikitext( $content, $mode, $page, $method, $section ) {
-		global $wgRequest, $wgTitle, $wgOut, $wgEnableSlowPagesBlacklistExt;
+		global $wgRequest, $wgTitle, $wgOut;
 		wfProfileIn(__METHOD__);
 
 		if($wgTitle && class_exists($page)) {
