@@ -54,7 +54,7 @@ require([
 
 		function initVideo(onCreate) {
 			var playerParams = window.wgOoyalaParams,
-				autoplay = cookies.get(autoplayCookieName) !== '0' && window.OO.allowAutoPlay,
+				autoplay = cookies.get(autoplayCookieName) !== '0',
 				vastUrl,
 				inlineSkinConfig = {
 					controlBar: {
