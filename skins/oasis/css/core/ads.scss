@@ -517,6 +517,10 @@ body > a > img[src$="noad.gif"] {
 #WikiaAdInContentPlaceHolder.rail-sticky-module {
 	@include sticky();
 	top: $navbar-size-for-sticky-element;
+
+	@media #{$breakpoint-below-small-plus} {
+		position: static;
+	}
 }
 
 .wikia-ad-interactive-map {
