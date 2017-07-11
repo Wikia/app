@@ -652,8 +652,8 @@ class Snoopy
 		$headerfile = uniqid(time());
 		
 		# accept self-signed certs
-		$cmdline_params .= " -k"; 
-		exec($this->curl_path." -D \"/tmp/$headerfile\"".escapeshellcmd($cmdline_params)." ".escapeshellcmd($URI),$results,$return);
+		$cmdline_params .= " -k";
+		exec($this->curl_path." -D \"/tmp/$headerfile\"".escapeshellcmd($cmdline_params)." ".escapeshellarg($URI),$results,$return);
 		
 		if($return)
 		{
