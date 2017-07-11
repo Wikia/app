@@ -3495,14 +3495,14 @@
           //Remove any listeners we added on the previous shared video element
           if (this.sharedVideoElement && OO.isIphone && typeof this.sharedVideoElement.removeEventListener === "function")
           {
-            this.sharedVideoElement.removeEventListener('webkitendfullscreen', _raisePauseEvent);
+            this.sharedVideoElement.removeEventListener('webkitendfullscreen', _raiseFullScreenEndEvent);
           }
           this.sharedVideoElement = element;
           //On iPhone, there is a limitation in the IMA SDK where we do not receive a pause event when
           //we leave the native player
           //This is a workaround to listen for the webkitendfullscreen event ourselves
           if(this.sharedVideoElement && OO.isIphone && typeof this.sharedVideoElement.addEventListener === "function"){
-            this.sharedVideoElement.addEventListener('webkitendfullscreen', _raisePauseEvent);
+            this.sharedVideoElement.addEventListener('webkitendfullscreen', _raiseFullScreenEndEvent);
           }
         };
 
@@ -4388,7 +4388,7 @@
           _IMAAdsManager = adsManagerLoadedEvent.getAdsManager(_playheadTracker, adsSettings);
 
           // WIKIA CHANGE - START
-          this.onAdRequestSuccess(_IMAAdsManager);
+          this.onAdRequestSuccess(_IMAAdsManager, _uiContainer);
           // WIKIA CHANGE - END
 
           // When the ads manager is ready, we are ready to apply css changes to the video element
@@ -4533,6 +4533,21 @@
           _endCurrentAd(true);
 
           OO.log("GOOGLE_IMA:: Content Resume Requested by Google IMA!");
+        });
+
+        /**
+         * Notifies the video controller wrapper of the fullscreen end event.
+         * @private
+         * @method GoogleIMA#_raiseFullScreenEndEvent
+         */
+        var _raiseFullScreenEndEvent = privateMember(function()
+        {
+
+          if (this.videoControllerWrapper)
+          {
+            this.videoControllerWrapper.raiseFullScreenEvent();
+            this.videoControllerWrapper.raisePauseEvent();
+          }
         });
 
         /**
@@ -5398,6 +5413,11 @@
       this.raisePauseEvent = function()
       {
         notifyIfInControl(this.controller.EVENTS.PAUSED);
+      };
+
+      this.raiseFullScreenEvent = function()
+      {
+        notifyIfInControl(this.controller.EVENTS.FULLSCREEN_CHANGED);
       };
 
       this.raiseVolumeEvent = function()

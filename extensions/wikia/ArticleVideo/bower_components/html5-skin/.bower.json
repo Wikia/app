@@ -1,12 +1,12 @@
 {
   "name": "html5-skin",
   "homepage": "https://github.com/Wikia/html5-skin",
-  "_release": "c11bae50e2",
+  "_release": "70f7e0bf7e",
   "_resolution": {
     "type": "commit",
-    "commit": "c11bae50e23f131a68ea422b2ffb43c6ba3a1e3b"
+    "commit": "70f7e0bf7ebe819b96b16b9de91bd4abddf00686"
   },
   "_source": "https://github.com/Wikia/html5-skin.git",
-  "_target": "c11bae50e23f131a68ea422b2ffb43c6ba3a1e3b",
+  "_target": "70f7e0bf7ebe819b96b16b9de91bd4abddf00686",
   "_originalSource": "Wikia/html5-skin"
 }

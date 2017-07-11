@@ -92,7 +92,7 @@ function buildJS(file, hash, watch, ugly, sourcemap, debug, externalReact, callb
 }
 
 gulp.task('build:all', ['build:vendor', 'build'], function () {
-  gulp.src(['build/core.js', 'build/main_html5.js', 'build/html5-skin.min.js']).pipe(concat('all.js')).pipe(gulp.dest('build'));
+  gulp.src(['build/core.js', 'build/main_html5.js', 'build/html5-skin.min.js', 'build/google_ima.js']).pipe(concat('all.js')).pipe(gulp.dest('build'));
 });
 
 gulp.task('build:vendor', function () {

@@ -26,7 +26,7 @@ var WikiaAdScreen = React.createClass({
                                 playerState={this.props.playerState}
                                 isWikiaAdScreen={true}
                                 showAdTimeLeft={this.props.controller.state.showAdTimeLeft}
-                                showAdFullScreenToggle={this.props.controller.state.showAdFullScreenToggleToggle}
+                                showAdFullScreenToggle={this.props.controller.state.showAdFullScreenToggle}
                                 key='controlBar'/>
     };
 

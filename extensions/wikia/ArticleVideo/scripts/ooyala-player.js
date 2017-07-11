@@ -133,7 +133,16 @@ define('ooyala-player', function () {
 					// FIXME with VPAID it causes volume controls to be in incorrect state
 					IMAAdsManager.setVolume(params.initialVolume);
 				},
-				onAdRequestSuccess: function (IMAAdsManager) {
+				onAdRequestSuccess: function (IMAAdsManager, uiContainer) {
+					require([
+						'ext.wikia.adEngine.adContext',
+						'ext.wikia.adEngine.video.player.porvata.moatVideoTracker'
+					], function(adContext, moatVideoTracker) {
+						if (adContext.getContext().opts.isMoatTrackingForFeaturedVideoEnabled) {
+							moatVideoTracker.init(IMAAdsManager, uiContainer, google.ima.ViewMode.NORMAL, 'ooyala', 'featured-video');
+						}
+					});
+
 					IMAAdsManager.addEventListener('loaded', function (eventData) {
 						var player = html5Player.player;
 
