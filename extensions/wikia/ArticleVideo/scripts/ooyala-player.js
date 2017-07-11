@@ -1,4 +1,4 @@
-define('ooyala-player', function () {
+define('ooyala-player', ['wikia.browserDetect'], function (browserDetect) {
 
 	var baseJSONSkinUrl = '/wikia.php?controller=OoyalaConfig&method=skin&cb=' + window.wgStyleVersion;
 	// TODO ooyala only supports font icons so we probably need to extract our DS icons to font
@@ -148,6 +148,9 @@ define('ooyala-player', function () {
 
 						if (eventData.getAdData().vpaid === true) {
 							player.mb.publish(OO.EVENTS.WIKIA.SHOW_AD_TIME_LEFT, false);
+							player.mb.publish(OO.EVENTS.WIKIA.SHOW_AD_FULLSCREEN_TOGGLE, false);
+						} else if (browserDetect.isIPad()) {
+							// Ads aren't visible on fullscreen when using iPad, let's hide the toggle
 							player.mb.publish(OO.EVENTS.WIKIA.SHOW_AD_FULLSCREEN_TOGGLE, false);
 						}
 					}, false, this);
