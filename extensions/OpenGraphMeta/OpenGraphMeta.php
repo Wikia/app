@@ -81,7 +81,7 @@ function efOpenGraphMetaPageHook( OutputPage &$out, &$sk ) {
 			( defined('NS_BLOG_ARTICLE_TALK') && $title->getNamespace() == NS_BLOG_ARTICLE_TALK ) ) {
 			$meta["og:title"] = $title->getSubpageText();
 		} elseif (defined('NS_USER_WALL_MESSAGE') && $title->getNamespace() == NS_USER_WALL_MESSAGE) {
-			$meta["og:title"] = $out->mHTMLtitle;
+			$meta["og:title"] = $out->mPagetitle;
 		} else {
 			$meta["og:title"] = $title->getText();
 		}
