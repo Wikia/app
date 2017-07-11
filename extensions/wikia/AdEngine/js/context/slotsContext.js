@@ -28,23 +28,28 @@ define('ext.wikia.adEngine.context.slotsContext', [
 		var context = adContext.getContext(),
 			isHome = params.getPageType() === 'home',
 			isOasis = context.targeting.skin === 'oasis',
-			isIncontentEnabled = !isHome && isOasis && isInContentApplicable() &&
+			isPremiumAdLayoutEnabled = context.opts.premiumAdLayoutEnabled,
+			isIncontentEnabled =
+				!isHome &&
+				isOasis &&
+				isInContentApplicable() &&
 				videoFrequencyMonitor.videoCanBeLaunched();
-
-		setStatus('PREFOOTER_MIDDLE_BOXAD', isHome);
 
 		// those slots exists on all pages
 		setStatus('TOP_LEADERBOARD', true);
 		setStatus('TOP_RIGHT_BOXAD', true);
 
-		setStatus('LEFT_SKYSCRAPER_2', !isHome);
-		setStatus('LEFT_SKYSCRAPER_3', !isHome);
+		setStatus('PREFOOTER_MIDDLE_BOXAD', !isPremiumAdLayoutEnabled && isHome);
+		setStatus('LEFT_SKYSCRAPER_2', !isPremiumAdLayoutEnabled && !isHome);
+		setStatus('LEFT_SKYSCRAPER_3', !isPremiumAdLayoutEnabled && !isHome);
 		setStatus('INCONTENT_BOXAD_1', !isHome);
 
-		setStatus('INVISIBLE_HIGH_IMPACT_2', geo.isProperGeo(instantGlobals.wgAdDriverHighImpact2SlotCountries));
-		setStatus('PREFOOTER_RIGHT_BOXAD', !context.opts.overridePrefootersSizes);
+		setStatus('INVISIBLE_HIGH_IMPACT_2', !isPremiumAdLayoutEnabled && geo.isProperGeo(instantGlobals.wgAdDriverHighImpact2SlotCountries));
+		setStatus('PREFOOTER_RIGHT_BOXAD', !isPremiumAdLayoutEnabled && !context.opts.overridePrefootersSizes);
+		setStatus('PREFOOTER_LEFT_BOXAD', !isPremiumAdLayoutEnabled);
 
 		setStatus('INCONTENT_PLAYER', isIncontentEnabled);
+		setStatus('BOTTOM_LEADERBOARD', isPremiumAdLayoutEnabled);
 
 		log(['Disabled slots:', slots], 'info', logGroup);
 	}
