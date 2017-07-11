@@ -3768,7 +3768,7 @@ $messages['de'] = array(
 * Sperrnummer (ID): $5
 * Aktuelle IP-Adresse: $3
 
-Du kannst $1 oder andere [[Special:ListAdmins|Administratoren]] kontaktieren, um über die Sperre zu sprechen. Bei Problemen kannst Du [[Special:Contact|Kontakt zu FANDOM]] aufnehmen.
+Du kannst $1 oder andere [[Special:ListAdmins|Administratoren]] kontaktieren, um über die Sperre zu sprechen. Bei Problemen kannst Du [[Special:Contact|Kontakt zu Fandom]] aufnehmen.
 
 Bitte gib bei entsprechenden Anfragen immer den Namen dieses Wikis und die Sperrnummer an.',
 	'blockednoreason' => 'keine Begründung angegeben',

@@ -1502,8 +1502,8 @@ $messages['de'] = array(
 	'group-reviewer-member' => 'Bilder-Prüfer',
 	'group-reviewer' => 'Bilder-Prüfer',
 	'grouppage-helper' => 'w:de:Helfer',
-	'grouppage-staff' => 'w:c:de.community:FANDOM-Mitarbeiter',
-	'grouppage-util' => 'w:c:de.community:FANDOM-Mitarbeiter',
+	'grouppage-staff' => 'w:c:de.community:Fandom-Mitarbeiter',
+	'grouppage-util' => 'w:c:de.community:Fandom-Mitarbeiter',
 	'grouppage-vstf' => 'w:de:SpamTaskForce',
 	'googlesearch' => '<form method="get" action="//www.google.com/search" id="googlesearch">
 	<input type="hidden" name="domains" value="{{SERVER}}" />
@@ -1526,6 +1526,8 @@ $messages['de'] = array(
 	'group-voldev' => 'Volunteer Developers',
 	'group-voldev-member' => 'Volunteer Developer',
 	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
 );
 
 $messages['de-formal'] = array(
@@ -1780,6 +1782,8 @@ $messages['es'] = array(
 	'group-voldev' => 'Desarrollador voluntario',
 	'group-voldev-member' => 'Desarrollador voluntario',
 	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
 );
 
 $messages['et'] = array(
@@ -2084,6 +2088,8 @@ $messages['fr'] = array(
 	'group-vanguard' => 'Vanguards',
 	'group-vanguard-member' => 'Vanguard',
 	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
 );
 
 $messages['frc'] = array(
@@ -3047,6 +3053,8 @@ $messages['it'] = array(
 	'group-voldev' => 'Volunteer Developer',
 	'group-voldev-member' => 'Volunteer Developer',
 	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
 );
 
 $messages['iu'] = array(
@@ -3160,6 +3168,8 @@ $messages['ja'] = array(
 	'group-vanguard' => 'ヴァンガード',
 	'group-vanguard-member' => 'ヴァンガードのメンバー',
 	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
 );
 
 $messages['jam'] = array(
@@ -4811,6 +4821,8 @@ $messages['nl'] = array(
 	'group-voldev' => 'Volunteer Developers',
 	'group-voldev-member' => 'Volunteer Developer',
 	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
 );
 
 $messages['nl-informal'] = array(
@@ -5155,6 +5167,8 @@ $messages['pl'] = array(
 	'group-voldev' => 'Volunteer Developers',
 	'group-voldev-member' => 'volunteer developer',
 	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
 );
 
 $messages['pms'] = array(
@@ -5366,6 +5380,8 @@ $messages['pt'] = array(
 	'group-voldev' => 'Desenvolvedores voluntários',
 	'group-voldev-member' => 'Desenvolvedor voluntário',
 	'grouppage-voldev' => 'w:c:dev:Desenvolvedores_voluntários',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
 );
 
 $messages['qu'] = array(
@@ -5611,6 +5627,8 @@ $messages['ru'] = array(
 	'group-voldev' => 'Разработчики-волонтёры',
 	'group-voldev-member' => 'Разработчик-волонтёр',
 	'grouppage-voldev' => 'w:c:dev:Разработчики_Волонтеры',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
 );
 
 $messages['rue'] = array(
@@ -7375,6 +7393,8 @@ $messages['zh-hans'] = array(
 	'group-voldev' => '志愿开发者',
 	'group-voldev-member' => '志愿开发者',
 	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
 );
 
 $messages['zh-hant'] = array(
@@ -7448,6 +7468,8 @@ $messages['zh-hant'] = array(
 	'group-voldev' => '志願開發者',
 	'group-voldev-member' => '志願開發者',
 	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
 );
 
 $messages['zu'] = array(

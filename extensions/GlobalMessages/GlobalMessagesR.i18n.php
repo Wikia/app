@@ -11309,7 +11309,7 @@ Paĝoj en [[Special:Watchlist|via atentaro]] estas '''grasaj'''.",
 );
 
 $messages['es'] = array(
-	'realmap-deprecated-info' => 'Mapas del mundo real han sido descontinuados por FANDOM. Para obtener más información, revisa: $1',
+	'realmap-deprecated-info' => 'Mapas del mundo real han sido descontinuados por Fandom. Para obtener más información, revisa: $1',
 	'returnto' => 'Volver a $1.',
 	'redirectedfrom' => '(Redirigido desde $1)',
 	'redirectpagesub' => 'Página redirigida',
@@ -11600,7 +11600,7 @@ No tiene acceso a él.',
 	'revdelete-hid' => 'ocultó $1',
 	'revdelete-unhid' => 'dejó de ocultar $1',
 	'revdelete-log-message' => '$1 para $2 {{PLURAL:$2|revisión|revisiones}}',
-	'reconfirmemail_subject' => 'Por favor, confirma de nuevo tu cuenta de FANDOM',
+	'reconfirmemail_subject' => 'Por favor, confirma de nuevo tu cuenta de Fandom',
 	'reconfirmemail_body' => 'Hola $2,
 
 Gracias por actualizar tu dirección de email en tu cuenta de Wikia Por favor, confirma que esta es la dirección de correo electrónico correcta haciendo clic en el siguiente enlace, solo te tomará un minuto: $3
