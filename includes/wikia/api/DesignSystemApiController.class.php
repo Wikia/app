@@ -31,6 +31,11 @@ class DesignSystemApiController extends WikiaApiController {
 		$this->addCachingHeaders();
 	}
 
+	public function getCommunityHeader() {
+		$this->setResponseData($this->getCommunityHeaderMockedData());
+		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
+	}
+
 	/**
 	 * return all possible elements of Design System API
 	 * @throws \NotFoundApiException
@@ -52,6 +57,7 @@ class DesignSystemApiController extends WikiaApiController {
 		$this->setResponseData( [
 			'global-footer' => $footerModel->getData(),
 			'global-navigation' => $navigationModel->getData(),
+			'community-header' => $this->getCommunityHeaderMockedData()
 		] );
 
 		$this->addCachingHeaders();
@@ -88,5 +94,161 @@ class DesignSystemApiController extends WikiaApiController {
 		} else {
 			$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 		}
+	}
+
+	private function getCommunityHeaderMockedData() {
+		return [
+			"wordmark" => [
+				"type" => "link-image",
+				"href" => "http://masseffect.wikia.com/wiki/Mass_Effect_Wiki",
+				"image-data" => [
+					"type" => "image-external",
+					"url" => "http://img2.wikia.nocookie.net/__cb32/masseffect/images/8/89/Wiki-wordmark.png"
+				],
+				"title" => [
+					"type" => "text",
+					"value" => "Masseffect",
+				],
+				"tracking_label" => "wordmark-image"
+			],
+
+			"sitename" => [
+				"type" => "link-text",
+				"title" => [
+					"type" => "text",
+					"value" => "Masseffect"
+				],
+				"href" => "http://masseffect.wikia.com/wiki/Mass_Effect_Wiki",
+				"tracking_label" => "sitename"
+			],
+
+			"background-image" => "https://vignette3.wikia.nocookie.net/masseffect/images/0/0e/Community-header-background/revision/latest/zoom-crop/width/471/height/115?cb=20170609160041",
+
+			"navigation" => [
+				[
+					"type" => "link-text",
+					"title" => [
+						"type" => "text",
+						"value" => "link 1 1"
+					],
+					"href" => "http://masseffect.wikia.com/wiki/Mass_Effect_Wiki",
+					"tracking_label" => "custom-label-1",
+				],
+
+				[
+					"type" => "dropdown",
+					"title" => [
+						"type" => "text",
+						"value" => "link 1 2"
+					],
+					"href" => "http://masseffect.wikia.com/wiki/Mass_Effect_Wiki",
+					"tracking_label" => "custom-level-1",
+					"items" => [
+						[
+							"type" => "link-text",
+							"title" => [
+								"type" => "text",
+								"value" => "link 2 1"
+							],
+							"href" => "http://masseffect.wikia.com/wiki/Mass_Effect_Wiki",
+							"tracking_label" => "custom-level-2",
+						],
+
+						[
+							"type" => "link-text",
+							"title" => [
+								"type" => "text",
+								"value" => "link 2 2"
+							],
+							"href" => "http://masseffect.wikia.com/wiki/Mass_Effect_Wiki",
+							"tracking_label" => "custom-level-2",
+						],
+
+						[
+							"type" => "link-text",
+							"title" => [
+								"type" => "text",
+								"value" => "link 2 3"
+							],
+							"href" => "http://masseffect.wikia.com/wiki/Mass_Effect_Wiki",
+							"tracking_label" => "custom-level-2",
+						],
+					]
+				],
+
+				[
+					"type" => "dropdown",
+					"title" => [
+						"type" => "text",
+						"value" => "link 1 3"
+					],
+					"href" => "http://masseffect.wikia.com/wiki/Mass_Effect_Wiki",
+					"tracking_label" => "custom-level-1",
+					"items" => [
+						[
+							"type" => "link-text",
+							"title" => [
+								"type" => "text",
+								"value" => "link 2 1"
+							],
+							"href" => "http://masseffect.wikia.com/wiki/Mass_Effect_Wiki",
+							"tracking_label" => "custom-level-2",
+						],
+
+						[
+							"type" => "link-text",
+							"title" => [
+								"type" => "text",
+								"value" => "link 2 2"
+							],
+							"href" => "http://masseffect.wikia.com/wiki/Mass_Effect_Wiki",
+							"tracking_label" => "custom-level-2",
+						],
+
+						[
+							"type" => "dropdown",
+							"title" => [
+								"type" => "text",
+								"value" => "link 2 3"
+							],
+							"href" => "http://masseffect.wikia.com/wiki/Mass_Effect_Wiki",
+							"tracking_label" => "custom-level-2",
+							"items" => [
+								[
+									"type" => "link-text",
+									"title" => [
+										"type" => "text",
+										"value" => "link 3 1"
+									],
+									"href" => "http://masseffect.wikia.com/wiki/Mass_Effect_Wiki",
+									"tracking_label" => "custom-level-3",
+								],
+
+								[
+									"type" => "link-text",
+									"title" => [
+										"type" => "text",
+										"value" => "link 3 2"
+									],
+									"href" => "http://masseffect.wikia.com/wiki/Mass_Effect_Wiki",
+									"tracking_label" => "custom-level-3",
+								],
+
+								[
+									"type" => "link-text",
+									"title" => [
+										"type" => "text",
+										"value" => "link 3 3"
+									],
+									"href" => "http://masseffect.wikia.com/wiki/Mass_Effect_Wiki",
+									"tracking_label" => "custom-level-3",
+								],
+							]
+						]
+					]
+				]
+
+			]
+		];
 	}
 }
