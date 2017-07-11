@@ -35,6 +35,10 @@ class RailController extends WikiaController {
 		$this->getLazyRail();
 	}
 
+	public function stickyModule() {
+		// It loads Rail_stickyModule.php
+	}
+
 	/**
 	 * Get lazy right rail modules
 	 */
@@ -77,15 +81,15 @@ class RailController extends WikiaController {
 
 		krsort( $railModules );
 
-		// TODO XW-2760 remove after experiment is done
-		$isAdMixExperimentEnabled = $this->request->getBool( 'isAdMixExperimentEnabled', false );
+		// TODO ADEN-5481 remove after experiment is done
+		$isPremiumAdLayoutEnabled = $this->request->getBool( 'isPremiumAdLayoutEnabled', false );
 
-		if ( $isAdMixExperimentEnabled ) {
+		if ( $isPremiumAdLayoutEnabled ) {
 			// copied from RecirculationHooks::onGetRailModuleList
 			$recirculationModulePosition = $context->getUser()->isAnon() ? 1305 : 1285;
 			unset( $railModules[$recirculationModulePosition] );
 
-			array_push( $railModules, [ 'AdMixExperiment', 'recirculationAndAdPlaceholder', [] ] );
+			array_push( $railModules, [ 'Rail', 'stickyModule', [] ] );
 		}
 
 		$wrapper->wrap( function () use ( $railModules, &$railLazyContent ) {
@@ -99,8 +103,11 @@ class RailController extends WikiaController {
 		} );
 
 		// ad mix experiment uses a wrapper to group recirculation and ad placeholder
-		if ( !$isAdMixExperimentEnabled ) {
-			$railLazyContent .= Html::element( 'div', [ 'id' => 'WikiaAdInContentPlaceHolder' ] );
+		if ( !$isPremiumAdLayoutEnabled ) {
+			$railLazyContent .= Html::element( 'div', [
+				'id' => 'WikiaAdInContentPlaceHolder',
+				'class' => 'rail-sticky-module'
+			] );
 		}
 
 		$this->railLazyContent = $railLazyContent;

@@ -87,21 +87,24 @@ define('ext.wikia.adEngine.adContext', [
 	}
 
 	function enableAdMixExperiment(context) {
-		context.opts.adMixExperimentEnabled = !!(
-			isPageType('article') &&
-			context.targeting.skin === 'oasis' &&
-			context.targeting.hasFeaturedVideo &&
-			geo.isProperGeo(instantGlobals.wgAdDriverAdMixCountries)
-		);
+		var isEnabledOnFeaturedVideo = !!(
+				isPageType('article') &&
+				context.targeting.skin === 'oasis' &&
+				context.targeting.hasFeaturedVideo &&
+				geo.isProperGeo(instantGlobals.wgAdDriverAdMixCountries)
+			),
+			isEnabledOnRegularArticle = !!(
+				isPageType('article') &&
+				context.targeting.skin === 'oasis' &&
+				!context.targeting.hasFeaturedVideo &&
+				geo.isProperGeo(instantGlobals.wgAdDriverPremiumAdLayoutCountries)
+			);
 
-		// TODO remove admix1 in ADEN-5443
-		context.opts.adMix1Enabled = false;
-		context.opts.adMix3Enabled = context.opts.adMixExperimentEnabled;
+		context.opts.premiumAdLayoutEnabled = isEnabledOnFeaturedVideo || isEnabledOnRegularArticle;
+		context.slots.premiumAdLayoutSlotsToUnblock = ['INCONTENT_BOXAD_1', 'BOTTOM_LEADERBOARD'];
 
-		context.slots.adMixToUnblock = ['INCONTENT_BOXAD_1'];
-
-		if (context.opts.adMix3Enabled) {
-			context.slots.adMixToUnblock.push('BOTTOM_LEADERBOARD');
+		if (!context.targeting.hasFeaturedVideo) {
+			context.slots.premiumAdLayoutSlotsToUnblock.push('INCONTENT_PLAYER');
 		}
 	}
 

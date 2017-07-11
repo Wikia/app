@@ -102,7 +102,8 @@ require([
 	win
 ) {
 	'use strict';
-	var context = adContext.getContext();
+	var context = adContext.getContext(),
+		premiumSlots = context.slots.premiumAdLayoutSlotsToUnblock;
 
 	function initDesktopSlots() {
 		highImpact.init();
@@ -111,7 +112,8 @@ require([
 	}
 
 	win.addEventListener('wikia.uap', bottomLeaderboard.init);
-	if (context.opts.adMixExperimentEnabled && context.slots.adMixToUnblock.indexOf('BOTTOM_LEADERBOARD') >= 0) {
+
+	if (context.opts.premiumAdLayoutEnabled && premiumSlots.indexOf('BOTTOM_LEADERBOARD') >= 0) {
 		win.addEventListener('wikia.not_uap', bottomLeaderboard.init);
 	}
 

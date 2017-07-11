@@ -699,6 +699,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 		//border-top: 1px solid $color-search-grid-border;
 		margin-top: 35px;
 		overflow: hidden;
+		padding: 10px 0 0 10px;
 	}
 
 	.WikiaSearchAds {
@@ -722,10 +723,6 @@ $form-negative-side-padding: $form-side-padding*-1;
 			font-weight: bold;
 			line-height: 18px;
 		}
-	}
-
-	.SearchAdsTopWrapper {
-		padding: 10px 0 0 10px;
 	}
 
 	.SearchAdsBottom {

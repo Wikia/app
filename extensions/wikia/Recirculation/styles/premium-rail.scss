@@ -2,6 +2,10 @@
 @import 'skins/shared/mixins/transform';
 @import 'skins/shared/mixins/flexbox';
 
+$recirculation-thumbnail-margin: 6px;
+$recirculation-thumbnail-size: 20px;
+
+// TODO ADEN-5481 remove unused styles after premiumAdLayout rollout
 .WikiaRail .premium-recirculation-rail {
 
 	.recirculation-sponsored-footer {
@@ -43,6 +47,28 @@
 		&:hover {
 			color: $color-links;
 			text-decoration: none;
+		}
+	}
+}
+
+.rail-sticky-module {
+	.premium-recirculation-rail {
+		.item.is-video .image-thumbnail::after {
+			bottom: $recirculation-thumbnail-margin;
+			height: $recirculation-thumbnail-size;
+			right: $recirculation-thumbnail-margin;
+			width: $recirculation-thumbnail-size;
+		}
+
+		.content {
+			font-size: 12px;
+			line-height: inherit;
+			margin-left: 12px;
+			margin-top: 3px;
+		}
+
+		a {
+			@include flex-direction(row);
 		}
 	}
 }
