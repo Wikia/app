@@ -39,7 +39,7 @@ define('ext.wikia.adEngine.context.slotsContext', [
 		setStatus('TOP_LEADERBOARD', true);
 		setStatus('TOP_RIGHT_BOXAD', true);
 
-		setStatus('PREFOOTER_MIDDLE_BOXAD', !isPremiumAdLayoutEnabled && isHome);
+		setStatus('PREFOOTER_MIDDLE_BOXAD', isHome);
 		setStatus('LEFT_SKYSCRAPER_2', !isPremiumAdLayoutEnabled && !isHome);
 		setStatus('LEFT_SKYSCRAPER_3', !isPremiumAdLayoutEnabled && !isHome);
 		setStatus('INCONTENT_BOXAD_1', !isHome);
@@ -49,6 +49,8 @@ define('ext.wikia.adEngine.context.slotsContext', [
 		setStatus('PREFOOTER_LEFT_BOXAD', !isPremiumAdLayoutEnabled);
 
 		setStatus('INCONTENT_PLAYER', isIncontentEnabled);
+		// BLB can be used also as a part of UAP, but UAP is not looking at the slot status
+		// so we can safely set it to false (for non premium) and don't wait for uap response
 		setStatus('BOTTOM_LEADERBOARD', isPremiumAdLayoutEnabled);
 
 		log(['Disabled slots:', slots], 'info', logGroup);
