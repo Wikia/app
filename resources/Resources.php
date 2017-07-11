@@ -178,6 +178,13 @@ return array(
 		'scripts' => 'resources/jquery/jquery.xmldom.js',
 	),
 
+	/* jQuery Tipsy */
+
+	'jquery.tipsy' => array(
+		'scripts' => 'resources/jquery.tipsy/jquery.tipsy.js',
+		'styles' => 'resources/jquery.tipsy/jquery.tipsy.css',
+	),
+
 	/* jQuery UI */
 
 	// Core
