@@ -82,7 +82,7 @@ class SetWikiFactoryVariable extends Maintenance {
 		}
 
 		if ( !empty( $wikiId ) ) {
-			$wikiIds = [ $wikiId ];
+			$wikiIds = explode(',', $wikiId);
 		} else if ( !empty( $file ) ) {
 			$wikiIds = file( $file );
 		} else {
