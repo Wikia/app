@@ -58,7 +58,6 @@ require([
 				vastUrl,
 				inlineSkinConfig = {
 					controlBar: {
-						autoplayToggle: true,
 						autoplayCookieName: autoplayCookieName
 					}
 				};

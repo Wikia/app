@@ -5691,7 +5691,7 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
 
   if (OO.publicApi && OO.publicApi.VERSION) {
     // This variable gets filled in by the build script
-    OO.publicApi.VERSION.skin = {"releaseVersion": "4.14.8", "rev": "22c02fafc69ad8234b053ef0af4ddef796fa23dd"};
+    OO.publicApi.VERSION.skin = {"releaseVersion": "4.14.8", "rev": "4ecc3ceecfc395c341aabb771b35d22e1e9574aa"};
   }
 
   // WIKIA CHANGE - START
@@ -5704,6 +5704,7 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
   // WIKIA CHANGE - END
 
   var autoplayCookieName = 'html5-skin.autoplay',
+    autoplayCookieDomain,
     autoplayCookieExpireDays = 14,
     Html5Skin = function (mb, id) {
       this.mb = mb;
@@ -6617,6 +6618,9 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
         if(this.skin.props.skinConfig.controlBar.autoplayCookieExpireDays) {
           autoplayCookieExpireDays = this.skin.props.skinConfig.controlBar.autoplayCookieExpireDays;
         }
+        if(this.skin.props.skinConfig.controlBar.autoplayCookieDomain) {
+          autoplayCookieDomain = this.skin.props.skinConfig.controlBar.autoplayCookieDomain;
+        }
       }
       this.state.autoPlay.enabled = Cookies.get(autoplayCookieName) !== '0';
       this.state.configLoaded = true;
@@ -7260,7 +7264,14 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
     toggleAutoPlayEnabled: function() {
       this.state.autoPlay.enabled = !this.state.autoPlay.enabled;
       this.renderSkin();
-      Cookies.set(autoplayCookieName, this.state.autoPlay.enabled ? 1 : 0, { expires: autoplayCookieExpireDays });
+      Cookies.set(
+        autoplayCookieName,
+        this.state.autoPlay.enabled ? 1 : 0,
+        {
+          domain: autoplayCookieDomain,
+          expires: autoplayCookieExpireDays
+        }
+      );
       this.mb.publish(OO.EVENTS.WIKIA.AUTOPLAY_TOGGLED, this.state.autoPlay.enabled);
     },
 
