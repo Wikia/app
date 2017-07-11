@@ -36,7 +36,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 					targeting: {loc: 'hivi'}
 				},
 				BOTTOM_LEADERBOARD: {
-					sizes: [[728, 90]],
+					sizes: [[728, 90], [970, 250]],
 					targeting: {loc: 'footer'}
 				},
 				PREFOOTER_LEFT_BOXAD: {

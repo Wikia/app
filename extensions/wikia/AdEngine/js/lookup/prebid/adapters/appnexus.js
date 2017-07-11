@@ -60,7 +60,8 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexus',[
 				},
 				BOTTOM_LEADERBOARD: {
 					sizes: [
-						[728, 90]
+						[728, 90],
+						[970, 250]
 					],
 					position: 'btf'
 				},
