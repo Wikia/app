@@ -180,4 +180,26 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 
 		expect(context.filterSlotMap()).toEqual({});
 	});
+
+	it('filter slot map for premum ad layout', function () {
+		mocks.context.opts.premiumAdLayoutEnabled = true;
+		var context = getContext(),
+			slotMap = {
+				TOP_LEADERBOARD: 1,
+				TOP_RIGHT_BOXAD: 2,
+				PREFOOTER_LEFT_BOXAD: 3,
+				PREFOOTER_MIDDLE_BOXAD: 4,
+				PREFOOTER_RIGHT_BOXAD: 5,
+				LEFT_SKYSCRAPER_2: 6,
+				LEFT_SKYSCRAPER_3: 7,
+				INVISIBLE_HIGH_IMPACT_2: 8,
+				BOTTOM_LEADERBOARD: 9
+			};
+
+		expect(context.filterSlotMap(slotMap)).toEqual({
+			TOP_LEADERBOARD: 1,
+			TOP_RIGHT_BOXAD: 2,
+			BOTTOM_LEADERBOARD: 9
+		});
+	});
 });

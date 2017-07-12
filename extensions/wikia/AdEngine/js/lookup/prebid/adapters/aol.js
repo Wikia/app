@@ -59,6 +59,14 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.aol', [
 					alias: '4431475',
 					sizeId: '529'
 				}
+				// TODO: fill with proper numbers https://wikia-inc.atlassian.net/browse/ADEN-5517
+				// BOTTOM_LEADERBOARD: {
+				// 	size: [728, 90],
+				// 	placement: 'XXXX',
+				// 	network: network,
+				// 	alias: 'XXXX',
+				// 	sizeId: 'XXXX'
+				// }
 				// Because of differences in AOL dashboard and DFP (ADEN-4750) this slot was disabled. To avoid making
 				// additional calls it is turned off. For more details see epic (ADEN-4580).
 				// INCONTENT_BOXAD_1: {
