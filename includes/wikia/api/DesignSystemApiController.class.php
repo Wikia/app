@@ -48,6 +48,9 @@ class DesignSystemApiController extends WikiaApiController {
 			'wgEnableForumExt' => WikiFactory::getVarValueByName( 'wgEnableForumExt', intval($params[static::PARAM_ID] )),
 			'wgEnableDiscussions' => WikiFactory::getVarValueByName( 'wgEnableDiscussions', intval($params[static::PARAM_ID] )),
 			'wgEnableSpecialVideosExt' => WikiFactory::getVarValueByName( 'wgEnableSpecialVideosExt', intval($params[static::PARAM_ID] )),
+
+			//used in Navigation Model
+			'wgOasisGlobalNavigation' => WikiFactory::getVarValueByName( 'wgOasisGlobalNavigation', intval($params[static::PARAM_ID] )),
 		]);
 
 		$globalStateWrapper->wrap(function() use($params) {

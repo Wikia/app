@@ -107,7 +107,8 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	}
 
 	public function getWikiLocalNavigation(): array {
-
+		$localWikiNavData = F::app()->sendRequest( 'NavigationApi', 'getData' )->getData()['navigation']['wiki'];
+		ddd($localWikiNavData);
 		return [];
 	}
 
@@ -224,5 +225,25 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		}
 
 		return $this->discussLinkData;
+	}
+
+	private function formatLocalNavData( $items, $nestingLevel ): array {
+		return array_map(function($item) use($nestingLevel) {
+			$ret = [
+				"type" => isset($item['children']) ? "dropdown" : "link-text",
+				"title" => [
+					"type" => "text",
+					"value" => $item['text']
+				],
+				"href" => $item['href'],
+				"tracking_label" => "custom-level-" . $nestingLevel,
+			];
+
+			if (isset($item['children'])) {
+				$ret['items'] = $this->formatLocalNavData($item['children'], $nestingLevel + 1);
+			}
+
+			return $ret;
+		}, $items);
 	}
 }
