@@ -11,7 +11,7 @@ de
 nl',
 	'widget-title-activetalkpages' => 'Active talk pages',
 	'widget-desc-activetalkpages' => 'A list of recently edited talk pages',
-	'widget-title-advertiser' => 'Fandom Spotlight',
+	'widget-title-advertiser' => 'FANDOM Spotlight',
 	'widget-desc-advertiser' => 'Showing spotlights / ads',
 	'widget-title-ancientpages' => 'Stale pages',
 	'widget-desc-ancientpages' => 'See a list of pages that have not been edited in a long time',
@@ -61,8 +61,8 @@ nl',
 	'widget-desc-topvoted' => "See the highest rated pages, as voted by this wiki's community",
 	'widget-title-watchlist' => 'Watchlist',
 	'widget-desc-watchlist' => 'Easily keep an eye on your watched pages',
-	'widget-title-wikiamessages' => 'Fandom messages',
-	'widget-desc-wikiamessages' => 'Fandom messages',
+	'widget-title-wikiamessages' => 'FANDOM messages',
+	'widget-desc-wikiamessages' => 'FANDOM messages',
 	'widget-title-wikiapartners' => 'Our partners',
 	'widget-desc-wikiapartners' => 'Our partners',
 	'widget-title-wikiatoolbox' => 'Toolbox',
@@ -88,9 +88,9 @@ nl',
 
 $messages['fr'] = array(
 	'widgetframework-desc' => 'Framework de widget de Wikia',
-	'widget-title-advertiser' => 'À la une de Fandom',
-	'widget-desc-wikiamessages' => 'Messages de Fandom',
-	'widget-title-wikiamessages' => 'Messages de Fandom',
+	'widget-title-advertiser' => 'À la une de FANDOM',
+	'widget-desc-wikiamessages' => 'Messages de FANDOM',
+	'widget-title-wikiamessages' => 'Messages de FANDOM',
 	'widget-community-hoursago' => ', {{PLURAL:$1|il y a une heure|il y a $1 heures}}',
 	'widget-community-minutesago' => ', {{PLURAL:$1|il y a une minute|il y a $1 minutes}}',
 	'widget-community-more' => 'Plus',
@@ -123,9 +123,9 @@ $messages['qqq'] = array(
 );
 
 $messages['de'] = array(
-	'widget-title-advertiser' => 'Fandom-Spotlight',
-	'widget-desc-wikiamessages' => 'Fandom-Nachrichten',
-	'widget-title-wikiamessages' => 'Fandom-Nachrichten',
+	'widget-title-advertiser' => 'FANDOM-Spotlight',
+	'widget-desc-wikiamessages' => 'FANDOM-Nachrichten',
+	'widget-title-wikiamessages' => 'FANDOM-Nachrichten',
 	'widget-bookmark-empty' => 'Klicke auf das darüberliegende Symbol, um deine Lieblingsseiten hinzuzufügen.',
 	'widget-categorycloud-empty' => '(Keine Kategorien bislang)',
 	'widget-community-hoursago' => ', {{PLURAL:$1|vor einer Stunde|vor $1 Stunden}}',
@@ -188,9 +188,9 @@ $messages['de'] = array(
 );
 
 $messages['es'] = array(
-	'widget-desc-wikiamessages' => 'Mensajes de Fandom',
-	'widget-title-wikiamessages' => 'Mensajes de Fandom',
-	'widget-title-advertiser' => 'Spotlights de Fandom',
+	'widget-desc-wikiamessages' => 'Mensajes de FANDOM',
+	'widget-title-wikiamessages' => 'Mensajes de FANDOM',
+	'widget-title-advertiser' => 'Spotlights de FANDOM',
 	'widget-bookmark-empty' => 'Añade tus páginas favoritas pulsando en el icono de "añadir" encima de este texto.',
 	'widget-community-hoursago' => ', {{PLURAL:$1|hace una hora|hace $1 horas}}',
 	'widget-community-minutesago' => ', {{PLURAL:$1|hace un minuto|hace $1 minutos}}',
@@ -397,15 +397,15 @@ $messages['hu'] = array(
 );
 
 $messages['it'] = array(
-	'widget-desc-wikiamessages' => 'Messaggi di Fandom',
-	'widget-title-advertiser' => 'Fandom Spotlight',
-	'widget-title-wikiamessages' => 'Messaggi di Fandom',
+	'widget-desc-wikiamessages' => 'Messaggi di FANDOM',
+	'widget-title-advertiser' => 'FANDOM Spotlight',
+	'widget-title-wikiamessages' => 'Messaggi di FANDOM',
 );
 
 $messages['ja'] = array(
-	'widget-desc-wikiamessages' => 'Fandomのメッセージ',
-	'widget-title-advertiser' => 'Fandomスポットライト',
-	'widget-title-wikiamessages' => 'Fandomのメッセージ',
+	'widget-desc-wikiamessages' => 'FANDOMのメッセージ',
+	'widget-title-advertiser' => 'FANDOMスポットライト',
+	'widget-title-wikiamessages' => 'FANDOMのメッセージ',
 	'widget-bookmark-empty' => '上にある「追加」ボタンをクリックしてお気に入りのページを追加してください。',
 	'widget-community-hoursago' => ', $1時間前',
 	'widget-community-minutesago' => ', $1分前',
@@ -480,13 +480,13 @@ $messages['pl'] = array(
 	'widget-desc-topvoted' => 'Lista najwyżej ocenionych artykułów na tej wiki',
 	'widget-title-watchlist' => 'Obserwowane',
 	'widget-desc-watchlist' => 'Lista obserwowanych stron na tej wiki',
-	'widget-title-wikiamessages' => 'Wiadomości Fandomu',
+	'widget-title-wikiamessages' => 'Wiadomości FANDOMu',
 	'widget-title-wikiapartners' => 'Nasi partnerzy',
 	'widget-desc-wikiapartners' => 'Nasi partnerzy',
 	'widget-title-wikipage' => 'Strona wiki w widżecie',
 	'widget-desc-wikipage' => 'Umieszcza treść podanej strony wewnątrz widżeta',
-	'widget-desc-wikiamessages' => 'Wiadomości Fandomu',
-	'widget-title-advertiser' => 'Wyróżnione w Fandom',
+	'widget-desc-wikiamessages' => 'Wiadomości FANDOMu',
+	'widget-title-advertiser' => 'Wyróżnione w FANDOM',
 	'widget-community-hoursago' => ', {{PLURAL:$1|godzinę temu|$1 godziny temu|$1 godzin temu}}',
 	'widget-community-minutesago' => ', {{PLURAL:$1|minutę temu|$1 minuty temu|$1 minut temu}}',
 	'widget-community-more' => 'Więcej',
@@ -498,9 +498,9 @@ $messages['pl'] = array(
 );
 
 $messages['pt'] = array(
-	'widget-desc-wikiamessages' => 'Mensagens do Fandom',
-	'widget-title-advertiser' => 'Fandom Spotlight',
-	'widget-title-wikiamessages' => 'Mensagens do Fandom',
+	'widget-desc-wikiamessages' => 'Mensagens do FANDOM',
+	'widget-title-advertiser' => 'FANDOM Spotlight',
+	'widget-title-wikiamessages' => 'Mensagens do FANDOM',
 );
 
 $messages['ru'] = array(
@@ -635,14 +635,14 @@ pl hu es de',
 );
 
 $messages['zh-hans'] = array(
-	'widget-desc-wikiamessages' => 'Fandom消息',
-	'widget-title-advertiser' => 'Fandom聚光灯',
-	'widget-title-wikiamessages' => 'Fandom消息',
+	'widget-desc-wikiamessages' => 'FANDOM消息',
+	'widget-title-advertiser' => 'FANDOM聚光灯',
+	'widget-title-wikiamessages' => 'FANDOM消息',
 );
 
 $messages['zh-hant'] = array(
-	'widget-desc-wikiamessages' => 'Fandom訊息',
-	'widget-title-advertiser' => 'Fandom聚光燈',
-	'widget-title-wikiamessages' => 'Fandom訊息',
+	'widget-desc-wikiamessages' => 'FANDOM訊息',
+	'widget-title-advertiser' => 'FANDOM聚光燈',
+	'widget-title-wikiamessages' => 'FANDOM訊息',
 );
 
