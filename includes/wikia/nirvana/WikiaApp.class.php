@@ -23,12 +23,6 @@ class WikiaApp {
 	private $localRegistry = null;
 
 	/**
-	 * hook dispatcher
-	 * @var $hookDispatcher WikiaHookDispatcher
-	 */
-	private $hookDispatcher = null;
-
-	/**
 	 * namespace Registry
 	 * @var $namespaceRegistry array list of namespaces Registered by nirvana framework
 	 */
@@ -74,10 +68,9 @@ class WikiaApp {
 	 * constructor
 	 * @param WikiaRegistry $globalRegistry
 	 * @param WikiaRegistry $localRegistry
-	 * @param WikiaHookDispatcher $hookDispatcher
 	 */
 
-	public function __construct( WikiaRegistry $globalRegistry = null, WikiaRegistry $localRegistry = null, WikiaHookDispatcher $hookDispatcher = null ) {
+	public function __construct( WikiaRegistry $globalRegistry = null, WikiaRegistry $localRegistry = null ) {
 
 		if(!is_object($globalRegistry)) {
 			$globalRegistry = (new WikiaGlobalRegistry);
@@ -87,12 +80,7 @@ class WikiaApp {
 			$localRegistry = (new WikiaLocalRegistry);
 		}
 
-		if(!is_object($hookDispatcher)) {
-			$hookDispatcher = (new WikiaHookDispatcher);
-		}
-
 		$this->localRegistry = $localRegistry;
-		$this->hookDispatcher = $hookDispatcher;
 
 		// set helper accessors
 		$this->wg = $globalRegistry;
@@ -191,14 +179,6 @@ class WikiaApp {
 		} else {
  			return $baseName . "Service";
 		}
-	}
-
-	/**
-	 * get hook dispatcher
-	 * @return WikiaHookDispatcher
-	 */
-	public function getHookDispatcher() {
-		return $this->hookDispatcher;
 	}
 
 	/**

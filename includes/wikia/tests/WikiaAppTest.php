@@ -11,19 +11,16 @@ class WikiaAppTest extends TestCase {
 	private $globalRegistry;
 	/* @var PHPUnit_Framework_MockObject_MockObject */
 	private $localRegistry;
-	/* @var PHPUnit_Framework_MockObject_MockObject */
-	private $hookDispatcher;
 
 	protected function setUp() {
 		$this->globalRegistry = $this->createMock( WikiaGlobalRegistry::class );
 		$this->localRegistry = $this->createMock( WikiaLocalRegistry::class );
-		$this->hookDispatcher = $this->createMock( WikiaHookDispatcher::class );
-		$this->application = new WikiaApp($this->globalRegistry, $this->localRegistry, $this->hookDispatcher);
+		$this->application = new WikiaApp($this->globalRegistry, $this->localRegistry );
 	}
 
-	public function testDefaultRegistryAndHookDispatcherInstances() {
+	public function testDefaultRegistryInstances() {
 		$application = new WikiaApp();
-		$this->assertInstanceOf('WikiaHookDispatcher', $application->getHookDispatcher());
+
 		$this->assertInstanceOf('WikiaGlobalRegistry', $application->getGlobalRegistry());
 		$this->assertInstanceOf('WikiaLocalRegistry', $application->getLocalRegistry());
 	}
