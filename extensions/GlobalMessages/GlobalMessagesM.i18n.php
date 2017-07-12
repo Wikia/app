@@ -15544,7 +15544,7 @@ contenttype/subtypeの形式で指定してください（例：<tt>image/jpeg</
 	'most_visited' => '最多アクセス',
 	'most_emailed' => 'メールの使われた記事',
 	'manage_widgets' => 'ウィジェットの設定',
-	'masthead-anonymous-user' => 'Fandomユーザー',
+	'masthead-anonymous-user' => 'FANDOMユーザー',
 	'monaco-sidebar' => '*mainpage|{{SITENAME}}
 *mainpage|コンテンツ
 **#popular#|お薦め記事
@@ -36857,7 +36857,7 @@ $messages['zh-hans'] = array(
 	'mobile-hide' => '隐藏',
 	'mobile-show' => '显示',
 	'most_visited' => '最多人访问',
-	'masthead-anonymous-user' => 'Fandom用户',
+	'masthead-anonymous-user' => 'FANDOM用户',
 	'mainpage-nstab' => '',
 	'media_sample' => 'Example.ogg',
 	'mostlinked-summary' => '',
@@ -37090,7 +37090,7 @@ $messages['zh-hant'] = array(
 	'mobile-hide' => '隱藏',
 	'mobile-show' => '顯示',
 	'most_visited' => '最多人訪問',
-	'masthead-anonymous-user' => 'Fandom用戶',
+	'masthead-anonymous-user' => 'FANDOM用戶',
 	'mainpage-nstab' => '',
 	'media_sample' => 'Example.ogg',
 	'mostlinked-summary' => '',

@@ -17793,7 +17793,7 @@ $messages['ja'] = array(
 * [http://ja.wikia.com/利用規約 利用規約]
 * [[Special:Contact|お問い合わせ]]
 * [http://www.wikia.com/Advertising 広告]',
-	'specialpages-group-wikia' => 'Fandomのページ',
+	'specialpages-group-wikia' => 'FANDOMのページ',
 	'seeeditcount' => '編集回数のカウントをご覧ください',
 	'seemoredotdotdot' => 'その他',
 	'showall' => '全て表示する',

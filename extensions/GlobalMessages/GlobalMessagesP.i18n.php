@@ -40905,7 +40905,7 @@ $messages['zh-hans'] = array(
 	'passwordtooshort' => '您的密码至少需要{{PLURAL:$1|1个字符|$1个字符}}。',
 	'password-name-match' => '您的密码必须不同于您的用户名。',
 	'password-login-forbidden' => '这个用户名称及密码的使用是被禁止的。',
-	'passwordremindertitle' => '来自Fandom的密码提示',
+	'passwordremindertitle' => '来自FANDOM的密码提示',
 	'passwordremindertext' => '你好，
 
 用户"$2"的登入密码是"$3"。
@@ -40914,7 +40914,7 @@ $messages['zh-hans'] = array(
 
 谢谢！
 
-Fandom社区团队
+FANDOM社区团队
 
 www.wikia.com
 ___________________________________________________________
@@ -41102,7 +41102,7 @@ ___________________________________________________________
 	'patrol-log-header' => '这是巡查后的修订版本的日志。',
 	'previousdiff' => '←上一编辑',
 	'parentheses' => '（$1）',
-	'prefs-help-birthinfo' => '作为安全预防措施，也为了遵守美国联邦法规而保持网站的完整性，Fandom要求所有用户提供自己的真实出生日期。',
+	'prefs-help-birthinfo' => '作为安全预防措施，也为了遵守美国联邦法规而保持网站的完整性，FANDOM要求所有用户提供自己的真实出生日期。',
 	'prefs-help-terms' => '创建用户帐户，即表示您同意并接受此[[homepage:Terms of use|Wikia, Inc使用条款]]',
 	'profile' => '用户档案',
 	'pagecategorieslink' => 'Special:Categories',
@@ -41160,7 +41160,7 @@ $messages['zh-hant'] = array(
 	'passwordtooshort' => '您的密碼不能少於$1個字元。',
 	'password-name-match' => '您的密碼必須跟您的用戶名不相同。',
 	'password-login-forbidden' => '這個用戶名稱及密碼的使用是被禁止的。',
-	'passwordremindertitle' => '來自Fandom的密碼提示問題',
+	'passwordremindertitle' => '來自FANDOM的密碼提示問題',
 	'passwordremindertext' => '你好，
 
 用戶"$2"的登入密碼是"$3"。
@@ -41169,7 +41169,7 @@ $messages['zh-hant'] = array(
 
 謝謝！
 
-Fandom社區團隊
+FANDOM社區團隊
 
 www.wikia.com
 ___________________________________________________________
@@ -41356,7 +41356,7 @@ ___________________________________________________________
 	'patrol-log-header' => '這是已巡查修訂版本的日誌。',
 	'previousdiff' => '←上一版本',
 	'parentheses' => '（$1）',
-	'prefs-help-birthinfo' => '作爲安全措施，也爲了遵守美國聯邦法規的同時，保持網站完整性，Fandom要求所有用戶提供自己的真實出生日期。',
+	'prefs-help-birthinfo' => '作爲安全措施，也爲了遵守美國聯邦法規的同時，保持網站完整性，FANDOM要求所有用戶提供自己的真實出生日期。',
 	'prefs-help-terms' => '創建帳戶，即表示你同意此[[homepage:Terms of use|Wikia, Inc使用條款]]。',
 	'profile' => '用戶檔案',
 	'pagecategorieslink' => 'Special:Categories',

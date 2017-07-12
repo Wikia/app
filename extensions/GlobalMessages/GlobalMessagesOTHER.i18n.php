@@ -122,7 +122,13 @@ $messages['ka'] = array(
 );
 
 $messages['ko'] = array(
-	'1movedto2' => '[[$1]]을 [[$2]]로 이동함',
+	'1movedto2' => 'moved [[$1]] to [[$2]]',
+	'1movedto2_redir' => 'moved [[$1]] to [[$2]] over redirect',
+	'#voted#' => 'Top voted articles',
+	'#popular#' => 'Most popular articles',
+	'#visited#' => 'Most visited articles',
+	'#newlychanged#' => 'Newly changed articles',
+	'#topusers#' => 'Top users',
 );
 
 $messages['ne'] = array(

@@ -9615,7 +9615,7 @@ Bitte prüfe die Logbücher.',
 	'rightsnone' => '(–)',
 	'recentchanges' => 'Letzte Änderungen',
 	'recentchanges-legend' => 'Anzeigeoptionen',
-	'recentchangestext' => '<div id="wikia-mediawiki-recentchangestext" style="border:2px solid #e9e9e9; margin-bottom:0.3em; padding:0.2em 0.5em;"><span style="float:left;">[[Special:NewPages|Neue Seiten]] - [[Special:NewImages|Neue Bilder]] – [[Special:Log|Logbücher]] – [[Special:Insights|Insights]]</span><span style="float:right;">[[w:c:de.community:Hilfe:Letzte_Änderungen|Letzte Änderungen]]</span><div style="clear:both;"></div></div>',
+	'recentchangestext' => '<div id="wikia-mediawiki-recentchangestext" style="border:2px solid #e9e9e9; margin-bottom:0.3em; padding:0.2em 0.5em;"><span style="float:left;">[[Special:NewPages|Neue Seiten]] – [[Special:NewImages|Neue Bilder]] – [[Special:Log|Logbücher]] – [[Special:Insights|Insights]]</span><span style="float:right;">[[Hilfe:Letzte_Änderungen|Letzte Änderungen]]</span><div style="clear:both;"></div></div>',
 	'recentchanges-feed-description' => 'Verfolge mit diesem Feed die letzten Änderungen in {{SITENAME}}.',
 	'recentchanges-label-newpage' => 'Neue Seite',
 	'recentchanges-label-minor' => 'Kleine Änderung',
@@ -20973,7 +20973,7 @@ ___________________________________________
 	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
-	'registerintro-title' => 'Fandomでアカウントを作成すると、コミュニティの一員になります',
+	'registerintro-title' => 'FANDOMでアカウントを作成すると、コミュニティの一員になります',
 	'registerintro-text' => 'あなたが行う全ての投稿にクレジットがつけられ、プロフィールの作成・気に入ったページのウォッチ・様々なツールの利用ができるようになります。',
 	'rcshowhidelogs' => 'ログを$1',
 	'right-hideblockername' => 'ブロック通知にユーザー名を表示させない',
@@ -49068,7 +49068,7 @@ Wikia 社区团队',
 	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
-	'registerintro-title' => '当你在Fandom上创建帐户时，你就成为了社区的一员！',
+	'registerintro-title' => '当你在FANDOM上创建帐户时，你就成为了社区的一员！',
 	'registerintro-text' => '你的贡献将得到认可！你还可以创建个人用户主页，关注你最喜欢的页面，以及使用各种实用的工具。',
 	'rcshowhidelogs' => '$1个记录',
 	'right-hideblockername' => '在封禁通知中不显示用户名。',
