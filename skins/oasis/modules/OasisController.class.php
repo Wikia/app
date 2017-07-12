@@ -146,7 +146,7 @@ class OasisController extends WikiaController {
 
 		$jsPackages = array();
 		$scssPackages = array();
-		$this->app->runHook(
+		Hooks::run(
 			'WikiaAssetsPackages',
 			array(
 				&$wgOut,

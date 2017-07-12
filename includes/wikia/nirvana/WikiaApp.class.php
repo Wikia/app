@@ -656,17 +656,6 @@ class WikiaApp {
 	}
 
 	/**
-	 * simple Hooks::run wrapper
-	 *
-	 * @param string $hookName The name of the hook to run
-	 * @param array $parameters An array of the params to pass in the hook call
-	 * @return bool
-	 */
-	public function runHook( $hookName, $parameters ) {
-		return Hooks::run( $hookName, $parameters );
-	}
-
-	/**
 	 * get view Object for given controller and method, providing your own data
 	 * @param string $controllerName
 	 * @param string $method

@@ -821,7 +821,7 @@ class Linker {
 				$srcWidth = $file->getWidth( $page );
 
 				/* Wikia change start - Jakub */
-				F::app()->runHook( 'LinkerMakeThumbLink2FileOriginalSize', array( $file, &$srcWidth ) );
+				Hooks::run( 'LinkerMakeThumbLink2FileOriginalSize', [ $file, &$srcWidth ] );
 				/* Wikia change end */
 
 				if ( $srcWidth && !$file->mustRender() && $hp['width'] > $srcWidth ) {
