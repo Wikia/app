@@ -122,7 +122,7 @@ class DesignSystemApiController extends WikiaApiController {
 				"tracking_label" => "sitename"
 			],
 
-			"background-image" => "https://vignette3.wikia.nocookie.net/masseffect/images/0/0e/Community-header-background/revision/latest/zoom-crop/width/471/height/115?cb=20170609160041",
+			"background_image" => "https://vignette3.wikia.nocookie.net/masseffect/images/0/0e/Community-header-background/revision/latest/zoom-crop/width/471/height/115?cb=20170609160041",
 
 			"navigation" => [
 				[
