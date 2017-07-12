@@ -40,6 +40,7 @@ class DesignSystemApiController extends WikiaApiController {
 			'wgAdminSkin' => WikiFactory::getVarValueByName( 'wgAdminSkin',(int) $params[static::PARAM_ID] ),
 			'wgOasisThemeSettings' => WikiFactory::getVarValueByName( 'wgOasisThemeSettings', (int)$params[static::PARAM_ID] ),
 			'wgOasisThemeSettingsHistory' => WikiFactory::getVarValueByName( 'wgOasisThemeSettingsHistory', (int)$params[static::PARAM_ID] ),
+			'wgUploadPath' => WikiFactory::getVarValueByName( 'wgUploadPath', (int)$params[static::PARAM_ID] ),
 		]);
 
 		$globalStateWrapper->wrap(function() use($params) {

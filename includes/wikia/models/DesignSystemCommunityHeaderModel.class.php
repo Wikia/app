@@ -5,6 +5,8 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	const DEFAULT_LANG = 'en';
 	const PRODUCT_WIKIS = 'wikis';
 
+	const WORDMARK_TYPE_GRAPHIC = 'graphic';
+
 	private $product;
 	private $productInstanceId;
 	private $lang;
@@ -14,6 +16,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	private $bgImageUrl = null;
 
 	private $themeSettings;
+	private $settings;
 	private $mainPageUrl;
 
 	public function __construct( $product, $productInstanceId, $lang = self::DEFAULT_LANG ) {
@@ -24,31 +27,45 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		$this->lang = $lang;
 
 		$this->themeSettings = new ThemeSettings();
+		$this->settings = $this->themeSettings->getSettings();
 		$this->mainPageUrl = GlobalTitle::newMainPage( $this->productInstanceId )->getFullURL();
 	}
 
 	public function getData(): array {
-		return [
+		$data = [
 			"sitename" => $this->getSiteNameData(),
-			"background_image" => $this->getBackgroundImageUrl()
 		];
+
+		if ( !empty( $this->getBackgroundImageUrl() ) ) {
+			$data["background_image"] = $this->getBackgroundImageUrl();
+		}
+
+		if ( !empty( $this->getWordmarkData() ) ) {
+			$data["wordmark"] = $this->getWordmarkData();
+		}
+
+		return $data;
 	}
 
 	public function getWordmarkData(): array {
 		if ( $this->wordmarkData === null ) {
-			$this->wordmarkData = [
-				"type" => "link-image",
-				"href" => $this->mainPageUrl,
-				"image-data" => [
-					"type" => "image-external",
-					"url" => "",//TODO
-				],
-				"title" => [
-					"type" => "text",
-					"value" => $this->themeSettings->getSettings()['wordmark-text'],
-				],
-				"tracking_label" => "wordmark-image",
-			];
+			$this->wordmarkData = [];
+
+			if ( $this->settings['wordmark-type'] === self::WORDMARK_TYPE_GRAPHIC ) {
+				$this->wordmarkData = [
+					"type" => "link-image",
+					"href" => $this->mainPageUrl,
+					"image-data" => [
+						"type" => "image-external",
+						"url" => $this->themeSettings->getWordmarkUrl(),
+					],
+					"title" => [
+						"type" => "text",
+						"value" => $this->themeSettings->getSettings()['wordmark-text'],
+					],
+					"tracking_label" => "wordmark-image",
+				];
+			}
 		}
 
 		return $this->wordmarkData;
