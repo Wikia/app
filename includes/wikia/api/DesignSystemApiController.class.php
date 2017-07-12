@@ -272,7 +272,7 @@ class DesignSystemApiController extends WikiaApiController {
 						"type" => "translatable-text",
 						"key" => "community-header-explore"
 					],
-					"image" => [
+					"image-data" => [
 						"type" => "wds-svg",
 						"name" => "wds-icons-explore-tiny"
 					],
@@ -305,7 +305,7 @@ class DesignSystemApiController extends WikiaApiController {
 						"type" => "translatable-text",
 						"key" => "community-header-discuss"
 					],
-					"image" => [
+					"image-data" => [
 						"type" => "wds-svg",
 						"name" => "wds-icons-reply-tiny"
 					],

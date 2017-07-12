@@ -14,6 +14,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	private $wordmarkData = null;
 	private $sitenameData = null;
 	private $bgImageUrl = null;
+	private $exploreMenu = null;
 
 	private $themeSettings;
 	private $settings;
@@ -34,6 +35,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	public function getData(): array {
 		$data = [
 			"sitename" => $this->getSiteNameData(),
+			"navigation" => $this->getNavigation()
 		];
 
 		if ( !empty( $this->getBackgroundImageUrl() ) ) {
@@ -96,7 +98,11 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	}
 
 	public function getNavigation(): array {
-		return [];
+		return array_merge(
+			$this->getWikiLocalNavigation(),
+			$this->getExploreMenu(),
+			$this->getDiscussLink()
+		);
 	}
 
 	public function getWikiLocalNavigation(): array {
@@ -105,8 +111,81 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	}
 
 	public function getExploreMenu(): array {
+		global $wgEnableCommunityPageExt, $wgEnableForumExt, $wgEnableDiscussions, $wgEnableSpecialVideosExt;
 
-		return [];
+		if ( $this->exploreMenu === null ) {
+			$exploreItems = [
+				[
+					'title' => 'WikiActivity',
+					'key' => 'community-header-wiki-activity',
+					'tracking' => 'explore-activity',
+					'include' => true,
+				],
+				[
+					'title' => 'Random',
+					'key' => 'community-header-random-page',
+					'tracking' => 'explore-random',
+					'include' => true,
+				],
+				[
+					'title' => 'Community',
+					'key' => 'community-header-community',
+					'tracking' => 'explore-community',
+					'include' => !empty( $wgEnableCommunityPageExt ),
+				],
+				[
+					'title' => 'Videos',
+					'key' => 'community-header-videos',
+					'tracking' => 'explore-videos',
+					'include' => !empty( $wgEnableSpecialVideosExt ),
+				],
+				[
+					'title' => 'Images',
+					'key' => 'community-header-images',
+					'tracking' => 'explore-images',
+					'include' => true,
+				],
+				[
+					'title' => 'Forum',
+					'key' => 'community-header-forum',
+					'tracking' => 'explore-forum',
+					'include' => !empty( $wgEnableForumExt ) && !empty( $wgEnableDiscussions ),
+				],
+			];
+
+			$this->exploreMenu = [
+				"type" => "dropdown",
+				"title" => [
+					"type" => "translatable-text",
+					"key" => "community-header-explore",
+				],
+				"image-data" => [
+					"type" => "wds-svg",
+					"name" => "wds-icons-explore-tiny"
+				],
+				"items" => array_map(
+					function ( $item ) {
+						return [
+							"type" => "link-text",
+							"title" => [
+								"type" => "translatable-text",
+								"key" => $item['key'],
+							],
+							"href" => GlobalTitle::newFromText( $item['title'], NS_SPECIAL, $this->productInstanceId )
+								->getFullURL(),
+							"tracking_label" => $item['tracking']
+						];
+					},
+					array_filter(
+						$exploreItems,
+						function ( $item ) {
+							return $item['include'];
+						}
+					)
+				)];
+		}
+
+		return $this->exploreMenu;
 	}
 
 	public function getDiscussLink(): array {
