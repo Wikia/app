@@ -15,6 +15,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	private $sitenameData = null;
 	private $bgImageUrl = null;
 	private $exploreMenu = null;
+	private $discussLinkData = null;
 
 	private $themeSettings;
 	private $settings;
@@ -24,7 +25,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		parent::__construct();
 
 		$this->product = $product;
-		$this->productInstanceId = $productInstanceId;
+		$this->productInstanceId = intval($productInstanceId);
 		$this->lang = $lang;
 
 		$this->themeSettings = new ThemeSettings();
@@ -98,11 +99,11 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	}
 
 	public function getNavigation(): array {
-		return array_merge(
-			$this->getWikiLocalNavigation(),
-			$this->getExploreMenu(),
-			$this->getDiscussLink()
-		);
+		return [
+			0 => $this->getWikiLocalNavigation(),
+			1 => $this->getExploreMenu(),
+			2 => $this->getDiscussLinkData()
+		];
 	}
 
 	public function getWikiLocalNavigation(): array {
@@ -182,13 +183,46 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 							return $item['include'];
 						}
 					)
-				)];
+				)
+			];
 		}
 
 		return $this->exploreMenu;
 	}
 
-	public function getDiscussLink(): array {
-		return [];
+	public function getDiscussLinkData(): array {
+		global $wgEnableForumExt, $wgEnableDiscussions;
+
+		if ( $this->discussLinkData === null ) {
+			$url = "";
+			$key = "";
+			$tracking = "";
+
+			if ( !empty( $wgEnableDiscussions ) ) {
+				$url = "/d/f";
+				$key = "community-header-discuss";
+				$tracking = "discuss";
+			} elseif ( !empty( $wgEnableForumExt ) ) {
+				$url = GlobalTitle::newFromText( "Forum", NS_SPECIAL, $this->productInstanceId )->getFullURL();
+				$key = "community-header-forum";
+				$tracking = "forum";
+			}
+
+			$this->discussLinkData = empty( $url ) ? [] : [
+				"type" => "link-text",
+				"title" => [
+					"type" => "translatable-text",
+					"key" => $key,
+				],
+				"href" => $url,
+				"tracking_label" => $tracking,
+				"image-data" => [
+					"type" => "wds-svg",
+					"name" => "wds-icons-reply-small",
+				]
+			];
+		}
+
+		return $this->discussLinkData;
 	}
 }

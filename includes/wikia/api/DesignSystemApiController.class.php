@@ -36,11 +36,18 @@ class DesignSystemApiController extends WikiaApiController {
 
 		//TODO: think about refactoring ThemeSettings class to have cityId as constructor param
 		$globalStateWrapper = new \Wikia\Util\GlobalStateWrapper([
-			'wgSitename' => WikiFactory::getVarValueByName( 'wgSitename', (int)$params[static::PARAM_ID] ),
-			'wgAdminSkin' => WikiFactory::getVarValueByName( 'wgAdminSkin',(int) $params[static::PARAM_ID] ),
-			'wgOasisThemeSettings' => WikiFactory::getVarValueByName( 'wgOasisThemeSettings', (int)$params[static::PARAM_ID] ),
-			'wgOasisThemeSettingsHistory' => WikiFactory::getVarValueByName( 'wgOasisThemeSettingsHistory', (int)$params[static::PARAM_ID] ),
-			'wgUploadPath' => WikiFactory::getVarValueByName( 'wgUploadPath', (int)$params[static::PARAM_ID] ),
+			// used in ThemeSettings
+			'wgSitename' => WikiFactory::getVarValueByName( 'wgSitename', intval($params[static::PARAM_ID] )),
+			'wgAdminSkin' => WikiFactory::getVarValueByName( 'wgAdminSkin',intval( $params[static::PARAM_ID]) ),
+			'wgOasisThemeSettings' => WikiFactory::getVarValueByName( 'wgOasisThemeSettings', intval($params[static::PARAM_ID] )),
+			'wgOasisThemeSettingsHistory' => WikiFactory::getVarValueByName( 'wgOasisThemeSettingsHistory', intval($params[static::PARAM_ID] )),
+			'wgUploadPath' => WikiFactory::getVarValueByName( 'wgUploadPath', intval($params[static::PARAM_ID] )),
+
+			// used in DesignSystemCommunityHeaderModel
+			'wgEnableCommunityPageExt' => WikiFactory::getVarValueByName( 'wgEnableCommunityPageExt', intval($params[static::PARAM_ID] )),
+			'wgEnableForumExt' => WikiFactory::getVarValueByName( 'wgEnableForumExt', intval($params[static::PARAM_ID] )),
+			'wgEnableDiscussions' => WikiFactory::getVarValueByName( 'wgEnableDiscussions', intval($params[static::PARAM_ID] )),
+			'wgEnableSpecialVideosExt' => WikiFactory::getVarValueByName( 'wgEnableSpecialVideosExt', intval($params[static::PARAM_ID] )),
 		]);
 
 		$globalStateWrapper->wrap(function() use($params) {
