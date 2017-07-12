@@ -1022,7 +1022,7 @@ class MediaWikiService {
 	 * @deprecated
 	 */
 	public function registerHook( $event, $class, $method ) {
-		$this->app->registerHook( $event, $class, $method );
+		\Hooks::register( $event, "$class::$method" );
 	}
 
 	/**

@@ -345,19 +345,6 @@ class WikiaApp {
 	}
 
 	/**
-	 * register hook (alias: WikiaHookDispatcher::registerHook)
-	 * @param string $hookName
-	 * @param string $className
-	 * @param string $methodName
-	 * @param array $options
-	 * @param bool $alwaysRebuild
-	 * @param null $object
-	 */
-	public function registerHook( $hookName, $className, $methodName, Array $options = array(), $alwaysRebuild = false, $object = null ) {
-		$this->wg->append( 'wgHooks', $this->hookDispatcher->registerHook( $className, $methodName, $options, $alwaysRebuild, $object ), $hookName );
-	}
-
-	/**
 	 * If the namespace is registered using registerNamespaceController $className, $methodName
 	 * will be executed instead of regular article path.  The title is passed as a request
 	 * attribute, e.g.:
@@ -373,7 +360,7 @@ class WikiaApp {
 
 	public function registerNamespaceController( $namespace, $className, $methodName ) {
 		if(empty($this->namespaceRegistry)) {
-			$this->registerHook( 'ArticleViewHeader', 'WikiaApp', 'onArticleViewHeader', array(), false, $this );
+			Hooks::register( 'ArticleViewHeader', [ $this, 'onArticleViewHeader' ] );
 		}
 
 		$this->namespaceRegistry[$namespace] =  array(

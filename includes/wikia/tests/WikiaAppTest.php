@@ -28,30 +28,6 @@ class WikiaAppTest extends TestCase {
 		$this->assertInstanceOf('WikiaLocalRegistry', $application->getLocalRegistry());
 	}
 
-	public function testRegisteringHookProxiesToWikiaHookDispatcherAndMediaWikiRegistry() {
-		$hookName = 'HookName';
-		$class = 'HookClass';
-		$method = 'HookMethod';
-		$options = array('HookOptions');
-		$rebuild = true;
-		$callback = array();
-
-		$registry = $this->createMock( WikiaGlobalRegistry::class );
-		$registry->expects($this->once())
-		         ->method('append')
-		         ->with($this->equalTo('wgHooks'), $this->equalTo($callback), $this->equalTo($hookName));
-
-		$this->hookDispatcher
-		     ->expects($this->once())
-		     ->method('registerHook')
-		     ->with($this->equalTo($class), $this->equalTo($method), $this->equalTo($options), $this->equalTo($rebuild))
-		     ->will($this->returnValue($callback));
-
-		$this->application->setGlobalRegistry($registry);
-
-		$this->application->registerHook($hookName, $class, $method, $options, $rebuild);
-	}
-
 	public function testRegisteringClassProxiesToMediaWikiRegistry() {
 		$path = 'filepath';
 		$class = 'HookClass';

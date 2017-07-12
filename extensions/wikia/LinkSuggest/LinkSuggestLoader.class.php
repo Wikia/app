@@ -14,7 +14,7 @@ class LinkSuggestLoader {
 
 	private function __construct() {
 		// register hook to add LinkSuggest output modules
-		F::app()->registerHook( 'BeforePageDisplay', get_class( $this ), 'onBeforePageDisplay', [], false, $this );
+		Hooks::register( 'BeforePageDisplay', [ $this, 'onBeforePageDisplay' ] );
 	}
 
 	public static function getInstance() {
