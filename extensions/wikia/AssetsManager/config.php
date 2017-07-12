@@ -721,7 +721,6 @@ $config['wikiamobile_js_body_minimal'] = [
 		'//resources/wikia/modules/window.js',
 		'//resources/wikia/modules/document.js',
 		'//resources/wikia/modules/location.js',
-		'//resources/wikia/modules/localStorage.js',
 		'//resources/wikia/modules/querystring.js',
 		'//resources/wikia/modules/history.js',
 		'//resources/wikia/modules/cookies.js',
@@ -960,7 +959,6 @@ $config['mercury_ads_js'] = [
 
 		'#group_mobile_base_ads_js',
 		'//resources/wikia/modules/cache.js',
-		'//resources/wikia/modules/localStorage.js',
 
 		// Advertisement libs
 		'//extensions/wikia/AbTesting/js/AbTest.js',
