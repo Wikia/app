@@ -20,7 +20,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaSetup', [
 
 	function getOverriddenVast() {
 		if (win.location.href.indexOf('porvata_override_vast=1') !== -1) {
-			return win.localStorage.getItem('porvata_vast');
+			return win.localStorage['porvata_vast'];
 		}
 	}
 
