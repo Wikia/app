@@ -6,7 +6,7 @@
 	   <?= empty( $buttonAction['accesskey'] ) ? '' : "accesskey=\"{$buttonAction['accesskey']}\"" ?>
 	>
 		<?= DesignSystemHelper::renderSvg( $buttonAction['icon'], 'wds-icon wds-icon-small' ); ?>
-		<span><?= $buttonAction['text'] ?></span>
+		<span><?= htmlspecialchars( $buttonAction['text'] ) ?></span>
 	</a>
 	<div class="wds-dropdown">
 		<div class="wds-button wds-is-squished wds-dropdown__toggle">
@@ -20,7 +20,7 @@
 						   href="<?= $action['href'] ?>"
 						   data-tracking="<?= $action['data-tracking'] ?>"
 						   <?= empty( $action['accesskey'] ) ? '' : "accesskey=\"{$action['accesskey']}\"" ?>>
-							<?= $action['text'] ?>
+							<?= htmlspecialchars( $action['text'] ) ?>
 						</a>
 					</li>
 				<? endforeach; ?>
