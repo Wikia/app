@@ -483,7 +483,7 @@ class MediaWikiService {
 	 * @return mixed
 	 */
 	public function invokeHook( $hookName, array $args = [] ) {
-		return Hooks::run( $hookName, $args );
+		return \Hooks::run( $hookName, $args );
 	}
 
 	/**

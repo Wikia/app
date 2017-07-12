@@ -205,9 +205,8 @@ class SearchControllerTest extends BaseTest {
 		                    ->disableOriginalConstructor()
 		                    ->setMethods( [ 'getTitle' ] )
 		                    ->getMock();
-		$mockRunHooks = $this->getGlobalFunctionMock( 'Hooks::run' );
+		$mockRunHooks = $this->getStaticMethodMock( 'Hooks', 'run' );
 
-		$originalQuery = 'foo';
 		$redirectUrl = 'http://foo.wikia.com/Wiki/foo';
 
 		$searchConfig
@@ -244,7 +243,7 @@ class SearchControllerTest extends BaseTest {
 			->will( $this->returnValue( '0' ) );
 		$mockRunHooks
 			->expects( $this->once() )
-			->method( 'Hooks::run' );
+			->method( 'run' );
 		$mockTitle
 			->expects( $this->any() )
 			->method( 'getFullURL' )
@@ -286,10 +285,9 @@ class SearchControllerTest extends BaseTest {
 		                  ->setMethods( array( 'getFullUrl' ) )
 		                  ->getMock();
 		$mockResponse = $this->getMock( 'WikiaResponse', array( 'redirect' ), array( 'html' ) );
-		$mockRunHooks = $this->getGlobalFunctionMock( 'Hooks::run' );
+		$mockRunHooks = $this->getStaticMethodMock( 'Hooks', 'run' );
 
 		$originalQuery = 'foo';
-		$redirectUrl = 'http://foo.wikia.com/Wiki/foo';
 
 		$searchConfig
 			->expects	( $this->any() )
@@ -313,7 +311,7 @@ class SearchControllerTest extends BaseTest {
 		;
 		$mockRunHooks
 		    ->expects( $this->once() )
-		    ->method ( 'Hooks::run' )
+		    ->method ( 'run' )
 		    ->with   ( 'SpecialSearchNogomatch', array( $mockTitle ) )
 		;
 
