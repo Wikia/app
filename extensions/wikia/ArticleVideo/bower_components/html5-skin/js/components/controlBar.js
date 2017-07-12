@@ -6,7 +6,6 @@ var React = require('react'),
     CONSTANTS = require('../constants/constants'),
     ClassNames = require('classnames'),
     ScrubberBar = require('./scrubberBar'),
-    Slider = require('./slider'),
     Utils = require('./utils'),
     Popover = require('../views/popover'),
     VideoQualityPanel = require('./videoQualityPanel'),
@@ -19,7 +18,6 @@ var ControlBar = React.createClass({
   getInitialState: function() {
     this.isMobile = this.props.controller.state.isMobile;
     this.responsiveUIMultiple = this.getResponsiveUIMultiple(this.props.responsiveView);
-    this.volumeSliderValue = 0;
     this.moreOptionsItems = null;
 
     return {
@@ -41,9 +39,6 @@ var ControlBar = React.createClass({
   componentWillUnmount: function () {
     this.props.controller.cancelTimer();
     this.closePopovers();
-    if (Utils.isAndroid()){
-      this.props.controller.hideVolumeSliderBar();
-    }
     window.removeEventListener('orientationchange', this.closePopovers);
   },
 
@@ -84,15 +79,7 @@ var ControlBar = React.createClass({
       this.props.controller.startHideControlBarTimer();
       evt.stopPropagation(); // W3C
       evt.cancelBubble = true; // IE
-      var canShowVolumeSliderBar = !this.props.skinConfig.controlBar
-        || !this.props.skinConfig.controlBar.volumeControl
-        || this.props.skinConfig.controlBar.volumeControl.sliderVisible !== false;
-      if (canShowVolumeSliderBar && !this.props.controller.state.volumeState.volumeSliderVisible){
-        this.props.controller.showVolumeSliderBar();
-      }
-      else {
-        this.props.controller.handleMuteClick();
-      }
+      this.props.controller.handleMuteClick();
     }
     else{
       this.props.controller.handleMuteClick();
@@ -404,9 +391,8 @@ var ControlBar = React.createClass({
       if (defaultItems[j].name == "volume") {
         volumeItem = defaultItems[j];
 
-        var extraSpaceVolumeSlider = (((volumeItem && this.isMobile && !this.props.controller.state.volumeState.volumeSliderVisible) || volumeItem && Utils.isIos()) ? parseInt(volumeItem.minWidth) : 0);
         var extraSpaceVolumeBar = this.isMobile ? 0 : parseInt(volumeItem.minWidth)/2;
-        extraSpaceVolume = extraSpaceVolumeSlider + extraSpaceVolumeBar;
+        extraSpaceVolume = extraSpaceVolumeBar;
 
         break;
       }
@@ -469,7 +455,7 @@ var ControlBar = React.createClass({
       }
 
       // WIKIA CHANGE - START
-      if (Utils.isIos() && defaultItems[k].name === "volume") {
+      if (Utils.isIos() && OO.iosMajorVersion < 10 && defaultItems[k].name === "volume") {
         continue;
       }
 
