@@ -16,8 +16,9 @@ var WikiaAdScreen = React.createClass({
   getPlaybackControlItems: function () {
     if (!this.props.skinConfig.adScreen.showControlBar) return null;
 
-    var showControlBar =
-      this.props.controller.state.controlBarVisible || this.props.playerState == CONSTANTS.STATE.PAUSE;
+    var showControlBar = this.state.isMobile
+      || this.props.controller.state.controlBarVisible
+      || this.props.playerState == CONSTANTS.STATE.PAUSE;
 
     var playbackControlItemTemplates = {
       "controlBar": <ControlBar {...this.props}
@@ -25,7 +26,7 @@ var WikiaAdScreen = React.createClass({
                                 playerState={this.props.playerState}
                                 isWikiaAdScreen={true}
                                 showAdTimeLeft={this.props.controller.state.showAdTimeLeft}
-                                showAdFullScreenToggle={this.props.controller.state.showAdFullScreenToggleToggle}
+                                showAdFullScreenToggle={this.props.controller.state.showAdFullScreenToggle}
                                 key='controlBar'/>
     };
 
@@ -38,18 +39,6 @@ var WikiaAdScreen = React.createClass({
 
     return playbackControlItems;
   },
-
-  // FIXME XW-3636 move this to controller.js (?) so the first click shows controls, not toggles
-  // play/pause
-  // onClick: function (e) {
-  //   if (!this.state.controlBarVisible && this.props.playerState !== CONSTANTS.STATE.PAUSE) {
-  //     this.props.controller.startHideControlBarTimer();
-  //     this.showControlBar();
-  //   } else {
-  //     this.props.controller.togglePlayPause();
-  //   }
-  //   e.stopPropagation();
-  // },
 
   render: function () {
     var playbackControlItems = null;

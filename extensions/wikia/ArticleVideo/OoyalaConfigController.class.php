@@ -162,8 +162,7 @@ class OoyalaConfigController extends WikiaController {
 				'scrubberHandleBorderColor' => 'rgba(255,255,255,1)',
 				'thumbnailPreview' => true,
 			],
-		    // to show autoplayToggle use:
-		    // 'autoplayToggle' => true/false,
+		     'autoplayToggle' => true,
 
 			// to set autoplay cookie name use:
 		    // 'autoplayCookieName': 'cookie-name'
@@ -215,7 +214,7 @@ class OoyalaConfigController extends WikiaController {
 				[
 					'name' => 'quality',
 					'location' => 'controlBar',
-					'whenDoesNotFit' => 'drop',
+					'whenDoesNotFit' => 'keep',
 					'minWidth' => 45,
 				],
 				[
@@ -317,6 +316,8 @@ class OoyalaConfigController extends WikiaController {
 	];
 
 	public function skin() {
+		global $wgCookieDomain;
+
 		$config = self::CONFIG;
 		$config['icons']['play']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-play-triangle-small' );
 		$config['icons']['pause']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-pause-small' );
@@ -337,6 +338,8 @@ class OoyalaConfigController extends WikiaController {
 		if ( $this->getVal( 'isMobile' ) ) {
 			$config['controlBar']['volumeControl']['sliderVisible'] = false;
 		}
+
+		$config['controlBar']['autoplayCookieDomain'] = $wgCookieDomain;
 
 		$this->getResponse()->setData( $config );
 		$this->getResponse()->setFormat( WikiaResponse::FORMAT_JSON );

@@ -40,6 +40,7 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
   // WIKIA CHANGE - END
 
   var autoplayCookieName = 'html5-skin.autoplay',
+    autoplayCookieDomain,
     autoplayCookieExpireDays = 14,
     Html5Skin = function (mb, id) {
       this.mb = mb;
@@ -141,8 +142,7 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
         "volumeState": {
           "volume": 1,
           "muted": false,
-          "oldVolume": 1,
-          "volumeSliderVisible": false
+          "oldVolume": 1
         },
 
         "upNextInfo": {
@@ -228,26 +228,23 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
         }
 
         // ad events
-        if (!Utils.isIPhone()) {
-          //since iPhone is always playing in full screen and not showing our skin, don't need to render skin
-          this.mb.subscribe(OO.EVENTS.ADS_PLAYED, "customerUi", _.bind(this.onAdsPlayed, this));
-          this.mb.subscribe(OO.EVENTS.WILL_PLAY_ADS , "customerUi", _.bind(this.onWillPlayAds, this));
-          this.mb.subscribe(OO.EVENTS.AD_POD_STARTED, "customerUi", _.bind(this.onAdPodStarted, this));
-          this.mb.subscribe(OO.EVENTS.WILL_PLAY_SINGLE_AD , "customerUi", _.bind(this.onWillPlaySingleAd, this));
-          this.mb.subscribe(OO.EVENTS.SINGLE_AD_PLAYED , "customerUi", _.bind(this.onSingleAdPlayed, this));
-          this.mb.subscribe(OO.EVENTS.PLAY_NONLINEAR_AD, "customerUi", _.bind(this.onPlayNonlinearAd, this));
-          this.mb.subscribe(OO.EVENTS.NONLINEAR_AD_PLAYED, "customerUi", _.bind(this.closeNonlinearAd, this));
-          this.mb.subscribe(OO.EVENTS.HIDE_NONLINEAR_AD, "customerUi", _.bind(this.hideNonlinearAd, this));
-          this.mb.subscribe(OO.EVENTS.SHOW_NONLINEAR_AD, "customerUi", _.bind(this.showNonlinearAd, this));
-          this.mb.subscribe(OO.EVENTS.SHOW_NONLINEAR_AD_CLOSE_BUTTON, "customerUi", _.bind(this.showNonlinearAdCloseButton, this));
-          this.mb.subscribe(OO.EVENTS.SHOW_AD_SKIP_BUTTON, "customerUi", _.bind(this.onShowAdSkipButton, this));
-          this.mb.subscribe(OO.EVENTS.SHOW_AD_CONTROLS, "customerUi", _.bind(this.onShowAdControls, this));
-          this.mb.subscribe(OO.EVENTS.SHOW_AD_MARQUEE, "customerUi", _.bind(this.onShowAdMarquee, this));
-          // WIKIA CHANGE - START
-          this.mb.subscribe(OO.EVENTS.WIKIA.SHOW_AD_TIME_LEFT, "customerUi", _.bind(this.onShowAdTimeLeft, this));
-          this.mb.subscribe(OO.EVENTS.WIKIA.SHOW_AD_FULLSCREEN_TOGGLE, "customerUi", _.bind(this.onShowAdFullScreenToggle, this));
-          // WIKIA CHANGE - END
-        }
+        this.mb.subscribe(OO.EVENTS.ADS_PLAYED, "customerUi", _.bind(this.onAdsPlayed, this));
+        this.mb.subscribe(OO.EVENTS.WILL_PLAY_ADS , "customerUi", _.bind(this.onWillPlayAds, this));
+        this.mb.subscribe(OO.EVENTS.AD_POD_STARTED, "customerUi", _.bind(this.onAdPodStarted, this));
+        this.mb.subscribe(OO.EVENTS.WILL_PLAY_SINGLE_AD , "customerUi", _.bind(this.onWillPlaySingleAd, this));
+        this.mb.subscribe(OO.EVENTS.SINGLE_AD_PLAYED , "customerUi", _.bind(this.onSingleAdPlayed, this));
+        this.mb.subscribe(OO.EVENTS.PLAY_NONLINEAR_AD, "customerUi", _.bind(this.onPlayNonlinearAd, this));
+        this.mb.subscribe(OO.EVENTS.NONLINEAR_AD_PLAYED, "customerUi", _.bind(this.closeNonlinearAd, this));
+        this.mb.subscribe(OO.EVENTS.HIDE_NONLINEAR_AD, "customerUi", _.bind(this.hideNonlinearAd, this));
+        this.mb.subscribe(OO.EVENTS.SHOW_NONLINEAR_AD, "customerUi", _.bind(this.showNonlinearAd, this));
+        this.mb.subscribe(OO.EVENTS.SHOW_NONLINEAR_AD_CLOSE_BUTTON, "customerUi", _.bind(this.showNonlinearAdCloseButton, this));
+        this.mb.subscribe(OO.EVENTS.SHOW_AD_SKIP_BUTTON, "customerUi", _.bind(this.onShowAdSkipButton, this));
+        this.mb.subscribe(OO.EVENTS.SHOW_AD_CONTROLS, "customerUi", _.bind(this.onShowAdControls, this));
+        this.mb.subscribe(OO.EVENTS.SHOW_AD_MARQUEE, "customerUi", _.bind(this.onShowAdMarquee, this));
+        // WIKIA CHANGE - START
+        this.mb.subscribe(OO.EVENTS.WIKIA.SHOW_AD_TIME_LEFT, "customerUi", _.bind(this.onShowAdTimeLeft, this));
+        this.mb.subscribe(OO.EVENTS.WIKIA.SHOW_AD_FULLSCREEN_TOGGLE, "customerUi", _.bind(this.onShowAdFullScreenToggle, this));
+        // WIKIA CHANGE - END
       }
       this.state.isSubscribed = true;
     },
@@ -957,6 +954,9 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
         if(this.skin.props.skinConfig.controlBar.autoplayCookieExpireDays) {
           autoplayCookieExpireDays = this.skin.props.skinConfig.controlBar.autoplayCookieExpireDays;
         }
+        if(this.skin.props.skinConfig.controlBar.autoplayCookieDomain) {
+          autoplayCookieDomain = this.skin.props.skinConfig.controlBar.autoplayCookieDomain;
+        }
       }
       this.state.autoPlay.enabled = Cookies.get(autoplayCookieName) !== '0';
       this.state.configLoaded = true;
@@ -1209,25 +1209,21 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
       this.mb.unsubscribe(OO.EVENTS.PLAYBACK_READY, 'customerUi');
       this.state.isPlaybackReadySubscribed = false;
 
-      // ad events
-      if (!Utils.isIPhone()) {
-        //since iPhone is always playing in full screen and not showing our skin, don't need to render skin
-        this.mb.unsubscribe(OO.EVENTS.ADS_PLAYED, "customerUi");
-        this.mb.unsubscribe(OO.EVENTS.WILL_PLAY_ADS , "customerUi");
-        this.mb.unsubscribe(OO.EVENTS.AD_POD_STARTED, "customerUi");
-        this.mb.unsubscribe(OO.EVENTS.WILL_PLAY_SINGLE_AD , "customerUi");
-        this.mb.unsubscribe(OO.EVENTS.SINGLE_AD_PLAYED , "customerUi");
-        this.mb.unsubscribe(OO.EVENTS.PLAY_NONLINEAR_AD, "customerUi");
-        this.mb.unsubscribe(OO.EVENTS.NONLINEAR_AD_PLAYED, "customerUi");
-        this.mb.unsubscribe(OO.EVENTS.HIDE_NONLINEAR_AD, "customerUi");
-        this.mb.unsubscribe(OO.EVENTS.SHOW_NONLINEAR_AD, "customerUi");
-        this.mb.unsubscribe(OO.EVENTS.SHOW_AD_SKIP_BUTTON, "customerUi");
-        this.mb.unsubscribe(OO.EVENTS.SHOW_AD_CONTROLS, "customerUi");
-        this.mb.unsubscribe(OO.EVENTS.SHOW_AD_MARQUEE, "customerUi");
+      this.mb.unsubscribe(OO.EVENTS.ADS_PLAYED, "customerUi");
+      this.mb.unsubscribe(OO.EVENTS.WILL_PLAY_ADS , "customerUi");
+      this.mb.unsubscribe(OO.EVENTS.AD_POD_STARTED, "customerUi");
+      this.mb.unsubscribe(OO.EVENTS.WILL_PLAY_SINGLE_AD , "customerUi");
+      this.mb.unsubscribe(OO.EVENTS.SINGLE_AD_PLAYED , "customerUi");
+      this.mb.unsubscribe(OO.EVENTS.PLAY_NONLINEAR_AD, "customerUi");
+      this.mb.unsubscribe(OO.EVENTS.NONLINEAR_AD_PLAYED, "customerUi");
+      this.mb.unsubscribe(OO.EVENTS.HIDE_NONLINEAR_AD, "customerUi");
+      this.mb.unsubscribe(OO.EVENTS.SHOW_NONLINEAR_AD, "customerUi");
+      this.mb.unsubscribe(OO.EVENTS.SHOW_AD_SKIP_BUTTON, "customerUi");
+      this.mb.unsubscribe(OO.EVENTS.SHOW_AD_CONTROLS, "customerUi");
+      this.mb.unsubscribe(OO.EVENTS.SHOW_AD_MARQUEE, "customerUi");
 
-        if (OO.EVENTS.DISCOVERY_API) {
-          this.mb.unsubscribe(OO.EVENTS.DISCOVERY_API.RELATED_VIDEOS_FETCHED, "customerUi");
-        }
+      if (OO.EVENTS.DISCOVERY_API) {
+        this.mb.unsubscribe(OO.EVENTS.DISCOVERY_API.RELATED_VIDEOS_FETCHED, "customerUi");
       }
       this.state.isSubscribed = false;
     },
@@ -1335,7 +1331,7 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
 
     setVolume: function(volume){
       // WIKIA CHANGE - START
-      if (this.state.isMobile && !Utils.isIos() && this.state.mainVideoElement) {
+      if (this.state.isMobile && this.state.mainVideoElement) {
         if (volume > 0) {
           this.state.mainVideoElement.muted = false;
         } else {
@@ -1604,7 +1600,14 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
     toggleAutoPlayEnabled: function() {
       this.state.autoPlay.enabled = !this.state.autoPlay.enabled;
       this.renderSkin();
-      Cookies.set(autoplayCookieName, this.state.autoPlay.enabled ? 1 : 0, { expires: autoplayCookieExpireDays });
+      Cookies.set(
+        autoplayCookieName,
+        this.state.autoPlay.enabled ? 1 : 0,
+        {
+          domain: autoplayCookieDomain,
+          expires: autoplayCookieExpireDays
+        }
+      );
       this.mb.publish(OO.EVENTS.WIKIA.AUTOPLAY_TOGGLED, this.state.autoPlay.enabled);
     },
 
@@ -1665,29 +1668,6 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
       this.skin.updatePlayhead(playhead, this.skin.state.duration, this.skin.state.buffered);
     },
 
-    hideVolumeSliderBar: function() {
-      this.state.volumeState.volumeSliderVisible = false;
-      this.renderSkin();
-    },
-
-    showVolumeSliderBar: function() {
-      this.state.volumeState.volumeSliderVisible = true;
-      if (Utils.isAndroid()) {
-        this.startHideVolumeSliderTimer();
-      }
-      this.renderSkin();
-    },
-
-    startHideVolumeSliderTimer: function() {
-        this.cancelTimer();
-        var timer = setTimeout(function() {
-          if(this.state.volumeState.volumeSliderVisible === true){
-            this.hideVolumeSliderBar();
-          }
-        }.bind(this), 3000);
-        this.state.timer = timer;
-    },
-
     startHideControlBarTimer: function() {
       if (this.skin.props.skinConfig.controlBar.autoHide == true) {
         this.cancelTimer();
@@ -1706,9 +1686,6 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
 
     hideControlBar: function() {
       this.state.controlBarVisible = false;
-      if (Utils.isAndroid()) {
-        this.hideVolumeSliderBar();
-      }
     },
 
     cancelTimer: function() {
