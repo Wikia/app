@@ -273,7 +273,7 @@ class PhalanxService {
 			/* service doesn't work */
 			$res = false;
 
-			$this->error( "Phalanx service error", [
+			$this->error( "Phalanx service failed", [
 				"phalanxUrl" => $url,
 				'requestTime' => $requestTime,
 				'postParams' => json_encode( $loggerPostParams ),
