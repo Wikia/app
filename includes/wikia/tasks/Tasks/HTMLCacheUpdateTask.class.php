@@ -29,7 +29,7 @@ class HTMLCacheUpdateTask extends BaseTask {
 		global $wgUseFileCache, $wgUseSquid;
 
 		$affectedTitles = $this->getAffectedTitles( (array)$tables );
-		Hooks::run( "BacklinksPurge", [ $affectedTitles ] );
+		\Hooks::run( "BacklinksPurge", [ $affectedTitles ] );
 		$affectedCount  = count( $affectedTitles );
 
 		$this->info( "Purge Request", [
