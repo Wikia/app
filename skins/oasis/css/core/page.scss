@@ -56,6 +56,8 @@
 	}
 	.WikiaPageContentWrapper {
 		@include clearfix;
+		@include flexbox();
+		@include flex-wrap(wrap);
 		position: relative;
 	}
 }
@@ -66,7 +68,6 @@
 }
 
 .WikiaMainContent {
-	float: left;
 	position: relative;
 	width: $width-outside - 320px;
 	z-index: 1;
@@ -115,8 +116,11 @@
 
 /* end temp transistion code */
 
+.wikia-rail-inner {
+	width: 100%;
+}
+
 .WikiaRail {
-	float: right;
 	padding: 0 $width-gutter;
 	width: $width-rail;
 	&.grid-2 {
@@ -127,6 +131,7 @@
 		height: 48px;
 		margin: 10px;
 		padding-top: 10px;
+		width: 100%;
 	}
 
 	.module {

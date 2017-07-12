@@ -31,6 +31,9 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork', function (
 		spyOn(mocks.adContext, 'getContext').and.returnValue({
 			targeting: {
 				skin: 'mercury'
+			},
+			providers: {
+				audienceNetwork: true
 			}
 		});
 		var audienceNetwork = getAudienceNetwork();
@@ -43,6 +46,9 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork', function (
 		spyOn(mocks.adContext, 'getContext').and.returnValue({
 			targeting: {
 				skin: 'oasis'
+			},
+			providers: {
+				audienceNetwork: true
 			}
 		});
 
@@ -56,6 +62,9 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork', function (
 		spyOn(mocks.adContext, 'getContext').and.returnValue({
 			targeting: {
 				skin: 'mercury'
+			},
+			providers: {
+				audienceNetwork: true
 			}
 		});
 

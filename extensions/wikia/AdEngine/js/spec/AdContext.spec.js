@@ -771,6 +771,22 @@ describe('AdContext', function () {
 		expect(adContext.getContext().providers.evolve2).toBeFalsy();
 	});
 
+	it('enables FAN provider when provider is enabled by wg var', function () {
+		var adContext;
+		mocks.win = {
+			ads: {
+				context: {
+					providers: {
+						audienceNetwork: true
+					}
+				}
+			}
+		};
+
+		adContext = getModule();
+		expect(adContext.getContext().providers.audienceNetwork).toBeTruthy();
+	});
+
 	it('disable overriding prefooters sizes for mercury', function () {
 		mocks.instantGlobals = {wgAdDriverOverridePrefootersCountries: ['CURRENT_COUNTRY']};
 		mocks.win = {

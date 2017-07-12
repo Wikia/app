@@ -1248,6 +1248,12 @@ $wgAdDriverAolBidderCountries = null;
 $wgAdDriverAppNexusBidderCountries = null;
 
 /**
+ * @name $wgAdDriverUseAudienceNetworkBidder
+ * Enables Facebook Audience Network bidding platform.
+ */
+$wgAdDriverUseAudienceNetworkBidder = false;
+
+/**
  * @name $wgAdDriverAudienceNetworkBidderCountries
  * List of countries where Facebook Audience Network bidding platform is enabled.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1847,5 +1853,3 @@ $wgReviveSpotlightsCountries = null;
 include_once("$IP/extensions/wikia/ARecoveryEngine/ARecoveryEngine.setup.php");
 
 require_once "$IP/extensions/wikia/ImageReview/ImageReviewEvents.setup.php";
-
-require_once("$IP/extensions/wikia/AdMixExperiment/AdMixExperiment.setup.php");
