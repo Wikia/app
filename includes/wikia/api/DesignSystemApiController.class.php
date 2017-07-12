@@ -32,7 +32,25 @@ class DesignSystemApiController extends WikiaApiController {
 	}
 
 	public function getCommunityHeader() {
-		$this->setResponseData($this->getCommunityHeaderMockedData());
+		$params = $this->getRequestParameters();
+
+		//TODO: think about refactoring ThemeSettings class to have cityId as constructor param
+		$globalStateWrapper = new \Wikia\Util\GlobalStateWrapper([
+			'wgSitename' => WikiFactory::getVarValueByName( 'wgSitename', (int)$params[static::PARAM_ID] ),
+			'wgAdminSkin' => WikiFactory::getVarValueByName( 'wgAdminSkin',(int) $params[static::PARAM_ID] ),
+			'wgOasisThemeSettings' => WikiFactory::getVarValueByName( 'wgOasisThemeSettings', (int)$params[static::PARAM_ID] ),
+			'wgOasisThemeSettingsHistory' => WikiFactory::getVarValueByName( 'wgOasisThemeSettingsHistory', (int)$params[static::PARAM_ID] ),
+		]);
+
+		$globalStateWrapper->wrap(function() use($params) {
+			$this->setResponseData(
+				( new DesignSystemCommunityHeaderModel(
+					$params[static::PARAM_PRODUCT],
+					$params[static::PARAM_ID],
+					$params[static::PARAM_LANG]
+				))->getData() );
+		});
+
 		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 	}
 

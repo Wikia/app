@@ -361,6 +361,7 @@ $wgAutoloadClasses['NavigationModel'] = "{$IP}/includes/wikia/models/NavigationM
 $wgAutoloadClasses['WikiaCollectionsModel'] = "{$IP}/includes/wikia/models/WikiaCollectionsModel.class.php";
 $wgAutoloadClasses['WikiaCorporateModel'] = "{$IP}/includes/wikia/models/WikiaCorporateModel.class.php";
 $wgAutoloadClasses['MySQLKeyValueModel'] = "{$IP}/includes/wikia/models/MySQLKeyValueModel.class.php";
+$wgAutoloadClasses['DesignSystemCommunityHeaderModel'] = "{$IP}/includes/wikia/models/DesignSystemCommunityHeaderModel.class.php";
 $wgAutoloadClasses['DesignSystemGlobalFooterModel'] = "{$IP}/includes/wikia/models/DesignSystemGlobalFooterModel.class.php";
 $wgAutoloadClasses['DesignSystemGlobalNavigationModel'] = "{$IP}/includes/wikia/models/DesignSystemGlobalNavigationModel.class.php";
 $wgAutoloadClasses['DesignSystemSharedLinks'] = "{$IP}/includes/wikia/models/DesignSystemSharedLinks.class.php";
