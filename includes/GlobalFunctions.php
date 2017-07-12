@@ -4033,17 +4033,6 @@ function wfGetParserCacheStorage() {
 }
 
 /**
- * Call hook functions defined in $wgHooks
- *
- * @param $event String: event name
- * @param $args Array: parameters passed to hook functions
- * @return Boolean True if no handler aborted the hook
- */
-function Hooks::run( $event, $args = array() ) {
-	return Hooks::run( $event, $args );
-}
-
-/**
  * Wrapper around php's unpack.
  *
  * @param $format String: The format string (See php's docs)

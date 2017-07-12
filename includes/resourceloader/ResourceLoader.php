@@ -1187,7 +1187,7 @@ class ResourceLoader {
 		$query += $extraQuery;
 
 		// Wikia - change begin - @author: wladek
-		wfRUnHooks( 'ResourceLoaderMakeQuery', array( $modules, &$query ) );
+		Hooks::run( 'ResourceLoaderMakeQuery', [ $modules, &$query ] );
 		// Wikia - change end
 
 		// Make queries uniform in order
