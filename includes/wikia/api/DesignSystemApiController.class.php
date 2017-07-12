@@ -264,9 +264,54 @@ class DesignSystemApiController extends WikiaApiController {
 							]
 						]
 					]
-				]
+				],
+				[
+					"type" => "dropdown",
+					"title" => [
+						"type" => "translatable-text",
+						"key" => "community-header-explore"
+					],
+					"image" => [
+						"type" => "wds-svg",
+						"name" => "wds-icons-explore-tiny"
+					],
+					"items" => [
+						[
+							"type" => "link-text",
+							"title" => [
+								"type" => "text",
+								"value" => "link 2 1"
+							],
+							"href" => "http://masseffect.wikia.com/wiki/Mass_Effect_Wiki",
+							"tracking_label" => "custom-level-2",
+						],
 
-			]
+						[
+							"type" => "link-text",
+							"title" => [
+								"type" => "text",
+								"value" => "link 2 2"
+							],
+							"href" => "http://masseffect.wikia.com/wiki/Mass_Effect_Wiki",
+							"tracking_label" => "custom-level-2",
+						],
+					]
+				],
+
+				[
+					"type" => "link-text",
+					"title" => [
+						"type" => "translatable-text",
+						"key" => "community-header-discuss"
+					],
+					"image" => [
+						"type" => "wds-svg",
+						"name" => "wds-icons-reply-tiny"
+					],
+					"href" => "http://masseffect.wikia.com/wiki/Mass_Effect_Wiki",
+					"tracking_label" => "discuss",
+				],
+			],
 		];
 	}
 }
