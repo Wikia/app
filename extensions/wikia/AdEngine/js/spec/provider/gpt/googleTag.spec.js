@@ -34,6 +34,7 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 				collapseEmptyDivs: noop,
 				enableSingleRequest: noop,
 				disableInitialLoad: noop,
+				getTargeting: noop,
 				addEventListener: noop,
 				refresh: noop,
 				setTargeting: noop,
