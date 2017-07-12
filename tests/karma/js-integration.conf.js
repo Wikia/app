@@ -17,7 +17,7 @@ module.exports = function (config) {
 		files: [
 			'tests/lib/jasmine/helpers.js',
 
-			'resources/jquery/jquery-1.8.2.js',
+			'resources/jquery/jquery-2.0.3.js',
 			'resources/wikia/libraries/define.mock.js',
 
 			// JSMessages
