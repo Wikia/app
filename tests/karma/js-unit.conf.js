@@ -22,7 +22,7 @@ module.exports = function (config) {
 		files: [
 			'resources/wikia/libraries/define.mock.js',
 			'tests/lib/jasmine/helpers.js',
-			'resources/jquery/jquery-1.8.2.js',
+			'resources/jquery/jquery-2.0.3.js',
 			'resources/wikia/polyfills/bind.js',
 			'resources/wikia/polyfills/promise.js',
 			'resources/mediawiki/mediawiki.js',
