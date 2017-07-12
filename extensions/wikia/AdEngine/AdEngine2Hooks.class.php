@@ -182,7 +182,6 @@ class AdEngine2Hooks {
 		$scriptModules[] = 'wikia.document';
 		$scriptModules[] = 'wikia.geo';
 		$scriptModules[] = 'wikia.instantGlobals';
-		$scriptModules[] = 'wikia.localStorage';
 		$scriptModules[] = 'wikia.location';
 		$scriptModules[] = 'wikia.log';
 		$scriptModules[] = 'wikia.querystring';
