@@ -135,6 +135,16 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		});
 	}
 
+	function extendSlotTargetingForBlockedTraffic(adElement) {
+		var srcRec = win.googletag.pubads().getTargeting('src');
+		// IL sets src=rec as a page-level param - add it also to slot targeting
+		if (srcRec && srcRec.indexOf('rec') > -1) {
+			adElement.slotTargeting.src = 'rec';
+
+			log(['extendSlotTargetingForBlockedTraffic', adElement.slotTargeting], log.levels.info, logGroup);
+		}
+	}
+
 	function addSlot(adElement) {
 		var sizes = adElement.getSizes(),
 			slotId = adElement.getId(),
@@ -149,11 +159,11 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 				win.googletag.defineOutOfPageSlot(adElement.getSlotPath(), slotId);
 
 			slot.addService(win.googletag.pubads());
-
 			win.googletag.display(slotId);
 			googleSlots.addSlot(slot);
 		}
 
+		extendSlotTargetingForBlockedTraffic(adElement);
 		adElement.configureSlot(slot);
 		slotQueue.push(slot);
 
