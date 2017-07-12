@@ -38,7 +38,7 @@ class WikiaNewFilesSpecialController extends WikiaSpecialPageController {
 		$output->addHeadItem( 'Paginator', $paginator->getHeadItem() );
 
 		// Hook for ContentFeeds::specialNewImagesHook
-		wfRunHooks( 'SpecialNewImages::beforeDisplay', array( $images ) );
+		Hooks::run( 'SpecialNewImages::beforeDisplay', array( $images ) );
 
 		// Construct gallery
 		$gallery = new WikiaNewFilesGallery( $this->specialPage->getSkin() );

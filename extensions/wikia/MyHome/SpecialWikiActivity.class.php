@@ -78,7 +78,7 @@ JS
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/MyHome/WikiActivity.js\"></script>\n" );
 		$wgOut->addExtensionStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/MyHome/oasis.scss' ) );
 
-		wfRunHooks( 'SpecialWikiActivityExecute', [ $wgOut, $wgUser ] );
+		Hooks::run( 'SpecialWikiActivityExecute', [ $wgOut, $wgUser ] );
 
 		$data = $feedProvider->get( 50 );  // this breaks when set to 60...
 

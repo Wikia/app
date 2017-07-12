@@ -97,7 +97,7 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 					$fit = $this->appendProtocols( $p );
 					break;
 				default:
-					wfRunHooks( 'UseExternalQuerySiteInfo', array(&$this) );
+					Hooks::run( 'UseExternalQuerySiteInfo', array(&$this) );
 					if ( !isset($this->noErrors) ) {
 						ApiBase :: dieDebug( __METHOD__, "Unknown prop=$p" );
 					}
@@ -183,7 +183,7 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 			$data['misermode'] = '';
 		}
 
-		wfRunHooks( 'APIQuerySiteInfoGeneralInfo', array( $this, &$data ) );
+		Hooks::run( 'APIQuerySiteInfoGeneralInfo', array( $this, &$data ) );
 
 		return $this->getResult()->addValue( 'query', $property, $data );
 	}
@@ -355,7 +355,7 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 
 		// Wikia change begin
 		// @author macbre
-		wfRunHooks( 'APIQuerySiteInfoStatistics', array( $this, &$data ) );
+		Hooks::run( 'APIQuerySiteInfoStatistics', array( $this, &$data ) );
 		// Wikia change end
 
 		return $this->getResult()->addValue( 'query', $property, $data );

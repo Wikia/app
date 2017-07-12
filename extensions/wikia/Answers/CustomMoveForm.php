@@ -94,7 +94,7 @@ class CustomMovePageForm extends MovePageForm{
 		$wgOut->addHTML(
 			 Xml::openElement( 'form', array( 'onsubmit' => 'this.wpNewTitle.value=this.wpNewTitle.value.replace(/\?/g,\'\')', 'method' => 'post', 'action' => $titleObj->getLocalURL( 'action=submit' ), 'id' => 'movepage' ) )
 		);
-		wfRunHooks( 'ArticleMoveForm', array( &$wgOut ) );
+		Hooks::run( 'ArticleMoveForm', array( &$wgOut ) );
 		$wgOut->addHTML(
 			 //Xml::openElement( 'fieldset' ) .
 			 //Xml::element( 'legend', null, wfMsg( 'move-page-legend' ) ) .

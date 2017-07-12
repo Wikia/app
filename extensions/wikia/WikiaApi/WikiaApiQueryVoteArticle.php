@@ -299,7 +299,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 		$user_id = $this->getUser()->getId();
 		$browserId = $this->getBrowser();
 
-		if(!wfRunHooks( 'ArticleBeforeVote', array( &$user_id, &$page, $vote ) )) {
+		if(!Hooks::run( 'ArticleBeforeVote', array( &$user_id, &$page, $vote ) )) {
 			return true;
 		}
 		        
@@ -377,7 +377,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 		$this->getResult()->setIndexedTagName($data, $this->getIndexTagName());
 		$this->getResult()->addValue('item', $this->getModuleName(), $data);
 
-		wfRunHooks( 'ArticleAfterVote', array( &$user_id, &$page, $vote ) );
+		Hooks::run( 'ArticleAfterVote', array( &$user_id, &$page, $vote ) );
 	}
 
 	#---
@@ -490,7 +490,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 		$this->getResult()->setIndexedTagName($data, $this->getIndexTagName());
 		$this->getResult()->addValue('item', $this->getModuleName(), $data);
 
-		wfRunHooks( 'ArticleAfterVote', array( $user_id, &$page, $vote ) );
+		Hooks::run( 'ArticleAfterVote', array( $user_id, &$page, $vote ) );
 	}
 
 	#---

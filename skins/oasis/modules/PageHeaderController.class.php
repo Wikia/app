@@ -39,7 +39,7 @@ class PageHeaderController extends WikiaController {
 
 		global $wgTitle, $wgUser, $wgRequest;
 
-		wfRunHooks( 'BeforePrepareActionButtons', [ $this, &$this->content_actions ] );
+		Hooks::run( 'BeforePrepareActionButtons', [ $this, &$this->content_actions ] );
 
 		$isDiff = !is_null( $wgRequest->getVal( 'diff' ) );
 
@@ -130,7 +130,7 @@ class PageHeaderController extends WikiaController {
 			[ 'history', 'move', 'protect', 'unprotect', 'delete', 'undelete', 'replace-file' ] );
 
 		// Enable to modify actions list on dropdown
-		wfRunHooks( 'PageHeaderDropdownActions', [ &$actions ] );
+		Hooks::run( 'PageHeaderDropdownActions', [ &$actions ] );
 
 		foreach ( $actions as $action ) {
 			if ( isset( $this->content_actions[$action] ) ) {
@@ -184,10 +184,10 @@ class PageHeaderController extends WikiaController {
 		/** start of wikia changes @author nAndy */
 		$response = $this->getResponse();
 		if ( $response instanceof WikiaResponse ) {
-			wfRunHooks( 'PageHeaderIndexAfterActionButtonPrepared', [ $response, $ns, $skin ] );
+			Hooks::run( 'PageHeaderIndexAfterActionButtonPrepared', [ $response, $ns, $skin ] );
 			/** @author Jakub */
 			$this->extraButtons = [ ];
-			wfRunHooks( 'PageHeaderIndexExtraButtons', [ $response ] );
+			Hooks::run( 'PageHeaderIndexExtraButtons', [ $response ] );
 		} else {
 			// it happened on TimQ's devbox that $response was probably null fb#28747
 			WikiaLogger::instance()->error( 'Response not an instance of WikiaResponse', [
@@ -325,7 +325,7 @@ class PageHeaderController extends WikiaController {
 				$this->pageType = wfMessage( 'oasis-page-header-subtitle-forum' )->escaped();
 				break;
 		}
-		wfRunHooks( 'PageHeaderPageTypePrepared', [ $this, $this->getContext()->getTitle() ] );
+		Hooks::run( 'PageHeaderPageTypePrepared', [ $this, $this->getContext()->getTitle() ] );
 
 		// render subpage info
 		$this->pageSubject = $skin->subPageSubtitle();
@@ -506,7 +506,7 @@ class PageHeaderController extends WikiaController {
 			$this->comments = $service->getCommentsCount();
 		}
 
-		wfRunHooks( 'PageHeaderEditPage', [ &$this, $ns, $isPreview, $isShowChanges, $isDiff, $isEdit, $isHistory ] );
+		Hooks::run( 'PageHeaderEditPage', [ &$this, $ns, $isPreview, $isShowChanges, $isDiff, $isEdit, $isHistory ] );
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -612,7 +612,7 @@ class PageHeaderController extends WikiaController {
 			$this->shouldDisplay = true;
 			$href = SpecialPage::getTitleFor( 'CreatePage' )->getLocalURL();
 
-			wfRunHooks( 'PageHeaderAfterAddNewPageButton', [ &$href ] );
+			Hooks::run( 'PageHeaderAfterAddNewPageButton', [ &$href ] );
 
 			$this->href = $href;
 		}

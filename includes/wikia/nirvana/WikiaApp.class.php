@@ -656,14 +656,14 @@ class WikiaApp {
 	}
 
 	/**
-	 * simple wfRunHooks wrapper
+	 * simple Hooks::run wrapper
 	 *
 	 * @param string $hookName The name of the hook to run
 	 * @param array $parameters An array of the params to pass in the hook call
 	 * @return bool
 	 */
 	public function runHook( $hookName, $parameters ) {
-		return wfRunHooks( $hookName, $parameters );
+		return Hooks::run( $hookName, $parameters );
 	}
 
 	/**

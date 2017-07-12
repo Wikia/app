@@ -187,7 +187,7 @@ class DatabaseOracle extends DatabaseBase {
 		global $wgDBprefix;
 		$tablePrefix = $tablePrefix == 'get from global' ? strtoupper( $wgDBprefix ) : strtoupper( $tablePrefix );
 		parent::__construct( $server, $user, $password, $dbName, $flags, $tablePrefix );
-		wfRunHooks( 'DatabaseOraclePostInit', array( $this ) );
+		Hooks::run( 'DatabaseOraclePostInit', array( $this ) );
 	}
 
 	function __destruct() {

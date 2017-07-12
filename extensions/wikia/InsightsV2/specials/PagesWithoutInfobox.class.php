@@ -64,7 +64,7 @@ class PagesWithoutInfobox extends PageQueryPage {
 				->VALUES( $pagesWithoutInfobox )
 				->run( $dbw );
 		}
-		wfRunHooks( 'PagesWithoutInfoboxQueryRecached' );
+		Hooks::run( 'PagesWithoutInfoboxQueryRecached' );
 
 		return count( $pagesWithoutInfobox );
 	}

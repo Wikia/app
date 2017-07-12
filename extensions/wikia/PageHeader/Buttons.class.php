@@ -28,7 +28,7 @@ class Buttons {
 			);
 		}
 
-		wfRunHooks( 'AfterPageHeaderButtons', [ $title, &$buttons ] );
+		Hooks::run( 'AfterPageHeaderButtons', [ $title, &$buttons ] );
 
 		$this->buttons = $buttons;
 	}

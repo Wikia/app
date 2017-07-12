@@ -217,7 +217,7 @@ class EditPageLayoutController extends WikiaController {
 
 		$this->hideTitle = $editPage->hideTitle;
 
-		wfRunHooks( 'EditPageLayoutExecute', array( $this ) );
+		Hooks::run( 'EditPageLayoutExecute', array( $this ) );
 	}
 
 	public function wordmark() {

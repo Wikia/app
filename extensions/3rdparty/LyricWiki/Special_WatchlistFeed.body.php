@@ -352,7 +352,7 @@ class Watchlist{
 		wfAppendToArrayIfNotDefault('namespace', $nameSpace    , $defaults, $nondefaults);
 
 		$hookSql = "";
-		if( ! wfRunHooks('BeforeWatchlist', array($nondefaults, $wgUser, &$hookSql)) ) {
+		if( ! Hooks::run('BeforeWatchlist', array($nondefaults, $wgUser, &$hookSql)) ) {
 			return;
 		}
 

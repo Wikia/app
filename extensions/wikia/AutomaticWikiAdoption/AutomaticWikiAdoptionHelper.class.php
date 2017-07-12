@@ -168,7 +168,7 @@ class AutomaticWikiAdoptionHelper {
 				if ($oldGroups != $newGroups) {
 					//remove group
 					$admin->removeGroup($removedGroup);
-					wfRunHooks( 'UserRights', array( &$admin, array(), array($removedGroup) ) );
+					Hooks::run( 'UserRights', array( &$admin, array(), array($removedGroup) ) );
 
 					// get email params
 					$magicwords = array('#WIKINAME' => $wiki_name);
@@ -205,7 +205,7 @@ class AutomaticWikiAdoptionHelper {
 			foreach ($addGroups as $addGroup) {
 				$user->addGroup($addGroup);
 			}
-			wfRunHooks( 'UserRights', array( &$user, $addGroups, array() ) );
+			Hooks::run( 'UserRights', array( &$user, $addGroups, array() ) );
 			//log
 			self::addLogEntry($user, $oldGroups, $newGroups);
 			WikiFactory::log(WikiFactory::LOG_STATUS, $user->getName()." adopted wiki ".  $wiki_name);

@@ -204,7 +204,7 @@ abstract class File implements UrlGeneratorInterface {
 
 		/** Wikia change start, author Jacek Jursza, bug id: 31194 - not able to rename video files **/
 		$result = $mimeMagic->isMatchingExtension( $newExt, $oldMime );
-		wfRunHooks( 'File::checkExtensionCompatibilityResult', array( &$result, &$old, &$oldMime, &$newExt ) );
+		Hooks::run( 'File::checkExtensionCompatibilityResult', array( &$result, &$old, &$oldMime, &$newExt ) );
 
 		return $result;
 		/** Wikia change end **/

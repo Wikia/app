@@ -395,7 +395,7 @@ class ArticleAsJson {
 				self::linkifyMediaCaption( $parser, $media );
 			}
 
-			wfRunHooks( 'ArticleAsJsonBeforeEncode', [ &$text ] );
+			Hooks::run( 'ArticleAsJsonBeforeEncode', [ &$text ] );
 
 			$text = json_encode(
 				[

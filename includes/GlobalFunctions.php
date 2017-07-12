@@ -917,7 +917,7 @@ function wfDebug( $text, $logonly = false ) {
 			$cache = array();
 		}
 	}
-	# if ( wfRunHooks( 'Debug', array( $text, null ) ) ) { // Wikia change - BAC-91
+	# if ( Hooks::run( 'Debug', array( $text, null ) ) ) { // Wikia change - BAC-91
 		if ( $wgDebugLogFile != '' && !$wgProfileOnly ) {
 			# Strip unprintables; they can switch terminal modes when binary data
 			# gets dumped, which is pretty annoying.
@@ -1000,7 +1000,7 @@ function wfDebugLog( $logGroup, $text, $public = true ) {
 		$time = wfTimestamp( TS_DB );
 		$wiki = wfWikiID();
 		$host = wfHostname();
-		if ( wfRunHooks( 'Debug', array( $text, $logGroup ) ) ) {
+		if ( Hooks::run( 'Debug', array( $text, $logGroup ) ) ) {
 			wfErrorLog( "$time $host $wiki: $text", $wgDebugLogGroups[$logGroup] );
 		}
 	} elseif ( $public === true ) {
@@ -1506,7 +1506,7 @@ function wfMsgReal( $key, $args, $useDB = true, $forContent = false, $transform 
 function wfMsgGetKey( $key, $useDB = true, $langCode = false, $transform = true ) {
 	wfDeprecated( __METHOD__, '1.18' );
 
-	wfRunHooks( 'NormalizeMessageKey', array( &$key, &$useDB, &$langCode, &$transform ) );
+	Hooks::run( 'NormalizeMessageKey', array( &$key, &$useDB, &$langCode, &$transform ) );
 
 	$cache = MessageCache::singleton();
 	$message = $cache->get( $key, $useDB, $langCode );
@@ -2908,7 +2908,7 @@ function wfShellExec( $cmd, &$retval = null, $environ = array() ) {
 
 	wfInitShellLocale();
 
-	wfRunHooks( 'BeforeWfShellExec', [ &$cmd, &$environ ] ); // Wikia change
+	Hooks::run( 'BeforeWfShellExec', [ &$cmd, &$environ ] ); // Wikia change
 
 	$envcmd = '';
 	foreach( $environ as $k => $v ) {
@@ -3016,7 +3016,7 @@ function wfShellMaintenanceCmd( $script, array $parameters = array(), array $opt
 	global $wgPhpCli;
 	// Give site config file a chance to run the script in a wrapper.
 	// The caller may likely want to call wfBasename() on $script.
-	wfRunHooks( 'wfShellMaintenanceCmd', array( &$script, &$parameters, &$options ) );
+	Hooks::run( 'wfShellMaintenanceCmd', array( &$script, &$parameters, &$options ) );
 	$cmd = isset( $options['php'] ) ? array( $options['php'] ) : array( $wgPhpCli );
 	if ( isset( $options['wrapper'] ) ) {
 		$cmd[] = $options['wrapper'];
@@ -4039,7 +4039,7 @@ function wfGetParserCacheStorage() {
  * @param $args Array: parameters passed to hook functions
  * @return Boolean True if no handler aborted the hook
  */
-function wfRunHooks( $event, $args = array() ) {
+function Hooks::run( $event, $args = array() ) {
 	return Hooks::run( $event, $args );
 }
 

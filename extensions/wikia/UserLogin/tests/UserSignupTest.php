@@ -53,7 +53,7 @@
 				case 'isValidEmailAddr':
 					return true;
 				default:
-					return $this->callOriginalGlobalFunction( 'wfRunHooks', func_get_args() );
+					return $this->callOriginalGlobalFunction( 'Hooks::run', func_get_args() );
 			}
 		}
 
@@ -84,9 +84,9 @@
 			}
 
 			// required to prevent Phalanx checks
-			$mockRunHooks = $this->getGlobalFunctionMock( 'wfRunHooks' );
+			$mockRunHooks = $this->getGlobalFunctionMock( 'Hooks::run' );
 			$mockRunHooks->expects( $this->any() )
-				->method( 'wfRunHooks' )
+				->method( 'Hooks::run' )
 				->will( $this->returnCallback( array( $this, 'runHooksCallback' ) ) );
 
 			$this->setUpMock();

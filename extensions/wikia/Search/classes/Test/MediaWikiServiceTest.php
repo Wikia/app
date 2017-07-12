@@ -2969,10 +2969,10 @@ class MediaWikiServiceTest extends BaseTest
 	 */
 	public function testInvokeHook() {
 		$service = $this->service->setMethods( null )->getMock();
-		$mockRunHooks = $this->getGlobalFunctionMock( 'wfRunHooks' );
+		$mockRunHooks = $this->getGlobalFunctionMock( 'Hooks::run' );
 		$mockRunHooks
 		    ->expects( $this->once() )
-		    ->method ( 'wfRunHooks' )
+		    ->method ( 'Hooks::run' )
 		    ->with   ( 'onwhatever', [ 'foo', 123 ] )
 		    ->will   ( $this->returnValue( true ) )
 		;

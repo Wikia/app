@@ -236,7 +236,7 @@ class ResourceLoader {
 		$this->setSourceForStaticModules('common');
 		// Wikia - change end
 		// Register extension modules
-		wfRunHooks( 'ResourceLoaderRegisterModules', array( &$this ) );
+		Hooks::run( 'ResourceLoaderRegisterModules', array( &$this ) );
 		$this->register( $wgResourceModules );
 
 		if ( $wgEnableJavaScriptTest === true ) {
@@ -316,7 +316,7 @@ class ResourceLoader {
 		$testModules = array();
 		$testModules['qunit'] = include( "$IP/tests/qunit/QUnitTestResources.php" );
 		// Get other test suites (e.g. from extensions)
-		wfRunHooks( 'ResourceLoaderTestModules', array( &$testModules, &$this ) );
+		Hooks::run( 'ResourceLoaderTestModules', array( &$testModules, &$this ) );
 
 		// Add the testrunner (which configures QUnit) to the dependencies.
 		// Since it must be ready before any of the test suites are executed.
@@ -449,7 +449,7 @@ class ResourceLoader {
 	public function respond( ResourceLoaderContext $context ) {
 		global $wgCacheEpoch, $wgUseFileCache;
 
-		wfRunHooks('ResourceLoaderBeforeRespond',array($this,&$context));
+		Hooks::run('ResourceLoaderBeforeRespond',array($this,&$context));
 
 		// Use file cache if enabled and available...
 		if ( $wgUseFileCache ) {
@@ -551,7 +551,7 @@ class ResourceLoader {
 		}
 		ob_clean();
 
-		wfRunHooks( 'ResourceLoaderAfterRespond',[ $this,&$context ] );
+		Hooks::run( 'ResourceLoaderAfterRespond',[ $this,&$context ] );
 		// Wikia change - end
 		echo $response;
 
@@ -591,7 +591,7 @@ class ResourceLoader {
 		}
 
 		// Wikia - change begin - @author: macbre
-		wfRunHooks( 'ResourceLoaderModifyMaxAge',[ $this, $context, $mtime, &$maxage, &$smaxage ] );
+		Hooks::run( 'ResourceLoaderModifyMaxAge',[ $this, $context, $mtime, &$maxage, &$smaxage ] );
 		// Wikia - change end
 
 		if ( $context->getOnly() === 'styles' ) {
@@ -609,7 +609,7 @@ class ResourceLoader {
 			$exp = min( $maxage, $smaxage );
 			header( 'Expires: ' . wfTimestamp( TS_RFC2822, $exp + time() ) );
 			// Wikia - change begin - @author: wladek
-			wfRunHooks('ResourceLoaderCacheControlHeaders',array($context,$maxage,$smaxage,$exp));
+			Hooks::run('ResourceLoaderCacheControlHeaders',array($context,$maxage,$smaxage,$exp));
 			// Wikia - change end
 		}
 	}
@@ -1142,7 +1142,7 @@ class ResourceLoader {
 		/* Wikia - change begin - @author: wladek */
 		$loadScript = $wgLoadScript;
 		$url = false;
-		if ( !wfRunHooks('AlternateResourceLoaderURL',array(&$loadScript,&$query,&$url,$modules)) || $url !== false ) {
+		if ( !Hooks::run('AlternateResourceLoaderURL',array(&$loadScript,&$query,&$url,$modules)) || $url !== false ) {
 			wfProfileOut(__METHOD__);
 			return $url;
 		}

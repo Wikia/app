@@ -411,7 +411,7 @@ class ImportReporter extends ContextSource {
 				$page = WikiPage::factory( $title );
 				# Update page record
 				$page->updateRevisionOn( $dbw, $nullRevision );
-				wfRunHooks( 'NewRevisionFromEditComplete', array( $page, $nullRevision, $latest, $this->getUser() ) );
+				Hooks::run( 'NewRevisionFromEditComplete', array( $page, $nullRevision, $latest, $this->getUser() ) );
 			}
 		} else {
 			$this->getOutput()->addHTML( "<li>" . Linker::linkKnown( $title ) . " " .

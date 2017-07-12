@@ -70,7 +70,7 @@ class Handler extends \WikiaObject {
 			}
 
 			$message = '';
-			wfRunHooks( 'GetConfirmEditMessage', [ $this, &$message ] );
+			Hooks::run( 'GetConfirmEditMessage', [ $this, &$message ] );
 			if ( empty( $message ) ) {
 				$message = $this->captcha->getMessage( 'createaccount' );
 			}
@@ -430,7 +430,7 @@ class Handler extends \WikiaObject {
 
 		$result = null;
 		$hookParams = [ &$this, &$editPage, $newText, $section, $merged, &$result ];
-		if ( !wfRunHooks( 'ConfirmEdit::onConfirmEdit', $hookParams ) ) {
+		if ( !Hooks::run( 'ConfirmEdit::onConfirmEdit', $hookParams ) ) {
 			return $result;
 		}
 

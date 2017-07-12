@@ -64,7 +64,7 @@ class FacebookSignupController extends WikiaController {
 					'userName' => $name,
 					'errorMsg' => $errorMsg,
 				] );
-			} elseif ( !wfRunHooks( 'FacebookUserLoginSuccess', [ $user, &$errorMsg ] ) ) {
+			} elseif ( !Hooks::run( 'FacebookUserLoginSuccess', [ $user, &$errorMsg ] ) ) {
 				$this->response->setData( [
 					'loginAborted' => true,
 					'errorMsg' => $errorMsg,

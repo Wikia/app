@@ -135,7 +135,7 @@ class UserPagesHeaderController extends WikiaController {
 			);
 		}
 
-		wfRunHooks( 'UserPagesHeaderModuleAfterGetTabs', array( &$tabs, $namespace, $userName ) );
+		Hooks::run( 'UserPagesHeaderModuleAfterGetTabs', array( &$tabs, $namespace, $userName ) );
 
 		wfProfileOut( __METHOD__ );
 		return $tabs;
