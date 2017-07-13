@@ -22,7 +22,7 @@ class Wordmark {
 
 		$this->isValid = false;
 
-		if ( isset( $wordmarkData['image-data']['url'] ) && !empty( $wordmarkData['image-data']['url'] ) ) {
+		if ( !empty( $wordmarkData['image-data']['url'] ) ) {
 			$this->href = $wordmarkData['href'];
 			$this->label = new Label( $wordmarkData['title']['value'] );
 			$this->trackingLabel = $wordmarkData['tracking_label'];

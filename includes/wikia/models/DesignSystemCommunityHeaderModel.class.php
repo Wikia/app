@@ -27,16 +27,16 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 
 	public function getData(): array {
 		$data = [
-			"sitename" => $this->getSiteNameData(),
-			"navigation" => $this->getNavigation()
+			'sitename' => $this->getSiteNameData(),
+			'navigation' => $this->getNavigation()
 		];
 
 		if ( !empty( $this->getBackgroundImageUrl() ) ) {
-			$data["background_image"] = $this->getBackgroundImageUrl();
+			$data['background_image'] = $this->getBackgroundImageUrl();
 		}
 
 		if ( !empty( $this->getWordmarkData() ) ) {
-			$data["wordmark"] = $this->getWordmarkData();
+			$data['wordmark'] = $this->getWordmarkData();
 		}
 
 		return $data;
@@ -48,17 +48,17 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 
 			if ( $this->settings['wordmark-type'] === self::WORDMARK_TYPE_GRAPHIC ) {
 				$this->wordmarkData = [
-					"type" => "link-image",
-					"href" => $this->mainPageUrl,
-					"image-data" => [
-						"type" => "image-external",
-						"url" => $this->themeSettings->getWordmarkUrl(),
+					'type' => 'link-image',
+					'href' => $this->mainPageUrl,
+					'image-data' => [
+						'type' => 'image-external',
+						'url' => $this->themeSettings->getWordmarkUrl(),
 					],
-					"title" => [
-						"type" => "text",
-						"value" => $this->themeSettings->getSettings()['wordmark-text'],
+					'title' => [
+						'type' => 'text',
+						'value' => $this->themeSettings->getSettings()['wordmark-text'],
 					],
-					"tracking_label" => "wordmark-image",
+					'tracking_label' => 'wordmark-image',
 				];
 			}
 		}
@@ -69,13 +69,13 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	public function getSiteNameData(): array {
 		if ( $this->sitenameData === null ) {
 			$this->sitenameData = [
-				"type" => "link-text",
-				"title" => [
-					"type" => "text",
-					"value" => $this->themeSettings->getSettings()['wordmark-text']
+				'type' => 'link-text',
+				'title' => [
+					'type' => 'text',
+					'value' => $this->themeSettings->getSettings()['wordmark-text']
 				],
-				"href" => $this->mainPageUrl,
-				"tracking_label" => "sitename"
+				'href' => $this->mainPageUrl,
+				'tracking_label' => 'sitename'
 			];
 		}
 
@@ -112,7 +112,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 			}
 
 			$this->wikiLocalNavigation = $this->formatLocalNavData(
-				( new NavigationModel() )->getFormatedWiki( NavigationModel::WIKI_LOCAL_MESSAGE, $wikitext )['wiki'],
+				( new NavigationModel() )->getFormattedWiki( NavigationModel::WIKI_LOCAL_MESSAGE, $wikitext )['wiki'],
 				1
 			);
 		}
@@ -167,26 +167,26 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 			];
 
 			$this->exploreMenu = [
-				"type" => "dropdown",
-				"title" => [
-					"type" => "translatable-text",
-					"key" => "community-header-explore",
+				'type' => 'dropdown',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'community-header-explore',
 				],
-				"image-data" => [
-					"type" => "wds-svg",
-					"name" => "wds-icons-explore-tiny"
+				'image-data' => [
+					'type' => 'wds-svg',
+					'name' => 'wds-icons-explore-tiny'
 				],
-				"items" => array_map(
+				'items' => array_map(
 					function ( $item ) {
 						return [
-							"type" => "link-text",
-							"title" => [
-								"type" => "translatable-text",
-								"key" => $item['key'],
+							'type' => 'link-text',
+							'title' => [
+								'type' => 'translatable-text',
+								'key' => $item['key'],
 							],
-							"href" => GlobalTitle::newFromText( $item['title'], NS_SPECIAL, $this->productInstanceId )
+							'href' => GlobalTitle::newFromText( $item['title'], NS_SPECIAL, $this->productInstanceId )
 								->getFullURL(),
-							"tracking_label" => $item['tracking']
+							'tracking_label' => $item['tracking']
 						];
 					},
 					array_values(
@@ -209,31 +209,31 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 			$wgEnableForumExt = WikiFactory::getVarValueByName( 'wgEnableForumExt', $this->productInstanceId );
 			$wgEnableDiscussions = WikiFactory::getVarValueByName( 'wgEnableDiscussions', $this->productInstanceId );
 
-			$url = "";
-			$key = "";
-			$tracking = "";
+			$url = '';
+			$key = '';
+			$tracking = '';
 
 			if ( !empty( $wgEnableDiscussions ) ) {
-				$url = "/d/f";
-				$key = "community-header-discuss";
-				$tracking = "discuss";
+				$url = '/d/f';
+				$key = 'community-header-discuss';
+				$tracking = 'discuss';
 			} elseif ( !empty( $wgEnableForumExt ) ) {
-				$url = GlobalTitle::newFromText( "Forum", NS_SPECIAL, $this->productInstanceId )->getFullURL();
-				$key = "community-header-forum";
-				$tracking = "forum";
+				$url = GlobalTitle::newFromText( 'Forum', NS_SPECIAL, $this->productInstanceId )->getFullURL();
+				$key = 'community-header-forum';
+				$tracking = 'forum';
 			}
 
 			$this->discussLinkData = empty( $url ) ? [] : [
-				"type" => "link-text",
-				"title" => [
-					"type" => "translatable-text",
-					"key" => $key,
+				'type' => 'link-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => $key,
 				],
-				"href" => $url,
-				"tracking_label" => $tracking,
-				"image-data" => [
-					"type" => "wds-svg",
-					"name" => "wds-icons-reply-small",
+				'href' => $url,
+				'tracking_label' => $tracking,
+				'image-data' => [
+					'type' => 'wds-svg',
+					'name' => 'wds-icons-reply-small',
 				]
 			];
 		}
@@ -245,13 +245,13 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		return array_map(
 			function ( $item ) use ( $nestingLevel ) {
 				$ret = [
-					"type" => isset( $item['children'] ) ? "dropdown" : "link-text",
-					"title" => [
-						"type" => "text",
-						"value" => $item['text']
+					'type' => isset( $item['children'] ) ? 'dropdown' : 'link-text',
+					'title' => [
+						'type' => 'text',
+						'value' => $item['text']
 					],
-					"href" => $item['href'],
-					"tracking_label" => "custom-level-" . $nestingLevel,
+					'href' => $item['href'],
+					'tracking_label' => 'custom-level-' . $nestingLevel,
 				];
 
 				if ( isset( $item['children'] ) ) {

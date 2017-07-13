@@ -2,17 +2,17 @@
 
 namespace Wikia\CommunityHeader;
 
-use \DesignSystemCommunityHeaderModel;
+use DesignSystemCommunityHeaderModel;
 
 class Sitename {
 	public $titleText;
 	public $url;
 	public $trackingLabel;
 
-	public function __construct( DesignSystemCommunityHeaderModel $model) {
+	public function __construct( DesignSystemCommunityHeaderModel $model ) {
 		$sitenameData = $model->getSiteNameData();
 
-		$this->titleText = new Label($sitenameData['title']['value'] );
+		$this->titleText = new Label( $sitenameData['title']['value'] );
 		$this->url = $sitenameData['href'];
 		$this->trackingLabel = $sitenameData['tracking_label'];
 	}

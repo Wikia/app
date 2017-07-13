@@ -146,7 +146,7 @@ class NavigationModel extends WikiaModel {
 		];
 	}
 
-	public function getFormatedWiki( $msgName = false, $wikiText = '' ) {
+	public function getFormattedWiki( $msgName = false, $wikiText = '' ) {
 		$nav = $this->getWiki( $msgName, $wikiText );
 
 		$ret = array();
@@ -183,10 +183,8 @@ class NavigationModel extends WikiaModel {
 				$next['children'] = $children;
 			}
 
-		} else {
-			if ( !empty($children) ) {
-				$next = $children;
-			}
+		} else if ( !empty($children) ) {
+			$next = $children;
 		}
 
 		return $next;
