@@ -106,11 +106,14 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		return $localNav;
 	}
 
-	public function getWikiLocalNavigation(): array {
+	public function getWikiLocalNavigation( $wikitext = null ): array {
 		if ( $this->wikiLocalNavigation === null ) {
-			$navigationMessage =
-				GlobalTitle::newFromText( NavigationModel::WIKI_LOCAL_MESSAGE, NS_MEDIAWIKI, $this->productInstanceId );
-			$wikitext = $navigationMessage->getContent();
+
+			if ( empty( $wikitext ) ) {
+				$navigationMessage =
+					GlobalTitle::newFromText( NavigationModel::WIKI_LOCAL_MESSAGE, NS_MEDIAWIKI, $this->productInstanceId );
+				$wikitext = $navigationMessage->getContent();
+			}
 
 			$this->wikiLocalNavigation = $this->formatLocalNavData(
 				( new NavigationModel() )->getFormatedWiki( NavigationModel::WIKI_LOCAL_MESSAGE, $wikitext )['wiki'],

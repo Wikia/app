@@ -2,28 +2,28 @@
 	<ul class="wds-tabs">
 		<? foreach( $navigation->localNavigation as $firstLevelItem ): ?>
 			<li class="wds-tabs__tab">
-				<? if ( !empty( $firstLevelItem['children'] ) ): ?>
+				<? if ( !empty( $firstLevelItem['items'] ) ): ?>
 					<div class="wds-dropdown">
 						<div class="wds-tabs__tab-label wds-dropdown__toggle">
 							<a href="<?= $firstLevelItem['href'] ?? '#' ?>"<? if($isPreview): ?> target="_blank"<? endif; ?>>
-								<span><?= $firstLevelItem['textEscaped'] ?></span>
+								<span><?= $firstLevelItem['title']['value'] ?></span>
 							</a>
 							<?= DesignSystemHelper::renderSvg('wds-icons-dropdown-tiny', 'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron'); ?>
 						</div>
 						<div class="wds-is-not-scrollable wds-dropdown__content">
 							<ul class="wds-list wds-is-linked wds-has-bolded-items">
-								<? foreach( $firstLevelItem['children'] as $index => $secondLevelItem ): ?>
-									<? if ( array_key_exists( 'children', $secondLevelItem ) && !empty( $secondLevelItem['children'] ) ): ?>
-										<li class="<?= $index > count($secondLevelItem['children']) - 1 ? 'wds-is-sticked-to-parent ' : '' ?>wds-dropdown-level-2">
+								<? foreach( $firstLevelItem['items'] as $index => $secondLevelItem ): ?>
+									<? if ( array_key_exists( 'items', $secondLevelItem ) && !empty( $secondLevelItem['items'] ) ): ?>
+										<li class="<?= $index > count($secondLevelItem['items']) - 1 ? 'wds-is-sticked-to-parent ' : '' ?>wds-dropdown-level-2">
 											<a href="<?= $secondLevelItem['href'] ?? '#' ?>"<? if($isPreview): ?> target="_blank"<? endif; ?> class="wds-dropdown-level-2__toggle">
-												<span><?= $secondLevelItem['textEscaped'] ?></span>
+												<span><?= $secondLevelItem['title']['value'] ?></span>
 												<?= DesignSystemHelper::renderSvg( 'wds-icons-menu-control-tiny', 'wds-icon wds-icon-tiny wds-dropdown-chevron' ); ?>
 											</a>
 											<div class="wds-is-not-scrollable wds-dropdown-level-2__content">
 												<ul class="wds-list wds-is-linked">
-													<? foreach( $secondLevelItem['children'] as $thirdLevelItem ): ?>
+													<? foreach( $secondLevelItem['items'] as $thirdLevelItem ): ?>
 														<li>
-															<a href="<?= $thirdLevelItem['href'] ?? '#' ?>"<? if($isPreview): ?> target="_blank"<? endif; ?>><?= $thirdLevelItem['textEscaped'] ?></a>
+															<a href="<?= $thirdLevelItem['href'] ?? '#' ?>"<? if($isPreview): ?> target="_blank"<? endif; ?>><?= $thirdLevelItem['title']['value'] ?></a>
 														</li>
 													<? endforeach; ?>
 												</ul>
@@ -31,7 +31,7 @@
 										</li>
 									<? else : ?>
 										<li>
-											<a href="<?= $secondLevelItem['href'] ?? '#' ?>"<? if($isPreview): ?> target="_blank"<? endif; ?>><?= $secondLevelItem['textEscaped'] ?></a>
+											<a href="<?= $secondLevelItem['href'] ?? '#' ?>"<? if($isPreview): ?> target="_blank"<? endif; ?>><?= $secondLevelItem['title']['value'] ?></a>
 										</li>
 									<? endif; ?>
 								<? endforeach; ?>
