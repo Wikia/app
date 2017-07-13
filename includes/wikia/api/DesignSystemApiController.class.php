@@ -9,9 +9,7 @@ class DesignSystemApiController extends WikiaApiController {
 	public function getFooter() {
 		$params = $this->getRequestParameters();
 		$footerModel = new DesignSystemGlobalFooterModel(
-			$params[static::PARAM_PRODUCT],
-			$params[static::PARAM_ID],
-			$params[static::PARAM_LANG]
+			$params[static::PARAM_PRODUCT], $params[static::PARAM_ID], $params[static::PARAM_LANG]
 		);
 
 		$this->setResponseData( $footerModel->getData() );
@@ -23,10 +21,9 @@ class DesignSystemApiController extends WikiaApiController {
 
 		$this->setResponseData(
 			( new DesignSystemGlobalNavigationModel(
-				$params[static::PARAM_PRODUCT],
-				$params[static::PARAM_ID],
-				$params[static::PARAM_LANG]
-			) )->getData() );
+				$params[static::PARAM_PRODUCT], $params[static::PARAM_ID], $params[static::PARAM_LANG]
+			) )->getData()
+		);
 
 		$this->addCachingHeaders();
 	}
@@ -35,58 +32,82 @@ class DesignSystemApiController extends WikiaApiController {
 		$params = $this->getRequestParameters();
 
 		//TODO: think about refactoring ThemeSettings class to have cityId as constructor param
-		$globalStateWrapper = new \Wikia\Util\GlobalStateWrapper([
-			// used in ThemeSettings
-			'wgSitename' => WikiFactory::getVarValueByName( 'wgSitename', intval($params[static::PARAM_ID] )),
-			'wgAdminSkin' => WikiFactory::getVarValueByName( 'wgAdminSkin',intval( $params[static::PARAM_ID]) ),
-			'wgOasisThemeSettings' => WikiFactory::getVarValueByName( 'wgOasisThemeSettings', intval($params[static::PARAM_ID] )),
-			'wgOasisThemeSettingsHistory' => WikiFactory::getVarValueByName( 'wgOasisThemeSettingsHistory', intval($params[static::PARAM_ID] )),
-			'wgUploadPath' => WikiFactory::getVarValueByName( 'wgUploadPath', intval($params[static::PARAM_ID] )),
+		$globalStateWrapper = new \Wikia\Util\GlobalStateWrapper(
+			[
+				// used in ThemeSettings
+				'wgSitename' => WikiFactory::getVarValueByName( 'wgSitename', intval( $params[static::PARAM_ID] ) ),
+				'wgAdminSkin' => WikiFactory::getVarValueByName( 'wgAdminSkin', intval( $params[static::PARAM_ID] ) ),
+				'wgOasisThemeSettings' => WikiFactory::getVarValueByName(
+					'wgOasisThemeSettings',
+					intval( $params[static::PARAM_ID] )
+				),
+				'wgOasisThemeSettingsHistory' => WikiFactory::getVarValueByName(
+					'wgOasisThemeSettingsHistory',
+					intval( $params[static::PARAM_ID] )
+				),
+				'wgUploadPath' => WikiFactory::getVarValueByName( 'wgUploadPath', intval( $params[static::PARAM_ID] ) ),
+			]
+		);
 
-			// used in DesignSystemCommunityHeaderModel
-			'wgEnableCommunityPageExt' => WikiFactory::getVarValueByName( 'wgEnableCommunityPageExt', intval($params[static::PARAM_ID] )),
-			'wgEnableForumExt' => WikiFactory::getVarValueByName( 'wgEnableForumExt', intval($params[static::PARAM_ID] )),
-			'wgEnableDiscussions' => WikiFactory::getVarValueByName( 'wgEnableDiscussions', intval($params[static::PARAM_ID] )),
-			'wgEnableSpecialVideosExt' => WikiFactory::getVarValueByName( 'wgEnableSpecialVideosExt', intval($params[static::PARAM_ID] )),
-		]);
-
-		$globalStateWrapper->wrap(function() use($params) {
-			$this->setResponseData(
-				( new DesignSystemCommunityHeaderModel(
-					$params[static::PARAM_ID]
-				))->getData()
-			);
-		});
+		$globalStateWrapper->wrap(
+			function () use ( $params ) {
+				$this->setResponseData(
+					( new DesignSystemCommunityHeaderModel(
+						$params[static::PARAM_ID]
+					) )->getData()
+				);
+			}
+		);
 
 		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 	}
 
 	/**
 	 * return all possible elements of Design System API
+	 *
 	 * @throws \NotFoundApiException
 	 */
 	public function getAllElements() {
 		$params = $this->getRequestParameters();
 		$footerModel = new DesignSystemGlobalFooterModel(
-			$params[static::PARAM_PRODUCT],
-			$params[static::PARAM_ID],
-			$params[static::PARAM_LANG]
+			$params[static::PARAM_PRODUCT], $params[static::PARAM_ID], $params[static::PARAM_LANG]
 		);
 		$navigationModel = new DesignSystemGlobalNavigationModel(
-			$params[static::PARAM_PRODUCT],
-			$params[static::PARAM_ID],
-			$params[static::PARAM_LANG]
-		);
-		$communityHeaderModel = new DesignSystemCommunityHeaderModel(
-			$params[static::PARAM_ID]
+			$params[static::PARAM_PRODUCT], $params[static::PARAM_ID], $params[static::PARAM_LANG]
 		);
 
+		$globalStateWrapper = new \Wikia\Util\GlobalStateWrapper(
+			[
+				// used in ThemeSettings
+				'wgSitename' => WikiFactory::getVarValueByName( 'wgSitename', intval( $params[static::PARAM_ID] ) ),
+				'wgAdminSkin' => WikiFactory::getVarValueByName( 'wgAdminSkin', intval( $params[static::PARAM_ID] ) ),
+				'wgOasisThemeSettings' => WikiFactory::getVarValueByName(
+					'wgOasisThemeSettings',
+					intval( $params[static::PARAM_ID] )
+				),
+				'wgOasisThemeSettingsHistory' => WikiFactory::getVarValueByName(
+					'wgOasisThemeSettingsHistory',
+					intval( $params[static::PARAM_ID] )
+				),
+				'wgUploadPath' => WikiFactory::getVarValueByName( 'wgUploadPath', intval( $params[static::PARAM_ID] ) ),
+			]
+		);
 
-		$this->setResponseData( [
-			'global-footer' => $footerModel->getData(),
-			'global-navigation' => $navigationModel->getData(),
-			'community-header' => $communityHeaderModel->getData()
-		] );
+		$globalStateWrapper->wrap(
+			function () use ( $params ) {
+				$this->communityHeaderModel = new DesignSystemCommunityHeaderModel(
+					$params[static::PARAM_ID]
+				);
+			}
+		);
+
+		$this->setResponseData(
+			[
+				'global-footer' => $footerModel->getData(),
+				'global-navigation' => $navigationModel->getData(),
+				'community-header' => $this->communityHeaderModel->getData()
+			]
+		);
 
 		$this->addCachingHeaders();
 	}

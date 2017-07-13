@@ -125,9 +125,12 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	}
 
 	public function getExploreMenu(): array {
-		global $wgEnableCommunityPageExt, $wgEnableForumExt, $wgEnableDiscussions, $wgEnableSpecialVideosExt;
-
 		if ( $this->exploreMenu === null ) {
+			$wgEnableCommunityPageExt = WikiFactory::getVarValueByName( 'wgEnableCommunityPageExt', $this->productInstanceId );
+			$wgEnableForumExt = WikiFactory::getVarValueByName( 'wgEnableForumExt', $this->productInstanceId );
+			$wgEnableDiscussions = WikiFactory::getVarValueByName( 'wgEnableDiscussions', $this->productInstanceId );
+			$wgEnableSpecialVideosExt = WikiFactory::getVarValueByName( 'wgEnableSpecialVideosExt', $this->productInstanceId );
+
 			$exploreItems = [
 				[
 					'title' => 'WikiActivity',
@@ -206,9 +209,10 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	}
 
 	public function getDiscussLinkData(): array {
-		global $wgEnableForumExt, $wgEnableDiscussions;
-
 		if ( $this->discussLinkData === null ) {
+			$wgEnableForumExt = WikiFactory::getVarValueByName( 'wgEnableForumExt', $this->productInstanceId );
+			$wgEnableDiscussions = WikiFactory::getVarValueByName( 'wgEnableDiscussions', $this->productInstanceId );
+
 			$url = "";
 			$key = "";
 			$tracking = "";
