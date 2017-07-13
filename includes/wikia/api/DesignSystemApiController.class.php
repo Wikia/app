@@ -9,7 +9,9 @@ class DesignSystemApiController extends WikiaApiController {
 	public function getFooter() {
 		$params = $this->getRequestParameters();
 		$footerModel = new DesignSystemGlobalFooterModel(
-			$params[static::PARAM_PRODUCT], $params[static::PARAM_ID], $params[static::PARAM_LANG]
+			$params[static::PARAM_PRODUCT],
+			$params[static::PARAM_ID],
+			$params[static::PARAM_LANG]
 		);
 
 		$this->setResponseData( $footerModel->getData() );
@@ -18,47 +20,23 @@ class DesignSystemApiController extends WikiaApiController {
 
 	public function getNavigation() {
 		$params = $this->getRequestParameters();
-
-		$this->setResponseData(
-			( new DesignSystemGlobalNavigationModel(
-				$params[static::PARAM_PRODUCT], $params[static::PARAM_ID], $params[static::PARAM_LANG]
-			) )->getData()
+		$navigationModel = new DesignSystemGlobalNavigationModel(
+			$params[static::PARAM_PRODUCT],
+			$params[static::PARAM_ID],
+			$params[static::PARAM_LANG]
 		);
 
+		$this->setResponseData( $navigationModel->getData() );
 		$this->addCachingHeaders();
 	}
 
 	public function getCommunityHeader() {
 		$params = $this->getRequestParameters();
-
-		//TODO: think about refactoring ThemeSettings class to have cityId as constructor param
-		$globalStateWrapper = new \Wikia\Util\GlobalStateWrapper(
-			[
-				// used in ThemeSettings
-				'wgSitename' => WikiFactory::getVarValueByName( 'wgSitename', intval( $params[static::PARAM_ID] ) ),
-				'wgAdminSkin' => WikiFactory::getVarValueByName( 'wgAdminSkin', intval( $params[static::PARAM_ID] ) ),
-				'wgOasisThemeSettings' => WikiFactory::getVarValueByName(
-					'wgOasisThemeSettings',
-					intval( $params[static::PARAM_ID] )
-				),
-				'wgOasisThemeSettingsHistory' => WikiFactory::getVarValueByName(
-					'wgOasisThemeSettingsHistory',
-					intval( $params[static::PARAM_ID] )
-				),
-				'wgUploadPath' => WikiFactory::getVarValueByName( 'wgUploadPath', intval( $params[static::PARAM_ID] ) ),
-			]
+		$communityHeaderModel = new DesignSystemCommunityHeaderModel(
+			$params[static::PARAM_ID]
 		);
 
-		$globalStateWrapper->wrap(
-			function () use ( $params ) {
-				$this->setResponseData(
-					( new DesignSystemCommunityHeaderModel(
-						$params[static::PARAM_ID]
-					) )->getData()
-				);
-			}
-		);
-
+		$this->setResponseData( $communityHeaderModel->getData() );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 	}
 
@@ -69,43 +47,28 @@ class DesignSystemApiController extends WikiaApiController {
 	 */
 	public function getAllElements() {
 		$params = $this->getRequestParameters();
+
 		$footerModel = new DesignSystemGlobalFooterModel(
-			$params[static::PARAM_PRODUCT], $params[static::PARAM_ID], $params[static::PARAM_LANG]
+			$params[static::PARAM_PRODUCT],
+			$params[static::PARAM_ID],
+			$params[static::PARAM_LANG]
 		);
+
 		$navigationModel = new DesignSystemGlobalNavigationModel(
-			$params[static::PARAM_PRODUCT], $params[static::PARAM_ID], $params[static::PARAM_LANG]
+			$params[static::PARAM_PRODUCT],
+			$params[static::PARAM_ID],
+			$params[static::PARAM_LANG]
 		);
 
-		$globalStateWrapper = new \Wikia\Util\GlobalStateWrapper(
-			[
-				// used in ThemeSettings
-				'wgSitename' => WikiFactory::getVarValueByName( 'wgSitename', intval( $params[static::PARAM_ID] ) ),
-				'wgAdminSkin' => WikiFactory::getVarValueByName( 'wgAdminSkin', intval( $params[static::PARAM_ID] ) ),
-				'wgOasisThemeSettings' => WikiFactory::getVarValueByName(
-					'wgOasisThemeSettings',
-					intval( $params[static::PARAM_ID] )
-				),
-				'wgOasisThemeSettingsHistory' => WikiFactory::getVarValueByName(
-					'wgOasisThemeSettingsHistory',
-					intval( $params[static::PARAM_ID] )
-				),
-				'wgUploadPath' => WikiFactory::getVarValueByName( 'wgUploadPath', intval( $params[static::PARAM_ID] ) ),
-			]
-		);
-
-		$globalStateWrapper->wrap(
-			function () use ( $params ) {
-				$this->communityHeaderModel = new DesignSystemCommunityHeaderModel(
-					$params[static::PARAM_ID]
-				);
-			}
+		$communityHeaderModel = new DesignSystemCommunityHeaderModel(
+			$params[static::PARAM_ID]
 		);
 
 		$this->setResponseData(
 			[
 				'global-footer' => $footerModel->getData(),
 				'global-navigation' => $navigationModel->getData(),
-				'community-header' => $this->communityHeaderModel->getData()
+				'community-header' => $communityHeaderModel->getData()
 			]
 		);
 
@@ -113,7 +76,7 @@ class DesignSystemApiController extends WikiaApiController {
 	}
 
 	private function getRequestParameters() {
-		$id = $this->getRequiredParam( static::PARAM_ID );
+		$id = intval( $this->getRequiredParam( static::PARAM_ID ) );
 		$product = $this->getRequiredParam( static::PARAM_PRODUCT );
 		$lang = $this->getRequiredParam( static::PARAM_LANG );
 

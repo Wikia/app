@@ -4,10 +4,7 @@
 class DesignSystemCommunityHeaderModel extends WikiaModel {
 	const WORDMARK_TYPE_GRAPHIC = 'graphic';
 
-	private $product;
 	private $productInstanceId;
-	private $lang;
-
 	private $themeSettings;
 	private $settings;
 	private $mainPageUrl;
@@ -22,10 +19,9 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	public function __construct( $cityId ) {
 		parent::__construct();
 
-		$this->productInstanceId = intval( $cityId );
-
+		$this->productInstanceId = $cityId;
 		$this->themeSettings = new ThemeSettings();
-		$this->settings = $this->themeSettings->getSettings();
+		$this->settings = $this->themeSettings->getSettings( $cityId );
 		$this->mainPageUrl = GlobalTitle::newMainPage( $this->productInstanceId )->getFullURL();
 	}
 
