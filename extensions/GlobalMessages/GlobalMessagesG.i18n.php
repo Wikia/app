@@ -53,14 +53,14 @@ $messages['en'] = array(
 	'group-vstf' => 'VSTF',
 	'group-vstf-member' => 'VSTF',
 	'grouppage-vstf' => 'w:Wikia:SpamTaskForce',
-	'group-helper' => 'Fandom Helpers',
-	'group-helper-member' => 'Fandom Helper',
+	'group-helper' => 'FANDOM Helpers',
+	'group-helper-member' => 'FANDOM Helper',
 	'grouppage-helper' => 'Help:Helper Group',
-	'group-staff' => 'Fandom Staff',
-	'group-staff-member' => 'Fandom Staff',
+	'group-staff' => 'FANDOM Staff',
+	'group-staff-member' => 'FANDOM Staff',
 	'grouppage-staff' => 'wikia:Community_Central:Staff',
-	'group-util' => 'Fandom Utilities',
-	'group-util-member' => 'Fandom Utilities',
+	'group-util' => 'FANDOM Utilities',
+	'group-util-member' => 'FANDOM Utilities',
 	'grouppage-util' => 'wikia:Community_Central:Staff',
 	'group-reviewer' => 'Image Reviewers',
 	'group-reviewer-member' => 'Image Reviewer',
@@ -1493,12 +1493,12 @@ $messages['de'] = array(
 	'group-bureaucrat.js' => '/* Das folgende JavaScript wird nur für Bürokraten geladen. */',
 	'group-content-moderator' => 'Inhalts-Moderatoren',
 	'group-content-moderator-member' => 'Inhalts-Moderator',
-	'group-helper' => 'Fandom-Helfer',
-	'group-helper-member' => 'Fandom-Helfer',
-	'group-staff' => 'Fandom-Mitarbeiter',
-	'group-staff-member' => 'Fandom-Mitarbeiter',
-	'group-util' => 'Fandom-Hilfsmittel',
-	'group-util-member' => 'Fandom-Hilfsmittel',
+	'group-helper' => 'FANDOM-Helfer',
+	'group-helper-member' => 'FANDOM-Helfer',
+	'group-staff' => 'FANDOM-Mitarbeiter',
+	'group-staff-member' => 'FANDOM-Mitarbeiter',
+	'group-util' => 'FANDOM-Hilfsmittel',
+	'group-util-member' => 'FANDOM-Hilfsmittel',
 	'group-reviewer-member' => 'Bilder-Prüfer',
 	'group-reviewer' => 'Bilder-Prüfer',
 	'grouppage-helper' => 'w:de:Helfer',
@@ -1526,6 +1526,8 @@ $messages['de'] = array(
 	'group-voldev' => 'Volunteer Developers',
 	'group-voldev-member' => 'Volunteer Developer',
 	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
 );
 
 $messages['de-formal'] = array(
@@ -1739,12 +1741,12 @@ $messages['es'] = array(
 	'grouppage-suppress' => 'w:c:comunidad:Ayuda:Privilegios_de_usuario',
 	'group-content-moderator' => 'Moderadores de contenido',
 	'group-content-moderator-member' => 'Moderador de contenido',
-	'group-helper-member' => 'Helpers de Fandom',
-	'group-helper' => 'Helpers de Fandom',
-	'group-staff' => 'Staff de Fandom',
-	'group-staff-member' => 'Staff de Fandom',
-	'group-util' => 'Utilidades de Fandom',
-	'group-util-member' => 'Utilidades de Fandom',
+	'group-helper-member' => 'Helpers de FANDOM',
+	'group-helper' => 'Helpers de FANDOM',
+	'group-staff' => 'Staff de FANDOM',
+	'group-staff-member' => 'Staff de FANDOM',
+	'group-util' => 'Utilidades de FANDOM',
+	'group-util-member' => 'Utilidades de FANDOM',
 	'group-sysop.css' => '/* Cualquier código CSS escrito aquí será cargado solamente para los administradores */',
 	'group-sysop.js' => '/* Cualquier código JavaScript escrito aquí será cargado solamente para los administradores */',
 	'group-vstf-member' => 'VSTF',
@@ -1780,6 +1782,8 @@ $messages['es'] = array(
 	'group-voldev' => 'Desarrollador voluntario',
 	'group-voldev-member' => 'Desarrollador voluntario',
 	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
 );
 
 $messages['et'] = array(
@@ -2045,12 +2049,12 @@ $messages['fr'] = array(
 	'group-sysop.js' => '/* Le JavaScript placé ici se chargera uniquement pour les administrateurs */',
 	'group-content-moderator' => 'Modérateurs de contenu',
 	'group-content-moderator-member' => 'Modérateur de contenu',
-	'group-helper' => 'Assistants de Fandom',
-	'group-helper-member' => 'Assistant de Fandom',
-	'group-staff' => 'Staff de Fandom',
-	'group-staff-member' => 'Staff de Fandom',
-	'group-util' => 'Fandom Utilities',
-	'group-util-member' => 'Fandom Utilities',
+	'group-helper' => 'Assistants de FANDOM',
+	'group-helper-member' => 'Assistant de FANDOM',
+	'group-staff' => 'Staff de FANDOM',
+	'group-staff-member' => 'Staff de FANDOM',
+	'group-util' => 'FANDOM Utilities',
+	'group-util-member' => 'FANDOM Utilities',
 	'group-autoconfirmed.css' => "/* Le CSS placé ici n'affectera que les utilisateurs auto-confirmés */",
 	'group-autoconfirmed.js' => '/* Le JavaScript placé ici se chargera uniquement pour les utilisateurs auto-confirmés */',
 	'group-bot.css' => "/* Le CSS placé ici n'affectera que les robots */",
@@ -2084,6 +2088,8 @@ $messages['fr'] = array(
 	'group-vanguard' => 'Vanguards',
 	'group-vanguard-member' => 'Vanguard',
 	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
 );
 
 $messages['frc'] = array(
@@ -3014,12 +3020,12 @@ $messages['it'] = array(
 	'group-bureaucrat.js' => '/ * Il codice JavaScript inserito qui viene caricato solo per i burocrati * /',
 	'group-content-moderator' => 'Moderatori di contenuti',
 	'group-content-moderator-member' => 'Moderatore di contenuti',
-	'group-helper' => 'Helper di Fandom',
-	'group-helper-member' => 'Helper di Fandom',
-	'group-staff' => 'Staff Fandom',
-	'group-staff-member' => 'Staff Fandom',
-	'group-util' => 'Fandom Utilities',
-	'group-util-member' => 'Fandom Utilities',
+	'group-helper' => 'Helper di FANDOM',
+	'group-helper-member' => 'Helper di FANDOM',
+	'group-staff' => 'Staff FANDOM',
+	'group-staff-member' => 'Staff FANDOM',
+	'group-util' => 'FANDOM Utilities',
+	'group-util-member' => 'FANDOM Utilities',
 	'googlesearch' => '<form method="get" action="//www.google.com/search" id="googlesearch">
 	<input type="hidden" name="domains" value="{{SERVER}}" />
 	<input type="hidden" name="num" value="50" />
@@ -3047,6 +3053,8 @@ $messages['it'] = array(
 	'group-voldev' => 'Volunteer Developer',
 	'group-voldev-member' => 'Volunteer Developer',
 	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
 );
 
 $messages['iu'] = array(
@@ -3127,12 +3135,12 @@ $messages['ja'] = array(
 	'group-bureaucrat.js' => '/* ここにあるすべてのJavaScriptは、ビューロクラットのみに対して読み込まれます */',
 	'group-content-moderator' => 'コンテンツ・モデレーター',
 	'group-content-moderator-member' => 'コンテンツ・モデレーター',
-	'group-helper' => 'Fandomヘルパー',
-	'group-helper-member' => 'Fandomヘルパー',
-	'group-util' => 'Fandomのユーティリティ・メンバー',
-	'group-util-member' => 'Fandomのユーティリティ・メンバー',
-	'group-staff' => 'Fandomスタッフ',
-	'group-staff-member' => 'Fandomスタッフ',
+	'group-helper' => 'FANDOMヘルパー',
+	'group-helper-member' => 'FANDOMヘルパー',
+	'group-util' => 'FANDOMのユーティリティ・メンバー',
+	'group-util-member' => 'FANDOMのユーティリティ・メンバー',
+	'group-staff' => 'FANDOMスタッフ',
+	'group-staff-member' => 'FANDOMスタッフ',
 	'group-voldev-member' => 'ボランティア・デベロッパー',
 	'group-voldev' => 'ボランティア・デベロッパー',
 	'grouppage-helper' => 'W:c:ja.community:ヘルプ:ボランティアとヘルパー',
@@ -3160,6 +3168,8 @@ $messages['ja'] = array(
 	'group-vanguard' => 'ヴァンガード',
 	'group-vanguard-member' => 'ヴァンガードのメンバー',
 	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
 );
 
 $messages['jam'] = array(
@@ -4794,14 +4804,14 @@ $messages['nl'] = array(
 </form>',
 	'group-vstf-member' => 'VSTF',
 	'grouppage-vstf' => 'w:Wikia:SpamTaskForce',
-	'group-helper' => 'Fandom Helpers',
-	'group-helper-member' => 'Fandom Helper',
+	'group-helper' => 'FANDOM Helpers',
+	'group-helper-member' => 'FANDOM Helper',
 	'grouppage-helper' => 'Help:Helper Group',
-	'group-staff' => 'Fandom Staff',
-	'group-staff-member' => 'Fandom Staff',
+	'group-staff' => 'FANDOM Staff',
+	'group-staff-member' => 'FANDOM Staff',
 	'grouppage-staff' => 'wikia:Community_Central:Staff',
-	'group-util' => 'Fandom Utilities',
-	'group-util-member' => 'Fandom Utilities',
+	'group-util' => 'FANDOM Utilities',
+	'group-util-member' => 'FANDOM Utilities',
 	'grouppage-util' => 'wikia:Community_Central:Staff',
 	'group-reviewer' => 'Image Reviewers',
 	'group-reviewer-member' => 'Image Reviewer',
@@ -4811,6 +4821,8 @@ $messages['nl'] = array(
 	'group-voldev' => 'Volunteer Developers',
 	'group-voldev-member' => 'Volunteer Developer',
 	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
 );
 
 $messages['nl-informal'] = array(
@@ -5155,6 +5167,8 @@ $messages['pl'] = array(
 	'group-voldev' => 'Volunteer Developers',
 	'group-voldev-member' => 'volunteer developer',
 	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
 );
 
 $messages['pms'] = array(
@@ -5325,12 +5339,12 @@ $messages['pt'] = array(
 	'grouppage-suppress' => '{{ns:project}}:Oversight',
 	'group-content-moderator' => 'Moderadores de conteúdo',
 	'group-content-moderator-member' => 'Moderador de conteúdo',
-	'group-helper' => 'Ajudantes do Fandom',
-	'group-helper-member' => 'Ajudante do Fandom',
-	'group-staff' => 'Staff do Fandom',
-	'group-staff-member' => 'Staff do Fandom',
-	'group-util' => 'Utilitários do Fandom',
-	'group-util-member' => 'Utilitários do Fandom',
+	'group-helper' => 'Ajudantes do FANDOM',
+	'group-helper-member' => 'Ajudante do FANDOM',
+	'group-staff' => 'Staff do FANDOM',
+	'group-staff-member' => 'Staff do FANDOM',
+	'group-util' => 'Utilitários do FANDOM',
+	'group-util-member' => 'Utilitários do FANDOM',
 	'googlesearch' => '<form method="get" action="//www.google.com/search" id="googlesearch">
 	<input type="hidden" name="domains" value="{{SERVER}}" />
 	<input type="hidden" name="num" value="50" />
@@ -5366,36 +5380,8 @@ $messages['pt'] = array(
 	'group-voldev' => 'Desenvolvedores voluntários',
 	'group-voldev-member' => 'Desenvolvedor voluntário',
 	'grouppage-voldev' => 'w:c:dev:Desenvolvedores_voluntários',
-);
-
-$messages['pt-br'] = array(
-	'go' => 'Ir',
-	'gotaccount' => "Já possui uma conta? '''$1'''.",
-	'gotaccountlink' => 'Autenticar-se',
-	'guesstimezone' => 'Preencher a partir do navegador',
-	'gender-unknown' => 'Não especificado',
-	'gender-male' => 'Masculino',
-	'gender-female' => 'Feminino',
-	'group' => 'Grupo:',
-	'group-user' => 'Usuários',
-	'group-autoconfirmed' => 'Usuários auto-confirmados',
-	'group-bot' => 'Robôs',
-	'group-sysop' => 'Administradores',
-	'group-bureaucrat' => 'Burocratas',
-	'group-suppress' => 'Oversights',
-	'group-all' => '(todos)',
-	'group-user-member' => '{{GENDER:$1|usuário|usuária}}',
-	'group-autoconfirmed-member' => '{{GENDER:$1|usuário autoconfirmado|usuária autoconfirmada}}',
-	'group-bot-member' => 'robô',
-	'group-sysop-member' => '{{GENDER:$1|administrador|administradora}}',
-	'group-bureaucrat-member' => 'burocrata',
-	'group-suppress-member' => '{{GENDER:$1|supressor|supressora}}',
-	'grouppage-user' => '{{ns:project}}:Usuários',
-	'grouppage-autoconfirmed' => '{{ns:project}}:Auto-confirmados',
-	'grouppage-bot' => '{{ns:project}}:Robôs',
-	'grouppage-sysop' => '{{ns:project}}:Administradores',
-	'grouppage-bureaucrat' => '{{ns:project}}:Burocratas',
-	'grouppage-suppress' => '{{ns:project}}:Oversight',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
 );
 
 $messages['qu'] = array(
@@ -5641,6 +5627,8 @@ $messages['ru'] = array(
 	'group-voldev' => 'Разработчики-волонтёры',
 	'group-voldev-member' => 'Разработчик-волонтёр',
 	'grouppage-voldev' => 'w:c:dev:Разработчики_Волонтеры',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
 );
 
 $messages['rue'] = array(
@@ -7364,12 +7352,12 @@ $messages['zh-hans'] = array(
 	'grouppage-suppress' => '{{ns:project}}:监督员',
 	'group-content-moderator' => '内容版主',
 	'group-content-moderator-member' => '内容版主',
-	'group-helper' => 'Fandom助手',
-	'group-helper-member' => 'Fandom助手',
-	'group-staff' => 'Fandom员工',
-	'group-staff-member' => 'Fandom员工',
-	'group-util' => 'Fandom Utilities',
-	'group-util-member' => 'Fandom Utilities',
+	'group-helper' => 'FANDOM助手',
+	'group-helper-member' => 'FANDOM助手',
+	'group-staff' => 'FANDOM员工',
+	'group-staff-member' => 'FANDOM员工',
+	'group-util' => 'FANDOM Utilities',
+	'group-util-member' => 'FANDOM Utilities',
 	'googlesearch' => '<form method="get" action="//www.google.com/search" id="googlesearch">
 	<input type="hidden" name="domains" value="{{SERVER}}" />
 	<input type="hidden" name="num" value="50" />
@@ -7405,6 +7393,8 @@ $messages['zh-hans'] = array(
 	'group-voldev' => '志愿开发者',
 	'group-voldev-member' => '志愿开发者',
 	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
 );
 
 $messages['zh-hant'] = array(
@@ -7478,44 +7468,8 @@ $messages['zh-hant'] = array(
 	'group-voldev' => '志願開發者',
 	'group-voldev-member' => '志願開發者',
 	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
-);
-
-$messages['zh-hk'] = array(
-	'group-bot' => '機械人',
-	'group-bot-member' => '機械人',
-	'grouppage-bot' => '{{ns:project}}:機械人',
-);
-
-$messages['zh-min-nan'] = array(
-	'group-bot' => '機械人',
-	'group-bot-member' => '機械人',
-	'grouppage-bot' => '{{ns:project}}:機械人',
-);
-
-$messages['zh-mo'] = array(
-	'group-bot' => '機械人',
-	'group-bot-member' => '機械人',
-	'grouppage-bot' => '{{ns:project}}:機械人',
-);
-
-$messages['zh-my'] = array(
-	'group-bot' => '機械人',
-	'group-bot-member' => '機械人',
-	'grouppage-bot' => '{{ns:project}}:機械人',
-);
-
-$messages['zh-tw'] = array(
-	'gotaccount' => '已經擁有帳號？$1。',
-	'group-autoconfirmed' => '自動確認使用者',
-	'group-autoconfirmed-member' => '自動確認使用者',
-	'grouppage-autoconfirmed' => '{{ns:project}}:自動確認使用者',
-);
-
-$messages['zh-yue'] = array(
-	'gotaccount' => '已經擁有帳號？$1。',
-	'group-autoconfirmed' => '自動確認使用者',
-	'group-autoconfirmed-member' => '自動確認使用者',
-	'grouppage-autoconfirmed' => '{{ns:project}}:自動確認使用者',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
 );
 
 $messages['zu'] = array(

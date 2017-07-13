@@ -107,7 +107,7 @@ Try [[Special:Search|searching on the wiki]] for relevant new pages.',
 	'hub-Video_Games' => 'Video Games',
 	'hub-Videospiele' => 'Videospiele',
 	'hub-Lifestyle' => 'Lifestyle',
-	'hub-Wikia' => 'Fandom',
+	'hub-Wikia' => 'FANDOM',
 	'hub-Food_and_Drink' => 'Food and Drink',
 );
 
@@ -2488,7 +2488,7 @@ $messages['de'] = array(
 	'hidden-category-category' => 'Versteckte Kategorien',
 	'help' => 'Hilfe',
 	'history' => 'Versionsgeschichte',
-	'history_short' => 'Verlauf',
+	'history_short' => 'Versionen',
 	'helppage' => 'Hilfe:Übersicht',
 	'hidetoc' => 'Ausblenden',
 	'headline_sample' => 'Überschriftstext',
@@ -2549,7 +2549,7 @@ $messages['de'] = array(
 	'hub-Gaming' => 'Videospiele',
 	'hub-Videospiele' => 'Videospiele',
 	'hub-Lifestyle' => 'Lifestyle',
-	'hub-Wikia' => 'Fandom',
+	'hub-Wikia' => 'FANDOM',
 	'hidebots' => 'Bots ausblenden',
 	'hidesome' => 'Einige verbergen',
 	'hub-Food_and_Drink' => 'Essen und Trinken',
@@ -2989,7 +2989,7 @@ Prueba a [[Special:Search|buscar en el wiki]] nuevas páginas relevantes.',
 	'home' => 'Inicio',
 	'helpfaq' => 'Ayuda y preguntas frecuentes',
 	'highest_ratings' => 'Lo más votado',
-	'hub-Wikia' => 'Fandom',
+	'hub-Wikia' => 'FANDOM',
 	'hidebots' => 'Ocultar bots',
 	'hidesome' => 'Ocultar algo',
 	'htmlform-no' => 'No',
@@ -3483,7 +3483,7 @@ Essayez de [[Special:Search|rechercher sur le wiki]] pour trouver des pages en r
 	'home' => 'Accueil',
 	'helpfaq' => 'Aide et FAQ',
 	'highest_ratings' => 'Les mieux notées',
-	'hub-Wikia' => 'Fandom',
+	'hub-Wikia' => 'FANDOM',
 	'hidebots' => 'Masquer les robots',
 	'hub-Entertainment' => 'Divertissement',
 	'hub-Gaming' => 'Jeux vidéo',
@@ -5232,7 +5232,7 @@ Legenda: '''({{int:cur}})''' = differenze con la revisione attuale, '''({{int:la
 	'htmlform-submit' => 'Invia',
 	'htmlform-reset' => 'Annulla modifiche',
 	'htmlform-selectorother-other' => 'Altro',
-	'hub-Wikia' => 'Fandom',
+	'hub-Wikia' => 'FANDOM',
 	'highest_ratings' => 'Valutazioni migliori',
 	'hub-Entertainment' => 'Intrattenimento',
 	'hub-Food_and_Drink' => 'Cibo e bevande',
@@ -5444,7 +5444,7 @@ $messages['ja'] = array(
 	'hub-Video_Games' => 'ビデオゲーム
 ',
 	'hub-Lifestyle' => 'ライフスタイル',
-	'hub-Wikia' => 'Fandom',
+	'hub-Wikia' => 'FANDOM',
 	'htmlform-no' => 'いいえ',
 	'htmlform-yes' => 'はい',
 	'history_copyright' => '-',
@@ -8478,7 +8478,7 @@ Wellicht is die verwijderd of hernoemd.
 	'hub-Video_Games' => 'Video Games',
 	'hub-Videospiele' => 'Videospiele',
 	'hub-Lifestyle' => 'Lifestyle',
-	'hub-Wikia' => 'Fandom',
+	'hub-Wikia' => 'FANDOM',
 	'hub-Food_and_Drink' => 'Food and Drink',
 );
 
@@ -9343,7 +9343,7 @@ Tente [[Special:Pesquisa|pesquisar na wiki]] por páginas relevantes.',
 	'home' => 'Página inicial',
 	'helpfaq' => 'Ajuda e Perguntas Frequentes',
 	'highest_ratings' => 'Mais votado',
-	'hub-Wikia' => 'Fandom',
+	'hub-Wikia' => 'FANDOM',
 	'htmlform-no' => 'Não',
 	'htmlform-yes' => 'Sim',
 	'history_copyright' => '-',
@@ -9397,58 +9397,6 @@ Tente [[Special:Pesquisa|pesquisar na wiki]] por páginas relevantes.',
 	'hub-Videospiele' => 'Videospiele',
 	'hub-Lifestyle' => 'Estilo de vida',
 	'hub-Food_and_Drink' => 'Comida e bebida',
-);
-
-$messages['pt-br'] = array(
-	'hidden-categories' => '{{PLURAL:$1|Categoria oculta|Categorias ocultas}}',
-	'hidden-category-category' => 'Categorias ocultas',
-	'help' => 'Ajuda',
-	'history' => 'Histórico da página',
-	'history_short' => 'Histórico',
-	'helppage' => 'Help:Conteúdos',
-	'hidetoc' => 'ocultar',
-	'headline_sample' => 'Conteúdo do cabeçalho',
-	'headline_tip' => 'Seção de nível 2',
-	'hr_tip' => 'Linha horizontal (use de forma moderada)',
-	'hiddencategories' => 'Esta página pertence a {{PLURAL:$1|uma categoria oculta|$1 categorias ocultas}}:',
-	'histlegend' => "Como selecionar: marque as caixas de seleção das versões que deseja comparar e pressione enter ou clique no botão na parte inferior do formulário.<br />
-Legenda: '''({{int:cur}})''' = diferenças em relação a última versão, '''({{int:last}})''' = diferenças em relação a versão anterior, '''{{int:minoreditletter}}''' = edição menor.",
-	'history-fieldset-title' => 'Navegar pelo histórico',
-	'history-show-deleted' => 'Apenas as eliminadas',
-	'histfirst' => 'Mais antigas',
-	'histlast' => 'Mais recentes',
-	'historysize' => '({{PLURAL:$1|1 byte|$1 bytes}})',
-	'historyempty' => '(vazio)',
-	'history-feed-title' => 'Histórico de revisão',
-	'history-feed-description' => 'Histórico de revisões para esta página neste wiki',
-	'history-feed-item-nocomment' => '$1 em $2',
-	'history-feed-empty' => 'A página requisitada não existe.
-Poderá ter sido eliminada do wiki ou renomeada.
-Tente [[Special:Search|pesquisar no wiki]] por páginas relevantes.',
-	'history-title' => 'Histórico de edições de "$1"',
-	'hist' => 'hist',
-	'hide' => 'Ocultar',
-	'hookaborted' => 'A modificação que você tentou realizar foi abortada por uma extensão.',
-	'http-invalid-url' => 'URL inválida: $1',
-	'http-invalid-scheme' => 'URLs que iniciam com o prefixo "$1" não são aceitas.',
-	'http-request-error' => 'A requisição HTTP falhou devido a um erro desconhecido.',
-	'http-read-error' => 'Erro de leitura HTTP.',
-	'http-timed-out' => 'Esgotado o tempo de espera da requisição HTTP.',
-	'http-curl-error' => 'Erro ao requisitar a URL: $1',
-	'http-host-unreachable' => 'Não foi possível atingir a URL.',
-	'http-bad-status' => 'Ocorreu um problema durante a requisição HTTP: $1 $2',
-	'historywarning' => "'''Atenção:''' A página que você está prestes a eliminar possui um histórico com aproximadamente $1 {{PLURAL:$1|revisão|revisões}}:",
-	'hours' => '{{PLURAL:$1|uma hora|$1 horas}}',
-	'htmlform-invalid-input' => 'Existem problemas com alguns dos dados introduzidos',
-	'htmlform-select-badoption' => 'O valor que você especificou não é uma opção válida.',
-	'htmlform-int-invalid' => 'O valor que você especificou não é um número inteiro.',
-	'htmlform-float-invalid' => 'O valor que você especificou não é um número.',
-	'htmlform-int-toolow' => 'O valor que você especificou está abaixo do mínimo de $1',
-	'htmlform-int-toohigh' => 'O valor que você especificou está acima do máximo de $1',
-	'htmlform-required' => 'Este valor é necessário',
-	'htmlform-submit' => 'Enviar',
-	'htmlform-reset' => 'Desfazer alterações',
-	'htmlform-selectorother-other' => 'Outros',
 );
 
 $messages['qu'] = array(
@@ -9820,7 +9768,7 @@ $messages['ru'] = array(
 Она была удалена или переименована.
 Попробуйте [[Special:Search|найти]] похожие страницы.',
 	'history-title' => '$1 — история изменений',
-	'hist' => 'ист.',
+	'hist' => 'история',
 	'hide' => 'Скрыть',
 	'hookaborted' => 'Изменение, которые вы пытались сделать, было прервано обработчиком расширения.',
 	'http-invalid-url' => 'Ошибочный адрес: $1',
@@ -12718,15 +12666,6 @@ Misschien is een verwiederd of hernoemd.
 	'hide' => 'Verberge',
 );
 
-$messages['zh'] = array(
-	'history_short' => '历史纪录',
-	'hookaborted' => '您所尝试的修改已经不被扩展功能支持。',
-);
-
-$messages['zh-cn'] = array(
-	'history_short' => '沿革',
-);
-
 $messages['zh-hans'] = array(
 	'hidden-categories' => '$1个隐藏分类',
 	'hidden-category-category' => '隐藏分类',
@@ -12942,42 +12881,6 @@ $messages['zh-hant'] = array(
 	'hub-Videospiele' => 'Videospiele',
 	'hub-Lifestyle' => '生活',
 	'hub-Food_and_Drink' => '飲食',
-);
-
-$messages['zh-tw'] = array(
-	'help' => '使用說明',
-	'history' => '修訂記錄',
-	'history_short' => '歷史',
-	'hidetoc' => '隱藏',
-	'histlegend' => '差異選擇: 標記要比較版本的單選按鈕並點擊底部的按鈕進行比較。<br />
-說明: (目前) 指與目前版本比較，(先前) 指與前一個修訂版本比較，小 = 細微修改。',
-	'history-feed-title' => '修訂沿革',
-	'history-feed-description' => '本站上此頁的修訂沿革',
-	'history-feed-empty' => '所請求的頁面不存在。它可能已被刪除或重新命名。
-嘗試[[Special:Search|搜尋本站]]獲得相關的新建頁面。',
-	'history-title' => '「$1」的修訂沿革',
-	'hookaborted' => '您所嘗試的修改被擴展鉤捨棄。',
-	'home' => '主頁',
-	'helpfaq' => '幫助與常見問題',
-	'highest_ratings' => '得分最高',
-);
-
-$messages['zh-yue'] = array(
-	'help' => '使用說明',
-	'history' => '修訂記錄',
-	'history_short' => '歷史',
-	'hidetoc' => '隱藏',
-	'histlegend' => '差異選擇: 標記要比較版本的單選按鈕並點擊底部的按鈕進行比較。<br />
-說明: (目前) 指與目前版本比較，(先前) 指與前一個修訂版本比較，小 = 細微修改。',
-	'history-feed-title' => '修訂沿革',
-	'history-feed-description' => '本站上此頁的修訂沿革',
-	'history-feed-empty' => '所請求的頁面不存在。它可能已被刪除或重新命名。
-嘗試[[Special:Search|搜尋本站]]獲得相關的新建頁面。',
-	'history-title' => '「$1」的修訂沿革',
-	'hookaborted' => '您所嘗試的修改被擴展鉤捨棄。',
-	'home' => '主頁',
-	'helpfaq' => '幫助與常見問題',
-	'highest_ratings' => '得分最高',
 );
 
 $messages['zu'] = array(

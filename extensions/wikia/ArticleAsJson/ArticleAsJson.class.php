@@ -1,6 +1,6 @@
 <?php
 
-class ArticleAsJson extends WikiaService {
+class ArticleAsJson {
 	static $media = [ ];
 	static $users = [ ];
 	static $mediaDetailConfig = [

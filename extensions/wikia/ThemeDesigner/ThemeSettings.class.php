@@ -143,14 +143,19 @@ class ThemeSettings {
 		}
 
 		foreach ( $history as $key => $val ) {
-			$history[$key]['settings']['background-image'] = $this->getFreshURL(
-				$val['settings']['background-image-name'],
-				ThemeSettings::BackgroundImageName
-			);
-			$history[$key]['settings']['community-header-background-image'] = $this->getFreshURL(
-				$val['settings']['community-header-background-image'],
-				ThemeSettings::CommunityHeaderBackgroundImageName
-			);
+			if ( !empty( $val['settings']['background-image-name'] ) ) {
+				$val['settings']['background-image'] = $this->getFreshURL(
+					$val['settings']['background-image-name'],
+					ThemeSettings::BackgroundImageName
+				);
+			}
+
+			if ( !empty( $val['settings']['community-header-background-image-name'] ) ) {
+				$val['settings']['community-header-background-image'] = $this->getFreshURL(
+					$val['settings']['community-header-background-image-name'],
+					ThemeSettings::CommunityHeaderBackgroundImageName
+				);
+			}
 		}
 
 		return $history;
@@ -170,9 +175,9 @@ class ThemeSettings {
 			$file->upload( $temp_file->getPath(), '', '' );
 			$temp_file->delete( '' );
 
-			// FIXME: XW-3596 - this is hack
+			// For legacy reasons wordmark-image has other convention than the rest
 			if ( $name === 'wordmark-image' ) {
-				$settings["{$name}-url"] = $file->getURL();
+				$settings['wordmark-image-url'] = $file->getURL();
 			} else {
 				$settings["{$name}"] = $file->getURL();
 			}
@@ -261,17 +266,18 @@ class ThemeSettings {
 		$oldWordmarkFile = $this->saveImage(
 			$settings,
 			'wordmark-image',
-			self::WordmarkImageName,
+			self::WordmarkImageName
+		);
+
+		$oldFaviconFile = $this->saveImage(
+			$settings,
+			'favicon-image',
+			self::FaviconImageName,
 			[],
 			false,
 			function () {
 				Wikia::invalidateFavicon();
 			}
-		);
-		$oldFaviconFile = $this->saveImage(
-			$settings,
-			'favicon-image',
-			self::FaviconImageName
 		);
 
 		$reason = wfMessage( 'themedesigner-reason', $wgUser->getName() )->escaped();
@@ -398,7 +404,6 @@ class ThemeSettings {
 		$thumbnailUrl = '';
 		$originalUrl = $this->getSettings()['community-header-background-image'];
 
-		// @todo fix the issue with vignette urls without /latest and remove try-catch
 		try {
 			if ( VignetteRequest::isVignetteUrl( $originalUrl ) ) {
 				$thumbnailUrl = VignetteRequest::fromUrl( $originalUrl )
@@ -407,8 +412,9 @@ class ThemeSettings {
 					->height( self::COMMUNITY_HEADER_BACKGROUND_HEIGHT )
 					->url();
 			}
-		} catch (Exception $e) {
-
+		} catch ( InvalidArgumentException $e ) {
+			\Wikia\Logger\WikiaLogger::instance()
+				->warning("Wrong url to community-header-background-image", [ 'originalUrl' => $originalUrl ] );
 		}
 
 		return $thumbnailUrl;

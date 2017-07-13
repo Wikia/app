@@ -146,16 +146,16 @@ $(function () {
 		 * Set cookies for logged in users to save which tab is active when they exit the page
 		 */
 		initTabCookies: function () {
-			require(['wikia.localStorage'], function (ls) {
+			require(['wikia.cache'], function (cache) {
 				if (window.wgUserName) {
-					var selected = ls.WikiaFilePageTab || 'about';
+					var selected = cache.get('WikiaFilePageTab') || 'about';
 
 					$('[data-tab="' + selected + '"] a')
 						.click();
 
 					$(window)
 						.on('wikiaTabClicked', function (e, tab) {
-							ls.WikiaFilePageTab = tab;
+							cache.set('WikiaFilePageTab', tab);
 						});
 				} else {
 					$('[data-tab="about"] a')

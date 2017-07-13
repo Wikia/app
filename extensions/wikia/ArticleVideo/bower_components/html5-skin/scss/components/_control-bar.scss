@@ -5,7 +5,9 @@
   width: 100%;
   height: $control-bar-height;
   position: relative;
-  margin: 0;
+  // WIKIA CHANGE - START
+  margin: 0 0 -35px;
+  // WIKIA CHANGE - END
   padding: 0 15px;
   list-style: none;
   font-size: 18px;
@@ -86,6 +88,8 @@
       text-align: left;
       position: relative;
       top:-2px;
+      cursor: auto;
+      @include vendor-prefixes(user-select, text);
 
       .oo-total-time {
         color: $white;
@@ -155,13 +159,16 @@ a.oo-volume-bar {
 
 .oo-volume-bar:hover{
   height: 17px;
+  margin-bottom: 0;
 }
 
 .oo-on{
   background-color: rgba($blue-light, 1.0);
   height: 17px;
-  padding-bottom: 0px;
-  margin-bottom: 4px;
+  // WIKIA CHANGE - START
+  padding-bottom: 0;
+  margin-bottom: 0;
+  // WIKIA CHANGE - END
 }
 
 .oo-volume:hover .oo-volume-bar {
@@ -170,14 +177,6 @@ a.oo-volume-bar {
 
 .oo-volume:hover .oo-volume-bar.oo-on {
   background-color: $blue-light;
-}
-
-.oo-volume-slider {
-  display: inline-block;
-  position: relative;
-  margin-left: 6px;
-  height: 20px;
-  width: $slider-volume-width;
 }
 
 // IE 11 only

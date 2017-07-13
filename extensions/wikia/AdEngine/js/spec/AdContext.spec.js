@@ -11,11 +11,6 @@ describe('AdContext', function () {
 			pvCounter: {
 				increment: noop
 			},
-			abTesting: {
-				getGroup: function () {
-					return 'group';
-				}
-			},
 			geo: {
 				getCountryCode: function () {
 					return 'CURRENT_COUNTRY';
@@ -71,7 +66,6 @@ describe('AdContext', function () {
 	function getModule() {
 		return modules['ext.wikia.adEngine.adContext'](
 			mocks.pvCounter,
-			mocks.abTesting,
 			mocks.wikiaCookies,
 			mocks.doc,
 			mocks.geo,
@@ -775,6 +769,22 @@ describe('AdContext', function () {
 		mocks.instantGlobals = {wgAdDriverEvolve2Countries: ['HH', 'CURRENT_COUNTRY', 'ZZ']};
 		adContext = getModule();
 		expect(adContext.getContext().providers.evolve2).toBeFalsy();
+	});
+
+	it('enables FAN provider when provider is enabled by wg var', function () {
+		var adContext;
+		mocks.win = {
+			ads: {
+				context: {
+					providers: {
+						audienceNetwork: true
+					}
+				}
+			}
+		};
+
+		adContext = getModule();
+		expect(adContext.getContext().providers.audienceNetwork).toBeTruthy();
 	});
 
 	it('disable overriding prefooters sizes for mercury', function () {

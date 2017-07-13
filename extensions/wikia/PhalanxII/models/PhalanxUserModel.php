@@ -42,12 +42,44 @@ class PhalanxUserModel extends PhalanxModel {
 		return $ret;
 	}
 
+    /**
+     * Format the message with user block reason. If additional description was provided when creating that block,
+     * it's included in the message.
+     *
+     * @param String $reason Optional reason that came with the block
+     * @param bool $isExact Set to true for exact block
+     * @param bool $isBlockIP Set to true for IP blocks
+     * @return String Translated message with optional reason details
+     */
+    protected function getBlockReasonMessage( $reason, $isExact, $isBlockIP ) {
+        if ( $reason ) {
+            // a reason was given
+            if ( $isExact ) {
+                $result = wfMsg( 'phalanx-user-block-withreason-exact', $reason );
+            } elseif ( $isBlockIP ) {
+                $result = wfMsg( 'phalanx-user-block-withreason-ip', $reason );
+            } else {
+                $result = wfMsg( 'phalanx-user-block-withreason-similar', $reason );
+            }
+        } else {
+            // no reason in block data, so use preexisting no-param worded versions
+            if ( $isExact ) {
+                $result = wfMsg( 'phalanx-user-block-reason-exact' );
+            } elseif ( $isBlockIP ) {
+                $result = wfMsg( 'phalanx-user-block-reason-ip' );
+            } else {
+                $result = wfMsg( 'phalanx-user-block-reason-similar' );
+            }
+        }
+        return $result;
+    }
+
 	public function userBlock( $type = 'exact' ) {
 		wfProfileIn( __METHOD__ );
 
 		$this->user->mBlockedby = $this->block->authorId;
 		$this->user->mBlockedGlobally = true;
-		$this->user->mBlockreason = UserBlock::getBlockReasonMessage( $this->block->reason, $type == 'exact', $type == 'ip' );
+		$this->user->mBlockreason = $this->getBlockReasonMessage( $this->block->reason, $type == 'exact', $type == 'ip' );
 
 		// set expiry information
 		$this->user->mBlock = new Block();

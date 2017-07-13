@@ -31,14 +31,14 @@ $messages['en'] = array(
 	'passwordtooshort' => 'Passwords must be at least {{PLURAL:$1|1 character|$1 characters}}.',
 	'password-name-match' => 'Your password must be different from your username.',
 	'password-login-forbidden' => 'The use of this username and password has been forbidden.',
-	'passwordremindertitle' => 'Password reminder from Fandom',
+	'passwordremindertitle' => 'Password reminder from FANDOM',
 	'passwordremindertext' => 'Hi,
 The login password for user "$2" is now "$3".
 If you did not request a new password, don’t worry. The replacement password has been sent only to you at this email address. Your account is secure and you can continue to use your old password.
 
 Thanks,
 
-The Fandom Community Team
+The FANDOM Community Team
 
 www.wikia.com
 ___________________________________________________________
@@ -249,7 +249,7 @@ The latest log entry is provided below for reference:",
 	'prefs-help-terms' => "By creating an account, you agree to the [[homepage:Terms of use|Wikia, Inc's Terms of Use]]",
 	'prefs-help-birthday' => 'Why do I need to provide this?',
 	'prefs-help-birthmesg' => 'Why do I need to provide my birthday?',
-	'prefs-help-birthinfo' => 'Fandom requires all users to provide their real date of birth as both a safety precaution and as a means of preserving the integrity of the site while complying with federal regulations.',
+	'prefs-help-birthinfo' => 'FANDOM requires all users to provide their real date of birth as both a safety precaution and as a means of preserving the integrity of the site while complying with federal regulations.',
 	'popular-articles' => 'Popular Pages',
 	'popular-wikis' => 'Popular Wikis',
 	'preferences_s' => 'Preferences',
@@ -8020,14 +8020,14 @@ $messages['de'] = array(
 	'passwordtooshort' => 'Passwörter müssen mindestens {{PLURAL:$1|1 Zeichen|$1 Zeichen}} lang sein.',
 	'password-name-match' => 'Dein Passwort muss sich von deinem Benutzernamen unterscheiden.',
 	'password-login-forbidden' => 'Die Verwendung dieses Benutzernamens und Passwortes ist nicht erlaubt.',
-	'passwordremindertitle' => 'Passwort-Erinnerung von Fandom',
+	'passwordremindertitle' => 'Passwort-Erinnerung von FANDOM',
 	'passwordremindertext' => 'Hallo!
 Das Passwort für Benutzer "$2" lautet jetzt "$3".
 Mach dir keine Sorgen, falls du kein neues Passwort angefordert hast. Das Ersatz-Passwort wurde nur an dich unter dieser E-Mail-Adresse geschickt. Dein Konto ist sicher und du kannst auch weiterhin dein altes Passwort benutzen.
 
 Vielen Dank,
 
-Dein Fandom Community-Team
+Dein FANDOM Community-Team
 
 www.wikia.com
 ___________________________________________________________
@@ -8212,7 +8212,7 @@ Zur Information folgt der aktuelle Logbucheintrag:",
 	'patrol-log-header' => 'Dies ist das Kontroll-Logbuch.',
 	'previousdiff' => '← Zum vorherigen Versionsunterschied',
 	'percent' => '$1%',
-	'prefs-help-birthinfo' => 'Fandom verlangt von allen Nutzern, ihr tatsächliches Geburtsdatum anzugeben, sowohl als Sicherheitsmaßnahme, als auch als Mittel zur Wahrung der Integrität der Website unter Einhaltung der behördlichen Vorschriften.',
+	'prefs-help-birthinfo' => 'FANDOM verlangt von allen Nutzern, ihr tatsächliches Geburtsdatum anzugeben, sowohl als Sicherheitsmaßnahme, als auch als Mittel zur Wahrung der Integrität der Website unter Einhaltung der behördlichen Vorschriften.',
 	'prefs-help-terms' => 'Mit der Erstellung eines Benutzerkontos stimmst du den [[w:c:de:Nutzungsbedingungen|Nutzungsbedingungen]] von Fandom zu',
 	'patrol-log-auto' => '(automatisch)',
 	'patrol-log-diff' => 'Version $1',
@@ -9467,14 +9467,14 @@ $messages['es'] = array(
 	'passwordtooshort' => 'Las contraseñas deben tener al menos {{PLURAL:$1|1 caracter|$1 caracteres}}.',
 	'password-name-match' => 'Tu contraseña debe ser diferente de tu nombre de usuario.',
 	'password-login-forbidden' => 'El uso de este nombre de usuario y contraseña han sido prohibidos.',
-	'passwordremindertitle' => 'Recordatorio de la contraseña en Fandom',
+	'passwordremindertitle' => 'Recordatorio de la contraseña en FANDOM',
 	'passwordremindertext' => 'Hola,
 La contraseña de inicio de sesión del usuario "$2" es ahora "$3".
 Si no has solicitado una nueva contraseña, ¡no te preocupes! La contraseña temporal ha sido enviada solamente a esta dirección de correo electrónico. Tu cuenta está segura y puedes acceder con tu antigua contraseña.
 
 Atentamente,
 
-El equipo comunitario de Fandom
+El equipo comunitario de FANDOM
 
 www.es.fandom.com
 ___________________________________________________________
@@ -9660,7 +9660,7 @@ A continuación se muestra la última entrada de registro para referencia:",
 	'patrol-log-page' => 'Registro de patrullaje',
 	'patrol-log-header' => 'Este es un registro de revisiones patrulladas.',
 	'previousdiff' => '← Edición anterior',
-	'prefs-help-birthinfo' => 'Fandom solicita a todos los usuarios que pongan su fecha real de nacimiento como medida de seguridad y como forma de preservar la integridad del sitio mientras cumples con las regulaciones federales.',
+	'prefs-help-birthinfo' => 'FANDOM solicita a todos los usuarios que pongan su fecha real de nacimiento como medida de seguridad y como forma de preservar la integridad del sitio mientras cumples con las regulaciones federales.',
 	'prefs-help-terms' => 'Al crear una cuenta de usuario, aceptas los [[w:c:es:Términos de uso|términos de uso de Fandom]]',
 	'popular-articles' => 'Páginas populares',
 	'popular-wikis' => 'Wikis populares',
@@ -11064,14 +11064,14 @@ $messages['fr'] = array(
 	'passwordtooshort' => 'Votre mot de passe doit contenir au moins $1 caractère{{PLURAL:$1||s}}.',
 	'password-name-match' => 'Votre mot de passe doit être différent de votre nom d’utilisateur.',
 	'password-login-forbidden' => 'L’utilisation de ce nom d’utilisateur et de ce mot de passe a été interdite.',
-	'passwordremindertitle' => 'Rappel de mot de passe de Fandom',
+	'passwordremindertitle' => 'Rappel de mot de passe de FANDOM',
 	'passwordremindertext' => 'Bonjour,
 Le mot de passe de l\'utilisateur "$2" est désormais "$3".
 Si vous n\'avez pas demandé de nouveau mot de passe, ne vous inquiétez pas. Le mot de passe de substitution n\'a été envoyé qu\'à vous, à cette adresse e-mail. Votre compte est sain et sauf, et vous pouvez continuer à utiliser votre ancien mot de passe.
 
 Merci,
 
-L\'équipe de la communauté Fandom
+L\'équipe de la communauté FANDOM
 
 www.wikia.com
 ___________________________________________________________
@@ -11253,7 +11253,7 @@ Veuillez contacter votre fournisseur d’accès Internet ou votre support techni
 	'patrol-log-header' => 'Voici l’historique des versions relues.',
 	'previousdiff' => '← Modification précédente',
 	'percent' => '$1&nbsp;%',
-	'prefs-help-birthinfo' => "Fandom requiert que tous les utilisateurs fournissent leur date de naissance réelle ; ceci est une mesure de sécurité et permet également de préserver l'intégrité du site tout en respectant les lois fédérales américaines.",
+	'prefs-help-birthinfo' => "FANDOM requiert que tous les utilisateurs fournissent leur date de naissance réelle ; ceci est une mesure de sécurité et permet également de préserver l'intégrité du site tout en respectant les lois fédérales américaines.",
 	'prefs-help-terms' => "En créant un compte, vous acceptez les [[homepage:fr:Conditions d'utilisation|Conditions d'utilisation]]",
 	'pipe-separator' => '&#32;•&#32;',
 	'preferences_s' => 'Préférences',
@@ -16690,14 +16690,14 @@ $messages['it'] = array(
 	'passwordtooshort' => 'Le password devono contenere almeno {{PLURAL:$1|1 carattere|$1 caratteri}}.',
 	'password-name-match' => 'La password deve essere diversa dal nome utente.',
 	'password-login-forbidden' => "L'uso di questo nome utente e password è stato proibito.",
-	'passwordremindertitle' => 'Promemoria sulla password da Fandom',
+	'passwordremindertitle' => 'Promemoria sulla password da FANDOM',
 	'passwordremindertext' => 'Ciao,
 La password di accesso per l\'utente "$2" è ora "$3".
 Se non hai richiesto una nuova password, non preoccuparti. La password sostitutiva è stata inviata solo a te a questo indirizzo e-mail. Il tuo account è sicuro e puoi continuare a usare la tua vecchia password.
 
 Grazie,
 
-Il team della community di Fandom
+Il team della community di FANDOM
 
 www.wikia.com
 ___________________________________________________________
@@ -16879,8 +16879,8 @@ L'ultimo elemento del registro è riportato di seguito per informazione:",
 	'patrol-log-page' => 'Modifiche verificate',
 	'patrol-log-header' => 'Di seguito sono elencate le verifiche delle modifiche.',
 	'previousdiff' => '← Differenza precedente',
-	'prefs-help-birthinfo' => "Fandom chiede a tutti gli utenti di fornire la loro data di nascita reale sia quale precauzione di sicurezza, sia quale mezzo per preservare l'integrità del sito rispettando al contempo le disposizioni federali.",
-	'prefs-help-terms' => 'Con la creazione di un account, accetti i [[w:it:Project:Termini di utilizzo|Termini di utilizzo di Fandom]]',
+	'prefs-help-birthinfo' => "FANDOM chiede a tutti gli utenti di fornire la loro data di nascita reale sia quale precauzione di sicurezza, sia quale mezzo per preservare l'integrità del sito rispettando al contempo le disposizioni federali.",
+	'prefs-help-terms' => 'Con la creazione di un account, accetti i [[w:it:Project:Termini di utilizzo|Termini di utilizzo di FANDOM]]',
 	'preferences_s' => 'Preferenze',
 	'prefs-help-birthday' => 'Perché devo fornire questo dato?',
 	'prefs-help-birthmesg' => 'Perché è necessario indicare la mia data di nascita?',
@@ -27172,7 +27172,7 @@ De laatste logboekregel staat hieronder:",
 	'prefs-help-terms' => "By creating an account, you agree to the [[homepage:Terms of use|Wikia, Inc's Terms of Use]]",
 	'prefs-help-birthday' => 'Why do I need to provide this?',
 	'prefs-help-birthmesg' => 'Why do I need to provide my birthday?',
-	'prefs-help-birthinfo' => 'Fandom requires all users to provide their real date of birth as both a safety precaution and as a means of preserving the integrity of the site while complying with federal regulations.',
+	'prefs-help-birthinfo' => 'FANDOM requires all users to provide their real date of birth as both a safety precaution and as a means of preserving the integrity of the site while complying with federal regulations.',
 	'popular-articles' => 'Popular Pages',
 	'popular-wikis' => 'Popular Wikis',
 	'preferences_s' => 'Preferences',
@@ -28739,7 +28739,7 @@ $messages['pl'] = array(
 	'passwordtooshort' => 'Hasło musi mieć co najmniej $1 {{PLURAL:$1|znak|znaki|znaków}}.',
 	'password-name-match' => 'Hasło musi być inne niż nazwa użytkownika.',
 	'password-login-forbidden' => 'Wykorzystanie tej nazwy użytkownika lub hasła zostało zabronione.',
-	'passwordremindertitle' => 'Przypomnienie hasła od portalu Fandom',
+	'passwordremindertitle' => 'Przypomnienie hasła od portalu FANDOM',
 	'passwordremindertext' => 'Cześć,
 Hasło do konta użytkownika „$2” zostało zmienione na „$3”.
 Jeżeli nie prosiłeś o zmianę hasła, nie przejmuj się. Nowe hasło zostało wysłane do ciebie wyłącznie pod ten adres e-mail. Twoje konto jest bezpieczne i możesz nadal używać swojego starego hasła.
@@ -28933,7 +28933,7 @@ Ostatni wpis z rejestru jest pokazany poniżej.",
 	'patrol-log-header' => 'Poniżej znajduje się dziennik patrolowania stron.',
 	'previousdiff' => '← poprzednia edycja',
 	'percent' => '$1%',
-	'prefs-help-birthinfo' => 'Fandom wymaga od wszystkich użytkowników podania rzeczywistej daty urodzenia ze względów bezpieczeństwa oraz dla zachowania spójności strony, przy zapewnieniu zgodności z przepisami federalnymi.',
+	'prefs-help-birthinfo' => 'FANDOM wymaga od wszystkich użytkowników podania rzeczywistej daty urodzenia ze względów bezpieczeństwa oraz dla zachowania spójności strony, przy zapewnieniu zgodności z przepisami federalnymi.',
 	'prefs-help-terms' => 'Tworząc konto użytkownika, akceptujesz [[w:c:pl:Zasady_Użytkowania|Zasady Użytkowania]]',
 	'pipe-separator' => '&#32;•&#32;',
 	'prefs-help-birthday' => 'Dlaczego mam podać te informacje?',
@@ -29848,7 +29848,7 @@ $messages['pt'] = array(
 	'passwordtooshort' => 'As senhas devem ter no mínimo {{PLURAL:$1|1 caractere|$1 caracteres}}.',
 	'password-name-match' => 'A sua senha deve ser diferente do seu nome de usuário.',
 	'password-login-forbidden' => 'O uso deste nome de usuário e senha foi desautorizado.',
-	'passwordremindertitle' => 'Lembrete de senha do Fandom',
+	'passwordremindertitle' => 'Lembrete de senha do FANDOM',
 	'passwordremindertext' => 'Olá,
 
 A senha para o usuário "$2" agora é "$3". 
@@ -29856,7 +29856,7 @@ Se você não pediu uma senha nova, não se preocupe. A senha temporária foi en
 
 Obrigado,
 
-Equipe da Comunidade do Fandom
+Equipe da Comunidade do FANDOM
 
 http://www.wikia.com/explore-pt-br
 ___________________________________________________________
@@ -30040,7 +30040,7 @@ A última entrada no histórico é fornecida abaixo para referência:",
 	'patrol-log-page' => 'Registro de edições patrulhadas',
 	'patrol-log-header' => 'Este é um registro de edições patrulhadas.',
 	'previousdiff' => '← Edição anterior',
-	'prefs-help-birthinfo' => 'O Fandom exige que todos os usuários forneçam suas datas de nascimento verdadeiras como medida de segurança e para preservar a integridade do site, mantendo conformidade com os regulamentos federais.',
+	'prefs-help-birthinfo' => 'O FANDOM exige que todos os usuários forneçam suas datas de nascimento verdadeiras como medida de segurança e para preservar a integridade do site, mantendo conformidade com os regulamentos federais.',
 	'prefs-help-terms' => 'Ao criar uma conta, você concorda com os [[w:c:pt:Termos de Uso|Termos de Uso da Wikia, Inc]]',
 	'pagecategorieslink' => 'Especial:Categorias',
 	'pagetitle' => '$1 - {{SITENAME}}',
@@ -30070,221 +30070,6 @@ A última entrada no histórico é fornecida abaixo para referência:",
 	'preferences_s' => 'Preferências',
 	'profile' => 'Perfil',
 	'prefs-layout' => 'Layouts do site',
-);
-
-$messages['pt-br'] = array(
-	'pagecategories' => '{{PLURAL:$1|Categoria|Categorias}}',
-	'printableversion' => 'Versão para impressão',
-	'permalink' => 'Link permanente',
-	'print' => 'Imprimir',
-	'protect' => 'Proteger',
-	'protect_change' => 'alterar',
-	'protectthispage' => 'Proteger esta página',
-	'personaltools' => 'Ferramentas pessoais',
-	'protectedpage' => 'Página protegida',
-	'pool-timeout' => 'Tempo limite de espera para o bloqueio excedido',
-	'pool-queuefull' => 'A pool queue está cheia',
-	'pool-errorunknown' => 'Erro desconhecido',
-	'policy-url' => 'Project:Políticas',
-	'portal' => 'Portal comunitário',
-	'portal-url' => 'Project:Portal comunitário',
-	'privacy' => 'Política de privacidade',
-	'privacypage' => 'Project:Política_de_privacidade',
-	'page-rss-feed' => 'Feed RSS de "$1"',
-	'page-atom-feed' => 'Feed Atom de "$1"',
-	'perfcached' => "Os seguintes dados encontram-se armazenados na ''cache'' e podem não estar atualizados. No máximo {{PLURAL:$1|um resultado está disponível|$1 resultados estão disponíveis}} na ''cache''.",
-	'perfcachedts' => "Os seguintes dados encontram-se armazenados no ''cache'' e foram atualizados as $1. No máximo {{PLURAL:$4|um resultado está disponível|$4 resultados estão disponíveis}} no ''cache''.",
-	'protectedpagetext' => 'Esta página foi protegida contra novas edições.',
-	'protectedinterface' => 'Esta página fornece texto de interface ao software e encontra-se trancada para prevenir abusos.',
-	'passwordtooshort' => 'As senhas devem ter no mínimo {{PLURAL:$1|1 caractere|$1 caracteres}}.',
-	'password-name-match' => 'A sua senha deve ser diferente do seu nome de usuário.',
-	'password-login-forbidden' => 'O uso deste nome de usuário e senha foi desautorizado.',
-	'passwordremindertitle' => 'Nova senha temporária em {{SITENAME}}',
-	'passwordremindertext' => 'Alguém (provavelmente você, a partir do endereço de IP $1) solicitou uma nova senha para {{SITENAME}} ($4). Foi criada uma senha temporária para o usuário "$2", sendo ela "$3". Se esta era sua intenção, você precisará se autenticar e escolher uma nova senha agora.
-A sua senha temporária expirará em {{PLURAL:$5|um dia|$5 dias}}.
-
-Se foi outra pessoa quem fez este pedido, ou se você já lembrou a sua senha, e não quer mais alterá-la, você pode ignorar esta mensagem e continuar utilizando sua senha antiga.',
-	'passwordsent' => 'Uma nova senha está sendo enviada para o endereço de e-mail registrado para "$1".
-Por favor, reconecte-se ao recebê-lo.',
-	'php-mail-error-unknown' => 'Erro desconhecido na função mail() do PHP',
-	'preview' => 'Pré-visualização',
-	'previewnote' => "'''Lembre-se de que isto é apenas uma previsão.'''
-Suas alterações ainda não foram salvas!",
-	'previewconflict' => 'Esta previsão reflete o texto que está na área de edição acima e como ele aparecerá se você escolher salvar.',
-	'protectedpagewarning' => "'''Atenção: Esta página foi protegida para que apenas usuários com privilégios de administrado possam editá-la.'''
-A última entrada no histórico é fornecida abaixo como referência:",
-	'permissionserrors' => 'Erros de permissões',
-	'permissionserrorstext' => 'Você não possui permissão de fazer isso, {{PLURAL:$1|pelo seguinte motivo|pelos seguintes motivos}}:',
-	'permissionserrorstext-withaction' => 'Você não possui permissão para $2, {{PLURAL:$1|pelo seguinte motivo|pelos motivos a seguir}}:',
-	'post-expand-template-inclusion-warning' => "'''Aviso''': a soma do tamanho de inclusão de predefinições é muito grande.
-Algumas predefinições não serão processadas.",
-	'post-expand-template-inclusion-category' => 'Páginas onde a soma do tamanho de inclusão de predefinições é excedido',
-	'post-expand-template-argument-warning' => 'Aviso: Esta página contém pelo menos um argumento de predefinição com um tamanho muito grande.
-Estes argumentos foram omitidos.',
-	'post-expand-template-argument-category' => 'Páginas com omissões de argumentos em predefinições',
-	'parser-template-loop-warning' => 'Ciclo de predefinições detectado: [[$1]]',
-	'parser-template-recursion-depth-warning' => 'O limite de profundidade de recursividade de predefinição foi ultrapassado ($1)',
-	'previousrevision' => '← Edição anterior',
-	'page_first' => 'primeira',
-	'page_last' => 'última',
-	'pagehist' => 'Histórico da página',
-	'pagemerge-logentry' => '[[$1]] foi fundida em [[$2]] (até a edição $3)',
-	'prevn' => '{{PLURAL:$1|anterior|$1 anteriores}}',
-	'prevn-title' => '$1 {{PLURAL:$1|resultado anterior|resultados anteriores}}',
-	'powersearch' => 'Pesquisa avançada',
-	'powersearch-legend' => 'Pesquisa avançada',
-	'powersearch-ns' => 'Pesquisar nos espaços nominais:',
-	'powersearch-redir' => 'Listar redirecionamentos',
-	'powersearch-field' => 'Pesquisar',
-	'powersearch-togglelabel' => 'Selecionar:',
-	'powersearch-toggleall' => 'Todos',
-	'powersearch-togglenone' => 'Nenhum',
-	'preferences' => 'Preferências',
-	'prefs-edits' => 'Número de edições:',
-	'prefsnologin' => 'Não autenticado',
-	'prefsnologintext' => 'É necessário estar <span class="plainlinks">[{{fullurl:{{#Special:UserLogin}}|returnto=$1}} autenticado]</span> para definir as suas preferências.',
-	'prefs-skin' => 'Tema',
-	'prefs-beta' => 'Características beta',
-	'prefs-datetime' => 'Data e hora',
-	'prefs-labs' => 'Características de laboratório',
-	'prefs-user-pages' => 'Páginas de usuário',
-	'prefs-personal' => 'Minhas Informações',
-	'prefs-rc' => 'Mudanças recentes',
-	'prefs-watchlist' => 'Lista de páginas vigiadas',
-	'prefs-watchlist-days' => 'Dias a mostrar na lista de páginas vigiadas:',
-	'prefs-watchlist-days-max' => 'Máximo $1 {{PLURAL:$1|dia|dias}}',
-	'prefs-watchlist-edits' => 'Número de edições mostradas na lista de páginas vigiadas expandida:',
-	'prefs-watchlist-edits-max' => 'Número máximo: 1000',
-	'prefs-watchlist-token' => 'Senha para a lista de páginas vigiadas:',
-	'prefs-misc' => 'Diversos',
-	'prefs-resetpass' => 'Alterar senha',
-	'prefs-changeemail' => 'Alterar e-mail',
-	'prefs-setemail' => 'Definir um endereço de e-mail',
-	'prefs-email' => 'Opções de email',
-	'prefs-rendering' => 'Aparência',
-	'prefs-editing' => 'Opções de edição',
-	'prefs-edit-boxsize' => 'Tamanho da janela de edição.',
-	'prefs-help-recentchangescount' => 'Isto inclui mudanças recentes, histórico de páginas e registos.',
-	'prefs-help-watchlist-token' => "O preenchimento deste campo com uma senha secreta irá gerar um ''feed'' RSS para a sua lista de páginas vigiadas.
-Qualquer um que conheça a senha deste campo será capaz de ler sua lista de páginas vigiadas, então escolha um valor seguro.
-Eis um valor gerado aleatoriamente que você pode usar: $1",
-	'prefs-searchoptions' => 'Opções de busca',
-	'prefs-namespaces' => 'Espaços nominais',
-	'prefs-files' => 'Arquivos',
-	'prefs-custom-css' => 'CSS personalizada',
-	'prefs-custom-js' => 'JS personalizado',
-	'prefs-common-css-js' => 'CSS/JS partilhado por todos os temas:',
-	'prefs-reset-intro' => 'Você pode usar esta página para restaurar as suas preferências para os valores predefinidos do sítio.
-Esta ação não pode ser desfeita.',
-	'prefs-emailconfirm-label' => 'Confirmação do e-mail:',
-	'prefs-textboxsize' => 'Tamanho da janela de edição',
-	'prefs-memberingroups' => 'Membro {{PLURAL:$1|do grupo|dos grupos}}:',
-	'prefs-registration' => 'Hora de registro:',
-	'prefs-help-variant' => 'A sua variante preferida ou ortografia para mostrar no conteúdo das páginas deste wiki.',
-	'prefs-help-signature' => 'Ao inserir comentários em páginas de discussão, assine-os colocando quatro tiles (<nowiki>~~~~</nowiki>) no fim dos comentários. Ao salvar, estes serão convertidos na sua assinatura mais a data e a hora da edição.',
-	'prefs-help-gender' => 'Opcional: usado para endereçamento correto pelo software baseado no sexo. Esta informação será pública.',
-	'prefs-help-realname' => 'O fornecimento de seu nome verdadeiro é opcional.
-Caso decida fornecê-lo, este será utilizado para dar-lhe crédito pelo seu trabalho.',
-	'prefs-help-email' => 'O endereço de correio eletrônico é opcional, mas será necessário para recriar sua senha caso esqueça a antiga.',
-	'prefs-help-email-others' => 'Você também pode optar por permitir que outros entrem em contato com você através de sua página de usuário ou de discussão sem ter de revelar seus dados pessoais.',
-	'prefs-help-email-required' => 'O endereço de e-mail é requerido.',
-	'prefs-info' => 'Informações básicas',
-	'prefs-i18n' => 'Internacionalização',
-	'prefs-signature' => 'Assinatura',
-	'prefs-dateformat' => 'Formato de data',
-	'prefs-timeoffset' => 'Desvio horário',
-	'prefs-advancedediting' => 'Opções avançadas',
-	'prefs-advancedrc' => 'Opções avançadas',
-	'prefs-advancedrendering' => 'Opções avançadas',
-	'prefs-advancedsearchoptions' => 'Opções avançadas',
-	'prefs-advancedwatchlist' => 'Opções avançadas',
-	'prefs-displayrc' => 'Opções de exibição',
-	'prefs-displaysearchoptions' => 'Opções de exibição',
-	'prefs-displaywatchlist' => 'Opções de exibição',
-	'prefs-diffs' => 'Diferenças',
-	'php-uploaddisabledtext' => 'O envio de arquivos via PHP está desativado.
-Verifique a configuração file_uploads.',
-	'popularpages' => 'Páginas populares',
-	'prefixindex' => 'Todas as páginas com prefixo',
-	'prefixindex-namespace' => 'Todas as páginas com prefixo (espaço nominal $1)',
-	'protectedpages' => 'Páginas protegidas',
-	'protectedpages-indef' => 'Proteções infinitas apenas',
-	'protectedpages-cascade' => 'Apenas proteções progressivas',
-	'protectedpagestext' => 'As seguintes páginas encontram-se protegidas contra edições ou movimentações',
-	'protectedpagesempty' => 'Neste momento, nenhuma das páginas está protegida com estes parâmetros.',
-	'protectedtitles' => 'Títulos protegidos',
-	'protectedtitlestext' => 'Os títulos a seguir encontram-se protegidos contra criação',
-	'protectedtitlesempty' => 'Neste momento, nenhum dos títulos está protegido com estes parâmetros.',
-	'pager-newer-n' => '{{PLURAL:$1|posterior|$1 posteriores}}',
-	'pager-older-n' => '{{PLURAL:$1|1 anterior|$1 anteriores}}',
-	'prevpage' => 'Página anterior ($1)',
-	'protectlogpage' => 'Registro de proteção',
-	'protectlogtext' => 'Encontra-se abaixo o registro de proteção e desproteção de páginas.
-Consulte a [[Special:ProtectedPages|lista de páginas protegidas]] para ver as páginas que se encontram protegidas neste momento.',
-	'protectedarticle' => 'protegeu "[[$1]]"',
-	'protect-title' => 'Protegendo "$1"',
-	'protect-title-notallowed' => 'Ver o nível de proteção de "$1"',
-	'prot_1movedto2' => '[[$1]] foi movido para [[$2]]',
-	'protect-badnamespace-title' => 'Espaço de nomes não-protegidos',
-	'protect-badnamespace-text' => 'As páginas presentes nesse espaço de nomes não se pode proteger',
-	'protect-legend' => 'Confirmar proteção',
-	'protectcomment' => 'Motivo:',
-	'protectexpiry' => 'Expiração',
-	'protect_expiry_invalid' => 'O tempo de expiração fornecido é inválido.',
-	'protect_expiry_old' => 'O tempo de expiração fornecido se situa no passado.',
-	'protect-unchain-permissions' => 'Desbloquear opções adicionais de proteção',
-	'protect-text' => "Você pode, nesta página, alterar o nível de proteção para '''$1'''.",
-	'protect-locked-blocked' => "Você não poderá alterar os níveis de proteção enquanto estiver bloqueado. Esta é a configuração atual para a página '''$1''':",
-	'protect-locked-dblock' => "Não é possível alterar os níveis de proteção, uma vez que a base de dados se encontra trancada.
-Esta é a configuração atual para a página '''$1''':",
-	'protect-locked-access' => "Sua conta não possui permissões para alterar os níveis de proteção de uma página.
-Esta é a configuração atual para a página '''$1''':",
-	'protect-cascadeon' => 'Esta página encontra-se protegida, uma vez que se encontra incluída {{PLURAL:$1|na página listada a seguir, protegida|nas páginas listadas a seguir, protegidas}} com a "proteção progressiva" ativada. Você poderá alterar o nível de proteção desta página, mas isso não afetará a "proteção progressiva".',
-	'protect-default' => 'Permitir todos os usuários',
-	'protect-fallback' => 'É necessário o privilégio de "$1"',
-	'protect-level-autoconfirmed' => 'Bloquear usuários novos e não registrados',
-	'protect-level-sysop' => 'Apenas administradores',
-	'protect-summary-cascade' => 'p. progressiva',
-	'protect-expiring' => 'expira em $1 (UTC)',
-	'protect-expiring-local' => 'expira $1',
-	'protect-expiry-indefinite' => 'indefinido',
-	'protect-cascade' => '"Proteção progressiva" - proteja quaisquer páginas que estejam incluídas nesta.',
-	'protect-cantedit' => 'Você não pode alterar o nível de proteção desta página uma vez que você não se encontra habilitado a editá-la.',
-	'protect-othertime' => 'Outra duração:',
-	'protect-othertime-op' => 'outra duração',
-	'protect-existing-expiry' => 'A proteção atual expirará às $3 de $2',
-	'protect-otherreason' => 'Outro motivo/motivo adicional:',
-	'protect-otherreason-op' => 'Outro motivo',
-	'protect-dropdown' => "*Motivos comuns para proteção
-** Vandalismo excessivo
-** Inserção excessiva de ''spams''
-** Guerra de edições improdutiva
-** Página bastante acessada",
-	'protect-edit-reasonlist' => 'Editar motivos de proteções',
-	'protect-expiry-options' => '1 hora:1 hour,1 dia:1 day,1 semana:1 week,2 semanas:2 weeks,1 mês:1 month,3 meses:3 months,6 meses:6 months,1 ano:1 year,indefinido:infinite',
-	'pagesize' => '(bytes)',
-	'proxyblocker' => 'Bloqueador de proxy',
-	'proxyblocker-disabled' => 'Esta função está desabilitada.',
-	'proxyblockreason' => 'O seu endereço de IP foi bloqueado por ser um proxy público. Por favor contacte o seu fornecedor do serviço de Internet ou o apoio técnico e informe-os deste problema de segurança grave.',
-	'proxyblocksuccess' => 'Concluído.',
-	'pagemovedsub' => 'Página movida com sucesso',
-	'protectedpagemovewarning' => "'''Atenção:''' Esta página foi protegida de modo que apenas usuários com privilégio de administrador possam movê-la.
-A última entrada no histórico é fornecida abaixo para referência:",
-	'pageinfo-title' => 'Informações sobre "$1"',
-	'pageinfo-header-edits' => 'Edições',
-	'pageinfo-header-watchlist' => 'Páginas vigiadas',
-	'pageinfo-header-views' => 'Visitas',
-	'pageinfo-subjectpage' => 'Página',
-	'pageinfo-talkpage' => 'Página de discussão',
-	'pageinfo-watchers' => 'Número de pessoas vigiando',
-	'pageinfo-edits' => 'Número de edições',
-	'pageinfo-authors' => 'Número de autores individuais',
-	'pageinfo-views' => 'Número de visitas',
-	'pageinfo-viewsperedit' => 'Visitas por edição',
-	'patrol-log-page' => 'Registro de edições patrulhadas',
-	'patrol-log-header' => 'Este é um registro de edições patrulhadas.',
-	'previousdiff' => '← Edição anterior',
-	'profile' => 'Perfil',
 );
 
 $messages['qu'] = array(
@@ -31353,7 +31138,7 @@ L'urteme archivije de le trasute ha state mise aqquà sotte pe referimende:",
 );
 
 $messages['ru'] = array(
-	'pagecategories' => '{{PLURAL:$1|Категория|Категории|Категорий}}',
+	'pagecategories' => '{{PLURAL:$1|Категория|Категории}}',
 	'printableversion' => 'Версия для печати',
 	'permalink' => 'Постоянная ссылка',
 	'print' => 'Печать',
@@ -41093,27 +40878,6 @@ Sommige sjabloon'n worr'n nie getranscludeerd.",
 	'previousdiff' => '← Ouwere bewarkienge',
 );
 
-$messages['zh'] = array(
-	'passwordremindertitle' => 'Wikia密码变更通知',
-	'pagecategories' => '{{PLURAL:$1个|分类|分类}}',
-	'perfcachedts' => '下列数据已经过缓存处理，最后更新时间为$1。在缓存中最多有{{PLURAL:$4|一个结果|$4个结果}}可用。',
-	'permalink' => '固定链结',
-	'preferences' => '用戶设定',
-	'prefixindex' => '前缀索引',
-	'prefs-help-email' => '*<strong>电子邮件</strong>（可选）：让他人通过网站在不知道您的电子邮件地址的情况下通过电子邮件与您联络，以及通过电子邮件取得遗忘的密码。',
-	'prefs-i18n' => '字体转换',
-	'profile' => '用户档案',
-	'protectedpages' => '被保护的页面',
-);
-
-$messages['zh-cn'] = array(
-	'portal' => '社区专页',
-	'permalink' => '固定链结',
-	'prefixindex' => '前缀索引',
-	'prefs-help-email' => '*<strong>电子邮件</strong>（可选）：让他人通过网站在不知道您的电子邮件地址的情况下通过电子邮件与您联络，以及通过电子邮件取得遗忘的密码。',
-	'protectedpages' => '被保护的页面',
-);
-
 $messages['zh-hans'] = array(
 	'pagecategories' => '{{PLURAL:$1|个分类|个分类}}',
 	'printableversion' => '可打印版本',
@@ -41141,7 +40905,7 @@ $messages['zh-hans'] = array(
 	'passwordtooshort' => '您的密码至少需要{{PLURAL:$1|1个字符|$1个字符}}。',
 	'password-name-match' => '您的密码必须不同于您的用户名。',
 	'password-login-forbidden' => '这个用户名称及密码的使用是被禁止的。',
-	'passwordremindertitle' => '来自Fandom的密码提示',
+	'passwordremindertitle' => '来自FANDOM的密码提示',
 	'passwordremindertext' => '你好，
 
 用户"$2"的登入密码是"$3"。
@@ -41150,7 +40914,7 @@ $messages['zh-hans'] = array(
 
 谢谢！
 
-Fandom社区团队
+FANDOM社区团队
 
 www.wikia.com
 ___________________________________________________________
@@ -41338,7 +41102,7 @@ ___________________________________________________________
 	'patrol-log-header' => '这是巡查后的修订版本的日志。',
 	'previousdiff' => '←上一编辑',
 	'parentheses' => '（$1）',
-	'prefs-help-birthinfo' => '作为安全预防措施，也为了遵守美国联邦法规而保持网站的完整性，Fandom要求所有用户提供自己的真实出生日期。',
+	'prefs-help-birthinfo' => '作为安全预防措施，也为了遵守美国联邦法规而保持网站的完整性，FANDOM要求所有用户提供自己的真实出生日期。',
 	'prefs-help-terms' => '创建用户帐户，即表示您同意并接受此[[homepage:Terms of use|Wikia, Inc使用条款]]',
 	'profile' => '用户档案',
 	'pagecategorieslink' => 'Special:Categories',
@@ -41396,7 +41160,7 @@ $messages['zh-hant'] = array(
 	'passwordtooshort' => '您的密碼不能少於$1個字元。',
 	'password-name-match' => '您的密碼必須跟您的用戶名不相同。',
 	'password-login-forbidden' => '這個用戶名稱及密碼的使用是被禁止的。',
-	'passwordremindertitle' => '來自Fandom的密碼提示問題',
+	'passwordremindertitle' => '來自FANDOM的密碼提示問題',
 	'passwordremindertext' => '你好，
 
 用戶"$2"的登入密碼是"$3"。
@@ -41405,7 +41169,7 @@ $messages['zh-hant'] = array(
 
 謝謝！
 
-Fandom社區團隊
+FANDOM社區團隊
 
 www.wikia.com
 ___________________________________________________________
@@ -41592,7 +41356,7 @@ ___________________________________________________________
 	'patrol-log-header' => '這是已巡查修訂版本的日誌。',
 	'previousdiff' => '←上一版本',
 	'parentheses' => '（$1）',
-	'prefs-help-birthinfo' => '作爲安全措施，也爲了遵守美國聯邦法規的同時，保持網站完整性，Fandom要求所有用戶提供自己的真實出生日期。',
+	'prefs-help-birthinfo' => '作爲安全措施，也爲了遵守美國聯邦法規的同時，保持網站完整性，FANDOM要求所有用戶提供自己的真實出生日期。',
 	'prefs-help-terms' => '創建帳戶，即表示你同意此[[homepage:Terms of use|Wikia, Inc使用條款]]。',
 	'profile' => '用戶檔案',
 	'pagecategorieslink' => 'Special:Categories',
@@ -41621,140 +41385,6 @@ ___________________________________________________________
 	'popular-wikis' => '熱門Wiki',
 	'preferences_s' => '用戶設定',
 	'prefs-layout' => '網站布局',
-);
-
-$messages['zh-hk'] = array(
-	'printableversion' => '可打印版',
-	'permalink' => '永久連接',
-	'print' => '打印',
-	'privacy' => '私隱政策',
-	'privacypage' => 'Project:私隱政策',
-	'passwordremindertitle' => 'Wikia密碼變更通知',
-	'pagecategories' => '{{PLURAL:$1個|分類|分類}}',
-	'prefixindex' => '前缀索引',
-	'prefs-help-email' => '*<strong>電子郵件</strong>（可選）：讓他人通過網站在不知道您的電子郵件地址的情況下通過電子郵件與您聯絡，以及通過電子郵件取得遺忘的密碼。',
-	'prefs-i18n' => '字體轉換',
-	'profile' => '用戶檔案',
-	'protectedpages' => '被保護的頁面',
-);
-
-$messages['zh-min-nan'] = array(
-	'printableversion' => '可打印版',
-	'permalink' => '永久連接',
-	'print' => '打印',
-	'privacy' => '私隱政策',
-	'privacypage' => 'Project:私隱政策',
-);
-
-$messages['zh-mo'] = array(
-	'printableversion' => '可打印版',
-	'permalink' => '永久連接',
-	'print' => '打印',
-	'privacy' => '私隱政策',
-	'privacypage' => 'Project:私隱政策',
-);
-
-$messages['zh-my'] = array(
-	'printableversion' => '可打印版',
-	'permalink' => '永久連接',
-	'print' => '打印',
-	'privacy' => '私隱政策',
-	'privacypage' => 'Project:私隱政策',
-);
-
-$messages['zh-sg'] = array(
-	'portal' => '社区入口',
-);
-
-$messages['zh-tw'] = array(
-	'protect_change' => '更改',
-	'portal' => '社群入口',
-	'portal-url' => 'Project:社群入口',
-	'page-rss-feed' => '訂閱「$1」的 RSS 資料來源',
-	'page-atom-feed' => '訂閱「$1」的 Atom 資料來源',
-	'passwordtooshort' => '您的密碼不正確或太短，不能少於$1個字元，而且必須跟使用者名不同。',
-	'passwordremindertitle' => 'Wikia密碼變更通知',
-	'passwordremindertext' => '您好, 用戶"$2" 的密碼已改為"$3"。如果您並沒有申請新密碼，請別擔心。這個新密碼僅僅寄送到這個電子郵件信箱給您，因此您的帳號是安全的，且仍然可以使用您的舊密碼。謝謝。
-
-Wikia社區團隊
-
-___________________________________________________________
-* 要更改個人設定或密碼，請進入: http://www.wikia.com/wiki/Special:Preferences
-* 這個密碼通知是由以下IP地址申請的：$1 。',
-	'passwordsent' => '使用者"$1"的新密碼已經寄往所登記的電子郵件地址。
-請在收到後再登入。',
-	'previewnote' => "'''請記住這只是預覽，內容還未保存！'''",
-	'protectedpagewarning' => "'''警告: 本頁已經被保護，只有擁有管理員許可權的使用者才可修改。'''",
-	'post-expand-template-argument-category' => '包含著略過模板參數的頁面',
-	'powersearch' => '搜尋',
-	'preferences' => '偏好設定',
-	'prefsnologintext' => '您必須先[[Special:UserLogin|登入]]才能設定個人參數。',
-	'prefs-personal' => '使用者資料',
-	'prefs-rc' => '近期變動',
-	'prefs-watchlist-days' => '監視列表中顯示記錄的最長天數:',
-	'prefs-help-realname' => '真實姓名是選填的，如果您選擇提供它，那它便用以對您的貢獻署名。',
-	'prefs-help-email' => '*<strong>電子郵件</strong>（可選）：讓他人通過網站在不知道您的電子郵件地址的情況下通過電子郵件與您聯絡，以及通過電子郵件取得遺忘的密碼。',
-	'popularpages' => '熱門頁面',
-	'prefixindex' => '前缀索引',
-	'protect-title' => '正在保護"$1"',
-	'protect-locked-blocked' => "您不能在被封鎖時更改保護級別。
-以下是'''$1'''現時的保護級別:",
-	'protect-locked-access' => "您的帳號權限不能修改保護級別。
-以下是'''$1'''現時的保護級別:",
-	'protect-cascadeon' => '以下的{{PLURAL:$1|一個|多個}}頁面包含著本頁面的同時，啟動了連鎖保護，因此本頁面目前也被保護，未能編輯。您可以設定本頁面的保護級別，但這並不會對連鎖保護有所影響。',
-	'protect-default' => '(預設)',
-	'protect-level-autoconfirmed' => '禁止未註冊使用者',
-	'protect-expiry-options' => '2小時:2 hours,1天:1 day,1周:1 week,2周:2 weeks,1個月:1 month,3個月:3 months,6個月:6 months,1年:1 year,永久:infinite',
-	'patrol-log-page' => '巡查記錄',
-	'previousdiff' => '←上一個',
-	'pagecategories' => '{{PLURAL:$1個|分類|分類}}',
-	'permalink' => '固定鏈結',
-	'prefs-i18n' => '字體轉換',
-	'profile' => '用戶檔案',
-	'protectedpages' => '被保護的頁面',
-);
-
-$messages['zh-yue'] = array(
-	'protect_change' => '更改',
-	'portal' => '社群入口',
-	'portal-url' => 'Project:社群入口',
-	'page-rss-feed' => '訂閱「$1」的 RSS 資料來源',
-	'page-atom-feed' => '訂閱「$1」的 Atom 資料來源',
-	'passwordtooshort' => '您的密碼不正確或太短，不能少於$1個字元，而且必須跟使用者名不同。',
-	'passwordremindertitle' => '{{SITENAME}}密碼提醒',
-	'passwordremindertext' => '有人（來自IP位址$1，可能是您）已請求{{SITENAME}}的新密碼 （$4）。
-用戶"$2"現在已設定新臨時密碼"$3"。
-如果這個動作是您所指示的，您需要立即登入並選擇一個新的密碼。
-您的臨時密碼會在{{PLURAL:$5|一|$5}}天內過期。
-
-如果是其他人發出了該請求，或者您已經想起了您的密碼而且並不打算換掉，
-您可以忽略此消息並繼續使用您的舊密碼。',
-	'passwordsent' => '使用者"$1"的新密碼已經寄往所登記的電子郵件地址。
-請在收到後再登入。',
-	'previewnote' => "'''請記住這只是預覽，內容還未保存！'''",
-	'protectedpagewarning' => "'''警告: 本頁已經被保護，只有擁有管理員許可權的使用者才可修改。'''",
-	'post-expand-template-argument-category' => '包含著略過模板參數的頁面',
-	'powersearch' => '搜尋',
-	'preferences' => '偏好設定',
-	'prefsnologintext' => '您必須先[[Special:UserLogin|登入]]才能設定個人參數。',
-	'prefs-personal' => '使用者資料',
-	'prefs-rc' => '近期變動',
-	'prefs-watchlist-days' => '監視列表中顯示記錄的最長天數:',
-	'prefs-help-realname' => '真實姓名是選填的，如果您選擇提供它，那它便用以對您的貢獻署名。',
-	'prefs-help-email' => '電子郵件是選填的，但當啟用它後可以在您忘記您的個密碼時需要將新密碼重設寄回給您。而在您未公開自己的使用者身分時也能透過您的用戶頁或用戶討論頁與您聯繫。',
-	'popularpages' => '熱門頁面',
-	'prefixindex' => '前綴索引',
-	'protect-title' => '正在保護"$1"',
-	'protect-locked-blocked' => "您不能在被封鎖時更改保護級別。
-以下是'''$1'''現時的保護級別:",
-	'protect-locked-access' => "您的帳號權限不能修改保護級別。
-以下是'''$1'''現時的保護級別:",
-	'protect-cascadeon' => '以下的{{PLURAL:$1|一個|多個}}頁面包含著本頁面的同時，啟動了連鎖保護，因此本頁面目前也被保護，未能編輯。您可以設定本頁面的保護級別，但這並不會對連鎖保護有所影響。',
-	'protect-default' => '(預設)',
-	'protect-level-autoconfirmed' => '禁止未註冊使用者',
-	'protect-expiry-options' => '2小時:2 hours,1天:1 day,1周:1 week,2周:2 weeks,1個月:1 month,3個月:3 months,6個月:6 months,1年:1 year,永久:infinite',
-	'patrol-log-page' => '巡查記錄',
-	'previousdiff' => '←上一個',
 );
 
 $messages['zu'] = array(

@@ -3,7 +3,7 @@ require([
 	'wikia.onScroll',
 	'wikia.tracker',
 	'ooyala-player',
-	'wikia.abTest',
+	'wikia.cookies',
 	'wikia.articleVideo.videoFeedbackBox',
 	require.optional('ext.wikia.adEngine.adContext'),
 	require.optional('ext.wikia.adEngine.video.player.ooyala.ooyalaTracker'),
@@ -13,7 +13,7 @@ require([
 	onScroll,
 	tracker,
 	OoyalaPlayer,
-	abTest,
+	cookies,
 	VideoFeedbackBox,
 	adContext,
 	playerTracker,
@@ -45,13 +45,22 @@ require([
 				width: 300,
 				height: 169
 			},
-			videoFeedbackBox;
+			videoData = window.wgFeaturedVideoData,
+			videoId = videoData.videoId,
+			videoTitle = videoData.title,
+			videoLabels = (videoData.labels || '').join(','),
+			videoFeedbackBox,
+			autoplayCookieName = 'featuredVideoAutoplay';
 
 		function initVideo(onCreate) {
-			var ooyalaVideoId = window.wgFeaturedVideoId,
-				playerParams = window.wgOoyalaParams,
-				autoplay = abTest.inGroup('FEATURED_VIDEO_AUTOPLAY', 'AUTOPLAY') && window.OO.allowAutoPlay,
-				vastUrl;
+			var playerParams = window.wgOoyalaParams,
+				autoplay = cookies.get(autoplayCookieName) !== '0',
+				vastUrl,
+				inlineSkinConfig = {
+					controlBar: {
+						autoplayCookieName: autoplayCookieName
+					}
+				};
 
 			if (vastUrlBuilder && adContext && adContext.getContext().opts.showAds) {
 				vastUrl = vastUrlBuilder.build(640/480, {
@@ -69,10 +78,11 @@ require([
 			ooyalaVideoController = OoyalaPlayer.initHTML5Player(
 				ooyalaVideoElementId,
 				playerParams,
-				ooyalaVideoId,
+				videoId,
 				onCreate,
 				autoplay,
-				vastUrl
+				vastUrl,
+				inlineSkinConfig
 			);
 		}
 
@@ -190,6 +200,10 @@ require([
 			});
 		}
 
+		window.guaSetCustomDimension(34, videoId);
+		window.guaSetCustomDimension(35, videoTitle);
+		window.guaSetCustomDimension(36, videoLabels);
+
 		initVideo(function (player) {
 			$video.addClass('ready-to-play');
 
@@ -255,14 +269,6 @@ require([
 				});
 			});
 
-			player.mb.subscribe(window.OO.EVENTS.PLAYBACK_READY, 'ui-title-update', function () {
-				var videoTitle = player.getTitle(),
-					videoTime = ooyalaVideoController.getFormattedDuration(player.getDuration());
-
-				$videoContainer.find('.video-title').text(videoTitle);
-				$videoContainer.find('.video-time').text(videoTime);
-			});
-
 			player.mb.subscribe(window.OO.EVENTS.PLAYHEAD_TIME_CHANGED, 'featured-video', function (eventName, time, totalTime) {
 				var secondsPlayed = Math.floor(time),
 					percentage = Math.round(time / totalTime * 100);
@@ -287,6 +293,13 @@ require([
 					videoFeedbackBox = new VideoFeedbackBox();
 					videoFeedbackBox.init();
 				}
+			});
+
+			player.mb.subscribe(window.OO.EVENTS.WIKIA.AUTOPLAY_TOGGLED, 'featured-video', function (eventName, enabled) {
+				track({
+					action: tracker.ACTIONS.CLICK,
+					label: enabled ? 'featured-video-autoplay-enabled' : 'featured-video-autoplay-disabled'
+				});
 			});
 
 			track({

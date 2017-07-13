@@ -71,6 +71,7 @@ $color-highlight-column: rgba($color-page, 0);
 	height: $admin-dashboard-header-height;
 	padding: 0 15px;
 	position: relative;
+	width: 100%;
 	h1 {
 		font-size: 20px;
 		line-height: 40px;
@@ -366,36 +367,6 @@ $color-highlight-column: rgba($color-page, 0);
 	.WikiaMainContent.grid-6 {
 		margin-left: 0;
 		width: inherit;
-	}
-}
-
-.WikiHeader {
-	height: 75px;
-	margin-bottom: 10px;
-	padding-bottom: 0;
-	h1:before {
-		display: none;
-	}
-	.shadow-mask {
-		display: none;
-	}
-	@if ( not $responsive-or-breakpoints-layout-enabled ) {
-		>.buttons {
-			bottom: auto;
-			top: 15px;
-		}
-		.WikiaSearch {
-			bottom: 0;
-			position: absolute;
-			right: 10px;
-			input[type=text] {
-				width: 250px;
-			}
-		}
-		.wordmark {
-			bottom: 0;
-			position: absolute;
-		}
 	}
 }
 

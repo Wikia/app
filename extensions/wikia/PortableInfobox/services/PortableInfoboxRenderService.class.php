@@ -3,7 +3,7 @@
 use Wikia\PortableInfobox\Helpers\PortableInfoboxImagesHelper;
 use Wikia\PortableInfobox\Helpers\PortableInfoboxMustacheEngine;
 
-class PortableInfoboxRenderService extends WikiaService {
+class PortableInfoboxRenderService {
 	// keep synced with scss variables ($infobox-width)
 	const DEFAULT_DESKTOP_INFOBOX_WIDTH = 270;
 	const DEFAULT_EUROPA_INFOBOX_WIDTH = 300;
@@ -18,8 +18,7 @@ class PortableInfoboxRenderService extends WikiaService {
 
 	private $helper;
 
-	function __construct() {
-		parent::__construct();
+	public function __construct() {
 		$this->templateEngine = new PortableInfoboxMustacheEngine();
 	}
 

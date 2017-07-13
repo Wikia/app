@@ -365,7 +365,7 @@ Forum:Help_desk|User Support Forums',
 	'most_emailed' => 'Most emailed',
 	'manage_widgets' => 'Manage widgets',
 	'magicfooterlinks' => '<b>Featured pages</b>',
-	'masthead-anonymous-user' => 'A Fandom user',
+	'masthead-anonymous-user' => 'A FANDOM user',
 	'mobile-show' => 'Show',
 	'mobile-hide' => 'Hide',
 );
@@ -7374,7 +7374,7 @@ Weitere werden standardmäßig nicht angezeigt.
 	'most_emailed' => 'Am häufigsten verschickt',
 	'magicfooterlinks' => '<b>Vorgestellte Seiten</b>',
 	'manage_widgets' => 'Widgets verwalten',
-	'masthead-anonymous-user' => 'Ein Fandom-Benutzer',
+	'masthead-anonymous-user' => 'Ein FANDOM-Benutzer',
 	'messagebar_mess' => 'Wusstest du, dass du <a href="$1">diese Seite bearbeiten</a> und <a href="$2">eine neue Seite erstellen</a> kannst? <a href="$3">Finde heraus</a> wie das funktioniert.',
 	'mobile-hide' => 'ausblenden',
 	'mobile-show' => 'anzeigen',
@@ -8762,7 +8762,7 @@ Existen otros campos que se mantendrán ocultos por defecto.
 	'most_emailed' => 'Los más contactados por e-mail',
 	'magicfooterlinks' => '<b>Páginas destacadas</b>',
 	'manage_widgets' => 'Organizar widgets',
-	'masthead-anonymous-user' => 'Un usuario de Fandom',
+	'masthead-anonymous-user' => 'Un usuario de FANDOM',
 	'messagebar_mess' => '¿Sabes que puedes <a href="$1">editar esta página</a> o <a href="$2">crear una nueva</a>? <a href="$3">Averigua cómo</a> se hace.',
 	'mu_login' => 'Debes identificarte para subir archivos',
 	'multiplefileuploadsummary' => 'Resumen:',
@@ -10141,7 +10141,7 @@ Si vous l’exécutez, votre système peut être compromis.",
 	'most_visited' => 'Pages les plus vues',
 	'most_emailed' => 'Les plus envoyés',
 	'manage_widgets' => 'Gérer les widgets',
-	'masthead-anonymous-user' => 'Un utilisateur de Fandom',
+	'masthead-anonymous-user' => 'Un utilisateur de FANDOM',
 	'mobile-hide' => 'Masquer',
 	'mobile-show' => 'Afficher',
 	'monaco-sidebar' => '*mainpage|{{SITENAME}}
@@ -15159,7 +15159,7 @@ In questi casi, se lo si ritiene opportuno, occorre spostare o aggiungere manual
 * gpslongitude
 * gpsaltitude",
 	'monthsall' => 'tutti',
-	'masthead-anonymous-user' => 'Un utente Fandom',
+	'masthead-anonymous-user' => 'Un utente FANDOM',
 	'mobile-hide' => 'Nascondi',
 	'mobile-show' => 'Mostra',
 	'most_popular' => 'Più popolari',
@@ -15544,7 +15544,7 @@ contenttype/subtypeの形式で指定してください（例：<tt>image/jpeg</
 	'most_visited' => '最多アクセス',
 	'most_emailed' => 'メールの使われた記事',
 	'manage_widgets' => 'ウィジェットの設定',
-	'masthead-anonymous-user' => 'Fandomユーザー',
+	'masthead-anonymous-user' => 'FANDOMユーザー',
 	'monaco-sidebar' => '*mainpage|{{SITENAME}}
 *mainpage|コンテンツ
 **#popular#|お薦め記事
@@ -24360,7 +24360,7 @@ Andere velden worden verborgen.
 	'my_stuff' => 'my stuff',
 	'manage_widgets' => 'Manage widgets',
 	'magicfooterlinks' => '<b>Featured pages</b>',
-	'masthead-anonymous-user' => 'A Fandom user',
+	'masthead-anonymous-user' => 'A FANDOM user',
 	'mobile-show' => 'Show',
 	'mobile-hide' => 'Hide',
 );
@@ -25980,7 +25980,7 @@ Pozostałe pola zostaną domyślnie ukryte.
 	'most_visited' => 'Najczęściej odwiedzane',
 	'most_emailed' => 'Najczęściej przesyłane',
 	'manage_widgets' => 'Zarządzaj widgetami',
-	'masthead-anonymous-user' => 'Użytkownik Fandom',
+	'masthead-anonymous-user' => 'Użytkownik FANDOM',
 	'mycontributions' => 'Moje edycje',
 	'mainpage-nstab' => '',
 	'mostlinked-summary' => '',
@@ -26917,7 +26917,7 @@ Forum:Help_desk|User Support Forums',
 	'most_popular' => "Editor's pick",
 	'most_visited' => 'Mais visitas',
 	'most_emailed' => 'Most emailed',
-	'masthead-anonymous-user' => 'Um usuário do Fandom',
+	'masthead-anonymous-user' => 'Um usuário do FANDOM',
 	'mainpage-nstab' => '',
 	'mostlinked-summary' => '',
 	'mostlinkedcategories-summary' => '',
@@ -26951,176 +26951,6 @@ Forum:Help_desk|User Support Forums',
 	'magicfooterlinks' => '<b>Featured pages</b>',
 	'mobile-show' => 'Exibir',
 	'mobile-hide' => 'Ocultar',
-);
-
-$messages['pt-br'] = array(
-	'monday' => 'segunda-feira',
-	'mon' => 'seg',
-	'march' => 'março',
-	'may_long' => 'maio',
-	'march-gen' => 'março',
-	'may-gen' => 'maio',
-	'mar' => 'mar.',
-	'may' => 'maio',
-	'moredotdotdot' => 'Mais...',
-	'mypage' => 'Minha página',
-	'mytalk' => 'Minha discussão',
-	'mainpage' => 'Página principal',
-	'mainpage-description' => 'Página principal',
-	'missing-article' => 'O banco de dados não encontrou o texto de uma página que deveria ter encontrado, com o nome "$1" $2.
-
-Isso normalmente é causado ao acessar um link de diferença (diff) desatualizado ou para o histórico de uma página que foi apagada.
-
-Se não for este o caso, você pode ter encontrado um defeito (bug) no software.
-Anote o URL e reporte o ocorrido a um [[Special:ListUsers/sysop|administrador]].',
-	'missingarticle-rev' => '(revisão#: $1)',
-	'missingarticle-diff' => '(Dif.: $1, $2)',
-	'mailmypassword' => 'Enviar uma nova senha por e-mail',
-	'mailerror' => 'Erro a enviar o email: $1',
-	'media_sample' => 'Exemplo.ogg',
-	'media_tip' => 'Link para o arquivo',
-	'minoredit' => 'Marcar como edição menor',
-	'missingsummary' => "'''Lembrete:''' Você não introduziu um sumário de edição. Se clicar novamente em Salvar, a sua edição será salva sem um sumário.",
-	'missingcommenttext' => 'Por favor, introduzida um comentário abaixo.',
-	'missingcommentheader' => "'''Lembrete:''' Você não introduziu um assunto/título para este comentário.
-Se você clicar novamente \"{{int:savearticle}}\", a sua edição será salva sem um assunto/título.",
-	'moveddeleted-notice' => 'Esta página foi eliminada.
-Os registros de eliminação e de movimentação para esta página estão disponibilizados abaixo, para referência.',
-	'mergehistory' => 'Fundir histórico de páginas',
-	'mergehistory-header' => 'A partir desta página é possível fundir históricos de edições de uma página em outra.
-Certifique-se de que tal alteração manterá a continuidade das ações.',
-	'mergehistory-box' => 'Fundir revisões de duas páginas:',
-	'mergehistory-from' => 'Página de origem:',
-	'mergehistory-into' => 'Página de destino:',
-	'mergehistory-list' => 'Histórico de edições habilitadas para fusão',
-	'mergehistory-merge' => 'As edições de [[:$1]] a seguir poderão ser fundidas em [[:$2]]. Utilize a coluna de botões de opção para fundir apenas as edições feitas entre o intervalo de tempo especificado. Note que ao utilizar os links de navegação esta coluna será retornada a seus valores padrão.',
-	'mergehistory-go' => 'Exibir edições habilitadas a serem fundidas',
-	'mergehistory-submit' => 'Fundir edições',
-	'mergehistory-empty' => 'Não existem edições habilitadas a serem fundidas.',
-	'mergehistory-success' => '$3 {{PLURAL:$3|revisão|revisões}} de [[:$1]] fundidas em [[:$2]] com sucesso.',
-	'mergehistory-fail' => 'Não foi possível fundir os históricos; por gentileza, verifique a página e os parâmetros de tempo.',
-	'mergehistory-no-source' => 'A página de origem ($1) não existe.',
-	'mergehistory-no-destination' => 'A página de destino ($1) não existe.',
-	'mergehistory-invalid-source' => 'A página de origem precisa ser um título válido.',
-	'mergehistory-invalid-destination' => 'A página de destino precisa ser um título válido.',
-	'mergehistory-autocomment' => '[[:$1]] fundido em [[:$2]]',
-	'mergehistory-comment' => '[[:$1]] fundido em [[:$2]]: $3',
-	'mergehistory-same-destination' => 'As páginas de origem e de destino não podem ser as mesmas',
-	'mergehistory-reason' => 'Motivo:',
-	'mergelog' => 'Registro de fusão de históricos',
-	'mergelogpagetext' => 'Segue-se um registro das mais recentes fusões de históricos de páginas.',
-	'mwsuggest-disable' => 'Desativar sugestões AJAX',
-	'mypreferences' => 'Minhas preferências',
-	'minoreditletter' => 'm',
-	'minlength1' => 'Os nomes de arquivos precisam ter pelo menos uma letra.',
-	'morelinkstoimage' => 'Ver [[Special:WhatLinksHere/$1|mais links]] para este arquivo.',
-	'mimesearch' => 'Pesquisa MIME',
-	'mimesearch-summary' => 'Esta página possibilita que os arquivos sejam filtrados a partir de seu tipo MIME. Sintaxe de busca: tipo/subtipo (por exemplo, <tt>image/jpeg</tt>).',
-	'mimetype' => 'tipo MIME:',
-	'mostlinked' => 'Páginas com mais afluentes',
-	'mostlinkedcategories' => 'Categorias com mais membros',
-	'mostlinkedtemplates' => 'Predefinições com mais afluentes',
-	'mostcategories' => 'Páginas de conteúdo com mais categorias',
-	'mostimages' => 'Imagens com mais afluentes',
-	'mostrevisions' => 'Páginas de conteúdo com mais revisões',
-	'move' => 'Mover',
-	'movethispage' => 'Mover esta página',
-	'mailnologin' => 'Nenhum endereço de envio',
-	'mailnologintext' => 'Necessita de estar [[Special:UserLogin|autenticado]] e de possuir um endereço de e-mail válido nas suas [[Special:Preferences|preferências]] para poder enviar um e-mail a outros usuários.',
-	'mywatchlist' => 'Páginas vigiadas',
-	'modifiedarticleprotection' => 'alterou o nível de proteção para "[[$1]]"',
-	'movedarticleprotection' => 'moveu as configurações de proteção de "[[$2]]" para "[[$1]]"',
-	'minimum-size' => 'Tam. mínimo',
-	'maximum-size' => 'Tam. máximo:',
-	'mycontris' => 'Minhas contribuições',
-	'month' => 'Mês (inclusive anteriores):',
-	'move-page' => 'Mover $1',
-	'move-page-legend' => 'Mover página',
-	'movepagetext' => "Utilizando o seguinte formulário você poderá renomear uma página, movendo todo o histórico para o novo título. O título anterior será transformado em um redirecionamento para o novo.
-
-Links para as páginas antigas não serão mudados; certifique-se de verificar por redirecionamentos quebrados ou duplos. Você é responsável por certificar-se que os links continuam apontando para onde eles deveriam apontar.
-
-Note que a página '''não''' será movida se já existir uma página com o novo título, a não ser que ele esteja vazio ou seja um redirecionamento e não tenha histórico de edições. Isto significa que pode renomear uma página de volta para o nome que tinha anteriormente se cometer algum engano e que não pode sobrescrever uma página.
-
-<b>CUIDADO!</b>
-Isto pode ser uma mudança drástica e inesperada para uma página popular; por favor, tenha certeza de que compreende as consequências da mudança antes de prosseguir.",
-	'movepagetext-noredirectfixer' => "Usando o formulário abaixo, você irá alterar o nome de uma página e moverá todo o histórico desta para o nome novo.
-A página antiga será transformada numa página de redirecionamento para a nova.
-Verifique a existência de [[Special:DoubleRedirects|redirecionamentos duplos]] ou [[Special:BrokenRedirects|quebrados]].
-É sua responsabilidade certificar-se de que os links continuam a apontar para onde eles deveriam apontar.
-
-Note que a página '''não''' será movida se já existir uma página com o nome novo, a menos que esta página esteja vazia ou seja uma página de redirecionamento e não tenha um histórico de edições.
-Isto significa que, se você cometer um engano, poderá alterar o nome da página movida de volta para o seu nome original; e que não pode sobrescrever o conteúdo de uma página existente.
-
-'''Aviso!'''
-Para páginas populares, esta operação pode representar uma mudança drástica e inesperada;
-certifique-se de que compreende as consequências da operação antes de continuar.",
-	'movepagetalktext' => "A página de \"discussão\" associada, se existir, será automaticamente movida, '''a não ser que:'''
-*Uma página de discussão com conteúdo já exista sob o novo título, ou
-*Você não marque a caixa abaixo.
-
-Nestes casos, você terá que mover ou mesclar a página manualmente, se assim desejar.",
-	'movearticle' => 'Mover página',
-	'moveuserpage-warning' => "'''Aviso:''' Você irá mover uma página de usuário. Note que apenas a página será movida, ''sem'' alterar o nome do usuário.",
-	'movenologin' => 'Não autenticado',
-	'movenologintext' => 'Você precisa ser um usuário registrado e [[Special:UserLogin|autenticado]] para poder mover uma página.',
-	'movenotallowed' => 'Você não possui permissão para mover páginas.',
-	'movenotallowedfile' => 'Você não possui permissão para mover arquivos.',
-	'move-watch' => 'Vigiar esta página',
-	'movepagebtn' => 'Mover página',
-	'movepage-moved' => '\'\'\'"$1" foi movida para "$2"\'\'\'',
-	'movepage-moved-redirect' => 'Um redirecionamento foi criado.',
-	'movepage-moved-noredirect' => 'A criação de um redirecionamento foi suprimida.',
-	'movedto' => 'movido para',
-	'movetalk' => 'Mover também a página de discussão associada.',
-	'move-subpages' => 'Mover subpáginas (até $1)',
-	'move-talk-subpages' => 'Mover subpáginas da página de discussão (até $1)',
-	'movepage-page-exists' => 'A página $1 já existe e não pode ser substituída.',
-	'movepage-page-moved' => 'A página $1 foi movida para $2',
-	'movepage-page-unmoved' => 'A página $1 não pôde ser movida para $2.',
-	'movepage-max-pages' => 'O limite de $1 {{PLURAL:$1|página movida|páginas movidas}} foi atingido; não será possível mover mais páginas de forma automática.',
-	'movelogpage' => 'Registro de movimento',
-	'movelogpagetext' => 'Abaixo encontra-se uma lista de páginas movidas.',
-	'movesubpage' => '{{PLURAL:$1|Subpágina|Subpáginas}}',
-	'movesubpagetext' => 'Esta página tem $1 {{PLURAL:$1|subpágina mostrada|subpáginas mostradas}} abaixo.',
-	'movenosubpage' => 'Esta página não tem subpáginas.',
-	'movereason' => 'Motivo:',
-	'move-leave-redirect' => 'Criar um redirecionamento',
-	'move-over-sharedrepo' => '=== Arquivo existente ===
-[[:$1]] existe em um repositório compartilhado. Mover um arquivo para este título irá sobrescrever o arquivo compartilhado.',
-	'monobook.css' => '/* o código CSS colocado aqui terá efeito nos usuários do tema Monobook */',
-	'monobook.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin MonoBook */',
-	'markaspatrolleddiff' => 'Marcar como patrulhada',
-	'markaspatrolledtext' => 'Marcar esta página como verificada',
-	'markedaspatrolled' => 'Marcado como verificado',
-	'markedaspatrolledtext' => 'A revisão selecionada de [[:$1]] foi marcada como patrulhada.',
-	'markedaspatrollederror' => 'Não é possível marcar como verificado',
-	'markedaspatrollederrortext' => 'Você precisa de especificar uma revisão para poder marcar como verificado.',
-	'markedaspatrollederror-noautopatrol' => 'Você não está autorizado a marcar suas próprias edições como edições patrulhadas.',
-	'mediawarning' => "'''Aviso''': Este tipo de arquivo pode conter código malicioso.
-Executá-lo poderá comprometer a segurança do seu sistema.",
-	'minutes' => '{{PLURAL:$1|um minuto|$1 minutos}}',
-	'metadata' => 'Metadados',
-	'metadata-help' => 'Este arquivo contém dados adicionais, provavelmente adicionados pela câmera digital ou scanner utilizado para criar ou digitalizá-lo.
-Caso o arquivo tenha sofrido alterações, alguns detalhes poderão ser diferentes do que o arquivo atual é.',
-	'metadata-expand' => 'Mostrar detalhes adicionais',
-	'metadata-collapse' => 'Esconder detalhes restantes',
-	'metadata-fields' => 'Os campos de metadados de imagens listados nesta mensagem serão incluídos na página de descrição da imagem quando a tabela de metadados estiver recolhida.
-Por padrão, outros campos estarão ocultos.
-* make
-* model
-* datetimeoriginal
-* exposuretime
-* fnumber
-* isospeedratings
-* focallength
-* artist
-* copyright
-* imagedescription
-* gpslatitude
-* gpslongitude
-* gpsaltitude',
-	'monthsall' => 'todos',
 );
 
 $messages['qu'] = array(
@@ -36850,39 +36680,6 @@ Aorre veld'n worr'n verborr'n.
 	'monthsall' => 'aolle',
 );
 
-$messages['zh'] = array(
-	'mobile-hide' => '隐藏',
-	'mobile-show' => '显示',
-	'monaco-sidebar' => '*mainpage|{{SITENAME}}
-*mainpage|流行内容
-**#popular#|热门
-**#visited#|访问最多
-**#voted#|尖端排名
-**#newlychanged#|最近更新
-*portal-url|社区
-**#topusers#|忠实用户
-**portal-url|门户
-**forum-url|论坛
-*#category1#
-*#category2#',
-	'most_visited' => '最多人访问',
-	'mostlinked' => '最多被連結的页面',
-	'mostlinkedcategories' => '最多被使用的分类',
-	'mostrevisions' => '最多修訂的文章',
-	'mycontributions' => '我的活动',
-	'mypreferences' => '用戶设定',
-);
-
-$messages['zh-cn'] = array(
-	'mytalk' => '我的讨论页',
-	'mostcategories' => '最多分类的文章',
-	'mostlinked' => '最多被链接页面',
-	'mostlinkedcategories' => '最多被使用的分类',
-	'mostrevisions' => '最多修订的文章',
-	'move' => '移动',
-	'mypreferences' => '用戶设定',
-);
-
 $messages['zh-hans'] = array(
 	'monday' => '星期一',
 	'mon' => '一',
@@ -37060,7 +36857,7 @@ $messages['zh-hans'] = array(
 	'mobile-hide' => '隐藏',
 	'mobile-show' => '显示',
 	'most_visited' => '最多人访问',
-	'masthead-anonymous-user' => 'Fandom用户',
+	'masthead-anonymous-user' => 'FANDOM用户',
 	'mainpage-nstab' => '',
 	'media_sample' => 'Example.ogg',
 	'mostlinked-summary' => '',
@@ -37293,7 +37090,7 @@ $messages['zh-hant'] = array(
 	'mobile-hide' => '隱藏',
 	'mobile-show' => '顯示',
 	'most_visited' => '最多人訪問',
-	'masthead-anonymous-user' => 'Fandom用戶',
+	'masthead-anonymous-user' => 'FANDOM用戶',
 	'mainpage-nstab' => '',
 	'media_sample' => 'Example.ogg',
 	'mostlinked-summary' => '',
@@ -37342,161 +37139,6 @@ Forum:Help_desk|User Support Forums',
 	'most_emailed' => 'Most emailed',
 	'manage_widgets' => 'Manage widgets',
 	'magicfooterlinks' => '<b>Featured pages</b>',
-);
-
-$messages['zh-hk'] = array(
-	'march' => '三月',
-	'may_long' => '五月',
-	'mytalk' => '我的討論頁',
-	'mobile-hide' => '隱藏',
-	'mobile-show' => '顯示',
-	'most_visited' => '最多人訪問',
-	'mostcategories' => '最多分類的文章',
-	'mostlinked' => '最多被連接頁面',
-	'mostlinkedcategories' => '最多被使用的分類',
-	'mostrevisions' => '最多修訂的文章',
-);
-
-$messages['zh-min-nan'] = array(
-	'march' => '三月',
-	'may_long' => '五月',
-	'mytalk' => '我的討論頁',
-);
-
-$messages['zh-mo'] = array(
-	'march' => '三月',
-	'may_long' => '五月',
-	'mytalk' => '我的討論頁',
-);
-
-$messages['zh-my'] = array(
-	'march' => '三月',
-	'may_long' => '五月',
-	'mytalk' => '我的討論頁',
-);
-
-$messages['zh-tw'] = array(
-	'mon' => '一',
-	'march' => '三月',
-	'may_long' => '五月',
-	'march-gen' => '三月',
-	'may-gen' => '五月',
-	'mar' => '3月',
-	'may' => '5月',
-	'mainpage' => '首頁',
-	'media_tip' => '媒體檔案連結',
-	'minoredit' => '這是一個細微修改',
-	'mergehistory' => '合併修訂記錄',
-	'mergehistory-header' => "這一頁可以講您合併一個來源頁面的歷史到另一個新頁面中。
-請確認這次更改會繼續保留該頁面先前的歷史版本。
-
-'''最少該來源頁面的現時修訂必定會保持。'''",
-	'mergehistory-merge' => '以下[[:$1]]的修訂可以合併到[[:$2]]。用該選項按鈕欄去合併只有在指定時間以前所建立的修訂。要留意的是使用導航連結便會重設這一欄。',
-	'mergelogpagetext' => '以下是一個最近由一個頁面的修訂沿革合併到另一個頁面的列表。',
-	'mypreferences' => '用戶設定',
-	'mimesearch' => 'MIME 搜尋',
-	'mostimages' => '最多連結圖片',
-	'move' => '移動',
-	'mailnologin' => '無E-mail地址',
-	'mailnologintext' => '您必須先[[Special:UserLogin|登入]]
-並在[[Special:Preferences|偏好設定]]
-中有一個有效的e-mail地址才可以E-mail其他使用者。',
-	'maximum-size' => '最大大小',
-	'mycontris' => '我的編修記錄',
-	'movepagetext' => "用下面的表單來重新命名一個頁面，並將其修訂沿革同時移動到新頁面。
-老的頁面將成為新頁面的重定向頁。
-連結到老頁面的連結並不會自動更改；
-請檢查雙重或損壞重定向連結。
-您應當負責確定所有連結依然會連到指定的頁面。
-
-注意如果新頁面已經有內容的話，頁面將'''不會'''被移動，
-除非新頁面無內容或是重定向頁，而且沒有修訂沿革。
-這意味著您再必要時可以在移動到新頁面後再移回老的頁面，
-同時您也無法覆蓋現有頁面。
-
-<b>警告！</b>
-對一個經常被訪問的頁面而言這可能是一個重大與唐突的更改；
-請在行動前先了結其所可能帶來的後果。",
-	'movenologintext' => '您必須是一名登記使用者並且[[Special:UserLogin|登入]]
-後才可移動一個頁面。',
-	'movenotallowed' => '您在這個wiki中度並沒有許可權去移動頁面。',
-	'movetalk' => '如果可能的話，請同時移動對話頁。',
-	'movelogpagetext' => '以下是已經移動的頁面清單:',
-	'markedaspatrolledtext' => '選定的版本已被標記為已檢查.',
-	'metadata-help' => '此檔案中包含有擴展的訊息。這些訊息可能是由數位相機或掃描器在建立或數位化過程中所增加的。
-
-如果此檔案的源檔案已經被修改，一些訊息在修改後的檔案中將不能完全反映出來。',
-	'most_popular_articles' => '熱門文章',
-	'my_stuff' => '我的東西',
-	'most_popular' => '最熱門',
-	'most_visited' => '最多閱覽',
-	'most_emailed' => '轉寄最多',
-	'mobile-hide' => '隱藏',
-	'mobile-show' => '顯示',
-	'mostcategories' => '最多分類的文章',
-	'mostlinked' => '最多被連接頁面',
-	'mostlinkedcategories' => '最多被使用的分類',
-	'mostrevisions' => '最多修訂的文章',
-	'mu_login' => '您必須先登入才能上傳檔案',
-	'multiplefileuploadsummary' => '摘要:',
-);
-
-$messages['zh-yue'] = array(
-	'mon' => '一',
-	'march' => '三月',
-	'may_long' => '五月',
-	'march-gen' => '三月',
-	'may-gen' => '五月',
-	'mar' => '3月',
-	'may' => '5月',
-	'mainpage' => '首頁',
-	'media_tip' => '媒體檔案連結',
-	'minoredit' => '這是一個細微修改',
-	'mergehistory' => '合併修訂記錄',
-	'mergehistory-header' => "這一頁可以講您合併一個來源頁面的歷史到另一個新頁面中。
-請確認這次更改會繼續保留該頁面先前的歷史版本。
-
-'''最少該來源頁面的現時修訂必定會保持。'''",
-	'mergehistory-merge' => '以下[[:$1]]的修訂可以合併到[[:$2]]。用該選項按鈕欄去合併只有在指定時間以前所建立的修訂。要留意的是使用導航連結便會重設這一欄。',
-	'mergelogpagetext' => '以下是一個最近由一個頁面的修訂沿革合併到另一個頁面的列表。',
-	'mypreferences' => '我的偏好設定',
-	'mimesearch' => 'MIME 搜尋',
-	'mostimages' => '最多連結圖片',
-	'move' => '移動',
-	'mailnologin' => '無E-mail地址',
-	'mailnologintext' => '您必須先[[Special:UserLogin|登入]]
-並在[[Special:Preferences|偏好設定]]
-中有一個有效的e-mail地址才可以E-mail其他使用者。',
-	'maximum-size' => '最大大小',
-	'mycontris' => '我的編修記錄',
-	'movepagetext' => "用下面的表單來重新命名一個頁面，並將其修訂沿革同時移動到新頁面。
-老的頁面將成為新頁面的重定向頁。
-連結到老頁面的連結並不會自動更改；
-請檢查雙重或損壞重定向連結。
-您應當負責確定所有連結依然會連到指定的頁面。
-
-注意如果新頁面已經有內容的話，頁面將'''不會'''被移動，
-除非新頁面無內容或是重定向頁，而且沒有修訂沿革。
-這意味著您再必要時可以在移動到新頁面後再移回老的頁面，
-同時您也無法覆蓋現有頁面。
-
-<b>警告！</b>
-對一個經常被訪問的頁面而言這可能是一個重大與唐突的更改；
-請在行動前先了結其所可能帶來的後果。",
-	'movenologintext' => '您必須是一名登記使用者並且[[Special:UserLogin|登入]]
-後才可移動一個頁面。',
-	'movenotallowed' => '您在這個wiki中度並沒有許可權去移動頁面。',
-	'movetalk' => '如果可能的話，請同時移動對話頁。',
-	'movelogpagetext' => '以下是已經移動的頁面清單:',
-	'markedaspatrolledtext' => '選定的版本已被標記為已檢查.',
-	'metadata-help' => '此檔案中包含有擴展的訊息。這些訊息可能是由數位相機或掃描器在建立或數位化過程中所增加的。
-
-如果此檔案的源檔案已經被修改，一些訊息在修改後的檔案中將不能完全反映出來。',
-	'most_popular_articles' => '熱門文章',
-	'my_stuff' => '我的東西',
-	'most_popular' => '最熱門',
-	'most_visited' => '最多閱覽',
-	'most_emailed' => '轉寄最多',
 );
 
 $messages['zu'] = array(

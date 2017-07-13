@@ -30,6 +30,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 	}
 
 	padding-top: 20px;
+	width: 100%;
 
 	&.WikiaBlogPostHeader, &.WikiaBlogListingHeader {
 		background: transparent;
@@ -209,7 +210,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			}
 		}
 	}
-	
+
 	.contributions-details {
 		a {
 			color: $color-text;
@@ -219,7 +220,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			}
 		}
 	}
-	
+
 	.links {
 		@include clearfix;
 		li {

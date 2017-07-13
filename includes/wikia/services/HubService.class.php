@@ -1,6 +1,6 @@
 <?php
 
-class HubService extends Service {
+class HubService {
 
 	private static $comscore_prefix = 'comscore_';
 

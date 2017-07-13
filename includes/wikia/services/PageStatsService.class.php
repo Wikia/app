@@ -1,5 +1,5 @@
 <?php
-class PageStatsService extends Service {
+class PageStatsService {
 
 	const CACHE_TTL = 86400;
 

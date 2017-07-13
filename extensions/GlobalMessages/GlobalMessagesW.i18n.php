@@ -96,12 +96,12 @@ You can also [[Special:EditWatchlist|use the standard editor]].',
 	'watchlisttools-edit' => 'View and edit watchlist',
 	'watchlisttools-raw' => 'Edit raw watchlist',
 	'wikipedia_skin' => 'Wikipedia skin',
-	'wikicitieshome' => 'Fandom Home',
+	'wikicitieshome' => 'FANDOM Home',
 	'wikicitieshome-url' => 'http://www.wikia.com/',
 	'wikicitieshome-url/fr' => 'http://fr.wikia.com/',
 	'wikicities-nav' => 'wikia',
-	'widget-title-wikiamessages' => 'Fandom messages',
-	'widget-desc-wikiamessages' => 'Fandom messages',
+	'widget-title-wikiamessages' => 'FANDOM messages',
+	'widget-desc-wikiamessages' => 'FANDOM messages',
 	'widget-categorycloud-blacklist-global' => 'Answered_questions, Un-answered_questions',
 	'widget-categorycloud-blacklist' => '',
 	'widget-categorycloud-empty' => '(No categories yet)',
@@ -123,7 +123,7 @@ You can also [[Special:EditWatchlist|use the standard editor]].',
 	'watchlist_s' => 'Watchlist',
 	'widget_name' => 'Name',
 	'widget_description' => 'Description',
-	'wikia_messages' => 'Fandom messages',
+	'wikia_messages' => 'FANDOM messages',
 	'wikia-language-top-list' => 'de,en,es,he,fr,it,ja,no,pl,pt,pt-br,zh',
 	'wikia-language-top' => 'Top $1 languages',
 	'wikia-language-all' => 'All languages',
@@ -133,10 +133,10 @@ You can also [[Special:EditWatchlist|use the standard editor]].',
 	'wikia-days-ago' => '$1 {{PLURAL:$1|day|days}} ago',
 	'wikia-pagination-prev' => 'Prev',
 	'wikia-pagination-next' => 'Next',
-	'wikia-pagetitle-brand' => 'Fandom powered by Wikia',
+	'wikia-pagetitle-brand' => 'FANDOM powered by Wikia',
 	'wikia-pagetitle-sitename' => '{{SITENAME}}',
 	'wikia-read-only-mode' => 'Uh-oh! Our main datacenter is currently unavailable, so this is our backup. Unfortunately, this means you may not be able to do certain things like edit, upload, or chat.
-We are working to fix the problem, thank you for your patience! If you see this for an extended period of time, feel free to contact Fandom at community@wikia.com.',
+We are working to fix the problem, thank you for your patience! If you see this for an extended period of time, feel free to contact FANDOM at community@wikia.com.',
 );
 
 $messages['qqq'] = array(
@@ -3530,11 +3530,11 @@ Du kannst auch die [[Special:EditWatchlist|Standardseite]] zum Bearbeiten benutz
 	'watchlist_s' => 'Beobachtungsliste',
 	'wikia-pagetitle' => '$1 – Wikia',
 	'wikia-read-only-mode' => 'Ohje! Unser Hauptdatenzentrum ist derzeit nicht verfügbar, darum müssen wir unseren Backup verwenden. Leider bedeutet das für dich, dass du möglicherweise bestimmte Funktionen wie Bearbeiten, Hochladen oder Chatten nicht nutzen kannst. 
-Wir arbeiten daran, dieses Problem zu beheben, vielen Dank für deine Geduld! Wenn dir diese Nachricht über einen längeren Zeitraum hinweg angezeigt wird, kannst du gerne über community@fandom.com Kontakt zum Fandom-Team aufnehmen.',
-	'wikia_messages' => 'Fandom-Nachrichten',
-	'wikicitieshome' => 'Fandom Startseite',
-	'widget-desc-wikiamessages' => 'Fandom-Nachrichten',
-	'widget-title-wikiamessages' => 'Fandom-Nachrichten',
+Wir arbeiten daran, dieses Problem zu beheben, vielen Dank für deine Geduld! Wenn dir diese Nachricht über einen längeren Zeitraum hinweg angezeigt wird, kannst du gerne über community@fandom.com Kontakt zum FANDOM-Team aufnehmen.',
+	'wikia_messages' => 'FANDOM-Nachrichten',
+	'wikicitieshome' => 'FANDOM Startseite',
+	'widget-desc-wikiamessages' => 'FANDOM-Nachrichten',
+	'widget-title-wikiamessages' => 'FANDOM-Nachrichten',
 	'whats_new' => 'Was ist neu',
 	'widget-bookmark-empty' => 'Klicke auf das darüberliegende Symbol, um deine Lieblingsseiten hinzuzufügen.',
 	'widget-categorycloud-empty' => '(Keine Kategorien bislang)',
@@ -3575,7 +3575,7 @@ Wir arbeiten daran, dieses Problem zu beheben, vielen Dank für deine Geduld! We
 	'widget-contribs-limit' => 'Limit',
 	'widget_name' => 'Name',
 	'wikia-language-top-list' => 'de,en,es,he,fr,it,ja,no,pl,pt,pt-br,zh',
-	'wikia-pagetitle-brand' => 'Fandom powered by Wikia',
+	'wikia-pagetitle-brand' => 'FANDOM powered by Wikia',
 	'wikia-pagetitle-sitename' => '{{SITENAME}}',
 );
 
@@ -4203,11 +4203,11 @@ También puedes [[Special:EditWatchlist|usar el editor estándar]].',
 	'watchlisttools-edit' => 'Ver y editar tu lista de seguimiento',
 	'watchlisttools-raw' => 'Editar lista de seguimiento en crudo',
 	'wikia-read-only-mode' => 'Nuestro centro de datos principal no se encuentra disponible en estos momentos, esta es nuestra copia de seguridad. Desgraciadamente, esto significa que no puedes ser capaz de hacer ciertas cosas como editar, subir archivos o chatear. 
-Estamos trabajando para solucionar el problema, gracias por tu comprensión! Si ves este mensaje por un largo período de tiempo, no dudes en contactarte con Fandom a través de community@wikia.com.',
-	'widget-desc-wikiamessages' => 'Mensajes de Fandom',
-	'widget-title-wikiamessages' => 'Mensajes de Fandom',
-	'wikia_messages' => 'Mensajes de Fandom',
-	'wikicitieshome' => 'Casa de Fandom',
+Estamos trabajando para solucionar el problema, gracias por tu comprensión! Si ves este mensaje por un largo período de tiempo, no dudes en contactarte con FANDOM a través de community@wikia.com.',
+	'widget-desc-wikiamessages' => 'Mensajes de FANDOM',
+	'widget-title-wikiamessages' => 'Mensajes de FANDOM',
+	'wikia_messages' => 'Mensajes de FANDOM',
+	'wikicitieshome' => 'Casa de FANDOM',
 	'whats_new' => 'Qué es nuevo',
 	'widget-bookmark-empty' => 'Añade tus páginas favoritas pulsando en el icono de "añadir" encima de este texto.',
 	'widget-community-more' => 'Más',
@@ -4249,7 +4249,7 @@ Estamos trabajando para solucionar el problema, gracias por tu comprensión! Si 
 	'wikia-language-all' => 'All languages',
 	'wikia-pagination-prev' => 'Prev',
 	'wikia-pagination-next' => 'Next',
-	'wikia-pagetitle-brand' => 'Fandom powered by Wikia',
+	'wikia-pagetitle-brand' => 'FANDOM powered by Wikia',
 	'wikia-pagetitle-sitename' => '{{SITENAME}}',
 );
 
@@ -4921,11 +4921,11 @@ Vous pouvez aussi [[Special:EditWatchlist|utiliser l’éditeur normal]].',
 	'watchlisttools-edit' => 'Voir et modifier la liste de suivi',
 	'watchlisttools-raw' => 'Modifier la liste de suivi en mode brut',
 	'wikia-read-only-mode' => "Oups. Ceci est notre sauvegarde car notre principal centre de données est actuellement indisponible. Il se peut donc que vous ne puissiez malheureusement pas effectuer certaines tâches comme apporter des modifications, importer ou tchatter.
-Nous essayons de résoudre le problème et vous remercions de votre patience. S'il persiste pendant une période prolongée, n'hésitez pas à contacter Fandom à l'adresse e-mail community@wikia.com.",
-	'wikia_messages' => 'Messages de Fandom',
-	'wikicitieshome' => 'Accueil de Fandom',
-	'widget-desc-wikiamessages' => 'Messages de Fandom',
-	'widget-title-wikiamessages' => 'Messages de Fandom',
+Nous essayons de résoudre le problème et vous remercions de votre patience. S'il persiste pendant une période prolongée, n'hésitez pas à contacter FANDOM à l'adresse e-mail community@wikia.com.",
+	'wikia_messages' => 'Messages de FANDOM',
+	'wikicitieshome' => 'Accueil de FANDOM',
+	'widget-desc-wikiamessages' => 'Messages de FANDOM',
+	'widget-title-wikiamessages' => 'Messages de FANDOM',
 	'widget-community-more' => 'Plus',
 	'widget-contribs-empty' => 'Vous n’avez aucune contribution sur ce wiki.',
 	'widget-contribs-limit' => 'Limite',
@@ -4967,7 +4967,7 @@ Nous essayons de résoudre le problème et vous remercions de votre patience. S'
 	'widget_name' => 'Name',
 	'widget_description' => 'Description',
 	'wikia-language-top-list' => 'de,en,es,he,fr,it,ja,no,pl,pt,pt-br,zh',
-	'wikia-pagetitle-brand' => 'Fandom powered by Wikia',
+	'wikia-pagetitle-brand' => 'FANDOM powered by Wikia',
 	'wikia-pagetitle-sitename' => '{{SITENAME}}',
 );
 
@@ -7388,11 +7388,11 @@ Si noti che è anche possibile [[Special:EditWatchlist|modificare la lista con l
 	'watchlisttools-edit' => 'Visualizza e modifica la lista degli osservati speciali',
 	'watchlisttools-raw' => 'Modifica la lista in formato testo',
 	'wikia-read-only-mode' => "Oh! Il nostro centro dati principale non è al momento disponibile, così come il nostro backup. Sfortunatamente ciò significa che non puoi fare cose come modificare, caricare o chattare. 
-Stiamo lavorando alla risoluzione del problema, ti ringraziamo per la pazienza! Se visualizzi questo messaggio per un periodo di tempo prolungato, contatta pure Fandom all'indirizzo community@fandom.com.",
-	'wikia_messages' => 'Messaggi di Fandom',
-	'widget-desc-wikiamessages' => 'Messaggi di Fandom',
-	'widget-title-wikiamessages' => 'Messaggi di Fandom',
-	'wikicitieshome' => 'Pagina principale di Fandom',
+Stiamo lavorando alla risoluzione del problema, ti ringraziamo per la pazienza! Se visualizzi questo messaggio per un periodo di tempo prolungato, contatta pure FANDOM all'indirizzo community@fandom.com.",
+	'wikia_messages' => 'Messaggi di FANDOM',
+	'widget-desc-wikiamessages' => 'Messaggi di FANDOM',
+	'widget-title-wikiamessages' => 'Messaggi di FANDOM',
+	'wikicitieshome' => 'Pagina principale di FANDOM',
 	'wikia-days-ago' => '$1 {{PLURAL:$1|giorno|giorni}} fa',
 	'wikia-hours-ago' => '$1 {{PLURAL:$1|ora|ore}} fa',
 	'wikia-language-all' => 'Tutte le lingue',
@@ -7434,7 +7434,7 @@ Stiamo lavorando alla risoluzione del problema, ti ringraziamo per la pazienza! 
 	'widget_name' => 'Name',
 	'widget_description' => 'Description',
 	'wikia-language-top' => 'Top $1 languages',
-	'wikia-pagetitle-brand' => 'Fandom powered by Wikia',
+	'wikia-pagetitle-brand' => 'FANDOM powered by Wikia',
 	'wikia-pagetitle-sitename' => '{{SITENAME}}',
 );
 
@@ -7608,18 +7608,18 @@ $messages['ja'] = array(
 	'watchlisttools-view' => '関連する変更の表示',
 	'watchlisttools-edit' => 'ウォッチリストの表示と編集',
 	'watchlisttools-raw' => 'ウォッチリストをそのまま編集',
-	'wikicitieshome' => 'Fandomホーム',
+	'wikicitieshome' => 'FANDOMホーム',
 	'wikicitieshome-url' => 'http://ja.wikia.com/',
 	'wikicitieshome-url/fr' => 'http://fr.wikia.com/',
 	'wikicities-nav' => 'wikia',
 	'wysiwygcaption' => 'Visual editing',
 	'whats_new' => '新着',
 	'watchlist_s' => 'ウォッチリスト',
-	'wikia-read-only-mode' => 'Fandomのメインサーバーは現在利用不可となっており、このページはバックアップ版で表示されています。そのため、編集、アップロード、チャットなど一部操作が行えない可能性があります。
-現在Fandomでは問題の修正に取り組んでおりますので、もうしばらくお待ちください。しばらくたってもこのメッセージが表示される場合は、Fandom（community@fandom.com）までお気軽にお問い合わせください。',
-	'wikia_messages' => 'Fandomのメッセージ',
-	'widget-desc-wikiamessages' => 'Fandomのメッセージ',
-	'widget-title-wikiamessages' => 'Fandomのメッセージ',
+	'wikia-read-only-mode' => 'FANDOMのメインサーバーは現在利用不可となっており、このページはバックアップ版で表示されています。そのため、編集、アップロード、チャットなど一部操作が行えない可能性があります。
+現在FANDOMでは問題の修正に取り組んでおりますので、もうしばらくお待ちください。しばらくたってもこのメッセージが表示される場合は、FANDOM（community@fandom.com）までお気軽にお問い合わせください。',
+	'wikia_messages' => 'FANDOMのメッセージ',
+	'widget-desc-wikiamessages' => 'FANDOMのメッセージ',
+	'widget-title-wikiamessages' => 'FANDOMのメッセージ',
 	'wantedfiletext-cat' => '下記のファイルは使用されていますが存在しません。無関係なリポジトリからのファイルが存在するにもかかわらず表示されているかもしれません。誤検出されたものは<del>取り消し線</del>が引かれます。さらに、存在しないファイルが埋め込まれたページは[[:$1]]にリストアップされます。',
 	'widget-bookmark-empty' => '上にある「追加」ボタンをクリックしてお気に入りのページを追加してください。',
 	'widget-community-more' => 'もっと詳しく',
@@ -7655,7 +7655,7 @@ $messages['ja'] = array(
 	'wikia-language-top-list' => 'de,en,es,he,fr,it,ja,no,pl,pt,pt-br,zh',
 	'wikia-pagination-prev' => 'Prev',
 	'wikia-pagination-next' => 'Next',
-	'wikia-pagetitle-brand' => 'Fandom powered by Wikia',
+	'wikia-pagetitle-brand' => 'FANDOM powered by Wikia',
 	'wikia-pagetitle-sitename' => '{{SITENAME}}',
 );
 
@@ -11909,12 +11909,12 @@ Je kunt ook [[Special:EditWatchlist|het standaard bewerkingsscherm gebruiken]].'
 	'whatlinkshere-summary' => '',
 	'word-separator' => '&#32;',
 	'wikipedia_skin' => 'Wikipedia skin',
-	'wikicitieshome' => 'Fandom Home',
+	'wikicitieshome' => 'FANDOM Home',
 	'wikicitieshome-url' => 'http://www.wikia.com/',
 	'wikicitieshome-url/fr' => 'http://fr.wikia.com/',
 	'wikicities-nav' => 'wikia',
-	'widget-title-wikiamessages' => 'Fandom messages',
-	'widget-desc-wikiamessages' => 'Fandom messages',
+	'widget-title-wikiamessages' => 'FANDOM messages',
+	'widget-desc-wikiamessages' => 'FANDOM messages',
 	'widget-categorycloud-blacklist-global' => 'Answered_questions, Un-answered_questions',
 	'widget-categorycloud-blacklist' => '',
 	'widget-categorycloud-empty' => '(No categories yet)',
@@ -11936,7 +11936,7 @@ Je kunt ook [[Special:EditWatchlist|het standaard bewerkingsscherm gebruiken]].'
 	'watchlist_s' => 'Watchlist',
 	'widget_name' => 'Name',
 	'widget_description' => 'Description',
-	'wikia_messages' => 'Fandom messages',
+	'wikia_messages' => 'FANDOM messages',
 	'wikia-language-top-list' => 'de,en,es,he,fr,it,ja,no,pl,pt,pt-br,zh',
 	'wikia-language-top' => 'Top $1 languages',
 	'wikia-language-all' => 'All languages',
@@ -11946,10 +11946,10 @@ Je kunt ook [[Special:EditWatchlist|het standaard bewerkingsscherm gebruiken]].'
 	'wikia-days-ago' => '$1 {{PLURAL:$1|day|days}} ago',
 	'wikia-pagination-prev' => 'Prev',
 	'wikia-pagination-next' => 'Next',
-	'wikia-pagetitle-brand' => 'Fandom powered by Wikia',
+	'wikia-pagetitle-brand' => 'FANDOM powered by Wikia',
 	'wikia-pagetitle-sitename' => '{{SITENAME}}',
 	'wikia-read-only-mode' => 'Uh-oh! Our main datacenter is currently unavailable, so this is our backup. Unfortunately, this means you may not be able to do certain things like edit, upload, or chat.
-We are working to fix the problem, thank you for your patience! If you see this for an extended period of time, feel free to contact Fandom at community@wikia.com.',
+We are working to fix the problem, thank you for your patience! If you see this for an extended period of time, feel free to contact FANDOM at community@wikia.com.',
 );
 
 $messages['nl-informal'] = array(
@@ -12763,7 +12763,7 @@ Zmień [[Special:Preferences#prefsection-1|swoje preferencje]], aby używać wid
 Dziękujemy za cierpliwość! Właśnie pracujemy nad rozwiązaniem tego problemu. Jeżeli ta wiadomość jest widoczna przez dłuższy czas, możesz skontaktować się z Fandomem pisząc na adres community@wikia.com.',
 	'widget-desc-wikiamessages' => 'Wiadomości Fandomu',
 	'wikia_messages' => 'Wiadomości Fandomu',
-	'wikicitieshome' => 'Strona główna Fandom',
+	'wikicitieshome' => 'Strona główna FANDOM',
 	'widget-community-more' => 'Więcej',
 	'widget-contribs-empty' => 'Nie masz wkładu na tej wiki.',
 	'wikia-days-ago' => '$1 {{PLURAL:$1|dzień temu|dni temu}}',
@@ -12796,7 +12796,7 @@ Dziękujemy za cierpliwość! Właśnie pracujemy nad rozwiązaniem tego problem
 	'wikia-language-top-list' => 'de,en,es,he,fr,it,ja,no,pl,pt,pt-br,zh',
 	'wikia-language-top' => 'Top $1 languages',
 	'wikia-language-all' => 'All languages',
-	'wikia-pagetitle-brand' => 'Fandom powered by Wikia',
+	'wikia-pagetitle-brand' => 'FANDOM powered by Wikia',
 	'wikia-pagetitle-sitename' => '{{SITENAME}}',
 );
 
@@ -13232,11 +13232,11 @@ Você também pode [[Special:EditWatchlist|editar a lista da maneira convenciona
 	'watchlisttools-edit' => 'Ver e editar a lista de páginas vigiadas',
 	'watchlisttools-raw' => 'Edição crua da lista de páginas vigiadas',
 	'wikia-read-only-mode' => 'Opa! Nosso centro de dados principal está indisponível, então este é o nosso backup. Infelizmente, isto significa que talvez você não possa fazer certas coisas como editar, enviar arquivos ou entrar no chat.
-Estamos trabalhando para corrigir o problema, obrigado por sua paciência! Se isso demorar muito, entre em contato com o Fandom em comunidade@fandom.com.',
-	'widget-desc-wikiamessages' => 'Mensagens do Fandom',
-	'widget-title-wikiamessages' => 'Mensagens do Fandom',
-	'wikia_messages' => 'Mensagens do Fandom',
-	'wikicitieshome' => 'Página inicial do Fandom',
+Estamos trabalhando para corrigir o problema, obrigado por sua paciência! Se isso demorar muito, entre em contato com o FANDOM em comunidade@fandom.com.',
+	'widget-desc-wikiamessages' => 'Mensagens do FANDOM',
+	'widget-title-wikiamessages' => 'Mensagens do FANDOM',
+	'wikia_messages' => 'Mensagens do FANDOM',
+	'wikicitieshome' => 'Página inicial do FANDOM',
 	'wantedcategories-summary' => '',
 	'wantedpages-summary' => '',
 	'wantedfiles-summary' => '',
@@ -13280,91 +13280,8 @@ Estamos trabalhando para corrigir o problema, obrigado por sua paciência! Se is
 	'wikia-days-ago' => '$1 {{PLURAL:$1|day|days}} ago',
 	'wikia-pagination-prev' => 'Anterior',
 	'wikia-pagination-next' => 'Próximo',
-	'wikia-pagetitle-brand' => 'Fandom powered by Wikia',
+	'wikia-pagetitle-brand' => 'FANDOM powered by Wikia',
 	'wikia-pagetitle-sitename' => '{{SITENAME}}',
-);
-
-$messages['pt-br'] = array(
-	'wednesday' => 'quarta-feira',
-	'wed' => 'qua',
-	'wrong_wfQuery_params' => 'Parâmetros incorretos para wfQuery()<br />
-Função: $1<br />
-Consulta: $2',
-	'welcomecreation' => '== Bem-vindo(a), $1! ==
-A sua conta foi criada.
-Não se esqueça de personalizar as suas [[Special:Preferences|preferências no wiki {{SITENAME}}]].',
-	'wrongpassword' => 'A senha que introduziu é inválida. Por favor, tente novamente.',
-	'wrongpasswordempty' => 'Foi fornecida uma senha em branco.
-Tente novamente.',
-	'watchthis' => 'Vigiar esta página',
-	'whitelistedittext' => 'Você precisa $1 para poder editar páginas.',
-	'windows-nonascii-filename' => 'O wiki não aceita nomes de arquivos com caracteres especiais.',
-	'watchthisupload' => 'Vigiar este arquivo',
-	'withoutinterwiki' => 'Páginas sem interwikis de idiomas',
-	'withoutinterwiki-summary' => 'As seguintes páginas não possuem links para versões em outros idiomas:',
-	'withoutinterwiki-legend' => 'Prefixo',
-	'withoutinterwiki-submit' => 'Exibir',
-	'wantedcategories' => 'Categorias pedidas',
-	'wantedpages' => 'Páginas pedidas',
-	'wantedpages-badtitle' => 'Título inválido no conjunto de resultados: $1',
-	'wantedfiles' => 'Arquivos pedidos',
-	'wantedfiletext-cat' => 'Os seguintes arquivos são usados, mas não existem. Arquivos de repositórios externos podem acabar sendo listados apesar de existirem. Esses falsos positivos aparecerão <del>riscados</del>. As páginas que incluem arquivos inexistentes são listadas em [[:$1]].',
-	'wantedfiletext-nocat' => 'Os seguintes arquivos são usados, mas não existem. Arquivos de repositórios externos podem acabar sendo listados apesar de existirem. Esses falsos positivos aparecerão <del>riscados</del>.',
-	'wantedtemplates' => 'Predefinições pedidas',
-	'watchlist' => 'Páginas vigiadas',
-	'watchlistfor2' => 'Para $1 $2',
-	'watchlistanontext' => 'Por favor $1 para ver ou editar os itens na sua lista de páginas vigiadas.',
-	'watchnologin' => 'Não está autenticado',
-	'watchnologintext' => 'Você precisa estar [[Special:UserLogin|autenticado]] para modificar a sua lista de páginas vigiadas.',
-	'watch' => 'Vigiar',
-	'watchthispage' => 'Vigiar esta página',
-	'watchnochange' => 'Nenhuma das páginas vigiadas foi editada no período exibido.',
-	'watchlist-details' => '{{PLURAL:$1|$1 página|$1 páginas}} na sua lista de páginas vigiadas, excluindo páginas de discussão.',
-	'wlheader-enotif' => '* A notificação por email encontra-se ativada.',
-	'wlheader-showupdated' => "* As páginas modificadas desde a sua última visita são mostradas em '''negrito'''",
-	'watchmethod-recent' => 'verificando edições recentes para as páginas vigiadas',
-	'watchmethod-list' => 'verificando páginas vigiadas para edições recentes',
-	'watchlistcontains' => 'Sua lista de páginas vigiadas contém $1 {{PLURAL:$1|página|páginas}}.',
-	'wlnote' => "A seguir {{PLURAL:$1|está a última alteração ocorrida|estão as últimas '''$1''' alterações ocorridas}} {{PLURAL:$2|na última hora|nas últimas '''$2''' horas}} a partir de $3, $4.",
-	'wlshowlast' => 'Ver últimas $1 horas $2 dias $3',
-	'watchlist-options' => 'Opções da lista de páginas vigiadas',
-	'watching' => 'Vigiando...',
-	'watcherrortext' => 'Ocorreu um erro ao alterar a configuração da sua lista de páginas vigiadas para "$1".',
-	'whatlinkshere' => 'Páginas afluentes',
-	'whatlinkshere-title' => 'Páginas que têm links para "$1"',
-	'whatlinkshere-page' => 'Página:',
-	'whatlinkshere-prev' => '{{PLURAL:$1|anterior|$1 anteriores}}',
-	'whatlinkshere-next' => '{{PLURAL:$1|próximo|próximos $1}}',
-	'whatlinkshere-links' => '← links',
-	'whatlinkshere-hideredirs' => '$1 redirecionamentos',
-	'whatlinkshere-hidetrans' => '$1 transclusões',
-	'whatlinkshere-hidelinks' => '$1 links',
-	'whatlinkshere-hideimages' => '$1 links de imagens',
-	'whatlinkshere-filters' => 'Filtros',
-	'widthheightpage' => '$1 × $2, $3 {{PLURAL:$3|página|páginas}}',
-	'watchlistall2' => 'todas',
-	'watchlistedit-numitems' => 'A sua lista de páginas vigiadas possui {{PLURAL:$1|um título|$1 títulos}}, além das respectivas páginas de discussão.',
-	'watchlistedit-noitems' => 'A sua lista de páginas vigiadas não possui títulos.',
-	'watchlistedit-normal-title' => 'Editar lista de páginas vigiadas',
-	'watchlistedit-normal-legend' => 'Remover títulos da lista de páginas vigiadas',
-	'watchlistedit-normal-explain' => 'Os títulos das páginas de sua lista de vigiadas são exibidos abaixo.
-Para remover um título, marque a caixa ao lado do mesmo e clique "{{int:Watchlistedit-normal-submit}}".
-Você pode também [[Special:EditWatchlist/raw|editar a lista de páginas vigiadas em forma de texto]].',
-	'watchlistedit-normal-submit' => 'Remover Títulos',
-	'watchlistedit-normal-done' => '{{PLURAL:$1|um título foi removido|$1 títulos foram removidos}} de sua lista de páginas vigiadas:',
-	'watchlistedit-raw-title' => 'Edição crua da lista de páginas vigiadas',
-	'watchlistedit-raw-legend' => 'Edição crua da lista de páginas vigiadas',
-	'watchlistedit-raw-explain' => 'A lista de páginas vigiadas é apresentada abaixo. Você pode adicionar novas linhas ou remover linhas para aumentar ou reduzir a lista, desde que mantenha uma única página por linha.
-Quando terminar, clique "{{int:Watchlistedit-raw-submit}}".
-Você também pode [[Special:EditWatchlist|editar a lista da maneira convencional]].',
-	'watchlistedit-raw-titles' => 'Títulos:',
-	'watchlistedit-raw-submit' => 'Atualizar a lista de páginas vigiadas',
-	'watchlistedit-raw-done' => 'Sua lista de páginas vigiadas foi atualizada.',
-	'watchlistedit-raw-added' => '{{PLURAL:$1|Foi adicionado um título|Foram adicionados $1 títulos}}:',
-	'watchlistedit-raw-removed' => '{{PLURAL:$1|Foi removido um título|Foram removidos $1 títulos}}:',
-	'watchlisttools-view' => 'Ver alterações relevantes',
-	'watchlisttools-edit' => 'Ver e editar a lista de páginas vigiadas',
-	'watchlisttools-raw' => 'Edição crua da lista de páginas vigiadas',
 );
 
 $messages['qu'] = array(
@@ -13937,7 +13854,7 @@ $messages['ru'] = array(
 	'widget-community-more' => 'Activity feed',
 	'whats_new' => "What's New",
 	'wikia-language-top-list' => 'de,en,es,he,fr,it,ja,no,pl,pt,pt-br,zh',
-	'wikia-pagetitle-brand' => 'Fandom powered by Wikia',
+	'wikia-pagetitle-brand' => 'FANDOM powered by Wikia',
 	'wikia-pagetitle-sitename' => '{{SITENAME}}',
 );
 
@@ -18100,18 +18017,6 @@ Vergeet nie je [[Special:Preferences|vòkeuren voe {{SITENAME}}]] an te passen.'
 	'watchlisttools-raw' => "Rieuwe volglieste bewark'n",
 );
 
-$messages['zh'] = array(
-	'watch' => '关注',
-	'widgets' => 'Widgets列表',
-	'wikia-days-ago' => '$1 {{PLURAL:$1|天|天}}前',
-	'wikia-hours-ago' => '于$1{{PLURAL:$1|小时|小时}}之前',
-);
-
-$messages['zh-cn'] = array(
-	'wantedcategories' => '需要的分类',
-	'widgets' => 'Widgets列表',
-);
-
 $messages['zh-hans'] = array(
 	'wednesday' => '星期三',
 	'wed' => '三',
@@ -18190,11 +18095,11 @@ $messages['zh-hans'] = array(
 	'watchlisttools-raw' => '编辑原始监视列表',
 	'wikia-read-only-mode' => '很抱歉！目前数据中心不可使用，目前显示的是資料备份。这意味着您可能无法执行某些操作，例如编辑、上传文件或在线聊天。
 
-我们正在努力解决这个问题，请您耐心等待！如果您过了很久还持续遇到这个状况，请发送邮件至community@wikia.com与Fandom联系。',
-	'widget-desc-wikiamessages' => 'Fandom消息',
-	'widget-title-wikiamessages' => 'Fandom消息',
-	'wikia_messages' => 'Fandom消息',
-	'wikicitieshome' => 'Fandom之家',
+我们正在努力解决这个问题，请您耐心等待！如果您过了很久还持续遇到这个状况，请发送邮件至community@wikia.com与FANDOM联系。',
+	'widget-desc-wikiamessages' => 'FANDOM消息',
+	'widget-title-wikiamessages' => 'FANDOM消息',
+	'wikia_messages' => 'FANDOM消息',
+	'wikicitieshome' => 'FANDOM之家',
 	'widgets' => 'Widgets列表',
 	'wikia-days-ago' => '$1 {{PLURAL:$1|天|天}}前',
 	'wikia-hours-ago' => '$1 {{PLURAL:$1|小时|小时}}前',
@@ -18235,7 +18140,7 @@ $messages['zh-hans'] = array(
 	'wikia-minutes-ago' => '$1 {{PLURAL:$1|minute|minutes}} ago',
 	'wikia-pagination-prev' => 'Prev',
 	'wikia-pagination-next' => 'Next',
-	'wikia-pagetitle-brand' => 'Fandom powered by Wikia',
+	'wikia-pagetitle-brand' => 'FANDOM powered by Wikia',
 	'wikia-pagetitle-sitename' => '{{SITENAME}}',
 );
 
@@ -18319,11 +18224,11 @@ $messages['zh-hant'] = array(
 	'watchlisttools-raw' => '編輯原始監視列表',
 	'wikia-read-only-mode' => '很抱歉！目前資料中心费法使用，目前顯示的是資料備份。這意味著您可能無法執行某些操作，例如編輯、上傳檔案或線上聊天。
 
-我們正在努力解決這個問題，請您耐心等待！如果您過了很久還持續遇到這個狀況，請發送郵件至community@wikia.com與Fandom聯繫。',
-	'widget-desc-wikiamessages' => 'Fandom訊息',
-	'widget-title-wikiamessages' => 'Fandom訊息',
-	'wikia_messages' => 'Fandom訊息',
-	'wikicitieshome' => 'Fandom家園',
+我們正在努力解決這個問題，請您耐心等待！如果您過了很久還持續遇到這個狀況，請發送郵件至community@wikia.com與FANDOM聯繫。',
+	'widget-desc-wikiamessages' => 'FANDOM訊息',
+	'widget-title-wikiamessages' => 'FANDOM訊息',
+	'wikia_messages' => 'FANDOM訊息',
+	'wikicitieshome' => 'FANDOM家園',
 	'widgets' => 'Widgets列表',
 	'wikia-days-ago' => '$1 {{PLURAL:$1|天|天}} 以前',
 	'wikia-hours-ago' => '$1小時前',
@@ -18364,47 +18269,8 @@ $messages['zh-hant'] = array(
 	'wikia-minutes-ago' => '$1 {{PLURAL:$1|minute|minutes}} ago',
 	'wikia-pagination-prev' => 'Prev',
 	'wikia-pagination-next' => 'Next',
-	'wikia-pagetitle-brand' => 'Fandom powered by Wikia',
+	'wikia-pagetitle-brand' => 'FANDOM powered by Wikia',
 	'wikia-pagetitle-sitename' => '{{SITENAME}}',
-);
-
-$messages['zh-hk'] = array(
-	'wantedcategories' => '需要的分類',
-	'watch' => '關注',
-	'widgets' => 'Widgets列表',
-	'wikia-days-ago' => '$1 {{PLURAL:$1|天|天}} 以前',
-	'wikia-hours-ago' => '$1小時前',
-	'wikia-language-top-list' => 'zh,zh-hans,zh-hk,zh-tw',
-	'wikicitieshome-url' => 'http://zh-tw.wikia.com/',
-);
-
-$messages['zh-tw'] = array(
-	'wed' => '三',
-	'welcomecreation' => '== 歡迎，$1！ ==
-您的帳號已經建立。
-請不要忘記設定[[Special:Preferences|{{SITENAME}}的個人參數]]。',
-	'watchthisupload' => '監視此頁',
-	'withoutinterwiki-summary' => '以下的頁面是未有語言鏈接到其它語言版本:',
-	'watchlist-details' => '不包含討論頁，您的監視列表共有 $1 頁。',
-	'whatlinkshere-title' => '鏈接到$1的頁面',
-	'wantedcategories' => '需要的分類',
-	'watch' => '關注',
-	'widgets' => 'Widgets列表',
-	'wikia-days-ago' => '$1 {{PLURAL:$1|天|天}}前',
-	'wikia-hours-ago' => '$1小時前',
-	'wikia-language-top-list' => 'zh,zh-hans,zh-hk,zh-tw',
-	'wlshowlast' => '顯示最近$1小時；$2天；$3的修改。',
-);
-
-$messages['zh-yue'] = array(
-	'wed' => '三',
-	'welcomecreation' => '== 歡迎，$1！ ==
-您的帳號已經建立。
-請不要忘記設定[[Special:Preferences|{{SITENAME}}的個人參數]]。',
-	'watchthisupload' => '監視此頁',
-	'withoutinterwiki-summary' => '以下的頁面是未有語言鏈接到其它語言版本:',
-	'watchlist-details' => '不包含討論頁，您的監視列表共有 $1 頁。',
-	'whatlinkshere-title' => '鏈接到$1的頁面',
 );
 
 $messages['zu'] = array(

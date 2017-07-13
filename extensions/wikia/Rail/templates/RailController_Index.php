@@ -6,7 +6,7 @@
       class="WikiaRail<?= !empty($isGridLayoutEnabled) ? ' grid-2' : '' ?>"
       <?= $isEditPage ? 'style="display: none;"' : '' ?>
   >
-		<div id="WikiaRail">
+		<div id="WikiaRail" class="wikia-rail-inner">
 
 			<?php
 			// sort in reverse order (highest priority displays first)

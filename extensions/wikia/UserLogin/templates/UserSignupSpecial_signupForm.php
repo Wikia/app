@@ -128,7 +128,6 @@ if ( !empty( $byemail ) ) {
 		</h2>
 		<h3 class="subheading"></h3>
 		<div class="wiki-info">
-			<?= F::app()->renderView( 'WikiHeader', 'Wordmark' ) ?>
 			<p><?= wfMessage( 'usersignup-marketing-wikia' )->escaped() ?></p>
 			<?= wfMessage( 'usersignup-marketing-login' )->parse() ?>
 		</div>

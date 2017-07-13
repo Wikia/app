@@ -4,7 +4,7 @@ use \Wikia\DependencyInjection\Injector;
 use \Wikia\Service\User\Auth\CookieHelper;
 use \Wikia\Service\User\Auth\HeliosCookieHelper;
 
-class ApiService extends Service {
+class ApiService {
 
 	/**
 	 * string constant for mediawiki api endpoint

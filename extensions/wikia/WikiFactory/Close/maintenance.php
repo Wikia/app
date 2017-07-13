@@ -225,6 +225,14 @@ class CloseWikiMaintenance {
 					),
 					__METHOD__
 				);
+				// SUS-2374
+				$dbw->delete(
+					"city_variables",
+					array(
+						"cv_city_id" => $row->city_id
+					),
+					__METHOD__
+				);
 				$this->log( "{$row->city_id} removed from WikiFactory tables" );
 
 				$this->cleanupSharedData( intval( $row->city_id ) );

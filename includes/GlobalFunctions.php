@@ -2944,7 +2944,7 @@ function wfShellExec( $cmd, &$retval = null, $environ = array() ) {
 		$filesize = intval( $wgMaxShellFileSize );
 
 		if ( $time > 0 && $mem > 0 ) {
-			$script = "$IP/bin/ulimit4.sh";
+			$script = "$IP/includes/ulimit4.sh";
 			if ( is_executable( $script ) ) {
 				$cmd = '/bin/bash ' . escapeshellarg( $script ) . " $time $mem $filesize " . escapeshellarg( $cmd );
 			}

@@ -4,7 +4,6 @@
  */
 define('ext.wikia.adEngine.adContext', [
 	'ext.wikia.adEngine.adLogicPageViewCounter',
-	'wikia.abTest',
 	'wikia.cookies',
 	'wikia.document',
 	'wikia.geo',
@@ -12,7 +11,7 @@ define('ext.wikia.adEngine.adContext', [
 	'ext.wikia.adEngine.utils.sampler',
 	'wikia.window',
 	'wikia.querystring'
-], function (pvCounter, abTest, cookies, doc, geo, instantGlobals, sampler, w, Querystring) {
+], function (pvCounter, cookies, doc, geo, instantGlobals, sampler, w, Querystring) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
@@ -93,26 +92,24 @@ define('ext.wikia.adEngine.adContext', [
 	}
 
 	function enableAdMixExperiment(context) {
-		var group = abTest.getGroup('AD_MIX') || '';
+		var isEnabledOnFeaturedVideo = !!(
+				isPageType('article') &&
+				context.targeting.skin === 'oasis' &&
+				context.targeting.hasFeaturedVideo &&
+				geo.isProperGeo(instantGlobals.wgAdDriverAdMixCountries)
+			),
+			isEnabledOnRegularArticle = !!(
+				isPageType('article') &&
+				context.targeting.skin === 'oasis' &&
+				!context.targeting.hasFeaturedVideo &&
+				geo.isProperGeo(instantGlobals.wgAdDriverPremiumAdLayoutCountries)
+			);
 
-		context.opts.adMixExperimentEnabled = !!(
-			group.indexOf('AD_MIX_') === 0 &&
-			isPageType('article') &&
-			context.targeting.skin === 'oasis' &&
-			geo.isProperGeo(instantGlobals.wgAdDriverAdMixCountries)
-		);
+		context.opts.premiumAdLayoutEnabled = isEnabledOnFeaturedVideo || isEnabledOnRegularArticle;
+		context.slots.premiumAdLayoutSlotsToUnblock = ['INCONTENT_BOXAD_1', 'BOTTOM_LEADERBOARD'];
 
-		context.opts.adMix1Enabled = context.opts.adMixExperimentEnabled && abTest.getGroup('AD_MIX').indexOf('AD_MIX_1') === 0;
-		context.opts.adMix3Enabled = context.opts.adMixExperimentEnabled && abTest.getGroup('AD_MIX').indexOf('AD_MIX_3') === 0;
-
-		context.slots.adMixToUnblock = [];
-
-		if (!(context.opts.adMix1Enabled && context.targeting.hasFeaturedVideo)) {
-			context.slots.adMixToUnblock.push('INCONTENT_BOXAD_1');
-		}
-
-		if (context.opts.adMix3Enabled) {
-			context.slots.adMixToUnblock.push('BOTTOM_LEADERBOARD');
+		if (!context.targeting.hasFeaturedVideo) {
+			context.slots.premiumAdLayoutSlotsToUnblock.push('INCONTENT_PLAYER');
 		}
 	}
 
