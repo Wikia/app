@@ -1266,9 +1266,13 @@ class Wikia {
 
 		@list( $user, $signature1, $signature2, $public_key ) = explode("|", base64_decode( strtr($url, '-_,', '+/=') ));
 
-		if ( empty( $user ) || empty( $signature1 ) || empty( $signature2 ) || empty ( $public_key) ) {
+		if ( empty( $user ) || empty( $signature2 ) || empty ( $public_key) ) {
 			wfProfileOut( __METHOD__ );
 			return false;
+		}
+
+		if ( empty( $signature1 ) ) {
+			$signature1 = '';
 		}
 
 		# verification public key

@@ -49,7 +49,7 @@ class UnsubscribePage extends UnlistedSpecialPage {
 			if ( !empty( $data ) ) {
 				$username 	= ( isset( $data['user'] ) ) ? $data['user'] : null;
 				$token 		= ( isset( $data['token'] ) ) ? $data['token'] : null;
-				$timestamp 	= ( isset( $data['signature1'] ) ) ? $data['signature1'] : null;
+				$timestamp 	= ( isset( $data['signature1'] ) ) ? $data['signature1'] : '';
 
 				$oUser = User::newFromName( $username );
 				$email = $oUser->getEmail();
@@ -57,21 +57,12 @@ class UnsubscribePage extends UnlistedSpecialPage {
 		} else {
 			$email = $wgRequest->getText( 'email' , null );
 			$token = $wgRequest->getText( 'token' , null );
-			$timestamp = $wgRequest->getText( 'timestamp' , null );
+			$timestamp = $wgRequest->getText( 'timestamp' );
 		}
 
-		if($email == null || $token == null || $timestamp == null) {
+		if($email == null || $token == null) {
 			#give up now, abandon all hope.
 			$wgOut->addWikiMsg( 'unsubscribe-badaccess' );
-			return;
-		}
-
-		#validate timestamp isnt spoiled (you only have 7 days)
-		$timeCutoff = strtotime("7 days ago");
-		if( $timestamp <= $timeCutoff ) {
-			$wgOut->addWikiMsg( 'unsubscribe-badtime' );
-			// $wgOut->addHTML("timestamp={$timestamp}\n"); #DEVL (remove before release)
-			// $wgOut->addHTML("timeCutoff={$timeCutoff}\n"); #DEVL (remove before release)
 			return;
 		}
 
