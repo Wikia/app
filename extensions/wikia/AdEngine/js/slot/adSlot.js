@@ -55,9 +55,9 @@ define('ext.wikia.adEngine.slot.adSlot', [
 		var cssSelector = '#' + slotName + ' > .provider-container:not(.hidden) div[id*="_container_"] > iframe',
 			iframe = doc.querySelector(cssSelector);
 
-		if (!iframe && adBlockDetection && adBlockDetection.isBlocking()) {
-			iframe = getRecoveredIframe(slotName);
-		}
+		// if (!iframe && adBlockDetection && adBlockDetection.isBlocking()) {
+		// 	iframe = getRecoveredIframe(slotName);
+		// }
 
 		log(['getIframe', slotName, iframe && iframe.id], log.levels.debug, logGroup);
 
