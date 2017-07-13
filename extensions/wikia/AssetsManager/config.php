@@ -119,6 +119,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/video/videoSettings.js',
 		'//extensions/wikia/ARecoveryEngine/js/adBlockDetection.js',
 		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.js',
+		'//extensions/wikia/ARecoveryEngine/js/InstartLogic/recovery.js',
 		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/recovery.js',
 		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/slotFinder.js',
 		'//extensions/wikia/ARecoveryEngine/js/tweaker.js',

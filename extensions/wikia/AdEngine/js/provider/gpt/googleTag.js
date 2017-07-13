@@ -8,8 +8,9 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
+	require.optional('ext.wikia.aRecoveryEngine.instartLogic.recovery'),
 	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery')
-], function (googleSlots, adSlot, slotRegistry, adBlockDetection, doc, log, win, pageFair) {
+], function (googleSlots, adSlot, slotRegistry, adBlockDetection, doc, log, win, instartLogic, pageFair) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.googleTag',
@@ -136,11 +137,10 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	}
 
 	function extendTargetingForBlockedTraffic(adElement) {
-		var srcRec = win.googletag.pubads().getTargeting('src');
-		// IL sets src=rec as a page-level param - add it also to slot targeting
-		if (srcRec && srcRec.indexOf('rec') > -1) {
-			adElement.slotTargeting.src = 'rec';
-			win.googletag.pubads().setTargeting('requestSource', 'instartLogic');
+		if (instartLogic && instartLogic.isBlocking()) {
+			// TODO: for testing only!
+			//adElement.slotTargeting.src = 'rec';
+			//win.googletag.pubads().setTargeting('requestSource', 'instartLogic');
 
 			log(['extendTargetingForBlockedTraffic', adElement.slotTargeting], log.levels.info, logGroup);
 		}
