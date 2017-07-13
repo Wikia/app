@@ -60,7 +60,7 @@ class BenchmarkHooks extends Benchmarker {
 	private function benchHooks( $trials = 10 ) {
 		$start = wfTime();
 		for ( $i = 0; $i < $trials; $i++ ) {
-			wfRunHooks( 'Test' );
+			Hooks::run( 'Test' );
 		}
 		$delta = wfTime() - $start;
 		$pertrial = $delta / $trials;

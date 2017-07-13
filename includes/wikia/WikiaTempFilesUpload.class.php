@@ -169,7 +169,7 @@ class WikiaTempFilesUpload {
 		$ret = $upload->verifyUpload();
 
 		// this hook is used by WikiaTitleBlackList extension
-		if(!wfRunHooks('WikiaMiniUpload:BeforeProcessing', array($imageName))) {
+		if(!Hooks::run('WikiaMiniUpload:BeforeProcessing', array($imageName))) {
 			$this->log(__METHOD__, 'Hook "WikiaMiniUpload:BeforeProcessing" broke processing the file');
 			wfProfileOut(__METHOD__);
 			return UploadBase::VERIFICATION_ERROR;

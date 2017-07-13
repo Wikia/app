@@ -60,7 +60,7 @@ class WikiaSpecialVersion extends SpecialVersion {
 	    $software[$dbr->getSoftwareLink()] = $dbr->getServerInfo();
 
 	    // Allow a hook to add/remove items.
-	    wfRunHooks( 'SoftwareInfo', array( &$software ) );
+	    Hooks::run( 'SoftwareInfo', array( &$software ) );
 
 		return $software;
 	}

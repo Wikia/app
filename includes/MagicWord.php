@@ -230,7 +230,7 @@ class MagicWord {
 	static function getVariableIDs() {
 		if ( !self::$mVariableIDsInitialised ) {
 			# Get variable IDs
-			wfRunHooks( 'MagicWordwgVariableIDs', array( &self::$mVariableIDs ) );
+			Hooks::run( 'MagicWordwgVariableIDs', array( &self::$mVariableIDs ) );
 			self::$mVariableIDsInitialised = true;
 		}
 		return self::$mVariableIDs;

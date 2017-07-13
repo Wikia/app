@@ -284,7 +284,7 @@ class CreateNewWikiController extends WikiaController {
 		$description = $params[ 'wDescription' ];
 		if ( !empty( $description ) ) {
 			$blockedKeyword = '';
-			wfRunHooks( 'CheckContent', array( $description, &$blockedKeyword ) );
+			Hooks::run( 'CheckContent', array( $description, &$blockedKeyword ) );
 			if ( !empty( $blockedKeyword ) ) {
 				$this->setContentBlockedByPhalanxErrorResponse( $description, $blockedKeyword );
 				wfProfileOut( __METHOD__ );
@@ -371,7 +371,7 @@ class CreateNewWikiController extends WikiaController {
 		$text = $wgRequest->getVal('text','');
 		$blockedKeyword = '';
 
-		wfRunHooks( 'CheckContent', array( $text, &$blockedKeyword ) );
+		Hooks::run( 'CheckContent', array( $text, &$blockedKeyword ) );
 
 		if ( !empty( $blockedKeyword ) ) {
 			$this->setContentBlockedByPhalanxErrorResponse( $text, $blockedKeyword );

@@ -694,7 +694,7 @@ class WikiFactory {
 			 * city_language or city_url) and do some basic validation
 			 */
 			wfProfileIn( __METHOD__."-citylist" );
-			wfRunHooks( 'WikiFactoryChanged', [ $variable->cv_name , $city_id, $value ] );
+			Hooks::run( 'WikiFactoryChanged', [ $variable->cv_name , $city_id, $value ] );
 			switch ( $variable->cv_name ) {
 				case "wgServer":
 				case "wgScriptPath":
@@ -905,7 +905,7 @@ class WikiFactory {
 				global $wgMemc;
 				$wgMemc->delete( static::getVarValueKey( $wiki, $variable_id ) );
 
-				wfRunHooks( 'WikiFactoryVariableRemoved', [ $variable->cv_name , $wiki ] );
+				Hooks::run( 'WikiFactoryVariableRemoved', [ $variable->cv_name , $wiki ] );
 			}
 		}
 		catch ( DBQueryError $e ) {
@@ -1935,7 +1935,7 @@ class WikiFactory {
 
 		wfProfileIn( __METHOD__ );
 
-		wfRunHooks( 'WikiFactoryPublicStatusChange', [ &$city_public, &$city_id, $reason ] );
+		Hooks::run( 'WikiFactoryPublicStatusChange', [ &$city_public, &$city_id, $reason ] );
 
 		$update = [
 			"city_public" => $city_public,

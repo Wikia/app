@@ -502,7 +502,7 @@ class LogEventsList {
 			}
 		// Do nothing. The implementation is handled by the hook modifiying the passed-by-ref parameters.
 		} else {
-			wfRunHooks( 'LogLine', array( $row->log_type, $row->log_action, $title, $paramArray,
+			Hooks::run( 'LogLine', array( $row->log_type, $row->log_action, $title, $paramArray,
 				&$comment, &$revert, $row->log_timestamp ) );
 		}
 		if( $revert != '' ) {
@@ -726,7 +726,7 @@ class LogEventsList {
 		}
 
 		/* hook can return false, if we don't want the message to be emitted (Wikia BugId:7093) */
-		if ( wfRunHooks( 'LogEventsListShowLogExtract', array( &$s, $types, $page, $user, $param ) ) ) {
+		if ( Hooks::run( 'LogEventsListShowLogExtract', array( &$s, $types, $page, $user, $param ) ) ) {
 			// $out can be either an OutputPage object or a String-by-reference
 			if ( $out instanceof OutputPage ){
 				$out->addHTML( $s );

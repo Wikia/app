@@ -271,7 +271,7 @@ abstract class UploadBase {
 		}
 
 		$error = '';
-		if( !wfRunHooks( 'UploadVerification',
+		if( !Hooks::run( 'UploadVerification',
 				array( $this->mDestName, $this->mTempPath, &$error ) ) ) {
 			return array( 'status' => self::HOOK_ABORTED, 'error' => $error );
 		}
@@ -377,7 +377,7 @@ abstract class UploadBase {
 			}
 		}
 
-		wfRunHooks( 'UploadVerifyFile', array( $this, $mime, &$status ) );
+		Hooks::run( 'UploadVerifyFile', array( $this, $mime, &$status ) );
 		if ( $status !== true ) {
 			wfProfileOut( __METHOD__ );
 			return $status;
@@ -615,7 +615,7 @@ abstract class UploadBase {
 	public function performUpload( $comment, $pageText, $watch, $user ) {
 		$msg = '';
 
-		if ( !wfRunHooks( 'FileUploadSummaryCheck', [ $comment, &$msg, true ] ) ) {
+		if ( !Hooks::run( 'FileUploadSummaryCheck', [ $comment, &$msg, true ] ) ) {
 			return Status::newFatal( 'validator-fatal-error', $msg );
 		}
 
@@ -634,7 +634,7 @@ abstract class UploadBase {
 				$user->addWatch( $this->getLocalFile()->getTitle() );
 			}
 
-			wfRunHooks( 'UploadComplete', array( &$this ) );
+			Hooks::run( 'UploadComplete', array( &$this ) );
 		}
 
 		return $status;

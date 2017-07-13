@@ -61,7 +61,7 @@ class SpecialTags extends SpecialPage {
 			];
 		}
 
-		wfRunHooks( 'SpecialTags::UsedTags', [ &$used_tags ] );
+		Hooks::run( 'SpecialTags::UsedTags', [ &$used_tags ] );
 
 		foreach ( $used_tags as $used_tag ) {
 			$html .= $this->doTagRow( $used_tag['ct_tag'], $used_tag['hitcount'] );

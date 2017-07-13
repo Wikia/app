@@ -67,7 +67,7 @@ class EditPageService {
 		/**
 		 * Allow extensions to modify the ParserOutput
 		 */
-		wfRunHooks( 'ArticlePreviewAfterParse', [ $parserOutput, $this->mTitle ] );
+		Hooks::run( 'ArticlePreviewAfterParse', [ $parserOutput, $this->mTitle ] );
 
 		$html = $parserOutput->getText();
 		$html = EditPageService::wrapBodyText( $this->mTitle, $wgRequest, $html );

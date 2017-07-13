@@ -276,7 +276,7 @@ class CloseWikiMaintenance {
 				/**
 				 * let other extensions remove entries for closed wiki
 				 */
-				wfRunHooks( 'WikiFactoryDoCloseWiki', [ $row ] );
+				Hooks::run( 'WikiFactoryDoCloseWiki', [ $row ] );
 
 				/**
 				 * there is nothing to set because row in city_list doesn't

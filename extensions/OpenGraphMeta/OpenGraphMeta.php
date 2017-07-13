@@ -110,7 +110,7 @@ function efOpenGraphMetaPageHook( OutputPage &$out, &$sk ) {
 		$meta["fb:admins"] = $egFacebookAdmins;
 	}
 	/* begin wikia change */
-	wfRunHooks( 'OpenGraphMetaHeaders', array( "meta"=>&$meta, "title"=>$title ) );
+	Hooks::run( 'OpenGraphMetaHeaders', array( "meta"=>&$meta, "title"=>$title ) );
 	/* end wikia change */
 	foreach( $meta as $property => $value ) {
 		if ( $value ) {

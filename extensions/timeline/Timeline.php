@@ -86,7 +86,7 @@ function wfRenderTimeline( $timelinesrc ) {
 	$fname = 'mwstore://' . $backend->getName() . "/timeline-render/$hash";
 
 	// Wikia change - begin
-	wfRunHooks( 'BeforeRenderTimeline', [ &$backend, &$fname, $hash ] );
+	Hooks::run( 'BeforeRenderTimeline', [ &$backend, &$fname, $hash ] );
 	// Wikia change - end
 
 	$previouslyFailed = $backend->fileExists( array( 'src' => "{$fname}.err" ) );

@@ -293,12 +293,12 @@ abstract class WikiaSkin extends SkinTemplate {
 			'Wikia' => new stdClass(),
 		];
 
-		wfRunHooks( 'WikiaSkinTopScripts', array( &$vars, &$scripts, $this ) );
+		Hooks::run( 'WikiaSkinTopScripts', array( &$vars, &$scripts, $this ) );
 
 		$scripts .= $this->renderTopShortTTLModules();
 
 		$scriptModules = array( 'amd', 'wikia.tracker.stub' );
-		wfRunHooks( 'WikiaSkinTopModules', array( &$scriptModules, $this ) );
+		Hooks::run( 'WikiaSkinTopModules', array( &$scriptModules, $this ) );
 		if ( !empty($scriptModules) ) {
 			// Mocking mw.loader.state so the script can be loaded up high
 			// Whatever is passed to mw.loader.state is saved to window.preMwLdrSt
@@ -324,7 +324,7 @@ abstract class WikiaSkin extends SkinTemplate {
 	protected function renderTopShortTTLModules() {
 		$shortTtlScriptModules = [];
 
-		wfRunHooks( 'WikiaSkinTopShortTTLModules', [ &$shortTtlScriptModules, $this ] );
+		Hooks::run( 'WikiaSkinTopShortTTLModules', [ &$shortTtlScriptModules, $this ] );
 
 		if ( !empty($shortTtlScriptModules) ) {
 			$scripts = ResourceLoader::makeCustomLink( $this->wg->out, $shortTtlScriptModules, 'scripts' ) . "\n";
