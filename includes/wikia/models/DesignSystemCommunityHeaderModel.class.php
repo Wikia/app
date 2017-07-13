@@ -11,21 +11,22 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	private $productInstanceId;
 	private $lang;
 
+	private $themeSettings;
+	private $settings;
+	private $mainPageUrl;
+
 	private $wordmarkData = null;
 	private $sitenameData = null;
 	private $bgImageUrl = null;
 	private $exploreMenu = null;
 	private $discussLinkData = null;
-
-	private $themeSettings;
-	private $settings;
-	private $mainPageUrl;
+	private $wikiLocalNavigation = null;
 
 	public function __construct( $product, $productInstanceId, $lang = self::DEFAULT_LANG ) {
 		parent::__construct();
 
 		$this->product = $product;
-		$this->productInstanceId = intval($productInstanceId);
+		$this->productInstanceId = intval( $productInstanceId );
 		$this->lang = $lang;
 
 		$this->themeSettings = new ThemeSettings();
@@ -99,16 +100,26 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	}
 
 	public function getNavigation(): array {
-		return [
-			0 => $this->getWikiLocalNavigation(),
-			1 => $this->getExploreMenu(),
-			2 => $this->getDiscussLinkData()
-		];
+		return array_merge(
+			$this->getWikiLocalNavigation(),
+			[ $this->getExploreMenu() ],
+			[ $this->getDiscussLinkData() ]
+		);
 	}
 
 	public function getWikiLocalNavigation(): array {
-		$localWikiNavData = F::app()->sendRequest( 'NavigationApi', 'getData' )->getData()['navigation']['wiki'];
-		return [];
+		if ( $this->wikiLocalNavigation === null ) {
+			$navigationMessage =
+				GlobalTitle::newFromText( NavigationModel::WIKI_LOCAL_MESSAGE, NS_MEDIAWIKI, $this->productInstanceId );
+			$wikitext = $navigationMessage->getContent();
+
+			$this->wikiLocalNavigation = $this->formatLocalNavData(
+				( new NavigationModel() )->getFormatedWiki( NavigationModel::WIKI_LOCAL_MESSAGE, $wikitext )['wiki'],
+				1
+			);
+		}
+
+		return $this->wikiLocalNavigation;
 	}
 
 	public function getExploreMenu(): array {
@@ -226,23 +237,26 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		return $this->discussLinkData;
 	}
 
-	private function formatLocalNavData( $items, $nestingLevel ): array {
-		return array_map(function($item) use($nestingLevel) {
-			$ret = [
-				"type" => isset($item['children']) ? "dropdown" : "link-text",
-				"title" => [
-					"type" => "text",
-					"value" => $item['text']
-				],
-				"href" => $item['href'],
-				"tracking_label" => "custom-level-" . $nestingLevel,
-			];
+	private function formatLocalNavData( array $items, int $nestingLevel ): array {
+		return array_map(
+			function ( $item ) use ( $nestingLevel ) {
+				$ret = [
+					"type" => isset( $item['children'] ) ? "dropdown" : "link-text",
+					"title" => [
+						"type" => "text",
+						"value" => $item['text']
+					],
+					"href" => $item['href'],
+					"tracking_label" => "custom-level-" . $nestingLevel,
+				];
 
-			if (isset($item['children'])) {
-				$ret['items'] = $this->formatLocalNavData($item['children'], $nestingLevel + 1);
-			}
+				if ( isset( $item['children'] ) ) {
+					$ret['items'] = $this->formatLocalNavData( $item['children'], $nestingLevel + 1 );
+				}
 
-			return $ret;
-		}, $items);
+				return $ret;
+			},
+			$items
+		);
 	}
 }
