@@ -135,13 +135,14 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		});
 	}
 
-	function extendSlotTargetingForBlockedTraffic(adElement) {
+	function extendTargetingForBlockedTraffic(adElement) {
 		var srcRec = win.googletag.pubads().getTargeting('src');
 		// IL sets src=rec as a page-level param - add it also to slot targeting
 		if (srcRec && srcRec.indexOf('rec') > -1) {
 			adElement.slotTargeting.src = 'rec';
+			win.googletag.pubads().setTargeting('requestSource', 'instartLogic');
 
-			log(['extendSlotTargetingForBlockedTraffic', adElement.slotTargeting], log.levels.info, logGroup);
+			log(['extendTargetingForBlockedTraffic', adElement.slotTargeting], log.levels.info, logGroup);
 		}
 	}
 
@@ -163,7 +164,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 			googleSlots.addSlot(slot);
 		}
 
-		extendSlotTargetingForBlockedTraffic(adElement);
+		extendTargetingForBlockedTraffic(adElement);
 		adElement.configureSlot(slot);
 		slotQueue.push(slot);
 
