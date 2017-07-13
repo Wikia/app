@@ -95,11 +95,10 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	}
 
 	public function getNavigation(): array {
-		return array_merge(
-			$this->getWikiLocalNavigation(),
-			[ $this->getExploreMenu() ],
-			[ $this->getDiscussLinkData() ]
-		);
+		$localNav = $this->getWikiLocalNavigation();
+		array_push( $localNav, $this->getExploreMenu(), $this->getDiscussLinkData());
+
+		return $localNav;
 	}
 
 	public function getWikiLocalNavigation(): array {
@@ -183,12 +182,12 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 							"tracking_label" => $item['tracking']
 						];
 					},
-					array_filter(
+					array_values(array_filter(
 						$exploreItems,
 						function ( $item ) {
 							return $item['include'];
 						}
-					)
+					))
 				)
 			];
 		}

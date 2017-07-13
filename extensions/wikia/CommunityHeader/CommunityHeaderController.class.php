@@ -13,7 +13,7 @@ class CommunityHeaderController extends WikiaController {
 		$model = new DesignSystemCommunityHeaderModel($wgCityId);
 
 		$this->setVal( 'sitename', new Sitename( $model ) );
-		$this->setVal( 'wordmark', new Wordmark() );
+		$this->setVal( 'wordmark', new Wordmark( $model ) );
 		$this->setVal( 'counter', new Counter() );
 		$this->setVal( 'wikiButtons', new WikiButtons() );
 		$this->setVal( 'backgroundImageUrl', ( new ThemeSettings() )->getCommunityHeaderBackgroundUrl() );

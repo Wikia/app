@@ -2,9 +2,10 @@
 
 namespace Wikia\CommunityHeader;
 
-use \File;
-use \ThemeSettings;
-use \Title;
+use DesignSystemCommunityHeaderModel;
+use File;
+use ThemeSettings;
+use Title;
 
 class Wordmark {
 	const WORDMARK_TYPE_GRAPHIC = 'graphic';
@@ -14,19 +15,21 @@ class Wordmark {
 	public $href;
 	public $label;
 	public $image;
+	public $trackingLabel;
 
-	public function __construct() {
-		$themeSettings = new ThemeSettings();
-		$settings = $themeSettings->getSettings();
+	public function __construct( DesignSystemCommunityHeaderModel $model ) {
+		$wordmarkData = $model->getWordmarkData();
 
 		$this->isValid = false;
 
-		if ( $settings['wordmark-type'] === self::WORDMARK_TYPE_GRAPHIC ) {
-			$this->href = Title::newMainPage()->getLocalURL();
-			$this->label = new Label( $settings['wordmark-text'] );
-			$wordmarkURL = $themeSettings->getWordmarkUrl();
+		if ( isset( $wordmarkData['image-data']['url'] ) && !empty( $wordmarkData['image-data']['url'] ) ) {
+			$this->href = $wordmarkData['href'];
+			$this->label = new Label( $wordmarkData['title']['value'] );
+			$this->trackingLabel = $wordmarkData['tracking_label'];
 
-			$imageTitle = Title::newFromText( $themeSettings::WordmarkImageName, NS_IMAGE );
+			$wordmarkURL = $wordmarkData['image-data']['url'];
+
+			$imageTitle = Title::newFromText( ThemeSettings::WordmarkImageName, NS_IMAGE );
 			if ( $imageTitle instanceof Title ) {
 				$file = wfFindFile( $imageTitle );
 				if ( $file instanceof File && $file->width > 0 && $file->height > 0 ) {
