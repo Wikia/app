@@ -2,8 +2,9 @@
 
 namespace Wikia\CommunityHeader;
 
-use \NavigationModel;
-use \Title;
+use DesignSystemCommunityHeaderModel;
+use NavigationModel;
+use Title;
 
 class Navigation {
 	public $discussLink;
@@ -11,17 +12,19 @@ class Navigation {
 	public $exploreLabel;
 	public $localNavigation;
 
-	public function __construct( $wikiText = null ) {
+	private $model;
+
+	public function __construct( DesignSystemCommunityHeaderModel $model, $wikiText = null ) {
+		$this->model = $model;
+
 		$navigationModel = new NavigationModel();
 		if ( empty( $wikiText ) ) {
-			$this->localNavigation =
-				$navigationModel->getLocalNavigationTree( NavigationModel::WIKI_LOCAL_MESSAGE );
+			$this->localNavigation = $navigationModel->getLocalNavigationTree( NavigationModel::WIKI_LOCAL_MESSAGE );
 		} else {
 			$this->localNavigation = $navigationModel->getTreeFromText( $wikiText );
 		}
 
-		$this->exploreLabel =
-			new Label( 'community-header-explore', Label::TYPE_TRANSLATABLE_TEXT );
+		$this->exploreLabel = new Label( 'community-header-explore', Label::TYPE_TRANSLATABLE_TEXT );
 		$this->exploreItems = $this->getExploreItems();
 		$this->discussLink = $this->getDiscussLink();
 	}
@@ -68,27 +71,32 @@ class Navigation {
 			],
 		];
 
-		return array_map( function ( $item ) {
-			return new Link( new Label( $item['key'], Label::TYPE_TRANSLATABLE_TEXT ),
-				Title::newFromText( $item['title'], NS_SPECIAL )->getLocalURL(),
-				$item['tracking'] );
-		}, array_filter( $exploreItems, function ( $item ) {
-			return $item['include'];
-		} ) );
+		return array_map(
+			function ( $item ) {
+				return new Link(
+					new Label( $item['key'], Label::TYPE_TRANSLATABLE_TEXT ),
+					Title::newFromText( $item['title'], NS_SPECIAL )->getLocalURL(),
+					$item['tracking']
+				);
+			},
+			array_filter(
+				$exploreItems,
+				function ( $item ) {
+					return $item['include'];
+				}
+			)
+		);
 	}
 
 	private function getDiscussLink() {
-		global $wgEnableForumExt, $wgEnableDiscussions;
-
+		$discussData = $this->model->getDiscussLinkData();
 		$discussLink = null;
-		if ( !empty( $wgEnableDiscussions ) ) {
-			$discussLink =
-				new Link( new Label( 'community-header-discuss', Label::TYPE_TRANSLATABLE_TEXT ),
-					'/d/f', 'discuss' );
-		} elseif ( !empty( $wgEnableForumExt ) ) {
-			$discussLink =
-				new Link( new Label( 'community-header-forum', Label::TYPE_TRANSLATABLE_TEXT ),
-					Title::newFromText( 'Forum', NS_SPECIAL )->getLocalURL(), 'forum' );
+
+		if (!empty($discussData)) {
+			$discussLink = new Link(
+				//TODO: handle icon
+				new Label( $discussData['title']['key'], Label::TYPE_TRANSLATABLE_TEXT ), $discussData['href'], $discussData['tracking_label']
+			);
 		}
 
 		return $discussLink;
