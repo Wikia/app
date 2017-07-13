@@ -50,7 +50,7 @@
 		<li class="wds-tabs__tab">
 			<div class="wds-dropdown">
 				<div class="wds-tabs__tab-label wds-dropdown__toggle">
-					<?= DesignSystemHelper::renderSvg( 'wds-icons-explore-tiny', 'wds-icon-tiny wds-icon' ); ?>
+					<?= DesignSystemHelper::renderSvg( $navigation->exploreLabel->iconKey, 'wds-icon-tiny wds-icon' ); ?>
 					<span><?= $navigation->exploreLabel->renderInContentLang() ?></span>
 					<?= DesignSystemHelper::renderSvg( 'wds-icons-dropdown-tiny', 'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron' ); ?>
 				</div>
@@ -69,7 +69,7 @@
 			<li class="wds-tabs__tab">
 				<div class="wds-tabs__tab-label">
 					<a href="<?= $navigation->discussLink->href ?>"<? if($isPreview): ?> target="_blank"<? endif; ?> data-tracking="<?= $navigation->discussLink->tracking ?>">
-						<?= DesignSystemHelper::renderSvg( 'wds-icons-reply-small', 'wds-icon-tiny wds-icon' ); ?>
+						<?= DesignSystemHelper::renderSvg(  $navigation->discussLink->label->iconKey, 'wds-icon-tiny wds-icon' ); ?>
 						<span><?= $navigation->discussLink->label->renderInContentLang() ?></span>
 					</a>
 				</div>
