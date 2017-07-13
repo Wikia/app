@@ -2430,14 +2430,6 @@ $config['captcha_js'] = [
 	],
 ];
 
-$config['poweruser'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/PowerUser/js/pageViewTracking.js',
-		'//extensions/wikia/PowerUser/js/powerUser.run.js',
-	],
-];
-
 $config['portable_infobox_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
