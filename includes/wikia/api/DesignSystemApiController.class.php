@@ -53,9 +53,7 @@ class DesignSystemApiController extends WikiaApiController {
 		$globalStateWrapper->wrap(function() use($params) {
 			$this->setResponseData(
 				( new DesignSystemCommunityHeaderModel(
-					$params[static::PARAM_PRODUCT],
-					$params[static::PARAM_ID],
-					$params[static::PARAM_LANG]
+					$params[static::PARAM_ID]
 				))->getData()
 			);
 		});
@@ -80,9 +78,7 @@ class DesignSystemApiController extends WikiaApiController {
 			$params[static::PARAM_LANG]
 		);
 		$communityHeaderModel = new DesignSystemCommunityHeaderModel(
-			$params[static::PARAM_PRODUCT],
-			$params[static::PARAM_ID],
-			$params[static::PARAM_LANG]
+			$params[static::PARAM_ID]
 		);
 
 

@@ -2,9 +2,6 @@
 
 
 class DesignSystemCommunityHeaderModel extends WikiaModel {
-	const DEFAULT_LANG = 'en';
-	const PRODUCT_WIKIS = 'wikis';
-
 	const WORDMARK_TYPE_GRAPHIC = 'graphic';
 
 	private $product;
@@ -22,12 +19,10 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	private $discussLinkData = null;
 	private $wikiLocalNavigation = null;
 
-	public function __construct( $product, $productInstanceId, $lang = self::DEFAULT_LANG ) {
+	public function __construct( $cityId ) {
 		parent::__construct();
 
-		$this->product = $product;
-		$this->productInstanceId = intval( $productInstanceId );
-		$this->lang = $lang;
+		$this->productInstanceId = intval( $cityId );
 
 		$this->themeSettings = new ThemeSettings();
 		$this->settings = $this->themeSettings->getSettings();
