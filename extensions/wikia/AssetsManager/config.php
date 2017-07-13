@@ -2406,15 +2406,6 @@ $config['facebook_client_fbtags_js'] = [
 	],
 ];
 
-$config['delayed_hover_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//resources/wikia/libraries/delayed-hover/js-delayed-hover.js',
-		'//resources/wikia/modules/delayedHover.js',
-	],
-];
-
 $config['upload_photos_dialog_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
