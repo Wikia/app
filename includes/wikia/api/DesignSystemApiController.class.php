@@ -55,11 +55,13 @@ class DesignSystemApiController extends WikiaApiController {
 
 		$globalStateWrapper->wrap(function() use($params) {
 			$this->setResponseData(
-				( new DesignSystemCommunityHeaderModel(
-					$params[static::PARAM_PRODUCT],
-					$params[static::PARAM_ID],
-					$params[static::PARAM_LANG]
-				))->getData() );
+				//( new DesignSystemCommunityHeaderModel(
+				//	$params[static::PARAM_PRODUCT],
+				//	$params[static::PARAM_ID],
+				//	$params[static::PARAM_LANG]
+				//))->getData()
+			$this->getCommunityHeaderMockedData()
+			);
 		});
 
 		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );

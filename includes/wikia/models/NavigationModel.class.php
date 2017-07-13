@@ -157,6 +157,52 @@ class NavigationModel extends WikiaModel {
 		];
 	}
 
+	public function getFormatedWiki( $msgName = false, $wikiText = '' ) {
+		$nav = $this->getWiki( $msgName, $wikiText );
+
+		$ret = array();
+		foreach ( $nav as $type => $list ) {
+			$ret[$type] = $this->getChildren( $list );
+		}
+
+		return $ret;
+	}
+
+	private function getChildren( $list, $i = 0 ) {
+		$children = [ ];
+		$next = [ ];
+
+		if ( isset ($list[$i]) ) {
+			$element = $list[$i];
+		} else {
+			return [ ];
+		}
+
+		if ( isset($element['children']) ) {
+			foreach ( $element['children'] as $child ) {
+				$children[] = $this->getChildren( $list, $child );
+			}
+		}
+
+		if ( isset($element['text']) ) {
+			$next = array(
+				'text' => $element['text'],
+				'href' => $element['href']
+			);
+
+			if ( !empty($children) ) {
+				$next['children'] = $children;
+			}
+
+		} else {
+			if ( !empty($children) ) {
+				$next = $children;
+			}
+		}
+
+		return $next;
+	}
+
 	public function getLocalNavigationTree( $messageName, $refreshCache = false ) {
 		$this->setShouldTranslateContent( false );
 		$tree = $this->getTree(

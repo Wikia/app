@@ -108,7 +108,6 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 
 	public function getWikiLocalNavigation(): array {
 		$localWikiNavData = F::app()->sendRequest( 'NavigationApi', 'getData' )->getData()['navigation']['wiki'];
-		ddd($localWikiNavData);
 		return [];
 	}
 
