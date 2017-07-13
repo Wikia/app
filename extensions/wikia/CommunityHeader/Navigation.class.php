@@ -3,7 +3,6 @@
 namespace Wikia\CommunityHeader;
 
 use DesignSystemCommunityHeaderModel;
-use NavigationModel;
 
 class Navigation {
 	public $discussLink;
@@ -15,10 +14,8 @@ class Navigation {
 
 	public function __construct( DesignSystemCommunityHeaderModel $model, $wikiText = null ) {
 		$this->model = $model;
-
 		$this->localNavigation = $model->getWikiLocalNavigation( $wikiText );
-
-		$exploreMenu = $this->model->getExploreMenu();
+		$exploreMenu = $model->getExploreMenu();
 
 		$this->exploreLabel = new Label(
 			$exploreMenu['title']['key'], Label::TYPE_TRANSLATABLE_TEXT, $exploreMenu['image-data']['name']
@@ -48,9 +45,11 @@ class Navigation {
 
 		if ( !empty( $discussData ) ) {
 			$discussLink = new Link(
-				new Label( $discussData['title']['key'], Label::TYPE_TRANSLATABLE_TEXT, $discussData['image-data']['name'] ),
-				$discussData['href'],
-				$discussData['tracking_label']
+				new Label(
+					$discussData['title']['key'],
+					Label::TYPE_TRANSLATABLE_TEXT,
+					$discussData['image-data']['name']
+				), $discussData['href'], $discussData['tracking_label']
 			);
 		}
 
