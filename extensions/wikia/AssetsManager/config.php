@@ -314,15 +314,6 @@ $config['adengine2_porvata_js'] = [
 	],
 ];
 
-// TODO: remove 2 weeks after ADEN-4922 is released
-$config['ima_js'] = [
-	'skin' => [ 'oasis' ],
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/AdEngine/js/video/player/porvata/ima/20170219061519.js',
-	],
-];
-
 $config['adengine2_playwire_js'] = [
 	'skin' => [ 'oasis' ],
 	'type' => AssetsManager::TYPE_JS,
@@ -1862,14 +1853,6 @@ $config['wikia_photo_gallery_mosaic_scss'] = [
 	],
 ];
 
-$config['imagedrop_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'monobook', 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/ImageDrop/css/ImageDrop.scss',
-	],
-];
-
 /** AnalyticsEngine **/
 /** Note: this group is also used in Oasis! */
 $config['universal_analytics_js'] = [
@@ -2444,14 +2427,6 @@ $config['captcha_js'] = [
 	'skin' => [ 'oasis', 'monobook' ],
 	'assets' => [
 		'//extensions/wikia/Captcha/scripts/Captcha.js',
-	],
-];
-
-$config['fancycaptcha_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis', 'monobook' ],
-	'assets' => [
-		'//extensions/wikia/Captcha/styles/FancyCaptcha.scss',
 	],
 ];
 
