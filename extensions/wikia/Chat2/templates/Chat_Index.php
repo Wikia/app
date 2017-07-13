@@ -33,7 +33,7 @@
 		<h1 class="public wordmark">
 			<a href="<?= $mainPageURL ?>">
 			<? if ( $themeSettings['wordmark-type'] == 'graphic' ) { ?>
-			<img width="<?= ChatController::CHAT_WORDMARK_WIDTH ?>" height="<?= ChatController::CHAT_WORDMARK_HEIGHT ?>" src="<?= $wordmarkThumbnailUrl ?>">
+			<img height="<?= ChatController::CHAT_WORDMARK_HEIGHT ?>" src="<?= $wordmarkThumbnailUrl ?>">
 			<? } else { ?>
 			<span class="font-<?= $themeSettings['wordmark-font']?>"><?= $themeSettings['wordmark-text'] ?></span>
 			<? } ?>
@@ -49,7 +49,7 @@
 			<h1 class="public wordmark selected">
 				<img src="<?= $wg->BlankImgUrl ?>" class="chevron">
 				<? if ( $themeSettings['wordmark-type'] == 'graphic' ) { ?>
-				<img width="<?= ChatController::CHAT_WORDMARK_WIDTH ?>" height="<?= ChatController::CHAT_WORDMARK_HEIGHT ?>" src="<?= $wordmarkThumbnailUrl ?>" class="wordmark">
+				<img height="<?= ChatController::CHAT_WORDMARK_HEIGHT ?>" src="<?= $wordmarkThumbnailUrl ?>" class="wordmark">
 				<? } else { ?>
 				<span class="font-<?= $themeSettings['wordmark-font']?>"><?= $themeSettings['wordmark-text'] ?></span>
 				<? } ?>
