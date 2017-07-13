@@ -82,17 +82,6 @@ class NavigationModel extends WikiaModel {
 		WikiaDataAccess::cachePurge(
 			$this->getMemcKey( $key )
 		);
-
-		// Purging mcache set by invocation of NavigationModel::getTree() by NavigationModel::getLocalNavigationTree();
-		WikiaDataAccess::cachePurge(
-			$this->getTreeMemcKey(
-				self::TYPE_MESSAGE,
-				self::WIKI_LOCAL_MESSAGE,
-				self::LOCALNAV_LEVEL_1_ITEMS_COUNT,
-				self::LOCALNAV_LEVEL_2_ITEMS_COUNT,
-				self::LOCALNAV_LEVEL_3_ITEMS_COUNT
-			)
-		);
 	}
 
 	private function setShouldTranslateContent( $shouldTranslateContent ) {
@@ -203,10 +192,6 @@ class NavigationModel extends WikiaModel {
 		return $next;
 	}
 
-
-	private function getTreeMemcKey( /* args */ ) {
-		return $this->getMemcKey( implode( '-', func_get_args() + [ self::MEMC_VERSION ] ) );
-	}
 
 	/**
 	 * Parse wikitext from given "source" - either MediaWiki message or WikiFactory variable

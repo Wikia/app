@@ -16,13 +16,6 @@ class Navigation {
 	public function __construct( DesignSystemCommunityHeaderModel $model, $wikiText = null ) {
 		$this->model = $model;
 
-		//$navigationModel = new NavigationModel();
-		//if ( empty( $wikiText ) ) {
-		//	$this->localNavigation = $navigationModel->getLocalNavigationTree( NavigationModel::WIKI_LOCAL_MESSAGE );
-		//} else {
-		//	$this->localNavigation = $navigationModel->getTreeFromText( $wikiText );
-		//}
-
 		$this->localNavigation = $model->getWikiLocalNavigation( $wikiText );
 
 		$exploreMenu = $this->model->getExploreMenu();
