@@ -3,17 +3,9 @@
 use \Wikia\CommunityHeader\Label;
 use \Wikia\CommunityHeader\Link;
 use \Wikia\CommunityHeader\Navigation;
-use \Wikia\Util\GlobalStateWrapper;
 
 class NavigationTest extends WikiaBaseTest {
-	/**
-	 * $this->setUp() is called only after data providers are checked
-	 * We need the classes ready before that
-	 */
-	private function manualSetUp() {
-		global $IP, $wgAutoloadClasses;
-		require_once( "$IP/extensions/wikia/CommunityHeader/CommunityHeader.setup.php" );
-	}
+	const WIKI_ID = 147;
 
 	/**
 	 * @dataProvider exploreItemsProvider
@@ -22,15 +14,11 @@ class NavigationTest extends WikiaBaseTest {
 	 * @param $expectedExploreItems
 	 */
 	public function testExploreItems( $globals, $expectedExploreItems ) {
-		$globals = new GlobalStateWrapper( [
-			'wgEnableCommunityPageExt' => $globals['wgEnableCommunityPageExt'],
-			'wgEnableDiscussions' => $globals['wgEnableDiscussions'],
-			'wgEnableForumExt' => $globals['wgEnableForumExt'],
-		] );
+		$this->mockStaticMethodWithCallBack( 'WikiFactory', 'getVarValueByName', function( $variable, $id) use ($globals) {
+			return $globals[$variable];
+		});
 
-		$result = $globals->wrap( function () {
-			return new Navigation();
-		} );
+		$result =  new Navigation( new DesignSystemCommunityHeaderModel( self::WIKI_ID ) );
 
 		// used `array_values` to reset keys of array
 		$this->assertEquals( $expectedExploreItems, array_values( $result->exploreItems ) );
@@ -43,14 +31,11 @@ class NavigationTest extends WikiaBaseTest {
 	 * @param $expected
 	 */
 	public function testDiscussLink( $globals, $expected ) {
-		$globals = new GlobalStateWrapper( [
-			'wgEnableDiscussions' => $globals['wgEnableDiscussions'],
-			'wgEnableForumExt' => $globals['wgEnableForumExt'],
-		] );
+		$this->mockStaticMethodWithCallBack( 'WikiFactory', 'getVarValueByName', function( $variable, $id) use ($globals) {
+			return $globals[$variable];
+		});
 
-		$result = $globals->wrap( function () {
-			return new Navigation();
-		} );
+		$result = new Navigation( new DesignSystemCommunityHeaderModel( self::WIKI_ID ) );
 
 		$this->assertEquals( $expected, $result->discussLink );
 	}
@@ -66,62 +51,69 @@ class NavigationTest extends WikiaBaseTest {
 	}
 
 	public function exploreItemsProvider() {
-		$this->manualSetUp();
-
+		$host = WikiFactory::getHostById(self::WIKI_ID);
 		return [
 			[
 				'globals' => [
 					'wgEnableCommunityPageExt' => true,
 					'wgEnableDiscussions' => true,
 					'wgEnableForumExt' => true,
+					'wgEnableSpecialVideosExt' => true,
 				],
 				'expectedExploreItems' => $this->prepareExploreItems( [
 					[
 						'label' => [
 							'type' => 'translatable-text',
 							'key' => 'community-header-wiki-activity',
+							'iconKey' => null,
 						],
-						'href' => '/wiki/Special:WikiActivity',
+						'href' => $host . '/wiki/Special:WikiActivity',
 						'tracking' => 'explore-activity',
 					],
 					[
 						'label' => [
 							'type' => 'translatable-text',
 							'key' => 'community-header-random-page',
+							'iconKey' => null,
+
 						],
-						'href' => '/wiki/Special:Random',
+						'href' => $host . '/wiki/Special:Random',
 						'tracking' => 'explore-random',
 					],
 					[
 						'label' => [
 							'type' => 'translatable-text',
 							'key' => 'community-header-community',
+							'iconKey' => null,
 						],
-						'href' => '/wiki/Special:Community',
+						'href' => $host . '/wiki/Special:Community',
 						'tracking' => 'explore-community',
 					],
 					[
 						'label' => [
 							'type' => 'translatable-text',
 							'key' => 'community-header-videos',
+							'iconKey' => null,
 						],
-						'href' => '/wiki/Special:Videos',
+						'href' => $host . '/wiki/Special:Videos',
 						'tracking' => 'explore-videos',
 					],
 					[
 						'label' => [
 							'type' => 'translatable-text',
 							'key' => 'community-header-images',
+							'iconKey' => null,
 						],
-						'href' => '/wiki/Special:Images',
+						'href' => $host . '/wiki/Special:Images',
 						'tracking' => 'explore-images',
 					],
 					[
 						'label' => [
 							'type' => 'translatable-text',
 							'key' => 'community-header-forum',
+							'iconKey' => null,
 						],
-						'href' => '/wiki/Special:Forum',
+						'href' => $host . '/wiki/Special:Forum',
 						'tracking' => 'explore-forum',
 					],
 				] ),
@@ -131,46 +123,52 @@ class NavigationTest extends WikiaBaseTest {
 					'wgEnableCommunityPageExt' => false,
 					'wgEnableDiscussions' => true,
 					'wgEnableForumExt' => true,
+					'wgEnableSpecialVideosExt' => true,
 				],
 				'expectedExploreItems' => $this->prepareExploreItems( [
 					[
 						'label' => [
 							'type' => 'translatable-text',
 							'key' => 'community-header-wiki-activity',
+							'iconKey' => null,
 						],
-						'href' => '/wiki/Special:WikiActivity',
+						'href' => $host . '/wiki/Special:WikiActivity',
 						'tracking' => 'explore-activity',
 					],
 					[
 						'label' => [
 							'type' => 'translatable-text',
 							'key' => 'community-header-random-page',
+							'iconKey' => null,
 						],
-						'href' => '/wiki/Special:Random',
+						'href' => $host . '/wiki/Special:Random',
 						'tracking' => 'explore-random',
 					],
 					[
 						'label' => [
 							'type' => 'translatable-text',
 							'key' => 'community-header-videos',
+							'iconKey' => null,
 						],
-						'href' => '/wiki/Special:Videos',
+						'href' => $host . '/wiki/Special:Videos',
 						'tracking' => 'explore-videos',
 					],
 					[
 						'label' => [
 							'type' => 'translatable-text',
 							'key' => 'community-header-images',
+							'iconKey' => null,
 						],
-						'href' => '/wiki/Special:Images',
+						'href' => $host . '/wiki/Special:Images',
 						'tracking' => 'explore-images',
 					],
 					[
 						'label' => [
 							'type' => 'translatable-text',
 							'key' => 'community-header-forum',
+							'iconKey' => null,
 						],
-						'href' => '/wiki/Special:Forum',
+						'href' => $host . '/wiki/Special:Forum',
 						'tracking' => 'explore-forum',
 					],
 				] ),
@@ -180,46 +178,52 @@ class NavigationTest extends WikiaBaseTest {
 					'wgEnableCommunityPageExt' => true,
 					'wgEnableDiscussions' => false,
 					'wgEnableForumExt' => true,
+					'wgEnableSpecialVideosExt' => true,
 				],
 				'expectedExploreItems' => $this->prepareExploreItems( [
 					[
 						'label' => [
 							'type' => 'translatable-text',
 							'key' => 'community-header-wiki-activity',
+							'iconKey' => null,
 						],
-						'href' => '/wiki/Special:WikiActivity',
+						'href' => $host . '/wiki/Special:WikiActivity',
 						'tracking' => 'explore-activity',
 					],
 					[
 						'label' => [
 							'type' => 'translatable-text',
 							'key' => 'community-header-random-page',
+							'iconKey' => null,
 						],
-						'href' => '/wiki/Special:Random',
+						'href' => $host . '/wiki/Special:Random',
 						'tracking' => 'explore-random',
 					],
 					[
 						'label' => [
 							'type' => 'translatable-text',
 							'key' => 'community-header-community',
+							'iconKey' => null,
 						],
-						'href' => '/wiki/Special:Community',
+						'href' => $host . '/wiki/Special:Community',
 						'tracking' => 'explore-community',
 					],
 					[
 						'label' => [
 							'type' => 'translatable-text',
 							'key' => 'community-header-videos',
+							'iconKey' => null,
 						],
-						'href' => '/wiki/Special:Videos',
+						'href' => $host . '/wiki/Special:Videos',
 						'tracking' => 'explore-videos',
 					],
 					[
 						'label' => [
 							'type' => 'translatable-text',
 							'key' => 'community-header-images',
+							'iconKey' => null,
 						],
-						'href' => '/wiki/Special:Images',
+						'href' => $host . '/wiki/Special:Images',
 						'tracking' => 'explore-images',
 					],
 				] ),
@@ -229,46 +233,52 @@ class NavigationTest extends WikiaBaseTest {
 					'wgEnableCommunityPageExt' => true,
 					'wgEnableDiscussions' => true,
 					'wgEnableForumExt' => false,
+					'wgEnableSpecialVideosExt' => true,
 				],
 				'expectedExploreItems' => $this->prepareExploreItems( [
 					[
 						'label' => [
 							'type' => 'translatable-text',
 							'key' => 'community-header-wiki-activity',
+							'iconKey' => null,
 						],
-						'href' => '/wiki/Special:WikiActivity',
+						'href' => $host . '/wiki/Special:WikiActivity',
 						'tracking' => 'explore-activity',
 					],
 					[
 						'label' => [
 							'type' => 'translatable-text',
 							'key' => 'community-header-random-page',
+							'iconKey' => null,
 						],
-						'href' => '/wiki/Special:Random',
+						'href' => $host . '/wiki/Special:Random',
 						'tracking' => 'explore-random',
 					],
 					[
 						'label' => [
 							'type' => 'translatable-text',
 							'key' => 'community-header-community',
+							'iconKey' => null,
 						],
-						'href' => '/wiki/Special:Community',
+						'href' => $host . '/wiki/Special:Community',
 						'tracking' => 'explore-community',
 					],
 					[
 						'label' => [
 							'type' => 'translatable-text',
 							'key' => 'community-header-videos',
+							'iconKey' => null,
 						],
-						'href' => '/wiki/Special:Videos',
+						'href' => $host . '/wiki/Special:Videos',
 						'tracking' => 'explore-videos',
 					],
 					[
 						'label' => [
 							'type' => 'translatable-text',
 							'key' => 'community-header-images',
+							'iconKey' => null,
 						],
-						'href' => '/wiki/Special:Images',
+						'href' => $host . '/wiki/Special:Images',
 						'tracking' => 'explore-images',
 					],
 				] ),
@@ -278,46 +288,52 @@ class NavigationTest extends WikiaBaseTest {
 					'wgEnableCommunityPageExt' => true,
 					'wgEnableDiscussions' => false,
 					'wgEnableForumExt' => false,
+					'wgEnableSpecialVideosExt' => true,
 				],
 				'expectedExploreItems' => $this->prepareExploreItems( [
 					[
 						'label' => [
 							'type' => 'translatable-text',
 							'key' => 'community-header-wiki-activity',
+							'iconKey' => null,
 						],
-						'href' => '/wiki/Special:WikiActivity',
+						'href' => $host . '/wiki/Special:WikiActivity',
 						'tracking' => 'explore-activity',
 					],
 					[
 						'label' => [
 							'type' => 'translatable-text',
 							'key' => 'community-header-random-page',
+							'iconKey' => null,
 						],
-						'href' => '/wiki/Special:Random',
+						'href' => $host . '/wiki/Special:Random',
 						'tracking' => 'explore-random',
 					],
 					[
 						'label' => [
 							'type' => 'translatable-text',
 							'key' => 'community-header-community',
+							'iconKey' => null,
 						],
-						'href' => '/wiki/Special:Community',
+						'href' => $host . '/wiki/Special:Community',
 						'tracking' => 'explore-community',
 					],
 					[
 						'label' => [
 							'type' => 'translatable-text',
 							'key' => 'community-header-videos',
+							'iconKey' => null,
 						],
-						'href' => '/wiki/Special:Videos',
+						'href' => $host . '/wiki/Special:Videos',
 						'tracking' => 'explore-videos',
 					],
 					[
 						'label' => [
 							'type' => 'translatable-text',
 							'key' => 'community-header-images',
+							'iconKey' => null,
 						],
-						'href' => '/wiki/Special:Images',
+						'href' => $host . '/wiki/Special:Images',
 						'tracking' => 'explore-images',
 					],
 				] ),
@@ -327,15 +343,14 @@ class NavigationTest extends WikiaBaseTest {
 
 	private function prepareDiscussLink( $raw ) {
 		return new Link(
-			new Label( $raw['label']['key'], $raw['label']['type'] ),
+			new Label( $raw['label']['key'], $raw['label']['type'], $raw['label']['iconKey'] ),
 			$raw['href'],
 			$raw['tracking']
 		);
 	}
 
 	public function discussLinkProvider() {
-		$this->manualSetUp();
-
+		$host = WikiFactory::getHostById(self::WIKI_ID);
 		return [
 			[
 				'globals' => [
@@ -346,6 +361,7 @@ class NavigationTest extends WikiaBaseTest {
 					'label' => [
 						'type' => 'translatable-text',
 						'key' => 'community-header-discuss',
+						'iconKey' => 'wds-icons-reply-small',
 					],
 					'href' => '/d/f',
 					'tracking' => 'discuss',
@@ -360,6 +376,7 @@ class NavigationTest extends WikiaBaseTest {
 					'label' => [
 						'type' => 'translatable-text',
 						'key' => 'community-header-discuss',
+						'iconKey' => 'wds-icons-reply-small',
 					],
 					'href' => '/d/f',
 					'tracking' => 'discuss',
@@ -374,8 +391,9 @@ class NavigationTest extends WikiaBaseTest {
 					'label' => [
 						'type' => 'translatable-text',
 						'key' => 'community-header-forum',
+						'iconKey' => 'wds-icons-reply-small',
 					],
-					'href' => '/wiki/Special:Forum',
+					'href' => $host . '/wiki/Special:Forum',
 					'tracking' => 'forum',
 				] ),
 			],

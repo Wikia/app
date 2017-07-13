@@ -1190,7 +1190,7 @@ class WikiFactory {
 	}
 
 	/**
-	 * getLocalEnvURL
+	 * getLocalEnv
 	 *
 	 * return URL specific to current env:
 	 * (production, preview, verify, devbox, sandbox)
