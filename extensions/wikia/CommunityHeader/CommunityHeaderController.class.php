@@ -9,7 +9,10 @@ use \Wikia\CommunityHeader\Navigation;
 class CommunityHeaderController extends WikiaController {
 
 	public function index() {
-		$this->setVal( 'sitename', new Sitename() );
+		global $wgCityId;
+		$model = new DesignSystemCommunityHeaderModel($wgCityId);
+
+		$this->setVal( 'sitename', new Sitename( $model ) );
 		$this->setVal( 'wordmark', new Wordmark() );
 		$this->setVal( 'counter', new Counter() );
 		$this->setVal( 'wikiButtons', new WikiButtons() );
