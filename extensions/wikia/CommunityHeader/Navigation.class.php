@@ -49,7 +49,9 @@ class Navigation {
 					$discussData['title']['key'],
 					Label::TYPE_TRANSLATABLE_TEXT,
 					$discussData['image-data']['name']
-				), $discussData['href'], $discussData['tracking_label']
+				),
+				$discussData['href'],
+				$discussData['tracking_label']
 			);
 		}
 

@@ -7,7 +7,7 @@
 						<div class="wds-tabs__tab-label wds-dropdown__toggle">
 							<a href="<?= $firstLevelItem['href'] ?? '#' ?>"
 								<? if ( $isPreview ): ?> target="_blank"<? endif; ?>
-							   data-tracking="<?= $firstLevelItem['tracking_label'] ?>">
+								data-tracking="<?= $firstLevelItem['tracking_label'] ?>">
 								<span><?= $firstLevelItem['title']['value'] ?></span>
 							</a>
 							<?= DesignSystemHelper::renderSvg( 'wds-icons-dropdown-tiny', 'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron' ); ?>
@@ -18,9 +18,9 @@
 									<? if ( array_key_exists( 'items', $secondLevelItem ) && !empty( $secondLevelItem['items'] ) ): ?>
 										<li class="<?= $index > count( $secondLevelItem['items'] ) - 1 ? 'wds-is-sticked-to-parent ' : '' ?>wds-dropdown-level-2">
 											<a href="<?= $secondLevelItem['href'] ?? '#' ?>"
-												<? if ( $isPreview ): ?> target="_blank"<? endif; ?>
-											   class="wds-dropdown-level-2__toggle"
-											   data-tracking="<?= $secondLevelItem['tracking_label'] ?>"
+												<? if ( $isPreview ): ?>target="_blank"<? endif; ?>
+												class="wds-dropdown-level-2__toggle"
+												data-tracking="<?= $secondLevelItem['tracking_label'] ?>"
 											>
 												<span><?= $secondLevelItem['title']['value'] ?></span>
 												<?= DesignSystemHelper::renderSvg( 'wds-icons-menu-control-tiny', 'wds-icon wds-icon-tiny wds-dropdown-chevron' ); ?>
@@ -30,8 +30,8 @@
 													<? foreach ( $secondLevelItem['items'] as $thirdLevelItem ): ?>
 														<li>
 															<a href="<?= $thirdLevelItem['href'] ?? '#' ?>"
-																<? if ( $isPreview ): ?> target="_blank"<? endif; ?>
-															   data-tracking="<?= $thirdLevelItem['tracking_label'] ?>"
+																<? if ( $isPreview ): ?>target="_blank"<? endif; ?>
+																data-tracking="<?= $thirdLevelItem['tracking_label'] ?>"
 															><?= $thirdLevelItem['title']['value'] ?></a>
 														</li>
 													<? endforeach; ?>
@@ -41,8 +41,8 @@
 									<? else : ?>
 										<li>
 											<a href="<?= $secondLevelItem['href'] ?? '#' ?>"
-												<? if ( $isPreview ): ?> target="_blank"<? endif; ?>
-											   data-tracking="<?= $secondLevelItem['tracking_label'] ?>"
+												<? if ( $isPreview ): ?>target="_blank"<? endif; ?>
+												data-tracking="<?= $secondLevelItem['tracking_label'] ?>"
 											>
 												<?= $secondLevelItem['title']['value'] ?>
 											</a>
@@ -56,7 +56,7 @@
 					<div class="wds-tabs__tab-label">
 						<a href="<?= $firstLevelItem['href'] ?? '#' ?>"
 							<? if ( $isPreview ): ?> target="_blank"<? endif; ?>
-						   data-tracking="<?= $firstLevelItem['tracking_label'] ?>"
+							data-tracking="<?= $firstLevelItem['tracking_label'] ?>"
 						>
 							<span><?= $firstLevelItem['textEscaped'] ?></span>
 						</a>
@@ -76,8 +76,8 @@
 						<? foreach ( $navigation->exploreItems as $exploreItem ): ?>
 							<li>
 								<a href="<?= $exploreItem->href ?>"
-									<? if ( $isPreview ): ?> target="_blank"<? endif; ?>
-								   data-tracking="<?= $exploreItem->tracking ?>"
+									<? if ( $isPreview ): ?>target="_blank"<? endif; ?>
+									data-tracking="<?= $exploreItem->tracking ?>"
 								><?= $exploreItem->label->renderInContentLang() ?></a>
 							</li>
 						<? endforeach; ?>
@@ -88,8 +88,10 @@
 		<? if ( !empty( $navigation->discussLink ) ): ?>
 			<li class="wds-tabs__tab">
 				<div class="wds-tabs__tab-label">
-					<a href="<?= $navigation->discussLink->href ?>"<? if ( $isPreview ): ?> target="_blank"<? endif; ?>
-					   data-tracking="<?= $navigation->discussLink->tracking ?>">
+					<a href="<?= $navigation->discussLink->href ?>"
+						<? if ( $isPreview ): ?>target="_blank"<? endif; ?>
+						data-tracking="<?= $navigation->discussLink->tracking ?>"
+					>
 						<?= DesignSystemHelper::renderSvg( $navigation->discussLink->label->iconKey, 'wds-icon-tiny wds-icon' ); ?>
 						<span><?= $navigation->discussLink->label->renderInContentLang() ?></span>
 					</a>

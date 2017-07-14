@@ -147,7 +147,7 @@ class NavigationModel extends WikiaModel {
 	public function getFormattedWiki( $msgName = false, $wikiText = '' ) {
 		$nav = $this->getWiki( $msgName, $wikiText );
 
-		$ret = array();
+		$ret = [];
 		foreach ( $nav as $type => $list ) {
 			$ret[$type] = $this->getChildren( $list );
 		}
@@ -156,32 +156,31 @@ class NavigationModel extends WikiaModel {
 	}
 
 	private function getChildren( $list, $i = 0 ) {
-		$children = [ ];
-		$next = [ ];
+		$children = [];
+		$next = [];
 
-		if ( isset ($list[$i]) ) {
+		if ( isset ( $list[$i] ) ) {
 			$element = $list[$i];
 		} else {
-			return [ ];
+			return [];
 		}
 
-		if ( isset($element['children']) ) {
+		if ( isset( $element['children'] ) ) {
 			foreach ( $element['children'] as $child ) {
 				$children[] = $this->getChildren( $list, $child );
 			}
 		}
 
-		if ( isset($element['text']) ) {
-			$next = array(
+		if ( isset( $element['text'] ) ) {
+			$next = [
 				'text' => $element['text'],
 				'href' => $element['href']
-			);
+			];
 
-			if ( !empty($children) ) {
+			if ( !empty( $children ) ) {
 				$next['children'] = $children;
 			}
-
-		} else if ( !empty($children) ) {
+		} else if ( !empty( $children ) ) {
 			$next = $children;
 		}
 

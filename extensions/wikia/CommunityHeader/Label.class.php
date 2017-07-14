@@ -11,7 +11,7 @@ class Label {
 	public $value;
 	public $iconKey;
 
-	public function __construct( string $value, string $type = self::TYPE_TEXT, $iconKey = null) {
+	public function __construct( string $value, string $type = self::TYPE_TEXT, $iconKey = null ) {
 		$this->type = $type;
 		if ( $this->type === self::TYPE_TRANSLATABLE_TEXT ) {
 			$this->key = $value;

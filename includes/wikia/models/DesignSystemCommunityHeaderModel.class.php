@@ -1,6 +1,5 @@
 <?php
 
-
 class DesignSystemCommunityHeaderModel extends WikiaModel {
 	const WORDMARK_TYPE_GRAPHIC = 'graphic';
 
@@ -114,15 +113,20 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 
 	public function getWikiLocalNavigation( $wikitext = null ): array {
 		if ( $this->wikiLocalNavigation === null ) {
-
 			if ( empty( $wikitext ) ) {
-				$navigationMessage =
-					GlobalTitle::newFromText( NavigationModel::WIKI_LOCAL_MESSAGE, NS_MEDIAWIKI, $this->productInstanceId );
+				$navigationMessage = GlobalTitle::newFromText(
+					NavigationModel::WIKI_LOCAL_MESSAGE,
+					NS_MEDIAWIKI,
+					$this->productInstanceId
+				);
 				$wikitext = $navigationMessage->getContent();
 			}
 
 			$this->wikiLocalNavigation = $this->formatLocalNavData(
-				( new NavigationModel() )->getFormattedWiki( NavigationModel::WIKI_LOCAL_MESSAGE, $wikitext )['wiki'],
+				( new NavigationModel() )->getFormattedWiki(
+					NavigationModel::WIKI_LOCAL_MESSAGE,
+					$wikitext
+				)['wiki'],
 				1
 			);
 		}
