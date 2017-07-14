@@ -16,7 +16,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	private $discussLinkData = null;
 	private $wikiLocalNavigation = null;
 
-	public function __construct( $cityId ) {
+	public function __construct( string $cityId ) {
 		parent::__construct();
 
 		$this->productInstanceId = $cityId;
@@ -47,19 +47,29 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 			$this->wordmarkData = [];
 
 			if ( $this->settings['wordmark-type'] === self::WORDMARK_TYPE_GRAPHIC ) {
-				$this->wordmarkData = [
-					'type' => 'link-image',
-					'href' => $this->mainPageUrl,
-					'image-data' => [
-						'type' => 'image-external',
-						'url' => $this->themeSettings->getWordmarkUrl(),
-					],
-					'title' => [
-						'type' => 'text',
-						'value' => $this->themeSettings->getSettings()['wordmark-text'],
-					],
-					'tracking_label' => 'wordmark-image',
-				];
+				$imageTitle = Title::newFromText( ThemeSettings::WordmarkImageName, NS_IMAGE );
+
+				if ( $imageTitle instanceof Title ) {
+					$file = wfFindFile( $imageTitle );
+
+					if ( $file instanceof File && $file->width > 0 && $file->height > 0 ) {
+						$this->wordmarkData = [
+							'type' => 'link-image',
+							'href' => $this->mainPageUrl,
+							'image-data' => [
+								'type' => 'image-external',
+								'url' => $this->themeSettings->getWordmarkUrl(),
+								'width' => $file->width,
+								'height' => $file->height
+							],
+							'title' => [
+								'type' => 'text',
+								'value' => $this->themeSettings->getSettings()['wordmark-text'],
+							],
+							'tracking_label' => 'wordmark-image',
+						];
+					}
+				}
 			}
 		}
 

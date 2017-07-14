@@ -22,21 +22,16 @@ class Wordmark {
 
 		$this->isValid = false;
 
-		if ( !empty( $wordmarkData['image-data']['url'] ) ) {
+		if ( !empty( $wordmarkData ) ) {
 			$this->href = $wordmarkData['href'];
 			$this->label = new Label( $wordmarkData['title']['value'] );
 			$this->trackingLabel = $wordmarkData['tracking_label'];
-
-			$wordmarkURL = $wordmarkData['image-data']['url'];
-
-			$imageTitle = Title::newFromText( ThemeSettings::WordmarkImageName, NS_IMAGE );
-			if ( $imageTitle instanceof Title ) {
-				$file = wfFindFile( $imageTitle );
-				if ( $file instanceof File && $file->width > 0 && $file->height > 0 ) {
-					$this->image = new Image( $wordmarkURL, $file->width, $file->height );
-					$this->isValid = true;
-				}
-			}
+			$this->image = new Image(
+				$wordmarkData['image-data']['url'],
+				$wordmarkData['image-data']['width'],
+				$wordmarkData['image-data']['height']
+			);
+			$this->isValid = true;
 		}
 	}
 
