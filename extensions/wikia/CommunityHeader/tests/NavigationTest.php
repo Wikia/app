@@ -389,7 +389,7 @@ class NavigationTest extends WikiaBaseTest {
 							'key' => 'community-header-discuss',
 							'iconKey' => 'wds-icons-reply-small',
 						],
-						'href' => $host . '/d/f',
+						'href' => '/d/f',
 						'tracking' => 'discuss',
 					]
 				),
@@ -406,7 +406,7 @@ class NavigationTest extends WikiaBaseTest {
 							'key' => 'community-header-discuss',
 							'iconKey' => 'wds-icons-reply-small',
 						],
-						'href' => $host . '/d/f',
+						'href' => '/d/f',
 						'tracking' => 'discuss',
 					]
 				),
