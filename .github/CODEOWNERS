@@ -1,0 +1,28 @@
+# Defines per-directory code ownership to help selecting reviewers
+# @see https://github.com/blog/2392-introducing-code-owners
+
+# SUS team: @mixth-sense @TK-999 @macbre 
+/extensions/SemanticMediaWiki/*		@mixth-sense @TK-999 @macbre 
+/extensions/wikia/Answers/*		@mixth-sense @TK-999 @macbre 
+/extensions/wikia/ArticleComments/*		@mixth-sense @TK-999 @macbre 
+/extensions/wikia/Blogs/*		@mixth-sense @TK-999 @macbre 
+/extensions/wikia/Chat2/*		@mixth-sense @TK-999 @macbre 
+/extensions/wikia/CreateNewWiki/*		@mixth-sense @TK-999 @macbre 
+/extensions/wikia/Forum/*		@mixth-sense @TK-999 @macbre 
+/extensions/wikia/HAWelcome/*		@mixth-sense @TK-999 @macbre 
+/extensions/wikia/ImageReview/*		@mixth-sense @TK-999 @macbre 
+/extensions/wikia/Lightbox/*		@mixth-sense @TK-999 @macbre 
+/extensions/wikia/MediaGallery/*		@mixth-sense @TK-999 @macbre 
+/extensions/wikia/PhalanxII/*		@mixth-sense @TK-999 @macbre 
+/extensions/wikia/RTE/*		@mixth-sense @TK-999 @macbre 
+/extensions/wikia/Search/*		@mixth-sense @TK-999 @macbre 
+/extensions/wikia/ThemeDesigner/*		@mixth-sense @TK-999 @macbre 
+/extensions/wikia/UserProfilePageV3/*		@mixth-sense @TK-999 @macbre 
+/extensions/wikia/UserRenameTool/*		@mixth-sense @TK-999 @macbre 
+/extensions/wikia/VideoHandlers/*		@mixth-sense @TK-999 @macbre 
+/extensions/wikia/Wall/*		@mixth-sense @TK-999 @macbre 
+/extensions/wikia/WallNotifications/*		@mixth-sense @TK-999 @macbre 
+/extensions/wikia/WikiFactory/*		@mixth-sense @TK-999 @macbre 
+/extensions/wikia/WikiaHomePage/*		@mixth-sense @TK-999 @macbre 
+/extensions/wikia/WikiaHubsV3/*		@mixth-sense @TK-999 @macbre 
+/extensions/wikia/WikiaMaps/*		@mixth-sense @TK-999 @macbre 
