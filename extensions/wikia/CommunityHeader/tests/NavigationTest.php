@@ -6,7 +6,7 @@ use \Wikia\CommunityHeader\Navigation;
 
 class NavigationTest extends WikiaBaseTest {
 	const WIKI_ID = 147;
-
+	const DOMAIN =  "http://starwars.wikia.com";
 	/**
 	 * @dataProvider exploreItemsProvider
 	 *
@@ -32,6 +32,7 @@ class NavigationTest extends WikiaBaseTest {
 	 */
 	public function testDiscussLink( $globals, $expected ) {
 		$this->mockStaticMethodWithCallBack( 'WikiFactory', 'getVarValueByName', function( $variable, $id) use ($globals) {
+			$globals['wgServer'] = self::DOMAIN;
 			return $globals[$variable];
 		});
 
