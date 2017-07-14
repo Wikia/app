@@ -68,7 +68,6 @@ extensions/wikia/CategoryExhibition/*		@mixth-sense @TK-999 @macbre
 extensions/wikia/CategoryGalleries/*		@mixth-sense @TK-999 @macbre 
 extensions/wikia/CategorySelect/*		@mixth-sense @TK-999 @macbre 
 extensions/wikia/Chat2/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/Chat2/nodejs/*		@mixth-sense @TK-999 @macbre 
 extensions/wikia/CloseMyAccount/*		@mixth-sense @TK-999 @macbre 
 extensions/wikia/CommunityPage/*		@mixth-sense @TK-999 @macbre 
 extensions/wikia/ContentReview/*		@mixth-sense @TK-999 @macbre 
@@ -130,7 +129,6 @@ extensions/wikia/WhereIsExtension/*		@mixth-sense @TK-999 @macbre
 extensions/wikia/WikiaHomePage/*		@mixth-sense @TK-999 @macbre 
 extensions/wikia/WikiaHubsV3/*		@mixth-sense @TK-999 @macbre 
 extensions/wikia/WikiaMaps/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/WikiaMaps/nodejs/*		@mixth-sense @TK-999 @macbre 
 extensions/wikia/WikiAnswers/*		@mixth-sense @TK-999 @macbre 
 extensions/wikia/WikiaRSS/*		@mixth-sense @TK-999 @macbre 
 extensions/wikia/WikiFactory/*		@mixth-sense @TK-999 @macbre 
