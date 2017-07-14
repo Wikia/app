@@ -10,7 +10,7 @@ $wgHooks['EditPageMakeGlobalVariablesScript'][] = 'CommunityHeaderHooks::onEditP
 $wgHooks['MessageCacheReplace'][] = 'CommunityHeaderHooks::onMessageCacheReplace';
 
 // Controllers
-$wgAutoloadClasses['CommunityHeaderController'] = $dir . 'CommunityHeaderController.class.php';
+$wgAutoloadClasses['CommunityHeaderService'] = $dir . 'CommunityHeaderService.class.php';
 
 // Classes
 $wgAutoloadClasses['Wikia\CommunityHeader\Counter'] = $dir . 'Counter.class.php';

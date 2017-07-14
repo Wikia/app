@@ -32,5 +32,5 @@
 			<?php endforeach; ?>
 		</div>
 	</div>
-	<?= $app->renderView( 'CommunityHeaderController', 'localNavigation' ); ?>
+	<?= $app->renderView( 'CommunityHeaderService', 'localNavigation' ); ?>
 </header>

@@ -6,7 +6,7 @@ use Wikia\CommunityHeader\Sitename;
 use Wikia\CommunityHeader\WikiButtons;
 use Wikia\CommunityHeader\Wordmark;
 
-class CommunityHeaderController extends WikiaController {
+class CommunityHeaderService extends WikiaService {
 
 	/**
 	 * @var $model DesignSystemCommunityHeaderModel
