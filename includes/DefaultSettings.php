@@ -5273,6 +5273,12 @@ $wgAjaxUploadDestCheck = true;
 $wgAjaxLicensePreview = true;
 
 /**
+ * @name $wgEnableWikiaTOC
+ * enable Wikia JS driven TOC
+ */
+$wgEnableWikiaTOC = true;
+
+/**
  * Settings for incoming cross-site AJAX requests:
  * Newer browsers support cross-site AJAX when the target resource allows requests
  * from the origin domain by the Access-Control-Allow-Origin header.
