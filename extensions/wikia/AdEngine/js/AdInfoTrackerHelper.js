@@ -2,9 +2,10 @@
 define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 	'ext.wikia.adEngine.lookup.services',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
+	'wikia.browserDetect',
 	'wikia.log',
 	'wikia.window'
-], function (lookupServices, adBlockDetection, log, win) {
+], function (lookupServices, adBlockDetection, browserDetect, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adInfoTrackerHelper';
@@ -35,6 +36,7 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 		data = {
 			'pv': pageParams.pv || '',
 			'pv_unique_id': win.adEnginePvUID,
+			'browser': [ browserDetect.getOS(), browserDetect.getBrowser() ].join(' '),
 			'country': pageParams.geo || '',
 			'time_bucket': (new Date()).getHours(),
 			'slot_size': slotSize && slotSize.length ? slotSize.join('x') : '',
