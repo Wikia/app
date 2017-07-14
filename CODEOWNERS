@@ -61,6 +61,7 @@ extensions/Variables/*		@mixth-sense @TK-999 @macbre
 extensions/wikia/Blogs/*		@mixth-sense @TK-999 @macbre 
 extensions/wikia/Chat2/*		@mixth-sense @TK-999 @macbre 
 extensions/wikia/CreateNewWiki/*		@mixth-sense @TK-999 @macbre 
+extensions/wikia/FacebookClient/*		@mixth-sense @TK-999 @macbre 
 extensions/wikia/Forum/*		@mixth-sense @TK-999 @macbre 
 extensions/wikia/HAWelcome/*		@mixth-sense @TK-999 @macbre 
 extensions/wikia/ImageReview/*		@mixth-sense @TK-999 @macbre 
@@ -78,4 +79,21 @@ extensions/wikia/WallNotifications/*		@mixth-sense @TK-999 @macbre
 extensions/wikia/WikiFactory/*		@mixth-sense @TK-999 @macbre 
 extensions/wikia/WikiaHomePage/*		@mixth-sense @TK-999 @macbre 
 extensions/wikia/WikiaHubsV3/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/WikiaMaps/*		@mixth-sense @TK-999 @macbre 
+extensions/wikia/WikiaMaps/*		@mixth-sense @TK-999 @macbre
+# staff tools
+extensions/AbuseFilter/*		@mixth-sense @TK-999 @macbre 
+extensions/wikia/CloseMyAccount/*		@mixth-sense @TK-999 @macbre 
+extensions/wikia/CoppaTool/*		@mixth-sense @TK-999 @macbre 
+extensions/wikia/DMCARequest/*		@mixth-sense @TK-999 @macbre 
+extensions/wikia/EditAccount/*		@mixth-sense @TK-999 @macbre 
+extensions/wikia/Listusers/*		@mixth-sense @TK-999 @macbre 
+extensions/wikia/LookupContribs/*		@mixth-sense @TK-999 @macbre 
+extensions/wikia/LookupUser/*		@mixth-sense @TK-999 @macbre 
+extensions/wikia/Piggyback/*		@mixth-sense @TK-999 @macbre 
+extensions/wikia/SiteWideMessages/*		@mixth-sense @TK-999 @macbre 
+extensions/wikia/SpecialContact2/*		@mixth-sense @TK-999 @macbre 
+extensions/wikia/SpecialMultipleLookup/*		@mixth-sense @TK-999 @macbre 
+extensions/wikia/SpecialProtectSite/*		@mixth-sense @TK-999 @macbre 
+extensions/wikia/StaffLog/*		@mixth-sense @TK-999 @macbre 
+extensions/wikia/TaskManager/*		@mixth-sense @TK-999 @macbre 
+extensions/wikia/WhereIsExtension/*		@mixth-sense @TK-999 @macbre 
