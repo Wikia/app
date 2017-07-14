@@ -29,8 +29,6 @@
 
 <?= $app->renderView('AdEmptyContainer', 'Index', ['slotName' => 'TOP_LEADERBOARD_AB']); ?>
 
-<?= empty( $wg->WikiaSeasonsPencilUnit ) ? '' : $app->renderView( 'WikiaSeasons', 'pencilUnit', array() ); ?>
-
 <?= $beforeWikiaPageHtml ?>
 
 <? if ( empty( $wg->SuppressCommunityHeader ) && !WikiaPageType::isCorporatePage() ) : ?>
