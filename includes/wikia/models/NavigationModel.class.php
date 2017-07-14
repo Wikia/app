@@ -48,8 +48,6 @@ class NavigationModel extends WikiaModel {
 
 	const MEMC_VERSION = 2;
 
-	private $menuNodes;
-
 	private $biggestCategories;
 	private $lastExtraIndex = 1000;
 	private $extraWordsMap = [
