@@ -657,32 +657,6 @@ $config['wikiamobile_scss'] = [
 	],
 ];
 
-$config['wikiamobile_editor_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => 'wikiamobile',
-	'assets' => [
-		'//extensions/wikia/WikiaMobileEditor/css/WikiaMobileEditor.scss',
-	],
-];
-
-$config['wikiamobile_editor_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'wikiamobile',
-	'assets' => [
-		'#group_wikiamobile_tables_js',
-		'//resources/wikia/libraries/mustache/mustache.js',
-		'//extensions/wikia/WikiaMobileEditor/js/preview.js',
-	],
-];
-
-$config['wikiamobile_editor_view_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => 'wikiamobile',
-	'assets' => [
-		'//extensions/wikia/WikiaMobileEditor/css/WikiaMobileEditor.edit.scss',
-	],
-];
-
 $config['wikiamobile_404_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => 'wikiamobile',
