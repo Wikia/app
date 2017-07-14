@@ -86,10 +86,8 @@ describe('ext.wikia.adEngine.provider.*', function () {
 					mocks.adContext,
 					mocks.uapContext,
 					getFactory(),
-					mocks.adUnitBuilder,
 					mocks.kiloAdUnitBuilder,
-					mocks.slotTweaker,
-					mocks.adUnitBuilder
+					mocks.slotTweaker
 				);
 			case 'remnantGpt':
 				return modules['ext.wikia.adEngine.provider.' + providerName](
@@ -102,7 +100,6 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			case 'directGptMobile':
 				return modules['ext.wikia.adEngine.provider.' + providerName](
 					mocks.adContext,
-					mocks.defaultAdUnitBuilder,
 					mocks.kiloAdUnitBuilder,
 					getFactory()
 				);

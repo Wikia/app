@@ -18,7 +18,6 @@ describe('ext.wikia.adEngine.provider.directGpt', function () {
 			factory: {
 				createProvider: noop
 			},
-			defaultAdUnitBuilder: {name: 'defaultAdUnit'},
 			kiloAdUnitBuilder: {name: 'kiloAdUnit'},
 			slotTweaker: {},
 			pageFairRecovery: {},
@@ -30,7 +29,6 @@ describe('ext.wikia.adEngine.provider.directGpt', function () {
 			mocks.adContext,
 			mocks.uapContext,
 			mocks.factory,
-			mocks.defaultAdUnitBuilder,
 			mocks.kiloAdUnitBuilder,
 			mocks.slotTweaker,
 			mocks.pageFairRecovery,
@@ -38,18 +36,8 @@ describe('ext.wikia.adEngine.provider.directGpt', function () {
 		);
 	}
 
-	it('Return default adUnit if there is no param in context', function () {
+	it('Return kilo adUnit if there is no param in context', function () {
 		spyOn(mocks.factory, 'createProvider');
-
-		getModule();
-
-		expect(mocks.factory.createProvider.calls.argsFor(0)[4].adUnitBuilder)
-			.toEqual(mocks.defaultAdUnitBuilder);
-	});
-
-	it('Return KILO adUnit if there is param in context', function () {
-		spyOn(mocks.factory, 'createProvider');
-		spyOn(mocks.adContext, 'getContext').and.returnValue({opts: {enableKILOAdUnit: true}});
 
 		getModule();
 
