@@ -264,11 +264,13 @@ class MigrateOversightRevisions extends Maintenance {
 			}
 
 			if ( $this->getOption( 'migrate' ) ) {
-				$this->beginTransaction( $dbw, __METHOD__ );
+				$dbw->begin( __METHOD__ );
+
 				$dbw->insert( 'revision', $insertRevisionData, __METHOD__ );
 				$dbw->insert( 'archive', $insertArchiveData, __METHOD__ );
 				$dbw->insert( 'logging', $insertLoggingData, __METHOD__ );
-				$this->commitTransaction( $dbw, __METHOD__ );
+
+				$dbw->commit( __METHOD__ );
 			}
 		} while ( $hiddenRows->numRows() === $this->mBatchSize );
 
