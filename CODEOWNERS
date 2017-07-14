@@ -1,99 +1,101 @@
 # Defines per-directory code ownership to help selecting reviewers
 # @see https://github.com/blog/2392-introducing-code-owners
 
-# SUS team: @mixth-sense @TK-999 @macbre 
-extensions/3rdparty/RSS/*		@mixth-sense @TK-999 @macbre 
-extensions/AbuseFilter/*		@mixth-sense @TK-999 @macbre 
-extensions/AntiBot/*		@mixth-sense @TK-999 @macbre 
-extensions/ApiExplorer/*		@mixth-sense @TK-999 @macbre 
-extensions/Arrays/*		@mixth-sense @TK-999 @macbre 
-extensions/Autoincrement/*		@mixth-sense @TK-999 @macbre 
-extensions/CategoryIntersection/*		@mixth-sense @TK-999 @macbre 
-extensions/CategoryTree/*		@mixth-sense @TK-999 @macbre 
-extensions/CharInsert/*		@mixth-sense @TK-999 @macbre 
-extensions/Cite/*		@mixth-sense @TK-999 @macbre 
-extensions/cldr/*		@mixth-sense @TK-999 @macbre 
-extensions/ConfirmEdit/*		@mixth-sense @TK-999 @macbre 
-extensions/CreateBox/*		@mixth-sense @TK-999 @macbre 
-extensions/DismissableSiteNotice/*		@mixth-sense @TK-999 @macbre 
-extensions/DPLforum/*		@mixth-sense @TK-999 @macbre 
-extensions/DynamicPageList/*		@mixth-sense @TK-999 @macbre 
-extensions/ExpandTemplates/*		@mixth-sense @TK-999 @macbre 
-extensions/FormatNum/*		@mixth-sense @TK-999 @macbre 
-extensions/Gadgets/*		@mixth-sense @TK-999 @macbre 
-extensions/GlobalUsage/*		@mixth-sense @TK-999 @macbre 
-extensions/HeaderTabs/*		@mixth-sense @TK-999 @macbre 
-extensions/ImageMap/*		@mixth-sense @TK-999 @macbre 
-extensions/InputBox/*		@mixth-sense @TK-999 @macbre 
-extensions/LabeledSectionTransclusion/*		@mixth-sense @TK-999 @macbre 
-extensions/Loops/*		@mixth-sense @TK-999 @macbre 
-extensions/Maps/*		@mixth-sense @TK-999 @macbre 
-extensions/Math/*		@mixth-sense @TK-999 @macbre 
-extensions/MultiUpload/*		@mixth-sense @TK-999 @macbre 
-extensions/NewestPages/*		@mixth-sense @TK-999 @macbre 
-extensions/Nuke/*		@mixth-sense @TK-999 @macbre 
-extensions/NumberFormat/*		@mixth-sense @TK-999 @macbre 
-extensions/OAI/*		@mixth-sense @TK-999 @macbre 
-extensions/OggHandler/*		@mixth-sense @TK-999 @macbre 
-extensions/OpenGraphMeta/*		@mixth-sense @TK-999 @macbre 
-extensions/Oversight/*		@mixth-sense @TK-999 @macbre 
-extensions/PageBy/*		@mixth-sense @TK-999 @macbre 
-extensions/ParserFunctions/*		@mixth-sense @TK-999 @macbre 
-extensions/PdfHandler/*		@mixth-sense @TK-999 @macbre 
-extensions/Poem/*		@mixth-sense @TK-999 @macbre 
-extensions/PoolCounter/*		@mixth-sense @TK-999 @macbre 
-extensions/RandomImage/*		@mixth-sense @TK-999 @macbre 
-extensions/RandomInCategory/*		@mixth-sense @TK-999 @macbre 
-extensions/RandomRootPage/*		@mixth-sense @TK-999 @macbre 
-extensions/RefreshSpecial/*		@mixth-sense @TK-999 @macbre 
-extensions/RegexFun/*		@mixth-sense @TK-999 @macbre 
-extensions/Scribunto/*		@mixth-sense @TK-999 @macbre 
-extensions/SemanticMediaWiki/*		@mixth-sense @TK-999 @macbre 
-extensions/SpamBlacklist/*		@mixth-sense @TK-999 @macbre 
-extensions/SpamRegex/*		@mixth-sense @TK-999 @macbre 
-extensions/SyntaxHighlight_GeSHi/*		@mixth-sense @TK-999 @macbre 
-extensions/Tabber/*		@mixth-sense @TK-999 @macbre 
-extensions/timeline/*		@mixth-sense @TK-999 @macbre 
-extensions/TitleBlacklist/*		@mixth-sense @TK-999 @macbre 
-extensions/TitleKey/*		@mixth-sense @TK-999 @macbre 
-extensions/TorBlock/*		@mixth-sense @TK-999 @macbre 
-extensions/Variables/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/Blogs/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/Chat2/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/CreateNewWiki/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/FacebookClient/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/Forum/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/HAWelcome/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/ImageReview/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/Lightbox/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/MediaGallery/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/PhalanxII/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/RTE/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/Search/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/ThemeDesigner/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/UserProfilePageV3/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/UserRenameTool/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/VideoHandlers/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/Wall/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/WallNotifications/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/WikiFactory/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/WikiaHomePage/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/WikiaHubsV3/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/WikiaMaps/*		@mixth-sense @TK-999 @macbre
+#
+# The Sustaining Team
+#
+extensions/3rdparty/RSS/*		@Wikia/sus 
+extensions/AbuseFilter/*		@Wikia/sus 
+extensions/AntiBot/*		@Wikia/sus 
+extensions/ApiExplorer/*		@Wikia/sus 
+extensions/Arrays/*		@Wikia/sus 
+extensions/Autoincrement/*		@Wikia/sus 
+extensions/CategoryIntersection/*		@Wikia/sus 
+extensions/CategoryTree/*		@Wikia/sus 
+extensions/CharInsert/*		@Wikia/sus 
+extensions/Cite/*		@Wikia/sus 
+extensions/cldr/*		@Wikia/sus 
+extensions/ConfirmEdit/*		@Wikia/sus 
+extensions/CreateBox/*		@Wikia/sus 
+extensions/DismissableSiteNotice/*		@Wikia/sus 
+extensions/DPLforum/*		@Wikia/sus 
+extensions/DynamicPageList/*		@Wikia/sus 
+extensions/ExpandTemplates/*		@Wikia/sus 
+extensions/FormatNum/*		@Wikia/sus 
+extensions/Gadgets/*		@Wikia/sus 
+extensions/GlobalUsage/*		@Wikia/sus 
+extensions/HeaderTabs/*		@Wikia/sus 
+extensions/ImageMap/*		@Wikia/sus 
+extensions/InputBox/*		@Wikia/sus 
+extensions/LabeledSectionTransclusion/*		@Wikia/sus 
+extensions/Loops/*		@Wikia/sus 
+extensions/Maps/*		@Wikia/sus 
+extensions/Math/*		@Wikia/sus 
+extensions/MultiUpload/*		@Wikia/sus 
+extensions/NewestPages/*		@Wikia/sus 
+extensions/Nuke/*		@Wikia/sus 
+extensions/NumberFormat/*		@Wikia/sus 
+extensions/OAI/*		@Wikia/sus 
+extensions/OggHandler/*		@Wikia/sus 
+extensions/OpenGraphMeta/*		@Wikia/sus 
+extensions/Oversight/*		@Wikia/sus 
+extensions/PageBy/*		@Wikia/sus 
+extensions/ParserFunctions/*		@Wikia/sus 
+extensions/PdfHandler/*		@Wikia/sus 
+extensions/Poem/*		@Wikia/sus 
+extensions/PoolCounter/*		@Wikia/sus 
+extensions/RandomImage/*		@Wikia/sus 
+extensions/RandomInCategory/*		@Wikia/sus 
+extensions/RandomRootPage/*		@Wikia/sus 
+extensions/RefreshSpecial/*		@Wikia/sus 
+extensions/RegexFun/*		@Wikia/sus 
+extensions/Scribunto/*		@Wikia/sus 
+extensions/SemanticMediaWiki/*		@Wikia/sus 
+extensions/SpamBlacklist/*		@Wikia/sus 
+extensions/SpamRegex/*		@Wikia/sus 
+extensions/SyntaxHighlight_GeSHi/*		@Wikia/sus 
+extensions/Tabber/*		@Wikia/sus 
+extensions/timeline/*		@Wikia/sus 
+extensions/TitleBlacklist/*		@Wikia/sus 
+extensions/TitleKey/*		@Wikia/sus 
+extensions/TorBlock/*		@Wikia/sus 
+extensions/Variables/*		@Wikia/sus 
+extensions/wikia/Blogs/*		@Wikia/sus 
+extensions/wikia/Chat2/*		@Wikia/sus 
+extensions/wikia/CreateNewWiki/*		@Wikia/sus 
+extensions/wikia/FacebookClient/*		@Wikia/sus 
+extensions/wikia/Forum/*		@Wikia/sus 
+extensions/wikia/HAWelcome/*		@Wikia/sus 
+extensions/wikia/ImageReview/*		@Wikia/sus 
+extensions/wikia/Lightbox/*		@Wikia/sus 
+extensions/wikia/MediaGallery/*		@Wikia/sus 
+extensions/wikia/PhalanxII/*		@Wikia/sus 
+extensions/wikia/RTE/*		@Wikia/sus 
+extensions/wikia/Search/*		@Wikia/sus 
+extensions/wikia/ThemeDesigner/*		@Wikia/sus 
+extensions/wikia/UserProfilePageV3/*		@Wikia/sus 
+extensions/wikia/UserRenameTool/*		@Wikia/sus 
+extensions/wikia/VideoHandlers/*		@Wikia/sus 
+extensions/wikia/Wall/*		@Wikia/sus 
+extensions/wikia/WallNotifications/*		@Wikia/sus 
+extensions/wikia/WikiFactory/*		@Wikia/sus 
+extensions/wikia/WikiaHomePage/*		@Wikia/sus 
+extensions/wikia/WikiaHubsV3/*		@Wikia/sus 
+extensions/wikia/WikiaMaps/*		@Wikia/sus
 # staff tools
-extensions/AbuseFilter/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/CloseMyAccount/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/CoppaTool/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/DMCARequest/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/EditAccount/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/Listusers/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/LookupContribs/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/LookupUser/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/Piggyback/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/SiteWideMessages/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/SpecialContact2/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/SpecialMultipleLookup/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/SpecialProtectSite/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/StaffLog/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/TaskManager/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/WhereIsExtension/*		@mixth-sense @TK-999 @macbre 
+extensions/AbuseFilter/*		@Wikia/sus 
+extensions/wikia/CloseMyAccount/*		@Wikia/sus 
+extensions/wikia/CoppaTool/*		@Wikia/sus 
+extensions/wikia/DMCARequest/*		@Wikia/sus 
+extensions/wikia/EditAccount/*		@Wikia/sus 
+extensions/wikia/Listusers/*		@Wikia/sus 
+extensions/wikia/LookupContribs/*		@Wikia/sus 
+extensions/wikia/LookupUser/*		@Wikia/sus 
+extensions/wikia/Piggyback/*		@Wikia/sus 
+extensions/wikia/SiteWideMessages/*		@Wikia/sus 
+extensions/wikia/SpecialContact2/*		@Wikia/sus 
+extensions/wikia/SpecialMultipleLookup/*		@Wikia/sus 
+extensions/wikia/SpecialProtectSite/*		@Wikia/sus 
+extensions/wikia/StaffLog/*		@Wikia/sus 
+extensions/wikia/TaskManager/*		@Wikia/sus 
+extensions/wikia/WhereIsExtension/*		@Wikia/sus 
