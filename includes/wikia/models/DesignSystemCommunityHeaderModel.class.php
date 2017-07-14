@@ -20,7 +20,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		parent::__construct();
 
 		$this->productInstanceId = $cityId;
-		$this->themeSettings = new ThemeSettings();
+		$this->themeSettings = new ThemeSettings( $cityId );
 		$this->settings = $this->themeSettings->getSettings( $cityId );
 		$this->mainPageUrl = GlobalTitle::newMainPage( $this->productInstanceId )->getFullURL();
 	}
