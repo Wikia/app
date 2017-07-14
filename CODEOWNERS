@@ -1,25 +1,101 @@
 # Defines per-directory code ownership to help selecting reviewers
 # @see https://github.com/blog/2392-introducing-code-owners
 
-# SUS team: @mixth-sense @TK-999 @macbre 
-extensions/wikia/Blogs/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/Chat2/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/CreateNewWiki/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/Forum/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/HAWelcome/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/ImageReview/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/Lightbox/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/MediaGallery/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/PhalanxII/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/RTE/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/Search/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/ThemeDesigner/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/UserProfilePageV3/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/UserRenameTool/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/VideoHandlers/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/Wall/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/WallNotifications/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/WikiFactory/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/WikiaHomePage/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/WikiaHubsV3/*		@mixth-sense @TK-999 @macbre 
-extensions/wikia/WikiaMaps/*		@mixth-sense @TK-999 @macbre 
+#
+# The Sustaining Team
+#
+extensions/3rdparty/RSS/*		@Wikia/sus 
+extensions/AbuseFilter/*		@Wikia/sus 
+extensions/AntiBot/*		@Wikia/sus 
+extensions/ApiExplorer/*		@Wikia/sus 
+extensions/Arrays/*		@Wikia/sus 
+extensions/Autoincrement/*		@Wikia/sus 
+extensions/CategoryIntersection/*		@Wikia/sus 
+extensions/CategoryTree/*		@Wikia/sus 
+extensions/CharInsert/*		@Wikia/sus 
+extensions/Cite/*		@Wikia/sus 
+extensions/cldr/*		@Wikia/sus 
+extensions/ConfirmEdit/*		@Wikia/sus 
+extensions/CreateBox/*		@Wikia/sus 
+extensions/DismissableSiteNotice/*		@Wikia/sus 
+extensions/DPLforum/*		@Wikia/sus 
+extensions/DynamicPageList/*		@Wikia/sus 
+extensions/ExpandTemplates/*		@Wikia/sus 
+extensions/FormatNum/*		@Wikia/sus 
+extensions/Gadgets/*		@Wikia/sus 
+extensions/GlobalUsage/*		@Wikia/sus 
+extensions/HeaderTabs/*		@Wikia/sus 
+extensions/ImageMap/*		@Wikia/sus 
+extensions/InputBox/*		@Wikia/sus 
+extensions/LabeledSectionTransclusion/*		@Wikia/sus 
+extensions/Loops/*		@Wikia/sus 
+extensions/Maps/*		@Wikia/sus 
+extensions/Math/*		@Wikia/sus 
+extensions/MultiUpload/*		@Wikia/sus 
+extensions/NewestPages/*		@Wikia/sus 
+extensions/Nuke/*		@Wikia/sus 
+extensions/NumberFormat/*		@Wikia/sus 
+extensions/OAI/*		@Wikia/sus 
+extensions/OggHandler/*		@Wikia/sus 
+extensions/OpenGraphMeta/*		@Wikia/sus 
+extensions/Oversight/*		@Wikia/sus 
+extensions/PageBy/*		@Wikia/sus 
+extensions/ParserFunctions/*		@Wikia/sus 
+extensions/PdfHandler/*		@Wikia/sus 
+extensions/Poem/*		@Wikia/sus 
+extensions/PoolCounter/*		@Wikia/sus 
+extensions/RandomImage/*		@Wikia/sus 
+extensions/RandomInCategory/*		@Wikia/sus 
+extensions/RandomRootPage/*		@Wikia/sus 
+extensions/RefreshSpecial/*		@Wikia/sus 
+extensions/RegexFun/*		@Wikia/sus 
+extensions/Scribunto/*		@Wikia/sus 
+extensions/SemanticMediaWiki/*		@Wikia/sus 
+extensions/SpamBlacklist/*		@Wikia/sus 
+extensions/SpamRegex/*		@Wikia/sus 
+extensions/SyntaxHighlight_GeSHi/*		@Wikia/sus 
+extensions/Tabber/*		@Wikia/sus 
+extensions/timeline/*		@Wikia/sus 
+extensions/TitleBlacklist/*		@Wikia/sus 
+extensions/TitleKey/*		@Wikia/sus 
+extensions/TorBlock/*		@Wikia/sus 
+extensions/Variables/*		@Wikia/sus 
+extensions/wikia/Blogs/*		@Wikia/sus 
+extensions/wikia/Chat2/*		@Wikia/sus 
+extensions/wikia/CreateNewWiki/*		@Wikia/sus 
+extensions/wikia/FacebookClient/*		@Wikia/sus 
+extensions/wikia/Forum/*		@Wikia/sus 
+extensions/wikia/HAWelcome/*		@Wikia/sus 
+extensions/wikia/ImageReview/*		@Wikia/sus 
+extensions/wikia/Lightbox/*		@Wikia/sus 
+extensions/wikia/MediaGallery/*		@Wikia/sus 
+extensions/wikia/PhalanxII/*		@Wikia/sus 
+extensions/wikia/RTE/*		@Wikia/sus 
+extensions/wikia/Search/*		@Wikia/sus 
+extensions/wikia/ThemeDesigner/*		@Wikia/sus 
+extensions/wikia/UserProfilePageV3/*		@Wikia/sus 
+extensions/wikia/UserRenameTool/*		@Wikia/sus 
+extensions/wikia/VideoHandlers/*		@Wikia/sus 
+extensions/wikia/Wall/*		@Wikia/sus 
+extensions/wikia/WallNotifications/*		@Wikia/sus 
+extensions/wikia/WikiFactory/*		@Wikia/sus 
+extensions/wikia/WikiaHomePage/*		@Wikia/sus 
+extensions/wikia/WikiaHubsV3/*		@Wikia/sus 
+extensions/wikia/WikiaMaps/*		@Wikia/sus
+# staff tools
+extensions/AbuseFilter/*		@Wikia/sus 
+extensions/wikia/CloseMyAccount/*		@Wikia/sus 
+extensions/wikia/CoppaTool/*		@Wikia/sus 
+extensions/wikia/DMCARequest/*		@Wikia/sus 
+extensions/wikia/EditAccount/*		@Wikia/sus 
+extensions/wikia/Listusers/*		@Wikia/sus 
+extensions/wikia/LookupContribs/*		@Wikia/sus 
+extensions/wikia/LookupUser/*		@Wikia/sus 
+extensions/wikia/Piggyback/*		@Wikia/sus 
+extensions/wikia/SiteWideMessages/*		@Wikia/sus 
+extensions/wikia/SpecialContact2/*		@Wikia/sus 
+extensions/wikia/SpecialMultipleLookup/*		@Wikia/sus 
+extensions/wikia/SpecialProtectSite/*		@Wikia/sus 
+extensions/wikia/StaffLog/*		@Wikia/sus 
+extensions/wikia/TaskManager/*		@Wikia/sus 
+extensions/wikia/WhereIsExtension/*		@Wikia/sus 
