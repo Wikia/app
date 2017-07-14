@@ -228,7 +228,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 			$tracking = '';
 
 			if ( !empty( $wgEnableDiscussions ) ) {
-				$url = WikiFactory::getHostById( $this->productInstanceId ) . '/d/f';
+				$url = '/d/f';
 				$key = 'community-header-discuss';
 				$tracking = 'discuss';
 			} elseif ( !empty( $wgEnableForumExt ) ) {
