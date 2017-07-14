@@ -98,7 +98,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 
 		function shouldDelaySlotFillIn(slotName) {
 			var isBlocking = adBlockDetection.isBlocking() || instartLogic.isBlocking(),
-				shouldDelay = adContext.getContext().opts.delayBtf && !isBlocking;
+				shouldDelay = adContext.getContext().opts.delayBtf;// && !isBlocking;
 			log(['shouldDelaySlotFillIn', shouldDelay, slotName], log.levels.debug, logGroup);
 
 			return shouldDelay;
