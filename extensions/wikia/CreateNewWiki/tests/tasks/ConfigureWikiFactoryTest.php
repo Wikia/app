@@ -119,7 +119,6 @@ class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 					'wgLanguageCode' => 'en',
 					'wgServer' => 'http://foo.wikia.com',
 					'wgEnableSectionEdit' => true,
-					'wgEnableSwiftFileBackend' => true,
 					'wgOasisLoadCommonCSS' => true,
 					'wgEnablePortableInfoboxEuropaTheme' => true,
 					'wgDBcluster' => 'c7'
@@ -136,7 +135,6 @@ class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 					'wgLanguageCode' => 'en',
 					'wgServer' => 'http://foo.wikia.com',
 					'wgEnableSectionEdit' => true,
-					'wgEnableSwiftFileBackend' => true,
 					'wgOasisLoadCommonCSS' => true,
 					'wgEnablePortableInfoboxEuropaTheme' => true,
 					'wgMetaNamespace' => 'foo',
@@ -154,7 +152,6 @@ class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 					'wgLanguageCode' => 'en',
 					'wgServer' => 'http://foo.wikia.com',
 					'wgEnableSectionEdit' => true,
-					'wgEnableSwiftFileBackend' => true,
 					'wgOasisLoadCommonCSS' => true,
 					'wgEnablePortableInfoboxEuropaTheme' => true,
 					'wgMetaNamespace' => 'foo_barfizz',
