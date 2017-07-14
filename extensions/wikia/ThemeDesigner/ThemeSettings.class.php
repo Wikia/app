@@ -21,14 +21,23 @@ class ThemeSettings {
 	const CommunityHeaderBackgroundImageName = 'Community-header-background';
 	const FaviconImageName = 'Favicon.ico';
 
+	private $cityId;
 	private $defaultSettings;
 
-	function __construct() {
-		global $wgOasisThemes, $wgSitename, $wgAdminSkin;
+	function __construct( $cityId = null ) {
+		global $wgCityId, $wgOasisThemes;
 
-		$themeName = 'oasis';
+		if ( empty( $cityId ) ) {
+			$cityId = $wgCityId;
+		}
+
+		$this->cityId = $cityId;
+
+		$wgSitename = WikiFactory::getVarValueByName( 'wgSitename', $cityId );
+		$wgAdminSkin = WikiFactory::getVarValueByName( 'wgAdminSkin', $cityId );
 
 		$adminSkin = explode( '-', $wgAdminSkin );
+		$themeName = 'oasis';
 
 		if ( count( $adminSkin ) == 2 ) {
 			$transition = [
@@ -80,16 +89,20 @@ class ThemeSettings {
 
 	public function getSettings() {
 		$settings = $this->defaultSettings;
+		$wikiFactorySettings = WikiFactory::getVarValueByName(
+			self::WikiFactorySettings,
+			$this->cityId
+		);
 
-		if ( !empty( $GLOBALS[self::WikiFactorySettings] ) ) {
-			$settings = array_merge( $settings, $GLOBALS[self::WikiFactorySettings] );
+		if ( !empty( $wikiFactorySettings ) ) {
+			$settings = array_merge( $settings, $wikiFactorySettings );
 			$colorKeys = [ "color-body", "color-page", "color-community-header", "color-buttons", "color-links", "color-header" ];
 
 			// if user didn't define community header background color, but defined buttons color, we use buttons color
 			// as default for community header background
 			if (
-				!isset( $GLOBALS[self::WikiFactorySettings]["color-community-header"] ) &&
-				isset( $GLOBALS[self::WikiFactorySettings]["color-buttons"]
+				!isset( $wikiFactorySettings["color-community-header"] ) &&
+				isset( $wikiFactorySettings["color-buttons"]
 				)
 			) {
 				$settings["color-community-header"] = $settings["color-buttons"];
@@ -133,8 +146,13 @@ class ThemeSettings {
 	}
 
 	public function getHistory() {
-		if ( !empty( $GLOBALS[self::WikiFactoryHistory] ) ) {
-			$history = $GLOBALS[self::WikiFactoryHistory];
+		$wikiFactoryHistory = WikiFactory::getVarValueByName(
+			self::WikiFactoryHistory,
+			$this->cityId
+		);
+
+		if ( !empty( $wikiFactoryHistory ) ) {
+			$history = $wikiFactoryHistory;
 			foreach ( $history as &$entry ) {
 				$entry['settings'] = array_merge( $this->defaultSettings, $entry['settings'] );
 			}
@@ -224,9 +242,8 @@ class ThemeSettings {
 		return null;
 	}
 
-	public function saveSettings( $settings, $cityId = null ) {
-		global $wgCityId, $wgUser;
-		$cityId = empty( $cityId ) ? $wgCityId : $cityId;
+	public function saveSettings( $settings ) {
+		global $wgUser;
 
 		// Verify wordmark length ( CONN-116 )
 		if ( !empty( $settings['wordmark-text'] ) ) {
@@ -283,8 +300,13 @@ class ThemeSettings {
 		$reason = wfMessage( 'themedesigner-reason', $wgUser->getName() )->escaped();
 
 		// update history
-		if ( !empty( $GLOBALS[self::WikiFactoryHistory] ) ) {
-			$history = $GLOBALS[self::WikiFactoryHistory];
+		$wikiFactoryHistory = WikiFactory::getVarValueByName(
+			self::WikiFactoryHistory,
+			$this->cityId
+		);
+
+		if ( !empty( $wikiFactoryHistory ) ) {
+			$history = $wikiFactoryHistory;
 			$lastItem = end( $history );
 			$revisionId = intval( $lastItem['revision'] ) + 1;
 		} else {
@@ -302,7 +324,7 @@ class ThemeSettings {
 		}
 
 		// update WF variable with current theme settings
-		WikiFactory::setVarByName( self::WikiFactorySettings, $cityId, $settings, $reason );
+		WikiFactory::setVarByName( self::WikiFactorySettings, $this->cityId, $settings, $reason );
 
 		// add entry
 		$history[] = [
@@ -342,7 +364,7 @@ class ThemeSettings {
 			}
 		}
 
-		WikiFactory::setVarByName( self::WikiFactoryHistory, $cityId, $history, $reason );
+		WikiFactory::setVarByName( self::WikiFactoryHistory, $this->cityId, $history, $reason );
 	}
 
 	/**
@@ -357,7 +379,10 @@ class ThemeSettings {
 	 * @return string wordmark URL or empty string if not found
 	 */
 	public function getWordmarkUrl() {
-		global $wgUploadPath;
+		$wgUploadPath = WikiFactory::getVarValueByName(
+			'wgUploadPath',
+			$this->cityId
+		);
 
 		$wordmarkUrl = $this->getSettings()['wordmark-image-url'];
 
@@ -425,7 +450,10 @@ class ThemeSettings {
 	 * @return string
 	 */
 	private function getVignetteUrl( string $backgroundUrl ): string {
-		global $wgUploadPath;
+		$wgUploadPath = WikiFactory::getVarValueByName(
+			'wgUploadPath',
+			$this->cityId
+		);
 
 		if ( !VignetteRequest::isVignetteUrl( $backgroundUrl ) ) {
 			if ( empty( $backgroundUrl ) ) {

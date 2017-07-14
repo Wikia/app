@@ -34,7 +34,7 @@
 <?= $beforeWikiaPageHtml ?>
 
 <? if ( empty( $wg->SuppressCommunityHeader ) && !WikiaPageType::isCorporatePage() ) : ?>
-	<?= $app->renderView( 'CommunityHeader', 'index' ) ?>
+	<?= $app->renderView( 'CommunityHeaderService', 'index' ) ?>
 <? endif; ?>
 
 <!-- empty onclick event needs to be applied here to ensure that wds dropdowns work correctly on ios -->
