@@ -131,7 +131,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	function extendTargetingForBlockedTraffic(adElement) {
 		if (instartLogic && instartLogic.isBlocking()) {
 			adElement.slotTargeting.src = 'rec';
-			win.googletag.pubads().setTargeting('requestSource', 'instartLogic');
+			adElement.slotTargeting.requestSource = 'instartLogic';
 
 			log(['extendTargetingForBlockedTraffic', adElement.slotTargeting], log.levels.info, logGroup);
 		}
