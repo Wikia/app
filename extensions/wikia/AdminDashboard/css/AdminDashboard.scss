@@ -1,6 +1,7 @@
 @import "skins/shared/mixins/box-shadow";
 @import "skins/shared/mixins/calc";
 @import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/flexbox";
 @import "skins/shared/mixins/forms";
 @import "skins/shared/mixins/gradient";
 @import "skins/shared/mixins/menus";
@@ -129,8 +130,10 @@ $color-highlight-column: rgba($color-page, 0);
 }
 
 .AdminDashboardRail {
+	@include flex-direction(column);
+	
 	float: right;
-	margin: 20px 15px 0 0;
+	margin: 20px 15px 0 20px;
 	width: 275px;
 	h1 {
 		color: $color-admin-rail-header;
@@ -147,11 +150,6 @@ $color-highlight-column: rgba($color-page, 0);
 
 	@if ( $responsive-or-breakpoints-layout-enabled ) {
 		overflow: hidden;
-	}
-
-	ul, ol {
-		margin: 0;
-		list-style: none;
 	}
 
 	.admin-dashboard-content {
@@ -354,6 +352,13 @@ $color-highlight-column: rgba($color-page, 0);
 	fieldset {
 		border: solid 1px $color-links;
 	}
+
+	.AdminDashboard {
+		ul, ol {
+			margin: 0;
+			list-style: none;
+		}
+	}
 }
 
 @if ( not $responsive-or-breakpoints-layout-enabled ) {
@@ -382,6 +387,11 @@ $color-highlight-column: rgba($color-page, 0);
 }
 
 .QuickStatsWidget {
+	@include display-inline-flex();
+	@include flex-direction(column);
+	@include flex-grow(1);
+
+
 // make this reusable later
 // ng -> not global
 	.WikiaDataTable {
