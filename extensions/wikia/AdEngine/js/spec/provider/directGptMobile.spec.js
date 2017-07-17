@@ -19,6 +19,7 @@ describe('ext.wikia.adEngine.provider.directGpt', function () {
 				createProvider: noop
 			},
 			kiloAdUnitBuilder: {name: 'kiloAdUnit'},
+			megaAdUnitBuilder: {name: 'megaAdUnit'},
 			slotTweaker: {},
 			pageFairRecovery: {},
 			sourcePointRecovery: {}
@@ -30,6 +31,7 @@ describe('ext.wikia.adEngine.provider.directGpt', function () {
 			mocks.uapContext,
 			mocks.factory,
 			mocks.kiloAdUnitBuilder,
+			mocks.megaAdUnitBuilder,
 			mocks.slotTweaker,
 			mocks.pageFairRecovery,
 			mocks.sourcePointRecovery
@@ -38,6 +40,26 @@ describe('ext.wikia.adEngine.provider.directGpt', function () {
 
 	it('Return kilo adUnit if there is no param in context', function () {
 		spyOn(mocks.factory, 'createProvider');
+
+		getModule();
+
+		expect(mocks.factory.createProvider.calls.argsFor(0)[4].adUnitBuilder)
+			.toEqual(mocks.kiloAdUnitBuilder);
+	});
+
+	it('Return mega adUnit builder if there is premium ad layout set in context', function () {
+		spyOn(mocks.factory, 'createProvider');
+		spyOn(mocks.adContext, 'getContext').and.returnValue({opts:{premiumAdLayoutEnabled: true}});
+
+		getModule();
+
+		expect(mocks.factory.createProvider.calls.argsFor(0)[4].adUnitBuilder)
+			.toEqual(mocks.megaAdUnitBuilder);
+	});
+
+	it('Return kilo adUnit builder if there premium ad layout is turned off', function () {
+		spyOn(mocks.factory, 'createProvider');
+		spyOn(mocks.adContext, 'getContext').and.returnValue({opts:{premiumAdLayoutEnabled: false}});
 
 		getModule();
 
