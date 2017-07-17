@@ -11,7 +11,7 @@ class ResourceLoaderAdEngineInstartLogicModule extends ResourceLoaderAdEngineBas
 	const LOCAL_FILE_PATH = __DIR__ . '/../js/InstartLogic/code.js';
 
 	protected function getMemcKey() {
-		return wfSharedMemcKey( 'adengine', get_class( $this ) . __FUNCTION__, static::CACHE_BUSTER );
+		return wfSharedMemcKey( 'adengine', __METHOD__, static::CACHE_BUSTER );
 	}
 
 	/**
