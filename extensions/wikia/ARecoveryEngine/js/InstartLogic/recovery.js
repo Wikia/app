@@ -21,8 +21,10 @@ define('ext.wikia.aRecoveryEngine.instartLogic.recovery', [
 	 * @returns {boolean}
 	 */
 	function isBlocking() {
-		var gptLib = win.googletag.pubads && win.googletag.pubads() && win.googletag.pubads().getTargeting('src'),
-			isParamSet = gptLib && gptLib.indexOf('rec') > -1;
+		var gptLibSrcKeyVal = win.googletag.pubads && win.googletag.pubads() &&
+				win.googletag.pubads().getTargeting('src'),
+
+			isParamSet = gptLibSrcKeyVal && gptLibSrcKeyVal.indexOf('rec') > -1;
 
 		log(['isBlocking', isParamSet], log.levels.debug, logGroup);
 		return isParamSet;
