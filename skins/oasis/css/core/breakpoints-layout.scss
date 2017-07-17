@@ -121,11 +121,10 @@
 		}
 
 		@media #{$breakpoint-small-plus-up} {
-			margin-left: 20px;
+			@include flexbox();
+			@include flex-direction(column);
 
-			&:not(.SearchAdsTopWrapper) {
-				@include flexbox();
-			}
+			margin-left: 20px;
 		}
 	}
 
