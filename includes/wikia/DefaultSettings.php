@@ -30,6 +30,13 @@ $wgCityId = null;
  */
 $wgUseFakeExternalStoreDB = false;
 
+/**
+ * @name wgEnableSwiftFileBackend
+ * Enables distributed file system
+ *
+ * TODO: will be removed fully by SUS-2429
+ */
+$wgEnableSwiftFileBackend = true;
 
 /**
  * includes common for all wikis
