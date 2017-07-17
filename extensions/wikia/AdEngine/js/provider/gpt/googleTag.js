@@ -4,13 +4,11 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	'ext.wikia.adEngine.provider.gpt.googleSlots',
 	'ext.wikia.adEngine.slot.adSlot',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
-	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
-	require.optional('ext.wikia.aRecoveryEngine.instartLogic.recovery'),
-	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery')
-], function (googleSlots, adSlot, slotRegistry, adBlockDetection, doc, log, win, instartLogic, pageFair) {
+	require.optional('ext.wikia.aRecoveryEngine.instartLogic.recovery')
+], function (googleSlots, adSlot, slotRegistry, doc, log, win, instartLogic) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.googleTag',
