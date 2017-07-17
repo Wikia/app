@@ -22,10 +22,10 @@ define('ext.wikia.aRecoveryEngine.instartLogic.recovery', [
 	 */
 	function isBlocking() {
 		var gptLib = win.googletag.pubads && win.googletag.pubads() && win.googletag.pubads().getTargeting('src'),
-			isBlocking = gptLib && gptLib.indexOf('rec') > -1;
-console.warn('NASZE LOGI IE BLOCKING', isBlocking);
-		log(['isBlocking', isBlocking], log.levels.debug, logGroup);
-		return isBlocking;
+			isParamSet = gptLib && gptLib.indexOf('rec') > -1;
+
+		log(['isBlocking', isParamSet], log.levels.debug, logGroup);
+		return isParamSet;
 	}
 
 	return {

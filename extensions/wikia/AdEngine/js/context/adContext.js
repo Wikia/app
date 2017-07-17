@@ -89,7 +89,6 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.sourcePointMMS = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled && context.opts.sourcePointMMS;
 
 		context.opts.sourcePointBootstrap = context.opts.sourcePointMMS || context.opts.sourcePointRecovery;
-		console.warn('NASZE LOGI', 'RECOVERY SERVICES', JSON.stringify(context.opts));
 	}
 
 	function enableAdMixExperiment(context) {
@@ -154,7 +153,6 @@ define('ext.wikia.adEngine.adContext', [
 			geo.isProperGeo(instantGlobals.wgAdDriverSrcPremiumCountries);
 
 		context.opts.isMoatTrackingForFeaturedVideoEnabled = isMOATTrackingForFVEnabled();
-		console.warn('NASZE LOGI', 'SET CONTEXT');
 		updateDetectionServicesAdContext(context, noExternals);
 		updateAdContextRecoveryServices(context, noExternals);
 

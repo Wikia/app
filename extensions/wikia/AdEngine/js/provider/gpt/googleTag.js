@@ -27,7 +27,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 		log(['dispatchEvent', event], log.levels.info, logGroup);
 		slot = slotRegistry.get(slotName);
-console.error(slotName, slot, event);
+
 		if (slot && slot[methodName]) {
 			slot[methodName](event);
 		} else {
