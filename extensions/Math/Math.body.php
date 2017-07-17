@@ -239,7 +239,7 @@ class MathRenderer {
 	 * @return bool true if rendered PNG exists
 	 */
 	function _recall() {
-		global $wgMathDirectory, $wgMathCheckFiles;
+		global $wgMathCheckFiles;
 
 		$this->md5 = md5( $this->tex );
 		$dbr = wfGetDB( DB_SLAVE );
