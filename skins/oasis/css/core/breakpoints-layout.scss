@@ -121,7 +121,7 @@
 		}
 
 		@media #{$breakpoint-small-plus-up} {
-			@include flexbox();
+			@include display-inline-flex();
 			@include flex-direction(column);
 
 			margin-left: 20px;
