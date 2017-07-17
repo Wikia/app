@@ -130,6 +130,8 @@ $color-highlight-column: rgba($color-page, 0);
 }
 
 .AdminDashboardRail {
+	@include flex-direction(column);
+
 	float: right;
 	margin: 20px 15px 0 20px;
 	width: 275px;
