@@ -144,7 +144,7 @@ class Hooks {
 				\Wikia::addAssetsToOutput( 'template_classification_in_edit_js' );
 				\Wikia::addAssetsToOutput( 'template_classification_scss' );
 
-				Hooks::run( 'TemplateClassificationHooks::afterEditPageAssets' );
+				\Hooks::run( 'TemplateClassificationHooks::afterEditPageAssets' );
 			}
 		} elseif ( $permissions->shouldDisplayBulkActions( $user, $title ) ) {
 			\Wikia::addAssetsToOutput( 'template_classification_in_category_js' );
