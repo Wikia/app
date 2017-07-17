@@ -60,19 +60,11 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 	/**
 	 * Load GPT if not loaded only.
-	 * Don't load GPT if ads are blocked unless pageFair recovery is enabled.
 	 *
 	 * @returns {boolean}
 	 */
 	function canGptBeLoaded() {
-		var userIsBlockingAds = adBlockDetection.isBlocking(),
-			pageFairRecoveryEnabled = pageFair && pageFair.isEnabled();
-
-		if (win.googletag.apiReady) {
-			return false;
-		}
-
-		return !userIsBlockingAds || pageFairRecoveryEnabled;
+		return !win.googletag.apiReady;
 	}
 
 	function init() {
