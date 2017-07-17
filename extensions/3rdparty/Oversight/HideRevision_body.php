@@ -68,7 +68,7 @@ class SpecialOversight extends SpecialPage {
 	}
 
 	function getRevisions( $db, $condition ) {
-		wfRunHooks( 'Oversight::getRevisions', array(&$db, &$condition) );
+		Hooks::run( 'Oversight::getRevisions', array(&$db, &$condition) );
 
 		return $db->select(
 			array( 'hidden', 'user' ),

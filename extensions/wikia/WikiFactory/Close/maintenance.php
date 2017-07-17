@@ -276,7 +276,7 @@ class CloseWikiMaintenance {
 				/**
 				 * let other extensions remove entries for closed wiki
 				 */
-				wfRunHooks( 'WikiFactoryDoCloseWiki', [ $row ] );
+				Hooks::run( 'WikiFactoryDoCloseWiki', [ $row ] );
 
 				/**
 				 * there is nothing to set because row in city_list doesn't
@@ -327,42 +327,39 @@ class CloseWikiMaintenance {
 	 * @throws WikiaException thrown on failed backups
 	 */
 	private function tarFiles( $directory, $dbname, $cityid ) {
-		$swiftEnabled = WikiFactory::getVarValueByName( 'wgEnableSwiftFileBackend', $cityid );
 		$wgUploadPath = WikiFactory::getVarValueByName( 'wgUploadPath', $cityid );
 
-		if ( $swiftEnabled ) {
-			// check that S3 bucket for this wiki exists (PLATFORM-1199)
-			$swiftStorage = \Wikia\SwiftStorage::newFromWiki( $cityid );
-			$isEmpty = intval( $swiftStorage->getContainer()->object_count ) === 0;
+		// check that S3 bucket for this wiki exists (PLATFORM-1199)
+		$swiftStorage = \Wikia\SwiftStorage::newFromWiki( $cityid );
+		$isEmpty = intval( $swiftStorage->getContainer()->object_count ) === 0;
 
-			if ( $isEmpty ) {
-				$this->log( sprintf( "'%s' S3 bucket is empty, leave early\n", $swiftStorage->getContainerName() ) );
-				return false;
-			}
-
-			// sync Swift container to the local directory
-			$directory = sprintf( "/tmp/images/{$dbname}/" );
-
-			$path = trim( parse_url( $wgUploadPath, PHP_URL_PATH ), '/' );
-			$container = substr( $path, 0, -7 ); // eg. poznan/pl
-
-			$this->log( sprintf( 'Rsyncing images from "%s" Swift storage to "%s"...', $container, $directory ) );
-
-			wfMkdirParents( $directory );
-			$time = wfTime();
-
-			// s3cmd sync --dry-run s3://dilbert ~/images/dilbert/ --exclude "/thumb/*" --exclude "/temp/*"
-			$cmd = sprintf(
-				'%s sync s3://%s/images "%s" --exclude "/thumb/*" --exclude "/temp/*"',
-				self::S3_COMMAND,
-				$container,
-				$directory
-			);
-
-			wfShellExec( $cmd, $iStatus );
-			$time = Wikia::timeDuration( wfTime() - $time );
-			Wikia::log( __METHOD__, "info", "Rsync to {$directory} from {$container} Swift storage: status: {$iStatus}, time: {$time}", true, true );
+		if ( $isEmpty ) {
+			$this->log( sprintf( "'%s' S3 bucket is empty, leave early\n", $swiftStorage->getContainerName() ) );
+			return false;
 		}
+
+		// sync Swift container to the local directory
+		$directory = sprintf( "/tmp/images/{$dbname}/" );
+
+		$path = trim( parse_url( $wgUploadPath, PHP_URL_PATH ), '/' );
+		$container = substr( $path, 0, -7 ); // eg. poznan/pl
+
+		$this->log( sprintf( 'Rsyncing images from "%s" Swift storage to "%s"...', $container, $directory ) );
+
+		wfMkdirParents( $directory );
+		$time = wfTime();
+
+		// s3cmd sync --dry-run s3://dilbert ~/images/dilbert/ --exclude "/thumb/*" --exclude "/temp/*"
+		$cmd = sprintf(
+			'%s sync s3://%s/images "%s" --exclude "/thumb/*" --exclude "/temp/*"',
+			self::S3_COMMAND,
+			$container,
+			$directory
+		);
+
+		wfShellExec( $cmd, $iStatus );
+		$time = Wikia::timeDuration( wfTime() - $time );
+		Wikia::log( __METHOD__, "info", "Rsync to {$directory} from {$container} Swift storage: status: {$iStatus}, time: {$time}", true, true );
 
 		/**
 		 * @name dumpfile
@@ -431,7 +428,7 @@ class CloseWikiMaintenance {
 	 * Remove DFS bucket of a given wiki
 	 *
 	 * @see PLATFORM-1700
-	 * @param int $cityId
+	 * @param int $cityid
 	 */
 	private function removeBucket( $cityid ) {
 		try {

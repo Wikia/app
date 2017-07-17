@@ -7,6 +7,7 @@ use \SiteStats;
 class Counter {
 	public $label;
 	public $value;
+	public $trackingLabel = 'counter';
 
 	public function __construct() {
 		$value = SiteStats::articles();

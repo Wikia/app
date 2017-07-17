@@ -285,7 +285,7 @@ class AchAwardingService {
 				Wikia::log( __METHOD__, "", "Saving a new badge. About to run hook if badge can be re-loaded.", $wgWikiaForceAIAFdebug );
 				$badge = $achNotificationService->getBadge(  /*markAsNotified*/ false );
 				if ( $badge !== null ) {
-					wfRunHooks( 'AchievementEarned', array( $this->mUser, $badge ) );
+					Hooks::run( 'AchievementEarned', array( $this->mUser, $badge ) );
 				}
 			}
 
@@ -296,7 +296,7 @@ class AchAwardingService {
 			$this->mUser->getUserPage()->purgeSquid();
 
 			//run a hook to let other extensions know when Achievements-related cache should be purged
-			wfRunHooks( 'AchievementsInvalidateCache', array(  $this->mUser  ) );
+			Hooks::run( 'AchievementsInvalidateCache', array(  $this->mUser  ) );
 		}
 
 		wfProfileOut( __METHOD__ );

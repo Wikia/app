@@ -70,7 +70,7 @@ class TemplatesWithoutTypePage extends PageQueryPage {
 		}
 		$num = count( $templatesWithoutType );
 
-		wfRunHooks( 'TemplatesWithoutTypeQueryRecached', [ 'count' => $num ] );
+		Hooks::run( 'TemplatesWithoutTypeQueryRecached', [ 'count' => $num ] );
 
 		return $num;
 	}

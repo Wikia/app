@@ -98,7 +98,7 @@ class Subtitle {
 
 		$subtitle = RequestContext::getMain()->getOutput()->getSubtitle();
 
-		wfRunHooks( 'AfterPageHeaderSubtitle', [ &$subtitle ] );
+		\Hooks::run( 'AfterPageHeaderSubtitle', [ &$subtitle ] );
 
 		return $subtitle;
 	}
@@ -186,7 +186,7 @@ class Subtitle {
 			$pageType = wfMessage( 'page-header-subtitle-blog-category' )->escaped();
 		}
 
-		wfRunHooks( 'PageHeaderPageTypePrepared', [ $this->title, &$pageType ] );
+		\Hooks::run( 'PageHeaderPageTypePrepared', [ $this->title, &$pageType ] );
 
 		return $pageType;
 	}
@@ -249,7 +249,7 @@ class Subtitle {
 
 		$subtitleHTML = implode( " {$pipe} ", $subtitle );
 
-		wfRunHooks( 'AfterPageHeaderPageSubtitle', [ &$subtitleHTML, $this->title ] );
+		\Hooks::run( 'AfterPageHeaderPageSubtitle', [ &$subtitleHTML, $this->title ] );
 
 		return $subtitleHTML;
 	}

@@ -955,16 +955,4 @@ describe('AdContext', function () {
 		expect(moatSamplerArgs[0]).toEqual('moatTrackingForFeaturedVideo');
 		expect(moatSamplerArgs[1]).toEqual(25);
 	});
-
-	it('Enable KILO ad unit builder', function () {
-		mocks.instantGlobals = {wgAdDriverKILOCountries: ['CURRENT_COUNTRY']};
-
-		expect(getModule().getContext().opts.enableKILOAdUnit).toBeTruthy();
-	});
-
-	it('Disable KILO ad unit builder', function () {
-		mocks.instantGlobals = {wgAdDriverKILOCountries: ['AA']};
-
-		expect(getModule().getContext().opts.enableKILOAdUnit).toBeFalsy();
-	});
 });

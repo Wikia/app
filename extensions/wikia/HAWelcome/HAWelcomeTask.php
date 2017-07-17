@@ -424,7 +424,7 @@ class HAWelcomeTask extends BaseTask {
 		$sPrefixedText = $this->title->getPrefixedText();
 
 		// Article Comments and Message Wall hook up to this event.
-		wfRunHooks( 'HAWelcomeGetPrefixText' , array( &$sPrefixedText, $this->title ) );
+		Hooks::run( 'HAWelcomeGetPrefixText' , array( &$sPrefixedText, $this->title ) );
 
 		// Determine the key for the signature.
 		$sSignatureKey = ( in_array( 'staff', $senderGroups ) && !in_array( 'sysop', $senderGroups ) )

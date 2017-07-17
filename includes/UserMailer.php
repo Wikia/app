@@ -222,7 +222,7 @@ class UserMailer {
 		if ( !$has_address ) {
 			return Status::newFatal( 'user-mail-no-addy' );
 		}
-		wfRunHooks( 'UserMailerSend', [ &$to ] );
+		Hooks::run( 'UserMailerSend', [ &$to ] );
 
 		if ( F::app()->wg->DisableAllEmail ) {
 			\Wikia\Logger\WikiaLogger::instance()->info(
@@ -289,7 +289,7 @@ class UserMailer {
 			$headers['X-Priority'] = $priority;
 		}
 
-		$ret = wfRunHooks( 'AlternateUserMailer', [ $headers, $to, $from, $subject, $body , $priority, $attachments, $sourceType ] );
+		$ret = Hooks::run( 'AlternateUserMailer', [ $headers, $to, $from, $subject, $body , $priority, $attachments, $sourceType ] );
 		if ( $ret === false ) {
 			return Status::newGood();
 		} elseif ( $ret !== true ) {
@@ -346,7 +346,7 @@ class UserMailer {
 			# number of possible recipients.
 			$chunks = array_chunk( $to, F::app()->wg->EnotifMaxRecips );
 			foreach ( $chunks as $chunk ) {
-				if ( !wfRunHooks( 'ComposeMail', [ $chunk, &$body, &$headers ] ) ) {
+				if ( !Hooks::run( 'ComposeMail', [ $chunk, &$body, &$headers ] ) ) {
 					continue;
 				}
 				$status = self::sendWithPear( $mail_object, $chunk, $headers, $body );
@@ -385,7 +385,7 @@ class UserMailer {
 
 			$safeMode = wfIniGetBool( 'safe_mode' );
 			foreach ( $to as $recip ) {
-				if ( !wfRunHooks( 'ComposeMail', array( $recip, &$body, &$headers ) ) ) {
+				if ( !Hooks::run( 'ComposeMail', array( $recip, &$body, &$headers ) ) ) {
 					continue;
 				}
 				if ( $safeMode ) {

@@ -84,7 +84,7 @@ class UpdateSpecialPagesTask extends BaseTask {
 			}
 			$this->info( sprintf("%-30s updated %d rows in %.2fs", $special, $num, $end - $start) );
 
-			wfRunHooks( 'AfterUpdateSpecialPages', [ $queryPage ] );
+			\Hooks::run( 'AfterUpdateSpecialPages', [ $queryPage ] );
 
 			if ( wfGetLB()->pingAll() ) {
 				// commit the changes if all connections are still open

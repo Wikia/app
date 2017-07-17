@@ -201,7 +201,7 @@ function wfDismissWikiaNewtalks() {
 	// this request should be posted
 	if ($wgRequest->wasPosted()) {
 		// shared messages
-		wfRunHooks( 'DismissWikiaNewtalks', array( $wgUser ) );
+		Hooks::run( 'DismissWikiaNewtalks', array( $wgUser ) );
 		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
 		$dbw->delete(
 			'shared_newtalks',

@@ -2,7 +2,7 @@
 	<?= !empty( $backgroundImageUrl ) ? "style=\"background-image: url({$backgroundImageUrl});\"" : '' ?>
 	class="wds-community-header">
 	<? if ( $wordmark->hasWordmark() ) : ?>
-		<div class="wds-community-header__wordmark">
+		<div class="wds-community-header__wordmark" data-tracking="<?= $wordmark->trackingLabel ?>">
 			<a accesskey="z" href="<?= $wordmark->href ?>">
 				<img src="<?= $wordmark->image->url ?>"
 					 width="<?= $wordmark->image->width ?>"
@@ -12,10 +12,10 @@
 		</div>
 	<? endif; ?>
 	<div class="wds-community-header__top-container">
-		<div class="wds-community-header__sitename">
+		<div class="wds-community-header__sitename" data-tracking="<?= $sitename->trackingLabel ?>">
 			<a href="<?= $sitename->url ?>"><?= $sitename->titleText->render() ?></a>
 		</div>
-		<div class="wds-community-header__counter">
+		<div class="wds-community-header__counter" data-tracking="<?= $counter->trackingLabel ?>">
 			<span class="wds-community-header__counter-value"><?= $counter->value ?></span>
 			<span class="wds-community-header__counter-label"><?= $counter->label->render() ?></span>
 		</div>
@@ -32,5 +32,5 @@
 			<?php endforeach; ?>
 		</div>
 	</div>
-	<?= $app->renderView( 'CommunityHeaderController', 'localNavigation' ); ?>
+	<?= $app->renderView( 'CommunityHeaderService', 'localNavigation' ); ?>
 </header>

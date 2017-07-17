@@ -4,7 +4,6 @@ define('ext.wikia.adEngine.provider.directGpt', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.factory.wikiaGpt',
-	'ext.wikia.adEngine.slot.adUnitBuilder',
 	'ext.wikia.adEngine.slot.service.kiloAdUnitBuilder',
 	'ext.wikia.adEngine.slotTweaker',
 	require.optional('ext.wikia.aRecoveryEngine.instartLogic.recovery'),
@@ -14,7 +13,6 @@ define('ext.wikia.adEngine.provider.directGpt', [
 	adContext,
 	uapContext,
 	factory,
-	adUnitBuilder,
 	kiloAdUnitBuilder,
 	slotTweaker,
 	instartLogic,
@@ -69,7 +67,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 				'TOP_RIGHT_BOXAD',
 				'GPT_FLUSH'
 			],
-			adUnitBuilder: adContext.getContext().opts.enableKILOAdUnit ? kiloAdUnitBuilder : adUnitBuilder,
+			adUnitBuilder: kiloAdUnitBuilder,
 			highlyViewableSlots: [
 				'INCONTENT_BOXAD_1',
 				'INCONTENT_PLAYER',

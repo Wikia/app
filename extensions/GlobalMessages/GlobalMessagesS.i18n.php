@@ -9903,9 +9903,11 @@ Si crees que está mal, por favor contáctanos haciendo clic [[w:c:vstf:Report:S
 	'signup-moreinfo' => '¿Por qué es esto necesario?',
 	'signup-password' => 'Contraseña -',
 	'sp-contributions-footer-anon' => '{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;" 
-| \'\'\'Esta es la página de contribuciones de un usuario anónimo que no ha creado una cuenta aún o que no la usa, se identifica con una [[wikipedia:IP address|dirección IP]] numérica.\'\'\'
+| \'\'\'Esta es la página de contribuciones de un usuario anónimo que no ha creado una cuenta aún o que no la usa, se identifica con una [[wikipedia:es:Dirección IP|dirección IP]] numérica.\'\'\'
 
-Algunas direcciones IP cambian periódicamente, y pueden ser usadas por usuarios malintencionados. si eres un usuario anónimo, deberías [[{{ns:Special}}:Userlogin|crearte una cuenta de usuario o iniciar sesión]] para evitar futuras confusiones con usuarios anónimos. Registrandote también evitarás que se vea tu dirección IP. [[w:c:comunidad:Ayuda:Crear una cuenta|¿Por qué crear una cuenta?]]
+Algunas direcciones IP cambian periódicamente, y pueden ser usadas por usuarios malintencionados. si eres un usuario anónimo, deberías [[{{ns:Special}}:Userlogin|crearte una cuenta de usuario o identificarte]] para evitar futuras confusiones con usuarios anónimos. Registrandote también evitarás que se vea tu dirección IP. [[w:es:¿Por qué crear una cuenta?|¿Por qué crear una cuenta?]] ([[w:c:ayuda:Ayuda:Registrar una cuenta|Cómo crear una cuenta]])
+
+\'\'\'Información sobre esta IP:\'\'\' [http://whatismyipaddress.com/ip/$1 WHOIS] • [http://openrbl.org/query?$1 RDNS] • [http://www.robtex.com/rbls/$1.html RBLs] • [http://www.dnsstuff.com/tools/tracert.ch?ip=$1 Traceroute] • [http://www.as3344.net/is-tor/?args=$1 TOR check] &mdash; [[wikipedia:Regional Internet registry|RIR]]s: [http://ws.arin.net/whois/?queryinput=$1 América] &bull; [http://www.ripe.net/fcgi-bin/whois?searchtext=$1 Europa] · [http://www.afrinic.net/cgi-bin/whois?query=$1 África] · [http://www.apnic.net/apnic-bin/whois.pl?searchtext=$1 Asia-Pacífico] · [http://www.lacnic.net/cgi-bin/lacnic/whois?lg=EN&query=$1 Latino América/Caribe]
 |}',
 	'sitetitle' => '{{SITENAME}}',
 	'sitesubtitle' => '',
