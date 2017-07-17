@@ -76,7 +76,8 @@
 			@include width-calc('100% - 320px');
 		}
 
-		.main-page-tag-rcs {
+		.main-page-tag-rcs,
+		.rcs-container {
 			width: 300px;
 		}
 	}
