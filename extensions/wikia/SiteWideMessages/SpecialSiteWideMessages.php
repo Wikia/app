@@ -154,7 +154,7 @@ function SiteWideMessagesAddNotifications(&$skim, &$tpl) {
 			}
 			wfProfileOut( __METHOD__ . '::parse' );
 
-			wfRunHooks( 'SiteWideMessagesNotification', array( $msgs ) );
+			Hooks::run( 'SiteWideMessagesNotification', array( $msgs ) );
 
 			$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/SiteWideMessages/js/SiteWideMessages.tracking.js\"></script>" );
 		}

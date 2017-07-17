@@ -108,7 +108,7 @@ class SassUtil {
 				$oasisSettings['rtl'] = 'true';
 			}
 
-			wfRunHooks( 'AfterOasisSettingsInitialized', [ &$oasisSettings ] );
+			Hooks::run( 'AfterOasisSettingsInitialized', [ &$oasisSettings ] );
 
 			// RT:70673
 			foreach ($oasisSettings as $key => $val) {

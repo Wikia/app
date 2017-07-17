@@ -60,6 +60,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverOverridePrefootersCountries';
 		$vars[] = 'wgAdDriverPageFairDetectionCountries';
 		$vars[] = 'wgAdDriverPrebidBidderCountries';
+		$vars[] = 'wgAdDriverPremiumAdLayoutCountries';
 		$vars[] = 'wgAdDriverRubiconFastlaneCountries';
 		$vars[] = 'wgAdDriverRubiconFastlaneMercuryFixCountries';
 		$vars[] = 'wgAdDriverRubiconFastlaneProviderCountries';
@@ -181,7 +182,6 @@ class AdEngine2Hooks {
 		$scriptModules[] = 'wikia.document';
 		$scriptModules[] = 'wikia.geo';
 		$scriptModules[] = 'wikia.instantGlobals';
-		$scriptModules[] = 'wikia.localStorage';
 		$scriptModules[] = 'wikia.location';
 		$scriptModules[] = 'wikia.log';
 		$scriptModules[] = 'wikia.querystring';

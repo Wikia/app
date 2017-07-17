@@ -11,7 +11,9 @@ var React = require('react'),
     VideoQualityPanel = require('./components/videoQualityPanel'),
     SharePanel = require('./components/sharePanel'),
     MoreOptionsPanel = require('./components/moreOptionsPanel'),
-    AdScreen = require('./views/adScreen'),
+    // WIKIA CHANGE - START
+    WikiaAdScreen = require('./views/wikiaAdScreen'),
+    // WIKIA CHANGE - END
     EndScreen = require('./views/endScreen'),
     StartScreen = require('./views/startScreen'),
     PauseScreen = require('./views/pauseScreen'),
@@ -59,11 +61,12 @@ var Skin = React.createClass({
     this.setState(newState);
   },
 
-  updatePlayhead: function(newPlayhead, newDuration, newBuffered) {
+  updatePlayhead: function(newPlayhead, newDuration, newBuffered, adPlayhead) {
     this.setState({
       currentPlayhead: newPlayhead,
       duration: newDuration,
-      buffered: newBuffered
+      buffered: newBuffered,
+      currentAdPlayhead: adPlayhead
     });
   },
 
@@ -170,11 +173,13 @@ var Skin = React.createClass({
           );
           break;
         case CONSTANTS.SCREEN.AD_SCREEN:
+          // WIKIA CHANGE
           screen = (
-            <AdScreen {...this.props}
+            <WikiaAdScreen {...this.props}
               contentTree={this.state.contentTree}
               currentAdsInfo={this.state.currentAdsInfo}
               currentPlayhead={this.state.currentPlayhead}
+              currentAdPlayhead={this.state.currentAdPlayhead}
               fullscreen={this.state.fullscreen}
               playerState={this.state.playerState}
               duration={this.state.duration}
@@ -199,6 +204,7 @@ var Skin = React.createClass({
               <DiscoveryPanel
                 {...this.props}
                 videosPerPage={{xs:2, sm:4, md:6, lg:8}}
+                forceCountDownTimer={this.state.forceCountDownTimerOnEndScreen}
                 discoveryData={this.state.discoveryData}
                 playerState={this.state.playerState}
                 responsiveView={this.state.responsiveId}

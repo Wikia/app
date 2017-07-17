@@ -2,18 +2,18 @@
 
 namespace Wikia\CommunityHeader;
 
-use \ThemeSettings;
-use \Title;
+use DesignSystemCommunityHeaderModel;
 
 class Sitename {
 	public $titleText;
 	public $url;
+	public $trackingLabel;
 
-	public function __construct() {
-		$themeSettings = new ThemeSettings();
-		$settings = $themeSettings->getSettings();
+	public function __construct( DesignSystemCommunityHeaderModel $model ) {
+		$sitenameData = $model->getSiteNameData();
 
-		$this->titleText = new Label( $settings['wordmark-text'] );
-		$this->url = Title::newMainPage()->getLocalURL();
+		$this->titleText = new Label( $sitenameData['title']['value'] );
+		$this->url = $sitenameData['href'];
+		$this->trackingLabel = $sitenameData['tracking_label'];
 	}
 }

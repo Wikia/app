@@ -1,9 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
-	'wikia.browserDetect',
-	'ext.wikia.adEngine.adContext'
-], function (page, browserDetect, adContext) {
+	'ext.wikia.adEngine.context.slotsContext',
+	'wikia.browserDetect'
+], function (adContext, page, slotsContext, browserDetect) {
 	'use strict';
 
 	var dfpId = '5441',
@@ -69,7 +70,7 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 			provider + '.' + getGroup(slotName),
 			slotName.toLowerCase(),
 			device,
-			getAdLayout(params),
+			params.skin + '-' + getAdLayout(params),
 			wikiName + '-' + vertical
 		];
 
@@ -77,7 +78,18 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 	}
 
 	function getAdLayout(params) {
-		return params.skin + '-' + (getContextTargeting().hasFeaturedVideo ? 'fv-' : '') + params.s2;
+		var layout = params.s2,
+			incontentSlotName = params.skin === 'oasis' ? 'INCONTENT_PLAYER' : 'MOBILE_IN_CONTENT';
+
+		if (getContextTargeting().hasFeaturedVideo) {
+			layout = 'fv-' + layout;
+		}
+
+		if (slotsContext.isApplicable(incontentSlotName)) {
+			layout = layout + '-ic';
+		}
+
+		return layout;
 	}
 
 	function isValid(adUnit) {

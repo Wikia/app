@@ -6,19 +6,18 @@ var React = require('react'),
     CONSTANTS = require('../constants/constants'),
     ClassNames = require('classnames'),
     ScrubberBar = require('./scrubberBar'),
-    Slider = require('./slider'),
     Utils = require('./utils'),
     Popover = require('../views/popover'),
     VideoQualityPanel = require('./videoQualityPanel'),
     ClosedCaptionPopover = require('./closed-caption/closedCaptionPopover'),
-    Logo = require('./logo');
+    ConfigPanel = require('./configPanel'),
+    Logo = require('./logo'),
     Icon = require('./icon');
 
 var ControlBar = React.createClass({
   getInitialState: function() {
     this.isMobile = this.props.controller.state.isMobile;
     this.responsiveUIMultiple = this.getResponsiveUIMultiple(this.props.responsiveView);
-    this.volumeSliderValue = 0;
     this.moreOptionsItems = null;
 
     return {
@@ -40,9 +39,6 @@ var ControlBar = React.createClass({
   componentWillUnmount: function () {
     this.props.controller.cancelTimer();
     this.closePopovers();
-    if (Utils.isAndroid()){
-      this.props.controller.hideVolumeSliderBar();
-    }
     window.removeEventListener('orientationchange', this.closePopovers);
   },
 
@@ -83,15 +79,7 @@ var ControlBar = React.createClass({
       this.props.controller.startHideControlBarTimer();
       evt.stopPropagation(); // W3C
       evt.cancelBubble = true; // IE
-      var canShowVolumeSliderBar = !this.props.skinConfig.controlBar
-        || !this.props.skinConfig.controlBar.volumeControl
-        || this.props.skinConfig.controlBar.volumeControl.sliderVisible !== false;
-      if (canShowVolumeSliderBar && !this.props.controller.state.volumeState.volumeSliderVisible){
-        this.props.controller.showVolumeSliderBar();
-      }
-      else {
-        this.props.controller.handleMuteClick();
-      }
+      this.props.controller.handleMuteClick();
     }
     else{
       this.props.controller.handleMuteClick();
@@ -106,17 +94,35 @@ var ControlBar = React.createClass({
     this.props.controller.toggleShareScreen();
   },
 
+  // FIXME it looks like we've lost quality choosing functionality while updating ooyala, this
+  // function is not used anywhere but I leave it here cause it may be useful when we will be
+  // able to enable quality controls
   handleQualityClick: function() {
     if(this.props.responsiveView == this.props.skinConfig.responsive.breakpoints.xs.id) {
       this.props.controller.toggleScreen(CONSTANTS.SCREEN.VIDEO_QUALITY_SCREEN);
     } else {
       this.toggleQualityPopover();
       this.closeCaptionPopover();
+      this.closeConfigPopover();
     }
   },
 
-  toggleQualityPopover: function() {
+  toggleQualityPopOver: function() {
     this.props.controller.toggleVideoQualityPopOver();
+  },
+
+  handleConfigPanelClick: function() {
+    this.toggleConfigPopover();
+  },
+
+  toggleConfigPopover: function() {
+    this.props.controller.toggleConfigPanelPopover();
+  },
+
+  closeConfigPopover: function() {
+    if(this.props.controller.state.configPanelOptions.showConfigPanelPopover == true) {
+      this.toggleConfigPopover();
+    }
   },
 
   closeQualityPopover: function() {
@@ -184,13 +190,18 @@ var ControlBar = React.createClass({
     this.removeHighlight({target: ReactDOM.findDOMNode(this.refs.volumeIcon)});
   },
 
-  changeVolumeSlider: function(event) {
-    var newVolume = parseFloat(event.target.value);
-    this.props.controller.setVolume(newVolume);
-    this.setState({
-      volumeSliderValue: event.target.value
-    });
+  // WIKIA CHANGE - START
+  formatAdCountdown: function (timeInSeconds) {
+    var seconds = parseInt(timeInSeconds,10) % 60;
+    var minutes = parseInt(timeInSeconds / 60, 10);
+
+    if (seconds < 10) {
+      seconds = '0' + seconds;
+    }
+
+    return minutes + ":" + seconds;
   },
+  // WIKIA CHANGE - END
 
   populateControlBar: function() {
     var dynamicStyles = this.setupItemStyle();
@@ -236,20 +247,11 @@ var ControlBar = React.createClass({
         onClick={this.handleVolumeClick}></a>);
     }
 
-    var volumeSlider = <div className="oo-volume-slider"><Slider value={parseFloat(this.props.controller.state.volumeState.volume)}
-                        onChange={this.changeVolumeSlider}
-                        className={"oo-slider oo-slider-volume"}
-                        itemRef={"volumeSlider"}
-                        minValue={"0"}
-                        maxValue={"1"}
-                        step={"0.1"}/></div>;
-
     var volumeControls;
-    if (!this.isMobile){
-      volumeControls = volumeBars;
-    }
-    else {
-      volumeControls = this.props.controller.state.volumeState.volumeSliderVisible ? volumeSlider : null;
+    if (!this.props.isWikiaAdScreen) {
+      if (!this.isMobile) {
+        volumeControls = volumeBars;
+      }
     }
 
     var playheadTime = isFinite(parseInt(this.props.currentPlayhead)) ? Utils.formatSeconds(parseInt(this.props.currentPlayhead)) : null;
@@ -261,6 +263,10 @@ var ControlBar = React.createClass({
     var liveClick = isLiveNow ? null : this.handleLiveClick;
     var playheadTimeContent = isLiveStream ? (isLiveNow ? null : Utils.formatSeconds(timeShift)) : playheadTime;
     var totalTimeContent = isLiveStream ? null : <span className="oo-total-time">{totalTime}</span>;
+    // WIKIA CHANGE - START
+    var timeLeft = this.formatAdCountdown(Math.abs(timeShift));
+    var timeLeftContent = <span className="oo-ad-time-left">Ad • {timeLeft}</span>;
+    // WIKIA CHANGE - END
 
     // TODO: Update when implementing localization
     var liveText = Utils.getLocalizedString(this.props.language, CONSTANTS.SKIN_TEXT.LIVE, this.props.localizableStrings);
@@ -269,8 +275,9 @@ var ControlBar = React.createClass({
       "oo-control-bar-item oo-live oo-live-indicator": true,
       "oo-live-nonclickable": isLiveNow
     });
-
-    var videoQualityPopover = this.props.controller.state.videoQualityOptions.showVideoQualityPopover ? <Popover><VideoQualityPanel{...this.props} togglePopoverAction={this.toggleQualityPopover} popover={true}/></Popover> : null;
+    var showVideoQualityPanel = !this.props.skinConfig.controlBar.autoplayToggle || this.props.controller.state.configPanelOptions.showVideoQualityPanel;
+    var configPanelContent = showVideoQualityPanel ? <VideoQualityPanel{...this.props} togglePopoverAction={this.toggleConfigPopover} toggleVideoQualityPopOver={this.toggleQualityPopOver} popover={true}/> :  <ConfigPanel {...this.props} toggleQualityAction={this.toggleQualityPopOver} />;
+    var configPanelPopover = this.props.controller.state.configPanelOptions.showConfigPanelPopover  ? <Popover popoverClassName="oo-popover oo-popover-pull-right">{configPanelContent}</Popover> : null;
     var closedCaptionPopover = this.props.controller.state.closedCaptionOptions.showClosedCaptionPopover ? <Popover popoverClassName="oo-popover oo-popover-pull-right"><ClosedCaptionPopover {...this.props} togglePopoverAction={this.toggleCaptionPopover}/></Popover> : null;
 
     var qualityClass = ClassNames({
@@ -314,6 +321,10 @@ var ControlBar = React.createClass({
         <span>{playheadTimeContent}</span>{totalTimeContent}
       </a>,
 
+      // WIKIA CHANGE - START
+      "adTimeLeft": timeLeftContent,
+      // WIKIA CHANGE - END
+
       "flexibleSpace": <div className="oo-flexible-space oo-control-bar-flex-space" key="flexibleSpace"></div>,
 
       "moreOptions": <a className="oo-more-options oo-control-bar-item"
@@ -324,8 +335,8 @@ var ControlBar = React.createClass({
 
       "quality": (
         <div className="oo-popover-button-container" key="quality">
-          {videoQualityPopover}
-          <a className={qualityClass} onClick={this.handleQualityClick} style={selectedStyle}>
+          {configPanelPopover}
+          <a className={qualityClass} onClick={this.handleConfigPanelClick} style={selectedStyle}>
             <Icon {...this.props} icon="quality" style={dynamicStyles.iconCharacter}
               onMouseOver={this.highlight} onMouseOut={this.removeHighlight}/>
           </a>
@@ -368,7 +379,9 @@ var ControlBar = React.createClass({
     };
 
     var controlBarItems = [];
-    var defaultItems = this.props.controller.state.isPlayingAd ? this.props.skinConfig.buttons.desktopAd : this.props.skinConfig.buttons.desktopContent;
+    // WIKIA CHANGE - START
+    var defaultItems = this.props.skinConfig.buttons.desktopContent;
+    // WIKIA CHANGE - END
 
     //if mobile and not showing the slider or the icon, extra space can be added to control bar width. If volume bar is shown instead of slider, add some space as well:
     var volumeItem = null;
@@ -378,14 +391,12 @@ var ControlBar = React.createClass({
       if (defaultItems[j].name == "volume") {
         volumeItem = defaultItems[j];
 
-        var extraSpaceVolumeSlider = (((volumeItem && this.isMobile && !this.props.controller.state.volumeState.volumeSliderVisible) || volumeItem && Utils.isIos()) ? parseInt(volumeItem.minWidth) : 0);
         var extraSpaceVolumeBar = this.isMobile ? 0 : parseInt(volumeItem.minWidth)/2;
-        extraSpaceVolume = extraSpaceVolumeSlider + extraSpaceVolumeBar;
+        extraSpaceVolume = extraSpaceVolumeBar;
 
         break;
       }
     }
-
 
     //if no hours, add extra space to control bar width:
     var hours = parseInt(this.props.duration / 3600, 10);
@@ -395,23 +406,39 @@ var ControlBar = React.createClass({
 
     for (var k = 0; k < defaultItems.length; k++) {
 
-      // filter out unrecognized button names
+      //filter out unrecognized button names
       if (typeof controlItemTemplates[defaultItems[k].name] === "undefined") {
         continue;
       }
 
-      //do not show CC button if no CC available
-      if (!this.props.controller.state.closedCaptionOptions.availableLanguages && (defaultItems[k].name === "closedCaption")){
+      //filter out disabled buttons
+      if (defaultItems[k].location === "none") {
         continue;
       }
 
-      //do not show quality button if no bitrates available
-      if (!this.props.controller.state.videoQualityOptions.availableBitrates && (defaultItems[k].name === "quality")){
+      //do not show share button if not share options are available
+      if (defaultItems[k].name === "share") {
+        var shareContent = Utils.getPropertyValue(this.props.skinConfig, 'shareScreen.shareContent', []);
+        var socialContent = Utils.getPropertyValue(this.props.skinConfig, 'shareScreen.socialContent', []);
+        var onlySocialTab = shareContent.length === 1 && shareContent[0] === 'social';
+        //skip if no tabs were specified or if only the social tab is present but no social buttons are specified
+        if (this.props.controller.state.isOoyalaAds || !shareContent.length || (onlySocialTab && !socialContent.length)) {
+          continue;
+        }
+      }
+
+      //do not show CC button if no CC available
+      if ((this.props.controller.state.isOoyalaAds || !this.props.controller.state.closedCaptionOptions.availableLanguages) && (defaultItems[k].name === "closedCaption")){
+        continue;
+      }
+
+      //do not show quality button if no bitrates available or autoplay toggle is off
+      if ((this.props.controller.state.isOoyalaAds || !this.props.skinConfig.controlBar.autoplayToggle && !this.props.controller.state.videoQualityOptions.availableBitrates) && (defaultItems[k].name === "quality")) {
         continue;
       }
 
       //do not show discovery button if no related videos available
-      if (!this.props.controller.state.discoveryData && (defaultItems[k].name === "discovery")){
+      if ((this.props.controller.state.isOoyalaAds || !this.props.controller.state.discoveryData) && (defaultItems[k].name === "discovery")){
         continue;
       }
 
@@ -420,16 +447,31 @@ var ControlBar = React.createClass({
         continue;
       }
 
-      if (Utils.isIos() && (defaultItems[k].name === "volume")){
-        continue;
-      }
-
-      // Not sure what to do when there are multi streams
+      //not sure what to do when there are multi streams
       if (defaultItems[k].name === "live" &&
         (typeof this.props.isLiveStream === 'undefined' ||
         !(this.props.isLiveStream))) {
         continue;
       }
+
+      // WIKIA CHANGE - START
+      if (Utils.isIos() && OO.iosMajorVersion < 10 && defaultItems[k].name === "volume") {
+        continue;
+      }
+
+      if (this.props.isWikiaAdScreen && !this.props.showAdFullScreenToggle && defaultItems[k].name === "fullscreen") {
+        continue;
+      }
+
+      if ((!this.props.isWikiaAdScreen || !this.props.showAdTimeLeft) && defaultItems[k].name === "adTimeLeft"){
+        continue;
+      }
+
+      // hide timeDuration, quality and share icon on wikia ad screen
+      if (this.props.isWikiaAdScreen && ['timeDuration', 'quality', 'share'].indexOf(defaultItems[k].name) > -1) {
+        continue;
+      }
+      // WIKIA CHANGE - END
 
       controlBarItems.push(defaultItems[k]);
     }
@@ -442,7 +484,7 @@ var ControlBar = React.createClass({
     finalControlBarItems = [];
 
     for (var k = 0; k < collapsedControlBarItems.length; k++) {
-      if (collapsedControlBarItems[k].name === "moreOptions" && collapsedMoreOptionsItems.length === 0) {
+      if (collapsedControlBarItems[k].name === "moreOptions" && (this.props.controller.state.isOoyalaAds || collapsedMoreOptionsItems.length === 0)) {
         continue;
       }
 

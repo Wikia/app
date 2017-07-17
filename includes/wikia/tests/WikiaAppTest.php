@@ -11,45 +11,18 @@ class WikiaAppTest extends TestCase {
 	private $globalRegistry;
 	/* @var PHPUnit_Framework_MockObject_MockObject */
 	private $localRegistry;
-	/* @var PHPUnit_Framework_MockObject_MockObject */
-	private $hookDispatcher;
 
 	protected function setUp() {
 		$this->globalRegistry = $this->createMock( WikiaGlobalRegistry::class );
 		$this->localRegistry = $this->createMock( WikiaLocalRegistry::class );
-		$this->hookDispatcher = $this->createMock( WikiaHookDispatcher::class );
-		$this->application = new WikiaApp($this->globalRegistry, $this->localRegistry, $this->hookDispatcher);
+		$this->application = new WikiaApp($this->globalRegistry, $this->localRegistry );
 	}
 
-	public function testDefaultRegistryAndHookDispatcherInstances() {
+	public function testDefaultRegistryInstances() {
 		$application = new WikiaApp();
-		$this->assertInstanceOf('WikiaHookDispatcher', $application->getHookDispatcher());
+
 		$this->assertInstanceOf('WikiaGlobalRegistry', $application->getGlobalRegistry());
 		$this->assertInstanceOf('WikiaLocalRegistry', $application->getLocalRegistry());
-	}
-
-	public function testRegisteringHookProxiesToWikiaHookDispatcherAndMediaWikiRegistry() {
-		$hookName = 'HookName';
-		$class = 'HookClass';
-		$method = 'HookMethod';
-		$options = array('HookOptions');
-		$rebuild = true;
-		$callback = array();
-
-		$registry = $this->createMock( WikiaGlobalRegistry::class );
-		$registry->expects($this->once())
-		         ->method('append')
-		         ->with($this->equalTo('wgHooks'), $this->equalTo($callback), $this->equalTo($hookName));
-
-		$this->hookDispatcher
-		     ->expects($this->once())
-		     ->method('registerHook')
-		     ->with($this->equalTo($class), $this->equalTo($method), $this->equalTo($options), $this->equalTo($rebuild))
-		     ->will($this->returnValue($callback));
-
-		$this->application->setGlobalRegistry($registry);
-
-		$this->application->registerHook($hookName, $class, $method, $options, $rebuild);
 	}
 
 	public function testRegisteringClassProxiesToMediaWikiRegistry() {

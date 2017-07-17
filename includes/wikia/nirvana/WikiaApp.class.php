@@ -23,12 +23,6 @@ class WikiaApp {
 	private $localRegistry = null;
 
 	/**
-	 * hook dispatcher
-	 * @var $hookDispatcher WikiaHookDispatcher
-	 */
-	private $hookDispatcher = null;
-
-	/**
 	 * namespace Registry
 	 * @var $namespaceRegistry array list of namespaces Registered by nirvana framework
 	 */
@@ -65,12 +59,6 @@ class WikiaApp {
 	public $wg = null;
 
 	/**
-	 * global MW functions helper accessor
-	 * @var $wf WikiaFunctionWrapper
-	 */
-	public $wf = null;
-
-	/**
 	 * this variable is use for local cache of view. Used by getViewOnce, renderViewOnce
 	 */
 
@@ -80,11 +68,9 @@ class WikiaApp {
 	 * constructor
 	 * @param WikiaRegistry $globalRegistry
 	 * @param WikiaRegistry $localRegistry
-	 * @param WikiaHookDispatcher $hookDispatcher
-	 * @param WikiaFunctionWrapper $functionWrapper
 	 */
 
-	public function __construct(WikiaRegistry $globalRegistry = null, WikiaRegistry $localRegistry = null, WikiaHookDispatcher $hookDispatcher = null, WikiaFunctionWrapper $functionWrapper = null) {
+	public function __construct( WikiaRegistry $globalRegistry = null, WikiaRegistry $localRegistry = null ) {
 
 		if(!is_object($globalRegistry)) {
 			$globalRegistry = (new WikiaGlobalRegistry);
@@ -94,20 +80,10 @@ class WikiaApp {
 			$localRegistry = (new WikiaLocalRegistry);
 		}
 
-		if(!is_object($hookDispatcher)) {
-			$hookDispatcher = (new WikiaHookDispatcher);
-		}
-
-		if(!is_object($functionWrapper)) {
-			$functionWrapper = (new WikiaFunctionWrapper);
-		}
-
 		$this->localRegistry = $localRegistry;
-		$this->hookDispatcher = $hookDispatcher;
 
 		// set helper accessors
 		$this->wg = $globalRegistry;
-		$this->wf = $functionWrapper;
 
 		if ( !is_object( $this->wg ) ) {
 			// can't use Wikia::log or wfDebug or wfBacktrace at this point (not defined yet)
@@ -206,14 +182,6 @@ class WikiaApp {
 	}
 
 	/**
-	 * get hook dispatcher
-	 * @return WikiaHookDispatcher
-	 */
-	public function getHookDispatcher() {
-		return $this->hookDispatcher;
-	}
-
-	/**
 	 * set MediaWiki registry (global)
 	 * @param WikiaGlobalRegistry $globalRegistry
 	 */
@@ -243,22 +211,6 @@ class WikiaApp {
 	 */
 	public function getLocalRegistry() {
 		return $this->localRegistry;
-	}
-
-	/**
-	 * get global function wrapper
-	 * @return WikiaFunctionWrapper
-	 */
-	public function getFunctionWrapper() {
-		return $this->wf;
-	}
-
-	/**
-	 * set global function wrapper
-	 * @param WikiaFunctionWrapper $functionWrapper
-	 */
-	public function setFunctionWrapper(WikiaFunctionWrapper $functionWrapper) {
-		$this->wf = $functionWrapper;
 	}
 
 	/**
@@ -373,19 +325,6 @@ class WikiaApp {
 	}
 
 	/**
-	 * register hook (alias: WikiaHookDispatcher::registerHook)
-	 * @param string $hookName
-	 * @param string $className
-	 * @param string $methodName
-	 * @param array $options
-	 * @param bool $alwaysRebuild
-	 * @param null $object
-	 */
-	public function registerHook( $hookName, $className, $methodName, Array $options = array(), $alwaysRebuild = false, $object = null ) {
-		$this->wg->append( 'wgHooks', $this->hookDispatcher->registerHook( $className, $methodName, $options, $alwaysRebuild, $object ), $hookName );
-	}
-
-	/**
 	 * If the namespace is registered using registerNamespaceController $className, $methodName
 	 * will be executed instead of regular article path.  The title is passed as a request
 	 * attribute, e.g.:
@@ -401,7 +340,7 @@ class WikiaApp {
 
 	public function registerNamespaceController( $namespace, $className, $methodName ) {
 		if(empty($this->namespaceRegistry)) {
-			$this->registerHook( 'ArticleViewHeader', 'WikiaApp', 'onArticleViewHeader', array(), false, $this );
+			Hooks::register( 'ArticleViewHeader', [ $this, 'onArticleViewHeader' ] );
 		}
 
 		$this->namespaceRegistry[$namespace] =  array(
@@ -681,17 +620,6 @@ class WikiaApp {
 		$funcArgs = func_get_args();
 		$funcName = array_shift( $funcArgs );
 		return call_user_func_array( $funcName, $funcArgs );
-	}
-
-	/**
-	 * simple wfRunHooks wrapper
-	 *
-	 * @param string $hookName The name of the hook to run
-	 * @param array $parameters An array of the params to pass in the hook call
-	 * @return bool
-	 */
-	public function runHook( $hookName, $parameters ) {
-		return wfRunHooks( $hookName, $parameters );
 	}
 
 	/**

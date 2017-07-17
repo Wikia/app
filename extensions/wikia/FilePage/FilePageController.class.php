@@ -422,7 +422,7 @@ SQL;
 					}
 
 					// Let the wall code clean up any links to the user wall or forums
-					wfRunHooks( 'FormatForumLinks', array( &$extraInfo, $info['title'], $info['namespace_id'] ) );
+					Hooks::run( 'FormatForumLinks', array( &$extraInfo, $info['title'], $info['namespace_id'] ) );
 
 					// Clean up any type of comment on any article page
 					$cleanedText = preg_replace( '/\/@comment-.+-[0-9]+$/', '', $extraInfo['titleText'] );

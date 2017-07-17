@@ -25,7 +25,7 @@ class WikiaRecentChangesBlockHandler {
 				if( $oTitle instanceof Title ) {
 					$changeRecentChangesHeader = false;
 
-					wfRunHooks('WikiaRecentChangesBlockHandlerChangeHeaderBlockGroup', array($oChangeList, $r, $oRCCacheEntryArray, &$changeRecentChangesHeader, $oTitle, &$headerTitle));
+					Hooks::run('WikiaRecentChangesBlockHandlerChangeHeaderBlockGroup', array($oChangeList, $r, $oRCCacheEntryArray, &$changeRecentChangesHeader, $oTitle, &$headerTitle));
 
 					if( $changeRecentChangesHeader ) {
 						$app = F::app();

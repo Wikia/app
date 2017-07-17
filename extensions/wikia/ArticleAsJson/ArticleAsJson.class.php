@@ -1,6 +1,6 @@
 <?php
 
-class ArticleAsJson extends WikiaService {
+class ArticleAsJson {
 	static $media = [ ];
 	static $users = [ ];
 	static $mediaDetailConfig = [
@@ -395,7 +395,7 @@ class ArticleAsJson extends WikiaService {
 				self::linkifyMediaCaption( $parser, $media );
 			}
 
-			wfRunHooks( 'ArticleAsJsonBeforeEncode', [ &$text ] );
+			Hooks::run( 'ArticleAsJsonBeforeEncode', [ &$text ] );
 
 			$text = json_encode(
 				[

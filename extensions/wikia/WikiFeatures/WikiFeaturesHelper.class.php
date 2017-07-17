@@ -64,7 +64,7 @@ class WikiFeaturesHelper extends WikiaModel {
 
 		if (isset($this->wg->WikiFeatures['normal']) && is_array($this->wg->WikiFeatures['normal'])) {
 			//allow adding features in runtime
-			wfrunHooks( 'WikiFeatures::onGetFeatureNormal' );
+			Hooks::run( 'WikiFeatures::onGetFeatureNormal' );
 
 			foreach ($this->wg->WikiFeatures['normal'] as $feature) {
 				$list[] = array(
@@ -85,7 +85,7 @@ class WikiFeaturesHelper extends WikiaModel {
 		$list = array();
 		if (isset($this->wg->WikiFeatures['labs']) && is_array($this->wg->WikiFeatures['labs'])) {
 			//allow adding features in runtime
-			wfrunHooks( 'WikiFeatures::onGetFeatureLabs' );
+			Hooks::run( 'WikiFeatures::onGetFeatureLabs' );
 
 			foreach ($this->wg->WikiFeatures['labs'] as $feature) {
 				$list[] = array(

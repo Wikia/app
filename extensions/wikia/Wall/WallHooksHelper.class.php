@@ -95,7 +95,7 @@ class WallHooksHelper {
 				return true;
 			}
 
-			if ( !wfRunHooks( 'WallBeforeRenderThread', [ $mainTitle, $wallMessage ] ) ) {
+			if ( !Hooks::run( 'WallBeforeRenderThread', [ $mainTitle, $wallMessage ] ) ) {
 				return true;
 			}
 
@@ -1315,7 +1315,7 @@ class WallHooksHelper {
 	static protected function getMessagePrefix( $namespace ) {
 		$namespace = MWNamespace::getSubject( $namespace );
 		$prefix = '';
-		if ( !wfRunHooks( 'WallRecentchangesMessagePrefix', [ $namespace, &$prefix ] ) ) {
+		if ( !Hooks::run( 'WallRecentchangesMessagePrefix', [ $namespace, &$prefix ] ) ) {
 			return $prefix;
 		}
 

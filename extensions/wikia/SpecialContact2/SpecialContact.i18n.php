@@ -300,7 +300,7 @@ $messages['de'] = array(
 	'specialcontact-intro-main-head' => '<big>Brauchst du Hilfe? Kein Problem, die FANDOM-Community kann dir helfen.</big><br/>
 Klicke auf die folgenden Links, um mehr darüber zu erfahren, wie man FANDOM benutzt, anpasst oder das eigene Benutzerkonto verwaltet.',
 	'specialcontact-intro-main-local' => '',
-	'specialcontact-intro-main-foot' => "'''Beantwortet diese Seite deine Fragen?''' Wenn nicht, dann [[Special:contact/general|schreib uns]]. Vergiss nicht, dass du jederzeit unsere '''[[w:c:de.community:Hilfe:Übersicht|Hilfeseiten]]''', den [[w:c:de.community:Blog:Fandom_Deutschland_News|Fandom-Blog]] oder unsere '''[[w:c:de.community:Special:Forum|Foren]]''' zurate ziehen kannst.",
+	'specialcontact-intro-main-foot' => "'''Beantwortet diese Seite deine Fragen?''' Wenn nicht, dann [[Special:contact/general|schreib uns]]. Vergiss nicht, dass du jederzeit unsere '''[[w:c:de.community:Hilfe:Übersicht|Hilfeseiten]]''', den [[w:c:de.community:Blog:News|FANDOM-Blog]] oder unsere '''[[w:c:de.community:Special:Forum|Foren]]''' zurate ziehen kannst.",
 	'specialcontact-secheader-onwiki' => 'Fragen zu diesem Wiki',
 	'specialcontact-seclink-content-issue' => 'Probleme mit den Inhalten dieses Wikis',
 	'specialcontact-seclink-user-conflict' => 'Schwierigkeiten mit einem anderen Benutzer?',
@@ -2807,8 +2807,8 @@ FANDOM拥有大量不同主题的社区，我们希望您可以通过浏览其�
 
 十分感谢您的支持，祝您编辑愉快！
 ',
-	'specialcontact-intro-main-head' => '<big>需要帮助？别担心，FANDOM社区发展和支持团队会帮您解决各种问题。</big><br/>
-点击下面的链接了解如何使用FANDOM，以及如何更改您的FANDOM社区或者调整个人帐户设置。
+	'specialcontact-intro-main-head' => '<big>需要帮助吗？没问题！FANDOM社区发展和支持团队会帮您解决各种问题。</big><br/>
+点击下面的链接了解如何使用FANDOM，以及如何变更您的FANDOM社区或者调整个人帐户设置等。
 ',
 	'specialcontact-intro-rename-account' => '您在FANDOM上仅有一次更改用户名的机会，所以在提交更改用户名之前，请再次确认。一旦作出更改，您将无法再改回之前的用户名。在您作出决定之前，请仔细阅读有关用户名更改细节：http://zh.community.wikia.com/wiki/Help:更改用戶名
 
@@ -2836,7 +2836,7 @@ FANDOM拥有大量不同主题的社区，我们希望您可以通过浏览其�
 	'specialcontact-secheader-onwiki' => '关于此维基的问题',
 	'specialcontact-secheader-setting' => '此维基的更改',
 	'specialcontact-seclink-close-wiki' => '关闭此维基',
-	'specialcontact-seclink-content-issue' => '使用此维基内容进行发布',
+	'specialcontact-seclink-content-issue' => '关于此维基内容方面的问题',
 	'specialcontact-seclink-using-fandom' => '如何使用FANDOM？',
 	'specialcontact-sectitle' => 'FANDOM支持 - $1',
 	'specialcontact-sectitle-close-wiki' => '关闭此维基',

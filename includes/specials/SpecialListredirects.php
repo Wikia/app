@@ -57,7 +57,7 @@ class ListredirectsPage extends QueryPage {
 					'p2.page_title=rd_title' ) ) )
 		);
 
-		wfRunHooks( 'ListredirectsPage::getQueryInfo', array( &$this, &$query ) );
+		Hooks::run( 'ListredirectsPage::getQueryInfo', array( &$this, &$query ) );
 		return $query;
 	}
 

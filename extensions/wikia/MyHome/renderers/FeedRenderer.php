@@ -713,7 +713,7 @@ class FeedRenderer {
 			$hookTime = false;
 			$hookRes = null;
 
-			if ( !wfRunHooks( 'ImageBeforeProduceHTML',
+			if ( !Hooks::run( 'ImageBeforeProduceHTML',
 				array( &$hookDummy, &$title, &$hookFile, &$hookFrameParams, &$hookHandlerParams, &$hookTime, &$hookRes ) ) ) {
 				$thumbs[] = "<li>$hookRes</li>";
 			} else {

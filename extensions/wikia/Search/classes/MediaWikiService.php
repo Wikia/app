@@ -483,7 +483,7 @@ class MediaWikiService {
 	 * @return mixed
 	 */
 	public function invokeHook( $hookName, array $args = [] ) {
-		return wfRunHooks( $hookName, $args );
+		return \Hooks::run( $hookName, $args );
 	}
 
 	/**
@@ -1022,7 +1022,7 @@ class MediaWikiService {
 	 * @deprecated
 	 */
 	public function registerHook( $event, $class, $method ) {
-		$this->app->registerHook( $event, $class, $method );
+		\Hooks::register( $event, "$class::$method" );
 	}
 
 	/**

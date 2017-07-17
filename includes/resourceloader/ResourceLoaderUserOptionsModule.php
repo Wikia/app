@@ -56,7 +56,7 @@ class ResourceLoaderUserOptionsModule extends ResourceLoaderModule {
 
 		/* Wikia change begin - @author: macbre */
 		$options = $wgUser->getOptions();
-		wfRunHooks('ResourceLoaderUserOptionsModuleGetOptions', array($context, &$options));
+		Hooks::run('ResourceLoaderUserOptionsModuleGetOptions', array($context, &$options));
 		/* Wikia change end */
 
 		return Xml::encodeJsCall( 'mw.user.options.set',

@@ -140,6 +140,9 @@ describe('ControlBar', function () {
       {"name":"discovery", "location":"controlBar", "whenDoesNotFit":"moveToMoreOptions", "minWidth":35 },
       {"name":"fullscreen", "location":"controlBar", "whenDoesNotFit":"keep", "minWidth":35 }
     ];
+    // This might no longer be necessary after the skin.json submodule is updated
+    oneButtonSkinConfig.shareScreen.shareContent = ["social", "embed"];
+    oneButtonSkinConfig.shareScreen.socialContent = ["twitter", "facebook", "google+", "email"];
 
     var mockProps = {
       isLiveStream: false,
@@ -414,6 +417,190 @@ describe('ControlBar', function () {
     expect(toggleScreenClicked).toBe(true);
   });
 
+  it('hides closed caption button if ooyala ad is playing', function() {
+    var mockController = {
+      state: {
+        isMobile: false,
+        volumeState: {
+          volume: 1
+        },
+        closedCaptionOptions: {availableLanguages: true},
+        videoQualityOptions: {
+          availableBitrates: null
+        },
+        isOoyalaAds: true
+      }
+    };
+
+    var oneButtonSkinConfig = Utils.clone(skinConfig);
+    oneButtonSkinConfig.buttons.desktopContent = [
+      {"name":"closedCaption", "location":"controlBar", "whenDoesNotFit":"moveToMoreOptions", "minWidth":35 }
+    ];
+
+    var mockProps = {
+      isLiveStream: false,
+      controller: mockController,
+      skinConfig: oneButtonSkinConfig
+    };
+
+    var DOM = TestUtils.renderIntoDocument(
+      <ControlBar {...mockProps} controlBarVisible={true}
+        componentWidth={500}
+        playerState={CONSTANTS.STATE.PLAYING}
+        isLiveStream={mockProps.isLiveStream} />
+    );
+
+    var ccButtons = TestUtils.scryRenderedDOMComponentsWithClass(DOM, 'oo-closed-caption');
+    expect(ccButtons.length).toBe(0);
+  });
+
+  it('shows closed caption button if ooyala ad is not playing', function() {
+    var mockController = {
+      state: {
+        isMobile: false,
+        volumeState: {
+          volume: 1
+        },
+        closedCaptionOptions: {availableLanguages: true},
+        videoQualityOptions: {
+          availableBitrates: null
+        },
+        isOoyalaAds: false
+      }
+    };
+
+    var oneButtonSkinConfig = Utils.clone(skinConfig);
+    oneButtonSkinConfig.buttons.desktopContent = [
+      {"name":"closedCaption", "location":"controlBar", "whenDoesNotFit":"moveToMoreOptions", "minWidth":35 }
+    ];
+
+    var mockProps = {
+      isLiveStream: false,
+      controller: mockController,
+      skinConfig: oneButtonSkinConfig
+    };
+
+    var DOM = TestUtils.renderIntoDocument(
+      <ControlBar {...mockProps} controlBarVisible={true}
+        componentWidth={500}
+        playerState={CONSTANTS.STATE.PLAYING}
+        isLiveStream={mockProps.isLiveStream} />
+    );
+
+    var ccButtons = TestUtils.scryRenderedDOMComponentsWithClass(DOM, 'oo-closed-caption');
+    expect(ccButtons.length).toBe(1);
+  });
+
+  it('hides share button if share options are not provided', function() {
+    var customSkinConfig = JSON.parse(JSON.stringify(skinConfig));
+    var mockController = {
+      state: {
+        isMobile: false,
+        volumeState: { volume: 1 },
+        videoQualityOptions: {},
+        closedCaptionOptions: {}
+      }
+    };
+    var mockProps = {
+      isLiveStream: false,
+      controller: mockController,
+      skinConfig: customSkinConfig
+    };
+
+    customSkinConfig.buttons.desktopContent = [
+      { "name": "share", "location": "controlBar", "whenDoesNotFit": "moveToMoreOptions", "minWidth": 45 }
+    ];
+    customSkinConfig.shareScreen.shareContent = ["social"];
+    customSkinConfig.shareScreen.socialContent = [];
+
+    var DOM = TestUtils.renderIntoDocument(
+      <ControlBar {...mockProps}
+        controlBarVisible={true}
+        componentWidth={500}
+        playerState={CONSTANTS.STATE.PLAYING}
+        isLiveStream={mockProps.isLiveStream} />
+    );
+    expect(TestUtils.scryRenderedDOMComponentsWithClass(DOM, 'oo-share').length).toBe(0);
+
+    customSkinConfig.shareScreen.shareContent = [];
+    customSkinConfig.shareScreen.socialContent = ["twitter"];
+
+    DOM = TestUtils.renderIntoDocument(
+      <ControlBar {...mockProps}
+        controlBarVisible={true}
+        componentWidth={500}
+        playerState={CONSTANTS.STATE.PLAYING}
+        isLiveStream={mockProps.isLiveStream} />
+    );
+    expect(TestUtils.scryRenderedDOMComponentsWithClass(DOM, 'oo-share').length).toBe(0);
+  });
+
+  it('hides share button when ooyala ad is playing', function() {
+    var customSkinConfig = JSON.parse(JSON.stringify(skinConfig));
+    var mockController = {
+      state: {
+        isMobile: false,
+        volumeState: { volume: 1 },
+        videoQualityOptions: {},
+        closedCaptionOptions: {},
+        isOoyalaAds: true
+      }
+    };
+    var mockProps = {
+      isLiveStream: false,
+      controller: mockController,
+      skinConfig: customSkinConfig
+    };
+
+    customSkinConfig.buttons.desktopContent = [
+      { "name": "share", "location": "controlBar", "whenDoesNotFit": "moveToMoreOptions", "minWidth": 45 }
+    ];
+    customSkinConfig.shareScreen.shareContent = ["social"];
+    customSkinConfig.shareScreen.socialContent = ["twitter"];
+
+    var DOM = TestUtils.renderIntoDocument(
+      <ControlBar {...mockProps}
+        controlBarVisible={true}
+        componentWidth={500}
+        playerState={CONSTANTS.STATE.PLAYING}
+        isLiveStream={mockProps.isLiveStream} />
+    );
+    expect(TestUtils.scryRenderedDOMComponentsWithClass(DOM, 'oo-share').length).toBe(0);
+  });
+
+   it('shows share button when ooyala ad is not playing', function() {
+    var customSkinConfig = JSON.parse(JSON.stringify(skinConfig));
+    var mockController = {
+      state: {
+        isMobile: false,
+        volumeState: { volume: 1 },
+        videoQualityOptions: {},
+        closedCaptionOptions: {},
+        isOoyalaAds: false
+      }
+    };
+    var mockProps = {
+      isLiveStream: false,
+      controller: mockController,
+      skinConfig: customSkinConfig
+    };
+
+    customSkinConfig.buttons.desktopContent = [
+      { "name": "share", "location": "controlBar", "whenDoesNotFit": "moveToMoreOptions", "minWidth": 45 }
+    ];
+    customSkinConfig.shareScreen.shareContent = ["social"];
+    customSkinConfig.shareScreen.socialContent = ["twitter"];
+
+    var DOM = TestUtils.renderIntoDocument(
+      <ControlBar {...mockProps}
+        controlBarVisible={true}
+        componentWidth={500}
+        playerState={CONSTANTS.STATE.PLAYING}
+        isLiveStream={mockProps.isLiveStream} />
+    );
+    expect(TestUtils.scryRenderedDOMComponentsWithClass(DOM, 'oo-share').length).toBe(1);
+  });
+
   it('shows/hides discovery button if discovery available', function() {
     var mockController = {
       state: {
@@ -487,6 +674,82 @@ describe('ControlBar', function () {
     expect(discoveryClicked).toBe(true);
   });
 
+  it('hides discovery button when ooyala ad is playing', function() {
+    var mockController = {
+      state: {
+        isMobile: false,
+        volumeState: {
+          volume: 1
+        },
+        closedCaptionOptions: {},
+        videoQualityOptions: {
+          availableBitrates: null
+        },
+        discoveryData: true,
+        isOoyalaAds: true
+      }
+    };
+
+    var oneButtonSkinConfig = Utils.clone(skinConfig);
+    oneButtonSkinConfig.buttons.desktopContent = [
+      {"name":"discovery", "location":"controlBar", "whenDoesNotFit":"moveToMoreOptions", "minWidth":35 }
+    ];
+
+    var mockProps = {
+      isLiveStream: false,
+      controller: mockController,
+      skinConfig: oneButtonSkinConfig
+    };
+
+    var DOM = TestUtils.renderIntoDocument(
+      <ControlBar {...mockProps} controlBarVisible={true}
+        componentWidth={500}
+        playerState={CONSTANTS.STATE.PLAYING}
+        isLiveStream={mockProps.isLiveStream} />
+    );
+
+    var discoveryButtons = TestUtils.scryRenderedDOMComponentsWithClass(DOM, 'oo-discovery');
+    expect(discoveryButtons.length).toBe(0);
+  });
+
+ it('shows discovery button when ooyala ad is not playing', function() {
+    var mockController = {
+      state: {
+        isMobile: false,
+        volumeState: {
+          volume: 1
+        },
+        closedCaptionOptions: {},
+        videoQualityOptions: {
+          availableBitrates: null
+        },
+        discoveryData: true,
+        isOoyalaAds: false
+      }
+    };
+
+    var oneButtonSkinConfig = Utils.clone(skinConfig);
+    oneButtonSkinConfig.buttons.desktopContent = [
+      {"name":"discovery", "location":"controlBar", "whenDoesNotFit":"moveToMoreOptions", "minWidth":35 }
+    ];
+
+    var mockProps = {
+      isLiveStream: false,
+      controller: mockController,
+      skinConfig: oneButtonSkinConfig
+    };
+
+    var DOM = TestUtils.renderIntoDocument(
+      <ControlBar {...mockProps} controlBarVisible={true}
+        componentWidth={500}
+        playerState={CONSTANTS.STATE.PLAYING}
+        isLiveStream={mockProps.isLiveStream} />
+    );
+
+    var discoveryButtons = TestUtils.scryRenderedDOMComponentsWithClass(DOM, 'oo-discovery');
+    expect(discoveryButtons.length).toBe(1);
+  });
+
   it("shows/hides the more options button appropriately", function() {
     var mockController = {
       state: {
@@ -525,6 +788,95 @@ describe('ControlBar', function () {
     var buttons = TestUtils.scryRenderedDOMComponentsWithClass(DOM, 'oo-control-bar-item');
     expect(buttons.length).toBe(1);
 
+    oneButtonSkinConfig.buttons.desktopContent = [
+      {"name":"playPause", "location":"controlBar", "whenDoesNotFit":"keep", "minWidth":35 },
+      {"name":"playPause", "location":"controlBar", "whenDoesNotFit":"moveToMoreOptions", "minWidth":35 },
+      {"name":"playPause", "location":"controlBar", "whenDoesNotFit":"moveToMoreOptions", "minWidth":35 },
+      {"name":"playPause", "location":"controlBar", "whenDoesNotFit":"moveToMoreOptions", "minWidth":35 },
+      {"name":"playPause", "location":"controlBar", "whenDoesNotFit":"moveToMoreOptions", "minWidth":35 },
+      {"name":"moreOptions", "location":"controlBar", "whenDoesNotFit":"keep", "minWidth":35 }
+    ];
+
+    mockProps = {
+      isLiveStream: false,
+      controller: mockController,
+      skinConfig: oneButtonSkinConfig
+    };
+
+    DOM = TestUtils.renderIntoDocument(
+      <ControlBar {...mockProps} controlBarVisible={true}
+        componentWidth={100}
+        playerState={CONSTANTS.STATE.PLAYING}
+        isLiveStream={mockProps.isLiveStream} />
+    );
+
+    optionsButton = TestUtils.scryRenderedDOMComponentsWithClass(DOM, 'oo-more-options');
+    expect(optionsButton.length).toBe(1);
+    buttons = TestUtils.scryRenderedDOMComponentsWithClass(DOM, 'oo-play-pause');
+    expect(buttons.length).toBeLessThan(5);
+  });
+
+  it("hides the more options button when ooyala ad is playing", function() {
+    var mockController = {
+      state: {
+        isMobile: false,
+        volumeState: {
+          volume: 1
+        },
+        closedCaptionOptions: {},
+        videoQualityOptions: {
+          availableBitrates: null
+        },
+        isOoyalaAds: true
+      }
+    };
+
+    var oneButtonSkinConfig = Utils.clone(skinConfig);
+    oneButtonSkinConfig.buttons.desktopContent = [
+      {"name":"playPause", "location":"controlBar", "whenDoesNotFit":"keep", "minWidth":35 },
+      {"name":"playPause", "location":"controlBar", "whenDoesNotFit":"moveToMoreOptions", "minWidth":35 },
+      {"name":"playPause", "location":"controlBar", "whenDoesNotFit":"moveToMoreOptions", "minWidth":35 },
+      {"name":"playPause", "location":"controlBar", "whenDoesNotFit":"moveToMoreOptions", "minWidth":35 },
+      {"name":"playPause", "location":"controlBar", "whenDoesNotFit":"moveToMoreOptions", "minWidth":35 },
+      {"name":"moreOptions", "location":"controlBar", "whenDoesNotFit":"keep", "minWidth":35 }
+    ];
+
+    mockProps = {
+      isLiveStream: false,
+      controller: mockController,
+      skinConfig: oneButtonSkinConfig
+    };
+
+    DOM = TestUtils.renderIntoDocument(
+      <ControlBar {...mockProps} controlBarVisible={true}
+        componentWidth={100}
+        playerState={CONSTANTS.STATE.PLAYING}
+        isLiveStream={mockProps.isLiveStream} />
+    );
+
+    optionsButton = TestUtils.scryRenderedDOMComponentsWithClass(DOM, 'oo-more-options');
+    expect(optionsButton.length).toBe(0);
+    buttons = TestUtils.scryRenderedDOMComponentsWithClass(DOM, 'oo-play-pause');
+    expect(buttons.length).toBe(1);
+  });
+
+
+  it("shows the more options button when ooyala ad is not playing", function() {
+    var mockController = {
+      state: {
+        isMobile: false,
+        volumeState: {
+          volume: 1
+        },
+        closedCaptionOptions: {},
+        videoQualityOptions: {
+          availableBitrates: null
+        },
+        isOoyalaAds: false
+      }
+    };
+
+    var oneButtonSkinConfig = Utils.clone(skinConfig);
     oneButtonSkinConfig.buttons.desktopContent = [
       {"name":"playPause", "location":"controlBar", "whenDoesNotFit":"keep", "minWidth":35 },
       {"name":"playPause", "location":"controlBar", "whenDoesNotFit":"moveToMoreOptions", "minWidth":35 },
@@ -923,6 +1275,80 @@ describe('ControlBar', function () {
     expect(qualityClicked).toBe(true);
   });
 
+  it('hides quality button if ooyala ad is playing', function() {
+    var mockController = {
+      state: {
+        isMobile: false,
+        volumeState: {
+          volume: 1
+        },
+        closedCaptionOptions: {},
+        videoQualityOptions: {
+          availableBitrates: true
+        },
+        isOoyalaAds: true
+      }
+    };
+
+    var oneButtonSkinConfig = Utils.clone(skinConfig);
+    oneButtonSkinConfig.buttons.desktopContent = [
+      {"name":"quality", "location":"controlBar", "whenDoesNotFit":"moveToMoreOptions", "minWidth":35 }
+    ];
+
+    var mockProps = {
+      isLiveStream: false,
+      controller: mockController,
+      skinConfig: oneButtonSkinConfig
+    };
+
+    var DOM = TestUtils.renderIntoDocument(
+      <ControlBar {...mockProps} controlBarVisible={true}
+        componentWidth={500}
+        playerState={CONSTANTS.STATE.PLAYING}
+        isLiveStream={mockProps.isLiveStream} />
+    );
+
+    var qualityButtons = TestUtils.scryRenderedDOMComponentsWithClass(DOM, 'oo-quality');
+    expect(qualityButtons.length).toBe(0);
+  });
+
+  it('shows quality button if ooyala ad is not playing', function() {
+    var mockController = {
+      state: {
+        isMobile: false,
+        volumeState: {
+          volume: 1
+        },
+        closedCaptionOptions: {},
+        videoQualityOptions: {
+          availableBitrates: true
+        },
+        isOoyalaAds: false
+      }
+    };
+
+    var oneButtonSkinConfig = Utils.clone(skinConfig);
+    oneButtonSkinConfig.buttons.desktopContent = [
+      {"name":"quality", "location":"controlBar", "whenDoesNotFit":"moveToMoreOptions", "minWidth":35 }
+    ];
+
+    var mockProps = {
+      isLiveStream: false,
+      controller: mockController,
+      skinConfig: oneButtonSkinConfig
+    };
+
+    var DOM = TestUtils.renderIntoDocument(
+      <ControlBar {...mockProps} controlBarVisible={true}
+        componentWidth={500}
+        playerState={CONSTANTS.STATE.PLAYING}
+        isLiveStream={mockProps.isLiveStream} />
+    );
+
+    var qualityButtons = TestUtils.scryRenderedDOMComponentsWithClass(DOM, 'oo-quality');
+    expect(qualityButtons.length).toBe(1);
+  });
+
   it("renders nonclickable logo", function() {
     var mockController = {
       state: {
@@ -977,7 +1403,7 @@ describe('ControlBar', function () {
     oneButtonSkinConfig.buttons.desktopContent = [
       {"name":"logo", "location":"controlBar", "whenDoesNotFit":"keep", "minWidth":130 }
     ];
-    oneButtonSkinConfig.controlBar.logo.imageResource.url = "//player.ooyala.com/static/v4/candidate/latest/skin-plugin/assets/images/ooyala-logo.svg";
+    oneButtonSkinConfig.controlBar.logo.imageResource.url = "//player.ooyala.com/static/v4/stable/4.14.8/skin-plugin/assets/images/ooyala-logo.svg";
     oneButtonSkinConfig.controlBar.logo.clickUrl = "http://www.ooyala.com";
 
     var mockProps = {

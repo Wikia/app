@@ -203,7 +203,7 @@ Otherwise, you can use the easy form below. Your comment will be added to the pa
 	'footer_Terms_of_use' => '[http://www.wikia.com/wiki/Terms_of_use Terms of use]',
 	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/wiki/Advertising Advertise on Wikia]',
 	'fast-adv' => 'Advertisement',
-	'feed-watom' => 'Fandom Atom',
+	'feed-watom' => 'FANDOM Atom',
 );
 
 $messages['qqq'] = array(
@@ -5600,7 +5600,7 @@ Anderenfalls kannst du auch das untenstehende einfache Formular nutzen. Dein Kom
 	'feedback-bugcheck' => 'Super! Bitte überprüfe noch, ob es sich hierbei nicht um einen bereits [$1 bekannten Fehler] handelt.',
 	'feedback-bugnew' => 'Ich habe es überprüft. Den neuen Fehler melden.',
 	'forum' => 'Forum',
-	'feed-watom' => 'Fandom Atom',
+	'feed-watom' => 'FANDOM Atom',
 	'fast-adv' => 'Werbeanzeige',
 	'featured' => 'Vorgestellt',
 	'footer_1.5' => 'bearbeite diese Seite',
@@ -6688,7 +6688,7 @@ En otro caso, puedes usar el siguiente formulario. Tu comentario será añadido 
 	'feedback-bugcheck' => '¡Perfecto! Únicamente comprueba que no sea un [$1 fallo conocido].',
 	'feedback-bugnew' => 'Lo he comprobado. Informar de un nuevo fallo.',
 	'forum' => 'Foro',
-	'feed-watom' => 'Atomo de Fandom',
+	'feed-watom' => 'Atomo de FANDOM',
 	'featured' => 'Destacado',
 	'footer_1.5' => 'editando esta página',
 	'footer_1' => 'Haz crecer $1',
@@ -7900,7 +7900,7 @@ Sinon, vous pouvez utiliser le formulaire simplifié ci-dessous. Votre commentai
 	'feedback-bugcheck' => 'Formidable ! Vérifiez simplement que ce n’est pas un des [$1 bogues déjà connus].',
 	'feedback-bugnew' => "J'ai vérifié. Signaler un nouveau bogue",
 	'forum' => 'Forum',
-	'feed-watom' => 'Fandom Atom',
+	'feed-watom' => 'FANDOM Atom',
 	'featured' => 'En vedette',
 	'footer_1.5' => 'modifiant cette page',
 	'footer_1' => 'Améliorez $1 en',
@@ -11710,7 +11710,7 @@ Le immagini vengono mostrate alla massima risoluzione disponibile, per gli altri
 	'feedback-close' => 'Fatto',
 	'feedback-bugcheck' => 'Ottimo! Verifica che non sia già fra i [$1 bug conosciuti].',
 	'feedback-bugnew' => 'Controllo effettuato. Segnala un nuovo bug',
-	'feed-watom' => 'Fandom Atom',
+	'feed-watom' => 'FANDOM Atom',
 	'forum-url' => 'Forum:Index',
 	'feed-atom' => 'Atom',
 	'feed-rss' => 'RSS',
@@ -12078,7 +12078,7 @@ $1',
 	'feedback-close' => '完了',
 	'featured' => 'おすすめ',
 	'forum' => 'フォーラム',
-	'feed-watom' => 'FandomのAtom',
+	'feed-watom' => 'FANDOMのAtom',
 	'fast-adv' => '広告',
 	'footer_1.5' => '編集してみましょう',
 	'footer_1' => '$1のこの記事を',
@@ -18627,7 +18627,7 @@ Anders kunt u ook het eenvoudige formulier hieronder gebruiken. Uw commentaar za
 	'footer_Terms_of_use' => '[http://www.wikia.com/wiki/Terms_of_use Terms of use]',
 	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/wiki/Advertising Advertise on Wikia]',
 	'fast-adv' => 'Advertisement',
-	'feed-watom' => 'Fandom Atom',
+	'feed-watom' => 'FANDOM Atom',
 );
 
 $messages['nl-informal'] = array(
@@ -19888,7 +19888,7 @@ W przeciwnym wypadku można użyć prostego formularza poniżej. Komentarz zosta
 	'footer_7' => 'Prześlij ten artykuł mailem',
 	'footer_8' => 'Podziel się tym artykułem',
 	'footer_9' => 'Oceń ten artykuł',
-	'feed-watom' => 'Fandom Atom',
+	'feed-watom' => 'FANDOM Atom',
 	'filepage.css' => '/* Umieszczony tutaj kod CSS wpłynie na wygląd stron plików, także na zewnętrznych wiki */',
 	'footer_About_Wikia' => '[http://pl.wikia.com/wiki/O_nas O Wikii]',
 	'footer_Terms_of_use' => '[http://pl.wikia.com/Zasady_U%C5%BCytkowania Zasady Użytkowania]',
@@ -20683,7 +20683,7 @@ As imagens serão exibidas em sua resolução máxima, outros tipos de arquivos 
 	'feedback-error3' => 'Erro: A API não responde',
 	'feedback-close' => 'Feito',
 	'forum' => 'Fórum',
-	'feed-watom' => 'Fandom Atom',
+	'feed-watom' => 'FANDOM Atom',
 	'feed-atom' => 'Atom',
 	'feed-rss' => 'RSS',
 	'filepage.css' => '/* CSS placed here is included on the file description page, also included on foreign client wikis */',
@@ -20711,190 +20711,6 @@ Caso contrário, você poderá usar o formulário simplificado a seguir. Seu com
 	'footer_Terms_of_use' => '[http://www.wikia.com/wiki/Terms_of_use Terms of use]',
 	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/wiki/Advertising Advertise on Wikia]',
 	'fast-adv' => 'Anúncio',
-);
-
-$messages['pt-br'] = array(
-	'friday' => 'sexta-feira',
-	'fri' => 'sex',
-	'february' => 'fevereiro',
-	'february-gen' => 'fevereiro',
-	'feb' => 'fev.',
-	'faq' => 'FAQ',
-	'feedlinks' => 'Feed:',
-	'feed-invalid' => 'Tipo inválido de inscrição de feeds.',
-	'feed-unavailable' => 'Os "feeds" não se encontram disponíveis',
-	'fileappenderrorread' => 'Não foi possível ler "$1" durante a anexação.',
-	'fileappenderror' => 'Não foi possível adicionar "$1" a "$2".',
-	'filecopyerror' => 'Não foi possível copiar o arquivo "$1" para "$2".',
-	'filerenameerror' => 'Não foi possível renomear o arquivo "$1" para "$2".',
-	'filedeleteerror' => 'Não foi possível eliminar o arquivo "$1".',
-	'filenotfound' => 'Não foi possível encontrar o arquivo "$1".',
-	'fileexistserror' => 'Não foi possível gravar no arquivo "$1": ele já existe',
-	'formerror' => 'Erro: Não foi possível enviar o formulário',
-	'filereadonlyerror' => 'Não é possível modificar o arquivo "$1" porque o repositório do arquivo "$2" está em modo somente leitura.
-
-O administrador que bloqueou ofereceu a seguinte explicação: "$3".',
-	'filename' => 'Nome do arquivo',
-	'filedesc' => 'Descrição do arquivo',
-	'fileuploadsummary' => 'Sumário:',
-	'filereuploadsummary' => 'Alterações no arquivo:',
-	'filestatus' => 'Status dos direitos autorais:',
-	'filesource' => 'Fonte:',
-	'filename-toolong' => 'Os nomes dos arquivos não podem ter mais de 240 bytes.',
-	'filetype-mime-mismatch' => 'A extensão ".$1" não corresponde ao tipo MIME do arquivo ($2).',
-	'filetype-badmime' => 'Arquivos de tipo MIME "$1" não estão autorizados a serem enviados.',
-	'filetype-bad-ie-mime' => 'Este arquivo não pode ser carregado porque o Internet Explorer o detectaria como "$1", que é um tipo de arquivo não permitido e potencialmente perigoso.',
-	'filetype-unwanted-type' => "'''\".\$1\"''' não é um tipo de arquivo desejado.
-{{PLURAL:\$3|O tipo preferível é|Os tipos preferíveis são}} \$2.",
-	'filetype-banned-type' => '\'\'\'".$1"\'\'\' {{PLURAL:$4|não é um tipo de arquivo permitido|não são tipos de arquivos permitidos}}.
-{{PLURAL:$3|O tipo de arquivo permitido é|Os tipos de arquivos permitidos são}} $2.',
-	'filetype-missing' => 'O arquivo não possui uma extensão (como, por exemplo, ".jpg").',
-	'file-too-large' => 'O arquivo que você enviou era muito grande.',
-	'filename-tooshort' => 'O nome do arquivo é curto demais.',
-	'filetype-banned' => 'Este tipo de arquivo é proibido.',
-	'fileexists' => "Já existe um arquivo com este nome.
-Verifique '''<tt>[[:$1]]</tt>''' caso não tenha certeza se deseja alterar o arquivo atual.
-[[$1|thumb]]",
-	'filepageexists' => "A página de descrição deste arquivo já foi criada em '''<tt>[[:$1]]</tt>''', mas atualmente não existe nenhum arquivo com este nome.
-O sumário que você inseriu não aparecerá na página de descrição.
-Para que ele apareça, será necessário editá-lo manualmente.
-[[$1|thumb]]",
-	'fileexists-extension' => "Já existe um arquivo com nome similar: [[$2|thumb]]
-* Nome do arquivo que está sendo enviado: '''<tt>[[:$1]]</tt>'''
-* Nome do arquivo existente: '''<tt>[[:$2]]</tt>'''
-Escolha um nome diferente.",
-	'fileexists-thumbnail-yes' => "O arquivo parece ser uma imagem de tamanho reduzido (''miniatura'', ou ''thumbnail'').
-[[$1|thumb]]
-Verifique o arquivo '''<tt>[[:$1]]</tt>'''.
-Se o arquivo enviado é o mesmo do de tamanho original, não é necessário enviar uma versão adicional em miniatura.",
-	'file-thumbnail-no' => "O nome do arquivo começa com '''<tt>$1</tt>'''.
-Isso faz parecer se tratar de uma imagem de tamanho reduzido (''miniatura'', ou ''thumbnail'').
-Se você tem esta imagem em sua resolução completa, envie-a no lugar desta. Caso contrário, altere o nome de arquivo.",
-	'fileexists-forbidden' => 'Já existe um arquivo com este nome e ele não pode ser sobrescrito.
-Se ainda pretende enviar seu arquivo, volte e use um novo nome.
-[[File:$1|thumb|center|$1]]',
-	'fileexists-shared-forbidden' => 'Já existe um arquivo com este nome no repositório de arquivos compartilhados.
-Se você ainda quer enviar seu arquivo, volte e use um novo nome.
-[[File:$1|thumb|center|$1]]',
-	'file-exists-duplicate' => 'Este arquivo é uma duplicata do seguinte {{PLURAL:$1|arquivo|arquivos}}:',
-	'file-deleted-duplicate' => 'Um arquivo idêntico a este ([[:$1]]) foi eliminado anteriormente.
-Verifique o histórico de eliminação de tal arquivo antes de tentar re-enviar.',
-	'filewasdeleted' => 'Um arquivo com este nome foi enviado anteriormente e eliminado.
-Verifique o $1 antes de enviar novamente.',
-	'filename-bad-prefix' => "O nome do arquivo que você está enviando começa com '''\"\$1\"''', um nome pouco esclarecedor, comumente associado de forma automática por câmeras digitais.
-Escolha um nome de arquivo mais explicativo.",
-	'filename-prefix-blacklist' => ' #<!-- deixe esta linha exatamente como está --> <pre>
-# A sintaxe é a seguinte:
-#   * Tudo a partir do caractere "#" até ao fim da linha é um comentário
-#   * Todas as linhas não vazias são um prefixo para nomes de arquivos típicos atribuídos automaticamente por câmaras digitais
-CIMG # Casio
-DSC_ # Nikon
-DSCF # Fuji
-DSCN # Nikon
-DUW # alguns telefones móveis
-IMG # genérico
-JD # Jenoptik
-MGP # Pentax
-PICT # misc.
- #</pre> <!-- deixe esta linha exatamente como está -->',
-	'filejournal-fail-dbconnect' => 'Não foi possível se conectar ao banco de dados de registros do sistema de armazenamento "$1".',
-	'filejournal-fail-dbquery' => 'Não foi possível atualizar o banco de dados de registros do sistema de armazenamento "$1".',
-	'file-anchor-link' => 'Arquivo',
-	'filehist' => 'Histórico do arquivo',
-	'filehist-help' => 'Clique em uma data/horário para ver como o arquivo estava em um dado momento.',
-	'filehist-deleteall' => 'eliminar todas',
-	'filehist-deleteone' => 'eliminar',
-	'filehist-revert' => 'restaurar',
-	'filehist-current' => 'atual',
-	'filehist-datetime' => 'Data/Horário',
-	'filehist-thumb' => 'Miniatura',
-	'filehist-thumbtext' => 'Miniatura da versão das $1',
-	'filehist-nothumb' => 'Miniatura indisponível',
-	'filehist-user' => 'Usuário',
-	'filehist-dimensions' => 'Dimensões',
-	'filehist-filesize' => 'Tamanho do arquivo',
-	'filehist-comment' => 'Comentário',
-	'filehist-missing' => 'Arquivo faltando',
-	'filepage-nofile' => 'Não existe nenhum arquivo com esse nome.',
-	'filepage-nofile-link' => 'Não existe nenhum arquivo com este nome, mas você pode [$1 carregá-lo].',
-	'filerevert' => 'Reverter $1',
-	'filerevert-legend' => 'Reverter arquivo',
-	'filerevert-intro' => '<span class="plainlinks">Você está revertendo \'\'\'[[Media:$1|$1]]\'\'\' para a [$4 versão de $2 - $3].</span>',
-	'filerevert-comment' => 'Motivo:',
-	'filerevert-defaultcomment' => 'Revertido para a versão de $1 - $2',
-	'filerevert-submit' => 'Reverter',
-	'filerevert-success' => '<span class="plainlinks">\'\'\'[[Media:$1|$1]]\'\'\' foi revertida para a [$4 versão de $2 - $3].</span>',
-	'filerevert-badversion' => 'Não há uma versão local anterior deste arquivo no período de tempo especificado.',
-	'filedelete' => 'Eliminar $1',
-	'filedelete-legend' => 'Eliminar arquivo',
-	'filedelete-intro' => "Você está prestes a eliminar o arquivo '''[[Media:$1|$1]]''' junto com todo o seu histórico.",
-	'filedelete-intro-old' => '<span class="plainlinks">Você se encontra prestes a eliminar a versão de \'\'\'[[Media:$1|$1]]\'\'\' tal como se encontrava em [$4 $3, $2].</span>',
-	'filedelete-comment' => 'Motivo:',
-	'filedelete-submit' => 'Eliminar',
-	'filedelete-success' => "'''$1''' foi eliminado.",
-	'filedelete-success-old' => "A versão de '''[[Media:$1|$1]]''' tal como $3, $2 foi eliminada.",
-	'filedelete-nofile' => "'''$1''' não existe.",
-	'filedelete-nofile-old' => "Não há nenhuma versão de '''$1''' em arquivo com os parâmetros especificados.",
-	'filedelete-otherreason' => 'Outro/motivo adicional:',
-	'filedelete-reason-otherlist' => 'Outro motivo',
-	'filedelete-reason-dropdown' => '*Motivos comuns para eliminação
-** Violação de direitos de autor
-** Arquivo duplicado
-** Imagem inapropriada ou pornografica
-** Imagem sem uso',
-	'filedelete-edit-reasonlist' => 'Editar motivos de eliminação',
-	'filedelete-maintenance' => 'Eliminação e restauro de arquivos estão temporariamente desativados durante manutenção.',
-	'filedelete-maintenance-title' => 'Não é possível excluir o arquivo',
-	'fewestrevisions' => 'Páginas de conteúdo com menos edições',
-	'fix-double-redirects' => 'Atualizar todos os redirecionamentos que apontem para o título original',
-	'file-exists-sharedrepo' => 'O nome de arquivo escolhido já está em uso em um repositório compartilhado.
-Por favor, escolha outro nome.',
-	'filemissing' => 'arquivo não encontrado',
-	'filedeleteerror-short' => 'Erro ao eliminar arquivo: $1',
-	'filedeleteerror-long' => 'Foram encontrados erros ao tentar eliminar o arquivo:
-
-$1',
-	'filedelete-missing' => 'Não é possível eliminar "$1" já que o arquivo não existe.',
-	'filedelete-old-unregistered' => 'A revisão de arquivo especificada para "$1" não se encontra na base de dados.',
-	'filedelete-current-unregistered' => 'O arquivo "$1" não se encontra na base de dados.',
-	'filedelete-archive-read-only' => 'O servidor web não é capaz de fazer alterações no diretório "$1".',
-	'file-info' => 'tamanho: $1, tipo MIME: $2',
-	'file-info-size' => '$1 × $2 pixels, tamanho: $3, tipo MIME: $4',
-	'file-info-size-pages' => '$1 × $2 pixels, tamanho do arquivo: $3, tipo MIME: $4, $5 {{PLURAL:$5|página|páginas}}',
-	'file-nohires' => 'Sem resolução maior disponível.',
-	'file-info-gif-looped' => 'cíclico',
-	'file-info-gif-frames' => '$1 {{PLURAL:$1|quadro|quadros}}',
-	'file-info-png-looped' => 'cíclico',
-	'file-info-png-repeat' => 'tocado $1 {{PLURAL:$1|vez|vezes}}',
-	'file-info-png-frames' => '$1 {{PLURAL:$1|quadro|quadros}}',
-	'filepath' => 'Diretório do arquivo',
-	'filepath-page' => 'arquivo:',
-	'filepath-submit' => 'Ir',
-	'filepath-summary' => 'Esta página especial retorna o endereço completo de um arquivo.
-As imagens serão exibidas em sua resolução máxima, outros tipos de arquivos serão abertos diretamente pelos programas associados.',
-	'fileduplicatesearch' => 'Procurar por arquivos duplicados',
-	'fileduplicatesearch-summary' => 'Procure por arquivos duplicados tendo por base seu valor "hash".',
-	'fileduplicatesearch-legend' => 'Procurar por duplicatas',
-	'fileduplicatesearch-filename' => 'Nome do arquivo:',
-	'fileduplicatesearch-submit' => 'Pesquisa',
-	'fileduplicatesearch-info' => '$1 × $2 pixels<br />Tamanho: $3<br />tipo MIME: $4',
-	'fileduplicatesearch-result-1' => 'O arquivo "$1" não possui cópias idênticas.',
-	'fileduplicatesearch-result-n' => 'O arquivo "$1" possui {{PLURAL:$2|uma cópia idêntica|$2 cópias idênticas}}.',
-	'fileduplicatesearch-noresults' => 'Não foi encontrado nenhum arquivo com o nome "$1".',
-	'feedback-bugornote' => 'Se você está preparado para descrever detalhadamente um problema técnico, [$1 relate um bug].
-Caso contrário, você poderá usar o formulário simplificado a seguir. Seu comentário será adicionado à página "[$3 $2]", junto com o seu nome de usuário e o navegador que estiver usando neste momento.',
-	'feedback-subject' => 'Assunto:',
-	'feedback-message' => 'Mensagem:',
-	'feedback-cancel' => 'Cancelar',
-	'feedback-submit' => 'Enviar Comentários',
-	'feedback-adding' => 'Adicionando os comentários na página...',
-	'feedback-error1' => 'Erro: O resultado da API não foi reconhecido',
-	'feedback-error2' => 'Erro: A edição falhou',
-	'feedback-error3' => 'Erro: A API não responde',
-	'feedback-thanks' => 'Obrigado! O seu comentário foi adicionado à página "[ $2  $1 ]".',
-	'feedback-close' => 'Feito',
-	'feedback-bugcheck' => 'Perfeito! Apenas verifique se não é um dos [$1 bugs já conhecidos].',
-	'feedback-bugnew' => 'Eu verifiquei. Relatar um bug novo',
 );
 
 $messages['qu'] = array(
@@ -21790,7 +21606,7 @@ $1',
 	'feedback-bugcheck' => 'Прекрасно! Только проверьте, что в списке [$1 известных ошибок] её нет подобной записи.',
 	'feedback-bugnew' => 'Я проверил. Сообщить о новой ошибке',
 	'forum' => 'Форум',
-	'feed-watom' => 'Fandom Atom',
+	'feed-watom' => 'FANDOM Atom',
 	'forum-url' => 'Форум:Сообщество',
 	'feed-atom' => 'Atom',
 	'feed-rss' => 'RSS',
@@ -28206,39 +28022,6 @@ $messages['zea'] = array(
 	'file-nohires' => "Hin 'oôgere resolutie beschikbaer",
 );
 
-$messages['zh'] = array(
-	'filedesc' => '简述',
-	'footer_1.5' => '快来编修本页',
-	'footer_1' => '想改善 $1 ?',
-	'footer_10' => '与$1分享',
-	'footer_2' => '发表意见',
-	'footer_5' => '最近编辑：$1 $2',
-	'footer_6' => '查看随机页面',
-	'footer_7' => '转寄本文',
-	'footer_8' => '加到网路书签',
-	'footer_9' => '打分数',
-	'footer_About_Wikia' => '[http://www.wikia.com/wiki/About_Wikia 关於Wikia]',
-	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/wiki/Advertising 广告合作]',
-	'footer_Contact_Wikia' => '[http://www.wikia.com/wiki/Contact_us 联络Wikia]',
-	'footer_Terms_of_use' => '[http://www.wikia.com/wiki/Terms_of_use 使用条款]',
-);
-
-$messages['zh-cn'] = array(
-	'footer_1.5' => '快来编修本页',
-	'footer_1' => '觉得 $1 不夠好吗?',
-	'footer_10' => '与$1分享',
-	'footer_2' => '发表意见',
-	'footer_5' => '最近编辑：$1 $2',
-	'footer_6' => '随机页面',
-	'footer_7' => '转寄本文',
-	'footer_8' => '加到网路书签',
-	'footer_9' => '打分数',
-	'footer_About_Wikia' => '[http://www.wikia.com/wiki/About_Wikia 关於Wikia]',
-	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/wiki/Advertising 广告合作]',
-	'footer_Contact_Wikia' => '[http://www.wikia.com/wiki/Contact_us 联络Wikia]',
-	'footer_Terms_of_use' => '[http://www.wikia.com/wiki/Terms_of_use 使用条款]',
-);
-
 $messages['zh-hans'] = array(
 	'friday' => '星期五',
 	'fri' => '五',
@@ -28389,7 +28172,7 @@ $1',
 	'feedback-close' => '完成',
 	'feedback-bugcheck' => '请检查本bug是否为[$1 已知bug]。',
 	'feedback-bugnew' => '我检查了。报告新bug',
-	'feed-watom' => 'Fandom Atom',
+	'feed-watom' => 'FANDOM Atom',
 	'footer_1.5' => '快来编修本页',
 	'footer_1' => '想改善$1？',
 	'footer_2' => '回应此文',
@@ -28577,7 +28360,7 @@ $1',
 	'feedback-close' => '完成',
 	'feedback-bugcheck' => '請檢查此bug是否為[$1 已知bug]。',
 	'feedback-bugnew' => '我已經檢查過。報告一個新的bug',
-	'feed-watom' => 'Fandom Atom',
+	'feed-watom' => 'FANDOM Atom',
 	'footer_1.5' => '快來編輯此頁！',
 	'footer_1' => '覺得 $1 不夠好嗎?',
 	'footer_2' => '回應此文',
@@ -28615,111 +28398,6 @@ PICT # misc.
 	'footer_Terms_of_use' => '[http://www.wikia.com/wiki/Terms_of_use Terms of use]',
 	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/wiki/Advertising Advertise on Wikia]',
 	'fast-adv' => 'Advertisement',
-);
-
-$messages['zh-hk'] = array(
-	'february' => '二月',
-	'footer_1.5' => '快來編修本頁',
-	'footer_1' => '覺得 $1 不夠好嗎?',
-	'footer_10' => '與$1分享',
-	'footer_2' => '發表意見',
-	'footer_5' => '最近編輯：$1 $2',
-	'footer_6' => '隨機頁面',
-	'footer_7' => '轉寄本文',
-	'footer_8' => '加到網路書籤',
-	'footer_9' => '打分數',
-	'footer_About_Wikia' => '[http://www.wikia.com/wiki/About_Wikia 關於Wikia]',
-	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/wiki/Advertising 廣告合作]',
-	'footer_Contact_Wikia' => '[http://www.wikia.com/wiki/Contact_us 聯絡Wikia]',
-);
-
-$messages['zh-min-nan'] = array(
-	'february' => '二月',
-);
-
-$messages['zh-mo'] = array(
-	'february' => '二月',
-);
-
-$messages['zh-my'] = array(
-	'february' => '二月',
-);
-
-$messages['zh-tw'] = array(
-	'fri' => '五',
-	'february' => '二月',
-	'february-gen' => '二月',
-	'feb' => '2月',
-	'fileexists-thumbnail-yes' => "這個檔案好像是一幅圖片的縮圖版本''(縮圖)''。 [[$1|thumb]]
-請檢查清楚該檔案'''<tt>[[:$1]]</tt>'''。
-如果檢查後的檔案是同原本圖片的大小是一樣的話，就不用再上載多一幅縮圖。",
-	'file-thumbnail-no' => "該檔名是以'''<tt>$1</tt>'''開始。它好像一幅圖片的縮圖版本''(縮圖)''。
-如果你有該圖片的完整大小，如不是請再修改檔名。",
-	'fileexists-forbidden' => '已存在相同名稱的檔案；請返回並用一個新的名稱來上傳此檔案。[[File:$1|thumb|center|$1]]',
-	'fileexists-shared-forbidden' => '在共享檔案庫中已存在此名稱的檔案；請返回並用一個新的名稱來上傳此檔案。[[File:$1|thumb|center|$1]]',
-	'filehist' => '檔案歷史',
-	'filehist-deleteone' => '刪除這個',
-	'filehist-revert' => '復原',
-	'filehist-datetime' => '日期/時間',
-	'filehist-user' => '使用者',
-	'filerevert' => '復原$1',
-	'filerevert-legend' => '復原檔案',
-	'filerevert-intro' => '<span class="plainlinks">您現正在復原\'\'\'[[Media:$1|$1]]\'\'\'到[$4 於$2 $3的版本]。</span>',
-	'filerevert-defaultcomment' => '已經復原到於$1 $2的版本',
-	'filerevert-submit' => '復原',
-	'filerevert-success' => '<span class="plainlinks">\'\'\'[[Media:$1|$1]]\'\'\'已經復原到[$4 於$2 $3的版本]。</span>',
-	'filedelete-intro' => "您現正刪除'''[[Media:$1|$1]]'''。",
-	'filedelete-intro-old' => '<span class="plainlinks">你現正刪除\'\'\'[[Media:$1|$1]]\'\'\'於[$4 $2 $3]的版本。</span>',
-	'filedelete-comment' => '註解:',
-	'filedelete-nofile' => "'''$1'''在這個網站中不存在。",
-	'filedelete-nofile-old' => "在已指定屬性的情況下，這裡沒有'''$1'''於 $2 $3 的版本。",
-	'file-nohires' => '無更高解析度可提供。',
-	'forum' => '討論區',
-	'footer_1.5' => '快來編修本頁',
-	'footer_1' => '覺得 $1 不夠好嗎?',
-	'footer_10' => '與$1分享',
-	'footer_2' => '發表意見',
-	'footer_5' => '最近編輯：$1 $2',
-	'footer_6' => '隨機頁面',
-	'footer_7' => '轉寄本文',
-	'footer_8' => '加到網路書籤',
-	'footer_9' => '打分數',
-	'footer_About_Wikia' => '[http://www.wikia.com/wiki/About_Wikia 關於Wikia]',
-	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/wiki/Advertising 廣告合作]',
-	'footer_Contact_Wikia' => '[http://www.wikia.com/wiki/Contact_us 聯絡Wikia]',
-	'footer_Terms_of_use' => '[http://www.wikia.com/wiki/Terms_of_use 使用條款]',
-);
-
-$messages['zh-yue'] = array(
-	'fri' => '五',
-	'february' => '二月',
-	'february-gen' => '二月',
-	'feb' => '2月',
-	'fileexists-thumbnail-yes' => "這個檔案好像是一幅圖片的縮圖版本''(縮圖)''。 [[$1|thumb]]
-請檢查清楚該檔案'''<tt>[[:$1]]</tt>'''。
-如果檢查後的檔案是同原本圖片的大小是一樣的話，就不用再上載多一幅縮圖。",
-	'file-thumbnail-no' => "該檔名是以'''<tt>$1</tt>'''開始。它好像一幅圖片的縮圖版本''(縮圖)''。
-如果你有該圖片的完整大小，如不是請再修改檔名。",
-	'fileexists-forbidden' => '已存在相同名稱的檔案；請返回並用一個新的名稱來上傳此檔案。[[File:$1|thumb|center|$1]]',
-	'fileexists-shared-forbidden' => '在共享檔案庫中已存在此名稱的檔案；請返回並用一個新的名稱來上傳此檔案。[[File:$1|thumb|center|$1]]',
-	'filehist' => '檔案歷史',
-	'filehist-deleteone' => '刪除這個',
-	'filehist-revert' => '復原',
-	'filehist-datetime' => '日期/時間',
-	'filehist-user' => '使用者',
-	'filerevert' => '復原$1',
-	'filerevert-legend' => '復原檔案',
-	'filerevert-intro' => '<span class="plainlinks">您現正在復原\'\'\'[[Media:$1|$1]]\'\'\'到[$4 於$2 $3的版本]。</span>',
-	'filerevert-defaultcomment' => '已經復原到於$1 $2的版本',
-	'filerevert-submit' => '復原',
-	'filerevert-success' => '<span class="plainlinks">\'\'\'[[Media:$1|$1]]\'\'\'已經復原到[$4 於$2 $3的版本]。</span>',
-	'filedelete-intro' => "您現正刪除'''[[Media:$1|$1]]'''。",
-	'filedelete-intro-old' => '<span class="plainlinks">你現正刪除\'\'\'[[Media:$1|$1]]\'\'\'於[$4 $2 $3]的版本。</span>',
-	'filedelete-comment' => '註解:',
-	'filedelete-nofile' => "'''$1'''在這個網站中不存在。",
-	'filedelete-nofile-old' => "在已指定屬性的情況下，這裡沒有'''$1'''於 $2 $3 的版本。",
-	'file-nohires' => '無更高解析度可提供。',
-	'forum' => '討論區',
 );
 
 $messages['zu'] = array(

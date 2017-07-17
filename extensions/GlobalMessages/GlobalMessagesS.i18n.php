@@ -272,7 +272,7 @@ If you think this is wrong, please contact us [[w:c:vstf:Report:Spam filter prob
 	'send' => 'Send',
 	'save' => 'Save',
 	'searchtype' => 'Search frontend type',
-	'specialpages-group-wikia' => 'Fandom pages',
+	'specialpages-group-wikia' => 'FANDOM pages',
 	'seeeditcount' => 'See edit count',
 	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
 * [http://www.wikia.com/wiki/Wikia:About About Wikia]
@@ -8350,7 +8350,7 @@ Das liegt wahrscheinlich an einem Link auf eine externe Seite.',
 * [http://de.wikia.com/Nutzungsbedingungen Nutzungsbedingungen]
 * [[Special:Contact|Kontakt]]
 * [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Auf Wikia werben]',
-	'specialpages-group-wikia' => 'Fandom-Seiten',
+	'specialpages-group-wikia' => 'FANDOM-Seiten',
 	'save' => 'Speichern',
 	'searchsuggest' => 'Suchvorschläge',
 	'searchtype' => 'Such-Frontend',
@@ -9881,7 +9881,7 @@ Si crees que está mal, por favor contáctanos haciendo clic [[w:c:vstf:Report:S
 * [http://es.wikia.com/T%C3%A9rminos_de_Uso Términos de Uso]
 * [[Special:Contact|Contactar]]
 * [http://mediakit.wikia.com/wiki/Contact Publicidad]',
-	'specialpages-group-wikia' => 'Páginas de Fandom',
+	'specialpages-group-wikia' => 'Páginas de FANDOM',
 	'save' => 'Guardar',
 	'searchsuggest' => 'Búsquedas sugeridas',
 	'seeeditcount' => 'Ver contador de ediciones',
@@ -9903,9 +9903,11 @@ Si crees que está mal, por favor contáctanos haciendo clic [[w:c:vstf:Report:S
 	'signup-moreinfo' => '¿Por qué es esto necesario?',
 	'signup-password' => 'Contraseña -',
 	'sp-contributions-footer-anon' => '{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;" 
-| \'\'\'Esta es la página de contribuciones de un usuario anónimo que no ha creado una cuenta aún o que no la usa, se identifica con una [[wikipedia:IP address|dirección IP]] numérica.\'\'\'
+| \'\'\'Esta es la página de contribuciones de un usuario anónimo que no ha creado una cuenta aún o que no la usa, se identifica con una [[wikipedia:es:Dirección IP|dirección IP]] numérica.\'\'\'
 
-Algunas direcciones IP cambian periódicamente, y pueden ser usadas por usuarios malintencionados. si eres un usuario anónimo, deberías [[{{ns:Special}}:Userlogin|crearte una cuenta de usuario o iniciar sesión]] para evitar futuras confusiones con usuarios anónimos. Registrandote también evitarás que se vea tu dirección IP. [[w:c:comunidad:Ayuda:Crear una cuenta|¿Por qué crear una cuenta?]]
+Algunas direcciones IP cambian periódicamente, y pueden ser usadas por usuarios malintencionados. si eres un usuario anónimo, deberías [[{{ns:Special}}:Userlogin|crearte una cuenta de usuario o identificarte]] para evitar futuras confusiones con usuarios anónimos. Registrandote también evitarás que se vea tu dirección IP. [[w:es:¿Por qué crear una cuenta?|¿Por qué crear una cuenta?]] ([[w:c:ayuda:Ayuda:Registrar una cuenta|Cómo crear una cuenta]])
+
+\'\'\'Información sobre esta IP:\'\'\' [http://whatismyipaddress.com/ip/$1 WHOIS] • [http://openrbl.org/query?$1 RDNS] • [http://www.robtex.com/rbls/$1.html RBLs] • [http://www.dnsstuff.com/tools/tracert.ch?ip=$1 Traceroute] • [http://www.as3344.net/is-tor/?args=$1 TOR check] &mdash; [[wikipedia:Regional Internet registry|RIR]]s: [http://ws.arin.net/whois/?queryinput=$1 América] &bull; [http://www.ripe.net/fcgi-bin/whois?searchtext=$1 Europa] · [http://www.afrinic.net/cgi-bin/whois?query=$1 África] · [http://www.apnic.net/apnic-bin/whois.pl?searchtext=$1 Asia-Pacífico] · [http://www.lacnic.net/cgi-bin/lacnic/whois?lg=EN&query=$1 Latino América/Caribe]
 |}',
 	'sitetitle' => '{{SITENAME}}',
 	'sitesubtitle' => '',
@@ -11524,7 +11526,7 @@ impossible de renommer une page sur elle-même.',
 * [http://fr.wikia.com/Conditions_d'utilisation Conditions d'utilisation]
 * [[Special:Contact|Nous contacter]]
 * [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Publicité]",
-	'specialpages-group-wikia' => 'Pages Fandom',
+	'specialpages-group-wikia' => 'Pages FANDOM',
 	'save' => 'Enregistrer',
 	'searchsuggest' => 'Suggestions de recherche',
 	'seeeditcount' => 'Voir le nombre de modifications',
@@ -17300,7 +17302,7 @@ Se pensi ci sia un errore, contattaci su [[w:c:vstf:Report:Spam filter problems|
 * [http://it.community.wikia.com/wiki/Wiki_della_Community:Termini_di_utilizzo Termini di utilizzo]<span style="color: #ff0000"> (Aggiornati)</span>
 * [[Special:Contact|Contact]]
 * [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
-	'specialpages-group-wikia' => 'Pagine di Fandom',
+	'specialpages-group-wikia' => 'Pagine di FANDOM',
 	'signup-mail' => 'E-mail - ',
 	'signup-moreinfo' => 'Perché è necessario?',
 	'signup-password' => 'Password - ',
@@ -17793,7 +17795,7 @@ $messages['ja'] = array(
 * [http://ja.wikia.com/利用規約 利用規約]
 * [[Special:Contact|お問い合わせ]]
 * [http://www.wikia.com/Advertising 広告]',
-	'specialpages-group-wikia' => 'Fandomのページ',
+	'specialpages-group-wikia' => 'FANDOMのページ',
 	'seeeditcount' => '編集回数のカウントをご覧ください',
 	'seemoredotdotdot' => 'その他',
 	'showall' => '全て表示する',
@@ -27850,7 +27852,7 @@ Some IP addresses change periodically, and may be shared by several users. If yo
 	'send' => 'Send',
 	'save' => 'Save',
 	'searchtype' => 'Search frontend type',
-	'specialpages-group-wikia' => 'Fandom pages',
+	'specialpages-group-wikia' => 'FANDOM pages',
 	'seeeditcount' => 'See edit count',
 	'scarytranscludebadinterwiki' => 'Non-transcludable interwiki provided.',
 	'shared-News_box' => '[http://www.wikia.com/Hiring Wikia is now hiring for several open positions]<br>',
@@ -30759,7 +30761,7 @@ Tal bloqueio foi provavelmente causado por uma ligação para um ''website'' ext
 * [http://www.wikia.com/wiki/Wikia:Termos_de_uso Termos de uso]
 * [[Special:Contact|Contato]]
 * [http://www.wikia.com/wiki/Wikia:Publicidade_na_Wikia Publicidade]',
-	'specialpages-group-wikia' => 'Páginas do Fandom',
+	'specialpages-group-wikia' => 'Páginas do FANDOM',
 	'signup-password' => 'Senha - ',
 	'sidebar' => '* Content Navigation
 ** mainpage|mainpage
@@ -30825,222 +30827,6 @@ Alguns endereços IP mudam periodicamente e podem ser compartilhados por vários
 	'seeeditcount' => 'Veja a contagem de edições',
 	'scarytranscludebadinterwiki' => 'InterWikis non-transcludable fornecida.',
 	'shared-News_box' => '[http://www.wikia.com/Hiring Wikia is now hiring for several open positions]<br>',
-);
-
-$messages['pt-br'] = array(
-	'sunday' => 'domingo',
-	'saturday' => 'sábado',
-	'sun' => 'dom',
-	'sat' => 'sáb',
-	'september' => 'setembro',
-	'september-gen' => 'setembro',
-	'sep' => 'set.',
-	'subcategories' => 'Subcategorias',
-	'search' => 'Pesquisar',
-	'searchbutton' => 'Pesquisar',
-	'searcharticle' => 'Ir',
-	'specialpage' => 'Página especial',
-	'showtoc' => 'exibir',
-	'site-rss-feed' => 'Feed RSS $1',
-	'site-atom-feed' => 'Feed Atom $1',
-	'sort-descending' => 'Ordenar por ordem descendente',
-	'sort-ascending' => 'Ordenar por ordem ascendente',
-	'sqlhidden' => '(Consulta SQL em segundo-plano)',
-	'securelogin-stick-https' => 'Permanecer conectado ao HTTPS após a autenticação',
-	'suspicious-userlogout' => 'Sua solicitação para sair foi negada porque aparentemente foi enviada por um navegador danificado ou por um servidor proxy com cache.',
-	'sig_tip' => 'Sua assinatura, com hora e data',
-	'summary' => 'Sumário:',
-	'subject' => 'Assunto/cabeçalho:',
-	'savearticle' => 'Salvar página',
-	'showpreview' => 'Mostrar previsão',
-	'showlivepreview' => 'Pré-visualização em tempo real',
-	'showdiff' => 'Mostrar alterações',
-	'summary-preview' => 'Previsão de sumário:',
-	'subject-preview' => 'Previsão do assunto/título:',
-	'sitecsspreview' => "'''Lembre-se de que você está apenas previsualizando este CSS.'''
-'''Ele ainda não foi salvo!'''",
-	'sitejspreview' => "''Lembre-se de que você está apenas previsualizando este código JavaScript.'''
-'''Ele ainda não foi salvo!'''",
-	'session_fail_preview' => "'''Pedimos desculpas, mas não foi possível processar a sua edição devido à perda de dados da sua sessão.
-Por favor tente novamente.
-Caso continue não funcionando, tente [[Special:UserLogout|sair]] e voltar a entrar na sua conta.'''",
-	'session_fail_preview_html' => "'''Desculpe-nos! Não foi possível processar a sua edição devido a uma perda de dados de sessão.'''
-
-''Como o projeto {{SITENAME}} possui HTML bruto ativo, a previsão não será exibida, como uma precaução contra ataques por JavaScript.''
-
-'''Se esta é uma tentativa de edição legítima, por favor tente novamente.
-Caso continue não funcionando, tente [[Special:UserLogout|desautenticar-se]] e voltar a entrar na sua conta.'''",
-	'storedversion' => 'Versão guardada',
-	'semiprotectedpagewarning' => "'''Nota:''' Esta página foi protegida, sendo que apenas usuários registrados poderão editá-la.
-A última entrada no histórico é fornecida abaixo para referência:",
-	'sectioneditnotsupported-title' => 'Edição por seções não suportada',
-	'sectioneditnotsupported-text' => 'Edição por seções não suportada nesta página.',
-	'suppressionlog' => 'Registro de supressões',
-	'suppressionlogtext' => 'Abaixo está uma lista das eliminações e bloqueios envolvendo conteúdo ocultado por administradores.
-Veja a [[Special:BlockList|lista de bloqueios]] para uma lista de banimentos e bloqueios em efeito neste momento.',
-	'showhideselectedversions' => 'Exibir/ocultar edições selecionadas',
-	'searchresults' => 'Resultados da pesquisa',
-	'searchresults-title' => 'Resultados da pesquisa por "$1"',
-	'searchresulttext' => 'Para mais informações de como pesquisar na {{SITENAME}}, consulte [[{{MediaWiki:Helppage}}|{{int:help}}]].',
-	'searchsubtitle' => 'Você pesquisou por \'\'\'[[:$1]]\'\'\' ([[Special:Prefixindex/$1|páginas iniciadas por "$1"]]{{int:pipe-separator}}[[Special:WhatLinksHere/$1|páginas que apontam para "$1"]])',
-	'searchsubtitleinvalid' => 'Você pesquisou por "$1"',
-	'shown-title' => 'Mostrar $1 {{PLURAL:$1|resultado|resultados}} por página',
-	'searchmenu-legend' => 'Opções de pesquisa',
-	'searchmenu-exists' => "'''Há uma página com o nome \"[[:\$1]]\" neste wiki'''",
-	'searchmenu-new' => "'''Criar a página \"[[:\$1|\$1]]\" neste wiki!'''",
-	'searchhelp-url' => 'Help:Conteúdos',
-	'searchmenu-prefix' => '[[Special:PrefixIndex/$1|Navegue pelas páginas com este prefixo]]',
-	'searchprofile-articles' => 'Páginas de conteúdo',
-	'searchprofile-project' => 'Ajuda e páginas de projeto',
-	'searchprofile-images' => 'Multimídia',
-	'searchprofile-everything' => 'Tudo',
-	'searchprofile-advanced' => 'Avançado',
-	'searchprofile-articles-tooltip' => 'Pesquisar em $1',
-	'searchprofile-project-tooltip' => 'Pesquisar em $1',
-	'searchprofile-images-tooltip' => 'Pesquisar arquivos',
-	'searchprofile-everything-tooltip' => 'Pesquisar em todo o conteúdo (incluindo páginas de discussão)',
-	'searchprofile-advanced-tooltip' => 'Personalizar os espaços nominais onde pesquisar',
-	'search-result-size' => '$1 ({{PLURAL:$2|1 palavra|$2 palavras}})',
-	'search-result-category-size' => '{{PLURAL:$1|1 membro|$1 membros}} ({{PLURAL:$2|1 subcategoria|$2 subcategorias}}, {{PLURAL:$3|1 arquivo|$3 arquivos}})',
-	'search-result-score' => 'Relevância: $1%',
-	'search-redirect' => '(redirecionamento de $1)',
-	'search-section' => '(seção $1)',
-	'search-suggest' => 'Você quis dizer: $1',
-	'search-interwiki-caption' => 'Projetos irmãos',
-	'search-interwiki-default' => 'Resultados de $1:',
-	'search-interwiki-more' => '(mais)',
-	'search-mwsuggest-enabled' => 'com sugestões',
-	'search-mwsuggest-disabled' => 'sem sugestões',
-	'search-relatedarticle' => 'Relacionado',
-	'searcheverything-enable' => 'Procurar em todos os espaços nominais',
-	'searchrelated' => 'relacionados',
-	'searchall' => 'todos',
-	'showingresults' => "A seguir {{PLURAL:$1|é mostrado '''um''' resultado|são mostrados até '''$1''' resultados}}, iniciando no '''$2'''º.",
-	'showingresultsnum' => "A seguir {{PLURAL:$3|é mostrado '''um''' resultado|são mostrados '''$3''' resultados}}, iniciando com o '''$2'''º.",
-	'showingresultsheader' => "{{PLURAL:$5|Resulado '''$1''' de '''$3'''|Resultados '''$1 - $2''' de '''$3'''}} para '''$4'''",
-	'search-nonefound' => 'Não há resultados que correspondam à consulta.',
-	'search-external' => 'Pesquisa externa',
-	'searchdisabled' => 'A busca em {{SITENAME}} se encontra desativada.
-Você poderá pesquisar através do Google enquanto isso.
-Note que os índices do sistema de busca externo poderão conter referências desatualizadas a {{SITENAME}}.',
-	'skin-preview' => 'Pré-visualização',
-	'saveprefs' => 'Salvar',
-	'searchresultshead' => 'Pesquisar',
-	'stub-threshold' => 'Links para páginas de conteúdo aparecerão <a href="#" class="stub">desta forma</a> se elas possuírem menos de (bytes):',
-	'stub-threshold-disabled' => 'Desabilitado',
-	'savedprefs' => 'As suas preferências foram salvas.',
-	'servertime' => 'Horário do servidor:',
-	'saveusergroups' => 'Salvar grupos do usuário',
-	'show' => 'Exibir',
-	'savefile' => 'Salvar arquivo',
-	'sourcefilename' => 'Nome do arquivo de origem:',
-	'sourceurl' => 'URL de origem:',
-	'sharedupload' => 'Este arquivo é do $1 e pode ser usado por outros projetos.',
-	'sharedupload-desc-there' => 'Este arquivo é do $1 e pode ser utilizado por outros projetos.
-Por favor veja a [$2 página de descrição do arquivo] para mais informações.',
-	'sharedupload-desc-here' => 'Este arquivo é do $1 e pode ser utilizado por outros projetos.
-Sua [$2 página de descrição de arquivo] é reproduzida abaixo.',
-	'sharedupload-desc-edit' => 'Este arquivo é do $1 e pode ser utilizado por outros projetos.
-Talvez você deseje editar a descrição na sua [$2 página de descrição de arquivo] por lá.',
-	'sharedupload-desc-create' => 'Este arquivo é do $1 e pode ser utilizado por outros projetos.
-Talvez você deseje editar a descrição na sua [$2 página de descrição de arquivo] por lá.',
-	'shared-repo-from' => 'de $1',
-	'shared-repo' => 'um repositório compartilhado',
-	'statistics' => 'Estatísticas',
-	'statistics-header-pages' => 'Estatísticas de páginas',
-	'statistics-header-edits' => 'Estatísticas de edições',
-	'statistics-header-views' => 'Ver estatísticas',
-	'statistics-header-users' => 'Estatísticas dos usuários',
-	'statistics-header-hooks' => 'Outras estatísticas',
-	'statistics-articles' => 'Páginas de conteúdo',
-	'statistics-pages' => 'Páginas',
-	'statistics-pages-desc' => 'Todas as páginas no wiki, incluindo páginas de discussão, redirecionamentos, etc.',
-	'statistics-files' => 'Arquivos carregados',
-	'statistics-edits' => 'Edições de página desde que {{SITENAME}} foi instalado',
-	'statistics-edits-average' => 'Média de edições por página',
-	'statistics-views-total' => 'Total de visualizações',
-	'statistics-views-total-desc' => 'Visualizações de páginas não existentes e páginas especiais não estão incluídas',
-	'statistics-views-peredit' => 'Visualizações por edição',
-	'statistics-users' => '[[Special:ListUsers|Usuários]] registrados',
-	'statistics-users-active' => 'Usuários ativos',
-	'statistics-users-active-desc' => 'Usuários que efetuaram uma ação {{PLURAL:$1|no último dia|nos últimos $1 dias}}',
-	'statistics-mostpopular' => 'Páginas mais visitadas',
-	'specialpage-empty' => 'Atualmente não há dados a serem exibidos nesta página.',
-	'shortpages' => 'Páginas curtas',
-	'suppress' => 'Supervisor',
-	'specialloguserlabel' => 'Executor:',
-	'speciallogtitlelabel' => 'Destino (título ou usuário):',
-	'showhideselectedlogentries' => 'Exibir/ocultar os itens de registros selecionados',
-	'special-categories-sort-count' => 'ordenar por contagem',
-	'special-categories-sort-abc' => 'ordenar alfabeticamente',
-	'sp-deletedcontributions-contribs' => 'contribuições',
-	'sessionfailure-title' => 'Erro de sessão',
-	'sessionfailure' => 'Foram detetados problemas com a sua sessão;
-Esta ação foi cancelada como medida de proteção contra a intercepção de sessões.
-Experimente usar o botão "Voltar" e atualizar a página de onde veio e tente novamente.',
-	'sp-contributions-newbies' => 'Mostrar apenas as contribuições das novas contas',
-	'sp-contributions-newbies-sub' => 'Para contas novas',
-	'sp-contributions-newbies-title' => 'Contribuições de contas novas',
-	'sp-contributions-blocklog' => 'Registro de bloqueios',
-	'sp-contributions-deleted' => 'contribuições eliminadas',
-	'sp-contributions-uploads' => 'envios',
-	'sp-contributions-logs' => 'registros',
-	'sp-contributions-talk' => 'disc',
-	'sp-contributions-userrights' => 'gerenciamento de privilégios de usuários',
-	'sp-contributions-blocked-notice' => 'Este usuário atualmente está bloqueado. O registro de bloqueio mais recente é fornecido abaixo para referência:',
-	'sp-contributions-blocked-notice-anon' => 'Este endereço IP encontra-se bloqueado.
-Segue, para referência, a entrada mais recente no registro de bloqueios:',
-	'sp-contributions-search' => 'Navegar pelas contribuições',
-	'sp-contributions-username' => 'Endereço de IP ou usuário:',
-	'sp-contributions-toponly' => 'Mostrar somente as edições que sejam a última alteração',
-	'sp-contributions-submit' => 'Pesquisar',
-	'sorbsreason' => 'O seu endereço IP encontra-se listado como proxy aberto pela DNSBL utilizada por {{SITENAME}}.',
-	'sorbs_create_account_reason' => 'O seu endereço de IP encontra-se listado como proxy aberto na DNSBL utilizada por {{SITENAME}}. Você não pode criar uma conta',
-	'selfmove' => 'O título fonte e o título destinatário são os mesmos; não é possível mover uma página para ela mesma.',
-	'semiprotectedpagemovewarning' => "''Nota:''' Esta página foi protegida de modo que apenas usuários registrados possam movê-la.
-A última entrada no histórico é fornecida abaixo para referência:",
-	'siteuser' => '{{GENDER:$2|um utilizador|uma utilizadora|um utilizador}} da {{SITENAME}} ($1)',
-	'siteusers' => '{{PLURAL:$2|um usuário|$2 usuários}} da {{SITENAME}} ($1)',
-	'spamprotectiontitle' => 'Filtro de proteção contra spam',
-	'spamprotectiontext' => "A página que deseja salvar foi bloqueada pelo filtro de spam.
-Tal bloqueio foi provavelmente causado por uma ligação para um ''website'' externo que conste na lista negra.",
-	'spamprotectionmatch' => 'O seguinte texto ativou o filtro de spam: $1',
-	'spambot_username' => 'MediaWiki limpeza de spam',
-	'spam_reverting' => 'Revertendo para a última versão que não contém links para $1',
-	'spam_blanking' => 'Todas revisões contendo links para $1, limpando',
-	'spam_deleting' => 'Eliminada por todas as suas edições conterem links para $1',
-	'skinname-monobook' => 'MonoBook',
-	'svg-long-desc' => 'arquivo SVG, de $1 × $2 pixels, tamanho: $3',
-	'show-big-image' => 'Resolução original',
-	'show-big-image-preview' => 'Tamanho desta previsualização: $1.',
-	'show-big-image-other' => '{{PLURAL:$2|Outra resolução|Outras resoluções}}: $1.',
-	'show-big-image-size' => '$1 × $2 pixels',
-	'showhidebots' => '($1 robôs)',
-	'sp-newimages-showfrom' => 'Mostrar novos arquivos a partir das $2 de $1',
-	'seconds' => '{{PLURAL:$1|um segundo|$1 segundos}}',
-	'scarytranscludedisabled' => '[A transclusão de páginas de outros wikis encontra-se desabilitada]',
-	'scarytranscludefailed' => '[Não foi possível obter a predefinição a partir de $1]',
-	'scarytranscludetoolong' => '[URL longa demais]',
-	'signature' => '[[{{ns:user}}:$1|$2]] ([[{{ns:user_talk}}:$1|discussão]])',
-	'specialpages' => 'Páginas especiais',
-	'specialpages-note' => '----
-* Páginas especiais normais.
-* <span class="mw-specialpagerestricted">Páginas especiais restritas.</span>',
-	'specialpages-group-maintenance' => 'Relatórios de manutenção',
-	'specialpages-group-other' => 'Outras páginas especiais',
-	'specialpages-group-login' => 'Entrar / registrar-se',
-	'specialpages-group-changes' => 'Mudanças e registros recentes',
-	'specialpages-group-media' => 'Relatórios de mídias e uploads',
-	'specialpages-group-users' => 'Usuários e privilégios',
-	'specialpages-group-highuse' => 'Páginas muito usadas',
-	'specialpages-group-pages' => 'Listas de páginas',
-	'specialpages-group-pagetools' => 'Ferramentas de páginas',
-	'specialpages-group-wiki' => 'Dados e ferramentas sobre este wiki',
-	'specialpages-group-redirects' => 'Páginas especiais redirecionadas',
-	'specialpages-group-spam' => 'Ferramentas anti-spam',
-	'sqlite-has-fts' => '$1 com suporte de pesquisa de texto completo',
-	'sqlite-no-fts' => '$1 sem suporte de pesquisa de texto completo',
-	'signup-password' => 'Senha:',
 );
 
 $messages['qu'] = array(
@@ -42196,20 +41982,6 @@ De [$2 pagina mè de bestandsbeschrievienge] wòdt hieronder weergegeev'n.",
 	'signup-password' => 'Wachtwoôrd',
 );
 
-$messages['zh'] = array(
-	'showdiff' => '显示差異',
-	'signup-password' => '密码：',
-);
-
-$messages['zh-classical'] = array(
-	'signup-password' => '符節',
-);
-
-$messages['zh-cn'] = array(
-	'showdiff' => '显示差異',
-	'signup-password' => '密码：',
-);
-
 $messages['zh-hans'] = array(
 	'sunday' => '星期日',
 	'saturday' => '星期六',
@@ -42765,145 +42537,6 @@ $messages['zh-hant'] = array(
 	'seeeditcount' => '參見編輯計數',
 	'scarytranscludebadinterwiki' => '不提供非編碼轉換的跨Wiki連結。',
 	'shared-News_box' => '[http://www.wikia.com/Hiring Wikia is now hiring for several open positions]<br>',
-);
-
-$messages['zh-hk'] = array(
-	'september' => '九月',
-	'search' => '搜尋',
-	'specialpage' => '特殊頁面',
-	'search-mwsuggest-disabled' => '沒有意見',
-	'showhidebots' => '($1機械人)',
-	'specialpages' => '特殊頁面',
-	'signup-password' => '您的密碼:',
-);
-
-$messages['zh-min-nan'] = array(
-	'september' => '九月',
-	'search' => '搜尋',
-	'specialpage' => '特殊頁面',
-	'search-mwsuggest-disabled' => '沒有意見',
-	'showhidebots' => '($1機械人)',
-	'specialpages' => '特殊頁面',
-	'signup-password' => 'Lí ê bi̍t-bé:',
-);
-
-$messages['zh-mo'] = array(
-	'september' => '九月',
-	'search' => '搜尋',
-	'specialpage' => '特殊頁面',
-	'search-mwsuggest-disabled' => '沒有意見',
-	'showhidebots' => '($1機械人)',
-	'specialpages' => '特殊頁面',
-	'signup-password' => '您的密碼:',
-);
-
-$messages['zh-my'] = array(
-	'september' => '九月',
-	'search' => '搜尋',
-	'specialpage' => '特殊頁面',
-	'search-mwsuggest-disabled' => '沒有意見',
-	'showhidebots' => '($1機械人)',
-	'specialpages' => '特殊頁面',
-	'signup-password' => '密码：',
-);
-
-$messages['zh-sg'] = array(
-	'signup-password' => '密码：',
-);
-
-$messages['zh-tw'] = array(
-	'saturday' => '星期六',
-	'sun' => '日',
-	'september' => '九月',
-	'september-gen' => '九月',
-	'sep' => '9月',
-	'subcategories' => '子分類',
-	'search' => '搜尋',
-	'searchbutton' => '搜尋',
-	'showtoc' => '顯示',
-	'site-rss-feed' => '訂閱 $1 的 RSS 資料來源',
-	'site-atom-feed' => '訂閱 $1 的 Atom 資料來源',
-	'summary' => '摘要',
-	'savearticle' => '儲存頁面',
-	'session_fail_preview' => "'''很抱歉！由於部份資料遺失，我們無法處理您的編輯。請再試一次，如果仍然失敗，請登出後重新登入。'''",
-	'session_fail_preview_html' => "'''很抱歉！部份資料已遺失，我們無法處理您的編輯。''''''如果這個編輯過程沒有問題，請再試一次。如果仍然有問題，請登出後再重新登入一次。'''",
-	'storedversion' => '已保存版本',
-	'semiprotectedpagewarning' => "'''注意:''' 本頁面被鎖定，僅限註冊使用者編輯。",
-	'searchresults' => '搜尋結果',
-	'searchresulttext' => '有關搜尋{{SITENAME}}的更多詳情,參見[[{{MediaWiki:Helppage}}|{{int:help}}]]。',
-	'searchsubtitle' => '查詢\'\'\'[[:$1]]\'\'\'（[[Special:Prefixindex/$1|所有以 "$1" 開頭的頁面]]{{int:pipe-separator}}[[Special:WhatLinksHere/$1|所有鏈接到 "$1" 的頁面]]）',
-	'searchdisabled' => '{{SITENAME}}由於性能方面的原因，全文搜尋已被暫時停用。您可以暫時透過Google搜尋。請留意他們的索引可能會過時。',
-	'saveprefs' => '保存偏好設定',
-	'searchresultshead' => '搜尋結果設定',
-	'savedprefs' => '您的個人偏好設定已經保存。',
-	'servertime' => '伺服器時間',
-	'saveusergroups' => '保存使用者群組',
-	'statistics-header-users' => '使用者統計',
-	'specialloguserlabel' => '使用者:',
-	'sp-contributions-newbies' => '只顯示新建立之使用者的編修記錄',
-	'sp-contributions-blocklog' => '封鎖記錄',
-	'sp-contributions-userrights' => '使用者權限管理',
-	'sp-contributions-username' => 'IP位址或使用者名稱：',
-	'sorbsreason' => '您的IP位址被 DNSBL列為屬於開放代理服務器.',
-	'sorbs_create_account_reason' => '由於您的IP位址被 DNSBL列為屬於開放代理服務器，所以您無法建立帳號。',
-	'siteuser' => '{{SITENAME}}使用者$1',
-	'siteusers' => '{{SITENAME}}{{PLURAL:$2|使用者|使用者}}$1',
-	'spamprotectiontext' => '垃圾過濾器禁止保存您剛才提交的頁面，這可能是由於您所加入的外部網站連結所產生的問題。',
-	'spam_reverting' => '復原到不包含連結至$1的最近版本',
-	'show-big-image' => '完整解析度',
-	'showhidebots' => '(機器人$1)',
-	'scarytranscludefailed' => '[抱歉，模板$1讀取失敗]',
-	'scarytranscludetoolong' => '[抱歉，URL 地址太長]',
-	'specialpages' => '特殊頁面',
-	'showdiff' => '顯示差異',
-	'signup-password' => '您的密碼:',
-);
-
-$messages['zh-yue'] = array(
-	'saturday' => '星期六',
-	'sun' => '日',
-	'september' => '九月',
-	'september-gen' => '九月',
-	'sep' => '9月',
-	'subcategories' => '子分類',
-	'search' => '搜尋',
-	'searchbutton' => '搜尋',
-	'showtoc' => '顯示',
-	'site-rss-feed' => '訂閱 $1 的 RSS 資料來源',
-	'site-atom-feed' => '訂閱 $1 的 Atom 資料來源',
-	'summary' => '摘要',
-	'savearticle' => '儲存頁面',
-	'session_fail_preview' => "'''很抱歉！由於部份資料遺失，我們無法處理您的編輯。請再試一次，如果仍然失敗，請登出後重新登入。'''",
-	'session_fail_preview_html' => "'''很抱歉！部份資料已遺失，我們無法處理您的編輯。''''''如果這個編輯過程沒有問題，請再試一次。如果仍然有問題，請登出後再重新登入一次。'''",
-	'storedversion' => '已保存版本',
-	'semiprotectedpagewarning' => "'''注意:''' 本頁面被鎖定，僅限註冊使用者編輯。",
-	'searchresults' => '搜尋結果',
-	'searchresulttext' => '有關搜尋{{SITENAME}}的更多詳情,參見[[{{MediaWiki:Helppage}}|{{int:help}}]]。',
-	'searchsubtitle' => '查詢\'\'\'[[:$1]]\'\'\'（[[Special:Prefixindex/$1|所有以 "$1" 開頭的頁面]]{{int:pipe-separator}}[[Special:WhatLinksHere/$1|所有鏈接到 "$1" 的頁面]]）',
-	'searchdisabled' => '{{SITENAME}}由於性能方面的原因，全文搜尋已被暫時停用。您可以暫時透過Google搜尋。請留意他們的索引可能會過時。',
-	'saveprefs' => '保存偏好設定',
-	'searchresultshead' => '搜尋結果設定',
-	'savedprefs' => '您的個人偏好設定已經保存。',
-	'servertime' => '伺服器時間',
-	'saveusergroups' => '保存使用者群組',
-	'statistics-header-users' => '使用者統計',
-	'specialloguserlabel' => '使用者:',
-	'sp-contributions-newbies' => '只顯示新建立之使用者的編修記錄',
-	'sp-contributions-blocklog' => '封鎖記錄',
-	'sp-contributions-userrights' => '使用者權限管理',
-	'sp-contributions-username' => 'IP位址或使用者名稱：',
-	'sorbsreason' => '您的IP位址被 DNSBL列為屬於開放代理服務器.',
-	'sorbs_create_account_reason' => '由於您的IP位址被 DNSBL列為屬於開放代理服務器，所以您無法建立帳號。',
-	'siteuser' => '{{SITENAME}}使用者$1',
-	'siteusers' => '{{SITENAME}}{{PLURAL:$2|使用者|使用者}}$1',
-	'spamprotectiontext' => '垃圾過濾器禁止保存您剛才提交的頁面，這可能是由於您所加入的外部網站連結所產生的問題。',
-	'spam_reverting' => '復原到不包含連結至$1的最近版本',
-	'show-big-image' => '完整解析度',
-	'showhidebots' => '(機器人$1)',
-	'scarytranscludefailed' => '[抱歉，模板$1讀取失敗]',
-	'scarytranscludetoolong' => '[抱歉，URL 地址太長]',
-	'specialpages' => '特殊頁面',
-	'signup-password' => '密碼:',
 );
 
 $messages['zu'] = array(

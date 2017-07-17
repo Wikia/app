@@ -18,6 +18,10 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 
 	const WIKIA_MOBILE_SKIN_NAME = 'wikiamobile';
 
+	// yes, it is ugly, but we need this information in hooks where we don't have access to this controller or response
+	// and we don't want to do separate call to api to get this information from model
+	public static $mapDeleted = false;
+
 	/**
 	 * @var WikiaMaps
 	 */
@@ -180,16 +184,16 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 		$this->redirectIfForeignWiki( $mapCityId, $this->response->getVal( 'mapId' ) );
 		RequestContext::getMain()->getOutput()->setPageTitle( $mapData->title );
 
-		$mapDeleted = $mapData->deleted == WikiaMaps::MAP_DELETED;
+		self::$mapDeleted = $mapData->deleted == WikiaMaps::MAP_DELETED;
 
-		if ( $mapDeleted && $this->app->checkSkin( 'oasis' ) ) {
+		if ( self::$mapDeleted && $this->app->checkSkin( 'oasis' ) ) {
 			BannerNotificationsController::addConfirmation(
 				wfMessage( 'wikia-interactive-maps-map-is-deleted' ),
 				BannerNotificationsController::CONFIRMATION_WARN
 			);
 		}
 
-		$this->response->setVal( 'deleted', $mapDeleted );
+		$this->response->setVal( 'deleted', self::$mapDeleted );
 	}
 
 	/**

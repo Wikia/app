@@ -166,7 +166,7 @@ class BodyController extends WikiaController {
 			];
 
 			// Include additional modules from other extensions (like chat)
-			wfRunHooks( 'GetRailModuleList', [ &$railModuleList ] );
+			Hooks::run( 'GetRailModuleList', [ &$railModuleList ] );
 			return $railModuleList;
 		}
 
@@ -208,7 +208,7 @@ class BodyController extends WikiaController {
 			} else {
 				// don't show any module for MW core special pages
 				$railModuleList = [ ];
-				wfRunHooks( 'GetRailModuleSpecialPageList', [ &$railModuleList ] );
+				Hooks::run( 'GetRailModuleSpecialPageList', [ &$railModuleList ] );
 				return $railModuleList;
 			}
 		}
@@ -260,7 +260,7 @@ class BodyController extends WikiaController {
 		// allow the right rail when using the external cms since it changes the page state without requiring a page refresh
 		if ( ( $isEditPage && !$this->wg->EnableContributionPrototypeViewing )|| WikiaPageType::isMainPage() ) {
 			$modules = [ ];
-			wfRunHooks( 'GetEditPageRailModuleList', [ &$modules ] );
+			Hooks::run( 'GetEditPageRailModuleList', [ &$modules ] );
 			return $modules;
 		}
 		// No modules on Custom namespaces, unless they are in the ContentNamespaces list, those get the content rail
@@ -275,7 +275,7 @@ class BodyController extends WikiaController {
 		$railModuleList[1440] = [ 'Ad', 'Index', [ 'slotName' => 'TOP_RIGHT_BOXAD' ] ];
 		$railModuleList[1100] = [ 'Ad', 'Index', [ 'slotName' => 'LEFT_SKYSCRAPER_2' ] ];
 
-		wfRunHooks( 'GetRailModuleList', [ &$railModuleList ] );
+		Hooks::run( 'GetRailModuleList', [ &$railModuleList ] );
 
 		return $railModuleList;
 	}
@@ -301,17 +301,17 @@ class BodyController extends WikiaController {
 		$skin = RequestContext::getMain()->getSkin();
 
 		$afterBodyHtml = '';
-		wfRunHooks( 'GetHTMLAfterBody', [ $skin, &$afterBodyHtml ] );
+		Hooks::run( 'GetHTMLAfterBody', [ $skin, &$afterBodyHtml ] );
 		$this->afterBodyHtml = $afterBodyHtml;
 
 		$beforeWikiaPageHtml = '';
-		wfRunHooks( 'GetHTMLBeforeWikiaPage', [ &$beforeWikiaPageHtml ] );
+		Hooks::run( 'GetHTMLBeforeWikiaPage', [ &$beforeWikiaPageHtml ] );
 		$this->beforeWikiaPageHtml = $beforeWikiaPageHtml;
 
 
 		// this hook is needed for SMW's factbox
 		$afterContentHookText = '';
-		wfRunHooks( 'SkinAfterContent', [ &$afterContentHookText ] );
+		Hooks::run( 'SkinAfterContent', [ &$afterContentHookText ] );
 		$this->afterContentHookText = $afterContentHookText;
 
 		$this->headerModuleAction = 'Index';
@@ -336,7 +336,7 @@ class BodyController extends WikiaController {
 				$this->wg->SuppressFooter = true;
 				$this->wg->SuppressArticleCategories = true;
 				$this->wg->SuppressPageHeader = true;
-				$this->wg->SuppressWikiHeader = true;
+				$this->wg->SuppressCommunityHeader = true;
 				$this->wg->SuppressSlider = true;
 			}
 		} else {

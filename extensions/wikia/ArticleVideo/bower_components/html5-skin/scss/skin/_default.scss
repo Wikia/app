@@ -15,7 +15,6 @@
   height:0;
   // default aspect ratio 16:9
   @include set-aspect-ratio(16, 9);
-  @include vendor-prefixes(transition, padding-top 0.5s ease);
 
   // other video objects
   & > div,
@@ -66,6 +65,11 @@
 // html5 video
 video {
   @extend .oo-expand;
+}
+
+// fix anamorphic video issue on Firefox
+@include apply-to-firefox-only ('.oo-anamorphic video') {
+  object-fit: fill !important;
 }
 
 .oo-blur {

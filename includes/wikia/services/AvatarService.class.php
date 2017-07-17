@@ -3,7 +3,7 @@
 use Wikia\Vignette\StaticAssetsUrlGenerator;
 use Wikia\Vignette\UrlConfig;
 
-class AvatarService extends Service {
+class AvatarService {
 
 	const AVATAR_SIZE_SMALL = 20;
 	const AVATAR_SIZE_SMALL_PLUS = 30;

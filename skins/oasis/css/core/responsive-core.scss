@@ -13,13 +13,11 @@
 	}
 
 	.skin-oasis > .banner-notifications-wrapper,
-	.WikiaHeader .page-width-container,
 	.WikiaPage {
 		max-width: $width-outside-max;
 	}
 
-	.banner-notifications-wrapper,
-	.WikiaHeader .page-width-container {
+	.banner-notifications-wrapper {
 		box-sizing: border-box;
 		width: $width-outside;
 	}
@@ -37,29 +35,6 @@
 	.WikiaArticle,
 	.WikiaArticleFooter {
 		padding: 0;
-	}
-
-	.WikiHeader {
-		.navbackground {
-			width: 100%;
-		}
-
-		.WikiNav {
-			right: -4px;
-			width: auto;
-
-			.subnav-2 {
-				width: auto;
-			}
-		}
-	}
-
-	.WikiHeaderSearch {
-		display: none;
-	}
-
-	.WikiaHeader {
-		min-width: 0;
 	}
 
 	.WikiaMainContent {
@@ -85,8 +60,7 @@
 		}
 	}
 
-	.WikiaPageHeader,
-	.wikinav2 .WikiaPageHeader {
+	.WikiaPageHeader {
 		margin: 0 0 $width-padding;
 		padding-bottom: $width-padding / 2;
 
@@ -149,64 +123,6 @@
 			}
 		}
 
-		.WikiaHeader .start-a-wiki {
-			display: none;
-		}
-
-		.WikiHeader {
-			min-height: 154px;
-
-			> nav {
-				left: 0;
-				top: 85px;
-			}
-
-			.buttons {
-				top: 87px;
-			}
-		}
-
-		.WikiNav li.nav-item:first-child {
-			margin-left: 10px;
-		}
-
-		.WikiHeaderSearch {
-			display: block;
-			left: 280px;
-			position: absolute;
-			right: 10px;
-			top: 12px;
-			width: auto;
-
-			input[type="text"] {
-				box-sizing: border-box;
-				font-size: 15pt;
-				height: 40px !important;
-				left: 0;
-				margin-right: 0;
-				position: absolute;
-				right: 53px;
-				width: auto;
-				@include width-calc('100% - 53px');
-			}
-
-			.wikia-button {
-				height: 40px !important;
-				position: absolute;
-				right: 0;
-			}
-		}
-
-		// TODO: clean up all the wikinav2/oasis-one-column styles...
-		.wikinav2.oasis-one-column .WikiaPageHeader {
-			padding-right: 0;
-
-			.tally {
-				right: 0;
-			}
-		}
-
-		.WikiaSearchHeader .WikiaSearch,
 		.WikiaRail .WikiaSearch,
 		.WikiaRail .search-suggest,
 		.WikiaPageHeader .WikiaSearch {
@@ -215,18 +131,6 @@
 	}
 
 	@media screen and (max-width: $breakpoint-content) {
-		.WikiHeader .WikiNav {
-			right: 0;
-
-			.navbackground img {
-				display: none;
-			}
-		}
-
-		.WikiaHeader .page-width-container {
-			width: auto;
-		}
-
 		.banner-notifications-wrapper {
 			width: 100%;
 
@@ -248,7 +152,6 @@
 	}
 
 	@media screen and (min-width: $breakpoint-fluid) {
-		.WikiaHeader .page-width-container,
 		.WikiaPage {
 			margin: 0 $width-adskin;
 			width: auto;
@@ -256,7 +159,6 @@
 	}
 
 	@media screen and (min-width: $breakpoint-max) {
-		.WikiaHeader .page-width-container,
 		.WikiaPage {
 			margin: 0 auto;
 		}

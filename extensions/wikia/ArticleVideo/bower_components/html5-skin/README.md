@@ -6,7 +6,8 @@ An open-source HTML5 UI skin based on [React.js](https://github.com/facebook/rea
 main_html5.js and `all-with-youtube.js` which contains youtube plugin.
 * added support for svg icons
 * some of imports that we don't use are commented out in `html5-skin.scss` to make styles file smaller
-* we currently use v.4.10.6 of Ooyala Player
+* we currently use v.4.14.8 of Ooyala Player
+* custom ad screen with player controls
 
 ## High Level Overview
 `html5-skin` is a JS file that is made available externally to Ooyala core V4 player. It accepts and triggers general Ooyala Message Bus events from and to core player to change the behavior of video playback. All static files necessary to create and run video playback are hosted and can be accessed publicly. This skin repo are available to be git cloned or forked and be modified by developers (terms and condition apply).
@@ -15,7 +16,7 @@ main_html5.js and `all-with-youtube.js` which contains youtube plugin.
 `core.js` is a lightweight core player that enables basic video playback functionality and provides Message Bus environment. Most of additional capabilities such as ads, discovery and skin are separated from core player JS. You may want to load additional plugins.
 
 ## Examples
-We have a sample HTML page ready for you. Check out [sample page](http://debug.ooyala.com/ea/index.html?ec=RmZW4zcDo6KqkTIhn1LnowEZyUYn5Tb2&pbid=26e2e3c1049c4e70ae08a242638b5c40&pcode=5zb2wxOlZcNCe_HVT3a6cawW298X&core_player=http%3A%2F%2Fplayer.ooyala.com%2Fstatic%2Fv4%2Fstable%2F4.10.6%2Fcore.min.js&video_plugins=http%3A%2F%2Fplayer.ooyala.com%2Fstatic%2Fv4%2Fstable%2F4.10.6%2Fvideo-plugin%2Fmain_html5.min.js%0Ahttp%3A%2F%2Fplayer.ooyala.com%2Fstatic%2Fv4%2Fstable%2F4.10.6%2Fvideo-plugin%2Fosmf_flash.min.js%0Ahttp%3A%2F%2Fplayer.ooyala.com%2Fstatic%2Fv4%2Fstable%2F4.10.6%2Fvideo-plugin%2Fbit_wrapper.min.js&html5_skin=http%3A%2F%2Fplayer.ooyala.com%2Fstatic%2Fv4%2Fstable%2F4.10.6%2Fskin-plugin%2Fhtml5-skin.min.js&skin_asset=http%3A%2F%2Fplayer.ooyala.com%2Fstatic%2Fv4%2Fstable%2F4.10.6%2Fskin-plugin%2Fhtml5-skin.min.css&skin_config=http%3A%2F%2Fplayer.ooyala.com%2Fstatic%2Fv4%2Fstable%2F4.10.6%2Fskin-plugin%2Fskin.json&ad_plugin=http%3A%2F%2Fplayer.ooyala.com%2Fstatic%2Fv4%2Fstable%2F4.10.6%2Fad-plugin%2Ffreewheel.min.js&additional_plugins=http%3A%2F%2Fplayer.ooyala.com%2Fstatic%2Fv4%2Fstable%2F4.10.6%2Fother-plugin%2Fdiscovery_api.min.js&options=%7B%22freewheel-ads-manager%22%3A%7B%22fw_video_asset_id%22%3A%22NqcGg4bzoOmMiV35ZttQDtBX1oNQBnT-%22%2C%22html5_ad_server%22%3A%22http%3A%2F%2Fg1.v.fwmrm.net%22%2C%22fw_android_ad_server%22%3A%22http%3A%2F%2Fg1.v.fwmrm.net%2F%22%2C%22html5_player_profile%22%3A%2290750%3Aooyala_html5%22%2C%22fw_android_player_profile%22%3A%2290750%3Aooyala_android%22%2C%22fw_mrm_network_id%22%3A%22380912%22%7D%7D)
+We have a sample HTML page ready for you. Check out [sample page](http://debug.ooyala.com/ea/index.html?ec=RmZW4zcDo6KqkTIhn1LnowEZyUYn5Tb2&pbid=26e2e3c1049c4e70ae08a242638b5c40&pcode=5zb2wxOlZcNCe_HVT3a6cawW298X&core_player=http%3A%2F%2Fplayer.ooyala.com%2Fstatic%2Fv4%2Fproduction%2Flatest%2Fcore.min.js&video_plugins=http%3A%2F%2Fplayer.ooyala.com%2Fstatic%2Fv4%2Fproduction%2Flatest%2Fvideo-plugin%2Fmain_html5.min.js%0Ahttp%3A%2F%2Fplayer.ooyala.com%2Fstatic%2Fv4%2Fproduction%2Flatest%2Fvideo-plugin%2Fosmf_flash.min.js%0Ahttp%3A%2F%2Fplayer.ooyala.com%2Fstatic%2Fv4%2Fproduction%2Flatest%2Fvideo-plugin%2Fbit_wrapper.min.js&html5_skin=http%3A%2F%2Fplayer.ooyala.com%2Fstatic%2Fv4%2Fproduction%2Flatest%2Fskin-plugin%2Fhtml5-skin.min.js&skin_asset=http%3A%2F%2Fplayer.ooyala.com%2Fstatic%2Fv4%2Fproduction%2Flatest%2Fskin-plugin%2Fhtml5-skin.min.css&skin_config=http%3A%2F%2Fplayer.ooyala.com%2Fstatic%2Fv4%2Fproduction%2Flatest%2Fskin-plugin%2Fskin.json&ad_plugin=http%3A%2F%2Fplayer.ooyala.com%2Fstatic%2Fv4%2Fproduction%2Flatest%2Fad-plugin%2Ffreewheel.min.js&additional_plugins=http%3A%2F%2Fplayer.ooyala.com%2Fstatic%2Fv4%2Fproduction%2Flatest%2Fother-plugin%2Fdiscovery_api.min.js&options=%7B%22freewheel-ads-manager%22%3A%7B%22fw_video_asset_id%22%3A%22NqcGg4bzoOmMiV35ZttQDtBX1oNQBnT-%22%2C%22html5_ad_server%22%3A%22http%3A%2F%2Fg1.v.fwmrm.net%22%2C%22fw_android_ad_server%22%3A%22http%3A%2F%2Fg1.v.fwmrm.net%2F%22%2C%22html5_player_profile%22%3A%2290750%3Aooyala_html5%22%2C%22fw_android_player_profile%22%3A%2290750%3Aooyala_android%22%2C%22fw_mrm_network_id%22%3A%22380912%22%7D%7D)
 
 This simple test HTML page can also be hosted on your environment to showcase html5 skin.
 ```html
@@ -24,13 +25,13 @@ This simple test HTML page can also be hosted on your environment to showcase ht
 <head>
   <meta charset="utf-8">
   <!-- V4 JS core and at least one video plugin is required. Plugins such as skin, discovery and Advertising need to be loaded separately -->
-  <script src="//player.ooyala.com/static/v4/stable/4.10.6/core.min.js"></script>
-  <script src="//player.ooyala.com/static/v4/stable/4.10.6/video-plugin/main_html5.min.js"></script>
-  <script src="//player.ooyala.com/static/v4/stable/4.10.6/video-plugin/osmf_flash.min.js"></script>
-  <script src="//player.ooyala.com/static/v4/stable/4.10.6/video-plugin/bit_wrapper.min.js"></script>
+  <script src="//player.ooyala.com/static/v4/stable/4.14.8/core.min.js"></script>
+  <script src="//player.ooyala.com/static/v4/stable/4.14.8/video-plugin/main_html5.min.js"></script>
+  <script src="//player.ooyala.com/static/v4/stable/4.14.8/video-plugin/osmf_flash.min.js"></script>
+  <script src="//player.ooyala.com/static/v4/stable/4.14.8/video-plugin/bit_wrapper.min.js"></script>
   <!-- Change these html5-skin.min.css and html5-skin.min.js to your local build if necessary -->
-  <script src="//player.ooyala.com/static/v4/stable/4.10.6/skin-plugin/html5-skin.min.js"></script>
-  <link rel="stylesheet" href="//player.ooyala.com/static/v4/stable/4.10.6/skin-plugin/html5-skin.min.css"/>
+  <script src="//player.ooyala.com/static/v4/stable/4.14.8/skin-plugin/html5-skin.min.js"></script>
+  <link rel="stylesheet" href="//player.ooyala.com/static/v4/stable/4.14.8/skin-plugin/html5-skin.min.css"/>
 </head>
 
 <body>
@@ -143,7 +144,7 @@ Simple customization can be achieved by modifying `skin.json` settings. Furtherm
 ```javascript
 var playerParam = {
   "skin": {
-    "config": "//player.ooyala.com/static/v4/stable/4.10.6/skin-plugin/skin.json",
+    "config": "//player.ooyala.com/static/v4/stable/4.14.8/skin-plugin/skin.json",
     "inline": {
       "startScreen": {"showDescription": false, "playIconStyle": {"color": "blue"}}
     }
@@ -153,3 +154,23 @@ var playerParam = {
 
 ### Advanced Customization
 Advanced customization is readily available by modifying JS files. Follow [Developer Setup](#developer-setup) section to create a local repository and to run build script. Built files are available inside build folder. You are welcomed to host your built skin javascript to be run with your player.
+
+## How to Contribute
+
+If you send a pull request, please do it against the [`master` branch](https://github.com/ooyala/html5-skin/tree/master). We maintain stable branches separately but we don't accept pull requests to them directly.
+
+We will do our best to keep the `master` branch in good shape, with tests passing at all times. But our `master` branch is under active development and may contain changes that your application might not be compatible with. We recommend using [latest stable version](https://github.com/ooyala/html5-skin/tree/stable) for production.
+
+### Submitting a Pull Request
+The core team monitors pull requests. We will review your pull request and either merge it, request changes to it, or close it with an explanation.
+
+Before submitting a pull request, please make sure the following is done:
+
+1. Fork the repository and create your branch from `master`.
+
+2. If you've added code that should be tested, [add tests](https://github.com/ooyala/html5-skin#testing)!
+
+3. Ensure the test suite passes (`npm test`).
+
+### Style Guide
+We *mostly* follow [Airbnb's Style Guide](https://github.com/airbnb/javascript).

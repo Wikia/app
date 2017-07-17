@@ -3519,24 +3519,6 @@ $messages['pt'] = array(
 	'yourbirthdate' => 'Birth Date',
 );
 
-$messages['pt-br'] = array(
-	'youhavenewmessages' => 'Você tem $1 ($2).',
-	'youhavenewmessagesmulti' => 'Você tem novas mensagens em $1',
-	'yourname' => 'Nome de usuário:',
-	'yourpassword' => 'Senha:',
-	'yourpasswordagain' => 'Redigite sua senha',
-	'yourdomainname' => 'Seu domínio:',
-	'yourtext' => 'Seu texto',
-	'yourdiff' => 'Diferenças',
-	'youremail' => 'Seu e-mail:',
-	'yourrealname' => 'Nome verdadeiro:',
-	'yourlanguage' => 'Língua:',
-	'yourvariant' => 'Variante da língua de conteúdo:',
-	'yournick' => 'Assinatura:',
-	'yourgender' => 'Gênero:',
-	'year' => 'Ano (inclusive anteriores):',
-);
-
 $messages['qu'] = array(
 	'youhavenewmessages' => '$1 qhawanayki kachkan ($2).',
 	'youhavenewmessagesmulti' => 'Musuq willaykunam qhawanayki kachkan $1-pi',
@@ -4862,10 +4844,6 @@ $messages['zea'] = array(
 	'year' => 'Von jaer (en eêder):',
 );
 
-$messages['zh'] = array(
-	'yourbirthdate' => '出生日期',
-);
-
 $messages['zh-hans'] = array(
 	'youhavenewmessages' => '你有$1（$2）。',
 	'youhavenewmessagesmulti' => '您在$1有一条新信息',
@@ -4902,19 +4880,6 @@ $messages['zh-hant'] = array(
 	'yourgender' => '性別：',
 	'year' => '從該年份 （或更早）:',
 	'yourbirthdate' => 'Birth Date',
-);
-
-$messages['zh-tw'] = array(
-	'yourname' => '您的使用者名:',
-	'yourpassword' => '密碼：',
-	'yournick' => '暱稱:',
-	'youhavenewmessagesmulti' => '您在 $1 有一條新訊息',
-);
-
-$messages['zh-yue'] = array(
-	'yourname' => '您的使用者名:',
-	'yourpassword' => '密碼：',
-	'yournick' => '暱稱:',
 );
 
 $messages['zu'] = array(

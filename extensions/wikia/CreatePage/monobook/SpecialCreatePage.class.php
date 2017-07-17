@@ -20,7 +20,7 @@ class SpecialCreatePage extends SpecialEditPage {
 		global $wgUser, $wgOut, $wgRequest, $wgJsMimeType, $wgExtensionsPath;
 
 		if ( !empty( $par ) ) {
-			if ( !wfRunHooks('SpecialCreatePage::Subpage', array( $par )) ) {
+			if ( !Hooks::run('SpecialCreatePage::Subpage', array( $par )) ) {
 				return;
 			}
 		}
@@ -67,7 +67,7 @@ class SpecialCreatePage extends SpecialEditPage {
 	}
 
 	protected function parseFormData() {
-		wfRunHooks( 'BlogsAlternateEdit', array( false ) );
+		Hooks::run( 'BlogsAlternateEdit', array( false ) );
 
 		$request = $this->getRequest();
 

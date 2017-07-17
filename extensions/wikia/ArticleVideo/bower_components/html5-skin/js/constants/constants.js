@@ -27,6 +27,8 @@ module.exports = {
   },
 
   SKIN_TEXT: {
+    AUTOPLAY_VIDEOS: "Autoplay Videos",
+    BACK: "Back",
     LEARN_MORE: "Learn More",
     CLOSED_CAPTION_PREVIEW: "CLOSED CAPTION PREVIEW",
     SAMPLE_TEXT: "Sample Text",
@@ -117,7 +119,9 @@ module.exports = {
 
   MEDIA_TYPE: {
     HTML5: "html5",
-    FLASH: "flash"
+    FLASH: "flash",
+    VIDEO: "video",
+    OBJECT: "object"
   },
 
   ERROR_MESSAGE: {

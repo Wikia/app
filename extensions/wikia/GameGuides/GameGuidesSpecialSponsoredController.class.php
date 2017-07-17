@@ -183,7 +183,7 @@ class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 			$this->response->setVal( 'status', $status );
 
 			if ( $status ) {
-				wfRunHooks( 'GameGuidesSponsoredVideosSave' );
+				Hooks::run( 'GameGuidesSponsoredVideosSave' );
 			}
 		}
 

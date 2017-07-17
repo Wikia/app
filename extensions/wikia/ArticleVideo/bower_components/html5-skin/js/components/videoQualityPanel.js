@@ -5,8 +5,9 @@
  */
 var React = require('react'),
     ScrollArea = require('react-scrollbar/dist/no-css'),
-    ClassNames = require('classnames'),
-    Icon = require('../components/icon');
+	  CONSTANTS = require('../constants/constants'),
+	  Utils = require('./utils'),
+    ClassNames = require('classnames');
 
 var VideoQualityPanel = React.createClass({
   getInitialState: function() {
@@ -25,7 +26,12 @@ var VideoQualityPanel = React.createClass({
       selected: selectedBitrateId
     });
     this.props.togglePopoverAction();
+    this.props.toggleVideoQualityPanel();
   },
+
+    handleBackClick: function() {
+        this.props.toggleVideoQualityPopOver();
+    },
 
   render: function() {
     var availableBitrates  = this.props.videoQualityOptions.availableBitrates;
@@ -58,6 +64,16 @@ var VideoQualityPanel = React.createClass({
       'oo-mobile-fullscreen': !this.props.popover && this.props.controller.state.isMobile && (this.props.controller.state.fullscreen || this.props.controller.state.isFullWindow)
     });
 
+    var back;
+    var backText = Utils.getLocalizedString(this.props.language, CONSTANTS.SKIN_TEXT.BACK, this.props.localizableStrings);
+    if(this.props.skinConfig.controlBar.autoplayToggle) {
+      back = <a className="back" onClick={this.handleBackClick}>
+        <svg className="oo-chevron" width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 14a.997.997 0 0 1-.707-.293l-7-7a.999.999 0 1 1 1.414-1.414L9 11.586l6.293-6.293a.999.999 0 1 1 1.414 1.414l-7 7A.997.997 0 0 1 9 14" fill-rule="evenodd"/></svg>
+        {backText}
+      </a>;
+    }
+
     return (
       <div className={qualityScreenClass}>
         <ScrollArea
@@ -67,6 +83,7 @@ var VideoQualityPanel = React.createClass({
           <ul>
             {bitrateButtons}
           </ul>
+          {back}
         </ScrollArea>
       </div>
     );

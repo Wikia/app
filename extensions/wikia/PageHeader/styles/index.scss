@@ -15,6 +15,7 @@
 	-webkit-font-smoothing: antialiased;
 	padding: 16px 0 12px;
 	position: relative;
+	width: 100%;
 	z-index: 4;
 
 	button {
@@ -132,6 +133,7 @@
 		height: 1px;
 		margin-bottom: 18px;
 		margin-top: 0;
+		width: 100%;
 	}
 
 	&__subtitle {
