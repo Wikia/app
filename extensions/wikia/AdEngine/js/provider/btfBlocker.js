@@ -1,4 +1,4 @@
-/*global define*/
+/*global define, require*/
 define('ext.wikia.adEngine.provider.btfBlocker', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.uapContext',
@@ -6,8 +6,8 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 	'wikia.lazyqueue',
 	'wikia.log',
 	'wikia.window',
-	require.optional('ext.wikia.aRecoveryEngine.instartLogic.recovery')
-], function (adContext, uapContext, adBlockDetection, lazyQueue, log, win, instartLogic) {
+	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery')
+], function (adContext, uapContext, adBlockDetection, lazyQueue, log, win, pageFair) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.btfBlocker',
@@ -97,8 +97,9 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 		}
 
 		function shouldDelaySlotFillIn(slotName) {
-			var isBlocking = adBlockDetection.isBlocking() || instartLogic.isBlocking(),
-				shouldDelay = adContext.getContext().opts.delayBtf;// && !isBlocking;
+			var isBlocking = adBlockDetection.isBlocking() && pageFair.isEnabled(),
+				shouldDelay = adContext.getContext().opts.delayBtf && !isBlocking;
+
 			log(['shouldDelaySlotFillIn', shouldDelay, slotName], log.levels.debug, logGroup);
 
 			return shouldDelay;
