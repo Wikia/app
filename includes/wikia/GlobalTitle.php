@@ -100,8 +100,13 @@ class GlobalTitle extends Title {
 			throw new \Exception( 'Invalid $city_id.' );
 		}
 
-		// sure hope this redirects for the most part
-		$title = self::newFromText( 'Main Page', NS_MAIN, $city_id );
+		$title = self::newFromText( wfMsgForContent('mainpage'), NS_MAIN, $city_id );
+
+		if ( !$title ) {
+			// sure hope this redirects for the most part
+			$title = self::newFromText( 'Main Page', NS_MAIN, $city_id );
+		}
+
 		return $title;
 	}
 
