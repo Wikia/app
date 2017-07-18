@@ -65,15 +65,14 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.openx',[
 						[300, 250]
 					],
 					unit: 538735694
+				},
+				BOTTOM_LEADERBOARD: {
+					sizes: [
+						[728, 90],
+						[970, 250]
+					],
+					unit: 539119447
 				}
-				// TODO: fill with proper numbers https://wikia-inc.atlassian.net/browse/ADEN-5517
-				// BOTTOM_LEADERBOARD: {
-				// 	sizes: [
-				// 		[728, 90],
-				// 		[970, 250]
-				// 	],
-				// 	unit: 999999
-				// }
 			},
 			mercury: {
 				MOBILE_IN_CONTENT: {
