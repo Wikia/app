@@ -421,9 +421,6 @@ $config['oasis_jquery'] = [
 		'//resources/wikia/libraries/jquery/expirystorage/jquery.expirystorage.js',
 		'//resources/wikia/libraries/jquery/focusNoScroll/jquery.focusNoScroll.js',
 
-		// Facebook
-		'//resources/wikia/modules/facebookLocale.js',
-
 		// libraries loaders
 		'//resources/wikia/libraries/jquery/getResources/jquery.wikia.getResources.js',
 		'//resources/wikia/libraries/jquery/loadLibrary/jquery.wikia.loadLibrary.js',
@@ -593,7 +590,6 @@ $config['gameguides_js'] = [
 		'//resources/wikia/modules/window.js',
 		'//resources/wikia/modules/location.js',
 		'//resources/wikia/modules/nirvana.js',
-		'//resources/wikia/modules/facebookLocale.js',
 		'//resources/wikia/modules/loader.js',
 		'//resources/wikia/modules/querystring.js',
 		'//resources/wikia/modules/history.js',
@@ -727,9 +723,6 @@ $config['wikiamobile_js_body_minimal'] = [
 
 		// performance
 		'#group_bucky_js',
-
-		// facebook
-		'//resources/wikia/modules/facebookLocale.js',
 
 		//modules
 		'//resources/wikia/modules/nirvana.js',
