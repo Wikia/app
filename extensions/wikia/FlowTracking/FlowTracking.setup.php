@@ -5,4 +5,3 @@ $wgHooks['ArticleInsertComplete'][] = 'FlowTrackingHooks::onArticleInsertComplet
 $wgHooks['BeforePageDisplay'][] = 'FlowTrackingHooks::onBeforePageDisplay';
 $wgHooks['BeforePrepareActionButtons'][] = 'FlowTrackingHooks::onBeforePrepareActionButtons';
 $wgHooks['MakeGlobalVariablesScript'][] = 'FlowTrackingHooks::onMakeGlobalVariablesScript';
-$wgHooks['PageHeaderAfterAddNewPageButton'][] = 'FlowTrackingHooks::onPageHeaderAfterAddNewPageButton';

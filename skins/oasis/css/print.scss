@@ -29,19 +29,6 @@ html,
 	width: auto;
 }
 
-// article header: hide everything except page title
-#WikiaPageHeader {
-	.commentslikes,
-	details,
-	p,
-	h2,
-	a,
-	ul,
-	.tally {
-		display: none;
-	}
-}
-
 #WikiaArticle {
 	min-height: 1px;
 	.thumbinner div {
