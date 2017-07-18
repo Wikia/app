@@ -76,7 +76,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 		}
 
 		function fillInSlot(slot) {
-			log(['fillInSlot', slot.name], 'debug', logGroup);
+			log(['fillInSlot', slot.name, providerName], 'debug', logGroup);
 
 			var slotPath = getAdUnit(slot),
 				slotTargeting = JSON.parse(JSON.stringify(slotMap[slot.name])); // copy value
@@ -97,10 +97,11 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 
 			gptHelper.pushAd(slot, slotPath, slotTargeting, {
 				sraEnabled: extra.sraEnabled,
+				isInstartLogicRecoverable: extra.isInstartLogicRecoverable ? extra.isInstartLogicRecoverable(slot.name) : false,
 				isPageFairRecoverable: extra.isPageFairRecoverable ? extra.isPageFairRecoverable(slot.name) : false,
 				isSourcePointRecoverable: extra.isSourcePointRecoverable ? extra.isSourcePointRecoverable(slot.name) : false
 			});
-			log(['fillInSlot', slot.name, 'done'], 'debug', logGroup);
+			log(['fillInSlot', slot.name, providerName, 'done'], 'debug', logGroup);
 		}
 
 		return {

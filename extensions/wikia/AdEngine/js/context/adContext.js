@@ -70,6 +70,11 @@ define('ext.wikia.adEngine.adContext', [
 		var isRecoveryServiceAlreadyEnabled = false,
 			serviceCanBeEnabled = !noExternals && context.opts.showAds !== false; // showAds is undefined by default
 
+		// InstartLogic recovery
+		context.opts.instartLogicRecovery = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
+			context.opts.instartLogicRecovery && geo.isProperGeo(instantGlobals.wgAdDriverInstartLogicRecoveryCountries);
+		isRecoveryServiceAlreadyEnabled |= context.opts.instartLogicRecovery;
+
 		// PageFair recovery
 		context.opts.pageFairRecovery = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
 			context.opts.pageFairRecovery && geo.isProperGeo(instantGlobals.wgAdDriverPageFairRecoveryCountries);
@@ -148,7 +153,6 @@ define('ext.wikia.adEngine.adContext', [
 			geo.isProperGeo(instantGlobals.wgAdDriverSrcPremiumCountries);
 
 		context.opts.isMoatTrackingForFeaturedVideoEnabled = isMOATTrackingForFVEnabled();
-
 		updateDetectionServicesAdContext(context, noExternals);
 		updateAdContextRecoveryServices(context, noExternals);
 
