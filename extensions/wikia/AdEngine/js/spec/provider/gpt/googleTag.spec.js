@@ -34,6 +34,7 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 				collapseEmptyDivs: noop,
 				enableSingleRequest: noop,
 				disableInitialLoad: noop,
+				getTargeting: noop,
 				addEventListener: noop,
 				refresh: noop,
 				setTargeting: noop,
@@ -41,11 +42,6 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 			},
 			slotRegistry: {
 				get: noop
-			},
-			sourcePoint: {
-				isBlocking: function () {
-					return false;
-				}
 			},
 			window: {
 				googletag: {
@@ -101,7 +97,6 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 			mocks.googleSlots,
 			mocks.adSlot,
 			mocks.slotRegistry,
-			mocks.sourcePoint,
 			document,
 			mocks.log,
 			mocks.window

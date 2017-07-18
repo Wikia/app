@@ -53,6 +53,7 @@ class AdEngine2ContextService {
 					'sourcePointRecovery' => ARecoveryModule::isSourcePointRecoveryEnabled(),
 					'pageFairDetectionUrl' => $pageFairDetectionUrl,
 					'pageFairRecovery' => ARecoveryModule::isPageFairRecoveryEnabled(),
+					'instartLogicRecovery' => ARecoveryModule::isInstartLogicRecoveryEnabled(),
 					'prebidBidderUrl' => $prebidBidderUrl
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
