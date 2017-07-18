@@ -207,13 +207,6 @@ ve.init.mw.ViewPageTarget.prototype.setupToolbar = function ( surface ) {
 	this.getToolbar().$element
 		.addClass( 've-init-mw-viewPageTarget-toolbar' );
 
-	// Wikia change - #WikiaPageHeader instead of #firstHeading and after instead of before
-	// Move the toolbar to before #firstHeading if it exists
-	$firstHeading = $( '#WikiaPageHeader' );
-	if ( $firstHeading.length ) {
-		this.getToolbar().$element.insertAfter( $firstHeading );
-	}
-
 	this.getToolbar().$bar.slideDown( 'fast', function () {
 		// Check the surface wasn't torn down while the toolbar was animating
 		if ( this.getSurface() ) {

@@ -314,6 +314,7 @@ class BodyController extends WikiaController {
 		Hooks::run( 'SkinAfterContent', [ &$afterContentHookText ] );
 		$this->afterContentHookText = $afterContentHookText;
 
+		$this->headerModuleName = null;
 		$this->headerModuleAction = 'Index';
 		$this->headerModuleParams = [ 'showSearchBox' => false ];
 
@@ -321,34 +322,20 @@ class BodyController extends WikiaController {
 		if ( self::showUserPagesHeader() ) {
 			$this->headerModuleName = 'UserPagesHeader';
 		// show corporate header on this page?
-		} else if ( WikiaPageType::isCorporatePage() || WikiaPageType::isWikiaHub() ) {
-			$this->headerModuleName = 'PageHeader';
-
-			if ( self::isEditPage() ) {
-				$this->headerModuleAction = 'EditPage';
-			} else {
-				$this->headerModuleAction = 'Corporate';
-			}
-
-			if ( WikiaPageType::isWikiaHubMain() ) {
-				$this->headerModuleAction = 'Hubs';
-			} elseif ( WikiaPageType::isMainPage() ) {
-				$this->wg->SuppressFooter = true;
-				$this->wg->SuppressArticleCategories = true;
-				$this->wg->SuppressPageHeader = true;
-				$this->wg->SuppressCommunityHeader = true;
-				$this->wg->SuppressSlider = true;
-			}
-		} else {
-			$this->headerModuleName = 'PageHeader';
-			if ( self::isEditPage() ) {
-				$this->headerModuleAction = 'EditPage';
-			}
+		} else if (
+			( WikiaPageType::isCorporatePage() || WikiaPageType::isWikiaHub() ) &&
+			!WikiaPageType::isWikiaHubMain() &&
+			WikiaPageType::isMainPage()
+		) {
+			$this->wg->SuppressFooter = true;
+			$this->wg->SuppressArticleCategories = true;
+			$this->wg->SuppressPageHeader = true;
+			$this->wg->SuppressCommunityHeader = true;
+			$this->wg->SuppressSlider = true;
 		}
 
 		// Display chromed header on Special:AdminDashboard
 		if ( $this->wg->Title->isSpecial( 'AdminDashboard' ) && $this->wg->User->isAllowed( 'admindashboard' ) ) {
-			$this->headerModuleName = null;
 			$this->displayAdminDashboard = true;
 		} else {
 			$this->displayAdminDashboard = false;
@@ -382,15 +369,9 @@ class BodyController extends WikiaController {
 			OasisController::addBodyClass( 'oasis-responsive' );
 		}
 
-		// if we are on a special search page, pull in the css file and don't render a header
+		// if we are on a special search page, pull in the css file
 		if ( $this->wg->Title && $this->wg->Title->isSpecial( 'Search' ) && !$this->wg->WikiaSearchIsDefault ) {
 			$this->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL( "skins/oasis/css/modules/SpecialSearch.scss" ) );
-			$this->headerModuleName = null;
-		}
-
-		// Inter-wiki search
-		if ( $this->wg->Title && ( $this->wg->Title->isSpecial( 'WikiaSearch' ) || ( $this->wg->Title->isSpecial( 'Search' ) && $this->wg->WikiaSearchIsDefault ) ) ) {
-			$this->headerModuleName = null;
 		}
 
 		// load CSS for Special:Preferences
