@@ -39,6 +39,9 @@
 		<testsuite name="LyricFind Test Suite">
 			<directory>../extensions/3rdparty/LyricWiki/LyricFind/tests/</directory>
 		</testsuite>
+		<testsuite name="MediaWiki /includes/libs Test Suite">
+			<directory>../includes/libs/tests/</directory>
+		</testsuite>
 	</testsuites>
 	<groups>
 		<exclude>
