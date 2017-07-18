@@ -133,7 +133,7 @@ $color-highlight-column: rgba($color-page, 0);
 	@include flex-direction(column);
 
 	float: right;
-	margin: 20px 15px 0 20px;
+	margin: 20px 15px 0 0;
 	width: 275px;
 	h1 {
 		color: $color-admin-rail-header;

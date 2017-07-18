@@ -58,6 +58,7 @@
 		@include clearfix;
 		@include flexbox();
 		@include flex-wrap(wrap);
+		@include justify-content(space-between);
 		position: relative;
 	}
 }

@@ -122,8 +122,6 @@
 
 		@media #{$breakpoint-small-plus-up} {
 			@include display-inline-flex();
-
-			margin-left: 20px;
 		}
 	}
 
