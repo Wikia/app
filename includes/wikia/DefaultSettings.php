@@ -1621,11 +1621,6 @@ $wgNirvanaAccessRules = [
 		"method" => "*",
 		"requiredPermissions" => [],
 	],
-	[
-		"class" => "FacebookSignupController",
-		"method" => "*",
-		"requiredPermissions" => [],
-	],
 	/* We need oasis controller to render  */
 	[
 		"class" => "OasisController",
