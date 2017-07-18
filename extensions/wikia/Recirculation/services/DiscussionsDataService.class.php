@@ -99,6 +99,7 @@ class DiscussionsDataService {
 			'limit' => self::DISCUSSIONS_API_LIMIT,
 			'sortKey' => self::DISCUSSIONS_API_SORT_KEY,
 			'sortDirection' => self::DISCUSSIONS_API_SORT_DIRECTION,
+			'viewableOnly' => true,
 		];
 
 		$params = array_merge( $defaultParams, $options );
