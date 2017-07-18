@@ -2320,22 +2320,6 @@ $config['media_gallery_js'] = [
 	],
 ];
 
-$config['facebook_client_preferences_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'monobook' ],
-	'assets' => [
-		'//extensions/wikia/FacebookClient/scripts/preferences.js',
-	],
-];
-
-$config['facebook_client_preferences_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis', 'monobook' ],
-	'assets' => [
-		'//extensions/wikia/FacebookClient/styles/preferences.scss',
-	],
-];
-
 $config['banner_notifications_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'monobook' ],
@@ -2367,14 +2351,6 @@ $config['cookie_policy_js'] = [
 	'skin' => [ 'oasis', 'monobook' ],
 	'assets' => [
 		'//extensions/wikia/CookiePolicy/scripts/cookiePolicy.js',
-	],
-];
-
-$config['facebook_client_fbtags_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'monobook' ],
-	'assets' => [
-		'//extensions/wikia/FacebookClient/scripts/FacebookClient.facebookTags.js',
 	],
 ];
 
