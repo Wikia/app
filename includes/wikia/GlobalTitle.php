@@ -102,8 +102,8 @@ class GlobalTitle extends Title {
 
 		$title = self::newFromText( wfMsgForContent('mainpage'), NS_MAIN, $city_id );
 
+		// Don't give fatal errors if the message is broken
 		if ( !$title ) {
-			// sure hope this redirects for the most part
 			$title = self::newFromText( 'Main Page', NS_MAIN, $city_id );
 		}
 
