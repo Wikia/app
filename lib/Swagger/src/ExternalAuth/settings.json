@@ -1,0 +1,6 @@
+{
+  "packagePath": "Swagger",
+  "srcBasePath": "src",
+  "modelPackage": "ExternalAuth\\Models",
+  "apiPackage": "ExternalAuth\\Api"
+}
