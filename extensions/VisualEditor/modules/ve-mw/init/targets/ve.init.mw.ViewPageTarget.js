@@ -191,7 +191,6 @@ ve.init.mw.ViewPageTarget.prototype.verifyPopState = function ( popState ) {
  * @inheritdoc
  */
 ve.init.mw.ViewPageTarget.prototype.setupToolbar = function ( surface ) {
-	var $firstHeading;
 	// Parent method
 	ve.init.mw.Target.prototype.setupToolbar.call( this, surface );
 
