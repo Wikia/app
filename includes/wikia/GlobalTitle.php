@@ -670,7 +670,7 @@ class GlobalTitle extends Title {
 				array( 'page' ),
 				array( 'page_id' ),
 				array(
-					'page_title' => $this->mText,
+					'page_title' => $this->mDbkeyform,
 					'page_namespace' => $this->mNamespace
 				),
 				__METHOD__
