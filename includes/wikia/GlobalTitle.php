@@ -100,7 +100,7 @@ class GlobalTitle extends Title {
 			throw new \Exception( 'Invalid $city_id.' );
 		}
 
-		$title = self::newFromText( wfMsgForContent('mainpage'), NS_MAIN, $city_id );
+		$title = self::newFromText( wfMessage('mainpage')->inContentLanguage()->escaped(), NS_MAIN, $city_id );
 
 		// Don't give fatal errors if the message is broken
 		if ( !$title ) {
