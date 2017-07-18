@@ -161,7 +161,7 @@ class Hooks {
 				$func = $hook;
 			} elseif ( is_object( $hook ) ) {
 				$object = $hook; # Wikia
-				if ( $object instanceof Closure ) {
+				if ( is_callable( $object ) ) {
 					$closure = true;
 				} else {
 					$method = "on" . $event;
