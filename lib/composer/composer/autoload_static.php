@@ -92,7 +92,6 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'F' => 
         array (
             'FluentSql\\' => 10,
-            'Facebook\\' => 9,
         ),
         'D' => 
         array (
@@ -239,10 +238,6 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'FluentSql\\' => 
         array (
             0 => __DIR__ . '/..' . '/wikia/fluent-sql-php/src',
-        ),
-        'Facebook\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/facebook/php-sdk-v4/src/Facebook',
         ),
         'Doctrine\\Instantiator\\' => 
         array (

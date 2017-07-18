@@ -37,7 +37,6 @@ return array(
     'GuzzleHttp\\Ring\\' => array($vendorDir . '/guzzlehttp/ringphp/src'),
     'GuzzleHttp\\' => array($vendorDir . '/guzzlehttp/guzzle/src'),
     'FluentSql\\' => array($vendorDir . '/wikia/fluent-sql-php/src'),
-    'Facebook\\' => array($vendorDir . '/facebook/php-sdk-v4/src/Facebook'),
     'Doctrine\\Instantiator\\' => array($vendorDir . '/doctrine/instantiator/src/Doctrine/Instantiator'),
     'Deserializers\\' => array($vendorDir . '/serialization/serialization/src/Deserializers'),
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
