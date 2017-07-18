@@ -14,6 +14,7 @@ class FacebookTagConstants {
 		'fb:like',
 		'fb:like-box',
 		'fb:share_button',
+		'fb:share-button',
 	];
 
 	const SUPPORTED_TAG_ATTRIBUTES = [
@@ -26,14 +27,14 @@ class FacebookTagConstants {
 			'adapt_container_width'
 		],
 		'follow' => [
-			'colorscheme', 'href', 'kid_directed_site', 'layout', 'show_faces', 'size', 'width'
+			'colorscheme', 'href', 'kid_directed_site', 'layout', 'show_faces', 'size', 'width', 'height'
 		],
 		'like' => [
 			'action', 'colorscheme', 'href', 'kid_directed_site', 'layout', 'ref', 'share', 'show_faces',
-			'size', 'width'
+			'size', 'width', 'height'
 		],
-		'fb-share-button' => [
-			'href', 'layout', 'mobile_iframe', 'size'
+		'share_button' => [
+			'href', 'layout', 'mobile_iframe', 'size', 'width', 'height'
 		],
 	];
 

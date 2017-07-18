@@ -13,6 +13,9 @@ class FacebookPreferencesControllerTest extends TestCase {
 	/** @var FacebookApi|PHPUnit_Framework_MockObject_MockObject $apiMock */
 	private $apiMock;
 
+	/** @var FacebookApiFactory|PHPUnit_Framework_MockObject_MockObject $facebookApiFactoryMock */
+	private $facebookApiFactoryMock;
+
 	/** @var WikiaResponse $response */
 	private $response;
 
@@ -26,6 +29,11 @@ class FacebookPreferencesControllerTest extends TestCase {
 		$this->requestMock = $this->createMock( WikiaRequest::class );
 		$this->apiMock = $this->createMock( FacebookApi::class );
 
+		$this->facebookApiFactoryMock = $this->createMock( FacebookApiFactory::class );
+		$this->facebookApiFactoryMock->expects( $this->any() )
+			->method( 'getApi' )
+			->willReturn( $this->apiMock );
+
 		$this->response = new WikiaResponse( WikiaResponse::FORMAT_HTML );
 
 		$context = new RequestContext();
@@ -33,11 +41,12 @@ class FacebookPreferencesControllerTest extends TestCase {
 
 		$this->facebookPreferencesController = new FacebookPreferencesController();
 		$this->facebookPreferencesController->setContext( $context );
+		$this->facebookPreferencesController->setRequest( $this->requestMock );
 		$this->facebookPreferencesController->setResponse( $this->response );
 
-		$reflApi = new ReflectionProperty( FacebookPreferencesController::class, 'api' );
+		$reflApi = new ReflectionProperty( FacebookPreferencesController::class, 'facebookApiFactory' );
 		$reflApi->setAccessible( true );
-		$reflApi->setValue( $this->facebookPreferencesController, $this->apiMock );
+		$reflApi->setValue( $this->facebookPreferencesController, $this->facebookApiFactoryMock );
 	}
 
 	/**
@@ -56,6 +65,7 @@ class FacebookPreferencesControllerTest extends TestCase {
 		$this->apiMock->expects( $this->never() )
 			->method( 'unlinkAccount' );
 
+		$this->facebookPreferencesController->init();
 		$this->facebookPreferencesController->linkAccount();
 	}
 
@@ -65,7 +75,7 @@ class FacebookPreferencesControllerTest extends TestCase {
 	public function testLoggedOutUserWithInvalidTokenCannotLinkAccount() {
 		$this->requestMock->expects( $this->any() )
 			->method( 'assertValidWriteRequest' )
-			->willReturn( false );
+			->willThrowException( new BadRequestException() );
 
 		$this->userMock->expects( $this->any() )
 			->method( 'isLoggedIn' )
@@ -74,6 +84,7 @@ class FacebookPreferencesControllerTest extends TestCase {
 		$this->apiMock->expects( $this->never() )
 			->method( 'unlinkAccount' );
 
+		$this->facebookPreferencesController->init();
 		$this->facebookPreferencesController->linkAccount();
 	}
 
@@ -93,6 +104,7 @@ class FacebookPreferencesControllerTest extends TestCase {
 		$this->apiMock->expects( $this->never() )
 			->method( 'unlinkAccount' );
 
+		$this->facebookPreferencesController->init();
 		$this->facebookPreferencesController->unlinkAccount();
 	}
 
@@ -102,7 +114,7 @@ class FacebookPreferencesControllerTest extends TestCase {
 	public function testLoggedOutUserWithInvalidTokenCannotUnLinkAccount() {
 		$this->requestMock->expects( $this->any() )
 			->method( 'assertValidWriteRequest' )
-			->willReturn( false );
+			->willThrowException( new BadRequestException() );
 
 		$this->userMock->expects( $this->any() )
 			->method( 'isLoggedIn' )
@@ -111,6 +123,7 @@ class FacebookPreferencesControllerTest extends TestCase {
 		$this->apiMock->expects( $this->never() )
 			->method( 'unlinkAccount' );
 
+		$this->facebookPreferencesController->init();
 		$this->facebookPreferencesController->unlinkAccount();
 	}
 
@@ -121,15 +134,16 @@ class FacebookPreferencesControllerTest extends TestCase {
 	public function testLoggedInUserWithoutValidTokenCannotLinkAccount() {
 		$this->requestMock->expects( $this->once() )
 			->method( 'assertValidWriteRequest' )
-			->willReturn( false );
+			->willThrowException( new BadRequestException() );
 
-		$this->userMock->expects( $this->once() )
+		$this->userMock->expects( $this->any() )
 			->method( 'isLoggedIn' )
 			->willReturn( true );
 
 		$this->apiMock->expects( $this->never() )
 			->method( 'unlinkAccount' );
 
+		$this->facebookPreferencesController->init();
 		$this->facebookPreferencesController->linkAccount();
 	}
 
@@ -140,15 +154,16 @@ class FacebookPreferencesControllerTest extends TestCase {
 	public function testLoggedInUserWithoutValidTokenCannotUnLinkAccount() {
 		$this->requestMock->expects( $this->once() )
 			->method( 'assertValidWriteRequest' )
-			->willReturn( false );
+			->willThrowException( new BadRequestException() );
 
-		$this->userMock->expects( $this->once() )
+		$this->userMock->expects( $this->any() )
 			->method( 'isLoggedIn' )
 			->willReturn( true );
 
 		$this->apiMock->expects( $this->never() )
 			->method( 'unlinkAccount' );
 
+		$this->facebookPreferencesController->init();
 		$this->facebookPreferencesController->unlinkAccount();
 	}
 
@@ -171,6 +186,7 @@ class FacebookPreferencesControllerTest extends TestCase {
 			->method( 'unlinkAccount' )
 			->with( $userId );
 
+		$this->facebookPreferencesController->init();
 		$this->facebookPreferencesController->unlinkAccount();
 
 		$this->assertEquals(
@@ -197,8 +213,10 @@ class FacebookPreferencesControllerTest extends TestCase {
 
 		$this->apiMock->expects( $this->once() )
 			->method( 'unlinkAccount' )
+			->with( $userId )
 			->willThrowException( $apiException );
 
+		$this->facebookPreferencesController->init();
 		$this->facebookPreferencesController->unlinkAccount();
 
 		$this->assertEquals(
@@ -232,10 +250,11 @@ class FacebookPreferencesControllerTest extends TestCase {
 			->method( 'linkAccount' )
 			->with( $userId, $token );
 
-		$this->facebookPreferencesController->unlinkAccount();
+		$this->facebookPreferencesController->init();
+		$this->facebookPreferencesController->linkAccount();
 
 		$this->assertEquals(
-			WikiaResponse::RESPONSE_CODE_OK,
+			WikiaResponse::RESPONSE_CODE_CREATED,
 			$this->response->getCode()
 		);
 	}
@@ -258,8 +277,10 @@ class FacebookPreferencesControllerTest extends TestCase {
 
 		$this->apiMock->expects( $this->once() )
 			->method( 'linkAccount' )
+			->with( $userId )
 			->willThrowException( $apiException );
 
+		$this->facebookPreferencesController->init();
 		$this->facebookPreferencesController->linkAccount();
 
 		$this->assertEquals(

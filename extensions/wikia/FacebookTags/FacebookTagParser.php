@@ -36,8 +36,8 @@ class FacebookTagParser {
 
 		$tagAttributes += [
 			'src' => Sanitizer::cleanUrl( $fbUrl ),
-			'frameborder' => 0,
 			'scrolling' => 'no',
+			'frameborder' => 0,
 			'allowTransparency' => 'true',
 		];
 

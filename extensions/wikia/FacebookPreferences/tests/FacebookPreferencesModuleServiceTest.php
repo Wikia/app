@@ -15,6 +15,9 @@ class FacebookPreferencesModuleServiceTest extends TestCase {
 	/** @var FacebookApi|PHPUnit_Framework_MockObject_MockObject $apiMock */
 	private $apiMock;
 
+	/** @var FacebookApiFactory|PHPUnit_Framework_MockObject_MockObject $facebookApiFactoryMock */
+	private $facebookApiFactoryMock;
+
 	/** @var WikiaResponse $response */
 	private $response;
 
@@ -32,13 +35,18 @@ class FacebookPreferencesModuleServiceTest extends TestCase {
 		$context = new RequestContext();
 		$context->setUser( $this->userMock );
 
+		$this->facebookApiFactoryMock = $this->createMock( FacebookApiFactory::class );
+		$this->facebookApiFactoryMock->expects( $this->any() )
+			->method( 'getApi' )
+			->willReturn( $this->apiMock );
+
 		$this->facebookPreferencesModule = new FacebookPreferencesModuleService();
 		$this->facebookPreferencesModule->setContext( $context );
 		$this->facebookPreferencesModule->setResponse( $this->response );
 
-		$reflApi = new ReflectionProperty( FacebookPreferencesModuleService::class, 'api' );
+		$reflApi = new ReflectionProperty( FacebookPreferencesModuleService::class, 'facebookApiFactory' );
 		$reflApi->setAccessible( true );
-		$reflApi->setValue( $this->facebookPreferencesModule, $this->apiMock );
+		$reflApi->setValue( $this->facebookPreferencesModule, $this->facebookApiFactoryMock );
 	}
 
 	public function testRendersConnectedTemplateIfUserHasLinkedFacebookAccount() {
@@ -49,6 +57,8 @@ class FacebookPreferencesModuleServiceTest extends TestCase {
 		$this->apiMock->expects( $this->once() )
 			->method( 'me' )
 			->willReturn( new LinkedFacebookAccount() );
+
+		$this->facebookPreferencesModule->renderFacebookPreferences();
 
 		$this->assertStringEndsWith(
 		'linked.php',
@@ -64,6 +74,8 @@ class FacebookPreferencesModuleServiceTest extends TestCase {
 		$this->apiMock->expects( $this->once() )
 			->method( 'me' )
 			->willThrowException( new ApiException() );
+
+		$this->facebookPreferencesModule->renderFacebookPreferences();
 
 		$this->assertStringEndsWith(
 			'connected.php',

@@ -16,7 +16,7 @@ class FacebookPreferencesController extends WikiaController {
 		$this->checkWriteRequest();
 
 		$this->user = $this->getContext()->getUser();
-		if ( $this->user->isAnon() ) {
+		if ( !$this->user->isLoggedIn() ) {
 			throw new ForbiddenException();
 		}
 	}
@@ -48,5 +48,7 @@ class FacebookPreferencesController extends WikiaController {
 
 			return;
 		}
+
+		$this->response->setCode( WikiaResponse::RESPONSE_CODE_OK );
 	}
 }

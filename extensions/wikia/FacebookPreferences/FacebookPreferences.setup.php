@@ -9,6 +9,7 @@ $wgExtensionCredits['other'][] = [
 $wgExtensionMessagesFiles['FacebookPreferences'] = __DIR__ . '/FacebookPreferences.i18n.php';
 
 $wgAutoloadClasses['FacebookApiProvider'] = __DIR__ . '/FacebookApiProvider.php';
+$wgAutoloadClasses['FacebookApiFactory'] = __DIR__ . '/FacebookApiFactory.php';
 $wgAutoloadClasses['FacebookPreferencesController'] = __DIR__ . '/FacebookPreferencesController.php';
 $wgAutoloadClasses['FacebookPreferencesModuleService'] = __DIR__ . '/FacebookPreferencesModuleService.php';
 $wgAutoloadClasses['FacebookPreferencesHooks'] = __DIR__ . '/FacebookPreferencesHooks.php';
