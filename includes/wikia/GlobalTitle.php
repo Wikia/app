@@ -100,10 +100,11 @@ class GlobalTitle extends Title {
 			throw new \Exception( 'Invalid $city_id.' );
 		}
 
-		$title = self::newFromText( wfMessage('mainpage')->inContentLanguage()->escaped(), NS_MAIN, $city_id );
+		$mainPageName = self::newFromText( 'mainpage', NS_MEDIAWIKI, $city_id )->getContent();
+		$title = self::newFromText( $mainPageName, NS_MAIN, $city_id );
 
 		// Don't give fatal errors if the message is broken
-		if ( !$title ) {
+		if ( empty( $title->mText ) ) {
 			$title = self::newFromText( 'Main Page', NS_MAIN, $city_id );
 		}
 
