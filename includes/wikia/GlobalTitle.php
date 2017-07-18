@@ -104,8 +104,7 @@ class GlobalTitle extends Title {
 		$title = self::newFromText( $mainPageName, NS_MAIN, $city_id );
 
 		// Don't give fatal errors if the message is broken
-		// Checking explicitly articleId instead of exists() because the later method does not work at the moment
-		if ( $title->getArticleID() <= 0 ) {
+		if ( !$title->exists() ) {
 			$title = self::newFromText( 'Main Page', NS_MAIN, $city_id );
 		}
 
