@@ -320,6 +320,8 @@ class GlobalTitle extends Title {
 			} );
 
 			$titleText = wfUrlencode( $localName );
+		} elseif ( $this->mUrlform === 'Main_Page' ) {
+			$titleText = wfMessage( 'mainpage' )->inLanguage( $this->mLang )->useDatabase( false )->plain();
 		}
 
 		/**
