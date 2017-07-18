@@ -53,22 +53,25 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	 * @param {Object}  extra                  - optional parameters
 	 * @param {boolean} extra.sraEnabled       - whether to use Single Request Architecture
 	 * @param {string}  extra.forcedAdType     - ad type for callbacks info
-	 * @param {array}   extra.isSourcePointRecoverable - true if currently processed slot is recovered by SP
+	 * @param {bool}    extra.isInstartLogicRecoverable - true if currently processed slot is recovered by IL
 	 * @param {bool}    extra.isPageFairRecoverable - true if currently processed slot is recovered by PF
+	 * @param {array}   extra.isSourcePointRecoverable - true if currently processed slot is recovered by SP
 	 */
 	function pushAd(slot, slotPath, slotTargetingData, extra) {
 		extra = extra || {};
 		var element,
 			isBlocking = adBlockDetection.isBlocking(),
 			isRecoveryEnabled = adBlockRecovery.isEnabled(),
-			adIsRecoverable = extra.isPageFairRecoverable || extra.isSourcePointRecoverable,
+			adIsRecoverable = extra.isPageFairRecoverable ||
+				extra.isSourcePointRecoverable ||
+				extra.isInstartLogicRecoverable,
 			adShouldBeRecovered = isRecoveryEnabled && isBlocking && adIsRecoverable,
 			shouldPush = !isBlocking || adShouldBeRecovered,
 			slotName = slot.name,
 			uapId = uapContext.getUapId();
 
 		log(['isRecoveryEnabled, isBlocking, adIsRecoverable',
-			isRecoveryEnabled, isBlocking, adIsRecoverable], log.levels.debug, logGroup);
+			slot.name, isRecoveryEnabled, isBlocking, adIsRecoverable], log.levels.debug, logGroup);
 
 		// copy value
 		slotTargetingData = JSON.parse(JSON.stringify(slotTargetingData));

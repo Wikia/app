@@ -1503,6 +1503,12 @@ $wgAdDriverSourcePointRecoveryCountries = null;
 $wgAdDriverEnableSourcePointRecovery = true;
 
 /**
+ * @name wgAdDriverEnableInstartLogicRecovery
+ * Enable InstartLogic Recovery per wiki
+ */
+$wgAdDriverEnableInstartLogicRecovery = true;
+
+/**
  * @name $wgAdDriverPageFairDetectionCountries
  * List of countries to call PageFair detection scripts
  */
