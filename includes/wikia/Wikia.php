@@ -337,55 +337,6 @@ class Wikia {
 		return $name;
 	}
 
-
-    /**
-     * addCredits
-     *
-     * add html with credits to xml dump
-     *
-     * @access public
-     * @static
-     * @author eloy@wikia
-     * @author emil@wikia
-     *
-     * @param object $row: Database Row with page object
-     *
-     * @return string: HTML string with credits line
-     */
-    static public function addCredits( $row )
-    {
-		global $wgIwPrefix, $wgExternalSharedDB, $wgAddFromLink;
-
-        $text = "";
-
-		if ( $wgAddFromLink && ($row->page_namespace != 8) && ($row->page_namespace != 10) ) {
-			if (isset($wgIwPrefix)){
-				$text .= '<div id="wikia-credits"><br /><br /><small>' . wfMsg('tagline-url-interwiki',$wgIwPrefix) . '</small></div>';
-			}
-            elseif (isset($wgExternalSharedDB)){
-				global $wgServer,$wgArticlePath,$wgSitename;
-				$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-				$oRow = $dbr->selectRow(
-                    'interwiki',
-                    array( 'iw_prefix' ),
-                    array( 'iw_url' => $wgServer.$wgArticlePath ),
-                    __METHOD__
-                );
-				if ($oRow) {
-					$text .= '<div id="wikia-credits"><br /><br /><small>' . wfMsg('tagline-url-interwiki',$oRow->iw_prefix) . '</small></div>';
-				}
-				else {
-					$text .= '<div id="wikia-credits"><br /><br /><small>' . wfMsg('tagline-url') . '</small></div>';
-				}
-			}
-            else {
-				$text .= '<div id="wikia-credits"><br /><br /><small>' . wfMsg('tagline-url') . '</small></div>';
-			}
-		}
-
-        return $text;
-    }
-
     /**
      * ImageProgress
      *
