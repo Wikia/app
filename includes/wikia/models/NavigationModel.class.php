@@ -112,20 +112,21 @@ class NavigationModel extends WikiaModel {
 			true
 		);
 
-		$this->setShouldTranslateContent( false );
-		if ( !empty( $msgName ) && $msgName == self::WIKI_LOCAL_MESSAGE && !empty( $wikiText ) ) {
-			$wiki = $this->parseText(
-				$wikiText,
-				[
-					$this->wg->maxLevelOneNavElements,
-					$this->wg->maxLevelTwoNavElements,
-					$this->wg->maxLevelThreeNavElements
-				]
-			);
-		} else {
-			$wiki = ( $this->wg->User->isAllowed( 'read' ) ?
-				// Only show menu items if user is allowed to view wiki content (BugId:44632)
-				$this->parse(
+		$wiki = [];
+		// Only show menu items if user is allowed to view wiki content (BugId:44632)
+		if ( $this->wg->User->isAllowed( 'read' ) ) {
+			$this->setShouldTranslateContent( false );
+			if ( !empty( $msgName ) && $msgName == self::WIKI_LOCAL_MESSAGE && !empty( $wikiText ) ) {
+				$wiki = $this->parseText(
+					$wikiText,
+					[
+						$this->wg->maxLevelOneNavElements,
+						$this->wg->maxLevelTwoNavElements,
+						$this->wg->maxLevelThreeNavElements
+					]
+				);
+			} else {
+				$wiki = $this->parse(
 					self::TYPE_MESSAGE,
 					self::WIKI_LOCAL_MESSAGE,
 					[
@@ -134,9 +135,10 @@ class NavigationModel extends WikiaModel {
 						$this->wg->maxLevelThreeNavElements
 					],
 					self::CACHE_TTL
-				) : [] );
+				);
+			}
+			$this->setShouldTranslateContent( true );
 		}
-		$this->setShouldTranslateContent( true );
 
 		return [
 			'wikia' => $wikia,
