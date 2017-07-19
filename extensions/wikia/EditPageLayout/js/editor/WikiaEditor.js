@@ -1,4 +1,5 @@
 (function(window,$){
+	
 	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable()),
 		slice = [].slice;
 
@@ -93,6 +94,7 @@
 
 	// Returns the currently active instance
 	WE.getInstance = function(instanceId) {
+		
 		return WE.instances[instanceId || WE.instanceId];
 	};
 
@@ -214,6 +216,7 @@
 
 		initPlugins: function() {
 			// Get the loading order
+
 			var order = [];
 			var loaded = {};
 			function queuePlugin(name){
@@ -665,11 +668,13 @@
 		AUTO_SHOW_ATTRIBUTE: 'data-space-autoshow',
 
 		beforeInit: function() {
+			
 			this.editor.on('uiReady',this.proxy(this.renderToolbars));
 			this.toolbars = {};
 		},
 
 		renderToolbars: function() {
+			
 			// Find all toolbars
 			var spaces = this.editor.getSpaces();
 			var toolbars = this.toolbars = {};
@@ -691,6 +696,7 @@
 				config.element = toolbars[name].el;
 				toolbars[name].module = this.editor.modules.create(config);
 			}
+			debugger;
 			// Render each toolbar
 			for (var name in toolbars) {
 				if (toolbars[name].module) {
@@ -974,8 +980,11 @@
 		},
 
 		getEditboxWrapper: function() {
-			return $(this.editor.ck.getThemeSpace('contents').$);
-		},
+			//kacper olek edit, rte update
+			//return $(this.editor.ck.getThemeSpace('contents').$);
+			return $(this.editor.ck.ui.space('contents').$);
+	
+	},
 
 		// Returns the original editor element that CKE has replaced
 		getEditorElement: function() {

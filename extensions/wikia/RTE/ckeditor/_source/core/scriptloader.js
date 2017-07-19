@@ -53,6 +53,7 @@ CKEDITOR.scriptLoader = (function()
 		 */
 		load : function( scriptUrl, callback, scope, showBusy )
 		{
+			
 			var isString = ( typeof scriptUrl == 'string' );
 
 			if ( isString )

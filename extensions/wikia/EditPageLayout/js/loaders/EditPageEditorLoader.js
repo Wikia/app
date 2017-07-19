@@ -13,6 +13,7 @@
 		},
 
 		getToolbarsConfig: function() {
+			debugger;
 			var data = {
 				main: !!window.wgEditPageIsWidePage,
 				rte: typeof window.RTE != 'undefined',
@@ -35,6 +36,7 @@
 			// source toolbar
 			layout.toolbar.push('ToolbarMediawiki');
 			// format toolbars
+			debugger;
 			if (data.rte) {
 				layout.toolbar.push('Format');
 				layout.toolbar.push('FormatExpanded');
@@ -112,6 +114,7 @@
 		},
 
 		initWikiaEditor: function() {
+			
 			var data = this.getData();
 
 			window.WikiaEditor.create(data.plugins, data.config);

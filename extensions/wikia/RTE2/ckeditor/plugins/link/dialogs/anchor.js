@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @license Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
@@ -55,7 +55,7 @@ CKEDITOR.dialog.add( 'anchor', function( editor ) {
 					var newFake = createFakeAnchor( editor, attributes );
 					newFake.replace( this._.selectedElement );
 
-					// Selecting fake element for IE. (http://dev.ckeditor.com/ticket/11377)
+					// Selecting fake element for IE. (#11377)
 					if ( CKEDITOR.env.ie ) {
 						editor.getSelection().selectElement( newFake );
 					}
