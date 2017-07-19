@@ -1676,46 +1676,6 @@ class Wikia {
 	}
 
 	/**
-	 * ord
-	 * Returns the character id using the approriate encoding
-	 *
-	 * @static
-	 * @access public
-	 * @author Wladyslaw Bodzek
-	 *
-	 * @param $char string Character
-	 * @param $encoding string [optional] Encoding
-	 *
-	 * @return int Character id
-	 *
-	 */
-	static public function ord( $char, $encoding = 'UTF-8' ) {
-		$char = mb_convert_encoding($char,'UCS-4BE',$encoding);
-		if ($char == '')
-			return false;
-
-		return reset(unpack("N",$char));
-	}
-
-	/**
-	 * chr
-	 * Returns the character using the approriate encoding
-	 *
-	 * @static
-	 * @access public
-	 * @author Wladyslaw Bodzek
-	 *
-	 * @param $ord int Character id
-	 * @param $encoding string [optional] Encoding
-	 *
-	 * @return string Character
-	 *
-	 */
-	static public function chr( $ord, $encoding = 'UTF-8' ) {
-		return mb_convert_encoding(pack("N",$ord),$encoding,'UCS-4BE');
-	}
-
-	/**
 	 * informJobQueue
 	 * Send information to the backend script what job was added
 	 *
