@@ -105,7 +105,10 @@ class GlobalTitle extends Title {
 
 		// Don't give fatal errors if the message is broken
 		if ( !$title->exists() ) {
-			$title = self::newFromText( 'Main Page', NS_MAIN, $city_id );
+			// $title->loadContentLang() works here even if exists() returns false because only mCityId is needed to get it
+			// and this is always set by newFromText method
+			$titleText = wfMessage( 'mainpage' )->inLanguage( $title->loadContLang() )->useDatabase( false )->plain();
+			$title = self::newFromText( $titleText, NS_MAIN, $city_id );
 		}
 
 		return $title;
@@ -320,8 +323,6 @@ class GlobalTitle extends Title {
 			} );
 
 			$titleText = wfUrlencode( $localName );
-		} elseif ( $this->mUrlform === 'Main_Page' ) {
-			$titleText = wfMessage( 'mainpage' )->inLanguage( $this->mLang )->useDatabase( false )->plain();
 		}
 
 		/**
