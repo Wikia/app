@@ -195,25 +195,6 @@ class Wikia {
 		}
 	}
 
-	/**
-	 * @author inez@wikia.com
-	 */
-	function getThemesOfSkin($skinname = 'quartz') {
-		global $wgSkinTheme;
-
-		$themes = array();
-
-		if(isset($wgSkinTheme) && is_array($wgSkinTheme) && isset($wgSkinTheme[$skinname])) {
-			foreach($wgSkinTheme[$skinname] as $val) {
-				if( $val != 'custom' && ! (isset($wgSkipThemes) && is_array($wgSkipThemes) && isset($wgSkipThemes[$skinname]) && in_array($wgSkipThemes[$skinname],$val))) {
-					$themes[] = $val;
-				}
-			}
-		}
-
-		return $themes;
-	}
-
     /**
      * successbox
      *
