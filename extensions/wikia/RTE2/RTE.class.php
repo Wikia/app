@@ -265,7 +265,7 @@ class RTE {
 		$vars['RTECookiePath'] = $wgCookiePath;
 
 		// allow other extensions to add extra global JS variables to edit form
-		Hooks:run('RTEAddGlobalVariablesScript', array(&$vars));
+		Hooks::run('RTEAddGlobalVariablesScript', array(&$vars));
 
 		wfProfileOut(__METHOD__);
 		return true;
