@@ -1371,7 +1371,7 @@ Vai a: {{fullurl:{{ns:special}}:Preferences}}.',
 	'enotif_subject_blogpost' => 'Un nuovo blog post, $PAGETITLE, è stato aggiunto a $BLOGLISTING su {{SITENAME}} da $PAGEEDITOR',
 	'enotif_subject_categoryadd' => 'La pagina $PAGETITLE su {{SITENAME}} è stata aggiunta a $CATEGORY da $PAGEEDITOR',
 	'oasis-wikiafollowedpages-special-seeall' => 'Vedi tutto >',
-	'wikiafollowedpages-following' => 'Seguite',
+	'wikiafollowedpages-following' => 'Seguita',
 	'wikiafollowedpages-masthead' => 'Pagine seguite',
 	'wikiafollowedpages-special-anon' => 'Per favore, [[Special:Signup|accedi]] per creare o visualizzare il proprio elenco delle pagine seguite.',
 	'wikiafollowedpages-special-blog-by' => 'da $1',
@@ -2157,10 +2157,10 @@ Dodaj strony do listy klikając „{{int:watch}}“ na dole strony.',
 	'wikiafollowedpages-userpage-hide' => 'ukryj',
 	'wikiafollowedpages-userpage-empty' => 'Lista stron obserwowanych przez tego użytkownika jest pusta.
 Dodaj strony do tej listy klikając „{{int:watch}}” u góry strony.',
-	'enotif_subject_categoryadd' => 'Strona $PAGETITLE na {{GRAMMAR:locative|{{SITENAME}}}} została dodana do kategorii $CATEGORYNAME przez użytkownika $PAGEEDITOR',
+	'enotif_subject_categoryadd' => 'Strona $PAGETITLE na {{GRAMMAR:MS.lp|{{SITENAME}}}} została dodana do kategorii $CATEGORYNAME przez użytkownika $PAGEEDITOR',
 	'enotif_body_categoryadd' => 'Witaj $WATCHINGUSERNAME,
 
-Strona została dodana do kategorii $CATEGORY na {{GRAMMAR:locative|{{SITENAME}}}}.
+Strona została dodana do kategorii $CATEGORY na {{GRAMMAR:MS.lp|{{SITENAME}}}}.
 
 Przejdź na „$PAGETITLE_URL”, by obejrzeć nową stronę.
 
@@ -2172,7 +2172,7 @@ ___________________________________________
 Przejdź na: http://spolecznosc.wikia.com/Specjalna:Preferencje',
 	'enotif_body_categoryadd-HTML' => 'Witaj $WATCHINGUSERNAME.
 <br /><br />
-Strona została dodana do kategorii <a href="$CATEGORY_URL">$CATEGORY</a> na {{GRAMMAR:locative|{{SITENAME}}}}.
+Strona została dodana do kategorii <a href="$CATEGORY_URL">$CATEGORY</a> na {{GRAMMAR:MS.lp|{{SITENAME}}}}.
 <br /><br />
 Przejdź na <a href="$PAGETITLE_URL">$PAGETITLE</a>, by obejrzeć nową stronę.
 <br /><br />
@@ -2184,10 +2184,10 @@ Przejdź na <a href="$PAGETITLE_URL">$PAGETITLE</a>, by obejrzeć nową stronę.
 <li>Chcesz kontrolować otrzymywane wiadomości? Przejdź do <a href="http://spolecznosc.wikia.com/Specjalna:Preferencje">preferencji użytkownika</a></li>
 </ul>
 </p>',
-	'enotif_subject_blogpost' => 'Strona $PAGETITLE na {{GRAMMAR:locative|{{SITENAME}}}} została dodana do listy $BLOGLISTINGNAME przez użytkownika $PAGEEDITOR',
+	'enotif_subject_blogpost' => 'Strona $PAGETITLE na {{GRAMMAR:MS.lp|{{SITENAME}}}} została dodana do listy $BLOGLISTINGNAME przez użytkownika $PAGEEDITOR',
 	'enotif_body_blogpost' => 'Witaj $WATCHINGUSERNAME.
 
-Dodano nowy wpis na śledzonym przez Ciebie blogu $BLOGLISTING na {{GRAMMAR:locative|{{SITENAME}}}}.
+Dodano nowy wpis na śledzonym przez Ciebie blogu $BLOGLISTING na {{GRAMMAR:MS.lp|{{SITENAME}}}}.
 
 Przejdź na „$PAGETITLE_URL”, by obejrzeć nowy wpis.
 
@@ -2199,7 +2199,7 @@ ___________________________________________
 Przejdź na: http://spolecznosc.wikia.com/Specjalna:Preferencje',
 	'enotif_body_blogpost-HTML' => 'Witaj $WATCHINGUSERNAME.
 <br /><br />
-Dodano nowy wpis na śledzonym przez Ciebie blogu $BLOGLISTING na {{GRAMMAR:locative|{{SITENAME}}}}.
+Dodano nowy wpis na śledzonym przez Ciebie blogu $BLOGLISTING na {{GRAMMAR:MS.lp|{{SITENAME}}}}.
 <br /><br />
 Przejdź na <a href="$PAGETITLE_URL">$PAGETITLE</a>, by obejrzeć nowy wpis.
 <br /><br />
@@ -2473,8 +2473,7 @@ $messages['ru'] = array(
 	'wikiafollowedpages-special-heading-media' => 'Изображения и видео ($1)',
 	'wikiafollowedpages-special-namespace' => '($1 cтраница)',
 	'wikiafollowedpages-special-heading-wall' => 'Стены обсуждения ( $1 )',
-	'wikiafollowedpages-special-empty' => 'Ваш список отслеживаемых страинц пуст.
-Добавьте страницы в список, нажав «{{int:watch}}» наверху страницы.',
+	'wikiafollowedpages-special-empty' => 'Ваш список отслеживаемых страниц пуст. Добавьте страницы в список, нажав «{{int:watch}}» на панели Мои инструменты внизу страницы.',
 	'wikiafollowedpages-special-anon' => 'Пожалуйста, [[Special:Signup|представьтесь]] системе для создания или просмотра своего списка отслеживаемых страниц.',
 	'oasis-wikiafollowedpages-special-seeall' => 'Показать все >',
 	'wikiafollowedpages-special-seeall' => 'Показать все >',

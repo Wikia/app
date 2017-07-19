@@ -66,7 +66,7 @@ $wgHooks['ArticleSaveComplete'][] = 'LandingPagesParser::onArticleSaveComplete';
 if ( empty( $app->wg->LandingPagesAsContentMagicWords ) ) {
 	 $app->wg->LandingPagesAsContentMagicWords = array(
 		__NORAIL__ => 'wgSuppressRail',
-		__NONAV__ => 'wgSuppressWikiHeader',
+		__NONAV__ => 'wgSuppressCommunityHeader',
 		__NOHEADER__ => 'wgSuppressPageHeader',
 		__NOSPOTLIGHTS__ => 'wgSuppressSpotlights',
 		__INTERLANGTOP__ => 'wgInterlangOnTop',

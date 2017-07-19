@@ -1266,9 +1266,13 @@ class Wikia {
 
 		@list( $user, $signature1, $signature2, $public_key ) = explode("|", base64_decode( strtr($url, '-_,', '+/=') ));
 
-		if ( empty( $user ) || empty( $signature1 ) || empty( $signature2 ) || empty ( $public_key) ) {
+		if ( empty( $user ) || empty( $signature2 ) || empty ( $public_key) ) {
 			wfProfileOut( __METHOD__ );
 			return false;
+		}
+
+		if ( empty( $signature1 ) ) {
+			$signature1 = '';
 		}
 
 		# verification public key
@@ -2118,21 +2122,19 @@ class Wikia {
 	static function onAfterSetupLocalFileRepo(Array &$repo) {
 		// $wgUploadPath: http://images.wikia.com/poznan/pl/images
 		// $wgFSSwiftContainer: poznan/pl
-		global $wgFSSwiftContainer, $wgFSSwiftServer, $wgEnableSwiftFileBackend, $wgUploadPath;
+		global $wgFSSwiftContainer, $wgFSSwiftServer, $wgUploadPath;
 
 		$path = trim( parse_url( $wgUploadPath, PHP_URL_PATH ), '/' );
 		$wgFSSwiftContainer = substr( $path, 0, -7 );
 
-		if ( !empty( $wgEnableSwiftFileBackend ) ) {
-			$repo['backend'] = 'swift-backend';
-			$repo['zones'] = array (
-				'public' => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images' ),
-				'temp'   => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/temp' ),
-				'thumb'  => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/thumb' ),
-				'deleted'=> array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/deleted' ),
-				'archive'=> array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/archive' )
-			);
-		}
+		$repo['backend'] = 'swift-backend';
+		$repo['zones'] = array (
+			'public' => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images' ),
+			'temp'   => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/temp' ),
+			'thumb'  => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/thumb' ),
+			'deleted'=> array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/deleted' ),
+			'archive'=> array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/archive' )
+		);
 
 		return true;
 	}
@@ -2146,12 +2148,10 @@ class Wikia {
 	 * @return bool true - it's a hook
 	 */
 	static function onBeforeRenderTimeline(&$backend, &$fname, $hash) {
-		global $wgEnableSwiftFileBackend, $wgFSSwiftContainer;
+		global $wgFSSwiftContainer;
 
-		if ( !empty( $wgEnableSwiftFileBackend ) ) {
-			$backend = FileBackendGroup::singleton()->get( 'swift-backend' );
-			$fname = 'mwstore://' . $backend->getName() . "/$wgFSSwiftContainer/images/timeline/$hash";
-		}
+		$backend = FileBackendGroup::singleton()->get( 'swift-backend' );
+		$fname = 'mwstore://' . $backend->getName() . "/$wgFSSwiftContainer/images/timeline/$hash";
 
 		return true;
 	}

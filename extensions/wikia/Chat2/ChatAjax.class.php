@@ -54,12 +54,10 @@ class ChatAjax {
 			return [ 'errorMsg' => self::ERROR_USER_NOT_FOUND ];
 		}
 
-		$canPromoteModerator = in_array( Chat::CHAT_MODERATOR, $user->changeableGroups()['add'] );
-
 		$res = [
 			'canChat' => Chat::canChat( $user ),
 			'isModerator' => $user->isAllowed( Chat::CHAT_MODERATOR ),
-			'canPromoteModerator' => $canPromoteModerator,
+			'isAdmin' => $user->isAllowed( Chat::CHAT_ADMIN ),
 			'isStaff' => $user->isAllowed( Chat::CHAT_STAFF ),
 			'username' => $user->getName(),
 			'username_encoded' => rawurlencode( $user->getName() ),
@@ -103,8 +101,7 @@ class ChatAjax {
 				? getdate( wfTimestamp( TS_UNIX, $stats['firstContributionTimestamp'] ) )
 				: '';
 
-			// NOTE: This is attached to the user so it will be in the wiki's content language instead of wgLang (which it normally will).
-			$res['editCount'] = $wgContLang->formatNum( $stats['editcount'] );
+			$res['editCount'] = (int) $stats['editcount'];
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -220,45 +217,6 @@ class ChatAjax {
 
 	static public function getPrivateBlocks() {
 		return Chat::getPrivateBlocks();
-	}
-
-	/**
-	 * Ajax endpoint to set a user as a chat moderator (ie: add them to the 'chatmoderator' group).
-	 *
-	 * Returns an associative array.  On success, returns "success" => true, on failure,
-	 * returns "error" => [error message].
-	 */
-	static public function giveChatMod() {
-		global $wgRequest, $wgUser;
-
-		wfProfileIn( __METHOD__ );
-		Chat::info( __METHOD__ . ': Method called' );
-
-		if ( !self::authenticateServer() ) {
-			wfProfileOut( __METHOD__ );
-
-			return [ 'error' => self::ERROR_NOT_AUTHENTICATED ];
-		}
-
-		$promotingUser = $wgUser;
-
-		$res = [ ];
-		$userToPromote = $wgRequest->getVal( 'userToPromote' );
-
-		if ( empty( $userToPromote ) ) {
-			$res["error"] = wfMessage( 'chat-missing-required-parameter', 'userToPromote' )->text();
-		} else {
-			$result = Chat::promoteModerator( $userToPromote, $promotingUser );
-			if ( $result === true ) {
-				$res["success"] = true;
-			} else {
-				$res["error"] = $result;
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $res;
 	}
 
 	/**

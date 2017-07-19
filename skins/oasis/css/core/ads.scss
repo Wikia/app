@@ -6,6 +6,7 @@
 @import 'skins/shared/mixins/clearfix';
 @import 'skins/shared/mixins/flexbox';
 @import 'skins/shared/mixins/gradient';
+@import 'skins/shared/mixins/sticky';
 @import 'skins/shared/mixins/transform';
 @import 'ads-floor';
 @import 'ads-in-content';
@@ -25,6 +26,8 @@ $floating-ad-index: $wikia-top-ads-index + 10;
 $floating-ad-video-width: 320px;
 $floating-ad-animation-speed: $video-collapse-animation-speed;
 $floating-ad-featured-video-gap: $video-container-width;
+
+$navbar-size-for-sticky-element: 65px;
 
 $video-control-bar-padding: 18px;
 $video-control-bar-items-margin: 12px;
@@ -186,7 +189,7 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 		}
 	}
 
-	#WikiaPage {
+	.wds-community-header {
 		margin-top: 20px;
 	}
 }
@@ -337,7 +340,10 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 /** Skyscrapers **/
 @media #{$breakpoint-small-plus-up} {
 	#WikiaRail.left-skyscraper-3-present {
-		padding-bottom: 660px;
+		padding-bottom: 610px;
+	}
+	#WikiaRail.small-left-skyscraper-3-present {
+		padding-bottom: 260px;
 	}
 }
 
@@ -505,6 +511,15 @@ body > a > img[src$="noad.gif"] {
 		position: relative;
 		text-align: center;
 		width: 300px;
+	}
+}
+
+#WikiaAdInContentPlaceHolder.rail-sticky-module {
+	@include sticky();
+	top: $navbar-size-for-sticky-element;
+
+	@media #{$breakpoint-below-small-plus} {
+		position: static;
 	}
 }
 

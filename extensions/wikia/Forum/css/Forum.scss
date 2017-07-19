@@ -30,20 +30,6 @@
 		margin-top: 5px;
 	}
 
-	.BreadCrumbs {
-		@include clearfix;
-		padding-top: 3px;
-		.removed {
-			color: $color-alternate-text;
-			padding-left: 7px;
-		}
-		.separator {
-			padding: 0 3px;
-			position: relative;
-			top: -1px;
-		}
-	}
-
 	.DiscussionBox {
 		margin: 15px 0 20px 0;
 
@@ -280,48 +266,6 @@
 	.policies-link {
 		float: right;
 		margin: 10px;
-	}
-}
-
-.WikiaPage .WikiaPageHeader {
-	border-bottom: 0;
-	margin: 0 10px 0 0;
-	padding-bottom: 0;
-	padding-right: 0;
-	position: relative;
-
-	h1 {
-		margin: 0;
-		word-break: normal;
-	}
-
-	.header-right {
-		float: right;
-	}
-
-	.tally {
-		float: left;
-		margin: 0;
-		padding: 0 20px;
-
-		&.last {
-			border-left: 1px solid $color-page-border-subtle;
-		}
-
-		> span {
-			float: left;
-		}
-	}
-}
-
-.WikiaPage .WikiaSearchHeader {
-	float: left;
-
-	.WikiaSearch {
-		margin-bottom: 0;
-		input[type=text] {
-			width: 249px;
-		}
 	}
 }
 

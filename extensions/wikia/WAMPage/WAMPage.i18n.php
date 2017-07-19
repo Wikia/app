@@ -202,6 +202,62 @@ Por favor, ponte en contacto con el equipo de soporte comunitario en [mailto:sup
 	'wam-page-desc' => 'WAM Page',
 );
 
+$messages['fi'] = array(
+	'wam-page-desc' => 'WAM Page',
+	'wam-html-title' => 'Wiki Activity Monitor (WAM)',
+	'wampage-header' => 'Wam',
+	'wampage-header-faq' => 'Frequently asked questions',
+	'wam-all' => 'All',
+	'wam-tv' => 'TV',
+	'wam-games' => 'Games',
+	'wam-books' => 'Books',
+	'wam-comics' => 'Comics',
+	'wam-lifestyle' => 'Lifestyle',
+	'wam-music' => 'Music',
+	'wam-movies' => 'Movies',
+	'wampage-top-gainers-header' => 'Top Gainers',
+	'wampage-header-wam' => 'WAM Score',
+	'wampage-subheader-wam' => 'Wiki Activity Monitor (WAM) Score is an indicator of the strength and momentum of a FANDOM community.',
+	'wampage-content' => "The WAM is calculated daily for the top 5,000 wiki sites and includes an overall rank, a vertical rank, and a score from 0 to 100. The WAM rankings are sensitive to real-world events and change frequently, capturing the latest trends from FANDOM's wikis.",
+	'wampage-content-faq-link' => '[[$1|Frequently Asked Questions]]',
+	'wampage-faq' => '__NOTOC____NOEDITSECTION__===How is the WAM calculated?===
+	The WAM rank is a combination of traffic, engagement and growth. We are not able to provide the specifics because we do not want Wikis attempting to manipulate the rankings. But rest assured, we have included all the essential ingredients for a successful and thriving Wiki.
+===Why should I care about the WAM?===
+	At Wikia we believe knowledge is power. While we have always been open about data and statistics, the WAM represents a huge step forward in the measurement of online communities. The WAM is a valuable feedback loop for founders, admins and contributors as they look to better understand where their Wiki ranks and how their activity is moving the needle.
+===How can I improve my WAM score?===
+	The WAM is a complex algorithm, and there isn’t a simple way to instantly improve your score and ranking. That said, there are steps you can take that will put you in a good position to move up the ranks. First and foremost, we suggest that you [[w:c:en:help:Attracting_contributors|encourage participation on your Wiki]]. Wikis that have a large number of active contributions and contributors are more likely to do well in the WAM rankings. But it is important to remember that you can’t game the system. The more authentic and relevant the content is, the more likely it will resonate with your readers.
+
+	We also recommend reaching out to your fellow contributors to [[w:c:en:help:Making_a_successful_wiki|see if there are improvements you can make to the Wiki]]. Is the navigation intuitive? Do you have enough rich media (videos & images)?  Are there gaps in the content?  Of course, we can [[w:c:en:help:Contents|help guide you in the right direction]].
+
+===How much historical WAM data is available?===
+	WAM data goes back to January 1, 2012
+
+===Where is the WAM currently displayed?===
+	You can currently find the WAM on this product page, the [[w:c:en:Video Games|Video Games]], [[w:c:en:Entertainment|Entertainment]] and [[w:c:en:Lifestyle|Lifestyle]] hub pages, and the preview interstitial page for each Wiki.
+
+===Am I allowed to display my WAM score on my Wiki?===
+We encourage you to display your WAM score or rank on your Wiki, but we ask you that you link back to the product page.
+
+===Who can I speak to if I have other questions about the WAM?===
+Please contact community support at [mailto:support@wikia-inc.com support@wikia-inc.com].
+	',
+	'wam-index-header-rank' => 'Rank',
+	'wam-index-header-score' => 'WAM Score',
+	'wam-index-header-wiki-name' => 'URL',
+	'wam-index-header-vertical' => 'Vertical',
+	'wam-index-header-vertical-rank' => 'Vertical Rank',
+	'wam-index-header-admins' => 'Admins',
+	'wampage-breadcrumb-back-to-wam' => 'Back to WAM Score',
+	'wam-index-header-peak-rank' => 'Peak Rank',
+	'wam-index-no-results' => 'The wiki you searched for is not in the top 5000 for the date you selected. WAM rankings are updated daily, so please check back. [mailto:support@wikia-inc.com Contact FANDOM Community Support] if you have any questions.',
+	'wam-index-filter-search-placeholder' => 'Search',
+	'wam-index-filter-sort-label' => 'Vertical',
+	'wam-index-filter-date-label' => 'Date',
+	'wam-index-filter-lang-label' => 'Language',
+	'wam-index-filter-language-default' => 'All',
+	'wam-index-filter-vertical-default' => 'All',
+);
+
 $messages['fr'] = array(
 	'wam-html-title' => "Moniteur d'Activité des Wikis (WAM)",
 	'wampage-header' => 'Wam',
@@ -373,54 +429,59 @@ WAMスコアやランキングをウィキ上にのせることは、ウィキ�
 );
 
 $messages['ko'] = array(
-	'wam-index-header-wiki-name' => '위키아 URL',
-	'wam-index-no-results' => '귀하가 검색하고자 하신 위키는 선택하신 날짜의 5,000위 안에 들지 못했습니다. WAM 순위는 매일 갱신되므로 다음에 다시 확인하러 와 주세요. 질문이 있으시다면 위키아 커뮤니티 지원팀에게 [mailto:support@wikia-inc.com 연락]해주세요.',
-	'wampage-content' => 'WAM은 매일 상위 커뮤니티 5,000개를 선정해 전체 순위와 분야 순위, 그리고 특정 방식으로 계산된 점수(0~100점)를 보여줍니다. WAM 순위는 현실에서 발생한 사건이나 변화에 매우 민감하게 반응합니다. 그러므로 주기적으로 이 페이지에 들러 최근 유행을 확인해 보세요.',
-	'wampage-subheader-wam' => 'WAM 점수를 통해 각 위키아 커뮤니티가 가진 힘과 발전 가속도를 알아볼 수 있습니다.',
-	'wam-all' => '모두',
-	'wam-books' => '책',
-	'wam-comics' => '만화',
-	'wam-games' => '게임',
-	'wam-index-filter-date-label' => '날짜',
-	'wam-index-filter-lang-label' => '언어',
-	'wam-index-filter-language-default' => '모두',
-	'wam-index-filter-search-placeholder' => '검색',
-	'wam-index-header-admins' => '관리자',
-	'wam-index-header-peak-rank' => '최고 순위',
-	'wam-index-header-rank' => '순위',
-	'wam-index-header-score' => 'WAM 점수',
-	'wam-index-header-vertical-rank' => '분야 순위',
-	'wam-index-header-vertical' => '분야',
-	'wam-lifestyle' => '생활',
-	'wam-movies' => '영화',
-	'wam-music' => '음악',
-	'wampage-breadcrumb-back-to-wam' => 'WAM 페이지로 돌아가기',
-	'wampage-content-faq-link' => '[[$1|자주 묻는 질문]]',
-	'wampage-faq' => '__NOTOC____NOEDITSECTION__===WAM 계산 방식은 무엇인가요?===
-	WAM 순위는 방문자, 참여도, 성장률 등 여러 요인에 의해 결정됩니다. 아쉽게도, 특정 위키가 WAM 순위를 조작하는 일이 발생하지 않도록 하기 위해, 자세한 계산 방식은 공개하고 있지 않습니다. 일단 성공적인 위키를 만들기 위한 모든 조건이라면 대부분 계산 방식에 포함된다는 점을 명심해 두세요!
+	'wam-index-header-wiki-name' => 'URL',
+	'wam-index-no-results' => 'The wiki you searched for is not in the top 5000 for the date you selected. WAM rankings are updated daily, so please check back. [mailto:support@wikia-inc.com Contact FANDOM Community Support] if you have any questions.',
+	'wampage-content' => "The WAM is calculated daily for the top 5,000 wiki sites and includes an overall rank, a vertical rank, and a score from 0 to 100. The WAM rankings are sensitive to real-world events and change frequently, capturing the latest trends from FANDOM's wikis.",
+	'wampage-subheader-wam' => 'Wiki Activity Monitor (WAM) Score is an indicator of the strength and momentum of a FANDOM community.',
+	'wam-all' => 'All',
+	'wam-books' => 'Books',
+	'wam-comics' => 'Comics',
+	'wam-games' => 'Games',
+	'wam-index-filter-date-label' => 'Date',
+	'wam-index-filter-lang-label' => 'Language',
+	'wam-index-filter-language-default' => 'All',
+	'wam-index-filter-search-placeholder' => 'Search',
+	'wam-index-header-admins' => 'Admins',
+	'wam-index-header-peak-rank' => 'Peak Rank',
+	'wam-index-header-rank' => 'Rank',
+	'wam-index-header-score' => 'WAM Score',
+	'wam-index-header-vertical-rank' => 'Vertical Rank',
+	'wam-index-header-vertical' => 'Vertical',
+	'wam-lifestyle' => 'Lifestyle',
+	'wam-movies' => 'Movies',
+	'wam-music' => 'Music',
+	'wampage-breadcrumb-back-to-wam' => 'Back to WAM Score',
+	'wampage-content-faq-link' => '[[$1|Frequently Asked Questions]]',
+	'wampage-faq' => '__NOTOC____NOEDITSECTION__===How is the WAM calculated?===
+	The WAM rank is a combination of traffic, engagement and growth. We are not able to provide the specifics because we do not want Wikis attempting to manipulate the rankings. But rest assured, we have included all the essential ingredients for a successful and thriving Wiki.
+===Why should I care about the WAM?===
+	At Wikia we believe knowledge is power. While we have always been open about data and statistics, the WAM represents a huge step forward in the measurement of online communities. The WAM is a valuable feedback loop for founders, admins and contributors as they look to better understand where their Wiki ranks and how their activity is moving the needle.
+===How can I improve my WAM score?===
+	The WAM is a complex algorithm, and there isn’t a simple way to instantly improve your score and ranking. That said, there are steps you can take that will put you in a good position to move up the ranks. First and foremost, we suggest that you [[w:c:en:help:Attracting_contributors|encourage participation on your Wiki]]. Wikis that have a large number of active contributions and contributors are more likely to do well in the WAM rankings. But it is important to remember that you can’t game the system. The more authentic and relevant the content is, the more likely it will resonate with your readers.
 
-===왜 WAM 점수를 신경 써야 하나요?===
-	WAM 점수는 해당 커뮤니티의 다양한 요인들을 기반으로 결정됩니다. 그러므로 WAM은 커뮤니티의 설립자와 관리자, 편집자들에게 자신의 커뮤니티가 현재 전체적으로 어느 정도 수준에 있고, 어느 방향으로 가고 있는지 알려주는 좋은 수단입니다.
+	We also recommend reaching out to your fellow contributors to [[w:c:en:help:Making_a_successful_wiki|see if there are improvements you can make to the Wiki]]. Is the navigation intuitive? Do you have enough rich media (videos & images)?  Are there gaps in the content?  Of course, we can [[w:c:en:help:Contents|help guide you in the right direction]].
 
-===어떻게 WAM 점수를 올릴 수 있나요?===
-	WAM 점수는 복잡한 알고리즘으로 이루어져 있는 만큼 간단히 올릴 수는 없습니다. 그렇긴 하지만, 일부 단계를 거치면 WAM 점수를 조금이나마 올릴 수 있습니다. 가장 먼저 [[w:c:ko:도움말:커뮤니티 세우기|사용자들을 커뮤니티로 끌어들이]]세요. 활동이 활발한 커뮤니티는 WAM 랭킹에서 상위권을 차지할 가능성이 높습니다. 단 속임수를 써서 WAM 점수를 올리려고는 하지 마세요. 커뮤니티에서 직접 정성을 다해 만든 독자적인 콘텐츠야말로 많은 사용자들의 관심을 끌 수 있습니다.
+===How much historical WAM data is available?===
+	WAM data goes back to January 1, 2012
 
-	또 커뮤니티 사용자들에게 다가가 [[w:c:en:help:Making_a_successful_wiki|무엇을 개선하면 좋을지 물어 보는 것]]도 추천합니다. 내비게이션이 보기 힘든가요? 미디어 자료는 충분한가요? 콘텐츠가 부실한가요? [[w:c:ko:도움말:콘텐츠|도움말:콘텐츠]]에서 더 많은 도움을 얻으실 수 있습니다.
+===Where is the WAM currently displayed?===
+	You can currently find the WAM on this product page, the [[w:c:en:Video Games|Video Games]], [[w:c:en:Entertainment|Entertainment]] and [[w:c:en:Lifestyle|Lifestyle]] hub pages, and the preview interstitial page for each Wiki.
 
-===WAM 데이터는 과거로 언제까지 저장돼 있나요?===
-	WAM 데이터는 2012년 1월 1일까지 거슬러 올라갈 수 있습니다.
+===Am I allowed to display my WAM score on my Wiki?===
+We encourage you to display your WAM score or rank on your Wiki, but we ask you that you link back to the product page.
 
-===어디서 WAM을 확인할 수 있나요?===
-	WAM 정보는 주로 방금 전까지 있던 페이지에서 확인할 수 있습니다. 그 외에로는 [[w:c:en:Video Games|비디오 게임]], [[w:c:en:Entertainment|엔터테인먼트]], [[w:c:en:Lifestyle|생활]] 허브 페이지 같은 곳에서도 찾아볼 수 있습니다.
-
-===WAM 점수를 제 커뮤니티에 올려도 괜찮나요?===
-WAM 점수를 귀하의 커뮤니티에 올려도 상관 없습니다. 오히려 그 점은 권장하는 부분입니다. 단 WAM 페이지로 연결된 링크를 걸어 두는 것을 추천합니다.
-
-===다른 질문이 있을 땐 어떻게 하나요?===
-커뮤니티 지원팀([mailto:support@wikia-inc.com support@wikia-inc.com])에게 연락해 주세요.',
-	'wampage-header-faq' => '자주 묻는 질문',
-	'wampage-header-wam' => 'WAM 점수',
-	'wampage-top-gainers-header' => '인기 커뮤니티',
+===Who can I speak to if I have other questions about the WAM?===
+Please contact community support at [mailto:support@wikia-inc.com support@wikia-inc.com].
+	',
+	'wampage-header-faq' => 'Frequently asked questions',
+	'wampage-header-wam' => 'WAM Score',
+	'wampage-top-gainers-header' => 'Top Gainers',
+	'wam-page-desc' => 'WAM Page',
+	'wam-html-title' => 'Wiki Activity Monitor (WAM)',
+	'wampage-header' => 'Wam',
+	'wam-tv' => 'TV',
+	'wam-index-filter-sort-label' => 'Vertical',
+	'wam-index-filter-vertical-default' => 'All',
 );
 
 $messages['nl'] = array(
@@ -668,6 +729,62 @@ $messages['uk'] = array(
 	'wampage-breadcrumb-back-to-wam' => 'Рейтинг WAM',
 );
 
+$messages['vi'] = array(
+	'wam-page-desc' => 'WAM Page',
+	'wam-html-title' => 'Wiki Activity Monitor (WAM)',
+	'wampage-header' => 'Wam',
+	'wampage-header-faq' => 'Frequently asked questions',
+	'wam-all' => 'All',
+	'wam-tv' => 'TV',
+	'wam-games' => 'Games',
+	'wam-books' => 'Books',
+	'wam-comics' => 'Comics',
+	'wam-lifestyle' => 'Lifestyle',
+	'wam-music' => 'Music',
+	'wam-movies' => 'Movies',
+	'wampage-top-gainers-header' => 'Top Gainers',
+	'wampage-header-wam' => 'WAM Score',
+	'wampage-subheader-wam' => 'Wiki Activity Monitor (WAM) Score is an indicator of the strength and momentum of a FANDOM community.',
+	'wampage-content' => "The WAM is calculated daily for the top 5,000 wiki sites and includes an overall rank, a vertical rank, and a score from 0 to 100. The WAM rankings are sensitive to real-world events and change frequently, capturing the latest trends from FANDOM's wikis.",
+	'wampage-content-faq-link' => '[[$1|Frequently Asked Questions]]',
+	'wampage-faq' => '__NOTOC____NOEDITSECTION__===How is the WAM calculated?===
+	The WAM rank is a combination of traffic, engagement and growth. We are not able to provide the specifics because we do not want Wikis attempting to manipulate the rankings. But rest assured, we have included all the essential ingredients for a successful and thriving Wiki.
+===Why should I care about the WAM?===
+	At Wikia we believe knowledge is power. While we have always been open about data and statistics, the WAM represents a huge step forward in the measurement of online communities. The WAM is a valuable feedback loop for founders, admins and contributors as they look to better understand where their Wiki ranks and how their activity is moving the needle.
+===How can I improve my WAM score?===
+	The WAM is a complex algorithm, and there isn’t a simple way to instantly improve your score and ranking. That said, there are steps you can take that will put you in a good position to move up the ranks. First and foremost, we suggest that you [[w:c:en:help:Attracting_contributors|encourage participation on your Wiki]]. Wikis that have a large number of active contributions and contributors are more likely to do well in the WAM rankings. But it is important to remember that you can’t game the system. The more authentic and relevant the content is, the more likely it will resonate with your readers.
+
+	We also recommend reaching out to your fellow contributors to [[w:c:en:help:Making_a_successful_wiki|see if there are improvements you can make to the Wiki]]. Is the navigation intuitive? Do you have enough rich media (videos & images)?  Are there gaps in the content?  Of course, we can [[w:c:en:help:Contents|help guide you in the right direction]].
+
+===How much historical WAM data is available?===
+	WAM data goes back to January 1, 2012
+
+===Where is the WAM currently displayed?===
+	You can currently find the WAM on this product page, the [[w:c:en:Video Games|Video Games]], [[w:c:en:Entertainment|Entertainment]] and [[w:c:en:Lifestyle|Lifestyle]] hub pages, and the preview interstitial page for each Wiki.
+
+===Am I allowed to display my WAM score on my Wiki?===
+We encourage you to display your WAM score or rank on your Wiki, but we ask you that you link back to the product page.
+
+===Who can I speak to if I have other questions about the WAM?===
+Please contact community support at [mailto:support@wikia-inc.com support@wikia-inc.com].
+	',
+	'wam-index-header-rank' => 'Rank',
+	'wam-index-header-score' => 'WAM Score',
+	'wam-index-header-wiki-name' => 'URL',
+	'wam-index-header-vertical' => 'Vertical',
+	'wam-index-header-vertical-rank' => 'Vertical Rank',
+	'wam-index-header-admins' => 'Admins',
+	'wampage-breadcrumb-back-to-wam' => 'Back to WAM Score',
+	'wam-index-header-peak-rank' => 'Peak Rank',
+	'wam-index-no-results' => 'The wiki you searched for is not in the top 5000 for the date you selected. WAM rankings are updated daily, so please check back. [mailto:support@wikia-inc.com Contact FANDOM Community Support] if you have any questions.',
+	'wam-index-filter-search-placeholder' => 'Search',
+	'wam-index-filter-sort-label' => 'Vertical',
+	'wam-index-filter-date-label' => 'Date',
+	'wam-index-filter-lang-label' => 'Language',
+	'wam-index-filter-language-default' => 'All',
+	'wam-index-filter-vertical-default' => 'All',
+);
+
 $messages['zh-hans'] = array(
 	'wam-html-title' => '维基活动监视器 (WAM)',
 	'wampage-header' => 'Wam',
@@ -682,8 +799,8 @@ $messages['zh-hans'] = array(
 	'wam-movies' => '电影',
 	'wampage-top-gainers-header' => '排行榜',
 	'wampage-header-wam' => 'WAM分数',
-	'wampage-subheader-wam' => '维基活动监视器(WAM)分数是一个Fandom社区的发展和流行指标。',
-	'wampage-content' => 'WAM用来每日计算排名前5000的维基社区，包括所有社区和分类社区以及其0 -100的排名分数。WAM的排名每日都将按照社区的发展趋势不断变化，所以记得时常浏览一下Fandom上最新Wiki的流行趋势。',
+	'wampage-subheader-wam' => '维基活动监视器(WAM)分数是一个FANDOM社区的发展和流行指标。',
+	'wampage-content' => 'WAM用来每日计算排名前5000的维基社区，包括所有社区和分类社区以及其0 -100的排名分数。WAM的排名每日都将按照社区的发展趋势不断变化，所以记得时常浏览一下FANDOM上最新Wiki的流行趋势。',
 	'wampage-content-faq-link' => '[[$1|常见问题]]',
 	'wampage-faq' => '__NOTOC____NOEDITSECTION__ 
 === 如何计算WAM分数? === 
@@ -714,7 +831,7 @@ WAM上的数据最早可以追溯到2012年1月1日
 	'wam-index-header-admins' => '管理员',
 	'wampage-breadcrumb-back-to-wam' => '返回WAM分数',
 	'wam-index-header-peak-rank' => '顶尖排名',
-	'wam-index-no-results' => '您所查找的社区并不在WAM排名前5000之内。WAM排名每日都在不断更新，您可以随后重新访问这个页面。如果您有任何问题，欢迎发送邮件至[mailto:support@wikia-inc.com Fandom社区支持团队]。',
+	'wam-index-no-results' => '您所查找的社区并不在WAM排名前5000之内。WAM排名每日都在不断更新，您可以随后重新访问这个页面。如果您有任何问题，欢迎发送邮件至[mailto:support@wikia-inc.com FANDOM社区支持团队]。',
 	'wam-index-filter-search-placeholder' => '搜索',
 	'wam-index-filter-sort-label' => '主题社区',
 	'wam-index-filter-date-label' => '日期',
@@ -725,16 +842,16 @@ WAM上的数据最早可以追溯到2012年1月1日
 );
 
 $messages['zh-hant'] = array(
-	'wampage-content' => 'WAM用來每日計算排名前5000的Wiki社區，包括所有社區和分類社區以及其0 -100的分數。WAM的排名常會跟隨現實世界的流行發展趨勢不斷變化，所以記得時常瀏覽Fandom的Wiki以了解流行趨勢。',
+	'wampage-content' => 'WAM用來每日計算排名前5000的Wiki社區，包括所有社區和分類社區以及其0 -100的分數。WAM的排名常會跟隨現實世界的流行發展趨勢不斷變化，所以記得時常瀏覽FANDOM的Wiki以了解流行趨勢。',
 	'wam-html-title' => 'Wiki活動監視器 (WAM)',
 	'wam-index-header-wiki-name' => 'URL',
-	'wam-index-no-results' => '您所查找的社群並不在WAM排名前5000之內。WAM排名每日都在不斷更新，您可以隨後重新訪問這個頁面。如果您有任何問題，歡迎發送郵件至[mailto:support@wikia-inc.com Fandom社區支援團隊]。',
-	'wampage-subheader-wam' => 'Wiki活動監視器(WAM) 分數是Fandom社區的動能和活躍程度指標。',
+	'wam-index-no-results' => '您所查找的社群並不在WAM排名前5000之內。WAM排名每日都在不斷更新，您可以隨後重新訪問這個頁面。如果您有任何問題，歡迎發送郵件至[mailto:support@wikia-inc.com FANDOM社區支援團隊]。',
+	'wampage-subheader-wam' => 'Wiki活動監視器(WAM) 分數是FANDOM社區的動能和活躍程度指標。',
 	'wampage-faq' => '__NOTOC____NOEDITSECTION__
 === 如何計算WAM分數?？===
 WAM的排名是根據網頁流量、社區參與度和社區增長進行的資料整合分析。我們不能提供如何整個資料的具體細節，因為我們不想讓任何社區試圖以此操控排名，這對社區發展不利也不公平。我們將保證所有活躍和成功的Wiki社區都將被WAM納入其中。
 ===為什麼WAM非常重要？===
-Fandom一直都認為知識就是力量。我們一直試圖讓相關資料和統計數字非常透明，WAM對線上社區的發展的資料化呈現也是一大進步。WAM的資料回饋對社區的創始人、管理員和貢獻者都非常有意義，因為他們可以更加輕鬆簡單地瞭解到所在社區發展的近況和活躍程度，並更加宏觀地把握社區的整體發展。
+FANDOM一直都認為知識就是力量。我們一直試圖讓相關資料和統計數字非常透明，WAM對線上社區的發展的資料化呈現也是一大進步。WAM的資料回饋對社區的創始人、管理員和貢獻者都非常有意義，因為他們可以更加輕鬆簡單地瞭解到所在社區發展的近況和活躍程度，並更加宏觀地把握社區的整體發展。
 ===如何提高WAM分數？===
 WAM使用複雜的計算方法，並沒有一種簡單的方式可以迅速提高社區的分數和排名。儘管如此，這裡還是有一些方法可以幫到你提高WAM分數。首先，我們建議您查看[[w:c:zh:help:Attracting_contributors|説明:吸引參與者]]頁面。非常活躍或者每日編輯數量非常多的Wiki社區一般在WAM上排名都會比較靠前。請記住，不要試圖和系統耍花招。只有與主題相關和可信的社區內容才能讓你的社區和讀者產生共鳴。
 

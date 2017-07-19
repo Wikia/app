@@ -16,7 +16,7 @@ class IpAddressQuery implements SearchQuery {
 		"bool": {
 			"should": [{
 				"query_string": {
-					"query":"rawTags:dis_service_* AND client_ip:$ipAddress"
+					"query":"rawTags:dis_service_* AND client_ip:\"$ipAddress\""
 				}
 			}]
 		}

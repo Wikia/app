@@ -1,10 +1,13 @@
-/*global define*/
+/*global define, require*/
 define('ext.wikia.adEngine.provider.btfBlocker', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.context.uapContext',
+	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.lazyqueue',
 	'wikia.log',
-	'wikia.window'
-], function (adContext, lazyQueue, log, win) {
+	'wikia.window',
+	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery')
+], function (adContext, uapContext, adBlockDetection, lazyQueue, log, win, pageFair) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.btfBlocker',
@@ -35,15 +38,23 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 		});
 
 		function processBtfSlot(slot) {
+			var context = adContext.getContext();
 			log(['processBtfSlot', slot.name], 'debug', logGroup);
 
-			if (win.ads.runtime.unblockHighlyViewableSlots && config.highlyViewableSlots) {
-				config.highlyViewableSlots.map(unblock);
-			}
+			if (context.opts.premiumAdLayoutEnabled && !uapContext.isUapLoaded()) {
+				if (context.slots.premiumAdLayoutSlotsToUnblock.indexOf(slot.name) !== -1) {
+					fillInSlot(slot);
+					return;
+				}
+			} else {
+				if (win.ads.runtime.unblockHighlyViewableSlots && config.highlyViewableSlots) {
+					config.highlyViewableSlots.map(unblock);
+				}
 
-			if (unblockedSlots.indexOf(slot.name) > -1 || !win.ads.runtime.disableBtf) {
-				fillInSlot(slot);
-				return;
+				if (unblockedSlots.indexOf(slot.name) > -1 || !win.ads.runtime.disableBtf) {
+					fillInSlot(slot);
+					return;
+				}
 			}
 
 			slot.collapse({adType: 'blocked'});
@@ -57,9 +68,9 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 				return;
 			}
 
-			if (context.opts.adMixExperimentEnabled) {
+			if (context.opts.premiumAdLayoutEnabled) {
 				win.ads.runtime.disableBtf = true;
-				context.slots.adMixToUnblock.map(unblock);
+				context.slots.premiumAdLayoutSlotsToUnblock.map(unblock);
 			}
 
 			lazyQueue.makeQueue(btfQueue, processBtfSlot);
@@ -85,6 +96,15 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 			}
 		}
 
+		function shouldDelaySlotFillIn(slotName) {
+			var isBlocking = adBlockDetection.isBlocking() && pageFair.isEnabled(),
+				shouldDelay = adContext.getContext().opts.delayBtf && !isBlocking;
+
+			log(['shouldDelaySlotFillIn', shouldDelay, slotName], log.levels.debug, logGroup);
+
+			return shouldDelay;
+		}
+
 		function fillInSlotWithDelay(slot) {
 			log(['fillInSlotWithDelay', slot.name], 'debug', logGroup);
 
@@ -92,7 +112,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 				onSlotResponse(slot.name);
 			}
 
-			if (!adContext.getContext().opts.delayBtf) {
+			if (!shouldDelaySlotFillIn(slot.name)) {
 				fillInSlot(slot);
 				return;
 			}

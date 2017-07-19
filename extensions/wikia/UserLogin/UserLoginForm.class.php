@@ -98,7 +98,7 @@ class UserLoginForm extends LoginForm {
 
 		if ( $result === true ) {
 			$msgKey = '';
-			if ( !wfRunHooks( 'cxValidateUserName', array( $this->mUsername, &$msgKey ) ) ) {
+			if ( !Hooks::run( 'cxValidateUserName', array( $this->mUsername, &$msgKey ) ) ) {
 				$result = $msgKey;
 			}
 		}
@@ -257,7 +257,7 @@ class UserLoginForm extends LoginForm {
 			UserLoginHelper::setNotConfirmedUserSession( $u->getId() );
 		}
 
-		wfRunHooks( 'AddNewAccount', array( $u, false ) );
+		Hooks::run( 'AddNewAccount', array( $u, false ) );
 
 		/*
 		 * Remove when SOC-217 ABTest is finished

@@ -4,13 +4,21 @@ define('ext.wikia.adEngine.provider.directGpt', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.factory.wikiaGpt',
-	'ext.wikia.adEngine.slot.adUnitBuilder',
 	'ext.wikia.adEngine.slot.service.kiloAdUnitBuilder',
 	'ext.wikia.adEngine.slotTweaker',
-	require.optional('ext.wikia.adEngine.lookup.openx.openXBidderHelper'),
+	require.optional('ext.wikia.aRecoveryEngine.instartLogic.recovery'),
 	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery'),
 	require.optional('ext.wikia.aRecoveryEngine.sourcePoint.recovery')
-], function (adContext, uapContext, factory, adUnitBuilder, kiloAdUnitBuilder, slotTweaker, openXHelper, pageFair, sourcePoint) {
+], function (
+	adContext,
+	uapContext,
+	factory,
+	kiloAdUnitBuilder,
+	slotTweaker,
+	instartLogic,
+	pageFair,
+	sourcePoint
+) {
 	'use strict';
 
 	return factory.createProvider(
@@ -49,9 +57,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 					slotTweaker.adjustLeaderboardSize(slotName);
 				}
 			},
-			beforeHop: function (slotName) {
-				openXHelper && openXHelper.addOpenXSlot(slotName);
-			},
+			isInstartLogicRecoverable: instartLogic ? instartLogic.isSlotRecoverable : false,
 			isPageFairRecoverable: pageFair ? pageFair.isSlotRecoverable : false,
 			isSourcePointRecoverable: sourcePoint ? sourcePoint.isSlotRecoverable : false,
 			sraEnabled: true,
@@ -61,7 +67,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 				'TOP_RIGHT_BOXAD',
 				'GPT_FLUSH'
 			],
-			adUnitBuilder: adContext.getContext().opts.enableKILOAdUnit ? kiloAdUnitBuilder : adUnitBuilder,
+			adUnitBuilder: kiloAdUnitBuilder,
 			highlyViewableSlots: [
 				'INCONTENT_BOXAD_1',
 				'INCONTENT_PLAYER',

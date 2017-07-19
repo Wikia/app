@@ -408,7 +408,7 @@ class SpecialMergeHistory extends SpecialPage {
 			wfMsgExt( 'mergehistory-success', array('parseinline'),
 			$targetTitle->getPrefixedText(), $destTitle->getPrefixedText(), $count ) );
 
-		wfRunHooks( 'ArticleMergeComplete', array( $targetTitle, $destTitle ) );
+		Hooks::run( 'ArticleMergeComplete', array( $targetTitle, $destTitle ) );
 
 		return true;
 	}

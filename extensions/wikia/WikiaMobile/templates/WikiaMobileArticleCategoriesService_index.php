@@ -1,13 +1,12 @@
 <?
 /**
  * @var $categoryLinks String
- * @var $wf WikiaFunctionWrapper
  */
 ?>
 
 <? if ( !empty( $categoryLinks ) ) :?>
 <section id=wkArtCat>
-	<h1 class=collSec><?= wfMsg( 'wikiamobile-article-categories' ); ?><span class=chev></span></h1>
+	<h1 class=collSec><?= wfMessage( 'wikiamobile-article-categories' )->escaped(); ?><span class=chev></span></h1>
 	<?= $categoryLinks ?>
 </section>
 <? endif ;?>

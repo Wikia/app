@@ -203,7 +203,7 @@ class WikiaRequest implements Wikia\Interfaces\IRequest {
 	 * @return bool
 	 */
 	public function wasPosted() {
-		wfRunHooks( 'WikiaRequestWasPosted' );
+		Hooks::run( 'WikiaRequestWasPosted' );
 
 		return isset( $_SERVER['REQUEST_METHOD'] ) && $_SERVER['REQUEST_METHOD'] == 'POST';
 	}

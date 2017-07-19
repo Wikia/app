@@ -272,7 +272,7 @@ class WikiExporter {
 				# Default JOIN, to be overridden...
 				$join['revision'] = array( 'INNER JOIN', 'page_id=rev_page AND page_latest=rev_id' );
 				# One, and only one hook should set this, and return false
-				if ( wfRunHooks( 'WikiExporter::dumpStableQuery', array( &$tables, &$opts, &$join ) ) ) {
+				if ( Hooks::run( 'WikiExporter::dumpStableQuery', array( &$tables, &$opts, &$join ) ) ) {
 					wfProfileOut( __METHOD__ );
 					throw new MWException( __METHOD__ . " given invalid history dump type." );
 				}
@@ -300,7 +300,7 @@ class WikiExporter {
 				$prev = $this->db->bufferResults( false );
 			}
 
-			wfRunHooks( 'ModifyExportQuery',
+			Hooks::run( 'ModifyExportQuery',
 						array( $this->db, &$tables, &$cond, &$opts, &$join ) );
 
 			# Do the query!
@@ -498,7 +498,7 @@ class XmlDumpWriter {
 				strval( $row->page_restrictions ) ) . "\n";
 		}
 
-		wfRunHooks( 'XmlDumpWriterOpenPage', array( $this, &$out, $row, $title ) );
+		Hooks::run( 'XmlDumpWriterOpenPage', array( $this, &$out, $row, $title ) );
 
 		return $out;
 	}
@@ -559,7 +559,7 @@ class XmlDumpWriter {
 				"" ) . "\n";
 		}
 
-		wfRunHooks( 'XmlDumpWriterWriteRevision', array( &$this, &$out, $row, $text ) );
+		Hooks::run( 'XmlDumpWriterWriteRevision', array( &$this, &$out, $row, $text ) );
 
 		$out .= "    </revision>\n";
 

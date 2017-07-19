@@ -3,7 +3,7 @@
 use Wikia\Vignette\StaticAssetsUrlGenerator;
 use Wikia\Vignette\UrlConfig;
 
-class AvatarService extends Service {
+class AvatarService {
 
 	const AVATAR_SIZE_SMALL = 20;
 	const AVATAR_SIZE_SMALL_PLUS = 30;
@@ -159,9 +159,10 @@ class AvatarService extends Service {
 	 * Render avatar
 	 * @param string $userName
 	 * @param int $avatarSize
+	 * @param string $class
 	 * @return string rendered avatar <img /> tag
 	 */
-	static function renderAvatar( $userName, $avatarSize = 20 ) {
+	static function renderAvatar( $userName, $avatarSize = 20, $class = '' ) {
 		wfProfileIn( __METHOD__ );
 
 		// For performance reasons, we only generate avatars that are of specific sizes.
@@ -180,7 +181,7 @@ class AvatarService extends Service {
 			'src' => $avatarUrl,
 			'width' => $avatarSize,
 			'height' => $avatarSize,
-			'class' => 'avatar',
+			'class' => $class ?: 'avatar',
 			'alt' => IP::isIPAddress( $userName ) ? wfMessage( 'oasis-anon-user' )->text() : $userName,
 		) );
 

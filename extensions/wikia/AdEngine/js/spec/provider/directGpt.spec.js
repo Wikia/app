@@ -24,24 +24,13 @@ describe('ext.wikia.adEngine.provider.directGptMobile', function () {
 	function getModule() {
 		return modules['ext.wikia.adEngine.provider.directGptMobile'](
 			mocks.adContext,
-			mocks.defaultAdUnitBuilder,
 			mocks.kiloAdUnitBuilder,
 			mocks.factory
 		);
 	}
 
-	it('Return default adUnit if there is no param in context', function () {
+	it('Return kilo adUnit if there is no param in context', function () {
 		spyOn(mocks.factory, 'createProvider');
-
-		getModule();
-
-		expect(mocks.factory.createProvider.calls.argsFor(0)[4].adUnitBuilder)
-			.toEqual(mocks.defaultAdUnitBuilder);
-	});
-
-	it('Return KILO adUnit if there is param in context', function () {
-		spyOn(mocks.factory, 'createProvider');
-		spyOn(mocks.adContext, 'getContext').and.returnValue({opts: {enableKILOAdUnit: true}});
 
 		getModule();
 

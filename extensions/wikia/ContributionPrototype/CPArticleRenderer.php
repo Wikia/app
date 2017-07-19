@@ -15,6 +15,7 @@ class CPArticleRenderer {
 	use Loggable;
 
 	const SERVICE_NAME = "structdata";
+	const CP_TITLE_HEADER = 'X-Page-Title';
 
 	/** @var string */
 	private $publicHost;
@@ -28,23 +29,18 @@ class CPArticleRenderer {
 	/** @var UrlProvider */
 	private $urlProvider;
 
-	/** @var bool */
-	private $premiumHeaderEnabled;
-
 	/**
 	 * CPArticleRenderer constructor.
 	 * @param string $publicHost
 	 * @param int $wikiId
 	 * @param string $dbName
 	 * @param UrlProvider $urlProvider
-	 * @param bool $premiumHeaderEnabled
 	 */
-	public function __construct($publicHost, $wikiId, $dbName, $urlProvider, $premiumHeaderEnabled) {
+	public function __construct($publicHost, $wikiId, $dbName, $urlProvider) {
 		$this->publicHost = $publicHost;
 		$this->wikiId = $wikiId;
 		$this->dbName = $dbName;
 		$this->urlProvider = $urlProvider;
-		$this->premiumHeaderEnabled = $premiumHeaderEnabled;
 	}
 
 	/**
@@ -57,15 +53,19 @@ class CPArticleRenderer {
 		}
 
 		$output->setPageTitle($title->getPrefixedText());
-		$content = $this->getArticleContent($title->getPartialURL(), $action);
-		
-		if ($content === false) {
-			// TODO: what do we want to show here?
+		$cpArticle = $this->getArticle($title->getPartialURL(), $action);
+		$this->addStyles($output);
+
+		if ($cpArticle === false) {
+			$output->addHTML("<p>We're currently experiencing some technical difficulties. Hang tight, we're working to fix these ASAP.</p>");
 			return;
 		}
 
-		$output->addHTML($content);
-		$this->addStyles($output);
+		$output->addHTML($cpArticle->getContent());
+		if (!empty($cpArticle->getTitle())) {
+			$output->setPageTitle($cpArticle->getTitle());
+		}
+
 		$this->addScripts($output);
 	}
 
@@ -88,10 +88,28 @@ class CPArticleRenderer {
 		$output->addHTML(\DesignSystemHelper::renderSvg('sprite'));
 	}
 
-	private function getArticleContent($title, $action) {
-//		$internalHost = $this->urlProvider->getUrl(self::SERVICE_NAME);
+	private function splitArticleIdAndTitle($title) {
+		if (preg_match('/^(\d+)\/(.*$)$/', urldecode($title), $matches) == 1) {
+			return [$matches[1], rawurlencode($matches[2])];
+		}
+
+		return false;
+	}
+
+	private function getFCRequestPath($title) {
+		$parts = $this->splitArticleIdAndTitle($title);
+		if ($parts === false) {
+			return "wiki/{$title}";
+		}
+
+		list($id, $slug) = $parts;
+		return "wiki/{$id}/{$slug}";
+	}
+
+	private function getArticle($title, $action) {
 		$internalHost = $this->publicHost;
-		$path = "wiki/{$title}";
+
+		$path = $this->getFCRequestPath($title);
 
 		if ($action != 'view') {
 			$path .= "/${action}";
@@ -108,16 +126,16 @@ class CPArticleRenderer {
 					'followRedirects'=> true,
 					'headers' => [
 						'X-Wikia-Community' => $this->dbName,
-						'X-Wikia-PremiumHeader' => $this->premiumHeaderEnabled
+						'X-Wikia-PremiumHeader' => true
 					]
 				]
 		);
 
-		if ($response->getStatus() >= 500) {
+		if (!$response->status->isOK()) {
 			// Http::request logs when http status > 399
 			return false;
 		}
 
-		return $response->getContent();
+		return new CPArticle($response->getContent(), $response->getResponseHeader(self::CP_TITLE_HEADER));
 	}
 }

@@ -23,7 +23,7 @@ class WatchlistFeedAPIProxy implements iAPIProxy {
 
 		$api = new ApiMain(new FauxRequest($this->APIparams));
 		$api->execute();
-		$res = &$api->GetResultData();
+		$res = $api->GetResultData();
 
 		$out = array();
 

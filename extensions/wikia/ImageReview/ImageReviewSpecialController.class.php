@@ -26,7 +26,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		// get more space for images
 		$this->wg->OasisFluid = true;
 		$this->wg->SuppressSpotlights = true;
-		$this->wg->SuppressWikiHeader = true;
+		$this->wg->SuppressCommunityHeader = true;
 		$this->wg->SuppressPageHeader = true;
 		$this->wg->SuppressFooter = true;
 

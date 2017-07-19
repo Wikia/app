@@ -7,13 +7,13 @@ define('ext.wikia.adEngine.adEngineRunner', [
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.lookup.amazonMatch'),
 	require.optional('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane'),
-	require.optional('ext.wikia.aRecoveryEngine.adBlockRecovery'),
-	require.optional('ext.wikia.adEngine.lookup.prebid')
-], function (adEngine, adTracker, instantGlobals, log, win, amazonMatch, rubiconFastlane, adBlockRecovery, prebid) {
+	require.optional('ext.wikia.adEngine.lookup.prebid'),
+	require.optional('ext.wikia.aRecoveryEngine.adBlockRecovery')
+], function (adEngine, adTracker, instantGlobals, log, win, amazonMatch, rubiconFastlane, prebid, adBlockRecovery) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adEngineRunner',
-		supportedModules = [amazonMatch, rubiconFastlane, adBlockRecovery, prebid],
+		supportedModules = [amazonMatch, rubiconFastlane, prebid, adBlockRecovery],
 		timeout = instantGlobals.wgAdDriverDelayTimeout || 2000;
 
 	/**
@@ -33,6 +33,7 @@ define('ext.wikia.adEngine.adEngineRunner', [
 		 */
 		function markModule(name) {
 			log(name + ' responded', log.levels.debug, logGroup);
+
 			if (modulesQueue.indexOf(name) === -1) {
 				modulesQueue.push(name);
 			}
@@ -49,8 +50,10 @@ define('ext.wikia.adEngine.adEngineRunner', [
 		 */
 		function registerModules() {
 			log(['Register modules', enabledModules.length], log.levels.debug, logGroup);
+
 			enabledModules.forEach(function (module) {
 				var name = module.getName();
+
 				module.addResponseListener(function () {
 					markModule(name);
 				});

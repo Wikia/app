@@ -10,8 +10,6 @@ html,
 	background: #fff;
 }
 
-#WikiaHeader,
-#WikiHeader,
 #WikiaRail,
 #WikiaFooter,
 #WikiaSearch {
@@ -29,19 +27,6 @@ html,
 #WikiaMainContent {
 	float: none;
 	width: auto;
-}
-
-// article header: hide everything except page title
-#WikiaPageHeader {
-	.commentslikes,
-	details,
-	p,
-	h2,
-	a,
-	ul,
-	.tally {
-		display: none;
-	}
 }
 
 #WikiaArticle {

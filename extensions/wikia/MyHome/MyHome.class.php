@@ -112,7 +112,7 @@ class MyHome {
 		}
 
 		//allow to alter $data by other extensions (eg. Article Comments)
-		wfRunHooks('MyHome:BeforeStoreInRC', array(&$rc, &$data));
+		Hooks::run('MyHome:BeforeStoreInRC', array(&$rc, &$data));
 
 		// encode data to be stored in rc_params
 		if (!empty($data)) {
@@ -358,16 +358,12 @@ class MyHome {
 	 * @author Maciej Brencz <macbre@wikia-inc.com>
 	 */
 	public static function getDefaultView() {
-		wfProfileIn(__METHOD__);
-
-		global $wgUser;
-		$defaultView = $wgUser->getGlobalPreference('myhomedefaultview');
+		$defaultView = RequestContext::getMain()->getUser()->getGlobalPreference('myhomedefaultview');
 
 		if (empty($defaultView)) {
 			$defaultView = 'activity';
 		}
 
-		wfProfileOut(__METHOD__);
 		return $defaultView;
 	}
 

@@ -6,7 +6,6 @@
  * @file
  * @ingroup Extensions
  */
-
 $messages = array();
 
 /** English */

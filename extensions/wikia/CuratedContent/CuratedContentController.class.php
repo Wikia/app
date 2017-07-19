@@ -332,7 +332,7 @@ class CuratedContentController extends WikiaController {
 				$status = ( new CommunityDataService( $wgCityId ) )->setCuratedContent( $sections );
 
 				if ( !empty( $status ) ) {
-					wfRunHooks( 'CuratedContentSave', [ $sections ] );
+					Hooks::run( 'CuratedContentSave', [ $sections ] );
 				}
 			}
 			$this->response->setVal( 'status', $status );

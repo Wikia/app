@@ -4,7 +4,7 @@
  * WAM Service
  * Service for handling WAM related queries
  */
-class WAMService extends Service {
+class WAMService {
 
 	const WAM_DEFAULT_ITEM_LIMIT_PER_PAGE = 20;
 	const WAM_BLACKLIST_EXT_VAR_NAME = 'wgEnableContentWarningExt';

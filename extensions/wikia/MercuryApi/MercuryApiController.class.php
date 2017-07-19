@@ -576,6 +576,6 @@ class MercuryApiController extends WikiaController {
 	private function isSupportedByMercury( Title $title ) {
 		return MercuryApiMainPageHandler::shouldGetMainPageData( $title->isMainPage() ) ||
 			$title->isContentPage() ||
-			in_array( $title->getNamespace(), [ NS_FILE, NS_CATEGORY ]);
+			in_array( $title->getNamespace(), [ NS_FILE, NS_CATEGORY, NS_BLOG_ARTICLE ]);
 	}
 }

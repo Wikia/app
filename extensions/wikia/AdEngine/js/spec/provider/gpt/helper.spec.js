@@ -67,6 +67,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			},
 			slotTargetingHelper: {
 				getAbTestId: noop,
+				getOutstreamData: noop,
 				getPrebidSlotId: noop,
 				getWikiaSlotId: noop
 			},
@@ -105,6 +106,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			mocks.adBlockRecovery,
 			mocks.slotTweaker,
 			mocks.log,
+			undefined,
 			mocks.sraHelper,
 			mocks.pageFair
 		);

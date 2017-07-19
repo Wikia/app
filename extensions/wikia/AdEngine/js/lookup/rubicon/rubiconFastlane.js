@@ -35,6 +35,10 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 					sizes: [[120, 600], [160, 600], [300, 250], [300, 600]],
 					targeting: {loc: 'hivi'}
 				},
+				BOTTOM_LEADERBOARD: {
+					sizes: [[728, 90], [970, 250]],
+					targeting: {loc: 'footer'}
+				},
 				PREFOOTER_LEFT_BOXAD: {
 					sizes: [[300, 250], [336, 280]],
 					targeting: {loc: 'footer'}
@@ -173,6 +177,22 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 			}
 		});
 	}
+	
+	function shouldHandleFloorPrice(floorPrice, slotName, rubiconTierKeyParam) {
+		return typeof floorPrice !== 'undefined' &&
+			rubiconTierKeyParam && typeof rubiconTierKeyParam.map === 'function' &&
+			bestPrices[slotName] / 100 <= floorPrice &&
+			bestPricesPrivate[slotName] / 100 <= floorPrice
+		
+	}
+
+	function handleFloorPrice(floorPrice, slotName, parameters) {
+		if (shouldHandleFloorPrice(floorPrice, slotName, parameters[rubiconTierKey])) {
+			parameters[rubiconTierKey] = parameters[rubiconTierKey].map(function (tier) {
+				return tier.replace(/tier\d+/, 'tierPREBID');
+			});
+		}
+	}
 
 	function saveBestPrice(slotName, tiers) {
 		tiers.forEach(function (tier) {
@@ -198,7 +218,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 		return price;
 	}
 
-	function getSlotParams(slotName) {
+	function getSlotParams(slotName, floorPrice) {
 		var targeting,
 			parameters = {};
 
@@ -212,6 +232,9 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 				parameters[params.key] = params.values;
 			}
 		});
+
+		handleFloorPrice(floorPrice, slotName, parameters);
+
 		fillInWithMissingTiers(slotName, parameters);
 		if (parameters[rubiconTierKey] && typeof parameters[rubiconTierKey].sort === 'function') {
 			parameters[rubiconTierKey].sort(compareTiers);
@@ -258,12 +281,12 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 
 			node.parentNode.insertBefore(rubicon, node);
 			context = adContext.getContext();
-			configureSlots(skin);
 			prefetchDNS();
 
 			rubiconLoaded = true;
 		}
 
+		configureSlots(skin);
 		defineSlots(skin, function () {
 			response = true;
 			priceMap = {};

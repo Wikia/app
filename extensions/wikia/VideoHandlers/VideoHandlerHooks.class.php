@@ -65,7 +65,7 @@ class VideoHandlerHooks {
 			'backend' => 'local-backend',
 		);
 
-		wfRunHooks( 'AfterSetupLocalFileRepo', [&$wgLocalFileRepo] );
+		Hooks::run( 'AfterSetupLocalFileRepo', [&$wgLocalFileRepo] );
 		return true;
 	}
 

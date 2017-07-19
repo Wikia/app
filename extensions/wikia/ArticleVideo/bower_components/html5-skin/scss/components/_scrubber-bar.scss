@@ -1,0 +1,102 @@
+.oo-scrubber-bar-container {
+  padding: 0;
+  margin: 0;
+  position: relative;
+  width: 100%;
+  height: $scrubber-bar-padding-height;
+  z-index: $zindex-scrubber-bar;
+  @include vendor-prefixes(user-select, none);
+
+  .oo-scrubber-bar-padding {
+    height: 100%;
+    left: 0;
+    right: 0;
+    position: absolute;
+
+    .oo-scrubber-bar {
+      background-color: $gray-lighter;
+      height: $scrubber-bar-height;
+      width: 100%;
+      margin: 0;
+      position: absolute;
+      cursor: pointer;
+      padding: 0;
+      bottom: 50%;
+      border-radius: 3px;
+      transform: translateY(50%);
+      @include vendor-prefixes(transition, all 0.15s);
+    }
+
+    .oo-scrubber-bar-hover {
+      height: 6px;
+      border-radius: 6px;
+    }
+
+    .oo-hovered-indicator {
+      background-color: $blue-light;
+      opacity: 0.6;
+      height: 100%;
+      position: absolute;
+      border-radius: 3px;
+    }
+
+    .oo-buffered-indicator {
+      background-color: $gray-light;
+      height: 100%;
+      position: absolute;
+      border-radius: 3px;
+      @include vendor-prefixes(transition, all 0.10s);
+    }
+
+    .oo-played-indicator {
+      background: $blue-light;
+      height: 100%;
+      position: absolute;
+      border-radius: 3px;
+    }
+
+    .oo-played-ad-indicator {
+      background: #FF3F80;
+    }
+
+    .oo-playhead-padding {
+      width: 25px;
+      height: 25px;
+      position: absolute;
+      z-index: $zindex-playhead-padding;
+      top: 100%;
+      transition: opacity 0.25s;
+      @include vendor-prefixes(transform, translateY(-50%) translateX(-50%));
+
+      .oo-playhead {
+        background: $blue-light;
+        width: 13px;
+        height: 13px;
+        border: 2px solid $white;
+        border-radius: 10px;
+        position: absolute;
+        top: 40%;
+        cursor: pointer;
+        left: 50%;
+        @include vendor-prefixes(transform, translateY(-50%) translateX(-50%));
+        @include vendor-prefixes(transition, all 0.10s);
+      }
+
+      .oo-playhead-scrubbing {
+        width: 20px;
+        height: 20px;
+        border: 3px solid $blue-light;
+        background: $white;
+        box-shadow: rgba(0,0,0,0.5) 0 6px 18px;
+      }
+
+      .oo-playhead-hovering {
+        top: 40%;
+      }
+
+      .oo-ad-playhead {
+        visibility: hidden;
+      }
+    }
+  }
+}

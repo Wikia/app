@@ -635,7 +635,7 @@ class LocalisationCache {
 		// author: mech
 		// allow extensions to use hook to add messages files
 		// this can be used in cases when enumerating message files is expensive so it shouldn't be done in setup file
-		wfRunHooks( 'BeforeExtensionMessagesRecache', array( &$wgExtensionMessagesFiles ) );
+		Hooks::run( 'BeforeExtensionMessagesRecache', array( &$wgExtensionMessagesFiles ) );
 		// wikia change end
 
 		# Load the extension localisations
@@ -687,7 +687,7 @@ class LocalisationCache {
 		}
 
 		# Run hooks
-		wfRunHooks( 'LocalisationCacheRecache', array( $this, $code, &$allData ) );
+		Hooks::run( 'LocalisationCacheRecache', array( $this, $code, &$allData ) );
 
 		if ( is_null( $allData['namespaceNames'] ) ) {
 			throw new MWException( __METHOD__.': Localisation data failed sanity check! ' .

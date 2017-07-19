@@ -1,4 +1,6 @@
 <?php
+use Wikia\PageHeader\Button;
+
 class WikiaMapsHooks {
 
 	/**
@@ -10,6 +12,7 @@ class WikiaMapsHooks {
 	 */
 	public static function onOasisSkinAssetGroups( Array &$assetsArray ) {
 		$assetsArray[] = 'wikia_maps_contribution_button_create_map_js';
+
 		return true;
 	}
 
@@ -29,6 +32,7 @@ class WikiaMapsHooks {
 				$text .= Html::linkedScript( $script );
 			}
 		}
+
 		return true;
 	}
 
@@ -40,8 +44,7 @@ class WikiaMapsHooks {
 	private static function isSpecialMapsPage() {
 		global $wgEnableWikiaInteractiveMaps, $wgTitle;
 
-		return !empty( $wgEnableWikiaInteractiveMaps )
-			&& $wgTitle->isSpecial( WikiaMapsSpecialController::PAGE_NAME );
+		return !empty( $wgEnableWikiaInteractiveMaps ) && $wgTitle->isSpecial( WikiaMapsSpecialController::PAGE_NAME );
 	}
 
 	/**
@@ -78,20 +81,55 @@ class WikiaMapsHooks {
 			$scssPackages[] = 'wikia_maps_parser_tag_scss_wikiamobile';
 			$jsExtensionPackages[] = 'wikia_maps_parser_tag_js_wikiamobile';
 		}
+
 		return true;
 	}
 
 	/**
 	 * @brief Adds fragment metatag in <head> section on single maps' pages
-	 * 
+	 *
 	 * @param OutputPage $out
-	 * 
+	 *
 	 * @return bool true
 	 */
 	public static function onBeforePageDisplay( $out ) {
 		if ( self::isSpecialMapsPage() && self::isSingleMapPage() ) {
 			$out->addMeta( 'fragment', '!' );
 		}
+
+		return true;
+	}
+
+	/**
+	 * @param Title $title
+	 * @param array $buttons
+	 *
+	 * @return bool
+	 */
+	public static function onAfterPageHeaderButtons( \Title $title, array &$buttons ): bool {
+		if ( self::isSpecialMapsPage() ) {
+			$label = wfMessage( 'wikia-interactive-maps-create-a-map' )->escaped();
+			$buttons[] = new Button( $label, '', '#', '', 'createMap' );
+
+			if ( self::isSingleMapPage() ) {
+				if ( WikiaMapsSpecialController::$mapDeleted ) {
+					$label = wfMessage( 'wikia-interactive-maps-undelete-map' )->escaped();
+					$buttons[] = new Button( $label, '', '#', 'wds-is-secondary', 'undeleteMap' );
+				} else {
+					$label = wfMessage( 'wikia-interactive-maps-delete-map' )->escaped();
+					$buttons[] = new Button( $label, '', '#', 'wds-is-secondary', 'deleteMap' );
+				}
+			}
+		}
+
+		return true;
+	}
+
+	public static function onPageHeaderPageTypePrepared( \Title $title, string &$pageType ) {
+		if ( $title->isSpecial( 'Maps' ) ) {
+			$pageType = '';
+		}
+
 		return true;
 	}
 }

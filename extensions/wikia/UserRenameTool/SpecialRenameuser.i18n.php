@@ -3487,7 +3487,7 @@ $messages['ru'] = array(
 	'userrenametool-info-in-progress' => 'Переименование в процессе.
 Остальные процессы будут осуществляться в фоновом режиме.
 Вы будете уведомлены по электронной почте о его завершении.',
-	'userrenametool-success' => 'Участник «<nowiki>$1</nowiki>» был переименован в «<nowiki>$2</nowiki>».',
+	'userrenametool-success' => 'Участник «$1» был переименован в «$2».',
 	'userrenametool-confirm-intro' => 'Вы действительно хотите это сделать?',
 	'userrenametool-confirm-yes' => 'Да',
 	'userrenametool-confirm-no' => 'Нет',

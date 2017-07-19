@@ -59,7 +59,7 @@ class Parser_LinkHooks extends Parser {
 		CoreLinkFunctions::register( $this );
 		$this->initialiseVariables();
 
-		wfRunHooks( 'ParserFirstCallInit', array( &$this ) );
+		Hooks::run( 'ParserFirstCallInit', array( &$this ) );
 		wfProfileOut( __METHOD__ );
 	}
 

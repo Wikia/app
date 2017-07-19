@@ -4,7 +4,7 @@
  * Service providing interface for generating previews and diffs
  */
 
-class EditPageService extends Service {
+class EditPageService {
 
 	private $app;
 
@@ -67,7 +67,7 @@ class EditPageService extends Service {
 		/**
 		 * Allow extensions to modify the ParserOutput
 		 */
-		wfRunHooks( 'ArticlePreviewAfterParse', [ $parserOutput, $this->mTitle ] );
+		Hooks::run( 'ArticlePreviewAfterParse', [ $parserOutput, $this->mTitle ] );
 
 		$html = $parserOutput->getText();
 		$html = EditPageService::wrapBodyText( $this->mTitle, $wgRequest, $html );

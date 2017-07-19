@@ -406,7 +406,7 @@ class ApiMain extends ApiBase {
 		global $wgUseXVO, $wgVaryOnXFP;
 		$response = $this->getRequest()->response();
 
-		wfRunHooks( 'ApiMainBeforeSendCacheHeaders', [ $response ] ); # Wikia change
+		Hooks::run( 'ApiMainBeforeSendCacheHeaders', [ $response ] ); # Wikia change
 
 		if ( $this->mCacheMode == 'private' ) {
 			$response->header( 'Cache-Control: private' );
@@ -725,7 +725,7 @@ class ApiMain extends ApiBase {
 		// Execute
 		$module->profileIn();
 		$module->execute();
-		wfRunHooks( 'APIAfterExecute', array( &$module ) );
+		Hooks::run( 'APIAfterExecute', array( &$module ) );
 		$module->profileOut();
 
 		$module->destroyLogContext(); // Wikia Change

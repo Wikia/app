@@ -113,8 +113,6 @@ class WikiaMapsSpecialControllerTest extends WikiaBaseTest {
 			->will( $this->returnValue( $mapsModelMock ) );
 		$wikiaMapsSpecialControllerMock->expects( $this->once() )
 			->method( 'prepareSingleMapPage' );
-		$wikiaMapsSpecialControllerMock->expects( $this->once() )
-			->method( 'getMenuMarkup' );
 
 		$wikiaMapsSpecialControllerMock->getApp()->wg->CityId = self::WIKI_CITY_ID;
 
@@ -168,8 +166,6 @@ class WikiaMapsSpecialControllerTest extends WikiaBaseTest {
 			->will( $this->returnValue( $mapsModelMock ) );
 		$wikiaMapsSpecialControllerMock->expects( $this->once() )
 			->method( 'prepareSingleMapPage' );
-		$wikiaMapsSpecialControllerMock->expects( $this->once() )
-			->method( 'getMenuMarkup' );
 		$wikiaMapsSpecialControllerMock->expects( $this->once() )
 			->method( 'prepareListOfPois' );
 
@@ -440,7 +436,6 @@ class WikiaMapsSpecialControllerTest extends WikiaBaseTest {
 					'setVal',
 					'addAsset',
 					'setTemplateEngine',
-					'getMenuMarkup'
 				], [], '', false );
 
 				$mapsSpecialControllerMock->expects( $this->any() )
@@ -470,7 +465,6 @@ class WikiaMapsSpecialControllerTest extends WikiaBaseTest {
 					'setVal',
 					'addAsset',
 					'setTemplateEngine',
-					'getMenuMarkup'
 				], [], '', false );
 
 				$mapsSpecialControllerMock->expects( $this->any() )

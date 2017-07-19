@@ -263,12 +263,12 @@
 
 		return rating;
 	}
-	
+
 	function hasPortableInfobox() {
 		if (window.ads && window.ads.context.targeting.hasPortableInfobox) {
 			return 'Yes';
 		}
-		
+
 		return 'No';
 	}
 
@@ -363,7 +363,6 @@
 		['set', 'dimension23', window.wikiaIsPowerUserFrequent ? 'Yes' : 'No'],     // IsPowerUser: Frequent
 		['set', 'dimension24', window.wikiaIsPowerUserLifetime ? 'Yes' : 'No'],     // IsPowerUser: Lifetime
 		['set', 'dimension25', String(window.wgNamespaceNumber)],                   // Namespace Number
-		['set', 'dimension26', String(window.wgSeoTestingBucket || 0)],             // SEO Testing bucket
 		['set', 'dimension27', String(window.wgCanonicalSpecialPageName || '')],    // Special page canonical name (SUS-1465)
 		['set', 'dimension28', hasPortableInfobox()] // If there is Portable Infobox on the page (ADEN-4708)
 	);
@@ -524,7 +523,6 @@
 	window.ga('ads.set', 'dimension23', window.wikiaIsPowerUserFrequent ? 'Yes' : 'No'); // IsPowerUser: Frequent
 	window.ga('ads.set', 'dimension24', window.wikiaIsPowerUserLifetime ? 'Yes' : 'No'); // IsPowerUser: Lifetime
 	window.ga('ads.set', 'dimension25', String(window.wgNamespaceNumber));               // Namespace Number
-	window.ga('ads.set', 'dimension26', String(window.wgSeoTestingBucket || 0));         // SEO Testing bucket
 	window.ga('ads.set', 'dimension27', String(window.wgCanonicalSpecialPageName || '')); // Special page canonical name (SUS-1465)
 	window.ga('ads.set', 'dimension28', hasPortableInfobox()); // // If there is Portable Infobox on the page (ADEN-4708)
 
@@ -603,5 +601,15 @@
 		var nsPrefix = (opt_namespace) ? opt_namespace + '.' : '';
 		_gaWikiaPush([nsPrefix + 'send', 'pageview', fakePage]);
 	};
+
+	/**
+	 * Set Custom Dimension
+	 *
+	 * @param {number|string} index
+	 * @param {string} value
+	 */
+	window.guaSetCustomDimension = function (index, value) {
+		_gaWikiaPush(['set', 'dimension' + index, value]);
+	}
 
 }(window));

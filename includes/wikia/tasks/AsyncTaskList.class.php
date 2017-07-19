@@ -18,7 +18,6 @@ use Wikia\Logger\WikiaLogger;
 use Wikia\Tasks\Queues\ParsoidPurgePriorityQueue;
 use Wikia\Tasks\Queues\ParsoidPurgeQueue;
 use Wikia\Tasks\Queues\PriorityQueue;
-use Wikia\Tasks\Queues\NlpPipelineQueue;
 use Wikia\Tasks\Queues\PurgeQueue;
 use Wikia\Tasks\Queues\Queue;
 use Wikia\Tasks\Queues\SMWQueue;
@@ -91,9 +90,6 @@ class AsyncTaskList {
 				break;
 			case ParsoidPurgePriorityQueue::NAME:
 				$queue = new ParsoidPurgePriorityQueue();
-				break;
-			case NlpPipelineQueue::NAME:
-				$queue = new NlpPipelineQueue();
 				break;
 			case SMWQueue::NAME:
 				$queue = new SMWQueue();
