@@ -233,6 +233,73 @@ define('ext.wikia.adEngine.adEngine', [
 		adslots.start();
 
 		log(['run', 'initial queue handled'], log.levels.debug, logGroup);
+
+
+		var slot = slotRegistry.get('TOP_LEADERBOARD');
+
+		function leaderboardMagic() {
+			var adHeight = $('.WikiaTopAdsInner').height(),
+				outherAdHeight = adHeight + 20;
+
+			function revertMagic() {
+				$('#globalNavigation').css({top: 0})
+				$('.WikiaTopAdsInner').css({top: -outherAdHeight + 'px'});
+
+				setTimeout(function(){
+					$('.WikiaTopAdsInner').css({position: '', background: '', padding: '', width: '', top: '', left: ''});
+				}, 1000);
+			}
+
+			$('.WikiaTopAds').css({height: adHeight, 'z-index': 50000});
+			$('.WikiaTopAdsInner').css({position: 'fixed', top: -outherAdHeight + 'px', width: '100%', left: 0, padding: '10px 0', background: 'white'});
+			setTimeout(function() {
+				$('.WikiaTopAdsInner').css({top: 0, transition: 'top 1s'});
+				$('#globalNavigation').css({top: outherAdHeight + 'px', transition: 'top 1s'});
+			}, 0);
+
+			var viewabilityCheckCount = 0,
+				viewabilityInterval = setInterval(function() {
+					if ($('.WikiaTopAdsInner .provider-container:last').data('slot-viewed') || viewabilityCheckCount++ > 50) {
+						clearInterval(viewabilityInterval);
+
+						var revertMagicTimeout = setTimeout(function() {
+							$(window).off('scroll.leaderboard');
+							revertMagic();
+						}, 10000);
+
+						$(window).on('scroll.leaderboard', function () {
+							clearTimeout(revertMagicTimeout);
+							$(window).off('scroll.leaderboard');
+
+							revertMagic();
+						});
+					}
+				}, 100);
+		}
+
+		slot.post('success', function() {
+			var magicTimeout = setTimeout(function() {
+				$(window).off('scroll.preleaderboard');
+
+				if (!$('.WikiaTopAdsInner .provider-container:last').data('slot-viewed')) {
+					leaderboardMagic();
+				}
+			}, 10000);
+
+			$(window).on('scroll.preleaderboard', function () {
+				$(window).off('scroll.preleaderboard');
+				clearTimeout(magicTimeout);
+
+				if (!$('.WikiaTopAdsInner .provider-container:last').data('slot-viewed')) {
+					leaderboardMagic();
+				}
+
+			});
+
+		});
+
+
+
 	}
 
 	return {run: run};

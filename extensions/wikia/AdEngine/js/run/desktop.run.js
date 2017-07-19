@@ -17,7 +17,7 @@ require([
 	'ext.wikia.adEngine.sourcePointDetection',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.template.floatingRail')
+	require.optional('ext.wikia.adEngine.template.floatingRail'),
 ], function (
 	adContext,
 	adEngineRunner,
@@ -78,6 +78,7 @@ require([
 
 		// Recovery & detection
 		adBlockDetection.initEventQueues();
+
 	});
 });
 
