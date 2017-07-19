@@ -365,32 +365,6 @@ class Wikia {
         }
     }
 
-    /**
-     * binphp
-     *
-     * full path to php binary used in background scripts. wikia uses
-     * /opt/wikia/php/bin/php, fp & localhost could use others. Write here Your
-     * additional conditions to check
-     *
-	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
-     * @access public
-     * @static
-     *
-     * @return string: path to php binary
-     */
-	static public function binphp() {
-		wfProfileIn( __METHOD__ );
-
-		$path = ( file_exists( "/opt/wikia/php/bin/php" )
-			&& is_executable( "/opt/wikia/php/bin/php" ) )
-			? "/opt/wikia/php/bin/php"
-			: "/usr/bin/php";
-
-		wfProfileOut( __METHOD__ );
-
-		return $path;
-	}
-
 	/**
 	 * simple logger which log message to STDERR if devel environment is set
 	 *
