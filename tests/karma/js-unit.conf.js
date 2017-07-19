@@ -101,6 +101,7 @@ module.exports = function (config) {
 			'extensions/wikia/AdEngine/js/slot/*.js',
 			'extensions/wikia/AdEngine/js/slot/**/*.js',
 			'extensions/wikia/AdEngine/js/template/*.js',
+			'extensions/wikia/AdEngine/js/tracking/*.js',
 			'extensions/wikia/AdEngine/js/utils/*.js',
 			'extensions/wikia/AdEngine/js/video/**/*.js',
 			'extensions/wikia/AdEngine/js/wrappers/*.js',
