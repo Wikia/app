@@ -34,6 +34,9 @@ $wgAutoloadClasses['ChatServerApiClient'] = "$dir/ChatServerApiClient.class.php"
 $wgAutoloadClasses['ChatBanListSpecialController'] = "$dir/ChatBanListSpecialController.class.php";
 $wgAutoloadClasses['ChatBanData'] = "$dir/ChatBanListSpecial_helper.php";
 
+$wgAutoloadClasses['ResourceLoaderChatSiteModule'] = "$dir/resourceloader/ResourceLoaderChatSiteModule.php";
+$wgAutoloadClasses['ResourceLoaderChatUserModule'] = "$dir/resourceloader/ResourceLoaderChatUserModule.php";
+
 // special pages
 $wgSpecialPages['Chat'] = 'SpecialChat';
 $wgSpecialPages['ChatBanList'] = 'ChatBanListSpecialController';
@@ -144,6 +147,16 @@ $wgResourceModules[ 'ext.Chat2.ChatBanList' ] = [
  * ResourceLoader module
  */
 $wgResourceModules['ext.Chat2'] = [
+	'scripts' => [
+		'js/lib/underscore.js',
+		'js/lib/backbone.js',
+		'js/emoticons.js',
+		'js/models/models.js',
+		'js/views/views.js',
+		'js/views/ChatBanModal.js',
+		'js/controllers/controllers.js',
+		'js/site_user.js',
+	],
 	'messages' => [
 		// Inline alerts
 		'chat-user-permanently-disconnected',
@@ -194,9 +207,35 @@ $wgResourceModules['ext.Chat2'] = [
 
 		// misc
 		'chat-user-throttled',
+	],	
+	'dependencies' => [
+		'jquery.wikia',
+		'jquery.onscroll',
+		'wikia.log',
+		'wikia.cookies',
+		'wikia.history',
+		'wikia.querystring',
+		'ext.Chat2.socket.io',
+		'mediawiki.legacy.wikibits', // will make importScriptPage() available, used heavily by custom Chat.js
+		'jquery.modal', // will make $.makeModal available, used heavily by custom Chat.js
 	],
-	'dependencies' => [ 'mediawiki.jqueryMsg' ],
-	'position' => 'top'
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/Chat2'
+];
+
+$wgResourceModules['ext.Chat2.socket.io'] = [
+	'scripts' => 'js/lib/socket.io-2.0.3.js',
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/Chat2'
+];
+
+// Resource Loader modules for site and user JS loaded in Chat
+$wgResourceModules['chat.site'] = [
+	'class' => ResourceLoaderChatSiteModule::class,
+];
+
+$wgResourceModules['chat.user'] = [
+	'class' => ResourceLoaderChatUserModule::class,
 ];
 
 

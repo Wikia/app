@@ -7,7 +7,9 @@
 return [
 	// AMD library
 	'amd' => [
-		'scripts' => 'resources/wikia/libraries/modil/modil.js',
+		'scripts' => [
+			'resources/wikia/libraries/modil/modil.js',
+		]
 	],
 
 	// shared AMD modules loaded on each page
@@ -218,6 +220,10 @@ return [
 		]
 	],
 
+	'wikia.throttle' => [
+		'scripts' => 'resources/wikia/modules/throttle.js',
+	],
+
 	// module loaded via $.loadjQuery UI and is a wrapper for MediaWiki jQuery UI modules
 	// this used to be static file located in /skins/common/jquery/jquery-ui-1.8.14.custom.js
 	'wikia.jquery.ui' => [
@@ -251,6 +257,24 @@ return [
 	'jquery.dataTables' => [
 		'scripts' => 'resources/wikia/libraries/jquery/datatables/jquery.dataTables.min.js',
 	],
+
+	'jquery.wikia' => [
+		'scripts' => [
+			'resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js',
+			'resources/wikia/jquery.wikia.js',
+		],
+	],
+
+	'jquery.onscroll' => [
+		'scripts' => 'skins/shared/scripts/onScroll.js',
+		'dependencies' => 'wikia.throttle',
+	],
+
+	'jquery.modal' => [
+		'scripts' => 'resources/wikia/libraries/jquery/modal/jquery.wikia.modal.js',
+		'dependencies' => 'amd'
+	],
+
 
 	// moved here from AssetsManager by wladek
 	'wikia.yui' => [
