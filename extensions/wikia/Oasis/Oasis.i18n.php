@@ -831,6 +831,7 @@ $messages['de'] = array(
 	'oasis-wiki-navigation' => '$1 Navigation',
 	'oasis-navigation-v2-edit-page' => 'Seite bearbeiten',
 	'oasis-navigation-v2-edit-this-menu' => 'Wiki-Navigation bearbeiten',
+	'oasis-page-header-diff' => '<strong>Änderungen:</strong> $1',
 );
 
 $messages['de-formal'] = array(
@@ -1056,6 +1057,7 @@ $messages['es'] = array(
 	'oasis-wiki-navigation' => 'Navegación de $1',
 	'oasis-navigation-v2-edit-page' => 'Editar esta página',
 	'oasis-navigation-v2-edit-this-menu' => 'Editar la navegación del wiki',
+	'oasis-page-header-diff' => '<strong>Cambios:</strong> $1',
 );
 
 $messages['fa'] = array(
@@ -1468,6 +1470,7 @@ $messages['fr'] = array(
 	'oasis-wiki-navigation' => 'Navigation sur $1',
 	'oasis-navigation-v2-edit-page' => 'Modifier cette page',
 	'oasis-navigation-v2-edit-this-menu' => 'Modifier la navigation',
+	'oasis-page-header-diff' => '<strong>Modifications :</strong> $1',
 );
 
 $messages['gl'] = array(
@@ -2066,6 +2069,7 @@ $messages['it'] = array(
 	'oasis-wiki-navigation' => 'Navigazione di $1',
 	'oasis-navigation-v2-edit-page' => 'Modifica questa pagina',
 	'oasis-navigation-v2-edit-this-menu' => 'Modifica la navigazione della wiki',
+	'oasis-page-header-diff' => '<strong>Differenze:</strong> $1',
 );
 
 $messages['ja'] = array(
@@ -2260,6 +2264,7 @@ $messages['ja'] = array(
 	'oasis-wiki-navigation' => '$1のナビゲーション',
 	'oasis-navigation-v2-edit-page' => 'このページを編集',
 	'oasis-navigation-v2-edit-this-menu' => 'ウィキナビゲーションを編集',
+	'oasis-page-header-diff' => '<strong>変更:</strong> $1',
 );
 
 $messages['jp'] = array(
@@ -2466,6 +2471,7 @@ $messages['ko'] = array(
 	'oasis-wiki-navigation' => '$1 Navigation',
 	'oasis-navigation-v2-edit-page' => 'Edit this Page',
 	'oasis-navigation-v2-edit-this-menu' => 'Edit Wiki Navigation',
+	'oasis-page-header-diff' => '<strong>Changes:</strong> $1',
 );
 
 $messages['ku-latn'] = array(
@@ -3405,6 +3411,7 @@ $messages['pl'] = array(
 	'oasis-wiki-navigation' => 'Nawigacja $1',
 	'oasis-navigation-v2-edit-page' => 'Edytuj tę stronę',
 	'oasis-navigation-v2-edit-this-menu' => 'Edytuj nawigację',
+	'oasis-page-header-diff' => '<strong>Zmiany:</strong> $1',
 );
 
 $messages['pms'] = array(
@@ -3634,6 +3641,7 @@ $messages['pt'] = array(
 	'oasis-wiki-navigation' => 'Navegação da $1',
 	'oasis-navigation-v2-edit-page' => 'Editar esta página',
 	'oasis-navigation-v2-edit-this-menu' => 'Editar a navegação da wiki',
+	'oasis-page-header-diff' => '<strong>Alterações:</strong> $1',
 );
 
 $messages['ru'] = array(
@@ -3829,6 +3837,7 @@ $messages['ru'] = array(
 	'oasis-wiki-navigation' => 'Навигация по «$1»',
 	'oasis-navigation-v2-edit-page' => 'Редактировать страницу',
 	'oasis-navigation-v2-edit-this-menu' => 'Править меню вики',
+	'oasis-page-header-diff' => '<strong>Изменения:</strong> $1',
 );
 
 $messages['sr-ec'] = array(
@@ -4713,6 +4722,7 @@ $messages['zh-hans'] = array(
 	'oasis-wiki-navigation' => '$1导航',
 	'oasis-navigation-v2-edit-page' => '编辑此页面',
 	'oasis-navigation-v2-edit-this-menu' => '编辑维基导航',
+	'oasis-page-header-diff' => '<strong>更改内容：</strong> $1',
 );
 
 $messages['zh-hant'] = array(
@@ -4908,5 +4918,6 @@ $messages['zh-hant'] = array(
 	'oasis-wiki-navigation' => '$1導航',
 	'oasis-navigation-v2-edit-page' => '編輯此頁',
 	'oasis-navigation-v2-edit-this-menu' => '編輯Wiki導航',
+	'oasis-page-header-diff' => '<strong>變更：</strong> $1',
 );
 
