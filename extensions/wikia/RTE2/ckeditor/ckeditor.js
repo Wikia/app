@@ -13,9 +13,11 @@ a,!1),b()):document.attachEvent&&"complete"===document.readyState&&(document.det
 /* jscs:enable */
 /* jshint ignore:end */
 
-if ( CKEDITOR.loader )
+	if ( CKEDITOR.loader ){
 	CKEDITOR.loader.load( 'ckeditor' );
-else {
+		
+	}	
+	else {
 	// Set the script name to be loaded by the loader.
 	CKEDITOR._autoLoad = 'ckeditor';
 

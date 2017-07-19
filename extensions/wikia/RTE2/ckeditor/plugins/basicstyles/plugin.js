@@ -86,8 +86,10 @@ CKEDITOR.plugins.add( 'basicstyles', {
 				]
 			},
 			config = editor.config,
-			lang = editor.lang.basicstyles;
-
+			//kacper olek fix it by editor.lang;
+			//lang = editor.lang.basicstyles;
+			lang = editor.lang;
+			debugger;
 		addButtonCommand( 'Bold', lang.bold, 'bold', config.coreStyles_bold );
 		addButtonCommand( 'Italic', lang.italic, 'italic', config.coreStyles_italic );
 		addButtonCommand( 'Underline', lang.underline, 'underline', config.coreStyles_underline );

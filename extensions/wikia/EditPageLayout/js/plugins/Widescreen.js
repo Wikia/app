@@ -1,5 +1,4 @@
 (function(window,$){
-
 	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable());
 
 	/**
