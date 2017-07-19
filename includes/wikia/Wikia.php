@@ -805,26 +805,6 @@ class Wikia {
 	}
 
 	/**
-	 * fixed answers sitenames
-	 */
-	public static function getAnswersSitenames() {
-		global $wgAvailableAnswersLang, $wgContLang;
-		wfProfileIn(__METHOD__);
-		$result = array();
-		$msg = "autocreatewiki-sitename-answers";
-		if ( !empty($wgAvailableAnswersLang) ) {
-			foreach ( $wgAvailableAnswersLang as $lang ) {
-				$sitename = wfMsgExt( $msg, array( "language" => $lang ) );
-				if ( !empty($sitename) && !wfEmptyMsg( $msg, $sitename ) ) {
-					$result[$lang] = $sitename;
-				}
-			}
-		}
-		wfProfileOut(__METHOD__);
-		return $result;
-	}
-
-	/**
 	 * check if domain is valid according to some known standards
 	 * (it is not very strict checking)
 	 *
