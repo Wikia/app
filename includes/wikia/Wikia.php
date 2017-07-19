@@ -337,34 +337,6 @@ class Wikia {
 		return $name;
 	}
 
-    /**
-     * ImageProgress
-     *
-     * hmtl code with progress image
-     *
-     * @access public
-     * @static
-     * @author eloy@wikia
-     *
-     * @param string $type: type of progress image, default bar
-     *
-     * @return string: HTML string with progress image
-     */
-    static public function ImageProgress( $type = "bar" )
-    {
-        $sImagesCommonPath = wfGetImagesCommon();
-        switch ( $type ) {
-            default:
-                return Xml::element( 'img', array(
-                    "src"    => "{$sImagesCommonPath}/skins/quartz/images/progress_bar.gif", // FIXME: image does not exist
-                    "width"  => 100,
-                    "height" => 9,
-                    "alt"    => ".....",
-                    "border" => 0
-                ));
-        }
-    }
-
 	/**
 	 * simple logger which log message to STDERR if devel environment is set
 	 *
