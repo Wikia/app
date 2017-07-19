@@ -123,6 +123,7 @@ define('ext.wikia.adEngine.slot.premiumFloatingMedrec', [
 					slotName: slotName,
 					onSuccess: function () {
 						hideRecirculation();
+						refreshInfo.lastRefreshTime = (new Date()).getTime();
 					}
 				});
 

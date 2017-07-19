@@ -76,7 +76,8 @@
 			@include width-calc('100% - 320px');
 		}
 
-		.main-page-tag-rcs {
+		.main-page-tag-rcs,
+		.rcs-container {
 			width: 300px;
 		}
 	}
@@ -120,11 +121,7 @@
 		}
 
 		@media #{$breakpoint-small-plus-up} {
-			margin-left: 20px;
-
-			&:not(.SearchAdsTopWrapper) {
-				@include flexbox();
-			}
+			@include display-inline-flex();
 		}
 	}
 
