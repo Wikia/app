@@ -129,5 +129,4 @@ doMail( 'community@wikia.com', $body );
 function doMail($address, $body) {
 	$header = "From: $address\r\n";
 	mail( $address, 'Discussions alert', $body, $header );
-
 }
