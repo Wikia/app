@@ -48,7 +48,7 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 	}
 
 	function buildAdUnit(slotParams, videoPos) {
-		return videoPos !== undefined && context.opts.premiumAdLayoutEnabled ?
+		return videoPos !== undefined && context.opts.megaAdUnitBuilderEnabled ?
 			megaAdUnitBuilder.build(videoPos, slotParams.src)
 			: adUnitBuilder.build(slotParams.pos, slotParams.src);
 	}

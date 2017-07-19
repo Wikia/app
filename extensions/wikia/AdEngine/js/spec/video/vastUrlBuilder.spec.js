@@ -151,7 +151,7 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 	});
 
 	it('Build VAST URL with premium ad unit for premium ad layout and with correct video pos name', function () {
-		spyOn(mocks.adContext, 'getContext').and.returnValue({opts:{premiumAdLayoutEnabled: true}});
+		spyOn(mocks.adContext, 'getContext').and.returnValue({opts:{megaAdUnitBuilderEnabled: true}});
 		var vastUrl = getModule().build(1, mocks.slotParams, {},'featured');
 
 		expect(vastUrl).toMatch(PREMIUM_AD_UNIT_QUERY_PARAM);

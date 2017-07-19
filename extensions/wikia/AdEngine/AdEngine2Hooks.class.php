@@ -52,6 +52,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverKruxCountries';
 		$vars[] = 'wgAdDriverKILOCountries';
 		$vars[] = 'wgAdDriverMEGACountries';
+		$vars[] = 'wgAdDriverMegaAdUnitBuilderForFVCountries';
 		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdCountries';
 		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdSampling';
 		$vars[] = 'wgAdDriverNetzAthletenCountries';

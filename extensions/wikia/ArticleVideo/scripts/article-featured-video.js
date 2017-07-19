@@ -66,7 +66,7 @@ require([
 				vastUrl = vastUrlBuilder.build(640/480, {
 					pos: prerollSlotName,
 					src: 'premium'
-				});
+				}, null, 'FEATURED');
 			} else {
 				playerTrackerParams.adProduct = 'featured-video-no-preroll';
 			}
