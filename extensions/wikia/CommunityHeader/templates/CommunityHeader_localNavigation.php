@@ -64,6 +64,7 @@
 				<? endif; ?>
 			</li>
 		<? endforeach; ?>
+		<? if ( !empty( $navigation->exploreItems ) ): ?>
 		<li class="wds-tabs__tab">
 			<div class="wds-dropdown">
 				<div class="wds-tabs__tab-label wds-dropdown__toggle">
@@ -85,6 +86,7 @@
 				</div>
 			</div>
 		</li>
+		<? endif; ?>
 		<? if ( !empty( $navigation->discussLink ) ): ?>
 			<li class="wds-tabs__tab">
 				<div class="wds-tabs__tab-label">
