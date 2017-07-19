@@ -114,7 +114,7 @@ class NavigationModel extends WikiaModel {
 
 		$wiki = [];
 		// Only show menu items if user is allowed to view wiki content (BugId:44632)
-		if ( $this->wg->User->isAllowed( 'read' ) ) {
+		if ( RequestContext::getMain()->getUser()->isAllowed( 'read' ) ) {
 			$this->setShouldTranslateContent( false );
 			if ( !empty( $msgName ) && $msgName == self::WIKI_LOCAL_MESSAGE && !empty( $wikiText ) ) {
 				$wiki = $this->parseText(
