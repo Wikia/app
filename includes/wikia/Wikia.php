@@ -1510,24 +1510,6 @@ class Wikia {
 	}
 
 	/**
-	 * Fallback actions from $wgDisabledActionsWithViewFallback to "view" (BugId:9964)
-	 *
-	 * @author macbre
-	 */
-	static public function onMediaWikiGetAction(MediaWiki $mediaWiki, RequestContext $context) {
-		global $wgDisabledActionsWithViewFallback;
-		$request = $context->getRequest();
-		$action = $request->getVal('action', 'view');
-
-		if ( in_array( $action, $wgDisabledActionsWithViewFallback ) ) {
-			$request->setVal('action', 'view');
-			wfDebug(__METHOD__ . ": '{$action}' action fallbacked to 'view'\n");
-		}
-
-		return true;
-	}
-
-	/**
 	 * Purge Common and Wikia and User css/js when those files are edited
 	 * Uses $wgOut->makeResourceLoaderLink which was protected, but has lots of logic we don't want to duplicate
 	 * This was rewritten from scratch as part of BAC-895
