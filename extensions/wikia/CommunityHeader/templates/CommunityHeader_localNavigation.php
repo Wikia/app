@@ -58,7 +58,7 @@
 							<? if ( $isPreview ): ?> target="_blank"<? endif; ?>
 							data-tracking="<?= $firstLevelItem['tracking_label'] ?>"
 						>
-							<span><?= $firstLevelItem['textEscaped'] ?></span>
+							<span><?= $firstLevelItem['title']['value'] ?></span>
 						</a>
 					</div>
 				<? endif; ?>
