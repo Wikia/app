@@ -136,49 +136,57 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 
 	public function getExploreMenu(): array {
 		if ( $this->exploreMenu === null ) {
-			$wgEnableCommunityPageExt = WikiFactory::getVarValueByName( 'wgEnableCommunityPageExt', $this->productInstanceId );
-			$wgEnableForumExt = WikiFactory::getVarValueByName( 'wgEnableForumExt', $this->productInstanceId );
-			$wgEnableDiscussions = WikiFactory::getVarValueByName( 'wgEnableDiscussions', $this->productInstanceId );
-			$wgEnableSpecialVideosExt = WikiFactory::getVarValueByName( 'wgEnableSpecialVideosExt', $this->productInstanceId );
+			$user = RequestContext::getMain()->getUser();
+			$exploreItems = [];
 
-			$exploreItems = [
-				[
-					'title' => 'WikiActivity',
-					'key' => 'community-header-wiki-activity',
-					'tracking' => 'explore-activity',
-					'include' => true,
-				],
-				[
-					'title' => 'Random',
-					'key' => 'community-header-random-page',
-					'tracking' => 'explore-random',
-					'include' => true,
-				],
-				[
-					'title' => 'Community',
-					'key' => 'community-header-community',
-					'tracking' => 'explore-community',
-					'include' => !empty( $wgEnableCommunityPageExt ),
-				],
-				[
-					'title' => 'Videos',
-					'key' => 'community-header-videos',
-					'tracking' => 'explore-videos',
-					'include' => !empty( $wgEnableSpecialVideosExt ),
-				],
-				[
-					'title' => 'Images',
-					'key' => 'community-header-images',
-					'tracking' => 'explore-images',
-					'include' => true,
-				],
-				[
-					'title' => 'Forum',
-					'key' => 'community-header-forum',
-					'tracking' => 'explore-forum',
-					'include' => !empty( $wgEnableForumExt ) && !empty( $wgEnableDiscussions ),
-				],
-			];
+			if ( $user->isAllowed( 'read' ) ) {
+				$wgEnableCommunityPageExt =
+					WikiFactory::getVarValueByName( 'wgEnableCommunityPageExt', $this->productInstanceId );
+				$wgEnableForumExt = WikiFactory::getVarValueByName( 'wgEnableForumExt', $this->productInstanceId );
+				$wgEnableDiscussions =
+					WikiFactory::getVarValueByName( 'wgEnableDiscussions', $this->productInstanceId );
+				$wgEnableSpecialVideosExt =
+					WikiFactory::getVarValueByName( 'wgEnableSpecialVideosExt', $this->productInstanceId );
+
+				$exploreItems = [
+					[
+						'title' => 'WikiActivity',
+						'key' => 'community-header-wiki-activity',
+						'tracking' => 'explore-activity',
+						'include' => true,
+					],
+					[
+						'title' => 'Random',
+						'key' => 'community-header-random-page',
+						'tracking' => 'explore-random',
+						'include' => true,
+					],
+					[
+						'title' => 'Community',
+						'key' => 'community-header-community',
+						'tracking' => 'explore-community',
+						'include' => !empty( $wgEnableCommunityPageExt ),
+					],
+					[
+						'title' => 'Videos',
+						'key' => 'community-header-videos',
+						'tracking' => 'explore-videos',
+						'include' => !empty( $wgEnableSpecialVideosExt ),
+					],
+					[
+						'title' => 'Images',
+						'key' => 'community-header-images',
+						'tracking' => 'explore-images',
+						'include' => true,
+					],
+					[
+						'title' => 'Forum',
+						'key' => 'community-header-forum',
+						'tracking' => 'explore-forum',
+						'include' => !empty( $wgEnableForumExt ) && !empty( $wgEnableDiscussions ),
+					],
+				];
+			}
 
 			$this->exploreMenu = [
 				'type' => 'dropdown',
@@ -220,22 +228,27 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 
 	public function getDiscussLinkData(): array {
 		if ( $this->discussLinkData === null ) {
-			$wgEnableForumExt = WikiFactory::getVarValueByName( 'wgEnableForumExt', $this->productInstanceId );
-			$wgEnableDiscussions = WikiFactory::getVarValueByName( 'wgEnableDiscussions', $this->productInstanceId );
+			$user = RequestContext::getMain()->getUser();
 
 			$url = '';
 			$key = '';
 			$tracking = '';
 
-			if ( !empty( $wgEnableDiscussions ) ) {
-				$url = '/d/f';
-				$key = 'community-header-discuss';
-				$tracking = 'discuss';
-			} elseif ( !empty( $wgEnableForumExt ) ) {
-				$url = GlobalTitle::newFromText( 'Forum', NS_SPECIAL, $this->productInstanceId )->getFullURL();
-				$key = 'community-header-forum';
-				$tracking = 'forum';
+			if ( $user->isAllowed( 'read' ) ) {
+				$wgEnableForumExt = WikiFactory::getVarValueByName( 'wgEnableForumExt', $this->productInstanceId );
+				$wgEnableDiscussions = WikiFactory::getVarValueByName( 'wgEnableDiscussions', $this->productInstanceId );
+
+				if ( !empty( $wgEnableDiscussions ) ) {
+					$url = '/d/f';
+					$key = 'community-header-discuss';
+					$tracking = 'discuss';
+				} elseif ( !empty( $wgEnableForumExt ) ) {
+					$url = GlobalTitle::newFromText( 'Forum', NS_SPECIAL, $this->productInstanceId )->getFullURL();
+					$key = 'community-header-forum';
+					$tracking = 'forum';
+				}
 			}
+
 
 			$this->discussLinkData = empty( $url ) ? [] : [
 				'type' => 'link-text',
