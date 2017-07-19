@@ -1,6 +1,10 @@
 /*global define*/
-define('ext.wikia.adEngine.ml.model.logisticRegression', [], function () {
+define('ext.wikia.adEngine.ml.model.logisticRegression', [
+	'wikia.log'
+], function (log) {
 	'use strict';
+
+	var logGroup = 'ext.wikia.adEngine.ml.model.logisticRegression';
 
 	function create(coefficients, intercept) {
 		function predict(x) {
@@ -8,7 +12,8 @@ define('ext.wikia.adEngine.ml.model.logisticRegression', [], function () {
 				result = 0;
 
 			if (x.length !== coefficients.length) {
-				throw 'Incorrect vectors';
+				log('Incorrect vectors', log.levels.debug, logGroup);
+				return -1;
 			}
 
 			for (i = 0; i < coefficients.length; i += 1) {

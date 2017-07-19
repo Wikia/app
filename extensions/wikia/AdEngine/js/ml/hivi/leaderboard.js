@@ -7,6 +7,7 @@ define('ext.wikia.adEngine.ml.hivi.leaderboard', [
 ], function (leaderboardInputParser, logisticRegression, geo, instantGlobals) {
 	'use strict';
 
+	// Values come from notebook: adeng-jupyter/hivi-lb/HiVi Leaderboard.ipynb
 	var coefficients = [
 			-0.65132532,
 			-0.552271,

@@ -126,8 +126,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 				slotTargetingData.abi = abId;
 			}
 
-			slotTargetingData.hivi = [];
 			if (hiviLeaderboard && slotName === 'TOP_LEADERBOARD') {
+				slotTargetingData.hivi = [];
 				hiviLeaderboard.getValue().forEach(function (value) {
 					slotTargetingData.hivi.push(value);
 				});
