@@ -7,7 +7,7 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 	'ext.wikia.adEngine.slot.slotTargeting',
 	'wikia.location',
 	'wikia.log'
-], function (adContext, page, adUnitBuilder, megaAdUnitBuilder, slotTargeting, loc, log) {
+], function (adContext, page, regularAdUnitBuilder, megaAdUnitBuilder, slotTargeting, loc, log) {
 	'use strict';
 	var adSizes = {
 			vertical: '320x480',
@@ -47,13 +47,12 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 		return aspectRatio >= 1 || !isNumeric(aspectRatio) ? adSizes.horizontal : adSizes.vertical;
 	}
 
-	function buildAdUnit(slotParams, videoPos) {
-		return videoPos !== undefined && context.opts.megaAdUnitBuilderEnabled ?
-			megaAdUnitBuilder.build(videoPos, slotParams.src)
-			: adUnitBuilder.build(slotParams.pos, slotParams.src);
+	function buildAdUnit(slotParams) {
+		var adUnitBuilder = context.opts.megaAdUnitBuilderEnabled ? megaAdUnitBuilder : regularAdUnitBuilder;
+		return adUnitBuilder.build(slotParams.pos, slotParams.src);
 	}
 
-	function build(aspectRatio, slotParams, options, videoPos) {
+	function build(aspectRatio, slotParams, options) {
 		options = options || {};
 		slotParams = slotParams || {};
 
@@ -64,7 +63,7 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 				'gdfp_req=1',
 				'impl=s',
 				'unviewed_position_start=1',
-				'iu=' + buildAdUnit(slotParams, videoPos),
+				'iu=' + buildAdUnit(slotParams),
 				'sz=' + getSizeByAspectRatio(aspectRatio),
 				'url=' + loc.href,
 				'correlator=' + correlator,
