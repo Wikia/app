@@ -25,22 +25,17 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	}
 
 	public function getData(): array {
-		$user = RequestContext::getMain()->getUser();
+		$data = [
+			'sitename' => $this->getSiteNameData(),
+			'navigation' => $this->getNavigation()
+		];
 
-		$data = [];
-		if ( $user->isAllowed( 'read' ) ) {
-			$data = [
-				'sitename' => $this->getSiteNameData(),
-				'navigation' => $this->getNavigation()
-			];
+		if ( !empty( $this->getBackgroundImageUrl() ) ) {
+			$data['background_image'] = $this->getBackgroundImageUrl();
+		}
 
-			if ( !empty( $this->getBackgroundImageUrl() ) ) {
-				$data['background_image'] = $this->getBackgroundImageUrl();
-			}
-
-			if ( !empty( $this->getWordmarkData() ) ) {
-				$data['wordmark'] = $this->getWordmarkData();
-			}
+		if ( !empty( $this->getWordmarkData() ) ) {
+			$data['wordmark'] = $this->getWordmarkData();
 		}
 
 		return $data;
