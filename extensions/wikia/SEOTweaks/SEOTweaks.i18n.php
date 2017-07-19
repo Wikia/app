@@ -19,10 +19,12 @@ $messages['qqq'] = [
 
 $messages['de'] = [
 	'seotweaks-image' => 'Bild',
+	'seotweaks-image' => 'Video',
 ];
 
 $messages['es'] = [
 	'seotweaks-image' => 'Imagen',
+	'seotweaks-image' => 'Vídeo',
 ];
 
 $messages['ru'] = [
@@ -31,6 +33,7 @@ $messages['ru'] = [
 ];
 
 $messages['fr'] = [
+	'seotweaks-image' => 'Image',
 	'seotweaks-video' => 'Vidéo',
 ];
 
