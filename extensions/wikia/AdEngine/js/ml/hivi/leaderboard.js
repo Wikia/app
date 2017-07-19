@@ -40,7 +40,7 @@ define('ext.wikia.adEngine.ml.hivi.leaderboard', [
 		lr = logisticRegression.create(coefficients, intercept);
 
 	function isEnabled() {
-		return geo.isProperGeo(instantGlobals.wgAdDriverHiViLeaderboardCountries);
+		return geo.isProperGeo(instantGlobals.wgAdDriverHiViLeaderboardRabbitCountries);
 	}
 
 	function predictViewability() {

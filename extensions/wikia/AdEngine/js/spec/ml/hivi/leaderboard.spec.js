@@ -9,7 +9,7 @@ describe('ext.wikia.adEngine.ml.hivi.leaderboard', function () {
 				}
 			},
 			instantGlobals: {
-				wgAdDriverHiViLeaderboardCountries: [ 'PL' ]
+				wgAdDriverHiViLeaderboardRabbitCountries: [ 'PL' ]
 			}
 		},
 		testCases = [
