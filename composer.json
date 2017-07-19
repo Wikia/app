@@ -11,6 +11,10 @@
     {
       "type": "git",
       "url": "https://github.com/Wikia/SemanticMediaWiki"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/pear/Mail2"
     }
   ],
   "config": {
@@ -35,6 +39,8 @@
     "data-values/geo": "~1.0",
     "mediawiki/maps": "3.5.1",
     "mediawiki/semantic-media-wiki": "2.4.2.6",
-    "ooyala/v2-api": "^2.0"
+    "ooyala/v2-api": "^2.0",
+    "pear/Mail2": "^0.1.1",
+    "pear/Mail_Mime": "^1.10"
   }
 }

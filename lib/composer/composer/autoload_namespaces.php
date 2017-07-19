@@ -11,9 +11,12 @@ return array(
     'ProxyManager\\' => array($vendorDir . '/ocramius/proxy-manager/src'),
     'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src'),
     'PhpAmqpLib' => array($vendorDir . '/videlalvaro/php-amqplib'),
+    'PEAR' => array($vendorDir . '/pear/pear_exception'),
+    'Mail' => array($vendorDir . '/pear/mail_mime'),
     'Doctrine\\Common\\Lexer\\' => array($vendorDir . '/doctrine/lexer/lib'),
     'Doctrine\\Common\\Cache\\' => array($vendorDir . '/doctrine/cache/lib'),
     'Doctrine\\Common\\Annotations\\' => array($vendorDir . '/doctrine/annotations/lib'),
     'DataValues\\' => array($vendorDir . '/data-values/data-values/src'),
-    '' => array($vendorDir . '/cssjanus/cssjanus/src'),
+    'Console' => array($vendorDir . '/pear/console_getopt'),
+    '' => array($vendorDir . '/cssjanus/cssjanus/src', $vendorDir . '/pear/pear-core-minimal/src'),
 );
