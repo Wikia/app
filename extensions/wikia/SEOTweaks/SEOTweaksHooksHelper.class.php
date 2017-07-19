@@ -16,19 +16,6 @@ class SEOTweaksHooksHelper {
 	const SHARING_HOSTS_REGEX = '/\.(facebook|twitter|google)\./is';
 
 	/**
-	 * @author mech
-	 * @param OutputPage $out
-	 * @return bool true
-	 */
-	static function onBeforePageDisplay( $out ) {
-		global $wgSEOGooglePlusLink;
-		if ( !empty( $wgSEOGooglePlusLink ) ) {
-			$out->addLink( array( 'href' => $wgSEOGooglePlusLink, 'rel' => 'publisher' ) );
-		}
-		return true;
-	}
-
-	/**
 	 * change title tag for Video Page and Image Page
 	 * @author Jacek Jursza
 	 * @param ImagePage $imgPage

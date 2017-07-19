@@ -60,16 +60,6 @@
 		}
 	}
 
-	.WikiaPageHeader {
-		margin: 0 0 $width-padding;
-		padding-bottom: $width-padding / 2;
-
-		.wikia-menu-button,
-		> .comments {
-			margin-top: 3px;
-		}
-	}
-
 	.WikiaRail {
 		overflow: hidden;
 		padding: 0 10px 10px 0;
@@ -124,8 +114,7 @@
 		}
 
 		.WikiaRail .WikiaSearch,
-		.WikiaRail .search-suggest,
-		.WikiaPageHeader .WikiaSearch {
+		.WikiaRail .search-suggest {
 			display: none;
 		}
 	}

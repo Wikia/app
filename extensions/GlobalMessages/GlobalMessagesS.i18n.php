@@ -17297,11 +17297,11 @@ Se pensi ci sia un errore, contattaci su [[w:c:vstf:Report:Spam filter problems|
 	'specialpages-group-spam' => 'Strumenti contro lo spam',
 	'sqlite-has-fts' => '$1 con la possibilità di ricerca completa nel testo',
 	'sqlite-no-fts' => '$1 senza la possibilità di ricerca completa nel testo',
-	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
-* [http://www.wikia.com/wiki/Wikia:About About Wikia]
-* [http://it.community.wikia.com/wiki/Wiki_della_Community:Termini_di_utilizzo Termini di utilizzo]<span style="color: #ff0000"> (Aggiornati)</span>
-* [[Special:Contact|Contact]]
-* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
+	'shared-Monobook-footer-wikia-links' => "* [http://it.community.wikia.com/wiki/Wiki_della_Community:Privacy Privacy]
+* [http://fandom.wikia.com/about?uselang=it Cos'è FANDOM]
+* [http://it.community.wikia.com/wiki/Wiki_della_Community:Termini_di_utilizzo Termini di utilizzo]
+* [[Special:Contact|Contattaci]]
+* [http://fandom.wikia.com/mediakit Pubblicizzare]",
 	'specialpages-group-wikia' => 'Pagine di FANDOM',
 	'signup-mail' => 'E-mail - ',
 	'signup-moreinfo' => 'Perché è necessario?',

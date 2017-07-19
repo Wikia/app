@@ -60,62 +60,6 @@ jQuery(function ($) {
 		};
 	})();
 
-	/** page header (title-area) **/
-
-	(function () {
-		$('#WikiaPageHeader').on('mousedown', 'a', function (event) {
-			var label,
-				el = $(event.currentTarget),
-				id = el.data('id');
-
-			// Primary mouse button only
-			if (event.which !== 1) {
-				return;
-			}
-
-			if (window.veTrack) {
-				if (id === 'edit') {
-					veTrack({
-						action: 'other-edit-click'
-					});
-				}
-				if (id === 've-edit') {
-					veTrack({
-						action: 've-edit-click'
-					});
-				}
-			}
-
-			switch (id) {
-				case 'createpage':
-					label = 'add-a-page';
-					break;
-				case 'comment':
-					label = el.hasClass('talk') ? 'talk' : 'comment';
-					break;
-				case 'share':
-				case 'edit':
-					label = id;
-					break;
-				case 'delete':
-				case 'history':
-				case 'move':
-				case 'protect':
-				case 'flags':
-					label = 'edit-' + id;
-					break;
-			}
-
-			if (label !== undefined) {
-				track({
-					browserEvent: event,
-					category: 'title-area',
-					label: label
-				});
-			}
-		});
-	})();
-
 	/** article **/
 
 	(function () {

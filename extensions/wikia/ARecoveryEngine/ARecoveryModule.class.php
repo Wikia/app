@@ -18,9 +18,20 @@ class ARecoveryModule {
 	 * @return bool
 	 */
 	public static function isSourcePointRecoveryEnabled() {
-		global $wgUser, $wgAdDriverEnableSourcePointRecovery;
+		global $wgAdDriverEnableSourcePointRecovery;
 
 		return static::isRecoverablePage() && $wgAdDriverEnableSourcePointRecovery;
+	}
+
+	/**
+	 * Checks whether InstartLogic recovery is enabled
+	 *
+	 * @return bool
+	 */
+	public static function isInstartLogicRecoveryEnabled() {
+		global $wgAdDriverEnableInstartLogicRecovery;
+
+		return static::isRecoverablePage() && $wgAdDriverEnableInstartLogicRecovery;
 	}
 
 	/**

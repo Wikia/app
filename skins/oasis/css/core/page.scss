@@ -30,10 +30,6 @@
 	margin: 0 auto;
 	/* temp grid transition code - integrate into main, then remove after grid is fully rolled out */
 	&.WikiaGrid {
-		.WikiaPageHeader {
-			margin-left: 0;
-			margin-right: 0;
-		}
 		.WikiaArticle {
 			padding: 0;
 		}
@@ -58,6 +54,7 @@
 		@include clearfix;
 		@include flexbox();
 		@include flex-wrap(wrap);
+		@include justify-content(space-between);
 		position: relative;
 	}
 }

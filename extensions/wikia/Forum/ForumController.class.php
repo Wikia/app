@@ -216,37 +216,6 @@ class ForumController extends WallBaseController {
 			->setTemplatePath( 'extensions/wikia/Wall/templates/Wall_brickHeader.php' );
 	}
 
-	public function header() {
-		$forum = new Forum();
-		$this->response->setVal( 'threads', $forum->getTotalThreads() );
-		$this->response->setVal( 'activeThreads', $forum->getTotalActiveThreads() );
-
-		$title = $this->wg->Title;
-		$pageHeading = wfMessage( 'forum-specialpage-heading' )->escaped();
-		$pageDescription = '';
-		$showStats = true;
-
-		$nameSpace = $title->getNamespace();
-		if ( $nameSpace === NS_WIKIA_FORUM_BOARD ) {
-			$showStats = false;
-			$pageHeading = wfMessage( 'forum-board-title', $title->getText() )->escaped();
-			$board = ForumBoard::newFromTitle( $title );
-			$pageDescription = $board->getDescription();
-		} else if ( $nameSpace === NS_USER_WALL_MESSAGE ) {
-			$showStats = false;
-			$messageKey = $title->getText();
-			$message = WallMessage::newFromId( $messageKey );
-			if ( !empty( $message ) ) {
-				$message->load();
-				$pageHeading = $message->getMetaTitle();
-			}
-		}
-
-		$this->response->setVal('showStats', $showStats);
-		$this->response->setVal('pageHeading', $pageHeading);
-		$this->response->setVal('pageDescription', $pageDescription);
-	}
-
 	public function threadMessage() {
 		parent::message();
 	}

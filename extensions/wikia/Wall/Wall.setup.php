@@ -66,7 +66,6 @@ $wgHooks['PersonalUrls'][] = 'WallHooksHelper::onPersonalUrls';
 $wgHooks['UserPagesHeaderModuleAfterGetTabs'][] = 'WallHooksHelper::onUserPagesHeaderModuleAfterGetTabs';
 $wgHooks['SkinSubPageSubtitleAfterTitle'][] = 'WallHooksHelper::onSkinSubPageSubtitleAfterTitle';
 $wgHooks['SkinTemplateContentActions'][] = 'WallHooksHelper::onSkinTemplateContentActions';
-$wgHooks['PageHeaderIndexAfterActionButtonPrepared'][] = 'WallHooksHelper::onPageHeaderIndexAfterActionButtonPrepared';
 $wgHooks['BlockIpCompleteWatch'][] = 'WallHooksHelper::onBlockIpCompleteWatch';
 $wgHooks['UserIsBlockedFrom'][] = 'WallHooksHelper::onUserIsBlockedFrom';
 
@@ -114,7 +113,6 @@ $wgHooks['UnwatchArticle'][] = 'WallHooksHelper::onUnwatchArticle';
 
 // diff page adjusting
 $wgHooks['DiffViewHeader'][] = 'WallHooksHelper::onDiffViewHeader';
-$wgHooks['PageHeaderEditPage'][] = 'WallHooksHelper::onPageHeaderEditPage';
 
 // right rail adjusting
 $wgHooks['GetRailModuleList'][] = 'WallRailHelper::onGetRailModuleList';

@@ -7,9 +7,20 @@ define('ext.wikia.adEngine.provider.directGpt', [
 	'ext.wikia.adEngine.slot.service.kiloAdUnitBuilder',
 	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'ext.wikia.adEngine.slotTweaker',
+	require.optional('ext.wikia.aRecoveryEngine.instartLogic.recovery'),
 	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery'),
 	require.optional('ext.wikia.aRecoveryEngine.sourcePoint.recovery')
-], function (adContext, uapContext, factory, kiloAdUnitBuilder, megaAdUnitBuilder, slotTweaker, pageFair, sourcePoint) {
+], function (
+	adContext,
+	uapContext,
+	factory,
+	kiloAdUnitBuilder,
+	megaAdUnitBuilder,
+	slotTweaker,
+	instartLogic,
+	pageFair,
+	sourcePoint
+) {
 	'use strict';
 
 	var context = adContext.getContext();
@@ -50,6 +61,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 					slotTweaker.adjustLeaderboardSize(slotName);
 				}
 			},
+			isInstartLogicRecoverable: instartLogic ? instartLogic.isSlotRecoverable : false,
 			isPageFairRecoverable: pageFair ? pageFair.isSlotRecoverable : false,
 			isSourcePointRecoverable: sourcePoint ? sourcePoint.isSlotRecoverable : false,
 			sraEnabled: true,
