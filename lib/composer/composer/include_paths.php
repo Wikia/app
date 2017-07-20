@@ -12,7 +12,4 @@ return array(
     $vendorDir . '/pear/pear-core-minimal/src',
     $vendorDir . '/pear/mail_mime',
     $vendorDir . '/pear/archive_tar',
-    $vendorDir . '/pear/net_socket',
-    $vendorDir . '/pear/net_smtp2',
-    $vendorDir . '/pear/net_socket2',
 );

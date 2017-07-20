@@ -305,15 +305,6 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
                 0 => __DIR__ . '/..' . '/pear/pear_exception',
             ),
         ),
-        'N' => 
-        array (
-            'Net' => 
-            array (
-                0 => __DIR__ . '/..' . '/pear/net_socket',
-                1 => __DIR__ . '/..' . '/pear/net_smtp2',
-                2 => __DIR__ . '/..' . '/pear/net_socket2',
-            ),
-        ),
         'M' => 
         array (
             'Mail' => 
