@@ -948,27 +948,6 @@ $wgAutoloadLocalClasses = array(
 	# maintenance/term
 	'AnsiTermColorer'  => 'maintenance/term/MWTerm.php',
 	'DummyTermColorer' => 'maintenance/term/MWTerm.php',
-
-	# tests
-	'DbTestPreviewer' => 'tests/testHelpers.inc',
-	'DbTestRecorder' => 'tests/testHelpers.inc',
-	'TestFileIterator' => 'tests/testHelpers.inc',
-	'TestRecorder' => 'tests/testHelpers.inc',
-
-	# tests/parser
-	'ParserTest' => 'tests/parser/parserTest.inc',
-	'ParserTestParserHook' => 'tests/parser/parserTestsParserHook.php',
-	'ParserTestStaticParserHook' => 'tests/parser/parserTestsStaticParserHook.php',
-
-	# tests/selenium
-	'Selenium' => 'tests/selenium/Selenium.php',
-	'SeleniumLoader' => 'tests/selenium/SeleniumLoader.php',
-	'SeleniumTestCase' => 'tests/selenium/SeleniumTestCase.php',
-	'SeleniumTestConsoleLogger' => 'tests/selenium/SeleniumTestConsoleLogger.php',
-	'SeleniumTestHTMLLogger' => 'tests/selenium/SeleniumTestHTMLLogger.php',
-	'SeleniumTestListener' => 'tests/selenium/SeleniumTestListener.php',
-	'SeleniumTestSuite' => 'tests/selenium/SeleniumTestSuite.php',
-	'SeleniumConfig' => 'tests/selenium/SeleniumConfig.php',
 );
 
 

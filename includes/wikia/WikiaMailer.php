@@ -58,8 +58,6 @@ class WikiaSendgridMailer {
 		global $wgEnotifMaxRecips, $wgSMTP;
 
 		wfProfileIn( __METHOD__ );
-		require_once( 'Mail2.php' );
-		require_once( 'Mail2/mime.php' );
 
 		$logContext = array_merge( $headers, [
 			'issue' => 'SOC-910',

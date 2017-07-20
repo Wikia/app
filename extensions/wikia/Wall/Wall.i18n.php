@@ -1980,6 +1980,7 @@ Der Originalbeitrag und deine Zusammenfassung werden weiterhin in der Versionsge
 	'wall-posting-message-failed-filter-title' => 'Unangemessene Inhalte entdeckt',
 	'wall-posting-message-failed-filter-body' => 'Dieser Beitrag konnte nicht gespeichert werden, da er unangemessene Inhalte enthält. Bitte formuliere ihn neu.',
 	'wall-message-not-found' => 'Diese Nachricht konnte nicht gefunden werden. Wenn dieser Fehler angezeigt wird, kontaktiere bitte FANDOM per [[Spezial:Kontakt]], und gib so viele Details wie möglich dazu an, wie der Fehler reproduziert werden kann. Vielen Dank!',
+	'wall-deleted-msg-pagetitle' => 'Nachricht gelöscht',
 );
 
 $messages['diq'] = array(
@@ -2383,6 +2384,7 @@ El mensaje original y tu resumen seguirán apareciendo en el historial del wiki.
 	'wall-posting-message-failed-filter-title' => 'Contenido inapropiado detectado',
 	'wall-posting-message-failed-filter-body' => 'Esta edición no pudo ser guardada ya que tiene contenido inapropiado. Por favor, cambiar de contenido.',
 	'wall-message-not-found' => 'Este mensaje no pudo ser encontrado. Si ves este error, por favor, contacta con FANDOM a través de [[Special:Contact|Especial:Contactar]] y aporta todos los detalles que puedas dar sobre cómo puede reproducirse este error. ¡Gracias!',
+	'wall-deleted-msg-pagetitle' => 'Mensaje borrado',
 );
 
 $messages['eu'] = array(
@@ -2990,6 +2992,7 @@ Le message original et votre résumé seront toujours visibles dans l’historiq
 	'wall-posting-message-failed-filter-title' => 'Contenu inapproprié détecté',
 	'wall-posting-message-failed-filter-body' => "Cette modification n'a pas pu être enregistrée car elle inclut du contenu inapproprié. Veuillez reformuler.",
 	'wall-message-not-found' => 'Impossible de trouver ce message. Si vous voyez cette erreur, veuillez contacter FANDOM via [[Special:Contact]] et fournir autant de détails que possible sur la façon de reproduire ce bug. Merci !',
+	'wall-deleted-msg-pagetitle' => 'Message supprimé',
 );
 
 $messages['fy'] = array(
@@ -3978,7 +3981,7 @@ Il messaggio originale e la tua motivazione continueranno ad apparire nella cron
 	'right-walledit' => 'Can edit wall posts',
 	'right-wallarchive' => 'Can archive wall posts',
 	'right-wallremove' => 'Can remove wall threads',
-	'right-wallshowwikiaemblem' => 'Flags user as "Wikia Staff" on wall posts',
+	'right-wallshowwikiaemblem' => 'Marca gli utenti come "Staff di FANDOM" sui messaggi della bacheca',
 	'right-wallfastadmindelete' => 'Can delete wall messages with one click',
 	'right-walladmindelete' => 'Can delete message wall messages',
 	'right-walldelete' => 'Can delete message wall messages',
@@ -3988,6 +3991,7 @@ Il messaggio originale e la tua motivazione continueranno ad apparire nella cron
 	'wall-posting-message-failed-filter-title' => 'Rilevati contenuti inappropriati',
 	'wall-posting-message-failed-filter-body' => 'Non è possibile salvare questa modifica, in quanto contiene contenuti inappropriati. Si prega di riformulare.',
 	'wall-message-not-found' => 'Impossibile trovare questo messaggio. Se si visualizza questo errore, contattare FANDOM a [[Special:Contact]] e fornire quanti più dettagli possibile su come è possibile riprodurre questo bug. Grazie!',
+	'wall-deleted-msg-pagetitle' => 'Messaggio cancellato',
 );
 
 $messages['ja'] = array(
@@ -4254,6 +4258,7 @@ $messages['ja'] = array(
 	'wall-posting-message-failed-filter-title' => '不適切なコンテンツを検出',
 	'wall-posting-message-failed-filter-body' => '不適切なコンテンツが含まれているため、この編集を保存できませんでした。内容を言い換えた上、再度お試しください',
 	'wall-message-not-found' => 'このメッセージは見つかりませんでした。お手数ですが、どのようにしてこのバグが発生したか、[[特別:お問い合わせ]]より詳細をご連絡いただきますようお願いします。',
+	'wall-deleted-msg-pagetitle' => 'メッセージが削除されました',
 );
 
 $messages['ka'] = array(
@@ -4899,6 +4904,7 @@ $messages['lol'] = array(
 	'right-wallmessagemove' => 'crwdns57578:0crwdne57578:0',
 	'right-notifyeveryone' => 'crwdns57579:0crwdne57579:0',
 	'right-editwallarchivedpages' => 'crwdns57580:0crwdne57580:0',
+	'wall-deleted-msg-pagetitle' => 'crwdns26692:0crwdne26692:0',
 );
 
 $messages['lrc'] = array(
@@ -5913,6 +5919,7 @@ Het oorspronkelijke bericht en uw bewerkingssamenvatting blijven nog wel in de g
 	'wall-posting-message-failed-filter-title' => 'Inappropriate content detected',
 	'wall-posting-message-failed-filter-body' => 'This edit could not be saved as it contains inappropriate content. Please rephrase.',
 	'wall-message-not-found' => 'Dit bericht is niet aangetroffen. Als u deze foutmelding ziet, neem dan [[Special:Contact|contact op met Wikia]] en lever zoveel mogelijk details aan over hoe het mogelijk is deze foutmelding tevoorschijn te laten komen. Alvast bedankt!',
+	'wall-deleted-msg-pagetitle' => 'Het bericht is verwijderd',
 );
 
 $messages['nn'] = array(
@@ -6258,6 +6265,7 @@ Oryginał wiadomości i twój komentarz wciąż pozostaną w historii wiki.',
 	'wall-posting-message-failed-filter-title' => 'Wykryto nieodpowiednie treści',
 	'wall-posting-message-failed-filter-body' => 'Twoja edycja nie mogła zostać zapisana, ponieważ zawiera nieodpowiednie treści. Spróbuj inaczej sformułować zdanie.',
 	'wall-message-not-found' => 'Nie odnaleziono wiadomości. Jeżeli widzisz ten błąd, powiadom nas przez [[{{#special:Contact}}]], podając dokładne informacje na temat okoliczności jego wystąpienia, abyśmy mogli spróbować go odtworzyć. Dziękujemy!',
+	'wall-deleted-msg-pagetitle' => 'Wiadomość została skasowana',
 );
 
 $messages['ps'] = array(
@@ -6583,6 +6591,7 @@ O post original e seu sumário ainda aparecerão no histórico da wiki.',
 	'wall-posting-message-failed-filter-title' => 'Conteúdo inadequado detectado',
 	'wall-posting-message-failed-filter-body' => 'Esta edição não pôde ser salva porque contém conteúdo impróprio. Por favor, reformule.',
 	'wall-message-not-found' => 'This message could not be found. If you see this error, please contact FANDOM at [[Special:Contact]] and provide as much detail as possible about how this bug can be reproduced. Thank you!',
+	'wall-deleted-msg-pagetitle' => 'Mensagem excluída',
 );
 
 $messages['qu'] = array(
@@ -6892,6 +6901,7 @@ $messages['ru'] = array(
 	'wall-posting-message-failed-filter-title' => 'Обнаружено неприемлемое содержание',
 	'wall-posting-message-failed-filter-body' => 'Невозможно сохранить правку из-за её неприемлемого содержания. Пожалуйста, перепишите сообщение.',
 	'wall-message-not-found' => 'Это сообщение не найдено. Если вы видите это сообщение об ошибке, свяжитесь с сотрудниками Фэндома через [[Служебная:Contact|форму обратной связи]] и сообщите подробности, чтобы мы могли решить проблему.',
+	'wall-deleted-msg-pagetitle' => 'Сообщение удалено',
 );
 
 $messages['sco'] = array(
@@ -8573,6 +8583,7 @@ $messages['zh-hans'] = array(
 	'wall-posting-message-failed-filter-title' => '检测到不恰当的内容',
 	'wall-posting-message-failed-filter-body' => '无法保存此编辑，因为它包含不恰当的内容。请重新撰写。',
 	'wall-message-not-found' => '找不到此信息。如果您看到此错误，请在[[Special:Contact]]联系Fandom并尽可能提供如何重现此问题的信息。谢谢您！',
+	'wall-deleted-msg-pagetitle' => '信息已删除',
 );
 
 $messages['zh-hant'] = array(
@@ -8839,5 +8850,6 @@ $messages['zh-hant'] = array(
 	'wall-posting-message-failed-filter-title' => '檢測到不恰當的內容',
 	'wall-posting-message-failed-filter-body' => '無法保存此編輯，因為它包含不恰當的內容。請重新表述。',
 	'wall-message-not-found' => '找不到此訊息。如果您看到此錯誤，請用[[special:Contact]]聯絡Fandom，並儘量提供關於這個問題發生的詳細訊息。謝謝！',
+	'wall-deleted-msg-pagetitle' => '訊息已刪除',
 );
 

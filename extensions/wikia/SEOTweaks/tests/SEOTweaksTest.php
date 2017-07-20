@@ -13,48 +13,6 @@ class SEOTweaksTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @covers SEOTweaksHooksHelper::onBeforePageDisplay
-	 */
-	public function testOnBeforePageDisplayWithoutGoogleVals() {
-
-		$this->mockGlobalVariable('wgSEOGooglePlusLink', null);
-
-		/** @var OutputPage|PHPUnit_Framework_MockObject_MockObject $mockOut */
-		$mockOut = $this->createMock( OutputPage::class );
-		$mockOut
-			->expects( $this->never() )
-			->method ( 'addLink' )
-		;
-
-		// first, with neither setting -- nothing should happen
-		$this->assertTrue(
-				SEOTweaksHooksHelper::onBeforePageDisplay( $mockOut ),
-				'SEOTweaksHooksHelper::onBeforePageDisplay should always return true'
-		);
-	}
-
-	/**
-	 * @covers SEOTweaksHooksHelper::onBeforePageDisplay
-	 */
-	public function testOnBeforePageDisplayWithGoogleVals() {
-
-		$this->mockGlobalVariable('wgSEOGooglePlusLink', 'bazqux');
-
-		/** @var OutputPage|PHPUnit_Framework_MockObject_MockObject $mockOut */
-		$mockOut = $this->createMock( OutputPage::class );
-
-		$mockOut
-			->expects( $this->once() )
-			->method ( 'addLink' )
-			->with   ( array( 'href' => 'bazqux', 'rel' => 'publisher' ) )
-		;
-		$this->assertTrue(
-				SEOTweaksHooksHelper::onBeforePageDisplay( $mockOut ),
-				'SEOTweaksHooksHelper::onBeforePageDisplay should always return true'
-		);
-	}
-
-	/**
 	 * @covers SEOTweaksHooksHelper::onImagePageAfterImageLinks
 	 * @group Broken
 	 */
