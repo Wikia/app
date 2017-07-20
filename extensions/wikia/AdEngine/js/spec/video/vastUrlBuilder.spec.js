@@ -5,44 +5,58 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 	function noop() {
 	}
 
-	var mocks = {
-		adUnitBuilder: {
-			build: function () {
-				return 'my/ad/unit';
+	var REGULAR_AD_UNIT_QUERY_PARAM = '&iu=my\/ad\/unit&',
+		PREMIUM_AD_UNIT_QUERY_PARAM = '&iu=premium\/ad\/unit&',
+		mocks = {
+			adContext: {
+				getContext: function () {
+					return {opts: {}};
+				}
+			},
+			adUnitBuilder: {
+				build: function () {
+					return 'my/ad/unit';
+				}
+			},
+			megaAdUnitBuilder: {
+				build: function () {
+					return 'premium/ad/unit';
+				}
+			},
+			slotTargeting: {
+				getWikiaSlotId: function () {
+					return 'xxxx';
+				}
+			},
+			page: {
+				getPageLevelParams: function () {
+					return {
+						uno: 'foo',
+						due: 15,
+						tre: ['bar', 'zero'],
+						quattro: null,
+						s0: 'life',
+						s1: '_project43',
+						s2: 'article'
+					};
+				}
+			},
+			loc: {
+				href: 'http://foo.url'
+			},
+			log: noop,
+			slotParams: {
+				src: 'src',
+				pos: 'SLOT_NAME'
 			}
-		},
-		slotTargeting: {
-			getWikiaSlotId: function () {
-				return 'xxxx';
-			}
-		},
-		page: {
-			getPageLevelParams: function () {
-				return {
-					uno: 'foo',
-					due: 15,
-					tre: ['bar', 'zero'],
-					quattro: null,
-					s0: 'life',
-					s1: '_project43',
-					s2: 'article'
-				};
-			}
-		},
-		loc: {
-			href: 'http://foo.url'
-		},
-		log: noop,
-		slotParams: {
-			src: 'src',
-			pos: 'SLOT_NAME'
-		}
 	};
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.video.vastUrlBuilder'](
+			mocks.adContext,
 			mocks.page,
 			mocks.adUnitBuilder,
+			mocks.megaAdUnitBuilder,
 			mocks.slotTargeting,
 			mocks.loc,
 			mocks.log
@@ -117,10 +131,30 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 		expect(vastUrl).toMatch(/&cust_params=wsi%3Dxxxx%26uno%3Dfoo%26due%3D15%26tre%3Dbar%2Czero%26s0%3Dlife%26s1%3D_project43%26s2%3Darticle%26passback%3Dplaywire%26pos%3DTEST_SLOT%26src%3Dremnant$/);
 	});
 
-	it('Build VAST URL with ad unit id', function () {
+	it('Build VAST URL with regular ad unit', function () {
 		var vastUrl = getModule().build(1, mocks.slotParams);
 
-		expect(vastUrl).toMatch('&iu=my\/ad\/unit&');
+		expect(vastUrl).toMatch(REGULAR_AD_UNIT_QUERY_PARAM);
+	});
+
+	it('Build VAST URL with regular ad unit for premium ad layout and without correct video pos name', function () {
+		spyOn(mocks.adContext, 'getContext').and.returnValue({opts:{premiumAdLayoutEnabled: true}});
+		var vastUrl = getModule().build(1, mocks.slotParams);
+
+		expect(vastUrl).toMatch(REGULAR_AD_UNIT_QUERY_PARAM);
+	});
+
+	it('Build VAST URL with regular ad unit for regular ad layout and with correct video pos name', function () {
+		var vastUrl = getModule().build(1, mocks.slotParams, {}, 'featured');
+
+		expect(vastUrl).toMatch(REGULAR_AD_UNIT_QUERY_PARAM);
+	});
+
+	it('Build VAST URL with premium ad unit for premium ad layout and with correct video pos name', function () {
+		spyOn(mocks.adContext, 'getContext').and.returnValue({opts:{megaAdUnitBuilderEnabled: true}});
+		var vastUrl = getModule().build(1, mocks.slotParams, {},'featured');
+
+		expect(vastUrl).toMatch(PREMIUM_AD_UNIT_QUERY_PARAM);
 	});
 
 	it('Build VAST URL with restricted number of ads', function () {

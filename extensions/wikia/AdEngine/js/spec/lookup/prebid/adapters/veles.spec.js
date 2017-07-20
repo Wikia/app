@@ -9,6 +9,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 		adContext: {
 			getContext: function () {
 				return {
+					opts: {},
 					targeting: {
 						skin: 'oasis'
 					}

@@ -64,7 +64,7 @@ require([
 
 			if (vastUrlBuilder && adContext && adContext.getContext().opts.showAds) {
 				vastUrl = vastUrlBuilder.build(640/480, {
-					pos: prerollSlotName,
+					pos: (adContext.getContext().opts.megaAdUnitBuilderEnabled ? 'FEATURED' : prerollSlotName),
 					src: 'premium'
 				});
 			} else {

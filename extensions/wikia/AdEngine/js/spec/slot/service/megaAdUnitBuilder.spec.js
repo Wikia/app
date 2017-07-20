@@ -59,7 +59,7 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 			},
 			{
 				slotName: 'BOTTOM_LEADERBOARD',
-				adUnit: '/5441/wka2a.OTHER/bottom_leaderboard/tablet/oasis-home/_godofwar-gaming'
+				adUnit: '/5441/wka2a.PF/bottom_leaderboard/tablet/oasis-home/_godofwar-gaming'
 			},
 			{
 				slotName: 'INCONTENT_PLAYER',
@@ -67,7 +67,19 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 			},
 			{
 				slotName: 'BOTTOM_LEADERBOARD',
-				adUnit: '/5441/wka2a.OTHER/bottom_leaderboard/tablet/oasis-home/_godofwar-gaming'
+				adUnit: '/5441/wka2a.PF/bottom_leaderboard/tablet/oasis-home/_godofwar-gaming'
+			},
+			{
+				slotName: 'FEATURED',
+				adUnit: '/5441/wka2a.VIDEO/featured/tablet/oasis-home/_godofwar-gaming'
+			},
+			{
+				slotName: 'OOYALA',
+				adUnit: '/5441/wka2a.VIDEO/ooyala/tablet/oasis-home/_godofwar-gaming'
+			},
+			{
+				slotName: 'UAP_BFAA',
+				adUnit: '/5441/wka2a.VIDEO/uap_bfaa/tablet/oasis-home/_godofwar-gaming'
 			}
 		],
 		testCasesForValidation = [

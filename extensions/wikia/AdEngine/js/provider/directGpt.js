@@ -5,6 +5,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.factory.wikiaGpt',
 	'ext.wikia.adEngine.slot.service.kiloAdUnitBuilder',
+	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'ext.wikia.adEngine.slotTweaker',
 	require.optional('ext.wikia.aRecoveryEngine.instartLogic.recovery'),
 	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery'),
@@ -14,12 +15,15 @@ define('ext.wikia.adEngine.provider.directGpt', [
 	uapContext,
 	factory,
 	kiloAdUnitBuilder,
+	megaAdUnitBuilder,
 	slotTweaker,
 	instartLogic,
 	pageFair,
 	sourcePoint
 ) {
 	'use strict';
+
+	var context = adContext.getContext();
 
 	return factory.createProvider(
 		'ext.wikia.adEngine.provider.directGpt',
@@ -67,7 +71,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 				'TOP_RIGHT_BOXAD',
 				'GPT_FLUSH'
 			],
-			adUnitBuilder: kiloAdUnitBuilder,
+			adUnitBuilder: context.opts.megaAdUnitBuilderEnabled ? megaAdUnitBuilder : kiloAdUnitBuilder,
 			highlyViewableSlots: [
 				'INCONTENT_BOXAD_1',
 				'INCONTENT_PLAYER',
