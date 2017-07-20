@@ -5,5 +5,5 @@ php: 7.0
 install:
   - rm LocalSettings.php
   - mysql -e 'create database its_a_mw;'
-  - php maintenance/install.php --dbtype $DB --dbuser root --dbname its_a_mw --dbpath $(pwd) --pass nyan TravisWiki admin --scriptpath /TravisWiki
+  - php maintenance/install.php --dbuser root --dbname its_a_mw --dbpath $(pwd) --pass nyan TravisWiki admin --scriptpath /TravisWiki
 script: cd tests && ./php-all
