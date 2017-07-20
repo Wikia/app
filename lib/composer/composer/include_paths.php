@@ -11,4 +11,5 @@ return array(
     $vendorDir . '/pear/console_getopt',
     $vendorDir . '/pear/pear-core-minimal/src',
     $vendorDir . '/pear/mail_mime',
+    $vendorDir . '/pear/archive_tar',
 );

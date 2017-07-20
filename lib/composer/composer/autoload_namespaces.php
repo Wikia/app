@@ -18,5 +18,6 @@ return array(
     'Doctrine\\Common\\Annotations\\' => array($vendorDir . '/doctrine/annotations/lib'),
     'DataValues\\' => array($vendorDir . '/data-values/data-values/src'),
     'Console' => array($vendorDir . '/pear/console_getopt'),
+    'Archive_Tar' => array($vendorDir . '/pear/archive_tar'),
     '' => array($vendorDir . '/cssjanus/cssjanus/src', $vendorDir . '/pear/pear-core-minimal/src'),
 );

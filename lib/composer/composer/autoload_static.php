@@ -338,6 +338,13 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
                 0 => __DIR__ . '/..' . '/pear/console_getopt',
             ),
         ),
+        'A' => 
+        array (
+            'Archive_Tar' => 
+            array (
+                0 => __DIR__ . '/..' . '/pear/archive_tar',
+            ),
+        ),
     );
 
     public static $fallbackDirsPsr0 = array (
