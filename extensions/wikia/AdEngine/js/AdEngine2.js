@@ -247,10 +247,11 @@ define('ext.wikia.adEngine.adEngine', [
 
 				setTimeout(function(){
 					$('.WikiaTopAdsInner').css({position: '', background: '', padding: '', width: '', top: '', left: ''});
+					$('.WikiaTopAds').css({height: '', 'z-index': ''});
 				}, 1000);
 			}
 
-			$('.WikiaTopAds').css({height: adHeight, 'z-index': 50000});
+			$('.WikiaTopAds').css({height: adHeight, 'z-index': 5000101});
 			$('.WikiaTopAdsInner').css({position: 'fixed', top: -outherAdHeight + 'px', width: '100%', left: 0, padding: '10px 0', background: 'white'});
 			setTimeout(function() {
 				$('.WikiaTopAdsInner').css({top: 0, transition: 'top 1s'});
@@ -277,6 +278,7 @@ define('ext.wikia.adEngine.adEngine', [
 				}, 100);
 		}
 
+
 		slot.post('success', function() {
 			var magicTimeout = setTimeout(function() {
 				$(window).off('scroll.preleaderboard');
@@ -284,9 +286,15 @@ define('ext.wikia.adEngine.adEngine', [
 				if (!$('.WikiaTopAdsInner .provider-container:last').data('slot-viewed')) {
 					leaderboardMagic();
 				}
-			}, 10000);
+			}, 10000),
+				normalizedScrollPosition = window.scrollY - $('.wds-community-header').offset().top;
 
 			$(window).on('scroll.preleaderboard', function () {
+				if (window.scrollY - $('.wds-community-header').offset().top === normalizedScrollPosition ||
+					window.scrollY - $('.wds-community-header').offset().top + $('.WikiaTopAdsInner').height() - 90 === normalizedScrollPosition) {
+					// user didn't scroll - ad appeared and moved content down
+					return;
+				}
 				$(window).off('scroll.preleaderboard');
 				clearTimeout(magicTimeout);
 
