@@ -4,12 +4,11 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	'ext.wikia.adEngine.provider.gpt.googleSlots',
 	'ext.wikia.adEngine.slot.adSlot',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
-	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
-	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery')
-], function (googleSlots, adSlot, slotRegistry, adBlockDetection, doc, log, win, pageFair) {
+	require.optional('ext.wikia.aRecoveryEngine.instartLogic.recovery')
+], function (googleSlots, adSlot, slotRegistry, doc, log, win, instartLogic) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.googleTag',
@@ -59,19 +58,11 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 	/**
 	 * Load GPT if not loaded only.
-	 * Don't load GPT if ads are blocked unless pageFair recovery is enabled.
 	 *
 	 * @returns {boolean}
 	 */
 	function canGptBeLoaded() {
-		var userIsBlockingAds = adBlockDetection.isBlocking(),
-			pageFairRecoveryEnabled = pageFair && pageFair.isEnabled();
-
-		if (win.googletag.apiReady) {
-			return false;
-		}
-
-		return !userIsBlockingAds || pageFairRecoveryEnabled;
+		return !win.googletag.apiReady;
 	}
 
 	function init() {
@@ -135,6 +126,15 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		});
 	}
 
+	function extendTargetingForBlockedTraffic(adElement) {
+		if (instartLogic && instartLogic.isBlocking()) {
+			adElement.slotTargeting.src = 'rec';
+			adElement.slotTargeting.requestSource = 'instartLogic';
+
+			log(['extendTargetingForBlockedTraffic', adElement.slotTargeting], log.levels.info, logGroup);
+		}
+	}
+
 	function addSlot(adElement) {
 		var sizes = adElement.getSizes(),
 			slotId = adElement.getId(),
@@ -149,11 +149,11 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 				win.googletag.defineOutOfPageSlot(adElement.getSlotPath(), slotId);
 
 			slot.addService(win.googletag.pubads());
-
 			win.googletag.display(slotId);
 			googleSlots.addSlot(slot);
 		}
 
+		extendTargetingForBlockedTraffic(adElement);
 		adElement.configureSlot(slot);
 		slotQueue.push(slot);
 

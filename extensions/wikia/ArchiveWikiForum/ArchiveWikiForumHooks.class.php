@@ -23,34 +23,6 @@ class ArchiveWikiForumHooks {
     }
 
     /**
-     * Override button on forum
-     * @param WikiaResponse $response
-     * @param $ns
-     * @param $skin
-     * @return bool
-     */
-    public static function onPageHeaderIndexAfterActionButtonPrepared( $response, $ns, $skin ) {
-        $app = F::app();
-        $title = $app->wg->Title;
-        $user = $app->wg->User;
-
-        if ( static::isForumNS( $title->getNamespace() ) && !static::canEditOldForum( $user ) ) {
-            $action = [
-                'class' => '',
-                'text' => wfMessage('viewsource')->escaped(),
-                'href' => $title->getLocalURL( [ 'action' => 'edit' ] ),
-                'id' => 'ca-viewsource',
-                'primary' => 1
-            ];
-            $response->setVal( 'actionImage', MenuButtonController::LOCK_ICON );
-            $response->setVal( 'action', $action );
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
      * @param Title $title
      * @param User $user
      * @param $action

@@ -76,7 +76,8 @@
 			@include width-calc('100% - 320px');
 		}
 
-		.main-page-tag-rcs {
+		.main-page-tag-rcs,
+		.rcs-container {
 			width: 300px;
 		}
 	}
@@ -120,11 +121,7 @@
 		}
 
 		@media #{$breakpoint-small-plus-up} {
-			margin-left: 20px;
-
-			&:not(.SearchAdsTopWrapper) {
-				@include flexbox();
-			}
+			@include display-inline-flex();
 		}
 	}
 
@@ -198,11 +195,6 @@
 		}
 	}
 
-	.WikiaPageHeader {
-		margin-left: 0;
-		margin-right: 0;
-	}
-
 	// 'special case' for 1024px tablets (think landscape iPad)
 	@media #{$breakpoint-small-plus} {
 		.WikiaPage {
@@ -241,10 +233,6 @@ body.ve {
 
 	.ve-ui-overlay {
 		pointer-events: all;
-	}
-
-	.WikiaPageHeader {
-		margin: 0 10px;
 	}
 
 	.WikiaMainContent {

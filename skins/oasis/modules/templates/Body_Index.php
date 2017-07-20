@@ -33,7 +33,7 @@
 
 <?= $beforeWikiaPageHtml ?>
 
-<? if ( empty( $wg->SuppressCommunityHeader ) && !WikiaPageType::isCorporatePage() ) : ?>
+<? if ( empty( $wg->SuppressCommunityHeader ) && !WikiaPageType::isCorporatePage() && $wg->user->isAllowed('read')) : ?>
 	<?= $app->renderView( 'CommunityHeaderService', 'index' ) ?>
 <? endif; ?>
 
@@ -49,7 +49,7 @@
 			<?= $app->renderView( 'ArticleInterlang', 'Index' ) ?>
 		<? endif; ?>
 
-		<? if ( $headerModuleName == 'UserPagesHeader' ) : ?>
+		<? if ( $headerModuleName === 'UserPagesHeader' ) : ?>
 			<?= $app->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams ) ?>
 		<? endif; ?>
 
@@ -65,14 +65,13 @@
 		<article id="WikiaMainContent" class="WikiaMainContent<?= !empty( $isGridLayoutEnabled ) ? $railModulesExist ? ' grid-4' : ' grid-6' : '' ?>">
 			<div id="WikiaMainContentContainer" class="WikiaMainContentContainer">
 				<?php
-					// render UserPagesHeader or PageHeader or nothing...
-					if ( $headerModuleName ) {
-						if ( $headerModuleName == 'UserPagesHeader' ) {
-							if ( $headerModuleAction !== 'BlogPost' && $headerModuleAction !== 'BlogListing' ) {
-								// Show just the edit button
-								echo $app->renderView( 'UserProfilePage', 'renderActionButton', array() );
-							}
-						}
+					if (
+						$headerModuleName === 'UserPagesHeader' &&
+						$headerModuleAction !== 'BlogPost' &&
+						$headerModuleAction !== 'BlogListing'
+					) {
+						// Show just the edit button
+						echo $app->renderView( 'UserProfilePage', 'renderActionButton', array() );
 					}
 				?>
 
@@ -84,7 +83,7 @@
 					<?= $app->renderView( 'ArticleVideo', 'related' ) ?>
 				<? endif; ?>
 
-				<? if ( $subtitle != '' && $headerModuleName == 'UserPagesHeader' ) : ?>
+				<? if ( $subtitle != '' && $headerModuleName === 'UserPagesHeader' ) : ?>
 					<div id="contentSub"><?= $subtitle ?></div>
 				<? endif; ?>
 

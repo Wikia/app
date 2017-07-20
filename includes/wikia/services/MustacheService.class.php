@@ -6,6 +6,8 @@
  * in order to supply Mustache engine (either in PHP or JS) with all necessary
  * dependencies.
  *
+ * @see https://github.com/jbboehr/php-mustache
+ *
  * @author Władysław Bodzek <wladek@wikia-inc.com>
  */
 class MustacheService {
@@ -147,12 +149,9 @@ class MustacheService {
 		// so pre-process them before sending to renderer
 		$data = $this->parseData($data);
 
-		if( class_exists('Mustache') ) {
-			$mustache = new Mustache();
-		} else {
-			$mustache = new MustachePHP();
-		}
-
+		// PHP extension is used for Mustache rendering
+		// @see https://github.com/jbboehr/php-mustache
+		$mustache = new Mustache();
 		return $mustache->render($template,$data,$partials);
 	}
 

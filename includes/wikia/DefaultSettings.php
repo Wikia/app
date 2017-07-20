@@ -221,7 +221,6 @@ $wgAutoloadClasses[ "WikiFactoryHub"                  ] = "$IP/extensions/wikia/
 $wgAutoloadClasses[ "WikiFactoryHubHooks"             ] = "$IP/extensions/wikia/WikiFactory/Hubs/WikiFactoryHubHooks.class.php";
 $wgAutoloadClasses[ 'SimplePie'                       ] = "$IP/lib/vendor/SimplePie/simplepie.inc";
 $wgAutoloadClasses[ 'MustachePHP'                     ] = "$IP/lib/vendor/mustache.php/Mustache.php";
-$wgAutoloadClasses[ 'GMetricClient'                   ] = "$IP/lib/vendor/GMetricClient.class.php";
 $wgAutoloadClasses[ 'FakeLocalFile'                   ] = "$IP/includes/wikia/FakeLocalFile.class.php";
 $wgAutoloadClasses[ 'WikiaUploadStash'                ] = "$IP/includes/wikia/upload/WikiaUploadStash.class.php";
 $wgAutoloadClasses[ 'WikiaUploadStashFile'            ] = "$IP/includes/wikia/upload/WikiaUploadStashFile.class.php";
@@ -370,7 +369,6 @@ $wgAutoloadClasses['BodyController'] = $IP.'/skins/oasis/modules/BodyController.
 $wgAutoloadClasses['BodyContentOnlyController'] = $IP.'/skins/oasis/modules/BodyContentOnlyController.class.php';
 $wgAutoloadClasses['ContentDisplayController'] = $IP.'/skins/oasis/modules/ContentDisplayController.class.php';
 $wgAutoloadClasses['SearchController'] = $IP.'/skins/oasis/modules/SearchController.class.php';
-$wgAutoloadClasses['PageHeaderController'] = $IP.'/skins/oasis/modules/PageHeaderController.class.php';
 $wgAutoloadClasses['LatestActivityController'] = $IP.'/skins/oasis/modules/LatestActivityController.class.php';
 $wgAutoloadClasses['FooterController'] = $IP.'/skins/oasis/modules/FooterController.class.php';
 $wgAutoloadClasses['ArticleCategoriesController'] = $IP.'/skins/oasis/modules/ArticleCategoriesController.class.php';
@@ -1410,6 +1408,13 @@ $wgAdDriverKILOCountries = null;
 $wgAdDriverMEGACountries = null;
 
 /**
+ * @name $wgAdDriverMegaAdUnitBuilderForFVCountries
+ * Enables new way of building adUnits for FeaturedVideo pages.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverMegaAdUnitBuilderForFVCountries = null;
+
+/**
  * @name $wgAdDriverMoatTrackingForFeaturedVideoAdCountries
  * Enables MOAT tracking for feature video ads.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1502,6 +1507,12 @@ $wgAdDriverSourcePointRecoveryCountries = null;
  * Enable SourcePoint Recovery per wiki
  */
 $wgAdDriverEnableSourcePointRecovery = true;
+
+/**
+ * @name wgAdDriverEnableInstartLogicRecovery
+ * Enable InstartLogic Recovery per wiki
+ */
+$wgAdDriverEnableInstartLogicRecovery = true;
 
 /**
  * @name $wgAdDriverPageFairDetectionCountries

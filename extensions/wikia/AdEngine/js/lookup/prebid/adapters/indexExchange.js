@@ -73,15 +73,14 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 					id: '9',
 					siteID: 185049
 				},
-				// TODO: fill with proper numbers https://wikia-inc.atlassian.net/browse/ADEN-5517
-				// BOTTOM_LEADERBOARD: {
-				// 	sizes: [
-				// 		[728, 90],
-				// 		[970, 250]
-				// 	],
-				// 	id: '99999',
-				// 	siteID: 999999
-				// }
+				BOTTOM_LEADERBOARD: {
+					sizes: [
+						[728, 90],
+						[970, 250]
+					],
+					id: '12',
+					siteID: 209250
+				}
 			},
 			mercury: {
 				MOBILE_TOP_LEADERBOARD: {

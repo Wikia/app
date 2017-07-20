@@ -15,7 +15,6 @@ class RailController extends WikiaController {
 		$this->isEditPage = $this->request->getBool( 'isEditPage' );
 		$this->railModuleList = $this->filterModules( $railModules, self::FILTER_NON_LAZY_MODULES );
 		$this->isGridLayoutEnabled = BodyController::isGridLayoutEnabled();
-		$this->isAside = $this->wg->RailInAside;
 		$this->loadLazyRail = $railModules > $this->railModuleList;
 	}
 

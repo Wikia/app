@@ -955,4 +955,24 @@ describe('AdContext', function () {
 		expect(moatSamplerArgs[0]).toEqual('moatTrackingForFeaturedVideo');
 		expect(moatSamplerArgs[1]).toEqual(25);
 	});
+
+	it('Should enable MEGA ad unit builder only for featured video pages', function () {
+		mocks.instantGlobals = {
+			wgAdDriverMegaAdUnitBuilderForFVCountries: ['CURRENT_COUNTRY'],
+			wgAdDriverAdMixCountries: ['CURRENT_COUNTRY']
+		};
+
+		var context = {
+			targeting: {
+				hasFeaturedVideo: true,
+				skin: 'oasis',
+				pageType: 'article'
+			}
+		};
+
+		getModule().setContext(context);
+		expect(context.opts.megaAdUnitBuilderEnabled).toEqual(true);
+
+	});
+
 });

@@ -28,11 +28,6 @@ class PlacesHooks {
 			}
 		}
 
-		if ( ( $title instanceof Title ) && ( $title->getNamespace() == NS_CATEGORY ) ){
-			$out->addScript( '<script src="' . F::app()->wg->extensionsPath . '/wikia/Places/js/GeoEnableButton.js"></script>' );
-			$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/Places/css/GeoEnableButton.scss' ) );
-		}
-
 		wfProfileOut( __METHOD__ );
 		return true;
 	}

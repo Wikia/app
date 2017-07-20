@@ -122,6 +122,11 @@ foreach ( $queries as $query ) {
 
 $body .= "\nThis is the end of the list.  If you can't read this line, please tell TOR.  Oh... wait...\n";
 
-// send the e-mail
-mail( 'tor@wikia-inc.com', 'Discussions alert', $body );
-mail( 'community@wikia.com', 'Discussion alerts', $body );
+
+doMail( 'tor@wikia-inc.com', $body );
+doMail( 'community@wikia.com', $body );
+
+function doMail($address, $body) {
+	$header = "From: $address\r\n";
+	mail( $address, 'Discussions alert', $body, $header );
+}

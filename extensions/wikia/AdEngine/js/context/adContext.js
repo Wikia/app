@@ -70,6 +70,11 @@ define('ext.wikia.adEngine.adContext', [
 		var isRecoveryServiceAlreadyEnabled = false,
 			serviceCanBeEnabled = !noExternals && context.opts.showAds !== false; // showAds is undefined by default
 
+		// InstartLogic recovery
+		context.opts.instartLogicRecovery = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
+			context.opts.instartLogicRecovery && geo.isProperGeo(instantGlobals.wgAdDriverInstartLogicRecoveryCountries);
+		isRecoveryServiceAlreadyEnabled |= context.opts.instartLogicRecovery;
+
 		// PageFair recovery
 		context.opts.pageFairRecovery = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
 			context.opts.pageFairRecovery && geo.isProperGeo(instantGlobals.wgAdDriverPageFairRecoveryCountries);
@@ -102,6 +107,9 @@ define('ext.wikia.adEngine.adContext', [
 
 		context.opts.premiumAdLayoutEnabled = isEnabledOnFeaturedVideo || isEnabledOnRegularArticle;
 		context.slots.premiumAdLayoutSlotsToUnblock = ['INCONTENT_BOXAD_1', 'BOTTOM_LEADERBOARD'];
+
+		context.opts.megaAdUnitBuilderEnabled = context.targeting.hasFeaturedVideo && isEnabledOnFeaturedVideo &&
+			geo.isProperGeo(instantGlobals.wgAdDriverMegaAdUnitBuilderForFVCountries);
 
 		if (!context.targeting.hasFeaturedVideo) {
 			context.slots.premiumAdLayoutSlotsToUnblock.push('INCONTENT_PLAYER');
@@ -148,7 +156,6 @@ define('ext.wikia.adEngine.adContext', [
 			geo.isProperGeo(instantGlobals.wgAdDriverSrcPremiumCountries);
 
 		context.opts.isMoatTrackingForFeaturedVideoEnabled = isMOATTrackingForFVEnabled();
-
 		updateDetectionServicesAdContext(context, noExternals);
 		updateAdContextRecoveryServices(context, noExternals);
 

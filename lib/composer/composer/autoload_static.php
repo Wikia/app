@@ -295,6 +295,26 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
             array (
                 0 => __DIR__ . '/..' . '/videlalvaro/php-amqplib',
             ),
+            'PEAR' => 
+            array (
+                0 => __DIR__ . '/..' . '/pear/pear_exception',
+            ),
+        ),
+        'N' => 
+        array (
+            'Net' => 
+            array (
+                0 => __DIR__ . '/..' . '/wikia/net_socket2',
+                1 => __DIR__ . '/..' . '/pear/net_socket',
+                2 => __DIR__ . '/..' . '/wikia/net_smtp2',
+            ),
+        ),
+        'M' => 
+        array (
+            'Mail' => 
+            array (
+                0 => __DIR__ . '/..' . '/pear/mail_mime',
+            ),
         ),
         'D' => 
         array (
@@ -315,10 +335,25 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
                 0 => __DIR__ . '/..' . '/data-values/data-values/src',
             ),
         ),
+        'C' => 
+        array (
+            'Console' => 
+            array (
+                0 => __DIR__ . '/..' . '/pear/console_getopt',
+            ),
+        ),
+        'A' => 
+        array (
+            'Archive_Tar' => 
+            array (
+                0 => __DIR__ . '/..' . '/pear/archive_tar',
+            ),
+        ),
     );
 
     public static $fallbackDirsPsr0 = array (
         0 => __DIR__ . '/..' . '/cssjanus/cssjanus/src',
+        1 => __DIR__ . '/..' . '/pear/pear-core-minimal/src',
     );
 
     public static $classMap = array (
@@ -333,6 +368,15 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'File_Iterator_Factory' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Factory.php',
         'Hashable' => __DIR__ . '/..' . '/data-values/data-values/src/interfaces/Hashable.php',
         'Immutable' => __DIR__ . '/..' . '/data-values/data-values/src/interfaces/Immutable.php',
+        'Mail2' => __DIR__ . '/..' . '/wikia/mail2/Mail2.php',
+        'Mail2_Exception' => __DIR__ . '/..' . '/wikia/mail2/Mail2/Exception.php',
+        'Mail2_RFC822' => __DIR__ . '/..' . '/wikia/mail2/Mail2/RFC822.php',
+        'Mail2_mail' => __DIR__ . '/..' . '/wikia/mail2/Mail2/mail.php',
+        'Mail2_mock' => __DIR__ . '/..' . '/wikia/mail2/Mail2/mock.php',
+        'Mail2_null' => __DIR__ . '/..' . '/wikia/mail2/Mail2/null.php',
+        'Mail2_sendmail' => __DIR__ . '/..' . '/wikia/mail2/Mail2/sendmail.php',
+        'Mail2_smtp' => __DIR__ . '/..' . '/wikia/mail2/Mail2/smtp.php',
+        'Mail2_smtpmx' => __DIR__ . '/..' . '/wikia/mail2/Mail2/smtpmx.php',
         'MapEditorHtml' => __DIR__ . '/../../..' . '/extensions/Maps/includes/editor/MapEditorHTML.php',
         'MapsBaseFillableElement' => __DIR__ . '/../../..' . '/extensions/Maps/includes/Maps_BaseFillableElement.php',
         'MapsBaseStrokableElement' => __DIR__ . '/../../..' . '/extensions/Maps/includes/Maps_BaseStrokableElement.php',

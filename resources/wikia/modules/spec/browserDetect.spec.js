@@ -17,6 +17,22 @@ describe('browserDetect', function () {
 		expect(browserDetectModule.isFirefox()).toBe(true);
 	});
 
+	it('Validates Chrome userAgent if Chrome', function() {
+		winMock.navigator.userAgent =
+			'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36';
+
+		browserDetectModule = modules['wikia.browserDetect'](winMock);
+		expect(browserDetectModule.isChrome()).toBeTruthy();
+	});
+
+	it('Validates Chrome userAgent if Firefox', function() {
+		winMock.navigator.userAgent =
+			'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:33.0) Gecko/20100101 Firefox/33.0';
+
+		browserDetectModule = modules['wikia.browserDetect'](winMock);
+		expect(browserDetectModule.isChrome()).toBeFalsy();
+	});
+
 	it('Check if position fixed is not supported for iPad with iOS7', function () {
 		winMock.navigator.userAgent =
 			'Mozilla/5.0 (iPad; CPU OS 7_0 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A465 Safari/9537.53';

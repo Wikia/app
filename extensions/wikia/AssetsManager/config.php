@@ -65,6 +65,9 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/pageFairDetection.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 		'//extensions/wikia/AdEngine/js/config/desktop.js',
+		'//extensions/wikia/AdEngine/js/ml/hivi/leaderboard.js',
+		'//extensions/wikia/AdEngine/js/ml/hivi/leaderboardInputParser.js',
+		'//extensions/wikia/AdEngine/js/ml/model/logisticRegression.js',
 		'//extensions/wikia/AdEngine/js/provider/btfBlocker.js',
 		'//extensions/wikia/AdEngine/js/provider/directGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
@@ -119,6 +122,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/video/videoSettings.js',
 		'//extensions/wikia/ARecoveryEngine/js/adBlockDetection.js',
 		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.js',
+		'//extensions/wikia/ARecoveryEngine/js/InstartLogic/recovery.js',
 		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/recovery.js',
 		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/slotFinder.js',
 		'//extensions/wikia/ARecoveryEngine/js/tweaker.js',
@@ -501,7 +505,6 @@ $config['oasis_nojquery_shared_js'] = [
 		// oasis specific files
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
 		'//resources/wikia/libraries/bootstrap/popover.js',
-		'//skins/oasis/js/PageHeader.js',
 		'//skins/oasis/js/Search.js',
 		'//skins/oasis/js/WikiaFooter.js',
 		'//skins/oasis/js/buttons.js',
@@ -647,32 +650,6 @@ $config['wikiamobile_scss'] = [
 	'skin' => 'wikiamobile',
 	'assets' => [
 		'//extensions/wikia/WikiaMobile/css/WikiaMobile.scss',
-	],
-];
-
-$config['wikiamobile_editor_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => 'wikiamobile',
-	'assets' => [
-		'//extensions/wikia/WikiaMobileEditor/css/WikiaMobileEditor.scss',
-	],
-];
-
-$config['wikiamobile_editor_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'wikiamobile',
-	'assets' => [
-		'#group_wikiamobile_tables_js',
-		'//resources/wikia/libraries/mustache/mustache.js',
-		'//extensions/wikia/WikiaMobileEditor/js/preview.js',
-	],
-];
-
-$config['wikiamobile_editor_view_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => 'wikiamobile',
-	'assets' => [
-		'//extensions/wikia/WikiaMobileEditor/css/WikiaMobileEditor.edit.scss',
 	],
 ];
 
