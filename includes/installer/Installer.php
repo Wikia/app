@@ -1335,7 +1335,7 @@ abstract class Installer {
 		$coreInstallSteps = array(
 			array( 'name' => 'database',   'callback' => array( $installer, 'setupDatabase' ) ),
 			array( 'name' => 'tables',     'callback' => array( $installer, 'createTables' ) ),
-			array( 'name' => 'interwiki',  'callback' => array( $installer, 'populateInterwikiTable' ) ),
+		//	array( 'name' => 'interwiki',  'callback' => array( $installer, 'populateInterwikiTable' ) ),
 			array( 'name' => 'stats',      'callback' => array( $this, 'populateSiteStats' ) ),
 			array( 'name' => 'keys',       'callback' => array( $this, 'generateKeys' ) ),
 			array( 'name' => 'sysop',      'callback' => array( $this, 'createSysop' ) ),
