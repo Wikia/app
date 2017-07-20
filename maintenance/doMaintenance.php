@@ -97,16 +97,18 @@ if ( defined( 'MW_CONFIG_CALLBACK' ) ) {
 }
 
 // Wikia change - begin - attach sink to the profiler (copied from WebStart.php)
-if ( $wgProfiler instanceof Profiler ) {
-	if ( empty($wgProfilerSendViaScribe) ) {
-		$sink = new ProfilerDataUdpSink();
-	} else {
-		$sink = new ProfilerDataScribeSink();
+if ( !defined( 'MEDIAWIKI_INSTALL' ) ) {
+	if ( isset( $wgProfiler ) && $wgProfiler instanceof Profiler ) {
+		if ( empty( $wgProfilerSendViaScribe ) ) {
+			$sink = new ProfilerDataUdpSink();
+		} else {
+			$sink = new ProfilerDataScribeSink();
+		}
+		$wgProfiler->addSink( $sink );
 	}
-	$wgProfiler->addSink( $sink );
+	Transaction::setEntryPoint( Transaction::ENTRY_POINT_MAINTENANCE );
+	Transaction::setAttribute( Transaction::PARAM_MAINTENANCE_SCRIPT, $maintClass );
 }
-Transaction::setEntryPoint(Transaction::ENTRY_POINT_MAINTENANCE);
-Transaction::setAttribute(Transaction::PARAM_MAINTENANCE_SCRIPT, $maintClass);
 // Wikia change - end
 
 if ( $maintenance->getDbType() === Maintenance::DB_ADMIN &&
