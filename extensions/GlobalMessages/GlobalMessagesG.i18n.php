@@ -74,6 +74,8 @@ $messages['en'] = array(
 	'group-content-moderator-member' => 'Content Moderator',
 	'group-fandom-editor' => 'News and Stories Wordpress access',
 	'group-fandom-editor-member' => 'News and Stories Wordpress access',
+	'group-global-discussions-moderator' => 'Global Discussions Moderator',
+	'group-global-discussions-moderator-member' => 'Global Discussions Moderator',
 );
 
 $messages['qqq'] = array(
