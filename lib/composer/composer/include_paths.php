@@ -6,10 +6,13 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname(dirname($vendorDir));
 
 return array(
-    $vendorDir . '/pear/mail2',
     $vendorDir . '/pear/pear_exception',
     $vendorDir . '/pear/console_getopt',
     $vendorDir . '/pear/pear-core-minimal/src',
     $vendorDir . '/pear/mail_mime',
     $vendorDir . '/pear/archive_tar',
+    $vendorDir . '/wikia/mail2',
+    $vendorDir . '/wikia/net_socket2',
+    $vendorDir . '/pear/net_socket',
+    $vendorDir . '/wikia/net_smtp2',
 );
