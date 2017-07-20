@@ -7,11 +7,11 @@ in most of the cases the video is uploaded and the tag is replaced with a `[File
 
 ### Usage
  
-Usage is documented on this cummunity help page: http://community.wikia.com/wiki/Help%3AYouTube_extension
+Usage is documented on this cummunity help page: [http://community.wikia.com/wiki/Help%3AYouTube_extension]()
 
 ### Usage reports
 
-The `<youtube>` parser tag is covered by this tags usage reporter: https://github.com/Wikia/backend/blob/736feac731371cb763e6489d60b061a078dcc666/bin/specials/tags_report.pl. 
+The `<youtube>` parser tag is covered by this tags usage reporter: [https://github.com/Wikia/backend/blob/736feac731371cb763e6489d60b061a078dcc666/bin/specials/tags_report.pl](). 
 To find articles on which this is used, simply go to `statsdb` and take a look at the `stats/city_used_tags` table. 
 
 
