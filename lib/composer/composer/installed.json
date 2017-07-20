@@ -4264,5 +4264,171 @@
             "archive",
             "tar"
         ]
+    },
+    {
+        "name": "pear/net_socket",
+        "version": "v1.2.1",
+        "version_normalized": "1.2.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/pear/Net_Socket.git",
+            "reference": "f31d75ac352d49908f8987bbb1496c02a409812a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/pear/Net_Socket/zipball/f31d75ac352d49908f8987bbb1496c02a409812a",
+            "reference": "f31d75ac352d49908f8987bbb1496c02a409812a",
+            "shasum": ""
+        },
+        "require": {
+            "pear/pear_exception": "@stable",
+            "php": ">=5.4.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "^4"
+        },
+        "time": "2017-04-06T15:16:38+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Net": "./"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "include-path": [
+            "./"
+        ],
+        "license": [
+            "BSD-2-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Chuck Hagenbuch",
+                "email": "chuck@horde.org",
+                "role": "Lead"
+            },
+            {
+                "name": "Aleksander Machniak",
+                "email": "alec@php.net",
+                "role": "Lead"
+            },
+            {
+                "name": "Stig Bakken",
+                "email": "stig@php.net",
+                "role": "Lead"
+            }
+        ],
+        "description": "More info available on: http://pear.php.net/package/Net_Socket"
+    },
+    {
+        "name": "pear/net_smtp2",
+        "version": "0.1.0",
+        "version_normalized": "0.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/pear/Net_SMTP2",
+            "reference": "4efa7833bb0331cb944b65daa1b6ad977b7b9385"
+        },
+        "require": {
+            "pear/net_socket": "*",
+            "pear/pear_exception": "*"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "*"
+        },
+        "suggest": {
+            "pear/auth_sasl": "Install optionally via your project's composer.json"
+        },
+        "time": "2014-06-04T06:04:56+00:00",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "Net": "./"
+            }
+        },
+        "include-path": [
+            "./"
+        ],
+        "license": [
+            "PHP License"
+        ],
+        "authors": [
+            {
+                "email": "jon@php.net",
+                "name": "Jon Parise",
+                "homepage": "http://www.indelible.org",
+                "role": "Lead"
+            },
+            {
+                "email": "chuck@horde.org",
+                "name": "Chuck Hagenbuch",
+                "role": "Lead"
+            }
+        ],
+        "description": "An implementation of the SMTP protocol",
+        "homepage": "http://pear.github.io/Net_SMTP2/",
+        "keywords": [
+            "email",
+            "mail",
+            "smtp"
+        ],
+        "support": {
+            "issues": "https://github.com/pear/Net_SMTP2/issues",
+            "source": "https://github.com/pear/Net_SMTP2"
+        }
+    },
+    {
+        "name": "pear/net_socket2",
+        "version": "0.1.1",
+        "version_normalized": "0.1.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/pear/Net_Socket2",
+            "reference": "844e786aea06809f2e738fe2f894a8c610739d09"
+        },
+        "require": {
+            "pear/pear_exception": "*"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "*"
+        },
+        "time": "2015-03-23T14:31:27+00:00",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "Net": "./"
+            }
+        },
+        "include-path": [
+            "./"
+        ],
+        "license": [
+            "PHP License"
+        ],
+        "authors": [
+            {
+                "email": "chuck@horde.org",
+                "name": "Chuck Hagenbuch",
+                "role": "Lead"
+            },
+            {
+                "email": "stig@php.net",
+                "name": "Stig Bakken",
+                "role": "Lead"
+            },
+            {
+                "email": "alec@php.net",
+                "name": "Aleksander Machniak",
+                "role": "Lead"
+            }
+        ],
+        "description": "More info available on: http://pear.php.net/package/Net_Socket2",
+        "support": {
+            "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name[]=Net_Socket2",
+            "source": "https://github.com/pear/Net_Socket2"
+        }
     }
 ]

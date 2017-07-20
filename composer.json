@@ -15,6 +15,14 @@
     {
       "type": "git",
       "url": "https://github.com/pear/Mail2"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/pear/Net_SMTP2"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/pear/Net_Socket2"
     }
   ],
   "config": {
@@ -42,6 +50,8 @@
     "ooyala/v2-api": "^2.0",
     "pear/Mail2": "^0.1.1",
     "pear/Mail_Mime": "^1.10",
-    "pear/archive_tar": "^1.4"
+    "pear/archive_tar": "^1.4",
+    "pear/Net_SMTP2": "^0.1.0",
+    "pear/Net_Socket2": "^0.1.1"
   }
 }
