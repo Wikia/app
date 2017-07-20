@@ -1607,42 +1607,42 @@ FANDOMチーム
 FANDOMチーム<br /><br />
 
 <a href="$3">配信を停止</a>よりメール配信設定を変更することができます。',
-	'wikiadoption-desc' => 'An AutomaticWikiAdoption extension for MediaWiki',
-	'wikiadoption-description' => "$1, ready to adopt {{SITENAME}}?
+	'wikiadoption-desc' => 'MediaWikiの拡張機能、AutomaticWikiAdoption',
+	'wikiadoption-description' => '$さん、『{{SITENAME}}』を引き継ぎませんか。
 <br /><br />
-There hasn't been an active administrator on {{SITENAME}} for a while, and we're looking for a new leader to help this wiki's content and community grow! As someone who's contributed to {{SITENAME}} we were wondering if you'd like the job.
+『{{SITENAME}}』にはしばらくの間、アドミンとして活動を行っている方がおらず、Fandomでは、このWikiのコンテンツとコミュニティの発展をサポートしてくださる新しいリーダーを探しています。あなたは『{{SITENAME}}』に投稿されたことがあるため、この役割に興味をお持ちかどうかお尋ねするためにご連絡させていただきました。
 <br /><br />
-By adopting the wiki, you'll be promoted to administrator and bureaucrat to give you the tools you'll need to manage the wiki's community and content. You'll also be able to create other administrators to help, delete, rollback, move and protect pages.
+このWikiを引き継がれるとアドミンとビューロクラットに昇格し、Wikiのコミュニティとコンテンツの管理に必要なツールをお使いいただけるようになります。また、ページのサポート、削除、ロールバック、移動、保護を行うアドミンに他のユーザーを指名することもできます。
 <br /><br />
-Are you ready to take the next steps to help {{SITENAME}}?",
-	'wikiadoption-know-more-description' => 'Check out these links for more information. And of course, feel free to contact us if you have any questions!',
-	'wikiadoption-adoption-successed' => 'Congratulations! You are a now an administrator on this wiki!',
-	'wikiadoption-adoption-failed' => 'We are sorry. We tried to make you an administrator, but it did not work out. Please [http://community.wikia.com/Special:Contact contact us], and we will try to help you out.',
-	'wikiadoption-not-allowed' => 'We are sorry. You cannot adopt this wiki right now.',
-	'wikiadoption-not-enough-edits' => 'Oops! You need to have more than 10 edits to adopt this wiki.',
-	'wikiadoption-adopted-recently' => 'Oops! You have already adopted another wiki recently. You will need to wait a while before you can adopt a new wiki.',
-	'wikiadoption-log-reason' => 'Automatic Wiki Adoption',
-	'wikiadoption-notification' => '{{SITENAME}} is up for adoption. Interested in becoming a leader here? Adopt this wiki to get started! $2',
-	'wikiadoption-mail-first-subject' => 'We have not seen you around in a while',
-	'wikiadoption-mail-second-subject' => '#WIKINAME will be put up for adoption soon',
-	'tog-adoptionmails' => 'Email me if $1 will become available for other users to adopt',
-	'tog-adoptionmails-v2' => '...if the wiki will become available for other users to adopt',
-	'wikiadoption-pref-label' => 'Changing these preferences will only affect emails from $1.',
-	'wikiadoption-welcome-body' => "You're now a bureaucrat on this wiki. With your new status you now have access to all the tools that will help you manage {{SITENAME}}.
+『{{SITENAME}}』を引き継いでいただけますか？',
+	'wikiadoption-know-more-description' => '詳細については、以下のリンクをチェックしてみてください。また、ご不明な点がございましたら、お気軽にFandomまでお問い合わせください。',
+	'wikiadoption-adoption-successed' => 'あなたは、このWikiのアドミンになりました。',
+	'wikiadoption-adoption-failed' => '申し訳ございませんが、あなたをアドミンに昇格することができませんでした。お手数ですが、[http://ja.community.wikia.com/wiki//Special:Contact Fandomにお問い合わせ]ください。お手伝いいたします。',
+	'wikiadoption-not-allowed' => '申し訳ございませんが、現在、あなたはこのWikiを引き継ぐことができません。',
+	'wikiadoption-not-enough-edits' => 'このWikiを引き継ぐには、10件以上の編集を行っていただく必要があります。',
+	'wikiadoption-adopted-recently' => 'あなたは、最近別のWikiを引き継がれたようです。新しいWikiを引き継げるようになるまで、しばらくお待ちください。',
+	'wikiadoption-log-reason' => 'Wikiの自動引き継ぎ',
+	'wikiadoption-notification' => '『{{SITENAME}}』は譲渡可能になっています。このWikiのリーダーになることに興味をお持ちでしたら、まずはこのWikiを引き継ぎましょう！$2',
+	'wikiadoption-mail-first-subject' => '最近投稿や編集をされていないようです',
+	'wikiadoption-mail-second-subject' => '『#WIKINAME』は間もなく譲渡可能になります',
+	'tog-adoptionmails' => '他のユーザーが『$』を引き継げるようになったらメールを受け取る',
+	'tog-adoptionmails-v2' => '他のユーザーがこのWikiを引き継げるようになった場合',
+	'wikiadoption-pref-label' => 'これらの設定への変更は、『$1』からのメールだけに適用されます。',
+	'wikiadoption-welcome-body' => 'この度、あなたはこのWikiのビューロクラットになりました。この権限があると、『{{SITENAME}}』の管理に必要なあらゆるツールをお使いいただけます。
 <br /><br />
-The most important thing you can do to help {{SITENAME}} grow is keep editing.
+『{{SITENAME}}』の発展をサポートするためには、たびたび編集するようにしてください。
 <br /><br />
-If there is no active administrator on a wiki it can be put up for adoption so be sure to check in on the wiki frequently.
+アクティブなアドミンがいないWikiは、他のユーザーへの譲渡が可能になることもあるため、頻繁にWikiをチェックするようにしましょう。
 <br /><br />
-Helpful Tools:
+役立つツール：
 <br /><br />
-[[Special:ThemeDesigner|ThemeDesigner]]
+[[Special:ThemeDesigner|テーマデザイナー]]
 <br />
-[[Special:LayoutBuilder|Page Layout Builder]]
+[[Special:LayoutBuilder|ページ・レイアウト・ビルダ]]
 <br />
-[[Special:ListUsers|User List]]
+[[Special:ListUsers|ユーザー一覧]]
 <br />
-[[Special:UserRights|Manage Rights]]",
+[[Special:UserRights|ユーザー権限]]',
 );
 
 $messages['kn'] = array(
@@ -3342,7 +3342,7 @@ $messages['zh-hans'] = array(
 
 如果您需要帮助照顾此维基社区，您还可以前往$2查看如何设置其他社群成员加入管理员团队。我们期待您很快重新活跃在#WIKINAME上！
 
-Fandom团队
+FANDOM团队
 
 您可以单击这里取消邮件订阅：$3',
 	'wikiadoption-mail-first-content-HTML' => '您好，$1！<br /><br />
@@ -3351,7 +3351,7 @@ Fandom团队
 
 如果您需要帮助照顾此维基社区，您还可以前往<a href="$2">用户权限管理</a>查看如何设置其他社群成员加入管理员团队。我们期待您很快重新活跃在#WIKINAME上！<br /><br />
 
-Fandom团队<br /><br />
+FANDOM团队<br /><br />
 
 您可以单击此处<a href="$3">取消邮件订阅</a>。',
 	'wikiadoption-mail-second-subject' => '#WIKINAME 将很快被公示认领',
@@ -3361,7 +3361,7 @@ Fandom团队<br /><br />
 
 由于这个社区长期没有活跃的管理员，#WIKINAME将被开放认领，以允许其他用户成为管理员。
 
-Fandom团队
+FANDOM团队
 
 您可以单击这里取消邮件订阅：$3',
 	'wikiadoption-mail-second-content-HTML' => '您好，$1！<br /><br />
@@ -3370,7 +3370,7 @@ Fandom团队
 
 由于这个社区长期没有活跃的管理员，#WIKINAME将被开放认领，以允许其他用户成为管理员。<br /><br />
 
-Fandom团队<br /><br />
+FANDOM团队<br /><br />
 
 您可以单击这里 <a href="$3">取消邮件订阅</a>。',
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME已被认领',
@@ -3380,7 +3380,7 @@ Fandom团队<br /><br />
 
 #WIKINAME的代管用户将拥有行政员与管理员权限。别担心，您还可以随时重新取得您在此社区上的管理员权限并继续做出贡献。
 
-Fandom团队
+FANDOM团队
 
 您可以更改这个列表来取消订阅信息：$3
 ',
@@ -3390,7 +3390,7 @@ Fandom团队
 
 #WIKINAME的代管用户将拥有行政员与管理员权限。别担心，您还可以随时重新取得您在此社区上的管理员权限并继续做出贡献。<br /><br />
 
-Fandom团队<br /><br />
+FANDOM团队<br /><br />
 
 您可以更改这个列表<a href="$3">取消订阅</a>。',
 	'tog-adoptionmails' => '当$1可以被其他用户认领时邮件通知我',
@@ -3433,7 +3433,7 @@ $messages['zh-hant'] = array(
 
 #WIKINAME的領養用戶將擁有行政員與管理員權限。別擔心，您還可以隨時重新取得您在此社區上的管理員權限並繼續做出貢獻。
 
-Fandom團隊
+FANDOM團隊
 
 您可以更改這個表單取消訂閱訊息：$3',
 	'wikiadoption-mail-adoption-content-HTML' => '您好，$1！<br /><br />
@@ -3442,7 +3442,7 @@ Fandom團隊
 
 #WIKINAME的領養用戶將擁有行政員與管理員權限。別擔心，您還可以隨時重新取得您在此社區上的管理員權限並繼續做出貢獻。<br /><br />
 
-Fandom團隊<br /><br />
+FANDOM團隊<br /><br />
 
 您可以更改這個表單<a href="$3">取消訂閱</a>。',
 	'wikiadoption-mail-first-content' => '您好，$1！
@@ -3451,7 +3451,7 @@ Fandom團隊<br /><br />
 
 如果您需要幫助照顧此wiki社區，您還可以前往$2查看如何設置其他社群成員加入管理員團隊。我們期待您很快重新活躍在#WIKINAME上！
 
-Fandom團隊
+FANDOM團隊
 
 您可以按這裡取消郵件訂閱：$3',
 	'wikiadoption-mail-first-content-HTML' => '您好，$1！<br /><br />
@@ -3460,7 +3460,7 @@ Fandom團隊
 
 如果您需要幫助照顧此wiki社區，您還可以前往<a href="$2">用戶權限管理</a>查看如何設置其他社群成員加入管理員團隊。我們期待您很快重新活躍在#WIKINAME上！<br /><br />
 
-Fandom團隊<br /><br />
+FANDOM團隊<br /><br />
 
 您可以按此處<a href="$3">取消郵件訂閱</a>。',
 	'wikiadoption-mail-second-content' => '您好，$1！
@@ -3469,7 +3469,7 @@ Fandom團隊<br /><br />
 
 由於這個社群長期沒有活躍的管理員，#WIKINAME將被開放認領，以允許其他用戶成為管理員。
 
-Fandom團隊
+FANDOM團隊
 
 您可以按這裡取消郵件訂閱：$3',
 	'wikiadoption-mail-second-content-HTML' => '您好，$1！<br /><br />
@@ -3478,7 +3478,7 @@ Fandom團隊
 
 由於這個社群長期沒有活躍的管理員，#WIKINAME將被開放認領，以允許其他用戶成為管理員。<br /><br />
 
-Fandom團隊<br /><br />
+FANDOM團隊<br /><br />
 
 您可以按這裡<a href="$3">取消郵件訂閱</a>。
 ',

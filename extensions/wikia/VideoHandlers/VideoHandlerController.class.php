@@ -185,7 +185,7 @@ class VideoHandlerController extends WikiaController {
 				if ( $status->isOK() ) {
 					$oldimage = null;
 					$user = $this->wg->User;
-					wfRunHooks( 'FileDeleteComplete', array( &$file, &$oldimage, &$page, &$user, &$reason ) );
+					Hooks::run( 'FileDeleteComplete', array( &$file, &$oldimage, &$page, &$user, &$reason ) );
 				} else if ( !empty($error) ) {
 					$error = $status->getMessage();
 				}

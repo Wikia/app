@@ -58,6 +58,13 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexus',[
 					],
 					position: 'btf'
 				},
+				BOTTOM_LEADERBOARD: {
+					sizes: [
+						[728, 90],
+						[970, 250]
+					],
+					position: 'btf'
+				},
 				INCONTENT_BOXAD_1: {
 					sizes: [
 						[160, 600],

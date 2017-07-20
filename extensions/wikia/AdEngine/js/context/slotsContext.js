@@ -2,17 +2,19 @@
 define('ext.wikia.adEngine.context.slotsContext', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
+	'ext.wikia.adEngine.video.videoFrequencyMonitor',
 	'wikia.document',
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.log'
-], function (adContext, params, doc, geo, instantGlobals, log) {
+], function (adContext, params, videoFrequencyMonitor, doc, geo, instantGlobals, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.context.slotsContext',
 		slots = {};
 
 	function setStatus(slotName, status) {
+		log(['setStatus', slotName, status], log.levels.info, logGroup);
 		slots[slotName] = !!status;
 	}
 
@@ -25,22 +27,31 @@ define('ext.wikia.adEngine.context.slotsContext', [
 	function setupSlots() {
 		var context = adContext.getContext(),
 			isHome = params.getPageType() === 'home',
-			isOasis = context.targeting.skin === 'oasis';
-
-		setStatus('PREFOOTER_MIDDLE_BOXAD', isHome);
+			isOasis = context.targeting.skin === 'oasis',
+			isPremiumAdLayoutEnabled = context.opts.premiumAdLayoutEnabled,
+			isIncontentEnabled =
+				!isHome &&
+				isOasis &&
+				isInContentApplicable() &&
+				videoFrequencyMonitor.videoCanBeLaunched();
 
 		// those slots exists on all pages
 		setStatus('TOP_LEADERBOARD', true);
 		setStatus('TOP_RIGHT_BOXAD', true);
 
-		setStatus('LEFT_SKYSCRAPER_2', !isHome);
-		setStatus('LEFT_SKYSCRAPER_3', !isHome);
+		setStatus('PREFOOTER_MIDDLE_BOXAD', isHome);
+		setStatus('LEFT_SKYSCRAPER_2', !isPremiumAdLayoutEnabled && !isHome);
+		setStatus('LEFT_SKYSCRAPER_3', !isPremiumAdLayoutEnabled && !isHome);
 		setStatus('INCONTENT_BOXAD_1', !isHome);
 
-		setStatus('INVISIBLE_HIGH_IMPACT_2', geo.isProperGeo(instantGlobals.wgAdDriverHighImpact2SlotCountries));
-		setStatus('PREFOOTER_RIGHT_BOXAD', !context.opts.overridePrefootersSizes);
+		setStatus('INVISIBLE_HIGH_IMPACT_2', !isPremiumAdLayoutEnabled && geo.isProperGeo(instantGlobals.wgAdDriverHighImpact2SlotCountries));
+		setStatus('PREFOOTER_RIGHT_BOXAD', !isPremiumAdLayoutEnabled && !context.opts.overridePrefootersSizes);
+		setStatus('PREFOOTER_LEFT_BOXAD', !isPremiumAdLayoutEnabled);
 
-		setStatus('INCONTENT_PLAYER', !isHome && isOasis && isInContentApplicable());
+		setStatus('INCONTENT_PLAYER', isIncontentEnabled);
+		// BLB can be used also as a part of UAP, but UAP is not looking at the slot status
+		// so we can safely set it to false (for non premium) and don't wait for uap response
+		setStatus('BOTTOM_LEADERBOARD', isPremiumAdLayoutEnabled);
 
 		log(['Disabled slots:', slots], 'info', logGroup);
 	}
@@ -66,12 +77,10 @@ define('ext.wikia.adEngine.context.slotsContext', [
 	}
 
 	setupSlots();
-	adContext.addCallback(function () {
-		setupSlots();
-	});
 
 	return {
 		filterSlotMap: filterSlotMap,
-		isApplicable: isApplicable
+		isApplicable: isApplicable,
+		setStatus: setStatus
 	};
 });

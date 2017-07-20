@@ -111,12 +111,17 @@ class BodyController extends WikiaController {
 		// perform namespace and special page check
 		$isUserPage = in_array( $wg->Title->getNamespace(), self::getUserPagesNamespaces() );
 
-		$ret = ( $isUserPage && !$wg->Title->isSubpage() )
-			|| $wg->Title->isSpecial( 'Following' )
-			|| $wg->Title->isSpecial( 'Contributions' )
-			|| $wg->Title->isSpecial( 'UserActivity' )
-			|| ( defined( 'NS_BLOG_LISTING' ) && $wg->Title->getNamespace() == NS_BLOG_LISTING )
-			|| ( defined( 'NS_BLOG_ARTICLE' ) && $wg->Title->getNamespace() == NS_BLOG_ARTICLE );
+		$ret =
+			( $isUserPage && !$wg->Title->isSubpage() ) ||
+			$wg->Title->isSpecial( 'Following' ) ||
+			$wg->Title->isSpecial( 'Contributions' ) ||
+			$wg->Title->isSpecial( 'UserActivity' ) ||
+			(
+				defined( 'NS_BLOG_ARTICLE' ) &&
+				$wg->Title->getNamespace() == NS_BLOG_ARTICLE &&
+				// show user pages header only on user blog listing
+		        !$wg->Title->isSubpage()
+			);
 
 		return $ret;
 	}
@@ -161,7 +166,7 @@ class BodyController extends WikiaController {
 			];
 
 			// Include additional modules from other extensions (like chat)
-			wfRunHooks( 'GetRailModuleList', [ &$railModuleList ] );
+			Hooks::run( 'GetRailModuleList', [ &$railModuleList ] );
 			return $railModuleList;
 		}
 
@@ -203,7 +208,7 @@ class BodyController extends WikiaController {
 			} else {
 				// don't show any module for MW core special pages
 				$railModuleList = [ ];
-				wfRunHooks( 'GetRailModuleSpecialPageList', [ &$railModuleList ] );
+				Hooks::run( 'GetRailModuleSpecialPageList', [ &$railModuleList ] );
 				return $railModuleList;
 			}
 		}
@@ -255,7 +260,7 @@ class BodyController extends WikiaController {
 		// allow the right rail when using the external cms since it changes the page state without requiring a page refresh
 		if ( ( $isEditPage && !$this->wg->EnableContributionPrototypeViewing )|| WikiaPageType::isMainPage() ) {
 			$modules = [ ];
-			wfRunHooks( 'GetEditPageRailModuleList', [ &$modules ] );
+			Hooks::run( 'GetEditPageRailModuleList', [ &$modules ] );
 			return $modules;
 		}
 		// No modules on Custom namespaces, unless they are in the ContentNamespaces list, those get the content rail
@@ -270,7 +275,7 @@ class BodyController extends WikiaController {
 		$railModuleList[1440] = [ 'Ad', 'Index', [ 'slotName' => 'TOP_RIGHT_BOXAD' ] ];
 		$railModuleList[1100] = [ 'Ad', 'Index', [ 'slotName' => 'LEFT_SKYSCRAPER_2' ] ];
 
-		wfRunHooks( 'GetRailModuleList', [ &$railModuleList ] );
+		Hooks::run( 'GetRailModuleList', [ &$railModuleList ] );
 
 		return $railModuleList;
 	}
@@ -296,61 +301,41 @@ class BodyController extends WikiaController {
 		$skin = RequestContext::getMain()->getSkin();
 
 		$afterBodyHtml = '';
-		wfRunHooks( 'GetHTMLAfterBody', [ $skin, &$afterBodyHtml ] );
+		Hooks::run( 'GetHTMLAfterBody', [ $skin, &$afterBodyHtml ] );
 		$this->afterBodyHtml = $afterBodyHtml;
 
 		$beforeWikiaPageHtml = '';
-		wfRunHooks( 'GetHTMLBeforeWikiaPage', [ &$beforeWikiaPageHtml ] );
+		Hooks::run( 'GetHTMLBeforeWikiaPage', [ &$beforeWikiaPageHtml ] );
 		$this->beforeWikiaPageHtml = $beforeWikiaPageHtml;
 
 
 		// this hook is needed for SMW's factbox
 		$afterContentHookText = '';
-		wfRunHooks( 'SkinAfterContent', [ &$afterContentHookText ] );
+		Hooks::run( 'SkinAfterContent', [ &$afterContentHookText ] );
 		$this->afterContentHookText = $afterContentHookText;
 
+		$this->headerModuleName = null;
 		$this->headerModuleAction = 'Index';
 		$this->headerModuleParams = [ 'showSearchBox' => false ];
 
 		// show user pages header on this page?
 		if ( self::showUserPagesHeader() ) {
 			$this->headerModuleName = 'UserPagesHeader';
-			// is this page a blog post?
-			if ( self::isBlogPost() ) {
-				$this->headerModuleAction = 'BlogPost';
-			} // is this page a blog listing?
-			else if ( self::isBlogListing() ) {
-				$this->headerModuleAction = 'BlogListing';
-			}
-			// show corporate header on this page?
-		} else if ( WikiaPageType::isCorporatePage() || WikiaPageType::isWikiaHub() ) {
-			$this->headerModuleName = 'PageHeader';
-
-			if ( self::isEditPage() ) {
-				$this->headerModuleAction = 'EditPage';
-			} else {
-				$this->headerModuleAction = 'Corporate';
-			}
-
-			if ( WikiaPageType::isWikiaHubMain() ) {
-				$this->headerModuleAction = 'Hubs';
-			} elseif ( WikiaPageType::isMainPage() ) {
-				$this->wg->SuppressFooter = true;
-				$this->wg->SuppressArticleCategories = true;
-				$this->wg->SuppressPageHeader = true;
-				$this->wg->SuppressWikiHeader = true;
-				$this->wg->SuppressSlider = true;
-			}
-		} else {
-			$this->headerModuleName = 'PageHeader';
-			if ( self::isEditPage() ) {
-				$this->headerModuleAction = 'EditPage';
-			}
+		// show corporate header on this page?
+		} else if (
+			( WikiaPageType::isCorporatePage() || WikiaPageType::isWikiaHub() ) &&
+			!WikiaPageType::isWikiaHubMain() &&
+			WikiaPageType::isMainPage()
+		) {
+			$this->wg->SuppressFooter = true;
+			$this->wg->SuppressArticleCategories = true;
+			$this->wg->SuppressPageHeader = true;
+			$this->wg->SuppressCommunityHeader = true;
+			$this->wg->SuppressSlider = true;
 		}
 
 		// Display chromed header on Special:AdminDashboard
 		if ( $this->wg->Title->isSpecial( 'AdminDashboard' ) && $this->wg->User->isAllowed( 'admindashboard' ) ) {
-			$this->headerModuleName = null;
 			$this->displayAdminDashboard = true;
 		} else {
 			$this->displayAdminDashboard = false;
@@ -384,15 +369,9 @@ class BodyController extends WikiaController {
 			OasisController::addBodyClass( 'oasis-responsive' );
 		}
 
-		// if we are on a special search page, pull in the css file and don't render a header
+		// if we are on a special search page, pull in the css file
 		if ( $this->wg->Title && $this->wg->Title->isSpecial( 'Search' ) && !$this->wg->WikiaSearchIsDefault ) {
 			$this->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL( "skins/oasis/css/modules/SpecialSearch.scss" ) );
-			$this->headerModuleName = null;
-		}
-
-		// Inter-wiki search
-		if ( $this->wg->Title && ( $this->wg->Title->isSpecial( 'WikiaSearch' ) || ( $this->wg->Title->isSpecial( 'Search' ) && $this->wg->WikiaSearchIsDefault ) ) ) {
-			$this->headerModuleName = null;
 		}
 
 		// load CSS for Special:Preferences
@@ -418,11 +397,6 @@ class BodyController extends WikiaController {
 		// VOLDEV-125: Fix Special:AllMessages colors on dark wikis
 		if ( !empty( $this->wg->Title ) && $this->wg->Title->isSpecial( 'Allmessages' ) && SassUtil::isThemeDark() ) {
 			$this->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'skins/oasis/css/modules/SpecialAllMessages.scss' ) );
-		}
-
-		// Forum Extension
-		if ( !empty( $this->wg->EnableForumExt ) && ForumHelper::isForum() ) {
-			$this->wg->SuppressPageHeader = true;
 		}
 
 		$namespace = $this->wg->Title->getNamespace();

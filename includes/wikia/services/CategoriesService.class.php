@@ -1,5 +1,5 @@
 <?php
-class CategoriesService extends Service {
+class CategoriesService {
 
 	const CACHE_TTL = 3600;
 

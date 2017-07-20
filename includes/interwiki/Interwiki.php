@@ -142,7 +142,7 @@ class Interwiki {
 		global $wgMemc, $wgInterwikiExpiry;
 
 		$iwData = false;
-		if ( !wfRunHooks( 'InterwikiLoadPrefix', array( $prefix, &$iwData ) ) ) {
+		if ( !Hooks::run( 'InterwikiLoadPrefix', array( $prefix, &$iwData ) ) ) {
 			return Interwiki::loadFromArray( $iwData );
 		}
 

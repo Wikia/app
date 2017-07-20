@@ -2,8 +2,7 @@
 describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 	'use strict';
 
-	function noop() {
-	}
+	function noop() {}
 
 	var mocks = {
 		log: noop,
@@ -22,10 +21,20 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 				return false;
 			}
 		},
+		adBlockDetection: {
+			isBlocking: function () {
+				return false;
+			}
+		},
+		pageFair: {
+			isEnabled: function () {
+				return false;
+			}
+		},
 		win: {}
 	};
 
-	mocks.log.levels = {debug: ''};
+	mocks.log.levels = {};
 	beforeEach(function () {
 		mocks.context.opts.delayBtf = true;
 		spyOn(mocks, 'methodCalledInsideFillInSlot');
@@ -35,9 +44,11 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 		return modules['ext.wikia.adEngine.provider.btfBlocker'](
 			mocks.adContext,
 			mocks.uapContext,
+			mocks.adBlockDetection,
 			modules['wikia.lazyqueue'](),
 			mocks.log,
-			mocks.win
+			mocks.win,
+			mocks.pageFair
 		);
 	}
 
@@ -87,6 +98,24 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 		mocks.context.opts.delayBtf = false;
 
 		fillInSlot = btfBlocker.decorate(fakeFillInSlot);
+		fillInSlot(slot);
+
+		expect(slot.success).toHaveBeenCalled();
+	});
+
+	it('Do not change fillInSlot method when user is blocking ads and PF is enabled', function () {
+		var fillInSlot,
+			btfBlocker = getBtfBlocker(),
+			fakeProvider = getFakeProvider(),
+			slot = getFakeSlot('BTF_SLOT'),
+			fakeFillInSlot = function (slot) {
+				slot.success();
+			};
+		mocks.context.opts.delayBtf = true;
+		spyOn(mocks.adBlockDetection, 'isBlocking').and.returnValue(true);
+		spyOn(mocks.pageFair, 'isEnabled').and.returnValue(true);
+
+		fillInSlot = btfBlocker.decorate(fakeFillInSlot, fakeProvider.config);
 		fillInSlot(slot);
 
 		expect(slot.success).toHaveBeenCalled();

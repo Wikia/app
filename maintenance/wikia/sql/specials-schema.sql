@@ -6,18 +6,6 @@
 
 
 --
--- Table structure for table `__groups`
---
-
-DROP TABLE IF EXISTS `__groups`;
-CREATE TABLE `__groups` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `common_key_value`
 --
 
@@ -38,21 +26,6 @@ CREATE TABLE `const_values` (
   `name` varchar(50) NOT NULL,
   `val` int(8) unsigned NOT NULL,
   PRIMARY KEY (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Table structure for table `crosslink`
---
-
-DROP TABLE IF EXISTS `crosslink`;
-CREATE TABLE `crosslink` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `source_wiki` int(8) unsigned NOT NULL,
-  `source_page` int(8) unsigned NOT NULL,
-  `target_wiki` int(8) unsigned NOT NULL,
-  `target_page` int(8) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `source` (`source_wiki`,`source_page`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -77,7 +50,6 @@ CREATE TABLE `events_local_users` (
   `wiki_id` int(8) unsigned NOT NULL,
   `user_id` int(10) unsigned NOT NULL,
   `user_name` varchar(255) NOT NULL DEFAULT '',
-  `last_ip` int(10) unsigned NOT NULL DEFAULT '0',
   `edits` int(11) unsigned NOT NULL DEFAULT '0',
   `editdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `last_revision` int(11) NOT NULL DEFAULT '0',
@@ -125,10 +97,13 @@ CREATE TABLE `jobs_summary` (
 DROP TABLE IF EXISTS `multilookup`;
 CREATE TABLE `multilookup` (
   `ml_city_id` int(9) unsigned NOT NULL,
-  `ml_ip_bin` varbinary(16) DEFAULT NULL,
+  `ml_ip_bin` varbinary(16) NOT NULL DEFAULT '',
   `ml_count` int(6) unsigned NOT NULL DEFAULT '0',
   `ml_ts` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`ml_city_id`,`ml_ip_bin`),
+  UNIQUE KEY `multilookup_ip_city_id_uni_inx` (`ml_city_id`,`ml_ip_bin`),
+  KEY `multilookup_ts_inx` (`ml_ts`),
+  KEY `multilookup_cnt_ts_inx` (`ml_count`,`ml_ts`),
   KEY `multilookup_ip_bin_ts_inx` (`ml_ip_bin`,`ml_ts`),
   KEY `multilookup_ip_bin_cnt_ts_inx` (`ml_ip_bin`,`ml_count`,`ml_ts`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
@@ -166,23 +141,6 @@ CREATE TABLE `script_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Table structure for table `user_groups`
---
-
-DROP TABLE IF EXISTS `user_groups`;
-CREATE TABLE `user_groups` (
-  `user_id` int(10) unsigned NOT NULL,
-  `group_id` int(10) unsigned NOT NULL,
-  `wiki_id` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`user_id`,`group_id`,`wiki_id`),
-  KEY `user_id` (`user_id`),
-  KEY `group_id` (`group_id`),
-  KEY `wiki_id` (`wiki_id`),
-  KEY `group_wikis` (`group_id`,`wiki_id`),
-  CONSTRAINT `user_groups_ibfk_1` FOREIGN KEY (`group_id`) REFERENCES `__groups` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `user_login_history`
 --
 
@@ -210,4 +168,4 @@ CREATE TABLE `user_login_history_summary` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- Dump completed on 2017-05-24  7:42:01
+-- Dump completed on 2017-07-06  8:12:51

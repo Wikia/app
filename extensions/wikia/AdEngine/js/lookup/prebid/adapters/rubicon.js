@@ -7,7 +7,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 ], function (slotsContext, geo, instantGlobals, log) {
 	'use strict';
 
-	var bidderName = 'rubicon',
+	var bidderName = 'rubicon', // aka rubicon vulcan
 		logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.rubicon',
 		outstreamSizeId = 203,
 		rubiconAccountId = 7450,

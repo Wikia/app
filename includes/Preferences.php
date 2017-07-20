@@ -75,7 +75,7 @@ class Preferences {
 		self::searchPreferences( $user, $context, $defaultPreferences );
 		self::miscPreferences( $user, $context, $defaultPreferences );
 
-		wfRunHooks( 'GetPreferences', array( $user, &$defaultPreferences ) );
+		Hooks::run( 'GetPreferences', array( $user, &$defaultPreferences ) );
 
 		## Remove preferences that wikis don't want to use
 		global $wgHiddenPrefs;
@@ -289,7 +289,7 @@ class Preferences {
 
 		// Language
 		/** WIKIA CHANGE BEGIN **/
-		$languages = wfGetFixedLanguageNames();
+		$languages = WikiaLanguage::getRequestSupportedLanguages();
 		/** WIKIA CHANGE END **/
 		if ( !array_key_exists( $wgLanguageCode, $languages ) ) {
 			$languages[$wgLanguageCode] = $wgLanguageCode;
@@ -406,7 +406,7 @@ class Preferences {
 			if ( $wgEmailAuthentication ) {
 				/* Wikia change - begin */
 				$emailauthenticated = '';
-				wfRunHooks( 'PreferencesGetEmailAuthentication', array( &$user, $context, &$disableEmailPrefs, &$emailauthenticated ) );
+				Hooks::run( 'PreferencesGetEmailAuthentication', array( &$user, $context, &$disableEmailPrefs, &$emailauthenticated ) );
 				if ( empty($emailauthenticated) ) {
 					/* Wikia change - end */
 					if ( $user->getEmail() ) {
@@ -743,7 +743,7 @@ class Preferences {
 		global $wgUseExternalEditor, $wgLivePreview, $wgAllowUserCssPrefs;
 
 		/* Wikia change begin - @author: Macbre */
-		wfRunHooks( 'EditingPreferencesBefore', [ $user, &$defaultPreferences ] );
+		Hooks::run( 'EditingPreferencesBefore', [ $user, &$defaultPreferences ] );
 		/* Wikia change end */
 
 		## Editing #####################################
@@ -923,7 +923,7 @@ class Preferences {
 	static function watchlistPreferences( $user, IContextSource $context, &$defaultPreferences ) {
 		global $wgUseRCPatrol, $wgEnableAPI, $wgRCMaxAge;
 
-		if ( !wfRunHooks( 'WatchlistPreferencesBefore', array( $user, &$defaultPreferences ) ) ) {
+		if ( !Hooks::run( 'WatchlistPreferencesBefore', array( $user, &$defaultPreferences ) ) ) {
 			return true;
 		}
 
@@ -1454,7 +1454,7 @@ class Preferences {
 		);
 
 		/* Wikia change - begin */
-		if ( !wfRunHooks( 'PreferencesTrySetUserEmail', array( $user, $formData['emailaddress'], &$result ) ) ) {
+		if ( !Hooks::run( 'PreferencesTrySetUserEmail', array( $user, $formData['emailaddress'], &$result ) ) ) {
 			return $result;
 		}
 		/* Wikia change -end */
@@ -1519,7 +1519,7 @@ class Preferences {
 	 */
 	public static function tryUISubmit( $formData, $form ) {
 		$error = null;
-		if( !wfRunHooks('SavePreferences', array(&$formData, &$error)) ) {
+		if( !Hooks::run('SavePreferences', array(&$formData, &$error)) ) {
 			return $error;
 		}
 
@@ -1557,7 +1557,7 @@ class Preferences {
 		if ( $wgEnableEmail ) {
 			#<Wikia>
 			$result = null;
-			wfRunHooks( 'Preferences::SetUserEmail', array( $user, $newaddr, &$result, &$info ) );
+			Hooks::run( 'Preferences::SetUserEmail', array( $user, $newaddr, &$result, &$info ) );
 			if ( empty($result) ) {
 				#</Wikia>
 				$oldaddr = $user->getEmail();
@@ -1588,7 +1588,7 @@ class Preferences {
 			/* Wikia change - end */
 
 			if ( $oldaddr != $newaddr ) {
-				wfRunHooks( 'PrefsEmailAudit', array( $user, $oldaddr, $newaddr ) );
+				Hooks::run( 'PrefsEmailAudit', array( $user, $oldaddr, $newaddr ) );
 			}
 		}
 
@@ -1723,7 +1723,7 @@ class PreferencesForm extends HTMLForm {
 	 */
 	function getLegend( $key ) {
 		$legend = parent::getLegend( $key );
-		wfRunHooks( 'PreferencesGetLegend', array( $this, $key, &$legend ) );
+		Hooks::run( 'PreferencesGetLegend', array( $this, $key, &$legend ) );
 		return $legend;
 	}
 }

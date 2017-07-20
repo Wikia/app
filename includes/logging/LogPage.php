@@ -558,18 +558,24 @@ class LogPage {
 	 * Convert a comma-delimited list of block log flags
 	 * into a more readable (and translated) form
 	 *
-	 * @param $flags Flags to format
+	 * @param $flags string Flags to format
 	 * @param $lang Language object to use
-	 * @return String
+	 * @return string
 	 */
-	public static function formatBlockFlags( $flags, $lang ) {
-		$flags = explode( ',', trim( $flags ) );
+	public static function formatBlockFlags( string $flags, Language $lang ): string {
+		$flags = str_getcsv( trim( $flags ) );
 
-		if( count( $flags ) > 0 ) {
-			for( $i = 0; $i < count( $flags ); $i++ ) {
-				$flags[$i] = self::formatBlockFlag( $flags[$i], $lang );
+		foreach ( $flags as $key => $flag ) {
+			// SUS-1528: Exclude legacy "account creation disabled" flag which may be set for old blocks
+			if ( $flag == 'nocreate' ) {
+				unset( $flags[$key] );
+			} else {
+				$flags[$key] = self::formatBlockFlag( $flag, $lang );
 			}
-			return '(' . $lang->commaList( $flags ) . ')';
+		}
+
+		if ( !empty( $flags ) ) {
+			return wfMessage( 'parentheses' )->inLanguage( $lang )->rawParams( $flags )->escaped();
 		} else {
 			return '';
 		}
@@ -578,7 +584,7 @@ class LogPage {
 	/**
 	 * Translate a block log flag if possible
 	 *
-	 * @param $flag int Flag to translate
+	 * @param $flag string Flag to translate
 	 * @param $lang Language object to use
 	 * @return String
 	 */
@@ -593,7 +599,6 @@ class LogPage {
 			// * block-log-flags-anononly
 			// * block-log-flags-hiddenname
 			// * block-log-flags-noautoblock
-			// * block-log-flags-nocreate
 			// * block-log-flags-noemail
 			// * block-log-flags-nousertalk
 			$msg = wfMessage( 'block-log-flags-' . $flag )->inLanguage( $lang );

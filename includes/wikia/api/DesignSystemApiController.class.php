@@ -20,45 +20,63 @@ class DesignSystemApiController extends WikiaApiController {
 
 	public function getNavigation() {
 		$params = $this->getRequestParameters();
-
-		$this->setResponseData(
-			( new DesignSystemGlobalNavigationModel(
-				$params[static::PARAM_PRODUCT],
-				$params[static::PARAM_ID],
-				$params[static::PARAM_LANG]
-			) )->getData() );
-
-		$this->addCachingHeaders();
-	}
-
-	/**
-	 * return all possible elements of Design System API
-	 * @throws \NotFoundApiException
-	 */
-	public function getAllElements() {
-		$params = $this->getRequestParameters();
-		$footerModel = new DesignSystemGlobalFooterModel(
-			$params[static::PARAM_PRODUCT],
-			$params[static::PARAM_ID],
-			$params[static::PARAM_LANG]
-		);
 		$navigationModel = new DesignSystemGlobalNavigationModel(
 			$params[static::PARAM_PRODUCT],
 			$params[static::PARAM_ID],
 			$params[static::PARAM_LANG]
 		);
 
+		$this->setResponseData( $navigationModel->getData() );
+		$this->addCachingHeaders();
+	}
 
-		$this->setResponseData( [
-			'global-footer' => $footerModel->getData(),
-			'global-navigation' => $navigationModel->getData(),
-		] );
+	public function getCommunityHeader() {
+		$params = $this->getRequestParameters();
+		$communityHeaderModel = new DesignSystemCommunityHeaderModel(
+			$params[static::PARAM_ID]
+		);
+
+		$this->setResponseData( $communityHeaderModel->getData() );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
+	}
+
+	/**
+	 * return all possible elements of Design System API
+	 *
+	 * @throws \NotFoundApiException
+	 */
+	public function getAllElements() {
+		$params = $this->getRequestParameters();
+
+		$footerModel = new DesignSystemGlobalFooterModel(
+			$params[static::PARAM_PRODUCT],
+			$params[static::PARAM_ID],
+			$params[static::PARAM_LANG]
+		);
+
+		$navigationModel = new DesignSystemGlobalNavigationModel(
+			$params[static::PARAM_PRODUCT],
+			$params[static::PARAM_ID],
+			$params[static::PARAM_LANG]
+		);
+
+		$communityHeaderModel = new DesignSystemCommunityHeaderModel(
+			$params[static::PARAM_ID]
+		);
+
+		$this->setResponseData(
+			[
+				'global-footer' => $footerModel->getData(),
+				'global-navigation' => $navigationModel->getData(),
+				'community-header' => $communityHeaderModel->getData()
+			]
+		);
 
 		$this->addCachingHeaders();
 	}
 
 	private function getRequestParameters() {
-		$id = $this->getRequiredParam( static::PARAM_ID );
+		$id = intval( $this->getRequiredParam( static::PARAM_ID ) );
 		$product = $this->getRequiredParam( static::PARAM_PRODUCT );
 		$lang = $this->getRequiredParam( static::PARAM_LANG );
 

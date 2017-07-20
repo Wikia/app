@@ -1,6 +1,6 @@
 <?php
 
-class CommunityDataService extends WikiaService {
+class CommunityDataService {
 	const CURATED_CONTENT_VAR_NAME = 'wgWikiaCuratedContent';
 	const FEATURED_SECTION = 'featured';
 	const CURATED_SECTION = 'curated';
@@ -11,7 +11,6 @@ class CommunityDataService extends WikiaService {
 	private $cityId;
 
 	function __construct( $cityId ) {
-		parent::__construct();
 		$this->cityId = $cityId;
 	}
 

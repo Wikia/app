@@ -169,7 +169,7 @@ class PBLoginForm extends LoginForm {
 
 		$wgRequest->setSessionData( 'PgParentUser', $wgUser->getID() );
 
-		wfRunHooks( 'PiggybackLogIn', array( $wgUser, $u ) );
+		Hooks::run( 'PiggybackLogIn', array( $wgUser, $u ) );
 
 		$log = new LogPage( 'piggyback' );
 		$log->addEntry(

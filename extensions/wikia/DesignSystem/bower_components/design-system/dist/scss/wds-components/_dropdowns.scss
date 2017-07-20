@@ -6,11 +6,11 @@
 	position: relative;
 
 	&__toggle {
-		cursor: pointer;
+		cursor: default;
 		position: relative;
 	}
 
-	&__toggle-chevron {
+	&__toggle-chevron:not(:only-child) {
 		margin-left: 5px;
 	}
 
@@ -43,7 +43,7 @@
 		// The default is to show scroll on long dropdowns
 		&:not(.wds-is-not-scrollable) {
 			.wds-list {
-				@include scrollable-list(270px);
+				@include scrollable-list($wds-dropdown-height);
 			}
 		}
 
@@ -76,8 +76,10 @@
 						transition-property: background-color, color;
 					}
 
-					&:hover > a {
-						@include wds-dropdown-linked-list-item-hover;
+					&:hover, &.wds-is-selected {
+						> a {
+							@include wds-dropdown-linked-list-item-hover;
+						}
 					}
 				}
 			}

@@ -658,26 +658,6 @@ function isMsgEmpty( $key ) {
 }
 
 /**
- * Get a list of language names available for wiki request
- * (possibly filter some)
- *
- * @author nef@wikia-inc.com
- * @return array
- *
- * @see Language::getLanguageNames()
- * @see RT#11870
- */
-function wfGetFixedLanguageNames() {
-	$languages = Language::getLanguageNames();
-
-	$filter_languages = explode( ',', wfMsgForContent( 'requestwiki-filter-language' ) );
-	foreach ( $filter_languages as $key ) {
-		unset( $languages[$key] );
-	}
-	return $languages;
-}
-
-/**
  * @brief: Get a shared cache key
  * @details: this function is used for creating keys for information that
  * 	should be shared among wikis. Function uses func_get_arrays
@@ -824,7 +804,7 @@ function wfMsgHTMLwithLanguage( $key, $lang, $options = array(), $params = array
  */
 function wfMsgHTMLwithLanguageAndAlternative( $key, $keyAlternative, $lang, $options = array(), $params = array(), $wantHTML = true ) {
 	// inserted here for external i18n add-on, adjust params if needed
-	wfRunHooks( 'MsgHTMLwithLanguageAndAlternativeBefore' );
+	Hooks::run( 'MsgHTMLwithLanguageAndAlternativeBefore' );
 
 	list ( $msgPlainMain, $msgRichMain, $msgPlainMainFallback, $msgRichMainFallback ) = wfMsgHTMLwithLanguage( $key, $lang, $options, $params, $wantHTML );
 	list ( $msgPlainAlter, $msgRichAlter, $msgPlainAlterFallback, $msgRichAlterFallback ) = wfMsgHTMLwithLanguage( $keyAlternative, $lang, $options, $params, $wantHTML );
@@ -1480,7 +1460,7 @@ function wfGetNamespaces() {
 	global $wgContLang;
 
 	$namespaces = $wgContLang->getFormattedNamespaces();
-	wfRunHooks( 'XmlNamespaceSelectorAfterGetFormattedNamespaces', array( &$namespaces ) );
+	Hooks::run( 'XmlNamespaceSelectorAfterGetFormattedNamespaces', array( &$namespaces ) );
 
 	return $namespaces;
 }

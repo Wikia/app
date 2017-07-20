@@ -131,7 +131,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		var request = new win.XMLHttpRequest(),
 			skin = adContext.getContext().targeting.skin,
 			vastUrl = vastUrlBuilder.build(640 / 480, {
-				pos: Object.keys(slots[skin]),
+				pos: (adContext.getContext().opts.megaAdUnitBuilderEnabled ? 'OUTSTREAM' : Object.keys(slots[skin])),
 				src: skin === 'oasis' ? 'gpt' : 'mobile',
 				passback: bidderName
 			}, {

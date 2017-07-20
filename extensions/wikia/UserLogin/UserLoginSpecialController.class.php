@@ -65,7 +65,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->response->addAsset( 'userlogin_scss_wikiamobile' );
 
 		// hide things in the skin
-		$this->wg->SuppressWikiHeader = false;
+		$this->wg->SuppressCommunityHeader = false;
 		$this->wg->SuppressPageHeader = false;
 		$this->wg->SuppressFooter = false;
 		$this->wg->SuppressAds = true;
@@ -115,7 +115,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 */
 	public function loggedIn() {
 		// don't show "special page" text
-		$this->wg->SupressPageSubtitle = true;
+		$this->wg->SuppressPageSubtitle = true;
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
 		$userName = $this->wg->user->getName();
@@ -466,7 +466,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				} else {
 					$result = '';
 					$resultMsg = '';
-					if ( !wfRunHooks( 'WikiaUserLoginSuccess', array( $this->wg->User, &$result, &$resultMsg ) ) ) {
+					if ( !Hooks::run( 'WikiaUserLoginSuccess', array( $this->wg->User, &$result, &$resultMsg ) ) ) {
 						$this->response->setValues( [
 							'result' => $result,
 							'msg' => $resultMsg,
@@ -476,7 +476,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 
 					// Login succesful
 					$injected_html = '';
-					wfRunHooks( 'UserLoginComplete', array( &$this->wg->User, &$injected_html ) );
+					Hooks::run( 'UserLoginComplete', array( &$this->wg->User, &$injected_html ) );
 
 					// set rememberpassword option
 					if ( (bool)$loginForm->mRemember != (bool)$this->wg->User->getGlobalPreference( 'rememberpassword' ) ) {
@@ -725,7 +725,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				if ( $newPassword !== $retype ) {
 					$this->result = 'error';
 					$this->msg = wfMessage( 'badretype' )->escaped();
-					wfRunHooks( 'PrefsPasswordAudit', [ $user, $newPassword, 'badretype' ] );
+					Hooks::run( 'PrefsPasswordAudit', [ $user, $newPassword, 'badretype' ] );
 					return;
 				}
 
@@ -733,7 +733,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				if ( !$user->checkPassword( $password )->success() ) {
 					$this->result = 'error';
 					$this->msg = wfMessage( 'userlogin-error-wrongpassword' )->escaped();
-					wfRunHooks( 'PrefsPasswordAudit', [ $user, $newPassword, 'wrongpassword' ] );
+					Hooks::run( 'PrefsPasswordAudit', [ $user, $newPassword, 'wrongpassword' ] );
 					return;
 				}
 
@@ -745,7 +745,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				}
 
 				$user->setPassword( $newPassword );
-				wfRunHooks( 'PrefsPasswordAudit', [ $user, $newPassword, 'success' ] );
+				Hooks::run( 'PrefsPasswordAudit', [ $user, $newPassword, 'success' ] );
 				$user->saveSettings();
 
 				$this->result = 'ok';

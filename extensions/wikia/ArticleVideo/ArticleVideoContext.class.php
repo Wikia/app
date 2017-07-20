@@ -14,7 +14,31 @@ class ArticleVideoContext {
 		return $wg->enableArticleFeaturedVideo &&
 			isset( $wg->articleVideoFeaturedVideos[$title] ) &&
 			self::isFeaturedVideosValid( $wg->articleVideoFeaturedVideos[$title] ) &&
-			!WikiaPageType::isActionPage(); // Prevents to show video on ?action=history etc.;
+			// Prevents to show video on ?action=history etc.
+			!WikiaPageType::isActionPage();
+	}
+
+	/**
+	 * Gets video id and labels for featured video
+	 *
+	 * @param string $title Prefixed article title (see: Title::getPrefixedDBkey)
+	 * @return array
+	 */
+	public static function getFeaturedVideoData( $title ) {
+		$wg = F::app()->wg;
+
+		if ( self::isFeaturedVideoEmbedded( $title ) ) {
+			$api = OoyalaBacklotApiService::getInstance();
+
+			$videoData = $wg->articleVideoFeaturedVideos[$title];
+			$videoData['title'] = $api->getTitle( $videoData['videoId'] );
+			$videoData['labels'] = $api->getLabels( $videoData['videoId'] );
+			$videoData['duration'] = $api->getDuration( $videoData['videoId'] );
+
+			return $videoData;
+		}
+
+		return [];
 	}
 
 	private static function isFeaturedVideosValid( $featuredVideo ) {
@@ -46,15 +70,5 @@ class ArticleVideoContext {
 		}
 
 		return [];
-	}
-
-	/**
-	 * Checks if related video is embedded on given article
-	 *
-	 * @param string $title Prefixed article title (see: Title::getPrefixedDBkey)
-	 * @return bool
-	 */
-	public static function isRelatedVideoEmbedded( $title ) {
-		return !empty( static::getRelatedVideoData( $title ) );
 	}
 }

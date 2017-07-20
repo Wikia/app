@@ -7,6 +7,7 @@ $messages['en'] = array(
 	'article-blog-comments-file-page' => "[[$1|Comment from $2]] on [[$3|$4]] post on [[$5|$6's]] blog",
 	'article-comments-anonymous' => 'Anonymous user',
 	'article-comments-comments' => 'Comments ($1)',
+	'article-comments-no-comments' => 'Comments',
 	'article-comments-post' => 'Post comment',
 	'article-comments-cancel' => 'Cancel',
 	'article-comments-delete' => 'delete',
@@ -91,6 +92,7 @@ Parameters:
 	'article-comments-anonymous' => 'Anonymous users are logged out / un-authenticated users.
 {{Identical|Anonymous user}}',
 	'article-comments-comments' => '{{Identical|Comment}}',
+	'article-comments-no-comments' => 'Label on button that links to comments if there is no comments yet',
 	'article-comments-post' => 'This is the text of a submit button to post a new article comment.
 {{Identical|Post comment}}',
 	'article-comments-cancel' => 'Cancel/stop editing an article comment.
@@ -870,6 +872,7 @@ Dein freundliches {{SITENAME}}-Benachrichtigungssystem
 	'right-commentedit' => 'Can edit article comments',
 	'right-commentmove' => 'Can move article comments',
 	'right-commentcreate' => 'Can create article comments',
+	'article-comments-no-comments' => 'Kommentare',
 );
 
 $messages['de-formal'] = array(
@@ -1070,6 +1073,7 @@ Hay nuevos comentarios en la página $PAGETITLE de {{SITENAME}}. Usa el siguient
 	'right-commentedit' => 'Can edit article comments',
 	'right-commentmove' => 'Can move article comments',
 	'right-commentcreate' => 'Can create article comments',
+	'article-comments-no-comments' => 'Comentarios',
 );
 
 $messages['et'] = array(
@@ -1255,6 +1259,7 @@ ___________________________________________
 	'right-commentedit' => 'Can edit article comments',
 	'right-commentmove' => 'Can move article comments',
 	'right-commentcreate' => 'Can create article comments',
+	'article-comments-no-comments' => 'Kommentit',
 );
 
 $messages['fo'] = array(
@@ -1353,6 +1358,7 @@ Un nouveau commentaire a été laissé sur « $PAGETITLE » sur {{SITENAME}}. Ut
 	'right-commentedit' => 'Can edit article comments',
 	'right-commentmove' => 'Can move article comments',
 	'right-commentcreate' => 'Can create article comments',
+	'article-comments-no-comments' => 'Commentaires',
 );
 
 $messages['fy'] = array(
@@ -1846,6 +1852,7 @@ Wikia
 	'right-commentedit' => 'Can edit article comments',
 	'right-commentmove' => 'Can move article comments',
 	'right-commentcreate' => 'Can create article comments',
+	'article-comments-no-comments' => 'Commenti',
 );
 
 $messages['ja'] = array(
@@ -1917,6 +1924,7 @@ ___________________________________________
 	'right-commentedit' => 'Can edit article comments',
 	'right-commentmove' => 'Can move article comments',
 	'right-commentcreate' => 'Can create article comments',
+	'article-comments-no-comments' => 'コメント',
 );
 
 $messages['ka'] = array(
@@ -2058,6 +2066,7 @@ $messages['ko'] = array(
 	'right-commentedit' => 'Can edit article comments',
 	'right-commentmove' => 'Can move article comments',
 	'right-commentcreate' => 'Can create article comments',
+	'article-comments-no-comments' => '댓글',
 );
 
 $messages['krc'] = array(
@@ -2236,6 +2245,7 @@ $messages['lol'] = array(
 	'right-commentedit' => 'crwdns65246:0crwdne65246:0',
 	'right-commentmove' => 'crwdns65247:0crwdne65247:0',
 	'right-commentcreate' => 'crwdns65248:0crwdne65248:0',
+	'article-comments-no-comments' => 'crwdns66802:0crwdne66802:0',
 );
 
 $messages['lrc'] = array(
@@ -2838,6 +2848,7 @@ Wikia
 	'right-commentedit' => 'Can edit article comments',
 	'right-commentmove' => 'Can move article comments',
 	'right-commentcreate' => 'Can create article comments',
+	'article-comments-no-comments' => 'Reacties',
 );
 
 $messages['nl-informal'] = array(
@@ -2973,6 +2984,7 @@ ___________________________________________
 	'right-commentedit' => 'Edytowanie komentarzy',
 	'right-commentmove' => 'Can move article comments',
 	'right-commentcreate' => 'Can create article comments',
+	'article-comments-no-comments' => 'Komentarze',
 );
 
 $messages['pms'] = array(
@@ -3146,6 +3158,7 @@ ___________________________________________
 	'right-commentedit' => 'Can edit article comments',
 	'right-commentmove' => 'Can move article comments',
 	'right-commentcreate' => 'Can create article comments',
+	'article-comments-no-comments' => 'Comentários',
 );
 
 $messages['ro'] = array(
@@ -3297,6 +3310,7 @@ $PAGETITLE_URL
 	'right-commentedit' => 'Can edit article comments',
 	'right-commentmove' => 'Can move article comments',
 	'right-commentcreate' => 'Can create article comments',
+	'article-comments-no-comments' => 'Комментарии',
 );
 
 $messages['sa'] = array(
@@ -3923,6 +3937,7 @@ Wikia
 	'right-commentedit' => 'Can edit article comments',
 	'right-commentmove' => 'Can move article comments',
 	'right-commentcreate' => 'Can create article comments',
+	'article-comments-no-comments' => 'Bình luận',
 );
 
 $messages['zh-hans'] = array(
@@ -3998,6 +4013,7 @@ ___________________________________________
 	'right-commentedit' => 'Can edit article comments',
 	'right-commentmove' => 'Can move article comments',
 	'right-commentcreate' => 'Can create article comments',
+	'article-comments-no-comments' => '评论',
 );
 
 $messages['zh-hant'] = array(
@@ -4073,5 +4089,6 @@ ___________________________________________
 	'right-commentedit' => 'Can edit article comments',
 	'right-commentmove' => 'Can move article comments',
 	'right-commentcreate' => 'Can create article comments',
+	'article-comments-no-comments' => '評論',
 );
 

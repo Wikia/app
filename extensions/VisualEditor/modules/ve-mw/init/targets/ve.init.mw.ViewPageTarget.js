@@ -191,7 +191,6 @@ ve.init.mw.ViewPageTarget.prototype.verifyPopState = function ( popState ) {
  * @inheritdoc
  */
 ve.init.mw.ViewPageTarget.prototype.setupToolbar = function ( surface ) {
-	var $firstHeading;
 	// Parent method
 	ve.init.mw.Target.prototype.setupToolbar.call( this, surface );
 
@@ -206,13 +205,6 @@ ve.init.mw.ViewPageTarget.prototype.setupToolbar = function ( surface ) {
 
 	this.getToolbar().$element
 		.addClass( 've-init-mw-viewPageTarget-toolbar' );
-
-	// Wikia change - #WikiaPageHeader instead of #firstHeading and after instead of before
-	// Move the toolbar to before #firstHeading if it exists
-	$firstHeading = $( '#WikiaPageHeader' );
-	if ( $firstHeading.length ) {
-		this.getToolbar().$element.insertAfter( $firstHeading );
-	}
 
 	this.getToolbar().$bar.slideDown( 'fast', function () {
 		// Check the surface wasn't torn down while the toolbar was animating
@@ -481,7 +473,6 @@ ve.init.mw.ViewPageTarget.prototype.afterHideSpinner = function ( surfaceReadyTi
 	this.hidePageContent();
 
 	this.toolbar.initialize();
-	this.surface.getFocusWidget().$element.show();
 
 	this.surface.getView().focus();
 

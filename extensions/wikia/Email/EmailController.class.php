@@ -411,7 +411,7 @@ abstract class EmailController extends \WikiaController {
 	 */
 	protected function getUnsubscribeLink() {
 		$params = [
-			'email' => $this->getTargetUserEmail(),
+			'email' => $this->getTargetUserEmail()
 		];
 		$params['token'] = wfGenerateUnsubToken( $params['email'] );
 		$unsubscribeTitle = \GlobalTitle::newFromText( 'Unsubscribe', NS_SPECIAL, \Wikia::COMMUNITY_WIKI_ID );

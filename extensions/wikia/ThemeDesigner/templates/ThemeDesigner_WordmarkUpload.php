@@ -1,1 +1,5 @@
-<?= json_encode(array('wordmarkImageUrl' => $wordmarkImageUrl, 'wordmarkImageName' => $wordmarkImageName, 'errors' => $errors)) ?>
+<?= json_encode( [
+	'wordmarkImageUrl' => $wordmarkImageUrl,
+	'wordmarkImageName' => $wordmarkImageName,
+	'errors' => $errors
+] ) ?>

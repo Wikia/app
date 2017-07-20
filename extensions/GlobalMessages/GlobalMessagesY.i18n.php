@@ -1,7 +1,7 @@
 <?php
-$messages = [];
+$messages = array();
 
-$messages['en'] = [
+$messages['en'] = array(
 	'youhavenewmessages' => 'You have $1 ($2).',
 	'youhavenewmessagesmulti' => 'You have new messages on $1',
 	'yourname' => 'Username',
@@ -18,18 +18,18 @@ $messages['en'] = [
 	'yourgender' => 'Gender:',
 	'year' => 'From year (and earlier):',
 	'yourbirthdate' => 'Birth Date',
-];
+);
 
-$messages['qqq'] = [
+$messages['qqq'] = array(
 	'youhavenewmessages' => 'The blue message appearing when someone edited your user talk page.
 The format is: "{{int:youhavenewmessages| [[MediaWiki:Newmessageslink/{{SUBPAGENAME}}|{{int:newmessageslink}}]] |[[MediaWiki:Newmessagesdifflink/{{SUBPAGENAME}}|{{int:newmessagesdifflink}}]]}}"',
 	'youhavenewmessagesmulti' => 'The alternative of {{msg|youhavenewmessages}} as used on wikis with a special setup so they can receive the "new message" notice on other wikis as well. Used on [http://www.wikia.com/ Wikia].
 The format is: "{{int:youhavenewmessagesmulti| [[MediaWiki:Newmessageslink/{{SUBPAGENAME}}|{{int:newmessageslink}}]]}}"',
-	'yourname' => 'In user preferences
+	'yourname' => "In user preferences
 
-<nowiki>{{</nowiki>[[Gender|GENDER]]<nowiki>}}</nowiki> is \'\'\'NOT\'\'\' supported.
+<nowiki>{{</nowiki>[[Gender|GENDER]]<nowiki>}}</nowiki> is '''NOT''' supported.
 
-{{Identical|Username}}',
+{{Identical|Username}}",
 	'yourpassword' => 'In user preferences
 
 {{Identical|Password}}',
@@ -50,14 +50,14 @@ The format is: "{{int:youhavenewmessagesmulti| [[MediaWiki:Newmessageslink/{{SUB
 	'yourgender' => 'Used in [[Special:Preferences]], first tab.
 {{Identical|Gender}}',
 	'year' => 'Used in [[Special:Contributions]] and history pages ([{{fullurl:Sandbox|action=history}} example]), as label for a inputbox to select a specific year to view the edits made in that year, and the earlier years. See also {{msg|month}}.',
-];
+);
 
-$messages['ab'] = [
+$messages['ab'] = array(
 	'youhavenewmessages' => 'Уара $1 уауит ($2).',
 	'yourlanguage' => 'Абызшәа:',
-];
+);
 
-$messages['ace'] = [
+$messages['ace'] = array(
 	'youhavenewmessages' => 'Droëneuh   na $1 ($2).',
 	'yourname' => 'Ureuëng nguy:',
 	'yourpassword' => 'Lageuëm:',
@@ -65,9 +65,9 @@ $messages['ace'] = [
 	'youremail' => 'Surat-e:',
 	'yourrealname' => 'Nan aseuli:',
 	'year' => 'Yôh thôn (ngön yôh goh lom nyan)',
-];
+);
 
-$messages['af'] = [
+$messages['af'] = array(
 	'youhavenewmessages' => 'U het $1 (sien $2).',
 	'youhavenewmessagesmulti' => 'U het nuwe boodskappe op $1',
 	'yourname' => 'Gebruikersnaam:',
@@ -83,9 +83,9 @@ $messages['af'] = [
 	'yournick' => 'Bynaam (vir handtekening)',
 	'yourgender' => 'Geslag:',
 	'year' => 'Vanaf jaar (en vroeër):',
-];
+);
 
-$messages['aln'] = [
+$messages['aln'] = array(
 	'youhavenewmessages' => 'Keni $1 ($2).',
 	'youhavenewmessagesmulti' => 'Keni mesazhe të reja në $1',
 	'yourname' => 'Nofka:',
@@ -100,9 +100,9 @@ $messages['aln'] = [
 	'yournick' => 'Nofka :',
 	'yourgender' => 'Gjinia:',
 	'year' => 'Prej vjetit (e mâ herët):',
-];
+);
 
-$messages['als'] = [
+$messages['als'] = array(
 	'youhavenewmessages' => 'Keni $1 ($2).',
 	'youhavenewmessagesmulti' => 'Keni mesazhe të reja në $1',
 	'yourname' => 'Nofka:',
@@ -117,9 +117,9 @@ $messages['als'] = [
 	'yournick' => 'Nofka :',
 	'yourgender' => 'Gjinia:',
 	'year' => 'Prej vjetit (e mâ herët):',
-];
+);
 
-$messages['am'] = [
+$messages['am'] = array(
 	'youhavenewmessages' => '$1 አሉዎት ($2)።',
 	'youhavenewmessagesmulti' => 'በ$1 አዲስ መልእክቶች አሉዎት',
 	'yourname' => 'Username / የብዕር ስም:',
@@ -134,13 +134,13 @@ $messages['am'] = [
 	'yournick' => 'ቁልምጫ ስም (ለፊርማ)',
 	'yourgender' => 'ሥርዓተ ጾታ',
 	'year' => 'እስከዚህ አመት (እ.ኤ.አ.) ድረስ፡-',
-];
+);
 
-$messages['an'] = [
+$messages['an'] = array(
 	'youhavenewmessages' => 'Tiene $1 ($2).',
 	'youhavenewmessagesmulti' => 'Tiene nuevos mensaches en $1',
-	'yourname' => 'Nombre d\'usuario:',
-	'yourpassword' => 'Clau d\'acceso:',
+	'yourname' => "Nombre d'usuario:",
+	'yourpassword' => "Clau d'acceso:",
 	'yourpasswordagain' => 'Torne a escribir a clau:',
 	'yourdomainname' => 'Dominio:',
 	'yourtext' => 'O texto suyo',
@@ -148,13 +148,13 @@ $messages['an'] = [
 	'youremail' => 'Adreza de correu electronico:',
 	'yourrealname' => 'Nombre reyal:',
 	'yourlanguage' => 'Luenga:',
-	'yourvariant' => 'Variant linguistica d\'o conteniu:',
+	'yourvariant' => "Variant linguistica d'o conteniu:",
 	'yournick' => 'Sinyatura:',
 	'yourgender' => 'Sexo:',
-	'year' => 'Dende l\'anyo (y anteriors):',
-];
+	'year' => "Dende l'anyo (y anteriors):",
+);
 
-$messages['ang'] = [
+$messages['ang'] = array(
 	'youhavenewmessages' => 'Þū hæfst $1 ($2).',
 	'youhavenewmessagesmulti' => 'Þū hæfst nīƿe ǣrende on $1',
 	'yourname' => 'Þīn brūcendnama',
@@ -169,16 +169,16 @@ $messages['ang'] = [
 	'yourvariant' => 'Sprǣce wendung',
 	'yourgender' => 'Ȝecynd:',
 	'year' => 'Fram ȝēare (and ǣror)',
-];
+);
 
-$messages['anp'] = [
+$messages['anp'] = array(
 	'youhavenewmessages' => 'तोरा लेली छै $1  ($2)',
 	'yourname' => 'सदस्यनाम:',
 	'yourpassword' => 'कूटशब्द :',
 	'year' => 'इ साल सॆं (आरू पुरानॊ):',
-];
+);
 
-$messages['ar'] = [
+$messages['ar'] = array(
 	'youhavenewmessages' => 'توجد لديك $1 ($2).',
 	'youhavenewmessagesmulti' => 'لديك رسائل جديدة على $1',
 	'yourname' => 'اسم المستخدم:',
@@ -194,9 +194,9 @@ $messages['ar'] = [
 	'yournick' => 'التوقيع:',
 	'yourgender' => 'الجنس:',
 	'year' => 'من سنة (وأقدم):',
-];
+);
 
-$messages['arc'] = [
+$messages['arc'] = array(
 	'youhavenewmessages' => 'ܐܝܬ ܠܟ $1 ($2).',
 	'youhavenewmessagesmulti' => 'ܐܝܬ ܠܟ ܐܓܪ̈ܬܐ ܚܕ̈ܬܬܐ ܒ $1',
 	'yourname' => 'ܫܡܐ ܕܡܦܠܚܢܐ:',
@@ -210,9 +210,9 @@ $messages['arc'] = [
 	'yournick' => 'ܪܡܝ ܐܝܕܐ:',
 	'yourgender' => 'ܓܢܣܐ:',
 	'year' => 'ܡܢ ܫܢܬ (ܘܡܢ ܩܕܡ ܗܝܕܝܢ):',
-];
+);
 
-$messages['arn'] = [
+$messages['arn'] = array(
 	'youhavenewmessages' => 'Nieymi $1 ($2).',
 	'youhavenewmessagesmulti' => 'Nieymi we yefalzugu $1 mew.',
 	'yourname' => 'Tami üy',
@@ -223,9 +223,9 @@ $messages['arn'] = [
 	'yourrealname' => 'Mupiñ üy:',
 	'yourlanguage' => 'Cezugun:',
 	'year' => 'Tripantu:',
-];
+);
 
-$messages['ary'] = [
+$messages['ary'] = array(
 	'youhavenewmessages' => 'Ĝendek $1 ($2).',
 	'youhavenewmessagesmulti' => 'Jawek méṣajaṫ jdad fe $1',
 	'yourname' => 'smiṫ l-mosṫĥdim:',
@@ -241,9 +241,9 @@ $messages['ary'] = [
 	'yournick' => 'sinyator jdid:',
 	'yourgender' => 'ljisn :',
 	'year' => 'Men ĝam (o men qbel)',
-];
+);
 
-$messages['arz'] = [
+$messages['arz'] = array(
 	'youhavenewmessages' => 'عندك $1 ($2).',
 	'youhavenewmessagesmulti' => 'عندك ميسيدج جديدة فى $1',
 	'yourname' => 'اليوزرنيم:',
@@ -259,9 +259,9 @@ $messages['arz'] = [
 	'yournick' => 'الإمضا:',
 	'yourgender' => 'النوع:',
 	'year' => 'من سنة (واللى قبل كده):',
-];
+);
 
-$messages['as'] = [
+$messages['as'] = array(
 	'youhavenewmessages' => 'আপোনাৰ কাৰণে $1 আছে। ($2)',
 	'youhavenewmessagesmulti' => '$1 ত আপোনাৰ কাৰণে নতুন বাৰ্তা আছে',
 	'yourname' => 'সদস্যনাম:',
@@ -277,12 +277,12 @@ $messages['as'] = [
 	'yournick' => 'নতুন স্বাক্ষ্যৰ:',
 	'yourgender' => 'লিঙ্গ:',
 	'year' => 'এই বছৰৰ পৰা (আৰু আগৰ):',
-];
+);
 
-$messages['ast'] = [
+$messages['ast'] = array(
 	'youhavenewmessages' => 'Tienes $1 ($2).',
 	'youhavenewmessagesmulti' => 'Tienes mensaxes nuevos en $1',
-	'yourname' => 'Nome d\'usuariu:',
+	'yourname' => "Nome d'usuariu:",
 	'yourpassword' => 'Conseña:',
 	'yourpasswordagain' => 'Escribi otra vuelta la to conseña:',
 	'yourdomainname' => 'El to dominiu:',
@@ -294,10 +294,10 @@ $messages['ast'] = [
 	'yourvariant' => 'Variante llingüística del conteníu:',
 	'yournick' => 'Firma:',
 	'yourgender' => 'Xéneru:',
-	'year' => 'Dende l\'añu (y anteriores):',
-];
+	'year' => "Dende l'añu (y anteriores):",
+);
 
-$messages['avk'] = [
+$messages['avk'] = array(
 	'youhavenewmessages' => 'Rin dil va $1 ($2).',
 	'youhavenewmessagesmulti' => 'Rin dil va warzafa staksa moe $1',
 	'yourname' => 'Rinaf favesikyolt',
@@ -311,14 +311,14 @@ $messages['avk'] = [
 	'yourlanguage' => 'Walasikiava',
 	'yournick' => 'Sugdara tori prilara se (do <tt><nowiki>~~~</nowiki></tt>)&nbsp;',
 	'year' => 'Mali ilana (is logaveon) :',
-];
+);
 
-$messages['ay'] = [
+$messages['ay'] = array(
 	'yourdiff' => 'Jalaqtatanaka',
 	'yourlanguage' => 'Aru:',
-];
+);
 
-$messages['az'] = [
+$messages['az'] = array(
 	'youhavenewmessages' => 'Hal-hazırda $1 var. ($2)',
 	'youhavenewmessagesmulti' => '"$1"da yeni mesajınız var.',
 	'yourname' => 'İstifadəçi adı',
@@ -334,9 +334,9 @@ $messages['az'] = [
 	'yournick' => 'Ləqəb:',
 	'yourgender' => 'Cins:',
 	'year' => 'Axtarışa bu tarixdən etibarən başla:',
-];
+);
 
-$messages['ba'] = [
+$messages['ba'] = array(
 	'youhavenewmessages' => 'Яңы $1 бар ($2).',
 	'youhavenewmessagesmulti' => 'Һеҙгә яңы хәбәрҙәр бар: $1',
 	'yourname' => 'Ҡатнашыусы исеме',
@@ -352,9 +352,9 @@ $messages['ba'] = [
 	'yournick' => 'Һеҙҙең уйҙырма исемегеҙ/ҡушаматығыҙ (имза өсөн):',
 	'yourgender' => 'Зат:',
 	'year' => 'Йылдан башлап (һәм элегерәк):',
-];
+);
 
-$messages['bar'] = [
+$messages['bar'] = array(
 	'youhavenewmessages' => 'Du host $1 ($2).',
 	'youhavenewmessagesmulti' => 'Du host neiche Noochrichten: $1',
 	'yourname' => 'Benutzernåm:',
@@ -366,9 +366,9 @@ $messages['bar'] = [
 	'yourrealname' => 'Da echte Nåm:',
 	'yourlanguage' => 'Sprooch vo da Benutzerowerflächen',
 	'year' => 'bis zum Jor:',
-];
+);
 
-$messages['bat-smg'] = [
+$messages['bat-smg'] = array(
 	'youhavenewmessages' => 'Du host $1 ($2).',
 	'youhavenewmessagesmulti' => 'Du host neiche Noochrichten: $1',
 	'yourname' => 'Benutzernåm:',
@@ -380,9 +380,9 @@ $messages['bat-smg'] = [
 	'yourrealname' => 'Da echte Nåm:',
 	'yourlanguage' => 'Sprooch vo da Benutzerowerflächen',
 	'year' => 'bis zum Jor:',
-];
+);
 
-$messages['bcc'] = [
+$messages['bcc'] = array(
 	'youhavenewmessages' => 'شما هست  $1 ($2).',
 	'youhavenewmessagesmulti' => 'شما را نوکین کوله یان هست ته   $1',
 	'yourname' => 'نام کاربری',
@@ -398,15 +398,15 @@ $messages['bcc'] = [
 	'yournick' => 'امضا:',
 	'yourgender' => 'جنس:',
 	'year' => 'چه سال(و پیشتر)',
-];
+);
 
-$messages['bcl'] = [
+$messages['bcl'] = array(
 	'youhavenewmessages' => 'Igwa ka nin $1 ($2).',
 	'youhavenewmessagesmulti' => 'Igwa ka nin mga bàgong mensahe sa $1',
 	'yourname' => 'Pangaran kan paragamit:',
 	'yourpassword' => 'Sekretong panlaog:',
 	'yourpasswordagain' => 'Itaták giraray an sekretong panlaog:',
-	'yourdomainname' => 'An saimong \'\'domain\'\':',
+	'yourdomainname' => "An saimong ''domain'':",
 	'yourtext' => 'Saimong teksto',
 	'yourdiff' => 'Mga kaibahán',
 	'youremail' => 'E-koreo:',
@@ -415,9 +415,9 @@ $messages['bcl'] = [
 	'yourvariant' => 'Bariante:',
 	'yournick' => 'Gahâ:',
 	'year' => 'Poon taon (asin mas amay):',
-];
+);
 
-$messages['be'] = [
+$messages['be'] = array(
 	'youhavenewmessages' => 'Вы маеце $1 ($2).',
 	'youhavenewmessagesmulti' => 'У вас ёсць новыя паведамленні на $1',
 	'yourname' => 'Імя ўдзельніка',
@@ -433,9 +433,9 @@ $messages['be'] = [
 	'yournick' => 'Псеўданім:',
 	'yourgender' => 'Пол:',
 	'year' => 'Ад году (і раней):',
-];
+);
 
-$messages['be-tarask'] = [
+$messages['be-tarask'] = array(
 	'youhavenewmessages' => 'Вы маеце $1 ($2).',
 	'youhavenewmessagesmulti' => 'Вы атрымалі новыя паведамленьні на $1',
 	'yourname' => 'Імя ўдзельніка:',
@@ -451,9 +451,9 @@ $messages['be-tarask'] = [
 	'yournick' => 'Подпіс:',
 	'yourgender' => 'Пол:',
 	'year' => 'Ад году (і раней):',
-];
+);
 
-$messages['be-x-old'] = [
+$messages['be-x-old'] = array(
 	'youhavenewmessages' => 'Вы маеце $1 ($2).',
 	'youhavenewmessagesmulti' => 'Вы атрымалі новыя паведамленьні на $1',
 	'yourname' => 'Імя ўдзельніка:',
@@ -469,9 +469,9 @@ $messages['be-x-old'] = [
 	'yournick' => 'Подпіс:',
 	'yourgender' => 'Пол:',
 	'year' => 'Ад году (і раней):',
-];
+);
 
-$messages['bg'] = [
+$messages['bg'] = array(
 	'youhavenewmessages' => 'Имате $1 ($2).',
 	'youhavenewmessagesmulti' => 'Имате нови съобщения на $1',
 	'yourname' => 'Потребителско име:',
@@ -488,9 +488,9 @@ $messages['bg'] = [
 	'yourgender' => 'Пол:',
 	'year' => 'Година:',
 	'yourbirthdate' => 'Дата на раждане -',
-];
+);
 
-$messages['bh'] = [
+$messages['bh'] = array(
 	'youhavenewmessages' => 'Имате $1 ($2).',
 	'youhavenewmessagesmulti' => 'Имате нови съобщения в $1',
 	'yourname' => 'Потребителско име:',
@@ -506,9 +506,9 @@ $messages['bh'] = [
 	'yournick' => 'Подпис:',
 	'yourgender' => 'Пол:',
 	'year' => 'Година:',
-];
+);
 
-$messages['bho'] = [
+$messages['bho'] = array(
 	'youhavenewmessages' => 'रउआ लगे बा $1 ($2).',
 	'youhavenewmessagesmulti' => 'रउआ लगे $1 पर नया सन्देश बा',
 	'yourname' => 'प्रयोगकर्ता नाम',
@@ -516,13 +516,13 @@ $messages['bho'] = [
 	'yourpasswordagain' => 'गुप्त-शब्द पुन:डालीं:',
 	'yourdiff' => 'अंतर',
 	'year' => 'साल से (आ उ से पहिले):',
-];
+);
 
-$messages['bi'] = [
+$messages['bi'] = array(
 	'year' => 'Yia:',
-];
+);
 
-$messages['bjn'] = [
+$messages['bjn'] = array(
 	'youhavenewmessages' => 'Pian baisi $1 ($2)',
 	'youhavenewmessagesmulti' => 'Pian baisi pasan hanyar dalam $1',
 	'yourname' => 'Ngaran pamuruk',
@@ -538,9 +538,9 @@ $messages['bjn'] = [
 	'yournick' => 'Tandatangan:',
 	'yourgender' => 'Janis kalamin:',
 	'year' => 'Matan tahun (wan sabalumnya):',
-];
+);
 
-$messages['bn'] = [
+$messages['bn'] = array(
 	'youhavenewmessages' => 'আপনার $1 ($2) এসেছে৷',
 	'youhavenewmessagesmulti' => 'আপনার $1টি নতুন বার্তা এসেছে',
 	'yourname' => 'ব্যবহারকারী নাম:',
@@ -556,9 +556,9 @@ $messages['bn'] = [
 	'yournick' => 'স্বাক্ষর:',
 	'yourgender' => 'লিঙ্গ:',
 	'year' => 'এই বছর (এবং তার আগে) থেকে:',
-];
+);
 
-$messages['bo'] = [
+$messages['bo'] = array(
 	'youhavenewmessages' => 'ཁྱེད་ལ་འཕྲིན་གསར་$1($2)ཡོད།',
 	'youhavenewmessagesmulti' => 'ཁྱེད་ལ་ $1 སྟེང་དུ་འཕྲིན་ཡིག་འདུག',
 	'yourname' => 'སྤྱོད་མིང་།',
@@ -572,9 +572,9 @@ $messages['bo'] = [
 	'yournick' => 'མིང་རྟགས་སོ་མ།',
 	'yourgender' => 'ཕོ་མོ།',
 	'year' => 'ལོ་འདི་ནས།',
-];
+);
 
-$messages['bpy'] = [
+$messages['bpy'] = array(
 	'youhavenewmessages' => 'তরতা $1 ($2) আসে।',
 	'youhavenewmessagesmulti' => 'তরতা নুৱা পৌ $1হান আহিসে',
 	'yourname' => 'আতাকুরার নাংহান (Username)',
@@ -588,9 +588,9 @@ $messages['bpy'] = [
 	'yourlanguage' => 'ঠারহান:',
 	'yournick' => 'দাহানির নাংহান:',
 	'year' => 'বসরেত্ত (বারো অতার আগেত্ত):',
-];
+);
 
-$messages['bqi'] = [
+$messages['bqi'] = array(
 	'youhavenewmessages' => 'پیام تاره داری $1 ($2).',
 	'youhavenewmessagesmulti' => 'ایسا پیام تازه دارین منه
 $1',
@@ -598,17 +598,17 @@ $1',
 	'yourpassword' => 'رمز:',
 	'yourrealname' => 'نام واقعی:',
 	'year' => 'در ای سال (وقبل زه آن):',
-];
+);
 
-$messages['br'] = [
-	'youhavenewmessages' => '$1 zo ganeoc\'h ($2).',
-	'youhavenewmessagesmulti' => 'Kemennoù nevez zo ganeoc\'h war $1',
+$messages['br'] = array(
+	'youhavenewmessages' => "$1 zo ganeoc'h ($2).",
+	'youhavenewmessagesmulti' => "Kemennoù nevez zo ganeoc'h war $1",
 	'yourname' => 'Anv implijer :',
 	'yourpassword' => 'Ger-tremen :',
 	'yourpasswordagain' => 'Skrivit ho ker-tremen en-dro',
 	'yourdomainname' => 'Ho tomani',
 	'yourtext' => 'Ho testenn',
-	'yourdiff' => 'Diforc\'hioù',
+	'yourdiff' => "Diforc'hioù",
 	'youremail' => 'Postel :',
 	'yourrealname' => 'Anv gwir*',
 	'yourlanguage' => 'Yezh an etrefas&nbsp;',
@@ -616,17 +616,17 @@ $messages['br'] = [
 	'yournick' => 'Sinadur :',
 	'yourgender' => 'Jener :',
 	'year' => 'Abaoe bloaz (hag a-raok) :',
-];
+);
 
-$messages['brh'] = [
+$messages['brh'] = array(
 	'youhavenewmessages' => 'Nekin $1 ($2) are.',
 	'yourname' => 'Kárband pin:',
 	'yourpassword' => 'Kilítlaoz:',
 	'yourrealname' => 'Aslí pin',
 	'year' => 'Dá sál (o must) án:',
-];
+);
 
-$messages['bs'] = [
+$messages['bs'] = array(
 	'youhavenewmessages' => 'Imate $1 ($2).',
 	'youhavenewmessagesmulti' => 'Imate nove poruke na $1',
 	'yourname' => 'Korisničko ime:',
@@ -642,18 +642,18 @@ $messages['bs'] = [
 	'yournick' => 'Nadimak (za potpise):',
 	'yourgender' => 'Spol:',
 	'year' => 'Od godine (i ranije):',
-];
+);
 
-$messages['bug'] = [
+$messages['bug'] = array(
 	'yourname' => 'Aseŋ papaké:',
 	'yourpassword' => 'Adacili:',
 	'youremail' => 'E-mail:',
-];
+);
 
-$messages['ca'] = [
+$messages['ca'] = array(
 	'youhavenewmessages' => 'Tens $1 ($2).',
 	'youhavenewmessagesmulti' => 'Teniu nous missatges a $1',
-	'yourname' => 'Nom d\'usuari',
+	'yourname' => "Nom d'usuari",
 	'yourpassword' => 'Contrasenya',
 	'yourpasswordagain' => 'Escriviu una altra vegada la contrasenya',
 	'yourdomainname' => 'El vostre domini',
@@ -666,9 +666,9 @@ $messages['ca'] = [
 	'yournick' => 'Signatura:',
 	'yourgender' => 'Sexe:',
 	'year' => 'Any (i anteriors):',
-];
+);
 
-$messages['cdo'] = [
+$messages['cdo'] = array(
 	'youhavenewmessages' => 'Nṳ̄ ô $1 ($2).',
 	'yourname' => 'Ê̤ṳng-hô-miàng',
 	'yourpassword' => 'Mĭk-mā',
@@ -680,9 +680,9 @@ $messages['cdo'] = [
 	'yourlanguage' => 'Ngṳ̄-ngiòng:',
 	'yournick' => 'Nguôi-hô̤:',
 	'year' => 'Téng nièng-hông (gâe̤ng gáing cā):',
-];
+);
 
-$messages['ce'] = [
+$messages['ce'] = array(
 	'youhavenewmessages' => 'Хьуна кхечи $1 ($2).',
 	'youhavenewmessagesmulti' => 'Хьуна кхаьчна керла хаам оцу $1',
 	'yourname' => 'Декъашхон цlе:',
@@ -697,9 +697,9 @@ $messages['ce'] = [
 	'yourvariant' => 'Метта башхо',
 	'yourgender' => 'Ву/Йу:',
 	'year' => 'Шерачохь (йа хьалхе):',
-];
+);
 
-$messages['ceb'] = [
+$messages['ceb'] = array(
 	'youhavenewmessages' => 'Aduna kay $1 ($2).',
 	'youhavenewmessagesmulti' => 'Adunay kay bag-ong mensahe sa $1',
 	'yourname' => 'Ngalan sa tiggamit:',
@@ -714,25 +714,25 @@ $messages['ceb'] = [
 	'yournick' => 'Bag-ong pirma:',
 	'yourgender' => 'Gender:',
 	'year' => 'Gikan sa tuig (ug mas sayo pa):',
-];
+);
 
-$messages['ch'] = [
+$messages['ch'] = array(
 	'youhavenewmessages' => 'Guåha $1 ($2).',
 	'youhavenewmessagesmulti' => 'Guåha nuebu mensahe-mu gi $1',
-	'yourname' => 'Nå\'an ni muna\'setbi:',
+	'yourname' => "Nå'an ni muna'setbi:",
 	'yourpassword' => 'Password:',
-	'yourpasswordagain' => 'Taip ta\'lo i password:',
+	'yourpasswordagain' => "Taip ta'lo i password:",
 	'yourdomainname' => 'Lugat-mu:',
-	'yourtext' => 'Tinige\'-mu',
+	'yourtext' => "Tinige'-mu",
 	'yourdiff' => 'Diferensia',
 	'youremail' => 'E-mail:',
-	'yourrealname' => 'Minagahet nå\'an-mu:',
+	'yourrealname' => "Minagahet nå'an-mu:",
 	'yourlanguage' => 'Lengguahe:',
 	'yournick' => 'Fitma:',
 	'year' => 'Ginen i sakkan (yan eståba):',
-];
+);
 
-$messages['ckb'] = [
+$messages['ckb'] = array(
 	'youhavenewmessages' => '$1ت ھەیە ($2).',
 	'youhavenewmessagesmulti' => 'لە $1 دا پەیامی نوێت ھەیە',
 	'yourname' => 'ناوی بەکارھێنەر:',
@@ -748,9 +748,9 @@ $messages['ckb'] = [
 	'yournick' => 'نازناو',
 	'yourgender' => 'ڕەگەز:',
 	'year' => 'لە ساڵی (و پێشترەوە):',
-];
+);
 
-$messages['co'] = [
+$messages['co'] = array(
 	'yourname' => 'Nome di utilizatore:',
 	'yourpassword' => 'Parulla secreta:',
 	'yourpasswordagain' => 'Scrive torna a parulla secreta:',
@@ -759,12 +759,12 @@ $messages['co'] = [
 	'yourdiff' => 'Differenze',
 	'youremail' => 'Indirizzu e-mail:',
 	'yourrealname' => 'U to veru nome:',
-	'yourlanguage' => 'Lingua di l\'interfaccia:',
+	'yourlanguage' => "Lingua di l'interfaccia:",
 	'yourvariant' => 'Variante',
 	'yournick' => 'Signatura pè e discussioni:',
-];
+);
 
-$messages['cps'] = [
+$messages['cps'] = array(
 	'youhavenewmessages' => 'May ara ka sang $1 ($2).',
 	'youhavenewmessagesmulti' => 'May mga bag-o ka nga mensahe sa $1',
 	'yourname' => 'Hayo (username):',
@@ -772,9 +772,9 @@ $messages['cps'] = [
 	'yourpasswordagain' => 'Liwata ka pindot ang password:',
 	'yourdomainname' => 'Imo domain:',
 	'year' => 'Halin sa tu-ig (kag sa mas timprano):',
-];
+);
 
-$messages['crh'] = [
+$messages['crh'] = array(
 	'youhavenewmessages' => 'May ara ka sang $1 ($2).',
 	'youhavenewmessagesmulti' => 'May mga bag-o ka nga mensahe sa $1',
 	'yourname' => 'Hayo (username):',
@@ -782,9 +782,9 @@ $messages['crh'] = [
 	'yourpasswordagain' => 'Liwata ka pindot ang password:',
 	'yourdomainname' => 'Imo domain:',
 	'year' => 'Halin sa tu-ig (kag sa mas timprano):',
-];
+);
 
-$messages['crh-cyrl'] = [
+$messages['crh-cyrl'] = array(
 	'youhavenewmessages' => 'Янъы $1 бар ($2).',
 	'youhavenewmessagesmulti' => '$1 саифесинде янъы беянатынъыз бар.',
 	'yourname' => 'Къулланыджы адынъыз',
@@ -800,9 +800,9 @@ $messages['crh-cyrl'] = [
 	'yournick' => 'Янъы имзанъыз:',
 	'yourgender' => 'Джынсынъыз:',
 	'year' => 'Бу сене (ве ондан эрте):',
-];
+);
 
-$messages['crh-latn'] = [
+$messages['crh-latn'] = array(
 	'youhavenewmessages' => 'Yañı $1 bar ($2).',
 	'youhavenewmessagesmulti' => '$1 saifesinde yañı beyanatıñız bar.',
 	'yourname' => 'Qullanıcı adıñız',
@@ -818,9 +818,9 @@ $messages['crh-latn'] = [
 	'yournick' => 'Yañı imzañız:',
 	'yourgender' => 'Cınsıñız:',
 	'year' => 'Bu sene (ve ondan erte):',
-];
+);
 
-$messages['cs'] = [
+$messages['cs'] = array(
 	'youhavenewmessages' => 'Máte $1 ($2).',
 	'youhavenewmessagesmulti' => 'Na $1 máte nové zprávy',
 	'yourname' => 'Uživatelské jméno:',
@@ -836,9 +836,9 @@ $messages['cs'] = [
 	'yournick' => 'Podpis:',
 	'yourgender' => 'Pohlaví:',
 	'year' => 'Do roku:',
-];
+);
 
-$messages['csb'] = [
+$messages['csb'] = array(
 	'youhavenewmessages' => 'Môsz $1 ($2).',
 	'youhavenewmessagesmulti' => 'Môsz nowé klëczi: $1',
 	'yourname' => 'Miono brëkòwnika',
@@ -853,9 +853,9 @@ $messages['csb'] = [
 	'yourvariant' => 'Wariant:',
 	'yournick' => 'Pòdpisënk:',
 	'year' => 'Òd rokù (ë wczasni):',
-];
+);
 
-$messages['cu'] = [
+$messages['cu'] = array(
 	'youhavenewmessages' => '$1 тєбѣ напьсанꙑ сѫтъ ($2)',
 	'yourname' => 'твоѥ имѧ',
 	'yourpassword' => 'таино слово напиши',
@@ -864,9 +864,9 @@ $messages['cu'] = [
 	'yourlanguage' => 'ѩꙁꙑкъ :',
 	'yournick' => 'аѵтографъ :',
 	'yourgender' => 'полъ :',
-];
+);
 
-$messages['cv'] = [
+$messages['cv'] = array(
 	'youhavenewmessages' => 'Сирĕн $1 пур ($2).',
 	'youhavenewmessagesmulti' => '$1-та çĕнĕ пĕлтерӳсем пур.',
 	'yourname' => 'Сирĕн ят',
@@ -880,9 +880,9 @@ $messages['cv'] = [
 	'yourlanguage' => 'Интерфейс чĕлхи:',
 	'yourvariant' => 'Чĕлхе варианчĕ',
 	'yournick' => 'Сирĕн ят (алă пусма усă курăнĕ):',
-];
+);
 
-$messages['cy'] = [
+$messages['cy'] = array(
 	'youhavenewmessages' => 'Mae gennych chi $1 ($2).',
 	'youhavenewmessagesmulti' => 'Mae negeseuon newydd gennych ar $1',
 	'yourname' => 'Eich enw defnyddiwr:',
@@ -898,9 +898,9 @@ $messages['cy'] = [
 	'yournick' => 'Eich llysenw (fel llofnod):',
 	'yourgender' => 'Rhyw:',
 	'year' => 'Cyfraniadau hyd at y flwyddyn (ac yn gynharach):',
-];
+);
 
-$messages['da'] = [
+$messages['da'] = array(
 	'youhavenewmessages' => 'Du har $1 ($2).',
 	'youhavenewmessagesmulti' => 'Du har nye beskeder på $1',
 	'yourname' => 'Dit brugernavn:',
@@ -916,9 +916,9 @@ $messages['da'] = [
 	'yournick' => 'Signatur:',
 	'yourgender' => 'Køn:',
 	'year' => 'År:',
-];
+);
 
-$messages['de'] = [
+$messages['de'] = array(
 	'youhavenewmessages' => 'Du hast $1 ($2).',
 	'youhavenewmessagesmulti' => 'Du hast neue Nachrichten: $1',
 	'yourname' => 'Benutzername',
@@ -935,16 +935,16 @@ $messages['de'] = [
 	'yourgender' => 'Geschlecht:',
 	'year' => 'bis Jahr:',
 	'yourbirthdate' => 'Geburtsdatum:',
-];
+);
 
-$messages['de-formal'] = [
+$messages['de-formal'] = array(
 	'youhavenewmessages' => 'Sie haben $1 auf Ihrer Diskussionsseite ($2).',
 	'youhavenewmessagesmulti' => 'Sie haben neue Nachrichten: $1',
 	'yourdomainname' => 'Ihre Domain:',
 	'yourtext' => 'Ihr Text',
-];
+);
 
-$messages['de-weigsbrag'] = [
+$messages['de-weigsbrag'] = array(
 	'youhavenewmessages' => 'Haddar $2 auw deines $1.',
 	'youhavenewmessagesmulti' => 'Haddar neues Nagrigdes: $1',
 	'yourname' => 'Benudesnam:',
@@ -959,9 +959,9 @@ $messages['de-weigsbrag'] = [
 	'yourtext' => 'Deines Degsd',
 	'yourdiff' => 'Undschiedes',
 	'year' => 'bis Jahr:',
-];
+);
 
-$messages['diq'] = [
+$messages['diq'] = array(
 	'youhavenewmessages' => 'To rê estê $1 ($2).',
 	'youhavenewmessagesmulti' => 'To rê $1 de mesacê newey estê',
 	'yourname' => 'Namey karberi',
@@ -976,9 +976,9 @@ $messages['diq'] = [
 	'yournick' => 'imza:',
 	'yourgender' => 'Cınsiyetê to:',
 	'year' => 'Serre ra (u verênêr):',
-];
+);
 
-$messages['dsb'] = [
+$messages['dsb'] = array(
 	'youhavenewmessages' => 'Maš $1 ($2).',
 	'youhavenewmessagesmulti' => 'Maš nowe powěsći: $1',
 	'yourname' => 'mě wužywarja',
@@ -994,9 +994,9 @@ $messages['dsb'] = [
 	'yournick' => 'Pódpismo:',
 	'yourgender' => 'Rod:',
 	'year' => 'wót lěta (a jěsnjej):',
-];
+);
 
-$messages['dtp'] = [
+$messages['dtp'] = array(
 	'youhavenewmessages' => 'Kiharo $1 montok dia ($2).',
 	'youhavenewmessagesmulti' => 'Kiharo pason kawawagu montok dia id $1',
 	'yourname' => 'Ngarandait:',
@@ -1008,9 +1008,9 @@ $messages['dtp'] = [
 	'youremail' => 'Surat-i:',
 	'yourrealname' => 'Ngaran otopot:',
 	'year' => 'Mantad toun (om di touun po):',
-];
+);
 
-$messages['dv'] = [
+$messages['dv'] = array(
 	'yourname' => 'މެންބަރުގެނަން',
 	'yourpassword' => 'ސިއްރުބަސް',
 	'yourpasswordagain' => 'ސިއްރުބަސް އަލުންލިޔުއްވާ',
@@ -1020,17 +1020,17 @@ $messages['dv'] = [
 	'yourrealname' => '* އަސްލު ނަން',
 	'yourlanguage' => 'ބަސް:',
 	'yournick' => 'ލަގަބު/ކުއްނިއްޔާ:',
-];
+);
 
-$messages['dz'] = [
+$messages['dz'] = array(
 	'youhavenewmessages' => 'ཁྱོད་ལུ་ $1 ($2) འདུག།',
 	'yourname' => 'ལག་ལེན་པའི་མིང་:',
 	'yourpassword' => 'ཆོག་ཡིག:',
 	'yourrealname' => 'མིང་ངོ་མ:',
 	'year' => 'ལོ་(ཧེ་མ་)ལས་:',
-];
+);
 
-$messages['ee'] = [
+$messages['ee'] = array(
 	'youhavenewmessages' => '$1 le asiwo ($2).',
 	'youhavenewmessagesmulti' => 'Du yeyewo le asiwo le $1',
 	'yourtext' => 'Wò nuŋɔŋlɔ',
@@ -1038,9 +1038,9 @@ $messages['ee'] = [
 	'yourlanguage' => 'Gbe:',
 	'yournick' => 'Dzesi',
 	'year' => 'Tso ƒe (kple do ŋgɔ):',
-];
+);
 
-$messages['el'] = [
+$messages['el'] = array(
 	'youhavenewmessages' => 'Έχετε $1 ($2).',
 	'youhavenewmessagesmulti' => 'Έχετε νέα μηνύματα στο $1',
 	'yourname' => 'Όνομα χρήστη:',
@@ -1056,15 +1056,15 @@ $messages['el'] = [
 	'yournick' => 'Υπογραφή:',
 	'yourgender' => 'Φύλο:',
 	'year' => 'Από τη χρονιά (και νωρίτερα):',
-];
+);
 
-$messages['eml'] = [
+$messages['eml'] = array(
 	'yourdiff' => 'Differèinzi',
 	'yourrealname' => 'Al tô vér nàmm:',
 	'yourlanguage' => 'Léngua:',
-];
+);
 
-$messages['eo'] = [
+$messages['eo'] = array(
 	'youhavenewmessages' => 'Por vi estas $1 ($2).',
 	'youhavenewmessagesmulti' => 'Vi havas novajn mesaĝojn ĉe $1',
 	'yourname' => 'Salutnomo:',
@@ -1080,9 +1080,9 @@ $messages['eo'] = [
 	'yournick' => 'Subskribo:',
 	'yourgender' => 'Sekso:',
 	'year' => 'Ekde jaro (kaj pli frue):',
-];
+);
 
-$messages['es'] = [
+$messages['es'] = array(
 	'youhavenewmessages' => 'Tienes $1 ($2).',
 	'youhavenewmessagesmulti' => 'Tienes nuevos mensajes en $1',
 	'yourname' => 'Nombre de usuario:',
@@ -1099,9 +1099,9 @@ $messages['es'] = [
 	'yourgender' => 'Género:',
 	'year' => 'Desde el año (y anterior):',
 	'yourbirthdate' => 'Fecha de nacimiento:',
-];
+);
 
-$messages['et'] = [
+$messages['et'] = array(
 	'youhavenewmessages' => 'Teile on $1 ($2).',
 	'youhavenewmessagesmulti' => 'Sulle on uusi sõnumeid $1',
 	'yourname' => 'Kasutajanimi:',
@@ -1117,9 +1117,9 @@ $messages['et'] = [
 	'yournick' => 'Uus allkiri:',
 	'yourgender' => 'Sugu:',
 	'year' => 'Alates aastast (ja varasemad):',
-];
+);
 
-$messages['eu'] = [
+$messages['eu'] = array(
 	'youhavenewmessages' => '$1 dauzkazu ($2).',
 	'youhavenewmessagesmulti' => 'Mezu berriak dituzu $1(e)n',
 	'yourname' => 'Erabiltzaile izena',
@@ -1135,12 +1135,12 @@ $messages['eu'] = [
 	'yournick' => 'Erabiltzaile izena:',
 	'yourgender' => 'Generoa:',
 	'year' => 'Urtea (eta lehenagokoak):',
-];
+);
 
-$messages['ext'] = [
+$messages['ext'] = array(
 	'youhavenewmessages' => 'Tiinis $1 ($2).',
 	'youhavenewmessagesmulti' => 'Tiinis nuevus mensahis en $1',
-	'yourname' => 'Nombri d\'usuáriu:',
+	'yourname' => "Nombri d'usuáriu:",
 	'yourpassword' => 'Consínia:',
 	'yourpasswordagain' => 'Escrebi e nuevu la consínia:',
 	'yourdomainname' => 'El tu domiñu:',
@@ -1153,9 +1153,9 @@ $messages['ext'] = [
 	'yournick' => 'Moti:',
 	'yourgender' => 'Héneru:',
 	'year' => 'Añu:',
-];
+);
 
-$messages['fa'] = [
+$messages['fa'] = array(
 	'youhavenewmessages' => '$1 دارید ($2).',
 	'youhavenewmessagesmulti' => 'پیام‌های جدیدی در $1 دارید.',
 	'yourname' => 'نام کاربری:',
@@ -1172,9 +1172,9 @@ $messages['fa'] = [
 	'yourgender' => 'جنسیت:',
 	'year' => 'در این سال (و پیش از آن):',
 	'yourbirthdate' => 'تاریخ تولد:',
-];
+);
 
-$messages['fi'] = [
+$messages['fi'] = array(
 	'youhavenewmessages' => 'Sinulle on $1 ($2).',
 	'youhavenewmessagesmulti' => 'Sinulla on uusia viestejä sivuilla $1',
 	'yourname' => 'Käyttäjätunnus',
@@ -1191,9 +1191,9 @@ $messages['fi'] = [
 	'yourgender' => 'Sukupuoli',
 	'year' => 'Vuosi',
 	'yourbirthdate' => 'Syntymäpäivä:',
-];
+);
 
-$messages['fiu-vro'] = [
+$messages['fiu-vro'] = array(
 	'youhavenewmessages' => 'Sinulle on $1 ($2).',
 	'youhavenewmessagesmulti' => 'Sinulla on uusia viestejä sivuilla $1',
 	'yourname' => 'Käyttäjätunnus',
@@ -1209,16 +1209,16 @@ $messages['fiu-vro'] = [
 	'yournick' => 'Allekirjoitus',
 	'yourgender' => 'Sukupuoli',
 	'year' => 'Vuosi',
-];
+);
 
-$messages['fj'] = [
+$messages['fj'] = array(
 	'yourname' => 'Yaca vakayagataki',
 	'yourpassword' => 'Yaca vuni',
 	'yourpasswordagain' => 'Vola tale na Yaca vuni',
 	'youremail' => 'I vola livaliva *:',
-];
+);
 
-$messages['fo'] = [
+$messages['fo'] = array(
 	'youhavenewmessages' => 'Tú hevur $1 ($2).',
 	'youhavenewmessagesmulti' => 'Tú hevur nýggj boð á $1',
 	'yourname' => 'Títt brúkaranavn:',
@@ -1233,9 +1233,9 @@ $messages['fo'] = [
 	'yournick' => 'Nýggj undirskrift:',
 	'yourgender' => 'Kyn:',
 	'year' => 'Frá ár (og áðrenn):',
-];
+);
 
-$messages['fr'] = [
+$messages['fr'] = array(
 	'youhavenewmessages' => 'Vous avez $1 ($2).',
 	'youhavenewmessagesmulti' => 'Vous avez de nouveaux messages sur $1.',
 	'yourname' => 'Nom d’utilisateur',
@@ -1252,12 +1252,12 @@ $messages['fr'] = [
 	'yourgender' => 'Genre :',
 	'year' => 'À partir de l’année (et précédentes) :',
 	'yourbirthdate' => 'Date de naissance',
-];
+);
 
-$messages['frc'] = [
+$messages['frc'] = array(
 	'youhavenewmessages' => 'Vous avez $1 ($2).',
 	'youhavenewmessagesmulti' => 'Vous avez des nouveaux messages sus $1.',
-	'yourname' => 'Nom d\'useur:',
+	'yourname' => "Nom d'useur:",
 	'yourpassword' => 'Mot de passe:',
 	'yourpasswordagain' => 'Mot de passe encore:',
 	'yourdomainname' => 'Votre domaine:',
@@ -1267,10 +1267,10 @@ $messages['frc'] = [
 	'yourrealname' => 'Vrai nom:',
 	'yourlanguage' => 'Langue:',
 	'yourvariant' => 'Différent:',
-	'yournick' => '\'Tit nom:',
-];
+	'yournick' => "'Tit nom:",
+);
 
-$messages['frp'] = [
+$messages['frp'] = array(
 	'youhavenewmessages' => 'Vos avéd de $1 ($2).',
 	'youhavenewmessagesmulti' => 'Vos avéd de mèssâjos novéls dessus $1.',
 	'yourname' => 'Nom d’usanciér :',
@@ -1286,9 +1286,9 @@ $messages['frp'] = [
 	'yournick' => 'Signatura por les discussions :',
 	'yourgender' => 'Sèxo :',
 	'year' => 'Dês l’an (et devant) :',
-];
+);
 
-$messages['frr'] = [
+$messages['frr'] = array(
 	'youhavenewmessages' => 'Dü hääst $1 aw din diskusjoonssid ($2).',
 	'youhavenewmessagesmulti' => 'Dü hääst nai tisinge aw $1',
 	'yourname' => 'Brükernoome:',
@@ -1302,9 +1302,9 @@ $messages['frr'] = [
 	'yourlanguage' => 'Spräke:',
 	'yournick' => 'Nai signatuur:',
 	'year' => 'bit iir:',
-];
+);
 
-$messages['fur'] = [
+$messages['fur'] = array(
 	'youhavenewmessages' => 'Tu âs $1 ($2).',
 	'youhavenewmessagesmulti' => 'Tu âs gnûfs messaçs su $1',
 	'yourname' => 'Non utent',
@@ -1319,9 +1319,9 @@ $messages['fur'] = [
 	'yournick' => 'Stranon (nick):',
 	'yourgender' => 'Ses:',
 	'year' => 'Scomençant dal an (e prime):',
-];
+);
 
-$messages['fy'] = [
+$messages['fy'] = array(
 	'youhavenewmessages' => 'Jo hawwe $1 ($2).',
 	'youhavenewmessagesmulti' => 'Jo hawwe nije berjochten op $1',
 	'yourname' => 'Jo meidochnamme:',
@@ -1336,29 +1336,29 @@ $messages['fy'] = [
 	'yournick' => 'Jo alias (foar sinjaturen)',
 	'yourgender' => 'Geslacht:',
 	'year' => 'Fan jier (en earder):',
-];
+);
 
-$messages['ga'] = [
+$messages['ga'] = array(
 	'youhavenewmessages' => 'Tá $1 agat ($2).',
 	'youhavenewmessagesmulti' => 'Tá teachtaireachtaí nua agat ar $1',
-	'yourname' => 'D\'ainm úsáideora',
-	'yourpassword' => 'D\'fhocal faire',
-	'yourpasswordagain' => 'Athiontráil d\'fhocal faire',
-	'yourdomainname' => 'D\'fhearann',
+	'yourname' => "D'ainm úsáideora",
+	'yourpassword' => "D'fhocal faire",
+	'yourpasswordagain' => "Athiontráil d'fhocal faire",
+	'yourdomainname' => "D'fhearann",
 	'yourtext' => 'Do chuid téacs',
 	'yourdiff' => 'Difríochtaí',
 	'youremail' => 'Do ríomhsheoladh:',
-	'yourrealname' => 'D\'fhíorainm **',
+	'yourrealname' => "D'fhíorainm **",
 	'yourlanguage' => 'Teanga',
 	'yourvariant' => 'Difríocht teanga:',
 	'yournick' => 'Do leasainm (mar a bheidh i sínithe)',
 	'yourgender' => 'Inscne:',
 	'year' => 'Ón bhliain seo (agus níos luaithe):',
-];
+);
 
-$messages['gag'] = [
+$messages['gag'] = array(
 	'youhavenewmessages' => 'Var eni <u>$1</u>. ($2)',
-	'youhavenewmessagesmulti' => '$1\'de eni mesajınız var.',
+	'youhavenewmessagesmulti' => "$1'de eni mesajınız var.",
 	'yourname' => 'Kullanıcı adınız',
 	'yourpassword' => 'Parol',
 	'yourpasswordagain' => 'Parolu enidän yaz',
@@ -1370,9 +1370,9 @@ $messages['gag'] = [
 	'yourlanguage' => 'Dil:',
 	'yournick' => 'Nik',
 	'year' => 'Yıl:',
-];
+);
 
-$messages['gan-hans'] = [
+$messages['gan-hans'] = array(
 	'youhavenewmessages' => '倷有 $1 （$2）.',
 	'youhavenewmessagesmulti' => '$1 上有倷𠮶新消息',
 	'yourname' => '用户名：',
@@ -1387,9 +1387,9 @@ $messages['gan-hans'] = [
 	'yourvariant' => '多款内容语言：',
 	'yournick' => '签名：',
 	'year' => '从个年 （或更早）:',
-];
+);
 
-$messages['gan-hant'] = [
+$messages['gan-hant'] = array(
 	'youhavenewmessages' => '汝有 $1 （$2）.',
 	'youhavenewmessagesmulti' => '$1 上有倷嗰新消息',
 	'yourname' => '用戶名：',
@@ -1404,9 +1404,9 @@ $messages['gan-hant'] = [
 	'yourvariant' => '多款內容語言：',
 	'yournick' => '簽名：',
 	'year' => '從箇年 （或更早）:',
-];
+);
 
-$messages['gd'] = [
+$messages['gd'] = array(
 	'youhavenewmessages' => 'Tha $1 ($2) agad.',
 	'youhavenewmessagesmulti' => 'Tha teachdaireachdan ùra agad ann an $1',
 	'yourname' => 'Ainm-cleachdaiche:',
@@ -1416,13 +1416,13 @@ $messages['gd'] = [
 	'yourtext' => 'An teacsa agad',
 	'yourdiff' => 'Caochlaidhean',
 	'youremail' => 'Post-dealain:',
-	'yourrealname' => 'An dearbh ainm a th\' ort:',
+	'yourrealname' => "An dearbh ainm a th' ort:",
 	'yourlanguage' => 'Cànan:',
 	'yournick' => 'Earr-sgrìobhadh ùr:',
 	'year' => 'On bhliadhna (agus na bu tràithe):',
-];
+);
 
-$messages['gl'] = [
+$messages['gl'] = array(
 	'youhavenewmessages' => 'Ten $1 ($2).',
 	'youhavenewmessagesmulti' => 'Ten mensaxes novas en $1',
 	'yourname' => 'Nome de usuario:',
@@ -1438,27 +1438,27 @@ $messages['gl'] = [
 	'yournick' => 'Sinatura:',
 	'yourgender' => 'Sexo:',
 	'year' => 'Desde o ano (e anteriores):',
-];
+);
 
-$messages['gn'] = [
+$messages['gn'] = array(
 	'youhavenewmessagesmulti' => 'Reguereko marandu pyahu $1',
 	'yourname' => 'Hero',
 	'yourpassword' => 'Ne remiñemi',
 	'yourpasswordagain' => 'Repita ne remiñemi',
-	'yourtext' => 'Mba\'ehaipyre',
-	'youremail' => 'Ñe\'ẽveve',
-	'yourlanguage' => 'Ñe\'ẽ:',
-];
+	'yourtext' => "Mba'ehaipyre",
+	'youremail' => "Ñe'ẽveve",
+	'yourlanguage' => "Ñe'ẽ:",
+);
 
-$messages['got'] = [
+$messages['got'] = array(
 	'youhavenewmessages' => '𐌸𐌿 𐌷𐌰𐌱𐌹𐍃 $1 ($2).',
 	'yourname' => '𐌽𐌹𐌿𐍄𐌰𐌽𐌳𐌹𐍃𐌽𐌰𐌼𐍉:',
 	'yourpassword' => '𐌰𐌽𐌰𐌻𐌰𐌿𐌲𐌽𐍃 𐍅𐌰𐌿𐍂𐌳𐌰:',
 	'yourdiff' => 'Missalieks',
 	'year' => '𐍆𐍂𐌰𐌼 𐌾𐌴𐍂𐌰 (𐌾𐌰𐌷 𐌰𐍆𐍄𐌿𐌼𐌰):',
-];
+);
 
-$messages['grc'] = [
+$messages['grc'] = array(
 	'youhavenewmessages' => 'Ἔχεις $1 ($2).',
 	'youhavenewmessagesmulti' => 'Νέας εἰσί σοι ἀγγελίας ἐν $1',
 	'yourname' => 'Ὄνομα χρωμένου:',
@@ -1473,9 +1473,9 @@ $messages['grc'] = [
 	'yournick' => 'Προσωνυμία:',
 	'yourgender' => 'Φῦλον:',
 	'year' => 'Ἔτος:',
-];
+);
 
-$messages['gsw'] = [
+$messages['gsw'] = array(
 	'youhavenewmessages' => 'Du hesch $1 ($2).',
 	'youhavenewmessagesmulti' => 'Si hen neui Nochrichte: $1',
 	'yourname' => 'Dyy Benutzername',
@@ -1491,9 +1491,9 @@ $messages['gsw'] = [
 	'yournick' => 'Unterschrift:',
 	'yourgender' => 'Gschlächt:',
 	'year' => 'bis Jahr:',
-];
+);
 
-$messages['gu'] = [
+$messages['gu'] = array(
 	'youhavenewmessages' => 'તમારા માટે $1 ($2).',
 	'youhavenewmessagesmulti' => '$1 ઉપર તમારા માટે નવો સંદેશ છે.',
 	'yourname' => 'સભ્ય નામ:',
@@ -1509,14 +1509,14 @@ $messages['gu'] = [
 	'yournick' => 'સહી:',
 	'yourgender' => 'જાતિ:',
 	'year' => ':વર્ષથી (અને પહેલાનાં)',
-];
+);
 
-$messages['gv'] = [
+$messages['gv'] = array(
 	'youhavenewmessages' => 'Ta $1 ayd ($2).',
 	'youhavenewmessagesmulti' => 'Ta çhaghteraghtyn noa ayd er $1',
-	'yourname' => 'Dt\'ennym ymmydeyr',
+	'yourname' => "Dt'ennym ymmydeyr",
 	'yourpassword' => 'Fockle yn arrey:',
-	'yourpasswordagain' => 'Aascreeu d\'ockle arrey:',
+	'yourpasswordagain' => "Aascreeu d'ockle arrey:",
 	'yourtext' => 'Dty heks',
 	'yourdiff' => 'Anchaslyssyn',
 	'youremail' => 'Post-L:',
@@ -1524,17 +1524,17 @@ $messages['gv'] = [
 	'yourlanguage' => 'Çhengey:',
 	'yournick' => 'Far-ennym:',
 	'yourgender' => 'Keintys:',
-	'year' => 'Veih blein (as ny s\'aa):',
-];
+	'year' => "Veih blein (as ny s'aa):",
+);
 
-$messages['ha'] = [
+$messages['ha'] = array(
 	'youhavenewmessages' => 'Kuna da $1 ($2).',
-	'yourname' => 'Sunan ma\'aikaci:',
+	'yourname' => "Sunan ma'aikaci:",
 	'yourpassword' => 'Kalmar sirri:',
 	'year' => 'Tun daga shekara (da gabanta):',
-];
+);
 
-$messages['hak'] = [
+$messages['hak'] = array(
 	'youhavenewmessages' => 'Ngì yû $1（$2）。',
 	'youhavenewmessagesmulti' => 'Ngì chhai $1 yû yit-thiàu sîn sêu-sit',
 	'yourname' => 'Yung-fu-miàng',
@@ -1549,14 +1549,14 @@ $messages['hak'] = [
 	'yourvariant' => 'Sṳ-thí pien-von:',
 	'yournick' => 'Kién-chhṳ̂n:',
 	'year' => 'Chhiùng liá-ke ngièn-fun (fe̍t-he kien-chó):',
-];
+);
 
-$messages['haw'] = [
+$messages['haw'] = array(
 	'youhavenewmessages' => 'He $1 ($2) kāu.',
 	'youhavenewmessagesmulti' => 'He mau memo kou ma $1',
-	'yourname' => 'Inoa mea ho\'ohana',
+	'yourname' => "Inoa mea ho'ohana",
 	'yourpassword' => 'ʻŌlelo hūnā:',
-	'yourpasswordagain' => 'Hua\'ōlelo huna hou',
+	'yourpasswordagain' => "Hua'ōlelo huna hou",
 	'yourtext' => 'Ko‘u ‘ōlelo',
 	'yourdiff' => 'Nā mea ‘oko‘a',
 	'youremail' => 'Leka uila:',
@@ -1565,9 +1565,9 @@ $messages['haw'] = [
 	'yournick' => 'Inoa kapakapa:',
 	'yourgender' => 'Keka:',
 	'year' => 'Mai ka makahiki (me mua):',
-];
+);
 
-$messages['he'] = [
+$messages['he'] = array(
 	'youhavenewmessages' => 'יש לך $1 ($2).',
 	'youhavenewmessagesmulti' => 'יש לך הודעות חדשות ב־$1',
 	'yourname' => 'שם משתמש:',
@@ -1583,9 +1583,9 @@ $messages['he'] = [
 	'yournick' => 'חתימה:',
 	'yourgender' => 'מגדר:',
 	'year' => 'עד השנה:',
-];
+);
 
-$messages['hi'] = [
+$messages['hi'] = array(
 	'youhavenewmessages' => 'आपके लिए $1 है। ($2)',
 	'youhavenewmessagesmulti' => '$1 पर आपके लिए नया संदेश है',
 	'yourname' => 'सदस्यनाम:',
@@ -1601,9 +1601,9 @@ $messages['hi'] = [
 	'yournick' => 'आपका उपनाम (दस्तखत/सही के लिये)',
 	'yourgender' => 'लिंग',
 	'year' => 'इस सालसे (और पुराने):',
-];
+);
 
-$messages['hif'] = [
+$messages['hif'] = array(
 	'youhavenewmessages' => 'आपके लिए $1 है। ($2)',
 	'youhavenewmessagesmulti' => '$1 पर आपके लिए नया संदेश है',
 	'yourname' => 'सदस्यनाम:',
@@ -1619,9 +1619,9 @@ $messages['hif'] = [
 	'yournick' => 'आपका उपनाम (दस्तखत/सही के लिये)',
 	'yourgender' => 'लिंग',
 	'year' => 'इस सालसे (और पुराने):',
-];
+);
 
-$messages['hif-latn'] = [
+$messages['hif-latn'] = array(
 	'youhavenewmessages' => 'Aapke pass hai $1 ($2).',
 	'youhavenewmessagesmulti' => 'Aap ke khatir $1 pe sandes hai',
 	'yourname' => 'Username:',
@@ -1637,9 +1637,9 @@ $messages['hif-latn'] = [
 	'yournick' => 'Chinh:',
 	'yourgender' => 'Admi ki aurat:',
 	'year' => 'Saal se (aur pahile):',
-];
+);
 
-$messages['hil'] = [
+$messages['hil'] = array(
 	'youhavenewmessages' => 'Ikaw may $1 ($2).',
 	'youhavenewmessagesmulti' => 'May mga bag-ong mensahe ka sa $1',
 	'yourname' => 'Ngalan sang Manog-gamit:',
@@ -1655,9 +1655,9 @@ $messages['hil'] = [
 	'yournick' => 'Bag-o nga pirma:',
 	'yourgender' => 'Gender:',
 	'year' => 'Halin sa tu-ig (kag sang timprano):',
-];
+);
 
-$messages['hr'] = [
+$messages['hr'] = array(
 	'youhavenewmessages' => 'Imate $1 ($2).',
 	'youhavenewmessagesmulti' => 'Imate nove poruke na $1',
 	'yourname' => 'Suradničko ime',
@@ -1673,9 +1673,9 @@ $messages['hr'] = [
 	'yournick' => 'Vaš nadimak (za potpisivanje)',
 	'yourgender' => 'Spol:',
 	'year' => 'Od godine (i ranije):',
-];
+);
 
-$messages['hsb'] = [
+$messages['hsb'] = array(
 	'youhavenewmessages' => 'Maš $1 ($2).',
 	'youhavenewmessagesmulti' => 'Maš nowe powěsće: $1',
 	'yourname' => 'Wužiwarske mjeno:',
@@ -1691,9 +1691,9 @@ $messages['hsb'] = [
 	'yournick' => 'Podpis:',
 	'yourgender' => 'Splah:',
 	'year' => 'wot lěta (a do toho):',
-];
+);
 
-$messages['ht'] = [
+$messages['ht'] = array(
 	'youhavenewmessages' => 'Ou genyen $1 ($2).',
 	'youhavenewmessagesmulti' => 'Ou genyen nouvo mesaj sou $1.',
 	'yourname' => 'Non itilizatè ou an :',
@@ -1707,9 +1707,9 @@ $messages['ht'] = [
 	'yourlanguage' => 'Lang:',
 	'yournick' => 'Siyati pou espas diskisyon :',
 	'year' => 'Depi lane (ak anvan tou) :',
-];
+);
 
-$messages['hu'] = [
+$messages['hu'] = array(
 	'youhavenewmessages' => 'Új üzenet vár $1! (Az üzenetet $2.)',
 	'youhavenewmessagesmulti' => 'Új üzenetet vár a(z) $1 wikin',
 	'yourname' => 'Szerkesztőneved:',
@@ -1725,9 +1725,9 @@ $messages['hu'] = [
 	'yournick' => 'Aláírás:',
 	'yourgender' => 'Nem:',
 	'year' => 'Eddig az évig:',
-];
+);
 
-$messages['hy'] = [
+$messages['hy'] = array(
 	'youhavenewmessages' => 'Դուք ունեք $1 ($2)։',
 	'youhavenewmessagesmulti' => 'Դուք նոր ուղերձներ եք ստացել $1 վրա',
 	'yourname' => 'Մասնակցի անուն.',
@@ -1743,9 +1743,9 @@ $messages['hy'] = [
 	'yournick' => 'Ստորագրություն.',
 	'yourgender' => 'Սեռ․',
 	'year' => 'Սկսած տարեթվից (և վաղ)՝',
-];
+);
 
-$messages['ia'] = [
+$messages['ia'] = array(
 	'youhavenewmessages' => 'Tu ha $1 ($2).',
 	'youhavenewmessagesmulti' => 'Tu ha nove messages in $1',
 	'yourname' => 'Nomine de usator:',
@@ -1761,9 +1761,9 @@ $messages['ia'] = [
 	'yournick' => 'Signatura:',
 	'yourgender' => 'Sexo:',
 	'year' => 'A partir del anno (e anterior):',
-];
+);
 
-$messages['id'] = [
+$messages['id'] = array(
 	'youhavenewmessages' => 'Anda mempunyai $1 ($2).',
 	'youhavenewmessagesmulti' => 'Anda mendapat beberapa pesan baru pada $1',
 	'yourname' => 'Nama pengguna:',
@@ -1779,9 +1779,9 @@ $messages['id'] = [
 	'yournick' => 'Tanda tangan:',
 	'yourgender' => 'Jenis kelamin:',
 	'year' => 'Sejak tahun (dan sebelumnya):',
-];
+);
 
-$messages['ie'] = [
+$messages['ie'] = array(
 	'youhavenewmessages' => 'Vu have $1 ($2).',
 	'youhavenewmessagesmulti' => 'Vu have nov missages in $1',
 	'yourname' => 'Nómine de usator:',
@@ -1797,12 +1797,12 @@ $messages['ie'] = [
 	'yournick' => 'Nov signature:',
 	'yourgender' => 'Génere:',
 	'year' => 'De annu (e anterioris):',
-];
+);
 
-$messages['ig'] = [
+$messages['ig'] = array(
 	'youhavenewmessages' => 'I nwèrè $1 ($2).',
 	'youhavenewmessagesmulti' => 'Inwere eziohu na $1',
-	'yourname' => 'Áhà ọ\'bànifé:',
+	'yourname' => "Áhà ọ'bànifé:",
 	'yourpassword' => 'Okwúngáfè:',
 	'yourpasswordagain' => 'Detuari mkpurụ okwu ejị a gafẹ:',
 	'yourdomainname' => 'Obí gi:',
@@ -1814,27 +1814,27 @@ $messages['ig'] = [
 	'yournick' => 'Ndè áhà gi òhúrù:',
 	'yourgender' => 'Nwayi/okpoho ma o nwoke:',
 	'year' => 'Shi afọr (na ndi nke mbu):',
-];
+);
 
-$messages['ike-cans'] = [
+$messages['ike-cans'] = array(
 	'youhavenewmessages' => 'ᐃᓕᔅᓯ ᐱᒋᕚ $1 ($2).',
 	'yourname' => 'ᐅᐃᑭᐱᑎᐊ ᐊᑎᖅ',
 	'yourpassword' => 'ᐅᐃᑭᐱᑎᐊ ᐸᓚᙵᓴᐅᑎ',
 	'yourpasswordagain' => 'ᑕᒪᑐᒪᓃᖅᐹ ᐃᒃᓯᒐᖅᑐᖅ ᐅᐃᑭᐱᑎᐊ ᐸᓚᙵᓴᐅᑎ',
 	'youremail' => 'ᑭᒍᑎᐅᑉ ᓯᑎᓂᖅᐹᖓ:',
 	'yourrealname' => 'ᐃᓄᓪᓚᕆᒃ ᐊᑎᖅ:',
-];
+);
 
-$messages['ike-latn'] = [
+$messages['ike-latn'] = array(
 	'youhavenewmessages' => 'ilissu pigivaa $1 ($2).',
 	'yourname' => 'uikipitia atiq',
 	'yourpassword' => 'uikipitia palanngasauti',
 	'yourpasswordagain' => 'tamatumaniiqpaa iksigaqtuq uikipitia palanngasauti',
 	'youremail' => 'kigutiup sitiniqpaanga:',
 	'yourrealname' => 'inullarik atiq:',
-];
+);
 
-$messages['ilo'] = [
+$messages['ilo'] = array(
 	'youhavenewmessages' => 'Addaanka iti $1 ($2).',
 	'youhavenewmessagesmulti' => 'Adda dagiti baro a mensahem iti $1',
 	'yourname' => 'Nagan ti agar-aramat:',
@@ -1850,9 +1850,9 @@ $messages['ilo'] = [
 	'yournick' => 'Baro a pirma:',
 	'yourgender' => 'Lalaki wenno Babai:',
 	'year' => 'Manipud iti tawen (ken nasapsapa pay):',
-];
+);
 
-$messages['inh'] = [
+$messages['inh'] = array(
 	'youhavenewmessages' => 'Оаш $1 ($2) дӀайийцад',
 	'youhavenewmessagesmulti' => 'Оаш $1чу керда хоамаш дӀайийцад',
 	'yourname' => 'Дакъалаьцархочунна цӀи:',
@@ -1864,9 +1864,9 @@ $messages['inh'] = [
 	'yourrealname' => 'Шун цIи:',
 	'yourlanguage' => 'Мотт:',
 	'year' => 'Цхьа шу хьалхагIа (кха хьалхагIа):',
-];
+);
 
-$messages['io'] = [
+$messages['io'] = array(
 	'youhavenewmessages' => 'Vu havas $1 ($2).',
 	'youhavenewmessagesmulti' => 'Vu havas nova mesaji ye $1',
 	'yourname' => 'Vua uzantonomo:',
@@ -1881,9 +1881,9 @@ $messages['io'] = [
 	'yournick' => 'Signaturo:',
 	'yourgender' => 'Genro:',
 	'year' => 'De yaro (e plu frue):',
-];
+);
 
-$messages['is'] = [
+$messages['is'] = array(
 	'youhavenewmessages' => 'Þú hefur fengið $1 ($2).',
 	'youhavenewmessagesmulti' => 'Þín bíða ný skilaboð á $1',
 	'yourname' => 'Notandanafn:',
@@ -1899,9 +1899,9 @@ $messages['is'] = [
 	'yournick' => 'Undirskrift:',
 	'yourgender' => 'Kyn:',
 	'year' => 'Frá árinu (og fyrr):',
-];
+);
 
-$messages['it'] = [
+$messages['it'] = array(
 	'youhavenewmessages' => 'Hai $1 ($2).',
 	'youhavenewmessagesmulti' => 'Hai nuovi messaggi su $1',
 	'yourname' => 'Username:',
@@ -1912,15 +1912,15 @@ $messages['it'] = [
 	'yourdiff' => 'Differenze',
 	'youremail' => 'Indirizzo e-mail:',
 	'yourrealname' => 'Nome vero:',
-	'yourlanguage' => 'Lingua dell\'interfaccia:',
+	'yourlanguage' => "Lingua dell'interfaccia:",
 	'yourvariant' => 'Variante della lingua:',
 	'yournick' => 'Soprannome (nickname):',
 	'yourgender' => 'Genere:',
-	'year' => 'Dall\'anno (e precedenti):',
+	'year' => "Dall'anno (e precedenti):",
 	'yourbirthdate' => 'Data di nascita',
-];
+);
 
-$messages['iu'] = [
+$messages['iu'] = array(
 	'youhavenewmessages' => 'Hai $1 ($2).',
 	'youhavenewmessagesmulti' => 'Hai nuovi messaggi su $1',
 	'yourname' => 'Nome utente:',
@@ -1931,14 +1931,14 @@ $messages['iu'] = [
 	'yourdiff' => 'Differenze',
 	'youremail' => 'Indirizzo e-mail:',
 	'yourrealname' => 'Nome vero:',
-	'yourlanguage' => 'Lingua dell\'interfaccia:',
+	'yourlanguage' => "Lingua dell'interfaccia:",
 	'yourvariant' => 'Variante della lingua:',
 	'yournick' => 'Soprannome (nickname):',
 	'yourgender' => 'Genere:',
-	'year' => 'Dall\'anno (e precedenti):',
-];
+	'year' => "Dall'anno (e precedenti):",
+);
 
-$messages['ja'] = [
+$messages['ja'] = array(
 	'youhavenewmessages' => '$1が届いています。($2)',
 	'youhavenewmessagesmulti' => '$1に新しい伝言が届いています',
 	'yourname' => 'ユーザー名',
@@ -1956,9 +1956,9 @@ $messages['ja'] = [
 	'year' => 'これ以前の年：',
 	'yourmail' => 'あなたのメールアドレス(返信先)',
 	'yourbirthdate' => '生年月日',
-];
+);
 
-$messages['jam'] = [
+$messages['jam'] = array(
 	'youhavenewmessages' => 'Yu gat $1 ($2).',
 	'youhavenewmessagesmulti' => 'Yu gat nyuu mechiz pahn $1',
 	'yourname' => 'Yuuzaniem:',
@@ -1968,9 +1968,9 @@ $messages['jam'] = [
 	'yourtext' => 'Yu tex',
 	'yourdiff' => 'Difrans',
 	'year' => 'Frahn ier (ahn oerlia):',
-];
+);
 
-$messages['jut'] = [
+$messages['jut'] = array(
 	'youhavenewmessages' => 'Du har $1 ($2).',
 	'youhavenewmessagesmulti' => 'Der er nye meddelelser til dig: $1',
 	'yourname' => 'Dit brugernav',
@@ -1978,9 +1978,9 @@ $messages['jut'] = [
 	'youremail' => 'E-mail:',
 	'yourrealname' => 'Dit rigtege navn*',
 	'year' => 'År:',
-];
+);
 
-$messages['jv'] = [
+$messages['jv'] = array(
 	'youhavenewmessages' => 'Panjenengan kagungan $1 ($2).',
 	'youhavenewmessagesmulti' => 'Panjenengan olèh pesen-pesen anyar $1',
 	'yourname' => 'Asma pangangeman',
@@ -1996,9 +1996,9 @@ $messages['jv'] = [
 	'yournick' => 'Asma sesinglon/samaran (kagem tapak asta):',
 	'yourgender' => 'Jinis kelamin:',
 	'year' => 'Wiwit taun (lan sadurungé):',
-];
+);
 
-$messages['ka'] = [
+$messages['ka'] = array(
 	'youhavenewmessages' => 'თქვენ გაქვთ $1 ($2).',
 	'youhavenewmessagesmulti' => 'თქვენ გაქვთ ახალი შეტყობინება $1-ზე',
 	'yourname' => 'მომხმარებელი:',
@@ -2014,26 +2014,26 @@ $messages['ka'] = [
 	'yournick' => 'მეტსახელი:',
 	'yourgender' => 'სქესი:',
 	'year' => 'წელი:',
-];
+);
 
-$messages['kaa'] = [
+$messages['kaa'] = array(
 	'youhavenewmessages' => 'Sizge $1 bar ($2).',
-	'youhavenewmessagesmulti' => '$1 betinde sizge jan\'a xabarlar bar',
+	'youhavenewmessagesmulti' => "$1 betinde sizge jan'a xabarlar bar",
 	'yourname' => 'Paydalanıwshı atı:',
 	'yourpassword' => 'Parol:',
-	'yourpasswordagain' => 'Paroldi qayta kiritin\':',
-	'yourdomainname' => 'Sizin\' domen:',
-	'yourtext' => 'Sizin\' tekst',
+	'yourpasswordagain' => "Paroldi qayta kiritin':",
+	'yourdomainname' => "Sizin' domen:",
+	'yourtext' => "Sizin' tekst",
 	'yourdiff' => 'Parqlar',
 	'youremail' => 'E-mail:',
-	'yourrealname' => 'Haqıyqıy isimin\'iz:',
+	'yourrealname' => "Haqıyqıy isimin'iz:",
 	'yourlanguage' => 'Til:',
-	'yourvariant' => 'Tu\'ri',
-	'yournick' => 'Laqabın\'ız:',
-	'year' => 'Jıldag\'ı (ha\'m onnanda erterek):',
-];
+	'yourvariant' => "Tu'ri",
+	'yournick' => "Laqabın'ız:",
+	'year' => "Jıldag'ı (ha'm onnanda erterek):",
+);
 
-$messages['kab'] = [
+$messages['kab'] = array(
 	'youhavenewmessages' => 'Ɣur-k $1 ($2).',
 	'youhavenewmessagesmulti' => 'Tesɛiḍ iznan imaynuten deg $1',
 	'yourname' => 'Isem n wemseqdac',
@@ -2047,9 +2047,9 @@ $messages['kab'] = [
 	'yourlanguage' => 'Tutlayt:',
 	'yourvariant' => 'Ameskil:',
 	'yournick' => 'Isem wis sin (mačči d amenṣib):',
-];
+);
 
-$messages['kbd'] = [
+$messages['kbd'] = array(
 	'youhavenewmessages' => 'Ɣur-k $1 ($2).',
 	'youhavenewmessagesmulti' => 'Tesɛiḍ iznan imaynuten deg $1',
 	'yourname' => 'Isem n wemseqdac',
@@ -2063,9 +2063,9 @@ $messages['kbd'] = [
 	'yourlanguage' => 'Tutlayt:',
 	'yourvariant' => 'Ameskil:',
 	'yournick' => 'Isem wis sin (mačči d amenṣib):',
-];
+);
 
-$messages['kbd-cyrl'] = [
+$messages['kbd-cyrl'] = array(
 	'youhavenewmessages' => 'КъыпхуэкӀуауэ уиӀэ $1 ($2).',
 	'youhavenewmessagesmulti' => 'КъыпхуэкӀуауэ уиӀэ тхыгъэщӀэхэр $1 идеж',
 	'yourname' => 'Уи цӀэр:',
@@ -2075,18 +2075,18 @@ $messages['kbd-cyrl'] = [
 	'yourtext' => 'Уи текстыр',
 	'yourdiff' => 'ЗэщхьэщыкӀыныгъэхэр',
 	'year' => 'Мы илъэсым щыщIэдзауэ (е нэхъпасэжу):',
-];
+);
 
-$messages['kg'] = [
+$messages['kg'] = array(
 	'youhavenewmessages' => 'Nge kele na $1 ($2).',
 	'youhavenewmessagesmulti' => 'Nge kele na bansangu ya yimpa kuna $1',
 	'yourname' => 'Nkûmbu ya nsoniki:',
 	'yourpassword' => 'Mpovo ya kuluta:',
 	'yourlanguage' => 'Ndinga:',
 	'year' => 'Katuka mvula:',
-];
+);
 
-$messages['khw'] = [
+$messages['khw'] = array(
 	'youhavenewmessages' => 'تہ بچے ای $1 شیر۔ ($2)',
 	'youhavenewmessagesmulti' => 'ء$1 تہ بچے نوغ نوغ پیغامات شینی',
 	'yourname' => 'اسمِ رکنیت',
@@ -2099,9 +2099,9 @@ $messages['khw'] = [
 	'yourrealname' => '* اصلی نم',
 	'yournick' => 'دسخط',
 	'year' => 'سال (وا ھیغاری پروشٹی):',
-];
+);
 
-$messages['kiu'] = [
+$messages['kiu'] = array(
 	'youhavenewmessages' => 'Yê sıma $1 ($2) esto.',
 	'youhavenewmessagesmulti' => '$1 de mesacê sımaê newey estê',
 	'yourname' => 'Namê karberi:',
@@ -2117,9 +2117,9 @@ $messages['kiu'] = [
 	'yournick' => 'İmza:',
 	'yourgender' => 'Cınsiyet:',
 	'year' => 'Serre ra (u ravêr):',
-];
+);
 
-$messages['kk-arab'] = [
+$messages['kk-arab'] = array(
 	'youhavenewmessages' => 'سىزگە $1 بار ($2).',
 	'youhavenewmessagesmulti' => '$1 دەگەندە جاڭا حابارلار بار',
 	'yourname' => 'قاتىسۋشى اتىڭىز:',
@@ -2134,9 +2134,9 @@ $messages['kk-arab'] = [
 	'yourvariant' => 'ٴتىل/ٴجازبا نۇسقاڭىز:',
 	'yournick' => 'قولتاڭباڭىز:',
 	'year' => 'مىنا جىلدان (جانە ەرتەرەكتەن):',
-];
+);
 
-$messages['kk-cn'] = [
+$messages['kk-cn'] = array(
 	'youhavenewmessages' => 'سىزگە $1 بار ($2).',
 	'youhavenewmessagesmulti' => '$1 دەگەندە جاڭا حابارلار بار',
 	'yourname' => 'قاتىسۋشى اتىڭىز:',
@@ -2151,9 +2151,9 @@ $messages['kk-cn'] = [
 	'yourvariant' => 'ٴتىل/ٴجازبا نۇسقاڭىز:',
 	'yournick' => 'قولتاڭباڭىز:',
 	'year' => 'مىنا جىلدان (جانە ەرتەرەكتەن):',
-];
+);
 
-$messages['kk-cyrl'] = [
+$messages['kk-cyrl'] = array(
 	'youhavenewmessages' => 'Сізге $1 бар ($2).',
 	'youhavenewmessagesmulti' => '$1 дегенде жаңа хабарлар бар',
 	'yourname' => 'Қатысушы атыңыз:',
@@ -2169,9 +2169,9 @@ $messages['kk-cyrl'] = [
 	'yournick' => 'Қолтаңбаңыз:',
 	'yourgender' => 'Жынысыңыз:',
 	'year' => 'Мына жылдан (және ертеректен):',
-];
+);
 
-$messages['kk-kz'] = [
+$messages['kk-kz'] = array(
 	'youhavenewmessages' => 'Сізге $1 бар ($2).',
 	'youhavenewmessagesmulti' => '$1 дегенде жаңа хабарлар бар',
 	'yourname' => 'Қатысушы атыңыз:',
@@ -2187,9 +2187,9 @@ $messages['kk-kz'] = [
 	'yournick' => 'Қолтаңбаңыз:',
 	'yourgender' => 'Жынысыңыз:',
 	'year' => 'Мына жылдан (және ертеректен):',
-];
+);
 
-$messages['kk-latn'] = [
+$messages['kk-latn'] = array(
 	'youhavenewmessages' => 'Sizge $1 bar ($2).',
 	'youhavenewmessagesmulti' => '$1 degende jaña xabarlar bar',
 	'yourname' => 'Qatıswşı atıñız:',
@@ -2204,9 +2204,9 @@ $messages['kk-latn'] = [
 	'yourvariant' => 'Til/jazba nusqañız:',
 	'yournick' => 'Qoltañbañız:',
 	'year' => 'Mına jıldan (jäne erterekten):',
-];
+);
 
-$messages['kk-tr'] = [
+$messages['kk-tr'] = array(
 	'youhavenewmessages' => 'Sizge $1 bar ($2).',
 	'youhavenewmessagesmulti' => '$1 degende jaña xabarlar bar',
 	'yourname' => 'Qatıswşı atıñız:',
@@ -2221,9 +2221,9 @@ $messages['kk-tr'] = [
 	'yourvariant' => 'Til/jazba nusqañız:',
 	'yournick' => 'Qoltañbañız:',
 	'year' => 'Mına jıldan (jäne erterekten):',
-];
+);
 
-$messages['kl'] = [
+$messages['kl'] = array(
 	'youhavenewmessages' => '<!-- This sentence shall be empty because of kl grammar. --> $1 ($2)',
 	'yourname' => 'Atuisutut atit',
 	'yourpassword' => 'Isissutissaq:',
@@ -2231,9 +2231,9 @@ $messages['kl'] = [
 	'yourtext' => 'Allatat',
 	'yourlanguage' => 'Oqaatsit:',
 	'year' => 'Ukioq:',
-];
+);
 
-$messages['km'] = [
+$messages['km'] = array(
 	'youhavenewmessages' => 'អ្នកមាន $1 ($2)។',
 	'youhavenewmessagesmulti' => 'អ្នកមានសារថ្មីៗនៅ $1',
 	'yourname' => 'អត្តនាម៖',
@@ -2249,9 +2249,9 @@ $messages['km'] = [
 	'yournick' => 'ហត្ថលេខាថ្មី៖',
 	'yourgender' => 'ភេទ៖',
 	'year' => 'ឆ្នាំ៖',
-];
+);
 
-$messages['kn'] = [
+$messages['kn'] = array(
 	'youhavenewmessages' => 'ನಿಮಗೆ $1 ಇವೆ ($2).',
 	'youhavenewmessagesmulti' => '$1 ಅಲ್ಲಿ ನಿಮಗೆ ಹೊಸ ಸಂದೇಶಗಳಿವೆ',
 	'yourname' => 'ನಿಮ್ಮ ಬಳಕೆಯ ಹೆಸರು',
@@ -2265,9 +2265,9 @@ $messages['kn'] = [
 	'yournick' => 'ಸಹಿ:',
 	'yourgender' => 'ಲಿಂಗ:',
 	'year' => 'ಈ ವರ್ಷದಿಂದ (ಮತ್ತು ಮುಂಚಿನ):',
-];
+);
 
-$messages['ko'] = [
+$messages['ko'] = array(
 	'youhavenewmessages' => '다른 사용자가 $1란에 글을 남겼습니다. ($2)',
 	'youhavenewmessagesmulti' => '다른 사용자가 $1의 사용자 토론란에 글을 남겼습니다.',
 	'yourname' => '계정 이름:',
@@ -2284,9 +2284,9 @@ $messages['ko'] = [
 	'yourgender' => '성별:',
 	'year' => '연도:',
 	'yourbirthdate' => '생년월일 -',
-];
+);
 
-$messages['ko-kp'] = [
+$messages['ko-kp'] = array(
 	'youhavenewmessages' => '다른 사용자가 $1란에 글을 남겼습니다. ($2)',
 	'youhavenewmessagesmulti' => '다른 사용자가 $1란에 글을 남겼습니다.',
 	'yourname' => '계정 이름:',
@@ -2302,9 +2302,9 @@ $messages['ko-kp'] = [
 	'yournick' => '새 서명:',
 	'yourgender' => '성별:',
 	'year' => '연도:',
-];
+);
 
-$messages['koi'] = [
+$messages['koi'] = array(
 	'youhavenewmessages' => 'Тэныт локтiс $1 ($2).',
 	'youhavenewmessagesmulti' => '$1 юкöтын тэ понда мыйкö эм',
 	'yourname' => 'Уджкерисьлöн пыран ним:',
@@ -2317,9 +2317,9 @@ $messages['koi'] = [
 	'yourlanguage' => 'Кыв:',
 	'yournick' => 'Виль кырымпас:',
 	'year' => 'Во сьöрна (и одзжык):',
-];
+);
 
-$messages['krc'] = [
+$messages['krc'] = array(
 	'youhavenewmessages' => 'Сизге $1 келдиле ($2).',
 	'youhavenewmessagesmulti' => '$1 бетде джангы билдириуле бардыла.',
 	'yourname' => 'Къошулуучуну аты',
@@ -2335,21 +2335,21 @@ $messages['krc'] = [
 	'yournick' => 'Псевдонимигиз (къол салыулагъа):',
 	'yourgender' => 'Эркиши/Тиширыу:',
 	'year' => 'Джылдан башлаб (эм алгъаракъ):',
-];
+);
 
-$messages['kri'] = [
+$messages['kri'] = array(
 	'youhavenewmessages' => 'Yu get $1 ($2).',
 	'yourname' => 'Yuzanem:',
 	'youremail' => 'Imel:',
-];
+);
 
-$messages['krj'] = [
+$messages['krj'] = array(
 	'youhavenewmessages' => 'May rudyan kaw nga $1 ($2).',
 	'youhavenewmessagesmulti' => 'May rudyan kaw nga manga bag-o nga mensahe sa $1',
 	'youremail' => 'E-mail:',
-];
+);
 
-$messages['ksh'] = [
+$messages['ksh'] = array(
 	'youhavenewmessages' => 'Do häs $1 ($2).',
 	'youhavenewmessagesmulti' => 'Do häs neu Nachrichte op $1',
 	'yourname' => 'Metmaacher Name:',
@@ -2365,9 +2365,9 @@ $messages['ksh'] = [
 	'yournick' => 'Ding&nbsp;„Ongerschreff“&nbsp;*',
 	'yourgender' => 'Do bes *',
 	'year' => 'Beß Johr:',
-];
+);
 
-$messages['ku'] = [
+$messages['ku'] = array(
 	'youhavenewmessages' => 'Do häs $1 ($2).',
 	'youhavenewmessagesmulti' => 'Do häs neu Nachrichte op $1',
 	'yourname' => 'Metmaacher Name:',
@@ -2383,9 +2383,9 @@ $messages['ku'] = [
 	'yournick' => 'Ding&nbsp;„Ongerschreff“&nbsp;*',
 	'yourgender' => 'Do bes *',
 	'year' => 'Beß Johr:',
-];
+);
 
-$messages['ku-latn'] = [
+$messages['ku-latn'] = array(
 	'youhavenewmessages' => '$1 yên te hene ($2).',
 	'youhavenewmessagesmulti' => 'Peyamên nû li $1 ji te re hene.',
 	'yourname' => 'Navê bikarhêner:',
@@ -2401,13 +2401,13 @@ $messages['ku-latn'] = [
 	'yournick' => 'Bernavkê nû (ji bo îmzeyê):',
 	'yourgender' => 'Zayend:',
 	'year' => 'Ji salê (û zûtir):',
-];
+);
 
-$messages['kv'] = [
+$messages['kv'] = array(
 	'yourname' => 'Пырысьлӧн ним:',
-];
+);
 
-$messages['kw'] = [
+$messages['kw'] = array(
 	'youhavenewmessages' => 'Ma $1 genowgh ($2).',
 	'youhavenewmessagesmulti' => 'Ma messajys noweth genowgh war $1',
 	'yourname' => 'Hanow-usyer:',
@@ -2422,9 +2422,9 @@ $messages['kw'] = [
 	'yournick' => 'Sinans noweth:',
 	'yourgender' => 'Reyth:',
 	'year' => 'A-dhia bledhen (ha moy a-varr):',
-];
+);
 
-$messages['ky'] = [
+$messages['ky'] = array(
 	'youhavenewmessages' => 'Сизге $1 ($2) бар.',
 	'youhavenewmessagesmulti' => 'Сизге $1 жаңы кат бар.',
 	'yourname' => 'Колдонуучунун аты',
@@ -2439,9 +2439,9 @@ $messages['ky'] = [
 	'yourvariant' => 'Вариант:',
 	'yournick' => 'Такма атыңыз:',
 	'year' => 'Жылынан (жана андан мурун):',
-];
+);
 
-$messages['la'] = [
+$messages['la'] = array(
 	'youhavenewmessages' => 'Habes $1 ($2).',
 	'youhavenewmessagesmulti' => 'Habes nuntia nova in $1',
 	'yourname' => 'Nomen usoris:',
@@ -2457,9 +2457,9 @@ $messages['la'] = [
 	'yournick' => 'Subscriptio nova:',
 	'yourgender' => 'Sexus:',
 	'year' => 'Ab anno (et prior):',
-];
+);
 
-$messages['lad'] = [
+$messages['lad'] = array(
 	'youhavenewmessages' => 'Tienes $1 ($2).',
 	'youhavenewmessagesmulti' => 'Tienes messajes nuevos en $1',
 	'yourname' => 'Su nombre de usuario',
@@ -2471,9 +2471,9 @@ $messages['lad'] = [
 	'yourlanguage' => 'Lingua:',
 	'yournick' => 'Firma mueva:',
 	'year' => 'Desde el año (i antes):',
-];
+);
 
-$messages['lb'] = [
+$messages['lb'] = array(
 	'youhavenewmessages' => 'Dir hutt $1 ($2).',
 	'youhavenewmessagesmulti' => 'Dir hutt nei Messagen op $1',
 	'yourname' => 'Benotzernumm:',
@@ -2489,9 +2489,9 @@ $messages['lb'] = [
 	'yournick' => 'Ënnerschrëft:',
 	'yourgender' => 'Geschlecht:',
 	'year' => 'Vum Joer (a virdrun):',
-];
+);
 
-$messages['lez'] = [
+$messages['lez'] = array(
 	'youhavenewmessages' => 'Квез  $1 ($2) атанва.',
 	'yourname' => 'Иштиракчидин тlвар',
 	'yourpassword' => 'Парол',
@@ -2500,9 +2500,9 @@ $messages['lez'] = [
 	'yourrealname' => 'Xалис тIвар:',
 	'yourlanguage' => 'ЧIалар',
 	'year' => 'Иисалай (ва адалай вилик):',
-];
+);
 
-$messages['lfn'] = [
+$messages['lfn'] = array(
 	'youhavenewmessages' => 'Tu ave $1 ($2).',
 	'youhavenewmessagesmulti' => 'Tu ave mesajes nova en $1',
 	'yourname' => 'Nom de usor:',
@@ -2516,12 +2516,12 @@ $messages['lfn'] = [
 	'yournick' => 'Suscrive:',
 	'yourgender' => 'Seso:',
 	'year' => 'De anio (e plu vea):',
-];
+);
 
-$messages['lg'] = [
+$messages['lg'] = array(
 	'youhavenewmessages' => 'Ofunye $1 ($2).',
 	'youhavenewmessagesmulti' => 'Ku $1 bakuweerezza obubaka',
-	'yourname' => 'Ery\'obwa memba',
+	'yourname' => "Ery'obwa memba",
 	'yourpassword' => 'Ekigambo ekikuumi',
 	'yourpasswordagain' => 'Ddamu ekigambo ekikuumi',
 	'yourdomainname' => 'Linnya lya twale lya kayungirizi lyo:',
@@ -2529,10 +2529,10 @@ $messages['lg'] = [
 	'yourdiff' => 'Ebikyuse',
 	'yourlanguage' => 'Lulimi lwo:',
 	'yournick' => 'Empaako yo (ssi ya tteeka):',
-	'year' => 'Mu mwaka (n\'egyakulembera):',
-];
+	'year' => "Mu mwaka (n'egyakulembera):",
+);
 
-$messages['li'] = [
+$messages['li'] = array(
 	'youhavenewmessages' => 'Doe höbs $1 ($2).',
 	'youhavenewmessagesmulti' => 'Doe höbs nuuj berichte op $1',
 	'yourname' => 'Diene gebroekersnaam',
@@ -2545,14 +2545,14 @@ $messages['li'] = [
 	'yourrealname' => 'Dienen echte naam*',
 	'yourlanguage' => 'Taal van de gebroekersinterface',
 	'yourvariant' => 'Sjpraokvariantj veur inhawd:',
-	'yournick' => 'Diene bienaam (veur \'\'handjteikeninge\'\')',
+	'yournick' => "Diene bienaam (veur ''handjteikeninge'')",
 	'yourgender' => 'Geslach:',
 	'year' => 'Van jaor (en ierder):',
-];
+);
 
-$messages['lij'] = [
-	'youhavenewmessages' => 'Ti gh\'æ $1 ($2).',
-	'youhavenewmessagesmulti' => 'Ti t\'æ neuvi messaggi in scia $1',
+$messages['lij'] = array(
+	'youhavenewmessages' => "Ti gh'æ $1 ($2).",
+	'youhavenewmessagesmulti' => "Ti t'æ neuvi messaggi in scia $1",
 	'yourname' => 'Nomme',
 	'yourpassword' => 'Pòula segretta:',
 	'yourpasswordagain' => 'Scrivi tórna a pòula segrétta:',
@@ -2564,10 +2564,10 @@ $messages['lij'] = [
 	'yourlanguage' => 'Léngoa:',
 	'yourvariant' => 'Differensa',
 	'yournick' => 'Nommeaggio:',
-	'year' => 'Partendo da l\'anno (e preçedenti):',
-];
+	'year' => "Partendo da l'anno (e preçedenti):",
+);
 
-$messages['liv'] = [
+$messages['liv'] = array(
 	'youhavenewmessages' => 'Täddõn um $1 ($2)',
 	'yourname' => 'Kȭlbatijiznim:',
 	'yourpassword' => 'Sallisõnä:',
@@ -2575,14 +2575,14 @@ $messages['liv'] = [
 	'youremail' => 'E-kēra adres:',
 	'yourrealname' => 'Õigi nim:',
 	'year' => 'āigastõst',
-];
+);
 
-$messages['lmo'] = [
-	'youhavenewmessages' => 'A gh\'hii di $1 ($2).',
-	'youhavenewmessagesmulti' => 'Te gh\'hee di messagg növ ins\'el $1',
+$messages['lmo'] = array(
+	'youhavenewmessages' => "A gh'hii di $1 ($2).",
+	'youhavenewmessagesmulti' => "Te gh'hee di messagg növ ins'el $1",
 	'yourname' => 'El to suranóm:',
-	'yourpassword' => 'Parola d\'urdin',
-	'yourpasswordagain' => 'Mett dent ammò la parola d\'urdin',
+	'yourpassword' => "Parola d'urdin",
+	'yourpasswordagain' => "Mett dent ammò la parola d'urdin",
 	'yourtext' => 'El tò test',
 	'yourdiff' => 'Diferenz',
 	'youremail' => 'E-mail',
@@ -2590,10 +2590,10 @@ $messages['lmo'] = [
 	'yourlanguage' => 'Lengua:',
 	'yournick' => 'Suranomm:',
 	'yourgender' => 'Géner:',
-	'year' => 'A partì de l\'ann (e quij inanz)',
-];
+	'year' => "A partì de l'ann (e quij inanz)",
+);
 
-$messages['ln'] = [
+$messages['ln'] = array(
 	'youhavenewmessages' => 'Ozweí $1 ($2).',
 	'yourname' => 'Nkómbó ya mosáleli:',
 	'yourpassword' => 'Banda nayó:',
@@ -2603,9 +2603,9 @@ $messages['ln'] = [
 	'yourrealname' => 'nkómbó ya sɔ̂lɔ́',
 	'yourlanguage' => 'Lokótá',
 	'year' => 'Bandá mobú (mpé myangó milekí) :',
-];
+);
 
-$messages['lo'] = [
+$messages['lo'] = array(
 	'youhavenewmessages' => 'ທ່ານ ມີ $1 ($2).',
 	'youhavenewmessagesmulti' => 'ທ່ານມີຂໍ້ຄວາມໃໝ່ ຢູ່ $1',
 	'yourname' => 'ຊື່ຜູ້ໃຊ້',
@@ -2619,9 +2619,9 @@ $messages['lo'] = [
 	'yourlanguage' => 'ພາສາ:',
 	'yournick' => 'ຊື່ຫຼິ້ນ:',
 	'year' => 'ແຕ່ປີ (ແລະກ່ອນໜ້ານັ້ນ):',
-];
+);
 
-$messages['loz'] = [
+$messages['loz'] = array(
 	'youhavenewmessages' => 'A sa pozefisize $1 ($2).',
 	'youhavenewmessagesmulti' => 'Nca $1 mulumiwani',
 	'yourname' => 'Sebelu:',
@@ -2636,9 +2636,9 @@ $messages['loz'] = [
 	'yourvariant' => 'Pane:',
 	'yournick' => 'Kamukile di sebelu printezi:',
 	'year' => 'Dyanu (previ):',
-];
+);
 
-$messages['lt'] = [
+$messages['lt'] = array(
 	'youhavenewmessages' => 'Jūs turite $1 ($2).',
 	'youhavenewmessagesmulti' => 'Turite naujų žinučių $1',
 	'yourname' => 'Naudotojo vardas:',
@@ -2654,9 +2654,9 @@ $messages['lt'] = [
 	'yournick' => 'Parašas:',
 	'yourgender' => 'Lytis:',
 	'year' => 'Nuo metų (ir anksčiau):',
-];
+);
 
-$messages['ltg'] = [
+$messages['ltg'] = array(
 	'youhavenewmessages' => 'Tu dabuoji $1 ($2).',
 	'yourname' => 'Slāgvuords:',
 	'yourpassword' => 'Paroļs:',
@@ -2665,9 +2665,9 @@ $messages['ltg'] = [
 	'yourlanguage' => 'Volūda:',
 	'yourgender' => 'Kuorta:',
 	'year' => 'Nu goda (i vacuoki):',
-];
+);
 
-$messages['lv'] = [
+$messages['lv'] = array(
 	'youhavenewmessages' => 'Tev ir $1 (skat. $2).',
 	'youhavenewmessagesmulti' => 'Tev ir jauns ziņojums: $1',
 	'yourname' => 'Tavs lietotājvārds',
@@ -2683,9 +2683,9 @@ $messages['lv'] = [
 	'yournick' => 'Tava iesauka (parakstam):',
 	'yourgender' => 'Dzimums:',
 	'year' => 'No gada (un senāki):',
-];
+);
 
-$messages['lzh'] = [
+$messages['lzh'] = array(
 	'youhavenewmessages' => '子有$1（$2）',
 	'youhavenewmessagesmulti' => '新訊於$1',
 	'yourname' => '名',
@@ -2700,20 +2700,20 @@ $messages['lzh'] = [
 	'yournick' => '新署名︰',
 	'yourgender' => '性別︰',
 	'year' => '年不越',
-];
+);
 
-$messages['lzz'] = [
+$messages['lzz'] = array(
 	'youhavenewmessages' => 'Ağani <u>$1</u> giğun. ($2)',
-	'youhavenewmessagesmulti' => '$1\'s ağne mesajepe giğun',
+	'youhavenewmessagesmulti' => "$1's ağne mesajepe giğun",
 	'yourname' => 'Skani maxmare-coxo:',
 	'yourpassword' => 'Pʼarola-skani:',
 	'youremail' => 'E-maili:',
 	'yourrealname' => 'Coxo skani:',
 	'yourlanguage' => 'Nena skani:',
 	'year' => '3ʼana:',
-];
+);
 
-$messages['mai'] = [
+$messages['mai'] = array(
 	'youhavenewmessages' => 'अहाँ लग अछि $1 ($2).',
 	'youhavenewmessagesmulti' => '$1 पर अहाँ लेल नव सन्देश अछि',
 	'yourname' => 'प्रयोक्ता:',
@@ -2729,9 +2729,9 @@ $messages['mai'] = [
 	'yournick' => 'नव पहिचान:',
 	'yourgender' => 'पुरुख आकि स्त्री',
 	'year' => 'ऐ साल (आ पहिने)',
-];
+);
 
-$messages['map-bms'] = [
+$messages['map-bms'] = array(
 	'youhavenewmessages' => 'Rika duwe $1 ($2).',
 	'youhavenewmessagesmulti' => 'Rika olih pesen-pesen anyar nang $1',
 	'yourname' => 'Jeneng panganggo:',
@@ -2745,9 +2745,9 @@ $messages['map-bms'] = [
 	'yournick' => 'Tapak asta anyar:',
 	'yourgender' => 'Jinis kelamin:',
 	'year' => 'Sekang taun (lan sadurunge):',
-];
+);
 
-$messages['mdf'] = [
+$messages['mdf'] = array(
 	'youhavenewmessages' => 'Тонь ули $1 ($2).',
 	'youhavenewmessagesmulti' => 'Тонь улихть од сёрмат $1-са',
 	'yourname' => 'Тиить лемоц:',
@@ -2762,11 +2762,11 @@ $messages['mdf'] = [
 	'yournick' => 'Эсь тяшкстама:',
 	'yourgender' => 'Симанкс:',
 	'year' => 'Кизоста (ди сядынголе):',
-];
+);
 
-$messages['mg'] = [
+$messages['mg'] = array(
 	'youhavenewmessages' => 'Manana $1 ($2).',
-	'youhavenewmessagesmulti' => 'Manana hafatra vaovao ianao eo amin\'ny $1.',
+	'youhavenewmessagesmulti' => "Manana hafatra vaovao ianao eo amin'ny $1.",
 	'yourname' => 'Solonanarana',
 	'yourpassword' => 'Tenimiafina',
 	'yourpasswordagain' => 'Avereno ampidirina eto ny tenimiafina',
@@ -2779,10 +2779,10 @@ $messages['mg'] = [
 	'yourvariant' => 'fitenim-paritry ny fitenim-botoatiny :',
 	'yournick' => 'Anaram-bositra:',
 	'yourgender' => 'lahi-vavy :',
-	'year' => 'Tamin\'ny taona (sy teo aloha) :',
-];
+	'year' => "Tamin'ny taona (sy teo aloha) :",
+);
 
-$messages['mhr'] = [
+$messages['mhr'] = array(
 	'youhavenewmessages' => 'Тендан $1 уло ($2).',
 	'yourname' => 'Пайдаланышын лӱмжӧ:',
 	'yourpassword' => 'Шолыпмут:',
@@ -2795,9 +2795,9 @@ $messages['mhr'] = [
 	'yourlanguage' => 'Йылме:',
 	'yournick' => 'Кидпале:',
 	'year' => 'Могай ий гыч тӱҥалаш? (але ондакрак):',
-];
+);
 
-$messages['min'] = [
+$messages['min'] = array(
 	'youhavenewmessages' => 'Awak punyo $1 ($2).',
 	'youhavenewmessagesmulti' => 'Awak ang mandapek pasan baru pado $1',
 	'yourname' => 'Namo pangguno:',
@@ -2809,9 +2809,9 @@ $messages['min'] = [
 	'youremail' => 'Surek Elektronik:',
 	'yourrealname' => 'Namo sabananyo:',
 	'year' => 'Sejak tahun (dan sabalunnyo):',
-];
+);
 
-$messages['mk'] = [
+$messages['mk'] = array(
 	'youhavenewmessages' => 'Имате $1 ($2).',
 	'youhavenewmessagesmulti' => 'Имате нови пораки на $1',
 	'yourname' => 'Корисничко име:',
@@ -2827,9 +2827,9 @@ $messages['mk'] = [
 	'yournick' => 'Потпис:',
 	'yourgender' => 'Пол:',
 	'year' => 'Од година (и порано):',
-];
+);
 
-$messages['ml'] = [
+$messages['ml'] = array(
 	'youhavenewmessages' => 'താങ്കൾക്ക് $1 ഉണ്ട് ($2).',
 	'youhavenewmessagesmulti' => 'താങ്കൾക്ക് $1-ൽ പുതിയ സന്ദേശങ്ങൾ ഉണ്ട്',
 	'yourname' => 'ഉപയോക്തൃനാമം:',
@@ -2845,9 +2845,9 @@ $messages['ml'] = [
 	'yournick' => 'ഒപ്പ്:',
 	'yourgender' => 'ആൺ/പെൺ:',
 	'year' => 'വർഷം:',
-];
+);
 
-$messages['mn'] = [
+$messages['mn'] = array(
 	'youhavenewmessages' => 'Таньд $1 （$2） байна.',
 	'youhavenewmessagesmulti' => 'Таньд $1 дээр шинэ мессеж ирсэн байна',
 	'yourname' => 'Хэрэглэгчийн нэр:',
@@ -2863,16 +2863,16 @@ $messages['mn'] = [
 	'yournick' => 'Дуудах нэр （хоч）:',
 	'yourgender' => 'Хүйс:',
 	'year' => 'Дараах жилээс （өмнөх засварууд нь ч орно）:',
-];
+);
 
-$messages['mo'] = [
+$messages['mo'] = array(
 	'youhavenewmessages' => 'Ай $1 ($2).',
 	'yourname' => 'Нуме де утилизатор:',
 	'yourpassword' => 'Паролэ:',
 	'year' => 'Дин анул (ши май ынаинте):',
-];
+);
 
-$messages['mr'] = [
+$messages['mr'] = array(
 	'youhavenewmessages' => 'तुमच्यासाठी $1 ($2).',
 	'youhavenewmessagesmulti' => '$1 वर तुमच्यासाठी नवीन संदेश आहेत.',
 	'yourname' => 'तुमचे नाव',
@@ -2888,16 +2888,16 @@ $messages['mr'] = [
 	'yournick' => 'आपले उपनाव (सहीसाठी)',
 	'yourgender' => 'लिंग',
 	'year' => 'या वर्षापासून (आणि पूर्वीचे):',
-];
+);
 
-$messages['mrj'] = [
+$messages['mrj'] = array(
 	'youhavenewmessages' => 'Тӓ нӓлӹндӓ $1 ($2).',
 	'yourname' => 'Сирӹшӹн лӹмжӹ:',
 	'yourpassword' => 'Пароль:',
 	'year' => 'Ти и гӹц (ирӹрӓкӓт):',
-];
+);
 
-$messages['ms'] = [
+$messages['ms'] = array(
 	'youhavenewmessages' => 'Anda mempunyai $1 ($2).',
 	'youhavenewmessagesmulti' => 'Anda telah menerima pesanan baru pada $1',
 	'yourname' => 'Nama pengguna:',
@@ -2913,14 +2913,14 @@ $messages['ms'] = [
 	'yournick' => 'Nama samaran:',
 	'yourgender' => 'Jantina:',
 	'year' => 'Sebelum tahun:',
-];
+);
 
-$messages['mt'] = [
+$messages['mt'] = array(
 	'youhavenewmessages' => 'Għandek $1 ($2).',
 	'youhavenewmessagesmulti' => 'Għandek messaġġi ġodda fuq $1',
 	'yourname' => 'Isem tal-utent:',
 	'yourpassword' => 'Password:',
-	'yourpasswordagain' => 'Erġa\' ikteb il-password:',
+	'yourpasswordagain' => "Erġa' ikteb il-password:",
 	'yourdomainname' => 'Id-dominju tiegħek:',
 	'yourtext' => 'It-test tiegħek',
 	'yourdiff' => 'Differenzi',
@@ -2931,9 +2931,9 @@ $messages['mt'] = [
 	'yournick' => 'Firma:',
 	'yourgender' => 'Sess:',
 	'year' => 'Mis-sena (u qabel):',
-];
+);
 
-$messages['mwl'] = [
+$messages['mwl'] = array(
 	'youhavenewmessages' => 'Tu tenes $1 ($2).',
 	'youhavenewmessagesmulti' => 'Tenes nuobas mensaiges an $1',
 	'yourname' => 'Nome de Outelizador',
@@ -2947,9 +2947,9 @@ $messages['mwl'] = [
 	'yournick' => 'Assinatura:',
 	'yourgender' => 'Sexo:',
 	'year' => 'De l anho (i atrasados):',
-];
+);
 
-$messages['my'] = [
+$messages['my'] = array(
 	'youhavenewmessages' => 'သင့်တွင် $1 ($2) ရှိသည်။',
 	'youhavenewmessagesmulti' => '$1 မှာ မက်ဆေ့အသစ်များ ရှိသည်',
 	'yourname' => 'အသုံးပြုသူအမည် -',
@@ -2964,9 +2964,9 @@ $messages['my'] = [
 	'yournick' => 'လက်မှတ်အသစ် -',
 	'yourgender' => 'ကျား/မ -',
 	'year' => 'အဆိုပါ နှစ်မှစ၍ ( အဆိုပါနှစ်ထက်လည်း စောသော) :',
-];
+);
 
-$messages['myv'] = [
+$messages['myv'] = array(
 	'youhavenewmessages' => 'Тонеть сась $1 ($2).',
 	'youhavenewmessagesmulti' => 'Од сёрминеть учить эйсэть $1-со',
 	'yourname' => 'Теицянь лем:',
@@ -2981,9 +2981,9 @@ $messages['myv'] = [
 	'yournick' => 'Кедень путома:',
 	'yourgender' => 'Сыметь (цёрань-тейтерень):',
 	'year' => 'Иестэнть (ды седе икеле):',
-];
+);
 
-$messages['mzn'] = [
+$messages['mzn'] = array(
 	'youhavenewmessages' => 'شما اتا $1 دانّی ($2).',
 	'youhavenewmessagesmulti' => 'شه مه وسه ترنه پیغوم بی یه موئه ای جه $1',
 	'yourname' => 'شمه کاروری‌نوم:',
@@ -2994,13 +2994,13 @@ $messages['mzn'] = [
 	'youremail' => 'شه مه Email:',
 	'yourrealname' => 'شیمه راستین ره نوم :',
 	'yourlanguage' => 'زوون:',
-];
+);
 
-$messages['na'] = [
+$messages['na'] = array(
 	'yourlanguage' => 'Edorer',
-];
+);
 
-$messages['nah'] = [
+$messages['nah'] = array(
 	'youhavenewmessages' => 'Tiquimpiya $1 ($2).',
 	'youhavenewmessagesmulti' => 'Tiquimpiya yancuīc tlahcuilōlli īpan $1',
 	'yourname' => 'Motlatequitiltilīltōca:',
@@ -3014,9 +3014,9 @@ $messages['nah'] = [
 	'yourlanguage' => 'Tlâtòlli:',
 	'yournick' => 'Motōcātlaliz:',
 	'year' => 'Xiuhhuīcpa (auh achtopa):',
-];
+);
 
-$messages['nan'] = [
+$messages['nan'] = array(
 	'youhavenewmessages' => 'Lí ū $1 ($2).',
 	'youhavenewmessagesmulti' => 'Lí tī $1 ū sin sìn-sit',
 	'yourname' => 'Lí ê iōng-chiá miâ-chheng:',
@@ -3032,15 +3032,15 @@ $messages['nan'] = [
 	'yournick' => 'Lí ê sió-miâ (chhiam-miâ iōng):',
 	'yourgender' => '性別：',
 	'year' => 'Kàu tó 1 nî ûi-chí:',
-];
+);
 
-$messages['nap'] = [
+$messages['nap'] = array(
 	'youhavenewmessagesmulti' => 'Tiene nuove mmasciate $1',
-	'yourdomainname' => 'Spiecà \'o dumminio',
+	'yourdomainname' => "Spiecà 'o dumminio",
 	'yourlanguage' => 'Lengua:',
-];
+);
 
-$messages['nb'] = [
+$messages['nb'] = array(
 	'youhavenewmessages' => 'Du har $1 ($2).',
 	'youhavenewmessagesmulti' => 'Du har nye beskjeder på $1',
 	'yourname' => 'Brukernavn:',
@@ -3056,9 +3056,9 @@ $messages['nb'] = [
 	'yournick' => 'Signatur:',
 	'yourgender' => 'Kjønn:',
 	'year' => 'Fra år (og tidligere):',
-];
+);
 
-$messages['nds'] = [
+$messages['nds'] = array(
 	'youhavenewmessages' => 'Du hest $1 ($2).',
 	'youhavenewmessagesmulti' => 'Du hest ne’e Narichten op $1',
 	'yourname' => 'Dien Brukernaam',
@@ -3074,9 +3074,9 @@ $messages['nds'] = [
 	'yournick' => 'Dien Ökelnaam (för dat Ünnerschrieven)',
 	'yourgender' => 'Geslecht:',
 	'year' => 'Bet Johr:',
-];
+);
 
-$messages['nds-nl'] = [
+$messages['nds-nl'] = array(
 	'youhavenewmessages' => 'Je hebben $1 ($2).',
 	'youhavenewmessagesmulti' => 'Je hebben nieje berichten op $1',
 	'yourname' => 'Gebrukersnaam',
@@ -3092,9 +3092,9 @@ $messages['nds-nl'] = [
 	'yournick' => 'Alias veur ondertekeningen',
 	'yourgender' => 'Geslachte:',
 	'year' => 'Jaor:',
-];
+);
 
-$messages['ne'] = [
+$messages['ne'] = array(
 	'youhavenewmessages' => 'तपाईंको लागि ($2) मा  $1 छ ।',
 	'youhavenewmessagesmulti' => 'तपाईंको लागि $1 मा  नयाँ सन्देशहरू छन्',
 	'yourname' => 'प्रयोगकर्ता-नाम',
@@ -3110,9 +3110,9 @@ $messages['ne'] = [
 	'yournick' => 'उपनाम (निकनेम):',
 	'yourgender' => 'लिङ्ग:',
 	'year' => 'वर्ष देखि( र पहिले):',
-];
+);
 
-$messages['new'] = [
+$messages['new'] = array(
 	'youhavenewmessagesmulti' => '$1य् छित न्हुगु सन्देश वगु दु',
 	'yourname' => 'छ्य्‌लामि नां:',
 	'yourpassword' => 'दुथखँग्वः (पासवर्द):',
@@ -3122,18 +3122,18 @@ $messages['new'] = [
 	'youremail' => 'इ-मेल:',
 	'yourrealname' => 'वास्तविक नां:',
 	'yourlanguage' => 'भाषा:',
-];
+);
 
-$messages['niu'] = [
+$messages['niu'] = array(
 	'youhavenewmessages' => 'Fai $1 ($2).',
 	'youhavenewmessagesmulti' => 'Fai tohi foou a koe he $1',
 	'yourname' => 'Matahigoa he tagata:',
 	'yourpassword' => 'Kupu fufu:',
 	'yourpasswordagain' => 'Liu lolomi e kupu fufu:',
 	'youremail' => 'Meli hila:',
-];
+);
 
-$messages['nl'] = [
+$messages['nl'] = array(
 	'youhavenewmessages' => 'Je hebt $1 ($2).',
 	'youhavenewmessagesmulti' => 'Je hebt nieuwe berichten op $1',
 	'yourname' => 'Gebruikersnaam:',
@@ -3149,18 +3149,19 @@ $messages['nl'] = [
 	'yournick' => 'Tekst voor ondertekening:',
 	'yourgender' => 'Geslacht:',
 	'year' => 'Van jaar (en eerder):',
-];
+	'yourbirthdate' => 'Birth Date',
+);
 
-$messages['nl-informal'] = [
+$messages['nl-informal'] = array(
 	'youhavenewmessages' => 'Je hebt $1 ($2).',
 	'youhavenewmessagesmulti' => 'Je hebt nieuwe berichten op $1',
 	'yourpasswordagain' => 'Geef je wachtwoord opnieuw in:',
 	'yourdomainname' => 'Je domein:',
 	'yourtext' => 'Je tekst',
 	'youremail' => 'Je e-mailadres:',
-];
+);
 
-$messages['nn'] = [
+$messages['nn'] = array(
 	'youhavenewmessages' => 'Du har $1 ($2).',
 	'youhavenewmessagesmulti' => 'Du har nye meldingar på $1',
 	'yourname' => 'Brukarnamn:',
@@ -3176,9 +3177,9 @@ $messages['nn'] = [
 	'yournick' => 'Signatur:',
 	'yourgender' => 'Kjønn:',
 	'year' => 'År:',
-];
+);
 
-$messages['no'] = [
+$messages['no'] = array(
 	'youhavenewmessages' => 'Du har $1 ($2).',
 	'youhavenewmessagesmulti' => 'Du har nye meldingar på $1',
 	'yourname' => 'Brukarnamn:',
@@ -3195,17 +3196,17 @@ $messages['no'] = [
 	'yourgender' => 'Kjønn:',
 	'year' => 'År:',
 	'yourbirthdate' => 'Fødselsdag -',
-];
+);
 
-$messages['nov'] = [
+$messages['nov'] = array(
 	'youhavenewmessages' => 'Vu have $1 ($2).',
 	'youhavenewmessagesmulti' => 'Vu have novi mesajes pri $1',
 	'yourname' => 'Usere-nome:',
 	'yourpassword' => 'Pasa-vorde:',
 	'yourtext' => 'Vun texte',
-];
+);
 
-$messages['nso'] = [
+$messages['nso'] = array(
 	'youhavenewmessages' => 'O na le $1 ($2).',
 	'youhavenewmessagesmulti' => 'O nale melaetša ye mefsa go $1',
 	'yourname' => 'Leina la mošomiši:',
@@ -3217,22 +3218,22 @@ $messages['nso'] = [
 	'yourlanguage' => 'Polelo:',
 	'yournick' => 'Tshaeno:',
 	'year' => 'Go tloga ngwageng (le peleng):',
-];
+);
 
-$messages['nv'] = [
+$messages['nv'] = array(
 	'youhavenewmessages' => 'Háíshį́į́ $1 nichʼįʼ áyiilaa. <small>($2)</small>',
 	'yourname' => 'Choyoołʼįįhí bizhiʼ:',
 	'yourpassword' => 'Passwordígíí:',
-];
+);
 
-$messages['ny'] = [
+$messages['ny'] = array(
 	'youhavenewmessagesmulti' => 'Muli ndi mauthenga atsopano ku $1',
-];
+);
 
-$messages['oc'] = [
+$messages['oc'] = array(
 	'youhavenewmessages' => 'Avètz $1 ($2).',
 	'youhavenewmessagesmulti' => 'Avètz de messatges novèls sus $1',
-	'yourname' => 'Vòstre nom d\'utilizaire :',
+	'yourname' => "Vòstre nom d'utilizaire :",
 	'yourpassword' => 'Vòstre senhal :',
 	'yourpasswordagain' => 'Picatz vòstre senhal tornarmai :',
 	'yourdomainname' => 'Vòstre domeni',
@@ -3240,14 +3241,14 @@ $messages['oc'] = [
 	'yourdiff' => 'Diferéncias',
 	'youremail' => 'Adreça de corrièr electronic :',
 	'yourrealname' => 'Nom vertadièr :',
-	'yourlanguage' => 'Lenga de l\'interfàcia :',
+	'yourlanguage' => "Lenga de l'interfàcia :",
 	'yourvariant' => 'Varianta lingüistica :',
 	'yournick' => 'Signatura per las discussions :',
 	'yourgender' => 'Sèxe :',
 	'year' => 'A partir de l’annada (e precedentas) :',
-];
+);
 
-$messages['om'] = [
+$messages['om'] = array(
 	'yourname' => 'Maqaa-Tajajilamma:',
 	'yourdomainname' => 'Maqaa domain kankee:',
 	'yourtext' => 'Barrefama kee',
@@ -3255,9 +3256,9 @@ $messages['om'] = [
 	'yourrealname' => 'Maqaa Dhugaa:',
 	'yourlanguage' => 'Afaan:',
 	'yourvariant' => 'Jijjirama:',
-];
+);
 
-$messages['or'] = [
+$messages['or'] = array(
 	'youhavenewmessages' => 'ଆପଣଙ୍କର $1 ($2).',
 	'youhavenewmessagesmulti' => '$1 ତାରିଖରେ ନୂଆ ଚିଠିଟିଏ ଆସିଛି',
 	'yourname' => 'ବ୍ୟବହାରକାରୀଙ୍କ ନାମ:',
@@ -3273,9 +3274,9 @@ $messages['or'] = [
 	'yournick' => 'ନୂଆ ସନ୍ତକ:',
 	'yourgender' => 'ଲିଙ୍ଗ:',
 	'year' => 'ବର୍ଷରୁ (ଆଉ ତା ଆଗରୁ)',
-];
+);
 
-$messages['os'] = [
+$messages['os'] = array(
 	'youhavenewmessages' => 'Райстай $1 ($2).',
 	'yourname' => 'Архайæджы ном:',
 	'yourpassword' => 'Пароль:',
@@ -3290,9 +3291,9 @@ $messages['os'] = [
 	'yournick' => 'Ног къухæрфыст:',
 	'yourgender' => 'Æрд:',
 	'year' => 'Ацы азы (æмæ раздæр):',
-];
+);
 
-$messages['pa'] = [
+$messages['pa'] = array(
 	'youhavenewmessages' => 'ਤੁਹਾਨੂੰ $1 ($2).',
 	'youhavenewmessagesmulti' => 'ਤੁਹਾਨੂੰ ਨਵੇਂ ਸੁਨੇਹੇ $1 ਉੱਤੇ ਹਨ',
 	'yourname' => 'ਯੂਜ਼ਰ ਨਾਂ:',
@@ -3305,18 +3306,18 @@ $messages['pa'] = [
 	'yourrealname' => 'ਅਸਲੀ ਨਾਂ:',
 	'yourlanguage' => 'ਭਾਸ਼ਾ:',
 	'yournick' => 'ਛੋਟਾ ਨਾਂ:',
-];
+);
 
-$messages['pag'] = [
+$messages['pag'] = array(
 	'youhavenewmessages' => 'Walay $1 ($2).',
 	'youhavenewmessagesmulti' => 'Walay balo ran pakabat mo ed $1',
 	'yourdomainname' => 'Say domain mo',
 	'yourdiff' => 'Saray niduma',
 	'yourrealname' => 'Tuwan ngaran:',
 	'year' => 'Taon:',
-];
+);
 
-$messages['pam'] = [
+$messages['pam'] = array(
 	'youhavenewmessages' => 'Atin kang $1 ($2).',
 	'youhavenewmessagesmulti' => 'Atin kang bayung mensahi king $1',
 	'yourname' => 'Lagyung talagamit (Username):',
@@ -3330,9 +3331,9 @@ $messages['pam'] = [
 	'yourlanguage' => 'Amanu:',
 	'yournick' => 'Pirma (Signature):',
 	'year' => 'Manibat banuang (at minuna pa):',
-];
+);
 
-$messages['pap'] = [
+$messages['pap'] = array(
 	'youhavenewmessages' => 'Bo tin $1 ($2).',
 	'youhavenewmessagesmulti' => 'Bo tin mensahe nobo riba $1',
 	'yourname' => 'Nòmber di uzadó',
@@ -3345,23 +3346,23 @@ $messages['pap'] = [
 	'yourlanguage' => 'Idioma:',
 	'yourvariant' => 'Variante:',
 	'yournick' => 'Nòmber di kariño:',
-];
+);
 
-$messages['pcd'] = [
+$messages['pcd'] = array(
 	'youhavenewmessages' => 'Os avez $1 ($2).',
 	'youhavenewmessagesmulti' => 'Os avez des nouvieus messaches su $1',
-	'yourname' => 'nom d\'uzeu:',
-	'yourpassword' => 'Mot d\'passe:',
-	'yourpasswordagain' => 'Intrer à nouvieu ch\'mot d\'passe:',
+	'yourname' => "nom d'uzeu:",
+	'yourpassword' => "Mot d'passe:",
+	'yourpasswordagain' => "Intrer à nouvieu ch'mot d'passe:",
 	'yourdomainname' => 'Vote donmène:',
 	'yourtext' => 'Vote teske',
 	'youremail' => 'Imèle:',
 	'yourrealname' => 'Vrai nom:',
 	'yourlanguage' => 'Langache:',
 	'year' => 'Del innée (pi avint)',
-];
+);
 
-$messages['pdc'] = [
+$messages['pdc'] = array(
 	'youhavenewmessages' => 'Du hast $1 uff deinem $2.',
 	'youhavenewmessagesmulti' => 'Du hascht neie Comments: $1',
 	'yourname' => 'Yuuser-Naame:',
@@ -3373,9 +3374,9 @@ $messages['pdc'] = [
 	'yourlanguage' => 'Schprooch:',
 	'yourgender' => 'Geschlecht:',
 	'year' => 'bis Yaahr:',
-];
+);
 
-$messages['pdt'] = [
+$messages['pdt'] = array(
 	'youhavenewmessages' => 'Dü hast $1 ($2).',
 	'youhavenewmessagesmulti' => 'Du hast niee Norechte bie $1',
 	'yourname' => 'Bruckanome:',
@@ -3384,16 +3385,16 @@ $messages['pdt'] = [
 	'yourrealname' => 'Ajchta Nome:',
 	'yourlanguage' => 'Sproak:',
 	'year' => 'Fonn Joa (onn ferdäm):',
-];
+);
 
-$messages['pfl'] = [
+$messages['pfl'] = array(
 	'youhavenewmessages' => 'Du hoscht $1 ($2).',
 	'yourname' => 'Benutzername:',
 	'yourpassword' => 'Passwort:',
 	'year' => 'Ab em Johr (un frieher):',
-];
+);
 
-$messages['pl'] = [
+$messages['pl'] = array(
 	'youhavenewmessages' => 'Masz $1 ($2).',
 	'youhavenewmessagesmulti' => 'Masz nowe wiadomości na $1',
 	'yourname' => 'Nazwa {{GENDER:|użytkownika|użytkowniczki}}',
@@ -3410,11 +3411,11 @@ $messages['pl'] = [
 	'yourgender' => 'Płeć',
 	'year' => 'Przed rokiem (włącznie)',
 	'yourbirthdate' => 'Data urodzenia',
-];
+);
 
-$messages['pms'] = [
-	'youhavenewmessages' => 'A l\'ha $1 ($2).',
-	'youhavenewmessagesmulti' => 'A l\'ha dij neuv mëssagi an $1',
+$messages['pms'] = array(
+	'youhavenewmessages' => "A l'ha $1 ($2).",
+	'youhavenewmessagesmulti' => "A l'ha dij neuv mëssagi an $1",
 	'yourname' => 'Sò stranòm',
 	'yourpassword' => 'Soa ciav',
 	'yourpasswordagain' => 'Che a bata torna soa ciav',
@@ -3428,9 +3429,9 @@ $messages['pms'] = [
 	'yournick' => 'Sò stranòm (për firmé):',
 	'yourgender' => 'Sess:',
 	'year' => 'Ann:',
-];
+);
 
-$messages['pnb'] = [
+$messages['pnb'] = array(
 	'youhavenewmessages' => 'تواڈے لئی $1 ($2).',
 	'youhavenewmessagesmulti' => 'تھاڈے ل‏ی $1 تے نوں سنیعہ اے۔',
 	'yourname' => 'ورتن والہ:',
@@ -3446,26 +3447,26 @@ $messages['pnb'] = [
 	'yournick' => 'دسخط:',
 	'yourgender' => 'جنس',
 	'year' => 'سال توں (تے پہلاں):',
-];
+);
 
-$messages['pnt'] = [
+$messages['pnt'] = array(
 	'youhavenewmessages' => 'Έχετε $1 ($2).',
 	'youhavenewmessagesmulti' => 'Έχετε καινούρεα μενέματα σο $1',
 	'yourname' => 'Όνεμαν χρήστε:',
 	'yourpassword' => 'Σημάδι:',
-	'yourpasswordagain' => 'Ξαν\' γράψτεν το σημάδι:',
+	'yourpasswordagain' => "Ξαν' γράψτεν το σημάδι:",
 	'yourdomainname' => 'Το domain εσούν:',
 	'yourtext' => 'Το γράψιμονις',
 	'yourdiff' => 'Διαφοράς',
 	'youremail' => 'Ελεκτρονικόν μένεμαν:',
 	'yourrealname' => 'Πραματικόν όνεμαν:',
-	'yourlanguage' => 'Τ\' εσόν η γλώσσαν:',
+	'yourlanguage' => "Τ' εσόν η γλώσσαν:",
 	'yournick' => 'Υπογραφή:',
 	'yourgender' => 'Φύλον:',
 	'year' => 'Ασή χρονίαν (και πριχού):',
-];
+);
 
-$messages['prg'] = [
+$messages['prg'] = array(
 	'youhavenewmessages' => 'Tu turri $1 ($2)',
 	'youhavenewmessagesmulti' => 'Tū turri nāunans waīstins ēn $1',
 	'yourname' => 'Twajā tērpautajas pabilisnā:',
@@ -3480,9 +3481,9 @@ $messages['prg'] = [
 	'yournick' => 'Nāuns papeisāsenis:',
 	'yourgender' => 'Twajjan gīmtan:',
 	'year' => 'Pirzdau mettan (be ānkstais):',
-];
+);
 
-$messages['ps'] = [
+$messages['ps'] = array(
 	'youhavenewmessages' => 'تاسې $1 لری  ($2).',
 	'youhavenewmessagesmulti' => 'تاسې په $1 کې نوي پېغامونه لرۍ',
 	'yourname' => 'کارن-نوم:',
@@ -3497,27 +3498,9 @@ $messages['ps'] = [
 	'yournick' => 'کورنی نوم:',
 	'yourgender' => 'جنس:',
 	'year' => 'له ټاکلي کال نه راپدېخوا (او تر دې پخواني):',
-];
+);
 
-$messages['pt'] = [
-	'youhavenewmessages' => 'Tem $1 ($2).',
-	'youhavenewmessagesmulti' => 'Tem mensagens novas em $1',
-	'yourname' => 'Nome de utilizador:',
-	'yourpassword' => 'Palavra-chave:',
-	'yourpasswordagain' => 'Repita a palavra-chave:',
-	'yourdomainname' => 'O seu domínio:',
-	'yourtext' => 'O seu texto',
-	'yourdiff' => 'Diferenças',
-	'youremail' => 'Correio electrónico:',
-	'yourrealname' => 'Nome verdadeiro:',
-	'yourlanguage' => 'Língua:',
-	'yourvariant' => 'Variante da língua de conteúdo:',
-	'yournick' => 'Assinatura:',
-	'yourgender' => 'Sexo:',
-	'year' => 'Até o ano:',
-];
-
-$messages['pt-br'] = [
+$messages['pt'] = array(
 	'youhavenewmessages' => 'Você tem $1 ($2).',
 	'youhavenewmessagesmulti' => 'Você tem novas mensagens em $1',
 	'yourname' => 'Nome de usuário:',
@@ -3533,9 +3516,10 @@ $messages['pt-br'] = [
 	'yournick' => 'Assinatura:',
 	'yourgender' => 'Gênero:',
 	'year' => 'Ano (inclusive anteriores):',
-];
+	'yourbirthdate' => 'Birth Date',
+);
 
-$messages['qu'] = [
+$messages['qu'] = array(
 	'youhavenewmessages' => '$1 qhawanayki kachkan ($2).',
 	'youhavenewmessagesmulti' => 'Musuq willaykunam qhawanayki kachkan $1-pi',
 	'yourname' => 'Ruraq sutiyki:',
@@ -3547,13 +3531,13 @@ $messages['qu'] = [
 	'youremail' => 'E-chaski imamaytayki',
 	'yourrealname' => 'Chiqap sutiyki*',
 	'yourlanguage' => 'Rimay',
-	'yourvariant' => 'Samiq rimaypa rikch\'aynin:',
+	'yourvariant' => "Samiq rimaypa rikch'aynin:",
 	'yournick' => 'Chutu sutiyki (ruruchinapaq)',
 	'yourgender' => 'Qhari icha warmi:',
 	'year' => 'Kay watamanta (ñawpaqmantapas):',
-];
+);
 
-$messages['qug'] = [
+$messages['qug'] = array(
 	'youhavenewmessages' => '$1 charipanki ($2).',
 	'youhavenewmessagesmulti' => '$1-pi mushuk chaskikunata charipankimi.',
 	'yourname' => 'Rurak shuti:',
@@ -3562,27 +3546,27 @@ $messages['qug'] = [
 	'youremail' => 'E-chaski:',
 	'yourrealname' => 'Kikinka kikin shuti:',
 	'year' => 'Kay watamanta (ñawpakmantapash) :',
-];
+);
 
-$messages['rgn'] = [
-	'youhavenewmessages' => 'A j ò fët ch\'t\'epa $1 ($2).',
+$messages['rgn'] = array(
+	'youhavenewmessages' => "A j ò fët ch't'epa $1 ($2).",
 	'yourname' => 'Soranòm:',
 	'yourpassword' => 'Paróla segreta:',
-	'year' => 'A cminzipié d\'l\'àn (e d\'j èn prezedent)',
-];
+	'year' => "A cminzipié d'l'àn (e d'j èn prezedent)",
+);
 
-$messages['rif'] = [
+$messages['rif'] = array(
 	'youhavenewmessages' => 'Ghar-k / Ghar-m $1 ($2).',
 	'yourname' => 'Izwl-usqdac:',
 	'yourpassword' => 'Tawalt n wadaf:',
 	'yourrealname' => 'isem n deṣṣaḥ :',
 	'year' => 'Zg usggwas (d zik):',
-];
+);
 
-$messages['rm'] = [
+$messages['rm'] = array(
 	'youhavenewmessages' => 'Ti has $1 ($2).',
 	'youhavenewmessagesmulti' => 'Ti as novs messadis en $1',
-	'yourname' => 'Num d\'utilisader',
+	'yourname' => "Num d'utilisader",
 	'yourpassword' => 'pled-clav',
 	'yourpasswordagain' => 'repeter pled-clav',
 	'yourdomainname' => 'Vossa domain',
@@ -3594,10 +3578,10 @@ $messages['rm'] = [
 	'yourvariant' => 'Varianta da la lingua:',
 	'yournick' => 'Signatura:',
 	'yourgender' => 'Schlattaina',
-	'year' => 'da l\'onn (e pli baud):',
-];
+	'year' => "da l'onn (e pli baud):",
+);
 
-$messages['rmy'] = [
+$messages['rmy'] = array(
 	'yourname' => 'Tiro anav',
 	'yourpassword' => 'O nakhavipnasko lav',
 	'yourpasswordagain' => 'O nakhavipnasko lav de nevo',
@@ -3607,9 +3591,9 @@ $messages['rmy'] = [
 	'yourrealname' => 'Tiro chacho anav*',
 	'yourlanguage' => 'Ćhib:',
 	'yournick' => 'I xarni versyunya, le semnaturenge',
-];
+);
 
-$messages['ro'] = [
+$messages['ro'] = array(
 	'youhavenewmessages' => 'Aveți $1 ($2).',
 	'youhavenewmessagesmulti' => 'Aveți mesaje noi la $1',
 	'yourname' => 'Nume de utilizator:',
@@ -3625,35 +3609,35 @@ $messages['ro'] = [
 	'yournick' => 'Semnătură:',
 	'yourgender' => 'Gen:',
 	'year' => 'Până în anul:',
-];
+);
 
-$messages['roa-rup'] = [
+$messages['roa-rup'] = array(
 	'youhavenewmessagesmulti' => 'Avets nãi dimãndãri pi $1',
 	'yourname' => 'Numa di ufilizitor:',
 	'yourpassword' => 'Cljao:',
 	'yourpasswordagain' => 'Bãgats-u cljao iara:',
 	'youremail' => 'E-mail:',
-];
+);
 
-$messages['roa-tara'] = [
+$messages['roa-tara'] = array(
 	'youhavenewmessages' => 'Tu tine $1 ($2).',
-	'youhavenewmessagesmulti' => 'T\'onne arrevete mèssagge nueve sus \'a $1',
+	'youhavenewmessagesmulti' => "T'onne arrevete mèssagge nueve sus 'a $1",
 	'yourname' => 'Nome utende:',
 	'yourpassword' => 'Passuord:',
-	'yourpasswordagain' => 'Scrive \'a passuord notra vote:',
-	'yourdomainname' => '\'U nome d\'u dominie tue:',
-	'yourtext' => '\'U teste tue',
+	'yourpasswordagain' => "Scrive 'a passuord notra vote:",
+	'yourdomainname' => "'U nome d'u dominie tue:",
+	'yourtext' => "'U teste tue",
 	'yourdiff' => 'Differenze',
 	'youremail' => 'Poste:',
 	'yourrealname' => 'Nome vere:',
 	'yourlanguage' => 'Lènga:',
-	'yourvariant' => 'Variande d\'u condenute d\'a lènghe:',
+	'yourvariant' => "Variande d'u condenute d'a lènghe:",
 	'yournick' => 'Firma toje:',
 	'yourgender' => 'Sesso:',
-	'year' => 'Da l\'anne (e cchiù recende):',
-];
+	'year' => "Da l'anne (e cchiù recende):",
+);
 
-$messages['ru'] = [
+$messages['ru'] = array(
 	'youhavenewmessages' => 'Вы получили $1 ($2).',
 	'youhavenewmessagesmulti' => 'Вы получили новые сообщения на $1',
 	'yourname' => 'Имя участника:',
@@ -3670,9 +3654,9 @@ $messages['ru'] = [
 	'yourgender' => 'Пол:',
 	'year' => 'С года (и ранее):',
 	'yourbirthdate' => 'Дата рождения',
-];
+);
 
-$messages['rue'] = [
+$messages['rue'] = array(
 	'youhavenewmessages' => 'Маєте $1 ($2).',
 	'youhavenewmessagesmulti' => 'Маєте новы ознамы на $1',
 	'yourname' => 'Мено хоснователя:',
@@ -3688,35 +3672,35 @@ $messages['rue'] = [
 	'yournick' => 'Підпис:',
 	'yourgender' => 'Поглавя:',
 	'year' => 'Од року (і скоре):',
-];
+);
 
-$messages['rup'] = [
+$messages['rup'] = array(
 	'youhavenewmessagesmulti' => 'Avets nãi dimãndãri pi $1',
 	'yourname' => 'Numa di ufilizitor:',
 	'yourpassword' => 'Cljao:',
 	'yourpasswordagain' => 'Bãgats-u cljao iara:',
 	'youremail' => 'E-mail:',
-];
+);
 
-$messages['ruq'] = [
+$messages['ruq'] = array(
 	'youhavenewmessagesmulti' => 'Avets nãi dimãndãri pi $1',
 	'yourname' => 'Numa di ufilizitor:',
 	'yourpassword' => 'Cljao:',
 	'yourpasswordagain' => 'Bãgats-u cljao iara:',
 	'youremail' => 'E-mail:',
-];
+);
 
-$messages['ruq-cyrl'] = [
+$messages['ruq-cyrl'] = array(
 	'youhavenewmessages' => 'Весес $1 ($2).',
 	'yourname' => 'Ном дутилизатору:',
-];
+);
 
-$messages['ruq-latn'] = [
+$messages['ruq-latn'] = array(
 	'youhavenewmessages' => 'Veses $1 ($2).',
-	'yourname' => 'Nom d\'utilizatoru:',
-];
+	'yourname' => "Nom d'utilizatoru:",
+);
 
-$messages['sa'] = [
+$messages['sa'] = array(
 	'youhavenewmessages' => 'भवदर्थम् $1 सन्ति। ($2).',
 	'youhavenewmessagesmulti' => 'भवतः कृते $1 मध्ये नूतनः सन्देशः विद्यते',
 	'yourname' => 'योजकनामन्:',
@@ -3731,9 +3715,9 @@ $messages['sa'] = [
 	'yournick' => ' नूतनाः हस्ताक्षराः:',
 	'yourgender' => 'लिंगम् (Gender):',
 	'year' => 'अस्मात् वर्षात् (प्राक्तनानि च):',
-];
+);
 
-$messages['sah'] = [
+$messages['sah'] = array(
 	'youhavenewmessages' => '$1 ($2) кэллэ',
 	'youhavenewmessagesmulti' => '$1, саҥа суруктар кэллилэр',
 	'yourname' => 'Кыттааччы аатыҥ:',
@@ -3749,9 +3733,9 @@ $messages['sah'] = [
 	'yournick' => 'Илии баттааһын:',
 	'yourgender' => 'Эр киһитэ/дьахтара:',
 	'year' => 'Сылтан бэттэх:',
-];
+);
 
-$messages['sc'] = [
+$messages['sc'] = array(
 	'youhavenewmessages' => 'Tenes $1 ($2).',
 	'youhavenewmessagesmulti' => 'Tenes messàgios noos in $1',
 	'yourname' => 'Nùmene usuàriu',
@@ -3765,15 +3749,15 @@ $messages['sc'] = [
 	'yourlanguage' => 'Limba:',
 	'yournick' => 'Sa firma tua:',
 	'yourgender' => 'Natura:',
-	'year' => 'Dae s\'annu (e in antis):',
-];
+	'year' => "Dae s'annu (e in antis):",
+);
 
-$messages['scn'] = [
+$messages['scn'] = array(
 	'youhavenewmessages' => 'Ricivìsti $1 ($2).',
 	'youhavenewmessagesmulti' => 'Hai missaggi novi supra $1',
-	'yourname' => 'Lu tò nomu d\'utenti (\'\'user name\'\')',
-	'yourpassword' => 'La tò \'\'password\'\'',
-	'yourpasswordagain' => 'Scrivi la password n\'àutra vota',
+	'yourname' => "Lu tò nomu d'utenti (''user name'')",
+	'yourpassword' => "La tò ''password''",
+	'yourpasswordagain' => "Scrivi la password n'àutra vota",
 	'yourdomainname' => 'Lu tò dominiu',
 	'yourtext' => 'Lu tò testu',
 	'yourdiff' => 'Diffirenzi',
@@ -3783,10 +3767,10 @@ $messages['scn'] = [
 	'yourvariant' => 'Varianti:',
 	'yournick' => 'Suprannomu (nickname):',
 	'yourgender' => 'Geniri:',
-	'year' => 'A pàrtiri di l\'annu (e pricidenti):',
-];
+	'year' => "A pàrtiri di l'annu (e pricidenti):",
+);
 
-$messages['sco'] = [
+$messages['sco'] = array(
 	'youhavenewmessages' => 'Ye hae $1 ($2).',
 	'youhavenewmessagesmulti' => 'Ye hae neow messages on $1',
 	'yourname' => 'Yer uiser name',
@@ -3801,22 +3785,22 @@ $messages['sco'] = [
 	'yourvariant' => 'Leid variant',
 	'yournick' => 'New seegnatur:',
 	'year' => 'Frae year (an afore):',
-];
+);
 
-$messages['sd'] = [
+$messages['sd'] = array(
 	'youhavenewmessages' => 'توهان لاءِ $1 ($2) آهن.',
 	'yourname' => 'يُوزرنانءُ:',
 	'yourpassword' => 'ڳجھو لفظ:',
 	'yourrealname' => 'اصل نالو:',
 	'year' => 'سال (۽ اڳوڻيون):',
-];
+);
 
-$messages['sdc'] = [
+$messages['sdc'] = array(
 	'youhavenewmessages' => 'Ài $1 ($2).',
 	'youhavenewmessagesmulti' => 'Ài nobi imbasciaddi i $1',
 	'yourname' => 'Innòmu utenti',
-	'yourpassword' => 'Paràura d\'órdhini',
-	'yourpasswordagain' => 'Ripeti la paràura d\'órdhini',
+	'yourpassword' => "Paràura d'órdhini",
+	'yourpasswordagain' => "Ripeti la paràura d'órdhini",
 	'yourdomainname' => 'Ippizzificà lu dumìniu',
 	'yourtext' => 'Lu testhu tóiu',
 	'yourdiff' => 'Diffarènzi',
@@ -3826,10 +3810,10 @@ $messages['sdc'] = [
 	'yourvariant' => 'Varianti:',
 	'yournick' => 'Ingiùgliu:',
 	'yourgender' => 'Generi:',
-	'year' => 'A parthì da l\'anni (e prizzidenti):',
-];
+	'year' => "A parthì da l'anni (e prizzidenti):",
+);
 
-$messages['se'] = [
+$messages['se'] = array(
 	'youhavenewmessages' => 'Dutnje leat $1 ($2).',
 	'youhavenewmessagesmulti' => 'Dutnje lea ođđa dieđut siiddus $1',
 	'yourname' => 'Geavaheaddjidovddaldat',
@@ -3844,9 +3828,9 @@ $messages['se'] = [
 	'yourvariant' => 'Giellavarianta:',
 	'yournick' => 'Vuolláičálus',
 	'year' => 'Jahki',
-];
+);
 
-$messages['sei'] = [
+$messages['sei'] = array(
 	'youhavenewmessages' => 'Mecui $1 ($2).',
 	'youhavenewmessagesmulti' => 'Mecui huniitom $1 iti',
 	'yourname' => 'Caitom ID:',
@@ -3860,14 +3844,14 @@ $messages['sei'] = [
 	'yourlanguage' => 'Itom ö:',
 	'yourvariant' => 'Ccójbam:',
 	'yournick' => 'Brazzi:',
-];
+);
 
-$messages['sg'] = [
+$messages['sg'] = array(
 	'yourpassword' => 'Pafungûla',
 	'yournick' => 'Nyîmbâ:',
-];
+);
 
-$messages['sgs'] = [
+$messages['sgs'] = array(
 	'youhavenewmessages' => 'Tamsta toret $1 ($2).',
 	'youhavenewmessagesmulti' => 'Toret naujū žėnotiu $1',
 	'yourname' => 'Nauduotuojė vards:',
@@ -3883,9 +3867,9 @@ $messages['sgs'] = [
 	'yournick' => 'Pasėrinkts slapīvardis:',
 	'yourgender' => 'Lītis:',
 	'year' => 'Nu metu (ėr onkstiau):',
-];
+);
 
-$messages['sh'] = [
+$messages['sh'] = array(
 	'youhavenewmessages' => 'Imate $1 ($2).',
 	'youhavenewmessagesmulti' => 'Imate nove poruke na $1',
 	'yourname' => 'Korisničko ime:',
@@ -3901,9 +3885,9 @@ $messages['sh'] = [
 	'yournick' => 'Nadimak (za potpise):',
 	'yourgender' => 'Spol:',
 	'year' => 'Od godine (i ranije):',
-];
+);
 
-$messages['shi'] = [
+$messages['shi'] = array(
 	'youhavenewmessages' => 'Illa dark $1 ($2).',
 	'youhavenewmessagesmulti' => 'Dark tibratin timaynutin ɣ $1',
 	'yourname' => 'smiyt o-msxdam:',
@@ -3917,9 +3901,9 @@ $messages['shi'] = [
 	'yournick' => 'sinyator',
 	'yourgender' => 'ljins',
 	'year' => 'Z usggas (d urbur):',
-];
+);
 
-$messages['si'] = [
+$messages['si'] = array(
 	'youhavenewmessages' => 'ඔබ හට $1 ($2)',
 	'youhavenewmessagesmulti' => 'ඔබ හට $1 හි නව පණිවුඩ ඇත',
 	'yourname' => 'පරිශීලක නාමය:',
@@ -3935,9 +3919,9 @@ $messages['si'] = [
 	'yournick' => 'නව අත්සන:',
 	'yourgender' => 'ස්ත්‍රී/පුරුෂ භාවය:',
 	'year' => 'මෙම වසර (හා ඉන් පෙරාතුව) සිට:',
-];
+);
 
-$messages['sk'] = [
+$messages['sk'] = array(
 	'youhavenewmessages' => 'Máte $1 ($2).',
 	'youhavenewmessagesmulti' => 'Máte nové správy na $1',
 	'yourname' => 'Používateľské meno:',
@@ -3953,9 +3937,9 @@ $messages['sk'] = [
 	'yournick' => 'Podpis:',
 	'yourgender' => 'Pohlavie:',
 	'year' => 'Rok:',
-];
+);
 
-$messages['sl'] = [
+$messages['sl'] = array(
 	'youhavenewmessages' => 'Imate $1 ($2)',
 	'youhavenewmessagesmulti' => 'Na $1 imate novo sporočilo',
 	'yourname' => 'Uporabniško ime:',
@@ -3971,9 +3955,9 @@ $messages['sl'] = [
 	'yournick' => 'Nov podpis:',
 	'yourgender' => 'Spol:',
 	'year' => 'Od leta (in prej):',
-];
+);
 
-$messages['sli'] = [
+$messages['sli'] = array(
 	'youhavenewmessages' => 'Du hust $1 ($2).',
 	'youhavenewmessagesmulti' => 'Du hast neue Nachrichta: $1',
 	'yourname' => 'Benutzernoame:',
@@ -3988,18 +3972,18 @@ $messages['sli'] = [
 	'yourvariant' => 'Variante',
 	'yournick' => 'Unterschrift:',
 	'year' => 'bis Joahr:',
-];
+);
 
-$messages['sm'] = [
-	'youhavenewmessages' => '\'Ua iai lau $1 ($2).',
-	'youhavenewmessagesmulti' => '\'Ua iai au fe\'au fou i le $1',
-	'yourname' => 'Igoa o le tagata fa\'aaoga',
-	'yourpassword' => '\'Upu ulufale',
-	'yourpasswordagain' => 'Toe lolomi \'upu ulufale',
-	'youremail' => '\'Imeli:',
-];
+$messages['sm'] = array(
+	'youhavenewmessages' => "'Ua iai lau $1 ($2).",
+	'youhavenewmessagesmulti' => "'Ua iai au fe'au fou i le $1",
+	'yourname' => "Igoa o le tagata fa'aaoga",
+	'yourpassword' => "'Upu ulufale",
+	'yourpasswordagain' => "Toe lolomi 'upu ulufale",
+	'youremail' => "'Imeli:",
+);
 
-$messages['sma'] = [
+$messages['sma'] = array(
 	'youhavenewmessages' => 'Datne åtna $1 ($2).',
 	'yourname' => 'Nuhtjiennomme:',
 	'yourpassword' => 'Loevesbaakoe:',
@@ -4010,17 +3994,17 @@ $messages['sma'] = [
 	'yourlanguage' => 'Gïele:',
 	'yournick' => 'Nuhjiennomme:',
 	'year' => 'Raejeste jaepie (jih övtebe):',
-];
+);
 
-$messages['sn'] = [
+$messages['sn'] = array(
 	'youhavenewmessagesmulti' => 'Une mashoko matsva pa$1',
 	'yourname' => 'Zita:',
 	'yourpassword' => 'Password:',
 	'yourpasswordagain' => 'Nyorazve password:',
 	'youremail' => 'E-mail:',
-];
+);
 
-$messages['so'] = [
+$messages['so'] = array(
 	'youhavenewmessages' => 'Waxaa kuu taala $1 ($2).',
 	'youhavenewmessagesmulti' => '$1 waxaa kuuyaala fariimo cusub',
 	'yourname' => 'Erayga Gudagalka:',
@@ -4034,9 +4018,9 @@ $messages['so'] = [
 	'yourlanguage' => 'luqad:',
 	'yournick' => 'Saxiix (Naaneys):',
 	'yourgender' => 'Jinsi:',
-];
+);
 
-$messages['sq'] = [
+$messages['sq'] = array(
 	'youhavenewmessages' => 'Ju keni $1 ($2).',
 	'youhavenewmessagesmulti' => 'Ju keni mesazhe të reja në $1',
 	'yourname' => 'Fusni nofkën tuaj',
@@ -4052,9 +4036,9 @@ $messages['sq'] = [
 	'yournick' => 'Nënshkrimi',
 	'yourgender' => 'Gjinia:',
 	'year' => 'Nga viti (dhe më herët):',
-];
+);
 
-$messages['sr-ec'] = [
+$messages['sr-ec'] = array(
 	'youhavenewmessages' => 'Имате $1 ($2).',
 	'youhavenewmessagesmulti' => 'Имате нових порука на $1',
 	'yourname' => 'Корисничко име:',
@@ -4070,9 +4054,9 @@ $messages['sr-ec'] = [
 	'yournick' => 'Нови потпис:',
 	'yourgender' => 'Пол:',
 	'year' => 'од године (и раније):',
-];
+);
 
-$messages['sr-el'] = [
+$messages['sr-el'] = array(
 	'youhavenewmessages' => 'Imate $1 ($2).',
 	'youhavenewmessagesmulti' => 'Imate novih poruka na $1',
 	'yourname' => 'Korisničko ime',
@@ -4088,9 +4072,9 @@ $messages['sr-el'] = [
 	'yournick' => 'Nadimak:',
 	'yourgender' => 'Pol:',
 	'year' => 'Od godine (i ranije):',
-];
+);
 
-$messages['srn'] = [
+$messages['srn'] = array(
 	'youhavenewmessages' => 'Yu abi $1 ($2).',
 	'youhavenewmessagesmulti' => 'Yu abi nyun boskopu na tapu $1',
 	'yourname' => 'Kebroikiman nen:',
@@ -4104,19 +4088,19 @@ $messages['srn'] = [
 	'yourlanguage' => 'Tongo:',
 	'yournick' => 'Ondroskrifi:',
 	'year' => 'Fu a yari (nanga moro owru):',
-];
+);
 
-$messages['ss'] = [
+$messages['ss'] = array(
 	'youhavenewmessages' => 'Una $1 ($2).',
 	'youhavenewmessagesmulti' => 'Unemilayeto lemisha nge $1',
 	'yourlanguage' => 'Lulwimi:',
-];
+);
 
-$messages['st'] = [
+$messages['st'] = array(
 	'yourpasswordagain' => 'Ngola lepetjo hape',
-];
+);
 
-$messages['stq'] = [
+$messages['stq'] = array(
 	'youhavenewmessages' => 'Du hääst $1 ($2).',
 	'youhavenewmessagesmulti' => 'Du hääst näie Ättergjuchte: $1',
 	'yourname' => 'Benutsernoome:',
@@ -4132,9 +4116,9 @@ $messages['stq'] = [
 	'yournick' => 'Unnerskrift:',
 	'yourgender' => 'Geslächt:',
 	'year' => 'bit Jier:',
-];
+);
 
-$messages['su'] = [
+$messages['su'] = array(
 	'youhavenewmessages' => 'Anjeun boga $1 ($2).',
 	'youhavenewmessagesmulti' => 'Anjeun boga talatah anyar di $1',
 	'yourname' => 'Sandiasma:',
@@ -4150,9 +4134,9 @@ $messages['su'] = [
 	'yournick' => 'Landihan anjeun (pikeun tawis leungeun)',
 	'yourgender' => 'Jenis kelamin:',
 	'year' => 'Ti taun (jeung saméméhna):',
-];
+);
 
-$messages['sv'] = [
+$messages['sv'] = array(
 	'youhavenewmessages' => 'Du har $1 ($2).',
 	'youhavenewmessagesmulti' => 'Du har nya meddelanden på $1',
 	'yourname' => 'Användarnamn:',
@@ -4168,9 +4152,9 @@ $messages['sv'] = [
 	'yournick' => 'Signatur:',
 	'yourgender' => 'Kön:',
 	'year' => 'Från år (och tidigare):',
-];
+);
 
-$messages['sw'] = [
+$messages['sw'] = array(
 	'youhavenewmessages' => 'Una $1 ($2).',
 	'youhavenewmessagesmulti' => 'Umepokea jumbe mpya kule $1',
 	'yourname' => 'Jina la mtumiaji:',
@@ -4186,9 +4170,9 @@ $messages['sw'] = [
 	'yournick' => 'Sahihi:',
 	'yourgender' => 'Jinsi:',
 	'year' => 'Kutoka mwakani (na zamani zaidi):',
-];
+);
 
-$messages['szl'] = [
+$messages['szl'] = array(
 	'youhavenewmessages' => 'Mosz $1 ($2).',
 	'youhavenewmessagesmulti' => 'Mosz nowe powjadůmjyńa: $1',
 	'yourname' => 'Mjano užytkowńika:',
@@ -4202,9 +4186,9 @@ $messages['szl'] = [
 	'yourlanguage' => 'Godka interfejsu',
 	'yournick' => 'Twoja šrajba:',
 	'year' => 'Uod roku (i dowńijše):',
-];
+);
 
-$messages['ta'] = [
+$messages['ta'] = array(
 	'youhavenewmessages' => 'உங்களுக்குப் $1 உள்ளன ($2).',
 	'youhavenewmessagesmulti' => '$1 இல் உங்களுக்கு புதிய செய்திகள் காத்திருக்கின்றன',
 	'yourname' => 'பயனர் பெயர்:',
@@ -4220,9 +4204,9 @@ $messages['ta'] = [
 	'yournick' => 'கையொப்பம்:',
 	'yourgender' => 'பால்:',
 	'year' => 'ஆண்டு உட்பட முந்தைய:',
-];
+);
 
-$messages['tcy'] = [
+$messages['tcy'] = array(
 	'youhavenewmessages' => 'ಇರೆಗ್ $1 ಉಂಡು ($2).',
 	'youhavenewmessagesmulti' => '$1 ಡ್ ಇರೆಗ್ ಪೊಸ ಸಂದೇಶೊಲು ಉಂಡು',
 	'yourname' => 'ಸದಸ್ಯೆರ್ನ ಪುದರ್:',
@@ -4237,9 +4221,9 @@ $messages['tcy'] = [
 	'yournick' => 'ಪೊಸ ಸಹಿ',
 	'yourgender' => 'ಲಿಂಗೊ',
 	'year' => 'ಈ ವರ್ಷೊರ್ದು (ಬೊಕ್ಕ ದುಂಬುದ):',
-];
+);
 
-$messages['te'] = [
+$messages['te'] = array(
 	'youhavenewmessages' => 'మీకు $1 ఉన్నాయి ($2).',
 	'youhavenewmessagesmulti' => '$1లో మీకో సందేశం ఉంది',
 	'yourname' => 'వాడుకరి పేరు:',
@@ -4254,35 +4238,35 @@ $messages['te'] = [
 	'yournick' => 'ముద్దు పేరు',
 	'yourgender' => 'లింగం:',
 	'year' => 'ఈ సంవత్సరం నుండి (అంతకు ముందువి):',
-];
+);
 
-$messages['tet'] = [
+$messages['tet'] = array(
 	'youhavenewmessages' => 'Ó iha $1 ($2).',
 	'youhavenewmessagesmulti' => 'Ó iha mensajen foun sira iha $1',
-	'yourname' => 'Naran uza-na\'in:',
+	'yourname' => "Naran uza-na'in:",
 	'yourtext' => 'Ó-nia testu',
 	'yourdiff' => 'Diferensa sira',
 	'youremail' => 'Korreiu eletróniku:',
 	'yourlanguage' => 'Lian:',
 	'year' => 'Tinan (ho molok):',
-];
+);
 
-$messages['tg'] = [
+$messages['tg'] = array(
 	'youhavenewmessages' => 'Ó iha $1 ($2).',
 	'youhavenewmessagesmulti' => 'Ó iha mensajen foun sira iha $1',
-	'yourname' => 'Naran uza-na\'in:',
+	'yourname' => "Naran uza-na'in:",
 	'yourtext' => 'Ó-nia testu',
 	'yourdiff' => 'Diferensa sira',
 	'youremail' => 'Korreiu eletróniku:',
 	'yourlanguage' => 'Lian:',
 	'year' => 'Tinan (ho molok):',
-];
+);
 
-$messages['tg-cyrl'] = [
+$messages['tg-cyrl'] = array(
 	'youhavenewmessages' => 'Шумо $1 ($2) доред.',
 	'youhavenewmessagesmulti' => 'Шумо номаҳои нав дар $1 доред.',
 	'yourname' => 'Номи корбар',
-	'yourpassword' => 'Калимаи убур\пароль',
+	'yourpassword' => 'Калимаи убур\\пароль',
 	'yourpasswordagain' => 'Калимаи убурро боз нависед',
 	'yourdomainname' => 'Домейни Шумо',
 	'yourtext' => 'Матни Шумо',
@@ -4294,13 +4278,13 @@ $messages['tg-cyrl'] = [
 	'yournick' => 'Ники шумо:',
 	'yourgender' => 'Ҷинс:',
 	'year' => 'Дар ин сол (ва қабл аз он):',
-];
+);
 
-$messages['tg-latn'] = [
+$messages['tg-latn'] = array(
 	'youhavenewmessages' => 'Şumo $1 ($2) dored.',
 	'youhavenewmessagesmulti' => 'Şumo nomahoi nav dar $1 dored.',
 	'yourname' => 'Nomi korbar',
-	'yourpassword' => 'Kalimai ubur\parolь',
+	'yourpassword' => 'Kalimai ubur\\parolь',
 	'yourpasswordagain' => 'Kalimai uburro boz navised',
 	'yourdomainname' => 'Domejni Şumo',
 	'yourtext' => 'Matni Şumo',
@@ -4311,9 +4295,9 @@ $messages['tg-latn'] = [
 	'yournick' => 'Niki şumo:',
 	'yourgender' => 'Çins:',
 	'year' => 'Dar in sol (va qabl az on):',
-];
+);
 
-$messages['th'] = [
+$messages['th'] = array(
 	'youhavenewmessages' => 'คุณมี $1 ($2)',
 	'youhavenewmessagesmulti' => 'คุณมีข้อความใหม่ที่ $1',
 	'yourname' => 'ชื่อผู้ใช้',
@@ -4329,15 +4313,15 @@ $messages['th'] = [
 	'yournick' => 'ลายเซ็น:',
 	'yourgender' => 'เพศ:',
 	'year' => 'จากปี (และก่อนหน้า):',
-];
+);
 
-$messages['ti'] = [
+$messages['ti'] = array(
 	'yourname' => 'ናይ ኣባል ሽም:',
 	'youremail' => 'ኢ-መይል:',
 	'yourlanguage' => 'ቋንቋ:',
-];
+);
 
-$messages['tk'] = [
+$messages['tk'] = array(
 	'youhavenewmessages' => 'Size <u>$1</u> bar. ($2)',
 	'youhavenewmessagesmulti' => 'Size $1-de täze habarlaşyk bar.',
 	'yourname' => 'Ulanyjy adyňyz:',
@@ -4352,9 +4336,9 @@ $messages['tk'] = [
 	'yournick' => 'Lakamyňyz (gol hökmünde):',
 	'yourgender' => 'Jyns:',
 	'year' => 'Ýyl:',
-];
+);
 
-$messages['tl'] = [
+$messages['tl'] = array(
 	'youhavenewmessages' => 'Mayroon kang $1 ($2).',
 	'youhavenewmessagesmulti' => 'Mayroon kang mga bagong mensahe sa $1',
 	'yourname' => 'Bansag:',
@@ -4370,18 +4354,18 @@ $messages['tl'] = [
 	'yournick' => 'Panglagda:',
 	'yourgender' => 'Kasarian:',
 	'year' => 'Mula sa taon (at nauna):',
-];
+);
 
-$messages['tn'] = [
+$messages['tn'] = array(
 	'youhavenewmessages' => 'O na le $1 ($2).',
 	'youhavenewmessagesmulti' => 'O na le molaetsa o moša mo $1',
 	'yourname' => 'Leina la modirisi:',
 	'yourpassword' => 'Selotlolo sa sephiri:',
 	'yourpasswordagain' => 'Kwala selotlolo sa gago sa sephiri gape:',
 	'youremail' => 'E-mail:',
-];
+);
 
-$messages['to'] = [
+$messages['to'] = array(
 	'youhavenewmessages' => 'ʻOku ʻi ai haʻo $1 ($2).',
 	'youhavenewmessagesmulti' => 'ʻOku ʻi ai haʻo tala foʻou ʻi $1',
 	'yourname' => 'Hingoa ʻetita',
@@ -4395,9 +4379,9 @@ $messages['to'] = [
 	'yourlanguage' => 'Lea:',
 	'yourvariant' => 'Faikeheʻi',
 	'yournick' => 'Hingoa tenetene:',
-];
+);
 
-$messages['tpi'] = [
+$messages['tpi'] = array(
 	'youhavenewmessages' => '$1 i kam ($2).',
 	'yourname' => 'Yusanem:',
 	'yourpassword' => 'Paswot:',
@@ -4408,11 +4392,11 @@ $messages['tpi'] = [
 	'yourlanguage' => 'Tokples:',
 	'yourgender' => 'Man/Meri:',
 	'year' => 'Long yia (na bifo):',
-];
+);
 
-$messages['tr'] = [
+$messages['tr'] = array(
 	'youhavenewmessages' => 'Yeni <u>$1</u> var. ($2)',
-	'youhavenewmessagesmulti' => '$1\'de yeni mesajınız var.',
+	'youhavenewmessagesmulti' => "$1'de yeni mesajınız var.",
 	'yourname' => 'Kullanıcı adı:',
 	'yourpassword' => 'Parola:',
 	'yourpasswordagain' => 'Parolayı yeniden yaz:',
@@ -4426,18 +4410,18 @@ $messages['tr'] = [
 	'yournick' => 'İmzalarda gözükmesini istediğiniz isim',
 	'yourgender' => 'Cinsiyet:',
 	'year' => 'Yıl:',
-];
+);
 
-$messages['ts'] = [
+$messages['ts'] = array(
 	'youhavenewmessages' => 'U na $1 ($2).',
 	'youhavenewmessagesmulti' => 'Una marungula mantswa hi $1',
 	'yourpassword' => 'Vito-mpfungulo:',
 	'yourrealname' => 'Vito ra ntiyiso:',
 	'yourlanguage' => 'Ririmi:',
 	'year' => 'Ku sukela e ka lembe ra (kuya endhzaku):',
-];
+);
 
-$messages['tt-cyrl'] = [
+$messages['tt-cyrl'] = array(
 	'youhavenewmessages' => 'Сездә $1 бар ($2).',
 	'youhavenewmessagesmulti' => 'Сезгә монда яңа хәбәрләр бар: $1',
 	'yourname' => 'Кулланучы исеме:',
@@ -4453,9 +4437,9 @@ $messages['tt-cyrl'] = [
 	'yournick' => 'Яңа имзагыз:',
 	'yourgender' => 'Җенес:',
 	'year' => 'Елдан башлап (һәм элегрәк):',
-];
+);
 
-$messages['tt-latn'] = [
+$messages['tt-latn'] = array(
 	'youhavenewmessages' => 'Sezdä $1 bar ($2).',
 	'youhavenewmessagesmulti' => 'Sezgä monda yaña xäbärlär bar: $1',
 	'yourname' => 'Qullanuçı iseme:',
@@ -4471,14 +4455,14 @@ $messages['tt-latn'] = [
 	'yournick' => 'Yaña imzağız:',
 	'yourgender' => 'Cenes:',
 	'year' => 'Yıldan başlap (häm elegräk):',
-];
+);
 
-$messages['ty'] = [
+$messages['ty'] = array(
 	'youremail' => 'Tā’u ’āfata rata uira',
 	'yourlanguage' => 'Te reo:',
-];
+);
 
-$messages['tyv'] = [
+$messages['tyv'] = array(
 	'youhavenewmessages' => 'Силерде $1 ($2) бар.',
 	'yourname' => 'Aжыглакчының ады',
 	'yourpassword' => 'Чажыт сөс',
@@ -4488,9 +4472,9 @@ $messages['tyv'] = [
 	'yourrealname' => 'Шын адыңар *',
 	'yourlanguage' => 'Дылыңар:',
 	'yournick' => 'Шола ат:',
-];
+);
 
-$messages['ug-arab'] = [
+$messages['ug-arab'] = array(
 	'youhavenewmessages' => 'سىزدە $1 ($2) بار.',
 	'youhavenewmessagesmulti' => '$1 يېڭى ئۇچۇرىڭىز بار',
 	'yourname' => 'ئىشلەتكۈچى ئاتى:',
@@ -4505,35 +4489,35 @@ $messages['ug-arab'] = [
 	'yournick' => 'ئىمزا:',
 	'yourgender' => 'جىنسى:',
 	'year' => 'يىلدىن بۇيان (ياكى ئىلگىرى):',
-];
+);
 
-$messages['ug-latn'] = [
+$messages['ug-latn'] = array(
 	'yourname' => 'Ishletkuqi ismi:',
 	'yourpassword' => 'Achkuch:',
 	'yourpasswordagain' => 'Achkuchni khayta besing:',
 	'youremail' => 'Élxet:',
 	'yourlanguage' => 'Til:',
-];
+);
 
-$messages['uk'] = [
+$messages['uk'] = array(
 	'youhavenewmessages' => 'Ви отримали $1 ($2).',
 	'youhavenewmessagesmulti' => 'Ви отримали нові повідомлення на $1',
-	'yourname' => 'Ім\'я користувача:',
+	'yourname' => "Ім'я користувача:",
 	'yourpassword' => 'Пароль:',
 	'yourpasswordagain' => 'Повторний набір пароля:',
 	'yourdomainname' => 'Ваш домен:',
 	'yourtext' => 'Ваш текст',
 	'yourdiff' => 'Відмінності',
 	'youremail' => 'Адреса електронної пошти:',
-	'yourrealname' => 'Справжнє ім\'я:',
+	'yourrealname' => "Справжнє ім'я:",
 	'yourlanguage' => 'Мова інтерфейсу:',
 	'yourvariant' => 'Варіант мови вмісту:',
 	'yournick' => 'Підпис:',
 	'yourgender' => 'Стать:',
 	'year' => 'Від року (і раніше):',
-];
+);
 
-$messages['ur'] = [
+$messages['ur'] = array(
 	'youhavenewmessages' => 'آپکے لیۓ ایک $1 ہے۔ ($2)',
 	'youhavenewmessagesmulti' => 'ء$1 پر آپ کیلئے نئے پیغامات ہیں',
 	'yourname' => 'اسمِ رکنیت',
@@ -4549,19 +4533,19 @@ $messages['ur'] = [
 	'yournick' => 'دستخط',
 	'yourgender' => 'جنس:',
 	'year' => 'سال (اور اُس سے قبل):',
-];
+);
 
-$messages['uz'] = [
+$messages['uz'] = array(
 	'youhavenewmessages' => 'Sizga $1 keldi ($2).',
 	'yourname' => 'Foydalanuvchi nomi',
-	'yourpassword' => 'Maxfiy so\'z',
-	'yourpasswordagain' => 'Maxfiy so\'zni qayta kiriting',
+	'yourpassword' => "Maxfiy so'z",
+	'yourpasswordagain' => "Maxfiy so'zni qayta kiriting",
 	'yourrealname' => 'Haqiqiy ism *:',
-];
+);
 
-$messages['val'] = [
+$messages['val'] = array(
 	'youhavenewmessages' => 'Tens $1 ($2).',
-	'yourname' => 'Nom d\'usuari',
+	'yourname' => "Nom d'usuari",
 	'yourpassword' => 'Contrasenya',
 	'yourpasswordagain' => 'Escriu una atra vegada la contrasenya',
 	'yourdomainname' => 'El teu domini',
@@ -4573,14 +4557,14 @@ $messages['val'] = [
 	'yourtext' => 'El teu text',
 	'yourdiff' => 'Diferències',
 	'youhavenewmessagesmulti' => 'Tens nous mensages a $1',
-];
+);
 
-$messages['ve'] = [
+$messages['ve'] = array(
 	'yourname' => 'Dzina ḽa mushumisi:',
 	'yourpassword' => 'Phasiwede:',
-];
+);
 
-$messages['vec'] = [
+$messages['vec'] = array(
 	'youhavenewmessages' => 'Te ghè $1 ($2).',
 	'youhavenewmessagesmulti' => 'Te ghè messagi novi su $1',
 	'yourname' => 'Nome utente:',
@@ -4595,10 +4579,10 @@ $messages['vec'] = [
 	'yourvariant' => 'Variante de linguaggio:',
 	'yournick' => 'Firma:',
 	'yourgender' => 'Sesso:',
-	'year' => 'Da l\'ano (e quei prima):',
-];
+	'year' => "Da l'ano (e quei prima):",
+);
 
-$messages['vep'] = [
+$messages['vep'] = array(
 	'youhavenewmessages' => 'Tö sat $1 ($2).',
 	'youhavenewmessagesmulti' => 'Teil om uzid tedotusid $1-lehtpolel',
 	'yourname' => 'Kävutajan nimi:',
@@ -4609,14 +4593,14 @@ $messages['vep'] = [
 	'yourdiff' => 'Erod',
 	'youremail' => 'E-počt:',
 	'yourrealname' => 'Todesine nimi:',
-	'yourlanguage' => 'Kel\':',
+	'yourlanguage' => "Kel':",
 	'yourvariant' => 'Südäimišton kelenvariant:',
 	'yournick' => 'Allekirjutez:',
 	'yourgender' => 'Sugu:',
 	'year' => 'Voz’:',
-];
+);
 
-$messages['vi'] = [
+$messages['vi'] = array(
 	'youhavenewmessages' => 'Bạn có $1 ($2).',
 	'youhavenewmessagesmulti' => 'Bạn có tin nhắn mới ở $1',
 	'yourname' => 'Tên người dùng:',
@@ -4633,17 +4617,17 @@ $messages['vi'] = [
 	'yourgender' => 'Giới tính:',
 	'year' => 'Từ năm (trở về trước):',
 	'yourbirthdate' => 'Ngày sinh',
-];
+);
 
-$messages['vmf'] = [
-	'youhavenewmessages' => 'S\'gajd $1 af dajnâr disghusjoons-sajdn ($2).',
-	'youhavenewmessagesmulti' => 'S\'gajd naje middajlungn: $1',
+$messages['vmf'] = array(
+	'youhavenewmessages' => "S'gajd $1 af dajnâr disghusjoons-sajdn ($2).",
+	'youhavenewmessagesmulti' => "S'gajd naje middajlungn: $1",
 	'yourname' => 'Benudsârnôômâ',
 	'yourpassword' => 'Bhaswôrd:',
 	'year' => 'bis dsum jôôr:',
-];
+);
 
-$messages['vo'] = [
+$messages['vo'] = array(
 	'youhavenewmessages' => 'Su pad ola binons $1 ($2).',
 	'youhavenewmessagesmulti' => 'Labol nunis nulik su $1',
 	'yourname' => 'Gebananem:',
@@ -4658,16 +4642,16 @@ $messages['vo'] = [
 	'yournick' => 'Dispenäd nulik:',
 	'yourgender' => 'Gen:',
 	'year' => 'De yel (e büiks):',
-];
+);
 
-$messages['vot'] = [
+$messages['vot'] = array(
 	'youhavenewmessages' => 'Teill on $1 ($2).',
 	'yourname' => 'Tšäüttijänimi:',
 	'yourpassword' => 'Salasõna',
 	'year' => 'Voosi:',
-];
+);
 
-$messages['vro'] = [
+$messages['vro'] = array(
 	'youhavenewmessages' => 'Sul om $1 ($2).',
 	'youhavenewmessagesmulti' => 'Sullõ om vahtsit sõnomit lehe pääl $1',
 	'yourname' => 'Pruukjanimi',
@@ -4682,12 +4666,12 @@ $messages['vro'] = [
 	'yourvariant' => 'Keelevariant:',
 	'yournick' => 'Alakirotus',
 	'year' => 'Alostõn aastagast (ja varrampa):',
-];
+);
 
-$messages['wa'] = [
+$messages['wa'] = array(
 	'youhavenewmessages' => 'Vos avoz des $1 ($2).',
 	'youhavenewmessagesmulti' => 'Vos avoz des noveas messaedjes so $1',
-	'yourname' => 'Vosse no d\' elodjaedje',
+	'yourname' => "Vosse no d' elodjaedje",
 	'yourpassword' => 'Vosse sicret',
 	'yourpasswordagain' => 'Ritapez vosse sicret',
 	'yourdomainname' => 'Vosse dominne',
@@ -4695,12 +4679,12 @@ $messages['wa'] = [
 	'yourdiff' => 'Diferinces',
 	'youremail' => 'Vost emile*',
 	'yourrealname' => 'Li vraiy no da vosse*',
-	'yourlanguage' => 'Lingaedje po l\' eterface',
+	'yourlanguage' => "Lingaedje po l' eterface",
 	'yourvariant' => 'Variante do lingaedje',
 	'yournick' => 'Vosse no metou (po les sinateures)',
-];
+);
 
-$messages['war'] = [
+$messages['war'] = array(
 	'youhavenewmessages' => 'Mayda ka $1 ($2).',
 	'youhavenewmessagesmulti' => 'Mayda ka mga bag-o nga mensahe ha $1',
 	'yourname' => 'Agnay hit gumaramit:',
@@ -4714,9 +4698,9 @@ $messages['war'] = [
 	'yourlanguage' => 'Yinaknan:',
 	'yournick' => 'Bag-o nga pirma:',
 	'year' => 'Tikang ha tuig (ngan uruunhan):',
-];
+);
 
-$messages['wo'] = [
+$messages['wo'] = array(
 	'youhavenewmessages' => 'Am nga $1 ($2).',
 	'youhavenewmessagesmulti' => 'Am nga bataaxal yu yees ci $1',
 	'yourname' => 'Sa turu jëfandikukat',
@@ -4730,9 +4714,9 @@ $messages['wo'] = [
 	'yourlanguage' => 'Làkk :',
 	'yournick' => 'Xaatim ngir say waxtaan :',
 	'year' => 'Tambali ci atum (ak yi jiitu) :',
-];
+);
 
-$messages['wuu'] = [
+$messages['wuu'] = array(
 	'youhavenewmessages' => '侬有$1（$2）。',
 	'youhavenewmessagesmulti' => '侬垃拉$1有新讯息',
 	'yourname' => '用户名:',
@@ -4746,9 +4730,9 @@ $messages['wuu'] = [
 	'yourlanguage' => '语言:',
 	'yournick' => '绰号:',
 	'year' => '从箇年 （或再早）：',
-];
+);
 
-$messages['xal'] = [
+$messages['xal'] = array(
 	'youhavenewmessages' => 'Та $1та бәәнәт ($2).',
 	'youhavenewmessagesmulti' => 'Таньд $1 деер шин зәңг ирсн бәәнә.',
 	'yourname' => 'Демнчна нернь:',
@@ -4763,16 +4747,16 @@ $messages['xal'] = [
 	'yournick' => 'Тәвсн һар:',
 	'yourgender' => 'Киисн:',
 	'year' => 'Эн җиләс (болн эртәр):',
-];
+);
 
-$messages['xh'] = [
+$messages['xh'] = array(
 	'youhavenewmessagesmulti' => 'Unemiyalezo emitsha ku $1',
 	'yourname' => 'Igama lelungu:',
 	'yourpassword' => 'Igama elifihlakeleyo lelungu:',
 	'yourpasswordagain' => 'Faka kwakhona igama elifihlakeleyo:',
-];
+);
 
-$messages['xmf'] = [
+$messages['xmf'] = array(
 	'youhavenewmessages' => 'თქვა გიღუნა $1 ($2).',
 	'yourname' => 'მახვარებუშ ჯოხო:',
 	'yourpassword' => 'პაროლი',
@@ -4783,9 +4767,9 @@ $messages['xmf'] = [
 	'yourrealname' => 'ნანდულ სახელ *',
 	'yourlanguage' => 'ნინა:',
 	'year' => 'ათე წანაშე (დო უადრაშე):',
-];
+);
 
-$messages['yi'] = [
+$messages['yi'] = array(
 	'youhavenewmessages' => 'איר האט $1 ($2).',
 	'youhavenewmessagesmulti' => 'איר האט נייע מעלדונגען אין $1',
 	'yourname' => 'באַניצער נאָמען:',
@@ -4801,9 +4785,9 @@ $messages['yi'] = [
 	'yournick' => 'חתימה:',
 	'yourgender' => 'מין:',
 	'year' => 'ביז יאר:',
-];
+);
 
-$messages['yo'] = [
+$messages['yo'] = array(
 	'youhavenewmessages' => 'Ẹ ní $1 ($2).',
 	'youhavenewmessagesmulti' => 'Ẹ ní ìránsẹ́ tuntun ni $1',
 	'yourname' => 'Orúkọ oníṣe (username):',
@@ -4818,9 +4802,9 @@ $messages['yo'] = [
 	'yournick' => 'Ìtọwọ́bọ̀wé tuntun:',
 	'yourgender' => 'Akọmbábo:',
 	'year' => 'Láti ọdún (àti sẹ́yìn):',
-];
+);
 
-$messages['yue'] = [
+$messages['yue'] = array(
 	'youhavenewmessages' => '你有$1（$2）。',
 	'youhavenewmessagesmulti' => '你響 $1 有新信',
 	'yourname' => '用戶名:',
@@ -4836,15 +4820,15 @@ $messages['yue'] = [
 	'yournick' => '新花名:',
 	'yourgender' => '性別:',
 	'year' => '由呢一年 (同更早):',
-];
+);
 
-$messages['za'] = [
+$messages['za'] = array(
 	'youhavenewmessages' => 'Mungz meiz $1（$2）。',
 	'yourname' => 'Ciu bouxdeiz:',
 	'yourpassword' => 'Mizmak：',
-];
+);
 
-$messages['zea'] = [
+$messages['zea'] = array(
 	'youhavenewmessages' => 'Je ei $1 ($2).',
 	'youhavenewmessagesmulti' => 'Je ei nieuwe berichen op $1',
 	'yourname' => 'Gebrukersnaem',
@@ -4858,9 +4842,9 @@ $messages['zea'] = [
 	'yourlanguage' => 'Taele:',
 	'yournick' => 'Tekst voe onderteêkenienge:',
 	'year' => 'Von jaer (en eêder):',
-];
+);
 
-$messages['zh-hans'] = [
+$messages['zh-hans'] = array(
 	'youhavenewmessages' => '你有$1（$2）。',
 	'youhavenewmessagesmulti' => '您在$1有一条新信息',
 	'yourname' => '用户名：',
@@ -4876,9 +4860,10 @@ $messages['zh-hans'] = [
 	'yournick' => '新签名：',
 	'yourgender' => '性别：',
 	'year' => '自年份（及之前内容）：',
-];
+	'yourbirthdate' => 'Birth Date',
+);
 
-$messages['zh-hant'] = [
+$messages['zh-hant'] = array(
 	'youhavenewmessages' => '您有$1（$2）。',
 	'youhavenewmessagesmulti' => '您在 $1 有一條新訊息',
 	'yourname' => '您的使用者名稱：',
@@ -4894,22 +4879,10 @@ $messages['zh-hant'] = [
 	'yournick' => '新簽名:',
 	'yourgender' => '性別：',
 	'year' => '從該年份 （或更早）:',
-];
+	'yourbirthdate' => 'Birth Date',
+);
 
-$messages['zh-tw'] = [
-	'yourname' => '您的使用者名:',
-	'yourpassword' => '密碼：',
-	'yournick' => '暱稱:',
-	'youhavenewmessagesmulti' => '您在 $1 有一條新訊息',
-];
-
-$messages['zh-yue'] = [
-	'yourname' => '您的使用者名:',
-	'yourpassword' => '密碼：',
-	'yournick' => '暱稱:',
-];
-
-$messages['zu'] = [
+$messages['zu'] = array(
 	'youhavenewmessagesmulti' => 'Uyanemilayezo emisha e $1',
 	'yourname' => 'Isiga',
 	'yourpassword' => 'Izwi elingenangozi',
@@ -4918,9 +4891,5 @@ $messages['zu'] = [
 	'yourdiff' => 'Izinguquko',
 	'yourrealname' => 'Igama eliqinisileyo',
 	'yourlanguage' => 'Ulimi:',
-];
-
-$messages['zh'] = [
-	'yourbirthdate' => '出生日期',
-];
+);
 

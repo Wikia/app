@@ -383,7 +383,7 @@ abstract class FormAction extends Action {
 		$this->fields = $this->getFormFields();
 
 		// Give hooks a chance to alter the form, adding extra fields or text etc
-		wfRunHooks( 'ActionModifyFormFields', array( $this->getName(), &$this->fields, $this->page ) );
+		Hooks::run( 'ActionModifyFormFields', array( $this->getName(), &$this->fields, $this->page ) );
 
 		$form = new HTMLForm( $this->fields, $this->getContext() );
 		$form->setSubmitCallback( array( $this, 'onSubmit' ) );
@@ -401,7 +401,7 @@ abstract class FormAction extends Action {
 		$this->alterForm( $form );
 
 		// Give hooks a chance to alter the form, adding extra fields or text etc
-		wfRunHooks( 'ActionBeforeFormDisplay', array( $this->getName(), &$form, $this->page ) );
+		Hooks::run( 'ActionBeforeFormDisplay', array( $this->getName(), &$form, $this->page ) );
 
 		return $form;
 	}

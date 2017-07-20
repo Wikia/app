@@ -201,7 +201,6 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'quicktools',
 		'quickadopt',
 		'restrictsession',
-		'scribeevents',
 		'performancestats',
 		'messagetool',
 		'forceview',

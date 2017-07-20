@@ -18,6 +18,10 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 
 	const WIKIA_MOBILE_SKIN_NAME = 'wikiamobile';
 
+	// yes, it is ugly, but we need this information in hooks where we don't have access to this controller or response
+	// and we don't want to do separate call to api to get this information from model
+	public static $mapDeleted = false;
+
 	/**
 	 * @var WikiaMaps
 	 */
@@ -42,8 +46,7 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 	 * Wikia Maps special page
 	 */
 	public function index() {
-		$this->wg->SuppressPageHeader = true;
-		$this->wg->out->setHTMLTitle( wfMessage( 'wikia-interactive-maps-title' )->escaped() );
+		RequestContext::getMain()->getOutput()->setPageTitle( wfMessage( 'wikia-interactive-maps-title' )->escaped() );
 
 		if ( is_numeric( $this->getPar() ) ) {
 			if ( $this->getRequest()->getVal( '_escaped_fragment_' ) === null ) {
@@ -132,7 +135,6 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 				$this->setMapOnMobile();
 			} else {
 				$this->setVal( 'title', $map->title );
-				$this->setVal( 'menu', $this->getMenuMarkup() );
 			}
 
 			$this->setVal( 'mapFound', true );
@@ -160,8 +162,6 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 			$this->prepareSingleMapPage( $mapData );
 
 			$this->setVal( 'title', $mapData->title );
-			$this->setVal( 'menu', $this->getMenuMarkup() );
-
 			$this->setVal( 'mapFound', true );
 
 			$this->prepareListOfPois( $mapData );
@@ -182,18 +182,18 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 		$this->response->setVal( 'mapCityId', $mapCityId );
 
 		$this->redirectIfForeignWiki( $mapCityId, $this->response->getVal( 'mapId' ) );
-		$this->wg->out->setHTMLTitle( $mapData->title );
+		RequestContext::getMain()->getOutput()->setPageTitle( $mapData->title );
 
-		$mapDeleted = $mapData->deleted == WikiaMaps::MAP_DELETED;
+		self::$mapDeleted = $mapData->deleted == WikiaMaps::MAP_DELETED;
 
-		if ( $mapDeleted && $this->app->checkSkin( 'oasis' ) ) {
+		if ( self::$mapDeleted && $this->app->checkSkin( 'oasis' ) ) {
 			BannerNotificationsController::addConfirmation(
 				wfMessage( 'wikia-interactive-maps-map-is-deleted' ),
 				BannerNotificationsController::CONFIRMATION_WARN
 			);
 		}
 
-		$this->response->setVal( 'deleted', $mapDeleted );
+		$this->response->setVal( 'deleted', self::$mapDeleted );
 	}
 
 	/**
@@ -245,32 +245,6 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 		// skip rendering parts of Wikia page
 		WikiaMobileFooterService::setSkipRendering( true );
 		WikiaMobilePageHeaderService::setSkipRendering( true );
-	}
-
-	/**
-	 * Renders the menu markup for the map page from mustache
-	 * @return string
-	 */
-	function getMenuMarkup() {
-		$actionButtonArray = [
-			'action' => [
-				'text' => wfMessage( 'wikia-interactive-maps-actions' )->escaped(),
-			],
-			'dropdown' => [],
-		];
-		if ( $this->response->getVal( 'deleted' ) ) {
-			$actionButtonArray[ 'dropdown' ][ 'undeleteMap' ] = [
-				'text' => wfMessage( 'wikia-interactive-maps-undelete-map' )->escaped(),
-				'id' => 'undeleteMap'
-			];
-		} else {
-			$actionButtonArray[ 'dropdown' ][ 'deleteMap' ] = [
-				'text' => wfMessage( 'wikia-interactive-maps-delete-map' )->escaped(),
-				'id' => 'deleteMap'
-			];
-		}
-
-		return $this->app->renderView( 'MenuButton', 'index', $actionButtonArray );
 	}
 
 	/**

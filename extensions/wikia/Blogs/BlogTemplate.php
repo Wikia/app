@@ -900,7 +900,7 @@ class BlogTemplateClass {
 		}
 
 		// macbre: change for Oasis to add avatars and comments / likes data
-		wfRunHooks( 'BlogTemplateGetResults', array( &$aResult ) );
+		Hooks::run( 'BlogTemplateGetResults', array( &$aResult ) );
 
 		self::$dbr->freeResult( $res );
     	return $aResult;
@@ -1076,7 +1076,7 @@ class BlogTemplateClass {
 				}
 			}
 
-			wfRunHooks( 'BlogListAfterParse', array( self::$oTitle, $relationArray ) );
+			Hooks::run( 'BlogListAfterParse', array( self::$oTitle, $relationArray ) );
 
 			/* */
 			if ( !empty( $showOnlyPage ) ) {
@@ -1175,7 +1175,7 @@ class BlogTemplateClass {
 							}
 
 							if ( F::app()->checkSkin( 'oasis' ) ) {
-								wfRunHooks( 'BlogsRenderBlogArticlePage', array( &$result, $aResult, self::$aOptions, $sPager ) );
+								Hooks::run( 'BlogsRenderBlogArticlePage', array( &$result, $aResult, self::$aOptions, $sPager ) );
 							} else {
 								/* run template */
 								$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );

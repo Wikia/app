@@ -431,7 +431,7 @@ class UserLoginHelper extends WikiaModel {
 		$user->setGlobalFlag( UserLoginSpecialController::SIGNED_UP_ON_WIKI_OPTION_NAME, null );
 		$user->saveSettings();
 		$user->saveToCache();
-		wfRunHooks( 'SignupConfirmEmailComplete', array( $user ) );
+		Hooks::run( 'SignupConfirmEmailComplete', array( $user ) );
 		return true;
 	}
 

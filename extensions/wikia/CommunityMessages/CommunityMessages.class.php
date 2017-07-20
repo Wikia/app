@@ -87,7 +87,7 @@ class CommunityMessages {
 		}
 
 		// macbre: add an easy way for Oasis to show it's own notification for community messages
-		wfRunHooks('CommunityMessages::showMessage', array(&$msg));
+		Hooks::run('CommunityMessages::showMessage', array(&$msg));
 
 		return true;
 	}

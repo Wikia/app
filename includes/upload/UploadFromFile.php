@@ -18,10 +18,12 @@ class UploadFromFile extends UploadBase {
 	function initializeFromRequest( &$request ) {
 		$upload = $request->getUpload( 'wpUploadFile' );		
 		$desiredDestName = $request->getText( 'wpDestFile' );
-		if( !$desiredDestName )
+
+		if( !$desiredDestName ) {
 			$desiredDestName = $upload->getName();
+		}
 			
-		return $this->initialize( $desiredDestName, $upload );
+		$this->initialize( $desiredDestName, $upload );
 	}
 
 	/**
@@ -31,8 +33,11 @@ class UploadFromFile extends UploadBase {
 	 */
 	function initialize( $name, $webRequestUpload ) {
 		$this->mUpload = $webRequestUpload;
-		return $this->initializePathInfo( $name, 
-			$this->mUpload->getTempName(), $this->mUpload->getSize() );
+		$this->initializePathInfo(
+			$name,
+			$this->mUpload->getTempName(),
+			$this->mUpload->getSize()
+		);
 	}
 
 	/**

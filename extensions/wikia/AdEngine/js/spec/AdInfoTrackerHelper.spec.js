@@ -15,6 +15,14 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 		adBlockDetection: {
 			isBlocking: noop
 		},
+		browserDetect: {
+			getOS: function () {
+				return 'BarOS';
+			},
+			getBrowser: function () {
+				return 'Foo 50';
+			}
+		},
 		window: {},
 		log: noop
 	}, fakeJSONString = JSON.stringify({foo: 1});
@@ -23,6 +31,7 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 		return modules['ext.wikia.adEngine.adInfoTrackerHelper'](
 			mocks.lookupServices,
 			mocks.adBlockDetection,
+			mocks.browserDetect,
 			mocks.log,
 			mocks.window
 		);
@@ -164,5 +173,89 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 		expect(data.kv_ref).toBe('ref');
 		expect(data.kv_top).toBe('top');
 		expect(data.kv_ah).toBe('ah');
+	});
+
+	it('prepareData correctly calculates bidder_won for no bidders', function () {
+		var data,
+			slot = getTopLeaderboardSlotWithPageParams(fakeJSONString);
+
+		slot.container.firstChild.dataset.gptSlotParams = fakeJSONString;
+		slot.container.firstChild.dataset.gptCreativeSize = fakeJSONString;
+
+		data = getModule().prepareData(slot);
+
+		expect(data.bidder_won).toBe('');
+	});
+
+	it('prepareData correctly calculates bidder_won for bidders - fastlane_private', function () {
+		var data,
+			slot = getTopLeaderboardSlotWithPageParams(fakeJSONString);
+
+		slot.container.firstChild.dataset.gptSlotParams = JSON.stringify({foo: 1, rpfl_7450: 1});
+		slot.container.firstChild.dataset.gptCreativeSize = fakeJSONString;
+
+		mocks.lookupServices.getDfpSlotPrices = function() {
+			return {
+				fastlane_private: '2.50',
+				openx: '1.30',
+				rubicon: '0.75'
+			};
+		};
+
+		data = getModule().prepareData(slot);
+
+		expect(data.bidder_won).toBe('fastlane_private');
+	});
+
+	it('prepareData correctly calculates bidder_won for bidders - openx', function () {
+		var data,
+			slot = getTopLeaderboardSlotWithPageParams(fakeJSONString);
+
+		slot.container.firstChild.dataset.gptSlotParams = JSON.stringify({foo: 1, hb_bidder: 'openx'});
+		slot.container.firstChild.dataset.gptCreativeSize = fakeJSONString;
+
+		mocks.lookupServices.getDfpSlotPrices = function() {
+			return {
+				fastlane_private: '2.50',
+				openx: '3.30',
+				rubicon: '0.75'
+			};
+		};
+
+		data = getModule().prepareData(slot);
+
+		expect(data.bidder_won).toBe('openx');
+	});
+
+	it('prepareData correctly calculates bidder_won for bidders - tie (we promote prebid.js)', function () {
+		var data,
+			slot = getTopLeaderboardSlotWithPageParams(fakeJSONString);
+
+		slot.container.firstChild.dataset.gptSlotParams = JSON.stringify({foo: 1, hb_bidder: 'rubicon', rpfl_7450: 1});
+		slot.container.firstChild.dataset.gptCreativeSize = fakeJSONString;
+
+		mocks.lookupServices.getDfpSlotPrices = function() {
+			return {
+				fastlane_private: '2.60',
+				openx: '2.60',
+				rubicon: '2.60'
+			};
+		};
+
+		data = getModule().prepareData(slot);
+
+		expect(data.bidder_won).toBe('rubicon');
+	});
+
+	it('include browser information data', function () {
+		var data,
+			slot = getTopLeaderboardSlotWithPageParams(fakeJSONString);
+
+		slot.container.firstChild.dataset.gptSlotParams = JSON.stringify({});
+		slot.container.firstChild.dataset.gptCreativeSize = fakeJSONString;
+
+		data = getModule().prepareData(slot);
+
+		expect(data.browser).toBe('BarOS Foo 50');
 	});
 });
