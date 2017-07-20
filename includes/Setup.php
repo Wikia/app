@@ -399,6 +399,7 @@ if ( $wgCanonicalServer === false ) {
 	$wgCanonicalServer = wfExpandUrl( $wgServer, PROTO_HTTP );
 }
 
+// Wikia change - moved this here so that wfShorthandToInteger is defined
 // Ensure the minimum chunk size is less than PHP upload limits or the maximum
 // upload size.
 $wgMinUploadChunkSize = min(
@@ -407,6 +408,9 @@ $wgMinUploadChunkSize = min(
 	wfShorthandToInteger( ini_get( 'upload_max_filesize' ), 1e100 ),
 	wfShorthandToInteger( ini_get( 'post_max_size' ), 1e100) - 1024 # Leave room for other parameters
 );
+
+// Wikia change - fire up DI
+Wikia\DependencyInjection\InjectorInitializer::init();
 
 wfProfileIn( $fname . '-misc1' );
 
