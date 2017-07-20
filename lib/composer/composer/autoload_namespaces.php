@@ -12,6 +12,7 @@ return array(
     'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src'),
     'PhpAmqpLib' => array($vendorDir . '/videlalvaro/php-amqplib'),
     'PEAR' => array($vendorDir . '/pear/pear_exception'),
+    'Net' => array($vendorDir . '/pear/net_socket', $vendorDir . '/pear/net_smtp2', $vendorDir . '/pear/net_socket2'),
     'Mail' => array($vendorDir . '/pear/mail_mime'),
     'Doctrine\\Common\\Lexer\\' => array($vendorDir . '/doctrine/lexer/lib'),
     'Doctrine\\Common\\Cache\\' => array($vendorDir . '/doctrine/cache/lib'),
