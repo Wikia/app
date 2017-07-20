@@ -12,10 +12,12 @@ class PreferenceMigrationModule implements Module {
 	const PREFERENCE_CORRECTION_SAMPLE_RATE = 0.2;
 
 	public function configure( InjectorBuilder $builder ) {
-		global $wgGlobalUserPreferenceWhiteList, $wgLocalUserPreferenceWhiteList, $wgCityId;
+		global $wgGlobalUserPreferenceWhiteList, $wgLocalUserPreferenceWhiteList;
 
 		$builder
-			->bind( PreferenceScopeService::GLOBAL_SCOPE_PREFS )->to( $wgGlobalUserPreferenceWhiteList )
-			->bind( PreferenceScopeService::LOCAL_SCOPE_PREFS )->to( $wgLocalUserPreferenceWhiteList );
+			->bind( PreferenceScopeService::GLOBAL_SCOPE_PREFS )
+				->to( $wgGlobalUserPreferenceWhiteList ?? [] )
+			->bind( PreferenceScopeService::LOCAL_SCOPE_PREFS )
+				->to( $wgLocalUserPreferenceWhiteList ?? [] );
 	}
 }
