@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "343cef608fcb2aee41d31bf94829f0d5",
+    "content-hash": "c3911255b525c86591845e72470020e4",
     "packages": [
         {
             "name": "composer/installers",
@@ -1889,62 +1889,6 @@
             "time": "2015-07-20T20:28:12+00:00"
         },
         {
-            "name": "pear/mail2",
-            "version": "v0.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/pear/Mail2",
-                "reference": "20bfc47db5244a8d2f1808420ede14b0a6bf7e4d"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "*"
-            },
-            "suggest": {
-                "pear/net_smtp": "Install optionally via your project's composer.json"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "Mail2.php",
-                    "Mail2"
-                ]
-            },
-            "autoload-dev": {
-                "classmap": [
-                    "tests"
-                ]
-            },
-            "include-path": [
-                "./"
-            ],
-            "license": [
-                "BSD-2-Clause"
-            ],
-            "authors": [
-                {
-                    "email": "chuck@horde.org",
-                    "name": "Chuck Hagenbuch",
-                    "role": "Lead"
-                },
-                {
-                    "email": "richard@phpguru.org",
-                    "name": "Richard Heyes",
-                    "role": "Developer"
-                },
-                {
-                    "email": "alec@alec.pl",
-                    "name": "Aleksander Machniak",
-                    "role": "Developer"
-                }
-            ],
-            "description": "More info available on: http://pear.php.net/package/Mail2",
-            "support": {
-                "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name[]=Mail2",
-                "source": "https://github.com/pear/Mail2"
-            },
-            "time": "2015-12-08T19:23:03+00:00"
-        },
-        {
             "name": "pear/mail_mime",
             "version": "1.10.1",
             "source": {
@@ -1989,6 +1933,60 @@
             "description": "Mail_Mime provides classes to create MIME messages",
             "homepage": "http://pear.php.net/package/Mail_Mime",
             "time": "2017-05-21T10:43:06+00:00"
+        },
+        {
+            "name": "pear/net_socket",
+            "version": "v1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pear/Net_Socket.git",
+                "reference": "f31d75ac352d49908f8987bbb1496c02a409812a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pear/Net_Socket/zipball/f31d75ac352d49908f8987bbb1496c02a409812a",
+                "reference": "f31d75ac352d49908f8987bbb1496c02a409812a",
+                "shasum": ""
+            },
+            "require": {
+                "pear/pear_exception": "@stable",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Net": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "./"
+            ],
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Chuck Hagenbuch",
+                    "email": "chuck@horde.org",
+                    "role": "Lead"
+                },
+                {
+                    "name": "Aleksander Machniak",
+                    "email": "alec@php.net",
+                    "role": "Lead"
+                },
+                {
+                    "name": "Stig Bakken",
+                    "email": "stig@php.net",
+                    "role": "Lead"
+                }
+            ],
+            "description": "More info available on: http://pear.php.net/package/Net_Socket",
+            "time": "2017-04-06T15:16:38+00:00"
         },
         {
             "name": "pear/pear-core-minimal",
@@ -3938,6 +3936,172 @@
             ],
             "description": "Fluent SQL wrapper for PHP",
             "time": "2014-12-02T19:19:03+00:00"
+        },
+        {
+            "name": "wikia/mail2",
+            "version": "v0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Wikia/Mail2.git",
+                "reference": "20bfc47db5244a8d2f1808420ede14b0a6bf7e4d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Wikia/Mail2/zipball/20bfc47db5244a8d2f1808420ede14b0a6bf7e4d",
+                "reference": "20bfc47db5244a8d2f1808420ede14b0a6bf7e4d",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "suggest": {
+                "pear/net_smtp": "Install optionally via your project's composer.json"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "Mail2.php",
+                    "Mail2"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "./"
+            ],
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Chuck Hagenbuch",
+                    "email": "chuck@horde.org",
+                    "role": "Lead"
+                },
+                {
+                    "name": "Richard Heyes",
+                    "email": "richard@phpguru.org",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Aleksander Machniak",
+                    "email": "alec@alec.pl",
+                    "role": "Developer"
+                }
+            ],
+            "description": "More info available on: http://pear.php.net/package/Mail2",
+            "time": "2015-12-08T19:23:03+00:00"
+        },
+        {
+            "name": "wikia/net_smtp2",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Wikia/Net_SMTP2.git",
+                "reference": "4efa7833bb0331cb944b65daa1b6ad977b7b9385"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Wikia/Net_SMTP2/zipball/4efa7833bb0331cb944b65daa1b6ad977b7b9385",
+                "reference": "4efa7833bb0331cb944b65daa1b6ad977b7b9385",
+                "shasum": ""
+            },
+            "require": {
+                "pear/net_socket": "*",
+                "pear/pear_exception": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "suggest": {
+                "pear/auth_sasl": "Install optionally via your project's composer.json"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Net": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "./"
+            ],
+            "license": [
+                "PHP License"
+            ],
+            "authors": [
+                {
+                    "name": "Jon Parise",
+                    "email": "jon@php.net",
+                    "homepage": "http://www.indelible.org",
+                    "role": "Lead"
+                },
+                {
+                    "name": "Chuck Hagenbuch",
+                    "email": "chuck@horde.org",
+                    "role": "Lead"
+                }
+            ],
+            "description": "An implementation of the SMTP protocol",
+            "homepage": "http://pear.github.io/Net_SMTP2/",
+            "keywords": [
+                "email",
+                "mail",
+                "smtp"
+            ],
+            "time": "2014-06-04T06:04:56+00:00"
+        },
+        {
+            "name": "wikia/net_socket2",
+            "version": "0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Wikia/Net_Socket2.git",
+                "reference": "844e786aea06809f2e738fe2f894a8c610739d09"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Wikia/Net_Socket2/zipball/844e786aea06809f2e738fe2f894a8c610739d09",
+                "reference": "844e786aea06809f2e738fe2f894a8c610739d09",
+                "shasum": ""
+            },
+            "require": {
+                "pear/pear_exception": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Net": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "./"
+            ],
+            "license": [
+                "PHP License"
+            ],
+            "authors": [
+                {
+                    "name": "Chuck Hagenbuch",
+                    "email": "chuck@horde.org",
+                    "role": "Lead"
+                },
+                {
+                    "name": "Aleksander Machniak",
+                    "email": "alec@php.net",
+                    "role": "Lead"
+                },
+                {
+                    "name": "Stig Bakken",
+                    "email": "stig@php.net",
+                    "role": "Lead"
+                }
+            ],
+            "description": "More info available on: http://pear.php.net/package/Net_Socket2",
+            "time": "2015-03-23T14:31:27+00:00"
         },
         {
             "name": "wikia/phpflickr",
