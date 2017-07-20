@@ -164,7 +164,7 @@
 			editor.on( 'uiSpace', function( event ) {
 				if ( event.data.space != editor.config.toolbarLocation )
 					return;
-
+				debugger;
 				// Create toolbar only once.
 				event.removeListener();
 
@@ -422,6 +422,7 @@
 	} );
 
 	function getToolbarConfig( editor ) {
+		debugger;
 		var removeButtons = editor.config.removeButtons;
 
 		removeButtons = removeButtons && removeButtons.split( ',' );
