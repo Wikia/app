@@ -77,7 +77,9 @@ if ( !defined( 'MW_COMPILED' ) ) {
 }
 # Wikia change - comment out the next line since we include DefaultSettings.php
 # in LocalSettings.php
-#require_once( MWInit::compiledPath( 'includes/DefaultSettings.php' ) );
+if ( defined( 'MEDIAWIKI_INSTALL' ) ) {
+	require_once MWInit::compiledPath( 'includes/DefaultSettings.php' );
+}
 
 if ( defined( 'MW_CONFIG_CALLBACK' ) ) {
 	# Use a callback function to configure MediaWiki
