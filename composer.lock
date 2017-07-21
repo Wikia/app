@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "c3911255b525c86591845e72470020e4",
+    "content-hash": "905c23c710d306e852a20f1fd78b31fe",
     "packages": [
         {
             "name": "composer/installers",
@@ -4125,6 +4125,33 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "time": "2016-04-27T13:12:26+00:00"
+        },
+        {
+            "name": "wikia/simplehtmldom",
+            "version": "v1.6.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Wikia/simplehtmldom.git",
+                "reference": "17c40a62d1eaea267ce10aa3530815766efe7c1a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Wikia/simplehtmldom/zipball/17c40a62d1eaea267ce10aa3530815766efe7c1a",
+                "reference": "17c40a62d1eaea267ce10aa3530815766efe7c1a",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "simple_html_dom.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A simple PHP HTML DOM parser written in PHP5+, supports invalid HTML, and provides a very easy way to handle HTML elements.",
+            "time": "2017-07-21T10:54:58+00:00"
         },
         {
             "name": "zendframework/zend-code",

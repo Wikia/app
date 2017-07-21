@@ -784,4 +784,6 @@ return array(
     'iStrokableMapElement' => $baseDir . '/extensions/Maps/includes/properties/iStrokableMapElement.php',
     'phpFlickr' => $vendorDir . '/wikia/phpflickr/phpFlickr.php',
     'phpFlickr_pager' => $vendorDir . '/wikia/phpflickr/phpFlickr.php',
+    'simple_html_dom' => $vendorDir . '/wikia/simplehtmldom/simple_html_dom.php',
+    'simple_html_dom_node' => $vendorDir . '/wikia/simplehtmldom/simple_html_dom.php',
 );

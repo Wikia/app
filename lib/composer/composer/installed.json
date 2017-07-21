@@ -4434,5 +4434,34 @@
             "mail",
             "smtp"
         ]
+    },
+    {
+        "name": "wikia/simplehtmldom",
+        "version": "v1.6.2",
+        "version_normalized": "1.6.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Wikia/simplehtmldom.git",
+            "reference": "17c40a62d1eaea267ce10aa3530815766efe7c1a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Wikia/simplehtmldom/zipball/17c40a62d1eaea267ce10aa3530815766efe7c1a",
+            "reference": "17c40a62d1eaea267ce10aa3530815766efe7c1a",
+            "shasum": ""
+        },
+        "time": "2017-07-21T10:54:58+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "simple_html_dom.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "description": "A simple PHP HTML DOM parser written in PHP5+, supports invalid HTML, and provides a very easy way to handle HTML elements."
     }
 ]

@@ -1,4 +1,6 @@
-#$Rev: 185 $
+#$Rev$
+[Updates - add some ability to insert and create nodes.]
+[1: add ability to search the "noise" array]
 
 [PHP Simple HTML Dom version 1.5 released.]
 1: Memory leak fixed!
