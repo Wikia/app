@@ -44,7 +44,14 @@ class FollowEmailTask extends BaseTask {
 		} else {
 			$msg = 'WatchlistLogs: Sending other watchlist updates';
 		}
+		// MAIN-10869 - don't use dynamic keys (titles) as key names
+		// Convert $watchers to a flat array before logging.
+		$flat_watchers = [];
+		foreach( $watchers as $title => $users ) {
+			$flat_watchers[] = $title;
+			$flat_watchers = array_merge( $flat_watchers, $users );
+		}
 
-		$this->info( $msg, [ 'watchers' => $watchers, 'action' => $action ] );
+		$this->info( $msg, [ 'watchers' => $flat_watchers, 'action' => $action ] );
 	}
 }
