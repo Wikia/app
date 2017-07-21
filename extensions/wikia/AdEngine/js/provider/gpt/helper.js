@@ -13,7 +13,10 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'ext.wikia.aRecoveryEngine.adBlockRecovery',
 	'ext.wikia.adEngine.slotTweaker',
+	'wikia.geo',
+	'wikia.instantGlobals',
 	'wikia.log',
+	'wikia.window',
 	require.optional('ext.wikia.adEngine.ml.hivi.leaderboard'),
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
 	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery')
@@ -30,7 +33,10 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	adBlockDetection,
 	adBlockRecovery,
 	slotTweaker,
+	geo,
+	instantGlobals,
 	log,
+	win,
 	hiviLeaderboard,
 	sraHelper,
 	pageFair
@@ -131,6 +137,14 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 				hiviLeaderboard.getValue().forEach(function (value) {
 					slotTargetingData.hivi.push(value);
 				});
+			}
+
+			if (
+				slotName === 'TOP_LEADERBOARD' &&
+				geo.isProperGeo(instantGlobals.wgAdDriverLBScrollExperimentCountires) &&
+				instantGlobals.wgAdDriverLBScrollExperimentBucket > 0
+			) {
+				slotTargetingData.scrolltop = Math.floor(win.scrollY / instantGlobals.wgAdDriverLBScrollExperimentBucket) * instantGlobals.wgAdDriverLBScrollExperimentBucket;
 			}
 		}
 
