@@ -144,7 +144,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 				geo.isProperGeo(instantGlobals.wgAdDriverLBScrollExperimentCountires) &&
 				instantGlobals.wgAdDriverLBScrollExperimentBucket > 0
 			) {
-				slotTargetingData.scrolltop = Math.floor(win.scrollY / instantGlobals.wgAdDriverLBScrollExperimentBucket) * instantGlobals.wgAdDriverLBScrollExperimentBucket;
+				slotTargetingData.scrolltop = 'top_' + Math.floor(win.scrollY / instantGlobals.wgAdDriverLBScrollExperimentBucket) * instantGlobals.wgAdDriverLBScrollExperimentBucket;
 			}
 		}
 
