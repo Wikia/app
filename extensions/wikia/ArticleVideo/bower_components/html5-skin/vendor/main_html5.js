@@ -3780,8 +3780,8 @@
         var video = $("<video>");
         video.attr("class", "video");
         video.attr("id", domId);
+        video.attr("playsinline", true);
         if (parentContainer.attr('data-autoplay')) {
-          video.attr("playsinline", true);
           video[0].autoplay = true;
           video[0].muted = true;
         }

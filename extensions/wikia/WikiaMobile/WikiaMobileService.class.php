@@ -75,7 +75,7 @@ class WikiaMobileService extends WikiaService {
 
 		//let extensions manipulate the asset packages (e.g. ArticleComments,
 		//this is done to cut down the number or requests)
-		$this->app->runHook(
+		Hooks::run(
 			'WikiaMobileAssetsPackages',
 			[
 				//This should be a static package - files that need to be loaded on EVERY page

@@ -123,7 +123,7 @@ class UserLoginFacebookForm extends UserLoginForm {
 	 */
 	private function confirmUser( User $user ) {
 		$user->confirmEmail();
-		wfRunHooks( 'SignupConfirmEmailComplete', [ $user ] );
+		Hooks::run( 'SignupConfirmEmailComplete', [ $user ] );
 		$user->saveSettings();
 	}
 

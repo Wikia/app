@@ -50,22 +50,21 @@ require([
 			videoTitle = videoData.title,
 			videoLabels = (videoData.labels || '').join(','),
 			videoFeedbackBox,
-			autoplayCookieName = 'featuredVideoAutoplay';
+			autoplayCookieName = 'featuredVideoAutoplay',
+			autoplay = cookies.get(autoplayCookieName) !== '0';
 
 		function initVideo(onCreate) {
 			var playerParams = window.wgOoyalaParams,
-				autoplay = cookies.get(autoplayCookieName) !== '0' && window.OO.allowAutoPlay,
 				vastUrl,
 				inlineSkinConfig = {
 					controlBar: {
-						autoplayToggle: true,
 						autoplayCookieName: autoplayCookieName
 					}
 				};
 
 			if (vastUrlBuilder && adContext && adContext.getContext().opts.showAds) {
 				vastUrl = vastUrlBuilder.build(640/480, {
-					pos: prerollSlotName,
+					pos: (adContext.getContext().opts.megaAdUnitBuilderEnabled ? 'FEATURED' : prerollSlotName),
 					src: 'premium'
 				});
 			} else {
@@ -204,6 +203,7 @@ require([
 		window.guaSetCustomDimension(34, videoId);
 		window.guaSetCustomDimension(35, videoTitle);
 		window.guaSetCustomDimension(36, videoLabels);
+		window.guaSetCustomDimension(37, autoplay ? 'Yes' : 'No');
 
 		initVideo(function (player) {
 			$video.addClass('ready-to-play');

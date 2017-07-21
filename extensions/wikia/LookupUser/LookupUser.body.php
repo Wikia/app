@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Provides the special page to look up user info
  *
@@ -518,4 +519,6 @@ EOT
 	private static function getFounderMemKey( $userName, $wikiId ) {
 		return wfSharedMemcKey( 'lookupUser', 'isUserFounder', $userName, $wikiId );
 	}
+
+
 }

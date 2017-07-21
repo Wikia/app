@@ -1589,13 +1589,6 @@
 .oo-player-container .oo-volume:hover .oo-volume-bar.oo-on {
   background-color: #448aff; }
 
-.oo-player-container .oo-volume-slider {
-  display: inline-block;
-  position: relative;
-  margin-left: 6px;
-  height: 20px;
-  width: 200px; }
-
 @media all and (-ms-high-contrast: none) {
   .oo-player-container *::-ms-backdrop, .oo-player-container .oo-volume-slider {
     height: auto; } }
@@ -2294,11 +2287,6 @@
   height: 9.8px;
   padding-bottom: 0; }
 
-.oo-player-container .oo-xsmall .oo-volume-slider {
-  height: 14px;
-  width: 140px;
-  margin-left: 4.2px; }
-
 @media all and (-ms-high-contrast: none) {
   .oo-player-container .oo-xsmall *::-ms-backdrop, .oo-player-container .oo-xsmall .oo-volume-slider {
     height: 0; } }
@@ -2387,42 +2375,6 @@
 
 .oo-player-container .oo-xsmall .oo-player-skin-plugins-click-layer {
   bottom: 63px; }
-
-.oo-player-container .oo-xsmall .oo-slider-volume {
-  width: 140px; }
-
-.oo-player-container .oo-xsmall .oo-slider-volume[type=range] {
-  /*required for proper track sizing in FF*/
-  width: 140px; }
-
-.oo-player-container .oo-xsmall .oo-slider-volume[type=range]::-webkit-slider-runnable-track {
-  height: 2.1px; }
-
-.oo-player-container .oo-xsmall .oo-slider-volume[type=range]::-webkit-slider-thumb {
-  height: 10.5px;
-  width: 10.5px;
-  margin-top: -4.2px; }
-
-@supports (-ms-accelerator: true) {
-  .oo-player-container .oo-xsmall .oo-slider-volume[type=range]::-webkit-slider-thumb {
-    margin-top: 1px; } }
-
-.oo-player-container .oo-xsmall .oo-slider-volume[type=range]::-moz-range-track {
-  width: 140px;
-  height: 2.1px; }
-
-.oo-player-container .oo-xsmall .oo-slider-volume[type=range]::-moz-range-thumb {
-  height: 10.5px;
-  width: 10.5px; }
-
-.oo-player-container .oo-xsmall .oo-slider-volume[type=range]::-ms-track {
-  width: 140px;
-  height: 2.1px;
-  border-width: 5.25px 0; }
-
-.oo-player-container .oo-xsmall .oo-slider-volume[type=range]::-ms-thumb {
-  height: 10.5px;
-  width: 10.5px; }
 
 .oo-player-container .oo-xsmall .oo-text-track-container {
   max-width: 96%;

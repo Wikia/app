@@ -21,7 +21,7 @@ class CommunityHeaderHooks {
 		if ( NavigationModel::isWikiNavMessage( $title ) ) {
 			// render a preview
 			$html = F::app()->renderPartial(
-				'CommunityHeader',
+				'CommunityHeaderService',
 				'localNavigationPreview',
 				[ 'wikiText' => $wikitext ]
 			);

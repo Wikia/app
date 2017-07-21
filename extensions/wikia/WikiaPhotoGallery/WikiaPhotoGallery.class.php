@@ -561,7 +561,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		wfProfileIn( __METHOD__ );
 
-		if ( !wfRunHooks( 'GalleryBeforeProduceHTML', array( $this->mData, &$out ) ) ) {
+		if ( !Hooks::run( 'GalleryBeforeProduceHTML', array( $this->mData, &$out ) ) ) {
 			wfProfileOut( __METHOD__ );
 
 			return $out;
@@ -932,7 +932,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				}
 			}
 
-			wfRunHooks( 'GalleryBeforeRenderImage', array( &$image ) );
+			Hooks::run( 'GalleryBeforeRenderImage', array( &$image ) );
 
 			// see Image SEO project
 			$wrapperId = preg_replace( '/[^a-z0-9_]/i', '-', Sanitizer::escapeId( $image['linkTitle'] ) );
@@ -1204,7 +1204,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 				# Give extensions a chance to select the file revision for us
 				$time = $descQuery = false;
-				wfRunHooks( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
+				Hooks::run( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
 
 				$img = wfFindFile( $nt, $time );
 
@@ -1465,7 +1465,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			// parse link (RT #142515)
 			$linkAttribs = $this->parseLink( $nt->getLocalUrl(), $nt->getText(), $link );
 
-			wfRunHooks( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
+			Hooks::run( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
 
 			$file = wfFindFile( $nt, $time );
 			if ( $file instanceof File && ( $nt->getNamespace() == NS_FILE ) ) {
@@ -1767,7 +1767,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		// Give extensions a chance to select the file revision for us
 		$time = $descQuery = false;
-		wfRunHooks( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
+		Hooks::run( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
 
 		// Render image thumbnail
 		$img = wfFindFile( $nt, $time );

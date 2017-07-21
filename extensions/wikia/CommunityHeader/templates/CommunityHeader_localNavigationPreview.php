@@ -1,6 +1,6 @@
 <header class="wds-community-header local-navigation-preview">
 	<?= $app->renderView(
-		'CommunityHeaderController',
+		'CommunityHeaderService',
 		'localNavigation',
 		[ 'wikiText' => $wikiText, 'isPreview' => true ]
 	); ?>

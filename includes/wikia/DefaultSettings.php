@@ -30,7 +30,6 @@ $wgCityId = null;
  */
 $wgUseFakeExternalStoreDB = false;
 
-
 /**
  * includes common for all wikis
  */
@@ -74,7 +73,6 @@ global $wgAutoloadClasses;
 $wgAutoloadClasses['F'] = $IP . '/includes/wikia/nirvana/WikiaApp.class.php';
 $wgAutoloadClasses['WikiaApp'] = $IP . '/includes/wikia/nirvana/WikiaApp.class.php';
 $wgAutoloadClasses['WikiaObject'] = $IP . '/includes/wikia/nirvana/WikiaObject.class.php';
-$wgAutoloadClasses['WikiaHookDispatcher'] = $IP . '/includes/wikia/nirvana/WikiaHookDispatcher.class.php';
 $wgAutoloadClasses['WikiaRegistry'] = $IP . '/includes/wikia/nirvana/WikiaRegistry.class.php';
 $wgAutoloadClasses['WikiaGlobalRegistry'] = $IP . '/includes/wikia/nirvana/WikiaGlobalRegistry.class.php';
 $wgAutoloadClasses['WikiaLocalRegistry'] = $IP . '/includes/wikia/nirvana/WikiaLocalRegistry.class.php';
@@ -223,7 +221,6 @@ $wgAutoloadClasses[ "WikiFactoryHub"                  ] = "$IP/extensions/wikia/
 $wgAutoloadClasses[ "WikiFactoryHubHooks"             ] = "$IP/extensions/wikia/WikiFactory/Hubs/WikiFactoryHubHooks.class.php";
 $wgAutoloadClasses[ 'SimplePie'                       ] = "$IP/lib/vendor/SimplePie/simplepie.inc";
 $wgAutoloadClasses[ 'MustachePHP'                     ] = "$IP/lib/vendor/mustache.php/Mustache.php";
-$wgAutoloadClasses[ 'GMetricClient'                   ] = "$IP/lib/vendor/GMetricClient.class.php";
 $wgAutoloadClasses[ 'FakeLocalFile'                   ] = "$IP/includes/wikia/FakeLocalFile.class.php";
 $wgAutoloadClasses[ 'WikiaUploadStash'                ] = "$IP/includes/wikia/upload/WikiaUploadStash.class.php";
 $wgAutoloadClasses[ 'WikiaUploadStashFile'            ] = "$IP/includes/wikia/upload/WikiaUploadStashFile.class.php";
@@ -361,6 +358,7 @@ $wgAutoloadClasses['NavigationModel'] = "{$IP}/includes/wikia/models/NavigationM
 $wgAutoloadClasses['WikiaCollectionsModel'] = "{$IP}/includes/wikia/models/WikiaCollectionsModel.class.php";
 $wgAutoloadClasses['WikiaCorporateModel'] = "{$IP}/includes/wikia/models/WikiaCorporateModel.class.php";
 $wgAutoloadClasses['MySQLKeyValueModel'] = "{$IP}/includes/wikia/models/MySQLKeyValueModel.class.php";
+$wgAutoloadClasses['DesignSystemCommunityHeaderModel'] = "{$IP}/includes/wikia/models/DesignSystemCommunityHeaderModel.class.php";
 $wgAutoloadClasses['DesignSystemGlobalFooterModel'] = "{$IP}/includes/wikia/models/DesignSystemGlobalFooterModel.class.php";
 $wgAutoloadClasses['DesignSystemGlobalNavigationModel'] = "{$IP}/includes/wikia/models/DesignSystemGlobalNavigationModel.class.php";
 $wgAutoloadClasses['DesignSystemSharedLinks'] = "{$IP}/includes/wikia/models/DesignSystemSharedLinks.class.php";
@@ -371,7 +369,6 @@ $wgAutoloadClasses['BodyController'] = $IP.'/skins/oasis/modules/BodyController.
 $wgAutoloadClasses['BodyContentOnlyController'] = $IP.'/skins/oasis/modules/BodyContentOnlyController.class.php';
 $wgAutoloadClasses['ContentDisplayController'] = $IP.'/skins/oasis/modules/ContentDisplayController.class.php';
 $wgAutoloadClasses['SearchController'] = $IP.'/skins/oasis/modules/SearchController.class.php';
-$wgAutoloadClasses['PageHeaderController'] = $IP.'/skins/oasis/modules/PageHeaderController.class.php';
 $wgAutoloadClasses['LatestActivityController'] = $IP.'/skins/oasis/modules/LatestActivityController.class.php';
 $wgAutoloadClasses['FooterController'] = $IP.'/skins/oasis/modules/FooterController.class.php';
 $wgAutoloadClasses['ArticleCategoriesController'] = $IP.'/skins/oasis/modules/ArticleCategoriesController.class.php';
@@ -631,6 +628,7 @@ include_once( "$IP/extensions/wikia/PageHeader/PageHeader.setup.php" );
 include_once( "$IP/extensions/ApiExplorer/SpecialApiExplorer.php" );
 include_once( "$IP/extensions/wikia/Bucky/Bucky.setup.php" );
 include_once( "$IP/extensions/wikia/QuickTools/QuickTools.setup.php" );
+include_once( "$IP/extensions/wikia/TOC/TOC.setup.php" );
 
 /**
  * @name $wgSkipSkins
@@ -1248,6 +1246,12 @@ $wgAdDriverAolBidderCountries = null;
 $wgAdDriverAppNexusBidderCountries = null;
 
 /**
+ * @name $wgAdDriverUseAudienceNetworkBidder
+ * Enables Facebook Audience Network bidding platform.
+ */
+$wgAdDriverUseAudienceNetworkBidder = false;
+
+/**
  * @name $wgAdDriverAudienceNetworkBidderCountries
  * List of countries where Facebook Audience Network bidding platform is enabled.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1404,6 +1408,13 @@ $wgAdDriverKILOCountries = null;
 $wgAdDriverMEGACountries = null;
 
 /**
+ * @name $wgAdDriverMegaAdUnitBuilderForFVCountries
+ * Enables new way of building adUnits for FeaturedVideo pages.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverMegaAdUnitBuilderForFVCountries = null;
+
+/**
  * @name $wgAdDriverMoatTrackingForFeaturedVideoAdCountries
  * Enables MOAT tracking for feature video ads.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1496,6 +1507,12 @@ $wgAdDriverSourcePointRecoveryCountries = null;
  * Enable SourcePoint Recovery per wiki
  */
 $wgAdDriverEnableSourcePointRecovery = true;
+
+/**
+ * @name wgAdDriverEnableInstartLogicRecovery
+ * Enable InstartLogic Recovery per wiki
+ */
+$wgAdDriverEnableInstartLogicRecovery = true;
 
 /**
  * @name $wgAdDriverPageFairDetectionCountries
@@ -1847,5 +1864,3 @@ $wgReviveSpotlightsCountries = null;
 include_once("$IP/extensions/wikia/ARecoveryEngine/ARecoveryEngine.setup.php");
 
 require_once "$IP/extensions/wikia/ImageReview/ImageReviewEvents.setup.php";
-
-require_once("$IP/extensions/wikia/AdMixExperiment/AdMixExperiment.setup.php");

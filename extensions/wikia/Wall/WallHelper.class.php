@@ -175,7 +175,7 @@ class WallHelper {
 			$item = [ ];
 		}
 
-		wfRunHooks( 'AfterWallWikiActivityFilter', [ &$item, $wmessage ] );
+		Hooks::run( 'AfterWallWikiActivityFilter', [ &$item, $wmessage ] );
 
 		wfProfileOut( __METHOD__ );
 		return $item;

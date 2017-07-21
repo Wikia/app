@@ -45,13 +45,16 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverEvolve2Countries';
 		$vars[] = 'wgAdDriverHighImpactSlotCountries';
 		$vars[] = 'wgAdDriverHighImpact2SlotCountries';
+		$vars[] = 'wgAdDriverHiViLeaderboardRabbitCountries';
 		$vars[] = 'wgAdDriverIncontentPlayerSlotCountries';
 		$vars[] = 'wgAdDriverIndexExchangeBidderCountries';
-		$vars[] = 'wgAdDriverKikimoraTrackingCountries';
 		$vars[] = 'wgAdDriverKikimoraPlayerTrackingCountries';
+		$vars[] = 'wgAdDriverKikimoraTrackingCountries';
+		$vars[] = 'wgAdDriverKikimoraViewabilityTrackingCountries';
 		$vars[] = 'wgAdDriverKruxCountries';
 		$vars[] = 'wgAdDriverKILOCountries';
 		$vars[] = 'wgAdDriverMEGACountries';
+		$vars[] = 'wgAdDriverMegaAdUnitBuilderForFVCountries';
 		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdCountries';
 		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdSampling';
 		$vars[] = 'wgAdDriverNetzAthletenCountries';
@@ -60,6 +63,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverOverridePrefootersCountries';
 		$vars[] = 'wgAdDriverPageFairDetectionCountries';
 		$vars[] = 'wgAdDriverPrebidBidderCountries';
+		$vars[] = 'wgAdDriverPremiumAdLayoutCountries';
 		$vars[] = 'wgAdDriverRubiconFastlaneCountries';
 		$vars[] = 'wgAdDriverRubiconFastlaneMercuryFixCountries';
 		$vars[] = 'wgAdDriverRubiconFastlaneProviderCountries';
@@ -181,7 +185,6 @@ class AdEngine2Hooks {
 		$scriptModules[] = 'wikia.document';
 		$scriptModules[] = 'wikia.geo';
 		$scriptModules[] = 'wikia.instantGlobals';
-		$scriptModules[] = 'wikia.localStorage';
 		$scriptModules[] = 'wikia.location';
 		$scriptModules[] = 'wikia.log';
 		$scriptModules[] = 'wikia.querystring';

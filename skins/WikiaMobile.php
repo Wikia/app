@@ -28,7 +28,7 @@ class SkinWikiaMobile extends WikiaSkin {
 		$globalVariables['Wikia'] = new StdClass();
 
 		//this is run to grab all global variables
-		wfRunHooks( 'WikiaSkinTopScripts', [ &$vars, &$scripts, $this ] );
+		Hooks::run( 'WikiaSkinTopScripts', [ &$vars, &$scripts, $this ] );
 
 		// load ResourceLoader modules that have a short caching time
 		$scripts .= $this->renderTopShortTTLModules();

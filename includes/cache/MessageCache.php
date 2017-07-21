@@ -513,7 +513,7 @@ class MessageCache {
 		global $wgContLang;
 		MessageBlobStore::updateMessage( $wgContLang->lcfirst( $msg ) );
 
-		wfRunHooks( 'MessageCacheReplace', array( $title, $text ) );
+		Hooks::run( 'MessageCacheReplace', array( $title, $text ) );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -735,7 +735,7 @@ class MessageCache {
 		} else {
 			// XXX: This is not cached in process cache, should it?
 			$message = false;
-			wfRunHooks( 'MessagesPreLoad', array( $title, &$message ) );
+			Hooks::run( 'MessagesPreLoad', array( $title, &$message ) );
 			if ( $message !== false ) {
 				return $message;
 			}

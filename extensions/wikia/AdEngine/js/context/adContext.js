@@ -70,6 +70,11 @@ define('ext.wikia.adEngine.adContext', [
 		var isRecoveryServiceAlreadyEnabled = false,
 			serviceCanBeEnabled = !noExternals && context.opts.showAds !== false; // showAds is undefined by default
 
+		// InstartLogic recovery
+		context.opts.instartLogicRecovery = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
+			context.opts.instartLogicRecovery && geo.isProperGeo(instantGlobals.wgAdDriverInstartLogicRecoveryCountries);
+		isRecoveryServiceAlreadyEnabled |= context.opts.instartLogicRecovery;
+
 		// PageFair recovery
 		context.opts.pageFairRecovery = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
 			context.opts.pageFairRecovery && geo.isProperGeo(instantGlobals.wgAdDriverPageFairRecoveryCountries);
@@ -87,21 +92,27 @@ define('ext.wikia.adEngine.adContext', [
 	}
 
 	function enableAdMixExperiment(context) {
-		context.opts.adMixExperimentEnabled = !!(
-			isPageType('article') &&
-			context.targeting.skin === 'oasis' &&
-			context.targeting.hasFeaturedVideo &&
-			geo.isProperGeo(instantGlobals.wgAdDriverAdMixCountries)
-		);
+		var isEnabledOnFeaturedVideo = !!(
+				isPageType('article') &&
+				context.targeting.skin === 'oasis' &&
+				context.targeting.hasFeaturedVideo &&
+				geo.isProperGeo(instantGlobals.wgAdDriverAdMixCountries)
+			),
+			isEnabledOnRegularArticle = !!(
+				isPageType('article') &&
+				context.targeting.skin === 'oasis' &&
+				!context.targeting.hasFeaturedVideo &&
+				geo.isProperGeo(instantGlobals.wgAdDriverPremiumAdLayoutCountries)
+			);
 
-		// TODO remove admix1 in ADEN-5443
-		context.opts.adMix1Enabled = false;
-		context.opts.adMix3Enabled = context.opts.adMixExperimentEnabled;
+		context.opts.premiumAdLayoutEnabled = isEnabledOnFeaturedVideo || isEnabledOnRegularArticle;
+		context.slots.premiumAdLayoutSlotsToUnblock = ['INCONTENT_BOXAD_1', 'BOTTOM_LEADERBOARD'];
 
-		context.slots.adMixToUnblock = ['INCONTENT_BOXAD_1'];
+		context.opts.megaAdUnitBuilderEnabled = context.targeting.hasFeaturedVideo && isEnabledOnFeaturedVideo &&
+			geo.isProperGeo(instantGlobals.wgAdDriverMegaAdUnitBuilderForFVCountries);
 
-		if (context.opts.adMix3Enabled) {
-			context.slots.adMixToUnblock.push('BOTTOM_LEADERBOARD');
+		if (!context.targeting.hasFeaturedVideo) {
+			context.slots.premiumAdLayoutSlotsToUnblock.push('INCONTENT_PLAYER');
 		}
 	}
 
@@ -145,7 +156,6 @@ define('ext.wikia.adEngine.adContext', [
 			geo.isProperGeo(instantGlobals.wgAdDriverSrcPremiumCountries);
 
 		context.opts.isMoatTrackingForFeaturedVideoEnabled = isMOATTrackingForFVEnabled();
-
 		updateDetectionServicesAdContext(context, noExternals);
 		updateAdContextRecoveryServices(context, noExternals);
 
@@ -174,7 +184,6 @@ define('ext.wikia.adEngine.adContext', [
 		}
 
 		context.opts.enableRemnantNewAdUnit = geo.isProperGeo(instantGlobals.wgAdDriverMEGACountries);
-		context.opts.enableKILOAdUnit = geo.isProperGeo(instantGlobals.wgAdDriverKILOCountries);
 
 		// INVISIBLE_HIGH_IMPACT slot
 		context.slots.invisibleHighImpact = (
@@ -183,6 +192,8 @@ define('ext.wikia.adEngine.adContext', [
 			) || isUrlParamSet('highimpactslot');
 
 		// AdInfo warehouse logging
+		context.opts.kikimoraViewabilityTracking =
+			geo.isProperGeo(instantGlobals.wgAdDriverKikimoraViewabilityTrackingCountries);
 		context.opts.enableAdInfoLog = geo.isProperGeo(instantGlobals.wgAdDriverKikimoraTrackingCountries);
 		context.opts.playerTracking = geo.isProperGeo(instantGlobals.wgAdDriverKikimoraPlayerTrackingCountries);
 

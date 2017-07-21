@@ -65,7 +65,7 @@ function wfIsTrustedProxy( $ip ) {
 
 	$trusted = in_array( $ip, $wgSquidServers ) ||
 		in_array( $ip, $wgSquidServersNoPurge );
-	wfRunHooks( 'IsTrustedProxy', array( &$ip, &$trusted ) );
+	Hooks::run( 'IsTrustedProxy', array( &$ip, &$trusted ) );
 	return $trusted;
 }
 

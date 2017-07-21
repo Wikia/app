@@ -49,7 +49,7 @@ function GetLinksArrayFromMessage( $messagename ) { // feel free to suggest bett
 					$text = $line[1];
 				if ( wfEmptyMsg( $line[0], $link ) )
 					$link = $line[0];
-					if ( preg_match( '/^(?:' . wfUrlProtocols() . ')/', $link ) ) {
+				if ( preg_match( '/^(?:' . wfUrlProtocols() . ')/', $link ) ) {
 					$href = $link;
 				} else {
 					$title = Title::newFromText( $link );
@@ -804,7 +804,7 @@ function wfMsgHTMLwithLanguage( $key, $lang, $options = array(), $params = array
  */
 function wfMsgHTMLwithLanguageAndAlternative( $key, $keyAlternative, $lang, $options = array(), $params = array(), $wantHTML = true ) {
 	// inserted here for external i18n add-on, adjust params if needed
-	wfRunHooks( 'MsgHTMLwithLanguageAndAlternativeBefore' );
+	Hooks::run( 'MsgHTMLwithLanguageAndAlternativeBefore' );
 
 	list ( $msgPlainMain, $msgRichMain, $msgPlainMainFallback, $msgRichMainFallback ) = wfMsgHTMLwithLanguage( $key, $lang, $options, $params, $wantHTML );
 	list ( $msgPlainAlter, $msgRichAlter, $msgPlainAlterFallback, $msgRichAlterFallback ) = wfMsgHTMLwithLanguage( $keyAlternative, $lang, $options, $params, $wantHTML );
@@ -1041,9 +1041,9 @@ function wfLoadExtensionNamespaces( $extensionName, $nsList ) {
  * @author uberfuzzy
  * @return string
  */
-function wfGenerateUnsubToken( $email, $timestamp ) {
+function wfGenerateUnsubToken( $email ) {
 	global $wgUnsubscribeSalt;
-	$token = sha1( $timestamp . $email . $wgUnsubscribeSalt );
+	$token = sha1( $email . $wgUnsubscribeSalt );
 	return $token;
 }
 
@@ -1460,7 +1460,7 @@ function wfGetNamespaces() {
 	global $wgContLang;
 
 	$namespaces = $wgContLang->getFormattedNamespaces();
-	wfRunHooks( 'XmlNamespaceSelectorAfterGetFormattedNamespaces', array( &$namespaces ) );
+	Hooks::run( 'XmlNamespaceSelectorAfterGetFormattedNamespaces', array( &$namespaces ) );
 
 	return $namespaces;
 }

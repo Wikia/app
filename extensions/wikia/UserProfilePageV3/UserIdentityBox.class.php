@@ -407,7 +407,7 @@ class UserIdentityBox extends WikiaObject {
 		wfProfileIn( __METHOD__ );
 
 		$_ = array();
-		$res = wfRunHooks( 'SpamFilterCheck', array( $spamSubject, null, &$_ ) );
+		$res = Hooks::run( 'SpamFilterCheck', array( $spamSubject, null, &$_ ) );
 
 		wfProfileOut( __METHOD__ );
 		return $res;

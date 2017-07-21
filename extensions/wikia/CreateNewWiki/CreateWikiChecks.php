@@ -161,7 +161,7 @@ class CreateWikiChecks {
 	 * @return bool is given text allowed to pass?
 	 */
 	public static function checkBadWords( $sText, $where, $split = false ) {
-		return wfRunHooks( 'CreateWikiChecks::checkBadWords', array( $sText, $where, $split ) );
+		return Hooks::run( 'CreateWikiChecks::checkBadWords', array( $sText, $where, $split ) );
 	}
 
 	/**

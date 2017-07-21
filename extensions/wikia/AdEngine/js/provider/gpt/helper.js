@@ -14,6 +14,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.aRecoveryEngine.adBlockRecovery',
 	'ext.wikia.adEngine.slotTweaker',
 	'wikia.log',
+	require.optional('ext.wikia.adEngine.ml.hivi.leaderboard'),
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
 	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery')
 ], function (
@@ -30,6 +31,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	adBlockRecovery,
 	slotTweaker,
 	log,
+	hiviLeaderboard,
 	sraHelper,
 	pageFair
 ) {
@@ -53,22 +55,25 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	 * @param {Object}  extra                  - optional parameters
 	 * @param {boolean} extra.sraEnabled       - whether to use Single Request Architecture
 	 * @param {string}  extra.forcedAdType     - ad type for callbacks info
-	 * @param {array}   extra.isSourcePointRecoverable - true if currently processed slot is recovered by SP
+	 * @param {bool}    extra.isInstartLogicRecoverable - true if currently processed slot is recovered by IL
 	 * @param {bool}    extra.isPageFairRecoverable - true if currently processed slot is recovered by PF
+	 * @param {array}   extra.isSourcePointRecoverable - true if currently processed slot is recovered by SP
 	 */
 	function pushAd(slot, slotPath, slotTargetingData, extra) {
 		extra = extra || {};
 		var element,
 			isBlocking = adBlockDetection.isBlocking(),
 			isRecoveryEnabled = adBlockRecovery.isEnabled(),
-			adIsRecoverable = extra.isPageFairRecoverable || extra.isSourcePointRecoverable,
+			adIsRecoverable = extra.isPageFairRecoverable ||
+				extra.isSourcePointRecoverable ||
+				extra.isInstartLogicRecoverable,
 			adShouldBeRecovered = isRecoveryEnabled && isBlocking && adIsRecoverable,
 			shouldPush = !isBlocking || adShouldBeRecovered,
 			slotName = slot.name,
 			uapId = uapContext.getUapId();
 
 		log(['isRecoveryEnabled, isBlocking, adIsRecoverable',
-			isRecoveryEnabled, isBlocking, adIsRecoverable], log.levels.debug, logGroup);
+			slot.name, isRecoveryEnabled, isBlocking, adIsRecoverable], log.levels.debug, logGroup);
 
 		// copy value
 		slotTargetingData = JSON.parse(JSON.stringify(slotTargetingData));
@@ -119,6 +124,13 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			abId = slotTargeting.getAbTestId(slotTargetingData);
 			if (abId) {
 				slotTargetingData.abi = abId;
+			}
+
+			if (hiviLeaderboard && slotName === 'TOP_LEADERBOARD') {
+				slotTargetingData.hivi = [];
+				hiviLeaderboard.getValue().forEach(function (value) {
+					slotTargetingData.hivi.push(value);
+				});
 			}
 		}
 

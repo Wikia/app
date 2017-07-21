@@ -1,4 +1,4 @@
-define('ooyala-player', function () {
+define('ooyala-player', ['wikia.browserDetect'], function (browserDetect) {
 
 	var baseJSONSkinUrl = '/wikia.php?controller=OoyalaConfig&method=skin&cb=' + window.wgStyleVersion;
 	// TODO ooyala only supports font icons so we probably need to extract our DS icons to font
@@ -133,12 +133,24 @@ define('ooyala-player', function () {
 					// FIXME with VPAID it causes volume controls to be in incorrect state
 					IMAAdsManager.setVolume(params.initialVolume);
 				},
-				onAdRequestSuccess: function (IMAAdsManager) {
+				onAdRequestSuccess: function (IMAAdsManager, uiContainer) {
+					require([
+						'ext.wikia.adEngine.adContext',
+						'ext.wikia.adEngine.video.player.porvata.moatVideoTracker'
+					], function(adContext, moatVideoTracker) {
+						if (adContext.getContext().opts.isMoatTrackingForFeaturedVideoEnabled) {
+							moatVideoTracker.init(IMAAdsManager, uiContainer, google.ima.ViewMode.NORMAL, 'ooyala', 'featured-video');
+						}
+					});
+
 					IMAAdsManager.addEventListener('loaded', function (eventData) {
 						var player = html5Player.player;
 
 						if (eventData.getAdData().vpaid === true) {
 							player.mb.publish(OO.EVENTS.WIKIA.SHOW_AD_TIME_LEFT, false);
+							player.mb.publish(OO.EVENTS.WIKIA.SHOW_AD_FULLSCREEN_TOGGLE, false);
+						} else if (browserDetect.isIPad()) {
+							// Ads aren't visible on fullscreen when using iPad, let's hide the toggle
 							player.mb.publish(OO.EVENTS.WIKIA.SHOW_AD_FULLSCREEN_TOGGLE, false);
 						}
 					}, false, this);

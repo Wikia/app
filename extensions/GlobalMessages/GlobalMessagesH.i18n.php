@@ -12787,7 +12787,7 @@ $messages['zh-hant'] = array(
 	'headline_tip' => '2級標題文字',
 	'hr_tip' => '水平線 （小心使用）',
 	'hiddencategories' => '這個頁面屬於$1個隱藏分類：',
-	'histlegend' => '<span style="white-space:nowrap;"> 要查看任何下面列出的版本，請按一下其日期。</span><span style="white-space:nowrap;"> 更多的説明，請參閱 [[Help:Page history]].</span>< br / > <span style="white-space:nowrap;"> （cur） = 與當前版本的差異，（prep）  = 與前一個版本的差異</span> <span style="white-space:nowrap;"> m = [[Help:Minor edit|小編輯]]，→ = 段落編輯 = 自動編輯摘要</span>',
+	'histlegend' => '<span style="white-space:nowrap;"> 要查看任何下面列出的版本，請按一下其日期。</span><span style="white-space:nowrap;"> 更多的説明，請參閱 [[Help:Page history|幫助:頁面歷史]].</span><br / > <span style="white-space:nowrap;"> （cur） = 與當前版本的差異，（prep）  = 與前一個版本的差異</span> <span style="white-space:nowrap;"> m = [[Help:Minor edit|小編輯]]，→ = 段落編輯 = 自動編輯摘要</span>',
 	'history-fieldset-title' => '瀏覽歷史',
 	'history-show-deleted' => '僅已刪除的',
 	'histfirst' => '最早版本',

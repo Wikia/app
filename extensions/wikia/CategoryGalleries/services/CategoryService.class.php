@@ -314,7 +314,7 @@
 			$catDBkey = $catTitle->getDBKey();
 			$key = self::getTopArticlesKey($catDBkey, $ns);
 			$wgMemc->delete($key);
-			wfRunHooks('CategoryService::invalidateTopArticles',array($catTitle,$ns));
+			Hooks::run('CategoryService::invalidateTopArticles',array($catTitle,$ns));
 
 			wfProfileOut(__METHOD__);
 		}

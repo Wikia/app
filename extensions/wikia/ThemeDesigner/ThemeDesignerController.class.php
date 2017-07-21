@@ -212,7 +212,7 @@ class ThemeDesignerController extends WikiaController {
 				$this->errors = [ wfMessage( 'themedesigner-unknown-error' )->escaped() ];
 			}
 
-			wfRunHooks( 'UploadWordmarkComplete', [ &$upload ] );
+			Hooks::run( 'UploadWordmarkComplete', [ &$upload ] );
 		} else if ( $status['status'] === 'error' ) {
 			$this->errors = $status['errors'];
 		}
