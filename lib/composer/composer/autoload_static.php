@@ -281,6 +281,10 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
             array (
                 0 => __DIR__ . '/..' . '/symfony/css-selector',
             ),
+            'SimplePie' => 
+            array (
+                0 => __DIR__ . '/..' . '/simplepie/simplepie/library',
+            ),
         ),
         'P' => 
         array (

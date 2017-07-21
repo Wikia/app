@@ -41,6 +41,7 @@
     "wikia/mail2": "^0.1.1",
     "wikia/net_socket2": "^0.1.1",
     "wikia/net_smtp2": "^0.1.0",
-    "wikia/simplehtmldom": "^1.6"
+    "wikia/simplehtmldom": "^1.6",
+    "simplepie/simplepie": "^1.5"
   }
 }
