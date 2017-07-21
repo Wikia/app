@@ -574,8 +574,14 @@ class MercuryApiController extends WikiaController {
 	}
 
 	private function isSupportedByMercury( Title $title ) {
+		$nsList = [ NS_FILE, NS_CATEGORY ];
+
+		if ( defined( 'NS_BLOG_ARTICLE' ) ) {
+			$nsList[] = NS_BLOG_ARTICLE;
+		}
+
 		return MercuryApiMainPageHandler::shouldGetMainPageData( $title->isMainPage() ) ||
 			$title->isContentPage() ||
-			in_array( $title->getNamespace(), [ NS_FILE, NS_CATEGORY, NS_BLOG_ARTICLE ]);
+			in_array( $title->getNamespace(), $nsList );
 	}
 }
