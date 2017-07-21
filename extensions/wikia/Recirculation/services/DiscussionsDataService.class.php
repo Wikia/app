@@ -6,6 +6,7 @@ class DiscussionsDataService {
 	const DISCUSSIONS_API_LIMIT = 5;
 	const DISCUSSIONS_API_SORT_KEY = 'trending';
 	const DISCUSSIONS_API_SORT_DIRECTION = 'descending';
+	const DISCUSSIONS_API_VIEWABLE_ONLY = true;
 
 	const MCACHE_VER = '1.2';
 
@@ -99,7 +100,7 @@ class DiscussionsDataService {
 			'limit' => self::DISCUSSIONS_API_LIMIT,
 			'sortKey' => self::DISCUSSIONS_API_SORT_KEY,
 			'sortDirection' => self::DISCUSSIONS_API_SORT_DIRECTION,
-			'viewableOnly' => true,
+			'viewableOnly' => self::DISCUSSIONS_API_VIEWABLE_ONLY,
 		];
 
 		$params = array_merge( $defaultParams, $options );
