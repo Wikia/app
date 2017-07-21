@@ -20,7 +20,7 @@
 			contentsCss: [$.getSassLocalURL('extensions/wikia/RTE2/css/content.scss'), window.RTESiteCss],
 			coreStyles_bold: {element: 'b', overrides: 'strong'},
 			coreStyles_italic: {element: 'i', overrides: 'em'},
-			customConfig: '',
+			customConfig: 'config.js',
 			dialog_backgroundCoverColor: '#000',
 			dialog_backgroundCoverOpacity: 0.8,
 			disableDragDrop: false,
@@ -32,7 +32,8 @@
 			language: window.wgUserLanguage,
 			plugins:
 			//	'basicstyles,' +
-			//	'button,' +
+				'button,' +
+				'toolbar,' +
 			//	'clipboard,' +
 			//	'contextmenu,' +
 			//	'dialogui,' +
@@ -41,7 +42,7 @@
 			//	'richcombo' +
 			//	'format,' +
 			//	'htmldataprocessor,' + core
-			//	'indent,' +
+				'indent,' +
 			//	'keystrokes,' + core
 			//	'list,' +
 			//	'pastetext,' +
@@ -56,7 +57,7 @@
 			// Custom RTE plugins for CKEDITOR
 			// Used to be built in RTE.loadPlugins()
 		extraPlugins:
-				'autogrow,' +
+				'autogrow',
 				//'basicstyles,' + 
 				//'accesskey,' +
 				//'comment,' +
@@ -76,7 +77,7 @@
 				//'spellchecker,' +
 				//'template,' +
 				//'temporary-save,' +
-				'toolbar',
+				//'toolbar',
 				//'tools',
 			// TODO: Too buggy. Try to use this after we update to 3.6.2 (BugId:23061)
 			//readOnly: true,
@@ -178,7 +179,7 @@
 			}
 
 			RTE.config.startupMode = editor.config.mode;
-
+			debugger;
 			// This call creates a new CKE instance which replaces the textarea with the applicable ID
 			editor.ck = CKEDITOR.replace(editor.instanceId, RTE.config);
 

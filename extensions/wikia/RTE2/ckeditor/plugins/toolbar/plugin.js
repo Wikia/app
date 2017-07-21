@@ -9,6 +9,7 @@
  */
 
 ( function() {
+	debugger;
 	var toolbox = function() {
 			this.toolbars = [];
 			this.focusCommandExecuted = false;
@@ -164,7 +165,7 @@
 			editor.on( 'uiSpace', function( event ) {
 				if ( event.data.space != editor.config.toolbarLocation )
 					return;
-				debugger;
+			
 				// Create toolbar only once.
 				event.removeListener();
 
@@ -184,7 +185,7 @@
 				// an additional container for all toolbars.
 				if ( editor.config.toolbarCanCollapse && editor.elementMode != CKEDITOR.ELEMENT_MODE_INLINE )
 					output.push( '<span class="cke_toolbox_main"' + ( expanded ? '>' : ' style="display:none">' ) );
-
+				debugger;
 				var toolbars = editor.toolbox.toolbars,
 					toolbar = getToolbarConfig( editor ),
 					toolbarLength = toolbar.length;
@@ -233,12 +234,13 @@
 							}
 
 							canGroup = item.canGroup !== false;
-
+							debugger;
 							// Initialize the toolbar first, if needed.
 							if ( !toolbarObj ) {
 								// Create the basic toolbar object.
 								toolbarId = CKEDITOR.tools.getNextId();
 								toolbarObj = { id: toolbarId, items: [] };
+								//Kacper Olek lang.toolbar.toolbarGroups -> lang.toolbarGroups
 								toolbarName = row.name && ( editor.lang.toolbar.toolbarGroups[ row.name ] || row.name );
 
 								// Output the toolbar opener.
