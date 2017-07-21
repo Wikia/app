@@ -78,6 +78,7 @@ packages :
 				//order matters!
 
 				'ckeditor.js'
+				'config.js'
 				'core/loader.js'
 				'core/event.js'
 				'core/editor_basic.js'
@@ -134,13 +135,18 @@ packages :
 				'core/skin.js'
 				'core/_bootstrap.js'			
 
-				'plugins/basicstyles/plugin.js'
+				//'plugins/basicstyles/plugin.js'
 				
 				'../js/RTE.js'
 				'../js/jquery.editor.js'
 	                	'plugins/autogrow/plugin.js'
-				
-			       	//'../js/plugins/accesskey/plugin.js',
+				'plugins/toolbar/plugin.js'
+				'plugins/indent/plugin.js'
+				'plugins/wysiwygarea/plugin.js'
+				'plugins/button/plugin.js'
+			       	'plugins/basicstyles/plugin.js'
+			
+				//'../js/plugins/accesskey/plugin.js',
 				//'../js/plugins/comment/plugin.js',
 				//'../js/plugins/comment/dialogs/comment.js',
 				//'../js/plugins/dialog/plugin.js',
@@ -161,7 +167,6 @@ packages :
 				//'../js/plugins/template/plugin.js',
 				//'../js/plugins/template/dialogs/template.js',
 				//'../js/plugins/temporary-save/plugin.js',
-				//'../js/plugins/toolbar/plugin.js',
 				//'../js/plugins/tools/plugin.js',
 		
 				]

@@ -247,6 +247,7 @@
 	var loadConfigLoaded = {};
 
 	function loadConfig( editor ) {
+		debugger;
 		var customConfig = editor.config.customConfig;
 
 		// Check if there is a custom config to load.
