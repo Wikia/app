@@ -1140,6 +1140,8 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'iStrokableMapElement' => __DIR__ . '/../../..' . '/extensions/Maps/includes/properties/iStrokableMapElement.php',
         'phpFlickr' => __DIR__ . '/..' . '/wikia/phpflickr/phpFlickr.php',
         'phpFlickr_pager' => __DIR__ . '/..' . '/wikia/phpflickr/phpFlickr.php',
+        'simple_html_dom' => __DIR__ . '/..' . '/wikia/simplehtmldom/simple_html_dom.php',
+        'simple_html_dom_node' => __DIR__ . '/..' . '/wikia/simplehtmldom/simple_html_dom.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
