@@ -1,0 +1,75 @@
+{
+	"description": "Test `mw.smw.ask` functions defined in module.smw.lua",
+	"setup": [
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "Has text",
+			"contents": "[[Has type::Text]]"
+		},
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "Has number",
+			"contents": "[[Has type::Number]]"
+		},
+		{
+			"namespace": "NS_MODULE",
+			"page": "smw",
+			"contents": {
+				"import-from": "/../Fixtures/module.smw.lua"
+			}
+		},
+		{
+			"page": "Scribunto/ask/001/1",
+			"contents": "[[Has text::Is a Scribunto example text]] [[Category:ask-001]]"
+		},
+		{
+			"page": "Scribunto/ask/001/2",
+			"contents": "[[Has number::42]] [[Category:ask-001]]"
+		},
+		{
+			"page": "Scribunto/ask/001/Q.0",
+			"contents": "{{#invoke:smw|ask|[[Category:ask-001]] [[Has text::+]]|?#-=page|?Has text |limit=3 |mainlabel=-}}"
+		},
+		{
+			"page": "Scribunto/ask/001/Q.1",
+			"contents": "{{#invoke:smw|ask|[[Category:ask-001]] [[Has number::+]]|?#-=page|?Has number |limit=3 }}"
+		}
+	],
+	"tests": [
+		{
+			"type": "parser",
+			"about": "#0 verify output for the `[[Category:ask-001]] [[Has text::+]]` query",
+			"subject": "Scribunto/ask/001/Q.0",
+			"assert-output": {
+				"to-contain": [
+					"<ul><li> page: Scribunto/ask/001/1</li>",
+					"<li> Has text: Is a Scribunto example text</li></ul></li></ul>"
+				]
+			}
+		},
+		{
+			"type": "parser",
+			"about": "#1 verify output for the `[[Category:ask-001]] [[Has number::+]]` query",
+			"subject": "Scribunto/ask/001/Q.1",
+			"assert-output": {
+				"to-contain": [
+					"title=\"Scribunto/ask/001/2\">Scribunto/ask/001/2</a></li>",
+					"<li> page: Scribunto/ask/001/2</li>",
+					"<li> Has number: 42</li></ul></li></ul>"
+				]
+			}
+		}
+	],
+	"settings": {
+		"wgContLang": "en",
+		"wgLang": "en",
+		"smwgPageSpecialProperties": [
+			"_MDAT"
+		]
+	},
+	"meta": {
+		"version": "1",
+		"is-incomplete": false,
+		"debug": false
+	}
+}

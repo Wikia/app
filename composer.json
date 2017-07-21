@@ -11,6 +11,10 @@
     {
       "type": "git",
       "url": "https://github.com/Wikia/SemanticMediaWiki"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/TK-999/SemanticScribunto"
     }
   ],
   "config": {
@@ -40,6 +44,7 @@
     "pear/archive_tar": "^1.4",
     "wikia/mail2": "^0.1.1",
     "wikia/net_socket2": "^0.1.1",
-    "wikia/net_smtp2": "^0.1.0"
+    "wikia/net_smtp2": "^0.1.0",
+    "mediawiki/semantic-scribunto": "1.1.0"
   }
 }

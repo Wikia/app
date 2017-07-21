@@ -1,0 +1,37 @@
+language: php
+
+matrix:
+  fast_finish: true
+  include:
+    - env: DB=mysql; MW=REL1_26; TYPE=coverage
+      php: 5.6
+    - env: DB=mysql; MW=REL1_26;
+      php: 5.5
+    - env: DB=sqlite; MW=1.26.3; SITELANG=ja
+      php: 5.5
+    - env: DB=sqlite; MW=master; PHPUNIT=4.8.*
+      php: '7'
+
+install:
+  - bash ./tests/travis/install-mediawiki.sh
+  - bash ./tests/travis/install-semantic-scribunto.sh
+
+script:
+  - bash ./tests/travis/run-tests.sh
+
+after_success:
+  - bash ./tests/travis/upload-coverage-report.sh
+
+notifications:
+  email:
+    on_success: change
+    on_failure: always
+  irc:
+    channels:
+      - "chat.freenode.net#semantic-mediawiki"
+    on_success: change
+    on_failure: always
+
+cache:
+  directories:
+    - $HOME/.composer/cache

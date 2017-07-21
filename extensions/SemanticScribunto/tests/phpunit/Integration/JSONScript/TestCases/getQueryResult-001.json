@@ -1,0 +1,88 @@
+{
+	"description": "Test `mw.smw.ask` functions defined in module.smw.lua",
+	"setup": [
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "Has text",
+			"contents": "[[Has type::Text]]"
+		},
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "Has number",
+			"contents": "[[Has type::Number]]"
+		},
+		{
+			"namespace": "NS_MODULE",
+			"page": "SMWgetQueryResult",
+			"contents": {
+				"import-from": "/../Fixtures/module.smw.getQueryResult.lua"
+			}
+		},
+		{
+			"page": "Scribunto/getQueryResult/001/1",
+			"contents": "[[Has text::Is a Scribunto example text]] [[Category:getQueryResult-001]]"
+		},
+		{
+			"page": "Scribunto/getQueryResult/001/2",
+			"contents": "[[Has number::42]] [[Category:getQueryResult-001]]"
+		},
+		{
+			"page": "Scribunto/getQueryResult/001/Q.0",
+			"contents": "{{#invoke:SMWgetQueryResult|getQueryResultPrintRequests|[[Category:getQueryResult-001]] [[Has text::+]]|?Has text |limit=3 }}"
+		},
+		{
+			"page": "Scribunto/getQueryResult/001/Q.1",
+			"contents": "{{#invoke:SMWgetQueryResult|getQueryResultPrintRequests|[[Category:getQueryResult-001]] [[Has number::+]]|?Has number |limit=3 }}"
+		},
+		{
+			"page": "Scribunto/getQueryResult/001/Q.2",
+			"contents": "{{#invoke:SMWgetQueryResult|getQueryResultCount|[[Category:getQueryResult-001]] |limit=3 }}"
+		}
+	],
+	"tests": [
+		{
+			"type": "parser",
+			"about": "#0 verify output for the `[[Category:getQueryResult-001]] [[Has text::+]]` query",
+			"subject": "Scribunto/getQueryResult/001/Q.0",
+			"assert-output": {
+				"to-contain": [
+					"<li> fulltext: Scribunto/getQueryResult/001/1</li>",
+					"<li> Has text: Is a Scribunto example text</li>"
+				]
+			}
+		},
+		{
+			"type": "parser",
+			"about": "#1 verify output for the `[[Category:getQueryResult-001]] [[Has number::+]]` query",
+			"subject": "Scribunto/getQueryResult/001/Q.1",
+			"assert-output": {
+				"to-contain": [
+					"<li> fulltext: Scribunto/getQueryResult/001/2</li>",
+					"<li> Has number: 42</li>"
+				]
+			}
+		},
+		{
+			"type": "parser",
+			"about": "#2 verify result count",
+			"subject": "Scribunto/getQueryResult/001/Q.2",
+			"assert-output": {
+				"to-contain": [
+					"We have 2 results."
+				]
+			}
+		}
+	],
+	"settings": {
+		"wgContLang": "en",
+		"wgLang": "en",
+		"smwgPageSpecialProperties": [
+			"_MDAT"
+		]
+	},
+	"meta": {
+		"version": "1",
+		"is-incomplete": false,
+		"debug": false
+	}
+}

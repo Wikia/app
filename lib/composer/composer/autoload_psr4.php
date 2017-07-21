@@ -17,6 +17,7 @@ return array(
     'TijsVerkoyen\\CssToInlineStyles\\' => array($vendorDir . '/tijsverkoyen/css-to-inline-styles/src'),
     'Serializers\\' => array($vendorDir . '/serialization/serialization/src/Serializers'),
     'SensioLabs\\Consul\\' => array($vendorDir . '/sensiolabs/consul-php-sdk/Consul'),
+    'SMW\\Scribunto\\' => array($baseDir . '/extensions/SemanticScribunto/src'),
     'SMW\\Maintenance\\' => array($baseDir . '/extensions/SemanticMediaWiki/maintenance'),
     'SMW\\' => array($baseDir . '/extensions/SemanticMediaWiki/src'),
     'React\\Promise\\' => array($vendorDir . '/react/promise/src'),

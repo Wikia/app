@@ -1,0 +1,240 @@
+{
+	"description": "Test `mw.smw.subobject` functions defined in module.smw.subobject",
+	"setup": [
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "Has text",
+			"contents": "[[Has type::Text]]"
+		},
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "Has number",
+			"contents": "[[Has type::Number]]"
+		},
+		{
+			"namespace": "NS_MODULE",
+			"page": "smw",
+			"contents": {
+				"import-from": "/../Fixtures/module.smw.lua"
+			}
+		},
+		{
+			"page": "Scribunto/subobject/001/0",
+			"contents": "{{#invoke:smw|subobject|Has text=Is a Scribunto example subobject test|Has number=1}}"
+		},
+		{
+			"page": "Scribunto/subobject/001/0/Q.0",
+			"contents": "{{#ask:[[Scribunto/subobject/001/0]]|?has subobject#-|format=ul}}"
+		},
+		{
+			"page": "Scribunto/subobject/001/1",
+			"contents": "{{#invoke:smw|subobject|Has text=Here there be subobjects|Has number=42}}{{#invoke:smw|subobject|Has text=Two, to be exact|Has number=13}}"
+		},
+		{
+			"page": "Scribunto/subobject/001/1/Q.0",
+			"contents": "{{#ask:[[Scribunto/subobject/001/1]]|?has subobject#-|format=ul}}"
+		},
+		{
+			"page": "Scribunto/subobject/001/2",
+			"contents": "{{#invoke:smw|subobject|Has text=subobject with id|Has number=99999|subobjectId=1234567890baz}}"
+		},
+		{
+			"page": "Scribunto/subobject/001/2/Q.0",
+			"contents": "{{#ask:[[Scribunto/subobject/001/2]]|?has subobject#-|format=ul}}"
+		}
+	],
+	"tests": [
+		{
+			"type": "parser",
+			"about": "#0, sub-test #0 storing of one subobject (text output)",
+			"subject": "Scribunto/subobject/001/0",
+			"store": {
+				"clear-cache": true
+			},
+			"assert-output": {
+				"to-contain": [
+					"Your data was stored successfully in a subobject"
+				],
+				"not-contain": [
+					"An error occurred during the subobject storage process. Message reads"
+				]
+			}
+		},
+		{
+			"type": "parser",
+			"about": "#0, sub-test #1 storing of one subobject (has subobject query)",
+			"subject": "Scribunto/subobject/001/0/Q.0",
+			"store": {
+				"clear-cache": true
+			},
+			"assert-output": {
+				"to-contain": [
+					"Scribunto/subobject/001/0#_86e73ba4007c05bcb66e9a6824567241"
+				]
+			}
+		},
+		{
+			"type": "parser",
+			"about": "#0, sub-test #2 storing of one subobject (subobject smw data)",
+			"subject": "Scribunto/subobject/001/0#_86e73ba4007c05bcb66e9a6824567241",
+			"store": {
+				"clear-cache": true
+			},
+			"assert-store": {
+				"semantic-data": {
+					"strictPropertyValueMatch": false,
+					"propertyCount": 3,
+					"propertyKeys": [
+						"_SKEY",
+						"Has_number",
+						"Has_text"
+					],
+					"propertyValues": [
+						"Is a Scribunto example subobject test",
+						"1"
+					]
+				}
+			}
+		},
+		{
+			"type": "parser",
+			"about": "#1, sub-test #0 storing of two subobjects (text output)",
+			"subject": "Scribunto/subobject/001/1",
+			"store": {
+				"clear-cache": true
+			},
+			"assert-output": {
+				"to-contain": [
+					"Your data was stored successfully in a subobject"
+				],
+				"not-contain": [
+					"An error occurred during the subobject storage process. Message reads"
+				]
+			}
+		},
+		{
+			"type": "parser",
+			"about": "#1, sub-test #1 storing of two subobjects (has subobject query)",
+			"subject": "Scribunto/subobject/001/1/Q.0",
+			"store": {
+				"clear-cache": true
+			},
+			"assert-output": {
+				"to-contain": [
+					"Scribunto/subobject/001/1#_752345ba7643e7b56fbaf5ca045efbdd",
+					"Scribunto/subobject/001/1#_b0edeea70a7d0208259ef103503230b3"
+				]
+			}
+		},
+		{
+			"type": "parser",
+			"about": "#1, sub-test #2 storing of two subobjects (subobject#1 smw data)",
+			"subject": "Scribunto/subobject/001/1#_752345ba7643e7b56fbaf5ca045efbdd",
+			"store": {
+				"clear-cache": true
+			},
+			"assert-store": {
+				"semantic-data": {
+					"strictPropertyValueMatch": false,
+					"propertyCount": 3,
+					"propertyKeys": [
+						"_SKEY",
+						"Has_number",
+						"Has_text"
+					],
+					"propertyValues": [
+						"Here there be subobjects",
+						"42"
+					]
+				}
+			}
+		},
+		{
+			"type": "parser",
+			"about": "#1, sub-test #3 storing of two subobjects (subobject#2 smw data)",
+			"subject": "Scribunto/subobject/001/1#_b0edeea70a7d0208259ef103503230b3",
+			"store": {
+				"clear-cache": true
+			},
+			"assert-store": {
+				"semantic-data": {
+					"strictPropertyValueMatch": false,
+					"propertyCount": 3,
+					"propertyKeys": [
+						"_SKEY",
+						"Has_number",
+						"Has_text"
+					],
+					"propertyValues": [
+						"Two, to be exact",
+						"13"
+					]
+				}
+			}
+		},
+		{
+			"type": "parser",
+			"about": "#2, sub-test #0 storing of one subobject with id (text output)",
+			"subject": "Scribunto/subobject/001/2",
+			"store": {
+				"clear-cache": true
+			},
+			"assert-output": {
+				"to-contain": [
+					"Your data was stored successfully in a subobject"
+				],
+				"not-contain": [
+					"An error occurred during the subobject storage process. Message reads"
+				]
+			}
+		},
+		{
+			"type": "parser",
+			"about": "#2, sub-test #1 storing of one subobject (has subobject query)",
+			"subject": "Scribunto/subobject/001/2/Q.0",
+			"store": {
+				"clear-cache": true
+			},
+			"assert-output": {
+				"to-contain": [
+					"Scribunto/subobject/001/2#1234567890baz"
+				]
+			}
+		},
+		{
+			"type": "parser",
+			"about": "#2, sub-test #2 storing of one subobject with id (subobject smw data)",
+			"subject": "Scribunto/subobject/001/2#1234567890baz",
+			"store": {
+				"clear-cache": true
+			},
+			"assert-store": {
+				"semantic-data": {
+					"strictPropertyValueMatch": false,
+					"propertyCount": 3,
+					"propertyKeys": [
+						"_SKEY",
+						"Has_number",
+						"Has_text"
+					],
+					"propertyValues": [
+						"subobject with id",
+						"99999"
+					]
+				}
+			}
+		}
+	],
+	"settings": {
+		"wgContLang": "en",
+		"wgLang": "en",
+		"smwgPageSpecialProperties": [
+			"_MDAT"
+		]
+	},
+	"meta": {
+		"version": "1",
+		"is-incomplete": false,
+		"debug": false
+	}
+}

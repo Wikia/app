@@ -1,0 +1,77 @@
+{
+	"description": "Test `mw.smw.info` functions defined in module.smw.info",
+	"setup": [
+		{
+			"namespace": "NS_MODULE",
+			"page": "smw",
+			"contents": {
+				"import-from": "/../Fixtures/module.smw.lua"
+			}
+		},
+		{
+			"message-cache": "clear",
+			"page": "Info-warning",
+			"contents": "{{#invoke:smw|info|an error text|warning}}"
+		},
+		{
+			"message-cache": "clear",
+			"page": "Info-note",
+			"contents": "{{#invoke:smw|info|a note|note}}"
+		},
+		{
+			"message-cache": "clear",
+			"page": "Info-info",
+			"contents": "{{#invoke:smw|info|an info text}}"
+		}
+	],
+	"tests": [
+		{
+			"type": "parser",
+			"about": "#0: a warning",
+			"subject": "Info-warning",
+			"assert-output": {
+				"to-contain": [
+					"<span class=\"smw-highlighter\" data-type=\"4\" data-state=\"inline\" data-title=\"Error\" title=\"an error text\">",
+					"<span class=\"smwtticon warning\">",
+					"<div class=\"smwttcontent\">an error text</div>"
+				]
+			}
+		},
+		{
+			"type": "parser",
+			"about": "#1: a note",
+			"subject": "Info-note",
+			"assert-output": {
+				"to-contain": [
+					"<span class=\"smw-highlighter\" data-type=\"7\" data-state=\"inline\" data-title=\"Note\" title=\"a note\">",
+					"<span class=\"smwtticon note\">",
+					"<div class=\"smwttcontent\">a note</div>"
+				]
+			}
+		},
+		{
+			"type": "parser",
+			"about": "#2: an info",
+			"subject": "Info-info",
+			"assert-output": {
+				"to-contain": [
+					"<span class=\"smw-highlighter\" data-type=\"5\" data-state=\"persistent\" data-title=\"Information\" title=\"an info text\">",
+					"<span class=\"smwtticon info\">",
+					"<div class=\"smwttcontent\">an info text</div>"
+				]
+			}
+		}
+	],
+	"settings": {
+		"wgContLang": "en",
+		"wgLang": "en",
+		"smwgPageSpecialProperties": [
+			"_MDAT"
+		]
+	},
+	"meta": {
+		"version": "1",
+		"is-incomplete": false,
+		"debug": false
+	}
+}

@@ -1,0 +1,66 @@
+{
+	"description": "Test mw.smw.set to produce error output",
+	"setup": [
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "Has number",
+			"contents": "[[Has type::Number]]"
+		},
+		{
+			"namespace": "NS_MODULE",
+			"page": "smw",
+			"contents": {
+				"import-from": "/../Fixtures/module.smw.lua"
+			}
+		},
+		{
+			"page": "Scribunto/set/002",
+			"contents": "{{#invoke:smw|set|Has number=12}} {{#invoke:smw|set|Has number=32a}} {{#invoke:smw|set|Has number=66}} {{#invoke:smw|set|Has number=88b}}"
+		}
+	],
+	"tests": [
+		{
+			"type": "parser",
+			"about": "#0 with error 'invalid number type'",
+			"subject": "Scribunto/set/002",
+			"store": {
+				"clear-cache": true
+			},
+			"assert-store": {
+				"semantic-data": {
+					"strictPropertyValueMatch": false,
+					"propertyCount": 4,
+					"propertyKeys": [
+						"Has_number",
+						"_ERRC",
+						"_SKEY",
+						"_MDAT"
+					],
+					"propertyValues": [
+						12,
+						66
+					]
+				}
+			},
+			"assert-output": {
+				"to-contain": [
+					"Your data was stored successfully",
+					"\"a\" can not be assigned to a declared number type with value 32.",
+					"\"b\" can not be assigned to a declared number type with value 88."
+				]
+			}
+		}
+	],
+	"settings": {
+		"wgContLang": "en",
+		"wgLang": "en",
+		"smwgPageSpecialProperties": [
+			"_MDAT"
+		]
+	},
+	"meta": {
+		"version": "1",
+		"is-incomplete": false,
+		"debug": false
+	}
+}

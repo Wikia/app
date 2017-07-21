@@ -1,0 +1,83 @@
+{
+	"description": "Test in-text annotation for `_boo` datatype (`wgContLang=ja`, `wgLang=ja`)",
+	"setup": [
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "Has boolean",
+			"contents": "[[Has type::Boolean]]"
+		},
+		{
+			"namespace": "NS_MODULE",
+			"page": "smw",
+			"contents": {
+				"import-from": "/../Fixtures/module.smw.lua"
+			}
+		},
+		{
+			"page": "Scribunto/set/005/0",
+			"contents": "{{#invoke:smw|set|Has boolean=偽 }}"
+		},
+		{
+			"page": "Scribunto/set/005/1",
+			"contents": "{{#invoke:smw|set|Has boolean=真 }}"
+		}
+	],
+	"tests": [
+		{
+			"type": "parser",
+			"about": "#0 false",
+			"subject": "Scribunto/set/005/0",
+			"store": {
+				"clear-cache": true
+			},
+			"assert-store": {
+				"semantic-data": {
+					"strictPropertyValueMatch": false,
+					"propertyCount": 3,
+					"propertyKeys": [
+						"Has_boolean",
+						"_SKEY",
+						"_MDAT"
+					],
+					"propertyValues": [
+						false
+					]
+				}
+			}
+		},
+		{
+			"type": "parser",
+			"about": "#1 true",
+			"subject": "Scribunto/set/005/1",
+			"store": {
+				"clear-cache": true
+			},
+			"assert-store": {
+				"semantic-data": {
+					"strictPropertyValueMatch": false,
+					"propertyCount": 3,
+					"propertyKeys": [
+						"Has_boolean",
+						"_SKEY",
+						"_MDAT"
+					],
+					"propertyValues": [
+						true
+					]
+				}
+			}
+		}
+	],
+	"settings": {
+		"wgContLang": "ja",
+		"wgLang": "ja",
+		"smwgPageSpecialProperties": [
+			"_MDAT"
+		]
+	},
+	"meta": {
+		"version": "1",
+		"is-incomplete": false,
+		"debug": false
+	}
+}

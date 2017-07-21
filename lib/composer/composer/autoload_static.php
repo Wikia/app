@@ -13,10 +13,10 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         '0dd9431cbbfa9ed9cb9d565d7129dbaf' => __DIR__ . '/..' . '/data-values/validators/Validators.php',
         'af3cc937b8a54e5b4209c82d6cfe8889' => __DIR__ . '/..' . '/param-processor/param-processor/DefaultConfig.php',
         'ad155f8f1cf0d418fe49e248db8c661b' => __DIR__ . '/..' . '/react/promise/src/functions_include.php',
-        '5a494680c593293bd6035e42e2a6825c' => __DIR__ . '/..' . '/data-values/geo/Geo.php',
-        'c3ae67574219cc56cab6c30ef8877b85' => __DIR__ . '/../../..' . '/extensions/Validator/Validator.php',
         'f4c767faab43077fd89ff7cf99ffb4b8' => __DIR__ . '/..' . '/serialization/serialization/Serialization.php',
         '94e265ce14c952a920a4ea5f7e8e9baa' => __DIR__ . '/..' . '/mediawiki/parser-hooks/ParserHooks.php',
+        '5a494680c593293bd6035e42e2a6825c' => __DIR__ . '/..' . '/data-values/geo/Geo.php',
+        'c3ae67574219cc56cab6c30ef8877b85' => __DIR__ . '/../../..' . '/extensions/Validator/Validator.php',
         'bbf73f3db644d3dced353b837903e74c' => __DIR__ . '/..' . '/php-di/php-di/src/DI/functions.php',
         '9ebf2cbcc0b7687b276c44d77096b002' => __DIR__ . '/../../..' . '/extensions/Maps/Maps.php',
         '679670650e5628b8e655cb72d74ae35b' => __DIR__ . '/..' . '/ooyala/v2-api/OoyalaApi.php',
@@ -51,6 +51,7 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         array (
             'Serializers\\' => 12,
             'SensioLabs\\Consul\\' => 18,
+            'SMW\\Scribunto\\' => 14,
             'SMW\\Maintenance\\' => 16,
             'SMW\\' => 4,
         ),
@@ -158,6 +159,10 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'SensioLabs\\Consul\\' => 
         array (
             0 => __DIR__ . '/..' . '/sensiolabs/consul-php-sdk/Consul',
+        ),
+        'SMW\\Scribunto\\' => 
+        array (
+            0 => __DIR__ . '/../../..' . '/extensions/SemanticScribunto/src',
         ),
         'SMW\\Maintenance\\' => 
         array (

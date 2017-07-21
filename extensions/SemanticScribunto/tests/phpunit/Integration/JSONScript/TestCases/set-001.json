@@ -1,0 +1,134 @@
+{
+	"description": "Test `mw.smw.set` functions defined in module.smw.lua",
+	"setup": [
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "Has text",
+			"contents": "[[Has type::Text]]"
+		},
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "Has number",
+			"contents": "[[Has type::Number]]"
+		},
+		{
+			"namespace": "NS_MODULE",
+			"page": "smw",
+			"contents": {
+				"import-from": "/../Fixtures/module.smw.lua"
+			}
+		},
+		{
+			"page": "Scribunto/set/001/0",
+			"contents": "{{#invoke:smw|set|Has text=Is a Scribunto example text}}[[Category:set-001]]"
+		},
+		{
+			"page": "Scribunto/set/001/1",
+			"contents": "{{#invoke:smw|set|Has number=42}} [[Category:set-001]]"
+		},
+		{
+			"page": "Scribunto/set/001/2",
+			"contents": "{{#invoke:smw|set|Has number=42|Has text=Is a Scribunto example text}} [[Category:set-001]]"
+		}
+	],
+	"tests": [
+		{
+			"type": "parser",
+			"about": "#0 storing of text property `has text`",
+			"subject": "Scribunto/set/001/0",
+			"store": {
+				"clear-cache": true
+			},
+			"assert-output": {
+				"to-contain": [
+					"Your data was stored successfully"
+				]
+			},
+			"assert-store": {
+				"semantic-data": {
+					"strictPropertyValueMatch": false,
+					"propertyCount": 4,
+					"propertyKeys": [
+						"_INST",
+						"_SKEY",
+						"_MDAT",
+						"Has text"
+					],
+					"propertyValues": [
+						"Is a Scribunto example text"
+					]
+				}
+			}
+		},
+		{
+			"type": "parser",
+			"about": "#1 storing of number property `has number`",
+			"subject": "Scribunto/set/001/1",
+			"store": {
+				"clear-cache": true
+			},
+			"assert-output": {
+				"to-contain": [
+					"Your data was stored successfully"
+				]
+			},
+			"assert-store": {
+				"semantic-data": {
+					"strictPropertyValueMatch": false,
+					"propertyCount": 4,
+					"propertyKeys": [
+						"_INST",
+						"_SKEY",
+						"_MDAT",
+						"Has number"
+					],
+					"propertyValues": [
+						"42"
+					]
+				}
+			}
+		},
+		{
+			"type": "parser",
+			"about": "#2 storing of properties `has text` and `has number`",
+			"subject": "Scribunto/set/001/2",
+			"store": {
+				"clear-cache": true
+			},
+			"assert-output": {
+				"to-contain": [
+					"Your data was stored successfully"
+				]
+			},
+			"assert-store": {
+				"semantic-data": {
+					"strictPropertyValueMatch": false,
+					"propertyCount": 5,
+					"propertyKeys": [
+						"_INST",
+						"_SKEY",
+						"_MDAT",
+						"Has text",
+						"Has number"
+					],
+					"propertyValues": [
+						"Is a Scribunto example text",
+						"42"
+					]
+				}
+			}
+		}
+	],
+	"settings": {
+		"wgContLang": "en",
+		"wgLang": "en",
+		"smwgPageSpecialProperties": [
+			"_MDAT"
+		]
+	},
+	"meta": {
+		"version": "1",
+		"is-incomplete": false,
+		"debug": false
+	}
+}

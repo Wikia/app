@@ -1,0 +1,146 @@
+{
+	"description": "test case to cover '... return results in correct order' for function mw.swm.ask",
+	"setup": [
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "Has text",
+			"contents": "[[Has type::Text]]"
+		},
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "Has number",
+			"contents": "[[Has type::Number]]"
+		},
+		{
+			"namespace": "NS_MODULE",
+			"page": "smw",
+			"contents": {
+				"import-from": "/../Fixtures/module.smw.lua"
+			}
+		},
+		{
+			"page": "Scribunto/ask/002/1",
+			"contents": "[[Has text::SSC order test page b]] [[Has number::1]] [[Category:ask-002]]"
+		},
+		{
+			"page": "Scribunto/ask/002/2",
+			"contents": "[[Has text::SSC order test page a]] [[Has number::42]] [[Category:ask-002]]"
+		},
+		{
+			"page": "Scribunto/ask/002/3",
+			"contents": "[[Has text::SSC order test page 6]] [[Has number::13.13]] [[Category:ask-002]]"
+		},
+		{
+			"page": "Scribunto/ask/002/4",
+			"contents": "[[Has text::SSC order test page d]] [[Has number::0]] [[Category:ask-002]]"
+		},
+		{
+			"page": "Scribunto/ask/002/5",
+			"contents": "[[Has text::SSC order test page -1]] [[Has number::-99999999]] [[Category:ask-002]]"
+		},
+		{
+			"page": "Scribunto/ask/002/Q.0",
+			"contents": "{{#invoke:smw|ask|[[Category:ask-002]] [[Has text::+]] [[Has number::+]]|?#-=page|mainlabel=-}}"
+		},
+		{
+			"page": "Scribunto/ask/002/Q.1",
+			"contents": "{{#invoke:smw|ask|[[Category:ask-002]] [[Has text::+]] [[Has number::+]]|?#-=page|mainlabel=-|sort=has number|order=asc}}"
+		},
+		{
+			"page": "Scribunto/ask/002/Q.2",
+			"contents": "{{#invoke:smw|ask|[[Category:ask-002]] [[Has text::+]] [[Has number::+]]|?#-=page|mainlabel=-|sort=has number|order=desc}}"
+		},
+		{
+			"page": "Scribunto/ask/002/Q.3",
+			"contents": "{{#invoke:smw|ask|[[Category:ask-002]] [[Has text::+]] [[Has number::+]]|?#-=page|mainlabel=-|sort=has text|order=asc}}"
+		},
+		{
+			"page": "Scribunto/ask/002/Q.4",
+			"contents": "{{#invoke:smw|ask|[[Category:ask-002]] [[Has text::+]] [[Has number::+]]|?#-=page|mainlabel=-|sort=has text|order=desc}}"
+		}
+	],
+	"tests": [
+		{
+			"type": "parser",
+			"about": "#0 verify ask result order w/o sort and order parameter",
+			"subject": "Scribunto/ask/002/Q.0",
+			"assert-output": {
+				"to-contain": [
+					"<li> This is result #1\n<ul><li> page: Scribunto/ask/002/1</li></ul></li>",
+					"<li> This is result #2\n<ul><li> page: Scribunto/ask/002/2</li></ul></li>",
+					"<li> This is result #3\n<ul><li> page: Scribunto/ask/002/3</li></ul></li>",
+					"<li> This is result #4\n<ul><li> page: Scribunto/ask/002/4</li></ul></li>",
+					"<li> This is result #5\n<ul><li> page: Scribunto/ask/002/5</li></ul></li>"
+				]
+			}
+		},
+		{
+			"type": "parser",
+			"about": "#1 verify ask result order w/ number sort and order ascending",
+			"subject": "Scribunto/ask/002/Q.1",
+			"assert-output": {
+				"to-contain": [
+					"<li> This is result #1\n<ul><li> page: Scribunto/ask/002/5</li></ul></li>",
+					"<li> This is result #2\n<ul><li> page: Scribunto/ask/002/4</li></ul></li>",
+					"<li> This is result #3\n<ul><li> page: Scribunto/ask/002/1</li></ul></li>",
+					"<li> This is result #4\n<ul><li> page: Scribunto/ask/002/3</li></ul></li>",
+					"<li> This is result #5\n<ul><li> page: Scribunto/ask/002/2</li></ul></li>"
+				]
+			}
+		},
+		{
+			"type": "parser",
+			"about": "#2 verify ask result order w/ number sort and order descending",
+			"subject": "Scribunto/ask/002/Q.2",
+			"assert-output": {
+				"to-contain": [
+					"<li> This is result #1\n<ul><li> page: Scribunto/ask/002/2</li></ul></li>",
+					"<li> This is result #2\n<ul><li> page: Scribunto/ask/002/3</li></ul></li>",
+					"<li> This is result #3\n<ul><li> page: Scribunto/ask/002/1</li></ul></li>",
+					"<li> This is result #4\n<ul><li> page: Scribunto/ask/002/4</li></ul></li>",
+					"<li> This is result #5\n<ul><li> page: Scribunto/ask/002/5</li></ul></li>"
+				]
+			}
+		},
+		{
+			"type": "parser",
+			"about": "#3 verify ask result order w/ text sort and order ascending",
+			"subject": "Scribunto/ask/002/Q.3",
+			"assert-output": {
+				"to-contain": [
+					"<li> This is result #1\n<ul><li> page: Scribunto/ask/002/5</li></ul></li>",
+					"<li> This is result #2\n<ul><li> page: Scribunto/ask/002/3</li></ul></li>",
+					"<li> This is result #3\n<ul><li> page: Scribunto/ask/002/2</li></ul></li>",
+					"<li> This is result #4\n<ul><li> page: Scribunto/ask/002/1</li></ul></li>",
+					"<li> This is result #5\n<ul><li> page: Scribunto/ask/002/4</li></ul></li>"
+				]
+			}
+		},
+		{
+			"type": "parser",
+			"about": "#4 verify ask result order w/ text sort and order descending",
+			"subject": "Scribunto/ask/002/Q.4",
+			"assert-output": {
+				"to-contain": [
+					"<li> This is result #1\n<ul><li> page: Scribunto/ask/002/4</li></ul></li>",
+					"<li> This is result #2\n<ul><li> page: Scribunto/ask/002/1</li></ul></li>",
+					"<li> This is result #3\n<ul><li> page: Scribunto/ask/002/2</li></ul></li>",
+					"<li> This is result #4\n<ul><li> page: Scribunto/ask/002/3</li></ul></li>",
+					"<li> This is result #5\n<ul><li> page: Scribunto/ask/002/5</li></ul></li>"
+				]
+			}
+		}
+	],
+	"settings": {
+		"wgContLang": "en",
+		"wgLang": "en",
+		"smwgPageSpecialProperties": [
+			"_MDAT"
+		]
+	},
+	"meta": {
+		"version": "1",
+		"is-incomplete": false,
+		"debug": false
+	}
+}
