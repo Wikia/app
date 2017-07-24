@@ -131,34 +131,6 @@ ve.ui.WikiaSingleMediaDialogTool.static.commandName = 'wikiaSingleMedia';
 ve.ui.toolFactory.register( ve.ui.WikiaSingleMediaDialogTool );
 
 /**
- * UserInterface WikiaMapInsertDialog tool.
- *
- * @class
- * @extends ve.ui.DialogTool
- *
- * @constructor
- * @param {OO.ui.ToolGroup} toolGroup
- * @param {Object} [config] Config options
- */
-ve.ui.WikiaMapInsertDialogTool = function VeUiWikiaMapInsertDialogTool( toolGroup, config ) {
-	// Parent constructor
-	ve.ui.WikiaMapInsertDialogTool.super.call( this, toolGroup, config );
-};
-
-OO.inheritClass( ve.ui.WikiaMapInsertDialogTool, ve.ui.DialogTool );
-
-ve.ui.WikiaMapInsertDialogTool.static.name = 'wikiaMapInsert';
-ve.ui.WikiaMapInsertDialogTool.static.group = 'object';
-ve.ui.WikiaMapInsertDialogTool.static.icon = 'map';
-ve.ui.WikiaMapInsertDialogTool.static.title =
-	OO.ui.deferMsg( 'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' );
-ve.ui.WikiaMapInsertDialogTool.static.commandName = 'wikiaMapInsert';
-
-if ( mw.config.get( 'wgEnableWikiaInteractiveMaps' ) === true ) {
-	ve.ui.toolFactory.register( ve.ui.WikiaMapInsertDialogTool );
-}
-
-/**
  * UserInterface WikiaInfoboxInsertDialog tool.
  *
  * @class
