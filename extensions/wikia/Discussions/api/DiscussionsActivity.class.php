@@ -11,7 +11,13 @@ class DiscussionsActivity {
 
 		$targetUser = User::newFromName( $username );
 		if ( self::discussionsIsActive( $siteId ) ) {
-			$posts = self::getDiscussionContributionApi()->getPosts( $siteId, $targetUser->getId() );
+			try {
+				$posts = self::getDiscussionContributionApi()->getPosts( $siteId, $targetUser->getId() );
+			} catch ( Exception $e ) {
+				Wikia\Logger\WikiaLogger::instance()->warning( "Getting discussion info failed" );
+				return [ "count" => "?", "date" => "?" ];
+			}
+
 			$count = $posts->getPostCount();
 
 			return [
