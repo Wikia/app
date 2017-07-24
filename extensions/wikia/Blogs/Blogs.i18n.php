@@ -1293,7 +1293,7 @@ $messages['es'] = array(
 <li>Algo en el texto ha desencadenado uno de nuestros filtros de spam</li>
 </ul>',
 	'create-blog-cant-edit' => 'No se pudo realizar la edición',
-	'create-blog-post-category' => 'Entradas de blog',
+	'create-blog-post-category' => 'Entradas',
 	'create-blog-post-category-body' => 'Esta lista de blogs se genera automáticamente',
 	'create-blog-post-category-log' => 'Categoría de artículos para entradas de blog',
 	'create-blog-post-recent-listing' => 'Entradas recientes',
