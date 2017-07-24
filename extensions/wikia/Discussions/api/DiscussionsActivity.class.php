@@ -14,7 +14,9 @@ class DiscussionsActivity {
 			try {
 				$posts = self::getDiscussionContributionApi()->getPosts( $siteId, $targetUser->getId() );
 			} catch ( Exception $e ) {
-				Wikia\Logger\WikiaLogger::instance()->warning( "Getting discussion info failed" );
+				Wikia\Logger\WikiaLogger::instance()->warning( "Getting discussion info failed", [
+						"exception" => $e
+				] );
 				return [ "count" => "?", "date" => "?" ];
 			}
 
