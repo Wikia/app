@@ -205,4 +205,53 @@ class ArticleAsJsonTest extends TestCase {
 			]
 		];
 	}
+
+	/**
+	 * @param $data
+	 * @param $expectedRef
+	 * @dataProvider onExtendPortableInfoboxImageDataProvider
+	 */
+	public function testOnExtendPortableInfoboxImageData($data, $expectedRef) {
+		$ref = null;
+		ArticleAsJson::onExtendPortableInfoboxImageData( $data, $ref );
+		$this->assertEquals( $expectedRef, $ref);
+	}
+
+	public function onExtendPortableInfoboxImageDataProvider() {
+		return [
+			[
+				'data' => [
+					'name' => 'An image name',
+					'context' => null,
+					'caption' => 'An image caption'
+				],
+				'expectedRef' => 0,
+			],
+			[
+				'data' => [
+					'name' => 'An image name',
+					'context' => null,
+					'caption' => 'An image caption'
+				],
+				'expectedRef' => 1,
+			],
+			[
+				'data' => [
+					'name' => 'An image name',
+					'context' => null,
+					'caption' => 'An image caption'
+				],
+				'expectedRef' => 2,
+			],
+			[
+				'data' => [
+					'name' => 'An image name',
+					'context' => null,
+					'caption' => 'An image caption'
+				],
+				'expectedRef' => 3,
+			],
+		];
+	}
+
 }
