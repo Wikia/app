@@ -180,12 +180,6 @@ module.exports = function (config) {
 			'extensions/wikia/Thumbnails/scripts/views/titleThumbnail.js',
 			'extensions/wikia/Thumbnails/scripts/spec/*.spec.js',
 
-			// WikiaMaps
-			'extensions/wikia/WikiaMaps/js/WikiaMapsPoiCategories.js',
-			'extensions/wikia/WikiaMaps/js/models/WikiaMapsPoiCategoriesModel.js',
-			'extensions/wikia/WikiaMaps/js/WikiaMapsUtils.js',
-			'extensions/wikia/WikiaMaps/spec/*.spec.js',
-
 			// MediaGalleries
 			'extensions/wikia/MediaGallery/scripts/templates.mustache.js',
 			'extensions/wikia/MediaGallery/scripts/views/caption.js',
