@@ -15,7 +15,8 @@
   ],
   "config": {
     "vendor-dir": "lib/composer",
-    "prepend-autoloader": false
+    "prepend-autoloader": false,
+    "optimize-autoloader": true
   },
   "require": {
     "wikia/fluent-sql-php": "1.0.*",
