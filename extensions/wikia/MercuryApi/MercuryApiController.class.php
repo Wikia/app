@@ -370,12 +370,6 @@ class MercuryApiController extends WikiaController {
 				// Set it before we remove the namespace from $displayTitle
 				$data['htmlTitle'] = $this->mercuryApi->getHtmlTitleForPage( $title, $displayTitle );
 
-				$otherLanguages = $this->getOtherLanguages( $title );
-
-				if ( !empty( $otherLanguages ) ) {
-					$data['otherLanguages'] = $otherLanguages;
-				}
-
 				if ( MercuryApiMainPageHandler::shouldGetMainPageData( $isMainPage ) ) {
 					$data['curatedMainPageData'] = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi );
 				} else {
@@ -531,46 +525,6 @@ class MercuryApiController extends WikiaController {
 		$this->response->setValues(
 			$this->sendRequest( 'SearchSuggestionsApi', 'getList', $this->request->getParams() )->getData()
 		);
-	}
-
-	private function getOtherLanguages( Title $title ) {
-		global $wgEnableLillyExt;
-
-		if ( empty( $wgEnableLillyExt ) ) {
-			return null;
-		}
-
-		$url = $title->getFullURL();
-
-		$lilly = new Lilly();
-		$links = $lilly->getCluster( $url );
-		if ( !count( $links ) ) {
-			return null;
-		}
-
-		// Remove link to self
-		$langCode = $title->getPageLanguage()->getCode();
-		unset( $links[$langCode] );
-
-		// Construct the structure for Mercury
-		$langMap = array_map( function ( $langCode, $url ) {
-			$urlPath = parse_url( $url, PHP_URL_PATH );
-			$articleTitle = preg_replace( '|^/(wiki/)?|', '', rawurldecode( $urlPath ) );
-			return [
-				'languageCode' => $langCode,
-				'languageName' => Language::getLanguageName( $langCode ),
-				'articleTitle' => str_replace( '_', ' ', $articleTitle ),
-				'url' => $url,
-			];
-		}, array_keys( $links ), array_values( $links ) );
-
-		// Sort by localized language name
-		$c = Collator::create( 'en_US.UTF-8' );
-		usort( $langMap, function ( $lang1, $lang2 ) use ( $c ) {
-			return $c->compare( $lang1['languageName'], $lang2['languageName'] );
-		} );
-
-		return $langMap;
 	}
 
 	private function isSupportedByMercury( Title $title ) {
