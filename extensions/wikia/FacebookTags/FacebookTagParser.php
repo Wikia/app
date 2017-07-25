@@ -1,6 +1,6 @@
 <?php
 
-class FacebookTagParser {
+class FacebookTagParser extends AbstractInvokableParserHook {
 	/** @var string $tagName */
 	private $tagName;
 
@@ -13,15 +13,7 @@ class FacebookTagParser {
 		$this->tagName = $tagName;
 	}
 
-	public function __invoke( ...$args ) {
-		/**
-		 * @var string $contents
-		 * @var array $attributes
-		 * @var Parser $parser
-		 * @var PPFrame $frame
-		 */
-		list( $contents, $attributes, $parser, $frame ) = $args;
-
+	public function parse( string $content, array $attributes, Parser $parser, PPFrame $frame ): string {
 		$tagAttributes = $this->buildTagAttributes( $attributes );
 
 		return Html::element( 'iframe', $tagAttributes );
