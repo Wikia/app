@@ -4,7 +4,7 @@ define('ext.wikia.recirculation.plista', function () {
 			return item.presented_by;
 		});
 
-		return index === -1 && ['AU', 'NZ', 'DE'].indexOf(Geo.getCountryCode()) > -1;
+		return index === -1 && ['AU', 'NZ'].indexOf(Geo.getCountryCode()) > -1;
 	}
 
 	function fetchPlista() {
