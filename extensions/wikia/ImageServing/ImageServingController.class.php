@@ -57,4 +57,54 @@ class ImageServingController extends WikiaController {
 		$this->setVal( 'result', $is->getImages( $count ) );
 	}
 
+	public function getImageUrl() {
+		$filePageId = $this->getVal( 'id' );
+		$title = Title::newFromID( $filePageId, NS_FILE );
+
+		if ( !$title->exists() ) {
+			throw new NotFoundException();
+		}
+
+		$revisionId = $this->getVal( 'revision' ) ?? $title->getLatestRevID();
+
+		if ( $revisionId < $title->getLatestRevID() ) {
+			$key = wfMemcKey( 'old-file-url-' . $filePageId . '-' . $revisionId );
+
+			$url = WikiaDataAccess::cache(
+				$key,
+				WikiaResponse::CACHE_STANDARD,
+				function () use ( $revisionId, $filePageId, $title ) {
+					$db = wfGetDB( DB_SLAVE );
+					$timestamp = $db->selectField(
+						[ 'revision' ],
+						'rev_timestamp',
+						[
+							'rev_page' => $filePageId,
+							'rev_id' => $revisionId,
+						],
+						__METHOD__
+					);
+
+					if ( empty( $timestamp ) ) {
+						throw new NotFoundException();
+					}
+
+					$oldFile = OldLocalFile::newFromTitle( $title, RepoGroup::singleton()->getLocalRepo(), $timestamp );
+
+					return $oldFile->getUrl();
+				}
+			);
+
+			$this->response->setCode( 301 );
+		} else if ( $revisionId == $title->getLatestRevID()) {
+			$localFile = LocalFile::newFromTitle( $title, RepoGroup::singleton()->getLocalRepo() );
+			$url = $localFile->getUrl();
+
+			$this->response->setCode( 302 );
+		} else {
+			throw new NotFoundException();
+		}
+
+		$this->response->setHeader( 'Location', $url );
+	}
 }

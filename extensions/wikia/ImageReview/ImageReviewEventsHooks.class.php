@@ -1,14 +1,14 @@
 <?php
 
-use \Wikia\Logger\WikiaLogger;
-use \Wikia\Tasks\Tasks\ImageReviewTask;
+use Wikia\Logger\WikiaLogger;
+use Wikia\Tasks\Tasks\ImageReviewTask;
 
 class ImageReviewEventsHooks {
 	public static function onUploadComplete( UploadBase $form ) {
 		global $wgCityId, $wgImageReviewTestCommunities;
 
 		if ( in_array( $wgCityId, $wgImageReviewTestCommunities ) ) {
-			self::sendToImageReveiwService( $form->getTitle(), $form->getLocalFile() );
+			self::sendToImageReveiwService( $form->getTitle() );
 		} else {
 			static::createAddTask( $form->getTitle() );
 		}
@@ -45,19 +45,26 @@ class ImageReviewEventsHooks {
 			);
 
 			$task = new ImageReviewTask();
-			$task->call( 'deleteFromQueue', [ [
-				'wiki_id' => $wgCityId,
-				'page_id' => $articleId,
-			] ] );
+			$task->call(
+				'deleteFromQueue',
+				[
+					[
+						'wiki_id' => $wgCityId,
+						'page_id' => $articleId,
+					]
+				]
+			);
 			$task->prioritize();
 			$task->queue();
 		}
+
 		return true;
 	}
 
 	private static function isFileForReview( $title ) {
 		if ( $title->inNamespace( NS_FILE ) ) {
 			$localFile = wfLocalFile( $title );
+
 			return ( $localFile instanceof File );
 		}
 
@@ -87,25 +94,31 @@ class ImageReviewEventsHooks {
 		$task->queue();
 	}
 
-	private static function sendToImageReveiwService( Title $title, LocalFile $localFile ) {
+	private static function sendToImageReveiwService( Title $title ) {
 		global $wgImageReview, $wgCityId;
 
-		$requestContext = RequestContext::getMain();
 		$rabbitConnection = new \Wikia\IndexingPipeline\ConnectionBase( $wgImageReview );
+		$wamRank = ( new WAMService() )->getCurrentWamRankForWiki( $wgCityId );
+		$revisionId = $title->getLatestRevID();
+		$articleId = $title->getArticleID();
 
-		$wamRank = (new WAMService())->getCurrentWamRankForWiki( $wgCityId );
 		$data = [
-			// TODO: currently this url points to .../revision/latest?cb=xxxxxxxxxxxx
-			// TODO: it should point to .../revision/XXXXXXXXXXXX, however revision number is created after new revision is uploaded
-			'url' => $localFile->getUrl(),
-			'userId' => $requestContext->getUser()->getId(),
+			'url' => ImageServingController::getUrl(
+				'getImageUrl',
+				[
+					'id' => $articleId,
+					'revision' => $revisionId,
+				]
+			),
+			'userId' => RequestContext::getMain()->getUser()->getId(),
 			'wikiId' => $wgCityId,
-			'pageId' => $title->getArticleID(),
-			'revisionId' => $title->getLatestRevID(),
+			'pageId' => $articleId,
+			'revisionId' => $revisionId,
 			'contextUrl' => $title->getFullURL(),
 			'top200' => !empty( $wamRank ) && $wamRank <= 200,
 			'action' => 'created'
 		];
-		$rabbitConnection->publish('image-review.mw-context.on-upload', $data);
+
+		$rabbitConnection->publish( 'image-review.mw-context.on-upload', $data );
 	}
 }
