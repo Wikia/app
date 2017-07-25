@@ -2,8 +2,6 @@
 
 use Swagger\Client\ExternalAuth\Api\FacebookApi;
 use Wikia\DependencyInjection\Injector;
-use Wikia\Service\Constants;
-use Wikia\Service\Swagger\ApiProvider;
 
 trait FacebookApiProvider {
 	/** @var FacebookApiFactory $facebookApiFactory **/
