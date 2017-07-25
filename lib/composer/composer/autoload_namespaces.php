@@ -7,6 +7,7 @@ $baseDir = dirname(dirname($vendorDir));
 
 return array(
     'Symfony\\Component\\CssSelector\\' => array($vendorDir . '/symfony/css-selector'),
+    'SimplePie' => array($vendorDir . '/simplepie/simplepie/library'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log'),
     'ProxyManager\\' => array($vendorDir . '/ocramius/proxy-manager/src'),
     'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src'),

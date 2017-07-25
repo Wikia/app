@@ -1,6 +1,7 @@
 <?php
 
 use Wikia\Security\CSRFDetector;
+use Email\EmailController;
 
 /**
  * Provides the special page for single point unsubscribe.
@@ -41,15 +42,14 @@ class UnsubscribePage extends UnlistedSpecialPage {
 
 		$hash_key = $wgRequest->getText('key', null );
 
-		$email = $token = $timestamp = null;
+		$email = $token = null;
 		if ( !empty( $hash_key ) ) {
 			#$hask_key = urldecode ( $hash_key );
-			$data = Wikia::verifyUserSecretKey( $hash_key, 'sha256' );
+			$data = EmailController::verifyUserSecretKey( $hash_key, 'sha256' );
 			error_log( "data = " . print_r($data, true) );
 			if ( !empty( $data ) ) {
 				$username 	= ( isset( $data['user'] ) ) ? $data['user'] : null;
 				$token 		= ( isset( $data['token'] ) ) ? $data['token'] : null;
-				$timestamp 	= ( isset( $data['signature1'] ) ) ? $data['signature1'] : '';
 
 				$oUser = User::newFromName( $username );
 				$email = $oUser->getEmail();
@@ -57,7 +57,6 @@ class UnsubscribePage extends UnlistedSpecialPage {
 		} else {
 			$email = $wgRequest->getText( 'email' , null );
 			$token = $wgRequest->getText( 'token' , null );
-			$timestamp = $wgRequest->getText( 'timestamp' );
 		}
 
 		if($email == null || $token == null) {
@@ -67,7 +66,7 @@ class UnsubscribePage extends UnlistedSpecialPage {
 		}
 
 		#generate what the token SHOULD be
-		$shouldToken = wfGenerateUnsubToken($email, $timestamp);
+		$shouldToken = wfGenerateUnsubToken($email);
 		if( !hash_equals( $shouldToken, $token ) ) {
 			$wgOut->addWikiMsg( 'unsubscribe-badtoken' );
 			// $wgOut->addHTML("shouldtoken={$shouldToken}\n"); #DEVL (remove before release)
@@ -95,7 +94,7 @@ class UnsubscribePage extends UnlistedSpecialPage {
 			$this->procUnsub( $email );
 		} else {
 			#this is 1st pass, give them a button to push
-			$this->showInfo( $email , $token, $timestamp);
+			$this->showInfo( $email , $token);
 		}
 
 	}
@@ -218,7 +217,6 @@ class UnsubscribePage extends UnlistedSpecialPage {
 <input type="hidden" name="title" value="{$form_title}" />
 <input type="hidden" name="email" value="{$email}" />
 <input type="hidden" name="token" value="{$token}" />
-<input type="hidden" name="timestamp" value="{$timestamp}" />
 <input type="hidden" name="confirm" value="1" />
 {$unsub_text} &nbsp; <input type="submit" value="{$unsub_button}" />
 </form>
