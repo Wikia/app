@@ -41,7 +41,7 @@ define('ext.wikia.recirculation.plista', ['jquery'], function ($) {
 		return function() {
 			var length = renderData.items.length;
 
-			if (true || shouldFetchPlista(renderData.items)) {
+			if (shouldFetchPlista(renderData.items)) {
 				return getPlista().then(function (data) {
 					renderData.items.splice(5, 0, data);
 
