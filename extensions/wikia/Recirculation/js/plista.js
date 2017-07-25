@@ -1,4 +1,4 @@
-define('ext.wikia.recirculation.plista', function () {
+define('ext.wikia.recirculation.plista', ['jquery'], function ($) {
 	function shouldFetchPlista(items) {
 		var index = items.findIndex(function (item) {
 			return item.presented_by;
@@ -12,7 +12,12 @@ define('ext.wikia.recirculation.plista', function () {
 			'&count=1&adcount=1&image[width]=583&image[height]=328'
 		)
 			.then(function (data) {
-				return data[0];
+				if (data[0]) {
+					return data[0];
+				} else {
+					return $.Deferred().reject('Plista returned no content');
+				}
+
 			});
 	}
 
@@ -32,8 +37,26 @@ define('ext.wikia.recirculation.plista', function () {
 		return fetchPlista().then(mapPlista);
 	}
 
+	function prepareData(renderData) {
+		return function() {
+			var length = renderData.items.length;
+
+			if (true || shouldFetchPlista(renderData.items)) {
+				return getPlista().then(function (data) {
+					renderData.items.splice(5, 0, data);
+
+					renderData.items = renderData.items.slice(0, length);
+				}, function() {
+					// If Plista did not return anything, just don't add it to renderData
+
+					return $.Deferred().resolve();
+				});
+			}
+		}
+
+	}
+
 	return {
-		get: getPlista,
-		shouldFetch: shouldFetchPlista
+		prepareData: prepareData
 	}
 });

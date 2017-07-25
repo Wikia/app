@@ -38,17 +38,7 @@ define('ext.wikia.recirculation.views.impactFooter', [
 		};
 
 		return utils.prepareFooter()
-			.then(function() {
-				var length = renderData.items.length;
-
-				if (true || plista.shouldFetch(renderData.items)) {
-					return plista.get().then(function (data) {
-						renderData.items.splice(5, 0, data);
-
-						renderData.items = renderData.items.slice(0, length);
-					});
-				}
-			})
+			.then(plista.prepareData(renderData))
 			.then(function () {
 				return utils.renderTemplate('client/impactFooter.mustache', renderData)
 			})
