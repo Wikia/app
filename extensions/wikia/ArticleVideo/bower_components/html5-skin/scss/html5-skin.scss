@@ -31,7 +31,7 @@
   @import "components/popover";
 
   // Components
-  //@import "components/discovery-panel";
+  @import "components/discovery-panel";
   @import "components/autoplay";
   @import "components/share-panel";
   @import "components/config-panel";
@@ -43,8 +43,8 @@
   //@import "components/forms";
   @import "components/scrubber-bar";
   @import "components/control-bar";
-  //@import "components/up-next-panel";
-  //@import "components/count-down-clock";
+  @import "components/up-next-panel";
+  @import "components/count-down-clock";
   @import "components/spinner";
   //@import "components/slider";
   //@import "components/ad-overlay";

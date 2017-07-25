@@ -90,7 +90,7 @@ class OoyalaConfigController extends WikiaController {
 			'showTitle' => true,
 			'showDescription' => false,
 			'infoPanelPosition' => 'topLeft',
-			'screenToShowOnPause' => 'default',
+			'screenToShowOnPause' => 'discovery',
 		],
 		'endScreen' => [
 			'screenToShowOnEnd' => 'discovery',
@@ -117,8 +117,12 @@ class OoyalaConfigController extends WikiaController {
 				'source' => "<iframe width='640' height='480' frameborder='0' allowfullscreen src='//player.ooyala.com/static/v4/stable/4.10.6/skin-plugin/iframe.html?ec=<ASSET_ID>&pbid=<PLAYER_ID>&pcode=<PUBLISHER_ID>'></iframe>",
 			],
 		],
+		"discoveryScreen" => [
+			"showCountDownTimerOnEndScreen" => true,
+			"countDownTime" => 5
+		],
 		'upNext' => [
-			'showUpNext' => true,
+			'showUpNext' => false,
 			'timeToShow' => '10',
 		],
 		'controlBar' => [
