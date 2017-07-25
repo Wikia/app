@@ -13,7 +13,6 @@ define('videopageadmin.views.featured', [
 		initialize: function () {
 			EditBaseView.prototype.initialize.call(this, arguments);
 			this.$fieldsToValidate = this.$el.find('.description, .display-title, .video-key, .alt-thumb');
-			this.bannerNotification = new BannerNotification().setType('error');
 
 			_.bindAll(this, 'initAddVideo', 'initValidator', 'clearForm');
 
@@ -109,7 +108,10 @@ define('videopageadmin.views.featured', [
 								// close VET modal
 								vet.close();
 							} else {
-								bannerNotification.setContent(json.msg).show();
+								new BannerNotification()
+									.setType('error')
+									.setContent(json.msg)
+									.show();
 							}
 						}
 					});
