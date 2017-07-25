@@ -221,8 +221,6 @@ It may have already been undeleted.',
 $1',
 	'undelete-show-file-confirm' => 'Are you sure you want to view the deleted revision of the file "<nowiki>$1</nowiki>" from $2 at $3?',
 	'undelete-show-file-submit' => 'Yes',
-	'undelete-cantedit' => 'You cannot undelete this page as you are not allowed to edit this page.',
-	'undelete-cantcreate' => 'You cannot undelete this page as there is no existing page with this name and you are not allowed to create this page.',
 	'uctop' => '(top)',
 	'unblock' => 'Unblock user',
 	'unblockip' => 'Unblock user',
@@ -430,8 +428,6 @@ Extensions making use of it:
 
 {{identical|Are you sure you want to view the deleted revision of the file...}}',
 	'undelete-show-file-submit' => '{{Identical|Yes}}',
-	'undelete-cantedit' => 'Shown if the user tries to undelete a page that they cannot edit.',
-	'undelete-cantcreate' => 'Shown if the user tries to undelete a page which currently does not exist, and they are not allowed to create it. This could for example happen on a wiki with custom protection levels where the page name has been create-protected and the user has the right to undelete but not the right to edit protected pages.',
 	'uctop' => 'This message is used in [[Special:Contributions]]. It is used to show that a particular edit was the last made to a page. Example: 09:57, 11 February 2008 (hist) (diff) Pagename‎ (edit summary) (top)',
 	'unblocked' => 'Do not translate the namespace "User:".',
 	'unblocklogentry' => 'This is the text of an entry in the Block log (and Recent Changes), after hour (and date, only in the Block log) and sysop name:
