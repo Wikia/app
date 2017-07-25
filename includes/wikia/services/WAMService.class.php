@@ -89,6 +89,42 @@ class WAMService {
 	}
 
 	/**
+	 * Returns the latest WAM rank provided a wiki ID
+	 * @param int $wikiId
+	 * @return number
+	 */
+	public function getCurrentWamRankForWiki ($wikiId) {
+		wfProfileIn(__METHOD__);
+
+		$memKey = wfSharedMemcKey('datamart', self::MEMCACHE_VER, 'wam_rank', $wikiId);
+
+		$getData = function () use ($wikiId) {
+			if ( $this->isDisabled() ) {
+				return 0;
+			}
+
+			$db = $this->getDB();
+
+			$result = $db->select(
+				['fact_wam_scores'],
+				['wam_rank'],
+				['wiki_id' => $wikiId],
+				__METHOD__,
+				[
+					'ORDER BY' => 'time_id DESC',
+					'LIMIT' => 1
+				]
+			);
+
+			return ($row = $db->fetchObject($result)) ? $row->wam_rank : 0;
+		};
+
+		$wamRank = WikiaDataAccess::cacheWithLock($memKey, self::CACHE_DURATION, $getData);
+		wfProfileOut(__METHOD__);
+		return $wamRank;
+	}
+
+	/**
 	 * @param array $inputOptions - available options:
 	 * 	int $currentTimestamp
 	 * 	int $previousTimestamp

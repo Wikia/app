@@ -5,7 +5,13 @@ use \Wikia\Tasks\Tasks\ImageReviewTask;
 
 class ImageReviewEventsHooks {
 	public static function onUploadComplete( UploadBase $form ) {
-		static::createAddTask( $form->getTitle() );
+		global $wgCityId, $wgImageReviewTestCommunities;
+
+		if ( in_array( $wgCityId, $wgImageReviewTestCommunities ) ) {
+			self::sendToImageReveiwService( $form->getTitle(), $form->getLocalFile() );
+		} else {
+			static::createAddTask( $form->getTitle() );
+		}
 
 		return true;
 	}
@@ -79,5 +85,27 @@ class ImageReviewEventsHooks {
 		$task->title( $title );
 		$task->prioritize();
 		$task->queue();
+	}
+
+	private static function sendToImageReveiwService( Title $title, LocalFile $localFile ) {
+		global $wgImageReview, $wgCityId;
+
+		$requestContext = RequestContext::getMain();
+		$rabbitConnection = new \Wikia\IndexingPipeline\ConnectionBase( $wgImageReview );
+
+		$wamRank = (new WAMService())->getCurrentWamRankForWiki( $wgCityId );
+		$data = [
+			// TODO: currently this url points to .../revision/latest?cb=xxxxxxxxxxxx
+			// TODO: it should point to .../revision/XXXXXXXXXXXX, however revision number is created after new revision is uploaded
+			'url' => $localFile->getUrl(),
+			'userId' => $requestContext->getUser()->getId(),
+			'wikiId' => $wgCityId,
+			'pageId' => $title->getArticleID(),
+			'revisionId' => $title->getLatestRevID(),
+			'contextUrl' => $title->getFullURL(),
+			'top200' => !empty( $wamRank ) && $wamRank <= 200,
+			'action' => 'created'
+		];
+		$rabbitConnection->publish('image-review.mw-context.on-upload', $data);
 	}
 }
