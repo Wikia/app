@@ -1,12 +1,23 @@
 <?php
 
-class ThumbnailController extends WikiaService {
+class ThumbnailController extends WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
 	/**
 	 * @const int Minimum width of thumbnail to show icon link to file page on hover
 	 */
 	const MIN_INFO_ICON_WIDTH = 100;
+
+	/**
+	 * SUS-2504: prevent access via wikia.php
+	 * @throws ForbiddenException
+	 */
+	public function init() {
+		parent::init();
+		if ( !$this->request->isInternal() ) {
+			throw new ForbiddenException();
+		}
+	}
 
 	/**
 	 * Render core video thumbnail HTML
