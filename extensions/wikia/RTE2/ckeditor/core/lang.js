@@ -10,8 +10,7 @@
 	 * @class
 	 * @singleton
 	 */
-	debugger;
-	CKEDITOR.lang = {
+		CKEDITOR.lang = {
 		/**
 		 * The list of languages available in the editor core.
 		 *
@@ -45,7 +44,7 @@
 		 * function: the language code and the loaded language entries.
 		 */
 		load: function( languageCode, defaultLanguage, callback ) {
-			debugger;
+			
 			// If no languageCode - fallback to browser or default.
 			// If languageCode - fallback to no-localized version or default.
 			if ( !languageCode || !CKEDITOR.lang.languages[ languageCode ] )
