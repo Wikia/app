@@ -31,7 +31,7 @@
 			indentOffset: 24, // match WikiaArticle styles (BugId:25379)
 			language: window.wgUserLanguage,
 			plugins:
-			//	'basicstyles,' +
+				'basicstyles,' +
 				'button,' +
 				'toolbar,' +
 			//	'clipboard,' +
@@ -58,7 +58,7 @@
 			// Custom RTE plugins for CKEDITOR
 			// Used to be built in RTE.loadPlugins()
 		extraPlugins:
-				'autogrow',
+				'autogrow,' +
 				//'basicstyles,' + 
 				//'accesskey,' +
 				//'comment,' +
@@ -67,7 +67,7 @@
 				//'entities',
 				//'gallery',
 				//'justify,' +
-				//'link,' +
+				'link',
 				//'linksuggest,' +
 				//'media,'  +
 				//'modeswitch,' +
@@ -451,7 +451,6 @@ CKEDITOR.getUrl = function( resource ) {
 
 	// catch requests for /lang/xx.js
 	if (CKEDITOR.langRegExp.test(resource)) {
-		debugger;
 		var matches = resource.match(CKEDITOR.langRegExp);
 		var lang = matches[1];
 

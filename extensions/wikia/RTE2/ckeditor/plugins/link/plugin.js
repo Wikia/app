@@ -1,4 +1,4 @@
-CKEDITOR.plugins.add('rte-link',
+CKEDITOR.plugins.add('link',
 {
 	init: function(editor) {
 		// add commands
