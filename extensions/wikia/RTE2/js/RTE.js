@@ -43,6 +43,7 @@
 			//	'format,' +
 			//	'htmldataprocessor,' + core
 				'indent,' +
+				'indentblock,' +
 			//	'keystrokes,' + core
 			//	'list,' +
 			//	'pastetext,' +
@@ -179,7 +180,7 @@
 			}
 
 			RTE.config.startupMode = editor.config.mode;
-			debugger;
+
 			// This call creates a new CKE instance which replaces the textarea with the applicable ID
 			editor.ck = CKEDITOR.replace(editor.instanceId, RTE.config);
 
@@ -215,7 +216,7 @@
 
 		// final setup of editor's instance
 		onEditorReady: function(event) {
-			debugger;
+
 			var editor = event.editor,
 			instanceId = editor.instanceId;
 
@@ -450,6 +451,7 @@ CKEDITOR.getUrl = function( resource ) {
 
 	// catch requests for /lang/xx.js
 	if (CKEDITOR.langRegExp.test(resource)) {
+		debugger;
 		var matches = resource.match(CKEDITOR.langRegExp);
 		var lang = matches[1];
 

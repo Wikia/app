@@ -16,7 +16,7 @@
 CKEDITOR.replaceClass = 'ckeditor';
 
 ( function() {
-	debugger;
+	
 	/**
 	 * Replaces a `<textarea>` or a DOM element (`<div>`) with a CKEditor
 	 * instance. For textareas, the initial value in the editor will be the
@@ -347,7 +347,7 @@ CKEDITOR.replaceClass = 'ckeditor';
 
 		// Once the editor is loaded, start the UI.
 		editor.on( 'loaded', function() {
-			debugger;	
+				
 			loadTheme( editor );
 
 			if ( mode == CKEDITOR.ELEMENT_MODE_REPLACE && editor.config.autoUpdateElement && element.$.form )
@@ -390,7 +390,7 @@ CKEDITOR.replaceClass = 'ckeditor';
 	}
 
 	function loadTheme( editor ) {
-		debugger;
+		
 		var name = editor.name,
 			element = editor.element,
 			elementMode = editor.elementMode;

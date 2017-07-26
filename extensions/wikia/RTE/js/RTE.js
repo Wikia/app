@@ -442,6 +442,7 @@ CKEDITOR.getUrl = function( resource ) {
 
 	// catch requests for /lang/xx.js
 	if (CKEDITOR.langRegExp.test(resource)) {
+		debugger;
 		var matches = resource.match(CKEDITOR.langRegExp);
 		var lang = matches[1];
 

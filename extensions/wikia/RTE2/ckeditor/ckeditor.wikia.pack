@@ -144,8 +144,12 @@ packages :
 				'plugins/indent/plugin.js'
 				'plugins/wysiwygarea/plugin.js'
 				'plugins/button/plugin.js'
-			       	'plugins/basicstyles/plugin.js'
-			
+				'plugins/indentblock/plugin.js'
+			       	'plugins/toolbar/lang/en.js'
+				'plugins/button/lang/en.js'
+				'plugins/indent/lang/en.js'
+				
+
 				//'../js/plugins/accesskey/plugin.js',
 				//'../js/plugins/comment/plugin.js',
 				//'../js/plugins/comment/dialogs/comment.js',
