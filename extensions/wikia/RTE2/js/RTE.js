@@ -30,6 +30,7 @@
 			height: 400, // default height when "auto resizing" is not applied
 			indentOffset: 24, // match WikiaArticle styles (BugId:25379)
 			language: window.wgUserLanguage,
+			toolbarCanCollapse: true,
 			plugins:
 				'basicstyles,' +
 				'button,' +
@@ -55,6 +56,8 @@
 			//	'table,' +
 			//	'tabletools,' +
 			//	'undo,' +
+				'undo,' +
+				'justify,' +
 				'wysiwygarea',
 
 			// Custom RTE plugins for CKEDITOR
