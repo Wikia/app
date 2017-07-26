@@ -17,7 +17,6 @@ define('ext.wikia.recirculation.plista', ['jquery'], function ($) {
 				} else {
 					return $.Deferred().reject('Plista returned no content');
 				}
-
 			});
 	}
 
