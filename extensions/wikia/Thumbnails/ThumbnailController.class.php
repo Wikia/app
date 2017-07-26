@@ -1,6 +1,6 @@
 <?php
 
-class ThumbnailController extends WikiaController {
+class ThumbnailController extends WikiaService {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
 	/**
