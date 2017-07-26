@@ -182,7 +182,14 @@ packages :
 				
 				'plugins/format/plugin.js'
 				'plugins/format/lang/en.js'
-				//'../js/plugins/accesskey/plugin.js',
+
+				'plugins/justify/plugin.js'
+				'plugins/justify/lang/en.js'
+
+				'plugins/undo/plugin.js'
+				'plugins/undo/lang/en.js'
+
+					//'../js/plugins/accesskey/plugin.js',
 				//'../js/plugins/comment/plugin.js',
 				//'../js/plugins/comment/dialogs/comment.js',
 				//'../js/plugins/dialog/plugin.js',
