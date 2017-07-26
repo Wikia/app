@@ -32,13 +32,6 @@ class ContactForm extends SpecialPage {
 			'subject' => "Account issue: %s",
 		),
 
-		'close-account' => array(
-			'format' => "User requested account \"%s\" to be disabled.\n\nhttp://community.wikia.com/wiki/Special:EditAccount/%s?wpAction=closeaccount",
-			'vars' => array( 'wpUserName', 'wpUrlencUserName' ),
-			'subject' => 'Disable account: %s',
-			'markuser' => 'requested-closure',
-		),
-
 		'rename-account' => array(
 			'format' => "User requested his username to be changed from \"%s\" to \"%s\".\n\nhttp://community.wikia.com/wiki/Special:UserRenameTool?oldusername=%s&newusername=%s",
 			'vars' => array( 'wpUserName', 'wpUserNameNew', 'wpUrlencUserName', 'wpUrlencUserNameNew' ),
@@ -81,7 +74,7 @@ class ContactForm extends SpecialPage {
 		// Disable user JS
 		$out->disallowUserJs();
 
-		if ( $par === 'close-account' && $this->isCloseMyAccountSupported() ) {
+		if ( $par === 'close-account' ) {
 			$closeAccountTitle = SpecialPage::getTitleFor( 'CloseMyAccount' );
 			$out->redirect( $closeAccountTitle->getFullURL() );
 		}
@@ -409,8 +402,6 @@ class ContactForm extends SpecialPage {
 
 		$secDat = array();
 
-		$closeMyAccountSupported = $this->isCloseMyAccountSupported();
-
 		foreach ( $SpecialContactSecMap as $section ) {
 			if( empty($section['headerMsg']) ) {
 				continue;
@@ -441,7 +432,7 @@ class ContactForm extends SpecialPage {
 					$msg = $info;
 				}
 
-				if ( $sub === 'close-account' && $closeMyAccountSupported ) {
+				if ( $sub === 'close-account' ) {
 					$title = SpecialPage::getTitleFor( 'CloseMyAccount' );
 				} elseif ( $sub === 'dmca-request' ) {
 					$title = GlobalTitle::newFromText( 'DMCARequest', NS_SPECIAL, Wikia::COMMUNITY_WIKI_ID );
@@ -760,18 +751,5 @@ class ContactForm extends SpecialPage {
 			return false;
 		}
 		return true;
-	}
-
-	/**
-	 * Check if the CloseMyAccount extension is enabled and supported in the
-	 * current language.
-	 *
-	 * @return boolean True if CloseMyAccount is enabled and supported in the
-	 *                 current language, false otherwise
-	 */
-	private function isCloseMyAccountSupported() {
-		global $wgContLang, $wgEnableCloseMyAccountExt, $wgSupportedCloseMyAccountLang;
-		return !empty( $wgEnableCloseMyAccountExt )
-				&& in_array( $wgContLang->getCode(), $wgSupportedCloseMyAccountLang );
 	}
 }
