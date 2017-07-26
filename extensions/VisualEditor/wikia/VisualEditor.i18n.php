@@ -555,6 +555,11 @@ Wenn du der Meinung bist, dass deine Seite diesen Abschnitt nicht braucht, lösc
 	'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' => 'Anmelden',
 	'wikia-visualeditor-anon-register' => 'registrieren',
 	'wikia-visualeditor-dialog-wikiamediainsert-register-button' => 'Registrieren',
+	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Karte',
+	'wikia-visualeditor-dialog-wikiamapinsert-create-button' => 'Karte erstellen',
+	'wikia-visualeditor-dialog-wikiamapinsert-headline' => 'Wähle eine bestehende Karten-Vorlage oder lade deine eigene Karte hoch. <a href="$1" target="_blank">Mehr erfahren.</a>',
+	'wikia-visualeditor-dialog-wikiamapinsert-empty-headline' => 'Es wurden noch keine Karten erstellt',
+	'wikia-visualeditor-dialog-wikiamapinsert-empty-text' => 'Unterstütze deine Community, indem du interessante Orte zur Karte hinzufügst. <a href="$1" target="_blank">Mehr erfahren.</a>',
 );
 
 $messages['diq'] = array(
@@ -701,6 +706,11 @@ Si piensas que tu página no necesita esta sección, simplemente bórrala. Tambi
 	'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' => 'Iniciar sesión',
 	'wikia-visualeditor-anon-register' => 'Registrarse',
 	'wikia-visualeditor-dialog-wikiamediainsert-register-button' => 'Registrarse',
+	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Mapa',
+	'wikia-visualeditor-dialog-wikiamapinsert-create-button' => 'Crear un mapa',
+	'wikia-visualeditor-dialog-wikiamapinsert-headline' => 'Seleccionar un mapa existente o crear un mapa para insertarlo. <a href="$1" target="_blank">Aprende más.</a>',
+	'wikia-visualeditor-dialog-wikiamapinsert-empty-headline' => 'No hay mapas creados hasta el momento',
+	'wikia-visualeditor-dialog-wikiamapinsert-empty-text' => 'Colabora con la comunidad colocando puntos de interés en el mapa. <a href="$1" target="_blank">Aprende mas.</a>',
 );
 
 $messages['eu'] = array(
@@ -911,6 +921,11 @@ Si vous pensez que cette section est inutile, vous pouvez la supprimer. Vous pou
 	'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' => 'Se connecter',
 	'wikia-visualeditor-anon-register' => "S'inscrire",
 	'wikia-visualeditor-dialog-wikiamediainsert-register-button' => "S'inscrire",
+	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Carte',
+	'wikia-visualeditor-dialog-wikiamapinsert-create-button' => 'Créer une carte',
+	'wikia-visualeditor-dialog-wikiamapinsert-headline' => 'Sélectionnez une carte existante ou créez-en une pour l’insérer. <a href="$1" target="_blank">En savoir plus.</a>',
+	'wikia-visualeditor-dialog-wikiamapinsert-empty-headline' => 'Aucune carte n’a été créée pour l’instant',
+	'wikia-visualeditor-dialog-wikiamapinsert-empty-text' => 'Collaborez avec la communauté en plaçant des points d’intérêt sur des cartes. <a href="$1" target="_blank">En savoir plus.</a>',
 );
 
 $messages['fy'] = array(
@@ -1172,6 +1187,11 @@ Se ritieni che la tua pagina non abbia bisogno di questa sezione, semplicemente 
 	'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' => 'Accedi',
 	'wikia-visualeditor-anon-register' => 'Iscriviti',
 	'wikia-visualeditor-dialog-wikiamediainsert-register-button' => 'Iscriviti',
+	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Mappa',
+	'wikia-visualeditor-dialog-wikiamapinsert-create-button' => 'Crea una mappa',
+	'wikia-visualeditor-dialog-wikiamapinsert-headline' => 'Seleziona una mappa esistente o crea una mappa da inserire. <a href="$1" target="_blank">Impara di più.</a>',
+	'wikia-visualeditor-dialog-wikiamapinsert-empty-headline' => 'Nessuna mappa è stata ancora creata',
+	'wikia-visualeditor-dialog-wikiamapinsert-empty-text' => 'Collabora con la comunità aggiungendo punti d’interesse sulle mappe. <a href="$1" target="_blank">Impara di più.</a>',
 );
 
 $messages['ja'] = array(
@@ -1272,6 +1292,11 @@ $messages['ja'] = array(
 	'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' => 'ログイン',
 	'wikia-visualeditor-anon-register' => '新規登録',
 	'wikia-visualeditor-dialog-wikiamediainsert-register-button' => '新規登録',
+	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'マップ',
+	'wikia-visualeditor-dialog-wikiamapinsert-create-button' => 'マップを作成',
+	'wikia-visualeditor-dialog-wikiamapinsert-headline' => '既存の地図の中から選ぶもしくは挿入する地図を作成する. <a href="$1" target="_blank">詳細はこちら。</a>',
+	'wikia-visualeditor-dialog-wikiamapinsert-empty-headline' => '作成されたマップはまだありません',
+	'wikia-visualeditor-dialog-wikiamapinsert-empty-text' => 'マップ上の関心のある場所に視覚的にピンを配置ことによってコミュニティとコラボレーションしましょう。<a href="$1" target="_blank">詳細はこちら。</a>',
 );
 
 $messages['ka'] = array(
@@ -1746,6 +1771,11 @@ If you think your page does not need this section, simply delete it. You may als
 	'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' => 'Sign in',
 	'wikia-visualeditor-anon-register' => 'Register',
 	'wikia-visualeditor-dialog-wikiamediainsert-register-button' => 'Register',
+	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Kaart',
+	'wikia-visualeditor-dialog-wikiamapinsert-create-button' => 'Een kaart aanmaken',
+	'wikia-visualeditor-dialog-wikiamapinsert-headline' => 'Selecteer een bestaande kaart of maak een kaart aan om ze in te voegen. <a href="$1" target="_blank">Kom meer te weten.</a>',
+	'wikia-visualeditor-dialog-wikiamapinsert-empty-headline' => 'Er zijn nog geen kaarten aangemaakt',
+	'wikia-visualeditor-dialog-wikiamapinsert-empty-text' => 'Werk samen met de community door interessante locaties vast te pinnen op de kaart. <a href="$1" target="_blank">Kom meer te weten.</a>',
 );
 
 $messages['nn'] = array(
@@ -1892,6 +1922,11 @@ Jeśli uważasz, że twoja strona nie potrzebuje tej sekcji, po prostu ją usuń
 	'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' => 'Zaloguj się',
 	'wikia-visualeditor-anon-register' => 'zarejestruj',
 	'wikia-visualeditor-dialog-wikiamediainsert-register-button' => 'Zarejestruj się',
+	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Mapa',
+	'wikia-visualeditor-dialog-wikiamapinsert-create-button' => 'Utwórz mapę',
+	'wikia-visualeditor-dialog-wikiamapinsert-headline' => 'Wybierz istniejącą mapę lub utwórz mapę by ją wstawić. <a href="$1" target="_blank">Dowiedz się więcej.</a>',
+	'wikia-visualeditor-dialog-wikiamapinsert-empty-headline' => 'Aktualnie nie ma utworzonej żadnej mapy.',
+	'wikia-visualeditor-dialog-wikiamapinsert-empty-text' => 'Współpracuj ze społecznością poprzez wizualne zaznaczanie interesujących miejsc na mapach. <a href="$1" target="_blank">Dowiedz się więcej.</a>',
 );
 
 $messages['ps'] = array(
@@ -2024,6 +2059,11 @@ Se você acha que sua página não precisa desta seção, simplesmente a exclua.
 	'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' => 'Iniciar sessão',
 	'wikia-visualeditor-anon-register' => 'Registre-se',
 	'wikia-visualeditor-dialog-wikiamediainsert-register-button' => 'Registre-se',
+	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Mapa',
+	'wikia-visualeditor-dialog-wikiamapinsert-create-button' => 'Crie um mapa',
+	'wikia-visualeditor-dialog-wikiamapinsert-headline' => 'Selecione um mapa existente ou crie um mapa para inseri-lo. <a href="$1" target="_blank">Aprenda mais.</a>',
+	'wikia-visualeditor-dialog-wikiamapinsert-empty-headline' => 'Nenhum mapa foi criado ainda',
+	'wikia-visualeditor-dialog-wikiamapinsert-empty-text' => 'Colabore com a comunidade colocando locais de interesse no mapa. <a href="$1" target="_blank">Aprenda mais.</a>',
 );
 
 $messages['ro'] = array(
@@ -2189,6 +2229,11 @@ $messages['ru'] = array(
 	'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' => 'Войти',
 	'wikia-visualeditor-anon-register' => 'Зарегистрироваться',
 	'wikia-visualeditor-dialog-wikiamediainsert-register-button' => 'Зарегистрироваться',
+	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Карта',
+	'wikia-visualeditor-dialog-wikiamapinsert-create-button' => 'Создать карту',
+	'wikia-visualeditor-dialog-wikiamapinsert-headline' => 'Чтобы добавить карту, выберите уже существующую или создайте новую.  <a href="$1" target="_blank">Узнать больше.</a>',
+	'wikia-visualeditor-dialog-wikiamapinsert-empty-headline' => 'Ещё нет ни одной созданной карты',
+	'wikia-visualeditor-dialog-wikiamapinsert-empty-text' => 'Сотрудничайте с участниками, чтобы добавить интересные точки на карты. <a href="$1" target="_blank">Узнать больше.</a>',
 );
 
 $messages['sc'] = array(
@@ -2627,6 +2672,11 @@ $messages['zh-hans'] = array(
 	'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' => '登录',
 	'wikia-visualeditor-anon-register' => '注册',
 	'wikia-visualeditor-dialog-wikiamediainsert-register-button' => '注册',
+	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => '地图',
+	'wikia-visualeditor-dialog-wikiamapinsert-create-button' => '创建地图',
+	'wikia-visualeditor-dialog-wikiamapinsert-headline' => '选择已有的地图或者创建地图进行插入. <a href="$1" target="_blank">了解更多.</a>',
+	'wikia-visualeditor-dialog-wikiamapinsert-empty-headline' => '目前没有地图被创建',
+	'wikia-visualeditor-dialog-wikiamapinsert-empty-text' => '通过在地图上的兴趣图钉与社群协作。<a href="$1" target="_blank">了解更多。</a>',
 );
 
 $messages['zh-hant'] = array(
@@ -2727,5 +2777,10 @@ $messages['zh-hant'] = array(
 	'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' => '登入',
 	'wikia-visualeditor-anon-register' => '註冊',
 	'wikia-visualeditor-dialog-wikiamediainsert-register-button' => '註冊',
+	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => '地圖',
+	'wikia-visualeditor-dialog-wikiamapinsert-create-button' => '建立地圖',
+	'wikia-visualeditor-dialog-wikiamapinsert-headline' => '選擇一個已存在的地圖或插入一個新建立的地圖。 <a href="$1" target="_blank">瞭解更多。</a>',
+	'wikia-visualeditor-dialog-wikiamapinsert-empty-headline' => '目前沒有已建立的地圖！',
+	'wikia-visualeditor-dialog-wikiamapinsert-empty-text' => '與社群一同以視覺的方式標記有趣的地點在地圖上。 <a href="$1" target="_blank">瞭解更多。</a>',
 );
 
