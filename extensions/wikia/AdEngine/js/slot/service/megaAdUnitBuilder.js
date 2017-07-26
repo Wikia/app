@@ -85,10 +85,6 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 		var layout = params.s2,
 			incontentSlotName = params.skin === 'oasis' ? 'INCONTENT_PLAYER' : 'MOBILE_IN_CONTENT';
 
-		if (getContextTargeting().hasFeaturedVideo) {
-			layout = 'fv-' + layout;
-		}
-
 		if (slotsContext.isApplicable(incontentSlotName)) {
 			layout = layout + '-ic';
 		}
