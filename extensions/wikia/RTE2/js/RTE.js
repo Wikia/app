@@ -34,18 +34,17 @@
 				'basicstyles,' +
 				'button,' +
 				'toolbar,' +
-			//	'clipboard,' +
+				'clipboard,' +
 			//	'contextmenu,' +
 			//	'dialogui,' +
 			//	'dialog,' +
 			//	'enterkey,' +
 			//	'richcombo' +
 			//	'format,' +
-			//	'htmldataprocessor,' + core
 				'indent,' +
 				'indentblock,' +
-			//	'keystrokes,' + core
-			//	'list,' +
+				'indentlist,' +
+				'list,' +
 			//	'pastetext,' +
 			//	'removeformat,' +
 			//	'sourcearea,' +
@@ -58,7 +57,7 @@
 			// Custom RTE plugins for CKEDITOR
 			// Used to be built in RTE.loadPlugins()
 		extraPlugins:
-				'autogrow,' +
+				'autogrow',
 				//'basicstyles,' + 
 				//'accesskey,' +
 				//'comment,' +
@@ -67,7 +66,7 @@
 				//'entities',
 				//'gallery',
 				//'justify,' +
-				'link',
+				//'link',
 				//'linksuggest,' +
 				//'media,'  +
 				//'modeswitch,' +

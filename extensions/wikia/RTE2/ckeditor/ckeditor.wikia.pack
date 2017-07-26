@@ -157,9 +157,14 @@ packages :
 				'plugins/toolbar/lang/en.js'
 				'plugins/indent/lang/en.js'
 				'plugins/button/lang/en.js'
+				'plugins/clipboard/plugin.js'
+				'plugins/clipboard/lang/en.js'
 				//'plugins/link/plugin.js'
 				//'plugins/link/dialogs/link.js'
-							
+				'plugins/indentlist/plugin.js'
+				'plugins/indentlist/lang/en.js'
+				'plugins/list/plugin.js'
+				'plugins/list/lang/en.js'			
 				//'../js/plugins/accesskey/plugin.js',
 				//'../js/plugins/comment/plugin.js',
 				//'../js/plugins/comment/dialogs/comment.js',
