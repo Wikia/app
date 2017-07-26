@@ -59,9 +59,9 @@ class ImageServingController extends WikiaController {
 
 	public function getImageUrl() {
 		$filePageId = $this->getVal( 'id' );
-		$title = Title::newFromID( $filePageId, NS_FILE );
+		$title = Title::newFromID( $filePageId );
 
-		if ( !$title->exists() ) {
+		if ( !$title->exists() || $title->getNamespace() != NS_FILE ) {
 			throw new NotFoundException();
 		}
 
