@@ -303,6 +303,11 @@ require([
 				});
 			});
 
+			player.mb.subscribe(window.OO.EVENTS.REPORT_DISCOVERY_CLICK, 'featured-video', function () {
+				// Don't play ads between videos
+				window.OO.Ads.unregisterAdManager('google-ima-ads-manager');
+			});
+
 			track({
 				action: tracker.ACTIONS.IMPRESSION,
 				label: 'featured-video'

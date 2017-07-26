@@ -99,7 +99,10 @@
   };
   OO.ready(function() {
     window.pp = OO.Player.create('container', '51ZmdxYTE6oaO5aQo9Hqt31Nn9Nave4e', playerParam);
-
+    window.pp.mb.subscribe(OO.EVENTS.REPORT_DISCOVERY_CLICK, 'discovery', function () {
+      // Don't play ads between videos
+      OO.Ads.unregisterAdManager('google-ima-ads-manager');
+    });
   });
 </script>
 
