@@ -135,21 +135,31 @@ packages :
 				'core/skin.js'
 				'core/_bootstrap.js'			
 
-				//'plugins/basicstyles/plugin.js'
+				
 				
 				'../js/RTE.js'
 				'../js/jquery.editor.js'
-	                	'plugins/autogrow/plugin.js'
+				'lang/en.js'	
+	                
+				
+
+				//'plugins/dialogui/plugin.js'
+				//'plugins/dialog/plugin.js'
+								
+				'plugins/autogrow/plugin.js'
 				'plugins/toolbar/plugin.js'
 				'plugins/indent/plugin.js'
 				'plugins/wysiwygarea/plugin.js'
 				'plugins/button/plugin.js'
 				'plugins/indentblock/plugin.js'
-			       	'plugins/toolbar/lang/en.js'
-				'plugins/button/lang/en.js'
+				'plugins/basicstyles/plugin.js'
+				'plugins/basicstyles/lang/en.js'
+				'plugins/toolbar/lang/en.js'
 				'plugins/indent/lang/en.js'
-				
-
+				'plugins/button/lang/en.js'
+				//'plugins/link/plugin.js'
+				//'plugins/link/dialogs/link.js'
+							
 				//'../js/plugins/accesskey/plugin.js',
 				//'../js/plugins/comment/plugin.js',
 				//'../js/plugins/comment/dialogs/comment.js',
