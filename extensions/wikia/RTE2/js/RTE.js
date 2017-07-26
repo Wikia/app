@@ -39,8 +39,11 @@
 			//	'dialogui,' +
 			//	'dialog,' +
 			//	'enterkey,' +
-			//	'richcombo' +
-			//	'format,' +
+				'panel,' +
+				'listblock,' +
+				'floatpanel,' +
+				'richcombo,' +
+				'format,' +
 				'indent,' +
 				'indentblock,' +
 				'indentlist,' +

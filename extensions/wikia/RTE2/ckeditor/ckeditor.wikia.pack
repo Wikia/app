@@ -164,7 +164,24 @@ packages :
 				'plugins/indentlist/plugin.js'
 				'plugins/indentlist/lang/en.js'
 				'plugins/list/plugin.js'
+	
 				'plugins/list/lang/en.js'			
+			
+				
+				'plugins/panel/plugin.js'
+				'plugins/panel/lang/en.js'
+			
+				'plugins/listblock/plugin.js'
+				'plugins/listblock/lang/en.js'
+				
+				
+				'plugins/floatpanel/plugin.js'
+				'plugins/floatpanel/lang/en.js'
+				'plugins/richcombo/plugin.js'
+				'plugins/richcombo/lang/en.js'
+				
+				'plugins/format/plugin.js'
+				'plugins/format/lang/en.js'
 				//'../js/plugins/accesskey/plugin.js',
 				//'../js/plugins/comment/plugin.js',
 				//'../js/plugins/comment/dialogs/comment.js',
