@@ -1,13 +1,12 @@
 /*global define*/
 define('ext.wikia.adEngine.context.slotsContext', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'ext.wikia.adEngine.video.videoFrequencyMonitor',
 	'wikia.document',
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.log'
-], function (adContext, params, videoFrequencyMonitor, doc, geo, instantGlobals, log) {
+], function (adContext, videoFrequencyMonitor, doc, geo, instantGlobals, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.context.slotsContext',
@@ -26,12 +25,13 @@ define('ext.wikia.adEngine.context.slotsContext', [
 
 	function setupSlots() {
 		var context = adContext.getContext(),
-			isHome = params.getPageType() === 'home',
+			isHome = context.targeting.pageType === 'home',
 			isOasis = context.targeting.skin === 'oasis',
 			isPremiumAdLayoutEnabled = context.opts.premiumAdLayoutEnabled,
 			isIncontentEnabled =
 				!isHome &&
 				isOasis &&
+				!context.targeting.hasFeaturedVideo &&
 				isInContentApplicable() &&
 				videoFrequencyMonitor.videoCanBeLaunched();
 

@@ -19,11 +19,6 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 				return mocks.context;
 			}
 		},
-		adLogicZoneParams: {
-			getPageType: function () {
-				return mocks.context.pageType;
-			}
-		},
 		videoFrequencyMonitor: {
 			canLaunchVideo: true,
 			videoCanBeLaunched: function () {
@@ -57,7 +52,6 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 	function getContext() {
 		return modules['ext.wikia.adEngine.context.slotsContext'](
 			mocks.adContext,
-			mocks.adLogicZoneParams,
 			mocks.videoFrequencyMonitor,
 			mocks.doc,
 			mocks.geo,
@@ -68,7 +62,7 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 
 	beforeEach(function () {
 		mocks.context.opts = {};
-		mocks.context.pageType = 'article';
+		mocks.context.targeting.pageType = 'article';
 		mocks.instantGlobals = {};
 	});
 
@@ -82,7 +76,7 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 	});
 
 	it('on home page mark article slots and one home specific slot as enabled', function () {
-		mocks.context.pageType = 'home';
+		mocks.context.targeting.pageType = 'home';
 		var context = getContext();
 
 		expect(context.isApplicable('TOP_LEADERBOARD')).toBeTruthy();
@@ -158,7 +152,7 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 	});
 
 	it('filter slot map based on status (home page type)', function () {
-		mocks.context.pageType = 'home';
+		mocks.context.targeting.pageType = 'home';
 		var context = getContext(),
 			slotMap = {
 				TOP_LEADERBOARD: 1,
