@@ -43,9 +43,9 @@
     'https://pubads.g.doubleclick.net/gampad/ads?output=xml_vast3&env=vp&gdfp_req=1&unviewed_position_start=1&iu=%2F5441%2Fwka.life%2F_project43%2F%2Farticle%2Fpremium%2FFEATURED_VIDEO&sz=640x480&url=http%3A%2F%2Fproject43.wikia.com%2Fwiki%2FSyntheticTests%2FPremium%2FFeaturedVideo%3FAbTest.FEATURED_VIDEO_AUTOPLAY%3DCONTROL&correlator=1927378681583883&cust_params=wsi%3Doxap%26s0%3Dlife%26s0v%3Dlifestyle%26s0c%3Dtech%26s1%3D_project43%26s2%3Darticle%26ab%3D49_162%2C52_170%2C78_336%26ar%3D4%3A3%26artid%3D355%26dmn%3Dwikiacom%26hostpre%3Dproject43%26skin%3Doasis%26lang%3Den%26wpage%3Dsynthetictests%2Fpremium%2Ffeaturedvideo%26ref%3Ddirect%26esrb%3Dteen%26geo%3DPL%26pv%3D6%26u%3Dryo8cyllq%26ksgmnt%3D%26top%3D1k%26ah%3D9000%26pos%3DFEATURED_VIDEO%26src%3Dpremium&eid=41351088&sdkv=h.3.173.0&sdki=3c0d&scor=264486118542786&adk=3826960879&osd=2&frm=0&sdr=1&mpt=Ooyala&mpv=1.0&afvsz=200x200%2C250x250%2C300x250%2C336x280%2C450x50%2C468x60%2C480x70&ged=ve4_td164_tt158_pd164_la0_er419.141.574.441_vi0.0.941.1000_vp100_eb24171';
   var autoplay = (!OO.isIphone || OO.iosMajorVersion >= 10) && Cookies.get('html5-skin.autoplay') !== '0';
   var playerParam = {
-    pcode: '5zb2wxOlZcNCe_HVT3a6cawW298X',
-    playerBrandingId: '26e2e3c1049c4e70ae08a242638b5c40',
-    debug:true,
+    pcode: 'J0MTUxOtPDJVNZastij14_v7VDRS',
+    playerBrandingId: '6d79ed36a62a4a9885d9c961c70289a8',
+    debug: true,
     skin: {
       'config': 'wikia.json',
       inline: {
@@ -92,6 +92,10 @@
     },
     replayAds: false,
     initialVolume: autoplay ? 0 : 1,
+    discoveryApiAdditionalParams: {
+      discovery_profile_id: 0,
+      where: 'labels INCLUDES \'Fandom\''
+    }
   };
   OO.ready(function() {
     window.pp = OO.Player.create('container', '51ZmdxYTE6oaO5aQo9Hqt31Nn9Nave4e', playerParam);

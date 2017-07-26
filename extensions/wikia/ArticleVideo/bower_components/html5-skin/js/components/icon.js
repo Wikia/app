@@ -8,6 +8,12 @@ var Icon = React.createClass({
   },
 
   render: function() {
+    // WIKIA CHANGE - START
+    if (!this.props.icon) {
+      return (<span></span>);
+    }
+    // WIKIA CHANGE - END
+
     if(this.props.skinConfig.icons[this.props.icon].svg) {
       var svg = {
         __html: this.props.skinConfig.icons[this.props.icon].svg

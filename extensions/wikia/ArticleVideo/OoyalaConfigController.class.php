@@ -90,7 +90,7 @@ class OoyalaConfigController extends WikiaController {
 			'showTitle' => true,
 			'showDescription' => false,
 			'infoPanelPosition' => 'topLeft',
-			'screenToShowOnPause' => 'discovery',
+			'screenToShowOnPause' => 'default',
 		],
 		'endScreen' => [
 			'screenToShowOnEnd' => 'discovery',

@@ -115,7 +115,11 @@ define('ooyala-player', ['wikia.browserDetect'], function (browserDetect) {
 				autoplay: autoplay,
 				initialVolume: autoplay ? 0 : 1,
 				pcode: playerParams.ooyalaPCode,
-				playerBrandingId: playerParams.ooyalaPlayerBrandingId
+				playerBrandingId: playerParams.ooyalaPlayerBrandingId,
+				discoveryApiAdditionalParams: {
+					discovery_profile_id: 0,
+					where: 'labels INCLUDES \'Fandom\''
+				}
 			},
 			html5Player;
 

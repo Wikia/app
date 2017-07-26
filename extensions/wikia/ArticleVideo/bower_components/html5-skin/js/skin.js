@@ -200,7 +200,7 @@ var Skin = React.createClass({
               {...this.props}
               screen={CONSTANTS.SCREEN.DISCOVERY_SCREEN}
               titleText={CONSTANTS.SKIN_TEXT.DISCOVER}
-              icon="discovery">
+              icon={null}>
               <DiscoveryPanel
                 {...this.props}
                 videosPerPage={{xs:2, sm:4, md:6, lg:8}}

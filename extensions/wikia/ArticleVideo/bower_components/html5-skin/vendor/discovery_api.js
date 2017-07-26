@@ -24,6 +24,9 @@ OO.plugin("DiscoveryApi", function(OO, _, $, W) {
 		this.relatedVideos = [];
 		this.guid = "";
 		this.apiHost = OO.playerParams.backlot_api_write_server || 'api.ooyala.com';
+		// WIKIA CHANGE - START
+    this.playerParams = {};
+		// WIKIA CHANGE - END
 
 		OO.StateMachine.create({
 			initial:'Init',
@@ -31,6 +34,9 @@ OO.plugin("DiscoveryApi", function(OO, _, $, W) {
 			moduleName:'DiscoveryApi',
 			target:this,
 			events:[
+        // WIKIA CHANGE - START
+				{name:OO.EVENTS.PLAYER_CREATED, from:'*'},
+        // WIKIA CHANGE - END
 				{name:OO.EVENTS.EMBED_CODE_CHANGED, from:'*'},
 				{name:OO.EVENTS.ASSET_CHANGED, from:'*'},
 				{name:OO.EVENTS.ASSET_UPDATED, from:'*'},
@@ -42,6 +48,11 @@ OO.plugin("DiscoveryApi", function(OO, _, $, W) {
 	};
 
 	_.extend(DiscoveryApi.prototype, {
+    // WIKIA CHANGE - START
+    onPlayerCreated: function (event, type, playerParams) {
+			this.playerParams = playerParams;
+    },
+    // WIKIA CHANGE - END
 		onEmbedCodeChanged: function(event, embedCode) {
 			//Keep the order of the most recently viewed embed codes so we can reorder the related videos
 			recentEmbedCodes = _.filter(recentEmbedCodes, function(recentEmbedCode) {
@@ -194,20 +205,31 @@ OO.plugin("DiscoveryApi", function(OO, _, $, W) {
 			var params = {
 				sign_version: 'player',
 				pcode: OO.playerParams.pcode,
-				// WIKIA CHANGE - START
-				// Ooyala returns empty list or server error when we use discovery profile
-        // discovery_profile_id: OO.playerParams.playerBrandingId,
-				// WIKIA CHANGE - END
+        discovery_profile_id: OO.playerParams.playerBrandingId,
 				video_pcode: OO.playerParams.pcode,
 				limit: MAX_VIDEOS,
 				device_id: this.guid,
 				expected_bucket_info_version: 2,
 				expires: Math.floor((new Date().getTime() / 1000)+3600)
 			};
+
+      // WIKIA CHANGE - START
+			if (this.playerParams.discoveryApiAdditionalParams) {
+				_.extend(params, this.playerParams.discoveryApiAdditionalParams);
+			}
+      // WIKIA CHANGE - END
+
 			var signature = encodeURIComponent(this._generateSignature(params));
 			// Note(manish) nov-14, 2012: encode the device_id which may have special characters (+,?) etc that
 			// may need to be uri-encoded. its important that this is done *after* the signature is calculated.
 			params.device_id = encodeURIComponent(params.device_id);
+
+      // WIKIA CHANGE - START
+			if (params.where) {
+        params.where = encodeURIComponent(params.where);
+      }
+      // WIKIA CHANGE - END
+
 			var url = "//" + this.apiHost + "/v2/discover/similar/assets/" + embedCode + "?" +
 				this._generateParamString(params, signature);
 			$.ajax({
