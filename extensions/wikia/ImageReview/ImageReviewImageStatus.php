@@ -20,35 +20,17 @@ function efImageReviewDisplayStatus( ImagePage $imagePage, &$html ) {
 
 	$html .= Xml::element( 'h2', array(), wfMsg( 'imagereview-imagepage-header' ) );
 
-	$reviews = array();
-	$headers = array(
+	$headers = [
 		wfMessage('imagereview-imagepage-table-header-reviewer')->text(),
 		wfMessage('imagereview-imagepage-table-header-state')->text(),
 		wfMessage('imagereview-imagepage-table-header-time')->text(),
-	);
-	$where = array(
-			'wiki_id' => $wgCityId,
-			'page_id' => $imagePage->getId(),
-	);
+	];
 
-	$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
+	$dbr = wfGetDB( DB_SLAVE, [], $wgExternalDatawareDB );
 
-	$res = $dbr->select(
-		'image_review_stats',
-		'*',
-		$where
-	);
-
-	if ( $dbr->numRows( $res ) == 0 ) {
-		//check if image is in the queue at all!
-
-		$imgCurState = $dbr->selectField(
-			'image_review',
-			'state',
-			$where	
-		);
-
-		if ( false === $imgCurState ) {
+	$reviews = fetchReviewHistory( $dbr, $wgCityId, $imagePage->getID() );
+	if ( empty( $reviews ) ) {
+		if ( false === isImageInReviewQueue( $dbr, $wgCityId, $imagePage->getID() ) ) {
 			/**
 			 * If the file is a local one and is older than 1 hour - send it to ImageReview
 			 * since it's probably been restored, and is not just a fresh file.
@@ -85,17 +67,6 @@ function efImageReviewDisplayStatus( ImagePage $imagePage, &$html ) {
 			$html .= wfMsg( 'imagereview-state-0' );
 		}
 	} else {
-		// go through the list and display review states
-
-		while ( $row = $dbr->fetchObject( $res ) ) {
-			$data = array();
-			$data[] = User::newFromId( $row->reviewer_id )->getName();
-			$data[] = wfMsg( 'imagereview-state-' . $row->review_state );
-			$data[] = $row->review_end . ' (UTC)';
-
-			$reviews[] = $data;
-		}
-
 		$html .= Xml::buildTable(
 			$reviews,
 			array(
@@ -107,4 +78,40 @@ function efImageReviewDisplayStatus( ImagePage $imagePage, &$html ) {
 	}
 
 	return true;
+}
+
+function fetchReviewHistory( $dbr, $cityId, $pageId ) {
+	// TODO: fetch history from image
+
+	$res = $dbr->select(
+		'image_review_stats',
+		'*',
+		[
+			'wiki_id' => $cityId,
+			'page_id' => $pageId,
+		]
+	);
+
+	$reveiws = [];
+	while ( $row = $dbr->fetchObject( $res ) ) {
+		$data = [];
+		$data[] = User::newFromId( $row->reviewer_id )->getName();
+		$data[] = wfMsg( 'imagereview-state-' . $row->review_state );
+		$data[] = $row->review_end . ' (UTC)';
+
+		$reviews[] = $data;
+	}
+
+	return $reveiws;
+}
+
+function isImageInReviewQueue( $dbr, $cityId, $pageId ) {
+	return $dbr->selectField(
+		'image_review',
+		'state',
+		[
+			'wiki_id' => $cityId,
+			'page_id' => $pageId,
+		]
+	);
 }
