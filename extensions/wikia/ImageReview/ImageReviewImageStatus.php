@@ -18,7 +18,7 @@ function efImageReviewDisplayStatus( ImagePage $imagePage, &$html ) {
 		return true;
 	}
 
-	$html .= Xml::element( 'h2', array(), wfMsg( 'imagereview-imagepage-header' ) );
+	$html .= Xml::element( 'h2', array(), wfMessage( 'imagereview-imagepage-header' )->escaped() );
 
 	$headers = [
 		wfMessage('imagereview-imagepage-table-header-reviewer')->text(),
@@ -30,6 +30,8 @@ function efImageReviewDisplayStatus( ImagePage $imagePage, &$html ) {
 
 	$reviews = fetchReviewHistory( $dbr, $wgCityId, $imagePage->getID() );
 	if ( empty( $reviews ) ) {
+
+		// TODO: consider if in the new flow this also should be checked
 		if ( false === isImageInReviewQueue( $dbr, $wgCityId, $imagePage->getID() ) ) {
 			/**
 			 * If the file is a local one and is older than 1 hour - send it to ImageReview
@@ -60,11 +62,11 @@ function efImageReviewDisplayStatus( ImagePage $imagePage, &$html ) {
 			}
 
 			// oh oh, image is not in queue at all
-			$html .= wfMsg( 'imagereview-imagepage-not-in-queue' );
+			$html .= wfMessage( 'imagereview-imagepage-not-in-queue' )->escaped();
 
 		} else {
 			// image is in the queue but not reviewed yet
-			$html .= wfMsg( 'imagereview-state-0' );
+			$html .= wfMessage( 'imagereview-state-0' )->escaped();
 		}
 	} else {
 		$html .= Xml::buildTable(
@@ -81,7 +83,7 @@ function efImageReviewDisplayStatus( ImagePage $imagePage, &$html ) {
 }
 
 function fetchReviewHistory( $dbr, $cityId, $pageId ) {
-	// TODO: fetch history from image
+	// TODO: fetch history from ImageReview service
 
 	$res = $dbr->select(
 		'image_review_stats',
@@ -96,7 +98,15 @@ function fetchReviewHistory( $dbr, $cityId, $pageId ) {
 	while ( $row = $dbr->fetchObject( $res ) ) {
 		$data = [];
 		$data[] = User::newFromId( $row->reviewer_id )->getName();
-		$data[] = wfMsg( 'imagereview-state-' . $row->review_state );
+
+		//Possible keys:
+		// imagereview-state-0
+		// imagereview-state-1
+		// imagereview-state-2
+		// imagereview-state-3
+		// imagereview-state-4
+		// imagereview-state-5
+		$data[] = wfMessage( 'imagereview-state-' . $row->review_state )->escaped();
 		$data[] = $row->review_end . ' (UTC)';
 
 		$reviews[] = $data;
