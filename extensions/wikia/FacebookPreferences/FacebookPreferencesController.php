@@ -1,14 +1,23 @@
 <?php
 
 use Swagger\Client\ApiException;
+use Wikia\DependencyInjection\Injector;
 use Wikia\Logger\Loggable;
 
 class FacebookPreferencesController extends WikiaController {
-	use FacebookApiProvider;
 	use Loggable;
 
 	/** @var User $user */
 	private $user;
+
+	/** @var FacebookService $facebookService */
+	private $facebookService;
+
+	public function __construct() {
+		parent::__construct();
+
+		$this->facebookService = Injector::getInjector()->get( FacebookService::class );
+	}
 
 	public function init() {
 		parent::init();
@@ -23,10 +32,9 @@ class FacebookPreferencesController extends WikiaController {
 
 	public function linkAccount() {
 		$accessToken = $this->request->getVal( 'accessToken' );
-		$userId = $this->user->getId();
 
 		try {
-			$this->getApi( $userId )->linkAccount( $userId, $accessToken );
+			$this->facebookService->linkAccount( $this->user, $accessToken );
 		} catch ( ApiException $apiException ) {
 			$serviceErrorCode = $apiException->getCode();
 			$this->response->setCode( $serviceErrorCode );
@@ -38,10 +46,8 @@ class FacebookPreferencesController extends WikiaController {
 	}
 
 	public function unlinkAccount() {
-		$userId = $this->user->getId();
-
 		try {
-			$this->getApi( $userId )->unlinkAccount( $userId );
+			$this->facebookService->unlinkAccount( $this->user );
 		} catch ( ApiException $apiException ) {
 			$serviceErrorCode = $apiException->getCode();
 			$this->response->setCode( $serviceErrorCode );

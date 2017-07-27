@@ -1,12 +1,21 @@
 <?php
 
 use Swagger\Client\ExternalAuth\Models\LinkedFacebookAccount;
+use Wikia\DependencyInjection\Injector;
 use Wikia\Logger\Loggable;
 use Wikia\Util\Assert;
 
 class FacebookPreferencesModuleService extends WikiaService {
-	use FacebookApiProvider;
 	use Loggable;
+
+	/** @var FacebookService $facebookService */
+	private $facebookService;
+
+	public function __construct() {
+		parent::__construct();
+
+		$this->facebookService = Injector::getInjector()->get( FacebookService::class );
+	}
 
 	public function renderFacebookPreferences() {
 		global $fbAppId;
@@ -18,8 +27,8 @@ class FacebookPreferencesModuleService extends WikiaService {
 		$out->addModules( 'ext.wikia.facebookPreferences' );
 
 		try {
-			$userId = $context->getUser()->getId();
-			$linkedFacebookAccount = $this->getApi( $userId )->me();
+			$user = $context->getUser();
+			$linkedFacebookAccount = $this->facebookService->getExternalIdentity( $user );
 
 			Assert::true( $linkedFacebookAccount instanceof LinkedFacebookAccount );
 

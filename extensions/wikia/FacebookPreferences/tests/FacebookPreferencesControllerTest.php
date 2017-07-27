@@ -10,11 +10,8 @@ class FacebookPreferencesControllerTest extends TestCase {
 	/** @var WikiaRequest|PHPUnit_Framework_MockObject_MockObject $requestMock */
 	private $requestMock;
 
-	/** @var FacebookApi|PHPUnit_Framework_MockObject_MockObject $apiMock */
-	private $apiMock;
-
-	/** @var FacebookApiFactory|PHPUnit_Framework_MockObject_MockObject $facebookApiFactoryMock */
-	private $facebookApiFactoryMock;
+	/** @var FacebookService|PHPUnit_Framework_MockObject_MockObject $facebookServiceMock */
+	private $facebookServiceMock;
 
 	/** @var WikiaResponse $response */
 	private $response;
@@ -26,13 +23,11 @@ class FacebookPreferencesControllerTest extends TestCase {
 		parent::setUp();
 
 		$this->userMock = $this->createMock( User::class );
-		$this->requestMock = $this->createMock( WikiaRequest::class );
-		$this->apiMock = $this->createMock( FacebookApi::class );
-
-		$this->facebookApiFactoryMock = $this->createMock( FacebookApiFactory::class );
-		$this->facebookApiFactoryMock->expects( $this->any() )
-			->method( 'getApi' )
-			->willReturn( $this->apiMock );
+		$this->requestMock = $this->getMockBuilder( WikiaRequest::class )
+			->disableOriginalConstructor()
+			->setMethods( [ 'assertValidWriteRequest' ] )
+			->getMock();
+		$this->facebookServiceMock = $this->createMock( FacebookService::class );
 
 		$this->response = new WikiaResponse( WikiaResponse::FORMAT_HTML );
 
@@ -44,9 +39,9 @@ class FacebookPreferencesControllerTest extends TestCase {
 		$this->facebookPreferencesController->setRequest( $this->requestMock );
 		$this->facebookPreferencesController->setResponse( $this->response );
 
-		$reflApi = new ReflectionProperty( FacebookPreferencesController::class, 'facebookApiFactory' );
-		$reflApi->setAccessible( true );
-		$reflApi->setValue( $this->facebookPreferencesController, $this->facebookApiFactoryMock );
+		$reflService = new ReflectionProperty( FacebookPreferencesController::class, 'facebookService' );
+		$reflService->setAccessible( true );
+		$reflService->setValue( $this->facebookPreferencesController, $this->facebookServiceMock );
 	}
 
 	/**
@@ -62,7 +57,7 @@ class FacebookPreferencesControllerTest extends TestCase {
 			->method( 'isLoggedIn' )
 			->willReturn( false );
 
-		$this->apiMock->expects( $this->never() )
+		$this->facebookServiceMock->expects( $this->never() )
 			->method( 'unlinkAccount' );
 
 		$this->facebookPreferencesController->init();
@@ -81,7 +76,7 @@ class FacebookPreferencesControllerTest extends TestCase {
 			->method( 'isLoggedIn' )
 			->willReturn( false );
 
-		$this->apiMock->expects( $this->never() )
+		$this->facebookServiceMock->expects( $this->never() )
 			->method( 'unlinkAccount' );
 
 		$this->facebookPreferencesController->init();
@@ -101,7 +96,7 @@ class FacebookPreferencesControllerTest extends TestCase {
 			->method( 'isLoggedIn' )
 			->willReturn( false );
 
-		$this->apiMock->expects( $this->never() )
+		$this->facebookServiceMock->expects( $this->never() )
 			->method( 'unlinkAccount' );
 
 		$this->facebookPreferencesController->init();
@@ -120,7 +115,7 @@ class FacebookPreferencesControllerTest extends TestCase {
 			->method( 'isLoggedIn' )
 			->willReturn( false );
 
-		$this->apiMock->expects( $this->never() )
+		$this->facebookServiceMock->expects( $this->never() )
 			->method( 'unlinkAccount' );
 
 		$this->facebookPreferencesController->init();
@@ -140,7 +135,7 @@ class FacebookPreferencesControllerTest extends TestCase {
 			->method( 'isLoggedIn' )
 			->willReturn( true );
 
-		$this->apiMock->expects( $this->never() )
+		$this->facebookServiceMock->expects( $this->never() )
 			->method( 'unlinkAccount' );
 
 		$this->facebookPreferencesController->init();
@@ -160,7 +155,7 @@ class FacebookPreferencesControllerTest extends TestCase {
 			->method( 'isLoggedIn' )
 			->willReturn( true );
 
-		$this->apiMock->expects( $this->never() )
+		$this->facebookServiceMock->expects( $this->never() )
 			->method( 'unlinkAccount' );
 
 		$this->facebookPreferencesController->init();
@@ -168,8 +163,6 @@ class FacebookPreferencesControllerTest extends TestCase {
 	}
 
 	public function testLoggedInUserWithValidTokenCanUnLinkAccount() {
-		$userId = 58;
-
 		$this->requestMock->expects( $this->once() )
 			->method( 'assertValidWriteRequest' )
 			->willReturn( true );
@@ -178,13 +171,9 @@ class FacebookPreferencesControllerTest extends TestCase {
 			->method( 'isLoggedIn' )
 			->willReturn( true );
 
-		$this->userMock->expects( $this->once() )
-			->method( 'getId' )
-			->willReturn( $userId );
-
-		$this->apiMock->expects( $this->once() )
+		$this->facebookServiceMock->expects( $this->once() )
 			->method( 'unlinkAccount' )
-			->with( $userId );
+			->with( $this->userMock );
 
 		$this->facebookPreferencesController->init();
 		$this->facebookPreferencesController->unlinkAccount();
@@ -196,7 +185,6 @@ class FacebookPreferencesControllerTest extends TestCase {
 	}
 
 	public function testServiceErrorCodeIsReturnedToClientWhenUnlinkFails() {
-		$userId = 58;
 		$apiException = new ApiException( 'error', WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
 
 		$this->requestMock->expects( $this->once() )
@@ -207,13 +195,9 @@ class FacebookPreferencesControllerTest extends TestCase {
 			->method( 'isLoggedIn' )
 			->willReturn( true );
 
-		$this->userMock->expects( $this->once() )
-			->method( 'getId' )
-			->willReturn( $userId );
-
-		$this->apiMock->expects( $this->once() )
+		$this->facebookServiceMock->expects( $this->once() )
 			->method( 'unlinkAccount' )
-			->with( $userId )
+			->with( $this->userMock )
 			->willThrowException( $apiException );
 
 		$this->facebookPreferencesController->init();
@@ -226,29 +210,20 @@ class FacebookPreferencesControllerTest extends TestCase {
 	}
 
 	public function testLoggedInUserWithValidTokenCanLinkAccount() {
-		$userId = 58;
 		$token = 'secret';
 
+		$this->requestMock->setVal( 'accessToken', $token );
 		$this->requestMock->expects( $this->once() )
 			->method( 'assertValidWriteRequest' )
 			->willReturn( true );
-
-		$this->requestMock->expects( $this->once() )
-			->method( 'getVal' )
-			->with( 'accessToken' )
-			->willReturn( $token );
 
 		$this->userMock->expects( $this->once() )
 			->method( 'isLoggedIn' )
 			->willReturn( true );
 
-		$this->userMock->expects( $this->once() )
-			->method( 'getId' )
-			->willReturn( $userId );
-
-		$this->apiMock->expects( $this->once() )
+		$this->facebookServiceMock->expects( $this->once() )
 			->method( 'linkAccount' )
-			->with( $userId, $token );
+			->with( $this->userMock, $token );
 
 		$this->facebookPreferencesController->init();
 		$this->facebookPreferencesController->linkAccount();
@@ -260,9 +235,10 @@ class FacebookPreferencesControllerTest extends TestCase {
 	}
 
 	public function testServiceErrorCodeIsReturnedToClientWhenLinkFails() {
-		$userId = 58;
 		$apiException = new ApiException( 'error', WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
+		$token = 'secret';
 
+		$this->requestMock->setVal( 'accessToken', $token );
 		$this->requestMock->expects( $this->once() )
 			->method( 'assertValidWriteRequest' )
 			->willReturn( true );
@@ -271,13 +247,9 @@ class FacebookPreferencesControllerTest extends TestCase {
 			->method( 'isLoggedIn' )
 			->willReturn( true );
 
-		$this->userMock->expects( $this->once() )
-			->method( 'getId' )
-			->willReturn( $userId );
-
-		$this->apiMock->expects( $this->once() )
+		$this->facebookServiceMock->expects( $this->once() )
 			->method( 'linkAccount' )
-			->with( $userId )
+			->with( $this->userMock, $token )
 			->willThrowException( $apiException );
 
 		$this->facebookPreferencesController->init();
@@ -288,6 +260,4 @@ class FacebookPreferencesControllerTest extends TestCase {
 			$this->response->getCode()
 		);
 	}
-
-
 }

@@ -12,11 +12,8 @@ class FacebookPreferencesModuleServiceTest extends TestCase {
 	/** @var User|PHPUnit_Framework_MockObject_MockObject $userMock */
 	private $userMock;
 
-	/** @var FacebookApi|PHPUnit_Framework_MockObject_MockObject $apiMock */
-	private $apiMock;
-
-	/** @var FacebookApiFactory|PHPUnit_Framework_MockObject_MockObject $facebookApiFactoryMock */
-	private $facebookApiFactoryMock;
+	/** @var FacebookService|PHPUnit_Framework_MockObject_MockObject $facebookServiceMock */
+	private $facebookServiceMock;
 
 	/** @var WikiaResponse $response */
 	private $response;
@@ -28,34 +25,26 @@ class FacebookPreferencesModuleServiceTest extends TestCase {
 		parent::setUp();
 
 		$this->userMock = $this->createMock( User::class );
-		$this->apiMock = $this->createMock( FacebookApi::class );
+		$this->facebookServiceMock = $this->createMock( FacebookService::class );
 
 		$this->response = new WikiaResponse( WikiaResponse::FORMAT_HTML );
 
 		$context = new RequestContext();
 		$context->setUser( $this->userMock );
 
-		$this->facebookApiFactoryMock = $this->createMock( FacebookApiFactory::class );
-		$this->facebookApiFactoryMock->expects( $this->any() )
-			->method( 'getApi' )
-			->willReturn( $this->apiMock );
-
 		$this->facebookPreferencesModule = new FacebookPreferencesModuleService();
 		$this->facebookPreferencesModule->setContext( $context );
 		$this->facebookPreferencesModule->setResponse( $this->response );
 
-		$reflApi = new ReflectionProperty( FacebookPreferencesModuleService::class, 'facebookApiFactory' );
-		$reflApi->setAccessible( true );
-		$reflApi->setValue( $this->facebookPreferencesModule, $this->facebookApiFactoryMock );
+		$reflService = new ReflectionProperty( FacebookPreferencesModuleService::class, 'facebookService' );
+		$reflService->setAccessible( true );
+		$reflService->setValue( $this->facebookPreferencesModule, $this->facebookServiceMock );
 	}
 
 	public function testRendersConnectedTemplateIfUserHasLinkedFacebookAccount() {
-		$this->userMock->expects( $this->once() )
-			->method( 'getId' )
-			->willReturn( $this->userId );
-
-		$this->apiMock->expects( $this->once() )
-			->method( 'me' )
+		$this->facebookServiceMock->expects( $this->once() )
+			->method( 'getExternalIdentity' )
+			->with( $this->userMock )
 			->willReturn( new LinkedFacebookAccount() );
 
 		$this->facebookPreferencesModule->renderFacebookPreferences();
@@ -67,12 +56,9 @@ class FacebookPreferencesModuleServiceTest extends TestCase {
 	}
 
 	public function testRendersDisconnectedTemplateIfUserDoesNotHaveLinkedFacebookAccount() {
-		$this->userMock->expects( $this->once() )
-			->method( 'getId' )
-			->willReturn( $this->userId );
-
-		$this->apiMock->expects( $this->once() )
-			->method( 'me' )
+		$this->facebookServiceMock->expects( $this->once() )
+			->method( 'getExternalIdentity' )
+			->with( $this->userMock )
 			->willThrowException( new ApiException() );
 
 		$this->facebookPreferencesModule->renderFacebookPreferences();
