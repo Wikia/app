@@ -38,4 +38,14 @@ describe('ext.wikia.adEngine.provider.directGptMobile', function () {
 		expect(mocks.factory.createProvider.calls.argsFor(0)[4].adUnitBuilder)
 			.toEqual(mocks.kiloAdUnitBuilder);
 	});
+
+	it('Return MEGA adUnit if there is correct param turned on', function () {
+		spyOn(mocks.factory, 'createProvider');
+		spyOn(mocks.adContext, 'getContext').and.returnValue({opts:{megaAdUnitBuilderEnabled: true}});
+
+		getModule();
+
+		expect(mocks.factory.createProvider.calls.argsFor(0)[4].adUnitBuilder)
+			.toEqual(mocks.megaAdUnitBuilder);
+	});
 });
