@@ -37,8 +37,8 @@
 				'toolbar,' +
 				'clipboard,' +
 		
-			//	'dialogui,' +
-			//	'dialog,' +
+				'dialogui,' +
+				'dialog,' +
 				'enterkey,' +
 				'panel,' +
 				'listblock,' +
@@ -53,8 +53,8 @@
 			//	'removeformat,' +
 			//	'sourcearea,' +
 				'tab,' +
-			//	'table,' +
-			//	'tabletools,' +
+				'table,' +
+				'tabletools,' +
 				'menu,' +
 				'contextmenu,' +	
 				'undo,' +
