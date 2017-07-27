@@ -22,23 +22,6 @@ class CloseMyAccountHooks {
 	}
 
 	/**
-	 * Abort a successful login through Facebook Connect if the user has
-	 * requested an account closure.
-	 *
-	 * @param  User    $user     The user attempting to log in
-	 * @param  string  $errorMsg Error message to display to the user
-	 * @return boolean           True if login should succeed, false otherwise
-	 */
-	public static function onFacebookUserLoginSuccess( User $user, &$errorMsg ) {
-		$closeAccountHelper = new CloseMyAccountHelper();
-		if ( $closeAccountHelper->isScheduledForClosure( $user ) ) {
-			$errorMsg = wfMessage( 'closemyaccount-reactivate-error-fbconnect', $user->getName() )->parse();
-			return false;
-		}
-		return true;
-	}
-
-	/**
 	 * Hijack SendConfirmationMail for our purposes, correcting the URL
 	 * to point to the CloseMyAccount reactivation page.
 	 *
