@@ -804,6 +804,7 @@
 		},
 
 		initDom: function() {
+			debugger;
 			this.editor.fire('editboxReady', this.editor, this.getEditbox());
 		},
 
@@ -921,7 +922,7 @@
 
 		// wikiaEditor is now available as this.editor
 		initEditor: function() {
-
+			debugger;
 			// Set up listeners on proxied ck events
 			this.editor.on('ck-mode', this.proxy(this.modeChanged));
 			this.editor.on('ck-modeSwitch', this.proxy(this.beforeModeChange));
@@ -951,7 +952,7 @@
 
 		// ckeditor instance is now available
 		ckInstanceCreated: function(ck) {
-
+			debugger;
 			// Store a reference to the CKE instance in wikiaEditor
 			this.editor.ck = ck;
 
@@ -1015,6 +1016,7 @@
 		},
 
 		themeLoaded: function() {
+			debugger;
 			this.editor.fire('editboxReady', this.editor, $(this.editor.ck.getThemeSpace('contents').$));
 		},
 

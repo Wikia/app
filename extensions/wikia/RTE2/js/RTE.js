@@ -55,15 +55,16 @@
 			//	'tab,' +
 			//	'table,' +
 			//	'tabletools,' +
-			//	'undo,' +
+				'menu,' +
+				'contextmenu,' +	
 				'undo,' +
 				'justify,' +
 				'wysiwygarea',
 
 			// Custom RTE plugins for CKEDITOR
 			// Used to be built in RTE.loadPlugins()
-		extraPlugins:
-				'autogrow',
+		//extraPlugins:
+		//		'autogrow',
 				//'basicstyles,' + 
 				//'accesskey,' +
 				//'comment,' +
