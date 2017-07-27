@@ -63,14 +63,14 @@
 
 			// Custom RTE plugins for CKEDITOR
 			// Used to be built in RTE.loadPlugins()
-		//extraPlugins:
-		//		'autogrow',
-				//'basicstyles,' + 
-				//'accesskey,' +
-				//'comment,' +
-				//'dialog,' +
-				//'dragdrop,' +
-				//'entities',
+		extraPlugins:
+			
+		 
+				'rte-accesskey,' +
+				'rte-comment,' +
+				'rte-dialog,' +
+				'rte-dragdrop,' +
+				'rte-entities',
 				//'gallery',
 				//'justify,' +
 				//'link',

@@ -413,7 +413,7 @@
 	}
 
 	function loadLang( editor ) {
-		debugger;
+		
 		CKEDITOR.lang.load( editor.config.language, editor.config.defaultLanguage, function( languageCode, lang ) {
 			var configTitle = editor.config.title;
 
@@ -508,7 +508,7 @@
 
 		// Load all plugins defined in the "plugins" setting.
 		CKEDITOR.plugins.load( plugins.split( ',' ), function( plugins ) {
-			debugger;
+			
 			// The list of plugins.
 			var pluginsArray = [];
 

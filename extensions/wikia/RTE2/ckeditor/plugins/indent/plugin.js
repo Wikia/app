@@ -22,7 +22,7 @@
 		hidpi: true, // %REMOVE_LINE_CORE%
 
 		init: function( editor ) {
-			debugger;
+			
 			var genericDefinition = CKEDITOR.plugins.indent.genericDefinition;
 
 			// Register generic commands.

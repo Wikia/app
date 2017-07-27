@@ -91,7 +91,7 @@ CKEDITOR.plugins.add( 'basicstyles', {
 			//lang = editor.lang.basicstyles;
 			
 			lang = editor.lang.basicstyles;
-			debugger;
+			
 		addButtonCommand( 'Bold', lang.bold, 'bold', config.coreStyles_bold );
 		addButtonCommand( 'Italic', lang.italic, 'italic', config.coreStyles_italic );
 		addButtonCommand( 'Underline', lang.underline, 'underline', config.coreStyles_underline );

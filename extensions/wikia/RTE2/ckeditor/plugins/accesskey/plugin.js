@@ -1,6 +1,8 @@
 CKEDITOR.plugins.add('accesskey',
 {
+
 	init: function(editor) {
+			debugger;
 		if (CKEDITOR.env.ie) {
 			var accessibleElements = [];
 			$('*[accesskey]').each(function(ev) {

@@ -207,13 +207,20 @@ packages :
 				'plugins/pastetext/lang/en.js'
 				'plugins/sourcearea/plugin.js'
 				'plugins/sourcearea/lang/en.js'	
-				//'../js/plugins/accesskey/plugin.js',
-				//'../js/plugins/comment/plugin.js',
-				//'../js/plugins/comment/dialogs/comment.js',
-				//'../js/plugins/dialog/plugin.js',
-				//'../js/plugins/dragdrop/plugin.js',
-				//'../js/plugins/entities/plugin.js',
-				//'../js/plugins/gallery/plugin.js',
+				
+
+				//wikia plugins below
+				'../js/plugins/accesskey/plugin.js'
+				'../js/plugins/comment/plugin.js'	
+				'../js/plugins/comment/dialogs/comment.js'
+				'../js/plugins/dialog/plugin.js'
+				
+				'../js/plugins/dragdrop/plugin.js',
+				
+				'../js/plugins/entities/plugin.js',
+				
+				//'plugins/gallery/plugin.js',
+				
 				//'../js/plugins/justify/plugin.js',
 				//'../js/plugins/link/plugin.js',
 				//'../js/plugins/link/dialogs/link.js',
