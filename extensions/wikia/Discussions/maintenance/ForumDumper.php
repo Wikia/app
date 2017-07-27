@@ -339,7 +339,7 @@ class ForumDumper {
 
 		foreach ($this->getPages() as $page) {
 			if ($page->namespace === NS_WIKIA_FORUM_BOARD_THREAD) {
-				$threadIds[$page->raw_title] = $page->id;
+				$this->threadIds[$page->raw_title] = $page->id;
 			}
 		}
 
