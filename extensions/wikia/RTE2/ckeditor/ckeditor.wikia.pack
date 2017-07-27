@@ -205,7 +205,9 @@ packages :
 				'plugins/pastetext/plugin.js'
 			
 				'plugins/pastetext/lang/en.js'
-					//'../js/plugins/accesskey/plugin.js',
+				'plugins/sourcearea/plugin.js'
+				'plugins/sourcearea/lang/en.js'	
+				//'../js/plugins/accesskey/plugin.js',
 				//'../js/plugins/comment/plugin.js',
 				//'../js/plugins/comment/dialogs/comment.js',
 				//'../js/plugins/dialog/plugin.js',

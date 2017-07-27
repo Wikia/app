@@ -51,7 +51,7 @@
 				'list,' +
 				'pastetext,' +
 				'removeformat,' +//not used anywhere though
-			//	'sourcearea,' +
+				'sourcearea,' +
 				'tab,' +
 				'table,' +
 				'tabletools,' +
