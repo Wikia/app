@@ -1,6 +1,7 @@
 <?php
 
 use Wikia\Logger\WikiaLogger;
+use Wikia\Rabbit\ConnectionBase;
 use Wikia\Tasks\Tasks\ImageReviewTask;
 
 class ImageReviewEventsHooks {
@@ -97,7 +98,7 @@ class ImageReviewEventsHooks {
 	private static function sendToImageReviewService( Title $title ) {
 		global $wgImageReview, $wgCityId;
 
-		$rabbitConnection = new \Wikia\Rabbit\ConnectionBase( $wgImageReview );
+		$rabbitConnection = new ConnectionBase( $wgImageReview );
 		$wamRank = ( new WAMService() )->getCurrentWamRankForWiki( $wgCityId );
 		$revisionId = $title->getLatestRevID();
 		$articleId = $title->getArticleID();
