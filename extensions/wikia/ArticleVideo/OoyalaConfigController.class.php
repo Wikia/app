@@ -271,10 +271,7 @@ class OoyalaConfigController extends WikiaController {
 				'fontString' => 'n',
 				'fontStyleClass' => 'oo-icon oo-icon-system-settings',
 			],
-			'dismiss' => [
-				'fontFamilyName' => 'ooyala-slick-type',
-				'fontString' => 'e',
-				'fontStyleClass' => 'oo-icon oo-icon-system-close',
+			'dismiss' => [// svg set in skin()
 			],
 			'toggleOn' => [
 				'fontFamilyName' => 'fontawesome',
@@ -335,6 +332,7 @@ class OoyalaConfigController extends WikiaController {
 		$config['icons']['shareFacebook']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-facebook' );
 		$config['icons']['shareGoogle']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-googleplus' );
 		$config['icons']['shareMail']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-mail' );
+		$config['icons']['dismiss']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-cross' );
 
 		$config['localization']['availableLanguageFile'][0]['languageFile'] =
 			'/extensions/wikia/ArticleVideo/bower_components/skin-config/languageFiles/en.json';
