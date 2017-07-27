@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by IntelliJ IDEA.
- * User: mszabo
- * Date: 2017. 07. 18.
- * Time: 13:02
- */
 class FacebookTagConstants {
 	const FB_API_URL = 'https://www.facebook.com/plugins/%s.php?%s';
 	const SUPPORTED_TAGS = [
