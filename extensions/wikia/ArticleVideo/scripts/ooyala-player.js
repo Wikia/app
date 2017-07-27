@@ -118,7 +118,7 @@ define('ooyala-player', ['wikia.browserDetect'], function (browserDetect) {
 				playerBrandingId: playerParams.ooyalaPlayerBrandingId,
 				discoveryApiAdditionalParams: {
 					discovery_profile_id: 0,
-					where: 'labels INCLUDES \'Fandom\''
+					where: 'labels INCLUDES \'Promoted\''
 				}
 			},
 			html5Player;
