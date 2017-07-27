@@ -7,10 +7,10 @@ $baseDir = dirname(dirname($vendorDir));
 
 return array(
     'Symfony\\Component\\CssSelector\\' => array($vendorDir . '/symfony/css-selector'),
+    'SimplePie' => array($vendorDir . '/simplepie/simplepie/library'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log'),
     'ProxyManager\\' => array($vendorDir . '/ocramius/proxy-manager/src'),
     'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src'),
-    'PhpAmqpLib' => array($vendorDir . '/videlalvaro/php-amqplib'),
     'PEAR' => array($vendorDir . '/pear/pear_exception'),
     'Net' => array($vendorDir . '/wikia/net_socket2', $vendorDir . '/pear/net_socket', $vendorDir . '/wikia/net_smtp2'),
     'Mail' => array($vendorDir . '/pear/mail_mime'),

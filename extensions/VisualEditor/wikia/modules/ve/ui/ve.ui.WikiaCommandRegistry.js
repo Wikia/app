@@ -60,16 +60,6 @@ ve.ui.commandRegistry.register(
 
 ve.ui.commandRegistry.register(
 	new ve.ui.Command(
-		'wikiaMapInsert', 'window', 'open',
-		{
-			args: ['wikiaMapInsert'],
-			supportedSelections: ['linear']
-		}
-	)
-);
-
-ve.ui.commandRegistry.register(
-	new ve.ui.Command(
 		'wikiaInfoboxInsert', 'window', 'open',
 		{
 			args: ['wikiaInfoboxInsert'],

@@ -52,13 +52,14 @@ class WikiaInYourLangController extends WikiaController {
 			$sNativeWikiDomain = $this->getNativeWikiDomain( $sWikiDomain, $sTargetLanguage );
 			$this->response->setVal( 'nativeDomain', $sNativeWikiDomain );
 			$oNativeWiki = $this->getNativeWikiByDomain( $sNativeWikiDomain );
-			$this->response->setVal( 'linkAddress', $oNativeWiki->city_url );
 
 			/**
 			 * If a wikia is found - send a response with its url and sitename.
 			 * Send success=false otherwise.
 			 */
 			if ( is_object( $oNativeWiki ) ) {
+				$this->response->setVal( 'linkAddress', $oNativeWiki->city_url );
+
 				/**
 				 * Check for false-positives - see CE-1216
 				 * Per request we should unify dialects like pt and pt-br
