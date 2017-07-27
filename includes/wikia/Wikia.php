@@ -195,25 +195,6 @@ class Wikia {
 		}
 	}
 
-	/**
-	 * @author inez@wikia.com
-	 */
-	function getThemesOfSkin($skinname = 'quartz') {
-		global $wgSkinTheme;
-
-		$themes = array();
-
-		if(isset($wgSkinTheme) && is_array($wgSkinTheme) && isset($wgSkinTheme[$skinname])) {
-			foreach($wgSkinTheme[$skinname] as $val) {
-				if( $val != 'custom' && ! (isset($wgSkipThemes) && is_array($wgSkipThemes) && isset($wgSkipThemes[$skinname]) && in_array($wgSkipThemes[$skinname],$val))) {
-					$themes[] = $val;
-				}
-			}
-		}
-
-		return $themes;
-	}
-
     /**
      * successbox
      *
@@ -356,109 +337,6 @@ class Wikia {
 		return $name;
 	}
 
-
-    /**
-     * addCredits
-     *
-     * add html with credits to xml dump
-     *
-     * @access public
-     * @static
-     * @author eloy@wikia
-     * @author emil@wikia
-     *
-     * @param object $row: Database Row with page object
-     *
-     * @return string: HTML string with credits line
-     */
-    static public function addCredits( $row )
-    {
-		global $wgIwPrefix, $wgExternalSharedDB, $wgAddFromLink;
-
-        $text = "";
-
-		if ( $wgAddFromLink && ($row->page_namespace != 8) && ($row->page_namespace != 10) ) {
-			if (isset($wgIwPrefix)){
-				$text .= '<div id="wikia-credits"><br /><br /><small>' . wfMsg('tagline-url-interwiki',$wgIwPrefix) . '</small></div>';
-			}
-            elseif (isset($wgExternalSharedDB)){
-				global $wgServer,$wgArticlePath,$wgSitename;
-				$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-				$oRow = $dbr->selectRow(
-                    'interwiki',
-                    array( 'iw_prefix' ),
-                    array( 'iw_url' => $wgServer.$wgArticlePath ),
-                    __METHOD__
-                );
-				if ($oRow) {
-					$text .= '<div id="wikia-credits"><br /><br /><small>' . wfMsg('tagline-url-interwiki',$oRow->iw_prefix) . '</small></div>';
-				}
-				else {
-					$text .= '<div id="wikia-credits"><br /><br /><small>' . wfMsg('tagline-url') . '</small></div>';
-				}
-			}
-            else {
-				$text .= '<div id="wikia-credits"><br /><br /><small>' . wfMsg('tagline-url') . '</small></div>';
-			}
-		}
-
-        return $text;
-    }
-
-    /**
-     * ImageProgress
-     *
-     * hmtl code with progress image
-     *
-     * @access public
-     * @static
-     * @author eloy@wikia
-     *
-     * @param string $type: type of progress image, default bar
-     *
-     * @return string: HTML string with progress image
-     */
-    static public function ImageProgress( $type = "bar" )
-    {
-        $sImagesCommonPath = wfGetImagesCommon();
-        switch ( $type ) {
-            default:
-                return Xml::element( 'img', array(
-                    "src"    => "{$sImagesCommonPath}/skins/quartz/images/progress_bar.gif", // FIXME: image does not exist
-                    "width"  => 100,
-                    "height" => 9,
-                    "alt"    => ".....",
-                    "border" => 0
-                ));
-        }
-    }
-
-    /**
-     * binphp
-     *
-     * full path to php binary used in background scripts. wikia uses
-     * /opt/wikia/php/bin/php, fp & localhost could use others. Write here Your
-     * additional conditions to check
-     *
-	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
-     * @access public
-     * @static
-     *
-     * @return string: path to php binary
-     */
-	static public function binphp() {
-		wfProfileIn( __METHOD__ );
-
-		$path = ( file_exists( "/opt/wikia/php/bin/php" )
-			&& is_executable( "/opt/wikia/php/bin/php" ) )
-			? "/opt/wikia/php/bin/php"
-			: "/usr/bin/php";
-
-		wfProfileOut( __METHOD__ );
-
-		return $path;
-	}
-
 	/**
 	 * simple logger which log message to STDERR if devel environment is set
 	 *
@@ -598,104 +476,6 @@ class Wikia {
 
 		return $staffUser;
 	}
-
-	/**
-	 * View any string as a hexdump.
-	 *
-	 * This is most commonly used to view binary data from streams
-	 * or sockets while debugging, but can be used to view any string
-	 * with non-viewable characters.
-	 *
-	 * @version     1.3.2
-	 * @author      Aidan Lister <aidan@php.net>
-	 * @author      Peter Waller <iridum@php.net>
-	 * @link        http://aidanlister.com/repos/v/function.hexdump.php
-	 * @param       string  $data        The string to be dumped
-	 * @param       bool    $htmloutput  Set to false for non-HTML output
-	 * @param       bool    $uppercase   Set to true for uppercase hex
-	 * @param       bool    $return      Set to true to return the dump
-	 */
-	static public function hex($data, $htmloutput = true, $uppercase = false, $return = false) {
-		// Init
-		$hexi   = '';
-		$ascii  = '';
-		$dump   = ($htmloutput === true) ? '<pre>' : '';
-		$offset = 0;
-		$len    = strlen($data);
-
-		// Upper or lower case hexadecimal
-		$x = ($uppercase === false) ? 'x' : 'X';
-
-		// Iterate string
-		for ($i = $j = 0; $i < $len; $i++) {
-			// Convert to hexidecimal
-			$hexi .= sprintf("%02$x ", ord($data[$i]));
-
-			// Replace non-viewable bytes with '.'
-			if (ord($data[$i]) >= 32) {
-				$ascii .= ($htmloutput === true) ? htmlentities($data[$i]) : $data[$i];
-			} else {
-				$ascii .= '.';
-			}
-
-			// Add extra column spacing
-			if ($j === 7) {
-				$hexi  .= ' ';
-				$ascii .= ' ';
-			}
-
-			// Add row
-			if (++$j === 16 || $i === $len - 1) {
-				// Join the hexi / ascii output
-				$dump .= sprintf("%04$x  %-49s  %s", $offset, $hexi, $ascii);
-
-				// Reset vars
-				$hexi   = $ascii = '';
-				$offset += 16;
-				$j      = 0;
-
-				// Add newline
-				if ($i !== $len - 1) {
-					$dump .= "\n";
-				}
-			}
-		}
-
-		// Finish dump
-		$dump .= ($htmloutput === true) ? '</pre>' : '';
-		$dump .= "\n";
-
-		// Output method
-		if ($return === false) {
-			echo $dump;
-		} else {
-			return $dump;
-		}
-	}
-
-	/**
-	 * Represents a write lock on the key, based in MessageCache::lock
-	 */
-	static public function lock( $key ) {
-		global $wgMemc;
-		$timeout = 10;
-		$lockKey = wfMemcKey( $key, "lock" );
-		for ($i=0; $i < $timeout && !$wgMemc->add( $lockKey, 1, $timeout ); $i++ ) {
-			sleep(1);
-		}
-
-		return $i >= $timeout;
-	}
-
-	/**
-	 * Unlock a write lock on the key, based in MessageCache::unlock
-	 */
-	static public function unlock($key) {
-		global $wgMemc;
-		$lockKey = wfMemcKey( $key, "lock" );
-		return $wgMemc->delete( $lockKey );
-	}
-
 
 	/**
 	 * A function for making time periods readable
@@ -898,42 +678,6 @@ class Wikia {
 		return $domains;
 	}
 
-	/**
-	 * fixed answers sitenames
-	 */
-	public static function getAnswersSitenames() {
-		global $wgAvailableAnswersLang, $wgContLang;
-		wfProfileIn(__METHOD__);
-		$result = array();
-		$msg = "autocreatewiki-sitename-answers";
-		if ( !empty($wgAvailableAnswersLang) ) {
-			foreach ( $wgAvailableAnswersLang as $lang ) {
-				$sitename = wfMsgExt( $msg, array( "language" => $lang ) );
-				if ( !empty($sitename) && !wfEmptyMsg( $msg, $sitename ) ) {
-					$result[$lang] = $sitename;
-				}
-			}
-		}
-		wfProfileOut(__METHOD__);
-		return $result;
-	}
-
-	/**
-	 * check if domain is valid according to some known standards
-	 * (it is not very strict checking)
-	 *
-	 * @author Krzysztof Krzyżaniak (eloy)
-	 * @access public
-	 * @static
-	 *
-	 * @param String $domain -- domain name for checking
-	 *
-	 * @return Boolean  -- true if valid, false otherwise
-	 */
-	public static function isValidDomain( $domain ) {
-		return (bool )preg_match("/^([a-z0-9]([-a-z0-9]*[a-z0-9])?\\.)+((a[cdefgilmnoqrstuwxz]|aero|arpa)|(b[abdefghijmnorstvwyz]|biz)|(c[acdfghiklmnorsuvxyz]|cat|com|coop)|d[ejkmoz]|(e[ceghrstu]|edu)|f[ijkmor]|(g[abdefghilmnpqrstuwy]|gov)|h[kmnrtu]|(i[delmnoqrst]|info|int)|(j[emop]|jobs)|k[eghimnprwyz]|l[abcikrstuvy]|(m[acdghklmnopqrstuvwxyz]|mil|mobi|museum)|(n[acefgilopruz]|name|net)|(om|org)|(p[aefghklmnrstwy]|pro)|qa|r[eouw]|s[abcdeghijklmnortvyz]|(t[cdfghjklmnoprtvwz]|travel)|u[agkmsyz]|v[aceginu]|w[fs]|y[etu]|z[amw])$/i", $domain );
-	}
-
 	/* TODO remove when cat_hidden is fixed */
 	public static function categoryCloudGetHiddenCategories() {
 		$data = array();
@@ -1013,32 +757,6 @@ class Wikia {
 
 		wfProfileOut(__METHOD__);
 		return $result;
-	}
-
-	/**
-	 * Returns true if the currently set skin is Oasis.  Do not call this before the skin
-	 * has been set on wgUser.
-	 */
-	public static function isOasis(){
-		wfProfileIn( __METHOD__ );
-
-		$isOasis = (get_class(RequestContext::getMain()->getSkin()) == 'SkinOasis');
-
-		wfProfileOut( __METHOD__ );
-		return $isOasis;
-	}
-
-	/**
-	 * Returns true if the currently set skin is WikiaMobile.  Do not call this before the skin
-	 * has been set on wgUser.
-	 */
-	public static function isWikiaMobile( $skin = null ){
-		wfProfileIn( __METHOD__ );
-
-		$isWikiaMobile = ( ( ( !empty( $skin ) ) ? $skin : F::app()->wg->User->getSkin() ) instanceof SkinWikiaMobile );
-
-		wfProfileOut( __METHOD__ );
-		return $isWikiaMobile;
 	}
 
 	/**
@@ -1210,11 +928,9 @@ class Wikia {
 			return false;
 		}
 
-		$ts = time();
 		$params = array(
 			'user' 			=> (string) $username,
-			'signature1' 	=> (string) $ts,
-			'token'			=> (string) wfGenerateUnsubToken( $email, $ts ),
+			'token'			=> (string) wfGenerateUnsubToken( $email ),
 		);
 
 		// Generate content verification signature
@@ -1224,89 +940,12 @@ class Wikia {
 		$signature = hash_hmac( $hash_algorithm, $data, $wgWikiaAuthTokenKeys[ 'private' ] );
 
 		// encode public information
-		$public_information = array( $username, $ts, $signature, $wgWikiaAuthTokenKeys[ 'public' ] );
+		$public_information = array( $username, $signature, $wgWikiaAuthTokenKeys[ 'public' ] );
 		$result = strtr( base64_encode( implode( "|", $public_information ) ), '+/=', '-_,' );
 
 		wfProfileOut( __METHOD__ );
 
 		return $result;
-	}
-
-
-	/**
-	 * Parse given message containing a wikitext list of items and return array of items
-	 *
-	 * @author macbre
-	 */
-	static public function parseMessageToArray($msgName, $forContent = false) {
-		wfProfileIn( __METHOD__ );
-		$items = array();
-		$message = $forContent ? wfMsgForContent($msgName) : wfMsg($msgName);
-
-		if (!wfEmptyMsg($msgName, $message)) {
-			$parsed = explode("\n", $message);
-
-			foreach($parsed as $item) {
-				$items[] = trim($item, ' *');
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
-		return $items;
-	}
-	/**
-	 * check user authentication key
-	 * @static
-	 * @access public
-	 * @param array $params
-	 */
-	static public function verifyUserSecretKey( $url, $hash_algorithm = 'sha256' ) {
-		global $wgWikiaAuthTokenKeys;
-		wfProfileIn( __METHOD__ );
-
-		@list( $user, $signature1, $signature2, $public_key ) = explode("|", base64_decode( strtr($url, '-_,', '+/=') ));
-
-		if ( empty( $user ) || empty( $signature1 ) || empty( $signature2 ) || empty ( $public_key) ) {
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-
-		# verification public key
-		if ( $wgWikiaAuthTokenKeys['public'] == $public_key ) {
-			$private_key = $wgWikiaAuthTokenKeys['private'];
-		} else {
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-
-		$oUser = User::newFromName( $user );
-		if ( !is_object($oUser) ) {
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-
-		// verify params
-		$email = $oUser->getEmail();
-		$params = array(
-			'user'			=> (string) $user,
-			'signature1'	=> (string) $signature1,
-			'token'			=> (string) wfGenerateUnsubToken( $email, $signature1 )
-		);
-
-		// message to hash
-		$message = serialize( $params );
-
-		// computed signature
-		$hash = hash_hmac( $hash_algorithm, $message, $private_key );
-
-		// compare values
-		if ( $hash != $signature2 ) {
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-
-		wfProfileOut( __METHOD__ );
-		return $params;
 	}
 
 	static public function isUnsubscribed( $to, $body, $subject ) {
@@ -1506,24 +1145,6 @@ class Wikia {
 	}
 
 	/**
-	 * Fallback actions from $wgDisabledActionsWithViewFallback to "view" (BugId:9964)
-	 *
-	 * @author macbre
-	 */
-	static public function onMediaWikiGetAction(MediaWiki $mediaWiki, RequestContext $context) {
-		global $wgDisabledActionsWithViewFallback;
-		$request = $context->getRequest();
-		$action = $request->getVal('action', 'view');
-
-		if ( in_array( $action, $wgDisabledActionsWithViewFallback ) ) {
-			$request->setVal('action', 'view');
-			wfDebug(__METHOD__ . ": '{$action}' action fallbacked to 'view'\n");
-		}
-
-		return true;
-	}
-
-	/**
 	 * Purge Common and Wikia and User css/js when those files are edited
 	 * Uses $wgOut->makeResourceLoaderLink which was protected, but has lots of logic we don't want to duplicate
 	 * This was rewritten from scratch as part of BAC-895
@@ -1669,46 +1290,6 @@ class Wikia {
 		}
 
 		return true;
-	}
-
-	/**
-	 * ord
-	 * Returns the character id using the approriate encoding
-	 *
-	 * @static
-	 * @access public
-	 * @author Wladyslaw Bodzek
-	 *
-	 * @param $char string Character
-	 * @param $encoding string [optional] Encoding
-	 *
-	 * @return int Character id
-	 *
-	 */
-	static public function ord( $char, $encoding = 'UTF-8' ) {
-		$char = mb_convert_encoding($char,'UCS-4BE',$encoding);
-		if ($char == '')
-			return false;
-
-		return reset(unpack("N",$char));
-	}
-
-	/**
-	 * chr
-	 * Returns the character using the approriate encoding
-	 *
-	 * @static
-	 * @access public
-	 * @author Wladyslaw Bodzek
-	 *
-	 * @param $ord int Character id
-	 * @param $encoding string [optional] Encoding
-	 *
-	 * @return string Character
-	 *
-	 */
-	static public function chr( $ord, $encoding = 'UTF-8' ) {
-		return mb_convert_encoding(pack("N",$ord),$encoding,'UCS-4BE');
 	}
 
 	/**
@@ -2118,21 +1699,19 @@ class Wikia {
 	static function onAfterSetupLocalFileRepo(Array &$repo) {
 		// $wgUploadPath: http://images.wikia.com/poznan/pl/images
 		// $wgFSSwiftContainer: poznan/pl
-		global $wgFSSwiftContainer, $wgFSSwiftServer, $wgEnableSwiftFileBackend, $wgUploadPath;
+		global $wgFSSwiftContainer, $wgFSSwiftServer, $wgUploadPath;
 
 		$path = trim( parse_url( $wgUploadPath, PHP_URL_PATH ), '/' );
 		$wgFSSwiftContainer = substr( $path, 0, -7 );
 
-		if ( !empty( $wgEnableSwiftFileBackend ) ) {
-			$repo['backend'] = 'swift-backend';
-			$repo['zones'] = array (
-				'public' => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images' ),
-				'temp'   => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/temp' ),
-				'thumb'  => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/thumb' ),
-				'deleted'=> array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/deleted' ),
-				'archive'=> array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/archive' )
-			);
-		}
+		$repo['backend'] = 'swift-backend';
+		$repo['zones'] = array (
+			'public' => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images' ),
+			'temp'   => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/temp' ),
+			'thumb'  => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/thumb' ),
+			'deleted'=> array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/deleted' ),
+			'archive'=> array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/archive' )
+		);
 
 		return true;
 	}
@@ -2146,12 +1725,10 @@ class Wikia {
 	 * @return bool true - it's a hook
 	 */
 	static function onBeforeRenderTimeline(&$backend, &$fname, $hash) {
-		global $wgEnableSwiftFileBackend, $wgFSSwiftContainer;
+		global $wgFSSwiftContainer;
 
-		if ( !empty( $wgEnableSwiftFileBackend ) ) {
-			$backend = FileBackendGroup::singleton()->get( 'swift-backend' );
-			$fname = 'mwstore://' . $backend->getName() . "/$wgFSSwiftContainer/images/timeline/$hash";
-		}
+		$backend = FileBackendGroup::singleton()->get( 'swift-backend' );
+		$fname = 'mwstore://' . $backend->getName() . "/$wgFSSwiftContainer/images/timeline/$hash";
 
 		return true;
 	}
@@ -2406,40 +1983,6 @@ class Wikia {
 		}
 
 		return true;
-	}
-
-	/**
-	 * Get an array of country codes and return the country names array indexed by corresponding codes
-	 * @param array $countryCodes
-	 * @return array Country names indexed by code
-	 */
-	public static function getCountryNames( array $countryCodes ) {
-		if ( empty( $countryCodes ) ) {
-			return [];
-		}
-
-		// This is hacky and I'm not proud of this :(
-		// Load only files required for country names to avoid loading the whole CLDR
-		// The files are included on the fly as needed instead of loading it every single time
-		global $IP;
-		require_once( "$IP/extensions/cldr/CldrNames.php" );
-		require_once( "$IP/extensions/cldr/CountryNames.body.php" );
-
-		$userLanguageCode = F::app()->wg->Lang->getCode();
-
-		// Retrieve the list of countries in user's language (via CLDR)
-		$countries = CountryNames::getNames( $userLanguageCode );
-		if ( empty( $countries ) ) {
-			return [];
-		}
-
-		foreach ( $countryCodes as $countryCode ) {
-			if ( isset( $countries[$countryCode] ) ) {
-				$countryNames[$countryCode] = $countries[$countryCode];
-			}
-		}
-
-		return $countryNames;
 	}
 
 	/**

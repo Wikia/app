@@ -53,7 +53,7 @@
 				case 'isValidEmailAddr':
 					return true;
 				default:
-					return $this->callOriginalGlobalFunction( 'wfRunHooks', func_get_args() );
+					return $this->callOriginalStaticMethod( 'Hooks', 'run', func_get_args() );
 			}
 		}
 
@@ -84,9 +84,9 @@
 			}
 
 			// required to prevent Phalanx checks
-			$mockRunHooks = $this->getGlobalFunctionMock( 'wfRunHooks' );
+			$mockRunHooks = $this->getStaticMethodMock( 'Hooks', 'run' );
 			$mockRunHooks->expects( $this->any() )
-				->method( 'wfRunHooks' )
+				->method( 'run' )
 				->will( $this->returnCallback( array( $this, 'runHooksCallback' ) ) );
 
 			$this->setUpMock();
@@ -269,7 +269,7 @@
 			);
 
 			$reqParams18 = array(
-				'userloginext01' => self::TEST_USERNAME . ':test' ,
+				'userloginext01' => self::TEST_USERNAME . ':test',
 			);
 
 			return array(
@@ -306,7 +306,7 @@
 				'error - not empty fake password' =>
 				array( $reqParams17, $mockUserParams1, $mockUserLoginForm1, 'error', $expMsg16, $expErrParam16 ),
 				'error - invalid user name with colon' =>
-					array( $reqParams18, $mockUserParams3, $mockUserLoginForm1, 'error', $expMsg4, $expErrParam1 ),
+					array ( $reqParams18, $mockUserParams3, $mockUserLoginForm1, 'error', $expMsg4, $expErrParam1 ),
 			);
 		}
 

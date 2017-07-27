@@ -28,7 +28,7 @@ class EditPageLayoutHooks {
 	static function onMakeGlobalVariablesScript( Array &$vars ) {
 		global $wgUser;
 
-		wfRunHooks( 'EditPageMakeGlobalVariablesScript', array( &$vars ) );
+		Hooks::run( 'EditPageMakeGlobalVariablesScript', array( &$vars ) );
 		$helper = EditPageLayoutHelper::getInstance();
 		$js = $helper->getJsVars();
 		foreach( $js as $key => $value ) {

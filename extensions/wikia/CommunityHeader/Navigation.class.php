@@ -2,8 +2,7 @@
 
 namespace Wikia\CommunityHeader;
 
-use \NavigationModel;
-use \Title;
+use DesignSystemCommunityHeaderModel;
 
 class Navigation {
 	public $discussLink;
@@ -11,84 +10,49 @@ class Navigation {
 	public $exploreLabel;
 	public $localNavigation;
 
-	public function __construct( $wikiText = null ) {
-		$navigationModel = new NavigationModel();
-		if ( empty( $wikiText ) ) {
-			$this->localNavigation =
-				$navigationModel->getLocalNavigationTree( NavigationModel::WIKI_LOCAL_MESSAGE );
-		} else {
-			$this->localNavigation = $navigationModel->getTreeFromText( $wikiText );
-		}
+	private $model;
 
-		$this->exploreLabel =
-			new Label( 'community-header-explore', Label::TYPE_TRANSLATABLE_TEXT );
+	public function __construct( DesignSystemCommunityHeaderModel $model, $wikiText = null ) {
+		$this->model = $model;
+		$this->localNavigation = $model->getWikiLocalNavigation( $wikiText );
+		$exploreMenu = $model->getExploreMenu();
+
+		$this->exploreLabel = new Label(
+			$exploreMenu['title']['key'], Label::TYPE_TRANSLATABLE_TEXT, $exploreMenu['image-data']['name']
+		);
 		$this->exploreItems = $this->getExploreItems();
 		$this->discussLink = $this->getDiscussLink();
 	}
 
 	private function getExploreItems(): array {
-		global $wgEnableCommunityPageExt, $wgEnableForumExt, $wgEnableDiscussions;
+		$exploreItems = $this->model->getExploreMenu()['items'];
 
-		$exploreItems = [
-			[
-				'title' => 'WikiActivity',
-				'key' => 'community-header-wiki-activity',
-				'tracking' => 'explore-activity',
-				'include' => true,
-			],
-			[
-				'title' => 'Random',
-				'key' => 'community-header-random-page',
-				'tracking' => 'explore-random',
-				'include' => true,
-			],
-			[
-				'title' => 'Community',
-				'key' => 'community-header-community',
-				'tracking' => 'explore-community',
-				'include' => !empty( $wgEnableCommunityPageExt ),
-			],
-			[
-				'title' => 'Videos',
-				'key' => 'community-header-videos',
-				'tracking' => 'explore-videos',
-				'include' => true,
-			],
-			[
-				'title' => 'Images',
-				'key' => 'community-header-images',
-				'tracking' => 'explore-images',
-				'include' => true,
-			],
-			[
-				'title' => 'Forum',
-				'key' => 'community-header-forum',
-				'tracking' => 'explore-forum',
-				'include' => !empty( $wgEnableForumExt ) && !empty( $wgEnableDiscussions ),
-			],
-		];
-
-		return array_map( function ( $item ) {
-			return new Link( new Label( $item['key'], Label::TYPE_TRANSLATABLE_TEXT ),
-				Title::newFromText( $item['title'], NS_SPECIAL )->getLocalURL(),
-				$item['tracking'] );
-		}, array_filter( $exploreItems, function ( $item ) {
-			return $item['include'];
-		} ) );
+		return array_map(
+			function ( $item ) {
+				return new Link(
+					new Label( $item['title']['key'], Label::TYPE_TRANSLATABLE_TEXT ),
+					$item['href'],
+					$item['tracking_label']
+				);
+			},
+			$exploreItems
+		);
 	}
 
 	private function getDiscussLink() {
-		global $wgEnableForumExt, $wgEnableDiscussions;
-
+		$discussData = $this->model->getDiscussLinkData();
 		$discussLink = null;
-		if ( !empty( $wgEnableDiscussions ) ) {
-			$discussLink =
-				new Link( new Label( 'community-header-discuss', Label::TYPE_TRANSLATABLE_TEXT ),
-					'/d/f', 'discuss' );
-		} elseif ( !empty( $wgEnableForumExt ) ) {
-			$discussLink =
-				new Link( new Label( 'community-header-forum', Label::TYPE_TRANSLATABLE_TEXT ),
-					Title::newFromText( 'Forum', NS_SPECIAL )->getLocalURL(), 'forum' );
+
+		if ( !empty( $discussData ) ) {
+			$discussLink = new Link(
+				new Label(
+					$discussData['title']['key'],
+					Label::TYPE_TRANSLATABLE_TEXT,
+					$discussData['image-data']['name']
+				),
+				$discussData['href'],
+				$discussData['tracking_label']
+			);
 		}
 
 		return $discussLink;

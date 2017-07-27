@@ -15,6 +15,7 @@
 	-webkit-font-smoothing: antialiased;
 	padding: 16px 0 12px;
 	position: relative;
+	width: 100%;
 	z-index: 4;
 
 	button {
@@ -77,6 +78,7 @@
 		&-in {
 			font-weight: 600;
 			padding-right: 4px;
+			white-space: nowrap;
 		}
 
 		&-dropdown {
@@ -119,6 +121,10 @@
 		line-height: 1;
 		max-width: 100%;
 		word-wrap: break-word;
+
+		i {
+			font-style: italic;
+		}
 	}
 
 	&__separator {
@@ -127,6 +133,7 @@
 		height: 1px;
 		margin-bottom: 18px;
 		margin-top: 0;
+		width: 100%;
 	}
 
 	&__subtitle {

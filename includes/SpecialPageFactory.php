@@ -186,7 +186,7 @@ class SpecialPageFactory {
 
 			// Run hooks
 			// This hook can be used to remove undesired built-in special pages
-			wfRunHooks( 'SpecialPage_initList', array( &self::$mList ) );
+			Hooks::run( 'SpecialPage_initList', array( &self::$mList ) );
 
 			// Cast to object: func()[$key] doesn't work, but func()->$key does
 			settype( self::$mList, 'object' );

@@ -17,7 +17,11 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 				isMobile: noop
 			},
 			adContext: {
+				addCallback: noop,
 				getContext: noop
+			},
+			slotsContext: {
+				isApplicable: noop
 			}
 		},
 		testCases = [
@@ -55,7 +59,7 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 			},
 			{
 				slotName: 'BOTTOM_LEADERBOARD',
-				adUnit: '/5441/wka2a.OTHER/bottom_leaderboard/tablet/oasis-home/_godofwar-gaming'
+				adUnit: '/5441/wka2a.PF/bottom_leaderboard/tablet/oasis-home/_godofwar-gaming'
 			},
 			{
 				slotName: 'INCONTENT_PLAYER',
@@ -63,7 +67,19 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 			},
 			{
 				slotName: 'BOTTOM_LEADERBOARD',
-				adUnit: '/5441/wka2a.OTHER/bottom_leaderboard/tablet/oasis-home/_godofwar-gaming'
+				adUnit: '/5441/wka2a.PF/bottom_leaderboard/tablet/oasis-home/_godofwar-gaming'
+			},
+			{
+				slotName: 'FEATURED',
+				adUnit: '/5441/wka2a.VIDEO/featured/tablet/oasis-home/_godofwar-gaming'
+			},
+			{
+				slotName: 'OOYALA',
+				adUnit: '/5441/wka2a.VIDEO/ooyala/tablet/oasis-home/_godofwar-gaming'
+			},
+			{
+				slotName: 'UAP_BFAA',
+				adUnit: '/5441/wka2a.VIDEO/uap_bfaa/tablet/oasis-home/_godofwar-gaming'
 			}
 		],
 		testCasesForValidation = [
@@ -87,9 +103,11 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.slot.service.megaAdUnitBuilder'](
+			mocks.adContext,
 			mocks.page,
-			mocks.browserDetect,
-			mocks.adContext);
+			mocks.slotsContext,
+			mocks.browserDetect
+		);
 	}
 
 	function mockPageParams(params) {
@@ -97,9 +115,11 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 		mocks.page.getPageLevelParams.and.returnValue(params);
 	}
 
-	function mockTargetingWikiIsTop1000(isTop1000) {
+	function mockTargeting(isTop1000) {
 		spyOn(mocks.adContext, 'getContext');
-		mocks.adContext.getContext.and.returnValue({targeting: {wikiIsTop1000: isTop1000}});
+		mocks.adContext.getContext.and.returnValue({targeting: {
+			wikiIsTop1000: isTop1000
+		}});
 	}
 
 	it('Should build new ad unit', function () {
@@ -109,7 +129,7 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 			's2': 'home',
 			'skin': 'mercury'
 		});
-		mockTargetingWikiIsTop1000(true);
+		mockTargeting(true);
 
 		expect(getModule().build('MOBILE_PREFOOTER', 'mobile_remnant'))
 			.toEqual('/5441/wka2a.PF/mobile_prefooter/smartphone/mercury-home/_godofwar-gaming');
@@ -117,7 +137,7 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 
 	it('Should build new ad unit with correct tablet recognition', function () {
 		mockPageParams(DEFAULT_PAGE_PARAMS);
-		mockTargetingWikiIsTop1000(true);
+		mockTargeting(true);
 
 		spyOn(mocks.browserDetect, 'isMobile').and.returnValue(true);
 
@@ -125,9 +145,61 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 			.toEqual('/5441/wka2a.PF/mobile_prefooter/tablet/oasis-home/_godofwar-gaming');
 	});
 
+	it('Should build new ad unit with featured video', function () {
+		mockPageParams({
+			's0': 'gaming',
+			's1': '_godofwar',
+			's2': 'fv-article',
+			'skin': 'mercury'
+		});
+		mockTargeting(true);
+
+		expect(getModule().build('MOBILE_PREFOOTER', 'mobile_remnant'))
+			.toEqual('/5441/wka2a.PF/mobile_prefooter/smartphone/mercury-fv-article/_godofwar-gaming');
+	});
+
+	it('Should build new ad unit with featured video', function () {
+		mockPageParams({
+			's0': 'gaming',
+			's1': '_godofwar',
+			's2': 'fv-article',
+			'skin': 'oasis'
+		});
+		mockTargeting(true);
+
+		expect(getModule().build('MOBILE_PREFOOTER', 'mobile_remnant'))
+			.toEqual('/5441/wka2a.PF/mobile_prefooter/desktop/oasis-fv-article/_godofwar-gaming');
+	});
+
+	it('Should build new ad unit with IC info', function () {
+		mockPageParams({
+			's0': 'gaming',
+			's1': '_godofwar',
+			's2': 'article',
+			'skin': 'oasis'
+		});
+		mockTargeting(true);
+		spyOn(mocks.slotsContext, 'isApplicable').and.returnValue(true);
+
+		expect(getModule().build('TOP_LEADERBOARD', 'gpt')).toContain('/oasis-article-ic/');
+	});
+
+	it('Should build new ad unit with FV and IC info', function () {
+		mockPageParams({
+			's0': 'gaming',
+			's1': '_godofwar',
+			's2': 'fv-article',
+			'skin': 'oasis'
+		});
+		mockTargeting(true);
+		spyOn(mocks.slotsContext, 'isApplicable').and.returnValue(true);
+
+		expect(getModule().build('TOP_LEADERBOARD', 'gpt')).toContain('/oasis-fv-article-ic/');
+	});
+
 	it('Should build new ad unit for wiki not in top 1000', function () {
 		mockPageParams(DEFAULT_PAGE_PARAMS);
-		mockTargetingWikiIsTop1000(false);
+		mockTargeting(false);
 
 		spyOn(mocks.browserDetect, 'isMobile').and.returnValue(true);
 
@@ -137,7 +209,7 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 
 	it('Should build new ad unit non-remnant provider with wka1a', function () {
 		mockPageParams(DEFAULT_PAGE_PARAMS);
-		mockTargetingWikiIsTop1000(true);
+		mockTargeting(true);
 
 		expect(getModule().build('TOP_LEADERBOARD', 'gpt'))
 			.toEqual('/5441/wka1a.LB/top_leaderboard/desktop/oasis-home/_godofwar-gaming');
@@ -150,7 +222,7 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 			's2': 'special',
 			'skin': 'oasis'
 		});
-		mockTargetingWikiIsTop1000(true);
+		mockTargeting(true);
 
 		spyOn(mocks.browserDetect, 'isMobile').and.returnValue(true);
 
@@ -175,7 +247,7 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 	testCases.forEach(function (testCase) {
 		it('Should build new ad unit without correct pos group', function () {
 			mockPageParams(DEFAULT_PAGE_PARAMS);
-			mockTargetingWikiIsTop1000(true);
+			mockTargeting(true);
 
 			spyOn(mocks.browserDetect, 'isMobile').and.returnValue(true);
 

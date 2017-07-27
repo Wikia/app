@@ -1,1 +1,0 @@
-<li class="wikia-seasons-header-lights"></li>

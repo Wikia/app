@@ -16,13 +16,17 @@ var ChatWidget = {
 		}
 
 		// make sure we start processing after ChatModule templates is loaded
-		if ($('.chat-module').length) {
+		// SUS-1202: refresh user list for in-content chat widget, the one on the right rail is always loaded fresh
+		if ($('.chat-module').not('.rail-module').length) {
 			if (!ChatWidget.loading) {
 				// if we're not loading yet - start it
 				ChatWidget.loading = true;
 				ChatWidget.loadDataAndInitializeModules();
 			}
 		}
+
+		// we do not need to wait for widgets to be initialized
+		ChatWidget.initializeChatModules();
 	},
 
 	openChat: function (event) {
@@ -53,8 +57,6 @@ var ChatWidget = {
 				// cache result
 				ChatWidget.users = users;
 			}
-
-			ChatWidget.initializeChatModules();
 		});
 	},
 

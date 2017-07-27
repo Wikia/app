@@ -96,13 +96,9 @@ class MercuryApiArticleHandler {
 	}
 
 	public static function getFeaturedVideoDetails( Title $title ): array {
-		global $wgEnableArticleFeaturedVideo, $wgArticleVideoFeaturedVideos;
+		$featuredVideo = ArticleVideoContext::getFeaturedVideoData( $title->getPrefixedDBkey() );
 
-		$prefixedDBkey = $title->getPrefixedDBkey();
-
-		if ( !empty( $wgEnableArticleFeaturedVideo ) && ArticleVideoContext::isFeaturedVideoEmbedded( $prefixedDBkey ) ) {
-			$featuredVideo = $wgArticleVideoFeaturedVideos[$prefixedDBkey];
-
+		if ( !empty( $featuredVideo ) ) {
 			return [
 				'type' => 'video',
 				'context' => 'featured-video',
@@ -111,9 +107,12 @@ class MercuryApiArticleHandler {
 				'embed' => [
 					'provider' => 'ooyala-v4',
 					'jsParams' => [
-						'videoId' => $featuredVideo['videoId'],
+						'videoId' => $featuredVideo['videoId']
 					]
-				]
+				],
+				'title' => $featuredVideo['title'],
+				'duration' => $featuredVideo['duration'],
+				'labels' => $featuredVideo['labels']
 			];
 		}
 

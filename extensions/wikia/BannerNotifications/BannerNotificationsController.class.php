@@ -185,7 +185,7 @@ class BannerNotificationsController extends WikiaController {
 				$pageName
 			)->inContentLanguage()->parse();
 
-			wfRunHooks( 'OasisAddPageDeletedConfirmationMessage', array( &$title, &$message ) );
+			Hooks::run( 'OasisAddPageDeletedConfirmationMessage', array( &$title, &$message ) );
 
 			self::addConfirmation( $message, self::CONFIRMATION_CONFIRM );
 

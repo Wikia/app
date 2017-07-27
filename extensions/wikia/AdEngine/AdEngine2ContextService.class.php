@@ -53,6 +53,7 @@ class AdEngine2ContextService {
 					'sourcePointRecovery' => ARecoveryModule::isSourcePointRecoveryEnabled(),
 					'pageFairDetectionUrl' => $pageFairDetectionUrl,
 					'pageFairRecovery' => ARecoveryModule::isPageFairRecoveryEnabled(),
+					'instartLogicRecovery' => ARecoveryModule::isInstartLogicRecoveryEnabled(),
 					'prebidBidderUrl' => $prebidBidderUrl
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
@@ -79,6 +80,7 @@ class AdEngine2ContextService {
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
 					'evolve2' => $wg->AdDriverUseEvolve2,
+					'audienceNetwork' => $wg->AdDriverUseAudienceNetworkBidder,
 					'rubiconFastlane' => AnalyticsProviderRubiconFastlane::isEnabled()
 				] ),
 				'slots' => $this->filterOutEmptyItems( [

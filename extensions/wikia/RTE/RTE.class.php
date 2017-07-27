@@ -185,7 +185,7 @@ class RTE {
 		}
 
 		// allow other extensions to add extra HTML to edit form
-		wfRunHooks('RTEAddToEditForm', array(&$form, &$out));
+		Hooks::run('RTEAddToEditForm', array(&$form, &$out));
 
 		wfProfileOut(__METHOD__);
 
@@ -265,7 +265,7 @@ class RTE {
 		$vars['RTECookiePath'] = $wgCookiePath;
 
 		// allow other extensions to add extra global JS variables to edit form
-		wfRunHooks('RTEAddGlobalVariablesScript', array(&$vars));
+		Hooks::run('RTEAddGlobalVariablesScript', array(&$vars));
 
 		wfProfileOut(__METHOD__);
 		return true;
@@ -529,17 +529,6 @@ HTML
 		if ($var !== NULL) {
 			$debug .= ' - >>' . print_r($var, true) . '<<';
 		}
-
-		wfDebug("{$debug}\n");
-	}
-
-	/**
-	 * Add hexdump of given variable to MW log
-	 *
-	 * @author Macbre
-	 */
-	public static function hex( $method, $string ) {
-		$debug = "RTE: {$method}\n" . Wikia::hex($string, false, false, true);
 
 		wfDebug("{$debug}\n");
 	}

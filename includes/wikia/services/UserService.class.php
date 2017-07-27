@@ -3,7 +3,7 @@ use Wikia\DependencyInjection\Injector;
 use Wikia\Logger\WikiaLogger;
 use Wikia\Service\Helios\HeliosClient;
 
-class UserService extends Service {
+class UserService {
 
 	const CACHE_EXPIRATION = 86400;//1 day
 

@@ -41,14 +41,14 @@ class LyricFindHooks {
 	 */
 	static public function onAlternateEdit(EditPage $editPage) {
 		$wg = F::app()->wg;
-		$wf = F::app()->wf;
 		$title = $editPage->getTitle();
 
 		// Block view-source on the certain pages.
 		if($title->exists()){
 			// Look at the page-props to see if this page is blocked.
 			if(!$wg->user->isAllowed( 'editlyricfind' )){ // some users (staff/admin) will be allowed to edit these to prevent vandalism/spam issues.
-				$removedProp = $wf->GetWikiaPageProp(WPP_LYRICFIND_MARKED_FOR_REMOVAL, $title->getArticleID());
+				$removedProp = wfGetWikiaPageProp(WPP_LYRICFIND_MARKED_FOR_REMOVAL,
+					$title->getArticleID());
 				if(!empty($removedProp)){
 					$wg->Out->addHTML(Wikia::errorbox(wfMessage('lyricfind-editpage-blocked')));
 					$blockEdit = true;

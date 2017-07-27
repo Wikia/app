@@ -15,11 +15,11 @@
   ],
   "config": {
     "vendor-dir": "lib/composer",
-    "prepend-autoloader": false
+    "prepend-autoloader": false,
+    "optimize-autoloader": true
   },
   "require": {
     "wikia/fluent-sql-php": "1.0.*",
-    "videlalvaro/php-amqplib": "2.2.*",
     "monolog/monolog": "^1.18",
     "phpunit/phpunit": "^6.2",
     "facebook/php-sdk-v4": "4.0.*",
@@ -34,6 +34,16 @@
     "param-processor/param-processor": "~1.2",
     "data-values/geo": "~1.0",
     "mediawiki/maps": "3.5.1",
-    "mediawiki/semantic-media-wiki": "2.4.2.6"
+    "mediawiki/semantic-media-wiki": "2.4.2.6",
+    "ooyala/v2-api": "^2.0",
+    "pear/Mail_Mime": "^1.10",
+    "pear/archive_tar": "^1.4",
+    "wikia/mail2": "^0.1.1",
+    "wikia/net_socket2": "^0.1.1",
+    "wikia/net_smtp2": "^0.1.0",
+    "wikia/simplehtmldom": "^1.6",
+    "simplepie/simplepie": "^1.5",
+    "wikia/semantic-scribunto": "^1.1",
+    "php-amqplib/php-amqplib": "^2.6"
   }
 }

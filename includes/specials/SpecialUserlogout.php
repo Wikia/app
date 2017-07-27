@@ -75,7 +75,7 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 		wfResetSessionID();
 
 		$injectedHTML = '';
-		wfRunHooks( 'UserLogoutComplete', array( &$user, &$injectedHTML, $oldName ) );
+		Hooks::run( 'UserLogoutComplete', array( &$user, &$injectedHTML, $oldName ) );
 
 		// redirection
 

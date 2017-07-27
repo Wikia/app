@@ -20,7 +20,6 @@ return [
 			'wikia.geo',
 			'wikia.fbLocale',
 			'wikia.loader',
-			'wikia.localStorage',
 			'wikia.location',
 			'wikia.log',
 			'wikia.mw',
@@ -46,7 +45,6 @@ return [
 		'scripts' => 'resources/wikia/modules/cache.js',
 		'dependencies' => [
 			'amd',
-			'wikia.localStorage',
 			'wikia.window',
 		],
 	],
@@ -59,13 +57,6 @@ return [
 	],
 	'wikia.location' => [
 		'scripts' => 'resources/wikia/modules/location.js',
-		'dependencies' => [
-			'amd',
-			'wikia.window',
-		],
-	],
-	'wikia.localStorage' => [
-		'scripts' => 'resources/wikia/modules/localStorage.js',
 		'dependencies' => [
 			'amd',
 			'wikia.window',

@@ -450,7 +450,7 @@ if ( $wgCommandLineMode ) {
 	wfDebug( "$debug\n" );
 }
 
-wfRunHooks('WebRequestInitialized', [ $wgRequest ] ); // Wikia change
+Hooks::run('WebRequestInitialized', [ $wgRequest ] ); // Wikia change
 
 wfProfileOut( $fname . '-misc1' );
 wfProfileIn( $fname . '-memcached' );
@@ -466,7 +466,7 @@ wfDebug( 'CACHES: ' . get_class( $wgMemc ) . '[main] ' .
 wfProfileOut( $fname . '-memcached' );
 
 # # Most of the config is out, some might want to run hooks here.
-wfRunHooks( 'SetupAfterCache' );
+Hooks::run( 'SetupAfterCache' );
 
 wfProfileIn( $fname . '-session' );
 
@@ -495,7 +495,7 @@ $wgContLang->initContLang();
 
 $wgRequest->interpolateTitle();
 $wgUser = RequestContext::getMain()->getUser(); # BackCompat
-wfRunHooks( 'AfterSetupUser', array( $wgUser ) ); // Wikia change
+Hooks::run( 'AfterSetupUser', array( $wgUser ) ); // Wikia change
 
 /**
  * @var Language
@@ -514,7 +514,7 @@ $wgParser = new StubObject( 'wgParser', $wgParserConf['class'], array( $wgParser
 
 if ( !is_object( $wgAuth ) ) {
 	$wgAuth = new StubObject( 'wgAuth', 'AuthPlugin' );
-	wfRunHooks( 'AuthPluginSetup', array( &$wgAuth ) );
+	Hooks::run( 'AuthPluginSetup', array( &$wgAuth ) );
 }
 
 # Placeholders in case of DB error

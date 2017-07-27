@@ -21,12 +21,4 @@ class LocalSitemapPageHooks {
 
 		return true;
 	}
-
-	public static function onPageHeaderLanguageSelectorShouldDisplay( \Title $title, bool &$shouldDisplayLangSelector) {
-		if ( $title->getBaseText() === 'Local Sitemap' ) {
-			$shouldDisplayLangSelector = false;
-		}
-
-		return true;
-	}
 }

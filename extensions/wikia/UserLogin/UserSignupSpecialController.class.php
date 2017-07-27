@@ -101,7 +101,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		}
 
 		// hide things in the skin
-		$this->wg->SuppressWikiHeader = true;
+		$this->wg->SuppressCommunityHeader = true;
 		$this->wg->SuppressPageHeader = true;
 		$this->wg->SuppressFooter = true;
 		$this->wg->SuppressAds = true;
@@ -316,7 +316,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			$this->response->addAsset( 'extensions/wikia/UserLogin/js/ConfirmEmail.js' );
 
 			// hide things in the skin
-			$this->wg->SuppressWikiHeader = true;
+			$this->wg->SuppressCommunityHeader = true;
 			$this->wg->SuppressPageHeader = true;
 			$this->wg->SuppressFooter = true;
 			$this->wg->SuppressAds = true;

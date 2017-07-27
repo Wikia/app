@@ -12,4 +12,3 @@ $wgExtensionMessagesFiles['LocalSitemapPage'] = __DIR__ . '/LocalSitemapPage.i18
 // hooks
 $wgHooks['ArticleFromTitle'][] = 'LocalSitemapPageHooks::onArticleFromTitle';
 $wgHooks['PageHeaderActionButtonShouldDisplay'][] = 'LocalSitemapPageHooks::onPageHeaderActionButtonShouldDisplay';
-$wgHooks['PageHeaderLanguageSelectorShouldDisplay'][] = 'LocalSitemapPageHooks::onPageHeaderLanguageSelectorShouldDisplay';

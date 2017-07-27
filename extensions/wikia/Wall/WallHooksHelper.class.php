@@ -89,13 +89,12 @@ class WallHooksHelper {
 			if ( $isDeleted && !$showDeleted ) {
 				$app->wg->Out->addHTML( $app->renderView(
 					'WallController',
-					'messageDeleted',
-					[ 'title' => wfMessage( 'wall-deleted-msg-pagetitle' )->text() ]
+					'messageDeleted'
 				) );
 				return true;
 			}
 
-			if ( !wfRunHooks( 'WallBeforeRenderThread', [ $mainTitle, $wallMessage ] ) ) {
+			if ( !Hooks::run( 'WallBeforeRenderThread', [ $mainTitle, $wallMessage ] ) ) {
 				return true;
 			}
 
@@ -526,91 +525,6 @@ class WallHooksHelper {
 
 		return true;
 	}
-
-	/**
-	 * @brief Adds an action button on user talk archive page
-	 *
-	 * @param WikiaResponse $response
-	 * @param $ns
-	 * @param $skin
-	 * @return bool
-	 *
-	 * @author Andrzej 'nAndy' Łukaszewski
-	 */
-	static public function onPageHeaderIndexAfterActionButtonPrepared( $response, $ns, $skin ) {
-		$app = F::App();
-		$helper = new WallHelper();
-
-		//return early instead wrap everything with brackets
-		if ( empty( $app->wg->EnableWallExt ) ) {
-			return true;
-		}
-
-		$title = $app->wg->Title;
-		$parts = explode( '/', $title->getText() );
-		$action = $response->getVal( 'action' );
-		$dropdown = $response->getVal( 'dropdown' );
-		$canEdit = $app->wg->User->isAllowed( 'editwallarchivedpages' );
-
-		if ( $title->isSubpage() && !empty( $parts[ 1 ] ) ) {
-			// user talk archive
-			if ($ns === NS_USER_WALL
-				&& mb_strtolower( str_replace( ' ', '_', $parts[ 1 ] ) ) === mb_strtolower( $helper->getArchiveSubPageText())){
-
-				$userTalkPageTitle = $helper->getTitle( NS_USER_TALK );
-				$action = self::getAction( $userTalkPageTitle, $canEdit );
-				$dropdown = self::getDropDown( $userTalkPageTitle );
-			}
-
-			// subpage
-			if($title->getNamespace() === NS_USER_WALL
-				&& mb_strtolower( str_replace( ' ', '_', $parts[ 1 ] ) ) !== mb_strtolower( $helper->getArchiveSubPageText())){
-
-				$userTalkPageTitle = $helper->getTitle( NS_USER_TALK, $parts[ 1 ] );
-				$action = self::getAction( $userTalkPageTitle, $canEdit );
-				$dropdown = self::getDropDown( $userTalkPageTitle );
-			}
-		}
-		// update the response object with any changes
-		$response->setVal( 'action', $action );
-		$response->setVal( 'dropdown', $dropdown );
-		return true;
-	}
-
-	/**
-	 * @param Title $userTalkPageTitle
-	 * @param $canEdit
-	 * @return array
-	 */
-	private static function getAction( Title $userTalkPageTitle, $canEdit ) {
-		$action = [
-			'class' => '',
-			'text' => wfMessage( 'viewsource' )->text(),
-			'href' => $userTalkPageTitle->getLocalUrl( [ 'action' => 'edit' ] ),
-		];
-
-		if ( $canEdit ) {
-			$action[ 'text' ] = wfMessage( 'edit' )->text();
-			$action[ 'id' ] = 'talkArchiveEditButton';
-			return $action;
-		}
-		return $action;
-	}
-
-	/**
-	 * @param Title $userTalkPageTitle
-	 * @return array
-	 */
-	private static function getDropDown( Title $userTalkPageTitle ) {
-		$dropdown = [
-			'history' => [
-				'href' => $userTalkPageTitle->getLocalUrl( [ 'action' => 'history' ] ),
-				'text' => wfMessage( 'history_short' )->text(),
-			],
-		];
-		return $dropdown;
-	}
-
 
 	/**
 	 * @brief Redirects to current title if it is in NS_USER_WALL namespace
@@ -1315,7 +1229,7 @@ class WallHooksHelper {
 	static protected function getMessagePrefix( $namespace ) {
 		$namespace = MWNamespace::getSubject( $namespace );
 		$prefix = '';
-		if ( !wfRunHooks( 'WallRecentchangesMessagePrefix', [ $namespace, &$prefix ] ) ) {
+		if ( !Hooks::run( 'WallRecentchangesMessagePrefix', [ $namespace, &$prefix ] ) ) {
 			return $prefix;
 		}
 
@@ -1745,35 +1659,7 @@ class WallHooksHelper {
 	}
 
 	/**
-	 * Changes fields in a PageHeaderModule instance to display correct content in <h1 /> and <h2 /> tags
-	 *
-	 * @param PageHeaderController $pageHeaderModule
-	 * @param int $ns
-	 * @param Boolean $isPreview
-	 * @param Boolean $isShowChanges
-	 * @param Boolean $isDiff
-	 * @param Boolean $isEdit
-	 * @param Boolean $isHistory
-	 *
-	 * @return true
-	 */
-	static public function onPageHeaderEditPage( $pageHeaderModule, $ns, $isPreview, $isShowChanges, $isDiff, $isEdit, $isHistory ) {
-		if (  WallHelper::isWallNamespace( $ns ) && $isDiff ) {
-			$app = F::App();
-
-			$app->wg->Out->addExtensionStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/Wall/css/WallDiffPage.scss' ) );
-
-			$wmRef = '';
-			$meta = static::getMetatitleFromTitleObject( $app->wg->Title, $wmRef );
-			$pageHeaderModule->title = wfMessage( 'oasis-page-header-diff' )->rawParams( htmlspecialchars( $meta ) )->parse();
-			$pageHeaderModule->subtitle = Xml::element( 'a', [ 'href' => $wmRef->getMessagePageUrl() ], wfMessage( 'oasis-page-header-back-to-article' )->text() );
-		}
-
-		return true;
-	}
-
-	/**
-	 * Helper method which gets meta title from an WallMessage instance; used in WallHooksHelper::onDiffViewHeader() and WallHooksHelper::onPageHeaderEditPage()
+	 * Helper method which gets meta title from an WallMessage instance; used in WallHooksHelper::onDiffViewHeader()
 	 * @param Title $title
 	 * @param mixed $wmRef a variable which value will be created WallMessage instance
 	 *
@@ -2324,5 +2210,28 @@ class WallHooksHelper {
 		}
 
 		return $allow;
+	}
+
+	/**
+	 * @param string $pageSubtitle
+	 *
+	 * @param Title $title
+	 * @return bool
+	 */
+	public static function onAfterPageHeaderPageSubtitle( &$pageSubtitle, Title $title ): bool {
+		if (
+			$title->getNamespace() === NS_USER_WALL_MESSAGE &&
+			RequestContext::getMain()->getRequest()->getVal( 'action' ) !== 'history'
+		) {
+			$pageSubtitle = F::app()->renderView(
+				'Wall',
+				'brickHeader',
+				[
+					'id' => $title->getText()
+				]
+			);
+		}
+
+		return true;
 	}
 }

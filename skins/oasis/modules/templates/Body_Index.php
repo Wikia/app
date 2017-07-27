@@ -17,11 +17,6 @@
 <? if ( $displayHeader ): ?>
 	<h2><?= wfMessage( 'oasis-global-page-header' )->escaped(); ?></h2>
 <? endif; ?>
-<div class="skiplinkcontainer">
-<a class="skiplink" rel="nofollow" href="#WikiaArticle"><?= wfMessage( 'oasis-skip-to-content' )->escaped(); ?></a>
-<a class="skiplink wikinav" rel="nofollow" href="#WikiHeader"><?= wfMessage( 'oasis-skip-to-wiki-navigation' )->escaped(); ?></a>
-<a class="skiplink sitenav" rel="nofollow" href="#GlobalNavigation"><?= wfMessage( 'oasis-skip-to-site-navigation' )->escaped(); ?></a>
-</div>
 <?= $afterBodyHtml ?>
 
 <div id="ad-skin" class="wikia-ad noprint"></div>
@@ -31,7 +26,6 @@
 	<?= $app->renderView( 'BannerNotifications', 'Confirmation' ) ?>
 </div>
 <?= $app->renderView( 'Ad', 'Top' ) ?>
-<?= empty( $wg->EnableEBS ) ? '' : $app->renderView( 'EmergencyBroadcastSystem', 'index' ); ?>
 
 <?= $app->renderView('AdEmptyContainer', 'Index', ['slotName' => 'TOP_LEADERBOARD_AB']); ?>
 
@@ -39,8 +33,8 @@
 
 <?= $beforeWikiaPageHtml ?>
 
-<? if ( empty( $wg->SuppressWikiHeader ) && !WikiaPageType::isCorporatePage() ) : ?>
-	<?= $app->renderView( 'CommunityHeader', 'index' ) ?>
+<? if ( empty( $wg->SuppressCommunityHeader ) && !WikiaPageType::isCorporatePage() && $wg->user->isAllowed('read')) : ?>
+	<?= $app->renderView( 'CommunityHeaderService', 'index' ) ?>
 <? endif; ?>
 
 <!-- empty onclick event needs to be applied here to ensure that wds dropdowns work correctly on ios -->
@@ -55,7 +49,7 @@
 			<?= $app->renderView( 'ArticleInterlang', 'Index' ) ?>
 		<? endif; ?>
 
-		<? if ( $headerModuleName == 'UserPagesHeader' && ( $headerModuleAction != 'BlogPost' && $headerModuleAction != 'BlogListing' ) ) : ?>
+		<? if ( $headerModuleName === 'UserPagesHeader' ) : ?>
 			<?= $app->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams ) ?>
 		<? endif; ?>
 
@@ -71,14 +65,13 @@
 		<article id="WikiaMainContent" class="WikiaMainContent<?= !empty( $isGridLayoutEnabled ) ? $railModulesExist ? ' grid-4' : ' grid-6' : '' ?>">
 			<div id="WikiaMainContentContainer" class="WikiaMainContentContainer">
 				<?php
-					// render UserPagesHeader or PageHeader or nothing...
-					if ( $headerModuleName ) {
-						if ( $headerModuleName == 'UserPagesHeader' ) {
-							if ( $headerModuleAction !== 'BlogPost' && $headerModuleAction !== 'BlogListing' ) {
-								// Show just the edit button
-								echo $app->renderView( 'UserProfilePage', 'renderActionButton', array() );
-							}
-						}
+					if (
+						$headerModuleName === 'UserPagesHeader' &&
+						$headerModuleAction !== 'BlogPost' &&
+						$headerModuleAction !== 'BlogListing'
+					) {
+						// Show just the edit button
+						echo $app->renderView( 'UserProfilePage', 'renderActionButton', array() );
 					}
 				?>
 
@@ -90,7 +83,7 @@
 					<?= $app->renderView( 'ArticleVideo', 'related' ) ?>
 				<? endif; ?>
 
-				<? if ( $subtitle != '' && $headerModuleName == 'UserPagesHeader' ) : ?>
+				<? if ( $subtitle != '' && $headerModuleName === 'UserPagesHeader' ) : ?>
 					<div id="contentSub"><?= $subtitle ?></div>
 				<? endif; ?>
 

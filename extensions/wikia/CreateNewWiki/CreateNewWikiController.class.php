@@ -23,11 +23,11 @@ class CreateNewWikiController extends WikiaController {
 	const LANG_ALL_AGES_OPT        = 'en';
 
 	public function index() {
-		global $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressToolbar, $wgRequest, $wgUser, $wgWikiaBaseDomain;
+		global $wgSuppressCommunityHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressToolbar, $wgRequest, $wgUser, $wgWikiaBaseDomain;
 		wfProfileIn( __METHOD__ );
 
 		// hide some default oasis UI things
-		$wgSuppressWikiHeader = true;
+		$wgSuppressCommunityHeader = true;
 		$wgSuppressPageHeader = true;
 		$wgSuppressFooter = false;
 		$wgSuppressToolbar = true;
@@ -53,8 +53,8 @@ class CreateNewWikiController extends WikiaController {
 
 		$this->setupVerticalsAndCategories();
 
-		$this->aTopLanguages = explode(',', wfMsg('autocreatewiki-language-top-list'));
-		$languages = wfGetFixedLanguageNames();
+		$this->aTopLanguages = WikiaLanguage::getSupportedLanguages();
+		$languages = WikiaLanguage::getRequestSupportedLanguages();
 		asort( $languages );
 		$this->aLanguages = $languages;
 
@@ -284,7 +284,7 @@ class CreateNewWikiController extends WikiaController {
 		$description = $params[ 'wDescription' ];
 		if ( !empty( $description ) ) {
 			$blockedKeyword = '';
-			wfRunHooks( 'CheckContent', array( $description, &$blockedKeyword ) );
+			Hooks::run( 'CheckContent', array( $description, &$blockedKeyword ) );
 			if ( !empty( $blockedKeyword ) ) {
 				$this->setContentBlockedByPhalanxErrorResponse( $description, $blockedKeyword );
 				wfProfileOut( __METHOD__ );
@@ -371,7 +371,7 @@ class CreateNewWikiController extends WikiaController {
 		$text = $wgRequest->getVal('text','');
 		$blockedKeyword = '';
 
-		wfRunHooks( 'CheckContent', array( $text, &$blockedKeyword ) );
+		Hooks::run( 'CheckContent', array( $text, &$blockedKeyword ) );
 
 		if ( !empty( $blockedKeyword ) ) {
 			$this->setContentBlockedByPhalanxErrorResponse( $text, $blockedKeyword );

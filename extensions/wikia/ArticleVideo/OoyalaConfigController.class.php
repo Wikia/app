@@ -28,7 +28,6 @@ class OoyalaConfigController extends WikiaController {
 			'availableLanguageFile' => [
 				0 => [
 					'language' => 'en',
-					'languageFile' => '//player.ooyala.com/static/v4/stable/4.6.9/skin-plugin/en.json',
 					'androidResource' => 'skin-config/en.json',
 					'iosResource' => 'en',
 				],
@@ -107,7 +106,7 @@ class OoyalaConfigController extends WikiaController {
 		'adScreen' => [
 			'showAdMarquee' => true,
 			'showAdCountDown' => true,
-			'showControlBar' => false,
+			'showControlBar' => true,
 		],
 		'shareScreen' => [
 			'shareContent' => [
@@ -163,57 +162,67 @@ class OoyalaConfigController extends WikiaController {
 				'scrubberHandleBorderColor' => 'rgba(255,255,255,1)',
 				'thumbnailPreview' => true,
 			],
+		     'autoplayToggle' => true,
+
+			// to set autoplay cookie name use:
+		    // 'autoplayCookieName': 'cookie-name'
 		],
 		'buttons' => [
 			'desktopContent' => [
-				0 => [
+				[
 					'name' => 'playPause',
 					'location' => 'controlBar',
 					'whenDoesNotFit' => 'keep',
 					'minWidth' => 45,
 				],
-				1 => [
+				[
 					'name' => 'volume',
 					'location' => 'controlBar',
 					'whenDoesNotFit' => 'keep',
 					'minWidth' => 240,
 				],
-				2 => [
+				[
+					'name' => 'adTimeLeft',
+					'location' => 'controlBar',
+					'whenDoesNotFit' => 'keep',
+					'minWidth' => 100,
+				],
+				[
 					'name' => 'live',
 					'location' => 'controlBar',
 					'whenDoesNotFit' => 'keep',
 					'minWidth' => 45,
 				],
-				3 => [
+				[
 					'name' => 'timeDuration',
 					'location' => 'controlBar',
 					'whenDoesNotFit' => 'drop',
 					'minWidth' => 145,
 				],
-				4 => [
+				[
 					'name' => 'flexibleSpace',
 					'location' => 'controlBar',
 					'whenDoesNotFit' => 'keep',
 					'minWidth' => 1,
 				],
-				5 => [
+				[
 					'name' => 'share',
 					'location' => 'controlBar',
 					'whenDoesNotFit' => 'moveToMoreOptions',
 					'minWidth' => 45,
 				],
-				6 => [
-					'name' => 'logo',
-					'location' => 'controlBar',
-					'whenDoesNotFit' => 'keep',
-					'minWidth' => 125,
-				],
-				7 => [
-					'name' => 'fullscreen',
+				[
+					'name' => 'quality',
 					'location' => 'controlBar',
 					'whenDoesNotFit' => 'keep',
 					'minWidth' => 45,
 				],
+				[
+					'name' => 'fullscreen',
+					'location' => 'controlBar',
+					'whenDoesNotFit' => 'keep',
+					'minWidth' => 45,
+				]
 			],
 		],
 		'icons' => [
@@ -251,10 +260,7 @@ class OoyalaConfigController extends WikiaController {
 				'fontString' => 'l',
 				'fontStyleClass' => 'oo-icon oo-icon-discovery-binoculars',
 			],
-			'quality' => [
-				'fontFamilyName' => 'ooyala-slick-type',
-				'fontString' => 'm',
-				'fontStyleClass' => 'oo-icon oo-icon-bitrate',
+			'quality' => [// svg set in skin()
 			],
 			'setting' => [
 				'fontFamilyName' => 'ooyala-slick-type',
@@ -310,6 +316,8 @@ class OoyalaConfigController extends WikiaController {
 	];
 
 	public function skin() {
+		global $wgCookieDomain;
+
 		$config = self::CONFIG;
 		$config['icons']['play']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-play-triangle-small' );
 		$config['icons']['pause']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-pause-small' );
@@ -318,14 +326,20 @@ class OoyalaConfigController extends WikiaController {
 		$config['icons']['expand']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-fullscreen-small' );
 		$config['icons']['compress']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-fullscreen-off-small' );
 		$config['icons']['share']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-share-small' );
+		$config['icons']['quality']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-gear-small' );
 		$config['icons']['shareTwitter']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-twitter' );
 		$config['icons']['shareFacebook']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-facebook' );
 		$config['icons']['shareGoogle']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-googleplus' );
 		$config['icons']['shareMail']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-mail' );
 
+		$config['localization']['availableLanguageFile'][0]['languageFile'] =
+			'/extensions/wikia/ArticleVideo/bower_components/skin-config/languageFiles/en.json';
+
 		if ( $this->getVal( 'isMobile' ) ) {
 			$config['controlBar']['volumeControl']['sliderVisible'] = false;
 		}
+
+		$config['controlBar']['autoplayCookieDomain'] = $wgCookieDomain;
 
 		$this->getResponse()->setData( $config );
 		$this->getResponse()->setFormat( WikiaResponse::FORMAT_JSON );

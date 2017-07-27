@@ -14,6 +14,7 @@ class Counter {
 	public $text;
 
 	public function __construct() {
+		$app = \F::app();
 		$title = RequestContext::getMain()->getTitle();
 
 		if ( $title->isSpecial( 'Videos' ) ) {
@@ -22,7 +23,7 @@ class Counter {
 			$this->text = $this->getTextForSpecialImages();
 		} else if ( defined( 'NS_BLOG_LISTING' ) && $title->inNamespace( NS_BLOG_LISTING ) ) {
 			$this->text = $this->getTextForBlogListing();
-		} else if ( $title->isSpecial( 'Forum' ) ) {
+		} else if ( $app->wg->enableForumExt && $title->isSpecial( 'Forum' ) ) {
 			$this->text = $this->getTextForForum();
 		}
 	}

@@ -58,7 +58,7 @@ class PortableInfoboxImagesHelper {
 		}
 		$ref = null;
 
-		wfRunHooks( 'PortableInfoboxRenderServiceHelper::extendImageData', [ $data, &$ref ] );
+		\Hooks::run( 'PortableInfoboxRenderServiceHelper::extendImageData', [ $data, &$ref ] );
 
 		return array_merge( $data, [
 			'ref' => $ref,

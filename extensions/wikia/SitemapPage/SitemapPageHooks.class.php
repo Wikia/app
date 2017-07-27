@@ -14,7 +14,7 @@ class SitemapPageHooks {
 		$sitemapPage = new SitemapPageModel();
 		if ( $sitemapPage->isSitemapPage( $title ) ) {
 			$app->wg->SuppressPageHeader = true;
-			$app->wg->SuppressWikiHeader = true;
+			$app->wg->SuppressCommunityHeader = true;
 			$app->wg->SuppressRail = true;
 			$app->wg->SuppressFooter = true;
 			$article = new SitemapPageArticle( $title );
