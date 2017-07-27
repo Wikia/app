@@ -156,7 +156,8 @@ class WallHistory extends WikiaModel {
 				'parent_page_id' => $parentPageId,
 				'post_user_id' => $postUserId,
 				'post_ns' => MWNamespace::getSubject( $ns ),
-				'post_user_ip' => ( intval( $postUserId ) === 0 ? $this->ip2long( $postUserName ) : null ),
+				'post_user_ip' => null, // TODO SUS-2257 Mix <mix@fandom.com> Remove after migration.
+				'post_user_ip_bin' => ( intval( $postUserId ) === 0 ? inet_pton( $postUserName ) : null ),
 				'is_reply' => $isReply,
 				'comment_id' => $commentId,
 				'parent_comment_id' => ( $isReply ? $parentCommentId: $commentId ),
@@ -221,7 +222,7 @@ class WallHistory extends WikiaModel {
 			'SELECT
 				`parent_page_id`,
 				`post_user_id`,
-				`post_user_ip`,
+				`post_user_ip_bin`,
 				`is_reply`,
 				`parent_comment_id`,
 				`comment_id`,
@@ -371,7 +372,7 @@ class WallHistory extends WikiaModel {
 			[
 				'parent_page_id',
 				'post_user_id',
-				'post_user_ip',
+				'post_user_ip_bin',
 				'is_reply',
 				'parent_comment_id',
 				'comment_id',
@@ -418,7 +419,7 @@ class WallHistory extends WikiaModel {
 		if ( $row['post_user_id'] > 0 ) {
 			$user = User::newFromId( $row['post_user_id'] );
 		} else {
-			$user = User::newFromName( long2ip( $row['post_user_ip'] ), false );
+			$user = User::newFromName( inet_ntop( $row['post_user_ip_bin'] ), false );
 		}
 
 		$message = WallMessage::newFromId( $row['comment_id'] );
@@ -445,14 +446,6 @@ class WallHistory extends WikiaModel {
 				'revision_id' => $row['revision_id'],
 				'wall_message' => $message
 			];
-		} else {
-		// it happened once on devbox when master&slave weren't sync'ed
-			wfDebug( __METHOD__ . ": Seems like master&slave are not sync'ed\n" );
 		}
 	}
-
-	protected function ip2long( $userName ) {
-		return User::isIP( $userName ) ? ip2long( $userName ): null;
-	}
-
 }
