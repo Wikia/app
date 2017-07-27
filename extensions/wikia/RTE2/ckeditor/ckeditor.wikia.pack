@@ -191,8 +191,14 @@ packages :
 
 
 				'plugins/tab/plugin.js'
-
-
+				
+				'plugins/dialogui/plugin.js'
+				'plugins/dialog/plugin.js'
+				
+				'plugins/table/plugin.js'				
+				'plugins/table/lang/en.js'
+				'plugins/tabletools/plugin.js'
+				'plugins/tabletools/lang/en.js'
 				//'plugins/pastetext/plugin.js'
 				//'plugins/pastetext/lang/en.js'
 					//'../js/plugins/accesskey/plugin.js',
