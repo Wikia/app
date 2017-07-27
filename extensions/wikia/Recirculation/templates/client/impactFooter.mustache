@@ -9,11 +9,6 @@
 				{{#meta}} data-meta="{{meta}}" {{/meta}}
 			>
 				<a title="{{title}}" href="{{url}}" class="track-items">
-					{{#presented_by}}
-						<div class="recirculation-sponsored-header">
-							Sponsored
-						</div>
-					{{/presented_by}}
 					<div class="thumbnail placeholder-thumbnail">
 						{{#thumbnail}}
 							<img src="{{thumbnail}}" alt="{{title}}">
@@ -21,6 +16,13 @@
 					</div>
 					{{#isPlista}}
 						<a href="https://www.plista.com/optout" class="badge badge-plista"></a>
+					{{/isPlista}}
+					{{^isPlista}}
+						{{#presented_by}}
+							<div class="recirculation-sponsored-header">
+								Sponsored
+							</div>
+						{{/presented_by}}
 					{{/isPlista}}
 					<div class="recirc-footer-title-container">
 						<div class="title_pretext">
