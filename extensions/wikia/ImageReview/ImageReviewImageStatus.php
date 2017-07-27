@@ -98,7 +98,7 @@ function fetchReviewHistory( $dbr, $cityId, $pageId ) {
 		]
 	);
 
-	$reveiws = [];
+	$reviews = [];
 	while ( $row = $dbr->fetchObject( $res ) ) {
 		$data = [];
 		$data[] = User::newFromId( $row->reviewer_id )->getName();
@@ -116,25 +116,32 @@ function fetchReviewHistory( $dbr, $cityId, $pageId ) {
 		$reviews[] = $data;
 	}
 
-	return $reveiws;
+	return $reviews;
 }
 
 function fetchReviewHistoryFromService( $cityId, $pageId, $revisionId ) {
-	$reviewHistory = ( new ImageReviewService() )->getImageHistory(
-			$cityId,
-			$pageId,
-			$revisionId,
-			RequestContext::getMain()->getUser()
-		);
+	$statusMessages = [
+		'UNREVIEWED' => wfMessage( 'imagereview-state-0' )->escaped(),
+		'ACCEPTED' => wfMessage( 'imagereview-state-2' )->escaped(),
+		'QUESTIONABLE' => wfMessage( 'imagereview-state-5' )->escaped(),
+		'REJECTED' => wfMessage( 'imagereview-state-4' )->escaped(),
+		'REMOVED' => wfMessage( 'imagereview-state-3' )->escaped()
+	];
 
-	// TODO: translate status
+	$reviewHistory = ( new ImageReviewService() )->getImageHistory(
+		$cityId,
+		$pageId,
+		$revisionId,
+		RequestContext::getMain()->getUser()
+	);
+
 	// TODO: filter out initial 'UNREVIEWED' status with user who uploaded revision
 	return array_map(
-		function ( ImageHistoryEntry $item ) {
+		function ( ImageHistoryEntry $item ) use ( $statusMessages ) {
 			return [
 				$item->getUser(),
-				$item->getStatus(),
-				$item->getDate() // TODO: date is in format YYYY-MM-DD, while old image review had exact time. Do we care about it?
+				$statusMessages[$item->getStatus()],
+				$item->getDate()
 			];
 		},
 		$reviewHistory

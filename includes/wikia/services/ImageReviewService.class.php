@@ -4,12 +4,6 @@ use Swagger\Client\ImageReview\Api\ImageApi;
 use Wikia\DependencyInjection\Injector;
 use Wikia\Service\Swagger\ApiProvider;
 
-/**
- * Created by PhpStorm.
- * User: ryba
- * Date: 27/07/2017
- * Time: 11:33
- */
 
 class ImageReviewService {
 	const SERVICE_NAME = 'image-review';
