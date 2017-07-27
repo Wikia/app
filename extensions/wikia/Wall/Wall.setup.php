@@ -54,7 +54,6 @@ $wgAutoloadClasses['WallBuilderGenericException'] = __DIR__ . '/exceptions/WallB
 
 $wgExtensionMessagesFiles['Wall'] = $dir . '/Wall.i18n.php';
 
-$wgHooks['AccountNavigationModuleAfterDropdownItems'][] = 'WallHooksHelper::onAccountNavigationModuleAfterDropdownItems';
 $wgHooks['ArticleViewHeader'][] = 'WallHooksHelper::onArticleViewHeader';
 $wgHooks['SkinTemplateTabs'][] = 'WallHooksHelper::onSkinTemplateTabs';
 $wgHooks['AlternateEdit'][] = 'WallHooksHelper::onAlternateEdit';
