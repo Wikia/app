@@ -2,8 +2,9 @@
 define('ext.wikia.adEngine.provider.directGptMobile', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.slot.service.kiloAdUnitBuilder',
+	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'ext.wikia.adEngine.provider.factory.wikiaGpt'
-], function (adContext, kiloAdUnitBuilder, factory) {
+], function (adContext, kiloAdUnitBuilder, megaAdUnitBuilder, factory) {
 	'use strict';
 
 	return factory.createProvider(

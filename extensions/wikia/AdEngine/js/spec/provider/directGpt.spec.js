@@ -18,13 +18,15 @@ describe('ext.wikia.adEngine.provider.directGptMobile', function () {
 				createProvider: noop
 			},
 			defaultAdUnitBuilder: {name: 'defaultAdUnit'},
-			kiloAdUnitBuilder: {name: 'kiloAdUnit'}
+			kiloAdUnitBuilder: {name: 'kiloAdUnit'},
+			megaAdUnitBuilder: {name: 'megaAdUnit'}
 		};
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.provider.directGptMobile'](
 			mocks.adContext,
 			mocks.kiloAdUnitBuilder,
+			mocks.megaAdUnitBuilder,
 			mocks.factory
 		);
 	}

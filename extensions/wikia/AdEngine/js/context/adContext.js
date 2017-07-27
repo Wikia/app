@@ -91,25 +91,37 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.sourcePointBootstrap = context.opts.sourcePointMMS || context.opts.sourcePointRecovery;
 	}
 
+	function isMEGAEnabledForFVMobile(context) {
+		return context.targeting.skin === 'mercury' &&
+			context.targeting.hasFeaturedVideo &&
+			geo.isProperGeo(instantGlobals.wgAdDriverAdMixCountries) &&
+			geo.isProperGeo(instantGlobals.wgAdDriverMegaAdUnitBuilderForFVCountries);
+	}
+
+	function isMEGAEnablefForFVOasis(context, isEnabledOnDesktopFeaturedVideo) {
+		return context.targeting.hasFeaturedVideo && isEnabledOnDesktopFeaturedVideo &&
+			geo.isProperGeo(instantGlobals.wgAdDriverMegaAdUnitBuilderForFVCountries);
+	}
+
 	function enableAdMixExperiment(context) {
-		var isEnabledOnFeaturedVideo = !!(
+		var isPALEnabledOnDesktopFeaturedVideo = !!(
 				isPageType('article') &&
 				context.targeting.skin === 'oasis' &&
 				context.targeting.hasFeaturedVideo &&
 				geo.isProperGeo(instantGlobals.wgAdDriverAdMixCountries)
 			),
-			isEnabledOnRegularArticle = !!(
+			isPALEnabledOnRegularArticle = !!(
 				isPageType('article') &&
 				context.targeting.skin === 'oasis' &&
 				!context.targeting.hasFeaturedVideo &&
 				geo.isProperGeo(instantGlobals.wgAdDriverPremiumAdLayoutCountries)
 			);
 
-		context.opts.premiumAdLayoutEnabled = isEnabledOnFeaturedVideo || isEnabledOnRegularArticle;
+		context.opts.premiumAdLayoutEnabled = isPALEnabledOnDesktopFeaturedVideo || isPALEnabledOnRegularArticle;
 		context.slots.premiumAdLayoutSlotsToUnblock = ['INCONTENT_BOXAD_1', 'BOTTOM_LEADERBOARD'];
 
-		context.opts.megaAdUnitBuilderEnabled = context.targeting.hasFeaturedVideo && isEnabledOnFeaturedVideo &&
-			geo.isProperGeo(instantGlobals.wgAdDriverMegaAdUnitBuilderForFVCountries);
+		context.opts.megaAdUnitBuilderEnabled = isMEGAEnablefForFVOasis(context, isPALEnabledOnDesktopFeaturedVideo) ||
+			isMEGAEnabledForFVMobile(context);
 
 		if (!context.targeting.hasFeaturedVideo) {
 			context.slots.premiumAdLayoutSlotsToUnblock.push('INCONTENT_PLAYER');
