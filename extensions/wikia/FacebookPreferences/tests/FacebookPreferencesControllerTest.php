@@ -1,7 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
 use Swagger\Client\ApiException;
-use Swagger\Client\ExternalAuth\Api\FacebookApi;
 
 class FacebookPreferencesControllerTest extends TestCase {
 	/** @var User|PHPUnit_Framework_MockObject_MockObject $userMock */

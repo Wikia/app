@@ -2,7 +2,6 @@
 
 use PHPUnit\Framework\TestCase;
 use Swagger\Client\ApiException;
-use Swagger\Client\ExternalAuth\Api\FacebookApi;
 use Swagger\Client\ExternalAuth\Models\LinkedFacebookAccount;
 
 class FacebookPreferencesModuleServiceTest extends TestCase {

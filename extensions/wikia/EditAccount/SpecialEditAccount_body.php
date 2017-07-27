@@ -18,10 +18,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
-use Swagger\Client\ExternalAuth\Api\FacebookApi;
 use Wikia\DependencyInjection\Injector;
 use Wikia\Service\Helios\HeliosClient;
-
 
 class EditAccount extends SpecialPage {
 	/** @var User */
