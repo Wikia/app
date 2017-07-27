@@ -202,8 +202,9 @@ packages :
 				'plugins/removeformat/plugin.js'
 				'plugins/removeformat/lang/en.js'
 			
-				//'plugins/pastetext/plugin.js'
-				//'plugins/pastetext/lang/en.js'
+				'plugins/pastetext/plugin.js'
+			
+				'plugins/pastetext/lang/en.js'
 					//'../js/plugins/accesskey/plugin.js',
 				//'../js/plugins/comment/plugin.js',
 				//'../js/plugins/comment/dialogs/comment.js',

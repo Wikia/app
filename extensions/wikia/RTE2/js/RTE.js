@@ -49,7 +49,7 @@
 				'indentblock,' +
 				'indentlist,' +
 				'list,' +
-			//	'pastetext,' +
+				'pastetext,' +
 				'removeformat,' +//not used anywhere though
 			//	'sourcearea,' +
 				'tab,' +
