@@ -93,22 +93,20 @@ class WAMService {
 	 * @param int $wikiId
 	 * @return number
 	 */
-	public function getCurrentWamRankForWiki ($wikiId) {
-		wfProfileIn(__METHOD__);
+	public function getCurrentWamRankForWiki( $wikiId ) {
+		$memKey = wfSharedMemcKey( 'datamart', self::MEMCACHE_VER, 'wam_rank', $wikiId );
 
-		$memKey = wfSharedMemcKey('datamart', self::MEMCACHE_VER, 'wam_rank', $wikiId);
-
-		$getData = function () use ($wikiId) {
+		$getData = function () use ( $wikiId ) {
 			if ( $this->isDisabled() ) {
 				return 0;
 			}
 
 			$db = $this->getDB();
 
-			$result = $db->select(
-				['fact_wam_scores'],
-				['wam_rank'],
-				['wiki_id' => $wikiId],
+			$result = $db->selectField(
+				[ 'fact_wam_scores' ],
+				'wam_rank',
+				[ 'wiki_id' => $wikiId ],
 				__METHOD__,
 				[
 					'ORDER BY' => 'time_id DESC',
@@ -116,11 +114,11 @@ class WAMService {
 				]
 			);
 
-			return ($row = $db->fetchObject($result)) ? $row->wam_rank : 0;
+			return $result ? $result : 0;
 		};
 
-		$wamRank = WikiaDataAccess::cacheWithLock($memKey, self::CACHE_DURATION, $getData);
-		wfProfileOut(__METHOD__);
+		$wamRank = WikiaDataAccess::cacheWithLock( $memKey, self::CACHE_DURATION, $getData );
+
 		return $wamRank;
 	}
 
