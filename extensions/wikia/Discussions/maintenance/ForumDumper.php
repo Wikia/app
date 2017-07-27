@@ -83,7 +83,7 @@ class ForumDumper {
 
 	const COLUMNS_FOLLOWS = [
 		"follower_id",
-		"thread_id",
+		"mw_thread_id",
 	];
 
 	private $pages = [];
@@ -352,8 +352,8 @@ class ForumDumper {
 			->IN( $this->threadIds )
 			->runLoop( $dbh, function ( &$follows, $row ) {
 				$follows[] = [
-					'user_id' => $row->wl_user,
-					'thread_id' => $this->threadIds[$row->wl_title]
+					'follower_id' => $row->wl_user,
+					'mw_thread_id' => $this->threadIds[$row->wl_title]
 				];
 			} );
 	}
