@@ -36,10 +36,10 @@
 				'button,' +
 				'toolbar,' +
 				'clipboard,' +
-			//	'contextmenu,' +
+		
 			//	'dialogui,' +
 			//	'dialog,' +
-			//	'enterkey,' +
+				'enterkey,' +
 				'panel,' +
 				'listblock,' +
 				'floatpanel,' +
