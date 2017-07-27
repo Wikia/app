@@ -1009,7 +1009,6 @@ $config['interactivemaps_ads_js'] = [
 		'//extensions/wikia/ARecoveryEngine/js/adBlockDetection.js',
 		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.js',
 		'//extensions/wikia/ARecoveryEngine/js/PageFair/recovery.js',
-		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/recovery.js',
 	],
 ];
 
