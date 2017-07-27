@@ -303,7 +303,23 @@ require([
 				});
 			});
 
-			player.mb.subscribe(window.OO.EVENTS.REPORT_DISCOVERY_CLICK, 'featured-video', function () {
+			player.mb.subscribe(window.OO.EVENTS.REPORT_DISCOVERY_IMPRESSION, 'featured-video', function () {
+				track({
+					action: tracker.ACTIONS.IMPRESSION,
+					label: 'recommended-video'
+				});
+			});
+
+			player.mb.subscribe(window.OO.EVENTS.REPORT_DISCOVERY_CLICK, 'featured-video', function (eventName, eventData) {
+				// bucket_info has '2' before the JSON string
+				var bucketInfo = JSON.parse(eventData.clickedVideo.bucket_info.substring(1)),
+					position = bucketInfo.position;
+
+				track({
+					action: tracker.ACTIONS.VIEW,
+					label: 'recommended-video-' + position
+				});
+
 				// Don't play ads between videos
 				window.OO.Ads.unregisterAdManager('google-ima-ads-manager');
 			});
