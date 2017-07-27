@@ -43,24 +43,22 @@ define('ext.wikia.recirculation.plista', ['jquery'], function ($) {
 		}
 	}
 
-	function getPlista() {
-		return fetchPlista().then(mapPlista);
-	}
-
 	function prepareData(renderData) {
-		return function() {
+		return function () {
 			var length = renderData.items.length;
 
 			if (shouldFetchPlista(renderData.items)) {
-				return getPlista().then(function (data) {
-					renderData.items.splice(5, 0, data);
+				return fetchPlista()
+					.then(mapPlista)
+					.then(function (data) {
+						renderData.items.splice(5, 0, data);
 
-					renderData.items = renderData.items.slice(0, length);
-				}, function() {
-					// If Plista did not return anything, just don't add it to renderData
+						renderData.items = renderData.items.slice(0, length);
+					}, function () {
+						// If Plista did not return anything, just don't add it to renderData
 
-					return $.Deferred().resolve();
-				});
+						return $.Deferred().resolve();
+					});
 			}
 		}
 
