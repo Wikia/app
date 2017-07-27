@@ -4,7 +4,7 @@ define('ext.wikia.recirculation.plista', ['jquery'], function ($) {
 			return item.presented_by;
 		});
 
-		return hasSponsoredContent && ['AU', 'NZ'].indexOf(Geo.getCountryCode()) > -1;
+		return !hasSponsoredContent && ['AU', 'NZ'].indexOf(Geo.getCountryCode()) > -1;
 	}
 
 	function fetchPlista() {
