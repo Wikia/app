@@ -8,11 +8,12 @@ class ImageReviewEventsHooks {
 	public static function onUploadComplete( UploadBase $form ) {
 		global $wgCityId, $wgImageReviewTestCommunities;
 
-		if ( in_array( $wgCityId, $wgImageReviewTestCommunities ) ) {
+		// TODO: community switch
+		//if ( in_array( $wgCityId, $wgImageReviewTestCommunities ) ) {
 			self::sendToImageReviewService( $form->getTitle() );
-		} else {
-			static::createAddTask( $form->getTitle() );
-		}
+		//} else {
+		//	static::createAddTask( $form->getTitle() );
+		//}
 
 		return true;
 	}

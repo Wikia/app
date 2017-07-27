@@ -1,9 +1,12 @@
 <?php
 /**
  * Adds image review stats information to file pages
+ *
  * @author tor
  * @date 2012-10-04
  */
+
+use Swagger\Client\ImageReview\Models\ImageHistoryEntry;
 
 $wgHooks['ImagePageAfterImageLinks'][] = 'efImageReviewDisplayStatus';
 
@@ -18,17 +21,20 @@ function efImageReviewDisplayStatus( ImagePage $imagePage, &$html ) {
 		return true;
 	}
 
-	$html .= Xml::element( 'h2', array(), wfMessage( 'imagereview-imagepage-header' )->escaped() );
+	$html .= Xml::element( 'h2', [], wfMessage( 'imagereview-imagepage-header' )->escaped() );
 
 	$headers = [
-		wfMessage('imagereview-imagepage-table-header-reviewer')->text(),
-		wfMessage('imagereview-imagepage-table-header-state')->text(),
-		wfMessage('imagereview-imagepage-table-header-time')->text(),
+		wfMessage( 'imagereview-imagepage-table-header-reviewer' )->text(),
+		wfMessage( 'imagereview-imagepage-table-header-state' )->text(),
+		wfMessage( 'imagereview-imagepage-table-header-time' )->text(),
 	];
 
 	$dbr = wfGetDB( DB_SLAVE, [], $wgExternalDatawareDB );
 
-	$reviews = fetchReviewHistory( $dbr, $wgCityId, $imagePage->getID() );
+	//TODO: community switch
+	$reviews =
+		fetchReviewHistoryFromService( $wgCityId, $imagePage->getID(), $imagePage->getTitle()->getLatestRevID() );
+	//$reviews = fetchReviewHistory( $dbr, $wgCityId, $imagePage->getID() );
 	if ( empty( $reviews ) ) {
 
 		// TODO: consider if in the new flow this also should be checked
@@ -50,7 +56,8 @@ function efImageReviewDisplayStatus( ImagePage $imagePage, &$html ) {
 						'pageTitle' => $imagePage->getTitle()->getText(),
 						'uploadUser' => $user->getName(),
 					];
-					\Wikia\Logger\WikiaLogger::instance()->info( 'ImageReviewLog',
+					\Wikia\Logger\WikiaLogger::instance()->info(
+						'ImageReviewLog',
 						[
 							'message' => 'Image moved back to queue',
 							'params' => $logParams,
@@ -63,7 +70,6 @@ function efImageReviewDisplayStatus( ImagePage $imagePage, &$html ) {
 
 			// oh oh, image is not in queue at all
 			$html .= wfMessage( 'imagereview-imagepage-not-in-queue' )->escaped();
-
 		} else {
 			// image is in the queue but not reviewed yet
 			$html .= wfMessage( 'imagereview-state-0' )->escaped();
@@ -71,10 +77,10 @@ function efImageReviewDisplayStatus( ImagePage $imagePage, &$html ) {
 	} else {
 		$html .= Xml::buildTable(
 			$reviews,
-			array(
+			[
 				'class' => 'wikitable filehistory sortable',
 				'style' => 'width: 60%',
-			),
+			],
 			$headers
 		);
 	}
@@ -83,8 +89,6 @@ function efImageReviewDisplayStatus( ImagePage $imagePage, &$html ) {
 }
 
 function fetchReviewHistory( $dbr, $cityId, $pageId ) {
-	// TODO: fetch history from ImageReview service
-
 	$res = $dbr->select(
 		'image_review_stats',
 		'*',
@@ -113,6 +117,28 @@ function fetchReviewHistory( $dbr, $cityId, $pageId ) {
 	}
 
 	return $reveiws;
+}
+
+function fetchReviewHistoryFromService( $cityId, $pageId, $revisionId ) {
+	$reviewHistory = ( new ImageReviewService() )->getImageHistory(
+			$cityId,
+			$pageId,
+			$revisionId,
+			RequestContext::getMain()->getUser()
+		);
+
+	// TODO: translate status
+	// TODO: filter out initial 'UNREVIEWED' status with user who uploaded revision
+	return array_map(
+		function ( ImageHistoryEntry $item ) {
+			return [
+				$item->getUser(),
+				$item->getStatus(),
+				$item->getDate() // TODO: date is in format YYYY-MM-DD, while old image review had exact time. Do we care about it?
+			];
+		},
+		$reviewHistory
+	);
 }
 
 function isImageInReviewQueue( $dbr, $cityId, $pageId ) {
