@@ -52,7 +52,7 @@
 			//	'pastetext,' +
 			//	'removeformat,' +
 			//	'sourcearea,' +
-			//	'tab,' +
+				'tab,' +
 			//	'table,' +
 			//	'tabletools,' +
 				'menu,' +
