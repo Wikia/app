@@ -216,6 +216,7 @@ $config['adengine2_tracking_js'] = [
 		'//extensions/wikia/AdEngine/js/video/vastUrlBuilder.js',
 		'//extensions/wikia/ARecoveryEngine/js/adBlockDetection.js',
 		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.js',
+		'//extensions/wikia/ARecoveryEngine/js/PageFair/recovery.js',
 		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/recovery.js',
 		'//resources/wikia/modules/browserDetect.js',
 		'//resources/wikia/modules/krux.js'
@@ -247,6 +248,7 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/video/videoFrequencyStore.js',
 		'//extensions/wikia/ARecoveryEngine/js/adBlockDetection.js',
 		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.js',
+		'//extensions/wikia/ARecoveryEngine/js/PageFair/recovery.js',
 		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/recovery.js',
 		'//resources/wikia/modules/browserDetect.js',
 		'//resources/wikia/modules/krux.js'
@@ -897,6 +899,7 @@ $config['mobile_base_ads_js'] = [
 		// Recovery
 		'//extensions/wikia/ARecoveryEngine/js/adBlockDetection.js',
 		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.js',
+		'//extensions/wikia/ARecoveryEngine/js/PageFair/recovery.js',
 		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/recovery.js',
 
 		// Video ads
@@ -1005,6 +1008,7 @@ $config['interactivemaps_ads_js'] = [
 		// RecoveryEngine
 		'//extensions/wikia/ARecoveryEngine/js/adBlockDetection.js',
 		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.js',
+		'//extensions/wikia/ARecoveryEngine/js/PageFair/recovery.js',
 		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/recovery.js',
 	],
 ];

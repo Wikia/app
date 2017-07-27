@@ -135,6 +135,14 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		}
 	}
 
+	function updateTargetingForBlockedTraffic() {
+		win.googletag.pubads().getSlots().forEach(function(slot) {
+			// slot.clearTargeting described in docs is not applicable in this context
+			slot.targeting.src = [];
+			slot.setTargeting('src', 'rec');
+		});
+	}
+
 	function addSlot(adElement) {
 		var sizes = adElement.getSizes(),
 			slotId = adElement.getId(),
@@ -225,6 +233,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	return {
 		addSlot: addSlot,
 		destroySlots: destroySlots,
+		updateTargetingForBlockedTraffic: updateTargetingForBlockedTraffic,
 		flush: flush,
 		init: init,
 		isInitialized: isInitialized,

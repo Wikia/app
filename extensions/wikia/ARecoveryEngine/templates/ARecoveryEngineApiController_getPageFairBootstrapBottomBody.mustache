@@ -1,9 +1,10 @@
 <script type="text/javascript">
 	require([
 		'ext.wikia.adEngine.adContext',
+		'ext.wikia.adEngine.provider.gpt.googleTag',
 		'wikia.instantGlobals',
 		'wikia.window'
-	], function (adContext, instantGlobals, win) {
+	], function (adContext, googleTag, instantGlobals, win) {
 		var context = adContext.getContext();
 
 		if (context.opts.pageFairRecovery === true) {
@@ -13,6 +14,13 @@
 			adonis.conditionalAdRendering = true;
 			adonis.conditionalIframeRendering = true;
 			adonis.transport = 'https://9k6y.b2rrns9dgbx56tf5kc.agency/http';
+			adonis.od = function(detectionStatus) {
+				win.ads.runtime = win.ads.runtime || {};
+				win.ads.runtime.pf = win.ads.runtime.pf || {};
+				win.ads.runtime.pf.recovering = detectionStatus;
+				// the ATF slots are already defined so we need to update their targeting
+				googleTag.updateTargetingForBlockedTraffic();
+			};
 
 			{{{code}}}
 		}

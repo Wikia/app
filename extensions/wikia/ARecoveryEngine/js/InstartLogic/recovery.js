@@ -22,7 +22,8 @@ define('ext.wikia.aRecoveryEngine.instartLogic.recovery', [
 	 */
 	function isBlocking() {
 		var gptLibSrcKeyVal = win.googletag.pubads && win.googletag.pubads() &&
-				win.googletag.pubads().getTargeting('src'),
+			typeof win.googletag.pubads().getTargeting === "function" &&
+			win.googletag.pubads().getTargeting('src'),
 
 			isParamSet = gptLibSrcKeyVal && gptLibSrcKeyVal.indexOf('rec') > -1;
 
