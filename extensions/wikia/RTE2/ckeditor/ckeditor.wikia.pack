@@ -146,7 +146,7 @@ packages :
 				//'plugins/dialogui/plugin.js'
 				//'plugins/dialog/plugin.js'
 								
-				'plugins/autogrow/plugin.js'
+				//'plugins/autogrow/plugin.js'
 				'plugins/toolbar/plugin.js'
 				'plugins/indent/plugin.js'
 				'plugins/wysiwygarea/plugin.js'
@@ -188,7 +188,11 @@ packages :
 
 				'plugins/undo/plugin.js'
 				'plugins/undo/lang/en.js'
-
+				'plugins/menu/plugin.js'
+				'plugins/menu/lang/en.js'
+				'plugins/contextmenu/plugin.js'
+				'plugins/contextmenu/lang/en.js'
+			
 					//'../js/plugins/accesskey/plugin.js',
 				//'../js/plugins/comment/plugin.js',
 				//'../js/plugins/comment/dialogs/comment.js',
