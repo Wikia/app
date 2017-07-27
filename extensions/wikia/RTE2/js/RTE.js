@@ -50,7 +50,7 @@
 				'indentlist,' +
 				'list,' +
 			//	'pastetext,' +
-			//	'removeformat,' +
+				'removeformat,' +//not used anywhere though
 			//	'sourcearea,' +
 				'tab,' +
 				'table,' +
@@ -74,7 +74,7 @@
 				//'gallery',
 				//'justify,' +
 				//'link',
-				//'linksuggest,' +
+			//'linksuggest,' +
 				//'media,'  +
 				//'modeswitch,' +
 				//'overlay,' +
