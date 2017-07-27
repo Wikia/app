@@ -241,8 +241,8 @@ CKEDITOR.dialog.add( 'link', function( editor )
 		contents : [
 			{
 				id : 'internal',
-				label : lang.internal.tab,
-				title : lang.internal.tab,
+				label : 'label',//lang.internal.tab,
+				title : 'title',//lang.internal.tab,
 				elements : [
 					{
 						'type': 'html',
@@ -251,7 +251,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 					},
 					{
 						'type': 'text',
-						'label': editor.lang.link.label.target,
+						'label': 'target',//editor.lang.link.label.target,
 						'id': 'name',
 						onKeyUp: function() {
 							var linkTextField = this.getDialog().getContentElement('internal', 'label');
@@ -308,7 +308,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 					},
 					{
 						'type': 'text',
-						'label': editor.lang.link.label.display,
+						'label': 'display',//editor.lang.link.label.display,
 						'id': 'label',
 						onFocus: function()
 						{
@@ -318,7 +318,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 					},
 					{
 						'type': 'radio',
-						'items': [[editor.lang.link.label.internal,'wiki'],[editor.lang.link.label.external,'ext']],
+						'items': [[/*editor.lang.link.label.internal*/'internal','wiki'],[/*editor.lang.link.label.external*/'external','ext']],
 						'default': 'wiki',
 						'id': 'linktype',
 						'onChange': function( e )

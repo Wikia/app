@@ -7,11 +7,11 @@ CKEDITOR.plugins.add('rte-link',
 
 		// add toolbar buttons
 		editor.ui.addButton('Link',{
-			label : editor.lang.link.add,
+			label : 'Link',//kacper olek edit editor.lang.link.add,
 			command : 'link'
 		});
 		editor.ui.addButton('Unlink', {
-			label : editor.lang.unlink,
+			label : 'Unlink',//kacper olek edit editor.lang.unlink,
 			command : 'unlink'
 		});
 
@@ -22,14 +22,14 @@ CKEDITOR.plugins.add('rte-link',
 		if (editor.addMenuItems) {
 			editor.addMenuItems({
 				link: {
-					label : editor.lang.link.menu,
+					label : 'menu',//editor.lang.link.menu,
 					command : 'link',
 					group : 'link',
 					order : 1
 				},
 
 				unlink:	{
-					label : editor.lang.unlink,
+					label : 'unmenu',//editor.lang.unlink,
 					command : 'unlink',
 					group : 'link',
 					order : 5
