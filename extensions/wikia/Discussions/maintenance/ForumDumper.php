@@ -9,7 +9,9 @@ class ForumDumper {
 	const TABLE_REVISION = 'revision';
 	const TABLE_TEXT = 'text';
 	const TABLE_VOTE = 'page_vote';
-	const TABLE_PAGE_WIKIA_PROPS  = 'page_wikia_props';
+	const TABLE_PAGE_WIKIA_PROPS = 'page_wikia_props';
+	//TODO verify that this is the table
+	const TABLE_THREAD_WATCHER = 'watchlist';
 
 	const CONTRIBUTOR_TYPE_USER = "user";
 	const CONTRIBUTOR_TYPE_IP = "ip";
@@ -47,7 +49,7 @@ class ForumDumper {
 		"first_revision_id",
 		"last_revision_id",
 		"comment_timestamp",
-		"display_order"
+		"display_order",
 	];
 
 	const COLUMNS_REVISION = [
@@ -65,7 +67,7 @@ class ForumDumper {
 		"text_flags",
 		"comment",
 		"raw_content",
-		"content"
+		"content",
 	];
 
 	const COLUMNS_VOTE = [
@@ -76,12 +78,18 @@ class ForumDumper {
 
 	const FORUM_NAMEPSACES = [
 		NS_WIKIA_FORUM_BOARD,
-		NS_WIKIA_FORUM_BOARD_THREAD
+		NS_WIKIA_FORUM_BOARD_THREAD,
+	];
+
+	const COLUMNS_FOLLOWS = [
+		"follower_id",
+		"thread_id",
 	];
 
 	private $pages = [];
 	private $revisions = [];
 	private $votes = [];
+	private $threadIds = [];
 
 	public function addPage( $id, $data ) {
 		// There are cases when the page appears twice; one marked as deleted in comments_index
@@ -109,13 +117,16 @@ class ForumDumper {
 
 		$display_order = 0;
 		$dbh = wfGetDB( DB_SLAVE );
-		( new \WikiaSQL() )
-			->SELECT( "page.*, comments_index.*, IF(pp.props is NULL,concat('i:', page.page_id, ';'), pp.props) as idx" )
+		( new \WikiaSQL() )->SELECT( "page.*, comments_index.*, IF(pp.props is NULL,concat('i:', page.page_id, ';'), pp.props) as idx" )
 			->FROM( self::TABLE_PAGE )
-			->LEFT_JOIN( self::TABLE_COMMENTS )->ON( 'page_id', 'comment_id' )
-			->LEFT_JOIN( self::TABLE_PAGE_WIKIA_PROPS )->AS_( 'pp' )
-				->ON( 'page.page_id', 'pp.page_id' )->AND_( 'propname', WPP_WALL_ORDER_INDEX )
-			->WHERE( 'page_namespace' )->IN( self::FORUM_NAMEPSACES )
+			->LEFT_JOIN( self::TABLE_COMMENTS )
+			->ON( 'page_id', 'comment_id' )
+			->LEFT_JOIN( self::TABLE_PAGE_WIKIA_PROPS )
+			->AS_( 'pp' )
+			->ON( 'page.page_id', 'pp.page_id' )
+			->AND_( 'propname', WPP_WALL_ORDER_INDEX )
+			->WHERE( 'page_namespace' )
+			->IN( self::FORUM_NAMEPSACES )
 			->ORDER_BY( 'idx' )
 			->runLoop( $dbh, function ( &$pages, $row ) use ( &$display_order ) {
 				// A few of these properties were removed and do not appear on some wikis
@@ -126,29 +137,30 @@ class ForumDumper {
 				}
 
 				$this->addPage( $row->page_id, [
-						"page_id" => $row->page_id,
-						"namespace" => $row->page_namespace,
-						"raw_title" => $row->page_title,
-						"is_redirect" => $row->page_is_redirect,
-						"is_new" => $row->page_is_new,
-						"touched" => $row->page_touched,
-						"latest_revision_id" => $row->page_latest,
-						"length" => $row->page_len,
-						"parent_page_id" => $row->parent_page_id,
-						"parent_comment_id" => $row->parent_comment_id,
-						"last_child_comment_id" => $row->last_child_comment_id,
-						"archived_ind" => $row->archived ?: 0,
-						"deleted_ind" => $row->deleted ?: 0,
-						"removed_ind" => $row->removed ?: 0,
-						"locked_ind" => $row->locked ?: 0,
-						"protected_ind" => $row->protected ?: 0,
-						"sticky_ind" => $row->sticky ?: 0,
-						"first_revision_id" => $row->first_rev_id,
-						"last_revision_id" => $row->last_rev_id,
-						"comment_timestamp" => $row->last_touched,
-						"display_order" => $display_order++
-					] );
+					"page_id" => $row->page_id,
+					"namespace" => $row->page_namespace,
+					"raw_title" => $row->page_title,
+					"is_redirect" => $row->page_is_redirect,
+					"is_new" => $row->page_is_new,
+					"touched" => $row->page_touched,
+					"latest_revision_id" => $row->page_latest,
+					"length" => $row->page_len,
+					"parent_page_id" => $row->parent_page_id,
+					"parent_comment_id" => $row->parent_comment_id,
+					"last_child_comment_id" => $row->last_child_comment_id,
+					"archived_ind" => $row->archived ?: 0,
+					"deleted_ind" => $row->deleted ?: 0,
+					"removed_ind" => $row->removed ?: 0,
+					"locked_ind" => $row->locked ?: 0,
+					"protected_ind" => $row->protected ?: 0,
+					"sticky_ind" => $row->sticky ?: 0,
+					"first_revision_id" => $row->first_rev_id,
+					"last_revision_id" => $row->last_rev_id,
+					"comment_timestamp" => $row->last_touched,
+					"display_order" => $display_order ++,
+				] );
 			} );
+
 		return $this->pages;
 	}
 
@@ -156,15 +168,16 @@ class ForumDumper {
 		if ( !empty( $this->revisions ) ) {
 			return $this->revisions;
 		}
-		
+
 		$pageIds = array_keys( $this->getPages() );
 
 		$dbh = wfGetDB( DB_SLAVE );
-		( new \WikiaSQL() )
-			->SELECT_ALL()
+		( new \WikiaSQL() )->SELECT_ALL()
 			->FROM( self::TABLE_REVISION )
-			->JOIN( self::TABLE_TEXT )->ON( 'rev_text_id', 'old_id' )
-			->WHERE( 'rev_page' )->IN( $pageIds )
+			->JOIN( self::TABLE_TEXT )
+			->ON( 'rev_text_id', 'old_id' )
+			->WHERE( 'rev_page' )
+			->IN( $pageIds )
 			->runLoop( $dbh, function ( &$revisions, $row ) {
 				list( $parsedText, $plainText, $title ) = $this->getTextAndTitle( $row->rev_page );
 
@@ -186,7 +199,7 @@ class ForumDumper {
 					"text_flags" => $row->old_flags,
 					"comment" => $row->rev_comment,
 					"raw_content" => $plainText,
-				    "content" => $parsedText
+					"content" => $parsedText,
 				] );
 			} );
 
@@ -225,11 +238,8 @@ class ForumDumper {
 		$rawText = strip_tags( $articleComment->getRawText() );
 
 		// There are some bogus characters in our data.  Strip them out
-		return filter_var(
-			$rawText,
-			FILTER_UNSAFE_RAW,
-			FILTER_FLAG_STRIP_LOW|FILTER_FLAG_STRIP_HIGH
-		);
+		return filter_var( $rawText, FILTER_UNSAFE_RAW,
+			FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH );
 	}
 
 	private function getParsedText( \ArticleComment $articleComment ) {
@@ -276,11 +286,8 @@ class ForumDumper {
 	 * @return mixed
 	 */
 	private function updateLazyImages( $text ) {
-		return preg_replace(
-			"/<img +[^>]+ +data-src=[^>]+><noscript>(<img[^>]+>)<\\/noscript>/",
-			"$1",
-			$text
-		);
+		return preg_replace( "/<img +[^>]+ +data-src=[^>]+><noscript>(<img[^>]+>)<\\/noscript>/",
+			"$1", $text );
 	}
 
 	private function removeACMetadata( $text ) {
@@ -311,19 +318,44 @@ class ForumDumper {
 		$pageIds = array_keys( $this->getPages() );
 
 		$dbh = wfGetDB( DB_SLAVE );
-		( new \WikiaSQL() )
-			->SELECT_ALL()
+		( new \WikiaSQL() )->SELECT_ALL()
 			->FROM( self::TABLE_VOTE )
-			->WHERE( 'article_id' )->IN( $pageIds )
+			->WHERE( 'article_id' )
+			->IN( $pageIds )
 			->runLoop( $dbh, function ( &$pages, $row ) {
 
 				$this->addVote( [
 					"page_id" => $row->article_id,
 					"user_identifier" => $row->user_id,
-					"timestamp" => $row->time
+					"timestamp" => $row->time,
 				] );
 			} );
 
 		return $this->votes;
 	}
+
+	public function getFollows() {
+		$this->threadIds = [];
+
+		foreach ($this->getPages() as $page) {
+			if ($page->namespace === NS_WIKIA_FORUM_BOARD_THREAD) {
+				$threadIds[$page->raw_title] = $page->id;
+			}
+		}
+
+		$dbh = wfGetDB( DB_SLAVE );
+		return ( new \WikiaSQL() )->SELECT_ALL()
+			->FROM( self::TABLE_THREAD_WATCHER )
+			->WHERE( 'wl_namespace' )
+			->EQUAL_TO( NS_WIKIA_FORUM_BOARD_THREAD )
+			->AND_( 'wl_title' )
+			->IN( $this->threadIds )
+			->runLoop( $dbh, function ( &$follows, $row ) {
+				$follows[] = [
+					'user_id' => $row->wl_user,
+					'thread_id' => $this->threadIds[$row->wl_title]
+				];
+			} );
+	}
+
 }
