@@ -35,7 +35,6 @@ CKEDITOR.plugins.load = CKEDITOR.tools.override( CKEDITOR.plugins.load, function
 							requires = plugin && plugin.requires;
 
 						if ( !initialized[ pluginName ] ) {
-							debugger;
 							// Register all icons eventually defined by this plugin.
 							if ( plugin.icons ) {
 								var icons = plugin.icons.split( ',' );
@@ -106,7 +105,7 @@ CKEDITOR.plugins.load = CKEDITOR.tools.override( CKEDITOR.plugins.load, function
  * the respective translation.
  */
 CKEDITOR.plugins.setLang = function( pluginName, languageCode, languageEntries ) {
-	debugger;	
+		
 	var plugin = this.get( pluginName ),
 		pluginLangEntries = plugin.langEntries || ( plugin.langEntries = {} ),
 		pluginLang = plugin.lang || ( plugin.lang = [] );

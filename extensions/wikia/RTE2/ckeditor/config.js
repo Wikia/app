@@ -4,7 +4,7 @@
  */
 
 CKEDITOR.editorConfig = function( config ) {
-	debugger;	
+		
 	// %REMOVE_START%
 	// The configuration options below are needed when running CKEditor from source files.
 //	config.plugins = 'wysiwygarea,button,autogrow,toolbar,indent,sourcearea';
