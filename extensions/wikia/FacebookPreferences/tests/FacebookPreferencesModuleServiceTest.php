@@ -6,9 +6,6 @@ use Swagger\Client\ExternalAuth\Api\FacebookApi;
 use Swagger\Client\ExternalAuth\Models\LinkedFacebookAccount;
 
 class FacebookPreferencesModuleServiceTest extends TestCase {
-	/** @var int $userId */
-	private $userId = 1563;
-
 	/** @var User|PHPUnit_Framework_MockObject_MockObject $userMock */
 	private $userMock;
 
