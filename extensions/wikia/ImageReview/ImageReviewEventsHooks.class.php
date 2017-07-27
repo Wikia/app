@@ -8,7 +8,7 @@ class ImageReviewEventsHooks {
 		global $wgCityId, $wgImageReviewTestCommunities;
 
 		if ( in_array( $wgCityId, $wgImageReviewTestCommunities ) ) {
-			self::sendToImageReveiwService( $form->getTitle() );
+			self::sendToImageReviewService( $form->getTitle() );
 		} else {
 			static::createAddTask( $form->getTitle() );
 		}
@@ -94,10 +94,10 @@ class ImageReviewEventsHooks {
 		$task->queue();
 	}
 
-	private static function sendToImageReveiwService( Title $title ) {
+	private static function sendToImageReviewService( Title $title ) {
 		global $wgImageReview, $wgCityId;
 
-		$rabbitConnection = new \Wikia\IndexingPipeline\ConnectionBase( $wgImageReview );
+		$rabbitConnection = new \Wikia\Rabbit\ConnectionBase( $wgImageReview );
 		$wamRank = ( new WAMService() )->getCurrentWamRankForWiki( $wgCityId );
 		$revisionId = $title->getLatestRevID();
 		$articleId = $title->getArticleID();

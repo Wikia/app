@@ -1,6 +1,6 @@
 <?php
 
-class PipelineConnectionBaseTest extends WikiaBaseTest {
+class RabbitConnectionBaseTest extends WikiaBaseTest {
 
 	protected function setUp() {
 		$this->setupFile = dirname( __FILE__ ) . '/../IndexingPipeline.setup.php';
@@ -20,7 +20,7 @@ class PipelineConnectionBaseTest extends WikiaBaseTest {
 			'deadExchange' => 'test-dead',
 		];
 
-		$pipe = new \Wikia\IndexingPipeline\ConnectionBase( $wgIndexingPipeline );
+		$pipe = new \Wikia\Rabbit\ConnectionBase( $wgIndexingPipeline );
 		$this->assertAttributeEquals($wgIndexingPipeline['host'], 'host', $pipe);
 		$this->assertAttributeEquals($wgIndexingPipeline['port'], 'port', $pipe);
 		$this->assertAttributeEquals($wgIndexingPipeline['user'], 'user', $pipe);

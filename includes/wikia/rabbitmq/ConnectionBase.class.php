@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikia\IndexingPipeline;
+namespace Wikia\Rabbit;
 
 use PhpAmqpLib\Connection\AMQPConnection;
 use PhpAmqpLib\Exception\AMQPExceptionInterface;
