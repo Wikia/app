@@ -21,6 +21,7 @@ CKEDITOR.plugins.add('rte-gallery',
 
 		// check existance of WikiaPhotoGallery extension
 		if (typeof window.WikiaPhotoGallery != 'undefined') {
+			debugger;
 			self.addButton(editor,{
 				type: WikiaPhotoGallery.TYPE_GALLERY,
 				commandName: 'addgallery',

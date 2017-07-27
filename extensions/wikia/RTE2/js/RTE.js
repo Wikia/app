@@ -70,10 +70,11 @@
 				'rte-comment,' +
 				'rte-dialog,' +
 				'rte-dragdrop,' +
-				'rte-entities',
-				//'gallery',
+				'rte-entities,' +
+				//'rte-gallery,' +
 				//'justify,' +
-				//'link',
+				'fakeobjects,' +
+				'link',
 			//'linksuggest,' +
 				//'media,'  +
 				//'modeswitch,' +
