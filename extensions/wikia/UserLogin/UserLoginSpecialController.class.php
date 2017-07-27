@@ -326,7 +326,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			return $query['returnto'];
 		}
 
-		if ( isset( $query['title'] ) && !$this->isTitleBlacklisted( $query['title'] ) ) {
+		if ( isset( $query['title'] ) ) {
 			$returnTo = $query['title'];
 		} else {
 			$returnTo = $this->getMainPagePartialUrl();
@@ -337,10 +337,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 
 	private function getMainPagePartialUrl() {
 		return Title::newMainPage()->getPartialURL();
-	}
-
-	private function isTitleBlacklisted( $title ) {
-		return AccountNavigationController::isBlacklisted( $title );
 	}
 
 	private function getReturnToQueryFromQuery( $query ) {
