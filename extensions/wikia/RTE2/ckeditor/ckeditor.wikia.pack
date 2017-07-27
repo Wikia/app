@@ -190,6 +190,7 @@ packages :
 				'plugins/enterkey/plugin.js'
 
 
+				'plugins/tab/plugin.js'
 
 
 				//'plugins/pastetext/plugin.js'
