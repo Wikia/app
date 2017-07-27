@@ -135,7 +135,6 @@ function fetchReviewHistoryFromService( $cityId, $pageId, $revisionId ) {
 		RequestContext::getMain()->getUser()
 	);
 
-	// TODO: filter out initial 'UNREVIEWED' status with user who uploaded revision
 	return array_map(
 		function ( ImageHistoryEntry $item ) use ( $statusMessages ) {
 			return [
@@ -144,7 +143,10 @@ function fetchReviewHistoryFromService( $cityId, $pageId, $revisionId ) {
 				$item->getDate()
 			];
 		},
-		$reviewHistory
+		array_filter( $reviewHistory, function( ImageHistoryEntry $item ) {
+			// Filter out entry with status 'UNREVIEWED' as does
+			return $item->getStatus() != 'UNREVIEWED';
+		} )
 	);
 }
 
