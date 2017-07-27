@@ -198,7 +198,10 @@ packages :
 				'plugins/table/plugin.js'				
 				'plugins/table/lang/en.js'
 				'plugins/tabletools/plugin.js'
-				'plugins/tabletools/lang/en.js'
+			
+				'plugins/removeformat/plugin.js'
+				'plugins/removeformat/lang/en.js'
+			
 				//'plugins/pastetext/plugin.js'
 				//'plugins/pastetext/lang/en.js'
 					//'../js/plugins/accesskey/plugin.js',
