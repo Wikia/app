@@ -98,7 +98,7 @@ define('ext.wikia.adEngine.adContext', [
 			geo.isProperGeo(instantGlobals.wgAdDriverMegaAdUnitBuilderForFVCountries);
 	}
 
-	function isMEGAEnablefForFVOasis(context, isEnabledOnDesktopFeaturedVideo) {
+	function isMEGAEnabledForFVOasis(context, isEnabledOnDesktopFeaturedVideo) {
 		return context.targeting.hasFeaturedVideo && isEnabledOnDesktopFeaturedVideo &&
 			geo.isProperGeo(instantGlobals.wgAdDriverMegaAdUnitBuilderForFVCountries);
 	}
@@ -120,7 +120,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.premiumAdLayoutEnabled = isPALEnabledOnDesktopFeaturedVideo || isPALEnabledOnRegularArticle;
 		context.slots.premiumAdLayoutSlotsToUnblock = ['INCONTENT_BOXAD_1', 'BOTTOM_LEADERBOARD'];
 
-		context.opts.megaAdUnitBuilderEnabled = isMEGAEnablefForFVOasis(context, isPALEnabledOnDesktopFeaturedVideo) ||
+		context.opts.megaAdUnitBuilderEnabled = isMEGAEnabledForFVOasis(context, isPALEnabledOnDesktopFeaturedVideo) ||
 			isMEGAEnabledForFVMobile(context);
 
 		if (!context.targeting.hasFeaturedVideo) {
