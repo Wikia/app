@@ -1988,11 +1988,6 @@ class WallHooksHelper {
 		return true;
 	}
 
-	static public function onAccountNavigationModuleAfterDropdownItems( &$possibleItems, &$personal_urls ) {
-		$personal_urls[ 'mytalk' ][ 'class' ] = 'message-wall';
-		return true;
-	}
-
 	/**
 	 * Add user links to toolbar in Monobook for Message Wall
 	 *

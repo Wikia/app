@@ -164,41 +164,12 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$result = $response->getVal( 'result', '' );
 
 		if ( $result == 'ok' ) {
-			/*
-			 * Remove when SOC-217 ABTest is finished
-			 */
-			$signupForm = new UserLoginForm( $this->wg->request );
-
-			if ( $signupForm->isAllowedRegisterUnconfirmed() ) {
-				$user = User::newFromName( $this->username );
-				// Get and clear redirect page
-				$userSignupRedirect = $user->getGlobalAttribute( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME );
-				$user->setGlobalAttribute( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME, null );
-
-				$user->saveSettings();
-
-				// redirect user
-				if ( !empty( $userSignupRedirect ) ) {
-					// Redirect user to the point where he finished (when signup on create wiki)
-					$title = SpecialPage::getTitleFor( 'CreateNewWiki' );
-					$query = $userSignupRedirect;
-				} else {
-					$title = $user->getUserPage();
-					$query = '';
-				}
-
-				$redirectUrl = $title->getFullURL( $query );
-			} else {
-				/*
-				 * end remove
-				 */
-				$params = [
-					'sendConfirmationEmail' => true,
-					'username' => $this->username,
-					'byemail' => intval( $this->byemail ),
-				];
-				$redirectUrl = $this->wg->title->getFullUrl( $params );
-			}
+			$params = [
+				'sendConfirmationEmail' => true,
+				'username' => $this->username,
+				'byemail' => intval( $this->byemail ),
+			];
+			$redirectUrl = $this->wg->title->getFullUrl( $params );
 
 			$this->track( 'signup-successful' );
 			$this->wg->out->redirect( $redirectUrl );
