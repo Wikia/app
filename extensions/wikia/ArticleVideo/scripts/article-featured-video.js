@@ -24,12 +24,16 @@ require([
 		var $video = $('#article-video'),
 			$videoContainer = $video.find('.video-container'),
 			$videoThumbnail = $videoContainer.find('.video-thumbnail'),
+			$onScrollVideoTitle = $videoContainer.find('.video-title'),
+			$onScrollVideoTime = $videoContainer.find('.video-time'),
+			$onScrollAttribution = $videoContainer.find('.featured-video__attribution-container'),
 			$closeBtn = $videoContainer.find('.close'),
 			ooyalaVideoController,
 			ooyalaVideoElementId = 'ooyala-article-video',
 			$ooyalaVideo = $('#' + ooyalaVideoElementId),
 			videoCollapsed = false,
 			collapsingDisabled = false,
+			nextVideoPlayed = false,
 			playTime = -1,
 			percentagePlayTime = -1,
 			prerollSlotName = 'FEATURED_VIDEO',
@@ -212,24 +216,34 @@ require([
 				playerTracker.register(player, playerTrackerParams);
 			}
 
-			player.mb.subscribe(OO.EVENTS.INITIAL_PLAY, 'featured-video', function () {
+			player.mb.subscribe(window.OO.EVENTS.INITIAL_PLAY, 'featured-video', function () {
 				track({
 					action: tracker.ACTIONS.PLAY_VIDEO,
 					label: 'featured-video'
 				});
 			});
 
-			player.mb.subscribe(OO.EVENTS.VOLUME_CHANGED, 'featured-video', function (eventName, volume) {
+			player.mb.subscribe(window.OO.EVENTS.PLAYBACK_READY, 'ui-update', function () {
+				if (nextVideoPlayed) {
+					$onScrollVideoTitle.text(player.getTitle());
+					$onScrollVideoTime.text(
+						ooyalaVideoController.getFormattedDuration(player.getDuration())
+					);
+					$onScrollAttribution.remove();
+				}
+			});
+
+			player.mb.subscribe(window.OO.EVENTS.VOLUME_CHANGED, 'featured-video', function (eventName, volume) {
 				if (volume > 0) {
 					track({
 						action: tracker.ACTIONS.CLICK,
 						label: 'featured-video-unmuted'
 					});
-					player.mb.unsubscribe(OO.EVENTS.VOLUME_CHANGED, 'featured-video');
+					player.mb.unsubscribe(window.OO.EVENTS.VOLUME_CHANGED, 'featured-video');
 				}
 			});
 
-			player.mb.subscribe(OO.EVENTS.PLAY, 'featured-video', function () {
+			player.mb.subscribe(window.OO.EVENTS.PLAY, 'featured-video', function () {
 				collapsingDisabled = false;
 				if (videoFeedbackBox) {
 					videoFeedbackBox.show();
@@ -240,14 +254,14 @@ require([
 				});
 			});
 
-			player.mb.subscribe(OO.EVENTS.PLAYED, 'featured-video', function () {
+			player.mb.subscribe(window.OO.EVENTS.PLAYED, 'featured-video', function () {
 				track({
 					action: tracker.ACTIONS.CLICK,
 					label: 'featured-video-played'
 				});
 			});
 
-			player.mb.subscribe(OO.EVENTS.PAUSED, 'featured-video', function () {
+			player.mb.subscribe(window.OO.EVENTS.PAUSED, 'featured-video', function () {
 				if (videoFeedbackBox) {
 					videoFeedbackBox.hide();
 				}
@@ -314,6 +328,8 @@ require([
 				// bucket_info has '2' before the JSON string
 				var bucketInfo = JSON.parse(eventData.clickedVideo.bucket_info.substring(1)),
 					position = bucketInfo.position;
+
+				nextVideoPlayed = true;
 
 				track({
 					action: tracker.ACTIONS.VIEW,
