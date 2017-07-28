@@ -73,34 +73,31 @@ class ImageServingController extends WikiaController {
 		$revisionId = $this->getVal( 'revision' ) ?? $title->getLatestRevID();
 
 		if ( $revisionId < $title->getLatestRevID() ) {
-			$key = wfMemcKey( 'old-file-url-' . $filePageId . '-' . $revisionId );
-
-			$url = WikiaDataAccess::cache(
-				$key,
-				WikiaResponse::CACHE_STANDARD,
-				function () use ( $revisionId, $filePageId, $title ) {
-					$db = wfGetDB( DB_SLAVE );
-					$timestamp = $db->selectField(
-						[ 'revision' ],
-						'rev_timestamp',
-						[
-							'rev_page' => $filePageId,
-							'rev_id' => $revisionId,
-						],
-						__METHOD__
-					);
-
-					if ( empty( $timestamp ) ) {
-						throw new NotFoundException();
-					}
-
-					$oldFile = OldLocalFile::newFromTitle( $title, RepoGroup::singleton()->getLocalRepo(), $timestamp );
-
-					return $oldFile->getUrl();
-				}
+			$db = wfGetDB( DB_SLAVE );
+			$timestamp = $db->selectField(
+				[ 'revision' ],
+				'rev_timestamp',
+				[
+					'rev_page' => $filePageId,
+					'rev_id' => $revisionId,
+				],
+				__METHOD__
 			);
 
-			$this->response->setCode( 301 );
+			if ( empty( $timestamp ) ) {
+				throw new NotFoundException();
+			}
+
+			$file = OldLocalFile::newFromTitle( $title, RepoGroup::singleton()->getLocalRepo(), $timestamp );
+			// adding description to imagepage creates new revision so if there is no OldFile with this timestamp, return latest revision link
+			if ( !$file->exists() ) {
+				$file = LocalFile::newFromTitle( $title, RepoGroup::singleton()->getLocalRepo(), $timestamp );
+				$this->response->setCode( 302 );
+			} else {
+				$this->response->setCode( 301 );
+			}
+
+			$url = $file->getUrl();
 		} else if ( $revisionId == $title->getLatestRevID() ) {
 			$localFile = LocalFile::newFromTitle( $title, RepoGroup::singleton()->getLocalRepo() );
 			$url = $localFile->getUrl();
