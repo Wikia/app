@@ -44,7 +44,6 @@ class ArticlesApiController extends WikiaApiController {
 	const DEFAULT_SEARCH_NAMESPACE = 0;
 	const DEFAULT_AVATAR_SIZE = 20;
 
-	const CLIENT_CACHE_VALIDITY = 86400;// 24h
 	const CATEGORY_CACHE_ID = 'category';
 	const ARTICLE_CACHE_ID = 'article';
 	const DETAILS_CACHE_ID = 'details';
@@ -237,7 +236,7 @@ class ArticlesApiController extends WikiaApiController {
 		$this->setResponseData(
 			[ 'basepath' => $this->wg->Server, 'items' => $collection ],
 			[ 'imgFields' => 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
-			self::CLIENT_CACHE_VALIDITY
+			WikiaResponse::CACHE_STANDARD
 		);
 
 		$batches = null;
@@ -272,7 +271,7 @@ class ArticlesApiController extends WikiaApiController {
 		$this->setResponseData(
 			[ 'basepath' => $this->wg->Server, 'items' => $mostLinkedOutput ],
 			[ 'imgFields' => 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
-			self::CLIENT_CACHE_VALIDITY
+			WikiaResponse::CACHE_STANDARD
 		);
 	}
 
@@ -375,7 +374,7 @@ class ArticlesApiController extends WikiaApiController {
 					$results[] = $item;
 				}
 
-				$this->wg->Memc->set( $key, $results, self::CLIENT_CACHE_VALIDITY );
+				$this->wg->Memc->set( $key, $results, WikiaResponse::CACHE_STANDARD );
 			}
 		}
 
@@ -517,7 +516,7 @@ class ArticlesApiController extends WikiaApiController {
 
 			$articles = WikiaDataAccess::cache(
 				self::getCacheKey( $offset, self::PAGE_CACHE_ID, [ $limit . $namespace ] ),
-				self::CLIENT_CACHE_VALIDITY,
+				WikiaResponse::CACHE_STANDARD,
 				function() use ( $limit, $offset, $namespace ) {
 
 					$params = [
@@ -584,7 +583,7 @@ class ArticlesApiController extends WikiaApiController {
 		$this->setResponseData(
 			$responseValues,
 			[ 'imgFields' => 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
-			self::CLIENT_CACHE_VALIDITY
+			WikiaResponse::CACHE_STANDARD
 		);
 
 		wfProfileOut( __METHOD__ );
@@ -632,7 +631,7 @@ class ArticlesApiController extends WikiaApiController {
 		$this->setResponseData(
 			[ 'items' => $collection, 'basepath' => $this->wg->Server ],
 			[ 'imgFields' => 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
-			self::CLIENT_CACHE_VALIDITY
+			WikiaResponse::CACHE_STANDARD
 		);
 
 		$collection = null;
@@ -872,7 +871,7 @@ class ArticlesApiController extends WikiaApiController {
 	static private function getCategoryMembers( $category, $limit = 5000, $offset = '', $namespaces = '', $sort = 'sortkey', $dir = 'asc' ) {
 		return WikiaDataAccess::cache(
 			self::getCacheKey( $category, self::CATEGORY_CACHE_ID, [ $limit, $offset, $namespaces, $dir ] ),
-			self::CLIENT_CACHE_VALIDITY,
+			WikiaResponse::CACHE_STANDARD,
 			function() use ( $category, $limit, $offset, $namespaces, $sort, $dir ) {
 				$ids = ApiService::call(
 					array(
@@ -1068,7 +1067,7 @@ class ArticlesApiController extends WikiaApiController {
 				$popular = $this->expandArticlesDetails( $popular );
 			}
 
-			$this->wg->set( $key, $popular, self::CLIENT_CACHE_VALIDITY );
+			$this->wg->set( $key, $popular, WikiaResponse::CACHE_STANDARD );
 		}
 
 		$popular = array_slice( $popular, 0, $limit );
@@ -1077,7 +1076,7 @@ class ArticlesApiController extends WikiaApiController {
 		$this->setResponseData(
 			[ 'items' => $popular, 'basepath' => $wgServer ],
 			[ 'imgFields' => 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
-			self::CLIENT_CACHE_VALIDITY
+			WikiaResponse::CACHE_STANDARD
 		);
 
 	}
