@@ -1,4 +1,4 @@
-/*global describe, expect, it, modules, spyOn*/
+/*global beforeEach, describe, expect, it, modules, spyOn*/
 describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 	'use strict';
 
@@ -8,14 +8,10 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 	var mocks = {
 		adContext: {
 			getContext: function () {
-				return {
-					opts: {},
-					targeting: {
-						skin: 'oasis'
-					}
-				};
+				return mocks.context;
 			}
 		},
+		context: {},
 		priceParsingHelper: {
 			getPriceFromString: function () {
 				return 0;
@@ -75,6 +71,15 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 
 	mocks.log.levels = {};
 
+	beforeEach(function () {
+		mocks.context = {
+			opts: {},
+			targeting: {
+				skin: 'oasis'
+			}
+		};
+	});
+
 	function getVeles() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.veles'](
 			mocks.adContext,
@@ -99,6 +104,15 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 
 	it('Is disabled when geo does not match', function () {
 		spyOn(mocks.geo, 'isProperGeo').and.returnValue(false);
+		var veles = getVeles();
+
+		expect(veles.isEnabled()).toBeFalsy();
+	});
+
+	it('Is disabled on page with featured video', function () {
+		spyOn(mocks.geo, 'isProperGeo').and.returnValue(true);
+		mocks.context.targeting.hasFeaturedVideo = true;
+
 		var veles = getVeles();
 
 		expect(veles.isEnabled()).toBeFalsy();

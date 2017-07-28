@@ -42,8 +42,10 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		};
 
 	function isEnabled() {
-		var isVelesEnabled = geo.isProperGeo(instantGlobals.wgAdDriverVelesBidderCountries);
+		var hasFeaturedVideo = adContext.getContext().targeting.hasFeaturedVideo,
+			isVelesEnabled = geo.isProperGeo(instantGlobals.wgAdDriverVelesBidderCountries) && !hasFeaturedVideo;
 		log(['isEnabled', isVelesEnabled], log.levels.debug, logGroup);
+
 		return isVelesEnabled;
 	}
 
