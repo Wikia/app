@@ -7,8 +7,6 @@ define('ext.wikia.adEngine.provider.directGptMobile', [
 ], function (adContext, kiloAdUnitBuilder, megaAdUnitBuilder, factory) {
 	'use strict';
 
-	var context = adContext.getContext();
-
 	return factory.createProvider(
 		'ext.wikia.adEngine.provider.directGptMobile',
 		'DirectGptMobile',
@@ -22,7 +20,9 @@ define('ext.wikia.adEngine.provider.directGptMobile', [
 			MOBILE_PREFOOTER:           {size: '320x50,300x250,300x50', loc: 'footer'}
 		},
 		{
-			adUnitBuilder: context.opts.megaAdUnitBuilderEnabled ? megaAdUnitBuilder : kiloAdUnitBuilder,
+			adUnitBuilder: function () {
+				return adContext.getContext().opts.megaAdUnitBuilderEnabled ? megaAdUnitBuilder : kiloAdUnitBuilder;
+			},
 			atfSlots: [
 				'MOBILE_TOP_LEADERBOARD'
 			]
