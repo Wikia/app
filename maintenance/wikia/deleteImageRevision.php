@@ -8,12 +8,16 @@ class DeleteImageRevision extends Maintenance {
 	const REVISION_ID_OPTION = 'revisionId';
 	const REASON_OPTION = 'reason';
 
+	private $db;
+
 	public function __construct() {
 		parent::__construct();
 		$this->addOption( self::PAGE_ID_OPTION, "image page id", true );
 		$this->addOption( self::REVISION_ID_OPTION, "revision id", true );
 		$this->addOption( self::REASON_OPTION, "deletion reason", true );
 		$this->mDescription = "Remove given revision of given image file";
+
+		$this->db = wfGetDB( DB_SLAVE );
 	}
 
 
@@ -23,16 +27,84 @@ class DeleteImageRevision extends Maintenance {
 		$reason = $this->getOption( self::REASON_OPTION );
 		$title = Title::newFromID( $pageId );
 
-		//TODO: fix it, adding description to imagepage creates new revision so following check will not check if the image is old
-		if ( $revisionId < $title->getLatestRevID() ) {
-			$this->removeOldRevision( $title, $revisionId, $pageId, $reason );
-		} else {
 
+		$timestamp = $this->db->selectField(
+			[ 'revision' ],
+			'rev_timestamp',
+			[
+				'rev_page' => $title->getArticleID(),
+				'rev_id' => $revisionId,
+			],
+			__METHOD__
+		);
+
+		$this->output('jfdslkjflkdsjflkjskldfj');
+		if ( $this->isOldImageRevision( $timestamp, $title->getDBkey() ) ) {
+			$this->removeOldRevision( $title, $timestamp, $revisionId, $pageId, $reason );
+		} else {
+			$this->removeLatestRevision( $title, $timestamp, $revisionId, $pageId, $reason );
 		}
 	}
 
-	private function removeOldRevision( Title $title, int $revisionId, int $pageId, string $reason ) {
-		$oldLocalFile = $this->getOldLocalFile( $title, $revisionId );
+	private function removeLatestRevision( Title $title, string $revisionTimestamp, int $revisionId, int $pageId, string $reason ) {
+		$this->output(__METHOD__ . "\n");
+
+		if ( !$this->hasOldRevisions( $title->getDBkey() ) ) {
+			LocalFile::newFromTitle( $title, RepoGroup::singleton()->getLocalRepo() );
+
+			// intentionally left as empty string to enforce removal of whole File by FileDeleteForm::doDelete when there is only one revision
+			$oldfile = '';
+			if ( !FileDeleteForm::doDelete( $title, $file, $oldfile, $reason, false )->isOK() ) {
+				\Wikia\Logger\WikiaLogger::instance()->error(
+					"deleting file was not successful",
+					[
+						'page_id' => $pageId,
+						'revision_id' => $revisionId
+					]
+				);
+			}
+		} else {
+			$this->revertToPreviousRevision( $title, $reason );
+			wfWaitForSlaves();
+			$this->removeOldRevision( $title, $revisionTimestamp, $revisionId, $pageId, $reason );
+		}
+	}
+
+	private function revertToPreviousRevision( Title $title, string $comment ) {
+		$this->output(__METHOD__ . "\n");
+
+		$db = wfGetDb( DB_SLAVE );
+		$archiveName = $db->selectField(
+			['oldimage'],
+			'oi_archive_name',
+			[
+				'oi_name' => $title->getDBkey()
+			],
+			__METHOD__,
+			['ORDER BY oi_timestamp desc']
+		);
+
+		$oldLocalFile = OldLocalFile::newFromArchiveName( $title, RepoGroup::singleton()->getLocalRepo(), $archiveName );
+		$source = $oldLocalFile->getArchiveVirtualUrl( $oldLocalFile->getArchiveName() );
+		$oldLocalFile->upload( $source, $comment, $comment );
+	}
+
+	private function hasOldRevisions( $fileName ):bool {
+		$this->output(__METHOD__ . "\n");
+
+		return !empty(
+			$this->db->selectField(
+				[ 'oldimage' ],
+				'1 as has_old',
+				[ 'oi_name' => $fileName ]
+			)
+		);
+	}
+
+	private function removeOldRevision( Title $title, string $revisionTimestamp, int $revisionId, int $pageId, string $reason ) {
+		$this->output(__METHOD__ . "\n");
+
+		$oldLocalFile = OldLocalFile::newFromTitle( $title, RepoGroup::singleton()->getLocalRepo(), $revisionTimestamp );
 		$oldimage = $oldLocalFile->getArchiveName();
 
 		// if $oldimage is empty, FileDeleteForm::doDelete would delete whole file instead of single revision
@@ -57,19 +129,19 @@ class DeleteImageRevision extends Maintenance {
 		}
 	}
 
-	private function getOldLocalFile( Title $title, int $revId ): OldLocalFile {
-		$db = wfGetDB( DB_SLAVE );
-		$timestamp = $db->selectField(
-			[ 'revision' ],
-			'rev_timestamp',
-			[
-				'rev_page' => $title->getArticleID(),
-				'rev_id' => $revId,
-			],
-			__METHOD__
-		);
+	private function isOldImageRevision( $revisionTimestamp, $fileName ): bool {
+		$this->output(__METHOD__ . "\n");
 
-		return OldLocalFile::newFromTitle( $title, RepoGroup::singleton()->getLocalRepo(), $timestamp );
+		return !empty(
+			$this->db->selectField(
+				[ 'oldimage' ],
+				'1 as latest',
+				[
+					'oi_name' => $fileName,
+					'oi_timestamp' => $revisionTimestamp
+				]
+			)
+		);
 	}
 }
 
