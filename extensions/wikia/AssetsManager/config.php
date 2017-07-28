@@ -128,6 +128,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/slotFinder.js',
 		'//extensions/wikia/ARecoveryEngine/js/tweaker.js',
 		'//extensions/wikia/ARecoveryEngine/js/PageFair/recovery.js',
+		'//extensions/wikia/AdEngine/js/provider/gpt/targeting.js',
 		'//resources/wikia/modules/domCalculator.js',
 		'//resources/wikia/modules/krux.js',
 		'//resources/wikia/modules/throttle.js',

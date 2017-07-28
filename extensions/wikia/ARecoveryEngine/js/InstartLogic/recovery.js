@@ -1,8 +1,10 @@
+/*global define*/
 define('ext.wikia.aRecoveryEngine.instartLogic.recovery', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.provider.gpt.targeting',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, log, win) {
+], function (adContext, targeting, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.aRecoveryEngine.instartLogic.recovery',
@@ -21,10 +23,8 @@ define('ext.wikia.aRecoveryEngine.instartLogic.recovery', [
 	 * @returns {boolean}
 	 */
 	function isBlocking() {
-		var gptLibSrcKeyVal = win.googletag.pubads && win.googletag.pubads() &&
-				typeof win.googletag.pubads().getTargeting === "function" &&
-				win.googletag.pubads().getTargeting('src'),
-			isParamSet = gptLibSrcKeyVal && gptLibSrcKeyVal.indexOf('rec') > -1;
+		var srcKeyVal = targeting.getPageLevelTargetingValue('src'),
+			isParamSet = srcKeyVal && srcKeyVal.indexOf('rec') > -1;
 
 		log(['isBlocking', isParamSet], log.levels.debug, logGroup);
 		return isParamSet;

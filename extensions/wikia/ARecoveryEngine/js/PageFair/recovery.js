@@ -1,3 +1,4 @@
+/*global define*/
 define('ext.wikia.aRecoveryEngine.pageFair.recovery', [
 	'ext.wikia.adEngine.adContext',
 	'wikia.log',
