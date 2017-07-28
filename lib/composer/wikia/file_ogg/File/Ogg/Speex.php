@@ -21,8 +21,6 @@
 // | Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA |
 // +----------------------------------------------------------------------------+
 
-require_once('File/Ogg/Media.php');
-
 /**
  * @author      David Grant <david@grant.org.uk>, Tim Starling <tstarling@wikimedia.org>
  * @category    File
@@ -31,7 +29,7 @@ require_once('File/Ogg/Media.php');
  * @link        http://pear.php.net/package/File_Ogg
  * @link        http://www.speex.org/docs.html
  * @package     File_Ogg
- * @version     CVS: $Id: Speex.php,v 1.10 2005/11/16 20:43:27 djg Exp $
+ * @version     CVS: $Id$
  */
 class File_Ogg_Speex extends File_Ogg_Media
 {
@@ -44,15 +42,15 @@ class File_Ogg_Speex extends File_Ogg_Media
         $this->_decodeHeader();
         $this->_decodeCommentsHeader();
         $endSec =
-            (( '0x' . substr( $this->_lastGranulePos, 0, 8 ) ) * pow(2, 32) 
-            + ( '0x' . substr( $this->_lastGranulePos, 8, 8 ) ))
+            (intval(substr( $this->_lastGranulePos, 0, 8 ), 16 ) * pow(2, 32)
+            + intval( substr( $this->_lastGranulePos, 8, 8 ), 16 ))
             / $this->_header['rate'];
-     
-         $startSec	 =        
-            (( '0x' . substr( $this->_firstGranulePos, 0, 8 ) ) * pow(2, 32) 
-            + ( '0x' . substr( $this->_firstGranulePos, 8, 8 ) ))
+
+         $startSec	 =
+            (intval(substr( $this->_firstGranulePos, 0, 8 ), 16 ) * pow(2, 32)
+            + intval(substr( $this->_firstGranulePos, 8, 8 ), 16 ))
             / $this->_header['rate'];
-            
+
          //make sure the offset is worth taking into account oggz_chop related hack
 	    if( $startSec > 1){
             $this->_streamLength = $endSec - $startSec;
@@ -66,7 +64,7 @@ class File_Ogg_Speex extends File_Ogg_Media
      * Get a short string describing the type of the stream
      * @return string
      */
-    function getType() 
+    function getType()
     {
         return 'Speex';
     }
@@ -80,7 +78,7 @@ class File_Ogg_Speex extends File_Ogg_Media
         fseek($this->_filePointer, $this->_streamData['pages'][0]['body_offset'], SEEK_SET);
         // The first 8 characters should be "Speex   ".
         if (fread($this->_filePointer, 8) != 'Speex   ')
-            throw new PEAR_Exception("Stream is undecodable due to a malformed header.", OGG_ERROR_UNDECODABLE);
+            throw new OggException("Stream is undecodable due to a malformed header.", OGG_ERROR_UNDECODABLE);
 
         $this->_version = fread($this->_filePointer, 20);
         $this->_header = File_Ogg::_readLittleEndian($this->_filePointer, array(

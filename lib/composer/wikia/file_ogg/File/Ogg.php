@@ -28,7 +28,7 @@
  * @license     http://www.gnu.org/copyleft/lesser.html GNU LGPL
  * @link        http://pear.php.net/package/File_Ogg
  * @package     File_Ogg
- * @version     CVS: $Id: Ogg.php,v 1.14 2005/11/19 09:06:30 djg Exp $
+ * @version     CVS: $Id$
  */
 
 /**
@@ -47,6 +47,10 @@ define("OGG_STREAM_SPEEX",      3);
  * @access  public
  */
 define("OGG_STREAM_FLAC",       4);
+/**
+ * @access  public
+ */
+define("OGG_STREAM_OPUS",       5);
 
 /**
  * Capture pattern to determine if a file is an Ogg physical stream.
@@ -86,6 +90,11 @@ define("OGG_STREAM_CAPTURE_FLAC",   "FLAC");
  */
 define("OGG_STREAM_CAPTURE_THEORA", "theora");
 /**
+ * Capture pattern for an Ogg Opus logical stream.
+ * @access  private
+ */
+define("OGG_STREAM_CAPTURE_OPUS",  "OpusHead");
+/**
  * Error thrown if the file location passed is nonexistant or unreadable.
  *
  * @access  private
@@ -111,14 +120,9 @@ define("OGG_ERROR_BAD_SERIAL",   3);
  */
 define("OGG_ERROR_UNDECODABLE",      4);
 
-require_once('PEAR.php');
-require_once('PEAR/Exception.php');
-require_once('File/Ogg/Bitstream.php');
-require_once("File/Ogg/Flac.php");
-require_once("File/Ogg/Speex.php");
-require_once("File/Ogg/Theora.php");
-require_once("File/Ogg/Vorbis.php");
-
+class OggException extends Exception {
+    // Stub
+}
 
 /**
  * Class for parsing a ogg bitstream.
@@ -188,18 +192,18 @@ class File_Ogg
     {
         clearstatcache();
         if (! file_exists($fileLocation)) {
-            throw new PEAR_Exception("Couldn't Open File.  Check File Path.", OGG_ERROR_INVALID_FILE);
+            throw new OggException("Couldn't Open File.  Check File Path.", OGG_ERROR_INVALID_FILE);
         }
 
         // Open this file as a binary, and split the file into streams.
         $this->_filePointer = fopen($fileLocation, "rb");
         if (!is_resource($this->_filePointer))
-            throw new PEAR_Exception("Couldn't Open File.  Check File Permissions.", OGG_ERROR_INVALID_FILE);
+            throw new OggException("Couldn't Open File.  Check File Permissions.", OGG_ERROR_INVALID_FILE);
 
         // Check for a stream at the start
         $magic = fread($this->_filePointer, strlen(OGG_CAPTURE_PATTERN));
         if ($magic !== OGG_CAPTURE_PATTERN) {
-            throw new PEAR_Exception("Couldn't read file: Incorrect magic number.", OGG_ERROR_UNDECODABLE);
+            throw new OggException("Couldn't read file: Incorrect magic number.", OGG_ERROR_UNDECODABLE);
         }
         fseek($this->_filePointer, 0, SEEK_SET);
 
@@ -240,7 +244,7 @@ class File_Ogg
         $bufferLength = ceil(array_sum($fields) / 8);
         $buffer = fread($file, $bufferLength);
         if (strlen($buffer) != $bufferLength) {
-            throw new PEAR_Exception('Unexpected end of file', OGG_ERROR_UNDECODABLE);
+            throw new OggException('Unexpected end of file', OGG_ERROR_UNDECODABLE);
         }
         $bytePos = 0;
         $bitPos = 0;
@@ -302,7 +306,7 @@ class File_Ogg
         $bufferLength = ceil(array_sum($fields) / 8);
         $buffer = fread($file, $bufferLength);
         if (strlen($buffer) != $bufferLength) {
-            throw new PEAR_Exception('Unexpected end of file', OGG_ERROR_UNDECODABLE);
+            throw new OggException('Unexpected end of file', OGG_ERROR_UNDECODABLE);
         }
 
         $bytePos = 0;
@@ -356,6 +360,10 @@ class File_Ogg
      */
     function _decodePageHeader($pageData, $pageOffset, $groupId)
     {
+        // Don't blindly substr() and unpack() if data is cut off
+        if (strlen($pageData) < 27)
+            return (false);
+
         // Extract the various bits and pieces found in each packet header.
         if (substr($pageData, 0, 4) != OGG_CAPTURE_PATTERN)
             return (false);
@@ -378,6 +386,11 @@ class File_Ogg
         $page_sequence   = unpack("Vdata", substr($pageData, 18, 4));
         $checksum        = unpack("Vdata", substr($pageData, 22, 4));
         $page_segments   = unpack("Cdata", substr($pageData, 26, 1));
+
+        // Header is extended with segment lengths; make sure we have data.
+        if (strlen($pageData) < 27 + $page_segments['data'])
+            return (false);
+
         $segments_total  = 0;
         for ($i = 0; $i < $page_segments['data']; ++$i) {
             $segment_length = unpack("Cdata", substr($pageData, 26 + ($i + 1), 1));
@@ -420,6 +433,7 @@ class File_Ogg
             $stream['last_granule_pos'] = $abs_granule_pos;
         }
 
+        $pageData = null;
         return $page;
     }
 
@@ -439,7 +453,7 @@ class File_Ogg
             }
             $page = $this->_decodePageHeader($pageData, $this_page_offset, $groupId);
             if ($page === false) {
-                throw new PEAR_Exception("Cannot decode Ogg file: Invalid page at offset $this_page_offset", OGG_ERROR_UNDECODABLE);
+                throw new OggException("Cannot decode Ogg file: Invalid page at offset $this_page_offset", OGG_ERROR_UNDECODABLE);
             }
 
             // Keep track of multiplexed groups
@@ -453,7 +467,7 @@ class File_Ogg
                 }
             }
             if ($openStreams < 0) {
-                throw new PEAR_Exception("Unexpected end of stream", OGG_ERROR_UNDECODABLE);
+                throw new OggException("Unexpected end of stream", OGG_ERROR_UNDECODABLE);
             }
 
             $this_page_offset = $page['body_finish'];
@@ -476,6 +490,9 @@ class File_Ogg
             } elseif (preg_match("/" . OGG_STREAM_CAPTURE_THEORA . "/", $pattern)) {
                 $this->_streamList[$stream_serial]['stream_type'] = OGG_STREAM_THEORA;
                 $stream = new File_Ogg_Theora($stream_serial, $streamData, $this->_filePointer);
+            } elseif (preg_match("/" . OGG_STREAM_CAPTURE_OPUS . "/", $pattern)) {
+                $this->_streamList[$stream_serial]['stream_type'] = OGG_STREAM_OPUS;
+                $stream = new File_Ogg_Opus($stream_serial, $streamData, $this->_filePointer);
             } else {
                 $streamData['stream_type'] = "unknown";
                 $stream = false;
@@ -491,7 +508,7 @@ class File_Ogg
                 }
                 //just store the startOffset for the first stream:
                 if( $this->_startOffset === false ){
-                	$this->_startOffset = $stream->getStartOffset();
+                    $this->_startOffset = $stream->getStartOffset();
                 }
 
             }
@@ -512,8 +529,8 @@ class File_Ogg
     function getOverhead() {
         $header_size    = 0;
         $stream_size    = 0;
-        foreach ($this->_streams as $stream) {
-            foreach ($stream->_streamList as $stream_data) {
+        foreach ($this->_streams as $serial => $stream) {
+            foreach ($stream->_streamList as $offset => $stream_data) {
                 $header_size += $stream_data['body_offset'] - $stream_data['head_offset'];
                 $stream_size  = $stream_data['body_finish'];
             }
@@ -534,7 +551,7 @@ class File_Ogg
     function &getStream($streamSerial)
     {
         if (! array_key_exists($streamSerial, $this->_streams))
-                throw new PEAR_Exception("The stream number is invalid.", OGG_ERROR_BAD_SERIAL);
+                throw new OggException("The stream number is invalid.", OGG_ERROR_BAD_SERIAL);
 
         return $this->_streams[$streamSerial];
     }
@@ -606,16 +623,19 @@ class File_Ogg
         else
             return array();
     }
+
     /**
      * getStartOffset
      *
      * @return unknown
      */
-	function getStartOffset(){
-		if( $this->_startOffset === false)
-			return 0;
-		return $this->_startOffset;
-	}
+    function getStartOffset(){
+        if ($this->_startOffset === false) {
+            return 0;
+        }
+        return $this->_startOffset;
+    }
+
     /**
      * Get the total length of the group of streams
      */
@@ -623,4 +643,3 @@ class File_Ogg
         return $this->_totalLength;
     }
 }
-?>

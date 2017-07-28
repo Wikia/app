@@ -21,8 +21,6 @@
 // | Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA |
 // +----------------------------------------------------------------------------+
 
-require_once('File/Ogg/Bitstream.php');
-
 /**
  * Check number for the first header in a Vorbis stream.
  *
@@ -81,7 +79,7 @@ define("OGG_VORBIS_ERROR_ILLEGAL_COMMENT",  3);
  * @link        http://pear.php.net/package/File_Ogg
  * @link        http://www.xiph.org/vorbis/doc/
  * @package     File_Ogg
- * @version     CVS: $Id: Vorbis.php,v 1.13 2005/11/19 09:06:32 djg Exp $
+ * @version     CVS: $Id$
  */
 class File_Ogg_Vorbis extends File_Ogg_Media
 {
@@ -186,8 +184,8 @@ class File_Ogg_Vorbis extends File_Ogg_Media
         $this->_avgBitrate      = $this->_streamLength ? ($this->_streamSize * 8) / $this->_streamLength : 0;
     }
 	function getSecondsFromGranulePos( $granulePos ){
-		return (( '0x' . substr( $granulePos, 0, 8 ) ) * pow(2, 32)
-            + ( '0x' . substr( $granulePos, 8, 8 ) ))
+		return (intval(substr( $granulePos, 0, 8 ), 16) * pow(2, 32)
+            + intval( substr( $granulePos, 8, 8 ), 16 ))
             / $this->_idHeader['audio_sample_rate'];
 	}
     /**
@@ -228,17 +226,17 @@ class File_Ogg_Vorbis extends File_Ogg_Media
         if ($h['vorbis_version'] == 0)
             $this->_version = $h['vorbis_version'];
         else
-            throw new PEAR_Exception("Stream is undecodable due to an invalid vorbis stream version.", OGG_VORBIS_ERROR_UNDECODABLE);
+            throw new OggException("Stream is undecodable due to an invalid vorbis stream version.", OGG_VORBIS_ERROR_UNDECODABLE);
 
         // The number of channels MUST be greater than 0.
         if ($h['audio_channels'] == 0)
-            throw new PEAR_Exception("Stream is undecodable due to zero channels.", OGG_VORBIS_ERROR_UNDECODABLE);
+            throw new OggException("Stream is undecodable due to zero channels.", OGG_VORBIS_ERROR_UNDECODABLE);
         else
             $this->_channels = $h['audio_channels'];
 
         // The sample rate MUST be greater than 0.
         if ($h['audio_sample_rate'] == 0)
-            throw new PEAR_Exception("Stream is undecodable due to a zero sample rate.", OGG_VORBIS_ERROR_UNDECODABLE);
+            throw new OggException("Stream is undecodable due to a zero sample rate.", OGG_VORBIS_ERROR_UNDECODABLE);
         else
             $this->_sampleRate = $h['audio_sample_rate'];
 
@@ -253,23 +251,23 @@ class File_Ogg_Vorbis extends File_Ogg_Media
         // blocksize_0 MUST be a valid blocksize.
         $blocksize_0 = pow(2, $h['blocksize_0']);
         if (FALSE == in_array($blocksize_0, $valid_block_sizes))
-            throw new PEAR_Exception("Stream is undecodable because blocksize_0 is $blocksize_0, which is not a valid size.", OGG_VORBIS_ERROR_UNDECODABLE);
+            throw new OggException("Stream is undecodable because blocksize_0 is $blocksize_0, which is not a valid size.", OGG_VORBIS_ERROR_UNDECODABLE);
 
         // Extract bits 5 to 8 from the character data.
         // blocksize_1 MUST be a valid blocksize.
         $blocksize_1 = pow(2, $h['blocksize_1']);
         if (FALSE == in_array($blocksize_1, $valid_block_sizes))
-            throw new PEAR_Exception("Stream is undecodable because blocksize_1 is not a valid size.", OGG_VORBIS_ERROR_UNDECODABLE);
+            throw new OggException("Stream is undecodable because blocksize_1 is not a valid size.", OGG_VORBIS_ERROR_UNDECODABLE);
 
         // blocksize 0 MUST be less than or equal to blocksize 1.
         if ($blocksize_0 > $blocksize_1)
-            throw new PEAR_Exception("Stream is undecodable because blocksize_0 is not less than or equal to blocksize_1.", OGG_VORBIS_ERROR_UNDECODABLE);
+            throw new OggException("Stream is undecodable because blocksize_0 is not less than or equal to blocksize_1.", OGG_VORBIS_ERROR_UNDECODABLE);
 
         // The framing bit MUST be set to mark the end of the identification header.
         // Some encoders are broken though -- TS
         /*
         if ($h['framing_flag'] == 0)
-            throw new PEAR_Exception("Stream in undecodable because the framing bit is not non-zero.", OGG_VORBIS_ERROR_UNDECODABLE);
+            throw new OggException("Stream in undecodable because the framing bit is not non-zero.", OGG_VORBIS_ERROR_UNDECODABLE);
          */
 
         $this->_idHeader = $h;
@@ -288,7 +286,7 @@ class File_Ogg_Vorbis extends File_Ogg_Media
         // The framing bit MUST be set to mark the end of the comments header.
         $framing_bit = unpack("Cdata", fread($this->_filePointer, 1));
         if ($framing_bit['data'] != 1)
-            throw new PEAR_Exception("Stream Undecodable", OGG_VORBIS_ERROR_UNDECODABLE);
+            throw new OggException("Stream Undecodable", OGG_VORBIS_ERROR_UNDECODABLE);
     }
 
     /**
@@ -311,23 +309,6 @@ class File_Ogg_Vorbis extends File_Ogg_Media
     function getEncoderVersion()
     {
         return ($this->_version);
-    }
-
-    /**
-     * Number of channels used in this stream
-     *
-     * This function returns the number of channels used in this stream.  This
-     * can range from 1 to 255, but will likely be 2 (stereo) or 1 (mono).
-     *
-     * @access  public
-     * @return  int
-     * @see     File_Ogg_Vorbis::isMono()
-     * @see     File_Ogg_Vorbis::isStereo()
-     * @see     File_Ogg_Vorbis::isQuadrophonic()
-     */
-    function getChannels()
-    {
-        return ($this->_channels);
     }
 
     /**

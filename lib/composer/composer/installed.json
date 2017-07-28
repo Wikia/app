@@ -4633,5 +4633,44 @@
             "queue",
             "rabbitmq"
         ]
+    },
+    {
+        "name": "wikia/file_ogg",
+        "version": "1.0.7",
+        "version_normalized": "1.0.7.0",
+        "dist": {
+            "type": "tar",
+            "url": "http://artifactory.wikia-inc.com/artifactory/api/composer/php-local/direct-dists/wikia/file_ogg/file_ogg-1.0.7.tar",
+            "reference": null,
+            "shasum": null
+        },
+        "require-dev": {
+            "phpunit/phpunit": "*"
+        },
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "File": "./"
+            }
+        },
+        "include-path": [
+            "./"
+        ],
+        "license": [
+            "GNU LGPL"
+        ],
+        "authors": [
+            {
+                "email": "tstarling@wikimedia.org",
+                "name": "Tim Starling",
+                "role": "Lead"
+            }
+        ],
+        "description": "More info available on: http://pear.php.net/package/File_Ogg",
+        "support": {
+            "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name[]=File_Ogg",
+            "source": "https://github.com/pear/File_Ogg"
+        }
     }
 ]

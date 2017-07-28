@@ -21,8 +21,6 @@
 // | Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA |
 // +----------------------------------------------------------------------------+
 
-require_once('File/Ogg/Bitstream.php');
-
 define( 'OGG_THEORA_IDENTIFICATION_HEADER', 0x80 );
 define( 'OGG_THEORA_COMMENTS_HEADER', 0x81 );
 define( 'OGG_THEORA_IDENTIFICATION_PAGE_OFFSET', 0 );
@@ -37,7 +35,7 @@ define( 'OGG_THEORA_COMMENTS_PAGE_OFFSET', 1 );
  * @link        http://pear.php.net/package/File_Ogg
  * @link        http://www.xiph.org/theora/
  * @package     File_Ogg
- * @version     CVS: $Id: Theora.php,v 1.9 2005/11/16 20:43:27 djg Exp $
+ * @version     CVS: $Id$
  */
 class File_Ogg_Theora extends File_Ogg_Media
 {
@@ -117,27 +115,27 @@ class File_Ogg_Theora extends File_Ogg_Media
             'KFGSHIFT' => 5,
             'PF' => 2));
         if ( !$h ) {
-            throw new PEAR_Exception("Stream is undecodable due to a truncated header.", OGG_ERROR_UNDECODABLE);
+            throw new OggException("Stream is undecodable due to a truncated header.", OGG_ERROR_UNDECODABLE);
         }
 
         // Theora version
         // Seems overly strict but this is what the spec says
         // VREV is for backwards-compatible changes, apparently
         if ( $h['VMAJ'] != 3 || $h['VMIN'] != 2 ) {
-            throw new PEAR_Exception("Stream is undecodable due to an invalid theora version.", OGG_ERROR_UNDECODABLE);
+            throw new OggException("Stream is undecodable due to an invalid theora version.", OGG_ERROR_UNDECODABLE);
         }
         $this->_theoraVersion = "{$h['VMAJ']}.{$h['VMIN']}.{$h['VREV']}";
 
         // Frame height/width
         if ( !$h['FMBW'] || !$h['FMBH'] ) {
-            throw new PEAR_Exception("Stream is undecodable because it has frame size of zero.", OGG_ERROR_UNDECODABLE);
+            throw new OggException("Stream is undecodable because it has frame size of zero.", OGG_ERROR_UNDECODABLE);
         }
         $this->_frameWidth = $h['FMBW'] * 16;
         $this->_frameHeight = $h['FMBH'] * 16;
 
         // Picture height/width
         if ( $h['PICW'] > $this->_frameWidth || $h['PICH'] > $this->_frameHeight ) {
-            throw new PEAR_Exception("Stream is undecodable because the picture width is greater than the frame width.", OGG_ERROR_UNDECODABLE);
+            throw new OggException("Stream is undecodable because the picture width is greater than the frame width.", OGG_ERROR_UNDECODABLE);
         }
         $this->_pictureWidth = $h['PICW'];
         $this->_pictureHeight = $h['PICH'];

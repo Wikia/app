@@ -21,8 +21,6 @@
 // | Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA |
 // +----------------------------------------------------------------------------+
 
-require_once('File/Ogg/Bitstream.php');
-
 /**
  * Parent class for media bitstreams
  * Contains some functions common to various media formats
@@ -30,12 +28,19 @@ require_once('File/Ogg/Bitstream.php');
 abstract class File_Ogg_Media extends File_Ogg_Bitstream
 {
     /**
+     * Maximum size of header comment to parse.
+     * Set to 1 MB by default. Make sure this is less than your PHP memory_limit.
+     */
+    const COMMENT_MAX_SIZE = 1000000;
+
+    /**
      * Array to hold each of the comments.
      *
      * @access  private
      * @var     array
      */
     var $_comments = array();
+
     /**
      * Vendor string for the stream.
      *
@@ -48,7 +53,7 @@ abstract class File_Ogg_Media extends File_Ogg_Bitstream
      * Length of the stream in seconds
      */
     var $_streamLength;
-	
+
     /* Start offset of the stream in seconds */
     var $_startOffset = 0;
 
@@ -79,12 +84,12 @@ abstract class File_Ogg_Media extends File_Ogg_Bitstream
             // Check if this is the correct header.
             $packet = unpack("Cdata", fread($this->_filePointer, 1));
             if ($packet['data'] != $packetType)
-                throw new PEAR_Exception("Stream Undecodable", OGG_ERROR_UNDECODABLE);
-        
+                throw new OggException("Stream Undecodable", OGG_ERROR_UNDECODABLE);
+
             // The following six characters should be equal to getIdentificationString()
             $id = $this->getIdentificationString();
             if ($id !== '' && fread($this->_filePointer, strlen($id)) !== $id)
-                throw new PEAR_Exception("Stream is undecodable due to a malformed header.", OGG_ERROR_UNDECODABLE);
+                throw new OggException("Stream is undecodable due to a malformed header.", OGG_ERROR_UNDECODABLE);
         } // else seek only, no common header
     }
 
@@ -114,12 +119,18 @@ abstract class File_Ogg_Media extends File_Ogg_Bitstream
         for ($i = 0; $i < $comment_list_length['data']; ++$i) {
             // Unpack the length of this comment.
             $comment_length = unpack("Vdata", fread($this->_filePointer, 4));
+
+            // If the comment length is greater than specified limit, skip it.
+            if ( $comment_length['data'] > self::COMMENT_MAX_SIZE ) {
+                continue;
+            }
+
             // Comments are in the format 'ARTIST=Super Furry Animals', so split it on the equals character.
             // NOTE: Equals characters are strictly prohibited in either the COMMENT or DATA parts.
             $comment        = explode("=", fread($this->_filePointer, $comment_length['data']));
             $comment_title  = (string) $comment[0];
             $comment_value  = (string) utf8_decode($comment[1]);
-    
+
             // Check if the comment type (e.g. ARTIST) already exists.  If it does,
             // take the new value, and the existing value (or array) and insert it
             // into a new array.  This is important, since each comment type may have
@@ -134,7 +145,24 @@ abstract class File_Ogg_Media extends File_Ogg_Bitstream
                 $this->_comments[$comment_title] = $comment_value;
         }
     }
-    
+
+    /**
+     * Number of channels used in this stream
+     *
+     * This function returns the number of channels used in this stream.  This
+     * can range from 1 to 255, but will likely be 2 (stereo) or 1 (mono).
+     *
+     * @access  public
+     * @return  int
+     * @see     File_Ogg_Vorbis::isMono()
+     * @see     File_Ogg_Vorbis::isStereo()
+     * @see     File_Ogg_Vorbis::isQuadrophonic()
+     */
+    function getChannels()
+    {
+        return ($this->_channels);
+    }
+
     /**
      * Provides a list of the comments extracted from the Vorbis stream.
      *
@@ -177,7 +205,7 @@ abstract class File_Ogg_Media extends File_Ogg_Bitstream
         // The comment doesn't exist in this file.  The user should've called getCommentList first.
         return ("");
     }
-    
+
     /**
      * Get the entire comments array.
      * May return an empty array if the bitstream does not support comments.
@@ -209,7 +237,7 @@ abstract class File_Ogg_Media extends File_Ogg_Bitstream
      * @access  public
      * @return  array
      */
-    function getHeader() 
+    function getHeader()
     {
         return array();
     }
