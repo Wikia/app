@@ -21,16 +21,39 @@ class DeleteImageRevision extends Maintenance {
 		$pageId = intval( $this->getOption( self::PAGE_ID_OPTION ) );
 		$revisionId = intval( $this->getOption( self::REVISION_ID_OPTION ) );
 		$reason = $this->getOption( self::REASON_OPTION );
-
 		$title = Title::newFromID( $pageId );
 
 		//TODO: fix it, adding description to imagepage creates new revision so following check will not check if the image is old
 		if ( $revisionId < $title->getLatestRevID() ) {
-			$oldLocalFile = $this->getOldLocalFile( $title, $revisionId );
-			$oldLocalFile->deleteOld( $oldLocalFile->getArchiveName(), $reason );
+			$this->removeOldRevision( $title, $revisionId, $pageId, $reason );
 		} else {
-			//do the revision revert
-			// and then remove second newest revision
+
+		}
+	}
+
+	private function removeOldRevision( Title $title, int $revisionId, int $pageId, string $reason ) {
+		$oldLocalFile = $this->getOldLocalFile( $title, $revisionId );
+		$oldimage = $oldLocalFile->getArchiveName();
+
+		// if $oldimage is empty, FileDeleteForm::doDelete would delete whole file instead of single revision
+		if ( !empty( $oldimage ) ) {
+			if ( !FileDeleteForm::doDelete( $title, $oldLocalFile, $oldimage, $reason, false )->isOK() ) {
+				\Wikia\Logger\WikiaLogger::instance()->error(
+					"deleting file revision was not successful",
+					[
+						'page_id' => $pageId,
+						'revision_id' => $revisionId
+					]
+				);
+			}
+		} else {
+			\Wikia\Logger\WikiaLogger::instance()->error(
+				"trying to remove whole image page",
+				[
+					'page_id' => $pageId,
+					'revision_id' => $revisionId
+				]
+			);
 		}
 	}
 
