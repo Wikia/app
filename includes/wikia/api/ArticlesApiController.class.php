@@ -62,11 +62,6 @@ class ArticlesApiController extends WikiaApiController {
 	const SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME = "id";
 	const SIMPLE_JSON_ARTICLE_TITLE_PARAMETER_NAME = "title";
 
-	private $imageDimensionFields = [
-		'width',
-		'height'
-	];
-
 	/**
 	 * @var CrossOriginResourceSharingHeaderHelper
 	 */
