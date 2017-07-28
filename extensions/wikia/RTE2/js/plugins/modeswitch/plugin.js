@@ -4,7 +4,8 @@ CKEDITOR.plugins.add('rte-modeswitch',
 	messages: {},
 
 	init: function(editor) {
-		this.messages = editor.lang.modeSwitch;
+		debugger;
+		this.messages = 'Messages'; //kacper editor.lang.modeSwitch;
 
 		this.addCommands(editor);
 

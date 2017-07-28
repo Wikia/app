@@ -66,27 +66,27 @@
 		extraPlugins:
 			
 		 
-				'rte-accesskey,' +
-				'rte-comment,' +
-				'rte-dialog,' +
-				'rte-dragdrop,' +
-				'rte-entities,' +
+				//'rte-accesskey,' +
+				//'rte-comment,' +
+				//'rte-dialog,' +
+				//'rte-dragdrop,' +
+				//'rte-entities,' +
 				//'rte-gallery,' +
 				//'justify,' +
-				'fakeobjects,' +
-				'link',
-			//'linksuggest,' +
-				//'media,'  +
-				//'modeswitch,' +
-				//'overlay,' +
-				//'paste,' +
-				//'placeholder,' +
-				//'signature,' +
-				//'spellchecker,' +
-				//'template,' +
-				//'temporary-save,' +
-				//'toolbar',
-				//'tools',
+				//'fakeobjects,' +
+				//'link,' +
+				//'rte-linksuggest,' +
+				'rte-media',
+				//'rte-modeswitch',
+				//'rte-overlay,' +
+				//'rte-paste,' +
+				//'rte-placeholder,' +
+				//'rte-signature',
+				//'rte-spellchecker,' +
+				//'rte-template,' +
+				//'rte-temporary-save,' +
+				//'rte-toolbar,' +
+				//'rte-tools',
 			// TODO: Too buggy. Try to use this after we update to 3.6.2 (BugId:23061)
 			//readOnly: true,
 			resize_enabled: false,
