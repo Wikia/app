@@ -150,10 +150,12 @@ function doDumpBackup( $row, $path, array $args = [] ) {
 		"--output=".DumpsOnDemand::DEFAULT_COMPRESSION_FORMAT.":{$path}"
 	], $args ) );
 
-	// redirect stderr to stdout, so it becames a part of $output
+	// redirect stderr to stdout, so it becomes a part of $output
 	$cmd .= ' 2>&1';
 
 	Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} command: {$cmd}", true, true);
+
+	echo sprintf( "Generating dump %s (%s)... %s\n", $path, join( ' ', $args ), $cmd );
 
 	$output = wfShellExec( $cmd, $status );
 	$time = Wikia::timeDuration( wfTime() - $time );
@@ -179,10 +181,14 @@ function doDumpBackup( $row, $path, array $args = [] ) {
 		$logger->error( __METHOD__ . '::dumpBackup', [
 			'exception' => new Exception( $cmd, $status ),
 			'row' => (array) $row,
+			'output' => $output
 		]);
 
 		exit( 2 );
 	}
+
+	echo $output;
+	echo sprintf( "Dump %s (%s) generation completed\n", $path, join( ' ', $args ) );
 }
 
 /**
