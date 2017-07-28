@@ -20,7 +20,7 @@ class ImageReviewService {
 			return $api->getImageHistory( "mw-${cityId}-${pageId}-${revisionId}" );
 		} catch ( \Swagger\Client\ApiException $e ) {
 
-			\Wikia\Logger\WikiaLogger::instance()->error( 'Failed to contact Template Classification service', [
+			\Wikia\Logger\WikiaLogger::instance()->error( 'Failed to contact Image Review service', [
 				'exception' => $e,
 				'wiki_id' => intval( $cityId ),
 				'page_id' => intval( $pageId ),
