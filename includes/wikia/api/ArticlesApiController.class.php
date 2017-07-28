@@ -90,16 +90,6 @@ class ArticlesApiController extends WikiaApiController {
 		);
 	}
 
-	public static function getMetadataCacheTime( $omitExpandParam = false ) {
-		$app = F::app();
-		if ( !empty( $app->wg->EnablePOIExt ) &&
-			$app->wg->request->getBool( static::PARAMETER_EXPAND, $omitExpandParam ) ) {
-			return PalantirApiController::METADATA_CACHE_EXPIRATION;
-		}
-
-		return self::CLIENT_CACHE_VALIDITY;
-	}
-
 	/**
 	 * Get the top articles by pageviews optionally filtering by category and/or namespaces
 	 *
@@ -247,7 +237,7 @@ class ArticlesApiController extends WikiaApiController {
 		$this->setResponseData(
 			[ 'basepath' => $this->wg->Server, 'items' => $collection ],
 			[ 'imgFields' => 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
-			self::getMetadataCacheTime()
+			self::CLIENT_CACHE_VALIDITY
 		);
 
 		$batches = null;
@@ -282,7 +272,7 @@ class ArticlesApiController extends WikiaApiController {
 		$this->setResponseData(
 			[ 'basepath' => $this->wg->Server, 'items' => $mostLinkedOutput ],
 			[ 'imgFields' => 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
-			self::getMetadataCacheTime()
+			self::CLIENT_CACHE_VALIDITY
 		);
 	}
 
@@ -594,7 +584,7 @@ class ArticlesApiController extends WikiaApiController {
 		$this->setResponseData(
 			$responseValues,
 			[ 'imgFields' => 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
-			self::getMetadataCacheTime()
+			self::CLIENT_CACHE_VALIDITY
 		);
 
 		wfProfileOut( __METHOD__ );
@@ -642,7 +632,7 @@ class ArticlesApiController extends WikiaApiController {
 		$this->setResponseData(
 			[ 'items' => $collection, 'basepath' => $this->wg->Server ],
 			[ 'imgFields' => 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
-			self::getMetadataCacheTime( true )
+			self::CLIENT_CACHE_VALIDITY
 		);
 
 		$collection = null;
@@ -656,24 +646,6 @@ class ArticlesApiController extends WikiaApiController {
 			'length' => $this->request->getInt( static::PARAMETER_ABSTRACT, static::DEFAULT_ABSTRACT_LEN ),
 			'titleKeys' => $this->request->getArray( self::PARAMETER_TITLES )
 		];
-	}
-
-	protected function appendMetadata( $collection ) {
-		if ( !empty( $this->wg->EnablePOIExt ) ) {
-			$helper = new QuestDetailsSolrHelper();
-			$questDetailsSearch = new QuestDetailsSearchService();
-			$metadata = $questDetailsSearch->newQuery()
-				->withIds( array_keys( $collection ), $this->wg->CityId )
-				->search();
-			$metadata = $helper->processMetadata( $metadata );
-			foreach ( $collection as &$item ) {
-				$key = $this->wg->CityId . "_" . $item[ "id" ];
-				if ( isset( $metadata[ $key ] ) ) {
-					$item[ "metadata" ] = $metadata[ $key ];
-				}
-			}
-		}
-		return $collection;
 	}
 
 	protected function getArticlesDetails( $articleIds, $articleKeys = [], $width = 0, $height = 0, $abstract = 0, $strict = false ) {
@@ -784,8 +756,6 @@ class ArticlesApiController extends WikiaApiController {
 				$details = array_merge( $details, $thumbnails[ $id ] );
 			}
 		}
-
-		$collection = $this->appendMetadata( $collection );
 
 		$thumbnails = null;
 		// The collection can be in random order (depends if item was found in memcache or not)
@@ -902,7 +872,7 @@ class ArticlesApiController extends WikiaApiController {
 	static private function getCategoryMembers( $category, $limit = 5000, $offset = '', $namespaces = '', $sort = 'sortkey', $dir = 'asc' ) {
 		return WikiaDataAccess::cache(
 			self::getCacheKey( $category, self::CATEGORY_CACHE_ID, [ $limit, $offset, $namespaces, $dir ] ),
-			self::getMetadataCacheTime(),
+			self::CLIENT_CACHE_VALIDITY,
 			function() use ( $category, $limit, $offset, $namespaces, $sort, $dir ) {
 				$ids = ApiService::call(
 					array(
@@ -1107,7 +1077,7 @@ class ArticlesApiController extends WikiaApiController {
 		$this->setResponseData(
 			[ 'items' => $popular, 'basepath' => $wgServer ],
 			[ 'imgFields' => 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
-			self::getMetadataCacheTime()
+			self::CLIENT_CACHE_VALIDITY
 		);
 
 	}
@@ -1288,10 +1258,6 @@ class ArticlesApiController extends WikiaApiController {
 	}
 
 	static private function getCacheKey( $name, $type, $params = '' ) {
-		$app = F::app();
-		if ( !empty( $app->wg->EnablePOIExt ) ) {
-			$name .= PalantirApiController::MEMC_KEY_SUFFIX;
-		}
 		if ( $params !== '' ) {
 			$params = md5( implode( '|', $params ) );
 		}
