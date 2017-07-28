@@ -19,12 +19,20 @@ class ImageReviewEventsHooks {
 	}
 
 	public static function onFileRevertComplete( Page $page ) {
-		static::createAddTask( $page->getTitle() );
+		global $wgCityId, $wgImageReviewTestCommunities;
+
+		// TODO: community switch
+		//if ( in_array( $wgCityId, $wgImageReviewTestCommunities ) ) {
+		self::sendToImageReviewService( $page->getTitle() );
+		//} else {
+		//	static::createAddTask( $page->getTitle() );
+		//}
 
 		return true;
 	}
 
 	public static function onArticleUndelete( Title $title, $created, $comment ) {
+		// TODO: test if undelete creates new revision and if so then send data to IR service
 		if ( static::isFileForReview( $title ) ) {
 			static::createAddTask( $title );
 		}
@@ -35,6 +43,8 @@ class ImageReviewEventsHooks {
 	public static function onArticleDeleteComplete( Page $page, User $user, $reason, $articleId ) {
 		global $wgCityId;
 
+		// TODO: should ImageReview service be notified about article delete?
+		
 		$title = $page->getTitle();
 
 		if ( static::isFileForReview( $title ) ) {
