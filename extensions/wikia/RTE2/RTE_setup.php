@@ -75,3 +75,17 @@ function RTEAjax() {
 	wfProfileOut(__METHOD__);
 	return $ret;
 }
+
+$wgResourceModules['ext.wikia.RTE2'] = array(
+	'messages' => array(
+		'rte-ck-modeSwitch-error',
+		'rte-ck-modeSwitch-toSource',
+		'rte-ck-modeSwitch-toSourceTooltip',
+		'rte-ck-modeSwitch-toWysiwyg',
+		'rte-ck-modeSwitch-toWysiwygTooltip',
+	),
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/PhalanxII'
+	
+	
+	);

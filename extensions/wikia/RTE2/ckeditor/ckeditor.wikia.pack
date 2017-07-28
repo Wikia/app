@@ -139,14 +139,7 @@ packages :
 				
 				'../js/RTE.js'
 				'../js/jquery.editor.js'
-				'lang/en.js'	
-	                
-				
-
-				//'plugins/dialogui/plugin.js'
-				//'plugins/dialog/plugin.js'
-								
-				//'plugins/autogrow/plugin.js'
+				'lang/en.js'			
 				'plugins/toolbar/plugin.js'
 				'plugins/indent/plugin.js'
 				'plugins/wysiwygarea/plugin.js'
@@ -159,80 +152,56 @@ packages :
 				'plugins/button/lang/en.js'
 				'plugins/clipboard/plugin.js'
 				'plugins/clipboard/lang/en.js'
-				//'plugins/link/plugin.js'
-				//'plugins/link/dialogs/link.js'
 				'plugins/indentlist/plugin.js'
 				'plugins/list/plugin.js'
-	
 				'plugins/list/lang/en.js'			
-			
-				
 				'plugins/panel/plugin.js'
-							
-				'plugins/listblock/plugin.js'
-								
-				
+				'plugins/listblock/plugin.js'	
 				'plugins/floatpanel/plugin.js'
-				'plugins/richcombo/plugin.js'
-								
+				'plugins/richcombo/plugin.js'	
 				'plugins/format/plugin.js'
 				'plugins/format/lang/en.js'
-
 				'plugins/justify/plugin.js'
 				'plugins/justify/lang/en.js'
-
 				'plugins/undo/plugin.js'
 				'plugins/undo/lang/en.js'
 				'plugins/menu/plugin.js'
 				'plugins/contextmenu/plugin.js'
 				'plugins/contextmenu/lang/en.js'
-				
 				'plugins/enterkey/plugin.js'
-
-
 				'plugins/tab/plugin.js'
-				
 				'plugins/dialogui/plugin.js'
 				'plugins/dialog/plugin.js'
-				
 				'plugins/table/plugin.js'				
 				'plugins/table/lang/en.js'
 				'plugins/tabletools/plugin.js'
-			
 				'plugins/removeformat/plugin.js'
 				'plugins/removeformat/lang/en.js'
-			
 				'plugins/pastetext/plugin.js'
-			
 				'plugins/pastetext/lang/en.js'
 				'plugins/sourcearea/plugin.js'
 				'plugins/sourcearea/lang/en.js'	
-				
 
 				//wikia plugins below
-				'../js/plugins/accesskey/plugin.js'
-				'../js/plugins/comment/plugin.js'	
-				'../js/plugins/comment/dialogs/comment.js'
-				'../js/plugins/dialog/plugin.js'
-				
-				'../js/plugins/dragdrop/plugin.js',
-				
-				'../js/plugins/entities/plugin.js',
-				
-				//'../js/plugins/gallery/plugin.js',not working yet because language files
-				
-				//'../js/plugins/justify/plugin.js', already in basic plugins
-				'plugins/fakeobjects/plugin.js'
-				'plugins/fakeobjects/lang/en.js'
-				'plugins/link/plugin.js'
-				'plugins/link/lang/en.js'	
-				'plugins/link/dialogs/link.js'
-				
-				//'../js/plugins/link/plugin.js',
-				//'../js/plugins/link/dialogs/link.js',
-				
+				//'../js/plugins/accesskey/plugin.js'
+				//'../js/plugins/comment/plugin.js'	
+				//'../js/plugins/comment/dialogs/comment.js'
+				//'../js/plugins/dialog/plugin.js'
+				//'../js/plugins/dragdrop/plugin.js'
+				//'../js/plugins/entities/plugin.js'
+				//'plugins/fakeobjects/plugin.js'
+				//'plugins/fakeobjects/lang/en.js'
+				//'plugins/link/plugin.js'
+				//'plugins/link/lang/en.js'	
+				//'plugins/link/dialogs/link.js'
+				//'../js/plugins/media/plugin.js'
+				//'../js/plugins/placeholder/plugin.js'
+				//'../js/plugins/template/plugin.js'
+				//'../js/plugins/template/dialogs/template.js'
+				//'../js/plugins/gallery/plugin.js'
+				//'../js/plugins/toolbar/plugin.js'
 				//'../js/plugins/linksuggest/plugin.js',
-				//'../js/plugins/media/plugin.js',
+				'../js/plugins/media/plugin.js',
 				//'../js/plugins/modeswitch/plugin.js',
 				//'../js/plugins/overlay/plugin.js',
 				//'../js/plugins/paste/plugin.js',
