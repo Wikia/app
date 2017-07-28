@@ -18,10 +18,6 @@ if ( !in_array( 'ogv', $wgFileExtensions ) ) {
 if ( !in_array( 'oga', $wgFileExtensions ) ) {
 	$wgFileExtensions[] = 'oga';
 }
-ini_set( 'include_path',
-	"$oggDir/PEAR/File_Ogg" .
-	PATH_SEPARATOR .
-	ini_get( 'include_path' ) );
 
 // Bump this when updating OggPlayer.js to help update caches
 $wgOggScriptVersion = '12';
@@ -83,4 +79,3 @@ $wgOggThumbLocation = false;
 $wgCortadoJarFile = "cortado-ovt-stripped-0.5.1.jar";
 
 /******************* CONFIGURATION ENDS HERE **********************/
-

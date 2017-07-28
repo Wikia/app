@@ -227,28 +227,7 @@ class UserLoginForm extends LoginForm {
 			return false;
 		}
 
-		/*
-		 * Remove when SOC-217 ABTest is finished
-		 */
-		$isAllowRegisterUnconfirmed = $this->isAllowedRegisterUnconfirmed();
-		/*
-		 * end remove
-		 */
-
 		if ( $skipConfirm === false ) {
-			/*
-			 * Remove when SOC-217 ABTest is finished
-			 */
-			$u->setGlobalPreference(
-				UserLoginSpecialController::NOT_CONFIRMED_LOGIN_OPTION_NAME,
-				$isAllowRegisterUnconfirmed
-					? UserLoginSpecialController::NOT_CONFIRMED_LOGIN_ALLOWED
-					: UserLoginSpecialController::NOT_CONFIRMED_LOGIN_NOT_ALLOWED
-			);
-			/*
-			 * end remove
-			 */
-
 			// Set properties that will require user to confirm email after signup
 			$u->setGlobalAttribute( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME, $this->mReturnTo );
 			$u->setGlobalFlag( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, true );
@@ -258,16 +237,6 @@ class UserLoginForm extends LoginForm {
 		}
 
 		Hooks::run( 'AddNewAccount', array( $u, false ) );
-
-		/*
-		 * Remove when SOC-217 ABTest is finished
-		 */
-		if ( $isAllowRegisterUnconfirmed ) {
-			$u->setCookies();
-		}
-		/*
-		 * end remove
-		 */
 
 		return true;
 	}
@@ -298,25 +267,4 @@ class UserLoginForm extends LoginForm {
 		}
 		return false;
 	}
-
-
-	/*
-	 * Remove when SOC-217 ABTest is finished
-	 */
-	/**
-	 * Check if user is allowed to register account without email confirmation
-	 *
-	 * @return bool
-	 */
-	public function isAllowedRegisterUnconfirmed() {
-		$registerUnconfirmedCookie = $this->getRequest()->getCookie( 'RegisterUnconfirmed' );
-
-		if ( !empty( F::app()->wg->EnableRegisterUnconfirmed ) && !empty( $registerUnconfirmedCookie ) ) {
-			return true;
-		}
-		return false;
-	}
-	/*
-	 * end remove
-	 */
 }

@@ -3753,7 +3753,7 @@ class User implements JsonSerializable {
 	/**
 	 * Confirmation after change the email
 	 *
-	 * @return WikiError|bool True on success, a WikiError object on failure.
+	 * @return Status|bool True on success, a WikiError object on failure.
 	 */
 	function sendReConfirmationMail() {
 		$this->setGlobalFlag("mail_edited","1");
@@ -3767,7 +3767,7 @@ class User implements JsonSerializable {
 	/**
 	 * Confirmation reminder after 7 day
 	 *
-	 * @return \types{\bool,\type{WikiError}} True on success, a WikiError object on failure.
+	 * @return Status|false True on success, a WikiError object on failure.
 	 */
 	function sendConfirmationReminderMail() {
 		if( ($this->getGlobalFlag("cr_mailed", 0) == 1) || ($this->getGlobalFlag("mail_edited", 0) == 1) ) {

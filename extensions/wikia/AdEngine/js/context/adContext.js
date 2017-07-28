@@ -108,6 +108,9 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.premiumAdLayoutEnabled = isEnabledOnFeaturedVideo || isEnabledOnRegularArticle;
 		context.slots.premiumAdLayoutSlotsToUnblock = ['INCONTENT_BOXAD_1', 'BOTTOM_LEADERBOARD'];
 
+		context.opts.megaAdUnitBuilderEnabled = context.targeting.hasFeaturedVideo && isEnabledOnFeaturedVideo &&
+			geo.isProperGeo(instantGlobals.wgAdDriverMegaAdUnitBuilderForFVCountries);
+
 		if (!context.targeting.hasFeaturedVideo) {
 			context.slots.premiumAdLayoutSlotsToUnblock.push('INCONTENT_PLAYER');
 		}
@@ -189,6 +192,8 @@ define('ext.wikia.adEngine.adContext', [
 			) || isUrlParamSet('highimpactslot');
 
 		// AdInfo warehouse logging
+		context.opts.kikimoraViewabilityTracking =
+			geo.isProperGeo(instantGlobals.wgAdDriverKikimoraViewabilityTrackingCountries);
 		context.opts.enableAdInfoLog = geo.isProperGeo(instantGlobals.wgAdDriverKikimoraTrackingCountries);
 		context.opts.playerTracking = geo.isProperGeo(instantGlobals.wgAdDriverKikimoraPlayerTrackingCountries);
 

@@ -109,6 +109,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/template/playwire.js',
 		'//extensions/wikia/AdEngine/js/template/porvata.js',
 		'//extensions/wikia/AdEngine/js/template/skin.js',
+		'//extensions/wikia/AdEngine/js/tracking/viewabilityTracker.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/AdEngine/js/utils/eventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/utils/hooks.js',
@@ -886,6 +887,7 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/slot/service/slotRegistry.js',
 		'//extensions/wikia/AdEngine/js/slot/service/stateMonitor.js',
 		'//extensions/wikia/AdEngine/js/slot/service/viewabilityHandler.js',
+		'//extensions/wikia/AdEngine/js/tracking/viewabilityTracker.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/AdEngine/js/utils/eventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/utils/hooks.js',
@@ -2152,146 +2154,6 @@ $config['bucky_js'] = [
 		'//extensions/wikia/Bucky/js/bucky_init.js',
 		'//extensions/wikia/Bucky/js/bucky_resources_timing.js',
 		'//extensions/wikia/Bucky/js/bucky_metrics.js',
-	],
-];
-
-/* extension/wikia/WikiaMaps */
-
-$config['wikia_maps_ponto'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//resources/wikia/libraries/Ponto/ponto.js',
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsPontoBridge.js',
-	],
-];
-
-$config['wikia_maps_special_page_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsConfig.js',
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsUtils.js',
-		'#group_wikia_maps_ponto',
-		'//extensions/wikia/WikiaMaps/js/WikiaMaps.js',
-	],
-];
-
-$config['wikia_maps_in_modal_display_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'#group_wikia_maps_ponto',
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsConfig.js',
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsUtils.js',
-	],
-];
-
-$config['wikia_maps_create_map_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsUtils.js',
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsCreateMapTileSet.js',
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsCreateMapPreview.js',
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsCreateMapModal.js',
-	],
-];
-
-$config['wikia_maps_create_map_contribute_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsConfig.js',
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsUtils.js',
-	],
-];
-
-$config['wikia_maps_poi_categories_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsUtils.js',
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsPoiCategories.js',
-		'//extensions/wikia/WikiaMaps/js/models/WikiaMapsPoiCategoriesModel.js',
-		'//resources/wikia/libraries/jquery/serialize-object/jquery.serialize-object.js',
-	],
-];
-
-$config['wikia_maps_poi_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsPoi.js',
-	],
-];
-
-$config['wikia_maps_delete_map_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsUtils.js',
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsDeleteMap.js',
-	],
-];
-
-$config['wikia_maps_undelete_map_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsUtils.js',
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsUndeleteMap.js',
-	],
-];
-
-$config['wikia_maps_embed_map_code'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsUtils.js',
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsEmbedMapCode.js',
-	],
-];
-
-$config['wikia_maps_special_page_scss_wikiamobile'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'wikiamobile' ],
-	'assets' => [
-		'//extensions/wikia/WikiaMaps/css/WikiaMaps.wikiamobile.scss',
-	],
-];
-
-$config['wikia_maps_contribution_button_create_map_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsCreateMap.js',
-	],
-];
-
-$config['wikia_maps_parser_tag_scss_wikiamobile'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'wikiamobile' ],
-	'assets' => [
-		'//extensions/wikia/WikiaMaps/css/WikiaMapsParserTag.scss',
-		'//extensions/wikia/WikiaMaps/css/WikiaMapsParserTag.wikiamobile.scss',
-	],
-];
-
-$config['wikia_maps_special_page_js_wikiamobile'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'wikiamobile' ],
-	'assets' => [
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsUtils.js',
-		'#group_wikia_maps_ponto',
-		'//extensions/wikia/WikiaMaps/js/WikiaMaps.wikiamobile.js',
-	],
-];
-
-$config['wikia_maps_parser_tag_js_wikiamobile'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'wikiamobile' ],
-	'assets' => [
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsParserTag.wikiamobile.js',
 	],
 ];
 

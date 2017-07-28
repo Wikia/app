@@ -8,7 +8,6 @@
 $dir = __DIR__ . '/';
 
 require_once( $IP . '/lib/vendor/Solarium/Autoloader.php' );
-require_once( $IP . '/lib/vendor/simplehtmldom/simple_html_dom.php' );
 Solarium_Autoloader::register();
 
 /**

@@ -33,7 +33,7 @@
 
 <?= $beforeWikiaPageHtml ?>
 
-<? if ( empty( $wg->SuppressCommunityHeader ) && !WikiaPageType::isCorporatePage() ) : ?>
+<? if ( empty( $wg->SuppressCommunityHeader ) && !WikiaPageType::isCorporatePage() && $wg->user->isAllowed('read')) : ?>
 	<?= $app->renderView( 'CommunityHeaderService', 'index' ) ?>
 <? endif; ?>
 
