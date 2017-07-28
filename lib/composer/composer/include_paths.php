@@ -15,4 +15,5 @@ return array(
     $vendorDir . '/wikia/net_socket2',
     $vendorDir . '/pear/net_socket',
     $vendorDir . '/wikia/net_smtp2',
+    $vendorDir . '/wikia/file_ogg',
 );
