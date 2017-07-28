@@ -91,7 +91,7 @@ class DefaultContent extends AbstractService {
 			'indexed' => gmdate( "Y-m-d\TH:i:s\Z" )
 		];
 
-		$returnValue = array_merge(
+		return array_merge(
 			$this->getPageContentFromParseResponse( $response ),
 			$this->getCategoriesFromParseResponse( $response ),
 			$this->getHeadingsFromParseResponse( $response ),
@@ -99,8 +99,6 @@ class DefaultContent extends AbstractService {
 			$pageFields,
 			$this->getNolangTxt()
 		);
-
-		return $returnValue;
 	}
 
 	/**
