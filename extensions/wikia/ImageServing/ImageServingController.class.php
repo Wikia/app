@@ -72,41 +72,44 @@ class ImageServingController extends WikiaController {
 
 		$revisionId = $this->getVal( 'revision' ) ?? $title->getLatestRevID();
 
-		if ( $revisionId < $title->getLatestRevID() ) {
-			$db = wfGetDB( DB_SLAVE );
-			$timestamp = $db->selectField(
-				[ 'revision' ],
-				'rev_timestamp',
-				[
-					'rev_page' => $filePageId,
-					'rev_id' => $revisionId,
-				],
-				__METHOD__
-			);
+		$db = wfGetDB( DB_SLAVE );
+		$timestamp = $db->selectField(
+			[ 'revision' ],
+			'rev_timestamp',
+			[
+				'rev_page' => $filePageId,
+				'rev_id' => $revisionId,
+			],
+			__METHOD__
+		);
 
-			if ( empty( $timestamp ) ) {
-				throw new NotFoundException();
-			}
-
-			$file = OldLocalFile::newFromTitle( $title, RepoGroup::singleton()->getLocalRepo(), $timestamp );
-			// adding description to imagepage creates new revision so if there is no OldFile with this timestamp, return latest revision link
-			if ( !$file->exists() ) {
-				$file = LocalFile::newFromTitle( $title, RepoGroup::singleton()->getLocalRepo(), $timestamp );
-				$this->response->setCode( 302 );
-			} else {
-				$this->response->setCode( 301 );
-			}
-
-			$url = $file->getUrl();
-		} else if ( $revisionId == $title->getLatestRevID() ) {
-			$localFile = LocalFile::newFromTitle( $title, RepoGroup::singleton()->getLocalRepo() );
-			$url = $localFile->getUrl();
-
-			$this->response->setCode( 302 );
-		} else {
+		if ( empty( $timestamp ) ) {
 			throw new NotFoundException();
 		}
 
+		if ( $this->isOldImageRevision( $db, $timestamp, $title->getDBkey() ) ) {
+			$oldLocalFile = OldLocalFile::newFromTitle( $title, RepoGroup::singleton()->getLocalRepo(), $timestamp );
+			$this->response->setCode( 301 );
+			$url = $oldLocalFile->getUrl();
+		} else {
+			$localFile = LocalFile::newFromTitle( $title, RepoGroup::singleton()->getLocalRepo() );
+			$this->response->setCode( 302 );
+			$url = $localFile->getUrl();
+		}
+
 		$this->response->setHeader( 'Location', $url );
+	}
+
+	private function isOldImageRevision( $db, $revisionTimestamp, $fileName ): bool {
+		return !empty(
+			$db->selectField(
+				[ 'oldimage' ],
+				'1 as latest',
+				[
+					'oi_name' => $fileName,
+					'oi_timestamp' => $revisionTimestamp
+				]
+			)
+		);
 	}
 }
