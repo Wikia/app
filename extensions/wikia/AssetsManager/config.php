@@ -231,6 +231,7 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
 		'//extensions/wikia/AdEngine/js/AdTracker.js',
+		'//extensions/wikia/AdEngine/js/utils/eventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/utils/sampler.js',
 		'//extensions/wikia/AdEngine/js/utils/timeBuckets.js',
 		'//extensions/wikia/AdEngine/js/context/adContext.js',
