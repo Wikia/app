@@ -14,7 +14,7 @@ class ImageReviewService {
 		$api = $this->getImageApiClient();
 		$api->getApiClient()
 			->getConfig()
-			->setApiKey('X-Wikia-UserId', $user->getId() );
+			->setApiKey('X-Wikia-UserId', $user->getId() ); //TODO: check if this is valid or should we use Access token
 
 		try {
 			return $api->getImageHistory( "mw-${cityId}-${pageId}-${revisionId}" );

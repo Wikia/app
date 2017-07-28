@@ -144,7 +144,7 @@ function fetchReviewHistoryFromService( $cityId, $pageId, $revisionId ) {
 			];
 		},
 		array_filter( $reviewHistory, function( ImageHistoryEntry $item ) {
-			// Filter out entry with status 'UNREVIEWED' as does
+			// Filter out entry with status 'UNREVIEWED' as it does make sense to display entry about unreviewed status with user that uploaded the file
 			return $item->getStatus() != 'UNREVIEWED';
 		} )
 	);
