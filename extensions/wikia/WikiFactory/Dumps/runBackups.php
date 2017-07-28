@@ -156,15 +156,16 @@ function doDumpBackup( $row, $path, array $args = [] ) {
 
 	Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} command: {$cmd}", true, true);
 
-	echo sprintf( "Generating dump %s (%s)... %s\n", $path, join( ' ', $args ), $cmd );
-
 	$output = wfShellExec( $cmd, $status );
 	$time = Wikia::timeDuration( wfTime() - $time );
 
 	Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} status: {$status}, time: {$time}", true, true);
+	Wikia::log( __METHOD__, "info", $output, true, true);
 
 	if ( $status === 0 ) {
 		if ( isset( $options['s3'] ) ) {
+			Wikia\Util\Assert::true( file_exists( $path ), __FUNCTION__ . ': Dump file does not exist' );
+
 			$res = DumpsOnDemand::putToAmazonS3( $path, !isset( $options[ "hide" ] ),  MimeMagic::singleton()->guessMimeType( $path ) );
 			unlink( $path );
 
@@ -187,9 +188,6 @@ function doDumpBackup( $row, $path, array $args = [] ) {
 
 		exit( 2 );
 	}
-
-	echo $output;
-	echo sprintf( "Dump %s (%s) generation completed\n", $path, join( ' ', $args ) );
 }
 
 /**
