@@ -2,9 +2,8 @@
 define('ext.wikia.aRecoveryEngine.instartLogic.recovery', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.provider.gpt.targeting',
-	'wikia.log',
-	'wikia.window'
-], function (adContext, targeting, log, win) {
+	'wikia.log'
+], function (adContext, targeting, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.aRecoveryEngine.instartLogic.recovery',
