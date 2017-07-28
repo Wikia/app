@@ -35,6 +35,8 @@ class DumpsOnDemandCron extends Maintenance {
                 )
         );
 
+        $sWikiaId = 410; // yugioh - FIXME (debug!)
+
         if ( !$sWikiaId ) {
             $this->output( "INFO: No pending dump requests. Terminating.\n" );
             unlink( self::PIDFILE );
