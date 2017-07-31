@@ -138,7 +138,9 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	function updateTargetingForBlockedTraffic() {
 		win.googletag.pubads().getSlots().forEach(function(slot) {
 			// slot.clearTargeting described in docs is not applicable in this context
-			slot.targeting.src = [];
+			if (slot.targeting) {
+				slot.targeting.src = [];
+			}
 			slot.setTargeting('src', 'rec');
 		});
 	}
