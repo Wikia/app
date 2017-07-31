@@ -25,14 +25,13 @@ function findFirstLetterOf($fLetterOf)
 	{
 		return "0-9";
 	}
-	else if(($fLetter < "A") || ($fLetter > "Z"))
+	if(preg_match("/^[A-ZÀ-ÖØ-ÞĀ-ŽΆ-ΩА-Я]$/u", $fLetter))
 	{
-		return "Symbol";
-	}
-	else
-	{
+		// Covers Latin, accented/extended Latin (3 sets), Greek, and Cyrillic letters.
+		// Rest can be set when creating wiki page to avoid this becoming complicated.
 		return $fLetter;
 	}
+	return "Symbol";
 }
 
 function LyricWikiVariableDefaults()
