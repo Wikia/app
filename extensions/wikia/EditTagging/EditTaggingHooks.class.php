@@ -66,7 +66,10 @@ class EditTaggingHooks {
 	 * Handle tagging new revisions on Article Save Completion
 	 * @return bool
 	 */
-	public static function onArticleSaveComplete( &$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
+	public static function onArticleSaveComplete(
+		WikiPage $article, User $user, $text, $summary, $minoredit, $watchthis, $sectionanchor,
+		$flags, Revision $revision, Status &$status, $baseRevId
+	): bool {
 		if ( !$revision instanceof Revision ) {
 			// We are only tagging real revisions, so no tag change
 			return true;
