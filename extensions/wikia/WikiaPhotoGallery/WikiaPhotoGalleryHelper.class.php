@@ -62,9 +62,12 @@ class WikiaPhotoGalleryHelper {
 
 	/**
 	 * Allow this extension to use its own "parser" for <gallery> tag content
+	 * @param Parser $parser
+	 * @param WikiaPhotoGallery $ig
+	 * @return bool false
 	 */
-	static public function beforeRenderImageGallery(&$parser, &$ig) {
-		$ig->parse($parser);
+	static public function beforeRenderImageGallery( Parser $parser, WikiaPhotoGallery $ig ): bool {
+		$ig->parse( $parser );
 		// by returning false we're telling MW parser to return gallery's HTML immediatelly
 		return false;
 	}

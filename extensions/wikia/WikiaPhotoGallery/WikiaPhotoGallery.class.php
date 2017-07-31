@@ -382,8 +382,9 @@ class WikiaPhotoGallery extends ImageGallery {
 
 	/**
 	 * Parse content of <gallery> tag (add images with captions and links provided)
+	 * @param Parser|null $parser
 	 */
-	public function parse( &$parser = null ) {
+	public function parse( Parser $parser = null ) {
 		wfProfileIn( __METHOD__ );
 
 		// use images passed inside <gallery> tag
