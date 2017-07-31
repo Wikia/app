@@ -52,7 +52,7 @@ function wfSpecialMultiUploadNav( &$skintemplate, &$nav_urls, &$oldid, &$revid )
 }
 
 // Add the link to Special:MultipleUpload to SkinTemplate based skins
-function wfMultiUploadToolbox( &$monobook ) {
+function wfMultiUploadToolbox( $monobook ): bool {
 	if ( isset( $monobook->data['nav_urls']['multiupload'] ) )  {
 		if ( $monobook->data['nav_urls']['multiupload']['href'] == '' ) {
 			?><li id="t-ismultiupload"><?php echo $monobook->msg( 'multiupload-toolbox' ); ?></li><?php
