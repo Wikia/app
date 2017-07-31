@@ -111,7 +111,13 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 	it('Build slot path based on page params width extra ad unit builder', function () {
 		spyOn(mocks.gptHelper, 'pushAd');
 
-		getProvider({adUnitBuilder: mocks.extraUnitBuilder}).fillInSlot(createSlot('TOP_LEADERBOARD'));
+		var extra = {
+			adUnitBuilder: function () {
+				return mocks.extraUnitBuilder;
+			}
+		};
+
+		getProvider(extra).fillInSlot(createSlot('TOP_LEADERBOARD'));
 
 		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[1]).toEqual(
 			'extra/testSource/TOP_LEADERBOARD'
