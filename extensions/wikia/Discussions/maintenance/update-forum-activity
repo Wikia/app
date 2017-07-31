@@ -1,10 +1,10 @@
 #!/bin/bash
 #
-# Update the stats table about discussion migration.  Run whenever migrations take place
-# Remove when migraitons are done.
+# Update the stats table about discussion migration. Run whenever migrations take place
+# Remove when migrations are done.
 
 DATE=`date "+%Y-%m-%d"`
-LOG_DIR="/home/garth/update-forum-activity-logs/$DATE"
+LOG_DIR="~/update-forum-activity-logs/$DATE"
 
 APP_DIR="/usr/wikia/slot1/current/src"
 
