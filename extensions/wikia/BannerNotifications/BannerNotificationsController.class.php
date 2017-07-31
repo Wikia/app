@@ -121,14 +121,15 @@ class BannerNotificationsController extends WikiaController {
 	/**
 	 * Handle confirmations when the page is moved
 	 *
+	 * @param MovePageForm $form
 	 * @param $ot Title
 	 * @param $nt Title
+	 * @return bool
 	 */
-	public static function addPageMovedConfirmation( &$form, &$ot, &$nt ) {
-		global $wgOut;
-
-		if ( F::app()->checkSkin( 'oasis' ) ) {
-			$oldUrl = $ot->getFullUrl( 'redirect=no' );
+	public static function addPageMovedConfirmation(
+		MovePageForm $form, Title $ot, Title $nt
+	): bool {
+		if ( $form->getSkin()->getSkinName() === 'oasis' ) {
 			$newUrl = $nt->getFullUrl();
 			$oldText = $ot->getPrefixedText();
 			$newText = $nt->getPrefixedText();
@@ -138,7 +139,7 @@ class BannerNotificationsController extends WikiaController {
 			$newLink = $newText;
 
 			self::addConfirmation(
-				wfMessage(
+				$form->msg(
 					'movepage-moved',
 					$oldLink,
 					$newLink,
@@ -148,7 +149,7 @@ class BannerNotificationsController extends WikiaController {
 			);
 
 			// redirect to page with new title
-			$wgOut->redirect( $newUrl );
+			$form->getOutput()->redirect( $newUrl );
 		}
 
 		return true;
@@ -158,8 +159,14 @@ class BannerNotificationsController extends WikiaController {
 	 * Handle confirmations when page is deleted
 	 *
 	 * @param WikiPage $article
+	 * @param User $user
+	 * @param $reason
+	 * @param $articleId
+	 * @return bool
 	 */
-	public static function addPageDeletedConfirmation( &$article, &$user, $reason, $articleId ) {
+	public static function addPageDeletedConfirmation(
+		WikiPage $article, User $user, $reason, $articleId
+	): bool {
 		global $wgOut;
 
 		if ( F::app()->checkSkin( 'oasis' ) ) {
@@ -201,7 +208,7 @@ class BannerNotificationsController extends WikiaController {
 	 *
 	 * @param $title Title
 	 */
-	public static function addPageUndeletedConfirmation( $title, $create ) {
+	public static function addPageUndeletedConfirmation( $title, $create ): bool {
 		global $wgOut;
 
 		if ( F::app()->checkSkin( 'oasis' ) ) {
@@ -219,7 +226,7 @@ class BannerNotificationsController extends WikiaController {
 	/**
 	 * Handle confirmations when user logs out
 	 */
-	public static function addLogOutConfirmation( &$user, &$injected_html, $oldName ) {
+	public static function addLogOutConfirmation( &$user, &$injected_html, $oldName ): bool {
 		global $wgOut, $wgRequest;
 
 		if ( F::app()->checkSkin( 'oasis' ) ) {
@@ -257,7 +264,7 @@ class BannerNotificationsController extends WikiaController {
 	/**
 	 * Handle confirmations about edit being saved
 	 */
-	public static function addSaveConfirmation( $editPage, $code ) {
+	public static function addSaveConfirmation( $editPage, $code ): bool {
 		global $wgUser;
 
 		// as for now only add it for logged-in (BugId:1317)
@@ -271,14 +278,14 @@ class BannerNotificationsController extends WikiaController {
 	/**
 	 * Adds assets for BannerNotifications on the bottom of the body on Monobook
 	 *
-	 * @param {String} $skin
-	 * @param {String} $text
+	 * @param Skin $skin
+	 * @param string $text
 	 *
-	 * @return true
+	 * @return bool true
 	 */
-	public static function onSkinAfterBottomScripts( $skin, &$text ) {
+	public static function onSkinAfterBottomScripts( Skin $skin, &$text ): bool {
 
-		if ( F::app()->checkSkin( 'monobook', $skin ) ) {
+		if ( $skin->getSkinName() === 'monobook' ) {
 			$styles = AssetsManager::getInstance()->getURL( 'banner_notifications_scss' );
 
 			foreach ( $styles as $style ) {
@@ -294,15 +301,15 @@ class BannerNotificationsController extends WikiaController {
 	 * @param \OutputPage $out
 	 * @return bool
 	 */
-	public static function onBeforePageDisplay( \OutputPage $out ) {
-		global $wgUser;
+	public static function onBeforePageDisplay( \OutputPage $out ): bool {
+		$user = $out->getUser();
 
-		if ( $wgUser->isLoggedIn() ) {
+		if ( $user->isLoggedIn() ) {
 			$message = null;
 
-			if ( empty($wgUser->getEmail() ) && empty( $wgUser->getNewEmail() ) ) {
+			if ( empty( $user->getEmail() ) && empty( $user->getNewEmail() ) ) {
 				$message = wfMessage( 'bannernotifications-no-email' )->parse();
-			} elseif ( !$wgUser->isEmailConfirmed() ) {
+			} elseif ( !$user->isEmailConfirmed() ) {
 				$message = wfMessage( 'bannernotifications-not-confirmed-email' )->parse();
 			}
 
