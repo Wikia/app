@@ -443,7 +443,7 @@ class WikiExporter {
 			$offset_start = 1;
 			$batch_size = 500; # this returns up to ~100k rows on yugioh
 
-			while( $offset_start < $page_max ) {
+			while( $offset_start <= $page_max ) {
 				$cond = [
 					sprintf( 'page_id BETWEEN %d AND %d', $offset_start, $offset_start + $batch_size - 1 )
 				];
