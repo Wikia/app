@@ -465,11 +465,11 @@ class BlogArticle extends Article {
 	/**
 	 * store properties for updated article
 	 *
-	 * @param $LinksUpdate
+	 * @param LinksUpdate $LinksUpdate
 	 *
 	 * @return bool
 	 */
-	static public function linksUpdate( &$LinksUpdate ) {
+	static public function linksUpdate( LinksUpdate $LinksUpdate ): bool {
 
 		$namespace = $LinksUpdate->mTitle->getNamespace();
 		if ( !in_array( $namespace, array( NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK ) ) ) {
