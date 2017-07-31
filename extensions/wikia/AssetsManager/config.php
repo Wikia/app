@@ -300,6 +300,35 @@ $config['adengine2_pr3b1d_js'] = [
 	],
 ];
 
+//TODO: remove after ADEN-5624 release + 24h (2 Aug 2017)
+$config['adengine2_prebid_js'] = [
+	'skin' => [ 'oasis' ],
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/AdEngine/js/lookup/prebid/bidHelper.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/prebid.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/prebidHelper.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/prebidSettings.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/priceGranularityHelper.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/priceParsingHelper.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adaptersPerformanceTracker.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adaptersPricesTracker.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adaptersRegistry.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/aol.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexus.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexusAst.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexusPlacements.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/audienceNetwork.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/indexExchange.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/openx.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/rubicon.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/wikia.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/veles.js',
+
+		'//extensions/wikia/AdEngine/js/wrappers/prebid.js'
+	],
+];
+
 $config['adengine2_porvata_js'] = [
 	'skin' => [ 'oasis' ],
 	'type' => AssetsManager::TYPE_JS,
@@ -969,6 +998,14 @@ $config['mercury_ads_js'] = [
 ];
 
 $config['pr3b1d_prod_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/AdEngine/resources/prebid/prebid.min.js'
+	]
+];
+
+//TODO: remove after ADEN-5624 release + 24h (2 Aug 2017)
+$config['prebid_prod_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/AdEngine/resources/prebid/prebid.min.js'
