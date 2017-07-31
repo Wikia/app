@@ -65,7 +65,7 @@ class ImageServingHelper {
 	 * @param WikiaPhotoGallery $ig
 	 * @return bool return true to continue hooks flow
 	 */
-	public static function onBeforeParserrenderImageGallery( $parser, &$ig) {
+	public static function onBeforeParserrenderImageGallery( Parser $parser, WikiaPhotoGallery $ig ) {
 		global $wgEnableWikiaPhotoGalleryExt;
 
 		if ((!self::$hookOnOff) || empty($wgEnableWikiaPhotoGalleryExt)) {
@@ -75,9 +75,7 @@ class ImageServingHelper {
 		wfProfileIn(__METHOD__);
 
 		$ig->parse();
-		$data = $ig->getData();
 
-		$ig = new FakeImageGalleryImageServing( $data['images'] );
 		wfProfileOut(__METHOD__);
 		return false;
 	}
