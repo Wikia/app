@@ -358,8 +358,9 @@ class SiteStatus {
 		}
 
 		$num = ( new \WikiaSQL() )
-			->SELECT( "count(*)" )->AS_( "num_posts" )
+			->SELECT( "count(comment_id)" )->AS_( "num_posts" )
 			->FROM( self::TABLE_PAGE )
+			->LEFT_JOIN( self::TABLE_COMMENTS )->ON( 'page_id', 'comment_id' )
 			->WHERE( 'page_namespace' )->EQUAL_TO( NS_FORUM )
 			->run(
 				$this->localDbh,
