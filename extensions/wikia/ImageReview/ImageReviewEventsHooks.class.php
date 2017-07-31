@@ -8,12 +8,12 @@ class ImageReviewEventsHooks {
 	public static function onUploadComplete( UploadBase $form ) {
 		global $wgCityId, $wgImageReviewTestCommunities;
 
-		// TODO: community switch
-		//if ( in_array( $wgCityId, $wgImageReviewTestCommunities ) ) {
+
+		if ( in_array( $wgCityId, $wgImageReviewTestCommunities ) ) {
 			self::sendToImageReviewService( $form->getTitle() );
-		//} else {
-		//	static::createAddTask( $form->getTitle() );
-		//}
+		} else {
+			static::createAddTask( $form->getTitle() );
+		}
 
 		return true;
 	}
@@ -21,21 +21,24 @@ class ImageReviewEventsHooks {
 	public static function onFileRevertComplete( Page $page ) {
 		global $wgCityId, $wgImageReviewTestCommunities;
 
-		// TODO: community switch
-		//if ( in_array( $wgCityId, $wgImageReviewTestCommunities ) ) {
-		self::sendToImageReviewService( $page->getTitle() );
-		//} else {
-		//	static::createAddTask( $page->getTitle() );
-		//}
+		if ( in_array( $wgCityId, $wgImageReviewTestCommunities ) ) {
+			self::sendToImageReviewService( $page->getTitle() );
+		} else {
+			static::createAddTask( $page->getTitle() );
+		}
 
 		return true;
 	}
 
 	public static function onArticleUndelete( Title $title, $created, $comment ) {
 		if ( static::isFileForReview( $title ) ) {
-			// TODO: community switch
-			self::sendToImageReviewService( $title );
-			//static::createAddTask( $title );
+			global $wgCityId, $wgImageReviewTestCommunities;
+
+			if ( in_array( $wgCityId, $wgImageReviewTestCommunities ) ) {
+				self::sendToImageReviewService( $title );
+			} else {
+				static::createAddTask( $title );
+			}
 		}
 
 		return true;

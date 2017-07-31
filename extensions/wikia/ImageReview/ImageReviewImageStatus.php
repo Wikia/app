@@ -11,7 +11,7 @@ use Swagger\Client\ImageReview\Models\ImageHistoryEntry;
 $wgHooks['ImagePageAfterImageLinks'][] = 'efImageReviewDisplayStatus';
 
 function efImageReviewDisplayStatus( ImagePage $imagePage, &$html ) {
-	global $wgCityId, $wgExternalDatawareDB, $wgUser;
+	global $wgCityId, $wgExternalDatawareDB, $wgUser, $wgImageReviewTestCommunities;
 
 	if ( !$wgUser->isAllowed( 'imagereviewstats' ) ) {
 		return true;
@@ -31,14 +31,15 @@ function efImageReviewDisplayStatus( ImagePage $imagePage, &$html ) {
 
 	$dbr = wfGetDB( DB_SLAVE, [], $wgExternalDatawareDB );
 
-	//TODO: community switch
-	$reviews =
-		fetchReviewHistoryFromService( $wgCityId, $imagePage->getID(), $imagePage->getTitle()->getLatestRevID() );
-	//$reviews = fetchReviewHistory( $dbr, $wgCityId, $imagePage->getID() );
-	if ( empty( $reviews ) ) {
+	if ( in_array( $wgCityId, $wgImageReviewTestCommunities ) ) {
+		$reviews =
+			fetchReviewHistoryFromService( $wgCityId, $imagePage->getID(), $imagePage->getTitle()->getLatestRevID() );
+	} else {
+		$reviews = fetchReviewHistory( $dbr, $wgCityId, $imagePage->getID() );
+	}
 
-		// TODO: consider if in the new flow this also should be checked
-		if ( false === isImageInReviewQueue( $dbr, $wgCityId, $imagePage->getID() ) ) {
+	if ( empty( $reviews ) ) {
+		if ( !in_array( $wgCityId, $wgImageReviewTestCommunities ) && false === isImageInReviewQueue( $dbr, $wgCityId, $imagePage->getID() ) ) {
 			/**
 			 * If the file is a local one and is older than 1 hour - send it to ImageReview
 			 * since it's probably been restored, and is not just a fresh file.

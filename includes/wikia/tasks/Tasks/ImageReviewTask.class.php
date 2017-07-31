@@ -12,14 +12,19 @@ use \Wikia\Logger\WikiaLogger;
 class ImageReviewTask extends BaseTask {
 
 	public function delete( $pageList, $suppress = false ) {
-		global $IP;
+		global $IP, $wgCityId, $wgImageReviewTestCommunities;
 
 		$user = \User::newFromId( $this->createdBy );
 		$userName = $user->getName();
 		$articlesDeleted = 0;
 
 		foreach ( $pageList as $imageData ) {
-			list( $wikiId, $imageId, $revisionId ) = $imageData;
+			// prevent notices
+			if ( count( $imageData ) == 3 ) {
+				list( $wikiId, $imageId, $revisionId ) = $imageData;
+			} else {
+				list( $wikiId, $imageId ) = $imageData;
+			}
 
 			if ( !\WikiFactory::isPublic( $wikiId ) ) {
 				$this->notice( 'wiki has been disabled', ['wiki_id' => $wikiId] );
@@ -41,18 +46,20 @@ class ImageReviewTask extends BaseTask {
 			$cityLang = \WikiFactory::getVarValueByName( 'wgLanguageCode', $wikiId );
 			$reason = wfMsgExt( 'imagereview-reason', ['language' => $cityLang] );
 
-			// TODO: community switch
-			//$command = "SERVER_ID={$wikiId} php {$IP}/maintenance/wikia/deleteOn.php" .
-			//	' -u ' . escapeshellarg( $userName ) .
-			//	' --id ' . $imageId;
+			if ( in_array( $wgCityId, $wgImageReviewTestCommunities ) ) {
+				$command =
+					"/usr/wikia/backend/bin/run_maintenance --id=${wikiId} --script='wikia/deleteImageRevision.php --pageId=${imageId} --revisionId=${revisionId} --reason=${reason}'";
+			} else {
+				$command = "SERVER_ID={$wikiId} php {$IP}/maintenance/wikia/deleteOn.php" .
+					' -u ' . escapeshellarg( $userName ) .
+					' --id ' . $imageId;
 
-			$command = "/usr/wikia/backend/bin/run_maintenance --id=${wikiId} --script='wikia/deleteImageRevision.php --pageId=${imageId} --revisionId=${revisionId} --reason=${reason}'";
-
-			if ( $reason ) {
-				$command .= ' -r ' . escapeshellarg( $reason );
-			}
-			if ( $suppress ) {
-				$command .= ' -s';
+				if ( $reason ) {
+					$command .= ' -r ' . escapeshellarg( $reason );
+				}
+				if ( $suppress ) {
+					$command .= ' -s';
+				}
 			}
 
 			$title = wfShellExec( $command, $exitStatus );
