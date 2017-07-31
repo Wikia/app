@@ -16,8 +16,6 @@ class DeleteImageRevision extends Maintenance {
 		$this->addOption( self::REVISION_ID_OPTION, "revision id", true );
 		$this->addOption( self::REASON_OPTION, "deletion reason", true );
 		$this->mDescription = "Remove given revision of given image file";
-
-		$this->db = wfGetDB( DB_SLAVE );
 	}
 
 
@@ -25,8 +23,17 @@ class DeleteImageRevision extends Maintenance {
 		$pageId = intval( $this->getOption( self::PAGE_ID_OPTION ) );
 		$revisionId = intval( $this->getOption( self::REVISION_ID_OPTION ) );
 		$reason = $this->getOption( self::REASON_OPTION );
-		$title = Title::newFromID( $pageId );
 
+		$title = Title::newFromID( $pageId );
+		if ( empty( $title ) ) {
+			\Wikia\Logger\WikiaLogger::instance()->error(
+				"can not find a file with page_id ${pageId}"
+			);
+
+			return;
+		}
+
+		$this->db = wfGetDB( DB_SLAVE );
 
 		$timestamp = $this->db->selectField(
 			[ 'revision' ],
@@ -38,7 +45,6 @@ class DeleteImageRevision extends Maintenance {
 			__METHOD__
 		);
 
-		$this->output('jfdslkjflkdsjflkjskldfj');
 		if ( $this->isOldImageRevision( $timestamp, $title->getDBkey() ) ) {
 			$this->removeOldRevision( $title, $timestamp, $revisionId, $pageId, $reason );
 		} else {
@@ -50,10 +56,10 @@ class DeleteImageRevision extends Maintenance {
 		$this->output(__METHOD__ . "\n");
 
 		if ( !$this->hasOldRevisions( $title->getDBkey() ) ) {
-			LocalFile::newFromTitle( $title, RepoGroup::singleton()->getLocalRepo() );
+			$file = wfLocalFile( $title );
 
-			// intentionally left as empty string to enforce removal of whole File by FileDeleteForm::doDelete when there is only one revision
-			$oldfile = '';
+			// intentionally left as false to enforce removal of whole File by FileDeleteForm::doDelete when there is only one revision
+			$oldfile = false;
 			if ( !FileDeleteForm::doDelete( $title, $file, $oldfile, $reason, false )->isOK() ) {
 				\Wikia\Logger\WikiaLogger::instance()->error(
 					"deleting file was not successful",
@@ -73,8 +79,7 @@ class DeleteImageRevision extends Maintenance {
 	private function revertToPreviousRevision( Title $title, string $comment ) {
 		$this->output(__METHOD__ . "\n");
 
-		$db = wfGetDb( DB_SLAVE );
-		$archiveName = $db->selectField(
+		$archiveName = $this->db->selectField(
 			['oldimage'],
 			'oi_archive_name',
 			[
