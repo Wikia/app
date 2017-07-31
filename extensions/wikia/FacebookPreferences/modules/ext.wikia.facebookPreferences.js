@@ -16,6 +16,7 @@ require(['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'BannerNotification'],
 	}
 
 	function showConnectFailure(res) {
+		// Prevent showing two error messages
 		if (!res) {
 			return;
 		}
