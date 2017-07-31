@@ -15,7 +15,7 @@
 						{{/thumbnail}}
 					</div>
 					{{#isPlista}}
-						<a href="https://www.plista.com/optout" class="badge badge-plista"></a>
+						<a href="https://www.plista.com/opt-out" class="badge badge-plista"></a>
 					{{/isPlista}}
 					{{^isPlista}}
 						{{#presented_by}}
@@ -32,12 +32,17 @@
 								</div>
 							{{/isPlista}}
 							{{#presented_by}}
-								<div class="recirculation-sponsored-footer">
-									Sponsored{{^isPlista}} by {{presented_by}}{{/isPlista}}
-								</div>
+							    {{^isPlista}}
+                                    <div class="recirculation-sponsored-footer">Sponsored by {{presented_by}}</div>
+								{{/isPlista}}
 							{{/presented_by}}
 						</div>
 						<h4>{{title}}</h4>
+                        {{#isPlista}}
+                            <a class="recirculation-powered-plista" href="https://www.plista.com/au">
+                                <img src="http://static.plista.com/images/powered_by_plista_logo.png">
+                            </a>
+                        {{/isPlista}}
 					</div>
 				</a>
 			</div>

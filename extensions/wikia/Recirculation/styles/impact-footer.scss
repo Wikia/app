@@ -76,6 +76,18 @@ $recirculation-impact-footer-color-feature-overlay: rgba(0, 0, 0, .75);
 		}
 	}
 
+	.recirculation-powered-plista {
+		bottom: 0;
+		padding: 5px;
+		position: absolute;
+		right: 0;
+		width: 100px;
+
+		img {
+			background-color: transparent;
+		}
+	}
+
 
 	.title_pretext, .recirculation-sponsored-header {
 		display: none;
