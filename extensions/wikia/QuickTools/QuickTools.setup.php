@@ -45,19 +45,7 @@ $wgResourceModules['ext.quickTools'] = $qtResourceTemplate + array(
 		'quicktools-adopt-error'
 	)
 );
-$wgResourceModules['ext.createUserPage'] = $qtResourceTemplate + array(
-	'scripts' => array( 'ext.createUserPage.js' ),
-	'dependencies' => array(
-		'mediawiki.user',
-		'mediawiki.util'
-	),
-	'messages' => array(
-		'quicktools-createuserpage-reason',
-		'quicktools-createuserpage-success',
-		'quicktools-createuserpage-exists',
-		'quicktools-createuserpage-error',
-	)
-);
+
 $wgResourceModules['ext.quickAdopt'] = $qtResourceTemplate + array(
 	'scripts' => array( 'ext.quickAdopt.js' ),
 	'dependencies' => array(
@@ -76,4 +64,3 @@ $wgResourceModules['ext.quickAdopt'] = $qtResourceTemplate + array(
 );
 
 $wgHooks['ContributionsToolLinks'][] = 'QuickToolsHooksHelper::onContributionsToolLinks';
-$wgHooks['AccountNavigationModuleAfterDropdownItems'][] = 'QuickToolsHooksHelper::onAccountNavigationModuleAfterDropdownItems';

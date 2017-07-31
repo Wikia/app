@@ -11,16 +11,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	/* @const NOT_CONFIRMED_SIGNUP_OPTION_NAME Name of user option saying that user hasn't confirmed email since sign up */
 	const NOT_CONFIRMED_SIGNUP_OPTION_NAME = 'NotConfirmedSignup';
 
-	/*
-	 * Remove when SOC-217 ABTest is finished
-	 */
-	const NOT_CONFIRMED_LOGIN_OPTION_NAME = 'NotConfirmedLogin';
-	const NOT_CONFIRMED_LOGIN_ALLOWED = '1';
-	const NOT_CONFIRMED_LOGIN_NOT_ALLOWED = '2';
-	/*
-	 * end remove
-	 */
-
 	/* @const SIGNUP_REDIRECT_OPTION_NAME Name of user option containing redirect path to return to after email confirmation */
 	const SIGNUP_REDIRECT_OPTION_NAME = 'SignupRedirect';
 
@@ -178,8 +168,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				$action === wfMessage( 'wikiamobile-sendpassword-label' )->escaped() ||
 				$type === 'forgotPassword'
 			) {
-				$this->result = $response->getVal( 'result', '' );
-				$this->msg = $response->getVal( 'msg', '' );
+				$this->result = $this->request->getVal( 'result', '' );
+				$this->msg = $this->request->getVal( 'msg', '' );
 			} else if ( $action === wfMessage( 'resetpass_submit' )->escaped() ) {
 				// change password
 				$this->editToken = $this->wg->request->getVal( 'editToken', '' );
@@ -288,73 +278,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->redirectUrl = SpecialPage::getTitleFor( 'CloseMyAccount', 'reactivate' )->getFullUrl();
 	}
 
-	/**
-	 * Renders html version that will be inserted into ajax based login interaction.
-	 * On GET, template partial for an ajax element will render
-	 */
-	public function dropdown() {
-		$query = $this->app->wg->Request->getValues();
-
-		$this->response->setVal( 'returnto', $this->getReturnToFromQuery( $query ) );
-		$this->response->setVal( 'returntoquery', $this->getReturnToQueryFromQuery( $query ) );
-
-		$requestParams = $this->getRequest()->getParams();
-		if ( !empty( $requestParams['registerLink'] ) ) {
-			$this->response->setVal( 'registerLink',  $requestParams['registerLink'] );
-		}
-
-		if ( !empty( $requestParams['template'] ) ) {
-			$this->overrideTemplate( $requestParams['template'] );
-		}
-	}
-
-	public function getReturnToFromQuery( $query ) {
-		if ( !is_array( $query ) ) {
-			return '';
-		}
-
-		// If there's already a returnto here, use it.
-		if ( isset( $query['returnto'] ) ) {
-			return $query['returnto'];
-		}
-
-		if ( isset( $query['title'] ) && !$this->isTitleBlacklisted( $query['title'] ) ) {
-			$returnTo = $query['title'];
-		} else {
-			$returnTo = $this->getMainPagePartialUrl();
-		}
-
-		return $returnTo;
-	}
-
-	private function getMainPagePartialUrl() {
-		return Title::newMainPage()->getPartialURL();
-	}
-
-	private function isTitleBlacklisted( $title ) {
-		return AccountNavigationController::isBlacklisted( $title );
-	}
-
-	private function getReturnToQueryFromQuery( $query ) {
-		if ( !is_array( $query ) ) {
-			return '';
-		}
-
-		if ( isset( $query['returnto'] ) ) {
-			// If we're already got a 'returnto' value, make sure to pair it with the 'returntoquery' or
-			// default to blank if there isn't one.
-			return array_key_exists( 'returntoquery', $query ) ? $query['returntoquery'] : '';
-		} elseif ( $this->request->wasPosted() ) {
-			// Don't use any query parameters if this was a POST and we couldn't find
-			// a returntoquery param
-			return '';
-		}
-
-		// Ignore the title parameter as it would either be used by the returnto or blacklisted
-		unset( $query['title'] );
-		return wfArrayToCGI( $query );
-	}
-
 	public function modal() {
 		$this->response->setVal( 'loginToken', UserLoginHelper::getLoginToken() );
 		$this->response->setVal( 'signupUrl', Title::newFromText( 'UserSignup', NS_SPECIAL )->getFullUrl() );
@@ -410,15 +333,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		switch ( $loginCase ) {
 			case LoginForm::SUCCESS:
 				// first check if user has confirmed email after sign up
-				if ( $this->wg->User->getGlobalFlag( self::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) &&
-					/*
-					 * Remove when SOC-217 ABTest is finished
-					 */
-					$this->wg->User->getGlobalPreference( self::NOT_CONFIRMED_LOGIN_OPTION_NAME ) !== self::NOT_CONFIRMED_LOGIN_ALLOWED
-					/*
-					 * end remove
-					 */
-				) {
+				if ( $this->wg->User->getGlobalFlag( self::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) ) {
 					// User not confirmed on signup
 					LoginForm::clearLoginToken();
 					$this->userLoginHelper->setNotConfirmedUserSession( $this->wg->User->getId() );
@@ -567,38 +482,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				throw new BadRequestException('Request must be POSTed and provide a valid login token.');
 			}
 		}
-	}
-
-	/**
-	 * Given a message key and any params for that key (exactly the same signature as wfMessage),
-	 * set the error response for this request
-	 *
-	 * @param string $key The message key
-	 * @param array ...$params The first element of this array will always be the message key
-	 */
-	private function setErrorResponse( $key, ...$params ) {
-		$this->setResponseGeneric(  $key, $params, 'error' );
-	}
-
-	/**
-	 * Same as setErrorResponse except the message key is parsed for wikitext
-	 *
-	 * @param string $key The message key
-	 * @param array ...$params The first element of this array will always be the message key
-	 */
-	private function setParsedErrorResponse( $key, ...$params ) {
-		$this->setResponseGeneric( $key, $params, 'error', 'parse' );
-	}
-
-	/**
-	 * Given a message key and any params for that key (exactly the same signature as wfMessage),
-	 * set a success response for this request
-	 *
-	 * @param string $key The message key
-	 * @param array ...$params The first element of this array will always be the message key
-	 */
-	private function setSuccessResponse( $key, ...$params ) {
-		$this->setResponseGeneric(  $key, $params );
 	}
 
 	/**

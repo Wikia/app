@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ac8c4cb8bba91762b85393b7ed71e40c",
+    "content-hash": "e969c647a7f78d0f0b67638b21f61ab3",
     "packages": [
         {
             "name": "composer/installers",
@@ -3934,6 +3934,43 @@
                 "validate"
             ],
             "time": "2016-11-23T20:04:58+00:00"
+        },
+        {
+            "name": "wikia/file_ogg",
+            "version": "1.0.7",
+            "dist": {
+                "type": "tar",
+                "url": "http://artifactory.wikia-inc.com/artifactory/api/composer/php-local/direct-dists/wikia/file_ogg/file_ogg-1.0.7.tar",
+                "reference": null,
+                "shasum": null
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "File": "./"
+                }
+            },
+            "include-path": [
+                "./"
+            ],
+            "license": [
+                "GNU LGPL"
+            ],
+            "authors": [
+                {
+                    "email": "tstarling@wikimedia.org",
+                    "name": "Tim Starling",
+                    "role": "Lead"
+                }
+            ],
+            "description": "More info available on: http://pear.php.net/package/File_Ogg",
+            "support": {
+                "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name[]=File_Ogg",
+                "source": "https://github.com/pear/File_Ogg"
+            }
         },
         {
             "name": "wikia/fluent-sql-php",

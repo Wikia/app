@@ -12,14 +12,13 @@ module.exports={
   "CC Options": "Caption options",
   "On": "On",
   "Off": "Off",
-  "Discovery": "Discovery",
   "Facebook Unavailable": "Facebook Unavailable",
   "Facebook Success": "Check out this video on Facebook",
   "Twitter Unavailable": "Twitter Unavailable",
   "Twitter Success": "Check out this video on Twitter",
   "Post Title": "Post Successfully",
   "Account Configure": "Please set up your account on device",
-  "Discover": "Discover",
+  "Discover": "Recommended",
   "Up next": "Up next",
   "Video Quality": "Video Quality",
   "Invest In Social Change": "Invest In Social Change",
@@ -140,7 +139,7 @@ module.exports={
   "CC Options": "Opciones de subtitulado",
   "On": "Sí",
   "Off": "No",
-  "Discover": "Descubrir",
+  "Discover": "Recommended",
   "Up next": "Siguiente",
   "Video Quality": "Calidad de video",
   "Invest In Social Change": "Invertir en el cambio social",
@@ -259,14 +258,13 @@ module.exports={
   "CC Options": "字幕設定",
   "On": "オン",
   "Off": "オフ",
-  "Discovery": "Discovery",
   "Facebook Unavailable": "Facebookログイン失敗",
   "Facebook Success": "Facebookで動画を見る",
   "Twitter Unavailable": "Twitterログイン失敗",
   "Twitter Success": "Twitterで動画を見る",
   "Post Title": "投稿完了",
   "Account Configure": "アカウントを設定してください。",
-  "Discover": "Discover",
+  "Discover": "Recommended",
   "Up next": "次の動画",
   "Video Quality": "動画の品質",
   "Invest In Social Change": "動画をシェアする",
@@ -388,7 +386,7 @@ module.exports={
   "CC Options": "抄送选项",
   "On": "在",
   "Off": "关闭",
-  "Discover": "发现",
+  "Discover": "Recommended",
   "Up next": "下一个",
   "Video Quality": "视频质量",
   "Invest In Social Change": "投资于社会变迁",
@@ -3050,6 +3048,12 @@ var Icon = React.createClass({displayName: "Icon",
   },
 
   render: function() {
+    // WIKIA CHANGE - START
+    if (!this.props.icon) {
+      return (React.createElement("span", null));
+    }
+    // WIKIA CHANGE - END
+
     if(this.props.skinConfig.icons[this.props.icon].svg) {
       var svg = {
         __html: this.props.skinConfig.icons[this.props.icon].svg
@@ -5691,7 +5695,7 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
 
   if (OO.publicApi && OO.publicApi.VERSION) {
     // This variable gets filled in by the build script
-    OO.publicApi.VERSION.skin = {"releaseVersion": "4.14.8", "rev": "4ecc3ceecfc395c341aabb771b35d22e1e9574aa"};
+    OO.publicApi.VERSION.skin = {"releaseVersion": "4.14.8", "rev": "a95258006d3a6b44536941e4282627c641b57425"};
   }
 
   // WIKIA CHANGE - START
@@ -5751,7 +5755,6 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
         "mainVideoInnerWrapper": null,
         "mainVideoElement": null,
         "mainVideoMediaType": null,
-        "mainVideoAspectRatio": 0,
         "pluginsElement": null,
         "pluginsClickElement": null,
         "buffering": false,
@@ -5884,7 +5887,6 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
         this.mb.subscribe(OO.EVENTS.VOLUME_CHANGED, "customerUi", _.bind(this.onVolumeChanged, this));
         this.mb.subscribe(OO.EVENTS.VC_VIDEO_ELEMENT_IN_FOCUS, "customerUi", _.bind(this.onVideoElementFocus, this));
         this.mb.subscribe(OO.EVENTS.REPLAY, "customerUi", _.bind(this.onReplay, this));
-        this.mb.subscribe(OO.EVENTS.ASSET_DIMENSION, "customerUi", _.bind(this.onAssetDimensionsReceived, this));
         // PLAYBACK_READY is a fundamental event in the init process that can be unsubscribed by errors.
         // If and only if such has occured, it needs a route to being resubscribed.
         if(!this.state.isPlaybackReadySubscribed) {
@@ -5980,7 +5982,6 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
       if (params.videoId === OO.VIDEO.MAIN) {
         this.state.mainVideoElement = videoElement;
         this.enableFullScreen();
-        this.updateAspectRatio();
       }
     },
 
@@ -6363,13 +6364,6 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
 
     onReplay: function(event) {
       this.resetUpNextInfo(false);
-    },
-
-    onAssetDimensionsReceived: function(event, params) {
-      if (params.videoId == OO.VIDEO.MAIN && (this.skin.props.skinConfig.responsive.aspectRatio == "auto" || !this.skin.props.skinConfig.responsive.aspectRatio)) {
-        this.state.mainVideoAspectRatio = this.calculateAspectRatio(params.width, params.height);
-        this.setAspectRatio();
-      }
     },
 
     /********************************************************************
@@ -7359,27 +7353,6 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
       }
     },
 
-    //use fixed aspect ratio number from skinConfig
-    updateAspectRatio: function() {
-      if(this.skin && this.skin.props.skinConfig.responsive.aspectRatio && this.skin.props.skinConfig.responsive.aspectRatio != "auto") {
-        this.state.mainVideoAspectRatio = this.skin.props.skinConfig.responsive.aspectRatio;
-        this.setAspectRatio();
-      }
-    },
-
-    //returns original video aspect ratio
-    calculateAspectRatio: function(width, height) {
-      var aspectRatio = ((height / width) * 100).toFixed(2);
-      return aspectRatio;
-    },
-
-    //set Main Video Element Wrapper padding-top to aspect ratio
-    setAspectRatio: function() {
-      if(this.state.mainVideoAspectRatio > 0) {
-        this.state.mainVideoInnerWrapper.css("padding-top", this.state.mainVideoAspectRatio+"%");
-      }
-    },
-
     //find descendant video element
     findMainVideoElement: function(element) {
       var elements = [];
@@ -7758,7 +7731,7 @@ var Skin = React.createClass({displayName: "Skin",
               this.props, 
               {screen: CONSTANTS.SCREEN.DISCOVERY_SCREEN, 
               titleText: CONSTANTS.SKIN_TEXT.DISCOVER, 
-              icon: "discovery"}), 
+              icon: null}), 
               React.createElement(DiscoveryPanel, React.__spread({}, 
                 this.props, 
                 {videosPerPage: {xs:2, sm:4, md:6, lg:8}, 

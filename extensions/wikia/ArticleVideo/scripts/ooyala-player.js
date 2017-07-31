@@ -72,13 +72,13 @@ define('ooyala-player', ['wikia.browserDetect'], function (browserDetect) {
 	};
 
 	/**
-	 * Formats milliseconds as HH:mm:ss duration
+	 * Formats seconds as HH:mm:ss duration
 	 *
-	 * @param {number}
+	 * @param seconds
 	 * @returns {string}
 	 */
-	OoyalaHTML5Player.prototype.getFormattedDuration = function (millisec) {
-		var seconds = parseInt(millisec / 1000, 10);
+	OoyalaHTML5Player.prototype.getFormattedDuration = function (seconds) {
+		seconds = parseInt(seconds, 10);
 		var hours = parseInt(seconds / 3600, 10);
 		seconds = seconds % 3600;
 		var minutes = parseInt(seconds / 60, 10);
@@ -115,7 +115,11 @@ define('ooyala-player', ['wikia.browserDetect'], function (browserDetect) {
 				autoplay: autoplay,
 				initialVolume: autoplay ? 0 : 1,
 				pcode: playerParams.ooyalaPCode,
-				playerBrandingId: playerParams.ooyalaPlayerBrandingId
+				playerBrandingId: playerParams.ooyalaPlayerBrandingId,
+				discoveryApiAdditionalParams: {
+					discovery_profile_id: 0,
+					where: 'labels INCLUDES \'Promoted\''
+				}
 			},
 			html5Player;
 
