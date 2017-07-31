@@ -26,7 +26,7 @@ require([
 			$videoThumbnail = $videoContainer.find('.video-thumbnail'),
 			$closeBtn = $videoContainer.find('.close'),
 			ooyalaVideoController,
-			ooyalaVideoElementId = 'ooyala-article-video',
+			ooyalaVideoElementId = 'myPlayerID',
 			$ooyalaVideo = $('#' + ooyalaVideoElementId),
 			videoCollapsed = false,
 			collapsingDisabled = false,
@@ -205,109 +205,9 @@ require([
 		window.guaSetCustomDimension(36, videoLabels);
 		window.guaSetCustomDimension(37, autoplay ? 'Yes' : 'No');
 
-		initVideo(function (player) {
-			$video.addClass('ready-to-play');
 
-			if (playerTracker) {
-				playerTracker.register(player, playerTrackerParams);
-			}
+		$video.addClass('ready-to-play');
 
-			player.mb.subscribe(OO.EVENTS.INITIAL_PLAY, 'featured-video', function () {
-				track({
-					action: tracker.ACTIONS.PLAY_VIDEO,
-					label: 'featured-video'
-				});
-			});
-
-			player.mb.subscribe(OO.EVENTS.VOLUME_CHANGED, 'featured-video', function (eventName, volume) {
-				if (volume > 0) {
-					track({
-						action: tracker.ACTIONS.CLICK,
-						label: 'featured-video-unmuted'
-					});
-					player.mb.unsubscribe(OO.EVENTS.VOLUME_CHANGED, 'featured-video');
-				}
-			});
-
-			player.mb.subscribe(OO.EVENTS.PLAY, 'featured-video', function () {
-				collapsingDisabled = false;
-				if (videoFeedbackBox) {
-					videoFeedbackBox.show();
-				}
-				track({
-					action: tracker.ACTIONS.CLICK,
-					label: 'featured-video-play'
-				});
-			});
-
-			player.mb.subscribe(OO.EVENTS.PLAYED, 'featured-video', function () {
-				track({
-					action: tracker.ACTIONS.CLICK,
-					label: 'featured-video-played'
-				});
-			});
-
-			player.mb.subscribe(OO.EVENTS.PAUSED, 'featured-video', function () {
-				if (videoFeedbackBox) {
-					videoFeedbackBox.hide();
-				}
-				track({
-					action: tracker.ACTIONS.CLICK,
-					label: 'featured-video-paused'
-				});
-			});
-
-			player.mb.subscribe(window.OO.EVENTS.SIZE_CHANGED, 'featured-video', function (eventName, width) {
-				if (width === collapsedVideoSize.width) {
-					updateOoyalaSize();
-				}
-			});
-
-			player.mb.subscribe(window.OO.EVENTS.REPLAY, 'featured-video', function () {
-				track({
-					action: tracker.ACTIONS.CLICK,
-					label: 'featured-video-replay'
-				});
-			});
-
-			player.mb.subscribe(window.OO.EVENTS.PLAYHEAD_TIME_CHANGED, 'featured-video', function (eventName, time, totalTime) {
-				var secondsPlayed = Math.floor(time),
-					percentage = Math.round(time / totalTime * 100);
-
-				if (secondsPlayed % 5 === 0 && secondsPlayed !== playTime) {
-					playTime = secondsPlayed;
-					track({
-						action: tracker.ACTIONS.VIEW,
-						label: 'featured-video-played-seconds-' + playTime
-					});
-				}
-
-				if (percentage % 10 === 0 && percentage !== percentagePlayTime) {
-					percentagePlayTime = percentage;
-					track({
-						action: tracker.ACTIONS.VIEW,
-						label: 'featured-video-played-percentage-' + percentagePlayTime
-					});
-				}
-
-				if (secondsPlayed >= 5 && !videoFeedbackBox && player.getState() === window.OO.STATE.PLAYING) {
-					videoFeedbackBox = new VideoFeedbackBox();
-					videoFeedbackBox.init();
-				}
-			});
-
-			player.mb.subscribe(window.OO.EVENTS.WIKIA.AUTOPLAY_TOGGLED, 'featured-video', function (eventName, enabled) {
-				track({
-					action: tracker.ACTIONS.CLICK,
-					label: enabled ? 'featured-video-autoplay-enabled' : 'featured-video-autoplay-disabled'
-				});
-			});
-
-			track({
-				action: tracker.ACTIONS.IMPRESSION,
-				label: 'featured-video'
-			});
-		});
 
 		$closeBtn.click(closeButtonClicked);
 
