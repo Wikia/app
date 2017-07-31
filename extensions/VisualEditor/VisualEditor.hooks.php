@@ -159,21 +159,6 @@ class VisualEditorHooks {
 		return true;
 	}
 
-	/**
-	 * Convert a namespace index to the local text for display to the user.
-	 *
-	 * @param $nsIndex int
-	 * @return string
-	 */
-	private static function convertNs( $nsIndex ) {
-		global $wgLang;
-		if ( $nsIndex ) {
-			return $wgLang->convertNamespace( $nsIndex );
-		} else {
-			return wfMessage( 'blanknamespace' )->text();
-		}
-	}
-
 	public static function onListDefinedTags( &$tags ) {
 		$tags[] = 'visualeditor';
 		$tags[] = 'visualeditor-needcheck';

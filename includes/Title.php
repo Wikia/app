@@ -1617,10 +1617,9 @@ class Title {
 	 */
 	public function getCanonicalURL( $query = '', $query2 = false ) {
 		$query = self::fixUrlQueryArgs( $query, $query2 );
-		$url = wfExpandUrl( $this->getLocalURL( $query ) . $this->getFragmentForURL(), PROTO_CANONICAL );
 
-
-		return $url;
+		return wfExpandUrl( $this->getLocalURL( $query ) . $this->getFragmentForURL(),
+			PROTO_CANONICAL );
 	}
 
 	/**
