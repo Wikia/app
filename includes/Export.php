@@ -376,7 +376,7 @@ class WikiExporter {
 						array( $this->db, &$tables, &$cond, &$opts, &$join ) );
 
 				# Do the query!
-				$result = $this->db->select( $tables, '*', $cond, __METHOD__, $opts, $join );
+				$result = $this->selectRows( $tables, '*', $cond, __METHOD__, $opts, $join );
 				# Output dump results
 				$this->outputPageStream( $result );
 
@@ -389,7 +389,7 @@ class WikiExporter {
 
 				// Freeing result
 				try {
-					if ( $result ) {
+					if ( $result instanceof ResultWrapper ) {
 						$result->free();
 					}
 				} catch ( Exception $e2 ) {
@@ -409,6 +409,53 @@ class WikiExporter {
 
 				// Inform caller about problem
 				throw $e;
+			}
+		}
+	}
+
+	/**
+	 * This method makes the main database query to fetch all rows required to generate a dump.
+	 *
+	 * When $cond argument is empty, we assume that we're generating a full dump. Instead of using unbuffered query,
+	 * let's just send a set of small batched queries and yield each row returned. outputPageStream method
+	 * uses foreach to consume the passed $result object.
+	 *
+	 * @param $tables
+	 * @param $vars
+	 * @param $cond
+	 * @param $fname
+	 * @param $opts
+	 * @param $join
+	 * @return ResultWrapper|Generator
+	 */
+	private function selectRows($tables, $vars, $cond, $fname, $opts, $join) {
+		// we're not doing a full dump, let's just make a single query
+		if ( !empty( $cond ) ) {
+			return $this->db->select( $tables, $vars, $cond, $fname, $opts, $join );
+		}
+		else {
+			// as said above, we do want to make a set of small, buffered queries
+			$this->db->bufferResults( true );
+
+			$page_max = (int) $this->db->selectField( 'page','MAX(page_id)', '', $fname );
+
+			// fetch 500 pages in each batch
+			$offset_start = 1;
+			$batch_size = 500; # this returns up to ~100k rows on yugioh
+
+			while( $offset_start < $page_max ) {
+				$cond = [
+					sprintf( 'page_id BETWEEN %d AND %d', $offset_start, $offset_start + $batch_size - 1 )
+				];
+
+				$results = $this->db->select( $tables, $vars, $cond, $fname, $opts, $join );
+
+				foreach( $results as $row ) {
+					yield $row;
+				}
+
+				$results->free();
+				$offset_start += $batch_size;
 			}
 		}
 	}
