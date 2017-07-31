@@ -46,9 +46,22 @@ class PageStatsService {
 	 * Refresh cache when article is edited
 	 *
 	 * @param WikiPage $article
+	 * @param User $user
+	 * @param $text
+	 * @param $summary
+	 * @param $minoredit
+	 * @param $watchthis
+	 * @param $sectionanchor
+	 * @param $flags
+	 * @param $revision
+	 * @param Status $status
+	 * @param $baseRevId
+	 * @return bool
 	 */
-	static function onArticleSaveComplete(&$article, &$user, $text, $summary,
-		$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+	static function onArticleSaveComplete(
+		WikiPage $article, User $user, $text, $summary, $minoredit, $watchthis, $sectionanchor,
+		$flags, $revision, Status &$status, $baseRevId
+	): bool {
 
 		wfProfileIn(__METHOD__);
 
