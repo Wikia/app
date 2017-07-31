@@ -8,7 +8,7 @@ class LatestPhotosHooks {
 		return true;
 	}
 
-	public static function onImageUploadComplete( &$image ){
+	public static function onImageUploadComplete( UploadBase $image ): bool {
 		self::avoidUpdateRace();
 		return true;
 	}

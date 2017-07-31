@@ -40,13 +40,14 @@ $wgHooks['SkinTemplateToolboxEnd'][]  = 'wfMultiUploadToolbox';
 $wgHooks['SkinTemplateBuildNavUrlsNav_urlsAfterPermalink'][] = 'wfSpecialMultiUploadNav';
 
 // Add the link to Special:MultipleUpload to all SkinTemplate-based skins for users with the 'upload' user right
-function wfSpecialMultiUploadNav( &$skintemplate, &$nav_urls, &$oldid, &$revid ) {
-	global $wgUser;
-	if( $wgUser->isAllowed( 'upload' ) )
-		$nav_urls['multiupload'] = array(
-			'text' => wfMsg( 'multiupload_link' ),
-			'href' => $skintemplate->makeSpecialUrl( 'MultipleUpload' )
-		);
+function wfSpecialMultiUploadNav( Skin $skin, &$nav_urls, &$oldid, &$revid ): bool {
+
+	if ( $skin->getUser()->isAllowed( 'upload' ) ) {
+		$nav_urls['multiupload'] = [
+			'text' => $skin->msg( 'multiupload_link' )->escaped(),
+			'href' => Skin::makeSpecialUrl( 'MultipleUpload' ),
+		];
+	}
 
 	return true;
 }

@@ -95,15 +95,16 @@ class BannerNotificationsController extends WikiaController {
 
 	/**
 	 * Handle confirmations from special preferences
+	 * @param SpecialPreferences $prefs
+	 * @return bool
 	 */
-	public static function addPreferencesConfirmation( &$prefs ) {
-		global $wgRequest;
+	public static function addPreferencesConfirmation( SpecialPreferences $prefs ): bool {
+		$request = $prefs->getRequest();
 
-		if ( F::app()->checkSkin( 'oasis' ) ) {
-			if ( $wgRequest->getCheck( 'success' ) ) {
+		if ( $prefs->getSkin()->getSkinName() === 'oasis' ) {
+			if ( $request->getCheck( 'success' ) ) {
 				self::addConfirmation( wfMessage( 'savedprefs' )->escaped() );
-			}
-			else if ( $wgRequest->getCheck( 'eauth' ) ) {
+			} elseif ( $request->getCheck( 'eauth' ) ) {
 				self::addConfirmation(
 					wfMessage( 'eauthentsent' )->escaped(),
 					self::CONFIRMATION_ERROR
@@ -111,8 +112,8 @@ class BannerNotificationsController extends WikiaController {
 			}
 
 			// clear the state, so that MW core doesn't render any message
-			$wgRequest->setVal( 'eauth', null );
-			$wgRequest->setVal( 'success', null );
+			$request->setVal( 'eauth', null );
+			$request->setVal( 'success', null );
 		}
 
 		return true;

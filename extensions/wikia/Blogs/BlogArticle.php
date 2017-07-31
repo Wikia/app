@@ -429,21 +429,20 @@ class BlogArticle extends Article {
 	/**
 	 * write additinonal checkboxes on editpage
 	 *
-	 * @param $EditPage
-	 * @param $checkboxes
-	 *
+	 * @param EditPage $editPage
+	 * @param array $checkboxes
 	 * @return bool
+	 * @internal param $EditPage
 	 */
-	static public function editPageCheckboxes( &$EditPage, &$checkboxes ) {
-		if ( $EditPage->mTitle->getNamespace() != NS_BLOG_ARTICLE ) {
+	static public function editPageCheckboxes( EditPage $editPage, array &$checkboxes ): bool {
+		if ( $editPage->mTitle->getNamespace() != NS_BLOG_ARTICLE ) {
 			return true;
 		}
 		wfProfileIn( __METHOD__ );
-		Wikia::log( __METHOD__ );
 
 		$output = array();
-		if ( $EditPage->mTitle->mArticleID ) {
-			$props = self::getProps( $EditPage->mTitle->mArticleID );
+		if ( $editPage->mTitle->mArticleID ) {
+			$props = self::getProps( $editPage->mTitle->mArticleID );
 			$output["voting"] = Xml::checkLabel(
 				wfMsg( "blog-voting-label" ),
 				"wpVoting",

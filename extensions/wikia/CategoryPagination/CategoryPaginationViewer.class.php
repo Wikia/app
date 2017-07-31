@@ -65,7 +65,7 @@ class CategoryPaginationViewer extends CategoryViewer {
 		 * @see answerCategoryOtherSection
 		 */
 		$answersSection = '';
-		Hooks::run( 'CategoryViewer::getOtherSection', [ &$this, &$answersSection ] );
+		Hooks::run( 'CategoryViewer::getOtherSection', [ $this, &$answersSection ] );
 
 		/**
 		 * Hook for category galleries to add the top pages at the top

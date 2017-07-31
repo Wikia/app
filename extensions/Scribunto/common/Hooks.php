@@ -261,10 +261,9 @@ class ScribuntoHooks {
 	 * Wikia change - Add modules and console in the editor in Oasis
 	 *
 	 * @param  EditPage $editPage
-	 * @param  array   $hidden
 	 * @return bool
 	 */
-	public static function onAfterDisplayingTextbox( EditPage $editPage, &$hidden ) {
+	public static function onAfterDisplayingTextbox( EditPage $editPage ): bool {
 		$app = F::app();
 		if ( !$app->checkSkin( 'oasis' )
 			|| !( $editPage instanceof EditPageLayout )

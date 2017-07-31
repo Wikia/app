@@ -109,9 +109,10 @@ class FounderProgressBarHooks {
 	 * @desc Counts the following actions
 	 *
 	 * Adding a photo
-	 *
+	 * @param UploadBase $image
+	 * @return bool
 	 */
-	public static function onUploadComplete (&$image) {
+	public static function onUploadComplete ( UploadBase $image ): bool {
 		// Quick exit if tasks are all completed
 		if (self::allTasksComplete()) {
 			return true;

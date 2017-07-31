@@ -168,10 +168,9 @@ class EditPageLayoutHooks {
 	 * Modify HTML before edit page textarea
 	 *
 	 * @param $editPage EditPage edit page instance
-	 * @param $hidden boolean not used
 	 * @return boolean return true
 	 */
-	static function onBeforeDisplayingTextbox( EditPage $editPage, &$hidden ) {
+	static function onBeforeDisplayingTextbox( EditPage $editPage ): bool {
 		$app = F::app();
 		if ( $app->checkSkin( 'oasis' ) ) {
 			$app->wg->Out->addHtml( '<div id="editarea" class="editpage-editarea" data-space-type="editarea">' );
@@ -184,10 +183,9 @@ class EditPageLayoutHooks {
 	 * Modify HTML after edit page textarea
 	 *
 	 * @param $editPage EditPage edit page instance
-	 * @param $hidden boolean not used
 	 * @return boolean return true
 	 */
-	static function onAfterDisplayingTextbox( EditPage $editPage, &$hidden ) {
+	static function onAfterDisplayingTextbox( EditPage $editPage ): bool {
 		$app = F::app();
 		if ( $app->checkSkin( 'oasis') ) {
 			$params = array(
