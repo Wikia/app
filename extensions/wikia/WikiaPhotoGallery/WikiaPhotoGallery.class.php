@@ -166,7 +166,7 @@ class WikiaPhotoGallery extends ImageGallery {
 	 *
 	 * @param $parser Parser
 	 */
-	public function recordParserOption( &$parser ) {
+	public function recordParserOption( Parser $parser ) {
 		if ( $this->mType == self::WIKIA_PHOTO_SLIDER ) {
 			/**
 			 * because slider tag contains elements of interface we need to
@@ -1203,11 +1203,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				$text = $pair[1];
 				$link = $pair[2];
 
-				# Give extensions a chance to select the file revision for us
-				$time = $descQuery = false;
-				Hooks::run( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
-
-				$img = wfFindFile( $nt, $time );
+				$img = wfFindFile( $nt );
 
 				if ( WikiaFileHelper::isFileTypeVideo( $img ) ) {
 					continue;
@@ -1461,14 +1457,12 @@ class WikiaPhotoGallery extends ImageGallery {
 			$link = $pair[2];
 			$linkText = $this->mData['images'][$p]['linktext'];
 			$shortText = $this->mData['images'][$p]['shorttext'];
-			$time = $descQuery = false;
 
 			// parse link (RT #142515)
 			$linkAttribs = $this->parseLink( $nt->getLocalUrl(), $nt->getText(), $link );
 
-			Hooks::run( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
 
-			$file = wfFindFile( $nt, $time );
+			$file = wfFindFile( $nt );
 			if ( $file instanceof File && ( $nt->getNamespace() == NS_FILE ) ) {
 				list( $adjWidth, $adjHeight ) = $this->fitWithin( $file, $imagesDimensions );
 
@@ -1761,17 +1755,13 @@ class WikiaPhotoGallery extends ImageGallery {
 	 *
 	 * @param Title $nt Title object for the image
 	 *
-	 * @return LocalFile|Bool
+	 * @return File
 	 */
 	private function getImage( $nt ) {
 		wfProfileIn( __METHOD__ );
 
-		// Give extensions a chance to select the file revision for us
-		$time = $descQuery = false;
-		Hooks::run( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
-
 		// Render image thumbnail
-		$img = wfFindFile( $nt, $time );
+		$img = wfFindFile( $nt );
 
 		wfProfileOut( __METHOD__ );
 		return $img;

@@ -248,7 +248,7 @@ class Handler extends \WikiaObject {
 				$newLinks = $this->findLinks( $editPage, $newText );
 			}
 
-			$unknownLinks = array_filter( $newLinks, [ &$this, 'filterLink' ] );
+			$unknownLinks = array_filter( $newLinks, [ $this, 'filterLink' ] );
 			$addedLinks = array_diff( $unknownLinks, $oldLinks );
 			$numLinks = count( $addedLinks );
 
@@ -429,13 +429,13 @@ class Handler extends \WikiaObject {
 		}
 
 		$result = null;
-		$hookParams = [ &$this, &$editPage, $newText, $section, $merged, &$result ];
+		$hookParams = [ $this, $editPage, $newText, $section, $merged, &$result ];
 		if ( !\Hooks::run( 'ConfirmEdit::onConfirmEdit', $hookParams ) ) {
 			return $result;
 		}
 
 		if ( !$this->doConfirmEdit( $editPage, $newText, $section, $merged ) ) {
-			$editPage->showEditForm( [ &$this, 'editCallback' ] );
+			$editPage->showEditForm( [ $this, 'editCallback' ] );
 			return false;
 		}
 		return true;

@@ -584,7 +584,7 @@ class CategoryWithAds extends CategoryViewer{
 			} elseif( $this->showGallery && $title->getNamespace() == NS_FILE ) {
 				$this->addImage( $title, $x->cl_sortkey, $x->page_len, $x->page_is_redirect );
 			} else {
-				if( Hooks::run( "CategoryViewer::addPage", array( &$this, &$title, &$x, $x->cl_sortkey ) ) ) {
+				if ( Hooks::run( "CategoryViewer::addPage", [ $this, &$title, &$x, $x->cl_sortkey ] ) ) {
 					$this->addPage( $title, $x->cl_sortkey, $x->page_len, $x->page_is_redirect );
 				}
 			}
@@ -594,7 +594,6 @@ class CategoryWithAds extends CategoryViewer{
 }
 
 include( dirname(__FILE__) . "/HomePageList.php");
-include( dirname(__FILE__) . "/EditSimilarAnswers.php");
 include( dirname(__FILE__) . "/FakeAnswersMessaging.php");
 
 $wgAjaxExportList[] = 'wfAnswersGetEditPointsAjax';
