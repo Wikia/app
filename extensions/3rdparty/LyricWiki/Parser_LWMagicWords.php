@@ -142,7 +142,12 @@ function getLyricWikiVariables()
 		$titleStr = $wgTitle->getFullText();
 
 		$ns = $wgTitle->getNamespace();
-		if(($ns != NS_MAIN) && ($ns  != NS_TALK))
+		if($ns == NS_CATEGORY)
+		{
+			//set pagetype for category namespace so template preload in Templates.php can run there.
+			$lwVars["pagetype"] = "category";
+		}
+		elseif(($ns != NS_MAIN) && ($ns != NS_TALK))
 		{
 			//pages outside of the main namespace & talk shouldn't have music-related templates.
 			$lwVars["pagetype"] = "none";

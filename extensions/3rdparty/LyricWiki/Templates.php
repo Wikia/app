@@ -63,9 +63,9 @@ function lw_templatePreload(&$textbox, Title &$title)
 
 	$titleStr = $title->getText();
 
-	// only use templates in the main namespace
+	// only use templates in the main and category namespace
 	$ns = $title->getNamespace();
-	if(($ns != NS_MAIN) && ($ns != NS_TALK)){
+	if(($ns != NS_MAIN) && ($ns != NS_TALK) && ($ns != NS_CATEGORY)){
 		return true;
 	}
 
