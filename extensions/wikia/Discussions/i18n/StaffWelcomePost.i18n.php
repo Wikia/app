@@ -4,7 +4,7 @@ $messages = array();
 $messages['en'] = array(
 	'discussions-staff-welcome-title' => 'Welcome to Discussions!',
 	'discussions-staff-welcome-post' => "
-This is the place to talk about your favorite topic, to share news, theories, ideas, and to connect with others.
+This is the place to talk about your favorite topic, to share news, theories, ideas, and to connect with others. The content from your Forum has been converted to Discussions posts, so nothing has been lost.
 
 To learn more about what you can do here, check out http://community.wikia.com/wiki/Help:Discussions
 
