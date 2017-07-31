@@ -294,7 +294,7 @@ class SpecialVersion extends SpecialPage {
 		/**
 		 * @deprecated as of 1.17, use hook ExtensionTypes instead.
 		 */
-		Hooks::run( 'SpecialVersionExtensionTypes', array( &$this, &$extensionTypes ) );
+		Hooks::run( 'SpecialVersionExtensionTypes', [ $this, &$extensionTypes ] );
 
 		$out = Xml::element( 'h2', array( 'id' => 'mw-version-ext' ), wfMessage( 'version-extensions' )->plain() ) .
 			Xml::openElement( 'table', array( 'class' => 'wikitable', 'id' => 'sv-ext' ) );

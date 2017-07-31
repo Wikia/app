@@ -559,7 +559,7 @@ class XmlDumpWriter {
 				"" ) . "\n";
 		}
 
-		Hooks::run( 'XmlDumpWriterWriteRevision', array( &$this, &$out, $row, $text ) );
+		Hooks::run( 'XmlDumpWriterWriteRevision', [ $this, &$out, $row, $text ] );
 
 		$out .= "    </revision>\n";
 
