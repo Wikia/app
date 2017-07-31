@@ -63,7 +63,7 @@ class SpamBlacklistHooks {
 	 * @param $hookErr array
 	 * @return bool
 	 */
-	public static function userCanSendEmail( &$user, &$hookErr ) {
+	public static function userCanSendEmail( User $user, &$hookErr ): bool {
 		/** @var $blacklist EmailBlacklist */
 		$blacklist = BaseBlacklist::getInstance( 'email' );
 		if ( $blacklist->checkUser( $user ) ) {
