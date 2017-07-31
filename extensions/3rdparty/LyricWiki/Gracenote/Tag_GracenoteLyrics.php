@@ -146,9 +146,9 @@ function gracenoteLyricsTagCss(OutputPage $out)
 .lyricbox
 {
 	padding: 1em;
-	border: 1px solid silver;
-	color: black;
-	background-color: #ffffcc;
+	border: 1px solid #ccc;
+	color: #3a3a3a;
+	background-color: #f8f8f8;
 }
 DOC
 ;
