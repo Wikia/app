@@ -106,7 +106,7 @@ function lw_templatePreload(&$textbox, Title &$title)
 		$template = wfMsgForContentNoTrans("lwtemp-{$pageType}-template");
 
 		// only display a template if the template actually exists
-		if( $template != "<{$pageType}Template>" and $template != "&lt;{$pageType}Template&gt;" )
+		if( $template != "&lt;lwtemp-{$pageType}-template&gt;" )
 		{
 			$textbox = $template;
 			$lwVars = getLyricWikiVariables();
