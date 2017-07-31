@@ -19,7 +19,7 @@ class ImageReviewTask extends BaseTask {
 		$articlesDeleted = 0;
 
 		foreach ( $pageList as $imageData ) {
-			list( $wikiId, $imageId ) = $imageData;
+			list( $wikiId, $imageId, $revisionId ) = $imageData;
 
 			if ( !\WikiFactory::isPublic( $wikiId ) ) {
 				$this->notice( 'wiki has been disabled', ['wiki_id' => $wikiId] );
@@ -41,9 +41,12 @@ class ImageReviewTask extends BaseTask {
 			$cityLang = \WikiFactory::getVarValueByName( 'wgLanguageCode', $wikiId );
 			$reason = wfMsgExt( 'imagereview-reason', ['language' => $cityLang] );
 
-			$command = "SERVER_ID={$wikiId} php {$IP}/maintenance/wikia/deleteOn.php" .
-				' -u ' . escapeshellarg( $userName ) .
-				' --id ' . $imageId;
+			// TODO: community switch
+			//$command = "SERVER_ID={$wikiId} php {$IP}/maintenance/wikia/deleteOn.php" .
+			//	' -u ' . escapeshellarg( $userName ) .
+			//	' --id ' . $imageId;
+
+			$command = "/usr/wikia/backend/bin/run_maintenance --id=${wikiId} --script='wikia/deleteImageRevision.php --pageId=${imageId} --revisionId=${revisionId} --reason=${reason}'";
 
 			if ( $reason ) {
 				$command .= ' -r ' . escapeshellarg( $reason );
