@@ -32,9 +32,10 @@ class ImageReviewEventsHooks {
 	}
 
 	public static function onArticleUndelete( Title $title, $created, $comment ) {
-		// TODO: test if undelete creates new revision and if so then send data to IR service
 		if ( static::isFileForReview( $title ) ) {
-			static::createAddTask( $title );
+			// TODO: community switch
+			self::sendToImageReviewService( $title );
+			//static::createAddTask( $title );
 		}
 
 		return true;
