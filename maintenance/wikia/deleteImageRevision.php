@@ -89,9 +89,17 @@ class DeleteImageRevision extends Maintenance {
 			['ORDER BY oi_timestamp desc']
 		);
 
+		//TODO: check on sandbox on test wiki if this method works as expected
+		$this->output( $archiveName . "\n" );
 		$oldLocalFile = OldLocalFile::newFromArchiveName( $title, RepoGroup::singleton()->getLocalRepo(), $archiveName );
 		$source = $oldLocalFile->getArchiveVirtualUrl( $oldLocalFile->getArchiveName() );
-		$oldLocalFile->upload( $source, $comment, $comment );
+		$this->output( $source . "\n" );
+
+		$status = $oldLocalFile->upload( $source, $comment, $comment );
+
+		if( !$status->isGood() ) {
+			\Wikia\Logger\WikiaLogger::instance()->error("failed to revert file to previous revision" );
+		}
 	}
 
 	private function hasOldRevisions( $fileName ):bool {
@@ -114,6 +122,7 @@ class DeleteImageRevision extends Maintenance {
 
 		// if $oldimage is empty, FileDeleteForm::doDelete would delete whole file instead of single revision
 		if ( !empty( $oldimage ) ) {
+			// TODO: file is removed but still appears in file history with broken thumbnail
 			if ( !FileDeleteForm::doDelete( $title, $oldLocalFile, $oldimage, $reason, false )->isOK() ) {
 				\Wikia\Logger\WikiaLogger::instance()->error(
 					"deleting file revision was not successful",
