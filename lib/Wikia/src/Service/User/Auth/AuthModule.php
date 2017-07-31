@@ -24,7 +24,7 @@ class AuthModule implements Module {
 			->bind( HeliosClientImpl::BASE_URI )->to( function ( Container $c ) {
 					global $wgAuthServiceName, $wgAuthServiceInternalUrl;
 
-					if ( ( new BernoulliTrial( 0.1 ) )->shouldSample() ) {
+					if ( !empty( $wgAuthServiceInternalUrl ) && ( new BernoulliTrial( 0.1 ) )->shouldSample() ) {
 						return $wgAuthServiceInternalUrl;
 					}
 
