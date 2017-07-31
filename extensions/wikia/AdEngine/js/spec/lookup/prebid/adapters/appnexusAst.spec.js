@@ -3,6 +3,15 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', function () {
 	'use strict';
 
 	var mocks = {
+		adContext: {
+			getContext: function () {
+				return {
+					targeting: {
+						hasFeaturedVideo: false
+					}
+				};
+			}
+		},
 		instantGlobals: {
 			wgAdDriverAppNexusAstBidderCountries: ['PL']
 		},
@@ -21,6 +30,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', function () {
 
 	function getAppNexus() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst'](
+			mocks.adContext,
 			mocks.slotsContext,
 			mocks.geo,
 			mocks.instantGlobals,

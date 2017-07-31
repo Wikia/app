@@ -1,10 +1,11 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.slotsContext',
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.log'
-], function (slotsContext, geo, instantGlobals, log) {
+], function (adContext, slotsContext, geo, instantGlobals, log) {
 	'use strict';
 
 	var bidderName = 'rubicon', // aka rubicon vulcan
@@ -32,7 +33,8 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 		};
 
 	function isEnabled() {
-		return geo.isProperGeo(instantGlobals.wgAdDriverRubiconPrebidCountries);
+		return geo.isProperGeo(instantGlobals.wgAdDriverRubiconPrebidCountries) &&
+			!adContext.getContext().targeting.hasFeaturedVideo;
 	}
 
 	function prepareAdUnit(slotName, config) {

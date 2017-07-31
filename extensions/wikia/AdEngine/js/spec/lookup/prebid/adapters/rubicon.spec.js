@@ -3,6 +3,15 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', function () {
 	'use strict';
 
 	var mocks = {
+		adContext: {
+			getContext: function () {
+				return {
+					targeting: {
+						hasFeaturedVideo: false
+					}
+				};
+			}
+		},
 		instantGlobals: {
 			wgAdDriverRubiconPrebidCountries: ['PL']
 		},
@@ -21,6 +30,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', function () {
 
 	function getBidder() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.rubicon'](
+			mocks.adContext,
 			mocks.slotsContext,
 			mocks.geo,
 			mocks.instantGlobals,
