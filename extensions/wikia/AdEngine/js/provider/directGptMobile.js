@@ -20,7 +20,7 @@ define('ext.wikia.adEngine.provider.directGptMobile', [
 			MOBILE_PREFOOTER:           {size: '320x50,300x250,300x50', loc: 'footer'}
 		},
 		{
-			adUnitBuilder: function () {
+			getAdUnitBuilder: function () {
 				return adContext.getContext().opts.megaAdUnitBuilderEnabled ? megaAdUnitBuilder : kiloAdUnitBuilder;
 			},
 			atfSlots: [

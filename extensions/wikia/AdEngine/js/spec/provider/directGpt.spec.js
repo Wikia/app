@@ -43,7 +43,7 @@ describe('ext.wikia.adEngine.provider.directGpt', function () {
 
 		getModule();
 
-		expect(mocks.factory.createProvider.calls.argsFor(0)[4].adUnitBuilder())
+		expect(mocks.factory.createProvider.calls.argsFor(0)[4].getAdUnitBuilder())
 			.toEqual(mocks.kiloAdUnitBuilder);
 	});
 
@@ -53,7 +53,7 @@ describe('ext.wikia.adEngine.provider.directGpt', function () {
 
 		getModule();
 
-		expect(mocks.factory.createProvider.calls.argsFor(0)[4].adUnitBuilder())
+		expect(mocks.factory.createProvider.calls.argsFor(0)[4].getAdUnitBuilder())
 			.toEqual(mocks.megaAdUnitBuilder);
 	});
 
@@ -63,7 +63,7 @@ describe('ext.wikia.adEngine.provider.directGpt', function () {
 
 		getModule();
 
-		expect(mocks.factory.createProvider.calls.argsFor(0)[4].adUnitBuilder())
+		expect(mocks.factory.createProvider.calls.argsFor(0)[4].getAdUnitBuilder())
 			.toEqual(mocks.kiloAdUnitBuilder);
 	});
 });

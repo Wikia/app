@@ -112,7 +112,7 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 		spyOn(mocks.gptHelper, 'pushAd');
 
 		var extra = {
-			adUnitBuilder: function () {
+			getAdUnitBuilder: function () {
 				return mocks.extraUnitBuilder;
 			}
 		};
@@ -128,7 +128,7 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 		spyOn(mocks.gptHelper, 'pushAd');
 
 		var extra = {
-			adUnitBuilder: function () {
+			getAdUnitBuilder: function () {
 				return mocks.extraUnitBuilder;
 			}
 		};

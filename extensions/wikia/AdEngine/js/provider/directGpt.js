@@ -71,7 +71,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 				'TOP_RIGHT_BOXAD',
 				'GPT_FLUSH'
 			],
-			adUnitBuilder: function () {
+			getAdUnitBuilder: function () {
 				return context.opts.megaAdUnitBuilderEnabled ? megaAdUnitBuilder : kiloAdUnitBuilder;
 			},
 			highlyViewableSlots: [

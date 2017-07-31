@@ -18,7 +18,7 @@ define('ext.wikia.adEngine.provider.remnantGptMobile', [
 			MOBILE_PREFOOTER:           {size: '320x50,300x250,300x50'}
 		},
 		{
-			adUnitBuilder: function () {
+			getAdUnitBuilder: function () {
 				return adContext.getContext().opts.enableRemnantNewAdUnit ? megaAdUnitBuilder : adUnitBuilder;
 			}
 		});
