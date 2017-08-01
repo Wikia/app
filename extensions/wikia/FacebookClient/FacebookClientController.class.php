@@ -106,6 +106,7 @@ class FacebookClientController extends WikiaController {
 		$status = $res->getVal( 'status', '' );
 
 		$logResultParams = [
+			'signedRequest' => $signedRequest,
 			'method'      => __METHOD__,
 			'facebookId'  => $facebookUserId,
 			'wikiaUserId' => $map->getWikiaUserId(),

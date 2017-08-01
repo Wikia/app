@@ -272,6 +272,35 @@ $config['adengine2_rubicon_fastlane_js'] = [
 	],
 ];
 
+$config['adengine2_pr3b1d_js'] = [
+	'skin' => [ 'oasis' ],
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/AdEngine/js/lookup/prebid/bidHelper.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/prebid.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/prebidHelper.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/prebidSettings.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/priceGranularityHelper.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/priceParsingHelper.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adaptersPerformanceTracker.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adaptersPricesTracker.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adaptersRegistry.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/aol.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexus.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexusAst.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexusPlacements.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/audienceNetwork.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/indexExchange.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/openx.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/rubicon.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/wikia.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/veles.js',
+
+		'//extensions/wikia/AdEngine/js/wrappers/prebid.js'
+	],
+];
+
+//TODO: remove after ADEN-5624 release + 24h (2 Aug 2017)
 $config['adengine2_prebid_js'] = [
 	'skin' => [ 'oasis' ],
 	'type' => AssetsManager::TYPE_JS,
@@ -906,7 +935,7 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/PaidAssetDrop/js/paidAssetDrop.js',
 
 		//Prebid
-		'#group_adengine2_prebid_js',
+		'#group_adengine2_pr3b1d_js',
 	],
 ];
 
@@ -968,6 +997,14 @@ $config['mercury_ads_js'] = [
 	],
 ];
 
+$config['pr3b1d_prod_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/AdEngine/resources/prebid/prebid.min.js'
+	]
+];
+
+//TODO: remove after ADEN-5624 release + 24h (2 Aug 2017)
 $config['prebid_prod_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
@@ -2154,146 +2191,6 @@ $config['bucky_js'] = [
 		'//extensions/wikia/Bucky/js/bucky_init.js',
 		'//extensions/wikia/Bucky/js/bucky_resources_timing.js',
 		'//extensions/wikia/Bucky/js/bucky_metrics.js',
-	],
-];
-
-/* extension/wikia/WikiaMaps */
-
-$config['wikia_maps_ponto'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//resources/wikia/libraries/Ponto/ponto.js',
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsPontoBridge.js',
-	],
-];
-
-$config['wikia_maps_special_page_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsConfig.js',
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsUtils.js',
-		'#group_wikia_maps_ponto',
-		'//extensions/wikia/WikiaMaps/js/WikiaMaps.js',
-	],
-];
-
-$config['wikia_maps_in_modal_display_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'#group_wikia_maps_ponto',
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsConfig.js',
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsUtils.js',
-	],
-];
-
-$config['wikia_maps_create_map_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsUtils.js',
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsCreateMapTileSet.js',
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsCreateMapPreview.js',
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsCreateMapModal.js',
-	],
-];
-
-$config['wikia_maps_create_map_contribute_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsConfig.js',
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsUtils.js',
-	],
-];
-
-$config['wikia_maps_poi_categories_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsUtils.js',
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsPoiCategories.js',
-		'//extensions/wikia/WikiaMaps/js/models/WikiaMapsPoiCategoriesModel.js',
-		'//resources/wikia/libraries/jquery/serialize-object/jquery.serialize-object.js',
-	],
-];
-
-$config['wikia_maps_poi_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsPoi.js',
-	],
-];
-
-$config['wikia_maps_delete_map_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsUtils.js',
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsDeleteMap.js',
-	],
-];
-
-$config['wikia_maps_undelete_map_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsUtils.js',
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsUndeleteMap.js',
-	],
-];
-
-$config['wikia_maps_embed_map_code'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsUtils.js',
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsEmbedMapCode.js',
-	],
-];
-
-$config['wikia_maps_special_page_scss_wikiamobile'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'wikiamobile' ],
-	'assets' => [
-		'//extensions/wikia/WikiaMaps/css/WikiaMaps.wikiamobile.scss',
-	],
-];
-
-$config['wikia_maps_contribution_button_create_map_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsCreateMap.js',
-	],
-];
-
-$config['wikia_maps_parser_tag_scss_wikiamobile'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'wikiamobile' ],
-	'assets' => [
-		'//extensions/wikia/WikiaMaps/css/WikiaMapsParserTag.scss',
-		'//extensions/wikia/WikiaMaps/css/WikiaMapsParserTag.wikiamobile.scss',
-	],
-];
-
-$config['wikia_maps_special_page_js_wikiamobile'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'wikiamobile' ],
-	'assets' => [
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsUtils.js',
-		'#group_wikia_maps_ponto',
-		'//extensions/wikia/WikiaMaps/js/WikiaMaps.wikiamobile.js',
-	],
-];
-
-$config['wikia_maps_parser_tag_js_wikiamobile'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'wikiamobile' ],
-	'assets' => [
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsParserTag.wikiamobile.js',
 	],
 ];
 

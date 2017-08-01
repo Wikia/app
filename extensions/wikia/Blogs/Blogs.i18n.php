@@ -1047,7 +1047,7 @@ $messages['de'] = array(
 
 <big>'''Was sind Wikia Blogs?'''</big>
 
-Wikia Blogs ermöglichen es dir in deinem Wiki deinen Blog-Beitrag zu den [[Blog:Letzte Beiträge|Blogs der Wiki-Gemeinschaft]] hinzuzufügen.
+Wikia Blogs ermöglichen es dir in deinem Wiki deinen Blog-Beitrag zu den [[Blog:Recent posts|Blogs der Wiki-Gemeinschaft]] hinzuzufügen.
 
 Blogs werden von Wiki-Gemeinschaften für Fanfictions, News und Ankündigungen, Fragen oder Anforderungen an die Community genutzt. Schau dir die folgenden Beispielblogs an! 
 *<span class=\"plainlinks\">[http://bit.ly/animanga-newsblog Newsblog des Animanga-Wikis]</span>
@@ -1293,7 +1293,7 @@ $messages['es'] = array(
 <li>Algo en el texto ha desencadenado uno de nuestros filtros de spam</li>
 </ul>',
 	'create-blog-cant-edit' => 'No se pudo realizar la edición',
-	'create-blog-post-category' => 'Entradas de blog',
+	'create-blog-post-category' => 'Entradas',
 	'create-blog-post-category-body' => 'Esta lista de blogs se genera automáticamente',
 	'create-blog-post-category-log' => 'Categoría de artículos para entradas de blog',
 	'create-blog-post-recent-listing' => 'Entradas recientes',

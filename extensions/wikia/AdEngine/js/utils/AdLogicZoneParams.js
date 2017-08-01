@@ -58,6 +58,16 @@ define('ext.wikia.adEngine.utils.adLogicZoneParams', [
 		return '_' + (context.targeting.wikiDbName || 'wikia').replace('/[^0-9A-Z_a-z]/', '_');
 	}
 
+	function getAdLayout(params) {
+		var layout = params.pageType || 'article';
+
+		if (layout === 'article' && context.targeting.hasFeaturedVideo) {
+			layout = 'fv-' + layout;
+		}
+
+		return layout;
+	}
+
 	function calculateParams() {
 		log('calculateParams', 'info', logGroup);
 		var mappedVertical = getVerticalName(context.targeting);
@@ -69,7 +79,7 @@ define('ext.wikia.adEngine.utils.adLogicZoneParams', [
 		} else {
 			site = mappedVertical;
 			zone1 = getRawDbName();
-			zone2 = context.targeting.pageType || 'article';
+			zone2 = getAdLayout(context.targeting);
 		}
 		calculated = true;
 		log(['calculateParams', site, zone1, zone2], 'info', logGroup);

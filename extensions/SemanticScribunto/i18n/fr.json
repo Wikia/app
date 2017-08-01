@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"Gomoko",
+			"Urhixidur"
+		]
+	},
+	"smw-scribunto-desc": "Une extension MédiaWiki Sémantique pour prendre en charge de façon native l’extension Scribunto"
+}
