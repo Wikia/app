@@ -23,11 +23,10 @@
 					googleTag.updateTargetingForBlockedTraffic();
 					eventName = 'wikia.blocking';
 				}
-				eventDispatcher.dispatch(eventName);
-
 				win.ads.runtime = win.ads.runtime || {};
 				win.ads.runtime.pf = win.ads.runtime.pf || {};
 				win.ads.runtime.pf.recovering = detectionStatus;
+				eventDispatcher.dispatch(eventName);
 			};
 
 			{{{code}}}
