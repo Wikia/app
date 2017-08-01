@@ -38,14 +38,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 				return '//foo.vast';
 			}
 		},
-		instantGlobals: {
-			wgAdDriverVelesBidderCountries: ['PL'],
-			wgAdDriverVelesBidderConfig: {}
-		},
 		log: noop,
-		geo: {
-			isProperGeo: noop
-		},
 		win: {
 			XMLHttpRequest: noop,
 			pbjs: {
@@ -76,6 +69,9 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 			opts: {},
 			targeting: {
 				skin: 'oasis'
+			},
+			bidders: {
+				veles: true
 			}
 		};
 	});
@@ -86,8 +82,6 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 			mocks.priceParsingHelper,
 			mocks.prebid,
 			mocks.vastUrlBuilder,
-			mocks.geo,
-			mocks.instantGlobals,
 			mocks.log,
 			mocks.win
 		);
@@ -102,24 +96,14 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 		};
 	}
 
-	it('Is disabled when geo does not match', function () {
-		spyOn(mocks.geo, 'isProperGeo').and.returnValue(false);
+	it('Is disabled when context is disabled', function () {
+		mocks.context.bidders.veles = false;
 		var veles = getVeles();
 
 		expect(veles.isEnabled()).toBeFalsy();
 	});
 
-	it('Is disabled on page with featured video', function () {
-		spyOn(mocks.geo, 'isProperGeo').and.returnValue(true);
-		mocks.context.targeting.hasFeaturedVideo = true;
-
-		var veles = getVeles();
-
-		expect(veles.isEnabled()).toBeFalsy();
-	});
-
-	it('Is enabled when geo matches', function () {
-		spyOn(mocks.geo, 'isProperGeo').and.returnValue(true);
+	it('Is enabled when context is enabled', function () {
 		var veles = getVeles();
 
 		expect(veles.isEnabled()).toBeTruthy();

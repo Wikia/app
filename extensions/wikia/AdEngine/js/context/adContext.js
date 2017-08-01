@@ -91,6 +91,19 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.sourcePointBootstrap = context.opts.sourcePointMMS || context.opts.sourcePointRecovery;
 	}
 
+	function updateAdContextBidders(context) {
+		var hasFeaturedVideo = context.targeting.hasFeaturedVideo;
+
+		context.bidders.veles =  geo.isProperGeo(instantGlobals.wgAdDriverVelesBidderCountries) &&
+			!hasFeaturedVideo;
+
+		context.bidders.rubicon =  geo.isProperGeo(instantGlobals.wgAdDriverRubiconPrebidCountries) &&
+			!hasFeaturedVideo;
+
+		context.bidders.appnexusAst =  geo.isProperGeo(instantGlobals.wgAdDriverAppNexusAstBidderCountries) &&
+			!hasFeaturedVideo;
+	}
+
 	function enableAdMixExperiment(context) {
 		var isEnabledOnFeaturedVideo = !!(
 				isPageType('article') &&
@@ -140,6 +153,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.slots = context.slots || {};
 		context.targeting = context.targeting || {};
 		context.providers = context.providers || {};
+		context.bidders = context.bidders || {};
 		context.forcedProvider = qs.getVal('forcead', null) || context.forcedProvider || null;
 		context.opts.noExternals = noExternals;
 
@@ -158,6 +172,8 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.isMoatTrackingForFeaturedVideoEnabled = isMOATTrackingForFVEnabled();
 		updateDetectionServicesAdContext(context, noExternals);
 		updateAdContextRecoveryServices(context, noExternals);
+
+		updateAdContextBidders(context);
 
 		// showcase.*
 		if (cookies.get('mock-ads') === 'NlfdjR5xC0') {

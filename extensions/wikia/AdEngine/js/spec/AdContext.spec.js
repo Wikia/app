@@ -975,4 +975,89 @@ describe('AdContext', function () {
 
 	});
 
+	[
+		{
+			hasFeaturedVideo: true,
+			instantGlobals: {
+				wgAdDriverVelesBidderCountries: ['CURRENT_COUNTRY']
+			},
+			testedBidder: 'veles',
+			expectedResult: false
+		},
+		{
+			hasFeaturedVideo: false,
+			instantGlobals: {
+				wgAdDriverVelesBidderCountries: ['ZZ']
+			},
+			testedBidder: 'veles',
+			expectedResult: false
+		},
+		{
+			hasFeaturedVideo: false,
+			instantGlobals: {
+				wgAdDriverVelesBidderCountries: ['CURRENT_COUNTRY']
+			},
+			testedBidder: 'veles',
+			expectedResult: true
+		},
+		{
+			hasFeaturedVideo: true,
+			instantGlobals: {
+				wgAdDriverRubiconPrebidCountries: ['CURRENT_COUNTRY']
+			},
+			testedBidder: 'rubicon',
+			expectedResult: false
+		},
+		{
+			hasFeaturedVideo: false,
+			instantGlobals: {
+				wgAdDriverRubiconPrebidCountries: ['ZZ']
+			},
+			testedBidder: 'rubicon',
+			expectedResult: false
+		},
+		{
+			hasFeaturedVideo: false,
+			instantGlobals: {
+				wgAdDriverRubiconPrebidCountries: ['CURRENT_COUNTRY']
+			},
+			testedBidder: 'rubicon',
+			expectedResult: true
+		},
+		{
+			hasFeaturedVideo: true,
+			instantGlobals: {
+				wgAdDriverAppNexusAstBidderCountries: ['CURRENT_COUNTRY']
+			},
+			testedBidder: 'appnexusAst',
+			expectedResult: false
+		},
+		{
+			hasFeaturedVideo: false,
+			instantGlobals: {
+				wgAdDriverAppNexusAstBidderCountries: ['ZZ']
+			},
+			testedBidder: 'appnexusAst',
+			expectedResult: false
+		},
+		{
+			hasFeaturedVideo: false,
+			instantGlobals: {
+				wgAdDriverAppNexusAstBidderCountries: ['CURRENT_COUNTRY']
+			},
+			testedBidder: 'appnexusAst',
+			expectedResult: true
+		}
+	].forEach(function (testCase) {
+		it('Test bidder configuration', function () {
+			getModule().setContext({
+				targeting: {
+					hasFeaturedVideo: testCase.hasFeaturedVideo
+				}
+			});
+			mocks.instantGlobals = testCase.instantGlobals;
+
+			expect(getModule().getContext().bidders[testCase.testedBidder]).toEqual(testCase.expectedResult);
+		});
+	});
 });

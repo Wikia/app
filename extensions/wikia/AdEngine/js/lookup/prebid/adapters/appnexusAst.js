@@ -2,10 +2,8 @@
 define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.slotsContext',
-	'wikia.geo',
-	'wikia.instantGlobals',
 	'wikia.location'
-], function (adContext, slotsContext, geo, instantGlobals, loc) {
+], function (adContext, slotsContext, loc) {
 	'use strict';
 
 	var bidderName = 'appnexusAst',
@@ -27,8 +25,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', [
 		};
 
 	function isEnabled() {
-		return geo.isProperGeo(instantGlobals.wgAdDriverAppNexusAstBidderCountries) &&
-			!adContext.getContext().targeting.hasFeaturedVideo;
+		return adContext.getContext().bidders.appnexusAst;
 	}
 
 	function prepareAdUnit(slotName, config) {

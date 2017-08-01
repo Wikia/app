@@ -5,19 +5,10 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', function () {
 	var mocks = {
 		adContext: {
 			getContext: function () {
-				return {
-					targeting: {
-						hasFeaturedVideo: false
-					}
-				};
+				return mocks.context;
 			}
 		},
-		instantGlobals: {
-			wgAdDriverAppNexusAstBidderCountries: ['PL']
-		},
-		geo: {
-			isProperGeo: jasmine.createSpy('isProperGeo')
-		},
+		context: {},
 		slotsContext: {
 			filterSlotMap: function (map) {
 				return map;
@@ -32,17 +23,29 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', function () {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst'](
 			mocks.adContext,
 			mocks.slotsContext,
-			mocks.geo,
-			mocks.instantGlobals,
 			mocks.loc
 		);
 	}
 
-	it('isEnabled checks the countries instant global', function () {
-		var appNexus = getAppNexus();
-		appNexus.isEnabled();
+	beforeEach(function () {
+		mocks.context = {
+			bidders: {
+				appnexusAst: true
+			}
+		};
+	});
 
-		expect(mocks.geo.isProperGeo).toHaveBeenCalledWith(['PL']);
+	it('Is disabled when context is disabled', function () {
+		mocks.context.bidders.appnexusAst = false;
+		var appnexus = getAppNexus();
+
+		expect(appnexus.isEnabled()).toBeFalsy();
+	});
+
+	it('Is enabled when context is enabled', function () {
+		var appnexus = getAppNexus();
+
+		expect(appnexus.isEnabled()).toBeTruthy();
 	});
 
 	it('prepareAdUnit returns data in correct shape', function () {
