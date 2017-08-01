@@ -2,12 +2,14 @@
 define('ext.wikia.adEngine.template.bfaa', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.uapContext',
+	'ext.wikia.adEngine.video.uapVideo',
 	'wikia.log',
 	require.optional('ext.wikia.adEngine.template.bfaaDesktop'),
 	require.optional('ext.wikia.adEngine.template.bfaaMobile')
 ], function (
 	adContext,
 	uapContext,
+	uapVideo,
 	log,
 	bfaaDesktop,
 	bfaaMobile
@@ -28,8 +30,15 @@ define('ext.wikia.adEngine.template.bfaa', [
 	 * @param {object} [params.videoTriggerElement] - DOM element which triggers video (button or background)
 	 */
 	function show(params) {
+		var uapType = 'uap';
+
+		if (uapVideo.isEnabled(params)) {
+			uapType = 'vuap';
+		}
+
+		params.adProduct = params.adProduct || uapType;
 		uapContext.setUapId(params.uap);
-		uapContext.setType(params.adProduct || 'vuap');
+		uapContext.setType(params.adProduct);
 
 		switch (adContext.getContext().targeting.skin) {
 			case 'oasis':
