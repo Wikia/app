@@ -128,7 +128,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		params.vastTargeting = {
 			src: params.src,
 			pos: params.slotName,
-			passback: 'vuap',
+			passback: uapContext.getType(),
 			uap: uapContext.getUapId()
 		};
 
