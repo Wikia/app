@@ -19,6 +19,8 @@
 				var eventName = 'wikia.not_blocking';
 
 				if (detectionStatus) {
+					// the ATF slots are already defined so we need to update their targeting
+					googleTag.updateTargetingForBlockedTraffic();
 					eventName = 'wikia.blocking';
 				}
 				eventDispatcher.dispatch(eventName);
@@ -26,8 +28,6 @@
 				win.ads.runtime = win.ads.runtime || {};
 				win.ads.runtime.pf = win.ads.runtime.pf || {};
 				win.ads.runtime.pf.recovering = detectionStatus;
-				// the ATF slots are already defined so we need to update their targeting
-				googleTag.updateTargetingForBlockedTraffic();
 			};
 
 			{{{code}}}
