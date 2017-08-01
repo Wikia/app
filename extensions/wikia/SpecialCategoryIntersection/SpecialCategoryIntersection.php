@@ -167,7 +167,7 @@ class SpecialCategoryIntersection extends SpecialPage {
 			$html .= "</select><br/>\n";
 
 			// Display submit button
-			$html .= "<input class='wikia-button' type='submit' name='wpSubmit' value='". wfMsg('categoryintersection-form-submit') ."'/>\n";
+			$html .= "<button class='wikia-button' type='submit' name='wpSubmit' value='submit'>". wfMsg('categoryintersection-form-submit') ."</button>\n";
 
 		$html .= "</form>\n";
 		$html .= "</div>\n";
