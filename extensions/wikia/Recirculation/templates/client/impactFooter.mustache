@@ -8,31 +8,28 @@
 				{{#id}} data-id="{{id}}" {{/id}}
 				{{#meta}} data-meta="{{meta}}" {{/meta}}
 			>
-				{{#isPlista}}
-					<a href="https://www.plista.com/opt-out" class="badge badge-plista"></a>
-				{{/isPlista}}
 				<a title="{{title}}" href="{{url}}" class="track-items">
+					{{#presented_by}}
+						<div class="recirculation-sponsored-header">Sponsored</div>
+					{{/presented_by}}
 					<div class="thumbnail placeholder-thumbnail">
 						{{#thumbnail}}
 							<img src="{{thumbnail}}" alt="{{title}}">
 						{{/thumbnail}}
 					</div>
-
-					{{^isPlista}}
-						{{#presented_by}}
-							<div class="recirculation-sponsored-header">Sponsored</div>
-						{{/presented_by}}
-					{{/isPlista}}
 					<div class="recirc-footer-title-container">
-                        {{^isPlista}}
-                            <div class="title_pretext">
-                                <div class="featured-fandom-subtitle">
-                                    {{i18n.featuredFandomSubtitle}}
-                                </div>
-                                {{#presented_by}}
-                                    <div class="recirculation-sponsored-footer">Sponsored by {{presented_by}}</div>
-                                {{/presented_by}}
-                            </div>
+						{{^isPlista}}
+							<div class="title_pretext">
+								<div class="featured-fandom-subtitle">
+									{{i18n.featuredFandomSubtitle}}
+								</div>
+								{{#presented_by}}
+									<div class="recirculation-sponsored-footer">
+										Sponsored by {{presented_by}}
+									</div>
+								{{/presented_by}}
+
+							</div>
 						{{/isPlista}}
 						<h4>{{title}}</h4>
 					</div>
