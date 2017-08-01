@@ -105,7 +105,7 @@ function print_pre( $param, $return = 0 )
  * @author Inez Korczyński <inez@wikia-inc.com>
  *
  * @param string $url -- old url
- * @param string|bool $timestamp -- last change timestamp
+ * @param string|false $timestamp -- last change timestamp
  *
  * @return string -- new url
  */
