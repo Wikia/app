@@ -44,7 +44,7 @@ class ImageReviewTask extends BaseTask {
 			}
 
 			$cityLang = \WikiFactory::getVarValueByName( 'wgLanguageCode', $wikiId );
-			$reason = wfMsgExt( 'imagereview-reason', ['language' => $cityLang] );
+			$reason = wfMessage( 'imagereview-reason' )->inLanguage( $cityLang );
 
 			if ( count( $imageData ) == 3 ) {
 				$command =
@@ -114,6 +114,13 @@ class ImageReviewTask extends BaseTask {
 		}
 
 		return $success;
+	}
+
+	public function update( $pageList ) {
+		foreach ( $pageList as list( $cityId, $pageId, $revisionId ) ) {
+			$key = wfMemcKey( "image-review-${cityId}-${pageId}-${revisionId}" );
+			\WikiaDataAccess::cachePurge( $key );
+		}
 	}
 
 	public function deleteFromQueue( Array $aDeletionList ) {
