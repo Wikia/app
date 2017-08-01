@@ -335,31 +335,6 @@ class ImageServing {
 	}
 
 	/**
-	 * @param File $img
-	 * @param $width
-	 * @param $height
-	 * @return String
-	 */
-	private function getLegacyUrl($img, $width, $height) {
-		$issvg = false;
-		$mime = strtolower( $img->getMimeType() );
-		if( $mime == 'image/svg+xml' || $mime == 'image/svg' ) {
-			$issvg = true;
-		}
-
-		$sPrefix = '';
-		if ( WikiaFileHelper::isVideoFile( $img ) ) {
-			// videos has different thumbnail markup
-			$sPrefix = 'v,000000,';
-		}
-
-		$url = wfReplaceImageServer( $img->getThumbUrl( $sPrefix . $this->getCut( $width, $height ) . "-" . $img->getName().($issvg ? ".png":"") ) );
-
-		wfProfileOut( __METHOD__ );
-		return $url;
-	}
-
-	/**
 	 * getUrl - generate cut frame for Thumb
 	 *
 	 * @param $width int
