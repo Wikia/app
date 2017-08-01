@@ -20,7 +20,6 @@ class GlobalFileTest extends WikiaBaseTest {
 		// assume we're in production environment
 		$this->mockGlobalVariable('wgDevelEnvironment', false);
 		$this->mockGlobalVariable('wgDevBoxImageServerOverride', false);
-		$this->mockGlobalVariable('wgEnableVignette', false);
 
 		$this->mockGlobalVariable('wgImagesDomainSharding', 'images%s.wikia.nocookie.net');
 		$this->mockGlobalVariable('wgCdnStylePath', sprintf('http://slot1.images.wikia.nocookie.net/__cb%s/common', self::DEFAULT_CB));
@@ -60,7 +59,7 @@ class GlobalFileTest extends WikiaBaseTest {
 		$this->assertEquals($url, $file->getUrl());
 
 		if ($file->exists()) {
-			$this->assertContains("/{$path}/images/thumb/0/06/Gzik.jpg/{$crop}", $file->getCrop(200, 200));
+			$this->assertContains("/window-crop/width/200/", $file->getCrop(200, 200));
 		}
 
 		// metadata
