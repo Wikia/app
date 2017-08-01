@@ -12,7 +12,7 @@ use \Wikia\Logger\WikiaLogger;
 class ImageReviewTask extends BaseTask {
 
 	public function delete( $pageList, $suppress = false ) {
-		global $IP, $wgCityId, $wgImageReviewTestCommunities;
+		global $IP;
 
 		$user = \User::newFromId( $this->createdBy );
 		$userName = $user->getName();
@@ -46,9 +46,31 @@ class ImageReviewTask extends BaseTask {
 			$cityLang = \WikiFactory::getVarValueByName( 'wgLanguageCode', $wikiId );
 			$reason = wfMsgExt( 'imagereview-reason', ['language' => $cityLang] );
 
-			if ( in_array( $wgCityId, $wgImageReviewTestCommunities ) ) {
+			if ( count( $imageData ) == 3 ) {
 				$command =
 					"/usr/wikia/backend/bin/run_maintenance --id=${wikiId} --script='wikia/deleteImageRevision.php --pageId=${imageId} --revisionId=${revisionId} --reason=${reason}'";
+
+				$output = wfShellExec( $command, $exitStatus );
+
+				if ( $exitStatus !== 0 ) {
+					$this->error( 'article deletion error', [
+						'cityId' => $cityUrl,
+						'pageId' => $imageId,
+						'revisionId' => $revisionId,
+						'exit_status' => $exitStatus,
+						'output' => $output,
+					] );
+
+					continue;
+				}
+
+				$this->info( 'removed image', [
+					'cityId' => $cityUrl,
+					'pageId' => $imageId,
+					'revisionId' => $revisionId,
+					'exit_status' => $exitStatus,
+				] );
+
 			} else {
 				$command = "SERVER_ID={$wikiId} php {$IP}/maintenance/wikia/deleteOn.php" .
 					' -u ' . escapeshellarg( $userName ) .
@@ -60,27 +82,28 @@ class ImageReviewTask extends BaseTask {
 				if ( $suppress ) {
 					$command .= ' -s';
 				}
-			}
 
-			$title = wfShellExec( $command, $exitStatus );
+				$title = wfShellExec( $command, $exitStatus );
 
-			if ( $exitStatus !== 0 ) {
-				$this->error( 'article deletion error', [
-					'city_url' => $cityUrl,
-					'exit_status' => $exitStatus,
-					'error' => $title,
+				if ( $exitStatus !== 0 ) {
+					$this->error( 'article deletion error', [
+						'city_url' => $cityUrl,
+						'exit_status' => $exitStatus,
+						'error' => $title,
+					] );
+
+					continue;
+				}
+
+				$cityPath = \WikiFactory::getVarValueByName( 'wgScript', $wikiId );
+				$escapedTitle = wfEscapeWikiText( $title );
+
+				$this->info( 'removed image', [
+					'link' => "{$cityUrl}{$cityPath}?title={$escapedTitle}",
+					'title' => $escapedTitle,
 				] );
-
-				continue;
 			}
 
-			$cityPath = \WikiFactory::getVarValueByName( 'wgScript', $wikiId );
-			$escapedTitle = wfEscapeWikiText( $title );
-
-			$this->info( 'removed image', [
-				'link' => "{$cityUrl}{$cityPath}?title={$escapedTitle}",
-				'title' => $escapedTitle,
-			] );
 
 			++$articlesDeleted;
 		}
