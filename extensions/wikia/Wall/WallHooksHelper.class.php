@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 /**
  * Hooks for Message Wall.
  *
@@ -70,7 +72,15 @@ class WallHooksHelper {
 				// try master
 				$mainTitle = Title::newFromId( $threadId, Title::GAID_FOR_UPDATE );
 				if ( !empty( $mainTitle ) ) {
+					WikiaLogger::instance()->info( 'Wall thread master fallback - found', [
+						'threadId' => $threadId
+					] );
+
 					$dbkey = $mainTitle->getDBkey();
+				} else {
+					WikiaLogger::instance()->info( 'Wall thread master fallback - not found', [
+						'threadId' => $threadId
+					] );
 				}
 			}
 
@@ -1392,7 +1402,7 @@ class WallHooksHelper {
 			$realTitle = Title::newFromID( $id );
 
 			if ( empty( $realTitle ) ) {
-				\Wikia\Logger\WikiaLogger::instance()->debug( 'Unknown thread ID', [
+				WikiaLogger::instance()->debug( 'Unknown thread ID', [
 					'method' => __METHOD__,
 					'titleText' => $title->getText(),
 					'titleId' => $id,
