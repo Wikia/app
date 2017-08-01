@@ -58,7 +58,7 @@ class BlogsHelper {
 	 * @see doc/hooks.txt
 	 */
 	public static function OnParserBeforeInternalParse(
-		Parser $oParser, string &$sText, &$oStripState
+		Parser $oParser, &$sText, &$oStripState
 	): bool {
 		wfProfileIn( __METHOD__ );
 		// The name of the bloglist tag is defined in a constant.
