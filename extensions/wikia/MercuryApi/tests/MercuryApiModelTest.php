@@ -409,11 +409,10 @@ class MercuryApiModelTest extends WikiaBaseTest {
 	 * @param $wgArticlePath
 	 * @param $getLocalURL
 	 */
-	public function testProcessCuratedContentItem( $expected, $item, $wgArticlePath, $getLocalURL ) {
+	public function testProcessCuratedContentItem( $expected, $item, $wgArticlePath, $getLocalURL, $categoryMembersCount ) {
 		$mercuryApi = new MercuryApi();
 
 		$titleMock = $this->getMockBuilder( 'Title' )->setMethods( [ 'getLocalURL' ] )->getMock();
-
 		$titleMock->expects( $this->any() )->method( 'getLocalURL' )->willReturn( $getLocalURL );
 
 		$mockNewFromId = $this->getStaticMethodMock( 'Title', 'newFromID' )
@@ -430,6 +429,15 @@ class MercuryApiModelTest extends WikiaBaseTest {
 				->willReturn( null );
 		}
 
+		$categoryMock = $this->getMockBuilder( 'Category' )->disableOriginalConstructor()->setMethods( [ 'getPageCount' ] )->getMock();
+		$categoryMock->expects( $this->any() )->method( 'getPageCount' )->willReturn( $categoryMembersCount );
+
+		$this->getStaticMethodMock( 'Category', 'newFromTitle' )
+			->expects( $this->any() )
+			->method( 'newFromTitle' )
+			->willReturn( $categoryMock );
+
+
 		$this->mockGlobalVariable( 'wgArticlePath', $wgArticlePath );
 
 		$this->assertEquals( $expected, $mercuryApi->processCuratedContentItem( $item ) );
@@ -441,7 +449,8 @@ class MercuryApiModelTest extends WikiaBaseTest {
 				'$expected' => null,
 				'$item' => [],
 				'$wgArticlePath' => '',
-				'$getLocalURL' => ''
+				'$getLocalURL' => '',
+				'$categoryMembersCount' => 0
 			],
 			[
 				'$expected' => null,
@@ -449,7 +458,8 @@ class MercuryApiModelTest extends WikiaBaseTest {
 					'article_id' => null
 				],
 				'$wgArticlePath' => '',
-				'$getLocalURL' => ''
+				'$getLocalURL' => '',
+				'$categoryMembersCount' => 0
 			],
 			[
 				'$expected' => [
@@ -468,7 +478,22 @@ class MercuryApiModelTest extends WikiaBaseTest {
 					'image_url' => 'image_url_3',
 				],
 				'$wgArticlePath' => '/wiki/$1',
-				'$getLocalURL' => ''
+				'$getLocalURL' => '',
+				'$categoryMembersCount' => 10
+			],
+			[
+				'$expected' => null,
+				'$item' => [
+					'title' => 'Category:Category_name_0',
+					'label' => 'Category Name Zero',
+					'image_id' => 4096,
+					'article_id' => 0,
+					'type' => 'category',
+					'image_url' => 'image_url_3',
+				],
+				'$wgArticlePath' => '/wiki/$1',
+				'$getLocalURL' => '',
+				'$categoryMembersCount' => 0
 			],
 			[
 				'$expected' => [
@@ -487,7 +512,8 @@ class MercuryApiModelTest extends WikiaBaseTest {
 					'image_url' => 'image_url_4',
 				],
 				'$wgArticlePath' => '',
-				'$getLocalURL' => '/wiki/Category:Category_name_1'
+				'$getLocalURL' => '/wiki/Category:Category_name_1',
+				'$categoryMembersCount' => 10
 			]
 		];
 	}

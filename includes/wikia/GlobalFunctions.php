@@ -49,7 +49,7 @@ function GetLinksArrayFromMessage( $messagename ) { // feel free to suggest bett
 					$text = $line[1];
 				if ( wfEmptyMsg( $line[0], $link ) )
 					$link = $line[0];
-					if ( preg_match( '/^(?:' . wfUrlProtocols() . ')/', $link ) ) {
+				if ( preg_match( '/^(?:' . wfUrlProtocols() . ')/', $link ) ) {
 					$href = $link;
 				} else {
 					$title = Title::newFromText( $link );
@@ -104,21 +104,13 @@ function print_pre( $param, $return = 0 )
  *
  * @author Inez Korczyński <inez@wikia-inc.com>
  *
- * @param String $url -- old url
- * @param String $timestamp -- last change timestamp
+ * @param string $url -- old url
+ * @param string|false $timestamp -- last change timestamp
  *
- * @return String -- new url
+ * @return string -- new url
  */
 function wfReplaceImageServer( $url, $timestamp = false ) {
 	$wg = F::app()->wg;
-
-	// Override image server location for Wikia development environment
-	// This setting should be images.developerName.wikia-dev.com or perhaps "localhost"
-	// FIXME: This needs to be removed. It should be encapsulated in the URL generation.
-	$overrideServer = !empty( $wg->DevBoxImageServerOverride ) && !$wg->EnableVignette;
-	if ( $overrideServer ) {
-		$url = preg_replace( "/\\/\\/(.*?)wikia-dev\\.(pl|us|com)\\/(.*)/", "//{$wg->DevBoxImageServerOverride}/$2", $url );
-	}
 
 	wfDebug( __METHOD__ . ": requested url $url\n" );
 	if ( substr( strtolower( $url ), -4 ) != '.ogg' && isset( $wg->ImagesServers ) && is_int( $wg->ImagesServers ) ) {
@@ -146,19 +138,10 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 			// RT#98969 if the url already has a cb value, don't add another one...
 			$cb = ( $timestamp != '' && strpos( $url, "__cb" ) === false ) ? "__cb{$timestamp}/" : '';
 
-			if ( $overrideServer ) {
-				// Dev boxes
-				// TODO: support domains sharding on devboxes
-				$url = str_replace( 'http://images.wikia.com/', sprintf( "http://{$wg->DevBoxImageServerOverride}/%s", $cb ), $url );
-			} else {
-				// Production
-				$url = str_replace( 'http://images.wikia.com/', sprintf( "http://{$wg->ImagesDomainSharding}/%s", $serverNo, $cb ), $url );
-			}
+			// Production
+			$url = str_replace( 'http://images.wikia.com/', sprintf( "http://{$wg->ImagesDomainSharding}/%s", $serverNo, $cb ), $url );
 		}
-	} else if ( $overrideServer ) {
-		$url = str_replace( 'http://images.wikia.com/', "http://{$wg->DevBoxImageServerOverride}/", $url );
 	}
-
 	return $url;
 }
 
@@ -1041,9 +1024,9 @@ function wfLoadExtensionNamespaces( $extensionName, $nsList ) {
  * @author uberfuzzy
  * @return string
  */
-function wfGenerateUnsubToken( $email, $timestamp ) {
+function wfGenerateUnsubToken( $email ) {
 	global $wgUnsubscribeSalt;
-	$token = sha1( $timestamp . $email . $wgUnsubscribeSalt );
+	$token = sha1( $email . $wgUnsubscribeSalt );
 	return $token;
 }
 

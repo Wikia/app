@@ -491,9 +491,15 @@ class MercuryApi {
 				return $result;
 			}
 		} elseif ( $item['article_id'] === 0 ) {
-			$result['url'] = Title::newFromText( $item['title'] )->getLocalURL();
+			$title =  Title::newFromText( $item['title'] );
 
-			return $result;
+			$category = empty( $title ) ? null : Category::newFromTitle( $title );
+
+			if ( !empty( $category ) && $category->getPageCount() ) {
+				$result['url'] = $title->getLocalURL();
+
+				return $result;
+			}
 		}
 
 		return null;

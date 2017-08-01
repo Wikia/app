@@ -1,0 +1,28 @@
+{
+    "authors": [
+        {
+            "email": "tstarling@wikimedia.org",
+            "name": "Tim Starling",
+            "role": "Lead"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "File": "./"
+        }
+    },
+    "description": "More info available on: http://pear.php.net/package/File_Ogg",
+    "include-path": [
+        "./"
+    ],
+    "license": "GNU LGPL",
+    "name": "wikia/file_ogg",
+    "support": {
+        "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name[]=File_Ogg",
+        "source": "https://github.com/pear/File_Ogg"
+    },
+    "type": "library",
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    }
+}

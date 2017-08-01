@@ -155,7 +155,6 @@ class BodyController extends WikiaController {
 		$railModuleList = [ ];
 
 		$latestActivityKey = $user->isAnon() ? 1250 : 1300;
-		$huluVideoPanelKey = $user->isAnon() ? 1390 : 1280;
 
 		// Forum Extension
 		if ( $this->wg->EnableForumExt && ForumHelper::isForum() ) {
@@ -176,12 +175,6 @@ class BodyController extends WikiaController {
 					$railModuleList = [
 						$latestActivityKey => [ 'LatestActivity', 'Index', null ],
 					];
-
-					if ( empty( $this->wg->EnableWikiAnswers ) ) {
-						if ( $this->wg->EnableHuluVideoPanel ) {
-							$railModuleList[$huluVideoPanelKey] = [ 'HuluVideoPanel', 'Index', null ];
-						}
-					}
 				}
 			} else if ( $title->isSpecial( 'Leaderboard' ) ) {
 				$railModuleList = [
@@ -199,12 +192,6 @@ class BodyController extends WikiaController {
 				$railModuleList = [
 					$latestActivityKey => [ 'LatestActivity', 'Index', null ],
 				];
-
-				if ( empty( $this->wg->EnableWikiAnswers ) ) {
-					if ( $this->wg->EnableHuluVideoPanel ) {
-						$railModuleList[$huluVideoPanelKey] = [ 'HuluVideoPanel', 'Index', null ];
-					}
-				}
 			} else {
 				// don't show any module for MW core special pages
 				$railModuleList = [ ];
@@ -222,12 +209,6 @@ class BodyController extends WikiaController {
 			// add any content page related rail modules here
 
 			$railModuleList[$latestActivityKey] = [ 'LatestActivity', 'Index', null ];
-
-			if ( empty( $this->wg->EnableWikiAnswers ) ) {
-				if ( $this->wg->EnableHuluVideoPanel ) {
-					$railModuleList[$huluVideoPanelKey] = [ 'HuluVideoPanel', 'Index', null ];
-				}
-			}
 		}
 
 		// User page namespaces

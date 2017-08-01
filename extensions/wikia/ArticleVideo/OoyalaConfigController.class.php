@@ -117,8 +117,12 @@ class OoyalaConfigController extends WikiaController {
 				'source' => "<iframe width='640' height='480' frameborder='0' allowfullscreen src='//player.ooyala.com/static/v4/stable/4.10.6/skin-plugin/iframe.html?ec=<ASSET_ID>&pbid=<PLAYER_ID>&pcode=<PUBLISHER_ID>'></iframe>",
 			],
 		],
+		"discoveryScreen" => [
+			"showCountDownTimerOnEndScreen" => true,
+			"countDownTime" => 5
+		],
 		'upNext' => [
-			'showUpNext' => true,
+			'showUpNext' => false,
 			'timeToShow' => '10',
 		],
 		'controlBar' => [
@@ -267,10 +271,7 @@ class OoyalaConfigController extends WikiaController {
 				'fontString' => 'n',
 				'fontStyleClass' => 'oo-icon oo-icon-system-settings',
 			],
-			'dismiss' => [
-				'fontFamilyName' => 'ooyala-slick-type',
-				'fontString' => 'e',
-				'fontStyleClass' => 'oo-icon oo-icon-system-close',
+			'dismiss' => [// svg set in skin()
 			],
 			'toggleOn' => [
 				'fontFamilyName' => 'fontawesome',
@@ -331,6 +332,7 @@ class OoyalaConfigController extends WikiaController {
 		$config['icons']['shareFacebook']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-facebook' );
 		$config['icons']['shareGoogle']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-googleplus' );
 		$config['icons']['shareMail']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-mail' );
+		$config['icons']['dismiss']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-cross' );
 
 		$config['localization']['availableLanguageFile'][0]['languageFile'] =
 			'/extensions/wikia/ArticleVideo/bower_components/skin-config/languageFiles/en.json';

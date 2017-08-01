@@ -192,6 +192,8 @@ define('ext.wikia.adEngine.adContext', [
 			) || isUrlParamSet('highimpactslot');
 
 		// AdInfo warehouse logging
+		context.opts.kikimoraViewabilityTracking =
+			geo.isProperGeo(instantGlobals.wgAdDriverKikimoraViewabilityTrackingCountries);
 		context.opts.enableAdInfoLog = geo.isProperGeo(instantGlobals.wgAdDriverKikimoraTrackingCountries);
 		context.opts.playerTracking = geo.isProperGeo(instantGlobals.wgAdDriverKikimoraPlayerTrackingCountries);
 
