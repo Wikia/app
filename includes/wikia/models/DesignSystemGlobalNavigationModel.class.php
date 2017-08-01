@@ -119,7 +119,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		$isCorporatePage = WikiaPageType::isCorporatePage( $this->productInstanceId );
 
 		if ( $this->product === static::PRODUCT_FANDOMS && $this->lang === static::DEFAULT_LANG ) {
-			$searchUrl = '/';
+			$searchUrl = 'http://fandom.wikia.com/';
 			$searchPlaceholderKey = 'global-navigation-search-placeholder-fandom';
 			$searchParamName = 's';
 		} else {
@@ -150,7 +150,12 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			]
 		];
 
-		if ( $this->product !== static::PRODUCT_FANDOMS && !$isCorporatePage ) {
+		if ( $this->product === static::PRODUCT_FANDOMS || $isCorporatePage ) {
+			$search['hiddenFields'] = [
+				'resultsLang' => $this->lang,
+				'uselang' => $this->lang,
+			];
+		} else {
 			$search['suggestions'] = [
 				'url' => WikiFactory::getHostById( $this->productInstanceId ) . '/index.php?action=ajax&rs=getLinkSuggest&format=json',
 				'param-name' => 'query',
@@ -390,10 +395,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	}
 
 	private function getCorporatePageSearchUrl() {
-		return GlobalTitle::newFromText( 'Search', NS_SPECIAL, WikiService::WIKIAGLOBAL_CITY_ID )->getFullURL( [
-			'fulltext' => 'Search',
-			'resultsLang' => $this->lang
-		] );
+		return GlobalTitle::newFromText( 'Search', NS_SPECIAL, WikiService::WIKIAGLOBAL_CITY_ID )->getFullURL();
 	}
 
 	private function getCommunityCentralLink() {
