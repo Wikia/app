@@ -63,7 +63,7 @@
 
 			// Custom RTE plugins for CKEDITOR
 			// Used to be built in RTE.loadPlugins()
-		extraPlugins:
+	//	extraPlugins:
 			
 		 
 				//'rte-accesskey,' +
@@ -76,7 +76,7 @@
 				//'fakeobjects,' +
 				//'link,' +
 				//'rte-linksuggest,' +
-				'rte-media',
+			//	'rte-media',
 				//'rte-modeswitch',
 				//'rte-overlay,' +
 				//'rte-paste,' +
