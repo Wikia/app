@@ -216,11 +216,7 @@ class SpecialCategoryIntersection extends SpecialPage {
 					if(startsWith($key, self::$CAT_PREFIX)){
 						$cat = $wgRequest->getVal($key);
 						if(!empty($cat)){
-							$categories[] = $cat;
-
-							if(!startsWith($cat, $this->CATEGORY_NS_PREFIX)){
-								$html .= "<em>Warning: \"$cat\" does not start with \"{$this->CATEGORY_NS_PREFIX}\".</em><br/>\n";
-							}
+							$categories[] = !startsWith($cat, $this->CATEGORY_NS_PREFIX) ? $this->CATEGORY_NS_PREFIX.$cat : $cat;
 						}
 					}
 				}
