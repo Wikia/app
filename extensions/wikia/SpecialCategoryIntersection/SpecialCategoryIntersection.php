@@ -293,12 +293,13 @@ class SpecialCategoryIntersection extends SpecialPage {
 		// Examples are now kept in wikitext so that each wiki can have its own examples if it wishes.
 		$exampleText = wfMsg('categoryintersection-footer-examples');
 		$rawExamples = explode("\n\n", $exampleText);
-		foreach($rawExamples as $singleExample){
+		$examples = array_map(function($singleExample) {
 			$items = explode("\n", trim($singleExample));
 			if(count($items) > 0){
-				$examples[] = $items;
+			    return $items;
 			}
-		}
+			return [];
+		},$rawExamples);
 
 		// Format and output the examples.
 		$html .= "<ul>\n";
