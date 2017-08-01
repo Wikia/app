@@ -282,8 +282,6 @@ class ImageServing {
 	 * @return  string url for image
 	 */
 	public function getUrl( $name, $width = 1, $height = 1 ) {
-		global $wgEnableVignette;
-
 		wfProfileIn( __METHOD__ );
 
 		if ( $name instanceof File || $name instanceof GlobalFile ) {
@@ -303,13 +301,7 @@ class ImageServing {
 			$this->tmpDeltaY = 0.5 - $H / $height / 2;
 		}
 
-		if ($wgEnableVignette) {
-			$url = $this->getVignetteUrl($img, $width, $height);
-		} else {
-			$url = $this->getLegacyUrl($img, $width, $height);
-		}
-
-		return $url;
+		return $this->getVignetteUrl($img, $width, $height);
 	}
 
 	/**
