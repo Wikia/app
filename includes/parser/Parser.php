@@ -5264,7 +5264,7 @@ class Parser {
 
 		/* Wikia change begin */
 		/* Allow extensions to use their own "parser" for <gallery> tag content */
-		if ( !Hooks::run( 'BeforeParserrenderImageGallery', [ $this, $ig ] ) ) {
+		if ( !Hooks::run( 'BeforeParserrenderImageGallery', [ $this, &$ig ] ) ) {
 			Hooks::run( 'AfterParserParseImageGallery', [ $marker, $ig ] );
 			return $ig->toHTML();
 		}
