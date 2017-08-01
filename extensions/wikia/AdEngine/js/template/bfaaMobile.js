@@ -93,7 +93,9 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 
 		log(['show', params.uap], log.levels.info, logGroup);
 
-		unblockedSlots.forEach(btfBlocker.unblock);
+		if (params.adProduct !== 'abcd') {
+			unblockedSlots.forEach(btfBlocker.unblock);
+		}
 	}
 
 	return {
