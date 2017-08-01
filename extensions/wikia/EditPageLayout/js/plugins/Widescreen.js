@@ -47,6 +47,7 @@
 		},
 
 		activate: function() {
+			console.log("odpala sie");
 			this.enabled = true;
 			if (this.enabled) {
 				this.active = this.editor.mode === 'source';
@@ -98,13 +99,15 @@
 		},
 
 		loadState: function( initial ) {
+			console.log("loadState" + initial);
 			var wide = $.storage.get(this.storageEntry) == true;
 			this.editor.log('widescreen::load() - wide = '+(wide?'true':'false'));
 			if (initial) {
-				if (typeof this.editor.config.wideInSourceInitial != 'undefined') {
-					wide = !!this.editor.config.wideInSourceInitial;
-					this.editor.log('widescreen::load() - wide[2] = '+(wide?'true':'false'));
-				}
+				debugger;
+			//	if (typeof this.editor.config.wideInSourceInitial != 'undefined') {
+			//		wide = !!this.editor.config.wideInSourceInitial;
+			//		this.editor.log('widescreen::load() - wide[2] = '+(wide?'true':'false'));
+			//	}
 			}
 
 			this.setState(wide);
