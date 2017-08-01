@@ -1,18 +1,18 @@
 /*global define*/
 define('ext.wikia.aRecoveryEngine.adBlockDetection', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.aRecoveryEngine.sourcePoint.recovery',
 	'wikia.document',
 	'wikia.instantGlobals',
 	'wikia.lazyqueue',
-	'wikia.log'
+	'wikia.log',
+	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery')
 ], function (
 	adContext,
-	sourcePoint,
 	doc,
 	instantGlobals,
 	lazyQueue,
-	log
+	log,
+	pageFair
 ) {
 	'use strict';
 
@@ -37,14 +37,14 @@ define('ext.wikia.aRecoveryEngine.adBlockDetection', [
 	}
 
 	function isBlocking() {
-		return isEnabled() && sourcePoint.isBlocking();
+		return isEnabled() && pageFair && pageFair.isBlocking();
 	}
 
 	function isEnabled() {
 		var context = adContext.getContext();
 
-		log(['isEnabled', context.opts.sourcePointDetection], log.levels.debug, logGroup);
-		return context.opts.sourcePointDetection;
+		log(['isEnabled', context.opts.pageFairRecovery], log.levels.debug, logGroup);
+		return context.opts.pageFairRecovery;
 	}
 
 	return {

@@ -128,6 +128,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/slotFinder.js',
 		'//extensions/wikia/ARecoveryEngine/js/tweaker.js',
 		'//extensions/wikia/ARecoveryEngine/js/PageFair/recovery.js',
+		'//extensions/wikia/AdEngine/js/provider/gpt/targeting.js',
 		'//resources/wikia/modules/domCalculator.js',
 		'//resources/wikia/modules/krux.js',
 		'//resources/wikia/modules/throttle.js',
@@ -193,35 +194,6 @@ $config['adengine2_interactive_maps_js'] = [
 	],
 ];
 
-// TODO
-// release n+1 Remove adengine2_tracking_js group
-$config['adengine2_tracking_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'wikiamobile' ],
-	'assets' => [
-		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
-		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
-		'//extensions/wikia/AdEngine/js/AdTracker.js',
-		'//extensions/wikia/AdEngine/js/utils/sampler.js',
-		'//extensions/wikia/AdEngine/js/utils/timeBuckets.js',
-		'//extensions/wikia/AdEngine/js/context/adContext.js',
-		'//extensions/wikia/AdEngine/js/context/slotsContext.js',
-		'//extensions/wikia/AdEngine/js/lookup/lookupFactory.js',
-		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
-		'//extensions/wikia/AdEngine/js/slot/adUnitBuilder.js',
-		'//extensions/wikia/AdEngine/js/slot/slotTargeting.js',
-		'//extensions/wikia/AdEngine/js/slot/service/kiloAdUnitBuilder.js',
-		'//extensions/wikia/AdEngine/js/slot/service/megaAdUnitBuilder.js',
-		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
-		'//extensions/wikia/AdEngine/js/video/vastUrlBuilder.js',
-		'//extensions/wikia/ARecoveryEngine/js/adBlockDetection.js',
-		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.js',
-		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/recovery.js',
-		'//resources/wikia/modules/browserDetect.js',
-		'//resources/wikia/modules/krux.js'
-	],
-];
-
 $config['adengine2_top_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis', 'wikiamobile' ],
@@ -229,6 +201,7 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
 		'//extensions/wikia/AdEngine/js/AdTracker.js',
+		'//extensions/wikia/AdEngine/js/utils/eventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/utils/sampler.js',
 		'//extensions/wikia/AdEngine/js/utils/timeBuckets.js',
 		'//extensions/wikia/AdEngine/js/context/adContext.js',
@@ -247,6 +220,7 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/video/videoFrequencyStore.js',
 		'//extensions/wikia/ARecoveryEngine/js/adBlockDetection.js',
 		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.js',
+		'//extensions/wikia/ARecoveryEngine/js/PageFair/recovery.js',
 		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/recovery.js',
 		'//resources/wikia/modules/browserDetect.js',
 		'//resources/wikia/modules/krux.js'
@@ -1042,7 +1016,7 @@ $config['interactivemaps_ads_js'] = [
 		// RecoveryEngine
 		'//extensions/wikia/ARecoveryEngine/js/adBlockDetection.js',
 		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.js',
-		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/recovery.js',
+		'//extensions/wikia/ARecoveryEngine/js/PageFair/recovery.js',
 	],
 ];
 
