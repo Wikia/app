@@ -146,7 +146,7 @@ class SpecialCategoryIntersection extends SpecialPage {
 		$html .= "<h3>". wfMsg('categoryintersection-form-title') ."</h3>";
 
 		$html .= "<div>\n";
-		$html .= "<form name='categoryintersection' id='CategoryAutoComplete' class='WikiaForm' action='' method='GET'>\n";
+		$html .= "<form name='categoryintersection' id='CategoryAutoComplete' class='WikiaForm' action='#ci_results' method='GET'>\n";
 
 			// Display a couple of rows
 			$html .= $this->getHtmlForCategoryBox(1);
@@ -202,7 +202,7 @@ class SpecialCategoryIntersection extends SpecialPage {
 		global $wgRequest, $wgServer, $wgScriptPath;
 
 		$html = "";
-		$html .= "<div class='ci_results'>\n";
+		$html .= "<div class='ci_results' id='ci_results'>\n";
 
 			$html .= "<h2>". wfMsg('categoryintersection-results-title') ."</h2>\n";
 
