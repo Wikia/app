@@ -5,9 +5,8 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.lazyqueue',
 	'wikia.log',
-	'wikia.window',
-	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery')
-], function (adContext, uapContext, adBlockDetection, lazyQueue, log, win, pageFair) {
+	'wikia.window'
+], function (adContext, uapContext, adBlockDetection, lazyQueue, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.btfBlocker',
@@ -36,6 +35,9 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 			win.ads.runtime.unblockHighlyViewableSlots = false;
 			unblockedSlots = [];
 		});
+
+		// as soon as we know that user has adblock, unblock BTF slots
+		win.addEventListener('wikia.blocking', startBtfQueue);
 
 		function processBtfSlot(slot) {
 			var context = adContext.getContext();
@@ -97,8 +99,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 		}
 
 		function shouldDelaySlotFillIn(slotName) {
-			var isBlocking = adBlockDetection.isBlocking() && pageFair.isEnabled(),
-				shouldDelay = adContext.getContext().opts.delayBtf && !isBlocking;
+			var shouldDelay = adContext.getContext().opts.delayBtf;
 
 			log(['shouldDelaySlotFillIn', shouldDelay, slotName], log.levels.debug, logGroup);
 

@@ -18,6 +18,8 @@ class NavigationTest extends WikiaBaseTest {
 			'WikiFactory',
 			'getVarValueByName',
 			function ( $variable/*, $id*/ ) use ( $globals ) {
+				$globals['wgServer'] = self::DOMAIN;
+
 				return $globals[$variable] ?? $GLOBALS[$variable] ?? false;
 			}
 		);
