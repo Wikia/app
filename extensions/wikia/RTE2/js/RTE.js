@@ -80,8 +80,8 @@
 				'rte-modeswitch,' +
 				'rte-overlay,' +
 				'rte-paste,' +
-				'rte-placeholder',
-				//'rte-signature',
+				'rte-placeholder,' +
+				'rte-signature',
 				//'rte-spellchecker,' +
 				//'rte-template,' +
 				//'rte-temporary-save,' +
