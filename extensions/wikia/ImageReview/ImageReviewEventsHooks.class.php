@@ -8,9 +8,11 @@ class ImageReviewEventsHooks {
 	public static function onUploadComplete( UploadBase $form ) {
 		global $wgCityId, $wgImageReviewTestCommunities;
 
-
 		if ( in_array( $wgCityId, $wgImageReviewTestCommunities ) ) {
-			self::sendToImageReviewService( $form->getTitle() );
+			// $form->getTitle() returns Title object with not updated latestRevisionId when uploading new revision
+			// of the file
+			$title = Title::newFromID( $form->getTitle()->getArticleID() );
+			self::sendToImageReviewService( $title );
 		} else {
 			static::createAddTask( $form->getTitle() );
 		}
@@ -22,7 +24,9 @@ class ImageReviewEventsHooks {
 		global $wgCityId, $wgImageReviewTestCommunities;
 
 		if ( in_array( $wgCityId, $wgImageReviewTestCommunities ) ) {
-			self::sendToImageReviewService( $page->getTitle() );
+			// $page->getTitle() returns Title object created before revert, so latestRevisionId is not updated there
+			$title = Title::newFromID( $page->getTitle()->getArticleID() );
+			self::sendToImageReviewService( $title );
 		} else {
 			static::createAddTask( $page->getTitle() );
 		}

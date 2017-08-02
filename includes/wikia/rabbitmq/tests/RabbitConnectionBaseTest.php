@@ -1,12 +1,6 @@
 <?php
 
 class RabbitConnectionBaseTest extends WikiaBaseTest {
-
-	protected function setUp() {
-		$this->setupFile = dirname( __FILE__ ) . '/../IndexingPipeline.setup.php';
-		parent::setUp();
-	}
-
 	/** @test */
 	public function shouldLoadConfigCorrectly() {
 		global $wgIndexingPipeline;
