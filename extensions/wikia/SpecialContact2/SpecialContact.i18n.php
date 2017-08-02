@@ -1296,11 +1296,10 @@ Grazie e buone modifiche!",
 	'specialcontact-intro-bug' => "Siamo spiacenti di sentire che hai trovato un bug su FANDOM. Ti preghiamo di fornire i dettagli completi del problema da te riscontrato qui di seguito, così che possiamo investigare ulteriormente. Dettagli importanti da includere sono:
 * Il tuo nome utente
 * Il link alla tua community
-* Le informazioni sul tuo browser, tra cui il tipo e la versione ([[w:it:Aiuto:Browser supportati
-|fare clic qui per visualizzare l'elenco dei browser supportati]])
+* Le informazioni sul tuo browser, tra cui il tipo e la versione ([[w:it:Aiuto:Browser supportati|fare clic qui per visualizzare l'elenco dei browser supportati]])
 * Screenshot
 
-Per altri consigli su cosa includere nel tuo report, consulta la [[w:it:Aiuto:Segnalare_i_bug|nostra pagina sui report sui bug]].
+Per altri consigli su cosa includere nel tuo report, consulta la [[w:it:Aiuto:Segnalare i bug|nostra pagina sui report sui bug]].
 
 Grazie ancora per il report e per usare FANDOM.
 
