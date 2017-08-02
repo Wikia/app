@@ -4,6 +4,7 @@ CKEDITOR.plugins.add('rte-modeswitch',
 	messages: {},
 
 	init: function(editor) {
+		debugger;
 		this.messages = editor.lang.modeSwitch;
 
 		this.addCommands(editor);
@@ -181,8 +182,8 @@ CKEDITOR.plugins.add('rte-modeswitch',
 
 	updateTooltips: function(ev) {
 		var mode = ev.editor.mode,
-			sourceTabLabel = this.messages['toSource' + (mode == 'source' ? '' : 'Tooltip')],
-			wysiwygTabLabel = this.messages['toWysiwyg' + (mode == 'wysiwyg' ? '' : 'Tooltip')];
+			sourceTabLabel = window.mw.msg('rte-ck-modeSwitch-toSource-' + (mode == 'source' ? '' : 'Tooltip')); //this.messages['toSource' + (mode == 'source' ? '' : 'Tooltip')],
+			wysiwygTabLabel = window.mw.msg('rte-ck-modeSwitch-toWysiwyg-' + (mode == 'wysiwyg' ? '' : 'Tooltip'));//this.messages['toWysiwyg' + (mode == 'wysiwyg' ? '' : 'Tooltip')];
 
 		this.getSwitchTab(ev.editor, 'ModeSource').attr('title', sourceTabLabel);
 		this.getSwitchTab(ev.editor, 'ModeWysiwyg').attr('title', wysiwygTabLabel);
@@ -218,13 +219,13 @@ CKEDITOR.plugins.add('rte-modeswitch',
 		});
 
 		editor.ui.addButton( 'ModeSource', {
-			label : this.messages.toSource,
+			label : window.mw.msg('rte-ck-modeSwitch-toSource'),//this.messages.toSource,
 			hasIcon: editor.config.isMiniEditor,
 			command : 'ModeSource'
 		});
 
 		editor.ui.addButton( 'ModeWysiwyg', {
-			label : this.messages.toWysiwyg,
+			label : window.mw.msg('rte-ck-modeSwitch-toWysiwyg'),//this.messages.toWysiwyg,
 			hasIcon: editor.config.isMiniEditor,
 			command : 'ModeWysiwyg'
 		});
