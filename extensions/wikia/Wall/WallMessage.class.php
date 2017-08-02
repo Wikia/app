@@ -722,14 +722,13 @@ class WallMessage {
 	 * @return bool true when the user is the owner
 	 */
 	public function isWallOwner( User $user ) {
-		$wallUser = $this->getWallOwner();
-		if ( empty( $wallUser ) ) {
+		// SUS-1777: Of course the user cannot be the Wall owner of a Forum thread
+		if ( !$this->title->inNamespace( NS_USER_WALL_MESSAGE ) ) {
 			return false;
 		}
 
-		// we're using names instead of ids, as ids for anonymous users are equal 0. This will cause bugs
-		// while verifying anonymous wall owners
-		return $wallUser->getName() == $user->getName();
+		$wallUser = $this->getWallOwner();
+		return !empty( $wallUser ) && $wallUser->equals( $user );
 	}
 
 	public function load( $master = false ) {

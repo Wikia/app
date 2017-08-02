@@ -241,15 +241,16 @@ class ForumHooksHelper {
 
 	/**
 	 * overriding message
-	 * @param WallMessage $mw
+	 * @param Title $parentTitle
 	 * @param WikiaResponse $response
 	 * @return bool
 	 */
-
-	static public function onWallMessageDeleted( &$mw, &$response ) {
-		$title = $mw->getTitle();
-		if ( $title->getNamespace() == NS_WIKIA_FORUM_BOARD_THREAD ) {
-			$response->setVal( 'returnTo', wfMessage( 'forum-thread-deleted-return-to', $mw->getArticleTitle()->getText() )->escaped() );
+	static public function onWallMessageDeleted(
+		Title $parentTitle, WikiaResponse $response
+	): bool {
+		if ( $parentTitle->inNamespace( NS_WIKIA_FORUM_BOARD ) ) {
+			$response->setVal( 'returnTo',
+				wfMessage( 'forum-thread-deleted-return-to', $parentTitle->getBaseText() )->escaped() );
 		}
 		return true;
 	}

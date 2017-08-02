@@ -20,28 +20,26 @@ class WallController extends WallBaseController {
 	}
 
 	public function messageDeleted() {
-		$id = $this->app->wg->Title->getText();
+		$id = $this->wg->Title->getText();
 
 		$wm	= WallMessage::newFromId( $id );
 
 		if ( empty( $wm ) ) {
-			$this->response->setVal( 'wallOwner', '' );
-			$this->response->setVal( 'wallUrl',  '' );
-		} else {
-
-			$user = $wm->getWallOwner();
-			$user_displayname = $user->getName();
-
-			$this->response->setVal( 'wallOwner', $user_displayname );
-			$this->response->setVal( 'wallUrl', $wm->getArticleTitle()->getFullURL() );
-
-			$this->response->setVal( 'showViewLink', $wm->canViewDeletedMessage( $this->app->wg->User ) );
-			$this->response->setVal( 'viewUrl', $this->app->wg->Title->getFullUrl( 'show=1' ) );
-
-			$this->response->setVal( 'returnTo', wfMsg( 'wall-deleted-msg-return-to', $user_displayname ) );
-
-			Hooks::run( 'WallMessageDeleted', [ &$wm, &$this->response ] );
+			$this->response->setVal( 'wallUrl', '' );
+			return;
 		}
+
+		$parentTitle = $wm->getArticleTitle();
+
+		$this->response->setVal( 'wallUrl', $parentTitle->getFullURL() );
+
+		$this->response->setVal( 'showViewLink', $wm->canViewDeletedMessage( $this->wg->User ) );
+		$this->response->setVal( 'viewUrl', $this->wg->Title->getFullUrl( 'show=1' ) );
+
+		$this->response->setVal( 'returnTo',
+			wfMessage( 'wall-deleted-msg-return-to', $parentTitle->getBaseText() )->escaped() );
+
+		Hooks::run( 'WallMessageDeleted', [ $parentTitle, $this->response ] );
 	}
 
 	/**
