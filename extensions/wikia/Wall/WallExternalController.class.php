@@ -100,15 +100,19 @@ class WallExternalController extends WikiaController {
 			return true;
 		}
 
-		$wall = Wall::newFromId( $destinationId );
-		$thread = WallThread::newFromId( $threadId );
+		$threadTitle = Title::newFromID( $threadId );
 
-		if ( empty( $wall ) ) {
+		// SUS-1777: Only allow moving Forum threads
+		if ( empty( $threadTitle ) || $threadTitle->inNamespace( NS_USER_WALL_MESSAGE ) ) {
 			$this->errormsg = 'unknown';
+			return false;
 		}
 
+		$wall = Wall::newFromId( $destinationId );
 
+		$thread = WallThread::newFromId( $threadId );
 		$thread->move( $wall, $this->wg->User );
+
 		$this->status = 'ok';
 	}
 
