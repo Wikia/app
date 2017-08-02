@@ -18,7 +18,9 @@ class NavigationTest extends WikiaBaseTest {
 			'WikiFactory',
 			'getVarValueByName',
 			function ( $variable/*, $id*/ ) use ( $globals ) {
-				return $globals[$variable];
+				$globals['wgServer'] = self::DOMAIN;
+
+				return $globals[$variable] ?? $GLOBALS[$variable] ?? false;
 			}
 		);
 
@@ -41,7 +43,7 @@ class NavigationTest extends WikiaBaseTest {
 			function ( $variable/*, $id*/ ) use ( $globals ) {
 				$globals['wgServer'] = self::DOMAIN;
 
-				return $globals[$variable];
+				return $globals[$variable] ?? $GLOBALS[$variable] ?? false;
 			}
 		);
 

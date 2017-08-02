@@ -94,35 +94,47 @@ define('ext.wikia.adEngine.adContext', [
 	function updateAdContextBidders(context) {
 		var hasFeaturedVideo = context.targeting.hasFeaturedVideo;
 
-		context.bidders.veles =  geo.isProperGeo(instantGlobals.wgAdDriverVelesBidderCountries) &&
+		context.bidders.veles = geo.isProperGeo(instantGlobals.wgAdDriverVelesBidderCountries) &&
 			!hasFeaturedVideo;
 
-		context.bidders.rubicon =  geo.isProperGeo(instantGlobals.wgAdDriverRubiconPrebidCountries) &&
+		context.bidders.rubicon = geo.isProperGeo(instantGlobals.wgAdDriverRubiconPrebidCountries) &&
 			!hasFeaturedVideo;
 
-		context.bidders.appnexusAst =  geo.isProperGeo(instantGlobals.wgAdDriverAppNexusAstBidderCountries) &&
+		context.bidders.appnexusAst = geo.isProperGeo(instantGlobals.wgAdDriverAppNexusAstBidderCountries) &&
 			!hasFeaturedVideo;
 	}
 
+	function isMEGAEnabledForFVMobile(context) {
+		return context.targeting.skin === 'mercury' &&
+			context.targeting.hasFeaturedVideo &&
+			geo.isProperGeo(instantGlobals.wgAdDriverAdMixCountries) &&
+			geo.isProperGeo(instantGlobals.wgAdDriverMegaAdUnitBuilderForFVCountries);
+	}
+
+	function isMEGAEnabledForFVOasis(context, isEnabledOnDesktopFeaturedVideo) {
+		return context.targeting.hasFeaturedVideo && isEnabledOnDesktopFeaturedVideo &&
+			geo.isProperGeo(instantGlobals.wgAdDriverMegaAdUnitBuilderForFVCountries);
+	}
+
 	function enableAdMixExperiment(context) {
-		var isEnabledOnFeaturedVideo = !!(
+		var isPALEnabledOnDesktopFeaturedVideo = !!(
 				isPageType('article') &&
 				context.targeting.skin === 'oasis' &&
 				context.targeting.hasFeaturedVideo &&
 				geo.isProperGeo(instantGlobals.wgAdDriverAdMixCountries)
 			),
-			isEnabledOnRegularArticle = !!(
+			isPALEnabledOnRegularArticle = !!(
 				isPageType('article') &&
 				context.targeting.skin === 'oasis' &&
 				!context.targeting.hasFeaturedVideo &&
 				geo.isProperGeo(instantGlobals.wgAdDriverPremiumAdLayoutCountries)
 			);
 
-		context.opts.premiumAdLayoutEnabled = isEnabledOnFeaturedVideo || isEnabledOnRegularArticle;
+		context.opts.premiumAdLayoutEnabled = isPALEnabledOnDesktopFeaturedVideo || isPALEnabledOnRegularArticle;
 		context.slots.premiumAdLayoutSlotsToUnblock = ['INCONTENT_BOXAD_1', 'BOTTOM_LEADERBOARD'];
 
-		context.opts.megaAdUnitBuilderEnabled = context.targeting.hasFeaturedVideo && isEnabledOnFeaturedVideo &&
-			geo.isProperGeo(instantGlobals.wgAdDriverMegaAdUnitBuilderForFVCountries);
+		context.opts.megaAdUnitBuilderEnabled = isMEGAEnabledForFVOasis(context, isPALEnabledOnDesktopFeaturedVideo) ||
+			isMEGAEnabledForFVMobile(context);
 
 		if (!context.targeting.hasFeaturedVideo) {
 			context.slots.premiumAdLayoutSlotsToUnblock.push('INCONTENT_PLAYER');
