@@ -200,6 +200,8 @@ packages :
 				'../js/plugins/paste/plugin.js'
 				'../js/plugins/placeholder/plugin.js'
 				'../js/plugins/signature/plugin.js'
+				'../js/plugins/spellchecker/plugin.js'
+		
 				//'plugins/fakeobjects/plugin.js'
 				//'plugins/fakeobjects/lang/en.js'
 				//'plugins/link/plugin.js'
