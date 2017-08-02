@@ -27,24 +27,24 @@ CKEDITOR.plugins.add('rte-gallery',
 				type: WikiaPhotoGallery.TYPE_GALLERY,
 				commandName: 'addgallery',
 				buttonName: 'Gallery',
-				buttonLabel: editor.lang.photoGallery.gallery,
-				buttonTooltip: editor.lang.photoGallery.addGallery,
+				buttonLabel: window.mw.msg('rte-ck-photoGallery-gallery'),//editor.lang.photoGallery.gallery,
+				buttonTooltip: window.mw.msg('rte-ck-photoGallery-addGallery'),//editor.lang.photoGallery.addGallery,
 				buttonClass: 'RTEGalleryButton'
 			});
 			self.addButton(editor,{
 				type: WikiaPhotoGallery.TYPE_SLIDESHOW,
 				commandName: 'addslideshow',
 				buttonName: 'Slideshow',
-				buttonLabel: editor.lang.photoGallery.slideshow,
-				buttonTooltip: editor.lang.photoGallery.addSlideshow,
+				buttonLabel: window.mw.msg('rte-ck-photoGallery-slideshow'),//editor.lang.photoGallery.slideshow,
+				buttonTooltip: window.mw.msg('rte-ck-photoGallery-addSlideshow'),//editor.lang.photoGallery.addSlideshow,
 				buttonClass: 'RTESlideshowButton'
 			});
 			self.addButton(editor,{
 				type: WikiaPhotoGallery.TYPE_SLIDER,
 				commandName: 'addslider',
 				buttonName: 'Slider',
-				buttonLabel: editor.lang.photoGallery.slider,
-				buttonTooltip: editor.lang.photoGallery.addSlider,
+				buttonLabel: window.mw.msg('rte-ck-photoGallery-slider'),//editor.lang.photoGallery.slider,
+				buttonTooltip: window.mw.msg('rte-ck-photoGallery-addSlider'),//editor.lang.photoGallery.addSlider,
 				buttonClass: 'RTESliderButton'
 			});
 		}

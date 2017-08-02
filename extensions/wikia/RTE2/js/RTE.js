@@ -70,8 +70,8 @@
 				'rte-comment,' +
 				'rte-dialog,' +
 				'rte-dragdrop,' +
-				'rte-entities',
-				//'rte-gallery,' +
+				'rte-entities,' +
+				'rte-gallery',
 				//'justify,' +
 				//'fakeobjects,' +
 				//'link,' +
