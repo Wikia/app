@@ -93,6 +93,8 @@ class DeleteImageRevision extends Maintenance {
 		$source = $oldLocalFile->getArchiveVirtualUrl( $oldLocalFile->getArchiveName() );
 		$status = wfLocalFile( $title )->upload( $source, $comment, $comment );
 
+		Hooks::run( 'FileRevertComplete', [ new WikiPage( $title ) ] );
+
 		if( !$status->isGood() ) {
 			\Wikia\Logger\WikiaLogger::instance()->error("failed to revert file to previous revision" );
 		}
