@@ -1,5 +1,6 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
 use Wikia\PageHeader\Button;
 
 class ForumHooksHelper {
@@ -296,19 +297,24 @@ class ForumHooksHelper {
 			$threadId = empty( $parent ) ? $comment_id:$parent;
 			RelatedForumDiscussionController::purgeCache( $threadId );
 
-			// cleare board info
-			$commentsIndex = CommentsIndex::getInstance()->entryFromId( $comment_id );
-			if ( empty( $commentsIndex ) ) {
-				return true;
-			}
-			$board = ForumBoard::newFromId( $commentsIndex->getParentPageId() );
-			if ( empty( $board ) ) {
-				return true;
-			}
+			// clear board info
+			try {
+				$commentsIndex = CommentsIndex::getInstance()->entryFromId( $comment_id );
+				$board = ForumBoard::newFromId( $commentsIndex->getParentPageId() );
+				if ( empty( $board ) ) {
+					return true;
+				}
 
-			$thread = WallThread::newFromId( $threadId );
-			if ( !empty( $thread ) ) {
-				$thread->purgeLastMessage();
+				$thread = WallThread::newFromId( $threadId );
+				if ( !empty( $thread ) ) {
+					$thread->purgeLastMessage();
+				}
+			} catch ( CommentsIndexEntryNotFoundException $entryNotFoundException ) {
+				WikiaLogger::instance()->error( 'SUS-1680: No comments index entry for message', [
+					'messageTitle' => $title->getPrefixedText(),
+					'messageId' => $comment_id,
+					'exception' => $entryNotFoundException
+				] );
 			}
 		}
 		return true;

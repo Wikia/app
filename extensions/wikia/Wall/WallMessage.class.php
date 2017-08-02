@@ -17,6 +17,8 @@ class WallMessage {
 	protected static $wallURLCache = [ ];
 
 	protected static $wallMessageCache = [];
+	protected static $titleCache = [];
+	protected static $emptyTitle;
 
 	/**
 	 * @var $commentsIndex CommentsIndexEntry
@@ -42,6 +44,10 @@ class WallMessage {
 
 		$this->helper = new WallHelper();
 		wfProfileOut( __METHOD__ );
+	}
+
+	static public function emptyTitle(): Title {
+		return static::$emptyTitle ?? ( static::$emptyTitle = Title::newFromText( 'empty' ));
 	}
 
 	/**
@@ -162,9 +168,9 @@ class WallMessage {
 	/**
 	 * @return CommentsIndexEntry
 	 */
-		public function getCommentsIndexEntry() {
-		if ( false === $this->commentsIndex ) { // false means we didn't call newFromId yet
-			$this->commentsIndex = CommentsIndex::getInstance()->entryFromId( $this->getId() ); // note: can return null
+	public function getCommentsIndexEntry() {
+		if ( !( $this->commentsIndex instanceof CommentsIndexEntry ) ) {
+			$this->commentsIndex = CommentsIndex::getInstance()->entryFromId( $this->getId() );
 		}
 
 		return $this->commentsIndex;
@@ -576,46 +582,39 @@ class WallMessage {
 	/**
 	 * @return Title
 	 */
-	public function getArticleTitle( $useMasterDB = false ) {
-		$entry = $this->getCommentsIndexEntry();
-		if ( empty( $entry ) ) {
-			$this->error( __METHOD__ . ' - SUS-1680 - No comments_index entry for message', [
-				'messageTitle' => $this->getTitle()->getPrefixedText(),
-				'messageId' => $this->getTitle()->getArticleID()
+	public function getArticleTitle(): Title {
+		$title = $this->getTitle();
+
+		// Wall Threads always belong to the user wall they were posted on
+		// No need to check comments index here
+		if ( $title->inNamespace( NS_USER_WALL_MESSAGE ) ) {
+			$parentPageText = $title->getBaseText();
+
+			return Title::newFromText( $parentPageText, NS_USER_WALL ) ??
+				   static::emptyTitle();
+		}
+
+		// Forum Threads may have been moved to another board - use comments index as data source
+		try {
+			$commentsIndexEntry = $this->getCommentsIndexEntry();
+			$parentPageId = $commentsIndexEntry->getParentPageId();
+
+			$parentTitle =
+				static::$titleCache[$parentPageId] ??
+				Title::newFromID( $parentPageId ) ??
+				Title::newFromID( $parentPageId, Title::GAID_FOR_UPDATE ) ??
+				static::$emptyTitle;
+
+			return ( static::$titleCache[$parentPageId] = $parentTitle );
+		} catch ( CommentsIndexEntryNotFoundException $entryNotFoundException ) {
+			WikiaLogger::instance()->error( 'SUS-1680: No comments index entry for message', [
+				'messageTitle' => $title->getPrefixedText(),
+				'messageId' => $title->getArticleID(),
+				'exception' => $entryNotFoundException
 			] );
-			return Title::newFromText( 'empty' );
+
+			return static::emptyTitle();
 		}
-		$pageId = $entry->getParentPageId();
-		static $cache = [ ];
-		if ( empty( $cache[ $pageId ] ) ) {
-			if ( !$useMasterDB ) {
-				$cache[ $pageId ] = Title::newFromId( $pageId );
-				// make sure this did not happen due to master-slave delay
-				// if so, this is a bug in the code, as $master flag should be set to true
-				// we want to log this and fix it
-				if ( empty( $cache[ $pageId ] ) ) {
-					$cache[ $pageId ] = Title::newFromId( $pageId, Title::GAID_FOR_UPDATE );
-					if ( !empty( $cache[ $pageId ] ) ) {
-						$this->error( __METHOD__ . ' - SUS-1680 - message article title does not exist in slave', [
-							'messageTitle' => $this->getTitle()->getPrefixedText(),
-							'messageId' => $this->getTitle()->getArticleID(),
-							'parentPageTitle' => $cache[$pageId]->getPrefixedText(),
-							'parentPageId' => $cache[$pageId]->getArticleID()
-						] );
-					}
-				}
-			} else {
-				$cache[ $pageId ] = Title::newFromId( $pageId, Title::GAID_FOR_UPDATE );
-			}
-		}
-		if ( empty( $cache[ $pageId ] ) ) {
-			$this->error( __METHOD__ . ' - SUS-1680 - No title for message parent', [
-				'messageTitle' => $this->getTitle()->getPrefixedText(),
-				'messageId' => $this->getTitle()->getArticleID()
-			] );
-			return Title::newFromText( 'empty' );
-		}
-		return $cache[ $pageId ];
 	}
 
 	/**

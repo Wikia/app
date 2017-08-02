@@ -152,7 +152,8 @@ class CommentsIndex {
 	 * Return a single Comments Index Entry corresponding to the row in comments_index table with matching comment_id
 	 *
 	 * @param int $commentId
-	 * @return CommentsIndexEntry|null
+	 * @return CommentsIndexEntry
+	 * @throws CommentsIndexEntryNotFoundException
 	 */
 	public function entryFromId( int $commentId ) {
 		if ( isset( $this->objectCache[$commentId] ) ) {
@@ -167,7 +168,7 @@ class CommentsIndex {
 				'commentId' => $commentId
 			] );
 
-			return null;
+			throw new CommentsIndexEntryNotFoundException();
 		}
 
 		$entry = CommentsIndexEntry::newFromRow( $row );
