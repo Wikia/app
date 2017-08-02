@@ -189,6 +189,8 @@ packages :
 				'../js/plugins/dialog/plugin.js'
 				'../js/plugins/dragdrop/plugin.js'
 				'../js/plugins/entities/plugin.js'
+				'../js/plugins/gallery/plugin.js'
+
 				//'plugins/fakeobjects/plugin.js'
 				//'plugins/fakeobjects/lang/en.js'
 				//'plugins/link/plugin.js'
@@ -198,7 +200,6 @@ packages :
 				//'../js/plugins/placeholder/plugin.js'
 				//'../js/plugins/template/plugin.js'
 				//'../js/plugins/template/dialogs/template.js'
-				//'../js/plugins/gallery/plugin.js'
 				//'../js/plugins/toolbar/plugin.js'
 				//'../js/plugins/linksuggest/plugin.js',
 				'../js/plugins/media/plugin.js',
