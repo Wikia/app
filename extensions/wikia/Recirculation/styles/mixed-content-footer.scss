@@ -62,6 +62,7 @@
 
 
 .mcf-card-wiki-article {
+	position: relative;
 	@include flex-direction(column);
 	@include flexbox();
 	@include justify-content(flex-end);
@@ -91,6 +92,26 @@
 	}
 
 	&__is-video {
-
+		box-sizing: border-box;
+		@include flexbox();
+		@include justify-content(center);
+		@include align-items(center);
+		@include align-self(center);
+		position: absolute;
+		top: 50px;
+		z-index: 1;
+		background-color: rgba(26, 26, 26, 0.2);
+		border: solid 6px #ffffff;
+		width: 90px;
+		height: 90px;
+		-webkit-border-radius:50%;
+		-moz-border-radius:50%;
+		border-radius:50%;
 	}
+
+	.play-icon {
+		fill: #fff;
+		margin-left: 6px;
+	}
+
 }
