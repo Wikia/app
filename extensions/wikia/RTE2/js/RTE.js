@@ -81,8 +81,8 @@
 				'rte-overlay,' +
 				'rte-paste,' +
 				'rte-placeholder,' +
-				'rte-signature',
-				//'rte-spellchecker,' +
+				'rte-signature,' +
+				'rte-spellchecker',
 				//'rte-template,' +
 				//'rte-temporary-save,' +
 				//'rte-toolbar,' +
