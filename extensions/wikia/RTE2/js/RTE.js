@@ -78,8 +78,8 @@
 				'rte-linksuggest,' +
 				'rte-media,' +
 				'rte-modeswitch,' +
-				'rte-overlay',
-				//'rte-paste,' +
+				'rte-overlay,' +
+				'rte-paste',
 				//'rte-placeholder,' +
 				//'rte-signature',
 				//'rte-spellchecker,' +
