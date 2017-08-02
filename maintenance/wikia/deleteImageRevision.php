@@ -86,7 +86,7 @@ class DeleteImageRevision extends Maintenance {
 				'oi_name' => $title->getDBkey()
 			],
 			__METHOD__,
-			['ORDER BY oi_timestamp desc']
+			['ORDER BY' => 'oi_timestamp desc']
 		);
 
 		$oldLocalFile = OldLocalFile::newFromArchiveName( $title, RepoGroup::singleton()->getLocalRepo(), $archiveName );
