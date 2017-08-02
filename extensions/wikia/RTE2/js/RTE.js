@@ -74,8 +74,8 @@
 				'rte-gallery,' +
 				//'rte-justify',
 				//'fakeobjects,' +
-				'rte-link',
-				//'rte-linksuggest,' +
+				'rte-link,' +
+				'rte-linksuggest',
 				//'rte-media',
 				//'rte-modeswitch',
 				//'rte-overlay,' +

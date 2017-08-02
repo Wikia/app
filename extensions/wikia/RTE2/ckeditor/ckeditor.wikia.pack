@@ -193,7 +193,7 @@ packages :
 				//'../js/plugins/justify/plugin.js' for now lets use native ckeditor 4.7 justify plugin :)
 				'../js/plugins/link/plugin.js'
 				'../js/plugins/link/dialogs/link.js'
-		
+				'../js/plugins/linksuggest/plugin.js''	
 				//'plugins/fakeobjects/plugin.js'
 				//'plugins/fakeobjects/lang/en.js'
 				//'plugins/link/plugin.js'
