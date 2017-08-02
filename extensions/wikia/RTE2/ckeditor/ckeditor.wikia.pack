@@ -198,6 +198,7 @@ packages :
 				'../js/plugins/modeswitch/plugin.js'
 				'../js/plugins/overlay/plugin.js'
 				'../js/plugins/paste/plugin.js'
+				'../js/plugins/placeholder/plugin.js'
 
 				//'plugins/fakeobjects/plugin.js'
 				//'plugins/fakeobjects/lang/en.js'

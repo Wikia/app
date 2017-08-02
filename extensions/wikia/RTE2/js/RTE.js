@@ -79,8 +79,8 @@
 				'rte-media,' +
 				'rte-modeswitch,' +
 				'rte-overlay,' +
-				'rte-paste',
-				//'rte-placeholder,' +
+				'rte-paste,' +
+				'rte-placeholder',
 				//'rte-signature',
 				//'rte-spellchecker,' +
 				//'rte-template,' +
