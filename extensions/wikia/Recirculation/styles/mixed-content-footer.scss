@@ -115,3 +115,61 @@
 	}
 
 }
+
+.mcf-card-wiki-articles {
+	border: 1px solid #ccc;
+	background-color: #fff;
+	width: 334px;
+
+	&__header {
+		background-color: #0000ff;
+		padding: 16px;
+		background-position: right center;
+		background-repeat: no-repeat;
+		background-size: contain;
+		position: relative;
+		font-size: 18px;
+		color: #fff;
+
+		&:before {
+			content: '';
+			display: block;
+			height: 100%;
+			position: absolute;
+			width: 100%;
+			background: linear-gradient(to right,rgba(0,103,34,0.5),rgba(0,103,34,0.5)),linear-gradient(to left,rgba(0,103,34,0) 200px,#006722 430px);
+		}
+	}
+
+	ul {
+		margin: 16px;
+	}
+
+	&__item {
+		@include align-items(center);
+		@include flexbox();
+		border-bottom: 1px solid #ccc;
+		padding: 21px 0;
+
+		&:last-child {
+			border-bottom: 0;
+		}
+	}
+
+	&__circle {
+		@include align-items(center);
+		@include flexbox();
+		@include justify-content(center);
+		background-color: #0000ff;
+		border-radius: 50%;
+		height: 36px;
+		width: 36px;
+		font-size: 18px;
+		font-weight: bold;
+		color: #fff;
+	}
+
+	&__title {
+		margin-left: 12px;
+	}
+}
