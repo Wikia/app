@@ -201,7 +201,9 @@ packages :
 				'../js/plugins/placeholder/plugin.js'
 				'../js/plugins/signature/plugin.js'
 				'../js/plugins/spellchecker/plugin.js'
-		
+				'../js/plugins/template/plugin.js'
+				'../js/plugins/template/dialogs/template.js'
+
 				//'plugins/fakeobjects/plugin.js'
 				//'plugins/fakeobjects/lang/en.js'
 				//'plugins/link/plugin.js'

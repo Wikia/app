@@ -8,8 +8,8 @@ CKEDITOR.plugins.add('rte-template',
 
 		// register template dropdown list
 		editor.ui.addRichCombo('Template', {
-			label : editor.lang.templateDropDown.label,
-			title: editor.lang.templateDropDown.title,
+			label : window.mw.msg('rte-ck-templateDropDown-label'),//editor.lang.templateDropDown.label,
+			title: window.mw.msg('rte-ck-templateDropDown-title'),//editor.lang.templateDropDown.title,
 			className : 'cke_template',
 			multiSelect : false,
 
@@ -18,7 +18,7 @@ CKEDITOR.plugins.add('rte-template',
 			},
 
 			init : function() {
-				this.startGroup(editor.lang.templateDropDown.title);
+				this.startGroup(window.mw.msg('rte-ck-templateDropDown-title'));//editor.lang.templateDropDown.title);
 
 				// list of templates to be added to dropdown
 				var templates = window.RTETemplatesDropdown;
@@ -33,17 +33,17 @@ CKEDITOR.plugins.add('rte-template',
 
 				// add "Other template / magic word"
 				this.add('--other--',
-					'<strong>' + editor.lang.templateDropDown.chooseAnotherTpl  + '</strong>',
-					editor.lang.templateDropDown.chooseAnotherTpl);
+					'<strong>' + window.mw.msg('rte-ck-templateDropDown-chooseAnotherTpl')/*editor.lang.templateDropDown.chooseAnotherTpl*/  + '</strong>',
+					window.mw.msg('rte-ck-templateDropDown-chooseAnotherTpl')/*editor.lang.templateDropDown.chooseAnotherTpl*/);
 
 				// add "List of used templates"
 				this.add('--list--',
-					'<strong>' + editor.lang.templateDropDown.showUsedList  + '</strong>',
-					editor.lang.templateDropDown.showUsedList);
+					'<strong>' + window.mw.msg('rte-ck-templateDropDown-showUsedList') /*editor.lang.templateDropDown.showUsedList*/  + '</strong>',
+					window.mw.msg('rte-ck-templateDropDown-showUsedList')/*editor.lang.templateDropDown.showUsedList*/);
 				// add "Make a layout"
 				this.add('--make-layout--',
-					'<strong>' + editor.lang.templateDropDown.makeLayout  + '</strong>',
-					editor.lang.templateDropDown.makeLayout);
+					'<strong>' + window.mw.msg('rte-ck-templateDropDown-makeLayout')/*editor.lang.templateDropDown.makeLayout*/  + '</strong>',
+					window.mw.msg('rte-ck-templateDropDown-makeLayout')/*editor.lang.templateDropDown.makeLayout*/);
 			},
 
 			onClick : function(value) {
