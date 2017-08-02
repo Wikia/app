@@ -112,12 +112,12 @@ class EditPageLayoutHelper {
 		$this->addJsVariable( 'wgEditPageIsWidePage', $this->isWidePage() );
 		$this->addJsVariable( 'wgIsDarkTheme', SassUtil::isThemeDark() );
 
-		//if ( $user->isLoggedIn() ) {
-		//	global $wgRTEDisablePreferencesChange;
-		//	$wgRTEDisablePreferencesChange = true;
-		//	$this->addJsVariable( 'wgEditPageWideSourceMode', (bool)$user->getGlobalPreference( 'editwidth' ) );
-		//	unset( $wgRTEDisablePreferencesChange );
-		//}
+		if ( $user->isLoggedIn() ) {
+			global $wgRTEDisablePreferencesChange;
+			$wgRTEDisablePreferencesChange = true;
+			$this->addJsVariable( 'wgEditPageWideSourceMode', (bool)$user->getGlobalPreference( 'editwidth' ) );
+			unset( $wgRTEDisablePreferencesChange );
+		}
 
 		$this->addJsVariableRef( 'wgEditPageFormType', $this->editPage->formtype );
 		$this->addJsVariableRef( 'wgEditPageIsConflict', $this->editPage->isConflict );
