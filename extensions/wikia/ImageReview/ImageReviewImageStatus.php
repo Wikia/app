@@ -121,39 +121,37 @@ function fetchReviewHistory( $dbr, $cityId, $pageId ) {
 }
 
 function fetchReviewHistoryFromService( $cityId, $pageId, $revisionId ) {
-	$db = \WikiFactory::IDtoDB( $cityId );
-	$key = wfForeignMemcKey( $db, '', "image-review-${cityId}-${pageId}-${revisionId}" );
+	$statusMessages = [
+		'UNREVIEWED' => wfMessage( 'imagereview-state-0' )->escaped(),
+		'ACCEPTED' => wfMessage( 'imagereview-state-2' )->escaped(),
+		'QUESTIONABLE' => wfMessage( 'imagereview-state-5' )->escaped(),
+		'REJECTED' => wfMessage( 'imagereview-state-4' )->escaped(),
+		'REMOVED' => wfMessage( 'imagereview-state-3' )->escaped()
+	];
 
-	return WikiaDataAccess::cache( $key, WikiaResponse::CACHE_STANDARD, function() use( $cityId, $pageId, $revisionId ) {
-		$statusMessages = [
-			'UNREVIEWED' => wfMessage( 'imagereview-state-0' )->escaped(),
-			'ACCEPTED' => wfMessage( 'imagereview-state-2' )->escaped(),
-			'QUESTIONABLE' => wfMessage( 'imagereview-state-5' )->escaped(),
-			'REJECTED' => wfMessage( 'imagereview-state-4' )->escaped(),
-			'REMOVED' => wfMessage( 'imagereview-state-3' )->escaped()
-		];
+	$reviewHistory = ( new ImageReviewService() )->getImageHistory(
+		$cityId,
+		$pageId,
+		$revisionId,
+		RequestContext::getMain()->getUser()
+	);
 
-		$reviewHistory = ( new ImageReviewService() )->getImageHistory(
-			$cityId,
-			$pageId,
-			$revisionId,
-			RequestContext::getMain()->getUser()
-		);
-
-		return array_map(
-			function ( ImageHistoryEntry $item ) use ( $statusMessages ) {
-				return [
-					$item->getUser(),
-					$statusMessages[$item->getStatus()],
-					$item->getDate()
-				];
-			},
-			array_filter( $reviewHistory, function( ImageHistoryEntry $item ) {
+	return array_map(
+		function ( ImageHistoryEntry $item ) use ( $statusMessages ) {
+			return [
+				$item->getUser(),
+				$statusMessages[$item->getStatus()],
+				$item->getDate()
+			];
+		},
+		array_filter(
+			$reviewHistory,
+			function ( ImageHistoryEntry $item ) {
 				// Filter out entry with status 'UNREVIEWED' as it does make sense to display entry about unreviewed status with user that uploaded the file
 				return $item->getStatus() != 'UNREVIEWED';
-			} )
-		);
-	});
+			}
+		)
+	);
 }
 
 function isImageInReviewQueue( $dbr, $cityId, $pageId ) {
