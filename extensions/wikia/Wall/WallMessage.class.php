@@ -576,46 +576,14 @@ class WallMessage {
 	/**
 	 * @return Title
 	 */
-	public function getArticleTitle( $useMasterDB = false ) {
-		$entry = $this->getCommentsIndexEntry();
-		if ( empty( $entry ) ) {
-			$this->error( __METHOD__ . ' - SUS-1680 - No comments_index entry for message', [
-				'messageTitle' => $this->getTitle()->getPrefixedText(),
-				'messageId' => $this->getTitle()->getArticleID()
-			] );
-			return Title::newFromText( 'empty' );
-		}
-		$pageId = $entry->getParentPageId();
-		static $cache = [ ];
-		if ( empty( $cache[ $pageId ] ) ) {
-			if ( !$useMasterDB ) {
-				$cache[ $pageId ] = Title::newFromId( $pageId );
-				// make sure this did not happen due to master-slave delay
-				// if so, this is a bug in the code, as $master flag should be set to true
-				// we want to log this and fix it
-				if ( empty( $cache[ $pageId ] ) ) {
-					$cache[ $pageId ] = Title::newFromId( $pageId, Title::GAID_FOR_UPDATE );
-					if ( !empty( $cache[ $pageId ] ) ) {
-						$this->error( __METHOD__ . ' - SUS-1680 - message article title does not exist in slave', [
-							'messageTitle' => $this->getTitle()->getPrefixedText(),
-							'messageId' => $this->getTitle()->getArticleID(),
-							'parentPageTitle' => $cache[$pageId]->getPrefixedText(),
-							'parentPageId' => $cache[$pageId]->getArticleID()
-						] );
-					}
-				}
-			} else {
-				$cache[ $pageId ] = Title::newFromId( $pageId, Title::GAID_FOR_UPDATE );
-			}
-		}
-		if ( empty( $cache[ $pageId ] ) ) {
-			$this->error( __METHOD__ . ' - SUS-1680 - No title for message parent', [
-				'messageTitle' => $this->getTitle()->getPrefixedText(),
-				'messageId' => $this->getTitle()->getArticleID()
-			] );
-			return Title::newFromText( 'empty' );
-		}
-		return $cache[ $pageId ];
+	public function getArticleTitle() {
+		$title = $this->getTitle();
+		$namespace = $title->getNamespace();
+
+		$parentNamespace = MWNamespace::getSubject( $namespace );
+		$parentPageText = $title->getBaseText();
+
+		return Title::newFromText( $parentPageText, $parentNamespace );
 	}
 
 	/**
