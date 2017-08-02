@@ -47,14 +47,16 @@ class ImageReviewTask extends BaseTask {
 			$reason = wfMessage( 'imagereview-reason' )->inLanguage( $cityLang );
 
 			if ( count( $imageData ) == 3 ) {
+				$escapedReason = escapeshellarg( $reason );
+
 				$command =
-					"/usr/wikia/backend/bin/run_maintenance --id=${wikiId} --script='wikia/deleteImageRevision.php --pageId=${imageId} --revisionId=${revisionId} --reason=${reason}'";
+					escapeshellcmd( "/usr/wikia/backend/bin/run_maintenance --id=${wikiId} --script='wikia/deleteImageRevision.php --pageId=${imageId} --revisionId=${revisionId} --reason=\"${escapedReason}\"'" );
 
 				$output = wfShellExec( $command, $exitStatus );
 
 				if ( $exitStatus !== 0 ) {
 					$this->error( 'article deletion error', [
-						'cityId' => $cityUrl,
+						'cityId' => $wikiId,
 						'pageId' => $imageId,
 						'revisionId' => $revisionId,
 						'exit_status' => $exitStatus,
@@ -65,7 +67,7 @@ class ImageReviewTask extends BaseTask {
 				}
 
 				$this->info( 'removed image', [
-					'cityId' => $cityUrl,
+					'cityId' => $wikiId,
 					'pageId' => $imageId,
 					'revisionId' => $revisionId,
 					'exit_status' => $exitStatus,
