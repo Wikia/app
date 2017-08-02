@@ -7,6 +7,13 @@ use \Wikia\CommunityHeader\Navigation;
 class NavigationTest extends WikiaBaseTest {
 	const WIKI_ID = 147;
 	const DOMAIN =  "http://starwars.wikia.com";
+
+
+	protected function setUp() {
+		parent::setUp();
+		$this->disableMemCache();
+	}
+
 	/**
 	 * @dataProvider exploreItemsProvider
 	 *
