@@ -203,6 +203,7 @@ packages :
 				'../js/plugins/spellchecker/plugin.js'
 				'../js/plugins/template/plugin.js'
 				'../js/plugins/template/dialogs/template.js'
+				'../js/plugins/temporary-save/plugin.js'
 
 				//'plugins/fakeobjects/plugin.js'
 				//'plugins/fakeobjects/lang/en.js'

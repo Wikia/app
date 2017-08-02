@@ -83,8 +83,8 @@
 				'rte-placeholder,' +
 				'rte-signature,' +
 				'rte-spellchecker,' +
-				'rte-template',
-				//'rte-temporary-save,' +
+				'rte-template,' +
+				'rte-temporary-save',
 				//'rte-toolbar,' +
 				//'rte-tools',
 			// TODO: Too buggy. Try to use this after we update to 3.6.2 (BugId:23061)
