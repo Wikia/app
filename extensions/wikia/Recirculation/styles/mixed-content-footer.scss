@@ -24,3 +24,37 @@
 		margin-bottom: 40px;
 	}
 }
+
+.mcf-card-wiki-article {
+	@include flex-direction(column);
+	@include flexbox();
+	@include justify-content(flex-end);
+	background-size: cover;
+	background-position: center;
+	// fixme size shouldn't be fixed
+	width: 334px;
+	height: 292px;
+
+	&__title {
+		color: #fff;
+		font-size: 16px;
+		font-weight: 600;
+		line-height: 24px;
+		margin-bottom: 12px;
+		padding: 0 18px;
+	}
+
+	&__subtitle {
+		color: #fff;
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 24px;
+		margin-bottom: 18px;
+		opacity: 0.5;
+		padding-left: 18px;
+	}
+
+	&__is-video {
+
+	}
+}
