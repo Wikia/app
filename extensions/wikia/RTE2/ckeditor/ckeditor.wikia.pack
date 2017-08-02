@@ -188,7 +188,7 @@ packages :
 				'../js/plugins/comment/dialogs/comment.js'
 				'../js/plugins/dialog/plugin.js'
 				'../js/plugins/dragdrop/plugin.js'
-				//'../js/plugins/entities/plugin.js'
+				'../js/plugins/entities/plugin.js'
 				//'plugins/fakeobjects/plugin.js'
 				//'plugins/fakeobjects/lang/en.js'
 				//'plugins/link/plugin.js'
