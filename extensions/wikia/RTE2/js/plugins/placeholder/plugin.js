@@ -99,8 +99,8 @@ CKEDITOR.plugins.add('rte-placeholder',
 						break;
 
 					case 'comment':
-						title = 'title';//lang.comment.title;
-						intro = 'intro';//lang.comment.intro;
+						title = lang.comment.title;
+						intro = lang.comment.intro;
 
 						// exclude comment beginning and end markers
 						code = data.wikitext.replace(/^<!--\s+/, '').replace(/\s+-->$/, '');
@@ -115,12 +115,12 @@ CKEDITOR.plugins.add('rte-placeholder',
 						var imageName = data.wikitext.replace(/^\[\[/, '').replace(/\]\]$/, '').split('|').shift();
 						title = imageName;
 
-						intro = 'notexist';//lang.media.notExisting;
+						intro = lang.media.notExisting;
 						break;
 
 					default:
-						title = 'codedElement';//lang.codedElement.title;
-						intro = 'intro';//lang.codedElement.intro;
+						title = lang.codedElement.title;
+						intro = lang.codedElement.intro;
 						break;
 				}
 
