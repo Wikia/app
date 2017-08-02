@@ -187,7 +187,5 @@ $wgResourceModules['ext.wikia.RTE2'] = array(
 		'rte-ck-format-tag_h5',
 	),
 	'localBasePath' => __DIR__,
-	'remoteExtPath' => 'wikia/PhalanxII'
-	
-	
+	'remoteExtPath' => 'wikia/PhalanxII'	
 	);
