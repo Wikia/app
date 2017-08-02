@@ -1,3 +1,4 @@
+/*global define*/
 define('ext.wikia.aRecoveryEngine.pageFair.recovery', [
 	'ext.wikia.adEngine.adContext',
 	'wikia.log',
@@ -29,7 +30,7 @@ define('ext.wikia.aRecoveryEngine.pageFair.recovery', [
 	}
 
 	function isBlocking() {
-		var isBlocking = !!(win.ads && win.ads.runtime.pf && win.ads.runtime.pf.blocking);
+		var isBlocking = !!(win.ads && win.ads.runtime.pf && win.ads.runtime.pf.recovering);
 
 		log(['isBlocking', isBlocking], log.levels.debug, logGroup);
 		return isBlocking;

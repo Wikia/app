@@ -59,6 +59,7 @@ $wgAutoloadLocalClasses = array(
 	'DoubleReplacer' => 'includes/StringUtils.php',
 	'DummyLinker' => 'includes/Linker.php',
 	'Dump7ZipOutput' => 'includes/Export.php',
+	'DumpBzOutput' => 'includes/Export.php', # Wikia change
 	'DumpBZip2Output' => 'includes/Export.php',
 	'DumpFileOutput' => 'includes/Export.php',
 	'DumpFilter' => 'includes/Export.php',

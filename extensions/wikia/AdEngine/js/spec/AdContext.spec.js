@@ -975,4 +975,39 @@ describe('AdContext', function () {
 
 	});
 
+	it('Should disable MEGA on non-FV mobile page', function () {
+		mocks.instantGlobals = {
+			wgAdDriverMegaAdUnitBuilderForFVCountries: ['CURRENT_COUNTRY'],
+			wgAdDriverAdMixCountries: ['CURRENT_COUNTRY']
+		};
+
+		var context = {
+			targeting: {
+				hasFeaturedVideo: false,
+				skin: 'oasis',
+				pageType: 'article'
+			}
+		};
+
+		getModule().setContext(context);
+		expect(context.opts.megaAdUnitBuilderEnabled).toBeFalsy();
+	});
+
+	it('Should enable MEGA on FV mobile page', function () {
+		mocks.instantGlobals = {
+			wgAdDriverMegaAdUnitBuilderForFVCountries: ['CURRENT_COUNTRY'],
+			wgAdDriverAdMixCountries: ['CURRENT_COUNTRY']
+		};
+
+		var context = {
+			targeting: {
+				hasFeaturedVideo: true,
+				skin: 'mercury',
+				pageType: 'article'
+			}
+		};
+
+		getModule().setContext(context);
+		expect(context.opts.megaAdUnitBuilderEnabled).toBeTruthy();
+	});
 });
