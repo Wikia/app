@@ -76,8 +76,8 @@
 				//'fakeobjects,' +
 				'rte-link,' +
 				'rte-linksuggest,' +
-				'rte-media',
-				//'rte-modeswitch',
+				'rte-media,' +
+				'rte-modeswitch',
 				//'rte-overlay,' +
 				//'rte-paste,' +
 				//'rte-placeholder,' +
