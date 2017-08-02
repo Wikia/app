@@ -66,8 +66,8 @@
 		extraPlugins:
 			
 		 
-				'rte-accesskey',
-				//'rte-comment,' +
+				'rte-accesskey,' +
+				'rte-comment',
 				//'rte-dialog,' +
 				//'rte-dragdrop,' +
 				//'rte-entities,' +
