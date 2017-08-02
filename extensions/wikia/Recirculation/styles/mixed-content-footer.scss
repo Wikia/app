@@ -62,15 +62,14 @@
 
 
 .mcf-card-wiki-article {
-	position: relative;
 	@include flex-direction(column);
-	@include flexbox();
 	@include justify-content(flex-end);
 	background-size: cover;
 	background-position: center;
+	height: 292px;
+	position: relative;
 	// fixme size shouldn't be fixed
 	width: 334px;
-	height: 292px;
 
 	&__title {
 		color: #fff;
@@ -91,25 +90,22 @@
 		padding-left: 18px;
 	}
 
-	&__is-video {
-		box-sizing: border-box;
-		@include flexbox();
-		@include justify-content(center);
+	&__video {
 		@include align-items(center);
 		@include align-self(center);
+		@include flexbox();
+		@include justify-content(center);
+		background-color: rgba(26, 26, 26, 0.2);
+		border-radius:50%;
+		box-sizing: border-box;
+		border: solid 6px #ffffff;
+		height: 90px;
 		position: absolute;
 		top: 50px;
-		z-index: 1;
-		background-color: rgba(26, 26, 26, 0.2);
-		border: solid 6px #ffffff;
 		width: 90px;
-		height: 90px;
-		-webkit-border-radius:50%;
-		-moz-border-radius:50%;
-		border-radius:50%;
 	}
 
-	.play-icon {
+	&__video-icon {
 		fill: #fff;
 		margin-left: 6px;
 	}
@@ -171,5 +167,39 @@
 
 	&__title {
 		margin-left: 12px;
+	}
+}
+
+.mcf-card-realted-wikis {
+	border: 1px solid #ccc;
+	background-color: #fff;
+	width: 334px;
+	height: 376px;
+
+	&__header {
+		padding: 16px;
+		font-size: 18px;
+		color: #000;
+		border-bottom: 1px solid #ccc;
+		position: relative;
+	}
+
+	ul {
+		margin: 16px;
+	}
+
+	&__item {
+		@include align-items(center);
+		@include flexbox();
+		border-bottom: 1px solid #ccc;
+		padding: 18px 0;
+
+		&:first-child {
+			padding: 0 0 18px 0;
+		}
+
+		&:last-child {
+			border-bottom: 0;
+		}
 	}
 }
