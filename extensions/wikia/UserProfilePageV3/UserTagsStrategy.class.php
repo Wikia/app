@@ -137,7 +137,7 @@ class UserTagsStrategy extends WikiaObject {
 					$tags[] = wfMessage( 'user-identity-box-group-council' )->escaped();
 					break;
 				case 'global-discussions-moderator':
-					$tags[] = "Global Discussions Moderator";
+					$tags[] = wfMessage( 'user-identity-box-group-global-discussions-moderator' )->escaped();
 					break;
 			}
 		}
