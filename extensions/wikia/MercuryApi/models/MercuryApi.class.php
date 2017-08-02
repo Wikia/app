@@ -1,6 +1,7 @@
 <?php
 
 use Wikia\Logger\WikiaLogger;
+use Wikia\CommunityHeader\Wordmark;
 
 class MercuryApi {
 
@@ -163,6 +164,7 @@ class MercuryApi {
 				]
 			],
 			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId ),
+			'wordmark' => new Wordmark( new DesignSystemCommunityHeaderModel( (int) $wgCityId ) ),
 		];
 	}
 
