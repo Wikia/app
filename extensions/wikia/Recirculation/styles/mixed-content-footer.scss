@@ -1,0 +1,26 @@
+@import 'skins/shared/mixins/flexbox';
+
+.mcf-card-ns-stream {
+	@include align-items(center);
+	@include flex-direction(column);
+	@include flexbox();
+	@include justify-content(flex-end);
+	background-size: cover;
+	background-position: center;
+	// fixme size shouldn't be fixed
+	width: 334px;
+	height: 334px;
+
+	&__title {
+		color: #fff;
+		font-size: 18px;
+		font-weight: bold;
+		line-height: 24px;
+		margin-bottom: 12px;
+		text-align: center;
+	}
+
+	.wds-button {
+		margin-bottom: 40px;
+	}
+}
