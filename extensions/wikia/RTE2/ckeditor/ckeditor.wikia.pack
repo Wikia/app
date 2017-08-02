@@ -185,8 +185,8 @@ packages :
 				//wikia plugins below
 				'../js/plugins/accesskey/plugin.js'
 				'../js/plugins/comment/plugin.js'	
-				//'../js/plugins/comment/dialogs/comment.js'
-				//'../js/plugins/dialog/plugin.js'
+				'../js/plugins/comment/dialogs/comment.js'
+				'../js/plugins/dialog/plugin.js'
 				//'../js/plugins/dragdrop/plugin.js'
 				//'../js/plugins/entities/plugin.js'
 				//'plugins/fakeobjects/plugin.js'
