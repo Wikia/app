@@ -25,6 +25,9 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		kiloAdUnitBuilder: {
 			build: function () {}
 		},
+		megaAdUnitBuilder: {
+			build: function () {}
+		},
 		gptHelper: {
 			pushAd: function (slotName, slotElement, slotPath, slotTargeting, extra) {
 				extra.success();
@@ -101,6 +104,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 				return modules['ext.wikia.adEngine.provider.' + providerName](
 					mocks.adContext,
 					mocks.kiloAdUnitBuilder,
+					mocks.megaAdUnitBuilder,
 					getFactory()
 				);
 			case 'remnantGptMobile':

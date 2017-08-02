@@ -162,21 +162,12 @@ class CommentsIndex {
 		$dbr = wfGetDB( DB_SLAVE );
 		$row = $dbr->selectRow( 'comments_index', '*', [ 'comment_id' => $commentId ], __METHOD__ );
 
-		// TODO: Monitor if this actually gets executed and remove if not
 		if ( !$row ) {
-			$this->error( 'SUS-1680 - No match for comment id in slave comments_index - retry from master', [
+			$this->error( 'SUS-1680 - No match for comment id in comments_index', [
 				'commentId' => $commentId
 			] );
 
-			$dbw = wfGetDB( DB_MASTER );
-			$row = $dbw->selectRow( 'comments_index', '*', [ 'comment_id' => $commentId ], __METHOD__ );
-
-			if ( !$row ) {
-				$this->error( 'SUS-1680 - No match for comment id in master comments_index', [
-					'commentId' => $commentId
-				] );
-				return null;
-			}
+			return null;
 		}
 
 		$entry = CommentsIndexEntry::newFromRow( $row );
