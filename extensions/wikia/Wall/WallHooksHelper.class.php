@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 /**
  * Hooks for Message Wall.
  *
@@ -54,9 +56,12 @@ class WallHooksHelper {
 
 		if ( $title->getNamespace() === NS_USER_WALL_MESSAGE && intval( $title->getText() ) > 0  ) {
 			// message wall index - brick page
+
+			// SUS-2521: Ensure thread ID is an integer - intval( '2123_karamba' ) = 2123
+			$threadId = intval( $title->getText() );
 			$outputDone = true;
 
-			$mainTitle = Title::newFromId( $title->getText() );
+			$mainTitle = Title::newFromId( $threadId );
 			if ( empty( $mainTitle ) ) {
 				$dbkey = null;
 			} else {
@@ -65,9 +70,17 @@ class WallHooksHelper {
 
 			if ( empty( $dbkey ) ) {
 				// try master
-				$mainTitle = Title::newFromId( $title->getText(), Title::GAID_FOR_UPDATE );
+				$mainTitle = Title::newFromId( $threadId, Title::GAID_FOR_UPDATE );
 				if ( !empty( $mainTitle ) ) {
+					WikiaLogger::instance()->info( 'Wall thread master fallback - found', [
+						'threadId' => $threadId
+					] );
+
 					$dbkey = $mainTitle->getDBkey();
+				} else {
+					WikiaLogger::instance()->info( 'Wall thread master fallback - not found', [
+						'threadId' => $threadId
+					] );
 				}
 			}
 
@@ -101,7 +114,7 @@ class WallHooksHelper {
 			$app->wg->Out->addHTML( $app->renderView(
 				'WallController',
 				'thread',
-				[ 'id' => $title->getText(), 'title' => $wallMessage->getArticleTitle() ]
+				[ 'id' => $threadId, 'title' => $wallMessage->getArticleTitle() ]
 			) );
 
 			return true;
@@ -116,7 +129,6 @@ class WallHooksHelper {
 		) {
 			// message wall index
 			$outputDone = true;
-			$action = $app->wg->request->getVal( 'action' );
 			$app->wg->Out->addHTML( $app->renderView( 'WallController', 'index', [ 'title' => $article->getTitle() ] ) );
 		}
 
@@ -1390,7 +1402,7 @@ class WallHooksHelper {
 			$realTitle = Title::newFromID( $id );
 
 			if ( empty( $realTitle ) ) {
-				\Wikia\Logger\WikiaLogger::instance()->debug( 'Unknown thread ID', [
+				WikiaLogger::instance()->debug( 'Unknown thread ID', [
 					'method' => __METHOD__,
 					'titleText' => $title->getText(),
 					'titleId' => $id,
