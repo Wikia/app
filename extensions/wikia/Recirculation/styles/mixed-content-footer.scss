@@ -1,9 +1,13 @@
 @import 'skins/shared/mixins/flexbox';
 
+.mcf-card {
+	@include flexbox();
+	border-radius: 2px;
+}
+
 .mcf-card-ns-stream {
 	@include align-items(center);
 	@include flex-direction(column);
-	@include flexbox();
 	@include justify-content(flex-end);
 	background-size: cover;
 	background-position: center;
@@ -24,6 +28,38 @@
 		margin-bottom: 40px;
 	}
 }
+
+.mcf-card-topic {
+	@include flex-direction(column);
+	@include justify-content(flex-end);
+	background-size: cover;
+	background-position: center;
+	// fixme size shouldn't be fixed
+	width: 334px;
+	height: 334px;
+
+	&__overlay {
+		@include align-items(center);
+		@include flex-direction(column);
+		@include flexbox();
+		background-color: rgba(#1a1a1a, 0.75);
+	}
+
+	&__title {
+		margin-bottom: 25px;
+		font-size: 30px;
+		color: #fff;
+		margin-top: 20px;
+		font-weight: bold;
+	}
+
+	.wds-button {
+		border-color: #fff;
+		color: #fff;
+		margin-bottom: 30px;
+	}
+}
+
 
 .mcf-card-wiki-article {
 	@include flex-direction(column);
