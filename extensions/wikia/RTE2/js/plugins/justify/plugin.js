@@ -243,22 +243,22 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 			editor.ui.addButton( 'JustifyLeft',
 				{
-					label : editor.lang.justify.left,
+					label : window.mw.msg('rte-ck-justify-left'),//editor.lang.justify.left,
 					command : 'justifyleft'
 				} );
 			editor.ui.addButton( 'JustifyCenter',
 				{
-					label : editor.lang.justify.center,
+					label : window.mw.msg('rte-ck-justify-center'),//editor.lang.justify.center,
 					command : 'justifycenter'
 				} );
 			editor.ui.addButton( 'JustifyRight',
 				{
-					label : editor.lang.justify.right,
+					label : window.mw.msg('rte-ck-justify-right'),//editor.lang.justify.right,
 					command : 'justifyright'
 				} );
 			editor.ui.addButton( 'JustifyBlock',
 				{
-					label : editor.lang.justify.block,
+					label : window.mw.msg('rte-ck-justify-block'),//editor.lang.justify.block,
 					command : 'justifyblock'
 				} );
 

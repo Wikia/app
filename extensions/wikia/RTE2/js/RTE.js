@@ -71,10 +71,10 @@
 				'rte-dialog,' +
 				'rte-dragdrop,' +
 				'rte-entities,' +
-				'rte-gallery',
-				//'justify,' +
+				'rte-gallery,' +
+				//'rte-justify',
 				//'fakeobjects,' +
-				//'link,' +
+				'rte-link',
 				//'rte-linksuggest,' +
 				//'rte-media',
 				//'rte-modeswitch',
