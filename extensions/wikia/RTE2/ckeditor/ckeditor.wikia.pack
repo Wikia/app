@@ -199,7 +199,7 @@ packages :
 				'../js/plugins/overlay/plugin.js'
 				'../js/plugins/paste/plugin.js'
 				'../js/plugins/placeholder/plugin.js'
-
+				'../js/plugins/signature/plugin.js'
 				//'plugins/fakeobjects/plugin.js'
 				//'plugins/fakeobjects/lang/en.js'
 				//'plugins/link/plugin.js'

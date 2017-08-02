@@ -13,8 +13,8 @@ CKEDITOR.plugins.add('rte-signature',
 
 		// register "Signature" toolbar button
 		editor.ui.addButton('Signature', {
-			title: editor.lang.signature.add,
-			label: editor.lang.signature.label,
+			title: window.mw.msg('rte-ck-signature-add'),//editor.lang.signature.add,
+			label: window.mw.msg('rte-ck-signature-label'),//editor.lang.signature.label,
 			className: 'cke_label_button cke_button_signature',
 			command: 'addsignature'
 		});
