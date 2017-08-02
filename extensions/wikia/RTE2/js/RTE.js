@@ -82,8 +82,8 @@
 				'rte-paste,' +
 				'rte-placeholder,' +
 				'rte-signature,' +
-				'rte-spellchecker',
-				//'rte-template,' +
+				'rte-spellchecker,' +
+				'rte-template',
 				//'rte-temporary-save,' +
 				//'rte-toolbar,' +
 				//'rte-tools',
