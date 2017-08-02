@@ -47,10 +47,8 @@ class ImageReviewTask extends BaseTask {
 			$reason = wfMessage( 'imagereview-reason' )->inLanguage( $cityLang );
 
 			if ( count( $imageData ) == 3 ) {
-				$escapedReason = escapeshellarg( $reason );
-
 				$command =
-					escapeshellcmd( "/usr/wikia/backend/bin/run_maintenance --id=${wikiId} --script='wikia/deleteImageRevision.php --pageId=${imageId} --revisionId=${revisionId} --reason=\"${escapedReason}\"'" );
+					"/usr/wikia/backend/bin/run_maintenance --id=${wikiId} --script='wikia/deleteImageRevision.php --pageId=${imageId} --revisionId=${revisionId}'";
 
 				$output = wfShellExec( $command, $exitStatus );
 

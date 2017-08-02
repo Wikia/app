@@ -14,7 +14,6 @@ class DeleteImageRevision extends Maintenance {
 		parent::__construct();
 		$this->addOption( self::PAGE_ID_OPTION, "image page id", true );
 		$this->addOption( self::REVISION_ID_OPTION, "revision id", true );
-		$this->addOption( self::REASON_OPTION, "deletion reason", true );
 		$this->mDescription = "Remove given revision of given image file";
 	}
 
@@ -22,7 +21,7 @@ class DeleteImageRevision extends Maintenance {
 	public function execute() {
 		$pageId = intval( $this->getOption( self::PAGE_ID_OPTION ) );
 		$revisionId = intval( $this->getOption( self::REVISION_ID_OPTION ) );
-		$reason = $this->getOption( self::REASON_OPTION );
+		$reason = wfMessage( 'imagereview-reason' )->inContentLanguage();
 
 		$title = Title::newFromID( $pageId );
 		if ( empty( $title ) ) {
