@@ -120,7 +120,8 @@ class ImageReviewTask extends BaseTask {
 
 	public function update( $pageList ) {
 		foreach ( $pageList as list( $cityId, $pageId, $revisionId ) ) {
-			$key = wfMemcKey( "image-review-${cityId}-${pageId}-${revisionId}" );
+			$db = \WikiFactory::IDtoDB( $cityId );
+			$key = wfForeignMemcKey( $db, '', "image-review-${cityId}-${pageId}-${revisionId}" );
 			\WikiaDataAccess::cachePurge( $key );
 		}
 	}

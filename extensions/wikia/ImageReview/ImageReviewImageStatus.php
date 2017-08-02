@@ -121,7 +121,8 @@ function fetchReviewHistory( $dbr, $cityId, $pageId ) {
 }
 
 function fetchReviewHistoryFromService( $cityId, $pageId, $revisionId ) {
-	$key = wfMemcKey( "image-review-${cityId}-${pageId}-${revisionId}" );
+	$db = \WikiFactory::IDtoDB( $cityId );
+	$key = wfForeignMemcKey( $db, '', "image-review-${cityId}-${pageId}-${revisionId}" );
 
 	return WikiaDataAccess::cache( $key, WikiaResponse::CACHE_STANDARD, function() use( $cityId, $pageId, $revisionId ) {
 		$statusMessages = [
