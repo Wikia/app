@@ -30,8 +30,8 @@ CKEDITOR.plugins.add('rte-media', {
 		debugger;
 		// register "Image" toolbar button
 		editor.ui.addButton('Image', {
-			label: editor.lang.image.photo,
-			title: editor.lang.image.add,
+			label: window.mw.msg('rte-ck-image-photo'),//editor.lang.image.photo,
+			title: window.mw.msg('rte-ck-image-add'),//editor.lang.image.add,
 			className: 'RTEImageButton',
 			command: 'addimage'
 		});
@@ -49,8 +49,8 @@ CKEDITOR.plugins.add('rte-media', {
 
 			// register "Video" toolbar button
 			editor.ui.addButton('Video', {
-				label: editor.lang.video.video,
-				title: editor.lang.video.add,
+				label: window.mw.msg('rte-ck-video-video'),//editor.lang.video.video,
+				title: window.mw.msg('rte-ck-video-add'),//editor.lang.video.add,
 				className: 'RTEVideoButton',
 				command: 'addvideo'
 			});

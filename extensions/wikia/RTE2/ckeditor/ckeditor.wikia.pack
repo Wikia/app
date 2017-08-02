@@ -194,18 +194,19 @@ packages :
 				'../js/plugins/link/plugin.js'
 				'../js/plugins/link/dialogs/link.js'
 				'../js/plugins/linksuggest/plugin.js''	
+				'../js/plugins/media/plugin.js'
+	
 				//'plugins/fakeobjects/plugin.js'
 				//'plugins/fakeobjects/lang/en.js'
 				//'plugins/link/plugin.js'
 				//'plugins/link/lang/en.js'	
 				//'plugins/link/dialogs/link.js'
-				//'../js/plugins/media/plugin.js'
 				//'../js/plugins/placeholder/plugin.js'
 				//'../js/plugins/template/plugin.js'
 				//'../js/plugins/template/dialogs/template.js'
 				//'../js/plugins/toolbar/plugin.js'
 				//'../js/plugins/linksuggest/plugin.js',
-				'../js/plugins/media/plugin.js',
+				//'../js/plugins/media/plugin.js',
 				//'../js/plugins/modeswitch/plugin.js',
 				//'../js/plugins/overlay/plugin.js',
 				//'../js/plugins/paste/plugin.js',
