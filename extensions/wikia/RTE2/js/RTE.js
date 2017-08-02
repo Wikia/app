@@ -68,8 +68,8 @@
 		 
 				'rte-accesskey,' +
 				'rte-comment,' +
-				'rte-dialog',
-				//'rte-dragdrop,' +
+				'rte-dialog,' +
+				'rte-dragdrop',
 				//'rte-entities,' +
 				//'rte-gallery,' +
 				//'justify,' +
