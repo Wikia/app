@@ -205,6 +205,7 @@ packages :
 				'../js/plugins/template/dialogs/template.js'
 				'../js/plugins/temporary-save/plugin.js'
 				'../js/plugins/toolbar/plugin.js'
+				'../js/plugins/tools/plugin.js'
 
 				//'plugins/fakeobjects/plugin.js'
 				//'plugins/fakeobjects/lang/en.js'
