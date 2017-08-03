@@ -25,7 +25,7 @@ class FixYoutubeUpgrade extends Maintenance {
 		}
 
 		// Load wikia user
-		$wgUser = User::newFromName( 'WikiaBot' );
+		$wgUser = User::newFromName( Wikia::BOT_USER );
 		if ( !$wgUser ) {
 			echo "WARN: Could not load WikiaBot user\n";
 			exit(1);
