@@ -8,18 +8,18 @@ CKEDITOR.dialog.add('rte-template', function(editor)
 	var lang = editor.lang.templateEditor;
 
 	// help link for magic words
-	var magicWordsLink = window.wgArticlePath.replace(/\$1/, lang.dialog.magicWordsLink.replace(/ /g, '_'))
+	var magicWordsLink = window.wgArticlePath.replace(/\$1/, window.mw.msg('rte-ck-templateEditor-magicWordsLink').replace(/ /g, '_')/*lang.dialog.magicWordsLink.replace(/ /g, '_')*/);
 
 	// return dialog structure definition
 	return {
-		title: lang.title,
+		title: window.mw.msg('rte-ck-templateEditor-title'),//lang.title,
 		minWidth: 760,
 		minHeight: 365,
 		buttons: [  // [Ok] and [Choose another template]
 			{
 				id: 'chooseAnotherTpl',
 				type: 'button',
-				label: lang.editor.chooseAnotherTpl,
+				label: window.mw.msg('rte-ck-templateEditor-editor-chooseAnotherTpl'),//lang.editor.chooseAnotherTpl,
 				className: 'cke_dialog_choose_another_tpl',
 				buttonType: 'secondary',
 				onClick: function (ev) {
@@ -47,7 +47,7 @@ CKEDITOR.dialog.add('rte-template', function(editor)
 							{
 								type: 'html',
 								className: 'templateEditorHeader dark_text_2',
-								html: lang.dialog.search
+								html: window.mw.msg('rte-ck-templateEditor-dialog-search'),//lang.dialog.search
 							},
 							{
 								id: 'templateSearchQuery',
@@ -57,7 +57,7 @@ CKEDITOR.dialog.add('rte-template', function(editor)
 							{
 								id: 'templateDoSearch',
 								type: 'button',
-								label: lang.dialog.insert,
+								label: window.mw.msg('rte-ck-templateEditor-dialog-insert'),//lang.dialog.insert,
 								style: 'position: relative; top: 6px',
 								onClick: function() {
 									var dialog = this.getDialog();
@@ -83,7 +83,7 @@ CKEDITOR.dialog.add('rte-template', function(editor)
 						// browse for template
 						type: 'html',
 						className: 'templateEditorHeader',
-						html: lang.dialog.browse
+						html: window.mw.msg('rte-ck-templateEditor-dialog-browse'),//lang.dialog.browse
 					},
 					{
 						// list of templates / magic words (wrapper)
@@ -93,13 +93,13 @@ CKEDITOR.dialog.add('rte-template', function(editor)
 							{
 								// list of templates
 								type: 'html',
-								html: '<h2>' + lang.dialog.mostFrequentlyUsed  + '</h2>' +
+								html: '<h2>' + window.mw.msg('rte-ck-templateEditor-dialog-mostFrequentUsed')/*lang.dialog.mostFrequentlyUsed*/  + '</h2>' +
 									'<ul id="templateEditorHotTemplates"></ul>'
 							},
 							{
 								// list of magic words
 								type: 'html',
-								html: '<h2><a id="templateLinkToHelp" target="_blank" href="' + magicWordsLink + '">' + lang.dialog.magicWords  + '</a></h2>' +
+								html: '<h2><a id="templateLinkToHelp" target="_blank" href="' + magicWordsLink + '">' + window.mw.msg('rte-ck-templateEditor-dialog-magicWords')/*lang.dialog.magicWords*/  + '</a></h2>' +
 									'<ul id="templateEditorMagicWords"></ul>'
 
 							}
@@ -117,8 +117,8 @@ CKEDITOR.dialog.add('rte-template', function(editor)
 						type: 'html',
 						html: '<div id="templateEditorIntro">' +
 							'<h1 id="templateEditorTemplateName" class="dark_text_2"></h1>' +
-							'<a id="templateEditorViewLink" href="#" target="_blank">' + lang.editor.viewTemplate + '</a>' +
-							'<p>' + lang.editor.intro  + '</p>' +
+							'<a id="templateEditorViewLink" href="#" target="_blank">' + window.mw.msg('rte-ck-templateEditor-viewTemplate')/*lang.editor.viewTemplate*/ + '</a>' +
+							'<p>' + window.mw.msg('rte-ck-templateEditor-editor-intro')/*lang.editor.intro*/  + '</p>' +
 							'</div>'
 					},
 					{
@@ -129,13 +129,13 @@ CKEDITOR.dialog.add('rte-template', function(editor)
 							{
 								// list of parameters and their values
 								type: 'html',
-								html: '<h2>' + lang.editor.parameters + '</h2>' +
+								html: '<h2>' + window.mw.msg('rte-ck-templateEditor-editor-parameters')/*lang.editor.parameters*/ + '</h2>' +
 									'<dl id="templateParameters"></dl>'
 							},
 							{
 								// preview button
 								type: 'button',
-								label: lang.editor.previewButton,
+								label: window.mw.msg('rte-ck-templateEditor-editor-previewButton'),//lang.editor.previewButton,
 								onClick: function() {
 									var self = this;
 
@@ -153,7 +153,7 @@ CKEDITOR.dialog.add('rte-template', function(editor)
 							{
 								// preview area
 								type: 'html',
-								html: '<h2>' + lang.editor.previewTitle  + '</h2>' +
+								html: '<h2>' + window.mw.msg('rte-ck-templateEditor-editor-previewTitle')/*lang.editor.previewTitle*/  + '</h2>' +
 									'<div id="templatePreview" class="reset"></div>'
 							}
 						]

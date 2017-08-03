@@ -115,7 +115,7 @@ CKEDITOR.plugins.add('rte-gallery',
 						break;
 				}
 
-				return RTE.getInstance().lang.photoGallery[key];
+				return window.mw.msg('rte-ck-photoGallery-' + key);//RTE.getInstance().lang.photoGallery[key];
 			});
 	}
 });

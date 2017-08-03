@@ -88,7 +88,7 @@ CKEDITOR.plugins.add('rte-placeholder',
 						className = 'RTEPlaceholderPreviewTemplate';
 
 						title = info.title.replace(/_/g, ' ').replace(/^Template:/, window.RTEMessages.template + ':');
-						intro = info.exists ? lang.template.intro : lang.template.notExisting;
+						intro = info.exists ? window.mw.msg('rte-ck-hoverPreview-template-intro')/*lang.template.intro*/ : window.mw.msg('rte-ck-hoverPreview-template-notExisting');/*lang.template.notExisting;*/
 
 						// show wikitext, if template does not exist
 						code = info.exists ? info.html : data.wikitext;
@@ -143,12 +143,12 @@ CKEDITOR.plugins.add('rte-placeholder',
 
 				if (showEdit && isEditable) {
 					tools += '<img class="sprite edit" src="'+wgBlankImgUrl+'" />' +
-						'<a class="RTEPlaceholderPreviewToolsEdit">' + lang.edit + '</a>';
+						'<a class="RTEPlaceholderPreviewToolsEdit">' + window.mw.msg('rte-ck-hoverPreview-edit')/*lang.edit*/ + '</a>';
 				}
 
 				tools += '<img class="sprite remove" src="'+wgBlankImgUrl+'" />' +
 					'<a class="RTEPlaceholderPreviewToolsDelete">' +
-					lang['delete'] + '</a>';
+					window.mw.msg('rte-ck-hoverPreview-delete')/*lang['delete']*/ + '</a>';
 
 				//
 				// render HTML
@@ -244,7 +244,7 @@ CKEDITOR.plugins.add('rte-placeholder',
 		// position preview node
 		var position = RTE.tools.getPlaceholderPosition(placeholder);
 		var tempTop,
-			freeBottomSpace = $(RTE.getInstance().getThemeSpace('contents').$).height() - position.top;
+			freeBottomSpace = $(RTE.getInstance().ui.space('contents').$).height() - position.top;
 		if (freeBottomSpace <= preview.height()) {
 			tempTop = position.top - preview.height() - placeholder.height();
 			preview.addClass('bottom');
