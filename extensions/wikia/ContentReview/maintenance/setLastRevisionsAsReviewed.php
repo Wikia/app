@@ -62,7 +62,7 @@ class ReviewedRevision extends Maintenance {
 
 	private function getWikiaUser() {
 		if ( empty( $this->wikiaUser ) ) {
-			$this->wikiaUser = User::newFromName( 'Wikia' );
+			$this->wikiaUser = User::newFromName( Wikia::USER );
 		}
 
 		return $this->wikiaUser;

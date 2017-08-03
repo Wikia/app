@@ -98,7 +98,7 @@ class HAWelcomeTaskHookDispatcher {
 	}
 
 	protected function currentUserIsDefaultWelcomer() {
-		return $this->currentUser->getName() == HAWelcomeTask::DEFAULT_WELCOMER;
+		return $this->currentUser->getName() == Wikia::USER;
 	}
 
 	protected function currentUserIsFounder() {
