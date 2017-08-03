@@ -61,21 +61,31 @@ class CrossOriginResourceSharingHeaderHelper {
 					$response->removeHeader( $headerName );
 
 					foreach ( $headers as $header ) {
-						if ( strpos( $header['value'], self::HEADER_DELIMETER ) !== false ) {
-							$valuesToSet = array_merge( $valuesToSet, explode( self::HEADER_DELIMETER, $header['value'] ) );
-						}
+						$valuesToSet = $this->mergeValues( $valuesToSet, $header['value'] );
 					}
 				}
 
-				if ( is_array( $valuesToSet ) ) {
-					$response->setHeader( $headerName, implode( self::HEADER_DELIMETER, $valuesToSet ) );
-				} else {
-					$response->setHeader( $headerName, $valuesToSet );
-				}
+				$this->setResponseHeader( $response, $headerName, $valuesToSet );
 			}
 		}
 
 		return $this;
+	}
+
+	private function mergeValues( $mergeTo, $headerValue ) {
+		if ( is_array( $mergeTo ) && strpos( $headerValue, self::HEADER_DELIMETER ) !== false ) {
+			return array_merge( $mergeTo, explode( self::HEADER_DELIMETER, $headerValue ) );
+		}
+
+		return $mergeTo;
+	}
+
+	private function setResponseHeader( WikiaResponse $response, $headerName, $values ) {
+		if ( is_array( $values ) ) {
+			$response->setHeader( $headerName, implode( self::HEADER_DELIMETER, $values ) );
+		} else {
+			$response->setHeader( $headerName, $values );
+		}
 	}
 
 	/**
