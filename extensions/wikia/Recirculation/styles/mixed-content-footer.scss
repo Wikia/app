@@ -8,7 +8,8 @@
 	@include flex-direction(column);
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
-	border-radius: 2px;
+	border: 1px solid $wds-color-faint-gray;
+	border-radius: 3px;
 	text-decoration: none;
 
 	&:hover {
@@ -64,10 +65,10 @@
 	}
 
 	&__title {
-		margin-bottom: 25px;
-		font-size: 30px;
 		color: $wds-color-white;
-		margin-top: 20px;
+		font-size: 30px;
+		margin-bottom: 18px;
+		margin-top: 14px;
 		font-weight: bold;
 	}
 
@@ -90,8 +91,8 @@
 		color: $wds-color-white;
 		font-size: 16px;
 		font-weight: bold;
-		line-height: 24px;
-		margin-bottom: 12px;
+		line-height: 22px;
+		margin-bottom: 6px;
 		padding: 0 18px;
 	}
 
@@ -100,24 +101,26 @@
 		font-size: 14px;
 		font-weight: bold;
 		line-height: 24px;
-		margin-bottom: 18px;
+		margin-bottom: 13px;
 		opacity: 0.5;
 		padding-left: 18px;
 	}
 
 	&__video {
+		$play-button-size: 90px;
 		@include align-items(center);
-		@include align-self(center);
 		@include flexbox();
 		@include justify-content(center);
-		background-color: rgba(26, 26, 26, 0.2);
+		background-color: rgba($wds-color-black, 0.2);
+		border: solid 6px $wds-color-white;
 		border-radius: 50%;
 		box-sizing: border-box;
-		border: solid 6px $wds-color-white;
-		height: 90px;
+		height: $play-button-size;
+		left: 50%;
+		margin-left: -$play-button-size/2;
 		position: absolute;
 		top: 50px;
-		width: 90px;
+		width: $play-button-size;
 	}
 
 	&__video-icon {
@@ -129,7 +132,6 @@
 
 .mcf-card-wiki-articles {
 	background-color: $wds-color-white;
-	border: 1px solid $wds-color-faint-gray;
 	width: 334px;
 
 	&__header {
@@ -159,8 +161,8 @@
 		position: relative;
 	}
 
-	ul {
-		margin: 0 16px;
+	&__list {
+		margin: 0 18px;
 	}
 
 	&__item {
@@ -198,12 +200,12 @@
 	}
 
 	&__title {
+		font-size: 14px;
 		margin-left: 12px;
 	}
 }
 
 .mcf-card-related-wikis {
-	border: 1px solid $wds-color-faint-gray;
 	background-color: $wds-color-white;
 	height: 376px;
 	width: 334px;
@@ -217,7 +219,7 @@
 		position: relative;
 	}
 
-	ul {
+	&__list {
 		margin: 0 16px;
 	}
 
@@ -227,6 +229,10 @@
 		border-bottom: 1px solid $wds-color-faint-gray;
 		min-height: 70px;
 		min-width: 302px;
+
+		&:last-child {
+			border-bottom: 0;
+		}
 	}
 
 	&__item-link {
