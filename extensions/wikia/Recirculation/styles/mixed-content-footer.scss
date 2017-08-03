@@ -1,13 +1,32 @@
 @import 'skins/shared/mixins/flexbox';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-functions/index';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-mixins/index';
 
 .mcf-card {
 	@include flexbox();
+	@include flex-direction(column);
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
 	border-radius: 2px;
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: none;
+	}
+
+	.wds-button.wds-is-secondary {
+		cursor: pointer;
+
+		&:hover {
+			border-color: $wds-color-link;
+			color: $wds-color-link;
+		}
+	}
 }
 
 .mcf-card-ns-stream {
 	@include align-items(center);
-	@include flex-direction(column);
 	@include justify-content(flex-end);
 	background-size: cover;
 	background-position: center;
@@ -16,7 +35,7 @@
 	height: 334px;
 
 	&__title {
-		color: #fff;
+		color: $wds-color-white;
 		font-size: 18px;
 		font-weight: bold;
 		line-height: 24px;
@@ -30,7 +49,6 @@
 }
 
 .mcf-card-topic {
-	@include flex-direction(column);
 	@include justify-content(flex-end);
 	background-size: cover;
 	background-position: center;
@@ -42,27 +60,24 @@
 		@include align-items(center);
 		@include flex-direction(column);
 		@include flexbox();
-		background-color: rgba(#1a1a1a, 0.75);
+		background-color: rgba($wds-color-black, 0.75);
 	}
 
 	&__title {
 		margin-bottom: 25px;
 		font-size: 30px;
-		color: #fff;
+		color: $wds-color-white;
 		margin-top: 20px;
 		font-weight: bold;
 	}
 
 	.wds-button {
-		border-color: #fff;
-		color: #fff;
 		margin-bottom: 30px;
 	}
 }
 
 
 .mcf-card-wiki-article {
-	@include flex-direction(column);
 	@include justify-content(flex-end);
 	background-size: cover;
 	background-position: center;
@@ -72,18 +87,18 @@
 	width: 334px;
 
 	&__title {
-		color: #fff;
+		color: $wds-color-white;
 		font-size: 16px;
-		font-weight: 600;
+		font-weight: bold;
 		line-height: 24px;
 		margin-bottom: 12px;
 		padding: 0 18px;
 	}
 
 	&__subtitle {
-		color: #fff;
+		color: $wds-color-white;
 		font-size: 14px;
-		font-weight: 600;
+		font-weight: bold;
 		line-height: 24px;
 		margin-bottom: 18px;
 		opacity: 0.5;
@@ -96,9 +111,9 @@
 		@include flexbox();
 		@include justify-content(center);
 		background-color: rgba(26, 26, 26, 0.2);
-		border-radius:50%;
+		border-radius: 50%;
 		box-sizing: border-box;
-		border: solid 6px #ffffff;
+		border: solid 6px $wds-color-white;
 		height: 90px;
 		position: absolute;
 		top: 50px;
@@ -106,49 +121,66 @@
 	}
 
 	&__video-icon {
-		fill: #fff;
+		fill: $wds-color-white;
 		margin-left: 6px;
 	}
 
 }
 
 .mcf-card-wiki-articles {
-	border: 1px solid #ccc;
-	background-color: #fff;
+	background-color: $wds-color-white;
+	border: 1px solid $wds-color-faint-gray;
 	width: 334px;
 
 	&__header {
-		background-color: #0000ff;
-		padding: 16px;
+		background-color: $color-community-header;
 		background-position: right center;
 		background-repeat: no-repeat;
 		background-size: contain;
-		position: relative;
+		color: community-header-text-color($color-community-header);
 		font-size: 18px;
-		color: #fff;
+		font-weight: bold;
+		padding: 16px;
+		position: relative;
 
 		&:before {
+			@include community-header-gradient($color-community-header, 50px, 220px);
 			content: '';
 			display: block;
 			height: 100%;
 			position: absolute;
 			width: 100%;
-			background: linear-gradient(to right,rgba(0,103,34,0.5),rgba(0,103,34,0.5)),linear-gradient(to left,rgba(0,103,34,0) 200px,#006722 430px);
+			top: 0;
+			left: 0;
 		}
 	}
 
+	&__header-text {
+		position: relative;
+	}
+
 	ul {
-		margin: 16px;
+		margin: 0 16px;
 	}
 
 	&__item {
-		@include align-items(center);
-		@include flexbox();
-		border-bottom: 1px solid #ccc;
-		padding: 21px 0;
+		border-bottom: 1px solid $wds-color-faint-gray;
 
 		&:last-child {
 			border-bottom: 0;
+		}
+	}
+
+	&__item-link {
+		@include align-items(center);
+		@include flexbox();
+		color: $wds-color-black;
+		padding: 21px 0;
+		text-decoration: none;
+		width: 100%;
+
+		&:hover {
+			text-decoration: none;
 		}
 	}
 
@@ -156,13 +188,13 @@
 		@include align-items(center);
 		@include flexbox();
 		@include justify-content(center);
-		background-color: #0000ff;
+		background-color: $wds-color-light-gray;
 		border-radius: 50%;
-		height: 36px;
-		width: 36px;
+		color: $wds-color-white;
 		font-size: 18px;
 		font-weight: bold;
-		color: #fff;
+		height: 36px;
+		width: 36px;
 	}
 
 	&__title {
@@ -170,44 +202,48 @@
 	}
 }
 
-.mcf-card-realted-wikis {
-	border: 1px solid #ccc;
-	background-color: #fff;
-	width: 334px;
+.mcf-card-related-wikis {
+	border: 1px solid $wds-color-faint-gray;
+	background-color: $wds-color-white;
 	height: 376px;
+	width: 334px;
 
 	&__header {
-		color: #000;
-		border-bottom: 1px solid #ccc;
+		color: $wds-color-black;
+		border-bottom: 1px solid $wds-color-faint-gray;
 		font-size: 18px;
-		font-weight: 600;
+		font-weight: bold;
 		padding: 16px;
 		position: relative;
 	}
 
 	ul {
-		margin: 16px;
+		margin: 0 16px;
 	}
 
 	&__item {
 		@include align-items(center);
 		@include flexbox();
-		border-bottom: 1px solid #ccc;
+		border-bottom: 1px solid $wds-color-faint-gray;
 		min-height: 70px;
 		min-width: 302px;
+	}
+
+	&__item-link {
+		@include align-items(center);
+		@include flexbox();
+		color: $wds-color-black;
 		padding: 18px 0;
+		text-decoration: none;
+		width: 100%;
 
-		&:first-child {
-			padding: 0 0 18px 0;
-		}
-
-		&:last-child {
-			border-bottom: 0;
+		&:hover {
+			text-decoration: none;
 		}
 	}
 
 	&__title {
-		color: #2c2c2c;
+		color: $wds-color-black;
 		display: block;
 		font-size: 16px;
 		font-weight: bold;
@@ -215,7 +251,7 @@
 	}
 
 	&__subtitle {
-		color: #999999;
+		color: $wds-color-light-gray;
 		font-size: 14px;
 		font-weight: normal;
 		margin-left: 12px;

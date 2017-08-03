@@ -9,20 +9,16 @@
 ) {
 	@include dropdown-theming($color-page, $color-text, $color-links, $color-page-border);
 
-	$text-color: $wds-color-white;
-	@if luminance($header-background-color) > .3 {
-		$text-color: $wds-color-black;
-	}
+	$text-color: community-header-text-color($header-background-color);
 	$text-hover-color: rgba($text-color, .8);
 
-	margin-top: luminance($color-page);
 	background-color: $header-background-color;
 
 	&::before {
-		background: linear-gradient(to right, rgba($header-background-color, .5), rgba($header-background-color, .5)), linear-gradient(to left, rgba($header-background-color, 0) 200px, $header-background-color $wds-community-header-background-width);
+		@include community-header-gradient($header-background-color, 200px, $wds-community-header-background-width);
 
 		@media #{$wds-breakpoint-l-down} {
-			background: linear-gradient(to right, rgba($header-background-color, .5), rgba($header-background-color, .5)), linear-gradient(to left, rgba($header-background-color, 0) 200px, $header-background-color $wds-community-header-background-width-small-breakpoint);
+			@include community-header-gradient($header-background-color, 200px, $wds-community-header-background-width-small-breakpoint);
 		}
 	}
 
@@ -59,12 +55,21 @@
 		}
 	}
 
-	.wds-tabs__tab.wds-is-active .wds-tabs__tab-label,
-	.wds-tabs__tab:hover .wds-tabs__tab-label {
-		color: $text-hover-color;
+	.wds-tabs__tab.wds-is-current {
+		@include wds-box-underline($text-color);
+	}
 
-		a {
-			color: inherit;
+	.wds-tabs__tab:hover {
+		.wds-tabs__tab-label {
+			color: $text-hover-color;
+
+			a {
+				color: inherit;
+			}
+		}
+
+		&.wds-is-current {
+			@include wds-box-underline($text-hover-color);
 		}
 	}
 
@@ -79,5 +84,9 @@
 
 	.wds-community-header__counter {
 		color: $text-color;
+	}
+
+	.wds-avatar-stack .user-avatar .avatar .user-avatar__image {
+		border-color: $text-color;
 	}
 }
