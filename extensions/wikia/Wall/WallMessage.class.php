@@ -603,7 +603,7 @@ class WallMessage {
 				static::$titleCache[$parentPageId] ??
 				Title::newFromID( $parentPageId ) ??
 				Title::newFromID( $parentPageId, Title::GAID_FOR_UPDATE ) ??
-				static::$emptyTitle;
+				static::emptyTitle();
 
 			return ( static::$titleCache[$parentPageId] = $parentTitle );
 		} catch ( CommentsIndexEntryNotFoundException $entryNotFoundException ) {
