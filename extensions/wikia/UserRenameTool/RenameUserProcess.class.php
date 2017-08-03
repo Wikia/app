@@ -635,7 +635,7 @@ class RenameUserProcess {
 		global $wgCityId, $wgUser;
 
 		$wgOldUser = $wgUser;
-		$wgUser = User::newFromName( 'Wikia' );
+		$wgUser = User::newFromName( Wikia::USER );
 
 		$cityDb = WikiFactory::IDtoDB( $wgCityId );
 		$this->addLog( "Processing wiki database: {$cityDb}." );
@@ -766,7 +766,7 @@ class RenameUserProcess {
 		}
 
 		$wgOldUser = $wgUser;
-		$wgUser = User::newFromName( 'Wikia' );
+		$wgUser = User::newFromName( Wikia::USER );
 
 		$cityDb = WikiFactory::IDtoDB( $wgCityId );
 		$this->addLog( "Processing wiki database: {$cityDb}." );
