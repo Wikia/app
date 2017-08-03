@@ -4,6 +4,7 @@ namespace Wikia\IndexingPipeline;
 
 use Title;
 use Wikia\Logger\WikiaLogger;
+use Wikia\Rabbit\ConnectionBase;
 
 class PipelineEventProducer {
 	const ARTICLE_MESSAGE_PREFIX = 'article';
@@ -272,7 +273,7 @@ class PipelineEventProducer {
 	/*
 	 * Helper methods
 	 */
-	/** @return ConnectionBase */
+	/** @return \Wikia\Rabbit\ConnectionBase */
 	protected static function getPipeline() {
 		global $wgIndexingPipeline;
 

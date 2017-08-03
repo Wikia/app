@@ -633,7 +633,7 @@ class AchAwardingService {
 				if ( $userPageTitle ) {
 					$userPageArticle = new Article( $userPageTitle, 0 );
 					if ( !$userPageArticle->exists() ) {
-						$userWikia = User::newFromName( 'Wikia' );
+						$userWikia = User::newFromName( Wikia::USER );
 
 						//#60032: forcing IP for bot since this code is run in a real user session and not from a maintenance script
 						$origIP = $wgRequest->getIP();

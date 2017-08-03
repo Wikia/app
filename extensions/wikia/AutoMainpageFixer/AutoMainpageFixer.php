@@ -38,7 +38,7 @@ function fnAutoMWMainpageFixer( Title $title, Title $newtitle, User $user, $oldi
 	$flags = EDIT_UPDATE + EDIT_NEW + EDIT_FORCE_BOT + EDIT_SUPPRESS_RC;
 
 	// VOLDEV-14: Non-admins should not be editing a MediaWiki page
-	$fauxUser = User::newFromName( Wikia::BOT_USER );
+	$fauxUser = User::newFromName( Wikia::USER );
 
 	$article->doEdit( $article_text, $edit_summary, $flags, false, $fauxUser );
 

@@ -578,7 +578,7 @@ class BlogArticle extends Article {
 		$results = [];
 
 		// VOLDEV-96: Do not credit edits to localhost
-		$wikiaUser = User::newFromName( 'Wikia' );
+		$wikiaUser = User::newFromName( Wikia::USER );
 
 		/**
 		 * create Blog:Recent posts page if not exists
