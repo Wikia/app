@@ -5,6 +5,8 @@ use Wikia\Rabbit\ConnectionBase;
 use Wikia\Tasks\Tasks\ImageReviewTask;
 
 class ImageReviewEventsHooks {
+	const ROUTING_KEY = 'image-review.mw-context.on-upload';
+
 	public static function onUploadComplete( UploadBase $form ) {
 		global $wgCityId, $wgImageReviewTestCommunities;
 
@@ -12,7 +14,7 @@ class ImageReviewEventsHooks {
 			// $form->getTitle() returns Title object with not updated latestRevisionId when uploading new revision
 			// of the file
 			$title = Title::newFromID( $form->getTitle()->getArticleID() );
-			self::sendToImageReviewService( $title );
+			self::actionCreate( $title );
 		} else {
 			static::createAddTask( $form->getTitle() );
 		}
@@ -26,7 +28,7 @@ class ImageReviewEventsHooks {
 		if ( in_array( $wgCityId, $wgImageReviewTestCommunities ) ) {
 			// $page->getTitle() returns Title object created before revert, so latestRevisionId is not updated there
 			$title = Title::newFromID( $page->getTitle()->getArticleID() );
-			self::sendToImageReviewService( $title );
+			self::actionCreate( $title );
 		} else {
 			static::createAddTask( $page->getTitle() );
 		}
@@ -39,7 +41,7 @@ class ImageReviewEventsHooks {
 			global $wgCityId, $wgImageReviewTestCommunities;
 
 			if ( in_array( $wgCityId, $wgImageReviewTestCommunities ) ) {
-				self::sendToImageReviewService( $title );
+				self::actionCreate( $title );
 			} else {
 				static::createAddTask( $title );
 			}
@@ -49,33 +51,35 @@ class ImageReviewEventsHooks {
 	}
 
 	public static function onArticleDeleteComplete( Page $page, User $user, $reason, $articleId ) {
-		global $wgCityId;
-
-		// TODO: should ImageReview service be notified about article delete?
-		
 		$title = $page->getTitle();
 
 		if ( static::isFileForReview( $title ) ) {
-			WikiaLogger::instance()->debug(
-				'Image Review - Adding delete task',
-				[
-					'method' => __METHOD__,
-					'title' => $title->getPrefixedText(),
-				]
-			);
+			global $wgCityId, $wgImageReviewTestCommunities;
 
-			$task = new ImageReviewTask();
-			$task->call(
-				'deleteFromQueue',
-				[
+			if ( in_array( $wgCityId, $wgImageReviewTestCommunities ) ) {
+				self::actionDelete( $title );
+			} else {
+				WikiaLogger::instance()->debug(
+					'Image Review - Adding delete task',
 					[
-						'wiki_id' => $wgCityId,
-						'page_id' => $articleId,
+						'method' => __METHOD__,
+						'title' => $title->getPrefixedText(),
 					]
-				]
-			);
-			$task->prioritize();
-			$task->queue();
+				);
+
+				$task = new ImageReviewTask();
+				$task->call(
+					'deleteFromQueue',
+					[
+						[
+							'wiki_id' => $wgCityId,
+							'page_id' => $articleId,
+						]
+					]
+				);
+				$task->prioritize();
+				$task->queue();
+			}
 		}
 
 		return true;
@@ -114,7 +118,7 @@ class ImageReviewEventsHooks {
 		$task->queue();
 	}
 
-	private static function sendToImageReviewService( Title $title ) {
+	private static function actionCreate( Title $title ) {
 		global $wgImageReview, $wgCityId;
 
 		$rabbitConnection = new ConnectionBase( $wgImageReview );
@@ -139,6 +143,23 @@ class ImageReviewEventsHooks {
 			'action' => 'created'
 		];
 
-		$rabbitConnection->publish( 'image-review.mw-context.on-upload', $data );
+		$rabbitConnection->publish( self::ROUTING_KEY, $data );
+	}
+
+	private static function actionDelete( Title $title, $revisionId = null ) {
+		global $wgImageReview, $wgCityId;
+
+		$rabbitConnection = new ConnectionBase( $wgImageReview );
+		$data = [
+			'wikiId' => $wgCityId,
+			'pageId' => $title->getArticleID(),
+			'action' => 'deleted'
+		];
+
+		if ( !empty( $revisionId ) ) {
+			$data['revisionId'] = $revisionId;
+		}
+
+		$rabbitConnection->publish( self::ROUTING_KEY, $data );
 	}
 }
