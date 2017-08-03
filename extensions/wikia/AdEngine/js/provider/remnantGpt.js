@@ -37,9 +37,7 @@ define('ext.wikia.adEngine.provider.remnantGpt', [
 					slotTweaker.adjustLeaderboardSize(slotName);
 				}
 			},
-			getAdUnitBuilder: function () {
-				return adContext.getContext().opts.enableRemnantNewAdUnit ? megaAdUnitBuilder : adUnitBuilder;
-			}
+			adUnitBuilder: adContext.getContext().opts.enableRemnantNewAdUnit ? megaAdUnitBuilder : adUnitBuilder
 		}
 	);
 });

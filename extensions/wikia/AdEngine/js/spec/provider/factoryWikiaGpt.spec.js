@@ -19,11 +19,6 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 				return '/5441/wka.ent/_muppet//home/' + src + '/' + slotName;
 			}
 		},
-		extraUnitBuilder: {
-			build: function(slotName, src) {
-				return 'extra/' + src + '/' + slotName;
-			}
-		},
 		gptHelper: {
 			pushAd: function (slot) {
 				slot.success();
@@ -105,38 +100,6 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 
 		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[1]).toEqual(
 			'/5441/wka.ent/_muppet//home/testSource/TOP_LEADERBOARD'
-		);
-	});
-
-	it('Build slot path based on page params width extra ad unit builder', function () {
-		spyOn(mocks.gptHelper, 'pushAd');
-
-		var extra = {
-			getAdUnitBuilder: function () {
-				return mocks.extraUnitBuilder;
-			}
-		};
-
-		getProvider(extra).fillInSlot(createSlot('TOP_LEADERBOARD'));
-
-		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[1]).toEqual(
-			'extra/testSource/TOP_LEADERBOARD'
-		);
-	});
-
-	it('Build slot path based on page params width extra ad unit builder in function', function () {
-		spyOn(mocks.gptHelper, 'pushAd');
-
-		var extra = {
-			getAdUnitBuilder: function () {
-				return mocks.extraUnitBuilder;
-			}
-		};
-
-		getProvider(extra).fillInSlot(createSlot('TOP_RIGHT_BOXAD'));
-
-		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[1]).toEqual(
-			'extra/testSource/TOP_RIGHT_BOXAD'
 		);
 	});
 
