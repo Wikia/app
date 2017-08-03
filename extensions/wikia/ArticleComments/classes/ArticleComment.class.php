@@ -7,7 +7,6 @@ use Wikia\Logger\WikiaLogger;
 
 class ArticleComment {
 
-	const MOVE_USER = 'WikiaBot';
 	const AVATAR_BIG_SIZE = 50;
 	const AVATAR_SMALL_SIZE = 30;
 
@@ -1359,7 +1358,7 @@ class ArticleComment {
 		}
 
 		$currentUser = $wgUser;
-		$wgUser = User::newFromName( self::MOVE_USER );
+		$wgUser = User::newFromName( Wikia::BOT_USER );
 
 		$parts = self::explode( $oCommentTitle->getDBkey() );
 		$commentTitleText = implode( '/', $parts['partsOriginal'] );
@@ -1462,7 +1461,7 @@ class ArticleComment {
 					'lang'		=> '',
 					'cat'		=> '',
 					'selwikia'	=> $wgCityId,
-					'user'		=> self::MOVE_USER
+					'user'		=> Wikia::BOT_USER
 				];
 
 				for ( $i = $finish + 1; $i < count( $comments ); $i++ ) {
