@@ -273,23 +273,20 @@ class MWCryptRand {
 		}
 
 		if ( strlen( $buffer ) < $bytes ) {
-			// If available make use of mcrypt_create_iv URANDOM source to generate randomness
-			// On unix-like systems this reads from /dev/urandom but does it without any buffering
-			// and bypasses openbasdir restrictions so it's preferable to reading directly
-			// On Windows starting in PHP 5.3.0 Windows' native CryptGenRandom is used to generate
-			// entropy so this is also preferable to just trying to read urandom because it may work
-			// on Windows systems as well.
-			if ( function_exists( 'mcrypt_create_iv' ) ) {
-				wfProfileIn( __METHOD__ . '-mcrypt' );
+			// If available make use of PHP 7's random_bytes
+			// On Linux, getrandom syscall will be used if available.
+			// On Windows CryptGenRandom will always be used
+			// On other platforms, /dev/urandom will be used.
+			// Avoids polyfills from before php 7.0
+			// All error situations will throw Exceptions and or Errors
+			if ( PHP_VERSION_ID >= 70000
+				 || ( defined( 'HHVM_VERSION_ID' ) && HHVM_VERSION_ID >= 31101 )
+			) {
 				$rem = $bytes - strlen( $buffer );
-				$iv = mcrypt_create_iv( $rem, MCRYPT_DEV_URANDOM );
-				if ( $iv === false ) {
-					wfDebug( __METHOD__ . ": mcrypt_create_iv returned false.\n" );
-				} else {
-					$buffer .= $iv;
-					wfDebug( __METHOD__ . ": mcrypt_create_iv generated " . strlen( $iv ) . " bytes of randomness.\n" );
-				}
-				wfProfileOut( __METHOD__ . '-mcrypt' );
+				$buffer .= random_bytes( $rem );
+			}
+			if ( strlen( $buffer ) >= $bytes ) {
+				$this->strong = true;
 			}
 		}
 
