@@ -182,8 +182,8 @@ CKEDITOR.plugins.add('rte-modeswitch',
 
 	updateTooltips: function(ev) {
 		var mode = ev.editor.mode,
-			sourceTabLabel = window.mw.msg('rte-ck-modeSwitch-toSource-' + (mode == 'source' ? '' : 'Tooltip')); //this.messages['toSource' + (mode == 'source' ? '' : 'Tooltip')],
-			wysiwygTabLabel = window.mw.msg('rte-ck-modeSwitch-toWysiwyg-' + (mode == 'wysiwyg' ? '' : 'Tooltip'));//this.messages['toWysiwyg' + (mode == 'wysiwyg' ? '' : 'Tooltip')];
+			sourceTabLabel 	= window.mw.msg('rte-ck-modeSwitch-toSource' + 	(mode == 'source'  ? '' : 'Tooltip')); //this.messages['toSource' + (mode == 'source' ? '' : 'Tooltip')],
+			wysiwygTabLabel = window.mw.msg('rte-ck-modeSwitch-toWysiwyg' + (mode == 'wysiwyg' ? '' : 'Tooltip')); //this.messages['toWysiwyg' + (mode == 'wysiwyg' ? '' : 'Tooltip')];
 
 		this.getSwitchTab(ev.editor, 'ModeSource').attr('title', sourceTabLabel);
 		this.getSwitchTab(ev.editor, 'ModeWysiwyg').attr('title', wysiwygTabLabel);

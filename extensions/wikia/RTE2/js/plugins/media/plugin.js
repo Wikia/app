@@ -109,7 +109,7 @@ CKEDITOR.plugins.add('rte-media', {
 		};
 
 		standardButtons = [{
-			label: msgs.edit,
+			label: window.mw.msg('rte-ck-media-edit'),//msgs.edit,
 			'class': 'RTEMediaOverlayEdit',
 			callback: function (node) {
 				var category = getTrackingCategory(node);
@@ -124,7 +124,7 @@ CKEDITOR.plugins.add('rte-media', {
 				node.trigger('edit');
 			}
 		}, {
-			label: msgs.delete,
+			label: window.mw.msg('rte-ck-media-delete'),//msgs.delete,
 			'class': 'RTEMediaOverlayDelete',
 			callback: function (node) {
 				var msgMediaType, category, title, msg;
@@ -369,7 +369,7 @@ CKEDITOR.plugins.add('rte-media', {
 
 		// setup image / video placeholder separatelly
 		images = placeholder.filter('.image-placeholder');
-		images.attr('title', RTE.getInstance().lang.imagePlaceholder.tooltip);
+		images.attr('title', window.mw.msg('rte-ck-imagePlaceholder-tooltip'));//RTE.getInstance().lang.imagePlaceholder.tooltip);
 		images.bind('click.placeholder edit.placeholder', function () {
 			// call WikiaMiniUpload and provide WMU with image clicked + inform it's placeholder
 			var self = this;
@@ -387,7 +387,7 @@ CKEDITOR.plugins.add('rte-media', {
 		});
 
 		videos = placeholder.filter('.video-placeholder');
-		videos.attr('title', RTE.getInstance().lang.videoPlaceholder.tooltip);
+		videos.attr('title', window.mw.msg('rte-ck-imagePlaceholder-tooltip'))//RTE.getInstance().lang.videoPlaceholder.tooltip);
 		videos.bind('click.placeholder edit.placeholder', function () {
 			// call VideoEmbedTool and provide VET with video clicked + inform it's placeholder
 			var self = this;
