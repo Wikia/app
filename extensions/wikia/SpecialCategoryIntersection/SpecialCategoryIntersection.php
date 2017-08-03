@@ -216,7 +216,12 @@ class SpecialCategoryIntersection extends SpecialPage {
 					if(startsWith($key, self::$CAT_PREFIX)){
 						$cat = $wgRequest->getVal($key);
 						if(!empty($cat)){
-							$categories[] = (!startsWith($cat, $this->CATEGORY_NS_PREFIX) and !startsWith($cat, NS_CATEGORY)) ? $this->CATEGORY_NS_PREFIX.$cat : $cat;
+							if(!startsWith($cat, $this->CATEGORY_NS_PREFIX) and !startsWith($cat, NS_CATEGORY))) {
+								$categories[] =  $this->CATEGORY_NS_PREFIX.$cat
+							}
+							else {
+								$categories[] = $cat;
+							}
 						}
 					}
 				}
@@ -289,13 +294,12 @@ class SpecialCategoryIntersection extends SpecialPage {
 		// Examples are now kept in wikitext so that each wiki can have its own examples if it wishes.
 		$exampleText = wfMsg('categoryintersection-footer-examples');
 		$rawExamples = explode("\n\n", $exampleText);
-		$examples = array_map(function($singleExample) {
+		foreach($rawExamples as $singleExample){
 			$items = explode("\n", trim($singleExample));
 			if(count($items) > 0){
-			    return $items;
+				$examples[] = $items;
 			}
-			return [];
-		},$rawExamples);
+		}
 
 		// Format and output the examples.
 		$html .= "<ul>\n";
