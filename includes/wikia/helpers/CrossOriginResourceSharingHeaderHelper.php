@@ -10,6 +10,7 @@
 class CrossOriginResourceSharingHeaderHelper {
 	const ALLOW_ORIGIN_HEADER_NAME = 'Access-Control-Allow-Origin';
 	const ALLOW_METHOD_HEADER_NAME = 'Access-Control-Allow-Method';
+	const ALLOW_CREDENTIALS_HEADER_NAME = 'Access-Control-Allow-Credentials';
 	const HEADER_DELIMETER = ',';
 
 	protected $allowValues = [];
@@ -35,6 +36,16 @@ class CrossOriginResourceSharingHeaderHelper {
 	}
 
 	/**
+	 * @param boolean $value
+	 * @return $this
+	 */
+	public function setAllowCredentials( $value ) {
+		$this->allowValues[self::ALLOW_CREDENTIALS_HEADER_NAME] = (boolean)$value ? 'true' : 'false';
+
+		return $this;
+	}
+
+	/**
 	 * This method sets all configured CORS related headers
 	 *
 	 * @param WikiaResponse $response response object to set headers to
@@ -50,11 +61,17 @@ class CrossOriginResourceSharingHeaderHelper {
 					$response->removeHeader( $headerName );
 
 					foreach ( $headers as $header ) {
-						$valuesToSet = array_merge( $valuesToSet, explode( self::HEADER_DELIMETER, $header['value'] ) );
+						if ( strpos( $header['value'], self::HEADER_DELIMETER ) !== false ) {
+							$valuesToSet = array_merge( $valuesToSet, explode( self::HEADER_DELIMETER, $header['value'] ) );
+						}
 					}
 				}
 
-				$response->setHeader( $headerName, implode( self::HEADER_DELIMETER, $valuesToSet ) );
+				if ( is_array( $valuesToSet ) ) {
+					$response->setHeader( $headerName, implode( self::HEADER_DELIMETER, $valuesToSet ) );
+				} else {
+					$response->setHeader( $headerName, $valuesToSet );
+				}
 			}
 		}
 

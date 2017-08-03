@@ -11,7 +11,8 @@ class DesignSystemApiController extends WikiaApiController {
 	public function __construct() {
 		parent::__construct();
 		$this->cors = new CrossOriginResourceSharingHeaderHelper();
-		$this->cors->setAllowOrigin( [ '*' ] );
+		$this->cors->readConfig();
+		$this->cors->setAllowCredentials( true );
 	}
 
 	public function getFooter() {
