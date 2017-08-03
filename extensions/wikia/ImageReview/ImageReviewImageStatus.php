@@ -33,7 +33,7 @@ function efImageReviewDisplayStatus( ImagePage $imagePage, &$html ) {
 
 	if ( in_array( $wgCityId, $wgImageReviewTestCommunities ) ) {
 		$reviews =
-			fetchReviewHistoryFromService( $wgCityId, $imagePage->getID(), $imagePage->getTitle()->getLatestRevID() );
+			fetchReviewHistoryFromService( $wgCityId, $imagePage->getTitle() );
 	} else {
 		$reviews = fetchReviewHistory( $dbr, $wgCityId, $imagePage->getID() );
 	}
@@ -111,7 +111,7 @@ function fetchReviewHistory( $dbr, $cityId, $pageId ) {
 		// imagereview-state-3
 		// imagereview-state-4
 		// imagereview-state-5
-		$data[] = wfMessage( 'imagereview-state-' . $row->review_state )->escaped();
+		$data[] = wfMessage( 'imagereview-state-' . $row->review_state )->text();
 		$data[] = $row->review_end . ' (UTC)';
 
 		$reviews[] = $data;
@@ -120,38 +120,57 @@ function fetchReviewHistory( $dbr, $cityId, $pageId ) {
 	return $reviews;
 }
 
-function fetchReviewHistoryFromService( $cityId, $pageId, $revisionId ) {
-	$statusMessages = [
-		'UNREVIEWED' => wfMessage( 'imagereview-state-0' )->escaped(),
-		'ACCEPTED' => wfMessage( 'imagereview-state-2' )->escaped(),
-		'QUESTIONABLE' => wfMessage( 'imagereview-state-5' )->escaped(),
-		'REJECTED' => wfMessage( 'imagereview-state-4' )->escaped(),
-		'REMOVED' => wfMessage( 'imagereview-state-3' )->escaped()
-	];
+function fetchReviewHistoryFromService( $cityId, Title $title ) {
+	global $wgDBname;
 
-	$reviewHistory = ( new ImageReviewService() )->getImageHistory(
-		$cityId,
-		$pageId,
-		$revisionId,
-		RequestContext::getMain()->getUser()
+	$db = wfGetDB( DB_SLAVE );
+	$timestamp = wfLocalFile( $title )->getTimestamp();
+	// latest revision of image is needed so we can not use $title->getLatestRevisionId() as it would return
+	// revision id for image description
+	$revisionId = $db->selectField(
+		['revision'],
+		'rev_id',
+		[
+			'rev_page' => $title->getArticleID(),
+			'rev_timestamp' => $timestamp
+		]
 	);
 
-	return array_map(
-		function ( ImageHistoryEntry $item ) use ( $statusMessages ) {
-			return [
-				$item->getUser(),
-				$statusMessages[$item->getStatus()],
-				$item->getDate()
-			];
-		},
-		array_filter(
-			$reviewHistory,
-			function ( ImageHistoryEntry $item ) {
-				// Filter out entry with status 'UNREVIEWED' as it does make sense to display entry about unreviewed status with user that uploaded the file
-				return $item->getStatus() != 'UNREVIEWED';
-			}
-		)
-	);
+	$key = wfForeignMemcKey( $wgDBname, 'image-review', $cityId, $title->getArticleID(), $revisionId );
+
+	return WikiaDataAccess::cache( $key, WikiaResponse::CACHE_STANDARD, function() use( $cityId, $title, $revisionId ) {
+		$statusMessages = [
+			'UNREVIEWED' => wfMessage( 'imagereview-state-0' )->escaped(),
+			'ACCEPTED' => wfMessage( 'imagereview-state-2' )->escaped(),
+			'QUESTIONABLE' => wfMessage( 'imagereview-state-5' )->escaped(),
+			'REJECTED' => wfMessage( 'imagereview-state-4' )->escaped(),
+			'REMOVED' => wfMessage( 'imagereview-state-3' )->escaped()
+		];
+
+		$reviewHistory = ( new ImageReviewService() )->getImageHistory(
+			$cityId,
+			$title->getArticleID(),
+			$revisionId,
+			RequestContext::getMain()->getUser()
+		);
+
+		return array_map(
+			function ( ImageHistoryEntry $item ) use ( $statusMessages ) {
+				return [
+					$item->getUser(),
+					$statusMessages[$item->getStatus()],
+					$item->getDate()
+				];
+			},
+			array_filter(
+				$reviewHistory,
+				function ( ImageHistoryEntry $item ) {
+					// Filter out entry with status 'UNREVIEWED' as it does make sense to display entry about unreviewed status with user that uploaded the file
+					return $item->getStatus() != 'UNREVIEWED';
+				}
+			)
+		);
+	} );
 }
 
 function isImageInReviewQueue( $dbr, $cityId, $pageId ) {
