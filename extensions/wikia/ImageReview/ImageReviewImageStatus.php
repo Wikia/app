@@ -121,8 +121,6 @@ function fetchReviewHistory( $dbr, $cityId, $pageId ) {
 }
 
 function fetchReviewHistoryFromService( $cityId, Title $title ) {
-	global $wgDBname;
-
 	$db = wfGetDB( DB_SLAVE );
 	$timestamp = wfLocalFile( $title )->getTimestamp();
 	// latest revision of image is needed so we can not use $title->getLatestRevisionId() as it would return
@@ -136,7 +134,7 @@ function fetchReviewHistoryFromService( $cityId, Title $title ) {
 		]
 	);
 
-	$key = wfForeignMemcKey( $wgDBname, 'image-review', $cityId, $title->getArticleID(), $revisionId );
+	$key = wfForeignMemcKey( $cityId, 'image-review', $title->getArticleID(), $revisionId );
 
 	return WikiaDataAccess::cache( $key, WikiaResponse::CACHE_STANDARD, function() use( $cityId, $title, $revisionId ) {
 		$statusMessages = [
