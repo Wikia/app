@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikia\IndexingPipeline;
+namespace Wikia\Rabbit;
 
 use PhpAmqpLib\Connection\AbstractConnection;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
