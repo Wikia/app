@@ -12,7 +12,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 	function checkStatus() {
 		var pageName = CKEDITOR.dialog.getCurrent().getContentElement('internal','name').getValue();
 		if ( pageName ) {
-			$(".link-type-note span").html(editor.lang.link.status.checking);
+			$(".link-type-note span").html(window.mw.msg('rte-ck-link-status-checking')/*editor.lang.link.status.checking*/);
 			$(".link-type-note img").show()[0].className = 'sprite progress';
 
 			// check our page name for validity
@@ -25,10 +25,10 @@ CKEDITOR.dialog.add( 'link', function( editor )
 
 	function setLinkExistance(exists) {
 		if ( exists ) {
-			$(".link-type-note span").html(editor.lang.link.status.exists);
+			$(".link-type-note span").html(window.mw.msg('rte-ck-link-status-exists')/*editor.lang.link.status.exists*/);
 			$(".link-type-note img").show()[0].className = 'link-icon link-yes';
 		} else {
-			$(".link-type-note span").html(editor.lang.link.status.notexists);
+			$(".link-type-note span").html(window.mw.msg('rte-ck-link-status-exists')/*editor.lang.link.status.notexists*/);
 			$(".link-type-note img").show()[0].className = 'link-icon link-no';
 		}
 	}
@@ -44,7 +44,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			if( radios.getValue() != 'ext' ){
 				radios.setValue('ext');
 			}
-			$(".link-type-note span").html(editor.lang.link.status.external);
+			$(".link-type-note span").html(window.mw.msg('rte-ck-link-status-external')/*editor.lang.link.status.external*/);
 			$(".link-type-note img").show()[0].className = 'sprite external';
 
 			// disable suggestions on the name box if external url
@@ -234,15 +234,15 @@ CKEDITOR.dialog.add( 'link', function( editor )
 	var lang = editor.lang.link;
 
 	return {
-		title : editor.lang.link.title,
+		title : window.mw.msg('rte-ck-link-title'),//editor.lang.link.title,
 		minWidth : 500,
 		minHeight : 185,
 		doNotCheckForChanged: true /* link dialog no longer warns on close (r25573 refactored) */,
 		contents : [
 			{
 				id : 'internal',
-				label : lang.internal.tab,
-				title : lang.internal.tab,
+				label : window.mw.msg('rte-ck-link-internal-tab'),//lang.internal.tab,
+				title : window.mw.msg('rte-ck-link-internal-tab'),//lang.internal.tab,
 				elements : [
 					{
 						'type': 'html',
@@ -251,7 +251,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 					},
 					{
 						'type': 'text',
-						'label': editor.lang.link.label.target,
+						'label': window.mw.msg('rte-ck-link-label-target'),//editor.lang.link.label.target,
 						'id': 'name',
 						onKeyUp: function() {
 							var linkTextField = this.getDialog().getContentElement('internal', 'label');
@@ -268,7 +268,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 								if( existsTimeout ){
 									clearTimeout(existsTimeout);
 								}
-								$(".link-type-note span").html(editor.lang.link.status.checking);
+								$(".link-type-note span").html(window.mw.msg('rte-ck-status-checking')/*editor.lang.link.status.checking*/);
 								$(".link-type-note img").show()[0].className = 'sprite progress';
 								existsTimeout = setTimeout(checkStatus,1000);
 							}
@@ -289,7 +289,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 							if ( linktype == 'wiki' ) {
 								// validate page name and anchors (RT #34047)
 								re = new RegExp('^(#(.+))|[' + RTE.constants.validTitleChars + ']+$');
-								var validPageNameFunc = CKEDITOR.dialog.validate.regex(re, editor.lang.link.error.badPageTitle);
+								var validPageNameFunc = CKEDITOR.dialog.validate.regex(re, window.mw.msg('rte-ck-link-error-badPageTitle')/*editor.lang.link.error.badPageTitle*/);
 
 								isValid = validPageNameFunc.apply(this);
 							} else {
@@ -298,7 +298,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 								if (!this.getValue().match(re)) {
 									this.setValue('http://' + this.getValue());
 								}
-								var validUrlFunc = CKEDITOR.dialog.validate.regex(re, editor.lang.link.error.badUrl);
+								var validUrlFunc = CKEDITOR.dialog.validate.regex(re, window.mw.msg('rte-ck-link-error-badUrl')/*editor.lang.link.error.badUrl*/);
 
 								isValid = validUrlFunc.apply(this);
 							}
@@ -308,7 +308,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 					},
 					{
 						'type': 'text',
-						'label': editor.lang.link.label.display,
+						'label': window.mw.msg('rte-ck-link-label-display'),//editor.lang.link.label.display,
 						'id': 'label',
 						onFocus: function()
 						{
@@ -318,7 +318,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 					},
 					{
 						'type': 'radio',
-						'items': [[editor.lang.link.label.internal,'wiki'],[editor.lang.link.label.external,'ext']],
+						'items': [[window.mw.msg('rte-ck-link-label-internal')/*editor.lang.link.label.internal*/,'wiki'],[window.mw.msg('rte-ck-link-label-external') /*editor.lang.link.label.external*/,'ext']],
 						'default': 'wiki',
 						'id': 'linktype',
 						'onChange': function( e )
