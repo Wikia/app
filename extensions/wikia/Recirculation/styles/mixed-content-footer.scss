@@ -177,10 +177,11 @@
 	height: 376px;
 
 	&__header {
-		padding: 16px;
-		font-size: 18px;
 		color: #000;
 		border-bottom: 1px solid #ccc;
+		font-size: 18px;
+		font-weight: 600;
+		padding: 16px;
 		position: relative;
 	}
 
@@ -192,6 +193,8 @@
 		@include align-items(center);
 		@include flexbox();
 		border-bottom: 1px solid #ccc;
+		min-height: 70px;
+		min-width: 302px;
 		padding: 18px 0;
 
 		&:first-child {
@@ -201,5 +204,20 @@
 		&:last-child {
 			border-bottom: 0;
 		}
+	}
+
+	&__title {
+		color: #2c2c2c;
+		display: block;
+		font-size: 16px;
+		font-weight: bold;
+		margin-left: 12px;
+	}
+
+	&__subtitle {
+		color: #999999;
+		font-size: 14px;
+		font-weight: normal;
+		margin-left: 12px;
 	}
 }
