@@ -24,7 +24,7 @@ for cluster in $(seq 1 7); do
 	echo -e "Updating activity for cluster $cluster"
 	echo -e "\tWriting to log $LOG_FILE"
 
-	CMD="php $RUNNER_SCRIPT --file $RUNNER_FILE -c $cluster --filter all --no-db-check > $LOG_FILE"
+	CMD="php -d display_errors=1 $RUNNER_SCRIPT --file $RUNNER_FILE -c $cluster --filter all --no-db-check > $LOG_FILE"
 	echo -e "\t$CMD"
 	$CMD
 #	echo -e "\tStarted with PID $! ..."
