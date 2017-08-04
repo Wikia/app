@@ -75,7 +75,7 @@ class ApiHooks {
 	 */
 	public static function onArticleSaveComplete(
 		WikiPage $wikiPage, User $user, $text, $summary, $minoredit, $watchthis, $sectionanchor,
-		$flags, Revision $revision, Status &$status, $baseRevId
+		$flags, $revision, Status &$status, $baseRevId
 	): bool {
 		ArticlesApiController::purgeCache( $wikiPage->getTitle()->getArticleID() );
 		ArticlesApiController::purgeMethods( [

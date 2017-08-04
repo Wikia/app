@@ -104,7 +104,7 @@ class CommunityMessages {
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 * @return bool
 	 */
-	static function onArticleSaveComplete( WikiPage $article, User $user, $text, $summary, $minoredit, $watchthis, $sectionanchor, $flags, Revision $revision, Status &$status, $baseRevId ): bool {
+	static function onArticleSaveComplete( WikiPage $article, User $user, $text, $summary, $minoredit, $watchthis, $sectionanchor, $flags, $revision, Status &$status, $baseRevId ): bool {
 		global $wgMemc;
 		$title = $article->getTitle();
 

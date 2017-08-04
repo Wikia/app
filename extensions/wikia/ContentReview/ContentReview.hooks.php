@@ -234,11 +234,10 @@ class Hooks {
 	 * @param $status
 	 * @param $baseRevId
 	 * @return bool
-	 * @throws PermissionsException
 	 */
-	public function onArticleSaveComplete( \WikiPage &$article, \User &$user, $text, $summary,
-			$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId
-	) {
+	public function onArticleSaveComplete( \WikiPage $article, \User $user, $text, $summary,
+			$minoredit, $watchthis, $sectionanchor, $flags, $revision, &$status, $baseRevId
+	): bool {
 		global $wgCityId;
 
 		/**

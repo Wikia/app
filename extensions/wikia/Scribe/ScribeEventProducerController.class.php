@@ -31,7 +31,10 @@ class ScribeEventProducerController {
 		return true;
 	}
 
-	static public function onSaveComplete( &$oPage, &$oUser, $text, $summary, $minor, $undef1, $undef2, &$flags, $oRevision, &$status, $baseRevId ) {
+	static public function onSaveComplete(
+		WikiPage $oPage, User $oUser, $text, $summary, $minor, $undef1, $undef2,
+		$flags, $oRevision, Status &$status, $baseRevId
+	): bool {
 		wfProfileIn( __METHOD__ );
 
 		$key = ( isset( $status->value['new'] ) && $status->value['new'] == 1 ) ? 'create' : 'edit';

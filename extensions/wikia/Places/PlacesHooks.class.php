@@ -32,7 +32,10 @@ class PlacesHooks {
 		return true;
 	}
 
-	static public function onArticleSaveComplete( WikiPage $article, User $user, $text, $summary, $minoredit, $watchthis, $sectionanchor, $flags, Revision $revision, Status &$status, $baseRevId ): bool {
+	static public function onArticleSaveComplete(
+		WikiPage $article, User $user, $text, $summary, $minoredit, $watchthis,
+		$sectionanchor, $flags, $revision, Status &$status, $baseRevId
+	): bool {
  		wfProfileIn( __METHOD__ );
 
 		wfDebug( __METHOD__ . "\n" );

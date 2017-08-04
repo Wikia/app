@@ -183,7 +183,7 @@ class ActivityFeedHelper {
 		return true;
 	}
 
-	static function onArticleSaveComplete( WikiPage $article, User $user, $text, $summary, $minoredit, $watchthis, $sectionanchor, $flags, Revision $revision, Status &$status, $baseRevId) {
+	static function onArticleSaveComplete( WikiPage $article, User $user, $text, $summary, $minoredit, $watchthis, $sectionanchor, $flags, $revision, Status &$status, $baseRevId) {
 		self::purgeCommunityWidgetInVarnish($article->mTitle);
 		return true;
 	}

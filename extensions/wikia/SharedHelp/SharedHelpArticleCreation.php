@@ -26,7 +26,7 @@ $wgHooks['ArticleSaveComplete'][] = 'efSharedHelpArticleCreation';
  * @param $baseRevId
  * @return bool
  */
-function efSharedHelpArticleCreation( WikiPage $article, User $user, $text, $summary, $minoredit, $watchthis, $sectionanchor, $flags, Revision $revision, Status &$status, $baseRevId ): bool {
+function efSharedHelpArticleCreation( WikiPage $article, User $user, $text, $summary, $minoredit, $watchthis, $sectionanchor, $flags, $revision, Status &$status, $baseRevId ): bool {
 	global $wgCityId, $wgHelpWikiId;
 
 	// only run on help wikis

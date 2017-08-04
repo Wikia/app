@@ -68,7 +68,7 @@ class EditTaggingHooks {
 	 */
 	public static function onArticleSaveComplete(
 		WikiPage $article, User $user, $text, $summary, $minoredit, $watchthis, $sectionanchor,
-		$flags, Revision $revision, Status &$status, $baseRevId
+		$flags, $revision, Status &$status, $baseRevId
 	): bool {
 		if ( !$revision instanceof Revision ) {
 			// We are only tagging real revisions, so no tag change

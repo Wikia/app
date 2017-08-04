@@ -24,7 +24,10 @@ class UserProfilePageHooks {
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	static public function onArticleSaveComplete( WikiPage $article, User $user, $text, $summary, $minoredit, $watchthis, $sectionanchor, $flags, Revision $revision, Status &$status, $baseRevId ): bool {
+	static public function onArticleSaveComplete(
+		WikiPage $article, User $user, $text, $summary, $minoredit, $watchthis,
+		$sectionanchor, $flags, $revision, Status &$status, $baseRevId
+	): bool {
 		global $wgCityId;
 		if ( $revision !== NULL ) { // do not count null edits
 			$wikiId = intval( $wgCityId );

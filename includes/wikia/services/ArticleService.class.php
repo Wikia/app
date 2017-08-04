@@ -377,7 +377,7 @@ class ArticleService extends WikiaObject {
 	 */
 	static public function onArticleSaveComplete(
 		WikiPage $page, User $user, $text, $summary, $minoredit, $watchthis, $sectionanchor, $flags,
-		Revision $revision, Status &$status, $baseRevId
+		$revision, Status &$status, $baseRevId
 	): bool {
 		/**
 		 * @var $service ArticleService

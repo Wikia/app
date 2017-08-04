@@ -133,7 +133,7 @@ class ScribeProducer {
 	 *
 	 * @author Piotr Molski (MoLi)
 	 */
-	static public function saveComplete( WikiPage $oArticle, User $oUser, $text, $summary, $minor, $undef1, $undef2, $flags, Revision $oRevision, Status &$status, $baseRevId ): bool {
+	static public function saveComplete( WikiPage $oArticle, User $oUser, $text, $summary, $minor, $undef1, $undef2, $flags, $oRevision, Status &$status, $baseRevId ): bool {
 		global $wgCityId;
 		wfProfileIn( __METHOD__ );
 

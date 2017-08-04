@@ -131,9 +131,12 @@ class VideoInfoHooksHelper {
 	 * @param $revision
 	 * @param $status
 	 * @param $baseRevId
-	 * @return true
+	 * @return bool true
 	 */
-	public static function onArticleSaveComplete( WikiPage $article, User $user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, Revision $revision, Status &$status, $baseRevId) {
+	public static function onArticleSaveComplete(
+		WikiPage $article, User $user, $text, $summary,
+		$minoredit, $watchthis, $sectionanchor, $flags, $revision, Status &$status, $baseRevId
+	): bool {
 
 		$insertedImages = Wikia::getVar( 'imageInserts' );
 

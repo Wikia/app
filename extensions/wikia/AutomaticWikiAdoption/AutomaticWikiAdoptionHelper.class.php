@@ -416,7 +416,7 @@ class AutomaticWikiAdoptionHelper {
 	 */
 	static function onArticleSaveComplete(
 		WikiPage $article, User $user, $text, $summary, $minoredit, $watchthis, $sectionanchor,
-		$flags, Revision $revision, Status &$status, $baseRevId
+		$flags, $revision, Status &$status, $baseRevId
 	): bool {
 		global $wgCityId;
 		if (in_array('sysop', $user->getGroups())) {

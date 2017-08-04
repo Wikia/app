@@ -28,7 +28,7 @@ class HAWelcomeTaskHooks {
 	 */
 	public static function onArticleSaveComplete(
 		WikiPage $page, User $user, $editContent, $editSummary, $isMinorEdit, $watchThis,
-		$sectionAnchor, $editFlags, Revision $revisionObject, Status $statusObject, $baseRevisionId
+		$sectionAnchor, $editFlags, $revisionObject, Status $statusObject, $baseRevisionId
 	): bool {
 		global $wgCityId, $wgCommandLineMode, $wgMemc, $wgUser;
 

@@ -730,7 +730,10 @@ class Masthead {
 	 * @param $baseRevId
 	 * @return bool
 	 */
-	static public function userMastheadInvalidateCache( &$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
+	static public function userMastheadInvalidateCache(
+		WikiPage $article, User $user, $text, $summary, $minoredit, $watchthis, $sectionanchor,
+		$flags, $revision, Status &$status, $baseRevId
+	): bool {
 		if ( !$user->isAnon() ) {
 			if ( count( $status->errors ) == 0 ) {
 				global $wgMemc;

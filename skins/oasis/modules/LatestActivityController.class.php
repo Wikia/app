@@ -71,7 +71,7 @@ class LatestActivityController extends WikiaController {
 		$watchthis,
 		$sectionanchor,
 		$flags,
-		Revision $revision,
+		$revision,
 		Status &$status,
 		$baseRevId
 	) {

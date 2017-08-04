@@ -1254,7 +1254,7 @@ class WallHooksHelper {
 	}
 
 	/**
-	 * @param Article $article
+	 * @param WikiPage $article
 	 * @param User $user
 	 * @param $text
 	 * @param $summary
@@ -1263,11 +1263,14 @@ class WallHooksHelper {
 	 * @param $sectionanchor
 	 * @param $flags
 	 * @param $revision
-	 * @param $status
+	 * @param Status $status
 	 * @param $baseRevId
 	 * @return bool
 	 */
-	static public function onArticleSaveComplete( Article $article, User $user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, Revision $revision, Status &$status, $baseRevId	) {
+	static public function onArticleSaveComplete(
+		WikiPage $article, User $user, $text, $summary, $minoredit, $watchthis,
+		$sectionanchor, $flags, $revision, Status &$status, $baseRevId
+	): bool {
 		$app = F::app();
 		$title = $article->getTitle();
 

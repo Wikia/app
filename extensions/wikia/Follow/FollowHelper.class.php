@@ -253,7 +253,7 @@ class FollowHelper {
 	 */
 	static public function watchBlogListing(
 		WikiPage $article, User $user, $text, $summary, $minor, $undef1, $undef2, $flags,
-		Revision $revision, Status &$status, $baseRevId
+		$revision, Status &$status, $baseRevId
 	): bool {
 		if ( !$status->value['new'] ) {
 			return true;
