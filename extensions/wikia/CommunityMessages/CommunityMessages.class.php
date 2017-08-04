@@ -27,11 +27,11 @@ class CommunityMessages {
 	 * check conditions and display message
 	 *
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
-	 * @param array $msgs
+	 * @param string $msgs
 	 * @param Skin $skin
 	 * @return bool
 	 */
-	static function onSkinTemplatePageBeforeUserMsg( array &$msgs, Skin $skin ): bool {
+	static function onSkinTemplatePageBeforeUserMsg( string &$msgs, Skin $skin ): bool {
 		global $wgUser, $wgMemc, $wgCookiePrefix;
 
 		if (self::$messageSeen) {
