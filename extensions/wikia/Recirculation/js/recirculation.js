@@ -80,7 +80,7 @@ require([
 		completed = [],
 		liftigniterHelpers = {};
 
-	if (w.wgContentLanguage !== 'en') {
+	if (w.wgContentLanguage === 'en') {
 		if (videosModule) {
 			videosModule('#recirculation-rail');
 		}

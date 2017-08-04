@@ -119,11 +119,12 @@ class DiscussionsDataService {
 		$meta['authorAvatarUrl'] = $rawPost['createdBy']['avatarUrl'];
 		$meta['upvoteCount'] = $rawPost['upvoteCount'];
 		$meta['postCount'] = $rawPost['postCount'];
+		$meta['forumName'] = $rawPost['forumName'];
 
 		return new RecirculationContent( [
 			'url' => $this->server . '/d/p/' . $rawPost['id'],
 			'index' => $index,
-			'title' =>  wfShortenText( $rawPost['rawContent'], 120 ),
+			'title' =>  wfShortenText( $rawPost['rawContent'], 70 ),
 			'publishDate' => wfTimestamp( TS_ISO_8601, $rawPost['creationDate']['epochSecond'] ),
 			'author' => $rawPost['createdBy']['name'],
 			'source' => 'discussions',

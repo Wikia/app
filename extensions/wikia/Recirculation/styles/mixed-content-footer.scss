@@ -263,3 +263,108 @@
 		margin-left: 12px;
 	}
 }
+
+.mcf-card-discussions {
+	border: 1px solid #ccc;
+	background-color: #fff;
+	max-width: 334px;
+	height: 608px;
+
+	&__header {
+		@include flexbox();
+		@include justify-content(space-between);
+		color: #000;
+		border-bottom: 1px solid #ccc;
+		font-size: 18px;
+		font-weight: 600;
+		padding: 16px;
+		position: relative;
+	}
+
+	&__link {
+		@include align-items(center);
+		@include flexbox();
+		font-size: 12px;
+		font-weight: bold;
+		text-align: right;
+		color: #011f6f;
+		text-decoration: none;
+	}
+
+	&__link-icon {
+		margin-left: 6px;
+		transform: rotate(180deg);
+	}
+
+	ul {
+		@include scrollable-list(555px, $wds-color-white);
+	}
+
+	&__item {
+		@include align-items(flex-start);
+		@include flexbox();
+		@include flex-direction(column);
+		border-bottom: 1px solid $wds-color-faint-gray;
+		margin: 0 16px;
+		min-height: 70px;
+		min-width: 302px;
+
+		a {
+			text-decoration: none;
+			width: 100%;
+		}
+	}
+
+	&__avatar {
+		border: 2px solid #cccccc;
+		border-radius: 50%;
+		height: 30px;
+		width: 30px;
+	}
+
+	&__user-info {
+		@include align-items(center);
+		@include flexbox();
+		margin-top: 12px;
+	}
+
+	&__user-subtitle {
+		color: #3a3a3a;
+		opacity: 0.5;
+		font-weight: bold;
+		font-size: 14px;
+		margin-left: 6px;
+	}
+
+	&__content {
+		color: #3a3a3a;
+		font-size: 18px;
+		font-weight: 500;
+		margin-top: 6px;
+		margin-bottom: 10px;
+		word-break: break-word;
+	}
+
+	&__meta {
+		@include justify-content(space-between);
+		@include flexbox();
+		padding-bottom: 12px;
+	}
+
+	&__in {
+		font-size: 14px;
+		font-weight: bold;
+		color: #999999;
+	}
+
+	&__counters {
+		@include align-items(center);
+		@include flexbox();
+		color: #999999;
+
+		svg {
+			margin-left: 6px;
+			margin-right: 3px;
+		}
+	}
+}
