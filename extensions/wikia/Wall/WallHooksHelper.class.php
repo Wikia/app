@@ -386,29 +386,28 @@ class WallHooksHelper {
 	/**
 	 * @brief Changes "My talk" to "Message wall" in the user links.
 	 *
-	 * @param $personalUrls
-	 * @param $title
-	 * @return true
+	 * @param array $personalUrls
+	 * @param Title $title
+	 * @param Skin $skin
+	 * @return bool true
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 * @author Piotrek Bablok
 	 */
-	static public function onPersonalUrls( &$personalUrls, &$title ) {
-		$app = F::App();
+	static public function onPersonalUrls( array &$personalUrls, Title $title, Skin $skin ): bool {
+		global $wgEnableWallExt;
 
-		if ( empty( $app->wg->EnableWallExt ) ) {
+		if ( empty( $wgEnableWallExt ) ) {
 			return true;
 		}
 
-		$user = $app->wg->User;
 		JSMessages::enqueuePackage( 'Wall', JSMessages::EXTERNAL );
 
-		if ( $user instanceof User && $user->isLoggedIn() ) {
-			$userWallTitle = static::getWallTitle( null, $user );
-			if ( $userWallTitle instanceof Title ) {
-				$personalUrls['mytalk']['href'] = $userWallTitle->getLocalUrl();
-			}
-			$personalUrls['mytalk']['text'] = wfMessage( 'wall-message-wall' )->text();
+		if ( $skin->getUser()->isLoggedIn() ) {
+			$userWallTitle = $skin->getUser()->getTalkPage();
+
+			$personalUrls['mytalk']['href'] = $userWallTitle->getLocalUrl();
+			$personalUrls['mytalk']['text'] = $skin->msg( 'wall-message-wall' )->text();
 
 			if ( !empty( $personalUrls['mytalk']['class'] ) ) {
 				unset( $personalUrls['mytalk']['class'] );
