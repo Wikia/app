@@ -275,12 +275,12 @@ If you think this is wrong, please contact us [[w:c:vstf:Report:Spam filter prob
 	'specialpages-group-wikia' => 'FANDOM pages',
 	'seeeditcount' => 'See edit count',
 	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
-* [http://www.wikia.com/wiki/Wikia:About About Wikia]
+* [http://www.wikia.com/wiki/Wikia:About About FANDOM]
 * [http://www.wikia.com/wiki/Wikia:Terms_of_use Terms of use]
 * [[Special:Contact|Contact]]
 * [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
 	'scarytranscludebadinterwiki' => 'Non-transcludable interwiki provided.',
-	'shared-News_box' => '[http://www.wikia.com/Hiring Wikia is now hiring for several open positions]<br>',
+	'shared-News_box' => '[http://www.wikia.com/Hiring FANDOM is now hiring for several open positions]<br>',
 );
 
 $messages['qqq'] = array(

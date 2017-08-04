@@ -42,13 +42,13 @@ $messages['en'] = array(
 	'content-review-status-escalated' => 'Escalated',
 	'content-review-rejection-explanation-title' => 'Submitted script change $1 rejected',
 	'content-review-rejection-explanation' => '==$1==
-The recently submitted change to this JavaScript page (revision [$2 $3]) was rejected by the Wikia review process. Please make sure you meet the [[Help:JavaScript review process|Custom JavaScript guidelines]]. --~~~~',
+The recently submitted change to this JavaScript page (revision [$2 $3]) was rejected by the FANDOM review process. Please make sure you meet the [[Help:JavaScript review process|Custom JavaScript guidelines]]. --~~~~',
 	'content-review-status-link-text' => 'Review status',
 	'content-review-special-js-pages-title' => 'JavaScript pages',
 	'content-review-special-js-description' => 'This page lists the current [[Help:JavaScript review process|review status]] of MediaWiki namespace scripts on this community.',
 	'content-review-special-js-importjs-description' => 'Note: you can add and remove local and dev.wikia.com script imports without the review process via [[MediaWiki:ImportJS]].',
 	'content-review-importjs-description' => 'Here, you can easily import scripts:
-* from your local wikia by article name - e.g. MyScript.js
+* from your local community by article name - e.g. MyScript.js
 * from dev.wikia.com by article name, preceded by "dev:" - e.g. dev:Code.js
 Names should not contain the MediaWiki namespace prefix. Write each script on a new line. See [[Help:Including additional CSS and JS]] for more information.
 ----

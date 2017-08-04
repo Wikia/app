@@ -37,12 +37,10 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 
 	function setupCustomAdapters() {
 		customAdapters.forEach(function (adapter) {
-			if (adapter && adapter.isEnabled()) {
-				push(adapter);
-				win.pbjs.que.push(function () {
-					win.pbjs.registerBidAdapter(adapter.create, adapter.getName());
-				});
-			}
+			push(adapter);
+			win.pbjs.que.push(function () {
+				win.pbjs.registerBidAdapter(adapter.create, adapter.getName());
+			});
 		});
 	}
 

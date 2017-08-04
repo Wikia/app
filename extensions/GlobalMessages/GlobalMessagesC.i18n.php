@@ -103,18 +103,7 @@ Since you do not have the hideuser right, you cannot see or edit the user's bloc
 	'cant-move-user-page' => 'You do not have permission to move user pages (apart from subpages).',
 	'cant-move-to-user-page' => 'You do not have permission to move a page to a user page (except to a user subpage).',
 	'cantmove-titleprotected' => 'You cannot move a page to this location, because the new title has been protected from creation',
-	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/
-
-/* Mark redirects in Special:Allpages and Special:Watchlist */
-.allpagesredirect {
-   font-style: italic;
-}
-.allpagesredirect:after {
-   color: #808080; content: " (redirect)"
-}
-.watchlistredir {
-   font-style: italic;
-}',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
 	'common.js' => '/* Any JavaScript here will be loaded for all users on every page load. */',
 	'creditspage' => 'Page credits',
 	'confirmemail' => 'Confirm email address',
