@@ -57,7 +57,7 @@ class ImageReviewEventsHooks {
 			global $wgCityId, $wgImageReviewTestCommunities;
 
 			if ( in_array( $wgCityId, $wgImageReviewTestCommunities ) ) {
-				self::actionDelete( $title );
+				self::actionDelete( $articleId );
 			} else {
 				WikiaLogger::instance()->debug(
 					'Image Review - Adding delete task',
@@ -80,6 +80,26 @@ class ImageReviewEventsHooks {
 				$task->prioritize();
 				$task->queue();
 			}
+		}
+
+		return true;
+	}
+
+	public static function onOldFileDeleteComplete( Title $title, $oi_timestamp ) {
+		global $wgCityId, $wgImageReviewTestCommunities;
+
+		if ( in_array( $wgCityId, $wgImageReviewTestCommunities ) ) {
+			$revisionId = wfGetDB( DB_SLAVE )->selectField(
+				['revision'],
+				'rev_id',
+				[
+					'rev_page' => $title->getArticleID(),
+					'rev_timestamp' => $oi_timestamp
+				],
+				__METHOD__
+			);
+
+			self::actionDelete( $title->getArticleID(), $revisionId );
 		}
 
 		return true;
@@ -146,13 +166,13 @@ class ImageReviewEventsHooks {
 		$rabbitConnection->publish( self::ROUTING_KEY, $data );
 	}
 
-	private static function actionDelete( Title $title, $revisionId = null ) {
+	private static function actionDelete( $pageId, $revisionId = null ) {
 		global $wgImageReview, $wgCityId;
 
 		$rabbitConnection = new ConnectionBase( $wgImageReview );
 		$data = [
 			'wikiId' => $wgCityId,
-			'pageId' => $title->getArticleID(),
+			'pageId' => $pageId,
 			'action' => 'deleted'
 		];
 
