@@ -14,6 +14,7 @@ class ImageReviewEventsHooks {
 			// $form->getTitle() returns Title object with not updated latestRevisionId when uploading new revision
 			// of the file
 			$title = Title::newFromID( $form->getTitle()->getArticleID() );
+
 			self::actionCreate( $title );
 		} else {
 			static::createAddTask( $form->getTitle() );
@@ -109,7 +110,7 @@ class ImageReviewEventsHooks {
 		if ( $title->inNamespace( NS_FILE ) ) {
 			$localFile = wfLocalFile( $title );
 
-			return ( $localFile instanceof File );
+			return ( $localFile instanceof File ) && strpos( $localFile->getMimeType(), 'image' ) !== false;
 		}
 
 		return false;
@@ -139,31 +140,33 @@ class ImageReviewEventsHooks {
 	}
 
 	private static function actionCreate( Title $title ) {
-		global $wgImageReview, $wgCityId;
+		if ( self::isFileForReview( $title ) ) {
+			global $wgImageReview, $wgCityId;
 
-		$rabbitConnection = new ConnectionBase( $wgImageReview );
-		$wamRank = ( new WAMService() )->getCurrentWamRankForWiki( $wgCityId );
-		$revisionId = $title->getLatestRevID();
-		$articleId = $title->getArticleID();
+			$rabbitConnection = new ConnectionBase( $wgImageReview );
+			$wamRank = ( new WAMService() )->getCurrentWamRankForWiki( $wgCityId );
+			$revisionId = $title->getLatestRevID();
+			$articleId = $title->getArticleID();
 
-		$data = [
-			'url' => ImageServingController::getUrl(
-				'getImageUrl',
-				[
-					'id' => $articleId,
-					'revision' => $revisionId,
-				]
-			),
-			'userId' => RequestContext::getMain()->getUser()->getId(),
-			'wikiId' => $wgCityId,
-			'pageId' => $articleId,
-			'revisionId' => $revisionId,
-			'contextUrl' => $title->getFullURL(),
-			'top200' => !empty( $wamRank ) && $wamRank <= 200,
-			'action' => 'created'
-		];
+			$data = [
+				'url' => ImageServingController::getUrl(
+					'getImageUrl',
+					[
+						'id' => $articleId,
+						'revision' => $revisionId,
+					]
+				),
+				'userId' => RequestContext::getMain()->getUser()->getId(),
+				'wikiId' => $wgCityId,
+				'pageId' => $articleId,
+				'revisionId' => $revisionId,
+				'contextUrl' => $title->getFullURL(),
+				'top200' => !empty( $wamRank ) && $wamRank <= 200,
+				'action' => 'created'
+			];
 
-		$rabbitConnection->publish( self::ROUTING_KEY, $data );
+			$rabbitConnection->publish( self::ROUTING_KEY, $data );
+		}
 	}
 
 	private static function actionDelete( $pageId, $revisionId = null ) {
