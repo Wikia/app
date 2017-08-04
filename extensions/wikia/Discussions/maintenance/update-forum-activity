@@ -4,7 +4,7 @@
 # Remove when migrations are done.
 
 DATE=`date "+%Y-%m-%d"`
-LOG_DIR="$HOME/update-forum-activity-logs/$DATE/"
+LOG_DIR="$HOME/update-forum-activity-logs/$DATE"
 mkdir -p $LOG_DIR
 
 # Please note that this won't work if current directory is a sym-link
