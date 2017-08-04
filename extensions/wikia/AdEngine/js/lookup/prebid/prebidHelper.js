@@ -28,6 +28,7 @@ define('ext.wikia.adEngine.lookup.prebid.prebidHelper', [
 	function setupAdUnits(skin) {
 		var adapters = adaptersRegistry.getAdapters();
 
+		adUnits = [];
 		adapters.forEach(function (adapter) {
 			if (adapter && adapter.isEnabled()) {
 				addAdUnits(getAdapterAdUnits(adapter, skin));
