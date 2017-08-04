@@ -30,7 +30,7 @@
 			height: 400, // default height when "auto resizing" is not applied
 			indentOffset: 24, // match WikiaArticle styles (BugId:25379)
 			language: window.wgUserLanguage,
-			toolbarCanCollapse: true,
+			toolbarCanCollapse: false,
 			plugins:
 				'basicstyles,' +
 				'button,' +
@@ -236,14 +236,14 @@
 			editor.dataProcessor.writer.lineBreakChars = '';
 
 			// override "Source" button to send AJAX request first, instead of mode switching
-			//CKEDITOR.plugins.sourcearea.commands.source.exec = function(editor) {
-			//	if (editor.mode == 'wysiwyg') {
-			//		editor.fire('saveSnapshot');
-			//	}
-			//
-			//	editor.fire('modeSwitch');
-			//}
-			//^^ No modeswitch yet
+			CKEDITOR.plugins.sourcearea.commands.source.exec = function(editor) {
+				if (editor.mode == 'wysiwyg') {
+					editor.fire('saveSnapshot');
+				}
+			
+				editor.fire('modeSwitch');
+			}
+	
 			// ok, we're done!
 			RTE.loaded.push(editor);
 

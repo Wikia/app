@@ -28,7 +28,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			$(".link-type-note span").html(window.mw.msg('rte-ck-link-status-exists')/*editor.lang.link.status.exists*/);
 			$(".link-type-note img").show()[0].className = 'link-icon link-yes';
 		} else {
-			$(".link-type-note span").html(window.mw.msg('rte-ck-link-status-exists')/*editor.lang.link.status.notexists*/);
+			$(".link-type-note span").html(window.mw.msg('rte-ck-link-status-notexists')/*editor.lang.link.status.notexists*/);
 			$(".link-type-note img").show()[0].className = 'link-icon link-no';
 		}
 	}
