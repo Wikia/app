@@ -376,7 +376,15 @@ class WikiExporter {
 						array( $this->db, &$tables, &$cond, &$opts, &$join ) );
 
 				# Do the query!
-				$result = $this->selectRows( $tables, '*', $cond, __METHOD__, $opts, $join );
+				# Wikia change begin - SUS-1395
+				if (!empty($cond)) {
+					$result = $this->db->select( $tables, '*', $cond, __METHOD__, $opts, $join );
+				}
+				else {
+					$result = $this->selectRows($tables, '*', $cond, __METHOD__, $opts, $join);
+				}
+				# Wikia change end
+
 				# Output dump results
 				$this->outputPageStream( $result );
 
@@ -420,43 +428,39 @@ class WikiExporter {
 	 * let's just send a set of small batched queries and yield each row returned. outputPageStream method
 	 * uses foreach to consume the passed $result object.
 	 *
+	 * @see SUS-1395
+	 *
 	 * @param $tables
 	 * @param $vars
 	 * @param $cond
 	 * @param $fname
 	 * @param $opts
 	 * @param $join
-	 * @return ResultWrapper|Generator
+	 * @return Generator
 	 */
 	private function selectRows($tables, $vars, $cond, $fname, $opts, $join) {
-		// we're not doing a full dump, let's just make a single query
-		if ( !empty( $cond ) ) {
-			return $this->db->select( $tables, $vars, $cond, $fname, $opts, $join );
-		}
-		else {
-			// as said above, we do want to make a set of small, buffered queries
-			$this->db->bufferResults( true );
+		// as said above, we do want to make a set of small, buffered queries
+		$this->db->bufferResults( true );
 
-			$page_max = (int) $this->db->selectField( 'page','MAX(page_id)', '', $fname );
+		$page_max = (int) $this->db->selectField( 'page','MAX(page_id)', '', $fname );
 
-			// fetch 500 pages in each batch
-			$offset_start = 1;
-			$batch_size = 500; # this returns up to ~100k rows on yugioh
+		// fetch 500 pages in each batch
+		$offset_start = 1;
+		$batch_size = 500; # this returns up to ~100k rows on yugioh
 
-			while( $offset_start <= $page_max ) {
-				$cond = [
-					sprintf( 'page_id BETWEEN %d AND %d', $offset_start, $offset_start + $batch_size - 1 )
-				];
+		while( $offset_start <= $page_max ) {
+			$cond = [
+				sprintf( 'page_id BETWEEN %d AND %d', $offset_start, $offset_start + $batch_size - 1 )
+			];
 
-				$results = $this->db->select( $tables, $vars, $cond, $fname, $opts, $join );
+			$results = $this->db->select( $tables, $vars, $cond, $fname, $opts, $join );
 
-				foreach( $results as $row ) {
-					yield $row;
-				}
-
-				$results->free();
-				$offset_start += $batch_size;
+			foreach( $results as $row ) {
+				yield $row;
 			}
+
+			$results->free();
+			$offset_start += $batch_size;
 		}
 	}
 
