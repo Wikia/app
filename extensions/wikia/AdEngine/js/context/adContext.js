@@ -118,13 +118,11 @@ define('ext.wikia.adEngine.adContext', [
 
 	function enableAdMixExperiment(context) {
 		var isPALEnabledOnDesktopFeaturedVideo = !!(
-				isPageType('article') &&
 				context.targeting.skin === 'oasis' &&
 				context.targeting.hasFeaturedVideo &&
 				geo.isProperGeo(instantGlobals.wgAdDriverAdMixCountries)
 			),
 			isPALEnabledOnRegularArticle = !!(
-				isPageType('article') &&
 				context.targeting.skin === 'oasis' &&
 				!context.targeting.hasFeaturedVideo &&
 				geo.isProperGeo(instantGlobals.wgAdDriverPremiumAdLayoutCountries)
