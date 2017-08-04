@@ -192,7 +192,7 @@ class GlobalTitle extends Title {
 	 *  for that kind of things
 	 */
 	private function loadAll() {
-		$old = $this->loadFromCache();
+		//$old = $this->loadFromCache();
 		$this->loadServer();
 		$this->loadArticlePath();
 		$this->loadContLang();
@@ -704,6 +704,11 @@ class GlobalTitle extends Title {
 		 * get value from city_variables
 		 */
 		$server = WikiFactory::getVarValueByName( "wgServer", $this->mCityId );
+		global $wgCityId;
+		if ( $this->mCityId === $wgCityId ) {
+			var_dump( $server );
+			exit;
+		}
 		if ( $server ) {
 			$this->mServer = \WikiFactory::getLocalEnvURL( $server );
 			return $server;
