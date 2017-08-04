@@ -12,9 +12,6 @@ namespace Wikia\Tasks\Tasks;
 use Wikia\Util\GlobalStateWrapper;
 
 class CreateNewWikiTask extends BaseTask {
-	const
-		DEFAULT_USER = 'Default',
-		WIKIA_USER = 'Wikia';
 
 	/** @var \User */
 	private $founder;
@@ -153,7 +150,7 @@ class CreateNewWikiTask extends BaseTask {
 					'target' => $targetTitle->getPrefixedText(),
 				];
 				if ( $sourceTitle->getPrefixedText() !== $targetTitle->getPrefixedText() ) {
-					$wikiaUser = \User::newFromName( self::WIKIA_USER );
+					$wikiaUser = \User::newFromName( \Wikia::USER );
 					$wrapper = new GlobalStateWrapper( [
 						'wgUser' => $wikiaUser
 					] );
@@ -225,7 +222,7 @@ class CreateNewWikiTask extends BaseTask {
 	 */
 	private function changeStarterContributions( $params ) {
 		$dbw = wfGetDB( DB_MASTER );
-		$contributor = \User::newFromName( self::DEFAULT_USER );
+		$contributor = \User::newFromName( \Wikia::USER );
 		$lastRevTimestamp = 0;
 
 		/**
@@ -380,7 +377,7 @@ class CreateNewWikiTask extends BaseTask {
 		global $wgUser, $wgWikiaKeyPages;
 
 		$saveUser = $wgUser;
-		$wgUser = \User::newFromName( self::WIKIA_USER );
+		$wgUser = \User::newFromName( \Wikia::USER );
 
 		if ( empty( $wgWikiaKeyPages ) ) {
 			$wgWikiaKeyPages = array( 'File:Wiki.png', 'File:Favicon.ico' );

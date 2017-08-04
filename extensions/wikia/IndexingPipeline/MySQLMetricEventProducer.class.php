@@ -2,6 +2,8 @@
 
 namespace Wikia\IndexingPipeline;
 
+use Wikia\Rabbit\ConnectionBase;
+
 class MySQLMetricEventProducer {
 	protected static $pipe;
 	const ROUTE = 'mainpage._output._warehouse';
@@ -43,7 +45,7 @@ class MySQLMetricEventProducer {
 	}
 
 	/**
-	 * @return \Wikia\IndexingPipeline\ConnectionBase
+	 * @return \Wikia\Rabbit\ConnectionBase
 	 */
 	protected static function getPipeline() {
 		global $wgMySQLMetricWorker;

@@ -44,6 +44,8 @@ $wgAutoloadClasses['WallBaseController'] =  $dir . '/WallBaseController.class.ph
 $wgAutoloadClasses['VoteHelper'] =  $dir . '/VoteHelper.class.php';
 $wgAutoloadClasses['WallRelatedPages'] =  $dir . '/WallRelatedPages.class.php';
 
+$wgAutoloadClasses['WallTabsRenderer'] = __DIR__ . '/WallTabsRenderer.php';
+
 $wgAutoloadClasses['WallBuilder'] = __DIR__ . '/builders/WallBuilder.class.php';
 $wgAutoloadClasses['WallMessageBuilder'] = __DIR__ . '/builders/WallMessageBuilder.class.php';
 $wgAutoloadClasses['WallEditBuilder'] = __DIR__ . '/builders/WallEditBuilder.class.php';
