@@ -61,8 +61,7 @@ class RecirculationController extends WikiaController {
 		$communityHeaderModel = new DesignSystemCommunityHeaderModel( $wgCityId );
 		$this->response->setVal( 'communityHeaderBackground',
 			$communityHeaderModel->getBackgroundImageUrl() );
-		$this->response->setVal( 'sitename',
-			new Sitename( $communityHeaderModel ) );
+		$this->response->setVal( 'sitename', new Sitename( $communityHeaderModel ) );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_PHP );
 	}
 }

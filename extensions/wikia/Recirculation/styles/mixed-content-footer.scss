@@ -32,8 +32,8 @@
 	background-size: cover;
 	background-position: center;
 	// fixme size shouldn't be fixed
-	width: 334px;
 	height: 334px;
+	width: 334px;
 
 	&__title {
 		color: $wds-color-white;
@@ -54,8 +54,8 @@
 	background-size: cover;
 	background-position: center;
 	// fixme size shouldn't be fixed
-	width: 334px;
 	height: 334px;
+	width: 334px;
 
 	&__overlay {
 		@include align-items(center);
@@ -67,9 +67,9 @@
 	&__title {
 		color: $wds-color-white;
 		font-size: 30px;
+		font-weight: bold;
 		margin-bottom: 18px;
 		margin-top: 14px;
-		font-weight: bold;
 	}
 
 	.wds-button {
