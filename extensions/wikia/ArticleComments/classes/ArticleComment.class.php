@@ -1242,10 +1242,8 @@ class ArticleComment {
 	 *
 	 * @return Bool true -- because it's a hook
 	 */
-	static public function watchlistNotify( RecentChange &$oRC ) {
+	static public function watchlistNotify( RecentChange $oRC ): bool {
 		global $wgEnableGroupedArticleCommentsRC;
-
-		Hooks::run( 'AC_RecentChange_Save', [ &$oRC ] );
 
 		if ( !empty( $wgEnableGroupedArticleCommentsRC ) && ( $oRC instanceof RecentChange ) ) {
 			$title = $oRC->getAttribute( 'rc_title' );
