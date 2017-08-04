@@ -132,4 +132,34 @@ class WallNotificationsExternalController extends WikiaController {
 		$this->response->setCachePolicy( WikiaResponse::CACHE_PRIVATE );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
 	}
+
+	/**
+	 * Requested by Wall Notifications for cross-wiki notifications
+	 * @see WallNotificationEntity::loadDataFromRevIdOnWiki()
+	 */
+	public function getEntityData() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
+		$revId = $this->getVal( 'revId' );
+		$useMasterDB = $this->getVal( 'useMasterDB', false );
+
+		$wn = new WallNotificationEntity();
+		if ( $wn->loadDataFromRevId( $revId, $useMasterDB ) ) {
+			$this->response->setCacheValidity( WikiaResponse::CACHE_SHORT );
+
+			$this->response->setData( [
+				'data' => $wn->data,
+				'parentTitleDbKey' => $wn->parentTitleDbKey,
+				'msgText' => $wn->msgText,
+				'threadTitleFull' => $wn->threadTitleFull,
+				'status' => 'ok',
+			] );
+
+			return;
+		}
+
+		$this->response->setData( [
+			'status' => 'error'
+		] );
+	}
 }
