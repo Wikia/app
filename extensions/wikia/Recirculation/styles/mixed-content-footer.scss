@@ -1,0 +1,265 @@
+@import 'skins/shared/mixins/flexbox';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-functions/index';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-mixins/index';
+
+.mcf-card {
+	@include flexbox();
+	@include flex-direction(column);
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	border: 1px solid $wds-color-faint-gray;
+	border-radius: 3px;
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: none;
+	}
+
+	.wds-button.wds-is-secondary {
+		cursor: pointer;
+
+		&:hover {
+			border-color: $wds-color-link;
+			color: $wds-color-link;
+		}
+	}
+}
+
+.mcf-card-ns-stream {
+	@include align-items(center);
+	@include justify-content(flex-end);
+	background-size: cover;
+	background-position: center;
+	// fixme size shouldn't be fixed
+	height: 334px;
+	width: 334px;
+
+	&__title {
+		color: $wds-color-white;
+		font-size: 18px;
+		font-weight: bold;
+		line-height: 24px;
+		margin-bottom: 12px;
+		text-align: center;
+	}
+
+	.wds-button {
+		margin-bottom: 40px;
+	}
+}
+
+.mcf-card-topic {
+	@include justify-content(flex-end);
+	background-size: cover;
+	background-position: center;
+	// fixme size shouldn't be fixed
+	height: 334px;
+	width: 334px;
+
+	&__overlay {
+		@include align-items(center);
+		@include flex-direction(column);
+		@include flexbox();
+		background-color: rgba($wds-color-black, 0.75);
+	}
+
+	&__title {
+		color: $wds-color-white;
+		font-size: 30px;
+		font-weight: bold;
+		margin-bottom: 18px;
+		margin-top: 14px;
+	}
+
+	.wds-button {
+		margin-bottom: 30px;
+	}
+}
+
+
+.mcf-card-wiki-article {
+	@include justify-content(flex-end);
+	background-size: cover;
+	background-position: center;
+	height: 292px;
+	position: relative;
+	// fixme size shouldn't be fixed
+	width: 334px;
+
+	&__title {
+		color: $wds-color-white;
+		font-size: 16px;
+		font-weight: bold;
+		line-height: 22px;
+		margin-bottom: 6px;
+		padding: 0 18px;
+	}
+
+	&__subtitle {
+		color: $wds-color-white;
+		font-size: 14px;
+		font-weight: bold;
+		line-height: 24px;
+		margin-bottom: 13px;
+		opacity: 0.5;
+		padding-left: 18px;
+	}
+
+	&__video {
+		$play-button-size: 90px;
+		@include align-items(center);
+		@include flexbox();
+		@include justify-content(center);
+		background-color: rgba($wds-color-black, 0.2);
+		border: solid 6px $wds-color-white;
+		border-radius: 50%;
+		box-sizing: border-box;
+		height: $play-button-size;
+		left: 50%;
+		margin-left: -$play-button-size/2;
+		position: absolute;
+		top: 50px;
+		width: $play-button-size;
+	}
+
+	&__video-icon {
+		fill: $wds-color-white;
+		margin-left: 6px;
+	}
+
+}
+
+.mcf-card-wiki-articles {
+	background-color: $wds-color-white;
+	width: 334px;
+
+	&__header {
+		background-color: $color-community-header;
+		background-position: right center;
+		background-repeat: no-repeat;
+		background-size: contain;
+		color: community-header-text-color($color-community-header);
+		font-size: 18px;
+		font-weight: bold;
+		padding: 16px;
+		position: relative;
+
+		&:before {
+			@include community-header-gradient($color-community-header, 50px, 220px);
+			content: '';
+			display: block;
+			height: 100%;
+			position: absolute;
+			width: 100%;
+			top: 0;
+			left: 0;
+		}
+	}
+
+	&__header-text {
+		position: relative;
+	}
+
+	&__list {
+		margin: 0 18px;
+	}
+
+	&__item {
+		border-bottom: 1px solid $wds-color-faint-gray;
+
+		&:last-child {
+			border-bottom: 0;
+		}
+	}
+
+	&__item-link {
+		@include align-items(center);
+		@include flexbox();
+		color: $wds-color-black;
+		padding: 21px 0;
+		text-decoration: none;
+		width: 100%;
+
+		&:hover {
+			text-decoration: none;
+		}
+	}
+
+	&__circle {
+		@include align-items(center);
+		@include flexbox();
+		@include justify-content(center);
+		background-color: $wds-color-light-gray;
+		border-radius: 50%;
+		color: $wds-color-white;
+		font-size: 18px;
+		font-weight: bold;
+		height: 36px;
+		width: 36px;
+	}
+
+	&__title {
+		font-size: 14px;
+		margin-left: 12px;
+	}
+}
+
+.mcf-card-related-wikis {
+	background-color: $wds-color-white;
+	height: 376px;
+	width: 334px;
+
+	&__header {
+		color: $wds-color-black;
+		border-bottom: 1px solid $wds-color-faint-gray;
+		font-size: 18px;
+		font-weight: bold;
+		padding: 16px;
+		position: relative;
+	}
+
+	&__list {
+		margin: 0 16px;
+	}
+
+	&__item {
+		@include align-items(center);
+		@include flexbox();
+		border-bottom: 1px solid $wds-color-faint-gray;
+		min-height: 70px;
+		min-width: 302px;
+
+		&:last-child {
+			border-bottom: 0;
+		}
+	}
+
+	&__item-link {
+		@include align-items(center);
+		@include flexbox();
+		color: $wds-color-black;
+		padding: 18px 0;
+		text-decoration: none;
+		width: 100%;
+
+		&:hover {
+			text-decoration: none;
+		}
+	}
+
+	&__title {
+		color: $wds-color-black;
+		display: block;
+		font-size: 16px;
+		font-weight: bold;
+		margin-left: 12px;
+	}
+
+	&__subtitle {
+		color: $wds-color-light-gray;
+		font-size: 14px;
+		font-weight: normal;
+		margin-left: 12px;
+	}
+}
