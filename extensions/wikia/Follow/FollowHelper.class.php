@@ -328,26 +328,27 @@ class FollowHelper {
 	 *
 	 * @author Maciej Brencz <macbre@wikia-inc.com>
 	 *
-	 * @param $personal_urls
-	 * @param $title
+	 * @param array $personal_urls
+	 * @param Title $title
+	 * @param Skin $skin
 	 *
-	 * @return bool
+	 * @return bool true
 	 */
-	public static function addPersonalUrl( &$personal_urls, &$title ) {
+	public static function addPersonalUrl( array &$personal_urls, Title $title, Skin $skin ): bool {
 		// don't touch anon users
-		global $wgUser;
-		if ( $wgUser->isAnon() ) {
+		if ( $skin->getUser()->isAnon() ) {
 			return true;
 		}
 
 		// only for Oasis users
 		// replace 'watchlist' with 'followed pages'
-		if ( get_class( RequestContext::getMain()->getSkin() ) == 'SkinOasis' ) {
-			$personal_urls['watchlist'] = array(
-				'text' =>  wfMsg( 'wikiafollowedpages-special-title-userbar' ),
+		if ( $skin->getSkinName() === 'oasis' ) {
+			$personal_urls['watchlist'] = [
+				'text' => $skin->msg( 'wikiafollowedpages-special-title-userbar' )->text(),
 				'href' => Skin::makeSpecialUrl( 'following' ),
-			);
+			];
 		}
+
 		return true;
 	}
 
