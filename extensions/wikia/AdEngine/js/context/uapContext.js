@@ -17,7 +17,21 @@ define('ext.wikia.adEngine.context.uapContext', [
 		return context.uapId;
 	}
 
+	function setType(type) {
+		context.type = type;
+	}
+
+	function getType() {
+		return context.type;
+	}
+
 	function isUapLoaded() {
+		var isUapType = !!(context.type === 'uap' || context.type === 'vuap');
+
+		return !!context.uapId && isUapType;
+	}
+
+	function isBfaaLoaded() {
 		return !!context.uapId;
 	}
 
@@ -39,9 +53,12 @@ define('ext.wikia.adEngine.context.uapContext', [
 
 	return {
 		dispatchEvent: dispatchEvent,
+		getType: getType,
 		getUapId: getUapId,
+		isBfaaLoaded: isBfaaLoaded,
 		isUapLoaded: isUapLoaded,
 		reset: reset,
+		setType: setType,
 		setUapId: setUapId,
 		shouldDispatchEvent: shouldDispatchEvent
 	};
