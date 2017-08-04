@@ -25,7 +25,7 @@ var AjaxPoll = {
 		});
 
 		// send purge request
-		//$.post(wgScript, {action: 'purge', title: wgPageName});
+		$.post(wgScript, {action: 'purge', title: wgPageName});
 	},
 
 	submit: function( e ) {
