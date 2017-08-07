@@ -72,7 +72,7 @@ What do you want to do?
 * Create article <span class=\"plainlinks\">[{{fullurl:{{FULLPAGENAME}}|action=create}} {{FULLPAGENAME}}]</span>
 }}",
 
-	'noarticletextanon' => '{{int:noarticletext}}',
+
 	'note' => "'''Note:'''",
 	'nonunicodebrowser' => "'''Warning: Your browser is not unicode compliant.'''
 A workaround is in place to allow you to safely edit pages: Non-ASCII characters will appear in the edit box as hexadecimal codes.",
@@ -5871,7 +5871,7 @@ oder die zugehörigen <span class="plainlinks">[{{fullurl:{{#special:Log}}|page=
 	'newsectionheaderdefaultlevel' => '== $1 ==',
 	'nocookiesforlogin' => '{{int:nocookieslogin}}',
 	'newarticletextanon' => '{{int:newarticletext}}',
-	'noarticletextanon' => '{{int:noarticletext}}',
+
 	'number_of_watching_users_RCview' => '[$1]',
 	'newpages-summary' => '',
 	'nontabbedsearch' => 'Non-tabbed search',
@@ -6909,7 +6909,7 @@ Prueba a usar el prefijo ''all:'' para buscar en todo el contenido (incluyendo p
 	'newsectionheaderdefaultlevel' => '== $1 ==',
 	'nocookiesforlogin' => '{{int:nocookieslogin}}',
 	'newarticletextanon' => '{{int:newarticletext}}',
-	'noarticletextanon' => '{{int:noarticletext}}',
+
 	'number_of_watching_users_RCview' => '[$1]',
 	'newpages-summary' => '',
 	'noscript.css' => '/* CSS placed here will affect users with JavaScript disabled */',
@@ -7971,7 +7971,7 @@ Essayez en utilisant le préfixe ''all:'' pour rechercher dans tout le contenu (
 	'newsectionheaderdefaultlevel' => '== $1 ==',
 	'nocookiesforlogin' => '{{int:nocookieslogin}}',
 	'newarticletextanon' => '{{int:newarticletext}}',
-	'noarticletextanon' => '{{int:noarticletext}}',
+
 	'number_of_watching_users_RCview' => '[$1]',
 	'newpages-summary' => '',
 	'noscript.css' => '/* CSS placed here will affect users with JavaScript disabled */',
@@ -12141,7 +12141,7 @@ Potrebbe essere stata spostata o eliminata mentre si stava visionando la pagina.
 	'newsectionheaderdefaultlevel' => '== $1 ==',
 	'nocookiesforlogin' => '{{int:nocookieslogin}}',
 	'newarticletextanon' => '{{int:newarticletext}}',
-	'noarticletextanon' => '{{int:noarticletext}}',
+
 	'number_of_watching_users_RCview' => '[$1]',
 	'newpages-summary' => '',
 	'newuserlog-create-entry' => 'New user account',
@@ -12425,7 +12425,7 @@ URLを間違って打ったか、正しくないリンクを辿った可能性�
 	'newsectionheaderdefaultlevel' => '== $1 ==',
 	'nocookiesforlogin' => '{{int:nocookieslogin}}',
 	'newarticletextanon' => '{{int:newarticletext}}',
-	'noarticletextanon' => '{{int:noarticletext}}',
+
 	'number_of_watching_users_RCview' => '[$1]',
 	'newpages-summary' => '',
 	'newuserlog-create-entry' => 'New user account',
@@ -19687,7 +19687,7 @@ Je kunt ook een naamruimte als voorvoegsel gebruiken.",
 	'newsectionheaderdefaultlevel' => '== $1 ==',
 	'nocookiesforlogin' => '{{int:nocookieslogin}}',
 	'newarticletextanon' => '{{int:newarticletext}}',
-	'noarticletextanon' => '{{int:noarticletext}}',
+
 	'number_of_watching_users_RCview' => '[$1]',
 	'newpages-summary' => '',
 	'newuserlog-create-entry' => 'New user account',
@@ -21076,7 +21076,7 @@ Możesz edytować istniejące strony bądź też [[Special:UserLogin|zalogować 
 	'newsectionheaderdefaultlevel' => '== $1 ==',
 	'nocookiesforlogin' => '{{int:nocookieslogin}}',
 	'newarticletextanon' => '{{int:newarticletext}}',
-	'noarticletextanon' => '{{int:noarticletext}}',
+
 	'number_of_watching_users_RCview' => '[$1]',
 	'newpages-summary' => '',
 	'newuserlog-create-entry' => 'New user account',
@@ -21826,7 +21826,7 @@ Tente utilizar o prefixo ''all:'' em sua busca, para pesquisar por todos os cont
 	'newsectionheaderdefaultlevel' => '== $1 ==',
 	'nocookiesforlogin' => '{{int:nocookieslogin}}',
 	'newarticletextanon' => '{{int:newarticletext}}',
-	'noarticletextanon' => 'No momento, não há conteúdo nesta página
+
 Você pode [[Special:Search/{{PAGENAME}}|pesquisar pelo título desta página]] em outras páginas,
 ou <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} buscar por registros relacionados] </span>.',
 	'number_of_watching_users_RCview' => '[$1]',
@@ -22729,7 +22729,7 @@ The wiki server can't provide data in a format your client can read.",
 	'newsectionheaderdefaultlevel' => '== $1 ==',
 	'nocookiesforlogin' => '{{int:nocookieslogin}}',
 	'newarticletextanon' => '{{int:newarticletext}}',
-	'noarticletextanon' => '{{int:noarticletext}}',
+
 	'number_of_watching_users_RCview' => '[$1]',
 	'newpages-summary' => '',
 	'newuserlog-create-entry' => 'New user account',
@@ -30040,7 +30040,7 @@ $messages['zh-hans'] = array(
 	'newsectionheaderdefaultlevel' => '== $1 ==',
 	'nocookiesforlogin' => '{{int:nocookieslogin}}',
 	'newarticletextanon' => '{{int:newarticletext}}',
-	'noarticletextanon' => '{{int:noarticletext}}',
+
 	'number_of_watching_users_RCview' => '[$1]',
 	'newpages-summary' => '',
 	'noscript.css' => '/* CSS placed here will affect users with JavaScript disabled */',
@@ -30193,7 +30193,7 @@ $messages['zh-hant'] = array(
 	'newsectionheaderdefaultlevel' => '== $1 ==',
 	'nocookiesforlogin' => '{{int:nocookieslogin}}',
 	'newarticletextanon' => '{{int:newarticletext}}',
-	'noarticletextanon' => '{{int:noarticletext}}',
+
 	'number_of_watching_users_RCview' => '[$1]',
 	'newpages-summary' => '',
 	'noscript.css' => '/* CSS placed here will affect users with JavaScript disabled */',

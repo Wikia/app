@@ -547,7 +547,6 @@ $wgMessageStructure = array(
 		'talkpagetext',
 		'anontalkpagetext',
 		'noarticletext',
-		'noarticletextanon',
 		'userpage-userdoesnotexist',
 		'userpage-userdoesnotexist-view',
 		'blocked-notice-logextract',
