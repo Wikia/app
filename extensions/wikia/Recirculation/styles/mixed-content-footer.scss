@@ -265,16 +265,16 @@
 }
 
 .mcf-card-discussions {
-	border: 1px solid #ccc;
-	background-color: #fff;
+	border: 1px solid $wds-color-faint-gray;
+	background-color: $wds-color-white;
 	max-width: 334px;
 	height: 608px;
 
 	&__header {
 		@include flexbox();
 		@include justify-content(space-between);
-		color: #000;
-		border-bottom: 1px solid #ccc;
+		color: $wds-color-black;
+		border-bottom: 1px solid $wds-color-faint-gray;
 		font-size: 18px;
 		font-weight: 600;
 		padding: 16px;
@@ -287,7 +287,7 @@
 		font-size: 12px;
 		font-weight: bold;
 		text-align: right;
-		color: #011f6f;
+		color: $wds-color-light-blue;
 		text-decoration: none;
 	}
 
@@ -316,7 +316,7 @@
 	}
 
 	&__avatar {
-		border: 2px solid #cccccc;
+		border: 2px solid $wds-color-faint-gray;
 		border-radius: 50%;
 		height: 30px;
 		width: 30px;
@@ -329,7 +329,7 @@
 	}
 
 	&__user-subtitle {
-		color: #3a3a3a;
+		color: $wds-color-black;
 		opacity: 0.5;
 		font-weight: bold;
 		font-size: 14px;
@@ -337,12 +337,12 @@
 	}
 
 	&__content {
-		color: #3a3a3a;
+		color: $wds-color-black;
 		font-size: 18px;
 		font-weight: 500;
 		margin-top: 6px;
 		margin-bottom: 10px;
-		word-break: break-word;
+		word-wrap: break-word;
 	}
 
 	&__meta {
@@ -354,17 +354,18 @@
 	&__in {
 		font-size: 14px;
 		font-weight: bold;
-		color: #999999;
+		color: $wds-color-light-gray;
 	}
 
 	&__counters {
 		@include align-items(center);
 		@include flexbox();
-		color: #999999;
+		color: $wds-color-light-gray;
 
 		svg {
 			margin-left: 6px;
 			margin-right: 3px;
+			color: $wds-color-faint-gray;
 		}
 	}
 }
