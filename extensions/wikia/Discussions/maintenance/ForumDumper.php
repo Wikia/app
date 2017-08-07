@@ -10,8 +10,6 @@ class ForumDumper {
 	const TABLE_TEXT = 'text';
 	const TABLE_VOTE = 'page_vote';
 	const TABLE_PAGE_WIKIA_PROPS = 'page_wikia_props';
-	//TODO verify that this is the table
-	const TABLE_THREAD_WATCHER = 'watchlist';
 
 	const CONTRIBUTOR_TYPE_USER = "user";
 	const CONTRIBUTOR_TYPE_IP = "ip";
@@ -336,33 +334,20 @@ class ForumDumper {
 	}
 
 	public function getFollows() {
-		$this->threadIds = [];
-		$pages = [];
+		$threadsNamesToIds = $this->getThreadNamesToIds();
+		$finder = new FollowsFinder( wfGetDB( DB_SLAVE ), $threadsNamesToIds );
 
-		foreach ($this->getPages() as $page) {
-			if ($page->namespace === NS_WIKIA_FORUM_BOARD_THREAD) {
-				$this->threadIds[$page->raw_title] = $page->id;
-				$this->pages[] = $page->raw_title;
+		return $finder->findFollows();
+	}
+
+	private function getThreadNamesToIds() {
+		$threadsNamesToIds = [];
+		foreach ( $this->getPages() as $page ) {
+			if ( $page["namespace"] === NS_WIKIA_FORUM_BOARD_THREAD ) {
+				$threadsNamesToIds[$page["raw_title"]] = $page["id"];
 			}
 		}
-
-		$dbh = wfGetDB( DB_SLAVE );
-
-		$follows = ( new \WikiaSQL() )->SELECT_ALL()
-			->FROM( self::TABLE_THREAD_WATCHER )
-			->WHERE( 'wl_namespace' )
-			->EQUAL_TO( NS_WIKIA_FORUM_BOARD_THREAD )
-			->AND_( 'wl_title' )
-			->IN( $pages )
-			->runLoop( $dbh, function ( &$follows, $row ) {
-				$follows[] = [
-					'follower_id' => $row->wl_user,
-					'mw_thread_id' => $this->threadIds[$row->wl_title],
-					'timestamp' => $row->wl_notificationtimestamp,
-				];
-			} );
-		$this->threadIds = null;
-		return $follows;
+		return $threadsNamesToIds;
 	}
 
 }
