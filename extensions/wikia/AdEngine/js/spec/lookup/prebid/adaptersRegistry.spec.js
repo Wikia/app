@@ -23,6 +23,7 @@ describe('adaptersRegistry', function () {
             mocks.adapters.audienceNetwork,
             mocks.adapters.indexExchange,
             mocks.adapters.openx,
+            mocks.adapters.fastlane,
             mocks.adapters.rubicon,
             mocks.adapters.wikia,
             mocks.adapters.veles,
@@ -39,6 +40,7 @@ describe('adaptersRegistry', function () {
                 audienceNetwork: new AdapterMock('audienceNetwork', true),
                 indexExchange: new AdapterMock('indexExchange', true),
                 openx: new AdapterMock('openx', true),
+                fastlane: new AdapterMock('fastlane', true),
                 rubicon: new AdapterMock('rubicon', true),
                 wikia: new AdapterMock('wikia', true),
                 veles: new AdapterMock('veles', true)
@@ -46,7 +48,8 @@ describe('adaptersRegistry', function () {
             win: {
                 pbjs: {
                     que: [],
-                    registerBidAdapter: function () {}
+                    registerBidAdapter: function () {},
+                    aliasBidder: function () {}
                 }
             }
         };
@@ -61,7 +64,8 @@ describe('adaptersRegistry', function () {
                 mocks.adapters.audienceNetwork,
                 mocks.adapters.indexExchange,
                 mocks.adapters.openx,
-                mocks.adapters.rubicon
+                mocks.adapters.rubicon,
+                mocks.adapters.fastlane
             ];
 
         expectedAdapters.forEach(function (adapter) {

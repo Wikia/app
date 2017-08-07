@@ -1207,6 +1207,13 @@ $wgAdDriverEnableRubiconFastlane = true;
 $wgAdDriverRubiconFastlaneCountries = null;
 
 /**
+ * @name $wgAdDriverRubiconFastlaneCountries
+ * Enables RubiconFastlane Prebid implementation in these countries.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverRubiconFastlanePrebidCountries = null;
+
+/**
  * @name $wgAdDriverRubiconFastlaneProviderCountries
  * Enables RubiconFastlane provider in these countries.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
