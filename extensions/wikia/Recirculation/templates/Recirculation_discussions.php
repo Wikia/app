@@ -7,11 +7,11 @@
 				'wds-icon wds-icon-small mcf-card-discussions__link-icon'
 			) ?></a>
 	</header>
-	<ul>
+	<ul class="mcf-card-discussions__list">
 		<?php foreach ( $posts as $post ): ?>
 			<li class="mcf-card-discussions__item">
-				<a href="/User:<?= $post->author ?>" class="mcf-card-discussions__user-info">
-					<img class="mcf-card-discussions__avatar" src="<?= $post->meta['authorAvatarUrl'] ?>">
+				<a href="<?= AvatarService::getUrl( $post->author, $ns = NS_USER ) ?>" class="mcf-card-discussions__user-info">
+					<img class="wds-avatar" src="<?= $post->meta['authorAvatarUrl'] ?>">
 					<span class="mcf-card-discussions__user-subtitle"><?= $post->author ?>
 						• <time class="discussion-timestamp" datetime="<?= $post->pub_date ?>"></time></span>
 				</a>

@@ -124,7 +124,7 @@ class DiscussionsDataService {
 		return new RecirculationContent( [
 			'url' => $this->server . '/d/p/' . $rawPost['id'],
 			'index' => $index,
-			'title' =>  wfShortenText( $rawPost['rawContent'], 70 ),
+			'title' =>  $rawPost['title'],
 			'publishDate' => wfTimestamp( TS_ISO_8601, $rawPost['creationDate']['epochSecond'] ),
 			'author' => $rawPost['createdBy']['name'],
 			'source' => 'discussions',

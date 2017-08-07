@@ -265,29 +265,27 @@
 }
 
 .mcf-card-discussions {
-	border: 1px solid $wds-color-faint-gray;
 	background-color: $wds-color-white;
-	max-width: 334px;
 	height: 608px;
+	max-width: 334px;
 
 	&__header {
 		@include flexbox();
 		@include justify-content(space-between);
-		color: $wds-color-black;
 		border-bottom: 1px solid $wds-color-faint-gray;
+		color: $wds-color-black;
 		font-size: 18px;
 		font-weight: 600;
 		padding: 16px;
-		position: relative;
 	}
 
 	&__link {
 		@include align-items(center);
 		@include flexbox();
+		color: $wds-color-light-blue;
 		font-size: 12px;
 		font-weight: bold;
 		text-align: right;
-		color: $wds-color-light-blue;
 		text-decoration: none;
 	}
 
@@ -296,7 +294,7 @@
 		transform: rotate(180deg);
 	}
 
-	ul {
+	&__list {
 		@include scrollable-list(555px, $wds-color-white);
 	}
 
@@ -306,10 +304,9 @@
 		@include flex-direction(column);
 		border-bottom: 1px solid $wds-color-faint-gray;
 		margin: 0 16px;
-		min-height: 70px;
-		min-width: 302px;
 
 		a {
+			color:  $wds-color-faint-gray;
 			text-decoration: none;
 			width: 100%;
 		}
@@ -330,18 +327,16 @@
 
 	&__user-subtitle {
 		color: $wds-color-black;
-		opacity: 0.5;
 		font-weight: bold;
 		font-size: 14px;
 		margin-left: 6px;
+		opacity: 0.5;
 	}
 
 	&__content {
 		color: $wds-color-black;
 		font-size: 18px;
-		font-weight: 500;
-		margin-top: 6px;
-		margin-bottom: 10px;
+		margin: 6px 0 10px;
 		word-wrap: break-word;
 	}
 
@@ -352,9 +347,9 @@
 	}
 
 	&__in {
+		color: $wds-color-light-gray;
 		font-size: 14px;
 		font-weight: bold;
-		color: $wds-color-light-gray;
 	}
 
 	&__counters {
@@ -363,9 +358,8 @@
 		color: $wds-color-light-gray;
 
 		svg {
-			margin-left: 6px;
-			margin-right: 3px;
 			color: $wds-color-faint-gray;
+			margin: 0 3px 0 6px;
 		}
 	}
 }
