@@ -277,7 +277,7 @@ class Hooks {
 	 * @param $id
 	 * @return bool
 	 */
-	public function onArticleDeleteComplete( \WikiPage &$article, \User &$user, $reason, $id ) {
+	public function onArticleDeleteComplete( \WikiPage $article, \User $user, $reason, $id ): bool {
 		global $wgCityId;
 
 		$title = $article->getTitle();
