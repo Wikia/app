@@ -34,7 +34,9 @@ class CloseMyAccountHooks {
 	 * @param  string  $type     The type of confirmation mail
 	 * @return boolean
 	 */
-	public static function onUserSendConfirmationMail( &$user, &$args, &$priority, &$url, $token, $ip_arg, $type ) {
+	public static function onUserSendConfirmationMail(
+		User $user, &$args, &$priority, &$url, $token, $ip_arg, $type
+	) {
 		if ( $type === 'reactivateaccount' ) {
 			$priority = 1;  // reactivation emails are higher than default priority of 0
 			$title = Title::makeTitle( NS_MAIN, 'Special:CloseMyAccount/reactivate' );

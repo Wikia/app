@@ -38,12 +38,8 @@ class FakeImageGalleryImageServing extends ImageGallery {
 	private function getImage(Title $nt) {
 		wfProfileIn(__METHOD__);
 
-		# Give extensions a chance to select the file revision for us
-		$time = $descQuery = false;
-		Hooks::run( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
-
 		# Render image thumbnail
-		$img = wfFindFile( $nt, array('time' => $time) );
+		$img = wfFindFile( $nt );
 		wfProfileOut(__METHOD__);
 		return $img;
 	}

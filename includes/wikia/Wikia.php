@@ -74,7 +74,7 @@ $wgHooks['WebRequestInitialized'][] = 'Wikia::onWebRequestInitialized';
 # Log user email changes
 $wgHooks['BeforeUserSetEmail'][] = 'Wikia::logEmailChanges';
 
-use \Wikia\Tracer\WikiaTracer;
+use Wikia\Tracer\WikiaTracer;
 
 /**
  * This class has only static methods so they can be used anywhere
@@ -86,6 +86,7 @@ class Wikia {
 	const COMMUNITY_WIKI_ID = 177; // community.wikia.com
 	const NEWSLETTER_WIKI_ID = 223496; // wikianewsletter.wikia.com
 
+	const USER = 'Fandom';
 	const BOT_USER = 'FandomBot';
 
 	const FAVICON_URL_CACHE_KEY = 'favicon-v1';
@@ -1912,7 +1913,9 @@ class Wikia {
 	 * usually return true to allow processing other hooks
 	 * return false stops permissions processing and we are totally decided (nothing later can override)
 	 */
-	static function canEditInterfaceWhitelist ( &$title, &$wgUser, $action, &$result ) {
+	static function canEditInterfaceWhitelist(
+		Title $title, User $wgUser, string $action, &$result
+	): bool {
 		global $wgEditInterfaceWhitelist;
 
 		// Allowed actions at this point

@@ -350,7 +350,7 @@ class Article extends Page {
 		$this->mContent = $this->mRevision->getText( Revision::FOR_THIS_USER ); // Loads if user is allowed
 		$this->mRevIdFetched = $this->mRevision->getId();
 
-		Hooks::run( 'ArticleAfterFetchContent', array( &$this, &$this->mContent ) );
+		Hooks::run( 'ArticleAfterFetchContent', [ $this, &$this->mContent ] );
 
 		wfProfileOut( __METHOD__ );
 
@@ -509,7 +509,7 @@ class Article extends Page {
 		while ( !$outputDone && ++$pass ) {
 			switch( $pass ) {
 				case 1:
-					Hooks::run( 'ArticleViewHeader', array( &$this, &$outputDone, &$useParserCache ) );
+					Hooks::run( 'ArticleViewHeader', [ $this, &$outputDone, &$useParserCache ] );
 					break;
 				case 2:
 					# Early abort if the page doesn't exist
@@ -518,15 +518,15 @@ class Article extends Page {
 						$this->showMissingArticle();
 						wfProfileOut( __METHOD__ );
 						/* Wikia change begin - @author: Marcin, #BugId: 30436 */
-							$text = '';
-							if (Hooks::run('ArticleNonExistentPage', array( &$this, $wgOut, &$text))) {
-								$this->mParserOutput = $wgParser->parse(
-									$text,
-									$this->getTitle(),
-									$parserOptions
-								);
-								$wgOut->addParserOutput( $this->mParserOutput );
-							}
+						$text = '';
+						if ( Hooks::run( 'ArticleNonExistentPage', [ $this, $wgOut, &$text ] ) ) {
+							$this->mParserOutput = $wgParser->parse(
+								$text,
+								$this->getTitle(),
+								$parserOptions
+							);
+							$wgOut->addParserOutput( $this->mParserOutput );
+						}
 						/* Wikia change end */
 						return;
 					}
@@ -905,7 +905,7 @@ class Article extends Page {
 		if ( isset( $this->mRedirectedFrom ) ) {
 			// This is an internally redirected page view.
 			// We'll need a backlink to the source page for navigation.
-			if ( Hooks::run( 'ArticleViewRedirect', array( &$this ) ) ) {
+			if ( Hooks::run( 'ArticleViewRedirect', [ $this ] ) ) {
 				# start wikia change
 				global $wgWikiaUseNoFollow;
 				$redirAttribs = array();
@@ -1165,7 +1165,7 @@ class Article extends Page {
 	public function setOldSubtitle( $oldid = 0 ) {
 		global $wgLang, $wgOut, $wgUser, $wgRequest;
 
-		if ( !Hooks::run( 'DisplayOldSubtitle', array( &$this, &$oldid ) ) ) {
+		if ( !Hooks::run( 'DisplayOldSubtitle', [ $this, &$oldid ] ) ) {
 			return;
 		}
 
@@ -1348,7 +1348,7 @@ class Article extends Page {
 	 */
 	public function protect() {
 		# Wikia change @author nAndy
-		Hooks::run( 'BeforePageProtect', array(&$this) );
+		Hooks::run( 'BeforePageProtect', [ $this ] );
 		# End of Wikia change
 		$form = new ProtectionForm( $this );
 		$form->execute();
@@ -1359,7 +1359,7 @@ class Article extends Page {
 	 */
 	public function unprotect() {
 		# Wikia change @author nAndy
-		Hooks::run( 'BeforePageUnprotect', array(&$this) );
+		Hooks::run( 'BeforePageUnprotect', [ $this ] );
 		# End of Wikia change
 		$this->protect();
 	}
@@ -1371,7 +1371,7 @@ class Article extends Page {
 		global $wgOut, $wgRequest, $wgLang;
 
 		# Wikia change @author nAndy
-		Hooks::run( 'BeforePageDelete', array(&$this) );
+		Hooks::run( 'BeforePageDelete', [ $this ] );
 		# End of Wikia change
 
 		# This code desperately needs to be totally rewritten
@@ -1383,7 +1383,7 @@ class Article extends Page {
 		$permission_errors = $title->getUserPermissionsErrors( 'delete', $user );
 
 		# Wikia change @author nAndy (DAR-1133)
-		Hooks::run( 'BeforeDeletePermissionErrors', [ &$this, &$title, &$user, &$permission_errors ] );
+		Hooks::run( 'BeforeDeletePermissionErrors', [ $this, $title, $user, &$permission_errors ] );
 		# End of Wikia change
 
 		if ( count( $permission_errors ) ) {
@@ -1663,7 +1663,7 @@ class Article extends Page {
 				&& !$this->mRedirectedFrom && !$this->getTitle()->isRedirect();
 			// Extension may have reason to disable file caching on some pages.
 			if ( $cacheable ) {
-				$cacheable = Hooks::run( 'IsFileCacheable', array( &$this ) );
+				$cacheable = Hooks::run( 'IsFileCacheable', [ $this ] );
 			}
 		}
 

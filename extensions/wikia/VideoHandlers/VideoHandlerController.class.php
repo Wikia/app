@@ -194,7 +194,7 @@ class VideoHandlerController extends WikiaController {
 				if ( $title->exists() ) {
 					$article = Article::newFromID( $title->getArticleID() );
 				} else {
-					$botUser = User::newFromName( 'WikiaBot' );
+					$botUser = User::newFromName( Wikia::BOT_USER );
 					$flags = EDIT_NEW | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT;
 
 					// @FIXME Set $article here after calling addCategoryVideos so that the doDeleteArticle call below works properly

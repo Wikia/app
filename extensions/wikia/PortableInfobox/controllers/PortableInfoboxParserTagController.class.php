@@ -53,7 +53,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 	 *
 	 * @return string
 	 */
-	public static function replaceInfoboxMarkers( &$parser, &$text ) {
+	public static function replaceInfoboxMarkers( Parser $parser, &$text ) {
 		global $wgArticleAsJson;
 		// The replacements for ArticleAsJson are handled in PortableInfoboxHooks::onArticleAsJsonBeforeEncode
 		if ( !$wgArticleAsJson ) {

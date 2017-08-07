@@ -221,7 +221,7 @@ class Profiler {
 	 * Returns a tree of function call instead of a list of functions
 	 */
 	function getCallTree() {
-		return implode( '', array_map( array( &$this, 'getCallTreeLine' ), $this->remapCallTree( $this->mStack ) ) );
+		return implode( '', array_map( [ $this, 'getCallTreeLine' ], $this->remapCallTree( $this->mStack ) ) );
 	}
 
 	/**

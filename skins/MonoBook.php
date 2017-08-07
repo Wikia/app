@@ -84,9 +84,8 @@ class MonoBookTemplate extends WikiaSkinTemplate {
 
 		$this->html( 'headelement' );
 		/* Wikia change begin - @author: Tomek */
-		global $wgUser;
 		$afterBodyHtml = '';
-		Hooks::run('GetHTMLAfterBody', array ($wgUser->getSkin(), &$afterBodyHtml));
+		Hooks::run( 'GetHTMLAfterBody', [ $this->getSkin(), &$afterBodyHtml ] );
 		echo $afterBodyHtml;
 		/* Wikia change end */
 ?><div id="globalWrapper">
@@ -312,8 +311,8 @@ echo $footerEnd;
 
 <?php
 		}
-		Hooks::run( 'MonoBookTemplateToolboxEnd', array( &$this ) );
-		Hooks::run( 'SkinTemplateToolboxEnd', array( &$this, true ) );
+Hooks::run( 'MonoBookTemplateToolboxEnd', [ $this ] );
+Hooks::run( 'SkinTemplateToolboxEnd', [ $this, true ] );
 ?>
 			</ul>
 		</div>
