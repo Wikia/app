@@ -271,6 +271,10 @@ $config['adengine2_pr3b1d_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/wikia.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/veles.js',
 
+		// IL recovery
+		'//extensions/wikia/ARecoveryEngine/js/InstartLogic/recovery.js',
+		'//extensions/wikia/AdEngine/js/provider/gpt/targeting.js',
+
 		'//extensions/wikia/AdEngine/js/wrappers/prebid.js'
 	],
 ];

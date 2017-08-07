@@ -9,18 +9,12 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', [
 	var logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements',
 		placementsMap = instantGlobals.wgAdDriverAppNexusBidderPlacementsConfig;
 
-	function getPlacement(skin, position) {
-		var vertical = adContext.getContext().targeting.mappedVerticalName;
+	function getPlacement(skin, position, recovery) {
+		var vertical = recovery ? 'recovery' : adContext.getContext().targeting.mappedVerticalName;
 
 		if (placementsMap && placementsMap[skin] && placementsMap[skin][vertical]) {
 			if (position && placementsMap[skin][vertical][position]) {
 				return placementsMap[skin][vertical][position];
-			}
-
-			// TODO: remove if statement after switching config from old structure (conf[skin][vertical] = pId)
-			// ADEN-4116 done + 24h
-			if (!position || position === 'atf') {
-				return placementsMap[skin][vertical];
 			}
 		}
 

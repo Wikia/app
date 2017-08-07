@@ -7,10 +7,11 @@ define('ext.wikia.adEngine.lookup.prebid.prebidHelper', [
 
 	function getAdapterAdUnits(adapter, skin) {
 		var adapterAdUnits = [],
-			slots = adapter.getSlots(skin);
+			slots = adapter.getSlots(skin),
+			recovery = window.INSTART_TARGET_NAME === 'morpheus';
 
 		Object.keys(slots).forEach(function(slotName) {
-			var adUnit = adapter.prepareAdUnit(slotName, slots[slotName], skin);
+			var adUnit = adapter.prepareAdUnit(slotName, slots[slotName], skin, recovery);
 			if (adUnit) {
 				adapterAdUnits.push(adUnit);
 			}
