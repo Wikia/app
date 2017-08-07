@@ -6,7 +6,7 @@ use Wikia\Service\Gateway\ConsulUrlProvider;
  * @method PhalanxService setLimit( int $limit )
  * @method PhalanxService setUser( User $user )
  */
-class PhalanxService extends Service {
+class PhalanxService {
 
 	use \Wikia\Logger\Loggable;
 
@@ -273,7 +273,7 @@ class PhalanxService extends Service {
 			/* service doesn't work */
 			$res = false;
 
-			$this->error( "Phalanx service error", [
+			$this->error( "Phalanx service failed", [
 				"phalanxUrl" => $url,
 				'requestTime' => $requestTime,
 				'postParams' => json_encode( $loggerPostParams ),

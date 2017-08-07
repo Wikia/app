@@ -100,7 +100,7 @@ class ChatServerApiClient {
 		] );
 
 		if ( isset( $roomData->roomId ) ) {
-			$roomId = $roomData->roomId;
+			$roomId = intval( $roomData->roomId );
 			Chat::info( __METHOD__ . ': Method called', [
 				'roomId' => $roomId,
 			] );

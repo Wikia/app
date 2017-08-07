@@ -112,8 +112,6 @@ class User implements JsonSerializable {
 		'mId',
 		'mName',
 		'mRealName',
-		'mNewpassword',
-		'mNewpassTime',
 		'mEmail',
 		'mTouched',
 		'mToken',
@@ -131,12 +129,18 @@ class User implements JsonSerializable {
 
 	/** @name Cache variables */
 	//@{
-	var $mId, $mName, $mRealName, $mNewpassword, $mNewpassTime,
-		$mEmail, $mTouched, $mToken, $mEmailAuthenticated,
+	var $mId, $mName, $mRealName,
+		$mEmail, $mToken, $mEmailAuthenticated,
 		$mEmailToken, $mEmailTokenExpires, $mRegistration, $mGroups, $mOptionOverrides,
 		$mCookiePassword, $mEditCount, $mAllowUsertalk;
 	var $mBirthDate; // Wikia. Added to reflect our user table layout.
 	//@}
+
+	/** @var string TS_MW timestamp from the DB */
+	public $mTouched;
+
+	/** @var string TS_MW timestamp from cache */
+	protected $mQuickTouched;
 
 	/**
 	 * Bool Whether the cache variables have been loaded.
@@ -614,7 +618,7 @@ class User implements JsonSerializable {
 
 		if ( $s === false ) {
 			$user_name = $nt->getText();
-			wfRunHooks( 'UserNameLoadFromId', array( $user_name, &$s ) );
+			Hooks::run( 'UserNameLoadFromId', array( $user_name, &$s ) );
 		}
 
 		if ( $s === false ) {
@@ -679,7 +683,7 @@ class User implements JsonSerializable {
 			|| strlen( $name ) > $wgMaxNameChars
 			|| $name != $wgContLang->ucfirst( $name ) ) {
 			wfDebugLog( 'username', __METHOD__ .
-				": '$name' invalid due to empty, IP, slash, length, or lowercase" );
+				": '$name' invalid due to empty, IP, slash, colon, length, or lowercase" );
 			return false;
 		}
 
@@ -735,7 +739,7 @@ class User implements JsonSerializable {
 		static $reservedUsernames = false;
 		if ( !$reservedUsernames ) {
 			$reservedUsernames = $wgReservedUsernames;
-			wfRunHooks( 'UserGetReservedNames', array( &$reservedUsernames ) );
+			Hooks::run( 'UserGetReservedNames', array( &$reservedUsernames ) );
 		}
 
 		// Certain names may be reserved for batch processes.
@@ -1016,8 +1020,6 @@ class User implements JsonSerializable {
 		$this->mId = 0;
 		$this->mName = $name;
 		$this->mRealName = '';
-		$this->mNewpassword = '';
-		$this->mNewpassTime = null;
 		$this->mEmail = '';
 		$this->mOptionOverrides = null;
 		$this->mOptionsLoaded = false;
@@ -1038,7 +1040,7 @@ class User implements JsonSerializable {
 
 		$this->mBirthDate = null; // Wikia. Added to reflect our user table layout.
 
-		wfRunHooks( 'UserLoadDefaults', array( $this, $name ) );
+		Hooks::run( 'UserLoadDefaults', array( $this, $name ) );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -1113,7 +1115,7 @@ class User implements JsonSerializable {
 		}
 
 		$s = $dbr->selectRow( 'user', '*', array( 'user_id' => $this->mId ), __METHOD__ );
-		wfRunHooks( 'UserLoadFromDatabase', array( $this, &$s ) );
+		Hooks::run( 'UserLoadFromDatabase', array( $this, &$s ) );
 
 		if ( $s !== false ) {
 			# Initialise user table data
@@ -1168,9 +1170,7 @@ class User implements JsonSerializable {
 			$all = false;
 		}
 
-		if ( isset( $row->user_password ) ) {
-			$this->mNewpassword = $row->user_newpassword;
-			$this->mNewpassTime = wfTimestampOrNull( TS_MW, $row->user_newpass_time );
+		if ( isset( $row->user_email ) ) {
 			$this->mEmail = $row->user_email;
 			if ( isset( $row->user_options ) ) {
 				$this->decodeOptions( $row->user_options );
@@ -1268,7 +1268,7 @@ class User implements JsonSerializable {
 		// Which is insane and would never happen during normal MW operation, but is also not
 		// likely to get fixed unless and until we context-ify everything.
 		// See also https://www.mediawiki.org/wiki/Special:Code/MediaWiki/101488#c25275
-		wfRunHooks( 'UserGetDefaultOptions', array( &$defOpt ) );
+		Hooks::run( 'UserGetDefaultOptions', array( &$defOpt ) );
 
 		return $defOpt;
 	}
@@ -1361,7 +1361,7 @@ class User implements JsonSerializable {
 
 		# Extensions
 		/* Wikia change begin - SUS-92 */
-		wfRunHooks( 'GetBlockedStatus', array( &$this, $shouldLogBlockInStats, $global ) );
+		Hooks::run( 'GetBlockedStatus', array( &$this, $shouldLogBlockInStats, $global ) );
 		/* Wikia change end */
 
 		if ( !empty($this->mBlockedby) ) {
@@ -1516,7 +1516,7 @@ class User implements JsonSerializable {
 	public function pingLimiter( $action = 'edit' ) {
 		# Call the 'PingLimiter' hook
 		$result = false;
-		if( !wfRunHooks( 'PingLimiter', array( &$this, $action, $result ) ) ) {
+		if( !Hooks::run( 'PingLimiter', array( &$this, $action, $result ) ) ) {
 			return $result;
 		}
 
@@ -1650,7 +1650,7 @@ class User implements JsonSerializable {
 			wfDebug( __METHOD__ . ": self-talk page, ignoring any blocks\n" );
 		}
 
-		wfRunHooks( 'UserIsBlockedFrom', array( $this, $title, &$blocked, &$allowUsertalk ) );
+		Hooks::run( 'UserIsBlockedFrom', array( $this, $title, &$blocked, &$allowUsertalk ) );
 
 		wfProfileOut( __METHOD__ );
 		return $blocked;
@@ -1702,7 +1702,7 @@ class User implements JsonSerializable {
 			$ip = $this->getRequest()->getIP();
 		}
 		$blocked = false;
-		wfRunHooks( 'UserIsBlockedGlobally', array( &$this, $ip, &$blocked ) );
+		Hooks::run( 'UserIsBlockedGlobally', array( &$this, $ip, &$blocked ) );
 		$this->mBlockedGlobally = (bool)$blocked;
 		return $this->mBlockedGlobally;
 	}
@@ -1856,7 +1856,7 @@ class User implements JsonSerializable {
 	 */
 	public function getNewMessageLinks() {
 		$talks = array();
-		wfRunHooks( 'UserRetrieveNewTalks', array( &$this, &$talks) );
+		Hooks::run( 'UserRetrieveNewTalks', array( &$this, &$talks) );
 
 		/* Wikia change begin - @author: XXX */
 		if( $this->getNewtalk() ) {
@@ -2007,51 +2007,42 @@ class User implements JsonSerializable {
 
 	/**
 	 * Immediately touch the user data cache for this account.
-	 * Updates user_touched field, and removes account data from memcached
-	 * for reload on the next hit.
+	 *
+	 * Calls touch() and removes account data from memcached
+	 *
+	 * @see SUS-1620
 	 */
 	public function invalidateCache() {
-		#<Wikia>
-		global $wgLogUserInvalidateCache;
-		if ( !empty( $wgLogUserInvalidateCache ) ) {
-			$e = new Exception;
-			$this->error( 'SUS-546', [ 'traceBack' => $e->getTraceAsString() ] );
-		}
-		#</Wikia>
-		if( wfReadOnly() ) {
-			return;
-		}
+		$this->touch();
+		$this->clearSharedCache();
+
+		// Wikia change
+		self::permissionsService()->invalidateCache( $this );
+	}
+
+	/**
+	 * Update the "touched" timestamp for the user
+	 *
+	 * This is useful on various login/logout events when making sure that
+	 * a browser or proxy that has multiple tenants does not suffer cache
+	 * pollution where the new user sees the old users content. The value
+	 * of getTouched() is checked when determining 304 vs 200 responses.
+	 * Unlike invalidateCache(), this preserves the User object cache and
+	 * avoids database writes.
+	 *
+	 * @@see SUS-1620
+	 * @since 1.25
+	 */
+	public function touch() {
+		global $wgMemc;
+
 		$this->load();
-		if ( wfReadOnly() ) {
-			return;
-		}
-		if( $this->mId ) {
-			$this->mTouched = self::newTouchedTimestamp();
 
-			#<Wikia>
-			global $wgExternalSharedDB, $wgSharedDB;
-			if( isset( $wgSharedDB ) ) {
-				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-			}
-			else {
-				$dbw = wfGetDB( DB_MASTER );
-			}
-			#</Wikia>
-
-			$touched = $dbw->timestamp( $this->mTouched );
-			$needsPurge =  $dbw->selectField(
-				'`user`', '1',
-				array( 'user_id' => $this->mId, 'user_touched < ' . $dbw->addQuotes( $touched ) ),
-				__METHOD__ );
-
-			if ( $needsPurge ) {
-				$dbw->update( '`user`',
-					array( 'user_touched' => $touched ), array( 'user_id' => $this->mId ),
-					__METHOD__ );
-			}
-			self::permissionsService()->invalidateCache( $this );
-
-			$this->clearSharedCache();
+		if ( $this->mId ) {
+			$key = wfSharedMemcKey( 'user-quicktouched', 'id', $this->mId );
+			$timestamp = self::newTouchedTimestamp();
+			$wgMemc->set( $key, $timestamp );
+			$this->mQuickTouched = $timestamp;
 		}
 	}
 
@@ -2068,10 +2059,26 @@ class User implements JsonSerializable {
 
 	/**
 	 * Get the user touched timestamp
-	 * @return String timestamp
+	 * @return string TS_MW Timestamp
 	 */
 	public function getTouched() {
+		global $wgMemc;
+
 		$this->load();
+
+		if ( $this->mId ) {
+			if ( $this->mQuickTouched === null ) {
+				$key = wfSharedMemcKey( 'user-quicktouched', 'id', $this->mId );
+				$timestamp = $wgMemc->get( $key );
+				if ( !$timestamp ) {
+					# Set the timestamp to get HTTP 304 cache hits
+					$this->touch();
+				}
+			}
+
+			return max( $this->mTouched, $this->mQuickTouched );
+		}
+
 		return $this->mTouched;
 	}
 
@@ -2114,7 +2121,7 @@ class User implements JsonSerializable {
 			$this->heliosSetNewPassword( $password );
 		}
 
-		$this->clearNewPasswordAndSetToken();
+		$this->setToken();
 
 		if ( $forceLogout ) {
 			self::heliosClient()->forceLogout( $this->getId() );
@@ -2164,16 +2171,6 @@ class User implements JsonSerializable {
 	}
 
 	/**
-	 * Set the password and reset the random token unconditionally.
-	 */
-	private function clearNewPasswordAndSetToken() {
-		$this->setToken();
-
-		$this->mNewpassword = '';
-		$this->mNewpassTime = null;
-	}
-
-	/**
 	 * Get the user's current token.
 	 * @param boolean $forceCreation Force the generation of a new token if the user doesn't have one (default=true for backwards compatibility)
 	 * @return String Token
@@ -2202,42 +2199,12 @@ class User implements JsonSerializable {
 	}
 
 	/**
-	 * Set the password for a password reminder or new account email
-	 *
-	 * @param $str String New password to set
-	 * @param $throttle Bool If true, reset the throttle timestamp to the present
-	 */
-	public function setNewpassword( $str, $throttle = true ) {
-		$this->load();
-
-		$this->mNewpassword = self::crypt( $str );
-		if ( $throttle ) {
-			$this->mNewpassTime = wfTimestampNow();
-		}
-	}
-
-	/**
-	 * Has password reminder email been sent within the last
-	 * $wgPasswordReminderResendTime hours?
-	 * @return Bool
-	 */
-	public function isPasswordReminderThrottled() {
-		global $wgPasswordReminderResendTime;
-		$this->load();
-		if ( !$this->mNewpassTime || !$wgPasswordReminderResendTime ) {
-			return false;
-		}
-		$expiry = wfTimestamp( TS_UNIX, $this->mNewpassTime ) + $wgPasswordReminderResendTime * 3600;
-		return time() < $expiry;
-	}
-
-	/**
 	 * Get the user's e-mail address
 	 * @return String User's email address
 	 */
 	public function getEmail() {
 		$this->load();
-		wfRunHooks( 'UserGetEmail', array( $this, &$this->mEmail ) );
+		Hooks::run( 'UserGetEmail', array( $this, &$this->mEmail ) );
 		return $this->mEmail;
 	}
 
@@ -2272,7 +2239,7 @@ class User implements JsonSerializable {
 	 */
 	public function getEmailAuthenticationTimestamp() {
 		$this->load();
-		wfRunHooks( 'UserGetEmailAuthenticationTimestamp', array( $this, &$this->mEmailAuthenticated ) );
+		Hooks::run( 'UserGetEmailAuthenticationTimestamp', array( $this, &$this->mEmailAuthenticated ) );
 		return $this->mEmailAuthenticated;
 	}
 
@@ -2288,7 +2255,7 @@ class User implements JsonSerializable {
 
 		/* Wikia change */
 		/* add a new hook that sends both before/after emails @param User, new_email, old_email */
-		wfRunHooks( 'BeforeUserSetEmail', array( $this, $str, $this->mEmail ) );
+		Hooks::run( 'BeforeUserSetEmail', array( $this, $str, $this->mEmail ) );
 
 		$this->mEmail = $str;
 
@@ -2299,7 +2266,7 @@ class User implements JsonSerializable {
 		}
 		/* Wikia change end */
 
-		wfRunHooks( 'UserSetEmail', array( $this, &$this->mEmail ) );
+		Hooks::run( 'UserSetEmail', array( $this, &$this->mEmail ) );
 	}
 
 	/**
@@ -2380,7 +2347,7 @@ class User implements JsonSerializable {
 			/* make local copy of option value, so hook won't modify value read from DB and store in object */
 			$value = $this->mOptions[$oname];
 
-			wfRunHooks( 'UserGetOption', array( $this->mOptions, $oname, &$value ) );
+			Hooks::run( 'UserGetOption', array( $this->mOptions, $oname, &$value ) );
 
 			return $value;
 			/* Wikia change end */
@@ -2510,7 +2477,7 @@ class User implements JsonSerializable {
 				$preferences[$globalPreference->getName()] = $globalPreference->getValue();
 			}
 
-			wfRunHooks(
+			Hooks::run(
 				'UserGetPreference',
 				[
 					$preferences,
@@ -2953,19 +2920,28 @@ class User implements JsonSerializable {
 	 * the next change of the page if it's watched etc.
 	 * @param $title Title of the article to look at
 	 */
-	public function clearNotification( &$title ) {
-		global $wgUseEnotif, $wgShowUpdatedMarker;
+	public function clearNotification( Title $title ) {
+		global $wgUseEnotif, $wgShowUpdatedMarker, $wgCityId;
 
 		# Do nothing if the database is locked to writes
 		if( wfReadOnly() ) {
 			return;
 		}
 
-		if( $title->getNamespace() == NS_USER_TALK &&
-			$title->getText() == $this->getName() ) {
-			if( !wfRunHooks( 'UserClearNewTalkNotification', array( &$this ) ) )
+		if ( $title->getNamespace() == NS_USER_TALK && $title->getText() == $this->getName() ) {
+			if ( !Hooks::run( 'UserClearNewTalkNotification', [ $this ] ) ) {
 				return;
-			$this->setNewtalk( false );
+			}
+
+			// SUS-2161: Only schedule a notification update if there are new messages
+			if ( $this->getNewtalk() ) {
+				$task = ( new \Wikia\Tasks\Tasks\WatchlistUpdateTask() )
+					->title( $title )
+					->wikiId( $wgCityId );
+
+				$task->call( 'clearMessageNotification', $this->getName() );
+				$task->queue();
+			}
 		}
 
 		if( !$wgUseEnotif && !$wgShowUpdatedMarker ) {
@@ -2992,8 +2968,13 @@ class User implements JsonSerializable {
 		// If the page is watched by the user (or may be watched), update the timestamp on any
 		// any matching rows
 		if ( $watched ) {
-			$wl = WatchedItem::fromUserTitle( $this, $title );
-			$wl->clearWatch();
+			// SUS-2161: Use a background task for watchlist update
+			$task = ( new \Wikia\Tasks\Tasks\WatchlistUpdateTask() )
+				->title( $title )
+				->wikiId( $wgCityId );
+
+			$task->call( 'clearWatch', $this->getId() );
+			$task->queue();
 		}
 	}
 
@@ -3019,7 +3000,7 @@ class User implements JsonSerializable {
 				), __METHOD__
 			);
 
-			wfRunHooks( 'User::resetWatch', array ( $id ) );
+			Hooks::run( 'User::resetWatch', array ( $id ) );
 			# 	We also need to clear here the "you have new message" notification for the own user_talk page
 			#	This is cleared one page view later in Article::viewUpdates();
 		}
@@ -3128,7 +3109,7 @@ class User implements JsonSerializable {
 			$cookies['Token'] = false;
 		}
 
-		wfRunHooks( 'UserSetCookies', array( $this, &$session, &$cookies ) );
+		Hooks::run( 'UserSetCookies', array( $this, &$session, &$cookies ) );
 
 		foreach ( $session as $name => $value ) {
 			$request->setSessionData( $name, $value );
@@ -3151,7 +3132,7 @@ class User implements JsonSerializable {
 	 * Log this user out.
 	 */
 	public function logout() {
-		if ( wfRunHooks( 'UserLogout', array( &$this ) ) ) {
+		if ( Hooks::run( 'UserLogout', array( &$this ) ) ) {
 			$this->doLogout();
 		}
 	}
@@ -3203,14 +3184,12 @@ class User implements JsonSerializable {
 
 		$this->mTouched = self::newTouchedTimestamp();
 
-		wfRunHooks( 'BeforeUserSaveSettings', array( $this ) );
+		Hooks::run( 'BeforeUserSaveSettings', array( $this ) );
 
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->update( 'user',
 			array( /* SET */
 				'user_name' => $this->mName,
-				'user_newpassword' => $this->mNewpassword,
-				'user_newpass_time' => $dbw->timestampOrNull( $this->mNewpassTime ),
 				'user_real_name' => $this->mRealName,
 				'user_email' => $this->mEmail,
 				'user_email_authenticated' => $dbw->timestampOrNull( $this->mEmailAuthenticated ),
@@ -3227,7 +3206,7 @@ class User implements JsonSerializable {
 		$this->savePreferences();
 		$this->saveAttributes();
 
-		wfRunHooks( 'UserSaveSettings', array( $this ) );
+		Hooks::run( 'UserSaveSettings', array( $this ) );
 		$this->clearSharedCache();
 
 		# Wikia - bad style fix for #1531 - needs review if it is still needed
@@ -3286,8 +3265,6 @@ class User implements JsonSerializable {
 		$fields = array(
 			'user_id' => $seqVal,
 			'user_name' => $name,
-			'user_newpassword' => $user->mNewpassword,
-			'user_newpass_time' => $dbw->timestampOrNull( $user->mNewpassTime ),
 			'user_email' => $user->mEmail,
 			'user_email_authenticated' => $dbw->timestampOrNull( $user->mEmailAuthenticated ),
 			'user_real_name' => $user->mRealName,
@@ -3326,8 +3303,6 @@ class User implements JsonSerializable {
 			array(
 				'user_id' => $seqVal,
 				'user_name' => $this->mName,
-				'user_newpassword' => $this->mNewpassword,
-				'user_newpass_time' => $dbw->timestampOrNull( $this->mNewpassTime ),
 				'user_email' => $this->mEmail,
 				'user_email_authenticated' => $dbw->timestampOrNull( $this->mEmailAuthenticated ),
 				'user_real_name' => $this->mRealName,
@@ -3424,7 +3399,7 @@ class User implements JsonSerializable {
 
 		// Give a chance for extensions to modify the hash, if they have
 		// extra options or other effects on the parser cache.
-		wfRunHooks( 'PageRenderingHash', array( &$confstr ) );
+		Hooks::run( 'PageRenderingHash', array( &$confstr ) );
 
 		// Make it a valid memcached key fragment
 		$confstr = str_replace( ' ', '_', $confstr );
@@ -3609,7 +3584,7 @@ class User implements JsonSerializable {
 			// Wikia change - end
 		}
 
-		wfRunHooks( 'UserMatchEditToken' ); # Wikia change
+		Hooks::run( 'UserMatchEditToken' ); # Wikia change
 
 		return $equals;
 	}
@@ -3684,7 +3659,7 @@ class User implements JsonSerializable {
 		}
 
 		$priority = 0;
-		wfRunHooks( 'UserSendConfirmationMail' , array( &$this, &$args, &$priority, &$url, $token, $ip_arg, $type ) );
+		Hooks::run( 'UserSendConfirmationMail' , array( &$this, &$args, &$priority, &$url, $token, $ip_arg, $type ) );
 
 		$emailController = $this->getEmailController( $mailtype );
 		if ( !empty( $emailController ) ) {
@@ -3778,7 +3753,7 @@ class User implements JsonSerializable {
 	/**
 	 * Confirmation after change the email
 	 *
-	 * @return WikiError|bool True on success, a WikiError object on failure.
+	 * @return Status|bool True on success, a WikiError object on failure.
 	 */
 	function sendReConfirmationMail() {
 		$this->setGlobalFlag("mail_edited","1");
@@ -3792,7 +3767,7 @@ class User implements JsonSerializable {
 	/**
 	 * Confirmation reminder after 7 day
 	 *
-	 * @return \types{\bool,\type{WikiError}} True on success, a WikiError object on failure.
+	 * @return Status|false True on success, a WikiError object on failure.
 	 */
 	function sendConfirmationReminderMail() {
 		if( ($this->getGlobalFlag("cr_mailed", 0) == 1) || ($this->getGlobalFlag("mail_edited", 0) == 1) ) {
@@ -3913,7 +3888,7 @@ class User implements JsonSerializable {
 	 */
 	public function confirmEmail() {
 		$this->setEmailAuthenticationTimestamp( wfTimestampNow() );
-		wfRunHooks( 'ConfirmEmailComplete', array( $this ) );
+		Hooks::run( 'ConfirmEmailComplete', array( $this ) );
 		return true;
 	}
 
@@ -3939,7 +3914,7 @@ class User implements JsonSerializable {
 	function setEmailAuthenticationTimestamp( $timestamp ) {
 		$this->load();
 		$this->mEmailAuthenticated = $timestamp;
-		wfRunHooks( 'UserSetEmailAuthenticationTimestamp', array( $this, &$this->mEmailAuthenticated ) );
+		Hooks::run( 'UserSetEmailAuthenticationTimestamp', array( $this, &$this->mEmailAuthenticated ) );
 	}
 
 	/**
@@ -3953,7 +3928,7 @@ class User implements JsonSerializable {
 			return false;
 		}
 		$canSend = $this->isEmailConfirmed();
-		wfRunHooks( 'UserCanSendEmail', array( &$this, &$canSend ) );
+		Hooks::run( 'UserCanSendEmail', array( &$this, &$canSend ) );
 		return $canSend;
 	}
 
@@ -3980,7 +3955,7 @@ class User implements JsonSerializable {
 		global $wgEmailAuthentication;
 		$this->load();
 		$confirmed = true;
-		if ( wfRunHooks( 'EmailConfirmed', array( &$this, &$confirmed ) ) ) {
+		if ( Hooks::run( 'EmailConfirmed', array( &$this, &$confirmed ) ) ) {
 			if( $this->isAnon() ) {
 				return false;
 			}
@@ -4085,39 +4060,6 @@ class User implements JsonSerializable {
 	}
 
 	/**
-	 * Make a new-style password hash
-	 *
-	 * @param $password String Plain-text password
-	 * @param bool|string $salt Optional salt, may be random or the user ID.
-	 *                     If unspecified or false, will generate one automatically
-	 * @return String Password hash
-	 * @deprecated use HeliosClient
-	 */
-	public static function crypt( $password, $salt = false ) {
-		global $wgPasswordSalt, $wgDevelEnvironment;
-		// Wikia change - begin
-		// Only allow on devboxes for now
-		// @todo Remove once old login code is removed (PLATFORM-2891)
-		if ( empty( $wgDevelEnvironment ) ) {
-			throw new MWException( 'Unsupported User::crypt method requested' );
-		}
-		// Wikia change - end
-		$hash = '';
-		if( !wfRunHooks( 'UserCryptPassword', array( &$password, &$salt, &$wgPasswordSalt, &$hash ) ) ) {
-			return $hash;
-		}
-
-		if( $wgPasswordSalt ) {
-			if ( $salt === false ) {
-				$salt = MWCryptRand::generateHex( 8 );
-			}
-			return ':B:' . $salt . ':' . md5( $salt . '-' . md5( $password ) );
-		} else {
-			return ':A:' . md5( $password );
-		}
-	}
-
-	/**
 	 * Add a newuser log entry for this user. Before 1.19 the return value was always true.
 	 *
 	 * @param $byEmail Boolean: account made by email?
@@ -4214,7 +4156,7 @@ class User implements JsonSerializable {
 
 		$this->mOptionsLoaded = true;
 
-		wfRunHooks( 'UserLoadOptions', array( $this, &$this->mOptions ) );
+		Hooks::run( 'UserLoadOptions', array( $this, &$this->mOptions ) );
 	}
 
 	/**
@@ -4257,7 +4199,7 @@ class User implements JsonSerializable {
 
 		// Allow hooks to abort, for instance to save to a global profile.
 		// Reset options to default state before saving.
-		if( !wfRunHooks( 'UserSaveOptions', array( $this, &$saveOptions ) ) ) {
+		if( !Hooks::run( 'UserSaveOptions', array( $this, &$saveOptions ) ) ) {
 			return;
 		}
 
@@ -4723,7 +4665,8 @@ class User implements JsonSerializable {
 			if( $dbName !== $name ) {
 				WikiaLogger::instance()->debug( "Default name different than lookup", [
 					"user_id" => $userId,
-					"username_db" => $dbName,
+					// SUS-2008, always log username_db as string
+					"username_db" => $dbName ?: '',
 					"username_default" => $name,
 					"caller" => $callerFunction
 				] );

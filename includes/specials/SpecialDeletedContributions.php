@@ -412,7 +412,7 @@ class DeletedContributionsPage extends SpecialPage {
 				);
 			}
 
-			wfRunHooks( 'ContributionsToolLinks', array( $id, $nt, &$tools ) );
+			Hooks::run( 'ContributionsToolLinks', array( $id, $nt, &$tools ) );
 
 			$links = $this->getLanguage()->pipeList( $tools );
 

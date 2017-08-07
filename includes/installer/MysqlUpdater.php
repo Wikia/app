@@ -85,7 +85,6 @@ class MysqlUpdater extends DatabaseUpdater {
 			array( 'addIndex', 'recentchanges',   'rc_user_text',     'patch-rc_user_text-index.sql' ),
 
 			// 1.9
-			array( 'addField', 'user',          'user_newpass_time', 'patch-user_newpass_time.sql' ),
 			array( 'addTable', 'redirect',                           'patch-redirect.sql' ),
 			array( 'addTable', 'querycachetwo',                      'patch-querycachetwo.sql' ),
 			array( 'addField', 'ipblocks',      'ipb_enable_autoblock', 'patch-ipb_optional_autoblock.sql' ),
@@ -162,7 +161,6 @@ class MysqlUpdater extends DatabaseUpdater {
 			array( 'addTable', 'iwlinks',                           'patch-iwlinks.sql' ),
 			array( 'addIndex', 'iwlinks', 'iwl_prefix_title_from',  'patch-rename-iwl_prefix.sql' ),
 			array( 'addField', 'updatelog',     'ul_value',         'patch-ul_value.sql' ),
-			array( 'addField', 'interwiki',     'iw_api',           'patch-iw_api_and_wikiid.sql' ),
 			array( 'dropIndex', 'iwlinks',      'iwl_prefix',       'patch-kill-iwl_prefix.sql' ),
 			array( 'dropIndex', 'iwlinks',      'iwl_prefix_from_title', 'patch-kill-iwl_pft.sql' ),
 			array( 'addField', 'categorylinks', 'cl_collation',     'patch-categorylinks-better-collation.sql' ),

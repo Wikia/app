@@ -116,12 +116,14 @@ class MercuryApi {
 	 * @return mixed
 	 */
 	public function getWikiVariables() {
-		global $wgAnalyticsDriverIVW3Countries, $wgCacheBuster, $wgCityId, $wgContLang, $wgContentNamespaces, $wgDBname,
+		global $wgCacheBuster, $wgCityId, $wgContLang, $wgContentNamespaces, $wgDBname,
 		       $wgDefaultSkin, $wgDisableAnonymousEditing, $wgDisableAnonymousUploadForMercury,
-		       $wgDisableMobileSectionEditor, $wgEnableCommunityData, $wgEnableDiscussions, $wgEnableNewAuth,
-		       $wgLanguageCode, $wgSitename, $wgWikiDirectedAtChildrenByFounder, $wgWikiDirectedAtChildrenByStaff;
+		       $wgDisableMobileSectionEditor, $wgEnableCommunityData, $wgEnableDiscussions,
+		       $wgEnableNewAuth, $wgLanguageCode, $wgSitename,
+		       $wgWikiDirectedAtChildrenByFounder, $wgWikiDirectedAtChildrenByStaff;
 
 		return [
+			'appleTouchIcon' => Wikia::getWikiLogoMetadata(),
 			'cacheBuster' => (int) $wgCacheBuster,
 			'contentNamespaces' => array_values( $wgContentNamespaces ),
 			'dbName' => $wgDBname,
@@ -150,10 +152,6 @@ class MercuryApi {
 				'vertical' => HubService::getVerticalNameForComscore( $wgCityId ),
 				'comscore' => [
 					'c7Value' => AnalyticsProviderComscore::getC7Value(),
-				],
-				'ivw3' => [
-					'countries' => $wgAnalyticsDriverIVW3Countries,
-					'cmKey' => AnalyticsProviderIVW3::getCMKey()
 				],
 				'nielsen' => [
 					'enabled' => AnalyticsProviderNielsen::isEnabled(),
@@ -325,15 +323,18 @@ class MercuryApi {
 			return '';
 		}
 
+		$htmlTitle = $displayTitle;
+
 		if ( class_exists( 'SEOTweaksHooksHelper' ) && $title->inNamespace( NS_FILE ) ) {
 			/*
 			 * Only run this code if SEOTweaks extension is enabled.
 			 * We don't use $wg variable because there are multiple switches enabling this extension
 			 */
 			$file = WikiaFileHelper::getFileFromTitle( $title );
-			$htmlTitle = SEOTweaksHooksHelper::getTitleForFilePage( $title, $file );
-		} else {
-			$htmlTitle = $displayTitle;
+
+			if ( !empty( $file ) ) {
+				$htmlTitle = SEOTweaksHooksHelper::getTitleForFilePage( $title, $file );
+			}
 		}
 
 		if ( empty( $htmlTitle ) ) {
@@ -490,9 +491,15 @@ class MercuryApi {
 				return $result;
 			}
 		} elseif ( $item['article_id'] === 0 ) {
-			$result['url'] = Title::newFromText( $item['title'] )->getLocalURL();
+			$title =  Title::newFromText( $item['title'] );
 
-			return $result;
+			$category = empty( $title ) ? null : Category::newFromTitle( $title );
+
+			if ( !empty( $category ) && $category->getPageCount() ) {
+				$result['url'] = $title->getLocalURL();
+
+				return $result;
+			}
 		}
 
 		return null;

@@ -21,16 +21,15 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	win
 ) {
 	'use strict';
-
-	/*
-	 * When updating prebid.js (https://github.com/prebid/Prebid.js/) to a new version
-	 * remember about the additional [320, 480] slot size, see:
-	 * https://github.com/Wikia/app/pull/12269/files#diff-5bbaaa809332f9adaddae42c8847ae5bR6015
-	 */
-
 	var adUnits = [],
 		biddersPerformanceMap = {},
 		prebidLoaded = false;
+
+	function removeAdUnits() {
+		(win.pbjs.adUnits || []).forEach(function (adUnit) {
+			win.pbjs.removeAdUnit(adUnit.code);
+		});
+	}
 
 	function call(skin, onResponse) {
 		var prebid, node;
@@ -55,12 +54,13 @@ define('ext.wikia.adEngine.lookup.prebid', [
 			if (!prebidLoaded) {
 				win.pbjs.que.push(function () {
 					win.pbjs.bidderSettings = settings.create();
-					win.pbjs.addAdUnits(adUnits);
 				});
 			}
 
 			win.pbjs.que.push(function () {
+				removeAdUnits();
 				win.pbjs.requestBids({
+					adUnits: adUnits,
 					bidsBackHandler: onResponse
 				});
 			});

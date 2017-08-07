@@ -2,6 +2,7 @@
 
 namespace ContributionPrototype;
 
+use ViewAction;
 use FormlessAction;
 
 class CPViewAction extends FormlessAction {
@@ -15,6 +16,18 @@ class CPViewAction extends FormlessAction {
 	}
 
 	public function show() {
-		Utils::getRenderer()->render($this->page->getTitle()->getPartialURL(), $this->getOutput());
+		switch ($this->page->getTitle()->getNamespace()) {
+			case NS_MAIN:
+				Utils::getRenderer()->render($this->page->getTitle(), $this->getOutput());
+				break;
+			default:
+				$this->fallback();
+				break;
+		}
+	}
+
+	private function fallback() {
+		$action = new ViewAction($this->page, $this->context);
+		$action->show();
 	}
 }

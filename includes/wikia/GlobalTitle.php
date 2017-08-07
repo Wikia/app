@@ -100,8 +100,17 @@ class GlobalTitle extends Title {
 			throw new \Exception( 'Invalid $city_id.' );
 		}
 
-		// sure hope this redirects for the most part
-		$title = self::newFromText( 'Main Page', NS_MAIN, $city_id );
+		$mainPageName = self::newFromText( 'Mainpage', NS_MEDIAWIKI, $city_id )->getContent();
+		$title = self::newFromText( $mainPageName, NS_MAIN, $city_id );
+
+		// Don't give fatal errors if the message is broken
+		if ( !$title->exists() ) {
+			// $title->loadContentLang() works here even if exists() returns false because only mCityId is needed to get it
+			// and this is always set by newFromText method
+			$titleText = wfMessage( 'mainpage' )->inLanguage( $title->loadContLang() )->useDatabase( false )->plain();
+			$title = self::newFromText( $titleText, NS_MAIN, $city_id );
+		}
+
 		return $title;
 	}
 
@@ -290,7 +299,7 @@ class GlobalTitle extends Title {
 	/**
 	 * Get a real URL referring to this title
 	 *
-	 * @param string $query an optional query string
+	 * @param string|array $query an optional query string
 	 * @param string|bool $variant language variant of url (for sr, zh..)
 	 *
 	 * @return string the URL
@@ -663,7 +672,7 @@ class GlobalTitle extends Title {
 				array( 'page' ),
 				array( 'page_id' ),
 				array(
-					'page_title' => $this->mText,
+					'page_title' => $this->mDbkeyform,
 					'page_namespace' => $this->mNamespace
 				),
 				__METHOD__

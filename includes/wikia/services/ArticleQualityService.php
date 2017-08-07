@@ -1,7 +1,7 @@
 <?php
 
 
-class ArticleQualityService extends Service {
+class ArticleQualityService {
 	use Wikia\Logger\Loggable;
 
 	const SQL_CACHE_TIME = 86399; // 24h - 1s

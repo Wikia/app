@@ -188,10 +188,10 @@ class WallMessage {
 	}
 
 	public function storeRelatedTopicsInDB( $relatedTopicURLs ) {
-		wfRunHooks( 'WallBeforeStoreRelatedTopicsInDB', [ $this->getTopParentId(), $this->getTitle()->getArticleId(), $this->getTitle()->getNamespace() ] );
+		Hooks::run( 'WallBeforeStoreRelatedTopicsInDB', [ $this->getTopParentId(), $this->getTitle()->getArticleId(), $this->getTitle()->getNamespace() ] );
 		$rp = new WallRelatedPages();
 		$rp->setWithURLs( $this->getId(), $relatedTopicURLs );
-		wfRunHooks( 'WallAfterStoreRelatedTopicsInDB', [ $this->getTopParentId(), $this->getTitle()->getArticleId(), $this->getTitle()->getNamespace() ] );
+		Hooks::run( 'WallAfterStoreRelatedTopicsInDB', [ $this->getTopParentId(), $this->getTitle()->getArticleId(), $this->getTitle()->getNamespace() ] );
 	}
 
 	public function getRelatedTopics() {
@@ -531,7 +531,7 @@ class WallMessage {
 		$parts = explode( '/', $title->getText() );
 		$wallOwnerName = $parts[ 0 ];
 
-		wfRunHooks( 'WallMessageGetWallOwnerName', [ $title, &$wallOwnerName ] );
+		Hooks::run( 'WallMessageGetWallOwnerName', [ $title, &$wallOwnerName ] );
 
 		return $wallOwnerName;
 	}
@@ -760,7 +760,7 @@ class WallMessage {
 		} else {
 			// this only happend for wrong enties in DB
 			// without revision information
-			return User::newFromName( '0.0.0.0', false );
+			return User::newFromName( NON_ROUTABLE_IPV6, false );
 		}
 	}
 

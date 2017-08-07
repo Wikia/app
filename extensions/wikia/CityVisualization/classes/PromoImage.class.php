@@ -170,7 +170,7 @@ class PromoImage extends WikiaObject {
 					$this->wg->cityId => array($imageName)
 				)
 			);
-			wfRunHooks('CreatePromoImageReviewTask', ['delete', $deletion_list]);
+			Hooks::run('CreatePromoImageReviewTask', ['delete', $deletion_list]);
 		}
 	}
 

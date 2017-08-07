@@ -150,11 +150,6 @@ class SpecialBlock extends FormSpecialPage {
 				'label-message' => 'ipbreason',
 				'options-message' => 'ipbreason-dropdown',
 			),
-			'CreateAccount' => array(
-				'type' => 'check',
-				'label-message' => 'ipbcreateaccount',
-				'default' => true,
-			),
 		);
 
 		if( self::canBlockEmail( $user ) ) {
@@ -248,7 +243,6 @@ class SpecialBlock extends FormSpecialPage {
 			)
 		{
 			$fields['HardBlock']['default'] = $block->isHardblock();
-			$fields['CreateAccount']['default'] = $block->prevents( 'createaccount' );
 			$fields['AutoBlock']['default'] = $block->isAutoblocking();
 
 			if( isset( $fields['DisableEmail'] ) ){
@@ -311,12 +305,14 @@ class SpecialBlock extends FormSpecialPage {
 	 * Add header elements like block log entries, etc.
 	 */
 	protected function preText(){
+		$this->getOutput()->addModules( 'mediawiki.special.block' );
+
 		$text = $this->msg( 'blockiptext' )->parse();
 
 		$otherBlockMessages = array();
 		if( $this->target !== null ) {
 			# Get other blocks, i.e. from GlobalBlocking or TorBlock extension
-			wfRunHooks( 'OtherBlockLogLink', array( &$otherBlockMessages, $this->target ) );
+			Hooks::run( 'OtherBlockLogLink', array( &$otherBlockMessages, $this->target ) );
 
 			if( count( $otherBlockMessages ) ) {
 				$s = Html::rawElement(
@@ -643,14 +639,13 @@ class SpecialBlock extends FormSpecialPage {
 		$block->setBlocker( $performer );
 		$block->mReason = $data['Reason'][0];
 		$block->mExpiry = self::parseExpiryInput( $data['Expiry'] );
-		$block->prevents( 'createaccount', $data['CreateAccount'] );
 		$block->prevents( 'editownusertalk', ( !$wgBlockAllowsUTEdit || $data['DisableUTEdit'] ) );
 		$block->prevents( 'sendemail', $data['DisableEmail'] );
 		$block->isHardblock( $data['HardBlock'] );
 		$block->isAutoblocking( $data['AutoBlock'] );
 		$block->mHideName = $data['HideUser'];
 
-		if( !wfRunHooks( 'BlockIp', array( &$block, &$performer ) ) ) {
+		if( !Hooks::run( 'BlockIp', array( &$block, &$performer ) ) ) {
 			return array( 'hookaborted' );
 		}
 
@@ -696,7 +691,7 @@ class SpecialBlock extends FormSpecialPage {
 			$logaction = 'block';
 		}
 
-		wfRunHooks( 'BlockIpComplete', array( $block, $performer ) );
+		Hooks::run( 'BlockIpComplete', array( $block, $performer ) );
 
 		# Set *_deleted fields if requested
 		if( $data['HideUser'] ) {
@@ -852,11 +847,6 @@ class SpecialBlock extends FormSpecialPage {
 		if( !$data['HardBlock'] && $type != Block::TYPE_USER ){
 			// For grepping: message block-log-flags-anononly
 			$flags[] = 'anononly';
-		}
-
-		if( $data['CreateAccount'] ){
-			// For grepping: message block-log-flags-nocreate
-			$flags[] = 'nocreate';
 		}
 
 		# Same as anononly, this is not displayed when blocking an IP address

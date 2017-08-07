@@ -1,6 +1,7 @@
 <?php
 
 class PassThroughSanitizerTest extends WikiaBaseTest {
+	/** @var PassThroughSanitizer $sanitizer */
 	private $sanitizer;
 
 	protected function setUp() {
@@ -13,7 +14,7 @@ class PassThroughSanitizerTest extends WikiaBaseTest {
 	/**
 	 * @param $data
 	 * @param $expected
-	 * @dataProvider testSanitizeDataProvider
+	 * @dataProvider sanitizeDataProvider
 	 */
 	function testSanitize( $data, $expected ) {
 		$this->assertEquals(
@@ -22,7 +23,7 @@ class PassThroughSanitizerTest extends WikiaBaseTest {
 		);
 	}
 
-	function testSanitizeDataProvider() {
+	function sanitizeDataProvider() {
 		return [
 			[
 				['value' => 'Test Title' ],

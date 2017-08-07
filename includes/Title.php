@@ -219,7 +219,7 @@ class Title {
 		/* wikia change here */
 		if ( $id == 0 ) {
 			$title = null;
-		} 
+		}
 		/* </wikia> */
 		else {
 			$db = ( $flags & self::GAID_FOR_UPDATE ) ? wfGetDB( DB_MASTER ) : wfGetDB( DB_SLAVE );
@@ -755,19 +755,6 @@ class Title {
 	}
 
 	/**
-	 * Returns the DB name of the distant wiki which owns the object.
-	 *
-	 * @return String the DB name
-	 */
-	public function getTransWikiID() {
-		if ( $this->mInterwiki == '' ) {
-			return false;
-		}
-
-		return Interwiki::fetch( $this->mInterwiki )->getWikiID();
-	}
-
-	/**
 	 * Get the text form (spaces not underscores) of the main part
 	 *
 	 * @return String Main part of the title
@@ -1016,7 +1003,7 @@ class Title {
 		}
 
 		$result = true;
-		wfRunHooks( 'TitleIsMovable', array( $this, &$result ) );
+		Hooks::run( 'TitleIsMovable', array( $this, &$result ) );
 		return $result;
 	}
 
@@ -1062,7 +1049,7 @@ class Title {
 	 */
 	public function isWikitextPage() {
 		$retval = !$this->isCssOrJsPage() && !$this->isCssJsSubpage();
-		wfRunHooks( 'TitleIsWikitextPage', array( $this, &$retval ) );
+		Hooks::run( 'TitleIsWikitextPage', array( $this, &$retval ) );
 		return $retval;
 	}
 
@@ -1075,7 +1062,7 @@ class Title {
 	public function isCssOrJsPage() {
 		$retval = $this->mNamespace == NS_MEDIAWIKI
 			&& preg_match( '!\.(?:css|js)$!u', $this->mTextform ) > 0;
-		wfRunHooks( 'TitleIsCssOrJsPage', array( $this, &$retval ) );
+		Hooks::run( 'TitleIsCssOrJsPage', array( $this, &$retval ) );
 		return $retval;
 	}
 
@@ -1161,7 +1148,7 @@ class Title {
 		// begin wikia change
 		// VOLDEV-66
 		$talkPageTitle = Title::makeTitle( MWNamespace::getTalk( $this->getNamespace() ), $this->getDBkey() );
-		wfRunHooks( 'GetTalkPage', [$this, &$talkPageTitle] );
+		Hooks::run( 'GetTalkPage', [$this, &$talkPageTitle] );
 		return $talkPageTitle;
 		// end wikia change
 	}
@@ -1428,7 +1415,7 @@ class Title {
 		# Finally, add the fragment.
 		$url .= $this->getFragmentForURL();
 
-		wfRunHooks( 'GetFullURL', array( &$this, &$url, $query ) );
+		Hooks::run( 'GetFullURL', array( &$this, &$url, $query ) );
 		return $url;
 	}
 
@@ -1469,7 +1456,7 @@ class Title {
 			$dbkey = wfUrlencode( $this->getPrefixedDBkey() );
 			if ( $query == '' ) {
 				$url = str_replace( '$1', $dbkey, $wgArticlePath );
-				wfRunHooks( 'GetLocalURL::Article', array( &$this, &$url ) );
+				Hooks::run( 'GetLocalURL::Article', array( &$this, &$url ) );
 			} else {
 				global $wgVariantArticlePath, $wgActionPaths;
 				$url = false;
@@ -1521,7 +1508,7 @@ class Title {
 				}
 			}
 
-			wfRunHooks( 'GetLocalURL::Internal', array( &$this, &$url, $query ) );
+			Hooks::run( 'GetLocalURL::Internal', array( &$this, &$url, $query ) );
 
 			// @todo FIXME: This causes breakage in various places when we
 			// actually expected a local URL and end up with dupe prefixes.
@@ -1529,7 +1516,7 @@ class Title {
 				$url = $wgServer . $url;
 			}
 		}
-		wfRunHooks( 'GetLocalURL', array( &$this, &$url, $query ) );
+		Hooks::run( 'GetLocalURL', array( &$this, &$url, $query ) );
 		return $url;
 	}
 
@@ -1608,7 +1595,7 @@ class Title {
 		$query = self::fixUrlQueryArgs( $query, $query2 );
 		$server = $wgInternalServer !== false ? $wgInternalServer : $wgServer;
 		$url = wfExpandUrl( $server . $this->getLocalURL( $query ), PROTO_HTTP );
-		wfRunHooks( 'GetInternalURL', array( &$this, &$url, $query ) );
+		Hooks::run( 'GetInternalURL', array( &$this, &$url, $query ) );
 		return $url;
 	}
 
@@ -1628,7 +1615,7 @@ class Title {
 	public function getCanonicalURL( $query = '', $query2 = false ) {
 		$query = self::fixUrlQueryArgs( $query, $query2 );
 		$url = wfExpandUrl( $this->getLocalURL( $query ) . $this->getFragmentForURL(), PROTO_CANONICAL );
-		wfRunHooks( 'GetCanonicalURL', array( &$this, &$url, $query ) );
+		Hooks::run( 'GetCanonicalURL', array( &$this, &$url, $query ) );
 		return $url;
 	}
 
@@ -1857,16 +1844,16 @@ class Title {
 	private function checkPermissionHooks( $action, $user, $errors, $doExpensiveQueries, $short ) {
 		// Use getUserPermissionsErrors instead
 		$result = '';
-		if ( !wfRunHooks( 'userCan', array( &$this, &$user, $action, &$result ) ) ) {
+		if ( !Hooks::run( 'userCan', array( &$this, &$user, $action, &$result ) ) ) {
 			return $result ? array() : array( array( 'badaccess-group0' ) );
 		}
 		// Check getUserPermissionsErrors hook
-		if ( !wfRunHooks( 'getUserPermissionsErrors', array( &$this, &$user, $action, &$result ) ) ) {
+		if ( !Hooks::run( 'getUserPermissionsErrors', array( &$this, &$user, $action, &$result ) ) ) {
 			$errors = $this->resultToError( $errors, $result );
 		}
 		// Check getUserPermissionsErrorsExpensive hook
 		if ( $doExpensiveQueries && !( $short && count( $errors ) > 0 ) &&
-			 !wfRunHooks( 'getUserPermissionsErrorsExpensive', array( &$this, &$user, $action, &$result ) ) ) {
+			 !Hooks::run( 'getUserPermissionsErrorsExpensive', array( &$this, &$user, $action, &$result ) ) ) {
 			$errors = $this->resultToError( $errors, $result );
 		}
 
@@ -2058,6 +2045,7 @@ class Title {
 				$errors[] = array( 'delete-toobig', $wgLang->formatNum( $wgDeleteRevisionsLimit ) );
 			}
 		}
+
 		# start change by wikia
 		elseif( $action == 'edit' ) {
 			if( !$user->isAllowed( 'edit' ) ) {
@@ -2245,7 +2233,7 @@ class Title {
 
 		if ( !$whitelisted ) {
 			# If the title is not whitelisted, give extensions a chance to do so...
-			wfRunHooks( 'TitleReadWhitelist', array( $this, $user, &$whitelisted ) );
+			Hooks::run( 'TitleReadWhitelist', array( $this, $user, &$whitelisted ) );
 			if ( !$whitelisted ) {
 				$errors[] = $this->missingPermissionError( $action, $short );
 			}
@@ -2393,7 +2381,7 @@ class Title {
 			$types = array_diff( $types, array( 'upload' ) );
 		}
 
-		wfRunHooks( 'TitleGetRestrictionTypes', array( $this, &$types ) );
+		Hooks::run( 'TitleGetRestrictionTypes', array( $this, &$types ) );
 
 		wfDebug( __METHOD__ . ': applicable restrictions to [[' .
 			$this->getPrefixedText() . ']] are {' . implode( ',', $types ) . "}\n" );
@@ -3482,7 +3470,7 @@ class Title {
 		// purge variant urls as well
 		if ( $wgContLang->hasVariants() ) {
 			$variants = $wgContLang->getVariants();
-			wfRunHooks( 'TitleGetLangVariants', [ $wgContLang, &$variants ] ); // Wikia change - @author macbre / BAC-1278
+			Hooks::run( 'TitleGetLangVariants', [ $wgContLang, &$variants ] ); // Wikia change - @author macbre / BAC-1278
 			foreach ( $variants as $vCode ) {
 				$urls[] = $this->getInternalURL( '', $vCode );
 			}
@@ -3490,7 +3478,7 @@ class Title {
 
 		// Wikia change - begin
 		// @author macbre
-		wfRunHooks('TitleGetSquidURLs', array($this, &$urls));
+		Hooks::run('TitleGetSquidURLs', array($this, &$urls));
 		// Wikia change - end
 
 		return $urls;
@@ -3586,7 +3574,7 @@ class Title {
 		}
 
 		$err = null;
-		if ( !wfRunHooks( 'AbortMove', array( $this, $nt, $wgUser, &$err, $reason ) ) ) {
+		if ( !Hooks::run( 'AbortMove', array( $this, $nt, $wgUser, &$err, $reason ) ) ) {
 			$errors[] = array( 'hookaborted', $err );
 		}
 
@@ -3760,7 +3748,7 @@ class Title {
 
 		$dbw->commit();
 
-		wfRunHooks( 'TitleMoveComplete', array( &$this, &$nt, &$wgUser, $pageid, $redirid ) );
+		Hooks::run( 'TitleMoveComplete', array( &$this, &$nt, &$wgUser, $pageid, $redirid ) );
 		return true;
 	}
 
@@ -3845,7 +3833,7 @@ class Title {
 
 		$newpage->updateRevisionOn( $dbw, $nullRevision );
 
-		wfRunHooks( 'NewRevisionFromEditComplete',
+		Hooks::run( 'NewRevisionFromEditComplete',
 			array( $newpage, $nullRevision, $latest, $wgUser ) );
 
 		$newpage->doEditUpdates( $nullRevision, $wgUser, array( 'changed' => false ) );
@@ -3870,7 +3858,7 @@ class Title {
 				$redirectRevision->insertOn( $dbw );
 				$redirectArticle->updateRevisionOn( $dbw, $redirectRevision, 0 );
 
-				wfRunHooks( 'NewRevisionFromEditComplete',
+				Hooks::run( 'NewRevisionFromEditComplete',
 					array( $redirectArticle, $redirectRevision, false, $wgUser ) );
 
 				$redirectArticle->doEditUpdates( $redirectRevision, $wgUser, array( 'created' => true ) );
@@ -4054,7 +4042,7 @@ class Title {
 		$data = array();
 
 		$titleKey = $this->getArticleId();
-		
+
 		if ( $titleKey === 0 ) {
 			return $data;
 		}
@@ -4684,7 +4672,7 @@ class Title {
 		// on the Title object passed in, and should probably
 		// tell the users to run updateCollations.php --force
 		// in order to re-sort existing category relations.
-		wfRunHooks( 'GetDefaultSortkey', array( $this, &$unprefixed ) );
+		Hooks::run( 'GetDefaultSortkey', array( $this, &$unprefixed ) );
 		if ( $prefix !== '' ) {
 			# Separate with a line feed, so the unprefixed part is only used as
 			# a tiebreaker when two pages have the exact same prefix.
@@ -4721,7 +4709,7 @@ class Title {
 		// If nothing special, it should be in the wiki content language
 		$pageLang = $wgContLang;
 		// Hook at the end because we don't want to override the above stuff
-		wfRunHooks( 'PageContentLanguage', array( $this, &$pageLang, $wgLang ) );
+		Hooks::run( 'PageContentLanguage', array( $this, &$pageLang, $wgLang ) );
 		return wfGetLangObj( $pageLang );
 	}
 

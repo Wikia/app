@@ -16,6 +16,9 @@ class UserPagesHeaderController extends WikiaController {
 		$this->actionMenu = array();
 		$this->comments = null;
 		$this->editTimestamp = null;
+
+		//User pages have custom page header
+		$this->wg->SuppressPageHeader = true;
 	}
 
 	/**
@@ -132,7 +135,7 @@ class UserPagesHeaderController extends WikiaController {
 			);
 		}
 
-		wfRunHooks( 'UserPagesHeaderModuleAfterGetTabs', array( &$tabs, $namespace, $userName ) );
+		Hooks::run( 'UserPagesHeaderModuleAfterGetTabs', array( &$tabs, $namespace, $userName ) );
 
 		wfProfileOut( __METHOD__ );
 		return $tabs;
@@ -168,7 +171,7 @@ class UserPagesHeaderController extends WikiaController {
 	public function executeIndex() {
 		wfProfileIn( __METHOD__ );
 
-		global $wgTitle, $wgRequest, $wgUser, $wgOut, $wgCityId, $wgIsPrivateWiki;
+		global $wgTitle, $wgUser, $wgCityId, $wgIsPrivateWiki;
 
 		//fb#1090
 		$this->isInternalWiki = empty( $wgCityId );
@@ -294,103 +297,5 @@ class UserPagesHeaderController extends WikiaController {
 		$userURL = explode( '/', AvatarService::getUrl( $user_name ) );
 		$userURL = $userURL[count( $userURL ) -1];
 		return $userURL;
-	}
-
-	/**
-	 * Render header for blog post
-	 */
-	public function executeBlogPost() {
-		wfProfileIn( __METHOD__ );
-		global $wgTitle, $wgLang, $wgOut;
-
-		// remove User_blog:xxx from title
-		$titleParts = explode( '/', $wgTitle->getText() );
-		array_shift( $titleParts );
-		$this->title = implode( '/', $titleParts );
-
-		// get user name to display in header
-		$this->userName = self::getUserName( $wgTitle, BodyController::getUserPagesNamespaces() );
-
-		// render avatar (48x48)
-		$this->avatar = AvatarService::renderAvatar( $this->userName, 48 );
-
-		// link to user page
-		$this->userPage = AvatarService::getUrl( $this->userName );
-
-		if( $this->wg->EnableBlogArticles ) {
-			// link to user blog page
-			$this->userBlogPage = AvatarService::getUrl( $this->userName, NS_BLOG_ARTICLE );
-
-			// user blog page message
-			$this->userBlogPageMessage = wfMessage( 'user-blog-url-link', $this->userName )->inContentLanguage()->parse();
-		}
-		if( !empty( $this->wg->EnableGoogleAuthorInfo )
-			&& !empty( $this->wg->GoogleAuthorLinks )
-			&& array_key_exists( $this->userName, $this->wg->GoogleAuthorLinks )
-		) {
-			$this->googleAuthorLink = $this->wg->GoogleAuthorLinks[$this->userName] . '?rel=author';
-		}
-		if( $this->app->wg->Request->getVal( 'action' ) == 'history' || $this->app->wg->Request->getCheck( 'diff' ) ) {
-			$this->navLinks = Wikia::link( $this->app->wg->title, wfMsg( 'oasis-page-header-back-to-article' ), array(), array(), 'known' );
-		}
-		// user stats (edit points, account creation date)
-		$this->stats = $this->getStats( $this->userName );
-
-		// commments / likes / date of first edit
-		if ( !empty( $wgTitle ) && $wgTitle->exists() ) {
-			$service = new PageStatsService( $wgTitle->getArticleId() );
-
-			$this->editTimestamp = $wgLang->date( $service->getFirstRevisionTimestamp() );
-			$this->comments = $service->getCommentsCount();
-		}
-
-		$actionMenu = array();
-		$dropdownActions = array( 'move', 'protect', 'unprotect', 'delete', 'undelete', 'history' );
-
-		// edit button / dropdown
-		if ( isset( $this->content_actions['ve-edit'] ) ) {
-			// new visual editor is enabled
-			$actionMenu['action'] = $this->content_actions['ve-edit'];
-			// add classic editor link to the possible dropdown options
-			array_unshift( $dropdownActions, 'edit' );
-		}
-		else if ( isset( $this->content_actions['edit'] ) ) {
-			$actionMenu['action'] = $this->content_actions['edit'];
-		}
-
-		foreach( $dropdownActions as $action ) {
-			if ( isset( $this->content_actions[$action] ) ) {
-				$actionMenu['dropdown'][$action] = $this->content_actions[$action];
-			}
-		}
-		$this->actionMenu = $actionMenu;
-
-		// load CSS for .WikiaUserPagesHeader (BugId:9212, 10246)
-		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( "skins/oasis/css/core/UserPagesHeader.scss" ) );
-
-		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 * Render header for blog listing
-	 */
-	public function executeBlogListing() {
-		wfProfileIn( __METHOD__ );
-
-		global $wgTitle, $wgOut;
-
-		// "Create blog post" button
-		$this->actionButton = array(
-				'href' => SpecialPage::getTitleFor( 'CreateBlogPage' )->getLocalUrl(),
-				'text' => wfMsg( 'blog-create-post-label' ),
-				);
-		$this->title = $wgTitle->getText();
-		//subtitle is no longer rendered in this module. this probably needs to be moved to body module.
-		$this->subtitle = wfMsg( 'create-blog-post-category' );
-
-		// load CSS for .WikiaBlogListingHeader (BugId:9212, 10246)
-		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( "skins/oasis/css/core/UserPagesHeader.scss" ) );
-
-		wfProfileOut( __METHOD__ );
 	}
 }

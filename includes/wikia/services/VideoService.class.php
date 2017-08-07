@@ -49,7 +49,7 @@ class VideoService extends WikiaModel {
 				$videoTitle = $title;
 				$videoPageId = $title->getArticleId();
 				$videoProvider = '';
-				wfRunHooks( 'AddPremiumVideo', array( $title ) );
+				Hooks::run( 'AddPremiumVideo', array( $title ) );
 			} else {
 				if ( empty( $this->wg->allowNonPremiumVideos ) ) {
 					wfProfileOut( __METHOD__ );

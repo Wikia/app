@@ -172,9 +172,8 @@ class WallBaseController extends WikiaService {
 		$wallMessage = $this->getWallMessage();
 
 		if ( !( $wallMessage instanceof WallMessage ) || !WallMessage::isWallMessage( $wallMessage->getTitle() ) ) {
-			$this->forward( 'WallBaseController', 'message_error' );
 			wfProfileOut( __METHOD__ );
-			return true;
+			return false;
 		}
 
 		$head = '';
@@ -485,6 +484,7 @@ class WallBaseController extends WikiaService {
 
 		$path = [ ];
 		$this->response->setVal( 'path', $path );
+		$this->response->setVal( 'className', $this->request->getVal( 'className' ) );
 
 		$title = Title::newFromId( $this->request->getVal( 'id' ) );
 		if ( empty( $title ) ) {
@@ -549,9 +549,9 @@ class WallBaseController extends WikiaService {
 
 			$this->getContext()->getOutput()->setRobotPolicy( 'index,follow' );
 
-			wfRunHooks( 'WallThreadHeader', [ $title, $wallMessage, &$path, &$this->response, &$this->request ] );
+			Hooks::run( 'WallThreadHeader', [ $title, $wallMessage, &$path, &$this->response, &$this->request ] );
 		} else {
-			wfRunHooks( 'WallHeader', [ $this->wg->Title, &$path, &$this->response, &$this->request ] );
+			Hooks::run( 'WallHeader', [ $this->wg->Title, &$path, &$this->response, &$this->request ] );
 		}
 		$this->response->setVal( 'path', $path );
 	}
@@ -570,7 +570,7 @@ class WallBaseController extends WikiaService {
 		$this->response->setVal( 'username', $username );
 		$this->response->setVal( 'wall_username', $wall_username );
 
-		wfRunHooks( 'WallNewMessage', [ $this->wg->Title, &$this->response ] );
+		Hooks::run( 'WallNewMessage', [ $this->wg->Title, &$this->response ] );
 
 		$notifyEveryone = $this->helper->isAllowedNotifyEveryone( $this->wg->Title->getNamespace(), $this->wg->User );
 
@@ -605,13 +605,6 @@ class WallBaseController extends WikiaService {
 		} else {
 			$this->response->setVal( 'userBlocked', false );
 		}
-
-	}
-
-	/**
-	 * Renders Wall_message_error.php template
-	 */
-	public function message_error() {
 
 	}
 

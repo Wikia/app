@@ -1,6 +1,7 @@
 @import "skins/shared/mixins/box-shadow";
 @import "skins/shared/mixins/calc";
 @import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/flexbox";
 @import "skins/shared/mixins/forms";
 @import "skins/shared/mixins/gradient";
 @import "skins/shared/mixins/menus";
@@ -71,6 +72,7 @@ $color-highlight-column: rgba($color-page, 0);
 	height: $admin-dashboard-header-height;
 	padding: 0 15px;
 	position: relative;
+	width: 100%;
 	h1 {
 		font-size: 20px;
 		line-height: 40px;
@@ -128,6 +130,8 @@ $color-highlight-column: rgba($color-page, 0);
 }
 
 .AdminDashboardRail {
+	@include flex-direction(column);
+
 	float: right;
 	margin: 20px 15px 0 0;
 	width: 275px;
@@ -146,11 +150,6 @@ $color-highlight-column: rgba($color-page, 0);
 
 	@if ( $responsive-or-breakpoints-layout-enabled ) {
 		overflow: hidden;
-	}
-
-	ul, ol {
-		margin: 0;
-		list-style: none;
 	}
 
 	.admin-dashboard-content {
@@ -353,6 +352,13 @@ $color-highlight-column: rgba($color-page, 0);
 	fieldset {
 		border: solid 1px $color-links;
 	}
+
+	.AdminDashboard {
+		ul, ol {
+			margin: 0;
+			list-style: none;
+		}
+	}
 }
 
 @if ( not $responsive-or-breakpoints-layout-enabled ) {
@@ -369,36 +375,6 @@ $color-highlight-column: rgba($color-page, 0);
 	}
 }
 
-.WikiHeader {
-	height: 75px;
-	margin-bottom: 10px;
-	padding-bottom: 0;
-	h1:before {
-		display: none;
-	}
-	.shadow-mask {
-		display: none;
-	}
-	@if ( not $responsive-or-breakpoints-layout-enabled ) {
-		>.buttons {
-			bottom: auto;
-			top: 15px;
-		}
-		.WikiaSearch {
-			bottom: 0;
-			position: absolute;
-			right: 10px;
-			input[type=text] {
-				width: 250px;
-			}
-		}
-		.wordmark {
-			bottom: 0;
-			position: absolute;
-		}
-	}
-}
-
 // Module overwrites
 // ListUser overwrite
 .WikiaArticle .lu_fieldset {
@@ -411,6 +387,11 @@ $color-highlight-column: rgba($color-page, 0);
 }
 
 .QuickStatsWidget {
+	@include display-inline-flex();
+	@include flex-direction(column);
+	@include flex-grow(1);
+
+
 // make this reusable later
 // ng -> not global
 	.WikiaDataTable {

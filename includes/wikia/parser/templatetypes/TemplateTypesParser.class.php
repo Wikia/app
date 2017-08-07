@@ -11,7 +11,7 @@ class TemplateTypesParser {
 	 *
 	 * @return bool
 	 */
-	public static function onFetchTemplateAndTitle( &$text, &$finalTitle ) {
+	public static function onFetchTemplateAndTitle( &$text, Title $finalTitle ) {
 		global $wgEnableReferencesTemplateParsing,
 			   $wgEnableNavboxTemplateParsing,
 			   $wgEnableNoticeTemplateParsing,

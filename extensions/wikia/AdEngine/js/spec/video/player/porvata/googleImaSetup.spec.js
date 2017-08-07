@@ -16,7 +16,7 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaSetup', function () {
 				build: noop
 			},
 			log: noop,
-			recoveryHelper: {
+			sourcePoint: {
 				getSafeUri: function (url) {
 					return url;
 				}
@@ -37,7 +37,7 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaSetup', function () {
 	function getModule(vastUrlBuilder) {
 		return modules['ext.wikia.adEngine.video.player.porvata.googleImaSetup'](
 			vastUrlBuilder,
-			mocks.recoveryHelper,
+			mocks.sourcePoint,
 			mocks.browserDetect,
 			mocks.log,
 			mocks.win

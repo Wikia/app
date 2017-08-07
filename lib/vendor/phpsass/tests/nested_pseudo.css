@@ -1,3 +1,0 @@
-div :first-child,
-div h1 + * {
-	border: 0; }

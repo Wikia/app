@@ -5,11 +5,6 @@
  */
 class AvatarServiceTest extends WikiaBaseTest {
 
-	public function setUp() {
-		parent::setUp();
-		$this->mockGlobalVariable( 'wgEnableVignette', true );
-	}
-
 	/**
 	 * @dataProvider getDefaultAvatarDataProvider
 	 * @group UsingDB
@@ -160,14 +155,45 @@ class AvatarServiceTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * SUS-1507: Verify that default avatar for anon users has "A Fandom User" message as alt text
+	 */
+	public function testAltTextForAnonAvatarsUsesMediaWikiMessage() {
+		$messageMock = $this->getMockBuilder( Message::class )
+			->setMethods( [ 'text' ] )
+			->disableOriginalConstructor()
+			->getMock();
+
+		$messageMock->expects( $this->once() )
+			->method( 'text' )
+			->willReturn( 'A Fandom User' );
+
+		$this->getGlobalFunctionMock( 'wfMessage' )
+			->expects( $this->once() )
+			->method( 'wfMessage' )
+			->with( 'oasis-anon-user' )
+			->willReturn( $messageMock );
+
+		$this->mockGlobalFunction( 'getMessageForContentAsArray', [] );
+
+		$avatarTag = AvatarService::renderAvatar( '8.8.8.8', 20 );
+
+		$this->assertEquals(
+			'<img src="' . AvatarService::getDefaultAvatar( 20 ) . '" width="20" height="20" class="avatar" alt="A Fandom User" />',
+			$avatarTag
+		);
+	}
+
+	/**
 	 * @dataProvider getVignetteUrlDataProvider
 	 */
 	function testGetVignetteUrl( $userAttr, $width, $expectedUrl ) {
 		$this->mockGlobalVariable( 'wgVignetteUrl', 'http://vignette.wikia-dev.com' );
 
-		$user = $this->mockClassWithMethods( 'User', [
+		/** @var User $user */
+		$user = $this->createConfiguredMock( User::class, [
 			'getGlobalAttribute' => $userAttr,
-		]);
+		] );
+
 		$masthead = Masthead::newFromUser( $user );
 		$url = AvatarService::getVignetteUrl( $masthead, $width, false );
 

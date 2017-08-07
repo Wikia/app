@@ -561,7 +561,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		wfProfileIn( __METHOD__ );
 
-		if ( !wfRunHooks( 'GalleryBeforeProduceHTML', array( $this->mData, &$out ) ) ) {
+		if ( !Hooks::run( 'GalleryBeforeProduceHTML', array( $this->mData, &$out ) ) ) {
 			wfProfileOut( __METHOD__ );
 
 			return $out;
@@ -932,7 +932,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				}
 			}
 
-			wfRunHooks( 'GalleryBeforeRenderImage', array( &$image ) );
+			Hooks::run( 'GalleryBeforeRenderImage', array( &$image ) );
 
 			// see Image SEO project
 			$wrapperId = preg_replace( '/[^a-z0-9_]/i', '-', Sanitizer::escapeId( $image['linkTitle'] ) );
@@ -1204,7 +1204,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 				# Give extensions a chance to select the file revision for us
 				$time = $descQuery = false;
-				wfRunHooks( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
+				Hooks::run( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
 
 				$img = wfFindFile( $nt, $time );
 
@@ -1465,7 +1465,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			// parse link (RT #142515)
 			$linkAttribs = $this->parseLink( $nt->getLocalUrl(), $nt->getText(), $link );
 
-			wfRunHooks( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
+			Hooks::run( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
 
 			$file = wfFindFile( $nt, $time );
 			if ( $file instanceof File && ( $nt->getNamespace() == NS_FILE ) ) {
@@ -1687,25 +1687,11 @@ class WikiaPhotoGallery extends ImageGallery {
 	 * @return String
 	 */
 	public function resizeURL( File $file, array $box ) {
-		global $wgEnableVignette;
-
 		list( $adjWidth, $_ ) = $this->fitWithin( $file, $box );
 
-		if ( $wgEnableVignette ) {
-			$resizeUrl = $file->getUrlGenerator()
-				->scaleToWidth( $adjWidth )
-				->url();
-		} else {
-			$append = '';
-			$mime = strtolower( $file->getMimeType() );
-			if ( $mime == 'image/svg+xml' || $mime == 'image/svg' ) {
-				$append = '.png';
-			}
-
-			$resizeUrl = wfReplaceImageServer( $file->getThumbUrl( $adjWidth . 'px-' . $file->getName() . $append ) );
-		}
-
-		return $resizeUrl;
+		return $file->getUrlGenerator()
+			->scaleToWidth( $adjWidth )
+			->url();
 	}
 
 	/**
@@ -1719,41 +1705,12 @@ class WikiaPhotoGallery extends ImageGallery {
 	 * @return String
 	 */
 	private function cropURL( File $file, array $box ) {
-		global $wgEnableVignette;
-
-		if ( $wgEnableVignette ) {
-			$cropUrl = $file->getUrlGenerator()
-				->zoomCropDown()
-				->width( $box['w'] )
-				->height( $box['h'] )
-				->url();
-		} else {
-			list( $adjWidth, $adjHeight ) = $this->fitClosest( $file, $box );
-
-			$height = $file->getHeight();
-			$width = $file->getWidth();
-
-			if ( $adjHeight == $box['h'] ) {
-				$width = $box['w'] * ( $file->getHeight() / $box['h'] );
-			}
-
-			if ( $adjWidth == $box['w'] ) {
-				$height = $box['h'] * ( $file->getWidth() / $box['w'] );
-			}
-
-			$cropStr = sprintf( "%dpx-0,%d,0,%d", $adjWidth, $width, $height );
-			$append = '';
-			$mime = strtolower( $file->getMimeType() );
-			if ( $mime == 'image/svg+xml' || $mime == 'image/svg' ) {
-				$append = '.png';
-			}
-
-			$cropUrl = wfReplaceImageServer( $file->getThumbUrl( $cropStr . '-' . $file->getName() . $append ) );
-		}
-
-		return $cropUrl;
+		return $file->getUrlGenerator()
+			->zoomCropDown()
+			->width( $box['w'] )
+			->height( $box['h'] )
+			->url();
 	}
-
 
 	/**
 	 * Get object for given image (and call hook)
@@ -1767,7 +1724,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		// Give extensions a chance to select the file revision for us
 		$time = $descQuery = false;
-		wfRunHooks( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
+		Hooks::run( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
 
 		// Render image thumbnail
 		$img = wfFindFile( $nt, $time );

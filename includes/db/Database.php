@@ -1934,6 +1934,10 @@ abstract class DatabaseBase implements DatabaseType {
 				$first = false;
 			}
 
+			if ( is_bool( $value ) ) {
+				$value = (int) $value;
+			}
+
 			if ( ( $mode == LIST_AND || $mode == LIST_OR ) && is_numeric( $field ) ) {
 				$list .= "($value)";
 			} elseif ( ( $mode == LIST_SET ) && is_numeric( $field ) ) {
@@ -2305,6 +2309,7 @@ abstract class DatabaseBase implements DatabaseType {
 
 	/**
 	 * If it's a string, adds quotes and backslashes
+	 * If it's a boolean, converts it to int
 	 * Otherwise returns as-is
 	 *
 	 * @param $s string
@@ -2314,6 +2319,8 @@ abstract class DatabaseBase implements DatabaseType {
 	function addQuotes( $s ) {
 		if ( $s === null ) {
 			return 'NULL';
+		} elseif ( is_bool( $s ) ) {
+			return (int) $s;
 		} else {
 			# This will also quote numeric values. This should be harmless,
 			# and protects against weird problems that occur when they really
@@ -2655,8 +2662,8 @@ abstract class DatabaseBase implements DatabaseType {
 	/**
 	 * DELETE query wrapper.
 	 *
-	 * @param $table string|array Table name
-	 * @param $conds string|array of conditions. See $conds in DatabaseBase::select() for
+	 * @param string $table Table name
+	 * @param $conds String|Array of conditions. See $conds in DatabaseBase::select() for
 	 *               the format. Use $conds == "*" to delete all rows
 	 * @param $fname string name of the calling function
 	 *
@@ -2664,7 +2671,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @throws DBUnexpectedError
 	 * @throws MWException
 	 */
-	function delete( $table, $conds, $fname = 'DatabaseBase::delete' ) {
+	function delete( string $table, $conds, $fname = 'DatabaseBase::delete' ) {
 		if ( !$conds ) {
 			throw new DBUnexpectedError( $this, 'DatabaseBase::delete() called with no conditions' );
 		}

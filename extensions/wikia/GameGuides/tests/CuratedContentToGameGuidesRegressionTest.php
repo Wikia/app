@@ -1,7 +1,11 @@
 <?php
-require_once( $IP . '/extensions/wikia/GameGuides/GameGuidesController.class.php' );
 
 class CuratedContentToGameGuidesRegressionTest extends WikiaBaseTest {
+
+	protected function setUp() {
+		$this->setupFile = __DIR__ . '/../GameGuides_setup.php';
+		parent::setUp();
+	}
 
 	/**
 	 * @param String $message

@@ -96,7 +96,7 @@ class EditAccount extends SpecialPage {
 				//
 				// 2) and copy the data from the shared to the local database
 				$oUser = User::newFromName( $userName );
-				wfRunHooks( 'UserNameLoadFromId', array( $userName, &$oUser, true ) );
+				Hooks::run( 'UserNameLoadFromId', array( $userName, &$oUser, true ) );
 
 				$id = 0;
 				$this->mUser = $oUser;
@@ -617,7 +617,7 @@ class EditAccount extends SpecialPage {
 		$baseUrl = !empty( $wgDevelEnvironment ) ?
 			'http://preview.fandom.wikia.com' :
 			'http://fandom.wikia.com';
-		$url = $baseUrl . '/ajax/create_user/';
+		$url = $baseUrl . '/api/create_user/';
 
 		$fields = [
 			'wp_login' => $this->mUser->getName(),

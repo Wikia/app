@@ -26,6 +26,7 @@ ve.init.wikia.ViewPageTarget = function VeInitWikiaViewPageTarget() {
 	this.toolbarSaveButtonEnableTracked = false;
 	this.userLoggedInDuringEdit = false;
 	this.$license = null;
+	this.$wikiaAds = null;
 };
 
 /* Inheritance */
@@ -62,7 +63,7 @@ ve.init.wikia.ViewPageTarget.static.toolbarGroups = [
 		type: 'list',
 		label: OO.ui.deferMsg( 'visualeditor-toolbar-insert' ),
 		indicator: 'down',
-		include: [ 'wikiaInfoboxInsert', 'wikiaMapInsert', 'wikiaTemplateInsert', 'reference', 'referencesList', 'insertTable' ]
+		include: [ 'wikiaInfoboxInsert', 'wikiaTemplateInsert', 'reference', 'referencesList', 'insertTable' ]
 	},
 	// Table
 	{
@@ -104,6 +105,13 @@ ve.init.wikia.ViewPageTarget.prototype.onSurfaceReady = function () {
 		this.licenseWidget.setupLicense( '#WikiaArticle' );
 	}
 
+	this.$wikiaAds = $('.hide-to-edit, .hide-for-edit, .wikia-ad, #WikiaAdInContentPlaceHolder').each(function () {
+		var $ad = $(this);
+		$ad.css({
+			height: $ad.height(),
+			width: $ad.width()
+		});
+	}).addClass('ve-hidden-ad');
 };
 
 /**
@@ -112,6 +120,13 @@ ve.init.wikia.ViewPageTarget.prototype.onSurfaceReady = function () {
 ve.init.wikia.ViewPageTarget.prototype.tearDownSurface = function ( noAnimate ) {
 	this.tearDownLicense();
 	this.tearDownAnonWarning();
+
+	this.$wikiaAds
+		.css({
+			height: 'auto',
+			width: 'auto'
+		})
+		.removeClass('ve-hidden-ad');
 
 	// Parent method
 	return ve.init.mw.ViewPageTarget.prototype.tearDownSurface.call( this, noAnimate );

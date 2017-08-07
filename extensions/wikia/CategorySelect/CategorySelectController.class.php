@@ -20,7 +20,7 @@ class CategorySelectController extends WikiaController {
 		wfProfileIn( __METHOD__ );
 
 		// Template rendering cancelled by hook
-		if ( !wfRunHooks( 'CategorySelectArticlePage' ) ) {
+		if ( !Hooks::run( 'CategorySelectArticlePage' ) ) {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
@@ -256,7 +256,7 @@ class CategorySelectController extends WikiaController {
 					$response[ 'html' ] = $this->app->renderView( 'CategorySelectController', 'categories', array(
 						'categories' => $categories
 					));
-					wfRunHooks( 'CategorySelectSave', array( $title, $newCategories ) );
+					Hooks::run( 'CategorySelectSave', array( $title, $newCategories ) );
 					break;
 
 				case EditPage::AS_SPAM_ERROR:

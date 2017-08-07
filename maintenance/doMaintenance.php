@@ -159,4 +159,4 @@ try {
 	throw $e;
 }
 
-wfRunHooks( 'RestInPeace' ); // Wikia change - @author macbre
+Hooks::run( 'RestInPeace' ); // Wikia change - @author macbre

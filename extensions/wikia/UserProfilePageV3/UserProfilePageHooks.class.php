@@ -119,7 +119,7 @@ class UserProfilePageHooks {
 		$html = '';
 
 		$out = array();
-		wfRunHooks( 'AddToUserProfile', array( &$out, $user ) );
+		Hooks::run( 'AddToUserProfile', array( &$out, $user ) );
 
 		if ( count( $out ) > 0 ) {
 			$wg->Out->addExtensionStyle( "{$wg->ExtensionsPath}/wikia/UserProfilePageV3/css/UserprofileMonobook.css" );

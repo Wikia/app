@@ -113,7 +113,7 @@ class SimpleCaptcha {
 			}
 			/* Wikia change - begin */
 			$message = '';
-			wfRunHooks( 'GetConfirmEditMessage', array( $this, &$message) );
+			Hooks::run( 'GetConfirmEditMessage', array( $this, &$message) );
 			if ( empty($message) ) {
 				$message = $this->getMessage( 'createaccount' );
 			}
@@ -475,7 +475,7 @@ class SimpleCaptcha {
 		
 		#<Wikia>
 		$result = null;                                                                                                                                                                  
-		if( !wfRunHooks( 'ConfirmEdit::onConfirmEdit', array( &$this, &$editPage, $newtext, $section, $merged, &$result ) ) ) {                                                          
+		if( !Hooks::run( 'ConfirmEdit::onConfirmEdit', array( &$this, &$editPage, $newtext, $section, $merged, &$result ) ) ) {                                                          
 			return $result;                                                                                                                                                          
 		}
 		#</Wikia>

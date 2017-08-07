@@ -28,14 +28,21 @@ describe('ext.wikia.adEngine.context.uapContext', function () {
 		expect(context.isUapLoaded()).toBeFalsy();
 
 		context.setUapId('123456');
+		expect(context.isUapLoaded()).toBeFalsy();
+		expect(context.isBfaaLoaded()).toBeTruthy();
+
+		context.setType('vuap');
 		expect(context.isUapLoaded()).toBeTruthy();
+		expect(context.isBfaaLoaded()).toBeTruthy();
 		expect(context.getUapId()).toEqual('123456');
+		expect(context.getType()).toEqual('vuap');
 	});
 
 	it('reset uap id', function () {
 		var context = getContext();
 
 		context.setUapId('123456');
+		context.setType('uap');
 		expect(context.isUapLoaded()).toBeTruthy();
 
 		context.reset();
@@ -47,9 +54,21 @@ describe('ext.wikia.adEngine.context.uapContext', function () {
 		spyOn(mocks.eventDispatcher, 'dispatch');
 
 		context.setUapId('123456');
+		context.setType('uap');
 		context.dispatchEvent();
 
 		expect(mocks.eventDispatcher.dispatch.calls.mostRecent().args[0]).toEqual('wikia.uap');
+	});
+
+	it('dispatch not uap event when uap id set and type is abcd', function () {
+		var context = getContext();
+		spyOn(mocks.eventDispatcher, 'dispatch');
+
+		context.setUapId('123456');
+		context.setType('abcd');
+		context.dispatchEvent();
+
+		expect(mocks.eventDispatcher.dispatch.calls.mostRecent().args[0]).toEqual('wikia.not_uap');
 	});
 
 	it('dispatch not_uap event when uap id not set and event not dispatched yet', function () {
@@ -62,7 +81,7 @@ describe('ext.wikia.adEngine.context.uapContext', function () {
 	});
 
 	it('should dispatch event for leaderboard', function () {
-		var context = getContext();
+		var context = getContext()
 
 		expect(context.shouldDispatchEvent('TOP_LEADERBOARD')).toBeTruthy();
 	});

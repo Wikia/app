@@ -25,7 +25,7 @@ class CreateBlogListingPage extends SpecialPage {
 	public function execute( $par ) {
 		global $wgOut, $wgUser, $wgRequest, $wgTitle;
 
-		wfRunHooks( 'beforeBlogListingForm', array( &$this, $wgRequest->getVal( 'article' ) ) );
+		Hooks::run( 'beforeBlogListingForm', array( &$this, $wgRequest->getVal( 'article' ) ) );
 
 		if ( !$wgUser->isLoggedIn() ) {
 			$wgOut->showErrorPage( 'create-blog-no-login', 'create-blog-login-required', array( wfGetReturntoParam() ) );
@@ -204,7 +204,7 @@ class CreateBlogListingPage extends SpecialPage {
 			$aListingCategories = explode( '|', $this->mFormData['listingCategories'] );
 			$aListingAuthors = explode( ',', $this->mFormData['listingAuthors'] );
 
-			wfRunHooks( 'BlogListingSave', array( $this->mFormData['listingTitle'], $aListingCategories, $aListingAuthors ) );
+			Hooks::run( 'BlogListingSave', array( $this->mFormData['listingTitle'], $aListingCategories, $aListingAuthors ) );
 
 			$wgOut->redirect( $this->mPostArticle->getTitle()->getFullUrl() );
 		}

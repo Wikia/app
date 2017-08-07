@@ -1,117 +1,228 @@
 <?php
 
-class SEOTweaksTest extends WikiaBaseTest
-{
+class SEOTweaksTest extends WikiaBaseTest {
 
-	public function setUp() {
+	/** @var PHPUnit_Framework_MockObject_MockBuilder $helperMocker */
+	private $helperMocker;
+
+	protected function setUp() {
 		parent::setUp();
+        $this->setupFile =  dirname(__FILE__) . '/../SEOTweaks.setup.php';
 		$this->helperMocker = $this->getMockBuilder( 'SEOTweaksHooksHelper' )
 									->disableOriginalConstructor();
 
 	}
 
-	/**
-	 * @covers SEOTweaksHooksHelper::onBeforePageDisplay
-	 */
-	public function testOnBeforePageDisplayWithoutGoogleVals() {
+    /**
+     * @group Slow
+     * @group Broken
+     * @slowExecutionTime 0.16133 ms
+     * Test if the thumbnail gets generated for article
+     */
+    public function testArticleImageGeneration() {
+        $memkey = 'sght_memkey';
+        $thumbUrl = 'http://www.wikia.com/wiki/fake.jpg';
 
-		$this->mockGlobalVariable('wgSEOGooglePlusLink', null);
+        $mock_cache = $this->getMock('stdClass', array('get', 'set'));
+        $mock_cache->expects($this->once())
+            ->method('get')
+            ->with($this->equalTo($memkey))
+            ->will($this->returnValue(null));
+        $mock_cache->expects($this->once())
+            ->method('set')
+            ->with($this->equalTo($memkey),$this->equalTo($thumbUrl));
 
-		$mockOut = $this->getMockbuilder( 'OutputPage' )
-						->disableOriginalConstructor()
-						->setMethods( array( 'addLink' ) )
-						->getMock();
+        $fileMock = $this->getMock('File', array(), array(), '', FALSE);
+        $mockedFileTitle = $this->getMock( 'Title' );
 
-		$mockHelper = $this->helperMocker->setMethods( array( 'foo' ) ) // fake method required to run real methods
-										->getMock();
+        $this->mockGlobalVariable('wgMemc', $mock_cache, 0);
 
-		$wgRefl = new ReflectionProperty( 'WikiaObject', 'wg' );
-		$wgRefl->setAccessible( true );
+        $mockFindFile = $this->getGlobalFunctionMock( 'wfFindFile' );
 
-		$mockOut
-			->expects( $this->never() )
-			->method ( 'addLink' )
-		;
+        $mockFindFile
+            ->expects( $this->once() )
+            ->method( 'wfFindFile' )
+            ->with( $this->equalTo( $mockedFileTitle ) )
+            ->will( $this->returnValue( $fileMock ) );
 
-		// first, with neither setting -- nothing should happen
-		$this->assertTrue(
-				$mockHelper->onBeforePageDisplay( $mockOut ),
-				'SEOTweaksHooksHelper::onBeforePageDisplay should always return true'
-		);
-	}
+        $mockedTitle = $this->getMock('Title');
 
-	/**
-	 * @covers SEOTweaksHooksHelper::onBeforePageDisplay
-	 */
-	public function testOnBeforePageDisplayWithGoogleVals() {
+        $this->getStaticMethodMock( 'SEOTweaksHooksHelper', 'getFirstArticleImage' )
+            ->expects($this->once())
+            ->method('getFirstArticleImage')
+            ->with($this->equalTo( $mockedTitle ) )
+            ->will( $this->returnValue( $mockedFileTitle ) );
 
-		$this->mockGlobalVariable('wgSEOGooglePlusLink', 'bazqux');
+        $this->getStaticMethodMock( 'SEOTweaksHooksHelper', 'getThumbFromFile' )
+            ->expects($this->once())
+            ->method('getThumbFromFile')
+            ->with($this->equalTo( $fileMock ) )
+            ->will( $this->returnValue( $thumbUrl ) );
 
-		$mockOut = $this->getMockbuilder( 'OutputPage' )
-						->disableOriginalConstructor()
-						->setMethods( array( 'addLink' ) )
-						->getMock();
+        $this->getStaticMethodMock( 'SEOTweaksHooksHelper', 'makeOpenGraphKey' )
+            ->expects( $this->any() )
+            ->method('makeOpenGraphKey')
+            ->will( $this->returnValue($memkey) );
 
-		$mockHelper = $this->helperMocker->setMethods( array( 'foo' ) ) // fake method required to run real methods
-										->getMock();
+        $mocked = $this->getMock('SEOTweaksHooksHelper', array('getThumbFromFile', 'getFirstArticleImage', 'makeOpenGraphKey') );
 
-		$wgRefl = new ReflectionProperty( 'WikiaObject', 'wg' );
-		$wgRefl->setAccessible( true );
+        $meta = array('foo'=>'bar');
+        $mocked->onOpenGraphMetaHeaders($meta, $mockedTitle);
+        $this->assertEquals(array('foo'=>'bar', 'og:image' => $thumbUrl), $meta);
+    }
 
-		$mockOut
-			->expects( $this->once() )
-			->method ( 'addLink' )
-			->with   ( array( 'href' => 'bazqux', 'rel' => 'publisher' ) )
-		;
-		$this->assertTrue(
-				$mockHelper->onBeforePageDisplay( $mockOut ),
-				'SEOTweaksHooksHelper::onBeforePageDisplay should always return true'
-		);
-	}
+    /**
+     * @group Slow
+     * @group Broken
+     * @slowExecutionTime 0.14801 ms
+     * Test if the thumbnail gets generated for article from file namespace
+     */
+    public function testFileImageGeneration() {
+        $memkey = 'sght_memkey2';
+        $thumbUrl = 'http://www.wikia.com/wiki/fake2.jpg';
 
-	/**
+        $mock_cache = $this->getMock('stdClass', array('get', 'set'));
+        $mock_cache->expects($this->once())
+            ->method('get')
+            ->with($this->equalTo($memkey))
+            ->will($this->returnValue(null));
+        $mock_cache->expects($this->once())
+            ->method('set')
+            ->with($this->equalTo($memkey),$this->equalTo($thumbUrl));
+
+        $fileMock = $this->getMock('File', array(), array(), '', FALSE);
+        $mockedTitle = $this->getMock('Title', array('getNamespace') );
+        $mockedTitle->expects($this->any())
+            ->method('getNamespace')
+            ->will($this->returnValue(NS_FILE));
+
+        $this->mockGlobalVariable('wgMemc', $mock_cache, 0);
+        $this->getGlobalFunctionMock( 'wfFindFile' )
+            ->expects( $this->exactly( 1 ) )
+            ->method( 'wfFindFile' )
+            ->with( $mockedTitle )
+            ->will( $this->returnValue( $fileMock ) );
+
+        $this->getStaticMethodMock( 'SEOTweaksHooksHelper', 'getFirstArticleImage' )
+            ->expects($this->never())
+            ->method('getFirstArticleImage');
+        $this->getStaticMethodMock( 'SEOTweaksHooksHelper', 'getThumbFromFile' )
+            ->expects($this->once())
+            ->method('getThumbFromFile')
+            ->with($this->equalTo( $fileMock ) )
+            ->will( $this->returnValue( $thumbUrl ) );
+        $this->getStaticMethodMock( 'SEOTweaksHooksHelper', 'makeOpenGraphKey' )
+            ->expects( $this->any() )
+            ->method('makeOpenGraphKey')
+            ->will( $this->returnValue($memkey) );
+
+        $mocked = $this->getMock('SEOTweaksHooksHelper', array('getThumbFromFile', 'getFirstArticleImage', 'makeOpenGraphKey') );
+
+        $meta = array('foo'=>'bar');
+        $mocked->onOpenGraphMetaHeaders($meta, $mockedTitle);
+        $this->assertEquals(array('foo'=>'bar', 'og:image' => $thumbUrl), $meta);
+    }
+
+    /**
+     * @group Slow
+     * @group Broken
+     * @slowExecutionTime 0.10808 ms
+     * Test if we don't try to generate thumbnail for user pages (bugid 98881)
+     */
+    public function testUserNS() {
+        $mock_cache = $this->getMock('stdClass', array('get', 'set'));
+        $mock_cache->expects($this->never())
+            ->method('get');
+        $mock_cache->expects($this->never())
+            ->method('set');
+
+        $this->mockGlobalVariable('wgMemc', $mock_cache, 0);
+
+        $mockedTitle = $this->getMock('Title', array('getNamespace') );
+        $mockedTitle->expects($this->any())
+            ->method('getNamespace')
+            ->will($this->returnValue(NS_USER));
+
+        $this->getStaticMethodMock( 'SEOTweaksHooksHelper', 'makeOpenGraphKey' )
+            ->expects($this->any())
+            ->method('makeOpenGraphKey')
+            ->will($this->returnValue('bar'));
+        $this->getStaticMethodMock( 'SEOTweaksHooksHelper', 'getFirstArticleImage' )
+            ->expects($this->never())
+            ->method('getFirstArticleImage');
+        $this->getStaticMethodMock( 'SEOTweaksHooksHelper', 'getThumbFromFile' )
+            ->expects($this->never())
+            ->method('getThumbFromFile');
+        $meta = array('foo'=>'bar');
+
+        $mocked = $this->getMock('SEOTweaksHooksHelper', array('getThumbFromFile', 'getFirstArticleImage', 'makeOpenGraphKey') );
+
+        $mocked->onOpenGraphMetaHeaders($meta, $mockedTitle);
+        $this->assertEquals(array('foo'=>'bar'), $meta);
+    }
+    /**
+     * @group Slow
+     * @group Broken
+     * @slowExecutionTime 0.0735 ms
+     * As tests above cover all the generation cases, we right now use the cached value to check the
+     * behaviour in remaining scenarios
+     * @dataProvider getCacheDataProvider
+     */
+    public function testCache($memcacheValue, $meta, $expected, $desciption) {
+        $memkey = 'sght_memkey2';
+
+        $mock_cache = $this->getMock('stdClass', array('get', 'set'));
+        $mock_cache->expects($this->once())
+            ->method('get')
+            ->with($this->equalTo($memkey))
+            ->will($this->returnValue($memcacheValue));
+        $mock_cache->expects($this->never())
+            ->method('set');
+
+        $this->mockGlobalVariable('wgMemc', $mock_cache, 0);
+
+        $this->getStaticMethodMock( 'SEOTweaksHooksHelper', 'makeOpenGraphKey' )
+            ->expects( $this->any() )
+            ->method('makeOpenGraphKey')
+            ->will( $this->returnValue($memkey) );
+        $this->getStaticMethodMock( 'SEOTweaksHooksHelper', 'getThumbFromFile' )
+            ->expects($this->never())
+            ->method('getThumbFromFile');
+
+        $mocked = $this->getMock('SEOTweaksHooksHelper', array('getThumbFromFile', 'getFirstArticleImage', 'makeOpenGraphKey') );
+
+        $mockedTitle = $this->getMock('Title');
+        $mocked->onOpenGraphMetaHeaders($meta, $mockedTitle);
+        $this->assertEquals($expected, $meta, $desciption);
+
+    }
+
+    public function getCacheDataProvider() {
+        return array(
+            array('http://www.wikia.com/wiki/fake3.jpg', array('foo'=>'bar'), array('foo'=>'bar', 'og:image' => 'http://www.wikia.com/wiki/fake3.jpg'),
+                'cached value'
+            ),
+            array('http://www.wikia.com/wiki/fake3.jpg', array('foo'=>'bar', 'og:image' => 'http://www.wikia.com/wiki/to_override.jpg'), array('foo'=>'bar', 'og:image' => 'http://www.wikia.com/wiki/fake3.jpg'),
+                'cache overrides input value'
+            ),
+            array('', array('foo'=>'bar'), array('foo'=>'bar'),
+                'if no thumbnail was generated, don\'t create the entry for \'og:image\''
+            ),
+            array('', array('foo'=>'bar', 'og:image' => 'http://www.wikia.com/wiki/dont_override.jpg'), array('foo'=>'bar', 'og:image' => 'http://www.wikia.com/wiki/dont_override.jpg'),
+                'if no thumbnail was generated, don\'t override the input value'
+            ),
+        );
+    }
+
+    /**
 	 * @covers SEOTweaksHooksHelper::onImagePageAfterImageLinks
 	 * @group Broken
 	 */
 	public function testOnImagePageAfterImageLinksEmpties() {
 
-		$mockHelper = $this->helperMocker->setMethods( array( 'foo' ) ) // fake method required to run real methods
-										->getMock();
-
-		$mockImagePage = $this->getMockBuilder( 'ImagePage' )
-							->disableOriginalConstructor()
-							->setMethods( array( 'getDisplayedFile', 'getTitle' ) )
-							->getMock();
-
-		$mockFileHelper = $this->getMockBuilder( 'WikiaFileHelper' )
-								->disableOriginalConstructor()
-								->setMethods( array( 'isFileTypeVideo' ) )
-								->getMock();
-
-		$mockOut = $this->getMockBuilder( 'OutputPage' )
-						->disableOriginalConstructor()
-						->setMethods( array( 'setPageTitle' ) )
-						->getMock();
-
-		$mockWrapper = $this->getMockBuilder( 'WikiaFunctionWrapper' )
-							->disableOriginalConstructor()
-							->setMethods( array( 'Msg' ) )
-							->getMock();
-
-		$mockTitle = $this->getMockBuilder( 'Title' )
-							->disableOriginalConstructor()
-							->setMethods( array( 'getBaseText' ) )
-							->getMock();
-
-		$mockFile = $this->getMockBuilder( 'File' )
-							->disableOriginalConstructor()
-							->setMethods( array( 'getHandler' ) )
-							->getMock();
-
-
-		$wfRefl = new ReflectionProperty( 'WikiaObject', 'wf' );
-		$wfRefl->setAccessible( true );
-		$wfRefl->setValue( $mockHelper, $mockWrapper );
+		/** @var ImagePage|PHPUnit_Framework_MockObject_MockObject $mockImagePage */
+		$mockImagePage = $this->createMock( ImagePage::class );
+		$mockOut = $this->createMock( OutputPage::class );
 
 		$mockImagePage
 			->expects( $this->at( 0 ) )
@@ -124,19 +235,13 @@ class SEOTweaksTest extends WikiaBaseTest
 			->will   ( $this->returnValue( null ) )
 		;
 
-		$mockFileHelper
-			->staticExpects( $this->never() )
-			->method       ( 'isFileTypeVideo' )
-		;
 		$mockOut
 			->expects( $this->never() )
 			->method ( 'setPageTitle' )
 		;
 
-		$this->mockClass( 'WikiaFileHelper', $mockFileHelper );
-
 		$this->assertTrue(
-				$mockHelper->onImagePageAfterImageLinks( $mockImagePage, '' ),
+				SEOTweaksHooksHelper::onImagePageAfterImageLinks( $mockImagePage, '' ),
 				'SEOTweaksHooksHelper::onImagePageAfterImageLinks should always return true'
 		);
 	}
@@ -166,11 +271,6 @@ class SEOTweaksTest extends WikiaBaseTest
 						->disableOriginalConstructor()
 						->setMethods( array( 'setPageTitle' ) )
 						->getMock();
-
-		$mockWrapper = $this->getMockBuilder( 'WikiaFunctionWrapper' )
-							->disableOriginalConstructor()
-							->setMethods( array( 'Msg' ) )
-							->getMock();
 
 		$mockTitle = $this->getMockBuilder( 'Title' )
 							->disableOriginalConstructor()
@@ -265,10 +365,6 @@ class SEOTweaksTest extends WikiaBaseTest
 		$mockFile = $this->getMockBuilder( 'LocalFile' )
 							->disableOriginalConstructor()
 							->setMethods( array( 'getHandler' ) )
-							->getMock();
-
-		$mockHandler = $this->getMockBuilder( 'JpegHandler' )
-							->disableOriginalConstructor()
 							->getMock();
 
 		$mockImagePage
@@ -421,11 +517,6 @@ class SEOTweaksTest extends WikiaBaseTest
 		                  ->setMethods( array( 'exists' ) )
 		                  ->getMock();
 
-		$mockWrapper = $this->getMockBuilder( 'WikiaFunctionWrapper' )
-		                    ->disableOriginalConstructor()
-		                    ->setMethods( array( 'GetDB' ) )
-		                    ->getMock();
-
 		$outputDone = false;
 		$pcache = false;
 
@@ -439,14 +530,6 @@ class SEOTweaksTest extends WikiaBaseTest
 		    ->method ( 'exists' )
 		    ->will   ( $this->returnValue( true ) )
 		;
-		$mockWrapper
-		    ->expects( $this->never() )
-		    ->method ( 'getDB' )
-		;
-
-		$reflWf = new ReflectionProperty( 'WikiaObject', 'wf' );
-		$reflWf->setAccessible( true );
-		$reflWf->setValue( $mockHelper, $mockWrapper );
 
 		$this->assertTrue(
 				$mockHelper->onArticleViewHeader( $mockArticle, $outputDone, $pcache),
@@ -476,11 +559,6 @@ class SEOTweaksTest extends WikiaBaseTest
 		                  ->setMethods( array( 'exists' ) )
 		                  ->getMock();
 
-		$mockWrapper = $this->getMockBuilder( 'WikiaFunctionWrapper' )
-		                    ->disableOriginalConstructor()
-		                    ->setMethods( array( 'GetDB' ) )
-		                    ->getMock();
-
 		$outputDone = false;
 		$pcache = false;
 
@@ -494,14 +572,6 @@ class SEOTweaksTest extends WikiaBaseTest
 		    ->method ( 'exists' )
 		    ->will   ( $this->returnValue( false ) )
 		;
-		$mockWrapper
-		    ->expects( $this->never() )
-		    ->method ( 'getDB' )
-		;
-
-		$reflWf = new ReflectionProperty( 'WikiaObject', 'wf' );
-		$reflWf->setAccessible( true );
-		$reflWf->setValue( $mockHelper, $mockWrapper );
 
 		$this->assertTrue(
 				$mockHelper->onArticleViewHeader( $mockArticle, $outputDone, $pcache),
@@ -568,13 +638,6 @@ class SEOTweaksTest extends WikiaBaseTest
 			->method ( 'getNamespace' )
 			->will   ( $this->returnValue( 66 ) )
 		;
-		/*
-		$mockWrapper
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getDB' )
-		    ->will   ( $this->returnValue( $mockDb ) )
-		;
-		*/
 		$mockTitle
 			->expects( $this->once() )
 			->method ( 'getDBKey' )
@@ -604,12 +667,6 @@ class SEOTweaksTest extends WikiaBaseTest
 		;
 
 		$this->mockGlobalFunction('wfGetDB', $mockDb);
-
-		/*
-		$reflWf = new ReflectionProperty( 'WikiaObject', 'wf' );
-		$reflWf->setAccessible( true );
-		$reflWf->setValue( $mockHelper, $mockWrapper );
-		*/
 
 		$this->assertTrue(
 				$mockHelper->onArticleViewHeader( $mockArticle, $outputDone, $pcache),

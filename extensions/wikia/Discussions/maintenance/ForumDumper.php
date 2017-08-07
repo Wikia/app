@@ -24,7 +24,7 @@ class ForumDumper {
 	// A very loose interpretation of markup favoring false positives for markup.  Match
 	// alphanumerics, anything in a basic URL and punctuation.  If any character in the text
 	// doesn't match, assume there is wiki text and parse it.
-	const REGEXP_MATCH_HAS_MARKUP = '/[^a-zA-Z0-9\.\/:\?&%" ]/';
+	const REGEXP_MATCH_HAS_MARKUP = '/[^a-zA-Z0-9\.\/:\?&%"\' ]/';
 
 	const COLUMNS_PAGE = [
 		"page_id",
@@ -84,6 +84,13 @@ class ForumDumper {
 	private $votes = [];
 
 	public function addPage( $id, $data ) {
+		// There are cases when the page appears twice; one marked as deleted in comments_index
+		// and one where its not marked deleted in comments_index.  This might represent a move.
+		// If this is the case, prefer the un-deleted version.
+		if ( !empty( $this->pages[$id] ) && $data["deleted_ind"] == 1 ) {
+			return;
+		}
+
 		$this->pages[$id] = $data;
 	}
 
@@ -111,6 +118,13 @@ class ForumDumper {
 			->WHERE( 'page_namespace' )->IN( self::FORUM_NAMEPSACES )
 			->ORDER_BY( 'idx' )
 			->runLoop( $dbh, function ( &$pages, $row ) use ( &$display_order ) {
+				// A few of these properties were removed and do not appear on some wikis
+				foreach ( [ 'sticky', 'locked', 'protected' ] as $prop ) {
+					if ( !property_exists( $row, $prop ) ) {
+						$row->$prop = 0;
+					}
+				}
+
 				$this->addPage( $row->page_id, [
 						"page_id" => $row->page_id,
 						"namespace" => $row->page_namespace,
@@ -187,6 +201,15 @@ class ForumDumper {
 		$title = $articleComment->getMetadata( 'title', '' );
 		$parsedText = $this->getParsedText( $articleComment );
 
+		if ( empty( $parsedText ) ) {
+			// If there's nothing to parse, use rawText as the default
+			$parsedText = $rawText;
+		} else {
+			// If there is parsed text, use the tag stripped version as rawText so it can
+			// be the plaintext version (otherwise its full of wikitext)
+			$rawText = strip_tags( $parsedText );
+		}
+
 		// Truncate the strings if they are too big
 		if ( strlen( $parsedText ) > self::MAX_CONTENT_SIZE ) {
 			$parsedText = substr( $parsedText, 0, self::MAX_CONTENT_SIZE );
@@ -214,10 +237,54 @@ class ForumDumper {
 
 		// If this text appears not to have any markup, just return the text as is.
 		if ( !preg_match( self::REGEXP_MATCH_HAS_MARKUP, $wikiText ) ) {
-			return $wikiText;
+			return "";
 		}
 
-		return $articleComment->getText();
+		$formattedText = $articleComment->getText();
+		$formattedText = $this->updateLazyImages( $formattedText );
+		$formattedText = $this->removeACMetadata( $formattedText );
+
+		return $formattedText;
+	}
+
+	/**
+	 * Matches lazy load image tags and de-lazifies them.  For example, this image tag:
+	 *
+	 *  <img
+	 *     src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"
+	 *     alt="Joker laughing"
+	 *     class="lzy lzyPlcHld "
+	 *     data-image-key="Joker_laughing.gif"
+	 *     data-image-name="Joker laughing.gif"
+	 *     data-src="http://vignette3.wikia.nocookie.net/wonderland-org/images/d/d0/Joker_laughing.gif/revision/latest/scale-to-width-down/200?cb=20150901041046"
+	 *     width="200"
+	 *     height="154"
+	 *     onload="if(typeof ImgLzy==='object'){ImgLzy.load(this)}"
+	 *  >
+	 *
+	 * would match and update to:
+	 *
+	 *  <img
+	 *     src="http://vignette3.wikia.nocookie.net/wonderland-org/images/d/d0/Joker_laughing.gif/revision/latest/scale-to-width-down/200?cb=20150901041046"
+	 *     alt="Joker laughing"
+	 *     width="200"
+	 *     height="154"
+	 *  >
+	 *
+	 * @param $text
+	 *
+	 * @return mixed
+	 */
+	private function updateLazyImages( $text ) {
+		return preg_replace(
+			"/<img +[^>]+ +data-src=[^>]+><noscript>(<img[^>]+>)<\\/noscript>/",
+			"$1",
+			$text
+		);
+	}
+
+	private function removeACMetadata( $text ) {
+		return preg_replace( "#(<|&lt;)ac_metadata.+/ac_metadata(>|&gt;)#", '', $text );
 	}
 
 	public function getContributorType( $row ) {

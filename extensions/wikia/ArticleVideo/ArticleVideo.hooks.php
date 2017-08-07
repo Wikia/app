@@ -1,79 +1,48 @@
 <?php
 
 class ArticleVideoHooks {
-	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
+	public static function onBeforePageDisplay( \OutputPage $out/*, \Skin $skin*/ ) {
 		$wg = F::app()->wg;
-		$title = $wg->Title->getPrefixedDBkey();
+		$title = RequestContext::getMain()->getTitle()->getPrefixedDBkey();
 
-		$relatedVideo =
-			ArticleVideoController::getRelatedVideoData( $wg->articleVideoRelatedVideos, $title );
-		$isFeaturedVideoEmbedded = self::isFeaturedVideoEmbedded( $title );
-		$isRelatedVideoEmbedded = self::isRelatedVideoEmbedded( $relatedVideo );
+		$featuredVideoData = ArticleVideoContext::getFeaturedVideoData( $title );
+		$relatedVideoData = ArticleVideoContext::getRelatedVideoData( $title );
 
-		if ( $isFeaturedVideoEmbedded || $isRelatedVideoEmbedded ) {
+		if ( !empty( $featuredVideoData ) || !empty( $relatedVideoData ) ) {
+			// html5-skin has hardcoded, relative path to fonts so we can't use the AssetsManager
+			$out->addExtensionStyle(
+				"{$wg->extensionsPath}/wikia/ArticleVideo/bower_components/html5-skin/build/html5-skin.css"
+			);
+
 			\Wikia::addAssetsToOutput( 'ooyala_scss' );
 			\Wikia::addAssetsToOutput( 'ooyala_js' );
+
+			$out->addJsConfigVars( [
+				'wgOoyalaParams' => [
+					'ooyalaPCode' => $wg->ooyalaApiConfig['pcode'],
+					'ooyalaPlayerBrandingId' => $wg->ooyalaApiConfig['playerBrandingId'],
+				]
+			] );
 		}
 
-		if ( $isFeaturedVideoEmbedded ) {
+		if ( !empty( $featuredVideoData ) ) {
 			\Wikia::addAssetsToOutput( 'article_featured_video_scss' );
 			\Wikia::addAssetsToOutput( 'article_featured_video_js' );
+
+			$out->addJsConfigVars( [
+				'wgFeaturedVideoData' => $featuredVideoData
+			] );
 		}
 
-		if ( $isRelatedVideoEmbedded ) {
+		if ( !empty( $relatedVideoData ) ) {
 			\Wikia::addAssetsToOutput( 'article_related_video_scss' );
 			\Wikia::addAssetsToOutput( 'article_related_video_js' );
+
+			$out->addJsConfigVars( [
+				'wgRelatedVideoId' => $relatedVideoData['videoId'],
+			] );
 		}
 
 		return true;
 	}
-
-	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
-		$wg = F::app()->wg;
-		$title = $wg->Title->getPrefixedDBkey();
-
-		if ( self::isFeaturedVideoEmbedded( $title ) ) {
-			$vars['wgOoyalaParams'] = [
-				'ooyalaPCode' => $wg->ooyalaApiConfig['pcode'],
-				'ooyalaPlayerBrandingId' => $wg->ooyalaApiConfig['playerBrandingId'],
-			];
-			$vars['wgFeaturedVideoId'] = $wg->articleVideoFeaturedVideos[$title]['videoId'];
-		}
-
-		$relatedVideo =
-			ArticleVideoController::getRelatedVideoData( $wg->articleVideoRelatedVideos, $title );
-		if ( self::isRelatedVideoEmbedded( $relatedVideo ) ) {
-			$vars['wgOoyalaParams'] = [
-				'ooyalaPCode' => $wg->ooyalaApiConfig['pcode'],
-				'ooyalaPlayerBrandingId' => $wg->ooyalaApiConfig['playerBrandingId'],
-			];
-			$vars['wgRelatedVideoId'] = $relatedVideo['videoId'];
-		}
-
-		return true;
-	}
-
-	public static function isFeaturedVideoEmbedded( $title ) {
-		$wg = F::app()->wg;
-
-		return $wg->enableArticleFeaturedVideo &&
-		       isset( $wg->articleVideoFeaturedVideos[$title] ) &&
-		       self::isFeaturedVideosValid( $wg->articleVideoFeaturedVideos[$title] );
-	}
-
-	public static function isRelatedVideoEmbedded( $relatedVideo ) {
-		$wg = F::app()->wg;
-
-		return $wg->enableArticleRelatedVideo && isset( $wg->articleVideoRelatedVideos ) &&
-		       !empty( $relatedVideo ) && self::isRelatedVideosValid( $relatedVideo );
-	}
-
-	private static function isFeaturedVideosValid( $featuredVideo ) {
-		return isset( $featuredVideo['videoId'], $featuredVideo['thumbnailUrl'] );
-	}
-
-	private static function isRelatedVideosValid( $relatedVideo ) {
-		return isset( $relatedVideo['articles'], $relatedVideo['videoId'] );
-	}
-
 }

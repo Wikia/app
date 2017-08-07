@@ -5,7 +5,7 @@ define('ext.wikia.adEngine.video.player.porvata', [
 	'ext.wikia.adEngine.video.player.porvata.porvataTracker',
 	'wikia.log',
 	'wikia.viewportObserver',
-	require.optional('ext.wikia.adEngine.video.player.porvata.floater'),
+	require.optional('ext.wikia.adEngine.video.player.porvata.floater')
 ], function (googleIma, porvataPlayerFactory, tracker, log, viewportObserver, floater) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata';
@@ -18,20 +18,19 @@ define('ext.wikia.adEngine.video.player.porvata', [
 			viewportListener = null;
 
 		function isFloatingEnabled(params) {
-			return floater && floater.isEnabled(params.floatingContext);
+			return params.floatingContext && params.floatingContext.isActive();
 		}
 
 		function tryEnablingFloating(video, inViewportCallback) {
 			if (floater && floater.canFloat(params)) {
 				params.floatingContext = floater.makeFloat(video, params, {
-					onStart: function() {
+					onStart: function () {
 						inViewportCallback(true);
 					},
-					onEnd: function() {
+					onEnd: function () {
 						inViewportCallback(false);
 					}
 				});
-				inViewportCallback(true);
 			}
 		}
 
@@ -65,28 +64,44 @@ define('ext.wikia.adEngine.video.player.porvata', [
 				log(['porvata video player created', video], log.levels.debug, logGroup);
 				tracker.register(video, params);
 
+				function shouldResume(isVisible) {
+					// Don't resume when video was paused manually
+					return isVisible && autoPaused &&
+						// Do not resume automatically when video has controls
+						!videoSettings.hasUiControls() &&
+						// Do not resume when video floating is active
+						!isFloatingEnabled(params);
+				}
+
+				function shouldPause(isVisible) {
+					// force not pausing when outside of viewport
+					return !params.blockOutOfViewportPausing &&
+						// Pause video once it's out of viewport and set autoPaused to distinguish manual and auto pause
+						!isVisible && video.isPlaying() &&
+						// Do not pause when video floating is active
+						!isFloatingEnabled(params);
+				}
+
 				function inViewportCallback(isVisible) {
 					// Play video automatically only for the first time
 					if (isVisible && !autoPlayed && videoSettings.isAutoPlay()) {
 						video.play();
 						autoPlayed = true;
-					// Don't resume when video was paused manually
-					} else if (isVisible && autoPaused && !isFloatingEnabled(params)) {
+					} else if (shouldResume(isVisible)) {
 						video.resume();
-					// Pause video once it's out of viewport and set autoPaused to distinguish manual and auto pause
-					} else if (!isVisible && video.isPlaying() && !isFloatingEnabled(params)) {
+					} else if (shouldPause(isVisible)) {
 						video.pause();
 						autoPaused = true;
 					}
 				}
 
 				video.addEventListener('adCanPlay', function () {
-					video.ima.getAdsManager().dispatchEvent('wikiaAdStarted');
+					video.ima.dispatchEvent('wikiaAdStarted');
 				});
 
 				video.addEventListener('allAdsCompleted', function () {
 					isFirstPlay = false;
-					video.ima.getAdsManager().dispatchEvent('wikiaAdCompleted');
+					video.ima.dispatchEvent('wikiaAdCompleted');
 					video.ima.setAutoPlay(false);
 
 					if (viewportListener) {
@@ -95,19 +110,19 @@ define('ext.wikia.adEngine.video.player.porvata', [
 					}
 				});
 				video.addEventListener('start', function () {
-					video.ima.getAdsManager().dispatchEvent('wikiaAdPlay');
+					video.ima.dispatchEvent('wikiaAdPlay');
 					if (!viewportListener) {
 						viewportListener = viewportObserver.addListener(params.container, inViewportCallback);
 					}
 				});
 				video.addEventListener('resume', function () {
-					video.ima.getAdsManager().dispatchEvent('wikiaAdPlay');
+					video.ima.dispatchEvent('wikiaAdPlay');
 					autoPaused = false;
 				});
 				video.addEventListener('pause', function () {
-					video.ima.getAdsManager().dispatchEvent('wikiaAdPause');
+					video.ima.dispatchEvent('wikiaAdPause');
 				});
-				video.addOnDestroyCallback(function() {
+				video.addOnDestroyCallback(function () {
 					if (viewportListener) {
 						viewportObserver.removeListener(viewportListener);
 						viewportListener = null;
@@ -116,10 +131,6 @@ define('ext.wikia.adEngine.video.player.porvata', [
 
 				if (videoSettings.isAutoPlay()) {
 					muteFirstPlay(video);
-				}
-
-				if (params.onReady) {
-					params.onReady(video);
 				}
 
 				viewportListener = viewportObserver.addListener(params.container, inViewportCallback);

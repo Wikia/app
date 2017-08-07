@@ -1,8 +1,11 @@
 <?php
+
+use PHPUnit\Framework\TestCase;
+
 /**
 * @ingroup mwabstract
 *
-* Unit tests for Wikia Teamplate System.
+* Unit tests for Wikia Template System.
 *
 * Covers:
 * * Wikia\Template\Engne
@@ -12,7 +15,7 @@
 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
 * @see WikiaTemplateEngineIntegration for the integration test
 */
-class WikiaTemplateEngineTest extends PHPUnit_Framework_TestCase {
+class WikiaTemplateEngineTest extends TestCase {
 	public function engines() {
 		return [
 			['Wikia\Template\PHPEngine'],

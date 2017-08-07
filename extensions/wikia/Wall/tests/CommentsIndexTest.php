@@ -51,7 +51,8 @@ class CommentsIndexTest extends WikiaBaseTest {
 			->willReturn( 'foo' );
 
 		$dbMock->expects( $this->exactly( 2 ) )
-			->method( 'update' );
+			->method( 'update' )
+			->willReturn( true );
 
 		$dbMock->expects( $this->once() )
 			->method( 'selectField' )

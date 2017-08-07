@@ -48,7 +48,6 @@
 	 */
 	UserBaseAjaxForm.prototype.bindEvents = function () {
 		this.form.on('submit', this.submitLogin.bind(this));
-		this.forgotPasswordLink.on('click', this.mailPassword.bind(this));
 	};
 
 	/**
@@ -156,26 +155,6 @@
 		} else {
 			this.wikiaForm.showGenericError(json.msg);
 		}
-	};
-
-	/**
-	 * Called when a user clicks the forgot password link in a login form
-	 * @param {Event} e Click event
-	 */
-	UserBaseAjaxForm.prototype.mailPassword = function (e) {
-		e.preventDefault();
-		this.form.find('.input-group').removeClass('error');
-		this.form.find('.error-msg').remove();
-		$.nirvana.postJson(
-			'UserLoginSpecial',
-			'mailPassword',
-			{
-				username: this.inputs.username.val(),
-				token: this.inputs.loginToken.val()
-			},
-			// error validation will show success and error messages in this case
-			this.errorValidation.bind(this)
-		);
 	};
 
 	/**

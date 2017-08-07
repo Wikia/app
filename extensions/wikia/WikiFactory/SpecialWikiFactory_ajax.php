@@ -607,7 +607,7 @@ function axWFactorySaveVariable() {
                     }
                 }
 
-		wfRunHooks('WikiFactoryVarSave::AfterErrorDetection',array($cv_id,$city_id,$cv_name,$cv_value,&$return,&$error));
+		Hooks::run('WikiFactoryVarSave::AfterErrorDetection',array($cv_id,$city_id,$cv_name,$cv_value,&$return,&$error));
 
 
 		# Save to DB, but only if no errors occurred

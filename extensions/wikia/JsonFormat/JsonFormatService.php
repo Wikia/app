@@ -1,6 +1,8 @@
 <?php
 
-class JsonFormatService extends \WikiaService {
+use Wikia\JsonFormat\HtmlParser;
+
+class JsonFormatService extends WikiaObject {
 
 	const SIMPLE_JSON_SCHEMA_VERSION = 3;
 	const SIMPLE_JSON_CACHE_EXPIRATION = 14400; //4 hour
@@ -8,13 +10,11 @@ class JsonFormatService extends \WikiaService {
 	private $htmlParser;
 	private $requestContext;
 
-	function __construct( $htmlParser = null ) {
-		if( $htmlParser == null ) {
-			$htmlParser = new Wikia\JsonFormat\HtmlParser();
-		}
-		$this->requestContext = new RequestContext();
-		$this->htmlParser = $htmlParser;
+	public function __construct() {
 		parent::__construct();
+
+		$this->requestContext = new RequestContext();
+		$this->htmlParser = new HtmlParser();
 	}
 
 	/**
@@ -65,10 +65,10 @@ class JsonFormatService extends \WikiaService {
 			 *
 			 * @see DivContainingHeadersVisitor::parseTabview
 			 */
-			\Wikia\JsonFormat\HtmlParser::markAsVisited( $article->getTitle()->getText() );
+			HtmlParser::markAsVisited( $article->getTitle()->getText() );
 			$jsonFormatRootNode = $this->getJsonFormatForArticle( $article );
 			// We have finished parsing of article, so we can clean array of visited articles
-			\Wikia\JsonFormat\HtmlParser::clearVisited();
+			HtmlParser::clearVisited();
 
 			$simplifier = new Wikia\JsonFormat\JsonFormatSimplifier;
 			$jsonSimple = $simplifier->simplify( $jsonFormatRootNode, $article->getTitle()->getText() );

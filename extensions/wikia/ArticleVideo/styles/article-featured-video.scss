@@ -1,14 +1,6 @@
 @import 'skins/shared/color';
-@import 'global-video';
-@import 'video-controls';
-
-$video-overlay-gradient: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000000);
-$video-container-width: 225px;
-$video-collapsed-height: 126px;
-$video-collapse-animation-speed: 0.4s;
-
-$spinner-color: #ccc;
-$spinnerSize: 48;
+@import 'skins/shared/mixins/flexbox';
+@import 'video-shared-variables';
 
 @keyframes spinner {
 	0% {
@@ -25,10 +17,13 @@ $spinnerSize: 48;
 	}
 }
 
+.featured-video-wrapper {
+	margin-bottom: 11px;
+}
+
 .article-video {
 	background-position: center;
 	background-size: cover;
-	margin-bottom: 11px;
 	padding-top: 56.25%; // we want to have 16:9 ratio div size
 	position: relative;
 	width: 100%;
@@ -53,32 +48,49 @@ $spinnerSize: 48;
 		z-index: 1;
 	}
 
+	.video-details {
+		background-color: #000;
+		display: none;
+		font-weight: bold;
+		padding: $video-details-horizontal-padding $video-details-vertical-padding;
+		-moz-osx-font-smoothing: grayscale;
+		-webkit-font-smoothing: antialiased;
+
+		> div {
+			max-width: $video-container-width - 2 * $video-details-vertical-padding;
+		}
+	}
+
 	.video-title {
-		bottom: 41px;
-		color: #fff;
-		font-size: 24px;
-		left: 38px;
-		position: absolute;
+		color: #ccc;
+		font-size: 14px;
+	}
+
+	.video-label {
+		color: #999;
+		font-size: 12px;
+		opacity: 0.5;
+		text-transform: uppercase;
 	}
 
 	.video-time {
 		&:before {
 			content: '\2022';
-			padding: 0 .5em;
+			padding: 0 2px;
 		}
 	}
 
 	.video-wiki-play-button {
-		align-items: center;
+		@include align-items(center);
+		@include flexbox();
+		@include justify-content(center);
 		background-color: $color-buttons;
 		border: 6px solid rgba(0, 0, 0, .32);
 		border-radius: 100%;
 		bottom: 35px;
 		box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.3);
 		box-sizing: border-box;
-		display: flex;
 		height: 80px;
-		justify-content: center;
 		position: absolute;
 		right: 35px;
 		width: 80px;
@@ -114,30 +126,12 @@ $spinnerSize: 48;
 	}
 
 	&.ready-to-play {
-		cursor: pointer;
-
-		.video-container {
-			.video-details {
-				* {
-					opacity: 1;
-				}
-			}
-		}
-
 		.spinner {
 			display: none;
 		}
 	}
 
-	&.played.ready-to-play {
-		cursor: default;
-
-		.video-play-button {
-			cursor: pointer;
-		}
-	}
-
-	&.collapsed-ready {
+	&.is-collapsed-ready {
 		.video-container {
 			left: auto;
 			position: fixed;
@@ -149,7 +143,7 @@ $spinnerSize: 48;
 		}
 	}
 
-	&.collapsed {
+	&.is-collapsed {
 		.video-container {
 			bottom: 45px !important;
 			left: auto;
@@ -170,6 +164,10 @@ $spinnerSize: 48;
 				height: $video-collapsed-height !important;
 				transition: height $video-collapse-animation-speed;
 			}
+
+			.video-details {
+				display: block;
+			}
 		}
 
 		.ooyala-article-video {
@@ -186,35 +184,23 @@ $spinnerSize: 48;
 					.oo-action-icon {
 						border-width: 3px;
 						bottom: 10px;
-						height: 40px;
+						height: 60px;
 						right: 10px;
-						width: 40px;
+						width: 60px;
 
 						svg {
-							height: 16px;
+							height: 24px;
 							margin-left: 3px;
-							width: 12px;
+							width: 18px;
 						}
 					}
 
 					.oo-state-screen-info {
-						bottom: 10px;
-						display: flex;
-						flex-direction: column;
-						justify-content: center;
-						left: 10px;
-						min-height: 40px;
+						display: none;
+					}
 
-						.oo-state-screen-title {
-							font-size: 12px;
-							line-height: 14px;
-						}
-
-						.video-duration {
-							font-size: 10px;
-							font-weight: bold;
-							line-height: 14px;
-						}
+					.oo-start-screen-linear-gradient {
+						background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, transparent 50%);
 					}
 				}
 			}

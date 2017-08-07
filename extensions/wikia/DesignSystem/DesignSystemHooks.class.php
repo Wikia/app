@@ -20,6 +20,7 @@ class DesignSystemHooks {
 			}
 		}
 
+		$out->addModules( 'ext.designSystem' );
 		return true;
 	}
 }

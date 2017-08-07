@@ -109,7 +109,7 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 	protected function getCustomFilters() {
 		if ( $this->customFilters === null ) {
 			$this->customFilters = array();
-			wfRunHooks( 'SpecialRecentChangesFilters', array( $this, &$this->customFilters ) );
+			Hooks::run( 'SpecialRecentChangesFilters', array( $this, &$this->customFilters ) );
 		}
 		return $this->customFilters;
 	}
@@ -446,7 +446,7 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 			);
 		}
 
-		if ( !wfRunHooks( 'SpecialRecentChangesQuery',
+		if ( !Hooks::run( 'SpecialRecentChangesQuery',
 			array( &$conds, &$tables, &$join_conds, $opts, &$query_options, &$fields ) ) )
 		{
 			return false;
@@ -670,7 +670,7 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 			$extraOpts['tagfilter'] = $tagFilter;
 		}
 
-		wfRunHooks( 'SpecialRecentChangesPanel', array( &$extraOpts, $opts ) );
+		Hooks::run( 'SpecialRecentChangesPanel', array( &$extraOpts, $opts ) );
 		return $extraOpts;
 	}
 
@@ -710,7 +710,7 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 		# start wikia change
 		$nsSelect = '';
 		/* Wikia Change */
-		wfRunHooks( 'onGetNamespaceCheckbox', array(&$nsSelect, $opts['namespace'], '', 'namespace', null) );
+		Hooks::run( 'onGetNamespaceCheckbox', array(&$nsSelect, $opts['namespace'], '', 'namespace', null) );
 		
 		$nsLabel = Xml::label( wfMsg( 'namespace' ), 'namespace' );
 		if ( empty($nsSelect) ) {
