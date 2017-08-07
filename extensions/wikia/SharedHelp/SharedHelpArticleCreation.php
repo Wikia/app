@@ -26,7 +26,7 @@ $wgHooks['ArticleSaveComplete'][] = 'efSharedHelpArticleCreation';
  * @param $baseRevId
  * @return bool
  */
-function efSharedHelpArticleCreation( &$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
+function efSharedHelpArticleCreation( WikiPage $article, User $user, $text, $summary, $minoredit, $watchthis, $sectionanchor, $flags, $revision, Status &$status, $baseRevId ): bool {
 	global $wgCityId, $wgHelpWikiId;
 
 	// only run on help wikis
@@ -60,12 +60,13 @@ function efSharedHelpArticleCreation( &$article, &$user, $text, $summary, $minor
 	$talkArticle = new Article( $talkTitle );
 
 	$redir = $article->getRedirectTarget();
+	$editSummary = wfMessage( 'sharedhelp-autotalkcreate-summary' )->inContentLanguage()->text();
 
 	if ( $redir ) {
 		$target = $redir->getTalkNsText() . ':' . $redir->getText();
-		$talkArticle->doEdit( "#REDIRECT [[$target]]", wfMsgForContent( 'sharedhelp-autotalkcreate-summary' ) );
+		$talkArticle->doEdit( "#REDIRECT [[$target]]", $editSummary );
 	} else {
-		$talkArticle->doEdit( '{{talkheader}}', wfMsgForContent( 'sharedhelp-autotalkcreate-summary' ) );
+		$talkArticle->doEdit( '{{talkheader}}', $editSummary );
 	}
 
 	return true;

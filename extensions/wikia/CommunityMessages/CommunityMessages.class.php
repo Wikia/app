@@ -27,8 +27,11 @@ class CommunityMessages {
 	 * check conditions and display message
 	 *
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+	 * @param string $msgs
+	 * @param Skin $skin
+	 * @return bool
 	 */
-	static function onSkinTemplatePageBeforeUserMsg(&$msgs) {
+	static function onSkinTemplatePageBeforeUserMsg( string &$msgs, Skin $skin ): bool {
 		global $wgUser, $wgMemc, $wgCookiePrefix;
 
 		if (self::$messageSeen) {
@@ -73,7 +76,7 @@ class CommunityMessages {
 		}
 
 		// macbre: add an easy way for Oasis to show it's own notification for community messages
-		Hooks::run('CommunityMessages::showMessage', array(&$msg));
+		Hooks::run('CommunityMessages::showMessage', [ &$msg, $skin ] );
 
 		return true;
 	}
@@ -85,8 +88,9 @@ class CommunityMessages {
 	 * @param WikiPage $article
 	 *
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+	 * @return bool
 	 */
-	static function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+	static function onArticleSaveComplete( WikiPage $article, User $user, $text, $summary, $minoredit, $watchthis, $sectionanchor, $flags, $revision, Status &$status, $baseRevId ): bool {
 		global $wgMemc;
 		$title = $article->getTitle();
 
@@ -103,11 +107,14 @@ class CommunityMessages {
 	 * update user's timestamp of seen message
 	 *
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+	 * @param OutputPage $out
+	 * @param Skin $skin
+	 * @return bool
 	 */
-	static function onBeforePageDisplay(&$output, &$skin) {
-		global $wgTitle;
+	static function onBeforePageDisplay( OutputPage $out, Skin $skin ): bool {
+		$title = $out->getTitle();
 
-		if ($wgTitle->isSpecial('ActivityFeed') || $wgTitle->isSpecial('MyHome') || $wgTitle->isSpecial('WikiActivity')) {
+		if ( $title->isSpecial('ActivityFeed') || $title->isSpecial('MyHome') || $title->isSpecial('WikiActivity') ) {
 			self::dismissMessage();
 		}
 

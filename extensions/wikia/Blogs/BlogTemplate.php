@@ -342,7 +342,7 @@ class BlogTemplateClass {
 	/**
 	 * This method can be used by extensions to render blog listing
 	 */
-	public static function parseTag( $input, $params, &$parser, $frame = null, $returnPlainData = false ) {
+	public static function parseTag( $input, $params, $parser, $frame = null, $returnPlainData = false ) {
 		global $wgTitle;
 
 		/* parse input parameters */
@@ -358,7 +358,7 @@ class BlogTemplateClass {
 		return $res;
 	}
 
-	public static function parseTagWithTitle( $input, $params, &$parser, $oTitle ) {
+	public static function parseTagWithTitle( $input, $params, $parser, $oTitle ) {
 		self::$oTitle = $oTitle;
 		return self::parseTag( $input, $params, $parser );
 	}
@@ -636,7 +636,7 @@ class BlogTemplateClass {
 		return $text;
 	}
 
-	private static function __getCategories ( $aParamValues, &$parser ) {
+	private static function __getCategories ( $aParamValues, $parser ) {
 		self::$aCategoryNames = $aParamValues;
 		$aPages = array();
     	if ( !empty( $aParamValues ) ) {
@@ -947,7 +947,7 @@ class BlogTemplateClass {
 		return $aOutput;
 	}
 
-	private static function __parse( $aInput, $aParams, &$parser, $returnPlainData = false ) {
+	private static function __parse( $aInput, $aParams, $parser, $returnPlainData = false ) {
 		global $wgLang, $wgUser, $wgCityId, $wgParser, $wgOut;
 		global $wgExtensionsPath, $wgStylePath, $wgRequest;
 

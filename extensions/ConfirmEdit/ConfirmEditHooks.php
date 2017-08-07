@@ -27,7 +27,7 @@ class ConfirmEditHooks {
 		return self::getInstance()->confirmEditAPI( $editPage, $newtext, $resultArr );
 	}
 
-	static function injectUserCreate( &$template ) {
+	static function injectUserCreate( QuickTemplate $template ): bool {
 		return self::getInstance()->injectUserCreate( $template );
 	}
 
@@ -39,7 +39,7 @@ class ConfirmEditHooks {
 		return self::getInstance()->triggerUserLogin( $user, $password, $retval );
 	}
 
-	static function injectUserLogin( &$template ) {
+	static function injectUserLogin( QuickTemplate $template ): bool {
 		return self::getInstance()->injectUserLogin( $template );
 	}
 
@@ -47,7 +47,7 @@ class ConfirmEditHooks {
 		return self::getInstance()->confirmUserLogin( $u, $pass, $retval );
 	}
 
-	static function injectEmailUser( &$form ) {
+	static function injectEmailUser( HTMLForm $form ): bool {
 		return self::getInstance()->injectEmailUser( $form );
 	}
 
@@ -55,11 +55,11 @@ class ConfirmEditHooks {
 		return self::getInstance()->confirmEmailUser( $from, $to, $subject, $text, $error );
 	}
 
-	public static function APIGetAllowedParams( &$module, &$params ) {
+	public static function APIGetAllowedParams( ApiBase $module, &$params ): bool {
 		return self::getInstance()->APIGetAllowedParams( $module, $params );
 	}
 
-	public static function APIGetParamDescription( &$module, &$desc ) {
+	public static function APIGetParamDescription( ApiBase $module, &$desc ): bool {
 		return self::getInstance()->APIGetParamDescription( $module, $desc );
 	}
 }

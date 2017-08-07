@@ -37,7 +37,7 @@ class Handler extends \WikiaObject {
 	 *
 	 * @return bool whether to keep running callbacks
 	 */
-	public function injectEmailUser( &$form ) {
+	public function injectEmailUser( \HTMLForm $form ) {
 		if ( $this->wg->CaptchaTriggers['sendemail'] ) {
 			if ( $this->wg->User->isAllowed( 'skipcaptcha' ) ) {
 				$this->log( "user group allows skipping captcha on email sending\n" );
@@ -62,7 +62,7 @@ class Handler extends \WikiaObject {
 	 *
 	 * @return bool whether to keep running callbacks
 	 */
-	public function injectUserCreate( &$template ) {
+	public function injectUserCreate( \QuickTemplate $template ): bool {
 		if ( $this->wg->CaptchaTriggers['createaccount'] ) {
 			if ( $this->wg->User->isAllowed( 'skipcaptcha' ) ) {
 				$this->log( "user group allows skipping captcha on account creation\n" );
@@ -94,7 +94,7 @@ class Handler extends \WikiaObject {
 	 *
 	 * @return bool whether to keep running callbacks
 	 */
-	public function injectUserLogin( &$template ) {
+	public function injectUserLogin( \QuickTemplate $template ): bool {
 		if ( $this->isBadLoginTriggered() ) {
 			$template->set( 'header',
 				"<div class='captcha'>" .
@@ -194,7 +194,7 @@ class Handler extends \WikiaObject {
 	 *
 	 * @return bool true if the captcha should run
 	 */
-	public function shouldCheck( &$editPage, $newText, $section, $merged = false ) {
+	public function shouldCheck( \EditPage $editPage, $newText, $section, $merged = false ): bool {
 		$this->trigger = '';
 		$title = $editPage->mArticle->getTitle();
 
@@ -248,7 +248,7 @@ class Handler extends \WikiaObject {
 				$newLinks = $this->findLinks( $editPage, $newText );
 			}
 
-			$unknownLinks = array_filter( $newLinks, [ &$this, 'filterLink' ] );
+			$unknownLinks = array_filter( $newLinks, [ $this, 'filterLink' ] );
 			$addedLinks = array_diff( $unknownLinks, $oldLinks );
 			$numLinks = count( $addedLinks );
 
@@ -303,7 +303,7 @@ class Handler extends \WikiaObject {
 	private function filterLink( $url ) {
 		$source = wfMessage( 'captcha-addurl-whitelist' )->inContentLanguage()->text();
 
-		$whitelist = wfEmptyMsg( 'captcha-addurl-whitelist', $source )
+		$whitelist = wfEmptyMsg( 'captcha-addurl-whitelist' )
 			? false
 			: $this->buildRegexes( explode( "\n", $source ) );
 
@@ -316,7 +316,7 @@ class Handler extends \WikiaObject {
 	/**
 	 * Build regex from white-list
 	 *
-	 * @param string $lines Lines from [[MediaWiki:Captcha-addurl-whitelist]]
+	 * @param string[] $lines Lines from [[MediaWiki:Captcha-addurl-whitelist]]
 	 *
 	 * @return string Regex or bool false if white-list is empty
 	 */
@@ -367,7 +367,7 @@ class Handler extends \WikiaObject {
 	 *
 	 * @param \Title $title
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function getLinksFromTracker( $title ) {
 		$dbr = wfGetDB( DB_SLAVE );
@@ -429,13 +429,13 @@ class Handler extends \WikiaObject {
 		}
 
 		$result = null;
-		$hookParams = [ &$this, &$editPage, $newText, $section, $merged, &$result ];
+		$hookParams = [ $this, $editPage, $newText, $section, $merged, &$result ];
 		if ( !\Hooks::run( 'ConfirmEdit::onConfirmEdit', $hookParams ) ) {
 			return $result;
 		}
 
 		if ( !$this->doConfirmEdit( $editPage, $newText, $section, $merged ) ) {
-			$editPage->showEditForm( [ &$this, 'editCallback' ] );
+			$editPage->showEditForm( [ $this, 'editCallback' ] );
 			return false;
 		}
 		return true;
@@ -446,7 +446,7 @@ class Handler extends \WikiaObject {
 	 *
 	 * @param \OutputPage $out
 	 */
-	public function editCallback( &$out ) {
+	public function editCallback( \OutputPage $out ) {
 		$out->addWikiText( $this->captcha->getMessage( $this->action ) );
 		$out->addHTML( $this->captcha->getForm() );
 	}
@@ -573,7 +573,7 @@ class Handler extends \WikiaObject {
 	 *
 	 * @return array of strings
 	 */
-	public function findLinks( &$editPage, $text ) {
+	public function findLinks( \EditPage $editPage, $text ) {
 		$options = new \ParserOptions();
 		$text = $this->wg->Parser->preSaveTransform( $text, $editPage->mTitle, $this->wg->User, $options );
 		$out = $this->wg->Parser->parse( $text, $editPage->mTitle, $options );
