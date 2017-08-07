@@ -1,1 +1,1 @@
-<section id="<?= htmlspecialchars($containerId) ?>"></section>
+<section id="<?= Sanitizer::encodeAttribute( $containerId ) ?>"></section>
