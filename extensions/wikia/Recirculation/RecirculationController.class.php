@@ -49,11 +49,6 @@ class RecirculationController extends WikiaController {
 		return false;
 	}
 
-	public function container( $params ) {
-		$containerId = $this->request->getVal( 'containerId' );
-		$this->response->setVal( 'containerId', $containerId );
-	}
-
 	public function footer() {
 		global $wgCityId;
 
