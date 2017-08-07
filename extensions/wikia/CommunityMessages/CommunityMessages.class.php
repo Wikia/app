@@ -37,26 +37,12 @@ class CommunityMessages {
 		}
 
 		//get timestamp of message
-		$communityMessagesTimestamp = $wgMemc->get(wfMemcKey('CommunityMessagesTimestamp'));
+		$cacheKey = static::getCommunityMessagesCacheKey();
+		$communityMessagesTimestamp = $wgMemc->get( $cacheKey );
 
-		if (!$communityMessagesTimestamp) {
-			$msgTitle = Title::newFromText('community-corner', NS_MEDIAWIKI);
-			if ($msgTitle) {
-				$msgRev = Revision::newFromTitle($msgTitle);
-				if ($msgRev) {
-					$communityMessagesTimestamp = wfTimestamp(TS_UNIX, $msgRev->getTimestamp());
-					$wgMemc->set(wfMemcKey('CommunityMessagesTimestamp'), $communityMessagesTimestamp, 86400 /*24h*/);
-				}
-			}
-		}
-
-		if (!$communityMessagesTimestamp) {
-			//no message?
-			return true;
-		}
-
-		if ($communityMessagesTimestamp < (time() - 86400 /*24h*/)) {
-			//message older than 24h - do not inform user about it
+		if ( !$communityMessagesTimestamp ||
+			 $communityMessagesTimestamp < ( time() - 86400 /*24h*/ ) ) {
+			// no message or message older than 24h - do not inform user about it
 			return true;
 		}
 
@@ -105,10 +91,8 @@ class CommunityMessages {
 		$title = $article->getTitle();
 
 		if ($title->getNamespace() == NS_MEDIAWIKI && strtolower($title->getText()) == 'community-corner' && !$minoredit) {
-			$revision = Revision::newFromTitle($title);
-			if ($revision) {
-				$wgMemc->set(wfMemcKey('CommunityMessagesTimestamp'), wfTimestamp(TS_UNIX, $revision->getTimestamp()), 86400 /*24h*/);
-			}
+			// SUS-2566: Skip DB call here. We just made an edit, let's just use the current time.
+			$wgMemc->set( static::getCommunityMessagesCacheKey(), time(), 86400 /*24h*/ );
 		}
 
 		return true;
@@ -193,5 +177,9 @@ class CommunityMessages {
 			__METHOD__
 		);
 		return $userTimestamp ? wfTimestamp(TS_UNIX, $userTimestamp) : false;
+	}
+
+	private static function getCommunityMessagesCacheKey(): string {
+		return wfMemcKey( 'CommunityMessagesTimestamp' );
 	}
 }
