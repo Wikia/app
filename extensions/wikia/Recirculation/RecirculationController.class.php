@@ -58,4 +58,9 @@ class RecirculationController extends WikiaController {
 		$this->response->setVal( 'sitename', new Sitename( $communityHeaderModel ) );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_PHP );
 	}
+
+	public function container( $params ) {
+		$containerId = $this->request->getVal( 'containerId' );
+		$this->response->setVal( 'containerId', $containerId );
+	}
 }
