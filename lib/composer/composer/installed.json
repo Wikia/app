@@ -4409,74 +4409,6 @@
         }
     },
     {
-        "name": "wikia/maps",
-        "version": "3.5.2",
-        "version_normalized": "3.5.2.0",
-        "dist": {
-            "type": "tar",
-            "url": "http://artifactory.wikia-inc.com/artifactory/api/composer/php-local/direct-dists/wikia/maps/maps-3.5.2.tar",
-            "reference": null,
-            "shasum": null
-        },
-        "require": {
-            "composer/installers": "^1.0.1",
-            "data-values/geo": "~1.0",
-            "mediawiki/validator": "^2.0.2",
-            "php": ">=5.3.2"
-        },
-        "type": "mediawiki-extension",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "3.5.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "files": [
-                "Maps.php"
-            ],
-            "psr-4": {
-                "Maps\\": "src/Maps/"
-            },
-            "classmap": [
-                "includes/",
-                "Maps.hooks.php"
-            ]
-        },
-        "scripts": {
-            "phpunit": [
-                "php ../../tests/phpunit/phpunit.php -c phpunit.xml.dist"
-            ]
-        },
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "Jeroen De Dauw",
-                "email": "jeroendedauw@gmail.com",
-                "homepage": "http://jeroendedauw.com",
-                "role": "Creator and lead developer"
-            }
-        ],
-        "description": "Adds various mapping features to MediaWiki",
-        "homepage": "https://github.com/JeroenDeDauw/Maps",
-        "keywords": [
-            "Google Maps",
-            "Maps",
-            "MediaWiki",
-            "OSM",
-            "OpenLayers",
-            "OpenStreetMap",
-            "Semantic MediaWiki"
-        ],
-        "support": {
-            "email": "semediawiki-user@lists.sourceforge.net",
-            "irc": "irc://irc.freenode.net/mediawiki",
-            "source": "https://github.com/JeroenDeDauw/Maps"
-        }
-    },
-    {
         "name": "wikia/semantic-media-wiki",
         "version": "2.4.2.9",
         "version_normalized": "2.4.2.9",
@@ -4672,6 +4604,74 @@
             "forum": "https://www.semantic-mediawiki.org/wiki/semantic-mediawiki.org_talk:Community_portal",
             "wiki": "https://www.semantic-mediawiki.org/wiki/",
             "source": "https://github.com/SemanticMediaWiki/SemanticScribunto"
+        }
+    },
+    {
+        "name": "wikia/maps",
+        "version": "3.5.3",
+        "version_normalized": "3.5.3.0",
+        "dist": {
+            "type": "tar",
+            "url": "http://artifactory.wikia-inc.com/artifactory/api/composer/php-local/direct-dists/wikia/maps/maps-3.5.3.tar",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "composer/installers": "^1.0.1",
+            "data-values/geo": "~1.0",
+            "mediawiki/validator": "^2.0.2",
+            "php": ">=5.3.2"
+        },
+        "type": "mediawiki-extension",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.5.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "Maps.php"
+            ],
+            "psr-4": {
+                "Maps\\": "src/Maps/"
+            },
+            "classmap": [
+                "includes/",
+                "Maps.hooks.php"
+            ]
+        },
+        "scripts": {
+            "phpunit": [
+                "php ../../tests/phpunit/phpunit.php -c phpunit.xml.dist"
+            ]
+        },
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Jeroen De Dauw",
+                "email": "jeroendedauw@gmail.com",
+                "homepage": "http://jeroendedauw.com",
+                "role": "Creator and lead developer"
+            }
+        ],
+        "description": "Adds various mapping features to MediaWiki",
+        "homepage": "https://github.com/JeroenDeDauw/Maps",
+        "keywords": [
+            "Google Maps",
+            "Maps",
+            "MediaWiki",
+            "OSM",
+            "OpenLayers",
+            "OpenStreetMap",
+            "Semantic MediaWiki"
+        ],
+        "support": {
+            "email": "semediawiki-user@lists.sourceforge.net",
+            "irc": "irc://irc.freenode.net/mediawiki",
+            "source": "https://github.com/JeroenDeDauw/Maps"
         }
     }
 ]

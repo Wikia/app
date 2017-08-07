@@ -41,9 +41,7 @@
 		},
 		"classmap": [
 			"includes/",
-			"Maps.hooks.php",
-			"tests/phpunit/elements/",
-			"tests/phpunit/parserhooks/ParserHookTest.php"
+			"Maps.hooks.php"
 		]
 	},
 	"extra": {

@@ -3937,10 +3937,10 @@
         },
         {
             "name": "wikia/maps",
-            "version": "3.5.2",
+            "version": "3.5.3",
             "dist": {
                 "type": "tar",
-                "url": "http://artifactory.wikia-inc.com/artifactory/api/composer/php-local/direct-dists/wikia/maps/maps-3.5.2.tar",
+                "url": "http://artifactory.wikia-inc.com/artifactory/api/composer/php-local/direct-dists/wikia/maps/maps-3.5.3.tar",
                 "reference": null,
                 "shasum": null
             },
