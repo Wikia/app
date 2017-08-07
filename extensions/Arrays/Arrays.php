@@ -994,7 +994,7 @@ class ExtArrays {
 	# Used Hooks #
 	##############
 
-	static function onParserClearState( Parser &$parser ) {
+	static function onParserClearState( Parser $parser ) {
 		// remove all arrays to avoid conflicts with job queue or Special:Import or SMW semantic updates
 		$parser->mExtArrays = new self();
 		return true;
@@ -1017,11 +1017,11 @@ class ExtArrays {
 	 *
 	 * @since 2.0
 	 *
-	 * @param Parser &$parser
+	 * @param Parser $parser
 	 *
 	 * @return ExtArrays by reference so we still have the right object after 'ParserClearState'
 	 */
-	public static function &get( Parser &$parser ) {
+	public static function &get( Parser $parser ) {
 		return $parser->mExtArrays;
 	}
 
