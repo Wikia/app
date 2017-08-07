@@ -1,7 +1,8 @@
 <section class="mcf-card mcf-card-discussions">
 	<header class="mcf-card-discussions__header">
-		<span>Latest Discussions</span>
-		<a href="<?= $discussionsUrl ?>" class="mcf-card-discussions__link">View All
+		<span><?= wfMessage('recirculation-discussions-latest-discussions')->escaped() ?></span>
+		<a href="<?= $discussionsUrl ?>" class="mcf-card-discussions__link">
+			<?= wfMessage('recirculation-discussion-link-text')->escaped() ?>
 			<?= DesignSystemHelper::renderSvg(
 				'wds-icons-arrow',
 				'wds-icon wds-icon-small mcf-card-discussions__link-icon'
@@ -18,7 +19,9 @@
 				<a href="<?= $post->url ?>">
 					<div class="mcf-card-discussions__content"><?= $post->title ?></div>
 					<div class="mcf-card-discussions__meta">
-						<div class="mcf-card-discussions__in">in <?= $post->meta['forumName'] ?></div>
+						<div class="mcf-card-discussions__in">
+							<?= wfMessage('recirculation-discussions-in')->escaped() ?>
+							<?= $post->meta['forumName'] ?></div>
 						<div class="mcf-card-discussions__counters">
 							<?= DesignSystemHelper::renderSvg( 'wds-icons-upvote', 'wds-icon wds-icon-tiny' ) ?>
 							<?= $post->meta['upvoteCount'] ?>
