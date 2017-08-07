@@ -88,7 +88,6 @@ class ForumDumper {
 	private $pages = [];
 	private $revisions = [];
 	private $votes = [];
-	private $threadIds = [];
 
 	public function addPage( $id, $data ) {
 		// There are cases when the page appears twice; one marked as deleted in comments_index
@@ -342,9 +341,9 @@ class ForumDumper {
 
 	private function getThreadNamesToIds() {
 		$threadsNamesToIds = [];
-		foreach ( $this->getPages() as $page ) {
-			if ( $page["namespace"] === NS_WIKIA_FORUM_BOARD_THREAD ) {
-				$threadsNamesToIds[$page["raw_title"]] = $page["id"];
+		foreach ( $this->getPages() as $id => $page ) {
+			if ( $page["namespace"] == NS_WIKIA_FORUM_BOARD_THREAD ) {
+				$threadsNamesToIds[$page["raw_title"]] = $page[$id];
 			}
 		}
 		return $threadsNamesToIds;

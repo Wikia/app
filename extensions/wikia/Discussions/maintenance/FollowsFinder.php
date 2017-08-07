@@ -25,6 +25,7 @@ class FollowsFinder {
 			->AND_( 'wl_title' )
 			->IN( $pageTitles )
 			->runLoop( $this->dbh, function ( &$follows, $row ) {
+
 				$follows[] = [
 					'follower_id' => $row->wl_user,
 					'mw_thread_id' => $this->threadNameToId[$row->wl_title],
