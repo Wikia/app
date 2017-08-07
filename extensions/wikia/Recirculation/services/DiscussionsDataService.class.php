@@ -123,7 +123,7 @@ class DiscussionsDataService {
 
 		$postTitle = $rawPost['title'];
 
-		if (empty( $rawPost['title'] )) {
+		if ( empty( $rawPost['title'] ) ) {
 			$postTitle = wfShortenText( $rawPost['rawContent'], 70 );
 		}
 

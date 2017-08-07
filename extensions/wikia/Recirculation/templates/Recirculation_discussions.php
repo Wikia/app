@@ -14,7 +14,7 @@
 				<a href="<?= AvatarService::getUrl( $post->author ) ?>" class="mcf-card-discussions__user-info">
 					<img class="wds-avatar" src="<?= Sanitizer::encodeAttribute( $post->meta['authorAvatarUrl'] ) ?>">
 					<span class="mcf-card-discussions__user-subtitle"><?= Sanitizer::escapeHtmlAllowEntities( $post->author ) ?>
-						• <time class="discussion-timestamp" datetime="<?= Sanitizer::escapeHtmlAllowEntities( $post->pub_date ) ?>"></time></span>
+						• <time class="discussion-timestamp" datetime="<?= Sanitizer::encodeAttribute( $post->pub_date ) ?>"></time></span>
 				</a>
 				<a href="<?= Sanitizer::encodeAttribute( $post->url )?>">
 					<div class="mcf-card-discussions__content"><?= Sanitizer::escapeHtmlAllowEntities( $post->title ) ?></div>
