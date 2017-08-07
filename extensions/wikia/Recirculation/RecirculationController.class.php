@@ -52,12 +52,12 @@ class RecirculationController extends WikiaController {
 	}
 
 	public function footer() {
-		global $wgCityId;
+		global $wgSitename;
 
-		$communityHeaderModel = new DesignSystemCommunityHeaderModel( $wgCityId );
+		$themeSettings = new ThemeSettings();
 		$this->response->setVal( 'communityHeaderBackground',
-			$communityHeaderModel->getBackgroundImageUrl() );
-		$this->response->setVal( 'sitename', new Sitename( $communityHeaderModel ) );
+			$themeSettings->getCommunityHeaderBackgroundUrl() );
+		$this->response->setVal( 'sitename', $wgSitename );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_PHP );
 	}
 
