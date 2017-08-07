@@ -13,7 +13,7 @@ $wgHooks['ParserFirstCallInit'][] = 'wfSigSetup';
  * @param Parser $parser
  * @return bool
  */
-function wfSigSetup(&$parser) {
+function wfSigSetup( Parser $parser ): bool {
 	$parser->setHook( 'staff', 'wfMakeStaffSignature' );
 	$parser->setHook( 'helper', 'wfMakeHelperSignature' );
 	return true;
@@ -30,7 +30,7 @@ function wfMakeHelperSignature( $contents, $attributes, $parser ) {
 }
 
 function wfMakeSignatureCommon($href, $title, $iurl=null) {
-	global $wgExtensionsPath, $wgBlankImgUrl;
+	global $wgBlankImgUrl;
 
 	if( empty($iurl) ) {
 		$iurl = wfGetSignatureUrl();

@@ -1,7 +1,5 @@
 <?php
 
-use Wikia\Logger\WikiaLogger;
-
 class HAWelcomeTaskHooks {
 
 	/**
@@ -28,7 +26,10 @@ class HAWelcomeTaskHooks {
 	 * @since MediaWiki 1.19.4
 	 * @internal
 	 */
-	public static function onArticleSaveComplete( &$articleObject, &$userObject, $editContent, $editSummary, $isMinorEdit, $watchThis, $sectionAnchor, &$editFlags, $revisionObject, $statusObject, $baseRevisionId ) {
+	public static function onArticleSaveComplete(
+		WikiPage $page, User $user, $editContent, $editSummary, $isMinorEdit, $watchThis,
+		$sectionAnchor, $editFlags, $revisionObject, Status $statusObject, $baseRevisionId
+	): bool {
 		global $wgCityId, $wgCommandLineMode, $wgMemc, $wgUser;
 
 		// means we're dealing with a null edit (no content change) and therefore we don't have to welcome anybody

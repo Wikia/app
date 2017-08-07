@@ -40,12 +40,11 @@ class EditorPreference {
 	 * Changes the Edit button and dropdown to account for user's editor preference.
 	 * This is attached to the MediaWiki 'SkinTemplateNavigation' hook.
 	 *
-	 * @param SkinTemplate $skin
+	 * @param Skin $skin
 	 * @param array $links Navigation links
 	 * @return bool true
 	 */
-	public static function onSkinTemplateNavigation( &$skin, &$links ) {
-		global $wgUser;
+	public static function onSkinTemplateNavigation( Skin $skin, array &$links ): bool {
 
 		if ( !isset( $links['views']['edit'] ) || !self::shouldShowVisualEditorLink( $skin ) ) {
 			// There's no edit link OR the Visual Editor cannot be used, so there's no change to make
@@ -78,7 +77,7 @@ class EditorPreference {
 				// Create the Visual Editor tab
 				$visualEditorTab = array(
 					'href' => self::getVisualEditorEditUrl(),
-					'text' => wfMessage( $visualEditorMessageKey )->setContext( $skin->getContext() )->text(),
+					'text' => $skin->msg( $visualEditorMessageKey )->text(),
 					'class' => '',
 					// Visual Editor is main Edit tab if...
 					'main' => $isVisualEditorPrimaryEditor
@@ -86,7 +85,7 @@ class EditorPreference {
 
 				// Alter the edit tab
 				$editTab = $data;
-				$editTab['text'] = wfMessage( $editMessageKey )->setContext( $skin->getContext() )->text();
+				$editTab['text'] = $skin->msg( $editMessageKey )->text();
 				$editTab['main'] = !$visualEditorTab['main'];
 
 				if ( $isVisualEditorPrimaryEditor ) {
@@ -116,9 +115,11 @@ class EditorPreference {
 	 * @return bool true
 	 */
 	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
-		global $wgUser, $wgTitle;
-		$vars['wgVisualEditorPreferred'] = ( self::getPrimaryEditor() === self::OPTION_EDITOR_VISUAL &&
-			!$wgUser->isBlockedFrom( $wgTitle, true ) );
+		$vars['wgVisualEditorPreferred'] = (
+			self::getPrimaryEditor() === self::OPTION_EDITOR_VISUAL &&
+			!$out->getUser()->isBlockedFrom( $out->getTitle(), true )
+		);
+
 		return true;
 	}
 

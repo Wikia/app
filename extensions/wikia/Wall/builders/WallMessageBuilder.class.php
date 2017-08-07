@@ -258,7 +258,7 @@ class WallMessageBuilder extends WallBuilder {
 				->notifyIfNeeded();
 		}
 
-		Hooks::run( 'AfterBuildNewMessageAndPost', [ &$this->newMessage ] );
+		Hooks::run( 'AfterBuildNewMessageAndPost', [ $this->newMessage ] );
 		return $this->newMessage;
 	}
 

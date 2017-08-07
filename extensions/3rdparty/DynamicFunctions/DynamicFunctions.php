@@ -66,7 +66,7 @@ class ExtDynamicFunctions
 	 * @param Parser $parser
 	 * @return bool
 	 */
-    function arg( &$parser, $name = '', $default = '' )
+    function arg( Parser $parser, $name = '', $default = '' )
     {
         global $wgRequest;
         $parser->disableCache();
@@ -77,7 +77,7 @@ class ExtDynamicFunctions
 	 * @param Parser $parser
 	 * @return bool
 	 */
-    function ip( &$parser )
+    function ip( Parser $parser )
     {
         $parser->disableCache();
         return wfGetIP();
@@ -87,7 +87,7 @@ class ExtDynamicFunctions
 	 * @param Parser $parser
 	 * @return bool
 	 */
-    function rand( &$parser, $a = 0, $b = 1 )
+    function rand( Parser $parser, $a = 0, $b = 1 )
     {
         $parser->disableCache();
         return mt_rand( intval($a), intval($b) );
@@ -97,7 +97,7 @@ class ExtDynamicFunctions
 	 * @param Parser $parser
 	 * @return bool
 	 */
-    function skin( &$parser )
+    function skin( Parser $parser )
     {
         global $wgUser, $wgRequest;
         $parser->disableCache();

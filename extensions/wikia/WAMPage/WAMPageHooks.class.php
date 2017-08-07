@@ -33,8 +33,6 @@ class WAMPageHooks {
 	 * @return true because it's a hook
 	 */
 	static public function onArticleFromTitle(&$title, &$article) {
-		global $wgOut;
-
 		wfProfileIn( __METHOD__ );
 		self::init();
 

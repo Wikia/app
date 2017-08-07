@@ -94,8 +94,10 @@ class RTE {
 	 * Setup Rich Text Editor by loading needed JS/CSS files and adding hook(s)
 	 *
 	 * @author Inez KorczyDski, Macbre
+	 * @param EditPage $form
+	 * @return bool
 	 */
-	public static function init( &$form ) {
+	public static function init( EditPage $form ): bool {
 		global $wgOut, $wgHooks, $wgAllInOne, $wgRequest;
 
 		wfProfileIn(__METHOD__);
@@ -149,8 +151,11 @@ class RTE {
 
 	/**
 	 * Parse wikitext of edited article, so CK can be provided with HTML
+	 * @param EditPage $form
+	 * @param OutputPage $out
+	 * @return bool
 	 */
-	public static function init2( &$form, OutputPage &$out ) {
+	public static function init2( EditPage $form, OutputPage $out ): bool {
 		wfProfileIn(__METHOD__);
 
 		// add hidden edit form field
@@ -183,9 +188,6 @@ class RTE {
 			// set editor textarea content
 			$form->textbox1 = $html;
 		}
-
-		// allow other extensions to add extra HTML to edit form
-		Hooks::run('RTEAddToEditForm', array(&$form, &$out));
 
 		wfProfileOut(__METHOD__);
 
@@ -263,9 +265,6 @@ class RTE {
 		global $wgCookieDomain, $wgCookiePath;
 		$vars['RTECookieDomain'] = $wgCookieDomain;
 		$vars['RTECookiePath'] = $wgCookiePath;
-
-		// allow other extensions to add extra global JS variables to edit form
-		Hooks::run('RTEAddGlobalVariablesScript', array(&$vars));
 
 		wfProfileOut(__METHOD__);
 		return true;

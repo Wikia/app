@@ -56,7 +56,7 @@ $wgExtensionMessagesFiles['DPLforumMagic'] = $dir . 'DPLforum.i18n.magic.php';
 $wgExtensionMessagesFiles['DPLforumNamespaces'] = $dir . 'DPLforum.namespaces.php';
 $wgAutoloadClasses['DPLForum'] = $dir . 'DPLforum_body.php';
 
-function wfDPLinit( &$parser ) {
+function wfDPLinit( Parser $parser ): bool {
 	$parser->setHook( 'forum', 'parseForum' );
 	$parser->setFunctionHook( 'forumlink', array( new DPLForum(), 'link' ) );
 	return true;

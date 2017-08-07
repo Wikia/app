@@ -78,7 +78,7 @@ $wgCompiledFiles[] = MWInit::extCompiledPath( 'wikihiero/data/tables.php' );
  * @param $parser Parser
  * @return bool
  */
-function wfRegisterWikiHiero( &$parser ) {
+function wfRegisterWikiHiero( Parser $parser ): bool {
 	$parser->setHook( 'hiero', 'WikiHiero::parserHook' );
 	return true;
 }

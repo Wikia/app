@@ -337,7 +337,7 @@ class CategoryViewer extends ContextSource {
 					$this->addImage( $title, $humanSortkey, $row->page_len, $row->page_is_redirect );
 				} else {
 					# <Wikia>
-					if( Hooks::run( "CategoryViewer::addPage", array( &$this, &$title, &$row, $humanSortkey ) ) ) {
+					if( Hooks::run( "CategoryViewer::addPage", array( $this, $title, &$row, $humanSortkey ) ) ) {
 						$this->addPage( $title, $humanSortkey, $row->page_len, $row->page_is_redirect );
 					}
 					# </Wikia>
@@ -442,7 +442,8 @@ class CategoryViewer extends ContextSource {
 	/* <Wikia> */
 	function getOtherSection() {
 		$r = "";
-		Hooks::run( "CategoryViewer::getOtherSection", array( &$this, &$r ) );
+		Hooks::run( "CategoryViewer::getOtherSection", [ $this, &$r ] );
+
 		return $r;
 	}
 	/* </Wikia> */

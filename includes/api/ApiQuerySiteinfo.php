@@ -97,7 +97,7 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 					$fit = $this->appendProtocols( $p );
 					break;
 				default:
-					Hooks::run( 'UseExternalQuerySiteInfo', array(&$this) );
+					Hooks::run( 'UseExternalQuerySiteInfo', [ $this ] );
 					if ( !isset($this->noErrors) ) {
 						ApiBase :: dieDebug( __METHOD__, "Unknown prop=$p" );
 					}

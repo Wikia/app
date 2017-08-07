@@ -27,8 +27,10 @@ class CategorySelectHooksHelper {
 	/**
 	 * Remove hidden category box from edit page.
 	 * Returning false ensures formatHiddenCategories will not be called.
+	 * @param EditPage $editform
+	 * @return bool
 	 */
-	public static function onEditPageCategoryBox( &$editform ) {
+	public static function onEditPageCategoryBox( EditPage $editform ): bool {
 		return false;
 	}
 
