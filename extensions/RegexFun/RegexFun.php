@@ -196,16 +196,7 @@ class ExtRegexFun {
 		}
 		return false;
 	}
-	
-	private static function limitHandler( Parser &$parser ) {		
-		// is the limit exceeded for this parsers parse() process?
-		if( self::limitExceeded( $parser ) ) {
-			return false;
-		}		
-		self::increaseRegexCount( $parser );
-		return true;
-	}
-	
+
 	/**
 	 * Returns a valid parser function output that the given pattern is not valid for a regular
 	 * expression. The message can be displayed in the wiki and is wrapped in an error-class span

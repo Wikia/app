@@ -187,7 +187,7 @@ class WikiaPhotoGalleryHelper {
 	/**
 	 * Parse given link and return link tag attributes
 	 */
-	static public function parseLink(&$parser, $url, $text, $link) {
+	static public function parseLink( Parser $parser, $url, $text, $link ) {
 		// fallback: link to image page + lightbox
 		$linkAttribs = array(
 			'class' => 'image lightbox',
