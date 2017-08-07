@@ -312,13 +312,6 @@
 		}
 	}
 
-	&__avatar {
-		border: 2px solid $wds-color-faint-gray;
-		border-radius: 50%;
-		height: 30px;
-		width: 30px;
-	}
-
 	&__user-info {
 		@include align-items(center);
 		@include flexbox();
