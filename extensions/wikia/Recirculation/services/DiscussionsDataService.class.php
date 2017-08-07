@@ -3,7 +3,7 @@
 use Wikia\Service\Gateway\ConsulUrlProvider;
 
 class DiscussionsDataService {
-	const DISCUSSIONS_API_LIMIT = 5;
+	const DISCUSSIONS_API_LIMIT = 10;
 	const DISCUSSIONS_API_SORT_KEY = 'trending';
 	const DISCUSSIONS_API_SORT_DIRECTION = 'descending';
 	const DISCUSSIONS_API_VIEWABLE_ONLY = true;
