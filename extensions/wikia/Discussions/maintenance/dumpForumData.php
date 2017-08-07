@@ -9,6 +9,8 @@ error_reporting(E_ALL);
 
 require_once( __DIR__ . '/../../../../maintenance/Maintenance.php' );
 include_once( __DIR__ . '/ForumDumper.php' );
+include_once( __DIR__ . '/FollowsFinder.php' );
+
 
 class DumpForumData extends Maintenance {
 	/** @var  \Discussions\ForumDumper */
