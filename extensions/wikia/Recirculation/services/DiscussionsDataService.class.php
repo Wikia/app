@@ -121,10 +121,16 @@ class DiscussionsDataService {
 		$meta['postCount'] = $rawPost['postCount'];
 		$meta['forumName'] = $rawPost['forumName'];
 
+		$postTitle = $rawPost['title'];
+
+		if (empty( $rawPost['title'] )) {
+			$postTitle = wfShortenText( $rawPost['rawContent'], 70 );
+		}
+
 		return new RecirculationContent( [
 			'url' => $this->server . '/d/p/' . $rawPost['id'],
 			'index' => $index,
-			'title' =>  $rawPost['title'],
+			'title' =>  $postTitle,
 			'publishDate' => wfTimestamp( TS_ISO_8601, $rawPost['creationDate']['epochSecond'] ),
 			'author' => $rawPost['createdBy']['name'],
 			'source' => 'discussions',
