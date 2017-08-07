@@ -2662,10 +2662,10 @@ abstract class DatabaseBase implements DatabaseType {
 	/**
 	 * DELETE query wrapper.
 	 *
-	 * @param string $table Table name
-	 * @param $conds String|Array of conditions. See $conds in DatabaseBase::select() for
+	 * @param $table string|array Table name
+	 * @param $conds string|array of conditions. See $conds in DatabaseBase::select() for
 	 *               the format. Use $conds == "*" to delete all rows
-	 * @param $fname String name of the calling function
+	 * @param $fname string name of the calling function
 	 *
 	 * @return bool
 	 * @throws DBUnexpectedError
