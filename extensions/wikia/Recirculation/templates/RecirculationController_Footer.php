@@ -3,7 +3,7 @@
 	<div class="mcf-row">
 		<?= F::app()
 			->renderPartial( 'Recirculation', 'wikiArticles',
-				[ 'sitename' => $sitename->titleText->render() ] ); ?>
+				[ 'sitename' => $sitename->titleText->render(), 'recirculationArticlesMore' => wfMessage( 'recirculation-articles-more' )->escaped() ] ); ?>
 		<?= F::app()->renderPartial('Recirculation', 'article'); ?>
 		<?= F::app()->renderPartial('Recirculation', 'article'); ?>
 	</div>
@@ -12,7 +12,7 @@
 		<div class="mcf-col">
 			<div class="mcf-row">
 				<?= F::app()->renderPartial('Recirculation', 'article'); ?>
-				<?= F::app()->renderPartial('Recirculation', 'topic'); ?>
+				<?= F::app()->renderPartial('Recirculation', 'topic', [ 'recirculationExplore' => wfMessage( 'recirculation-explore' )->escaped() ] ); ?>
 			</div>
 			<div class="mcf-row">
 				<?= F::app()->renderPartial('Recirculation', 'article'); ?>
@@ -21,14 +21,14 @@
 		</div>
 	</div>
 	<div class="mcf-row">
-		<?= F::app()->renderPartial('Recirculation', 'storyStream'); ?>
+		<?= F::app()->renderPartial('Recirculation', 'storyStream', [ 'recirculationExplorePosts' => wfMessage( 'recirculation-explore-posts' )->escaped() ] ); ?>
 		<?= F::app()->renderPartial('Recirculation', 'article'); ?>
 		<?= F::app()->renderPartial('Recirculation', 'article'); ?>
 	</div>
 	<div class="mcf-row">
 		<?= F::app()->renderPartial('Recirculation', 'article'); ?>
 		<?= F::app()->renderPartial('Recirculation', 'article'); ?>
-		<?= F::app()->renderPartial('Recirculation', 'storyStream'); ?>
+		<?= F::app()->renderPartial('Recirculation', 'storyStream', [ 'recirculationExplorePosts' => wfMessage( 'recirculation-explore-posts' )->escaped() ] ); ?>
 	</div>
 	<div class="mcf-row">
 		<?= F::app()->renderPartial('Recirculation', 'article'); ?>
@@ -36,8 +36,8 @@
 		<?= F::app()->renderPartial('Recirculation', 'article'); ?>
 	</div>
 	<div class="mcf-row">
-		<?= F::app()->renderPartial('Recirculation', 'topic'); ?>
-		<?= F::app()->renderPartial('Recirculation', 'exploreWikis'); ?>
+		<?= F::app()->renderPartial('Recirculation', 'topic', [ 'recirculationExplore' => wfMessage( 'recirculation-explore' )->escaped() ] ); ?>
+		<?= F::app()->renderPartial('Recirculation', 'exploreWikis', [ 'recirculationExploreWikis' => wfMessage( 'recirculation-explore-wikis' )->escaped() ]); ?>
 		<?= F::app()->renderPartial('Recirculation', 'article'); ?>
 	</div>
 </div>
