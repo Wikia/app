@@ -34,6 +34,12 @@ function efImageReviewDisplayStatus( ImagePage $imagePage, &$html ) {
 	if ( in_array( $wgCityId, $wgImageReviewTestCommunities ) ) {
 		$reviews =
 			fetchReviewHistoryFromService( $wgCityId, $imagePage->getTitle() );
+
+		// TODO: temporary solution, remove it as soon as image review history is migrated to the new tool
+		// display history of review for images reviewed by old ImageReview tool
+		if ( empty( $reviews ) ) {
+			$reviews = fetchReviewHistory( $dbr, $wgCityId, $imagePage->getID() );
+		}
 	} else {
 		$reviews = fetchReviewHistory( $dbr, $wgCityId, $imagePage->getID() );
 	}
