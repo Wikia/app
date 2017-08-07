@@ -92,11 +92,11 @@ class ReCaptcha extends BaseCaptcha {
 		return $msg;
 	}
 
-	public function APIGetAllowedParams( \ApiBase $module, array &$params ): bool {
+	public function APIGetAllowedParams( \ApiBase $module, &$params ): bool {
 		return true;
 	}
 
-	public function APIGetParamDescription( \ApiBase $module, array &$desc ): bool {
+	public function APIGetParamDescription( \ApiBase $module, &$desc ): bool {
 		return true;
 	}
 }

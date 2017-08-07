@@ -594,7 +594,7 @@ class SimpleCaptcha {
 	 * @param $params array
 	 * @return bool
 	 */
-	public function APIGetAllowedParams( ApiBase $module, array &$params ): bool {
+	public function APIGetAllowedParams( ApiBase $module, &$params ): bool {
 		if ( !$module instanceof ApiEditPage ) {
 			return true;
 		}
@@ -609,7 +609,7 @@ class SimpleCaptcha {
 	 * @param $desc array
 	 * @return bool
 	 */
-	public function APIGetParamDescription( ApiBase $module, array &$desc ): bool {
+	public function APIGetParamDescription( ApiBase $module, &$desc ): bool {
 		if ( !$module instanceof ApiEditPage ) {
 			return true;
 		}

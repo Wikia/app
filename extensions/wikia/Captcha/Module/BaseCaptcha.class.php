@@ -116,7 +116,7 @@ abstract class BaseCaptcha extends \WikiaObject {
 	 *
 	 * @return bool
 	 */
-	public function APIGetAllowedParams( \ApiBase $module, array &$params ): bool {
+	public function APIGetAllowedParams( \ApiBase $module, &$params ): bool {
 		if ( $module instanceof \ApiEditPage ) {
 			$params['captchaword'] = null;
 			$params['captchaid'] = null;
@@ -129,7 +129,7 @@ abstract class BaseCaptcha extends \WikiaObject {
 	 * @param array $desc
 	 * @return bool
 	 */
-	public function APIGetParamDescription( \ApiBase $module, array &$desc ): bool {
+	public function APIGetParamDescription( \ApiBase $module, &$desc ): bool {
 		if ( $module instanceof \ApiEditPage ) {
 			$desc['captchaid'] = 'CAPTCHA ID from previous request';
 			$desc['captchaword'] = 'Answer to the CAPTCHA';

@@ -55,11 +55,11 @@ class ConfirmEditHooks {
 		return self::getInstance()->confirmEmailUser( $from, $to, $subject, $text, $error );
 	}
 
-	public static function APIGetAllowedParams( ApiBase $module, array &$params ): bool {
+	public static function APIGetAllowedParams( ApiBase $module, &$params ): bool {
 		return self::getInstance()->APIGetAllowedParams( $module, $params );
 	}
 
-	public static function APIGetParamDescription( ApiBase $module, array &$desc ): bool {
+	public static function APIGetParamDescription( ApiBase $module, &$desc ): bool {
 		return self::getInstance()->APIGetParamDescription( $module, $desc );
 	}
 }

@@ -144,7 +144,7 @@ function Ach_ArticleSaveComplete(
 ): bool {
 	wfProfileIn(__METHOD__);
 
-	if ( $status->isOK() ) {
+	if ( $status->isOK() && $revision instanceof Revision ) {
 		// handle only successful edits and page creations
 
 		$awardingService = new AchAwardingService();
