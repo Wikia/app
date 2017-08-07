@@ -337,20 +337,23 @@ class ForumDumper {
 
 	public function getFollows() {
 		$this->threadIds = [];
+		$pages = [];
 
 		foreach ($this->getPages() as $page) {
 			if ($page->namespace === NS_WIKIA_FORUM_BOARD_THREAD) {
 				$this->threadIds[$page->raw_title] = $page->id;
+				$this->pages[] = $page->raw_title;
 			}
 		}
 
 		$dbh = wfGetDB( DB_SLAVE );
-		return ( new \WikiaSQL() )->SELECT_ALL()
+
+		$follows = ( new \WikiaSQL() )->SELECT_ALL()
 			->FROM( self::TABLE_THREAD_WATCHER )
 			->WHERE( 'wl_namespace' )
 			->EQUAL_TO( NS_WIKIA_FORUM_BOARD_THREAD )
 			->AND_( 'wl_title' )
-			->IN( $this->threadIds )
+			->IN( $pages )
 			->runLoop( $dbh, function ( &$follows, $row ) {
 				$follows[] = [
 					'follower_id' => $row->wl_user,
@@ -358,6 +361,8 @@ class ForumDumper {
 					'timestamp' => $row->wl_notificationtimestamp,
 				];
 			} );
+		$this->threadIds = null;
+		return $follows;
 	}
 
 }
