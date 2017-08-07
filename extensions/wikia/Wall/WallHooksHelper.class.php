@@ -31,13 +31,9 @@ class WallHooksHelper {
 	static public function onUserIsBlockedFrom( $user, $title, &$blocked, &$allowUsertalk ) {
 
 		if ( !$user->mHideName && $allowUsertalk && $title->inNamespace( NS_USER_WALL_MESSAGE  ) ) {
-			// SUS-2474: build the title from the URL if this is a Thread:xxx title
-			$threadId = intval( $title->getText() );
-			$wm = $title->exists() ? new WallMessage( $title ) : WallMessage::newFromId( $threadId );
+			$wm = new WallMessage( $title );
 
-			if ( $wm && $wm->isWallOwner( $user ) ) {
-				$blocked = false;
-			}
+			$blocked = !( $wm->isWallOwner( $user ) );
 		}
 
 		return true;
