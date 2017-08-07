@@ -116,7 +116,7 @@ class ExtVariables {
 	}
 	private static function initFunction(
 		Parser $parser, $name, $functionCallback = null, $flags = 0
-	): bool {
+	) {
 		if( $functionCallback === null ) {
 			// prefix parser functions with 'pf_'
 			$functionCallback = array( __CLASS__, 'pf_' . $name );
