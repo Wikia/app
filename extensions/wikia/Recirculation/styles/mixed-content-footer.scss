@@ -89,33 +89,6 @@ h1.mcf-header {
 }
 
 .mcf-card {
-	width: $mcf-card-width-xl;
-	height: $mcf-card-height-xl;
-}
-
-.mcf-discussions-placeholder {
-	background-color: #ccc;
-	height: $mcf-discussion-height-xl;
-	width: $mcf-card-width-xl;
-	border-radius: 3px;
-
-	@media #{$wds-breakpoint-xxl-up} {
-		width: $mcf-card-width-xxl;
-		height: $mcf-discussion-height-xxl;
-	}
-
-	@media #{$wds-breakpoint-l-only} {
-		width: $mcf-card-width-l;
-		height: $mcf-discussion-height-l;
-	}
-
-	@media #{$wds-breakpoint-m-down} {
-		width: $mcf-card-width-m;
-		height: $mcf-discussion-height-m;
-	}
-}
-
-.mcf-card {
 	@include flexbox();
 	@include flex-direction(column);
 	-moz-osx-font-smoothing: grayscale;
@@ -123,6 +96,8 @@ h1.mcf-header {
 	border: 1px solid $wds-color-faint-gray;
 	border-radius: 3px;
 	box-sizing: border-box;
+	height: $mcf-card-height-xl;
+	width: $mcf-card-width-xl;
 	text-decoration: none;
 
 	&:hover {
@@ -434,8 +409,23 @@ h1.mcf-header {
 
 .mcf-card-discussions {
 	background-color: $wds-color-white;
-	height: 608px;
-	max-width: 334px;
+	height: $mcf-discussion-height-xl;
+	width: $mcf-card-width-xl;
+
+	@media #{$wds-breakpoint-xxl-up} {
+		height: $mcf-discussion-height-xxl;
+		width: $mcf-card-width-xxl;
+	}
+
+	@media #{$wds-breakpoint-l-only} {
+		height: $mcf-discussion-height-l;
+		width: $mcf-card-width-l;
+	}
+
+	@media #{$wds-breakpoint-m-down} {
+		height: $mcf-discussion-height-m;
+		width: $mcf-card-width-m;
+	}
 
 	&__header {
 		@include flexbox();
@@ -464,7 +454,7 @@ h1.mcf-header {
 	}
 
 	&__list {
-		@include scrollable-list(555px, $wds-color-white);
+		@include scrollable-list(100%, $wds-color-white);
 	}
 
 	&__item {
@@ -473,6 +463,10 @@ h1.mcf-header {
 		@include flex-direction(column);
 		border-bottom: 1px solid $wds-color-faint-gray;
 		margin: 0 16px;
+
+		&:last-child {
+			border-bottom: 0;
+		}
 
 		a {
 			color:  $wds-color-faint-gray;
@@ -485,6 +479,12 @@ h1.mcf-header {
 		@include align-items(center);
 		@include flexbox();
 		margin-top: 12px;
+
+		.wds-avatar {
+			height: 26px;
+			min-width: 26px;
+			width: 26px;
+		}
 	}
 
 	&__user-subtitle {
@@ -493,6 +493,10 @@ h1.mcf-header {
 		font-size: 14px;
 		margin-left: 6px;
 		opacity: 0.5;
+
+		@media #{$wds-breakpoint-m-down} {
+			font-size: 12px;
+		}
 	}
 
 	&__content {
@@ -500,17 +504,25 @@ h1.mcf-header {
 		font-size: 18px;
 		margin: 6px 0 10px;
 		word-wrap: break-word;
+
+		@media #{$wds-breakpoint-m-down} {
+			font-size: 14px;
+		}
 	}
 
 	&__meta {
 		@include justify-content(space-between);
 		@include flexbox();
+		font-size: 14px;
 		padding-bottom: 12px;
+
+		@media #{$wds-breakpoint-m-down} {
+			font-size: 12px;
+		}
 	}
 
 	&__in {
 		color: $wds-color-light-gray;
-		font-size: 14px;
 		font-weight: bold;
 	}
 
