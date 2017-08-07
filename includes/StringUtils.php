@@ -208,7 +208,7 @@ class StringUtils {
  */
 class Replacer {
 	function cb() {
-		return array( &$this, 'replace' );
+		return [ $this, 'replace' ];
 	}
 }
 

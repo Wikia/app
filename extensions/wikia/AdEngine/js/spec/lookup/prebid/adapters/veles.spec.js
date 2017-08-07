@@ -1,4 +1,4 @@
-/*global describe, expect, it, modules, spyOn*/
+/*global beforeEach, describe, expect, it, modules, spyOn*/
 describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 	'use strict';
 
@@ -8,14 +8,10 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 	var mocks = {
 		adContext: {
 			getContext: function () {
-				return {
-					opts: {},
-					targeting: {
-						skin: 'oasis'
-					}
-				};
+				return mocks.context;
 			}
 		},
+		context: {},
 		priceParsingHelper: {
 			getPriceFromString: function () {
 				return 0;
@@ -42,14 +38,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 				return '//foo.vast';
 			}
 		},
-		instantGlobals: {
-			wgAdDriverVelesBidderCountries: ['PL'],
-			wgAdDriverVelesBidderConfig: {}
-		},
 		log: noop,
-		geo: {
-			isProperGeo: noop
-		},
 		win: {
 			XMLHttpRequest: noop,
 			pbjs: {
@@ -75,14 +64,24 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 
 	mocks.log.levels = {};
 
+	beforeEach(function () {
+		mocks.context = {
+			opts: {},
+			targeting: {
+				skin: 'oasis'
+			},
+			bidders: {
+				veles: true
+			}
+		};
+	});
+
 	function getVeles() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.veles'](
 			mocks.adContext,
 			mocks.priceParsingHelper,
 			mocks.prebid,
 			mocks.vastUrlBuilder,
-			mocks.geo,
-			mocks.instantGlobals,
 			mocks.log,
 			mocks.win
 		);
@@ -97,15 +96,14 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 		};
 	}
 
-	it('Is disabled when geo does not match', function () {
-		spyOn(mocks.geo, 'isProperGeo').and.returnValue(false);
+	it('Is disabled when context is disabled', function () {
+		mocks.context.bidders.veles = false;
 		var veles = getVeles();
 
 		expect(veles.isEnabled()).toBeFalsy();
 	});
 
-	it('Is enabled when geo matches', function () {
-		spyOn(mocks.geo, 'isProperGeo').and.returnValue(true);
+	it('Is enabled when context is enabled', function () {
 		var veles = getVeles();
 
 		expect(veles.isEnabled()).toBeTruthy();

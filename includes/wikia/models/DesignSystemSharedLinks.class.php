@@ -83,7 +83,7 @@ class DesignSystemSharedLinks {
 			'media-kit-contact' => null,
 			'app-store' => 'https://itunes.apple.com/developer/wikia-inc./id422467077',
 			'google-play' => 'https://play.google.com/store/apps/developer?id=Fandom+powered+by+Wikia',
-			'fandom-logo' => 'http://fandom.wikia.com',
+			'fandom-logo' => 'http://fandom.wikia.com/',
 			'games' => 'http://fandom.wikia.com/topics/games',
 			'movies' => 'http://fandom.wikia.com/topics/movies',
 			'tv' => 'http://fandom.wikia.com/topics/tv',

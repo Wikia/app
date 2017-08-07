@@ -342,10 +342,23 @@ class AttributionCache {
 
 	/**
 	 * hook: ArticleSaveComplete
-	 *
-	 * @param Article $article
+	 * @param WikiPage $article
+	 * @param User $user
+	 * @param $text
+	 * @param $summary
+	 * @param $minoredit
+	 * @param $watchthis
+	 * @param $sectionanchor
+	 * @param $flags
+	 * @param $revision
+	 * @param Status $status
+	 * @param $baseRevId
+	 * @return bool
 	 */
-	public static function purgeArticleContribs(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+	public static function purgeArticleContribs(
+		WikiPage $article, User $user, $text, $summary, $minoredit, $watchthis, $sectionanchor,
+		$flags, $revision, Status &$status, $baseRevId
+	): bool {
 		if(count($status->errors) == 0) {
 			AttributionCache::getInstance()->purge($article->getTitle(), $user);
 		}

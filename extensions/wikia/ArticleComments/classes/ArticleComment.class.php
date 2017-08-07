@@ -1242,10 +1242,8 @@ class ArticleComment {
 	 *
 	 * @return Bool true -- because it's a hook
 	 */
-	static public function watchlistNotify( RecentChange &$oRC ) {
+	static public function watchlistNotify( RecentChange $oRC ): bool {
 		global $wgEnableGroupedArticleCommentsRC;
-
-		Hooks::run( 'AC_RecentChange_Save', [ &$oRC ] );
 
 		if ( !empty( $wgEnableGroupedArticleCommentsRC ) && ( $oRC instanceof RecentChange ) ) {
 			$title = $oRC->getAttribute( 'rc_title' );
@@ -1350,7 +1348,7 @@ class ArticleComment {
 	 * @return array|Mixed
 	 * @throws MWException
 	 */
-	static private function moveComment( $oCommentTitle, &$oNewTitle, $reason = '' ) {
+	static private function moveComment( Title $oCommentTitle, Title $oNewTitle, $reason = '' ) {
 		global $wgUser;
 
 		if ( !is_object( $oCommentTitle ) ) {
@@ -1383,14 +1381,14 @@ class ArticleComment {
 	 *
 	 * @return bool
 	 */
-	static public function moveComments( MovePageForm &$form , Title &$oOldTitle , Title &$oNewTitle ) {
-		global $wgUser, $wgRC2UDPEnabled, $wgMaxCommentsToMove, $wgEnableMultiDeleteExt, $wgCityId;
+	static public function moveComments( MovePageForm $form , Title $oOldTitle , Title $oNewTitle ): bool {
+		global $wgRC2UDPEnabled, $wgMaxCommentsToMove, $wgEnableMultiDeleteExt, $wgCityId;
 
-		if ( !$wgUser->isAllowed( 'move' ) ) {
+		if ( !$form->getUser()->isAllowed( 'move' ) ) {
 			return true;
 		}
 
-		if ( $wgUser->isBlocked() ) {
+		if ( $form->getUser()->isBlocked() ) {
 			return true;
 		}
 
@@ -1663,7 +1661,9 @@ class ArticleComment {
 	 *
 	 * @return boolean because it's a hook
 	 */
-	static public function onBeforeDeletePermissionErrors( &$article, &$title, &$user, &$permission_errors ) {
+	static public function onBeforeDeletePermissionErrors(
+		Article $article, Title $title, User $user, &$permission_errors
+	): bool {
 		if ( self::isCommentingEnabled() &&
 			$user->isAllowed( 'commentdelete' ) &&
 			ArticleComment::isTitleComment( $title )
@@ -1699,7 +1699,7 @@ class ArticleComment {
 	 * @param bool $result Whether $user can perform $action on $title
 	 * @return bool Whether to continue checking hooks
 	 */
-	static public function userCan( Title &$title, User &$user, $action, &$result ) {
+	static public function userCan( Title $title, User $user, string $action, &$result ): bool {
 		$wg = F::app()->wg;
 		$commentsNS = $wg->ArticleCommentsNamespaces;
 		$ns = $title->getNamespace();

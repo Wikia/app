@@ -19,7 +19,7 @@ $wgExtensionMessagesFiles['AutoMainpageFixer'] = __DIR__ . '/AutoMainpageFixer.i
 
 $wgHooks['TitleMoveComplete'][] = 'fnAutoMWMainpageFixer';
 
-function fnAutoMWMainpageFixer( &$title, &$newtitle, &$user, $oldid, $newid ) {
+function fnAutoMWMainpageFixer( Title $title, Title $newtitle, User $user, $oldid, $newid ): bool {
 	wfProfileIn(__METHOD__);
 
 	$mp = Title::newMainPage();
@@ -31,7 +31,7 @@ function fnAutoMWMainpageFixer( &$title, &$newtitle, &$user, $oldid, $newid ) {
 
 	$title = Title::newFromText('Mainpage', NS_MEDIAWIKI);
 
-	$article = new Article($title);
+	$article = new WikiPage( $title );
 	$article_text = $newtitle;
 	$edit_summary = '';
 	#we REALLY dont want this to show up

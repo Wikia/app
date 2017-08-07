@@ -90,14 +90,14 @@ class ImageLazyLoad  {
 
 	}
 
-	public static function onParserClearState( &$parser ) {
+	public static function onParserClearState( Parser $parser ) {
 		if ( !empty( $parser->lazyLoadedImagesCount ) ) {
 			$parser->lazyLoadedImagesCount = 0;
 		}
 		return true;
 	}
 
-	public static function onBeforePageDisplay( OutputPage &$out, &$skin ) {
+	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ): bool {
 		global $wgExtensionsPath;
 		if ( self::isEnabled() ) {
 			$out->addHtml( '<noscript><link rel="stylesheet" href="' . $wgExtensionsPath . '/wikia/ImageLazyLoad/css/ImageLazyLoadNoScript.css" /></noscript>' );
@@ -107,9 +107,9 @@ class ImageLazyLoad  {
 
 	/**
 	 * Update thumbnail img attributes when lazy loading
-	 * @param WikiaController $controller
+	 * @param WikiaDispatchableObject $controller
 	 */
-	public static function setLazyLoadingAttribs( WikiaController $controller ) {
+	public static function setLazyLoadingAttribs( WikiaDispatchableObject $controller ) {
 		$controller->onLoad = self::IMG_ONLOAD;
 		$controller->imgClass = array_merge( $controller->imgClass, explode( ' ', self::LAZY_IMAGE_CLASSES ) );
 		$controller->dataSrc = $controller->imgSrc;
