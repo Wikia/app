@@ -79,8 +79,15 @@ class PageStatsService {
 
 	/**
 	 * Refresh cache when article is deleted
+	 * @param WikiPage $article
+	 * @param User $user
+	 * @param $reason
+	 * @param $articleId
+	 * @return bool
 	 */
-	static function onArticleDeleteComplete(&$article, &$user, $reason, $articleId) {
+	static function onArticleDeleteComplete(
+		WikiPage $article, User $user, $reason, $articleId
+	): bool {
 		wfProfileIn(__METHOD__);
 
 		$title = $article->getTitle();
