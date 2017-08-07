@@ -36,7 +36,7 @@ class Hooks {
 	 * @return bool
 	 */
 	public function onArticleSaveComplete( \WikiPage $article, \User $user, $text, $summary,
-		$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId
+		$minoredit, $watchthis, $sectionanchor, $flags, $revision, &$status, $baseRevId
 	) {
 		global $wgCityId;
 

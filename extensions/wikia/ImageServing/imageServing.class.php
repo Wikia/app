@@ -180,7 +180,7 @@ class ImageServing {
 
 			if( empty( $out ) ) {
 				// Hook for finding fallback images if there were no matches. - NOTE: should this fallback any time (count($out) < $limit)? Seems like overkill.
-				Hooks::run( 'ImageServing::fallbackOnNoResults', array( &$this, $limit, &$out ) );
+				Hooks::run( 'ImageServing::fallbackOnNoResults', [ $this, $limit, &$out ] );
 			}
 
 			// apply limiting

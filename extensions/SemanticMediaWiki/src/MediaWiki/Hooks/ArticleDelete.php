@@ -32,7 +32,7 @@ class ArticleDelete {
 	 *
 	 * @param WikiPage $wikiPage
 	 */
-	public function __construct( &$wikiPage, &$user, &$reason, &$error ) {
+	public function __construct( WikiPage $wikiPage, User $user, $reason, &$error ) {
 		$this->wikiPage = $wikiPage;
 	}
 

@@ -102,7 +102,7 @@ class SpecialForumRedirectController extends WikiaSpecialPageController {
 	 *
 	 * @return bool
 	 */
-	public static function onBeforePageHistory( &$article ) {
+	public static function onBeforePageHistory( Article $article ): bool {
 		self::redirectPage( $article );
 		return true;
 	}
@@ -114,8 +114,11 @@ class SpecialForumRedirectController extends WikiaSpecialPageController {
 	 *
 	 * @return bool
 	 */
-	public static function onArticleViewHeader( &$article, &$outputDone, &$useParserCache ) {
+	public static function onArticleViewHeader(
+		Article $article, bool &$outputDone, bool &$useParserCache
+	): bool {
 		self::redirectPage( $article );
+
 		return true;
 	}
 

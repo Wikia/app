@@ -25,16 +25,16 @@ use Wikia\DependencyInjection\Injector;
 use Wikia\Domain\User\Attribute;
 use Wikia\Logger\Loggable;
 use Wikia\Logger\WikiaLogger;
-use Wikia\Service\User\Attributes\UserAttributes;
-use Wikia\Service\User\Preferences\PreferenceService;
-use Wikia\Service\User\Permissions\PermissionsService;
-use Wikia\Util\Statistics\BernoulliTrial;
-use Wikia\Service\Helios\HeliosClient;
 use Wikia\Service\Helios\ClientException;
+use Wikia\Service\Helios\HeliosClient;
+use Wikia\Service\User\Attributes\UserAttributes;
 use Wikia\Service\User\Auth\AuthResult;
 use Wikia\Service\User\Auth\AuthServiceAccessor;
 use Wikia\Service\User\Auth\CookieHelper;
+use Wikia\Service\User\Permissions\PermissionsService;
+use Wikia\Service\User\Preferences\PreferenceService;
 use Wikia\Util\PerformanceProfilers\UsernameLookupProfiler;
+use Wikia\Util\Statistics\BernoulliTrial;
 
 /**
  * Int Number of characters in user_token field.
@@ -1361,7 +1361,7 @@ class User implements JsonSerializable {
 
 		# Extensions
 		/* Wikia change begin - SUS-92 */
-		Hooks::run( 'GetBlockedStatus', array( &$this, $shouldLogBlockInStats, $global ) );
+		Hooks::run( 'GetBlockedStatus', [ $this, $shouldLogBlockInStats, $global ] );
 		/* Wikia change end */
 
 		if ( !empty($this->mBlockedby) ) {
@@ -1516,7 +1516,7 @@ class User implements JsonSerializable {
 	public function pingLimiter( $action = 'edit' ) {
 		# Call the 'PingLimiter' hook
 		$result = false;
-		if( !Hooks::run( 'PingLimiter', array( &$this, $action, $result ) ) ) {
+		if ( !Hooks::run( 'PingLimiter', [ $this, $action, $result ] ) ) {
 			return $result;
 		}
 
@@ -1702,7 +1702,7 @@ class User implements JsonSerializable {
 			$ip = $this->getRequest()->getIP();
 		}
 		$blocked = false;
-		Hooks::run( 'UserIsBlockedGlobally', array( &$this, $ip, &$blocked ) );
+		Hooks::run( 'UserIsBlockedGlobally', [ $this, $ip, &$blocked ] );
 		$this->mBlockedGlobally = (bool)$blocked;
 		return $this->mBlockedGlobally;
 	}
@@ -1852,24 +1852,24 @@ class User implements JsonSerializable {
 
 	/**
 	 * Return the talk page(s) this user has new messages on.
-	 * @return Array of String page URLs
+	 * @return string[] page URLs
 	 */
 	public function getNewMessageLinks() {
-		$talks = array();
-		Hooks::run( 'UserRetrieveNewTalks', array( &$this, &$talks) );
+		$talks = [];
+		Hooks::run( 'UserRetrieveNewTalks', [ $this, &$talks ] );
 
-		/* Wikia change begin - @author: XXX */
-		if( $this->getNewtalk() ) {
+		/* Wikia change begin */
+		if ( $this->getNewtalk() ) {
 			global $wgCityId, $wgSitename;
 			$up = $this->getUserPage();
 			$utp = $up->getTalkPage();
 			unset( $talks[$wgCityId] );
-			$talks[0] = array( "wiki" => $wgSitename, "link" => $utp->getFullURL() );
+			$talks[0] = [ "wiki" => $wgSitename, "link" => $utp->getFullURL() ];
+
 			return $talks;
 		}
-		else {
-			return array_values($talks);
-		}
+
+		return array_values( $talks );
 		/* Wikia change end */
 	}
 
@@ -3132,7 +3132,7 @@ class User implements JsonSerializable {
 	 * Log this user out.
 	 */
 	public function logout() {
-		if ( Hooks::run( 'UserLogout', array( &$this ) ) ) {
+		if ( Hooks::run( 'UserLogout', [ $this ] ) ) {
 			$this->doLogout();
 		}
 	}
@@ -3659,7 +3659,7 @@ class User implements JsonSerializable {
 		}
 
 		$priority = 0;
-		Hooks::run( 'UserSendConfirmationMail' , array( &$this, &$args, &$priority, &$url, $token, $ip_arg, $type ) );
+		Hooks::run( 'UserSendConfirmationMail', [ $this, &$args, &$priority, &$url, $token, $ip_arg, $type ] );
 
 		$emailController = $this->getEmailController( $mailtype );
 		if ( !empty( $emailController ) ) {
@@ -3928,7 +3928,8 @@ class User implements JsonSerializable {
 			return false;
 		}
 		$canSend = $this->isEmailConfirmed();
-		Hooks::run( 'UserCanSendEmail', array( &$this, &$canSend ) );
+		Hooks::run( 'UserCanSendEmail', [ $this, &$canSend ] );
+
 		return $canSend;
 	}
 
@@ -3955,7 +3956,7 @@ class User implements JsonSerializable {
 		global $wgEmailAuthentication;
 		$this->load();
 		$confirmed = true;
-		if ( Hooks::run( 'EmailConfirmed', array( &$this, &$confirmed ) ) ) {
+		if ( Hooks::run( 'EmailConfirmed', [ $this, &$confirmed ] ) ) {
 			if( $this->isAnon() ) {
 				return false;
 			}

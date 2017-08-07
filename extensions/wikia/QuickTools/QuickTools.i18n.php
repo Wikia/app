@@ -134,11 +134,6 @@ $messages['de'] = array(
 	'quicktools-adopt-confirm-ok' => 'Yes',
 	'quicktools-adopt-confirm-cancel' => 'No',
 	'quicktools-adopt-confirm-title' => 'Confirm Adoption',
-	'quicktools-createuserpage-link' => 'Create user page',
-	'quicktools-createuserpage-reason' => 'Creating user page',
-	'quicktools-createuserpage-success' => 'Successfully created page!',
-	'quicktools-createuserpage-exists' => 'User page already exists!',
-	'quicktools-createuserpage-error' => 'Creating page failed!',
 );
 
 $messages['es'] = array(
@@ -184,11 +179,6 @@ $messages['es'] = array(
 	'quicktools-adopt-confirm-ok' => 'Yes',
 	'quicktools-adopt-confirm-cancel' => 'No',
 	'quicktools-adopt-confirm-title' => 'Confirm Adoption',
-	'quicktools-createuserpage-link' => 'Crear página de usuario',
-	'quicktools-createuserpage-reason' => 'Creating user page',
-	'quicktools-createuserpage-success' => '¡La página se creó satisfactoriamente!',
-	'quicktools-createuserpage-exists' => '¡La página de usuario ya existe!',
-	'quicktools-createuserpage-error' => '¡Falló al crear la página!',
 );
 
 $messages['fi'] = array(
@@ -234,11 +224,6 @@ $messages['fi'] = array(
 	'quicktools-adopt-confirm-ok' => 'Yes',
 	'quicktools-adopt-confirm-cancel' => 'No',
 	'quicktools-adopt-confirm-title' => 'Confirm Adoption',
-	'quicktools-createuserpage-link' => 'Create user page',
-	'quicktools-createuserpage-reason' => 'Creating user page',
-	'quicktools-createuserpage-success' => 'Successfully created page!',
-	'quicktools-createuserpage-exists' => 'User page already exists!',
-	'quicktools-createuserpage-error' => 'Creating page failed!',
 );
 
 $messages['fr'] = array(
@@ -284,11 +269,6 @@ $messages['fr'] = array(
 	'quicktools-adopt-confirm-ok' => 'Yes',
 	'quicktools-adopt-confirm-cancel' => 'No',
 	'quicktools-adopt-confirm-title' => 'Confirm Adoption',
-	'quicktools-createuserpage-link' => 'Create user page',
-	'quicktools-createuserpage-reason' => 'Creating user page',
-	'quicktools-createuserpage-success' => 'Successfully created page!',
-	'quicktools-createuserpage-exists' => 'User page already exists!',
-	'quicktools-createuserpage-error' => 'Creating page failed!',
 );
 
 $messages['it'] = array(
@@ -334,11 +314,6 @@ $messages['it'] = array(
 	'quicktools-adopt-confirm-ok' => 'Yes',
 	'quicktools-adopt-confirm-cancel' => 'No',
 	'quicktools-adopt-confirm-title' => 'Confirm Adoption',
-	'quicktools-createuserpage-link' => 'Crea pagina utente',
-	'quicktools-createuserpage-reason' => 'Creating user page',
-	'quicktools-createuserpage-success' => 'Successfully created page!',
-	'quicktools-createuserpage-exists' => 'User page already exists!',
-	'quicktools-createuserpage-error' => 'Creating page failed!',
 );
 
 $messages['ja'] = array(
@@ -384,11 +359,6 @@ $messages['ja'] = array(
 	'quicktools-adopt-confirm-ok' => 'Yes',
 	'quicktools-adopt-confirm-cancel' => 'No',
 	'quicktools-adopt-confirm-title' => 'Confirm Adoption',
-	'quicktools-createuserpage-link' => 'ユーザーページ作成',
-	'quicktools-createuserpage-reason' => 'Creating user page',
-	'quicktools-createuserpage-success' => 'ユーザーページの作成に成功しました。',
-	'quicktools-createuserpage-exists' => 'ユーザーページはすでに作成されています。',
-	'quicktools-createuserpage-error' => 'Creating page failed!',
 );
 
 $messages['ko'] = array(
@@ -434,11 +404,6 @@ $messages['ko'] = array(
 	'quicktools-adopt-confirm-ok' => 'Yes',
 	'quicktools-adopt-confirm-cancel' => 'No',
 	'quicktools-adopt-confirm-title' => 'Confirm Adoption',
-	'quicktools-createuserpage-link' => '사용자 문서 생성',
-	'quicktools-createuserpage-reason' => '사용자 문서 생성하는 중...',
-	'quicktools-createuserpage-success' => 'Successfully created page!',
-	'quicktools-createuserpage-exists' => '사용자 문서가 이미 존재합니다!',
-	'quicktools-createuserpage-error' => '문서를 생성하는 데에 실패했습니다!',
 );
 
 $messages['lol'] = array(
@@ -484,11 +449,6 @@ $messages['lol'] = array(
 	'quicktools-adopt-confirm-ok' => 'crwdns65539:0crwdne65539:0',
 	'quicktools-adopt-confirm-cancel' => 'crwdns65540:0crwdne65540:0',
 	'quicktools-adopt-confirm-title' => 'crwdns65541:0crwdne65541:0',
-	'quicktools-createuserpage-link' => 'crwdns65529:0crwdne65529:0',
-	'quicktools-createuserpage-reason' => 'crwdns65530:0crwdne65530:0',
-	'quicktools-createuserpage-success' => 'crwdns65531:0crwdne65531:0',
-	'quicktools-createuserpage-exists' => 'crwdns65532:0crwdne65532:0',
-	'quicktools-createuserpage-error' => 'crwdns65533:0crwdne65533:0',
 );
 
 $messages['nl'] = array(
@@ -534,11 +494,6 @@ $messages['nl'] = array(
 	'quicktools-adopt-confirm-ok' => 'Yes',
 	'quicktools-adopt-confirm-cancel' => 'No',
 	'quicktools-adopt-confirm-title' => 'Confirm Adoption',
-	'quicktools-createuserpage-link' => 'Create user page',
-	'quicktools-createuserpage-reason' => 'Creating user page',
-	'quicktools-createuserpage-success' => 'Successfully created page!',
-	'quicktools-createuserpage-exists' => 'User page already exists!',
-	'quicktools-createuserpage-error' => 'Creating page failed!',
 );
 
 $messages['pl'] = array(
@@ -584,11 +539,6 @@ $messages['pl'] = array(
 	'quicktools-adopt-confirm-ok' => 'Yes',
 	'quicktools-adopt-confirm-cancel' => 'No',
 	'quicktools-adopt-confirm-title' => 'Confirm Adoption',
-	'quicktools-createuserpage-link' => 'Utwórz profil',
-	'quicktools-createuserpage-reason' => 'Tworzenie profilu użytkownika',
-	'quicktools-createuserpage-success' => 'Utworzono profil!',
-	'quicktools-createuserpage-exists' => 'Profil użytkownika już istnieje!',
-	'quicktools-createuserpage-error' => 'Tworzenie strony nie powiodło się!',
 );
 
 $messages['pt'] = array(
@@ -634,11 +584,6 @@ $messages['pt'] = array(
 	'quicktools-adopt-confirm-ok' => 'Yes',
 	'quicktools-adopt-confirm-cancel' => 'No',
 	'quicktools-adopt-confirm-title' => 'Confirm Adoption',
-	'quicktools-createuserpage-link' => 'Create user page',
-	'quicktools-createuserpage-reason' => 'Creating user page',
-	'quicktools-createuserpage-success' => 'Successfully created page!',
-	'quicktools-createuserpage-exists' => 'User page already exists!',
-	'quicktools-createuserpage-error' => 'Creating page failed!',
 );
 
 $messages['ru'] = array(
@@ -684,11 +629,6 @@ $messages['ru'] = array(
 	'quicktools-adopt-confirm-ok' => 'Yes',
 	'quicktools-adopt-confirm-cancel' => 'No',
 	'quicktools-adopt-confirm-title' => 'Confirm Adoption',
-	'quicktools-createuserpage-link' => 'Create user page',
-	'quicktools-createuserpage-reason' => 'Creating user page',
-	'quicktools-createuserpage-success' => 'Successfully created page!',
-	'quicktools-createuserpage-exists' => 'User page already exists!',
-	'quicktools-createuserpage-error' => 'Creating page failed!',
 );
 
 $messages['sus-2507'] = array(
@@ -774,11 +714,6 @@ $messages['vi'] = array(
 	'quicktools-adopt-confirm-ok' => 'Yes',
 	'quicktools-adopt-confirm-cancel' => 'No',
 	'quicktools-adopt-confirm-title' => 'Confirm Adoption',
-	'quicktools-createuserpage-link' => 'Create user page',
-	'quicktools-createuserpage-reason' => 'Creating user page',
-	'quicktools-createuserpage-success' => 'Successfully created page!',
-	'quicktools-createuserpage-exists' => 'User page already exists!',
-	'quicktools-createuserpage-error' => 'Creating page failed!',
 );
 
 $messages['zh-hans'] = array(
@@ -824,11 +759,6 @@ $messages['zh-hans'] = array(
 	'quicktools-adopt-confirm-ok' => 'Yes',
 	'quicktools-adopt-confirm-cancel' => 'No',
 	'quicktools-adopt-confirm-title' => 'Confirm Adoption',
-	'quicktools-createuserpage-link' => '创建用户页面',
-	'quicktools-createuserpage-reason' => 'Creating user page',
-	'quicktools-createuserpage-success' => 'Successfully created page!',
-	'quicktools-createuserpage-exists' => '用户页面已存在！',
-	'quicktools-createuserpage-error' => 'Creating page failed!',
 );
 
 $messages['zh-hant'] = array(
@@ -874,10 +804,5 @@ $messages['zh-hant'] = array(
 	'quicktools-adopt-confirm-ok' => 'Yes',
 	'quicktools-adopt-confirm-cancel' => 'No',
 	'quicktools-adopt-confirm-title' => 'Confirm Adoption',
-	'quicktools-createuserpage-link' => '創建用戶頁面',
-	'quicktools-createuserpage-reason' => 'Creating user page',
-	'quicktools-createuserpage-success' => 'Successfully created page!',
-	'quicktools-createuserpage-exists' => '用戶頁面已存在！',
-	'quicktools-createuserpage-error' => 'Creating page failed!',
 );
 

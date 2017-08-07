@@ -1,14 +1,14 @@
-/*global describe, expect, it, jasmine, modules*/
+/*global beforeEach, describe, expect, it, jasmine, modules*/
 describe('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', function () {
 	'use strict';
 
 	var mocks = {
-		instantGlobals: {
-			wgAdDriverRubiconPrebidCountries: ['PL']
+		adContext: {
+			getContext: function () {
+				return mocks.context;
+			}
 		},
-		geo: {
-			isProperGeo: jasmine.createSpy('isProperGeo')
-		},
+		context: {},
 		slotsContext: {
 			filterSlotMap: function (map) {
 				return map;
@@ -21,17 +21,31 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', function () {
 
 	function getBidder() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.rubicon'](
+			mocks.adContext,
 			mocks.slotsContext,
-			mocks.geo,
-			mocks.instantGlobals,
 			mocks.log
 		);
 	}
 
-	it('isEnabled checks the countries instant global', function () {
-		var bidder = getBidder();
-		bidder.isEnabled();
-		expect(mocks.geo.isProperGeo).toHaveBeenCalledWith(['PL']);
+	beforeEach(function () {
+		mocks.context = {
+			bidders: {
+				rubicon: true
+			}
+		};
+	});
+
+	it('Is disabled when context is disabled', function () {
+		mocks.context.bidders.rubicon = false;
+		var rubicon = getBidder();
+
+		expect(rubicon.isEnabled()).toBeFalsy();
+	});
+
+	it('Is enabled when context is enabled', function () {
+		var rubicon = getBidder();
+
+		expect(rubicon.isEnabled()).toBeTruthy();
 	});
 
 	it('prepareAdUnit returns data in correct shape', function () {
