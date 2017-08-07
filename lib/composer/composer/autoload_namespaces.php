@@ -14,6 +14,7 @@ return array(
     'PEAR' => array($vendorDir . '/pear/pear_exception'),
     'Net' => array($vendorDir . '/wikia/net_socket2', $vendorDir . '/pear/net_socket', $vendorDir . '/wikia/net_smtp2'),
     'Mail' => array($vendorDir . '/pear/mail_mime'),
+    'File' => array($vendorDir . '/wikia/file_ogg'),
     'Doctrine\\Common\\Lexer\\' => array($vendorDir . '/doctrine/lexer/lib'),
     'Doctrine\\Common\\Cache\\' => array($vendorDir . '/doctrine/cache/lib'),
     'Doctrine\\Common\\Annotations\\' => array($vendorDir . '/doctrine/annotations/lib'),

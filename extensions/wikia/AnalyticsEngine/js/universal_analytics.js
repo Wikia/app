@@ -272,6 +272,14 @@
 		return 'No';
 	}
 
+	function hasFeaturedVideo() {
+		if (window.ads && window.ads.context.targeting.hasFeaturedVideo) {
+			return 'Yes';
+		}
+
+		return 'No';
+	}
+
 	function getKruxSegment() {
 		var kruxSegment = 'not set',
 			uniqueKruxSegments = {
@@ -322,31 +330,6 @@
 		['set', 'dimension5', !!window.wgUserName ? 'user' : 'anon']  // LoginStatus
 	);
 
-	/*
-	 * Remove when SOC-217 ABTest is finished
-	 */
-	/**
-	 * Get unconfirmed email AbTest user type
-	 * @returns {string}
-	 */
-	function getUnconfirmedEmailUserType() {
-		if (!window.wgUserName) {
-			return 'anon';
-		} else {
-			switch (window.wgNotConfirmedEmail) {
-				case '1':
-					return 'unconfirmed';
-				case '2':
-					return 'confirmed';
-				default:
-					return 'old user';
-			}
-		}
-	}
-	/*
-	 * end remove
-	 */
-
 	/**** Medium-Priority Custom Dimensions ****/
 	_gaWikiaPush(
 		['set', 'dimension8', window.wikiaPageType],                                // PageType
@@ -364,16 +347,9 @@
 		['set', 'dimension24', window.wikiaIsPowerUserLifetime ? 'Yes' : 'No'],     // IsPowerUser: Lifetime
 		['set', 'dimension25', String(window.wgNamespaceNumber)],                   // Namespace Number
 		['set', 'dimension27', String(window.wgCanonicalSpecialPageName || '')],    // Special page canonical name (SUS-1465)
-		['set', 'dimension28', hasPortableInfobox()] // If there is Portable Infobox on the page (ADEN-4708)
+		['set', 'dimension28', hasPortableInfobox()],                               // If there is Portable Infobox on the page (ADEN-4708)
+		['set', 'dimension29', hasFeaturedVideo()]                                  // If there is Featured Video on the page (ADEN-5420)
 	);
-
-	/*
-	 * Remove when SOC-217 ABTest is finished
-	 */
-	_gaWikiaPush(['set', 'dimension39', getUnconfirmedEmailUserType()]);      // UnconfirmedEmailUserType
-	/*
-	 * end remove
-	 */
 
 	/**
 	 * Checks if Optimizely object and its crucial data attributes are available
@@ -524,7 +500,8 @@
 	window.ga('ads.set', 'dimension24', window.wikiaIsPowerUserLifetime ? 'Yes' : 'No'); // IsPowerUser: Lifetime
 	window.ga('ads.set', 'dimension25', String(window.wgNamespaceNumber));               // Namespace Number
 	window.ga('ads.set', 'dimension27', String(window.wgCanonicalSpecialPageName || '')); // Special page canonical name (SUS-1465)
-	window.ga('ads.set', 'dimension28', hasPortableInfobox()); // // If there is Portable Infobox on the page (ADEN-4708)
+	window.ga('ads.set', 'dimension28', hasPortableInfobox());                            // If there is Portable Infobox on the page (ADEN-4708)
+	window.ga('ads.set', 'dimension29', hasFeaturedVideo());                              // If there is Featured Video on the page (ADEN-5420)
 
 	/**** Include A/B testing status ****/
 	if (window.Wikia && window.Wikia.AbTest) {

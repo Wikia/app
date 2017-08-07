@@ -331,6 +331,13 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
                 0 => __DIR__ . '/..' . '/pear/mail_mime',
             ),
         ),
+        'F' => 
+        array (
+            'File' => 
+            array (
+                0 => __DIR__ . '/..' . '/wikia/file_ogg',
+            ),
+        ),
         'D' => 
         array (
             'Doctrine\\Common\\Lexer\\' => 
@@ -653,6 +660,14 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
         'File_Iterator_Facade' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Facade.php',
         'File_Iterator_Factory' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Factory.php',
+        'File_Ogg' => __DIR__ . '/..' . '/wikia/file_ogg/File/Ogg.php',
+        'File_Ogg_Bitstream' => __DIR__ . '/..' . '/wikia/file_ogg/File/Ogg/Bitstream.php',
+        'File_Ogg_Flac' => __DIR__ . '/..' . '/wikia/file_ogg/File/Ogg/Flac.php',
+        'File_Ogg_Media' => __DIR__ . '/..' . '/wikia/file_ogg/File/Ogg/Media.php',
+        'File_Ogg_Opus' => __DIR__ . '/..' . '/wikia/file_ogg/File/Ogg/Opus.php',
+        'File_Ogg_Speex' => __DIR__ . '/..' . '/wikia/file_ogg/File/Ogg/Speex.php',
+        'File_Ogg_Theora' => __DIR__ . '/..' . '/wikia/file_ogg/File/Ogg/Theora.php',
+        'File_Ogg_Vorbis' => __DIR__ . '/..' . '/wikia/file_ogg/File/Ogg/Vorbis.php',
         'FluentSql\\Breakdown' => __DIR__ . '/..' . '/wikia/fluent-sql-php/src/Breakdown.php',
         'FluentSql\\Cache\\Cache' => __DIR__ . '/..' . '/wikia/fluent-sql-php/src/Cache/Cache.php',
         'FluentSql\\Cache\\ProcessCache' => __DIR__ . '/..' . '/wikia/fluent-sql-php/src/Cache/ProcessCache.php',
