@@ -3,7 +3,6 @@
 use \Wikia\CommunityHeader\Sitename;
 
 class RecirculationController extends WikiaController {
-	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 	const ALLOWED_TYPES = ['popular', 'shares', 'recent_popular'];
 	const DEFAULT_TYPE = 'popular';
 
@@ -50,11 +49,6 @@ class RecirculationController extends WikiaController {
 		return false;
 	}
 
-	public function container( $params ) {
-		$containerId = $this->request->getVal( 'containerId' );
-		$this->response->setVal( 'containerId', $containerId );
-	}
-
 	public function footer() {
 		global $wgCityId;
 
@@ -63,5 +57,10 @@ class RecirculationController extends WikiaController {
 			$communityHeaderModel->getBackgroundImageUrl() );
 		$this->response->setVal( 'sitename', new Sitename( $communityHeaderModel ) );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_PHP );
+	}
+
+	public function container( $params ) {
+		$containerId = $this->request->getVal( 'containerId' );
+		$this->response->setVal( 'containerId', $containerId );
 	}
 }

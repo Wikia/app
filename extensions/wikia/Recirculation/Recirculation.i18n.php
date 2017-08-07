@@ -10,11 +10,13 @@ $messages['en'] = array(
 	'recirculation-fandom-title' => 'Trending FANDOM Articles',
 	'recirculation-fandom-subtitle' => 'Also Recommended',
 	'recirculation-discussion-title' => 'Top Discussions',
-	'recirculation-discussion-link-text' => 'View All Discussions',
+	'recirculation-discussion-link-text' => 'View All',
 	'recirculation-discussions-new' => 'Start a New Discussion',
 	'recirculation-discussions-upvotes' => 'upvotes',
 	'recirculation-discussions-replies' => 'replies',
 	'recirculation-discussions-posts' => 'Posts',
+	'recirculation-discussions-latest-discussions' => 'Latest Discussions',
+	'recirculation-discussions-in' => 'in',
 );
 
 $messages['qqq'] = array(
