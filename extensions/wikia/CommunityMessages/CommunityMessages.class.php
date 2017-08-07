@@ -91,10 +91,8 @@ class CommunityMessages {
 		$title = $article->getTitle();
 
 		if ($title->getNamespace() == NS_MEDIAWIKI && strtolower($title->getText()) == 'community-corner' && !$minoredit) {
-			$revision = Revision::newFromTitle($title);
-			if ($revision) {
-				$wgMemc->set(wfMemcKey('CommunityMessagesTimestamp'), wfTimestamp(TS_UNIX, $revision->getTimestamp()), 86400 /*24h*/);
-			}
+			// SUS-2566: Skip DB call here. We just made an edit, let's just use the current time.
+			$wgMemc->set( static::getCommunityMessagesCacheKey(), time(), 86400 /*24h*/ );
 		}
 
 		return true;
