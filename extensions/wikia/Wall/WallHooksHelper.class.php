@@ -1799,7 +1799,7 @@ class WallHooksHelper {
 		return true;
 	}
 
-	static public function onWantedPagesGetQueryInfo( ListredirectsPage $self, array &$query ): bool {
+	static public function onWantedPagesGetQueryInfo( WantedPagesPage $self, array &$query ): bool {
 		wfProfileIn( __METHOD__ );
 
 		$query['conds'][] = 'pl_namespace not in (' . static::getQueryNS() . ')';
