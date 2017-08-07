@@ -196,11 +196,9 @@ class Article extends Page {
 	 * This function has side effects! Do not use this function if you
 	 * only want the real revision text if any.
 	 *
-	 * @return Return the text of this revision
+	 * @return string the text of this revision
 	 */
 	public function getContent() {
-		global $wgUser;
-
 		wfProfileIn( __METHOD__ );
 
 		if ( $this->mPage->getID() === 0 ) {
@@ -212,7 +210,7 @@ class Article extends Page {
 					$text = '';
 				}
 			} else {
-				$text = wfMsgExt( $wgUser->isLoggedIn() ? 'noarticletext' : 'noarticletextanon', 'parsemag' );
+				$text = wfMessage( 'noarticletext' )->text();
 			}
 			wfProfileOut( __METHOD__ );
 
