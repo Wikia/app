@@ -3,6 +3,92 @@
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-functions/index';
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-mixins/index';
 
+$mcf-padding-horizontal: 10px;
+$mcf-padding-vertical: 12px;
+// size proportion of mixed content footer card
+$mcf-proportion: 292/334;
+
+$mcf-width-xxl: $page-width-large;
+$mcf-card-width-xxl: ($mcf-width-xxl - 2 * $mcf-padding-horizontal)/3;
+$mcf-card-height-xxl: $mcf-proportion * $mcf-card-width-xxl;
+$mcf-discussion-height-xxl: $mcf-card-height-xxl * 2 + $mcf-padding-vertical;
+
+$mcf-width-xl: $page-width-medium;
+$mcf-card-width-xl: ($mcf-width-xl - 2 * $mcf-padding-horizontal)/3;
+$mcf-card-height-xl: $mcf-proportion * $mcf-card-width-xl;
+$mcf-discussion-height-xl: $mcf-card-height-xl * 2 + $mcf-padding-vertical;
+
+$mcf-width-l: $page-width-small-plus;
+$mcf-card-width-l: ($mcf-width-l - 2 * $mcf-padding-horizontal)/3;
+$mcf-card-height-l: $mcf-proportion * $mcf-card-width-l;
+$mcf-discussion-height-l: $mcf-card-height-l * 2 + $mcf-padding-vertical;
+
+$mcf-width-m: $page-width-small;
+$mcf-card-width-m: ($mcf-width-m - 2 * $mcf-padding-horizontal)/3;
+$mcf-card-height-m: $mcf-proportion * $mcf-card-width-m;
+$mcf-discussion-height-m: $mcf-card-height-m * 2 + $mcf-padding-vertical;
+
+#mixed-content-footer {
+	$overlay-color: #000;
+	@if $is-dark-wiki {
+		$overlay-color: #fff;
+	}
+	background-color: rgba($overlay-color, 0.1);
+	margin: -$padding-width-medium;
+	padding: $padding-width-medium;
+
+	@media #{$wds-breakpoint-xxl-up} {
+		margin: -$padding-width-large;
+		padding: $padding-width-large;
+	}
+
+	@media #{$wds-breakpoint-l-only} {
+		margin: -$padding-width-small-plus;
+		padding: $padding-width-small-plus;
+	}
+
+	@media #{$wds-breakpoint-m-down} {
+		margin: -$padding-width-small;
+		padding: $padding-width-small;
+	}
+}
+
+// tag name to override styles
+h1.mcf-header {
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	font-size: 24px;
+	font-weight: bold;
+	line-height: 20px;
+	margin-bottom: 18px;
+}
+
+.mcf-row {
+	@include flexbox();
+	@include justify-content(space-between);
+	margin-bottom: 12px;
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+
+.mcf-col {
+	width: 2 * $mcf-card-width-xl + $mcf-padding-horizontal;
+
+	@media #{$wds-breakpoint-xxl-up} {
+		width: 2 * $mcf-card-width-xxl + $mcf-padding-horizontal;
+	}
+
+	@media #{$wds-breakpoint-l-only} {
+		width: 2 * $mcf-card-width-l + $mcf-padding-horizontal;
+	}
+
+	@media #{$wds-breakpoint-m-down} {
+		width: 2 * $mcf-card-width-m + $mcf-padding-horizontal;
+	}
+}
+
 .mcf-card {
 	@include flexbox();
 	@include flex-direction(column);
@@ -10,6 +96,9 @@
 	-webkit-font-smoothing: antialiased;
 	border: 1px solid $wds-color-faint-gray;
 	border-radius: 3px;
+	box-sizing: border-box;
+	height: $mcf-card-height-xl;
+	width: $mcf-card-width-xl;
 	text-decoration: none;
 
 	&:hover {
@@ -24,6 +113,21 @@
 			color: $wds-color-link;
 		}
 	}
+
+	@media #{$wds-breakpoint-xxl-up} {
+		width: $mcf-card-width-xxl;
+		height: $mcf-card-height-xxl;
+	}
+
+	@media #{$wds-breakpoint-l-only} {
+		width: $mcf-card-width-l;
+		height: $mcf-card-height-l;
+	}
+
+	@media #{$wds-breakpoint-m-down} {
+		width: $mcf-card-width-m;
+		height: $mcf-card-height-m;
+	}
 }
 
 .mcf-card-ns-stream {
@@ -31,21 +135,22 @@
 	@include justify-content(flex-end);
 	background-size: cover;
 	background-position: center;
-	// fixme size shouldn't be fixed
-	height: 334px;
-	width: 334px;
 
 	&__title {
 		color: $wds-color-white;
 		font-size: 18px;
 		font-weight: bold;
-		line-height: 24px;
+		line-height: 20px;
 		margin-bottom: 12px;
 		text-align: center;
 	}
 
 	.wds-button {
 		margin-bottom: 40px;
+
+		@media #{$wds-breakpoint-m-down} {
+			margin-bottom: 20px;
+		}
 	}
 }
 
@@ -53,9 +158,6 @@
 	@include justify-content(flex-end);
 	background-size: cover;
 	background-position: center;
-	// fixme size shouldn't be fixed
-	height: 334px;
-	width: 334px;
 
 	&__overlay {
 		@include align-items(center);
@@ -68,12 +170,20 @@
 		color: $wds-color-white;
 		font-size: 30px;
 		font-weight: bold;
-		margin-bottom: 18px;
-		margin-top: 14px;
+		margin: 14px 0 18px;
+
+		@media #{$wds-breakpoint-m-down} {
+			font-size: 24px;
+			margin: 12px 0 8px;
+		}
 	}
 
 	.wds-button {
 		margin-bottom: 30px;
+
+		@media #{$wds-breakpoint-m-down} {
+			margin-bottom: 20px;
+		}
 	}
 }
 
@@ -82,16 +192,13 @@
 	@include justify-content(flex-end);
 	background-size: cover;
 	background-position: center;
-	height: 292px;
 	position: relative;
-	// fixme size shouldn't be fixed
-	width: 334px;
 
 	&__title {
 		color: $wds-color-white;
 		font-size: 16px;
 		font-weight: bold;
-		line-height: 22px;
+		line-height: 20px;
 		margin-bottom: 6px;
 		padding: 0 18px;
 	}
@@ -100,7 +207,7 @@
 		color: $wds-color-white;
 		font-size: 14px;
 		font-weight: bold;
-		line-height: 24px;
+		line-height: 20px;
 		margin-bottom: 13px;
 		opacity: 0.5;
 		padding-left: 18px;
@@ -132,7 +239,6 @@
 
 .mcf-card-wiki-articles {
 	background-color: $wds-color-white;
-	width: 334px;
 
 	&__header {
 		background-color: $color-community-header;
@@ -155,17 +261,28 @@
 			top: 0;
 			left: 0;
 		}
+
+		@media #{$wds-breakpoint-m-down} {
+			font-size: 14px;
+			padding: 12px 16px 16px;
+		}
 	}
 
 	&__header-text {
 		position: relative;
+		word-wrap: break-word;
 	}
 
 	&__list {
+		@include flexbox();
+		@include flex-direction(column);
+		height: 100%;
 		margin: 0 18px;
 	}
 
 	&__item {
+		@include flexbox();
+		@include flex(1);
 		border-bottom: 1px solid $wds-color-faint-gray;
 
 		&:last-child {
@@ -177,7 +294,6 @@
 		@include align-items(center);
 		@include flexbox();
 		color: $wds-color-black;
-		padding: 21px 0;
 		text-decoration: none;
 		width: 100%;
 
@@ -196,19 +312,28 @@
 		font-size: 18px;
 		font-weight: bold;
 		height: 36px;
+		line-height: 1;
 		width: 36px;
+
+		@media #{$wds-breakpoint-m-down} {
+			font-size: 14px;
+			height: 24px;
+			width: 24px;
+		}
 	}
 
 	&__title {
 		font-size: 14px;
 		margin-left: 12px;
+
+		@media #{$wds-breakpoint-m-down} {
+			font-size: 12px;
+		}
 	}
 }
 
 .mcf-card-related-wikis {
 	background-color: $wds-color-white;
-	height: 376px;
-	width: 334px;
 
 	&__header {
 		color: $wds-color-black;
@@ -216,19 +341,25 @@
 		font-size: 18px;
 		font-weight: bold;
 		padding: 16px;
-		position: relative;
+
+		@media #{$wds-breakpoint-m-down} {
+			font-size: 14px;
+			padding: 12px 16px 16px;
+		}
 	}
 
 	&__list {
+		@include flexbox();
+		@include flex-direction(column);
+		height: 100%;
 		margin: 0 16px;
 	}
 
 	&__item {
-		@include align-items(center);
+		@include align-items(stretch);
 		@include flexbox();
+		@include flex(1);
 		border-bottom: 1px solid $wds-color-faint-gray;
-		min-height: 70px;
-		min-width: 302px;
 
 		&:last-child {
 			border-bottom: 0;
@@ -239,12 +370,17 @@
 		@include align-items(center);
 		@include flexbox();
 		color: $wds-color-black;
-		padding: 18px 0;
 		text-decoration: none;
 		width: 100%;
 
 		&:hover {
 			text-decoration: none;
+		}
+	}
+
+	&__item-image {
+		@media #{$wds-breakpoint-m-down} {
+			max-height: 36px;
 		}
 	}
 
@@ -254,6 +390,10 @@
 		font-size: 16px;
 		font-weight: bold;
 		margin-left: 12px;
+
+		@media #{$wds-breakpoint-m-down} {
+			font-size: 14px;
+		}
 	}
 
 	&__subtitle {
@@ -261,13 +401,32 @@
 		font-size: 14px;
 		font-weight: normal;
 		margin-left: 12px;
+
+		@media #{$wds-breakpoint-m-down} {
+			font-size: 12px;
+		}
 	}
 }
 
 .mcf-card-discussions {
 	background-color: $wds-color-white;
-	height: 608px;
-	max-width: 334px;
+	height: $mcf-discussion-height-xl;
+	width: $mcf-card-width-xl;
+
+	@media #{$wds-breakpoint-xxl-up} {
+		height: $mcf-discussion-height-xxl;
+		width: $mcf-card-width-xxl;
+	}
+
+	@media #{$wds-breakpoint-l-only} {
+		height: $mcf-discussion-height-l;
+		width: $mcf-card-width-l;
+	}
+
+	@media #{$wds-breakpoint-m-down} {
+		height: $mcf-discussion-height-m;
+		width: $mcf-card-width-m;
+	}
 
 	&__header {
 		@include flexbox();
@@ -296,7 +455,7 @@
 	}
 
 	&__list {
-		@include scrollable-list(555px, $wds-color-white);
+		@include scrollable-list(100%, $wds-color-white);
 	}
 
 	&__item {
@@ -305,6 +464,10 @@
 		@include flex-direction(column);
 		border-bottom: 1px solid $wds-color-faint-gray;
 		margin: 0 16px;
+
+		&:last-child {
+			border-bottom: 0;
+		}
 
 		a {
 			color:  $wds-color-faint-gray;
@@ -317,6 +480,12 @@
 		@include align-items(center);
 		@include flexbox();
 		margin-top: 12px;
+
+		.wds-avatar {
+			height: 26px;
+			min-width: 26px;
+			width: 26px;
+		}
 	}
 
 	&__user-subtitle {
@@ -325,6 +494,10 @@
 		font-size: 14px;
 		margin-left: 6px;
 		opacity: 0.5;
+
+		@media #{$wds-breakpoint-m-down} {
+			font-size: 12px;
+		}
 	}
 
 	&__content {
@@ -332,17 +505,25 @@
 		font-size: 18px;
 		margin: 6px 0 10px;
 		word-wrap: break-word;
+
+		@media #{$wds-breakpoint-m-down} {
+			font-size: 14px;
+		}
 	}
 
 	&__meta {
 		@include justify-content(space-between);
 		@include flexbox();
+		font-size: 14px;
 		padding-bottom: 12px;
+
+		@media #{$wds-breakpoint-m-down} {
+			font-size: 12px;
+		}
 	}
 
 	&__in {
 		color: $wds-color-light-gray;
-		font-size: 14px;
 		font-weight: bold;
 	}
 

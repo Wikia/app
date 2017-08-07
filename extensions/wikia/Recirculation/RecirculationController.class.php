@@ -3,6 +3,7 @@
 use \Wikia\CommunityHeader\Sitename;
 
 class RecirculationController extends WikiaController {
+	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 	const ALLOWED_TYPES = ['popular', 'shares', 'recent_popular'];
 	const DEFAULT_TYPE = 'popular';
 
@@ -35,6 +36,7 @@ class RecirculationController extends WikiaController {
 					$postObjects[] = $post->jsonSerialize();
 				}
 
+				$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_PHP );
 				$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 				$this->response->setData( [
 					'title' => wfMessage( 'recirculation-discussion-title' )->plain(),
@@ -50,17 +52,18 @@ class RecirculationController extends WikiaController {
 	}
 
 	public function footer() {
-		global $wgCityId;
+		global $wgSitename;
 
-		$communityHeaderModel = new DesignSystemCommunityHeaderModel( $wgCityId );
+		$themeSettings = new ThemeSettings();
 		$this->response->setVal( 'communityHeaderBackground',
-			$communityHeaderModel->getBackgroundImageUrl() );
-		$this->response->setVal( 'sitename', new Sitename( $communityHeaderModel ) );
+			$themeSettings->getCommunityHeaderBackgroundUrl() );
+		$this->response->setVal( 'sitename', $wgSitename );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_PHP );
 	}
 
 	public function container( $params ) {
 		$containerId = $this->request->getVal( 'containerId' );
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_PHP );
 		$this->response->setVal( 'containerId', $containerId );
 	}
 }

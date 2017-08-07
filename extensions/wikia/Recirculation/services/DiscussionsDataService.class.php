@@ -116,7 +116,6 @@ class DiscussionsDataService {
 
 	private function buildPost( $rawPost, $index ) {
 		$meta = [];
-		$meta['authorAvatarUrl'] = $rawPost['createdBy']['avatarUrl'];
 		$meta['upvoteCount'] = $rawPost['upvoteCount'];
 		$meta['postCount'] = $rawPost['postCount'];
 		$meta['forumName'] = $rawPost['forumName'];

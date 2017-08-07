@@ -17,14 +17,9 @@ define('ext.wikia.recirculation.discussions', [
 				cityId: w.wgCityId
 			},
 			callback: function (response) {
-				var $WikiaArticleFooter = $('#WikiaArticleFooter'),
-					$response = $(response);
+				var $response = $(response);
 
-				if ($WikiaArticleFooter.length) {
-					$WikiaArticleFooter.before($response);
-				} else {
-					$('#WikiaArticleBottomAd').before($response);
-				}
+				$('.mcf-discussions-placeholder').replaceWith($response);
 
 				tracker.trackImpression('discussions');
 				$response.find('.discussion-timestamp').timeago();

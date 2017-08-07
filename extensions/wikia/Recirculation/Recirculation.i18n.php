@@ -17,6 +17,10 @@ $messages['en'] = array(
 	'recirculation-discussions-posts' => 'Posts',
 	'recirculation-discussions-latest-discussions' => 'Latest Discussions',
 	'recirculation-discussions-in' => 'in',
+	'recirculation-articles-more' => 'More $1',
+	'recirculation-explore' => 'Explore',
+	'recirculation-explore-wikis' => 'Explore Wikis',
+	'recirculation-explore-posts' => 'Explore posts',
 );
 
 $messages['qqq'] = array(
