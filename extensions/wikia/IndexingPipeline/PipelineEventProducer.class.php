@@ -3,6 +3,7 @@
 namespace Wikia\IndexingPipeline;
 
 use Title;
+use User;
 use Wikia\Logger\WikiaLogger;
 use Wikia\Rabbit\ConnectionBase;
 
