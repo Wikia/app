@@ -42,36 +42,37 @@ require([
 					}
 				}
 			},
-			{
-				id: 'LI_impactFooter',
-				viewModule: 'ext.wikia.recirculation.views.impactFooter',
-				options: {
-					max: 9,
-					widget: 'wikia-impactfooter',
-					source: 'fandom',
-					opts: {
-						resultType: 'cross-domain',
-						domainType: 'fandom.wikia.com'
-					}
-				}
-			},
-			{
-				id: 'LI_footer',
-				viewModule: 'ext.wikia.recirculation.views.footer',
-				options: {
-					max: 3,
-					widget: 'wikia-footer-wiki-rec',
-					source: 'wiki',
-					title: 'Discover New Wikis',
-					width: 332,
-					height: 187,
-					flush: true,
-					opts: {
-						resultType: 'subdomain',
-						domainType: 'fandom.wikia.com'
-					}
-				}
-			}
+			// TODO - remove old recirculation footers
+			// {
+			// 	id: 'LI_impactFooter',
+			// 	viewModule: 'ext.wikia.recirculation.views.impactFooter',
+			// 	options: {
+			// 		max: 9,
+			// 		widget: 'wikia-impactfooter',
+			// 		source: 'fandom',
+			// 		opts: {
+			// 			resultType: 'cross-domain',
+			// 			domainType: 'fandom.wikia.com'
+			// 		}
+			// 	}
+			// },
+			// {
+			// 	id: 'LI_footer',
+			// 	viewModule: 'ext.wikia.recirculation.views.footer',
+			// 	options: {
+			// 		max: 3,
+			// 		widget: 'wikia-footer-wiki-rec',
+			// 		source: 'wiki',
+			// 		title: 'Discover New Wikis',
+			// 		width: 332,
+			// 		height: 187,
+			// 		flush: true,
+			// 		opts: {
+			// 			resultType: 'subdomain',
+			// 			domainType: 'fandom.wikia.com'
+			// 		}
+			// 	}
+			// }
 		],
 		logGroup = 'ext.wikia.recirculation.experiments.mix',
 		// Each view holds an array of promises used to gather data for that view

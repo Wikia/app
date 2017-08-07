@@ -1,5 +1,7 @@
 <?php
 
+use \Wikia\CommunityHeader\Sitename;
+
 class RecirculationController extends WikiaController {
 	const ALLOWED_TYPES = ['popular', 'shares', 'recent_popular'];
 	const DEFAULT_TYPE = 'popular';
@@ -50,5 +52,15 @@ class RecirculationController extends WikiaController {
 	public function container( $params ) {
 		$containerId = $this->request->getVal( 'containerId' );
 		$this->response->setVal( 'containerId', $containerId );
+	}
+
+	public function footer() {
+		global $wgCityId;
+
+		$communityHeaderModel = new DesignSystemCommunityHeaderModel( $wgCityId );
+		$this->response->setVal( 'communityHeaderBackground',
+			$communityHeaderModel->getBackgroundImageUrl() );
+		$this->response->setVal( 'sitename', new Sitename( $communityHeaderModel ) );
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_PHP );
 	}
 }
