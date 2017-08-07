@@ -15,6 +15,16 @@ class RefreshCategoryCountsTask extends BaseTask {
 	}
 
 	/**
+	 * This task needs to be run a local wiki (i.e. where it was queued)
+	 */
+	public function queue() {
+		global $wgCityId;
+		$this->wikiId($wgCityId);
+
+		parent::queue();
+	}
+
+	/**
 	 * @param string[]|string $data title of category or array of category titles
 	 */
 	public function refreshCounts( $data ) {
