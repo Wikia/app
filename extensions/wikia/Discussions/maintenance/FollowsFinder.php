@@ -28,8 +28,7 @@ class FollowsFinder {
 
 				$follows[] = [
 					'follower_id' => $row->wl_user,
-					'mw_thread_id' => $this->threadNameToId[$row->wl_title],
-					'timestamp' => $row->wl_notificationtimestamp,
+					'mw_thread_id' => $this->threadNameToId[$row->wl_title]
 				];
 			} );
 	}
