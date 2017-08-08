@@ -134,7 +134,7 @@ class RecirculationHooks {
 		$metaData['language'] = $wgLanguageCode;
 		$isProduction = empty( $wgDevelEnvironment ) && empty( $wgStagingEnvironment );
 
-		if ( !$isProduction ) {
+		if ( !$isProduction || $title->inNamespace( NS_FILE ) ) {
 			$metaData['noIndex'] = 'true';
 		}
 
