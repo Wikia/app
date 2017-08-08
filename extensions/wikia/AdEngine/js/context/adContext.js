@@ -248,6 +248,11 @@ define('ext.wikia.adEngine.adContext', [
 
 		enableAdMixExperiment(context);
 
+		if (geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries)) {
+			context.opts.premiumAdLayoutRubiconFastlaneTagsEnabled = context.opts.premiumAdLayoutEnabled &&
+				geo.isProperGeo(instantGlobals.wgAdDriverPremiumAdLayoutRubiconFastlaneTagsCountries);
+		}
+
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
 		if (w.ads && w.ads.context) {
