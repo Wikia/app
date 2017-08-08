@@ -79,12 +79,6 @@ class ForumDumper {
 		NS_WIKIA_FORUM_BOARD_THREAD,
 	];
 
-	const COLUMNS_FOLLOWS = [
-		"follower_id",
-		"mw_thread_id",
-		"timestamp",
-	];
-
 	private $pages = [];
 	private $revisions = [];
 	private $votes = [];

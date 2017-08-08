@@ -96,7 +96,7 @@ class DumpForumData extends Maintenance {
 		foreach ( $follows as $data ) {
 			$insert = $this->createInsert(
 				'import_follows',
-				Discussions\ForumDumper::COLUMNS_FOLLOWS,
+				Discussions\FollowsFinder::COLUMNS_FOLLOWS,
 				$data
 			);
 			fwrite( $this->fh, $insert . "\n");
@@ -106,7 +106,7 @@ class DumpForumData extends Maintenance {
 	private function createInsert( $table, $cols, $data ) {
 		$db = wfGetDB( DB_SLAVE );
 
-		$insert = "INSERT INTO $table (site_id, " .
+		$insert = "INSERT INTO $table (`site_id`, " .
 		          implode( ",", array_map( function ( $c ) use ( $db ) {
 			          return 	$db->addIdentifierQuotes( $c );
 		          }, $cols ) ) .
