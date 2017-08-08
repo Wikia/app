@@ -4189,13 +4189,10 @@ class Title {
 	/**
 	 * Check if this is a new page
 	 *
-	 * Wikia change, add possibility to use master - used in ArticleComment;
-	 * Wikia change: @author: Marooned
-	 *
 	 * @return bool
 	 */
-	public function isNewPage( $flags = 0 ) {
-		$dbr = ($flags & self::GAID_FOR_UPDATE) ? wfGetDB( DB_MASTER ) : wfGetDB( DB_SLAVE );
+	public function isNewPage() {
+		$dbr = wfGetDB( DB_SLAVE );
 
 		return (bool)$dbr->selectField( 'page', 'page_is_new', $this->pageCond(), __METHOD__ );
 	}
