@@ -138,6 +138,7 @@ class WallNotificationsExternalController extends WikiaController {
 	 * @see WallNotificationEntity::loadDataFromRevIdOnWiki()
 	 */
 	public function getEntityData() {
+		// SUS-1879: Disable cache - this endpoint is only requested internally
 		$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
