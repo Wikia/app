@@ -1828,28 +1828,48 @@ class User implements JsonSerializable {
 
 		# Load the newtalk status if it is unloaded (mNewtalk=-1)
 		if( $this->mNewtalk === -1 ) {
-			$this->mNewtalk = false; # reset talk page status
+			$this->mNewtalk = (bool) WikiaDataAccess::cache(
+				$this->getNewTalkMemcKey(),
+				WikiaResponse::CACHE_LONG,
+				function() : int {
+					// WikiaDataAccess::cache assumes that there's a cache miss
+					// when we get either null or false from the caching layer - cast the result to an integer
 
-			# Check memcached separately for anons, who have no
-			# entire User object stored in there.
-			if( !$this->mId ) {
-				global $wgMemc;
-				$key = wfMemcKey( 'newtalk', 'ip', $this->getName() );
-				$newtalk = $wgMemc->get( $key );
-				if( strval( $newtalk ) !== '' ) {
-					$this->mNewtalk = (bool)$newtalk;
-				} else {
-					// Since we are caching this, make sure it is up to date by getting it
-					// from the master
-					$this->mNewtalk = $this->checkNewtalk( 'user_ip', $this->getName(), true );
-					$wgMemc->set( $key, (int)$this->mNewtalk, 1800 );
+					// Check memcached separately for anons, who have no
+					// entire User object stored in there.
+					if ( !$this->mId ) {
+						global $wgDisableAnonTalk;
+						if ( $wgDisableAnonTalk ) {
+							// Anon newtalk disabled by configuration.
+							$result = false;
+						} else {
+							$result = $this->checkNewtalk( 'user_ip', $this->getName() );
+						}
+					} else {
+						$result = $this->checkNewtalk( 'user_id', $this->mId );
+					}
+
+					return (int) $result;
 				}
-			} else {
-				$this->mNewtalk = $this->checkNewtalk( 'user_id', $this->mId );
-			}
+			);
 		}
 
 		return (bool)$this->mNewtalk;
+	}
+
+	/**
+	 * Wikia change
+	 * @see SUS-2571
+	 *
+	 * @return string
+	 */
+	private function getNewTalkMemcKey() : string {
+		if ( $this->isAnon() ) {
+			return wfMemcKey( 'newtalk', 'ip', $this->getName() );
+		}
+		else {
+			return wfMemcKey( 'newtalk', 'user', $this->getId() );
+		}
 	}
 
 	/**
@@ -1881,15 +1901,11 @@ class User implements JsonSerializable {
 	 * @see getNewtalk()
 	 * @param $field String 'user_ip' for anonymous users, 'user_id' otherwise
 	 * @param $id String|Int User's IP address for anonymous users, User ID otherwise
-	 * @param $fromMaster Bool true to fetch from the master, false for a slave
 	 * @return Bool True if the user has new messages
 	 */
-	protected function checkNewtalk( $field, $id, $fromMaster = false ) {
-		if ( $fromMaster ) {
-			$db = wfGetDB( DB_MASTER );
-		} else {
-			$db = wfGetDB( DB_SLAVE );
-		}
+	protected function checkNewtalk( $field, $id ) {
+		$db = wfGetDB( DB_SLAVE );
+
 		$ok = $db->selectField( 'user_newtalk', $field,
 			array( $field => $id ), __METHOD__ );
 		return $ok !== false;
@@ -1955,7 +1971,6 @@ class User implements JsonSerializable {
 			$field = 'user_id';
 			$id = $this->getId();
 		}
-		global $wgMemc;
 
 		if( $val ) {
 			$changed = $this->updateNewtalk( $field, $id );
@@ -1963,12 +1978,13 @@ class User implements JsonSerializable {
 			$changed = $this->deleteNewtalk( $field, $id );
 		}
 
-		if( $this->isAnon() ) {
-			// Anons have a separate memcached space, since
-			// user records aren't kept for them.
-			$key = wfMemcKey( 'newtalk', 'ip', $id );
-			$wgMemc->set( $key, $val ? 1 : 0, 1800 );
-		}
+		// Wikia change - start
+		// SUS-2571 - store the updated new talk state to avoid database queries
+		// cast the value to an integer to avoid false cache misses in WikiaDataAccess::cache
+		global $wgMemc;
+		$wgMemc->set( $this->getNewTalkMemcKey(), (int) $val, WikiaResponse::CACHE_LONG );
+		// Wikia change - end
+
 		if ( $changed ) {
 			$this->invalidateCache();
 		}
