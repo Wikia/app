@@ -54,7 +54,7 @@ function wfMainPageTag( Parser $parser ): bool {
  * @param Parser $parser The parent parser (a Parser object); more advanced extensions use this to obtain the contextual Title, parse wiki text, expand braces, register link relationships and dependencies, etc.
  * @return bool
  */
-function wfMainPageTag_rcs( $input, $args, $parser ): bool {
+function wfMainPageTag_rcs( $input, $args, $parser ): string {
 	global $wfMainPageTag_rcs_called, $wfMainPageTag_lcs_called, $wgMainPageTag_count;
 
 	if ( !$wfMainPageTag_lcs_called ) {
@@ -77,7 +77,7 @@ function wfMainPageTag_rcs( $input, $args, $parser ): bool {
  * @param array $parser The parent parser (a Parser object); more advanced extensions use this to obtain the contextual Title, parse wiki text, expand braces, register link relationships and dependencies, etc.
  * @return bool
  */
-function wfMainPageTag_lcs( $input, $args, $parser ): bool {
+function wfMainPageTag_lcs( $input, $args, $parser ): string {
 	global $wfMainPageTag_rcs_called, $wfMainPageTag_lcs_called, $wgMainPageTag_count;
 
 	$wfMainPageTag_lcs_called = true;
@@ -120,7 +120,7 @@ function wfMainPageTag_lcs( $input, $args, $parser ): bool {
  * Inserts the necessary HTML to end either left or right column
  * only if there was a column start tag parsed
  */
-function wfMainPageTag_ec( $input, $args, $parser ): bool {
+function wfMainPageTag_ec( $input, $args, $parser ): string {
 	global $wgMainPageTag_count;
 
 	$html = '';
