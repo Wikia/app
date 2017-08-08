@@ -94,6 +94,8 @@ define('ext.wikia.adEngine.adContext', [
 	function updateAdContextBidders(context) {
 		var hasFeaturedVideo = context.targeting.hasFeaturedVideo;
 
+		context.bidders.fastlane = geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlanePrebidCountries);
+
 		context.bidders.veles = geo.isProperGeo(instantGlobals.wgAdDriverVelesBidderCountries) &&
 			!hasFeaturedVideo;
 

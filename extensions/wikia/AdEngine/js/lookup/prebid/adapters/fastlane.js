@@ -3,10 +3,8 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.fastlane', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
-	'wikia.geo',
-	'wikia.instantGlobals',
 	'wikia.log'
-], function (adContext, slotsContext, adLogicZoneParams, geo, instantGlobals, log) {
+], function (adContext, slotsContext, adLogicZoneParams, log) {
 	'use strict';
 
 	var bidderName = 'fastlane',
@@ -20,84 +18,96 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.fastlane', [
 				TOP_LEADERBOARD: {
 					sizes: [[728, 90], [970, 250]],
 					targeting: {loc: 'top'},
+					position: 'atf',
 					siteId: 41686,
 					zoneId: 175094
 				},
 				TOP_RIGHT_BOXAD: {
-					sizes: [[300, 250], [300, 600], [300, 1050]],
+					sizes: [[300, 250], [300, 600]],
 					targeting: {loc: 'top'},
+					position: 'atf',
 					siteId: 41686,
 					zoneId: 175094
 				},
 				LEFT_SKYSCRAPER_2: {
-					sizes: [[120, 600], [160, 600], [300, 250], [300, 600], [300, 1050]],
+					sizes: [[160, 600], [300, 600], [300, 250]],
 					targeting: {loc: 'middle'},
+					position: 'btf',
 					siteId: 41686,
 					zoneId: 194452
 				},
 				LEFT_SKYSCRAPER_3: {
-					sizes: [[120, 600], [160, 600], [300, 250], [300, 600]],
+					sizes: [[160, 600], [300, 600], [300, 250]],
 					targeting: {loc: 'footer'},
+					position: 'btf',
 					siteId: 41686,
 					zoneId: 194452
 				},
 				INCONTENT_BOXAD_1: {
-					sizes: [[120, 600], [160, 600], [300, 250], [300, 600]],
+					sizes: [[160, 600], [300, 600], [300, 250]],
 					targeting: {loc: 'hivi'},
+					position: 'btf',
 					siteId: 83830,
 					zoneId: 395614
 				},
 				BOTTOM_LEADERBOARD: {
 					sizes: [[728, 90], [970, 250]],
 					targeting: {loc: 'footer'},
+					position: 'btf',
 					siteId: 41686,
 					zoneId: 194452
 				},
 				PREFOOTER_LEFT_BOXAD: {
-					sizes: [[300, 250], [336, 280]],
+					sizes: [[300, 250]],
 					targeting: {loc: 'footer'},
+					position: 'btf',
 					siteId: 41686,
 					zoneId: 194452
 				},
 				PREFOOTER_MIDDLE_BOXAD: {
 					sizes: [[300, 250]],
 					targeting: {loc: 'footer'},
+					position: 'btf',
 					siteId: 41686,
 					zoneId: 194452
 				},
 				PREFOOTER_RIGHT_BOXAD: {
 					sizes: [[300, 250]],
 					targeting: {loc: 'footer'},
+					position: 'btf',
 					siteId: 41686,
 					zoneId: 194452
 				}
 			},
 			mercury: {
+				MOBILE_TOP_LEADERBOARD: {
+					sizes: [[320, 50]],
+					position: 'atf',
+					siteId: 23565,
+					zoneId: 87671
+				},
 				MOBILE_IN_CONTENT: {
-					sizes: [[300, 50], [300, 250], [320, 50], [320, 480]],
+					sizes: [[300, 250], [320, 480]],
+					position: 'btf',
 					siteId: 23565,
 					zoneId: 87671
 				},
 				MOBILE_PREFOOTER: {
-					sizes: [[300, 50], [300, 250], [320, 50]],
-					siteId: 23565,
-					zoneId: 87671
-				},
-				MOBILE_TOP_LEADERBOARD: {
-					sizes: [[300, 50], [320, 50], [320, 480]],
+					sizes: [[300, 250], [320, 50]],
+					position: 'btf',
 					siteId: 23565,
 					zoneId: 87671
 				}
 			}
 		};
 
-	function getContextTargeting() {
-		return adContext.getContext().targeting;
+	function getAdContext() {
+		return adContext.getContext();
 	}
 
-	function getTargeting(slotName, skin, passback) {
+	function getTargeting(slotName, skin) {
 		var provider = skin === 'oasis' ? 'gpt' : 'mobile',
-			s1 = getContextTargeting().wikiIsTop1000 ? adLogicZoneParams.getName() : 'not a top1k wiki';
+			s1 = getAdContext().targeting.wikiIsTop1000 ? adLogicZoneParams.getName() : 'not a top1k wiki';
 
 		return {
 			pos: slotName,
@@ -105,36 +115,40 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.fastlane', [
 			s0: adLogicZoneParams.getSite(),
 			s1: s1,
 			s2: adLogicZoneParams.getPageType(),
-			lang: adLogicZoneParams.getLanguage(),
-			passback: passback
+			lang: adLogicZoneParams.getLanguage()
 		};
 	}
 
 	function isEnabled() {
-		return geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlanePrebidCountries);
+		return getAdContext().bidders.fastlane;
 	}
 
 	function prepareAdUnit(slotName, config, skin) {
-		var position = slotName.indexOf('TOP') !== -1 ? 'atf' : 'btf',
-			targeting = Object.assign({}, config.targeting, getTargeting(slotName, skin, 'fastlane')),
-			adUnit = {
-				code: slotName,
-				sizes: config.sizes,
-				bids: [
-					{
-						bidder: bidderName,
-						params: {
-							accountId: rubiconAccountId,
-							siteId: config.siteId,
-							zoneId: config.zoneId,
-							name: slotName,
-							position: position,
-							keywords: ['rp.fastlane'],
-							inventory: targeting
-						}
+		var targeting = getTargeting(slotName, skin),
+			adUnit;
+
+		Object.keys(config.targeting || {}).forEach(function (key) {
+			targeting[key] = config.targeting[key];
+		});
+			
+		adUnit = {
+			code: slotName,
+			sizes: config.sizes,
+			bids: [
+				{
+					bidder: bidderName,
+					params: {
+						accountId: rubiconAccountId,
+						siteId: config.siteId,
+						zoneId: config.zoneId,
+						name: slotName,
+						position: config.position,
+						keywords: ['rp.fastlane'],
+						inventory: targeting
 					}
-				]
-			};
+				}
+			]
+		};
 
 		log(['prepareAdUnit', adUnit], log.levels.debug, logGroup);
 		return adUnit;
@@ -154,8 +168,8 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.fastlane', [
 
 	return {
 		isEnabled: isEnabled,
-		getName: getName,
 		getAliases: getAliases,
+		getName: getName,
 		getSlots: getSlots,
 		prepareAdUnit: prepareAdUnit
 	};

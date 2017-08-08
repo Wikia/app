@@ -4,14 +4,14 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 	'ext.wikia.adEngine.lookup.prebid.adapters.appnexus',
 	'ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst',
 	'ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork',
+	'ext.wikia.adEngine.lookup.prebid.adapters.fastlane',
 	'ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',
 	'ext.wikia.adEngine.lookup.prebid.adapters.openx',
-	'ext.wikia.adEngine.lookup.prebid.adapters.fastlane',
 	'ext.wikia.adEngine.lookup.prebid.adapters.rubicon',
 	'ext.wikia.adEngine.lookup.prebid.adapters.wikia',
 	'ext.wikia.adEngine.lookup.prebid.adapters.veles',
 	'wikia.window'
-], function(aol, appnexus, appnexusAst, audienceNetwork, indexExchange, openx, fastlane, rubicon, wikia, veles, win) {
+], function(aol, appnexus, appnexusAst, audienceNetwork, fastlane, indexExchange, openx, rubicon, wikia, veles, win) {
 	'use strict';
 
 	var adapters = [
@@ -66,7 +66,7 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 	return {
 		getAdapters: getAdapters,
 		push: push,
-		setupCustomAdapters: setupCustomAdapters,
-		registerAliases: registerAliases
+		registerAliases: registerAliases,
+		setupCustomAdapters: setupCustomAdapters
 	};
 });
