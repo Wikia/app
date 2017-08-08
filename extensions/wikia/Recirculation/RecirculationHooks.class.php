@@ -111,7 +111,9 @@ class RecirculationHooks {
 				if ( !empty( $rawData ) ) {
 					try {
 						$decodedData = json_decode( $rawData, true );
-					} catch ( Exception $exception ) {}
+					} catch ( Exception $exception ) {
+						// It's fine, we'll return an empty array
+					}
 				}
 
 				return $decodedData;
