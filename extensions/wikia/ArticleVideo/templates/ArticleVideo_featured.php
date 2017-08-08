@@ -34,28 +34,41 @@
 
 <script>define = old;
 
+	require(['ext.wikia.adEngine.video.vastUrlBuilder'], function (vastUrlBuilder) {
+		var vastUrl = vastUrlBuilder.build(640/480, {
+			pos: 'FEATURED',
+			src: 'premium'
+		});
 
-	myPlayerID.setAttribute('data-account', 5519514651001);
-	myPlayerID.setAttribute('data-player', 'Bys4vXDLb');
-	myPlayerID.setAttribute('data-video-id', 5522176571001);
-	window.bc(document.getElementById("myPlayerID"));
-	myPlayer = videojs("myPlayerID");
+		myPlayerID.setAttribute('data-account', 5519514651001);
+		myPlayerID.setAttribute('data-player', 'Bys4vXDLb');
+		myPlayerID.setAttribute('data-video-id', 5522176571001);
+		window.bc(document.getElementById("myPlayerID"));
+		myPlayer = videojs("myPlayerID");
 
-	myPlayer.on('loadedmetadata',function(){
-		myPlayer.play();
+		myPlayer.on('loadedmetadata',function(){
+			myPlayer.play();
+		});
+
+		myPlayer.ima3.settings.serverUrl = vastUrl;
+		videojs('vjs_video_3_html5_api').ready(function() {
+			var myPlayer = this;
+
+
+			myPlayer.ima3({
+				requestMode: 'onplay',
+				debug: true
+			});
+
+			myPlayer.on('play', function () {
+				console.log('play')
+			});
+
+			myPlayer.on('pause', function () {
+				console.log('pause')
+			});
+		})
 	});
-
-	videojs('vjs_video_3_html5_api').ready(function() {
-		var myPlayer = this;
-
-		myPlayer.on('play', function () {
-			console.log('play')
-		});
-
-		myPlayer.on('pause', function () {
-			console.log('pause')
-		});
-	})
 
 </script>
 <style>
