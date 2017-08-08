@@ -21,9 +21,9 @@ describe('adaptersRegistry', function () {
             mocks.adapters.appnexus,
             mocks.adapters.appnexusAst,
             mocks.adapters.audienceNetwork,
+            mocks.adapters.fastlane,
             mocks.adapters.indexExchange,
             mocks.adapters.openx,
-            mocks.adapters.fastlane,
             mocks.adapters.rubicon,
             mocks.adapters.wikia,
             mocks.adapters.veles,
@@ -38,9 +38,9 @@ describe('adaptersRegistry', function () {
                 appnexus: new AdapterMock('appnexus', true),
                 appnexusAst: new AdapterMock('appnexusAst', true),
                 audienceNetwork: new AdapterMock('audienceNetwork', true),
+                fastlane: new AdapterMock('fastlane', true),
                 indexExchange: new AdapterMock('indexExchange', true),
                 openx: new AdapterMock('openx', true),
-                fastlane: new AdapterMock('fastlane', true),
                 rubicon: new AdapterMock('rubicon', true),
                 wikia: new AdapterMock('wikia', true),
                 veles: new AdapterMock('veles', true)
@@ -62,10 +62,10 @@ describe('adaptersRegistry', function () {
                 mocks.adapters.appnexus,
                 mocks.adapters.appnexusAst,
                 mocks.adapters.audienceNetwork,
+                mocks.adapters.fastlane,
                 mocks.adapters.indexExchange,
                 mocks.adapters.openx,
-                mocks.adapters.rubicon,
-                mocks.adapters.fastlane
+                mocks.adapters.rubicon
             ];
 
         expectedAdapters.forEach(function (adapter) {

@@ -1207,8 +1207,8 @@ $wgAdDriverEnableRubiconFastlane = true;
 $wgAdDriverRubiconFastlaneCountries = null;
 
 /**
- * @name $wgAdDriverRubiconFastlaneCountries
- * Enables RubiconFastlane Prebid implementation in these countries.
+ * @name $wgAdDriverRubiconFastlanePrebidCountries
+ * Enables RubiconFastlane Prebid implementation and DISABLES the old one in these countries.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverRubiconFastlanePrebidCountries = null;
