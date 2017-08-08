@@ -18,12 +18,12 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 				TOP_LEADERBOARD: {
 					sizes: [[728, 90], [970, 250]],
 					targeting: {loc: 'top'},
-					alternativeZoneId: 704672
+					palZoneId: 704672
 				},
 				TOP_RIGHT_BOXAD: {
 					sizes: [[300, 250], [300, 600], [300, 1050]],
 					targeting: {loc: 'top'},
-					alternativeZoneId: 704672
+					palZoneId: 704672
 				},
 				LEFT_SKYSCRAPER_2: {
 					sizes: [[120, 600], [160, 600], [300, 250], [300, 600], [300, 1050]],
@@ -36,12 +36,12 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 				INCONTENT_BOXAD_1: {
 					sizes: [[120, 600], [160, 600], [300, 250], [300, 600]],
 					targeting: {loc: 'hivi'},
-					alternativeZoneId: 704676
+					palZoneId: 704676
 				},
 				BOTTOM_LEADERBOARD: {
 					sizes: [[728, 90], [970, 250]],
 					targeting: {loc: 'footer'},
-					alternativeZoneId: 704674
+					palZoneId: 704674
 				},
 				PREFOOTER_LEFT_BOXAD: {
 					sizes: [[300, 250], [336, 280]],
@@ -137,13 +137,13 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 		win.rubicontag.cmd.push(function () {
 			var rubiconSlot;
 
-			if (context.opts.premiumAdLayoutRubiconFastlaneTagsEnabled && slot.alternativeZoneId) {
+			if (context.opts.premiumAdLayoutRubiconFastlaneTagsEnabled && slot.palZoneId) {
 				rubiconSlot = win.rubicontag.defineSlot({
 					id: slotName,
 					sizes: slot.sizes,
 					name: slotName,
 					siteId: 148804,
-					zoneId: slot.alternativeZoneId
+					zoneId: slot.palZoneId
 				});
 			} else {
 				rubiconSlot = win.rubicontag.defineSlot(slotName, slot.sizes, slotName);

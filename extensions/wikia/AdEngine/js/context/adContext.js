@@ -248,7 +248,8 @@ define('ext.wikia.adEngine.adContext', [
 
 		enableAdMixExperiment(context);
 
-		if (geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries)) {
+		if (geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) ||
+			geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlanePrebidCountries)) {
 			context.opts.premiumAdLayoutRubiconFastlaneTagsEnabled = context.opts.premiumAdLayoutEnabled &&
 				geo.isProperGeo(instantGlobals.wgAdDriverPremiumAdLayoutRubiconFastlaneTagsCountries);
 		}

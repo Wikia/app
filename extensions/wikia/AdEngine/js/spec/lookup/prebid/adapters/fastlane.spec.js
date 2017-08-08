@@ -8,7 +8,8 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.fastlane', function () {
 				return mocks.context;
 			}
 		},
-		context: {},
+		context: {
+		},
 		slotsContext: {
 			filterSlotMap: function (map) {
 				return map;
@@ -49,7 +50,8 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.fastlane', function () {
             },
             targeting: {
                 wikiIsTop1000: true
-            }
+            },
+			opts: {}
 		};
 	});
 
