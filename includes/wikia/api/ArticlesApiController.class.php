@@ -708,6 +708,7 @@ class ArticlesApiController extends WikiaApiController {
 						$collection[$id]['comments'] = ArticleCommentList::newFromTitle( $t )->getCountAllNested();
 					}
 
+
 					// add file data
 					$collection[$id] = array_merge( $collection[ $id ], $fileData );
 					$resultingCollectionIds [] = $id;
