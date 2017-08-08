@@ -138,7 +138,7 @@ class RecirculationHooks {
 			$metaData['noIndex'] = 'true';
 		}
 
-		if ( isset( $siteAttributeData ) ) {
+		if ( !empty( $siteAttributeData ) ) {
 			$metaData = array_merge( $siteAttributeData, $metaData );
 		}
 
