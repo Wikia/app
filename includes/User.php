@@ -1814,6 +1814,16 @@ class User implements JsonSerializable {
 	 * @return Bool True if the user has new messages
 	 */
 	public function getNewtalk() {
+		# Wikia change - begin
+		# leave early, don't check it for our varnish ip addresses
+		global $wgSquidServers, $wgSquidServersNoPurge;
+		if( in_array( $this->getName(), $wgSquidServers ) ||
+			in_array( $this->getName(), $wgSquidServersNoPurge )
+		) {
+			return false;
+		}
+		# Wikia change - end
+
 		$this->load();
 
 		# Load the newtalk status if it is unloaded (mNewtalk=-1)
@@ -1823,14 +1833,6 @@ class User implements JsonSerializable {
 			# Check memcached separately for anons, who have no
 			# entire User object stored in there.
 			if( !$this->mId ) {
-				# hack: don't check it for our varnish ip addresses
-				global $wgSquidServers, $wgSquidServersNoPurge;
-				if( in_array( $this->getName(), $wgSquidServers ) ||
-					in_array( $this->getName(), $wgSquidServersNoPurge )
-				) {
-					return $this->mNewtalk;
-				}
-
 				global $wgMemc;
 				$key = wfMemcKey( 'newtalk', 'ip', $this->getName() );
 				$newtalk = $wgMemc->get( $key );
