@@ -104,19 +104,18 @@ class RecirculationHooks {
 			function () {
 				global $wgCityId;
 
-				$decodedData = [];
 				$rawData = ( new SiteAttributeService() )
 					->getAttribute( $wgCityId, 'liftigniterMetadata' );
 
 				if ( !empty( $rawData ) ) {
-					try {
-						$decodedData = json_decode( $rawData, true );
-					} catch ( Exception $exception ) {
-						// It's fine, we'll return an empty array
+					$decodedData = json_decode( $rawData, true );
+
+					if ( !empty( $decodedData ) ) {
+						return $decodedData;
 					}
 				}
 
-				return $decodedData;
+				return [];
 			}
 		);
 	}
