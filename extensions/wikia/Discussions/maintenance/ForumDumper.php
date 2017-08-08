@@ -343,7 +343,7 @@ class ForumDumper {
 		$threadsNamesToIds = [];
 		foreach ( $this->getPages() as $id => $page ) {
 			if ( $page["namespace"] == NS_WIKIA_FORUM_BOARD_THREAD ) {
-				$threadsNamesToIds[$page["raw_title"]] = $page[$id];
+				$threadsNamesToIds[$page["raw_title"]] = $id;
 			}
 		}
 		return $threadsNamesToIds;
