@@ -68,14 +68,16 @@ describe('ext.wikia.adEngine.lookup.prebid.prebidHelper', function () {
 			],
 			adaptersRegistry: {
 				getAdapters: function() {}
-			}
+			},
+			win: {}
 		};
 
 	function getPrebidHelper() {
 		spyOn(mocks.adaptersRegistry, 'getAdapters').and.returnValue(mocks.adapters);
 
 		return modules['ext.wikia.adEngine.lookup.prebid.prebidHelper'](
-			mocks.adaptersRegistry
+			mocks.adaptersRegistry,
+			mocks.win
 		);
 	}
 

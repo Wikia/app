@@ -1,3 +1,4 @@
+/*global describe, expect, it, modules*/
 describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', function () {
 	'use strict';
 
@@ -12,6 +13,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', functio
 				mappedVerticalName: ''
 			}
 		},
+		log: function() {},
 		instantGlobals: {
 			dev: {
 				wgAdDriverAppNexusBidderPlacementsConfig: {
@@ -42,7 +44,8 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', functio
 					entertainment: '9412983',
 					gaming: '9412984',
 					lifestyle: '9412985',
-					other: '9412985'
+					other: '9412985',
+					recovery: '9412986'
 				}
 			}
 		}
@@ -90,14 +93,14 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', functio
 
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements'](
 			mocks.adContext,
-			mocks.instantGlobals[env]
+			mocks.instantGlobals[env],
+			mocks.log
 		);
 	}
 
-
 	testCases.forEach(function (testCase) {
-		it('expected placementId is returned for skin/vertical combination ', function () {
-			var appNexusPlacements = getModule(testCase.vertical, testCase.env),
+		it('expected placementId is returned for skin/vertical combination ' + testCase.vertical + ':' + testCase.env, function () {
+			var appNexusPlacements = getModule(testCase.vertical, testCase.env, false),
 				result = appNexusPlacements.getPlacement(testCase.skin);
 
 			expect(result).toEqual(testCase.expected);
