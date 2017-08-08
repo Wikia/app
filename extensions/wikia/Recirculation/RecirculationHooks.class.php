@@ -122,7 +122,7 @@ class RecirculationHooks {
 	}
 
 	private static function addLiftIgniterMetadata( OutputPage $outputPage ) {
-		global $wgLanguageCode;
+		global $wgDevelEnvironment, $wgLanguageCode, $wgStagingEnvironment;
 
 		$context = RequestContext::getMain();
 		$title = $context->getTitle();
