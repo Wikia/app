@@ -11,12 +11,9 @@ class RecirculationHooks {
 	 * @return bool
 	 */
 	static public function onGetRailModuleList( &$modules ) {
-		wfProfileIn( __METHOD__ );
-
 		// Check if we're on a page where we want to show a recirculation module.
 		// If we're not, stop right here.
 		if ( !static::isCorrectPageType() ) {
-			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
@@ -27,15 +24,17 @@ class RecirculationHooks {
 
 		$modules[$pos] = array( 'Recirculation', 'container', ['containerId' => 'recirculation-rail'] );
 
-		wfProfileOut( __METHOD__ );
-
 		return true;
 	}
 
 	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
 		JSMessages::enqueuePackage( 'Recirculation', JSMessages::EXTERNAL );
 		Wikia::addAssetsToOutput( 'recirculation_scss' );
-		self::addMainPageMetadata( $out );
+
+		if ( static::isCorrectPageType() ) {
+			self::addLiftIgniterMetadata( $out );
+		}
+
 		return true;
 	}
 
@@ -98,19 +97,47 @@ class RecirculationHooks {
 		}
 	}
 
-	private static function addMainPageMetadata( OutputPage $outputPage ) {
-		if ( F::app()->wg->Title->isMainPage() ) {
-			$promoDetails = WikiaDataAccess::cache(
-					wfMemcKey( "site-attribute-liftigniterMetadata" ),
-					3600, // one hour cache
-					function() {
-						global $wgCityId;
-						return ( new SiteAttributeService() )->getAttribute( $wgCityId, "liftigniterMetadata" );
-					} );
+	private static function getLiftIgniterMetadataFromSiteAttributeService() {
+		return WikiaDataAccess::cache(
+			wfMemcKey( 'site-attribute-liftigniterMetadata' ),
+			3600,
+			function () {
+				global $wgCityId;
 
-			if ( $promoDetails !== null ) {
-				$outputPage->addScript( "<script id=\"liftigniter-metadata\" type=\"application/json\">${promoDetails}</script>" );
+				$decodedData = [];
+				$rawData = ( new SiteAttributeService() )
+					->getAttribute( $wgCityId, 'liftigniterMetadata' );
+
+				if ( !empty( $rawData ) ) {
+					try {
+						$decodedData = json_decode( $rawData, true );
+					} catch ( Exception $exception ) {}
+				}
+
+				return $decodedData;
 			}
+		);
+	}
+
+	private static function addLiftIgniterMetadata( OutputPage $outputPage ) {
+		global $wgLanguageCode;
+
+		$context = RequestContext::getMain();
+		$title = $context->getTitle();
+		$metaData = [];
+
+		if ( $title->isMainPage() ) {
+			$siteAttributeData = self::getLiftIgniterMetadataFromSiteAttributeService();
 		}
+
+		$metaData['language'] = $wgLanguageCode;
+
+		if ( isset( $siteAttributeData ) ) {
+			$metaData = array_merge( $siteAttributeData, $metaData );
+		}
+
+		$metaDataJson = json_encode( $metaData );
+
+		$outputPage->addScript( "<script id=\"liftigniter-metadata\" type=\"application/json\">${metaDataJson}</script>" );
 	}
 }
