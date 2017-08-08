@@ -131,6 +131,11 @@ class RecirculationHooks {
 		}
 
 		$metaData['language'] = $wgLanguageCode;
+		$isProduction = empty( $wgDevelEnvironment ) && empty( $wgStagingEnvironment );
+
+		if ( !$isProduction ) {
+			$metaData['noIndex'] = 'true';
+		}
 
 		if ( isset( $siteAttributeData ) ) {
 			$metaData = array_merge( $siteAttributeData, $metaData );
@@ -138,6 +143,8 @@ class RecirculationHooks {
 
 		$metaDataJson = json_encode( $metaData );
 
-		$outputPage->addScript( "<script id=\"liftigniter-metadata\" type=\"application/json\">${metaDataJson}</script>" );
+		$outputPage->addScript(
+			"<script id=\"liftigniter-metadata\" type=\"application/json\">${metaDataJson}</script>"
+		);
 	}
 }
