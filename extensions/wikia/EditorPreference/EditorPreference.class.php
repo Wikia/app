@@ -117,8 +117,9 @@ class EditorPreference {
 	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
 		$vars['wgVisualEditorPreferred'] = (
 			self::getPrimaryEditor() === self::OPTION_EDITOR_VISUAL &&
-			!$out->getUser()->isBlockedFrom( $out->getTitle() )
+			!$out->getUser()->isBlockedFrom( $out->getTitle(), true )
 		);
+
 		return true;
 	}
 
@@ -171,13 +172,23 @@ class EditorPreference {
 	 * @return boolean
 	 */
 	public static function shouldShowVisualEditorLink( Skin $skin ): bool {
-		global $wgTitle, $wgEnableVisualEditorExt, $wgVisualEditorNamespaces, $wgVisualEditorSupportedSkins, $wgUser;
-		return in_array( $skin->getSkinName(), $wgVisualEditorSupportedSkins ) &&
-			!$wgUser->isBlockedFrom( $wgTitle ) &&
-			!$wgTitle->isRedirect() &&
-			$wgEnableVisualEditorExt &&
-			( is_array( $wgVisualEditorNamespaces ) ?
-				in_array( $wgTitle->getNamespace(), $wgVisualEditorNamespaces ) : false );
+		global $wgEnableVisualEditorExt, $wgVisualEditorNamespaces,
+			   $wgVisualEditorSupportedSkins;
+
+		if ( !$wgEnableVisualEditorExt ) {
+			return false;
+		}
+
+		if ( !in_array( $skin->getSkinName(), $wgVisualEditorSupportedSkins ) ) {
+			return false;
+		}
+
+		$title = $skin->getTitle();
+
+		return
+			$title->inNamespaces( $wgVisualEditorNamespaces ) &&
+			!$title->isRedirect() &&
+			!$skin->getUser()->isBlockedFrom( $title, true );
 	}
 
 	/**
