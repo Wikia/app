@@ -101,6 +101,7 @@ class ApiVisualEditor extends ApiBase {
 					$loggerParams['parsoidDurationMS'] = (int) $matches[1];
 					$loggerParams['parsoidRealstartDeltaMS'] = (int) round ( $matches[2] - ( $time_start * 1000 ) );
 					$loggerParams['parsoidStartDeltaMS'] = (int) round ( $matches[3] - ( $time_start * 1000 ) );
+					$loggerParams['parsoidUrl'] = $url;
 				}
 				\Wikia\Logger\WikiaLogger::instance()->info( 'ApiVisualEditor_requestParsoid', $loggerParams );
 			}
