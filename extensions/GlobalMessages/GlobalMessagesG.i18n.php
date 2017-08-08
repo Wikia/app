@@ -1530,6 +1530,8 @@ $messages['de'] = array(
 	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
 	'group-fandom-editor' => 'News and Stories Wordpress access',
 	'group-fandom-editor-member' => 'News and Stories Wordpress access',
+	'group-global-discussions-moderator' => 'Globaler Diskussions-Moderator',
+	'group-global-discussions-moderator-member' => 'Globaler Diskussions-Moderator',
 );
 
 $messages['de-formal'] = array(
@@ -1786,6 +1788,8 @@ $messages['es'] = array(
 	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
 	'group-fandom-editor' => 'News and Stories Wordpress access',
 	'group-fandom-editor-member' => 'News and Stories Wordpress access',
+	'group-global-discussions-moderator' => 'Moderador global de discusiones',
+	'group-global-discussions-moderator-member' => 'Moderador global de discusiones',
 );
 
 $messages['et'] = array(
@@ -2092,6 +2096,8 @@ $messages['fr'] = array(
 	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
 	'group-fandom-editor' => 'News and Stories Wordpress access',
 	'group-fandom-editor-member' => 'News and Stories Wordpress access',
+	'group-global-discussions-moderator' => 'Modérateur global de discussions',
+	'group-global-discussions-moderator-member' => 'Modérateur global de discussions',
 );
 
 $messages['frc'] = array(
@@ -3057,6 +3063,8 @@ $messages['it'] = array(
 	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
 	'group-fandom-editor' => 'News and Stories Wordpress access',
 	'group-fandom-editor-member' => 'News and Stories Wordpress access',
+	'group-global-discussions-moderator' => 'Moderatore globale di Discussioni',
+	'group-global-discussions-moderator-member' => 'Moderatore globale di Discussioni',
 );
 
 $messages['iu'] = array(
@@ -3172,6 +3180,8 @@ $messages['ja'] = array(
 	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
 	'group-fandom-editor' => 'News and Stories Wordpress access',
 	'group-fandom-editor-member' => 'News and Stories Wordpress access',
+	'group-global-discussions-moderator' => 'グローバル・ディスカッション・モデレーター',
+	'group-global-discussions-moderator-member' => 'グローバル・ディスカッション・モデレーター',
 );
 
 $messages['jam'] = array(
@@ -4825,6 +4835,8 @@ $messages['nl'] = array(
 	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
 	'group-fandom-editor' => 'News and Stories Wordpress access',
 	'group-fandom-editor-member' => 'News and Stories Wordpress access',
+	'group-global-discussions-moderator' => 'Global Discussions Moderator',
+	'group-global-discussions-moderator-member' => 'Global Discussions Moderator',
 );
 
 $messages['nl-informal'] = array(
@@ -5171,6 +5183,8 @@ $messages['pl'] = array(
 	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
 	'group-fandom-editor' => 'News and Stories Wordpress access',
 	'group-fandom-editor-member' => 'News and Stories Wordpress access',
+	'group-global-discussions-moderator' => 'Globalny moderator Dyskusji',
+	'group-global-discussions-moderator-member' => 'Globalny moderator Dyskusji',
 );
 
 $messages['pms'] = array(
@@ -5384,6 +5398,8 @@ $messages['pt'] = array(
 	'grouppage-voldev' => 'w:c:dev:Desenvolvedores_voluntários',
 	'group-fandom-editor' => 'News and Stories Wordpress access',
 	'group-fandom-editor-member' => 'News and Stories Wordpress access',
+	'group-global-discussions-moderator' => 'Moderador global de discussões',
+	'group-global-discussions-moderator-member' => 'Moderador global de discussões',
 );
 
 $messages['qu'] = array(
@@ -5631,6 +5647,8 @@ $messages['ru'] = array(
 	'grouppage-voldev' => 'w:c:dev:Разработчики_Волонтеры',
 	'group-fandom-editor' => 'News and Stories Wordpress access',
 	'group-fandom-editor-member' => 'News and Stories Wordpress access',
+	'group-global-discussions-moderator' => 'Модератор Обсуждений Фэндома',
+	'group-global-discussions-moderator-member' => 'Модератор Обсуждений Фэндома',
 );
 
 $messages['rue'] = array(
@@ -7397,6 +7415,8 @@ $messages['zh-hans'] = array(
 	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
 	'group-fandom-editor' => 'News and Stories Wordpress access',
 	'group-fandom-editor-member' => 'News and Stories Wordpress access',
+	'group-global-discussions-moderator' => '全网话题版主',
+	'group-global-discussions-moderator-member' => '全网话题版主',
 );
 
 $messages['zh-hant'] = array(
@@ -7472,6 +7492,8 @@ $messages['zh-hant'] = array(
 	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
 	'group-fandom-editor' => 'News and Stories Wordpress access',
 	'group-fandom-editor-member' => 'News and Stories Wordpress access',
+	'group-global-discussions-moderator' => '全站話題版主',
+	'group-global-discussions-moderator-member' => '全站話題版主',
 );
 
 $messages['zu'] = array(
