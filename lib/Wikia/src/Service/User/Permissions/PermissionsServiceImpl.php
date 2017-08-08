@@ -56,7 +56,7 @@ class PermissionsServiceImpl implements PermissionsService {
 	 * @param int $userId
 	 * @return string memcache key
 	 */
-	static public function getMemcKey( $userId ) {
+	static private function getGlobalMemcKey( int $userId ) : string {
 		return implode( ':', [ 'GLOBAL', __CLASS__, 'permissions-groups', $userId ] );
 	}
 
@@ -66,7 +66,7 @@ class PermissionsServiceImpl implements PermissionsService {
 	 * @param int $userId
 	 * @return string memcache key
 	 */
-	static public function getLocalMemcKey( int $userId ) : string {
+	static private function getLocalMemcKey( int $userId ) : string {
 		return wfMemcKey(__CLASS__, 'permissions-local-groups', $userId );
 	}
 
@@ -156,7 +156,7 @@ class PermissionsServiceImpl implements PermissionsService {
 		return $permissions;
 	}
 
-	private function loadLocalGroups( $userId ) {
+	private function loadLocalGroups( int $userId ) {
 		if ( !empty( $userId ) && !isset( $this->localExplicitUserGroups[ $userId ] ) ) {
 
 			$fname = __METHOD__;
@@ -192,7 +192,7 @@ class PermissionsServiceImpl implements PermissionsService {
 
 			$fname = __METHOD__;
 			$globalGroups = \WikiaDataAccess::cache(
-				self::getMemcKey( $userId ),
+				self::getGlobalMemcKey( $userId ),
 				\WikiaResponse::CACHE_LONG,
 				function() use ( $userId, $fname ) {
 					$dbr = self::getSharedDB( DB_MASTER );
@@ -443,7 +443,7 @@ class PermissionsServiceImpl implements PermissionsService {
 
 	public function invalidateCache( \User $user ) {
 		$this->invalidateGroupsAndPermissions( $user->getId() );
-		\WikiaDataAccess::cachePurge( self::getMemcKey( $user->getId() ) );
+		\WikiaDataAccess::cachePurge( self::getGlobalMemcKey( $user->getId() ) );
 		\WikiaDataAccess::cachePurge( self::getLocalMemcKey( $user->getId() ) );
 	}
 }
