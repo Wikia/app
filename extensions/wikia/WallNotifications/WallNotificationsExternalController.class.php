@@ -138,6 +138,7 @@ class WallNotificationsExternalController extends WikiaController {
 	 * @see WallNotificationEntity::loadDataFromRevIdOnWiki()
 	 */
 	public function getEntityData() {
+		$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
 		$revId = $this->getVal( 'revId' );
@@ -145,8 +146,6 @@ class WallNotificationsExternalController extends WikiaController {
 
 		$wn = new WallNotificationEntity();
 		if ( $wn->loadDataFromRevId( $revId, $useMasterDB ) ) {
-			$this->response->setCacheValidity( WikiaResponse::CACHE_SHORT );
-
 			$this->response->setData( [
 				'data' => $wn->data,
 				'parentTitleDbKey' => $wn->parentTitleDbKey,
