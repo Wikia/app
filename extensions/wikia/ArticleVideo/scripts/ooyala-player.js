@@ -133,6 +133,7 @@ define('ooyala-player', ['wikia.browserDetect'], function (browserDetect) {
 				useGoogleAdUI: true,
 				useGoogleCountdown: false,
 				vpaidMode: 'insecure',
+				iframeZIndex: 0,
 				onBeforeAdsManagerStart: function (IMAAdsManager) {
 					// mutes VAST ads from the very beginning
 					// FIXME with VPAID it causes volume controls to be in incorrect state
