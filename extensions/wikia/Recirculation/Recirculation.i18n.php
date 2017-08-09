@@ -52,7 +52,7 @@ $messages['de'] = array(
 
 $messages['es'] = array(
 	'recirculation-desc' => 'Maneja contenido en recirculación',
-	'recirculation-impact-footer-title' => 'Noticias de los fans',
+	'recirculation-impact-footer-title' => 'Feed para los fans',
 	'recirculation-impact-footer-featured-fandom-subtitle' => 'en: FANDOM',
 	'recirculation-impact-footer-trending-tag' => 'En Tendencia',
 	'recirculation-impact-footer-wiki-tag' => 'Wiki',
@@ -184,6 +184,28 @@ $messages['ru'] = array(
 	'recirculation-discussions-replies' => 'ответ(а/ов)',
 	'recirculation-discussions-posts' => 'сообщение(я/й)',
 	'recirculation-incontent-title' => 'Близкие по теме статьи',
+);
+
+$messages['xw-3616'] = array(
+	'recirculation-desc' => '處理迴圈內容',
+	'recirculation-impact-footer-title' => '粉絲回饋',
+	'recirculation-impact-footer-featured-fandom-subtitle' => '源自：FANDOM',
+	'recirculation-impact-footer-trending-tag' => '熱門瀏覽',
+	'recirculation-impact-footer-wiki-tag' => 'Wiki',
+	'recirculation-fandom-title' => '粉絲流行原創文章',
+	'recirculation-fandom-subtitle' => '推薦',
+	'recirculation-discussion-title' => '熱門討論',
+	'recirculation-discussion-link-text' => '查看全部',
+	'recirculation-discussions-new' => '開始一個新討論',
+	'recirculation-discussions-upvotes' => '個讚',
+	'recirculation-discussions-replies' => '個回復',
+	'recirculation-discussions-posts' => '篇文章',
+	'recirculation-discussions-latest-discussions' => '最新討論',
+	'recirculation-discussions-in' => '分類：',
+	'recirculation-articles-more' => '更多關於$1',
+	'recirculation-explore' => '探索',
+	'recirculation-explore-wikis' => '探索Wiki',
+	'recirculation-explore-posts' => '閱讀文章',
 );
 
 $messages['zh-hans'] = array(

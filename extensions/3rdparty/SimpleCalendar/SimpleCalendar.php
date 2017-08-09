@@ -37,7 +37,7 @@ function wfSetupSimpleCalendar( $parser ) {
  * @param Parser $parser
  * @return string
  */
-function wfRenderCalendar(&$parser) {
+function wfRenderCalendar( Parser $parser ) {
 	$parser->disableCache();
 	$argv = array();
 	foreach (func_get_args() as $arg) if (!is_object($arg)) {

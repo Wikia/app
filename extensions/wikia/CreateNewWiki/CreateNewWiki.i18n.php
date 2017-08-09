@@ -1775,7 +1775,7 @@ $messages['kn'] = array(
 );
 
 $messages['ko'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|위키 생성 마법사]]',
+	'createnewwiki-desc' => 'Wiki creation wizard',
 	'cnw-next' => '다음',
 	'cnw-back' => '이전',
 	'cnw-title' => '새 위키 만들기',
@@ -1790,7 +1790,7 @@ $messages['ko'] = array(
 	'cnw-desc-select-vertical' => '허브 분류 선택',
 	'cnw-desc-select-categories' => '추가 분류 선택',
 	'cnw-desc-select-one' => '선택해주세요',
-	'cnw-desc-all-ages' => '어린이들이 볼 수 있는 위키인가요?',
+	'cnw-desc-all-ages' => 'Is this community directed to children under the age of 13?',
 	'cnw-desc-lang' => '언어',
 	'cnw-desc-wiki-submit-error' => '분류를 선택해주세요.',
 	'cnw-theme-headline' => '테마 선택하기',
@@ -1822,10 +1822,46 @@ $messages['ko'] = array(
 	'autocreatewiki-empty-field' => '이 상자를 채워주세요.',
 	'autocreatewiki-empty-wikiname' => '위키 이름을 입력하셔야 합니다.',
 	'autocreatewiki-invalid-wikiname' => '위키 이름에는 $나 @와 같은 특수 문자가 포함될 수 없으며 공백이 없어야 합니다.',
-	'autocreatewiki-language-top' => '상위 $1 언어',
+	'autocreatewiki-language-top' => 'Supported languages',
 	'autocreatewiki-name-too-long' => '위키 이름이 너무 깁니다. 50자를 넘지 않는 범위 내에서 위키 이름을 입력해주세요.',
 	'autocreatewiki-name-too-short' => '위키 이름이 너무 짧습니다. 위키 이름에는 적어도 3글자 이상이 들어가야 합니다.',
 	'autocreatewiki-violate-policy' => '위키 이름에 위키아의 정책에 반하는 단어가 포함되어 있습니다.',
+	'cnw-next-create-wiki' => 'Create my wiki',
+	'cnw-name-wiki-language' => '',
+	'cnw-theme-loading-state' => 'Creating your wiki. You may change your theme during this time.',
+	'cnw-theme-show-wiki' => 'Show me my wiki',
+	'autocreatewiki-welcometalk-log' => 'Welcome Message',
+	'autocreatewiki-regex-error-comment' => 'used in wiki $1 (whole text: $2)',
+	'autocreatewiki-protect-reason' => 'Part of the official interface',
+	'autocreatewiki-welcometalk-wall-title' => 'Welcome!',
+	'autocreatewiki-welcometalk-wall' => "Hello, I'm a member of FANDOM's Community Support team. We're excited to have {{subst:SITENAME}} as part of the FANDOM community!
+
+It may seem like there’s a lot to do, but we’re here to help make getting started quick and easy. Here are some helpful tips and links to get your community going:
+
+*Check out [[Special:WikiFeatures|Wiki Features]] to turn on some special features including our popular community Chat.
+*Customize your community’s color and style by visiting the [[Special:ThemeDesigner|Theme Designer]].
+*Stop by [[w:c:community|Community Central]] to check out the [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]], and ask questions on our [[w:c:community:Special:Forum|community forum]].
+*Lastly, visit our [[Help:Contents|help pages]] to learn the ins and outs of using FANDOM, or visit [[w:c:community:Wikia_University|FANDOM University]] for quick how-to videos.
+
+Have fun!",
+	'autocreatewiki-welcometalk' => "==Welcome!==
+Hey there!
+
+We're excited to have $4 as part of the FANDOM community! There's still a lot to do; here are some helpful tips and links to get your wiki going:
+
+*Check out [[Special:WikiFeatures|Wiki Features]] to see which features you can enable on your wiki, including chat, achievements and much more.
+*Stop by [[w:c:community|Community Central]] to stay informed through our [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]], ask questions on our [[w:c:community:Special:Forum|community forum]], watch videos on [[w:c:community:Wikia_university|FANDOM University]], or chat live with fellow FANDOM community members.
+*Lastly, visit our [[Help:Contents|help pages]] to learn the ins and outs of using FANDOM.
+
+All of the above links are a great place to start exploring, and have fun!
+
+-- [[User:$2|$3]] <staff />",
+	'autocreatewiki-welcomebody-HTML' => '"<p>Hello $2,<br /><br />
+The wiki you created is now available at <a href="$1">$1</a>.  We hope to see you editing there soon!<br /><br />
+We have added some information and tips on your <a href="$5">user talk Page</a> to help you get started. If you have any questions, just reply to this e-mail or browse our help pages at <a href="http://help.wikia.com/">FANDOM Help</a>.<br /><br />
+Good luck with the project,<br /><br />
+<a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
+FANDOM Community Team<br /></p>',
 );
 
 $messages['krc'] = array(

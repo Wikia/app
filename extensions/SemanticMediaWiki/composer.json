@@ -1,5 +1,5 @@
 {
-	"name": "mediawiki/semantic-media-wiki",
+	"name": "wikia/semantic-media-wiki",
 	"type": "mediawiki-extension",
 	"description": "MediaWiki extension that lets you store and query structured data within wiki pages",
 	"keywords": [
@@ -56,6 +56,9 @@
 	},
 	"replace": {
 		"mediawiki/semantic-mediawiki": "*"
+	},
+	"provide": {
+		"mediawiki/semantic-media-wiki": "2.4.2.9"
 	},
 	"suggest": {
 		"mediawiki/semantic-result-formats": "Additional result formats for SMW queries",
