@@ -4,6 +4,8 @@ require([
 	'wikia.tracker',
 	'ooyala-player',
 	'wikia.cookies',
+	'wikia.geo',
+	'wikia.instantGlobals',
 	'wikia.articleVideo.videoFeedbackBox',
 	require.optional('ext.wikia.adEngine.adContext'),
 	require.optional('ext.wikia.adEngine.video.player.ooyala.ooyalaTracker'),
@@ -14,6 +16,8 @@ require([
 	tracker,
 	OoyalaPlayer,
 	cookies,
+	geo,
+	instantGlobals,
 	VideoFeedbackBox,
 	adContext,
 	playerTracker,
@@ -53,15 +57,21 @@ require([
 			videoTitle = videoData.title,
 			videoLabels = (videoData.labels || '').join(','),
 			videoFeedbackBox,
+			inAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries),
+			inNextVideoAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoNextVideoAutoplayCountries),
 			autoplayCookieName = 'featuredVideoAutoplay',
-			autoplay = cookies.get(autoplayCookieName) !== '0';
+			autoplay = cookies.get(autoplayCookieName) !== '0' && inAutoplayCountries;
 
 		function initVideo(onCreate) {
 			var playerParams = window.wgOoyalaParams,
 				vastUrl,
 				inlineSkinConfig = {
 					controlBar: {
-						autoplayCookieName: autoplayCookieName
+						autoplayCookieName: autoplayCookieName,
+						autoplayToggle: inAutoplayCountries
+					},
+					discoveryScreen: {
+						showCountDownTimerOnEndScreen: inNextVideoAutoplayCountries
 					}
 				};
 
