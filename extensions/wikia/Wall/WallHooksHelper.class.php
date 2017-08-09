@@ -92,6 +92,11 @@ class WallHooksHelper {
 			$showDeleted = ( $wallMessage->canViewDeletedMessage( $app->wg->User )
 				&& $app->wg->Request->getVal( 'show' ) == '1' );
 
+			// SUS-2576: set response code to HTTP 410 Gone for deleted wall messages and forum threads
+			if ( $wallMessage->isRemove() ) {
+				$app->wg->Out->setStatusCode( 410 );
+			}
+
 			if ( $isDeleted ) {
 				$app->wg->Out->setStatusCode( 404 );
 			}
