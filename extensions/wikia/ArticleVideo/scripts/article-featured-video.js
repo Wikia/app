@@ -62,24 +62,36 @@ require([
 			logGroup = 'FeaturedVideo';
 
 		function initVideo(onCreate) {
+			var notBlockingCallback = function () {
+					setupPlayer(onCreate, true);
+				},
+				blockingCallback = function () {
+					setupPlayer(onCreate, false);
+				};
 
 			log('initVideo', 'info', logGroup);
 
 			if (!context.opts.pageFairDetection) {
 				log('initVideo, pageFairDetection disabled', 'info', logGroup);
-				setupPlayer(onCreate, false);
+				setupPlayer(onCreate, autoplay);
 			} else {
-				window.addEventListener('pf.not_blocking', function () {
-					setupPlayer(onCreate, false);
-				});
+				//If pageFair does not respond, start player
+				setTimeout(function () {
+					if (!ooyalaVideoController) {
+						log('initVideo, pageFair did not respond under 2000ms, starting video', 'info', logGroup);
+						window.removeEventListener('pf.not_blocking', notBlockingCallback);
+						window.removeEventListener('pf.blocking', blockingCallback);
 
-				window.addEventListener('pf.blocking', function () {
-					setupPlayer(onCreate, true);
-				});
+						setupPlayer(onCreate, autoplay);
+					}
+				}, 2000);
+
+				window.addEventListener('pf.not_blocking', notBlockingCallback);
+				window.addEventListener('pf.blocking', blockingCallback);
 			}
 		}
 
-		function setupPlayer(onCreate, detectionStatus) {
+		function setupPlayer(onCreate, autoplay) {
 			var playerParams = window.wgOoyalaParams,
 				vastUrl,
 				inlineSkinConfig = {
@@ -88,7 +100,7 @@ require([
 					}
 				};
 
-			log('setupPlayer, autoplay: ' + !detectionStatus, 'info', logGroup);
+			log('setupPlayer, autoplay: ' + autoplay, 'info', logGroup);
 
 			if (vastUrlBuilder && context && context.opts.showAds) {
 				vastUrl = vastUrlBuilder.build(640 / 480, {
@@ -108,7 +120,7 @@ require([
 				playerParams,
 				videoId,
 				onCreate,
-				!detectionStatus,
+				autoplay,
 				vastUrl,
 				inlineSkinConfig
 			);
