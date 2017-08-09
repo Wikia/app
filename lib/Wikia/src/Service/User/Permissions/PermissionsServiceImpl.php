@@ -310,8 +310,7 @@ class PermissionsServiceImpl implements PermissionsService {
 			}
 		}
 		finally {
-			$this->invalidateCache( $userToChange );
-			$userToChange->invalidateCache();
+			$userToChange->invalidateCache(); // it calls $this->invalidateCache( $userToChange ); internally
 		}
 
 		return $result;
@@ -367,8 +366,7 @@ class PermissionsServiceImpl implements PermissionsService {
 				}
 			}
 		} finally {
-			$this->invalidateCache( $userToChange );
-			$userToChange->invalidateCache();
+			$userToChange->invalidateCache(); // it calls $this->invalidateCache( $userToChange );
 		}
 		return $result;
 	}
