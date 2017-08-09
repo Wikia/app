@@ -455,6 +455,11 @@ class PermissionsServiceImpl implements PermissionsService {
 		return $groups;
 	}
 
+	/**
+	 * This method is public and is called by User::invalidateCache.
+	 *
+	 * @param \User $user
+	 */
 	public function invalidateCache( \User $user ) {
 		$this->invalidateGroupsAndPermissions( $user->getId() );
 		\WikiaDataAccess::cachePurge( self::getGlobalMemcKey( $user->getId() ) );
