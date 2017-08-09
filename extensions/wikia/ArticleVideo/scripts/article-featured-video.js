@@ -63,7 +63,7 @@ require([
 			autoplayCookieName = 'featuredVideoAutoplay',
 			autoplayEnabled = cookies.get(autoplayCookieName) !== '0' && inAutoplayCountries,
 			autoplay = autoplayEnabled && !document.hidden,
-			playerIsAfterInitialPlay = false;
+			initialPlayTriggered = false;
 
 		function initVideo(onCreate) {
 			var playerParams = window.wgOoyalaParams,
@@ -236,7 +236,7 @@ require([
 			}
 
 			player.mb.subscribe(window.OO.EVENTS.INITIAL_PLAY, 'featured-video', function () {
-				playerIsAfterInitialPlay = true;
+				initialPlayTriggered = true;
 
 				track({
 					action: tracker.ACTIONS.PLAY_VIDEO,
