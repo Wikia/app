@@ -104,7 +104,7 @@ require([
 		}
 
 		function handleTabChange() {
-			if (!document.hidden && !playerIsAfterInitialPlay && autoplayEnabled) {
+			if (!document.hidden && !initialPlayTriggered && autoplayEnabled) {
 				ooyalaVideoController.player.play();
 			}
 		}
