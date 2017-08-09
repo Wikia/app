@@ -76,23 +76,28 @@ require([
 
 			log('initVideo', 'info', logGroup);
 
-			if (!context.opts.pageFairDetection) {
-				log('initVideo, pageFairDetection disabled', 'info', logGroup);
+			if (!autoplay) {
+				log('initVideo, autoplay disabled', 'info', logGroup);
 				setupPlayer(onCreate, autoplay);
 			} else {
-				//If pageFair does not respond, start player
-				setTimeout(function () {
-					if (!ooyalaVideoController) {
-						log('initVideo, pageFair did not respond under 2000ms, starting video', 'info', logGroup);
-						window.removeEventListener('pf.not_blocking', adNotBlockedCallback);
-						window.removeEventListener('pf.blocking', adBlockedCallback);
+				if (!context.opts.pageFairDetection) {
+					log('initVideo, pageFairDetection disabled', 'info', logGroup);
+					setupPlayer(onCreate, autoplay);
+				} else {
+					//If pageFair does not respond, start player
+					setTimeout(function () {
+						if (!ooyalaVideoController) {
+							log('initVideo, pageFair did not respond under 2000ms, starting video', 'info', logGroup);
+							window.removeEventListener('pf.not_blocking', adNotBlockedCallback);
+							window.removeEventListener('pf.blocking', adBlockedCallback);
 
-						setupPlayer(onCreate, autoplay);
-					}
-				}, 2000);
+							setupPlayer(onCreate, autoplay);
+						}
+					}, 2000);
 
-				window.addEventListener('pf.not_blocking', adNotBlockedCallback);
-				window.addEventListener('pf.blocking', adBlockedCallback);
+					window.addEventListener('pf.not_blocking', adNotBlockedCallback);
+					window.addEventListener('pf.blocking', adBlockedCallback);
+				}
 			}
 		}
 
