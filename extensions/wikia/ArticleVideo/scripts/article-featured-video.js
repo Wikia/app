@@ -55,7 +55,7 @@ require([
 			videoId = videoData.videoId,
 			videoTitle = videoData.title,
 			videoLabels = (videoData.labels || '').join(','),
-			recommendLabel = videoData.recommendedLabel,
+			recommendedLabel = videoData.recommendedLabel,
 			videoFeedbackBox,
 			inAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries),
 			inNextVideoAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoNextVideoAutoplayCountries),
@@ -66,9 +66,7 @@ require([
 			recommendedVideoDepth = 0;
 
 		function initVideo(onCreate) {
-			var playerParams = window.wgOoyalaParams,
-				vastUrl,
-				inlineSkinConfig = {
+			var inlineSkinConfig = {
 					controlBar: {
 						autoplayCookieName: autoplayCookieName,
 						autoplayToggle: inAutoplayCountries
@@ -76,10 +74,18 @@ require([
 					discoveryScreen: {
 						showCountDownTimerOnEndScreen: inNextVideoAutoplayCountries
 					}
+				},
+				options = {
+					pcode: window.wgOoyalaParams.ooyalaPCode,
+					playerBrandingId: window.wgOoyalaParams.ooyalaPlayerBrandingId,
+					videoId: videoId,
+					autoplay: autoplayOnLoad,
+					inlineSkinConfig: inlineSkinConfig,
+					recommendedLabel: recommendedLabel
 				};
 
 			if (vastUrlBuilder && adContext && adContext.getContext().opts.showAds) {
-				vastUrl = vastUrlBuilder.build(640/480, {
+				options.vastUrl = vastUrlBuilder.build(640/480, {
 					pos: 'FEATURED',
 					src: 'premium'
 				});
@@ -91,16 +97,7 @@ require([
 				playerTracker.track(playerTrackerParams, 'init');
 			}
 
-			ooyalaVideoController = OoyalaPlayer.initHTML5Player(
-				ooyalaVideoElementId,
-				playerParams,
-				videoId,
-				onCreate,
-				autoplayOnLoad,
-				vastUrl,
-				inlineSkinConfig,
-				recommendLabel
-			);
+			ooyalaVideoController = OoyalaPlayer.initHTML5Player(ooyalaVideoElementId, options, onCreate);
 
 			document.addEventListener('visibilitychange', handleTabChange);
 		}
