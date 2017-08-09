@@ -48,6 +48,7 @@ class ArticleVideoHooks {
 
 	public static function onInstantGlobalsGetVariables( array &$vars ): bool {
 		$vars[] = 'wgArticleVideoAutoplayCountries';
+		$vars[] = 'wgArticleVideoNextVideoAutoplayCountries';
 
 		return true;
 	}
