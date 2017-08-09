@@ -7,6 +7,7 @@ require([
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.articleVideo.videoFeedbackBox',
+	'wikia.log',
 	require.optional('ext.wikia.adEngine.adContext'),
 	require.optional('ext.wikia.adEngine.video.player.ooyala.ooyalaTracker'),
 	require.optional('ext.wikia.adEngine.video.vastUrlBuilder')
@@ -19,6 +20,7 @@ require([
 	geo,
 	instantGlobals,
 	VideoFeedbackBox,
+	log,
 	adContext,
 	playerTracker,
 	vastUrlBuilder
@@ -60,9 +62,46 @@ require([
 			inAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries),
 			inNextVideoAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoNextVideoAutoplayCountries),
 			autoplayCookieName = 'featuredVideoAutoplay',
-			autoplay = cookies.get(autoplayCookieName) !== '0' && inAutoplayCountries;
+			autoplay = cookies.get(autoplayCookieName) !== '0' && inAutoplayCountries,
+			context = adContext && adContext.getContext(),
+			logGroup = 'FeaturedVideo';
 
 		function initVideo(onCreate) {
+			var adNotBlockedCallback = function () {
+					setupPlayer(onCreate, true);
+				},
+				adBlockedCallback = function () {
+					setupPlayer(onCreate, false);
+				};
+
+			log('initVideo', 'info', logGroup);
+
+			if (!autoplay) {
+				log('initVideo, autoplay disabled', 'info', logGroup);
+				setupPlayer(onCreate, autoplay);
+			} else {
+				if (!context.opts.pageFairDetection) {
+					log('initVideo, pageFairDetection disabled', 'info', logGroup);
+					setupPlayer(onCreate, autoplay);
+				} else {
+					//If pageFair does not respond, start player
+					setTimeout(function () {
+						if (!ooyalaVideoController) {
+							log('initVideo, pageFair did not respond under 2000ms, starting video', 'info', logGroup);
+							window.removeEventListener('pf.not_blocking', adNotBlockedCallback);
+							window.removeEventListener('pf.blocking', adBlockedCallback);
+
+							setupPlayer(onCreate, autoplay);
+						}
+					}, 2000);
+
+					window.addEventListener('pf.not_blocking', adNotBlockedCallback);
+					window.addEventListener('pf.blocking', adBlockedCallback);
+				}
+			}
+		}
+
+		function setupPlayer(onCreate, autoplay) {
 			var playerParams = window.wgOoyalaParams,
 				vastUrl,
 				inlineSkinConfig = {
@@ -75,7 +114,9 @@ require([
 					}
 				};
 
-			if (vastUrlBuilder && adContext && adContext.getContext().opts.showAds) {
+			log('setupPlayer, autoplay: ' + autoplay, 'info', logGroup);
+
+			if (vastUrlBuilder && context && context.opts.showAds) {
 				vastUrl = vastUrlBuilder.build(640/480, {
 					pos: 'FEATURED',
 					src: 'premium'
