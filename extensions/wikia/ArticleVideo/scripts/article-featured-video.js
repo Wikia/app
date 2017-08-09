@@ -60,7 +60,7 @@ require([
 			videoFeedbackBox,
 			autoplayCookieName = 'featuredVideoAutoplay',
 			autoplayEnabled = cookies.get(autoplayCookieName) !== '0' &&
-				geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries);
+				geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries),
 			autoplay = autoplayEnabled && !document.hidden,
 			playerIsAfterInitialPlay = false;
 
