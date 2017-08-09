@@ -58,9 +58,10 @@ require([
 			videoTitle = videoData.title,
 			videoLabels = (videoData.labels || '').join(','),
 			videoFeedbackBox,
+			inAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries),
+			inNextVideoAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoNextVideoAutoplayCountries),
 			autoplayCookieName = 'featuredVideoAutoplay',
-			autoplayEnabled = cookies.get(autoplayCookieName) !== '0' &&
-				geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries),
+			autoplayEnabled = cookies.get(autoplayCookieName) !== '0' && inAutoplayCountries,
 			autoplay = autoplayEnabled && !document.hidden,
 			playerIsAfterInitialPlay = false;
 
@@ -70,6 +71,9 @@ require([
 				inlineSkinConfig = {
 					controlBar: {
 						autoplayCookieName: autoplayCookieName
+					},
+					discoveryScreen: {
+						showCountDownTimerOnEndScreen: inNextVideoAutoplayCountries
 					}
 				};
 
