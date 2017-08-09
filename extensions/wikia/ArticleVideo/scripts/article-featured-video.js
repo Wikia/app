@@ -60,9 +60,8 @@ require([
 			inAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries),
 			inNextVideoAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoNextVideoAutoplayCountries),
 			autoplayCookieName = 'featuredVideoAutoplay',
-			autoplayEnabled = cookies.get(autoplayCookieName) !== '0' &&
-				inAutoplayCountries,
-			autoplay = autoplayEnabled && !document.hidden,
+			willAutoplay = cookies.get(autoplayCookieName) !== '0' && inAutoplayCountries,
+			autoplayOnLoad = willAutoplay && !document.hidden,
 			initialPlayTriggered = false;
 
 		function initVideo(onCreate) {
@@ -96,7 +95,7 @@ require([
 				playerParams,
 				videoId,
 				onCreate,
-				autoplay,
+				autoplayOnLoad,
 				vastUrl,
 				inlineSkinConfig
 			);
@@ -105,7 +104,7 @@ require([
 		}
 
 		function handleTabChange() {
-			if (!document.hidden && !initialPlayTriggered && autoplayEnabled) {
+			if (!document.hidden && !initialPlayTriggered && willAutoplay) {
 				ooyalaVideoController.player.play();
 			}
 		}
@@ -227,7 +226,7 @@ require([
 		window.guaSetCustomDimension(34, videoId);
 		window.guaSetCustomDimension(35, videoTitle);
 		window.guaSetCustomDimension(36, videoLabels);
-		window.guaSetCustomDimension(37, autoplay ? 'Yes' : 'No');
+		window.guaSetCustomDimension(37, willAutoplay ? 'Yes' : 'No');
 
 		initVideo(function (player) {
 			$video.addClass('ready-to-play');
