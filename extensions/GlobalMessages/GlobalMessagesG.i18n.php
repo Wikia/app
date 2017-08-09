@@ -2960,6 +2960,83 @@ $messages['io'] = array(
 	'grouppage-bureaucrat' => '{{ns:project}}:Burokrati',
 );
 
+$messages['iris-4622'] = array(
+	'go' => '進入',
+	'gotaccount' => '已經擁有帳號？$1。',
+	'gotaccountlink' => '登入',
+	'googlesearch' => '<form method="get" action="//www.google.com/search" id="googlesearch">
+	<input type="hidden" name="domains" value="{{SERVER}}" />
+	<input type="hidden" name="num" value="50" />
+	<input type="hidden" name="ie" value="$2" />
+	<input type="hidden" name="oe" value="$2" />
+
+	<input type="text" name="q" size="31" maxlength="255" value="$1" />
+	<input type="submit" name="btnG" value="$3" />
+  <div>
+	<input type="radio" name="sitesearch" id="gwiki" value="{{SERVER}}" checked="checked" /><label for="gwiki">{{SITENAME}}</label>
+	<input type="radio" name="sitesearch" id="gWWW" value="" /><label for="gWWW">WWW</label>
+  </div>
+</form>',
+	'guesstimezone' => '從瀏覽器填寫',
+	'gender-unknown' => '不指定',
+	'gender-male' => '男',
+	'gender-female' => '女',
+	'group' => '群組：',
+	'group-user' => '用戶',
+	'group-autoconfirmed' => '自動確認用戶',
+	'group-bot' => '機器人',
+	'group-sysop' => '管理員',
+	'group-bureaucrat' => '行政員',
+	'group-suppress' => '監督員',
+	'group-all' => '（全部）',
+	'group-user-member' => '{{GENDER:$1|用戶}}',
+	'group-autoconfirmed-member' => '自動確認用戶',
+	'group-bot-member' => '機器人',
+	'group-sysop-member' => '{{GENDER:$1|管理員}}',
+	'group-bureaucrat-member' => '行政員',
+	'group-suppress-member' => '監督員',
+	'grouppage-user' => '{{ns:project}}:用戶',
+	'grouppage-autoconfirmed' => '{{ns:project}}:自動確認用戶',
+	'grouppage-bot' => 'Help:機器人',
+	'grouppage-sysop' => '{{ns:project}}:管理員',
+	'grouppage-bureaucrat' => '{{ns:project}}:行政員',
+	'grouppage-suppress' => '{{ns:project}}:監督員',
+	'group-autoconfirmed.css' => '/* 這裡的CSS只會影響自動確認的用戶 */',
+	'group-bot.css' => '/* 這裡的CSS只會影響機器人帳號 */',
+	'group-sysop.css' => '/* 這裡的CSS只會影響管理員 */',
+	'group-bureaucrat.css' => '/* 這裡的CSS只會影響行政員 */',
+	'group-autoconfirmed.js' => '/* 這裡所有的JavaScript只對自動確認用戶載入 */',
+	'group-bot.js' => '/* 這裡所有的JavaScript只對機器人帳號載入 */',
+	'group-sysop.js' => '/* 這裡所有的JavaScript只對管理員載入 */',
+	'group-bureaucrat.js' => '/* 這裡所有的JavaScript只對行政員載入 */',
+	'group-vstf' => 'VSTF',
+	'group-vstf-member' => 'VSTF',
+	'grouppage-vstf' => 'w:c:zh.community:Help:反破壞小組',
+	'group-helper' => 'FANDOM助手',
+	'group-helper-member' => 'FANDOM助手',
+	'grouppage-helper' => 'Help:Volunteers and Helpers',
+	'group-staff' => 'FANDOM工作人員',
+	'group-staff-member' => 'FANDOM工作人員',
+	'grouppage-staff' => 'w:c:zh.community:Community_Central:Staff',
+	'group-util' => 'FANDOM Utilities',
+	'group-util-member' => 'FANDOM Utilities',
+	'grouppage-util' => 'w:c:zh.community:Community_Central:Staff',
+	'group-reviewer' => '圖像審核員',
+	'group-reviewer-member' => '圖像審核員',
+	'grouppage-reviewer' => 'w:c:zh.community:Help:用戶權限',
+	'group-vanguard' => '先鋒',
+	'group-vanguard-member' => '先鋒',
+	'group-voldev' => '志願開發者',
+	'group-voldev-member' => '志願開發者',
+	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
+	'group-content-moderator' => '內容版主',
+	'group-content-moderator-member' => '內容版主',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
+	'group-global-discussions-moderator' => '全站話題版主',
+	'group-global-discussions-moderator-member' => '全站話題版主',
+);
+
 $messages['is'] = array(
 	'go' => 'Áfram',
 	'gotaccount' => "Nú þegar með notandanafn? '''$1'''.",
