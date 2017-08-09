@@ -68,7 +68,8 @@ require([
 				vastUrl,
 				inlineSkinConfig = {
 					controlBar: {
-						autoplayCookieName: autoplayCookieName
+						autoplayCookieName: autoplayCookieName,
+						autoplayToggle: inAutoplayCountries
 					},
 					discoveryScreen: {
 						showCountDownTimerOnEndScreen: inNextVideoAutoplayCountries
