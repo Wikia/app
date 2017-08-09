@@ -207,7 +207,7 @@ class LocalRepo extends FileRepo {
 				],
 				__METHOD__  //Function name
 			);
-		} catch ( DBError $e ) {
+		} catch ( DBConnectionError $e ) {
 			// gracefully handle "Unknown database 'somedbname' errors - SUS-2359
 			$id = 0;
 		}
