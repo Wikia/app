@@ -56,6 +56,7 @@ require([
 			videoId = videoData.videoId,
 			videoTitle = videoData.title,
 			videoLabels = (videoData.labels || '').join(','),
+			recommendLabel = videoData.recommendedLabel,
 			videoFeedbackBox,
 			inAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries),
 			inNextVideoAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoNextVideoAutoplayCountries),
@@ -97,7 +98,8 @@ require([
 				onCreate,
 				autoplayOnLoad,
 				vastUrl,
-				inlineSkinConfig
+				inlineSkinConfig,
+				recommendLabel
 			);
 
 			document.addEventListener('visibilitychange', handleTabChange);
