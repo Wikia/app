@@ -156,15 +156,23 @@ class PermissionsServiceImpl implements PermissionsService {
 		return $permissions;
 	}
 
-	private function loadLocalGroups( int $userId ) {
+	/**
+	 * This method uses a slave database node to load local user groups.
+	 * Call this method with $fromMaster flag set to update the memcache entry shortly after the groups list is updated.
+	 * @see SUS-2564
+	 *
+	 * @param int $userId
+	 * @param bool $fromMaster
+	 */
+	private function loadLocalGroups( int $userId, $fromMaster = false ) {
 		if ( !empty( $userId ) && !isset( $this->localExplicitUserGroups[ $userId ] ) ) {
 
 			$fname = __METHOD__;
 			$userLocalGroups = \WikiaDataAccess::cache(
 				self::getLocalMemcKey( $userId ),
 				\WikiaResponse::CACHE_LONG,
-				function() use ( $userId, $fname ) {
-					$dbr = wfGetDB( DB_MASTER );
+				function() use ( $userId, $fname, $fromMaster ) {
+					$dbr = wfGetDB( $fromMaster ? DB_MASTER : DB_SLAVE  );
 					return $dbr->selectFieldValues(
 						'user_groups',
 						'ug_group',
@@ -187,15 +195,23 @@ class PermissionsServiceImpl implements PermissionsService {
 		return wfGetDB( $db, [], $wgExternalSharedDB );
 	}
 
-	private function loadGlobalUserGroups( $userId ) {
+	/**
+	 * This method uses a slave database node to load global user groups.
+	 * Call this method with $fromMaster flag set to update the memcache entry shortly after the groups list is updated.
+	 * @see SUS-2564
+	 *
+	 * @param int $userId
+	 * @param bool $fromMaster
+	 */
+	private function loadGlobalUserGroups( int $userId, $fromMaster = false ) {
 		if ( !empty( $userId ) && !isset( $this->globalExplicitUserGroups[$userId ] ) ) {
 
 			$fname = __METHOD__;
 			$globalGroups = \WikiaDataAccess::cache(
 				self::getGlobalMemcKey( $userId ),
 				\WikiaResponse::CACHE_LONG,
-				function() use ( $userId, $fname ) {
-					$dbr = self::getSharedDB( DB_MASTER );
+				function() use ( $userId, $fname, $fromMaster ) {
+					$dbr = self::getSharedDB( $fromMaster ? DB_MASTER : DB_SLAVE );
 					return $dbr->selectFieldValues(
 						'user_groups',
 						'ug_group',
@@ -445,5 +461,9 @@ class PermissionsServiceImpl implements PermissionsService {
 		$this->invalidateGroupsAndPermissions( $user->getId() );
 		\WikiaDataAccess::cachePurge( self::getGlobalMemcKey( $user->getId() ) );
 		\WikiaDataAccess::cachePurge( self::getLocalMemcKey( $user->getId() ) );
+
+		// memcache entries are not invalidated, let's update them with the fresh data from master db node / SUS-2564
+		$this->loadLocalGroups( $user->getId(), true /* fromMaster */ );
+		$this->loadGlobalUserGroups( $user->getId(), true  /* fromMaster */ );
 	}
 }
