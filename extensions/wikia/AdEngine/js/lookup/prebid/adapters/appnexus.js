@@ -99,8 +99,8 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexus',[
 		return geo.isProperGeo(instantGlobals.wgAdDriverAppNexusBidderCountries);
 	}
 
-	function prepareAdUnit(slotName, config, skin, recovery) {
-		var placementId = appnexusPlacements.getPlacement(skin, config.position, recovery);
+	function prepareAdUnit(slotName, config, skin, isRecovering) {
+		var placementId = appnexusPlacements.getPlacement(skin, config.position, isRecovering);
 
 		if (!placementId) {
 			return;

@@ -9,10 +9,10 @@ define('ext.wikia.adEngine.lookup.prebid.prebidHelper', [
 	function getAdapterAdUnits(adapter, skin) {
 		var adapterAdUnits = [],
 			slots = adapter.getSlots(skin),
-			recovery = !!(win.I11C && win.I11C.Morph);
+			isRecovering = !!(win.I11C && win.I11C.Morph);
 
 		Object.keys(slots).forEach(function(slotName) {
-			var adUnit = adapter.prepareAdUnit(slotName, slots[slotName], skin, recovery);
+			var adUnit = adapter.prepareAdUnit(slotName, slots[slotName], skin, isRecovering);
 			if (adUnit) {
 				adapterAdUnits.push(adUnit);
 			}

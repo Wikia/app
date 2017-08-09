@@ -9,8 +9,8 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', [
 	var logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements',
 		placementsMap = instantGlobals.wgAdDriverAppNexusBidderPlacementsConfig;
 
-	function getPlacement(skin, position, recovery) {
-		var vertical = recovery ? 'recovery' : adContext.getContext().targeting.mappedVerticalName;
+	function getPlacement(skin, position, isRecovering) {
+		var vertical = isRecovering ? 'recovery' : adContext.getContext().targeting.mappedVerticalName;
 
 		if (placementsMap && placementsMap[skin] && placementsMap[skin][vertical]) {
 			var skinVertical = placementsMap[skin][vertical];

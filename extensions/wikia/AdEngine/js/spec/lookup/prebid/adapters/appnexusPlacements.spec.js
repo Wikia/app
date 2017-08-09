@@ -129,21 +129,21 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', functio
 			skin: 'oasis',
 			env: 'prod',
 			pos: 'btf',
-			recovery: false,
+			isRecovering: false,
 			expected: '999998'
 		}, {
 			vertical: 'entertainment',
 			skin: 'oasis',
 			env: 'prod',
 			pos: 'atf',
-			recovery: true,
+			isRecovering: true,
 			expected: '999987'
 		}, {
 			vertical: 'lifestyle',
 			skin: 'oasis',
 			env: 'prod',
 			pos: 'hivi',
-			recovery: true,
+			isRecovering: true,
 			expected: '999985'
 		},{
 			vertical: 'NOT EXISTING',
@@ -167,7 +167,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', functio
 	testCases.forEach(function (testCase) {
 		it('returns expected placementId for ' + testCase.skin + ':' + testCase.vertical + ':' + testCase.env, function () {
 			var appNexusPlacements = getModule(testCase.vertical, testCase.env),
-				result = appNexusPlacements.getPlacement(testCase.skin, testCase.pos, testCase.recovery);
+				result = appNexusPlacements.getPlacement(testCase.skin, testCase.pos, testCase.isRecovering);
 
 			expect(result).toEqual(testCase.expected);
 		});
