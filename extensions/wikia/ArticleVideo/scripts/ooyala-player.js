@@ -109,19 +109,22 @@ define('ooyala-player', ['wikia.browserDetect'], function (browserDetect) {
 		$('.oo-state-screen-info').css('display', '');
 	};
 
-	OoyalaHTML5Player.initHTML5Player = function (videoElementId, playerParams, videoId, onCreate, autoplay, vastUrl, inlineSkinConfig) {
+	OoyalaHTML5Player.initHTML5Player = function (videoElementId, playerParams, videoId, onCreate, autoplay, vastUrl, inlineSkinConfig, recommendLabel) {
 		var params = {
 				videoId: videoId,
 				autoplay: autoplay,
 				initialVolume: autoplay ? 0 : 1,
 				pcode: playerParams.ooyalaPCode,
-				playerBrandingId: playerParams.ooyalaPlayerBrandingId,
-				discoveryApiAdditionalParams: {
-					discovery_profile_id: 0,
-					where: 'labels INCLUDES \'Promoted\''
-				}
+				playerBrandingId: playerParams.ooyalaPlayerBrandingId
 			},
 			html5Player;
+
+		if (recommendLabel) {
+			params['discoveryApiAdditionalParams'] = {
+				discovery_profile_id: 0,
+				where: 'labels INCLUDES \'' + recommendLabel + '\''
+			}
+		}
 
 		if (vastUrl) {
 			params['google-ima-ads-manager'] = {
