@@ -133,7 +133,7 @@ class GadgetHooks {
 	 * @param $resourceLoader ResourceLoader
 	 * @return bool
 	 */
-	public static function registerModules( &$resourceLoader ) {
+	public static function registerModules( ResourceLoader $resourceLoader ): bool {
 		$gadgets = Gadget::loadList();
 		if ( !$gadgets ) {
 			return true;

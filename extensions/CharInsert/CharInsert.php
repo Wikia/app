@@ -44,7 +44,7 @@ $wgExtensionCredits['parserhook'][] = array(
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['CharInsert'] = $dir . 'CharInsert.i18n.php';
 
-function setupSpecialChars( &$parser ) {
+function setupSpecialChars( Parser $parser ): bool {
 	$parser->setHook( 'charinsert', 'charInsert' );
 	return true;
 }

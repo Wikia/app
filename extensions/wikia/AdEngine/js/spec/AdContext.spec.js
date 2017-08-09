@@ -11,6 +11,7 @@ describe('AdContext', function () {
 			pvCounter: {
 				increment: noop
 			},
+			browserDetect: {},
 			geo: {
 				getCountryCode: function () {
 					return 'CURRENT_COUNTRY';
@@ -66,6 +67,7 @@ describe('AdContext', function () {
 	function getModule() {
 		return modules['ext.wikia.adEngine.adContext'](
 			mocks.pvCounter,
+			mocks.browserDetect,
 			mocks.wikiaCookies,
 			mocks.doc,
 			mocks.geo,

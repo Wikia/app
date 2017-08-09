@@ -75,7 +75,7 @@ class HistoryAction extends FormlessAction {
 
 	/**
 	 * Print the history page for an article.
-	 * @return nothing
+	 * @return void
 	 */
 	function onView() {
 		global $wgScript, $wgUseFileCache, $wgSquidMaxage;
@@ -84,7 +84,7 @@ class HistoryAction extends FormlessAction {
 		$request = $this->getRequest();
 
 		/* Wikia change @author Tomek */
-		if( !Hooks::run('BeforePageHistory', array( &$this->page ) ) ) {
+		if ( !Hooks::run( 'BeforePageHistory', [ $this->page ] ) ) {
 			return;
 		}
 		/* End of Wikia change */
@@ -370,7 +370,8 @@ class HistoryPager extends ReverseChronologicalPager {
 			$queryInfo['options'],
 			$this->tagFilter
 		);
-		Hooks::run( 'PageHistoryPager::getQueryInfo', array( &$this, &$queryInfo ) );
+		Hooks::run( 'PageHistoryPager::getQueryInfo', [ $this, &$queryInfo ] );
+
 		return $queryInfo;
 	}
 

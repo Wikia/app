@@ -404,7 +404,7 @@ class MovePageForm extends UnlistedSpecialPage {
 	}
 
 	function doSubmit() {
-		global $wgMaximumMovedPages, $wgFixDoubleRedirects, $wgDeleteRevisionsLimit;
+		global $wgMaximumMovedPages, $wgFixDoubleRedirects;
 
 		$user = $this->getUser();
 
@@ -415,7 +415,7 @@ class MovePageForm extends UnlistedSpecialPage {
 		$ot = $this->oldTitle;
 		$nt = $this->newTitle;
 
-		if( ! Hooks::run( 'SpecialMovepageBeforeMove', array(&$this))) {
+		if ( !Hooks::run( 'SpecialMovepageBeforeMove', [ $this ] ) ) {
 			return;
 		}
 
@@ -493,7 +493,7 @@ class MovePageForm extends UnlistedSpecialPage {
 			DoubleRedirectJob::fixRedirects( 'move', $ot, $nt );
 		}
 
-		Hooks::run( 'SpecialMovepageAfterMove', array( &$this, &$ot, &$nt ) );
+		Hooks::run( 'SpecialMovepageAfterMove', [ $this, &$ot, &$nt ] );
 
 		$out = $this->getOutput();
 		$out->setPagetitle( wfMsg( 'pagemovedsub' ) );

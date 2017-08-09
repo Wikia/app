@@ -236,7 +236,7 @@ class WikiFactoryLoader {
 		 *
 		 * @author Sean Colombo
 		 */
-		if( !Hooks::run( 'WikiFactory::execute', array( &$this ) ) ) {
+		if ( !Hooks::run( 'WikiFactory::execute', [ $this ] ) ) {
 			wfProfileOut(__METHOD__);
 			return $this->mWikiID;
 		}
@@ -637,7 +637,7 @@ class WikiFactoryLoader {
 		$this->mVariables["wgDBCluster"] = $this->mCityCluster;
 
 		// @author macbre
-		Hooks::run( 'WikiFactory::executeBeforeTransferToGlobals', array( &$this ) );
+		Hooks::run( 'WikiFactory::executeBeforeTransferToGlobals', [ $this ] );
 
 		/**
 		 * transfer configuration variables from database to GLOBALS
@@ -746,7 +746,7 @@ class WikiFactoryLoader {
 			}
 		}
 
-		Hooks::run( 'WikiFactory::onExecuteComplete', array( &$this ) );
+		Hooks::run( 'WikiFactory::onExecuteComplete', [ $this ] );
 
 		wfProfileOut( __METHOD__ );
 

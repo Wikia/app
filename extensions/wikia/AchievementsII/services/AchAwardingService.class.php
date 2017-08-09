@@ -155,7 +155,9 @@ class AchAwardingService {
 		wfProfileOut( __METHOD__ );
 	}
 
-	public function processSaveComplete($article, $user, $revision, $status ) {
+	public function processSaveComplete(
+		WikiPage $article, User $user, Revision $revision, Status $status
+	) {
 		wfProfileIn( __METHOD__ );
 
 		$this->mUser = $user;

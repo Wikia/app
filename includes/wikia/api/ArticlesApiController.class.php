@@ -704,7 +704,10 @@ class ArticlesApiController extends WikiaApiController {
 						]
 					];
 
-					$collection[$id]['comments'] = ( class_exists( 'ArticleCommentList' ) ) ? ArticleCommentList::newFromTitle( $t )->getCountAllNested() : false;
+					if ( $this->wg->EnableArticleCommentsExt ) {
+						$collection[$id]['comments'] = ArticleCommentList::newFromTitle( $t )->getCountAllNested();
+					}
+
 					// add file data
 					$collection[$id] = array_merge( $collection[ $id ], $fileData );
 					$resultingCollectionIds [] = $id;

@@ -8349,7 +8349,7 @@ Das liegt wahrscheinlich an einem Link auf eine externe Seite.',
 * [http://de.wikia.com/wiki/%C3%9Cber_Wikia Über FANDOM]
 * [http://de.wikia.com/Nutzungsbedingungen Nutzungsbedingungen]
 * [[Special:Contact|Kontakt]]
-* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Auf FANDOM werben]',
+* [http://fandom.wikia.com/mediakit Auf FANDOM werben]',
 	'specialpages-group-wikia' => 'FANDOM-Seiten',
 	'save' => 'Speichern',
 	'searchsuggest' => 'Suchvorschläge',
@@ -11521,7 +11521,7 @@ impossible de renommer une page sur elle-même.',
 	'specialpages-group-spam' => 'Outils anti-pourriel',
 	'sqlite-has-fts' => '$1 avec recherche en texte intégral supportée',
 	'sqlite-no-fts' => '$1 sans recherche en texte intégral supportée',
-	'shared-Monobook-footer-wikia-links' => "* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Confidentialité]
+	'shared-Monobook-footer-wikia-links' => "* [http://fr.wikia.com/Politique_de_confidentialité Confidentialité]
 * [http://fr.wikia.com/À_propos À propos de FANDOM]
 * [http://fr.wikia.com/Conditions_d'utilisation Conditions d'utilisation]
 * [[Special:Contact|Nous contacter]]
@@ -17791,7 +17791,7 @@ $messages['ja'] = array(
 	'save' => '保存する',
 	'searchsuggest' => '検索候補',
 	'shared-Monobook-footer-wikia-links' => '* [http://ja.wikia.com/プライバシーポリシー プライバシー]
-* [http://ja.wikia.com/Fandomについて FANDOMについて]
+* [http://fandom.wikia.com/about?uselang=ja FANDOMについて]
 * [http://ja.wikia.com/利用規約 利用規約]
 * [[Special:Contact|お問い合わせ]]
 * [http://www.wikia.com/Advertising 広告]',
@@ -29661,9 +29661,9 @@ Najprawdopodobniej zostało to spowodowane przez link do zewnętrznej strony int
 	'sqlite-no-fts' => '$1 bez wsparcia pełnotekstowego wyszukiwania',
 	'shoutbox' => 'Shout Box',
 	'send' => 'Wyślij',
-	'shared-Monobook-footer-wikia-links' => '* [http://pl.wikia.com/Polityka_Prywatności Polityka Prywatności]
-* [http://pl.wikia.com/O_nas O Wikii]
-* [http://pl.wikia.com/Zasady_Użytkowania Zasady Użytkowania]
+	'shared-Monobook-footer-wikia-links' => '* [http://pl.wikia.com/Polityka_prywatno%C5%9Bci Polityka_prywatności]
+* [http://pl.wikia.com/O_nas O FANDOMIE]
+* [http://pl.wikia.com/Zasady_użytkowania Zasady użytkowania]
 * [[Special:Contact|Kontakt]]
 * [http://www.wikia.com/Advertising Reklama]',
 	'specialpages-group-wikia' => 'Strony portalu FANDOM',
@@ -30756,11 +30756,11 @@ Tal bloqueio foi provavelmente causado por uma ligação para um ''website'' ext
 	'specialpages-group-spam' => 'Ferramentas anti-spam',
 	'sqlite-has-fts' => '$1 com suporte de pesquisa de texto completo',
 	'sqlite-no-fts' => '$1 sem suporte de pesquisa de texto completo',
-	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacidade_Política de privacidade]
-* [http://www.wikia.com/wiki/Wikia:Sobre Sobre a Wikia]
-* [http://www.wikia.com/wiki/Wikia:Termos_de_uso Termos de uso]
+	'shared-Monobook-footer-wikia-links' => '* [http://pt-br.wikia.com/wiki/Política_de_Privacidade Política de Privacidade]
+* [http://fandom.wikia.com/about?uselang=pt-br Sobre o FANDOM]
+* [http://pt-br.wikia.com/wiki/Termos_de_Uso Termos de uso]
 * [[Special:Contact|Contato]]
-* [http://www.wikia.com/wiki/Wikia:Publicidade_na_Wikia Publicidade]',
+* [http://fandom.wikia.com/mediakit Publicidade]',
 	'specialpages-group-wikia' => 'Páginas do FANDOM',
 	'signup-password' => 'Senha - ',
 	'sidebar' => '* Content Navigation
@@ -32097,12 +32097,12 @@ $messages['ru'] = array(
 	'specialpages-group-spam' => 'Инструменты против спама',
 	'sqlite-has-fts' => '$1 с поддержкой полнотекстового поиска',
 	'sqlite-no-fts' => '$1 без поддержки полнотекстового поиска',
-	'shared-Monobook-footer-wikia-links' => '* http://ru.wikia.com/wiki/ФЭНДОМ:Конфиденциальность Конфиденциальность]
-* [http://www.ru.wikia.com/wiki/ФЭНДОМ:О_нас О ФЭНДОМЕ]
-* [http://ru.community.wikia.com/wiki/ФЭНДОМ:Условия_использования Условия использования]
-* [[Special:Contact|Обратная связь]]
-* [http://ru.wikia.com/wiki/ФЭНДОМ:Реклама_на_ФЭНДОМЕ Реклама]',
-	'specialpages-group-wikia' => 'Страницы Фэндома',
+	'shared-Monobook-footer-wikia-links' => '* [http://ru.wikia.com/wiki/Конфиденциальность Конфиденциальность]
+* [http://fandom.wikia.com/about?uselang=ru О нас]
+* [http://ru.wikia.com/Условия_использования Условия использования]
+* [http://ru.community.wikia.com/wiki/Служебная:Contact Обратная связь]
+* [http://fandom.wikia.com/mediakit Реклама на ФЭНДОМЕ]',
+	'specialpages-group-wikia' => 'Страницы ФЭНДОМА',
 	'save' => 'Сохранить',
 	'seeeditcount' => 'См. счётчик правок',
 	'seemoredotdotdot' => 'Подробнее...',
@@ -32163,7 +32163,7 @@ $messages['ru'] = array(
 	'shoutbox' => 'Shout Box',
 	'searchtype' => 'Тип интерфейса поиска',
 	'scarytranscludebadinterwiki' => 'Данная интервики не подлежит включению.',
-	'shared-News_box' => '[http://www.wikia.com/Вакансии У нас есть несколько открытых вакансий]<br>',
+	'shared-News_box' => '[http://fandom.wikia.com/careers Вакансии на ФЭНДОМЕ]<br>',
 );
 
 $messages['rue'] = array(
@@ -42466,9 +42466,9 @@ $messages['zh-hant'] = array(
 	'specialpages-group-spam' => '防垃圾訊息工具',
 	'sqlite-has-fts' => '支援全文搜尋的版本$1',
 	'sqlite-no-fts' => '不支援全文搜尋的版本$1',
-	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy 隱私政策]
+	'shared-Monobook-footer-wikia-links' => '* [http://zh-tw.wikia.com/wiki/%E9%9A%B1%E7%A7%81%E6%AC%8A%E6%96%B9%E9%87%9D 隱私政策]
 * [http://www.wikia.com/wiki/Wikia:About 關於FANDOM]
-* [http://www.wikia.com/wiki/Wikia:Terms_of_use 使用條款]
+* [http://zh-tw.wikia.com/wiki/%E4%BD%BF%E7%94%A8%E6%A2%9D%E6%AC%BE 使用條款]
 * [[Special:Contact|聯繫我們]]
 * [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia 廣告投放]',
 	'specialpages-group-wikia' => 'FANDOM頁面',
