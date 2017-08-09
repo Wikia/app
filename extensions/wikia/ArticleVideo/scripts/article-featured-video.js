@@ -4,6 +4,8 @@ require([
 	'wikia.tracker',
 	'ooyala-player',
 	'wikia.cookies',
+	'wikia.geo',
+	'wikia.instantGlobals',
 	'wikia.articleVideo.videoFeedbackBox',
 	'wikia.log',
 	require.optional('ext.wikia.adEngine.adContext'),
@@ -15,6 +17,8 @@ require([
 	tracker,
 	OoyalaPlayer,
 	cookies,
+	geo,
+	instantGlobals,
 	VideoFeedbackBox,
 	log,
 	adContext,
@@ -38,10 +42,9 @@ require([
 			nextVideoPlayed = false,
 			playTime = -1,
 			percentagePlayTime = -1,
-			prerollSlotName = 'FEATURED_VIDEO',
 			playerTrackerParams = {
 				adProduct: 'featured-video-preroll',
-				slotName: prerollSlotName
+				slotName: 'FEATURED'
 			},
 			track = tracker.buildTrackingFunction({
 				category: 'article-video',
@@ -56,8 +59,10 @@ require([
 			videoTitle = videoData.title,
 			videoLabels = (videoData.labels || '').join(','),
 			videoFeedbackBox,
+			inAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries),
+			inNextVideoAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoNextVideoAutoplayCountries),
 			autoplayCookieName = 'featuredVideoAutoplay',
-			autoplay = cookies.get(autoplayCookieName) !== '0',
+			autoplay = cookies.get(autoplayCookieName) !== '0' && inAutoplayCountries,
 			context = adContext && adContext.getContext(),
 			logGroup = 'FeaturedVideo';
 
@@ -96,15 +101,19 @@ require([
 				vastUrl,
 				inlineSkinConfig = {
 					controlBar: {
-						autoplayCookieName: autoplayCookieName
+						autoplayCookieName: autoplayCookieName,
+						autoplayToggle: inAutoplayCountries
+					},
+					discoveryScreen: {
+						showCountDownTimerOnEndScreen: inNextVideoAutoplayCountries
 					}
 				};
 
 			log('setupPlayer, autoplay: ' + autoplay, 'info', logGroup);
 
 			if (vastUrlBuilder && context && context.opts.showAds) {
-				vastUrl = vastUrlBuilder.build(640 / 480, {
-					pos: (context.opts.megaAdUnitBuilderEnabled ? 'FEATURED' : prerollSlotName),
+				vastUrl = vastUrlBuilder.build(640/480, {
+					pos: 'FEATURED',
 					src: 'premium'
 				});
 			} else {
