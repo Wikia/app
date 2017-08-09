@@ -14,7 +14,6 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 			horizontal: '640x480'
 		},
 		baseUrl = 'https://pubads.g.doubleclick.net/gampad/ads?',
-		context = adContext.getContext(),
 		logGroup = 'ext.wikia.adEngine.video.vastUrlBuilder';
 
 	function getCustomParameters(slotParams) {
@@ -48,7 +47,7 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 	}
 
 	function buildAdUnit(slotParams) {
-		var adUnitBuilder = context.opts.megaAdUnitBuilderEnabled ? megaAdUnitBuilder : regularAdUnitBuilder;
+		var adUnitBuilder = adContext.getContext().opts.megaAdUnitBuilderEnabled ? megaAdUnitBuilder : regularAdUnitBuilder;
 		return adUnitBuilder.build(slotParams.pos, slotParams.src);
 	}
 
