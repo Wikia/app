@@ -101,7 +101,7 @@ require([
 				inlineSkinConfig
 			);
 
-			document.addEventListener("visibilitychange", handleTabChange);
+			document.addEventListener('visibilitychange', handleTabChange);
 		}
 
 		function handleTabChange() {
@@ -284,7 +284,6 @@ require([
 			});
 
 			player.mb.subscribe(window.OO.EVENTS.PAUSED, 'featured-video', function () {
-
 				if (videoFeedbackBox) {
 					videoFeedbackBox.hide();
 				}
