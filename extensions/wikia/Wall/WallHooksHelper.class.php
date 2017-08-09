@@ -1935,10 +1935,11 @@ class WallHooksHelper {
 	 * @access public
 	 * @author Sactage
 	 *
-	 * @param Skin $skin
-	 * @return boolean
+	 * @param QuickTemplate $quickTemplate
+	 * @return bool
 	 */
-	static public function onBuildMonobookToolbox( Skin $skin ) {
+	static public function onBuildMonobookToolbox( QuickTemplate $quickTemplate ): bool {
+		$skin = $quickTemplate->getSkin();
 		$title = $skin->getTitle();
 		$curUser = $skin->getUser();
 
