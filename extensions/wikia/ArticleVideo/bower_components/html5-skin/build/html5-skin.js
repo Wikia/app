@@ -5706,7 +5706,7 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
 
   if (OO.publicApi && OO.publicApi.VERSION) {
     // This variable gets filled in by the build script
-    OO.publicApi.VERSION.skin = {"releaseVersion": "4.14.8", "rev": "098b4b720814791b83f8657cf737f0d08d8c4615"};
+    OO.publicApi.VERSION.skin = {"releaseVersion": "4.14.8", "rev": "faa8d7bb17e2292f03823ec505939d6f6b5239f9"};
   }
 
   // WIKIA CHANGE - START
@@ -6302,7 +6302,8 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
         this.state.upNextInfo.delayedSetEmbedCodeEvent = false;
         this.state.upNextInfo.delayedContentData = null;
       }
-      else if (this.state.discoveryData && this.skin.props.skinConfig.endScreen.screenToShowOnEnd === "discovery"
+      else if (this.state.discoveryData && this.state.discoveryData.relatedVideos &&
+          this.state.discoveryData.relatedVideos.length && this.skin.props.skinConfig.endScreen.screenToShowOnEnd === "discovery"
                && !(Utils.isIPhone() || (Utils.isIos() && this.state.fullscreen))) {
         OO.log("Should display DISCOVERY_SCREEN on end");
         this.sendDiscoveryDisplayEvent("endScreen");
