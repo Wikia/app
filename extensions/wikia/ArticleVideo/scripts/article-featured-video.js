@@ -60,7 +60,8 @@ require([
 			videoFeedbackBox,
 			autoplayCookieName = 'featuredVideoAutoplay',
 			autoplay = cookies.get(autoplayCookieName) !== '0' &&
-				geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries);
+				geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries) && !document.hidden,
+			playerIsPaused = false;
 
 		function initVideo(onCreate) {
 			var playerParams = window.wgOoyalaParams,
@@ -93,6 +94,14 @@ require([
 				vastUrl,
 				inlineSkinConfig
 			);
+
+			document.addEventListener("visibilitychange", handleTabChange);
+		}
+
+		function handleTabChange() {
+			if (!document.hidden && !playerIsPaused && cookies.get(autoplayCookieName) !== '0') {
+				ooyalaVideoController.player.play();
+			}
 		}
 
 		function collapseVideo(videoOffset, videoHeight) {
@@ -267,6 +276,8 @@ require([
 			});
 
 			player.mb.subscribe(window.OO.EVENTS.PAUSED, 'featured-video', function () {
+				playerIsPaused = true;
+
 				if (videoFeedbackBox) {
 					videoFeedbackBox.hide();
 				}
