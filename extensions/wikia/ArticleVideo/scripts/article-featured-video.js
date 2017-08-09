@@ -62,10 +62,10 @@ require([
 			logGroup = 'FeaturedVideo';
 
 		function initVideo(onCreate) {
-			var notBlockingCallback = function () {
+			var adNotBlockedCallback = function () {
 					setupPlayer(onCreate, true);
 				},
-				blockingCallback = function () {
+				adBlockedCallback = function () {
 					setupPlayer(onCreate, false);
 				};
 
@@ -79,15 +79,15 @@ require([
 				setTimeout(function () {
 					if (!ooyalaVideoController) {
 						log('initVideo, pageFair did not respond under 2000ms, starting video', 'info', logGroup);
-						window.removeEventListener('pf.not_blocking', notBlockingCallback);
-						window.removeEventListener('pf.blocking', blockingCallback);
+						window.removeEventListener('pf.not_blocking', adNotBlockedCallback);
+						window.removeEventListener('pf.blocking', adBlockedCallback);
 
 						setupPlayer(onCreate, autoplay);
 					}
 				}, 2000);
 
-				window.addEventListener('pf.not_blocking', notBlockingCallback);
-				window.addEventListener('pf.blocking', blockingCallback);
+				window.addEventListener('pf.not_blocking', adNotBlockedCallback);
+				window.addEventListener('pf.blocking', adBlockedCallback);
 			}
 		}
 
