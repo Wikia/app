@@ -217,7 +217,7 @@ define('ext.wikia.adEngine.adContext', [
 		if (context.providers.rubiconFastlane) {
 			context.providers.rubiconFastlane = geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) &&
 				geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneProviderCountries) &&
-				!geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlanePrebidCountries); // disable non-prebid implementation when Fastlane adapter is active
+				!context.bidders.fastlane; // disable non-prebid implementation if Fastlane adapter is active
 		}
 
 		context.opts.enableRemnantNewAdUnit = geo.isProperGeo(instantGlobals.wgAdDriverMEGACountries);
