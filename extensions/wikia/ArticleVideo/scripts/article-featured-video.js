@@ -60,10 +60,10 @@ require([
 			inAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries),
 			inNextVideoAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoNextVideoAutoplayCountries),
 			autoplayCookieName = 'featuredVideoAutoplay',
-			autoplay = cookies.get(autoplayCookieName) !== '0' &&
-				!document.hidden &&
+			autoplayEnabled = cookies.get(autoplayCookieName) !== '0' &&
 				inAutoplayCountries,
-			playerIsPaused = false;
+			autoplay = autoplayEnabled && !document.hidden,
+			playerIsAfterInitialPlay = false;
 
 		function initVideo(onCreate) {
 			var playerParams = window.wgOoyalaParams,
@@ -105,7 +105,7 @@ require([
 		}
 
 		function handleTabChange() {
-			if (!document.hidden && !playerIsPaused && cookies.get(autoplayCookieName) !== '0') {
+			if (!document.hidden && !playerIsAfterInitialPlay && autoplayEnabled) {
 				ooyalaVideoController.player.play();
 			}
 		}
@@ -237,6 +237,8 @@ require([
 			}
 
 			player.mb.subscribe(window.OO.EVENTS.INITIAL_PLAY, 'featured-video', function () {
+				playerIsAfterInitialPlay = true;
+
 				track({
 					action: tracker.ACTIONS.PLAY_VIDEO,
 					label: 'featured-video'
@@ -282,7 +284,6 @@ require([
 			});
 
 			player.mb.subscribe(window.OO.EVENTS.PAUSED, 'featured-video', function () {
-				playerIsPaused = true;
 
 				if (videoFeedbackBox) {
 					videoFeedbackBox.hide();
