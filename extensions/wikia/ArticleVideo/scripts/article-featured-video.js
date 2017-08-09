@@ -39,10 +39,9 @@ require([
 			collapsingDisabled = false,
 			playTime = -1,
 			percentagePlayTime = -1,
-			prerollSlotName = 'FEATURED_VIDEO',
 			playerTrackerParams = {
 				adProduct: 'featured-video-preroll',
-				slotName: prerollSlotName
+				slotName: 'FEATURED'
 			},
 			track = tracker.buildTrackingFunction({
 				category: 'article-video',
@@ -85,7 +84,7 @@ require([
 
 			if (vastUrlBuilder && adContext && adContext.getContext().opts.showAds) {
 				options.vastUrl = vastUrlBuilder.build(640/480, {
-					pos: (adContext.getContext().opts.megaAdUnitBuilderEnabled ? 'FEATURED' : prerollSlotName),
+					pos: 'FEATURED',
 					src: 'premium'
 				});
 			} else {

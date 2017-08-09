@@ -52,11 +52,10 @@ class WallHooksHelper {
 		$helper = new WallHelper();
 		$title = $article->getTitle();
 
-		if ( $title->getNamespace() === NS_USER_WALL_MESSAGE && intval( $title->getText() ) > 0  ) {
+		if ( $title->getNamespace() === NS_USER_WALL_MESSAGE && is_numeric( $title->getText() ) ) {
 			// message wall index - brick page
 
-			// SUS-2521: Ensure thread ID is an integer - intval( '2123_karamba' ) = 2123
-			$threadId = intval( $title->getText() );
+			$threadId = $title->getText();
 			$outputDone = true;
 
 			$mainTitle = Title::newFromId( $threadId );
@@ -92,6 +91,11 @@ class WallHooksHelper {
 			$isDeleted = !$wallMessage->isVisible( $app->wg->User );
 			$showDeleted = ( $wallMessage->canViewDeletedMessage( $app->wg->User )
 				&& $app->wg->Request->getVal( 'show' ) == '1' );
+
+			// SUS-2576: set response code to HTTP 410 Gone for deleted wall messages and forum threads
+			if ( $wallMessage->isRemove() ) {
+				$app->wg->Out->setStatusCode( 410 );
+			}
 
 			if ( $isDeleted ) {
 				$app->wg->Out->setStatusCode( 404 );
@@ -1936,10 +1940,11 @@ class WallHooksHelper {
 	 * @access public
 	 * @author Sactage
 	 *
-	 * @param Skin $skin
-	 * @return boolean
+	 * @param QuickTemplate $quickTemplate
+	 * @return bool
 	 */
-	static public function onBuildMonobookToolbox( Skin $skin ) {
+	static public function onBuildMonobookToolbox( QuickTemplate $quickTemplate ): bool {
+		$skin = $quickTemplate->getSkin();
 		$title = $skin->getTitle();
 		$curUser = $skin->getUser();
 
