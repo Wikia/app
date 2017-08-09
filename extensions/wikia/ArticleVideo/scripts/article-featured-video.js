@@ -5,6 +5,7 @@ require([
 	'ooyala-player',
 	'wikia.cookies',
 	'wikia.articleVideo.videoFeedbackBox',
+	'wikia.log',
 	require.optional('ext.wikia.adEngine.adContext'),
 	require.optional('ext.wikia.adEngine.video.player.ooyala.ooyalaTracker'),
 	require.optional('ext.wikia.adEngine.video.vastUrlBuilder')
@@ -15,6 +16,7 @@ require([
 	OoyalaPlayer,
 	cookies,
 	VideoFeedbackBox,
+	log,
 	adContext,
 	playerTracker,
 	vastUrlBuilder
@@ -55,9 +57,29 @@ require([
 			videoLabels = (videoData.labels || '').join(','),
 			videoFeedbackBox,
 			autoplayCookieName = 'featuredVideoAutoplay',
-			autoplay = cookies.get(autoplayCookieName) !== '0';
+			autoplay = cookies.get(autoplayCookieName) !== '0',
+			context = adContext && adContext.getContext(),
+			logGroup = 'FeaturedVideo';
 
 		function initVideo(onCreate) {
+
+			log('initVideo', 'info', logGroup);
+
+			if (!context.opts.pageFairDetection) {
+				log('initVideo, pageFairDetection disabled', 'info', logGroup);
+				setupPlayer(onCreate, false);
+			} else {
+				window.addEventListener('pf.not_blocking', function () {
+					setupPlayer(onCreate, false);
+				});
+
+				window.addEventListener('pf.blocking', function () {
+					setupPlayer(onCreate, true);
+				});
+			}
+		}
+
+		function setupPlayer(onCreate, detectionStatus) {
 			var playerParams = window.wgOoyalaParams,
 				vastUrl,
 				inlineSkinConfig = {
@@ -66,9 +88,11 @@ require([
 					}
 				};
 
-			if (vastUrlBuilder && adContext && adContext.getContext().opts.showAds) {
-				vastUrl = vastUrlBuilder.build(640/480, {
-					pos: (adContext.getContext().opts.megaAdUnitBuilderEnabled ? 'FEATURED' : prerollSlotName),
+			log('setupPlayer, autoplay: ' + !detectionStatus, 'info', logGroup);
+
+			if (vastUrlBuilder && context && context.opts.showAds) {
+				vastUrl = vastUrlBuilder.build(640 / 480, {
+					pos: (context.opts.megaAdUnitBuilderEnabled ? 'FEATURED' : prerollSlotName),
 					src: 'premium'
 				});
 			} else {
@@ -84,7 +108,7 @@ require([
 				playerParams,
 				videoId,
 				onCreate,
-				autoplay,
+				!detectionStatus,
 				vastUrl,
 				inlineSkinConfig
 			);
