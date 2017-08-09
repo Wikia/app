@@ -1,6 +1,6 @@
 <?php
 
-use \Wikia\CommunityHeader\Sitename;
+use Wikia\Search\TopWikiArticles;
 
 class RecirculationController extends WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
@@ -58,7 +58,28 @@ class RecirculationController extends WikiaController {
 		$this->response->setVal( 'communityHeaderBackground',
 			$themeSettings->getCommunityHeaderBackgroundUrl() );
 		$this->response->setVal( 'sitename', $wgSitename );
+		$this->response->setVal( 'topWikiArticles', $this->getTopWikiArticles() );
+		// TODO if topWikiArticles is empty show one more N&S article card instead of More from wiki card
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_PHP );
+	}
+
+	private function getTopWikiArticles() {
+		global $wgTitle, $wgCityId;
+
+		$topWikiArticles = TopWikiArticles::getArticlesWithCache( $wgCityId, false );
+		// do not show itself
+		$topWikiArticles = array_filter( $topWikiArticles, function ( $item ) use ( $wgTitle ) {
+			return $item['id'] !== $wgTitle->getArticleID();
+		} );
+		// add index to items to render it by mustache template
+		$topWikiArticles = array_map( function ( $item, $index ) {
+			$item['index'] = $index + 1;
+
+			return $item;
+		}, $topWikiArticles, array_keys( array_values( $topWikiArticles ) ) );
+
+		// show max 3 elements
+		return array_slice( $topWikiArticles, 0, 3 );
 	}
 
 	public function container( $params ) {

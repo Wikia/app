@@ -2,11 +2,12 @@
 	<h1 class="mcf-header"><?= wfMessage('recirculation-impact-footer-title')->escaped() ?></h1>
 	<div class="mcf-row">
 		<?= F::app()->renderPartial( 'Recirculation', 'wikiArticles', [
-				'recirculationArticlesMore' => wfMessage( 'recirculation-articles-more' )
-					->params( $sitename )
-					->escaped(),
-				'communityHeaderBackground' => $communityHeaderBackground,
-			] ); ?>
+			'recirculationArticlesMore' => wfMessage( 'recirculation-articles-more' )
+				->params( $sitename )
+				->escaped(),
+			'communityHeaderBackground' => $communityHeaderBackground,
+			'wikiArticles' => $topWikiArticles,
+		] ); ?>
 		<?= F::app()->renderPartial('Recirculation', 'article'); ?>
 		<?= F::app()->renderPartial('Recirculation', 'article'); ?>
 	</div>

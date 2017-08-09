@@ -3,23 +3,13 @@
 	<span class="mcf-card-wiki-articles__header-text">{{{recirculationArticlesMore}}}</span>
 	</header>
 	<ul class="mcf-card-wiki-articles__list">
-		<li class="mcf-card-wiki-articles__item">
-			<a href="#" class="mcf-card-wiki-articles__item-link">
-				<span class="mcf-card-wiki-articles__circle">1</span>
-				<span class="mcf-card-wiki-articles__title">Stephen Strange (Earth-616)</span>
-			</a>
-		</li>
-		<li class="mcf-card-wiki-articles__item">
-			<a href="#" class="mcf-card-wiki-articles__item-link">
-				<span class="mcf-card-wiki-articles__circle">2</span>
-				<span class="mcf-card-wiki-articles__title">Stephen Strange (Earth-616)</span>
-			</a>
-		</li>
-		<li class="mcf-card-wiki-articles__item">
-			<a href="#" class="mcf-card-wiki-articles__item-link">
-				<span class="mcf-card-wiki-articles__circle">3</span>
-				<span class="mcf-card-wiki-articles__title">Stephen Strange (Earth-616)</span>
-			</a>
-		</li>
+		{{#wikiArticles}}
+			<li class="mcf-card-wiki-articles__item">
+				<a href="{{url}}" class="mcf-card-wiki-articles__item-link">
+					<span class="mcf-card-wiki-articles__circle">{{index}}</span>
+					<span class="mcf-card-wiki-articles__title">{{title}}</span>
+				</a>
+			</li>
+		{{/wikiArticles}}
 	</ul>
 </div>
