@@ -52,11 +52,10 @@ class WallHooksHelper {
 		$helper = new WallHelper();
 		$title = $article->getTitle();
 
-		if ( $title->getNamespace() === NS_USER_WALL_MESSAGE && intval( $title->getText() ) > 0  ) {
+		if ( $title->getNamespace() === NS_USER_WALL_MESSAGE && is_numeric( $title->getText() ) ) {
 			// message wall index - brick page
 
-			// SUS-2521: Ensure thread ID is an integer - intval( '2123_karamba' ) = 2123
-			$threadId = intval( $title->getText() );
+			$threadId = $title->getText();
 			$outputDone = true;
 
 			$mainTitle = Title::newFromId( $threadId );
