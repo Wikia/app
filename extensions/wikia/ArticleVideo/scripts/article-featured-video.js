@@ -37,7 +37,6 @@ require([
 			$ooyalaVideo = $('#' + ooyalaVideoElementId),
 			videoCollapsed = false,
 			collapsingDisabled = false,
-			nextVideoPlayed = false,
 			playTime = -1,
 			percentagePlayTime = -1,
 			prerollSlotName = 'FEATURED_VIDEO',
@@ -62,7 +61,8 @@ require([
 			inAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries),
 			inNextVideoAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoNextVideoAutoplayCountries),
 			autoplayCookieName = 'featuredVideoAutoplay',
-			autoplay = cookies.get(autoplayCookieName) !== '0' && inAutoplayCountries;
+			autoplay = cookies.get(autoplayCookieName) !== '0' && inAutoplayCountries,
+			recommendedVideoDepth = 0;
 
 		function initVideo(onCreate) {
 			var playerParams = window.wgOoyalaParams,
@@ -236,7 +236,7 @@ require([
 			});
 
 			player.mb.subscribe(window.OO.EVENTS.PLAYBACK_READY, 'ui-update', function () {
-				if (nextVideoPlayed) {
+				if (recommendedVideoDepth > 0) {
 					$onScrollVideoTitle.text(player.getTitle());
 					$onScrollVideoTime.text(
 						ooyalaVideoController.getFormattedDuration(player.getDuration())
@@ -341,11 +341,15 @@ require([
 				var bucketInfo = JSON.parse(eventData.clickedVideo.bucket_info.substring(1)),
 					position = bucketInfo.position;
 
-				nextVideoPlayed = true;
+				recommendedVideoDepth++;
 
 				track({
 					action: tracker.ACTIONS.VIEW,
 					label: 'recommended-video-' + position
+				});
+				track({
+					action: tracker.ACTIONS.VIEW,
+					label: 'recommended-video-depth-' + recommendedVideoDepth
 				});
 
 				// Don't play ads between videos
