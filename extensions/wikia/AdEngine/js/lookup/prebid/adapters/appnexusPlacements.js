@@ -13,9 +13,11 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', [
 		var vertical = recovery ? 'recovery' : adContext.getContext().targeting.mappedVerticalName;
 
 		if (placementsMap && placementsMap[skin] && placementsMap[skin][vertical]) {
-			if (position && placementsMap[skin][vertical][position]) {
-				return placementsMap[skin][vertical][position];
-			}
+			var skinVertical = placementsMap[skin][vertical];
+
+			return position && skinVertical[position] ?
+				skinVertical[position] :
+				skinVertical;
 		}
 
 		log([

@@ -165,7 +165,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', functio
 	}
 
 	testCases.forEach(function (testCase) {
-		it('expected placementId is returned for ' + testCase.skin + ':' + testCase.vertical + ':' + testCase.env, function () {
+		it('returns expected placementId for ' + testCase.skin + ':' + testCase.vertical + ':' + testCase.env, function () {
 			var appNexusPlacements = getModule(testCase.vertical, testCase.env),
 				result = appNexusPlacements.getPlacement(testCase.skin, testCase.pos, testCase.recovery);
 
