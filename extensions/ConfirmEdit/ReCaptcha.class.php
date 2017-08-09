@@ -72,11 +72,11 @@ class ReCaptcha extends SimpleCaptcha {
 		return wfMessage( $name )->isBlank() ? wfMessage( 'recaptcha-edit' )->escaped() : $text;
 	}
 
-	public function APIGetAllowedParams( &$module, &$params ) {
+	public function APIGetAllowedParams( ApiBase $module, &$params ): bool {
 		return true;
 	}
 
-	public function APIGetParamDescription( &$module, &$desc ) {
+	public function APIGetParamDescription( ApiBase $module, &$desc ): bool {
 		return true;
 	}
 }

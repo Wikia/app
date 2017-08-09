@@ -91,7 +91,13 @@ abstract class WallNotificationControllerBase extends WikiaService {
 
 		$msg = "";
 		Hooks::run( 'NotificationGetNotificationMessage', [
-			&$this, &$msg, $firstEntity->isMain(), $data, $authors, $userCount, $wg->User->getName()
+			$this,
+			&$msg,
+			$firstEntity->isMain(),
+			$data,
+			$authors,
+			$userCount,
+			$wg->User->getName(),
 		] );
 
 		if ( empty( $msg ) ) {

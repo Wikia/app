@@ -53,13 +53,7 @@ class SharedHttp {
 		# Use curl if available
 		if ( function_exists( 'curl_init' ) ) {
 			$c = curl_init( $url );
-			/*
-			if ( self::isLocalURL( $url ) ) {
-				curl_setopt( $c, CURLOPT_PROXY, 'localhost:80' );
-			} else if ($wgHTTPProxy) {
-				curl_setopt($c, CURLOPT_PROXY, $wgHTTPProxy);
-			}
-			*/
+
 			if (empty($wgDevelEnvironment)) {
 				curl_setopt( $c, CURLOPT_PROXY, 'localhost:80' );
 			}
@@ -126,8 +120,8 @@ class SharedHttp {
  * @param $text
  * @return bool
  */
-function SharedHelpHook(&$out, &$text) {
-	global $wgTitle, $wgOut, $wgMemc, $wgCityId, $wgHelpWikiId, $wgContLang, $wgLanguageCode, $wgArticlePath;
+function SharedHelpHook( OutputPage $out, string &$text ): bool {
+	global $wgMemc, $wgCityId, $wgHelpWikiId, $wgContLang, $wgLanguageCode, $wgArticlePath;
 
 	/* Insurance that hook will be called only once #BugId:  */
 	static $wasCalled = false;
@@ -154,13 +148,14 @@ function SharedHelpHook(&$out, &$text) {
 		return true;
 	}
 
-	if($wgTitle->getNamespace() == NS_HELP) {
+	$title = $out->getTitle();
+	if ( $title->inNamespace( NS_HELP ) ) {
 		# Initialize shared and local variables
 		# Canonical namespace is added here in case we ever want to share other namespaces (e.g. Advice)
 		$sharedArticleKey = wfSharedMemcKey(
 			'sharedArticles',
 			$wgHelpWikiId,
-			md5(MWNamespace::getCanonicalName( $wgTitle->getNamespace() ) . ':' . $wgTitle->getDBkey()),
+			md5(MWNamespace::getCanonicalName( $title->getNamespace() ) . ':' . $title->getDBkey() ),
 			SHAREDHELP_CACHE_VERSION
 		);
 		$sharedArticle = $wgMemc->get($sharedArticleKey);
@@ -204,7 +199,7 @@ function SharedHelpHook(&$out, &$text) {
 			$content = preg_replace("|<mw:editsection( .*)?>.*?</mw:editsection>|", "", $content);
 		} else {# If getting content from memcache failed (invalidate) then just download it via HTTP
 			$urlTemplate = $sharedServer . $sharedScript . "?title=Help:%s&action=render";
-			$articleUrl = sprintf($urlTemplate, urlencode($wgTitle->getDBkey()));
+			$articleUrl = sprintf( $urlTemplate, urlencode( $title->getDBkey() ) );
 			list($content, $c) = SharedHttp::get($articleUrl);
 
 			if ( $content === false ) {
@@ -221,13 +216,12 @@ function SharedHelpHook(&$out, &$text) {
 				}
 			}
 
-			global $wgServer, $wgArticlePath, $wgRequest, $wgTitle;
+			global $wgServer, $wgArticlePath;
 			$helpNs = $wgContLang->getNsText(NS_HELP);
-			$sk = RequestContext::getMain()->getSkin();
 
 			if (!empty ($_SESSION ['SH_redirected'])) {
 				$from_link = Title::newfromText( $helpNs . ":" . $_SESSION ['SH_redirected'] );
-				$redir = $sk->makeKnownLinkObj( $from_link, '', 'redirect=no', '', '', 'rel="nofollow"' );
+				$redir = Linker::linkKnown( $from_link, '', [ 'rel' => 'nofollow' ], 'redirect=no' );
 				$s = wfMessage( 'redirectedfrom', $redir )->text();
 				$out->setSubtitle( $s );
 				$_SESSION ['SH_redirected'] = '';
@@ -240,12 +234,12 @@ function SharedHelpHook(&$out, &$text) {
 					$destinationPageIndex = strpos( $destinationUrl, MWNamespace::getCanonicalName(NS_HELP) . ":" );
 				$destinationPage = substr( $destinationUrl, $destinationPageIndex );
 				$link = $wgServer . str_replace( "$1", $destinationPage, $wgArticlePath );
-				if ( 'no' != $wgRequest->getVal( 'redirect' ) ) {
-					$_SESSION ['SH_redirected'] = $wgTitle->getText();
+				if ( 'no' != $out->getRequest()->getVal( 'redirect' ) ) {
+					$_SESSION ['SH_redirected'] = $title->getText();
 					$out->redirect( $link );
 					$wasRedirected = true;
 				} else {
-					$content = "\n\n" . wfMsg( 'shared_help_was_redirect', "<a href=" . $link . ">$destinationPage</a>" );
+					$content = "\n\n" . $out->msg( 'shared_help_was_redirect' )->rawParams( "<a href=" . $link . ">$destinationPage</a>" )->escaped();
 				}
 			} else {
 				$tmp = explode("\r\n\r\n", $content, 2);
@@ -326,12 +320,12 @@ function SharedHelpHook(&$out, &$text) {
 			$sharedRedirectsArticlesKey = wfSharedMemcKey(
 				'sharedRedirectsArticles',
 				$wgHelpWikiId,
-				md5( MWNamespace::getCanonicalName( $wgTitle->getNamespace() ) . ':' . $wgTitle->getDBkey() )
+				md5( MWNamespace::getCanonicalName( $title->getNamespace() ) . ':' . $title->getDBkey() )
 			);
 			$articleLink = $wgMemc->get($sharedRedirectsArticlesKey, null);
 
 			if ( $articleLink == null ){
-				$articleLink =  MWNamespace::getCanonicalName(NS_HELP_TALK) . ':' . $wgTitle->getDBkey();
+				$articleLink =  MWNamespace::getCanonicalName(NS_HELP_TALK) . ':' . $title->getDBkey();
 				$apiUrl = $sharedServer."/api.php?action=query&redirects&format=json&titles=".$articleLink;
 				$file = @file_get_contents($apiUrl, FALSE );
 				$APIOut = json_decode($file);
@@ -340,10 +334,9 @@ function SharedHelpHook(&$out, &$text) {
 				}
 				$wgMemc->set($sharedRedirectsArticlesKey, $articleLink, 60*60*12);
 			}
-			$helpSitename = WikiFactory::getVarValueByName( 'wgSitename', $wgHelpWikiId );
 
 			// "this text is stored..."
-			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SharedHelp/css/shared-help.scss' ));
+			$out->addStyle(AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SharedHelp/css/shared-help.scss' ));
 			$info = '<div class="sharedHelpInfo plainlinks" style="text-align: right; font-size: smaller;padding: 5px">' . wfMessage( 'shared_help_info' )->parse() . '</div>';
 
 			if(strpos($text, '"noarticletext"') > 0) {
@@ -358,28 +351,30 @@ function SharedHelpHook(&$out, &$text) {
 	return true;
 }
 
-function SharedHelpEditPageHook(&$editpage) {
-	global $wgTitle, $wgCityId, $wgHelpWikiId;
+function SharedHelpEditPageHook( EditPage $editPage ): bool {
+	global $wgCityId, $wgHelpWikiId;
 
 	// do not show this message on the help wiki
 	if ($wgCityId == $wgHelpWikiId) {
 		return true;
 	}
 
+	$title = $editPage->getTitle();
+
 	// show message only when editing pages from Help namespace
-	if ( !($wgTitle instanceof Title) || ($wgTitle->getNamespace() != NS_HELP) ) {
+	if ( !$title->inNamespace( NS_HELP ) ) {
 		return true;
 	}
 
-	if ( !SharedHelpArticleExists($wgTitle) ) {
+	if ( !SharedHelpArticleExists( $title ) ) {
 		return true;
 	}
 
 	$helpSitename = WikiFactory::getVarValueByName( 'wgSitename', $wgHelpWikiId );
 
-	$msg = '<div style="border: solid 1px; padding: 10px; margin: 5px" class="sharedHelpEditInfo">' . wfMessage( 'shared_help_edit_info', $wgTitle->getDBkey(), $helpSitename )->parse() .'</div>';
+	$msg = '<div style="border: solid 1px; padding: 10px; margin: 5px" class="sharedHelpEditInfo">' . wfMessage( 'shared_help_edit_info', $title->getDBkey(), $helpSitename )->parse() .'</div>';
 
-	$editpage->editFormPageTop .= $msg;
+	$editPage->editFormPageTop .= $msg;
 
 	return true;
 }
@@ -478,7 +473,7 @@ function SharedHelpArticleExists(Title $title) {
 }
 
 // basically modify the Wantedpages query to exclude pages that appear on the help wiki, as per #5866
-function SharedHelpWantedPagesSql( &$page, &$sql ) {
+function SharedHelpWantedPagesSql( WantedPagesPage $page, array &$sql ): bool {
 	global $wgHelpWikiId, $wgMemc;
 	wfProfileIn( __METHOD__ );
 
@@ -546,7 +541,7 @@ function efSharedHelpGetMagicWord(&$magicWords, $langCode) {
 	return true;
 }
 
-function efSharedHelpRemoveMagicWord(&$parser, &$text, &$strip_state) {
+function efSharedHelpRemoveMagicWord( Parser $parser, string &$text, &$strip_state ): bool {
 	$found = MagicWord::get('MAG_NOSHAREDHELP')->matchAndRemove($text);
 	if ( $found ) {
 		$text .= NOSHAREDHELP_MARKER;

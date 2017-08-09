@@ -18,8 +18,8 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         '5a494680c593293bd6035e42e2a6825c' => __DIR__ . '/..' . '/data-values/geo/Geo.php',
         'c3ae67574219cc56cab6c30ef8877b85' => __DIR__ . '/../../..' . '/extensions/Validator/Validator.php',
         'bbf73f3db644d3dced353b837903e74c' => __DIR__ . '/..' . '/php-di/php-di/src/DI/functions.php',
-        '9ebf2cbcc0b7687b276c44d77096b002' => __DIR__ . '/../../..' . '/extensions/Maps/Maps.php',
         '679670650e5628b8e655cb72d74ae35b' => __DIR__ . '/..' . '/ooyala/v2-api/OoyalaApi.php',
+        'cc7fdba6ccbdf8a9ed7028cb59f8bb6f' => __DIR__ . '/../../..' . '/extensions/Maps/Maps.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -902,14 +902,6 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'Maps\\PolygonParser' => __DIR__ . '/../../..' . '/extensions/Maps/includes/parsers/PolygonParser.php',
         'Maps\\RectangleParser' => __DIR__ . '/../../..' . '/extensions/Maps/includes/parsers/RectangleParser.php',
         'Maps\\ServiceParam' => __DIR__ . '/../../..' . '/extensions/Maps/includes/ServiceParam.php',
-        'Maps\\Test\\ParserHookTest' => __DIR__ . '/../../..' . '/extensions/Maps/tests/phpunit/parserhooks/ParserHookTest.php',
-        'Maps\\Tests\\Elements\\BaseElementTest' => __DIR__ . '/../../..' . '/extensions/Maps/tests/phpunit/elements/BaseElementTest.php',
-        'Maps\\Tests\\Elements\\CircleTest' => __DIR__ . '/../../..' . '/extensions/Maps/tests/phpunit/elements/CircleTest.php',
-        'Maps\\Tests\\Elements\\ImageOverlayTest' => __DIR__ . '/../../..' . '/extensions/Maps/tests/phpunit/elements/ImageOverlayTest.php',
-        'Maps\\Tests\\Elements\\LineTest' => __DIR__ . '/../../..' . '/extensions/Maps/tests/phpunit/elements/LineTest.php',
-        'Maps\\Tests\\Elements\\LocationTest' => __DIR__ . '/../../..' . '/extensions/Maps/tests/phpunit/elements/LocationTest.php',
-        'Maps\\Tests\\Elements\\PolygonTest' => __DIR__ . '/../../..' . '/extensions/Maps/tests/phpunit/elements/PolygonTest.php',
-        'Maps\\Tests\\Elements\\RectangleTest' => __DIR__ . '/../../..' . '/extensions/Maps/tests/phpunit/elements/RectangleTest.php',
         'Maps\\WmsOverlayParser' => __DIR__ . '/../../..' . '/extensions/Maps/includes/parsers/WmsOverlayParser.php',
         'Monolog\\ErrorHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/ErrorHandler.php',
         'Monolog\\Formatter\\ChromePHPFormatter' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Formatter/ChromePHPFormatter.php',

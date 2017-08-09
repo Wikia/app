@@ -17,7 +17,7 @@ class WikiaMobileHooks {
 	 * @param $strip_state
 	 * @return bool
 	 */
-	static public function onParserBeforeStrip( &$parser, &$text, &$strip_state ) {
+	static public function onParserBeforeStrip( Parser $parser, string &$text, &$strip_state ): bool {
 		global $wgWikiaMobileDisableMediaGrouping;
 		wfProfileIn( __METHOD__ );
 
@@ -118,7 +118,7 @@ class WikiaMobileHooks {
 	 * @param $text String
 	 * @return bool
 	 */
-	static public function onParserAfterTidy( &$parser, &$text ){
+	static public function onParserAfterTidy( Parser $parser, string &$text ): bool {
 		wfProfileIn( __METHOD__ );
 
 		if ( F::app()->checkSkin( 'wikiamobile' ) ) {
@@ -226,7 +226,7 @@ class WikiaMobileHooks {
 	 * @return bool
 	 */
 
-	static public function onCategoryPageView( CategoryPage &$categoryPage ) {
+	static public function onCategoryPageView( CategoryPage $categoryPage ): bool {
 		wfProfileIn( __METHOD__ );
 
 		$app = F::app();
@@ -269,7 +269,7 @@ class WikiaMobileHooks {
 	 * @param WikiPage $page
 	 * @return bool
 	 */
-	static public function onArticlePurge( WikiPage &$page ) {
+	static public function onArticlePurge( WikiPage $page ): bool {
 		wfProfileIn( __METHOD__ );
 
 		$title = $page->getTitle();
@@ -337,14 +337,14 @@ class WikiaMobileHooks {
 	 * @param $skin Skin
 	 * @return bool
 	 */
-	static public function onBeforePageDisplay( &$out, &$skin ){
+	static public function onBeforePageDisplay( OutputPage $out, Skin $skin ): bool {
 		wfProfileIn( __METHOD__ );
 		$app = F::app();
 
 		if( $app->checkSkin( 'wikiamobile', $skin ) && WikiaMobileErrorService::$displayErrorPage == true ) {
 			$out->clearHTML();
 
-			$out->addHTML( $app->renderView( 'WikiaMobileErrorService', 'pageNotFound', array( 'out' => &$out) ) );
+			$out->addHTML( $app->renderView( 'WikiaMobileErrorService', 'pageNotFound', [ 'out' => $out ] ) );
 
 			wfProfileOut( __METHOD__ );
 			return false;

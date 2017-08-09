@@ -32,7 +32,10 @@ class PlacesHooks {
 		return true;
 	}
 
-	static public function onArticleSaveComplete( &$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ){
+	static public function onArticleSaveComplete(
+		WikiPage $article, User $user, $text, $summary, $minoredit, $watchthis,
+		$sectionanchor, $flags, $revision, Status &$status, $baseRevId
+	): bool {
  		wfProfileIn( __METHOD__ );
 
 		wfDebug( __METHOD__ . "\n" );
@@ -89,12 +92,16 @@ class PlacesHooks {
 
 	/**
 	 * Prepends the geolocation button for adding coordinates to a page
+	 * @param OutputPage $out
+	 * @param string $text
+	 * @return bool
 	 */
-	static public function onOutputPageBeforeHTML( &$out, &$text ){
-		$app = F::app();
-		if ( $app->wg->request->getVal('action', 'view') == true ) {
-			$text = $app->sendRequest( 'Places', 'getGeolocationButton' )->toString() . $text;
+	static public function onOutputPageBeforeHTML( OutputPage $out, string &$text ): bool {
+
+		if ( $out->getRequest()->getVal('action', 'view') == true ) {
+			$text = F::app()->sendRequest( 'Places', 'getGeolocationButton' )->toString() . $text;
 		}
-		return $out;
+
+		return true;
 	}
 }

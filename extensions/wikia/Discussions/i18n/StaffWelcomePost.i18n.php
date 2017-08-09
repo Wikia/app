@@ -60,6 +60,17 @@ Bonne continuation !
 ",
 );
 
+$messages['iris-4770'] = array(
+	'discussions-staff-welcome-title' => '歡迎來到討論版！',
+	'discussions-staff-welcome-post' => '您可以在這裡暢談您所感興趣的話題，分享訊息、理念、觀點，並且可以和其他人互動。論壇內容已經被移至討論版，您仍然可以查閱。
+
+如果您希望進一步瞭解在這裡可以進行哪些活動，請查看： http://zh.community.wikia.com/wiki/Help:Discussions
+
+如果您是這個社區的管理員，請閱讀如何自訂討論版以及如何為貢獻者制定方針：http://zh.community.wikia.com/wiki/Help:%E8%AE%A8%E8%AE%BA%E7%89%88#.E7.AE.A1.E7.90.86
+
+祝您編輯愉快！',
+);
+
 $messages['it'] = array(
 	'discussions-staff-welcome-title' => 'Benvenuto in Discussioni!',
 	'discussions-staff-welcome-post' => "
