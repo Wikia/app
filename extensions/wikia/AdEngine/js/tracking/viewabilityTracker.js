@@ -24,6 +24,7 @@ define('ext.wikia.adEngine.tracking.viewabilityTracker', [
 			'pv_unique_id': win.adEnginePvUID,
 			'wsi': slotParams.wsi || '',
 			'line_item_id': slotFirstChildData.gptLineItemId || '',
+			'creative_id': slotFirstChildData.gptCreativeId || '',
 			'rv': slotParams.rv || 1
 		};
 
