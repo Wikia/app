@@ -117,7 +117,6 @@ class Hooks {
 			$data = null;
 			$have_data = false;
 			$closure = false;
-			$badhookmsg = false;
 
 			/**
 			 * $hook can be: a function, an object, an array of $function and
