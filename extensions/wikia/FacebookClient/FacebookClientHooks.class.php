@@ -173,7 +173,7 @@ class FacebookClientHooks {
 	 *
 	 * @return bool
 	 */
-	public static function onUserLogout( &$user ) {
+	public static function onUserLogout( $user ) {
 		// Clean up any facebook cookies/data
 		FacebookClient::getInstance()->logout();
 		return true;
