@@ -212,46 +212,19 @@ class Hooks {
 
 			wfProfileOut(__METHOD__);
 			wfProfileIn( $func );
-			try {
-				$retval = call_user_func_array( $callback, $hook_args );
-			} catch ( MWHookException $e ) {
-				$badhookmsg = $e->getMessage();
-			}
+
+			$retval = call_user_func_array( $callback, $hook_args );
+
 			wfProfileOut( $func );
 			wfProfileIn(__METHOD__);
 
 
-			/* String return is an error; false return means stop processing. */
+			// Process the return value.
 			if ( is_string( $retval ) ) {
+				// String returned means error.
 				throw new FatalError( $retval );
-			} elseif( $retval === null ) {
-				if ( $closure ) {
-					$prettyFunc = "$event closure";
-				} elseif( is_array( $callback ) ) {
-					if( is_object( $callback[0] ) ) {
-						$prettyClass = get_class( $callback[0] );
-					} else {
-						$prettyClass = strval( $callback[0] );
-					}
-					$prettyFunc = $prettyClass . '::' . strval( $callback[1] );
-				} else {
-					$prettyFunc = strval( $callback );
-				}
-				if ( $badhookmsg ) {
-					throw new MWException(
-						'Detected bug in an extension! ' .
-						"Hook $prettyFunc has invalid call signature; " . $badhookmsg
-					);
-				} else {
-					throw new MWException(
-						'Detected bug in an extension! ' .
-						"Hook $prettyFunc failed to return a value; " .
-						'should return true to continue hook processing or false to abort.'
-					);
-				}
-			} elseif ( !$retval ) {
-				wfProfileOut(__METHOD__);
-				wfProfileOut(__METHOD__.'-hook-'.$event);
+			} elseif ( $retval === false ) {
+				// False was returned. Stop processing, but no error.
 				return false;
 			}
 		}
