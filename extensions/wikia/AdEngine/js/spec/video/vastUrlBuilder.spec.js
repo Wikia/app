@@ -109,6 +109,12 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 		expect(vastUrl).toMatch(/&url=http:\/\/foo\.url/g);
 	});
 
+	it('Build VAST URL with description_url', function () {
+		var vastUrl = getModule().build(1, mocks.slotParams);
+
+		expect(vastUrl).toMatch(/&description_url=http:\/\/foo\.url/g);
+	});
+
 	it('Build VAST URL with numeric correlator', function () {
 		var vastUrl = getModule().build(1, mocks.slotParams);
 
