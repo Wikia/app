@@ -37,7 +37,6 @@ require([
 			$ooyalaVideo = $('#' + ooyalaVideoElementId),
 			videoCollapsed = false,
 			collapsingDisabled = false,
-			nextVideoPlayed = false,
 			playTime = -1,
 			percentagePlayTime = -1,
 			playerTrackerParams = {
@@ -56,16 +55,16 @@ require([
 			videoId = videoData.videoId,
 			videoTitle = videoData.title,
 			videoLabels = (videoData.labels || '').join(','),
+			recommendedLabel = videoData.recommendedLabel,
 			videoFeedbackBox,
 			inAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries),
 			inNextVideoAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoNextVideoAutoplayCountries),
 			autoplayCookieName = 'featuredVideoAutoplay',
-			autoplay = cookies.get(autoplayCookieName) !== '0' && inAutoplayCountries;
+			autoplay = cookies.get(autoplayCookieName) !== '0' && inAutoplayCountries,
+			recommendedVideoDepth = 0;
 
 		function initVideo(onCreate) {
-			var playerParams = window.wgOoyalaParams,
-				vastUrl,
-				inlineSkinConfig = {
+			var inlineSkinConfig = {
 					controlBar: {
 						autoplayCookieName: autoplayCookieName,
 						autoplayToggle: inAutoplayCountries
@@ -73,10 +72,18 @@ require([
 					discoveryScreen: {
 						showCountDownTimerOnEndScreen: inNextVideoAutoplayCountries
 					}
+				},
+				options = {
+					pcode: window.wgOoyalaParams.ooyalaPCode,
+					playerBrandingId: window.wgOoyalaParams.ooyalaPlayerBrandingId,
+					videoId: videoId,
+					autoplay: autoplay,
+					inlineSkinConfig: inlineSkinConfig,
+					recommendedLabel: recommendedLabel
 				};
 
 			if (vastUrlBuilder && adContext && adContext.getContext().opts.showAds) {
-				vastUrl = vastUrlBuilder.build(640/480, {
+				options.vastUrl = vastUrlBuilder.build(640/480, {
 					pos: 'FEATURED',
 					src: 'premium'
 				});
@@ -88,15 +95,7 @@ require([
 				playerTracker.track(playerTrackerParams, 'init');
 			}
 
-			ooyalaVideoController = OoyalaPlayer.initHTML5Player(
-				ooyalaVideoElementId,
-				playerParams,
-				videoId,
-				onCreate,
-				autoplay,
-				vastUrl,
-				inlineSkinConfig
-			);
+			ooyalaVideoController = OoyalaPlayer.initHTML5Player(ooyalaVideoElementId, options, onCreate);
 		}
 
 		function collapseVideo(videoOffset, videoHeight) {
@@ -233,7 +232,7 @@ require([
 			});
 
 			player.mb.subscribe(window.OO.EVENTS.PLAYBACK_READY, 'ui-update', function () {
-				if (nextVideoPlayed) {
+				if (recommendedVideoDepth > 0) {
 					$onScrollVideoTitle.text(player.getTitle());
 					$onScrollVideoTime.text(
 						ooyalaVideoController.getFormattedDuration(player.getDuration())
@@ -338,11 +337,15 @@ require([
 				var bucketInfo = JSON.parse(eventData.clickedVideo.bucket_info.substring(1)),
 					position = bucketInfo.position;
 
-				nextVideoPlayed = true;
+				recommendedVideoDepth++;
 
 				track({
 					action: tracker.ACTIONS.VIEW,
 					label: 'recommended-video-' + position
+				});
+				track({
+					action: tracker.ACTIONS.VIEW,
+					label: 'recommended-video-depth-' + recommendedVideoDepth
 				});
 
 				// Don't play ads between videos
