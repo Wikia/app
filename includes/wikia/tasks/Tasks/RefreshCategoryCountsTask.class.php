@@ -107,7 +107,9 @@ class RefreshCategoryCountsTask extends BaseTask {
 			}
 		}
 
-		$this->db->delete( 'category', [ 'cat_title' => $entriesToDelete ], __METHOD__ );
+		if ( !empty( $entriesToDelete ) ) {
+			$this->db->delete( 'category', [ 'cat_title' => $entriesToDelete ], __METHOD__ );
+		}
 	}
 
 	/**
@@ -144,7 +146,7 @@ class RefreshCategoryCountsTask extends BaseTask {
 	 * @param string $catName
 	 * @return array|object
 	 */
-	private function getContentCounts( string $catName ): array {
+	private function getContentCounts( string $catName ) {
 		$cond1 = $this->db->conditional( 'page_namespace=' . NS_CATEGORY, 1, 'NULL' );
 		$cond2 = $this->db->conditional( 'page_namespace=' . NS_FILE, 1, 'NULL' );
 

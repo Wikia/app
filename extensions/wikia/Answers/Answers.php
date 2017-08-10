@@ -519,7 +519,7 @@ function displayMagicAnswer($editor){
 //CategoryPageView
 //injects Ads into Category pages
 $wgHooks['CategoryPageView'][] = 'wfCategoryPageWithAds';
-function wfCategoryPageWithAds( Category $cat ){
+function wfCategoryPageWithAds( $cat ){
 
 	$article = new Article( $cat->getTitle() );
 	$article->view();
