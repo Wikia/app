@@ -75,9 +75,8 @@ class RecirculationController extends WikiaController {
 		$topWikiArticles = array_slice( $topWikiArticles, 0, 3 );
 		// add index to items to render it by mustache template
 		$index = 1;
-		foreach($topWikiArticles as $wikiArticle) {
-			$wikiArticle['index'] = $index;
-			$index++;
+		foreach ( $topWikiArticles as &$wikiArticle ) {
+			$wikiArticle['index'] = $index++;
 		}
 
 		return $topWikiArticles;
