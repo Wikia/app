@@ -64,12 +64,12 @@ class RecirculationController extends WikiaController {
 	}
 
 	private function getTopWikiArticles() {
-		global $wgTitle, $wgCityId;
+		global $wgCityId;
 
 		$topWikiArticles = TopWikiArticles::getArticlesWithCache( $wgCityId, false );
 		// do not show itself
-		$topWikiArticles = array_filter( $topWikiArticles, function ( $item ) use ( $wgTitle ) {
-			return $item['id'] !== $wgTitle->getArticleID();
+		$topWikiArticles = array_filter( $topWikiArticles, function ( $item ) {
+			return $item['id'] !== RequestContext::getMain()->getTitle()->getArticleID();
 		} );
 		// add index to items to render it by mustache template
 		$topWikiArticles = array_map( function ( $item, $index ) {
