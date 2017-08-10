@@ -120,7 +120,7 @@ define('ooyala-player', ['wikia.browserDetect'], function (browserDetect) {
 			html5Player;
 
 		if (options.recommendedLabel) {
-			params['discoveryApiAdditionalParams'] = {
+			params.discoveryApiAdditionalParams = {
 				discovery_profile_id: 0,
 				where: 'labels INCLUDES \'' + options.recommendedLabel + '\''
 			}
