@@ -23,8 +23,6 @@
  * @file
  */
 
-class MWHookException extends MWException {}
-
 /**
  * Hooks class.
  *
