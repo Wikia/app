@@ -71,15 +71,16 @@ class RecirculationController extends WikiaController {
 		$topWikiArticles = array_filter( $topWikiArticles, function ( $item ) {
 			return $item['id'] !== RequestContext::getMain()->getTitle()->getArticleID();
 		} );
-		// add index to items to render it by mustache template
-		$topWikiArticles = array_map( function ( $item, $index ) {
-			$item['index'] = $index + 1;
-
-			return $item;
-		}, $topWikiArticles, array_keys( array_values( $topWikiArticles ) ) );
-
 		// show max 3 elements
-		return array_slice( $topWikiArticles, 0, 3 );
+		$topWikiArticles = array_slice( $topWikiArticles, 0, 3 );
+		// add index to items to render it by mustache template
+		$index = 1;
+		foreach($topWikiArticles as $wikiArticle) {
+			$wikiArticle['index'] = $index;
+			$index++;
+		}
+
+		return $topWikiArticles;
 	}
 
 	public function container( $params ) {
