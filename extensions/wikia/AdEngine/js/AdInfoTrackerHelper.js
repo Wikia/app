@@ -69,6 +69,8 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 			'product_chosen': '',
 			'product_lineitem_id': slotFirstChildData.gptLineItemId || '',
 			'creative_id': slotFirstChildData.gptCreativeId || '',
+			'creative_size': slotFirstChildData.gptCreativeSize || '',
+			'viewport_height': win.innerHeight || 0,
 			'product_label': '',
 			'ad_status': status || 'unknown'
 		};
