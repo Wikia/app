@@ -60,7 +60,9 @@ require([
 			inAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries),
 			inNextVideoAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoNextVideoAutoplayCountries),
 			autoplayCookieName = 'featuredVideoAutoplay',
-			autoplay = cookies.get(autoplayCookieName) !== '0' && inAutoplayCountries;
+			willAutoplay = cookies.get(autoplayCookieName) !== '0' && inAutoplayCountries,
+			autoplayOnLoad = willAutoplay && !document.hidden,
+			initialPlayTriggered = false;
 
 		function initVideo(onCreate) {
 			var playerParams = window.wgOoyalaParams,
@@ -93,10 +95,18 @@ require([
 				playerParams,
 				videoId,
 				onCreate,
-				autoplay,
+				autoplayOnLoad,
 				vastUrl,
 				inlineSkinConfig
 			);
+
+			document.addEventListener('visibilitychange', handleTabChange);
+		}
+
+		function handleTabChange() {
+			if (!document.hidden && !initialPlayTriggered && willAutoplay) {
+				ooyalaVideoController.player.play();
+			}
 		}
 
 		function collapseVideo(videoOffset, videoHeight) {
@@ -216,7 +226,7 @@ require([
 		window.guaSetCustomDimension(34, videoId);
 		window.guaSetCustomDimension(35, videoTitle);
 		window.guaSetCustomDimension(36, videoLabels);
-		window.guaSetCustomDimension(37, autoplay ? 'Yes' : 'No');
+		window.guaSetCustomDimension(37, willAutoplay ? 'Yes' : 'No');
 
 		initVideo(function (player) {
 			$video.addClass('ready-to-play');
@@ -226,6 +236,8 @@ require([
 			}
 
 			player.mb.subscribe(window.OO.EVENTS.INITIAL_PLAY, 'featured-video', function () {
+				initialPlayTriggered = true;
+
 				track({
 					action: tracker.ACTIONS.PLAY_VIDEO,
 					label: 'featured-video'
