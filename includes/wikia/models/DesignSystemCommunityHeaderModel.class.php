@@ -4,6 +4,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	const WORDMARK_TYPE_GRAPHIC = 'graphic';
 
 	private $productInstanceId;
+	private $langCode;
 	private $themeSettings;
 	private $settings;
 	private $mainPageUrl;
@@ -15,13 +16,14 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	private $discussLinkData = null;
 	private $wikiLocalNavigation = null;
 
-	public function __construct( string $cityId ) {
+	public function __construct(string $cityId, string $langCode) {
 		parent::__construct();
 
 		$this->productInstanceId = $cityId;
-		$this->themeSettings = new ThemeSettings( $cityId );
-		$this->settings = $this->themeSettings->getSettings( $cityId );
-		$this->mainPageUrl = GlobalTitle::newMainPage( $this->productInstanceId )->getFullURL();
+		$this->langCode = $langCode;
+		$this->themeSettings = new ThemeSettings($cityId);
+		$this->settings = $this->themeSettings->getSettings($cityId);
+		$this->mainPageUrl = GlobalTitle::newMainPage($this->productInstanceId)->getFullURL();
 	}
 
 	public function getData(): array {
@@ -114,21 +116,23 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	public function getWikiLocalNavigation( $wikitext = null ): array {
 		if ( $this->wikiLocalNavigation === null ) {
 			if ( empty( $wikitext ) ) {
-				$navigationMessage = GlobalTitle::newFromText(
-					NavigationModel::WIKI_LOCAL_MESSAGE,
-					NS_MEDIAWIKI,
-					$this->productInstanceId
-				);
+				$navigationMessage = GlobalTitle::newFromText(NavigationModel::WIKI_LOCAL_MESSAGE, NS_MEDIAWIKI, $this->productInstanceId);
+				//this will be empty on wikis with no Wiki-navigation
 				$wikitext = $navigationMessage->getContent();
 			}
 
 			$this->wikiLocalNavigation = $this->formatLocalNavData(
-				( new NavigationModel() )->getFormattedWiki(
-					NavigationModel::WIKI_LOCAL_MESSAGE,
-					$wikitext
-				)['wiki'],
+				ApiService::foreignCall(WikiFactory::getWikiByID( $this->productInstanceId )->city_dbname,
+					[
+						'controller' => 'NavigationApi',
+						'method' => 'getData',
+						'uselang' => $this->langCode,
+						'wikitext' => $wikitext
+					],
+					ApiService::WIKIA)['navigation']['wiki'],
 				1
 			);
+
 		}
 
 		return $this->wikiLocalNavigation;

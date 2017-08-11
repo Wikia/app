@@ -51,14 +51,11 @@ class ApiService {
 	 *
 	 * @return mixed API response
 	 */
-	static function foreignCall( $dbName, Array $params, $endpoint = self::API, $setUser = false ) {
-		wfProfileIn(__METHOD__);
-
+	static function foreignCall( string $dbName, Array $params, string $endpoint = self::API, bool $setUser = false ) {
 		$hostName = self::getHostByDbName( $dbName );
 
 		// If hostName is empty, this would make a request to the current host.
 		if ( empty( $hostName ) ) {
-			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -83,8 +80,6 @@ class ApiService {
 			$res = json_decode( $resp, true /* $assoc */ );
 		}
 
-		wfProfileOut( __METHOD__ );
-
 		return $res;
 	}
 
@@ -95,7 +90,7 @@ class ApiService {
 	 *
 	 * @return string HTTP domain
 	 */
-	private static function getHostByDbName( $dbName ) {
+	private static function getHostByDbName( string $dbName ) {
 		global $wgDevelEnvironment, $wgDevDomain;
 
 		$cityId = WikiFactory::DBtoID( $dbName );
