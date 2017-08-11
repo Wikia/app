@@ -121,7 +121,7 @@ class Track {
 		global $wgDevelEnvironment;
 
 		// Fake beacon and varnishTime values for development environment
-		if ( !empty( $wgDevelEnvironment ) ) {
+		if ( !empty( $wgDevelEnvironment )  ) {
 			$script = '<script>var beacon_id = "ThisIsFake", varnishTime = "' . date( "r" ) . '";</script>';
 
 		} else {
@@ -147,10 +147,20 @@ class Track {
 		
 	}
 
+	result = RegExp("wikia_session_id=([A-Za-z0-9_-]{10})").exec(document.cookie);
+	window.sessionId = result ? result[1] : '';
+	window.pvUID = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+			var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+			return v.toString(16);
+		});
+
 	var utma = RegExp("__utma=([0-9\.]+)").exec(document.cookie);
 	var utmb = RegExp("__utmb=([0-9\.]+)").exec(document.cookie);
 
-	var trackUrl = "$url" + ((typeof document.referrer != "undefined") ? "&r=" + escape(document.referrer) : "") + "&rand=" + (new Date).valueOf() + (window.beacon_id ? "&beacon=" + window.beacon_id : "") + (utma && utma[1] ? "&utma=" + utma[1] : "") + (utmb && utmb[1] ? "&utmb=" + utmb[1] : "");
+	var trackUrl = "$url" + ((typeof document.referrer != "undefined") ? "&r=" + escape(document.referrer) : "") +
+	"&rand=" + (new Date).valueOf() + (window.beacon_id ? "&beacon=" + window.beacon_id : "") +
+	(utma && utma[1] ? "&utma=" + utma[1] : "") + (utmb && utmb[1] ? "&utmb=" + utmb[1] : "") +
+	'&session_id=' + window.sessionId + '&pv_unique_id=' + window.pvUID;
 	var script = document.createElement('script');
 	script.src = trackUrl;
 	document.head.appendChild(script);

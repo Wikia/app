@@ -35,7 +35,7 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 
 		data = {
 			'pv': pageParams.pv || '',
-			'pv_unique_id': win.adEnginePvUID,
+			'pv_unique_id': win.pvUID,
 			'browser': [ browserDetect.getOS(), browserDetect.getBrowser() ].join(' '),
 			'country': pageParams.geo || '',
 			'time_bucket': (new Date()).getHours(),

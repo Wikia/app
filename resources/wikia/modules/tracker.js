@@ -142,6 +142,8 @@
 				'u': window.trackID || window.wgTrackID || 0,
 				's': window.skin,
 				'beacon': window.beacon_id || '',
+				'session_id': window.sessionId,
+				'pv_unique_id': window.pvUID,
 				'cb': Math.floor( Math.random() * 99999 )
 			};
 
