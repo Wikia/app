@@ -118,8 +118,12 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 
 		if ( $this->wikiLocalNavigation === null ) {
 			if ( empty( $wikitext ) ) {
-				$navigationMessage = GlobalTitle::newFromText(NavigationModel::WIKI_LOCAL_MESSAGE, NS_MEDIAWIKI, $this->productInstanceId);
-				//this will be empty on wikis with no Wiki-navigation
+				$navigationMessage = GlobalTitle::newFromText(
+					NavigationModel::WIKI_LOCAL_MESSAGE,
+					NS_MEDIAWIKI,
+					$this->productInstanceId
+				);
+
 				$wikitext = $navigationMessage->getContent();
 			}
 

@@ -217,7 +217,7 @@ class NavigationModel extends WikiaModel {
 				// get wikitext from given source
 				switch ( $type ) {
 					case self::TYPE_MESSAGE:
-                        $text = wfMessage( $source )->inContentLanguage()->text();
+						$text = wfMessage( $source )->inContentLanguage()->text();
 						break;
 
 					case self::TYPE_VARIABLE:
