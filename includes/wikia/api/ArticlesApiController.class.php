@@ -100,7 +100,6 @@ class ArticlesApiController extends WikiaApiController {
 	 * @example &category=Characters&namespaces=14
 	 */
 	public function getTop() {
-		wfProfileIn( __METHOD__ );
 		$this->cors->setHeaders( $this->response );
 
 		$namespaces = self::processNamespaces( $this->request->getArray( self::PARAMETER_NAMESPACES, null ), __METHOD__ );
@@ -130,7 +129,6 @@ class ArticlesApiController extends WikiaApiController {
 					} );
 				}
 			} else {
-				wfProfileOut( __METHOD__ );
 				throw new InvalidParameterApiException( self::PARAMETER_CATEGORY );
 			}
 		}
@@ -206,7 +204,6 @@ class ArticlesApiController extends WikiaApiController {
 			}
 			$collection = $result;
 		} else {
-			wfProfileOut( __METHOD__ );
 			if ( $baseArticleId === false ) {
 				throw new NotFoundApiException();
 			}
@@ -235,7 +232,6 @@ class ArticlesApiController extends WikiaApiController {
 		);
 
 		$batches = null;
-		wfProfileOut( __METHOD__ );
 	}
 
 	public function getMostLinked() {
@@ -285,7 +281,6 @@ class ArticlesApiController extends WikiaApiController {
 	 * @example http://www.wikia.com/wikia.php?controller=ArticlesApi&method=getTopByHub&hub=Gaming&lang=de
 	 */
 	public function getTopByHub() {
-		wfProfileIn( __METHOD__ );
 
 		if ( $this->wg->DBname == 'wikiaglobal' ) {
 			$hub = trim( $this->request->getVal( self::PARAMETER_HUB, null ) );
@@ -293,35 +288,28 @@ class ArticlesApiController extends WikiaApiController {
 			$namespaces = self::processNamespaces( $this->request->getArray( self::PARAMETER_NAMESPACES, null ), __METHOD__ );
 
 			if ( empty( $hub ) ) {
-				wfProfileOut( __METHOD__ );
 				throw new MissingParameterApiException( self::PARAMETER_HUB );
 			}
 
 			if ( !empty( $langs ) &&  count( $langs ) > self::LANGUAGES_LIMIT ) {
-				wfProfileOut( __METHOD__ );
 				throw new LimitExceededApiException( self::PARAMETER_LANGUAGES, self::LANGUAGES_LIMIT );
 			}
 
 			$res = DataMartService::getTopCrossWikiArticlesByPageview( $hub, $langs, $namespaces );
 
-			wfProfileOut( __METHOD__ );
 
 			if ( empty( $res ) ) {
-				wfProfileOut( __METHOD__ );
 				throw new NotFoundApiException();
 			}
 
 			$this->response->setVal( 'items', $res );
 		} else {
-			wfProfileOut( __METHOD__ );
 			throw new BadRequestApiException();
 		}
 	}
 
 
 	public function getNew() {
-		wfProfileIn( __METHOD__ );
-
 		$ns = $this->request->getArray( self::PARAMETER_NAMESPACES );
 		$limit = $this->request->getInt( self::PARAMETER_LIMIT, self::DEFAULT_NEW_ARTICLES_LIMIT );
 		$minArticleQuality = $this->request->getInt( self::PARAM_ARTICLE_QUALITY );
@@ -383,7 +371,6 @@ class ArticlesApiController extends WikiaApiController {
 			[ 'imgFields' => 'thumbnail', 'urlFields' => [ 'thumbnail', 'url', 'avatar' ] ],
 			self::NEW_ARTICLES_VARNISH_CACHE_EXPIRATION
 		);
-		wfProfileOut( __METHOD__ );
 	}
 
 
@@ -460,7 +447,6 @@ class ArticlesApiController extends WikiaApiController {
 	 * @example &category=Weapons&limit=5
 	 */
 	public function getList() {
-		wfProfileIn( __METHOD__ );
 
 		$category = $this->request->getVal( self::PARAMETER_CATEGORY, null );
 		$namespaces = $this->request->getArray( self::PARAMETER_NAMESPACES, [] );
@@ -470,7 +456,6 @@ class ArticlesApiController extends WikiaApiController {
 
 		if ( !empty( $category ) ) {
 			if ( ! ( $category = self::resolveCategoryName( $category ) ) ) {
-				wfProfileOut( __METHOD__ );
 				throw new InvalidParameterApiException( self::PARAMETER_CATEGORY );
 			}
 
@@ -541,7 +526,6 @@ class ArticlesApiController extends WikiaApiController {
 		}
 
 		if ( !is_array( $articles ) || empty( $articles[0] ) ) {
-			wfProfileOut(__METHOD__);
 			throw new NotFoundApiException('No members');
 		}
 
@@ -580,8 +564,6 @@ class ArticlesApiController extends WikiaApiController {
 			[ 'imgFields' => 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
 			WikiaResponse::CACHE_STANDARD
 		);
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -923,10 +905,6 @@ class ArticlesApiController extends WikiaApiController {
 				$n = is_numeric( $n ) ? (int) $n : false;
 
 				if ( $n === false ) {
-					if ( $caller !== null ) {
-						wfProfileOut( $caller );
-					}
-
 					throw new InvalidParameterApiException( self::PARAMETER_NAMESPACES );
 				}
 			}
