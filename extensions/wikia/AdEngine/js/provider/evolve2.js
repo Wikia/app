@@ -1,15 +1,25 @@
 /*global define, require*/
 define('ext.wikia.adEngine.provider.evolve2', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.provider.gpt.helper',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'ext.wikia.adEngine.utils.eventDispatcher',
-	'wikia.log',
-], function (adContext, gptHelper, slotTweaker, zoneParams, eventDispatcher, log) {
+	'wikia.log'
+], function (adContext, btfBlocker, gptHelper, slotTweaker, zoneParams, eventDispatcher, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.evolve2',
+		atfDesktopSlots = [
+			'INVISIBLE_SKIN',
+			'TOP_LEADERBOARD',
+			'TOP_RIGHT_BOXAD',
+			'EVOLVE_FLUSH'
+		],
+		atfMobileSlots = [
+			'MOBILE_TOP_LEADERBOARD'
+		],
 		posTargetingValue,
 		site = 'wikia_intl',
 		slotMap = {
@@ -115,6 +125,8 @@ define('ext.wikia.adEngine.provider.evolve2', [
 	return {
 		name: 'Evolve2',
 		canHandleSlot: canHandleSlot,
-		fillInSlot: fillInSlot
+		fillInSlot: btfBlocker.decorate(fillInSlot, {
+			atfSlots: adContext.getContext().targeting.skin === 'oasis' ? atfDesktopSlots : atfMobileSlots
+		})
 	};
 });
