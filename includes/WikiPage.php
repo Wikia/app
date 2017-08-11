@@ -2319,6 +2319,15 @@ class WikiPage extends Page implements IDBAccessObject {
 			$dbw->delete( 'page_props', array( 'pp_page' => $id ), __METHOD__ );
 		}
 
+		if ( $this->mTitle->inNamespace( NS_CATEGORY ) ) {
+			$field = $dbw->selectField( 'category', 'cat_title', [ 'cat_title' => $this->mTitle->getDBkey(), 'cat_pages <= 0' ], __METHOD__ );
+			if ( $field ) {
+				$task = new \Wikia\Tasks\Tasks\RefreshCategoryCountsTask();
+				$task->call( 'refreshCounts', $field );
+				$task->queue();
+			}
+		}
+
 		# If using cleanup triggers, we can skip some manual deletes
 		if ( !$dbw->cleanupTriggers() ) {
 			# Clean up recentchanges entries...
@@ -2559,6 +2568,12 @@ class WikiPage extends Page implements IDBAccessObject {
 		$title->touchLinks();
 		$title->purgeSquid();
 		$title->deleteTitleProtection();
+
+		// SUS-1782: If this is a category, try to load its category table entry
+		// If it does not have one, a background task will be scheduled to create one
+		if ( $title->inNamespace( NS_CATEGORY ) ) {
+			Category::newFromTitle( $title )->getID();
+		}
 	}
 
 	/**
@@ -2929,6 +2944,24 @@ class WikiPage extends Page implements IDBAccessObject {
 				array( 'cat_title' => $deleted ),
 				__METHOD__
 			);
+
+			// SUS-1782: Get those removed categories which seem to be empty now...
+			$emptyCats = $dbw->selectFieldValues(
+				'category',
+				'cat_title',
+				[
+					'cat_pages <= 0',
+					'cat_title' => $deleted
+				],
+				__METHOD__
+			);
+
+			// ...and schedule a background task to delete them if needed.
+			if ( !empty( $emptyCats ) ) {
+				$task = new \Wikia\Tasks\Tasks\RefreshCategoryCountsTask();
+				$task->call( 'refreshCounts', $emptyCats );
+				$task->queue();
+			}
 		}
 	}
 

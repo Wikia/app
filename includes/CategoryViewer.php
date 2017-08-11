@@ -701,15 +701,10 @@ class CategoryViewer extends ContextSource {
 			# quick due to the small number of entries.
 			$totalcnt = $rescnt;
 
-			// Wikia change - begin
-			// @see SUS-2050
-			global $wgCityId;
-
-			$task = new \Wikia\Tasks\Tasks\CategoryRefreshCountsTask();
-			$task->wikiId( $wgCityId );
-			$task->call( 'refresh', $this->cat->getName() );
+			// SUS-1782: Schedule a background task to update the bogus data
+			$task = new \Wikia\Tasks\Tasks\RefreshCategoryCountsTask();
+			$task->call( 'refreshCounts', $this->title->getDBkey() );
 			$task->queue();
-			// Wikia change - end
 		} else {
 			# Case 3: hopeless.  Don't give a total count at all.
 			return wfMessage( "category-$type-count-limited" )->numParams( $rescnt )->parseAsBlock();

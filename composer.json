@@ -34,7 +34,7 @@
     "simplepie/simplepie": "^1.5",
     "php-amqplib/php-amqplib": "^2.6",
     "wikia/file_ogg": "^1.0",
-    "wikia/semantic-media-wiki": "2.4.2.9",
+    "wikia/semantic-media-wiki": "^2.4",
     "wikia/maps": "^3.5",
     "wikia/semantic-scribunto": "^1.1"
   }

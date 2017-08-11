@@ -102,6 +102,8 @@ define('ext.wikia.adEngine.adContext', [
 	function updateAdContextBidders(context) {
 		var hasFeaturedVideo = context.targeting.hasFeaturedVideo;
 
+		context.bidders.fastlane = geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlanePrebidCountries);
+
 		context.bidders.veles = geo.isProperGeo(instantGlobals.wgAdDriverVelesBidderCountries) &&
 			!hasFeaturedVideo;
 
@@ -214,7 +216,8 @@ define('ext.wikia.adEngine.adContext', [
 
 		if (context.providers.rubiconFastlane) {
 			context.providers.rubiconFastlane = geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) &&
-				geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneProviderCountries);
+				geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneProviderCountries) &&
+				!context.bidders.fastlane; // disable non-prebid implementation if Fastlane adapter is active
 		}
 
 		context.opts.enableRemnantNewAdUnit = geo.isProperGeo(instantGlobals.wgAdDriverMEGACountries);
@@ -252,6 +255,9 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.outstreamVideoFrequencyCapping = instantGlobals.wgAdDriverOutstreamVideoFrequencyCapping;
 
 		enableAdMixExperiment(context);
+
+		context.opts.premiumAdLayoutRubiconFastlaneTagsEnabled = context.opts.premiumAdLayoutEnabled &&
+			geo.isProperGeo(instantGlobals.wgAdDriverPremiumAdLayoutRubiconFastlaneTagsCountries);
 
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js

@@ -86,8 +86,8 @@ class Wikia {
 	const COMMUNITY_WIKI_ID = 177; // community.wikia.com
 	const NEWSLETTER_WIKI_ID = 223496; // wikianewsletter.wikia.com
 
-	const USER = 'Fandom';
-	const BOT_USER = 'FandomBot';
+	const USER = 'FANDOM';
+	const BOT_USER = 'FANDOMbot';
 
 	const FAVICON_URL_CACHE_KEY = 'favicon-v1';
 

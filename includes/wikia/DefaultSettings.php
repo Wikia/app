@@ -1207,6 +1207,13 @@ $wgAdDriverEnableRubiconFastlane = true;
 $wgAdDriverRubiconFastlaneCountries = null;
 
 /**
+ * @name $wgAdDriverRubiconFastlanePrebidCountries
+ * Enables RubiconFastlane Prebid implementation and DISABLES the old one in these countries.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverRubiconFastlanePrebidCountries = null;
+
+/**
  * @name $wgAdDriverRubiconFastlaneProviderCountries
  * Enables RubiconFastlane provider in these countries.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1395,6 +1402,14 @@ $wgAdDriverKikimoraTrackingCountries = [];
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverSrcPremiumCountries = [];
+
+/**
+ * @name $wgAdDriverPremiumAdLayoutRubiconFastlaneTagsCountries
+ * Enables Premium Ad Layout site and zoneIds for Rubicon Fastlane bidder
+ * is present on that page.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverPremiumAdLayoutRubiconFastlaneTagsCountries = [];
 
 /**
  * @name $wgAdDriverKILOCountries

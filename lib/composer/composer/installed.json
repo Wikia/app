@@ -4357,120 +4357,6 @@
         }
     },
     {
-        "name": "wikia/semantic-media-wiki",
-        "version": "2.4.2.9",
-        "version_normalized": "2.4.2.9",
-        "dist": {
-            "type": "tar",
-            "url": "http://artifactory.wikia-inc.com/artifactory/api/composer/php-local/direct-dists/wikia/semantic-media-wiki/semantic-media-wiki-2.4.2.9.tar",
-            "reference": null,
-            "shasum": null
-        },
-        "require": {
-            "composer/installers": "1.*,>=1.0.1",
-            "ext-mbstring": "*",
-            "mediawiki/parser-hooks": "~1.4",
-            "onoi/blob-store": "~1.2",
-            "onoi/cache": "~1.2",
-            "onoi/callback-container": "~1.0",
-            "onoi/event-dispatcher": "~1.0",
-            "onoi/http-request": "~1.1",
-            "onoi/message-reporter": "~1.0",
-            "param-processor/param-processor": "~1.2",
-            "php": ">=5.3.0",
-            "serialization/serialization": "~3.2"
-        },
-        "provide": {
-            "mediawiki/semantic-media-wiki": "2.4.2.9"
-        },
-        "replace": {
-            "mediawiki/semantic-mediawiki": "*"
-        },
-        "require-dev": {
-            "phpmd/phpmd": "~2.1",
-            "squizlabs/php_codesniffer": "~2.1"
-        },
-        "suggest": {
-            "mediawiki/semantic-forms": "Easy creation of forms to add semantic data",
-            "mediawiki/semantic-result-formats": "Additional result formats for SMW queries"
-        },
-        "type": "mediawiki-extension",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.4.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "SMW\\": "src/",
-                "SMW\\Maintenance\\": "maintenance/"
-            },
-            "classmap": [
-                "includes/",
-                "languages/SMW_Language.php"
-            ]
-        },
-        "scripts": {
-            "phpunit": [
-                "php ../../tests/phpunit/phpunit.php -c phpunit.xml.dist"
-            ],
-            "unit": [
-                "composer dump-autoload",
-                "php ../../tests/phpunit/phpunit.php -c phpunit.xml.dist --testsuite=semantic-mediawiki-unit"
-            ],
-            "cs-standalone": [
-                "composer validate --no-interaction",
-                "vendor/bin/phpcs src/* includes/* tests/* --standard=phpcs.xml --extensions=php -sp"
-            ],
-            "cs": [
-                "composer cs-standalone",
-                "vendor/bin/phpmd src/,includes/,tests/ text phpmd.xml"
-            ],
-            "ci": [
-                "composer phpunit",
-                "composer cs"
-            ]
-        },
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "Markus Krötzsch",
-                "homepage": "http://korrekt.org",
-                "role": "Original author"
-            },
-            {
-                "name": "Jeroen De Dauw",
-                "email": "jeroendedauw@gmail.com",
-                "homepage": "http://jeroendedauw.com",
-                "role": "Core developer"
-            },
-            {
-                "name": "James Hong Kong",
-                "homepage": "https://www.semantic-mediawiki.org/wiki/User:MWJames",
-                "role": "Core developer"
-            }
-        ],
-        "description": "MediaWiki extension that lets you store and query structured data within wiki pages",
-        "homepage": "https://www.semantic-mediawiki.org/wiki/",
-        "keywords": [
-            "MediaWiki",
-            "SMW",
-            "Semantic MediaWiki",
-            "Wiki"
-        ],
-        "support": {
-            "email": "semediawiki-user@lists.sourceforge.net",
-            "issues": "https://github.com/SemanticMediaWiki/SemanticMediaWiki/issues",
-            "irc": "irc://irc.freenode.net/semantic-mediawiki",
-            "forum": "https://www.semantic-mediawiki.org/wiki/semantic-mediawiki.org_talk:Community_portal",
-            "wiki": "https://www.semantic-mediawiki.org/wiki/",
-            "source": "https://github.com/SemanticMediaWiki/SemanticMediaWiki"
-        }
-    },
-    {
         "name": "wikia/semantic-scribunto",
         "version": "1.1.4",
         "version_normalized": "1.1.4.0",
@@ -4620,6 +4506,120 @@
             "email": "semediawiki-user@lists.sourceforge.net",
             "irc": "irc://irc.freenode.net/mediawiki",
             "source": "https://github.com/JeroenDeDauw/Maps"
+        }
+    },
+    {
+        "name": "wikia/semantic-media-wiki",
+        "version": "2.4.6",
+        "version_normalized": "2.4.6.0",
+        "dist": {
+            "type": "tar",
+            "url": "http://artifactory.wikia-inc.com/artifactory/api/composer/php-local/direct-dists/wikia/semantic-media-wiki/semantic-media-wiki-2.4.6.tar",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "composer/installers": "1.*,>=1.0.1",
+            "ext-mbstring": "*",
+            "mediawiki/parser-hooks": "~1.4",
+            "onoi/blob-store": "~1.2",
+            "onoi/cache": "~1.2",
+            "onoi/callback-container": "~1.0",
+            "onoi/event-dispatcher": "~1.0",
+            "onoi/http-request": "~1.1",
+            "onoi/message-reporter": "~1.0",
+            "param-processor/param-processor": "~1.2",
+            "php": ">=5.3.0",
+            "serialization/serialization": "~3.2"
+        },
+        "provide": {
+            "mediawiki/semantic-media-wiki": "2.4.2.9"
+        },
+        "replace": {
+            "mediawiki/semantic-mediawiki": "*"
+        },
+        "require-dev": {
+            "phpmd/phpmd": "~2.1",
+            "squizlabs/php_codesniffer": "~2.1"
+        },
+        "suggest": {
+            "mediawiki/semantic-forms": "Easy creation of forms to add semantic data",
+            "mediawiki/semantic-result-formats": "Additional result formats for SMW queries"
+        },
+        "type": "mediawiki-extension",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.4.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "SMW\\": "src/",
+                "SMW\\Maintenance\\": "maintenance/"
+            },
+            "classmap": [
+                "includes/",
+                "languages/SMW_Language.php"
+            ]
+        },
+        "scripts": {
+            "phpunit": [
+                "php ../../tests/phpunit/phpunit.php -c phpunit.xml.dist"
+            ],
+            "unit": [
+                "composer dump-autoload",
+                "php ../../tests/phpunit/phpunit.php -c phpunit.xml.dist --testsuite=semantic-mediawiki-unit"
+            ],
+            "cs-standalone": [
+                "composer validate --no-interaction",
+                "vendor/bin/phpcs src/* includes/* tests/* --standard=phpcs.xml --extensions=php -sp"
+            ],
+            "cs": [
+                "composer cs-standalone",
+                "vendor/bin/phpmd src/,includes/,tests/ text phpmd.xml"
+            ],
+            "ci": [
+                "composer phpunit",
+                "composer cs"
+            ]
+        },
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Markus Krötzsch",
+                "homepage": "http://korrekt.org",
+                "role": "Original author"
+            },
+            {
+                "name": "Jeroen De Dauw",
+                "email": "jeroendedauw@gmail.com",
+                "homepage": "http://jeroendedauw.com",
+                "role": "Core developer"
+            },
+            {
+                "name": "James Hong Kong",
+                "homepage": "https://www.semantic-mediawiki.org/wiki/User:MWJames",
+                "role": "Core developer"
+            }
+        ],
+        "description": "MediaWiki extension that lets you store and query structured data within wiki pages",
+        "homepage": "https://www.semantic-mediawiki.org/wiki/",
+        "keywords": [
+            "MediaWiki",
+            "SMW",
+            "Semantic MediaWiki",
+            "Wiki"
+        ],
+        "support": {
+            "email": "semediawiki-user@lists.sourceforge.net",
+            "issues": "https://github.com/SemanticMediaWiki/SemanticMediaWiki/issues",
+            "irc": "irc://irc.freenode.net/semantic-mediawiki",
+            "forum": "https://www.semantic-mediawiki.org/wiki/semantic-mediawiki.org_talk:Community_portal",
+            "wiki": "https://www.semantic-mediawiki.org/wiki/",
+            "source": "https://github.com/SemanticMediaWiki/SemanticMediaWiki"
         }
     }
 ]
