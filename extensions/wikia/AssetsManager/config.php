@@ -274,7 +274,6 @@ $config['adengine2_pr3b1d_js'] = [
 
 		// IL recovery
 		'//extensions/wikia/ARecoveryEngine/js/InstartLogic/recovery.js',
-		'//extensions/wikia/AdEngine/js/provider/gpt/targeting.js',
 
 		'//extensions/wikia/AdEngine/js/wrappers/prebid.js'
 	],

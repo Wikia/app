@@ -3,8 +3,9 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.fastlane', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
+	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
 	'wikia.log'
-], function (adContext, slotsContext, adLogicZoneParams, log) {
+], function (adContext, slotsContext, adLogicZoneParams, instartLogic, log) {
 	'use strict';
 
 	var bidderName = 'fastlane',
@@ -120,7 +121,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.fastlane', [
 	}
 
 	function isEnabled() {
-		return getAdContext().bidders.fastlane;
+		return getAdContext().bidders.fastlane && !instartLogic.isBlocking();
 	}
 
 	function prepareAdUnit(slotName, config, skin) {

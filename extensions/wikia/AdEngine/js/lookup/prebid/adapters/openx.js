@@ -1,9 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.openx',[
 	'ext.wikia.adEngine.context.slotsContext',
+	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
 	'wikia.geo',
 	'wikia.instantGlobals'
-], function (slotsContext, geo, instantGlobals) {
+], function (slotsContext, instartLogic, geo, instantGlobals) {
 	'use strict';
 
 	var bidderName = 'openx',
@@ -99,7 +100,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.openx',[
 		};
 
 	function isEnabled() {
-		return geo.isProperGeo(instantGlobals.wgAdDriverOpenXPrebidBidderCountries);
+		return geo.isProperGeo(instantGlobals.wgAdDriverOpenXPrebidBidderCountries) && !instartLogic.isBlocking();
 	}
 
 	function getSlots(skin) {

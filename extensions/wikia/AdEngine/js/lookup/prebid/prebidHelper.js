@@ -1,15 +1,15 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.prebidHelper', [
 	'ext.wikia.adEngine.lookup.prebid.adaptersRegistry',
-	'wikia.window'
-], function(adaptersRegistry, win) {
+	'ext.wikia.aRecoveryEngine.instartLogic.recovery'
+], function(adaptersRegistry, instartLogic) {
 	'use strict';
 	var adUnits = [];
 
 	function getAdapterAdUnits(adapter, skin) {
 		var adapterAdUnits = [],
 			slots = adapter.getSlots(skin),
-			isRecovering = !!(win.I11C && win.I11C.Morph);
+			isRecovering = instartLogic.isBlocking();
 
 		Object.keys(slots).forEach(function(slotName) {
 			var adUnit = adapter.prepareAdUnit(slotName, slots[slotName], skin, isRecovering);
