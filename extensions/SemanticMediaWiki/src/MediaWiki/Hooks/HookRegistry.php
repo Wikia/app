@@ -3,16 +3,23 @@
 namespace SMW\MediaWiki\Hooks;
 
 use Hooks;
+use LinksUpdate;
 use Onoi\HttpRequest\HttpRequestFactory;
+use OutputPage;
 use Parser;
 use ParserHooks\HookRegistrant;
+use ParserOutput;
+use ResourceLoader;
+use Skin;
 use SMW\ApplicationFactory;
 use SMW\DeferredRequestDispatchManager;
-use SMW\NamespaceManager;
 use SMW\ParserFunctions\DocumentationParserFunction;
 use SMW\ParserFunctions\InfoParserFunction;
 use SMW\PermissionPthValidator;
 use SMW\SQLStore\QueryDependencyLinksStoreFactory;
+use Title;
+use User;
+use WikiPage;
 
 /**
  * @license GNU GPL v2+
@@ -210,7 +217,7 @@ class HookRegistry {
 		 *
 		 * @see https://www.mediawiki.org/wiki/Manual:Hooks/NewRevisionFromEditComplete
 		 */
-		$this->handlers['NewRevisionFromEditComplete'] = function ( WikiPage $wikiPage, Revision $revision, $baseId, User $user ) {
+		$this->handlers['NewRevisionFromEditComplete'] = function ( WikiPage $wikiPage, $revision, $baseId, User $user ) {
 
 			$newRevisionFromEditComplete = new NewRevisionFromEditComplete(
 				$wikiPage,
@@ -276,7 +283,7 @@ class HookRegistry {
 		 *
 		 * @see https://www.mediawiki.org/wiki/Manual:Hooks/LinksUpdateConstructed
 		 */
-		$this->handlers['LinksUpdateConstructed'] = function ( $linksUpdate ) {
+		$this->handlers['LinksUpdateConstructed'] = function ( LinksUpdate $linksUpdate ) {
 
 			$linksUpdateConstructed = new LinksUpdateConstructed(
 				$linksUpdate
@@ -299,17 +306,6 @@ class HookRegistry {
 			);
 
 			return $specialStatsAddExtra->process();
-		};
-
-		/**
-		 * Hook: For extensions adding their own namespaces or altering the defaults
-		 *
-		 * @Bug 34383
-		 * @see https://www.mediawiki.org/wiki/Manual:Hooks/CanonicalNamespaces
-		 */
-		$this->handlers['CanonicalNamespaces'] = function ( &$list ) {
-			$list = $list + NamespaceManager::getCanonicalNames();
-			return true;
 		};
 
 		/**
@@ -528,7 +524,8 @@ class HookRegistry {
 		 */
 		$this->handlers['SMW::Store::AfterQueryResultLookupComplete'] = function ( $store, &$result ) use ( $queryDependencyLinksStoreFactory ) {
 
-			$queryDependencyLinksStore = $queryDependencyLinksStoreFactory->newQueryDependencyLinksStore(
+			$queryDependencyLinksStore =
+				$queryDependencyLinksStoreFactory->newQueryDependencyLinksStore(
 				$store
 			);
 
