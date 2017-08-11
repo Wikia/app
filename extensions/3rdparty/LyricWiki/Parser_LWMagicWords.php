@@ -202,9 +202,8 @@ function wfLyricWikiDeclareVarIds(&$magicWordIds)
 	return true;
 }
 
-function wfLyricWikiSterilizeTitle( Parser $parser, $title = '' )
+function wfLyricWikiSterilizeTitle( $parser, $title = '' )
 {
-	$lwVars = Array();
 
 	preg_match("/(.*?):(.*)/",$title,$match);
 	$artist = $match[1];
