@@ -114,6 +114,8 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	}
 
 	public function getWikiLocalNavigation( $wikitext = null ): array {
+		global $wgCityId;
+
 		if ( $this->wikiLocalNavigation === null ) {
 			if ( empty( $wikitext ) ) {
 				$navigationMessage = GlobalTitle::newFromText(NavigationModel::WIKI_LOCAL_MESSAGE, NS_MEDIAWIKI, $this->productInstanceId);
@@ -121,18 +123,28 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 				$wikitext = $navigationMessage->getContent();
 			}
 
-			$this->wikiLocalNavigation = $this->formatLocalNavData(
-				ApiService::foreignCall(WikiFactory::getWikiByID( $this->productInstanceId )->city_dbname,
+			//No need for foreignCall if we're getting data for the same wiki
+			if ($this->productInstanceId == $wgCityId) {
+				$localNavData = (new NavigationModel())->getFormattedWiki(
+						NavigationModel::WIKI_LOCAL_MESSAGE,
+						$wikitext
+					)['wiki'];
+
+			} else {
+				//Navigation is created by parsing a message to do that properly
+				//we need full context of a wiki that we generate navigation for
+				$localNavData = ApiService::foreignCall(
+					WikiFactory::getWikiByID( $this->productInstanceId )->city_dbname,
 					[
 						'controller' => 'NavigationApi',
 						'method' => 'getData',
 						'uselang' => $this->langCode,
 						'wikitext' => $wikitext
 					],
-					ApiService::WIKIA)['navigation']['wiki'],
-				1
-			);
+					ApiService::WIKIA)['navigation']['wiki'];
+			}
 
+			$this->wikiLocalNavigation = $this->formatLocalNavData($localNavData, 1);
 		}
 
 		return $this->wikiLocalNavigation;
