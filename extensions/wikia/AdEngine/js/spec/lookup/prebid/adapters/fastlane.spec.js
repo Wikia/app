@@ -14,6 +14,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.fastlane', function () {
 				return map;
 			}
 		},
+		instartLogic: {
+			isBlocking: function() {
+				return false;
+			}
+		},
 		adLogicZoneParams: {
 			getLanguage: function () {
 				return 'en';
@@ -38,6 +43,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.fastlane', function () {
 			mocks.adContext,
 			mocks.slotsContext,
 			mocks.adLogicZoneParams,
+			mocks.instartLogic,
 			mocks.log
 		);
 	}

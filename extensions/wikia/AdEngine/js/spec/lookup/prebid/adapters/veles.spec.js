@@ -59,6 +59,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 					adId: 456
 				}]
 			}
+		},
+		instartLogic: {
+			isBlocking: function() {
+				return false;
+			}
 		}
 	};
 
@@ -82,6 +87,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 			mocks.priceParsingHelper,
 			mocks.prebid,
 			mocks.vastUrlBuilder,
+			mocks.instartLogic,
 			mocks.log,
 			mocks.win
 		);

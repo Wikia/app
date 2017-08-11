@@ -69,7 +69,11 @@ describe('ext.wikia.adEngine.lookup.prebid.prebidHelper', function () {
 			adaptersRegistry: {
 				getAdapters: function() {}
 			},
-			win: {}
+			instartLogic: {
+				isBlocking: function() {
+					return false;
+				}
+			}
 		};
 
 	function getPrebidHelper() {
@@ -77,7 +81,7 @@ describe('ext.wikia.adEngine.lookup.prebid.prebidHelper', function () {
 
 		return modules['ext.wikia.adEngine.lookup.prebid.prebidHelper'](
 			mocks.adaptersRegistry,
-			mocks.win
+			mocks.instartLogic
 		);
 	}
 

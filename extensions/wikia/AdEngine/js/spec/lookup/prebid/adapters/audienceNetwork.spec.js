@@ -14,12 +14,16 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork', function (
 		slotsContext: {},
 		adContext: {
 			getContext: noop
+		},
+		instartLogic: {
+			isBlocking: noop
 		}
 	};
 
 	function getAudienceNetwork() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork'](
 			mocks.slotsContext,
+			mocks.instartLogic,
 			mocks.geo,
 			mocks.instantGlobals,
 			mocks.adContext
