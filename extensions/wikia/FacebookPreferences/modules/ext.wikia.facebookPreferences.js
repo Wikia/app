@@ -1,7 +1,12 @@
 /* global require, window */
 require(['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'BannerNotification'], function ($, mw, loader, nirvana, BannerNotification) {
+	'use strict';
 
 	function showConnectSuccess() {
+		$('.facebook-preferences')
+			.removeClass('facebook-state-disconnected')
+			.addClass('facebook-state-linked');
+
 		new BannerNotification()
 			.setContent(mw.message('fbconnect-preferences-connected').escaped())
 			.setType('confirm')
@@ -9,6 +14,10 @@ require(['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'BannerNotification'],
 	}
 
 	function showDisconnectSuccess() {
+		$('.facebook-preferences')
+			.removeClass('facebook-state-linked')
+			.addClass('facebook-state-disconnected');
+
 		new BannerNotification()
 			.setContent(mw.message('fbconnect-disconnect-info').escaped())
 			.setType('confirm')

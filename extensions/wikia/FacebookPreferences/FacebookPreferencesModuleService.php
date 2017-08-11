@@ -32,7 +32,7 @@ class FacebookPreferencesModuleService extends WikiaService {
 
 			Assert::true( $linkedFacebookAccount instanceof LinkedFacebookAccount );
 
-			$this->overrideTemplate( 'linked' );
+			$this->setVal( 'state', 'linked' );
 		} catch ( Exception $exception ) {
 			// Error 404 simply indicates the user has not yet linked their Facebook account
 			if ( $exception->getCode() !== WikiaResponse::RESPONSE_CODE_NOT_FOUND ) {
@@ -41,7 +41,7 @@ class FacebookPreferencesModuleService extends WikiaService {
 				] );
 			}
 
-			$this->overrideTemplate( 'disconnected' );
+			$this->setVal( 'state', 'disconnected' );
 		}
 	}
 }

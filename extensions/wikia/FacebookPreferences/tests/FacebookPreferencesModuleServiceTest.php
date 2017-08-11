@@ -45,10 +45,7 @@ class FacebookPreferencesModuleServiceTest extends TestCase {
 
 		$this->facebookPreferencesModule->renderFacebookPreferences();
 
-		$this->assertStringEndsWith(
-		'linked.php',
-			$this->response->getView()->getTemplatePath()
-		);
+		$this->assertEquals( 'linked', $this->response->getVal( 'state' ) );
 	}
 
 	public function testRendersDisconnectedTemplateIfUserDoesNotHaveLinkedFacebookAccount() {
@@ -59,9 +56,6 @@ class FacebookPreferencesModuleServiceTest extends TestCase {
 
 		$this->facebookPreferencesModule->renderFacebookPreferences();
 
-		$this->assertStringEndsWith(
-			'connected.php',
-			$this->response->getView()->getTemplatePath()
-		);
+		$this->assertEquals( 'disconnected', $this->response->getVal( 'state' ) );
 	}
 }
