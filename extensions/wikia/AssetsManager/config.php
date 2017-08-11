@@ -955,6 +955,14 @@ $config['pr3b1d_prod_js'] = [
 	]
 ];
 
+//TODO: remove after ADEN-5624 release + 24h (2 Aug 2017)
+$config['prebid_prod_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/AdEngine/resources/prebid/prebid.min.js'
+	]
+];
+
 $config['interactivemaps_ads_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'interactivemaps',

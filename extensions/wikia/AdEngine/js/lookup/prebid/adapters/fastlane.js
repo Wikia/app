@@ -20,14 +20,16 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.fastlane', [
 					targeting: {loc: 'top'},
 					position: 'atf',
 					siteId: 41686,
-					zoneId: 175094
+					zoneId: 175094,
+					palZoneId: 704672
 				},
 				TOP_RIGHT_BOXAD: {
 					sizes: [[300, 250], [300, 600]],
 					targeting: {loc: 'top'},
 					position: 'atf',
 					siteId: 41686,
-					zoneId: 175094
+					zoneId: 175094,
+					palZoneId: 704672
 				},
 				LEFT_SKYSCRAPER_2: {
 					sizes: [[160, 600], [300, 600], [300, 250]],
@@ -48,14 +50,16 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.fastlane', [
 					targeting: {loc: 'hivi'},
 					position: 'btf',
 					siteId: 83830,
-					zoneId: 395614
+					zoneId: 395614,
+					palZoneId: 704676
 				},
 				BOTTOM_LEADERBOARD: {
 					sizes: [[728, 90], [970, 250]],
 					targeting: {loc: 'footer'},
 					position: 'btf',
 					siteId: 41686,
-					zoneId: 194452
+					zoneId: 194452,
+					palZoneId: 704674
 				},
 				PREFOOTER_LEFT_BOXAD: {
 					sizes: [[300, 250]],
@@ -125,27 +129,35 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.fastlane', [
 
 	function prepareAdUnit(slotName, config, skin) {
 		var targeting = getTargeting(slotName, skin),
-			adUnit;
+			adUnit,
+			bidParams;
 
 		Object.keys(config.targeting || {}).forEach(function (key) {
 			targeting[key] = config.targeting[key];
 		});
-			
+
+		bidParams = {
+			accountId: rubiconAccountId,
+			siteId: config.siteId,
+			zoneId: config.zoneId,
+			name: slotName,
+			position: config.position,
+			keywords: ['rp.fastlane'],
+			inventory: targeting
+		};
+
+		if (getAdContext().opts.premiumAdLayoutRubiconFastlaneTagsEnabled && config.palZoneId) {
+			bidParams.siteId = 148804;
+			bidParams.zoneId = config.palZoneId;
+		}
+
 		adUnit = {
 			code: slotName,
 			sizes: config.sizes,
 			bids: [
 				{
 					bidder: bidderName,
-					params: {
-						accountId: rubiconAccountId,
-						siteId: config.siteId,
-						zoneId: config.zoneId,
-						name: slotName,
-						position: config.position,
-						keywords: ['rp.fastlane'],
-						inventory: targeting
-					}
+					params: bidParams
 				}
 			]
 		};
