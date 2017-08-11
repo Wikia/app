@@ -87,19 +87,17 @@ class Hooks {
 	 * in here than would normally be necessary.
 	 *
 	 * @param $event String: event name
-	 * @param $args Array: parameters passed to hook functions
-	 * @return Boolean True if no handler aborted the hook
+	 * @param $args array: parameters passed to hook functions
+	 * @return bool True if no handler aborted the hook
+	 * @throws FatalError if a hook handler returns string
+	 * @throws MWException if the hook handler setup for this hook is invalid
 	 */
 	public static function run( $event, $args = array() ) {
-		wfProfileIn(__METHOD__.'-hook-'.$event);
-		wfProfileIn(__METHOD__);
 		// Wikia change - begin - @author: wladek
 		// optimized hooks execution
 
 		// Return quickly in the most common case
 		if ( !isset( self::$handlers[$event] ) ) {
-			wfProfileOut(__METHOD__);
-			wfProfileOut(__METHOD__.'-hook-'.$event);
 			return true;
 		}
 
@@ -176,9 +174,7 @@ class Hooks {
 
 			if ( $closure ) {
 				$callback = $object;
-				$func = "hook-$event-closure";
 			} elseif ( isset( $object ) ) {
-				$func = get_class( $object ) . '::' . $method;
 				$callback = array( $object, $method );
 			} else {
 				$callback = $func;
@@ -207,14 +203,7 @@ class Hooks {
 			 */
 			$retval = null;
 
-			wfProfileOut(__METHOD__);
-			wfProfileIn( $func );
-
 			$retval = call_user_func_array( $callback, $hook_args );
-
-			wfProfileOut( $func );
-			wfProfileIn(__METHOD__);
-
 
 			// Process the return value.
 			if ( is_string( $retval ) ) {
@@ -226,8 +215,6 @@ class Hooks {
 			}
 		}
 
-		wfProfileOut(__METHOD__);
-		wfProfileOut(__METHOD__.'-hook-'.$event);
 		return true;
 	}
 
