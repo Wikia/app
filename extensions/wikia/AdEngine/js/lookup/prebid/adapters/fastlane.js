@@ -3,8 +3,10 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.fastlane', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
+	'wikia.geo',
+	'wikia.instantGlobals',
 	'wikia.log'
-], function (adContext, slotsContext, adLogicZoneParams, log) {
+], function (adContext, slotsContext, adLogicZoneParams, geo, instantGlobals, log) {
 	'use strict';
 
 	var bidderName = 'fastlane',

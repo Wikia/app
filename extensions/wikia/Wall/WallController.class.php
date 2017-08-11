@@ -40,7 +40,7 @@ class WallController extends WallBaseController {
 
 			$this->response->setVal( 'returnTo', wfMsg( 'wall-deleted-msg-return-to', $user_displayname ) );
 
-			Hooks::run( 'WallMessageDeleted', [ &$wm, &$this->response ] );
+			Hooks::run( 'WallMessageDeleted', [ $wm, $this->response ] );
 		}
 	}
 

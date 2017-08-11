@@ -35,7 +35,7 @@ require([
 	win.loadCustomAd = customAdsLoader.loadCustomAd;
 
 	function callBiddersOnConsecutivePageView() {
-		var isRubiconFastlanePrebidAdapterActive = geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlanePrebidCountries);
+		var isRubiconFastlanePrebidAdapterActive = adContext.getContext().bidders.fastlane;
 		
 		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
 			prebid.call();
@@ -51,7 +51,7 @@ require([
 	}
 
 	mercuryListener.onLoad(function () {
-		var isRubiconFastlanePrebidAdapterActive = geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlanePrebidCountries);
+		var isRubiconFastlanePrebidAdapterActive = adContext.getContext().bidders.fastlane;
 
 		if (geo.isProperGeo(instantGlobals.wgAmazonMatchCountriesMobile)) {
 			amazon.call();

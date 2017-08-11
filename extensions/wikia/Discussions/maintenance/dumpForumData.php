@@ -9,6 +9,8 @@ error_reporting(E_ALL);
 
 require_once( __DIR__ . '/../../../../maintenance/Maintenance.php' );
 include_once( __DIR__ . '/ForumDumper.php' );
+include_once( __DIR__ . '/FollowsFinder.php' );
+
 
 class DumpForumData extends Maintenance {
 	/** @var  \Discussions\ForumDumper */
@@ -34,6 +36,7 @@ class DumpForumData extends Maintenance {
 		$this->dumpPages();
 		$this->dumpRevisions();
 		$this->dumpVotes();
+		$this->dumpFollows();
 	}
 
 	private function setConnectinoEncoding() {
@@ -44,6 +47,7 @@ class DumpForumData extends Maintenance {
 		fwrite( $this->fh, "DELETE FROM import_page;\n" );
 		fwrite( $this->fh, "DELETE FROM import_revision;\n" );
 		fwrite( $this->fh, "DELETE FROM import_vote;\n" );
+		fwrite( $this->fh, "DELETE FROM import_follows;\n" );
 	}
 
 	private function dumpPages() {
@@ -86,10 +90,23 @@ class DumpForumData extends Maintenance {
 		}
 	}
 
+	private function dumpFollows() {
+		$follows = $this->dumper->getFollows();
+
+		foreach ( $follows as $data ) {
+			$insert = $this->createInsert(
+				'import_follows',
+				Discussions\FollowsFinder::COLUMNS_FOLLOWS,
+				$data
+			);
+			fwrite( $this->fh, $insert . "\n");
+		}
+	}
+
 	private function createInsert( $table, $cols, $data ) {
 		$db = wfGetDB( DB_SLAVE );
 
-		$insert = "INSERT INTO $table (site_id, " .
+		$insert = "INSERT INTO $table (`site_id`, " .
 		          implode( ",", array_map( function ( $c ) use ( $db ) {
 			          return 	$db->addIdentifierQuotes( $c );
 		          }, $cols ) ) .

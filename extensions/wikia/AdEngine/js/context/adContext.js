@@ -4,6 +4,7 @@
  */
 define('ext.wikia.adEngine.adContext', [
 	'ext.wikia.adEngine.adLogicPageViewCounter',
+	'wikia.browserDetect',
 	'wikia.cookies',
 	'wikia.document',
 	'wikia.geo',
@@ -11,7 +12,7 @@ define('ext.wikia.adEngine.adContext', [
 	'ext.wikia.adEngine.utils.sampler',
 	'wikia.window',
 	'wikia.querystring'
-], function (pvCounter, cookies, doc, geo, instantGlobals, sampler, w, Querystring) {
+], function (pvCounter, browserDetect, cookies, doc, geo, instantGlobals, sampler, w, Querystring) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
@@ -40,6 +41,10 @@ define('ext.wikia.adEngine.adContext', [
 
 	function isPageType(pageType) {
 		return context.targeting.pageType === pageType;
+	}
+
+	function isInstartLogicSupportedBrowser() {
+		return browserDetect.isChrome() && browserDetect.getBrowserVersion() > 45;
 	}
 
 	function isPageFairDetectionEnabled() {
@@ -71,8 +76,11 @@ define('ext.wikia.adEngine.adContext', [
 			serviceCanBeEnabled = !noExternals && context.opts.showAds !== false; // showAds is undefined by default
 
 		// InstartLogic recovery
-		context.opts.instartLogicRecovery = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
-			context.opts.instartLogicRecovery && geo.isProperGeo(instantGlobals.wgAdDriverInstartLogicRecoveryCountries);
+		context.opts.instartLogicRecovery = serviceCanBeEnabled &&
+			!isRecoveryServiceAlreadyEnabled &&
+			context.opts.instartLogicRecovery &&
+			geo.isProperGeo(instantGlobals.wgAdDriverInstartLogicRecoveryCountries) &&
+			isInstartLogicSupportedBrowser();
 		isRecoveryServiceAlreadyEnabled |= context.opts.instartLogicRecovery;
 
 		// PageFair recovery
@@ -209,7 +217,7 @@ define('ext.wikia.adEngine.adContext', [
 		if (context.providers.rubiconFastlane) {
 			context.providers.rubiconFastlane = geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) &&
 				geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneProviderCountries) &&
-				!geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlanePrebidCountries); // disable non-prebid implementation when Fastlane adapter is active
+				!context.bidders.fastlane; // disable non-prebid implementation if Fastlane adapter is active
 		}
 
 		context.opts.enableRemnantNewAdUnit = geo.isProperGeo(instantGlobals.wgAdDriverMEGACountries);

@@ -697,14 +697,15 @@ class WikiaHomePageController extends WikiaController {
 		return true;
 	}
 
-	public static function onOutputPageBeforeHTML(OutputPage &$out, &$text) {
+	public static function onOutputPageBeforeHTML( OutputPage $out, &$text ): bool {
 		Wikia\Logger\WikiaLogger::instance()->debug( 'SUS-1276', [ 'method' => __METHOD__ ] );
-		if (WikiaPageType::isMainPage() && !(F::app()->checkSkin('wikiamobile'))) {
+		if ( WikiaPageType::isMainPage() && $out->getSkin()->getSkinName() !=='wikiamobile' ) {
 			$text = '';
 			$out->clearHTML();
 			$out->addHTML(F::app()->sendRequest('WikiaHomePageController', 'index')->toString());
 		}
-		return $out;
+
+		return true;
 	}
 
 	public static function onArticleCommentCheck($title) {
@@ -771,7 +772,7 @@ class WikiaHomePageController extends WikiaController {
 		return $this->visualization;
 	}
 
-	public static function onBeforePageDisplay( OutputPage &$out, &$skin ) {
+	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ): bool {
 		Wikia\Logger\WikiaLogger::instance()->debug( 'SUS-1276', [ 'method' => __METHOD__ ] );
 		OasisController::addBodyClass( 'wikia-contentlang-' . self::getContentLang() );
 

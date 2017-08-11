@@ -20,7 +20,9 @@
  *
  * @file
  */
-use \Wikia\Service\User\Permissions\PermissionsServiceAccessor;
+
+use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
+
 class Block {
 	use PermissionsServiceAccessor;
 	/* public*/ var $mReason, $mTimestamp, $mAuto, $mExpiry, $mHideName;
@@ -633,7 +635,7 @@ class Block {
 		}
 
 		# Allow hooks to cancel the autoblock.
-		if ( !Hooks::run( 'AbortAutoblock', array( $autoblockIP, &$this ) ) ) {
+		if ( !Hooks::run( 'AbortAutoblock', [ $autoblockIP, $this ] ) ) {
 			wfDebug( "Autoblock aborted by hook.\n" );
 			return false;
 		}

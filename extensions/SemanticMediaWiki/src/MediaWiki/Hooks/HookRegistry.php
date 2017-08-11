@@ -4,8 +4,13 @@ namespace SMW\MediaWiki\Hooks;
 
 use Hooks;
 use Onoi\HttpRequest\HttpRequestFactory;
+use OutputPage;
 use Parser;
 use ParserHooks\HookRegistrant;
+use ParserOutput;
+use ResourceLoader;
+use Revision;
+use Skin;
 use SMW\ApplicationFactory;
 use SMW\DeferredRequestDispatchManager;
 use SMW\NamespaceManager;
@@ -13,6 +18,9 @@ use SMW\ParserFunctions\DocumentationParserFunction;
 use SMW\ParserFunctions\InfoParserFunction;
 use SMW\PermissionPthValidator;
 use SMW\SQLStore\QueryDependencyLinksStoreFactory;
+use Title;
+use User;
+use WikiPage;
 
 /**
  * @license GNU GPL v2+
@@ -116,7 +124,7 @@ class HookRegistry {
 		 *
 		 * @see https://www.mediawiki.org/wiki/Manual:Hooks/ParserAfterTidy
 		 */
-		$this->handlers['ParserAfterTidy'] = function ( &$parser, &$text ) {
+		$this->handlers['ParserAfterTidy'] = function ( Parser $parser, &$text ) {
 
 			$parserAfterTidy = new ParserAfterTidy(
 				$parser,
@@ -132,7 +140,7 @@ class HookRegistry {
 		 *
 		 * @see https://www.mediawiki.org/wiki/Manual:Hooks/BaseTemplateToolbox
 		 */
-		$this->handlers['BaseTemplateToolbox'] = function ( $skinTemplate, &$toolbox ) {
+		$this->handlers['BaseTemplateToolbox'] = function ( Skin $skinTemplate, &$toolbox ) {
 
 			$baseTemplateToolbox = new BaseTemplateToolbox(
 				$skinTemplate,
@@ -163,7 +171,7 @@ class HookRegistry {
 		 *
 		 * @see https://www.mediawiki.org/wiki/Manual:Hooks/OutputPageParserOutput
 		 */
-		$this->handlers['OutputPageParserOutput'] = function ( &$outputPage, $parserOutput ) {
+		$this->handlers['OutputPageParserOutput'] = function ( OutputPage $outputPage, ParserOutput $parserOutput ) {
 
 			$outputPageParserOutput = new OutputPageParserOutput(
 				$outputPage,
@@ -178,7 +186,7 @@ class HookRegistry {
 		 *
 		 * @see https://www.mediawiki.org/wiki/Manual:Hooks/BeforePageDisplay
 		 */
-		$this->handlers['BeforePageDisplay'] = function ( &$outputPage, &$skin ) {
+		$this->handlers['BeforePageDisplay'] = function ( OutputPage $outputPage, Skin $skin ) {
 
 			$beforePageDisplay = new BeforePageDisplay(
 				$outputPage,
@@ -194,7 +202,7 @@ class HookRegistry {
 		 *
 		 * @see https://www.mediawiki.org/wiki/Manual:Hooks/InternalParseBeforeLinks
 		 */
-		$this->handlers['InternalParseBeforeLinks'] = function ( &$parser, &$text ) {
+		$this->handlers['InternalParseBeforeLinks'] = function ( Parser $parser, &$text ) {
 
 			$internalParseBeforeLinks = new InternalParseBeforeLinks(
 				$parser,
@@ -210,7 +218,7 @@ class HookRegistry {
 		 *
 		 * @see https://www.mediawiki.org/wiki/Manual:Hooks/NewRevisionFromEditComplete
 		 */
-		$this->handlers['NewRevisionFromEditComplete'] = function ( $wikiPage, $revision, $baseId, $user ) {
+		$this->handlers['NewRevisionFromEditComplete'] = function ( WikiPage $wikiPage, Revision $revision, $baseId, User $user ) {
 
 			$newRevisionFromEditComplete = new NewRevisionFromEditComplete(
 				$wikiPage,
@@ -246,7 +254,7 @@ class HookRegistry {
 		 *
 		 * @see https://www.mediawiki.org/wiki/Manual:Hooks/ArticlePurge
 		 */
-		$this->handlers['ArticlePurge']= function ( &$wikiPage ) {
+		$this->handlers['ArticlePurge']= function ( WikiPage $wikiPage ) {
 
 			$articlePurge = new ArticlePurge();
 
@@ -259,7 +267,7 @@ class HookRegistry {
 		 *
 		 * @see https://www.mediawiki.org/wiki/Manual:Hooks/ArticleDelete
 		 */
-		$this->handlers['ArticleDelete'] = function ( &$wikiPage, &$user, &$reason, &$error ) {
+		$this->handlers['ArticleDelete'] = function ( WikiPage $wikiPage, User $user, $reason, &$error ) {
 
 			$articleDelete = new ArticleDelete(
 				$wikiPage,
@@ -355,7 +363,7 @@ class HookRegistry {
 		/**
 		 * @see https://www.mediawiki.org/wiki/Manual:Hooks/SkinTemplateNavigation
 		 */
-		$this->handlers['SkinTemplateNavigation'] = function ( &$skinTemplate, &$links ) {
+		$this->handlers['SkinTemplateNavigation'] = function ( Skin $skinTemplate, &$links ) {
 
 			$skinTemplateNavigation = new SkinTemplateNavigation(
 				$skinTemplate,
@@ -380,7 +388,7 @@ class HookRegistry {
 		/**
 		 * @see https://www.mediawiki.org/wiki/Manual:Hooks/ResourceLoaderTestModules
 		 */
-		$this->handlers['ResourceLoaderTestModules'] = function ( &$testModules, &$resourceLoader ) use ( $basePath, $globalVars ) {
+		$this->handlers['ResourceLoaderTestModules'] = function ( &$testModules, ResourceLoader $resourceLoader ) use ( $basePath, $globalVars ) {
 
 			$resourceLoaderTestModules = new ResourceLoaderTestModules(
 				$resourceLoader,
@@ -481,7 +489,7 @@ class HookRegistry {
 		/**
 		 * @see https://www.mediawiki.org/wiki/Manual:Hooks/userCan
 		 */
-		$this->handlers['userCan'] = function ( &$title, &$user, $action, &$result ) use ( $permissionPthValidator ) {
+		$this->handlers['userCan'] = function ( Title $title, User $user, $action, &$result ) use ( $permissionPthValidator ) {
 			return $permissionPthValidator->checkUserCanPermissionFor( $title, $user, $action, $result );
 		};
 
@@ -545,7 +553,7 @@ class HookRegistry {
 		/**
 		 * @see https://www.mediawiki.org/wiki/Manual:Hooks/ParserFirstCallInit
 		 */
-		$this->handlers['ParserFirstCallInit'] = function ( &$parser ) use( $applicationFactory ) {
+		$this->handlers['ParserFirstCallInit'] = function ( Parser $parser ) use( $applicationFactory ) {
 
 			$parserFunctionFactory = $applicationFactory->newParserFunctionFactory( $parser );
 
