@@ -7,12 +7,7 @@ global $wgBlankImgUrl, $wgTitle, $wgStylePath, $wgUser, $wgScriptPath;
 			<?php
 			$title = $wgTitle;
 		// check whether current user is blocked (RT #48058)
-		$isUserBlocked = $wgUser->isBlockedFrom($title, false);
-
-		if ($isUserBlocked) {
-			//FIXME port the code from Answer::getBlockedInfo()
-			//echo $this->getBlockedInfo();
-		} else {
+		if ( !$wgUser->isBlocked( true ) ) {
 			?>	<script>var wgScriptPath = "<?= $wgScriptPath ?>"; </script>
 				<script src="<?=$wgStylePath?>/../extensions/wikia/JavascriptAPI/Mediawiki.js"></script>
 				<form onsubmit="return handleEditForm(this)">
