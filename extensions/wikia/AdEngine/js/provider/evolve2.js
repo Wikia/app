@@ -114,6 +114,16 @@ define('ext.wikia.adEngine.provider.evolve2', [
 		log(['fillInSlot', slot.name, 'done'], 'debug', logGroup);
 	}
 
+	function decorateFillInSlot() {
+		if (adContext.getContext().targeting.skin === 'oasis') {
+			return btfBlocker.decorate(fillInSlot, {
+				atfSlots: atfSlots
+			});
+		}
+
+		return fillInSlot;
+	}
+
 	resetPosTargeting();
 	adContext.addCallback(function () {
 		resetPosTargeting();
@@ -122,8 +132,6 @@ define('ext.wikia.adEngine.provider.evolve2', [
 	return {
 		name: 'Evolve2',
 		canHandleSlot: canHandleSlot,
-		fillInSlot: adContext.getContext().targeting.skin === 'oasis' ? btfBlocker.decorate(fillInSlot, {
-			atfSlots: atfSlots
-		}) : fillInSlot
+		fillInSlot: decorateFillInSlot()
 	};
 });
