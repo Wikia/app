@@ -16,14 +16,14 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	private $discussLinkData = null;
 	private $wikiLocalNavigation = null;
 
-	public function __construct(string $cityId, string $langCode) {
+	public function __construct( string $cityId, string $langCode ) {
 		parent::__construct();
 
 		$this->productInstanceId = $cityId;
 		$this->langCode = $langCode;
-		$this->themeSettings = new ThemeSettings($cityId);
-		$this->settings = $this->themeSettings->getSettings($cityId);
-		$this->mainPageUrl = GlobalTitle::newMainPage($this->productInstanceId)->getFullURL();
+		$this->themeSettings = new ThemeSettings( $cityId );
+		$this->settings = $this->themeSettings->getSettings( $cityId );
+		$this->mainPageUrl = GlobalTitle::newMainPage( $this->productInstanceId )->getFullURL();
 	}
 
 	public function getData(): array {
