@@ -35,24 +35,29 @@ require([
 	win.loadCustomAd = customAdsLoader.loadCustomAd;
 
 	function callBiddersOnConsecutivePageView() {
+		var isRubiconFastlanePrebidAdapterActive = adContext.getContext().bidders.fastlane;
+		
 		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
 			prebid.call();
 		}
 
 		if (
 			geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) &&
-			geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneMercuryFixCountries)
+			geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneMercuryFixCountries) &&
+			!isRubiconFastlanePrebidAdapterActive
 		) {
 			rubiconFastlane.call();
 		}
 	}
 
 	mercuryListener.onLoad(function () {
+		var isRubiconFastlanePrebidAdapterActive = adContext.getContext().bidders.fastlane;
+
 		if (geo.isProperGeo(instantGlobals.wgAmazonMatchCountriesMobile)) {
 			amazon.call();
 		}
 
-		if (geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries)) {
+		if (geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) && !isRubiconFastlanePrebidAdapterActive) {
 			rubiconFastlane.call();
 		}
 
