@@ -4,13 +4,8 @@ namespace SMW\MediaWiki\Hooks;
 
 use Hooks;
 use Onoi\HttpRequest\HttpRequestFactory;
-use OutputPage;
 use Parser;
 use ParserHooks\HookRegistrant;
-use ParserOutput;
-use ResourceLoader;
-use Revision;
-use Skin;
 use SMW\ApplicationFactory;
 use SMW\DeferredRequestDispatchManager;
 use SMW\NamespaceManager;
@@ -18,9 +13,6 @@ use SMW\ParserFunctions\DocumentationParserFunction;
 use SMW\ParserFunctions\InfoParserFunction;
 use SMW\PermissionPthValidator;
 use SMW\SQLStore\QueryDependencyLinksStoreFactory;
-use Title;
-use User;
-use WikiPage;
 
 /**
  * @license GNU GPL v2+
