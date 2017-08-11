@@ -9,7 +9,6 @@
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
-
 class MapsGeodistance extends ParserHook {
 
 	/**
@@ -35,42 +34,42 @@ class MapsGeodistance extends ParserHook {
 	protected function getParameterInfo( $type ) {
 		global $egMapsDistanceUnit, $egMapsDistanceDecimals, $egMapsAvailableGeoServices, $egMapsDefaultGeoService; 
 		
-		$params = array();
+		$params = [];
 
-		$params['mappingservice'] = array(
+		$params['mappingservice'] = [
 			'default' => '',
 			'values' => MapsMappingServices::getAllServiceValues(),
 			'tolower' => true,
-		);
+		];
 
-		$params['geoservice'] = array(
+		$params['geoservice'] = [
 			'default' => $egMapsDefaultGeoService,
 			'aliases' => 'service',
 			'values' => $egMapsAvailableGeoServices,
 			'tolower' => true,
-		);
+		];
 
-		$params['unit'] = array(
+		$params['unit'] = [
 			'default' => $egMapsDistanceUnit,
 			'values' => MapsDistanceParser::getUnits(),
-		);
+		];
 
-		$params['decimals'] = array(
+		$params['decimals'] = [
 			'type' => 'integer',
 			'default' => $egMapsDistanceDecimals,
-		);
+		];
 
-		$params['location1'] = array(
-			'type' => 'mapslocation',
+		$params['location1'] = [
+			'type' => 'mapslocation', // FIXME: geoservice is not used
 			'aliases' => 'from',
-			'dependencies' => array( 'mappingservice', 'geoservice' ),
-		);
+			'dependencies' => [ 'mappingservice', 'geoservice' ],
+		];
 
-		$params['location2'] = array(
-			'type' => 'mapslocation',
+		$params['location2'] = [
+			'type' => 'mapslocation', // FIXME: geoservice is not used
 			'aliases' => 'to',
-			'dependencies' => array( 'mappingservice', 'geoservice' ),
-		);
+			'dependencies' => [ 'mappingservice', 'geoservice' ],
+		];
 
 		// Give grep a chance to find the usages:
 		// maps-geodistance-par-mappingservice, maps-geodistance-par-geoservice,
@@ -94,7 +93,7 @@ class MapsGeodistance extends ParserHook {
 	 * @return array
 	 */
 	protected function getDefaultParameters( $type ) {
-		return array( 'location1', 'location2', 'unit', 'decimals' );
+		return [ 'location1', 'location2', 'unit', 'decimals' ];
 	}
 	
 	/**

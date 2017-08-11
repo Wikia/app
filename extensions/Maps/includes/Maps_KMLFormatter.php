@@ -33,7 +33,7 @@ class MapsKMLFormatter {
 	 * 
 	 * @param array $params
 	 */
-	public function __construct( array $params = array() ) {
+	public function __construct( array $params = [] ) {
 		$this->params = $params;
 		$this->clearElements();
 	}
@@ -98,7 +98,7 @@ EOT;
 	 * @since 0.7.3
 	 */	
 	public function clearPlacemarks() {
-		$this->placemarks = array();
+		$this->placemarks = [];
 	}
 	
 	/**
@@ -109,7 +109,7 @@ EOT;
 	 * @return string
 	 */	
 	protected function getKMLElements() {
-		$elements = array();
+		$elements = [];
 		
 		$elements = array_merge( $elements, $this->getPlacemarks() );
 		
@@ -125,7 +125,7 @@ EOT;
 	 * @return array
 	 */		
 	protected function getPlacemarks() {
-		$placemarks = array();
+		$placemarks = [];
 		
 		foreach ( $this->placemarks as $location ) {
 			$placemarks[] = $this->getKMLForLocation( $location );
@@ -153,7 +153,7 @@ EOT;
 		// lon,lat[,alt]
 		$coordinates = Xml::element(
 			'coordinates',
-			array(),
+			[],
 			$coordinates->getLongitude() . ',' . $coordinates->getLatitude() . ',0'
 		);
 

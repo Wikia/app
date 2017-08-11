@@ -40,23 +40,23 @@ class RectangleParser extends StringValueParser {
 			$this->stringToLatLongValue( $rectangleData[1] )
 		);
 
-		if ( $metaData !== array() ) {
+		if ( $metaData !== [] ) {
 			$rectangle->setTitle( array_shift( $metaData ) );
 		}
 
-		if ( $metaData !== array() ) {
+		if ( $metaData !== [] ) {
 			$rectangle->setText( array_shift( $metaData ) );
 		}
 
-		if ( $metaData !== array() ) {
+		if ( $metaData !== [] ) {
 			$rectangle->setStrokeColor( array_shift( $metaData ) );
 		}
 
-		if ( $metaData !== array() ) {
+		if ( $metaData !== [] ) {
 			$rectangle->setStrokeOpacity( array_shift( $metaData ) );
 		}
 
-		if ( $metaData !== array() ) {
+		if ( $metaData !== [] ) {
 			$rectangle->setStrokeWeight( array_shift( $metaData ) );
 		}
 

@@ -58,8 +58,6 @@
 	"maps-geocoder-not-available": "Opțiunea de geocodare pentru Hărți nu este disponibilă. Locația dumneavoastră nu a putut fi geocodată.",
 	"maps_click_to_activate": "Apăsați pentru a activa harta",
 	"maps_centred_on": "Hartă centrată la $1, $2.",
-	"maps-osm-par-thumbs": "Afișează miniaturi",
-	"maps-osm-par-photos": "Afișează fotografii",
 	"mapeditor": "Editor de hărți",
 	"specialpages-group-maps": "Hărți",
 	"mapeditor-none-text": "Nimic",
@@ -93,5 +91,6 @@
 	"mapeditor-imageoverlay-button": "Adaugă suprapunerea de imagine",
 	"mapeditor-form-field-image": "Imagine",
 	"mapeditor-imageoverlay-title": "Detalii suprapunere imagine",
-	"mapeditor-form-field-visitedicon": "Pictogramă vizitată"
+	"mapeditor-form-field-visitedicon": "Pictogramă vizitată",
+	"semanticmaps-forminput-locations": "Locuri"
 }

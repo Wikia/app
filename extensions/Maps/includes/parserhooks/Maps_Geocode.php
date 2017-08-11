@@ -1,5 +1,7 @@
 <?php
+
 use DataValues\Geo\Formatters\GeoCoordinateFormatter;
+use Maps\Geocoders;
 
 /**
  * Class for the 'geocode' parser hooks, which can turn
@@ -37,49 +39,40 @@ class MapsGeocode extends ParserHook {
 		global $egMapsDefaultGeoService, $egMapsCoordinateNotation;
 		global $egMapsAllowCoordsGeocoding, $egMapsCoordinateDirectional;
 		
-		$params = array();
+		$params = [];
 
-		$params['location'] = array(
-			'type' => 'mapslocation',
-			'dependencies' => array( 'mappingservice', 'geoservice' ),
-		);
+		$params['location'] = [
+			'type' => 'string',
+			'message' => 'maps-geocode-par-location',
+		];
 
-		$params['mappingservice'] = array(
-			'default' => '',
-			'values' => MapsMappingServices::getAllServiceValues(),
-			'tolower' => true,
-		);
-
-		$params['geoservice'] = array(
+		$params['geoservice'] = [
 			'default' => $egMapsDefaultGeoService,
 			'aliases' => 'service',
 			'values' => $egMapsAvailableGeoServices,
 			'tolower' => true,
-		);
+			'message' => 'maps-geocode-par-geoservice',
+		];
 
-		$params['allowcoordinates'] = array(
+		$params['allowcoordinates'] = [
 			'type' => 'boolean',
 			'default' => $egMapsAllowCoordsGeocoding,
-		);
+			'message' => 'maps-geocode-par-allowcoordinates',
+		];
 
-		$params['format'] = array(
+		$params['format'] = [
 			'default' => $egMapsCoordinateNotation,
 			'values' => $egMapsAvailableCoordNotations,
 			'aliases' => 'notation',
 			'tolower' => true,
-		);
+			'message' => 'maps-geocode-par-format',
+		];
 
-		$params['directional'] = array(
+		$params['directional'] = [
 			'type' => 'boolean',
 			'default' => $egMapsCoordinateDirectional,
-		);
-
-		// Give grep a chance to find the usages:
-		// maps-geocode-par-location, maps-geocode-par-mappingservice, maps-geocode-par-geoservice,
-		// maps-geocode-par-allowcoordinates, maps-geocode-par-format, maps-geocode-par-directional
-		foreach ( $params as $name => &$param ) {
-			$param['message'] = 'maps-geocode-par-' . $name;
-		}
+			'message' => 'maps-geocode-par-directional',
+		];
 
 		return $params;
 	}
@@ -93,7 +86,7 @@ class MapsGeocode extends ParserHook {
 	 * @return array
 	 */
 	protected function getDefaultParameters( $type ) {
-		return array( 'location', 'geoservice', 'mappingservice' );
+		return [ 'location', 'geoservice' ];
 	}	
 	
 	/**
@@ -107,16 +100,25 @@ class MapsGeocode extends ParserHook {
 	 * @return string
 	 */
 	public function render( array $parameters ) {
-		/**
-		 * @var \DataValues\LatLongValue $coordinates
-		 */
-		$coordinates = $parameters['location']->getCoordinates();
+		if ( !Geocoders::canGeocode() ) {
+			return 'No geocoders available';
+		}
 
-		$options = new \ValueFormatters\FormatterOptions( array(
+		$coordinates = Geocoders::attemptToGeocode(
+			$parameters['location'],
+			$parameters['geoservice'],
+			$parameters['allowcoordinates']
+		);
+
+		if ( $coordinates === false ) {
+			return 'Geocoding failed';
+		}
+
+		$options = new \ValueFormatters\FormatterOptions( [
 			GeoCoordinateFormatter::OPT_FORMAT => $parameters['format'],
 			GeoCoordinateFormatter::OPT_DIRECTIONAL => $parameters['directional'],
 			GeoCoordinateFormatter::OPT_PRECISION => 1 / 360000
-		) );
+		] );
 
 		$formatter = new GeoCoordinateFormatter( $options );
 

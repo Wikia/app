@@ -41,8 +41,6 @@
 	"maps_centred_on": "Mapa centrâ dessus $1, $2.",
 	"maps-googlemaps3-par-poi": "Montrar los pouents d’entèrèt.",
 	"maps-openlayers-par-controls": "Los contrôlos a placiér sur la mapa.",
-	"maps-osm-par-thumbs": "Fâre vêre des figures",
-	"maps-osm-par-photos": "Fâre vêre des fotôs",
 	"mapeditor": "Changior de mapa",
 	"specialpages-group-maps": "Mapes",
 	"mapeditor-none-text": "Nion",
@@ -76,5 +74,18 @@
 	"mapeditor-imageoverlay-button": "Apondre la cuvèrta d’émâge",
 	"mapeditor-form-field-image": "Émâge",
 	"mapeditor-imageoverlay-title": "Dètalys de la cuvèrta d’émâge",
-	"mapeditor-form-field-visitedicon": "Icôna visitâ"
+	"mapeditor-form-field-visitedicon": "Icôna visitâ",
+	"semanticmaps-unrecognizeddistance": "La valor $1 est pas una distance valida.",
+	"semanticmaps-kml-link": "Vêre lo fichiér KML",
+	"semanticmaps-default-kml-pagelink": "Vêre la pâge $1",
+	"semanticmaps-loading-forminput": "Chargement du formulèro d’entrâ de la mapa...",
+	"semanticmaps_lookupcoordinates": "Èstimar les coordonâs",
+	"semanticmaps_enteraddresshere": "Buchiéd l’adrèce ique",
+	"semanticmaps-updatemap": "Misa a jorn de la mapa",
+	"semanticmaps-forminput-remove": "Enlevar",
+	"semanticmaps-forminput-add": "Apondre",
+	"semanticmaps-latitude": "Latituda : $1",
+	"semanticmaps-longitude": "Longituda : $1",
+	"semanticmaps-altitude": "Hôtior : $1",
+	"semanticmaps-forminput-locations": "Emplacements"
 }

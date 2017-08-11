@@ -24,20 +24,20 @@ class Geocode extends ApiBase {
 		global $wgUser;
 
 		if ( !$wgUser->isAllowed( 'geocode' ) || $wgUser->isBlocked() ) {
-			$this->dieUsageMsg( array( 'badaccess-groups' ) );
+			$this->dieUsageMsg( [ 'badaccess-groups' ] );
 		}
 
 		$params = $this->extractRequestParams();
 
-		$results = array();
+		$results = [];
 
 		foreach ( array_unique( $params['locations'] ) as $location ) {
 			$result = \Maps\Geocoders::geocode( $location, $params['service'] );
 
-			$results[$location] = array(
+			$results[$location] = [
 				'count' => $result === false ? 0 : 1,
-				'locations' => array()
-			);
+				'locations' => []
+			];
 
 			if ( $result !== false ) {
 				$results[$location]['locations'][] = $result;
@@ -54,42 +54,42 @@ class Geocode extends ApiBase {
 	}
 
 	public function getAllowedParams() {
-		return array(
-			'locations' => array(
+		return [
+			'locations' => [
 				ApiBase::PARAM_TYPE => 'string',
 				ApiBase::PARAM_REQUIRED => true,
 				ApiBase::PARAM_ISMULTI => true,
-			),
-			'service' => array(
+			],
+			'service' => [
 				ApiBase::PARAM_TYPE => \Maps\Geocoders::getAvailableGeocoders(),
-			),
-			'props' => array(
+			],
+			'props' => [
 				ApiBase::PARAM_ISMULTI => true,
-				ApiBase::PARAM_TYPE => array( 'lat', 'lon', 'alt' ),
+				ApiBase::PARAM_TYPE => [ 'lat', 'lon', 'alt' ],
 				ApiBase::PARAM_DFLT => 'lat|lon',
-			),
-		);
+			],
+		];
 	}
 
 	public function getParamDescription() {
-		return array(
+		return [
 			'locations' => 'The locations to geocode',
 			'service' => 'The geocoding service to use',
-		);
+		];
 	}
 
 	public function getDescription() {
-		return array(
+		return [
 			'API module for geocoding.'
-		);
+		];
 	}
 
 	public function getExamples() {
-		return array(
+		return [
 			'api.php?action=geocode&locations=new york',
 			'api.php?action=geocode&locations=new york|brussels|london',
 			'api.php?action=geocode&locations=new york&service=geonames',
-		);
+		];
 	}
 
 	/**

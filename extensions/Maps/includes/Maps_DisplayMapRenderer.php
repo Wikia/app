@@ -1,7 +1,9 @@
 <?php
+
 use Maps\Element;
-use Maps\Elements\Line;
 use Maps\Elements\Location;
+use Maps\LocationParser;
+use ValueParsers\ParserOptions as ValueParserOptions;
 
 /**
  * Class handling the #display_map rendering.
@@ -12,62 +14,15 @@ use Maps\Elements\Location;
  */
 class MapsDisplayMapRenderer {
 
-	/**
-	 * @since 2.0
-	 *
-	 * @var iMappingService
-	 */
-	protected $service;
+	private $service;
 
 	/**
-	 * Constructor.
-	 *
-	 * @param iMappingService $service
+	 * @var LocationParser
 	 */
-	public function __construct( iMappingService $service ) {
+	private $locationParser;
+
+	public function __construct( MapsMappingService $service ) {
 		$this->service = $service;
-	}
-
-	/**
-	 * Returns the HTML to display the map.
-	 *
-	 * @since 2.0
-	 *
-	 * @param array $params
-	 * @param Parser $parser
-	 * @param string $mapName
-	 *
-	 * @return string
-	 */
-	protected function getMapHTML( array $params, Parser $parser, $mapName ) {
-		return Html::rawElement(
-			'div',
-			array(
-				'id' => $mapName,
-				'style' => "width: {$params['width']}; height: {$params['height']}; background-color: #cccccc; overflow: hidden;",
-				'class' => 'maps-map maps-' . $this->service->getName()
-			),
-			wfMessage( 'maps-loading-map' )->inContentLanguage()->escaped() .
-				Html::element(
-					'div',
-					array( 'style' => 'display:none', 'class' => 'mapdata' ),
-					FormatJson::encode( $this->getJSONObject( $params, $parser ) )
-				)
-		);
-	}
-
-	/**
-	 * Returns a PHP object to encode to JSON with the map data.
-	 *
-	 * @since 2.0
-	 *
-	 * @param array $params
-	 * @param Parser $parser
-	 *
-	 * @return mixed
-	 */
-	protected function getJSONObject( array $params, Parser $parser ) {
-		return $params;
 	}
 
 	/**
@@ -80,35 +35,77 @@ class MapsDisplayMapRenderer {
 	 * @return string
 	 */
 	public final function renderMap( array $params, Parser $parser ) {
+		$this->initializeLocationParser( $params );
+
 		$this->handleMarkerData( $params, $parser );
 
 		$mapName = $this->service->getMapId();
 
-		$output = $this->getMapHTML( $params, $parser, $mapName );
+		$output = $this->getMapHTML( $params, $mapName );
 
 		$configVars = Skin::makeVariablesScript( $this->service->getConfigVariables() );
 
+		$this->service->addHtmlDependencies(
+			self::getLayerDependencies( $params['mappingservice'], $params )
+		);
+
 		$this->service->addDependencies( $parser );
-		$parser->getOutput()->addHeadItem( $configVars );
+
+		$parserOutput = $parser->getOutput();
+		$parserOutput->addHeadItem( $configVars );
+
+		// Wikia change: Load library dependencies in OutputPageParserOutput hook
+		// Loading them in the <head> will cause Oasis skin to load them after ResourceLoader
+		// so RL modules that depend on them will fail
+		if ( !isset( $parserOutput->mapsMappingServices ) ) {
+			$parserOutput->mapsMappingServices = [];
+		}
+
+		$serviceName = $this->service->getName();
+		if ( !isset( $parserOutput->mapsMappingServices[$serviceName] ) ) {
+			$parserOutput->mapsMappingServices[$serviceName] = $this->service;
+		}
 
 		return $output;
+	}
+
+	private function initializeLocationParser( array $params ) {
+		$this->locationParser = new LocationParser( new ValueParserOptions( [
+			'geoService' => $params['geoservice']
+		] ) );
+	}
+
+	/**
+	 * Returns the HTML to display the map.
+	 *
+	 * @param array $params
+	 * @param string $mapName
+	 *
+	 * @return string
+	 */
+	protected function getMapHTML( array $params, $mapName ) {
+		return Html::rawElement(
+			'div',
+			[
+				'id' => $mapName,
+				'style' => "width: {$params['width']}; height: {$params['height']}; background-color: #cccccc; overflow: hidden;",
+				'class' => 'maps-map maps-' . $this->service->getName()
+			],
+			wfMessage( 'maps-loading-map' )->inContentLanguage()->escaped() .
+			Html::element(
+				'div',
+				[ 'style' => 'display:none', 'class' => 'mapdata' ],
+				FormatJson::encode( $params )
+			)
+		);
 	}
 
 	/**
 	 * Converts the data in the coordinates parameter to JSON-ready objects.
 	 * These get stored in the locations parameter, and the coordinates on gets deleted.
-	 *
-	 * FIXME: complexity
-	 *
-	 * @since 1.0
-	 *
-	 * @param array &$params
-	 * @param Parser $parser
 	 */
-	protected function handleMarkerData( array &$params, Parser $parser ) {
-		if ( is_object( $params['centre'] ) ) {
-			$params['centre'] = $params['centre']->getJSONObject();
-		}
+	private function handleMarkerData( array &$params, Parser $parser ) {
+		$params['centre'] = $this->getCenter( $params['centre'] );
 
 		$parserClone = clone $parser;
 
@@ -116,26 +113,7 @@ class MapsDisplayMapRenderer {
 			$params['wmsoverlay'] = $params['wmsoverlay']->getJSONObject();
 		}
 
-		$iconUrl = MapsMapper::getFileUrl( $params['icon'] );
-		$visitedIconUrl = MapsMapper::getFileUrl( $params['visitedicon'] );
-		$params['locations'] = array();
-
-		/**
-		 * @var Location $location
-		 */
-		foreach ( $params['coordinates'] as $location ) {
-			$jsonObj = $location->getJSONObject( $params['title'], $params['label'], $iconUrl, '', '',$visitedIconUrl);
-
-			$jsonObj['title'] = $parserClone->parse( $jsonObj['title'], $parserClone->getTitle(), new ParserOptions() )->getText();
-			$jsonObj['text'] = $parserClone->parse( $jsonObj['text'], $parserClone->getTitle(), new ParserOptions() )->getText();
-			$jsonObj['inlineLabel'] = strip_tags($parserClone->parse( $jsonObj['inlineLabel'], $parserClone->getTitle(), new ParserOptions() )->getText(),'<a><img>');
-
-			$hasTitleAndtext = $jsonObj['title'] !== '' && $jsonObj['text'] !== '';
-			$jsonObj['text'] = ( $hasTitleAndtext ? '<b>' . $jsonObj['title'] . '</b><hr />' : $jsonObj['title'] ) . $jsonObj['text'];
-			$jsonObj['title'] = strip_tags( $jsonObj['title'] );
-
-			$params['locations'][] = $jsonObj;
-		}
+		$params['locations'] = $this->getLocationJson( $params, $parserClone );
 
 		unset( $params['coordinates'] );
 
@@ -146,14 +124,69 @@ class MapsDisplayMapRenderer {
 		}
 	}
 
-	protected function handleShapeData( array &$params, Parser $parserClone ) {
-		$textContainers = array(
+	private function getCenter( $coordinatesOrAddress ) {
+		if ( $coordinatesOrAddress === false ) {
+			return false;
+		}
+
+		try {
+			// FIXME: a Location makes no sense here, since the non-coordinate data is not used
+			$location = $this->locationParser->stringParse( $coordinatesOrAddress );
+		}
+		catch ( \Exception $ex ) {
+			// TODO: somehow report this to the user
+			return false;
+		}
+
+		return $location->getJSONObject();
+	}
+
+	private function getLocationJson( array $params, $parserClone ) {
+		$iconUrl = MapsMapper::getFileUrl( $params['icon'] );
+		$visitedIconUrl = MapsMapper::getFileUrl( $params['visitedicon'] );
+
+		$locationJsonObjects = [];
+
+		foreach ( $params['coordinates'] as $coordinatesOrAddress ) {
+			try {
+				$location = $this->locationParser->stringParse( $coordinatesOrAddress );
+			}
+			catch ( \Exception $ex ) {
+				// TODO: somehow report this to the user
+				continue;
+			}
+
+			$locationJsonObjects[] = $this->getLocationJsonObject( $location, $params, $iconUrl, $visitedIconUrl, $parserClone );
+		}
+
+		return $locationJsonObjects;
+	}
+
+	private function getLocationJsonObject( Location $location, array $params, $iconUrl, $visitedIconUrl, Parser $parserClone ) {
+		$jsonObj = $location->getJSONObject( $params['title'], $params['label'], $iconUrl, '', '', $visitedIconUrl );
+
+		$jsonObj['title'] = $parserClone->parse( $jsonObj['title'], $parserClone->getTitle(), new ParserOptions() )->getText();
+		$jsonObj['text'] = $parserClone->parse( $jsonObj['text'], $parserClone->getTitle(), new ParserOptions() )->getText();
+
+		if ( isset( $jsonObj['inlineLabel'] ) ) {
+			$jsonObj['inlineLabel'] = strip_tags($parserClone->parse( $jsonObj['inlineLabel'], $parserClone->getTitle(), new ParserOptions() )->getText(),'<a><img>');
+		}
+
+		$hasTitleAndtext = $jsonObj['title'] !== '' && $jsonObj['text'] !== '';
+		$jsonObj['text'] = ( $hasTitleAndtext ? '<b>' . $jsonObj['title'] . '</b><hr />' : $jsonObj['title'] ) . $jsonObj['text'];
+		$jsonObj['title'] = strip_tags( $jsonObj['title'] );
+
+		return $jsonObj;
+	}
+
+	private function handleShapeData( array &$params, Parser $parserClone ) {
+		$textContainers = [
 			&$params['lines'] ,
 			&$params['polygons'] ,
 			&$params['circles'] ,
 			&$params['rectangles'],
 			&$params['imageoverlays'], // FIXME: this is Google Maps specific!!
-		);
+		];
 
 		foreach ( $textContainers as &$textContainer ) {
 			if ( is_array( $textContainer ) ) {
@@ -189,8 +222,8 @@ class MapsDisplayMapRenderer {
 	public static function evilOpenLayersHack( $layers ) {
 		global $egMapsOLLayerGroups, $egMapsOLAvailableLayers;
 
-		$layerDefs = array();
-		$layerNames = array();
+		$layerDefs = [];
+		$layerNames = [];
 
 		foreach ( $layers as $layerOrGroup ) {
 			$lcLayerOrGroup = strtolower( $layerOrGroup );
@@ -222,91 +255,40 @@ class MapsDisplayMapRenderer {
 					$layerNames[] = $lcLayerOrGroup;
 				}
 			}
-			// Image layers. Check validity and add if not present yet:
-			else {
-				$layerParts = explode( ';', $layerOrGroup, 2 );
-				$layerGroup = $layerParts[0];
-				$layerName = count( $layerParts ) > 1 ? $layerParts[1] : null;
-
-				$title = Title::newFromText( $layerGroup, Maps_NS_LAYER );
-
-				if ( $title !== null && $title->getNamespace() == Maps_NS_LAYER ) {
-					// TODO: FIXME: This shouldn't be here and using $wgParser, instead it should
-					//  be somewhere around MapsBaseMap::renderMap. But since we do a lot more than
-					//  'parameter manipulation' in here, we already diminish the information needed
-					//  for this which will never arrive there.
-					global $wgParser;
-					// add dependency to the layer page so if the layer definition gets updated,
-					// the page where it is used will be updated as well:
-					$rev = Revision::newFromTitle( $title );
-					$revId = null;
-					if( $rev !== null ) {
-						$revId = $rev->getId();
-					}
-					$wgParser->getOutput()->addTemplate( $title, $title->getArticleID(), $revId );
-
-					// if the whole layer group is not yet loaded into the map and the group exists:
-					if( !in_array( $layerGroup, $layerNames )
-						&& $title->exists()
-					) {
-						if( $layerName !== null ) {
-							// load specific layer with name:
-							$layer = MapsLayers::loadLayer( $title, $layerName );
-							$layers = new MapsLayerGroup( $layer );
-							$usedLayer = $layerOrGroup;
-						}
-						else {
-							// load all layers from group:
-							$layers = MapsLayers::loadLayerGroup( $title );
-							$usedLayer = $layerGroup;
-						}
-
-						foreach( $layers->getLayers() as $layer ) {
-							if( ( // make sure named layer is only taken once (in case it was requested on its own before)
-									$layer->getName() === null
-									|| !in_array( $layerGroup . ';' . $layer->getName(), $layerNames )
-								)
-								&& $layer->isOk()
-							) {
-								$layerDefs[] = $layer->getJavaScriptDefinition();
-							}
-						}
-
-						$layerNames[] = $usedLayer; // have to add this after loop of course!
-					}
-				}
-				else {
-					wfWarn( "Invalid layer ($layerOrGroup) encountered after validation." );
-				}
-			}
 		}
-
-		MapsMappingServices::getServiceInstance( 'openlayers' )->addLayerDependencies( self::getLayerDependencies( $layerNames ) );
-
-//		print_r( $layerDefs );
-//		die();
 		return $layerDefs;
 	}
 
-	/**
-	 * FIXME
-	 * @see evilOpenLayersHack
-	 */
-	private static function getLayerDependencies( array $layerNames ) {
-		global $egMapsOLLayerDependencies, $egMapsOLAvailableLayers;
+	public static function getLayerDependencies( $service, $params ) {
+		global $egMapsOLLayerDependencies, $egMapsOLAvailableLayers,
+			   $egMapsLeafletLayerDependencies, $egMapsLeafletAvailableLayers,
+			   $egMapsLeafletLayersApiKeys;
 
-		$layerDependencies = array();
+		$layerDependencies = [];
 
-		foreach ( $layerNames as $layerName ) {
-			if ( array_key_exists( $layerName, $egMapsOLAvailableLayers ) // The layer must be defined in php
-				&& is_array( $egMapsOLAvailableLayers[$layerName] ) // The layer must be an array...
-				&& count( $egMapsOLAvailableLayers[$layerName] ) > 1 // ...with a second element...
-				&& array_key_exists( $egMapsOLAvailableLayers[$layerName][1], $egMapsOLLayerDependencies ) ) { //...that is a dependency.
-				$layerDependencies[] = $egMapsOLLayerDependencies[$egMapsOLAvailableLayers[$layerName][1]];
+		if ( $service === 'leaflet' ) {
+			$layerName = $params['layer'];
+			if ( array_key_exists( $layerName, $egMapsLeafletAvailableLayers )
+					&& $egMapsLeafletAvailableLayers[$layerName]
+					&& array_key_exists( $layerName, $egMapsLeafletLayersApiKeys )
+					&& array_key_exists( $layerName, $egMapsLeafletLayerDependencies ) ) {
+				$layerDependencies[] = '<script src="' . $egMapsLeafletLayerDependencies[$layerName] .
+					$egMapsLeafletLayersApiKeys[$layerName] . '"></script>';
 			}
+		} else if ( $service === 'openlayers' ) {
+			$layerNames = $params['layers'];
+			foreach ( $layerNames as $layerName ) {
+				if ( array_key_exists( $layerName, $egMapsOLAvailableLayers ) // The layer must be defined in php
+						&& is_array( $egMapsOLAvailableLayers[$layerName] ) // The layer must be an array...
+						&& count( $egMapsOLAvailableLayers[$layerName] ) > 1 // ...with a second element...
+						&& array_key_exists( $egMapsOLAvailableLayers[$layerName][1], $egMapsOLLayerDependencies ) ) { //...that is a dependency.
+					$layerDependencies[] = $egMapsOLLayerDependencies[$egMapsOLAvailableLayers[$layerName][1]];
+				}
+			}
+
 		}
 
 		return array_unique( $layerDependencies );
 	}
-	
+
 }

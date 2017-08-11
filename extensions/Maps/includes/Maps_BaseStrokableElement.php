@@ -8,7 +8,7 @@ use Maps\Elements\BaseElement;
  * @licence GNU GPL v2+
  * @author Kim Eik < kim@heldig.org >
  */
-class MapsBaseStrokableElement extends BaseElement implements iStrokableMapElement {
+class MapsBaseStrokableElement extends BaseElement {
 
 	protected $strokeColor;
 	protected $strokeOpacity;
@@ -52,11 +52,11 @@ class MapsBaseStrokableElement extends BaseElement implements iStrokableMapEleme
 
 	public function getJSONObject( $defText = '' , $defTitle = '' ) {
 		$parentArray = parent::getJSONObject( $defText , $defTitle );
-		$array = array(
+		$array = [
 			'strokeColor' => $this->hasStrokeColor() ? $this->getStrokeColor() : '#FF0000' ,
 			'strokeOpacity' => $this->hasStrokeOpacity() ? $this->getStrokeOpacity() : '1' ,
 			'strokeWeight' => $this->hasStrokeWeight() ? $this->getStrokeWeight() : '2'
-		);
+		];
 		return array_merge( $parentArray , $array );
 	}
 

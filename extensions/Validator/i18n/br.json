@@ -7,7 +7,7 @@
 			"Y-M D"
 		]
 	},
-	"validator-desc": "Un doare aes eo kadarnataer evit an astennoù all da gadarnaat arventennoù ar fonksionoù parser hag astennoù ar balizennoù, evit termeniñ talvoudennoù dre ziouer ha sevel kemennoù fazioù",
+	"validator-desc": "Levraoueg plediñ gant an arventennoù disklêriañ",
 	"validator-warning": "Diwallit : $1",
 	"validator-error": "Fazi : $1",
 	"validator-fatal-error": "Fazi diremed: $1",

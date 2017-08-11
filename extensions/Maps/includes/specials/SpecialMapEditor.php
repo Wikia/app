@@ -34,7 +34,7 @@ class SpecialMapEditor extends SpecialPage{
 
 		$outputPage->addHtml( MapsGoogleMaps3::getApiScript(
 			$this->getLanguage()->getCode(),
-			array( 'libraries' => 'drawing' )
+			[ 'libraries' => 'drawing' ]
 		) );
 
 		$outputPage->addModules( 'mapeditor' );
@@ -49,10 +49,10 @@ class SpecialMapEditor extends SpecialPage{
 	 * @return array
 	 */
 	protected function getAttribs(){
-		return array(
+		return [
             'id' => 'map-canvas',
             'context' => 'SpecialMapEditor'
-        );
+        ];
 	}
 
 	protected function getGroupName() {

@@ -6,14 +6,15 @@
 			"Lijealso",
 			"Luckas",
 			"SandroHc",
-			"Waldir"
+			"Waldir",
+			"Vitorvicentevalente"
 		]
 	},
-	"validator-desc": "O Serviço de Validação permite que, de forma simples, as outras extensões possam validar parâmetros das funções do analisador sintáctico e das extensões dos elementos HTML, definir valores por omissão e gerar mensagens de erro",
+	"validator-desc": "Biblioteca de processamento de parâmetros declarativos",
 	"validator-warning": "Aviso: $1",
 	"validator-error": "Erro: $1",
 	"validator-fatal-error": "Erro fatal: $1",
-	"validator_error_parameters": "{{PLURAL:$1|Foi detectado o seguinte erro sintático|Foram detectados os seguintes erros sintáticos}}:",
+	"validator_error_parameters": "{{PLURAL:$1|Foi detetado o seguinte erro sintático|Foram detetados os seguintes erros sintáticos}}:",
 	"validator_warning_parameters": "{{PLURAL:$1|Existe um erro sintáctico|Existem erros sintácticos}}.",
 	"validator-warning-adittional-errors": "... e {{PLURAL:$1|mais um problema|vários outros problemas}}.",
 	"validator-error-omitted": "{{PLURAL:$2|O valor \"$1\" foi omitido|Os valores \"$1\" foram omitidos}}.",
@@ -26,6 +27,7 @@
 	"validator-type-float": "número",
 	"validator-type-boolean": "sim/não",
 	"validator-type-char": "carácter",
+	"validator-type-dimension": "número e unidade dimensional",
 	"validator-type-title": "título",
 	"validator-type-string-list": "lista de textos",
 	"validator-type-integer-list": "lista de números inteiros",
@@ -67,7 +69,7 @@
 	"validator-describe-pfmin": "Função do analisador sintáctico só com os parâmetros obrigatórios.",
 	"validator-describe-pfmax": "Função do analisador sintáctico com todos os parâmetros.",
 	"validator-describe-pfdefault": "Função do analisador sintáctico com todos os parâmetros, usando a notação do parâmetro por omissão.",
-	"validator-describe-autogen": "O conteúdo desta seção foi gerado de forma automática pelo hook \"describe\" do analisador sintático, criado pela extensão Serviço de Validação.",
+	"validator-describe-autogen": "O conteúdo desta secção foi gerado de forma automática pelo hook \"describe\" do analisador sintático, criado pela extensão Serviço de Validação.",
 	"validator_error_empty_argument": "O parâmetro $1 não pode estar vazio.",
 	"validator_error_must_be_number": "O parâmetro $1 só pode ser numérico.",
 	"validator_error_must_be_integer": "O parâmetro $1 só pode ser um número inteiro.",
@@ -82,6 +84,8 @@
 	"validator_list_error_empty_argument": "O parâmetro $1 não pode estar vazio.",
 	"validator_list_error_must_be_number": "O parâmetro $1 só pode ser numérico.",
 	"validator_list_error_must_be_integer": "O parâmetro $1 só pode ser um número inteiro.",
+	"validator_list_error_must_be_title": "O parâmetro $1 só pode conter nomes válidos de páginas da wiki.",
+	"validator_list_error_must_be_existing_title": "O parâmetro $1 só pode conter nomes válidos de páginas da wiki.",
 	"validator-list-error-must-be-float": "O parâmetro $1 só pode conter valores de vírgula flutuante.",
 	"validator_list_error_invalid_range": "Todos os valores do parâmetro $1 têm de ser entre $2 e $3.",
 	"validator-list-error-invalid-regex": "Todos os valores do parâmetro $1 devem corresponder à expressão regular: $2.",
@@ -90,5 +94,6 @@
 	"validator-list-error-accepts-only-omitted": "Um ou mais valores para o parâmetro $1 são inválidos.\nSó {{PLURAL:$3|é aceite este valor|são aceites estes valores}}: $2 (e $4 {{PLURAL:$4|valor omitido|valores omitidos}}).",
 	"validator_error_accepts_only": "O valor \"$4\" não é válido para o parâmetro $1. O parâmetro só aceita {{PLURAL:$3|este valor|estes valores}}: $2.",
 	"validator-error-accepts-only-omitted": "O valor $2 não é válido para o parâmetro $1.\nSó {{PLURAL:$5|é aceite este valor|são aceites estes valores}}: $3 (e $4 {{PLURAL:$4|valor omitido|valores omitidos}}).",
-	"validator_list_omitted": "{{PLURAL:$2|O valor $1 foi omitido|Os valores $1 foram omitidos}}."
+	"validator_list_omitted": "{{PLURAL:$2|O valor $1 foi omitido|Os valores $1 foram omitidos}}.",
+	"validator-message-nodesc": "Não foi fornecida nenhuma descrição"
 }

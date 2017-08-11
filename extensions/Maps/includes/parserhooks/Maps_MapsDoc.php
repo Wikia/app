@@ -43,16 +43,16 @@ class MapsMapsDoc extends ParserHook {
 	 * @return array
 	 */
 	protected function getParameterInfo( $type ) {
-		$params = array();
+		$params = [];
 
-		$params['service'] = array(
+		$params['service'] = [
 			'values' => $GLOBALS['egMapsAvailableServices'],
 			'tolower' => true,
-		);
+		];
 
-		$params['language'] = array(
+		$params['language'] = [
 			'default' => $GLOBALS['wgLanguageCode'],
-		);
+		];
 
 		// Give grep a chance to find the usages:
 		// maps-geocode-par-service, maps-geocode-par-language
@@ -72,7 +72,7 @@ class MapsMapsDoc extends ParserHook {
 	 * @return array
 	 */
 	protected function getDefaultParameters( $type ) {
-		return array( 'service', 'language' );
+		return [ 'service', 'language' ];
 	}
 
 	/**
@@ -103,7 +103,7 @@ class MapsMapsDoc extends ParserHook {
 	 *
 	 * @return string
 	 */
-	protected function msg() {
+	private function msg() {
 		$args = func_get_args();
 		$key = array_shift( $args );
 		return wfMessage( $key, $args )->inLanguage( $this->language )->text();
@@ -118,8 +118,8 @@ class MapsMapsDoc extends ParserHook {
 	 *
 	 * @return string
 	 */
-	protected function getParameterTable( array $parameters ) {
-		$tableRows = array();
+	private function getParameterTable( array $parameters ) {
+		$tableRows = [];
 
 		$parameters = ParamDefinition::getCleanDefinitions( $parameters );
 
@@ -130,13 +130,13 @@ class MapsMapsDoc extends ParserHook {
 		$table = '';
 
 		if ( count( $tableRows ) > 0 ) {
-			$tableRows = array_merge( array(
+			$tableRows = array_merge( [
 			'!' . $this->msg( 'validator-describe-header-parameter' ) ."\n" .
 			//'!' . $this->msg( 'validator-describe-header-aliases' ) ."\n" .
 			'!' . $this->msg( 'validator-describe-header-type' ) ."\n" .
 			'!' . $this->msg( 'validator-describe-header-default' ) ."\n" .
 			'!' . $this->msg( 'validator-describe-header-description' )
-			), $tableRows );
+			], $tableRows );
 
 			$table = implode( "\n|-\n", $tableRows );
 
@@ -152,16 +152,14 @@ class MapsMapsDoc extends ParserHook {
 	/**
 	 * Returns the wikitext for a table row describing a single parameter.
 	 *
-	 * @since 1.0
-	 *
 	 * @param ParamDefinition $parameter
 	 *
 	 * @return string
 	 */
-	protected function getDescriptionRow( ParamDefinition $parameter ) {
+	private function getDescriptionRow( ParamDefinition $parameter ) {
 		$description = $this->msg( $parameter->getMessage() );
 
-		$type = $parameter->getTypeMessage();
+		$type = $this->msg( $parameter->getTypeMessage() );
 
 		$default = $parameter->isRequired() ? "''" . $this->msg( 'validator-describe-required' ) . "''" : $parameter->getDefault();
 		if ( is_array( $default ) ) {
@@ -181,15 +179,15 @@ class MapsMapsDoc extends ParserHook {
 EOT;
 	}
 
-	protected function getServiceParameters( $service ) {
+	private function getServiceParameters( $service ) {
 		$service = MapsMappingServices::getServiceInstance( $service );
 
-		$params = array();
+		$params = [];
 
-		$params['zoom'] = array(
+		$params['zoom'] = [
 			'type' => 'integer',
 			'message' => 'maps-par-zoom',
-		);
+		];
 
 		$service->addParameterInfo( $params );
 

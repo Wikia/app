@@ -31,7 +31,6 @@
 	"maps-layer-type-supported-by": "Jenis lapisan ini {{PLURAL:$2|hanya boleh digunakan dengan perkhidmatan pemetaan $1|boleh digunakan dengan perkhidmatan-perkhidmatan pemetaan yang berikut: $1}}.",
 	"maps-coordinates-description": "Cangkuk penghurai untuk memformatkan koordinat daripada/kepada sebarang format yang disokong.",
 	"maps-displaymap-description": "Memaparkan peta geografi tanpa sebarang penanda tentuan wiki padanya.",
-	"maps-displaypoint-description": "Memaparkan peta geografi dengan sekurang-kurangnya satu penanda tentuan wiki padanya.",
 	"maps-distance-description": "Menukar nilai jarak yang menggunakan unit disokong yang tertentu kepada setaraannya yang menggunakan unit yang lain.",
 	"maps-finddestination-description": "Mencari tujuan dari satu titik permulaan (yang boleh dinyatakan dalam sebarang format yang disokong), bearing permulaan dan jarak.",
 	"maps-geocode-description": "Membolehkan pembuatan geokod alamat, iaitu menukar lokasi yang boleh dibaca oleh manusia kepada peranggu koordinat. Wujudnya sokongan untuk beberapa perkhidmatan geokod yang tidak boleh disamakan dengan perkhidmatan pemetaan.",
@@ -115,6 +114,7 @@
 	"maps-par-width": "Membolehkan penetapan lebar peta. Pada asali, piksel dianggap sebagai unit, tetapi anda boleh menetapkan mana-mana unit yang berikut: px, ex, em, %.",
 	"maps-par-height": "Membolehkan penetapan tinggi peta. Pada asali, piksel dianggap sebagai unit, tetapi anda boleh menetapkan mana-mana unit yang berikut: px, ex, em, %.",
 	"maps-par-centre": "Lokasi yang hendak dijadikan pusat peta",
+	"maps-par-kml": "Fail-fail KML untuk dimuatkan kepada peta.",
 	"maps-googlemaps3-incompatbrowser": "Pelayar anda tidak serasi dengan Google Maps v3.",
 	"maps-googlemaps3-par-type": "Jenis peta untuk dipaparkan pada mulanya.",
 	"maps-googlemaps3-par-types": "Jenis-jenis peta yang tersedia melalui kawalan jenis.",
@@ -123,7 +123,6 @@
 	"maps-googlemaps3-par-zoomstyle": "Gaya kawalan zum.",
 	"maps-googlemaps3-par-typestyle": "Gaya kawalan jenis.",
 	"maps-googlemaps3-par-autoinfowindows": "Membuka semua tetingkap maklumat secara automatik selepas laman dimuatkan.",
-	"maps-googlemaps3-par-kml": "Fail-fail KML untuk dimuatkan kepada peta.",
 	"maps-googlemaps3-par-gkml": "Fail-fail KML yang dihoskan oleh Google untuk dimuatkan pada peta.",
 	"maps-googlemaps3-par-fusiontables": "ID Google Fusion Tables yang patut dimuatkan pada peta.",
 	"maps-googlemaps3-par-tilt": "Ciri menyendengkan Peta ketika menggunakan Google Maps.",
@@ -131,8 +130,6 @@
 	"maps-googlemaps3-par-poi": "Tunjukkan tempat-tempat menarik.",
 	"maps-openlayers-par-controls": "Alat kawalan untuk diletakkan pada peta.",
 	"maps-openlayers-par-layers": "Lapisan-lapisan yang akan tersedia pada pemilih lapisan. Lapisan pertama akan dipaparkan apabila peta dimuatkan.",
-	"maps-osm-par-thumbs": "Tunjukkan gambar kenit (thumbnail)",
-	"maps-osm-par-photos": "Tunjukkan gambar",
 	"mapeditor": "Editor peta",
 	"specialpages-group-maps": "Peta",
 	"mapeditor-parser-error": "Timbulnya ralat ketika menghuraikan metadata. Input pengguna diabaikan.",
@@ -168,5 +165,6 @@
 	"mapeditor-imageoverlay-button": "Tambah tindihan imej",
 	"mapeditor-form-field-image": "Imej",
 	"mapeditor-imageoverlay-title": "Butiran tindihan imej",
-	"mapeditor-form-field-visitedicon": "Ikon dikunjungi"
+	"mapeditor-form-field-visitedicon": "Ikon dikunjungi",
+	"semanticmaps-forminput-locations": "Lokasi"
 }

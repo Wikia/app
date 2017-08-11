@@ -2,6 +2,8 @@
 
 namespace ParamProcessor\Tests;
 
+use ParamProcessor\ProcessingError;
+use ParamProcessor\ProcessingResult;
 use ParamProcessor\Processor;
 use ParamProcessor\Options;
 
@@ -352,14 +354,45 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testProcessParametersOnEmptyOptions() {
-
-		$options = new Options();
-		$validator = Processor::newFromOptions( $options );
+		$processor = Processor::newDefault();
 
 		$this->assertInstanceOf(
-			'\ParamProcessor\ProcessingResult',
-			$validator->processParameters()
+			ProcessingResult::class,
+			$processor->processParameters()
 		);
+	}
+
+	public function testErrorsCanBeRetrievedAfterProcessing() {
+		$processor = Processor::newDefault();
+
+		$this->processWithOneError( $processor );
+
+		$this->assertCount( 1, $processor->getErrors() );
+	}
+
+	private function processWithOneError( Processor $processor ) {
+		$processor->setParameters(
+			[],
+			[
+				'awesome' => [
+					'type' => 'boolean',
+					'message' => 'test-awesome'
+				],
+			]
+		);
+
+		// There should be a single "missing required parameter" error.
+		$processor->processParameters();
+	}
+
+	public function testErrorsAreClearedBetweenProcessingRuns() {
+		$processor = Processor::newDefault();
+
+		$this->processWithOneError( $processor );
+		$processor->setParameters( [], [] );
+		$processor->processParameters();
+
+		$this->assertEmpty( $processor->getErrors() );
 	}
 
 }

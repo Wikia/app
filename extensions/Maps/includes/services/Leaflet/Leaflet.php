@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This groupe contains all Leaflet related files of the Maps extension.
+ * This group contains all Leaflet related files of the Maps extension.
  *
  * @defgroup Leaflet
  */
@@ -19,49 +19,72 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 call_user_func( function() {
-	global $wgHooks, $wgResourceModules;
-
-	// Specify the function that will initialize the parser function.
-	$wgHooks['MappingServiceLoad'][] = 'efMapsInitLeaflet';
+	global $wgResourceModules;
 
 	$pathParts = ( explode( DIRECTORY_SEPARATOR . 'extensions' . DIRECTORY_SEPARATOR, __DIR__, 2 ) );
 
-	$wgResourceModules['ext.maps.leaflet'] = array(
-		'dependencies' => array( 'ext.maps.common' ),
+	$wgResourceModules['ext.maps.leaflet'] = [
+		'dependencies' => [ 'ext.maps.common' ],
 		'localBasePath' => __DIR__,
 		'remoteExtPath' => end( $pathParts ),
 		'group' => 'ext.maps',
-		'targets' => array(
+		'targets' => [
 			'mobile',
 			'desktop'
-		),
-		'scripts' => array(
+		],
+		'scripts' => [
 			'jquery.leaflet.js',
 			'ext.maps.leaflet.js',
-		),
-		'messages' => array(
+		],
+		'messages' => [
 			'maps-markers',
 			'maps-copycoords-prompt',
 			'maps-searchmarkers-text',
-		),
-	);
+		],
+	];
+
+	$wgResourceModules['ext.maps.leaflet.fullscreen'] = [
+		'localBasePath' => __DIR__ . '/leaflet.fullscreen',
+		'remoteExtPath' => end( $pathParts ) . '/leaflet.fullscreen',
+		'group' => 'ext.maps',
+		'targets' => [
+			'mobile',
+			'desktop'
+		],
+		'scripts' => [
+			'Control.FullScreen.js',
+		],
+		'styles' => [
+			'Control.FullScreen.css',
+		],
+	];
+
+	$wgResourceModules['ext.maps.leaflet.markercluster'] = [
+		'localBasePath' => __DIR__ . '/leaflet.markercluster',
+		'remoteExtPath' => end( $pathParts ),
+		'group' => 'ext.maps',
+		'targets' => [
+			'mobile',
+			'desktop'
+		],
+		'scripts' => [
+			'leaflet.markercluster.js',
+		],
+		'styles' => [
+			'MarkerCluster.css',
+		],
+	];
+
+	$wgResourceModules['ext.maps.leaflet.providers'] = [
+		'localBasePath' => __DIR__ . '/leaflet-providers',
+		'remoteExtPath' => end( $pathParts ) . '/leaflet-providers',
+		'group' => 'ext.maps',
+		'targets' => [
+			'mobile',
+			'desktop'
+		],
+		'scripts' => [
+			'leaflet-providers.js',
+		],
+	];
 } );
-
-/**
- * Initialization function for the Leaflet service.
- *
- * @ingroup Leaflet
- *
- * @return boolean true
- */
-function efMapsInitLeaflet() {
-	global $wgAutoloadClasses;
-
-	$wgAutoloadClasses['MapsLeaflet'] = __DIR__ . '/Maps_Leaflet.php';
-
-	MapsMappingServices::registerService( 'leaflet', 'MapsLeaflet' );
-	$leafletMaps = MapsMappingServices::getServiceInstance( 'leaflet' );
-	$leafletMaps->addFeature( 'display_map', 'MapsDisplayMapRenderer' );
-
-	return true;
-}

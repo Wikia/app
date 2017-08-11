@@ -30,7 +30,7 @@
 		"data-values/validators": "~0.1.1"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "~5.4",
+		"phpunit/phpunit": "~5.4|~4.8",
 		"squizlabs/php_codesniffer": "~2.1",
 		"phpmd/phpmd": "~2.1",
 		"ockcyp/covers-validator": "~0.4"
