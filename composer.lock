@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "edba00ddef64d6e9330e69111095ecd9",
+    "content-hash": "27d074ad9778cdac59e8b7c3b535a8d3",
     "packages": [
         {
             "name": "composer/installers",
@@ -4138,10 +4138,10 @@
         },
         {
             "name": "wikia/semantic-media-wiki",
-            "version": "2.4.2.9",
+            "version": "2.4.6",
             "dist": {
                 "type": "tar",
-                "url": "http://artifactory.wikia-inc.com/artifactory/api/composer/php-local/direct-dists/wikia/semantic-media-wiki/semantic-media-wiki-2.4.2.9.tar",
+                "url": "http://artifactory.wikia-inc.com/artifactory/api/composer/php-local/direct-dists/wikia/semantic-media-wiki/semantic-media-wiki-2.4.6.tar",
                 "reference": null,
                 "shasum": null
             },
