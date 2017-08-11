@@ -93,15 +93,17 @@ class ApiService {
 	private static function getHostByDbName( string $dbName ) {
 		global $wgDevelEnvironment, $wgDevDomain;
 
-		$cityId = WikiFactory::DBtoID( $dbName );
-		$hostName = WikiFactory::getVarValueByName( 'wgServer', $cityId );
-
 		if ( !empty( $wgDevelEnvironment ) ) {
+			$hostName = WikiFactory::DBtoUrl( $dbName );
+
 			if ( strpos( $hostName, 'wikia.com' ) ) {
 				$hostName = str_replace( 'wikia.com', $wgDevDomain, $hostName );
 			} else {
 				$hostName = WikiFactory::getLocalEnvURL( $hostName );
 			}
+		} else {
+			$cityId = WikiFactory::DBtoID( $dbName );
+			$hostName = WikiFactory::getVarValueByName( 'wgServer', $cityId );
 		}
 
 		return rtrim( $hostName, '/' );
