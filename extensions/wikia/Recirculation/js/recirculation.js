@@ -36,6 +36,7 @@ require([
 					max: 5,
 					widget: 'wikia-rail',
 					source: 'fandom',
+					flush: true,
 					opts: {
 						resultType: 'cross-domain',
 						domainType: 'fandom.wikia.com'
@@ -81,106 +82,48 @@ require([
 		completed = [],
 		liftigniterHelpers = {};
 
-	if (w.wgContentLanguage === 'en') {
-		if (videosModule) {
-			videosModule('#recirculation-rail');
-		}
+
 		discussions();
-		return;
-	}
 
-	recircModules.forEach(function (recircModule) {
-		var deferred = $.Deferred();
 
-		var configuredHelper = liftigniter(recircModule.options);
-		configuredHelper.loadData()
-			.done(function (data) {
-				deferred.resolve(data);
-			})
-			.fail(function (err) {
-				deferred.reject(err);
-			});
 
-		// We need to keep track of the liftigniter helpers so we can setup tracking for them
-		liftigniterHelpers[recircModule.id] = configuredHelper;
+	fetchFandomReccomendations();
+	fetchWikiRecomendationss();
 
-		if (recircModule.viewModule) {
-			views[recircModule.viewModule] = views[recircModule.viewModule] || [];
-			views[recircModule.viewModule].push(deferred);
-		}
-	});
-
-	$.each(views, function (viewModule, promises) {
-		var deferred = $.Deferred();
-
-		completed.push(deferred);
-
-		log('Initializing View: ' + viewModule, 'info', logGroup);
-		require([viewModule], function (viewFactory) {
-			$.when.apply($, promises)
-				.done(function () {
-					var view = viewFactory(),
-						args = Array.prototype.slice.call(arguments),
-						data = {
-							title: '',
-							items: []
-						};
-
-					log(args, 'info', logGroup);
-
-					args.forEach(function (result) {
-						if (!result) {
-							return;
-						}
-
-						if (result.title && data.title.length === 0) {
-							data.title = result.title;
-						}
-
-						data.items = data.items.concat(result.items);
-					});
-
-					view.render(data)
-						.then(view.setupTracking())
-						.then(deferred.resolve);
-				})
-				.fail(handleError(viewModule), function () {
-					deferred.reject(viewModule);
-				});
-		});
-	});
-
-	$.when.apply($, completed)
-		.done(function () {
-			log('Finished rendering recirculation', 'info', logGroup);
-
-			$.each(liftigniterHelpers, function (viewModule, helper) {
-				helper.setupTracking();
-			});
-		})
-		.fail(function (viewModule) {
-			log('Error running recirc at: ' + viewModule, 'info', logGroup);
-		});
-
-	function handleError(viewModule) {
-		return function (errorMessage) {
-			log(errorMessage, 'info', logGroup);
-
-			if (viewModule === 'ext.wikia.recirculation.views.premiumRail') {
-				require([
-					'ext.wikia.recirculation.helpers.fandom',
-					viewModule
-				], function (helper, view) {
-					helper({
-						type: 'community',
-						fill: true,
-						limit: 10
-					}).loadData()
-						.done(function (data) {
-							view().render(data);
-						});
-				});
+	function fetchFandomReccomendations() {
+		var fandomOptions = {
+				max: 17,
+				widget: 'wikia-rail',
+				opts: {
+					resultType: 'cross-domain',
+					domainType: 'fandom.wikia.com'
+				},
+			callback: function(resp){
+				console.log(resp)
 			}
 		};
+
+		var deferred = $.Deferred();
+
+		w.$p("register", fandomOptions);
+
+		w.$p('fetch');
+	}
+	function fetchWikiRecomendationss() {
+		var wikiaOptions = {
+			max: 17,
+			widget: 'footer',
+			callback: function(resp){
+				console.log(resp)
+			}
+		};
+
+		var deferred = $.Deferred();
+
+		setTimeout(function() {
+			w.$p("register", wikiaOptions);
+			w.$p('fetch');
+			}, 350)
+
 	}
 });

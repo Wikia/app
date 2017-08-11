@@ -17,7 +17,7 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 		function loadData() {
 			var deferred = $.Deferred(),
 				registerOptions = {
-					max: options.max * 2, // We want to load twice as many because we filter based on thumbnails
+					max: options.max, // We want to load twice as many because we filter based on thumbnails
 					widget: options.widget,
 					callback: function (response) {
 						deferred.resolve(formatData(response));
@@ -35,9 +35,9 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 			// Callback renders and injects results into the placeholder.
 			w.$p('register', registerOptions);
 
-			if (options.flush) {
+			//if (options.flush) {
 				w.$p('fetch');
-			}
+			//}
 
 			return deferred.promise();
 		}

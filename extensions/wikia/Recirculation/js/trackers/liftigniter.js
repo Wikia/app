@@ -45,7 +45,8 @@ function getLiftIgniterGlobalContext() {
 $p("init", "l9ehhrb6mtv75bp2", {
     config: {
         sdk: {
-            queryServer: "//query.fandommetrics.com"
+            queryServer: "//query.fandommetrics.com",
+	        multiFetch: true
         },
         activity: {
             activityServer: "//query.fandommetrics.com"
