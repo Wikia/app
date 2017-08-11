@@ -11,14 +11,11 @@ define('ext.wikia.adEngine.provider.evolve2', [
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.evolve2',
-		atfDesktopSlots = [
+		atfSlots = [
 			'INVISIBLE_SKIN',
 			'TOP_LEADERBOARD',
 			'TOP_RIGHT_BOXAD',
 			'EVOLVE_FLUSH'
-		],
-		atfMobileSlots = [
-			'MOBILE_TOP_LEADERBOARD'
 		],
 		posTargetingValue,
 		site = 'wikia_intl',
@@ -125,8 +122,8 @@ define('ext.wikia.adEngine.provider.evolve2', [
 	return {
 		name: 'Evolve2',
 		canHandleSlot: canHandleSlot,
-		fillInSlot: btfBlocker.decorate(fillInSlot, {
-			atfSlots: adContext.getContext().targeting.skin === 'oasis' ? atfDesktopSlots : atfMobileSlots
-		})
+		fillInSlot: adContext.getContext().targeting.skin === 'oasis' ? btfBlocker.decorate(fillInSlot, {
+			atfSlots: atfSlots
+		}) : fillInSlot
 	};
 });
