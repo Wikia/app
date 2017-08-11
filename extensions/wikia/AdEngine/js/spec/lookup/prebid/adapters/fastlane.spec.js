@@ -1,4 +1,4 @@
-/*global beforeEach, describe, expect, it, jasmine, modules*/
+/*global beforeEach, describe, expect, it, jasmine, modules, spyOn*/
 describe('ext.wikia.adEngine.lookup.prebid.adapters.fastlane', function () {
 	'use strict';
 
@@ -62,6 +62,13 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.fastlane', function () {
 	it('Is disabled when context is disabled', function () {
 		mocks.context.bidders.fastlane = false;
 		var rubicon = getBidder();
+
+		expect(rubicon.isEnabled()).toBeFalsy();
+	});
+
+	it('Is disabled when context is enabled but is blocking', function () {
+		var rubicon = getBidder();
+		spyOn(mocks.instartLogic, 'isBlocking').and.returnValue(true);
 
 		expect(rubicon.isEnabled()).toBeFalsy();
 	});

@@ -109,6 +109,13 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 		expect(veles.isEnabled()).toBeFalsy();
 	});
 
+	it('Is disabled when context is enabled but is blocking', function () {
+		var veles = getVeles();
+		spyOn(mocks.instartLogic, 'isBlocking').and.returnValue(true);
+
+		expect(veles.isEnabled()).toBeFalsy();
+	});
+
 	it('Is enabled when context is enabled', function () {
 		var veles = getVeles();
 
