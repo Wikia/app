@@ -68,6 +68,10 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 			'bidder_10': transformBidderPrice('appnexusAst', realSlotPrices, slotPricesIgnoringTimeout),
 			'product_chosen': '',
 			'product_lineitem_id': slotFirstChildData.gptLineItemId || '',
+			'creative_id': slotFirstChildData.gptCreativeId || '',
+			'creative_size': (slotFirstChildData.gptCreativeSize || '')
+				.replace('[', '').replace(']', '').replace(',', 'x'),
+			'viewport_height': win.innerHeight || 0,
 			'product_label': '',
 			'ad_status': status || 'unknown'
 		};
