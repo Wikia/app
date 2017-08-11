@@ -599,7 +599,6 @@ class ArticlesApiController extends WikiaApiController {
 	 * @example &ids=2187,23478&abstract=200&width=300&height=150
 	 */
 	public function getDetails() {
-		wfProfileIn( __METHOD__ );
 		$this->setOutputFieldType( "items", self::OUTPUT_FIELD_TYPE_OBJECT );
 
 		// get optional params for details
@@ -630,7 +629,6 @@ class ArticlesApiController extends WikiaApiController {
 		);
 
 		$collection = null;
-		wfProfileOut( __METHOD__ );
 	}
 
 	protected function getDetailsParams() {
@@ -679,11 +677,12 @@ class ArticlesApiController extends WikiaApiController {
 		if ( !empty( $titles ) ) {
 			foreach ( $titles as $t ) {
 				$fileData = [];
-				if ( $t->getNamespace() == NS_FILE ) {
+				$namespace = $t->getNamespace();
+				if ( $namespace == NS_FILE ) {
 					$fileData = $this->getFromFile( $t->getText() );
-				} elseif ( $t->getNamespace() == NS_MAIN ) {
+				} elseif ( $namespace == NS_MAIN ) {
 					$fileData = [ 'type' => static::ARTICLE_TYPE ];
-				} elseif ( $t->getNamespace() == NS_CATEGORY ) {
+				} elseif ( $namespace == NS_CATEGORY ) {
 					$fileData = [ 'type' => static::CATEGORY_TYPE ];
 				}
 				$id = $t->getArticleID();
@@ -704,7 +703,10 @@ class ArticlesApiController extends WikiaApiController {
 						]
 					];
 
-					if ( $this->wg->EnableArticleCommentsExt ) {
+					if (
+						($namespace == NS_BLOG_ARTICLE && $this->wg->EnableBlogArticles) ||
+						$this->wg->EnableArticleCommentsExt
+					) {
 						$collection[$id]['comments'] = ArticleCommentList::newFromTitle( $t )->getCountAllNested();
 					}
 
