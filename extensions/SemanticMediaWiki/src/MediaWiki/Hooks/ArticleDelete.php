@@ -8,6 +8,7 @@ use SMW\EventHandler;
 use SMW\SemanticData;
 use SMW\MediaWiki\Jobs\UpdateDispatcherJob;
 use Title;
+use User;
 use WikiPage;
 
 /**
