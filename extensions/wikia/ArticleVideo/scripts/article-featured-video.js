@@ -250,6 +250,9 @@ require([
 						ooyalaVideoController.getFormattedDuration(player.getDuration())
 					);
 					$onScrollAttribution.remove();
+
+					window.guaSetCustomDimension(34, player.getItem().embed_code);
+					window.guaSetCustomDimension(35, player.getTitle());
 				}
 			});
 
