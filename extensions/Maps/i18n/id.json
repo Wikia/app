@@ -6,7 +6,8 @@
 			"Irwangatot",
 			"IvanLanin",
 			"පසිඳු කාවින්ද",
-			"Macofe"
+			"Macofe",
+			"C5st4wr6ch"
 		]
 	},
 	"maps-desc": "Mengaktifkan penyertaan peta dinamis dalam halaman wiki, pembuatan geokode alamat, dan operasi geografi lain",
@@ -29,7 +30,6 @@
 	"maps-layer-type-supported-by": "Lapisan ini hanya dapat digunakan oleh layanan pemetaan {{PLURAL:$2|$1|$1}}.",
 	"maps-coordinates-description": "Pengait parser untuk memformat koordinat, dari dan ke salah satu format yang didukung.",
 	"maps-displaymap-description": "Menampilkan peta geografis tanpa mencantumkan penanda wiki terdefinisi.",
-	"maps-displaypoint-description": "Menampilkan peta geografis dengan satu atau lebih penanda wiki terdefinisi.",
 	"maps-distance-description": "Mengubah jarak dengan menggunakan unit terdukung tertentu menjadi setaranya dengan menggunakan unit lain.",
 	"maps-finddestination-description": "Menemukan tujuan dari suatu titik awal (dalam salah satu format yang didukung), arah, dan jarak.",
 	"maps-geocode-description": "Memberikan geokode alamat, atau dengan kata lain, mengubah lokasi yang dapat dibaca manusia ke set koordinat. Tersedia dukungan untuk beberapa layanan geokode, yang berbeda dengan layanan pemetaan.",
@@ -98,6 +98,7 @@
 	"maps-par-zoom": "Tingkat pembesaran peta. Secara bawaan, peta bertanda akan mengambil tingkat pembesaran yang masih menunjukkan semua tanda.",
 	"maps-par-width": "Memungkinkan pengaturan lebar peta. Secara bawaan, piksel akan dianggap sebagai unit, tetapi Anda dapat menentukan secara eksplisit salah satu unit berikut: px, ex, em, %.",
 	"maps-par-height": "Memungkinkan pengaturan tinggi peta. Secara bawaan, piksel akan dianggap sebagai unit, tetapi Anda dapat menentukan secara eksplisit salah satu unit berikut: px, ex, em, %.",
+	"maps-par-kml": "Berkas KML yang akan dimuat ke dalam peta.",
 	"maps-googlemaps3-incompatbrowser": "Peramban Anda tidak kompatibel dengan Google Maps v3.",
 	"maps-googlemaps3-par-type": "Jenis peta yang ditampilkan saat awal.",
 	"maps-googlemaps3-par-types": "Jenis peta yang akan tersedia melalui kontrol jenis.",
@@ -106,12 +107,9 @@
 	"maps-googlemaps3-par-zoomstyle": "Gaya kontrol pembesaran.",
 	"maps-googlemaps3-par-typestyle": "Gaya jenis kontrol.",
 	"maps-googlemaps3-par-autoinfowindows": "Otomatis membuka semua jendela info setelah halaman dimuat.",
-	"maps-googlemaps3-par-kml": "Berkas KML yang akan dimuat ke dalam peta.",
 	"maps-googlemaps3-par-fusiontables": "ID Google Fusion Tables yang harus dimuat ke dalam peta.",
 	"maps-openlayers-par-controls": "Kontrol yang akan ditempatkan pada peta.",
 	"maps-openlayers-par-layers": "Lapisan yang akan tersedia pada pemilih lapisan. Lapisan pertama akan ditampilkan ketika peta dimuat.",
-	"maps-osm-par-thumbs": "Tampilkan gambar mini",
-	"maps-osm-par-photos": "Tampilkan foto",
 	"mapeditor": "Penyunting peta",
 	"specialpages-group-maps": "Peta",
 	"mapeditor-none-text": "Tidak ada",
@@ -139,5 +137,15 @@
 	"mapeditor-form-field-fillopcaity": "Transparansi isi",
 	"mapeditor-mapparam-title": "Sunting parameter peta",
 	"mapeditor-mapparam-defoption": "-Pilih parameter-",
-	"mapeditor-form-field-image": "Gambar"
+	"mapeditor-form-field-image": "Gambar",
+	"semanticmaps-unrecognizeddistance": "Nilai $1 bukan jarak yang sah.",
+	"semanticmaps-kml-link": "Lihat berkas KML",
+	"semanticmaps-default-kml-pagelink": "Lihat halaman $1",
+	"semanticmaps-forminput-locations": "Lokasi",
+	"semanticmaps-par-staticlocations": "Daftar lokasi yang akan ditambahkan ke dalam peta, berikut data kueri. Seperti halnya display_points, Anda dapat menambahkan judul, deskripsi, dan ikon per lokasi dengan menggunakan tanda tilde \"~\" sebagai pemisah.",
+	"semanticmaps-par-showtitle": "Tampilkan judul di jendela info penanda. Penonaktifan judul sering berguna ketika menggunakan templat untuk memformat isi jendela info.",
+	"semanticmaps-par-centre": "Pusat peta. Jika tidak disediakan, peta secara otomatis akan memilih pusat optimal untuk menampilkan semua penanda di peta.",
+	"semanticmaps-par-template": "Ttemplat yang digunakan untuk memformat isi jendela info.",
+	"semanticmaps-kml-linkabsolute": "Pranala sebaiknya adalah mutlak (lawan dari relatif)",
+	"semanticmaps-shapes-improperformat": "Format yang kurang tepat untuk $1. Silakan lihat dokumentasi untuk format."
 }

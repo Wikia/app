@@ -34,7 +34,7 @@ class MapsDistanceParser {
 		
 		self::initUnitRegex();
 		
-		$matches = array();
+		$matches = [];
 		preg_match( '/^\d+(\.\d+)?\s?(' . self::$unitRegex . ')?$/', $distance, $matches );
 
 		$value = (float)( $matches[0] . $matches[1] );
@@ -161,7 +161,7 @@ class MapsDistanceParser {
 		$strlen = strlen( $distance );
 		
 		for ( $i = 0; $i < $strlen; $i++ ) {
-			if ( !ctype_digit( $distance{$i} ) && !in_array( $distance{$i}, array( ',', '.' ) ) ) {
+			if ( !ctype_digit( $distance{$i} ) && !in_array( $distance{$i}, [ ',', '.' ] ) ) {
 				$value = substr( $distance, 0, $i );
 				$unit = substr( $distance, $i );
 				break;
@@ -171,7 +171,7 @@ class MapsDistanceParser {
 		$value = str_replace( ',', '.', isset( $value ) ? $value : $distance );
 		
 		if ( isset( $unit ) ) {
-			$value .= ' ' . str_replace( array( ' ', "\t" ), '', $unit );
+			$value .= ' ' . str_replace( [ ' ', "\t" ], '', $unit );
 		}
 
 		return $value;

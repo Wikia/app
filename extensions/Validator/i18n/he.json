@@ -5,7 +5,8 @@
 			"Inkbug",
 			"Rotemliss",
 			"YaronSh",
-			"IKhitron"
+			"IKhitron",
+			"Guycn2"
 		]
 	},
 	"validator-desc": "ספריית עיבוד פרמטרים הצהרתי",
@@ -25,6 +26,7 @@
 	"validator-type-float": "מספר",
 	"validator-type-boolean": "כן או לא",
 	"validator-type-char": "תו",
+	"validator-type-dimension": "מספר ויחידה ממדית",
 	"validator-type-title": "כותרת",
 	"validator-type-string-list": "רשימת טקסטים",
 	"validator-type-integer-list": "רשימת מספרים שלמים",

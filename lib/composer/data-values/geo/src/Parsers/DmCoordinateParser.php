@@ -32,11 +32,15 @@ class DmCoordinateParser extends DdCoordinateParser {
 
 		$this->defaultOption( self::OPT_MINUTE_SYMBOL, "'" );
 
-		$this->defaultDelimiters = array( $this->getOption( self::OPT_MINUTE_SYMBOL ) );
+		$this->defaultDelimiters = [ $this->getOption( self::OPT_MINUTE_SYMBOL ) ];
 	}
 
 	/**
-	 * @see GeoCoordinateParserBase::areValidCoordinates
+	 * @see LatLongParserBase::areValidCoordinates
+	 *
+	 * @param string[] $normalizedCoordinateSegments
+	 *
+	 * @return bool
 	 */
 	protected function areValidCoordinates( array $normalizedCoordinateSegments ) {
 		// At least one coordinate segment needs to have minutes specified.
@@ -55,12 +59,12 @@ class DmCoordinateParser extends DdCoordinateParser {
 		// directional and non-directional is regarded invalid).
 		$directional = false;
 
-		foreach( $normalizedCoordinateSegments as $i => $segment ) {
+		foreach ( $normalizedCoordinateSegments as $i => $segment ) {
 			$direction = '('
 				. $this->getOption( self::OPT_NORTH_SYMBOL ) . '|'
 				. $this->getOption( self::OPT_SOUTH_SYMBOL ) . ')';
 
-			if( $i === 1 ) {
+			if ( $i === 1 ) {
 				$direction = '('
 					. $this->getOption( self::OPT_EAST_SYMBOL ) . '|'
 					. $this->getOption( self::OPT_WEST_SYMBOL ) . ')';
@@ -71,7 +75,7 @@ class DmCoordinateParser extends DdCoordinateParser {
 				$segment
 			);
 
-			if( $match ) {
+			if ( $match ) {
 				$detectedMinute = true;
 			} else {
 				$match = preg_match(
@@ -80,19 +84,19 @@ class DmCoordinateParser extends DdCoordinateParser {
 				);
 			}
 
-			if( $match ) {
+			if ( $match ) {
 				$directional = true;
 			} elseif ( !$directional ) {
 				$match = preg_match( '/^(-)?' . $regExpStrict . '$/i', $segment );
 
-				if( $match ) {
+				if ( $match ) {
 					$detectedMinute = true;
-				} else  {
+				} else {
 					$match = preg_match( '/^(-)?' . $regExpLoose . '$/i', $segment );
 				}
 			}
 
-			if( !$match ) {
+			if ( !$match ) {
 				return false;
 			}
 		}
@@ -102,11 +106,15 @@ class DmCoordinateParser extends DdCoordinateParser {
 
 	/**
 	 * @see DdCoordinateParser::getNormalizedNotation
+	 *
+	 * @param string $coordinates
+	 *
+	 * @return string
 	 */
 	protected function getNormalizedNotation( $coordinates ) {
 		$minute = $this->getOption( self::OPT_MINUTE_SYMBOL );
 
-		$coordinates = str_replace( array( '&#8242;', '&prime;', '´', '′' ), $minute, $coordinates );
+		$coordinates = str_replace( [ '&#8242;', '&prime;', '´', '′' ], $minute, $coordinates );
 
 		$coordinates = parent::getNormalizedNotation( $coordinates );
 
@@ -117,6 +125,10 @@ class DmCoordinateParser extends DdCoordinateParser {
 
 	/**
 	 * @see DdCoordinateParser::parseCoordinate
+	 *
+	 * @param string $coordinateSegment
+	 *
+	 * @return float
 	 */
 	protected function parseCoordinate( $coordinateSegment ) {
 		$isNegative = substr( $coordinateSegment, 0, 1 ) === '-';
@@ -128,7 +140,7 @@ class DmCoordinateParser extends DdCoordinateParser {
 		$degreeSymbol = $this->getOption( self::OPT_DEGREE_SYMBOL );
 		$exploded = explode( $degreeSymbol, $coordinateSegment );
 
-		if( count( $exploded ) !== 2 ) {
+		if ( count( $exploded ) !== 2 ) {
 			throw new ParseException(
 				'Unable to explode coordinate segment by degree symbol (' . $degreeSymbol . ')',
 				$coordinateSegment,

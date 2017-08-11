@@ -52,7 +52,7 @@ class LineParser extends StringValueParser {
 	 * @return LatLongValue[]
 	 */
 	protected function parseCoordinates( array $coordinateStrings ) {
-		$coordinates = array();
+		$coordinates = [];
 		$coordinateParser = new GeoCoordinateParser( new \ValueParsers\ParserOptions() );
 
 		$supportsGeocoding = $this->supportGeocoding && \Maps\Geocoders::canGeocode();

@@ -56,12 +56,14 @@ class ParamDefinitionFactory {
 	 * @since 1.0
 	 */
 	public function registerGlobals() {
-		foreach ( $GLOBALS['wgParamDefinitions'] as $type => $data ) {
-			if ( is_string( $data ) ) {
-				$data = [ 'definition' => $data ];
-			}
+		if ( array_key_exists( 'wgParamDefinitions', $GLOBALS ) ) {
+			foreach ( $GLOBALS['wgParamDefinitions'] as $type => $data ) {
+				if ( is_string( $data ) ) {
+					$data = [ 'definition' => $data ];
+				}
 
-			$this->registerType( $type, $data );
+				$this->registerType( $type, $data );
+			}
 		}
 	}
 

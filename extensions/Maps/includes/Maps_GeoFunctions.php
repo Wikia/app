@@ -72,10 +72,10 @@ final class MapsGeoFunctions {
 	 * @return array The destination coordinates, as non-directional floats in an array with lat and lon keys.
 	 */
 	public static function findDestination( LatLongValue $startingCoordinates, $bearing, $distance ) {
-		$startingCoordinates = array(
+		$startingCoordinates = [
 			'lat' => deg2rad( $startingCoordinates->getLatitude() ),
 			'lon' => deg2rad( $startingCoordinates->getLongitude() ),
-		);
+		];
 
 		$radBearing = deg2rad ( (float)$bearing );
 		$angularDistance = $distance / Maps_EARTH_RADIUS;
@@ -83,10 +83,10 @@ final class MapsGeoFunctions {
 		$lat = asin (sin ( $startingCoordinates['lat'] ) * cos ( $angularDistance ) + cos ( $startingCoordinates['lat'] )  * sin ( $angularDistance ) * cos ( $radBearing ) );
 		$lon = $startingCoordinates['lon'] + atan2 ( sin ( $radBearing ) * sin ( $angularDistance ) * cos ( $startingCoordinates['lat'] ), cos ( $angularDistance ) - sin ( $startingCoordinates['lat'] ) * sin ( $lat ) );
 	
-		return array(
+		return [
 			'lat' => rad2deg( $lat ),
 			'lon' => rad2deg( $lon )
-		);
+		];
 	}
 	
 }

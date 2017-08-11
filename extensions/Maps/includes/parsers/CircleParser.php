@@ -37,31 +37,31 @@ class CircleParser extends StringValueParser {
 
 		$circle = new Circle( $this->stringToLatLongValue( $circleData[0] ), (float)$circleData[1] );
 
-		if ( $metaData !== array() ) {
+		if ( $metaData !== [] ) {
 			$circle->setTitle( array_shift( $metaData ) );
 		}
 
-		if ( $metaData !== array() ) {
+		if ( $metaData !== [] ) {
 			$circle->setText( array_shift( $metaData ) );
 		}
 
-		if ( $metaData !== array() ) {
+		if ( $metaData !== [] ) {
 			$circle->setStrokeColor( array_shift( $metaData ) );
 		}
 
-		if ( $metaData !== array() ) {
+		if ( $metaData !== [] ) {
 			$circle->setStrokeOpacity( array_shift( $metaData ) );
 		}
 
-		if ( $metaData !== array() ) {
+		if ( $metaData !== [] ) {
 			$circle->setStrokeWeight( array_shift( $metaData ) );
 		}
 
-		if ( $metaData !== array() ) {
+		if ( $metaData !== [] ) {
 			$circle->setFillColor( array_shift( $metaData ) );
 		}
 
-		if ( $metaData !== array() ) {
+		if ( $metaData !== [] ) {
 			$circle->setFillOpacity( array_shift( $metaData ) );
 		}
 

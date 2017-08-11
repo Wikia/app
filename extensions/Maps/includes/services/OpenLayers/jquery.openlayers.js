@@ -4,21 +4,26 @@
  *
  * @author Jeroen De Dauw <jeroendedauw at gmail dot com>
  * @author Daniel Werner
+ * @author Peter Grassberger < petertheone@gmail.com >
  *
  * @todo This whole JS is very blown up and could use some quality refactoring.
  */
 
-(function ($) {
+(function ($, mw, OpenLayers) {
 	$.fn.openlayers = function (mapElementId, options) {
+
+		this.map = null;
+		this.options = options;
+		this.bounds = null;
 
 		OpenLayers._getScriptLocation = function() {
 			return mw.config.get('wgScriptPath') + '/extensions/Maps/includes/services/OpenLayers/OpenLayers/';
-		}
+		};
 
 		this.getOLMarker = function (markerLayer, markerData) {
 			var marker;
 
-			if (markerData.icon !== "") {
+			if (markerData.hasOwnProperty('icon') && markerData.icon !== "") {
 				marker = new OpenLayers.Marker(markerData.lonlat, new OpenLayers.Icon(markerData.icon));
 			} else {
 				marker = new OpenLayers.Marker(markerData.lonlat, new OpenLayers.Icon(markerLayer.defaultIcon));
@@ -56,51 +61,62 @@
 			}
 
 			var locations = options.locations;
-			var bounds = null;
 
 			if (locations.length > 1 && ( options.centre === false || options.zoom === false )) {
-				bounds = new OpenLayers.Bounds();
+				this.bounds = new OpenLayers.Bounds();
 			}
 
-			var groupLayers = new Object();
-			var groups = 0;
+			this.groupLayers = new Object();
+			this.groups = 0;
 
 			for (var i = locations.length - 1; i >= 0; i--) {
-
-				var location = locations[i];
-
-				// Create a own marker-layer for the marker group:
-				if (!groupLayers[ location.group ]) {
-					// in case no group is specified, use default marker layer:
-					var layerName = location.group != '' ? location.group : mediaWiki.msg('maps-markers');
-					var curLayer = new OpenLayers.Layer.Markers(layerName);
-					groups++;
-					curLayer.id = 'markerLayer' + groups;
-					// define default icon, one of ten in different colors, if more than ten layers, colors will repeat:
-					curLayer.defaultIcon = mw.config.get( 'egMapsScriptPath' ) + '/includes/services/OpenLayers/OpenLayers/img/marker' + ( ( groups + 10 ) % 10 ) + '.png';
-					map.addLayer(curLayer);
-					groupLayers[ location.group ] = curLayer;
-				} else {
-					// if markers of this group exist already, they have an own layer already
-					var curLayer = groupLayers[ location.group ];
-				}
-
-				location.lonlat = new OpenLayers.LonLat(location.lon, location.lat);
-
-				if (!hasImageLayer) {
-					location.lonlat.transform(new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913"));
-				}
-
-				if (bounds != null) bounds.extend(location.lonlat); // Extend the bounds when no center is set.
-				var marker = this.getOLMarker(curLayer, location);
-				this.markers.push({
-					target:marker,
-					data:location
-				});
-				curLayer.addMarker(marker); // Create and add the marker.
+				this.addMarker( locations[i] );
 			}
 
-			if (bounds != null) map.zoomToExtent(bounds); // If a bounds object has been created, use it to set the zoom and center.
+			if (this.bounds != null) map.zoomToExtent(this.bounds); // If a bounds object has been created, use it to set the zoom and center.
+		};
+
+		this.addMarker = function (markerData) {
+			markerData.group = !markerData.hasOwnProperty('group') ? '' : markerData.group;
+			// Create a own marker-layer for the marker group:
+			if (!this.groupLayers[ markerData.group ]) {
+				// in case no group is specified, use default marker layer:
+				var layerName = markerData.group != '' ? markerData.group : mw.msg('maps-markers');
+				var curLayer = new OpenLayers.Layer.Markers(layerName);
+				this.groups++;
+				curLayer.id = 'markerLayer' + this.groups;
+				// define default icon, one of ten in different colors, if more than ten layers, colors will repeat:
+				curLayer.defaultIcon = mw.config.get( 'egMapsScriptPath' ) + '/includes/services/OpenLayers/OpenLayers/img/marker' + ( ( this.groups + 10 ) % 10 ) + '.png';
+				map.addLayer(curLayer);
+				this.groupLayers[ markerData.group ] = curLayer;
+			} else {
+				// if markers of this group exist already, they have an own layer already
+				var curLayer = this.groupLayers[ markerData.group ];
+			}
+
+			markerData.lonlat = new OpenLayers.LonLat(markerData.lon, markerData.lat);
+
+			if (!hasImageLayer) {
+				markerData.lonlat.transform(new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913"));
+			}
+
+			if (this.bounds != null) this.bounds.extend(markerData.lonlat); // Extend the bounds when no center is set.
+			var marker = this.getOLMarker(curLayer, markerData);
+			this.markers.push({
+				target:marker,
+				data:markerData
+			});
+			curLayer.addMarker(marker); // Create and add the marker.
+		};
+
+		this.removeMarkers = function () {
+			var map = this.map;
+			$.each(this.groupLayers, function(index, layer) {
+				map.removeLayer(layer);
+			});
+			this.groupLayers = new Object();
+			this.groups = 0;
+			this.markers = [];
 		};
 
 		this.addControls = function (map, controls, mapElement) {
@@ -125,6 +141,18 @@
 			}
 
 			map.addControl(new OpenLayers.Control.Attribution());
+			map.addControl(new OpenLayers.Control.MousePosition({
+				formatOutput: function(lonLat) {
+					var digits = parseInt(this.numDigits);
+					var newHtml =
+						this.prefix +
+						lonLat.lat.toFixed(digits) +
+						this.separator +
+						lonLat.lon.toFixed(digits) +
+						this.suffix;
+					return newHtml;
+				}
+			}));
 		};
 
 		this.addLine = function (properties) {
@@ -233,7 +261,7 @@
 			var OLControls = [
 				'ArgParser', 'Attribution', 'Button', 'DragFeature', 'DragPan',
 				'DrawFeature', 'EditingToolbar', 'GetFeature', 'KeyboardDefaults', 'LayerSwitcher',
-				'Measure', 'ModifyFeature', 'MouseDefaults', 'MousePosition', 'MouseToolbar',
+				'Measure', 'ModifyFeature', 'MouseDefaults', 'MouseToolbar',
 				'Navigation', 'NavigationHistory', 'NavToolbar', 'OverviewMap', 'Pan',
 				'Panel', 'PanPanel', 'PanZoom', 'PanZoomBar', 'Permalink',
 				'Scale', 'ScaleLine', 'SelectFeature', 'Snapping', 'Split',
@@ -265,7 +293,7 @@
 		this.text( '' );
 
 		/**
-		 * ToDo: That layers being created by 'eval' will deny us the possiblity to
+		 * ToDo: That layers being created by 'eval' will deny us the possibility to
 		 * set certain options. It's possible to set properties of course but they will
 		 * show no effect since they are not passed as options to the constructor.
 		 * With this working we could adjust max/minScale to display overlays independent
@@ -330,6 +358,7 @@
 
 		map.addLayers( layers ); // Add the base layers
 
+		//Add markers
 		this.addMarkers( map, options );
 		var centre = false;
 
@@ -340,8 +369,7 @@
 			else if ( options.locations.length == 0 ) {
 				centre = new OpenLayers.LonLat( 0, 0 );
 			}
-		}
-		else { // When the center is provided, set it.
+		} else { // When the center is provided, set it.
 			centre = new OpenLayers.LonLat( options.centre.lon, options.centre.lat );
 		}
 
@@ -351,8 +379,10 @@
 					new OpenLayers.Projection( "EPSG:4326" ),
 					new OpenLayers.Projection( "EPSG:900913" )
 				);
+				map.setCenter( centre );
+			} else {
+				map.zoomToMaxExtent();
 			}
-			map.setCenter( centre );
 		}
 
 		if ( options.zoom !== false ) {
@@ -393,10 +423,6 @@
                 return valid;
             }
         }
-
-		//Add markers
-		this.addMarkers(map, options);
-		var centre = false;
 
 		//Add line layer if applicable
 		if (options.lines && options.lines.length > 0) {
@@ -445,7 +471,7 @@
 									'strokeOpacity':feature.attributes.strokeOpacity,
 									'fillColor':feature.attributes.fillColor,
 									'fillOpacity':feature.attributes.fillOpacity
-								}
+								};
 								_this.polygonLayer.drawFeature(feature, style);
 							}
 						},
@@ -457,7 +483,7 @@
 									'strokeOpacity':0,
 									'fillColor':feature.attributes.fillColor,
 									'fillOpacity':0
-								}
+								};
 								_this.polygonLayer.drawFeature(feature, style);
 							}
 						},
@@ -548,35 +574,6 @@
 			map.zoomTo(options.zoom);
 		}
 
-		if (options.centre === false) {
-			if (options.locations.length == 1) {
-				centre = new OpenLayers.LonLat(options.locations[0].lon, options.locations[0].lat);
-			}
-			else if (options.locations.length == 0) {
-				centre = new OpenLayers.LonLat(0, 0);
-			}
-		}
-		else { // When the center is provided, set it.
-			centre = new OpenLayers.LonLat(options.centre.lon, options.centre.lat);
-		}
-
-		if (centre !== false) {
-			if (!hasImageLayer) {
-				centre.transform(new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913"));
-				map.setCenter(centre);
-			} else {
-				map.zoomToMaxExtent();
-			}
-		}
-
-		if (options.resizable) {
-			mw.loader.using('ext.maps.resizable', function () {
-				_this.resizable();
-			});
-		}
-
-
-
 		if (options.copycoords) {
 			map.div.oncontextmenu = function () {
 				return false;
@@ -603,7 +600,7 @@
 					);
 				}
 
-			})
+			});
 			var click = new OpenLayers.Control.Click({
 				eventMethods:{
 					'rightclick':function (e) {
@@ -611,7 +608,7 @@
 						if (!hasImageLayer) {
 							lonlat = lonlat.transform(new OpenLayers.Projection("EPSG:900913"), new OpenLayers.Projection("EPSG:4326"));
 						}
-						prompt(mediaWiki.msg('maps-copycoords-prompt'), lonlat.lat + ',' + lonlat.lon);
+						prompt(mw.msg('maps-copycoords-prompt'), lonlat.lat + ',' + lonlat.lon);
 					}
 				}
 			});
@@ -623,7 +620,7 @@
 			OpenLayers.Control.SearchField = OpenLayers.Class(OpenLayers.Control, {
 				draw:function (px) {
 					OpenLayers.Control.prototype.draw.apply(this, arguments);
-					var searchBoxValue = mediaWiki.msg('maps-searchmarkers-text');
+					var searchBoxValue = mw.msg('maps-searchmarkers-text');
 					var searchBoxContainer = document.createElement('div');
 					this.div.style.top = "5px";
 					this.div.style.right = "5px";
@@ -675,16 +672,16 @@
 		}
 
 		function openBubble(properties) {
-			var mousePos = map.getControlsByClass("OpenLayers.Control.MousePosition")[0].lastXy
+			var mousePos = map.getControlsByClass("OpenLayers.Control.MousePosition")[0].lastXy;
 			var lonlat = map.getLonLatFromPixel(mousePos);
 			var popup = new OpenLayers.Popup(null, lonlat, null, properties.text, true, function () {
 				map.getControlsByClass('OpenLayers.Control.SelectFeature')[0].unselectAll();
 				map.removePopup(this);
-			})
+			});
 			_this.map.addPopup(popup);
 		}
 
 		return this;
 
 	};
-})(jQuery);
+})(jQuery, window.mediaWiki, OpenLayers);

@@ -25,7 +25,7 @@ abstract class ValueFormatterTestBase extends \PHPUnit_Framework_TestCase {
 	 *
 	 * @return array[]
 	 */
-	public abstract function validProvider();
+	abstract public function validProvider();
 
 	/**
 	 * @since 0.1
@@ -34,7 +34,7 @@ abstract class ValueFormatterTestBase extends \PHPUnit_Framework_TestCase {
 	 *
 	 * @return ValueFormatter
 	 */
-	protected abstract function getInstance( FormatterOptions $options = null );
+	abstract protected function getInstance( FormatterOptions $options = null );
 
 	/**
 	 * @dataProvider validProvider

@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Toliño"
+			"Toliño",
+			"Elisardojm"
 		]
 	},
 	"validator-desc": "Biblioteca de procesamento de parámetros declarativos",
@@ -21,6 +22,7 @@
 	"validator-type-float": "número",
 	"validator-type-boolean": "si/non",
 	"validator-type-char": "carácter",
+	"validator-type-dimension": "número e unidade de dimensión",
 	"validator-type-title": "título",
 	"validator-type-string-list": "lista de textos",
 	"validator-type-integer-list": "lista de números enteiros",

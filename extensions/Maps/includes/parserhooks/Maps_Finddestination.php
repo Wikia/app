@@ -1,4 +1,5 @@
 <?php
+
 use DataValues\Geo\Formatters\GeoCoordinateFormatter;
 
 /**
@@ -10,7 +11,6 @@ use DataValues\Geo\Formatters\GeoCoordinateFormatter;
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
-
 class MapsFinddestination extends ParserHook {
 
 	/**
@@ -37,50 +37,50 @@ class MapsFinddestination extends ParserHook {
 		global $egMapsAvailableGeoServices, $egMapsDefaultGeoService, $egMapsAvailableCoordNotations;
 		global $egMapsCoordinateNotation, $egMapsAllowCoordsGeocoding, $egMapsCoordinateDirectional;	 
 		
-		$params = array();
+		$params = [];
 
-		$params['location'] = array(
-			'dependencies' => array( 'mappingservice', 'geoservice' ),
-			'type' => 'mapslocation',
-		);
+		$params['location'] = [
+			'dependencies' => [ 'mappingservice', 'geoservice' ],
+			'type' => 'mapslocation', // FIXME: geoservice is not used
+		];
 
-		$params['format'] = array(
+		$params['format'] = [
 			'default' => $egMapsCoordinateNotation,
 			'values' => $egMapsAvailableCoordNotations,
 			'aliases' => 'notation',
 			'tolower' => true,
-		);
+		];
 
-		$params['directional'] = array(
+		$params['directional'] = [
 			'type' => 'boolean',
 			'default' => $egMapsCoordinateDirectional,
-		);
+		];
 
-		$params['bearing'] = array(
+		$params['bearing'] = [
 			'type' => 'float',
-		);
+		];
 
-		$params['distance'] = array(
+		$params['distance'] = [
 			'type' => 'distance',
-		);
+		];
 
-		$params['mappingservice'] = array(
+		$params['mappingservice'] = [
 			'default' => '',
 			'values' => MapsMappingServices::getAllServiceValues(),
 			'tolower' => true,
-		);
+		];
 
-		$params['geoservice'] = array(
+		$params['geoservice'] = [
 			'default' => $egMapsDefaultGeoService,
 			'aliases' => 'service',
 			'values' => $egMapsAvailableGeoServices,
 			'tolower' => true,
-		);
+		];
 
-		$params['allowcoordinates'] = array(
+		$params['allowcoordinates'] = [
 			'type' => 'boolean',
 			'default' => $egMapsAllowCoordsGeocoding,
-		);
+		];
 
 		// Give grep a chance to find the usages:
 		// maps-finddestination-par-location, maps-finddestination-par-format,
@@ -103,7 +103,7 @@ class MapsFinddestination extends ParserHook {
 	 * @return array
 	 */
 	protected function getDefaultParameters( $type ) {
-		return array( 'location', 'bearing', 'distance' );
+		return [ 'location', 'bearing', 'distance' ];
 	}
 	
 	/**
@@ -123,11 +123,11 @@ class MapsFinddestination extends ParserHook {
 			$parameters['distance']
 		);
 
-		$options = new \ValueFormatters\FormatterOptions( array(
+		$options = new \ValueFormatters\FormatterOptions( [
 			GeoCoordinateFormatter::OPT_FORMAT => $parameters['format'],
 			GeoCoordinateFormatter::OPT_DIRECTIONAL => $parameters['directional'],
 			GeoCoordinateFormatter::OPT_PRECISION => 1 / 360000
-		) );
+		] );
 
 		$formatter = new GeoCoordinateFormatter( $options );
 

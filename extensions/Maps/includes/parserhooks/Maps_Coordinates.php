@@ -1,4 +1,5 @@
 <?php
+
 use DataValues\Geo\Formatters\GeoCoordinateFormatter;
 
 /**
@@ -37,23 +38,23 @@ class MapsCoordinates extends ParserHook {
 		global $egMapsCoordinateNotation;
 		global $egMapsCoordinateDirectional;
 		
-		$params = array();
+		$params = [];
 
-		$params['location'] = array(
+		$params['location'] = [
 			'type' => 'coordinate',
-		);
+		];
 
-		$params['format'] = array(
+		$params['format'] = [
 			'default' => $egMapsCoordinateNotation,
 			'values' => $egMapsAvailableCoordNotations,
 			'aliases' => 'notation',
 			'tolower' => true,
-		);
+		];
 
-		$params['directional'] = array(
+		$params['directional'] = [
 			'type' => 'boolean',
 			'default' => $egMapsCoordinateDirectional,
-		);
+		];
 
 		// Give grep a chance to find the usages:
 		// maps-coordinates-par-location, maps-coordinates-par-format, maps-coordinates-par-directional
@@ -73,7 +74,7 @@ class MapsCoordinates extends ParserHook {
 	 * @return array
 	 */
 	protected function getDefaultParameters( $type ) {
-		return array( 'location', 'format', 'directional' );
+		return [ 'location', 'format', 'directional' ];
 	}
 	
 	/**
@@ -87,11 +88,11 @@ class MapsCoordinates extends ParserHook {
 	 * @return string
 	 */
 	public function render( array $parameters ) {
-		$options = new \ValueFormatters\FormatterOptions( array(
+		$options = new \ValueFormatters\FormatterOptions( [
 			GeoCoordinateFormatter::OPT_FORMAT => $parameters['format'],
 			GeoCoordinateFormatter::OPT_DIRECTIONAL => $parameters['directional'],
 			GeoCoordinateFormatter::OPT_PRECISION => 1 / 360000
-		) );
+		] );
 
 		$coordinateFormatter = new GeoCoordinateFormatter( $options );
 

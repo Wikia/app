@@ -18,7 +18,7 @@ final class MapsMappingServices {
 	 * 
 	 * @var string[]
 	 */
-	protected static $registeredServices = array();
+	protected static $registeredServices = [];
 	
 	/**
 	 * Associative with service identifiers as keys containing instances of
@@ -30,9 +30,9 @@ final class MapsMappingServices {
 	 * 
 	 * @since 0.6.6
 	 * 
-	 * @var iMappingService[]
+	 * @var MapsMappingService[]
 	 */
-	protected static $services = array();
+	protected static $services = [];
 	
 	/**
 	 * Registers a service class linked to an identifier.
@@ -40,11 +40,11 @@ final class MapsMappingServices {
 	 * 
 	 * @since 0.6.6
 	 * 
-	 * @param $serviceIdentifier String: internal service identifier
-	 * @param $serviceClassName String
-	 * @param $features Array
+	 * @param string $serviceIdentifier
+	 * @param string $serviceClassName
+	 * @param string[] $features
 	 */
-	public static function registerService( $serviceIdentifier, $serviceClassName, array $features = array() ) {
+	public static function registerService( $serviceIdentifier, $serviceClassName, array $features = [] ) {
 		self::$registeredServices[$serviceIdentifier] = $serviceClassName;
 		
 		foreach( $features as $featureName => $featureClassName ) {
@@ -79,16 +79,17 @@ final class MapsMappingServices {
 	 * 
 	 * @since 0.6.6
 	 * 
-	 * @param $serviceIdentifier String: internal service identifier
+	 * @param string $serviceIdentifier
 	 * 
-	 * @return iMappingService
+	 * @return MapsMappingService
+	 * @throws MWException
 	 */
 	public static function getServiceInstance( $serviceIdentifier ) {
 		if ( !array_key_exists( $serviceIdentifier, self::$services ) ) {
 			if ( array_key_exists( $serviceIdentifier, self::$registeredServices ) ) {
 				$service = new self::$registeredServices[$serviceIdentifier]( $serviceIdentifier );
 				
-				if ( $service instanceof iMappingService ) {
+				if ( $service instanceof MapsMappingService ) {
 					self::$services[$serviceIdentifier] = $service;
 				}
 				else {
@@ -114,7 +115,7 @@ final class MapsMappingServices {
 	 * @param $service String: service name or alias, does not need to be secure
 	 * @param $feature String
 	 * 
-	 * @return iMappingService
+	 * @return MapsMappingService
 	 */
 	public static function getValidServiceInstance( $service, $feature ) {
 		return self::getServiceInstance( self::getValidServiceName( $service, $feature ) );
@@ -207,7 +208,7 @@ final class MapsMappingServices {
 	public static function getAllServiceValues() {
 		global $egMapsAvailableServices;
 
-		$allServiceValues = array();
+		$allServiceValues = [];
 
 		foreach ( $egMapsAvailableServices as $availableService ) {
 			$allServiceValues[] = $availableService;
@@ -225,7 +226,7 @@ final class MapsMappingServices {
 	 * @return array of MappingService
 	 */
 	public static function getAllObjects() {
-		$objects = array();
+		$objects = [];
 		
 		foreach ( self::$registeredServices as $service => $class ) {
 			$objects[] = self::getServiceInstance( $service );

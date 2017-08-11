@@ -3,7 +3,7 @@
 namespace Maps;
 
 /**
- * Base geocoder class to be inherited by classes with a specific geocding implementation. 
+ * Base geocoder class to be inherited by classes with a specific geocoding implementation. 
  * 
  * @since 0.7
  * 
@@ -143,7 +143,7 @@ abstract class Geocoder {
 	 * @return string or false
 	 */
 	protected static function getXmlElementValue( $xml, $tagName ) {
-		$match = array();
+		$match = [];
 		preg_match( "/<$tagName>(.*?)<\/$tagName>/", $xml, $match );
 		return count( $match ) > 1 ? $match[1] : false;
 	}
@@ -159,7 +159,7 @@ abstract class Geocoder {
 	 * @return array
 	 */
 	public static function getOverrides() {
-		return array();
+		return [];
 	}
 	
 	/**

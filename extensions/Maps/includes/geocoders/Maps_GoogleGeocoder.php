@@ -35,7 +35,17 @@ final class MapsGoogleGeocoder extends \Maps\Geocoder {
 	 * @return string
 	 */	
 	protected function getRequestUrl( $address ) {
-		return 'http://maps.googleapis.com/maps/api/geocode/xml?address=' . urlencode( $address ) . '&sensor=false';
+		$urlArgs = [
+			'address' => $address
+		];
+		if ( $GLOBALS['egMapsGMaps3ApiKey'] !== '' ) {
+			$urlArgs['key'] = $GLOBALS['egMapsGMaps3ApiKey'];
+		}
+		if ( $GLOBALS['egMapsGMaps3ApiVersion'] !== '' ) {
+			$urlArgs['v'] = $GLOBALS['egMapsGMaps3ApiVersion'];
+		}
+
+		return 'https://maps.googleapis.com/maps/api/geocode/xml?' . wfArrayToCgi($urlArgs);
 	}
 	
 	/**
@@ -43,7 +53,7 @@ final class MapsGoogleGeocoder extends \Maps\Geocoder {
 	 * 
 	 * @since 0.7
 	 * 
-	 * @param string $address
+	 * @param string $response
 	 * 
 	 * @return array
 	 */		
@@ -54,10 +64,10 @@ final class MapsGoogleGeocoder extends \Maps\Geocoder {
 		// In case on of the values is not found, return false.
 		if ( !$lon || !$lat ) return false;
 
-		return array(
+		return [
 			'lat' => (float)$lat,
 			'lon' => (float)$lon
-		);
+		];
 	}
 	
 	/**
@@ -68,7 +78,7 @@ final class MapsGoogleGeocoder extends \Maps\Geocoder {
 	 * @return array
 	 */
 	public static function getOverrides() {
-		return array( 'googlemaps3' );
+		return [ 'googlemaps3' ];
 	}
 	
 }

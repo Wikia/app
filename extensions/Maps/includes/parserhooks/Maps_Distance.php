@@ -34,21 +34,21 @@ class MapsDistance extends ParserHook {
 	protected function getParameterInfo( $type ) {
 		global $egMapsDistanceUnit, $egMapsDistanceDecimals; 
 		
-		$params = array();
+		$params = [];
 
-		$params['distance'] = array(
+		$params['distance'] = [
 			'type' => 'distance',
-		);
+		];
 
-		$params['unit'] = array(
+		$params['unit'] = [
 			'default' => $egMapsDistanceUnit,
 			'values' => MapsDistanceParser::getUnits(),
-		);
+		];
 
-		$params['decimals'] = array(
+		$params['decimals'] = [
 			'type' => 'integer',
 			'default' => $egMapsDistanceDecimals,
-		);
+		];
 
 		// Give grep a chance to find the usages:
 		// maps-distance-par-distance, maps-distance-par-unit, maps-distance-par-decimals
@@ -70,7 +70,7 @@ class MapsDistance extends ParserHook {
 	 * @return array
 	 */
 	protected function getDefaultParameters( $type ) {
-		return array( 'distance', 'unit', 'decimals' );
+		return [ 'distance', 'unit', 'decimals' ];
 	}
 	
 	/**

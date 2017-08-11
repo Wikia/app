@@ -47,7 +47,7 @@ final class MapsGeonamesGeocoder extends \Maps\Geocoder {
 	 * 
 	 * @since 1.0
 	 * 
-	 * @param string $address
+	 * @param string $response
 	 * 
 	 * @return array
 	 */		
@@ -58,10 +58,10 @@ final class MapsGeonamesGeocoder extends \Maps\Geocoder {
 		// In case one of the values is not found, return false.
 		if ( !$lon || !$lat ) return false;
 
-		return array(
+		return [
 			'lat' => (float)$lat,
 			'lon' => (float)$lon
-		);		
+		];		
 	}
 	
 }

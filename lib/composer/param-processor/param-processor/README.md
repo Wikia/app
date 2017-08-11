@@ -32,7 +32,7 @@ dependency on `param-processor/param-processor` to your project's `composer.json
 Here is a minimal example of a `composer.json` file that just defines a dependency on
 version 1.x of this package:
 
-```js
+```json
 {
     "require": {
         "param-processor/param-processor": "~1.0"
@@ -260,6 +260,14 @@ support the [Maps](https://github.com/JeroenDeDauw/Maps) and [Semantic MediaWiki
 (https://semantic-mediawiki.org/) projects.
 
 ## Release notes
+
+### 1.3.2 (2017-03-26)
+
+* Fixed clearing of processing errors when making multiple processing calls to one `Processor` instance
+
+### 1.3.1 (2016-09-21)
+
+* Fixed `ParamDefinitionFactory` emitting a warning when initialized without the global `wgParamDefinitions` being set
 
 ### 1.3.0 (2016-07-15)
 
