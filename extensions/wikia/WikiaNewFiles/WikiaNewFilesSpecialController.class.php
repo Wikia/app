@@ -42,7 +42,6 @@ class WikiaNewFilesSpecialController extends WikiaSpecialPageController {
 
 		// Construct gallery
 		$gallery = new WikiaNewFilesGallery( $this->specialPage->getSkin() );
-		$gallery->setParser( new Parser() );
 		$gallery->addImages( $images );
 
 		// View
