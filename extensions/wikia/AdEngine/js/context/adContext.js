@@ -3,7 +3,6 @@
  * The AMD module to hold all the context needed for the client-side scripts to run.
  */
 define('ext.wikia.adEngine.adContext', [
-	'ext.wikia.adEngine.adLogicPageViewCounter',
 	'wikia.browserDetect',
 	'wikia.cookies',
 	'wikia.document',
@@ -12,7 +11,7 @@ define('ext.wikia.adEngine.adContext', [
 	'ext.wikia.adEngine.utils.sampler',
 	'wikia.window',
 	'wikia.querystring'
-], function (pvCounter, browserDetect, cookies, doc, geo, instantGlobals, sampler, w, Querystring) {
+], function (browserDetect, cookies, doc, geo, instantGlobals, sampler, w, Querystring) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
@@ -272,10 +271,6 @@ define('ext.wikia.adEngine.adContext', [
 	}
 
 	setContext(w.ads ? w.ads.context : {});
-
-	if (context.targeting.skin && context.targeting.skin !== 'mercury') {
-		pvCounter.increment();
-	}
 
 	return {
 		addCallback: addCallback,
