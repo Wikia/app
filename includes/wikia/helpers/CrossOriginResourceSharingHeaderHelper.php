@@ -85,6 +85,7 @@ class CrossOriginResourceSharingHeaderHelper {
 			foreach ( $this->whitelistOrigins as $origin ) {
 				if (preg_match('/'.$origin.'$/', $requestOrigin)) {
 					$this->setResponseHeader($response, self::ALLOW_ORIGIN_HEADER_NAME, $requestOrigin);
+					break;
 				}
 			}
 		}
