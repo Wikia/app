@@ -233,8 +233,9 @@ class SEOTweaksHooksHelper {
 	 * @param Article $article
 	 * @param bool $outputDone
 	 * @param bool $pcache
+	 * @return bool
 	 */
-	static public function onArticleViewHeader( &$article, &$outputDone, &$pcache ) {
+	static public function onArticleViewHeader( Article $article, bool &$outputDone, bool &$pcache ): bool {
 		global $wgEnableCustom404PageExt;
 
 		if ( !empty( $wgEnableCustom404PageExt ) ) {
@@ -270,7 +271,7 @@ class SEOTweaksHooksHelper {
 	 * @param CategoryPage $categoryPage
 	 * @return bool
 	 */
-	public static function onCategoryPageView( &$categoryPage ) {
+	public static function onCategoryPageView( CategoryPage $categoryPage ): bool {
 		$title = $categoryPage->getTitle();
 		if ( $title->getNamespace() === NS_CATEGORY ) {
 			$app = F::app();

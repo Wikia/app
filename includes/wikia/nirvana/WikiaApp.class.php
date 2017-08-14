@@ -376,7 +376,9 @@ class WikiaApp {
 	 * @return bool
 	 */
 
-	public function onArticleViewHeader( &$article, &$outputDone, &$useParserCache ) {
+	public function onArticleViewHeader(
+		Article $article, bool &$outputDone, bool &$useParserCache
+	): bool {
 		$title = $article->getTitle();
 
 		$namespace = $title->getNamespace();

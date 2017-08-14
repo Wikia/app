@@ -228,7 +228,7 @@ class WikiaDispatcher {
 				}
 
 				// keep the AfterExecute hooks for now, refactor later using "after" dispatching
-				Hooks::run( ( "{$controllerName}{$hookMethod}AfterExecute" ), [ &$controller, &$params ] );
+				Hooks::run( ( "{$controllerName}{$hookMethod}AfterExecute" ), [ $controller, $params ] );
 
 				wfProfileOut($profilename);
 

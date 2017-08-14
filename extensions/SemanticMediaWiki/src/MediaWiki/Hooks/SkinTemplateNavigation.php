@@ -32,7 +32,7 @@ class SkinTemplateNavigation {
 	 * @param SkinTemplate $skinTemplate
 	 * @param array $links
 	 */
-	public function __construct( SkinTemplate &$skinTemplate, array &$links ) {
+	public function __construct( SkinTemplate $skinTemplate, array &$links ) {
 		$this->skinTemplate = $skinTemplate;
 		$this->links =& $links;
 	}

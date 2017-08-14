@@ -136,7 +136,9 @@ class BlogLockdown {
 	 *
 	 * @return boolean because it's a hook
 	 */
-	public static function onBeforeDeletePermissionErrors( &$article, &$title, &$user, &$permission_errors ) {
+	public static function onBeforeDeletePermissionErrors(
+		Article $article, Title $title, User $user, &$permission_errors
+	) {
 		// Only users with delete permission can delete a blog article
 
 		$accessErrorKey = 'badaccess-group0';

@@ -66,7 +66,7 @@ class LoginForm extends SpecialPage {
 	/**
 	 * @param WebRequest $request
 	 */
-	public function __construct( &$request = null ) {
+	public function __construct( WebRequest $request = null ) {
 		parent::__construct( 'Userlogin' );
 
 		$this->mOverrideRequest = $request;

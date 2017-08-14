@@ -10,9 +10,13 @@ require(['wikia.window', 'wikia.tracker', 'ooyala-player'], function (window, tr
 			});
 
 		function initVideo(ooyalaContainerId, videoId, onCreate) {
-			var playerParams = window.wgOoyalaParams;
+			var options = {
+				pcode: window.wgOoyalaParams.ooyalaPCode,
+				playerBrandingId: window.wgOoyalaParams.ooyalaPlayerBrandingId,
+				videoId: videoId
+			};
 
-			ooyalaVideoController = OoyalaPlayer.initHTML5Player(ooyalaContainerId, playerParams, videoId, onCreate);
+			ooyalaVideoController = OoyalaPlayer.initHTML5Player(ooyalaContainerId, options, onCreate);
 		}
 
 		function getCandidate($element) {

@@ -461,7 +461,7 @@ class SyntaxHighlight_GeSHi {
 	 * @param $extensionTypes
 	 * @return bool
 	 */
-	public static function hOldSpecialVersion_GeSHi( &$sp, &$extensionTypes ) {
+	public static function hOldSpecialVersion_GeSHi( $sp, &$extensionTypes ) {
 		return self::hSpecialVersion_GeSHi( $extensionTypes );
 	}
 

@@ -63,7 +63,7 @@ class SpamBlacklistHooks {
 	 * @param $hookErr array
 	 * @return bool
 	 */
-	public static function userCanSendEmail( &$user, &$hookErr ) {
+	public static function userCanSendEmail( User $user, &$hookErr ): bool {
 		/** @var $blacklist EmailBlacklist */
 		$blacklist = BaseBlacklist::getInstance( 'email' );
 		if ( $blacklist->checkUser( $user ) ) {
@@ -145,7 +145,7 @@ class SpamBlacklistHooks {
 	 * Hook function for ArticleSaveComplete
 	 * Clear local spam blacklist caches on page save.
 	 *
-	 * @param $article Article
+	 * @param WikiPage $article
 	 * @param $user User
 	 * @param $text string
 	 * @param $summary string
@@ -154,7 +154,10 @@ class SpamBlacklistHooks {
 	 * @param $section
 	 * @return bool
 	 */
-	static function articleSave( &$article, &$user, $text, $summary, $isminor, $iswatch, $section ) {
+	static function articleSave(
+		WikiPage $article, User $user, $text,
+		$summary, $isminor, $iswatch, $section
+	): bool {
 		if( !BaseBlacklist::isLocalSource( $article->getTitle() ) ) {
 			return true;
 		}

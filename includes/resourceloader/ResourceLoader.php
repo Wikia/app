@@ -236,7 +236,7 @@ class ResourceLoader {
 		$this->setSourceForStaticModules('common');
 		// Wikia - change end
 		// Register extension modules
-		Hooks::run( 'ResourceLoaderRegisterModules', array( &$this ) );
+		Hooks::run( 'ResourceLoaderRegisterModules', [ $this ] );
 		$this->register( $wgResourceModules );
 
 		if ( $wgEnableJavaScriptTest === true ) {
@@ -316,7 +316,7 @@ class ResourceLoader {
 		$testModules = array();
 		$testModules['qunit'] = include( "$IP/tests/qunit/QUnitTestResources.php" );
 		// Get other test suites (e.g. from extensions)
-		Hooks::run( 'ResourceLoaderTestModules', array( &$testModules, &$this ) );
+		Hooks::run( 'ResourceLoaderTestModules', [ &$testModules, $this ] );
 
 		// Add the testrunner (which configures QUnit) to the dependencies.
 		// Since it must be ready before any of the test suites are executed.

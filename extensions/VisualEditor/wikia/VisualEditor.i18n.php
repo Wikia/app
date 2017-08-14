@@ -2714,7 +2714,7 @@ $messages['zh-hant'] = array(
 	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Help:Wikitext',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => '格式説明',
 	'wikia-visualeditor-notification-media-must-be-logged-in' => '你必須登入才能增加圖片與影片。',
-	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => '此wiki僅允許使用<a href="http://video.wikia.com" target="_blank">FANDOM影片資料庫</a>的授權內容，請至<a href="http://video.wikia.com" target="_blank">video.wikia.com</a>搜尋您需要的影片。',
+	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => '此Wiki僅允許使用<a href="http://video.wikia.com" target="_blank">FANDOM影片資料庫</a>的授權內容，請至<a href="http://video.wikia.com" target="_blank">video.wikia.com</a>搜尋您需要的影片。',
 	'wikia-visualeditor-notification-media-query-failed' => '抱歉，我們無法從這個 URL 找到可用的圖片或影片。',
 	'wikia-visualeditor-notification-media-permission-denied' => '權限不足',
 	'wikia-visualeditor-notification-video-preview-not-available' => '抱歉，此影片目前不開放預覽。',
