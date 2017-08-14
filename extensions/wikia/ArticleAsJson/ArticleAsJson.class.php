@@ -350,7 +350,7 @@ class ArticleAsJson {
 		return true;
 	}
 
-	public static function onParserAfterTidy( Parser &$parser, &$text ) {
+	public static function onParserAfterTidy( Parser $parser, &$text ): bool {
 		global $wgArticleAsJson;
 
 		wfProfileIn( __METHOD__ );
@@ -411,7 +411,7 @@ class ArticleAsJson {
 		return true;
 	}
 
-	public static function onShowEditLink( Parser &$parser, &$showEditLink ) {
+	public static function onShowEditLink( Parser $parser, &$showEditLink ): bool {
 		global $wgArticleAsJson;
 
 		//We don't have editing in this version

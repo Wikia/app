@@ -1,5 +1,5 @@
 {
-	"name": "mediawiki/maps",
+	"name": "wikia/maps",
 	"type": "mediawiki-extension",
 	"description": "Adds various mapping features to MediaWiki",
 	"keywords": [
@@ -41,9 +41,7 @@
 		},
 		"classmap": [
 			"includes/",
-			"Maps.hooks.php",
-			"tests/phpunit/elements/",
-			"tests/phpunit/parserhooks/ParserHookTest.php"
+			"Maps.hooks.php"
 		]
 	},
 	"extra": {

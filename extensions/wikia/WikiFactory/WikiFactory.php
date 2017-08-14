@@ -3008,7 +3008,7 @@ class WikiFactory {
 	 * @param $user
 	 * @return bool
 	 */
-	static public function updateCityDescription( &$article, &$user ) {
+	static public function updateCityDescription( WikiPage $article, User $user ): bool {
 		global $wgCityId;
 
 		if ( strtolower($article->getTitle()) == "mediawiki:description" ) {

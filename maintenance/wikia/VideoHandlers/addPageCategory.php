@@ -153,7 +153,7 @@ if ( $replace ) {
 	echo "REPLACE Categories: $old with $new\n";
 }
 
-$botUser = User::newFromName( 'WikiaBot' );
+$botUser = User::newFromName( Wikia::BOT_USER );
 
 $db = wfGetDB( DB_SLAVE );
 

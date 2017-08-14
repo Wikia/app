@@ -15,6 +15,7 @@ class UserTagsStrategy extends WikiaObject {
 	const GLOBAL_GROUPS_RANK = [
 		'staff',
 		'helper',
+		'global-discussions-moderator',
 		'vstf',
 		'voldev',
 		'vanguard',
@@ -134,6 +135,9 @@ class UserTagsStrategy extends WikiaObject {
 					break;
 				case 'council':
 					$tags[] = wfMessage( 'user-identity-box-group-council' )->escaped();
+					break;
+				case 'global-discussions-moderator':
+					$tags[] = wfMessage( 'user-identity-box-group-global-discussions-moderator' )->escaped();
 					break;
 			}
 		}

@@ -72,13 +72,13 @@ define('ooyala-player', ['wikia.browserDetect'], function (browserDetect) {
 	};
 
 	/**
-	 * Formats milliseconds as HH:mm:ss duration
+	 * Formats seconds as HH:mm:ss duration
 	 *
-	 * @param {number}
+	 * @param seconds
 	 * @returns {string}
 	 */
-	OoyalaHTML5Player.prototype.getFormattedDuration = function (millisec) {
-		var seconds = parseInt(millisec / 1000, 10);
+	OoyalaHTML5Player.prototype.getFormattedDuration = function (seconds) {
+		seconds = parseInt(seconds, 10);
 		var hours = parseInt(seconds / 3600, 10);
 		seconds = seconds % 3600;
 		var minutes = parseInt(seconds / 60, 10);
@@ -109,21 +109,28 @@ define('ooyala-player', ['wikia.browserDetect'], function (browserDetect) {
 		$('.oo-state-screen-info').css('display', '');
 	};
 
-	OoyalaHTML5Player.initHTML5Player = function (videoElementId, playerParams, videoId, onCreate, autoplay, vastUrl, inlineSkinConfig) {
+	OoyalaHTML5Player.initHTML5Player = function (videoElementId, options, onCreate) {
 		var params = {
-				videoId: videoId,
-				autoplay: autoplay,
-				initialVolume: autoplay ? 0 : 1,
-				pcode: playerParams.ooyalaPCode,
-				playerBrandingId: playerParams.ooyalaPlayerBrandingId
+				videoId: options.videoId,
+				autoplay: options.autoplay,
+				initialVolume: options.autoplay ? 0 : 1,
+				pcode: options.pcode,
+				playerBrandingId: options.playerBrandingId
 			},
 			html5Player;
 
-		if (vastUrl) {
+		if (options.recommendedLabel) {
+			params.discoveryApiAdditionalParams = {
+				discovery_profile_id: 0,
+				where: 'labels INCLUDES \'' + options.recommendedLabel + '\''
+			}
+		}
+
+		if (options.vastUrl) {
 			params['google-ima-ads-manager'] = {
 				all_ads: [
 					{
-						tag_url: vastUrl
+						tag_url: options.vastUrl
 					}
 				],
 				useGoogleAdUI: true,
@@ -159,7 +166,7 @@ define('ooyala-player', ['wikia.browserDetect'], function (browserDetect) {
 			params.replayAds = false;
 		}
 
-		html5Player = new OoyalaHTML5Player(document.getElementById(videoElementId), params, onCreate, inlineSkinConfig);
+		html5Player = new OoyalaHTML5Player(document.getElementById(videoElementId), params, onCreate, options.inlineSkinConfig);
 		html5Player.setUpPlayer();
 
 		return html5Player;

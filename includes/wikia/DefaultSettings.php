@@ -338,6 +338,7 @@ $wgAutoloadClasses['PortableInfoboxBuilderHelper'] = $IP . '/extensions/wikia/Po
 $wgAutoloadClasses['TemplateClassificationService'] = $IP . '/includes/wikia/services/TemplateClassificationService.class.php';
 $wgAutoloadClasses['CommunityDataService'] = $IP . '/includes/wikia/services/CommunityDataService.class.php';
 $wgAutoloadClasses['SiteAttributeService'] = $IP . '/includes/wikia/services/SiteAttributeService.class.php';
+$wgAutoloadClasses['ImageReviewService'] = $IP . '/includes/wikia/services/ImageReviewService.class.php';
 
 // services hooks
 $wgHooks['ArticleEditUpdates'][] = 'MediaQueryService::onArticleEditUpdates';
@@ -371,7 +372,6 @@ $wgAutoloadClasses['LatestActivityController'] = $IP.'/skins/oasis/modules/Lates
 $wgAutoloadClasses['FooterController'] = $IP.'/skins/oasis/modules/FooterController.class.php';
 $wgAutoloadClasses['ArticleCategoriesController'] = $IP.'/skins/oasis/modules/ArticleCategoriesController.class.php';
 $wgAutoloadClasses['AchievementsController'] = $IP.'/skins/oasis/modules/AchievementsController.class.php';
-$wgAutoloadClasses['AccountNavigationController'] = $IP.'/skins/oasis/modules/AccountNavigationController.class.php';
 $wgAutoloadClasses['AdController'] = $IP.'/skins/oasis/modules/AdController.class.php';
 $wgAutoloadClasses['AdEmptyContainerController'] = $IP.'/skins/oasis/modules/AdEmptyContainerController.class.php';
 $wgAutoloadClasses['FollowedPagesController'] = $IP.'/skins/oasis/modules/FollowedPagesController.class.php';
@@ -420,6 +420,10 @@ $wgAutoloadClasses['ProfilerData'] = "{$IP}/includes/profiler/ProfilerData.php";
 $wgAutoloadClasses['ProfilerDataSink'] = "{$IP}/includes/profiler/sinks/ProfilerDataSink.php";
 $wgAutoloadClasses['ProfilerDataUdpSink'] = "{$IP}/includes/profiler/sinks/ProfilerDataUdpSink.php";
 $wgAutoloadClasses['ProfilerDataScribeSink'] = "{$IP}/includes/profiler/sinks/ProfilerDataScribeSink.php";
+
+//RabbitMq
+$wgAutoloadClasses['Wikia\Rabbit\ConnectionBase'] = "{$IP}/includes/wikia/rabbitmq/ConnectionBase.class.php";
+
 
 // Skin loading scripts
 $wgHooks['WikiaSkinTopScripts'][] = 'WikiFactoryHubHooks::onWikiaSkinTopScripts';
@@ -1203,6 +1207,13 @@ $wgAdDriverEnableRubiconFastlane = true;
 $wgAdDriverRubiconFastlaneCountries = null;
 
 /**
+ * @name $wgAdDriverRubiconFastlanePrebidCountries
+ * Enables RubiconFastlane Prebid implementation and DISABLES the old one in these countries.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverRubiconFastlanePrebidCountries = null;
+
+/**
  * @name $wgAdDriverRubiconFastlaneProviderCountries
  * Enables RubiconFastlane provider in these countries.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1391,6 +1402,14 @@ $wgAdDriverKikimoraTrackingCountries = [];
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverSrcPremiumCountries = [];
+
+/**
+ * @name $wgAdDriverPremiumAdLayoutRubiconFastlaneTagsCountries
+ * Enables Premium Ad Layout site and zoneIds for Rubicon Fastlane bidder
+ * is present on that page.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverPremiumAdLayoutRubiconFastlaneTagsCountries = [];
 
 /**
  * @name $wgAdDriverKILOCountries

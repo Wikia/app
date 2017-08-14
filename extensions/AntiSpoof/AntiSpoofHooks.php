@@ -85,7 +85,7 @@ class AntiSpoofHooks {
 	 * @param $template UsercreateTemplate
 	 * @return bool
 	 */
-	public static function asUserCreateFormHook( &$template ) {
+	public static function asUserCreateFormHook( UsercreateTemplate $template ): bool {
 		global $wgRequest, $wgAntiSpoofAccounts, $wgUser;
 
 		if ( $wgAntiSpoofAccounts && $wgUser->isAllowed( 'override-antispoof' ) ) {

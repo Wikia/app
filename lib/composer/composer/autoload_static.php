@@ -18,8 +18,8 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         '5a494680c593293bd6035e42e2a6825c' => __DIR__ . '/..' . '/data-values/geo/Geo.php',
         'c3ae67574219cc56cab6c30ef8877b85' => __DIR__ . '/../../..' . '/extensions/Validator/Validator.php',
         'bbf73f3db644d3dced353b837903e74c' => __DIR__ . '/..' . '/php-di/php-di/src/DI/functions.php',
-        '9ebf2cbcc0b7687b276c44d77096b002' => __DIR__ . '/../../..' . '/extensions/Maps/Maps.php',
         '679670650e5628b8e655cb72d74ae35b' => __DIR__ . '/..' . '/ooyala/v2-api/OoyalaApi.php',
+        'cc7fdba6ccbdf8a9ed7028cb59f8bb6f' => __DIR__ . '/../../..' . '/extensions/Maps/Maps.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -329,6 +329,13 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
             'Mail' => 
             array (
                 0 => __DIR__ . '/..' . '/pear/mail_mime',
+            ),
+        ),
+        'F' => 
+        array (
+            'File' => 
+            array (
+                0 => __DIR__ . '/..' . '/wikia/file_ogg',
             ),
         ),
         'D' => 
@@ -653,6 +660,14 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
         'File_Iterator_Facade' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Facade.php',
         'File_Iterator_Factory' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Factory.php',
+        'File_Ogg' => __DIR__ . '/..' . '/wikia/file_ogg/File/Ogg.php',
+        'File_Ogg_Bitstream' => __DIR__ . '/..' . '/wikia/file_ogg/File/Ogg/Bitstream.php',
+        'File_Ogg_Flac' => __DIR__ . '/..' . '/wikia/file_ogg/File/Ogg/Flac.php',
+        'File_Ogg_Media' => __DIR__ . '/..' . '/wikia/file_ogg/File/Ogg/Media.php',
+        'File_Ogg_Opus' => __DIR__ . '/..' . '/wikia/file_ogg/File/Ogg/Opus.php',
+        'File_Ogg_Speex' => __DIR__ . '/..' . '/wikia/file_ogg/File/Ogg/Speex.php',
+        'File_Ogg_Theora' => __DIR__ . '/..' . '/wikia/file_ogg/File/Ogg/Theora.php',
+        'File_Ogg_Vorbis' => __DIR__ . '/..' . '/wikia/file_ogg/File/Ogg/Vorbis.php',
         'FluentSql\\Breakdown' => __DIR__ . '/..' . '/wikia/fluent-sql-php/src/Breakdown.php',
         'FluentSql\\Cache\\Cache' => __DIR__ . '/..' . '/wikia/fluent-sql-php/src/Cache/Cache.php',
         'FluentSql\\Cache\\ProcessCache' => __DIR__ . '/..' . '/wikia/fluent-sql-php/src/Cache/ProcessCache.php',
@@ -887,14 +902,6 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'Maps\\PolygonParser' => __DIR__ . '/../../..' . '/extensions/Maps/includes/parsers/PolygonParser.php',
         'Maps\\RectangleParser' => __DIR__ . '/../../..' . '/extensions/Maps/includes/parsers/RectangleParser.php',
         'Maps\\ServiceParam' => __DIR__ . '/../../..' . '/extensions/Maps/includes/ServiceParam.php',
-        'Maps\\Test\\ParserHookTest' => __DIR__ . '/../../..' . '/extensions/Maps/tests/phpunit/parserhooks/ParserHookTest.php',
-        'Maps\\Tests\\Elements\\BaseElementTest' => __DIR__ . '/../../..' . '/extensions/Maps/tests/phpunit/elements/BaseElementTest.php',
-        'Maps\\Tests\\Elements\\CircleTest' => __DIR__ . '/../../..' . '/extensions/Maps/tests/phpunit/elements/CircleTest.php',
-        'Maps\\Tests\\Elements\\ImageOverlayTest' => __DIR__ . '/../../..' . '/extensions/Maps/tests/phpunit/elements/ImageOverlayTest.php',
-        'Maps\\Tests\\Elements\\LineTest' => __DIR__ . '/../../..' . '/extensions/Maps/tests/phpunit/elements/LineTest.php',
-        'Maps\\Tests\\Elements\\LocationTest' => __DIR__ . '/../../..' . '/extensions/Maps/tests/phpunit/elements/LocationTest.php',
-        'Maps\\Tests\\Elements\\PolygonTest' => __DIR__ . '/../../..' . '/extensions/Maps/tests/phpunit/elements/PolygonTest.php',
-        'Maps\\Tests\\Elements\\RectangleTest' => __DIR__ . '/../../..' . '/extensions/Maps/tests/phpunit/elements/RectangleTest.php',
         'Maps\\WmsOverlayParser' => __DIR__ . '/../../..' . '/extensions/Maps/includes/parsers/WmsOverlayParser.php',
         'Monolog\\ErrorHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/ErrorHandler.php',
         'Monolog\\Formatter\\ChromePHPFormatter' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Formatter/ChromePHPFormatter.php',
@@ -2004,6 +2011,7 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'SMW\\MediaWiki\\ByLanguageCollationMapper' => __DIR__ . '/../../..' . '/extensions/SemanticMediaWiki/src/MediaWiki/ByLanguageCollationMapper.php',
         'SMW\\MediaWiki\\Database' => __DIR__ . '/../../..' . '/extensions/SemanticMediaWiki/src/MediaWiki/Database.php',
         'SMW\\MediaWiki\\DatabaseConnectionProvider' => __DIR__ . '/../../..' . '/extensions/SemanticMediaWiki/src/MediaWiki/DatabaseConnectionProvider.php',
+        'SMW\\MediaWiki\\DatabaseHelper' => __DIR__ . '/../../..' . '/extensions/SemanticMediaWiki/src/MediaWiki/DatabaseHelper.php',
         'SMW\\MediaWiki\\DeepRedirectTargetResolver' => __DIR__ . '/../../..' . '/extensions/SemanticMediaWiki/src/MediaWiki/DeepRedirectTargetResolver.php',
         'SMW\\MediaWiki\\EditInfoProvider' => __DIR__ . '/../../..' . '/extensions/SemanticMediaWiki/src/MediaWiki/EditInfoProvider.php',
         'SMW\\MediaWiki\\Hooks\\ArticleDelete' => __DIR__ . '/../../..' . '/extensions/SemanticMediaWiki/src/MediaWiki/Hooks/ArticleDelete.php',
@@ -2065,8 +2073,8 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'SMW\\MediaWiki\\TitleLookup' => __DIR__ . '/../../..' . '/extensions/SemanticMediaWiki/src/MediaWiki/TitleLookup.php',
         'SMW\\Message' => __DIR__ . '/../../..' . '/extensions/SemanticMediaWiki/src/Message.php',
         'SMW\\MessageFormatter' => __DIR__ . '/../../..' . '/extensions/SemanticMediaWiki/includes/formatters/MessageFormatter.php',
-        'SMW\\NamespaceExaminer' => __DIR__ . '/../../..' . '/extensions/SemanticMediaWiki/includes/NamespaceExaminer.php',
-        'SMW\\NamespaceManager' => __DIR__ . '/../../..' . '/extensions/SemanticMediaWiki/includes/NamespaceManager.php',
+        'SMW\\NamespaceExaminer' => __DIR__ . '/../../..' . '/extensions/SemanticMediaWiki/src/NamespaceExaminer.php',
+        'SMW\\NamespaceManager' => __DIR__ . '/../../..' . '/extensions/SemanticMediaWiki/src/NamespaceManager.php',
         'SMW\\NamespaceUriFinder' => __DIR__ . '/../../..' . '/extensions/SemanticMediaWiki/src/NamespaceUriFinder.php',
         'SMW\\Options' => __DIR__ . '/../../..' . '/extensions/SemanticMediaWiki/src/Options.php',
         'SMW\\PageInfo' => __DIR__ . '/../../..' . '/extensions/SemanticMediaWiki/src/PageInfo.php',
@@ -2213,8 +2221,8 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'SMW\\SQLStore\\RedirectInfoStore' => __DIR__ . '/../../..' . '/extensions/SemanticMediaWiki/src/SQLStore/RedirectInfoStore.php',
         'SMW\\SQLStore\\RequestOptionsProcessor' => __DIR__ . '/../../..' . '/extensions/SemanticMediaWiki/src/SQLStore/RequestOptionsProcessor.php',
         'SMW\\SQLStore\\SQLStoreFactory' => __DIR__ . '/../../..' . '/extensions/SemanticMediaWiki/src/SQLStore/SQLStoreFactory.php',
+        'SMW\\SQLStore\\TableBuilder\\TemporaryTableBuilder' => __DIR__ . '/../../..' . '/extensions/SemanticMediaWiki/src/SQLStore/TableBuilder/TemporaryTableBuilder.php',
         'SMW\\SQLStore\\TableDefinition' => __DIR__ . '/../../..' . '/extensions/SemanticMediaWiki/src/SQLStore/TableDefinition.php',
-        'SMW\\SQLStore\\TemporaryIdTableCreator' => __DIR__ . '/../../..' . '/extensions/SemanticMediaWiki/src/SQLStore/TemporaryIdTableCreator.php',
         'SMW\\SQLStore\\ValueLookupStore' => __DIR__ . '/../../..' . '/extensions/SemanticMediaWiki/src/SQLStore/ValueLookupStore.php',
         'SMW\\Scribunto\\HookRegistry' => __DIR__ . '/../../..' . '/extensions/SemanticScribunto/src/HookRegistry.php',
         'SMW\\Scribunto\\LibraryFactory' => __DIR__ . '/../../..' . '/extensions/SemanticScribunto/src/LibraryFactory.php',

@@ -163,7 +163,9 @@ class ForumHooksHelper {
 	 * @param $result
 	 * @return bool
 	 */
-	static public function getUserPermissionsErrors( &$title, &$user, $action, &$result ) {
+	static public function getUserPermissionsErrors(
+		Title $title, User $user, string $action, &$result
+	): bool {
 		$result = null;
 
 		if ( Forum::$allowToEditBoard == true ) {
@@ -187,7 +189,7 @@ class ForumHooksHelper {
 	 *
 	 * @return true
 	 */
-	static public function onContributionsLineEnding( &$contribsPager, &$ret, $row ) {
+	static public function onContributionsLineEnding( ContribsPager $contribsPager, &$ret, $row ): bool {
 
 		if ( isset( $row->page_namespace ) && in_array( MWNamespace::getSubject( $row->page_namespace ), [ NS_WIKIA_FORUM_BOARD ] ) ) {
 
@@ -196,8 +198,7 @@ class ForumHooksHelper {
 			}
 
 			if ( class_exists( 'WallHooksHelper' ) ) {
-				$wallHooks = new WallHooksHelper();
-				return $wallHooks->contributionsLineEndingProcess( $contribsPager, $ret, $row );
+				return WallHooksHelper::contributionsLineEndingProcess( $contribsPager, $ret, $row );
 			}
 		}
 		return true;
@@ -228,7 +229,7 @@ class ForumHooksHelper {
 	 * @return bool
 	 */
 
-	static public function onAfterBuildNewMessageAndPost( &$mw ) {
+	static public function onAfterBuildNewMessageAndPost( WallMessage $mw ): bool {
 		$title = $mw->getTitle();
 		if ( $title->getNamespace() == NS_WIKIA_FORUM_BOARD_THREAD ) {
 			$forum = ( new Forum );
@@ -245,7 +246,7 @@ class ForumHooksHelper {
 	 * @return bool
 	 */
 
-	static public function onWallMessageDeleted( &$mw, &$response ) {
+	static public function onWallMessageDeleted( WallMessage $mw, WikiaResponse $response ): bool {
 		$title = $mw->getTitle();
 		if ( $title->getNamespace() == NS_WIKIA_FORUM_BOARD_THREAD ) {
 			$response->setVal( 'returnTo', wfMessage( 'forum-thread-deleted-return-to', $mw->getArticleTitle()->getText() )->escaped() );
@@ -260,7 +261,8 @@ class ForumHooksHelper {
 	 * @return bool: true because it is a hook
 	 */
 	static public function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
-		$app = F::app();
+		global $wgEnableRecirculationDiscussions;
+
 		$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/Forum/css/ForumTag.scss' ) );
 		$title = $out->getTitle();
 		if ( $out->isArticle()
@@ -269,14 +271,14 @@ class ForumHooksHelper {
 			&& !Wikia::isMainPage()
 			&& $out->getRequest()->getVal( 'diff' ) === null
 			&& $out->getRequest()->getVal( 'action' ) !== 'render'
-			&& !( $app->checkSkin( 'wikiamobile', $out->getSkin() ) )
-			&& empty( $app->wg->EnableRecirculationDiscussions )
+			&& $out->getSkin()->getSkinName() !== 'wikiamobile'
+			&& empty( $wgEnableRecirculationDiscussions )
 		) {
 			// VOLDEV-46: Omit zero-state, only render if there are related forum threads
 			$messages = RelatedForumDiscussionController::getData( $title->getArticleId() );
 			unset( $messages['lastupdate'] );
 			if ( !empty( $messages ) ) {
-				$text .= $app->renderView( 'RelatedForumDiscussionController', 'index', [ 'messages' => $messages ] );
+				$text .= F::app()->renderView( 'RelatedForumDiscussionController', 'index', [ 'messages' => $messages ] );
 			}
 		}
 		return true;
@@ -382,8 +384,10 @@ class ForumHooksHelper {
 
 	/**
 	 * Create a tag for including the Forum Activity Module on pages
+	 * @param Parser $parser
+	 * @return bool true
 	 */
-	static public function onParserFirstCallInit( Parser &$parser ) {
+	static public function onParserFirstCallInit( Parser $parser ): bool {
 		$parser->setHook( 'wikiaforum', [ __CLASS__, 'parseForumActivityTag' ] );
 		return true;
 	}

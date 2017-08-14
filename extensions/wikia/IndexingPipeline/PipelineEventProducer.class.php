@@ -3,7 +3,9 @@
 namespace Wikia\IndexingPipeline;
 
 use Title;
+use User;
 use Wikia\Logger\WikiaLogger;
+use Wikia\Rabbit\ConnectionBase;
 
 class PipelineEventProducer {
 	const ARTICLE_MESSAGE_PREFIX = 'article';
@@ -133,9 +135,13 @@ class PipelineEventProducer {
 	/**
 	 * @desc Fires on:
 	 *  - article delete
+	 * @param \WikiPage $oPage
+	 * @param \User $oUser
+	 * @param $reason
+	 * @param $pageId
 	 * @return bool
 	 */
-	public static function onArticleDeleteComplete( &$oPage, &$oUser, $reason, $pageId ) {
+	public static function onArticleDeleteComplete( \WikiPage $oPage, \User $oUser, $reason, $pageId ): bool {
 		if ( !self::canIndex( $oPage->getTitle() ) ) {
 			return true;
 		}
@@ -153,9 +159,11 @@ class PipelineEventProducer {
 	 * @desc Fires on:
 	 *  - article restore
 	 * Send ACTION_CREATE as an article with new ID is created
+	 * @param Title $oTitle
+	 * @param bool $isNew
 	 * @return bool
 	 */
-	public static function onArticleUndelete( \Title &$oTitle, $isNew = false ) {
+	public static function onArticleUndelete( \Title $oTitle, $isNew = false ): bool {
 		if ( !self::canIndex( $oTitle ) ) {
 			return true;
 		}
@@ -173,9 +181,14 @@ class PipelineEventProducer {
 	 * @desc Fires on:
 	 *  - article rename
 	 * Send ACTION_UPDATE as the ID of article remains the same only title changes
+	 * @param Title $oOldTitle
+	 * @param Title $oNewTitle
+	 * @param User $oUser
+	 * @param $pageId
+	 * @param int $redirectId
 	 * @return bool
 	 */
-	public static function onTitleMoveComplete( &$oOldTitle, &$oNewTitle, &$oUser, $pageId, $redirectId = 0 ) {
+	public static function onTitleMoveComplete( Title $oOldTitle, Title $oNewTitle, User $oUser, $pageId, $redirectId = 0 ): bool {
 		if ( !self::canIndex( $oNewTitle ) ) {
 			return true;
 		}
@@ -261,7 +274,7 @@ class PipelineEventProducer {
 	/*
 	 * Helper methods
 	 */
-	/** @return ConnectionBase */
+	/** @return \Wikia\Rabbit\ConnectionBase */
 	protected static function getPipeline() {
 		global $wgIndexingPipeline;
 

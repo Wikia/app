@@ -12,7 +12,6 @@ class NotificationsController extends WikiaController {
 	const NOTIFICATION_TALK_PAGE_MESSAGE = 1;
 	const NOTIFICATION_COMMUNITY_MESSAGE = 2;
 	const NOTIFICATION_NEW_ACHIEVEMENTS_BADGE = 3;
-	const NOTIFICATION_EDIT_SIMILAR = 4;
 	const NOTIFICATION_SITEWIDE = 5;
 
 	const NOTIFICATION_CUSTOM = 10;
@@ -70,10 +69,13 @@ class NotificationsController extends WikiaController {
 
 	/**
 	 * Handle notifications about new message(s)
+	 * @param Skin $skin
+	 * @param QuickTemplate $tpl
+	 * @return bool
 	 */
-	public static function addMessageNotification( &$skin, &$tpl ) {
-		if ( F::app()->checkSkin( 'oasis' ) ) {
-			// Add talk page notificaations
+	public static function addMessageNotification( Skin $skin, QuickTemplate $tpl ): bool {
+		if ( $skin->getSkinName() === 'oasis' ) {
+			// Add talk page notifications
 			$msg = $tpl->data['usernewmessages'];
 			if ( $msg != '' ) {
 				self::addNotification( $msg, null, self::NOTIFICATION_TALK_PAGE_MESSAGE );
@@ -84,9 +86,12 @@ class NotificationsController extends WikiaController {
 
 	/**
 	 * Handle notifications from the SiteWide messaging tool
+	 * @param array $msgs
+	 * @param Skin $skin
+	 * @return bool
 	 */
-	public static function addSiteWideMessageNotification( $msgs ) {
-		if ( F::app()->checkSkin( 'oasis' ) ) {
+	public static function addSiteWideMessageNotification( array $msgs, Skin $skin ): bool {
+		if ( $skin->getSkinName() === 'oasis' ) {
 			self::addNotification( $msgs, null, self::NOTIFICATION_SITEWIDE );
 		}
 		return true;
@@ -97,8 +102,9 @@ class NotificationsController extends WikiaController {
 	 *
 	 * @param $user User
 	 * @param $badge AchBadge
+	 * @return bool
 	 */
-	public static function addBadgeNotification( $user, $badge, &$html ) {
+	public static function addBadgeNotification( $user, $badge, &$html ): bool {
 		if ( F::app()->checkSkin( 'oasis' ) ) {
 			// clear old-style notification
 			$html = '';
@@ -133,28 +139,16 @@ class NotificationsController extends WikiaController {
 	}
 
 	/**
-	 * Handle notifications with edit suggestions
-	 */
-	public static function addEditSimilarNotification( &$html ) {
-		if ( F::app()->checkSkin( 'oasis' ) ) {
-			self::addNotification( $html, array(), self::NOTIFICATION_EDIT_SIMILAR );
-
-			// stop hook processing - don't show default message from extensions
-			$ret = false;
-		}
-		else {
-			$ret = true;
-		}
-		return $ret;
-	}
-
-	/**
 	 * Handle notifications about updated community message
+	 * @param string $msg
+	 * @param Skin $skin
+	 * @return bool
 	 */
-	public static function addCommunityMessagesNotification( &$msg ) {
-		if ( F::app()->checkSkin( 'oasis' ) ) {
-			self::addNotification( $msg, array(), self::NOTIFICATION_COMMUNITY_MESSAGE );
+	public static function addCommunityMessagesNotification( string &$msg, Skin $skin ): bool {
+		if ( $skin->getSkinName() === 'oasis' ) {
+			self::addNotification( $msg, [], self::NOTIFICATION_COMMUNITY_MESSAGE );
 		}
+
 		return true;
 	}
 }

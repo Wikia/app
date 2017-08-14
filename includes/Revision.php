@@ -62,7 +62,7 @@ class Revision implements IDBAccessObject {
 	 * @param $flags Integer Bitfield (optional)
 	 * @return Revision or null
 	 */
-	public static function newFromTitle( $title, $id = 0, $flags = null ) {
+	public static function newFromTitle( $title, $id = 0, $flags = 0 ) {
 		$conds = array(
 			'page_namespace' => $title->getNamespace(),
 			'page_title' 	 => $title->getDBkey()
@@ -70,13 +70,13 @@ class Revision implements IDBAccessObject {
 		if ( $id ) {
 			// Use the specified ID
 			$conds['rev_id'] = $id;
+			return self::newFromConds( $conds, (int)$flags );
 		} else {
 			// Use a join to get the latest revision
 			$conds[] = 'rev_id=page_latest';
-			// Callers assume this will be up-to-date
-			$flags = is_int( $flags ) ? $flags : self::READ_LATEST; // b/c
+			$db = wfGetDB( ( $flags & self::READ_LATEST ) ? DB_MASTER : DB_SLAVE );
+			return self::loadFromConds( $db, $conds, $flags );
 		}
-		return self::newFromConds( $conds, (int)$flags );
 	}
 
 	/**
@@ -1062,7 +1062,7 @@ class Revision implements IDBAccessObject {
 
 		$this->mId = !is_null( $rev_id ) ? $rev_id : $dbw->insertId();
 
-		Hooks::run( 'RevisionInsertComplete', array( &$this, $data, $flags ) );
+		Hooks::run( 'RevisionInsertComplete', [ $this, $data, $flags ] );
 
 		wfProfileOut( __METHOD__ );
 		return $this->mId;

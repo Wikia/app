@@ -1,12 +1,23 @@
 {
   "name": "html5-skin",
+  "description": "Wikia's fork of ooyala/html5-skin",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Wikia/html5-skin.git"
+  },
+  "ignore": [
+    "/*",
+    "!/build",
+    "!/scss",
+    "!/vendor"
+  ],
   "homepage": "https://github.com/Wikia/html5-skin",
-  "_release": "84574003c0",
+  "_release": "f5a5524526",
   "_resolution": {
     "type": "commit",
-    "commit": "84574003c0cf2fa6de499bd6e7423a2a37681e44"
+    "commit": "f5a55245260c971bb4975d3f8aae63fa8df51eb1"
   },
   "_source": "git://github.com/Wikia/html5-skin.git",
-  "_target": "84574003c0cf2fa6de499bd6e7423a2a37681e44",
+  "_target": "f5a55245260c971bb4975d3f8aae63fa8df51eb1",
   "_originalSource": "Wikia/html5-skin"
 }

@@ -316,7 +316,7 @@ EOT
 			// only for this instance of class User
 
 			// SUS-423: Don't log user lookup in Phalanx stats
-			Hooks::run( 'GetBlockedStatus', [ &$user, false /* don't log in Phalanx stats */ ] );
+			Hooks::run( 'GetBlockedStatus', [ $user, false /* don't log in Phalanx stats */ ] );
 
 			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 			$oTmpl->set_vars( array(

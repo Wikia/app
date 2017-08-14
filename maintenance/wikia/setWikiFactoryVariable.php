@@ -113,7 +113,7 @@ class SetWikiFactoryVariable extends Maintenance {
 		}
 
 		$wg = F::app()->wg;
-		$wg->User = User::newFromName( 'WikiaBot' );
+		$wg->User = User::newFromName( Wikia::BOT_USER );
 		$wg->User->load();
 
 		$cnt = 0;
