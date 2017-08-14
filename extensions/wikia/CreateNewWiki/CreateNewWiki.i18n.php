@@ -1833,29 +1833,25 @@ $messages['ko'] = array(
 	'autocreatewiki-welcometalk-log' => 'Welcome Message',
 	'autocreatewiki-regex-error-comment' => 'used in wiki $1 (whole text: $2)',
 	'autocreatewiki-protect-reason' => 'Part of the official interface',
-	'autocreatewiki-welcometalk-wall-title' => 'Welcome!',
-	'autocreatewiki-welcometalk-wall' => "Hello, I'm a member of FANDOM's Community Support team. We're excited to have {{subst:SITENAME}} as part of the FANDOM community!
+	'autocreatewiki-welcometalk-wall-title' => '환영합니다!',
+	'autocreatewiki-welcometalk-wall' => '안녕하세요, 팬덤 커뮤니티 지원팀입니다! 먼저 {{subst:SITENAME}} 생성을 진심으로 축하드립니다. 귀하의 성공적인 위키 운영을 위해 도움이 될 만한 팁들을 가져왔습니다. 지금 바로 확인해 보세요!
 
-It may seem like there’s a lot to do, but we’re here to help make getting started quick and easy. Here are some helpful tips and links to get your community going:
+*[[특수기능:위키기능|위키 기능 관리 페이지]]에서 사용 가능한 기능들을 확인해 보세요. 문서 댓글부터 채팅까지 다양한 기능들을 지원하고 있습니다.
+*[[특수기능:테마디자이너|테마 디자이너]]에서 위키를 꾸며보세요.
+*[[w:ko:|팬덤 중앙 커뮤니티]]에 방문해 보세요. [[w:ko:블로그:팬덤_뉴스|스태프 블로그]]에서 최신 업데이트 소식을 알아보거나, [[w:ko:특수기능:포럼|포럼]]에서 다른 사용자들과 도움을 주고받아 보세요.
+*[[도움말:콘텐츠|도움말 문서]]에서 팬덤 사용법을 익혀 보세요.
 
-*Check out [[Special:WikiFeatures|Wiki Features]] to turn on some special features including our popular community Chat.
-*Customize your community’s color and style by visiting the [[Special:ThemeDesigner|Theme Designer]].
-*Stop by [[w:c:community|Community Central]] to check out the [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]], and ask questions on our [[w:c:community:Special:Forum|community forum]].
-*Lastly, visit our [[Help:Contents|help pages]] to learn the ins and outs of using FANDOM, or visit [[w:c:community:Wikia_University|FANDOM University]] for quick how-to videos.
+그럼 즐거운 위키 이용 되시기 바랍니다!',
+	'autocreatewiki-welcometalk' => '==환영합니다!==
+안녕하세요, $4 생성을 진심으로 축하드립니다! 귀하의 성공적인 위키 운영을 위해 도움이 될 만한 팁들을 가져왔습니다. 지금 바로 확인해 보세요!
 
-Have fun!",
-	'autocreatewiki-welcometalk' => "==Welcome!==
-Hey there!
+*[[특수기능:위키기능|위키 기능 관리 페이지]]에서 사용 가능한 기능들을 확인해 보세요. 문서 댓글부터 채팅까지 다양한 기능들을 지원하고 있습니다.
+*[[w:ko:|팬덤 중앙 커뮤니티]]에 방문해 보세요. [[w:ko:블로그:팬덤_뉴스|스태프 블로그]]에서 최신 업데이트 소식을 알아보거나, [[w:ko:특수기능:포럼|포럼]]에서 다른 사용자들과 도움을 주고받아 보세요.
+*[[도움말:콘텐츠|도움말 문서]]에서 팬덤 사용법을 익혀 보세요.
 
-We're excited to have $4 as part of the FANDOM community! There's still a lot to do; here are some helpful tips and links to get your wiki going:
+그럼 즐거운 위키 이용 되시기 바랍니다!
 
-*Check out [[Special:WikiFeatures|Wiki Features]] to see which features you can enable on your wiki, including chat, achievements and much more.
-*Stop by [[w:c:community|Community Central]] to stay informed through our [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]], ask questions on our [[w:c:community:Special:Forum|community forum]], watch videos on [[w:c:community:Wikia_university|FANDOM University]], or chat live with fellow FANDOM community members.
-*Lastly, visit our [[Help:Contents|help pages]] to learn the ins and outs of using FANDOM.
-
-All of the above links are a great place to start exploring, and have fun!
-
--- [[User:$2|$3]] <staff />",
+-- [[User:$2|$3]] <staff />',
 	'autocreatewiki-welcomebody-HTML' => '"<p>Hello $2,<br /><br />
 The wiki you created is now available at <a href="$1">$1</a>.  We hope to see you editing there soon!<br /><br />
 We have added some information and tips on your <a href="$5">user talk Page</a> to help you get started. If you have any questions, just reply to this e-mail or browse our help pages at <a href="http://help.wikia.com/">FANDOM Help</a>.<br /><br />
