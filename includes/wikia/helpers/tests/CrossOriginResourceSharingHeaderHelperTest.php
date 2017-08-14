@@ -57,6 +57,19 @@ class CrossOriginResourceSharingHeaderHelperTest extends BaseTest {
 		$this->assertEquals( '*', $headers[0]['value'] );
 	}
 
+	public function testWildcardGetsPrecedence() {
+		$dummyResponse = new WikiaResponse( "tmp" );
+		(new CrossOriginResourceSharingHeaderHelper())
+				->allowWhitelistedOrigins(['a','b'])
+				->setAllowAllOrigins()
+				->setHeaders( $dummyResponse );
+		$this->setupHttpOrigin( 'example.com' );
+
+		$headers = $dummyResponse->getHeader( CrossOriginResourceSharingHeaderHelper::ALLOW_ORIGIN_HEADER_NAME );
+
+		$this->assertEquals( '*', $headers[0]['value'] );
+	}
+
 	public function testShouldProperlySetHeadersWithPreExistingValues() {
 		$dummyResponse = new WikiaResponse( "tmp" );
 		$dummyResponse->setHeader(
