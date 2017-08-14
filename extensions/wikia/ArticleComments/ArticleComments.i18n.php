@@ -17,8 +17,6 @@ $messages['en'] = array(
 	'article-comments-undeleted-comment' => 'Undeleted comment for blog page $1',
 	'article-comments-rc-comment' => 'Article comment (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Article comments ([[$1]])',
-	'article-comments-fblogin' => 'Please <a href="$1" rel="nofollow">log in and connect with Facebook</a> to post a comment on this wiki!',
-	'article-comments-fbconnect' => 'Please <a href="$1">connect this account with Facebook</a> to comment!',
 	'article-comments-rc-blog-comment' => '&nbsp;Blog comment (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Blog comments ([[$1]])',
 	'article-comments-login' => 'Please [[Special:UserLogin|log in]] to post a comment on this wiki.',
@@ -47,7 +45,6 @@ $messages['en'] = array(
 	'wikiamobile-article-comments-post-fail' => 'Failed to save comment, please try again later',
 	'enotif_subject_article_comment' => 'Read the latest comments on the $PAGETITLE page on {{SITENAME}}',
 	'enotif_body_article_comment' => 'Hi $WATCHINGUSERNAME,
-
 There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all of the comments: $PAGETITLE_URL#WikiaArticleComments
 
 - Wikia Community Support
@@ -164,8 +161,6 @@ $messages['ar'] = array(
 	'article-comments-undeleted-comment' => 'تعليق غير محذوف من المدونة $1',
 	'article-comments-rc-comment' => 'تعليق المقال (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'تعليقات المقال ([[$1]])',
-	'article-comments-fblogin' => 'الرجاء <a href="$1" rel="nofollow">تسجيل الدخول عن طريق Facebook</a> لإضافة تعليق على هذا الويكي!',
-	'article-comments-fbconnect' => 'الرجاء <a href="$1">ربط هذا الحساب مع Facebook</a> من أجل التعليق!',
 	'article-comments-rc-blog-comment' => 'تعليق المدونة (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'تعليقات المدونة ([[$1]])',
 	'article-comments-login' => 'الرجاء [[Special:UserLogin|تسجيل الدخول]] لإضافة تعليق على هذا الويكي.',
@@ -246,7 +241,6 @@ $messages['az'] = array(
 	'article-comments-error' => 'Şərh qeyd edilə bilmir',
 	'article-comments-rc-comment' => 'Məqalə şərhi (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Məqalə şərhləri ([[$1]])',
-	'article-comments-fbconnect' => 'Şərh etmək üçün lütfən <a href="$1">Facebook hesabı ilə hesabınızı</a> əlaqələndirin!',
 	'article-comments-rc-blog-comment' => 'Bloq şərhi (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Bloq şərhləri ([[$1]])',
 	'article-comments-toc-item' => 'Şərhlər',
@@ -294,8 +288,6 @@ $messages['ba'] = array(
 	'article-comments-undeleted-comment' => '$1 блогы битендәге фекерҙе кире ҡайтарыу',
 	'article-comments-rc-comment' => '(<span class="plainlinks">[$1 $2]</span>) мәҡәләһенә фекер',
 	'article-comments-rc-comments' => '[[$1]] мәҡәләһенә фекер',
-	'article-comments-fblogin' => 'Зинһар, был вики-проектта фекер ҡалдырыу өсөн <a href="$1" rel="nofollow">системаға йәки Facebookка керегеҙ</a> һәм !',
-	'article-comments-fbconnect' => 'Зинһар, фекер ҡалдырыр өсөн <a href="$1">иҫәп яҙыуығыҙҙы Facebook менән бәйләгеҙ</a>!',
 	'article-comments-rc-blog-comment' => '(<span class="plainlinks">[$1 $2]</span>) блогына фекер',
 	'article-comments-rc-blog-comments' => '([[$1]]) блогына фекерҙәр',
 	'article-comments-login' => 'Был вики-проектта фекер ҡалдырыу өсөн, зинһар,  [[Special:UserLogin|системаға керегеҙ]]',
@@ -320,8 +312,6 @@ $messages['bar'] = array(
 	'article-comments-undeleted-comment' => 'Kómmentar zum Blog-Beitrog $1 is wiaderhergstöd worn.',
 	'article-comments-rc-comment' => 'Artiké Kómmentar (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Artiké Kómmentare ([[$1]])',
-	'article-comments-fblogin' => 'Bittscheh <a href="$1" rel="nofollow">eihloggen und mid Facebook vabinden</a>, um an Kómmentar in dém Wiki z\' schreim!',
-	'article-comments-fbconnect' => 'Bittscheh <a href="$1">dés Kontó mid Facebook vaknypfm</a>, um an Kómmentar obzgeem',
 	'article-comments-rc-blog-comment' => 'Blog-Kómmentar (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Blog-Kómmentare ([[$1]])',
 	'article-comments-login' => 'Zum Kómmentirn [[Special:UserLogin|åmöden]].',
@@ -337,7 +327,6 @@ $messages['bar'] = array(
 	'article-comments-empty-comment' => 'A laarer Kómmentar is néd méglé. [$1 Sóid man léschen?]',
 	'enotif_subject_article_comment' => '$PAGEEDITOR hod "$PAGETITLE" auf {{SITENAME}} kómmentird.',
 	'enotif_body_article_comment' => 'Servas $WATCHINGUSERNAME,
-
 $PAGEEDITOR hod an Kómmentar zua "$PAGETITLE" obgeem.
 
 Um an Kómmentar-Thread åzschauh, fóig \'m untensteeherden Link:
@@ -376,8 +365,6 @@ $messages['bcl'] = array(
 	'article-comments-undeleted-comment' => 'Dae pinagpurang komento para sa blog pahina $1',
 	'article-comments-rc-comment' => 'Komento sa artikulo (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Mga komento sa artikulo ([[$1]])',
-	'article-comments-fblogin' => 'Tabi man <a href="$1" rel="nofollow">maglaog asin ikonekta sa Facebook</a> tanganing makapaskil nin komento sa wiking ini!',
-	'article-comments-fbconnect' => 'Tabi man <a href="$1">ikonekta ining panindog sa Facebook</a> tanganing makakomento!',
 	'article-comments-rc-blog-comment' => 'Komento sa Blog (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Mga komento sa Blog ([[$1]])',
 	'article-comments-login' => 'Tabi man [[Special:UserLogin|maglaog]] tanganing makapaskil nin komento sa wiking ini.',
@@ -505,8 +492,6 @@ $messages['br'] = array(
 	'article-comments-undeleted-comment' => 'Diziverket eo bet an evezhiadenn evit pajenn ar blog $1',
 	'article-comments-rc-comment' => 'Evezhiadenn war pajenn (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Evezhiadennoù war pajenn ([[$1]])',
-	'article-comments-fblogin' => '<a href="$1">Kevreañ dre Facebook ha bezañ liammet outañ</a> evit lakaat un evezhiadenn war ar wiki-mañ !',
-	'article-comments-fbconnect' => '<a href="$1">Liammit ar gont-mañ ouzh Facebook</a> evit lakaat evezhiadennoù !',
 	'article-comments-rc-blog-comment' => 'Evezhiadenn war ar blog (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Evezhiadennoù war ar blog ([[$1]])',
 	'article-comments-login' => '[[Special:UserLogin|Ret eo kevreañ]] evit lezel ur gemennadenn war ar wiki-mañ.',
@@ -534,7 +519,6 @@ $messages['br'] = array(
 	'wikiamobile-article-comments-post-fail' => "C'hwitet eo enrolladur an displegadenn, adkrogit ganti diwezhatoc'h",
 	'enotif_subject_article_comment' => 'Un evezhiadenn zo bet graet gant $PAGEEDITOR diwar-benn "$PAGETITLE" war {{SITENAME}}',
 	'enotif_body_article_comment' => '$WATCHINGUSERNAME ker,
-
 Graet ez eus bet un evezhiadenn nevez gant $PAGEEDITOR war "$PAGETITLE".
 
 Evit sellet ouzh an neudennad, klikit war al liamm a-is :
@@ -579,8 +563,6 @@ $messages['ca'] = array(
 	'article-comments-undeleted-comment' => 'Comentari no eliminat de la pàgina del bloc $1',
 	'article-comments-rc-comment' => 'Comentari de l\'article (<span class="plainlinks">[$1  $2]</span>)',
 	'article-comments-rc-comments' => "Comentaris d'article ([[$1]])",
-	'article-comments-fblogin' => 'Si us plau <a href="$1" rel="nofollow"> identifiqueu-vos i connecteu-vos amb Facebook</a> per enviar un comentari en aquest wiki!',
-	'article-comments-fbconnect' => 'Si us plau, <a href="$1">connecta aquest compte amb Facebook</a> per deixar un comentari.',
 	'article-comments-rc-blog-comment' => 'Comentari de bloc (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Comentaris de bloc ([[$1]])',
 	'article-comments-login' => "[[Special:UserLogin|Identifica't]] per deixar un comentari.",
@@ -609,7 +591,6 @@ $messages['ca'] = array(
 	'wikiamobile-article-comments-post-fail' => 'Error al guardar el comentari, si us plau, intenta-ho de nou',
 	'enotif_subject_article_comment' => '$PAGEEDITOR ha comentat en "$PAGETITLE" en {{SITENAME}}',
 	'enotif_body_article_comment' => 'Hola $WATCHINGUSERNAME,
-
 Hi ha un nou comentari en la pàgina $PAGETITLE de {{SITENAME}}. Utilitza aquest enllaç per veure tots els comentaris: $PAGETITLE_URL#WikiaArticleComments
 
 - Equip Comunitari de Wikia
@@ -660,8 +641,6 @@ $messages['cs'] = array(
 	'article-comments-undeleted-comment' => 'Obnovený komentář pro stránku blogu $1',
 	'article-comments-rc-comment' => 'Komentář k článku (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Komentáře k článku ([[$1]])',
-	'article-comments-fblogin' => 'Pro přidávání komentářů na této wiki se prosím <a href="$1">přihlašte a propojte s Facebookem</a>!',
-	'article-comments-fbconnect' => 'Pro komentování připojte <a href="$1">váš Facebook účet</a>!',
 	'article-comments-rc-blog-comment' => 'Komentář blogu (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Komentáře blogu ([[$1]])',
 	'article-comments-login' => 'Pro přidání komentáře se prosím [[Special:UserLogin|přihlašte]].',
@@ -688,7 +667,6 @@ $messages['cs'] = array(
 	'wikiamobile-article-comments-login-post' => 'Prosím, přihlašte se, abyste mohli odesílat komentáře.',
 	'enotif_subject_article_comment' => '$PAGEEDITOR přidal komentář "$PAGETITLE" na {{SITENAME}}.',
 	'enotif_body_article_comment' => 'Vážený $WATCHINGUSERNAME,
-
 $PAGEEDITOR přidal komentář na "$PAGETITLE".
 
 Pro zobrazení klikněte na níže uvedený odkaz:
@@ -727,8 +705,6 @@ $messages['cy'] = array(
 	'article-comments-undeleted-comment' => 'Sylw ddim yn dileu am tudalen blog $1',
 	'article-comments-rc-comment' => 'Sylw erthygl (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Sylw erthygl ([[$1]])',
-	'article-comments-fblogin' => '<a href="$1" rel="nofollow">Mewngofnodi a chysylltu gyda Facebook</a> os ydych chi eisiau gwneud sylw ar y wici hwn!',
-	'article-comments-fbconnect' => '<a href="$1>Cysylltu y cyfrif hwn gyda Facebook</a> os ydych chi eisiau gwneud sylw!',
 	'article-comments-rc-blog-comment' => 'Sylw blog (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Sylwadau blog ([[$1]])',
 	'article-comments-login' => '[[Special:UserLogin|Mewngofnodi]] os ydych chi eisiau postio sylw ar y wici hwn.',
@@ -756,7 +732,6 @@ $messages['cy'] = array(
 	'wikiamobile-article-comments-post-fail' => "Ni lwyddwyd rhoi'r sylw ar gadw, ceisiwch eto'n ddiweddarach os gwelwch yn dda.",
 	'enotif_subject_article_comment' => 'Mae $PAGEEDITOR wedi sylw ar "$PAGETITLE" ar {{SITENAME}}',
 	'enotif_body_article_comment' => 'Helo $WATCHINGUSERNAME,
-
 Mae sylw newydd ar $PAGETITLE ar {{SITENAME}}. Defnyddwch y linc hwn i weld pob sylw:
 $PAGETITLE_URL#WikiaArticleComments
 
@@ -804,8 +779,6 @@ $messages['de'] = array(
 	'article-comments-undeleted-comment' => 'Kommentar zu Blog-Beitrag $1 wiederhergestellt.',
 	'article-comments-rc-comment' => 'Artikel-Kommentar (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Artikel-Kommentare ([[$1]])',
-	'article-comments-fblogin' => 'Bitte <a href="$1" rel="nofollow">anmelden und mit Facebook verbinden</a>, um einen Kommentar in diesem Wiki zu schreiben!',
-	'article-comments-fbconnect' => 'Bitte <a href="$1">dieses Konto mit Facebook verknüpfen</a>, um zu kommentieren!',
 	'article-comments-rc-blog-comment' => 'Blog-Kommentar (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Blog-Kommentare ([[$1]])',
 	'article-comments-login' => 'Zum Kommentieren [[Special:UserLogin|anmelden]].',
@@ -834,7 +807,6 @@ $messages['de'] = array(
 	'wikiamobile-article-comments-post-fail' => 'Der Kommentar konnte nicht gespeichert werden, bitte versuche es später erneut.',
 	'enotif_subject_article_comment' => '[{{SITENAME}}] $PAGEEDITOR hat "$PAGETITLE" kommentiert',
 	'enotif_body_article_comment' => 'Hallo $WATCHINGUSERNAME,
-
 $PAGEEDITOR hat einen Kommentar auf der Seite "$PAGETITLE" hinterlassen.
 
 Um alle Kommentare zu sehen, folge diesem Link:
@@ -878,7 +850,6 @@ Dein freundliches {{SITENAME}}-Benachrichtigungssystem
 $messages['de-formal'] = array(
 	'article-comments-comment-cannot-add' => 'Sie können keinen Kommentar zum Artikel hinzufügen.',
 	'enotif_body_article_comment' => 'Hallo $WATCHINGUSERNAME,
-
 $PAGEEDITOR hat einen Kommentar zu "$PAGETITLE" abgegeben.
 
 Um den Kommentar-Thread anzusehen, folgen Sie dem unten stehenden Link:
@@ -946,7 +917,6 @@ $messages['el'] = array(
 	'article-comments-undeleted-comment' => 'Επαναφερμένο σχόλιο για την σελίδα blog $1',
 	'article-comments-rc-comment' => 'Σχόλιο άρθρου (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Σχόλια άρθρου ([[$1]])',
-	'article-comments-fbconnect' => 'Παρακαλούμε <a href="$1">συνδέστε αυτό τον λογαριασμό με το Facebook</a> για να σχολιάσετε!',
 	'article-comments-rc-blog-comment' => 'Σχόλιο σε blog (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Σχόλια blog ([[$1]])',
 	'article-comments-login' => 'Παρακαλώ [[Special:UserLogin|συνδεθ]] για να αναρτήσετε σχόλιο σε αυτό το wiki.',
@@ -1019,8 +989,6 @@ $messages['es'] = array(
 	'article-comments-undeleted-comment' => 'Comentario no borrado para la página del blog $1',
 	'article-comments-rc-comment' => 'Comentario de artículo (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Comentarios de artículo (<span class="plainlinks">[[$1]]</span>)',
-	'article-comments-fblogin' => 'Por favor, <a href="$1">identifícate y conéctate con Facebook</a> para dejar un comentario en este wiki.',
-	'article-comments-fbconnect' => 'Por favor, <a href="$1">conecta esta cuenta con Facebook</a> para dejar un comentario.',
 	'article-comments-rc-blog-comment' => 'Comentario de blog (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Comentarios de blog (<span class="plainlinks">[[$1]]</span>)',
 	'article-comments-login' => '[[Special:UserLogin|Identifícate]] para dejar un comentario',
@@ -1049,7 +1017,6 @@ $messages['es'] = array(
 	'wikiamobile-article-comments-post-fail' => 'Error al guardar el comentario, por favor inténtalo nuevamente',
 	'enotif_subject_article_comment' => '$PAGEEDITOR ha comentado en la página "$PAGETITLE" de {{SITENAME}}',
 	'enotif_body_article_comment' => 'Hola $WATCHINGUSERNAME,
-
 Hay nuevos comentarios en la página $PAGETITLE de {{SITENAME}}. Usa el siguiente enlace para ver todos los comentarios: $PAGETITLE_URL#article-comments
 
 - Equipo comunitario de Wikia
@@ -1086,8 +1053,6 @@ $messages['et'] = array(
 	'article-comments-history' => 'ajalugu',
 	'article-comments-error' => 'Kommentaari ei õnnestu salvestada',
 	'article-comments-rc-comments' => 'Artikli kommentaarid ([[$1]])',
-	'article-comments-fblogin' => 'Palun <a href="$1" rel="nofollow">logi sisse ja ühenda Facebookiga</a> selle viki kommenteerimiseks!',
-	'article-comments-fbconnect' => 'Palun <a href="$1">ühendage kasutajakonto Facebookiga</a> kommenteerimiseks!',
 	'article-comments-rc-blog-comment' => 'Blogi kommentaar (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Blogi kommentaarid ([[$1]])',
 	'article-comments-login' => 'Palun [[Special:UserLogin|logi sisse]] viki kommenteerimiseks.',
@@ -1156,8 +1121,6 @@ $messages['fa'] = array(
 	'article-comments-undeleted-comment' => 'نظر برای صفحۀ وبلاگ $1 احیاء شد',
 	'article-comments-rc-comment' => 'نظر مقاله (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'نظرات مقاله ([[$1]])',
-	'article-comments-fblogin' => 'برای فرستادن نظر در این ویکی لطفاً <a href="$1">به فیس‌بوک وارد و متصل شوید</a>!',
-	'article-comments-fbconnect' => 'لطفاً <a href="<span class=" notranslate"="">$1 ">این حساب را به فیس بوک متصل کنید</a> تا نظر بدهید!',
 	'article-comments-rc-blog-comment' => 'نظر وبلاگ (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'نظرات وبلاگ ([[$1]])',
 	'article-comments-login' => 'برای نظر دادن [[Special:UserLogin|وارد سامانه شوید]].',
@@ -1201,8 +1164,6 @@ $messages['fi'] = array(
 	'article-comments-undeleted-comment' => 'Kommenttia ei poistettu blogisivulta $1',
 	'article-comments-rc-comment' => 'Artikkelin kommentti (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Artikkelin kommentit ([[$1]])',
-	'article-comments-fblogin' => 'Ole hyvä ja <a href="$1" rel="nofollow">kirjaudu sisään yhdistyäksesi Facebookiin</a> ja kommentoidaksesi tässä wikissä!',
-	'article-comments-fbconnect' => 'Ole hyvä ja <a href="$1">yhdistä tämä käyttäjätili Facebookiin</a> kommentoidaksesi!',
 	'article-comments-rc-blog-comment' => 'Blogin kommentti (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Blogin kommentit ([[$1]])',
 	'article-comments-login' => '[[Special:UserLogin|Kirjaudu sisään]] kommetoidaksesi tässä wikissä.',
@@ -1230,7 +1191,6 @@ $messages['fi'] = array(
 	'wikiamobile-article-comments-post-fail' => 'Kommenttia ei voitu tallentaa, yritä myöhemmin uudelleen',
 	'enotif_subject_article_comment' => '$PAGEEDITOR on kommentoinut artikkelia "$PAGETITLE" {{SITENAME}}ssä.',
 	'enotif_body_article_comment' => 'Hei $WATCHINGUSERNAME,
-
 {{SITENAME}}n sivulla $PAGETITLE on uusi kommentti. Nähdäksesi kaikki kommentit, seuraa linkkiä:
 $PAGETITLE_URL#WikiaArticleComments
 
@@ -1302,8 +1262,6 @@ $messages['fr'] = array(
 	'article-comments-undeleted-comment' => 'Commentaire pour la page de blog $1 restauré',
 	'article-comments-rc-comment' => 'Commentaire d’article (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Commentaires d’article ([[$1]])',
-	'article-comments-fblogin' => 'Veuillez <a href="$1">vous connecter et relier Facebook</a> pour poster un commentaire sur ce wiki !',
-	'article-comments-fbconnect' => 'Veuillez <a href="$1">relier ce compte à Facebook</a> pour commenter !',
 	'article-comments-rc-blog-comment' => 'Commentaire de blog (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Commentaires de blog ([[$1]])',
 	'article-comments-login' => 'Veuillez vous [[Special:UserLogin|connecter]] pour laisser un commentaire sur ce wiki.',
@@ -1332,7 +1290,6 @@ $messages['fr'] = array(
 	'wikiamobile-article-comments-post-fail' => 'Échec de l’enregistrement du commentaire, veuillez réessayer plus tard',
 	'enotif_subject_article_comment' => '[{{SITENAME}}] Venez lire les derniers commentaires sur $PAGETITLE',
 	'enotif_body_article_comment' => '$WATCHINGUSERNAME,
-
 Un nouveau commentaire a été laissé sur « $PAGETITLE » sur {{SITENAME}}. Utilisez ce lien pour voir tous les commentaires : $PAGETITLE_URL#WikiaArticleComments
 
 — L’équipe Wikia
@@ -1390,8 +1347,6 @@ $messages['gl'] = array(
 	'article-comments-undeleted-comment' => 'Comentario restaurado da páxina de blogue "$1"',
 	'article-comments-rc-comment' => 'Comentario de artigo (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Comentarios de artigo ([[$1]])',
-	'article-comments-fblogin' => '<a href="$1" rel="nofollow">Acceda ao sistema e conecte co Facebook</a> para publicar un comentario neste wiki!',
-	'article-comments-fbconnect' => '<a href="$1">Conecte esta conta co Facebook</a> para comentar!',
 	'article-comments-rc-blog-comment' => 'Comentario de blogue (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Comentarios de blogue ([[$1]])',
 	'article-comments-login' => '[[Special:UserLogin|Acceda ao sistema]] para publicar un comentario neste wiki.',
@@ -1478,8 +1433,6 @@ $messages['he'] = array(
 	'article-comments-history' => 'היסטוריה',
 	'article-comments-error' => 'לא ניתן היה לשמור את התגובה',
 	'article-comments-rc-comments' => 'תגובות ערכים ([[$1]])',
-	'article-comments-fblogin' => 'אנא <a href="$1" rel="nofollow">התחבר בעזרת פייסבוק</a> על מנת לפרסם תגובה בוויקי זו!',
-	'article-comments-fbconnect' => 'נא <a href="$1">לקשר את חשבון זה לפייסבוק</a> על מנת להגיב!',
 	'article-comments-login' => 'נא [[Special:UserLogin|להיכנס לחשבון]] על מנת לפרסם תגובה.',
 	'article-comments-toc-item' => 'תגובות',
 	'article-comments-comment-cannot-add' => 'אינך יכול להוסיף תגובה לערך',
@@ -1503,7 +1456,6 @@ $messages['he'] = array(
 	'wikiamobile-article-comments-post-fail' => 'תגובתך לא נשמרה. נא לנסות שוב.',
 	'enotif_subject_article_comment' => '$PAGEEDITOR הגיב על "$PAGETITLE" ב-{{SITENAME}}',
 	'enotif_body_article_comment' => 'שלום, $WATCHINGUSERNAME,
-
 ישנה תגובה חדשה בדף $PAGETITLE ב-{{SITENAME}}. נא להשתמש בקישור זה להצגת כל התגובות: $PAGETITLE_URL#WikiaArticleComments
 
 - תמיכה קהילתית, ויקיה 
@@ -1581,8 +1533,6 @@ $messages['hu'] = array(
 	'article-comments-undeleted-comment' => 'A(z) $1 bloglap hozzászólása vissza lett állítva',
 	'article-comments-rc-comment' => 'Cikkhez tartozó hozzászólás (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Cikkhez tartozó hozzászólások ([[$1]])',
-	'article-comments-fblogin' => 'Kérlek, <a href="$1" rel="nofollow">lépj be és kösd össze felhasználódat a Facebookal</a>, hogy hozzászólást írhass ezen a wikin!',
-	'article-comments-fbconnect' => 'Kérjük, hozzászólás küldéséhez <a href="$1">kapcsolja össze ezt a fiókot a Facebookkal</a>.',
 	'article-comments-rc-blog-comment' => 'Blog hozzászólás (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Blog hozzászólások ([[$1]])',
 	'article-comments-login' => 'Kérjük, [[Special:UserLogin|jelentkezz be]] hozzászólás beküldéséhez.',
@@ -1648,8 +1598,6 @@ $messages['ia'] = array(
 	'article-comments-undeleted-comment' => 'Commento in pagina de blog $1 restaurate',
 	'article-comments-rc-comment' => 'Commentario de articulo (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Commentarios de articulo ([[$1]])',
-	'article-comments-fblogin' => 'Per favor <a href="$1">aperi session e connecte con Facebook</a> pro publicar un commento in iste wiki!',
-	'article-comments-fbconnect' => 'Per favor <a href="$1">connecte iste conto con Facebook</a> pro commentar!',
 	'article-comments-rc-blog-comment' => 'Commento de blog (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Commentos de blog ([[$1]])',
 	'article-comments-login' => 'Per favor [[Special:UserLogin|aperi session]] pro publicar un commento in iste wiki.',
@@ -1675,7 +1623,6 @@ $messages['ia'] = array(
 	'wikiamobile-article-comments-login-post' => 'Per favor aperi session pro commentar.',
 	'enotif_subject_article_comment' => '$PAGEEDITOR ha commentate "$PAGETITLE" sur {{SITENAME}}',
 	'enotif_body_article_comment' => 'Car $WATCHINGUSERNAME,
-
 $PAGEEDITOR lassava un commento sur "$PAGETITLE".
 
 Pro vider le filo de commentos, seque le ligamine sequente:
@@ -1715,8 +1662,6 @@ $messages['id'] = array(
 	'article-comments-undeleted-comment' => 'Batalkan hapus komentar untuk halaman blog $1',
 	'article-comments-rc-comment' => 'Komentar artikel (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Komentar artikel ([[$1]])',
-	'article-comments-fblogin' => 'Silakan <a href="$1" rel="nofollow">masuk log dan terhubung dengan Facebook</a> untuk mengirim komentar pada wiki ini!',
-	'article-comments-fbconnect' => 'Silakan <a href="$1">hubungkan akun ini dengan Facebook</a> untuk berkomentar!',
 	'article-comments-rc-blog-comment' => 'Komentar blog (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Komentar blog ([[$1]])',
 	'article-comments-login' => 'Silakan [[Special:UserLogin|masuk]] untuk mengirim komentar pada wiki ini.',
@@ -1745,7 +1690,6 @@ $messages['id'] = array(
 	'wikiamobile-article-comments-post-fail' => 'Gagal untuk menyimpan komentar, silakan coba lagi nanti',
 	'enotif_subject_article_comment' => '$PAGEEDITOR telah berkomentar pada "$PAGETITLE" pada {{SITENAME}}',
 	'enotif_body_article_comment' => 'Hai $WATCHINGUSERNAME,
-
 Ada komentar baru pada $PAGETITLE di {{SITENAME}}. Gunakan pranala ini untuk melihat semua komentar: $PAGETITLE_URL#WikiaArticleComments
 
 -Komunitas Dukungan Wikia
@@ -1795,8 +1739,6 @@ $messages['it'] = array(
 	'article-comments-undeleted-comment' => 'Commenti non cancellati della pagina $1',
 	'article-comments-rc-comment' => 'Commento dell\'articolo (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Commenti articolo ([[$1]])',
-	'article-comments-fblogin' => 'Per favore <a href="$1" rel="nofollow">accedi a Facebook</a> per commentare su questa wiki!',
-	'article-comments-fbconnect' => 'Per favore <a href="$1">connetti questo account a Facebook</a> per commentare!',
 	'article-comments-rc-blog-comment' => 'Commento blog (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Commenti blog ([[$1]])',
 	'article-comments-login' => 'Per favore [[Special:UserLogin|accedi]] per postare un commento su questa wiki.',
@@ -1825,7 +1767,6 @@ $messages['it'] = array(
 	'wikiamobile-article-comments-post-fail' => 'Salvataggio del commento non riuscito, per favore riprova più tardi',
 	'enotif_subject_article_comment' => '$PAGEEDITOR ha commentato su "$PAGETITLE" su {{SITENAME}}',
 	'enotif_body_article_comment' => 'Caro $WATCHINGUSERNAME,
-
 $PAGEEDITOR ha commentato su "$PAGETITLE".
 
 Per vedere il commento, seguire il link qui sotto:
@@ -1869,8 +1810,6 @@ $messages['ja'] = array(
 	'article-comments-undeleted-comment' => 'ブログの記事 $1 へのコメントを復帰',
 	'article-comments-rc-comment' => '記事コメント（<span class="plainlinks">[$1 $2]</span>）',
 	'article-comments-rc-comments' => '記事コメント（[[$1]]）',
-	'article-comments-fblogin' => 'コメントするには<a href="$1" rel="nofollow">ログインしてアカウントを Facebook に接続してください</a>。',
-	'article-comments-fbconnect' => 'コメントするには<a href="$1">アカウントを Facebook に接続してください</a>。',
 	'article-comments-rc-blog-comment' => 'ブログコメント（<span class="plainlinks">[$1 $2]</span>）',
 	'article-comments-rc-blog-comments' => 'ブログコメント（[[$1]]）',
 	'article-comments-login' => 'コメントするには[[Special:UserLogin|ログイン]]する必要があります',
@@ -1967,8 +1906,6 @@ $messages['kn'] = array(
 	'article-comments-undeleted-comment' => '$1 ಬ್ಲಾಗ್ ಪುಟ ಇಗೆ ಟಿಪ್ಪಣಿ ಇನ ಅಳಿಸುದನ್ನ ರದ್ದು ಮಾಡಿದು',
 	'article-comments-rc-comment' => 'ಪುಟಕ್ಕೆ ತಿಪನ್ನಿ (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'ಪುಟಕ್ಕೆ ತಿಪನ್ನಿಗಳು ([[$1]])',
-	'article-comments-fblogin' => 'ಈ ವಿಕಿಗೆ ಟಿಪ್ಪಣಿ ಹಾಕಲಿಕ್ಕೆ ದೈವಿತ್ತು <a href="$1" rel="nofollow">ಲಾಗ್ ಇನ್ ಮಾಡಿಕೊಂಡು ಫೇಸ್ಬುಕ್ ಒಟ್ಟಿಗೆ ಕನೆಕ್ಟ್ ಮಾಡಿ</a>!',
-	'article-comments-fbconnect' => 'ದೈವಿತ್ತು ಟಿಪ್ಪಣಿ ಹಾಕಲಿಕ್ಕೆ <a href="$1">ಈ ಖಾತೆ ವನ್ನು ಫೇಸ್ಬುಕ್ ಒಟ್ಟಿಗೆ ಕನೆಕ್ಟ್ ಮಾಡಿ</a>!',
 	'article-comments-rc-blog-comment' => 'ಬ್ಲಾಗ್ ಇಗೆ  ಟಿಪ್ಪಣಿ (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'ಬ್ಲಾಗ್ ಇಗೆ  ಟಿಪ್ಪಣಿ ([[$1]])',
 	'article-comments-login' => 'ದೈವಿತ್ತು ಈ ವಿಕಿಗೆ ಟಿಪ್ಪಣಿ ಹಾಕಲಿಕ್ಕೆ [[Special:UserLogin|ಲಾಗ್ ಇನ್]] ಮಾಡಿ.',
@@ -2030,8 +1967,6 @@ $messages['ko'] = array(
 	'article-comments-undeleted-comment' => '블로그 글 $1의 복구된 댓글',
 	'article-comments-rc-comment' => '문서 댓글  (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => '문서 댓글 ([[$1]])',
-	'article-comments-fblogin' => '이 위키에 댓글을 남기시려면 로그인 후 당신의 계정을 Facebook과 <a href="$1">연동</a>하세요.',
-	'article-comments-fbconnect' => '이 글에 댓글을 남기시려면 당신의 계정을 Facebook과 <a href="$1">연동</a>하세요.',
 	'article-comments-rc-blog-comment' => '블로그 댓글 (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => '블로그 댓글 ([[$1]])',
 	'article-comments-login' => '이 위키에 댓글을 남기시려면 <a href="$1">로그인</a>하세요.',
@@ -2129,7 +2064,6 @@ $messages['lb'] = array(
 	'article-comments-undeleted-comment' => "Restauréiert Bemierkung dir d'Blog-Säit $1",
 	'article-comments-rc-comment' => 'Bemierkung vum Artikel (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Bemierkunge vum Artikel ([[$1]])',
-	'article-comments-fblogin' => '<a href="$1">Loggt Iech an a verbannt mat Facebook</a> fir eng Bemierkung op dëser Wiki ze schreiwen!',
 	'article-comments-toc-item' => 'Bemierkungen',
 	'article-comments-comment-cannot-add' => 'Dir däerft keng Bemierkung bei den Artikel derbäisetzen.',
 	'article-comments-vote' => 'Stëmmt of',
@@ -2210,8 +2144,6 @@ $messages['lol'] = array(
 	'article-comments-undeleted-comment' => 'crwdns65211:0crwdne65211:0',
 	'article-comments-rc-comment' => 'crwdns65212:0crwdne65212:0',
 	'article-comments-rc-comments' => 'crwdns65213:0crwdne65213:0',
-	'article-comments-fblogin' => 'crwdns65214:0crwdne65214:0',
-	'article-comments-fbconnect' => 'crwdns65215:0crwdne65215:0',
 	'article-comments-rc-blog-comment' => 'crwdns65216:0crwdne65216:0',
 	'article-comments-rc-blog-comments' => 'crwdns65217:0crwdne65217:0',
 	'article-comments-login' => 'crwdns65218:0crwdne65218:0',
@@ -2339,8 +2271,6 @@ $messages['lv'] = array(
 	'article-comments-undeleted-comment' => 'Dzēšana komentārs blogu lapā $1',
 	'article-comments-rc-comment' => 'Panta komentārs (<span class="plainlinks">[$1 $2] </span>)',
 	'article-comments-rc-comments' => 'Panta Komentāri ([[$1]])',
-	'article-comments-fblogin' => 'Lūdzu <a href="<span class=" notranslate"="" translate="no">$1" rel ="nofollow"> pieteikties un izveidot savienojumu ar Facebook</a> post komentāru par šo wiki!',
-	'article-comments-fbconnect' => 'Lūdzu <a href="<span class=" notranslate"="" translate="no">$1"> šī konta savienojumu ar Facebook</a> komentārus!',
 	'article-comments-rc-blog-comment' => 'Panta komentārs (<span class="plainlinks">[$1 $2] </span>)',
 	'article-comments-rc-blog-comments' => 'Blog komentārus ([[$1]])',
 	'article-comments-login' => 'Lūdzu [[Special:UserLogin|pieteikties]] post komentāru par šo viki.',
@@ -2368,7 +2298,6 @@ $messages['lv'] = array(
 	'wikiamobile-article-comments-post-fail' => 'Neizdevās saglabāt komentāru, lūdzu, mēģiniet vēlreiz vēlāk',
 	'enotif_subject_article_comment' => '$PAGEEDITOR komentēja ir "$PAGETITLE" uz {{SITENAME}}',
 	'enotif_body_article_comment' => 'Hi $WATCHINGUSERNAME,
-
 Nav jaunu komentāru pie $PAGETITLE par {{SITENAME}}. Izmantojiet šīs saites, lai redzētu visus komentāri: $PAGETITLE_URL#WikiaArticleComments
 
 - Vikija Kopienas
@@ -2404,8 +2333,6 @@ $messages['map-bms'] = array(
 	'article-comments-undeleted-comment' => 'Mbatalna komentar kanggo kaca blog $1',
 	'article-comments-rc-comment' => 'Komentar artikel (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Komentar artikel ([[$1]])',
-	'article-comments-fblogin' => 'Monggo <a href="$1" rel="nofollow">mlebu log lan nyambung nganggo Facebook</a> kanggo ngirimna komentar nang wiki kiye!',
-	'article-comments-fbconnect' => 'Monggo <a href="$1">nyambungna akun kiye karo Facebook</a> kanggo kirim komentar!',
 	'article-comments-rc-blog-comment' => 'Komentar blog (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Komentar blog ([[$1]])',
 	'article-comments-login' => 'Monggo [[Special:UserLogin|mlebu log]] kanggo ngirimna komentar nang wiki kiye.',
@@ -2437,8 +2364,6 @@ $messages['mk'] = array(
 	'article-comments-undeleted-comment' => 'Вратен избришаниот коментар на блоговската страница $1',
 	'article-comments-rc-comment' => 'Коментар на статија (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Коментари на статија ([[$1]])',
-	'article-comments-fblogin' => '<a href="$1">Најавете се и поврзете се со Facebook</a> за да коментирате на ова вики!',
-	'article-comments-fbconnect' => '<a href="$1">Поврзете ја сметката со Facebook</a> за да коментирате!',
 	'article-comments-rc-blog-comment' => 'Блоговски коментар (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Блоговски коментари ([[$1]])',
 	'article-comments-login' => '[[Special:UserLogin|Најавете се]] за да коментирате на ова вики.',
@@ -2467,7 +2392,6 @@ $messages['mk'] = array(
 	'wikiamobile-article-comments-post-fail' => 'Не успеав да го зачувам коментарот. Обидете се подоцна.',
 	'enotif_subject_article_comment' => '$PAGEEDITOR коментираше на „$PAGETITLE“ на {{SITENAME}}',
 	'enotif_body_article_comment' => 'Здраво $WATCHINGUSERNAME,
-
 Има нов коментар на страницата $PAGETITLE на {{SITENAME}}. Сите коментари ќе ги најдете тука: $PAGETITLE_URL#WikiaArticleComments
 
 - Поддршка за заедницата на Викија
@@ -2544,8 +2468,6 @@ $messages['ms'] = array(
 	'article-comments-undeleted-comment' => 'Ulasan yang dinyahhapuskan untuk laman blog $1',
 	'article-comments-rc-comment' => 'Ulasan rencana (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Ulasan rencana ([[$1]])',
-	'article-comments-fblogin' => 'Sila <a href="$1">log masuk dan bersambung dengan Facebook</a> untuk mengirimkan ulasan di wiki ini!',
-	'article-comments-fbconnect' => 'Sila <a href="$1">sambungkan akaun ini dengan Facebook</a> untuk mengulas!',
 	'article-comments-rc-blog-comment' => 'Ulasan blog (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Ulasan blog ([[$1]])',
 	'article-comments-login' => 'Sila [[Special:UserLogin|log masuk]] untuk mengirim ulasan di wiki ini.',
@@ -2574,7 +2496,6 @@ $messages['ms'] = array(
 	'wikiamobile-article-comments-post-fail' => 'Komen tidak dapat disimpan; sila cuba lagi nanti',
 	'enotif_subject_article_comment' => '$PAGEEDITOR telah mengulas "$PAGETITLE" di {{SITENAME}}',
 	'enotif_body_article_comment' => '$WATCHINGUSERNAME,
-
 Terdapat komen baru pada $PAGETITLE di {{SITENAME}}. Ikut pautan ini untuk melihat semua komen: $PAGETITLE_URL#WikiaArticleComments
 
 - Bantuan Komuniti Wikia
@@ -2607,8 +2528,6 @@ $messages['mt'] = array(
 	'article-comments-history' => 'kronoloġija',
 	'article-comments-error' => 'Il-kumment ma setax jiġi ssejvjat',
 	'article-comments-rc-comments' => 'Kummenti tal-artiklu ([[$1]])',
-	'article-comments-fblogin' => 'Jekk jogħġbok <a href="$1" rel="nofollow">idħol bil-Facebook</a> sabiex tibgħat kumment fuq din il-wiki!',
-	'article-comments-fbconnect' => 'jekk jogġbok <a href="$1">qabbad dan il-kont mal-Facebook</a> sabiex tikkummenta!',
 	'article-comments-rc-blog-comment' => 'Kumment tal-blogg (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Kummenti tal-blogg ([[$1]])',
 	'article-comments-login' => 'Jekk jogħġbok [[Special:UserLogin|idħol]] sabiex tibgħat kumment fuq din il-wiki.',
@@ -2654,8 +2573,6 @@ $messages['nan'] = array(
 	'article-comments-undeleted-comment' => '恢復部落格文章 $1 的評論',
 	'article-comments-rc-comment' => '文章評論 (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => '文章評論 ([[$1]])',
-	'article-comments-fblogin' => '請 <a href="$1" rel="nofollow">登入，並且連接Facebook</a> 來這个wiki發表評論',
-	'article-comments-fbconnect' => '請 <a href="$1">先共這个口座佮Facebook連結</a>，才來評論',
 	'article-comments-rc-blog-comment' => '部落格評論 (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => '部落格評論([[$1]])',
 	'article-comments-login' => '請先 [[Special:UserLogin|登入]]，才通佇這个wiki貼評論。',
@@ -2702,8 +2619,6 @@ $messages['nb'] = array(
 	'article-comments-undeleted-comment' => 'Angret slettning av kommetar for bloggsiden $1',
 	'article-comments-rc-comment' => 'Artikkelkommentar (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Artikkelkommentarer ([[$1]])',
-	'article-comments-fblogin' => 'Vennligst <a href="$1">logg inn og koble deg til Facebook</a> for å poste en kommentar på denne wikien!',
-	'article-comments-fbconnect' => 'Vennligst <a href="$1">koble denne kontoen til Facebook</a> for å kommentere!',
 	'article-comments-rc-blog-comment' => 'Bloggkommentar (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Bloggkommentarer ([[$1]])',
 	'article-comments-login' => 'Vennligst [[Special:UserLogin|logg inn]] for å kommentere på denne wikien.',
@@ -2731,7 +2646,6 @@ $messages['nb'] = array(
 	'wikiamobile-article-comments-post-fail' => 'Feilet lagring av kommentar, prøv igjen senere',
 	'enotif_subject_article_comment' => '$PAGEEDITOR har kommentert «$PAGETITLE» på {{SITENAME}}',
 	'enotif_body_article_comment' => 'Hei $WATCHINGUSERNAME,
-
 Det er en ny kommentar til $PAGETITLE på {{SITENAME}}. Bruk denne lenken for å se alle kommentarene: $PAGETITLE_URL#WikiaArticleComments
 
 - Wikia fellesskapssupporten
@@ -2791,8 +2705,6 @@ $messages['nl'] = array(
 	'article-comments-undeleted-comment' => 'Reactie teruggeplaatst op blogpagina $1',
 	'article-comments-rc-comment' => 'Reactie bij pagina (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Opmerkingen bij pagina ([[$1]])',
-	'article-comments-fblogin' => '<a href="$1">Meld u aan en verbind met Facebook</a> om een opmerking in deze wiki te plaatsen.',
-	'article-comments-fbconnect' => '<a href="$1">Verbind deze gebruiker met Facebook</a> om opmerkingen te plaatsen.',
 	'article-comments-rc-blog-comment' => 'Reactie bij blog (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Opmerkingen bij blog ([[$1]])',
 	'article-comments-login' => '[[Special:UserLogin|Meld u aan]] om een opmerking in deze wiki te kunnen plaatsen.',
@@ -2821,7 +2733,6 @@ $messages['nl'] = array(
 	'wikiamobile-article-comments-post-fail' => 'Het opslaan van de reactie is mislukt. Probeer het later opnieuw.',
 	'enotif_subject_article_comment' => '$PAGEEDITOR heeft een opmerking geplaatst bij "$PAGETITLE" op {{SITENAME}}',
 	'enotif_body_article_comment' => 'Hallo $WATCHINGUSERNAME,
-
 Er is een nieuwe reactie bij $PAGETITLE op {{SITENAME}}. Gebruik de volgende koppeling om alle reacties te bekijken: $PAGETITLE_URL#WikiaArticleComments
 
 - Wikia Community Support
@@ -2930,8 +2841,6 @@ $messages['pl'] = array(
 	'article-comments-undeleted-comment' => 'Przywrócony komentarz na blogu $1',
 	'article-comments-rc-comment' => 'Komentarz  (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Komentarze ([[$1]])',
-	'article-comments-fblogin' => '<a href="$1" rel="nofollow">Zaloguj się i połącz przez Facebook</a> aby zostawić komentarz na tej wiki',
-	'article-comments-fbconnect' => '<a href="$1">Połącz to konto z Facebookiem</a> aby dodać komentarz',
 	'article-comments-rc-blog-comment' => 'Komentarz (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Komentarze ([[$1]])',
 	'article-comments-login' => '[[Special:UserLogin|Zaloguj się]], aby komentować na tej wiki.',
@@ -2960,7 +2869,6 @@ $messages['pl'] = array(
 	'wikiamobile-article-comments-post-fail' => 'Nie udało się zapisać komentarza, spróbuj ponownie później',
 	'enotif_subject_article_comment' => '$PAGEEDITOR skomentował "$PAGETITLE" na {{SITENAME}}',
 	'enotif_body_article_comment' => 'Witaj $WATCHINGUSERNAME,
-
 Na {{SITENAME}} pojawił się nowy komentarz na stronie $PAGETITLE. Użyj tego linku aby zobaczyć wszystkie komentarze: $PAGETITLE_URL#WikiaArticleComments
 
 - Zespół Wikii
@@ -3001,8 +2909,6 @@ $messages['pms'] = array(
 	'article-comments-undeleted-comment' => 'Coment ripristinà për pàgina dë scartari $1',
 	'article-comments-rc-comment' => 'Coment d\'artìcol (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => "Coment d'artìcol ([[$1]])",
-	'article-comments-fblogin' => 'Për piasì, ch\'a <a href="$1" rel="nofollow">intra ant ël sistema e ch\'as colega a Facebook</a> për mandé un coment dzora sta wiki!',
-	'article-comments-fbconnect' => 'Për piasì <a href="$1">colega sto cont con Facebook</a> për comenté!',
 	'article-comments-rc-blog-comment' => 'Coment dë scartari (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Coment dë scartari ([[$1]])',
 	'article-comments-login' => "Për piasì, ch'a [[Special:UserLogin|intra ant ël sistema]] për mandé un coment dzora sta wiki.",
@@ -3029,7 +2935,6 @@ $messages['pms'] = array(
 	'wikiamobile-article-comments-post-fail' => 'Falì a salvé un coment, për piasì preuva torna pi tard',
 	'enotif_subject_article_comment' => '$PAGEEDITOR a l\'ha comentà dzor "$PAGETITLE" dzor {{SITENAME}}',
 	'enotif_body_article_comment' => "Cerea \$WATCHINGUSERNAME,
-
 A-i é un neuv coment a \$PAGETITLE dzora {{SITENAME}}. Ch'a deuvra sa liura për vëdde tùit ij coment:
 \$PAGETITLE_URL#WikiaArticleComments
 
@@ -3104,8 +3009,6 @@ $messages['pt'] = array(
 	'article-comments-undeleted-comment' => 'Comentário não deletado para a página do blog $1',
 	'article-comments-rc-comment' => 'Comentário do artigo (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Comentário do artigo ([[$1]])',
-	'article-comments-fblogin' => 'Por favor, <a href="$1">efetue o login e conecte-se com o Facebook</a> para postar um comentário sobre esta wiki!',
-	'article-comments-fbconnect' => 'Por favor <a href="$1">ligue essa conta com o Facebook</a> para comentar!',
 	'article-comments-rc-blog-comment' => 'Comentário de blog (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Comentário de blog ([[$1]])',
 	'article-comments-login' => 'Por favor, [[Special:UserLogin|efetue o login]] para postar um comentário sobre este wiki.',
@@ -3134,7 +3037,6 @@ $messages['pt'] = array(
 	'wikiamobile-article-comments-post-fail' => 'Falha ao salvar o comentário, por favor, tente novamente mais tarde',
 	'enotif_subject_article_comment' => 'Comentou sobre "$ PAGETITLE" em {{SITENAME}} $PAGEEDITOR',
 	'enotif_body_article_comment' => 'Olá $WATCHINGUSERNAME,
-
 Há um novo comentário em $PAGETITLE no {{SITENAME}}. Use esse link para ver todos os comentários: $PAGETITLE_URL#WikiaArticleComments
 
 - Suporte da Comunidade do FANDOM
@@ -3190,8 +3092,6 @@ $messages['roa-tara'] = array(
 	'article-comments-undeleted-comment' => "Commende no scangellate p'a pàgene $1 d'u blog",
 	'article-comments-rc-comment' => 'Commende d\'a vôsce (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => "Commende d'a vôsce ([[$1]])",
-	'article-comments-fblogin' => 'Pe piacere <a href="$1" rel="nofollow">tràse e connettite cu Feisbuk</a> pe mannà \'nu commende sus a stu messàgge sus a sta uicchi!',
-	'article-comments-fbconnect' => 'Please <a href="$1">tràse jndr\'à stu cunde cu Feisbuk</a> pe commendà!',
 	'article-comments-rc-blog-comment' => 'Commende d\'u blog (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => "Commende d'u blog ([[$1]])",
 	'article-comments-login' => "Pe piacere [[Special:UserLogin|tràse]] pe mannà 'nu commende sus a sta uicchi.",
@@ -3220,7 +3120,6 @@ $messages['roa-tara'] = array(
 	'wikiamobile-article-comments-post-fail' => 'Commende da reggistrà fallite, pe piacere pruève arrete',
 	'enotif_subject_article_comment' => '$PAGEEDITOR ave commendate sus a "$PAGETITLE" sus a {{SITENAME}}',
 	'enotif_body_article_comment' => "Cià \$WATCHINGUSERNAME,
-
 Stè 'nu commende nuève sus a \$PAGETITLE sus a {{SITENAME}}. Ause stu collegamende pe 'ndrucà tutte sus a le commende: \$PAGETITLE_URL#WikiaArticleComments
 
 - Uicchia Comunitate de Supporte
@@ -3256,8 +3155,6 @@ $messages['ru'] = array(
 	'article-comments-undeleted-comment' => 'Восстановить комментарий на странице блога $1',
 	'article-comments-rc-comment' => 'Комментарий к статье (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Комментарии к статье ([[$1]])',
-	'article-comments-fblogin' => 'Пожалуйста <a href="$1" rel="nofollow">войдите в систему и войдите на Facebook</a>, чтобы оставлять комментарии на этой вики!',
-	'article-comments-fbconnect' => 'Пожалуйста, <a href="$1">подключите свою учётную запись к Facebook</a>, чтобы комментировать!',
 	'article-comments-rc-blog-comment' => 'Комментарий к блогу (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Комментарии к блогу ([[$1]])',
 	'article-comments-login' => 'Пожалуйста, [[Special:UserLogin|войдите в систему]], чтобы оставлять комментарии на этой вики',
@@ -3286,7 +3183,6 @@ $messages['ru'] = array(
 	'wikiamobile-article-comments-post-fail' => 'Не удалось сохранить комментарий, повторите попытку позже',
 	'enotif_subject_article_comment' => 'Прочитать свежие комментарии страницы $PAGETITLE на {{SITENAME}}',
 	'enotif_body_article_comment' => 'Уважаемый $WATCHINGUSERNAME,
-
 Участник $PAGEEDITOR оставил комментарий в "$PAGETITLE".
 
 Чтобы увидеть данный комментарий, проследуйте по этой ссылке:
@@ -3344,8 +3240,6 @@ $messages['sh'] = array(
 	'article-comments-undeleted-comment' => 'Odbrisan komentar za stranicu bloga $1',
 	'article-comments-rc-comment' => 'Komentar članka (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Komentari članka ([[$1]])',
-	'article-comments-fblogin' => 'Molimo <a href="$1" rel="nofollow">prijavite se i povežite sa Facebookom</a> kako bi poslali komentar na ovu wiki!',
-	'article-comments-fbconnect' => 'Molimo <a href="$1">povežite ovaj račun s Facebookom</a> kako bi komentirali!',
 	'article-comments-rc-blog-comment' => 'Komentar nloga (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Komentari bloga ([[$1]])',
 	'article-comments-login' => 'Molimo [[Special:UserLogin|prijavite se]] kako biste poslali komentar na ovu wiki.',
@@ -3360,7 +3254,6 @@ $messages['sh'] = array(
 	'article-comments-empty-comment' => 'Ne možete poslati prazni komentar. [$1 Umjesto toga ga izbrisati?]',
 	'enotif_subject_article_comment' => '$PAGEEDITOR je komentirao/la "$PAGETITLE" na {{SITENAME}}',
 	'enotif_body_article_comment' => 'Cijenjeni/a $WATCHINGUSERNAME,
-
 $PAGEEDITOR je komentirao/la "$PAGETITLE".
 
 Da vidite thread komentara, pratite donji link:
@@ -3437,8 +3330,6 @@ $messages['sv'] = array(
 	'article-comments-undeleted-comment' => 'Återställd kommentar för bloggsidan $1',
 	'article-comments-rc-comment' => 'Artikelkommentar (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Artikelkommentarer ([[$1]])',
-	'article-comments-fblogin' => 'Var god <a href="$1">logga in och anslut dig till Facebook</a> för att posta en kommentar på den här wikin!',
-	'article-comments-fbconnect' => 'Var god <a href="$1">anslut detta konto till Facebook</a> för att kommentera!',
 	'article-comments-rc-blog-comment' => 'Bloggkommentar (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Bloggkommentarer ([[$1]])',
 	'article-comments-login' => 'Var god [[Special:UserLogin|logga in]] för att posta en kommentar på den här wikin.',
@@ -3467,7 +3358,6 @@ $messages['sv'] = array(
 	'wikiamobile-article-comments-post-fail' => 'Misslyckades att spara kommentar, var god försök igen senare',
 	'enotif_subject_article_comment' => '$PAGEEDITOR har kommenterat "$PAGETITLE" på {{SITENAME}}',
 	'enotif_body_article_comment' => 'Hej $WATCHINGUSERNAME,
-
 Det finns en ny kommentar på PAGETITLE på {{SITENAME}}. Använd denna länk för att se alla kommentarer.
 $PAGETITLE_URL#WikiaArticleComments
 
@@ -3518,8 +3408,6 @@ $messages['te'] = array(
 	'article-comments-undeleted-comment' => 'బ్లాగు పేజీ $1 లో తొలగించబడని వ్యాఖ్య',
 	'article-comments-rc-comment' => 'వ్యాసపు వ్యాఖ్య (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'వ్యాసపు వ్యాఖ్యలు ([[$1]])',
-	'article-comments-fblogin' => 'ఈ వికీలో వ్యాఖ్యానించేందుకు <a href="$1" rel="nofollow">లాగినయ్యాక, ఫేస్‍బుక్ తో కనెక్టవండి</a>!',
-	'article-comments-fbconnect' => 'వ్యాఖ్యానించేందుకు <a href="$1">ఈ ఖాతాను ఫేస్‍బుక్ తో కనెక్టు చెయ్యండి</a>!',
 	'article-comments-rc-blog-comment' => 'బ్లాగు వ్యాఖ్య (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'బ్లాగు వ్యాఖ్యలు ([[$1]])',
 	'article-comments-login' => 'ఈ వికీలో వ్యాఖ్యానించేందుకు [[Special:UserLogin|లాగినవండి]].',
@@ -3564,8 +3452,6 @@ $messages['th'] = array(
 	'article-comments-undeleted-comment' => 'ยกเลิกการลบความคิดเห็นสำหรับหน้าบล็อก $1',
 	'article-comments-rc-comment' => 'ความคิดเห็นบทความ  (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'ความคิดเห็นบทความ ([[$1]])',
-	'article-comments-fblogin' => 'กรุณา <a href="$1" rel="nofollow"> เข้าสู่ระบบโดยการเชื่อมต่อกับ Facebook</a> เพื่อสามารถแสดงความคิดเห็นบน วิกิ ได้!',
-	'article-comments-fbconnect' => 'กรุณา <a href="$1">เชื่อมต่อกับบัญชีนี้โดย Facebook</a> เพื่อแสดงความคิดเห็น!',
 	'article-comments-rc-blog-comment' => 'แสดงความคิดเห็นต่อบล็อก (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'ความคิดเห็นต่อบล็อก ([[$1]])',
 	'article-comments-login' => 'โปรด [[Special:UserLogin| เข้าสุ่ระบบ ]] เพื่อแสดงความคิดเห็นบน วิกิ',
@@ -3599,8 +3485,6 @@ $messages['tl'] = array(
 	'article-comments-undeleted-comment' => 'Hindi naburang puna para sa pahina ng blog na $1',
 	'article-comments-rc-comment' => 'Puna sa artikulo (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Mga puna sa artikulo ([[$1]])',
-	'article-comments-fblogin' => 'Mangyaring <a href="$1">lumagda at umugnay sa Facebook</a> upang makapagpaskil ng isang puna sa wiking ito!',
-	'article-comments-fbconnect' => 'Mangyaring <a href="$1">iugnay ang akawnt na ito sa Facebook</a> upang makapagbigay ng puna!',
 	'article-comments-rc-blog-comment' => 'Puna sa blog (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Mga puna sa blog ([[$1]])',
 	'article-comments-login' => 'Mangyaring [[Special:UserLogin|log in]] upang makapagpaskil ng isang puna sa wiking ito.',
@@ -3626,7 +3510,6 @@ $messages['tl'] = array(
 	'wikiamobile-article-comments-login-post' => 'Mangyaring lumagda upang makapagpaskil ng isang puna.',
 	'enotif_subject_article_comment' => 'Pumuna ang $PAGEEDITOR sa "$PAGETITLE" sa {{SITENAME}}',
 	'enotif_body_article_comment' => 'Minamahal na $WATCHINGUSERNAME,
-
 Nagbigay ng puna si $PAGEEDITOR sa "$PAGETITLE".
 
 Upang matingnan ang bagting ng puna, sundan ang kawing na nasa ibaba:
@@ -3674,8 +3557,6 @@ $messages['tr'] = array(
 	'article-comments-undeleted-comment' => '$1 blog sayfasındaki yorum geri alındı',
 	'article-comments-rc-comment' => 'Makale yorumu (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Makale yorumları ([[$1]])',
-	'article-comments-fblogin' => 'Bu makaleyi yorumlamak için lütfen oturum açın veya <a href="$1" rel="nofollow">Facebook ile bağlanın</a>!',
-	'article-comments-fbconnect' => 'Yorumlamak için lütfen <a href="$1">Facebook hesabı ile hesabınızı</a> ilişkilendirin!',
 	'article-comments-rc-blog-comment' => 'Blog yorumu (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Blog yorumları ([[$1]])',
 	'article-comments-login' => 'Bu wiki hakkında yorum yapabilmek için lütfen [[Special:UserLogin|oturum açın]].',
@@ -3703,7 +3584,6 @@ $messages['tr'] = array(
 	'wikiamobile-article-comments-post-fail' => 'Yorum kaydetme başarısız oldu, lütfen daha sonra yeniden deneyin',
 	'enotif_subject_article_comment' => '$PAGEEDITOR {{SITENAME}} sitesindeki  "$PAGETITLE" başlığına yorum bıraktı',
 	'enotif_body_article_comment' => 'Merhaba $WATCHINGUSERNAME,
-
 {{SITENAME}} sitesi $PAGETITLE  başlığında yeni bir yorum var. Tüm yorumları görmek için şu linki kullanabilirsiniz: $PAGETITLE_URL#WikiaArticleComments
 
 - Wikia Topluluğu Desteği
@@ -3737,8 +3617,6 @@ $messages['tt-cyrl'] = array(
 	'article-comments-undeleted-comment' => '$1 блогы сәхифәсендәге фикерне кире кайтару',
 	'article-comments-rc-comment' => '(<span class="plainlinks">[$1 $2]</span>) мәкаләсенә фикер',
 	'article-comments-rc-comments' => '[[$1]] мәкаләсенә фикер',
-	'article-comments-fblogin' => 'Зинһар өчен, <a href="$1" rel="nofollow">системага яки Facebookка керегез</a> һәм бу викида фикер калдырыгыз!',
-	'article-comments-fbconnect' => 'Зинһар, фикер калдырыр өчен <a href="$1">хисап язмагызны Facebook белән бәйләгез</a>!',
 	'article-comments-rc-blog-comment' => '(<span class="plainlinks">[$1 $2]</span>) блогына фикер',
 	'article-comments-rc-blog-comments' => '([[$1]]) блогына фикерләр',
 	'article-comments-login' => 'Бу викида фикер калдырыр өчен, зинһар,  [[Special:UserLogin|системага керегез]]',
@@ -3764,8 +3642,6 @@ $messages['tt-cyrl'] = array(
 	'wikiamobile-article-comments-login-post' => 'Фикер калдырыр өчен, зинһар, керегез.',
 	'enotif_subject_article_comment' => '$PAGEEDITOR {{SITENAME}} сәхифәсендә "$PAGETITLE" битен шәрехләде',
 	'enotif_body_article_comment' => 'Хөрмәтле $WATCHINGUSERNAME,
-
-
 $PAGEEDITOR "$PAGETITLE" мәкаләсендә шәрехләмә калдырды.
 
 Шәрехләмәне карар өчен, бу сылтама аша узыгыз:
@@ -3808,8 +3684,6 @@ $messages['uk'] = array(
 	'article-comments-undeleted-comment' => 'Відновити коментар на сторінці блогу $1',
 	'article-comments-rc-comment' => 'Коментар до статті (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Коментарі до статті ([[$1]])',
-	'article-comments-fblogin' => 'Будь ласка, <a href="$1" rel="nofollow">увійдіть до системи через Facebook</a>, щоб мати змогу залишати коментарі на цій вікі!',
-	'article-comments-fbconnect' => 'Будь ласка, <a href="$1">підключіть цей акаунт до Facebook</a>, щоб мати змогу коментувати!',
 	'article-comments-rc-blog-comment' => 'Коментар у блозі (<span class="plainlinks">[$1  $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Коментарі у блозі ([[$1]])',
 	'article-comments-login' => 'Будь ласка, [[Special:UserLogin|авторизуйтеся,]] щоб коментувати на цій вікі.',
@@ -3880,8 +3754,6 @@ $messages['vi'] = array(
 	'article-comments-undeleted-comment' => 'Hồi phục bình luận cho trang blog $1',
 	'article-comments-rc-comment' => 'Bình luận bài viết (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Bình luận bài viết ([[$1]])',
-	'article-comments-fblogin' => 'Xin vui lòng <a href="$1" rel="nofollow">đăng nhập và kết nối với Facebook</a> để đăng một bình luận trên wiki này!',
-	'article-comments-fbconnect' => 'Xin vui lòng <a href="$1">kết nối tài khoản này với Facebook</a> để bình luận!',
 	'article-comments-rc-blog-comment' => 'Bình luận Blog (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Bình luận Blog ([[$1]])',
 	'article-comments-login' => 'Xin vui lòng [[Special:UserLogin|đăng nhập]] để đăng một bình luận trên wiki này.',
@@ -3910,7 +3782,6 @@ $messages['vi'] = array(
 	'wikiamobile-article-comments-post-fail' => 'Không thể lưu bình luận, xin vui lòng thử lại sau',
 	'enotif_subject_article_comment' => '$PAGEEDITOR đã bình luận trang "$PAGETITLE" trên {{SITENAME}}',
 	'enotif_body_article_comment' => 'Xin chào $WATCHINGUSERNAME,
-
 $PAGEEDITOR đã có một bình luận trên trang "$PAGETITLE".
 
 Để xem các chủ đề thảo luận, xin theo liên kết dưới đây:
@@ -3955,8 +3826,6 @@ $messages['zh-hans'] = array(
 	'article-comments-undeleted-comment' => '撤消删除博客页$1的评论',
 	'article-comments-rc-comment' => '条目评论(<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => '文章评论([[$1]])',
-	'article-comments-fblogin' => '请<a href="$1" rel="nofollow">登陆并连接到Facebook</a>以在本维基上发表评论！',
-	'article-comments-fbconnect' => '请<a href="$1">将该账户连接到Facebook</a>以进行评论！',
 	'article-comments-rc-blog-comment' => '博客评论(<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => '博客评论([[$1]])',
 	'article-comments-login' => '请[[Special:UserLogin|登陆]]以在本维基上发表评论。',
@@ -4031,8 +3900,6 @@ $messages['zh-hant'] = array(
 	'article-comments-undeleted-comment' => '取消刪除部落格文章 $1 的評論',
 	'article-comments-rc-comment' => '文章評論 (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => '文章評論 ([[$1]])',
-	'article-comments-fblogin' => '請 <a href="$1" rel="nofollow">登入並連結 Facebook</a> 以在此 wiki 發表評論',
-	'article-comments-fbconnect' => '請 <a href="$1">連結此帳號與 Facebook </a> 以發表評論',
 	'article-comments-rc-blog-comment' => '部落格評論 (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => '部落格評論 ([[$1]])',
 	'article-comments-login' => '請 [[Special:UserLogin|登入]] 以在此 wiki 發表評論。',
