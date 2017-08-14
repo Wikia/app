@@ -20,18 +20,6 @@ class CrossOriginResourceSharingHeaderHelper {
 	protected $whitelistOrigins = [];
 	protected $allowAllOrigins = false;
 
-	/**
-	 * @param array $origins example [ '*' ]
-	 * @return $this
-	 */
-	public function setAllowOrigin( Array $origins ) {
-		foreach ($origins as $origin) {
-			$this->whitelistOrigins[] = $origin;
-		}
-
-		return $this;
-	}
-
 	public function setAllowAllOrigins() {
 		$this->allowAllOrigins = true;
 
@@ -139,5 +127,7 @@ class CrossOriginResourceSharingHeaderHelper {
 		foreach ($additionalOrigins as $origin) {
 			$this->whitelistOrigins[] = $origin;
 		}
+
+		return $this;
 	}
 }

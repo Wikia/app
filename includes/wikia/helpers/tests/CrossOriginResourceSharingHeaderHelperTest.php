@@ -3,15 +3,26 @@ use Wikia\Search\Test\BaseTest;
 
 class CrossOriginResourceSharingHeaderHelperTest extends BaseTest {
 
+	public function tearDown() {
+		parent::tearDown();
+
+		unset($_SERVER['HTTP_ORIGIN']);
+	}
+
+	private function setupHttpOrigin($origin) {
+		$_SERVER['HTTP_ORIGIN'] = $origin;
+	}
+
 	public function testShouldProperlySetOriginHeaders() {
 		$dummyResponse = new WikiaResponse( "tmp" );
+		$this->setupHttpOrigin('c');
 
 		$cors = new CrossOriginResourceSharingHeaderHelper();
-		$cors->setAllowOrigin( [ 'a', 'b', 'c' ] )->setHeaders( $dummyResponse );
+		$cors->allowWhitelistedOrigins( [ 'a', 'b', 'c' ] )->setHeaders( $dummyResponse );
 
 		$headers = $dummyResponse->getHeader( CrossOriginResourceSharingHeaderHelper::ALLOW_ORIGIN_HEADER_NAME );
 
-		$this->assertEquals( $headers[0]['value'], 'a,b,c' );
+		$this->assertEquals( $headers[0]['value'], 'c' );
 	}
 
 	public function testShouldProperlySetMethodHeaders() {
@@ -29,11 +40,21 @@ class CrossOriginResourceSharingHeaderHelperTest extends BaseTest {
 		$dummyResponse = new WikiaResponse( "tmp" );
 
 		$cors = new CrossOriginResourceSharingHeaderHelper();
-		$cors->setAllowOrigin( [ ] )->setHeaders( $dummyResponse );
+		$cors->allowWhitelistedOrigins()->setHeaders( $dummyResponse );
 
 		$headers = $dummyResponse->getHeader( CrossOriginResourceSharingHeaderHelper::ALLOW_ORIGIN_HEADER_NAME );
 
-		$this->assertEquals( $headers[0]['value'], '' );
+		$this->assertEquals( null, $headers );
+	}
+
+	public function testShouldReturnWildcardWhenAllOriginsAllowed() {
+		$dummyResponse = new WikiaResponse( "tmp" );
+		(new CrossOriginResourceSharingHeaderHelper())->setAllowAllOrigins()->setHeaders( $dummyResponse );
+		$this->setupHttpOrigin( 'example.com' );
+
+		$headers = $dummyResponse->getHeader( CrossOriginResourceSharingHeaderHelper::ALLOW_ORIGIN_HEADER_NAME );
+
+		$this->assertEquals( '*', $headers[0]['value'] );
 	}
 
 	public function testShouldProperlySetHeadersWithPreExistingValues() {
@@ -42,13 +63,14 @@ class CrossOriginResourceSharingHeaderHelperTest extends BaseTest {
 			CrossOriginResourceSharingHeaderHelper::ALLOW_ORIGIN_HEADER_NAME,
 			"t,m,p"
 		);
+		$this->setupHttpOrigin('t');
 
 		$cors = new CrossOriginResourceSharingHeaderHelper();
-		$cors->setAllowOrigin( [ "a", "b", "t" ] )->setHeaders( $dummyResponse );
+		$cors->allowWhitelistedOrigins( [ "a", "b", "t" ] )->setHeaders( $dummyResponse );
 
 		$headers = $dummyResponse->getHeader( CrossOriginResourceSharingHeaderHelper::ALLOW_ORIGIN_HEADER_NAME );
 
-		$this->assertEquals( $headers[0]['value'], 'a,b,t,t,m,p' );
+		$this->assertEquals( $headers[0]['value'], 't' );
 	}
 
 	public function testShouldProperlySetAllowCredentialsHeaderToTrue() {
@@ -75,9 +97,9 @@ class CrossOriginResourceSharingHeaderHelperTest extends BaseTest {
 	}
 
 	public function testShouldProperlyReadCORSConfigFromGlobal() {
-		global $wgCORSAllowOrigin;
-		$wgCORSAllowOrigin = [ "a", "b", "c" ];
 		$dummyResponse = new WikiaResponse( "tmp" );
+		$this->setupHttpOrigin('a');
+		$this->mockGlobalVariable('wgCORSAllowOrigin', ['a', 'b', 'c']);
 
 		$cors = new CrossOriginResourceSharingHeaderHelper();
 		$cors->allowWhitelistedOrigins()->setHeaders( $dummyResponse );
@@ -85,6 +107,6 @@ class CrossOriginResourceSharingHeaderHelperTest extends BaseTest {
 		$headers = $dummyResponse->getHeader(
 			CrossOriginResourceSharingHeaderHelper::ALLOW_ORIGIN_HEADER_NAME
 		);
-		$this->assertEquals( $headers[0]['value'], 'a,b,c' );
+		$this->assertEquals( $headers[0]['value'], 'a' );
 	}
 }
