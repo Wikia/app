@@ -169,17 +169,17 @@ class Track {
 
 	expireDate = new Date(expireDate.getTime() + 1000 * 60 * 30 );
 	document.cookie = 'tracking_session_id=' + window.sessionId + '; expires=' + expireDate.toGMTString() +
-	';domain=' + window.wgCookieDomain + '; path=' + window.wgCookiePath + ';';
+		';domain=' + window.wgCookieDomain + '; path=' + window.wgCookiePath + ';';
 	document.cookie = 'pv_number=' + window.pvNumber + '; expires=' + expireDate.toGMTString() +
-	'; path=' + window.wgCookiePath + ';';
+		'; path=' + window.wgCookiePath + ';';
 	document.cookie = 'pv_number_global=' + window.pvNumberGlobal + '; expires=' + expireDate.toGMTString() +
-	';domain=' + window.wgCookieDomain + '; path=' + window.wgCookiePath + ';';
+		';domain=' + window.wgCookieDomain + '; path=' + window.wgCookiePath + ';';
 
 	trackUrl = "$url" + ((typeof document.referrer != "undefined") ? "&r=" + escape(document.referrer) : "") +
-	"&rand=" + (new Date).valueOf() + (window.beacon_id ? "&beacon=" + window.beacon_id : "") +
-	(utma && utma[1] ? "&utma=" + utma[1] : "") + (utmb && utmb[1] ? "&utmb=" + utmb[1] : "") +
-	'&session_id=' + window.sessionId + '&pv_unique_id=' + window.pvUID + '&pv_number=' + window.pvNumber +
-	'&pv_number_global=' + window.pvNumberGlobal;
+		"&rand=" + (new Date).valueOf() + (window.beacon_id ? "&beacon=" + window.beacon_id : "") +
+		(utma && utma[1] ? "&utma=" + utma[1] : "") + (utmb && utmb[1] ? "&utmb=" + utmb[1] : "") +
+		'&session_id=' + window.sessionId + '&pv_unique_id=' + window.pvUID + '&pv_number=' + window.pvNumber +
+		'&pv_number_global=' + window.pvNumberGlobal;
 
 	script.src = trackUrl;
 	document.head.appendChild(script);
