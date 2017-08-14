@@ -62,7 +62,6 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 
 		spyOn(mocks.store, 'save');
 		mocks.window.pvNumber = 10;
-		// TODO use sinon to revert default value
 		jasmine.clock().mockDate(currentDate);
 
 		getModule().registerLaunchedVideo();

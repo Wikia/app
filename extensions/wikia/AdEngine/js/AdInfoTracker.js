@@ -39,14 +39,6 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 
 
 	function run() {
-		// TODO update pvId on mercury
-		// setAdEnginePvUID();
-		// if (mercuryListener) {
-		// 	mercuryListener.onEveryPageChange(function() {
-		// 		win.adEnginePvUID = adInfoTrackerHelper.generateUUID();
-		// 	});
-		// }
-
 		if (isEnabled()) {
 			log('run', log.levels.debug, logGroup);
 
