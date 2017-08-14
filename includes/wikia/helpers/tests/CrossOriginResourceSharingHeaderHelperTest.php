@@ -80,7 +80,7 @@ class CrossOriginResourceSharingHeaderHelperTest extends BaseTest {
 		$dummyResponse = new WikiaResponse( "tmp" );
 
 		$cors = new CrossOriginResourceSharingHeaderHelper();
-		$cors->readConfig()->setHeaders( $dummyResponse );
+		$cors->allowWhitelistedOrigins()->setHeaders( $dummyResponse );
 
 		$headers = $dummyResponse->getHeader(
 			CrossOriginResourceSharingHeaderHelper::ALLOW_ORIGIN_HEADER_NAME

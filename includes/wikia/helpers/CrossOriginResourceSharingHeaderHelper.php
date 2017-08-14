@@ -13,14 +13,27 @@ class CrossOriginResourceSharingHeaderHelper {
 	const ALLOW_CREDENTIALS_HEADER_NAME = 'Access-Control-Allow-Credentials';
 	const HEADER_DELIMETER = ',';
 
+	const PROD_ORIGINS = ['.wikia.com'];
+	const DEV_ORIGINS = ['.wikia-dev.us', '.wikia-dev.pl'];
+
 	protected $allowValues = [];
+	protected $whitelistOrigins = [];
+	protected $allowAllOrigins = false;
 
 	/**
-	 * @param array $values example [ '*' ]
+	 * @param array $origins example [ '*' ]
 	 * @return $this
 	 */
-	public function setAllowOrigin( Array $values ) {
-		$this->allowValues[self::ALLOW_ORIGIN_HEADER_NAME] = $values;
+	public function setAllowOrigin( Array $origins ) {
+		foreach ($origins as $origin) {
+			$this->whitelistOrigins[] = $origin;
+		}
+
+		return $this;
+	}
+
+	public function setAllowAllOrigins() {
+		$this->allowAllOrigins = true;
 
 		return $this;
 	}
@@ -40,7 +53,7 @@ class CrossOriginResourceSharingHeaderHelper {
 	 * @return $this
 	 */
 	public function setAllowCredentials( $value ) {
-		$this->allowValues[self::ALLOW_CREDENTIALS_HEADER_NAME] = (boolean)$value ? 'true' : 'false';
+		$this->allowValues[self::ALLOW_CREDENTIALS_HEADER_NAME] = (boolean) $value ? 'true' : 'false';
 
 		return $this;
 	}
@@ -50,6 +63,7 @@ class CrossOriginResourceSharingHeaderHelper {
 	 *
 	 * @param WikiaResponse $response response object to set headers to
 	 * @param bool $mergeExisting
+	 * @return $this
 	 */
 	public function setHeaders( WikiaResponse $response, $mergeExisting = true ) {
 		foreach( $this->allowValues as $headerName => $values ) {
@@ -69,7 +83,23 @@ class CrossOriginResourceSharingHeaderHelper {
 			}
 		}
 
+		$this->setOriginHeader($response);
+
 		return $this;
+	}
+
+	private function setOriginHeader( WikiaResponse $response ) {
+		if ( $this->allowAllOrigins ) {
+			$this->setResponseHeader( $response, self::ALLOW_ORIGIN_HEADER_NAME, '*' );
+		} else if ( count( $this->whitelistOrigins ) > 0 && isset($_SERVER['HTTP_ORIGIN']) ) {
+			$requestOrigin = $_SERVER['HTTP_ORIGIN'];
+
+			foreach ( $this->whitelistOrigins as $origin ) {
+				if (preg_match('/'.$origin.'$/', $requestOrigin)) {
+					$this->setResponseHeader($response, self::ALLOW_ORIGIN_HEADER_NAME, $requestOrigin);
+				}
+			}
+		}
 	}
 
 	private function mergeValues( $mergeTo, $headerValue ) {
@@ -88,16 +118,26 @@ class CrossOriginResourceSharingHeaderHelper {
 		}
 	}
 
-	/**
-	 * @return $this
-	 */
-	public function readConfig() {
-		global $wgCORSAllowOrigin;
+	public function allowWhitelistedOrigins(Array $additionalOrigins = [] ) {
+		global $wgWikiaEnvironment, $wgCORSAllowOrigin;
 
-		if ( !empty( $wgCORSAllowOrigin ) and is_array( $wgCORSAllowOrigin ) ) {
-			$this->allowValues[self::ALLOW_ORIGIN_HEADER_NAME] = $wgCORSAllowOrigin;
+		switch ( $wgWikiaEnvironment ) {
+			case WIKIA_ENV_DEV:
+				$this->whitelistOrigins = self::DEV_ORIGINS;
+				break;
+			default:
+				$this->whitelistOrigins = self::PROD_ORIGINS;
+				break;
 		}
 
-		return $this;
+		if ( !empty( $wgCORSAllowOrigin ) && is_array( $wgCORSAllowOrigin ) ) {
+			foreach ( $wgCORSAllowOrigin as $origin ) {
+				$this->whitelistOrigins[] = $origin;
+			}
+		}
+
+		foreach ($additionalOrigins as $origin) {
+			$this->whitelistOrigins[] = $origin;
+		}
 	}
 }
