@@ -26,7 +26,6 @@ Please note you will have $1 {{PLURAL:$1|day|days}} after making this request to
 Would you like to reactivate your account?',
 	'closemyaccount-reactivate-requested' => 'An email has been sent to the address you had set for your account. Please click the link in the email to reactivate your account.',
 	'closemyaccount-reactivate-error-id' => 'Please login to your account first to request reactivation.',
-	'closemyaccount-reactivate-error-fbconnect' => '{{GENDER:$1|You}} have previously requested that we close your account. If you would like to reactivate your account, please go to the [[Special:CloseMyAccount/reactivate|account reactivation page]] and follow the instructions you will see.',
 	'closemyaccount-reactivate-error-email' => 'No email was set for this account prior to requesting closure so it cannot be reactivated. Please [[Special:Contact|contact FANDOM]] if you have any questions.',
 	'closemyaccount-reactivate-error-not-scheduled' => 'Account is not scheduled for closure.',
 	'closemyaccount-reactivate-error-invalid-code' => '{{GENDER:$1|You}} appear to have used a confirmation code that has expired. Please check your email for a newer code you may have requested, or try requesting a new code by [[Special:UserLogin|logging in]] to the account you want to reactivate and following the instructions.',
@@ -62,8 +61,6 @@ $messages['qqq'] = array(
 * $2 is the username',
 	'closemyaccount-reactivate-requested' => 'Confirmation text displayed when a user has successfully requested their account be reactivated.',
 	'closemyaccount-reactivate-error-id' => 'Error message displayed when trying to access the reactivate form without a valid ID.',
-	'closemyaccount-reactivate-error-fbconnect' => 'Error message displayed when users try to login to an account that has requested closure via Facebook Connect.
-* $1 is the username',
 	'closemyaccount-reactivate-error-email' => 'Error message displayed when the user attempts to reactivate an account that does not have a confirmed email address.',
 	'closemyaccount-reactivate-error-not-scheduled' => 'Error message displayed when the user attempts to reactivate an account that is not scheduled for closure.',
 	'closemyaccount-reactivate-error-invalid-code' => 'Error message displayed when a user attempted to reactivate their account with an invalid or expired code.
@@ -111,7 +108,6 @@ Möchtest du dein Benutzerkonto wieder aktivieren?',
 
 Bitte beachte, dass du ab sofort $1 {{PLURAL:$1|Tag|Tage}} Zeit hast, dein Benutzerkonto zu reaktivieren. Dazu musst du dich [[Special:UserLogin|anmelden]] und den Anweisungen folgen. Nach dieser Wartezeit wird dein Benutzerkonto dauerhaft geschlossen und kann nicht wiederhergestellt werden.',
 	'closemyaccount-scheduled-failed' => 'Beim Reaktivieren dieses Benutzerkontos ist ein Fehler aufgetreten. Bitte [[Spezial:CloseMyAccount|probiere es nochmal]] oder [[Spezial:Kontakt|kontaktiere FANDOM]], falls das Problem bestehen bleibt.',
-	'closemyaccount-reactivate-error-fbconnect' => '{{GENDER:$1|Du}} hast die Schließung deines Benutzerkontos beantragt. Falls du Dein Konto wieder aktivieren möchtest, rufe bitte die [[Special:CloseMyAccount/reactivate|Reaktivierungsseite für dein Benutzerkonto]] auf und folge dort den Anweisungen.',
 	'closemyaccount-reactivate-success' => 'Dein Benutzerkonto wurde wieder aktiviert.',
 );
 
@@ -150,7 +146,6 @@ Ten en cuenta que tendrás $1 {{PLURAL:$1|día|días}} después de hacer el pedi
 
 Ten en cuenta que tendrás $1 {{PLURAL:$1|día|días}} después de hacer el pedido para reactivar tu cuenta [[{{#Special:UserLogin}}|ingresando]] y siguiendo las instrucciones. Después de este período de espera, tu cuenta será cerrada permanentemente y no podrá ser restaurada.',
 	'closemyaccount-scheduled-failed' => 'Se ha producido un error al intentar programar esta cuenta para que sea cerrada. Por favor [[{{#Special:CloseMyAccount}}|intenta de nuevo]] o [[{{#Special:Contact}}|contáctate con el equipo de soporte comunitario]] si el problema persiste.',
-	'closemyaccount-reactivate-error-fbconnect' => '{{GENDER:$1|Tu}} han solicitado previamente que cerrar tu cuenta. Si deseas reactivar tu cuenta, ingresa a la [[{{#Special:CloseMyAccount/reactivate}}|página de reactivación de cuenta]] y sigue las instrucciones.',
 	'closemyaccount-reactivate-success' => 'Tu cuenta ha sido reactivada.',
 );
 
@@ -178,7 +173,6 @@ Haluatko aktivoida tilisi uudelleen?',
 	'closemyaccount-reactivate-button-text' => 'Aktivoi tilini uudelleen',
 	'closemyaccount-reactivate-error-email' => 'Tälle tilille ei asetettu sähköpostiosoitetta ennen sen sulkemista. Mikäli sinulla on kysyttävää, ole hyvä ja  [[Special:Contact|ota Wikiaan yhteyttä]].',
 	'closemyaccount-reactivate-error-empty-code' => 'Tilisi uudelleenaktivointiin vaadittua vahvistuskoodia ei annettu. Mikäli olet pyytänyt tilisi sulkemista, ole hyvä ja napsauta  lähettämästämme sähköpostista löytyvää linkkiä. Muussa tapauksessa voit pyytää vahvistuskoodin [[Special:UserLogin|kirjautumalla]] tiliin, jonka haluat aktivoida uudelleen.',
-	'closemyaccount-reactivate-error-fbconnect' => 'Olet aiemmin pyytänyt tilisi sulkemista. Mikäli haluat aktivoida tilisi uudelleen, ole hyvä ja siirry [[Special:CloseMyAccount/reactivate|tilin aktivointisivulle]] ja seuraa näkemiäsi ohjeita.',
 	'closemyaccount-reactivate-error-id' => 'Pyytääksesi tilisi uudelleenaktivointia, ole hyvä ja kirjaudu sisään.',
 	'closemyaccount-reactivate-error-invalid-code' => 'Olet ilmeisesti käyttänyt vanhentunutta vahvistuskoodia. Ole hyvä ja tarkista sähköpostisi uudemman koodin varalta, tai pyydä uusi koodi [[Special:UserLogin|kirjautumalla tilille]], jonka haluat aktivoida sekä seuraamalla ohjeita.',
 	'closemyaccount-reactivate-error-not-scheduled' => 'Tiliä ei ole asetettu poistettavaksi.',
@@ -226,7 +220,6 @@ Souhaitez-vous réactiver votre compte ?",
 
 Veuillez noter que vous avez  $1 {{PLURAL:$1|jour|jours}} à partir de maintenant pour réactiver votre compte en [[Special:UserLogin|vous connectant]] et en suivant les instructions affichées. Après cette période de rétractation, votre compte sera définitivement fermé et ne pourra pas être restauré.',
 	'closemyaccount-scheduled-failed' => 'Une erreur est survenue en tentant de planifier la fermeture de ce compte. Veuillez [[Special:CloseMyAccount|réessayer]] ou [[Special:Contact|contactez FANDOM]] si le problème persiste.',
-	'closemyaccount-reactivate-error-fbconnect' => '{{GENDER:$1|Vous}} avez demandé précédemment de fermer votre compte. Si vous souhaitez réactiver votre compte, veuillez vous rendre sur la [[Special:CloseMyAccount/reactivate|page de réactivation de compte]] et suivre les instructions affichées.',
 	'closemyaccount-reactivate-success' => 'Votre compte a été réactivé.',
 );
 
@@ -265,7 +258,6 @@ Desideri riattivare il tuo account?",
 
 Per favore ricordati che hai $1 {{PLURAL:$1|giorno|giorni}} a disposizione da adesso per riattivare il tuo account [[Special:UserLogin|eseguendo l'accesso]] e seguendo le istruzioni che compariranno. Dopo questo periodo di attesa, il tuo account sarà chiuso definitivamente e non potrà essere riattivato.",
 	'closemyaccount-scheduled-failed' => 'Si è verificato un errore durante il tentativo di pianificare la chiusura di questo account. Per favore [[Special:CloseMyAccount|riprova]] o [[Special:Contact|contatta FANDOM]] se il problema persiste.',
-	'closemyaccount-reactivate-error-fbconnect' => "Hai richiesto in precedenza la chiusura del tuo account. Se volessi riattivare il tuo account, vai sulla [[Special:CloseMyAccount/reactivate|pagina di riattivazione dell'account]] e segui le istruzioni visualizzate.",
 	'closemyaccount-reactivate-success' => 'Il tuo account è stato riattivato.',
 );
 
@@ -304,7 +296,6 @@ $messages['ja'] = array(
 
 今から$1 {{PLURAL:$1|day|days}} 日間は、[[Special:UserLogin|ログイン]]からあなたのアカウントの再有効化することができます。詳細は手順にてご確認ください。この期間を過ぎるとあなたのアカウントは永久に無効化され、再度有効化することはできません。',
 	'closemyaccount-scheduled-failed' => 'アカウントを無効化する際にエラーが発生しました。お手数ですが、[[Special:CloseMyAccount|もう一度お試しください]]。それでもこの問題が解決しない場合は、[[Special:Contact|FANDOMにお問い合わせ]]ください。',
-	'closemyaccount-reactivate-error-fbconnect' => '{{GENDER:$1|あなた}}は、アカウントの無効化をリクエストされました。このアカウントの再開をご希望の場合は、[[特別:アカウント停止/reactivate|アカウントの再開ページ]]に移動して画面の手順に沿って行ってください。',
 	'closemyaccount-reactivate-success' => 'アカウントが再開されました。',
 );
 
@@ -351,7 +342,6 @@ Please note you will have $1 {{PLURAL:$1|day|days}} after making this request to
 Would you like to reactivate your account?',
 	'closemyaccount-reactivate-requested' => 'An email has been sent to the address you had set for your account. Please click the link in the email to reactivate your account.',
 	'closemyaccount-reactivate-error-id' => 'Please login to your account first to request reactivation.',
-	'closemyaccount-reactivate-error-fbconnect' => '{{GENDER:$1|You}} have previously requested that we close your account. If you would like to reactivate your account, please go to the [[Special:CloseMyAccount/reactivate|account reactivation page]] and follow the instructions you will see.',
 	'closemyaccount-reactivate-error-email' => 'No email was set for this account prior to requesting closure so it cannot be reactivated. Please [[Special:Contact|contact Wikia]] if you have any questions.',
 	'closemyaccount-reactivate-error-not-scheduled' => 'Account is not scheduled for closure.',
 	'closemyaccount-reactivate-error-invalid-code' => '{{GENDER:$1|You}} appear to have used a confirmation code that has expired. Please check your email for a newer code you may have requested, or try requesting a new code by [[Special:UserLogin|logging in]] to the account you want to reactivate and following the instructions.',
@@ -400,7 +390,6 @@ Czy chcesz reaktywować swoje konto?',
 
 Masz $1 {{PLURAL:$1|dzień|dni}}, aby je reaktywować, logując się ponownie i postępując zgodnie z instrukcjami. Po tym czasie twoje konto zostanie wyłączone na stałe i nie będzie możliwości odzyskania go.',
 	'closemyaccount-scheduled-failed' => 'Wystąpił błąd przy dodawaniu zadania zamknięcia konta. [[Special:CloseMyAccount|Spróbuj ponownie]] lub [[Special:Contact|skontaktuj się z Fandomem]], jeśli problem się powtarza.',
-	'closemyaccount-reactivate-error-fbconnect' => '{{GENDER:$1|Złożyłeś|Złożyłaś}} wniosek o zamknięcie konta. Jeśli chcesz ponownie aktywować konto, przejdź do [[Special:CloseMyAccount/reactivate|strony ponownej aktywacji konta]] i wykonuj polecenia zawarte na tej stronie.',
 	'closemyaccount-reactivate-success' => 'Twoje konto zostało reaktywowane.',
 );
 
@@ -439,7 +428,6 @@ Gostaria de reativar a sua conta?',
 
 Por favor, note que você terá $1 {{PLURAL:$1|dia|dias}} a partir de agora para reativar sua conta. Basta [[Special:UserLogin|logar]] e seguir as instruções que você verá. Após este período, sua conta será permanentemente fechada e não pode ser restaurada.',
 	'closemyaccount-scheduled-failed' => 'Um erro ocorreu ao tentar agendar o encerramento desta conta. Por favor [[Especial:CloseMyAccount|tente novamente]] ou [[Especial:Contact|contate o FANDOM]] se o problema persistir.',
-	'closemyaccount-reactivate-error-fbconnect' => '{{GENDER:$1|Você}} solicitou o fechamento de sua conta anteriormente. Se você quiser reativar a sua conta, acesse a [[Special:CloseMyAccount|página de reativação de conta]] e siga as instruções.',
 	'closemyaccount-reactivate-success' => 'Sua conta foi reativada.',
 );
 
@@ -478,7 +466,6 @@ $messages['ru'] = array(
 
 Обратите внимание, что у вас будет $1 {{PLURAL:$1|день|дня|дней}}, чтобы восстановить аккаунт. Для этого [[Special:UserLogin|войдите в свою учётную запись]] и следуйте инструкциям. По прошествии указанного времени ваш аккаунт будет окончательно отключён, и его будет невозможно восстановить.',
 	'closemyaccount-scheduled-failed' => 'Произошла ошибка при отключении учётной записи. Пожалуйста, попробуйте [[Special:CloseMyAccount|отключить аккаунт ещё раз]]. Если проблема повторяется, [[Special:Contact|свяжитесь с сотрудниками Фэндома]].',
-	'closemyaccount-reactivate-error-fbconnect' => '{{GENDER:$1|Вы}} запросили отключение вашей учётной записи. Если вы захотите восстановить свою учётную запись, перейдите на [[Special:CloseMyAccount/reactivate|страницу восстановления аккаунта]] и следуйте указанным инструкциям.',
 	'closemyaccount-reactivate-success' => 'Ваша учётная запись была восстановлена.',
 );
 
@@ -517,7 +504,6 @@ $messages['zh-hans'] = array(
 
 请注意，您还有$1{{PLURAL:$1|天|天}}时间重新激活您的帐户。请您[[Special:UserLogin|登入帐户]]进行激活。在这段时间之后，您的帐户将被永久禁用并且无法恢复。 ',
 	'closemyaccount-scheduled-failed' => '关闭帐户出现错误，请[[Help:關閉帳號|重新进行关闭]]。如果问题依然存在，请[http://zh.community.wikia.com/wiki/Special:Contact/general 联系我们]。',
-	'closemyaccount-reactivate-error-fbconnect' => '{{GENDER:$1|您}} 曾经要求关闭您的帐户。如果您希望重新激活帐户，请转到[[Special:CloseMyAccount/reactivate|激活帐户页面]]并且按照提示进行操作。',
 	'closemyaccount-reactivate-success' => '您的帐户已经被重新激活。',
 );
 
@@ -546,7 +532,6 @@ $messages['zh-hant'] = array(
 您希望重新開啟您的帳號嗎？',
 	'closemyaccount-reactivate-requested' => '我們已經發送了一封郵件到您的郵箱中。請點擊郵件中的連結重新啟動您的帳號。',
 	'closemyaccount-reactivate-error-id' => '請登錄您的帳號以重新啟動。',
-	'closemyaccount-reactivate-error-fbconnect' => '{{GENDER:$1|您}}之前申請關閉了您的帳號。如果您想要重新啟動您的帳號，請進入 [[Special:CloseMyAccount/reactivate|帳號重啟頁面]]，按照步驟進行重新啟動。',
 	'closemyaccount-reactivate-error-email' => '在您要求關閉此帳號之前未設置任何電子郵件地址，因此我們無法幫您重新啟動此帳號。如果您有任何疑問，請[[Special:Contact|聯繫我們]]。',
 	'closemyaccount-reactivate-error-not-scheduled' => '帳號未能成功關閉。',
 	'closemyaccount-reactivate-error-invalid-code' => '{{GENDER:$1|您}}似乎使用的是過期的驗證碼。請至您的郵箱查看最新的驗證碼，或者[[Special:UserLogin|登錄您之前要求關閉的帳號]]，按步驟進行重新啟用帳號。',

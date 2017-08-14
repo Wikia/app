@@ -94,7 +94,6 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'F' => 
         array (
             'FluentSql\\' => 10,
-            'Facebook\\' => 9,
         ),
         'D' => 
         array (
@@ -249,10 +248,6 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'FluentSql\\' => 
         array (
             0 => __DIR__ . '/..' . '/wikia/fluent-sql-php/src',
-        ),
-        'Facebook\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/facebook/php-sdk-v4/src/Facebook',
         ),
         'Doctrine\\Instantiator\\' => 
         array (
@@ -626,37 +621,6 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'Doctrine\\Instantiator\\Exception\\UnexpectedValueException' => __DIR__ . '/..' . '/doctrine/instantiator/src/Doctrine/Instantiator/Exception/UnexpectedValueException.php',
         'Doctrine\\Instantiator\\Instantiator' => __DIR__ . '/..' . '/doctrine/instantiator/src/Doctrine/Instantiator/Instantiator.php',
         'Doctrine\\Instantiator\\InstantiatorInterface' => __DIR__ . '/..' . '/doctrine/instantiator/src/Doctrine/Instantiator/InstantiatorInterface.php',
-        'Facebook\\Entities\\AccessToken' => __DIR__ . '/..' . '/facebook/php-sdk-v4/src/Facebook/Entities/AccessToken.php',
-        'Facebook\\Entities\\SignedRequest' => __DIR__ . '/..' . '/facebook/php-sdk-v4/src/Facebook/Entities/SignedRequest.php',
-        'Facebook\\FacebookAuthorizationException' => __DIR__ . '/..' . '/facebook/php-sdk-v4/src/Facebook/FacebookAuthorizationException.php',
-        'Facebook\\FacebookCanvasLoginHelper' => __DIR__ . '/..' . '/facebook/php-sdk-v4/src/Facebook/FacebookCanvasLoginHelper.php',
-        'Facebook\\FacebookClientException' => __DIR__ . '/..' . '/facebook/php-sdk-v4/src/Facebook/FacebookClientException.php',
-        'Facebook\\FacebookJavaScriptLoginHelper' => __DIR__ . '/..' . '/facebook/php-sdk-v4/src/Facebook/FacebookJavaScriptLoginHelper.php',
-        'Facebook\\FacebookOtherException' => __DIR__ . '/..' . '/facebook/php-sdk-v4/src/Facebook/FacebookOtherException.php',
-        'Facebook\\FacebookPageTabHelper' => __DIR__ . '/..' . '/facebook/php-sdk-v4/src/Facebook/FacebookPageTabHelper.php',
-        'Facebook\\FacebookPermissionException' => __DIR__ . '/..' . '/facebook/php-sdk-v4/src/Facebook/FacebookPermissionException.php',
-        'Facebook\\FacebookRedirectLoginHelper' => __DIR__ . '/..' . '/facebook/php-sdk-v4/src/Facebook/FacebookRedirectLoginHelper.php',
-        'Facebook\\FacebookRequest' => __DIR__ . '/..' . '/facebook/php-sdk-v4/src/Facebook/FacebookRequest.php',
-        'Facebook\\FacebookRequestException' => __DIR__ . '/..' . '/facebook/php-sdk-v4/src/Facebook/FacebookRequestException.php',
-        'Facebook\\FacebookResponse' => __DIR__ . '/..' . '/facebook/php-sdk-v4/src/Facebook/FacebookResponse.php',
-        'Facebook\\FacebookSDKException' => __DIR__ . '/..' . '/facebook/php-sdk-v4/src/Facebook/FacebookSDKException.php',
-        'Facebook\\FacebookServerException' => __DIR__ . '/..' . '/facebook/php-sdk-v4/src/Facebook/FacebookServerException.php',
-        'Facebook\\FacebookSession' => __DIR__ . '/..' . '/facebook/php-sdk-v4/src/Facebook/FacebookSession.php',
-        'Facebook\\FacebookSignedRequestFromInputHelper' => __DIR__ . '/..' . '/facebook/php-sdk-v4/src/Facebook/FacebookSignedRequestFromInputHelper.php',
-        'Facebook\\FacebookThrottleException' => __DIR__ . '/..' . '/facebook/php-sdk-v4/src/Facebook/FacebookThrottleException.php',
-        'Facebook\\GraphAlbum' => __DIR__ . '/..' . '/facebook/php-sdk-v4/src/Facebook/GraphAlbum.php',
-        'Facebook\\GraphLocation' => __DIR__ . '/..' . '/facebook/php-sdk-v4/src/Facebook/GraphLocation.php',
-        'Facebook\\GraphObject' => __DIR__ . '/..' . '/facebook/php-sdk-v4/src/Facebook/GraphObject.php',
-        'Facebook\\GraphPage' => __DIR__ . '/..' . '/facebook/php-sdk-v4/src/Facebook/GraphPage.php',
-        'Facebook\\GraphSessionInfo' => __DIR__ . '/..' . '/facebook/php-sdk-v4/src/Facebook/GraphSessionInfo.php',
-        'Facebook\\GraphUser' => __DIR__ . '/..' . '/facebook/php-sdk-v4/src/Facebook/GraphUser.php',
-        'Facebook\\GraphUserPage' => __DIR__ . '/..' . '/facebook/php-sdk-v4/src/Facebook/GraphUserPage.php',
-        'Facebook\\HttpClients\\FacebookCurl' => __DIR__ . '/..' . '/facebook/php-sdk-v4/src/Facebook/HttpClients/FacebookCurl.php',
-        'Facebook\\HttpClients\\FacebookCurlHttpClient' => __DIR__ . '/..' . '/facebook/php-sdk-v4/src/Facebook/HttpClients/FacebookCurlHttpClient.php',
-        'Facebook\\HttpClients\\FacebookGuzzleHttpClient' => __DIR__ . '/..' . '/facebook/php-sdk-v4/src/Facebook/HttpClients/FacebookGuzzleHttpClient.php',
-        'Facebook\\HttpClients\\FacebookHttpable' => __DIR__ . '/..' . '/facebook/php-sdk-v4/src/Facebook/HttpClients/FacebookHttpable.php',
-        'Facebook\\HttpClients\\FacebookStream' => __DIR__ . '/..' . '/facebook/php-sdk-v4/src/Facebook/HttpClients/FacebookStream.php',
-        'Facebook\\HttpClients\\FacebookStreamHttpClient' => __DIR__ . '/..' . '/facebook/php-sdk-v4/src/Facebook/HttpClients/FacebookStreamHttpClient.php',
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
         'File_Iterator_Facade' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Facade.php',
         'File_Iterator_Factory' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Factory.php',

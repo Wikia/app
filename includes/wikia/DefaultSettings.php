@@ -1665,11 +1665,6 @@ $wgNirvanaAccessRules = [
 		"method" => "*",
 		"requiredPermissions" => [],
 	],
-	[
-		"class" => "FacebookSignupController",
-		"method" => "*",
-		"requiredPermissions" => [],
-	],
 	/* We need oasis controller to render  */
 	[
 		"class" => "OasisController",
@@ -1897,3 +1892,9 @@ $wgReviveSpotlightsCountries = null;
 include_once("$IP/extensions/wikia/ARecoveryEngine/ARecoveryEngine.setup.php");
 
 require_once "$IP/extensions/wikia/ImageReview/ImageReviewEvents.setup.php";
+
+/**
+ * SUS-2164: Include Facebook extensions - enabled globally
+ */
+require_once "$IP/extensions/wikia/FacebookPreferences/FacebookPreferences.setup.php";
+require_once "$IP/extensions/wikia/FacebookTags/FacebookTags.setup.php";

@@ -341,18 +341,4 @@ class HeliosClientImpl implements HeliosClient {
 			[ self::METHOD => self::METHOD_DELETE, self::HEADERS => [ Constants::HELIOS_AUTH_HEADER => $userId ] ]
 		);
 	}
-
-	public function requestPasswordReset( $userId, $returnUrl, $tokenContext ) {
-		$postData = [
-			'redirect' => $returnUrl,
-			'token_ctx' => $tokenContext
-		];
-
-		return $this->request(
-			sprintf( 'users/%s/reset_password', $userId ),
-			[],
-			$postData,
-			[ self::METHOD => self::METHOD_POST ]
-		);
-	}
 }
