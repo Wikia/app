@@ -14,6 +14,9 @@ class WithoutimagesPage extends QueryPage {
 			'tables' => [ 'page' ],
 			'fields' => [ "'Withoutimages' as type", 'page_namespace as namespace', 'page_title as title', 'count(*) as value' ],
 			'options' => [ 'GROUP BY' => 'page_title, page_namespace' ],
+			// Note that querycache table contains rows with qc_type equal to MostimagesInContent only when given image
+			// is included in more than one article, that is why the condition is in form of `il_to not in ...`
+			// and then `qc_value >= 20`
 			'conds' => [
 				'page_id > 0',
 				'page_namespace' => MWNamespace::getContentNamespaces(),
@@ -21,11 +24,11 @@ class WithoutimagesPage extends QueryPage {
 				"page_id NOT IN (
 				    SELECT DISTINCT il_from
 				    FROM imagelinks
-				    WHERE il_to in (
+				    WHERE il_to not in (
 				      SELECT qc_title
 				      FROM querycache
 				      WHERE qc_type = 'MostimagesInContent'
-				        AND qc_value < 20
+				        AND qc_value >= 20
 				    )
 				)"
 			]
