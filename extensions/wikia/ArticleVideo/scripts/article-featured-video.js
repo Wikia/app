@@ -244,12 +244,16 @@ require([
 			});
 
 			player.mb.subscribe(window.OO.EVENTS.PLAYBACK_READY, 'ui-update', function () {
+				var title = player.getTitle();
 				if (recommendedVideoDepth > 0) {
-					$onScrollVideoTitle.text(player.getTitle());
+					$onScrollVideoTitle.text(title);
 					$onScrollVideoTime.text(
 						ooyalaVideoController.getFormattedDuration(player.getDuration())
 					);
 					$onScrollAttribution.remove();
+
+					window.guaSetCustomDimension(34, player.getItem().embed_code);
+					window.guaSetCustomDimension(35, title);
 				}
 			});
 
