@@ -29,49 +29,62 @@ require([
 	'use strict';
 
 	var recircModules = [
-			{
-				id: 'LI_rail',
-				viewModule: 'ext.wikia.recirculation.views.premiumRail',
-				options: {
-					max: 5,
-					widget: 'wikia-rail',
-					source: 'fandom',
-					opts: {
-						resultType: 'cross-domain',
-						domainType: 'fandom.wikia.com'
-					}
-				}
-			},
-			{
-				id: 'LI_impactFooter',
-				viewModule: 'ext.wikia.recirculation.views.impactFooter',
-				options: {
-					max: 9,
-					widget: 'wikia-impactfooter',
-					source: 'fandom',
-					opts: {
-						resultType: 'cross-domain',
-						domainType: 'fandom.wikia.com'
-					}
-				}
-			},
-			{
-				id: 'LI_footer',
-				viewModule: 'ext.wikia.recirculation.views.footer',
-				options: {
-					max: 3,
-					widget: 'wikia-footer-wiki-rec',
-					source: 'wiki',
-					title: 'Discover New Wikis',
-					width: 332,
-					height: 187,
-					flush: true,
-					opts: {
-						resultType: 'subdomain',
-						domainType: 'fandom.wikia.com'
-					}
-				}
-			}
+			// {
+			// 	id: 'LI_rail',
+			// 	viewModule: 'ext.wikia.recirculation.views.premiumRail',
+			// 	options: {
+			// 		max: 5,
+			// 		widget: 'wikia-rail',
+			// 		source: 'fandom',
+			// 		opts: {
+			// 			resultType: 'cross-domain',
+			// 			domainType: 'fandom.wikia.com'
+			// 		}
+			// 	}
+			// },
+			// {
+			// 	id: 'LI_impactFooter',
+			// 	viewModule: 'ext.wikia.recirculation.views.impactFooter',
+			// 	options: {
+			// 		max: 9,
+			// 		widget: 'wikia-impactfooter',
+			// 		source: 'fandom',
+			// 		opts: {
+			// 			resultType: 'cross-domain',
+			// 			domainType: 'fandom.wikia.com'
+			// 		}
+			// 	}
+			// },
+			// {
+			// 	id: 'LI_footer',
+			// 	viewModule: 'ext.wikia.recirculation.views.footer',
+			// 	options: {
+			// 		max: 3,
+			// 		widget: 'wikia-footer-wiki-rec',
+			// 		source: 'wiki',
+			// 		title: 'Discover New Wikis',
+			// 		width: 332,
+			// 		height: 187,
+			// 		flush: true,
+			// 		opts: {
+			// 			resultType: 'subdomain',
+			// 			domainType: 'fandom.wikia.com'
+			// 		}
+			// 	}
+			// },
+			// {
+			// 	id: 'LI_mixedFooter',
+			// 	viewModule: 'ext.wikia.recirculation.views.mixedFooter',
+			// 	options: {
+			// 		max: 17,
+			// 		widget: 'wikia-impactfooter',
+			// 		source: 'fandom',
+			// 		opts: {
+			// 			resultType: 'cross-domain',
+			// 			domainType: 'fandom.wikia.com'
+			// 		}
+			// 	}
+			// }
 		],
 		logGroup = 'ext.wikia.recirculation.experiments.mix',
 		// Each view holds an array of promises used to gather data for that view
@@ -80,12 +93,12 @@ require([
 		completed = [],
 		liftigniterHelpers = {};
 
-	if (w.wgContentLanguage !== 'en') {
+	if (w.wgContentLanguage === 'en') {
 		if (videosModule) {
 			videosModule('#recirculation-rail');
 		}
 		discussions();
-		return;
+		//return;
 	}
 
 	recircModules.forEach(function (recircModule) {
@@ -181,5 +194,42 @@ require([
 				});
 			}
 		};
+	}
+	fetchFandom();
+	function fetchFandom() {
+		var deferred = $.Deferred();
+		var fandomOptions = {
+			max: 17,
+			widget: 'wikia-impactfooter',
+			source: 'fandom',
+			opts: {
+				resultType: 'cross-domain',
+				domainType: 'fandom.wikia.com'
+			}
+		};
+		var configuredHelper = liftigniter(fandomOptions);
+		configuredHelper.loadData()
+			.done(function (data) {
+				deferred.resolve(data);
+				console.log(data);
+
+				var articleCards = $('.mcf-card-wiki-article__title');
+				var articleBackgrounds = $('a.mcf-card.mcf-card-wiki-article');
+				$.each(articleCards, function (index) {
+					this.innerText = data.items[index].title;
+				});
+
+				$.each(articleBackgrounds, function (index) {
+					$(this).attr('style', 'background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000000), url(' + data.items[index].thumbnail +')');
+					$(this).attr('href', data.items[index].url)
+				});
+
+
+				console.log(articleBackgrounds);
+
+			})
+			.fail(function (err) {
+				deferred.reject(err);
+			});
 	}
 });

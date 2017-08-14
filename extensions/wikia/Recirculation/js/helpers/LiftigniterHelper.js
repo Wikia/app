@@ -8,8 +8,8 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 	var helper = function (config) {
 		var defaults = {
 				max: 5,
-				width: 320,
-				height: 180,
+				width: 720,
+				height: 380,
 				flush: false
 			},
 			options = $.extend({}, defaults, config);
@@ -35,9 +35,9 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 			// Callback renders and injects results into the placeholder.
 			w.$p('register', registerOptions);
 
-			if (options.flush) {
+			// if (options.flush) {
 				w.$p('fetch');
-			}
+			// }
 
 			return deferred.promise();
 		}
