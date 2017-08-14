@@ -11870,14 +11870,14 @@ Assicurati di avere attivato i cookie, ricarica questa pagina e riprova.",
 Potrebbe essere stata spostata o eliminata mentre si stava visionando la pagina.',
 	'newarticle' => '(Nuovo)',
 	'newarticletext' => '<div style="margin-top: 0px;" class="emptymwmsg mediawiki_newarticletext"></div>',
-	'noarticletext' => "{{#ifeq:{{NAMESPACE}}||
-=== '''Article {{FULLPAGENAME}} was not found''' ===
+	'noarticletext' => '{{#ifeq: {{NAMESPACE}} ||
+=== \'\'\'La pagina "{{FULLPAGENAME}}" non è stata trovata\'\'\' ===
 
-What do you want to do?
+Cosa desideri fare?
 
-* Search existing articles for <span class=\"plainlinks\">[{{fullurl:Special:Search|search={{urlencode:{{PAGENAME}}}}}} {{PAGENAME}}]</span>
-* Create article <span class=\"plainlinks\">[{{fullurl:{{FULLPAGENAME}}|action=create}} {{FULLPAGENAME}}]</span>
-}}",
+* Cercare "{{PAGENAME}}" <span class="plainlinks">[{{fullurl:Special:Search|search={{urlencode:{{PAGENAME}}}}}} tra le pagine esistenti]</span>.
+* Creare la pagina <span class="plainlinks">"[{{fullurl:{{FULLPAGENAME}}|action=create}} {{FULLPAGENAME}}]"</span>.
+}}',
 	'note' => "'''NOTA:'''",
 	'nonunicodebrowser' => "'''Attenzione: si sta utilizzando un browser non compatibile con i caratteri Unicode. Per consentire la modifica delle pagine senza creare inconvenienti, i caratteri non ASCII vengono visualizzati nella casella di modifica sotto forma di codici esadecimali.'''",
 	'nocreatetitle' => 'Creazione delle pagine limitata',
@@ -21424,7 +21424,7 @@ Ela pode ter sido movida ou removido enquanto você estava vendo a página.',
 Para criá-la, comece escrevendo na caixa abaixo (veja [[{{MediaWiki:Helppage}}|a página de ajuda]] para mais informações).
 Se você chegou aqui por engano, clique no botão '''voltar''' do seu navegador.",
 	'noarticletext' => "{{#ifeq:{{NAMESPACE}}||
-=== '''Artigo{{FULLPAGENAME}} não encontrado''' ===
+=== '''Artigo {{FULLPAGENAME}} não encontrado''' ===
 
 O que você quer fazer?
 
@@ -22371,8 +22371,8 @@ $messages['ru'] = array(
 	'newuserlog-byemail' => 'пароль отправлен по эл. почте',
 	'not_you' => 'Не Вы?',
 	'newly_changed' => 'Недавно обновленные',
-	'number-shortening' => '$1тыс.',
-	'number-shortening-millions' => '$1милл.',
+	'number-shortening' => '$1 тыс.',
+	'number-shortening-millions' => '$1 млн',
 	'number-shortening-billions' => '$1миллиард',
 	'namespacedisabled' => 'Пространство имён отключено',
 	'namespacedisabledtext' => 'Это пространство имён было отключено.',
