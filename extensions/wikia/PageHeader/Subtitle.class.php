@@ -263,7 +263,7 @@ class Subtitle {
 
 		$userBlogPageUrl = AvatarService::getUrl( $userName, NS_BLOG_ARTICLE );
 		$namespaceText = $language->getFormattedNsText( $this->title->getNamespace() );
-		$userBlogPageText = $namespaceText . ':' . $userName;
+		$userBlogPageText = $namespaceText;
 
 		$pageStatsService = new PageStatsService( $this->title->getArticleId() );
 		$pageCreatedDate = $language->date( $pageStatsService->getFirstRevisionTimestamp() );
