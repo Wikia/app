@@ -11,10 +11,11 @@
 /*global define, require*/
 define('ext.wikia.adEngine.lookup.services', [
 	'wikia.log',
+	'wikia.window',
 	require.optional('ext.wikia.adEngine.lookup.prebid'),
 	require.optional('ext.wikia.adEngine.lookup.amazonMatch'),
 	require.optional('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane')
-], function (log, prebid, amazonMatch, rubiconFastlane) {
+], function (log, win, prebid, amazonMatch, rubiconFastlane) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.lookup.services',
 		bidders = [
@@ -37,7 +38,8 @@ define('ext.wikia.adEngine.lookup.services', [
 			}
 		},
 		bidMarker = ['x', 'x', 'x', 'x', 'x'],
-		realSlotPrices = {};
+		realSlotPrices = {},
+		scrollY = {};
 
 
 	function addParameters(providerName, slotName, slotTargeting) {
@@ -115,10 +117,20 @@ define('ext.wikia.adEngine.lookup.services', [
 		return realSlotPrices[slotName] || {};
 	}
 
+	function storeScrollY(slotName) {
+		scrollY[slotName] = win.scrollY || win.pageYOffset;
+	}
+
+	function getScrollY(slotName) {
+		return scrollY[slotName];
+	}
+
 	return {
 		extendSlotTargeting: extendSlotTargeting,
 		getCurrentSlotPrices: getCurrentSlotPrices,
 		storeRealSlotPrices: storeRealSlotPrices,
-		getDfpSlotPrices: getDfpSlotPrices
+		getDfpSlotPrices: getDfpSlotPrices,
+		storeScrollY: storeScrollY,
+		getScrollY: getScrollY
 	};
 });
