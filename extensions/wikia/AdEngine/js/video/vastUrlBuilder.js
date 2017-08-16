@@ -67,6 +67,7 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 				'url=' + encodeURIComponent(loc.href),
 				'description_url=' + encodeURIComponent(loc.href),
 				'correlator=' + correlator,
+				'ad_rule=0',
 				'cust_params=' + getCustomParameters(slotParams)
 			],
 			url;
