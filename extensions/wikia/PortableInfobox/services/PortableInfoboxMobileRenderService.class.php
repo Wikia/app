@@ -120,7 +120,8 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 	 */
 	private function renderInfoboxHero( $data ) {
 		$helper = $this->getImageHelper();
-		$template = '';
+		// fixme
+		$hasFeaturedVideo = true;
 
 		// In Mercury SPA content of the first infobox's hero module has been moved to the article header.
 		$firstInfoboxAlredyRendered = \Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()
@@ -136,12 +137,15 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 				return $this->renderItem( 'hero-mobile-wikiamobile', $data );
 			} elseif ( $firstInfoboxAlredyRendered ) {
 				return $this->renderItem( 'hero-mobile', $data );
+			} elseif ( $hasFeaturedVideo ) {
+				// fixme label i18n
+				return $this->renderItem( 'data', ['label' => wfMessage('imgplc-image')->escaped(), 'value' => '<img src="'. $image['url'] .'">'] );
 			}
 		} elseif ( !$this->isMercury() || $firstInfoboxAlredyRendered ) {
 			return $this->renderItem( 'title', $data['title'] );
 		}
 
-		return !empty( $template ) ? $this->renderItem( $template, $data['title'] ) : '';
+		return '';
 	}
 
 	/**
