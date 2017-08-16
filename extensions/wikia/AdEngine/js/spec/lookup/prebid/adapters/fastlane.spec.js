@@ -49,7 +49,8 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.fastlane', function () {
 			},
 			targeting: {
 				wikiIsTop1000: true
-			}
+			},
+			opts: {}
 		};
 	});
 

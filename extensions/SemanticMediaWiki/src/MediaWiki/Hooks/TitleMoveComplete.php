@@ -5,6 +5,8 @@ namespace SMW\MediaWiki\Hooks;
 use SMW\ApplicationFactory;
 use SMW\Factbox\FactboxCache;
 use SMW\EventHandler;
+use Title;
+use User;
 
 /**
  * TitleMoveComplete occurs whenever a request to move an article

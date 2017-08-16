@@ -1404,6 +1404,14 @@ $wgAdDriverKikimoraTrackingCountries = [];
 $wgAdDriverSrcPremiumCountries = [];
 
 /**
+ * @name $wgAdDriverPremiumAdLayoutRubiconFastlaneTagsCountries
+ * Enables Premium Ad Layout site and zoneIds for Rubicon Fastlane bidder
+ * is present on that page.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverPremiumAdLayoutRubiconFastlaneTagsCountries = [];
+
+/**
  * @name $wgAdDriverKILOCountries
  * Enables transitional to MEGA way of building adUnits (for GPT provider, NOT ONLY REMNANT).
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1657,11 +1665,6 @@ $wgNirvanaAccessRules = [
 		"method" => "*",
 		"requiredPermissions" => [],
 	],
-	[
-		"class" => "FacebookSignupController",
-		"method" => "*",
-		"requiredPermissions" => [],
-	],
 	/* We need oasis controller to render  */
 	[
 		"class" => "OasisController",
@@ -1889,3 +1892,9 @@ $wgReviveSpotlightsCountries = null;
 include_once("$IP/extensions/wikia/ARecoveryEngine/ARecoveryEngine.setup.php");
 
 require_once "$IP/extensions/wikia/ImageReview/ImageReviewEvents.setup.php";
+
+/**
+ * SUS-2164: Include Facebook extensions - enabled globally
+ */
+require_once "$IP/extensions/wikia/FacebookPreferences/FacebookPreferences.setup.php";
+require_once "$IP/extensions/wikia/FacebookTags/FacebookTags.setup.php";
