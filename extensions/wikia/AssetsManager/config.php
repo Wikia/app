@@ -49,6 +49,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
+		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
 		'//extensions/wikia/AdEngine/js/CustomAdsLoader.js',
 		'//extensions/wikia/AdEngine/js/utils/sampler.js',
 		'//extensions/wikia/AdEngine/js/context/adContext.js',
@@ -199,6 +200,7 @@ $config['adengine2_top_js'] = [
 	'skin' => [ 'oasis', 'wikiamobile' ],
 	'assets' => [
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
+		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
 		'//extensions/wikia/AdEngine/js/AdTracker.js',
 		'//extensions/wikia/AdEngine/js/utils/eventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/utils/sampler.js',
@@ -910,6 +912,7 @@ $config['mercury_ads_js'] = [
 
 		// Advertisement libs
 		'//extensions/wikia/AbTesting/js/AbTest.js',
+		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
 		'//extensions/wikia/AdEngine/js/CustomAdsLoader.js',
 		'//extensions/wikia/AdEngine/js/SourcePointDetection.js',
 		'//extensions/wikia/AdEngine/js/pageFairDetection.js',
@@ -990,6 +993,7 @@ $config['wikiamobile_ads_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => [
+		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
 
 		// Krux
 		'//resources/wikia/modules/krux.js',
@@ -2851,10 +2855,9 @@ $config['page_header_js'] = [
 ];
 
 $config['page_header_scss'] = [
-    'type' => AssetsManager::TYPE_SCSS,
-    'skin' => [ 'oasis' ],
-    'assets' => [
-        '//extensions/wikia/PageHeader/styles/index.scss',
-    ],
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/PageHeader/styles/index.scss',
+	],
 ];
-
