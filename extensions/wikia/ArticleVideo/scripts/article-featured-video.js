@@ -39,6 +39,7 @@ require([
 			collapsingDisabled = false,
 			playTime = -1,
 			percentagePlayTime = -1,
+			ooyalaContentSourceId = '2458214',
 			playerTrackerParams = {
 				adProduct: 'featured-video-preroll',
 				slotName: 'FEATURED'
@@ -88,6 +89,9 @@ require([
 				options.vastUrl = vastUrlBuilder.build(640/480, {
 					pos: 'FEATURED',
 					src: 'premium'
+				}, {
+					cmsid: ooyalaContentSourceId,
+					vid: videoId
 				});
 			} else {
 				playerTrackerParams.adProduct = 'featured-video-no-preroll';
