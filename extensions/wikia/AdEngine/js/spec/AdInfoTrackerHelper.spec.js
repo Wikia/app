@@ -9,7 +9,7 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 			getCurrentSlotPrices: function() {
 				return {};
 			},
-			getDfpSlotPrices: function() {
+			getDfpSlotPrices: function () {
 				return {};
 			},
 			getScrollY: noop

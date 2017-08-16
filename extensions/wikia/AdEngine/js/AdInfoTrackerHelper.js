@@ -75,7 +75,6 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 			'product_label': '',
 			'ad_status': status || 'unknown',
 			'scrollY': lookupServices.getScrollY(slot.name) || 0
-
 		};
 
 		return data;
