@@ -39,8 +39,8 @@ define('ext.wikia.recirculation.views.impactFooter', [
 
 		return utils.prepareFooter()
 			.then(plista.prepareData(renderData))
-			.then(function () {
-				return utils.renderTemplate('client/impactFooter.mustache', renderData)
+			.then(function() {
+				return utils.renderTemplateByName('client/impactFooter.mustache', renderData)
 			})
 			.then(function ($html) {
 				$('#recirculation-impactFooter-container').html($html).find('.discussion-timestamp').timeago();

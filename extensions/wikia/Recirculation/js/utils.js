@@ -21,7 +21,7 @@ define('ext.wikia.recirculation.utils', [
 
 			if (!footerState.loading) {
 				footerState.loading = true;
-				return renderTemplate('footer-index-container.mustache', {})
+				return renderTemplateByName('footer-index-container.mustache', {})
 					.then(function($html) {
 						$('#WikiaFooter')
 							.find('#BOTTOM_LEADERBOARD')
@@ -78,7 +78,34 @@ define('ext.wikia.recirculation.utils', [
 		return dfd.promise();
 	}
 
-	function renderTemplate(templateName, data) {
+	/**
+	 * Loads mustache templates
+	 * @returns {$.Deferred}
+	 */
+	function loadTemplates(templatesNames) {
+		var dfd = new $.Deferred(),
+			templatePath = 'extensions/wikia/Recirculation/templates/',
+			templateLocations = templatesNames.map(function (templatesName) {
+				return templatePath + templatesName;
+			});
+
+		loader({
+			type: loader.MULTI,
+			resources: {
+				mustache: templateLocations.join(',')
+			}
+		}).done(function (data) {
+			dfd.resolve(data.mustache);
+		});
+
+		return dfd.promise();
+	}
+
+	function renderTemplate(template, data) {
+		return $(Mustache.render(template, data));
+	}
+
+	function renderTemplateByName(templateName, data) {
 		return loadTemplate(templateName)
 			.then(function(template) {
 				return $(Mustache.render(template, data));
@@ -113,8 +140,10 @@ define('ext.wikia.recirculation.utils', [
 
 	return {
 		buildLabel: buildLabel,
+		loadTemplates: loadTemplates,
+		prepareFooter: prepareFooter,
 		renderTemplate: renderTemplate,
-		waitForRail: waitForRail,
-		prepareFooter: prepareFooter
+		renderTemplateByName: renderTemplateByName,
+		waitForRail: waitForRail
 	};
 });

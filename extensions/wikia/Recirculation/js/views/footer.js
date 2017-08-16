@@ -10,7 +10,7 @@ define('ext.wikia.recirculation.views.footer', [
 
 		return utils.prepareFooter()
 			.then(function() {
-				return utils.renderTemplate('client/footer.mustache', data)
+				return utils.renderTemplateByName('client/footer.mustache', data)
 			})
 			.then(function($html) {
 				$('#recirculation-footer-container').html($html);
