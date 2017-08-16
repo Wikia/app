@@ -16,7 +16,7 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 				max: options.max,
 				widget: options.widget,
 				callback: function (response) {
-					deferred.resolve(response.items);
+					deferred.resolve(response);
 					fetching = false;
 					if(fetchQueue.length) {
 						// setTimeout is necessary because LI need to wait for LI to remove already registered modules

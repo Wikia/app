@@ -8,13 +8,16 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 
 
 	function render(data) {
-		console.log(data)
+		console.log(data);
 		var $nsHook = $('.ns-article'),
 			$wikiArticleHook = $('.wiki-article'),
 			newsAndStoriesList = data.nsItems.items,
 			wikiArticlesList = data.wikiItems.items,
 			templateList = getTemplateList(newsAndStoriesList),
 			templates = {};
+
+
+		$('.mcf-discussions-placeholder').replaceWith(data.discussions);
 
 		utils.loadTemplates(templateList)
 			.then(function (data) {
