@@ -127,65 +127,10 @@ class Track {
 		} else {
 			$url = Track::getURL( 'view', '', $param, false );
 
-			$script = <<<SCRIPT1
-<!-- Wikia Beacon Tracking -->
-<noscript><img src="$url&amp;nojs=1" width="1" height="1" border="0" alt="" /></noscript>
-<script>
-(function() {
-	function genUID() {
-		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-			var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
-			return v.toString(16);
-		});
-	}
-
-	var expireDate = new Date(),
-		result = RegExp("wikia_beacon_id=([A-Za-z0-9_-]{10})").exec(document.cookie),
-		script = document.createElement('script'),
-		utma = RegExp("__utma=([0-9\.]+)").exec(document.cookie),
-		utmb = RegExp("__utmb=([0-9\.]+)").exec(document.cookie),
-		trackUrl;
-
-	if(result) {
-		window.beacon_id = result[1];
-	} else {
-		// something went terribly wrong
-		document.addEventListener("DOMContentLoaded", function (event) {
-			var image = document.createElement('img');
-			image.src = 'http://logs-01.loggly.com/inputs/88a88e56-77c6-49cc-af41-6f44f83fe7fe.gif?message=wikia_beacon_id%20is%20empty';
-			image.style.position = 'absolute';
-			image.style.top = '-1000px';
-			document.body.appendChild(image);
-		});
-	}
-
-	result = RegExp("tracking_session_id=([A-Za-z0-9_-]{36})").exec(document.cookie);
-	window.sessionId = result ? result[1] : genUID();
-	result = RegExp("pv_number=([0-9]+)").exec(document.cookie);
-	window.pvNumber = result ? parseInt(result[1], 10) + 1 : 1;
-	result = RegExp("pv_number_global=([0-9]+)").exec(document.cookie);
-	window.pvNumberGlobal = result ? parseInt(result[1], 10) + 1 : 1;
-	window.pvUID = genUID();
-
-	expireDate = new Date(expireDate.getTime() + 1000 * 60 * 30 );
-	document.cookie = 'tracking_session_id=' + window.sessionId + '; expires=' + expireDate.toGMTString() +
-		';domain=' + window.wgCookieDomain + '; path=' + window.wgCookiePath + ';';
-	document.cookie = 'pv_number=' + window.pvNumber + '; expires=' + expireDate.toGMTString() +
-		'; path=' + window.wgCookiePath + ';';
-	document.cookie = 'pv_number_global=' + window.pvNumberGlobal + '; expires=' + expireDate.toGMTString() +
-		';domain=' + window.wgCookieDomain + '; path=' + window.wgCookiePath + ';';
-
-	trackUrl = "$url" + ((typeof document.referrer != "undefined") ? "&r=" + escape(document.referrer) : "") +
-		"&rand=" + (new Date).valueOf() + (window.beacon_id ? "&beacon=" + window.beacon_id : "") +
-		(utma && utma[1] ? "&utma=" + utma[1] : "") + (utmb && utmb[1] ? "&utmb=" + utmb[1] : "") +
-		'&session_id=' + window.sessionId + '&pv_unique_id=' + window.pvUID + '&pv_number=' + window.pvNumber +
-		'&pv_number_global=' + window.pvNumberGlobal;
-
-	script.src = trackUrl;
-	document.head.appendChild(script);
-})();
-</script>
-SCRIPT1;
+			$script = ( new Wikia\Template\MustacheEngine )
+				->setPrefix( dirname( __FILE__ ) . '/templates' )
+				->setData(['url' => $url])
+				->render('track.mustache');
 		}
 
 		return $script;
