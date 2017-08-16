@@ -75,7 +75,6 @@ require([
 	// prepare & render right rail recirculation module
 	liftigniter.prepare(railRecirculation).done(function (data) {
 		require(['ext.wikia.recirculation.views.premiumRail'], function (viewFactory) {
-			debugger;
 			viewFactory().render(data);
 		});
 	});
@@ -89,7 +88,6 @@ require([
 	];
 	$.when.apply($, mixedContentFooterData).done(function (nsItems, wikiItems, discussions) {
 		require(['ext.wikia.recirculation.views.mixedFooter'], function (viewFactory) {
-			debugger;
 			viewFactory().render({
 				nsItems: nsItems,
 				wikiItems: wikiItems,
