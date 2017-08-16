@@ -21,6 +21,7 @@ class ArticleVideoHooks {
 				'wgOoyalaParams' => [
 					'ooyalaPCode' => $wg->ooyalaApiConfig['pcode'],
 					'ooyalaPlayerBrandingId' => $wg->ooyalaApiConfig['playerBrandingId'],
+					'dfpContentSourceId' => $wg->AdDriverDfpOoyalaContentSourceId
 				]
 			] );
 		}

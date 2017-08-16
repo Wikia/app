@@ -39,7 +39,6 @@ require([
 			collapsingDisabled = false,
 			playTime = -1,
 			percentagePlayTime = -1,
-			ooyalaContentSourceId = '2458214',
 			playerTrackerParams = {
 				adProduct: 'featured-video-preroll',
 				slotName: 'FEATURED'
@@ -90,7 +89,8 @@ require([
 					pos: 'FEATURED',
 					src: 'premium'
 				}, {
-					cmsid: ooyalaContentSourceId,
+					prerollOnly: true,
+					cmsid: window.wgOoyalaParams.dfpContentSourceId,
 					vid: videoId
 				});
 			} else {

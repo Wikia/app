@@ -1174,6 +1174,12 @@ $wgEnableNetzAthleten = true;
 $wgAdDriverNetzAthletenCountries = null;
 
 /**
+ * @name $wgAdDriverDfpOoyalaContentSourceId
+ * Defines content source id sent in VAST url
+ */
+$wgAdDriverDfpOoyalaContentSourceId = '2458214';
+
+/**
  * @name $wgEnableAmazonMatch
  * Enables AmazonMatch new integration (id=3115)
  */
