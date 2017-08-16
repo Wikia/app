@@ -8,35 +8,35 @@
 			'communityHeaderBackground' => $communityHeaderBackground,
 			'wikiArticles' => $topWikiArticles,
 		] ); ?>
-		<?= F::app()->renderPartial('Recirculation', 'article'); ?>
-		<?= F::app()->renderPartial('Recirculation', 'article'); ?>
+		<div class="ns-article"></div>
+		<div class="wiki-article"></div>
 	</div>
 	<div class="mcf-row">
 		<div class="mcf-discussions-placeholder"></div>
 		<div class="mcf-col">
 			<div class="mcf-row">
-				<?= F::app()->renderPartial('Recirculation', 'article'); ?>
+				<div class="ns-article"></div>
 				<?= F::app()->renderPartial('Recirculation', 'topic', [ 'recirculationExplore' => wfMessage( 'recirculation-explore' )->escaped() ] ); ?>
 			</div>
 			<div class="mcf-row">
-				<?= F::app()->renderPartial('Recirculation', 'article'); ?>
-				<?= F::app()->renderPartial('Recirculation', 'article'); ?>
+				<div class="wiki-article"></div>
+				<div class="ns-article"></div>
 			</div>
 		</div>
 	</div>
 	<div class="mcf-row">
 		<?= F::app()->renderPartial('Recirculation', 'storyStream', [ 'recirculationExplorePosts' => wfMessage( 'recirculation-explore-posts' )->escaped() ] ); ?>
-		<?= F::app()->renderPartial('Recirculation', 'article'); ?>
-		<?= F::app()->renderPartial('Recirculation', 'article'); ?>
+		<div class="wiki-article"></div>
+		<div class="ns-article"></div>
 	</div>
 	<div class="mcf-row">
-		<?= F::app()->renderPartial('Recirculation', 'article'); ?>
-		<?= F::app()->renderPartial('Recirculation', 'article'); ?>
+		<div class="wiki-article"></div>
+		<div class="ns-article"></div>
 		<?= F::app()->renderPartial('Recirculation', 'storyStream', [ 'recirculationExplorePosts' => wfMessage( 'recirculation-explore-posts' )->escaped() ] ); ?>
 	</div>
 	<div class="mcf-row">
-		<?= F::app()->renderPartial('Recirculation', 'article'); ?>
-		<?= F::app()->renderPartial('Recirculation', 'article'); ?>
+		<div class="wiki-article"></div>
+		<div class="ns-article"></div>
 		<?= F::app()->renderPartial('Recirculation', 'article'); ?>
 	</div>
 	<div class="mcf-row">

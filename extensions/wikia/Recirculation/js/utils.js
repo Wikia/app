@@ -13,35 +13,35 @@ define('ext.wikia.recirculation.utils', [
 		pending: []
 	};
 
-	function prepareFooter() {
-		var deferred = $.Deferred();
-
-		if (!footerState.cleared) {
-			footerState.pending.push(deferred);
-
-			if (!footerState.loading) {
-				footerState.loading = true;
-				return renderTemplateByName('footer-index-container.mustache', {})
-					.then(function($html) {
-						$('#WikiaFooter')
-							.find('#BOTTOM_LEADERBOARD')
-							.siblings()
-							.remove()
-							.end()
-							.end()
-							.append($html);
-						footerState.cleared = true;
-						footerState.pending.forEach(function(d) {
-							d.resolve();
-						});
-					});
-			} else {
-				return deferred.promise();
-			}
-		} else {
-			return deferred.resolve();
-		}
-	}
+	// function prepareFooter() {
+	// 	var deferred = $.Deferred();
+	//
+	// 	if (!footerState.cleared) {
+	// 		footerState.pending.push(deferred);
+	//
+	// 		if (!footerState.loading) {
+	// 			footerState.loading = true;
+	// 			return renderTemplateByName('footer-index-container.mustache', {})
+	// 				.then(function($html) {
+	// 					$('#WikiaFooter')
+	// 						.find('#BOTTOM_LEADERBOARD')
+	// 						.siblings()
+	// 						.remove()
+	// 						.end()
+	// 						.end()
+	// 						.append($html);
+	// 					footerState.cleared = true;
+	// 					footerState.pending.forEach(function(d) {
+	// 						d.resolve();
+	// 					});
+	// 				});
+	// 		} else {
+	// 			return deferred.promise();
+	// 		}
+	// 	} else {
+	// 		return deferred.resolve();
+	// 	}
+	// }
 
 	/**
 	 * Checks if template is cached in LocalStorage and if not loads it by using loader
@@ -63,7 +63,7 @@ define('ext.wikia.recirculation.utils', [
 			loader({
 				type: loader.MULTI,
 				resources: {
-					mustache: templateLocation
+					mustache: templateLocation + ',extensions/wikia/Recirculation/templates/client/Recirculation_topic.mustache'
 				}
 			}).done(function (data) {
 				template = data.mustache[0];
@@ -141,7 +141,7 @@ define('ext.wikia.recirculation.utils', [
 	return {
 		buildLabel: buildLabel,
 		loadTemplates: loadTemplates,
-		prepareFooter: prepareFooter,
+		// prepareFooter: prepareFooter,
 		renderTemplate: renderTemplate,
 		renderTemplateByName: renderTemplateByName,
 		waitForRail: waitForRail

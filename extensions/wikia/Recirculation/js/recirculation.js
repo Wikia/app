@@ -3,6 +3,7 @@ require([
 	'wikia.window',
 	'wikia.log',
 	'ext.wikia.recirculation.utils',
+	'ext.wikia.recirculation.views.mixedFooter',
 	'ext.wikia.recirculation.helpers.liftigniter',
 	'ext.wikia.recirculation.helpers.discussions',
 	'ext.wikia.recirculation.discussions',
@@ -11,6 +12,7 @@ require([
              w,
              log,
              utils,
+             mixedFooter,
              liftigniter,
              discussions,
              oldDiscussions,
@@ -68,7 +70,7 @@ require([
 
 	var logGroup = 'ext.wikia.recirculation.experiments.mix';
 
-	if (w.wgContentLanguage === 'en') {
+	if (w.wgContentLanguage !== 'en') {
 		if (videosModule) {
 			videosModule('#recirculation-rail');
 		}
@@ -80,7 +82,6 @@ require([
 	// load news & stories
 	liftigniter.prepare(railRecirculation).loadData().done(function (data) {
 		require(['ext.wikia.recirculation.views.premiumRail'], function (viewFactory) {
-			debugger;
 			viewFactory().render(data);
 		});
 	});
@@ -91,7 +92,7 @@ require([
 		discussions.prepare()
 	];
 	$.when.apply($, mixedContentFooterData).done(function (nsItems, wikiItems, discussions) {
-		require(['ext.wikia.recirculation.views.impactFooter'], function (viewFactory) {
+		require(['ext.wikia.recirculation.views.mixedFooter'], function (viewFactory) {
 			viewFactory().render({
 				nsItems: nsItems,
 				wikiItems: wikiItems,
@@ -128,7 +129,7 @@ require([
 			}
 		};
 	}
-	fetchFandom();
+//	fetchFandom();
 	function fetchFandom() {
 		var deferred = $.Deferred();
 		var fandomOptions = {
