@@ -52,14 +52,30 @@ class RecirculationController extends WikiaController {
 	}
 
 	public function footer() {
-		global $wgSitename;
+		global $wgSitename, $wgCityId;
 
 		$themeSettings = new ThemeSettings();
+		$discussionsEnabled =
+		$wgEnableDiscussions = WikiFactory::getVarValueByName( 'wgEnableDiscussions', $wgCityId );
+		$topWikiArticles = $this->getTopWikiArticles();
+		$numberOfWikiArticles = 8;
+		$numberOfNSArticles = 9;
+		if ( !$discussionsEnabled ) {
+			$numberOfWikiArticles++;
+			$numberOfNSArticles++;
+		}
+		if ( empty( $topWikiArticles ) ) {
+			$numberOfNSArticles++;
+		}
+
 		$this->response->setVal( 'communityHeaderBackground',
 			$themeSettings->getCommunityHeaderBackgroundUrl() );
 		$this->response->setVal( 'sitename', $wgSitename );
-		$this->response->setVal( 'topWikiArticles', $this->getTopWikiArticles() );
-		// TODO if topWikiArticles is empty show one more N&S article card instead of More from wiki card
+		$this->response->setVal( 'topWikiArticles', $topWikiArticles );
+		$this->response->setVal( 'discussionsEnabled', $discussionsEnabled );
+		$this->response->setVal( 'numberOfWikiArticles', $numberOfWikiArticles );
+		$this->response->setVal( 'numberOfNSArticles', $numberOfNSArticles );
+
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_PHP );
 	}
 

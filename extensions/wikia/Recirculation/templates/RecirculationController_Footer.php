@@ -1,4 +1,4 @@
-<div id="mixed-content-footer">
+<div id="mixed-content-footer" data-number-of-wiki-articles="<?= $numberOfWikiArticles ?>" data-number-of-ns-articles="<?= $numberOfNSArticles ?>">
 	<h1 class="mcf-header"><?= wfMessage('recirculation-impact-footer-title')->escaped() ?></h1>
 	<div class="mcf-row">
 		<?= F::app()->renderPartial( 'Recirculation', 'wikiArticles', [

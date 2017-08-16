@@ -32,43 +32,36 @@ require([
 	 */
 	'use strict';
 
-	var railRecirculation = {
-		max: 5,
-		widget: 'wikia-rail',
-		modelName: 'ns',
-		// source: 'fandom',
-		opts: {
-			resultType: 'cross-domain',
-			domainType: 'fandom.wikia.com'
-		}
-	};
-
-	var mixedContentFooter = {
-		nsItems: {
-			max: 9,
-			widget: 'wikia-impactfooter',
-			// source: 'fandom',
+	var $mixedContentFooter = $('#mixed-content-footer'),
+		railRecirculation = {
+			max: 5,
+			widget: 'wikia-rail',
 			modelName: 'ns',
 			opts: {
 				resultType: 'cross-domain',
 				domainType: 'fandom.wikia.com'
 			}
 		},
-		wikiItems: {
-			max: 3,
-			widget: 'wikia-footer-wiki-rec',
-			// source: 'wiki',
-			// title: 'Discover New Wikis',
-			// width: 332,
-			// height: 187,
-			modelName: 'wiki',
-			opts: {
-				domainType: 'fandom.wikia.com'
+		mixedContentFooter = {
+			nsItems: {
+				max: $mixedContentFooter.data('number-of-ns-articles'),
+				widget: 'wikia-impactfooter',
+				modelName: 'ns',
+				opts: {
+					resultType: 'cross-domain',
+					domainType: 'fandom.wikia.com'
+				}
+			},
+			wikiItems: {
+				max: $mixedContentFooter.data('number-of-wiki-articles'),
+				widget: 'wikia-footer-wiki-rec',
+				modelName: 'wiki',
+				opts: {
+					domainType: 'fandom.wikia.com'
+				}
 			}
-		}
-	};
-
-	var logGroup = 'ext.wikia.recirculation.experiments.mix';
+		},
+		logGroup = 'ext.wikia.recirculation.experiments.mix';
 
 	if (w.wgContentLanguage !== 'en') {
 		if (videosModule) {
@@ -79,20 +72,24 @@ require([
 	}
 
 
-	// load news & stories
-	liftigniter.prepare(railRecirculation).loadData().done(function (data) {
+	// prepare & render right rail recirculation module
+	liftigniter.prepare(railRecirculation).done(function (data) {
 		require(['ext.wikia.recirculation.views.premiumRail'], function (viewFactory) {
+			debugger;
 			viewFactory().render(data);
 		});
 	});
 
+
+	// prepare & render mixed content footer module
 	var mixedContentFooterData = [
-		liftigniter.prepare(mixedContentFooter.nsItems).loadData(),
-		liftigniter.prepare(mixedContentFooter.wikiItems).loadData(),
+		liftigniter.prepare(mixedContentFooter.nsItems),
+		liftigniter.prepare(mixedContentFooter.wikiItems),
 		discussions.prepare()
 	];
 	$.when.apply($, mixedContentFooterData).done(function (nsItems, wikiItems, discussions) {
 		require(['ext.wikia.recirculation.views.mixedFooter'], function (viewFactory) {
+			debugger;
 			viewFactory().render({
 				nsItems: nsItems,
 				wikiItems: wikiItems,
@@ -101,6 +98,8 @@ require([
 		});
 	});
 
+	// fetch data for all recirculation modules
+	// TODO lazy load some data on scroll
 	liftigniter.fetch('ns');
 	liftigniter.fetch('wiki');
 	discussions.fetch();
