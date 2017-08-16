@@ -807,6 +807,7 @@ $messages['de'] = array(
 	'wikiamobile-article-comments-post-fail' => 'Der Kommentar konnte nicht gespeichert werden, bitte versuche es später erneut.',
 	'enotif_subject_article_comment' => '[{{SITENAME}}] $PAGEEDITOR hat "$PAGETITLE" kommentiert',
 	'enotif_body_article_comment' => 'Hallo $WATCHINGUSERNAME,
+
 $PAGEEDITOR hat einen Kommentar auf der Seite "$PAGETITLE" hinterlassen.
 
 Um alle Kommentare zu sehen, folge diesem Link:
@@ -845,6 +846,8 @@ Dein freundliches {{SITENAME}}-Benachrichtigungssystem
 	'right-commentmove' => 'Can move article comments',
 	'right-commentcreate' => 'Can create article comments',
 	'article-comments-no-comments' => 'Kommentare',
+	'article-comments-fblogin' => 'Bitte <a href="$1" rel="nofollow">anmelden und mit Facebook verbinden</a>, um einen Kommentar in diesem Wiki zu schreiben!',
+	'article-comments-fbconnect' => 'Bitte <a href="$1">dieses Konto mit Facebook verknüpfen</a>, um zu kommentieren!',
 );
 
 $messages['de-formal'] = array(
@@ -1017,6 +1020,7 @@ $messages['es'] = array(
 	'wikiamobile-article-comments-post-fail' => 'Error al guardar el comentario, por favor inténtalo nuevamente',
 	'enotif_subject_article_comment' => '$PAGEEDITOR ha comentado en la página "$PAGETITLE" de {{SITENAME}}',
 	'enotif_body_article_comment' => 'Hola $WATCHINGUSERNAME,
+
 Hay nuevos comentarios en la página $PAGETITLE de {{SITENAME}}. Usa el siguiente enlace para ver todos los comentarios: $PAGETITLE_URL#article-comments
 
 - Equipo comunitario de Wikia
@@ -1041,6 +1045,8 @@ Hay nuevos comentarios en la página $PAGETITLE de {{SITENAME}}. Usa el siguient
 	'right-commentmove' => 'Can move article comments',
 	'right-commentcreate' => 'Can create article comments',
 	'article-comments-no-comments' => 'Comentarios',
+	'article-comments-fblogin' => 'Por favor, <a href="$1">identifícate y conéctate con Facebook</a> para dejar un comentario en este wiki.',
+	'article-comments-fbconnect' => 'Por favor, <a href="$1">conecta esta cuenta con Facebook</a> para dejar un comentario.',
 );
 
 $messages['et'] = array(
@@ -1191,6 +1197,7 @@ $messages['fi'] = array(
 	'wikiamobile-article-comments-post-fail' => 'Kommenttia ei voitu tallentaa, yritä myöhemmin uudelleen',
 	'enotif_subject_article_comment' => '$PAGEEDITOR on kommentoinut artikkelia "$PAGETITLE" {{SITENAME}}ssä.',
 	'enotif_body_article_comment' => 'Hei $WATCHINGUSERNAME,
+
 {{SITENAME}}n sivulla $PAGETITLE on uusi kommentti. Nähdäksesi kaikki kommentit, seuraa linkkiä:
 $PAGETITLE_URL#WikiaArticleComments
 
@@ -1220,6 +1227,8 @@ ___________________________________________
 	'right-commentmove' => 'Can move article comments',
 	'right-commentcreate' => 'Can create article comments',
 	'article-comments-no-comments' => 'Kommentit',
+	'article-comments-fblogin' => 'Ole hyvä ja <a href="$1" rel="nofollow">kirjaudu sisään yhdistyäksesi Facebookiin</a> ja kommentoidaksesi tässä wikissä!',
+	'article-comments-fbconnect' => 'Ole hyvä ja <a href="$1">yhdistä tämä käyttäjätili Facebookiin</a> kommentoidaksesi!',
 );
 
 $messages['fo'] = array(
@@ -1290,6 +1299,7 @@ $messages['fr'] = array(
 	'wikiamobile-article-comments-post-fail' => 'Échec de l’enregistrement du commentaire, veuillez réessayer plus tard',
 	'enotif_subject_article_comment' => '[{{SITENAME}}] Venez lire les derniers commentaires sur $PAGETITLE',
 	'enotif_body_article_comment' => '$WATCHINGUSERNAME,
+
 Un nouveau commentaire a été laissé sur « $PAGETITLE » sur {{SITENAME}}. Utilisez ce lien pour voir tous les commentaires : $PAGETITLE_URL#WikiaArticleComments
 
 — L’équipe Wikia
@@ -1316,6 +1326,8 @@ Un nouveau commentaire a été laissé sur « $PAGETITLE » sur {{SITENAME}}. Ut
 	'right-commentmove' => 'Can move article comments',
 	'right-commentcreate' => 'Can create article comments',
 	'article-comments-no-comments' => 'Commentaires',
+	'article-comments-fblogin' => 'Veuillez <a href="$1">vous connecter et relier Facebook</a> pour poster un commentaire sur ce wiki !',
+	'article-comments-fbconnect' => 'Veuillez <a href="$1">relier ce compte à Facebook</a> pour commenter !',
 );
 
 $messages['fy'] = array(
@@ -1767,6 +1779,7 @@ $messages['it'] = array(
 	'wikiamobile-article-comments-post-fail' => 'Salvataggio del commento non riuscito, per favore riprova più tardi',
 	'enotif_subject_article_comment' => '$PAGEEDITOR ha commentato su "$PAGETITLE" su {{SITENAME}}',
 	'enotif_body_article_comment' => 'Caro $WATCHINGUSERNAME,
+
 $PAGEEDITOR ha commentato su "$PAGETITLE".
 
 Per vedere il commento, seguire il link qui sotto:
@@ -1794,6 +1807,8 @@ Wikia
 	'right-commentmove' => 'Can move article comments',
 	'right-commentcreate' => 'Can create article comments',
 	'article-comments-no-comments' => 'Commenti',
+	'article-comments-fblogin' => 'Per favore <a href="$1" rel="nofollow">accedi a Facebook</a> per commentare su questa wiki!',
+	'article-comments-fbconnect' => 'Per favore <a href="$1">connetti questo account a Facebook</a> per commentare!',
 );
 
 $messages['ja'] = array(
@@ -1864,6 +1879,8 @@ ___________________________________________
 	'right-commentmove' => 'Can move article comments',
 	'right-commentcreate' => 'Can create article comments',
 	'article-comments-no-comments' => 'コメント',
+	'article-comments-fblogin' => 'コメントするには<a href="$1" rel="nofollow">ログインしてアカウントを Facebook に接続してください</a>。',
+	'article-comments-fbconnect' => 'コメントするには<a href="$1">アカウントを Facebook に接続してください</a>。',
 );
 
 $messages['ka'] = array(
@@ -2002,6 +2019,8 @@ $messages['ko'] = array(
 	'right-commentmove' => 'Can move article comments',
 	'right-commentcreate' => 'Can create article comments',
 	'article-comments-no-comments' => '댓글',
+	'article-comments-fblogin' => '이 위키에 댓글을 남기시려면 로그인 후 당신의 계정을 Facebook과 <a href="$1">연동</a>하세요.',
+	'article-comments-fbconnect' => '이 글에 댓글을 남기시려면 당신의 계정을 Facebook과 <a href="$1">연동</a>하세요.',
 );
 
 $messages['krc'] = array(
@@ -2178,6 +2197,8 @@ $messages['lol'] = array(
 	'right-commentmove' => 'crwdns65247:0crwdne65247:0',
 	'right-commentcreate' => 'crwdns65248:0crwdne65248:0',
 	'article-comments-no-comments' => 'crwdns66802:0crwdne66802:0',
+	'article-comments-fblogin' => 'crwdns65214:0crwdne65214:0',
+	'article-comments-fbconnect' => 'crwdns65215:0crwdne65215:0',
 );
 
 $messages['lrc'] = array(
@@ -2733,6 +2754,7 @@ $messages['nl'] = array(
 	'wikiamobile-article-comments-post-fail' => 'Het opslaan van de reactie is mislukt. Probeer het later opnieuw.',
 	'enotif_subject_article_comment' => '$PAGEEDITOR heeft een opmerking geplaatst bij "$PAGETITLE" op {{SITENAME}}',
 	'enotif_body_article_comment' => 'Hallo $WATCHINGUSERNAME,
+
 Er is een nieuwe reactie bij $PAGETITLE op {{SITENAME}}. Gebruik de volgende koppeling om alle reacties te bekijken: $PAGETITLE_URL#WikiaArticleComments
 
 - Wikia Community Support
@@ -2760,6 +2782,8 @@ Wikia
 	'right-commentmove' => 'Can move article comments',
 	'right-commentcreate' => 'Can create article comments',
 	'article-comments-no-comments' => 'Reacties',
+	'article-comments-fblogin' => '<a href="$1">Meld u aan en verbind met Facebook</a> om een opmerking in deze wiki te plaatsen.',
+	'article-comments-fbconnect' => '<a href="$1">Verbind deze gebruiker met Facebook</a> om opmerkingen te plaatsen.',
 );
 
 $messages['nl-informal'] = array(
@@ -2869,6 +2893,7 @@ $messages['pl'] = array(
 	'wikiamobile-article-comments-post-fail' => 'Nie udało się zapisać komentarza, spróbuj ponownie później',
 	'enotif_subject_article_comment' => '$PAGEEDITOR skomentował "$PAGETITLE" na {{SITENAME}}',
 	'enotif_body_article_comment' => 'Witaj $WATCHINGUSERNAME,
+
 Na {{SITENAME}} pojawił się nowy komentarz na stronie $PAGETITLE. Użyj tego linku aby zobaczyć wszystkie komentarze: $PAGETITLE_URL#WikiaArticleComments
 
 - Zespół Wikii
@@ -2893,6 +2918,8 @@ ___________________________________________
 	'right-commentmove' => 'Can move article comments',
 	'right-commentcreate' => 'Can create article comments',
 	'article-comments-no-comments' => 'Komentarze',
+	'article-comments-fblogin' => '<a href="$1" rel="nofollow">Zaloguj się i połącz przez Facebook</a> aby zostawić komentarz na tej wiki',
+	'article-comments-fbconnect' => '<a href="$1">Połącz to konto z Facebookiem</a> aby dodać komentarz',
 );
 
 $messages['pms'] = array(
@@ -3037,6 +3064,7 @@ $messages['pt'] = array(
 	'wikiamobile-article-comments-post-fail' => 'Falha ao salvar o comentário, por favor, tente novamente mais tarde',
 	'enotif_subject_article_comment' => 'Comentou sobre "$ PAGETITLE" em {{SITENAME}} $PAGEEDITOR',
 	'enotif_body_article_comment' => 'Olá $WATCHINGUSERNAME,
+
 Há um novo comentário em $PAGETITLE no {{SITENAME}}. Use esse link para ver todos os comentários: $PAGETITLE_URL#WikiaArticleComments
 
 - Suporte da Comunidade do FANDOM
@@ -3061,6 +3089,8 @@ ___________________________________________
 	'right-commentmove' => 'Can move article comments',
 	'right-commentcreate' => 'Can create article comments',
 	'article-comments-no-comments' => 'Comentários',
+	'article-comments-fblogin' => 'Por favor, <a href="$1">efetue o login e conecte-se com o Facebook</a> para postar um comentário sobre esta wiki!',
+	'article-comments-fbconnect' => 'Por favor <a href="$1">ligue essa conta com o Facebook</a> para comentar!',
 );
 
 $messages['ro'] = array(
@@ -3183,6 +3213,7 @@ $messages['ru'] = array(
 	'wikiamobile-article-comments-post-fail' => 'Не удалось сохранить комментарий, повторите попытку позже',
 	'enotif_subject_article_comment' => 'Прочитать свежие комментарии страницы $PAGETITLE на {{SITENAME}}',
 	'enotif_body_article_comment' => 'Уважаемый $WATCHINGUSERNAME,
+
 Участник $PAGEEDITOR оставил комментарий в "$PAGETITLE".
 
 Чтобы увидеть данный комментарий, проследуйте по этой ссылке:
@@ -3207,6 +3238,8 @@ $PAGETITLE_URL
 	'right-commentmove' => 'Can move article comments',
 	'right-commentcreate' => 'Can create article comments',
 	'article-comments-no-comments' => 'Комментарии',
+	'article-comments-fblogin' => 'Пожалуйста <a href="$1" rel="nofollow">войдите в систему и войдите на Facebook</a>, чтобы оставлять комментарии на этой вики!',
+	'article-comments-fbconnect' => 'Пожалуйста, <a href="$1">подключите свою учётную запись к Facebook</a>, чтобы комментировать!',
 );
 
 $messages['sa'] = array(
@@ -3782,6 +3815,7 @@ $messages['vi'] = array(
 	'wikiamobile-article-comments-post-fail' => 'Không thể lưu bình luận, xin vui lòng thử lại sau',
 	'enotif_subject_article_comment' => '$PAGEEDITOR đã bình luận trang "$PAGETITLE" trên {{SITENAME}}',
 	'enotif_body_article_comment' => 'Xin chào $WATCHINGUSERNAME,
+
 $PAGEEDITOR đã có một bình luận trên trang "$PAGETITLE".
 
 Để xem các chủ đề thảo luận, xin theo liên kết dưới đây:
@@ -3809,6 +3843,8 @@ Wikia
 	'right-commentmove' => 'Can move article comments',
 	'right-commentcreate' => 'Can create article comments',
 	'article-comments-no-comments' => 'Bình luận',
+	'article-comments-fblogin' => 'Xin vui lòng <a href="$1" rel="nofollow">đăng nhập và kết nối với Facebook</a> để đăng một bình luận trên wiki này!',
+	'article-comments-fbconnect' => 'Xin vui lòng <a href="$1">kết nối tài khoản này với Facebook</a> để bình luận!',
 );
 
 $messages['zh-hans'] = array(
@@ -3883,6 +3919,8 @@ ___________________________________________
 	'right-commentmove' => 'Can move article comments',
 	'right-commentcreate' => 'Can create article comments',
 	'article-comments-no-comments' => '评论',
+	'article-comments-fblogin' => '请<a href="$1" rel="nofollow">登陆并连接到Facebook</a>以在本维基上发表评论！',
+	'article-comments-fbconnect' => '请<a href="$1">将该账户连接到Facebook</a>以进行评论！',
 );
 
 $messages['zh-hant'] = array(
@@ -3957,5 +3995,7 @@ ___________________________________________
 	'right-commentmove' => 'Can move article comments',
 	'right-commentcreate' => 'Can create article comments',
 	'article-comments-no-comments' => '評論',
+	'article-comments-fblogin' => '請 <a href="$1" rel="nofollow">登入並連結 Facebook</a> 以在此 wiki 發表評論',
+	'article-comments-fbconnect' => '請 <a href="$1">連結此帳號與 Facebook </a> 以發表評論',
 );
 
