@@ -6,28 +6,43 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 ], function ($, w, tracker, utils) {
 	'use strict';
 
-	var mockData = {
-		title: 'Test title',
-		subtitle: 'Marvel Wiki'
-	};
 
 	function render(data) {
-		data = {
-			discussion: '',
-			ns: [{title: 'NS title', subtitle: 'Marvel Wiki', type: 'topic'}, {title: 'NS title', subtitle: 'Dupa Wiki', type: 'storyStream'}],
-			wikiarticles: [{title: 'WikiArt title', subtitle: 'Marvel Wiki'}, {title: 'WikiArt title', subtitle: 'Dupa Wiki'}],
-		};
+		console.log(data)
 		var $nsHook = $('.ns-article'),
 			$wikiArticleHook = $('.wiki-article'),
-			newsAndStoriesList = data.ns,
+			newsAndStoriesList = data.nsItems.items,
+			wikiArticlesList = data.wikiItems.items,
 			templateList = getTemplateList(newsAndStoriesList),
 			templates = {};
 
-		utils.loadTemplates(templateList).then(function (data) {
+		utils.loadTemplates(templateList)
+			.then(function (data) {
 			templateList.forEach(function (templateName, index) {
 				templates[templateName] = data[index];
+			})})
+			.then(function () {
+				$.each($nsHook, function( index, value ) {
+					var template = templates['client/Recirculation_article.mustache'];
+
+
+					if (newsAndStoriesList[index].type === 'topic') {
+						template = templates['client/Recirculation_topic.mustache'];
+					} else if (newsAndStoriesList[index].type === 'storyStream') {
+						template = templates['client/Recirculation_storyStream.mustache'];
+					}
+
+					$(this).replaceWith(utils.renderTemplate(template, newsAndStoriesList[index]));
+				});
+				$.each($wikiArticleHook, function( index, value ) {
+					debugger;
+					var template = templates['client/Recirculation_article.mustache'];
+
+					$(this).replaceWith(utils.renderTemplate(template, wikiArticlesList[index]));
+				});
 			});
-		});
+
+
 
 
 		// $.each($nsHook, function( index, value ) {

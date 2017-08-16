@@ -16,32 +16,32 @@
 		<div class="mcf-col">
 			<div class="mcf-row">
 				<div class="ns-article"></div>
-				<?= F::app()->renderPartial('Recirculation', 'topic', [ 'recirculationExplore' => wfMessage( 'recirculation-explore' )->escaped() ] ); ?>
+				<div class="wiki-article"></div>
 			</div>
 			<div class="mcf-row">
-				<div class="wiki-article"></div>
 				<div class="ns-article"></div>
+				<div class="wiki-article"></div>
 			</div>
 		</div>
 	</div>
 	<div class="mcf-row">
-		<?= F::app()->renderPartial('Recirculation', 'storyStream', [ 'recirculationExplorePosts' => wfMessage( 'recirculation-explore-posts' )->escaped() ] ); ?>
+		<div class="ns-article"></div>
 		<div class="wiki-article"></div>
 		<div class="ns-article"></div>
 	</div>
 	<div class="mcf-row">
 		<div class="wiki-article"></div>
 		<div class="ns-article"></div>
-		<?= F::app()->renderPartial('Recirculation', 'storyStream', [ 'recirculationExplorePosts' => wfMessage( 'recirculation-explore-posts' )->escaped() ] ); ?>
+		<div class="wiki-article"></div>
+	</div>
+	<div class="mcf-row">
+		<div class="ns-article"></div>
+		<div class="wiki-article"></div>
+		<div class="ns-article"></div>
 	</div>
 	<div class="mcf-row">
 		<div class="wiki-article"></div>
-		<div class="ns-article"></div>
-		<?= F::app()->renderPartial('Recirculation', 'article'); ?>
-	</div>
-	<div class="mcf-row">
-		<?= F::app()->renderPartial('Recirculation', 'topic', [ 'recirculationExplore' => wfMessage( 'recirculation-explore' )->escaped() ] ); ?>
 		<?= F::app()->renderPartial('Recirculation', 'exploreWikis', [ 'recirculationExploreWikis' => wfMessage( 'recirculation-explore-wikis' )->escaped() ]); ?>
-		<?= F::app()->renderPartial('Recirculation', 'article'); ?>
+		<div class="ns-article"></div>
 	</div>
 </div>
