@@ -3,15 +3,17 @@ require([
 	'wikia.window',
 	'wikia.log',
 	'ext.wikia.recirculation.utils',
-	'ext.wikia.recirculation.discussions',
 	'ext.wikia.recirculation.helpers.liftigniter',
+	'ext.wikia.recirculation.helpers.discussions',
+	'ext.wikia.recirculation.discussions',
 	require.optional('videosmodule.controllers.rail')
 ], function ($,
              w,
              log,
              utils,
-             discussions,
              liftigniter,
+             discussions,
+             oldDiscussions,
              videosModule) {
 	/**
 	 *
@@ -28,151 +30,82 @@ require([
 	 */
 	'use strict';
 
-	var recircModules = [
-			// {
-			// 	id: 'LI_rail',
-			// 	viewModule: 'ext.wikia.recirculation.views.premiumRail',
-			// 	options: {
-			// 		max: 5,
-			// 		widget: 'wikia-rail',
-			// 		source: 'fandom',
-			// 		opts: {
-			// 			resultType: 'cross-domain',
-			// 			domainType: 'fandom.wikia.com'
-			// 		}
-			// 	}
-			// },
-			// {
-			// 	id: 'LI_impactFooter',
-			// 	viewModule: 'ext.wikia.recirculation.views.impactFooter',
-			// 	options: {
-			// 		max: 9,
-			// 		widget: 'wikia-impactfooter',
-			// 		source: 'fandom',
-			// 		opts: {
-			// 			resultType: 'cross-domain',
-			// 			domainType: 'fandom.wikia.com'
-			// 		}
-			// 	}
-			// },
-			// {
-			// 	id: 'LI_footer',
-			// 	viewModule: 'ext.wikia.recirculation.views.footer',
-			// 	options: {
-			// 		max: 3,
-			// 		widget: 'wikia-footer-wiki-rec',
-			// 		source: 'wiki',
-			// 		title: 'Discover New Wikis',
-			// 		width: 332,
-			// 		height: 187,
-			// 		flush: true,
-			// 		opts: {
-			// 			resultType: 'subdomain',
-			// 			domainType: 'fandom.wikia.com'
-			// 		}
-			// 	}
-			// },
-			// {
-			// 	id: 'LI_mixedFooter',
-			// 	viewModule: 'ext.wikia.recirculation.views.mixedFooter',
-			// 	options: {
-			// 		max: 17,
-			// 		widget: 'wikia-impactfooter',
-			// 		source: 'fandom',
-			// 		opts: {
-			// 			resultType: 'cross-domain',
-			// 			domainType: 'fandom.wikia.com'
-			// 		}
-			// 	}
-			// }
-		],
-		logGroup = 'ext.wikia.recirculation.experiments.mix',
-		// Each view holds an array of promises used to gather data for that view
-		views = {},
-		// An array of promises to keep track of which views have completed rendering
-		completed = [],
-		liftigniterHelpers = {};
+	var railRecirculation = {
+		max: 5,
+		widget: 'wikia-rail',
+		modelName: 'ns',
+		// source: 'fandom',
+		opts: {
+			resultType: 'cross-domain',
+			domainType: 'fandom.wikia.com'
+		}
+	};
+
+	var mixedContentFooter = {
+		nsItems: {
+			max: 9,
+			widget: 'wikia-impactfooter',
+			// source: 'fandom',
+			modelName: 'ns',
+			opts: {
+				resultType: 'cross-domain',
+				domainType: 'fandom.wikia.com'
+			}
+		},
+		wikiItems: {
+			max: 3,
+			widget: 'wikia-footer-wiki-rec',
+			// source: 'wiki',
+			// title: 'Discover New Wikis',
+			// width: 332,
+			// height: 187,
+			modelName: 'wiki',
+			opts: {
+				domainType: 'fandom.wikia.com'
+			}
+		}
+	};
+
+	var logGroup = 'ext.wikia.recirculation.experiments.mix';
 
 	if (w.wgContentLanguage === 'en') {
 		if (videosModule) {
 			videosModule('#recirculation-rail');
 		}
-		discussions();
-		//return;
+		oldDiscussions();
+		return;
 	}
 
-	recircModules.forEach(function (recircModule) {
-		var deferred = $.Deferred();
 
-		var configuredHelper = liftigniter(recircModule.options);
-		configuredHelper.loadData()
-			.done(function (data) {
-				deferred.resolve(data);
-			})
-			.fail(function (err) {
-				deferred.reject(err);
-			});
-
-		// We need to keep track of the liftigniter helpers so we can setup tracking for them
-		liftigniterHelpers[recircModule.id] = configuredHelper;
-
-		if (recircModule.viewModule) {
-			views[recircModule.viewModule] = views[recircModule.viewModule] || [];
-			views[recircModule.viewModule].push(deferred);
-		}
-	});
-
-	$.each(views, function (viewModule, promises) {
-		var deferred = $.Deferred();
-
-		completed.push(deferred);
-
-		log('Initializing View: ' + viewModule, 'info', logGroup);
-		require([viewModule], function (viewFactory) {
-			$.when.apply($, promises)
-				.done(function () {
-					var view = viewFactory(),
-						args = Array.prototype.slice.call(arguments),
-						data = {
-							title: '',
-							items: []
-						};
-
-					log(args, 'info', logGroup);
-
-					args.forEach(function (result) {
-						if (!result) {
-							return;
-						}
-
-						if (result.title && data.title.length === 0) {
-							data.title = result.title;
-						}
-
-						data.items = data.items.concat(result.items);
-					});
-
-					view.render(data)
-						.then(view.setupTracking())
-						.then(deferred.resolve);
-				})
-				.fail(handleError(viewModule), function () {
-					deferred.reject(viewModule);
-				});
+	// load news & stories
+	liftigniter.prepare(railRecirculation).loadData().done(function (data) {
+		require(['ext.wikia.recirculation.views.premiumRail'], function (viewFactory) {
+			debugger;
+			viewFactory().render(data);
 		});
 	});
 
-	$.when.apply($, completed)
-		.done(function () {
-			log('Finished rendering recirculation', 'info', logGroup);
-
-			$.each(liftigniterHelpers, function (viewModule, helper) {
-				helper.setupTracking();
+	var mixedContentFooterData = [
+		liftigniter.prepare(mixedContentFooter.nsItems).loadData(),
+		liftigniter.prepare(mixedContentFooter.wikiItems).loadData(),
+		discussions.prepare()
+	];
+	$.when.apply($, mixedContentFooterData).done(function (nsItems, wikiItems, discussions) {
+		require(['ext.wikia.recirculation.views.impactFooter'], function (viewFactory) {
+			viewFactory().render({
+				nsItems: nsItems,
+				wikiItems: wikiItems,
+				discussions: discussions
 			});
-		})
-		.fail(function (viewModule) {
-			log('Error running recirc at: ' + viewModule, 'info', logGroup);
 		});
+	});
+
+	liftigniter.fetch('ns');
+	liftigniter.fetch('wiki');
+	discussions.fetch();
+
+	// TODO handle errors
+	// TODO LI tracking
 
 	function handleError(viewModule) {
 		return function (errorMessage) {

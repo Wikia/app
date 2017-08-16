@@ -6,44 +6,29 @@ define('ext.wikia.recirculation.helpers.discussions', [
 ], function ($, w, abTest, nirvana) {
 	'use strict';
 
-	return function(config) {
-		var defaults = {
-				type: 'all',
+	var deferred = $.Deferred();
+
+	function prepare() {
+		return deferred.promise();
+	}
+
+	function fetch() {
+		nirvana.sendRequest({
+			controller: 'Recirculation',
+			method: 'discussions',
+			format: 'html',
+			type: 'get',
+			data: {
 				cityId: w.wgCityId
 			},
-			options = $.extend({}, defaults, config);
-
-		function loadData() {
-			var deferred = $.Deferred();
-
-			nirvana.sendRequest({
-				controller: 'RecirculationApi',
-				method: 'getDiscussions',
-				format: 'json',
-				type: 'get',
-				scriptPath: w.wgCdnApiUrl,
-				data: options,
-				callback: function(data) {
-					data = formatData(data);
-					deferred.resolve(data);
-				}
-			});
-
-			return deferred.promise();
-		}
-
-		function formatData(data) {
-			var returnData = {};
-
-			if (data.posts) {
-				returnData.items = data.posts;
+			callback: function (response) {
+				deferred.resolve(response);
 			}
+		});
+	}
 
-			return returnData;
-		}
-
-		return {
-			loadData: loadData
-		};
+	return {
+		prepare: prepare,
+		fetch: fetch
 	};
 });

@@ -5,7 +5,11 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 ], function ($, w, thumbnailer) {
 	'use strict';
 
-	var helper = function (config) {
+	var willFetch = {},
+		fetchQueue = [],
+		fetching = false;
+
+	var prepare = function (config) {
 		var defaults = {
 				max: 5,
 				width: 720,
@@ -21,6 +25,14 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 					widget: options.widget,
 					callback: function (response) {
 						deferred.resolve(formatData(response));
+						fetching = false;
+						if(fetchQueue.length) {
+							// setTimeout is necessary because LI need to wait for LI to remove already registered modules
+							// LI clear register modules just after running all callbacks
+							setTimeout(function () {
+								fetch(fetchQueue.shift());
+							});
+						}
 					}
 				};
 
@@ -32,12 +44,16 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 				registerOptions.opts = options.opts;
 			}
 
-			// Callback renders and injects results into the placeholder.
-			w.$p('register', registerOptions);
+			var module = {
+				promise: deferred,
+				options: registerOptions
+			};
 
-			// if (options.flush) {
-				w.$p('fetch');
-			// }
+			if(willFetch[options.modelName]) {
+				willFetch[options.modelName].push(module)
+			} else {
+				willFetch[options.modelName] = [module];
+			}
 
 			return deferred.promise();
 		}
@@ -89,11 +105,28 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 			w.$p('track', trackOptions);
 		}
 
+
+
 		return {
 			setupTracking: setupTracking,
 			loadData: loadData
 		};
 	};
 
-	return helper;
+	function fetch(modelName) {
+		if (willFetch[modelName] && !fetching) {
+			willFetch[modelName].forEach(function (module) {
+				w.$p('register', module.options);
+			});
+			fetching = true;
+			w.$p('fetch');
+		} else if (fetching) {
+			fetchQueue.push(modelName);
+		}
+	}
+
+	return {
+		prepare: prepare,
+		fetch: fetch
+	};
 });
