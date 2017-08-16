@@ -1,3 +1,4 @@
+/*global beforeEach, describe, it, modules, expect, spyOn*/
 describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 	'use strict';
 
@@ -8,9 +9,10 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 			getCurrentSlotPrices: function() {
 				return {};
 			},
-			getDfpSlotPrices: function () {
+			getDfpSlotPrices: function() {
 				return {};
-			}
+			},
+			getScrollY: noop
 		},
 		adBlockDetection: {
 			isBlocking: noop

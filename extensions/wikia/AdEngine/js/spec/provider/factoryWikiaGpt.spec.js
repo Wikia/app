@@ -32,7 +32,8 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 		},
 		lookups: {
 			extendSlotTargeting: noop,
-			storeRealSlotPrices: noop
+			storeRealSlotPrices: noop,
+			storeScrollY: noop
 		},
 		slotRegistry: {
 			getRefreshCount: function () {

@@ -38,6 +38,7 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 	it('extends slot targeting for Amazon', function () {
 		var lookup = modules['ext.wikia.adEngine.lookup.services'](
 				mocks.log,
+				mocks.window,
 				undefined,
 				mocks.amazon
 			),
@@ -60,6 +61,7 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 	it('extends slot targeting for RubiconFastlane', function () {
 		var lookup = modules['ext.wikia.adEngine.lookup.services'](
 			mocks.log,
+			mocks.window,
 			undefined,
 			mocks.fastlane
 			),
@@ -82,6 +84,7 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 	it('extends slot targeting for Prebid.js', function () {
 		var lookup = modules['ext.wikia.adEngine.lookup.services'](
 			mocks.log,
+			mocks.window,
 			mocks.prebid
 			),
 			slotTargetingMock = {a: 'b'},
@@ -103,6 +106,7 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 	it('correctly mark all bid slots', function () {
 		var lookup = modules['ext.wikia.adEngine.lookup.services'](
 			mocks.log,
+			mocks.window,
 			mocks.prebid,
 			mocks.amazon,
 			mocks.fastlane
