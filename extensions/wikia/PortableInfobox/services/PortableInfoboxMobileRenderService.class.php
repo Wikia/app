@@ -141,7 +141,7 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 			} elseif ( $firstInfoboxAlredyRendered ) {
 				return $this->renderItem( 'hero-mobile', $data );
 			} elseif ( $hasFeaturedVideo ) {
-				return $this->renderHeroImageAsDataItem( $data['title'], $image );
+				return $this->renderSmallHeroImage( $data['title'], $image );
 			}
 		} elseif ( !$this->isMercury() || $firstInfoboxAlredyRendered ) {
 			return $this->renderItem( 'title', $data['title'] );
@@ -153,15 +153,16 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 	/**
 	 * renders hero image in data field with `Image` label
 	 *
+	 * @param $title
 	 * @param $image
 	 * 
 	 * @return string
 	 */
-	private function renderHeroImageAsDataItem( $title, $image ) {
+	private function renderSmallHeroImage( $title, $image ) {
 		$image['width'] = self::MOBILE_THUMBNAIL_WIDTH;
 		$image['height'] = round( $image['width'] * 9 / 16 );
 
-		return $this->renderItem( 'data-hero-mobile', array_merge( $image, [
+		return $this->renderItem( 'hero-mobile-small', array_merge( $image, [
 			'label' => wfMessage( 'portable-infobox-image' )->escaped(),
 			'title' => $title,
 		] ) );
