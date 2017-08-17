@@ -119,12 +119,12 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 	 * @return string
 	 */
 	private function renderInfoboxHero( $data ) {
-		global $wgTitle, $wgEnableArticleFeaturedVideo;
+		global $wgEnableArticleFeaturedVideo;
 
 		$helper = $this->getImageHelper();
 		$hasFeaturedVideo =
 			!empty( $wgEnableArticleFeaturedVideo ) &&
-			ArticleVideoContext::isFeaturedVideoEmbedded( $wgTitle->getPrefixedDBkey() );
+			ArticleVideoContext::isFeaturedVideoEmbedded( RequestContext::getMain()->getTitle()->getPrefixedDBkey() );
 
 		// In Mercury SPA content of the first infobox's hero module has been moved to the article header.
 		$firstInfoboxAlredyRendered = \Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()
