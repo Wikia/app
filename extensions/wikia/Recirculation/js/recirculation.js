@@ -67,7 +67,7 @@ require([
 		if (videosModule) {
 			videosModule('#recirculation-rail');
 		}
-		// oldDiscussions();
+		oldDiscussions();
 		return;
 	}
 
