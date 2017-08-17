@@ -138,14 +138,36 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 			} elseif ( $firstInfoboxAlredyRendered ) {
 				return $this->renderItem( 'hero-mobile', $data );
 			} elseif ( $hasFeaturedVideo ) {
-				// fixme label i18n
-				return $this->renderItem( 'data', ['label' => wfMessage('imgplc-image')->escaped(), 'value' => '<img src="'. $image['url'] .'">'] );
+				return $this->renderHeroImageAsDataItem( $image );
 			}
 		} elseif ( !$this->isMercury() || $firstInfoboxAlredyRendered ) {
 			return $this->renderItem( 'title', $data['title'] );
 		}
 
 		return '';
+	}
+
+	/**
+	 * renders hero image in data field with `Image` label
+	 *
+	 * @param $image
+	 * 
+	 * @return string
+	 */
+	private function renderHeroImageAsDataItem( $image ) {
+		$croppedUrl =
+			VignetteRequest::fromUrl( $image['url'] )
+				->zoomCrop()
+				->width( self::MOBILE_THUMBNAIL_WIDTH )
+				->height( round( self::MOBILE_THUMBNAIL_WIDTH * 9 / 16 ) )
+				->url();
+
+		// fixme label i18n
+		// todo placeholder, lightbox
+		return $this->renderItem( 'data', [
+			'label' => wfMessage( 'imgplc-image' )->escaped(),
+			'value' => '<img src="' . $croppedUrl . '" data-url="' . $image['url'] . '">',
+		] );
 	}
 
 	/**
