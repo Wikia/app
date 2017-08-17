@@ -16,7 +16,7 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 				max: options.max,
 				widget: options.widget,
 				callback: function (response) {
-					resizeThumbnails(response);
+					resizeThumbnails(response, options);
 					deferred.resolve(response);
 					fetching = false;
 					if(fetchQueue.length) {
@@ -70,15 +70,10 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 		// };
 	};
 
-	function resizeThumbnails(data) {
-		var card = {
-			height: 337,
-			width: 386
-		};
-
+	function resizeThumbnails(data, options) {
 		$.each(data.items, function (index, item) {
 			if (thumbnailer.isThumbUrl(item.thumbnail)) {
-				item.thumbnail = thumbnailer.getThumbURL(item.thumbnail, 'image', card.width, card.height);
+				item.thumbnail = thumbnailer.getThumbURL(item.thumbnail, 'image', options.width, options.height);
 			}
 		});
 	}

@@ -36,6 +36,8 @@ require([
 		railRecirculation = {
 			max: 5,
 			widget: 'wikia-rail',
+			width: 320,
+			height: 180,
 			modelName: 'ns',
 			opts: {
 				resultType: 'cross-domain',
@@ -46,6 +48,8 @@ require([
 			nsItems: {
 				max: $mixedContentFooter.data('number-of-ns-articles'),
 				widget: 'wikia-impactfooter',
+				width: 386,
+				height: 337,
 				modelName: 'ns',
 				opts: {
 					resultType: 'cross-domain',
@@ -55,13 +59,12 @@ require([
 			wikiItems: {
 				max: $mixedContentFooter.data('number-of-wiki-articles'),
 				widget: 'wikia-footer-wiki-rec',
-				modelName: 'wiki',
-				opts: {
-					domainType: 'fandom.wikia.com'
-				}
+				width: 386,
+				height: 337,
+				modelName: 'wiki'
 			}
 		},
-		logGroup = 'ext.wikia.recirculation.experiments.mix';
+		logGroup = 'ext.wikia.recirculation';
 
 	if (w.wgContentLanguage !== 'en') {
 		if (videosModule) {
@@ -71,14 +74,12 @@ require([
 		return;
 	}
 
-
 	// prepare & render right rail recirculation module
 	liftigniter.prepare(railRecirculation).done(function (data) {
 		require(['ext.wikia.recirculation.views.premiumRail'], function (viewFactory) {
 			viewFactory().render(data);
 		});
 	});
-
 
 	// prepare & render mixed content footer module
 	var mixedContentFooterData = [
