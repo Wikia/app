@@ -7,6 +7,7 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 	'use strict';
 
 	function render(data) {
+		console.log(data);
 		var	newsAndStoriesList = data.nsItems.items,
 			wikiArticlesList = data.wikiItems.items,
 			templateList = getTemplateList(newsAndStoriesList),
@@ -24,23 +25,28 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 	}
 
 	function injectTemplates(templates, newsAndStoriesList, wikiArticlesList) {
-		var $nsHook = $('.ns-article'),
+		var $newsAndStoriesHook = $('.ns-article'),
 			$wikiArticleHook = $('.wiki-article');
-		$.each($nsHook, function( index ) {
-			var template = templates['client/Recirculation_article.mustache'];
 
+		$.each($newsAndStoriesHook, function( index ) {
+			var template = templates['client/Recirculation_article.mustache'];
 
 			if (newsAndStoriesList[index].type === 'topic') {
 				template = templates['client/Recirculation_topic.mustache'];
+				newsAndStoriesList[index].label = $.msg('recirculation-explore');
 			} else if (newsAndStoriesList[index].type === 'storyStream') {
+				newsAndStoriesList[index].label = $.msg('recirculation-explore-posts');
 				template = templates['client/Recirculation_storyStream.mustache'];
 			}
 
 			$(this).replaceWith(utils.renderTemplate(template, newsAndStoriesList[index]));
 		});
+
 		$.each($wikiArticleHook, function( index ) {
 			var template = templates['client/Recirculation_article.mustache'];
+			// TODO check for thumbnail
 			wikiArticlesList[index].fandomHeartSvg = utils.fandomHeartSvg;
+
 			$(this).replaceWith(utils.renderTemplate(template, wikiArticlesList[index]));
 		});
 	}

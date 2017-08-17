@@ -126,7 +126,7 @@ require([
 			}
 		};
 	}
-//	fetchFandom();
+// TODO Remove fetchFandom
 	function fetchFandom() {
 		var deferred = $.Deferred();
 		var fandomOptions = {
@@ -142,7 +142,6 @@ require([
 		configuredHelper.loadData()
 			.done(function (data) {
 				deferred.resolve(data);
-				console.log(data);
 
 				var articleCards = $('.mcf-card-wiki-article__title');
 				var articleBackgrounds = $('a.mcf-card.mcf-card-wiki-article');
@@ -154,9 +153,6 @@ require([
 					$(this).attr('style', 'background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000000), url(' + data.items[index].thumbnail +')');
 					$(this).attr('href', data.items[index].url)
 				});
-
-
-				console.log(articleBackgrounds);
 
 			})
 			.fail(function (err) {
