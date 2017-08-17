@@ -55,8 +55,7 @@ class RecirculationController extends WikiaController {
 		global $wgSitename, $wgCityId;
 
 		$themeSettings = new ThemeSettings();
-		$discussionsEnabled =
-		$wgEnableDiscussions = WikiFactory::getVarValueByName( 'wgEnableDiscussions', $wgCityId );
+		$discussionsEnabled = WikiFactory::getVarValueByName( 'wgEnableDiscussions', $wgCityId );
 		$topWikiArticles = $this->getTopWikiArticles();
 		$numberOfWikiArticles = 8;
 		$numberOfNSArticles = 9;
