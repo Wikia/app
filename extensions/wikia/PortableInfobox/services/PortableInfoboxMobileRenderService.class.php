@@ -119,9 +119,12 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 	 * @return string
 	 */
 	private function renderInfoboxHero( $data ) {
+		global $wgTitle, $wgEnableArticleFeaturedVideo;
+
 		$helper = $this->getImageHelper();
-		// fixme
-		$hasFeaturedVideo = true;
+		$hasFeaturedVideo =
+			!empty( $wgEnableArticleFeaturedVideo ) &&
+			ArticleVideoContext::isFeaturedVideoEmbedded( $wgTitle->getPrefixedDBkey() );
 
 		// In Mercury SPA content of the first infobox's hero module has been moved to the article header.
 		$firstInfoboxAlredyRendered = \Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()
@@ -138,7 +141,7 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 			} elseif ( $firstInfoboxAlredyRendered ) {
 				return $this->renderItem( 'hero-mobile', $data );
 			} elseif ( $hasFeaturedVideo ) {
-				return $this->renderHeroImageAsDataItem( $image );
+				return $this->renderHeroImageAsDataItem( $data['title'], $image );
 			}
 		} elseif ( !$this->isMercury() || $firstInfoboxAlredyRendered ) {
 			return $this->renderItem( 'title', $data['title'] );
@@ -154,20 +157,14 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 	 * 
 	 * @return string
 	 */
-	private function renderHeroImageAsDataItem( $image ) {
-		$croppedUrl =
-			VignetteRequest::fromUrl( $image['url'] )
-				->zoomCrop()
-				->width( self::MOBILE_THUMBNAIL_WIDTH )
-				->height( round( self::MOBILE_THUMBNAIL_WIDTH * 9 / 16 ) )
-				->url();
+	private function renderHeroImageAsDataItem( $title, $image ) {
+		$image['width'] = self::MOBILE_THUMBNAIL_WIDTH;
+		$image['height'] = round( $image['width'] * 9 / 16 );
 
-		// fixme label i18n
-		// todo placeholder, lightbox
-		return $this->renderItem( 'data', [
-			'label' => wfMessage( 'imgplc-image' )->escaped(),
-			'value' => '<img src="' . $croppedUrl . '" data-url="' . $image['url'] . '">',
-		] );
+		return $this->renderItem( 'data-hero-mobile', array_merge( $image, [
+			'label' => wfMessage( 'portable-infobox-image' )->escaped(),
+			'title' => $title,
+		] ) );
 	}
 
 	/**
