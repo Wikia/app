@@ -90,7 +90,7 @@ require([
 					src: 'premium'
 				});
 
-				options.replayAds = adContext.getContext().opts.playAdsBetweenFVVideos;
+				options.replayAds = adContext.getContext().opts.replayAdsForFVVideos;
 			} else {
 				playerTrackerParams.adProduct = 'featured-video-no-preroll';
 			}
@@ -366,7 +366,7 @@ require([
 					label: 'recommended-video-depth-' + recommendedVideoDepth
 				});
 
-				if (adContext.getContext().opts.playAdsBetweenFVVideos) {
+				if (adContext.getContext().opts.replayAdsForFVVideos) {
 					// Don't play ads between videos
 					window.OO.Ads.unregisterAdManager('google-ima-ads-manager');
 				}

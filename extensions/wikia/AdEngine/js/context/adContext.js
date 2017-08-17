@@ -258,7 +258,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.premiumAdLayoutRubiconFastlaneTagsEnabled = context.opts.premiumAdLayoutEnabled &&
 			geo.isProperGeo(instantGlobals.wgAdDriverPremiumAdLayoutRubiconFastlaneTagsCountries);
 
-		context.opts.playAdsBetweenFVVideos = geo.isProperGeo(instantGlobals.wgAdDriverPlayAdsBetweenFVVideosCountries);
+		context.opts.replayAdsForFVVideos = geo.isProperGeo(instantGlobals.wgAdDriverReplayAdsForFVVideosCountries);
 
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
