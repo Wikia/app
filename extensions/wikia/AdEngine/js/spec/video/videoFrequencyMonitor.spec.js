@@ -9,10 +9,8 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 				numberOfVideosSeenInLastPageViews: noop,
 				numberOfVideosSeenInTime: noop
 			},
-			adLogicPageViewCounter: {
-				get: function () {
-					return 1;
-				}
+			window: {
+				pvNumber: 1
 			},
 			settings: {
 				get: function () {
@@ -52,9 +50,9 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.video.videoFrequencyMonitor'](
-			mocks.adLogicPageViewCounter,
 			mocks.settings,
-			mocks.store
+			mocks.store,
+			mocks.window
 		);
 	}
 
@@ -63,7 +61,7 @@ describe('ext.wikia.adEngine.video.videoFrequencyMonitor', function () {
 			currentDate = new Date();
 
 		spyOn(mocks.store, 'save');
-		spyOn(mocks.adLogicPageViewCounter, 'get').and.returnValue(10);
+		mocks.window.pvNumber = 10;
 		jasmine.clock().mockDate(currentDate);
 
 		getModule().registerLaunchedVideo();
