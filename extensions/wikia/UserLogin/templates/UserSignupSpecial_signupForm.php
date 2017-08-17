@@ -134,10 +134,6 @@ if ( !empty( $byemail ) ) {
 	<? endif; ?>
 
 	<div class="form-container">
-		<? if ( !$isMonobookOrUncyclo ): ?>
-			<? // 3rd party providers buttons ?>
-			<?= $app->renderView( 'UserLoginSpecial', 'ProvidersTop', [ 'requestType' => 'signup' ] ) ?>
-		<? endif; ?>
 		<?= F::app()->renderView( 'WikiaStyleGuideForm', 'index', [ 'form' => $form ] ) ?>
 	</div>
 	<? if ( empty( $byemail ) ): ?>

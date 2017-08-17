@@ -34,22 +34,7 @@ class CreateNewWikiController extends WikiaController {
 
 		// store the fact we're on CNW
 		$this->wg->atCreateNewWikiPage = true;
-
-		if ( !$this->wg->User->isLoggedIn() && !empty( $this->wg->EnableFacebookClientExt ) ) {
-			// required for FB Connect to work
-			$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js' );
-		}
-
-		// fbconnected means user has gone through step 2 to login via facebook.
-		// Therefore, we need to reload some values and start at the step after signup/login
-		$fbconnected = $wgRequest->getVal('fbconnected');
-		$fbreturn = $wgRequest->getVal('fbreturn');
-		if((!empty($fbconnected) && $fbconnected === '1') || (!empty($fbreturn) && $fbreturn === '1')) {
-			$this->LoadState();
-			$currentStep = 'DescWiki';
-		} else {
-			$currentStep = '';
-		}
+		$currentStep = '';
 
 		$this->setupVerticalsAndCategories();
 

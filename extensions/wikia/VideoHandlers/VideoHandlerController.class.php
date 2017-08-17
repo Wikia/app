@@ -58,7 +58,7 @@ class VideoHandlerController extends WikiaController {
 					 * Therefore we have to allow for accessing this API, from ie. file://
 					 */
 					(new CrossOriginResourceSharingHeaderHelper())
-						->setAllowOrigin( [ '*' ] )
+						->setAllowAllOrigins()
 						->setAllowMethod( [ 'GET' ] )
 						->setHeaders($this->response);
 				}

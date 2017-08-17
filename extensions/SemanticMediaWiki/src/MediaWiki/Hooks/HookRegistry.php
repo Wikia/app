@@ -139,7 +139,7 @@ class HookRegistry {
 		 *
 		 * @see https://www.mediawiki.org/wiki/Manual:Hooks/BaseTemplateToolbox
 		 */
-		$this->handlers['BaseTemplateToolbox'] = function ( Skin $skinTemplate, &$toolbox ) {
+		$this->handlers['BaseTemplateToolbox'] = function ( $skinTemplate, &$toolbox ) {
 
 			$baseTemplateToolbox = new BaseTemplateToolbox(
 				$skinTemplate,

@@ -187,7 +187,7 @@ class WikiaPhotoGalleryHelper {
 	/**
 	 * Parse given link and return link tag attributes
 	 */
-	static public function parseLink( Parser $parser, $url, $text, $link ) {
+	static public function parseLink( $parser, $url, $text, $link ) {
 		// fallback: link to image page + lightbox
 		$linkAttribs = array(
 			'class' => 'image lightbox',
@@ -195,8 +195,13 @@ class WikiaPhotoGalleryHelper {
 			'title' => $text,
 		);
 
+		// MAIN-11034: $parser can be empty here, just return
+		if ( !( $parser instanceof Parser ) ) {
+			return $linkAttribs;
+		}
+
 		// detect internal / external links (|links= param)
-		if ($link != '') {
+		if ( $link != '' ) {
 			$chars = Parser::EXT_LINK_URL_CLASS;
 			$prots = $parser->mUrlProtocols;
 
