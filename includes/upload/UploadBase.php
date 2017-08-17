@@ -257,7 +257,7 @@ abstract class UploadBase {
 		$imgHeight = $imgInfo[1];
 		$mime = $imgInfo['mime'];
 		$imageResolution = $imgHeight * $imgWidth;
-		if ( $imageResolution > $wgMaxImageArea && $mime !== 'image/jpeg' ) {
+		if ( $imageResolution > $wgMaxImageArea ) {
 			return [
 				'status' => self::VERIFICATION_ERROR,
 				'details' => [
