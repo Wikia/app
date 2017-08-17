@@ -36,7 +36,8 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		},
 		lookups: {
 			extendSlotTargeting: noop,
-			storeRealSlotPrices: noop
+			storeRealSlotPrices: noop,
+			storeScrollY: noop
 		},
 		slotRegistry: {
 			getRefreshCount: function () {

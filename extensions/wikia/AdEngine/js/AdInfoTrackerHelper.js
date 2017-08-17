@@ -73,7 +73,8 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 				.replace('[', '').replace(']', '').replace(',', 'x'),
 			'viewport_height': win.innerHeight || 0,
 			'product_label': '',
-			'ad_status': status || 'unknown'
+			'ad_status': status || 'unknown',
+			'scrollY': lookupServices.getScrollY(slot.name) || 0
 		};
 
 		return data;
