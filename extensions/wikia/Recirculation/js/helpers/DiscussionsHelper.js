@@ -19,7 +19,8 @@ define('ext.wikia.recirculation.helpers.discussions', [
 			format: 'html',
 			type: 'get',
 			data: {
-				cityId: w.wgCityId
+				cityId: w.wgCityId,
+				latest: true
 			},
 			callback: function (response) {
 				deferred.resolve(response);

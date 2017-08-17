@@ -18,6 +18,10 @@ class RecirculationController extends WikiaController {
 
 	public function discussions() {
 		$cityId = $this->request->getVal( 'cityId', null );
+		$sortKey =
+			$this->request->getVal( 'latest', false )
+				? DiscussionsDataService::DISCUSSIONS_API_SORT_KEY_LATEST
+				: DiscussionsDataService::DISCUSSIONS_API_SORT_KEY_TRENDING;
 
 		if ( !empty( $cityId ) && !is_numeric( $cityId ) ) {
 			throw new InvalidParameterApiException( 'cityId' );
@@ -25,7 +29,7 @@ class RecirculationController extends WikiaController {
 
 		if ( RecirculationHooks::canShowDiscussions( $cityId ) ) {
 			$discussionsDataService = new DiscussionsDataService( $cityId );
-			$posts = $discussionsDataService->getData( 'posts' )['posts'];
+			$posts = $discussionsDataService->getData( 'posts', $sortKey )['posts'];
 
 			if ( count( $posts ) > 0 ) {
 				$discussionsUrl = "$discussionsDataService->server/d/f";
