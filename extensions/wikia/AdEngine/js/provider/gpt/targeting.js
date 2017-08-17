@@ -7,7 +7,7 @@ define('ext.wikia.adEngine.provider.gpt.targeting', [
 	function getPageLevelTargetingValue(key) {
 		var pubads;
 
-		if (typeof win.googletag.pubads === "function") {
+		if (win.googletag && typeof win.googletag.pubads === "function") {
 			pubads = win.googletag.pubads();
 		}
 

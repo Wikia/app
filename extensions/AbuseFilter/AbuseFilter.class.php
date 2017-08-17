@@ -678,7 +678,7 @@ class AbuseFilter {
 		}
 
 		// Add vars from extensions
-		Hooks::run( 'AbuseFilter-filterAction', array( &$vars, $title ) );
+		Hooks::run( 'AbuseFilter-filterAction', array( $vars, $title ) );
 
 		// Set context
 		$vars->setVar( 'context', 'filter' );

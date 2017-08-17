@@ -98,7 +98,7 @@ If you have questions about this specific community, start by [[Special:ListAdmi
 You can also ask general questions to other community members on our [[w:c:community:Special:Forum|community help forum]].
 
 Remember, you can't break a community on FANDOM, so don't be afraid to get started. Happy editing!",
-	'specialcontact-intro-feedback' => 'Got feedback? We would love to hear it! Please provide your thoughts and details below. If you have feedback on a FANDOM Labs product, please provide feedback [[Special:WikiaLabs|there]].
+	'specialcontact-intro-feedback' => 'Got feedback? We would love to hear it! Please provide your thoughts and details below.
 
 Thanks in advance and happy editing!',
 	'specialcontact-intro-bug' => 'We are sorry to hear that you found a bug on FANDOM. Please provide full details of the issue you are seeing below so we can investigate further. Important details to include are:
@@ -525,7 +525,7 @@ $messages['es'] = array(
 	'contact' => 'Contáctate con FANDOM',
 	'specialcontact-wikia' => 'Contáctate con FANDOM',
 	'specialcontact-pagetitle' => 'Contactar con el equipo de soporte comunitario de FANDOM',
-	'specialcontact-intro-main-head' => '<big>¿Necesitas ayuda? ¡Que no cunda el pánico, la comunidad de FANDOM está aquí para ayudarte!</big><br/>
+	'specialcontact-intro-main-head' => '<big>¿Necesitas ayuda? ¡No te preocupes, la comunidad de FANDOM está aquí para ayudarte!</big><br/>
 Sigue los enlaces que hay debajo para aprender más sobre cómo usar FANDOM, hacer cambios en tu wiki o modificar tu cuenta.',
 	'specialcontact-intro-main-local' => '',
 	'specialcontact-intro-main-foot' => "'''¿Responde esta página a tu pregunta?''' Si no lo hace, siéntete libre de [[{{#Special:contact/general}}|contactar con nosotros]] para hablar sobre el problema que tienes. Recuerda que siempre puedes revisar nuestras '''[[w:c:comunidad:Ayuda:Contenidos|páginas de ayuda]]''', '''[[w:c:comunidad:Blog:Noticias_de_Fandom|blog del staff]]''' o dejar un mensaje en nuestros '''[[w:c:comunidad:Especial:Foro|foros de ayuda]]'''.",
@@ -602,9 +602,9 @@ Esperamos que hayas disfrutado mientras estuviste en FANDOM y que si tienes alg�
 Una vez leas esa página de ayuda y estés seguro de que el nuevo nombre de usuario suena bien, envía tu solicitud [[{{#Special:Contact/rename}}|aquí]]. Cuando tu nombre de usuario cambie, recibirás un correo electrónico confirmándolo. Después podrás identificarte con tu nuevo nombre de usuario usando tu antigua contraseña.
 
 ¡Diviértete editando!',
-	'specialcontact-intro-blocked' => 'Normalmente, las cuentas de usuario son bloqueadas por los administradores locales de los wikis y no por FANDOM. Deberías ver el nombre del administrador que te bloqueó en el aviso que recibiste. Deberías poder dejarle un mensaje al administrador desde tu propia página de usuario. Esta continúa siendo editable por los usuarios bloqueados (en algunos wikis) y los cambios que se hagan ahí, podrán ser vistos por otros editores del wiki. Encontrarás tu página de discusión siguiendo el enlace que aparece arriba a la derecha al pulsar en la flecha al lado de tu nombre de usuario.
+	'specialcontact-intro-blocked' => 'Normalmente, las cuentas de usuario son bloqueadas por los administradores locales de los wikis y no por el equipo de FANDOM. El nombre del administrador que te bloqueó debería estar en el aviso que recibiste. Deberías poder contactarte con el administrador dejándole un mensaje desde tu propia página de discusión. Esta continúa siendo editable para los usuarios bloqueados (en algunos wikis) y los cambios que se hagan ahí, podrán ser vistos por otros editores del wiki. Encontrarás tu página de discusión siguiendo el enlace Mis mensajes que aparece arriba a la derecha de cualquier página.
 
-Si tu página de discusión no puede ser editada, el mejor consejo que podemos darte es que esperes a que el bloqueo finalice o participes en la comunidad de otro de los muchos wikis que hay en FANDOM.
+Sin embargo, si la opción de página de discusión no está disponible en tu situación, entonces el mejor consejo que podemos darte es que esperes a que el bloqueo finalice o participes en la comunidad de otro de los muchos wikis que hay en FANDOM.
 
 Si sientes que necesitas discutir tu bloqueo con el staff de FANDOM, por favor, ponte en contacto con nosotros [[{{#Special:Contact/general}}|por aquí]].',
 	'specialcontact-intro-using-fandom' => 'Ahora que formas parte de la comunidad, puedes editar y contribuir en cualquier página de FANDOM. Comprueba nuestras [[w:c:comunidad:Ayuda:Contenidos|páginas de ayuda]] para obtener una introducción de ayuda. Son un magnífico lugar donde aprender los conceptos básicos para editar, dar formato y mucho más.

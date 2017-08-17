@@ -17,7 +17,8 @@ $wgExtensionCredits['parserhook']['ImageMap'] = array(
  * @param $parser Parser
  * @return bool
  */
-function wfSetupImageMap( &$parser ) {
-	$parser->setHook( 'imagemap', array( 'ImageMap', 'render' ) );
+function wfSetupImageMap( Parser $parser ): bool {
+	$parser->setHook( 'imagemap', [ 'ImageMap', 'render' ] );
+
 	return true;
 }

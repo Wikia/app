@@ -6,10 +6,6 @@ use Wikia\Util\GlobalStateWrapper;
 class HAWelcomeTask extends BaseTask {
 	use IncludeMessagesTrait;
 
-	/** @type String The default user to send welcome messages. */
-	const DEFAULT_WELCOMER = 'Wikia';
-
-
 	/**
 	 * Default switches to enable features, explained below.
 	 *
@@ -103,7 +99,7 @@ class HAWelcomeTask extends BaseTask {
 	}
 
 	protected function getDefaultWelcomerUser() {
-		return User::newFromName( self::DEFAULT_WELCOMER );
+		return User::newFromName( Wikia::USER );
 	}
 
 	public function getUserFeatureFlags() {
@@ -265,7 +261,7 @@ class HAWelcomeTask extends BaseTask {
 		}
 
 		// This should not happen. Fall back to the default welcomer.
-		$this->senderObject = User::newFromName( HAWelcomeTask::DEFAULT_WELCOMER );
+		$this->senderObject = User::newFromName( Wikia::USER );
 		return;
 	}
 

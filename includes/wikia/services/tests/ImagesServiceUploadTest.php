@@ -23,7 +23,7 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		parent::setUp();
 
 		$this->origUser = $wgUser;
-		$wgUser = User::newFromName( 'WikiaBot' );
+		$wgUser = User::newFromName( Wikia::BOT_USER );
 
 		$this->fileName = self::PREFIX . str_replace( '$1', time(), self::FILENAME );
 

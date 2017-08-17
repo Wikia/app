@@ -1,0 +1,17 @@
+.wds-button.facebook-button, .wds-button.facebook-button:hover {
+    background: #4b6ea8;
+    border: none;
+    width: 25%;
+}
+
+.wds-button.facebook-button:hover {
+    cursor: pointer;
+}
+
+.facebook-state-linked #fbConnectPreferences {
+    display: none;
+}
+
+.facebook-state-disconnected #fbDisconnectPreferences {
+    display: none;
+}

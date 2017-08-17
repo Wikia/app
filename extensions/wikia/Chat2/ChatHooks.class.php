@@ -22,18 +22,20 @@ class ChatHooks {
 
 	/**
 	 * Prepare a pre-rendered chat entry point for logged-in users
+	 * @param array $vars
+	 * @param OutputPage $out
+	 * @return bool
 	 */
-	public static function onMakeGlobalVariablesScript( &$vars ) {
-		global $wgUser;
-
+	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ): bool {
 		$chatUsers = [];
+		$user = $out->getUser();
 
-		if ( $wgUser->isLoggedIn() ) {
+		if ( $user->isLoggedIn() ) {
 			$chatUsers = ChatWidget::getUsersInfo();
 
 			if ( empty( $chatUsers ) ) {
 				// we will need it to attract user to join chat
-				$vars['wgWikiaChatProfileAvatarUrl'] = AvatarService::getAvatarUrl( $wgUser->getName(), ChatRailController::AVATAR_SIZE );
+				$vars['wgWikiaChatProfileAvatarUrl'] = AvatarService::getAvatarUrl( $user->getName(), ChatRailController::AVATAR_SIZE );
 			}
 		}
 
@@ -67,9 +69,7 @@ class ChatHooks {
 	 * @param Skin $skin
 	 * @return true to continue hook processing
 	 */
-	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
-		wfProfileIn( __METHOD__ );
-
+	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
 		$specialPages = [
 			'Contributions',
 			'Log',
@@ -84,7 +84,6 @@ class ChatHooks {
 			}
 		}
 
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 

@@ -20,7 +20,7 @@
             {{/thumbnail}}
           </div>
           <div class="recirc-footer-title-container">
-            <div class="title_pretext">
+            {{^isPlista}}<div class="title_pretext">
               <div class="featured-fandom-subtitle">
                 {{i18n.featuredFandomSubtitle}}
               </div>
@@ -30,10 +30,16 @@
                 </div>
               {{/presented_by}}
             </div>
-            <h4>{{title}}</h4>
+            {{/isPlista}}<h4>{{title}}</h4>
           </div>
         </a>
-      </div>
+      {{#isPlista}}
+					<a href="https://www.plista.com/au" class="recirculation-powered-plista">
+						<img src="http://static.plista.com/images/powered_by_plista_logo.png">
+					</a>
+				{{/isPlista}}</div>
     {{/items}}
   </div>
+
+
 </section>

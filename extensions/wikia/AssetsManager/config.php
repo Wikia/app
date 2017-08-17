@@ -159,6 +159,7 @@ $config['recirculation_js'] = [
 		'//extensions/wikia/Recirculation/js/views/impactFooter.js',
 		'//extensions/wikia/Recirculation/js/recirculation.js',
 		'//extensions/wikia/Recirculation/js/discussions.js',
+		'//extensions/wikia/Recirculation/js/plista.js',
 	],
 ];
 
@@ -264,40 +265,16 @@ $config['adengine2_pr3b1d_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexusAst.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexusPlacements.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/audienceNetwork.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/fastlane.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/indexExchange.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/openx.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/rubicon.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/wikia.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/veles.js',
 
-		'//extensions/wikia/AdEngine/js/wrappers/prebid.js'
-	],
-];
-
-//TODO: remove after ADEN-5624 release + 24h (2 Aug 2017)
-$config['adengine2_prebid_js'] = [
-	'skin' => [ 'oasis' ],
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/AdEngine/js/lookup/prebid/bidHelper.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/prebid.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/prebidHelper.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/prebidSettings.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/priceGranularityHelper.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/priceParsingHelper.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adaptersPerformanceTracker.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adaptersPricesTracker.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adaptersRegistry.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/aol.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexus.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexusAst.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexusPlacements.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/audienceNetwork.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/indexExchange.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/openx.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/rubicon.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/wikia.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/veles.js',
+		// IL recovery
+		'//extensions/wikia/ARecoveryEngine/js/InstartLogic/recovery.js',
+		'//extensions/wikia/AdEngine/js/provider/gpt/targeting.js',
 
 		'//extensions/wikia/AdEngine/js/wrappers/prebid.js'
 	],
@@ -429,9 +406,6 @@ $config['oasis_jquery'] = [
 		'//resources/wikia/libraries/jquery/expirystorage/jquery.expirystorage.js',
 		'//resources/wikia/libraries/jquery/focusNoScroll/jquery.focusNoScroll.js',
 
-		// Facebook
-		'//resources/wikia/modules/facebookLocale.js',
-
 		// libraries loaders
 		'//resources/wikia/libraries/jquery/getResources/jquery.wikia.getResources.js',
 		'//resources/wikia/libraries/jquery/loadLibrary/jquery.wikia.loadLibrary.js',
@@ -541,13 +515,10 @@ $config['user_login_js_anon'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/UserLogin/js/FacebookLogin.js',
 		'//extensions/wikia/UserLogin/js/MarketingOptIn.js',
 		'//extensions/wikia/UserLogin/js/UserBaseAjaxForm.js',
 		'//extensions/wikia/UserLogin/js/mixins/UserSignup.mixin.js',
 		'//extensions/wikia/UserLogin/js/UserSignupAjaxValidation.js',
-		'//extensions/wikia/UserLogin/js/FacebookFormCreateUser.js',
-		'//extensions/wikia/UserLogin/js/FacebookFormConnectUser.js',
 		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js',
 		'//extensions/wikia/UserLogin/js/UserLoginModal.js',
 	],
@@ -603,7 +574,6 @@ $config['gameguides_js'] = [
 		'//resources/wikia/modules/window.js',
 		'//resources/wikia/modules/location.js',
 		'//resources/wikia/modules/nirvana.js',
-		'//resources/wikia/modules/facebookLocale.js',
 		'//resources/wikia/modules/loader.js',
 		'//resources/wikia/modules/querystring.js',
 		'//resources/wikia/modules/history.js',
@@ -711,9 +681,6 @@ $config['wikiamobile_js_body_minimal'] = [
 
 		// performance
 		'#group_bucky_js',
-
-		// facebook
-		'//resources/wikia/modules/facebookLocale.js',
 
 		//modules
 		'//resources/wikia/modules/nirvana.js',
@@ -1631,14 +1598,6 @@ $config['userlogin_js_wikiamobile'] = [
 	],
 ];
 
-$config['userlogin_facebook_js_wikiamobile'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'wikiamobile',
-	'assets' => [
-		'//extensions/wikia/UserLogin/js/UserLoginFacebook.wikiamobile.js',
-	],
-];
-
 /** UserProfilePage **/
 $config['userprofilepage_scss_wikiamobile'] = [
 	'type' => AssetsManager::TYPE_SCSS,
@@ -2181,22 +2140,6 @@ $config['media_gallery_js'] = [
 	],
 ];
 
-$config['facebook_client_preferences_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'monobook' ],
-	'assets' => [
-		'//extensions/wikia/FacebookClient/scripts/preferences.js',
-	],
-];
-
-$config['facebook_client_preferences_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis', 'monobook' ],
-	'assets' => [
-		'//extensions/wikia/FacebookClient/styles/preferences.scss',
-	],
-];
-
 $config['banner_notifications_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'monobook' ],
@@ -2228,14 +2171,6 @@ $config['cookie_policy_js'] = [
 	'skin' => [ 'oasis', 'monobook' ],
 	'assets' => [
 		'//extensions/wikia/CookiePolicy/scripts/cookiePolicy.js',
-	],
-];
-
-$config['facebook_client_fbtags_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'monobook' ],
-	'assets' => [
-		'//extensions/wikia/FacebookClient/scripts/FacebookClient.facebookTags.js',
 	],
 ];
 

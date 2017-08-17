@@ -32,15 +32,14 @@
 }
 
 .recirculation-unit {
-
 	.recirculation-sponsored-header {
-		position: absolute;
-		background: #666666;
-		z-index: 1;
-		padding: 6px 12px;
-		font-size: 12px;
-		font-family: "Helvetica Neue", sans-serif;
+		background: #666;
 		color: white;
+		font-family: "Helvetica Neue", sans-serif;
+		font-size: 12px;
+		padding: 6px 12px;
+		position: absolute;
+		z-index: 1;
 	}
 
 	.recirculation-wiki-header {

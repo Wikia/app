@@ -119,7 +119,7 @@ class MercuryApi {
 		global $wgCacheBuster, $wgCityId, $wgContLang, $wgContentNamespaces, $wgDBname,
 		       $wgDefaultSkin, $wgDisableAnonymousEditing, $wgDisableAnonymousUploadForMercury,
 		       $wgDisableMobileSectionEditor, $wgEnableCommunityData, $wgEnableDiscussions,
-		       $wgEnableNewAuth, $wgLanguageCode, $wgSitename,
+		       $wgEnableDiscussionsImageUpload, $wgEnableNewAuth, $wgLanguageCode, $wgSitename,
 		       $wgWikiDirectedAtChildrenByFounder, $wgWikiDirectedAtChildrenByStaff;
 
 		return [
@@ -133,6 +133,7 @@ class MercuryApi {
 			'disableMobileSectionEditor' => $wgDisableMobileSectionEditor,
 			'enableCommunityData' => $wgEnableCommunityData,
 			'enableDiscussions' => $wgEnableDiscussions,
+			'enableDiscussionsImageUpload' => $wgEnableDiscussionsImageUpload,
 			'enableNewAuth' => $wgEnableNewAuth,
 			'favicon' => Wikia::getFaviconFullUrl(),
 			'homepage' => $this->getHomepageUrl(),

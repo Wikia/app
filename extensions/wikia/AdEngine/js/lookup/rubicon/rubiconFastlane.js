@@ -17,11 +17,13 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 			oasis: {
 				TOP_LEADERBOARD: {
 					sizes: [[728, 90], [970, 250]],
-					targeting: {loc: 'top'}
+					targeting: {loc: 'top'},
+					palZoneId: 704672
 				},
 				TOP_RIGHT_BOXAD: {
 					sizes: [[300, 250], [300, 600], [300, 1050]],
-					targeting: {loc: 'top'}
+					targeting: {loc: 'top'},
+					palZoneId: 704672
 				},
 				LEFT_SKYSCRAPER_2: {
 					sizes: [[120, 600], [160, 600], [300, 250], [300, 600], [300, 1050]],
@@ -33,11 +35,13 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 				},
 				INCONTENT_BOXAD_1: {
 					sizes: [[120, 600], [160, 600], [300, 250], [300, 600]],
-					targeting: {loc: 'hivi'}
+					targeting: {loc: 'hivi'},
+					palZoneId: 704676
 				},
 				BOTTOM_LEADERBOARD: {
 					sizes: [[728, 90], [970, 250]],
-					targeting: {loc: 'footer'}
+					targeting: {loc: 'footer'},
+					palZoneId: 704674
 				},
 				PREFOOTER_LEFT_BOXAD: {
 					sizes: [[300, 250], [336, 280]],
@@ -131,7 +135,21 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 		log(['defineSlot', slotName, slot], 'debug', logGroup);
 
 		win.rubicontag.cmd.push(function () {
-			var rubiconSlot = win.rubicontag.defineSlot(slotName, slot.sizes, slotName);
+			var rubiconSlot;
+
+			if (context.opts.premiumAdLayoutRubiconFastlaneTagsEnabled && slot.palZoneId) {
+				rubiconSlot = win.rubicontag.defineSlot({
+					id: slotName,
+					sizes: slot.sizes,
+					name: slotName,
+					siteId: 148804,
+					zoneId: slot.palZoneId
+				});
+			} else {
+				rubiconSlot = win.rubicontag.defineSlot(slotName, slot.sizes, slotName);
+			}
+
+
 			if (skin === 'oasis') {
 				rubiconSlot.setPosition(position);
 			}
@@ -177,13 +195,13 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 			}
 		});
 	}
-	
+
 	function shouldHandleFloorPrice(floorPrice, slotName, rubiconTierKeyParam) {
 		return typeof floorPrice !== 'undefined' &&
 			rubiconTierKeyParam && typeof rubiconTierKeyParam.map === 'function' &&
 			bestPrices[slotName] / 100 <= floorPrice &&
 			bestPricesPrivate[slotName] / 100 <= floorPrice
-		
+
 	}
 
 	function handleFloorPrice(floorPrice, slotName, parameters) {

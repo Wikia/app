@@ -103,18 +103,7 @@ Since you do not have the hideuser right, you cannot see or edit the user's bloc
 	'cant-move-user-page' => 'You do not have permission to move user pages (apart from subpages).',
 	'cant-move-to-user-page' => 'You do not have permission to move a page to a user page (except to a user subpage).',
 	'cantmove-titleprotected' => 'You cannot move a page to this location, because the new title has been protected from creation',
-	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/
-
-/* Mark redirects in Special:Allpages and Special:Watchlist */
-.allpagesredirect {
-   font-style: italic;
-}
-.allpagesredirect:after {
-   color: #808080; content: " (redirect)"
-}
-.watchlistredir {
-   font-style: italic;
-}',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
 	'common.js' => '/* Any JavaScript here will be loaded for all users on every page load. */',
 	'creditspage' => 'Page credits',
 	'confirmemail' => 'Confirm email address',
@@ -6145,7 +6134,7 @@ Grund der Sperre: ''$2''",
 	'cant-move-user-page' => 'Du hast nicht die Berechtigung, Benutzerhauptseiten zu verschieben.',
 	'cant-move-to-user-page' => 'Du hast nicht die Berechtigung, Seiten auf eine Benutzerseite zu verschieben (mit Ausnahme von Benutzerunterseiten).',
 	'cantmove-titleprotected' => 'Die Verschiebung kann nicht durchgeführt werden, da der Zieltitel vor Erstellung gesperrt ist.',
-	'common.css' => '/***** Das CSS auf dieser Seite beeinflusst alle Skins dieser Community. *****/',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
 	'common.js' => '/* JavaScript hier wird für alle Benutzer für jede Seite geladen. */',
 	'creditspage' => 'Seiteninformationen',
 	'confirmemail' => 'E-Mail-Adresse bestätigen',
@@ -7443,18 +7432,7 @@ alguien más puede haber deshecho el borrado antes.',
 	'cant-move-user-page' => 'No tienes permiso para renombrar páginas de usuario (excepto subpáginas).',
 	'cant-move-to-user-page' => 'No tienes permiso para renombrar una página a una página de usuario (excepto a subpáginas de usuario).',
 	'cantmove-titleprotected' => 'No puedes renombrar la página a esta ubicación, porque el nuevo título ha sido protegido para evitar su creación.',
-	'common.css' => '/***** Los estilos CSS definidos aquí se aplicarán a todas las pieles (skins) *****/
-
-/* Marca redirecciones en Special:Allpages y Special:Watchlist */
-.allpagesredirect {
-   font-style: italic;
-}
-.allpagesredirect:after {
-   color: #808080; content: " (redirect)"
-}
-.watchlistredir {
-   font-style: italic;
-}',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
 	'common.js' => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios en cada carga de página. */',
 	'creditspage' => 'Créditos de la página',
 	'confirmemail' => 'Confirmar dirección de correo electrónico',
@@ -8858,8 +8836,7 @@ un autre utilisateur a probablement déjà restauré la page.',
 	'cant-move-user-page' => 'Vous n’avez pas la permission de renommer les pages principales d’utilisateurs (en dehors de leurs sous-pages).',
 	'cant-move-to-user-page' => 'Vous n’avez pas la permission de renommer une page vers une page utilisateur (à l’exception d’une sous-page).',
 	'cantmove-titleprotected' => 'Vous ne pouvez pas déplacer une page vers cet emplacement car la création de page avec ce nouveau titre a été protégée.',
-	'common.css' => '/** Met en italique les redirections dans Special:Allpages et Special:Watchlist **/
-.allpagesredirects, .watchlistredir { font-style: italic;  }',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
 	'common.js' => '/* Tout JavaScript ici sera chargé pour chaque page visitée par n’importe quel utilisateur. */',
 	'creditspage' => 'Crédits de la page',
 	'confirmemail' => 'Confirmer l’adresse e-mail',
@@ -13126,18 +13103,7 @@ l'utente che le ha effettuate è l'unico ad aver contribuito alla pagina.",
 	'cant-move-user-page' => 'Non si dispone dei permessi necessari per spostare le pagine utente (ad eccezione delle sottopagine).',
 	'cant-move-to-user-page' => 'Non si dispone dei permessi necessari per spostare la pagina su una pagina utente (ad eccezione delle sottopagine utente).',
 	'cantmove-titleprotected' => 'Lo spostamento della pagina non è possibile in quanto il nuovo titolo è stato protetto per impedirne la creazione',
-	'common.css' => '/* Gli stili CSS inseriti qui saranno applicati su tutto il sito e in tutte le skin */
-
-/* Evidenzia i redirect su Special:Allpages e Special:Watchlist */
-.allpagesredirect {
-	font-style: italic;
-}
-.allpagesredirect:after {
-	color: #808080; content: " (redirect)"
-}
-.watchlistredir {
-	font-style: italic;
-}',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
 	'common.js' => '/* Il codice JavaScript inserito qui viene caricato da tutti gli utenti ad ogni visualizzazione di pagina. */',
 	'creditspage' => 'Autori della pagina',
 	'confirmemail' => 'Conferma indirizzo e-mail',
@@ -13625,18 +13591,7 @@ hideuser権限を持っていないため、この利用者のブロックを閲
 	'cant-move-user-page' => 'ユーザーページを移動させる権限がありません（サブページ内は除く）。',
 	'cant-move-to-user-page' => 'このページを利用者ページへ移動させる権限がありません。（ユーザーのサブページを除く）',
 	'cantmove-titleprotected' => '新しいページ名が作成保護されているため、この場所にページを移動できません。',
-	'common.css' => '/***** ここに書いたCSSはサイト全体のすべてのスキンに適用されます *****/
-
-/*  Special:Allpagesと Special:Watchlistでリダイレクトとしてマーク */
-.allpagesredirect {
-   font-style: italic;
-}
-.allpagesredirect:after {
-   color: #808080; content: " (リダイレクト)"
-}
-.watchlistredir {
-   font-style: italic;
-}',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
 	'common.js' => '/* ここにあるすべてのJavaScriptは、すべての利用者のどのページに対しても読み込まれます */',
 	'creditspage' => 'ページの帰属表示',
 	'confirmemail' => 'メールアドレスの確認',
@@ -21002,18 +20957,7 @@ Omdat je het recht 'hideuser' niet hebt, kun je de blokkade van de gebruiker nie
 	'cant-move-user-page' => "Je hebt geen rechten om gebruikerspagina's te hernoemen (met uitzondering van subpagina's).",
 	'cant-move-to-user-page' => 'Je hebt geen rechten om een pagina naar een gebruikerspagina te hernoemen. Hernoemen naar een subpagina is wel mogelijk.',
 	'cantmove-titleprotected' => 'Je kunt geen pagina naar deze paginaam hernoemen, omdat deze paginanaam beveiligd is tegen het aanmaken ervan.',
-	'common.css' => '/***** CSS die hier wordt geplaatst heeft invloed op alle skins op de hele site *****/
-
-/* Markeert doorverwijzingen in Speciaal:AllePaginas en Speciaal:Volglijst  */
-.allpagesredirect {
-   font-style: italic;
-}
-.allpagesredirect:after {
-   color: #808080; content: " (doorverwijzing)"
-}
-.watchlistredir {
-   font-style: italic;
-}',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
 	'common.js' => "/* JavaScript die hier wordt geplaatst heeft invloed op alle pagina's voor alle gebruikers */",
 	'creditspage' => 'Auteurspagina',
 	'confirmemail' => 'E-mailadres bevestigen',
@@ -22513,17 +22457,7 @@ Ktoś inny prawdopodobnie odtworzył już tę stronę.',
 	'cant-move-user-page' => 'Nie masz uprawnień do przenoszenia stron użytkowników (za wyjątkiem podstron).',
 	'cant-move-to-user-page' => 'Nie masz uprawnień do przenoszenia strony do strony użytkownika (za wyjątkiem podstron użytkownika).',
 	'cantmove-titleprotected' => 'Nie możesz przenieść strony, ponieważ nowa nazwa strony jest niedozwolona z powodu zabezpieczenia przed utworzeniem.',
-	'common.css' => '/* Umieszczony tutaj kod CSS zostanie zastosowany we wszystkich skórkach */
-
-/* Przekierowania na Specjalna:Wszystkie_strony oraz Specjalna:Obserwowane */
-.allpagesredirect,
-.watchlistredir {
-    font-style: italic;
-}
-.allpagesredirect::after {
-    color: #808080;
-    content: " (przekierowanie)"
-}',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
 	'common.js' => '/* Umieszczony tutaj kod JavaScript zostanie załadowany przez każdego użytkownika, podczas każdego ładowania strony. */',
 	'creditspage' => 'Autorzy',
 	'confirmemail' => 'Potwierdzanie adresu e‐mail',
@@ -23456,18 +23390,7 @@ A justificativa apresentada por $3 foi ''$2''",
 	'cant-move-user-page' => 'Você não possui permissão de mover páginas principais de usuários.',
 	'cant-move-to-user-page' => 'Você não tem permissão para mover uma página para uma página de usuários (exceto para uma subpágina de usuário).',
 	'cantmove-titleprotected' => 'Você não pode mover uma página para tal denominação uma vez que o novo título se encontra protegido contra criação',
-	'common.css' => '/***** o código CSS colocado aqui será aplicado a todos os temas ******/
-
-/* Marque redirecionamentos em Special:Allpages e Special:Watchlist */
-.allpagesredirect {
-   font-style: italic;
-}
-.allpagesredirect:after {
-   color: #808080; content: " (redirect)"
-}
-.watchlistredir {
-   font-style: italic;
-}',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
 	'common.js' => '/* Códigos JavaScript colocados aqui serão carregados por todos aqueles que acessarem alguma página desta wiki */',
 	'creditspage' => 'Créditos da página',
 	'confirmemail' => 'Confirmar endereço de E-mail',
@@ -24599,7 +24522,7 @@ $3 {{GENDER:$3|указал|указала}} следующую причину: 
 	'cant-move-user-page' => 'У вас нет разрешения переименовывать основные страницы участников.',
 	'cant-move-to-user-page' => 'У вас нет прав переименовывать страницу в страницу участника (можно переименовать в подстраницу).',
 	'cantmove-titleprotected' => 'Невозможно переименовать страницу, так как новое название входит в список запрещённых.',
-	'common.css' => '/** Размещённый здесь CSS будет применяться ко всем темам оформления */',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
 	'common.js' => '/* Размещённый здесь JavaScript код будет загружаться всем пользователям при обращении к каждой странице */',
 	'creditspage' => 'Благодарности',
 	'confirmemail' => 'Подтверждение адреса электронной почты',
@@ -32024,18 +31947,7 @@ $3的理由是''$2''",
 	'cant-move-user-page' => '您并没有许可权去移动用户页面（它的子页面除外）。',
 	'cant-move-to-user-page' => '您并没有许可权去移动到用户页面（它的子页面除外）。',
 	'cantmove-titleprotected' => '您无法将页面移动到该位置，因为新标题已被保护以防止创建。',
-	'common.css' => '/*****在此处添加CSS将应用于整个网站。*****/
-
-/* 在Special:Allpages和Special:Watchlist标记重定向。*/
-.allpagesredirect {
-   font-style: italic;
-}
-.allpagesredirect:after {
-   color: #808080; content: " (redirect)"
-}
-.watchlistredir {
-   font-style: italic;
-}',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
 	'common.js' => '/* 此处的JavaScript将加载于所有用户每一个页面。 */',
 	'creditspage' => '页面致谢',
 	'confirmemail' => '确认邮箱地址',
@@ -32343,18 +32255,7 @@ ___________________________________________
 	'cant-move-user-page' => '您並沒有許可權去移動用戶頁面（它的子頁面除外）。',
 	'cant-move-to-user-page' => '您並沒有將頁面移動到用戶頁面的權限（它的子頁面除外）。',
 	'cantmove-titleprotected' => '您不可以移動頁面到這個位置，因為該新標題已經被保護以防止建立。',
-	'common.css' => '/*****在此處的CSS將應用於全站。*****/
-
-/* 在Special:Allpages和Special:Watchlist中標記重定向。*/
-.allpagesredirect {
-   font-style: italic;
-}
-.allpagesredirect:after {
-   color: #808080; content: " (redirect)"
-}
-.watchlistredir {
-   font-style: italic;
-}',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
 	'common.js' => '/* 此處的JavaScript將在所有用戶載入每個頁面時使用。 */',
 	'creditspage' => '頁面致謝',
 	'confirmemail' => '確認郵箱位址',

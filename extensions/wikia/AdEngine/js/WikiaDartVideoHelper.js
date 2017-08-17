@@ -50,7 +50,8 @@ define('ext.wikia.adEngine.dartVideoHelper', ['wikia.log', 'wikia.location', 'ex
 			'&env=vp',
 			'&ad_rule=0',
 			'&unviewed_position_start=1',
-			'&url=' + location.origin,
+			'&url=' + encodeURIComponent(location.href),
+			'&description_url=' + encodeURIComponent(location.href),
 			'&correlator=' + ord
 		].join('');
 

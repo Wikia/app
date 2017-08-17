@@ -4,6 +4,7 @@
  */
 define('ext.wikia.adEngine.adContext', [
 	'ext.wikia.adEngine.adLogicPageViewCounter',
+	'wikia.browserDetect',
 	'wikia.cookies',
 	'wikia.document',
 	'wikia.geo',
@@ -11,7 +12,7 @@ define('ext.wikia.adEngine.adContext', [
 	'ext.wikia.adEngine.utils.sampler',
 	'wikia.window',
 	'wikia.querystring'
-], function (pvCounter, cookies, doc, geo, instantGlobals, sampler, w, Querystring) {
+], function (pvCounter, browserDetect, cookies, doc, geo, instantGlobals, sampler, w, Querystring) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
@@ -40,6 +41,10 @@ define('ext.wikia.adEngine.adContext', [
 
 	function isPageType(pageType) {
 		return context.targeting.pageType === pageType;
+	}
+
+	function isInstartLogicSupportedBrowser() {
+		return browserDetect.isChrome() && browserDetect.getBrowserVersion() > 45;
 	}
 
 	function isPageFairDetectionEnabled() {
@@ -71,8 +76,11 @@ define('ext.wikia.adEngine.adContext', [
 			serviceCanBeEnabled = !noExternals && context.opts.showAds !== false; // showAds is undefined by default
 
 		// InstartLogic recovery
-		context.opts.instartLogicRecovery = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
-			context.opts.instartLogicRecovery && geo.isProperGeo(instantGlobals.wgAdDriverInstartLogicRecoveryCountries);
+		context.opts.instartLogicRecovery = serviceCanBeEnabled &&
+			!isRecoveryServiceAlreadyEnabled &&
+			context.opts.instartLogicRecovery &&
+			geo.isProperGeo(instantGlobals.wgAdDriverInstartLogicRecoveryCountries) &&
+			isInstartLogicSupportedBrowser();
 		isRecoveryServiceAlreadyEnabled |= context.opts.instartLogicRecovery;
 
 		// PageFair recovery
@@ -91,6 +99,21 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.sourcePointBootstrap = context.opts.sourcePointMMS || context.opts.sourcePointRecovery;
 	}
 
+	function updateAdContextBidders(context) {
+		var hasFeaturedVideo = context.targeting.hasFeaturedVideo;
+
+		context.bidders.fastlane = geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlanePrebidCountries);
+
+		context.bidders.veles = geo.isProperGeo(instantGlobals.wgAdDriverVelesBidderCountries) &&
+			!hasFeaturedVideo;
+
+		context.bidders.rubicon = geo.isProperGeo(instantGlobals.wgAdDriverRubiconPrebidCountries) &&
+			!hasFeaturedVideo;
+
+		context.bidders.appnexusAst = geo.isProperGeo(instantGlobals.wgAdDriverAppNexusAstBidderCountries) &&
+			!hasFeaturedVideo;
+	}
+
 	function isMEGAEnabledForFVMobile(context) {
 		return context.targeting.skin === 'mercury' &&
 			context.targeting.hasFeaturedVideo &&
@@ -105,13 +128,11 @@ define('ext.wikia.adEngine.adContext', [
 
 	function enableAdMixExperiment(context) {
 		var isPALEnabledOnDesktopFeaturedVideo = !!(
-				isPageType('article') &&
 				context.targeting.skin === 'oasis' &&
 				context.targeting.hasFeaturedVideo &&
 				geo.isProperGeo(instantGlobals.wgAdDriverAdMixCountries)
 			),
 			isPALEnabledOnRegularArticle = !!(
-				isPageType('article') &&
 				context.targeting.skin === 'oasis' &&
 				!context.targeting.hasFeaturedVideo &&
 				geo.isProperGeo(instantGlobals.wgAdDriverPremiumAdLayoutCountries)
@@ -152,6 +173,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.slots = context.slots || {};
 		context.targeting = context.targeting || {};
 		context.providers = context.providers || {};
+		context.bidders = context.bidders || {};
 		context.forcedProvider = qs.getVal('forcead', null) || context.forcedProvider || null;
 		context.opts.noExternals = noExternals;
 
@@ -170,6 +192,8 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.isMoatTrackingForFeaturedVideoEnabled = isMOATTrackingForFVEnabled();
 		updateDetectionServicesAdContext(context, noExternals);
 		updateAdContextRecoveryServices(context, noExternals);
+
+		updateAdContextBidders(context);
 
 		// showcase.*
 		if (cookies.get('mock-ads') === 'NlfdjR5xC0') {
@@ -192,7 +216,8 @@ define('ext.wikia.adEngine.adContext', [
 
 		if (context.providers.rubiconFastlane) {
 			context.providers.rubiconFastlane = geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) &&
-				geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneProviderCountries);
+				geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneProviderCountries) &&
+				!context.bidders.fastlane; // disable non-prebid implementation if Fastlane adapter is active
 		}
 
 		context.opts.enableRemnantNewAdUnit = geo.isProperGeo(instantGlobals.wgAdDriverMEGACountries);
@@ -230,6 +255,9 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.outstreamVideoFrequencyCapping = instantGlobals.wgAdDriverOutstreamVideoFrequencyCapping;
 
 		enableAdMixExperiment(context);
+
+		context.opts.premiumAdLayoutRubiconFastlaneTagsEnabled = context.opts.premiumAdLayoutEnabled &&
+			geo.isProperGeo(instantGlobals.wgAdDriverPremiumAdLayoutRubiconFastlaneTagsCountries);
 
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
