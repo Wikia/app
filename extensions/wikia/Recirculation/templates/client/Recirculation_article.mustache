@@ -1,5 +1,8 @@
 <a href="{{url}}" class="mcf-card mcf-card-wiki-article"
    style="background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000000), url({{thumbnail}});">
+	{{^thumbnail}}
+		{{{fandomHeartSvg}}}
+	{{/thumbnail}}
 	<span class="mcf-card-wiki-article__title">
 		{{title}}
 	</span>

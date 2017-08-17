@@ -190,9 +190,17 @@ h1.mcf-header {
 
 .mcf-card-wiki-article {
 	@include justify-content(flex-end);
+	background-color: #002A32;
 	background-size: cover;
 	background-position: center;
 	position: relative;
+
+	> svg {
+		fill: #fff;
+		height: 100px;
+		opacity: .15;
+		width: 100px;
+	}
 
 	&__title {
 		color: $wds-color-white;

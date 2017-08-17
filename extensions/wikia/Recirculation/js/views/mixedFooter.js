@@ -5,29 +5,27 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 	'ext.wikia.recirculation.utils'
 ], function ($, w, tracker, utils) {
 	'use strict';
-	var $nsHook = $('.ns-article'),
-		$wikiArticleHook = $('.wiki-article'),
-		newsAndStoriesList,
-		wikiArticlesList,
-		templateList,
-		templates = {};
 
 	function render(data) {
-		newsAndStoriesList = data.nsItems.items;
-		wikiArticlesList = data.wikiItems.items;
-		templateList = getTemplateList(newsAndStoriesList);
+		var	newsAndStoriesList = data.nsItems.items,
+			wikiArticlesList = data.wikiItems.items,
+			templateList = getTemplateList(newsAndStoriesList),
+			templates = {};
 
 		$('.mcf-discussions-placeholder').replaceWith(data.discussions);
 
 		utils.loadTemplates(templateList)
 			.then(function (data) {
-			templateList.forEach(function (templateName, index) {
-				templates[templateName] = data[index];
-			})})
-			.then(injectTemplates);
+				templateList.forEach(function (templateName, index) {
+					templates[templateName] = data[index];
+				});
+				injectTemplates(templates, newsAndStoriesList, wikiArticlesList);
+			});
 	}
 
-	function injectTemplates() {
+	function injectTemplates(templates, newsAndStoriesList, wikiArticlesList) {
+		var $nsHook = $('.ns-article'),
+			$wikiArticleHook = $('.wiki-article');
 		$.each($nsHook, function( index ) {
 			var template = templates['client/Recirculation_article.mustache'];
 
@@ -42,7 +40,7 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 		});
 		$.each($wikiArticleHook, function( index ) {
 			var template = templates['client/Recirculation_article.mustache'];
-
+			wikiArticlesList[index].fandomHeartSvg = utils.fandomHeartSvg;
 			$(this).replaceWith(utils.renderTemplate(template, wikiArticlesList[index]));
 		});
 	}
