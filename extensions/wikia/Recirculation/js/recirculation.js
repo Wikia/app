@@ -67,7 +67,7 @@ require([
 		if (videosModule) {
 			videosModule('#recirculation-rail');
 		}
-		oldDiscussions();
+		// oldDiscussions();
 		return;
 	}
 
@@ -125,38 +125,5 @@ require([
 				});
 			}
 		};
-	}
-// TODO Remove fetchFandom
-	function fetchFandom() {
-		var deferred = $.Deferred();
-		var fandomOptions = {
-			max: 17,
-			widget: 'wikia-impactfooter',
-			source: 'fandom',
-			opts: {
-				resultType: 'cross-domain',
-				domainType: 'fandom.wikia.com'
-			}
-		};
-		var configuredHelper = liftigniter(fandomOptions);
-		configuredHelper.loadData()
-			.done(function (data) {
-				deferred.resolve(data);
-
-				var articleCards = $('.mcf-card-wiki-article__title');
-				var articleBackgrounds = $('a.mcf-card.mcf-card-wiki-article');
-				$.each(articleCards, function (index) {
-					this.innerText = data.items[index].title;
-				});
-
-				$.each(articleBackgrounds, function (index) {
-					$(this).attr('style', 'background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000000), url(' + data.items[index].thumbnail +')');
-					$(this).attr('href', data.items[index].url)
-				});
-
-			})
-			.fail(function (err) {
-				deferred.reject(err);
-			});
 	}
 });

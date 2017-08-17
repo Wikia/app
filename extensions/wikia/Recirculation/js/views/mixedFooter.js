@@ -7,7 +7,6 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 	'use strict';
 
 	function render(data) {
-		console.log(data);
 		var	newsAndStoriesList = data.nsItems.items,
 			wikiArticlesList = data.wikiItems.items,
 			templateList = getTemplateList(newsAndStoriesList),
@@ -28,7 +27,7 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 		var $newsAndStoriesHook = $('.ns-article'),
 			$wikiArticleHook = $('.wiki-article');
 
-		$.each($newsAndStoriesHook, function( index ) {
+		$.each($newsAndStoriesHook, function(index) {
 			var template = templates['client/Recirculation_article.mustache'];
 
 			if (newsAndStoriesList[index].type === 'topic') {
@@ -44,8 +43,10 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 
 		$.each($wikiArticleHook, function( index ) {
 			var template = templates['client/Recirculation_article.mustache'];
-			// TODO check for thumbnail
-			wikiArticlesList[index].fandomHeartSvg = utils.fandomHeartSvg;
+
+			if (!wikiArticlesList[index].thumbnail) {
+				wikiArticlesList[index].fandomHeartSvg = utils.fandomHeartSvg;
+			}
 
 			$(this).replaceWith(utils.renderTemplate(template, wikiArticlesList[index]));
 		});
@@ -72,7 +73,7 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 	return function() {
 		return {
 			render: render
-			//setupTracking: setupTracking
+			//TODO setupTracking: setupTracking
 		};
 	};
 });
