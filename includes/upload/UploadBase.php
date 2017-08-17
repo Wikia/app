@@ -231,6 +231,8 @@ abstract class UploadBase {
 	 * @return mixed self::OK or else an array with error information
 	 */
 	public function verifyUpload() {
+		global $wgMaxImageArea;
+
 		/**
 		 * If there was no filename or a zero size given, give up quick.
 		 */
@@ -248,6 +250,25 @@ abstract class UploadBase {
 				'max' => $maxSize,
 			);
 		}
+
+		// Wikia change - check if image resolution does not exceed wgMaxImageArea - @author: ryba
+		$imgInfo = getimagesize($this->mUpload->getTempName());
+		$imgWidth = $imgInfo[0];
+		$imgHeight = $imgInfo[1];
+		$mime = $imgInfo['mime'];
+		$imageResolution = $imgHeight * $imgWidth;
+		if ( $imageResolution > $wgMaxImageArea && $mime !== 'image/jpeg' ) {
+			return [
+				'status' => self::VERIFICATION_ERROR,
+				'details' => [
+					'file-resolution-exceeded',
+					round( $imageResolution / 1000000, 2 ),
+					round( $wgMaxImageArea / 1000000, 2 ),
+					$mime
+				]
+			];
+		}
+		// Wikia change - end
 
 		/**
 		 * Look at the contents of the file; if we can recognize the

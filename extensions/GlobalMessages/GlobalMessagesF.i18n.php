@@ -13,6 +13,7 @@ $messages['en'] = array(
 	'feed-unavailable' => 'Syndication feeds are not available',
 	'feed-atom' => 'Atom',
 	'feed-rss' => 'RSS',
+	'file-resolution-exceeded' => 'Provided image resolution ($1 MP) exceeds maximum allowed resolution of $2 MP for $3 MIME type.',
 	'fileappenderrorread' => 'Could not read "$1" during append.',
 	'fileappenderror' => 'Could not append "$1" to "$2".',
 	'filecopyerror' => 'Could not copy file "$1" to "$2".',
