@@ -23,6 +23,22 @@ require([
 	playerTracker,
 	vastUrlBuilder
 ) {
+	var FEATURED_VIDEO_SIZE = 640 / 480,
+		correlator = Math.round(Math.random() * 10000000000);
+
+	function generateSet(vpos, type, position) {
+		return {
+			position_type: type,
+			position: position,
+			tag_url: vastUrlBuilder.build(FEATURED_VIDEO_SIZE, {
+				pos: 'FEATURED',
+				src: 'premium'
+			}, {
+				vpos: vpos,
+				correlator: correlator
+			})
+		};
+	}
 
 	$(function () {
 		var $video = $('#article-video'),
@@ -85,10 +101,17 @@ require([
 				};
 
 			if (vastUrlBuilder && adContext && adContext.getContext().opts.showAds) {
-				options.vastUrl = vastUrlBuilder.build(640/480, {
-					pos: 'FEATURED',
-					src: 'premium'
-				});
+				options.adSet = [generateSet('preroll', 'p', 0)];
+
+				if (adContext.getContext().opts.isFVMidrollEnabled) {
+					options.adSet.push(generateSet('midroll', 'p', 50));
+				}
+
+				if (adContext.getContext().opts.isFVPostrollEnabled) {
+					// postroll should has more than 100% to correct working, if it is 100%
+					options.adSet.push(generateSet('postroll', 'p', 101));
+				}
+
 			} else {
 				playerTrackerParams.adProduct = 'featured-video-no-preroll';
 			}

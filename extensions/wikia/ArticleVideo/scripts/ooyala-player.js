@@ -123,16 +123,12 @@ define('ooyala-player', ['wikia.browserDetect'], function (browserDetect) {
 			params.discoveryApiAdditionalParams = {
 				discovery_profile_id: 0,
 				where: 'labels INCLUDES \'' + options.recommendedLabel + '\''
-			}
+			};
 		}
 
-		if (options.vastUrl) {
+		if (options.vastUrl || options.adSet) {
 			params['google-ima-ads-manager'] = {
-				all_ads: [
-					{
-						tag_url: options.vastUrl
-					}
-				],
+				all_ads: options.adSet ? options.adSet : [{ tag_url: options.vastUrl }],
 				useGoogleAdUI: true,
 				useGoogleCountdown: false,
 				onBeforeAdsManagerStart: function (IMAAdsManager) {
@@ -163,7 +159,7 @@ define('ooyala-player', ['wikia.browserDetect'], function (browserDetect) {
 					}, false, this);
 				}
 			};
-			params.replayAds = false;
+			params.replayAds = true;
 		}
 
 		html5Player = new OoyalaHTML5Player(document.getElementById(videoElementId), params, onCreate, options.inlineSkinConfig);

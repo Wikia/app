@@ -13,6 +13,7 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 			vertical: '320x480',
 			horizontal: '640x480'
 		},
+		availableVideoPositions = ['preroll', 'midroll', 'postroll'],
 		baseUrl = 'https://pubads.g.doubleclick.net/gampad/ads?',
 		logGroup = 'ext.wikia.adEngine.video.vastUrlBuilder';
 
@@ -55,7 +56,7 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 		options = options || {};
 		slotParams = slotParams || {};
 
-		var correlator = Math.round(Math.random() * 10000000000),
+		var correlator = options.correlator ? options.correlator : Math.round(Math.random() * 10000000000),
 			params = [
 				'output=vast',
 				'env=vp',
@@ -73,6 +74,10 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 
 		if (options.numberOfAds !== undefined) {
 			params.push('pmad=' + options.numberOfAds);
+		}
+
+		if (!options.prerollOnly && options.vpos && availableVideoPositions.indexOf(options.vpos) > -1) {
+			params.push('vpos=' + options.vpos);
 		}
 
 		if (options.prerollOnly) {
