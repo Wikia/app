@@ -76,12 +76,8 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 			params.push('pmad=' + options.numberOfAds);
 		}
 
-		if (!options.prerollOnly && options.vpos && availableVideoPositions.indexOf(options.vpos) > -1) {
+		if (options.vpos && availableVideoPositions.indexOf(options.vpos) > -1) {
 			params.push('vpos=' + options.vpos);
-		}
-
-		if (options.prerollOnly) {
-			params.push('vpos=preroll');
 		}
 
 		url = baseUrl + params.join('&');

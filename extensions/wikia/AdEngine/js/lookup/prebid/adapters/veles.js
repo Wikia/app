@@ -135,8 +135,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 				src: skin === 'oasis' ? 'gpt' : 'mobile',
 				passback: bidderName
 			}, {
-				numberOfAds: 1,
-				prerollOnly: true
+				numberOfAds: 1
 			});
 
 		request.onreadystatechange = function () {
