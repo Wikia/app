@@ -39,7 +39,7 @@ define('ext.wikia.recirculation.views.impactFooter', [
 
 		return utils.prepareFooter()
 			.then(plista.prepareData(renderData))
-			.then(function() {
+			.then(function () {
 				return utils.renderTemplateByName('client/impactFooter.mustache', renderData)
 			})
 			.then(function ($html) {

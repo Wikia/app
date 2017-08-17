@@ -8,40 +8,40 @@
 			'communityHeaderBackground' => $communityHeaderBackground,
 			'wikiArticles' => $topWikiArticles,
 		] ); ?>
-		<div class="ns-article"></div>
-		<div class="wiki-article"></div>
+		<div class="mcf-card-ns-placeholder"></div>
+		<div class="mcf-card-wiki-placeholder"></div>
 	</div>
 	<div class="mcf-row">
 		<div class="mcf-discussions-placeholder"></div>
 		<div class="mcf-col">
 			<div class="mcf-row">
-				<div class="ns-article"></div>
-				<div class="wiki-article"></div>
+				<div class="mcf-card-ns-placeholder"></div>
+				<div class="mcf-card-wiki-placeholder"></div>
 			</div>
 			<div class="mcf-row">
-				<div class="ns-article"></div>
-				<div class="wiki-article"></div>
+				<div class="mcf-card-ns-placeholder"></div>
+				<div class="mcf-card-wiki-placeholder"></div>
 			</div>
 		</div>
 	</div>
 	<div class="mcf-row">
-		<div class="ns-article"></div>
-		<div class="wiki-article"></div>
-		<div class="ns-article"></div>
+		<div class="mcf-card-ns-placeholder"></div>
+		<div class="mcf-card-wiki-placeholder"></div>
+		<div class="mcf-card-ns-placeholder"></div>
 	</div>
 	<div class="mcf-row">
-		<div class="wiki-article"></div>
-		<div class="ns-article"></div>
-		<div class="wiki-article"></div>
+		<div class="mcf-card-wiki-placeholder"></div>
+		<div class="mcf-card-ns-placeholder"></div>
+		<div class="mcf-card-wiki-placeholder"></div>
 	</div>
 	<div class="mcf-row">
-		<div class="ns-article"></div>
-		<div class="wiki-article"></div>
-		<div class="ns-article"></div>
+		<div class="mcf-card-ns-placeholder"></div>
+		<div class="mcf-card-wiki-placeholder"></div>
+		<div class="mcf-card-ns-placeholder"></div>
 	</div>
 	<div class="mcf-row">
-		<div class="wiki-article"></div>
+		<div class="mcf-card-wiki-placeholder"></div>
 		<?= F::app()->renderPartial('Recirculation', 'exploreWikis', [ 'recirculationExploreWikis' => wfMessage( 'recirculation-explore-wikis' )->escaped() ]); ?>
-		<div class="ns-article"></div>
+		<div class="mcf-card-ns-placeholder"></div>
 	</div>
 </div>

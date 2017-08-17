@@ -7,7 +7,7 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 	'use strict';
 
 	function render(data) {
-		var	newsAndStoriesList = data.nsItems.items,
+		var newsAndStoriesList = data.nsItems.items,
 			wikiArticlesList = data.wikiItems.items,
 			templateList = getTemplateList(newsAndStoriesList),
 			templates = {};
@@ -24,34 +24,36 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 	}
 
 	function injectTemplates(templates, newsAndStoriesList, wikiArticlesList) {
-		var $newsAndStoriesHook = $('.ns-article'),
-			$wikiArticleHook = $('.wiki-article');
+		var $newsAndStoriesHook = $('.mcf-card-ns-placeholder'),
+			$wikiArticleHook = $('.mcf-card-wiki-placeholder');
 
-		$.each($newsAndStoriesHook, function(index) {
-			var template = templates['client/Recirculation_article.mustache'];
+		$.each($newsAndStoriesHook, function (index) {
+			var template = templates['client/Recirculation_article.mustache'],
+				newsAndStoriesItem = newsAndStoriesList[index];
 
-			if (newsAndStoriesList[index].type === 'topic') {
+			if (newsAndStoriesItem.type === 'topic') {
 				template = templates['client/Recirculation_topic.mustache'];
-				newsAndStoriesList[index].label = $.msg('recirculation-explore');
-			} else if (newsAndStoriesList[index].type === 'storyStream') {
-				newsAndStoriesList[index].label = $.msg('recirculation-explore-posts');
+				newsAndStoriesItem.buttonLabel = $.msg('recirculation-explore');
+			} else if (newsAndStoriesItem.type === 'storyStream') {
 				template = templates['client/Recirculation_storyStream.mustache'];
+				newsAndStoriesItem.buttonLabel = $.msg('recirculation-explore-posts');
 			}
 
 			$(this).replaceWith(utils.renderTemplate(template, newsAndStoriesList[index]));
 		});
 
-		$.each($wikiArticleHook, function( index ) {
-			var template = templates['client/Recirculation_article.mustache'];
+		$.each($wikiArticleHook, function (index) {
+			var template = templates['client/Recirculation_article.mustache'],
+				wikiArticle = wikiArticlesList[index];
 
-			if (!wikiArticlesList[index].thumbnail) {
-				wikiArticlesList[index].fandomHeartSvg = utils.fandomHeartSvg;
+			if (!wikiArticle.thumbnail) {
+				wikiArticle.fandomHeartSvg = utils.fandomHeartSvg;
 			}
 
-			$(this).replaceWith(utils.renderTemplate(template, wikiArticlesList[index]));
+			$(this).replaceWith(utils.renderTemplate(template, wikiArticle));
 		});
 	}
-	
+
 	function getTemplateList(newsAndStoriesArticles) {
 		var templateList = ['client/Recirculation_article.mustache'],
 			topicExist = false,
@@ -70,7 +72,7 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 		return templateList;
 	}
 
-	return function() {
+	return function () {
 		return {
 			render: render
 			//TODO setupTracking: setupTracking

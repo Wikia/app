@@ -17,19 +17,6 @@ require([
              discussions,
              oldDiscussions,
              videosModule) {
-	/**
-	 *
-	 *  var recircModules = [
-	 *    {
-	 *  		id: 'unique identifier - only used if you want to use data across multiple views',
-	 *  		viewModule: 'name of the view',
-	 *  		options: {
-	 *  			any options to pass to the liftigniter helper
-	 *  		}
-	 *  	}
-	 *  ];
-	 *
-	 */
 	'use strict';
 
 	var $mixedContentFooter = $('#mixed-content-footer'),
@@ -63,8 +50,7 @@ require([
 				height: 337,
 				modelName: 'wiki'
 			}
-		},
-		logGroup = 'ext.wikia.recirculation';
+		};
 
 	if (w.wgContentLanguage !== 'en') {
 		if (videosModule) {
@@ -105,26 +91,4 @@ require([
 
 	// TODO handle errors
 	// TODO LI tracking
-
-	function handleError(viewModule) {
-		return function (errorMessage) {
-			log(errorMessage, 'info', logGroup);
-
-			if (viewModule === 'ext.wikia.recirculation.views.premiumRail') {
-				require([
-					'ext.wikia.recirculation.helpers.fandom',
-					viewModule
-				], function (helper, view) {
-					helper({
-						type: 'community',
-						fill: true,
-						limit: 10
-					}).loadData()
-						.done(function (data) {
-							view().render(data);
-						});
-				});
-			}
-		};
-	}
 });
