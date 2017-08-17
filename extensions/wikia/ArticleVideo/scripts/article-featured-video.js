@@ -89,9 +89,8 @@ require([
 					pos: 'FEATURED',
 					src: 'premium'
 				}, {
-					prerollOnly: true,
-					cmsid: window.wgOoyalaParams.dfpContentSourceId,
-					vid: videoId
+					contentSourceId: window.wgOoyalaParams.dfpContentSourceId,
+					videoId: videoId
 				});
 			} else {
 				playerTrackerParams.adProduct = 'featured-video-no-preroll';

@@ -71,9 +71,9 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 			],
 			url;
 
-		if (options.cmsid && options.vid) {
-			params.push('cmsid=' + options.cmsid);
-			params.push('vid=' + options.vid);
+		if (options.contentSourceId && options.videoId) {
+			params.push('cmsid=' + options.contentSourceId);
+			params.push('vid=' + options.videoId);
 		}
 
 		if (options.numberOfAds !== undefined) {
