@@ -565,6 +565,9 @@ class AutomatedDeadWikisDeletionMaintenance {
 		echo "Sending e-mail about $count wikis that may be deleted soon...\n";
 		$this->sendEmail(
 			self::EMAIL_SENDER,
+			
+			// Warning: only active Google accounts can be used
+			// to post messages to mailing lists.
 			"wikis-to-be-deleted-l@wikia-inc.com",
 			"[dead wikis] {$dateNice} - $count wikis may be deleted soon",
 			"{$count} candidate wikis have been found that may be deleted soon, full list of affected wikis is provided in the attachment.",
