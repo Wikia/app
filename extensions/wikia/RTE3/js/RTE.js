@@ -17,10 +17,10 @@
 			baseFloatZIndex: 5000101, // $zTop + 1 from _layout.scss
 			bodyClass: 'WikiaArticle',
 			bodyId: 'bodyContent',
-			contentsCss: [$.getSassLocalURL('extensions/wikia/RTE3/css/content.scss'), window.RTESiteCss],
+			contentsCss: [$.getSassLocalURL('extensions/wikia/RTE/css/content.scss'), window.RTESiteCss],
 			coreStyles_bold: {element: 'b', overrides: 'strong'},
 			coreStyles_italic: {element: 'i', overrides: 'em'},
-			customConfig: 'config.js',
+			customConfig: '',
 			dialog_backgroundCoverColor: '#000',
 			dialog_backgroundCoverOpacity: 0.8,
 			disableDragDrop: false,
@@ -30,51 +30,37 @@
 			height: 400, // default height when "auto resizing" is not applied
 			indentOffset: 24, // match WikiaArticle styles (BugId:25379)
 			language: window.wgUserLanguage,
-			toolbarCanCollapse: false,
 			plugins:
 				'basicstyles,' +
 				'button,' +
-				'toolbar,' +
 				'clipboard,' +
-		
-				'dialogui,' +
+				'contextmenu,' +
 				'dialog,' +
 				'enterkey,' +
-				'panel,' +
-				'listblock,' +
-				'floatpanel,' +
-				'richcombo,' +
 				'format,' +
-			//	'htmldataprocessor,' +
+				'htmldataprocessor,' +
 				'indent,' +
-				'indentblock,' +
-				'indentlist,' +
+				'keystrokes,' +
 				'list,' +
 				'pastetext,' +
-				'removeformat,' +//not used anywhere though
+				'removeformat,' +
 				'sourcearea,' +
 				'tab,' +
 				'table,' +
 				'tabletools,' +
-				'menu,' +
-				'contextmenu,' +	
 				'undo,' +
-				'justify,' +
 				'wysiwygarea',
 
 			// Custom RTE plugins for CKEDITOR
 			// Used to be built in RTE.loadPlugins()
-		extraPlugins:
-			
-		 
+			extraPlugins:
 				'rte-accesskey,' +
 				'rte-comment,' +
 				'rte-dialog,' +
 				'rte-dragdrop,' +
 				'rte-entities,' +
 				'rte-gallery,' +
-				//'rte-justify',
-				//'fakeobjects,' +
+				'rte-justify,' +
 				'rte-link,' +
 				'rte-linksuggest,' +
 				'rte-media,' +
@@ -91,10 +77,10 @@
 			// TODO: Too buggy. Try to use this after we update to 3.6.2 (BugId:23061)
 			//readOnly: true,
 			resize_enabled: false,
-			richcomboCss: $.getSassCommonURL('extensions/wikia/RTE3/css/richcombo.scss'),
-			skin: 'moono-lisa',
+			richcomboCss: $.getSassCommonURL('extensions/wikia/RTE/css/richcombo.scss'),
+			skin: 'wikia',
 			startupFocus: true, // Also used for determining wether to focus after modeswitch (BugId:19807)
-	//		theme: 'wikia'
+			theme: 'wikia'
 		},
 
 		// Unique editor instance Id, set on modeswitch
@@ -224,11 +210,10 @@
 		// final setup of editor's instance
 		onEditorReady: function(event) {
 			var editor = event.editor,
-			instanceId = editor.instanceId;
+				instanceId = editor.instanceId;
 
 			// base colors: use color / background-color from .color1 CSS class
-			//RTE.tools.getThemeColors();
-			//No more theme
+			RTE.tools.getThemeColors();
 
 			// remove HTML indentation
 			editor.dataProcessor.writer.indentationChars = '';
@@ -239,10 +224,10 @@
 				if (editor.mode == 'wysiwyg') {
 					editor.fire('saveSnapshot');
 				}
-			
+
 				editor.fire('modeSwitch');
 			}
-	
+
 			// ok, we're done!
 			RTE.loaded.push(editor);
 
@@ -473,9 +458,9 @@ CKEDITOR.getUrl = function( resource ) {
 	// If this is not a full or absolute path.
 	if ( resource.indexOf('://') == -1 && resource.indexOf( '/' ) !== 0 ) {
 		// Wikia: add _source subdirectory
-	//	if ( resource.indexOf('_source') == -1 ) {
-	//		resource = '_source/' + resource;
-	//	}
+		if ( resource.indexOf('_source') == -1 ) {
+			resource = '_source/' + resource;
+		}
 
 		resource = this.basePath + resource;
 	}

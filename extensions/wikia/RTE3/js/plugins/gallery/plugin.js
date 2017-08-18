@@ -27,24 +27,24 @@ CKEDITOR.plugins.add('rte-gallery',
 				type: WikiaPhotoGallery.TYPE_GALLERY,
 				commandName: 'addgallery',
 				buttonName: 'Gallery',
-				buttonLabel: editor.lang['rte-gallery'].gallery,
-				buttonTooltip: editor.lang['rte-gallery'].addGallery,
+				buttonLabel: editor.lang.photoGallery.gallery,
+				buttonTooltip: editor.lang.photoGallery.addGallery,
 				buttonClass: 'RTEGalleryButton'
 			});
 			self.addButton(editor,{
 				type: WikiaPhotoGallery.TYPE_SLIDESHOW,
 				commandName: 'addslideshow',
 				buttonName: 'Slideshow',
-				buttonLabel: editor.lang['rte-gallery'].slideshow,
-				buttonTooltip: editor.lang['rte-gallery'].addSlideshow,
+				buttonLabel: editor.lang.photoGallery.slideshow,
+				buttonTooltip: editor.lang.photoGallery.addSlideshow,
 				buttonClass: 'RTESlideshowButton'
 			});
 			self.addButton(editor,{
 				type: WikiaPhotoGallery.TYPE_SLIDER,
 				commandName: 'addslider',
 				buttonName: 'Slider',
-				buttonLabel: editor.lang['rte-gallery'].slider,
-				buttonTooltip: editor.lang['rte-gallery'].addSlider,
+				buttonLabel: editor.lang.photoGallery.slider,
+				buttonTooltip: editor.lang.photoGallery.addSlider,
 				buttonClass: 'RTESliderButton'
 			});
 		}

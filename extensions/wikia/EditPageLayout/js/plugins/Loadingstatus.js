@@ -68,7 +68,6 @@
 
 		set: function( state ) {
 			this.editor.log('loading-status: ', state);
-			debugger;
 			if ((this.state = state)) {
 				var text = this.editor.msg(this.MESSAGE_PREFIX + state);
 
