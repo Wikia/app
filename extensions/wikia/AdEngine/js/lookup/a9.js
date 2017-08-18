@@ -24,6 +24,8 @@ define('ext.wikia.adEngine.lookup.a9', [
 			}
 		},
 		amazonId = '3115',
+		bids = {},
+		priceMap = {},
 		slots = [];
 
 	function call(skin, onResponse) {
@@ -44,13 +46,21 @@ define('ext.wikia.adEngine.lookup.a9', [
 			pubID: amazonId
 		});
 
+		// TODO remove debugging
 		console.log(getA9Slots(slots));
 
 		win.apstag.fetchBids({
 			slots: getA9Slots(slots),
 			timeout: 2000
-		}, function(bids) {
-			console.log(bids);
+		}, function(currentBids) {
+			// TODO remove debugging
+			console.log(currentBids);
+
+			currentBids.forEach(function (bid) {
+				bids[bid.slotId] = bid;
+			});
+
+			onResponse();
 		});
 	}
 
@@ -85,15 +95,32 @@ define('ext.wikia.adEngine.lookup.a9', [
 	}
 
 	function calculatePrices() {
+		Object.keys(bids).forEach(function(slotName) {
+			// TODO convert bidId into $
+			priceMap[slotName] = bids[slotName].amznbid;
+		});
 	}
 
 	function encodeParamsForTracking(params) {
+		return params.amznsz + ';' + params.amznbid;
 	}
 
 	function getSlotParams(slotName) {
+		var bid = bids[slotName];
+
+		if (!bid) {
+			return {};
+		}
+
+		return {
+			amznbid: bid.amznbid,
+			amzniid: bid.amzniid,
+			amznsz: bid.amznsz
+		};
 	}
 
 	function getPrices() {
+		return priceMap;
 	}
 
 	function isSlotSupported(slotName) {
