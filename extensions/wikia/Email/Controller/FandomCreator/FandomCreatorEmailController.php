@@ -13,4 +13,11 @@ abstract class FandomCreatorEmailController extends EmailController {
 		$domain = $this->getVal('domain');
 		$this->magicWordWrapper = new MagicWordWrapper($sitename, $domain);
 	}
+
+	protected function getFooterMessages() {
+		return [
+				$this->getMessage( 'emailext-recipient-notice', $this->getTargetUserEmail() )->parse(),
+				$this->getMessage( 'emailext-unsubscribe', $this->getUnsubscribeLink() )->parse(),
+		];
+	}
 }
