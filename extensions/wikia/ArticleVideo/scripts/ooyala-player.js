@@ -164,7 +164,7 @@ define('ooyala-player', ['wikia.browserDetect'], function (browserDetect) {
 				}
 			};
 
-			params.replayAds = options.replayAds !== undefined ? options.replayAds : false;
+			params.replayAds = options.replayAds || false;
 		}
 
 		html5Player = new OoyalaHTML5Player(document.getElementById(videoElementId), params, onCreate, options.inlineSkinConfig);
