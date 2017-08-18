@@ -14,19 +14,19 @@ class ContentUpdatedController extends FandomCreatorEmailController {
 
 	public function initEmail() {
 		parent::initEmail();
-		$this->contentTitle = $this->request->getVal('contentTitle');
-		$this->contentUrl = $this->request->getVal('contentUrl');
-		$this->editSummary = $this->request->getVal('editSummary');
+		$this->contentTitle = $this->request->getVal( 'contentTitle' );
+		$this->contentUrl = $this->request->getVal( 'contentUrl' );
+		$this->editSummary = $this->request->getVal( 'editSummary' );
 	}
 
-	public function getSubject():string {
-		return $this->magicWordWrapper->wrap(function() {
+	public function getSubject(): string {
+		return $this->magicWordWrapper->wrap( function() {
 			return $this->getMessage(
 					'emailext-watchedpage-article-edited-subject',
 					$this->contentTitle,
 					$this->getCurrentUserName()
 			)->text();
-		});
+		} );
 	}
 
 	/**
@@ -38,8 +38,8 @@ class ContentUpdatedController extends FandomCreatorEmailController {
 	 * 	buttonLink - where buttonText goes
 	 */
 	public function body() {
-		$this->magicWordWrapper->wrap(function() {
-			$this->response->setData([
+		$this->magicWordWrapper->wrap( function() {
+			$this->response->setData( [
 					'salutation' => $this->getSalutation(),
 					'summary' => $this->getSummary(),
 					'editorUserName' => $this->getCurrentUserName(),
@@ -47,11 +47,11 @@ class ContentUpdatedController extends FandomCreatorEmailController {
 					'details' => $this->getDetails(),
 					'contentFooterMessages' => $this->getContentFooterMessages(),
 					'hasContentFooterMessages' => true,
-			]);
-		});
+			] );
+		} );
 	}
 
-	private function getSummary():string {
+	private function getSummary(): string {
 		return $this->getMessage(
 				'emailext-watchedpage-article-edited',
 				$this->contentUrl,
@@ -59,11 +59,11 @@ class ContentUpdatedController extends FandomCreatorEmailController {
 		)->parse();
 	}
 
-	private function getDetails():string {
+	private function getDetails(): string {
 		return $this->editSummary ? "\"{$this->editSummary}\"" : '';
 	}
 
-	private function getContentFooterMessages():array {
+	private function getContentFooterMessages(): array {
 		return [
 				$this->getMessage(
 						'emailext-watchedpage-article-link-text',
