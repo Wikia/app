@@ -198,7 +198,8 @@ if(wfReadOnly() && is_object($wgRequest) && $wgRequest->wasPosted()) {
 	) {
 
 		// SUS-2627: emit a proper HTTP error code indicating that something went wrong
-		HttpStatus::header( 500 );
+		// RFC says "The server is currently unable to handle the request due to a temporary overloading or maintenance of the server. "
+		HttpStatus::header( 503 );
 		header( "X-MediaWiki-ReadOnly: 1" );
 		header( "Content-Type: text/html; charset=utf-8" );
 
