@@ -1,6 +1,8 @@
 <?php
 
-namespace Email\Controller\FandomCreator;
+namespace FandomCreatorEmail\Controller;
+
+use FandomCreatorEmail\FandomCreatorEmailController;
 
 class ContentUpdatedController extends FandomCreatorEmailController {
 	/** @var string */

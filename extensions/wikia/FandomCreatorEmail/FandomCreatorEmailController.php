@@ -1,6 +1,6 @@
 <?php
 
-namespace Email\Controller\FandomCreator;
+namespace FandomCreatorEmail;
 
 use Email\EmailController;
 

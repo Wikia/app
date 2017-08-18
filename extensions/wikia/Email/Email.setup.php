@@ -80,9 +80,6 @@ $wgAutoloadClasses['Email\Controller\FacebookDisconnectController'] = $dir . 'Co
 $wgAutoloadClasses['Email\Controller\DiscussionReplyController'] = $dir . 'Controller/DiscussionController.class.php';
 $wgAutoloadClasses['Email\Controller\DiscussionUpvoteController'] = $dir . 'Controller/DiscussionController.class.php';
 $wgAutoloadClasses['Email\SpecialSendEmailController'] = $dir . 'SpecialSendEmailController.class.php';
-$wgAutoloadClasses['Email\Controller\FandomCreator\MagicWordWrapper'] = $dir . 'Controller/FandomCreator/MagicWordWrapper.php';
-$wgAutoloadClasses['Email\Controller\FandomCreator\FandomCreatorEmailController'] = $dir . 'Controller/FandomCreator/FandomCreatorEmailController.php';
-$wgAutoloadClasses['Email\Controller\FandomCreator\ContentUpdatedController'] = $dir . 'Controller/FandomCreator/ContentUpdatedController.php';
 
 /**
  * special pages
