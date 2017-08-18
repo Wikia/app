@@ -9,14 +9,10 @@ class ContentUpdatedController extends FandomCreatorEmailController {
 	/** @var string */
 	private $contentUrl;
 
-	/** @var string */
-	private $editSummary;
-
 	public function initEmail() {
 		parent::initEmail();
 		$this->contentTitle = $this->request->getVal( 'contentTitle' );
 		$this->contentUrl = $this->request->getVal( 'contentUrl' );
-		$this->editSummary = $this->request->getVal( 'editSummary' );
 	}
 
 	public function getSubject(): string {
@@ -33,6 +29,7 @@ class ContentUpdatedController extends FandomCreatorEmailController {
 	 * @template avatarLayout
 	 *
 	 * other possible keys:
+	 * 	details - additional email text
 	 * 	editorProfilePage - link to user's profile page on this community
 	 * 	buttonText - button beneath edit summary
 	 * 	buttonLink - where buttonText goes
@@ -44,7 +41,6 @@ class ContentUpdatedController extends FandomCreatorEmailController {
 					'summary' => $this->getSummary(),
 					'editorUserName' => $this->getCurrentUserName(),
 					'editorAvatarURL' => $this->getCurrentAvatarURL(),
-					'details' => $this->getDetails(),
 					'contentFooterMessages' => $this->getContentFooterMessages(),
 					'hasContentFooterMessages' => true,
 			] );
@@ -57,10 +53,6 @@ class ContentUpdatedController extends FandomCreatorEmailController {
 				$this->contentUrl,
 				$this->contentTitle
 		)->parse();
-	}
-
-	private function getDetails(): string {
-		return $this->editSummary ? "\"{$this->editSummary}\"" : '';
 	}
 
 	private function getContentFooterMessages(): array {
