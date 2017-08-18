@@ -36,7 +36,6 @@
 				'button,' +
 				'toolbar,' +
 				'clipboard,' +
-		
 				'dialogui,' +
 				'dialog,' +
 				'enterkey,' +

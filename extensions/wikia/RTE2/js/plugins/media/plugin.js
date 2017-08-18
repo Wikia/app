@@ -27,7 +27,7 @@ CKEDITOR.plugins.add('rte-media', {
 				});
 			}
 		});
-		debugger;
+
 		// register "Image" toolbar button
 		editor.ui.addButton('Image', {
 			label: window.mw.msg('rte-ck-image-photo'),//editor.lang.image.photo,
