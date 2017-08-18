@@ -9,9 +9,9 @@ abstract class FandomCreatorEmailController extends EmailController {
 	protected $magicWordWrapper;
 
 	public function initEmail() {
-		$sitename = $this->getVal('siteName');
-		$domain = $this->getVal('domain');
-		$this->magicWordWrapper = new MagicWordWrapper($sitename, $domain);
+		$siteName = $this->getVal('siteName');
+		$siteUrl = $this->getVal('siteUrl');
+		$this->magicWordWrapper = new MagicWordWrapper($siteName, $siteUrl);
 	}
 
 	protected function getFooterMessages() {

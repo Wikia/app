@@ -8,17 +8,17 @@ use Wikia\Util\GlobalStateWrapper;
 class MagicWordWrapper {
 	private $siteName;
 
-	private $domain;
+	private $siteUrl;
 
-	public function __construct(string $siteName, string $domain) {
+	public function __construct(string $siteName, string $siteUrl) {
 		$this->siteName = $siteName;
-		$this->domain = $domain;
+		$this->siteUrl = $siteUrl;
 	}
 
 	public function wrap(callable $func, array $additionalOverrides = []) {
 		return (new GlobalStateWrapper(array_merge([
 				'wgSitename' => $this->siteName, // {{SITENAME}}
-				'wgServer' => $this->domain, // {{SERVER}}
+				'wgServer' => $this->siteUrl, // {{SERVER}}
 		], $additionalOverrides)))->wrap($func);
 	}
 }
