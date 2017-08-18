@@ -18,6 +18,10 @@ class RecirculationController extends WikiaController {
 
 	public function discussions() {
 		$cityId = $this->request->getVal( 'cityId', null );
+		$sortKey =
+			$this->request->getVal( 'latest', false )
+				? DiscussionsDataService::DISCUSSIONS_API_SORT_KEY_LATEST
+				: DiscussionsDataService::DISCUSSIONS_API_SORT_KEY_TRENDING;
 
 		if ( !empty( $cityId ) && !is_numeric( $cityId ) ) {
 			throw new InvalidParameterApiException( 'cityId' );
@@ -25,7 +29,7 @@ class RecirculationController extends WikiaController {
 
 		if ( RecirculationHooks::canShowDiscussions( $cityId ) ) {
 			$discussionsDataService = new DiscussionsDataService( $cityId );
-			$posts = $discussionsDataService->getData( 'posts' )['posts'];
+			$posts = $discussionsDataService->getData( 'posts', $sortKey )['posts'];
 
 			if ( count( $posts ) > 0 ) {
 				$discussionsUrl = "$discussionsDataService->server/d/f";
@@ -52,14 +56,29 @@ class RecirculationController extends WikiaController {
 	}
 
 	public function footer() {
-		global $wgSitename;
+		global $wgSitename, $wgCityId;
 
 		$themeSettings = new ThemeSettings();
+		$discussionsEnabled = WikiFactory::getVarValueByName( 'wgEnableDiscussions', $wgCityId );
+		$topWikiArticles = $this->getTopWikiArticles();
+		$numberOfWikiArticles = 8;
+		$numberOfNSArticles = 9;
+		if ( !$discussionsEnabled ) {
+			$numberOfWikiArticles++;
+			$numberOfNSArticles++;
+		}
+		if ( empty( $topWikiArticles ) ) {
+			$numberOfNSArticles++;
+		}
+
 		$this->response->setVal( 'communityHeaderBackground',
 			$themeSettings->getCommunityHeaderBackgroundUrl() );
 		$this->response->setVal( 'sitename', $wgSitename );
-		$this->response->setVal( 'topWikiArticles', $this->getTopWikiArticles() );
-		// TODO if topWikiArticles is empty show one more N&S article card instead of More from wiki card
+		$this->response->setVal( 'topWikiArticles', $topWikiArticles );
+		$this->response->setVal( 'discussionsEnabled', $discussionsEnabled );
+		$this->response->setVal( 'numberOfWikiArticles', $numberOfWikiArticles );
+		$this->response->setVal( 'numberOfNSArticles', $numberOfNSArticles );
+
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_PHP );
 	}
 

@@ -157,6 +157,7 @@ $config['recirculation_js'] = [
 		'//extensions/wikia/Recirculation/js/views/premiumRail.js',
 		'//extensions/wikia/Recirculation/js/views/footer.js',
 		'//extensions/wikia/Recirculation/js/views/impactFooter.js',
+		'//extensions/wikia/Recirculation/js/views/mixedFooter.js',
 		'//extensions/wikia/Recirculation/js/recirculation.js',
 		'//extensions/wikia/Recirculation/js/discussions.js',
 		'//extensions/wikia/Recirculation/js/plista.js',

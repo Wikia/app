@@ -188,11 +188,22 @@ h1.mcf-header {
 }
 
 
-.mcf-card-wiki-article {
+.mcf-card-article {
 	@include justify-content(flex-end);
+	background-color: #002A32;
 	background-size: cover;
 	background-position: center;
 	position: relative;
+
+	> svg {
+		align-self: center;
+		fill: #fff;
+		height: 34.5%;
+		opacity: .15;
+		position: absolute;
+		top: 25%;
+		width: auto;
+	}
 
 	&__title {
 		color: $wds-color-white;
@@ -524,7 +535,6 @@ h1.mcf-header {
 
 	&__in {
 		color: $wds-color-light-gray;
-		font-weight: bold;
 	}
 
 	&__counters {

@@ -4,7 +4,8 @@ use Wikia\Service\Gateway\ConsulUrlProvider;
 
 class DiscussionsDataService {
 	const DISCUSSIONS_API_LIMIT = 10;
-	const DISCUSSIONS_API_SORT_KEY = 'trending';
+	const DISCUSSIONS_API_SORT_KEY_TRENDING = 'trending';
+	const DISCUSSIONS_API_SORT_KEY_LATEST = 'creation_date';
 	const DISCUSSIONS_API_SORT_DIRECTION = 'descending';
 	const DISCUSSIONS_API_VIEWABLE_ONLY = true;
 
@@ -24,16 +25,14 @@ class DiscussionsDataService {
 		$this->server = WikiFactory::getVarValueByName( 'wgServer', $this->cityId );
 	}
 
-	public function getData( $type ) {
+	public function getData( $type, $sortKey = self::DISCUSSIONS_API_SORT_KEY_TRENDING ) {
 		$memcKey = wfMemcKey( __METHOD__, $this->cityId, $type, self::MCACHE_VER );
 
-		$rawData = WikiaDataAccess::cache(
-			$memcKey,
-			WikiaResponse::CACHE_VERY_SHORT,
-			function() {
-				return $this->apiRequest();
-			}
-		);
+		$rawData =
+			WikiaDataAccess::cache( $memcKey, WikiaResponse::CACHE_VERY_SHORT,
+				function () use ( $sortKey ) {
+					return $this->apiRequest( $sortKey );
+				} );
 
 		if ( $type === 'posts' ) {
 			$data = $this->getPosts( $rawData );
@@ -77,10 +76,13 @@ class DiscussionsDataService {
 	/**
 	 * Make an API request to parsely to gather posts
 	 * @param string $type
+	 * @param string $sortKey
 	 * @return an array of posts
 	 */
-	private function apiRequest() {
-		$options = [];
+	private function apiRequest( $sortKey ) {
+		$options = [
+			'sortKey' => $sortKey,
+		];
 		$endpoint = $this->cityId . '/threads';
 
 		$url = $this->buildUrl( $endpoint, $options );
@@ -98,7 +100,7 @@ class DiscussionsDataService {
 	private function buildUrl( $endpoint, $options ) {
 		$defaultParams = [
 			'limit' => self::DISCUSSIONS_API_LIMIT,
-			'sortKey' => self::DISCUSSIONS_API_SORT_KEY,
+			'sortKey' => self::DISCUSSIONS_API_SORT_KEY_TRENDING,
 			'sortDirection' => self::DISCUSSIONS_API_SORT_DIRECTION,
 			'viewableOnly' => self::DISCUSSIONS_API_VIEWABLE_ONLY,
 		];
