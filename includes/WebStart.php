@@ -191,6 +191,7 @@ if ( !defined( 'MW_NO_SETUP' ) ) {
 	require_once( MWInit::compiledPath( "includes/Setup.php" ) );
 }
 
+/* @var $wgRequest WebRequest */
 if(wfReadOnly() && is_object($wgRequest) && $wgRequest->wasPosted()) {
 	if (
 		( strpos(strtolower($_SERVER['SCRIPT_URL']), 'datacenter') === false ) &&
@@ -203,7 +204,19 @@ if(wfReadOnly() && is_object($wgRequest) && $wgRequest->wasPosted()) {
 		header( "X-MediaWiki-ReadOnly: 1" );
 		header( "Content-Type: text/html; charset=utf-8" );
 
-$js = <<<EOD
+		// SUS-1634: whitelist WikiFactory methods as they do not touch local wiki cluster database, but a shared database
+		$ajaxMethod = $wgRequest->getVal( 'rs' );
+
+		if ( !in_array(
+				$ajaxMethod,
+				[
+					'axWFactorySaveVariable',
+					'axWFactoryRemoveVariable',
+					'axWFactoryFilterVariables',
+				]
+			) ) {
+
+			$js = <<<EOD
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
@@ -214,9 +227,9 @@ var pageTracker = _gat._getTracker("UA-288915-41");
 pageTracker._trackEvent("error", "PostInReadOnly");
 } catch(err) {}</script>
 EOD;
-		echo "<html><head>{$js}</head><body>{$wgReadOnly}</body></html>";
-		die(-1);
-
+			echo "<html><head>{$js}</head><body>{$wgReadOnly}</body></html>";
+			die(-1);
+		}
 	}
 }
 
