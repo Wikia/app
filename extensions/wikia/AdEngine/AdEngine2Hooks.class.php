@@ -67,9 +67,9 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverPrebidBidderCountries';
 		$vars[] = 'wgAdDriverPremiumAdLayoutCountries';
 		$vars[] = 'wgAdDriverPremiumAdLayoutRubiconFastlaneTagsCountries';
+		$vars[] = 'wgAdDriverRubiconDisplayPrebidCountries';
 		$vars[] = 'wgAdDriverRubiconFastlaneCountries';
 		$vars[] = 'wgAdDriverRubiconFastlaneMercuryFixCountries';
-		$vars[] = 'wgAdDriverRubiconFastlanePrebidCountries';
 		$vars[] = 'wgAdDriverRubiconFastlaneProviderCountries';
 		$vars[] = 'wgAdDriverRubiconFastlaneProviderSkipTier';
 		$vars[] = 'wgAdDriverRubiconPrebidCountries';

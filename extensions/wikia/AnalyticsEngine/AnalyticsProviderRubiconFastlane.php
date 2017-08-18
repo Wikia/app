@@ -2,7 +2,7 @@
 
 class AnalyticsProviderRubiconFastlane implements iAnalyticsProvider {
 	const COUNTRIES_VARIABLE = 'wgAdDriverRubiconFastlaneCountries';
-	const PREBID_COUNTRIES_VARIABLE = 'wgAdDriverRubiconFastlanePrebidCountries';
+	const PREBID_COUNTRIES_VARIABLE = 'wgAdDriverRubiconDisplayPrebidCountries';
 	const MODULE_NAME = 'ext.wikia.adEngine.lookup.rubicon.rubiconFastlane';
 	const TEMPLATE = 'extensions/wikia/AnalyticsEngine/templates/bidder.mustache';
 

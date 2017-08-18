@@ -66,6 +66,7 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 			'bidder_8': transformBidderPrice('veles', realSlotPrices, slotPricesIgnoringTimeout),
 			'bidder_9': transformBidderPrice('openx', realSlotPrices, slotPricesIgnoringTimeout),
 			'bidder_10': transformBidderPrice('appnexusAst', realSlotPrices, slotPricesIgnoringTimeout),
+			'bidder_11': transformBidderPrice('rubicon_display', realSlotPrices, slotPricesIgnoringTimeout),
 			'product_chosen': '',
 			'product_lineitem_id': slotFirstChildData.gptLineItemId || '',
 			'creative_id': slotFirstChildData.gptCreativeId || '',
