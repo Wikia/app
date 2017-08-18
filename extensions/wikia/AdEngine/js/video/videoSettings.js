@@ -28,6 +28,8 @@ define('ext.wikia.adEngine.video.videoSettings', [
 		function calculateMoatTrackingFlag(params) {
 			var sampling = params.moatTracking || 0;
 
+			debugger
+
 			if (typeof params.moatTracking === 'boolean') {
 				return params.moatTracking;
 			}
@@ -35,6 +37,8 @@ define('ext.wikia.adEngine.video.videoSettings', [
 			if ((params.bid && params.bid.moatTracking === 100) || sampling === 100) {
 				return true;
 			}
+
+			return true;
 
 			if (sampling > 0) {
 				return sampler.sample('moatVideoTracking',  sampling, 100) &&
