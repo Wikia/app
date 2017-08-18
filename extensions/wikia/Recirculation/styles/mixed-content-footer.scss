@@ -246,6 +246,32 @@ h1.mcf-header {
 		margin-left: 6px;
 	}
 
+	&__sponsored-bagde {
+		align-items: center;
+		display: flex;
+		width: 157px;
+		height: 30px;
+		opacity: 0.7;
+		border-radius: 2px;
+		position: absolute;
+		top: 12px;
+		left: 12px;
+		background-color: #1a1a1a;
+		font-size: 12px;
+		font-weight: bold;
+		line-height: 1.17;
+		letter-spacing: 0.3px;
+		color: #ffffff;
+	}
+
+	&__plista {
+		bottom: 0;
+		padding: 5px;
+		position: absolute;
+		right: 0;
+		width: 100px;
+	}
+
 }
 
 .mcf-card-wiki-articles {
