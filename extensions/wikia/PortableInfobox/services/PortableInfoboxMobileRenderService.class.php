@@ -159,8 +159,9 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 	 * @return string
 	 */
 	private function renderSmallHeroImage( $title, $image ) {
+		$originalWidth = $image['width'];
 		$image['width'] = self::MOBILE_THUMBNAIL_WIDTH;
-		$image['height'] = round( $image['width'] * 9 / 16 );
+		$image['height'] = round( $image['width'] * ( $image['height'] / $originalWidth ) );
 
 		return $this->renderItem( 'hero-mobile-small', array_merge( $image, [
 			'label' => wfMessage( 'portable-infobox-image' )->escaped(),
