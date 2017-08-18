@@ -229,9 +229,10 @@ require([
 			var adSet = [],
 				adVideoCapping = 3,
 				isReplayAdSupported = adContext.getContext().opts.replayAdsForFV,
-				shouldPlayAdOnNextVideo = videoDepth % adVideoCapping === 0;
+				shouldPlayAdOnNextVideo = videoDepth % adVideoCapping === 0,
+				showAds = adContext && adContext.getContext().opts.showAds;
 
-			if (isReplayAdSupported && shouldPlayAdOnNextVideo) {
+			if (isReplayAdSupported && shouldPlayAdOnNextVideo && vastUrlBuilder && showAds) {
 				adSet = [
 					{
 						tag_url: vastUrlBuilder.build(640/480, {
