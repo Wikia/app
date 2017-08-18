@@ -75,7 +75,7 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 			'viewport_height': win.innerHeight || 0,
 			'product_label': '',
 			'ad_status': status || 'unknown',
-			'scrollY': slotRegistry.getScrollY(slot.name) || 0
+			'scroll_y': slotRegistry.getScrollY(slot.name) || 0
 		};
 
 		return data;
