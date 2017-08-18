@@ -60,7 +60,7 @@ class ContentUpdatedController extends FandomCreatorEmailController {
 	}
 
 	private function getDetails():string {
-		return $this->editSummary ? "\"{$this->editSummary}\"" : $this->getMessage('emailext-watchedpage-no-summary')->text();
+		return $this->editSummary ? "\"{$this->editSummary}\"" : '';
 	}
 
 	private function getContentFooterMessages():array {
