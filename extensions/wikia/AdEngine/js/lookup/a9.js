@@ -59,8 +59,9 @@ define('ext.wikia.adEngine.lookup.a9', [
 
 		Object.keys(slots).forEach(function(slotName) {
 			a9Slots.push({
+				sizes: slots[slotName],
 				slotId: slotName,
-				sizes: slots[slotName]
+				slotName: slotName
 			});
 		});
 
