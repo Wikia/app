@@ -23,6 +23,20 @@ $wgExtensionCredits['Email'][] = [
 
 $dir = dirname( __FILE__ ) . '/';
 
+spl_autoload_register(function($class) {
+	$prefix = 'Email\\Controller\\FandomCreator\\';
+	$len = strlen($prefix);
+
+	if (strncmp($prefix, $class, $len) !== 0) {
+		return;
+	}
+
+	$file = __DIR__.'/../'.str_replace('\\', '/', $class).'.php';
+	if (file_exists($file)) {
+		require $file;
+	}
+});
+
 /**
  * classes
  */
@@ -80,6 +94,7 @@ $wgAutoloadClasses['Email\Controller\FacebookDisconnectController'] = $dir . 'Co
 $wgAutoloadClasses['Email\Controller\DiscussionReplyController'] = $dir . 'Controller/DiscussionController.class.php';
 $wgAutoloadClasses['Email\Controller\DiscussionUpvoteController'] = $dir . 'Controller/DiscussionController.class.php';
 $wgAutoloadClasses['Email\SpecialSendEmailController'] = $dir . 'SpecialSendEmailController.class.php';
+$wgAutoloadClasses['Email\Controller\FandomCreator\ContentUpdatedController'] = $dir . 'Controller/FandomCreator/ContentUpdatedController.php';
 
 /**
  * special pages
