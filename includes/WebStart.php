@@ -197,6 +197,12 @@ if(wfReadOnly() && is_object($wgRequest) && $wgRequest->wasPosted()) {
 		( strpos(strtolower($_SERVER['SCRIPT_URL']), 'api.php') === false )
 	) {
 
+		// SUS-2627: emit a proper HTTP error code indicating that something went wrong
+		// RFC says "The server is currently unable to handle the request due to a temporary overloading or maintenance of the server. "
+		HttpStatus::header( 503 );
+		header( "X-MediaWiki-ReadOnly: 1" );
+		header( "Content-Type: text/html; charset=utf-8" );
+
 $js = <<<EOD
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
