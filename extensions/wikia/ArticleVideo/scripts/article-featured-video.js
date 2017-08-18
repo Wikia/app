@@ -87,8 +87,11 @@ require([
 			if (vastUrlBuilder && adContext && adContext.getContext().opts.showAds) {
 				options.vastUrl = vastUrlBuilder.build(640/480, {
 					pos: 'FEATURED',
-					src: 'premium'
+					src: 'premium',
+					rv: 1
 				});
+
+				options.replayAds = adContext.getContext().opts.replayAdsForFV;
 			} else {
 				playerTrackerParams.adProduct = 'featured-video-no-preroll';
 			}
@@ -220,6 +223,28 @@ require([
 					label: 'attribution'
 				});
 			});
+		}
+
+		function configureAdSet(videoDepth) {
+			var adSet = [],
+				adVideoCapping = 3,
+				isReplayAdSupported = adContext.getContext().opts.replayAdsForFV,
+				shouldPlayAdOnNextVideo = videoDepth % adVideoCapping === 0,
+				showAds = adContext && adContext.getContext().opts.showAds;
+
+			if (isReplayAdSupported && shouldPlayAdOnNextVideo && vastUrlBuilder && showAds) {
+				adSet = [
+					{
+						tag_url: vastUrlBuilder.build(640/480, {
+							pos: 'FEATURED',
+							src: 'premium',
+							rv: Math.floor(videoDepth / adVideoCapping) + 1
+						})
+					}
+				];
+			}
+
+			ooyalaVideoController.updateAdSet(adSet);
 		}
 
 		window.guaSetCustomDimension(34, videoId);
@@ -364,8 +389,7 @@ require([
 					label: 'recommended-video-depth-' + recommendedVideoDepth
 				});
 
-				// Don't play ads between videos
-				window.OO.Ads.unregisterAdManager('google-ima-ads-manager');
+				configureAdSet(recommendedVideoDepth);
 			});
 
 			track({
