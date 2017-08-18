@@ -304,7 +304,7 @@ class UrlGenerator {
 			$imagePath .= empty( $queryString ) ? '' : '?'.$queryString;
 		}
 
-		return $this->domainShard( $imagePath );
+		return $this->config->baseUrl() . '/' . $imagePath;
 	}
 
 	public function config() {
@@ -384,14 +384,5 @@ class UrlGenerator {
 	protected function imageType($type) {
 		$this->imageType = $type;
 		return $this;
-	}
-
-	protected function domainShard($imagePath) {
-		// shard based on original image, so frontends can build thumb urls from originals that might be cached in the
-		// user's browser (VE, for instance)
-		$hash = ord(sha1($this->config->relativePath()));
-		$shard = 1 + ($hash % ($this->config->domainShardCount() - 1));
-
-		return str_replace('<SHARD>', $shard, $this->config->baseUrl()) . "/{$imagePath}";
 	}
 }
