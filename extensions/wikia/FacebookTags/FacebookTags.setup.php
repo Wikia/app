@@ -15,7 +15,7 @@ $wgAutoloadClasses['FacebookTagsHooks'] = __DIR__ . '/FacebookTagsHooks.php';
 $wgHooks['ParserFirstCallInit'][] = 'FacebookTagsHooks::onParserFirstCallInit';
 $wgHooks['BeforePageDisplay'][] = 'FacebookTagsHooks::onBeforePageDisplay';
 
-$wgResourceModules['ext.facebookTags'] = [
+$wgResourceModules['ext.wikia.facebookTags'] = [
 	'scripts' => 'modules/ext.facebookTags.js',
 
 	// apply domain sharding

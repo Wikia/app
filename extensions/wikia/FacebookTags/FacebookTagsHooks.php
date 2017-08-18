@@ -30,7 +30,7 @@ class FacebookTagsHooks {
 	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
 		// We don't want to load this on special pages etc. where such widgets won't be present
 		if ( $out->isArticle() ) {
-			$out->addModules( 'ext.facebookTags' );
+			$out->addModules( 'ext.wikia.facebookTags' );
 		}
 	}
 }
