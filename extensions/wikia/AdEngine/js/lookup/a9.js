@@ -29,8 +29,6 @@ define('ext.wikia.adEngine.lookup.a9', [
 		slots = [];
 
 	function call(skin, onResponse) {
-		// TODO solve price tie with prebid -> bidder_won
-		// TODO Convert bid price sent to kikimora
 		var a9Script = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0],
 			a9Slots;
