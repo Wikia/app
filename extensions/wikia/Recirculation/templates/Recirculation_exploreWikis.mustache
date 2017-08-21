@@ -3,32 +3,15 @@
 		{{recirculationExploreWikis}}
 	</header>
 	<ul class="mcf-card-related-wikis__list">
-		<li class="mcf-card-related-wikis__item">
-			<a href="#" class="mcf-card-related-wikis__item-link">
-				<img src="http://via.placeholder.com/100x56" class="mcf-card-related-wikis__item-image">
-				<div>
-					<span class="mcf-card-related-wikis__title">Twin Peaks Wiki</span>
-					<span class="mcf-card-related-wikis__subtitle">240 recent edits</span>
-				</div>
-			</a>
-		</li>
-		<li class="mcf-card-related-wikis__item">
-			<a href="#" class="mcf-card-related-wikis__item-link">
-				<img src="http://via.placeholder.com/100x56" class="mcf-card-related-wikis__item-image">
-				<div>
-					<span class="mcf-card-related-wikis__title">Twin Peaks Wiki</span>
-					<span class="mcf-card-related-wikis__subtitle">240 recent edits</span>
-				</div>
-			</a>
-		</li>
-		<li class="mcf-card-related-wikis__item">
-			<a href="#" class="mcf-card-related-wikis__item-link">
-				<img src="http://via.placeholder.com/100x56" class="mcf-card-related-wikis__item-image">
-				<div>
-					<span class="mcf-card-related-wikis__title">Twin Peaks Wiki</span>
-					<span class="mcf-card-related-wikis__subtitle">240 recent edits</span>
-				</div>
-			</a>
-		</li>
+		{{#items}}
+			<li class="mcf-card-related-wikis__item">
+				<a href="{{url}}" class="mcf-card-related-wikis__item-link">
+					<img src="{{thumbnailUrl}}" class="mcf-card-related-wikis__item-image">
+					<div>
+						<span class="mcf-card-related-wikis__title">{{title}}</span>
+					</div>
+				</a>
+			</li>
+		{{/items}}
 	</ul>
 </div>

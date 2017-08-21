@@ -4,7 +4,7 @@ use Wikia\Search\TopWikiArticles;
 
 class RecirculationController extends WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
-	const ALLOWED_TYPES = ['popular', 'shares', 'recent_popular'];
+	const ALLOWED_TYPES = [ 'popular', 'shares', 'recent_popular' ];
 	const DEFAULT_TYPE = 'popular';
 
 	public function init() {
@@ -48,6 +48,7 @@ class RecirculationController extends WikiaController {
 					'discussionsUrl' => $discussionsUrl,
 					'posts' => $postObjects,
 				] );
+
 				return true;
 			}
 		}
@@ -64,17 +65,18 @@ class RecirculationController extends WikiaController {
 		$numberOfWikiArticles = 8;
 		$numberOfNSArticles = 9;
 		if ( !$discussionsEnabled ) {
-			$numberOfWikiArticles++;
-			$numberOfNSArticles++;
+			$numberOfWikiArticles ++;
+			$numberOfNSArticles ++;
 		}
 		if ( empty( $topWikiArticles ) ) {
-			$numberOfNSArticles++;
+			$numberOfNSArticles ++;
 		}
 
 		$this->response->setVal( 'communityHeaderBackground',
 			$themeSettings->getCommunityHeaderBackgroundUrl() );
 		$this->response->setVal( 'sitename', $wgSitename );
 		$this->response->setVal( 'topWikiArticles', $topWikiArticles );
+		$this->response->setVal( 'wikiRecommendations', $this->getWikiRecommendations() );
 		$this->response->setVal( 'discussionsEnabled', $discussionsEnabled );
 		$this->response->setVal( 'numberOfWikiArticles', $numberOfWikiArticles );
 		$this->response->setVal( 'numberOfNSArticles', $numberOfNSArticles );
@@ -96,10 +98,16 @@ class RecirculationController extends WikiaController {
 		$index = 1;
 		foreach ( $topWikiArticles as &$wikiArticle ) {
 			$wikiArticle['index'] = $index;
-			$index++;
+			$index ++;
 		}
 
 		return $topWikiArticles;
+	}
+
+	private function getWikiRecommendations() {
+		global $wgLanguageCode;
+
+		return WikiRecommendations::getRecommendations( $wgLanguageCode );
 	}
 
 	public function container( $params ) {
