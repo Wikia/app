@@ -89,21 +89,24 @@ require([
 	// fetch data for all recirculation modules
 	liftigniter.fetch('ns');
 
-	window.addEventListener('scroll', $.throttle(50, function () {
-		if(!wikiArticlesFetched) {
-			var mcfOffset = $mixedContentFooter.offset().top,
-				scrollPosition = $(window).scrollTop(),
-				windowInnerHeight = $(window).height(),
-				lazyLoadOffset = 500,
-				aproachingMCF = scrollPosition > mcfOffset - windowInnerHeight - lazyLoadOffset;
+	window.addEventListener('scroll', function lazyLoadHandler() {
+		($.throttle(50, function () {
+			if(!wikiArticlesFetched) {
+				var mcfOffset = $mixedContentFooter.offset().top,
+					scrollPosition = $(window).scrollTop(),
+					windowInnerHeight = $(window).height(),
+					lazyLoadOffset = 500,
+					aproachingMCF = scrollPosition > mcfOffset - windowInnerHeight - lazyLoadOffset;
 
-			if (aproachingMCF) {
-				liftigniter.fetch('wiki');
-				discussions.fetch();
-				wikiArticlesFetched = true;
+				if (aproachingMCF) {
+					liftigniter.fetch('wiki');
+					discussions.fetch();
+					wikiArticlesFetched = true;
+					window.removeEventListener('scroll', lazyLoadHandler);
+				}
 			}
-		}
-	}));
+		}))()
+	});
 
 
 	// TODO handle errors
