@@ -18,9 +18,6 @@ describe('ext.wikia.adEngine.video.videoFrequencyStore', function () {
 				set: noop
 			},
 			log: noop,
-			pageViewCounter: {
-				get: noop
-			},
 			time: {
 				getInterval: noop
 			},
@@ -28,6 +25,9 @@ describe('ext.wikia.adEngine.video.videoFrequencyStore', function () {
 				getRequiredNumberOfItems: function () {
 					return 100;
 				}
+			},
+			window: {
+				pvNumber: 1
 			}
 		};
 
@@ -43,11 +43,11 @@ describe('ext.wikia.adEngine.video.videoFrequencyStore', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.video.videoFrequencyStore'](
-			mocks.pageViewCounter,
 			mocks.time,
 			mocks.settings,
 			mocks.cache,
-			mocks.log
+			mocks.log,
+			mocks.window
 		);
 	}
 
@@ -74,16 +74,15 @@ describe('ext.wikia.adEngine.video.videoFrequencyStore', function () {
 
 	it('Should return correct number of elements based on pv', function () {
 		var store = getModule();
-		spyOn(mocks.pageViewCounter, 'get');
 
 		store.save({date: 1000, pv: 1});
 		store.save({date: 2999, pv: 3});
-		mocks.pageViewCounter.get.and.returnValue(4);
+		mocks.window.pvNumber = 4;
 		expect(store.numberOfVideosSeenInLastPageViews(2)).toEqual(1);
 
 		store.save({date: 3000, pv: 4});
 		store.save({date: 5000, pv: 6});
-		mocks.pageViewCounter.get.and.returnValue(7);
+		mocks.window.pvNumber = 7;
 		expect(store.numberOfVideosSeenInLastPageViews(4)).toEqual(2);
 	});
 

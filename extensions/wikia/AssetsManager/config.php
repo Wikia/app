@@ -2821,10 +2821,9 @@ $config['page_header_js'] = [
 ];
 
 $config['page_header_scss'] = [
-    'type' => AssetsManager::TYPE_SCSS,
-    'skin' => [ 'oasis' ],
-    'assets' => [
-        '//extensions/wikia/PageHeader/styles/index.scss',
-    ],
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/PageHeader/styles/index.scss',
+	],
 ];
-

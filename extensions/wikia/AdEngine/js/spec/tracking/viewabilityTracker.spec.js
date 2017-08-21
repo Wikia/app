@@ -18,7 +18,7 @@ describe('ext.wikia.adEngine.tracking.viewabilityTracker', function () {
 				kikimoraViewabilityTracking: true
 			},
 			win: {
-				adEnginePvUID: 'fooBarID'
+				pvUID: 'fooBarID'
 			}
 		};
 
