@@ -51,6 +51,8 @@ class WikiFactoryLoader {
 
 	private $mDBhandler, $mDBname;
 
+	const PER_CLUSTER_READ_ONLY_MODE_REASON = 'This cluster is running in read-only mode.';
+
 	/**
 	 * __construct
 	 *
@@ -867,5 +869,23 @@ class WikiFactoryLoader {
 		if( !empty( $this->mDebug ) ) {
 			error_log("wikifactory: {$message}");
 		}
+	}
+
+	/**
+	 * Check the value of "wgReadOnlyCluster" WikiFactory variable defined for community.wikia.com
+	 * that controls which DB cluster is in read-only mode.
+	 *
+	 * @author macbre
+	 * @see SUS-1634
+	 *
+	 * An example:
+	 * $wgReadOnlyCluster = "c1"; // this will turn on read-only mode on all c1 wikis
+	 *
+	 * @param string $cluster
+	 * @return bool if true is returned, the caller should set $wgReadOnly flag
+	 */
+	public static function checkPerClusterReadOnlyFlag( string $cluster ) : bool {
+		$readOnlyCluster = WikiFactory::getVarValueByName( 'wgReadOnlyCluster', Wikia::COMMUNITY_WIKI_ID );
+		return $readOnlyCluster === $cluster;
 	}
 }
