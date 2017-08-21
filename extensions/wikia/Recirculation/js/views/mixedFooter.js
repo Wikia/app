@@ -18,6 +18,7 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 		utils.loadTemplates(templateList)
 			.then(plista.prepareData(wikiArticlesList))
 			.then(function (data) {
+				console.log(data);
 				templateList.forEach(function (templateName, index) {
 					templates[templateName] = data[index];
 				});
