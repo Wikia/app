@@ -28,6 +28,7 @@ class ArticleAsJson {
 	const MEDIA_GALLERY_TEMPLATE_AMP = 'extensions/wikia/ArticleAsJson/templates/media-gallery-amp.mustache';
 
 	private static function renderIcon( $media ) {
+		$template = self::isAmp() ? self::MEDIA_ICON_TEMPLATE_AMP : self::MEDIA_ICON_TEMPLATE;
 		$scaledSize = self::scaleIconSize( $media['height'], $media['width'] );
 
 		try {
@@ -43,7 +44,7 @@ class ArticleAsJson {
 
 		return self::removeNewLines(
 			\MustacheService::getInstance()->render(
-				self::MEDIA_ICON_TEMPLATE,
+				$template,
 				[
 					'url' => $thumbUrl,
 					'height' => $scaledSize['height'],
@@ -90,9 +91,11 @@ class ArticleAsJson {
 	}
 
 	private static function renderGallery( $media, $id, $hasLinkedImages ) {
+		$template = self::isAmp() ? self::MEDIA_GALLERY_TEMPLATE_AMP : self::MEDIA_GALLERY_TEMPLATE;
+
 		return self::removeNewLines(
 			\MustacheService::getInstance()->render(
-				self::MEDIA_GALLERY_TEMPLATE,
+				$template,
 				[
 					'galleryAttrs' => json_encode( [ 'ref' => $id ] ),
 					/**
