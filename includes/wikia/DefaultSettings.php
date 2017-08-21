@@ -1898,3 +1898,11 @@ require_once "$IP/extensions/wikia/ImageReview/ImageReviewEvents.setup.php";
  */
 require_once "$IP/extensions/wikia/FacebookPreferences/FacebookPreferences.setup.php";
 require_once "$IP/extensions/wikia/FacebookTags/FacebookTags.setup.php";
+
+/**
+ * @name $wgAdDriverReplayAdsForFVVideosCountries
+ * Enables replaying ads for Featured Videos in these countries.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverReplayAdsForFVVideosCountries = null;
+
