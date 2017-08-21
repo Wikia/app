@@ -4,7 +4,7 @@ define('ext.wikia.recirculation.plista', ['jquery'], function ($) {
 			return item.presented_by;
 		});
 
-		return !hasSponsoredContent && ['PL', 'AU', 'NZ'].indexOf(Geo.getCountryCode()) > -1;
+		return !hasSponsoredContent && ['AU', 'NZ'].indexOf(Geo.getCountryCode()) > -1;
 	}
 
 	function fetchPlista() {
@@ -33,7 +33,6 @@ define('ext.wikia.recirculation.plista', ['jquery'], function ($) {
 	}
 
 	function prepareData(renderData) {
-		console.log(renderData);
 		return function () {
 			var length = renderData.length;
 
@@ -41,9 +40,8 @@ define('ext.wikia.recirculation.plista', ['jquery'], function ($) {
 				return fetchPlista()
 					.then(mapPlista)
 					.then(function (data) {
-						renderData.splice(1, 1, data);
-
-					// Po co to??	renderData = renderData.slice(0, length);
+						renderData.splice(1, 0, data);
+						renderData = renderData.slice(0, length);
 					}, function () {
 						// If Plista did not return anything, just don't add it to renderData
 

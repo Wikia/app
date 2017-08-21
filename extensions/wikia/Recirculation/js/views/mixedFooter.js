@@ -16,15 +16,16 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 		$('.mcf-discussions-placeholder').replaceWith(data.discussions);
 
 		utils.loadTemplates(templateList)
-			.then(plista.prepareData(wikiArticlesList))
 			.then(function (data) {
-				console.log(data);
 				templateList.forEach(function (templateName, index) {
 					templates[templateName] = data[index];
 				});
+			})
+			.then(plista.prepareData(wikiArticlesList))
+			.then(function () {
+				console.log(wikiArticlesList);
 				injectTemplates(templates, newsAndStoriesList, wikiArticlesList);
 			})
-
 	}
 
 	function injectTemplates(templates, newsAndStoriesList, wikiArticlesList) {
