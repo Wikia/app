@@ -29,6 +29,9 @@ define('ext.wikia.adEngine.lookup.a9', [
 		slots = [];
 
 	function call(skin, onResponse) {
+		// TODO disable amazonMatch
+		// TODO solve price tie with prebid -> bidder_won
+		// TODO add to kikimora
 		var a9Script = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0];
 
@@ -46,18 +49,12 @@ define('ext.wikia.adEngine.lookup.a9', [
 			pubID: amazonId
 		});
 
-		// TODO remove debugging
-		console.log(getA9Slots(slots));
-
 		win.apstag.fetchBids({
 			slots: getA9Slots(slots),
 			timeout: 2000
 		}, function(currentBids) {
-			// TODO remove debugging
-			console.log(currentBids);
-
 			currentBids.forEach(function (bid) {
-				bids[bid.slotId] = bid;
+				bids[bid.slotID] = bid;
 			});
 
 			onResponse();
@@ -70,7 +67,7 @@ define('ext.wikia.adEngine.lookup.a9', [
 		Object.keys(slots).forEach(function(slotName) {
 			a9Slots.push({
 				sizes: slots[slotName],
-				slotId: slotName,
+				slotID: slotName,
 				slotName: slotName
 			});
 		});
@@ -115,7 +112,8 @@ define('ext.wikia.adEngine.lookup.a9', [
 		return {
 			amznbid: bid.amznbid,
 			amzniid: bid.amzniid,
-			amznsz: bid.amznsz
+			amznsz: bid.amznsz,
+			amznp: bid.amznp
 		};
 	}
 
