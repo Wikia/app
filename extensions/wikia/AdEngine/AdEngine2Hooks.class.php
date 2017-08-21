@@ -84,6 +84,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAmazonMatchCountries';
 		$vars[] = 'wgAmazonMatchCountriesMobile';
 		$vars[] = 'wgPorvataVastLoggerConfig';
+		$vars[] = 'wgAdDriverReplayAdsForFVVideosCountries';
 
 		/**
 		 * Disaster Recovery
