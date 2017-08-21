@@ -18,9 +18,9 @@ class CleanPageWikiaPropsMaintenance extends Maintenance {
 	const TABLE_NAME = 'page_wikia_props';
 
 	public function execute() {
-		global $wgDBname, $wgDBCluster;
+		global $wgDBname, $wgDBcluster;
 
-		$this->output("Cleaning up page_wikia_props on {$wgDBname} ({$wgDBCluster})...");
+		$this->output("Cleaning up page_wikia_props on {$wgDBname} ({$wgDBcluster})...");
 		$dbw = $this->getDB( DB_MASTER );
 
 		$then = microtime( true );
@@ -44,7 +44,7 @@ class CleanPageWikiaPropsMaintenance extends Maintenance {
 		wfWaitForSlaves();
 
 		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
-			'cluster' => $wgDBCluster,
+			'cluster' => $wgDBcluster,
 			'took' => round($took, 6),
 		] );
 
