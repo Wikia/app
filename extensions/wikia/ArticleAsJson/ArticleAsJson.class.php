@@ -23,6 +23,10 @@ class ArticleAsJson {
 	const MEDIA_THUMBNAIL_TEMPLATE = 'extensions/wikia/ArticleAsJson/templates/media-thumbnail.mustache';
 	const MEDIA_GALLERY_TEMPLATE = 'extensions/wikia/ArticleAsJson/templates/media-gallery.mustache';
 
+	const MEDIA_ICON_TEMPLATE_AMP = 'extensions/wikia/ArticleAsJson/templates/media-icon-amp.mustache';
+	const MEDIA_THUMBNAIL_TEMPLATE_AMP = 'extensions/wikia/ArticleAsJson/templates/media-thumbnail-amp.mustache';
+	const MEDIA_GALLERY_TEMPLATE_AMP = 'extensions/wikia/ArticleAsJson/templates/media-gallery-amp.mustache';
+
 	private static function renderIcon( $media ) {
 		$scaledSize = self::scaleIconSize( $media['height'], $media['width'] );
 
@@ -53,9 +57,11 @@ class ArticleAsJson {
 	}
 
 	private static function renderImage( $media, $id ) {
+		$template = self::isAmp() ? self::MEDIA_THUMBNAIL_TEMPLATE_AMP : self::MEDIA_THUMBNAIL_TEMPLATE;
+
 		return self::removeNewLines(
 			\MustacheService::getInstance()->render(
-				self::MEDIA_THUMBNAIL_TEMPLATE,
+				$template,
 				[
 					'mediaAttrs' => json_encode( [ 'ref' => $id ] ),
 					'media' => $media,
@@ -600,5 +606,11 @@ class ArticleAsJson {
 		}
 
 		return $mediaDetail;
+	}
+
+	private static function isAmp(): bool {
+		global $wgArticleAsJsonIsAmp;
+
+		return (bool) $wgArticleAsJsonIsAmp;
 	}
 }

@@ -83,6 +83,7 @@ class MercuryApiArticleHandler {
 	public static function getArticleJson( WikiaRequest $request, Article $article ) {
 		$redirect = $request->getVal( 'redirect' );
 		$sections = $request->getVal( 'sections', '' );
+		$isAmp = $request->getVal( 'isAmp', false );
 
 		return F::app()->sendRequest(
 			'ArticlesApi',
@@ -90,7 +91,8 @@ class MercuryApiArticleHandler {
 			[
 				'id' => $article->getID(),
 				'redirect' => $redirect,
-				'sections' => $sections
+				'sections' => $sections,
+				'isAmp' => $isAmp
 			]
 		)->getData();
 	}

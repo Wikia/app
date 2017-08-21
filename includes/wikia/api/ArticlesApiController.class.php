@@ -61,6 +61,7 @@ class ArticlesApiController extends WikiaApiController {
 	const SIMPLE_JSON_VARNISH_CACHE_EXPIRATION = 86400; // 24 hours
 	const SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME = "id";
 	const SIMPLE_JSON_ARTICLE_TITLE_PARAMETER_NAME = "title";
+	const SIMPLE_JSON_ARTICLE_AMP_PARAMETER_NAME = "isAmp";
 
 	/**
 	 * @var CrossOriginResourceSharingHeaderHelper
@@ -939,6 +940,7 @@ class ArticlesApiController extends WikiaApiController {
 		$articleId = $this->getRequest()->getInt( self::SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME, NULL );
 		$articleTitle = $this->getRequest()->getVal( self::SIMPLE_JSON_ARTICLE_TITLE_PARAMETER_NAME, NULL );
 		$redirect = $this->request->getVal( 'redirect' );
+		$isAmp = $this->request->getBool( self::SIMPLE_JSON_ARTICLE_AMP_PARAMETER_NAME, false );
 
 		if ( !empty( $articleId ) && !empty( $articleTitle ) ) {
 			throw new BadRequestApiException( 'Can\'t use id and title in the same request' );
@@ -983,14 +985,22 @@ class ArticlesApiController extends WikiaApiController {
 		global $wgArticleAsJson;
 		$wgArticleAsJson = true;
 
+		global $wgArticleAsJsonIsAmp;
+
+		if ( $isAmp === true ) {
+			$wgArticleAsJsonIsAmp = true;
+		}
+
 		$parsedArticle = $article->getParserOutput();
 
 		if ( $parsedArticle instanceof ParserOutput ) {
 			$articleContent = json_decode( $parsedArticle->getText() );
 			$content = $articleContent->content;
 			$wgArticleAsJson = false;
+			$wgArticleAsJsonIsAmp = false;
 		} else {
 			$wgArticleAsJson = false;
+			$wgArticleAsJsonIsAmp = false;
 			throw new ArticleAsJsonParserException( 'Parser is currently not available' );
 		}
 
