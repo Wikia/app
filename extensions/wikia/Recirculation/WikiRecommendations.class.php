@@ -54,14 +54,10 @@ class WikiRecommendations {
 	private static function getThumbnailUrl( $url ) {
 		global $wgVignetteUrl;
 
-		$url = $wgVignetteUrl . $url;
-		$newUrl =
-			VignetteRequest::fromUrl( $url )
-				->zoomCrop()
-				->width( self::THUMBNAIL_WIDTH )
-				->height( floor( self::THUMBNAIL_WIDTH / self::THUMBNAIL_RATIO ) )
-				->url();
-
-		return $newUrl;
+		return VignetteRequest::fromUrl( $wgVignetteUrl . $url )
+			->zoomCrop()
+			->width( self::THUMBNAIL_WIDTH )
+			->height( floor( self::THUMBNAIL_WIDTH / self::THUMBNAIL_RATIO ) )
+			->url();
 	}
 }
