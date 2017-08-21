@@ -98,7 +98,7 @@ h1.mcf-header {
 	@include flex-direction(column);
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
-	border: 1px solid $wds-color-faint-gray;
+	border: 1px solid $color-page-border;
 	border-radius: 3px;
 	box-sizing: border-box;
 	height: $mcf-card-height-xl;
@@ -426,6 +426,8 @@ h1.mcf-header {
 	}
 
 	&__item-image {
+		max-height: 56px;
+
 		@media #{$wds-breakpoint-m-down} {
 			max-height: 36px;
 		}
@@ -440,17 +442,6 @@ h1.mcf-header {
 
 		@media #{$wds-breakpoint-m-down} {
 			font-size: 14px;
-		}
-	}
-
-	&__subtitle {
-		color: $wds-color-light-gray;
-		font-size: 14px;
-		font-weight: normal;
-		margin-left: 12px;
-
-		@media #{$wds-breakpoint-m-down} {
-			font-size: 12px;
 		}
 	}
 }
