@@ -197,7 +197,7 @@ h1.mcf-header {
 
 	> svg {
 		align-self: center;
-		fill: #fff;
+		fill: $wds-color-white;
 		height: 34.5%;
 		opacity: .15;
 		position: absolute;
@@ -220,7 +220,7 @@ h1.mcf-header {
 		font-weight: bold;
 		line-height: 20px;
 		margin-bottom: 13px;
-		opacity: 0.5;
+		opacity: .5;
 		padding-left: 18px;
 	}
 
@@ -244,6 +244,38 @@ h1.mcf-header {
 	&__video-icon {
 		fill: $wds-color-white;
 		margin-left: 6px;
+	}
+
+	&__sponsored-bagde {
+		align-items: center;
+		background-color: rgba($wds-color-black, .7);
+		border-radius: 2px;
+		display: flex;
+		height: 30px;
+		left: 12px;
+		padding: 0 10px;
+		position: absolute;
+		top: 12px;
+	}
+
+	&__sponsored-text {
+		color: $wds-color-white;
+		font-size: 12px;
+		font-weight: bold;
+		line-height: 1.17;
+		letter-spacing: .3px;
+	}
+	
+	&__link {
+		position: relative;
+	}
+
+	&__plista {
+		bottom: 0;
+		padding: 5px;
+		position: absolute;
+		right: 0;
+		width: 100px;
 	}
 
 }

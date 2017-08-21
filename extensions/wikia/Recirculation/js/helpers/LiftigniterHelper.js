@@ -19,7 +19,7 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 					resizeThumbnails(response, options);
 					deferred.resolve(response);
 					fetching = false;
-					if(fetchQueue.length) {
+					if (fetchQueue.length) {
 						// setTimeout is necessary because LI need to wait for LI to remove already registered modules
 						// LI clear register modules just after running all callbacks
 						setTimeout(function () {
@@ -42,7 +42,7 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 			options: registerOptions
 		};
 
-		if(willFetch[options.modelName]) {
+		if (willFetch[options.modelName]) {
 			willFetch[options.modelName].push(module)
 		} else {
 			willFetch[options.modelName] = [module];
