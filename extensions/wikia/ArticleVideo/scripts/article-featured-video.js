@@ -228,12 +228,14 @@ require([
 			});
 		}
 
-		function configureAdSet(videoDepth) {
+		function configureAdSet(videoData, videoDepth) {
 			var adSet = [],
 				adVideoCapping = 3,
 				isReplayAdSupported = adContext.getContext().opts.replayAdsForFV,
 				shouldPlayAdOnNextVideo = videoDepth % adVideoCapping === 0,
 				showAds = adContext && adContext.getContext().opts.showAds;
+
+			videoData = videoData || {};
 
 			if (isReplayAdSupported && shouldPlayAdOnNextVideo && vastUrlBuilder && showAds) {
 				adSet = [
@@ -242,6 +244,9 @@ require([
 							pos: 'FEATURED',
 							src: 'premium',
 							rv: Math.floor(videoDepth / adVideoCapping) + 1
+						}, {
+							contentSourceId: window.wgOoyalaParams.dfpContentSourceId,
+							videoId: videoData.embed_code
 						})
 					}
 				];
@@ -392,7 +397,7 @@ require([
 					label: 'recommended-video-depth-' + recommendedVideoDepth
 				});
 
-				configureAdSet(recommendedVideoDepth);
+				configureAdSet(eventData.clickedVideo, recommendedVideoDepth);
 			});
 
 			track({
