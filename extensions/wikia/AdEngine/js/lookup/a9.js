@@ -134,13 +134,7 @@ define('ext.wikia.adEngine.lookup.a9', [
 	}
 
 	function getBestSlotPrice(slotName) {
-		if (priceMap[slotName]) {
-			return {
-				a9: priceMap[slotName]
-			};
-		}
-
-		return {};
+		return priceMap[slotName] ? {a9: priceMap[slotName]} : {};
 	}
 
 	return factory.create({
