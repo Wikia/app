@@ -53,6 +53,10 @@ $mcf-discussion-height-m: $mcf-card-height-m * 2 + $mcf-padding-vertical;
 	}
 }
 
+.mcf-content {
+	display: none;
+}
+
 // tag name to override styles
 h1.mcf-header {
 	-moz-osx-font-smoothing: grayscale;

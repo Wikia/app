@@ -20,6 +20,7 @@ require([
 	'use strict';
 
 	var $mixedContentFooter = $('#mixed-content-footer'),
+		$mixedContentFooterContent = $('.mcf-content'),
 	    wikiArticlesFetched = false,
 		railRecirculation = {
 			max: 5,
@@ -75,6 +76,7 @@ require([
 		discussions.prepare()
 	];
 	$.when.apply($, mixedContentFooterData).done(function (nsItems, wikiItems, discussions) {
+		$mixedContentFooterContent.show();
 		require(['ext.wikia.recirculation.views.mixedFooter'], function (viewFactory) {
 			viewFactory().render({
 				nsItems: nsItems,
