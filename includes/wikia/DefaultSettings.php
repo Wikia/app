@@ -1448,20 +1448,6 @@ $wgAdDriverMEGACountries = null;
 $wgAdDriverMegaAdUnitBuilderForFVCountries = null;
 
 /**
- * @name $wgAdDriverFVMidrollCountries
- * Enables Midroll video ad for FeaturedVideos.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverFVMidrollCountries = null;
-
-/**
- * @name $wgAdDriverFVPostrollCountries
- * Enables Postroll video ad for FeaturedVideos.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverFVPostrollCountries = null;
-
-/**
  * @name $wgAdDriverMoatTrackingForFeaturedVideoAdCountries
  * Enables MOAT tracking for feature video ads.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
