@@ -248,7 +248,7 @@ h1.mcf-header {
 
 	&__sponsored-bagde {
 		align-items: center;
-		background-color: rgba(26, 26, 26, 0.7);
+		background-color: rgba($wds-color-black, 0.7);
 		border-radius: 2px;
 		display: flex;
 		height: 30px;
@@ -259,7 +259,7 @@ h1.mcf-header {
 	}
 
 	&__sponsored-text {
-		color: #ffffff;
+		color: $wds-color-white;
 		font-size: 12px;
 		font-weight: bold;
 		line-height: 1.17;

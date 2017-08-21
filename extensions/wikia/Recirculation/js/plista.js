@@ -22,7 +22,6 @@ define('ext.wikia.recirculation.plista', ['jquery'], function ($) {
 
 	function mapPlista(plistaData) {
 		return {
-			meta: 'wikia-footer-wiki-rec',
 			source: 'plista',
 			thumbnail: plistaData.img,
 			title: plistaData.title,
