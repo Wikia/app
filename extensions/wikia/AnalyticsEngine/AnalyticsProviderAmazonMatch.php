@@ -20,9 +20,10 @@ class AnalyticsProviderAmazonMatch implements iAnalyticsProvider {
 		"wikia.instantGlobals",
 		require.optional($moduleName),
 	], function (geo, globals, amazon) {
-		var ac = globals[$instantGlobalName];
+		var ac = globals[$instantGlobalName],
+			dc = globals.wgAdDriverA9BidderCountries;
 
-		if (geo.isProperGeo(ac)) {
+		if (geo.isProperGeo(ac) && !geo.isProperGeo(dc)) {
 			amazon.call();
 		}
 	});

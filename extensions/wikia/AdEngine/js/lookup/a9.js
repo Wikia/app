@@ -29,9 +29,8 @@ define('ext.wikia.adEngine.lookup.a9', [
 		slots = [];
 
 	function call(skin, onResponse) {
-		// TODO disable amazonMatch
 		// TODO solve price tie with prebid -> bidder_won
-		// TODO add to kikimora
+		// TODO Convert bid price sent to kikimora
 		var a9Script = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0];
 
@@ -93,7 +92,6 @@ define('ext.wikia.adEngine.lookup.a9', [
 
 	function calculatePrices() {
 		Object.keys(bids).forEach(function(slotName) {
-			// TODO convert bidId into $
 			priceMap[slotName] = bids[slotName].amznbid;
 		});
 	}
@@ -125,6 +123,16 @@ define('ext.wikia.adEngine.lookup.a9', [
 		return slots[slotName];
 	}
 
+	function getBestSlotPrice(slotName) {
+		if (priceMap[slotName]) {
+			return {
+				a9: priceMap[slotName]
+			};
+		}
+
+		return {};
+	}
+
 	return factory.create({
 		logGroup: logGroup,
 		name: 'a9',
@@ -133,6 +141,7 @@ define('ext.wikia.adEngine.lookup.a9', [
 		getPrices: getPrices,
 		isSlotSupported: isSlotSupported,
 		encodeParamsForTracking: encodeParamsForTracking,
-		getSlotParams: getSlotParams
+		getSlotParams: getSlotParams,
+		getBestSlotPrice: getBestSlotPrice
 	});
 });
