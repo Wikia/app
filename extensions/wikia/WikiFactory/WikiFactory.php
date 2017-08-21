@@ -870,6 +870,16 @@ class WikiFactory {
 		$bStatus = false;
 		wfProfileIn( __METHOD__ );
 
+		// SUS-1634 added per-cluster control of database read-only mode. It sets $wgReadOnly global variable
+		// than affects read-only checks that take place before queries are made to other database clusters.
+		// This ugly hack makes removing wgReadOnlyCluster value possible when it was used to put A cluster into read-only mode.
+		global $wgReadOnly, $wgDBReadOnly;
+		if ( $wgReadOnly === WikiFactoryLoader::PER_CLUSTER_READ_ONLY_MODE_REASON ) {
+			$wgReadOnly = false;
+			$wgDBReadOnly = false;
+			wfDebug( __METHOD__ . " - removed read-only flag triggered by wgReadOnlyCluster variable\n" );
+		}
+
 		$variable = static::getVarById( $variable_id, $wiki );
 		$dbw = static::db( DB_MASTER );
 		$dbw->begin();
