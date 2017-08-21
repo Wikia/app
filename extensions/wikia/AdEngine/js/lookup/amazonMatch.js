@@ -45,12 +45,12 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 		amznMatch.type = 'text/javascript';
 		amznMatch.src = 'http://c.amazon-adsystem.com/aax2/amzn_ads.js';
 		amznMatch.addEventListener('load', function () {
-			var renderAd = win.apstag.renderAd;
-			if (!win.apstag.getAdsCallback || !renderAd) {
+			var renderAd = win.amznads.renderAd;
+			if (!win.amznads.getAdsCallback || !renderAd) {
 				return;
 			}
-			win.apstag.getAdsCallback(amazonId, onResponse);
-			win.apstag.renderAd = function (doc, adId) {
+			win.amznads.getAdsCallback(amazonId, onResponse);
+			win.amznads.renderAd = function (doc, adId) {
 				renderAd(doc, adId);
 				rendered = true;
 			};
@@ -64,7 +64,7 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 			tokens,
 			m;
 
-		tokens = win.apstag.getTokens();
+		tokens = win.amznads.getTokens();
 		log(['calculatePrices', tokens], 'debug', logGroup);
 
 		tokens.forEach(function (param) {
