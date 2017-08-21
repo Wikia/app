@@ -87,7 +87,7 @@ require([
 	// fetch data for all recirculation modules
 	liftigniter.fetch('ns');
 
-	window.addEventListener('scroll', function () {
+	window.addEventListener('scroll', $.throttle(50, function () {
 		if(!wikiArticlesFetched) {
 			var mcfOffset = $mixedContentFooter.offset().top,
 				scrollPosition = $(window).scrollTop(),
@@ -101,7 +101,7 @@ require([
 				wikiArticlesFetched = true;
 			}
 		}
-	});
+	}));
 
 
 	// TODO handle errors
