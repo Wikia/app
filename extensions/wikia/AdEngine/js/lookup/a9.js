@@ -32,7 +32,10 @@ define('ext.wikia.adEngine.lookup.a9', [
 		// TODO solve price tie with prebid -> bidder_won
 		// TODO Convert bid price sent to kikimora
 		var a9Script = doc.createElement('script'),
-			node = doc.getElementsByTagName('script')[0];
+			node = doc.getElementsByTagName('script')[0],
+			a9Slots;
+
+		log(['call', skin], 'debug', logGroup);
 
 		slots = slotsContext.filterSlotMap(config[skin]);
 
@@ -48,10 +51,15 @@ define('ext.wikia.adEngine.lookup.a9', [
 			pubID: amazonId
 		});
 
+		a9Slots = getA9Slots(slots);
+		log(['call - fetchBids', a9Slots], 'debug', logGroup);
+
 		win.apstag.fetchBids({
-			slots: getA9Slots(slots),
+			slots: a9Slots,
 			timeout: 2000
 		}, function(currentBids) {
+			log(['call - fetchBids response', currentBids], 'debug', logGroup);
+
 			currentBids.forEach(function (bid) {
 				bids[bid.slotID] = bid;
 			});
@@ -91,6 +99,8 @@ define('ext.wikia.adEngine.lookup.a9', [
 	}
 
 	function calculatePrices() {
+		log(['calculatePrices', bids], 'debug', logGroup);
+
 		Object.keys(bids).forEach(function(slotName) {
 			priceMap[slotName] = bids[slotName].amznbid;
 		});
@@ -102,6 +112,8 @@ define('ext.wikia.adEngine.lookup.a9', [
 
 	function getSlotParams(slotName) {
 		var bid = bids[slotName];
+
+		log(['getSlotParams', slotName], 'debug', logGroup);
 
 		if (!bid) {
 			return {};
