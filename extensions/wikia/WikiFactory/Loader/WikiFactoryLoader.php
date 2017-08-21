@@ -628,7 +628,7 @@ class WikiFactoryLoader {
 
 		# take some WF variables values from city_list
 		$this->mVariables["wgDBname"] = $this->mCityDB;
-		$this->mVariables["wgDBCluster"] = $this->mCityCluster;
+		$this->mVariables["wgDBcluster"] = $this->mCityCluster;
 
 		// @author macbre
 		Hooks::run( 'WikiFactory::executeBeforeTransferToGlobals', [ $this ] );
