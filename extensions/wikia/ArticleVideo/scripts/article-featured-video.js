@@ -226,11 +226,12 @@ require([
 		}
 
 		function configureAdSet(videoDepth) {
-			var adSet = [],
-				adVideoCapping = 3,
-				isReplayAdSupported = adContext.getContext().opts.replayAdsForFV,
+			var adContextOpts = adContext.getContext().opts,
+				adSet = [],
+				adVideoCapping = adContextOpts.featuredVideoPrerollFrequencyCapping,
+				isReplayAdSupported = adContextOpts.replayAdsForFV,
 				shouldPlayAdOnNextVideo = videoDepth % adVideoCapping === 0,
-				showAds = adContext && adContext.getContext().opts.showAds;
+				showAds = adContext && adContextOpts.showAds;
 
 			if (isReplayAdSupported && shouldPlayAdOnNextVideo && vastUrlBuilder && showAds) {
 				adSet = [
