@@ -215,6 +215,7 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/slot/slotTargeting.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/AdEngine/js/utils/time.js',
+		'//extensions/wikia/AdEngine/js/video/ooyalaAdSetProvider.js',
 		'//extensions/wikia/AdEngine/js/video/vastUrlBuilder.js',
 		'//extensions/wikia/AdEngine/js/video/videoFrequencyMonitor.js',
 		'//extensions/wikia/AdEngine/js/video/videoFrequencySettings.js',
