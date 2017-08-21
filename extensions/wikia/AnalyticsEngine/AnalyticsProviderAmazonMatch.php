@@ -1,5 +1,6 @@
 <?php
 
+// TODO ADEN-5756 Remove AmazonMatch after A9 full rollout
 class AnalyticsProviderAmazonMatch implements iAnalyticsProvider {
 
 	public static function isEnabled() {
