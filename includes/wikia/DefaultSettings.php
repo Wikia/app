@@ -1901,7 +1901,7 @@ require_once "$IP/extensions/wikia/FacebookTags/FacebookTags.setup.php";
 
 /**
  * @name $wgAdDriverReplayAdsForFVVideosCountries
- * Enables replaying ads for Featured Videos in these countries.
+ * Enables ads for consecutive Featured Videos in the same player for these countries.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverReplayAdsForFVVideosCountries = null;
