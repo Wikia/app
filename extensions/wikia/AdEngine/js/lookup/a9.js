@@ -1,12 +1,11 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.a9', [
-	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, slotsContext, factory, doc, log, win) {
+], function (slotsContext, factory, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.lookup.a9',
@@ -25,6 +24,7 @@ define('ext.wikia.adEngine.lookup.a9', [
 		},
 		amazonId = '3115',
 		bids = {},
+		loaded = false,
 		priceMap = {},
 		slots = [];
 
@@ -33,22 +33,25 @@ define('ext.wikia.adEngine.lookup.a9', [
 			node = doc.getElementsByTagName('script')[0],
 			a9Slots;
 
-		log(['call', skin], 'debug', logGroup);
+		if (!loaded) {
+			log(['call - load', skin], 'debug', logGroup);
+
+			a9Script.type = 'text/javascript';
+			a9Script.async = true;
+			a9Script.src = '//c.amazon-adsystem.com/aax2/apstag.js';
+
+			node.parentNode.insertBefore(a9Script, node);
+
+			configureApstag();
+
+			win.apstag.init({
+				pubID: amazonId
+			});
+
+			loaded = true;
+		}
 
 		slots = slotsContext.filterSlotMap(config[skin]);
-
-		a9Script.type = 'text/javascript';
-		a9Script.async = true;
-		a9Script.src = '//c.amazon-adsystem.com/aax2/apstag.js';
-
-		node.parentNode.insertBefore(a9Script, node);
-
-		configureApstag();
-
-		win.apstag.init({
-			pubID: amazonId
-		});
-
 		a9Slots = getA9Slots(slots);
 		log(['call - fetchBids', a9Slots], 'debug', logGroup);
 
@@ -85,15 +88,25 @@ define('ext.wikia.adEngine.lookup.a9', [
 	}
 
 	function configureApstag() {
-		win.apstag = {
-			init: function() {
+		if (typeof win.apstag === 'undefined') {
+			win.apstag = {};
+		}
+
+		if (typeof win.apstag._Q === 'undefined') {
+			win.apstag._Q = [];
+		}
+
+		if (typeof win.apstag.init === 'undefined') {
+			win.apstag.init = function() {
 				configureApstagCommand('i', arguments);
-			},
-			fetchBids: function() {
+			};
+		}
+
+		if (typeof win.apstag.fetchBids === 'undefined') {
+			win.apstag.fetchBids = function() {
 				configureApstagCommand('f', arguments);
-			},
-			_Q: []
-		};
+			};
+		}
 	}
 
 	function calculatePrices() {

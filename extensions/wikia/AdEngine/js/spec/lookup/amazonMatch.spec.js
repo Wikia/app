@@ -30,9 +30,9 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 	}
 
 	function init(amazonMatch, tokens) {
-		spyOn(mocks.window.amznads, 'getTokens').and.returnValue(tokens);
+		spyOn(mocks.window.apstag, 'getTokens').and.returnValue(tokens);
 		amazonMatch.call();
-		expect(typeof mocks.window.amznads.renderAd).toBe('function');
+		expect(typeof mocks.window.apstag.renderAd).toBe('function');
 	}
 
 	mocks = {
@@ -95,7 +95,7 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 		},
 		log: noop,
 		window: {
-			amznads: {
+			apstag: {
 				getAdsCallback: function (id, callback) {
 					callback();
 				},
@@ -213,7 +213,7 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 		init(amazonMatch, ['a3x5p14']);
 
 		expect(amazonMatch.getSlotParams('MOBILE_TOP_LEADERBOARD').amznslots).toEqual(['a3x5p14']);
-		mocks.window.amznads.renderAd(mocks.document);
+		mocks.window.apstag.renderAd(mocks.document);
 		expect(amazonMatch.getSlotParams('MOBILE_TOP_LEADERBOARD').amznslots).toEqual(undefined);
 	});
 
