@@ -20,6 +20,7 @@ require([
 	'use strict';
 
 	var $mixedContentFooter = $('#mixed-content-footer'),
+	    wikiArticlesFetched = false,
 		railRecirculation = {
 			max: 5,
 			widget: 'wikia-rail',
@@ -86,7 +87,20 @@ require([
 	// fetch data for all recirculation modules
 	// TODO lazy load some data on scroll
 	liftigniter.fetch('ns');
-	liftigniter.fetch('wiki');
+
+	window.addEventListener('scroll', function () {
+		var mcfOffset = $mixedContentFooter.offset().top,
+			scrollPosition = $(window).scrollTop(),
+			windowInnerHeight = $(window).innerHeight(),
+			lazyLoadOffset = 500,
+			aproachingMCF = scrollPosition + windowInnerHeight + lazyLoadOffset > mcfOffset;
+
+		if (aproachingMCF && !wikiArticlesFetched) {
+			liftigniter.fetch('wiki');
+			wikiArticlesFetched = true;
+		}
+	});
+
 	discussions.fetch();
 
 	// TODO handle errors
