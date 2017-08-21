@@ -88,19 +88,21 @@ require([
 	liftigniter.fetch('ns');
 
 	window.addEventListener('scroll', function () {
-		var mcfOffset = $mixedContentFooter.offset().top,
-			scrollPosition = $(window).scrollTop(),
-			windowInnerHeight = $(window).innerHeight(),
-			lazyLoadOffset = 500,
-			aproachingMCF = scrollPosition + windowInnerHeight + lazyLoadOffset > mcfOffset;
+		if(!wikiArticlesFetched) {
+			var mcfOffset = $mixedContentFooter.offset().top,
+				scrollPosition = $(window).scrollTop(),
+				windowInnerHeight = $(window).height(),
+				lazyLoadOffset = 500,
+				aproachingMCF = scrollPosition > mcfOffset - windowInnerHeight - lazyLoadOffset;
 
-		if (aproachingMCF && !wikiArticlesFetched) {
-			liftigniter.fetch('wiki');
-			wikiArticlesFetched = true;
+			if (aproachingMCF) {
+				liftigniter.fetch('wiki');
+				discussions.fetch();
+				wikiArticlesFetched = true;
+			}
 		}
 	});
 
-	discussions.fetch();
 
 	// TODO handle errors
 	// TODO LI tracking
