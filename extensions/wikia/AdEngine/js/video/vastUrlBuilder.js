@@ -46,8 +46,8 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 		return aspectRatio >= 1 || !isNumeric(aspectRatio) ? adSizes.horizontal : adSizes.vertical;
 	}
 
-	function buildAdUnit(slotParams) {
-		var adUnitBuilder = adContext.getContext().opts.megaAdUnitBuilderEnabled ? megaAdUnitBuilder : regularAdUnitBuilder;
+	function buildAdUnit(slotParams, useMegaAdUnitBuilder) {
+		var adUnitBuilder = useMegaAdUnitBuilder ? megaAdUnitBuilder : regularAdUnitBuilder;
 		return adUnitBuilder.build(slotParams.pos, slotParams.src);
 	}
 
@@ -56,20 +56,29 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 		slotParams = slotParams || {};
 
 		var correlator = Math.round(Math.random() * 10000000000),
-			params = [
-				'output=vast',
-				'env=vp',
-				'gdfp_req=1',
-				'impl=s',
-				'unviewed_position_start=1',
-				'iu=' + buildAdUnit(slotParams),
-				'sz=' + getSizeByAspectRatio(aspectRatio),
-				'url=' + encodeURIComponent(loc.href),
-				'description_url=' + encodeURIComponent(loc.href),
-				'correlator=' + correlator,
-				'cust_params=' + getCustomParameters(slotParams)
-			],
+			useMegaAdUnitBuilder = options.useMegaAdUnitBuilder,
+			params,
 			url;
+
+		// fallback to adContext flag
+		if (useMegaAdUnitBuilder === undefined) {
+			useMegaAdUnitBuilder = adContext.getContext().opts.megaAdUnitBuilderEnabled;
+			log(['build', '`useMegaAdUnitBuilder` option is not defined. Fallback to `opts.megaAdUnitBuilderEnabled`.'], 'debug', logGroup);
+		}
+
+		params = [
+			'output=vast',
+			'env=vp',
+			'gdfp_req=1',
+			'impl=s',
+			'unviewed_position_start=1',
+			'iu=' + buildAdUnit(slotParams, useMegaAdUnitBuilder),
+			'sz=' + getSizeByAspectRatio(aspectRatio),
+			'url=' + encodeURIComponent(loc.href),
+			'description_url=' + encodeURIComponent(loc.href),
+			'correlator=' + correlator,
+			'cust_params=' + getCustomParameters(slotParams)
+		];
 
 		if (options.numberOfAds !== undefined) {
 			params.push('pmad=' + options.numberOfAds);
@@ -87,5 +96,6 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 
 	return {
 		build: build
+
 	};
 });

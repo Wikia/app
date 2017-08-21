@@ -65,12 +65,13 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaSetup', function () {
 			request = imaSetup.createRequest({
 				width: slotWidth,
 				height: slotHeight,
+				useMegaAdUnitBuilder: true,
 				vastTargeting: 'porvata/foo'
 			});
 
 		expect(request.adTagUrl).toBe('foo/bar');
 
-		expect(buildSpy).toHaveBeenCalledWith(slotWidth / slotHeight, 'porvata/foo');
+		expect(buildSpy).toHaveBeenCalledWith(slotWidth / slotHeight, 'porvata/foo', {useMegaAdUnitBuilder: true});
 	});
 
 	it('createRequest with adTagUrl - vast URL not in params', function () {
@@ -80,12 +81,13 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaSetup', function () {
 			request = imaSetup.createRequest({
 				width: slotWidth,
 				height: slotHeight,
+				useMegaAdUnitBuilder: true,
 				vastTargeting: 'porvata/foo'
 			});
 
 		expect(request.adTagUrl).toBe('foo/bar');
 
-		expect(buildSpy).toHaveBeenCalledWith(slotWidth / slotHeight, 'porvata/foo');
+		expect(buildSpy).toHaveBeenCalledWith(slotWidth / slotHeight, 'porvata/foo', {useMegaAdUnitBuilder: true});
 	});
 
 	it('getRenderingSettings - setup default values', function () {
