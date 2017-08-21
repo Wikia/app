@@ -85,7 +85,6 @@ require([
 	});
 
 	// fetch data for all recirculation modules
-	// TODO lazy load some data on scroll
 	liftigniter.fetch('ns');
 
 	window.addEventListener('scroll', function () {
