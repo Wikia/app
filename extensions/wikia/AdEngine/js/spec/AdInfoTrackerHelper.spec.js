@@ -12,6 +12,9 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 				return {};
 			}
 		},
+		slotRegistry: {
+			getScrollY: noop
+		},
 		adBlockDetection: {
 			isBlocking: noop
 		},
@@ -30,6 +33,7 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 	function getModule() {
 		return modules['ext.wikia.adEngine.adInfoTrackerHelper'](
 			mocks.lookupServices,
+			mocks.slotRegistry,
 			mocks.adBlockDetection,
 			mocks.browserDetect,
 			mocks.log,

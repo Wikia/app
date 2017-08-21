@@ -1,11 +1,12 @@
 /*global define, JSON*/
 define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 	'ext.wikia.adEngine.lookup.services',
+	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.browserDetect',
 	'wikia.log',
 	'wikia.window'
-], function (lookupServices, adBlockDetection, browserDetect, log, win) {
+], function (lookupServices, slotRegistry, adBlockDetection, browserDetect, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adInfoTrackerHelper';
@@ -73,7 +74,8 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 				.replace('[', '').replace(']', '').replace(',', 'x'),
 			'viewport_height': win.innerHeight || 0,
 			'product_label': '',
-			'ad_status': status || 'unknown'
+			'ad_status': status || 'unknown',
+			'scroll_y': slotRegistry.getScrollY(slot.name) || 0
 		};
 
 		return data;
@@ -119,7 +121,7 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 			}
 
 			if (highestPriceBidders.indexOf('fastlane_private') >= 0) {
-				return 'fastlane_private'
+				return 'fastlane_private';
 			}
 		}
 
