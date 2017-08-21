@@ -260,7 +260,7 @@ define('ext.wikia.adEngine.adContext', [
 			geo.isProperGeo(instantGlobals.wgAdDriverPremiumAdLayoutRubiconFastlaneTagsCountries);
 
 		context.opts.replayAdsForFV = geo.isProperGeo(instantGlobals.wgAdDriverPlayAdsOnNextFVCountries);
-		context.opts.featuredVideoPrerollFrequencyCapping =  fvCapping !== undefined ? fvCapping : 3;
+		context.opts.featuredVideoPrerollFrequencyCapping = fvCapping !== undefined ? fvCapping : 3;
 
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
