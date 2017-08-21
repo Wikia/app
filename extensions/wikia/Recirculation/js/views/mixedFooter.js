@@ -23,7 +23,6 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 			})
 			.then(plista.prepareData(wikiArticlesList))
 			.then(function () {
-				console.log(wikiArticlesList);
 				injectTemplates(templates, newsAndStoriesList, wikiArticlesList);
 			})
 	}

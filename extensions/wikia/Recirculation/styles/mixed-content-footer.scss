@@ -248,20 +248,22 @@ h1.mcf-header {
 
 	&__sponsored-bagde {
 		align-items: center;
-		display: flex;
-		width: 157px;
-		height: 30px;
-		opacity: 0.7;
+		background-color: rgba(26, 26, 26, 0.7);
 		border-radius: 2px;
+		display: flex;
+		height: 30px;
+		left: 12px;
+		padding: 0 10px;
 		position: absolute;
 		top: 12px;
-		left: 12px;
-		background-color: #1a1a1a;
+	}
+
+	&__sponsored-text {
+		color: #ffffff;
 		font-size: 12px;
 		font-weight: bold;
 		line-height: 1.17;
 		letter-spacing: 0.3px;
-		color: #ffffff;
 	}
 	
 	&__link {
