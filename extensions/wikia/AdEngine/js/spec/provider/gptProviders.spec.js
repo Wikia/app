@@ -41,8 +41,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		slotRegistry: {
 			getRefreshCount: function () {
 				return 3;
-			},
-			storeScrollY: noop
+			}
 		},
 		slotTweaker: {
 			removeDefaultHeight: noop,

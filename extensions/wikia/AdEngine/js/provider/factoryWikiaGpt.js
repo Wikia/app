@@ -93,7 +93,6 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 			if (lookups) {
 				lookups.storeRealSlotPrices(slot.name);
 				lookups.extendSlotTargeting(slot.name, slotTargeting, providerName);
-				slotRegistry.storeScrollY(slot.name);
 			}
 
 			gptHelper.pushAd(slot, slotPath, slotTargeting, {

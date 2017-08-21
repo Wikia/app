@@ -7,6 +7,7 @@ class FacebookTagConstants {
 		'fb:follow',
 		'fb:like',
 		'fb:like-box',
+		'fb:share_button',
 		'fb:share-button',
 	];
 
@@ -26,12 +27,13 @@ class FacebookTagConstants {
 			'action', 'colorscheme', 'href', 'kid_directed_site', 'layout', 'ref', 'share', 'show_faces',
 			'size', 'width', 'height'
 		],
-		'share-button' => [
+		'share_button' => [
 			'href', 'layout', 'mobile_iframe', 'size', 'width', 'height'
 		],
 	];
 
 	const TAG_FALLBACKS = [
+		'share-button' => 'share_button',
 		'like-box' => 'page'
 	];
 }

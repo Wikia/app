@@ -109,16 +109,6 @@ define('ooyala-player', ['wikia.browserDetect'], function (browserDetect) {
 		$('.oo-state-screen-info').css('display', '');
 	};
 
-	OoyalaHTML5Player.prototype.updateAdSet = function (adSet) {
-		var controller = this.player.modules && this.player.modules.find(function (module) {
-			return module.name === 'adManagerController';
-		});
-
-		if (controller && controller.instance && controller.instance.pageSettings) {
-			controller.instance.pageSettings['google-ima-ads-manager'].all_ads = adSet;
-		}
-	};
-
 	OoyalaHTML5Player.initHTML5Player = function (videoElementId, options, onCreate) {
 		var params = {
 				videoId: options.videoId,
@@ -173,8 +163,7 @@ define('ooyala-player', ['wikia.browserDetect'], function (browserDetect) {
 					}, false, this);
 				}
 			};
-
-			params.replayAds = options.replayAds || false;
+			params.replayAds = false;
 		}
 
 		html5Player = new OoyalaHTML5Player(document.getElementById(videoElementId), params, onCreate, options.inlineSkinConfig);

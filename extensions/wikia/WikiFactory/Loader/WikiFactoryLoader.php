@@ -48,10 +48,9 @@ class WikiFactoryLoader {
 	public $mExpireValuesCacheTimeout = 86400; #--- 24 hours
 	public $mSaveDefaults = false;
 	public $mCacheAnyway = array( "wgArticlePath" );
+	public $mCheckUpgrade = false;
 
 	private $mDBhandler, $mDBname;
-
-	const PER_CLUSTER_READ_ONLY_MODE_REASON = 'This cluster is running in read-only mode.';
 
 	/**
 	 * __construct
@@ -624,6 +623,13 @@ class WikiFactoryLoader {
 			}
 			$this->debug( "reading from database, id {$this->mWikiID}, count ".count( $this->mVariables ) );
 			wfProfileOut( __METHOD__."-varsdb" );
+
+			/**
+			 * maybe upgrade database to current schema
+			 */
+			if( $this->mCheckUpgrade === true ) {
+				$this->maybeUpgrade();
+			}
 		}
 
 		# take some WF variables values from city_list
@@ -863,6 +869,8 @@ class WikiFactoryLoader {
 	 * @access private
 	 *
 	 * @param	string	$message	log message
+	 *
+	 * @return nothing
 	 */
 	private function debug( $message ) {
 		wfDebug("wikifactory: {$message}", true);
@@ -872,20 +880,34 @@ class WikiFactoryLoader {
 	}
 
 	/**
-	 * Check the value of "wgReadOnlyCluster" WikiFactory variable defined for community.wikia.com
-	 * that controls which DB cluster is in read-only mode.
+	 * maybeUpgrade
 	 *
-	 * @author macbre
-	 * @see SUS-1634
-	 *
-	 * An example:
-	 * $wgReadOnlyCluster = "c1"; // this will turn on read-only mode on all c1 wikis
-	 *
-	 * @param string $cluster
-	 * @return bool if true is returned, the caller should set $wgReadOnly flag
+	 * look for existence of some columns in database. If they are not exist
+	 * run database upgrade  on first request. Not very efficient for regular
+	 * usage but good for transition time
 	 */
-	public static function checkPerClusterReadOnlyFlag( string $cluster ) : bool {
-		$readOnlyCluster = WikiFactory::getVarValueByName( 'wgReadOnlyCluster', Wikia::COMMUNITY_WIKI_ID );
-		return $readOnlyCluster === $cluster;
+	private function maybeUpgrade( ) {
+		wfProfileIn( __METHOD__ . "-upgradedb" );
+		$dbr = $this->getDB();
+
+		/**
+		 * look for rev_sha1 in revision table
+		 */
+		if( !$dbr->fieldExists( "revision", "rev_sha1", __METHOD__ ) ) {
+			$ret = true;
+			ob_start( array( $this, 'outputHandler' ) );
+			try {
+				$up = DatabaseUpdater::newForDB( $this->db );
+				$up->doUpdates();
+			} catch ( MWException $e ) {
+				$this->debug( "An error occured: " . $e->getText() );
+				$ret = false;
+			}
+			ob_end_flush();
+			wfProfileOut( __METHOD__ . "-upgradedb" );
+			return $ret;
+		}
+
+		wfProfileOut( __METHOD__ . "-upgradedb" );
 	}
-}
+};
