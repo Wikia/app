@@ -40,7 +40,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 			canFloat = floater && floater.canFloat(params) ? 'canFloat' : '',
 			floatingState = (params.floatingContext && params.floatingContext.state) || (canFloat ? 'never' : ''),
 			trackingData = {
-				'pv_unique_id': win.adEnginePvUID,
+				'pv_unique_id': win.pvUID,
 				'pv_number': pageLevelParams.pv,
 				'country': geo.getCountryCode(),
 				'skin': pageLevelParams.skin,

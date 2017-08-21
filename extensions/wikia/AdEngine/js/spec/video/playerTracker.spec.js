@@ -51,7 +51,7 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 				}
 			},
 			window: {
-				adEnginePvUID: 'superFooUniqueID'
+				pvUID: 'superFooUniqueID'
 			}
 		},
 		tracker;

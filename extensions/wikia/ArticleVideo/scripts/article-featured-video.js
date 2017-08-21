@@ -26,13 +26,14 @@ require([
 	var FEATURED_VIDEO_SIZE = 640 / 480,
 		correlator = Math.round(Math.random() * 10000000000);
 
-	function generateSet(vpos, type, position) {
+	function generateSet(vpos, type, position, rv) {
 		return {
 			position_type: type,
 			position: position,
 			tag_url: vastUrlBuilder.build(FEATURED_VIDEO_SIZE, {
 				pos: 'FEATURED',
-				src: 'premium'
+				src: 'premium',
+				rv: rv
 			}, {
 				vpos: vpos,
 				correlator: correlator
@@ -101,17 +102,18 @@ require([
 				};
 
 			if (vastUrlBuilder && adContext && adContext.getContext().opts.showAds) {
-				options.adSet = [generateSet('preroll', 'p', 0)];
+				options.adSet = [generateSet('preroll', 'p', 0, 1)];
 
 				if (adContext.getContext().opts.isFVMidrollEnabled) {
-					options.adSet.push(generateSet('midroll', 'p', 50));
+					options.adSet.push(generateSet('midroll', 'p', 50, 1));
 				}
 
 				if (adContext.getContext().opts.isFVPostrollEnabled) {
 					// postroll should has more than 100% to correct working, if it is 100%
-					options.adSet.push(generateSet('postroll', 'p', 101));
+					options.adSet.push(generateSet('postroll', 'p', 101, 1));
 				}
 
+				options.replayAds = adContext.getContext().opts.replayAdsForFV;
 			} else {
 				playerTrackerParams.adProduct = 'featured-video-no-preroll';
 			}
@@ -243,6 +245,21 @@ require([
 					label: 'attribution'
 				});
 			});
+		}
+
+		function configureAdSet(videoDepth) {
+			var adSet = [],
+				adVideoCapping = 3,
+				isReplayAdSupported = adContext.getContext().opts.replayAdsForFV,
+				shouldPlayAdOnNextVideo = videoDepth % adVideoCapping === 0,
+				showAds = adContext && adContext.getContext().opts.showAds;
+
+			if (isReplayAdSupported && shouldPlayAdOnNextVideo && vastUrlBuilder && showAds) {
+				var rv = Math.floor(videoDepth / adVideoCapping) + 1;
+				adSet = [generateSet('preroll', 'p', 0, rv)];
+			}
+
+			ooyalaVideoController.updateAdSet(adSet);
 		}
 
 		window.guaSetCustomDimension(34, videoId);
@@ -387,8 +404,7 @@ require([
 					label: 'recommended-video-depth-' + recommendedVideoDepth
 				});
 
-				// Don't play ads between videos
-				window.OO.Ads.unregisterAdManager('google-ima-ads-manager');
+				configureAdSet(recommendedVideoDepth);
 			});
 
 			track({
