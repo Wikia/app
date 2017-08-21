@@ -47,11 +47,7 @@
 		</div>
 		<div class="mcf-row">
 			<div class="mcf-card-wiki-placeholder"></div>
-			<?= F::app()->renderPartial(
-				'Recirculation',
-				'exploreWikis',
-				[ 'recirculationExploreWikis' => wfMessage( 'recirculation-explore-wikis' )->escaped() ]
-			); ?>
+			<?= F::app()->renderPartial('Recirculation', 'exploreWikis', [ 'recirculationExploreWikis' => wfMessage( 'recirculation-explore-wikis' )->escaped(), 'items' => $wikiRecommendations ]); ?>
 			<div class="mcf-card-ns-placeholder"></div>
 		</div>
 	</div>
