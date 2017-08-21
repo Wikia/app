@@ -30,11 +30,14 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			adsManager = adsManagerLoadedEvent.getAdsManager(videoElement, imaSetup.getRenderingSettings(params));
 			isAdsManagerLoaded = true;
 
-
-			debugger
 			if (videoSettings.isMoatTrackingEnabled()) {
-				var slicer2 = params.adProduct === 'abcd' ? 'abcd' : params.slotName;
-				moatVideoTracker.init(adsManager, params.container, win.google.ima.ViewMode.NORMAL, params.src, slicer2);
+				moatVideoTracker.init(
+					adsManager,
+					params.container,
+					win.google.ima.ViewMode.NORMAL,
+					params.src,
+					params.adProduct + '/' + params.slotName
+				);
 			}
 
 			log('AdsManager loaded', log.levels.debug, logGroup);
