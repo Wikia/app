@@ -119,8 +119,12 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 	 * @return string
 	 */
 	private function renderInfoboxHero( $data ) {
+		global $wgEnableArticleFeaturedVideo;
+
 		$helper = $this->getImageHelper();
-		$template = '';
+		$hasFeaturedVideo =
+			!empty( $wgEnableArticleFeaturedVideo ) &&
+			ArticleVideoContext::isFeaturedVideoEmbedded( RequestContext::getMain()->getTitle()->getPrefixedDBkey() );
 
 		// In Mercury SPA content of the first infobox's hero module has been moved to the article header.
 		$firstInfoboxAlredyRendered = \Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()
@@ -136,12 +140,33 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 				return $this->renderItem( 'hero-mobile-wikiamobile', $data );
 			} elseif ( $firstInfoboxAlredyRendered ) {
 				return $this->renderItem( 'hero-mobile', $data );
+			} elseif ( $hasFeaturedVideo ) {
+				return $this->renderSmallHeroImage( $data['title'], $image );
 			}
 		} elseif ( !$this->isMercury() || $firstInfoboxAlredyRendered ) {
 			return $this->renderItem( 'title', $data['title'] );
 		}
 
-		return !empty( $template ) ? $this->renderItem( $template, $data['title'] ) : '';
+		return '';
+	}
+
+	/**
+	 * renders hero image in data field with `Image` label
+	 *
+	 * @param $title
+	 * @param $image
+	 * 
+	 * @return string
+	 */
+	private function renderSmallHeroImage( $title, $image ) {
+		$originalWidth = $image['width'];
+		$image['width'] = self::MOBILE_THUMBNAIL_WIDTH;
+		$image['height'] = round( $image['width'] * ( $image['height'] / $originalWidth ) );
+
+		return $this->renderItem( 'hero-mobile-small', array_merge( $image, [
+			'label' => wfMessage( 'portable-infobox-image' )->escaped(),
+			'title' => $title,
+		] ) );
 	}
 
 	/**

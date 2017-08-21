@@ -17,6 +17,7 @@ $messages['en'] = array(
 	'portable-infobox-xml-parse-error-tag-name-mismatch' => 'Opening and ending tag mismatch',
 	'portable-infobox-xml-parse-error-tag-not-finished' => 'Premature end of tag',
 	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'Attribute "$1" is not supported in <infobox> tag',
+	'portable-infobox-image' => 'Image',
 );
 
 $messages['qqq'] = array(
@@ -34,6 +35,7 @@ $messages['qqq'] = array(
 	'portable-infobox-xml-parse-error-tag-name-mismatch' => 'XML Error: Opening and ending tag mismatch (for example: <data></label>)',
 	'portable-infobox-xml-parse-error-tag-not-finished' => 'XML Error: premature end of tag',
 	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'Unsupported attribute used inside <infobox> tag. $1 param contains attribute name.',
+	'portable-infobox-image' => 'Image label for hero image',
 );
 
 $messages['de'] = array(
@@ -52,6 +54,7 @@ $messages['de'] = array(
 	'portable-infobox-xml-parse-error-tag-not-finished' => 'Der Tag wurde vorzeitig geschlossen',
 	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'Das Attribut "$1" wird im
 	<infobox>-Tag nicht unterstützt',
+	'portable-infobox-image' => 'Bild',
 );
 
 $messages['es'] = array(
@@ -70,6 +73,8 @@ $messages['es'] = array(
 	'portable-infobox-xml-parse-error-tag-not-finished' => 'Fin prematuro de etiqueta',
 	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'El atributo "$1" no está respaldado en
 	la etiqueta <infobox>',
+	'portable-infobox-image' => 'Imagen',
+
 );
 
 $messages['fr'] = array(
@@ -88,6 +93,7 @@ $messages['fr'] = array(
 	'portable-infobox-xml-parse-error-tag-not-finished' => 'Fin de balise prématurée',
 	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'L\'attribut "$1" n\'est pas pris en charge dans
 	la balise <infobox>',
+	'portable-infobox-image' => 'Image',
 );
 
 $messages['it'] = array(
@@ -106,6 +112,7 @@ $messages['it'] = array(
 	'portable-infobox-xml-parse-error-tag-not-finished' => 'Fine prematura del tag',
 	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'L\'attributo "$1" non è supportato nel
 	tag <infobox>',
+	'portable-infobox-image' => 'Immagine',
 );
 
 $messages['ja'] = array(
@@ -123,6 +130,7 @@ $messages['ja'] = array(
 	'portable-infobox-xml-parse-error-tag-name-mismatch' => '開始タグと終了タグが一致していません',
 	'portable-infobox-xml-parse-error-tag-not-finished' => 'タグが未完成です',
 	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => '属性「$1」は<infobox>タグでサポートされていません',
+	'portable-infobox-image' => '画像',
 );
 
 $messages['nl'] = array(
@@ -142,6 +150,7 @@ $messages['nl'] = array(
 	'portable-infobox-xml-parse-error-tag-not-finished' => 'Premature end of tag',
 	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'Attribute "$1" is not supported in
 	<infobox> tag',
+	'portable-infobox-image' => 'Afbeelding',
 );
 
 $messages['pl'] = array(
@@ -159,6 +168,7 @@ $messages['pl'] = array(
 	'portable-infobox-xml-parse-error-tag-name-mismatch' => 'Niezgodność otwierającego i kończącego znacznika',
 	'portable-infobox-xml-parse-error-tag-not-finished' => 'Przedwczesny koniec znacznika',
 	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'Atrybut "$1" nie jest obsługiwana w tagu <infobox>',
+	'portable-infobox-image' => 'Obraz',
 );
 
 $messages['pt'] = array(
@@ -176,6 +186,7 @@ $messages['pt'] = array(
 	'portable-infobox-xml-parse-error-tag-name-mismatch' => 'A marcação de abertura e fechamento não correspondem',
 	'portable-infobox-xml-parse-error-tag-not-finished' => 'Fim prematuro da marcação',
 	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'O atributo "$1" não é suportado na marcação <infobox>',
+	'portable-infobox-image' => 'Imagem',
 );
 
 $messages['ru'] = array(
@@ -194,6 +205,7 @@ $messages['ru'] = array(
 	'portable-infobox-xml-parse-error-tag-not-finished' => 'Закрывающий тег объявлен слишком рано',
 	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'Атрибут "$1" не поддерживается 
 	тегом <infobox>',
+	'portable-infobox-image' => 'Изображение',
 );
 
 $messages['zh-hans'] = array(
@@ -212,6 +224,7 @@ $messages['zh-hans'] = array(
 	'portable-infobox-xml-parse-error-tag-not-finished' => '标签结束得过早',
 	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => '<infobox>标签不支持属性"$1" 
 	',
+	'portable-infobox-image' => '照片',
 );
 
 $messages['zh-hant'] = array(
@@ -230,5 +243,6 @@ $messages['zh-hant'] = array(
 	'portable-infobox-xml-parse-error-tag-not-finished' => '標記結束得過早',
 	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => '<infobox>標記不支持屬性"$1"
 	',
+	'portable-infobox-image' => '圖片',
 );
 
