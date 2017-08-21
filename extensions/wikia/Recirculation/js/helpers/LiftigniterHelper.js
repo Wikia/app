@@ -17,8 +17,8 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 				widget: options.widget,
 				callback: function (response) {
 					resizeThumbnails(response, options);
-					deferred.resolve(response);
-					fetching = false;
+                    deferred.resolve(response);
+                    fetching = false;
 					if(fetchQueue.length) {
 						// setTimeout is necessary because LI need to wait for LI to remove already registered modules
 						// LI clear register modules just after running all callbacks

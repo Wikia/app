@@ -2,8 +2,9 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 	'jquery',
 	'wikia.window',
 	'ext.wikia.recirculation.tracker',
-	'ext.wikia.recirculation.utils'
-], function ($, w, tracker, utils) {
+	'ext.wikia.recirculation.utils',
+	'ext.wikia.recirculation.plista'
+], function ($, w, tracker, utils, plista) {
 	'use strict';
 
 	function render(data) {
@@ -20,7 +21,8 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 					templates[templateName] = data[index];
 				});
 				injectTemplates(templates, newsAndStoriesList, wikiArticlesList);
-			});
+			})
+			.then(plista.prepareData(wikiArticlesList));
 	}
 
 	function injectTemplates(templates, newsAndStoriesList, wikiArticlesList) {

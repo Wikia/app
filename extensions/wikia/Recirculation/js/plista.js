@@ -4,7 +4,7 @@ define('ext.wikia.recirculation.plista', ['jquery'], function ($) {
 			return item.presented_by;
 		});
 
-		return !hasSponsoredContent && ['AU', 'NZ'].indexOf(Geo.getCountryCode()) > -1;
+		return !hasSponsoredContent && ['PL', 'AU', 'NZ'].indexOf(Geo.getCountryCode()) > -1;
 	}
 
 	function fetchPlista() {
@@ -22,7 +22,7 @@ define('ext.wikia.recirculation.plista', ['jquery'], function ($) {
 
 	function mapPlista(plistaData) {
 		return {
-			meta: 'wikia-impactfooter',
+			meta: 'wikia-footer-wiki-rec',
 			source: 'plista',
 			thumbnail: plistaData.img,
 			title: plistaData.title,
@@ -33,16 +33,17 @@ define('ext.wikia.recirculation.plista', ['jquery'], function ($) {
 	}
 
 	function prepareData(renderData) {
+		console.log(renderData);
 		return function () {
-			var length = renderData.items.length;
+			var length = renderData.length;
 
-			if (shouldFetchPlista(renderData.items)) {
+			if (shouldFetchPlista(renderData)) {
 				return fetchPlista()
 					.then(mapPlista)
 					.then(function (data) {
-						renderData.items.splice(5, 0, data);
+						renderData.splice(1, 1, data);
 
-						renderData.items = renderData.items.slice(0, length);
+					// Po co to??	renderData = renderData.slice(0, length);
 					}, function () {
 						// If Plista did not return anything, just don't add it to renderData
 
