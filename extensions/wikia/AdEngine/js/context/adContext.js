@@ -162,7 +162,7 @@ define('ext.wikia.adEngine.adContext', [
 	function setContext(newContext) {
 		var i,
 			len,
-			fvCapping = instantGlobals.wgAdDriverFeaturedVideoPrerollFrequencyCapping,
+			fvCapping = instantGlobals.wgAdDriverFeaturedVideoPrerollNextVideoFrequencyCapping,
 			noExternals = w.wgNoExternals || isUrlParamSet('noexternals');
 
 		// Note: consider copying the value, not the reference
