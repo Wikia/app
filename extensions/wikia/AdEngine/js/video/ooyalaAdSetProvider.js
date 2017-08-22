@@ -23,7 +23,7 @@ define('ext.wikia.adEngine.video.ooyalaAdSetProvider', [
 	}
 
 	function calculateRV(videoDepth, capping) {
-		return videoDepth === 1 || !capping ? 1 : Math.floor((videoDepth - 1) / capping) + 1;
+		return videoDepth < 2 || !capping ? 1 : Math.floor((videoDepth - 1) / capping) + 1;
 	}
 
 	function shouldPlayNextVideoAd(videoDepth, capping) {
