@@ -5,5 +5,5 @@ abstract class AbstractInvokableParserHook {
 		return call_user_func_array( [ $this, 'parse' ], $args );
 	}
 
-	abstract public function parse( string $content, array $attributes, Parser $parser, PPFrame $frame ): string;
+	abstract public function parse( $content, array $attributes, Parser $parser, PPFrame $frame ): string;
 }

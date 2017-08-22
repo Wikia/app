@@ -114,9 +114,32 @@ class CommunityMessages {
 	static function onBeforePageDisplay( OutputPage $out, Skin $skin ): bool {
 		$title = $out->getTitle();
 
-		if ( $title->isSpecial('ActivityFeed') || $title->isSpecial('MyHome') || $title->isSpecial('WikiActivity') ) {
-			self::dismissMessage();
+		if ( !$title->isSpecial( 'ActivityFeed' ) && !$title->isSpecial( 'MyHome' ) &&
+			 !$title->isSpecial( 'WikiActivity' ) ) {
+			return true;
 		}
+
+		global $wgMemc;
+		$communityMessagesTimestamp = $wgMemc->get( static::getCommunityMessagesCacheKey() ) ?? time();
+
+		// SUS-2585: Update table for logged in users
+		$user = $out->getUser();
+		if ( $user->isLoggedIn() && $communityMessagesTimestamp > (int) static::getUserTimestamp( $user ) ) {
+			global $wgCityId;
+
+			$task = ( new \Wikia\Tasks\Tasks\DismissCommunityMessageTask() )
+				->wikiId( $wgCityId )
+				->createdBy( $user );
+
+			$task->call( 'dismissCommunityMessage', $communityMessagesTimestamp );
+			$task->queue();
+
+			return true;
+		}
+
+		// set cookie for anons
+		$out->getRequest()->response()
+			->setcookie('CommunityMessages', $communityMessagesTimestamp, time() + 86400 /*24h*/);
 
 		return true;
 	}

@@ -1,4 +1,4 @@
-/*global beforeEach, describe, expect, it, jasmine, modules*/
+/*global beforeEach, describe, expect, it, jasmine, modules, spyOn*/
 describe('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', function () {
 	'use strict';
 
@@ -12,6 +12,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', function ()
 		slotsContext: {
 			filterSlotMap: function (map) {
 				return map;
+			}
+		},
+		instartLogic: {
+			isBlocking: function() {
+				return false;
 			}
 		},
 		adLogicZoneParams: {
@@ -38,6 +43,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', function ()
 			mocks.adContext,
 			mocks.slotsContext,
 			mocks.adLogicZoneParams,
+			mocks.instartLogic,
 			mocks.log
 		);
 	}
@@ -57,6 +63,13 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', function ()
 	it('Is disabled when context is disabled', function () {
 		mocks.context.bidders.rubiconDisplay = false;
 		var rubicon = getBidder();
+
+		expect(rubicon.isEnabled()).toBeFalsy();
+	});
+
+	it('Is disabled when context is enabled but is blocking', function () {
+		var rubicon = getBidder();
+		spyOn(mocks.instartLogic, 'isBlocking').and.returnValue(true);
 
 		expect(rubicon.isEnabled()).toBeFalsy();
 	});

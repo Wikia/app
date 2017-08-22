@@ -274,7 +274,6 @@ $config['adengine2_pr3b1d_js'] = [
 
 		// IL recovery
 		'//extensions/wikia/ARecoveryEngine/js/InstartLogic/recovery.js',
-		'//extensions/wikia/AdEngine/js/provider/gpt/targeting.js',
 
 		'//extensions/wikia/AdEngine/js/wrappers/prebid.js'
 	],
@@ -2821,10 +2820,9 @@ $config['page_header_js'] = [
 ];
 
 $config['page_header_scss'] = [
-    'type' => AssetsManager::TYPE_SCSS,
-    'skin' => [ 'oasis' ],
-    'assets' => [
-        '//extensions/wikia/PageHeader/styles/index.scss',
-    ],
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/PageHeader/styles/index.scss',
+	],
 ];
-
