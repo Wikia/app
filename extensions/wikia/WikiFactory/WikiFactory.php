@@ -1619,7 +1619,7 @@ class WikiFactory {
 	 */
 	static public function getDomainKey( $domain ) {
 		$domainHash = static::getDomainHash($domain);
-		return "wikifactory:domains:by_domain_hash:{$domainHash}";
+		return "wikifactory:domains:by_domain_hash:{$domainHash}:v2";
 	}
 
 	/**

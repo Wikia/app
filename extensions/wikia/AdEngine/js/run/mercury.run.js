@@ -37,7 +37,7 @@ require([
 	win.loadCustomAd = customAdsLoader.loadCustomAd;
 
 	function callBiddersOnConsecutivePageView() {
-		var isRubiconFastlanePrebidAdapterActive = adContext.getContext().bidders.fastlane;
+		var isRubiconDisplayPrebidAdapterActive = adContext.getContext().bidders.rubiconDisplay;
 
 		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
 			prebid.call();
@@ -50,14 +50,14 @@ require([
 		if (
 			geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) &&
 			geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneMercuryFixCountries) &&
-			!isRubiconFastlanePrebidAdapterActive
+			!isRubiconDisplayPrebidAdapterActive
 		) {
 			rubiconFastlane.call();
 		}
 	}
 
 	mercuryListener.onLoad(function () {
-		var isRubiconFastlanePrebidAdapterActive = adContext.getContext().bidders.fastlane;
+		var isRubiconDisplayPrebidAdapterActive = adContext.getContext().bidders.rubiconDisplay;
 
 		if (geo.isProperGeo(instantGlobals.wgAdDriverA9BidderCountries)) {
 			a9.call();
@@ -69,7 +69,7 @@ require([
 			amazon.call();
 		}
 
-		if (geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) && !isRubiconFastlanePrebidAdapterActive) {
+		if (geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) && !isRubiconDisplayPrebidAdapterActive) {
 			rubiconFastlane.call();
 		}
 

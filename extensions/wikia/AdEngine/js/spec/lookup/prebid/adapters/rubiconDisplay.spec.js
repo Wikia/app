@@ -1,5 +1,5 @@
-/*global beforeEach, describe, expect, it, jasmine, modules*/
-describe('ext.wikia.adEngine.lookup.prebid.adapters.fastlane', function () {
+/*global beforeEach, describe, expect, it, jasmine, modules, spyOn*/
+describe('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', function () {
 	'use strict';
 
 	var mocks = {
@@ -12,6 +12,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.fastlane', function () {
 		slotsContext: {
 			filterSlotMap: function (map) {
 				return map;
+			}
+		},
+		instartLogic: {
+			isBlocking: function() {
+				return false;
 			}
 		},
 		adLogicZoneParams: {
@@ -34,10 +39,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.fastlane', function () {
 	mocks.log.levels = {};
 
 	function getBidder() {
-		return modules['ext.wikia.adEngine.lookup.prebid.adapters.fastlane'](
+		return modules['ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay'](
 			mocks.adContext,
 			mocks.slotsContext,
 			mocks.adLogicZoneParams,
+			mocks.instartLogic,
 			mocks.log
 		);
 	}
@@ -45,7 +51,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.fastlane', function () {
 	beforeEach(function () {
 		mocks.context = {
 			bidders: {
-				fastlane: true
+				rubiconDisplay: true
 			},
 			targeting: {
 				wikiIsTop1000: true
@@ -55,8 +61,15 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.fastlane', function () {
 	});
 
 	it('Is disabled when context is disabled', function () {
-		mocks.context.bidders.fastlane = false;
+		mocks.context.bidders.rubiconDisplay = false;
 		var rubicon = getBidder();
+
+		expect(rubicon.isEnabled()).toBeFalsy();
+	});
+
+	it('Is disabled when context is enabled but is blocking', function () {
+		var rubicon = getBidder();
+		spyOn(mocks.instartLogic, 'isBlocking').and.returnValue(true);
 
 		expect(rubicon.isEnabled()).toBeFalsy();
 	});
@@ -80,7 +93,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.fastlane', function () {
 			sizes: [[728, 90], [970, 250]],
 			bids: [
 				{
-					bidder: 'fastlane',
+					bidder: 'rubicon_display',
 					params: {
 						accountId: 7450,
 						siteId: 41686,
