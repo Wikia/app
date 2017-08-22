@@ -56,11 +56,11 @@ define('ext.wikia.adEngine.video.ooyalaAdSetProvider', [
 
 		var adSet = [],
 			isReplay = videoDepth > 1,
-			prerollAdVideoCapping = 3,
+			adsFrequency = adContext.getContext().opts.fvAdsFrequency,
 			isReplayAdSupported = adContext.getContext().opts.replayAdsForFV;
 
-		if (!isReplay || (isReplayAdSupported && prerollAdVideoCapping > 0 && shouldPlayNextVideoAd(videoDepth, prerollAdVideoCapping))) {
-			adSet.push(generateSet('preroll', 'p', 0, calculateRV(videoDepth, prerollAdVideoCapping), correlator));
+		if (!isReplay || (isReplayAdSupported && adsFrequency > 0 && shouldPlayNextVideoAd(videoDepth, adsFrequency))) {
+			adSet.push(generateSet('preroll', 'p', 0, calculateRV(videoDepth, adsFrequency), correlator));
 		}
 
 		if (!isReplay && adContext.getContext().opts.isFVMidrollEnabled) {

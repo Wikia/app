@@ -162,6 +162,7 @@ define('ext.wikia.adEngine.adContext', [
 	function setContext(newContext) {
 		var i,
 			len,
+			fvAdsFrequency = instantGlobals.wgAdDriverPlayAdsOnNextFVFrequency,
 			noExternals = w.wgNoExternals || isUrlParamSet('noexternals');
 
 		// Note: consider copying the value, not the reference
@@ -261,6 +262,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.isFVMidrollEnabled = geo.isProperGeo(instantGlobals.wgAdDriverFVMidrollCountries);
 		context.opts.isFVPostrollEnabled = geo.isProperGeo(instantGlobals.wgAdDriverFVPostrollCountries);
 		context.opts.replayAdsForFV = geo.isProperGeo(instantGlobals.wgAdDriverPlayAdsOnNextFVCountries);
+		context.opts.fvAdsFrequency = fvAdsFrequency !== undefined ? fvAdsFrequency : 3;
 
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
