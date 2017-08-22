@@ -139,6 +139,7 @@ h1.mcf-header {
 	@include justify-content(flex-end);
 	background-size: cover;
 	background-position: center;
+	padding: 0 10px;
 
 	&__title {
 		color: $wds-color-white;
@@ -168,6 +169,7 @@ h1.mcf-header {
 		@include flex-direction(column);
 		@include flexbox();
 		background-color: rgba($wds-color-black, 0.75);
+		padding: 0 10px;
 	}
 
 	&__title {
@@ -175,6 +177,7 @@ h1.mcf-header {
 		font-size: 30px;
 		font-weight: bold;
 		margin: 14px 0 18px;
+		text-align: center;
 
 		@media #{$wds-breakpoint-m-down} {
 			font-size: 24px;
@@ -199,14 +202,19 @@ h1.mcf-header {
 	background-position: center;
 	position: relative;
 
-	> svg {
-		align-self: center;
-		fill: $wds-color-white;
-		height: 34.5%;
-		opacity: .15;
+	&__thumbnail-container {
 		position: absolute;
+		text-align: center;
 		top: 25%;
-		width: auto;
+		width: 100%;
+
+		> svg {
+			$mcf-placeholder-svg-size: 34.5%;
+			fill: $wds-color-white;
+			height: $mcf-placeholder-svg-size;
+			opacity: .15;
+			width: $mcf-placeholder-svg-size;
+		}
 	}
 
 	&__title {
@@ -350,12 +358,16 @@ h1.mcf-header {
 	}
 
 	&__circle {
+		$circle-size: 36px;
+		$circle-small-size: 24px;
+
 		@include align-items(center);
 		@include flexbox();
 		@include justify-content(center);
 		background-color: $wds-color-light-gray;
 		border-radius: 50%;
 		color: $wds-color-white;
+		flex: 0 0 $circle-size;
 		font-size: 18px;
 		font-weight: bold;
 		height: 36px;
@@ -363,15 +375,19 @@ h1.mcf-header {
 		width: 36px;
 
 		@media #{$wds-breakpoint-m-down} {
+			flex: 0 0 $circle-small-size;
 			font-size: 14px;
-			height: 24px;
-			width: 24px;
+			height: $circle-small-size;
+			width: $circle-small-size;
 		}
 	}
 
 	&__title {
 		font-size: 14px;
 		margin-left: 12px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 
 		@media #{$wds-breakpoint-m-down} {
 			font-size: 12px;
@@ -388,6 +404,7 @@ h1.mcf-header {
 		font-size: 18px;
 		font-weight: bold;
 		padding: 16px;
+		word-wrap: break-word;
 
 		@media #{$wds-breakpoint-m-down} {
 			font-size: 14px;
@@ -475,6 +492,10 @@ h1.mcf-header {
 		font-weight: 600;
 		word-wrap: break-word;
 		padding: 16px;
+
+		@media #{$wds-breakpoint-m-down} {
+			font-size: 14px;
+		}
 	}
 
 	&__link {

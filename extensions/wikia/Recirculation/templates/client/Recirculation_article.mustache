@@ -2,7 +2,9 @@
     <a href="{{url}}" class="mcf-card mcf-card-article"
        style="background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000000), url({{thumbnail}});">
         {{^thumbnail}}
-            {{{fandomHeartSvg}}}
+			<div class="mcf-card-article__thumbnail-container">
+				{{{fandomHeartSvg}}}
+			</div>
         {{/thumbnail}}
         {{#video}}
             <div class="mcf-card-article__video">
