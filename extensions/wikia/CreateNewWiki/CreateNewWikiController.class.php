@@ -23,33 +23,18 @@ class CreateNewWikiController extends WikiaController {
 	const LANG_ALL_AGES_OPT        = 'en';
 
 	public function index() {
-		global $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressToolbar, $wgRequest, $wgUser, $wgWikiaBaseDomain;
+		global $wgSuppressCommunityHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressToolbar, $wgRequest, $wgUser, $wgWikiaBaseDomain;
 		wfProfileIn( __METHOD__ );
 
 		// hide some default oasis UI things
-		$wgSuppressWikiHeader = true;
+		$wgSuppressCommunityHeader = true;
 		$wgSuppressPageHeader = true;
 		$wgSuppressFooter = false;
 		$wgSuppressToolbar = true;
 
 		// store the fact we're on CNW
 		$this->wg->atCreateNewWikiPage = true;
-
-		if ( !$this->wg->User->isLoggedIn() && !empty( $this->wg->EnableFacebookClientExt ) ) {
-			// required for FB Connect to work
-			$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js' );
-		}
-
-		// fbconnected means user has gone through step 2 to login via facebook.
-		// Therefore, we need to reload some values and start at the step after signup/login
-		$fbconnected = $wgRequest->getVal('fbconnected');
-		$fbreturn = $wgRequest->getVal('fbreturn');
-		if((!empty($fbconnected) && $fbconnected === '1') || (!empty($fbreturn) && $fbreturn === '1')) {
-			$this->LoadState();
-			$currentStep = 'DescWiki';
-		} else {
-			$currentStep = '';
-		}
+		$currentStep = '';
 
 		$this->setupVerticalsAndCategories();
 
@@ -284,7 +269,7 @@ class CreateNewWikiController extends WikiaController {
 		$description = $params[ 'wDescription' ];
 		if ( !empty( $description ) ) {
 			$blockedKeyword = '';
-			wfRunHooks( 'CheckContent', array( $description, &$blockedKeyword ) );
+			Hooks::run( 'CheckContent', array( $description, &$blockedKeyword ) );
 			if ( !empty( $blockedKeyword ) ) {
 				$this->setContentBlockedByPhalanxErrorResponse( $description, $blockedKeyword );
 				wfProfileOut( __METHOD__ );
@@ -371,7 +356,7 @@ class CreateNewWikiController extends WikiaController {
 		$text = $wgRequest->getVal('text','');
 		$blockedKeyword = '';
 
-		wfRunHooks( 'CheckContent', array( $text, &$blockedKeyword ) );
+		Hooks::run( 'CheckContent', array( $text, &$blockedKeyword ) );
 
 		if ( !empty( $blockedKeyword ) ) {
 			$this->setContentBlockedByPhalanxErrorResponse( $text, $blockedKeyword );

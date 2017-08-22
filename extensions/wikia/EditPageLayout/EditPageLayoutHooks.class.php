@@ -24,11 +24,12 @@ class EditPageLayoutHooks {
 
 	/**
 	 * Add wgIsEditPage global JS variable on edit pages
+	 * @param array $vars
+	 * @param OutputPage $out
+	 * @return bool
 	 */
-	static function onMakeGlobalVariablesScript( Array &$vars ) {
-		global $wgUser;
-
-		wfRunHooks( 'EditPageMakeGlobalVariablesScript', array( &$vars ) );
+	static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ): bool {
+		Hooks::run( 'EditPageMakeGlobalVariablesScript', [ &$vars, $out ] );
 		$helper = EditPageLayoutHelper::getInstance();
 		$js = $helper->getJsVars();
 		foreach( $js as $key => $value ) {
@@ -36,7 +37,7 @@ class EditPageLayoutHooks {
 		}
 
 		// Export JS Variable to check to see if Admin Only Video Upload is enabled for this wiki
-		$vars['showAddVideoBtn'] = $wgUser->isAllowed( 'videoupload' );
+		$vars['showAddVideoBtn'] = $out->getUser()->isAllowed( 'videoupload' );
 
 		return true;
 	}
@@ -59,8 +60,11 @@ class EditPageLayoutHooks {
 
 	/**
 	 * Reverse parse wikitext when performing diff for edit conflict
+	 * @param EditPage $editform
+	 * @param OutputPage $out
+	 * @return bool
 	 */
-	static function onEditPageBeforeConflictDiff( &$editform, &$out ) {
+	static function onEditPageBeforeConflictDiff( EditPage $editform, OutputPage $out ): bool {
 		$helper = EditPageLayoutHelper::getInstance();
 		if ( class_exists( 'RTE' ) && $helper->getRequest()->getVal( 'RTEMode' ) == 'wysiwyg') {
 			$editform->textbox2 = RTE::HtmlToWikitext( $editform->textbox2 );
@@ -164,10 +168,9 @@ class EditPageLayoutHooks {
 	 * Modify HTML before edit page textarea
 	 *
 	 * @param $editPage EditPage edit page instance
-	 * @param $hidden boolean not used
 	 * @return boolean return true
 	 */
-	static function onBeforeDisplayingTextbox( EditPage $editPage, &$hidden ) {
+	static function onBeforeDisplayingTextbox( EditPage $editPage ): bool {
 		$app = F::app();
 		if ( $app->checkSkin( 'oasis' ) ) {
 			$app->wg->Out->addHtml( '<div id="editarea" class="editpage-editarea" data-space-type="editarea">' );
@@ -180,10 +183,9 @@ class EditPageLayoutHooks {
 	 * Modify HTML after edit page textarea
 	 *
 	 * @param $editPage EditPage edit page instance
-	 * @param $hidden boolean not used
 	 * @return boolean return true
 	 */
-	static function onAfterDisplayingTextbox( EditPage $editPage, &$hidden ) {
+	static function onAfterDisplayingTextbox( EditPage $editPage ): bool {
 		$app = F::app();
 		if ( $app->checkSkin( 'oasis') ) {
 			$params = array(

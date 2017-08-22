@@ -65,6 +65,13 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.openx',[
 						[300, 250]
 					],
 					unit: 538735694
+				},
+				BOTTOM_LEADERBOARD: {
+					sizes: [
+						[728, 90],
+						[970, 250]
+					],
+					unit: 539119447
 				}
 			},
 			mercury: {

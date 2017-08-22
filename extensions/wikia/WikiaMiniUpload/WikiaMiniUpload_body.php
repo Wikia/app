@@ -261,7 +261,7 @@ class WikiaMiniUpload {
 
 		$ret = $upload->verifyUpload();
 
-		if ( !wfRunHooks('WikiaMiniUpload:BeforeProcessing', array($mSrcName)) ) {
+		if ( !Hooks::run('WikiaMiniUpload:BeforeProcessing', array($mSrcName)) ) {
 			wfDebug( "Hook 'WikiaMiniUpload:BeforeProcessing' broke processing the file." );
 			return UploadBase::VERIFICATION_ERROR;
 		}
@@ -628,7 +628,7 @@ class WikiaMiniUpload {
 			$article_obj = new Article( $title_obj );
 			$text = $article_obj->getContent();
 
-			wfRunHooks( 'WikiaMiniUpload::fetchTextForImagePlaceholder', array( &$title_obj, &$text ) );
+			Hooks::run( 'WikiaMiniUpload::fetchTextForImagePlaceholder', array( &$title_obj, &$text ) );
 
 			$box = $wgRequest->getVal( 'box', '' );
 

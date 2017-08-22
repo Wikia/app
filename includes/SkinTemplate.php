@@ -376,7 +376,7 @@ class SkinTemplate extends Skin {
 		$tpl->set( 'usernewmessages', $ntl );
 		/* Wikia change end */
 
-		wfRunHooks( 'SkinTemplatePageBeforeUserMsg', array( &$ntl ) );
+		Hooks::run( 'SkinTemplatePageBeforeUserMsg', [ &$ntl, $this ] );
 
 		wfProfileOut( __METHOD__ . '-stuff2' );
 
@@ -548,7 +548,7 @@ class SkinTemplate extends Skin {
 		$tpl->set( 'reporttime', wfReportTime() );
 
 		// original version by hansm
-		if( !wfRunHooks( 'SkinTemplateOutputPageBeforeExec', array( &$this, &$tpl ) ) ) {
+		if ( !Hooks::run( 'SkinTemplateOutputPageBeforeExec', [ $this, $tpl ] ) ) {
 			wfDebug( __METHOD__ . ": Hook SkinTemplateOutputPageBeforeExec broke outputPage execution!\n" );
 		}
 
@@ -753,7 +753,7 @@ class SkinTemplate extends Skin {
 			}
 		}
 
-		wfRunHooks( 'PersonalUrls', array( &$personal_urls, &$title ) );
+		Hooks::run( 'PersonalUrls', [ &$personal_urls, $title, $this ] );
 		wfProfileOut( __METHOD__ );
 		return $personal_urls;
 	}
@@ -793,9 +793,17 @@ class SkinTemplate extends Skin {
 		}
 
 		$result = array();
-		if( !wfRunHooks( 'SkinTemplateTabAction', array( &$this,
-				$title, $message, $selected, $checkEdit,
-				&$classes, &$query, &$text, &$result ) ) ) {
+		if ( !Hooks::run( 'SkinTemplateTabAction', [
+			$this,
+			$title,
+			$message,
+			$selected,
+			$checkEdit,
+			&$classes,
+			&$query,
+			&$text,
+			&$result,
+		] ) ) {
 			return $result;
 		}
 
@@ -887,7 +895,7 @@ class SkinTemplate extends Skin {
 		$userCanRead = $title->quickUserCan( 'read', $user );
 
 		$preventActiveTabs = false;
-		wfRunHooks( 'SkinTemplatePreventOtherActiveTabs', array( &$this, &$preventActiveTabs ) );
+		Hooks::run( 'SkinTemplatePreventOtherActiveTabs', [ $this, &$preventActiveTabs ] );
 
 		// Checks if page is some kind of content
 		if( $title->canExist() ) {
@@ -1056,7 +1064,7 @@ class SkinTemplate extends Skin {
 				}
 			}
 
-			wfRunHooks( 'SkinTemplateNavigation', array( &$this, &$content_navigation ) );
+			Hooks::run( 'SkinTemplateNavigation', [ $this, &$content_navigation ] );
 
 			if ( $userCanRead && !$wgDisableLangConversion ) {
 				$pageLang = $title->getPageLanguage();
@@ -1095,12 +1103,11 @@ class SkinTemplate extends Skin {
 				'context' => 'subject'
 			);
 
-			wfRunHooks( 'SkinTemplateNavigation::SpecialPage',
-				array( &$this, &$content_navigation ) );
+			Hooks::run( 'SkinTemplateNavigation::SpecialPage', [ $this, &$content_navigation ] );
 		}
 
 		// Equiv to SkinTemplateContentActions
-		wfRunHooks( 'SkinTemplateNavigation::Universal', array( &$this,  &$content_navigation ) );
+		Hooks::run( 'SkinTemplateNavigation::Universal', [ $this, &$content_navigation ] );
 
 		// Setup xml ids and tooltip info
 		foreach ( $content_navigation as $section => &$links ) {
@@ -1137,7 +1144,7 @@ class SkinTemplate extends Skin {
 			}
 		}
 
-		wfRunHooks('SkinTemplateTabs', array($this, &$content_navigation));
+		Hooks::run('SkinTemplateTabs', array($this, &$content_navigation));
 
 		wfProfileOut( __METHOD__ );
 
@@ -1246,8 +1253,8 @@ class SkinTemplate extends Skin {
 			}
 
 			// Use the copy of revision ID in case this undocumented, shady hook tries to mess with internals
-			wfRunHooks( 'SkinTemplateBuildNavUrlsNav_urlsAfterPermalink',
-				array( &$this, &$nav_urls, &$revid, &$revid ) );
+			Hooks::run( 'SkinTemplateBuildNavUrlsNav_urlsAfterPermalink',
+				[ $this, &$nav_urls, &$revid, &$revid ] );
 		}
 
 		if ( $out->isArticleRelated() ) {
@@ -1515,7 +1522,8 @@ abstract class BaseTemplate extends QuickTemplate {
 				$toolbox['permalink']['id'] = 't-permalink';
 			}
 		}
-		wfRunHooks( 'BaseTemplateToolbox', array( &$this, &$toolbox ) );
+		Hooks::run( 'BaseTemplateToolbox', [ $this, &$toolbox ] );
+
 		wfProfileOut( __METHOD__ );
 		return $toolbox;
 	}
@@ -1625,7 +1633,7 @@ abstract class BaseTemplate extends QuickTemplate {
 			ob_start();
 			// We pass an extra 'true' at the end so extensions using BaseTemplateToolbox
 			// can abort and avoid outputting double toolbox links
-			wfRunHooks( 'SkinTemplateToolboxEnd', array( &$this, true ) );
+			Hooks::run( 'SkinTemplateToolboxEnd', [ $this, true ] );
 			$hookContents = ob_get_contents();
 			ob_end_clean();
 			if ( !trim( $hookContents ) ) {

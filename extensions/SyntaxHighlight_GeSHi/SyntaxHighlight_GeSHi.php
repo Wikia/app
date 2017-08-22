@@ -63,9 +63,11 @@ $wgResourceModules['ext.geshi.local'] = array( 'class' => 'HighlightGeSHilocal' 
  * Register parser hook
  *
  * @param $parser Parser
+ * @return bool
  */
-function efSyntaxHighlight_GeSHiSetup( &$parser ) {
-	$parser->setHook( 'source', array( 'SyntaxHighlight_GeSHi', 'parserHook' ) );
-	$parser->setHook( 'syntaxhighlight', array( 'SyntaxHighlight_GeSHi', 'parserHook' ) );
+function efSyntaxHighlight_GeSHiSetup( Parser $parser ): bool {
+	$parser->setHook( 'source', [ 'SyntaxHighlight_GeSHi', 'parserHook' ] );
+	$parser->setHook( 'syntaxhighlight', [ 'SyntaxHighlight_GeSHi', 'parserHook' ] );
+
 	return true;
 }

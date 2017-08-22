@@ -1,6 +1,5 @@
 /*global define, require*/
 define('ext.wikia.adEngine.template.bfaaMobile', [
-	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.slot.resolvedState',
 	'ext.wikia.adEngine.slotTweaker',
@@ -10,16 +9,17 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
-], function (uapContext,
-			 btfBlocker,
-			 resolvedState,
-			 slotTweaker,
-			 uapVideo,
-			 VideoSettings,
-			 doc,
-			 log,
-			 win,
-			 mercuryListener) {
+], function (
+	btfBlocker,
+	resolvedState,
+	slotTweaker,
+	uapVideo,
+	VideoSettings,
+	doc,
+	log,
+	win,
+	mercuryListener
+) {
 	'use strict';
 
 	var adsModule,
@@ -82,7 +82,6 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 		log(['show', page, wrapper, params], log.levels.info, logGroup);
 
 		wrapper.style.opacity = '0';
-		uapContext.setUapId(params.uap);
 		videoSettings = VideoSettings.create(params);
 		resolvedState.setImage(videoSettings);
 
@@ -94,7 +93,9 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 
 		log(['show', params.uap], log.levels.info, logGroup);
 
-		unblockedSlots.forEach(btfBlocker.unblock);
+		if (params.adProduct !== 'abcd') {
+			unblockedSlots.forEach(btfBlocker.unblock);
+		}
 	}
 
 	return {

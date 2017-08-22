@@ -36,7 +36,7 @@ class Hooks {
 	 * @return bool
 	 */
 	public function onArticleSaveComplete( \WikiPage $article, \User $user, $text, $summary,
-		$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId
+		$minoredit, $watchthis, $sectionanchor, $flags, $revision, &$status, $baseRevId
 	) {
 		global $wgCityId;
 
@@ -144,7 +144,7 @@ class Hooks {
 				\Wikia::addAssetsToOutput( 'template_classification_in_edit_js' );
 				\Wikia::addAssetsToOutput( 'template_classification_scss' );
 
-				wfRunHooks( 'TemplateClassificationHooks::afterEditPageAssets' );
+				\Hooks::run( 'TemplateClassificationHooks::afterEditPageAssets' );
 			}
 		} elseif ( $permissions->shouldDisplayBulkActions( $user, $title ) ) {
 			\Wikia::addAssetsToOutput( 'template_classification_in_category_js' );

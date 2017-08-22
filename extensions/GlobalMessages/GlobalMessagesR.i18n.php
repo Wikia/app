@@ -335,7 +335,7 @@ ___________________________________________
 	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
-	'registerintro-title' => 'When you create an account on Fandom, you become a part of the community!',
+	'registerintro-title' => 'When you create an account on FANDOM, you become a part of the community!',
 	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
 	'rcshowhidelogs' => '$1 logs',
 );
@@ -9615,7 +9615,7 @@ Bitte prüfe die Logbücher.',
 	'rightsnone' => '(–)',
 	'recentchanges' => 'Letzte Änderungen',
 	'recentchanges-legend' => 'Anzeigeoptionen',
-	'recentchangestext' => '<div id="wikia-mediawiki-recentchangestext" style="border:2px solid #e9e9e9; margin-bottom:0.3em; padding:0.2em 0.5em;"><span style="float:left;">[[Special:NewPages|Neue Seiten]] - [[Special:NewImages|Neue Bilder]] – [[Special:Log|Logbücher]] – [[Special:Insights|Insights]]</span><span style="float:right;">[[w:c:de.community:Hilfe:Letzte_Änderungen|Letzte Änderungen]]</span><div style="clear:both;"></div></div>',
+	'recentchangestext' => '<div id="wikia-mediawiki-recentchangestext" style="border:2px solid #e9e9e9; margin-bottom:0.3em; padding:0.2em 0.5em;"><span style="float:left;">[[Special:NewPages|Neue Seiten]] – [[Special:NewImages|Neue Bilder]] – [[Special:Log|Logbücher]] – [[Special:Insights|Insights]]</span><span style="float:right;">[[Hilfe:Letzte_Änderungen|Letzte Änderungen]]</span><div style="clear:both;"></div></div>',
 	'recentchanges-feed-description' => 'Verfolge mit diesem Feed die letzten Änderungen in {{SITENAME}}.',
 	'recentchanges-label-newpage' => 'Neue Seite',
 	'recentchanges-label-minor' => 'Kleine Änderung',
@@ -9751,7 +9751,7 @@ de.wikia.com',
 	'related_wiki' => 'Füge hier Links im Listenformat ein um ähnliche Wikis zu diesem im "Related Wikis" [[Special:Widgets|Widget]] anzuzeigen.
 
 * [{{FULLURL:MediaWiki:Related wiki}} Bisher wurde kein ähnliches Wiki eingetragen.]',
-	'registerintro-title' => 'Sobald du bei Fandom ein Konto erstellt hast, bist du Teil der Community!',
+	'registerintro-title' => 'Sobald du bei FANDOM ein Konto erstellt hast, bist du Teil der Community!',
 	'registerintro-text' => 'Alle deine Beiträge werden dir zugeordnet und du kannst dein eigenes Benutzerprofil erstellen, interessante Artikel beobachen und hast du Zugriff auf weitere nützliche Tools.',
 	'rcshowhidelogs' => 'Logbücher $1',
 	'right-hideblockername' => 'Verhindert, dass der Benutzername in Sperrbenachrichtigungen angezeigt wird',
@@ -11636,7 +11636,7 @@ ___________________________________________
 	'return_to_special' => 'Volver a la página especial',
 	'related_wiki' => 'Añadir enlaces aquí para mostrar wiki relacionados a este en el [[{{#Special:Widgets|widget}}]] del wiki relacionado. 
 * [{{FULLURL:MediaWiki:Related wiki}} todavía no ha sido seleccionado wiki relacionado.]',
-	'registerintro-title' => '¡Cuando creas una cuenta en Fandom, te conviertes en parte de la comunidad!',
+	'registerintro-title' => '¡Cuando creas una cuenta en FANDOM, te conviertes en parte de la comunidad!',
 	'registerintro-text' => 'Dale crédito a todas tus contribuciones, y también podrás crear tu propio perfil de usuario, lista de seguimiento con tus páginas favoritas y tendrás acceso a una gran variedad de herramientas continuamente actualizadas.',
 	'rcshowhidelogs' => '$1 registros',
 	'right-hideblockername' => 'No mostrar nombre de usuario en avisos de bloqueo',
@@ -13687,7 +13687,7 @@ www.wikia.com
 	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
-	'registerintro-title' => 'Lorsque vous créez un compte sur Fandom, vous devenez membre de la communauté !',
+	'registerintro-title' => 'Lorsque vous créez un compte sur FANDOM, vous devenez membre de la communauté !',
 	'registerintro-text' => "Vous comptabilisez toutes vos contributions et vous pouvez créer votre propre profil utilisateur, liste de suivi de vos pages favorites et avoir accès à toute sorte d'outils sympas. Vos contributions sont davantage prises au sérieux.",
 	'rcshowhidelogs' => '$1 les journaux',
 	'right-hideblockername' => "Ne pas afficher leur nom d'utilisateur dans les avis de blocage",
@@ -20110,17 +20110,18 @@ Puoi ancora visualizzare questo confronto; consultare il [{{fullurl:{{#Special:L
 	'revdelete-selected' => "'''{{PLURAL:$2|Revisione selezionata|Revisioni selezionate}} di [[:$1]]:'''",
 	'revdelete-text' => "'''Le revisioni cancellate e le azioni resteranno visibili nella cronologia e nei registi, mentre i loro contenuti non sarà accessibile al pubblico.'''
 Gli altri amministratori di {{SITENAME}} potranno accedere comunque ai contenuti nascosti e ripristinarli attraverso questa stessa interfaccia, a meno che non siano state impostate altre limitazioni.",
-	'revdelete-confirm' => 'Per favore conferma che questo è quanto intendi fare, che sei consapevole delle conseguenze, e che stai facendo questo nel rispetto delle [[{{MediaWiki:Policy-url}}|linee guida]].',
-	'revdelete-suppress-text' => "La rimozione deve essere utilizzata '''unicamente''' nei seguenti casi:
+	'revdelete-confirm' => 'Per favore, conferma che questo è quello che intendi fare, che sei consapevole delle conseguenze e che stai facendo questo nel rispetto delle [[{{MediaWiki:Policy-url}}|linee guida]].',
+	'revdelete-suppress-text' => "La soppressione delle revisioni deve essere utilizzata '''unicamente''' nei seguenti casi:
+* Informazioni potenzialmente diffamatorie
 * Dati personali inopportuni
 *: ''indirizzi, numeri di telefono, codici fiscali, ecc.''",
-	'revdelete-legend' => 'Imposta le seguenti limitazioni sulle versioni cancellate:',
-	'revdelete-hide-text' => 'Nascondi il testo della versione',
+	'revdelete-legend' => 'Imposta restrizioni per la visibilità',
+	'revdelete-hide-text' => 'Nascondi il testo della revisione',
 	'revdelete-hide-image' => 'Nascondi i contenuti del file',
 	'revdelete-hide-name' => 'Nascondi azione e oggetto della stessa',
-	'revdelete-hide-comment' => "Nascondi l'oggetto della modifica o la motivazione dell'azione",
-	'revdelete-hide-user' => "Nascondi il nome o l'indirizzo IP dell'autore",
-	'revdelete-hide-restricted' => 'Nascondi le informazioni indicate anche agli amministratori',
+	'revdelete-hide-comment' => 'Nascondi il riepilogo della modifica',
+	'revdelete-hide-user' => "Nascondi il nome o l'indirizzo IP dell'utente",
+	'revdelete-hide-restricted' => 'Nascondi le informazioni anche agli amministratori',
 	'revdelete-radio-same' => '(non cambiare)',
 	'revdelete-radio-set' => 'Sì',
 	'revdelete-radio-unset' => 'No',
@@ -20129,7 +20130,7 @@ Gli altri amministratori di {{SITENAME}} potranno accedere comunque ai contenuti
 	'revdelete-log' => 'Motivo:',
 	'revdelete-submit' => 'Applica {{PLURAL:$1|alla revisione selezionata|alle revisioni selezionate}}',
 	'revdelete-success' => "'''Visibilità della revisione aggiornata correttamente.'''",
-	'revdelete-failure' => "'''La visibilità della versione non può essere aggiornata:'''
+	'revdelete-failure' => "'''Non è stato possibile aggiornare la visibilità della revisione:'''
 $1",
 	'revdel-restore' => 'cambia la visibilità',
 	'revdel-restore-deleted' => 'revisioni cancellate',
@@ -20141,20 +20142,21 @@ $1",
 	'revdelete-no-change' => "'''Attenzione:''' l'oggetto con data $1 $2 aveva già le impostazioni di visibilità richieste.",
 	'revdelete-concurrent-change' => "Impossibile modificare l'oggetto con data $1 $2 in quanto il suo stato è stato modificato da un altro utente mentre se ne tentava la modifica.",
 	'revdelete-only-restricted' => "Errore nel nascondere l'oggetto datato $1, $2: non è possibile nascondere gli oggetti alla vista degli amministratori senza selezionare almeno un'altra delle opzioni di rimozione.",
-	'revdelete-reason-dropdown' => '*Motivazioni più comuni per la cancellazione
+	'revdelete-reason-dropdown' => '* Motivazioni più comuni per la cancellazione
 ** Violazione di copyright
-** Informazioni personali inappropriate',
+** Informazioni personali inappropriate
+** Informazioni potenzialmente diffamatorie',
 	'revdelete-otherreason' => 'Altra motivazione o motivazione aggiuntiva:',
 	'revdelete-reasonotherlist' => 'Altra motivazione',
 	'revdelete-edit-reasonlist' => 'Modifica le motivazioni per la cancellazione',
-	'revdelete-offender' => 'Autore della versione:',
-	'revertmerge' => 'Annulla unioni',
-	'resetprefs' => 'Reimposta le preferenze',
+	'revdelete-offender' => 'Autore della revisione:',
+	'revertmerge' => 'Annulla unione',
+	'resetprefs' => 'Annulla modifiche non salvate',
 	'restoreprefs' => 'Ripristina le impostazioni predefinite',
 	'rows' => 'Righe:',
-	'resultsperpage' => 'Numero di risultati per pagina:',
-	'recentchangesdays' => 'Numero di giorni da mostrare nelle ultime modifiche:',
-	'recentchangesdays-max' => '(massimo $1 {{PLURAL:$1|giorno|giorni}})',
+	'resultsperpage' => 'Risultati per pagina:',
+	'recentchangesdays' => 'Giorni da mostrare nelle ultime modifiche:',
+	'recentchangesdays-max' => 'Massimo $1 {{PLURAL:$1|giorno|giorni}}',
 	'recentchangescount' => 'Numero di modifiche da mostrare per default:',
 	'right-read' => 'Legge pagine',
 	'right-edit' => 'Modifica pagine',
@@ -20223,12 +20225,12 @@ $1",
 	'recentchanges' => 'Ultime modifiche',
 	'recentchanges-legend' => 'Opzioni ultime modifiche',
 	'recentchangestext' => '<div id="wikia-mediawiki-recentchangestext" style="border:2px solid #e9e9e9; margin-bottom:0.3em; padding:0.2em 0.5em;"><span style="float:left;">[[Special:NewPages|Nuove pagine]] - [[Special:NewImages|Nuove immagini]] - [[Special:Log|Registri]] - [[Special:Insights|Consigli]]</span><span style="float:right;">[[w:it:Aiuto:Ultime modifiche|Aiuto:Ultime modifiche]]</span><div style="clear:both;"></div></div>',
-	'recentchanges-feed-description' => 'Questo feed riporta le modifiche più recenti ai contenuti del sito.',
+	'recentchanges-feed-description' => 'Questo feed riporta le modifiche più recenti alla wiki.',
 	'recentchanges-label-newpage' => 'Questa modifica ha creato una nuova pagina',
 	'recentchanges-label-minor' => 'Questa è una modifica minore',
 	'recentchanges-label-bot' => 'Questa modifica è stata effettuata da un bot',
 	'recentchanges-label-unpatrolled' => 'Questa modifica non è stata ancora verificata',
-	'rcnote' => "Di seguito {{PLURAL:$1|è elencata la modifica più recente apportata|sono elencate le '''$1''' modifiche più recenti apportate}} al sito {{PLURAL:$2|nelle ultime 24 ore|negli scorsi '''$2''' giorni}}; i dati sono aggiornati alle $5 del $4.",
+	'rcnote' => '<div style="margin-top: -20px;" class="emptymwmsg mediawiki_rcnote"></div>',
 	'rcnotefrom' => "Di seguito sono elencate le modifiche apportate a partire da '''$2''' (fino a '''$1''').",
 	'rclistfrom' => 'Mostra le modifiche apportate a partire da $1',
 	'rcshowhideminor' => '$1 le modifiche minori',
@@ -20240,7 +20242,7 @@ $1",
 	'rclinks' => 'Mostra le $1 modifiche più recenti apportate negli ultimi $2 giorni<br />$3',
 	'rc_categories' => 'Limita alle categorie (separate da "|")',
 	'rc_categories_any' => 'Qualsiasi',
-	'rc-change-size-new' => '$1 {{PLURAL:$1|byte|byte}} dopo la modifica',
+	'rc-change-size-new' => '$1 byte dopo la modifica',
 	'rc-enhanced-expand' => 'Mostra dettagli (richiede JavaScript)',
 	'rc-enhanced-hide' => 'Nascondi dettagli',
 	'recentchangeslinked' => 'Modifiche correlate',
@@ -20267,15 +20269,15 @@ Le pagine contenute nella propria lista degli [[Special:Watchlist|Osservati spec
 	'revertpage' => 'Annullate le modifiche di [[Special:Contributions/$2|$2]] ([[User talk:$2|discussione]]), riportata alla versione precedente di [[User:$1|$1]]',
 	'revertpage-nouser' => 'Annullate le modifiche di (nome utente rimosso), riportata alla versione precedente di [[User:$1|$1]]',
 	'rollback-success' => "Annullate le modifiche di $1; pagina riportata all'ultima versione di $2.",
-	'restriction-type' => 'Permesso',
-	'restriction-level' => 'Livello di restrizione',
+	'restriction-type' => 'Permesso di:',
+	'restriction-level' => 'Livello di restrizione:',
 	'restriction-edit' => 'Modifica',
 	'restriction-move' => 'Spostamento',
 	'restriction-create' => 'Creazione',
-	'restriction-upload' => 'Carica',
+	'restriction-upload' => 'Caricamento',
 	'restriction-level-sysop' => 'protetta',
 	'restriction-level-autoconfirmed' => 'semi-protetta',
-	'restriction-level-all' => 'tutti i livelli',
+	'restriction-level-all' => 'qualsiasi livello',
 	'reblock-logentry' => 'ha cambiato le impostazioni del blocco per [[$1]] con una scadenza di $2 $3',
 	'range_block_disabled' => 'La possibilità di bloccare intervalli di indirizzi IP non è attiva al momento.',
 	'revertmove' => 'ripristina',
@@ -20368,7 +20370,7 @@ www.wikia.com
 	'related_wiki' => 'Aggiungi link puntati qui per visualizzare la wiki correlata alla presente nella wiki correlata [[Special:Widget|widget]].
 
 * [{{FULLURL:MediaWiki:Related wiki}} Non è stata ancora selezionata alcuna wiki correlata.]',
-	'registerintro-title' => 'Quando crei un account su Fandom, diventi parte della comunità!',
+	'registerintro-title' => 'Quando crei un account su FANDOM, diventi parte della comunità!',
 	'registerintro-text' => 'Ricevi il riconoscimento per tutte le tue collaborazioni, crea il tuo profilo utente personale, segui gli sviluppi delle tue pagine preferite e utilizza tutti i pratici strumenti disponibili.',
 	'rcshowhidelogs' => '$1 registri',
 	'right-hideblockername' => "Non hanno il loro nome utente visualizzato nell'avviso di blocco",
@@ -20971,7 +20973,7 @@ ___________________________________________
 	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
-	'registerintro-title' => 'Fandomでアカウントを作成すると、コミュニティの一員になります',
+	'registerintro-title' => 'FANDOMでアカウントを作成すると、コミュニティの一員になります',
 	'registerintro-text' => 'あなたが行う全ての投稿にクレジットがつけられ、プロフィールの作成・気に入ったページのウォッチ・様々なツールの利用ができるようになります。',
 	'rcshowhidelogs' => 'ログを$1',
 	'right-hideblockername' => 'ブロック通知にユーザー名を表示させない',
@@ -32460,7 +32462,7 @@ www.wikia.com
 	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
-	'registerintro-title' => 'When you create an account on Fandom, you become a part of the community!',
+	'registerintro-title' => 'When you create an account on FANDOM, you become a part of the community!',
 	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
 	'rcshowhidelogs' => '$1 logs',
 	'right-hideblockername' => 'Not have their user name show up in block notices',
@@ -35813,7 +35815,7 @@ Por favor, verifique os registos.',
 	'rightsnone' => '(nenhum)',
 	'recentchanges' => 'Mudanças recentes',
 	'recentchanges-legend' => 'Opções das mudanças recentes',
-	'recentchangestext' => '<div id="wikia-mediawiki-recentchangestext" style="border:2px solid #e9e9e9; margin-bottom:0.3em; padding:0.2em 0.5em;"> <span style="float:left;"> [Special: NewPages |Novas páginas]] – [[Special: NewImages|Novos arquivos]] – [[Special: Log|Logs]] – [[Special: Insights|Insights]]</span> <span style="float:right;"> [[Ajuda: mudanças recentes]]</span> <div style="clear:both;"></div></div>',
+	'recentchangestext' => '<div id="wikia-mediawiki-recentchangestext" style="border:2px solid #e9e9e9; margin-bottom:0.3em; padding:0.2em 0.5em;"> <span style="float:left;"> [[Special:NewPages|Novas páginas]] – [[Special:NewImages|Novos arquivos]] – [[Special:Log|Logs]] – [[Special:Insights|Insights]]</span> <span style="float:right;"> [[Ajuda:mudanças recentes]]</span> <div style="clear:both;"></div></div>',
 	'recentchanges-feed-description' => 'Acompanhe neste feed as mudanças mais recentes do wiki.',
 	'recentchanges-label-newpage' => 'Esta edição criou uma nova página',
 	'recentchanges-label-minor' => 'Esta é uma edição menor',
@@ -35945,281 +35947,10 @@ ___________________________________________
 	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
-	'registerintro-title' => 'Quando você cria uma conta no Fandom, você se torna parte da comunidade!',
+	'registerintro-title' => 'Quando você cria uma conta no FANDOM, você se torna parte da comunidade!',
 	'registerintro-text' => 'Você recebe crédito por todas as suas contribuições, e também pode criar seu próprio perfil de usuário, marcar suas páginas favoritas e obter acesso a todos os tipos de ferramentas interessantes.',
 	'rcshowhidelogs' => '$1 registros',
 	'right-hideblockername' => 'Não exibir o nome do usuário em notificações de bloqueio',
-);
-
-$messages['pt-br'] = array(
-	'realmap-deprecated-info' => 'Os mapas do mundo foram suspensos pela Wikia. Para obter mais informações, consulte: $1',
-	'returnto' => 'Retornar para $1.',
-	'redirectedfrom' => 'Redirecionado de $1',
-	'redirectpagesub' => 'Página de redirecionamento',
-	'retrievedfrom' => 'Disponível em "$1"',
-	'restorelink' => '{{PLURAL:$1|uma edição eliminada|$1 edições eliminadas}}',
-	'red-link-title' => '$1 (página inexistente)',
-	'readonly' => 'Banco de dados disponível no modo "somente leitura"',
-	'readonlytext' => 'O banco de dados da {{SITENAME}} está atualmente bloqueado para novas entradas e outras modificações, provavelmente por uma manutenção rotineira; mais tarde voltará ao normal.
-
-Quem fez o bloqueio oferece a seguinte explicação: $1',
-	'readonly_lag' => 'O banco de dados foi automaticamente bloqueado enquanto os servidores secundários se sincronizam com o principal',
-	'remembermypassword' => 'Lembrar meu login neste navegador (por no máximo $1 {{PLURAL:$1|dia|dias}})',
-	'resetpass' => 'Alterar senha',
-	'resetpass_announce' => 'Você foi autenticado através de uma senha temporária. Para prosseguir, será necessário definir uma nova senha.',
-	'resetpass_text' => '<!-- Adicionar texto aqui -->',
-	'resetpass_header' => 'Alterar a senha da conta',
-	'retypenew' => 'Reintroduza a nova senha',
-	'resetpass_submit' => 'Definir senha e entrar',
-	'resetpass_success' => 'Sua senha foi alterada com sucesso! Autenticando-se...',
-	'resetpass_forbidden' => 'As senhas não podem ser alteradas',
-	'resetpass-no-info' => 'Você precisa estar autenticado para acessar esta página diretamente.',
-	'resetpass-submit-loggedin' => 'Alterar senha',
-	'resetpass-submit-cancel' => 'Cancelar',
-	'resetpass-wrong-oldpass' => 'Senha temporária ou atual inválida.
-Você pode já ter alterado com sucesso a sua senha, ou solicitado uma nova senha temporária.',
-	'resetpass-temp-password' => 'Senha temporária:',
-	'readonlywarning' => "'''Aviso: A base de dados foi bloqueada para manutenção, por isso você não poderá salvar a sua edição neste momento.'''
-Pode, no entanto, copiar o seu texto num editor externo e guardá-lo para posterior envio.
-
-Quem bloqueou o banco de dados forneceu a seguinte justificativa: $1",
-	'recreate-moveddeleted-warn' => "'''Atenção: Você está recriando uma página já eliminada em outra ocasião.'''
-
-Considere se é realmente adequado continuar editando esta página.
-Os registros de eliminação e de movimentação desta página são exibidos a seguir, para sua comodidade:",
-	'revisionasof' => 'Edição das $1',
-	'revision-info' => 'Edição feita às $1 por $2',
-	'rev-deleted-comment' => '(resumo da edição suprimido)',
-	'rev-deleted-user' => '(nome de usuário removido)',
-	'rev-deleted-event' => '(entrada removida)',
-	'rev-deleted-user-contribs' => '[nome de usuário ou endereço de IP eliminado - edição ocultada das contribuições]',
-	'rev-deleted-text-permission' => "Esta revisão desta página foi '''eliminada'''.
-Podem existir mais detalhes no [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} registro de eliminações].",
-	'rev-deleted-text-unhide' => "Esta revisão desta página foi '''removida'''.
-Poderá haver detalhes no [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} registro de eliminação].
-Você ainda pode [$1 ver esta revisão] se deseja prosseguir.",
-	'rev-suppressed-text-unhide' => "Esta revisão desta página foi '''removida'''.
-Poderá haver detalhes no [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} registro de eliminação].
-Você ainda pode [$1 ver esta revisão] se deseja prosseguir.",
-	'rev-deleted-text-view' => "A revisão desta página foi '''eliminada'''.
-Você pode visualizá-la; pode haver detalhes no [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} registro de eliminação].",
-	'rev-suppressed-text-view' => "A revisão desta página foi '''eliminada'''.
-Você pode visualizá-la; podem existir mais detalhes no [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} registro de eliminação].",
-	'rev-deleted-no-diff' => "Você não pode ver estas diferenças porque uma das revisões foi '''eliminada'''.
-Poderá haver detalhes no [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} registro de eliminação].",
-	'rev-suppressed-no-diff' => "Você não pode ver esta comparação porque uma das revisões foi '''eliminada'''.",
-	'rev-deleted-unhide-diff' => "Uma das revisões desta diferença entre revisões foi '''eliminada'''.
-Podem existir mais detalhes no [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} registo de eliminações].
-Pode mesmo assim [$1 ver estas diferenças] se deseja prosseguir.",
-	'rev-suppressed-unhide-diff' => "Uma das revisões desta diferença entre revisões foi '''suprimida'''.
-Podem existir mais detalhes no [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} registo de supressões].
-Pode mesmo assim [$1 ver estas diferenças] se deseja prosseguir.",
-	'rev-deleted-diff-view' => "Uma das revisões desta diferença entre revisões foi '''eliminada'''.
-Você pode ver a diferença entre revisões; podem existir mais detalhes no [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} registo de eliminações].",
-	'rev-suppressed-diff-view' => "Uma das revisões desta comparação foi '''suprimida''''.
-Você pode ver esta comparação; detalhes podem ser encontradas no [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} registro de supressão].",
-	'rev-delundel' => 'exibir/ocultar',
-	'rev-showdeleted' => 'exibir',
-	'revisiondelete' => 'Eliminar/restaurar edições',
-	'revdelete-nooldid-title' => 'Nenhuma revisão selecionada',
-	'revdelete-nooldid-text' => 'Você ou não especificou uma(s) edição(ões) de destino, a edição especificada não existe ou, ainda, você está tentando ocultar a edição atual.',
-	'revdelete-nologtype-title' => 'Tipo de registro não especificado',
-	'revdelete-nologtype-text' => 'Você não especificou um tipo de registro sobre o qual executar esta ação.',
-	'revdelete-nologid-title' => 'Entrada de registro inválida',
-	'revdelete-nologid-text' => 'Você não especificou um evento de registro alvo para executar esta função ou a entrada especificada não existe.',
-	'revdelete-no-file' => 'O arquivo especificado não existe.',
-	'revdelete-show-file-confirm' => 'Tem a certeza de que quer visualizar uma revisão eliminada do arquivo "<nowiki>$1</nowiki>" de $2 em $3?',
-	'revdelete-show-file-submit' => 'Sim',
-	'revdelete-selected' => "'''{{PLURAL:$2|Edição selecionada|Edições selecionadas}} de [[:$1]]:'''",
-	'revdelete-text' => "'''Revisões eliminadas e eventos continuarão aparecendo no histórico da página e nos registros, apesar de o seu conteúdo textual estar inacessível ao público.'''
-Outros administradores no {{SITENAME}} continuarão podendo acessar ao conteúdo escondido e restaurá-lo através desta mesma ''interface'', a menos que uma restrição adicional seja definida.",
-	'revdelete-confirm' => 'Por favor confirme que pretende executar esta acção, que compreende as suas consequências e que o faz em concordância com as [[{{MediaWiki:Policy-url}}|políticas e recomendações]].',
-	'revdelete-suppress-text' => "A supressão deverá ser usada '''apenas''' para os seguintes casos:
-* Informação pessoal inapropriada
-*: ''endereços de domicílio e números de telefone, números da segurança social, etc''",
-	'revdelete-legend' => 'Definir restrições de visualização',
-	'revdelete-hide-text' => 'Ocultar texto da edição',
-	'revdelete-hide-image' => 'Ocultar conteúdos do arquivo',
-	'revdelete-hide-name' => 'Ocultar ação e alvo',
-	'revdelete-hide-comment' => 'Ocultar o sumário de edição',
-	'revdelete-hide-user' => 'Ocultar nome de usuário/IP do editor',
-	'revdelete-hide-restricted' => 'Suprimir dados de administradores assim como de outros',
-	'revdelete-radio-same' => '(não altere)',
-	'revdelete-radio-set' => 'Sim',
-	'revdelete-radio-unset' => 'Não',
-	'revdelete-suppress' => 'Suprimir dados de administradores, bem como de outros',
-	'revdelete-unsuppress' => 'Remover restrições das edições restauradas',
-	'revdelete-log' => 'Motivo:',
-	'revdelete-submit' => 'Aplicar {{PLURAL:$1|à revisão selecionada|à revisões selecionadas}}',
-	'revdelete-success' => "'''A visibilidade da revisão foi definida com sucesso.'''",
-	'revdelete-failure' => "'''A visibilidade da revisão não foi atualizada:'''
-$1",
-	'revdel-restore' => 'alterar visibilidade',
-	'revdel-restore-deleted' => 'edições eliminadas',
-	'revdel-restore-visible' => 'edições visíveis',
-	'revdelete-hide-current' => 'Erro ao ocultar o item datado de $2, $1: esta é a revisão atual.
-Não pode ser ocultada.',
-	'revdelete-show-no-access' => 'Erro ao mostrar o item datado de $2, $1: este item foi marcado como "restrito".
-Você não tem acesso a ele.',
-	'revdelete-modify-no-access' => 'Erro ao modificar o item datado de $2, $1: este item foi marcado como "restrito".
-Você não tem acesso a ele.',
-	'revdelete-modify-missing' => 'Erro ao modificar o item ID $1: está faltando na base de dados!',
-	'revdelete-no-change' => "'''Aviso:''' o item datado de $2, $1 já possui as configurações de visualização requeridas.",
-	'revdelete-concurrent-change' => 'Erro ao modificar o item datado de $2, $1: o seu estado parece ter sido alterado por outra pessoa enquanto você tentava modificá-lo.
-Por favor, verifique os registos.',
-	'revdelete-only-restricted' => 'Erro ao ocultar o item de $2 às $1: você não pode impedir que itens sejam visualizados por administradores sem também selecionar uma das outras opções de visibilidade.',
-	'revdelete-reason-dropdown' => '*Motivos comuns para eliminação
-** Violação de direitos autorais
-** Informação pessoal inapropriada
-** Informação potencialmente difamatória',
-	'revdelete-otherreason' => 'Outro motivo/motivo adicional:',
-	'revdelete-reasonotherlist' => 'Outro motivo',
-	'revdelete-edit-reasonlist' => 'Editar motivos de eliminação',
-	'revdelete-offender' => 'Autor da revisão:',
-	'revertmerge' => 'Desfazer fusão',
-	'resetprefs' => 'Eliminar as alterações não-salvas',
-	'restoreprefs' => 'Restaurar todas as configurações padrão',
-	'rows' => 'Linhas:',
-	'resultsperpage' => 'Resultados por página:',
-	'recentchangesdays' => 'Dias a serem exibidos nas Mudanças recentes:',
-	'recentchangesdays-max' => '(máximo: $1 {{PLURAL:$1|dia|dias}})',
-	'recentchangescount' => 'Número de edições a serem exibidas por padrão:',
-	'right-read' => 'Ler páginas',
-	'right-edit' => 'Editar páginas',
-	'right-createpage' => 'Criar páginas (que não sejam páginas de discussão)',
-	'right-createtalk' => 'Criar páginas de discussão',
-	'right-createaccount' => 'Criar novas contas de usuário',
-	'right-minoredit' => 'Marcar edições como menores',
-	'right-move' => 'Mover páginas',
-	'right-move-subpages' => 'Mover páginas com as suas subpáginas',
-	'right-move-rootuserpages' => 'Mover páginas raiz de usuários',
-	'right-movefile' => 'Mover arquivos',
-	'right-suppressredirect' => 'Não criar um redirecionamento do nome antigo quando uma página é movida',
-	'right-upload' => 'Enviar arquivos',
-	'right-reupload' => 'Sobrescrever um arquivo existente',
-	'right-reupload-own' => 'Sobrescrever um arquivo existente enviado pelo mesmo usuário',
-	'right-reupload-shared' => 'Sobrescrever localmente arquivos no repositório partilhado de mídias',
-	'right-upload_by_url' => 'Enviar um arquivo por um URL',
-	'right-purge' => 'Carregar a cache de uma página no site sem página de confirmação',
-	'right-autoconfirmed' => 'Editar páginas semi-protegidas',
-	'right-bot' => 'Ser tratado como um processo automatizado',
-	'right-nominornewtalk' => 'Não ter o aviso de novas mensagens despoletado quando são feitas edições menores a páginas de discussão',
-	'right-apihighlimits' => 'Usar limites superiores em consultas (queries) via API',
-	'right-writeapi' => 'Uso da API de escrita',
-	'right-delete' => 'Eliminar páginas',
-	'right-bigdelete' => 'Eliminar páginas com histórico grande',
-	'right-deleterevision' => 'Eliminar e restaurar revisões específicas de páginas',
-	'right-deletedhistory' => 'Ver entradas de histórico eliminadas, sem o texto associado',
-	'right-deletedtext' => 'Ver texto removido e alterado entre revisões removidas',
-	'right-browsearchive' => 'Buscar páginas eliminadas',
-	'right-undelete' => 'Restaurar páginas',
-	'right-suppressrevision' => 'Rever e restaurar edições indisponíveis a administradores',
-	'right-suppressionlog' => 'Ver registros privados',
-	'right-block' => 'Impedir outros usuários de editarem',
-	'right-blockemail' => 'Impedir um usuário de enviar email',
-	'right-hideuser' => 'Bloquear um nome de usuário, escondendo-o do público',
-	'right-ipblock-exempt' => 'Contornar bloqueios de IP, automáticos e de intervalo',
-	'right-proxyunbannable' => 'Contornar bloqueios automáticos de proxies',
-	'right-unblockself' => 'Desbloquearem-se a si próprios',
-	'right-protect' => 'Mudar níveis de proteção e editar páginas protegidas',
-	'right-editprotected' => 'Editar páginas protegidas (sem proteção em cascata)',
-	'right-editinterface' => 'Editar a interface de usuário',
-	'right-editusercssjs' => 'Editar os arquivos CSS e JS de outros usuários',
-	'right-editusercss' => 'Editar os arquivos CSS de outros usuários',
-	'right-edituserjs' => 'Editar os arquivos JS de outros usuários',
-	'right-rollback' => 'Reverter rapidamente o último usuário que editou uma página em particular',
-	'right-markbotedits' => 'Marcar edições revertidas como edições de bot',
-	'right-noratelimit' => 'Não afetado pelos limites de velocidade de operação',
-	'right-import' => 'Importar páginas de outros wikis',
-	'right-importupload' => 'Importar páginas de um arquivo carregado',
-	'right-patrol' => 'Marcar edições como patrulhadas',
-	'right-autopatrol' => 'Ter edições automaticamente marcadas como patrulhadas',
-	'right-patrolmarks' => 'Usar funcionalidades de patrulhagem das mudanças recentes',
-	'right-unwatchedpages' => 'Ver uma lista de páginas não vigiadas',
-	'right-mergehistory' => 'Fundir o histórico de páginas',
-	'right-userrights' => 'Editar todos os direitos de usuário',
-	'right-userrights-interwiki' => 'Editar direitos de usuário de usuários outros sites wiki',
-	'right-siteadmin' => 'Bloquear e desbloquear o banco de dados',
-	'right-override-export-depth' => 'Exportar páginas incluindo páginas ligadas até uma profundidade de 5',
-	'right-sendemail' => 'Enviar email a outros usuários',
-	'right-passwordreset' => 'Ver todos os e-mails de reposição de senhas',
-	'rightslog' => 'Registro de privilégios de usuário',
-	'rightslogtext' => 'Este é um registro de mudanças nos privilégios de usuários.',
-	'rightslogentry' => 'alterou os grupos de privilégios {{GENDER:$1|do usuário|da usuária|de usuário para}} $1 (de $2 para $3)',
-	'rightslogentry-autopromote' => 'foi automaticamente promovido de $2 para $3',
-	'rightsnone' => '(nenhum)',
-	'recentchanges' => 'Mudanças recentes',
-	'recentchanges-legend' => 'Opções das mudanças recentes',
-	'recentchanges-summary' => 'Acompanhe nesta página as mudanças mais recentes deste wiki.',
-	'recentchanges-feed-description' => 'Acompanhe neste feed as mudanças mais recentes do wiki.',
-	'recentchanges-label-newpage' => 'Esta edição criou uma nova página',
-	'recentchanges-label-minor' => 'Esta é uma edição menor',
-	'recentchanges-label-bot' => 'Esta edição foi feita por um bot',
-	'recentchanges-label-unpatrolled' => 'Esta edição ainda não foi patrulhada',
-	'rcnote' => "A seguir {{PLURAL:$1|está listada '''uma''' alteração ocorrida|estão listadas '''$1''' alterações ocorridas}} {{PLURAL:$2|no último dia|nos últimos '''$2''' dias}}, a partir das $5 de $4.",
-	'rcnotefrom' => "Seguem as alterações desde as '''$4''' de '''$3''' (limitadas a '''$1''').",
-	'rclistfrom' => 'Mostrar as novas alterações a partir das $1',
-	'rcshowhideminor' => '$1 edições menores',
-	'rcshowhidebots' => '$1 bots',
-	'rcshowhideliu' => '$1 usuários registrados',
-	'rcshowhideanons' => '$1 usuários anônimos',
-	'rcshowhidepatr' => '$1 edições patrulhadas',
-	'rcshowhidemine' => '$1 minhas edições',
-	'rclinks' => 'Exibir as $1 alterações recentes feitas nos últimos $2 dias<br />$3',
-	'rc_categories' => 'Limite para categorias (separar com "|")',
-	'rc_categories_any' => 'Qualquer',
-	'rc-change-size-new' => '$1 {{PLURAL:$1|byte|bytes}} após alterações',
-	'rc-enhanced-expand' => 'Exibir detalhes (requer JavaScript)',
-	'rc-enhanced-hide' => 'Ocultar detalhes',
-	'rc-old-title' => 'criado originalmente como "$1"',
-	'recentchangeslinked' => 'Alterações relacionadas',
-	'recentchangeslinked-feed' => 'Alterações relacionadas',
-	'recentchangeslinked-toolbox' => 'Alterações relacionadas',
-	'recentchangeslinked-title' => 'Alterações relacionadas com "$1"',
-	'recentchangeslinked-noresult' => 'Não ocorreram alterações em páginas relacionadas no intervalo de tempo especificado.',
-	'recentchangeslinked-summary' => "Esta página lista alterações feitas recentemente em páginas com links a uma em específico (ou de membros de uma categoria especificada).
-Páginas de sua [[Special:Watchlist|lista de páginas vigiadas]] são exibidas em '''negrito'''.",
-	'recentchangeslinked-page' => 'Nome da página:',
-	'recentchangeslinked-to' => 'Visualizar as alterações nas páginas vinculadas à página especificada ao invés disso',
-	'reuploaddesc' => 'Cancelar o envio e retornar ao formulário de upload',
-	'randompage' => 'Página aleatória',
-	'randompage-nopages' => 'Não há páginas {{PLURAL:$2|no seguinte espaço nominal|nos seguintes espaços nominais}}: $1.',
-	'randomredirect' => 'Redirecionamento aleatório',
-	'randomredirect-nopages' => 'Não há redirecionamentos no espaço nominal "$1".',
-	'removewatch' => 'Remover das páginas vigiadas',
-	'removedwatchtext' => 'A página "[[:$1]]" foi removida de sua [[Special:Watchlist|lista de páginas vigiadas]].',
-	'reverted' => 'Revertido para versão anterior',
-	'rollback' => 'Reverter edições',
-	'rollback_short' => 'Reverter',
-	'rollbacklink' => 'reverter',
-	'rollbackfailed' => 'A reversão falhou',
-	'revertpage' => 'Foram revertidas as edições de [[Special:Contributions/$2|$2]] ([[User talk:$2|disc]]) para a última versão por [[User:$1|$1]]',
-	'revertpage-nouser' => 'Revertidas as edições de (nome de usuário removido) para a última revisão por [[User:$1|$1]]',
-	'rollback-success' => 'Foram revertidas as edições de $1, com o conteúdo passando a estar como na última edição de $2.',
-	'restriction-type' => 'Permissão:',
-	'restriction-level' => 'Nível de restrição:',
-	'restriction-edit' => 'Editar',
-	'restriction-move' => 'Mover',
-	'restriction-create' => 'Criar',
-	'restriction-upload' => 'Carregar',
-	'restriction-level-sysop' => 'totalmente protegida',
-	'restriction-level-autoconfirmed' => 'semi-protegida',
-	'restriction-level-all' => 'qualquer nível',
-	'reblock-logentry' => 'modificou parâmetros de bloqueio de [[$1]] com expiração em $2. $3',
-	'range_block_disabled' => 'A funcionalidade de bloquear gamas de IPs encontra-se desativada.',
-	'revertmove' => 'reverter',
-	'rcpatroldisabled' => 'Edições verificadas nas Mudanças Recentes desativadas',
-	'rcpatroldisabledtext' => 'A funcionalidade de Edições verificadas nas Mudanças Recentes está atualmente desativada.',
-	'recreate' => 'Recriar',
-	'revdelete-content-hid' => 'conteúdo oculto',
-	'revdelete-summary-hid' => 'sumário de edição oculto',
-	'revdelete-uname-hid' => 'nome de usuário oculto',
-	'revdelete-content-unhid' => 'conteúdo não oculto',
-	'revdelete-summary-unhid' => 'sumário de edição não oculto',
-	'revdelete-uname-unhid' => 'nome de usuário não oculto',
-	'revdelete-restricted' => 'restrições a administradores aplicadas',
-	'revdelete-unrestricted' => 'restrições a administradores removidas',
-	'reconfirmemail_subject' => 'Bem vindo/a à Wikia!',
 );
 
 $messages['qu'] = array(
@@ -49016,64 +48747,6 @@ Pagina's die op [[Special:Watchlist|je volglieste]] staen wòdde '''vet''' weerg
 	'revdelete-unrestricted' => 'ei beperkiengen voe beheêrders opeheven',
 );
 
-$messages['zh'] = array(
-	'rcnote' => "以下是在$3，最近'''$2'''天内的'''$1'''次最近更改记录:",
-	'rcshowhideanons' => '$1 匿名用戶',
-	'rcshowhidebots' => '$1 机器人',
-	'rcshowhideenhanced' => '$1 折頁式顯示模式',
-	'rcshowhideliu' => '$1 登入用戶',
-	'recentchangestext' => '<span style="float:right;"><small>\'\'[[MediaWiki:Recentchangestext|View this template]]\'\'</small></span>
-此頁為本站最近更新的內容：
-
-{| class="plainlinks" style="background: transparent; margin-left:0.5em; margin-bottom:0.5em;" cellpadding="0" cellspacing="0"
-|-valign="top"
-|align="right"|\'\'\'記錄&nbsp;:&nbsp;\'\'\'
-|align="left" |[[Special:Newpages|最新文章]] - [[Special:Newimages|最新檔案]] - [[Special:Log/delete|刪除]] - [[Special:Log/move|移動頁面]] - [[Special:Log/upload|上傳記錄]] - [[Special:Log/block|封鎖]] - [[Special:Log|更多記錄...]]
-|-valign="top"
-|align="right"|\'\'\'特殊頁面&nbsp;:&nbsp;\'\'\'
-|align="left" |[[Special:Wantedpages|請求頁面]] - [[Special:Longpages|長頁面]] - [[Special:Uncategorizedimages|未分類圖片]] - [[Special:Uncategorizedpages|未分類文章]] - [[Special:Specialpages|更多特殊頁面...]]
-|}',
-	'reconfirmemail_body' => '$2 您好,
-
-谢谢您更新了Wikia帐号连结的电子邮件信箱。
-
-在我们的系统寄发任何您所选择的通知电子邮件之前，您需要再确认您的电子邮件信箱。
-
-点击以下链接或将网址贴到您的浏览器上： 
-
-$3
-
-注意: 这个确认链接会在7天之后失效。
-
-
-Wikia有成千上万的社区，在这里有很多方式可以找到乐趣。建议您可以访问我们的首页（zh.wikia.com） 看看有些什么有趣的社区和内容，您可以在您喜好的主题撰写文章，也可以和其他社区用户交流。
-
-我们期待在Wikia见到您！ 
-
-Wikia 社区团队',
-	'reconfirmemail_subject' => '欢迎来到Wikia!',
-);
-
-$messages['zh-cn'] = array(
-	'randomredirect' => '隨機重定向頁',
-	'rcnote' => "以下是在$3，最近'''$2'''天内的'''$1'''次最近更改记录:",
-	'rcshowhideanons' => '$1 匿名用戶',
-	'rcshowhidebots' => '$1 机器人',
-	'rcshowhideenhanced' => '$1 折页式显示模式',
-	'rcshowhideliu' => '$1 登入用戶',
-	'recentchangestext' => '<span style="float:right;"><small>\'\'[[MediaWiki:Recentchangestext|View this template]]\'\'</small></span>
-此页为本站最近更新的內容：
-
-{| class="plainlinks" style="background: transparent; margin-left:0.5em; margin-bottom:0.5em;" cellpadding="0" cellspacing="0"
-|-valign="top"
-|align="right"|\'\'\'记錄&nbsp;:&nbsp;\'\'\'
-|align="left" |[[Special:Newpages|最新文章]] - [[Special:Newimages|最新档案]] - [[Special:Log/delete|刪除]] - [[Special:Log/move|移动页面]] - [[Special:Log/upload|上载记錄]] - [[Special:Log/block|封锁]] - [[Special:Log|更多记錄...]]
-|-valign="top"
-|align="right"|\'\'\'特殊页面&nbsp;:&nbsp;\'\'\'
-|align="left" |[[Special:Wantedpages|请求页面]] - [[Special:Longpages|长页面]] - [[Special:Uncategorizedimages|未分类图片]] - [[Special:Uncategorizedpages|未分类文章]] - [[Special:Specialpages|更多特殊页面...]]
-|}',
-);
-
 $messages['zh-hans'] = array(
 	'realmap-deprecated-info' => 'Wikia已经不再支持世界地图功能。详情请参见: $1',
 	'returnto' => '返回到$1。',
@@ -49395,7 +49068,7 @@ Wikia 社区团队',
 	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
-	'registerintro-title' => '当你在Fandom上创建帐户时，你就成为了社区的一员！',
+	'registerintro-title' => '当你在FANDOM上创建帐户时，你就成为了社区的一员！',
 	'registerintro-text' => '你的贡献将得到认可！你还可以创建个人用户主页，关注你最喜欢的页面，以及使用各种实用的工具。',
 	'rcshowhidelogs' => '$1个记录',
 	'right-hideblockername' => '在封禁通知中不显示用户名。',
@@ -49729,504 +49402,6 @@ Wikia 社區團隊',
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
 	'registerintro-text' => '你的貢獻將得到認可！你還可以創建個人頁面，關注你最喜歡的頁面，以及使用各種實用的工具。',
 	'rcshowhidelogs' => '$1項日誌',
-);
-
-$messages['zh-hk'] = array(
-	'red-link-title' => '$1 (頁面不存在)',
-	'rev-deleted-comment' => '（註釋已除）',
-	'rev-deleted-event' => '（日誌已除）',
-	'revdelete-suppress-text' => "壓制'''只'''應用於以下的情況:
-* 不合適的個人資料
-*: ''地址、電話號碼、身份證號碼等。''",
-	'recentchanges-label-bot' => '這次編輯是由機械人進行',
-	'rcshowhidebots' => '$1機械人的編輯',
-	'randomredirect' => '隨機重定向頁',
-	'rcnote' => "以下是在$3，最近'''$2'''天內的'''$1'''次最近更改記錄:",
-	'rcshowhideenhanced' => '$1 折頁式顯示模式',
-	'recentchangestext' => '<span style="float:right;"><small>\'\'[[MediaWiki:Recentchangestext|View this template]]\'\'</small></span>
-此頁為本站最近更新的內容：
-
-{| class="plainlinks" style="background: transparent; margin-left:0.5em; margin-bottom:0.5em;" cellpadding="0" cellspacing="0"
-|-valign="top"
-|align="right"|\'\'\'記錄&nbsp;:&nbsp;\'\'\'
-|align="left" |[[Special:Newpages|最新文章]] - [[Special:Newimages|最新檔案]] - [[Special:Log/delete|刪除]] - [[Special:Log/move|移動頁面]] - [[Special:Log/upload|上傳記錄]] - [[Special:Log/block|封鎖]] - [[Special:Log|更多記錄...]]
-|-valign="top"
-|align="right"|\'\'\'特殊頁面&nbsp;:&nbsp;\'\'\'
-|align="left" |[[Special:Wantedpages|請求頁面]] - [[Special:Longpages|長頁面]] - [[Special:Uncategorizedimages|未分類圖片]] - [[Special:Uncategorizedpages|未分類文章]] - [[Special:Specialpages|更多特殊頁面...]]
-|}',
-	'reconfirmemail_body' => '$2 您好,
-
-謝謝您更新了Wikia帳號連結的電子郵件信箱。
-
-在我們的系統寄發任何您所選擇的通知電子郵件之前，您需要再確認您的電子郵件信箱。
-
-點擊以下鏈接或將網址貼到您的瀏覽器上： 
-
-$3
-
-注意: 這個確認鏈接會在7天之後失效。
-
-
-Wikia有成千上萬的社區，在這裡有很多方式可以找到樂趣。建議您可以訪問我們的首頁（zh-tw.wikia.com） 看看有些什麼有趣的社區和內容，您可以在您喜好的主題撰寫文章，也可以和其他社區用戶交流。
-
-我們期待在Wikia見到您！ 
-
-Wikia 社區團隊',
-	'reconfirmemail_subject' => '歡迎來到Wikia！',
-);
-
-$messages['zh-min-nan'] = array(
-	'red-link-title' => '$1 (頁面不存在)',
-	'rev-deleted-comment' => '（註釋已除）',
-	'rev-deleted-event' => '（日誌已除）',
-	'revdelete-suppress-text' => "壓制'''只'''應用於以下的情況:
-* 不合適的個人資料
-*: ''地址、電話號碼、身份證號碼等。''",
-	'recentchanges-label-bot' => '這次編輯是由機械人進行',
-	'rcshowhidebots' => '$1機械人的編輯',
-);
-
-$messages['zh-mo'] = array(
-	'red-link-title' => '$1 (頁面不存在)',
-	'rev-deleted-comment' => '（註釋已除）',
-	'rev-deleted-event' => '（日誌已除）',
-	'revdelete-suppress-text' => "壓制'''只'''應用於以下的情況:
-* 不合適的個人資料
-*: ''地址、電話號碼、身份證號碼等。''",
-	'recentchanges-label-bot' => '這次編輯是由機械人進行',
-	'rcshowhidebots' => '$1機械人的編輯',
-);
-
-$messages['zh-my'] = array(
-	'red-link-title' => '$1 (頁面不存在)',
-	'rev-deleted-comment' => '（註釋已除）',
-	'rev-deleted-event' => '（日誌已除）',
-	'revdelete-suppress-text' => "壓制'''只'''應用於以下的情況:
-* 不合適的個人資料
-*: ''地址、電話號碼、身份證號碼等。''",
-	'recentchanges-label-bot' => '這次編輯是由機械人進行',
-	'rcshowhidebots' => '$1機械人的編輯',
-);
-
-$messages['zh-sg'] = array(
-	'rcnote' => "以下是在$3，最近'''$2'''天内的'''$1'''次最近更改记录:",
-	'rcshowhideenhanced' => '$1 折页式显示模式',
-	'recentchangestext' => '<span style="float:right;"><small>\'\'[[MediaWiki:Recentchangestext|View this template]]\'\'</small></span>
-此页为本站最近更新的內容：
-
-{| class="plainlinks" style="background: transparent; margin-left:0.5em; margin-bottom:0.5em;" cellpadding="0" cellspacing="0"
-|-valign="top"
-|align="right"|\'\'\'记錄&nbsp;:&nbsp;\'\'\'
-|align="left" |[[Special:Newpages|最新文章]] - [[Special:Newimages|最新档案]] - [[Special:Log/delete|刪除]] - [[Special:Log/move|移动页面]] - [[Special:Log/upload|上传记錄]] - [[Special:Log/block|封锁]] - [[Special:Log|更多记錄...]]
-|-valign="top"
-|align="right"|\'\'\'特殊页面&nbsp;:&nbsp;\'\'\'
-|align="left" |[[Special:Wantedpages|请求页面]] - [[Special:Longpages|长页面]] - [[Special:Uncategorizedimages|未分类图片]] - [[Special:Uncategorizedpages|未分类文章]] - [[Special:Specialpages|更多特殊页面...]]
-|}',
-);
-
-$messages['zh-tw'] = array(
-	'realmap-deprecated-info' => 'Wikia已經不再支援世界地圖功能。 有關更多資訊，請參見: $1',
-	'red-link-title' => '$1 （頁面未存在）',
-	'readonlytext' => '資料庫目前禁止輸入新內容及更改，
-這很可能是由於資料庫正在維修，之後即可恢復。
-管理員有如下解釋: $1',
-	'resetpass' => '更改密碼',
-	'resetpass_announce' => '您是透過一個臨時的發送到郵件中的代碼登入的。要完成登入，您必須在這裡設定一個新密碼:',
-	'resetpass_header' => '更改賬戶密碼',
-	'resetpass_success' => '您的密碼已經被成功更改！
-現在正為您登入...',
-	'resetpass_forbidden' => '無法更改密碼',
-	'recreate-moveddeleted-warn' => "'''警告: {{GENDER:|你|妳|你}}現在重新建立一個先前曾經刪除過的頁面。'''
-
-{{GENDER:|你|妳|你}}應該要考慮一下繼續編輯這一個頁面是否合適。
-為方便起見，這一個頁面的刪除記錄已經在下面提供:",
-	'rev-deleted-user' => '（用戶名已移除）',
-	'rev-deleted-event' => '（日誌已除）',
-	'rev-deleted-text-permission' => "該頁面修訂已被'''刪除'''。
-在[{{fullurl:{{#Special:Log}}/delete|page={{PAGENAMEE}}}} 刪除日誌]中可以找到詳細的訊息。",
-	'rev-deleted-text-view' => "該頁面修訂已經被'''刪除'''。您可以查看它。在[{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} 刪除日誌]中可以找到詳細的信息。",
-	'revisiondelete' => '刪除/恢復刪除修訂',
-	'revdelete-nooldid-title' => '無效的目標修訂',
-	'revdelete-nooldid-text' => '您尚未指定一個目標修訂去進行這個功能、
-所指定的修訂不存在，或者您嘗試去隱藏現時的修訂。',
-	'revdelete-text' => "'''刪除的修訂仍將顯示在頁面歷史中, 但它們的文字內容已不能被公眾訪問。'''
-在{{SITENAME}}的其他管理員將仍能訪問隱藏的內容並透過與此相同的介面恢復刪除，除非網站工作者進行了一些附加的限制。",
-	'revdelete-legend' => '設定可見性之限制',
-	'revdelete-hide-user' => '隱藏編輯者的用戶名/IP地址',
-	'revdelete-hide-restricted' => '同時廢止由操作員以及其他用戶的資料',
-	'revdelete-suppress' => '同時廢止由操作員以及其他用戶的資料',
-	'revdelete-unsuppress' => '在已恢復的修訂中移除限制',
-	'revdelete-success' => "'''修訂的可見性已經成功更新。'''",
-	'resetprefs' => '清除未保存的更改',
-	'recentchangesdays' => '最近更改中的顯示日數:',
-	'recentchangescount' => '預設顯示的編輯數：',
-	'rightslog' => '用戶權限日誌',
-	'rightslogtext' => '以下記錄了用戶權限的更改記錄。',
-	'recentchanges' => '近期變動',
-	'recentchanges-feed-description' => '追蹤此訂閱在 wiki 上的最近更改。',
-	'rcnotefrom' => "下面是自'''$2'''（最多顯示'''$1'''）:",
-	'rcshowhideminor' => '$1小編輯',
-	'rcshowhidebots' => '$1 機器人',
-	'rcshowhideliu' => '$1 登入用戶',
-	'rcshowhideanons' => '$1 匿名用戶',
-	'rcshowhidepatr' => '$1巡查過的編輯',
-	'recentchangeslinked' => '連出更改',
-	'recentchangeslinked-feed' => '連出更改',
-	'recentchangeslinked-toolbox' => '連出更改',
-	'recentchangeslinked-title' => '對於「$1」有關的連出更改',
-	'recentchangeslinked-summary' => "這一個特殊頁面列示''由''所給出的一個頁面之連結到頁面的最近更改（或者是對於指定分類的成員）。
-在[[Special:Watchlist|您的監視列表]]中的頁面會以'''粗體'''顯示。",
-	'reuploaddesc' => '取消上載並返回上載表單',
-	'randompage-nopages' => '在以下的{{PLURAL:$2|名字空間}}中沒有頁面：$1',
-	'randomredirect-nopages' => '在 "$1" 名字空間中沒有重定向頁面。',
-	'removedwatchtext' => '[[:$1]]已經從[[Special:Watchlist|您的監視頁面]]中移除。',
-	'reverted' => '恢復到早期版本',
-	'rollback' => '恢復編輯',
-	'rollback_short' => '恢復',
-	'rollbacklink' => '恢復',
-	'rollbackfailed' => '無法恢復',
-	'revertpage' => '已恢復由[[Special:Contributions/$2|$2]]（[[User talk:$2|對話]]）的編輯至[[User:$1|$1]]的最後一個修訂版本',
-	'rollback-success' => '已恢復$1的編輯；
-更改回$2的最後修訂版本。',
-	'range_block_disabled' => '只有管理員才能創建禁止查封的範圍。',
-	'revertmove' => '恢復該移動',
-	'rate_it' => 'Rate this page:',
-	'returnto' => '返回到$1。',
-	'redirectedfrom' => '（重定向自$1）',
-	'redirectpagesub' => '重定向頁面',
-	'retrievedfrom' => '取自「$1」',
-	'restorelink' => '$1個被刪除的版本',
-	'readonly' => '資料庫禁止訪問',
-	'readonly_lag' => '附屬資料庫伺服器正在將快取更新到主伺服器，資料庫已被自動鎖定',
-	'remembermypassword' => '在這個瀏覽器上記住我的登入資訊（可維持 $1 {{PLURAL:$1|天|天}}）',
-	'resetpass_text' => '<!-- 在此處加入文字 -->',
-	'retypenew' => '確認密碼:',
-	'resetpass_submit' => '設定密碼並登入',
-	'resetpass-no-info' => '您必須登入後直接進入這個頁面。',
-	'resetpass-submit-loggedin' => '更改密碼',
-	'resetpass-submit-cancel' => '取消',
-	'resetpass-wrong-oldpass' => '無效的臨時或現有的密碼。
-您可能已成功地更改了您的密碼，或者已經請求一個新的臨時密碼。',
-	'resetpass-temp-password' => '臨時密碼:',
-	'readonlywarning' => "'''警告: 資料庫被鎖定以進行維護，所以您目前將無法保存您的修改。'''您或許希望先將本段文字複製並保存到文字檔案，然後等一會兒再修改。
-
-鎖定資料庫的管理員有如下解釋：$1",
-	'revisionasof' => '在$1所做的修訂版本',
-	'revision-info' => '在$1由$2所做的修訂版本',
-	'revision-info-current' => '-',
-	'revision-nav' => '($1) $2{{int:pipe-separator}}$3 ($4){{int:pipe-separator}}$5 ($6)',
-	'rev-deleted-comment' => '（編輯摘要已除）',
-	'rev-deleted-user-contribs' => '[用戶名或IP地址已移除 - 從貢獻中隱藏編輯]',
-	'rev-deleted-text-unhide' => "本頁面版本已被'''刪除'''。詳情請見[{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} 刪除日誌]。如果你想繼續操作，你仍然可以[$1 查看本版本]。",
-	'rev-suppressed-text-unhide' => "該頁面修訂已經被'''監督隱藏'''。在[{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} 監督日誌]中可以找到詳細的信息。如果您想繼續的話，您可以仍然[$1 去查看這次修訂]。",
-	'rev-suppressed-text-view' => "該頁面修訂已經被'''監督隱藏'''。您可以查看它。在[{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} 監督日誌]中可以找到詳細的信息。",
-	'rev-deleted-no-diff' => "因為其中一次修訂已被'''刪除'''，您不可以檢視這個差異。
-在[{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} 刪除日誌]中可以找到更多的資料。",
-	'rev-suppressed-no-diff' => "該頁面的其中一次修訂已經被'''刪除'''，你不可以查看這次的修訂。",
-	'rev-deleted-unhide-diff' => "該差異對比其中的一個修訂版本已經被'''刪除'''。在[{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} 刪除日誌]中可以找到更多的信息。如果您想繼續的話，您仍然可以[$1 查看這次修訂]。",
-	'rev-suppressed-unhide-diff' => "該頁面的其中一次修訂已經被'''監督隱藏'''。
-在[{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} 監督日誌]中可以找到更多的資料。如果您想繼續的話，您可以仍然[$1 去查看這次修訂]。",
-	'rev-deleted-diff-view' => "差異對比中的一次修訂已被'''刪除'''。您可以對比此差異。詳細信息可在[{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} 刪除日誌]中找到。",
-	'rev-suppressed-diff-view' => "差異對比中的一次修訂已被'''監督隱藏'''。您可以對比此差異。詳細信息可在[{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} 監督日誌]中找到。",
-	'rev-delundel' => '顯示/隱藏',
-	'rev-showdeleted' => '顯示',
-	'revdelete-nologtype-title' => '沒有給出日誌類型',
-	'revdelete-nologtype-text' => '您尚未指定一種日誌類型去做這個動作。',
-	'revdelete-nologid-title' => '無效的日誌項目',
-	'revdelete-nologid-text' => '您尚未指定一個目標日誌項目去進行這個動作或指定的項目不存在。',
-	'revdelete-no-file' => '指定的檔案不存在。',
-	'revdelete-show-file-confirm' => '{{GENDER:|你|妳|你}}是否真的是想去檢視於$2 $3刪除 "$1" 的檔案修訂？',
-	'revdelete-show-file-submit' => '是',
-	'revdelete-selected' => "'''選取[[:$1]]的$2次修訂:'''",
-	'revdelete-confirm' => '請確認您肯定去做的話，您就要明白到後果，以及這個程序符合[[{{MediaWiki:Policy-url}}|政策]]。',
-	'revdelete-suppress-text' => "壓制'''只'''應在以下的情況下進行:
-* 不合適的個人資料
-*: ''住家地址、電話號碼、社群保安號碼等。''",
-	'revdelete-hide-text' => '隱藏修訂文字',
-	'revdelete-hide-image' => '隱藏檔案內容',
-	'revdelete-hide-name' => '隱藏動作和目標',
-	'revdelete-hide-comment' => '隱藏編輯摘要',
-	'revdelete-radio-same' => '(勿更改)',
-	'revdelete-radio-set' => '是',
-	'revdelete-radio-unset' => '否',
-	'revdelete-log' => '理由：',
-	'revdelete-submit' => '應用於選取的{{PLURAL:$1|修訂}}',
-	'revdelete-failure' => "'''修訂的可見性無法更新：'''
-$1",
-	'revdel-restore' => '更改可見性',
-	'revdel-restore-deleted' => '已刪除的修訂版本',
-	'revdel-restore-visible' => '可見的修訂版本',
-	'revdelete-hide-current' => '正在隱藏於$1 $2之項目錯誤：這個是現時的修訂，不可以隱藏。',
-	'revdelete-show-no-access' => '正在顯示於$1 $2之項目錯誤：這個項目已經標示為"已限制"，您對它並無通行權。',
-	'revdelete-modify-no-access' => '正在更改於$1 $2之項目錯誤：這個項目已經標示為"已限制"，您對它並無通行權。',
-	'revdelete-modify-missing' => '正在更改項目ID $1錯誤：它在資料庫中遺失！',
-	'revdelete-no-change' => '警告：於$1 $2之項目已經請求了可見性的設定。',
-	'revdelete-concurrent-change' => '正在更改於$1 $2之項目錯誤：當我們嘗試更改它的設定時，已經被另一些人更改過。請檢查紀錄。',
-	'revdelete-only-restricted' => '在隱藏$1 $2的項目時發生錯誤：您不能在選擇了另一可見性選項後廢止管理員查看該項目。',
-	'revdelete-reason-dropdown' => '*常用刪除理由
-** 侵犯版權
-** 不合適的個人資料',
-	'revdelete-otherreason' => '其它／附加的理由：',
-	'revdelete-reasonotherlist' => '其它理由',
-	'revdelete-edit-reasonlist' => '編輯刪除埋由',
-	'revdelete-offender' => '修訂版本編輯者：',
-	'revertmerge' => '解除合併',
-	'restoreprefs' => '恢復所有預設設定',
-	'rows' => '列:',
-	'resultsperpage' => '每頁顯示連結數',
-	'recentchangesdays-max' => '最多$1{{PLURAL:$1|天}}',
-	'right-read' => '閱讀頁面',
-	'right-edit' => '編輯頁面',
-	'right-createpage' => '建立頁面（不含討論頁面）',
-	'right-createtalk' => '建立討論頁面',
-	'right-createaccount' => '創建新用戶賬戶',
-	'right-minoredit' => '標示作小編輯',
-	'right-move' => '移動頁面',
-	'right-move-subpages' => '移動頁面跟它的子頁面',
-	'right-move-rootuserpages' => '移動根用戶頁面',
-	'right-movefile' => '移動檔案',
-	'right-suppressredirect' => '當移動頁面時不建立來源頁面之重定向',
-	'right-upload' => '上傳檔案',
-	'right-reupload' => '覆蓋現有的檔案',
-	'right-reupload-own' => '覆蓋由同一位上載的檔案',
-	'right-reupload-shared' => '於本地無視共用媒體檔案庫上的檔案',
-	'right-upload_by_url' => '由一個URL上載檔案',
-	'right-purge' => '不需要確認之下清除網站快取',
-	'right-autoconfirmed' => '編輯半保護頁面',
-	'right-bot' => '視為一個自動程序',
-	'right-nominornewtalk' => '小編輯不引發新訊息提示',
-	'right-apihighlimits' => '在API查詢中使用更高的上限',
-	'right-writeapi' => '使用API編寫',
-	'right-delete' => '刪除頁面',
-	'right-bigdelete' => '刪除大量歷史之頁面',
-	'right-deleterevision' => '刪除及同反刪除頁面中的指定修訂',
-	'right-deletedhistory' => '檢視已刪除之歷史項目，不含關聯的文本',
-	'right-deletedtext' => '檢視已刪除修訂中之已刪除的字以及更改',
-	'right-browsearchive' => '搜尋已刪除之頁面',
-	'right-undelete' => '反刪除頁面',
-	'right-suppressrevision' => '檢視及恢復由操作員隱藏之修訂',
-	'right-suppressionlog' => '檢視私人的日誌',
-	'right-block' => '封鎖其他用戶防止編輯',
-	'right-blockemail' => '封鎖用戶不可發電郵',
-	'right-hideuser' => '封鎖用戶名，對公眾隱藏',
-	'right-ipblock-exempt' => '繞過IP封鎖、自動封鎖以及範圍封鎖',
-	'right-proxyunbannable' => '繞過Proxy的自動封鎖',
-	'right-unblockself' => '自我解除封鎖',
-	'right-protect' => '更改保護等級以及編輯保護頁面',
-	'right-editprotected' => '編輯保護頁面（無連鎖保護）',
-	'right-editinterface' => '編輯用戶界面',
-	'right-editusercssjs' => '編輯其他用戶的CSS和JavaScript檔案',
-	'right-editusercss' => '編輯其他用戶的CSS檔案',
-	'right-edituserjs' => '編輯其他用戶的JavaScript檔案',
-	'right-rollback' => '快速復原上位用戶對某一頁面之編輯',
-	'right-markbotedits' => '標示復原編輯作機械人編輯',
-	'right-noratelimit' => '沒有使用頻率限制',
-	'right-import' => '由其它wiki中匯入頁面',
-	'right-importupload' => '由檔案上載中匯入頁面',
-	'right-patrol' => '標示其它的編輯作已巡查的',
-	'right-autopatrol' => '將自己的編輯自動標示為已巡查的',
-	'right-patrolmarks' => '檢視最近巡查標記更改',
-	'right-unwatchedpages' => '檢視未監視之頁面',
-	'right-mergehistory' => '合併頁面歷史',
-	'right-userrights' => '編輯所有用戶的權限',
-	'right-userrights-interwiki' => '編輯在其它wiki上的用戶權限',
-	'right-siteadmin' => '鎖定和解除鎖定資料庫',
-	'right-override-export-depth' => '匯出含有五層深度連結頁面之頁面',
-	'right-sendemail' => '發電子郵件給其他用戶',
-	'right-passwordreset' => '查看重置密碼郵件',
-	'right-editmyoptions' => 'Can edit your own preferences',
-	'right-loggedin' => 'Flags user as being logged in to an account',
-	'right-mcachepurge' => 'Control memcached behaviour via request parameters',
-	'right-emailconfirmed' => 'User has been email confirmed',
-	'right-runjob' => 'Run job from the job queue via API',
-	'rightslogentry' => '將 $1 的權限從 $2 改為 $3',
-	'rightslogentry-autopromote' => '自動由$2晉升至$3',
-	'rightsnone' => '無',
-	'recentchanges-url' => 'Special:RecentChanges',
-	'recentchanges-legend' => '最近更改選項',
-	'recentchangestext' => '<span style="float:right;"><small>\'\'[[MediaWiki:Recentchangestext|View this template]]\'\'</small></span>
-此頁為本站最近更新的內容：
-
-{| class="plainlinks" style="background: transparent; margin-left:0.5em; margin-bottom:0.5em;" cellpadding="0" cellspacing="0"
-|-valign="top"
-|align="right"|\'\'\'記錄&nbsp;:&nbsp;\'\'\'
-|align="left" |[[Special:Newpages|最新文章]] - [[Special:Newimages|最新檔案]] - [[Special:Log/delete|刪除]] - [[Special:Log/move|移動頁面]] - [[Special:Log/upload|上傳]] - [[Special:Log/block|封鎖]] - [[Special:Log|更多記錄...]]
-|-valign="top"
-|align="right"|\'\'\'特殊頁面&nbsp;:&nbsp;\'\'\'
-|align="left" |[[Special:Wantedpages|請求文章]] - [[Special:Longpages|長文]] - [[Special:Uncategorizedimages|未分類圖片]] - [[Special:Uncategorizedpages|未分類文章]] - [[Special:Specialpages|更多特殊頁面...]]
-|}',
-	'recentchanges-label-newpage' => '這次編輯建立了一個新頁面',
-	'recentchanges-label-minor' => '這是一個小編輯',
-	'recentchanges-label-bot' => '這次編輯是由機器人進行',
-	'recentchanges-label-unpatrolled' => '這次編輯尚未巡查過',
-	'rcnote' => "以下是在$3，最近'''$2'''天內的'''$1'''次最近更改記錄:",
-	'rclistfrom' => '顯示自$1以來的新更改',
-	'rcshowhidemine' => '$1我的編輯',
-	'rclinks' => '顯示最近$2天內最新的$1次改動。<br />$3',
-	'rc_categories' => '分類界限（以"|"分割）',
-	'rc_categories_any' => '任意',
-	'rc-change-size' => '$1',
-	'rc-change-size-new' => '更改後$1字節',
-	'rc-enhanced-expand' => '顯示細節 （需要 JavaScript）',
-	'rc-enhanced-hide' => '隱藏細節',
-	'rc-old-title' => 'originally created as "$1"',
-	'recentchangeslinked-noresult' => '在這一段時間中連結的頁面並無更改。',
-	'recentchangeslinked-page' => '頁面名稱:',
-	'recentchangeslinked-to' => '顯示連到所給出的頁面',
-	'randompage' => '隨機頁面',
-	'randompage-url' => 'Special:Random',
-	'randomredirect' => '隨機重定向頁',
-	'rfcurl' => '//tools.ietf.org/html/rfc$1',
-	'removewatch' => '停止監視',
-	'revertpage-nouser' => '恢復由（移除了的用戶名）的編輯到[[User:$1|$1]]的最後一個修訂版本',
-	'restriction-type' => '權限:',
-	'restriction-level' => '限制級別:',
-	'restriction-edit' => '編輯',
-	'restriction-move' => '移動',
-	'restriction-create' => '建立',
-	'restriction-upload' => '上傳',
-	'restriction-level-sysop' => '全保護',
-	'restriction-level-autoconfirmed' => '半保護',
-	'restriction-level-all' => '任何級別',
-	'reblock-logentry' => '更改[[$1]]的封禁設定時間 $2 $3',
-	'rcpatroldisabled' => '最新更改檢查被關閉',
-	'rcpatroldisabledtext' => '最新更改檢查的功能目前已關閉。',
-	'recreate' => '重建',
-	'revdelete-content-hid' => '隱藏內容',
-	'revdelete-summary-hid' => '隱藏編輯摘要',
-	'revdelete-uname-hid' => '隱藏用戶名',
-	'revdelete-content-unhid' => '恢復內容',
-	'revdelete-summary-unhid' => '恢復編輯摘要',
-	'revdelete-uname-unhid' => '恢復用戶名',
-	'revdelete-restricted' => '已應用限制至操作員',
-	'revdelete-unrestricted' => '已移除對於操作員的限制',
-	'revdelete-logentry' => 'changed revision visibility of "[[$1]]"',
-	'revdelete-content' => 'content',
-	'revdelete-summary' => 'edit summary',
-	'revdelete-uname' => 'username',
-	'revdelete-hid' => 'hid $1',
-	'revdelete-unhid' => 'unhid $1',
-	'revdelete-log-message' => '$1 for $2 {{PLURAL:$2|revision|revisions}}',
-	'reconfirmemail_subject' => '歡迎來到Wikia！',
-	'reconfirmemail_body' => '$2 您好,
-
-謝謝您更新了Wikia帳號連結的電子郵件信箱。
-
-在我們的系統寄發任何您所選擇的通知電子郵件之前，您需要再確認您的電子郵件信箱。
-
-點擊以下鏈接或將網址貼到您的瀏覽器上： 
-
-$3
-
-注意: 這個確認鏈接會在7天之後失效。
-
-
-Wikia有成千上萬的社區，在這裡有很多方式可以找到樂趣。建議您可以訪問我們的首頁（zh-tw.wikia.com） 看看有些什麼有趣的社區和內容，您可以在您喜好的主題撰寫文章，也可以和其他社區用戶交流。
-
-我們期待在Wikia見到您！ 
-
-Wikia 社區團隊',
-	'rcshowhideenhanced' => '$1 折頁式顯示模式',
-	'refreshpage' => 'Reload page to activate this widget',
-	'requestcreatewiki' => 'Submit Request',
-	'right_now' => 'Right Now<br />people are...',
-	'return_to_article' => 'Return to page',
-	'return_to_talk' => 'Return to discussion',
-	'return_to_user' => 'Return to user page',
-	'return_to_user_talk' => 'Return to discussion',
-	'return_to_project' => 'Return to project page',
-	'return_to_project_talk' => 'Return to discussion',
-	'return_to_image' => 'Return to image page',
-	'return_to_image_talk' => 'Return to discussion',
-	'return_to_mediawiki' => 'Return to message page',
-	'return_to_mediawiki_talk' => 'Return to discussion',
-	'return_to_template' => 'Return to template page',
-	'return_to_template_talk' => 'Return to discussion',
-	'return_to_help' => 'Return to help page',
-	'return_to_help_talk' => 'Return to discussion',
-	'return_to_category' => 'Return to category page',
-	'return_to_category_talk' => 'Return to discussion',
-	'return_to_forum' => 'Return to forum page',
-	'return_to_forum_talk' => 'Return to discussion',
-	'return_to_special' => 'Return to special page',
-	'review_reason_1' => 'Review reason 1',
-	'review_reason_2' => 'Review reason 2',
-	'review_reason_3' => 'Review reason 3',
-	'review_reason_4' => 'Review reason 4',
-	'review_reason_5' => 'Review reason 5',
-	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
-
-* [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
-	'registerintro-title' => 'When you create an account on Wikia, you become a part of the community!',
-	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
-	'rcshowhidelogs' => '$1 logs',
-);
-
-$messages['zh-yue'] = array(
-	'red-link-title' => '$1 (頁面不存在)',
-	'readonlytext' => '資料庫目前禁止輸入新內容及更改，
-這很可能是由於資料庫正在維修，之後即可復原。
-管理員有如下解釋:
-<p>$1</p>',
-	'resetpass' => '更換密碼',
-	'resetpass_announce' => '您是透過臨時發送到郵件中的代碼登入的。要完成登入，您必須在這裡設定一個新密碼:',
-	'resetpass_header' => '更換帳號密碼',
-	'resetpass_success' => '您的密碼已經被成功更改﹗現下正為您登入...',
-	'resetpass_forbidden' => '無法更改密碼',
-	'recreate-moveddeleted-warn' => "'''警告: 你現在重新建立一個先前曾經刪除過的頁面。'''
-
-你應該要考慮一下繼續編輯這一個頁面是否合適。
-為方便起見，這一個頁面的刪除記錄已經在下面提供:",
-	'rev-deleted-user' => '(使用者名已移除)',
-	'rev-deleted-event' => '(項目已移除)',
-	'rev-deleted-text-permission' => '該頁面修訂已經被從公共文件中移除。
-在[{{fullurl:{{#Special:Log}}/suppress|page={{PAGENAMEE}}}} 刪除日誌]中您可能會檢視到詳細的訊息。',
-	'rev-deleted-text-view' => '該頁面修訂已經被從公共文件中移除。作為此網站的管理員，您可以檢視它；
-在[{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} 刪除日誌]中您可能會檢視到詳細的訊息。',
-	'revisiondelete' => '刪除/復原刪除修訂',
-	'revdelete-nooldid-title' => '沒有目標修訂',
-	'revdelete-nooldid-text' => '您沒有指定此操作的目標修訂。',
-	'revdelete-text' => "'''刪除的修訂仍將顯示在修訂記錄中, 但它們的文字內容已不能被公眾訪問。'''
-
-在此網站的其他管理員將仍能訪問隱藏的內容並透過與此相同的介面復原刪除，除非網站工作者進行了一些附加的限制。",
-	'revdelete-legend' => '設定修訂限制:',
-	'revdelete-hide-user' => '隱藏編輯者的使用者名/IP',
-	'revdelete-hide-restricted' => '將此限制同樣應用於管理員',
-	'revdelete-suppress' => '同時壓制由操作員以及其他使用者的資料',
-	'revdelete-unsuppress' => '在已復原的修訂中移除限制',
-	'revdelete-success' => '修訂的可見性已經成功設定。',
-	'resetprefs' => '重設參數',
-	'recentchangesdays' => '近期變動中的顯示日數:',
-	'recentchangescount' => '近期變動中的編輯數:',
-	'rightslog' => '使用者權限日誌',
-	'rightslogtext' => '以下記錄了使用者權限的更改記錄。',
-	'recentchanges' => '近期變動',
-	'recentchanges-feed-description' => '跟蹤此訂閱在 wiki 上的近期變動。',
-	'rcnotefrom' => '下面是自<b>$2</b>(最多顯示<b>$1</b>):',
-	'rcshowhideminor' => '$1細微修改',
-	'rcshowhidebots' => '$1機器人的編輯',
-	'rcshowhideliu' => '$1具名使用者的編輯',
-	'rcshowhideanons' => '$1匿名使用者的編輯',
-	'rcshowhidepatr' => ' $1檢查過的編輯',
-	'recentchangeslinked' => '相關頁面修訂記錄',
-	'recentchangeslinked-feed' => '相關頁面修訂記錄',
-	'recentchangeslinked-toolbox' => '相關頁面修訂記錄',
-	'recentchangeslinked-title' => '$1 內連結頁面的修訂記錄',
-	'recentchangeslinked-summary' => "這一個特殊頁面列示這一頁連出頁面的近期變動。在您監視列表中的頁面會以'''粗體'''表示。",
-	'reuploaddesc' => '返回上載表單。',
-	'randompage-nopages' => '在這個名字空間中沒有頁面。',
-	'randomredirect-nopages' => '在這個名字空間中沒有重定向頁面。',
-	'removedwatchtext' => '頁面「[[:$1]]」已經從您的監視頁面中移除。',
-	'reverted' => '復原到早期版本',
-	'rollback' => '復原',
-	'rollback_short' => '復原',
-	'rollbacklink' => '復原',
-	'rollbackfailed' => '無法復原',
-	'revertpage' => '復原由[[Special:Contributions/$2|$2]] ([[User talk:$2|對話]])的編輯；更改回[[User:$1|$1]]的最後一個版本',
-	'rollback-success' => '復原由$1的編輯；更改回$2的最後一個版本。',
-	'range_block_disabled' => '只有管理員才能建立禁止封鎖的範圍。',
-	'revertmove' => '復原該移動',
-	'rate_it' => '打分數:',
 );
 
 $messages['zu'] = array(

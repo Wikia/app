@@ -42,8 +42,10 @@ $wgRandomImageStrict = !$wgMiserMode;
 
 /**
  * Hook setup
+ * @param Parser $parser
+ * @return bool
  */
-function efRandomImage(&$parser) {
+function efRandomImage( Parser $parser ): bool {
 	$parser->setHook( 'randomimage', 'RandomImage::renderHook' );
 	return true;
 }

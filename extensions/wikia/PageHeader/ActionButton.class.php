@@ -44,7 +44,7 @@ class ActionButton {
 			)
 		);
 
-		wfRunHooks( 'PageHeaderActionButtonShouldDisplay', [ $this->title, &$shouldDisplay ] );
+		\Hooks::run( 'PageHeaderActionButtonShouldDisplay', [ $this->title, &$shouldDisplay ] );
 
 		$this->shouldDisplay = $shouldDisplay;
 	}
@@ -78,7 +78,7 @@ class ActionButton {
 		];
 
 		// Enable to modify actions list on dropdown
-		wfRunHooks( 'PageHeaderDropdownActions', [ &$actions ] );
+		\Hooks::run( 'PageHeaderDropdownActions', [ &$actions ] );
 
 		return array_map( function( $action ) {
 			$ret = $this->contentActions[$action];
@@ -93,7 +93,7 @@ class ActionButton {
 	}
 
 	private function prepareActionButton() {
-		wfRunHooks( 'BeforePrepareActionButtons', [ $this, &$this->contentActions ] );
+		\Hooks::run( 'BeforePrepareActionButtons', [ $this, &$this->contentActions ] );
 
 		$isDiff = !is_null( $this->request->getVal( 'diff' ) );
 

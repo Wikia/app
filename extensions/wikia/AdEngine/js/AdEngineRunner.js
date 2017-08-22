@@ -7,13 +7,13 @@ define('ext.wikia.adEngine.adEngineRunner', [
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.lookup.amazonMatch'),
 	require.optional('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane'),
-	require.optional('ext.wikia.aRecoveryEngine.adBlockRecovery'),
-	require.optional('ext.wikia.adEngine.lookup.prebid')
-], function (adEngine, adTracker, instantGlobals, log, win, amazonMatch, rubiconFastlane, adBlockRecovery, prebid) {
+	require.optional('ext.wikia.adEngine.lookup.prebid'),
+	require.optional('ext.wikia.aRecoveryEngine.adBlockRecovery')
+], function (adEngine, adTracker, instantGlobals, log, win, amazonMatch, rubiconFastlane, prebid, adBlockRecovery) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adEngineRunner',
-		supportedModules = [amazonMatch, rubiconFastlane, adBlockRecovery, prebid],
+		supportedModules = [amazonMatch, rubiconFastlane, prebid, adBlockRecovery],
 		timeout = instantGlobals.wgAdDriverDelayTimeout || 2000;
 
 	/**

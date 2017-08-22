@@ -22,4 +22,4 @@ $wgHooks['FileDeleteComplete'][] = 'LatestPhotosHooks::onImageDelete';
 $wgHooks['MessageCacheReplace'][] = 'LatestPhotosHooks::onMessageCacheReplace';
 $wgHooks['UploadComplete'][] = 'LatestPhotosHooks::onImageUploadComplete';
 $wgHooks['FileUpload'][] = 'LatestPhotosHooks::onImageUpload';
-$wgHooks['SpecialMovepageAfterMove'][] = 'LatestPhotosHooks::onImageRenameCompleated';
+$wgHooks['SpecialMovepageAfterMove'][] = 'LatestPhotosHooks::onImageRenameCompleted';

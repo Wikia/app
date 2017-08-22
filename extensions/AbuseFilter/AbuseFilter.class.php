@@ -200,7 +200,7 @@ class AbuseFilter {
 		}
 
 		$realValues = self::$builderValues;
-		wfRunHooks( 'AbuseFilter-builder', array( &$realValues ) );
+		Hooks::run( 'AbuseFilter-builder', array( &$realValues ) );
 
 		return $realValues;
 	}
@@ -666,7 +666,7 @@ class AbuseFilter {
 		global $wgUser, $wgTitle;
 
 		/* Wikia change begin: Needed to be able to bypass filters */
-		if ( !wfRunHooks( 'AbuseFilterShouldFilter', array( $wgUser ) ) ) {
+		if ( !Hooks::run( 'AbuseFilterShouldFilter', array( $wgUser ) ) ) {
 			return true;
 		}
 		/* Wikia change end */
@@ -678,7 +678,7 @@ class AbuseFilter {
 		}
 
 		// Add vars from extensions
-		wfRunHooks( 'AbuseFilter-filterAction', array( &$vars, $title ) );
+		Hooks::run( 'AbuseFilter-filterAction', array( $vars, $title ) );
 
 		// Set context
 		$vars->setVar( 'context', 'filter' );

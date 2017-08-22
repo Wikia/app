@@ -111,9 +111,6 @@ class MyHome {
 				break;
 		}
 
-		//allow to alter $data by other extensions (eg. Article Comments)
-		wfRunHooks('MyHome:BeforeStoreInRC', array(&$rc, &$data));
-
 		// encode data to be stored in rc_params
 		if (!empty($data)) {
 			$rc->mAttribs['rc_params'] = static::packData($data);
@@ -423,8 +420,10 @@ class MyHome {
 	 * Hook that's called when a RecentChange is saved.  This prevents any problems from race-conditions between
 	 * the creation of a RecentChange and the awarding of its corresponding Achievement (they occur on the same
 	 * page-load, but one isn't guaranteed to be before the other).
+	 * @param RecentChange $rc
+	 * @return bool
 	 */
-	public static function savingAnRc(&$rc){
+	public static function savingAnRc( RecentChange $rc ): bool {
 		global $wgAchievementToAddToRc, $wgWikiaForceAIAFdebug;
 		wfProfileIn( __METHOD__ );
 
@@ -443,8 +442,10 @@ class MyHome {
 
 	/**
 	 * Called upon the successful save of a RecentChange.
+	 * @param RecentChange $rc
+	 * @return bool
 	 */
-	public static function savedAnRc(&$rc){
+	public static function savedAnRc( RecentChange $rc ): bool {
 		global $wgARecentChangeHasBeenSaved, $wgWikiaForceAIAFdebug;
 		wfProfileIn( __METHOD__ );
 

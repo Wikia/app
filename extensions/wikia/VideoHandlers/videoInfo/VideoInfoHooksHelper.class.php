@@ -131,9 +131,12 @@ class VideoInfoHooksHelper {
 	 * @param $revision
 	 * @param $status
 	 * @param $baseRevId
-	 * @return true
+	 * @return bool true
 	 */
-	public static function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+	public static function onArticleSaveComplete(
+		WikiPage $article, User $user, $text, $summary,
+		$minoredit, $watchthis, $sectionanchor, $flags, $revision, Status &$status, $baseRevId
+	): bool {
 
 		$insertedImages = Wikia::getVar( 'imageInserts' );
 
@@ -211,9 +214,9 @@ class VideoInfoHooksHelper {
 	 * @param $form
 	 * @param Title $oldTitle
 	 * @param Title $newTitle
-	 * @return true
+	 * @return bool true
 	 */
-	public static function onFileRenameComplete( &$form , &$oldTitle , &$newTitle ) {
+	public static function onFileRenameComplete( MovePageForm $form , Title &$oldTitle , Title &$newTitle ): bool {
 
 		$videoInfoHelper = new VideoInfoHelper();
 		$affected = $videoInfoHelper->renameVideo( $oldTitle, $newTitle );
@@ -231,9 +234,9 @@ class VideoInfoHooksHelper {
 	 * @param User $user
 	 * @param string $reason
 	 * @param integer $pageId
-	 * @return true
+	 * @return bool true
 	 */
-	public static function onArticleDeleteComplete( &$wikiPage, &$user, $reason, $pageId  ) {
+	public static function onArticleDeleteComplete( WikiPage $wikiPage, User $user, $reason, $pageId ): bool {
 
 		$title = $wikiPage->getTitle();
 		if ( $title instanceof Title && $title->getNamespace() == NS_FILE ) {
@@ -268,9 +271,9 @@ class VideoInfoHooksHelper {
 	 * @param Title $title
 	 * @param User $user
 	 * @param string $reason
-	 * @return true
+	 * @return bool true
 	 */
-	public static function onUndeleteComplete( &$title, &$user, $reason ) {
+	public static function onUndeleteComplete( Title $title, User $user, string $reason ): bool {
 
 		if ( $title instanceof Title && $title->getNamespace() == NS_FILE ) {
 			$videoInfoHelper = new VideoInfoHelper();
@@ -348,9 +351,9 @@ class VideoInfoHooksHelper {
 	 * @param User $user
 	 * @param $reason
 	 * @param $error
-	 * @return true
+	 * @return bool true
 	 */
-	public static function onArticleDelete( &$wikiPage, User &$user, &$reason, &$error ) {
+	public static function onArticleDelete( WikiPage $wikiPage, User &$user, &$reason, &$error ): bool {
 
 		$title = $wikiPage->getTitle();
 

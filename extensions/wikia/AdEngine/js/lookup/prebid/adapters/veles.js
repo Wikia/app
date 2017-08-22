@@ -4,11 +4,9 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 	'ext.wikia.adEngine.lookup.prebid.priceParsingHelper',
 	'ext.wikia.adEngine.wrappers.prebid',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
-	'wikia.geo',
-	'wikia.instantGlobals',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, priceParsingHelper, prebid, vastUrlBuilder, geo, instantGlobals, log, win) {
+], function (adContext, priceParsingHelper, prebid, vastUrlBuilder, log, win) {
 	'use strict';
 
 	var bidderName = 'veles',
@@ -42,8 +40,9 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		};
 
 	function isEnabled() {
-		var isVelesEnabled = geo.isProperGeo(instantGlobals.wgAdDriverVelesBidderCountries);
+		var isVelesEnabled = adContext.getContext().bidders.veles;
 		log(['isEnabled', isVelesEnabled], log.levels.debug, logGroup);
+
 		return isVelesEnabled;
 	}
 
@@ -96,6 +95,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 			bidResponse.width = bid.sizes[0][0];
 			bidResponse.height = bid.sizes[0][1];
 			bidResponse.vastId = velesParams.vastId;
+			bidResponse.vastUrl = velesParams.vastUrl;
 
 			if (velesParams.valid && allowedSlots[velesParams.position].indexOf(bid.placementCode) > -1 ) {
 				bidResponse.ad = vastResponse;
@@ -131,7 +131,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		var request = new win.XMLHttpRequest(),
 			skin = adContext.getContext().targeting.skin,
 			vastUrl = vastUrlBuilder.build(640 / 480, {
-				pos: Object.keys(slots[skin]),
+				pos: (adContext.getContext().opts.megaAdUnitBuilderEnabled ? 'OUTSTREAM' : Object.keys(slots[skin])),
 				src: skin === 'oasis' ? 'gpt' : 'mobile',
 				passback: bidderName
 			}, {

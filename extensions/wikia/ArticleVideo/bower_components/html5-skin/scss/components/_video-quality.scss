@@ -124,6 +124,27 @@
     width:80px;
     text-align: center;
 
+    .oo-chevron {
+        transform: rotate(-270deg);
+        fill: #999999;
+    }
+
+    .back {
+      margin: 0 18px 0 18px;
+      padding: 9px 0 7px 0;
+      border-top: solid 1px #cccccc;
+      color: $white;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      @include vendor-prefixes(transition, opacity 0.3s ease);
+
+      &:hover {
+        color: rgba($white, 0.6)
+      }
+    }
+
     ul {
       padding: 0;
       margin: 0;

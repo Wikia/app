@@ -230,7 +230,7 @@ class MagicWord {
 	static function getVariableIDs() {
 		if ( !self::$mVariableIDsInitialised ) {
 			# Get variable IDs
-			wfRunHooks( 'MagicWordwgVariableIDs', array( &self::$mVariableIDs ) );
+			Hooks::run( 'MagicWordwgVariableIDs', array( &self::$mVariableIDs ) );
 			self::$mVariableIDsInitialised = true;
 		}
 		return self::$mVariableIDs;
@@ -456,7 +456,8 @@ class MagicWord {
 	 */
 	function matchAndRemove( &$text ) {
 		$this->mFound = false;
-		$text = preg_replace_callback( $this->getRegex(), array( &$this, 'pregRemoveAndRecord' ), $text );
+		$text = preg_replace_callback( $this->getRegex(), [ $this, 'pregRemoveAndRecord' ], $text );
+
 		return $this->mFound;
 	}
 
@@ -466,7 +467,10 @@ class MagicWord {
 	 */
 	function matchStartAndRemove( &$text ) {
 		$this->mFound = false;
-		$text = preg_replace_callback( $this->getRegexStart(), array( &$this, 'pregRemoveAndRecord' ), $text );
+		$text =
+			preg_replace_callback( $this->getRegexStart(), [ $this, 'pregRemoveAndRecord' ],
+				$text );
+
 		return $this->mFound;
 	}
 

@@ -2,8 +2,7 @@
 describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 	'use strict';
 
-	function noop() {
-	}
+	function noop() {}
 
 	var mocks = {
 		log: noop,
@@ -22,10 +21,17 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 				return false;
 			}
 		},
-		win: {}
+		adBlockDetection: {
+			isBlocking: function () {
+				return false;
+			}
+		},
+		win: {
+			addEventListener: noop
+		}
 	};
 
-	mocks.log.levels = {debug: ''};
+	mocks.log.levels = {};
 	beforeEach(function () {
 		mocks.context.opts.delayBtf = true;
 		spyOn(mocks, 'methodCalledInsideFillInSlot');
@@ -35,6 +41,7 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 		return modules['ext.wikia.adEngine.provider.btfBlocker'](
 			mocks.adContext,
 			mocks.uapContext,
+			mocks.adBlockDetection,
 			modules['wikia.lazyqueue'](),
 			mocks.log,
 			mocks.win

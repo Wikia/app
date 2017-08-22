@@ -321,6 +321,7 @@
   .oo-control-bar {
     height: $control-bar-height-small !important;
     font-size: 25px * $xsmall-multiple;
+    margin: 0;
 
     .oo-control-bar-items-wrapper {
       .oo-control-bar-item {
@@ -366,12 +367,6 @@
     background-color: rgba($blue-light, 1.0);
     height: 14px * $xsmall-multiple;
     padding-bottom: 0;
-  }
-
-  .oo-volume-slider {
-    height: 20px * $xsmall-multiple;
-    width: $slider-volume-width * $xsmall-multiple;
-    margin-left: 6px * $xsmall-multiple;
   }
 
   // IE 11 only
@@ -477,56 +472,6 @@
   }
   .oo-player-skin-plugins-click-layer {
     bottom: $control-bar-height * $xsmall-multiple;
-  }
-
-  //Slider
-  .oo-slider-volume {
-    width: #{$slider-volume-width-small};
-  }
-
-  .oo-slider-volume[type=range] {
-    /*required for proper track sizing in FF*/
-    width: #{$slider-volume-width-small};
-  }
-
-  .oo-slider-volume[type=range]::-webkit-slider-runnable-track {
-    height: #{$slider-volume-height-small};
-  }
-
-  .oo-slider-volume[type=range]::-webkit-slider-thumb {
-    height: #{$slider-volume-thumb-diameter-small};
-    width: #{$slider-volume-thumb-diameter-small};
-    margin-top: -($slider-volume-thumb-diameter-small - $slider-volume-height-small)/2;
-  }
-
-  //IE Edge only
-  @supports (-ms-accelerator:true) {
-    .oo-slider-volume[type=range]::-webkit-slider-thumb {
-      margin-top: 1px;
-    }
-  }
-
-  //moz
-  .oo-slider-volume[type=range]::-moz-range-track {
-    width: #{$slider-volume-width-small};
-    height: #{$slider-volume-height-small};
-  }
-
-  .oo-slider-volume[type=range]::-moz-range-thumb {
-    height: #{$slider-volume-thumb-diameter-small};
-    width: #{$slider-volume-thumb-diameter-small};
-  }
-
-  //ms
-  .oo-slider-volume[type=range]::-ms-track {
-    width: #{$slider-volume-width-small};
-    height: #{$slider-volume-height-small};
-    border-width: $slider-volume-thumb-diameter-small/2 0;
-  }
-
-  .oo-slider-volume[type=range]::-ms-thumb {
-    height: #{$slider-volume-thumb-diameter-small};
-    width: #{$slider-volume-thumb-diameter-small};
   }
 
   //Text Tracks

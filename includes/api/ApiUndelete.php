@@ -71,7 +71,7 @@ class ApiUndelete extends ApiBase {
 		}
 
 		if ( $retval[1] ) {
-			wfRunHooks( 'FileUndeleteComplete',
+			Hooks::run( 'FileUndeleteComplete',
 				array( $titleObj, array(), $this->getUser(), $params['reason'] ) );
 		}
 

@@ -96,31 +96,28 @@ div.oo-player-container {
 		.oo-icon:hover {
 			color: $video-player-blue !important;
 		}
-
-		.oo-icon-svg {
-			filter: none !important;
-
-			svg {
-				fill: #fff;
-				filter: none !important;
-			}
-
-			&:hover {
-				svg {
-					fill: $video-player-blue;
-				}
-			}
-		}
-
-
 	}
 
 	.oo-volume-bar {
 		padding-left: 6px;
 	}
 
-	// That overrides ooyala icons font. It prevents downloading the font.
+	.oo-close-button,
 	.oo-icon-svg {
+		filter: none !important;
+		// That overrides ooyala icons font. It prevents downloading the font.
 		font-family: $wds-font-family !important;
+		opacity: 1 !important;
+
+		svg {
+			fill: #fff;
+			filter: none !important;
+		}
+
+		&:hover {
+			svg {
+				fill: $video-player-blue;
+			}
+		}
 	}
 }

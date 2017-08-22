@@ -1,15 +1,15 @@
 /*global define*/
 define('ext.wikia.adEngine.video.videoFrequencyMonitor', [
-	'ext.wikia.adEngine.adLogicPageViewCounter',
 	'ext.wikia.adEngine.video.videoFrequencySettings',
-	'ext.wikia.adEngine.video.videoFrequencyStore'
-], function (pageViewCounter, settings, store) {
+	'ext.wikia.adEngine.video.videoFrequencyStore',
+	'wikia.window'
+], function (settings, store, win) {
 	'use strict';
 
 	function prepareData() {
 		return {
 			date: new Date().getTime(),
-			pv: pageViewCounter.get()
+			pv: win.pvNumber
 		};
 	}
 

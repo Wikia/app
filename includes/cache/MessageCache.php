@@ -513,7 +513,7 @@ class MessageCache {
 		global $wgContLang;
 		MessageBlobStore::updateMessage( $wgContLang->lcfirst( $msg ) );
 
-		wfRunHooks( 'MessageCacheReplace', array( $title, $text ) );
+		Hooks::run( 'MessageCacheReplace', array( $title, $text ) );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -650,19 +650,6 @@ class MessageCache {
 		}
 
 		# wikia change start
-		// Inline DefaultMessages check, it's getting called hundreds of times during a single request
-		// and uses time-consuming Hooks mechanism
-		if ( $message === false ) {
-			global $wgDefaultMessagesCache;
-			if ( is_object( $wgDefaultMessagesCache ) ) {
-				$dmcKey = $uckey;
-				if ( $langcode !== 'en' && strpos( $dmcKey, '/' ) === false ) {
-					$dmcKey .= '/' . $langcode;
-				}
-				$message = $wgDefaultMessagesCache->get( $dmcKey, $langcode, $useDB );
-			}
-		}
-
 		# Try the extension array
 		if ( $message === false && isset( $this->mExtensionMessages[$langcode][$lckey] ) ) {
 			$message = $this->mExtensionMessages[$langcode][$lckey];
@@ -748,7 +735,7 @@ class MessageCache {
 		} else {
 			// XXX: This is not cached in process cache, should it?
 			$message = false;
-			wfRunHooks( 'MessagesPreLoad', array( $title, &$message ) );
+			Hooks::run( 'MessagesPreLoad', array( $title, &$message ) );
 			if ( $message !== false ) {
 				return $message;
 			}

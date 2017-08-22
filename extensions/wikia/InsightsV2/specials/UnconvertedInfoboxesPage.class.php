@@ -73,7 +73,7 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 			$num = $dbw->affectedRows();
 		}
 
-		wfRunHooks( 'UnconvertedInfoboxesQueryRecached', [ 'count' => $num ] );
+		Hooks::run( 'UnconvertedInfoboxesQueryRecached', [ 'count' => $num ] );
 
 		return $num;
 	}

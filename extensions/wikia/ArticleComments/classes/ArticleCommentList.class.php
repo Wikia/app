@@ -607,12 +607,9 @@ class ArticleCommentList {
 	 * @param string  $reason  -- deleting reason
 	 * @param integer $error   -- error msg
 	 *
-	 * @static
-	 * @access public
-	 *
-	 * @return true -- because it's a hook
+	 * @return bool true -- because it's a hook
 	 */
-	static public function articleDelete( WikiPage &$wikiPage, &$user, &$reason, &$error ) {
+	static public function articleDelete( WikiPage $wikiPage, User $user, $reason, &$error ): bool {
 		$title = $wikiPage->getTitle();
 
 		if ( empty( self::$mArticlesToDelete ) ) {
@@ -662,7 +659,7 @@ class ArticleCommentList {
 	 *
 	 * @return boolean -- because it's a hook
 	 */
-	static public function articleDeleteComplete( WikiPage &$wikiPage, &$user, $reason, $id ) {
+	static public function articleDeleteComplete( WikiPage $wikiPage, User $user, $reason, $id ): bool {
 		global $wgOut, $wgRC2UDPEnabled, $wgMaxCommentsToDelete, $wgCityId, $wgUser, $wgEnableMultiDeleteExt;
 		$title = $wikiPage->getTitle();
 
@@ -760,36 +757,34 @@ class ArticleCommentList {
 	 *
 	 * @return boolean -- because it's a hook
 	 */
-	static public function undeleteComments( Title &$oTitle, $revision, $old_page_id ) {
+	static public function undeleteComments( Title $oTitle, $revision, $old_page_id ) {
 		global $wgRC2UDPEnabled;
 
-		if ( $oTitle instanceof Title ) {
-			$new_page_id = $oTitle->getArticleId();
-			$listing = ArticleCommentList::newFromTitle( $oTitle );
-			$pagesToRecover = $listing->getRemovedCommentPages( $oTitle );
-			if ( !empty( $pagesToRecover ) && is_array( $pagesToRecover ) ) {
-				$irc_backup = $wgRC2UDPEnabled;	// backup
-				$wgRC2UDPEnabled = false; // turn off
-				foreach ( $pagesToRecover as $page_id => $page_value ) {
-					$oCommentTitle = Title::makeTitleSafe( $page_value['nspace'], $page_value['title'] );
-					if ( $oCommentTitle instanceof Title ) {
-						$archive = new PageArchive( $oCommentTitle );
-						$ok = $archive->undelete( '', wfMessage( 'article-comments-undeleted-comment', $new_page_id )->escaped() );
+		$new_page_id = $oTitle->getArticleId();
+		$listing = ArticleCommentList::newFromTitle( $oTitle );
+		$pagesToRecover = $listing->getRemovedCommentPages( $oTitle );
+		if ( !empty( $pagesToRecover ) && is_array( $pagesToRecover ) ) {
+			$irc_backup = $wgRC2UDPEnabled;	// backup
+			$wgRC2UDPEnabled = false; // turn off
+			foreach ( $pagesToRecover as $page_id => $page_value ) {
+				$oCommentTitle = Title::makeTitleSafe( $page_value['nspace'], $page_value['title'] );
+				if ( $oCommentTitle instanceof Title ) {
+					$archive = new PageArchive( $oCommentTitle );
+					$ok = $archive->undelete( '', wfMessage( 'article-comments-undeleted-comment', $new_page_id )->escaped() );
 
-						if ( !is_array( $ok ) ) {
-							Wikia\Logger\WikiaLogger::instance()->error(
-								__METHOD__ . ' - cannot restore comment',
-								[
-									'exception' => new Exception(),
-									'page_id' => (string) $page_id,
-									'page_title' => $page_value['title']
-								]
-							);
-						}
+					if ( !is_array( $ok ) ) {
+						Wikia\Logger\WikiaLogger::instance()->error(
+							__METHOD__ . ' - cannot restore comment',
+							[
+								'exception' => new Exception(),
+								'page_id' => (string) $page_id,
+								'page_title' => $page_value['title']
+							]
+						);
 					}
 				}
-				$wgRC2UDPEnabled = $irc_backup; // restore to whatever it was
 			}
+			$wgRC2UDPEnabled = $irc_backup; // restore to whatever it was
 		}
 
 		return true;
@@ -1043,7 +1038,9 @@ class ArticleCommentList {
 	 *
 	 * @return bool
 	 */
-	static public function onConfirmEdit( &$SimpleCaptcha, &$editPage, $newtext, $section, $merged, &$result ) {
+	static public function onConfirmEdit(
+		$SimpleCaptcha, $editPage, $newtext, $section, $merged, &$result
+	): bool {
 		$title = $editPage->getArticle()->getTitle();
 		if ( MWNamespace::isTalk( $title->getNamespace() ) && ArticleComment::isTitleComment( $title ) ) {
 			$result = true;	// omit captcha

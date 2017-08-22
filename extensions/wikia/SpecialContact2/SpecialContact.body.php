@@ -740,7 +740,7 @@ class ContactForm extends SpecialPage {
 		$result = wfValidateUserName( $userName );
 		if ( $result === true ) {
 			$msgKey = '';
-			if ( !wfRunHooks( 'cxValidateUserName', array( $userName, &$msgKey ) ) ) {
+			if ( !Hooks::run( 'cxValidateUserName', array( $userName, &$msgKey ) ) ) {
 				$result = $msgKey;
 			}
 		}

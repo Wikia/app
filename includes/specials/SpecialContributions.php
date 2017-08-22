@@ -161,7 +161,7 @@ class SpecialContributions extends SpecialPage {
 		// Add RSS/atom links
 		$this->addFeedLinks( array( 'action' => 'feedcontributions', 'user' => $target ) );
 
-		if ( wfRunHooks( 'SpecialContributionsBeforeMainOutput', array( $id ) ) ) {
+		if ( Hooks::run( 'SpecialContributionsBeforeMainOutput', array( $id ) ) ) {
 
 			$out->addHTML( $this->getForm() );
 
@@ -237,7 +237,7 @@ class SpecialContributions extends SpecialPage {
 			/* Wikia change end */
 				$out = $this->getOutput(); // showLogExtract() wants first parameter by reference
 				//If user is blocked globally we do not show local log extract as it doesn't contain information about this block
-				if ( wfRunHooks('ContributionsLogEventsList', array( $out, $userObj) ) ) {
+				if ( Hooks::run('ContributionsLogEventsList', array( $out, $userObj) ) ) {
 					LogEventsList::showLogExtract(
 						$out,
 						'block',
@@ -346,7 +346,7 @@ class SpecialContributions extends SpecialPage {
 			}
 		}
 
-		wfRunHooks( 'ContributionsToolLinks', array( $id, $userpage, &$tools ) );
+		Hooks::run( 'ContributionsToolLinks', array( $id, $userpage, &$tools ) );
 		return $tools;
 	}
 
@@ -623,7 +623,8 @@ class ContribsPager extends ReverseChronologicalPager {
 			$this->tagFilter
 		);
 
-		wfRunHooks( 'ContribsPager::getQueryInfo', array( &$this, &$queryInfo ) );
+		Hooks::run( 'ContribsPager::getQueryInfo', [ $this, &$queryInfo ] );
+
 		return $queryInfo;
 	}
 
@@ -871,7 +872,7 @@ class ContribsPager extends ReverseChronologicalPager {
 		$ret .= " $tagSummary";
 
 		// Let extensions add data
-		wfRunHooks( 'ContributionsLineEnding', array( &$this, &$ret, $row ) );
+		Hooks::run( 'ContributionsLineEnding', [ $this, &$ret, $row ] );
 
 		$classes = implode( ' ', $classes );
 		$ret = "<li class=\"$classes\">$ret</li>\n";

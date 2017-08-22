@@ -31,12 +31,16 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 			'LB': ['TOP_LEADERBOARD', 'MOBILE_TOP_LEADERBOARD'],
 			'MR': ['TOP_RIGHT_BOXAD'],
 			'SKY': ['LEFT_SKYSCRAPER_2', 'LEFT_SKYSCRAPER_3'],
-			'PF': ['PREFOOTER_LEFT_BOXAD', 'PREFOOTER_MIDDLE_BOXAD', 'PREFOOTER_RIGHT_BOXAD', 'MOBILE_PREFOOTER'],
-			'PX': ['INVISIBLE_SKIN', 'INVISIBLE_HIGH_IMPACT_2'],
-			'HiVi': ['INCONTENT_BOXAD_1', 'MOBILE_IN_CONTENT']
+			'PF': [
+				'PREFOOTER_LEFT_BOXAD', 'PREFOOTER_MIDDLE_BOXAD', 'PREFOOTER_RIGHT_BOXAD', 'MOBILE_PREFOOTER',
+				'BOTTOM_LEADERBOARD', 'MOBILE_BOTTOM_LEADERBOARD'
+			],
+			'PX': ['INVISIBLE_SKIN', 'INVISIBLE_HIGH_IMPACT', 'INVISIBLE_HIGH_IMPACT_2'],
+			'HiVi': ['INCONTENT_BOXAD_1', 'MOBILE_IN_CONTENT'],
+			'VIDEO': ['FEATURED', 'OUTSTREAM', 'UAP_BFAA', 'UAP_BFAB', 'OOYALA']
 		};
 
-		// OTHER: 'BOTTOM_LEADERBOARD', 'MOBILE_BOTTOM_LEADERBOARD', 'INCONTENT_PLAYER'
+		// OTHER: 'INCONTENT_PLAYER'
 		return findSlotGroup(map, slotName) || 'OTHER';
 	}
 
@@ -80,10 +84,6 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 	function getAdLayout(params) {
 		var layout = params.s2,
 			incontentSlotName = params.skin === 'oasis' ? 'INCONTENT_PLAYER' : 'MOBILE_IN_CONTENT';
-
-		if (getContextTargeting().hasFeaturedVideo) {
-			layout = 'fv-' + layout;
-		}
 
 		if (slotsContext.isApplicable(incontentSlotName)) {
 			layout = layout + '-ic';

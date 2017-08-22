@@ -65,7 +65,7 @@ class VideoHandlerHooks {
 			'backend' => 'local-backend',
 		);
 
-		wfRunHooks( 'AfterSetupLocalFileRepo', [&$wgLocalFileRepo] );
+		Hooks::run( 'AfterSetupLocalFileRepo', [&$wgLocalFileRepo] );
 		return true;
 	}
 
@@ -80,7 +80,7 @@ class VideoHandlerHooks {
 	 * @param Parser $parser
 	 * @return bool
 	 */
-	static public function initParserHook( &$parser ) {
+	static public function initParserHook( Parser $parser ): bool {
 		$parser->setHook( 'videogallery', [ 'CoreTagHooks', 'gallery' ] );
 		return true;
 	}
@@ -138,7 +138,7 @@ class VideoHandlerHooks {
 		return false;
 	}
 
-	static public function convertOldInterwikiToNewInterwiki( &$parser, &$text ) {
+	static public function convertOldInterwikiToNewInterwiki( Parser $parser, string &$text ): bool {
 		global $wgRTEParserEnabled;
 		if ( $wgRTEParserEnabled ) {
 			return true;

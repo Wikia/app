@@ -49,7 +49,7 @@ $wgQueryPages = array(
 	[ 'UnusedtemplatesPage',           'Unusedtemplates'               ],
 	[ 'WithoutInterwikiPage',          'Withoutinterwiki'              ],
 );
-wfRunHooks( 'wgQueryPages', array( &$wgQueryPages ) );
+Hooks::run( 'wgQueryPages', array( &$wgQueryPages ) );
 
 global $wgDisableCounters;
 if ( !$wgDisableCounters )
@@ -297,7 +297,7 @@ abstract class QueryPage extends SpecialPage {
 		 * Wikia change begin
 		 * @author <adamk@wikia-inc.com>
 		 */
-		wfRunHooks( 'QueryPageUseResultsBeforeRecache', [ $this, $dbr, $res ] );
+		Hooks::run( 'QueryPageUseResultsBeforeRecache', [ $this, $dbr, $res ] );
 		/**
 		 * Wikia change end
 		 */

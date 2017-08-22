@@ -173,7 +173,7 @@ function wfLyricWikiMagicWords(&$aWikiWords, $langID)
 #---------------------------------------------------
 
 $wgHooks['ParserGetVariableValueSwitch'][] = 'wfLyricWikiVariableSwitch';
-function wfLyricWikiVariableSwitch(&$parser, &$cache, &$magicWordId, &$ret)
+function wfLyricWikiVariableSwitch( Parser $parser, &$cache, &$magicWordId, &$ret )
 {
 	$lwVars = getLyricWikiVariables();
 
@@ -202,9 +202,8 @@ function wfLyricWikiDeclareVarIds(&$magicWordIds)
 	return true;
 }
 
-function wfLyricWikiSterilizeTitle( &$parser, $title = '' )
+function wfLyricWikiSterilizeTitle( $parser, $title = '' )
 {
-	$lwVars = Array();
 
 	preg_match("/(.*?):(.*)/",$title,$match);
 	$artist = $match[1];

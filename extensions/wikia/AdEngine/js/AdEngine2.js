@@ -6,6 +6,7 @@ define('ext.wikia.adEngine.adEngine', [
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
+	'ext.wikia.adEngine.tracking.viewabilityTracker',
 	'ext.wikia.adEngine.utils.hooks',
 	'wikia.document',
 	'wikia.lazyqueue',
@@ -17,6 +18,7 @@ define('ext.wikia.adEngine.adEngine', [
 	slotRegistry,
 	slotTracker,
 	slotTweaker,
+	viewabilityTracker,
 	registerHooks,
 	doc,
 	lazyQueue,
@@ -161,6 +163,7 @@ define('ext.wikia.adEngine.adEngine', [
 					viewed: function () {
 						log(['viewed', provider.name, slotName], log.levels.debug, logGroup);
 						slot.container.setAttribute('data-slot-viewed', 'true');
+						viewabilityTracker.track(slot);
 					}
 				});
 

@@ -20,6 +20,7 @@ $wgAutoloadClasses['DiscussionsVarToggler'] = $dir . 'DiscussionsVarToggler.clas
 $wgAutoloadClasses['DiscussionsVarTogglerException'] = $dir . 'DiscussionsVarToggler.class.php';
 $wgAutoloadClasses['ThreadCreator'] = $dir . 'api/ThreadCreator.class.php';
 $wgAutoloadClasses['DiscussionsActivator'] = $dir . 'api/DiscussionsActivator.class.php';
+$wgAutoloadClasses['DiscussionsActivity'] = $dir . 'api/DiscussionsActivity.class.php';
 $wgAutoloadClasses['LegacyRedirect'] = $dir . 'api/LegacyRedirect.class.php';
 $wgAutoloadClasses['StaffWelcomePoster'] = $dir . 'maintenance/StaffWelcomePoster.class.php';
 

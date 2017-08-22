@@ -94,14 +94,14 @@ class SpecialStatistics extends SpecialPage {
 
 		# Statistic - other
 		$extraStats = array();
-		if( wfRunHooks( 'SpecialStatsAddExtra', array( &$extraStats ) ) ) {
+		if( Hooks::run( 'SpecialStatsAddExtra', array( &$extraStats ) ) ) {
 			$text .= $this->getOtherStats( $extraStats );
 		}
 
 		$text .= Xml::closeElement( 'table' );
 
 		#<Wikia>
-		wfRunHooks( "CustomSpecialStatistics", array( &$this, &$text ) );
+		Hooks::run( "CustomSpecialStatistics", [ $this, &$text ] );
 		#</Wikia>
 
 		# Customizable footer

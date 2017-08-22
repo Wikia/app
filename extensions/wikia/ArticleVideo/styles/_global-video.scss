@@ -122,4 +122,12 @@ div.oo-player-container {
 	.oo-thumbnail-carousel-time, .oo-thumbnail-time {
 		font-family: $wds-font-family;
 	}
+
+	.oo-discovery-panel {
+		width: 100%;
+	}
+
+	.oo-xsmall .oo-discovery-panel .oo-discovery-image-wrapper-style:nth-last-child(2) {
+		margin-right: 20px !important;
+	}
 }

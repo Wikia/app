@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "6020b3e041b68dafd595f01af9cd43cd",
+    "content-hash": "00e2a32d65d5e6b5875cc73da985f44b",
     "packages": [
         {
             "name": "composer/installers",
@@ -715,56 +715,6 @@
             "time": "2014-09-09T13:34:57+00:00"
         },
         {
-            "name": "facebook/php-sdk-v4",
-            "version": "4.0.11",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/facebook/php-graph-sdk.git",
-                "reference": "e2dc662c4ab4da680434b6b777d56461a9bd2563"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/facebook/php-graph-sdk/zipball/e2dc662c4ab4da680434b6b777d56461a9bd2563",
-                "reference": "e2dc662c4ab4da680434b6b777d56461a9bd2563",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "guzzlehttp/guzzle": "~4.0",
-                "mockery/mockery": "dev-master",
-                "phpunit/phpunit": "3.7.*"
-            },
-            "suggest": {
-                "guzzlehttp/guzzle": "Allows for implementation of the Guzzle HTTP client"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Facebook\\": "src/Facebook/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Facebook Platform"
-            ],
-            "authors": [
-                {
-                    "name": "Facebook",
-                    "homepage": "https://github.com/facebook/facebook-php-sdk-v4/contributors"
-                }
-            ],
-            "description": "Facebook SDK for PHP",
-            "homepage": "https://github.com/facebook/facebook-php-sdk-v4",
-            "keywords": [
-                "facebook",
-                "sdk"
-            ],
-            "abandoned": "facebook/graph-sdk",
-            "time": "2014-08-25T18:58:37+00:00"
-        },
-        {
             "name": "guzzlehttp/guzzle",
             "version": "5.3.0",
             "source": {
@@ -924,74 +874,6 @@
             "time": "2014-10-12T19:18:40+00:00"
         },
         {
-            "name": "mediawiki/maps",
-            "version": "3.5.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Wikia/Maps",
-                "reference": "a391388478238f27b9d383e987bdd5a98e32f7bf"
-            },
-            "require": {
-                "composer/installers": "^1.0.1",
-                "data-values/geo": "~1.0",
-                "mediawiki/validator": "^2.0.2",
-                "php": ">=5.3.2"
-            },
-            "type": "mediawiki-extension",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.5.x-dev"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "Maps.php"
-                ],
-                "psr-4": {
-                    "Maps\\": "src/Maps/"
-                },
-                "classmap": [
-                    "includes/",
-                    "Maps.hooks.php",
-                    "tests/phpunit/elements/",
-                    "tests/phpunit/parserhooks/ParserHookTest.php"
-                ]
-            },
-            "scripts": {
-                "phpunit": [
-                    "php ../../tests/phpunit/phpunit.php -c phpunit.xml.dist"
-                ]
-            },
-            "license": [
-                "GPL-2.0+"
-            ],
-            "authors": [
-                {
-                    "name": "Jeroen De Dauw",
-                    "email": "jeroendedauw@gmail.com",
-                    "homepage": "http://jeroendedauw.com",
-                    "role": "Creator and lead developer"
-                }
-            ],
-            "description": "Adds various mapping features to MediaWiki",
-            "homepage": "https://github.com/JeroenDeDauw/Maps",
-            "keywords": [
-                "Google Maps",
-                "Maps",
-                "MediaWiki",
-                "OSM",
-                "OpenLayers",
-                "OpenStreetMap",
-                "Semantic MediaWiki"
-            ],
-            "support": {
-                "email": "semediawiki-user@lists.sourceforge.net",
-                "irc": "irc://irc.freenode.net/mediawiki",
-                "source": "https://github.com/JeroenDeDauw/Maps"
-            },
-            "time": "2016-08-12T15:47:38+00:00"
-        },
-        {
             "name": "mediawiki/parser-hooks",
             "version": "1.5.0",
             "source": {
@@ -1044,115 +926,6 @@
                 "tag extension"
             ],
             "time": "2016-03-05T15:47:04+00:00"
-        },
-        {
-            "name": "mediawiki/semantic-media-wiki",
-            "version": "2.4.2.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Wikia/SemanticMediaWiki",
-                "reference": "256773e5f3db4191cbc800841448b9a52aa11dcf"
-            },
-            "require": {
-                "composer/installers": "1.*,>=1.0.1",
-                "ext-mbstring": "*",
-                "mediawiki/parser-hooks": "~1.4",
-                "onoi/blob-store": "~1.2",
-                "onoi/cache": "~1.2",
-                "onoi/callback-container": "~1.0",
-                "onoi/event-dispatcher": "~1.0",
-                "onoi/http-request": "~1.1",
-                "onoi/message-reporter": "~1.0",
-                "param-processor/param-processor": "~1.2",
-                "php": ">=5.3.0",
-                "serialization/serialization": "~3.2"
-            },
-            "replace": {
-                "mediawiki/semantic-mediawiki": "*"
-            },
-            "require-dev": {
-                "phpmd/phpmd": "~2.1",
-                "squizlabs/php_codesniffer": "~2.1"
-            },
-            "suggest": {
-                "mediawiki/semantic-forms": "Easy creation of forms to add semantic data",
-                "mediawiki/semantic-result-formats": "Additional result formats for SMW queries"
-            },
-            "type": "mediawiki-extension",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.4.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "SMW\\": "src/",
-                    "SMW\\Maintenance\\": "maintenance/"
-                },
-                "classmap": [
-                    "includes/",
-                    "languages/SMW_Language.php"
-                ]
-            },
-            "scripts": {
-                "phpunit": [
-                    "php ../../tests/phpunit/phpunit.php -c phpunit.xml.dist"
-                ],
-                "unit": [
-                    "composer dump-autoload",
-                    "php ../../tests/phpunit/phpunit.php -c phpunit.xml.dist --testsuite=semantic-mediawiki-unit"
-                ],
-                "cs-standalone": [
-                    "composer validate --no-interaction",
-                    "vendor/bin/phpcs src/* includes/* tests/* --standard=phpcs.xml --extensions=php -sp"
-                ],
-                "cs": [
-                    "composer cs-standalone",
-                    "vendor/bin/phpmd src/,includes/,tests/ text phpmd.xml"
-                ],
-                "ci": [
-                    "composer phpunit",
-                    "composer cs"
-                ]
-            },
-            "license": [
-                "GPL-2.0+"
-            ],
-            "authors": [
-                {
-                    "name": "Markus Krötzsch",
-                    "homepage": "http://korrekt.org",
-                    "role": "Original author"
-                },
-                {
-                    "name": "Jeroen De Dauw",
-                    "email": "jeroendedauw@gmail.com",
-                    "homepage": "http://jeroendedauw.com",
-                    "role": "Core developer"
-                },
-                {
-                    "name": "James Hong Kong",
-                    "homepage": "https://www.semantic-mediawiki.org/wiki/User:MWJames",
-                    "role": "Core developer"
-                }
-            ],
-            "description": "MediaWiki extension that lets you store and query structured data within wiki pages",
-            "homepage": "https://www.semantic-mediawiki.org/wiki/",
-            "keywords": [
-                "MediaWiki",
-                "SMW",
-                "Semantic MediaWiki",
-                "Wiki"
-            ],
-            "support": {
-                "email": "semediawiki-user@lists.sourceforge.net",
-                "issues": "https://github.com/SemanticMediaWiki/SemanticMediaWiki/issues",
-                "irc": "irc://irc.freenode.net/semantic-mediawiki",
-                "forum": "https://www.semantic-mediawiki.org/wiki/semantic-mediawiki.org_talk:Community_portal",
-                "wiki": "https://www.semantic-mediawiki.org/wiki/",
-                "source": "https://github.com/SemanticMediaWiki/SemanticMediaWiki"
-            },
-            "time": "2017-06-02T06:15:22+00:00"
         },
         {
             "name": "mediawiki/validator",
@@ -1676,6 +1449,38 @@
             "time": "2016-08-02T04:16:55+00:00"
         },
         {
+            "name": "ooyala/v2-api",
+            "version": "v2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ooyala/php-v2-sdk.git",
+                "reference": "cbe7d28bd31133daa6cd1b59919fac055629312f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ooyala/php-v2-sdk/zipball/cbe7d28bd31133daa6cd1b59919fac055629312f",
+                "reference": "cbe7d28bd31133daa6cd1b59919fac055629312f",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "OoyalaApi.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Ooyala's V2 API PHP SDK",
+            "time": "2016-06-27T16:45:25+00:00"
+        },
+        {
             "name": "param-processor/param-processor",
             "version": "1.3.0",
             "source": {
@@ -1742,6 +1547,318 @@
                 "validator"
             ],
             "time": "2016-07-15T11:53:19+00:00"
+        },
+        {
+            "name": "pear/archive_tar",
+            "version": "1.4.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pear/Archive_Tar.git",
+                "reference": "43455c960da70e655c6bdf8ea2bc8cc1a6034afb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pear/Archive_Tar/zipball/43455c960da70e655c6bdf8ea2bc8cc1a6034afb",
+                "reference": "43455c960da70e655c6bdf8ea2bc8cc1a6034afb",
+                "shasum": ""
+            },
+            "require": {
+                "pear/pear-core-minimal": "^1.10.0alpha2",
+                "php": ">=5.2.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "suggest": {
+                "ext-bz2": "bz2 compression support.",
+                "ext-xz": "lzma2 compression support.",
+                "ext-zlib": "Gzip compression support."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Archive_Tar": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "./"
+            ],
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Vincent Blavet",
+                    "email": "vincent@phpconcept.net"
+                },
+                {
+                    "name": "Greg Beaver",
+                    "email": "greg@chiaraquartet.net"
+                },
+                {
+                    "name": "Michiel Rook",
+                    "email": "mrook@php.net"
+                }
+            ],
+            "description": "Tar file management class",
+            "homepage": "https://github.com/pear/Archive_Tar",
+            "keywords": [
+                "archive",
+                "tar"
+            ],
+            "time": "2017-06-11T17:28:11+00:00"
+        },
+        {
+            "name": "pear/console_getopt",
+            "version": "v1.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pear/Console_Getopt.git",
+                "reference": "82f05cd1aa3edf34e19aa7c8ca312ce13a6a577f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pear/Console_Getopt/zipball/82f05cd1aa3edf34e19aa7c8ca312ce13a6a577f",
+                "reference": "82f05cd1aa3edf34e19aa7c8ca312ce13a6a577f",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Console": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "./"
+            ],
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Greg Beaver",
+                    "email": "cellog@php.net",
+                    "role": "Helper"
+                },
+                {
+                    "name": "Andrei Zmievski",
+                    "email": "andrei@php.net",
+                    "role": "Lead"
+                },
+                {
+                    "name": "Stig Bakken",
+                    "email": "stig@php.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "More info available on: http://pear.php.net/package/Console_Getopt",
+            "time": "2015-07-20T20:28:12+00:00"
+        },
+        {
+            "name": "pear/mail_mime",
+            "version": "1.10.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pear/Mail_Mime.git",
+                "reference": "3d4e33a6879cbb4c71684a282750b7bb072a121e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pear/Mail_Mime/zipball/3d4e33a6879cbb4c71684a282750b7bb072a121e",
+                "reference": "3d4e33a6879cbb4c71684a282750b7bb072a121e",
+                "shasum": ""
+            },
+            "require": {
+                "pear/pear-core-minimal": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Mail": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "./"
+            ],
+            "license": [
+                "BSD-3-clause"
+            ],
+            "authors": [
+                {
+                    "name": "Cipriano Groenendal",
+                    "email": "cipri@php.net",
+                    "role": "Lead"
+                },
+                {
+                    "name": "Aleksander Machniak",
+                    "email": "alec@php.net",
+                    "role": "Lead"
+                }
+            ],
+            "description": "Mail_Mime provides classes to create MIME messages",
+            "homepage": "http://pear.php.net/package/Mail_Mime",
+            "time": "2017-05-21T10:43:06+00:00"
+        },
+        {
+            "name": "pear/net_socket",
+            "version": "v1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pear/Net_Socket.git",
+                "reference": "f31d75ac352d49908f8987bbb1496c02a409812a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pear/Net_Socket/zipball/f31d75ac352d49908f8987bbb1496c02a409812a",
+                "reference": "f31d75ac352d49908f8987bbb1496c02a409812a",
+                "shasum": ""
+            },
+            "require": {
+                "pear/pear_exception": "@stable",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Net": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "./"
+            ],
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Chuck Hagenbuch",
+                    "email": "chuck@horde.org",
+                    "role": "Lead"
+                },
+                {
+                    "name": "Aleksander Machniak",
+                    "email": "alec@php.net",
+                    "role": "Lead"
+                },
+                {
+                    "name": "Stig Bakken",
+                    "email": "stig@php.net",
+                    "role": "Lead"
+                }
+            ],
+            "description": "More info available on: http://pear.php.net/package/Net_Socket",
+            "time": "2017-04-06T15:16:38+00:00"
+        },
+        {
+            "name": "pear/pear-core-minimal",
+            "version": "v1.10.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pear/pear-core-minimal.git",
+                "reference": "070f0b600b2caca2501e2c9b7e553016e4b0d115"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pear/pear-core-minimal/zipball/070f0b600b2caca2501e2c9b7e553016e4b0d115",
+                "reference": "070f0b600b2caca2501e2c9b7e553016e4b0d115",
+                "shasum": ""
+            },
+            "require": {
+                "pear/console_getopt": "~1.4",
+                "pear/pear_exception": "~1.0"
+            },
+            "replace": {
+                "rsky/pear-core-min": "self.version"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "src/"
+            ],
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Christian Weiske",
+                    "email": "cweiske@php.net",
+                    "role": "Lead"
+                }
+            ],
+            "description": "Minimal set of PEAR core files to be used as composer dependency",
+            "time": "2017-02-28T16:46:11+00:00"
+        },
+        {
+            "name": "pear/pear_exception",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pear/PEAR_Exception.git",
+                "reference": "8c18719fdae000b690e3912be401c76e406dd13b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pear/PEAR_Exception/zipball/8c18719fdae000b690e3912be401c76e406dd13b",
+                "reference": "8c18719fdae000b690e3912be401c76e406dd13b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=4.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "type": "class",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "PEAR": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "."
+            ],
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Helgi Thormar",
+                    "email": "dufuz@php.net"
+                },
+                {
+                    "name": "Greg Beaver",
+                    "email": "cellog@php.net"
+                }
+            ],
+            "description": "The PEAR Exception base class.",
+            "homepage": "https://github.com/pear/PEAR_Exception",
+            "keywords": [
+                "exception"
+            ],
+            "time": "2015-02-10T20:07:52+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -1844,6 +1961,76 @@
             ],
             "description": "Library for handling version information and constraints",
             "time": "2017-03-05T17:38:23+00:00"
+        },
+        {
+            "name": "php-amqplib/php-amqplib",
+            "version": "v2.6.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-amqplib/php-amqplib.git",
+                "reference": "fa2f0d4410a11008cb36b379177291be7ee9e4f6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-amqplib/php-amqplib/zipball/fa2f0d4410a11008cb36b379177291be7ee9e4f6",
+                "reference": "fa2f0d4410a11008cb36b379177291be7ee9e4f6",
+                "shasum": ""
+            },
+            "require": {
+                "ext-bcmath": "*",
+                "ext-mbstring": "*",
+                "php": ">=5.3.0"
+            },
+            "replace": {
+                "videlalvaro/php-amqplib": "self.version"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8",
+                "scrutinizer/ocular": "^1.1",
+                "squizlabs/php_codesniffer": "^2.5"
+            },
+            "suggest": {
+                "ext-sockets": "Use AMQPSocketConnection"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PhpAmqpLib\\": "PhpAmqpLib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1"
+            ],
+            "authors": [
+                {
+                    "name": "Alvaro Videla",
+                    "role": "Original Maintainer"
+                },
+                {
+                    "name": "John Kelly",
+                    "email": "johnmkelly86@gmail.com",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Raúl Araya",
+                    "email": "nubeiro@gmail.com",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "Formerly videlalvaro/php-amqplib.  This library is a pure PHP implementation of the AMQP protocol. It's been tested against RabbitMQ.",
+            "homepage": "https://github.com/php-amqplib/php-amqplib/",
+            "keywords": [
+                "message",
+                "queue",
+                "rabbitmq"
+            ],
+            "time": "2016-04-11T14:30:01+00:00"
         },
         {
             "name": "php-di/invoker",
@@ -3321,6 +3508,66 @@
             "time": "2014-08-19T01:53:31+00:00"
         },
         {
+            "name": "simplepie/simplepie",
+            "version": "1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/simplepie/simplepie.git",
+                "reference": "5de5551953f95feef12cf355a7a26a70f94aa3ab"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/simplepie/simplepie/zipball/5de5551953f95feef12cf355a7a26a70f94aa3ab",
+                "reference": "5de5551953f95feef12cf355a7a26a70f94aa3ab",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4 || ~5"
+            },
+            "suggest": {
+                "mf2/mf2": "Microformat module that allows for parsing HTML for microformats"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "SimplePie": "library"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Ryan Parman",
+                    "homepage": "http://ryanparman.com/",
+                    "role": "Creator, alumnus developer"
+                },
+                {
+                    "name": "Geoffrey Sneddon",
+                    "homepage": "http://gsnedders.com/",
+                    "role": "Alumnus developer"
+                },
+                {
+                    "name": "Ryan McCue",
+                    "email": "me@ryanmccue.info",
+                    "homepage": "http://ryanmccue.info/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A simple Atom/RSS parsing library for PHP",
+            "homepage": "http://simplepie.org/",
+            "keywords": [
+                "atom",
+                "feeds",
+                "rss"
+            ],
+            "time": "2017-04-17T07:29:31+00:00"
+        },
+        {
             "name": "symfony/css-selector",
             "version": "v2.6.5",
             "target-dir": "Symfony/Component/CssSelector",
@@ -3462,52 +3709,6 @@
             "time": "2014-08-01T18:02:04+00:00"
         },
         {
-            "name": "videlalvaro/php-amqplib",
-            "version": "v2.2.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-amqplib/php-amqplib.git",
-                "reference": "6ef2ca9a45bb9fb20872f824f4c7c1518315bd3f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-amqplib/php-amqplib/zipball/6ef2ca9a45bb9fb20872f824f4c7c1518315bd3f",
-                "reference": "6ef2ca9a45bb9fb20872f824f4c7c1518315bd3f",
-                "shasum": ""
-            },
-            "require": {
-                "ext-bcmath": "*",
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "3.7.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "PhpAmqpLib": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-2.1"
-            ],
-            "authors": [
-                {
-                    "name": "Alvaro Videla"
-                }
-            ],
-            "description": "This library is a pure PHP implementation of the AMQP protocol. It's been tested against RabbitMQ.",
-            "homepage": "https://github.com/videlalvaro/php-amqplib/",
-            "keywords": [
-                "message",
-                "queue",
-                "rabbitmq"
-            ],
-            "abandoned": "php-amqplib/php-amqplib",
-            "time": "2013-12-22T12:49:53+00:00"
-        },
-        {
             "name": "webmozart/assert",
             "version": "1.2.0",
             "source": {
@@ -3558,6 +3759,43 @@
             "time": "2016-11-23T20:04:58+00:00"
         },
         {
+            "name": "wikia/file_ogg",
+            "version": "1.0.7",
+            "dist": {
+                "type": "tar",
+                "url": "http://artifactory.wikia-inc.com/artifactory/api/composer/php-local/direct-dists/wikia/file_ogg/file_ogg-1.0.7.tar",
+                "reference": null,
+                "shasum": null
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "File": "./"
+                }
+            },
+            "include-path": [
+                "./"
+            ],
+            "license": [
+                "GNU LGPL"
+            ],
+            "authors": [
+                {
+                    "email": "tstarling@wikimedia.org",
+                    "name": "Tim Starling",
+                    "role": "Lead"
+                }
+            ],
+            "description": "More info available on: http://pear.php.net/package/File_Ogg",
+            "support": {
+                "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name[]=File_Ogg",
+                "source": "https://github.com/pear/File_Ogg"
+            }
+        },
+        {
             "name": "wikia/fluent-sql-php",
             "version": "v1.0.1",
             "source": {
@@ -3594,6 +3832,238 @@
             "time": "2014-12-02T19:19:03+00:00"
         },
         {
+            "name": "wikia/mail2",
+            "version": "v0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Wikia/Mail2.git",
+                "reference": "20bfc47db5244a8d2f1808420ede14b0a6bf7e4d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Wikia/Mail2/zipball/20bfc47db5244a8d2f1808420ede14b0a6bf7e4d",
+                "reference": "20bfc47db5244a8d2f1808420ede14b0a6bf7e4d",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "suggest": {
+                "pear/net_smtp": "Install optionally via your project's composer.json"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "Mail2.php",
+                    "Mail2"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "./"
+            ],
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Chuck Hagenbuch",
+                    "email": "chuck@horde.org",
+                    "role": "Lead"
+                },
+                {
+                    "name": "Richard Heyes",
+                    "email": "richard@phpguru.org",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Aleksander Machniak",
+                    "email": "alec@alec.pl",
+                    "role": "Developer"
+                }
+            ],
+            "description": "More info available on: http://pear.php.net/package/Mail2",
+            "time": "2015-12-08T19:23:03+00:00"
+        },
+        {
+            "name": "wikia/maps",
+            "version": "3.5.3",
+            "dist": {
+                "type": "tar",
+                "url": "http://artifactory.wikia-inc.com/artifactory/api/composer/php-local/direct-dists/wikia/maps/maps-3.5.3.tar",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "^1.0.1",
+                "data-values/geo": "~1.0",
+                "mediawiki/validator": "^2.0.2",
+                "php": ">=5.3.2"
+            },
+            "type": "mediawiki-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.5.x-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "Maps.php"
+                ],
+                "psr-4": {
+                    "Maps\\": "src/Maps/"
+                },
+                "classmap": [
+                    "includes/",
+                    "Maps.hooks.php"
+                ]
+            },
+            "scripts": {
+                "phpunit": [
+                    "php ../../tests/phpunit/phpunit.php -c phpunit.xml.dist"
+                ]
+            },
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Jeroen De Dauw",
+                    "email": "jeroendedauw@gmail.com",
+                    "homepage": "http://jeroendedauw.com",
+                    "role": "Creator and lead developer"
+                }
+            ],
+            "description": "Adds various mapping features to MediaWiki",
+            "homepage": "https://github.com/JeroenDeDauw/Maps",
+            "keywords": [
+                "Google Maps",
+                "Maps",
+                "MediaWiki",
+                "OSM",
+                "OpenLayers",
+                "OpenStreetMap",
+                "Semantic MediaWiki"
+            ],
+            "support": {
+                "email": "semediawiki-user@lists.sourceforge.net",
+                "irc": "irc://irc.freenode.net/mediawiki",
+                "source": "https://github.com/JeroenDeDauw/Maps"
+            }
+        },
+        {
+            "name": "wikia/net_smtp2",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Wikia/Net_SMTP2.git",
+                "reference": "4efa7833bb0331cb944b65daa1b6ad977b7b9385"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Wikia/Net_SMTP2/zipball/4efa7833bb0331cb944b65daa1b6ad977b7b9385",
+                "reference": "4efa7833bb0331cb944b65daa1b6ad977b7b9385",
+                "shasum": ""
+            },
+            "require": {
+                "pear/net_socket": "*",
+                "pear/pear_exception": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "suggest": {
+                "pear/auth_sasl": "Install optionally via your project's composer.json"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Net": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "./"
+            ],
+            "license": [
+                "PHP License"
+            ],
+            "authors": [
+                {
+                    "name": "Jon Parise",
+                    "email": "jon@php.net",
+                    "homepage": "http://www.indelible.org",
+                    "role": "Lead"
+                },
+                {
+                    "name": "Chuck Hagenbuch",
+                    "email": "chuck@horde.org",
+                    "role": "Lead"
+                }
+            ],
+            "description": "An implementation of the SMTP protocol",
+            "homepage": "http://pear.github.io/Net_SMTP2/",
+            "keywords": [
+                "email",
+                "mail",
+                "smtp"
+            ],
+            "time": "2014-06-04T06:04:56+00:00"
+        },
+        {
+            "name": "wikia/net_socket2",
+            "version": "0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Wikia/Net_Socket2.git",
+                "reference": "844e786aea06809f2e738fe2f894a8c610739d09"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Wikia/Net_Socket2/zipball/844e786aea06809f2e738fe2f894a8c610739d09",
+                "reference": "844e786aea06809f2e738fe2f894a8c610739d09",
+                "shasum": ""
+            },
+            "require": {
+                "pear/pear_exception": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Net": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "./"
+            ],
+            "license": [
+                "PHP License"
+            ],
+            "authors": [
+                {
+                    "name": "Chuck Hagenbuch",
+                    "email": "chuck@horde.org",
+                    "role": "Lead"
+                },
+                {
+                    "name": "Aleksander Machniak",
+                    "email": "alec@php.net",
+                    "role": "Lead"
+                },
+                {
+                    "name": "Stig Bakken",
+                    "email": "stig@php.net",
+                    "role": "Lead"
+                }
+            ],
+            "description": "More info available on: http://pear.php.net/package/Net_Socket2",
+            "time": "2015-03-23T14:31:27+00:00"
+        },
+        {
             "name": "wikia/phpflickr",
             "version": "3.1.2",
             "source": {
@@ -3615,6 +4085,227 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "time": "2016-04-27T13:12:26+00:00"
+        },
+        {
+            "name": "wikia/semantic-media-wiki",
+            "version": "2.4.6",
+            "dist": {
+                "type": "tar",
+                "url": "http://artifactory.wikia-inc.com/artifactory/api/composer/php-local/direct-dists/wikia/semantic-media-wiki/semantic-media-wiki-2.4.6.tar",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "1.*,>=1.0.1",
+                "ext-mbstring": "*",
+                "mediawiki/parser-hooks": "~1.4",
+                "onoi/blob-store": "~1.2",
+                "onoi/cache": "~1.2",
+                "onoi/callback-container": "~1.0",
+                "onoi/event-dispatcher": "~1.0",
+                "onoi/http-request": "~1.1",
+                "onoi/message-reporter": "~1.0",
+                "param-processor/param-processor": "~1.2",
+                "php": ">=5.3.0",
+                "serialization/serialization": "~3.2"
+            },
+            "provide": {
+                "mediawiki/semantic-media-wiki": "2.4.2.9"
+            },
+            "replace": {
+                "mediawiki/semantic-mediawiki": "*"
+            },
+            "require-dev": {
+                "phpmd/phpmd": "~2.1",
+                "squizlabs/php_codesniffer": "~2.1"
+            },
+            "suggest": {
+                "mediawiki/semantic-forms": "Easy creation of forms to add semantic data",
+                "mediawiki/semantic-result-formats": "Additional result formats for SMW queries"
+            },
+            "type": "mediawiki-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SMW\\": "src/",
+                    "SMW\\Maintenance\\": "maintenance/"
+                },
+                "classmap": [
+                    "includes/",
+                    "languages/SMW_Language.php"
+                ]
+            },
+            "scripts": {
+                "phpunit": [
+                    "php ../../tests/phpunit/phpunit.php -c phpunit.xml.dist"
+                ],
+                "unit": [
+                    "composer dump-autoload",
+                    "php ../../tests/phpunit/phpunit.php -c phpunit.xml.dist --testsuite=semantic-mediawiki-unit"
+                ],
+                "cs-standalone": [
+                    "composer validate --no-interaction",
+                    "vendor/bin/phpcs src/* includes/* tests/* --standard=phpcs.xml --extensions=php -sp"
+                ],
+                "cs": [
+                    "composer cs-standalone",
+                    "vendor/bin/phpmd src/,includes/,tests/ text phpmd.xml"
+                ],
+                "ci": [
+                    "composer phpunit",
+                    "composer cs"
+                ]
+            },
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Markus Krötzsch",
+                    "homepage": "http://korrekt.org",
+                    "role": "Original author"
+                },
+                {
+                    "name": "Jeroen De Dauw",
+                    "email": "jeroendedauw@gmail.com",
+                    "homepage": "http://jeroendedauw.com",
+                    "role": "Core developer"
+                },
+                {
+                    "name": "James Hong Kong",
+                    "homepage": "https://www.semantic-mediawiki.org/wiki/User:MWJames",
+                    "role": "Core developer"
+                }
+            ],
+            "description": "MediaWiki extension that lets you store and query structured data within wiki pages",
+            "homepage": "https://www.semantic-mediawiki.org/wiki/",
+            "keywords": [
+                "MediaWiki",
+                "SMW",
+                "Semantic MediaWiki",
+                "Wiki"
+            ],
+            "support": {
+                "email": "semediawiki-user@lists.sourceforge.net",
+                "issues": "https://github.com/SemanticMediaWiki/SemanticMediaWiki/issues",
+                "irc": "irc://irc.freenode.net/semantic-mediawiki",
+                "forum": "https://www.semantic-mediawiki.org/wiki/semantic-mediawiki.org_talk:Community_portal",
+                "wiki": "https://www.semantic-mediawiki.org/wiki/",
+                "source": "https://github.com/SemanticMediaWiki/SemanticMediaWiki"
+            }
+        },
+        {
+            "name": "wikia/semantic-scribunto",
+            "version": "1.1.4",
+            "dist": {
+                "type": "tar",
+                "url": "http://artifactory.wikia-inc.com/artifactory/api/composer/php-local/direct-dists/wikia/semantic-scribunto/semantic-scribunto-1.1.4.tar",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "1.*,>=1.0.1",
+                "php": ">=5.5",
+                "wikia/semantic-media-wiki": "~2.4"
+            },
+            "require-dev": {
+                "mediawiki/semantic-media-wiki": "@dev",
+                "phpmd/phpmd": "~2.1",
+                "squizlabs/php_codesniffer": "~2.1"
+            },
+            "type": "mediawiki-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SMW\\Scribunto\\": "src/"
+                }
+            },
+            "scripts": {
+                "phpunit": [
+                    "php ../../tests/phpunit/phpunit.php -c phpunit.xml.dist"
+                ],
+                "unit": [
+                    "composer phpunit -- --testsuite semantic-scribunto-unit"
+                ],
+                "integration": [
+                    "composer phpunit -- --testsuite semantic-scribunto-integration"
+                ],
+                "cs": [
+                    "vendor/bin/phpcs src/* tests/* --standard=phpcs.xml --extensions=php -sp",
+                    "vendor/bin/phpmd src/,tests/ text phpmd.xml"
+                ],
+                "ci": [
+                    "composer validate --no-interaction",
+                    "composer phpunit",
+                    "composer cs"
+                ]
+            },
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "James Hong Kong",
+                    "role": "Creator"
+                },
+                {
+                    "name": "Tobias Oetterer",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A Semantic Mediawiki extension to natively support the Scribunto extension",
+            "homepage": "https://www.semantic-mediawiki.org/wiki/Extension:SemanticScribunto",
+            "keywords": [
+                "Lua",
+                "Scribunto",
+                "mediawiki",
+                "semantic mediawiki",
+                "smw",
+                "wiki"
+            ],
+            "support": {
+                "email": "semediawiki-user@lists.sourceforge.net",
+                "issues": "https://github.com/SemanticMediaWiki/SemanticScribunto/issues",
+                "irc": "irc://irc.freenode.net/semantic-mediawiki",
+                "forum": "https://www.semantic-mediawiki.org/wiki/semantic-mediawiki.org_talk:Community_portal",
+                "wiki": "https://www.semantic-mediawiki.org/wiki/",
+                "source": "https://github.com/SemanticMediaWiki/SemanticScribunto"
+            }
+        },
+        {
+            "name": "wikia/simplehtmldom",
+            "version": "v1.6.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Wikia/simplehtmldom.git",
+                "reference": "17c40a62d1eaea267ce10aa3530815766efe7c1a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Wikia/simplehtmldom/zipball/17c40a62d1eaea267ce10aa3530815766efe7c1a",
+                "reference": "17c40a62d1eaea267ce10aa3530815766efe7c1a",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "simple_html_dom.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A simple PHP HTML DOM parser written in PHP5+, supports invalid HTML, and provides a very easy way to handle HTML elements.",
+            "time": "2017-07-21T10:54:58+00:00"
         },
         {
             "name": "zendframework/zend-code",

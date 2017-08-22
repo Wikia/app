@@ -177,7 +177,7 @@ class StaffLoggerPager extends ReverseChronologicalPager {
 				break;
 			default:
 				$out = "";
-				wfRunHooks('StaffLog::formatRow',array($result->slog_type,$result,$time,$linker,&$out));
+				Hooks::run('StaffLog::formatRow',array($result->slog_type,$result,$time,$linker,&$out));
 				break;
 		}
 

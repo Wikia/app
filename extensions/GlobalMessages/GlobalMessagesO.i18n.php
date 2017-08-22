@@ -2513,19 +2513,6 @@ $messages['pt'] = array(
 	'oasis-mobile-site' => 'Site móvel',
 );
 
-$messages['pt-br'] = array(
-	'october' => 'outubro',
-	'october-gen' => 'outubro',
-	'oct' => 'out.',
-	'otherlanguages' => 'Em outros idiomas',
-	'ok' => 'OK',
-	'oldpassword' => 'Senha antiga',
-	'overwrite' => 'Não é permitido sobrescrever um arquivo já existente.',
-	'overwroteimage' => 'enviou uma nova versão de "[[$1]]"',
-	'othercontribs' => 'Baseado no trabalho de $1.',
-	'others' => 'outros',
-);
-
 $messages['qu'] = array(
 	'october' => 'uktuwri',
 	'october-gen' => 'uktuwri',
@@ -3497,10 +3484,6 @@ $messages['zea'] = array(
 	'oldpassword' => 'Udihe wachtwoôrd:',
 );
 
-$messages['zh'] = array(
-	'oasis-mobile-site' => '手机版网页',
-);
-
 $messages['zh-hans'] = array(
 	'october' => '10月',
 	'october-gen' => '十月',
@@ -3537,38 +3520,6 @@ $messages['zh-hant'] = array(
 	'or' => 'or',
 	'other_people' => 'Other people have been searching for...',
 	'or_learn' => 'Or to learn more, take the ',
-);
-
-$messages['zh-hk'] = array(
-	'october' => '十月',
-	'oasis-mobile-site' => '手機版網頁',
-);
-
-$messages['zh-min-nan'] = array(
-	'october' => '十月',
-);
-
-$messages['zh-mo'] = array(
-	'october' => '十月',
-);
-
-$messages['zh-my'] = array(
-	'october' => '十月',
-);
-
-$messages['zh-tw'] = array(
-	'october' => '十月',
-	'october-gen' => '十月',
-	'oct' => '10月',
-	'oldpassword' => '舊密碼',
-	'oasis-mobile-site' => '手機版網頁',
-);
-
-$messages['zh-yue'] = array(
-	'october' => '十月',
-	'october-gen' => '十月',
-	'oct' => '10月',
-	'oldpassword' => '舊密碼',
 );
 
 $messages['zu'] = array(

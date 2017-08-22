@@ -312,7 +312,7 @@ class SpecialBlock extends FormSpecialPage {
 		$otherBlockMessages = array();
 		if( $this->target !== null ) {
 			# Get other blocks, i.e. from GlobalBlocking or TorBlock extension
-			wfRunHooks( 'OtherBlockLogLink', array( &$otherBlockMessages, $this->target ) );
+			Hooks::run( 'OtherBlockLogLink', array( &$otherBlockMessages, $this->target ) );
 
 			if( count( $otherBlockMessages ) ) {
 				$s = Html::rawElement(
@@ -645,7 +645,7 @@ class SpecialBlock extends FormSpecialPage {
 		$block->isAutoblocking( $data['AutoBlock'] );
 		$block->mHideName = $data['HideUser'];
 
-		if( !wfRunHooks( 'BlockIp', array( &$block, &$performer ) ) ) {
+		if( !Hooks::run( 'BlockIp', array( &$block, &$performer ) ) ) {
 			return array( 'hookaborted' );
 		}
 
@@ -691,7 +691,7 @@ class SpecialBlock extends FormSpecialPage {
 			$logaction = 'block';
 		}
 
-		wfRunHooks( 'BlockIpComplete', array( $block, $performer ) );
+		Hooks::run( 'BlockIpComplete', array( $block, $performer ) );
 
 		# Set *_deleted fields if requested
 		if( $data['HideUser'] ) {
