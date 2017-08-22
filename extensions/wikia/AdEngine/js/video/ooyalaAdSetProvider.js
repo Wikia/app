@@ -38,7 +38,15 @@ define('ext.wikia.adEngine.video.ooyalaAdSetProvider', [
 		return adContext && adContext.getContext() && adContext.getContext().opts.replayAdsForFV;
 	}
 
+	function isVideoDepthCorrect(videoDepth) {
+		return videoDepth === undefined || (typeof videoDepth === 'number' && videoDepth > 0);
+	}
+
 	function get(videoDepth, correlator) {
+		if (!isVideoDepthCorrect(videoDepth)) {
+			throw 'Not correct input variables';
+		}
+
 		if (!isAbleToDisplayAds()) {
 			return [];
 		}

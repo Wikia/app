@@ -137,6 +137,14 @@ describe('ext.wikia.adEngine.video.ooyalaAdSetProvider', function () {
 		expect(mocks.vastUrlBuilder.build.calls.argsFor(2)[1].rv).toEqual(3);
 	});
 
+	it('Should detect not correct input variable', function () {
+		var errorMessage = 'Not correct input variables';
+		expect(function () { getModule().get(-10); }).toThrow(errorMessage);
+		expect(function () { getModule().get('asdasd'); }).toThrow(errorMessage);
+		expect(function () { getModule().get({}); }).toThrow(errorMessage);
+		expect(function () { getModule().get(); }).not.toThrow(errorMessage);
+	});
+
 	it('Should pass correlator variable', function () {
 		spyOn(mocks.vastUrlBuilder, 'build');
 		spyOn(mocks.adContext, 'getContext').and.returnValue({
