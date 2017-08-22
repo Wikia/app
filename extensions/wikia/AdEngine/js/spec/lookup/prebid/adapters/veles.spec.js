@@ -59,6 +59,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 					adId: 456
 				}]
 			}
+		},
+		instartLogic: {
+			isBlocking: function() {
+				return false;
+			}
 		}
 	};
 
@@ -82,6 +87,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 			mocks.priceParsingHelper,
 			mocks.prebid,
 			mocks.vastUrlBuilder,
+			mocks.instartLogic,
 			mocks.log,
 			mocks.win
 		);
@@ -99,6 +105,13 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 	it('Is disabled when context is disabled', function () {
 		mocks.context.bidders.veles = false;
 		var veles = getVeles();
+
+		expect(veles.isEnabled()).toBeFalsy();
+	});
+
+	it('Is disabled when context is enabled but is blocking', function () {
+		var veles = getVeles();
+		spyOn(mocks.instartLogic, 'isBlocking').and.returnValue(true);
 
 		expect(veles.isEnabled()).toBeFalsy();
 	});

@@ -9,6 +9,9 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', function () {
 			}
 		},
 		context: {},
+		instartLogic: {
+			isBlocking: function() {}
+		},
 		slotsContext: {
 			filterSlotMap: function (map) {
 				return map;
@@ -23,6 +26,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', function () {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst'](
 			mocks.adContext,
 			mocks.slotsContext,
+			mocks.instartLogic,
 			mocks.loc
 		);
 	}

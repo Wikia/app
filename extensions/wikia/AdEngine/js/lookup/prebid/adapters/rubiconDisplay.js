@@ -1,17 +1,18 @@
 /*global define*/
-define('ext.wikia.adEngine.lookup.prebid.adapters.fastlane', [
+define('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
+	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
 	'wikia.log'
-], function (adContext, slotsContext, adLogicZoneParams, log) {
+], function (adContext, slotsContext, adLogicZoneParams, instartLogic, log) {
 	'use strict';
 
-	var bidderName = 'fastlane',
+	var bidderName = 'rubicon_display',
 		aliases = {
 			'rubicon': [bidderName]
 		},
-		logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.fastlane',
+		logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay',
 		rubiconAccountId = 7450,
 		slots = {
 			oasis: {
@@ -124,7 +125,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.fastlane', [
 	}
 
 	function isEnabled() {
-		return getAdContext().bidders.fastlane;
+		return getAdContext().bidders.rubiconDisplay && !instartLogic.isBlocking();
 	}
 
 	function prepareAdUnit(slotName, config, skin) {
