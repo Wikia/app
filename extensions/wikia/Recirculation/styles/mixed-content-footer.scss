@@ -139,6 +139,7 @@ h1.mcf-header {
 	@include justify-content(flex-end);
 	background-size: cover;
 	background-position: center;
+	padding: 0 10px;
 
 	&__title {
 		color: $wds-color-white;
@@ -168,6 +169,7 @@ h1.mcf-header {
 		@include flex-direction(column);
 		@include flexbox();
 		background-color: rgba($wds-color-black, 0.75);
+		padding: 0 10px;
 	}
 
 	&__title {
@@ -175,6 +177,7 @@ h1.mcf-header {
 		font-size: 30px;
 		font-weight: bold;
 		margin: 14px 0 18px;
+		text-align: center;
 
 		@media #{$wds-breakpoint-m-down} {
 			font-size: 24px;
