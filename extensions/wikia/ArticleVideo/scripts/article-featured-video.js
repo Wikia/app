@@ -226,11 +226,12 @@ require([
 		}
 
 		function configureAdSet(videoDepth) {
-			var adSet = [],
-				adVideoCapping = 3,
-				isReplayAdSupported = adContext.getContext().opts.replayAdsForFV,
-				shouldPlayAdOnNextVideo = videoDepth % adVideoCapping === 0,
-				showAds = adContext && adContext.getContext().opts.showAds;
+			var adContextOpts = adContext.getContext().opts,
+				adSet = [],
+				adsFrequency = adContextOpts.fvAdsFrequency,
+				isReplayAdSupported = adContextOpts.replayAdsForFV,
+				shouldPlayAdOnNextVideo = videoDepth % adsFrequency === 0,
+				showAds = adContext && adContextOpts.showAds;
 
 			if (isReplayAdSupported && shouldPlayAdOnNextVideo && vastUrlBuilder && showAds) {
 				adSet = [
@@ -238,7 +239,7 @@ require([
 						tag_url: vastUrlBuilder.build(640/480, {
 							pos: 'FEATURED',
 							src: 'premium',
-							rv: Math.floor(videoDepth / adVideoCapping) + 1
+							rv: Math.floor(videoDepth / adsFrequency) + 1
 						})
 					}
 				];

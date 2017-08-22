@@ -311,7 +311,8 @@ class WikiFactoryLoader {
 						"host" => $host,
 						"active" => $oRow->city_public,
 						"time" =>  $oRow->city_factory_timestamp,
-						"db" => $this->mCityDB
+						"db" => $this->mCityDB,
+						"cluster" => $oRow->city_cluster,
 					);
 				}
 			}
@@ -331,7 +332,8 @@ class WikiFactoryLoader {
 						"city_factory_timestamp",
 						"city_domain",
 						"city_url",
-						"city_dbname"
+						"city_dbname",
+						"city_cluster"
 					),
 					array(
 						"city_domains.city_id = city_list.city_id",
@@ -349,13 +351,15 @@ class WikiFactoryLoader {
 						$this->mIsWikiaActive = $oRow->city_public;
 						$this->mCityHost = $host;
 						$this->mCityDB   = $oRow->city_dbname;
+						$this->mCityCluster = $oRow->city_cluster;
 						$this->mTimestamp = $oRow->city_factory_timestamp;
 						$this->mDomain = array(
 							"id"     => $oRow->city_id,
 							"host"   => $host,
 							"active" => $oRow->city_public,
 							"time"   => $oRow->city_factory_timestamp,
-							"db"     => $oRow->city_dbname
+							"db"     => $oRow->city_dbname,
+							"cluster" => $oRow->city_cluster,
 						);
 					}
 				}
@@ -382,6 +386,7 @@ class WikiFactoryLoader {
 			$this->mIsWikiaActive = $this->mDomain["active"];
 			$this->mTimestamp = isset( $this->mDomain["time"] ) ? $this->mDomain["time"] : null;
 			$this->mCityDB = isset( $this->mDomain[ "db" ] ) ? $this->mDomain[ "db" ] : false;
+			$this->mCityCluster = $this->mDomain["cluster"];
 		}
 
 
@@ -628,7 +633,7 @@ class WikiFactoryLoader {
 
 		# take some WF variables values from city_list
 		$this->mVariables["wgDBname"] = $this->mCityDB;
-		$this->mVariables["wgDBCluster"] = $this->mCityCluster;
+		$this->mVariables["wgDBcluster"] = $this->mCityCluster;
 
 		// @author macbre
 		Hooks::run( 'WikiFactory::executeBeforeTransferToGlobals', [ $this ] );
