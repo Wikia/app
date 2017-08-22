@@ -21,7 +21,6 @@ require([
 
 	var $mixedContentFooter = $('#mixed-content-footer'),
 		$mixedContentFooterContent = $('.mcf-content'),
-	    wikiArticlesFetched = false,
 		railRecirculation = {
 			max: 5,
 			widget: 'wikia-rail',
