@@ -43,8 +43,8 @@ define('ext.wikia.adEngine.video.ooyalaAdSetProvider', [
 			return [];
 		}
 
-		videoDepth = videoDepth !== undefined ? videoDepth : 1;
-		correlator = correlator ? correlator : Math.round(Math.random() * 10000000000);
+		videoDepth = videoDepth || 1;
+		correlator = correlator || Math.round(Math.random() * 10000000000);
 
 		var adSet = [],
 			isReplay = videoDepth > 1,
