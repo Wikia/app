@@ -1,0 +1,18 @@
+<figure class="article-media-thumbnail">
+	<a href="{{href}}">
+		<amp-img alt="{{title}}"
+				 src="{{url}}"
+				 width="{{width}}"
+				 height="{{height}}"
+				 layout="responsive"
+		>
+		{{!--
+			TODO AMP-10
+			use srcset + Vignette thumbnails, see https://www.ampproject.org/docs/guides/responsive/art_direction
+		--}}
+		</amp-img>
+	</a>
+	{{#caption}}
+		<figcaption>{{{caption}}}</figcaption>
+	{{/caption}}
+</figure>
