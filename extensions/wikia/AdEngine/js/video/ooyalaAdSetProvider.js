@@ -34,7 +34,7 @@ define('ext.wikia.adEngine.video.ooyalaAdSetProvider', [
 		return adContext && adContext.getContext() && adContext.getContext().opts.showAds && vastUrlBuilder;
 	}
 
-	function adsCanBeplayedOnNextVideoViews() {
+	function adsCanBePlayedOnNextVideoViews() {
 		return adContext && adContext.getContext() && adContext.getContext().opts.replayAdsForFV;
 	}
 
@@ -68,8 +68,8 @@ define('ext.wikia.adEngine.video.ooyalaAdSetProvider', [
 	}
 
 	return {
-		adsCanBeplayedOnNextVideoViews: adsCanBeplayedOnNextVideoViews,
+		adsCanBePlayedOnNextVideoViews: adsCanBePlayedOnNextVideoViews,
 		isAbleToDisplayAds: isAbleToDisplayAds,
-		get: get,
+		get: get
 	};
 });

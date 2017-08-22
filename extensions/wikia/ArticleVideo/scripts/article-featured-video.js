@@ -84,7 +84,7 @@ require([
 
 			if (ooyalaAdSetProvider.isAbleToDisplayAds()) {
 				options.adSet = ooyalaAdSetProvider.get(1);
-				options.replayAds = ooyalaAdSetProvider.adsCanBeplayedOnNextVideoViews();
+				options.replayAds = ooyalaAdSetProvider.adsCanBePlayedOnNextVideoViews();
 			} else {
 				playerTrackerParams.adProduct = 'featured-video-no-preroll';
 			}
