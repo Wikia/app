@@ -358,12 +358,16 @@ h1.mcf-header {
 	}
 
 	&__circle {
+		$circle-size: 36px;
+		$circle-small-size: 24px;
+
 		@include align-items(center);
 		@include flexbox();
 		@include justify-content(center);
 		background-color: $wds-color-light-gray;
 		border-radius: 50%;
 		color: $wds-color-white;
+		flex: 0 0 $circle-size;
 		font-size: 18px;
 		font-weight: bold;
 		height: 36px;
@@ -371,15 +375,19 @@ h1.mcf-header {
 		width: 36px;
 
 		@media #{$wds-breakpoint-m-down} {
+			flex: 0 0 $circle-small-size;
 			font-size: 14px;
-			height: 24px;
-			width: 24px;
+			height: $circle-small-size;
+			width: $circle-small-size;
 		}
 	}
 
 	&__title {
 		font-size: 14px;
 		margin-left: 12px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 
 		@media #{$wds-breakpoint-m-down} {
 			font-size: 12px;
@@ -396,6 +404,7 @@ h1.mcf-header {
 		font-size: 18px;
 		font-weight: bold;
 		padding: 16px;
+		word-wrap: break-word;
 
 		@media #{$wds-breakpoint-m-down} {
 			font-size: 14px;
