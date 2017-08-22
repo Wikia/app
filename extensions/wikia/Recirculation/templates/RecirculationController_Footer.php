@@ -3,7 +3,7 @@
 	<div class="mcf-content">
 		<h1 class="mcf-header"><?= wfMessage( 'recirculation-impact-footer-title' )->escaped() ?></h1>
 		<div class="mcf-row">
-			<? if ( empty( $topWikiArticles ) ): ?>
+			<? if ( !empty( $topWikiArticles ) ): ?>
 				<?= F::app()->renderPartial(
 					'Recirculation',
 					'wikiArticles',

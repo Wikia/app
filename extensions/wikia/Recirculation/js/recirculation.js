@@ -9,7 +9,7 @@ require([
 	'ext.wikia.recirculation.discussions',
 	require.optional('videosmodule.controllers.rail')
 ], function ($,
-             w,
+             window,
              log,
              utils,
              mixedFooter,
@@ -49,11 +49,14 @@ require([
 				widget: 'wikia-footer-wiki-rec',
 				width: 386,
 				height: 337,
-				modelName: 'wiki'
+				modelName: 'wiki',
+				opts: {
+					rule_language : window.wgContentLanguage
+				}
 			}
 		};
 
-	if (w.wgContentLanguage !== 'en') {
+	if (window.wgContentLanguage !== 'en') {
 		if (videosModule) {
 			videosModule('#recirculation-rail');
 		}
