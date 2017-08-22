@@ -63,7 +63,16 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 			topicExist = false,
 			storyStreamExist = false;
 
-		newsAndStoriesArticles.forEach(function (article) {
+		newsAndStoriesArticles.forEach(function (article, index) {
+			if (index === 0) {
+				article.video = true;
+			} else if (index === 1) {
+				article.type = 'topic';
+				article.title = 'Game of thrones'
+			} else if (index === 2) {
+				article.type = 'storyStream';
+			}
+
 			if (article.type === 'topic' && !topicExist) {
 				templateList.push('client/Recirculation_topic.mustache');
 				topicExist = true;
