@@ -5,13 +5,13 @@ define('ext.wikia.adEngine.video.ooyalaAdSetProvider', [
 ], function (adContext, vastUrlBuilder) {
 	'use strict';
 
-	var FEATURED_VIDEO_SIZE = 640 / 480;
+	var FEATURED_VIDEO_RATIO = 640 / 480;
 
 	function generateSet(vpos, type, position, rv, correlator) {
 		return {
 			position_type: type,
 			position: position,
-			tag_url: vastUrlBuilder.build(FEATURED_VIDEO_SIZE, {
+			tag_url: vastUrlBuilder.build(FEATURED_VIDEO_RATIO, {
 				pos: 'FEATURED',
 				src: 'premium',
 				rv: rv
