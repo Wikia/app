@@ -97,7 +97,43 @@ describe('ext.wikia.adEngine.video.ooyalaAdSetProvider', function () {
 		expect(mocks.vastUrlBuilder.build.calls.first().args[1].rv).toEqual(1);
 	});
 
-	it('Should enable only preroll for replayed video every 3', function () {
+	it('Should show only first preroll if nothing else is enabled', function () {
+		spyOn(mocks.adContext, 'getContext').and.returnValue({
+			opts: {
+				isFVMidrollEnabled: false,
+				isFVPostrollEnabled: false,
+				replayAdsForFV: false,
+				fvAdsFrequency: 1,
+				showAds: true
+			}
+		});
+
+		expect(getModule().get(1).length).toEqual(1);
+		expect(getModule().get(2).length).toEqual(0);
+		expect(getModule().get(3).length).toEqual(0);
+		expect(getModule().get(4).length).toEqual(0);
+		expect(getModule().get(5).length).toEqual(0);
+	});
+
+	it('Should show preroll in correct frequency', function () {
+		spyOn(mocks.adContext, 'getContext').and.returnValue({
+			opts: {
+				isFVMidrollEnabled: false,
+				isFVPostrollEnabled: false,
+				replayAdsForFV: true,
+				fvAdsFrequency: 2,
+				showAds: true
+			}
+		});
+
+		expect(getModule().get(1).length).toEqual(1);
+		expect(getModule().get(2).length).toEqual(0);
+		expect(getModule().get(3).length).toEqual(1);
+		expect(getModule().get(4).length).toEqual(0);
+		expect(getModule().get(5).length).toEqual(1);
+	});
+
+	it('Should enable all ads if frequency capping is set and ads are enabled', function () {
 		spyOn(mocks.adContext, 'getContext').and.returnValue({
 			opts: {
 				isFVMidrollEnabled: true,
@@ -111,16 +147,16 @@ describe('ext.wikia.adEngine.video.ooyalaAdSetProvider', function () {
 		expect(getModule().get(1).length).toEqual(3);
 		expect(getModule().get(2).length).toEqual(0);
 		expect(getModule().get(3).length).toEqual(0);
-		expect(getModule().get(4).length).toEqual(1);
+		expect(getModule().get(4).length).toEqual(3);
 		expect(getModule().get(5).length).toEqual(0);
 		expect(getModule().get(6).length).toEqual(0);
-		expect(getModule().get(7).length).toEqual(1);
+		expect(getModule().get(7).length).toEqual(3);
 	});
 
-	it('Should enable only preroll for replayed video for every video', function () {
+	it('Should enable preroll and postrolls if both are enabled', function () {
 		spyOn(mocks.adContext, 'getContext').and.returnValue({
 			opts: {
-				isFVMidrollEnabled: true,
+				isFVMidrollEnabled: false,
 				isFVPostrollEnabled: true,
 				replayAdsForFV: true,
 				fvAdsFrequency: 1,
@@ -128,13 +164,13 @@ describe('ext.wikia.adEngine.video.ooyalaAdSetProvider', function () {
 			}
 		});
 
-		expect(getModule().get(1).length).toEqual(3);
-		expect(getModule().get(2).length).toEqual(1);
-		expect(getModule().get(3).length).toEqual(1);
-		expect(getModule().get(4).length).toEqual(1);
-		expect(getModule().get(5).length).toEqual(1);
-		expect(getModule().get(6).length).toEqual(1);
-		expect(getModule().get(7).length).toEqual(1);
+		expect(getModule().get(1).length).toEqual(2);
+		expect(getModule().get(2).length).toEqual(2);
+		expect(getModule().get(3).length).toEqual(2);
+		expect(getModule().get(4).length).toEqual(2);
+		expect(getModule().get(5).length).toEqual(2);
+		expect(getModule().get(6).length).toEqual(2);
+		expect(getModule().get(7).length).toEqual(2);
 	});
 
 	it('Should correctly count rv parameter for preroll', function () {
