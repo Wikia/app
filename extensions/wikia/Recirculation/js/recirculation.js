@@ -20,6 +20,7 @@ require([
 	'use strict';
 
 	var $mixedContentFooter = $('#mixed-content-footer'),
+		$mixedContentFooterContent = $('.mcf-content'),
 		railRecirculation = {
 			max: 5,
 			widget: 'wikia-rail',
@@ -74,6 +75,7 @@ require([
 		discussions.prepare()
 	];
 	$.when.apply($, mixedContentFooterData).done(function (nsItems, wikiItems, discussions) {
+		$mixedContentFooterContent.show();
 		require(['ext.wikia.recirculation.views.mixedFooter'], function (viewFactory) {
 			viewFactory().render({
 				nsItems: nsItems,
@@ -84,10 +86,25 @@ require([
 	});
 
 	// fetch data for all recirculation modules
-	// TODO lazy load some data on scroll
 	liftigniter.fetch('ns');
-	liftigniter.fetch('wiki');
-	discussions.fetch();
+
+	var lazyLoadHandler = $.throttle(50, function () {
+			var mcfOffset = $mixedContentFooter.offset().top,
+				scrollPosition = $(window).scrollTop(),
+				windowInnerHeight = $(window).height(),
+				lazyLoadOffset = 500,
+				aproachingMCF = scrollPosition > mcfOffset - windowInnerHeight - lazyLoadOffset;
+
+			if (aproachingMCF) {
+				liftigniter.fetch('wiki');
+				discussions.fetch();
+				window.removeEventListener('scroll', lazyLoadHandler);
+
+			}
+	});
+
+	window.addEventListener('scroll', lazyLoadHandler);
+
 
 	// TODO handle errors
 	// TODO LI tracking
