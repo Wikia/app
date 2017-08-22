@@ -246,6 +246,7 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'hideblockername',
 		'clearuserprofile',
 		'smw-patternedit',
+		'smw-admin',
 		'fandom-admin'
 	];
 
