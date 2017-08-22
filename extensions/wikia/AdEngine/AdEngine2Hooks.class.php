@@ -43,7 +43,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverDelayCountries';
 		$vars[] = 'wgAdDriverDelayTimeout';
 		$vars[] = 'wgAdDriverEvolve2Countries';
-		$vars[] = 'wgAdDriverFeaturedVideoPrerollFrequencyCapping';
+		$vars[] = 'wgAdDriverFeaturedVideoPrerollNextVideoFrequencyCapping';
 		$vars[] = 'wgAdDriverHighImpactSlotCountries';
 		$vars[] = 'wgAdDriverHighImpact2SlotCountries';
 		$vars[] = 'wgAdDriverHiViLeaderboardRabbitCountries';
