@@ -91,7 +91,7 @@ class ImageReviewEventsHooks {
 
 		if ( in_array( $wgCityId, $wgImageReviewTestCommunities ) ) {
 			$revisionId = wfGetDB( DB_SLAVE )->selectField(
-				['revision'],
+				[ 'revision' ],
 				'rev_id',
 				[
 					'rev_page' => $title->getArticleID(),
@@ -101,6 +101,34 @@ class ImageReviewEventsHooks {
 			);
 
 			self::actionDelete( $title->getArticleID(), $revisionId );
+		}
+
+		return true;
+	}
+
+	public static function onOldImageRevisionVisibilityChange( Title $title, string $oiRevision, bool $imageHidden ) {
+		$oldLocalFile = OldLocalFile::newFromArchiveName(
+			$title,
+			RepoGroup::singleton()->getLocalRepo(),
+			$oiRevision . '!' . $title->getDBkey()
+		);
+
+		$oiTimestamp = $oldLocalFile->getTimestamp();
+
+		$revisionId = wfGetDB( DB_SLAVE )->selectField(
+			[ 'revision' ],
+			'rev_id',
+			[
+				'rev_page' => $title->getArticleID(),
+				'rev_timestamp' => $oiTimestamp
+			],
+			__METHOD__
+		);
+
+		if ( $imageHidden ) {
+			self::actionHide( $title->getArticleID(), $revisionId );
+		} else {
+			self::actionShow( $title, $revisionId );
 		}
 
 		return true;
@@ -139,13 +167,13 @@ class ImageReviewEventsHooks {
 		$task->queue();
 	}
 
-	private static function actionCreate( Title $title ) {
+	private static function actionCreate( Title $title, $revisionId = null, $action = 'created' ) {
 		if ( self::isFileForReview( $title ) ) {
 			global $wgImageReview, $wgCityId;
 
 			$rabbitConnection = new ConnectionBase( $wgImageReview );
 			$wamRank = ( new WAMService() )->getCurrentWamRankForWiki( $wgCityId );
-			$revisionId = $title->getLatestRevID();
+			$revisionId = $revisionId ?? $title->getLatestRevID();
 			$articleId = $title->getArticleID();
 
 			$data = [
@@ -162,21 +190,21 @@ class ImageReviewEventsHooks {
 				'revisionId' => $revisionId,
 				'contextUrl' => $title->getFullURL(),
 				'top200' => !empty( $wamRank ) && $wamRank <= 200,
-				'action' => 'created'
+				'action' => $action
 			];
 
 			$rabbitConnection->publish( self::ROUTING_KEY, $data );
 		}
 	}
 
-	private static function actionDelete( $pageId, $revisionId = null ) {
+	private static function actionDelete( $pageId, $revisionId = null, $action = 'deleted' ) {
 		global $wgImageReview, $wgCityId;
 
 		$rabbitConnection = new ConnectionBase( $wgImageReview );
 		$data = [
 			'wikiId' => $wgCityId,
 			'pageId' => $pageId,
-			'action' => 'deleted'
+			'action' => $action
 		];
 
 		if ( !empty( $revisionId ) ) {
@@ -184,5 +212,13 @@ class ImageReviewEventsHooks {
 		}
 
 		$rabbitConnection->publish( self::ROUTING_KEY, $data );
+	}
+
+	private static function actionShow( Title $title, $revisionId ) {
+		self::actionCreate( $title, $revisionId, 'showed' );
+	}
+
+	private static function actionHide( $pageId, $revisionId ) {
+		self::actionDelete( $pageId, $revisionId, 'hidden' );
 	}
 }

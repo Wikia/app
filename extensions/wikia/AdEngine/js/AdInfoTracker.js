@@ -37,18 +37,8 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 		return adContext.getContext().opts.enableAdInfoLog;
 	}
 
-	function setAdEnginePvUID() {
-		win.adEnginePvUID = win.adEnginePvUID || adInfoTrackerHelper.generateUUID();
-	}
 
 	function run() {
-		setAdEnginePvUID();
-		if (mercuryListener) {
-			mercuryListener.onEveryPageChange(function() {
-				win.adEnginePvUID = adInfoTrackerHelper.generateUUID();
-			});
-		}
-
 		if (isEnabled()) {
 			log('run', log.levels.debug, logGroup);
 

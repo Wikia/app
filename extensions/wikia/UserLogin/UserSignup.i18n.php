@@ -583,8 +583,10 @@ $messages['de'] = array(
 	'usersignup-confirmation-heading-email-resent' => 'Neue E-Mail versandt',
 	'usersignup-confirmation-subheading' => 'E-Mails nachsehen',
 	'usersignup-confirmation-email-sent' => "Wir haben eine Mail an '''$1''' versandt.
+
 Klicke den Bestätigungslink in deiner E-Mail, um das Anlegen des Benutzerkontos abzuschließen.",
 	'usersignup-confirmation-email-sent-wikiamobile' => "Wir haben eine E-Mail an '''$1''' versandt.
+
 Klicke auf den Bestätigungslink in deiner E-Mail, um die Erstellung deines Benutzerkontos abzuschließen. Danke!",
 	'usersignup-reconfirmation-email-sent' => 'Deine E-Mail-Adresse wurde zu $1 geändert. Wir haben eine neue Bestätigungsmail versandt. Bitte bestätige die neue Mail-Adresse.',
 	'usersignup-welcome-email-subject' => 'Willkommen bei Wikia, $USERNAME!',
@@ -602,18 +604,32 @@ Klicke auf den Bestätigungslink in deiner E-Mail, um die Erstellung deines Benu
 	'usersignup-welcome-email-content' => 'Willst du mehr erfahren? Finde Tips, Antworten und die Wikia-Community im <a style="color:#2C85D5;" href="http://de.community.wikia.com">Community-Wiki</a>. Frohes Schreiben!',
 	'usersignup-welcome-email-signature' => 'Das Wikia-Team',
 	'usersignup-welcome-email-body' => 'Hallo $USERNAME,
+
 Wir freuen uns, dich bei Wikia und {{SITENAME}} willkommen zu heißen! Hier nun eine paar Dinge, mit denen du loslegen kannst.
+
 Bearbeite dein Profil.
+
 Füge deinem Profil auf {{SITENAME}} ein Profilbild und eine paar kurze Fakten über dich hinzu.
+
 Zu $EDITPROFILEURL
+
 Grundlagen erlernen.
+
 Erhalte ein kurze Einführung in die Basics von Wikia: Seiten bearbeiten, dein Nutzerprofil, deine Einstellungsmöglichkeiten, und mehr.
+
 Schaus dir an ($LEARNBASICURL)
+
 Weitere Wikias entdecken.
+
 Es gibt tausende von Wikis bei Wikia, du kannst interessante Wikis in unseren Hubs finden: Videospiele (http://de.wikia.com/Videospiele), Entertainment (http://de.wikia.com/Entertainment) oder Lifestyle (http://de.wikia.com/Lifestyle).
+
 Besuche $EXPLOREWIKISURL
+
 Willst du mehr erfahren? Finde Tips, Antworten und die Wikia-Community im Community-Wiki (http://de.community.wikia.com). Frohes Schreiben!
+
 Das Wikia-Team
+
+
 Um dich zu Wikia auf dem aktuellen Stand zu halten, besuche http://de.community.wikia.com
 Steuere, welche E-Mails du von uns erhalten willst, auf {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => 'Werde noch heute Mitglied bei FANDOM',
@@ -632,23 +648,44 @@ Steuere, welche E-Mails du von uns erhalten willst, auf {{fullurl:{{ns:special}}
 	'usersignup-account-creation-heading' => 'Erfolg!',
 	'usersignup-account-creation-subheading' => 'Wir haben eine E-Mail an $1 geschickt.',
 	'usersignup-account-creation-email-sent' => 'Du hast die Erstellung eines Benutzerkontos für $2 eingeleitet. Wir haben eine Mail an $1 mit einem temporären Passwort und einem Bestätigungslink versandt.
+
+
 $2 muss den Link in unserer Mail klicken, um das Benutzerkonto zu bestätigen und das temporäre Passwort ändern, um die Kontoerstellung abzuschließen.
+
 [{{fullurl:{{ns:special}}:UserSignup|byemail=1}} Erstelle weitere Konten] auf {{SITENAME}}',
 	'usersignup-account-creation-email-subject' => 'Für dich wurde auf Wikia ein Benutzerkonto angelegt!',
 	'usersignup-account-creation-email-greeting' => 'Hallo,',
 	'usersignup-account-creation-email-content' => 'Auf {{SITENAME}} ist für dich ein Benutzerkonto erstellt worden. Zum Zugriff darauf und dem Ändern des temporären Passworts klicke auf den unteren Link und melde dich mit den Namen "$USERNAME" und dem Passwort "$NEWPASSWORD" an.
+
 Zum Anmelden bitte auf <a style="color:#2C85D5;" href="{{fullurl:{{ns:special}}:UserLogin}}">{{fullurl:{{ns:special}}:UserLogin}}</a> klicken
+
 Falls du die Anlage dieses Kontos nicht gewünscht hast, kannst du diese Mail einfach ignorieren oder bei Fragen unseren Community-Support kontaktieren.',
 	'usersignup-account-creation-email-signature' => 'Das Wikia-Team',
 	'usersignup-account-creation-email-body' => 'Hallo,
+
 Auf {{SITENAME}} ist für dich ein Benutzerkonto erstellt worden. Zum Zugriff darauf und dem Ändern des temporären Passworts klicke auf den unteren Link und melde dich mit den Namen "$2" und dem Passwort "$3" an.
+
 Zum Anmelden bitte {{fullurl:{{ns:special}}:UserLogin}} aufsuchen
+
 Falls du die Anlage dieses Kontos nicht gewünscht hast, kannst du diese Mail einfach ignorieren oder bei Fragen unseren Community-Support kontaktieren.
+
 Das Wikia-Team
+
+
 ___________________________________________
+
 Um dich zu Wikia auf dem aktuellen Stand zu halten, besuche http://de.community.wikia.com
 Steuere, welche E-Mails du von uns erhalten willst, auf {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-account-creation-email-body-HTML' => '',
+	'usersignup-facebook-heading' => 'Anmeldung abschließen',
+	'usersignup-facebook-create-account' => 'Benutzerkonto anlegen',
+	'usersignup-facebook-email-tooltip' => 'Die E-Mail-Adresse kann später auch noch in den Einstellungen zu einer anderen Adresse geändert werden.',
+	'usersignup-facebook-have-an-account-heading' => 'Konto vorhanden?',
+	'usersignup-facebook-have-an-account' => 'Verknüpfe dein FANDOM-Benutzerkonto stattdessen mit Facebook.',
+	'usersignup-facebook-proxy-email' => 'Anonyme Facebook E-Mail',
+	'usersignup-facebook-problem' => 'Es gab ein Problem bei der Kommunikation mit Facebook. Bitte versuche es später noch einmal.',
+	'usersignup-facebook-signup-header' => 'Ein neues Benutzerkonto erstellen?',
+	'usersignup-facebook-login-header' => 'Hast du bereits ein Benutzerkonto?',
 );
 
 $messages['diq'] = array(
@@ -711,8 +748,10 @@ $messages['es'] = array(
 	'usersignup-confirmation-heading-email-resent' => 'Enviado nuevo correo electrónico',
 	'usersignup-confirmation-subheading' => 'Revisa tu correo electrónico',
 	'usersignup-confirmation-email-sent' => "Enviamos un correo electrónico a '''$1'''. 
+
 Haz clic en el enlace de confirmación en el correo electrónico para terminar el proceso de creación de tu cuenta.",
 	'usersignup-confirmation-email-sent-wikiamobile' => "Enviamos un correo electrónico a '''$1'''. 
+
 Haz clic en el enlace de confirmación en el correo electrónico para terminar el proceso de creación de tu cuenta. ¡Gracias!",
 	'usersignup-reconfirmation-email-sent' => 'Tu correo electrónico ha sido cambiado a $1. Hemos enviado un nuevo mensaje de confirmación. Por favor confirma la nueva dirección de correo electrónico.',
 	'usersignup-welcome-email-subject' => '¡Bienvenido a Wikia, $USERNAME!',
@@ -730,19 +769,34 @@ Haz clic en el enlace de confirmación en el correo electrónico para terminar e
 	'usersignup-welcome-email-content' => '¿Quieres más información? Encuentra consejos, respuestas y a la comunidad de Wikia en <a style="color:#2C85D5;" href="http://comunidad.wikia.com">Comunidad Central</a>. ¡Diviértete editando!',
 	'usersignup-welcome-email-signature' => 'El equipo de Wikia',
 	'usersignup-welcome-email-body' => 'Hola $USERNAME,
+
 ¡Estamos felices de darte la bienvenida a Wikia y a {{SITENAME}}! Aquí hay algunas cosas que puedes hacer para comenzar.
+
 Edita tu perfil. 
+
 Añade una imagen de perfil y otras cosas sobre ti en tu perfil de {{SITENAME}}.
+
 Ve a $EDITPROFILEURL 
+
 Aprende conceptos básicos. 
+
 Hazte con los consejos básicos de Wikia: cómo editar una página, tu perfil de usuario, cambiar tus preferencias y mucho más. 
+
 Échale un vistazo a ($LEARNBASICURL) 
+
 Explora más wikias. 
+
 Hay miles de comunidades en Wikia, encuentra más wikias que te interesen revisando nuestras categorías: Videojuegos (http://es.wikia.com/Videojuegos), Entretenimiento (http://es.wikia.com/Entretenimiento), o Estilo de vida (http://es.wikia.com/Estilo_de_vida).
+
 Ir a $EXPLOREWIKISURL 
+
 ¿Quieres más información? Encuentra consejos y respuestas en la comunidad central de Wikia (http://www.comunidad.wikia.com). ¡Diviértete editando!
+
 El Equipo de Wikia 
+
+
 ___________________________________________ 
+
 Para ver las noticias más recientes en Wikia, visita http://comunidad.wikia.com 
 ¿Quieres controlar los mensajes que recibes?? Ve a: {{fullurl:{{ns:special}}:Preferencias}}',
 	'usersignup-heading' => 'Únete hoy a FANDOM',
@@ -761,23 +815,43 @@ Para ver las noticias más recientes en Wikia, visita http://comunidad.wikia.com
 	'usersignup-account-creation-heading' => '¡Conseguido!',
 	'usersignup-account-creation-subheading' => 'Hemos enviado un correo electrónico a $1',
 	'usersignup-account-creation-email-sent' => 'Has comenzado el proceso de creación de una cuenta de usuario con el nombre $2. Hemos enviado un correo electrónico a $1 con una contraseña temporal y un enlace de confirmación. 
+
 El nuevo usuario, $2, necesitará hacer clic en el enlace del correo electrónico que le hemos enviado para confirmar su cuenta y cambiar su contraseña temporal para finalizar la creación de su cuenta. 
+
 [{{fullurl:{{ns:special}}:UserSignup|byemail=1}} Crear más cuentas] en {{SITENAME}}',
 	'usersignup-account-creation-email-subject' => '¡Ha sido creada una cuenta de usuario para ti en Wikia!',
 	'usersignup-account-creation-email-greeting' => 'Hola,',
 	'usersignup-account-creation-email-content' => 'Has creado una nueva cuenta de usuario en {{SITENAME}}. Para acceder a tu cuenta y cambiar tu contraseña temporal, haz clic en el enlace de abajo e identifícate con tu nombre de usuario "$USERNAME" y la contraseña "$NEWPASSWORD". 
+
 Por favor, identifícate en <a style="color:#2C85D5;" href="{{fullurl:{{ns:special}}:UserLogin}}">{{fullurl:{{ns:special}}:UserLogin}}</a>
+
 Si no querías que esta cuenta fuese creada, puedes simplemente ignorar este correo electrónico o contactar con nuestro equipo de Soporte Comunitario y preguntarles.',
 	'usersignup-account-creation-email-signature' => 'El equipo de Wikia',
 	'usersignup-account-creation-email-body' => 'Hola, 
+
 Has creado una nueva cuenta de usuario en {{SITENAME}}. Para acceder a tu cuenta y cambiar tu contraseña temporal, haz clic en el enlace de abajo e identifícate con tu el nombre de usuario "$2" y la contraseña "$3". 
+
 Por favor, identifícate en {{fullurl:{{ns:special}}:UserLogin}} 
+
 Si no querías que esta cuenta fuese creada, puedes simplemente ignorar este correo electrónico o contactar con nuestro equipo de Soporte Comunitario y preguntarles. 
+
 El equipo de Wikia 
+
+
 ___________________________________________ 
+
 Para revisar qué es lo último que ha sucedido en Wikia, visita http://comunidad.wikia.com/ 
 ¿Quieres controlar qué correos electrónicos vas a recibir? Ve a: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-account-creation-email-body-HTML' => '',
+	'usersignup-facebook-heading' => 'Termina de registrarte',
+	'usersignup-facebook-create-account' => 'Crear una cuenta',
+	'usersignup-facebook-email-tooltip' => 'Si deseas utilizar un correo electrónico diferente, puedes cambiarlo después en tus preferencias.',
+	'usersignup-facebook-have-an-account-heading' => '¿Ya tienes una cuenta?',
+	'usersignup-facebook-have-an-account' => 'Vincula tu cuenta de usuario en FANDOM con Facebook.',
+	'usersignup-facebook-proxy-email' => 'Correo electrónico anónimo de Facebook',
+	'usersignup-facebook-problem' => 'Hubo un problema de comunicación con Facebook. Inténtalo de nuevo más tarde.',
+	'usersignup-facebook-signup-header' => '¿Creando una nueva cuenta?',
+	'usersignup-facebook-login-header' => '¿Ya tienes una cuenta?',
 );
 
 $messages['fa'] = array(
@@ -837,6 +911,7 @@ $messages['fi'] = array(
 	'usersignup-confirmation-subheading' => 'Tarkista sähköpostiosoitteesi',
 	'usersignup-confirmation-email-sent' => "Olemme lähettäneet sinulle sähköpostia osoitteeseen '''$1'''.",
 	'usersignup-confirmation-email-sent-wikiamobile' => "Olemme lähettäneet sinulle sähköpostia osoitteeseen '''$1'''.
+
 Klikkaa sähköpostiviestissäsi olevaa vahvistuslinkkiä viimeistelläksesi kyttäjätilisi luominen. Kiitos!",
 	'usersignup-reconfirmation-email-sent' => 'Sähköpostiosoitteeksesi on muutettu $1. Olemme lähettäneet sinulle uuden vahvistusviestin. Vahvista uusi sähköpostiosoitteesi.',
 	'usersignup-welcome-email-subject' => 'Tervetuloa Wikiaan, $USERNAME!',
@@ -854,19 +929,34 @@ Klikkaa sähköpostiviestissäsi olevaa vahvistuslinkkiä viimeistelläksesi kyt
 	'usersignup-welcome-email-content' => 'Haluatko lisätietoa? Etsi neuvoja, vastauksia sekä Wikia-yhteisö <a style="color:#2C85D5;" href="http://yhteiso.wikia.com">Yhteisöwikistä</a>. Iloisia muokkauksia!',
 	'usersignup-welcome-email-signature' => 'Wikia-tiimi',
 	'usersignup-welcome-email-body' => 'Hei $USERNAME,
+
 Meillä on ilo toivottaa sinut tervetulleeksi Wikiaan sekä {{SITENAME}}-sivustolle! Tässä muutamia asioita, joita voit tehdä päästäksesi alkuun.
+
 Muokkaa profiiliasi.
+
 Lisää profiilikuva ja muutamia asioita itsestäsi {{SITENAME}}-profiiliisi.
+
 Mene $EDITPROFILEURL
+
 Opettele perusteet.
+
 Katso nopeasti pieni opetussivu Wikian perusasioista: kuinka muokata sivua, käyttäjäprofiiliasi, muuttaa asetuksiasi, ja muuta.
+
 Katso se itse ($LEARNBASICURL)
+
 Tutki lisää wikejä.
+
 Wikiassa on tuhansia wikejä, etsi lisää kinnostavia wikejä menemällä yhteen keskuksistamme: Videopelit (http://www.wikia.com/Video_Games), Viihde (http://www.wikia.com/Entertainment), tai Elämäntavat (http://www.wikia.com/Lifestyle).
+
 Mene $EXPLOREWIKISURL
+
 Haluatko lisätietoa? Etsi neuvoja, vastauksia sekä Wikia-yhteisö Yhteisöwikistä (http://www.community.wikia.com). Iloisia muokkauksia!
+
 Wikia-tiimi
+
+
 ___________________________________________
+
 Tarkistaaksesi Wikian viimeismmät tapahtumat, vieraile sivulla http://yhteiso.wikia.com
 Haluatko hallita saamiasi sähköposteja? Mene: {{fullurl:{{ns:special}}:Asetukset}}',
 	'usersignup-heading' => 'Liity Wikiaan tänään',
@@ -885,23 +975,44 @@ Haluatko hallita saamiasi sähköposteja? Mene: {{fullurl:{{ns:special}}:Asetuks
 	'usersignup-account-creation-heading' => 'Onnistui!',
 	'usersignup-account-creation-subheading' => 'Lähetimme sinulle sähköpostin osoitteeseen $1',
 	'usersignup-account-creation-email-sent' => 'Olet alkanut luoda käyttäjätiliä nimellä $2. Olemme lähettäneet sinulle sähköpostina osoitteeseen $1 tilapäisen salasanan ja vahvistuslinkin.
+
 Käyttäjän $2 tarvitsee klikata saamassaan sähköpostiviestissä olevaa linkkiä vahvistaakseen tilinsä ja muuttaakseen tilapäisen salansanansa viimeistelläkseen tilinsä luomisen.
+
+
 [{{fullurl:{{ns:special}}:UserSignup|byemail=1}} Luo lisää tilejä] sivustolle {{SITENAME}}',
 	'usersignup-account-creation-email-subject' => 'Sinulle on luotu käyttäjätili Wikiaan!',
 	'usersignup-account-creation-email-greeting' => 'Tervehdys,',
 	'usersignup-account-creation-email-content' => 'Sinulle on luotu käyttäjätili sivustolle {{SITENAME}}. Päästäksesi käsiksi tiliisi ja muuttaaksesi tilapäisen salasanasi, klikkaa alla olevaa linkkiä ja kirjaudu käyttäjänimellä "$USERNAME" sekä salasanalla "$NEWPASSWORD".
+
 Kirjaudu sisään sivun <a style="color:#2C85D5;" href="{{fullurl:{{ns:special}}:UserLogin}}">{{fullurl:{{ns:special}}:UserLogin}}</a> kautta
+
 Jos et halua, että tämä käyttäjätili luodaan, unohda tämä sähköposti ja ota yhteyttä yhteisötiimiin ja kysy mitä tahansa.',
 	'usersignup-account-creation-email-signature' => 'Wikia-tiimi',
 	'usersignup-account-creation-email-body' => 'Hei,
+
 Sinulle on luotu käyttäjätili sivustolle {{SITENAME}}. Päästäksesi käsiksi tiliisi ja muuttaaksesi tilapäisen salasanasi, klikkaa alla olevaa linkkiä ja kirjaudu käyttäjänimellä "$2" sekä salasanalla "$3".
+
 Kirjaudu sisään {{fullurl:{{ns:special}}:UserLogin}}
+
 Jos et halua, että tämä käyttäjätili luodaan, unohda tämä sähköposti ja ota yhteyttä yhteisötiimiin ja kysy mitä tahansa.
+
 Wikia-tiimi
+
+
 ___________________________________________
+
 Tarkistaaksesi Wikian viimeismmät tapahtumat, vieraile sivulla http://yhteiso.wikia.com
 Haluatko hallita saamiasi sähköposteja? Mene: {{fullurl:{{ns:special}}:Asetukset}}',
 	'usersignup-account-creation-email-body-HTML' => '',
+	'usersignup-facebook-heading' => 'Viimeistele rekisteröityminen',
+	'usersignup-facebook-create-account' => 'Luo käyttäjätili',
+	'usersignup-facebook-email-tooltip' => 'Jos haluat käyttää toista sähköpostiosoitetta voit muuttaa myöhemmin henkilökohtaisissa asetuksissasi.',
+	'usersignup-facebook-have-an-account-heading' => 'Onko sinulla jo käyttäjätili?',
+	'usersignup-facebook-have-an-account' => 'Yhdistä jo olemassa oleva Wikia-käyttäjänimesi mieluummin Facebookiin.',
+	'usersignup-facebook-proxy-email' => 'Tuntematon Facebook-sähköpostiosoite',
+	'usersignup-facebook-problem' => 'Yhteyden saamisessa Facebookiin oli ongelma. Yritä myöhemmin uudelleen.',
+	'usersignup-facebook-signup-header' => 'Luotko uuden käyttäjätilin?',
+	'usersignup-facebook-login-header' => 'Onko sinulla jo käyttäjätili?',
 );
 
 $messages['fr'] = array(
@@ -945,8 +1056,10 @@ $messages['fr'] = array(
 	'usersignup-confirmation-heading-email-resent' => 'Nouvel e-mail envoyé',
 	'usersignup-confirmation-subheading' => 'Vérifier votre adresse e-mail',
 	'usersignup-confirmation-email-sent' => "Nous avons envoyé un e-mail à '''$1'''.
+
 Cliquez sur le lien de confirmation dans l'e-mail pour terminer la création de votre compte.",
 	'usersignup-confirmation-email-sent-wikiamobile' => "Nous avons envoyé un e-mail à '''$1'''.
+
 Cliquez sur le lien de confirmation dans l'e-mail pour terminer la création de votre compte. Merci !",
 	'usersignup-reconfirmation-email-sent' => 'Votre adresse e-mail a été modifiée en $1. Nous vous avons envoyé un nouvel e-mail de confirmation. Veuillez confirmer la nouvelle adresse e-mail.',
 	'usersignup-welcome-email-subject' => 'Bienvenue sur Wikia, $USERNAME !',
@@ -964,19 +1077,34 @@ Cliquez sur le lien de confirmation dans l'e-mail pour terminer la création de 
 	'usersignup-welcome-email-content' => 'Vous souhaitez plus d\'informations ? Trouvez des conseils, des réponses et la communauté Wikia sur le <a style="color:#2C85D5;" href="http://communaute.wikia.com">Centre des communautés</a>. Bonnes modifications !',
 	'usersignup-welcome-email-signature' => "L'équipe Wikia",
 	'usersignup-welcome-email-body' => 'Bonjour $USERNAME,
+
 Nous sommes heureux de vous accueillir sur Wikia et {{SITENAME}} ! Voici certaines choses que vous pouvez faire pour commencer.
+
 Modifier votre profil.
+
 Ajoutez une photo de profil et quelques informations sommaires sur vous sur votre profil sur {{SITENAME}}.
+
 Aller à $EDITPROFILEURL
+
 Apprendre les bases.
+
 Consultez un tutoriel rapide sur les bases de Wikia : comment modifier une page, votre profil utilisateur, vos préférences et plus encore.
+
 Voir ($LEARNBASICURL)
+
 Explorez plus de wikias.
+
 Il y a des milliers de wikias, trouvez en plus qui vous intéressent en parcourant les portails : Jeux vidéo (http://fr.wikia.com/Jeux_vid%C3%A9o), Divertissement (http://fr.wikia.com/Divertissement) ou Mode de vie (http://fr.wikia.com/Mode_de_vie).
+
 Aller à $EXPLOREWIKISURL
+
 Vous souhaitez plus d\'informations ? Trouvez des conseils, des réponses et la communauté Wikia sur le Centre des communautés (http://communaute.wikia.com). Bonnes modifications !
+
 L\'équipe Wikia
+
+
 ___________________________________________
+
 * Pour voir les derniers évènements sur Wikia, visitez http://communaute.wikia.com
 * Vous souhaitez contrôler les e-mails que vous recevez ? Rendez-vous sur : {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => "Rejoindre FANDOM dès aujourd'hui",
@@ -995,23 +1123,43 @@ ___________________________________________
 	'usersignup-account-creation-heading' => 'Réussite !',
 	'usersignup-account-creation-subheading' => 'Un e-mail a été envoyé à $1',
 	'usersignup-account-creation-email-sent' => "Vous avez commencé le processus de création pour $2. Nous lui avons envoyé un e-mail à l'adresse $1 avec un mot de passe temporaire et un lien de confirmation.
+
 $2 devra cliquer sur le lien dans l'e-mail que nous lui avons envoyé pour confirmer son compte et modifier son mot de passe temporaire pour terminer la création de son compte.
+
 [{{fullurl:{{ns:special}}:UserSignup|byemail=1}} Créer plus de comptes] sur {{SITENAME}}",
 	'usersignup-account-creation-email-subject' => 'Un compte a été créé pour vous sur Wikia !',
 	'usersignup-account-creation-email-greeting' => 'Bonjour,',
 	'usersignup-account-creation-email-content' => 'Un compte a été créé pour vous sur {{SITENAME}}. Pour accéder à votre compte et modifier votre mot de passe temporaire, cliquez sur le lien ci-dessous et connectez-vous avec le nom d\'utilisateur « $USERNAME » et le mot de passe « $NEWPASSWORD ».
+
 Veuillez vous connecter sur <a style="color:#2C85D5;" href="{{fullurl:{{ns:special}}:UserLogin}}">{{fullurl:{{ns:special}}:UserLogin}}</a>
+
 Si vous ne souhaitez pas que ce compte soit créé, vous pouvez ignorer cet e-mail ou contactez l\'équipe d\'assistance à la communauté si vous avez des questions.',
 	'usersignup-account-creation-email-signature' => "L'équipe Wikia",
 	'usersignup-account-creation-email-body' => "Bonjour,
+
 Un compte a été créé pour vous sur {{SITENAME}}. Pour accéder à votre compte et modifier votre mot de passe temporaire, cliquez sur le lien ci-dessous et connectez-vous avec le nom d'utilisateur « $2 » et le mot de passe « $3 ».
+
 Veuillez vous connecter sur {{fullurl:{{ns:special}}:UserLogin}}
+
 Si vous ne souhaitez pas que ce compte soit créé, vous pouvez ignorer cet e-mail ou contactez l'équipe d'assistance à la communauté si vous avez des questions.
+
 L'équipe Wikia
+
+
 ___________________________________________
+
 * Pour voir les derniers évènements sur Wikia, visitez http://communaute.wikia.com
 * Vous souhaitez contrôler les e-mails que vous recevez ? Rendez-vous sur : {{fullurl:{{ns:special}}:Preferences}}",
 	'usersignup-account-creation-email-body-HTML' => '',
+	'usersignup-facebook-heading' => 'Terminer la création de compte',
+	'usersignup-facebook-create-account' => 'Créer un compte',
+	'usersignup-facebook-email-tooltip' => 'Si vous souhaitez utiliser une autre adresse e-mail, vous pouvez la modifier plus tard dans vos préférences.',
+	'usersignup-facebook-have-an-account-heading' => 'Vous avez déjà un compte ?',
+	'usersignup-facebook-have-an-account' => "Connectez plutôt votre nom d'utilisateur FANDOM existant à Facebook.",
+	'usersignup-facebook-proxy-email' => 'E-mail anonyme Facebook',
+	'usersignup-facebook-problem' => 'Une erreur est survenue en communiquant avec Facebook. Veuillez réessayer plus tard.',
+	'usersignup-facebook-signup-header' => 'Vous créez un nouveau compte ?',
+	'usersignup-facebook-login-header' => 'Vous avez déjà un compte ?',
 );
 
 $messages['fy'] = array(
@@ -1319,8 +1467,10 @@ $messages['it'] = array(
 	'usersignup-confirmation-heading-email-resent' => 'Nuova email inviata',
 	'usersignup-confirmation-subheading' => 'Controlla la tua email',
 	'usersignup-confirmation-email-sent' => 'Abbiamo inviato una email a "$1".
+
 Clicca sul link di conferma nella tua email per concludere la creazione del tuo account.',
 	'usersignup-confirmation-email-sent-wikiamobile' => 'Abbiamo inviato una email a "$1".
+
 Clicca sul link di conferma nella tua email per concludere la creazione del tuo account. Grazie!',
 	'usersignup-reconfirmation-email-sent' => 'Il tuo indirizzo email è stato cambiato in $1. Ti abbiamo inviato una nuova email di conferma. Per favore, conferma il nuovo indirizzo email.',
 	'usersignup-welcome-email-subject' => 'Benvenuto su Wikia, $USERNAME!',
@@ -1338,19 +1488,34 @@ Clicca sul link di conferma nella tua email per concludere la creazione del tuo 
 	'usersignup-welcome-email-content' => 'Vuoi maggiori informazioni? Trova consigli, risposte e la community di Wikia su la <a style="color:#2C85D5;" href="http://it.community.wikia.com">Wiki della Community</a>. Happy editing!',
 	'usersignup-welcome-email-signature' => 'Il team di Wikia',
 	'usersignup-welcome-email-body' => 'Ciao $USERNAME,
+
 Siamo felici di darti il benvenuto su Wikia e {{SITENAME}}! Ecco alcune cose ce puoi fare per iniziare.
+
 Modifica il tuo profilo.
+
 Aggiungi un\'immagine del profilo e alcune semplici informazioni su di te nel tuo profilo su {{SITENAME}}.
+
 Vai su $EDITPROFILEURL
+
 Impara le basi.
+
 Fai un tutorial rapido sulle basi di Wikia: come modificare una pagina, il tuo profilo utente, cambiare le tue preferenze e molto altro.
+
 Dacci un\'occhiata ($LEARNBASICURL)
+
 Esplora più wiki.
+
 Ci sono migliaia di wiki su Wikia, trovane di più interessanti per te andando su uno dei nostri hub: Videogiochi (http://www.wikia.com/Video_Games), Intrattenimento (http://www.wikia.com/Entertainment) o Stili di vita (http://www.wikia.com/Lifestyle).
+
 Vai su $EXPLOREWIKISURL
+
 Vuoi maggiori informazioni? Trova consigli, risposte e la community di Wikia su la Wiki della Community (http://it.community.wikia.com). Happy editing!
+
 Il team di Wikia
+
+
 ___________________________________________
+
 Per controllare le ultime novità su Wikia, vai su http://it.community.wikia.com
 Vuoi controllare le email che ricevi? Vai su: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => 'Iscriviti a FANDOM oggi stesso',
@@ -1369,23 +1534,45 @@ Vuoi controllare le email che ricevi? Vai su: {{fullurl:{{ns:special}}:Preferenc
 	'usersignup-account-creation-heading' => 'Successo!',
 	'usersignup-account-creation-subheading' => 'Abbiamo inviato una email a $1',
 	'usersignup-account-creation-email-sent' => "Hai avviato la creazione di un account per $2. Gli abbiamo inviato una email a $1 con una password temporanea e un link di conferma.
+
+
 $2 deve cliccare sul link presente nella email che gli abbiamo inviato per convalidare il suo account e cambiare la password temporanea completando la creazione dell'account.
+
+
 [{{fullurl:{{ns:special}}:UserSignup|byemail=1}} Crea altri account] su {{SITENAME}}",
 	'usersignup-account-creation-email-subject' => 'Un account è stato create per te su Wikia!',
 	'usersignup-account-creation-email-greeting' => 'Ciao,',
 	'usersignup-account-creation-email-content' => 'Un account è stato creato per te su {{SITENAME}}. Per accedere al tuo account e cambiare la tua password temporanea clicca sul link qui sotto e accedi con il nome utente "$USERNAME" e la password "$NEWPASSWORD".
+
 Per favore, accedi a <a style="color:#2C85D5;" href="{{fullurl:{{ns:special}}:UserLogin}}">{{fullurl:{{ns:special}}:UserLogin}}</a>
+
 Se non vuoi che questo account venga creato puoi semplicemente ignorare questa email o contattare il nostro team di supporto per qualunque domanda.',
 	'usersignup-account-creation-email-signature' => 'Il team di Wikia',
 	'usersignup-account-creation-email-body' => 'Ciao,
+
 Un account è stato creato per te su {{SITENAME}}. Per accedere al tuo account e cambiare la tua password temporanea clicca sul link qui sotto e accedi con il nome utente "$2" e la password "$3".
+
 Per favore, accedi a {{fullurl:{{ns:special}}:UserLogin}}
+
 Se non vuoi che questo account venga creato puoi semplicemente ignorare questa email o contattare il nostro team di supporto per qualunque domanda.
+
 Il team di Wikia
+
+
 ___________________________________________
+
 Per controllare le ultime novità su Wikia, vai su http://it.community.wikia.com
 Vuoi controllare le email che ricevi? Vai su: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-account-creation-email-body-HTML' => '',
+	'usersignup-facebook-heading' => "Concludi l'iscrizione",
+	'usersignup-facebook-create-account' => 'Crea account',
+	'usersignup-facebook-email-tooltip' => 'Se preferisci usare un indirizzo email differente, puoi cambiarlo in seguito nelle tue preferenze.',
+	'usersignup-facebook-have-an-account-heading' => 'Hai già un account?',
+	'usersignup-facebook-have-an-account' => 'Collega il tuo nome utente di FANDOM esistente con Facebook invece.',
+	'usersignup-facebook-proxy-email' => 'Email di Facebook anonima',
+	'usersignup-facebook-problem' => "C'è stato un problema di comunicazione con Facebook. Per favore, riprova più tardi.",
+	'usersignup-facebook-signup-header' => 'Stai creando un nuovo account?',
+	'usersignup-facebook-login-header' => 'Hai già un account?',
 );
 
 $messages['ja'] = array(
@@ -1429,8 +1616,10 @@ $messages['ja'] = array(
 	'usersignup-confirmation-heading-email-resent' => '新しい認証メールを送信しました',
 	'usersignup-confirmation-subheading' => 'メールを確認してください',
 	'usersignup-confirmation-email-sent' => "'''$1''' にアカウント認証用メールをお送りしました。
+
 メール本文内のリンクをクリックすることで、アカウントの作成が完了します。",
 	'usersignup-confirmation-email-sent-wikiamobile' => "'''$1''' にメールを送信しました。
+
 メール内の認証用リンクをクリックしてアカウントの作成を完了してください。どうもありがとうございます。",
 	'usersignup-reconfirmation-email-sent' => 'メールアドレスを $1 に変更しました。新しい認証メールを送信しましたので、新しいメールアドレスの認証を行ってください。',
 	'usersignup-welcome-email-subject' => '$USERNAME さん、Wikiaへようこそ！',
@@ -1448,19 +1637,34 @@ $messages['ja'] = array(
 	'usersignup-welcome-email-content' => '詳しくは、<a style="color:#2C85D5;" href="http://community.wikia.com">コミュニティ セントラル</a>にてアドバイス、回答、いろいろなWikiaコミュニティをご覧ください。それではどうぞ編集をお楽しみください。',
 	'usersignup-welcome-email-signature' => 'Wikiaチーム',
 	'usersignup-welcome-email-body' => '$USERNAME さん
+
 この度は、Wikiaと {{SITENAME}} にご登録いただき、ありがとうございます。ご利用を開始いただくにあたり、Wikiaでできることをこちらにいくつかご紹介します。
+
 プロフィールを編集しよう。
+
 {{SITENAME}} プロフィールにプロフィール写真や簡単な自己紹介を追加しましょう。
+
 $EDITPROFILEURL にアクセス
+
 基本について知ろう。
+
 Wikiaについての基本情報（ページやユーザー プロフィールの編集方法、設定の変更方法など）をご紹介するチュートリアルをご用意しています。ぜひ利用ください。
+
 チェックする（$LEARNBASICURL）
+
 色々なWikiaコミュニティを見てみよう。
+
 Wikiaには何千ものコミュニティがあります。<a style="color:#2C85D5;" href="http://ja.videogameshub.wikia.com/">ゲーム</a>、<a style="color:#2C85D5;" href="http://ja.entertainmenthub.wikia.com/">エンターテイメント</a>、<a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">ライフスタイル</a>のハブから、他にもおもしろそうなウィキを探してみましょう。
+
 $EXPLOREWIKISURL にアクセス
+
 詳しくは、コミュニティ セントラル（http://www.community.wikia.com）にてアドバイス、回答、いろいろなWikiaコミュニティをご覧ください。それではどうぞ編集をお楽しみください。
+
 Wikia チーム
+
+
 ___________________________________________
+
 Wikiaの最新情報については http://community.wikia.com をご覧ください
 メール通知に関する設定は {{fullurl:{{ns:special}}:個人設定}} のページで行っていただけます',
 	'usersignup-heading' => 'FANDOMに登録',
@@ -1479,23 +1683,45 @@ Wikiaの最新情報については http://community.wikia.com をご覧くだ�
 	'usersignup-account-creation-heading' => '認証が完了しました。',
 	'usersignup-account-creation-subheading' => '$1 にメールを送信しました',
 	'usersignup-account-creation-email-sent' => '$2 さんのアカウント作成手続きを開始しました。$1 に一時パスワードと認証用リンクを記載したメールを送信しました。
+
+
 $2 さんには、Wikiaから送信したメールに記載のリンクをクリックしてアカウントの認証を行い、一時パスワードを変更してアカウントの作成を完了していただく必要があります。
+
+
 {{SITENAME}} で [{{fullurl:{{ns:special}}:UserSignup|byemail=1}} 他のアカウントを作成]',
 	'usersignup-account-creation-email-subject' => 'Wikiaであなたのアカウントが作成されました。',
 	'usersignup-account-creation-email-greeting' => 'こんにちは。',
 	'usersignup-account-creation-email-content' => '{{SITENAME}} であなたのアカウントが作成されました。アカウントにアクセスして一時パスワードを変更するには、下のリンクをクリックしてユーザー名「$USERNAME」とパスワード「$NEWPASSWORD」でログインしてください。
+
 <a style="color:#2C85D5;" href="{{fullurl:{{ns:special}}:UserLogin}}">{{fullurl:{{ns:special}}:ユーザーログイン}}</a> からログインしてください。
+
 このアカウントの作成を取り消したい場合は、このメールを無視していただいて構いません。また、その他ご不明な点がございましたら、コミュニティサポートチームにお問い合わせください。',
 	'usersignup-account-creation-email-signature' => 'Wikiaチーム',
 	'usersignup-account-creation-email-body' => 'こんにちは。
+
 {{SITENAME}} であなたのアカウントが作成されました。アカウントにアクセスして一時パスワードを変更するには、下のリンクをクリックしてユーザー名「$2」とパスワード「$3」でログインしてください。
+
 {{fullurl:{{ns:special}}:ユーザーログイン}} からログインしてください
+
 このアカウントの作成を取り消したい場合は、このメールを無視していただいて構いません。また、その他ご不明な点がございましたら、コミュニティサポートチームにお問い合わせください。
+
 Wikia チーム
+
+
 ___________________________________________
+
 Wikiaの最新情報については http://community.wikia.com をご覧ください
 メール通知に関する設定は {{fullurl:{{ns:special}}:個人設定}} のページで行っていただけます',
 	'usersignup-account-creation-email-body-HTML' => '',
+	'usersignup-facebook-heading' => '登録を完了してください',
+	'usersignup-facebook-create-account' => 'アカウントを作成',
+	'usersignup-facebook-email-tooltip' => '別のメールアドレスの使用をご希望の場合には、個人設定で変更することができます。',
+	'usersignup-facebook-have-an-account-heading' => '既にアカウントをお持ちの方はログインしてください。',
+	'usersignup-facebook-have-an-account' => 'Facebookアカウントと既存のFANDOMユーザーネームを連携することもできます。',
+	'usersignup-facebook-proxy-email' => '匿名Facebookメール',
+	'usersignup-facebook-problem' => 'Facebookとの通信中にエラーが発生しました。しばらくしてからもう一度お試しください。',
+	'usersignup-facebook-signup-header' => '新しいアカウントを作成しますか？',
+	'usersignup-facebook-login-header' => '既にアカウントをお持ちの方はログインしてください。',
 );
 
 $messages['ka'] = array(
@@ -1542,8 +1768,10 @@ $messages['ko'] = array(
 	'usersignup-confirmation-heading-email-resent' => '새 이메일이 전송되었습니다',
 	'usersignup-confirmation-subheading' => '이메일 주소 확인',
 	'usersignup-confirmation-email-sent' => "'''$1'''로 이메일을 전송했습니다.
+
 해당 이메일에서 인증 링크를 눌러 계정 생성을 완료하세요.",
 	'usersignup-confirmation-email-sent-wikiamobile' => "'''$1'''로 이메일을 전송했습니다.
+
 해당 이메일에서 인증 링크를 눌러 계정 생성을 완료하세요. 감사합니다!",
 	'usersignup-reconfirmation-email-sent' => '귀하의 이메일 주소가 $1로 변경되었습니다. 새 인증 이메일을 전송했으니 해당 이메일을 인증해 주세요.',
 	'usersignup-welcome-email-subject' => '위키아에 오신 것을 환영합니다, $USERNAME 님!',
@@ -1561,19 +1789,34 @@ $messages['ko'] = array(
 	'usersignup-welcome-email-content' => '더 많은 정보를 원하시나요? 조언을 얻고, 질문을 하고, 다른 사용자들과 소통하려면 <a style="color:#2C85D5;" href="http://ko.community.wikia.com">위키아 중앙 커뮤니티</a>를 방문해 보세요. 즐거운 위키아 생활 되세요!',
 	'usersignup-welcome-email-signature' => '위키아 팀',
 	'usersignup-welcome-email-body' => '안녕하세요, $USERNAME 님.
+
 귀하를 위키아와 {{SITENAME}}에 맞이하게 되어서 정말 기쁩니다! 아래 내용을 참고해서 위키아 활동을 본격적으로 시작해 보세요.
+
 프로필 편집하기
+
 {{SITENAME}}에서 귀하의 프로필에 프로필 사진을 추가하고 간단한 정보를 적어 넣어 보세요.
+
 $EDITPROFILEURL 바로 가기
+
 기초 사항 배우기
+
 어떻게 문서를 편집하는지, 어떻게 설정을 변경하는지 등 위키아에서 활동하기 위한 기초적인 사항들을 배워 보세요.
+
 확인하기 ($LEARNBASICURL)
+
 더 많은 위키 찾아보기
+
 위키아에는 수많은 위키가 존재합니다. 허브에서 귀하의 관심을 끄는 위키를 찾아 보세요: 게임 (http://www.wikia.com/Video_Games), 엔터테인먼트 (http://www.wikia.com/Entertainment), 생활 (http://www.wikia.com/Lifestyle)
+
 $EXPLOREWIKISURL 방문하기
+
 더 많은 정보를 원하시나요? 조언을 얻고, 질문을 하고, 다른 사용자들과 소통하려면 위키아 중앙 커뮤니티(http://ko.community.wikia.com)를 방문해 보세요. 즐거운 위키아 생활 되세요!
+
 위키아 팀
+
+
 ___________________________________________
+
 위키아의 최근 소식을 찾아보시려면 이곳을 방문해 주세요: http://ko.community.wikia.com
 받을 이메일 종류를 선택하고 싶으시다면 이곳을 방문해 주세요: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => '위키아 계정 만들기',
@@ -1592,23 +1835,45 @@ ___________________________________________
 	'usersignup-account-creation-heading' => '성공!',
 	'usersignup-account-creation-subheading' => '$1로 이메일을 전송했습니다.',
 	'usersignup-account-creation-email-sent' => '귀하는 $2 사용자를 위한 계정 생성 과정을 시작하셨습니다. $1로 임시 비밀번호와 인증 링크를 전송했습니다.
+
+
 계정 생성을 완료하기 위해선 $2 사용자가 해당 이메일에서 인증 링크를 눌러 이메일을 인증하고 임시 비밀번호를 변경해야 합니다.
+
+
 {{SITENAME}}에 [{{fullurl:{{ns:special}}:UserSignup|byemail=1}} 더 많은 계정 만들기]',
 	'usersignup-account-creation-email-subject' => '귀하를 위한 위키아 계정이 생성되었습니다!',
 	'usersignup-account-creation-email-greeting' => '안녕하세요,',
 	'usersignup-account-creation-email-content' => '귀하를 위해 {{SITENAME}}에 귀하의 계정이 생성되었습니다. 귀하의 계정으로 접속해서 임시 비밀번호를 변경하시려면 먼저 아래의 인증 링크를 눌러 이메일을 인증하고, 사용자 이름 "$USERNAME"과 비밀번호 "$NEWPASSWORD"로 위키아에 로그인해 주세요.
+
 로그인은 <a style="color:#2C85D5;" href="{{fullurl:{{ns:special}}:UserLogin}}">{{fullurl:{{ns:special}}:UserLogin}}</a>에서 하실 수 있습니다.
+
 계정을 만들고 싶지 않으시다면 그냥 이 이메일을 무시하시거나 위키아 지원 팀에 문의를 넣어 주세요.',
 	'usersignup-account-creation-email-signature' => '위키아 팀',
 	'usersignup-account-creation-email-body' => '안녕하세요,
+
 귀하를 위해 {{SITENAME}}에 귀하의 계정이 생성되었습니다. 귀하의 계정으로 접속해서 임시 비밀번호를 변경하시려면 먼저 아래의 인증 링크를 눌러 이메일을 인증하고, 사용자 이름 "$2"과 비밀번호 "$3"로 위키아에 로그인해 주세요.
+
 로그인은 {{fullurl:{{ns:special}}:UserLogin}}에서 하실 수 있습니다.
+
 계정을 만들고 싶지 않으시다면 그냥 이 이메일을 무시하시거나 위키아 지원 팀에 문의를 넣어 주세요.
+
 위키아 팀
+
+
 ___________________________________________
+
 위키아의 최근 소식을 찾아보시려면 이곳을 방문해 주세요: http://ko.community.wikia.com
 받을 이메일 종류를 선택하고 싶으시다면 이곳을 방문해 주세요: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-account-creation-email-body-HTML' => '',
+	'usersignup-facebook-heading' => '가입 완료',
+	'usersignup-facebook-create-account' => '계정 만들기',
+	'usersignup-facebook-email-tooltip' => '다른 이메일 주소를 사용하고 싶을 땐 이후에 환경 설정에서 변경할 수 있습니다.',
+	'usersignup-facebook-have-an-account-heading' => '이미 계정을 가지고 계신가요?',
+	'usersignup-facebook-have-an-account' => '이미 있는 위키아 계정과 Facebook 계정을 연동하기',
+	'usersignup-facebook-proxy-email' => '익명 페이스북 이메일',
+	'usersignup-facebook-problem' => '페이스북과 통신하던 중 문제가 발생했습니다. 나중에 다시 시도해 주세요.',
+	'usersignup-facebook-signup-header' => '새 계정을 생성하시겠어요?',
+	'usersignup-facebook-login-header' => '이미 계정을 가지고 계신가요?',
 );
 
 $messages['krc'] = array(
@@ -1991,8 +2256,10 @@ $messages['nl'] = array(
 	'usersignup-confirmation-heading-email-resent' => 'Nieuwe e-mail verzonden',
 	'usersignup-confirmation-subheading' => 'Controleer uw e-mail',
 	'usersignup-confirmation-email-sent' => "Er is een e-mail verzonden naar '''$1'''.
+
 Klik op de koppeling in die e-mail om het aanmaken van uw gebruiker af te ronden.",
 	'usersignup-confirmation-email-sent-wikiamobile' => "Er is een e-mail verzonden naar '''$1'''.
+
 Klik op de koppeling in die e-mail om het aanmaken van uw gebruiker af te ronden. Bedankt!",
 	'usersignup-reconfirmation-email-sent' => 'Uw e-mailadres is gewijzigd naar $1. We hebben u een nieuwe bevestigings-e-mail verzonden. Bevestig nu het nieuwe e-mailadres.',
 	'usersignup-welcome-email-subject' => 'Welkom bij Wikia, $USERNAME!',
@@ -2010,19 +2277,33 @@ Klik op de koppeling in die e-mail om het aanmaken van uw gebruiker af te ronden
 	'usersignup-welcome-email-content' => 'Wilt u meer informatie? U kunt antwoorden en advies krijgen van de Wikiagemeenschap op <a style="color:#2C85D5;" href="http://community.wikia.com">Community Central</a>. Veel plezier!',
 	'usersignup-welcome-email-signature' => 'Het Wikia-team',
 	'usersignup-welcome-email-body' => 'Hallo $USERNAME,
+
 Welkom bij Wikia en {{SITENAME}}! Hier zijn enkele dingen die u kunt doen om aan de slag te gaan.
+
 Bewerk uw profiel.
+
 Voeg een profielfoto en een paar snelle feiten over uzelf toe aan uw profiel van {{SITENAME}}.
+
 Ga naar $EDITPROFILEURL
+
 Leer de basisvaardigheden.
+
 Volg een korte cursus over de basisprincipes van Wikia: hoe u een pagina kunt bewerken, uw gebruikersprofiel bewerken, uw voorkeuren wijzigen en meer.
+
 Ga hiervoor naar ($LEARNBASICURL)
+
 Vind interessante wiki\'s.
+
 U kunt wiki\'s vinden die bij uw interesses passen door naar een van onze hubs te gaan: Videogames (http://www.wikia.com/Video_Games ), Amusement (http://www.wikia.com/Entertainment ) of Lifestyle (http://www.wikia.com/Lifestyle ).
+
 Ga naar $EXPLOREWIKISURL
+
 Wilt u meer informatie? U kunt antwoorden en advies krijgen van de Wikiagemeenschap op Community Central (http://www.community.wikia.com ). Veel plezier!
+
 Het Wikia-team
+
 ___________________________________________
+
 Ga naar http://community.wikia.com voor het laatste nieuws over Wikia.
 Wilt u bepalen welke e-mails u ontvangt? Ga dan naar {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => 'Word vandaag lid van Wikia',
@@ -2041,23 +2322,44 @@ Wilt u bepalen welke e-mails u ontvangt? Ga dan naar {{fullurl:{{ns:special}}:Pr
 	'usersignup-account-creation-heading' => 'Afgerond',
 	'usersignup-account-creation-subheading' => 'Er is een e-mail verzonden naar $1.',
 	'usersignup-account-creation-email-sent' => 'U bent begonnen met het aanmaken van de gebruiker $2. We hebben een e-mail gezonden naar $1 met een tijdelijk wachtwoord en een bevestigingscode.
+
+
 $2 moet op de koppeling in de e-mail die we gezonden hebben klikken om de gebruiker te bevestigen en het tijdelijke wachtwoord wijzigen. Hierna is het aanmaken van de gebruiker afgerond.
+
+
 [{{fullurl:{{ns:special}}:UserSignup|byemail=1}} Meer gebruikers aanmaken] op {{SITENAME}}',
 	'usersignup-account-creation-email-subject' => 'Er is voor u een gebruiker aangemaakt op Wikia!',
 	'usersignup-account-creation-email-greeting' => 'Hallo,',
 	'usersignup-account-creation-email-content' => 'Er is een gebruiker voor u aangemaakt op {{SITENAME}}. Om toegang te krijgen tot uw gebruiker moet u via de onderstaande koppeling uw tijdelijke wachtwoord wijzigen en aanmelden met de gebruikersnaam "$USERNAME" en wachtwoord "$NEWPASSWORD".
+
 Meld u aan bij <a style="color:#2C85D5;" href="{{fullurl:{{ns:special}}:UserLogin}}">{{fullurl:{{ns:special}}:UserLogin}}</a>.
+
 Als u niet wilt dat deze gebruiker wordt aangemaakt, negeer deze e-mail dan, of neem contact op met ons team voor Community Support als u vragen hebt.',
 	'usersignup-account-creation-email-signature' => 'Het Wikia-team',
 	'usersignup-account-creation-email-body' => 'Hallo,
+
 Er is een gebruiker voor u aangemaakt op {{SITENAME}}. Om toegang te krijgen tot uw gebruiker moet u via de onderstaande koppeling uw tijdelijke wachtwoord wijzigen en aanmelden met de gebruikersnaam "$2" en wachtwoord "$3".
+
 Meld u aan bij {{fullurl:{{ns:special}}:UserLogin}}.
+
 Als u niet wilt dat deze gebruiker wordt aangemaakt, negeer deze e-mail dan, of neem contact op met ons team voor Community Support als u vragen hebt.
+
 Het Wikia-team
+
 ___________________________________________
+
 Ga naar http://community.wikia.com voor het laatste nieuws over Wikia.
 Wilt u bepalen welke e-mails u ontvangt? Ga dan naar {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-account-creation-email-body-HTML' => '',
+	'usersignup-facebook-heading' => 'Registratie afronden',
+	'usersignup-facebook-create-account' => 'Registreren',
+	'usersignup-facebook-email-tooltip' => 'Als u een ander e-mailadres wilt gebruiken, kunt u dat later in uw voorkeuren wijzigen.',
+	'usersignup-facebook-have-an-account-heading' => 'Hebt u al een account?',
+	'usersignup-facebook-have-an-account' => 'Uw huidige Wikigebruiker met Facebook koppelen.',
+	'usersignup-facebook-proxy-email' => 'Anonieme e-mailadres van Facebook',
+	'usersignup-facebook-problem' => 'Er is een probleem opgetreden in de communicatie met Facebook. Probeer het later opnieuw.',
+	'usersignup-facebook-signup-header' => 'Nieuwe gebruiker registreren?',
+	'usersignup-facebook-login-header' => 'Hebt u al een gebruiker?',
 );
 
 $messages['nn'] = array(
@@ -2137,8 +2439,10 @@ $messages['pl'] = array(
 	'usersignup-confirmation-heading-email-resent' => 'Wysłano nową wiadomość',
 	'usersignup-confirmation-subheading' => 'Sprawdź swoją pocztę',
 	'usersignup-confirmation-email-sent' => "Wysłaliśmy e-mail na '''$1'''.
+
 Kliknij na link potwierdzający we wiadomości, aby zakończyć tworzenie konta.",
 	'usersignup-confirmation-email-sent-wikiamobile' => "Wysłaliśmy e-mail na '''$1'''.
+
 Kliknij na link potwierdzający we wiadomości, aby zakończyć tworzenie konta. Dzięki!",
 	'usersignup-reconfirmation-email-sent' => 'Twój adres e-mail został zmieniony na $1. Wysłaliśmy nową wiadomość z potwierdzeniem.',
 	'usersignup-welcome-email-subject' => 'Witaj na Wikii, $USERNAME!',
@@ -2156,19 +2460,34 @@ Kliknij na link potwierdzający we wiadomości, aby zakończyć tworzenie konta.
 	'usersignup-welcome-email-content' => 'Szukasz więcej informacji? Znajdziesz odpowiedzi, porady i społeczność Wikii w <a style="color:#2C85D5;" href="http://spolecznosc.wikia.com/">Centrum Społeczności</a>. Przyjemnego edytowania!',
 	'usersignup-welcome-email-signature' => 'Zespół Wikii',
 	'usersignup-welcome-email-body' => 'Hej $USERNAME,
+
 Jesteśmy szczęśliwi mogąc przywitać Cię na Wikii i na {{SITENAME}}! Oto kilka spraw na dobry początek.
+
 Edytuj swój profil.
+
 Dodaj obraz i kilka informacji o sobie na swoim profilu na {{SITENAME}}.
+
 Przejdź do $EDITPROFILEURL
+
 Zapoznaj się z podstawami.
+
 Zapoznaj się z podstawami edytowania na Wikii: jak edytować strony, własny profil, zmienić swoje ustawienia i więcej.
+
 Sprawdź $LEARNBASICURL
+
 Odwiedź inne wiki.
+
 Na Wikii istnieje tysiące wiki, dowiedz się o nich więcej, odwiedzając jeden z portali: Gry (http://gryhub.wikia.com/), Rozrywka (http://rozrywkahub.wikia.com/) lub Lifestyle (http://pl.lifestyle.wikia.com/).
+
 Odwiedź $EXPLOREWIKISURL
+
 Szukasz więcej informacji? Znajdziesz odpowiedzi, porady i społeczność Wikii w Centrum Społeczności (http://spolecznosc.wikia.com/). Przyjemnego edytowania!
+
 Zespół Wikii
+
+
 ___________________________________________
+
 Aby dowiedzieć się co nowego na Wikii, odwiedź http://spolecznosc.wikia.com/
 Chcesz zmienić ustawienia przysyłanych wiadomości? Przejdź tutaj: {{fullurl:{{#special:preferences}}}}',
 	'usersignup-heading' => 'Dołącz do Fandomu już dziś',
@@ -2187,22 +2506,41 @@ Chcesz zmienić ustawienia przysyłanych wiadomości? Przejdź tutaj: {{fullurl:
 	'usersignup-account-creation-heading' => 'Sukces!',
 	'usersignup-account-creation-subheading' => 'Wysłaliśmy e-mail na $1',
 	'usersignup-account-creation-email-sent' => 'Rozpoczęto proces tworzenia konta dla użytkownika $2. Wysłaliśmy wiadomość na adres $1 z tymczasowym hasłem i linkiem potwierdzającym.
+
 $2 będzie musiał(-a) kliknąć na ten link aby potwierdzić adres i zmienić tymczasowe hasło w celu ukończenia tworzenie konta. [{{fullurl:{{#special:UserSignup}}|byemail=1}} Utwórz więcej kont] na {{SITENAME}}',
 	'usersignup-account-creation-email-subject' => 'Ktoś utworzył dla Ciebie konto na Wikii!',
 	'usersignup-account-creation-email-greeting' => 'Witaj,',
 	'usersignup-account-creation-email-content' => 'Na {{SITENAME}} zostało dla Ciebie utworzone konto. Aby uzyskać do niego dostęp i zmienić tymczasowe hasło, użyj poniższego linku i zaloguj się korzystając z nazwy użytkownika „$USERNAME” i hasła „$NEWPASSWORD”.
+
 Zaloguj się korzystając z: <a style="color:#2C85D5;" href="{{fullurl:{{#special:UserLogin}}}}">{{fullurl:{{#special:UserLogin}}}}</a>
+
 Jeśli nie chcesz, aby to konto zostało utworzone, zignoruj tę wiadomość albo skontaktuj się z nami jeśli masz pytania.',
 	'usersignup-account-creation-email-signature' => 'Zespół Wikii',
 	'usersignup-account-creation-email-body' => 'Witaj,
+
 Na {{SITENAME}} zostało dla Ciebie utworzone konto. Aby uzyskać do niego dostęp i zmienić tymczasowe hasło, użyj poniższego linku i zaloguj się korzystając z nazwy użytkownika „$2” i hasła „$3”.
+
 Zaloguj się korzystając z: {{fullurl:{{#special:UserLogin}}}}
+
 Jeśli nie chcesz, aby to konto zostało utworzone, zignoruj tę wiadomość albo skontaktuj się z nami jeśli masz pytania.
+
 Zespół Wikii
+
+
 ___________________________________________
+
 Aby dowiedzieć się co nowego na Wikii, odwiedź http://spolecznosc.wikia.com/
 Chcesz zmienić ustawienia przysyłanych wiadomości? Przejdź tutaj: {{fullurl:{{#special:preferences}}}}',
 	'usersignup-account-creation-email-body-HTML' => '',
+	'usersignup-facebook-heading' => 'Zakończenie rejestracji',
+	'usersignup-facebook-create-account' => 'Załóż nowe konto',
+	'usersignup-facebook-email-tooltip' => 'Jeśli chcesz zmienić swój adres e-mail, możesz to zrobić później w swoich preferencjach.',
+	'usersignup-facebook-have-an-account-heading' => 'Masz już konto?',
+	'usersignup-facebook-have-an-account' => 'Zamiast tworzyć nowe konto, rozważ połączenie istniejącego z Facebookiem.',
+	'usersignup-facebook-proxy-email' => 'Anonimowy e-mail z Facebooka',
+	'usersignup-facebook-problem' => 'Wystąpił problem podczas łączenia z Facebookiem. Spróbuj później.',
+	'usersignup-facebook-signup-header' => 'Tworzysz nowe konto?',
+	'usersignup-facebook-login-header' => 'Masz już konto?',
 );
 
 $messages['pms'] = array(
@@ -2366,8 +2704,10 @@ $messages['pt'] = array(
 	'usersignup-confirmation-heading-email-resent' => 'Novo e-mail enviado',
 	'usersignup-confirmation-subheading' => 'Verifique o seu e-mail',
 	'usersignup-confirmation-email-sent' => "Nós enviamos um e-mail para '''$1'''. 
+
 Clique no link de confirmação no seu e-mail para concluir a criação de sua conta.",
 	'usersignup-confirmation-email-sent-wikiamobile' => "Nós enviamos um e-mail para '''$1'''. 
+
 Clique no link de confirmação no seu e-mail para concluir a criação de sua conta. Obrigado!",
 	'usersignup-reconfirmation-email-sent' => 'O seu endereço de e-mail foi alterado para $1. Enviamos-lhe um novo e-mail de confirmação. Por favor, confirme o novo endereço de e-mail.',
 	'usersignup-welcome-email-subject' => 'Bem-vindo à Wikia, $USERNAME!',
@@ -2385,19 +2725,33 @@ Clique no link de confirmação no seu e-mail para concluir a criação de sua c
 	'usersignup-welcome-email-content' => 'Quer mais informações? Encontre respostas, conselhos e a comunidade Wikia na <a style="color:#2C85D5;" href="http://comunidade.wikia.com"> Central da Comunidade</a>. Boas contribuições!',
 	'usersignup-welcome-email-signature' => 'A equipe da Wikia',
 	'usersignup-welcome-email-body' => 'Olá $USERNAME,
+
 Nós estamos felizes em recebê-lo na Wikia e na {{SITENAME}}! Aqui estão algumas coisas que você pode fazer para começar. 
+
 Edite o seu perfil. 
+
 Adicione uma foto e alguns fatos sobre você no seu perfil na {{SITENAME}}. 
+
 Vá para $EDITPROFILEURL
+
 Aprenda o básico. 
+
 Veja um tutorial rápido sobre o básico na Wikia: como editar uma página, o seu perfil de usuário, mude as suas preferências, e mais. 
+
 Confira ($LEARNBASICURL)
+
 Explore mais comunidades.
+
 Há várias comunidades na Wikia, encontre algumas que lhe interessam visitando um dos nossos portais: Video Games (http://www.wikia.com/Video_Games), Entretenimento (http://www.wikia.com/Entertainment), ou Estilo de Vida (http://www.wikia.com/Lifestyle).
+
 Vá para $EXPLOREWIKISURL
+
 Quer mais informações? Encontre conselhos, respostas e a comunidade da Wikia na Central da Comunidade (http://www.comunidade.wikia.com). Boas contribuições!
+
 A equipe da Wikia
+
 ___________________________________________
+
 Para conferir os últimos acontecimentos na Wikia, visite http://comunidade.wikia.com
 Quer controlar quais emails você recebe? Vá para: {{fullurl:{{ns:special}}:Preferências}}',
 	'usersignup-heading' => 'Junte-se à Wikia Hoje',
@@ -2416,23 +2770,44 @@ Quer controlar quais emails você recebe? Vá para: {{fullurl:{{ns:special}}:Pre
 	'usersignup-account-creation-heading' => 'Sucesso!',
 	'usersignup-account-creation-subheading' => 'Enviamos um e-mail para $1',
 	'usersignup-account-creation-email-sent' => 'Você começou o processo de criação de conta para $2. Nós enviamos um e-mail para $1 com uma senha temporária e um link de confirmação. 
+
 $2 precisará clicar no link no e-mail que nós enviamos para confirmar sua conta e alterar sua senha temporária para terminar de criar sua conta.  
+
+
 [{{fullurl: {{ns:special}}: UserSignup|byemail=1}} Criar mais contas] em {{SITENAME}}',
 	'usersignup-account-creation-email-subject' => 'Uma conta foi criada para você na Wikia!',
 	'usersignup-account-creation-email-greeting' => 'Olá,',
 	'usersignup-account-creation-email-content' => 'Uma conta foi criada para você na {{SITENAME}}. Para acessar sua conta e alterar sua senha temporária, clique no link abaixo e inicie a sessão com o nome de usuário "$USERNAME" e senha "$NEWPASSWORD".
+
 Efetue o login no <a style="color:#2C85D5;" href="{{fullurl:{{ns:special}}:UserLogin}}"> {{fullurl: {{ns:special}}: UserLogin}}</a>
+
 Se você não quiser que esta conta seja criada, simplesmente ignore este e-mail ou entre em contato com nossa equipe de suporte da Comunidade se você tiver alguma pergunta.',
 	'usersignup-account-creation-email-signature' => 'A equipe da Wikia',
 	'usersignup-account-creation-email-body' => 'OIá,
+
 Uma conta foi criada para você na {{SITENAME}}. Para acessar sua conta e alterar sua senha temporária, clique no link abaixo e inicie a sessão com o nome de usuário "$2" e senha "$3".
+
 Por favor, efetue o login no {{fullurl:{{ns:special}}:UserLogin}}
+
 Se você não quiser que esta conta seja criada, simplesmente ignore este e-mail ou entre em contato com nossa equipe de suporte da Comunidade se você tiver alguma pergunta.
+
 A equipe da Wikia
+
+
 ___________________________________________
+
 Para conferir os últimos acontecimentos na Wikia, visite http://comunidade.wikia.com
 Quer controlar quais emails você recebe? Vá para: {{fullurl:{{ns:special}}:Preferências}}',
 	'usersignup-account-creation-email-body-HTML' => '',
+	'usersignup-facebook-heading' => 'Termine de se inscrever',
+	'usersignup-facebook-create-account' => 'Criar conta',
+	'usersignup-facebook-email-tooltip' => 'Se você gostaria de usar um endereço de e-mail diferente você pode alterar isso mais tarde em suas preferências.',
+	'usersignup-facebook-have-an-account-heading' => 'Já tem uma conta?',
+	'usersignup-facebook-have-an-account' => 'Conecte o seu nome de usuário Wikia existente com Facebook ao invés.',
+	'usersignup-facebook-proxy-email' => 'Email do Facebook anônimo',
+	'usersignup-facebook-problem' => 'Houve um problema na comunicação com o Facebook. Por favor, tente novamente mais tarde.',
+	'usersignup-facebook-signup-header' => 'Criando uma conta nova?',
+	'usersignup-facebook-login-header' => 'Já tem uma conta?',
 );
 
 $messages['roa-tara'] = array(
@@ -2492,8 +2867,10 @@ $messages['ru'] = array(
 	'usersignup-confirmation-heading-email-resent' => 'Письмо отправлено',
 	'usersignup-confirmation-subheading' => 'Проверьте вашу электронную почту',
 	'usersignup-confirmation-email-sent' => "Мы отправили письмо на адрес: '''$1'''.
+
 Нажмите на ссылку подтверждения в письме для завершения создания учётной записи.",
 	'usersignup-confirmation-email-sent-wikiamobile' => "Мы отправили письмо на адрес: '''$1'''.
+
 Нажмите на ссылку подтверждения в письме для завершения создания учётной записи. Спасибо!",
 	'usersignup-reconfirmation-email-sent' => 'Вы изменили адрес электронной почты на: $1. Мы отправили вам новое письмо со ссылкой на подтверждение. Пожалуйста, подтвердите новый адрес электронной почты.',
 	'usersignup-welcome-email-subject' => 'Добро пожаловать на Викия, $USERNAME!',
@@ -2511,19 +2888,34 @@ $messages['ru'] = array(
 	'usersignup-welcome-email-content' => 'Нужно больше информации? Найти советы и ответы на вопросы можно у других участников на <a style="color:#2C85D5;" href="http://ru.community.wikia.com">Вики Сообщества</a>. Счастливого редактирования!',
 	'usersignup-welcome-email-signature' => 'Команда Викия',
 	'usersignup-welcome-email-body' => 'Привет, $USERNAME,
+
 Мы рады приветствовать вас на Викия и {{SITENAME}}! Вот некоторые вещи, которые помогут вам начать.
+
 Отредактируйте свою личную страницу.
+
 Добавьте изображение и несколько фактов о себе на личную страничку на {{SITENAME}}.
+
 Перейти на $EDITPROFILEURL
+
 Узнайте основы.
+
 Прочитайте краткое руководство о Викия: как редактировать страницу, как добавить аватар, как изменить некоторые настройки и другое.
+
 Проверьте ($LEARNBASICURL)
+
 Исследуйте другие википроекты.
+
 Викия содержит тысячи википроектов! Чтобы найти то, что интересно именно вам, посетите страницы порталов: Видеоигры (http://www.wikia.com/Video_Games), Кино, сериалы, анимация (http://www.wikia.com/Entertainment) или Увлечения (http://www.wikia.com/Lifestyle).
+
 Перейти к $EXPLOREWIKISURL
+
 Нужно больше информации? Найти советы и ответы на вопросы можно у других участников на Вики Сообщества (http://www.ru.community.wikia.com). Счастливого редактирования!
+
 Команда Викия
+
+
 ___________________________________________
+
 Чтобы узнать свежие новости Викия, посетите http://community.wikia.com
 Хотите отписаться от этой рассылки? Перейдите на страницу {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => 'Присоединяйтесь к Фэндому сегодня',
@@ -2542,23 +2934,45 @@ ___________________________________________
 	'usersignup-account-creation-heading' => 'Отлично!',
 	'usersignup-account-creation-subheading' => 'Мы отправили электронное письмо на: $1',
 	'usersignup-account-creation-email-sent' => '$2, вы начали процесс создания учётной записи Викия. Мы отправили вам электронное письмо на $1 с временным паролем и ссылкой на подтверждение учётной записи.
+
+
 Для завершения создания учётной записи вам необходимо нажать на ссылку в письме, чтобы подтвердить учётную запись и изменить временный пароль на ваши личный пароль.
+
+
 [{{fullurl:{{ns:special}}:UserSignup|byemail=1}} Создать ещё один аккаунт] на {{SITENAME}}',
 	'usersignup-account-creation-email-subject' => 'Вы создали учётную запись Викия!',
 	'usersignup-account-creation-email-greeting' => 'Привет,',
 	'usersignup-account-creation-email-content' => 'Вы создали учётную запись Викия на {{SITENAME}}. Чтобы получить доступ к учётной записи и изменить временный пароль, нажмите на ссылку ниже, укажите своё имя участника - "$USERNAME" и пароль - "$NEWPASSWORD".
+
 Перейти на <a style="color:#2C85D5;" href="{{fullurl:{{ns:special}}:UserLogin}}">{{fullurl:{{ns:special}}:UserLogin}}</a>
+
 Если вы не запрашивали создание этой учётной записи, просто проигнорируйте это письме или свяжитесь со службой поддержки.',
 	'usersignup-account-creation-email-signature' => 'Команда Викия',
 	'usersignup-account-creation-email-body' => 'Привет,
+
 Вы создали учётную запись Викия на {{SITENAME}}. Чтобы получить доступ к учётной записи и изменить временный пароль, нажмите на ссылку ниже, укажите своё имя участника - "$2" и пароль - "$3".
+
 Перейти на {{fullurl:{{ns:special}}:UserLogin}}
+
 Если вы не запрашивали создание этой учётной записи, просто проигнорируйте это письме или свяжитесь со службой поддержки.
+
 Команда Викия
+
+
 ___________________________________________
+
 Чтобы узнать свежие новости Викия, посетите http://community.wikia.com
 Хотите отписаться от этой рассылки? Перейдите на страницу {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-account-creation-email-body-HTML' => '',
+	'usersignup-facebook-heading' => 'Завершить регистрацию',
+	'usersignup-facebook-create-account' => 'Создать учётную запись',
+	'usersignup-facebook-email-tooltip' => 'Если вы хотите использовать другой адрес электронной почты, вы сможете изменить его позже в личных настройках.',
+	'usersignup-facebook-have-an-account-heading' => 'Уже есть учётная запись?',
+	'usersignup-facebook-have-an-account' => 'Подключить уже существующую учётную запись на Фэндоме к Facebook.',
+	'usersignup-facebook-proxy-email' => 'Использовать адрес эл. почты от Facebook',
+	'usersignup-facebook-problem' => 'Есть проблема с соединением с Facebook. Пожалуйста, повторите попытку позже.',
+	'usersignup-facebook-signup-header' => 'Создать новую учётную запись?',
+	'usersignup-facebook-login-header' => 'Уже есть учётная запись?',
 );
 
 $messages['sv'] = array(
@@ -2943,8 +3357,10 @@ $messages['vi'] = array(
 	'usersignup-confirmation-heading-email-resent' => 'New email sent',
 	'usersignup-confirmation-subheading' => 'Check your email',
 	'usersignup-confirmation-email-sent' => "We sent an email to '''$1'''.
+
 Click the confirmation link in your email to finish creating your account.",
 	'usersignup-confirmation-email-sent-wikiamobile' => "We sent an email to '''$1'''.
+
 Click the confirmation link in your email to finish creating your account. Thanks!",
 	'usersignup-reconfirmation-email-sent' => "Your email address has been changed to $1. We've sent you a new confirmation email. Please confirm the new email address.",
 	'usersignup-welcome-email-subject' => 'Welcome to Wikia, $USERNAME!',
@@ -2962,19 +3378,34 @@ Click the confirmation link in your email to finish creating your account. Thank
 	'usersignup-welcome-email-content' => 'Want more information? Find advice, answers, and the Wikia community at <a style="color:#2C85D5;" href="http://community.wikia.com">Community Central</a>. Happy editing!',
 	'usersignup-welcome-email-signature' => 'The Wikia Team',
 	'usersignup-welcome-email-body' => 'Hi $USERNAME,
+
 We\'re happy to welcome you to Wikia and {{SITENAME}}! Here are some things you can do to get started.
+
 Edit your profile.
+
 Add a profile photo and a few quick facts about yourself on your {{SITENAME}} profile.
+
 Go to $EDITPROFILEURL
+
 Learn the basics.
+
 Get a quick tutorial on the basics of Wikia: how to edit a page, your user profile, change your preferences, and more.
+
 Check it out ($LEARNBASICURL)
+
 Explore more wikis.
+
 There are thousands of wikis on Wikia, find more wikis that interest you by heading to one of our hubs: Video Games (http://www.wikia.com/Video_Games), Entertainment (http://www.wikia.com/Entertainment), or Lifestyle (http://www.wikia.com/Lifestyle).
+
 Go to $EXPLOREWIKISURL
+
 Want more information? Find advice, answers, and the Wikia community at Community Central (http://www.community.wikia.com). Happy editing!
+
 The Wikia Team
+
+
 ___________________________________________
+
 To check out the latest happenings on Wikia, visit http://community.wikia.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => 'Tham gia Wikia ngay hôm nay',
@@ -2993,23 +3424,45 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 	'usersignup-account-creation-heading' => 'Success!',
 	'usersignup-account-creation-subheading' => "We've sent an email to $1",
 	'usersignup-account-creation-email-sent' => "You've started the account creation process for $2. We've sent them an email at $1 with a temporary password and a confirmation link.
+
+
 $2 will need to click on the link in the email we sent them to confirm their account and change their temporary password to finish creating their account.
+
+
 [{{fullurl:{{ns:special}}:UserSignup|byemail=1}} Create more accounts] on {{SITENAME}}",
 	'usersignup-account-creation-email-subject' => 'An account has been created for you on Wikia!',
 	'usersignup-account-creation-email-greeting' => 'Hello,',
 	'usersignup-account-creation-email-content' => 'An account has been created for you on {{SITENAME}}. To access your account and change your temporary password click the link below and log in with username "$USERNAME" and password "$NEWPASSWORD".
+
 Please log in at <a style="color:#2C85D5;" href="{{fullurl:{{ns:special}}:UserLogin}}">{{fullurl:{{ns:special}}:UserLogin}}</a>
+
 If you did not want this account to be created you can simply ignore this email or contact our Community Support team with any questions.',
 	'usersignup-account-creation-email-signature' => 'The Wikia Team',
 	'usersignup-account-creation-email-body' => 'Hello,
+
 An account has been created for you on {{SITENAME}}. To access your account and change your temporary password click the link below and log in with username "$2" and password "$3".
+
 Please log in at {{fullurl:{{ns:special}}:UserLogin}}
+
 If you did not want this account to be created you can simply ignore this email or contact our Community Support team with any questions.
+
 The Wikia Team
+
+
 ___________________________________________
+
 To check out the latest happenings on Wikia, visit http://community.wikia.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-account-creation-email-body-HTML' => '',
+	'usersignup-facebook-heading' => 'Finish Signing Up',
+	'usersignup-facebook-create-account' => 'Create account',
+	'usersignup-facebook-email-tooltip' => "If you'd like to use a different email address you can change it later in your Preferences.",
+	'usersignup-facebook-have-an-account-heading' => 'Already have an account?',
+	'usersignup-facebook-have-an-account' => 'Connect your existing Wikia username with Facebook instead.',
+	'usersignup-facebook-proxy-email' => 'Anonymous Facebook email',
+	'usersignup-facebook-problem' => 'There was a problem communicating with Facebook. Please try again later.',
+	'usersignup-facebook-signup-header' => 'Tạo tài khoản mới?',
+	'usersignup-facebook-login-header' => 'Đã có tài khoản?',
 );
 
 $messages['wa'] = array(
@@ -3058,8 +3511,10 @@ $messages['zh-hans'] = array(
 	'usersignup-confirmation-heading-email-resent' => '新的电子邮件已经发送',
 	'usersignup-confirmation-subheading' => '请检查您的电子邮件',
 	'usersignup-confirmation-email-sent' => "我们已经发送电子邮件至''$1''。
+
 请点击您的电子邮箱中的链接地址进行确认，完成帐户注册。",
 	'usersignup-confirmation-email-sent-wikiamobile' => "我们已经发送电子邮件至''$1''。
+
 请点击您的电子邮箱中的链接地址进行确认，完成帐户注册。谢谢。",
 	'usersignup-reconfirmation-email-sent' => '您的邮件地址已经变更为$1。我们已经发送给您一封确认邮件。请登录您的邮箱点击链接进行确认。',
 	'usersignup-welcome-email-subject' => '欢迎来到Wikia，$USERNAME！',
@@ -3077,18 +3532,31 @@ $messages['zh-hans'] = array(
 	'usersignup-welcome-email-content' => '希望了解更多信息？访问<a style="color:#2C85D5;" href="http://zh.community.wikia.com">中文社区中心</a>查找更多建议，帮助，编辑课程，以及维基社区！',
 	'usersignup-welcome-email-signature' => 'Wikia团队',
 	'usersignup-welcome-email-body' => '您好$USERNAME,
+
 我们很高兴您加入Wikia{{SITENAME}}社区！您现在可以开始做一些准备工作啦。
+
 编辑您的帐户主页。
+
 添加用户照片，并在{{SITENAME}}社区上创建您的个人档案。
+
 访问$EDITPROFILEURL
+
 从基础开始。
+
 学习如何使用Wikia：编辑文章页，个人档案设置，个人设定，等等。
+
 点击($LEARNBASICURL)
+
 查看更多维基社区。
+
 在Wikia上有成千上万的主题社区，您可以通过登录各大主题中心访问更多的维基社区：游戏(http://www.wikia.com/Video_Games), 娱乐(http://www.wikia.com/Entertainment), 或者生活方式(http://www.wikia.com/Lifestyle)。
+
 访问$EXPLOREWIKISURL
+
 希望了解更多信息？访问中文社区中心(http://zh.community.wikia.com)查找更多建议，帮助，编辑课程，以及维基社区！
+
 Wikia团队
+
 ___________________________________________
 想了解Wikia最近发生了什么？请访问http://zh.community.wikia.com 
 点击以下链接操作邮件获取方式: {{fullurl:{{ns:special}}:Preferences}}',
@@ -3108,23 +3576,41 @@ ___________________________________________
 	'usersignup-account-creation-heading' => '操作成功！',
 	'usersignup-account-creation-subheading' => '我们已经发送邮件到$1',
 	'usersignup-account-creation-email-sent' => '您正在创建帐户$2。我们已经将临时密码发送到电子邮件$1。
+
 $2需要点击相关链接完成帐户注册，并且需要更改临时密码。
+
 在{{SITENAME}}上[{{fullurl:{{ns:special}}:UserSignup|byemail=1}} 创建更多帐户]',
 	'usersignup-account-creation-email-subject' => '您的帐户已经在Wikia上创建！',
 	'usersignup-account-creation-email-greeting' => '您好，',
 	'usersignup-account-creation-email-content' => '您已经在{{SITENAME}}社区上创建了帐户。点击以下链接进入到您的帐户并且更改临时密码。您的帐户名为"$USERNAME"，密码为"$NEWPASSWORD"。
+
 登录帐户请点击<a style="color:#2C85D5;" href="{{fullurl:{{ns:special}}:UserLogin}}">{{fullurl:{{ns:special}}:UserLogin}}</a>
+
 如果您不想创建这个帐户，请忽略这封邮件或者联系我们的社区支持部门团队。',
 	'usersignup-account-creation-email-signature' => 'Wikia团队',
 	'usersignup-account-creation-email-body' => '您好，
+
 您已经在{{SITENAME}}社区上创建了帐户。点击以下链接进入到您的帐户并且更改临时密码。您的帐户名为"$2"，密码为"$3"。
+
 点击{{fullurl:{{ns:special}}:UserLogin}}进行帐户登录。
+
 如果您不想创建这个帐户，请忽略这封邮件或者联系我们的社区支持部门团队。
+
 Wikia团队 
 ___________________________________________ 
+
 想了解Wikia最近发生了什么？请访问http://zh.community.wikia.com 
 点击以下链接操作邮件获取方式: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-account-creation-email-body-HTML' => '',
+	'usersignup-facebook-heading' => '完成注册',
+	'usersignup-facebook-create-account' => '创建帐户',
+	'usersignup-facebook-email-tooltip' => '如果您想要使用一个不同的电子邮件地址，可以稍后在个人设置中进行更改。',
+	'usersignup-facebook-have-an-account-heading' => '已经有一个帐户了？',
+	'usersignup-facebook-have-an-account' => '将您现有的FANDOM帐户和Facebook进行连接。',
+	'usersignup-facebook-proxy-email' => '匿名的Facebook电子邮件',
+	'usersignup-facebook-problem' => '链接Facebook出现问题。请稍后再试。',
+	'usersignup-facebook-signup-header' => '创建帐户',
+	'usersignup-facebook-login-header' => '已经拥有一个帐户了？',
 );
 
 $messages['zh-hant'] = array(
@@ -3172,8 +3658,10 @@ $messages['zh-hant'] = array(
 	'usersignup-confirm-page-subheading-confirmed-user' => '您已經完成認證',
 	'usersignup-confirmation-heading-wikiamobile' => '查看您的電子信箱',
 	'usersignup-confirmation-email-sent' => "我們已發送電子郵件至''$1''。
+
 請點擊郵件中的連結進行認證，以完成帳戶註冊。",
 	'usersignup-confirmation-email-sent-wikiamobile' => "我們已發送電子郵件至''$1''。
+
 請點擊郵件中的連結進行認證，以完成帳戶註冊。謝謝！",
 	'usersignup-reconfirmation-email-sent' => '您的郵件地址已經變更為$1。我們已發送一封認證信給您。請認證這個新的電子信箱。',
 	'usersignup-welcome-email-subject' => '歡迎來到Wikia，$USERNAME！',
@@ -3191,18 +3679,31 @@ $messages['zh-hant'] = array(
 	'usersignup-welcome-email-content' => '希望了解更多訊息？訪問<a style="color:#2C85D5;" href="http://zh.community.wikia.com">中文社區中心</a>查找更多建議，幫助，以及編輯課程！',
 	'usersignup-welcome-email-signature' => 'Wikia團隊',
 	'usersignup-welcome-email-body' => '您好$USERNAME,
+
 我們很高興您加入Wikia{{SITENAME}}社區！建議您可以先從以下幾點開始。
+
 編輯您的用戶檔案。
+
 添加用戶照片，並創建在{{SITENAME}}的用戶檔案。
+
 訪問$EDITPROFILEURL
+
 學習基礎。
+
 學習如何使用Wikia：編輯文章頁，編輯個人檔案，用戶個人設定等。
+
 查看一下($LEARNBASICURL)
+
 瀏覽更多維基社區。
+
 在Wikia上有成千上萬的社區，您可以通過進入主題中心訪問更多的維基社區：<a style="color:#2C85D5;" href="http://www.wikia.com/Video_Games">遊戲</a>, <a style="color:#2C85D5;" href="http://www.wikia.com/Entertainment">娛樂</a>, or <a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">生活</a>.
+
 訪問$EXPLOREWIKISURL
+
 希望了解更多訊息？訪問<a style="color:#2C85D5;" href="http://zh.community.wikia.com">中文社區中心</a>查找更多建議，幫助，以及編輯課程！
+
 Wikia團隊
+
 ___________________________________________
 想了解Wikia最近發生了什麼嗎？請訪問http://zh.community.wikia.com 
 點擊以下連結設定收取通知郵件方式: {{fullurl:{{ns:special}}:Preferences}}',
@@ -3218,22 +3719,40 @@ ___________________________________________
 	'usersignup-account-creation-heading' => '操作成功！',
 	'usersignup-account-creation-subheading' => '我們已經發送郵件到$1',
 	'usersignup-account-creation-email-sent' => '您正在創建帳戶$2。我們已經將臨時密碼和認證連結送到電子信箱$1。
+
 需點擊認證連結以完成$2的帳戶註冊，並更改臨時密碼。
+
 在{{SITENAME}}上[{{fullurl:{{ns:special}}:UserSignup|byemail=1}} 創建更多帳戶]',
 	'usersignup-account-creation-email-subject' => '您已經在Wikia上創建了帳戶！',
 	'usersignup-account-creation-email-greeting' => '您好，',
 	'usersignup-account-creation-email-content' => '您已經在{{SITENAME}}社區上創建了帳戶。點擊以下連結進入您的帳戶並更改臨時密碼。您的帳戶名稱是"$USERNAME"，密碼是"$NEWPASSWORD"。
+
 請點擊<a style="color:#2C85D5;" href="{{fullurl:{{ns:special}}:UserLogin}}">{{fullurl:{{ns:special}}:UserLogin}}登入</a>
+
 如果您不想創建這個帳戶，請忽略這封郵件或者聯繫我們的社區支持部門團隊解決任何疑問。',
 	'usersignup-account-creation-email-signature' => 'Wikia團隊',
 	'usersignup-account-creation-email-body' => '您好，
+
 您已經在{{SITENAME}}上創建了帳戶。點擊以下連結進入您的帳戶並更改臨時密碼。您的帳戶名為"$2"，密碼為"$3"。
+
 點擊{{fullurl:{{ns:special}}:UserLogin}}登入。
+
 如果您不想創建這個帳戶，請忽略這封郵件或者聯繫我們的社區支持部門團隊解決任何疑問。
+
 Wikia團隊
 ___________________________________________ 
+
 想了解Wikia最近有什麼新消息嗎？請訪問http://zh.community.wikia.com 
 點擊以下連結設定電子郵件收取方式: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-account-creation-email-body-HTML' => '',
+	'usersignup-facebook-heading' => '完成註冊',
+	'usersignup-facebook-create-account' => '創建帳戶',
+	'usersignup-facebook-email-tooltip' => '如果您想要使用另一個電子郵件地址，可以稍後在您的用戶設定中進行更改。',
+	'usersignup-facebook-have-an-account-heading' => '已經有一個帳戶了？',
+	'usersignup-facebook-have-an-account' => '選擇將您已有的FANDOM帳戶與Facebook進行連結',
+	'usersignup-facebook-proxy-email' => '匿名的Facebook電子信箱地址',
+	'usersignup-facebook-problem' => '連接Facebook出現問題。請稍後再試。',
+	'usersignup-facebook-signup-header' => '要創建新的帳戶嗎？',
+	'usersignup-facebook-login-header' => '已經擁有一個帳戶了嗎？',
 );
 
