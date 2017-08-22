@@ -51,6 +51,9 @@ define('ext.wikia.adEngine.lookup.a9', [
 			loaded = true;
 		}
 
+		bids = {};
+		priceMap = {};
+
 		slots = slotsContext.filterSlotMap(config[skin]);
 		a9Slots = getA9Slots(slots);
 		log(['call - fetchBids', a9Slots], 'debug', logGroup);
@@ -88,13 +91,8 @@ define('ext.wikia.adEngine.lookup.a9', [
 	}
 
 	function configureApstag() {
-		if (typeof win.apstag === 'undefined') {
-			win.apstag = {};
-		}
-
-		if (typeof win.apstag._Q === 'undefined') {
-			win.apstag._Q = [];
-		}
+		win.apstag = win.apstag || {};
+		win.apstag._Q = win.apstag._Q || [];
 
 		if (typeof win.apstag.init === 'undefined') {
 			win.apstag.init = function() {
