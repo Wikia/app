@@ -8,19 +8,19 @@ class WikiRecommendations {
 	const RECOMMENDATIONS = [
 		'en' => [
 			[
-				'thumbnailUrl' => '/assassinscreed/images/2/25/Wikia-Visualization-Main%2Cassassinscreed.png/revision/latest/thumbnail-down/width/660/height/660?cb=20161102142202',
-				'title' => 'Assassin\'s Creed',
-				'url' => 'http://assassinscreed.wikia.com',
+				'thumbnailUrl' => 'https://vignette1.wikia.nocookie.net/gameofthrones/images/3/3a/WhiteWalker_%28Hardhome%29.jpg/revision/latest?cb=20150601151110',
+				'title' => 'Game of Thrones',
+				'url' => 'http://gameofthrones.wikia.com/wiki/Game_of_Thrones_Wiki',
 			],
 			[
-				'thumbnailUrl' => '/harrypotter/images/6/64/Grindelwald-Profile.jpg/revision/latest/zoom-crop/width/1000/height/563?cb=20170425165236',
-				'title' => 'Wiki Name2',
-				'url' => 'http://gta2.wikia.com',
+				'thumbnailUrl' => 'https://vignette2.wikia.nocookie.net/deathnote/images/1/1d/Light_Holding_Death_Note.png/revision/latest?cb=20120525180447',
+				'title' => 'Death Note',
+				'url' => 'http://deathnote.wikia.com/wiki/Main_Page',
 			],
 			[
-				'thumbnailUrl' => '/harrypotter/images/6/64/Grindelwald-Profile.jpg/revision/latest/zoom-crop/width/1000/height/563?cb=20170425165236',
-				'title' => 'Wiki Name3',
-				'url' => 'http://gta3.wikia.com',
+				'thumbnailUrl' => 'https://vignette2.wikia.nocookie.net/midnight-texas/images/b/b0/Blinded_by_the_Light_106-01-Rev-Sheehan-Davy-Deputy.jpg/revision/latest?cb=20170820185915',
+				'title' => 'Midnight Texas',
+				'url' => 'http://midnight-texas.wikia.com/wiki/Midnight,_Texas_Wikia',
 			],
 		],
 		'de' => [],
@@ -34,30 +34,55 @@ class WikiRecommendations {
 		'ja' => [],
 	];
 
+	const DEV_RECOMMENDATIONS = [
+		[
+			'thumbnailUrl' => 'https://vignette.wikia-dev.pl/gameofthrones/images/3/3a/WhiteWalker_%28Hardhome%29.jpg/revision/latest?cb=20150601151110',
+			'title' => 'Game of Thrones',
+			'url' => 'http://gameofthrones.wikia.com/wiki/Game_of_Thrones_Wiki',
+		],
+		[
+			'thumbnailUrl' => 'https://vignette.wikia-dev.pl/deathnote/images/1/1d/Light_Holding_Death_Note.png/revision/latest?cb=20120525180447',
+			'title' => 'Death Note',
+			'url' => 'http://deathnote.wikia.com/wiki/Main_Page',
+		],
+		[
+			'thumbnailUrl' => 'https://vignette.wikia-dev.pl/midnight-texas/images/b/b0/Blinded_by_the_Light_106-01-Rev-Sheehan-Davy-Deputy.jpg/revision/latest?cb=20170820185915',
+			'title' => 'Midnight Texas',
+			'url' => 'http://midnight-texas.wikia.com/wiki/Midnight,_Texas_Wikia',
+		]
+	];
+
 	const LANGUAGES = [ 'en', 'de', 'fr', 'es', 'pt-br', 'ru', 'it', 'pl', 'zh', 'ja' ];
 
 	public static function getRecommendations( $contentLanguage ) {
-		$recommendations = self::RECOMMENDATIONS['en'];
-		if ( in_array( $contentLanguage, self::LANGUAGES ) ) {
-			$recommendations = self::RECOMMENDATIONS[$contentLanguage];
+		global $wgDevelEnvironment;
+
+
+		if ( empty( $wgDevelEnvironment ) ) {
+			$recommendations = self::RECOMMENDATIONS['en'];
+
+			if ( in_array( $contentLanguage, self::LANGUAGES ) ) {
+				$recommendations = self::RECOMMENDATIONS[$contentLanguage];
+			}
+			shuffle( $recommendations );
+		} else {
+			$recommendations = self::DEV_RECOMMENDATIONS;
 		}
-		shuffle( $recommendations );
 
-		return array_map( function ( $recommendation ) {
-			$recommendation['thumbnailUrl'] =
-				self::getThumbnailUrl( $recommendation['thumbnailUrl'] );
+		return array_map(
+			function ( $recommendation ) {
+				$recommendation['thumbnailUrl'] = self::getThumbnailUrl( $recommendation['thumbnailUrl'] );
 
-			return $recommendation;
-		}, array_slice( $recommendations, 0, 3 ) );
+				return $recommendation;
+			},
+			array_slice( $recommendations, 0, 3 )
+		);
 	}
 
 	private static function getThumbnailUrl( $url ) {
-		global $wgVignetteUrl;
 
-		return VignetteRequest::fromUrl( $wgVignetteUrl . $url )
-			->zoomCrop()
-			->width( self::THUMBNAIL_WIDTH )
-			->height( floor( self::THUMBNAIL_WIDTH / self::THUMBNAIL_RATIO ) )
-			->url();
+		return VignetteRequest::fromUrl( $url )->zoomCrop()->width( self::THUMBNAIL_WIDTH )->height(
+			floor( self::THUMBNAIL_WIDTH / self::THUMBNAIL_RATIO )
+		)->url();
 	}
 }
