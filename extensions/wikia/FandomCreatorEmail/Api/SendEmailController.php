@@ -13,8 +13,8 @@ class SendEmailController extends WikiaApiController {
 	}
 
 	public function contentUpdated() {
-		$task = SendEmailTask::from($this->request, ContentUpdatedController::class);
+		$task = SendEmailTask::from( $this->request, ContentUpdatedController::class );
 		$taskId = $task->queue();
-		$this->setResponseData(['taskId' => $taskId]);
+		$this->setResponseData( ['taskId' => $taskId] );
 	}
 }
