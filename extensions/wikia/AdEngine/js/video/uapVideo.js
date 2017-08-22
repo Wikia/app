@@ -16,7 +16,10 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.video.uapVideo',
-		positionVideoPlayerClassName = 'video-player-';
+		positionVideoPlayerClassName = 'video-player-',
+		uapTypesToMegaMap = {
+			'abcd': true
+		};
 
 	function getVideoSize(slot, params, videoSettings) {
 		var width = slot.clientWidth;
@@ -36,11 +39,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	}
 
 	function shouldUseMegaAdUnitBuilder(type) {
-		var uapTypesMap = {
-				'abcd': true
-			};
-
-		return uapTypesMap[type];
+		return uapTypesToMegaMap[type];
 	}
 
 	function loadPorvata(params, slotContainer, providerContainer, videoSettings) {

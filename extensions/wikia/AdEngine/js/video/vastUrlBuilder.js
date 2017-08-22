@@ -51,6 +51,14 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 		return adUnitBuilder.build(slotParams.pos, slotParams.src);
 	}
 
+	/**
+	 * Creates VAST URL from given parameters.
+	 * If `options.useMegaAdUnitBuilder` is not explicitly provided, the `context.opts.megaAdUnitBuilderEnabled` is used.
+	 * @param {number} aspectRatio
+	 * @param {object} slotParams
+	 * @param {object} options
+	 * @returns {string}
+	 */
 	function build(aspectRatio, slotParams, options) {
 		options = options || {};
 		slotParams = slotParams || {};
@@ -60,10 +68,9 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 			params,
 			url;
 
-		// fallback to adContext flag
-		if (useMegaAdUnitBuilder === undefined) {
+		if (typeof useMegaAdUnitBuilder === 'undefined') {
 			useMegaAdUnitBuilder = adContext.getContext().opts.megaAdUnitBuilderEnabled;
-			log(['build', '`useMegaAdUnitBuilder` option is not defined. Fallback to `opts.megaAdUnitBuilderEnabled`.'], 'debug', logGroup);
+			log(['build', '`useMegaAdUnitBuilder` option is not defined. Fallback to `context.opts.megaAdUnitBuilderEnabled`.'], 'debug', logGroup);
 		}
 
 		params = [
@@ -80,7 +87,7 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 			'cust_params=' + getCustomParameters(slotParams)
 		];
 
-		if (options.numberOfAds !== undefined) {
+		if (typeof options.numberOfAds !== 'undefined') {
 			params.push('pmad=' + options.numberOfAds);
 		}
 
@@ -96,6 +103,5 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 
 	return {
 		build: build
-
 	};
 });
