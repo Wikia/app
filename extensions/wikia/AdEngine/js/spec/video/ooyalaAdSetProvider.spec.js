@@ -1,5 +1,5 @@
 /*global describe, it, expect, modules*/
-describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
+describe('ext.wikia.adEngine.video.ooyalaAdSetProvider', function () {
 	'use strict';
 
 	var FAKE_VAST_URL = 'http://fake.vast.url/test',
