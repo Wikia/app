@@ -23,7 +23,7 @@ define('ext.wikia.adEngine.video.ooyalaAdSetProvider', [
 	}
 
 	function calculateRV(videoDepth, capping) {
-		return videoDepth === 1 ? 1 : Math.floor((videoDepth - 1) / capping) + 1;
+		return videoDepth === 1 || !capping ? 1 : Math.floor((videoDepth - 1) / capping) + 1;
 	}
 
 	function shouldPlayNextVideoAd(videoDepth, capping) {
@@ -51,7 +51,7 @@ define('ext.wikia.adEngine.video.ooyalaAdSetProvider', [
 			prerollAdVideoCapping = 3,
 			isReplayAdSupported = adContext.getContext().opts.replayAdsForFV;
 
-		if (!isReplay || (isReplayAdSupported && shouldPlayNextVideoAd(videoDepth, prerollAdVideoCapping))) {
+		if (!isReplay || (isReplayAdSupported && prerollAdVideoCapping > 0 && shouldPlayNextVideoAd(videoDepth, prerollAdVideoCapping))) {
 			adSet.push(generateSet('preroll', 'p', 0, calculateRV(videoDepth, prerollAdVideoCapping), correlator));
 		}
 
