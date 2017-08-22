@@ -7,7 +7,6 @@ require([
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.articleVideo.videoFeedbackBox',
-	require.optional('ext.wikia.adEngine.adContext'),
 	require.optional('ext.wikia.adEngine.video.player.ooyala.ooyalaTracker'),
 	require.optional('ext.wikia.adEngine.video.ooyalaAdSetProvider')
 ], function (
@@ -19,7 +18,6 @@ require([
 	geo,
 	instantGlobals,
 	VideoFeedbackBox,
-	adContext,
 	playerTracker,
 	ooyalaAdSetProvider
 ) {
@@ -84,9 +82,9 @@ require([
 					recommendedLabel: recommendedLabel
 				};
 
-			if (adContext && adContext.getContext().opts.showAds) {
+			if (ooyalaAdSetProvider.isAbleToDisplayAds()) {
 				options.adSet = ooyalaAdSetProvider.get(1);
-				options.replayAds = adContext.getContext().opts.replayAdsForFV;
+				options.replayAds = ooyalaAdSetProvider.adsCanBeplayedOnNextVideoViews();
 			} else {
 				playerTrackerParams.adProduct = 'featured-video-no-preroll';
 			}
