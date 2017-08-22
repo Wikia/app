@@ -202,14 +202,19 @@ h1.mcf-header {
 	background-position: center;
 	position: relative;
 
-	> svg {
-		align-self: center;
-		fill: $wds-color-white;
-		height: 34.5%;
-		opacity: .15;
+	&__thumbnail-container {
 		position: absolute;
+		text-align: center;
 		top: 25%;
-		width: auto;
+		width: 100%;
+
+		> svg {
+			$mcf-placeholder-svg-size: 34.5%;
+			fill: $wds-color-white;
+			height: $mcf-placeholder-svg-size;
+			opacity: .15;
+			width: $mcf-placeholder-svg-size;
+		}
 	}
 
 	&__title {
@@ -478,6 +483,10 @@ h1.mcf-header {
 		font-weight: 600;
 		word-wrap: break-word;
 		padding: 16px;
+
+		@media #{$wds-breakpoint-m-down} {
+			font-size: 14px;
+		}
 	}
 
 	&__link {
