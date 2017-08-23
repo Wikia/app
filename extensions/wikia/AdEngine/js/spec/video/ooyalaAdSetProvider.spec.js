@@ -216,4 +216,22 @@ describe('ext.wikia.adEngine.video.ooyalaAdSetProvider', function () {
 		getModule().get(1, 666);
 		expect(mocks.vastUrlBuilder.build.calls.argsFor(0)[2].correlator).toEqual(666);
 	});
+
+	it('Should pass video id and content source id variables', function () {
+		spyOn(mocks.vastUrlBuilder, 'build');
+		spyOn(mocks.adContext, 'getContext').and.returnValue({
+			opts: {
+				replayAdsForFV: true,
+				showAds: true
+			}
+		});
+
+		getModule().get(1, 666, {
+			contentSourceId: 111,
+			videoId: 222
+		});
+
+		expect(mocks.vastUrlBuilder.build.calls.argsFor(0)[2].contentSourceId).toEqual(111);
+		expect(mocks.vastUrlBuilder.build.calls.argsFor(0)[2].videoId).toEqual(222);
+	});
 });

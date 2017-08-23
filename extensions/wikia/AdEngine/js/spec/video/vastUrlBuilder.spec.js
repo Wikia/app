@@ -172,6 +172,7 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 	});
 
 	it('Build VAST URL with static correlator', function () {
+		spyOn(Math, 'random').and.returnValue(0.1111111111);
 		var vastUrlBuilder = getModule(),
 			dynamicCorrelator = vastUrlBuilder.build(1, mocks.slotParams),
 			staticCorrelator = vastUrlBuilder.build(1, mocks.slotParams, {correlator: 666});
