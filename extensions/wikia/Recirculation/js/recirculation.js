@@ -68,9 +68,11 @@ require([
 	liftigniter.prepare(railRecirculation).done(function (data) {
 		require(['ext.wikia.recirculation.views.premiumRail'], function (viewFactory) {
 			var view = viewFactory();
-			view.render(data).then(function () {
-				liftigniter.setupTracking(view.itemsSelector, railRecirculation);
-			});
+			view.render(data)
+				.then(view.setupTracking())
+				.then(function () {
+					liftigniter.setupTracking(view.itemsSelector, railRecirculation);
+				});
 		});
 	});
 

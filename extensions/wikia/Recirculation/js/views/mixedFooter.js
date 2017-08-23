@@ -30,7 +30,7 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 			.then(plista.prepareData(wikiArticlesList))
 			.then(function () {
 				injectTemplates(templates, newsAndStoriesList, wikiArticlesList);
-				initTracking();
+				setupTracking();
 			})
 	}
 
@@ -92,7 +92,7 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 		return templateList;
 	}
 
-	function initTracking() {
+	function setupTracking() {
 		track({
 			action: tracker.ACTIONS.IMPRESSION
 		});
