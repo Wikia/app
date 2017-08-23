@@ -67,7 +67,10 @@ require([
 	// prepare & render right rail recirculation module
 	liftigniter.prepare(railRecirculation).done(function (data) {
 		require(['ext.wikia.recirculation.views.premiumRail'], function (viewFactory) {
-			viewFactory().render(data);
+			var view = viewFactory();
+			view.render(data).then(function () {
+				liftigniter.setupTracking(view.itemsSelector, railRecirculation);
+			});
 		});
 	});
 
@@ -80,10 +83,14 @@ require([
 	$.when.apply($, mixedContentFooterData).done(function (nsItems, wikiItems, discussions) {
 		$mixedContentFooterContent.show();
 		require(['ext.wikia.recirculation.views.mixedFooter'], function (viewFactory) {
-			viewFactory().render({
+			var view = viewFactory();
+			view.render({
 				nsItems: nsItems,
 				wikiItems: wikiItems,
 				discussions: discussions
+			}).then(function () {
+				liftigniter.setupTracking(view.nsItemsSelector, mixedContentFooter.nsItems);
+				liftigniter.setupTracking(view.wikiItemsSelector, mixedContentFooter.wikiItems);
 			});
 		});
 	});

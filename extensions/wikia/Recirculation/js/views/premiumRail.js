@@ -57,7 +57,8 @@ define('ext.wikia.recirculation.views.premiumRail', [
 
 		return {
 			render: render,
-			setupTracking: setupTracking
+			setupTracking: setupTracking,
+			itemsSelector: '.premium-recirculation-rail .item'
 		};
 	};
 });
