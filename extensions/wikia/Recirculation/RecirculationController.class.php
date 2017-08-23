@@ -19,6 +19,7 @@ class RecirculationController extends WikiaController {
 	public function discussions() {
 		global $wgLanguageCode;
 		$cityId = $this->request->getVal( 'cityId', null );
+		$limit = $this->request->getVal( 'limit', 5 );
 		$sortKey =
 			$this->request->getVal( 'latest', false )
 				? DiscussionsDataService::DISCUSSIONS_API_SORT_KEY_LATEST
@@ -29,7 +30,7 @@ class RecirculationController extends WikiaController {
 		}
 
 		if ( RecirculationHooks::canShowDiscussions( $cityId ) ) {
-			$discussionsDataService = new DiscussionsDataService( $cityId );
+			$discussionsDataService = new DiscussionsDataService( $cityId, $limit );
 			$posts = $discussionsDataService->getData( 'posts', $sortKey )['posts'];
 
 			$discussionsUrl = "$discussionsDataService->server/d/f";

@@ -20,7 +20,8 @@ define('ext.wikia.recirculation.helpers.discussions', [
 			type: 'get',
 			data: {
 				cityId: w.wgCityId,
-				latest: true
+				latest: true,
+				limit: 10
 			},
 			callback: function (response) {
 				deferred.resolve(response);

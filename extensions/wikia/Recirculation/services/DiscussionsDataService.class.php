@@ -3,7 +3,6 @@
 use Wikia\Service\Gateway\ConsulUrlProvider;
 
 class DiscussionsDataService {
-	const DISCUSSIONS_API_LIMIT = 10;
 	const DISCUSSIONS_API_SORT_KEY_TRENDING = 'trending';
 	const DISCUSSIONS_API_SORT_KEY_LATEST = 'creation_date';
 	const DISCUSSIONS_API_SORT_DIRECTION = 'descending';
@@ -11,9 +10,10 @@ class DiscussionsDataService {
 
 	const MCACHE_VER = '1.2';
 
-	private $cityId;
+	private $cityId, $limit;
 
-	public function __construct( $cityId ) {
+	public function __construct( $cityId, $limit ) {
+		$this->limit = $limit;
 		$discussionsAlias = WikiFactory::getVarValueByName( 'wgRecirculationDiscussionsAlias', $cityId );
 
 		if ( !empty( $discussionsAlias ) ) {
@@ -99,7 +99,7 @@ class DiscussionsDataService {
 	 */
 	private function buildUrl( $endpoint, $options ) {
 		$defaultParams = [
-			'limit' => self::DISCUSSIONS_API_LIMIT,
+			'limit' => $this->limit,
 			'sortKey' => self::DISCUSSIONS_API_SORT_KEY_TRENDING,
 			'sortDirection' => self::DISCUSSIONS_API_SORT_DIRECTION,
 			'viewableOnly' => self::DISCUSSIONS_API_VIEWABLE_ONLY,
