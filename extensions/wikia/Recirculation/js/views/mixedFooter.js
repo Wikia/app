@@ -1,11 +1,17 @@
 define('ext.wikia.recirculation.views.mixedFooter', [
 	'jquery',
 	'wikia.window',
-	'ext.wikia.recirculation.tracker',
+	'wikia.tracker',
 	'ext.wikia.recirculation.utils',
 	'ext.wikia.recirculation.plista'
 ], function ($, w, tracker, utils, plista) {
 	'use strict';
+
+	var track = tracker.buildTrackingFunction({
+			category: 'mixed-content-footer',
+			trackingMethod: 'analytics'
+		}),
+		$mixedContentFooter = $('#mixed-content-footer');
 
 	function render(data) {
 		var newsAndStoriesList = data.nsItems.items,
@@ -24,6 +30,7 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 			.then(plista.prepareData(wikiArticlesList))
 			.then(function () {
 				injectTemplates(templates, newsAndStoriesList, wikiArticlesList);
+				initTracking();
 			})
 	}
 
@@ -32,29 +39,36 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 			$wikiArticleHook = $('.mcf-card-wiki-placeholder');
 
 		$.each($newsAndStoriesHook, function (index) {
-			var template = templates['client/Recirculation_article.mustache'],
-				newsAndStoriesItem = newsAndStoriesList[index];
+			var $this = $(this),
+				template = templates['client/Recirculation_article.mustache'],
+				newsAndStoriesItem = newsAndStoriesList[index],
+				type = newsAndStoriesItem.type || 'ns-article';
 
-			if (newsAndStoriesItem.type === 'topic') {
+			if (type === 'topic') {
 				template = templates['client/Recirculation_topic.mustache'];
 				newsAndStoriesItem.buttonLabel = $.msg('recirculation-explore');
-			} else if (newsAndStoriesItem.type === 'storyStream') {
+			} else if (type === 'storyStream') {
 				template = templates['client/Recirculation_storyStream.mustache'];
 				newsAndStoriesItem.buttonLabel = $.msg('recirculation-explore-posts');
 			}
 
-			$(this).replaceWith(utils.renderTemplate(template, newsAndStoriesList[index]));
+			newsAndStoriesItem.trackingLabels = $this.data('tracking') + ',' + type;
+
+			$this.replaceWith(utils.renderTemplate(template, newsAndStoriesList[index]));
 		});
 
 		$.each($wikiArticleHook, function (index) {
-			var template = templates['client/Recirculation_article.mustache'],
+			var $this = $(this),
+				template = templates['client/Recirculation_article.mustache'],
 				wikiArticle = wikiArticlesList[index];
 
 			if (!wikiArticle.thumbnail) {
 				wikiArticle.fandomHeartSvg = utils.fandomHeartSvg;
 			}
 
-			$(this).replaceWith(utils.renderTemplate(template, wikiArticle));
+			wikiArticle.trackingLabels = $this.data('tracking') + ',wiki-article';
+
+			$this.replaceWith(utils.renderTemplate(template, wikiArticle));
 		});
 	}
 
@@ -76,10 +90,25 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 		return templateList;
 	}
 
+	function initTracking() {
+		track({
+			action: tracker.ACTIONS.IMPRESSION
+		});
+
+		$mixedContentFooter.on('click', '[data-tracking]', function () {
+			var labels = $(this).data('tracking').split(',');
+			labels.forEach(function (label) {
+				track({
+					action: tracker.ACTIONS.CLICK,
+					label: label
+				});
+			});
+		});
+	}
+
 	return function () {
 		return {
 			render: render
-			//TODO setupTracking: setupTracking
 		};
 	};
 });

@@ -69,14 +69,16 @@ class WikiRecommendations {
 			$recommendations = self::DEV_RECOMMENDATIONS;
 		}
 
-		return array_map(
-			function ( $recommendation ) {
-				$recommendation['thumbnailUrl'] = self::getThumbnailUrl( $recommendation['thumbnailUrl'] );
+		$recommendations = array_slice( $recommendations, 0, 3 );
 
-				return $recommendation;
-			},
-			array_slice( $recommendations, 0, 3 )
-		);
+		$index = 1;
+		foreach($recommendations as &$recommendation) {
+			$recommendation['thumbnailUrl'] = self::getThumbnailUrl( $recommendation['thumbnailUrl'] );
+			$recommendation['index'] = $index;
+			$index++;
+		}
+
+		return $recommendations;
 	}
 
 	private static function getThumbnailUrl( $url ) {
