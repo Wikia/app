@@ -49,25 +49,6 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 		}
 
 		return deferred.promise();
-		// TODO setup tracking
-		//
-		// function setupTracking() {
-		// 	var elements = $('.recirculation-unit .item[data-meta="' + options.widget + '"]').get(),
-		// 		trackOptions = {
-		// 			elements: elements,
-		// 			name: options.widget,
-		// 			source: 'LI'
-		// 		};
-		//
-		// 	if (options.opts) {
-		// 		trackOptions.opts = options.opts;
-		// 	}
-		// 	w.$p('track', trackOptions);
-		// }
-		// return {
-		// 	setupTracking: setupTracking,
-		// 	loadData: loadData
-		// };
 	};
 
 	function resizeThumbnails(data, options) {
@@ -90,8 +71,22 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 		}
 	}
 
+	function setupTracking(itemsSelector, options) {
+		var elements = $(itemsSelector).get(),
+			trackOptions = {
+				elements: elements,
+				name: options.widget,
+				source: 'LI',
+			};
+		if (options.opts) {
+			trackOptions.opts = options.opts
+		}
+		w.$p('track', trackOptions);
+	}
+
 	return {
 		prepare: prepare,
-		fetch: fetch
+		fetch: fetch,
+		setupTracking: setupTracking
 	};
 });
