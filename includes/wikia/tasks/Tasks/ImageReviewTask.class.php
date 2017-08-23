@@ -122,6 +122,12 @@ class ImageReviewTask extends BaseTask {
 			$key = wfForeignMemcKey( $cityId, 'image-review', $pageId, $revisionId );
 
 			WikiaDataAccess::cachePurge( $key );
+
+			// SUS-2650: invalidate file page of reviewed image
+			$task = new ImageReviewTask();
+			$task->call( 'invalidateFilePage', (int) $pageId );
+			$task->wikiId( $cityId );
+			$task->queue();
 		}
 	}
 
