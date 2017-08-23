@@ -6,19 +6,26 @@ define('ext.wikia.adEngine.video.ooyalaAdSetProvider', [
 	'use strict';
 
 	var FEATURED_VIDEO_RATIO = 640 / 480,
-		PREROLL = {
-			vpos: 'preroll',
-			position_type: 'p',
-			position: 0
-		}, MIDROLL = {
-			vpos: 'midroll',
-			position_type: 'p',
-			position: 50
+		POSITION_UNIT = {
+			PERCENTAGE: 'p',
+			TIME: 't'
 		},
-		POSTROLL = {
-			vpos: 'postroll',
-			position_type: 'p',
-			position: 101 // postroll should has more than 100% to correct working, if it is 100%
+		AD = {
+			PREROLL: {
+				vpos: 'preroll',
+				position_type: POSITION_UNIT.PERCENTAGE,
+				position: 0
+			},
+			MIDROLL: {
+				vpos: 'midroll',
+				position_type: POSITION_UNIT.PERCENTAGE,
+				position: 50
+			},
+			POSTROLL: {
+				vpos: 'postroll',
+				position_type: POSITION_UNIT.PERCENTAGE,
+				position: 101 // postroll should has more than 100% to correct working, if it is 100%
+			}
 		};
 
 	function generateSet(ad, rv, correlator) {
@@ -40,42 +47,34 @@ define('ext.wikia.adEngine.video.ooyalaAdSetProvider', [
 		return videoDepth < 2 || !capping ? 1 : Math.floor((videoDepth - 1) / capping) + 1;
 	}
 
-	function shouldPlayNextVideoAd(videoDepth, capping) {
-		return capping > 0 && (videoDepth - 1) % capping === 0;
+	function cappingAllowsToShowNextVideo(videoDepth, capping) {
+		return canShowNextVideoAds() && capping > 0 && (videoDepth - 1) % capping === 0;
 	}
 
-	function isAbleToDisplayAds() {
+	function canShowAds() {
 		return adContext && adContext.getContext() && adContext.getContext().opts.showAds && vastUrlBuilder;
 	}
 
-	function adsCanBePlayedOnNextVideoViews() {
+	function canShowNextVideoAds() {
 		return adContext && adContext.getContext() && adContext.getContext().opts.replayAdsForFV;
 	}
 
-	function isVideoDepthCorrect(videoDepth) {
+	function isVideoDepthValid(videoDepth) {
 		return videoDepth === undefined || (typeof videoDepth === 'number' && videoDepth > 0);
 	}
 
-	function isAbleToReplayAnyAd(videoDepth) {
-		var isReplay = videoDepth > 1,
-			isReplayAdSupported = adContext.getContext().opts.replayAdsForFV;
-		return isReplay && isReplayAdSupported;
-	}
+	function canAdBePlayed(videoDepth, adsFrequency) {
+		var isReplay = videoDepth > 1;
 
-	function canAdBePlayed(videoDepth, adsFrequency, isEnabled) {
-		var isReplay = videoDepth > 1,
-			allowForFirstPlay = !isReplay && isEnabled;
-
-		return allowForFirstPlay ||
-			(isAbleToReplayAnyAd(videoDepth) && isEnabled && shouldPlayNextVideoAd(videoDepth, adsFrequency));
+		return !isReplay || (isReplay && cappingAllowsToShowNextVideo(videoDepth, adsFrequency));
 	}
 
 	function get(videoDepth, correlator) {
-		if (!isVideoDepthCorrect(videoDepth)) {
+		if (!isVideoDepthValid(videoDepth)) {
 			throw 'Not correct input variables';
 		}
 
-		if (!isAbleToDisplayAds()) {
+		if (!canShowAds()) {
 			return [];
 		}
 
@@ -86,24 +85,24 @@ define('ext.wikia.adEngine.video.ooyalaAdSetProvider', [
 			adsFrequency = adContext.getContext().opts.fvAdsFrequency,
 			rv = calculateRV(videoDepth, adsFrequency);
 
-		if (canAdBePlayed(videoDepth, adsFrequency, true)) {
-			adSet.push(generateSet(PREROLL, rv, correlator));
+		if (canAdBePlayed(videoDepth, adsFrequency)) {
+			adSet.push(generateSet(AD.PREROLL, rv, correlator));
 		}
 
-		if (canAdBePlayed(videoDepth, adsFrequency, adContext.getContext().opts.isFVMidrollEnabled)) {
-			adSet.push(generateSet(MIDROLL, rv, correlator));
+		if (adContext.getContext().opts.isFVMidrollEnabled && canAdBePlayed(videoDepth, adsFrequency)) {
+			adSet.push(generateSet(AD.MIDROLL, rv, correlator));
 		}
 
-		if (canAdBePlayed(videoDepth, adsFrequency, adContext.getContext().opts.isFVPostrollEnabled)) {
-			adSet.push(generateSet(POSTROLL, rv, correlator));
+		if (adContext.getContext().opts.isFVPostrollEnabled && canAdBePlayed(videoDepth, adsFrequency)) {
+			adSet.push(generateSet(AD.POSTROLL, rv, correlator));
 		}
 
 		return adSet;
 	}
 
 	return {
-		adsCanBePlayedOnNextVideoViews: adsCanBePlayedOnNextVideoViews,
-		isAbleToDisplayAds: isAbleToDisplayAds,
+		adsCanBePlayedOnNextVideoViews: canShowNextVideoAds,
+		canShowAds: canShowAds,
 		get: get
 	};
 });

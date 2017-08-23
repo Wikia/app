@@ -49,6 +49,7 @@ require([
 				width: 300,
 				height: 169
 			},
+			correlator = Math.round(Math.random() * 10000000000),
 			videoData = window.wgFeaturedVideoData,
 			videoId = videoData.videoId,
 			videoTitle = videoData.title,
@@ -82,8 +83,8 @@ require([
 					recommendedLabel: recommendedLabel
 				};
 
-			if (ooyalaAdSetProvider.isAbleToDisplayAds()) {
-				options.adSet = ooyalaAdSetProvider.get(1);
+			if (ooyalaAdSetProvider.canShowAds()) {
+				options.adSet = ooyalaAdSetProvider.get(1, correlator);
 				options.replayAds = ooyalaAdSetProvider.adsCanBePlayedOnNextVideoViews();
 			} else {
 				playerTrackerParams.adProduct = 'featured-video-no-preroll';
@@ -360,7 +361,7 @@ require([
 					label: 'recommended-video-depth-' + recommendedVideoDepth
 				});
 
-				ooyalaVideoController.updateAdSet(ooyalaAdSetProvider.get(recommendedVideoDepth + 1));
+				ooyalaVideoController.updateAdSet(ooyalaAdSetProvider.get(recommendedVideoDepth + 1, correlator));
 			});
 
 			track({
