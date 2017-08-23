@@ -46,38 +46,54 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 		return aspectRatio >= 1 || !isNumeric(aspectRatio) ? adSizes.horizontal : adSizes.vertical;
 	}
 
-	function buildAdUnit(slotParams) {
-		var adUnitBuilder = adContext.getContext().opts.megaAdUnitBuilderEnabled ? megaAdUnitBuilder : regularAdUnitBuilder;
+	function buildAdUnit(slotParams, useMegaAdUnitBuilder) {
+		var adUnitBuilder = useMegaAdUnitBuilder ? megaAdUnitBuilder : regularAdUnitBuilder;
 		return adUnitBuilder.build(slotParams.pos, slotParams.src);
 	}
 
+	/**
+	 * Creates VAST URL from given parameters.
+	 * If `options.useMegaAdUnitBuilder` is not explicitly provided, the `context.opts.megaAdUnitBuilderEnabled` is used.
+	 * @param {number} aspectRatio
+	 * @param {object} slotParams
+	 * @param {object} options
+	 * @returns {string}
+	 */
 	function build(aspectRatio, slotParams, options) {
 		options = options || {};
 		slotParams = slotParams || {};
 
 		var correlator = Math.round(Math.random() * 10000000000),
-			params = [
-				'output=vast',
-				'env=vp',
-				'gdfp_req=1',
-				'impl=s',
-				'unviewed_position_start=1',
-				'iu=' + buildAdUnit(slotParams),
-				'sz=' + getSizeByAspectRatio(aspectRatio),
-				'url=' + encodeURIComponent(loc.href),
-				'description_url=' + encodeURIComponent(loc.href),
-				'correlator=' + correlator,
-				'cust_params=' + getCustomParameters(slotParams)
-			],
+			useMegaAdUnitBuilder = options.useMegaAdUnitBuilder,
+			params,
 			url;
+
+		if (typeof useMegaAdUnitBuilder === 'undefined') {
+			useMegaAdUnitBuilder = adContext.getContext().opts.megaAdUnitBuilderEnabled;
+			log(['build', '`useMegaAdUnitBuilder` option is not defined. Fallback to `context.opts.megaAdUnitBuilderEnabled`.'], 'debug', logGroup);
+		}
+
+		params = [
+			'output=vast',
+			'env=vp',
+			'gdfp_req=1',
+			'impl=s',
+			'unviewed_position_start=1',
+			'iu=' + buildAdUnit(slotParams, useMegaAdUnitBuilder),
+			'sz=' + getSizeByAspectRatio(aspectRatio),
+			'url=' + encodeURIComponent(loc.href),
+			'description_url=' + encodeURIComponent(loc.href),
+			'correlator=' + correlator,
+			'cust_params=' + getCustomParameters(slotParams)
+		];
+
+		if (typeof options.numberOfAds !== 'undefined') {
+			params.push('pmad=' + options.numberOfAds);
+		}
 
 		if (options.contentSourceId && options.videoId) {
 			params.push('cmsid=' + options.contentSourceId);
 			params.push('vid=' + options.videoId);
-		}
-
-		if (options.numberOfAds !== undefined) {
-			params.push('pmad=' + options.numberOfAds);
 		}
 
 		if (options.prerollOnly) {
