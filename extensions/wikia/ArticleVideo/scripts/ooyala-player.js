@@ -133,16 +133,12 @@ define('ooyala-player', ['wikia.browserDetect'], function (browserDetect) {
 			params.discoveryApiAdditionalParams = {
 				discovery_profile_id: 0,
 				where: 'labels INCLUDES \'' + options.recommendedLabel + '\''
-			}
+			};
 		}
 
-		if (options.vastUrl) {
+		if (options.vastUrl || options.adSet) {
 			params['google-ima-ads-manager'] = {
-				all_ads: [
-					{
-						tag_url: options.vastUrl
-					}
-				],
+				all_ads: options.adSet ? options.adSet : [{ tag_url: options.vastUrl }],
 				useGoogleAdUI: true,
 				useGoogleCountdown: false,
 				onBeforeAdsManagerStart: function (IMAAdsManager) {
