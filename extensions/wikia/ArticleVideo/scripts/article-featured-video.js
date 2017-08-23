@@ -84,7 +84,10 @@ require([
 				};
 
 			if (ooyalaAdSetProvider.canShowAds()) {
-				options.adSet = ooyalaAdSetProvider.get(1, correlator);
+				options.adSet = ooyalaAdSetProvider.get(1, correlator, {
+					contentSourceId: videoData.dfpContentSourceId,
+					videoId: videoId
+				});
 				options.replayAds = ooyalaAdSetProvider.adsCanBePlayedOnNextVideoViews();
 			} else {
 				playerTrackerParams.adProduct = 'featured-video-no-preroll';
@@ -348,7 +351,8 @@ require([
 			player.mb.subscribe(window.OO.EVENTS.REPORT_DISCOVERY_CLICK, 'featured-video', function (eventName, eventData) {
 				// bucket_info has '2' before the JSON string
 				var bucketInfo = JSON.parse(eventData.clickedVideo.bucket_info.substring(1)),
-					position = bucketInfo.position;
+					position = bucketInfo.position,
+					nextVideoData = eventData.clickedVideo || {};
 
 				recommendedVideoDepth++;
 
@@ -361,7 +365,10 @@ require([
 					label: 'recommended-video-depth-' + recommendedVideoDepth
 				});
 
-				ooyalaVideoController.updateAdSet(ooyalaAdSetProvider.get(recommendedVideoDepth + 1, correlator));
+				ooyalaVideoController.updateAdSet(ooyalaAdSetProvider.get(recommendedVideoDepth + 1, correlator, {
+					contentSourceId: videoData.dfpContentSourceId,
+					videoId: nextVideoData.embed_code
+				}));
 			});
 
 			track({

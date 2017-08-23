@@ -16,17 +16,6 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 			article: 'a',
 			home: 'h'
 		},
-		prebidIds = {
-			aol: 'ao',
-			appnexus: 'an',
-			appnexusAst: 'aa',
-			audienceNetwork: 'fb',
-			indexExchange: 'ie',
-			openx: 'ox',
-			veles: 've',
-			rubicon: 'ru',
-			wikia: 'wk'
-		},
 		slotSources = {
 			gpt: '1',
 			mobile: '1',
@@ -51,7 +40,11 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 			MOBILE_PREFOOTER: 'p',
 			MOBILE_BOTTOM_LEADERBOARD: 'b'
 		},
-		videoProviders = ['appnexusAst', 'veles', 'rubicon'],
+		videoBidders = {
+			appnexusAst: 'aa',
+			veles: 've',
+			rubicon: 'ru'
+		},
 		videoSlots = {
 			oasis: 'INCONTENT_PLAYER',
 			mercury: 'MOBILE_IN_CONTENT'
@@ -74,27 +67,6 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 			src = valueOrX(slotSources, slotSource);
 
 		return skin + slot + pageType + src;
-	}
-
-	function getPrebidSlotId(slotData) {
-		var id = 'x',
-
-			bidder,
-			cpm,
-			size,
-			tier;
-
-		if (slotData.hb_bidder) {
-			cpm = parseFloat(slotData.hb_pb);
-
-			bidder = valueOrX(prebidIds, slotData.hb_bidder);
-			size = slotData.hb_size;
-			tier = 't' + math.leftPad(cpm * 100, 4);
-
-			id = bidder + size + tier;
-		}
-
-		return id + slotData.wsi.substr(0, 2);
 	}
 
 	function getAbTestId(slotData) {
@@ -125,17 +97,16 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 
 	function constructOutstreamString(videoTargeting) {
 		var bidderName = videoTargeting.hb_bidder,
-			isVideoProvider = videoProviders.indexOf(bidderName) > -1;
+			isVideoProvider = !!videoBidders[bidderName];
 
 		if (isVideoProvider && videoTargeting.hb_pb) {
-			return prebidIds[bidderName] + math.leftPad(parseFloat(videoTargeting.hb_pb) * 100, 4);
+			return videoBidders[bidderName] + math.leftPad(parseFloat(videoTargeting.hb_pb) * 100, 4);
 		}
 	}
 
 	return {
 		getAbTestId: getAbTestId,
 		getOutstreamData: getOutstreamData,
-		getPrebidSlotId: getPrebidSlotId,
 		getWikiaSlotId: getWikiaSlotId
 	};
 });

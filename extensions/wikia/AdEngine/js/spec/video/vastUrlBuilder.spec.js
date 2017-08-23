@@ -193,5 +193,30 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 		expect(vastUrl).not.toContain('&vpos=preroll');
 		expect(vastUrl).not.toContain('&vpos');
 	});
+
+	it('Build VAST URL with content source and video ids', function () {
+		var vastUrl = getModule().build(1, mocks.slotParams, {
+			contentSourceId: '123',
+			videoId: 'abc'
+		});
+
+		expect(vastUrl).toMatch(/&cmsid=123&vid=abc/);
+	});
+
+	it('Build VAST URL without content source and video ids when at least one is missing', function () {
+		var vastUrl = getModule().build(1, mocks.slotParams, {
+			contentSourceId: '123'
+		});
+
+		expect(vastUrl).not.toMatch(/&cmsid=123/);
+	});
+
+	it('Build VAST URL without content source and video ids when at least one is missing', function () {
+		var vastUrl = getModule().build(1, mocks.slotParams, {
+			videoId: 'abc'
+		});
+
+		expect(vastUrl).not.toMatch(/&vid=abc/);
+	});
 });
 

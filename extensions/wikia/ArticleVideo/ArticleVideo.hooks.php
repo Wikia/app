@@ -20,7 +20,7 @@ class ArticleVideoHooks {
 			$out->addJsConfigVars( [
 				'wgOoyalaParams' => [
 					'ooyalaPCode' => $wg->ooyalaApiConfig['pcode'],
-					'ooyalaPlayerBrandingId' => $wg->ooyalaApiConfig['playerBrandingId'],
+					'ooyalaPlayerBrandingId' => $wg->ooyalaApiConfig['playerBrandingId']
 				]
 			] );
 		}

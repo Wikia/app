@@ -35,6 +35,7 @@ class ArticleVideoContext {
 			$videoData['labels'] = $api->getLabels( $videoData['videoId'] );
 			$videoData['duration'] = $api->getDuration( $videoData['videoId'] );
 			$videoData['recommendedLabel'] = $wg->featuredVideoRecommendedVideosLabel;
+			$videoData['dfpContentSourceId'] = $wg->AdDriverDfpOoyalaContentSourceId;
 
 			return $videoData;
 		}

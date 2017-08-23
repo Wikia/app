@@ -56,7 +56,7 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 		options = options || {};
 		slotParams = slotParams || {};
 
-		var correlator = options.correlator ? options.correlator : Math.round(Math.random() * 10000000000),
+		var correlator = options.correlator || Math.round(Math.random() * 10000000000),
 			params = [
 				'output=vast',
 				'env=vp',
@@ -71,6 +71,11 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 				'cust_params=' + getCustomParameters(slotParams)
 			],
 			url;
+
+		if (options.contentSourceId && options.videoId) {
+			params.push('cmsid=' + options.contentSourceId);
+			params.push('vid=' + options.videoId);
+		}
 
 		if (options.numberOfAds !== undefined) {
 			params.push('pmad=' + options.numberOfAds);

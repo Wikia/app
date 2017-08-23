@@ -2,8 +2,9 @@
 define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.slotsContext',
+	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
 	'wikia.log'
-], function (adContext, slotsContext, log) {
+], function (adContext, slotsContext, instartLogic, log) {
 	'use strict';
 
 	var bidderName = 'rubicon', // aka rubicon vulcan
@@ -31,7 +32,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 		};
 
 	function isEnabled() {
-		return adContext.getContext().bidders.rubicon;
+		return adContext.getContext().bidders.rubicon && !instartLogic.isBlocking();
 	}
 
 	function prepareAdUnit(slotName, config) {
