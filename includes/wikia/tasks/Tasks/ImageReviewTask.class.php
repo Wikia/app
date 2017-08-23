@@ -189,6 +189,23 @@ class ImageReviewTask extends BaseTask {
 		return $result;
 	}
 
+	/**
+	 * Invalidates provided file page (use page ID) by bumping page_touched entry in `page` table
+	 * and purging CDN cache.
+	 *
+	 * This task is queued when image review status changes to reflect this change on the file page.
+	 *
+	 * @see SUS-2650
+	 *
+	 * @param int $pageId
+	 */
+	public function invalidateFilePage( int $pageId ) {
+		$title = \Title::newFromId( $pageId );
+
+		$title->invalidateCache();
+		$title->purgeSquid();
+	}
+
 	private function isTop200( $wikiId ) {
 		global $wgExternalDatawareDB;
 		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalDatawareDB );
