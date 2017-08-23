@@ -13,6 +13,7 @@ $messages['en'] = array(
 	'feed-unavailable' => 'Syndication feeds are not available',
 	'feed-atom' => 'Atom',
 	'feed-rss' => 'RSS',
+	'file-resolution-exceeded' => 'Provided image resolution ($1 megapixels) exceeds maximum allowed resolution of $2 megapixels for $3 MIME type.',
 	'fileappenderrorread' => 'Could not read "$1" during append.',
 	'fileappenderror' => 'Could not append "$1" to "$2".',
 	'filecopyerror' => 'Could not copy file "$1" to "$2".',
@@ -215,6 +216,7 @@ $messages['qqq'] = array(
 	'feed-unavailable' => 'This message is displayed when a user tries to use an RSS or Atom feed on a wiki where such feeds have been disabled.',
 	'feed-atom' => '{{optional}}',
 	'feed-rss' => '{{optional}}',
+	'file-resolution-exceeded' => 'Error displayed when user tries to upload image with too high resolution',
 	'fileappenderrorread' => '"Append" is a computer procedure, explained on [http://en.wikipedia.org/wiki/Append Wikipedia].
 
 $1 is a filename, I think.',
