@@ -21,7 +21,7 @@
 			<div class="mcf-card-ns-placeholder" data-tracking="card-2"></div>
 			<div class="mcf-card-wiki-placeholder" data-tracking="card-3"></div>
 		</div>
-		<? if ( $discussionsEnabled ): ?>
+		<? if ( $canShowDiscussions ): ?>
 			<div class="mcf-row">
 				<div class="mcf-discussions-placeholder"></div>
 				<div class="mcf-col">

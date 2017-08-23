@@ -66,11 +66,11 @@ class RecirculationController extends WikiaController {
 			$this->response->setBody('');
 		}
 		$themeSettings = new ThemeSettings();
-		$discussionsEnabled = WikiFactory::getVarValueByName( 'wgEnableDiscussions', $wgCityId );
+		$canShowDiscussions = RecirculationHooks::canShowDiscussions( $wgCityId );
 		$topWikiArticles = $this->getTopWikiArticles();
 		$numberOfWikiArticles = 8;
 		$numberOfNSArticles = 9;
-		if ( !$discussionsEnabled ) {
+		if ( !$canShowDiscussions ) {
 			$numberOfWikiArticles ++;
 			$numberOfNSArticles ++;
 		}
@@ -83,7 +83,7 @@ class RecirculationController extends WikiaController {
 		$this->response->setVal( 'sitename', $wgSitename );
 		$this->response->setVal( 'topWikiArticles', $topWikiArticles );
 		$this->response->setVal( 'wikiRecommendations', $this->getWikiRecommendations() );
-		$this->response->setVal( 'discussionsEnabled', $discussionsEnabled );
+		$this->response->setVal( 'canShowDiscussions', $canShowDiscussions );
 		$this->response->setVal( 'numberOfWikiArticles', $numberOfWikiArticles );
 		$this->response->setVal( 'numberOfNSArticles', $numberOfNSArticles );
 
