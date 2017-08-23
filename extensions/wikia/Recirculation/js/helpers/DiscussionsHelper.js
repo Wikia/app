@@ -23,6 +23,7 @@ define('ext.wikia.recirculation.helpers.discussions', [
 				latest: true
 			},
 			callback: function (response) {
+				$response.find('.discussion-timestamp').timeago();
 				deferred.resolve(response);
 			}
 		});
