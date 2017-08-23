@@ -51,6 +51,8 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 			} else if (type === 'storyStream') {
 				template = templates['client/Recirculation_storyStream.mustache'];
 				newsAndStoriesItem.buttonLabel = $.msg('recirculation-explore-posts');
+			} else if (type === 'video') {
+				newsAndStoriesItem.video = true;
 			}
 
 			newsAndStoriesItem.trackingLabels = $this.data('tracking') + ',' + type;
