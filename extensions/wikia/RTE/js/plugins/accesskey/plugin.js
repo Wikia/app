@@ -1,7 +1,6 @@
 CKEDITOR.plugins.add('rte-accesskey',
 {
 	init: function(editor) {
-		debugger;
 		if (CKEDITOR.env.ie) {
 			var accessibleElements = [];
 			$('*[accesskey]').each(function(ev) {

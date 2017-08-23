@@ -5,7 +5,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 CKEDITOR.themes.add( 'wikia', (function()
 {
-	debugger;
 	return {
 		build : function( editor, themePath )
 		{
@@ -192,7 +191,6 @@ CKEDITOR.themes.add( 'wikia', (function()
 
 CKEDITOR.editor.prototype.getThemeSpace = function( spaceName )
 {
-debugger;
 	var elementId = WikiaEditor.instanceId,
 		getSpaceId = function(editorName, spaceName) {
 			switch (spaceName) {
