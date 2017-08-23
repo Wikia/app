@@ -197,11 +197,10 @@ describe('ext.wikia.adEngine.video.ooyalaAdSetProvider', function () {
 	});
 
 	it('Should detect not correct input variable', function () {
-		var errorMessage = 'Not correct input variables';
-		expect(function () { getModule().get(-10); }).toThrow(errorMessage);
-		expect(function () { getModule().get('asdasd'); }).toThrow(errorMessage);
-		expect(function () { getModule().get({}); }).toThrow(errorMessage);
-		expect(function () { getModule().get(); }).not.toThrow(errorMessage);
+		expect(getModule().get(-10).length).toEqual(0);
+		expect(getModule().get('asdasd').length).toEqual(0);
+		expect(getModule().get({}).length).toEqual(0);
+		expect(getModule().get().length).toEqual(1);
 	});
 
 	it('Should pass correlator variable', function () {

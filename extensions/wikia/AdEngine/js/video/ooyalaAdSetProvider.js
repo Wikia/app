@@ -73,11 +73,7 @@ define('ext.wikia.adEngine.video.ooyalaAdSetProvider', [
 	}
 
 	function get(videoDepth, correlator, videoInfo) {
-		if (!isVideoDepthValid(videoDepth)) {
-			throw 'Not correct input variables';
-		}
-
-		if (!canShowAds()) {
+		if (!canShowAds() || !isVideoDepthValid(videoDepth)) {
 			return [];
 		}
 
