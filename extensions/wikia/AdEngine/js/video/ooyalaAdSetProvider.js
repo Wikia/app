@@ -40,7 +40,7 @@ define('ext.wikia.adEngine.video.ooyalaAdSetProvider', [
 			}, {
 				vpos: ad.vpos,
 				correlator: correlator,
-				contentSourceId: videoInfo.dfpContentSourceId,
+				contentSourceId: videoInfo.contentSourceId,
 				videoId: videoInfo.videoId
 			})
 		};
@@ -59,7 +59,7 @@ define('ext.wikia.adEngine.video.ooyalaAdSetProvider', [
 	}
 
 	function canShowNextVideoAds() {
-		return adContext && adContext.getContext() && adContext.getContext().opts.replayAdsForFV;
+		return canShowAds() && adContext.getContext().opts.replayAdsForFV;
 	}
 
 	function isVideoDepthValid(videoDepth) {
