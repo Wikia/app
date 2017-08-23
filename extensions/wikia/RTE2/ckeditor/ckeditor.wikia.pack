@@ -139,7 +139,6 @@ packages :
 				
 				'../js/RTE.js'
 				'../js/jquery.editor.js'
-				'lang/en.js'			
 				'plugins/toolbar/plugin.js'
 				'plugins/indent/plugin.js'
 				'plugins/wysiwygarea/plugin.js'
@@ -228,7 +227,11 @@ packages :
 				//'../js/plugins/template/dialogs/template.js',
 				//'../js/plugins/temporary-save/plugin.js',
 				//'../js/plugins/tools/plugin.js',
-					'plugins/lang.js'	
+
+					//language files
+					'lang/lang.js'			
+					'plugins/lang.js'
+					
 				]
 		}
 

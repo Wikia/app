@@ -4,7 +4,7 @@ foo();
 
 function foo(){
 debugger;
-if(window.mw.msg('rte-ck-toolbarCollapse') != 'Collapse Toolbar'){
+if(window.mw.msg('rte-ck-toolbarCollapse') == '<rte-ck-toolbarCollapse>'){
 setTimeout(foo,1000);
 }
 

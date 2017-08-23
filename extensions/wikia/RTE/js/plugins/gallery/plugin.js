@@ -2,7 +2,6 @@
 CKEDITOR.plugins.add('rte-gallery',
 {
 	init: function(editor) {
-		debugger;
 		var self = this;
 
 		editor.on('wysiwygModeReady', function() {
