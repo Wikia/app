@@ -17,6 +17,7 @@ class RecirculationController extends WikiaController {
 	}
 
 	public function discussions() {
+		global $wgLanguageCode;
 		$cityId = $this->request->getVal( 'cityId', null );
 		$sortKey =
 			$this->request->getVal( 'latest', false )
@@ -40,7 +41,10 @@ class RecirculationController extends WikiaController {
 					$postObjects[] = $post->jsonSerialize();
 				}
 
-				$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_PHP );
+				if ($wgLanguageCode === 'en') {
+					//This is temporary to render new discusions card on en wikis (templates in php and mustache have the same name)
+					$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_PHP );
+				}
 				$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 				$this->response->setData( [
 					'title' => wfMessage( 'recirculation-discussion-title' )->plain(),
@@ -57,8 +61,12 @@ class RecirculationController extends WikiaController {
 	}
 
 	public function footer() {
-		global $wgSitename, $wgCityId;
+		global $wgSitename, $wgCityId, $wgLanguageCode;
 
+		if ($wgLanguageCode !== 'en') {
+			//This is temporary to supress MCF for old discussions on non-en wikis;
+			$this->response->setBody('');
+		}
 		$themeSettings = new ThemeSettings();
 		$discussionsEnabled = WikiFactory::getVarValueByName( 'wgEnableDiscussions', $wgCityId );
 		$topWikiArticles = $this->getTopWikiArticles();

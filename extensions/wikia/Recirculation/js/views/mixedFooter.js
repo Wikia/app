@@ -11,9 +11,10 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 		var newsAndStoriesList = data.nsItems.items,
 			wikiArticlesList = data.wikiItems.items,
 			templateList = getTemplateList(newsAndStoriesList),
-			templates = {};
-
-		$('.mcf-discussions-placeholder').replaceWith(data.discussions);
+			templates = {},
+			$discussions = $(data.discussions);
+		$('.mcf-discussions-placeholder').replaceWith($discussions);
+		$discussions.find('.discussion-timestamp').timeago();
 
 		utils.loadTemplates(templateList)
 			.then(function (data) {
