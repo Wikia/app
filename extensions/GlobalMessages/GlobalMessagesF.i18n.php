@@ -21439,7 +21439,7 @@ Ce nò, tu puè ausà 'u module facile aqquà sotte. 'U commende tune avène agg
 
 $messages['ru'] = array(
 	'friday' => 'пятница',
-	'fri' => 'Пт',
+	'fri' => 'пт',
 	'february' => 'февраль',
 	'february-gen' => 'февраля',
 	'feb' => 'фев',
@@ -24240,7 +24240,7 @@ $messages['sus-1393'] = array(
 	'feed-unavailable' => '聯合訂閱並無提供',
 	'feed-atom' => 'Atom',
 	'feed-rss' => 'RSS',
-	'file-resolution-exceeded' => 'Provided image resolution ($1 megapixels) exceeds maximum allowed resolution of $2 megapixels for $3 MIME type.',
+	'file-resolution-exceeded' => '對於使用$3類型的MIME檔案來說，您所提供的圖像解析度（$1百萬像素）已超出允許的最大$2百萬像素。',
 	'fileappenderrorread' => '當附加時無法讀取"$1"。',
 	'fileappenderror' => '不能附加"$1"到"$2"。',
 	'filecopyerror' => '無法複製檔案"$1"到"$2"。',
