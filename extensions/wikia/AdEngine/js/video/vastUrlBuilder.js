@@ -91,6 +91,11 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 			params.push('pmad=' + options.numberOfAds);
 		}
 
+		if (options.contentSourceId && options.videoId) {
+			params.push('cmsid=' + options.contentSourceId);
+			params.push('vid=' + options.videoId);
+		}
+
 		if (options.prerollOnly) {
 			params.push('vpos=preroll');
 		}

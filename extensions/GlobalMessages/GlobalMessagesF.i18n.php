@@ -13,6 +13,7 @@ $messages['en'] = array(
 	'feed-unavailable' => 'Syndication feeds are not available',
 	'feed-atom' => 'Atom',
 	'feed-rss' => 'RSS',
+	'file-resolution-exceeded' => 'Provided image resolution ($1 megapixels) exceeds maximum allowed resolution of $2 megapixels for $3 MIME type.',
 	'fileappenderrorread' => 'Could not read "$1" during append.',
 	'fileappenderror' => 'Could not append "$1" to "$2".',
 	'filecopyerror' => 'Could not copy file "$1" to "$2".',
@@ -215,6 +216,7 @@ $messages['qqq'] = array(
 	'feed-unavailable' => 'This message is displayed when a user tries to use an RSS or Atom feed on a wiki where such feeds have been disabled.',
 	'feed-atom' => '{{optional}}',
 	'feed-rss' => '{{optional}}',
+	'file-resolution-exceeded' => 'Error displayed when user tries to upload image with too high resolution',
 	'fileappenderrorread' => '"Append" is a computer procedure, explained on [http://en.wikipedia.org/wiki/Append Wikipedia].
 
 $1 is a filename, I think.',
@@ -21439,7 +21441,7 @@ Ce nò, tu puè ausà 'u module facile aqquà sotte. 'U commende tune avène agg
 
 $messages['ru'] = array(
 	'friday' => 'пятница',
-	'fri' => 'Пт',
+	'fri' => 'пт',
 	'february' => 'февраль',
 	'february-gen' => 'февраля',
 	'feb' => 'фев',
@@ -24240,7 +24242,7 @@ $messages['sus-1393'] = array(
 	'feed-unavailable' => '聯合訂閱並無提供',
 	'feed-atom' => 'Atom',
 	'feed-rss' => 'RSS',
-	'file-resolution-exceeded' => 'Provided image resolution ($1 megapixels) exceeds maximum allowed resolution of $2 megapixels for $3 MIME type.',
+	'file-resolution-exceeded' => '對於使用$3類型的MIME檔案來說，您所提供的圖像解析度（$1百萬像素）已超出允許的最大$2百萬像素。',
 	'fileappenderrorread' => '當附加時無法讀取"$1"。',
 	'fileappenderror' => '不能附加"$1"到"$2"。',
 	'filecopyerror' => '無法複製檔案"$1"到"$2"。',

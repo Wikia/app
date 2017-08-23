@@ -89,6 +89,9 @@ require([
 					pos: 'FEATURED',
 					src: 'premium',
 					rv: 1
+				}, {
+					contentSourceId: videoData.dfpContentSourceId,
+					videoId: videoId
 				});
 
 				options.replayAds = adContext.getContext().opts.replayAdsForFV;
@@ -225,12 +228,15 @@ require([
 			});
 		}
 
-		function configureAdSet(videoDepth) {
-			var adSet = [],
-				adVideoCapping = 3,
-				isReplayAdSupported = adContext.getContext().opts.replayAdsForFV,
-				shouldPlayAdOnNextVideo = videoDepth % adVideoCapping === 0,
-				showAds = adContext && adContext.getContext().opts.showAds;
+		function configureAdSet(nextVideoData, videoDepth) {
+			var adContextOpts = adContext.getContext().opts,
+				adSet = [],
+				adsFrequency = adContextOpts.fvAdsFrequency,
+				isReplayAdSupported = adContextOpts.replayAdsForFV,
+				shouldPlayAdOnNextVideo = videoDepth % adsFrequency === 0,
+				showAds = adContextOpts.showAds;
+
+			nextVideoData = nextVideoData || {};
 
 			if (isReplayAdSupported && shouldPlayAdOnNextVideo && vastUrlBuilder && showAds) {
 				adSet = [
@@ -238,7 +244,10 @@ require([
 						tag_url: vastUrlBuilder.build(640/480, {
 							pos: 'FEATURED',
 							src: 'premium',
-							rv: Math.floor(videoDepth / adVideoCapping) + 1
+							rv: Math.floor(videoDepth / adsFrequency) + 1
+						}, {
+							contentSourceId: videoData.dfpContentSourceId,
+							videoId: nextVideoData.embed_code
 						})
 					}
 				];
@@ -389,7 +398,7 @@ require([
 					label: 'recommended-video-depth-' + recommendedVideoDepth
 				});
 
-				configureAdSet(recommendedVideoDepth);
+				configureAdSet(eventData.clickedVideo, recommendedVideoDepth);
 			});
 
 			track({

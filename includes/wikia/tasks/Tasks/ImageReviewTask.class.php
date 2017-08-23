@@ -122,6 +122,12 @@ class ImageReviewTask extends BaseTask {
 			$key = wfForeignMemcKey( $cityId, 'image-review', $pageId, $revisionId );
 
 			WikiaDataAccess::cachePurge( $key );
+
+			// SUS-2650: invalidate file page of reviewed image
+			$task = new ImageReviewTask();
+			$task->call( 'invalidateFilePage', (int) $pageId );
+			$task->wikiId( $cityId );
+			$task->queue();
 		}
 	}
 
@@ -187,6 +193,23 @@ class ImageReviewTask extends BaseTask {
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Invalidates provided file page (use page ID) by bumping page_touched entry in `page` table
+	 * and purging CDN cache.
+	 *
+	 * This task is queued when image review status changes to reflect this change on the file page.
+	 *
+	 * @see SUS-2650
+	 *
+	 * @param int $pageId
+	 */
+	public function invalidateFilePage( int $pageId ) {
+		$title = \Title::newFromId( $pageId );
+
+		$title->invalidateCache();
+		$title->purgeSquid();
 	}
 
 	private function isTop200( $wikiId ) {

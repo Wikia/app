@@ -44,6 +44,7 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 			mocks.instantGlobals,
 			mocks.log,
 			mocks.win,
+			undefined,
 			bidders.amazonMatch,
 			bidders.rubiconFastlane
 		);
