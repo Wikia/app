@@ -150,16 +150,23 @@ class AsyncTaskList {
 		if ( is_int( $createdBy ) ) {
 			$user = \User::newFromId( $createdBy );
 			$user->load();
-		} elseif ( !( $createdBy instanceof \User ) ) {
-			$user = \User::newFromName( $createdBy );
-			$user->load();
+
+			$userName = $user->getName();
+			$userId = $createdBy;
+		} elseif ( $createdBy instanceof \User ) {
+			$userName = $createdBy->getName();
+			$userId = $createdBy->getId();
 		} else {
-			$user = $createdBy;
+			// SUS-1594: An Async Task may be queued so early in execution that neither $wgUser
+			// nor $wgAuth (required for User::newFromName) are set.
+			// In this case we have to fall back to using IP address from request.
+			$userName = \IP::sanitizeIP( $createdBy );
+			$userId = 0;
 		}
 
 		$this->createdBy = (object) [
-			'name' => $user->getName(),
-			'id' => $user->getId(),
+			'name' => $userName,
+			'id' => $userId,
 		];
 
 		return $this;
