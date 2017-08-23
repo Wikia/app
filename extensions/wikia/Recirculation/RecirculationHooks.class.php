@@ -82,13 +82,16 @@ class RecirculationHooks {
 
 	static public function canShowDiscussions( $cityId ) {
 		$discussionsAlias = WikiFactory::getVarValueByName( 'wgRecirculationDiscussionsAlias', $cityId );
+		var_dump($discussionsAlias);
 
 		if ( !empty( $discussionsAlias ) ) {
 			$cityId = $discussionsAlias;
 		}
 
 		$discussionsEnabled = WikiFactory::getVarValueByName( 'wgEnableDiscussions', $cityId );
+		var_dump($discussionsEnabled);
 		$recirculationDiscussionsEnabled = WikiFactory::getVarValueByName( 'wgEnableRecirculationDiscussions', $cityId );
+		var_dump($recirculationDiscussionsEnabled);
 
 		if ( !empty( $discussionsEnabled ) && !empty( $recirculationDiscussionsEnabled ) ) {
 			return true;
