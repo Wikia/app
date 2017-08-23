@@ -32,29 +32,27 @@ class RecirculationController extends WikiaController {
 			$discussionsDataService = new DiscussionsDataService( $cityId );
 			$posts = $discussionsDataService->getData( 'posts', $sortKey )['posts'];
 
-			if ( count( $posts ) > 0 ) {
-				$discussionsUrl = "$discussionsDataService->server/d/f";
+			$discussionsUrl = "$discussionsDataService->server/d/f";
 
-				$postObjects = [];
+			$postObjects = [];
 
-				foreach ( $posts as $post ) {
-					$postObjects[] = $post->jsonSerialize();
-				}
-
-				if ($wgLanguageCode === 'en') {
-					//This is temporary to render new discusions card on en wikis (templates in php and mustache have the same name)
-					$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_PHP );
-				}
-				$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
-				$this->response->setData( [
-					'title' => wfMessage( 'recirculation-discussion-title' )->plain(),
-					'linkText' => wfMessage( 'recirculation-discussion-link-text' )->plain(),
-					'discussionsUrl' => $discussionsUrl,
-					'posts' => $postObjects,
-				] );
-
-				return true;
+			foreach ( $posts as $post ) {
+				$postObjects[] = $post->jsonSerialize();
 			}
+
+			if ($wgLanguageCode === 'en') {
+				//This is temporary to render new discusions card on en wikis (templates in php and mustache have the same name)
+				$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_PHP );
+			}
+			$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
+			$this->response->setData( [
+				'title' => wfMessage( 'recirculation-discussion-title' )->plain(),
+				'linkText' => wfMessage( 'recirculation-discussion-link-text' )->plain(),
+				'discussionsUrl' => $discussionsUrl,
+				'posts' => $postObjects,
+			] );
+
+			return true;
 		}
 
 		return false;
