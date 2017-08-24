@@ -2,9 +2,8 @@
 define('ext.wikia.adEngine.provider.gpt.adElement', [
 	'wikia.document',
 	'wikia.log',
-	'ext.wikia.adEngine.provider.gpt.adSizeConverter',
 	'ext.wikia.adEngine.provider.gpt.adSizeFilter'
-], function (doc, log, adSizeConverter, adSizeFilter) {
+], function (doc, log, adSizeFilter) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.adElement';

@@ -1,12 +1,13 @@
-/*global define*/
+/*global define, require*/
 define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.provider.gpt.adSizeConverter',
 	'wikia.abTest',
 	'wikia.document',
 	'wikia.log',
+	'wikia.window',
 	require.optional('wikia.breakpointsLayout')
-], function (adContext, adSizeConverter, abTest, doc, log, breakpointsLayout) {
+], function (adContext, adSizeConverter, abTest, doc, log, win, breakpointsLayout) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.adSizeFilter',
@@ -30,12 +31,12 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 	}
 
 	function removeSize(slotSizes, sizeToRemove) {
-		var adContext = window.Mercury ?
-				window.Mercury.Modules.Ads.getInstance().adsContext :
-				window.ads.context,
+		var adContext = win.Mercury ?
+				win.Mercury.Modules.Ads.getInstance().adsContext :
+				win.ads.context,
 			re = new RegExp(',?' + sizeToRemove + ',?');
 
-		if (adContext.targeting.hasFeaturedVideo) {
+		if (adContext && adContext.targeting && adContext.targeting.hasFeaturedVideo) {
 			slotSizes = slotSizes.replace(re, '');
 		}
 
@@ -44,7 +45,8 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 
 	function filterSizes(slotName, slotSizes) {
 		var isPremiumLayout = context.opts.premiumAdLayoutEnabled,
-			footerSize;
+			footerSize,
+			sizesArray;
 		log(['filterSizes', slotName, slotSizes], 'debug', logGroup);
 
 		if (slotName === 'TOP_LEADERBOARD') {
@@ -53,7 +55,7 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 			slotSizes = removeSize(slotSizes, '2x2');
 		}
 
-		var sizesArray = adSizeConverter.toArray(slotSizes);
+		sizesArray = adSizeConverter.toArray(slotSizes);
 
 		switch (true) {
 			case slotName.indexOf('TOP_LEADERBOARD') > -1:
