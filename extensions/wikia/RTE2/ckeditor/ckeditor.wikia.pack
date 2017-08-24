@@ -227,6 +227,8 @@ packages :
 				//'../js/plugins/template/dialogs/template.js',
 				//'../js/plugins/temporary-save/plugin.js',
 				//'../js/plugins/tools/plugin.js',
+					//experimental!
+					'themes/wikia/theme.js'
 
 					//language files
 					'lang/lang.js'			
