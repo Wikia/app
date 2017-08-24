@@ -44,6 +44,7 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 				template = templates['client/Recirculation_article.mustache'],
 				newsAndStoriesItem = newsAndStoriesList[index],
 				type = newsAndStoriesItem.type || 'ns-article';
+				newsAndStoriesItem.shortTitle = newsAndStoriesItem.title;
 
 			if (type === 'topic') {
 				template = templates['client/Recirculation_topic.mustache'];
@@ -65,9 +66,14 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 			var $this = $(this),
 				template = templates['client/Recirculation_article.mustache'],
 				wikiArticle = wikiArticlesList[index];
+				wikiArticle.shortTitle = wikiArticle.title;
 
 			if (!wikiArticle.thumbnail) {
 				wikiArticle.fandomHeartSvg = utils.fandomHeartSvg;
+			}
+
+			if (wikiArticle.title.length > 90) {
+				wikiArticle.shortTitle = wikiArticle.title.substring(0, 80) + '...';
 			}
 
 			wikiArticle.trackingLabels = $this.data('tracking') + ',wiki-article';
