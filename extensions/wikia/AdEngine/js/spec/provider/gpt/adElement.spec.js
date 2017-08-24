@@ -10,15 +10,8 @@ describe('ext.wikia.adEngine.provider.gpt.adElement', function () {
 			[300, 600]
 		],
 		mocks = {
-			adSizeConverter: {
-				convert: function () {
-					return adSizes;
-				}
-			},
 			adSizeFilter: {
-				filter: function (slotName, sizes) {
-					return sizes;
-				}
+				filter: noop
 			},
 			log: noop
 		},
@@ -29,7 +22,6 @@ describe('ext.wikia.adEngine.provider.gpt.adElement', function () {
 		AdElement = modules['ext.wikia.adEngine.provider.gpt.adElement'](
 			document,
 			mocks.log,
-			mocks.adSizeConverter,
 			mocks.adSizeFilter
 		);
 		slot = {
@@ -60,6 +52,7 @@ describe('ext.wikia.adEngine.provider.gpt.adElement', function () {
 	});
 
 	it('Set sizes and add as json to attribute', function () {
+		spyOn(mocks.adSizeFilter, 'filter').and.returnValue(adSizes);
 		slotTargeting.size = '300x250,300x600';
 
 		var element = new AdElement('TOP_RIGHT_BOXAD', '/ELEMENT_SLOTPATH', slotTargeting);
