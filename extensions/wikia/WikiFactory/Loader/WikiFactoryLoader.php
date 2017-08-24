@@ -890,6 +890,12 @@ class WikiFactoryLoader {
 	 * @return bool if true is returned, the caller should set $wgReadOnly flag
 	 */
 	public static function checkPerClusterReadOnlyFlag( string $cluster ) : bool {
+		// we're already in DB read-only mode (are we in Reston DC?), leave early
+		global $wgDBReadOnly;
+		if ( $wgDBReadOnly === true ) {
+			return false;
+		}
+
 		$readOnlyCluster = WikiFactory::getVarValueByName( 'wgReadOnlyCluster', Wikia::COMMUNITY_WIKI_ID );
 		return $readOnlyCluster === $cluster;
 	}
