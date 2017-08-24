@@ -15,8 +15,8 @@ class UserTagsStrategy extends WikiaObject {
 	const GLOBAL_GROUPS_RANK = [
 		'staff',
 		'helper',
-		'global-discussions-moderator',
 		'vstf',
+		'global-discussions-moderator',
 		'voldev',
 		'vanguard',
 		'council',
