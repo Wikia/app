@@ -2,7 +2,7 @@ bar();
 
 function bar(){
 debugger;
-if(window.mw.msg('rte-ck-common-ok') == '<rte-ck-common-ok>'){
+if(window.mw.msg('rte-ck-unlink') == '<rte-ck-unlink>'){
 setTimeout(bar,1000);
 }
 

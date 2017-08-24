@@ -47,7 +47,6 @@
 		},
 
 		activate: function() {
-			console.log("odpala sie");
 			this.enabled = true;
 			if (this.enabled) {
 				this.active = this.editor.mode === 'source';
@@ -99,7 +98,6 @@
 		},
 
 		loadState: function( initial ) {
-			console.log("loadState" + initial);
 			var wide = $.storage.get(this.storageEntry) == true;
 			this.editor.log('widescreen::load() - wide = '+(wide?'true':'false'));
 			if (initial) {
