@@ -420,6 +420,8 @@ class MercuryApiController extends WikiaController {
 					}
 				}
 			}
+
+            \Hooks::run( 'MercuryPageData', [ $title, &$data ] );
 		} catch ( WikiaHttpException $exception ) {
 			$this->response->setCode( $exception->getCode() );
 

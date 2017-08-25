@@ -10,3 +10,4 @@ $wgAutoloadClasses['GoogleAmpHelper'] =  $dir . 'GoogleAmpHelper.class.php';
 
 // hooks
 $wgHooks['BeforePageDisplay'][] = 'GoogleAmpHelper::onBeforePageDisplay';
+$wgHooks['MercuryPageData'][] = 'GoogleAmpHelper::onMercuryPageData';

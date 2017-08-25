@@ -3,8 +3,16 @@
 class GoogleAmpHelper {
 
     static public function isAmpEnabled ( Title $title): bool {
-        global $wgEnableGoogleAmp, $wgGoogleAmpArticles;
-        return true;
+        global $wgEnableGoogleAmp, $wgGoogleAmpNamespaces, $wgGoogleAmpArticleBlacklist;
+
+        if ( $wgEnableGoogleAmp ) {
+            if ( in_array( $title->getNamespace(), $wgGoogleAmpNamespaces ) ) {
+                if ( !in_array( $title->getPrefixedDBkey(), $wgGoogleAmpArticleBlacklist ) ) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     static public function getAmpAddress( Title $title ) {
@@ -23,6 +31,14 @@ class GoogleAmpHelper {
         $article = $title->getPrefixedDBkey();
 
         return str_replace( '{WIKI}', $wikiServer, str_replace( '{ARTICLE}', $article, $wgGoogleAmpAddress));;
+    }
+
+    static public function onMercuryPageData( Title $title, &$data ): bool {
+        $ampAddress = self::getAmpAddress( $title );
+        if ( $ampAddress ) {
+            $data['amphtml'] = $ampAddress;
+        }
+        return true;
     }
 
     /**
