@@ -37,8 +37,8 @@ class GoogleAmpHelper {
 		if ( preg_match( $serverRegex, $wikiServer, $groups ) !== 1 ) {
 			return null;
 		}
-		$wikiServer = $groups[1];
-		$article = $title->getPrefixedDBkey();
+		$wikiServer = rawurlencode( $groups[1] );
+		$article = rawurlencode( $title->getPrefixedDBkey() );
 
 		return str_replace( '{WIKI}', $wikiServer, str_replace( '{ARTICLE}', $article, $wgGoogleAmpAddress ) );
 	}
