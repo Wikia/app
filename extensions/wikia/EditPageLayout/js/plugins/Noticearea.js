@@ -16,12 +16,12 @@
 		totalItemsCount: 0,
 
 		beforeInit: function(editor){
-			editor.on('notice',this.proxy(this.add));
+			console.trace('WE.plugins');		editor.on('notice',this.proxy(this.add));
 			editor.on('editorClick', this.proxy(this.dismissClicked));
 		},
 
 		initDom: function(editor){
-			var self = this;
+			console.trace('WE.plugins');		var self = this;
 
 			self.el = editor.getSpace('notices-short');
 			self.ul = self.el.find('ul').first();
@@ -60,23 +60,23 @@
 		},
 
 		getAllNotices: function(){
-			return this.ul.children('.' + this.itemClass);
+			console.trace('WE.plugins');		return this.ul.children('.' + this.itemClass);
 		},
 
 		getCount: function(){
-			return this.getAllNotices().length;
+			console.trace('WE.plugins');		return this.getAllNotices().length;
 		},
 
 		getTotalCount: function(){
-			return this.totalItemsCount;
+			console.trace('WE.plugins');		return this.totalItemsCount;
 		},
 
 		getNoticeByHash: function(hash){
-			return this.getAllNotices().filter('[' + this.dataAttr + '="' + hash + '"]');
+			console.trace('WE.plugins');		return this.getAllNotices().filter('[' + this.dataAttr + '="' + hash + '"]');
 		},
 
 		getNotice: function(hashOrElement){
-			var el;
+			console.trace('WE.plugins');		var el;
 
 			if(typeof hashOrElement == 'string'){
 				el = this.getNoticeByHash(hashOrElement);
@@ -90,7 +90,7 @@
 		},
 
 		updateSplotch: function(){
-			var val = this.getTotalCount();
+			console.trace('WE.plugins');		var val = this.getTotalCount();
 
 			this.notificationsLinkSplotch.html(val);
 			this.notificationsAreaSplotch.html(val);
@@ -102,24 +102,24 @@
 		},
 
 		hideSplotch: function(){
-			this.notificationsLinkSplotch.fadeOut('slow');
+			console.trace('WE.plugins');		this.notificationsLinkSplotch.fadeOut('slow');
 			this.notificationsAreaSplotch.fadeOut('slow');
 		},
 
 		generateNoticeKey: function(hash){
-			return wgTitle + '-' + hash;
+			console.trace('WE.plugins');		return wgTitle + '-' + hash;
 		},
 
 		getNoticeAreaStatus: function(){
-			return $.storage.get('WE-Noticearea-status');
+			console.trace('WE.plugins');		return $.storage.get('WE-Noticearea-status');
 		},
 
 		setNoticeAreaStatus: function(status){
-			$.storage.set('WE-Noticearea-status', status);
+			console.trace('WE.plugins');		$.storage.set('WE-Noticearea-status', status);
 		},
 
 		update: function(){
-			var count = this.getCount();
+			console.trace('WE.plugins');		var count = this.getCount();
 
 			if(count > 0){
 				this.visible = true;
@@ -132,7 +132,7 @@
 		},
 
 		wasNoticeAlreadyShown: function(hashOrElement){
-			this.updateNoticeareaStatus();
+			console.trace('WE.plugins');		this.updateNoticeareaStatus();
 
 			var notice = this.getNotice(hashOrElement),
 				hash = (notice) ? notice.attr(this.dataAttr) : null,
@@ -156,7 +156,7 @@
 		},
 
 		isNoticeMainPageEduNote: function(notice) {
-			var hash = notice.attr(this.dataAttr),
+			console.trace('WE.plugins');		var hash = notice.attr(this.dataAttr),
 				result = false;
 
 			if( hash && window.mainPageEduNoteHash && hash == window.mainPageEduNoteHash ) {
@@ -167,7 +167,7 @@
 		},
 
 		markNoticeAsShown: function(hashOrElement) {
-			var notice = this.getNotice(hashOrElement),
+			console.trace('WE.plugins');		var notice = this.getNotice(hashOrElement),
 				isMainPageEduNote = this.isNoticeMainPageEduNote(notice);
 
 			if( notice ) {
@@ -199,7 +199,7 @@
 		},
 
 		onDismissMainPageNotice: function(response) {
-			if( response.result && response.result.success != true ) {
+			console.trace('WE.plugins');		if( response.result && response.result.success != true ) {
 				$().log('Noticearea error: wrong during dissmissing main page edu note');
 
 				if( response.result.error ) {
@@ -209,7 +209,7 @@
 		},
 
 		updateNoticeareaStatus: function(){
-			var noticeareaStatus = this.getNoticeAreaStatus();
+			console.trace('WE.plugins');		var noticeareaStatus = this.getNoticeAreaStatus();
 
 			if(noticeareaStatus != null){
 				var currentTs = (new Date()).getTime()/1000,
@@ -227,13 +227,13 @@
 		},
 
 		dismissFromNotice: function(notice){
-			this.totalItemsCount = 0;
+			console.trace('WE.plugins');		this.totalItemsCount = 0;
 			this.updateSplotch();
 			this.dismissClicked(notice, true);
 		},
 
 		areaClicked: function(ev){
-			var self = this,
+			console.trace('WE.plugins');		var self = this,
 				target = $(ev.target);
 
 			if(target.hasClass(self.itemActionClass)){
@@ -259,7 +259,7 @@
 		},
 
 		dismissClicked: function(sourceElement, hideSplotch){
-			var self = this,
+			console.trace('WE.plugins');		var self = this,
 				notices = self.getNotice(sourceElement) || self.getAllNotices(),
 				clean = function(){
 					notices.each(function(){
@@ -280,7 +280,7 @@
 		},
 
 		add: function(message, type, html){
-			var li = $('<li>')
+			console.trace('WE.plugins');		var li = $('<li>')
 				.html(message)
 				.addClass(this.itemClass + ' notice-' + (type || 'warning'));
 

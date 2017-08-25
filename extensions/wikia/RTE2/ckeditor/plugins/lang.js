@@ -1,9 +1,8 @@
-debugger;
+
 foo();
 
 
 function foo(){
-debugger;
 if(window.mw.msg('rte-ck-unlink') == '<rte-ck-unlink>'){
 setTimeout(foo,1000);
 }
