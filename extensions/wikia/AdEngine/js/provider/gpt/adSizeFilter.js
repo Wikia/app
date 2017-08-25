@@ -46,7 +46,7 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 			slotSizes.forEach(function(size, index, array) {
 				var str = size.toString();
 
-				if (str === '2,2' || str === '3,3') {
+				if (str.equals('2,2') || str.equals('3,3')) {
 					array.splice(index, 1);
 				}
 			});
@@ -60,7 +60,7 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 			footerSize;
 		log(['filterSizes', slotName, slotSizes], 'debug', logGroup);
 
-		removeUAPForFeaturedVideoPages(slotName, slotSizes)
+		removeUAPForFeaturedVideoPages(slotName, slotSizes);
 
 		switch (true) {
 			case slotName.indexOf('TOP_LEADERBOARD') > -1:

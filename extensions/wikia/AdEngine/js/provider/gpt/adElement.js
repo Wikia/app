@@ -21,10 +21,9 @@ define('ext.wikia.adEngine.provider.gpt.adElement', [
 			this.node.id = this.id;
 		}
 		if (slotTargeting.size) {
-			this.sizes = adSizeConverter.toArray(this.sizes);
+			this.sizes = adSizeConverter.toArray(slotTargeting.size);
 			this.sizes = adSizeFilter.filter(slotName, this.sizes);
 			delete slotTargeting.size;
-
 			this.node.setAttribute('data-gpt-slot-sizes', JSON.stringify(this.sizes));
 		} else {
 			this.node.setAttribute('data-gpt-slot-type', 'out-of-page');
