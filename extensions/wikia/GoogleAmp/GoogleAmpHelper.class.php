@@ -11,10 +11,10 @@ class GoogleAmpHelper {
 	static public function isAmpEnabled( Title $title ): bool {
 		global $wgGoogleAmpNamespaces, $wgGoogleAmpArticleBlacklist;
 
-		if ( $title->exists() && in_array( $title->getNamespace(), $wgGoogleAmpNamespaces ) ) {
-			if ( !in_array( $title->getPrefixedDBkey(), $wgGoogleAmpArticleBlacklist ) ) {
+		if ( $title->exists() &&
+			in_array( $title->getNamespace(), $wgGoogleAmpNamespaces ) &&
+			!in_array( $title->getPrefixedDBkey(), $wgGoogleAmpArticleBlacklist ) ) {
 				return true;
-			}
 		}
 		return false;
 	}
