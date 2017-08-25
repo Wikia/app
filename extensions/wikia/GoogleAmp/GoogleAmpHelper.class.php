@@ -2,80 +2,80 @@
 
 class GoogleAmpHelper {
 
-    /**
-     * Checks whether AMP version is enabled for a given title.
-     *
-     * @param Title $title
-     * @return bool
-     */
-    static public function isAmpEnabled( Title $title ): bool {
-        global $wgGoogleAmpNamespaces, $wgGoogleAmpArticleBlacklist;
+	/**
+	 * Checks whether AMP version is enabled for a given title.
+	 *
+	 * @param Title $title
+	 * @return bool
+	 */
+	static public function isAmpEnabled( Title $title ): bool {
+		global $wgGoogleAmpNamespaces, $wgGoogleAmpArticleBlacklist;
 
-        if ( in_array( $title->getNamespace(), $wgGoogleAmpNamespaces ) ) {
-            if ( !in_array( $title->getPrefixedDBkey(), $wgGoogleAmpArticleBlacklist ) ) {
-                return true;
-            }
-        }
-        return false;
-    }
+		if ( in_array( $title->getNamespace(), $wgGoogleAmpNamespaces ) ) {
+			if ( !in_array( $title->getPrefixedDBkey(), $wgGoogleAmpArticleBlacklist ) ) {
+				return true;
+			}
+		}
+		return false;
+	}
 
-    /**
-     * If Amp is enabled for a given title, return Amp article address.
-     *
-     * @param Title $title
-     * @return string|null
-     */
-    static public function getAmpAddress( Title $title ) {
-        global $wgServer, $wgGoogleAmpAddress;
+	/**
+	 * If Amp is enabled for a given title, return Amp article address.
+	 *
+	 * @param Title $title
+	 * @return string|null
+	 */
+	static public function getAmpAddress( Title $title ) {
+		global $wgServer, $wgGoogleAmpAddress;
 
-        if ( !self::isAmpEnabled( $title ) ) {
-            return null;
-        }
+		if ( !self::isAmpEnabled( $title ) ) {
+			return null;
+		}
 
-        $wikiServer = WikiFactory::getLocalEnvURL( $wgServer, WIKIA_ENV_PROD );
-        $serverRegex = '/^https?:\/\/(.+)\.wikia\.com/';
-        if ( preg_match( $serverRegex, $wikiServer, $groups ) !== 1 ) {
-            return null;
-        }
-        $wikiServer = $groups[1];
-        $article = $title->getPrefixedDBkey();
+		$wikiServer = WikiFactory::getLocalEnvURL( $wgServer, WIKIA_ENV_PROD );
+		$serverRegex = '/^https?:\/\/(.+)\.wikia\.com/';
+		if ( preg_match( $serverRegex, $wikiServer, $groups ) !== 1 ) {
+			return null;
+		}
+		$wikiServer = $groups[1];
+		$article = $title->getPrefixedDBkey();
 
-        return str_replace( '{WIKI}', $wikiServer, str_replace( '{ARTICLE}', $article, $wgGoogleAmpAddress ) );
-    }
+		return str_replace( '{WIKI}', $wikiServer, str_replace( '{ARTICLE}', $article, $wgGoogleAmpAddress ) );
+	}
 
-    /**
-     * Adds Amp article data
-     *
-     * @param Title $title
-     * @param $data Mercury article data to be returned
-     * @return bool
-     */
-    static public function onMercuryPageData( Title $title, &$data ): bool {
-        $ampAddress = self::getAmpAddress( $title );
-        if ( $ampAddress ) {
-            $data['amphtml'] = $ampAddress;
-        }
-        return true;
-    }
+	/**
+	 * Adds Amp article data
+	 *
+	 * @param Title $title
+	 * @param $data Mercury article data to be returned
+	 * @return bool
+	 */
+	static public function onMercuryPageData( Title $title, &$data ): bool {
+		$ampAddress = self::getAmpAddress( $title );
+		if ( $ampAddress ) {
+			$data['amphtml'] = $ampAddress;
+		}
+		return true;
+	}
 
-    /**
-     * Add Amp rel link to page header.
-     *
-     * @param OutputPage $out
-     * @param Skin $skin
-     * @return bool
-     */
-    static public function onBeforePageDisplay( OutputPage $out, Skin $skin ): bool {
-        $title = $out->getTitle();
-        if ( $title ) {
-            $ampArticle = self::getAmpAddress( $title );
-            if ( $ampArticle ) {
-                $out->addLink( [
-                    'rel' => 'amphtml',
-                    'href' => $ampArticle
-                ] );
-            }
-        }
-        return true;
-    }
+	/**
+	 * Add Amp rel link to page header.
+	 *
+	 * @param OutputPage $out
+	 * @param Skin $skin
+	 * @return bool
+	 */
+	static public function onBeforePageDisplay( OutputPage $out, Skin $skin ): bool {
+		$title = $out->getTitle();
+		if ( $title ) {
+			$ampArticle = self::getAmpAddress( $title );
+			if ( $ampArticle ) {
+				$out->addLink( [
+					'rel' => 'amphtml',
+					'href' => $ampArticle
+				] );
+			}
+		}
+		return true;
+	}
 }
