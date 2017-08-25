@@ -9,6 +9,8 @@ require([
 	'EmbeddableDiscussionsSharing'
 ], function ($, tracker, uiFactory, mustache, window, throbber, templates, sharing) {
 	'use strict';
+	
+	$('.embeddable-discussions-upvote-area a.upvote').click(upvote);
 
 	var track = tracker.buildTrackingFunction({
 		action: tracker.ACTIONS.CLICK,
@@ -98,10 +100,12 @@ require([
 		return ret;
 	}
 
-	function performRequest($elem) {
-		var requestUrl = getBaseUrl() + $elem.attr('data-requestUrl'),
+	function performRequest($elem,action,options) {
+		var requestUrl = $elem.attr('data-requestUrl'),
 			requestData = JSON.parse($elem.attr('data-requestData')),
-			columnsDetailsClass;
+			columnsDetailsClass,
+		    	method,
+		    	url;
 
 		// Inject proper class for 2 columns display
 		if (requestData.columns === 2) {
@@ -112,10 +116,18 @@ require([
 				columnsDetailsClass = 'embeddable-discussions-post-detail-columns';
 			}
 		}
+		if (action === 'upvote') {
+			method = 'POST';
+			url = getBaseUrl() + requestData.upvoteRequestUrl + '/' + options.id;
+		}
+		else {
+			method = 'GET';
+			url = getBaseUrl() + requestUrl;
+		}
 
 		$.ajax({
-			type: 'GET',
-			url: requestUrl,
+			type: method,
+			url: url,
 			xhrFields: {
 				withCredentials: true
 			},
@@ -145,6 +157,14 @@ require([
 			throbber.hide($elem);
 			$elem.html($.msg('embeddable-discussions-error-loading'));
 		});
+	}
+	
+	function upvote(e) {
+		e.preventDefault();
+		$el = $(e.currentTarget);
+		$thread = $el.closest('.embeddable-discussions-post-detail')
+		id = $el.data('id');
+		performRequest($thread,'upvote',{id: id});
 	}
 
 	/**
@@ -205,7 +225,7 @@ require([
 		throbber.show($threads);
 
 		$.each($threads, function () {
-			performRequest($(this));
+			performRequest($(this),'fetch');
 		});
 	}
 
