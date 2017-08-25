@@ -613,12 +613,12 @@ h1.mcf-header {
 	}
 
 	&__zero-state {
+		border: dashed 1px $wds-color-faint-gray;
 		display: flex;
 		flex-direction: column;
+		height: 163px;
 		margin:18px auto;
 		width: 298px;
-		height: 163px;
-		border: dashed 1px $wds-color-faint-gray;
 
 		@media #{$wds-breakpoint-xxl-up} {
 			width: $mcf-card-width-xxl - 84px;
@@ -633,17 +633,21 @@ h1.mcf-header {
 			height: 220px;
 		}
 
+		&:hover {
+			text-decoration: none;
+		}
+
 		&-icon {
 			fill: $wds-color-faint-gray;
 			margin: 36px auto 6px auto;
 		}
 
 		&-text {
-			padding: 0 24px;
+			color: #333333;
 			font-size: 16px;
 			line-height: 1.38;
+			padding: 0 24px;
 			text-align: center;
-			color: #333333;
 		}
 	}
 }

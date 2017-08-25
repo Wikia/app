@@ -8,13 +8,13 @@
 				'wds-icon wds-icon-small mcf-card-discussions__link-icon' ) ?></a>
 	</header>
 	<ul class="mcf-card-discussions__list">
-		<?// if($showZeroState): ?>
-		<div class="mcf-card-discussions__zero-state">
+		<? if($showZeroState): ?>
+		<a href="<?= Sanitizer::encodeAttribute( $discussionsUrl ) ?>" class="mcf-card-discussions__zero-state">
 			<?= DesignSystemHelper::renderSvg( 'wds-icons-plus', 'wds-icon mcf-card-discussions__zero-state-icon' ) ?>
 			<div class="mcf-card-discussions__zero-state-text"><?= wfMessage( 'recirculation-discussions-no-posts' )->escaped() ?></div>
 			<span class="mcf-card-discussions__zero-state-text"><?= wfMessage( 'recirculation-discussions-get-started' )->escaped() ?></span>
-		</div>
-		<?// endif ?>
+		</a>
+		<? endif ?>
 		<?php foreach ( $posts as $index => $post ): ?>
 			<li class="mcf-card-discussions__item">
 				<a href="<?= AvatarService::getUrl( $post->author ) ?>" class="mcf-card-discussions__user-info" data-tracking="discussions-user-<?= $index ?>">
