@@ -1,13 +1,12 @@
 /*global define, require*/
 define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.provider.gpt.adSizeConverter',
 	'wikia.abTest',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
 	require.optional('wikia.breakpointsLayout')
-], function (adContext, adSizeConverter, abTest, doc, log, win, breakpointsLayout) {
+], function (adContext, abTest, doc, log, win, breakpointsLayout) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.adSizeFilter',

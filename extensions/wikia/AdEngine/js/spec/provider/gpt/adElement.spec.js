@@ -13,6 +13,9 @@ describe('ext.wikia.adEngine.provider.gpt.adElement', function () {
 			adSizeFilter: {
 				filter: noop
 			},
+			adSizeConverter: {
+				toArray: noop
+			},
 			log: noop
 		},
 		slot,
@@ -20,9 +23,10 @@ describe('ext.wikia.adEngine.provider.gpt.adElement', function () {
 
 	beforeEach(function () {
 		AdElement = modules['ext.wikia.adEngine.provider.gpt.adElement'](
+			mocks.adSizeConverter,
+			mocks.adSizeFilter,
 			document,
-			mocks.log,
-			mocks.adSizeFilter
+			mocks.log
 		);
 		slot = {
 			setTargeting: noop
