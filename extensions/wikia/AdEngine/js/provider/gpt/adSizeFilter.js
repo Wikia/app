@@ -30,14 +30,27 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 		return goodSizes.length ? goodSizes : fallbackSizes;
 	}
 
-	function removeSize(slotSizes, sizeToRemove) {
-		var adContext = win.Mercury ?
-				win.Mercury.Modules.Ads.getInstance().adsContext :
-				win.ads.context,
-			re = new RegExp(',?' + sizeToRemove + ',?');
+	function getAdContext() {
+		return win.Mercury ?
+			win.Mercury.Modules.Ads.getInstance().adsContext :
+			win.ads.context;
+	}
 
-		if (adContext && adContext.targeting && adContext.targeting.hasFeaturedVideo) {
-			slotSizes = slotSizes.replace(re, '');
+	function removeUAPForFeaturedVideoPages(slotName, slotSizes) {
+		var adContext = getAdContext();
+
+		if (slotName.indexOf('TOP_LEADERBOARD') > -1 &&
+			adContext &&
+			adContext.targeting &&
+			adContext.targeting.hasFeaturedVideo
+		) {
+			slotSizes.forEach(function(size, index, array) {
+				var str = size.toString();
+
+				if (str === '2,2' || str === '3,3') {
+					array.splice(index, 1);
+				}
+			});
 		}
 
 		return slotSizes;
@@ -45,35 +58,28 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 
 	function filterSizes(slotName, slotSizes) {
 		var isPremiumLayout = context.opts.premiumAdLayoutEnabled,
-			footerSize,
-			sizesArray;
+			footerSize;
 		log(['filterSizes', slotName, slotSizes], 'debug', logGroup);
 
-		if (slotName === 'TOP_LEADERBOARD') {
-			slotSizes = removeSize(slotSizes, '3x3');
-		} else if (slotName === 'MOBILE_TOP_LEADERBOARD') {
-			slotSizes = removeSize(slotSizes, '2x2');
-		}
-
-		sizesArray = adSizeConverter.toArray(slotSizes);
+		removeUAPForFeaturedVideoPages(slotName, slotSizes)
 
 		switch (true) {
 			case slotName.indexOf('TOP_LEADERBOARD') > -1:
-				return getNewSizes(sizesArray, doc.documentElement.offsetWidth, [[728, 90]]);
+				return getNewSizes(slotSizes, doc.documentElement.offsetWidth, [[728, 90]]);
 			case slotName === 'INVISIBLE_SKIN':
-				return doc.documentElement.offsetWidth >= minSkinWidth ? sizesArray : [[1, 1]];
+				return doc.documentElement.offsetWidth >= minSkinWidth ? slotSizes : [[1, 1]];
 			case slotName === 'PREFOOTER_LEFT_BOXAD' && context.opts.overridePrefootersSizes:
-				return isLargeBreakpoints() ? sizesArray : getNewSizes(sizesArray, maxAdSize, [[300, 250]]);
+				return isLargeBreakpoints() ? slotSizes : getNewSizes(slotSizes, maxAdSize, [[300, 250]]);
 			case slotName === 'BOTTOM_LEADERBOARD' && isPremiumLayout:
 				footerSize = doc.getElementById('WikiaFooter').offsetWidth;
 				return getNewSizes([[970, 250], [728, 90]], footerSize, [[728, 90]]);
 			case slotName === 'BOTTOM_LEADERBOARD':
 				footerSize = doc.getElementById('WikiaFooter').offsetWidth;
-				return getNewSizes(sizesArray, footerSize, [[728, 90]]);
+				return getNewSizes(slotSizes, footerSize, [[728, 90]]);
 			case slotName === 'INCONTENT_BOXAD_1' && isPremiumLayout && context.targeting.hasFeaturedVideo:
 				return [[300, 250]];
 			default:
-				return sizesArray;
+				return slotSizes;
 		}
 	}
 
