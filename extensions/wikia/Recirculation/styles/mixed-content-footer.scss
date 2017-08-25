@@ -611,4 +611,39 @@ h1.mcf-header {
 			margin: 0 3px 0 6px;
 		}
 	}
+
+	&__zero-state {
+		display: flex;
+		flex-direction: column;
+		margin:18px auto;
+		width: 298px;
+		height: 163px;
+		border: dashed 1px $wds-color-faint-gray;
+
+		@media #{$wds-breakpoint-xxl-up} {
+			width: $mcf-card-width-xxl - 84px;
+		}
+
+		@media #{$wds-breakpoint-l-only} {
+			width: $mcf-card-width-l - 84px;
+		}
+
+		@media #{$wds-breakpoint-m-down} {
+			width: $mcf-card-width-m - 84px;
+			height: 220px;
+		}
+
+		&-icon {
+			fill: $wds-color-faint-gray;
+			margin: 36px auto 6px auto;
+		}
+
+		&-text {
+			padding: 0 24px;
+			font-size: 16px;
+			line-height: 1.38;
+			text-align: center;
+			color: #333333;
+		}
+	}
 }

@@ -18,6 +18,7 @@ class RecirculationController extends WikiaController {
 
 	public function discussions() {
 		global $wgLanguageCode;
+		$showZeroState = false;
 		$cityId = $this->request->getVal( 'cityId', null );
 		$limit = $this->request->getVal( 'limit', 5 );
 		$sortKey =
@@ -37,6 +38,10 @@ class RecirculationController extends WikiaController {
 
 			$postObjects = [];
 
+			if (empty($posts)) {
+				$showZeroState = true;
+			}
+
 			foreach ( $posts as $post ) {
 				$postObjects[] = $post->jsonSerialize();
 			}
@@ -51,6 +56,7 @@ class RecirculationController extends WikiaController {
 				'linkText' => wfMessage( 'recirculation-discussion-link-text' )->plain(),
 				'discussionsUrl' => $discussionsUrl,
 				'posts' => $postObjects,
+				'showZeroState' => $showZeroState,
 			] );
 
 			return true;
