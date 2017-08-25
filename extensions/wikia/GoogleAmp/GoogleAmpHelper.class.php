@@ -11,7 +11,7 @@ class GoogleAmpHelper {
 	static public function isAmpEnabled( Title $title ): bool {
 		global $wgGoogleAmpNamespaces, $wgGoogleAmpArticleBlacklist;
 
-		if ( in_array( $title->getNamespace(), $wgGoogleAmpNamespaces ) ) {
+		if ( $title->exists() && in_array( $title->getNamespace(), $wgGoogleAmpNamespaces ) ) {
 			if ( !in_array( $title->getPrefixedDBkey(), $wgGoogleAmpArticleBlacklist ) ) {
 				return true;
 			}
