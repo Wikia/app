@@ -1174,6 +1174,12 @@ $wgEnableNetzAthleten = true;
 $wgAdDriverNetzAthletenCountries = null;
 
 /**
+ * @name $wgAdDriverDfpOoyalaContentSourceId
+ * Defines content source id sent in VAST url
+ */
+$wgAdDriverDfpOoyalaContentSourceId = '2458214';
+
+/**
  * @name $wgEnableAmazonMatch
  * Enables AmazonMatch new integration (id=3115)
  */
@@ -1193,6 +1199,14 @@ $wgAmazonMatchCountries = null;
  */
 $wgAmazonMatchCountriesMobile = null;
 
+
+/**
+ * @name $wgAdDriverA9BidderCountries
+ * List of countries where A9 bidding platform is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverA9BidderCountries = null;
+
 /**
  * @name $wgAdDriverEnableRubiconFastlane
  * Enables Rubicon Fastlane
@@ -1207,11 +1221,11 @@ $wgAdDriverEnableRubiconFastlane = true;
 $wgAdDriverRubiconFastlaneCountries = null;
 
 /**
- * @name $wgAdDriverRubiconFastlanePrebidCountries
- * Enables RubiconFastlane Prebid implementation and DISABLES the old one in these countries.
+ * @name $wgAdDriverRubiconDisplayPrebidCountries
+ * Enables Rubicon (Prebid) implementation and DISABLES the old one in these countries.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
-$wgAdDriverRubiconFastlanePrebidCountries = null;
+$wgAdDriverRubiconDisplayPrebidCountries = null;
 
 /**
  * @name $wgAdDriverRubiconFastlaneProviderCountries

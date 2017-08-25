@@ -4,9 +4,10 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 	'ext.wikia.adEngine.lookup.prebid.priceParsingHelper',
 	'ext.wikia.adEngine.wrappers.prebid',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
+	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, priceParsingHelper, prebid, vastUrlBuilder, log, win) {
+], function (adContext, priceParsingHelper, prebid, vastUrlBuilder, instartLogic, log, win) {
 	'use strict';
 
 	var bidderName = 'veles',
@@ -40,7 +41,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		};
 
 	function isEnabled() {
-		var isVelesEnabled = adContext.getContext().bidders.veles;
+		var isVelesEnabled = adContext.getContext().bidders.veles && !instartLogic.isBlocking();
 		log(['isEnabled', isVelesEnabled], log.levels.debug, logGroup);
 
 		return isVelesEnabled;
@@ -135,8 +136,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 				src: skin === 'oasis' ? 'gpt' : 'mobile',
 				passback: bidderName
 			}, {
-				numberOfAds: 1,
-				prerollOnly: true
+				numberOfAds: 1
 			});
 
 		request.onreadystatechange = function () {

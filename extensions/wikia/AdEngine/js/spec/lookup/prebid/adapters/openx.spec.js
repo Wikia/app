@@ -14,12 +14,18 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.openx', function () {
 			filterSlotMap: function (map) {
 				return map;
 			}
+		},
+		instartLogic: {
+			isBlocking: function() {
+				return false;
+			}
 		}
 	};
 
 	function getOpenx() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.openx'](
 			mocks.slotsContext,
+			mocks.instartLogic,
 			mocks.geo,
 			mocks.instantGlobals
 		);
