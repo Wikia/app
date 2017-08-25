@@ -17,7 +17,7 @@
 		enabled: false,
 
 		beforeInit: function() {
-			// enable this plugin only for Firefox 4.0+ (BugId:5654)
+			console.trace('WE.plugins');		// enable this plugin only for Firefox 4.0+ (BugId:5654)
 			this.enabled = !!$.browser.mozilla && (parseInt($.browser.version) >= 2 /* '2.0.1' = Fx 4.0.1 */);
 
 			if (this.enabled) {
@@ -36,13 +36,13 @@
 		},
 
 		init: function() {
-			if (this.enabled) {
+			console.trace('WE.plugins');		if (this.enabled) {
 				this.stateChanged(this.editor,this.editor.state);
 			}
 		},
 
 		stateChanged: function( editor, state ) {
-			var states = this.editor.states;
+			console.trace('WE.plugins');		var states = this.editor.states;
 
 			this.pollStylesheetsTimer.stop();
 			if ((state == states.INITIALIZING && this.editor.mode == 'wysiwyg') || state == states.LOADING_VISUAL) {
@@ -57,7 +57,7 @@
 		},
 
 		pollStylesheets: function() {
-			this.pollStylesheetsTimer.stop();
+			console.trace('WE.plugins');		this.pollStylesheetsTimer.stop();
 
 			var ed = this.editor.element;
 
@@ -84,7 +84,7 @@
 		},
 
 		fireState: function( state ) {
-			if (this.lastAnnounced !== state) {
+			console.trace('WE.plugins');		if (this.lastAnnounced !== state) {
 				this.editor.fire('extraState',this.editor,this.CSS_STATE_NAME,state);
 				this.lastAnnounced = state;
 			}

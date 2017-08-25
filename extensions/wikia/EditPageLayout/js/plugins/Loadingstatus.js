@@ -5,7 +5,6 @@
 	 * Loading status indicator
 	 */
 	WE.plugins.loadingstatus = $.createClass(WE.plugin, {
-
 		requires: ['spaces'],
 
 		MESSAGE_PREFIX: 'loadingStates-',
@@ -14,7 +13,7 @@
 		extraStatesCount: 0,
 
 		init: function() {
-			if ((this.el = this.editor.getSpace('loading-status'))) {
+			console.trace('WE.plugins');		if ((this.el = this.editor.getSpace('loading-status'))) {
 				this.textEl = this.el.find('.loading-text');
 
 				// overlay just an edit area (BugId:6349)
@@ -26,7 +25,7 @@
 		},
 
 		extraStateChanged: function( editor, name, state ) {
-			var states = editor.states;
+			console.trace('WE.plugins');		var states = editor.states;
 
 			if (state == states.INITIALIZING) {
 				if (!this.extraStates[name]) {
@@ -44,7 +43,7 @@
 		},
 
 		stateChanged: function( editor, state ) {
-			var states = editor.states, value = false;
+			console.trace('WE.plugins');		var states = editor.states, value = false;
 
 			if (state == states.INITIALIZING) {
 				value = 'loading';
@@ -67,7 +66,7 @@
 		},
 
 		set: function( state ) {
-			this.editor.log('loading-status: ', state);
+			console.trace('WE.plugins');		this.editor.log('loading-status: ', state);
 			if ((this.state = state)) {
 				var text = this.editor.msg(this.MESSAGE_PREFIX + state);
 

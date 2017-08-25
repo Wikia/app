@@ -15,11 +15,11 @@
 		html: false,
 
 		beforeInit: function() {
-			this.editor.on('mediawikiToolbarRendered',this.proxy(this.mediawikiToolbarRendered));
+			console.trace('WE.plugins');		this.editor.on('mediawikiToolbarRendered',this.proxy(this.mediawikiToolbarRendered));
 		},
 
 		mediawikiToolbarRendered: function( editor, el ) {
-			this.html = this.editor.element.find('.mw-editTools').html();
+			console.trace('WE.plugins');		this.html = this.editor.element.find('.mw-editTools').html();
 			if (this.html) {
 				var link = $('<span class="cke_toolbar_expand" />');
 				link.html('<a class="expand" href="#" style="display: inline;"><label>' + $.msg(this.LINK_CAPTION_MESSAGE) + '</label><span>+</span></a>');
@@ -29,7 +29,7 @@
 		},
 
 		showEdittools: function( evt ) {
-			evt && evt.preventDefault();
+			console.trace('WE.plugins');		evt && evt.preventDefault();
 			var title = $.htmlentities(this.editor.msg(this.DIALOG_TITLE_MESSAGE));
 			$.showModal(title,this.html,{
 				callback: function() {

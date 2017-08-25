@@ -27,7 +27,7 @@
 		wide: false,
 
 		initNodes: function() {
-			this.$rail = $('#EditPageRail');
+			console.trace('WE.plugins');		this.$rail = $('#EditPageRail');
 			this.$editpage = $('#EditPage');
 			this.$toolbar = $('#EditPageToolbar .cke_toolbar_source');
 			this.expandedToolbarBreakpoint =  this.$toolbar.width() + this.$rail.width();
@@ -35,7 +35,7 @@
 		},
 
 		sizeChanged: function() {
-			if (this.initialized) {
+			console.trace('WE.plugins');		if (this.initialized) {
 				if(this.editor.mode === 'source' && this.wide &&
 					this.$editpage.width() < this.expandedToolbarBreakpoint
 				) {
@@ -47,7 +47,7 @@
 		},
 
 		activate: function() {
-			this.enabled = true;
+			console.trace('WE.plugins');		this.enabled = true;
 			if (this.enabled) {
 				this.active = this.editor.mode === 'source';
 				// set up the trigger
@@ -70,7 +70,7 @@
 		},
 
 		modeChanged: function() {
-			var toolbar = this.editor.getSpace('toolbar');
+			console.trace('WE.plugins');		var toolbar = this.editor.getSpace('toolbar');
 
 			// adjust bar height and position
 			var cssTop = toolbar.offset().top + toolbar.outerHeight(true) - this.trigger.offsetParent().offset().top;
@@ -90,7 +90,7 @@
 		},
 
 		toggle: function() {
-			this.setState(!this.getState());
+			console.trace('WE.plugins');		this.setState(!this.getState());
 			this.saveState();
 
 			// toolbar height can change - resize the editor (BugId:5694)
@@ -98,7 +98,7 @@
 		},
 
 		loadState: function( initial ) {
-			var wide = $.storage.get(this.storageEntry) == true;
+			console.trace('WE.plugins');		var wide = $.storage.get(this.storageEntry) == true;
 			this.editor.log('widescreen::load() - wide = '+(wide?'true':'false'));
 			if (initial) {
 				if (typeof this.editor.config.wideInSourceInitial != 'undefined') {
@@ -111,20 +111,20 @@
 		},
 
 		setState: function( wide ) {
-			this.wide = wide;
+			console.trace('WE.plugins');		this.wide = wide;
 			this.editor.element[wide ? 'addClass' : 'removeClass'](this.wideClassName);
 			this.editor.element[!wide ? 'addClass' : 'removeClass'](this.narrowClassName);
 		},
 
 		saveState: function() {
-			$.storage.set(this.storageEntry,this.wide);
+			console.trace('WE.plugins');		$.storage.set(this.storageEntry,this.wide);
 			$.post(window.wgScript + '?action=ajax&rs=EditPageLayoutAjax&method=setWidescreen',{
 				state: this.wide ? '1' : '0'
 			});
 		},
 
 		getState: function() {
-			return this.editor.element.hasClass(this.wideClassName);
+			console.trace('WE.plugins');		return this.editor.element.hasClass(this.wideClassName);
 		}
 	});
 
@@ -140,7 +140,7 @@
 		pageControlsHeight: false,
 
 		activate: function() {
-			this.enabled = true;
+			console.trace('WE.plugins');		this.enabled = true;
 			if (this.enabled) {
 				this.editor.element.addClass('editpage-visualwidemode');
 				this.editor.on('toolbarsRendered',this.adjustHeights,this);
@@ -148,13 +148,13 @@
 		},
 
 		init: function() {
-			if (this.enabled) {
+			console.trace('WE.plugins');		if (this.enabled) {
 				this.editor.fire('mainpagewidemodeinit');
 			}
 		},
 
 		adjustHeights: function() {
-			var toolbar = this.editor.getSpace('toolbar'),
+			console.trace('WE.plugins');		var toolbar = this.editor.getSpace('toolbar'),
 				rail = this.editor.getSpace('rail');
 			if (!toolbar.exists() || !rail.exists()) {
 				return;
@@ -171,7 +171,7 @@
 	WE.plugins.widemodemanager = $.createClass(WE.plugin,{
 
 		beforeInit: function() {
-			var config = this.editor.config;
+			console.trace('WE.plugins');		var config = this.editor.config;
 			if (!config.wideModeDisabled) {
 				if (config.toolbars && (!config.toolbars.rail || config.toolbars.rail.length == 0) ) {
 					this.editor.log('choosing wide mode plugin: mainpage');

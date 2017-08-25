@@ -1012,7 +1012,7 @@
 		},
 
 		themeLoaded: function() {
-			this.editor.fire('editboxReady', this.editor, $(this.editor.ck.getThemeSpace('contents').$));
+			this.editor.fire('editboxReady', this.editor, $(this.editor.ck.ui.space('contents').$));//$(this.editor.ck.getThemeSpace('contents').$));
 		},
 
 		editorFocus: function() {
