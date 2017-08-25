@@ -46,7 +46,7 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 			slotSizes.forEach(function(size, index, array) {
 				var str = size.toString();
 
-				if (str.equals('2,2') || str.equals('3,3')) {
+				if (str === '2,2' || str === '3,3') {
 					array.splice(index, 1);
 				}
 			});
