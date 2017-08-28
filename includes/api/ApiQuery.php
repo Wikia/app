@@ -270,6 +270,12 @@ class ApiQuery extends ApiBase {
 			$module->destroyLogContext(); // Wikia Change
 		}
 
+		// Wikia change - do not cache API response if there is no such page/revision
+		// HTTP 404 Not Found should be returned in this case
+		if ( empty( $this->mPageSet->getGoodTitles() ) ) {
+			$this->setStatusCode( WikiaResponse::RESPONSE_CODE_NOT_FOUND );
+		}
+
 		// Set the cache mode
 		$this->getMain()->setCacheMode( $cacheMode );
 	}

@@ -1615,5 +1615,15 @@ abstract class ApiBase extends ContextSource {
 		WikiaLogger::instance()->popContext();
 	}
 
+	/**
+	 * Set the HTTP response code for the current request
+	 * @param int $httpStatusCode a valid HTTP status code
+	 */
+	protected function setStatusCode( int $httpStatusCode ) {
+		$statusMsg = HttpStatus::getMessage( $httpStatusCode );
+
+		$this->getRequest()->response()->header( "HTTP/1.1 $httpStatusCode $statusMsg ");
+	}
+
 	// Wikia Change - END
 }
