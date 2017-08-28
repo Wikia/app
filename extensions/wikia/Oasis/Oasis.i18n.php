@@ -2336,7 +2336,7 @@ $messages['ko'] = array(
 	'oasis-member-since' => 'Member since $1',
 	'oasis-modal-error-headline' => 'Please correct the following errors',
 	'oasis-more' => 'See more >',
-	'oasis-mytools' => 'My Tools',
+	'oasis-mytools' => '내 도구',
 	'oasis-navigation-v2-add-photo' => 'Add a Photo',
 	'oasis-navigation-v2-add-video' => 'Add a Video',
 	'oasis-navigation-v2-create-page' => 'Add a Page',
@@ -2395,7 +2395,7 @@ $messages['ko'] = array(
 	'oasis-upload-photos-more-options' => 'More Options',
 	'oasis-upload-photos-title' => 'Upload a Photo to the Wiki',
 	'oasis-user-page-change-avatar' => 'Change avatar',
-	'themedesigner' => 'Theme designer',
+	'themedesigner' => '테마 디자이너',
 	'wiki-navigation' => '*#|인기 문서
 **#visited#
 **#category1#
