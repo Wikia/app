@@ -78,12 +78,6 @@ class SpecialStatistics extends SpecialPage {
 
 		# Statistic - usergroups
 		$text .= $this->getGroupStats();
-		$text .= $viewsStats;
-
-		# Statistic - popular pages
-		if( !$wgDisableCounters && !$wgMiserMode ) {
-			$text .= $this->getMostViewedPages();
-		}
 
 		# Statistic - other
 		$extraStats = array();
@@ -231,43 +225,6 @@ class SpecialStatistics extends SpecialPage {
 				$this->getLanguage()->formatNum( $countUsers ),
 				array( 'class' => 'statistics-group-' . Sanitizer::escapeClass( $group ) . $classZero )  );
 		}
-		return $text;
-	}
-
-	private function getMostViewedPages() {
-		$text = '';
-		$dbr = wfGetDB( DB_SLAVE );
-		$res = $dbr->select(
-				'page',
-				array(
-					'page_namespace',
-					'page_title',
-					'page_counter',
-				),
-				array(
-					'page_is_redirect' => 0,
-					'page_counter > 0',
-				),
-				__METHOD__,
-				array(
-					'ORDER BY' => 'page_counter DESC',
-					'LIMIT' => 10,
-				)
-			);
-			if( $res->numRows() > 0 ) {
-				$text .= Xml::openElement( 'tr' );
-				$text .= Xml::tags( 'th', array( 'colspan' => '2' ), wfMsgExt( 'statistics-mostpopular', array( 'parseinline' ) ) );
-				$text .= Xml::closeElement( 'tr' );
-				foreach ( $res as $row ) {
-					$title = Title::makeTitleSafe( $row->page_namespace, $row->page_title );
-					if( $title instanceof Title ) {
-						$text .= $this->formatRow( Linker::link( $title ),
-								$this->getLanguage()->formatNum( $row->page_counter ) );
-
-					}
-				}
-				$res->free();
-			}
 		return $text;
 	}
 

@@ -164,10 +164,6 @@ class SpecialPageFactory {
 		if ( !is_object( self::$mList ) ) {
 			wfProfileIn( __METHOD__ );
 
-			if ( !$wgDisableCounters ) {
-				self::$mList['Popularpages'] = 'PopularpagesPage';
-			}
-
 			if ( !$wgDisableInternalSearch ) {
 				self::$mList['Search'] = 'SpecialSearch';
 			}
