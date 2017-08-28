@@ -71,10 +71,13 @@ class RecirculationController extends WikiaController {
 	public function footer() {
 		global $wgSitename, $wgCityId, $wgLanguageCode;
 
-		if ($wgLanguageCode !== 'en') {
-			//This is temporary to supress MCF for old discussions on non-en wikis;
-			$this->response->setBody('');
+		// Language code check is temporary to supress MCF for old discussions on non-en wikis;
+		if ( !RecirculationHooks::isCorrectPageType() || $wgLanguageCode !== 'en' ) {
+			$this->skipRendering();
+
+			return;
 		}
+
 		$themeSettings = new ThemeSettings();
 		$canShowDiscussions = RecirculationHooks::canShowDiscussions( $wgCityId, true );
 		$topWikiArticles = $this->getTopWikiArticles();
