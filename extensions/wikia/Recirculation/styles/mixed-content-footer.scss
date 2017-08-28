@@ -35,21 +35,21 @@ $mcf-discussion-height-m: $mcf-card-height-m * 2 + $mcf-padding-vertical;
 		$overlay-color: #fff;
 	}
 	background-color: rgba($overlay-color, 0.1);
-	margin: (-$padding-width-medium) (-$padding-width-medium) (-$mcf-footer-margin);
+	margin: 0 (-$padding-width-medium) (-$mcf-footer-margin);
 	padding: $padding-width-medium;
 
 	@media #{$wds-breakpoint-xxl-up} {
-		margin: -$padding-width-large;
+		margin: 0 -$padding-width-large -$padding-width-large;
 		padding: $padding-width-large;
 	}
 
 	@media #{$wds-breakpoint-l-only} {
-		margin: (-$padding-width-small-plus) (-$padding-width-small-plus) (-$mcf-footer-margin);
+		margin: 0 (-$padding-width-small-plus) (-$mcf-footer-margin);
 		padding: $padding-width-small-plus;
 	}
 
 	@media #{$wds-breakpoint-m-down} {
-		margin: (-$padding-width-small) (-$padding-width-small) (-$mcf-footer-margin);
+		margin: 0 (-$padding-width-small) (-$mcf-footer-margin);
 		padding: $padding-width-small;
 	}
 }
