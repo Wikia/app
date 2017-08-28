@@ -39,7 +39,7 @@ $mcf-discussion-height-m: $mcf-card-height-m * 2 + $mcf-padding-vertical;
 	padding: $padding-width-medium;
 
 	@media #{$wds-breakpoint-xxl-up} {
-		margin: 0 -$padding-width-large -$padding-width-large;
+		margin: 0 (-$padding-width-large) (-$padding-width-large);
 		padding: $padding-width-large;
 	}
 
