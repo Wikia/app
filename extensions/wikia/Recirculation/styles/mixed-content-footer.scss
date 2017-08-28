@@ -5,6 +5,7 @@
 
 $mcf-padding-horizontal: 10px;
 $mcf-padding-vertical: 12px;
+$mcf-footer-margin: 30px;
 // size proportion of mixed content footer card
 $mcf-proportion: 292/334;
 
@@ -34,7 +35,7 @@ $mcf-discussion-height-m: $mcf-card-height-m * 2 + $mcf-padding-vertical;
 		$overlay-color: #fff;
 	}
 	background-color: rgba($overlay-color, 0.1);
-	margin: -$padding-width-medium;
+	margin: (-$padding-width-medium) (-$padding-width-medium) (-$mcf-footer-margin);
 	padding: $padding-width-medium;
 
 	@media #{$wds-breakpoint-xxl-up} {
@@ -43,12 +44,12 @@ $mcf-discussion-height-m: $mcf-card-height-m * 2 + $mcf-padding-vertical;
 	}
 
 	@media #{$wds-breakpoint-l-only} {
-		margin: -$padding-width-small-plus;
+		margin: (-$padding-width-small-plus) (-$padding-width-small-plus) (-$mcf-footer-margin);
 		padding: $padding-width-small-plus;
 	}
 
 	@media #{$wds-breakpoint-m-down} {
-		margin: -$padding-width-small;
+		margin: (-$padding-width-small) (-$padding-width-small) (-$mcf-footer-margin);
 		padding: $padding-width-small;
 	}
 }
