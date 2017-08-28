@@ -52,9 +52,7 @@ class WikiRecommendations {
 			'url' => 'http://midnight-texas.wikia.com/wiki/Midnight,_Texas_Wikia',
 		]
 	];
-
-	const LANGUAGES = [ 'en', 'de', 'fr', 'es', 'pt-br', 'ru', 'it', 'pl', 'zh', 'ja' ];
-
+	
 	public static function getRecommendations( $contentLanguage ) {
 		global $wgDevelEnvironment;
 
