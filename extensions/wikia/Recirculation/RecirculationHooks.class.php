@@ -80,7 +80,7 @@ class RecirculationHooks {
 		}
 	}
 
-	static public function canShowDiscussions( $cityId ) {
+	static public function canShowDiscussions( $cityId, $ignoreWgEnableRecirculationDiscussions = false ) {
 		$discussionsAlias = WikiFactory::getVarValueByName( 'wgRecirculationDiscussionsAlias', $cityId );
 
 		if ( !empty( $discussionsAlias ) ) {
@@ -90,7 +90,9 @@ class RecirculationHooks {
 		$discussionsEnabled = WikiFactory::getVarValueByName( 'wgEnableDiscussions', $cityId );
 		$recirculationDiscussionsEnabled = WikiFactory::getVarValueByName( 'wgEnableRecirculationDiscussions', $cityId );
 
-		if ( !empty( $discussionsEnabled ) && !empty( $recirculationDiscussionsEnabled ) ) {
+		if ( !empty( $discussionsEnabled ) && ( $ignoreWgEnableRecirculationDiscussions ||
+		                                        !empty( $recirculationDiscussionsEnabled ) )
+		) {
 			return true;
 		} else {
 			return false;
