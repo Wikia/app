@@ -12,6 +12,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 			}
 		},
 		context: {},
+		slotsContext: {
+			filterSlotMap: function (map) {
+				return map;
+			}
+		},
 		priceParsingHelper: {
 			getPriceFromString: function () {
 				return 0;
@@ -84,6 +89,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 	function getVeles() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.veles'](
 			mocks.adContext,
+			mocks.slotsContext,
 			mocks.priceParsingHelper,
 			mocks.prebid,
 			mocks.vastUrlBuilder,

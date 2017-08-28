@@ -1,13 +1,14 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.lookup.prebid.priceParsingHelper',
 	'ext.wikia.adEngine.wrappers.prebid',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
 	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, priceParsingHelper, prebid, vastUrlBuilder, instartLogic, log, win) {
+], function (adContext, slotsContext, priceParsingHelper, prebid, vastUrlBuilder, instartLogic, log, win) {
 	'use strict';
 
 	var bidderName = 'veles',
@@ -63,7 +64,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 	}
 
 	function getSlots(skin) {
-		return slots[skin];
+		return slotsContext.filterSlotMap(slots[skin]);
 	}
 
 	function getName() {
