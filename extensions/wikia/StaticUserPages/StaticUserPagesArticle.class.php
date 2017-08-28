@@ -13,7 +13,9 @@ class StaticUserPagesArticle extends Article {
 		$this->showNamespaceHeader();
 
 		// render a content from i18n messages
-		$out->addWikiMsg( StaticUserPagesHooks::getMessageForTitle( $this->getTitle() ) );
+		$out->addHTML(
+			wfMessage( StaticUserPagesHooks::getMessageForTitle( $this->getTitle() ) )->inContentLanguage()->parseAsBlock()
+		);
 	}
 
 	public function getContent() {
