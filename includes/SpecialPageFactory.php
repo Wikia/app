@@ -158,7 +158,7 @@ class SpecialPageFactory {
 	 */
 	static function getList() {
 		global $wgSpecialPages;
-		global $wgDisableCounters, $wgDisableInternalSearch, $wgEmailAuthentication;
+		global $wgDisableInternalSearch, $wgEmailAuthentication;
 		global $wgEnableEmail;
 
 		if ( !is_object( self::$mList ) ) {

@@ -343,9 +343,6 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 		$data = array();
 		$data['pages'] = intval( SiteStats::pages() );
 		$data['articles'] = intval( SiteStats::articles() );
-		if ( !$wgDisableCounters ) {
-			$data['views'] = intval( SiteStats::views() );
-		}
 		$data['edits'] = intval( SiteStats::edits() );
 		$data['images'] = intval( SiteStats::images() );
 		$data['users'] = intval( SiteStats::users() );

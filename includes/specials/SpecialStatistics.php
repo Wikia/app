@@ -33,7 +33,7 @@ use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
 class SpecialStatistics extends SpecialPage {
 	use PermissionsServiceAccessor;
 
-	private $views, $edits, $good, $images, $total, $users,
+	private $edits, $good, $images, $total, $users,
 			$activeUsers = 0;
 
 	public function __construct() {
@@ -41,12 +41,11 @@ class SpecialStatistics extends SpecialPage {
 	}
 
 	public function execute( $par ) {
-		global $wgMemc, $wgDisableCounters, $wgMiserMode;
+		global $wgMemc, $wgMiserMode;
 
 		$this->setHeaders();
 		$this->getOutput()->addModuleStyles( 'mediawiki.special' );
 
-		$this->views = SiteStats::views();
 		$this->edits = SiteStats::edits();
 		$this->good = SiteStats::articles();
 		$this->images = SiteStats::images();
@@ -54,12 +53,6 @@ class SpecialStatistics extends SpecialPage {
 		$this->users = SiteStats::users();
 		$this->activeUsers = SiteStats::activeUsers();
 		$this->hook = '';
-
-		# Staticic - views
-		$viewsStats = '';
-		if( !$wgDisableCounters ) {
-			$viewsStats = $this->getViewsStats();
-		}
 
 		# Set active user count
 		if( !$wgMiserMode ) {
@@ -239,19 +232,6 @@ class SpecialStatistics extends SpecialPage {
 				array( 'class' => 'statistics-group-' . Sanitizer::escapeClass( $group ) . $classZero )  );
 		}
 		return $text;
-	}
-
-	private function getViewsStats() {
-		return Xml::openElement( 'tr' ) .
-			Xml::tags( 'th', array( 'colspan' => '2' ), wfMsgExt( 'statistics-header-views', array( 'parseinline' ) ) ) .
-			Xml::closeElement( 'tr' ) .
-				$this->formatRow( wfMsgExt( 'statistics-views-total', array( 'parseinline' ) ),
-					$this->getLanguage()->formatNum( $this->views ),
-						array ( 'class' => 'mw-statistics-views-total' ), 'statistics-views-total-desc' ) .
-				$this->formatRow( wfMsgExt( 'statistics-views-peredit', array( 'parseinline' ) ),
-					$this->getLanguage()->formatNum( sprintf( '%.2f', $this->edits ?
-						$this->views / $this->edits : 0 ) ),
-						array ( 'class' => 'mw-statistics-views-peredit' ) );
 	}
 
 	private function getMostViewedPages() {

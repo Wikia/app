@@ -552,3 +552,7 @@ $wgFullyInitialised = true;
 
 wfProfileOut( $fname . '-extensions' );
 wfProfileOut( $fname );
+
+// We don't use counters anymore. Left here for extensions still
+// expecting this to exist. Should be removed sometime 1.26 or later.
+$wgDisableCounters = true;
