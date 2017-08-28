@@ -21,6 +21,8 @@ class RecirculationController extends WikiaController {
 		$showZeroState = false;
 		$cityId = $this->request->getVal( 'cityId', null );
 		$limit = $this->request->getVal( 'limit', 5 );
+		$ignoreWgEnableRecirculationDiscussions =
+			$this->request->getVal( 'ignoreWgEnableRecirculationDiscussions', false );
 		$sortKey =
 			$this->request->getVal( 'latest', false )
 				? DiscussionsDataService::DISCUSSIONS_API_SORT_KEY_LATEST
@@ -30,7 +32,7 @@ class RecirculationController extends WikiaController {
 			throw new InvalidParameterApiException( 'cityId' );
 		}
 
-		if ( RecirculationHooks::canShowDiscussions( $cityId ) ) {
+		if ( RecirculationHooks::canShowDiscussions( $cityId, $ignoreWgEnableRecirculationDiscussions ) ) {
 			$discussionsDataService = new DiscussionsDataService( $cityId, $limit );
 			$posts = $discussionsDataService->getData( 'posts', $sortKey )['posts'];
 
@@ -73,7 +75,7 @@ class RecirculationController extends WikiaController {
 			$this->response->setBody('');
 		}
 		$themeSettings = new ThemeSettings();
-		$canShowDiscussions = RecirculationHooks::canShowDiscussions( $wgCityId );
+		$canShowDiscussions = RecirculationHooks::canShowDiscussions( $wgCityId, true );
 		$topWikiArticles = $this->getTopWikiArticles();
 		$numberOfWikiArticles = 8;
 		$numberOfNSArticles = 9;

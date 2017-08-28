@@ -21,7 +21,8 @@ define('ext.wikia.recirculation.helpers.discussions', [
 			data: {
 				cityId: w.wgCityId,
 				latest: true,
-				limit: 10
+				limit: 10,
+				ignoreWgEnableRecirculationDiscussions: true
 			},
 			callback: function (response) {
 				deferred.resolve(response);
