@@ -354,7 +354,7 @@ h1.mcf-header {
 
 	&__item {
 		@include flexbox();
-		@include flex(0 0 1/3*100%);
+		@include flex(0 1 1/3*100%);
 		border-bottom: 1px solid $wds-color-faint-gray;
 
 		&:last-child {
