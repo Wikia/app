@@ -28,16 +28,17 @@ define('ext.wikia.adEngine.video.ooyalaAdSetProvider', [
 			}
 		};
 
-	function generateSet(ad, rv, correlator, videoInfo) {
+	function generateSet(ad, rv, correlator, videoInfo, bidParams) {
 		videoInfo = videoInfo || {};
+		var slotParams = bidParams || {};
+		slotParams.pos = 'FEATURED';
+		slotParams.src = 'premium';
+		slotParams.rv = rv;
+
 		return {
 			position_type: ad.position_type,
 			position: ad.position,
-			tag_url: vastUrlBuilder.build(FEATURED_VIDEO_RATIO, {
-				pos: 'FEATURED',
-				src: 'premium',
-				rv: rv
-			}, {
+			tag_url: vastUrlBuilder.build(FEATURED_VIDEO_RATIO, slotParams, {
 				vpos: ad.vpos,
 				correlator: correlator,
 				contentSourceId: videoInfo.contentSourceId,
@@ -72,7 +73,7 @@ define('ext.wikia.adEngine.video.ooyalaAdSetProvider', [
 		return !isReplay || (isReplay && cappingAllowsToShowNextVideo(videoDepth, adsFrequency));
 	}
 
-	function get(videoDepth, correlator, videoInfo) {
+	function get(videoDepth, correlator, videoInfo, bidParams) {
 		if (!canShowAds() || !isVideoDepthValid(videoDepth)) {
 			return [];
 		}
@@ -85,15 +86,15 @@ define('ext.wikia.adEngine.video.ooyalaAdSetProvider', [
 			rv = calculateRV(videoDepth, adsFrequency);
 
 		if (canAdBePlayed(videoDepth, adsFrequency)) {
-			adSet.push(generateSet(AD.PREROLL, rv, correlator, videoInfo));
+			adSet.push(generateSet(AD.PREROLL, rv, correlator, videoInfo, bidParams));
 		}
 
 		if (adContext.getContext().opts.isFVMidrollEnabled && canAdBePlayed(videoDepth, adsFrequency)) {
-			adSet.push(generateSet(AD.MIDROLL, rv, correlator, videoInfo));
+			adSet.push(generateSet(AD.MIDROLL, rv, correlator, videoInfo, bidParams));
 		}
 
 		if (adContext.getContext().opts.isFVPostrollEnabled && canAdBePlayed(videoDepth, adsFrequency)) {
-			adSet.push(generateSet(AD.POSTROLL, rv, correlator, videoInfo));
+			adSet.push(generateSet(AD.POSTROLL, rv, correlator, videoInfo, bidParams));
 		}
 
 		return adSet;

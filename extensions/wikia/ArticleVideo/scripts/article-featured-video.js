@@ -8,7 +8,8 @@ require([
 	'wikia.instantGlobals',
 	'wikia.articleVideo.videoFeedbackBox',
 	require.optional('ext.wikia.adEngine.video.player.ooyala.ooyalaTracker'),
-	require.optional('ext.wikia.adEngine.video.ooyalaAdSetProvider')
+	require.optional('ext.wikia.adEngine.video.ooyalaAdSetProvider'),
+	require.optional('ext.wikia.adEngine.lookup.a9')
 ], function (
 	window,
 	onScroll,
@@ -19,7 +20,8 @@ require([
 	instantGlobals,
 	VideoFeedbackBox,
 	playerTracker,
-	ooyalaAdSetProvider
+	ooyalaAdSetProvider,
+	a9
 ) {
 
 	$(function () {
@@ -83,21 +85,33 @@ require([
 					recommendedLabel: recommendedLabel
 				};
 
-			if (ooyalaAdSetProvider.canShowAds()) {
-				options.adSet = ooyalaAdSetProvider.get(1, correlator, {
-					contentSourceId: videoData.dfpContentSourceId,
-					videoId: videoId
-				});
-				options.replayAds = ooyalaAdSetProvider.adsCanBePlayedOnNextVideoViews();
-			} else {
-				playerTrackerParams.adProduct = 'featured-video-no-preroll';
-			}
-
 			if (playerTracker) {
 				playerTracker.track(playerTrackerParams, 'init');
 			}
 
-			ooyalaVideoController = OoyalaPlayer.initHTML5Player(ooyalaVideoElementId, options, onCreate);
+			if (ooyalaAdSetProvider.canShowAds()) {
+				options.replayAds = ooyalaAdSetProvider.adsCanBePlayedOnNextVideoViews();
+
+				a9.waitForResponse()
+					.then(function () {
+						return a9.getSlotParams('FEATURED');
+					})
+					.catch(function () {
+						return {};
+					})
+					.then(function (additionalSlotParams) { // finally
+						options.adSet = ooyalaAdSetProvider.get(1, correlator, {
+							contentSourceId: videoData.dfpContentSourceId,
+							videoId: videoId
+						}, additionalSlotParams);
+
+						ooyalaVideoController = OoyalaPlayer.initHTML5Player(ooyalaVideoElementId, options, onCreate);
+					});
+
+			} else {
+				playerTrackerParams.adProduct = 'featured-video-no-preroll';
+				ooyalaVideoController = OoyalaPlayer.initHTML5Player(ooyalaVideoElementId, options, onCreate);
+			}
 
 			document.addEventListener('visibilitychange', handleTabChange);
 		}
