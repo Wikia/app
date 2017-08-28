@@ -61,7 +61,7 @@ class WikiRecommendations {
 		if ( empty( $wgDevelEnvironment ) ) {
 			$recommendations = self::RECOMMENDATIONS['en'];
 
-			if ( in_array( $contentLanguage, self::LANGUAGES ) ) {
+			if ( array_key_exists( $contentLanguage, self::RECOMMENDATIONS ) ) {
 				$recommendations = self::RECOMMENDATIONS[$contentLanguage];
 			}
 			shuffle( $recommendations );
