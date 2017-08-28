@@ -85,35 +85,43 @@ require([
 					recommendedLabel: recommendedLabel
 				};
 
+			if (ooyalaAdSetProvider.canShowAds()) {
+				options.replayAds = ooyalaAdSetProvider.adsCanBePlayedOnNextVideoViews();
+
+				if (a9) {
+					a9.waitForResponse()
+						.then(function () { return a9.getSlotParams('FEATURED'); })
+						.catch(function () { return {}; })
+						.then(function (additionalSlotParams) { // finally
+							options.adSet = setupFirstAdSet(additionalSlotParams);
+							initPlayerWithTracking(options, onCreate);
+						});
+				} else {
+					options.adSet = setupFirstAdSet();
+					initPlayerWithTracking(options, onCreate);
+				}
+
+			} else {
+				playerTrackerParams.adProduct = 'featured-video-no-preroll';
+				initPlayerWithTracking(options, onCreate);
+			}
+
+			document.addEventListener('visibilitychange', handleTabChange);
+		}
+
+		function initPlayerWithTracking(options, onCreate) {
 			if (playerTracker) {
 				playerTracker.track(playerTrackerParams, 'init');
 			}
 
-			if (ooyalaAdSetProvider.canShowAds()) {
-				options.replayAds = ooyalaAdSetProvider.adsCanBePlayedOnNextVideoViews();
+			ooyalaVideoController = OoyalaPlayer.initHTML5Player(ooyalaVideoElementId, options, onCreate);
+		}
 
-				a9.waitForResponse()
-					.then(function () {
-						return a9.getSlotParams('FEATURED');
-					})
-					.catch(function () {
-						return {};
-					})
-					.then(function (additionalSlotParams) { // finally
-						options.adSet = ooyalaAdSetProvider.get(1, correlator, {
-							contentSourceId: videoData.dfpContentSourceId,
-							videoId: videoId
-						}, additionalSlotParams);
-
-						ooyalaVideoController = OoyalaPlayer.initHTML5Player(ooyalaVideoElementId, options, onCreate);
-					});
-
-			} else {
-				playerTrackerParams.adProduct = 'featured-video-no-preroll';
-				ooyalaVideoController = OoyalaPlayer.initHTML5Player(ooyalaVideoElementId, options, onCreate);
-			}
-
-			document.addEventListener('visibilitychange', handleTabChange);
+		function setupFirstAdSet(additionalSlotParams) {
+			return ooyalaAdSetProvider.get(1, correlator, {
+				contentSourceId: videoData.dfpContentSourceId,
+				videoId: videoId
+			}, additionalSlotParams);
 		}
 
 		function handleTabChange() {
