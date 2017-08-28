@@ -6,6 +6,7 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 class KubernetesUrlProviderTest extends TestCase {
+
 	/**
 	 * @dataProvider provideEnvironmentDatacenterAndServiceName
 	 *
@@ -90,7 +91,6 @@ class KubernetesUrlProviderTest extends TestCase {
 	 * @expectedException InvalidArgumentException
 	 */
 	public function testThrowsExceptionForInvalidEnvironment() {
-		$kubernetesUrlProvider =
-			new KubernetesUrlProvider( 'blabla', WIKIA_DC_SJC );
+		return new KubernetesUrlProvider( 'blabla', WIKIA_DC_SJC );
 	}
 }
