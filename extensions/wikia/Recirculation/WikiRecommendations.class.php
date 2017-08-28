@@ -4,6 +4,7 @@ class WikiRecommendations {
 
 	const THUMBNAIL_WIDTH = 100;
 	const THUMBNAIL_RATIO = 16 / 9;
+	const WIKI_RECOMMENDATIONS_LIMIT = 3;
 
 	const RECOMMENDATIONS = [
 		'en' => [
@@ -69,7 +70,7 @@ class WikiRecommendations {
 			$recommendations = self::DEV_RECOMMENDATIONS;
 		}
 
-		$recommendations = array_slice( $recommendations, 0, 3 );
+		$recommendations = array_slice( $recommendations, 0, self::WIKI_RECOMMENDATIONS_LIMIT );
 
 		$index = 1;
 		foreach($recommendations as &$recommendation) {

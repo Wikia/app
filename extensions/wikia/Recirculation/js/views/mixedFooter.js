@@ -43,7 +43,7 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 			var $this = $(this),
 				template = templates['client/Recirculation_article.mustache'],
 				newsAndStoriesItem = newsAndStoriesList[index],
-				type = 'ns-article';
+				type;
 
 			if(newsAndStoriesItem) {
 				type = newsAndStoriesItem.type;

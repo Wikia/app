@@ -18,6 +18,7 @@ class RecirculationController extends WikiaController {
 
 	public function discussions() {
 		global $wgLanguageCode;
+
 		$showZeroState = false;
 		$cityId = $this->request->getVal( 'cityId', null );
 		$limit = $this->request->getVal( 'limit', 5 );
@@ -91,7 +92,8 @@ class RecirculationController extends WikiaController {
 			$themeSettings->getCommunityHeaderBackgroundUrl() );
 		$this->response->setVal( 'sitename', $wgSitename );
 		$this->response->setVal( 'topWikiArticles', $topWikiArticles );
-		$this->response->setVal( 'wikiRecommendations', $this->getWikiRecommendations() );
+		$this->response->setVal( 'wikiRecommendations',
+			WikiRecommendations::getRecommendations( $wgLanguageCode ) );
 		$this->response->setVal( 'canShowDiscussions', $canShowDiscussions );
 		$this->response->setVal( 'numberOfWikiArticles', $numberOfWikiArticles );
 		$this->response->setVal( 'numberOfNSArticles', $numberOfNSArticles );
@@ -117,12 +119,6 @@ class RecirculationController extends WikiaController {
 		}
 
 		return $topWikiArticles;
-	}
-
-	private function getWikiRecommendations() {
-		global $wgLanguageCode;
-
-		return WikiRecommendations::getRecommendations( $wgLanguageCode );
 	}
 
 	public function container( $params ) {

@@ -116,8 +116,4 @@ require([
 	});
 
 	window.addEventListener('scroll', lazyLoadHandler);
-
-
-	// TODO handle errors
-	// TODO LI tracking
 });

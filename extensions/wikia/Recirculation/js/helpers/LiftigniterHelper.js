@@ -20,7 +20,7 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 					deferred.resolve(response);
 					fetching = false;
 					if (fetchQueue.length) {
-						// setTimeout is necessary because LI need to wait for LI to remove already registered modules
+						// setTimeout is necessary because we need to wait for LI to remove already registered modules
 						// LI clear register modules just after running all callbacks
 						setTimeout(function () {
 							fetch(fetchQueue.shift());
