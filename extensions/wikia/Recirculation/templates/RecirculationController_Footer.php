@@ -1,7 +1,9 @@
 <div id="mixed-content-footer" data-number-of-wiki-articles="<?= $numberOfWikiArticles ?>"
      data-number-of-ns-articles="<?= $numberOfNSArticles ?>">
 	<div class="mcf-content">
-		<h1 class="mcf-header"><?= wfMessage( 'recirculation-impact-footer-title' )->escaped() ?></h1>
+		<h1 class="mcf-header"><?= wfMessage( 'recirculation-impact-footer-title' )
+				->inContentLanguage()
+				->escaped() ?></h1>
 		<div class="mcf-row">
 			<? if ( !empty( $topWikiArticles ) ): ?>
 				<?= F::app()->renderPartial(
@@ -10,6 +12,7 @@
 					[
 						'recirculationArticlesMore' => wfMessage( 'recirculation-articles-more' )
 							->params( $sitename )
+							->inContentLanguage()
 							->escaped(),
 						'communityHeaderBackground' => $communityHeaderBackground,
 						'wikiArticles' => $topWikiArticles,
@@ -68,7 +71,9 @@
 				'Recirculation',
 				'exploreWikis',
 				[
-					'recirculationExploreWikis' => wfMessage( 'recirculation-explore-wikis' )->escaped(),
+					'recirculationExploreWikis' => wfMessage( 'recirculation-explore-wikis' )
+						->inContentLanguage()
+						->escaped(),
 					'items' => $wikiRecommendations
 				]
 			); ?>

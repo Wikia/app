@@ -55,8 +55,12 @@ class RecirculationController extends WikiaController {
 			}
 			$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 			$this->response->setData( [
-				'title' => wfMessage( 'recirculation-discussion-title' )->plain(),
-				'linkText' => wfMessage( 'recirculation-discussion-link-text' )->plain(),
+				'title' => wfMessage( 'recirculation-discussion-title' )
+					->inContentLanguage()
+					->plain(),
+				'linkText' => wfMessage( 'recirculation-discussion-link-text' )
+					->inContentLanguage()
+					->plain(),
 				'discussionsUrl' => $discussionsUrl,
 				'posts' => $postObjects,
 				'showZeroState' => $showZeroState,
