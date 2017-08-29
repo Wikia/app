@@ -225,7 +225,7 @@ class SEOTweaksHooksHelper {
 			$finalDotPosition = strrpos( $fileName, '.' );
 
 			// lop off text after the ultimate dot (e.g. JPG)
-			$params['frame']['alt'] = substr( $fileName, $finalDotPosition );
+			$params['frame']['alt'] = substr( $fileName, 0, $finalDotPosition );
 		}
 
 		return true;
