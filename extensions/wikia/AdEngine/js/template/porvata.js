@@ -127,19 +127,17 @@ define('ext.wikia.adEngine.template.porvata', [
 			}
 		});
 
-		if (params.fallbackBid) {
-			video.addEventListener('wikiaEmptyAd', function () {
-				if (!fallbackAdRequested) {
-					fallbackAdRequested = true;
-					video.reload({
-						height: params.height,
-						width: params.width,
-						vastResponse: params.fallbackBid.vastContent,
-						vastUrl: params.fallbackBid.vastUrl
-					});
-				}
-			});
-		}
+		video.addEventListener('wikiaEmptyAd', function () {
+			if (!fallbackAdRequested && params.fallbackBid && params.fallbackBid.cpm > 0) {
+				fallbackAdRequested = true;
+				video.reload({
+					height: params.height,
+					width: params.width,
+					vastResponse: params.fallbackBid.vastContent,
+					vastUrl: params.fallbackBid.vastUrl
+				});
+			}
+		});
 
 		if (params.isDynamic) {
 			win.addEventListener('resize', function () {
