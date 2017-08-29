@@ -1,10 +1,10 @@
 /**
  * AMD module wrapping Promise global object
  */
-define('wikia.promise', function () {
+define('wikia.promise', ['wikia.window'], function (win) {
 	'use strict';
 
-	var P = window.Promise;
+	var P = win.Promise;
 
 	/**
 	 * Constructor for promise with timeout
