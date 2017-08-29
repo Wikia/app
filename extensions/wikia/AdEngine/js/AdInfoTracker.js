@@ -45,10 +45,11 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 			win.addEventListener('adengine.slot.status', function (event) {
 				var adType = event.detail.adInfo && event.detail.adInfo.adType,
 					data,
-					slot = event.detail.slot;
+					slot = event.detail.slot,
+					status = adType === 'blocked' ? 'blocked' : event.detail.status;
 
-				if (adType !== 'blocked' && adInfoTrackerHelper.shouldHandleSlot(slot, enabledSlots)) {
-					data = adInfoTrackerHelper.prepareData(slot, event.detail.status);
+				if (adInfoTrackerHelper.shouldHandleSlot(slot, enabledSlots)) {
+					data = adInfoTrackerHelper.prepareData(slot, status);
 
 					log(['adengine.slot.status', event], log.levels.debug, logGroup);
 					if (data) {
