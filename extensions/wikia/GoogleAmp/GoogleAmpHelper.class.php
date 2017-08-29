@@ -25,7 +25,7 @@ class GoogleAmpHelper {
 		if ( $title->exists() &&
 			in_array( $title->getNamespace(), $wgGoogleAmpNamespaces ) &&
 			!in_array( $title->getPrefixedDBkey(), $wgGoogleAmpArticleBlacklist ) &&
-			!self::isCuratedMainPage() ) {
+			!self::isCuratedMainPage( $title ) ) {
 				return true;
 		}
 		return false;
