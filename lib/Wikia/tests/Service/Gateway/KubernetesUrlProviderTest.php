@@ -20,7 +20,7 @@ class KubernetesUrlProviderTest extends TestCase {
 		$kubernetesUrlProvider = new KubernetesUrlProvider( $env, $dc );
 
 		$this->assertEquals(
-			"$env.$serviceName.$dc.k8s.wikia.net",
+			"$env.$dc.k8s.wikia.net/$serviceName",
 			$kubernetesUrlProvider->getUrl( $serviceName )
 		);
 	}
@@ -48,7 +48,7 @@ class KubernetesUrlProviderTest extends TestCase {
 		$kubernetesUrlProvider = new KubernetesUrlProvider( $env, $dc );
 
 		$this->assertEquals(
-			"$prodEnv.$serviceName.$dc.k8s.wikia.net",
+			"$prodEnv.$dc.k8s.wikia.net/$serviceName",
 			$kubernetesUrlProvider->getUrl( $serviceName )
 		);
 	}
@@ -75,7 +75,7 @@ class KubernetesUrlProviderTest extends TestCase {
 		$kubernetesUrlProvider = new KubernetesUrlProvider( $env, $dc );
 
 		$this->assertEquals(
-			"$env.$serviceName.$dc-dev.k8s.wikia.net",
+			"$env.$dc-dev.k8s.wikia.net/$serviceName",
 			$kubernetesUrlProvider->getUrl( $serviceName )
 		);
 	}

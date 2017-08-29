@@ -7,7 +7,7 @@ class KubernetesUrlProvider implements UrlProvider {
 	const URL_PROVIDER_WIKIA_ENVIRONMENT = 'url_provider_wikia_environment';
 	const URL_PROVIDER_DATACENTER = 'url_provider_datacenter';
 
-	const K8S_URL = "%s.%s.%s.k8s.wikia.net";
+	const K8S_URL = "%s.%s.k8s.wikia.net/%s";
 
 	private $env;
 
@@ -44,6 +44,6 @@ class KubernetesUrlProvider implements UrlProvider {
 	}
 
 	public function getUrl( $serviceName ) {
-		return sprintf( static::K8S_URL, $this->env, $serviceName, $this->dc );
+		return sprintf( static::K8S_URL, $this->env, $this->dc, $serviceName );
 	}
 }
