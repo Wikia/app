@@ -31,6 +31,18 @@ define('ext.wikia.adEngine.wrappers.prebid', [
 		return bids.length ? bids[0] : null;
 	}
 
+	function getBidBySlotName(slotName) {
+		var bids;
+
+		if (!win.pbjs) {
+			return null;
+		}
+
+		bids = win.pbjs.getHighestCpmBids(slotName);
+
+		return bids && bids.length ? bids[0] : null;
+	}
+
 	function push(callback) {
 		win.pbjs.que.push(callback);
 	}
@@ -40,6 +52,7 @@ define('ext.wikia.adEngine.wrappers.prebid', [
 		errorResponseStatusCode: errorResponseStatusCode,
 		get: get,
 		getBidByAdId: getBidByAdId,
+		getBidBySlotName: getBidBySlotName,
 		push: push
 	};
 });

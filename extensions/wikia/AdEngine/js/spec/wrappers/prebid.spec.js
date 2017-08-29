@@ -19,7 +19,8 @@ describe('ext.wikia.adEngine.wrappers.prebid', function () {
 							ad: 'bar',
 							adId: 'uniqueBarAd'
 						}
-					]
+					],
+					getHighestCpmBids: noop
 				}
 			}
 		},
@@ -54,5 +55,13 @@ describe('ext.wikia.adEngine.wrappers.prebid', function () {
 
 	it('Returns null when bid does not exist', function () {
 		expect(prebid.getBidByAdId('notExistingId')).toEqual(null);
+	});
+
+	it('Get highest bid for slot name', function () {
+		spyOn(mocks.win.pbjs, 'getHighestCpmBids');
+
+		prebid.getBidBySlotName('foo');
+
+		expect(mocks.win.pbjs.getHighestCpmBids).toHaveBeenCalled();
 	});
 });

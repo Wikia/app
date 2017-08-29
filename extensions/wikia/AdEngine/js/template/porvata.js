@@ -126,6 +126,17 @@ define('ext.wikia.adEngine.template.porvata', [
 			}
 		});
 
+		if (params.fallbackBid) {
+			video.addEventListener('wikiaEmptyAd', function () {
+				video.reload({
+					height: params.height,
+					width: params.width,
+					vastResponse: params.fallbackBid.vastContent,
+					vastUrl: params.fallbackBid.vastUrl
+				});
+			});
+		}
+
 		if (params.isDynamic) {
 			win.addEventListener('resize', function () {
 				if (!(video.isFloating && video.isFloating())) {
@@ -148,7 +159,9 @@ define('ext.wikia.adEngine.template.porvata', [
 	 * @param {object} params.src - SRC key-value needed for VastUrlBuilder
 	 * @param {object} params.width - Player width
 	 * @param {object} params.height - Player height
+	 * @param {string} [params.hbAdId] - Prebid ad id of winning offer
 	 * @param {string} [params.onReady] - Callback executed once player is ready
+	 * @param {string} [params.slotNameForFallbackBid] - Slot name for fallback bid
 	 * @param {string} [params.vastUrl] - Vast URL (DFP URL with page level targeting will be used if not passed)
 	 * @param {integer} [params.vpaidMode] - VPAID mode from IMA: https://developers.google.com/interactive-media-ads/docs/sdks/html5/v3/apis#ima.ImaSdkSettings.VpaidMode
 	 * @param {Boolean} [params.isDynamic] - Flag defining if slot should be collapsed and expanded
@@ -163,6 +176,10 @@ define('ext.wikia.adEngine.template.porvata', [
 			params.bid = prebid.getBidByAdId(params.hbAdId);
 			params.vastResponse = params.bid.vastContent || null;
 			params.vastUrl = params.bid.vastUrl;
+		}
+
+		if (params.slotNameForFallbackBid) {
+			params.fallbackBid = prebid.getBidBySlotName(params.slotNameForFallbackBid);
 		}
 
 		if (params.bid && params.adProduct === 'veles') {
