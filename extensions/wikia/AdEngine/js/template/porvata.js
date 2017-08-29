@@ -79,7 +79,8 @@ define('ext.wikia.adEngine.template.porvata', [
 	}
 
 	function onReady(video, params) {
-		var slot = doc.getElementById(params.slotName),
+		var fallbackAdRequested = false,
+			slot = doc.getElementById(params.slotName),
 			slotExpanded = false,
 			slotWidth;
 
@@ -128,12 +129,15 @@ define('ext.wikia.adEngine.template.porvata', [
 
 		if (params.fallbackBid) {
 			video.addEventListener('wikiaEmptyAd', function () {
-				video.reload({
-					height: params.height,
-					width: params.width,
-					vastResponse: params.fallbackBid.vastContent,
-					vastUrl: params.fallbackBid.vastUrl
-				});
+				if (!fallbackAdRequested) {
+					fallbackAdRequested = true;
+					video.reload({
+						height: params.height,
+						width: params.width,
+						vastResponse: params.fallbackBid.vastContent,
+						vastUrl: params.fallbackBid.vastUrl
+					});
+				}
 			});
 		}
 
