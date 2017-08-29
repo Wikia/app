@@ -48,7 +48,8 @@ class RecirculationController extends WikiaController {
 			foreach ( $posts as $post ) {
 				$postObjects[] = $post->jsonSerialize();
 			}
-			
+
+			$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_PHP );
 			$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 			$this->response->setData( [
 				'title' => wfMessage( 'recirculation-discussion-title' )
