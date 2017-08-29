@@ -20,7 +20,23 @@ describe('ext.wikia.adEngine.wrappers.prebid', function () {
 							adId: 'uniqueBarAd'
 						}
 					],
-					getHighestCpmBids: noop
+					getBidResponsesForAdUnitCode: function () {
+						return {
+							bids: [
+								{
+									cpm: 15.00,
+									mediaType: 'video'
+								},
+								{
+									cpm: 20.00
+								},
+								{
+									cpm: 17.50,
+									mediaType: 'video'
+								}
+							]
+						};
+					}
 				}
 			}
 		},
@@ -57,11 +73,9 @@ describe('ext.wikia.adEngine.wrappers.prebid', function () {
 		expect(prebid.getBidByAdId('notExistingId')).toEqual(null);
 	});
 
-	it('Get highest bid for slot name', function () {
-		spyOn(mocks.win.pbjs, 'getHighestCpmBids');
+	it('Get winning video bid for slot', function () {
+		var bid = prebid.getWinningVideoBidBySlotName('foo');
 
-		prebid.getBidBySlotName('foo');
-
-		expect(mocks.win.pbjs.getHighestCpmBids).toHaveBeenCalled();
+		expect(bid.cpm).toBe(17.50);
 	});
 });

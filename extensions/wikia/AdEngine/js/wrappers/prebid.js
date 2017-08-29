@@ -31,16 +31,23 @@ define('ext.wikia.adEngine.wrappers.prebid', [
 		return bids.length ? bids[0] : null;
 	}
 
-	function getBidBySlotName(slotName) {
-		var bids;
+	function getWinningVideoBidBySlotName(slotName) {
+		var bids,
+			videoBid = null;
 
 		if (!win.pbjs) {
 			return null;
 		}
 
-		bids = win.pbjs.getHighestCpmBids(slotName);
+		bids = win.pbjs.getBidResponsesForAdUnitCode(slotName).bids || [];
 
-		return bids && bids.length ? bids[0] : null;
+		bids.forEach(function (bid) {
+			if (bid.mediaType === 'video' && (videoBid === null || bid.cpm > videoBid.cpm)) {
+				videoBid = bid;
+			}
+		});
+
+		return videoBid;
 	}
 
 	function push(callback) {
@@ -52,7 +59,7 @@ define('ext.wikia.adEngine.wrappers.prebid', [
 		errorResponseStatusCode: errorResponseStatusCode,
 		get: get,
 		getBidByAdId: getBidByAdId,
-		getBidBySlotName: getBidBySlotName,
+		getWinningVideoBidBySlotName: getWinningVideoBidBySlotName,
 		push: push
 	};
 });

@@ -179,7 +179,7 @@ define('ext.wikia.adEngine.template.porvata', [
 		}
 
 		if (params.slotNameForFallbackBid) {
-			params.fallbackBid = prebid.getBidBySlotName(params.slotNameForFallbackBid);
+			params.fallbackBid = prebid.getWinningVideoBidBySlotName(params.slotNameForFallbackBid);
 		}
 
 		if (params.bid && params.adProduct === 'veles') {
