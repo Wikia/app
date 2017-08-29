@@ -33,7 +33,11 @@ define('ext.wikia.adEngine.template.porvata', [
 	mercuryListener
 ) {
 	'use strict';
-	var logGroup = 'ext.wikia.adEngine.template.porvata',
+	var fallbackBidders = [
+			'appnexusAst',
+			'rubicon'
+		],
+		logGroup = 'ext.wikia.adEngine.template.porvata',
 		videoAspectRatio = 640 / 360;
 
 	function loadVeles(params) {
@@ -127,17 +131,21 @@ define('ext.wikia.adEngine.template.porvata', [
 			}
 		});
 
-		video.addEventListener('wikiaEmptyAd', function () {
-			if (!fallbackAdRequested && params.fallbackBid && params.fallbackBid.cpm > 0) {
-				fallbackAdRequested = true;
-				video.reload({
-					height: params.height,
-					width: params.width,
-					vastResponse: params.fallbackBid.vastContent,
-					vastUrl: params.fallbackBid.vastUrl
-				});
-			}
-		});
+		if (params.slotNameForFallbackBid) {
+			video.addEventListener('wikiaEmptyAd', function () {
+				var fallbackBid = prebid.getWinningVideoBidBySlotName(params.slotNameForFallbackBid, fallbackBidders);
+
+				if (!fallbackAdRequested && fallbackBid && fallbackBid.cpm > 0) {
+					fallbackAdRequested = true;
+					video.reload({
+						height: params.height,
+						width: params.width,
+						vastResponse: fallbackBid.vastContent,
+						vastUrl: fallbackBid.vastUrl
+					});
+				}
+			});
+		}
 
 		if (params.isDynamic) {
 			win.addEventListener('resize', function () {
@@ -178,10 +186,6 @@ define('ext.wikia.adEngine.template.porvata', [
 			params.bid = prebid.getBidByAdId(params.hbAdId);
 			params.vastResponse = params.bid.vastContent || null;
 			params.vastUrl = params.bid.vastUrl;
-		}
-
-		if (params.slotNameForFallbackBid) {
-			params.fallbackBid = prebid.getWinningVideoBidBySlotName(params.slotNameForFallbackBid);
 		}
 
 		if (params.bid && params.adProduct === 'veles') {

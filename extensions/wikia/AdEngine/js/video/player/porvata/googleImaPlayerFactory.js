@@ -166,17 +166,15 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			false
 		);
 
+		adsLoader.addEventListener(win.google.ima.AdErrorEvent.Type.AD_ERROR, function (event) {
+			var emptyVastErrorCode = win.google.ima.AdError.ErrorCode.VAST_EMPTY_RESPONSE;
+
+			if (event.getError && event.getError().getErrorCode() === emptyVastErrorCode) {
+				dispatchEvent('wikiaEmptyAd');
+			}
+		});
+
 		adsLoader.requestAds(imaSetup.createRequest(params));
-
-		if (params.fallbackBid) {
-			adsLoader.addEventListener(win.google.ima.AdErrorEvent.Type.AD_ERROR, function (event) {
-				var emptyVastErrorCode = win.google.ima.AdError.ErrorCode.VAST_EMPTY_RESPONSE;
-
-				if (event.getError && event.getError().getErrorCode() === emptyVastErrorCode) {
-					dispatchEvent('wikiaEmptyAd');
-				}
-			});
-		}
 
 		if (videoSettings.isAutoPlay()) {
 			setAutoPlay(true);

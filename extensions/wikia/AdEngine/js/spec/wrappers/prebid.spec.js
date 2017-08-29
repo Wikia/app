@@ -24,15 +24,23 @@ describe('ext.wikia.adEngine.wrappers.prebid', function () {
 						return {
 							bids: [
 								{
+									bidderName: 'bidder1',
 									cpm: 15.00,
-									vastUrl: 'foo'
+									vastUrl: 'http://...'
 								},
 								{
-									cpm: 20.00
+									cpm: 20.00,
+									bidderName: 'bidder4'
 								},
 								{
+									bidderName: 'bidder2',
 									cpm: 17.50,
-									vastUrl: 'bar'
+									vastUrl: 'http://...'
+								},
+								{
+									bidderName: 'bidder3',
+									cpm: 19.50,
+									vastUrl: 'http://...'
 								}
 							]
 						};
@@ -75,6 +83,12 @@ describe('ext.wikia.adEngine.wrappers.prebid', function () {
 
 	it('Get winning video bid for slot', function () {
 		var bid = prebid.getWinningVideoBidBySlotName('foo');
+
+		expect(bid.cpm).toBe(19.50);
+	});
+
+	it('Get winning video bid for slot from allowed bidders only', function () {
+		var bid = prebid.getWinningVideoBidBySlotName('foo', ['bidder1', 'bidder2']);
 
 		expect(bid.cpm).toBe(17.50);
 	});

@@ -31,7 +31,7 @@ define('ext.wikia.adEngine.wrappers.prebid', [
 		return bids.length ? bids[0] : null;
 	}
 
-	function getWinningVideoBidBySlotName(slotName) {
+	function getWinningVideoBidBySlotName(slotName, allowedBidders) {
 		var bids,
 			videoBid = null;
 
@@ -42,9 +42,10 @@ define('ext.wikia.adEngine.wrappers.prebid', [
 		bids = win.pbjs.getBidResponsesForAdUnitCode(slotName).bids || [];
 
 		bids.forEach(function (bid) {
-			var bidHasVast = bid.vastUrl || bid.vastContent;
+			var canUseThisBidder = !allowedBidders || allowedBidders.indexOf(bid.bidderName) !== -1,
+				hasVast = bid.vastUrl || bid.vastContent;
 
-			if (bidHasVast && (videoBid === null || bid.cpm > videoBid.cpm)) {
+			if (canUseThisBidder && hasVast && (videoBid === null || bid.cpm > videoBid.cpm)) {
 				videoBid = bid;
 			}
 		});
