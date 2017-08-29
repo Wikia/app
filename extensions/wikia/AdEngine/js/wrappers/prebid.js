@@ -42,7 +42,7 @@ define('ext.wikia.adEngine.wrappers.prebid', [
 		bids = win.pbjs.getBidResponsesForAdUnitCode(slotName).bids || [];
 
 		bids.forEach(function (bid) {
-			var canUseThisBidder = !allowedBidders || allowedBidders.indexOf(bid.bidderName) !== -1,
+			var canUseThisBidder = !allowedBidders || allowedBidders.indexOf(bid.bidderCode) !== -1,
 				hasVast = bid.vastUrl || bid.vastContent;
 
 			if (canUseThisBidder && hasVast && (videoBid === null || bid.cpm > videoBid.cpm)) {

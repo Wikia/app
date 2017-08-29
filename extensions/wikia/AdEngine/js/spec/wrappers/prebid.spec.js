@@ -24,13 +24,13 @@ describe('ext.wikia.adEngine.wrappers.prebid', function () {
 						return {
 							bids: [
 								{
-									bidderName: 'bidder1',
+									bidderCode: 'bidder1',
 									cpm: 15.00,
 									vastUrl: 'http://...'
 								},
 								{
 									cpm: 20.00,
-									bidderName: 'bidder4'
+									bidderCode: 'bidder4'
 								},
 								{
 									bidderName: 'bidder2',
@@ -38,7 +38,7 @@ describe('ext.wikia.adEngine.wrappers.prebid', function () {
 									vastUrl: 'http://...'
 								},
 								{
-									bidderName: 'bidder3',
+									bidderCode: 'bidder3',
 									cpm: 19.50,
 									vastUrl: 'http://...'
 								}
