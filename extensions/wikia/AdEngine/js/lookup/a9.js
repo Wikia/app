@@ -14,14 +14,12 @@ define('ext.wikia.adEngine.lookup.a9', [
 				BOTTOM_LEADERBOARD: [[728, 90], [970, 250]],
 				INCONTENT_BOXAD_1: [[300, 250], [300, 600]],
 				TOP_LEADERBOARD: [[728, 90], [970, 250]],
-				TOP_RIGHT_BOXAD: [[300, 250], [300, 600]],
-				FEATURED: [[640, 480]]
+				TOP_RIGHT_BOXAD: [[300, 250], [300, 600]]
 			},
 			mercury: {
 				MOBILE_IN_CONTENT: [[300, 250], [320, 480]],
 				MOBILE_PREFOOTER: [[320, 50], [300, 250]],
-				MOBILE_TOP_LEADERBOARD: [[320, 50]],
-				FEATURED: [[640, 480]]
+				MOBILE_TOP_LEADERBOARD: [[320, 50]]
 			}
 		},
 		VIDEO_SLOTS = ['FEATURED'],
@@ -31,24 +29,29 @@ define('ext.wikia.adEngine.lookup.a9', [
 		priceMap = {},
 		slots = [];
 
-	function call(skin, onResponse) {
+	function insertScript() {
 		var a9Script = doc.createElement('script'),
-			node = doc.getElementsByTagName('script')[0],
-			a9Slots;
+			node = doc.getElementsByTagName('script')[0];
+
+		a9Script.type = 'text/javascript';
+		a9Script.async = true;
+		a9Script.src = '//c.amazon-adsystem.com/aax2/apstag.js';
+
+		node.parentNode.insertBefore(a9Script, node);
+	}
+
+	function call(skin, onResponse) {
+		var a9Slots;
 
 		if (!loaded) {
 			log(['call - load', skin], 'debug', logGroup);
 
-			a9Script.type = 'text/javascript';
-			a9Script.async = true;
-			a9Script.src = '//c.amazon-adsystem.com/aax2/apstag.js';
-
-			node.parentNode.insertBefore(a9Script, node);
-
+			insertScript();
 			configureApstag();
 
 			win.apstag.init({
-				pubID: amazonId
+				pubID: amazonId,
+				videoAdServer: 'DFP'
 			});
 
 			loaded = true;
@@ -58,7 +61,7 @@ define('ext.wikia.adEngine.lookup.a9', [
 		priceMap = {};
 
 		slots = slotsContext.filterSlotMap(config[skin]);
-		a9Slots = Object.keys(slots).map(createSlotDefinition);
+		a9Slots = Object.keys(slots).map(createSlotDefinition).concat(VIDEO_SLOTS.map(createVideoSlotDefinition));
 		log(['call - fetchBids', a9Slots], 'debug', logGroup);
 
 		win.apstag.fetchBids({
@@ -76,17 +79,18 @@ define('ext.wikia.adEngine.lookup.a9', [
 	}
 
 	function createSlotDefinition(slotName) {
-		var item = {
+		return {
 			sizes: slots[slotName],
 			slotID: slotName,
 			slotName: slotName
 		};
+	}
 
-		if (VIDEO_SLOTS.indexOf(slotName) > -1) {
-			item.mediaType = 'video';
-		}
-
-		return item;
+	function createVideoSlotDefinition(videoSlotName) {
+		return {
+			slotID: videoSlotName,
+			mediaType: 'video'
+		};
 	}
 
 	function configureApstagCommand(command, args) {
@@ -144,7 +148,7 @@ define('ext.wikia.adEngine.lookup.a9', [
 	}
 
 	function isSlotSupported(slotName) {
-		return slots[slotName];
+		return slots[slotName] || VIDEO_SLOTS.indexOf(slotName) >= 0;
 	}
 
 	function getBestSlotPrice(slotName) {
