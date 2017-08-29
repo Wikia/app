@@ -12,12 +12,11 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 	var logGroup = 'ext.wikia.adEngine.adInfoTrackerHelper';
 
 	function shouldHandleSlot(slot, enabledSlots) {
-		var dataGptDiv = slot.container.firstChild;
-
 		return (
 			enabledSlots[slot.name] &&
-			dataGptDiv &&
-			dataGptDiv.dataset.gptPageParams &&
+			slot.container &&
+			slot.container.firstChild &&
+			slot.container.firstChild.dataset.gptPageParams &&
 			!adBlockDetection.isBlocking()
 		);
 	}
