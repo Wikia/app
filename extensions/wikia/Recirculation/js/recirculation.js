@@ -56,13 +56,13 @@ require([
 			}
 		};
 
-	if (window.wgContentLanguage !== 'en') {
-		if (videosModule) {
-			videosModule('#recirculation-rail');
-		}
-		oldDiscussions();
-		return;
-	}
+	// if (window.wgContentLanguage !== 'en') {
+	// 	if (videosModule) {
+	// 		videosModule('#recirculation-rail');
+	// 	}
+	// 	oldDiscussions();
+	// 	return;
+	// }
 
 	// prepare & render right rail recirculation module
 	liftigniter.prepare(railRecirculation).done(function (data) {

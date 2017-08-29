@@ -76,7 +76,7 @@ class RecirculationController extends WikiaController {
 		global $wgSitename, $wgCityId, $wgLanguageCode;
 
 		// Language code check is temporary to supress MCF for old discussions on non-en wikis;
-		if ( !RecirculationHooks::isCorrectPageType() || $wgLanguageCode !== 'en' ) {
+		if ( !RecirculationHooks::isCorrectPageType() ) {
 			$this->skipRendering();
 
 			return;
