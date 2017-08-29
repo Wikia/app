@@ -33,7 +33,7 @@ describe('ext.wikia.adEngine.wrappers.prebid', function () {
 									bidderCode: 'bidder4'
 								},
 								{
-									bidderName: 'bidder2',
+									bidderCode: 'bidder2',
 									cpm: 17.50,
 									vastUrl: 'http://...'
 								},
