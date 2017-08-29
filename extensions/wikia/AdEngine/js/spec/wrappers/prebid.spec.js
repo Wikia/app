@@ -25,14 +25,14 @@ describe('ext.wikia.adEngine.wrappers.prebid', function () {
 							bids: [
 								{
 									cpm: 15.00,
-									mediaType: 'video'
+									vastUrl: 'foo'
 								},
 								{
 									cpm: 20.00
 								},
 								{
 									cpm: 17.50,
-									mediaType: 'video'
+									vastUrl: 'bar'
 								}
 							]
 						};
