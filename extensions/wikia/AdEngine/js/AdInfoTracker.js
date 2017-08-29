@@ -4,9 +4,8 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.adContext',
 	'wikia.log',
-	'wikia.window',
-	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
-], function (adInfoTrackerHelper, adTracker, adContext, log, win, mercuryListener) {
+	'wikia.window'
+], function (adInfoTrackerHelper, adTracker, adContext, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adInfoTracker',
@@ -36,7 +35,6 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 	function isEnabled() {
 		return adContext.getContext().opts.enableAdInfoLog;
 	}
-
 
 	function run() {
 		if (isEnabled()) {
