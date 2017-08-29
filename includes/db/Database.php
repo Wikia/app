@@ -241,6 +241,9 @@ abstract class DatabaseBase implements DatabaseType {
 
 	protected $delimiter = ';';
 
+	/** @var array Map of (table name => 1) for TEMPORARY tables */
+	protected $mSessionTempTables = [];
+
 # ------------------------------------------------------------------------------
 # Accessors
 # ------------------------------------------------------------------------------
@@ -832,6 +835,42 @@ abstract class DatabaseBase implements DatabaseType {
 	}
 
 	/**
+	 * @param string $sql A SQL query
+	 * @return bool Whether $sql is SQL for TEMPORARY table operation
+	 */
+	protected function registerTempTableOperation( $sql ) {
+		if ( preg_match(
+			'/^CREATE\s+TEMPORARY\s+TABLE\s+(?:IF\s+NOT\s+EXISTS\s+)?[`"\']?(\w+)[`"\']?/i',
+			$sql,
+			$matches
+		) ) {
+			$this->mSessionTempTables[$matches[1]] = 1;
+			return true;
+		} elseif ( preg_match(
+			'/^DROP\s+(?:TEMPORARY\s+)?TABLE\s+(?:IF\s+EXISTS\s+)?[`"\']?(\w+)[`"\']?/i',
+			$sql,
+			$matches
+		) ) {
+			$isTemp = isset( $this->mSessionTempTables[$matches[1]] );
+			unset( $this->mSessionTempTables[$matches[1]] );
+			return $isTemp;
+		} elseif ( preg_match(
+			'/^TRUNCATE\s+(?:TEMPORARY\s+)?TABLE\s+(?:IF\s+EXISTS\s+)?[`"\']?(\w+)[`"\']?/i',
+			$sql,
+			$matches
+		) ) {
+			return isset( $this->mSessionTempTables[$matches[1]] );
+		} elseif ( preg_match(
+			'/^(?:INSERT\s+(?:\w+\s+)?INTO|UPDATE|DELETE\s+FROM)\s+[`"\']?(\w+)[`"\']?/i',
+			$sql,
+			$matches
+		) ) {
+			return isset( $this->mSessionTempTables[$matches[1]] );
+		}
+		return false;
+	}
+
+	/**
 	 * Run an SQL query and return the result. Normally throws a DBQueryError
 	 * on failure. If errors are ignored, returns false instead.
 	 *
@@ -876,6 +915,8 @@ abstract class DatabaseBase implements DatabaseType {
 
 		$this->mLastQuery = $sql;
 		$is_writeable = $this->isWriteQuery( $sql );
+		$isNonTempWrite = !$this->registerTempTableOperation( $sql );
+
 		if ( !$this->mDoneWrites && $is_writeable ) {
 			# Set a flag indicating that writes have been done
 			wfDebug( __METHOD__ . ": Writes done: $sql\n" );
@@ -884,7 +925,7 @@ abstract class DatabaseBase implements DatabaseType {
 
 		# <Wikia>
 		global $wgDBReadOnly, $wgReadOnly;
-		if ( $is_writeable && $wgDBReadOnly ) {
+		if ( $is_writeable && $isNonTempWrite && $wgDBReadOnly ) {
 			if ( !Profiler::instance()->isStub() ) {
 				wfProfileOut( $queryProf );
 				wfProfileOut( $totalProf );
