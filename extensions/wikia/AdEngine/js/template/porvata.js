@@ -133,9 +133,14 @@ define('ext.wikia.adEngine.template.porvata', [
 
 		if (params.useBidAsFallback) {
 			video.addEventListener('wikiaEmptyAd', function () {
-				var fallbackBid = prebid.getWinningVideoBidBySlotName(params.slotName, fallbackBidders);
+				var fallbackBid;
 
-				if (!fallbackAdRequested && fallbackBid && fallbackBid.cpm > 0) {
+				if (fallbackAdRequested) {
+					return;
+				}
+
+				fallbackBid = prebid.getWinningVideoBidBySlotName(params.slotName, fallbackBidders);
+				if (fallbackBid) {
 					fallbackAdRequested = true;
 					video.reload({
 						height: params.height,
