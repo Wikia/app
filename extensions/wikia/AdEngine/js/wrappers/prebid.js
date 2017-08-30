@@ -44,14 +44,10 @@ define('ext.wikia.adEngine.wrappers.prebid', [
 				var canUseThisBidder = !allowedBidders || allowedBidders.indexOf(bid.bidderCode) !== -1,
 					hasVast = bid.vastUrl || bid.vastContent;
 
-				return canUseThisBidder && hasVast;
+				return canUseThisBidder && hasVast && bid.cpm > 0;
 			})
 			.reduce(function (previousBid, currentBid) {
-				if (previousBid === null && currentBid.cpm > 0) {
-					return currentBid;
-				}
-
-				if (currentBid !== null && currentBid.cpm > previousBid.cpm) {
+				if (previousBid === null  || currentBid.cpm > previousBid.cpm) {
 					return currentBid;
 				}
 
