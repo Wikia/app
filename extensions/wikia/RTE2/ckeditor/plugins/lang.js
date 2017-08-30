@@ -4,10 +4,10 @@ foo();
 
 function foo(){
 if(window.mw.msg('rte-ck-unlink') == '<rte-ck-unlink>'){
-setTimeout(foo,1000);
+setTimeout(foo,10);
 }
 
-CKEDITOR.plugins.setLang( 'toolbar', RTE.config.language, {
+CKEDITOR.plugins.setLang( 'toolbar', window.wgUserLanguage, {
 	toolbarCollapse: window.mw.msg('rte-ck-toolbarCollapse'),
 	toolbarExpand: window.mw.msg('rte-ck-toolbarExpand'),
 	toolbarGroups: {
@@ -28,7 +28,7 @@ CKEDITOR.plugins.setLang( 'toolbar', RTE.config.language, {
 } );
 
 
-CKEDITOR.plugins.setLang( 'basicstyles', RTE.config.language, {
+CKEDITOR.plugins.setLang( 'basicstyles', window.wgUserLanguage, {
 	bold: window.mw.msg('rte-ck-basicstyles-bold'),
 	italic:  window.mw.msg('rte-ck-basicstyles-italic'),
 	strike: window.mw.msg('rte-ck-basicstyles-strike'),
@@ -37,15 +37,15 @@ CKEDITOR.plugins.setLang( 'basicstyles', RTE.config.language, {
 	underline: window.mw.msg('rte-ck-basicstyles-underline'),
 } );
 
-CKEDITOR.plugins.setLang( 'contextmenu', RTE.config.language, {
+CKEDITOR.plugins.setLang( 'contextmenu', window.wgUserLanguage, {
 	options: window.mw.msg('rte-ck-contextmenu-options')
 } );
 
-CKEDITOR.plugins.setLang( 'button', RTE.config.language, {
+CKEDITOR.plugins.setLang( 'button', window.wgUserLanguage, {
 	selectedLabel: '%1 (Selected)'
 } );
 
-CKEDITOR.plugins.setLang( 'clipboard', RTE.config.language, {
+CKEDITOR.plugins.setLang( 'clipboard', window.wgUserLanguage, {
 	copy: window.mw.msg('rte-ck-copy'),
 	copyError: window.mw.msg('rte-ck-clipboard-copyError'),
 	cut: window.mw.msg('rte-ck-cut'),
@@ -55,15 +55,15 @@ CKEDITOR.plugins.setLang( 'clipboard', RTE.config.language, {
 } );
 
 
-//CKEDITOR.plugins.setLang( 'fakeobjects', RTE.config.language, {
-//	anchor: 'Anchor',
-//	flash: 'Flash Animation',
-//	hiddenfield: 'Hidden Field',
-//	iframe: 'IFrame',
-//	unknown: 'Unknown Object'
-//} );
+CKEDITOR.plugins.setLang( 'fakeobjects', window.wgUserLanguage, {
+	anchor: 'Anchor',
+	flash: 'Flash Animation',
+	hiddenfield: 'Hidden Field',
+	iframe: 'IFrame',
+	unknown: 'Unknown Object'
+} );
 
-CKEDITOR.plugins.setLang( 'format', RTE.config.language, {
+CKEDITOR.plugins.setLang( 'format', window.wgUserLanguage, {
 	label: window.mw.msg('rte-ck-format-label'),
 	panelTitle: window.mw.msg('rte-ck-format-panelTitle'),
 	tag_address: window.mw.msg('rte-ck-format-tag_address'),
@@ -78,20 +78,20 @@ CKEDITOR.plugins.setLang( 'format', RTE.config.language, {
 	tag_pre: window.mw.msg('rte-ck-format-tag_pre'),
 } );
 
-CKEDITOR.plugins.setLang( 'indent', RTE.config.language, {
+CKEDITOR.plugins.setLang( 'indent', window.wgUserLanguage, {
 	indent: window.mw.msg('rte-ck-indent'),
 	outdent: window.mw.msg('rte-ck-outdent'),
 } );
 
-CKEDITOR.plugins.setLang( 'justify', RTE.config.language, {
-	block: window.mw.msg('rte-ck-justify-block'),
-	center: window.mw.msg('rte-ck-justify-center'),
-	left: window.mw.msg('rte-ck-justify-left'),
-	right: window.mw.msg('rte-ck-justify-right'),
-} );
+//CKEDITOR.plugins.setLang( 'justify', window.wgUserLanguage, {
+//	block: window.mw.msg('rte-ck-justify-block'),
+//	center: window.mw.msg('rte-ck-justify-center'),
+//	left: window.mw.msg('rte-ck-justify-left'),
+//	right: window.mw.msg('rte-ck-justify-right'),
+//} );
 
 
-//CKEDITOR.plugins.setLang( 'rte-link', RTE.config.language, {
+//CKEDITOR.plugins.setLang( 'rte-link', window.wgUserLanguage, {
 //	acccessKey: window.mw.msg('rte-ck-'),
 //	advanced: window.mw.msg('rte-ck-'),
 //	advisoryContentType: window.mw.msg('rte-ck-'),
@@ -155,39 +155,39 @@ CKEDITOR.plugins.setLang( 'justify', RTE.config.language, {
 //	upload: window.mw.msg('rte-ck-'),
 //} );
 
-CKEDITOR.plugins.setLang( 'list', RTE.config.language, {
+CKEDITOR.plugins.setLang( 'list', window.wgUserLanguage, {
 	bulletedlist: window.mw.msg('rte-ck-bulletedlist'),
 	numberedlist: window.mw.msg('rte-ck-numberedlist'),
 } );
 
-//CKEDITOR.plugins.setLang( 'notification', RTE.config.language, {
+//CKEDITOR.plugins.setLang( 'notification', window.wgUserLanguage, {
 //	closed: window.mw.msg('rte-ck-'),
 //} );
 
-CKEDITOR.plugins.setLang( 'pastetext', RTE.config.language, {
+CKEDITOR.plugins.setLang( 'pastetext', window.wgUserLanguage, {
 	button: window.mw.msg('rte-ck-pasteText-button'),
 	pasteNotification: window.mw.msg('rte-ck-clipboard-pasteMsg'),
 } );
 
-CKEDITOR.plugins.setLang( 'removeformat', RTE.config.language, {
+CKEDITOR.plugins.setLang( 'removeformat', window.wgUserLanguage, {
 	toolbar: window.mw.msg('rte-ck-removeformat'),
 	//notsurehere
 } );
 
 
-CKEDITOR.plugins.setLang( 'sourcearea', RTE.config.language, {
+CKEDITOR.plugins.setLang( 'sourcearea', window.wgUserLanguage, {
 	toolbar: window.mw.msg('rte-ck-source'),
 } );
 
 
-CKEDITOR.plugins.setLang( 'undo', RTE.config.language, {
+CKEDITOR.plugins.setLang( 'undo', window.wgUserLanguage, {
 	redo: window.mw.msg('rte-ck-undo'),
 	undo: window.mw.msg('rte-ck-redo'),
 } );
 
 
 
-CKEDITOR.plugins.setLang( 'table', RTE.config.language, {
+CKEDITOR.plugins.setLang( 'table', window.wgUserLanguage, {
 	border: window.mw.msg('rte-ck-table-button'),
 	caption: window.mw.msg('rte-ck-table-caption'),
 	cell: {
