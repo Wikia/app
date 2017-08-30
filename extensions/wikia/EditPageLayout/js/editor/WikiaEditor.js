@@ -403,12 +403,14 @@
 		uiReadyFired: false,
 
 		initConfig: function() {
+			debugger;
 			this.items = {};
 			this.handlers = {};
 			this.providers = [this];
 		},
 
 		beforeInit: function() {
+			debugger;
 			this.editor.ui = this;
 			var self = this;
 			$('body').click(function(ev){
@@ -417,6 +419,7 @@
 		},
 
 		init: function() {
+			debugger;
 			var chk = function() {
 				if (!this.initDomCalled) return;
 				if (this.uiReadyFired) return;
@@ -1012,7 +1015,9 @@
 		},
 
 		themeLoaded: function() {
-			this.editor.fire('editboxReady', this.editor, $(this.editor.ck.ui.space('contents').$));//$(this.editor.ck.getThemeSpace('contents').$));
+		this.editor.fire('editboxReady', this.editor, $(this.editor.ck.ui.space('contents').$));
+		
+		//this.editor.fire('editboxReady', this.editor, $(this.editor.ck.getThemeSpace( 'contents' ).$));
 		},
 
 		editorFocus: function() {

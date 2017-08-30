@@ -5,7 +5,7 @@ if(window.mw.msg('rte-ck-unlink') == '<rte-ck-unlink>'){
 setTimeout(bar,1000);
 }
 
-CKEDITOR.lang[ RTE.config.language ] = {
+CKEDITOR.lang[ window.wgUserLanguage ] = {
 	// ARIA description.
 	editor: window.mw.msg('rte-ck-editor'),
 	editorPanel: 'Rich Text Editor panel',//not included

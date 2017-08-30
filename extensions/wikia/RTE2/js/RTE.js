@@ -20,7 +20,7 @@
 			contentsCss: [$.getSassLocalURL('extensions/wikia/RTE2/css/content.scss'), window.RTESiteCss],
 			coreStyles_bold: {element: 'b', overrides: 'strong'},
 			coreStyles_italic: {element: 'i', overrides: 'em'},
-			customConfig: 'config.js',
+			customConfig: '',//'config.js' to add additional statements
 			dialog_backgroundCoverColor: '#000',
 			dialog_backgroundCoverOpacity: 0.8,
 			disableDragDrop: false,
@@ -34,19 +34,14 @@
 			plugins:
 				'basicstyles,' +
 				'button,' +
-				'toolbar,' +
 				'clipboard,' +
-				'dialogui,' +
+				'contextmenu,' +	
 				'dialog,' +
 				'enterkey,' +
-				'panel,' +
-				'listblock,' +
-				'floatpanel,' +
-				'richcombo,' +
 				'format,' +
+				//htmldataprocessor
 				'indent,' +
-				'indentblock,' +
-				'indentlist,' +
+				//keystrokes
 				'list,' +
 				'pastetext,' +
 				'removeformat,' +//not used anywhere though
@@ -54,11 +49,20 @@
 				'tab,' +
 				'table,' +
 				'tabletools,' +
-				'menu,' +
-				'contextmenu,' +	
 				'undo,' +
-				'justify,' +
-				'wysiwygarea',
+				'wysiwygarea,',
+
+//				'toolbar,' +
+//				'dialogui,' +
+//				'panel,' +
+//				'listblock,' +
+//				'floatpanel,' +
+//				'richcombo,' +
+//				'indentblock,' +
+//				'indentlist,' +
+//				'menu,' +
+//				'justify',
+//				'fakeobjects,' +
 
 			// Custom RTE plugins for CKEDITOR
 			// Used to be built in RTE.loadPlugins()
@@ -71,8 +75,7 @@
 				'rte-dragdrop,' +
 				'rte-entities,' +
 				'rte-gallery,' +
-				//'rte-justify',
-				//'fakeobjects,' +
+				'rte-justify,' +
 				'rte-link,' +
 				'rte-linksuggest,' +
 				'rte-media,' +
