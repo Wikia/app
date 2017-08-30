@@ -80,7 +80,7 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 	'wikiamobile-sendpassword-label' => 'Send new password',
 	'userlogin-logged-in-title' => 'Welcome to {{SITENAME}}, $1!',
 	'userlogin-logged-in-message' => "You're logged in. Head over to the [[$1|homepage]] to see the latest or check out your [[$2|profile]].",
-	'userlogin-email-confirmation-banner-success-message' => 'Your email has been successfully confirmed!',
+	'userlogin-email-confirmation-banner-success-message' => 'Your email has been confirmed.',
 	'userlogin-email-confirmation-banner-error' => 'This account confirmation link has expired or you are signed in to another FANDOM account. Please sign in to the account you need to confirm or [[Special:ConfirmEmail|click here]] to receive a new link.',
 );
 
