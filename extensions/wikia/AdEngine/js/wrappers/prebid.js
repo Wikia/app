@@ -47,7 +47,7 @@ define('ext.wikia.adEngine.wrappers.prebid', [
 				return canUseThisBidder && hasVast && bid.cpm > 0;
 			})
 			.reduce(function (previousBid, currentBid) {
-				if (previousBid === null  || currentBid.cpm > previousBid.cpm) {
+				if (previousBid === null || currentBid.cpm > previousBid.cpm) {
 					return currentBid;
 				}
 
