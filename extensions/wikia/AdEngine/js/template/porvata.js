@@ -131,9 +131,9 @@ define('ext.wikia.adEngine.template.porvata', [
 			}
 		});
 
-		if (params.slotNameForFallbackBid) {
+		if (params.useBidAsFallback) {
 			video.addEventListener('wikiaEmptyAd', function () {
-				var fallbackBid = prebid.getWinningVideoBidBySlotName(params.slotNameForFallbackBid, fallbackBidders);
+				var fallbackBid = prebid.getWinningVideoBidBySlotName(params.slotName, fallbackBidders);
 
 				if (!fallbackAdRequested && fallbackBid && fallbackBid.cpm > 0) {
 					fallbackAdRequested = true;
@@ -171,7 +171,7 @@ define('ext.wikia.adEngine.template.porvata', [
 	 * @param {object} params.height - Player height
 	 * @param {string} [params.hbAdId] - Prebid ad id of winning offer
 	 * @param {string} [params.onReady] - Callback executed once player is ready
-	 * @param {string} [params.slotNameForFallbackBid] - Slot name for fallback bid
+	 * @param {string} [params.useBidAsFallback] - Slot name for fallback bid
 	 * @param {string} [params.vastUrl] - Vast URL (DFP URL with page level targeting will be used if not passed)
 	 * @param {integer} [params.vpaidMode] - VPAID mode from IMA: https://developers.google.com/interactive-media-ads/docs/sdks/html5/v3/apis#ima.ImaSdkSettings.VpaidMode
 	 * @param {Boolean} [params.isDynamic] - Flag defining if slot should be collapsed and expanded
