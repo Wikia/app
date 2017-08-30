@@ -161,7 +161,7 @@
 		}
 	}
 
-	.banner-notifications-wrapper {
+	.wds-banner-notification-container {
 		@media #{$breakpoint-small-only} {
 			width: $page-width-small - 2 * $content-border-width;
 

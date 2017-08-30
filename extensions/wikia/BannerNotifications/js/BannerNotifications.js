@@ -16,10 +16,22 @@
 
 	var defaultTimeout = 10000,
 		types = {
-			'notify': 'blue',
-			'confirm': 'green',
-			'error': 'red',
-			'warn': 'yellow'
+			'notify': {
+				className: 'wds-message',
+				svg: '<svg class="wds-icon wds-icon-small" width="18" height="16" viewBox="0 0 18 16" xmlns="http://www.w3.org/2000/svg"><path d="M17.928 15.156c.1.178.096.392-.013.565a.603.603 0 0 1-.515.28H.6a.607.607 0 0 1-.515-.28.544.544 0 0 1-.013-.564L8.472.278c.21-.37.847-.37 1.056 0l8.4 14.878zM8 5.99v4.02A1 1 0 0 0 9 11c.556 0 1-.444 1-.99V5.99A1 1 0 0 0 9 5c-.556 0-1 .444-1 .99zM8 13c0 .556.448 1 1 1 .556 0 1-.448 1-1 0-.556-.448-1-1-1-.556 0-1 .448-1 1z" fill-rule="evenodd"/></svg>'
+			},
+			'confirm': {
+				className: 'wds-success',
+				svg: '<svg class="wds-icon wds-icon-small" width="18" height="16" viewBox="0 0 18 16" xmlns="http://www.w3.org/2000/svg"><path d="M17.928 15.156c.1.178.096.392-.013.565a.603.603 0 0 1-.515.28H.6a.607.607 0 0 1-.515-.28.544.544 0 0 1-.013-.564L8.472.278c.21-.37.847-.37 1.056 0l8.4 14.878zM8 5.99v4.02A1 1 0 0 0 9 11c.556 0 1-.444 1-.99V5.99A1 1 0 0 0 9 5c-.556 0-1 .444-1 .99zM8 13c0 .556.448 1 1 1 .556 0 1-.448 1-1 0-.556-.448-1-1-1-.556 0-1 .448-1 1z" fill-rule="evenodd"/></svg>'
+			},
+			'error': {
+				className: 'wds-alert',
+				svg: '<svg class="wds-icon wds-icon-small" width="18" height="16" viewBox="0 0 18 16" xmlns="http://www.w3.org/2000/svg"><path d="M17.928 15.156c.1.178.096.392-.013.565a.603.603 0 0 1-.515.28H.6a.607.607 0 0 1-.515-.28.544.544 0 0 1-.013-.564L8.472.278c.21-.37.847-.37 1.056 0l8.4 14.878zM8 5.99v4.02A1 1 0 0 0 9 11c.556 0 1-.444 1-.99V5.99A1 1 0 0 0 9 5c-.556 0-1 .444-1 .99zM8 13c0 .556.448 1 1 1 .556 0 1-.448 1-1 0-.556-.448-1-1-1-.556 0-1 .448-1 1z" fill-rule="evenodd"/></svg>'
+			},
+			'warn': {
+				className: 'wds-warning',
+				svg: '<svg class="wds-icon wds-icon-small" width="18" height="16" viewBox="0 0 18 16" xmlns="http://www.w3.org/2000/svg"><path d="M17.928 15.156c.1.178.096.392-.013.565a.603.603 0 0 1-.515.28H.6a.607.607 0 0 1-.515-.28.544.544 0 0 1-.013-.564L8.472.278c.21-.37.847-.37 1.056 0l8.4 14.878zM8 5.99v4.02A1 1 0 0 0 9 11c.556 0 1-.444 1-.99V5.99A1 1 0 0 0 9 5c-.556 0-1 .444-1 .99zM8 13c0 .556.448 1 1 1 .556 0 1-.448 1-1 0-.556-.448-1-1-1-.556 0-1 .448-1 1z" fill-rule="evenodd"/></svg>'
+			}
 		},
 		classes = Object.keys(types).join(' '),
 		closeImageSource = window.stylepath + '/oasis/images/icon_close.png',
@@ -27,12 +39,15 @@
 		$header,
 		modal,
 		fadeTime = 400,
-		wrapperClass = 'banner-notifications-wrapper',
+		wrapperClass = 'wds-banner-notification-container',
 		wrapperSelector = '.' + wrapperClass,
-		template = '<div class="banner-notification">' +
-			'<button class="close wikia-chiclet-button"><img></button>' +
-			'<div class="msg">{{{content}}}</div>' +
-			'</div>';
+		template = '<div class="wds-banner-notification {{typeClassName}}">' +
+			'<div class="wds-banner-notification__icon">' +
+			'{{{icon}}}</div>' +
+			'<span class="wds-banner-notification__text">{{{content}}}</span>' +
+			'<svg class="wds-icon wds-icon-tiny wds-banner-notification__close" width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">' +
+			'<path d="M6 4.554L2.746 1.3C2.346.9 1.7.9 1.3 1.3c-.4.4-.4 1.046 0 1.446L4.554 6 1.3 9.254c-.4.4-.4 1.047 0 1.446.4.4 1.046.4 1.446 0L6 7.446 9.254 10.7c.4.4 1.047.4 1.446 0 .4-.4.4-1.046 0-1.446L7.446 6 10.7 2.746c.4-.4.4-1.047 0-1.446-.4-.4-1.046-.4-1.446 0L6 4.554z" fill-rule="evenodd"/>' +
+			'</svg></div>';
 
 	/**
 	 * Creates a new banner notifications instance (doesn't show it yet though!)
@@ -43,7 +58,7 @@
 	 * @constructor
 	 */
 	function BannerNotification(content, type, $parent, timeout) {
-		if (content instanceof jQuery && content.hasClass('banner-notification')) {
+		if (content instanceof jQuery && content.hasClass('wds-banner-notification')) {
 			//create a notification object from already existing markup
 			this.content = content.find('.msg').html();
 			this.$element = content;
@@ -272,7 +287,9 @@
 		return $(
 			mustache.render(template, {
 				imageSource: closeImageSource,
-				content: content
+				content: content,
+				icon: types[type].svg,
+				typeClassName: types[type].className,
 			})
 		).addClass(type).hide();
 	}
@@ -301,7 +318,7 @@
 	 * Bind close event to close button
 	 */
 	function setUpClose(notification) {
-		$(notification.$element).on('click', '.close', function (event) {
+		notification.$element.find('.wds-banner-notification__close').on('click', function (event) {
 			notification.hide();
 			notification.onCloseHandler(event);
 		});

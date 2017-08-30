@@ -4,7 +4,7 @@
 
 /* temp transition code until grid is fully rolled out, remove and integrate after transition */
 .wikia-grid {
-	.banner-notifications-wrapper {
+	.wds-banner-notification-container {
 		width: 988px;
 
 		&.float {
@@ -22,7 +22,7 @@
 
 /* end temp transistion code */
 
-.modalWrapper .banner-notifications-wrapper {
+.modalWrapper .wds-banner-notification-container {
 	@include box-shadow(0, 0, 0, #000);
 	margin: auto;
 	width: auto;
@@ -44,7 +44,7 @@
 	}
 }
 
-.modal .banner-notifications-wrapper {
+.modal .wds-banner-notification-container {
 	width: 100%;
 
 	.close {
@@ -54,7 +54,7 @@
 
 // VisualEditor specific notification styling
 .ve-ui-window-body {
-	.banner-notifications-wrapper {
+	.wds-banner-notification-container {
 		box-sizing: border-box;
 		position: absolute;
 		width: 100%;
