@@ -7,24 +7,36 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', [
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements',
-		placementsMap = instantGlobals.wgAdDriverAppNexusBidderPlacementsConfig;
+		placementsMap = instantGlobals.wgAdDriverAppNexusBidderPlacementsConfig,
+		palPlacementsMap = {
+			oasis: {
+				atf: '3143028',
+				btf: '3143029',
+				hivi: '3142398',
+				other: '3140173'
+			}
+		};
 
 	function getPlacement(skin, position, isRecovering) {
-		var vertical = isRecovering ? 'recovery' : adContext.getContext().targeting.mappedVerticalName;
+		var context = adContext.getContext(),
+			vertical = isRecovering ? 'recovery' : context.targeting.mappedVerticalName,
+			skinVertical;
 
-		if (placementsMap && placementsMap[skin] && placementsMap[skin][vertical]) {
-			var skinVertical = placementsMap[skin][vertical];
+		if (context.premiumAdLayoutEnabled) {
+			return palPlacementsMap[skin] && palPlacementsMap[skin][position];
+		} else if (placementsMap && placementsMap[skin] && placementsMap[skin][vertical]) {
+			skinVertical = placementsMap[skin][vertical];
 
 			return position && skinVertical[position] ?
 				skinVertical[position] :
 				skinVertical;
+		} else {
+			log([
+					'getPlacement', skin, vertical, position,
+					'wgAdDriverAppNexusBidderPlacementsConfig variable not set or not configured correctly'
+				], 'error', logGroup
+			);
 		}
-
-		log([
-				'getPlacement', skin, vertical, position,
-				'wgAdDriverAppNexusBidderPlacementsConfig variable not set or not configured correctly'
-			], 'error', logGroup
-		);
 	}
 
 	return {
