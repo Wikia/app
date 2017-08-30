@@ -24,30 +24,30 @@ $messages['qqq'] = array(
 );
 
 $messages['de'] = array(
-	'static-user-pages-user-content' => '<h2 style="overflow:auto">Willkommen bei FANDOM!</h2>
+	'static-user-pages-user-content' => 'Willkommen bei FANDOM!
 
 Wenn du von diesem Konto aus eine Willkommensnachricht erhalten hast, bist du ein neuer Autor in diesem Wiki. Hallo!
 
-Falls du Hilfe brauchst, kannst du der Person, die die Willkommensnachricht unterzeichnet hat, eine Nachricht hinterlassen. Folge dazu einfach dem Link zu deren Diskussionsseite und bearbeite dann die Seite, um deine Nachricht zu verfassen.
+Falls du Hilfe brauchst, kannst du der Person, die die Willkommensnachricht unterzeichnet hat, eine Nachricht hinterlassen. Folge dazu einfach dem Link zu deren Diskussionsseite und bearbeite dann die Seite, um deine Nachricht hinzuzufügen.
 
-Für allgemeine Fragen rund um FANDOM, besuche bitte die [[Help:Contents|FANDOM-Hilfe]] und [[Special:Contact|kontaktiere unsere Mitarbeiter]], falls deine Fragen dort nicht ausreichend geklärt wurden.
+Für allgemeine Fragen rund um FANDOM besuche bitte die [[Help:Contents|FANDOM-Hilfe]] und [[Special:Contact|kontaktiere unsere Mitarbeiter]], falls deine Fragen dort nicht ausreichend geklärt werden.
 
-==Informationen und Hilfe im Willkommens-Tool==
-Weitere Informationen zu den automatisch generierten Willkommensnachrichten findest du auf der [[Help:Welcome tool|Hilfeseite des Willkommens-Tools]].
+==Informationen und Unterstützung für die Begrüßungshilfe==
+Weitere Informationen zu den automatisch erstellten Willkommensnachrichten findest du auf der [[Help:Welcome tool|Hilfeseite zu automatischen Begrüßungen]].
 
-Wenn du Fragen zum FANDOM-Willkommens-Tool hast, [[Special:Contact|wende dich bitte an die FANDOM-Mitarbeiter]].
+Wenn du Probleme mit der FANDOM-Begrüßungshilfe hast, [[Special:Contact|wende dich bitte an die FANDOM-Mitarbeiter]].
 ',
-	'static-user-pages-bot-content' => 'User:FANDOMbot ist ein Bot-Konto, das von FANDOM-Mitarbeitern betrieben wird, um Massenbearbeitungen und -änderungen vorzunehmen.',
+	'static-user-pages-bot-content' => 'Benutzer:FANDOMbot ist ein Bot-Konto, das von FANDOM-Mitarbeitern betrieben wird, um Massenbearbeitungen vorzunehmen.',
 );
 
 $messages['es'] = array(
-	'static-user-pages-user-content' => '<h2 style="overflow:auto">¡Bienvenido a FANDOM!</h2>
+	'static-user-pages-user-content' => '¡Bienvenido a FANDOM!
 
 Si es que has recibido un mensaje de bienvenida de esta cuenta, eres un editor de este wiki. ¡Hola!
 
 Si estás buscando por ayuda, puedes dejar un mensaje al usuario que ha firmado el mensaje de bienvenida. Sigue el enlace hacia su muro de mensajes y escribe uno.
 
-Para ayuda general sobre FANDOM, visita [[Ayuda:Contenidos|las páginas de ayuda en FANDOM]], y/o [[Especial:Contactar|contacta con el staff]] si tienes preguntas.
+Para ayuda general sobre FANDOM, visita [[w:c:comunidad:Ayuda:Contenidos|las páginas de ayuda en FANDOM]], y/o [[Especial:Contactar|contacta con el staff]] si tienes preguntas.
 
 ==Información sobre el mensaje de bienvenida y ayuda==
 Para más información sobre el mensaje de bienvenida automático, visita [[Ayuda:Herramienta de bienvenida|la página de bienvenida]].
@@ -57,71 +57,76 @@ Si tienes preguntas acerca de la herramienta de bienvenida de FANDOM [[Especial:
 );
 
 $messages['fr'] = array(
-	'static-user-pages-user-content' => '<h2 style="overflow:auto">Welcome to FANDOM!</h2>
+	'static-user-pages-user-content' => "<h2 style=\"overflow:auto\">Bienvenue sur FANDOM !</h2> 
 
-If you got a welcome from this account, then you\'re a new editor on this wiki. Hi!
+Si vous avez reçu un message de bienvenue de la part de ce compte, c'est que vous êtes un nouveau contributeur sur ce wiki. Bienvenue ! 
 
-If you\'re looking for assistance, you can leave a message for the person that signed the welcome message. Follow the link to their talk page, and then edit the page to write your message.
+Si vous cherchez de l’aide, vous pouvez laisser un message à la personne ayant signé ce message de bienvenue. Suivez le lien vers leur page de discussion et modifiez la page pour écrire votre message. 
 
-For general FANDOM help please visit [[Help:Contents|FANDOM Help]], and [[Special:Contact|contact staff]] if you still have questions.
+Pour obtenir l'aide de FANDOM veuillez consulter nos [[w:fr:Aide:contenu|pages d'aide]] ou [[Special:Contact|contacter le staff]] si vous avez toujours des questions. 
 
-==Welcome tool information and help==
-For more information on the automatic welcome messages, see the [[Help:Welcome tool|Welcome tool help page]].
+== Informations et aide sur l'outil de bienvenue== 
+Pour en savoir plus sur les messages de bienvenue automatiques, veuillez consulter [[w:fr:Aide:Outil_de_bienvenue|cette page d'aide]]. 
 
-If you have any questions about the FANDOM Welcome tool, please [[Special:Contact|contact FANDOM staff]].
-',
-	'static-user-pages-bot-content' => 'User:FANDOMbot is a bot account operated by FANDOM Staff for bulk edits and changes.',
+Si vous avez des questions concernant l’outil de bienvenue FANDOM, veuillez contacter le [[Special:Contact|staff de FANDOM]]. 
+",
+	'static-user-pages-bot-content' => 'Utilisateur:FANDOMbot est un robot administré par le staff de FANDOM pour effectuer des modifications et des changements en masse.',
 );
 
 $messages['it'] = array(
-	'static-user-pages-user-content' => '<h2 style="overflow:auto">Welcome to FANDOM!</h2>
+	'static-user-pages-user-content' => '== Benvenuto su FANDOM! ==
 
-If you got a welcome from this account, then you\'re a new editor on this wiki. Hi!
+Sei hai ricevuto un messaggio di benvenuto da questo account, significa allora che sei un nuovo utente su questa wiki. Ciao!
 
-If you\'re looking for assistance, you can leave a message for the person that signed the welcome message. Follow the link to their talk page, and then edit the page to write your message.
+Se stai cercando assistenza, puoi lasciare un messaggio alla persona che ha firmato il messaggio di benvenuto. Segui il link per la sua pagina di discussione che potrai modificare per lasciare il tuo messaggio.
 
-For general FANDOM help please visit [[Help:Contents|FANDOM Help]], and [[Special:Contact|contact staff]] if you still have questions.
+Per un aiuto generale su FANDOM, leggi per favore le [[w:it:Aiuto:Contenuti|pagine di aiuto di FANDOM]] e [[Special:Contact|contatta lo staff]] nel caso tu abbia ancora delle domande.
 
-==Welcome tool information and help==
-For more information on the automatic welcome messages, see the [[Help:Welcome tool|Welcome tool help page]].
+== Strumento di benvenuto e aiuto ==
+Per maggiori informazioni riguardo ai messaggi automatici di benvenuto, vedere la [[w:it:Aiuto:Strumento di benvenuto|pagina di aiuto relativa]].
 
-If you have any questions about the FANDOM Welcome tool, please [[Special:Contact|contact FANDOM staff]].
+Se hai delle domande riguardo lo strumento di benvenuto di FANDOM, [[Special:Contact|contatta lo staff di FANDOM]] per favore.
 ',
-	'static-user-pages-bot-content' => 'User:FANDOMbot is a bot account operated by FANDOM Staff for bulk edits and changes.',
+	'static-user-pages-bot-content' => "'''User:FANDOMbot''' è un [[w:it:Aiuto:Bot|account bot]] gestito dallo staff di FANDOM per l'esecuzione di modifiche di massa e altri lavori di manutenzione.",
 );
 
 $messages['ja'] = array(
 	'static-user-pages-user-content' => '<h2 style="overflow:auto">FANDOMへようこそ！</h2>
 
-このアカウントからのウェルカム・メッセージは、新しくこのWikiの編集者になられた方にお送りしています。
+このアカウントからのウェルカムメッセージは、新しくこのWikiの編集者になられた方にお送りしています。
 
-サポートが必要になった場合は、ウェルカム・メッセージの送り主にメッセージをお送りください。リンクを使用して該当するユーザーのトークページに移動し、ページを編集することでメッセージを投稿していただけます。
+サポートが必要な際には、ウェルカムメッセージの送り主にメッセージをお送りください。リンクを使用して該当するユーザーのトークページに移動し、ページを編集することでメッセージを投稿していただけます。
 
-FANDOMに関する一般的なサポートが必要な場合は、[[ヘルプ:コンテンツ|FANDOMヘルプ]]をご利用ください。ヘルプで答えが見つからない場合は、[[Special:Contact|スタッフにお問い合わせ]]ください。
+FANDOMに関する一般的なサポートが必要な場合は、[[ヘルプ:コンテンツ|FANDOMヘルプ]]をご利用ください。ヘルプで答えが見つからない場合は、[[Special:Contact|スタッフでお問い合わせ]]ください。
 
-==ウェルカム・ツールに関する情報とサポート==
-自動ウェルカム・メッセージについて詳しくは、[[ヘルプ:ウェルカムツール|ウェルカム・ツールのヘルプページ]]をご覧ください。
+==ウェルカムツールに関する情報とサポート==
+自動ウェルカムメッセージについて詳しくは、[[ヘルプ:ウェルカムツール|ウェルカムツールのヘルプページ]]をご覧ください。
 
-FANDOMウェルカム・ツールについてご不明な点がございましたら、[[Special:Contact|FANDOMスタッフ]]にお問い合わせください。
+FANDOMウェルカムツールについてご不明な点がございましたら、[[Special:Contact|FANDOMスタッフ]]にお問い合わせください。
 ',
 	'static-user-pages-bot-content' => 'User:FANDOMbotは、一括編集や一括変更のためにFANDOMスタッフが運営しているボット・アカウントです。',
 );
 
+$messages['lol'] = array(
+	'static-user-pages-user-content' => 'crwdns70364:0crwdne70364:0',
+	'static-user-pages-bot-content' => 'crwdns70365:0crwdne70365:0',
+);
+
 $messages['pl'] = array(
-	'static-user-pages-user-content' => '<h2 style="overflow:auto">Welcome to FANDOM!</h2>
+	'static-user-pages-user-content' => '<h2 style="overflow:auto">Witamy w FANDOMIE!</h2>
 
-If you got a welcome from this account, then you\'re a new editor on this wiki. Hi!
+Jeśli {{GENDER:|otrzymałeś|otrzymałaś}} powitanie z tego konta, oznacza to, że jesteś nowym edytorem tej wiki. Cześć!
 
-If you\'re looking for assistance, you can leave a message for the person that signed the welcome message. Follow the link to their talk page, and then edit the page to write your message.
+Jeśli szukasz pomocy, możesz zostawić wiadomość osobie, która podpisała wiadomość powitalną. Kliknij odnośnik do ich strony dyskusji, a następnie edytuj stronę, aby napisać wiadomość.
 
-For general FANDOM help please visit [[Help:Contents|FANDOM Help]], and [[Special:Contact|contact staff]] if you still have questions.
+Aby znaleźć ogólną pomoc FANDOMU, odwiedź [[w:pl:Pomoc:Zawartość|pomoc FANDOMU]], [[w:c:spolecznosc|Centrum Społeczności]] lub [[Special:Contact|skontaktuj się z pracownikami]], jeśli nadal masz pytania.
 
-==Welcome tool information and help==
-For more information on the automatic welcome messages, see the [[Help:Welcome tool|Welcome tool help page]].
+== Informacje i pomoc dla narzędzia witania ==
+Aby uzyskać więcej informacji o automatycznych wiadomościach powitalnych, zobacz [[w:pl:Pomoc:Narzędzie witania|stronę pomocy narzędzia witania]].
 
-If you have any questions about the FANDOM Welcome tool, please [[Special:Contact|contact FANDOM staff]].
+Jeśli masz jakiekolwiek pytania dotyczące narzędzia witania FANDOMU, [[Special:Contact|skontaktuj się z pracownikami FANDOMU]].
 ',
-	'static-user-pages-bot-content' => 'User:FANDOMbot is a bot account operated by FANDOM Staff for bulk edits and changes.',
+	'static-user-pages-bot-content' => 'Użytkownik:FANDOMbot to konto bota, obsługiwane przez pracowników FANDOMU w celu dokonywania zbiorczych zmian i edycji.',
 );
 
 $messages['pt'] = array(
@@ -142,20 +147,20 @@ Se você tiver quaisquer perguntas sobre a ferramenta de boas-vindas do FANDOM, 
 );
 
 $messages['ru'] = array(
-	'static-user-pages-user-content' => '<h2 style="overflow:auto">Welcome to FANDOM!</h2>
+	'static-user-pages-user-content' => '<h2 style="overflow:auto">Добро пожаловать на ФЭНДОМ!</h2>
 
-If you got a welcome from this account, then you\'re a new editor on this wiki. Hi!
+Если вы получили приглашение с этого адреса, значит теперь вы новый редактор этой вики. Поздравляем!
 
-If you\'re looking for assistance, you can leave a message for the person that signed the welcome message. Follow the link to their talk page, and then edit the page to write your message.
+Если вам потребуется помощь, отправьте сообщение участнику, указанному в подписи письма. Перейдите по ссылке на страницу обсуждения и напишите свое сообщение, отредактировав страницу.
 
-For general FANDOM help please visit [[Help:Contents|FANDOM Help]], and [[Special:Contact|contact staff]] if you still have questions.
+Если у вас появятся вопросы о ФЭНДОМЕ, посетите [[Справка:Содержание|страницу справки]] или [[Служебная:Contact|свяжитесь с сотрудниками ФЭНДОМА]].
 
-==Welcome tool information and help==
-For more information on the automatic welcome messages, see the [[Help:Welcome tool|Welcome tool help page]].
+==Информация об автоматическом приветствии==
+Подробная информация об автоматических приветствиях находится на [[Справка:Автоматическое приветствие|этой странице]].
 
-If you have any questions about the FANDOM Welcome tool, please [[Special:Contact|contact FANDOM staff]].
+Если у вас есть вопросы об автоматических приветствиях, [[Служебная:Contact|свяжитесь с сотрудниками ФЭНДОМА]].
 ',
-	'static-user-pages-bot-content' => 'User:FANDOMbot is a bot account operated by FANDOM Staff for bulk edits and changes.',
+	'static-user-pages-bot-content' => 'User:FANDOMbot — это бот под управлением команды ФЭНДОМА. Мы используем его для массового внесения изменений и правок.',
 );
 
 $messages['zh-hans'] = array(
