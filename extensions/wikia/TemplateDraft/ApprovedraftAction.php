@@ -44,10 +44,10 @@ class ApprovedraftAction extends FormlessAction {
 		// Must have valid token for this action/title
 		$salt = [ $this->getName(), $title->getDBkey() ];
 
-		if ( false && !$this->getUser()->matchEditToken( $request->getVal( 'token' ), $salt ) ) {
+		if ( !$this->getUser()->matchEditToken( $request->getVal( 'token' ), $salt ) ) {
 			$this->addBannerNotificationMessage( 'sessionfailure' );
 			$redirectTitle = $title;
-		} elseif ( true || !$title->exists() ) {
+		} elseif ( !$title->exists() ) {
 
 			$this->addBannerNotificationMessage( 'templatedraft-approval-no-page-error' );
 			$redirectTitle = $title;
