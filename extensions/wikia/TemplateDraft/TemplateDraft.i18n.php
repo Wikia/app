@@ -5,7 +5,7 @@ $messages['en'] = array(
 	'templatedraft-description' => 'TemplateDraft extension',
 	'right-templatedraft' => 'Allows access to a wizard that helps convert non-portable infoboxes to the new markup',
 	'templatedraft-subpage' => 'Draft',
-	'templatedraft-editintro' => "Here is a draft version of your template that has been generated with our new markup. Please review and make any changes before saving. For more, please view the help page on Infobox markup or view parent template wikitext.",
+	'templatedraft-editintro' => "Here is a draft version of your template that has been generated with our new markup. Please review and make any changes before saving. For more, please view the help page on $1 or $2.",
 	'templatedraft-approval-no-page-error' => "There has been a problem approving the draft. This draft has already been approved or deleted. Please review the [?action=history history and differences] for this template.",
 	'templatedraft-approval-no-templatedraft-error' => 'There has been a problem approving the draft. This page is not recognized as a valid template draft.',
 	'templatedraft-approval-success-confirmation' => 'The content within this template has been replaced with the updated version from the draft template. The draft template has been removed.',
