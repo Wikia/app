@@ -146,7 +146,6 @@ class AdEngine2Hooks {
 	 */
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
 		$jsAssets[] = static::ASSET_GROUP_ADENGINE_DESKTOP;
-		$jsAssets[] = 'adengine2_interactive_maps_js';
 
 		return true;
 	}
