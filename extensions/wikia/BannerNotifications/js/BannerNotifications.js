@@ -41,6 +41,7 @@
 		fadeTime = 400,
 		wrapperClass = 'wds-banner-notification-container',
 		wrapperSelector = '.' + wrapperClass,
+		notificationSelector = '.wds-banner-notification',
 		template = '<div class="wds-banner-notification {{typeClassName}}">' +
 			'<div class="wds-banner-notification__icon">' +
 			'{{{icon}}}</div>' +
@@ -202,12 +203,12 @@
 		// SUS-729: hide notifications if VisualEditor is loaded and show them again once it's closed
 		if (mw.config.get('wgVisualEditor') && mw.config.get('wgIsArticle')) {
 			mw.hook('ve.activationComplete').add(function() {
-				$('.banner-notification').fadeOut(fadeTime);
+				$(notificationSelector).fadeOut(fadeTime);
 				updatePlaceholderHeight();
 			});
 
 			mw.hook('ve.deactivate').add(function() {
-				$('.banner-notification').fadeIn(fadeTime);
+				$(notificationSelector).fadeIn(fadeTime);
 				updatePlaceholderHeight();
 			});
 		}
@@ -226,7 +227,7 @@
 	 * (if such one exists)
 	 */
 	function createBackendNotifications() {
-		$('.banner-notification').each(function () {
+		$(notificationSelector).each(function () {
 			var backendNotification = new BannerNotification($(this));
 			setUpClose(backendNotification);
 		});

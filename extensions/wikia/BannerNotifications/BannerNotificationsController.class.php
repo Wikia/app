@@ -15,11 +15,23 @@ class BannerNotificationsController extends WikiaController {
 	const CONFIRMATION_ERROR = 'error'; // Red
 	const CONFIRMATION_WARN = 'warn'; // Yellow
 
-	const ICONS = [
-		self::CONFIRMATION_CONFIRM => 'wds-icons-checkmark-circle-small',
-		self::CONFIRMATION_NOTIFY => 'wds-icons-flag-small',
-		self::CONFIRMATION_ERROR => 'wds-icons-error-small',
-		self::CONFIRMATION_WARN => 'wds-icons-alert-small',
+	const TYPES = [
+		self::CONFIRMATION_CONFIRM => [
+			'class' => 'wds-success',
+			'icon' => 'wds-icons-checkmark-circle-small',
+		],
+		self::CONFIRMATION_NOTIFY => [
+			'class' => 'wds-message',
+			'icon' => 'wds-icons-flag-small',
+		],
+		self::CONFIRMATION_ERROR => [
+			'class' => 'wds-alert',
+			'icon' => 'wds-icons-error-small',
+		],
+		self::CONFIRMATION_WARN => [
+			'class' => 'wds-warning',
+			'icon' => 'wds-icons-alert-small',
+		],
 	];
 
 	const OPTION_NON_DISMISSIBLE = 'nonDismissible';
@@ -82,8 +94,8 @@ class BannerNotificationsController extends WikiaController {
 			foreach ( $_SESSION[self::SESSION_KEY] as $sessionEntities ) {
 				$notification = [
 					'message' => $sessionEntities['message'],
-					'class' => $sessionEntities['type'],
-					'icon' => self::ICONS[$sessionEntities['type']],
+					'class' => self::TYPES[$sessionEntities['type']]['class'],
+					'icon' => self::TYPES[$sessionEntities['type']]['icon'],
 				];
 
 				if ( !empty( $sessionEntities['options'][self::OPTION_NON_DISMISSIBLE] ) ) {
