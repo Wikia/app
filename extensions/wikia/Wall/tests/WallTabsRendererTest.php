@@ -73,7 +73,7 @@ class WallTabsRendererTest extends WikiaBaseTest {
 				'expected' => [
 					'namespaces' => [
 						'user_talk' => [
-							'class' => null,
+							'class' => [],
 							'primary' => true,
 							'text' => 'wall-message-wall',
 							'href' => '/wiki/Message_Wall:Jandamunda'

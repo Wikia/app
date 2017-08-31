@@ -258,7 +258,7 @@ class ForumDumper {
 	 *     class="lzy lzyPlcHld "
 	 *     data-image-key="Joker_laughing.gif"
 	 *     data-image-name="Joker laughing.gif"
-	 *     data-src="http://vignette3.wikia.nocookie.net/wonderland-org/images/d/d0/Joker_laughing.gif/revision/latest/scale-to-width-down/200?cb=20150901041046"
+	 *     data-src="http://vignette.wikia.nocookie.net/wonderland-org/images/d/d0/Joker_laughing.gif/revision/latest/scale-to-width-down/200?cb=20150901041046"
 	 *     width="200"
 	 *     height="154"
 	 *     onload="if(typeof ImgLzy==='object'){ImgLzy.load(this)}"
@@ -267,7 +267,7 @@ class ForumDumper {
 	 * would match and update to:
 	 *
 	 *  <img
-	 *     src="http://vignette3.wikia.nocookie.net/wonderland-org/images/d/d0/Joker_laughing.gif/revision/latest/scale-to-width-down/200?cb=20150901041046"
+	 *     src="http://vignette.wikia.nocookie.net/wonderland-org/images/d/d0/Joker_laughing.gif/revision/latest/scale-to-width-down/200?cb=20150901041046"
 	 *     alt="Joker laughing"
 	 *     width="200"
 	 *     height="154"
