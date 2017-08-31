@@ -915,7 +915,7 @@ abstract class DatabaseBase implements DatabaseType {
 
 		$this->mLastQuery = $sql;
 		$is_writeable = $this->isWriteQuery( $sql );
-		$isNonTempWrite = !$this->registerTempTableOperation( $sql );
+		$isTemporaryTableOperation = $this->registerTempTableOperation( $sql );
 
 		if ( !$this->mDoneWrites && $is_writeable ) {
 			# Set a flag indicating that writes have been done
@@ -925,7 +925,7 @@ abstract class DatabaseBase implements DatabaseType {
 
 		# <Wikia>
 		global $wgDBReadOnly, $wgReadOnly;
-		if ( $is_writeable && $isNonTempWrite && $wgDBReadOnly ) {
+		if ( $is_writeable && !$isTemporaryTableOperation && $wgDBReadOnly ) {
 			if ( !Profiler::instance()->isStub() ) {
 				wfProfileOut( $queryProf );
 				wfProfileOut( $totalProf );
