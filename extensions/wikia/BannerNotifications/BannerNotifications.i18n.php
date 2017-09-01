@@ -201,6 +201,13 @@ $messages['vi'] = array(
 	'bannernotifications-general-ajax-failure' => 'Trình duyệt không thể kết nối đến Wikia. Thử lại sau.',
 );
 
+$messages['xw-3171'] = array(
+	'bannernotifications-desc' => '顯示一個如AJAX失敗類似事件的系統通知',
+	'bannernotifications-general-ajax-failure' => '瀏覽器無法連接到FANDOM。請稍後再試。',
+	'bannernotifications-not-confirmed-email' => "Your email address hasn't been confirmed. There should be a confirmation message in your inbox. If you need us to send a new one, please [[Special:ConfirmEmail|click here]]. If you need to change your email, head to your [[Special:Preferences#mw-prefsection-emailv2|Preferences page]].",
+	'bannernotifications-no-email' => 'Your account does not have a confirmed email address. Please set up your email on your [[Special:Preferences#mw-prefsection-emailv2|Preferences page]].',
+);
+
 $messages['zh-hans'] = array(
 	'bannernotifications-desc' => '显示一些如AJAX失败类似事件的系统通知',
 	'bannernotifications-general-ajax-failure' => '浏览器无法连接到FANDOM。请稍后再试。',
