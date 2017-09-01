@@ -53,7 +53,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', [
 			vertical = context.targeting.mappedVerticalName,
 			skinVertical;
 
-		if (context.opts.premiumAdLayoutEnabled) {
+		if (context.opts.premiumAdLayoutEnabled && context.opts.premiumAdLayoutAppNexusTagsEnabled) {
 			vertical = 'pal';
 		}
 
