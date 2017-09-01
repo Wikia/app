@@ -12,7 +12,9 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', functio
 			targeting: {
 				mappedVerticalName: ''
 			},
-			premiumAdLayoutEnabled: false
+			opts: {
+				premiumAdLayoutEnabled: false
+			}
 		},
 		log: function() {}
 	}, testCases = [
@@ -86,7 +88,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', functio
 
 	function getModule(vertical, palEnabled) {
 		mocks.context.targeting.mappedVerticalName = vertical;
-		mocks.context.premiumAdLayoutEnabled = palEnabled;
+		mocks.context.opts.premiumAdLayoutEnabled = palEnabled;
 
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements'](
 			mocks.adContext,
