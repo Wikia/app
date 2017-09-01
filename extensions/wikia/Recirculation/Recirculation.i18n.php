@@ -50,7 +50,7 @@ $messages['de'] = array(
 	'recirculation-fandom-title' => 'FANDOM-Artikel im Trend',
 	'recirculation-fandom-subtitle' => 'Ebenfalls empfohlen',
 	'recirculation-discussion-title' => 'Top-Diskussionen',
-	'recirculation-discussion-link-text' => 'Alle Diskussionen anzeigen',
+	'recirculation-discussion-link-text' => 'Alle anzeigen',
 	'recirculation-discussions-new' => 'Eine neue Diskussionen beginnen',
 	'recirculation-discussions-upvotes' => 'Abstimmungen',
 	'recirculation-discussions-replies' => 'Antworten',
@@ -62,6 +62,8 @@ $messages['de'] = array(
 	'recirculation-explore' => 'Erkunden',
 	'recirculation-explore-wikis' => 'Wikis entdecken',
 	'recirculation-explore-posts' => 'Beiträge durchstöbern',
+	'recirculation-discussions-no-posts' => 'Es gibt noch keine Beiträge.',
+	'recirculation-discussions-get-started' => 'Erstelle einen Beitrag und starte eine neue Diskussion!',
 );
 
 $messages['es'] = array(
@@ -73,7 +75,7 @@ $messages['es'] = array(
 	'recirculation-fandom-title' => 'Artículos de FANDOM',
 	'recirculation-fandom-subtitle' => 'También Recomendado',
 	'recirculation-discussion-title' => 'Discusiones Top',
-	'recirculation-discussion-link-text' => 'Ver todas las Discusiones',
+	'recirculation-discussion-link-text' => 'Ver todo',
 	'recirculation-discussions-new' => 'Comenzar una nueva Discusión',
 	'recirculation-discussions-upvotes' => 'votos',
 	'recirculation-discussions-replies' => 'respuestas',
@@ -85,6 +87,8 @@ $messages['es'] = array(
 	'recirculation-explore' => 'Explora',
 	'recirculation-explore-wikis' => 'Explora wikis',
 	'recirculation-explore-posts' => 'Explora discusiones',
+	'recirculation-discussions-no-posts' => 'No hay entradas.',
+	'recirculation-discussions-get-started' => '¡Empieza la discusión, crea la primera ahora!',
 );
 
 $messages['fr'] = array(
@@ -96,7 +100,7 @@ $messages['fr'] = array(
 	'recirculation-fandom-title' => 'Articles de FANDOM tendance',
 	'recirculation-fandom-subtitle' => 'Également recommandé',
 	'recirculation-discussion-title' => 'Discussions les plus populaires',
-	'recirculation-discussion-link-text' => 'Voir toutes les discussions',
+	'recirculation-discussion-link-text' => 'Tout afficher',
 	'recirculation-discussions-new' => 'Lancer une discussion',
 	'recirculation-discussions-upvotes' => 'votes',
 	'recirculation-discussions-replies' => 'réponses',
@@ -108,6 +112,8 @@ $messages['fr'] = array(
 	'recirculation-explore' => 'Explorer',
 	'recirculation-explore-wikis' => 'Explorer les wikis',
 	'recirculation-explore-posts' => 'Explorer les publications',
+	'recirculation-discussions-no-posts' => 'Pas encore de publications.',
+	'recirculation-discussions-get-started' => 'Lancez la discussion en créant une publication maintenant !',
 );
 
 $messages['it'] = array(
@@ -120,17 +126,19 @@ $messages['it'] = array(
 	'recirculation-fandom-subtitle' => 'Consigliati anche',
 	'recirculation-incontent-title' => 'Link in primo piano',
 	'recirculation-discussion-title' => 'Discussioni in primo piano',
-	'recirculation-discussion-link-text' => 'Visualizza tutte le discussioni',
+	'recirculation-discussion-link-text' => 'Vedi tutti',
 	'recirculation-discussions-new' => 'Inizia una nuova discussione',
 	'recirculation-discussions-upvotes' => 'voti',
 	'recirculation-discussions-replies' => 'risposte',
 	'recirculation-discussions-posts' => 'Post',
 	'recirculation-discussions-latest-discussions' => 'Ultime discussioni',
 	'recirculation-discussions-in' => 'in',
-	'recirculation-articles-more' => 'Più su $1',
+	'recirculation-articles-more' => 'Altro su $1',
 	'recirculation-explore' => 'Esplora',
 	'recirculation-explore-wikis' => 'Esplora le wiki',
 	'recirculation-explore-posts' => 'Esplora i post',
+	'recirculation-discussions-no-posts' => 'Ancora nessun post.',
+	'recirculation-discussions-get-started' => 'Inizia la discussione, crea adesso il primo post!',
 );
 
 $messages['ja'] = array(
@@ -143,7 +151,7 @@ $messages['ja'] = array(
 	'recirculation-fandom-subtitle' => 'こちらもおすすめ',
 	'recirculation-incontent-title' => 'おすすめのリンク',
 	'recirculation-discussion-title' => 'おすすめのディスカッション',
-	'recirculation-discussion-link-text' => 'すべてのディスカッションを表示',
+	'recirculation-discussion-link-text' => '全て表示',
 	'recirculation-discussions-new' => '新しいディスカッションを開始',
 	'recirculation-discussions-upvotes' => 'イイね！',
 	'recirculation-discussions-replies' => '返信',
@@ -154,6 +162,8 @@ $messages['ja'] = array(
 	'recirculation-explore' => '探してみる',
 	'recirculation-explore-wikis' => 'Wikiを探す',
 	'recirculation-explore-posts' => '記事を探す',
+	'recirculation-discussions-no-posts' => 'まだ投稿はありません。',
+	'recirculation-discussions-get-started' => '投稿を作成して、ディスカッションに参加してみよう！',
 );
 
 $messages['nl'] = array(
@@ -165,7 +175,7 @@ $messages['nl'] = array(
 	'recirculation-fandom-title' => 'Trending FANDOM Articles',
 	'recirculation-fandom-subtitle' => 'Also Recommended',
 	'recirculation-discussion-title' => 'Top Discussions',
-	'recirculation-discussion-link-text' => 'View All Discussions',
+	'recirculation-discussion-link-text' => 'View All',
 	'recirculation-discussions-new' => 'Start a New Discussion',
 	'recirculation-discussions-upvotes' => 'upvotes',
 	'recirculation-discussions-replies' => 'replies',
@@ -177,6 +187,8 @@ $messages['nl'] = array(
 	'recirculation-explore' => 'Verkennen',
 	'recirculation-explore-wikis' => 'Explore Wikis',
 	'recirculation-explore-posts' => 'Explore posts',
+	'recirculation-discussions-no-posts' => 'No posts yet.',
+	'recirculation-discussions-get-started' => 'Get the discussion started, create the first post now!',
 );
 
 $messages['pl'] = array(
@@ -188,7 +200,7 @@ $messages['pl'] = array(
 	'recirculation-fandom-title' => 'Popularne artykuły z Fandomu',
 	'recirculation-fandom-subtitle' => 'Również polecane',
 	'recirculation-discussion-title' => 'Najpopularniejsze dyskusje',
-	'recirculation-discussion-link-text' => 'Pokaż wszystkie dyskusje',
+	'recirculation-discussion-link-text' => 'Zobacz wszystko',
 	'recirculation-discussions-new' => 'Rozpocznij nową dyskusję',
 	'recirculation-discussions-upvotes' => 'głosów',
 	'recirculation-discussions-replies' => 'odpowiedzi',
@@ -200,6 +212,8 @@ $messages['pl'] = array(
 	'recirculation-explore' => 'Przeglądaj',
 	'recirculation-explore-wikis' => 'Odkrywaj wiki',
 	'recirculation-explore-posts' => 'Przeglądaj posty',
+	'recirculation-discussions-no-posts' => 'Nie ma jeszcze postów.',
+	'recirculation-discussions-get-started' => 'Rozpocznij dyskusję, napisz pierwszy post!',
 );
 
 $messages['pt'] = array(
@@ -211,7 +225,7 @@ $messages['pt'] = array(
 	'recirculation-fandom-title' => 'Artigos do FANDOM em alta',
 	'recirculation-fandom-subtitle' => 'Também recomendado',
 	'recirculation-discussion-title' => 'Discussões populares',
-	'recirculation-discussion-link-text' => 'Veja todas as Discussões',
+	'recirculation-discussion-link-text' => 'Ver Todos',
 	'recirculation-discussions-new' => 'Comece uma nova Discussão',
 	'recirculation-discussions-upvotes' => 'votos',
 	'recirculation-discussions-replies' => 'respostas',
@@ -223,6 +237,8 @@ $messages['pt'] = array(
 	'recirculation-explore' => 'Explorar',
 	'recirculation-explore-wikis' => 'Explorar as wikis',
 	'recirculation-explore-posts' => 'Explorar posts',
+	'recirculation-discussions-no-posts' => 'Ainda não há posts.',
+	'recirculation-discussions-get-started' => 'Inicie a discussão criando o primeiro post agora!',
 );
 
 $messages['ru'] = array(
@@ -234,7 +250,7 @@ $messages['ru'] = array(
 	'recirculation-fandom-title' => 'Популярные статьи с FANDOM',
 	'recirculation-fandom-subtitle' => 'Также рекомендуем',
 	'recirculation-discussion-title' => 'Популярные обсуждения',
-	'recirculation-discussion-link-text' => 'Все обсуждения',
+	'recirculation-discussion-link-text' => 'Показать все',
 	'recirculation-discussions-new' => 'Начать новое обсуждение',
 	'recirculation-discussions-upvotes' => 'голос(а/ов)',
 	'recirculation-discussions-replies' => 'ответ(а/ов)',
@@ -246,6 +262,8 @@ $messages['ru'] = array(
 	'recirculation-explore' => 'Исследовать',
 	'recirculation-explore-wikis' => 'Исследуйте вики',
 	'recirculation-explore-posts' => 'Посмотреть блог',
+	'recirculation-discussions-no-posts' => 'Сообщений пока нет.',
+	'recirculation-discussions-get-started' => 'Начните обсуждение, опубликуйте первое сообщение!',
 );
 
 $messages['xw-3616'] = array(
@@ -281,7 +299,7 @@ $messages['zh-hans'] = array(
 	'recirculation-fandom-title' => '粉丝流行原创文章',
 	'recirculation-fandom-subtitle' => '推荐',
 	'recirculation-discussion-title' => '热门讨论',
-	'recirculation-discussion-link-text' => '展示所有讨论',
+	'recirculation-discussion-link-text' => '查看全部',
 	'recirculation-discussions-new' => '发起一个新讨论',
 	'recirculation-discussions-upvotes' => '个赞',
 	'recirculation-discussions-replies' => '个回复',
@@ -289,10 +307,12 @@ $messages['zh-hans'] = array(
 	'recirculation-incontent-title' => '热门推荐',
 	'recirculation-discussions-latest-discussions' => '最新讨论',
 	'recirculation-discussions-in' => '分类',
-	'recirculation-articles-more' => '更多$1',
+	'recirculation-articles-more' => '$1更多内容',
 	'recirculation-explore' => '探索',
 	'recirculation-explore-wikis' => '探索维基',
 	'recirculation-explore-posts' => '阅读文章',
+	'recirculation-discussions-no-posts' => '还没有任何帖子。',
+	'recirculation-discussions-get-started' => '赶快发起讨论，现在就创建第一个帖子吧！',
 );
 
 $messages['zh-hant'] = array(
@@ -304,7 +324,7 @@ $messages['zh-hant'] = array(
 	'recirculation-fandom-title' => '粉絲流行原創文章',
 	'recirculation-fandom-subtitle' => '推薦',
 	'recirculation-discussion-title' => '熱門討論',
-	'recirculation-discussion-link-text' => '顯示所有討論',
+	'recirculation-discussion-link-text' => '查看全部',
 	'recirculation-discussions-new' => '開始一個新討論',
 	'recirculation-discussions-upvotes' => '個讚',
 	'recirculation-discussions-replies' => '個回復',
@@ -316,5 +336,7 @@ $messages['zh-hant'] = array(
 	'recirculation-explore' => '探索',
 	'recirculation-explore-wikis' => '探索Wiki',
 	'recirculation-explore-posts' => '閱讀文章',
+	'recirculation-discussions-no-posts' => '沒有發佈任何文章。',
+	'recirculation-discussions-get-started' => '趕快發起討論，現在就去創建第一篇文章吧！',
 );
 
