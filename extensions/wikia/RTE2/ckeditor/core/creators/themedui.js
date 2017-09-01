@@ -172,6 +172,7 @@ CKEDITOR.replaceClass = 'ckeditor';
 	 * @param {Function} [callback] Optional callback function which is invoked once the mode switch has succeeded.
 	 */
 	CKEDITOR.editor.prototype.setMode = function( newMode, callback ) {
+		debugger;
 		var editor = this;
 
 		var modes = this._.modes;
@@ -346,14 +347,15 @@ CKEDITOR.replaceClass = 'ckeditor';
 		data && editor.setData( data, null, true );
 
 		// Once the editor is loaded, start the UI.
-		editor.on( 'loaded', function() {
-				
+		editor.on( 'loaded', function() {	
+			debugger;
 			loadTheme( editor );
 
 			if ( mode == CKEDITOR.ELEMENT_MODE_REPLACE && editor.config.autoUpdateElement && element.$.form )
 				editor._attachToForm();
 
 			editor.setMode( editor.config.startupMode, function() {
+				debugger;
 				// Clean on startup.
 				editor.resetDirty();
 

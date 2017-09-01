@@ -139,7 +139,6 @@ packages :
 				
 				'../js/RTE.js'
 				'../js/jquery.editor.js'
-				'plugins/toolbar/plugin.js'
 				'plugins/indent/plugin.js'
 				'plugins/wysiwygarea/plugin.js'
 				'plugins/button/plugin.js'
@@ -168,24 +167,9 @@ packages :
 				'plugins/pastetext/plugin.js'
 				'plugins/sourcearea/plugin.js'
 
+				'plugins/toolbar/plugin.js'
 
 
-
-
-				//'plugins/sourcearea/lang/en.js'
-				//'plugins/basicstyles/lang/en.js'
-				//'plugins/toolbar/lang/en.js'
-				//'plugins/indent/lang/en.js'
-				//'plugins/button/lang/en.js'
-				//'plugins/clipboard/lang/en.js'
-				//'plugins/list/lang/en.js'			
-				//'plugins/format/lang/en.js'
-				//'plugins/justify/lang/en.js'
-				//'plugins/undo/lang/en.js'
-				//'plugins/contextmenu/lang/en.js'
-				//'plugins/table/lang/en.js'
-				//'plugins/removeformat/lang/en.js'
-				//'plugins/pastetext/lang/en.js'
 
 				//wikia plugins below
 				'../js/plugins/accesskey/plugin.js'
@@ -212,27 +196,7 @@ packages :
 				'../js/plugins/toolbar/plugin.js'
 				'../js/plugins/tools/plugin.js'
 
-				//'plugins/fakeobjects/plugin.js'
-			
-				//'plugins/link/plugin.js'
-				//'plugins/link/lang/en.js'	
-				//'plugins/link/dialogs/link.js'
-				//'../js/plugins/placeholder/plugin.js'
-				//'../js/plugins/template/plugin.js'
-				//'../js/plugins/template/dialogs/template.js'
-				//'../js/plugins/toolbar/plugin.js'
-				//'../js/plugins/linksuggest/plugin.js',
-				//'../js/plugins/media/plugin.js',
-				//'../js/plugins/modeswitch/plugin.js',
-				//'../js/plugins/overlay/plugin.js',
-				//'../js/plugins/paste/plugin.js',
-				//'../js/plugins/placeholder/plugin.js',
-				//'../js/plugins/signature/plugin.js',
-				//'../js/plugins/spellchecker/plugin.js',
-				//'../js/plugins/template/plugin.js',
-				//'../js/plugins/template/dialogs/template.js',
-				//'../js/plugins/temporary-save/plugin.js',
-				//'../js/plugins/tools/plugin.js',
+
 					//experimental!
 					'themes/wikia/theme.js'
 

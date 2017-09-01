@@ -677,7 +677,7 @@
 		},
 
 		renderToolbars: function() {
-			
+			debugger;	
 			// Find all toolbars
 			var spaces = this.editor.getSpaces();
 			var toolbars = this.toolbars = {};
@@ -1080,6 +1080,7 @@
 		stateProxiedCommands: {},
 
 		beforeInit: function() {
+			debugger;
 			this.editor.ui.addExternalProvider(this);
 			this.editor.on('ck-themeLoaded',this.ckReady,this);
 			this.editor.on('uiBuildClickHandler',this.buildWysiwygClickHandler,this);
@@ -1088,6 +1089,7 @@
 		},
 
 		modeChanged: function( editor, mode ) {
+			debugger;
 			// show/hide appropriate buttons
 			for (var name in this.modeAwareCommands) {
 				var command = this.editor.ck.getCommand(name);
@@ -1108,11 +1110,13 @@
 		},
 
 		proxyAllCommandsState: function() {
+			debugger;
 			for (var commandName in this.stateProxiedCommands)
 				this.proxyCommandState( commandName );
 		},
 
 		proxyCommandState: function( commandName ) {
+			debugger;
 			var command = this.editor.ck.getCommand(commandName),
 				state = command && command.state,
 				elements = this.stateProxiedCommands[commandName];
@@ -1138,6 +1142,7 @@
 		},
 
 		elementCreated: function( editor, element, data ) {
+			debugger;
 			if (element.ckcommand) {
 				var commandName = element.ckcommand;
 				// auto state by ck command
@@ -1156,19 +1161,22 @@
 		},
 
 		ckReady: function() {
+			debugger;
 			this.ready = true;
 			this.editor.fire('uiExternalProviderReady',this.editor);
 		},
 
 		buildWysiwygClickHandler: function( editor, button ) {
+			debugger;
 			button.clickwysiwyg = function() {
 				this.editor.ck.execCommand(button.ckcommand,button.clickdatawysiwyg);
 			};
 		},
 
 		createElement: function( name ) {
+			debugger;
 			var ck = this.editor.ck, ui = this.editor.ck.ui, item;
-			if (ui._.items[name] && (item = ui.create(name)) ) {
+			if (ui.items[name] && (item = ui.create(name)) ) {
 				var output = [];
 				item.render(ck, output);
 				if (item.command) {
