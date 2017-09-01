@@ -25,7 +25,7 @@ class EnableDiscussionsController extends \WikiaController {
 			$wiki->city_lang ) )->activateDiscussions();
 
 		if ( $this->request->getBool( self::CREATE_WELCOME_POST, false ) ) {
-			( new \StaffWelcomePoster() )->postMessage( $wiki->city_id, $wiki->city_title );
+			( new \StaffWelcomePoster() )->postMessage( $wiki->city_id, $wiki->city_lang );
 		}
 	}
 
