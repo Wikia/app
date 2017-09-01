@@ -215,7 +215,7 @@ ve.ui.WikiaMediaQueryWidget.prototype.onRequestVideoDone = function ( data ) {
 		new BannerNotification(
 			errorMsg,
 			'error',
-			$( '.oo-ui-window-body' )
+			$( '.ve-ui-frame' ).contents().find( '.ve-ui-window-body' )
 		).show();
 
 		this.requestSearch();

@@ -143,7 +143,7 @@ ve.ui.WikiaUploadWidget.prototype.onFileChange = function ( event, file ) {
 				fileErrors[ fileErrors.length - 1 ][ 1 ]
 			),
 			'error',
-			$( '.oo-ui-window-body' )
+			$( '.ve-ui-frame' ).contents().find( '.ve-ui-window-body' )
 		).show();
 	} else {
 		form = new FormData( document.createElement( 'form' ) );

@@ -115,7 +115,7 @@ ve.ui.WikiaMediaPreviewWidget.prototype.onRequestVideoFail = function () {
 	new BannerNotification(
 		ve.msg( 'wikia-visualeditor-notification-video-preview-not-available' ),
 		'error',
-		$( '.oo-ui-window-body' )
+		$( '.ve-ui-frame' ).contents().find( '.ve-ui-window-body' )
 	).show();
 };
 
