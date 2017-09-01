@@ -67,7 +67,6 @@
 			// Custom RTE plugins for CKEDITOR
 			// Used to be built in RTE.loadPlugins()
 		extraPlugins:
-			
 		 
 				'rte-accesskey,' +
 				'rte-comment,' +
@@ -96,6 +95,8 @@
 			skin: 'moono-lisa',
 			startupFocus: true, // Also used for determining wether to focus after modeswitch (BugId:19807)
 	//			theme: 'wikia'
+			removePlugins: 'toolbar,notification,clipboard,pastetext', //temporary, till toolbar dependancies are fixed...
+			
 		},
 
 		// Unique editor instance Id, set on modeswitch

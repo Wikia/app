@@ -623,7 +623,7 @@
 				// Setup the configured blocked keystrokes.
 				for ( i = 0; i < editor.config.blockedKeystrokes.length; i++ )
 					editor.keystrokeHandler.blockedKeystrokes[ editor.config.blockedKeystrokes[ i ] ] = 1;
-
+				debugger;
 				editor.status = 'loaded';
 				editor.fireOnce( 'loaded' );
 				CKEDITOR.fire( 'instanceLoaded', null, editor );

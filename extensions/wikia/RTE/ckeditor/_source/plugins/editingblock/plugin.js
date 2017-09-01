@@ -166,6 +166,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	 */
 	CKEDITOR.editor.prototype.setMode = function( mode )
 	{
+		debugger;
 		this.fire( 'beforeSetMode', { newMode : mode } );
 
 		var data,
