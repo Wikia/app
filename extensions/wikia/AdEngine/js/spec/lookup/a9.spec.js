@@ -2,7 +2,18 @@
 describe('Method ext.wikia.adEngine.lookup.a9', function () {
 	'use strict';
 
-	var mocks, testCases;
+	var mocks,
+		testCases,
+		VIDEO_SLOT_NAME = 'FEATURED',
+		videoBidReponse = {
+			amznbid: 'testBidId',
+			amzniid: 'testImpression-123',
+			amznp: 'testP',
+			encodedQsParams: '%26amzniid%3DtestImpression-1028258831504272828705%26amznbid%3Dv_testBid%26amznp%3DtestP',
+			mediaType: 'video',
+			qsParams: '&amzniid=testImpression-1028258831504272828705&amznbid=v_testBid&amznp=testP',
+			slotID: 'FEATURED'
+		};
 
 	function noop() {
 		return;
@@ -20,6 +31,7 @@ describe('Method ext.wikia.adEngine.lookup.a9', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.lookup.a9'](
+			mocks.adContext,
 			mocks.slotsContext,
 			getFactory(),
 			mocks.document,
@@ -175,7 +187,7 @@ describe('Method ext.wikia.adEngine.lookup.a9', function () {
 					amznp: 'amznp3'
 				}
 			}
-		},
+		}
 	];
 
 	Object.keys(testCases).forEach(function (k) {
@@ -202,5 +214,22 @@ describe('Method ext.wikia.adEngine.lookup.a9', function () {
 		mocks.targeting.skin = 'oasis';
 		init(a9, []);
 		expect(a9.hasResponse()).toEqual(true);
+	});
+
+	it('should not show video slot if it is not enabled', function () {
+		expect(getModule().getSlotParams(VIDEO_SLOT_NAME)).toEqual({});
+	});
+
+	it('should get video slot if it is enabled', function () {
+		spyOn(mocks.adContext, 'getContext').and.returnValue({targeting: {skin: 'oasis'}, bidders: {a9Video: true}});
+		var a9 = getModule(),
+			slotParams;
+
+		init(a9, [videoBidReponse]);
+
+		slotParams = a9.getSlotParams(VIDEO_SLOT_NAME);
+		expect(slotParams.amznbid).toEqual(videoBidReponse.amznbid);
+		expect(slotParams.amzniid).toEqual(videoBidReponse.amzniid);
+		expect(slotParams.amznp).toEqual(videoBidReponse.amznp);
 	});
 });

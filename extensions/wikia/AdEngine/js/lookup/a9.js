@@ -1,11 +1,12 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.a9', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (slotsContext, factory, doc, log, win) {
+], function (adContext, slotsContext, factory, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.lookup.a9',
@@ -40,6 +41,14 @@ define('ext.wikia.adEngine.lookup.a9', [
 		node.parentNode.insertBefore(a9Script, node);
 	}
 
+	function isVideoBidderEnabled() {
+		return adContext &&
+			adContext.getContext() &&
+			adContext.getContext().bidders &&
+			adContext.getContext().bidders.a9Video
+		;
+	}
+
 	function call(skin, onResponse) {
 		var a9Slots;
 
@@ -61,7 +70,12 @@ define('ext.wikia.adEngine.lookup.a9', [
 		priceMap = {};
 
 		slots = slotsContext.filterSlotMap(config[skin]);
-		a9Slots = Object.keys(slots).map(createSlotDefinition).concat(VIDEO_SLOTS.map(createVideoSlotDefinition));
+		a9Slots = Object.keys(slots).map(createSlotDefinition);
+
+		if (isVideoBidderEnabled()) {
+			a9Slots = a9Slots.concat(VIDEO_SLOTS.map(createVideoSlotDefinition));
+		}
+
 		log(['call - fetchBids', a9Slots], 'debug', logGroup);
 
 		win.apstag.fetchBids({

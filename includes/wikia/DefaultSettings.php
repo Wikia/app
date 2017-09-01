@@ -1199,6 +1199,13 @@ $wgAmazonMatchCountries = null;
  */
 $wgAmazonMatchCountriesMobile = null;
 
+/**
+ * @name wgAdDriverA9VideoBidderCountries
+ * List of countries where A9 video bidding platform is enabled.
+ * It won't work if A9 display bidder isn't enabled
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverA9VideoBidderCountries = null;
 
 /**
  * @name $wgAdDriverA9BidderCountries

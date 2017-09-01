@@ -111,6 +111,8 @@ define('ext.wikia.adEngine.adContext', [
 
 		context.bidders.appnexusAst = geo.isProperGeo(instantGlobals.wgAdDriverAppNexusAstBidderCountries) &&
 			!hasFeaturedVideo;
+
+		context.bidders.a9Video = geo.isProperGeo(instantGlobals.wgAdDriverA9VideoBidderCountries);
 	}
 
 	function isMEGAEnabledForFVMobile(context) {
