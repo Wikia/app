@@ -39,7 +39,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverAolBidderCountries';
 		$vars[] = 'wgAdDriverAppNexusAstBidderCountries';
 		$vars[] = 'wgAdDriverAppNexusBidderCountries';
-		$vars[] = 'wgAdDriverAppNexusBidderPlacementsConfig';
 		$vars[] = 'wgAdDriverAudienceNetworkBidderCountries';
 		$vars[] = 'wgAdDriverA9BidderCountries';
 		$vars[] = 'wgAdDriverDelayCountries';
@@ -73,6 +72,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverPrebidBidderCountries';
 		$vars[] = 'wgAdDriverPremiumAdLayoutCountries';
 		$vars[] = 'wgAdDriverPremiumAdLayoutRubiconFastlaneTagsCountries';
+		$vars[] = 'wgAdDriverPremiumAdLayoutAppNexusTagsCountries';
 		$vars[] = 'wgAdDriverRubiconDisplayPrebidCountries';
 		$vars[] = 'wgAdDriverRubiconFastlaneCountries';
 		$vars[] = 'wgAdDriverRubiconFastlaneMercuryFixCountries';
