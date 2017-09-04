@@ -38,14 +38,14 @@ class ScribeEventProducer {
 				$this->mEventType = self::UNDELETE_CATEGORY_INT;
 				break;
 		}
-		$geo = json_decode( RequestContext::getMain()->getRequest()->getCookie( "Geo", "" ) );
+		$geo = json_decode( RequestContext::getMain()->getRequest()->getCookie( 'Geo', '' ) );
 		$this->setCityId( $this->app->wg->CityId );
 		$this->setServerName( $this->app->wg->Server );
 
 		$this->setIp( RequestContext::getMain()->getRequest()->getIP() );
-		$this->setGeoRegion($geo->region);
-		$this->setGeoCountry($geo->country);
-		$this->setGeoContinent($geo->continent);
+		$this->setGeoRegion( $geo->region );
+		$this->setGeoCountry( $geo->country );
+		$this->setGeoContinent( $geo->continent );
 		$this->setHostname( wfHostname() );
 		$this->setBeaconId ( wfGetBeaconId() );
 		$this->setArchive( $archive );
