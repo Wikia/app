@@ -131,9 +131,9 @@ class PhalanxService {
 			: [];
 
 		$result = $this->sendToPhalanxDaemon( "reload", $params );
-		$queue_result = $this->sendToPhalanxQueue( $changed );
+		$this->sendToPhalanxQueue( $changed );
 		wfProfileOut( __METHOD__ );
-		return $result && $queue_result;
+		return $result;
 	}
 
 	private function sendToPhalanxQueue( $changed ) {
@@ -143,7 +143,6 @@ class PhalanxService {
 		$rabbitConnection = new ConnectionBase( $wgPhalanxQueue );
 		$rabbitConnection->publish ( self::ROUTING_KEY, implode( ",", $changed ) );
 		wfProfileOut( __METHOD__ );
-		return true;
 	}
 
 	/**
