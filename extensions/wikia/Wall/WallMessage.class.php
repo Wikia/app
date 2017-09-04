@@ -590,8 +590,7 @@ class WallMessage {
 		if ( $title->inNamespace( NS_USER_WALL_MESSAGE ) ) {
 			$parentPageText = $title->getBaseText();
 
-			return Title::newFromText( $parentPageText, NS_USER_WALL ) ??
-				   static::emptyTitle();
+			return Title::makeTitle( $parentPageText, NS_USER_WALL );
 		}
 
 		// Forum Threads may have been moved to another board - use comments index as data source
