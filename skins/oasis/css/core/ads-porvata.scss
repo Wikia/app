@@ -142,25 +142,28 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 	line-height: 0;
 	text-align: center;
 
-	#INCONTENT_PLAYER.porvata-outstream {
-		margin: 0 auto;
-		max-width: 640px;
+	#INCONTENT_PLAYER {
+		margin: 0 auto -14px auto;
 
-		&:before {
-			color: $color-text;
-			content: attr(data-label);
-			display: block;
-			font-size: 0.625rem;
-			font-weight: 700;
-			line-height: 0.75rem;
-			padding-bottom: 6px;
-			padding-top: 6px;
-			text-align: center;
-			text-transform: uppercase;
-		}
+		&.porvata-outstream {
+			max-width: 640px;
 
-		.video-overlay {
-			background: #000;
+			&:before {
+				color: $color-text;
+				content: attr(data-label);
+				display: block;
+				font-size: 0.625rem;
+				font-weight: 700;
+				line-height: 0.75rem;
+				padding-bottom: 6px;
+				padding-top: 6px;
+				text-align: center;
+				text-transform: uppercase;
+			}
+
+			.video-overlay {
+				background: #000;
+			}
 		}
 	}
 }
