@@ -12,6 +12,14 @@ $wgExtensionCredits['parserhook'][] = array(
 // Avoid unstubbing $wgParser on setHook() too early on modern (1.12+) MW versions, as per r35980
 $wgHooks['ParserFirstCallInit'][] = 'wfTabber';
 
+$wgResourceModules['ext.tabber'] = [
+	'scripts' => [ 'tabber.js' ],
+	'styles' => [ 'tabber.css' ],
+
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => '3rdparty/tabber',
+];
+
 /**
  * @param Parser $parser
  * @return bool
@@ -21,35 +29,23 @@ function wfTabber( Parser $parser ) {
 	return true;
 }
 
-function renderTabber( $paramstring, $params, $parser ) {
-	global $wgExtensionsPath, $wgStyleVersion;
+function renderTabber( $paramstring, $params, Parser $parser ) {
+	// Wikia change - add styles and scripts to output:
+	$parser->getOutput()->addModules( 'ext.tabber' );
 
-	$path = $wgExtensionsPath . '/3rdparty/tabber/';
-
-	/*
-	 * Wikia Change Start @author: marzjan
-	 */
-	$snippets = JSSnippets::addToStack(
-		array( '/extensions/3rdparty/tabber/tabber.js' ),
-		array( '$.loadJQueryUI' )
-	);
-
-	$htmlHeader = '<link rel="stylesheet" href="' . $path . 'tabber.css?' . $wgStyleVersion . '" TYPE="text/css" MEDIA="screen">'
-		. $snippets
-		. '<div class="tabber">';
-	$htmlFooter = '</div>';
-	/*
-	 * Wikia Change End
-	 */
-
-	$htmlTabs = "";
+	// Wikia change - hide tabbers by default and let JS show them -> for lazy loading images
+	$style = 'display:none;';
 
 	$arr = explode( "|-|", $paramstring );
+	$htmlTabs = Html::openElement( 'div', [ 'class' => 'tabber', 'style' => $style ] );
+
 	foreach ( $arr as $tab ) {
 		$htmlTabs .= buildTab( $tab, $parser ); # macbre: pass Parser object (refs RT #34513)
 	}
 
-	return $htmlHeader . $htmlTabs . $htmlFooter;
+	$htmlTabs .= Html::closeElement( 'div' );
+
+	return $htmlTabs;
 }
 
 /**
@@ -67,9 +63,13 @@ function buildTab( $tab, $parser ) {
 	// Wikia Change End
 	$tabBody = $parser->recursiveTagParse( implode( "=", $arr ) );
 
-	$tab = '<div class="tabbertab" title="' . htmlspecialchars( $tabName ) . '">'
-		. '<p>' . $tabBody . '</p>'
-		. '</div>';
+	$tab = Html::openElement( 'div', [
+		'class' => 'tabbertab',
+		'title' => $tabName
+	] );
+
+	$tab .= Html::rawElement( 'p', [], $tabBody );
+	$tab .= Html::closeElement( 'div' );
 
 	return $tab;
 }
