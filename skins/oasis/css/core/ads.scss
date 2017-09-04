@@ -29,17 +29,7 @@ $floating-ad-featured-video-gap: $video-container-width;
 
 $navbar-size-for-sticky-element: 65px;
 
-$video-control-bar-padding: 18px;
-$video-control-bar-items-margin: 12px;
-$video-control-panel-default-color: white;
-$video-control-panel-active-color: $video-player-blue;
-$video-control-panel-inactive-color: $video-player-volume-bar-off-color;
-$video-control-panel-item-size: 23px;
-$video-control-panel-item-size-extra-large: 86px;
 $video-control-panel-item-size-small: 17px;
-$video-control-panel-progress-bar-shadow-color: rgba(175, 175, 175, 0.5);
-$video-control-pause-shadow-animation-duration: 1s;
-$video-control-pause-shadow-animation-function: ease;
 
 $vpaid-z-index: 10;
 $video-interactive-area-z-index: $vpaid-z-index + 1;
@@ -361,6 +351,7 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 			content: 'ADVERTISMEMENT';
 			display: block;
 			font-size: 0.625rem;
+			font-weight: 500;
 			line-height: 0.75rem;
 			padding-bottom: 6px;
 			padding-top: 6px;
@@ -624,77 +615,10 @@ body > a > img[src$="noad.gif"] {
 	display: none;
 	left: 0;
 	position: absolute;
-	top: 0;
+	top: 26px;
 	z-index: $video-interactive-area-z-index;
 
 	img {
 		padding: 7px;
-	}
-}
-
-.floating {
-	// TODO fix loating styles
-	.interactive-area {
-		.control-bar {
-			.control-bar-item {
-				width: $video-control-panel-item-size-small;
-			}
-
-			.sound-bar {
-				height: $video-control-panel-item-size-small;
-				padding-left: 3px;
-			}
-		}
-
-		svg {
-			height: $video-control-panel-item-size-small;
-		}
-	}
-}
-
-@keyframes show-then-hide {
-	from {
-		animation-timing-function: $video-control-pause-shadow-animation-function;
-		height: $video-control-panel-item-size;
-		opacity: 1;
-		visibility: visible;
-		width: $video-control-panel-item-size;
-	}
-
-	to {
-		height: $video-control-panel-item-size-extra-large;
-		opacity: 0;
-		visibility: hidden;
-		width: $video-control-panel-item-size-extra-large;
-	}
-}
-
-.pause-shadow {
-	bottom: 0;
-	height: $video-control-panel-item-size;
-	left: 0;
-	margin: auto;
-	opacity: 0;
-	position: absolute;
-	right: 0;
-	top: 0;
-	visibility: hidden;
-	width: $video-control-panel-item-size;
-	z-index: $video-interactive-area-z-index;
-
-	svg {
-		fill: $video-control-panel-default-color;
-		height: $video-control-panel-item-size;
-		width: $video-control-panel-item-size;
-	}
-
-	&.animate {
-		animation: show-then-hide $video-control-pause-shadow-animation-duration;
-
-		svg {
-			height: $video-control-panel-item-size-extra-large;
-			transition: all $video-control-pause-shadow-animation-duration $video-control-pause-shadow-animation-function;
-			width: $video-control-panel-item-size-extra-large;
-		}
 	}
 }

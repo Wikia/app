@@ -126,7 +126,7 @@ define('ext.wikia.adEngine.template.porvata', [
 	function show(params) {
 		var imaVpaidModeInsecure = 2,
 			settings;
-
+params.enableInContentFloating = true;
 		log(['show', params], log.levels.debug, logGroup);
 
 		if (params.hbAdId) {
