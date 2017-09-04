@@ -111,7 +111,7 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 		width: $video-player-button-size;
 	}
 
-	/* TODO remove .ima-mute-div in next releases */
+	/* TODO remove .ima-mute-div and all references in next releases (keep .volume-control only) */
 	.ima-mute-div, .volume-control {
 		/* remove Firefox's dotted outline on buttons and links */
 		:focus {outline:none;}

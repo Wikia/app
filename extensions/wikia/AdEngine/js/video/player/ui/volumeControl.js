@@ -12,7 +12,7 @@ define('ext.wikia.adEngine.video.player.ui.volumeControl', [
 
 		speaker.className = 'speaker';
 		speaker.appendChild(doc.createElement('span'));
-		volume.className = 'ima-mute-div hidden';
+		volume.className = 'ima-mute-div volume-control hidden';
 
 		volume.appendChild(speaker);
 		volume.speaker = speaker;
