@@ -63,11 +63,11 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 .video-player {
 	position: relative;
 
-	&#{&}-left, &#{&}-right {
+	&.video-player-left, &.video-player-right {
 		z-index: $wikia-top-ads-index;
 	}
 
-	&#{&}-right {
+	&.video-player-right {
 		right: 0;
 	}
 
