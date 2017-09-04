@@ -202,37 +202,7 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 
 /* Floating */
 
-#WikiaArticle.floating {
-	z-index: initial;
-
-	.wikia-ad {
-		bottom: $wikia-bar-height + $floating-ad-margin;
-		margin-bottom: 0;
-		position: fixed;
-		right: $floating-ad-margin;
-		transition: margin-bottom $floating-ad-animation-speed;
-		width: $floating-ad-video-width;
-		z-index: $floating-ad-index;
-
-		.provider-container {
-			padding-bottom: 0 !important; // has to be !important because o inline style
-			width: $floating-ad-video-width;
-		}
-
-		.floating-close-button {
-			display: block;
-		}
-	}
-
-	&.with-article-video {
-		.wikia-ad {
-			margin-bottom: $floating-ad-featured-video-gap;
-			transition: margin-bottom $floating-ad-animation-speed;
-		}
-	}
-}
-
-.WikiaTopAds.floating {
+#WikiaArticle.floating, .WikiaTopAds.floating {
 	z-index: $floating-ad-index;
 
 	.wikia-ad {
@@ -255,6 +225,20 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 		.wikia-ad {
 			margin-bottom: $floating-ad-featured-video-gap;
 			transition: margin-bottom $floating-ad-animation-speed;
+		}
+	}
+}
+
+#WikiaArticle.floating {
+	z-index: initial;
+
+	.wikia-ad {
+		width: $floating-ad-video-width;
+		z-index: $floating-ad-index;
+
+		.provider-container {
+			padding-bottom: 0 !important; // has to be !important because o inline style
+			width: $floating-ad-video-width;
 		}
 	}
 }
