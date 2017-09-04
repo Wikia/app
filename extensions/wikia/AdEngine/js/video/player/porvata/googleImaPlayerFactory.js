@@ -160,6 +160,10 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			return adsManager;
 		}
 
+		if (mobileVideoAd) {
+			params.container.classList.add('mobile-porvata');
+		}
+
 		adsLoader.addEventListener(
 			win.google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED,
 			adsManagerLoadedCallback,
