@@ -100,8 +100,21 @@ class GlobalTitle extends Title {
 			throw new \Exception( 'Invalid $city_id.' );
 		}
 
-		$mainPageName = self::newFromText( 'Mainpage', NS_MEDIAWIKI, $city_id )->getContent();
-		$title = self::newFromText( $mainPageName, NS_MAIN, $city_id );
+		$mainPageTitle = self::newFromText( 'Mainpage', NS_MEDIAWIKI, $city_id );
+		$mainPageName = $mainPageTitle->getContent();
+		$namespace = NS_MAIN;
+		// support for non-MAIN namespace pages, based on Title::secureAndSplit method
+		$prefixRegexp = "/^(.+?)_*:_*(.*)$/S";
+		if ( preg_match( $prefixRegexp, $mainPageName, $m ) ) {
+			$mainPageTitle->loadContLang();
+			$namespaceIndex = $mainPageTitle->mContLang->getNsIndex( $m[1] );
+			if ( $namespaceIndex !== false ) {
+				$namespace = $namespaceIndex;
+				$mainPageName = $m[2];
+			}
+		}
+
+		$title = self::newFromText( $mainPageName, $namespace, $city_id );
 
 		// Don't give fatal errors if the message is broken
 		if ( !$title->exists() ) {
