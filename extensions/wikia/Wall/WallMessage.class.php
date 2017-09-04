@@ -542,37 +542,15 @@ class WallMessage {
 		return $wallOwnerName;
 	}
 
-	public function getWallOwner( $useMasterDB = false ) {
-		$parts = explode( '/', $this->getArticleTitle( $useMasterDB )->getText() );
-		$userName = $parts[ 0 ];
-		$titleText = $this->title->getText();
-		$parts = explode( '/', $titleText );
-		if ( mt_rand( 1, 100 ) < 2 ) {  // doing this experiment for all requests pollutes the logs
-
-			// mech: I'm not sure we have to create wall title doing db queries on both, page and comments_index tables.
-			// as the user name is the first part on comment's title. But I'm not able to go through all wall/forum
-			// usecases. I'm going to check production logs for the next 2-3 sprints and make sure the result is
-			// always correct
-			if ( $parts[ 0 ] != $userName ) {
-				Wikia::log( __METHOD__, false, 'WALL_PERF article title owner does not match ci username (' . $userName .
-					' vs ' . $parts[ 0 ] . ') for ' . $this->getId() . ' (title is ' . $titleText . ')', true );
-			}
-
+	public function getWallOwner() {
+		if ( $this->title->inNamespace( NS_USER_WALL_MESSAGE ) ) {
+			$ownerUserName = $this->title->getBaseText();
+			return User::newFromName( $ownerUserName, false );
 		}
 
-		// mech: when the wall message is not in the db yet, the getWallTitle will return 'Empty' as is cannot find
-		// the row in comments_index. After I'll make sure that call to getWallTitle is not needed, the check below
-		// can be safely removed
-		if ( $userName == 'Empty' && !empty( $parts[ 0 ] ) ) {
-			$userName = $parts[ 0 ];
-		}
-
-		$wall_owner = User::newFromName( $userName, false );
-
-		if ( empty( $wall_owner ) ) {
-			error_log( 'EMPTY_WALL_OWNER: (id)' . $this->getId() );
-		}
-		return $wall_owner;
+		// horribile visu: Forum threads treat board name as user!
+		$boardName = $this->getArticleTitle()->getBaseText();
+		return User::newFromName( $boardName, false );
 	}
 
 	public function getWallPageUrl() {
