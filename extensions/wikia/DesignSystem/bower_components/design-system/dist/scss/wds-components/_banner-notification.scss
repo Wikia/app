@@ -1,11 +1,11 @@
-.wds-banner-notification-container {
-	box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
-}
-
 .wds-banner-notification {
 	background-color: $wds-color-white;
 	color: $wds-color-light-gray;
 	display: flex;
+
+	&__container {
+		box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
+	}
 
 	&__icon {
 		align-items: center;
@@ -44,9 +44,8 @@
 		padding: 18px;
 	}
 
-	+ .wds-banner-notification .wds-banner-notification {
-		&__close, &__text {
-			border-top: 1px solid #ccc;
-		}
+	& + & &__close,
+	& + & &__text {
+		border-top: 1px solid #ccc;
 	}
 }
