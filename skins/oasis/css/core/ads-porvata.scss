@@ -186,22 +186,10 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 
 			.speaker {
 				&.mute {
-					background: #fff;
-					mask-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/outstream_sound_off_button.svg'); /* inline */
-					mask-position: center bottom;
-					mask-repeat: no-repeat;
-					-webkit-mask-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/outstream_sound_off_button.svg'); /* inline */
-					-webkit-mask-position: center bottom;
-					-webkit-mask-repeat: no-repeat;
+					background: url('/extensions/wikia/AdEngine/js/video/player/ui/images/outstream_sound_off_button.svg') no-repeat center bottom; /* inline */
 				}
 
-				background: #fff;
-				mask-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/outstream_sound_on_button.svg'); /* inline */
-				mask-position: center bottom;
-				mask-repeat: no-repeat;
-				-webkit-mask-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/outstream_sound_on_button.svg'); /* inline */
-				-webkit-mask-position: center bottom;
-				-webkit-mask-repeat: no-repeat;
+				background: url('/extensions/wikia/AdEngine/js/video/player/ui/images/outstream_sound_on_button.svg') no-repeat center bottom; /* inline */
 			}
 		}
 	}
