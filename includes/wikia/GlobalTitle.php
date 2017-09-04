@@ -105,12 +105,12 @@ class GlobalTitle extends Title {
 		$namespace = NS_MAIN;
 		// support for non-MAIN namespace pages, based on Title::secureAndSplit method
 		$prefixRegexp = "/^(.+?)_*:_*(.*)$/S";
-		if ( preg_match( $prefixRegexp, $mainPageName, $m ) ) {
+		if ( preg_match( $prefixRegexp, $mainPageName, $matches ) ) {
 			$mainPageTitle->loadContLang();
-			$namespaceIndex = $mainPageTitle->mContLang->getNsIndex( $m[1] );
+			$namespaceIndex = $mainPageTitle->mContLang->getNsIndex( $matches[1] );
 			if ( $namespaceIndex !== false ) {
 				$namespace = $namespaceIndex;
-				$mainPageName = $m[2];
+				$mainPageName = $matches[2];
 			}
 		}
 
