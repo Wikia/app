@@ -375,7 +375,7 @@ class ResourceLoaderHooks {
 			WikiaLogger::instance()->info( 'rl.shortTTL', [
 				'modules' => join(',', $modules),
 				'cb' => $cb,
-				'ts' => $ts,
+				'ts' => $ts ?: 0,
 			]);
 		}
 
