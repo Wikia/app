@@ -170,6 +170,10 @@ class WallMessage {
 	 */
 	public function getCommentsIndexEntry() {
 		if ( !( $this->commentsIndex instanceof CommentsIndexEntry ) ) {
+			if ( !empty( $this->commentsIndex ) ) {
+				$this->getThread()->invalidateCache();
+			}
+
 			$this->commentsIndex = CommentsIndex::getInstance()->entryFromId( $this->getId() );
 		}
 
