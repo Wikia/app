@@ -194,7 +194,7 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 	}
 }
 
-.bfaa-template .ima-mute-div, .bfab-template .ima-mute-div {
+.video-overlay .ima-mute-div {
 	/* remove Firefox's dotted outline on buttons and links */
 	:focus {outline:none;}
 	::-moz-focus-inner {border:0;}
@@ -351,6 +351,27 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 	font-size: 0;
 	line-height: 0;
 	text-align: center;
+
+	#INCONTENT_PLAYER.porvata-outstream {
+		margin: 0 auto;
+		max-width: 640px;
+
+		&:before {
+			color: $color-text;
+			content: 'ADVERTISMEMENT';
+			display: block;
+			font-size: 0.625rem;
+			line-height: 0.75rem;
+			padding-bottom: 6px;
+			padding-top: 6px;
+			text-align: center;
+			text-transform: uppercase;
+		}
+
+		.video-overlay {
+			background: #000;
+		}
+	}
 }
 
 #LEFT_SKYSCRAPER_2 {
@@ -611,80 +632,8 @@ body > a > img[src$="noad.gif"] {
 	}
 }
 
-.interactive-area {
-	bottom: 0;
-	left: 0;
-	position: absolute;
-	width: 100%;
-	z-index: $video-interactive-area-z-index;
-
-	.control-bar {
-		padding: 0 $video-control-bar-padding;
-
-		.progress-bar {
-			background-color: $video-control-panel-progress-bar-shadow-color;
-			border-radius: 3px;
-			bottom: initial;
-			height: 4.2px;
-			left: initial;
-			position: static;
-			width: 100%;
-
-			.current-time {
-				background-color: $video-control-panel-active-color;
-				border-radius: 3px;
-			}
-		}
-
-		.control-bar-items {
-			display: flex;
-			margin: $video-control-bar-items-margin 0;
-		}
-
-		.control-bar-item {
-			cursor: pointer;
-			display: block;
-			padding: 0 6px;
-			width: $video-control-panel-item-size;
-		}
-
-		.play-pause-button {
-			padding-left: 0;
-		}
-
-		.sound-control {
-			display: flex;
-		}
-
-		.sound-bars-container {
-			display: flex;
-		}
-
-		.sound-bar {
-			background-clip:content-box;
-			background-color: $video-control-panel-default-color;
-			cursor: pointer;
-			height: $video-control-panel-item-size;
-			padding-left: 7px;
-			width: 2px;
-
-			&.unlit {
-				background-color: $video-control-panel-inactive-color;
-			}
-		}
-	}
-
-	svg {
-		fill: white;
-		height: $video-control-panel-item-size;
-
-		&:hover {
-			fill: $video-control-panel-active-color;
-		}
-	}
-}
-
 .floating {
+	// TODO fix loating styles
 	.interactive-area {
 		.control-bar {
 			.control-bar-item {

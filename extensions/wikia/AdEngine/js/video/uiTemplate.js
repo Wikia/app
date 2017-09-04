@@ -32,10 +32,11 @@ define('ext.wikia.adEngine.video.player.uiTemplate', [
 			'replayOverlay',
 			'closeButton'
 		],
-		featureVideo = [
+		outstream = [
+			'dynamicReveal',
+			'mouseEvents',
 			'progressBar',
-			'playPauseButton',
-			'soundControl'
+			'volumeControl'
 		],
 		logGroup = 'ext.wikia.adEngine.video.player.uiTemplate';
 
@@ -58,7 +59,7 @@ define('ext.wikia.adEngine.video.player.uiTemplate', [
 		autoPlayLayout: autoPlayLayout,
 		defaultLayout: defaultLayout,
 		splitLayout: splitLayout,
-		featureVideo: featureVideo,
+		outstream: outstream,
 		selectTemplate: selectTemplate
 	};
 });
