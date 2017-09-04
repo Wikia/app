@@ -8,9 +8,9 @@ require([
 	'wikia.instantGlobals',
 	'wikia.articleVideo.videoFeedbackBox',
 	'ext.wikia.adEngine.adContext',
+	require.optional('ext.wikia.adEngine.lookup.a9'),
 	require.optional('ext.wikia.adEngine.video.player.ooyala.ooyalaTracker'),
-	require.optional('ext.wikia.adEngine.video.ooyalaAdSetProvider'),
-	require.optional('ext.wikia.adEngine.lookup.a9')
+	require.optional('ext.wikia.adEngine.video.ooyalaAdSetProvider')
 ], function (
 	window,
 	onScroll,
@@ -19,11 +19,11 @@ require([
 	cookies,
 	geo,
 	instantGlobals,
-	adContext,
 	VideoFeedbackBox,
+	adContext,
+	a9,
 	playerTracker,
-	ooyalaAdSetProvider,
-	a9
+	ooyalaAdSetProvider
 ) {
 
 	$(function () {

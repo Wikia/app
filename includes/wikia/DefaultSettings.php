@@ -1205,7 +1205,7 @@ $wgAmazonMatchCountriesMobile = null;
  * It won't work if A9 display bidder isn't enabled
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
-$wgAdDriverA9VideoBidderCountries = null;
+$wgAdDriverA9VideoBidderCountries = [];
 
 /**
  * @name $wgAdDriverA9BidderCountries
