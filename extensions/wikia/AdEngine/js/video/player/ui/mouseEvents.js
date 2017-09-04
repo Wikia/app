@@ -3,7 +3,7 @@ define('ext.wikia.adEngine.video.player.ui.mouseEvents', [], function () {
 	'use strict';
 
 	function add(video, params) {
-		var userHasChangedVolumeManually = false;
+		var isVolumeChangedManually = false;
 
 		video.addEventListener('loaded', function () {
 			setTimeout(function () {
@@ -11,15 +11,15 @@ define('ext.wikia.adEngine.video.player.ui.mouseEvents', [], function () {
 			});
 
 			video.addEventListener('wikiaVolumeChangeClicked', function () {
-				userHasChangedVolumeManually = true;
+				isVolumeChangedManually = true;
 			});
 			params.container.addEventListener('mouseenter', function () {
-				if (!userHasChangedVolumeManually) {
+				if (!isVolumeChangedManually) {
 					video.setVolume(1);
 				}
 			});
 			params.container.addEventListener('mouseleave', function () {
-				if (!userHasChangedVolumeManually) {
+				if (!isVolumeChangedManually) {
 					video.setVolume(0);
 				}
 			});
