@@ -167,6 +167,7 @@ define('ext.wikia.adEngine.template.porvata', [
 		settings = videoSettings.create(params);
 		porvata.inject(settings).then(function (video) {
 			var imaVpaidMode = win.google.ima.ImaSdkSettings.VpaidMode,
+				templateName = params.isDynamic ? 'outstreamIncontent' : 'outstreamLeaderboard',
 				videoPlayer;
 
 			if (params.vpaidMode === imaVpaidMode.INSECURE) {
@@ -206,7 +207,7 @@ define('ext.wikia.adEngine.template.porvata', [
 				});
 			}
 
-			videoInterface.setup(video, uiTemplate.outstream, {
+			videoInterface.setup(video, uiTemplate[templateName], {
 				container: params.container,
 				isDynamic: params.isDynamic,
 				slotName: params.slotName
