@@ -218,7 +218,7 @@ define('ext.wikia.adEngine.template.porvata', [
 		}
 
 		if (params.isDynamic) {
-			slotTweaker.collapse(params.slotName);
+			slotTweaker.collapse(params.slotName, true);
 			slotTweaker.makeResponsive(params.slotName, videoAspectRatio);
 		}
 
