@@ -128,7 +128,7 @@ Before contributing to the {{SITENAME}} Forums, please keep in mind a few best p
 	'forum-board-validation-count' => 'The maximum number of boards is $1',
 	'forum-board-description-validation-length' => 'Please write a description for this board',
 	'forum-board-id-validation-missing' => 'Board id is missing',
-	'forum-board-no-board-warning' => "We couldn't find a board with that title.  Here's the list of forum boards.",
+	'forum-board-no-board-warning' => "There is no Forum Board with that title. Please try again or check out this list of Forum Boards.",
 	'forum-related-discussion-heading' => 'Discussions about $1',
 	'forum-related-discussion-new-post-button' => 'Start a Discussion',
 	'forum-related-discussion-new-post-tooltip' => 'Start a new discussion about $1',

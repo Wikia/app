@@ -2661,7 +2661,7 @@ $config['contribution_prototype_scss'] = [
 
 $config['design_system_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis' ],
+	'skin' => [ 'oasis', 'monobook' ],
 	'assets' => [
 		'//extensions/wikia/DesignSystem/styles/design-system.scss'
 	],

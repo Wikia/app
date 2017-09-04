@@ -4,8 +4,8 @@ $messages = array();
 $messages['en'] = array(
 	'bannernotifications-desc' => 'Displays system notifications for events such as AJAX failures',
 	'bannernotifications-general-ajax-failure' => 'The browser could not connect to FANDOM.  Try again later.',
-	'bannernotifications-not-confirmed-email' => "Oh no! Your email address has not yet been confirmed. You should have a confirmation message in your inbox. Didn't get it? [[Special:ConfirmEmail|Click here and we'll send a new one.]] If you need to change your address, head to your [[Special:Preferences#mw-prefsection-emailv2|Preferences page]].",
-	'bannernotifications-no-email' => "Oh no! Looks like we don't have an email address for you. To set your email, head to your [[Special:Preferences#mw-prefsection-emailv2|Preferences page]].",
+	'bannernotifications-not-confirmed-email' => "Your email address hasn't been confirmed. There should be a confirmation message in your inbox. If you need us to send a new one, please [[Special:ConfirmEmail|click here]]. If you need to change your email, head to your [[Special:Preferences#mw-prefsection-emailv2|Preferences page]].",
+	'bannernotifications-no-email' => "Your account does not have a confirmed email address. Please set up your email on your [[Special:Preferences#mw-prefsection-emailv2|Preferences page]].",
 );
 
 $messages['qqq'] = array(
