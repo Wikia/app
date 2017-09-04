@@ -12,7 +12,7 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 	var logGroup = 'ext.wikia.adEngine.adInfoTrackerHelper';
 
 	function shouldHandleSlot(slot, enabledSlots) {
-		var dataGptDiv = slot.container.firstChild;
+		var dataGptDiv = slot.container && slot.container.firstChild;
 
 		return (
 			enabledSlots[slot.name] &&

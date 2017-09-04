@@ -53,6 +53,16 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', funct
 							COMPLETE: 'foo'
 						}
 					},
+					AdError: {
+						ErrorCode: {
+							VAST_EMPTY_RESPONSE: 1009
+						}
+					},
+					AdErrorEvent: {
+						Type: {
+							AD_ERROR: 'foo'
+						}
+					},
 					AdsManagerLoadedEvent: {
 						Type: {
 							ADS_MANAGER_LOADED: 'foo'

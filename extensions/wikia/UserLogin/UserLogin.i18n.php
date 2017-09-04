@@ -2593,6 +2593,89 @@ Muốn kiểm soát email mà bạn nhận được? Đi đến: {{fullurl:{{ns:
 	'userlogin-error-wrongcredentials' => 'Tên thành viên cùng mật khẩu đi kèm không chính xác. Xin vui lòng thử lại.',
 );
 
+$messages['xw-3171'] = array(
+	'userlogin-desc' => '用戶登入擴展',
+	'userlogin-login-heading' => '登入',
+	'userlogin-forgot-password' => '忘記密碼了嗎？',
+	'userlogin-forgot-password-button' => '繼續',
+	'userlogin-forgot-password-go-to-login' => '已經有密碼了嗎？[[Special:UserLogin|登入]]',
+	'userlogin-remembermypassword' => '保持登入狀態',
+	'userlogin-error-noname' => '請填寫使用者名稱。',
+	'userlogin-error-sessionfailure' => '您的登錄已超時。請重新登錄。',
+	'userlogin-error-nosuchuser' => '嗯，我們找不到這個使用者名稱。別忘記使用者名稱要區分大小寫。',
+	'userlogin-error-wrongpassword' => '密碼錯誤。請確認 caps lock 已關閉，然後再試。',
+	'userlogin-error-wrongpasswordempty' => '請輸入密碼。',
+	'userlogin-error-resetpass_announce' => '看起來您使用的是臨時密碼。選擇新的密碼繼續登錄。',
+	'userlogin-error-login-throttled' => '密碼輸入錯誤次數過多，請稍後再試。',
+	'userlogin-error-login-userblocked' => '您的使用者名稱已被封鎖，不能登入。',
+	'userlogin-error-edit-account-closed-flag' => '您的帳戶已被FANDOM停用。',
+	'userlogin-error-cantcreateaccount-text' => '您的 IP 位址不被允許建立新的帳號。',
+	'userlogin-error-userexists' => '此使用者名稱已有人使用，請嘗試其他名稱。',
+	'userlogin-error-invalidemailaddress' => '請輸入有效的電子郵件地址。',
+	'userlogin-error-wrongcredentials' => '用戶名和密碼的搭配不正確。請再試一次。',
+	'userlogin-get-account' => '沒有帳號？<a href="$1" tabindex="$2">創建新帳號</a>',
+	'userlogin-account-admin-error' => '抱歉！出現問題。請聯繫[[Special:Contact|FANDOM]]以獲得幫助。',
+	'userlogin-error-invalid-username' => '無效的使用者名稱',
+	'userlogin-error-userlogin-unable-info' => '抱歉，我們現在不能建立你的帳號。',
+	'userlogin-error-user-not-allowed' => '此使用者名禁止使用。',
+	'userlogin-error-captcha-createaccount-fail' => '輸入的字元不相合，請重新輸入！',
+	'userlogin-error-userlogin-bad-birthday' => '抱歉，請填寫年、月、和日。',
+	'userlogin-error-externaldberror' => '抱歉！目前系統出錯，請稍後再試。',
+	'userlogin-error-noemailtitle' => '請輸入有效的電子郵件地址。',
+	'userlogin-error-acct_creation_throttle_hit' => '抱歉，此 IP 位址今天已建立了太多帳戶。請稍後再試。',
+	'userlogin-opt-in-label' => '請給我發電子郵件告知有關FANDOM的消息和活動',
+	'userlogin-error-resetpass_forbidden' => '無法更改密碼',
+	'userlogin-error-blocked-mailpassword' => '由於您的IP位址已經被FANDOM封禁，您無法請求新密碼。',
+	'userlogin-error-throttled-mailpassword' => '我們已經在{{PLURAL:$1|1小時|$1小時}}前發送了此帳戶的密碼提示。請檢查您的電子郵件。',
+	'userlogin-error-mail-error' => '哎呀，在向您寄電子郵件的時候遇到了問題。請[[Special:Contact/general|聯絡我們]]。',
+	'userlogin-password-email-sent' => '我們已經向帳戶 $1 傳送了一封包含有該帳戶新密碼的電子郵件。',
+	'userlogin-error-unconfirmed-user' => '抱歉，您尚未認證您的電子郵件地址。請先去認證您的電子郵件地址。',
+	'userlogin-error-confirmation-reminder-already-sent' => '驗證提醒郵件已經發送',
+	'userlogin-password-page-title' => '變更您的密碼',
+	'userlogin-oldpassword' => '舊密碼',
+	'userlogin-newpassword' => '新密碼',
+	'userlogin-retypenew' => '重新輸入新密碼',
+	'userlogin-password-email-subject' => '忘記密碼',
+	'userlogin-password-email-greeting' => '$USERNAME：',
+	'userlogin-password-email-content' => '請使用下列臨時密碼登陸Wikia："$NEWPASSWORD"
+<br /><br />
+如果您並未請求一個新密碼，請不要擔心。您的帳戶仍然安全可靠。您可以忽略這封電子郵件，並且繼續使用您的舊密碼登陸Wikia。
+<br /><br />
+仍然有問題？請隨時<a href="http://community.wikia.com/wiki/Special:Contact/account-issue">聯繫我們</a>。',
+	'userlogin-password-email-signature' => 'Wikia 社區支援',
+	'userlogin-password-email-body' => 'Hi $2,
+Please use this temporary password to log in to Wikia: "$3"
+If you didn\'t request a new password, don\'t worry! Your account is safe and secure. You can ignore this email and continue log in to Wikia with your old password.
+Questions or concerns? Feel free to contact us: http://community.wikia.com/wiki/Special:Contact/account-issue
+Wikia Community Support
+___________________________________________
+To check out the latest happenings on Wikia, visit http://community.wikia.com
+Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
+	'userlogin-password-email-body-HTML' => '',
+	'userlogin-email-footer-line1' => '要查看Wikia最新發生的事，請至<a style="color:#2a87d5;text-decoration:none;" href="http://zh.community.wikia.com">zh.community.wikia.com</a>',
+	'userlogin-email-footer-line2' => '想選擇您要接收那些郵件？請至您的<a href="{{fullurl:{{ns:specia}}:Preferences}}" style="color:#2a87d5; text-decoration:none;">偏好設定</a>',
+	'userlogin-email-footer-line3' => '<a href="http://www.twitter.com/wikia" style="text-decoration:none">
+<img alt="twitter" src="http://images4.wikia.nocookie.net/wikianewsletter/images/f/f7/Twitter.png" style="border:none">
+</a>
+&nbsp;
+</a>
+&nbsp;
+<a href="http://www.youtube.com/wikia" style="text-decoration:none">
+<img alt="youtube" src="http://images3.wikia.nocookie.net/wikianewsletter/images/a/af/Youtube.png" style="border:none">
+</a>
+&nbsp;
+<a href="http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog" style="text-decoration:none">
+<img alt="wikia" src="http://images1.wikia.nocookie.net/wikianewsletter/images/b/be/Wikia_blog.png" style="border:none">
+</a>',
+	'userlogin-loginreqlink' => '登入',
+	'userlogin-changepassword-needlogin' => '您需要$1來更改您的密碼。',
+	'wikiamobile-sendpassword-label' => '發送新密碼',
+	'userlogin-logged-in-title' => '歡迎來到{{SITENAME}}，$1！',
+	'userlogin-logged-in-message' => '您已經登入。進入[[$1|首頁]] 查看最新消息，或查看您的[[$2|個人資料]]。',
+	'userlogin-email-confirmation-banner-success-message' => '您的電子郵件已被驗證。',
+	'userlogin-email-confirmation-banner-error' => '這個認證連結已經過期或是您登入了另一個FANDOM帳號，請登入您需要認證的帳號或[[Special:ConfirmEmail|點擊這裡]]以收到新的連結。',
+);
+
 $messages['zh-hans'] = array(
 	'userlogin-desc' => '用户登录扩展',
 	'userlogin-login-heading' => '登录',

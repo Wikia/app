@@ -93,8 +93,8 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 
 				ima.playVideo(width, height);
 			},
-			reload: function () {
-				ima.reload();
+			reload: function (reloadParams) {
+				ima.reload(reloadParams);
 			},
 			removeEventListener: function (eventName, callback) {
 				ima.removeEventListener(eventName, callback);

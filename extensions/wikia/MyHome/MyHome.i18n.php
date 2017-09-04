@@ -1916,9 +1916,9 @@ $messages['ko'] = array(
 	'myhome-activity-feed-empty' => "This wiki is waiting for you to get involved. Click on '''[[Special:CreatePage|New page]]''' to start writing!",
 	'myhome-watchlist-feed' => '주시한 문서만 표시',
 	'myhome-watchlist-feed-empty' => 'You can follow pages by clicking the "Follow" link in the bar at the top of the page. You can use your followed pages list to keep track of the latest changes to pages that you care about.',
-	'myhome-hot-spots-feed' => 'Hot Spots',
+	'myhome-hot-spots-feed' => '인기 문서',
 	'myhome-hot-spots-feed-empty' => "This wiki is waiting for you to get involved. Click on '''[[Special:CreatePage|New page]]''' to start writing!",
-	'myhome-hot-spots-newest' => 'New pages on the wiki',
+	'myhome-hot-spots-newest' => '최근 생성된 문서',
 	'tog-userlandingpage' => 'Landing page:',
 	'prefs-myhome' => 'My Home',
 	'myhome-feed-newpage' => 'new page',
@@ -1941,44 +1941,44 @@ $messages['ko'] = array(
 	'myhome-feed-article-comment-edited-by' => '$1에 의해 댓글 편집됨',
 	'myhome-feed-by' => 'by $1',
 	'myhome-feed-diff-alt' => 'show me the change on this page',
-	'myhome-feed-new-page-details' => 'New page',
-	'myhome-feed-summary-details' => 'Summary',
-	'myhome-feed-section-edit-details' => 'Edited the section',
-	'myhome-feed-new-blog-post-details' => 'New blog',
-	'myhome-feed-new-blog-comment-details' => 'Comment',
-	'myhome-feed-new-article-comment-details' => 'Comment',
+	'myhome-feed-new-page-details' => '새로운 문서',
+	'myhome-feed-summary-details' => '요약',
+	'myhome-feed-section-edit-details' => '편집된 문단',
+	'myhome-feed-new-blog-post-details' => '새 블로그 글',
+	'myhome-feed-new-blog-comment-details' => '댓글',
+	'myhome-feed-new-article-comment-details' => '댓글',
 	'myhome-feed-move-details' => 'Renamed',
 	'myhome-feed-redirect-details' => 'Redirect',
-	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Added photo|Added photos}}',
-	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Added video|Added videos}}',
-	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Added category|Added categories}}',
+	'myhome-feed-inserted-image-details' => '추가된 그림',
+	'myhome-feed-inserted-video-details' => '추가된 동영상',
+	'myhome-feed-inserted-category-details' => '추가된 분류',
 	'myhome-user-contributions-empty' => 'You can get involved on this wiki by clicking "edit this page" on any page. Everybody can make changes, add information or correct a mistake. 
 
 The wiki is built by the community, and once you click the edit button, you\'re part of the community. Try it out!',
-	'myhome-hot-spots-number-of-editors' => 'editors',
+	'myhome-hot-spots-number-of-editors' => '명 참여',
 	'myhome-log-in' => "<center>The My Home feature is only available if you're logged in.<br><br><big>'''[{{fullurl:Special:Signup|$1}} Please log in to see this page!]'''</big></center>",
 	'myhome-switch-to-monaco' => "The Wiki Activity feature is only available if you're using the Wikia skin. If you'd like to see Wiki Activity, please visit '''[[Special:Preferences|your Preferences]]''' to change your skin.",
 	'myhome-namespace-blog' => 'Blog',
-	'myhome-community-corner-header' => 'Community Messages',
-	'oasis-myhome-community-corner-edit' => 'edit message &gt;',
-	'myhome-hot-spots-definition' => 'Pages with the most editors in the last {{PLURAL:$1|day|$1 days}}.',
+	'myhome-community-corner-header' => '커뮤니티 알림판',
+	'oasis-myhome-community-corner-edit' => '내용 편집 &gt;',
+	'myhome-hot-spots-definition' => '최근 $1일 동안 가장 많은 사용자가 참여한 문서',
 	'myhome-default-view-checkbox' => '$1를 기본 설정으로 사용',
-	'myhome-default-view-success' => 'Okay, this is your default now',
+	'myhome-default-view-success' => '기본 설정이 변경되었습니다.',
 	'activityfeed' => '모든 문서 표시',
-	'community-corner' => "'''Welcome to Wiki Activity!''' 
+	'community-corner' => "'''위키 활동 내역에 오신 것을 환영합니다!'''
 
-This page helps you stay up to date with what's happening on the wiki. 
+이 페이지에서는 최근 커뮤니티에 있었던 활동 내역을 확인할 수 있습니다.
 
 
-If you're the founder or an admin on this wiki, you can change this message to talk to the community about important things happening on the site. For example, you could:
+위키 관리자는 “커뮤니티 알림판”을 통해 유용한 정보를 커뮤니티 사용자들과 공유할 수 있습니다. 다음은 커뮤니티 알림판의 활용 예입니다.
 
-* Organize a project to build up an area of the wiki
-* Show off some new pages that everyone should see
-* Get people involved in a discussion that's happening on the site
-* Give a shout-out to a contributor who's added something special to the wiki
-* Or just post some words of encouragement!",
+* 위키의 성장을 위한 프로젝트 정리.
+* 기여를 필요로 하는 문서 나열.
+* 활발한 토론에 대한 참여 권장.
+* 중요한 기여를 한 사용자 칭찬.
+* 편집에 도움이 될 만한 글 작성.",
 	'myhome-activity-feed' => '모든 문서 보기',
-	'myhome-community-corner-edit' => 'edit message',
+	'myhome-community-corner-edit' => '내용 편집',
 	'myhome-user-contributions-feed' => 'My contributions',
 	'myhome-desc' => 'A private home page for logged-in users',
 	'accesskey-pt-myhome' => 'g',

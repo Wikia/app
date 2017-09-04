@@ -258,6 +258,8 @@ define('ext.wikia.adEngine.adContext', [
 
 		context.opts.premiumAdLayoutRubiconFastlaneTagsEnabled = context.opts.premiumAdLayoutEnabled &&
 			geo.isProperGeo(instantGlobals.wgAdDriverPremiumAdLayoutRubiconFastlaneTagsCountries);
+		context.opts.premiumAdLayoutAppNexusTagsEnabled = context.opts.premiumAdLayoutEnabled &&
+			geo.isProperGeo(instantGlobals.wgAdDriverPremiumAdLayoutAppNexusTagsCountries);
 
 		context.opts.isFVMidrollEnabled = geo.isProperGeo(instantGlobals.wgAdDriverFVMidrollCountries);
 		context.opts.isFVPostrollEnabled = geo.isProperGeo(instantGlobals.wgAdDriverFVPostrollCountries);
