@@ -8,7 +8,6 @@ use Wikia\DependencyInjection\Module;
 use Wikia\Service\Gateway\UrlProvider;
 use Wikia\Service\Helios\HeliosClient;
 use Wikia\Service\Helios\HeliosClientImpl;
-use Wikia\Util\Statistics\BernoulliTrial;
 
 class AuthModule implements Module {
 
@@ -24,7 +23,7 @@ class AuthModule implements Module {
 			->bind( HeliosClientImpl::BASE_URI )->to( function ( Container $c ) {
 					global $wgAuthServiceName, $wgAuthServiceInternalUrl;
 
-					if ( !empty( $wgAuthServiceInternalUrl ) && ( new BernoulliTrial( 0.5 ) )->shouldSample() ) {
+					if ( !empty( $wgAuthServiceInternalUrl ) ) {
 						return $wgAuthServiceInternalUrl;
 					}
 
