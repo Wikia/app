@@ -52,7 +52,7 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 	}
 
 	.replay-overlay {
-		background: rgba(0,0,0,0.3) url('/extensions/wikia/AdEngine/js/video/player/ui/images/play_button.svg') center/8% no-repeat;
+		background: rgba(0,0,0,0.3) url('/extensions/wikia/AdEngine/js/video/player/ui/images/play_button.svg') center/8% no-repeat; /* inline */
 		cursor: pointer;
 		height: 100%;
 		position: absolute;
@@ -101,7 +101,7 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 	}
 
 	.close-ad {
-		background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/close_button.svg');
+		background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/close_button.svg'); /* inline */
 		cursor: pointer;
 		height: $video-player-button-size;
 		margin: 10px 10px 30px 30px;
@@ -124,10 +124,10 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 
 		.speaker {
 			&.mute {
-				background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/sound_off_button.svg');
+				background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/sound_off_button.svg'); /* inline */
 			}
 
-			background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/sound_on_button.svg');
+			background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/sound_on_button.svg'); /* inline */
 			display: inline-block;
 			height: $video-player-button-size;
 			overflow: hidden;
@@ -187,19 +187,19 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 			.speaker {
 				&.mute {
 					background: #fff;
-					mask-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/outstream_sound_off_button.svg');
+					mask-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/outstream_sound_off_button.svg'); /* inline */
 					mask-position: center bottom;
 					mask-repeat: no-repeat;
-					-webkit-mask-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/outstream_sound_off_button.svg');
+					-webkit-mask-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/outstream_sound_off_button.svg'); /* inline */
 					-webkit-mask-position: center bottom;
 					-webkit-mask-repeat: no-repeat;
 				}
 
 				background: #fff;
-				mask-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/outstream_sound_on_button.svg');
+				mask-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/outstream_sound_on_button.svg'); /* inline */
 				mask-position: center bottom;
 				mask-repeat: no-repeat;
-				-webkit-mask-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/outstream_sound_on_button.svg');
+				-webkit-mask-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/outstream_sound_on_button.svg'); /* inline */
 				-webkit-mask-position: center bottom;
 				-webkit-mask-repeat: no-repeat;
 			}
