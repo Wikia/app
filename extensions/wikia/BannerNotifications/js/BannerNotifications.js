@@ -39,19 +39,19 @@
 
 		defaultTimeout = 10000,
 		types = {
-			'notify': {
+			notify: {
 				className: 'wds-message',
 				svg: templates.notifyIcon
 			},
-			'confirm': {
+			confirm: {
 				className: 'wds-success',
 				svg: templates.confirmIcon
 			},
-			'error': {
+			error: {
 				className: 'wds-alert',
 				svg: templates.errorIcon
 			},
-			'warn': {
+			warn: {
 				className: 'wds-warning',
 				svg: templates.warnIcon
 			}
