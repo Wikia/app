@@ -21,7 +21,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		$this->productInstanceId = $cityId;
 		$this->themeSettings = new ThemeSettings( $cityId );
 		$this->settings = $this->themeSettings->getSettings( $cityId );
-		$this->mainPageUrl = GlobalTitle::newMainPage( $this->productInstanceId )->getFullURL();
+		$this->mainPageUrl = Title::newMainPage()->getFullURL();
 	}
 
 	public function getData(): array {

@@ -101,20 +101,7 @@ class GlobalTitle extends Title {
 		}
 
 		$mainPageTitle = self::newFromText( 'Mainpage', NS_MEDIAWIKI, $city_id );
-		$mainPageName = str_replace( ' ', '_', $mainPageTitle->getContent() );
-		$namespace = NS_MAIN;
-		// support for non-MAIN namespace pages, based on Title::secureAndSplit method
-		$prefixRegexp = "/^(.+?)_*:_*(.*)$/S";
-		if ( preg_match( $prefixRegexp, $mainPageName, $matches ) ) {
-			$mainPageTitle->loadContLang();
-			$namespaceIndex = $mainPageTitle->mContLang->getNsIndex( $matches[1] );
-			if ( $namespaceIndex !== false ) {
-				$namespace = $namespaceIndex;
-				$mainPageName = $matches[2];
-			}
-		}
-
-		$title = self::newFromText( $mainPageName, $namespace, $city_id );
+		$title = self::newFromText( $mainPageTitle, NS_MAIN, $city_id );
 
 		// Don't give fatal errors if the message is broken
 		if ( !$title->exists() ) {
