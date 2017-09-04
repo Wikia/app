@@ -62,7 +62,7 @@
 		$header,
 		modal,
 		fadeTime = 400,
-		wrapperClass = 'wds-banner-notification-container',
+		wrapperClass = 'wds-banner-notification__container',
 		wrapperSelector = '.' + wrapperClass,
 		notificationSelector = '.wds-banner-notification';
 

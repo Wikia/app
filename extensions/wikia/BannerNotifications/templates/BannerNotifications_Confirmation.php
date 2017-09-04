@@ -1,5 +1,5 @@
 <?php if ( !empty( $notifications ) ): ?>
-	<div class="wds-banner-notification-container">
+	<div class="wds-banner-notification__container">
 		<? foreach ( $notifications as $notification ): ?>
 			<div class="wds-banner-notification <?= $notification['class'] ?>">
 				<div class="wds-banner-notification__icon">
