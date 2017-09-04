@@ -18,7 +18,7 @@ describe('ext.wikia.adEngine.tracking.viewabilityTracker', function () {
 				kikimoraViewabilityTracking: true
 			},
 			win: {
-				adEnginePvUID: 'fooBarID'
+				pvUID: 'fooBarID'
 			}
 		};
 
@@ -37,7 +37,8 @@ describe('ext.wikia.adEngine.tracking.viewabilityTracker', function () {
 				firstChild: {
 					dataset: {
 						gptSlotParams: '{"wsi":"foo1","rv":"2"}',
-						gptLineItemId: '567'
+						gptLineItemId: '567',
+						gptCreativeId: '123'
 					}
 				}
 			}
@@ -67,6 +68,7 @@ describe('ext.wikia.adEngine.tracking.viewabilityTracker', function () {
 			'pv_unique_id': 'fooBarID',
 			'wsi': 'foo1',
 			'line_item_id': '567',
+			'creative_id': '123',
 			'rv': '2'
 		}, 'adengviewability');
 	});

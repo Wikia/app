@@ -39,6 +39,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 			node = doc.getElementsByTagName('script')[0];
 
 			adaptersRegistry.setupCustomAdapters();
+			adaptersRegistry.registerAliases();
 
 			prebid.async = true;
 			prebid.type = 'text/javascript';

@@ -3,11 +3,13 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexus',[
 	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements',
 	'wikia.geo',
-	'wikia.instantGlobals'
-], function (slotsContext, appnexusPlacements, geo, instantGlobals) {
+	'wikia.instantGlobals',
+	'wikia.log'
+], function (slotsContext, appnexusPlacements, geo, instantGlobals, log) {
 	'use strict';
 
 	var bidderName = 'appnexus',
+		logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.appnexus',
 		slots = {
 			oasis: {
 				TOP_LEADERBOARD: {
@@ -99,12 +101,14 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexus',[
 		return geo.isProperGeo(instantGlobals.wgAdDriverAppNexusBidderCountries);
 	}
 
-	function prepareAdUnit(slotName, config, skin) {
-		var placementId = appnexusPlacements.getPlacement(skin, config.position);
+	function prepareAdUnit(slotName, config, skin, isRecovering) {
+		var placementId = appnexusPlacements.getPlacement(skin, config.position, isRecovering);
 
 		if (!placementId) {
 			return;
 		}
+
+		log(['Requesting appnexus ad', slotName, placementId], log.levels.debug, logGroup);
 
 		return {
 			code: slotName,

@@ -649,6 +649,7 @@ $wgAutoloadLocalClasses = array(
 	'XCacheBagOStuff' => 'includes/objectcache/XCacheBagOStuff.php',
 
 	# includes/parser
+	'AbstractInvokableParserHook' => 'includes/parser/AbstractInvokableParserHook.php',
 	'CacheTime' => 'includes/parser/ParserOutput.php',
 	'CoreLinkFunctions' => 'includes/parser/CoreLinkFunctions.php',
 	'CoreParserFunctions' => 'includes/parser/CoreParserFunctions.php',

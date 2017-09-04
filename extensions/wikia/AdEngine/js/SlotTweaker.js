@@ -155,12 +155,14 @@ define('ext.wikia.adEngine.slotTweaker', [
 		});
 	}
 
-	function collapse(slotName) {
+	function collapse(slotName, skipAnimation) {
 		var slot = doc.getElementById(slotName);
 
 		// make max-height consistent with expand()
-		slot.style.maxHeight = 2 * slot.scrollHeight + 'px';
-		DOMElementTweaker.forceRepaint(slot);
+		if (!skipAnimation) {
+			slot.style.maxHeight = 2 * slot.scrollHeight + 'px';
+			DOMElementTweaker.forceRepaint(slot);
+		}
 		DOMElementTweaker.addClass(slot, 'slot-animation');
 		slot.style.maxHeight = '0';
 	}

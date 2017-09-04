@@ -37,7 +37,8 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 		slotRegistry: {
 			getRefreshCount: function () {
 				return 2;
-			}
+			},
+			storeScrollY: noop
 		},
 		beforeSuccess: noop,
 		beforeCollapse: noop,

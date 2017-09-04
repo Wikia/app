@@ -117,7 +117,6 @@ $wgIgnoredMessages = array(
 	'newsectionheaderdefaultlevel',
 	'mainpage-nstab',
 	'newtalkseparator',
-	'noarticletextanon',
 	'number_of_watching_users_RCview',
 	'pagecategorieslink',
 	'pubmedurl',

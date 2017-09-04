@@ -31,7 +31,13 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			isAdsManagerLoaded = true;
 
 			if (videoSettings.isMoatTrackingEnabled()) {
-				moatVideoTracker.init(adsManager, params.container, win.google.ima.ViewMode.NORMAL, params.src, params.slotName);
+				moatVideoTracker.init(
+					adsManager,
+					params.container,
+					win.google.ima.ViewMode.NORMAL,
+					params.src,
+					params.adProduct + '/' + params.slotName
+				);
 			}
 
 			log('AdsManager loaded', log.levels.debug, logGroup);
@@ -111,10 +117,12 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			}
 		}
 
-		function reload() {
-			adsManager.destroy();
+		function reload(reloadParams) {
+			if (adsManager) {
+				adsManager.destroy();
+			}
 			adsLoader.contentComplete();
-			adsLoader.requestAds(imaSetup.createRequest(params));
+			adsLoader.requestAds(imaSetup.createRequest(reloadParams || params));
 
 			log('IMA player reloaded', log.levels.debug, logGroup);
 		}
@@ -158,7 +166,16 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			false
 		);
 
+		adsLoader.addEventListener(win.google.ima.AdErrorEvent.Type.AD_ERROR, function (event) {
+			var emptyVastErrorCode = win.google.ima.AdError.ErrorCode.VAST_EMPTY_RESPONSE;
+
+			if (typeof event.getError === 'function' && event.getError().getErrorCode() === emptyVastErrorCode) {
+				dispatchEvent('wikiaEmptyAd');
+			}
+		});
+
 		adsLoader.requestAds(imaSetup.createRequest(params));
+
 		if (videoSettings.isAutoPlay()) {
 			setAutoPlay(true);
 		}

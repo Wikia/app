@@ -20,7 +20,7 @@ class ArticleVideoHooks {
 			$out->addJsConfigVars( [
 				'wgOoyalaParams' => [
 					'ooyalaPCode' => $wg->ooyalaApiConfig['pcode'],
-					'ooyalaPlayerBrandingId' => $wg->ooyalaApiConfig['playerBrandingId'],
+					'ooyalaPlayerBrandingId' => $wg->ooyalaApiConfig['playerBrandingId']
 				]
 			] );
 		}
@@ -42,6 +42,13 @@ class ArticleVideoHooks {
 				'wgRelatedVideoId' => $relatedVideoData['videoId'],
 			] );
 		}
+
+		return true;
+	}
+
+	public static function onInstantGlobalsGetVariables( array &$vars ): bool {
+		$vars[] = 'wgArticleVideoAutoplayCountries';
+		$vars[] = 'wgArticleVideoNextVideoAutoplayCountries';
 
 		return true;
 	}

@@ -22,7 +22,6 @@ define('ext.wikia.recirculation.plista', ['jquery'], function ($) {
 
 	function mapPlista(plistaData) {
 		return {
-			meta: 'wikia-impactfooter',
 			source: 'plista',
 			thumbnail: plistaData.img,
 			title: plistaData.title,
@@ -34,15 +33,14 @@ define('ext.wikia.recirculation.plista', ['jquery'], function ($) {
 
 	function prepareData(renderData) {
 		return function () {
-			var length = renderData.items.length;
+			var length = renderData.length;
 
-			if (shouldFetchPlista(renderData.items)) {
+			if (shouldFetchPlista(renderData)) {
 				return fetchPlista()
 					.then(mapPlista)
 					.then(function (data) {
-						renderData.items.splice(5, 0, data);
-
-						renderData.items = renderData.items.slice(0, length);
+						renderData.splice(1, 0, data);
+						renderData = renderData.slice(0, length);
 					}, function () {
 						// If Plista did not return anything, just don't add it to renderData
 

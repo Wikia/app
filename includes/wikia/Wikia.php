@@ -86,8 +86,8 @@ class Wikia {
 	const COMMUNITY_WIKI_ID = 177; // community.wikia.com
 	const NEWSLETTER_WIKI_ID = 223496; // wikianewsletter.wikia.com
 
-	const USER = 'Fandom';
-	const BOT_USER = 'FandomBot';
+	const USER = 'FANDOM';
+	const BOT_USER = 'FANDOMbot';
 
 	const FAVICON_URL_CACHE_KEY = 'favicon-v1';
 
@@ -1187,6 +1187,13 @@ class Wikia {
 				$urls[]= $matches[1];
 			}
 		}
+
+		// purge Special:RecentChanges too (SUS-2595)
+		$rcTitle = SpecialPage::getTitleFor('RecentChanges');
+
+		$urls[] = $rcTitle->getInternalURL();
+		$urls[] = $rcTitle->getInternalURL('feed=rss');
+		$urls[] = $rcTitle->getInternalURL('feed=atom');
 
 		wfProfileOut(__METHOD__);
 		return true;

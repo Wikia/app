@@ -109,27 +109,36 @@ define('ooyala-player', ['wikia.browserDetect'], function (browserDetect) {
 		$('.oo-state-screen-info').css('display', '');
 	};
 
-	OoyalaHTML5Player.initHTML5Player = function (videoElementId, playerParams, videoId, onCreate, autoplay, vastUrl, inlineSkinConfig) {
+	OoyalaHTML5Player.prototype.updateAdSet = function (adSet) {
+		var controller = this.player.modules && this.player.modules.find(function (module) {
+			return module.name === 'adManagerController';
+		});
+
+		if (controller && controller.instance && controller.instance.pageSettings) {
+			controller.instance.pageSettings['google-ima-ads-manager'].all_ads = adSet;
+		}
+	};
+
+	OoyalaHTML5Player.initHTML5Player = function (videoElementId, options, onCreate) {
 		var params = {
-				videoId: videoId,
-				autoplay: autoplay,
-				initialVolume: autoplay ? 0 : 1,
-				pcode: playerParams.ooyalaPCode,
-				playerBrandingId: playerParams.ooyalaPlayerBrandingId,
-				discoveryApiAdditionalParams: {
-					discovery_profile_id: 0,
-					where: 'labels INCLUDES \'Promoted\''
-				}
+				videoId: options.videoId,
+				autoplay: options.autoplay,
+				initialVolume: options.autoplay ? 0 : 1,
+				pcode: options.pcode,
+				playerBrandingId: options.playerBrandingId
 			},
 			html5Player;
 
-		if (vastUrl) {
+		if (options.recommendedLabel) {
+			params.discoveryApiAdditionalParams = {
+				discovery_profile_id: 0,
+				where: 'labels INCLUDES \'' + options.recommendedLabel + '\''
+			};
+		}
+
+		if (options.vastUrl || options.adSet) {
 			params['google-ima-ads-manager'] = {
-				all_ads: [
-					{
-						tag_url: vastUrl
-					}
-				],
+				all_ads: options.adSet ? options.adSet : [{ tag_url: options.vastUrl }],
 				useGoogleAdUI: true,
 				useGoogleCountdown: false,
 				onBeforeAdsManagerStart: function (IMAAdsManager) {
@@ -160,10 +169,11 @@ define('ooyala-player', ['wikia.browserDetect'], function (browserDetect) {
 					}, false, this);
 				}
 			};
-			params.replayAds = false;
+
+			params.replayAds = options.replayAds || false;
 		}
 
-		html5Player = new OoyalaHTML5Player(document.getElementById(videoElementId), params, onCreate, inlineSkinConfig);
+		html5Player = new OoyalaHTML5Player(document.getElementById(videoElementId), params, onCreate, options.inlineSkinConfig);
 		html5Player.setUpPlayer();
 
 		return html5Player;

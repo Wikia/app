@@ -98,6 +98,7 @@ class ImageServingController extends WikiaController {
 		}
 
 		$this->response->setHeader( 'Location', $url );
+		$this->skipRendering();
 	}
 
 	private function isOldImageRevision( $db, $revisionTimestamp, $fileName ): bool {

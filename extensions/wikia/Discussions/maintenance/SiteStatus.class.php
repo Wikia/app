@@ -357,13 +357,15 @@ class SiteStatus {
 			return;
 		}
 
-		$num = ( new \WikiaSQL() )
-			->SELECT( "count(*)" )->AS_( "num_posts" )
-			->FROM( self::TABLE_PAGE )
-			->WHERE( 'page_namespace' )->EQUAL_TO( NS_FORUM )
-			->run(
-				$this->localDbh,
-				function ( $result ) {
+		$num =
+			( new \WikiaSQL() )->SELECT( "count(*)" )
+				->AS_( "num_posts" )
+				->FROM( self::TABLE_PAGE )
+				->JOIN( self::TABLE_COMMENTS )
+				->ON( 'page_id', 'comment_id' )
+				->WHERE( 'page_namespace' )
+				->IN( NS_WIKIA_FORUM_BOARD, NS_WIKIA_FORUM_BOARD_THREAD )
+				->run( $this->localDbh, function ( $result ) {
 					/** @var \ResultWrapper|bool $result */
 					if ( !is_object( $result ) ) {
 						return 0;
@@ -372,11 +374,9 @@ class SiteStatus {
 					$row = $result->fetchObject();
 
 					return $row ? $row->num_posts : 0;
-				},
-				0
-			);
+				}, 0 );
 
-		$this->debug("\tfound $num wiki forum posts" );
+		$this->debug( "\tfound $num wiki forum posts" );
 		$this->numWikiForumPosts = $num;
 	}
 

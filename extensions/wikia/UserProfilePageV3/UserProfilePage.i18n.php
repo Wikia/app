@@ -60,6 +60,7 @@ $messages['en'] = array(
 	'user-identity-box-group-threadmoderator' => 'Discussions Moderator',
 	'user-identity-box-group-vanguard' => 'Vanguard',
 	'user-identity-box-group-content-moderator' => 'Content Moderator',
+	'user-identity-box-group-global-discussions-moderator' => 'Global Discussions Moderator',
 	'user-identity-box-zero-state-location' => 'Location',
 	'user-identity-box-zero-state-birthday' => 'Birthday',
 	'user-identity-box-zero-state-gender' => 'Gender',
@@ -218,6 +219,7 @@ Parameters:
 	'user-identity-box-group-threadmoderator' => 'Group name shown on user profile page next to user login for users who are "Discussions Moderator".',
 	'user-identity-box-group-content-moderator' => 'Group name shown on user profile page next to user login for users who are "Content Moderator".',
 	'user-identity-box-group-vanguard' => 'Group name shown on user profile page next to user login for users who are "Vanguard".',
+	'user-identity-box-group-global-discussions-moderator' => 'Group name shown on user profile page next to user login for users who are "Global Discussions Moderator".',
 	'user-identity-box-zero-state-location' => "Placeholder message on user profile page for user location when user didn't provide it.",
 	'user-identity-box-zero-state-birthday' => "Placeholder message on user profile page for user birthday when user didn't provide it.",
 	'user-identity-box-zero-state-gender' => "Placeholder message on user profile page for user gender when user didn't provide it.",
@@ -732,6 +734,7 @@ $messages['de'] = array(
 	'right-deleteprofilev3' => 'Benutzerseiten löschen',
 	'right-renameprofilev3' => 'Benutzerseiten verschieben',
 	'right-clearuserprofile' => 'Inhalte eines Nutzerprofils mit einem Klick löschen',
+	'user-identity-box-group-global-discussions-moderator' => 'Globaler Diskussions-Moderator',
 );
 
 $messages['de-ch'] = array(
@@ -912,6 +915,7 @@ $messages['es'] = array(
 	'right-deleteprofilev3' => 'Borrar páginas de usuario',
 	'right-renameprofilev3' => 'Mover páginas de usuario',
 	'right-clearuserprofile' => 'Borrar el contenido del perfil de un usuario en un clic',
+	'user-identity-box-group-global-discussions-moderator' => 'Moderador global de discusiones',
 );
 
 $messages['fa'] = array(
@@ -1159,6 +1163,7 @@ $messages['fr'] = array(
 	'right-deleteprofilev3' => 'Supprimer des pages utilisateur',
 	'right-renameprofilev3' => 'Déplacer des pages utilisateur',
 	'right-clearuserprofile' => "Supprimer en un clic le contenu du bandeau du profil d'un utilisateur",
+	'user-identity-box-group-global-discussions-moderator' => 'Modérateur global de discussions',
 );
 
 $messages['gl'] = array(
@@ -1758,6 +1763,7 @@ $messages['it'] = array(
 	'right-deleteprofilev3' => 'Cancellare pagine utente',
 	'right-renameprofilev3' => 'Spostare pagine utente',
 	'right-clearuserprofile' => "Rimuovere i contenuti dell'intestazione del profilo di un utente in un click",
+	'user-identity-box-group-global-discussions-moderator' => 'Moderatore globale di Discussioni',
 );
 
 $messages['ja'] = array(
@@ -1893,6 +1899,7 @@ $messages['ja'] = array(
 	'right-deleteprofilev3' => 'ユーザーページを削除',
 	'right-renameprofilev3' => 'ユーザーページを移動',
 	'right-clearuserprofile' => 'ユーザーのプロフィール・マストヘッドのコンテンツをワンクリックで消去',
+	'user-identity-box-group-global-discussions-moderator' => 'グローバル・ディスカッション・モデレーター',
 );
 
 $messages['ko'] = array(
@@ -2518,6 +2525,7 @@ $messages['nl'] = array(
 	'right-deleteprofilev3' => 'Delete user pages',
 	'right-renameprofilev3' => 'Move user pages',
 	'right-clearuserprofile' => "Clear the contents of an user's profile masthead in one click",
+	'user-identity-box-group-global-discussions-moderator' => 'Global Discussions Moderator',
 );
 
 $messages['no'] = array(
@@ -2551,7 +2559,7 @@ $messages['pl'] = array(
 	'userprofilepage-avatar-error-type' => 'Nieprawidłowy typ MIME. Dozwolone: $1',
 	'userprofilepage-avatar-error-resolution' => 'Maksymalna rozdzielczość awatara to 2000×2000',
 	'user-identity-box-edit' => 'Edytuj',
-	'user-identity-box-wikia-contributor' => 'Użytkownik Fandomu',
+	'user-identity-box-wikia-contributor' => 'Użytkownik FANDOMU',
 	'user-identity-box-edit-avatar' => 'Edytuj awatar',
 	'user-identity-box-delete-avatar' => 'Usuń awatar',
 	'user-identity-box-avatar-upload-avatar' => 'Prześlij awatar',
@@ -2665,6 +2673,7 @@ $messages['pl'] = array(
 	'right-deleteprofilev3' => 'Usuwanie stron użytkowników',
 	'right-renameprofilev3' => 'Przenoszenie stron użytkowników',
 	'right-clearuserprofile' => 'Umożliwia czyszczenie profili użytkowników jednym kliknięciem',
+	'user-identity-box-group-global-discussions-moderator' => 'Globalny moderator Dyskusji',
 );
 
 $messages['pms'] = array(
@@ -2853,6 +2862,7 @@ $messages['pt'] = array(
 	'right-deleteprofilev3' => 'Excluir páginas de usuário',
 	'right-renameprofilev3' => 'Mover páginas de usuário',
 	'right-clearuserprofile' => 'Limpar o conteúdo do cabeçalho do perfil de um usuário com um clique',
+	'user-identity-box-group-global-discussions-moderator' => 'Moderador global de discussões',
 );
 
 $messages['roa-tara'] = array(
@@ -2998,6 +3008,7 @@ $messages['ru'] = array(
 	'right-deleteprofilev3' => 'Удалить страницы участника',
 	'right-renameprofilev3' => 'Переименовать страницы участника',
 	'right-clearuserprofile' => 'Удалить содержание профиля участника одним нажатием клавиши',
+	'user-identity-box-group-global-discussions-moderator' => 'Модератор Обсуждений Фэндома',
 );
 
 $messages['sr-ec'] = array(
@@ -3613,6 +3624,7 @@ $messages['zh-hans'] = array(
 	'right-deleteprofilev3' => '删除用户页面',
 	'right-renameprofilev3' => '移动用户页面',
 	'right-clearuserprofile' => '单击进行一次性清除用户主页标题内容',
+	'user-identity-box-group-global-discussions-moderator' => '全网话题版主',
 );
 
 $messages['zh-hant'] = array(
@@ -3747,5 +3759,6 @@ $messages['zh-hant'] = array(
 	'right-deleteprofilev3' => '刪除用戶頁面',
 	'right-renameprofilev3' => '移動用戶頁面',
 	'right-clearuserprofile' => '點擊進行清除用戶頁面刊頭內容',
+	'user-identity-box-group-global-discussions-moderator' => '全站話題版主',
 );
 

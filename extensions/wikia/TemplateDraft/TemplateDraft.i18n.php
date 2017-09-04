@@ -439,6 +439,45 @@ $2
 	'templatedraft-preview-example-value' => 'Тест',
 );
 
+$messages['xw-3171'] = array(
+	'templatedraft-description' => '模板草稿的擴展功能',
+	'right-templatedraft' => '允許使用將非行動訊息框轉變為新標記方式的協助精靈',
+	'templatedraft-subpage' => '模版草稿',
+	'templatedraft-editintro' => '這裡是從我們新標記檔案中生成的模版草稿。請審核和更改之後再進行保存。有關詳細資訊，請在$1或$2上查看幫助頁。',
+	'templatedraft-approval-no-page-error' => '批准這個草稿出現錯誤。草稿可能已經被批准或刪除。請查看這個模版的[{{fullurl:{{ns:Template}}:{{PAGENAME}}}}?action=history 歷史記錄和差異]。',
+	'templatedraft-approval-no-templatedraft-error' => '批准這個草稿出現錯誤。 這個頁面不被視為有效的模版草稿。',
+	'templatedraft-approval-success-confirmation' => '此模版中的內容已被更新後的模版草稿版本所替代。模版草稿已被刪除。',
+	'templatedraft-approval-summary' => '使用[[w:c:zh.community:Help:移動化訊息框|行動化訊息框]]遷移工具進行更新',
+	'templatedraft-draft-removal-summary' => '清理完畢。 草稿已批准而成為主頁面。',
+	'templatedraft-module-title-create' => '變更這個訊息框',
+	'templatedraft-module-subtitle-create' => '這個模板沒有使用新的[[w:c:zh.community:Help:移動化訊息框|行動化訊息框]]。',
+	'templatedraft-module-content-create' => '我們可以從現在用的訊息框生成標記文件的草稿，並保存為子頁面，以便於你查看並進行必要的更改。',
+	'templatedraft-module-button-create' => '生成標記文件草稿',
+	'templatedraft-module-button-title-create' => '開啟一個有預填充編輯表單的新標籤',
+	'templatedraft-module-title-approve' => '移動這個模板草稿',
+	'templatedraft-module-content-approve' => '對這個草稿感到滿意，並希望讓它生效成為主模板？',
+	'templatedraft-module-button-approve' => '批准這個模板的草稿',
+	'templatedraft-module-approve-protected' => '此模板受到保護。 請諮詢[[Special:ListAdmins|管理員]]批准這個草稿。',
+	'templatedraft-preview-n-docs' => '== 使用與預覽 ==
+鍵入下面的資訊：
+
+<pre>
+$1
+</pre>
+
+可以看到下面的資訊：
+
+$2
+
+[{{fullurl:{{ns:Template}}:{{PAGENAME}}}}?action=purge 按一下這裡刷新上面的預覽内容]',
+	'templatedraft-preview-example-value' => '這是一個測試',
+	'templatedraft-module-editintro-please-convert' => '我們可以用我們的新標記文件為你生成資訊框的草稿，只需按一下$1就可以了。',
+	'templatedraft-module-view-parent' => '查看主模板的wiki文本',
+	'templatedraft-module-help' => '查看資訊框標記文件的幫助頁面',
+	'templatedraft-invalid-template' => '提供的模版名稱無效',
+	'templatedraft-protect-edit' => '您沒有權限編輯主頁面。',
+);
+
 $messages['zh-hans'] = array(
 	'templatedraft-description' => 'TemplateDraft扩展',
 	'templatedraft-subpage' => '模版草稿',

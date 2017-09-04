@@ -602,7 +602,7 @@ class ArticleComment {
 			$links['edit'] = '#comment' . $commentId;
 		}
 
-		if ( !$this->mTitle->isNewPage( Title::GAID_FOR_UPDATE ) ) {
+		if ( !$this->mTitle->isNewPage() ) {
 			$buttons[] = Linker::linkKnown(
 				$title,
 				wfMessage( 'article-comments-history' )->escaped(),

@@ -11,12 +11,9 @@ class RecirculationHooks {
 	 * @return bool
 	 */
 	static public function onGetRailModuleList( &$modules ) {
-		wfProfileIn( __METHOD__ );
-
 		// Check if we're on a page where we want to show a recirculation module.
 		// If we're not, stop right here.
 		if ( !static::isCorrectPageType() ) {
-			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
@@ -27,15 +24,17 @@ class RecirculationHooks {
 
 		$modules[$pos] = array( 'Recirculation', 'container', ['containerId' => 'recirculation-rail'] );
 
-		wfProfileOut( __METHOD__ );
-
 		return true;
 	}
 
 	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
 		JSMessages::enqueuePackage( 'Recirculation', JSMessages::EXTERNAL );
 		Wikia::addAssetsToOutput( 'recirculation_scss' );
-		self::addMainPageMetadata( $out );
+
+		if ( static::isCorrectPageType() ) {
+			self::addLiftIgniterMetadata( $out );
+		}
+
 		return true;
 	}
 
@@ -81,7 +80,7 @@ class RecirculationHooks {
 		}
 	}
 
-	static public function canShowDiscussions( $cityId ) {
+	static public function canShowDiscussions( $cityId, $ignoreWgEnableRecirculationDiscussions = false ) {
 		$discussionsAlias = WikiFactory::getVarValueByName( 'wgRecirculationDiscussionsAlias', $cityId );
 
 		if ( !empty( $discussionsAlias ) ) {
@@ -91,26 +90,64 @@ class RecirculationHooks {
 		$discussionsEnabled = WikiFactory::getVarValueByName( 'wgEnableDiscussions', $cityId );
 		$recirculationDiscussionsEnabled = WikiFactory::getVarValueByName( 'wgEnableRecirculationDiscussions', $cityId );
 
-		if ( !empty( $discussionsEnabled ) && !empty( $recirculationDiscussionsEnabled ) ) {
+		if ( !empty( $discussionsEnabled ) && ( $ignoreWgEnableRecirculationDiscussions ||
+		                                        !empty( $recirculationDiscussionsEnabled ) )
+		) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	private static function addMainPageMetadata( OutputPage $outputPage ) {
-		if ( F::app()->wg->Title->isMainPage() ) {
-			$promoDetails = WikiaDataAccess::cache(
-					wfMemcKey( "site-attribute-liftigniterMetadata" ),
-					3600, // one hour cache
-					function() {
-						global $wgCityId;
-						return ( new SiteAttributeService() )->getAttribute( $wgCityId, "liftigniterMetadata" );
-					} );
+	private static function getLiftIgniterMetadataFromSiteAttributeService() {
+		return WikiaDataAccess::cache(
+			wfMemcKey( 'site-attribute-liftigniterMetadata' ),
+			3600,
+			function () {
+				global $wgCityId;
 
-			if ( $promoDetails !== null ) {
-				$outputPage->addScript( "<script id=\"liftigniter-metadata\" type=\"application/json\">${promoDetails}</script>" );
+				$rawData = ( new SiteAttributeService() )
+					->getAttribute( $wgCityId, 'liftigniterMetadata' );
+
+				if ( !empty( $rawData ) ) {
+					$decodedData = json_decode( $rawData, true );
+
+					if ( !empty( $decodedData ) ) {
+						return $decodedData;
+					}
+				}
+
+				return [];
 			}
+		);
+	}
+
+	private static function addLiftIgniterMetadata( OutputPage $outputPage ) {
+		global $wgDevelEnvironment, $wgLanguageCode, $wgStagingEnvironment;
+
+		$context = RequestContext::getMain();
+		$title = $context->getTitle();
+		$metaData = [];
+
+		if ( $title->isMainPage() ) {
+			$siteAttributeData = self::getLiftIgniterMetadataFromSiteAttributeService();
 		}
+
+		$metaData['language'] = $wgLanguageCode;
+		$isProduction = empty( $wgDevelEnvironment ) && empty( $wgStagingEnvironment );
+
+		if ( !$isProduction || $title->inNamespace( NS_FILE ) ) {
+			$metaData['noIndex'] = 'true';
+		}
+
+		if ( !empty( $siteAttributeData ) ) {
+			$metaData = array_merge( $siteAttributeData, $metaData );
+		}
+
+		$metaDataJson = json_encode( $metaData );
+
+		$outputPage->addScript(
+			"<script id=\"liftigniter-metadata\" type=\"application/json\">${metaDataJson}</script>"
+		);
 	}
 }

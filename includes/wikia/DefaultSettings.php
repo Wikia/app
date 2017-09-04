@@ -632,6 +632,7 @@ include_once( "$IP/extensions/wikia/Bucky/Bucky.setup.php" );
 include_once( "$IP/extensions/wikia/QuickTools/QuickTools.setup.php" );
 include_once( "$IP/extensions/wikia/TOC/TOC.setup.php" );
 include_once( "$IP/extensions/wikia/SEOTweaks/SEOTweaks.setup.php" );
+include_once( "$IP/extensions/wikia/StaticUserPages/StaticUserPages.setup.php" );
 
 /**
  * @name $wgSkipSkins
@@ -1050,7 +1051,7 @@ $wgHooks['ArticleDelete'][] = 'ArticlesUsingMediaQuery::onArticleDelete';
 /**
  * Password reminder name
  */
-$wgPasswordSenderName = 'Fandom';
+$wgPasswordSenderName = Wikia::USER;
 
 /**
  * Defines the mapping for per-skin Common.js/css
@@ -1174,6 +1175,12 @@ $wgEnableNetzAthleten = true;
 $wgAdDriverNetzAthletenCountries = null;
 
 /**
+ * @name $wgAdDriverDfpOoyalaContentSourceId
+ * Defines content source id sent in VAST url
+ */
+$wgAdDriverDfpOoyalaContentSourceId = '2458214';
+
+/**
  * @name $wgEnableAmazonMatch
  * Enables AmazonMatch new integration (id=3115)
  */
@@ -1193,6 +1200,14 @@ $wgAmazonMatchCountries = null;
  */
 $wgAmazonMatchCountriesMobile = null;
 
+
+/**
+ * @name $wgAdDriverA9BidderCountries
+ * List of countries where A9 bidding platform is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverA9BidderCountries = null;
+
 /**
  * @name $wgAdDriverEnableRubiconFastlane
  * Enables Rubicon Fastlane
@@ -1205,6 +1220,13 @@ $wgAdDriverEnableRubiconFastlane = true;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverRubiconFastlaneCountries = null;
+
+/**
+ * @name $wgAdDriverRubiconDisplayPrebidCountries
+ * Enables Rubicon (Prebid) implementation and DISABLES the old one in these countries.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverRubiconDisplayPrebidCountries = null;
 
 /**
  * @name $wgAdDriverRubiconFastlaneProviderCountries
@@ -1395,6 +1417,21 @@ $wgAdDriverKikimoraTrackingCountries = [];
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverSrcPremiumCountries = [];
+
+/**
+ * @name $wgAdDriverPremiumAdLayoutRubiconFastlaneTagsCountries
+ * Enables Premium Ad Layout site and zoneIds for Rubicon Fastlane bidder
+ * is present on that page.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverPremiumAdLayoutRubiconFastlaneTagsCountries = [];
+
+/**
+ * @name $wgAdDriverPremiumAdLayoutAppNexusTagsCountries
+ * Enables Premium Ad Layout site and placementIds for AppNexus bidder.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverPremiumAdLayoutAppNexusTagsCountries = [];
 
 /**
  * @name $wgAdDriverKILOCountries
@@ -1650,11 +1687,6 @@ $wgNirvanaAccessRules = [
 		"method" => "*",
 		"requiredPermissions" => [],
 	],
-	[
-		"class" => "FacebookSignupController",
-		"method" => "*",
-		"requiredPermissions" => [],
-	],
 	/* We need oasis controller to render  */
 	[
 		"class" => "OasisController",
@@ -1882,3 +1914,9 @@ $wgReviveSpotlightsCountries = null;
 include_once("$IP/extensions/wikia/ARecoveryEngine/ARecoveryEngine.setup.php");
 
 require_once "$IP/extensions/wikia/ImageReview/ImageReviewEvents.setup.php";
+
+/**
+ * SUS-2164: Include Facebook extensions - enabled globally
+ */
+require_once "$IP/extensions/wikia/FacebookPreferences/FacebookPreferences.setup.php";
+require_once "$IP/extensions/wikia/FacebookTags/FacebookTags.setup.php";

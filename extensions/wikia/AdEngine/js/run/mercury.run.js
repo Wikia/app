@@ -4,6 +4,7 @@ require([
 	'ext.wikia.adEngine.adInfoTracker',
 	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.lookup.amazonMatch',
+	'ext.wikia.adEngine.lookup.a9',
 	'ext.wikia.adEngine.lookup.prebid',
 	'ext.wikia.adEngine.lookup.rubicon.rubiconFastlane',
 	'ext.wikia.adEngine.customAdsLoader',
@@ -18,6 +19,7 @@ require([
 	adInfoTracker,
 	slotStateMonitor,
 	amazon,
+	a9,
 	prebid,
 	rubiconFastlane,
 	customAdsLoader,
@@ -35,24 +37,39 @@ require([
 	win.loadCustomAd = customAdsLoader.loadCustomAd;
 
 	function callBiddersOnConsecutivePageView() {
+		var isRubiconDisplayPrebidAdapterActive = adContext.getContext().bidders.rubiconDisplay;
+
 		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
 			prebid.call();
 		}
 
+		if (geo.isProperGeo(instantGlobals.wgAdDriverA9BidderCountries)) {
+			a9.call();
+		}
+
 		if (
 			geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) &&
-			geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneMercuryFixCountries)
+			geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneMercuryFixCountries) &&
+			!isRubiconDisplayPrebidAdapterActive
 		) {
 			rubiconFastlane.call();
 		}
 	}
 
 	mercuryListener.onLoad(function () {
-		if (geo.isProperGeo(instantGlobals.wgAmazonMatchCountriesMobile)) {
+		var isRubiconDisplayPrebidAdapterActive = adContext.getContext().bidders.rubiconDisplay;
+
+		if (geo.isProperGeo(instantGlobals.wgAdDriverA9BidderCountries)) {
+			a9.call();
+		}
+
+		// TODO ADEN-5756 remove 'if' after A9 full roll out
+		if (geo.isProperGeo(instantGlobals.wgAmazonMatchCountriesMobile) &&
+			!geo.isProperGeo(instantGlobals.wgAdDriverA9BidderCountries)) {
 			amazon.call();
 		}
 
-		if (geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries)) {
+		if (geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) && !isRubiconDisplayPrebidAdapterActive) {
 			rubiconFastlane.call();
 		}
 

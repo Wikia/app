@@ -10,8 +10,11 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaSetup', [
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata.googleImaSetup';
 
 	function buildVastUrl(params) {
-		var vastUrl = params.vastUrl ||
-			vastUrlBuilder.build(params.width / params.height, params.vastTargeting);
+		var vastUrlBuilderOptions = {
+				useMegaAdUnitBuilder: params.useMegaAdUnitBuilder
+			},
+			vastUrl = params.vastUrl ||
+			vastUrlBuilder.build(params.width / params.height, params.vastTargeting, vastUrlBuilderOptions);
 
 		log(['build vast url', vastUrl, params], log.levels.debug, logGroup);
 

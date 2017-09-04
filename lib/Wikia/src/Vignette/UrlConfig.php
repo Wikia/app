@@ -18,7 +18,6 @@ class UrlConfig {
 	protected $pathPrefix;
 	protected $bucket;
 	protected $baseUrl;
-	protected $domainShardCount;
 
 	public function setIsArchive($isArchive) {
 		$this->isArchive = $isArchive;
@@ -55,11 +54,6 @@ class UrlConfig {
 		return $this;
 	}
 
-	public function setDomainShardCount($domainShardCount) {
-		$this->domainShardCount = $domainShardCount;
-		return $this;
-	}
-
 	public function isArchive() {
 		return $this->isArchive;
 	}
@@ -86,9 +80,5 @@ class UrlConfig {
 
 	public function baseUrl() {
 		return $this->baseUrl;
-	}
-
-	public function domainShardCount() {
-		return $this->domainShardCount;
 	}
 }

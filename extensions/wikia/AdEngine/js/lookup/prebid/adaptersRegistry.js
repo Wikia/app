@@ -7,20 +7,22 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 	'ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',
 	'ext.wikia.adEngine.lookup.prebid.adapters.openx',
 	'ext.wikia.adEngine.lookup.prebid.adapters.rubicon',
-	'ext.wikia.adEngine.lookup.prebid.adapters.wikia',
+	'ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay',
 	'ext.wikia.adEngine.lookup.prebid.adapters.veles',
+	'ext.wikia.adEngine.lookup.prebid.adapters.wikia',
 	'wikia.window'
-], function(aol, appnexus, appnexusAst, audienceNetwork, indexExchange, openx, rubicon, wikia, veles, win) {
+], function(aol, appnexus, appnexusAst, audienceNetwork, indexExchange, openx, rubicon, rubiconDisplay, wikia, veles, win) {
 	'use strict';
 
 	var adapters = [
-			rubicon,
+			aol,
 			appnexus,
+			appnexusAst,
 			audienceNetwork,
 			indexExchange,
-			aol,
 			openx,
-			appnexusAst
+			rubicon,
+			rubiconDisplay
 		],
 		customAdapters = [
 			wikia,
@@ -35,6 +37,23 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 		adapters.push(adapter);
 	}
 
+	function registerAliases() {
+		adapters.forEach(function (adapter) {
+			var aliasMap = {};
+
+			if (typeof adapter.getAliases === 'function') {
+				win.pbjs.que.push(function () {
+					aliasMap = adapter.getAliases();
+					Object.keys(aliasMap).forEach(function (bidderName) {
+						aliasMap[bidderName].forEach(function (alias) {
+							win.pbjs.aliasBidder(bidderName, alias);
+						});
+					});
+				});
+			}
+		});
+	}
+
 	function setupCustomAdapters() {
 		customAdapters.forEach(function (adapter) {
 			push(adapter);
@@ -47,6 +66,7 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 	return {
 		getAdapters: getAdapters,
 		push: push,
+		registerAliases: registerAliases,
 		setupCustomAdapters: setupCustomAdapters
 	};
 });

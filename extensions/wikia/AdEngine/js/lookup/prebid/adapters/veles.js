@@ -1,12 +1,14 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.lookup.prebid.priceParsingHelper',
 	'ext.wikia.adEngine.wrappers.prebid',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
+	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, priceParsingHelper, prebid, vastUrlBuilder, log, win) {
+], function (adContext, slotsContext, priceParsingHelper, prebid, vastUrlBuilder, instartLogic, log, win) {
 	'use strict';
 
 	var bidderName = 'veles',
@@ -40,7 +42,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		};
 
 	function isEnabled() {
-		var isVelesEnabled = adContext.getContext().bidders.veles;
+		var isVelesEnabled = adContext.getContext().bidders.veles && !instartLogic.isBlocking();
 		log(['isEnabled', isVelesEnabled], log.levels.debug, logGroup);
 
 		return isVelesEnabled;
@@ -62,7 +64,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 	}
 
 	function getSlots(skin) {
-		return slots[skin];
+		return slotsContext.filterSlotMap(slots[skin]);
 	}
 
 	function getName() {
@@ -131,12 +133,11 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		var request = new win.XMLHttpRequest(),
 			skin = adContext.getContext().targeting.skin,
 			vastUrl = vastUrlBuilder.build(640 / 480, {
-				pos: (adContext.getContext().opts.megaAdUnitBuilderEnabled ? 'OUTSTREAM' : Object.keys(slots[skin])),
+				pos: (adContext.getContext().opts.megaAdUnitBuilderEnabled ? 'OUTSTREAM' : Object.keys(getSlots(skin))),
 				src: skin === 'oasis' ? 'gpt' : 'mobile',
 				passback: bidderName
 			}, {
-				numberOfAds: 1,
-				prerollOnly: true
+				numberOfAds: 1
 			});
 
 		request.onreadystatechange = function () {

@@ -3,7 +3,7 @@
 	'use strict';
 
 	/**
-	 * Base class for ajaxy forms like user login, user signup, and connecting wikia accounts with facebook
+	 * Base class for ajaxy forms like user login, user signup
 	 * @abstract
 	 * @param {HTMLElement|jQuery} el Wrapper element for form
 	 * @param {Object} options

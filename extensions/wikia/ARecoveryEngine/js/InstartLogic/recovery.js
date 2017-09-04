@@ -1,9 +1,9 @@
 /*global define*/
 define('ext.wikia.aRecoveryEngine.instartLogic.recovery', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.provider.gpt.targeting',
-	'wikia.log'
-], function (adContext, targeting, log) {
+	'wikia.log',
+	'wikia.window'
+], function (adContext, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.aRecoveryEngine.instartLogic.recovery',
@@ -17,16 +17,15 @@ define('ext.wikia.aRecoveryEngine.instartLogic.recovery', [
 	}
 
 	/**
-	 * When IL detects that user is blocking, it sets src=rec on page level params
+	 * When IL detects that user is blocking, the I11C.Morph is equal 1
 	 *
 	 * @returns {boolean}
 	 */
 	function isBlocking() {
-		var srcKeyVal = targeting.getPageLevelTargetingValue('src'),
-			isParamSet = srcKeyVal && srcKeyVal.indexOf('rec') > -1;
+		var isBlocking = !!(win.I11C && win.I11C.Morph);
 
-		log(['isBlocking', isParamSet], log.levels.debug, logGroup);
-		return isParamSet;
+		log(['isBlocking', isBlocking], log.levels.debug, logGroup);
+		return isEnabled() && isBlocking;
 	}
 
 	return {

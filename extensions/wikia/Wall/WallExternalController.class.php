@@ -240,8 +240,7 @@ class WallExternalController extends WikiaController {
 		 * BugId:68629 XSS vulnerable. We DO NOT want to have
 		 * any HTML here. Hence the strip_tags call.
 		 */
-		$titleMeta = strip_tags( $this->request->getVal( 'messagetitle', null ) );
-		$titleMeta = substr( $titleMeta, 0, 200 );
+		$titleMeta = static::sanitizeMetaTitle( $this->request->getVal( 'messagetitle' ) );
 
 		$body = $this->getConvertedContent( $this->request->getVal( 'body' ) );
 
@@ -617,7 +616,7 @@ class WallExternalController extends WikiaController {
 		$msgid = $this->request->getVal( 'msgid' );
 
 		// XSS vulnerable (MAIN-1412)
-		$newtitle = strip_tags( trim( $this->request->getVal( 'newtitle' ) ) );
+		$newtitle = static::sanitizeMetaTitle( $this->request->getVal( 'newtitle' ) );
 
 		$newbody = $this->getConvertedContent( $this->request->getVal( 'newbody' ) );
 
@@ -899,5 +898,14 @@ class WallExternalController extends WikiaController {
 			'status' => 'error',
 			'errormsg' => wfMessage( 'wall-message-no-permission' )->escaped()
 		] );
+	}
+
+	/**
+	 * Sanitize the meta-title of a Wall thread and make it conform to length constraints
+	 * @param $title
+	 * @return bool|string
+	 */
+	protected static function sanitizeMetaTitle( $title ) {
+		return substr( trim( strip_tags( $title ) ), 0, 200 );
 	}
 }
