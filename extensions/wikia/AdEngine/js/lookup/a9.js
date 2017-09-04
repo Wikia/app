@@ -42,11 +42,8 @@ define('ext.wikia.adEngine.lookup.a9', [
 	}
 
 	function isVideoBidderEnabled() {
-		return adContext &&
-			adContext.getContext() &&
-			adContext.getContext().bidders &&
-			adContext.getContext().bidders.a9Video
-		;
+		var context = adContext.getContext();
+		return context && context.bidders && context.bidders.a9Video;
 	}
 
 	function call(skin, onResponse) {

@@ -7,6 +7,7 @@ require([
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.articleVideo.videoFeedbackBox',
+	'ext.wikia.adEngine.adContext',
 	require.optional('ext.wikia.adEngine.video.player.ooyala.ooyalaTracker'),
 	require.optional('ext.wikia.adEngine.video.ooyalaAdSetProvider'),
 	require.optional('ext.wikia.adEngine.lookup.a9')
@@ -18,6 +19,7 @@ require([
 	cookies,
 	geo,
 	instantGlobals,
+	adContext,
 	VideoFeedbackBox,
 	playerTracker,
 	ooyalaAdSetProvider,
@@ -67,7 +69,8 @@ require([
 			recommendedVideoDepth = 0;
 
 		function initVideo(onCreate) {
-			var inlineSkinConfig = {
+			var context = adContext.getContext(),
+				inlineSkinConfig = {
 					controlBar: {
 						autoplayCookieName: autoplayCookieName,
 						autoplayToggle: inAutoplayCountries
@@ -88,7 +91,7 @@ require([
 			if (ooyalaAdSetProvider.canShowAds()) {
 				options.replayAds = ooyalaAdSetProvider.adsCanBePlayedOnNextVideoViews();
 
-				if (a9) {
+				if (a9 && context.bidders && context.bidders.a9Video) {
 					a9.waitForResponse()
 						.then(function () { return a9.getSlotParams('FEATURED'); })
 						.catch(function () { return {}; })
