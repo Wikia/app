@@ -100,8 +100,8 @@ class GlobalTitle extends Title {
 			throw new \Exception( 'Invalid $city_id.' );
 		}
 
-		$mainPageTitle = self::newFromText( 'Mainpage', NS_MEDIAWIKI, $city_id );
-		$title = self::newFromText( $mainPageTitle, NS_MAIN, $city_id );
+		$mainPageName = self::newFromText( 'Mainpage', NS_MEDIAWIKI, $city_id )->getContent();
+		$title = self::newFromText( $mainPageName, NS_MAIN, $city_id );
 
 		// Don't give fatal errors if the message is broken
 		if ( !$title->exists() ) {
