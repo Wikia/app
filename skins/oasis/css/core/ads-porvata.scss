@@ -148,7 +148,7 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 		&.porvata-outstream {
 			max-width: 640px;
 
-			&:before {
+			&::before {
 				color: $color-text;
 				content: attr(data-label);
 				display: block;
