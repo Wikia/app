@@ -2672,7 +2672,7 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 	'wikiamobile-sendpassword-label' => '發送新密碼',
 	'userlogin-logged-in-title' => '歡迎來到{{SITENAME}}，$1！',
 	'userlogin-logged-in-message' => '您已經登入。進入[[$1|首頁]] 查看最新消息，或查看您的[[$2|個人資料]]。',
-	'userlogin-email-confirmation-banner-success-message' => 'Your email has been confirmed.',
+	'userlogin-email-confirmation-banner-success-message' => '您的電子郵件已被驗證。',
 	'userlogin-email-confirmation-banner-error' => '這個認證連結已經過期或是您登入了另一個FANDOM帳號，請登入您需要認證的帳號或[[Special:ConfirmEmail|點擊這裡]]以收到新的連結。',
 );
 

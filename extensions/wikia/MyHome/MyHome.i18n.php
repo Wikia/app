@@ -1955,13 +1955,13 @@ $messages['ko'] = array(
 	'myhome-user-contributions-empty' => 'You can get involved on this wiki by clicking "edit this page" on any page. Everybody can make changes, add information or correct a mistake. 
 
 The wiki is built by the community, and once you click the edit button, you\'re part of the community. Try it out!',
-	'myhome-hot-spots-number-of-editors' => 'editors',
+	'myhome-hot-spots-number-of-editors' => '명 참여',
 	'myhome-log-in' => "<center>The My Home feature is only available if you're logged in.<br><br><big>'''[{{fullurl:Special:Signup|$1}} Please log in to see this page!]'''</big></center>",
 	'myhome-switch-to-monaco' => "The Wiki Activity feature is only available if you're using the Wikia skin. If you'd like to see Wiki Activity, please visit '''[[Special:Preferences|your Preferences]]''' to change your skin.",
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => '커뮤니티 알림판',
 	'oasis-myhome-community-corner-edit' => '내용 편집 &gt;',
-	'myhome-hot-spots-definition' => '최근 $1일 동안 가장 많은 사용자가 참여한 문서.',
+	'myhome-hot-spots-definition' => '최근 $1일 동안 가장 많은 사용자가 참여한 문서',
 	'myhome-default-view-checkbox' => '$1를 기본 설정으로 사용',
 	'myhome-default-view-success' => '기본 설정이 변경되었습니다.',
 	'activityfeed' => '모든 문서 표시',

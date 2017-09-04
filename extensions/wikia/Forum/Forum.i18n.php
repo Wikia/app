@@ -3518,10 +3518,10 @@ ___________________________________________<br />
 	'forum-desc' => 'Extensão Especial:Forum da Wikia',
 	'forum-disabled-desc' => 'Extensão Especial:Forum da Wikia; desativado',
 	'forum-specialpage-blurb' => '',
-	'forum-token-mismatch' => "Oops! Token doesn't match",
-	'right-forumadmin' => 'Has admin access to the forums',
-	'right-forumoldedit' => 'Can edit the old, archived forums',
-	'right-boardedit' => 'Edit Forum board information',
+	'forum-token-mismatch' => 'Opa! Token não corresponde',
+	'right-forumadmin' => 'Tem acesso de administrador para os fóruns',
+	'right-forumoldedit' => 'Pode editar os fóruns antigos, arquivados',
+	'right-boardedit' => 'Editar informações no Fórum',
 );
 
 $messages['ru'] = array(
@@ -4523,7 +4523,7 @@ $messages['xw-3171'] = array(
 	'forum-board-validation-count' => '討論板的上限數量是 $1',
 	'forum-board-description-validation-length' => '請寫此討論板的描述',
 	'forum-board-id-validation-missing' => '討論板 ID 消失',
-	'forum-board-no-board-warning' => 'There is no Forum Board with that title. Please try again or check out this list of Forum Boards.',
+	'forum-board-no-board-warning' => '這個標題的討論版不存在。 請再試一次或查看討論版清單。',
 	'forum-related-discussion-heading' => '關於 $1 的討論',
 	'forum-related-discussion-new-post-button' => '開始一個討論',
 	'forum-related-discussion-new-post-tooltip' => '發起關於 $1 的討論',

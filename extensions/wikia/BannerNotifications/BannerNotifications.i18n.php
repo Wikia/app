@@ -204,8 +204,8 @@ $messages['vi'] = array(
 $messages['xw-3171'] = array(
 	'bannernotifications-desc' => '顯示一個如AJAX失敗類似事件的系統通知',
 	'bannernotifications-general-ajax-failure' => '瀏覽器無法連接到FANDOM。請稍後再試。',
-	'bannernotifications-not-confirmed-email' => "Your email address hasn't been confirmed. There should be a confirmation message in your inbox. If you need us to send a new one, please [[Special:ConfirmEmail|click here]]. If you need to change your email, head to your [[Special:Preferences#mw-prefsection-emailv2|Preferences page]].",
-	'bannernotifications-no-email' => 'Your account does not have a confirmed email address. Please set up your email on your [[Special:Preferences#mw-prefsection-emailv2|Preferences page]].',
+	'bannernotifications-not-confirmed-email' => '你的電子郵件地址尚未獲得到認證。你的收件匣中應該已經收到了認證訊息。如果您需要我們重新發送一個郵件，[[Special:ConfirmEmail|按一下此處]]。如需更改郵件地址，請至[[Special:Preferences#mw-prefsection-emailv2|個人設定頁面]]。',
+	'bannernotifications-no-email' => '您的帳戶沒有確認的電子郵件地址。請在[[Special:Preferences#mw-prefsection-emailv2|個人設定頁面]]設置您的電子郵件。',
 );
 
 $messages['zh-hans'] = array(
