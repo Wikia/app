@@ -38,34 +38,20 @@ class ScribeEventProducer {
 				$this->mEventType = self::UNDELETE_CATEGORY_INT;
 				break;
 		}
-		$request = $this->app->wg->Request;
+		$geo = json_decode($this->app->wg->Request->getCookie( "Geo", "" ));
 		$this->setCityId( $this->app->wg->CityId );
 		$this->setServerName( $this->app->wg->Server );
 
-		$this->setIp( $request->getIP() );
-		$this->setParamFromHeader("geoLongitude", $request, FastlyHeaders::GEO_LONGITUDE );
-		$this->setParamFromHeader("geoLatitude", $request, FastlyHeaders::GEO_LATITUDE );
-		$this->setParamFromHeader("geoCity", $request, FastlyHeaders::GEO_CITY );
-		$this->setParamFromHeader("geoContinent", $request, FastlyHeaders::GEO_CONTINENT );
-		$this->setParamFromHeader("geoCountryCode", $request, FastlyHeaders::GEO_COUNTRY_CODE );
-		$this->setParamFromHeader("geoCountryName", $request, FastlyHeaders::GEO_COUNTRY_NAME );
-		$this->setParamFromHeader("geoPostalCode", $request, FastlyHeaders::GEO_POSTAL_CODE );
-		$this->setParamFromHeader("geoRegion", $request, FastlyHeaders::GEO_REGION );
-		$this->setParamFromHeader("geoAreaCode", $request, FastlyHeaders::GEO_AREA_CODE );
-		$this->setParamFromHeader("geoMetroCode", $request, FastlyHeaders::GEO_METRO_CODE );
+		$this->setIp( $this->app->wg->Request->getIP() );
+		$this->setGeoRegion($geo->region);
+		$this->setGeoCountry($geo->country);
+		$this->setGeoContinent($geo->continent);
 		$this->setHostname( wfHostname() );
 		$this->setBeaconId ( wfGetBeaconId() );
 		$this->setArchive( $archive );
 		$this->setLanguage();
 		$this->setCategory();
 	}
-
-    private function setParamFromHeader( string $paramName, WebRequest $request, string $headerName ) {
-	    $value = $request->getHeader( $headerName );
-	    if ( !empty( $value ) ) {
-		    $this->mParams[$paramName] = $value;
-		}
-    }
 
 	public function buildEditPackage( $oPage, $oUser, $oRevision = null, $oLocalFile = null ) {
 		wfProfileIn( __METHOD__ );
@@ -275,6 +261,18 @@ class ScribeEventProducer {
 		wfProfileOut( __METHOD__ );
 
 		return $this->buildEditPackage( $oPage, $oUser, $oRevision );
+	}
+
+	public function setGeoRegion ( $region ) {
+		$this->mParams['geoRegion'] = $region;
+	}
+
+	public function setGeoCountry ( $country ) {
+		$this->mParams['geoCountry'] = $country;
+	}
+
+	public function setGeoContinent ( $continent ) {
+		$this->mParams['geoContinent'] = $continent;
 	}
 
 	public function setCityId ( $city_id ) {
