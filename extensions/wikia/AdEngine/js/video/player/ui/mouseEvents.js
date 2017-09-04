@@ -3,25 +3,31 @@ define('ext.wikia.adEngine.video.player.ui.mouseEvents', [], function () {
 	'use strict';
 
 	function add(video, params) {
-		video.addEventListener('loaded', function () {
-			var adsManager = video.ima.getAdsManager();
+		var userHasChangedVolumeManually = false;
 
+		video.addEventListener('loaded', function () {
 			setTimeout(function () {
-				adsManager.setVolume(0);
+				video.setVolume(0);
 			});
 
-			// TODO user's click on mute/unmute button
+			video.addEventListener('wikiaVolumeChangeClicked', function () {
+				userHasChangedVolumeManually = true;
+			});
 			params.container.addEventListener('mouseenter', function () {
-				adsManager.setVolume(1);
+				if (!userHasChangedVolumeManually) {
+					video.setVolume(1);
+				}
 			});
 			params.container.addEventListener('mouseleave', function () {
-				adsManager.setVolume(0);
+				if (!userHasChangedVolumeManually) {
+					video.setVolume(0);
+				}
 			});
 		});
 
 		video.addEventListener('start', function () {
 			setTimeout(function () {
-				video.ima.getAdsManager().setVolume(0);
+				video.setVolume(0);
 			});
 		});
 	}

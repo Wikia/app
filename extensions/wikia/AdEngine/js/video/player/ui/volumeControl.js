@@ -52,6 +52,7 @@ define('ext.wikia.adEngine.video.player.ui.volumeControl', [
 		});
 
 		volumeControl.addEventListener('click', function (e) {
+			video.ima.dispatchEvent('wikiaVolumeChangeClicked');
 			video.volumeToggle();
 			e.preventDefault();
 		});
