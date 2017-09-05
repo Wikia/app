@@ -14,7 +14,7 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 		$mixedContentFooter = $('#mixed-content-footer');
 
 	function render(data) {
-		var newsAndStoriesList = data.nsItems.items,
+		var newsAndStoriesList = data.nsItems ? data.nsItems.items : [],
 			wikiArticlesList = data.wikiItems.items,
 			templateList = getTemplateList(newsAndStoriesList),
 			templates = {},
