@@ -1,4 +1,5 @@
 @import '../../../../extensions/wikia/ArticleVideo/styles/video-shared-variables';
+@import 'ads-mixin';
 
 $wikia-top-ads-index: 2;
 
@@ -16,14 +17,6 @@ $floating-ad-featured-video-gap: $video-container-width;
 
 $vpaid-z-index: 10;
 $video-interactive-area-z-index: $vpaid-z-index + 1;
-
-@mixin absolute-fill() {
-	height: 100%;
-	left: 0;
-	position: absolute;
-	top: 0;
-	width: 100%;
-}
 
 .wikia-ad {
 	.video-overlay {
@@ -183,13 +176,14 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 
 		.ima-mute-div, .volume-control {
 			bottom: 14px;
+			right: 7px;
 
 			.speaker {
 				&.mute {
-					background: url('/extensions/wikia/AdEngine/js/video/player/ui/images/outstream_sound_off_button.svg') no-repeat center bottom; /* inline */
+					background: url('/extensions/wikia/AdEngine/js/video/player/ui/images/outstream_sound_off_button.svg') no-repeat left bottom; /* inline */
 				}
 
-				background: url('/extensions/wikia/AdEngine/js/video/player/ui/images/outstream_sound_on_button.svg') no-repeat center bottom; /* inline */
+				background: url('/extensions/wikia/AdEngine/js/video/player/ui/images/outstream_sound_on_button.svg') no-repeat left bottom; /* inline */
 			}
 		}
 	}

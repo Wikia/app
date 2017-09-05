@@ -12,19 +12,12 @@
 @import 'ads-in-content';
 @import 'ads-interstitial';
 @import 'ads-invisible-high-impact';
+@import 'ads-mixin';
 @import 'ads-porvata';
 
 $wikia-top-ads-index: 2;
 $uap-video-animation-duration: 0.4s;
 $navbar-size-for-sticky-element: 65px;
-
-@mixin absolute-fill() {
-	height: 100%;
-	left: 0;
-	position: absolute;
-	width: 100%;
-	top: 0;
-}
 
 /** Hide invisible slots and 1x1 iframes **/
 #INVISIBLE_SKIN,
