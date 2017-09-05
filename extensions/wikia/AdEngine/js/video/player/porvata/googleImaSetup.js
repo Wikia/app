@@ -1,19 +1,30 @@
 /*global define*/
 define('ext.wikia.adEngine.video.player.porvata.googleImaSetup', [
+	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
 	'ext.wikia.aRecoveryEngine.sourcePoint.recovery',
 	'wikia.browserDetect',
 	'wikia.log',
 	'wikia.window'
-], function (vastUrlBuilder, adBlockRecovery, browserDetect, log, win) {
+], function (adContext, megaAdUnitBuilder, vastUrlBuilder, adBlockRecovery, browserDetect, log, win) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata.googleImaSetup';
 
+	function megaIsEnabled(params) {
+		return params.useMegaAdUnitBuilder !== false &&
+			(params.useMegaAdUnitBuilder || adContext.getContext().opts.megaAdUnitBuilderEnabled);
+	}
+
 	function buildVastUrl(params) {
-		var vastUrlBuilderOptions = {
-				useMegaAdUnitBuilder: params.useMegaAdUnitBuilder
-			},
-			vastUrl = params.vastUrl ||
+		var vastUrlBuilderOptions = {},
+			vastUrl;
+
+		if (megaIsEnabled(params)) {
+			vastUrlBuilderOptions.adUnit = megaAdUnitBuilder.build(params.vastTargeting.src, params.vastTargeting.pos);
+		}
+
+		vastUrl = params.vastUrl ||
 			vastUrlBuilder.build(params.width / params.height, params.vastTargeting, vastUrlBuilderOptions);
 
 		log(['build vast url', vastUrl, params], log.levels.debug, logGroup);
