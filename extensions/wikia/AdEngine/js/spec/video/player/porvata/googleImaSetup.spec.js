@@ -194,6 +194,6 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaSetup', function () {
 			useMegaAdUnitBuilder: true
 		});
 
-		expect(mocks.megaAdUnitBuilder.build).toHaveBeenCalledWith('test_src', 'TEST_SLOT');
+		expect(mocks.megaAdUnitBuilder.build).toHaveBeenCalledWith('TEST_SLOT', 'test_src');
 	});
 });

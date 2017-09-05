@@ -21,7 +21,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaSetup', [
 			vastUrl;
 
 		if (megaIsEnabled(params)) {
-			vastUrlBuilderOptions.adUnit = megaAdUnitBuilder.build(params.vastTargeting.src, params.vastTargeting.pos);
+			vastUrlBuilderOptions.adUnit = megaAdUnitBuilder.build(params.vastTargeting.pos, params.vastTargeting.src);
 		}
 
 		vastUrl = params.vastUrl ||
