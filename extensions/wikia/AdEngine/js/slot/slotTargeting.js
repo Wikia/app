@@ -1,11 +1,12 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.slotTargeting', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.utils.math',
 	'wikia.abTest',
 	'wikia.instantGlobals',
 	require.optional('ext.wikia.adEngine.wrappers.prebid')
-], function (adContext, math, abTest, instantGlobals, prebid) {
+], function (adContext, slotsContext, math, abTest, instantGlobals, prebid) {
 	'use strict';
 
 	var skins = {
@@ -88,12 +89,14 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 	function getOutstreamData() {
 		var context = adContext.getContext(),
 			getAdserverTargeting = prebid && prebid.get().getAdserverTargetingForAdUnitCode,
-			videoTargeting = getAdserverTargeting && getAdserverTargeting(videoSlots[context.targeting.skin]);
+			slotName = videoSlots[context.targeting.skin],
+			videoTargeting = getAdserverTargeting && getAdserverTargeting(slotName);
 
-			if (videoTargeting) {
-				return constructOutstreamString(videoTargeting);
-			}
-    	}
+		// prebid doesn't reset bids for disabled slots so we need to check if slot is still applicable on next pv
+		if (videoTargeting && slotsContext.isApplicable(slotName)) {
+			return constructOutstreamString(videoTargeting);
+		}
+	}
 
 	function constructOutstreamString(videoTargeting) {
 		var bidderName = videoTargeting.hb_bidder,

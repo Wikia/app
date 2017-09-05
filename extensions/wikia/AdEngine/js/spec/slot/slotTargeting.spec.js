@@ -5,6 +5,11 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 	var mocks = {
 		pbjs: {
 			getAdserverTargetingForAdUnitCode: noop
+		},
+		slotsContext: {
+			isApplicable: function () {
+
+			}
 		}
 	};
 
@@ -50,11 +55,12 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 
 		return modules['ext.wikia.adEngine.slot.slotTargeting'](
 			adContext,
+			mocks.slotsContext,
 			modules['ext.wikia.adEngine.utils.math'](),
 			abTest,
 			instantGlobals,
-            prebid
-        );
+			prebid
+		);
 	}
 
 	it('Generate correct wikia slot id', function () {
@@ -199,6 +205,7 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 						hb_bidder: 'veles',
 						hb_pb: '13.00'
 					},
+					outstreamSlotApplicable: true,
 					outstream: 've1300'
 				},
 				{
@@ -206,6 +213,7 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 						hb_bidder: 'veles',
 						hb_pb: '00.00'
 					},
+					outstreamSlotApplicable: true,
 					outstream: 've0000'
 				},
 				{
@@ -213,6 +221,7 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 						hb_bidder: 'rubicon',
 						hb_pb: '0000'
 					},
+					outstreamSlotApplicable: true,
 					outstream: 'ru0000'
 				},
 				{
@@ -220,29 +229,42 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 						hb_bidder: 'rubicon',
 						hb_pb: '12.50'
 					},
+					outstreamSlotApplicable: true,
 					outstream: 'ru1250'
 				},
 				{
-				    targeting: {
-					hb_bidder: 'indexExchange',
-					hb_pb: '12.50'
-				    },
-				    outstream: undefined
+					targeting: {
+						hb_bidder: 'rubicon',
+						hb_pb: '12.50'
+					},
+					outstreamSlotApplicable: false,
+					outstream: undefined
 				},
 				{
-				    targeting: {
-					hb_bidder: 'indexExchange'
-				    },
-				    outstream: undefined
+					targeting: {
+						hb_bidder: 'indexExchange',
+						hb_pb: '12.50'
+					},
+					outstreamSlotApplicable: true,
+					outstream: undefined
+				},
+				{
+					targeting: {
+						hb_bidder: 'indexExchange'
+					},
+					outstreamSlotApplicable: true,
+					outstream: undefined
 				}
 			],
-			getAdserverTargetingForAdUnitCodeSpy = spyOn(mocks.pbjs, 'getAdserverTargetingForAdUnitCode');
+			getAdserverTargetingForAdUnitCodeSpy = spyOn(mocks.pbjs, 'getAdserverTargetingForAdUnitCode'),
+			isApplicableSpy = spyOn(mocks.slotsContext, 'isApplicable');
 
 		testCases.forEach(function (testCase) {
 			var slotTargeting = getModule('article', 'oasis'),
 				outstream;
 
 			getAdserverTargetingForAdUnitCodeSpy.and.returnValue(testCase.targeting);
+			isApplicableSpy.and.returnValue(testCase.outstreamSlotApplicable);
 			outstream = slotTargeting.getOutstreamData();
 
 			expect(outstream).toBe(testCase.outstream);
