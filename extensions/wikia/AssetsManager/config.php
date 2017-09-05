@@ -2119,7 +2119,6 @@ $config['banner_notifications_js'] = [
 	'skin' => [ 'oasis', 'monobook' ],
 	'assets' => [
 		'//extensions/wikia/BannerNotifications/js/BannerNotifications.js',
-		'//extensions/wikia/BannerNotifications/js/templates.mustache.js',
 	],
 ];
 
