@@ -137,7 +137,7 @@ class SkinTemplate extends Skin {
 		global $wgScript, $wgStylePath;
 		global $wgMimeType, $wgJsMimeType;
 		global $wgXhtmlDefaultNamespace, $wgXhtmlNamespaces, $wgHtml5Version;
-		global $wgDisableCounters, $wgSitename, $wgLogo, $wgHideInterlanguageLinks;
+		global $wgSitename, $wgLogo, $wgHideInterlanguageLinks;
 		global $wgMaxCredits, $wgShowCreditsIfMax;
 		global $wgPageShowWatchingUsers;
 		global $wgDebugComments;
@@ -385,19 +385,13 @@ class SkinTemplate extends Skin {
 		$tpl->set( 'logo', $this->logoText() );
 
 		$tpl->set( 'copyright', false );
+		// No longer used
 		$tpl->set( 'viewcount', false );
 		$tpl->set( 'lastmod', false );
 		$tpl->set( 'credits', false );
 		$tpl->set( 'numberofwatchingusers', false );
 		if ( $out->isArticle() && $title->exists() ) {
 			if ( $this->isRevisionCurrent() ) {
-				if ( !$wgDisableCounters ) {
-					$viewcount = $this->getWikiPage()->getCount();
-					if ( $viewcount ) {
-						$tpl->set( 'viewcount', $this->msg( 'viewcount' )->numParams( $viewcount )->parse() );
-					}
-				}
-
 				if( $wgPageShowWatchingUsers ) {
 					$dbr = wfGetDB( DB_SLAVE );
 					$num = $dbr->selectField( 'watchlist', 'COUNT(*)',
@@ -432,7 +426,6 @@ class SkinTemplate extends Skin {
 		$tpl->set( 'footerlinks', array(
 			'info' => array(
 				'lastmod',
-				'viewcount',
 				'numberofwatchingusers',
 				'credits',
 				'copyright',
