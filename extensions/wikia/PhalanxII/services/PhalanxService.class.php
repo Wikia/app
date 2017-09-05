@@ -137,12 +137,10 @@ class PhalanxService {
 	}
 
 	private function sendToPhalanxQueue( $changed ) {
-		wfProfileIn( __METHOD__ );
 		global $wgPhalanxQueue;
 
 		$rabbitConnection = new ConnectionBase( $wgPhalanxQueue );
 		$rabbitConnection->publish ( self::ROUTING_KEY, implode( ",", $changed ) );
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
