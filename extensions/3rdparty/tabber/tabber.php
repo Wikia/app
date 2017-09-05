@@ -43,9 +43,7 @@ function renderTabber( $paramstring, $params, Parser $parser ) {
 		$htmlTabs .= buildTab( $tab, $parser ); # macbre: pass Parser object (refs RT #34513)
 	}
 
-	$htmlTabs .= Html::closeElement( 'div' );
-
-	return $htmlTabs;
+	return $htmlTabs . Html::closeElement( 'div' );
 }
 
 /**
