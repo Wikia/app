@@ -101,7 +101,7 @@ class GlobalTitle extends Title {
 		}
 
 		$mainPageTitle = self::newFromText( 'Mainpage', NS_MEDIAWIKI, $city_id );
-		$mainPageName = $mainPageTitle->getContent();
+		$mainPageName = str_replace( ' ', '_', $mainPageTitle->getContent() );
 		$namespace = NS_MAIN;
 		// support for non-MAIN namespace pages, based on Title::secureAndSplit method
 		$prefixRegexp = "/^(.+?)_*:_*(.*)$/S";
