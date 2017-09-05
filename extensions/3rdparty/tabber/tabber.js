@@ -218,7 +218,7 @@ tabberObj.prototype.init = function(e)
 			/* Title was not found (or is blank) so automatically generate a
 			 number for the tab.
 			 */
-			t.headingText = i + 1;
+			t.headingText = '' + i + 1;
 		}
 
 		/* Create a list element for the tab */
