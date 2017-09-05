@@ -17,8 +17,6 @@ class RecirculationController extends WikiaController {
 	}
 
 	public function discussions() {
-		global $wgLanguageCode;
-
 		$showZeroState = false;
 		$cityId = $this->request->getVal( 'cityId', null );
 		$limit = $this->request->getVal( 'limit', 5 );
