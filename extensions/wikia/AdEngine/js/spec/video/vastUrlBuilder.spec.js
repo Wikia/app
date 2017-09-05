@@ -5,8 +5,9 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 	function noop() {
 	}
 
-	var REGULAR_AD_UNIT_QUERY_PARAM = '&iu=my\/ad\/unit&',
-		PREMIUM_AD_UNIT_QUERY_PARAM = '&iu=premium\/ad\/unit&',
+	var AD_UNIT_QUERY_PARAM = '&iu=',
+		REGULAR_AD_UNIT_QUERY_PARAM = AD_UNIT_QUERY_PARAM + 'my\/ad\/unit&',
+		PREMIUM_AD_UNIT_QUERY_PARAM = AD_UNIT_QUERY_PARAM + 'premium\/ad\/unit&',
 		mocks = {
 			adContext: {
 				getContext: function () {
@@ -161,6 +162,15 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 		var vastUrl = getModule().build(1, mocks.slotParams, {},'featured');
 
 		expect(vastUrl).toMatch(PREMIUM_AD_UNIT_QUERY_PARAM);
+	});
+
+	it('Should override adUnit if is in options', function () {
+		var CUSTOM_AD_UNIT = 'THIS_IS_CUSTOM_AD_UNIT',
+			vastUrl = getModule().build(1, mocks.slotParams, {
+				adUnit: CUSTOM_AD_UNIT
+			});
+
+		expect(vastUrl).toContain(AD_UNIT_QUERY_PARAM + CUSTOM_AD_UNIT);
 	});
 
 	it('Build VAST URL with restricted number of ads', function () {

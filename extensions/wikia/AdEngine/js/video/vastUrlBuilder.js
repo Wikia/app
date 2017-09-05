@@ -80,7 +80,7 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 			'gdfp_req=1',
 			'impl=s',
 			'unviewed_position_start=1',
-			'iu=' + buildAdUnit(slotParams, useMegaAdUnitBuilder),
+			'iu=' + (options.adUnit || buildAdUnit(slotParams, useMegaAdUnitBuilder)),
 			'sz=' + getSizeByAspectRatio(aspectRatio),
 			'url=' + encodeURIComponent(loc.href),
 			'description_url=' + encodeURIComponent(loc.href),
