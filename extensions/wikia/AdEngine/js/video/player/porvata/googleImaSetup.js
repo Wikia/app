@@ -16,12 +16,25 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaSetup', [
 			(params.useMegaAdUnitBuilder || adContext.getContext().opts.megaAdUnitBuilderEnabled);
 	}
 
+	function getPosBasedOnProduct(params) {
+		if (params.adProduct === 'abcd') {
+			return params.adProduct.toUpperCase();
+		}
+
+		if (params.adProduct === 'vuap') {
+			return 'UAP_' + params.type.toUpperCase();
+		}
+
+		return params.vastTargeting.pos;
+	}
+
 	function buildVastUrl(params) {
 		var vastUrlBuilderOptions = {},
 			vastUrl;
 
 		if (megaIsEnabled(params)) {
-			vastUrlBuilderOptions.adUnit = megaAdUnitBuilder.build(params.vastTargeting.pos, params.vastTargeting.src);
+			vastUrlBuilderOptions.adUnit =
+				megaAdUnitBuilder.build(getPosBasedOnProduct(params), params.vastTargeting.src);
 		}
 
 		vastUrl = params.vastUrl ||

@@ -196,4 +196,37 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaSetup', function () {
 
 		expect(mocks.megaAdUnitBuilder.build).toHaveBeenCalledWith('TEST_SLOT', 'test_src');
 	});
+
+	[{
+		adProduct: 'vuap',
+		type: 'bfaa',
+		expected: 'UAP_BFAA'
+	}, {
+		adProduct: 'vuap',
+		type: 'bfab',
+		expected: 'UAP_BFAB'
+	}, {
+		adProduct: 'abcd',
+		type: 'bfaa',
+		expected: 'ABCD'
+	}].forEach(function (testCase) {
+		it('pass correct param to MEGA ad unit builder for "' + testCase.expected  + '" product', function () {
+			spyOn(mocks.vastUrlBuilder, 'build');
+			spyOn(mocks.megaAdUnitBuilder, 'build');
+
+			imaSetup.createRequest({
+				adProduct: testCase.adProduct,
+				type: testCase.type,
+				width: 100,
+				height: 100,
+				vastTargeting: {
+					src: 'test_src',
+					pos: 'TEST_SLOT'
+				},
+				useMegaAdUnitBuilder: true
+			});
+
+			expect(mocks.megaAdUnitBuilder.build).toHaveBeenCalledWith(testCase.expected, 'test_src');
+		});
+	});
 });
