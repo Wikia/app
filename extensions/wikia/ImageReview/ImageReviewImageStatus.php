@@ -50,7 +50,7 @@ function efImageReviewDisplayStatus( ImagePage $imagePage, &$html ) {
 			 * If the file is a local one and is older than 1 hour - send it to ImageReview
 			 * since it's probably been restored, and is not just a fresh file.
 			 */
-			$lastTouched = new DateTime( $imagePage->getRevisionFetched()->getTimestamp() );
+			$lastTouched = new DateTime( $imagePage->getPage()->getTouched() );
 			$now = new DateTime();
 			$file = $imagePage->getDisplayedFile();
 			if ( $file instanceof WikiaLocalFile && $lastTouched < $now->modify( '-1 hour' ) ) {

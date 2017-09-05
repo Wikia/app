@@ -15,7 +15,7 @@ For more information on the automatic welcome messages, see the [[Help:Welcome t
 
 If you have any questions about the FANDOM Welcome tool, please [[Special:Contact|contact FANDOM staff]].
 ',
-	'static-user-pages-bot-content' => 'User:FANDOMbot is a bot account operated by FANDOM Staff for bulk edits and changes.',
+	'static-user-pages-bot-content' => 'User:FANDOMbot is a [[Help:Bots|bot account]] operated by FANDOM Staff for bulk edits and changes.',
 );
 
 $messages['qqq'] = array(
@@ -126,7 +126,7 @@ Aby uzyskać więcej informacji o automatycznych wiadomościach powitalnych, zob
 
 Jeśli masz jakiekolwiek pytania dotyczące narzędzia witania FANDOMU, [[Special:Contact|skontaktuj się z pracownikami FANDOMU]].
 ',
-	'static-user-pages-bot-content' => 'Użytkownik:FANDOMbot to konto bota, obsługiwane przez pracowników FANDOMU w celu dokonywania zbiorczych zmian i edycji.',
+	'static-user-pages-bot-content' => 'Użytkownik:FANDOMbot to [[Pomoc:Boty|konto bota]], obsługiwane przez pracowników FANDOMU w celu dokonywania zbiorczych zmian i edycji.',
 );
 
 $messages['pt'] = array(

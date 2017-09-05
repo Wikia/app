@@ -2119,7 +2119,6 @@ $config['banner_notifications_js'] = [
 	'skin' => [ 'oasis', 'monobook' ],
 	'assets' => [
 		'//extensions/wikia/BannerNotifications/js/BannerNotifications.js',
-		'//extensions/wikia/BannerNotifications/js/templates.mustache.js',
 	],
 ];
 
@@ -2661,7 +2660,7 @@ $config['contribution_prototype_scss'] = [
 
 $config['design_system_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis' ],
+	'skin' => [ 'oasis', 'monobook' ],
 	'assets' => [
 		'//extensions/wikia/DesignSystem/styles/design-system.scss'
 	],

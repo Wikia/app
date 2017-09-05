@@ -272,7 +272,7 @@ Please confirm that this is what you intend to do.',
 	'user-properties-handler-not-registered' => 'Handler not registered',
 	'user-properties-method-nonexistent' => 'Handler method non-existent',
 	'user-properties-handler-nonexistent' => 'Handler class non-existent',
-	'usesitejs-disabled-warning' => 'Custom JavaScript is disabled on this wiki.',
+	'usesitejs-disabled-warning' => 'Custom JavaScript is disabled on this wiki. You can read about JavaScript on wikis [[Help:JavaScript_review_process|here]].',
 );
 
 $messages['qqq'] = array(
