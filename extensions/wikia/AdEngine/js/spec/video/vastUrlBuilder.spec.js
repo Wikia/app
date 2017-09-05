@@ -7,21 +7,10 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 
 	var AD_UNIT_QUERY_PARAM = '&iu=',
 		REGULAR_AD_UNIT_QUERY_PARAM = AD_UNIT_QUERY_PARAM + 'my\/ad\/unit&',
-		PREMIUM_AD_UNIT_QUERY_PARAM = AD_UNIT_QUERY_PARAM + 'premium\/ad\/unit&',
 		mocks = {
-			adContext: {
-				getContext: function () {
-					return {opts: {}};
-				}
-			},
 			adUnitBuilder: {
 				build: function () {
 					return 'my/ad/unit';
-				}
-			},
-			megaAdUnitBuilder: {
-				build: function () {
-					return 'premium/ad/unit';
 				}
 			},
 			slotTargeting: {
@@ -54,10 +43,8 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.video.vastUrlBuilder'](
-			mocks.adContext,
 			mocks.page,
 			mocks.adUnitBuilder,
-			mocks.megaAdUnitBuilder,
 			mocks.slotTargeting,
 			mocks.loc,
 			mocks.log
@@ -145,7 +132,6 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 	});
 
 	it('Build VAST URL with regular ad unit for premium ad layout and without correct video pos name', function () {
-		spyOn(mocks.adContext, 'getContext').and.returnValue({opts:{premiumAdLayoutEnabled: true}});
 		var vastUrl = getModule().build(1, mocks.slotParams);
 
 		expect(vastUrl).toMatch(REGULAR_AD_UNIT_QUERY_PARAM);
@@ -155,13 +141,6 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 		var vastUrl = getModule().build(1, mocks.slotParams, {}, 'featured');
 
 		expect(vastUrl).toMatch(REGULAR_AD_UNIT_QUERY_PARAM);
-	});
-
-	it('Build VAST URL with premium ad unit for premium ad layout and with correct video pos name', function () {
-		spyOn(mocks.adContext, 'getContext').and.returnValue({opts:{megaAdUnitBuilderEnabled: true}});
-		var vastUrl = getModule().build(1, mocks.slotParams, {},'featured');
-
-		expect(vastUrl).toMatch(PREMIUM_AD_UNIT_QUERY_PARAM);
 	});
 
 	it('Should override adUnit if is in options', function () {
