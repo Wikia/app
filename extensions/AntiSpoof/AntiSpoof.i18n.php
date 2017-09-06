@@ -5,7 +5,6 @@
  * @file
  * @ingroup Extensions
  */
-
 $messages = array();
 
 $messages['en'] = array(

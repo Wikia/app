@@ -103,18 +103,7 @@ Since you do not have the hideuser right, you cannot see or edit the user's bloc
 	'cant-move-user-page' => 'You do not have permission to move user pages (apart from subpages).',
 	'cant-move-to-user-page' => 'You do not have permission to move a page to a user page (except to a user subpage).',
 	'cantmove-titleprotected' => 'You cannot move a page to this location, because the new title has been protected from creation',
-	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/
-
-/* Mark redirects in Special:Allpages and Special:Watchlist */
-.allpagesredirect {
-   font-style: italic;
-}
-.allpagesredirect:after {
-   color: #808080; content: " (redirect)"
-}
-.watchlistredir {
-   font-style: italic;
-}',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
 	'common.js' => '/* Any JavaScript here will be loaded for all users on every page load. */',
 	'creditspage' => 'Page credits',
 	'confirmemail' => 'Confirm email address',
@@ -329,7 +318,7 @@ Please confirm that you really want to recreate this article.",
 	'community' => 'Community',
 	'contris_s' => 'Contributions',
 	'cockpit_hide' => 'Hide cockpit',
-	'create-account-new' => 'Create your Fandom Account',
+	'create-account-new' => 'Create your FANDOM Account',
 );
 
 $messages['qqq'] = array(
@@ -6145,7 +6134,7 @@ Grund der Sperre: ''$2''",
 	'cant-move-user-page' => 'Du hast nicht die Berechtigung, Benutzerhauptseiten zu verschieben.',
 	'cant-move-to-user-page' => 'Du hast nicht die Berechtigung, Seiten auf eine Benutzerseite zu verschieben (mit Ausnahme von Benutzerunterseiten).',
 	'cantmove-titleprotected' => 'Die Verschiebung kann nicht durchgeführt werden, da der Zieltitel vor Erstellung gesperrt ist.',
-	'common.css' => '/***** Das CSS auf dieser Seite beeinflusst alle Skins dieser Community. *****/',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
 	'common.js' => '/* JavaScript hier wird für alle Benutzer für jede Seite geladen. */',
 	'creditspage' => 'Seiteninformationen',
 	'confirmemail' => 'E-Mail-Adresse bestätigen',
@@ -6239,7 +6228,7 @@ Bitte bestätige, dass du diese Seite tatsächlich neu anlegen möchtest.",
 	'createpage' => 'Neue Seite anlegen',
 	'choose_reason' => 'Wähle einen Grund',
 	'community' => 'Community',
-	'create-account-new' => 'Benutzerkonto bei Fandom erstellen',
+	'create-account-new' => 'Benutzerkonto bei FANDOM erstellen',
 	'cockpit_hide' => 'Cockpit verstecken',
 	'corporatepage-company-info-headline' => 'Firmeninformationen',
 	'corporatepage-create-button' => 'Starte ein Wiki',
@@ -7443,18 +7432,7 @@ alguien más puede haber deshecho el borrado antes.',
 	'cant-move-user-page' => 'No tienes permiso para renombrar páginas de usuario (excepto subpáginas).',
 	'cant-move-to-user-page' => 'No tienes permiso para renombrar una página a una página de usuario (excepto a subpáginas de usuario).',
 	'cantmove-titleprotected' => 'No puedes renombrar la página a esta ubicación, porque el nuevo título ha sido protegido para evitar su creación.',
-	'common.css' => '/***** Los estilos CSS definidos aquí se aplicarán a todas las pieles (skins) *****/
-
-/* Marca redirecciones en Special:Allpages y Special:Watchlist */
-.allpagesredirect {
-   font-style: italic;
-}
-.allpagesredirect:after {
-   color: #808080; content: " (redirect)"
-}
-.watchlistredir {
-   font-style: italic;
-}',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
 	'common.js' => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios en cada carga de página. */',
 	'creditspage' => 'Créditos de la página',
 	'confirmemail' => 'Confirmar dirección de correo electrónico',
@@ -7555,7 +7533,7 @@ Este código de confirmación expirará el $4.',
 	'create_an_account' => 'Crear una cuenta',
 	'createpage' => 'Crea una página',
 	'choose_reason' => 'Elegir el motivo',
-	'create-account-new' => 'Crea tu cuenta de Fandom',
+	'create-account-new' => 'Crea tu cuenta de FANDOM',
 	'cockpit_hide' => 'Ocultar cabina',
 	'community' => 'Comunidad',
 	'corporatepage-company-info-headline' => 'Información de la compañía',
@@ -8858,8 +8836,7 @@ un autre utilisateur a probablement déjà restauré la page.',
 	'cant-move-user-page' => 'Vous n’avez pas la permission de renommer les pages principales d’utilisateurs (en dehors de leurs sous-pages).',
 	'cant-move-to-user-page' => 'Vous n’avez pas la permission de renommer une page vers une page utilisateur (à l’exception d’une sous-page).',
 	'cantmove-titleprotected' => 'Vous ne pouvez pas déplacer une page vers cet emplacement car la création de page avec ce nouveau titre a été protégée.',
-	'common.css' => '/** Met en italique les redirections dans Special:Allpages et Special:Watchlist **/
-.allpagesredirects, .watchlistredir { font-style: italic;  }',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
 	'common.js' => '/* Tout JavaScript ici sera chargé pour chaque page visitée par n’importe quel utilisateur. */',
 	'creditspage' => 'Crédits de la page',
 	'confirmemail' => 'Confirmer l’adresse e-mail',
@@ -8962,7 +8939,7 @@ Veuillez confirmer que vous désirez réellement recréer cette page.",
 	'create_an_account' => "S'inscrire",
 	'createpage' => 'Créer une nouvelle page',
 	'choose_reason' => 'Choisissez la raison',
-	'create-account-new' => 'Créer un compte Fandom',
+	'create-account-new' => 'Créer un compte FANDOM',
 	'cockpit_hide' => 'Masquer cockpit',
 	'community' => 'Communauté',
 	'corporatepage-company-info-headline' => 'Informations sur la société',
@@ -13126,18 +13103,7 @@ l'utente che le ha effettuate è l'unico ad aver contribuito alla pagina.",
 	'cant-move-user-page' => 'Non si dispone dei permessi necessari per spostare le pagine utente (ad eccezione delle sottopagine).',
 	'cant-move-to-user-page' => 'Non si dispone dei permessi necessari per spostare la pagina su una pagina utente (ad eccezione delle sottopagine utente).',
 	'cantmove-titleprotected' => 'Lo spostamento della pagina non è possibile in quanto il nuovo titolo è stato protetto per impedirne la creazione',
-	'common.css' => '/* Gli stili CSS inseriti qui saranno applicati su tutto il sito e in tutte le skin */
-
-	/** Evidenzia i redirect su Special:Allpages e Special:Watchlist **/
-.allpagesredirect {
-	font-style: italic;
-}
-.allpagesredirect:after {
-	color: #808080; content: " (redirect)"
-}
-.watchlistredir {
-	font-style: italic;
-}',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
 	'common.js' => '/* Il codice JavaScript inserito qui viene caricato da tutti gli utenti ad ogni visualizzazione di pagina. */',
 	'creditspage' => 'Autori della pagina',
 	'confirmemail' => 'Conferma indirizzo e-mail',
@@ -13234,7 +13200,7 @@ Per favore, conferma che desideri veramente ricreare questa pagina.",
 	'compare-revision-not-exists' => 'La revisione che hai specificato non esiste.',
 	'createpage' => 'Crea una nuova pagina',
 	'create_an_account' => 'Registrati',
-	'create-account-new' => 'Crea il tuo account Fandom',
+	'create-account-new' => 'Crea il tuo account FANDOM',
 	'community' => 'Community',
 	'contris' => 'Contributi',
 	'contris_s' => 'Contributi',
@@ -13625,18 +13591,7 @@ hideuser権限を持っていないため、この利用者のブロックを閲
 	'cant-move-user-page' => 'ユーザーページを移動させる権限がありません（サブページ内は除く）。',
 	'cant-move-to-user-page' => 'このページを利用者ページへ移動させる権限がありません。（ユーザーのサブページを除く）',
 	'cantmove-titleprotected' => '新しいページ名が作成保護されているため、この場所にページを移動できません。',
-	'common.css' => '/***** ここに書いたCSSはサイト全体のすべてのスキンに適用されます *****/
-
-/*  Special:Allpagesと Special:Watchlistでリダイレクトとしてマーク */
-.allpagesredirect {
-   font-style: italic;
-}
-.allpagesredirect:after {
-   color: #808080; content: " (リダイレクト)"
-}
-.watchlistredir {
-   font-style: italic;
-}',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
 	'common.js' => '/* ここにあるすべてのJavaScriptは、すべての利用者のどのページに対しても読み込まれます */',
 	'creditspage' => 'ページの帰属表示',
 	'confirmemail' => 'メールアドレスの確認',
@@ -13771,7 +13726,7 @@ $5
 	'choose_reason' => '理由を選択',
 	'community' => 'コミュニティ',
 	'contris_s' => '投稿記録',
-	'create-account-new' => 'Fandomアカウントを作成',
+	'create-account-new' => 'FANDOMアカウントを作成',
 	'cockpit_hide' => '非表示',
 	'corporatepage-create-button' => '新しいWikiコミュニティを作成する',
 	'corporatepage-edits-made' => '回の編集（本日分）',
@@ -21002,18 +20957,7 @@ Omdat je het recht 'hideuser' niet hebt, kun je de blokkade van de gebruiker nie
 	'cant-move-user-page' => "Je hebt geen rechten om gebruikerspagina's te hernoemen (met uitzondering van subpagina's).",
 	'cant-move-to-user-page' => 'Je hebt geen rechten om een pagina naar een gebruikerspagina te hernoemen. Hernoemen naar een subpagina is wel mogelijk.',
 	'cantmove-titleprotected' => 'Je kunt geen pagina naar deze paginaam hernoemen, omdat deze paginanaam beveiligd is tegen het aanmaken ervan.',
-	'common.css' => '/***** CSS die hier wordt geplaatst heeft invloed op alle skins op de hele site *****/
-
-/* Markeert doorverwijzingen in Speciaal:AllePaginas en Speciaal:Volglijst  */
-.allpagesredirect {
-   font-style: italic;
-}
-.allpagesredirect:after {
-   color: #808080; content: " (doorverwijzing)"
-}
-.watchlistredir {
-   font-style: italic;
-}',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
 	'common.js' => "/* JavaScript die hier wordt geplaatst heeft invloed op alle pagina's voor alle gebruikers */",
 	'creditspage' => 'Auteurspagina',
 	'confirmemail' => 'E-mailadres bevestigen',
@@ -21205,7 +21149,7 @@ Bevestig dat u de pagina opnieuw wilt aanmaken.',
 	'community' => 'Community',
 	'contris_s' => 'Contributions',
 	'cockpit_hide' => 'Hide cockpit',
-	'create-account-new' => 'Create your Fandom Account',
+	'create-account-new' => 'Create your FANDOM Account',
 );
 
 $messages['nl-informal'] = array(
@@ -22502,7 +22446,7 @@ Upewnij się, czy na pewno chcesz to zrobić, że rozumiesz konsekwencje. Zobacz
 	'cantrollback' => 'Nie można cofnąć edycji, ponieważ jest tylko jedna wersja tej strony.',
 	'cannotundelete' => 'Odtworzenie nie powiodło się.
 Ktoś inny prawdopodobnie odtworzył już tę stronę.',
-	'contributions' => 'Edycje',
+	'contributions' => 'Wkład użytkownika',
 	'contributions-title' => 'Wkład {{GENDER:$1|użytkownika|użytkowniczki}} $1',
 	'contribsub2' => 'Dla użytkownika $1 ($2)',
 	'createaccountblock' => 'blokada tworzenia kont',
@@ -22513,17 +22457,7 @@ Ktoś inny prawdopodobnie odtworzył już tę stronę.',
 	'cant-move-user-page' => 'Nie masz uprawnień do przenoszenia stron użytkowników (za wyjątkiem podstron).',
 	'cant-move-to-user-page' => 'Nie masz uprawnień do przenoszenia strony do strony użytkownika (za wyjątkiem podstron użytkownika).',
 	'cantmove-titleprotected' => 'Nie możesz przenieść strony, ponieważ nowa nazwa strony jest niedozwolona z powodu zabezpieczenia przed utworzeniem.',
-	'common.css' => '/* Umieszczony tutaj kod CSS zostanie zastosowany we wszystkich skórkach */
-
-/* Przekierowania na Specjalna:Wszystkie_strony oraz Specjalna:Obserwowane */
-.allpagesredirect,
-.watchlistredir {
-    font-style: italic;
-}
-.allpagesredirect::after {
-    color: #808080;
-    content: " (przekierowanie)"
-}',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
 	'common.js' => '/* Umieszczony tutaj kod JavaScript zostanie załadowany przez każdego użytkownika, podczas każdego ładowania strony. */',
 	'creditspage' => 'Autorzy',
 	'confirmemail' => 'Potwierdzanie adresu e‐mail',
@@ -23456,18 +23390,7 @@ A justificativa apresentada por $3 foi ''$2''",
 	'cant-move-user-page' => 'Você não possui permissão de mover páginas principais de usuários.',
 	'cant-move-to-user-page' => 'Você não tem permissão para mover uma página para uma página de usuários (exceto para uma subpágina de usuário).',
 	'cantmove-titleprotected' => 'Você não pode mover uma página para tal denominação uma vez que o novo título se encontra protegido contra criação',
-	'common.css' => '/***** o código CSS colocado aqui será aplicado a todos os temas ******/
-
-/* Marque redirecionamentos em Special:Allpages e Special:Watchlist */
-.allpagesredirect {
-   font-style: italic;
-}
-.allpagesredirect:after {
-   color: #808080; content: " (redirect)"
-}
-.watchlistredir {
-   font-style: italic;
-}',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
 	'common.js' => '/* Códigos JavaScript colocados aqui serão carregados por todos aqueles que acessarem alguma página desta wiki */',
 	'creditspage' => 'Créditos da página',
 	'confirmemail' => 'Confirmar endereço de E-mail',
@@ -23572,7 +23495,7 @@ Por favor, confirme que realmente deseja recriar esta página.",
 	'create_an_account' => 'Inscrever-se',
 	'createpage' => 'Crie um novo artigo',
 	'choose_reason' => 'Escolha o motivo',
-	'create-account-new' => 'Crie a sua conta no Fandom',
+	'create-account-new' => 'Crie a sua conta no FANDOM',
 	'contris_s' => 'Contribuições',
 	'categories-summary' => '',
 	'comma-separator' => ',&#32;',
@@ -23676,199 +23599,6 @@ Por favor, confirme que realmente deseja recriar esta página.",
 	'createwikilang' => 'Default language for this wiki',
 	'community' => 'Comunidade',
 	'cockpit_hide' => 'Esconder cabine',
-);
-
-$messages['pt-br'] = array(
-	'category_header' => 'Páginas na categoria "$1"',
-	'category-media-header' => 'Multimídia na categoria "$1"',
-	'category-empty' => "''No momento esta categoria não possui nenhuma página ou arquivo multimídia.''",
-	'category-subcat-count' => '{{PLURAL:$2|Esta categoria possui apenas a subcategoria a seguir.|Há, nesta categoria {{PLURAL:$1|uma subcategoria|$1 subcategorias}} (dentre um total de $2).}}',
-	'category-subcat-count-limited' => 'Esta categoria possui {{PLURAL:$1|a seguinte sub-categoria|as $1 sub-categorias a seguir}}.',
-	'category-article-count' => '{{PLURAL:$2|Esta categoria possui apenas a página a seguir.|Há, nesta categoria, {{PLURAL:$1|a página a seguir|as $1 páginas a seguir}} (dentre um total de $2).}}',
-	'category-article-count-limited' => 'Há, nesta categoria, {{PLURAL:$1|a página a seguir|as $1 páginas a seguir}}.',
-	'category-file-count' => '{{PLURAL:$2|Esta categoria possui apenas o arquivo a seguir.|Há, nesta categoria, {{PLURAL:$1|o arquivo a seguir|os $1 seguintes arquivos}} (dentre um total de $2.)}}',
-	'category-file-count-limited' => 'Nesta categoria há {{PLURAL:$1|um arquivo|$1 arquivos}}.',
-	'cancel' => 'Cancelar',
-	'create' => 'Criar',
-	'copyright' => 'Conteúdo disponível sob $1.',
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
-	'currentevents' => 'Eventos atuais',
-	'currentevents-url' => 'Project:Eventos atuais',
-	'collapsible-collapse' => 'Ocultar',
-	'collapsible-expand' => 'Expandir',
-	'cannotdelete' => 'Não foi possível eliminar a página ou arquivo $1.
-É possível que ele já tenha sido eliminado por outra pessoa.',
-	'cannotdelete-title' => 'Não é possível excluir a página " $1 "',
-	'cascadeprotected' => 'Esta página foi protegida contra edições por estar incluída {{PLURAL:$1|na página listada|nas páginas listadas}} a seguir, ({{PLURAL:$1|página essa que está protegida|páginas essas que estão protegidas}} com a opção de "proteção progressiva" ativada):
-$2',
-	'customcssprotected' => 'Você não tem permissão para editar esta página CSS, porque ele contém configurações pessoais de outro usuário.',
-	'customjsprotected' => 'Você não tem permissão para editar esta página de JavaScript, porque ele contém configurações pessoais de outro usuário.',
-	'createaccount' => 'Criar conta',
-	'createaccountmail' => 'por e-mail',
-	'createaccountreason' => 'Razão:',
-	'createaccounterror' => 'Não foi possível criar a conta: $1',
-	'cannotchangeemail' => 'A conta de e-mail não pode ser alterada neste wiki.',
-	'createaccount-title' => 'Criação de conta em {{SITENAME}}',
-	'createaccount-text' => 'Alguém criou uma conta de nome $2 para o seu endereço de email no wiki {{SITENAME}} ($4), tendo como senha "$3".
-Você deve se autenticar e alterar sua senha.
-
-Ignore esta mensagem caso a conta tenha sido criada por engano.',
-	'changeemail' => 'Alterar o endereço de e-mail',
-	'changeemail-header' => 'Alterar o endereço de e-mail da conta',
-	'changeemail-text' => 'Preencha este formulário para alterar o endereço de e-mail. Para confirmar esta alteração terá de introduzir a sua senha.',
-	'changeemail-no-info' => 'Para aceder diretamente a esta página você tem de estar autenticado.',
-	'changeemail-oldemail' => 'Endereço de e-mail atual:',
-	'changeemail-newemail' => 'Novo endereço de e-mail:',
-	'changeemail-none' => '(nenhum)',
-	'changeemail-submit' => 'Alterar e-mail',
-	'changeemail-cancel' => 'Cancelar',
-	'confirmedittext' => 'Você precisa confirmar o seu endereço de e-mail antes de começar a editar páginas.
-Por favor, introduza um e valide-o através das suas [[Special:Preferences|preferências de usuário]].',
-	'clearyourcache' => "'''Nota:''' Depois de salvar, você terá de limpar o ''cache'' do seu navegador para ver as alterações.
-* '''Firefox / Safari:''' pressione ''Shift'' enquanto clica em ''Recarregar'', ou pressione ''Ctrl-F5'' ou ''Ctrl-R'' (''Command-R'' para Mac);
-* '''Google Chrome:''' pressione ''Ctrl-Shift-R'' (''Command-Shift-R'' em um Mac)
-* '''Internet Explorer:''' pressione ''Ctrl'' enquanto clica em ''Recarregar'' ou pressione ''Ctrl-F5'';
-* '''Konqueror:''' clique no botão ''Recarregar'' ou pressione ''F5'';
-* '''Opera:''' limpe o ''cache'' em ''Ferramentas → Preferências'' (''Tools → Preferences'')",
-	'continue-editing' => 'Continuar editando',
-	'creating' => 'Criando $1',
-	'copyrightwarning' => "Por favor, note que todas as suas contribuições em {{SITENAME}} são consideradas como lançadas nos termos da licença $2 (veja $1 para detalhes). Se não deseja que o seu texto seja inexoravelmente editado e redistribuído de tal forma, não o envie.<br />
-Você está, ao mesmo tempo, garantindo-nos que isto é algo escrito por você mesmo ou algo copiado de uma fonte de textos em domínio público ou similarmente de teor livre.
-'''NÃO ENVIE TRABALHO PROTEGIDO POR DIREITOS AUTORAIS SEM A DEVIDA PERMISSÃO!'''",
-	'copyrightwarning2' => "Por favor, note que todas as suas contribuições em {{SITENAME}} podem ser editadas, alteradas ou removidas por outros contribuidores. Se você não deseja que o seu texto seja inexoravelmente editado, não o envie.<br />
-Você está, ao mesmo tempo, a garantir-nos que isto é algo escrito por si, ou algo copiado de alguma fonte de textos em domínio público ou similarmente de teor livre (veja $1 para detalhes).
-'''NÃO ENVIE TRABALHO PROTEGIDO POR DIREITOS DE AUTOR SEM A DEVIDA PERMISSÃO!'''",
-	'cascadeprotectedwarning' => "'''Atenção:''' Esta página se encontra protegida; apenas {{int:group-sysop}} podem editá-la, uma vez que se encontra incluída {{PLURAL:\$1|na seguinte página protegida|nas seguintes páginas protegidas}} com a \"proteção progressiva\":",
-	'cantcreateaccounttitle' => 'Não é possível criar uma conta',
-	'cantcreateaccount-text' => "Este IP ('''$1''') foi bloqueado de criar novas contas por [[User:$3|$3]].
-
-A justificativa apresentada por $3 foi ''$2''",
-	'currentrev' => 'Revisão atual',
-	'currentrev-asof' => 'Edição atual tal como às $1',
-	'currentrevisionlink' => 'ver versão atual',
-	'cur' => 'atu',
-	'compareselectedversions' => 'Compare as versões selecionadas',
-	'changepassword' => 'Alterar senha',
-	'columns' => 'Colunas:',
-	'copyuploaddisabled' => 'O upload por URL encontra-se desativado.',
-	'cachedspecial-viewing-cached-ttl' => 'Você está visualizando uma versão de cache desta página que pode ser de $1 atrás.',
-	'cachedspecial-viewing-cached-ts' => 'Você está visualizando uma versão de cache desta página que pode estar desatualizada.',
-	'cachedspecial-refresh-now' => 'Ver a mais recente.',
-	'categories' => 'Categorias',
-	'categoriespagetext' => '{{PLURAL:$1|A seguinte categoria contém|As seguintes contém}} páginas ou mídia.
-[[Special:UnusedCategories|Categorias não utilizadas]] não são mostradas aqui.
-Veja também [[Special:WantedCategories|categorias pedidas]].',
-	'categoriesfrom' => 'Listar categorias começando por:',
-	'changed' => 'alterada',
-	'created' => 'criada',
-	'confirm' => 'Confirmar',
-	'confirmdeletetext' => 'Encontra-se prestes a eliminar permanentemente uma página ou uma imagem e todo o seu histórico.
-Por favor, confirme que possui a intenção de fazer isto, que compreende as consequências e que encontra-se a fazer isto de acordo com as [[{{MediaWiki:Policy-url}}|políticas]] do projeto.',
-	'cantrollback' => 'Não foi possível reverter a edição; o último contribuidor é o único autor desta página',
-	'cannotundelete' => 'Restauração falhada; alguém talvez já restaurou a página.',
-	'contributions' => 'Contribuições {{GENDER:{{BASEPAGENAME}}|do usuário|da usuária}}',
-	'contributions-title' => 'Contribuições {{GENDER:$1|do usuário|da usuária}} $1',
-	'contribsub2' => 'Para $1 ($2)',
-	'createaccountblock' => 'criação de conta de usuário bloqueada',
-	'change-blocklink' => 'alterar bloqueio',
-	'contribslink' => 'contribs',
-	'cant-block-while-blocked' => 'Você não pode bloquear outros usuários enquanto estiver bloqueado.',
-	'cant-see-hidden-user' => 'O usuário que você está tentando bloquear já está bloqueado ou oculto. Como você não possui privilégio de ocultar usuários, você não pode ver ou editar o bloqueio desse usuário.',
-	'cant-move-user-page' => 'Você não possui permissão de mover páginas principais de usuários.',
-	'cant-move-to-user-page' => 'Você não tem permissão para mover uma página para uma página de usuários (exceto para uma subpágina de usuário).',
-	'cantmove-titleprotected' => 'Você não pode mover uma página para tal denominação uma vez que o novo título se encontra protegido contra criação',
-	'common.css' => '/** o código CSS colocado aqui será aplicado a todos os temas */',
-	'common.js' => '/* Códigos JavaScript aqui colocados serão carregados por todos aqueles que acessarem alguma página deste wiki */',
-	'creditspage' => 'Créditos da página',
-	'confirmemail' => 'Confirmar endereço de E-mail',
-	'confirmemail_noemail' => 'Não possui um endereço de e-mail válido indicado nas suas [[Special:Preferences|preferências de usuário]].',
-	'confirmemail_text' => '{{SITENAME}} requer o seu endereço de e-mail esteja validado antes de utilizar as funcionalidades que requerem um endereço de e-mail.
-Ative o botão abaixo para enviar uma confirmação para o seu endereço de e-mail.
-A mensagem incluirá um link que contém um código;
-acesse o link no seu navegador para confirmar que o seu endereço de e-mail é válido.',
-	'confirmemail_pending' => 'Um código de confirmação já foi enviado para você; caso tenha criado sua conta recentemente, é recomendável aguardar alguns minutos para o receber antes de tentar pedir um novo código.',
-	'confirmemail_send' => 'Enviar código de confirmação',
-	'confirmemail_sent' => 'E-mail de confirmação enviado.',
-	'confirmemail_oncreate' => 'Foi enviado um código de confirmação para o seu endereço de e-mail.
-Tal código não é exigido para que possa se autenticar no sistema, mas será necessário que você o forneça antes de habilitar qualquer ferramenta baseada no uso de e-mail deste wiki.',
-	'confirmemail_sendfailed' => 'O {{SITENAME}} não pôde enviar o email de confirmação.
-Verifique se o seu endereço de e-mail possui caracteres inválidos.
-
-O mailer retornou: $1',
-	'confirmemail_invalid' => 'Código de confirmação inválido. O código poderá ter expirado.',
-	'confirmemail_needlogin' => 'Precisa de $1 para confirmar o seu endereço de e-mail.',
-	'confirmemail_success' => 'O seu endereço de e-mail foi confirmado. Pode agora se ligar.',
-	'confirmemail_loggedin' => 'O seu endereço de e-mail foi agora confirmado.',
-	'confirmemail_error' => 'Alguma coisa correu mal ao guardar a sua confirmação.',
-	'confirmemail_subject' => '{{SITENAME}} confirmação de endereço de e-mail',
-	'confirmemail_body' => 'Alguém, provavelmente você, com o endereço de IP $1,
-registrou uma conta "$2" com este endereço de e-mail em {{SITENAME}}.
-
-Para confirmar que esta conta realmente é sua, e para ativar
-as funcionalidades de e-mail em {{SITENAME}},
-abra o seguinte endereço no seu navegador:
-
-$3
-
-Se você *não* registrou a conta, siga a seguinte ligação
-para cancelar a confirmação do endereço de e-mail:
-
-$5
-
-Este código de confirmação irá expirar em $4.',
-	'confirmemail_body_changed' => 'Alguém, provavelmente você com o endereço de IP $1,
-alterou o endereço de e-mail da conta "$2" para este em {{SITENAME}}.
-
-Para confirmar que esta conta é realmente sua e reativar
-as funcionalidades de e-mail em {{SITENAME}},
-abra o seguinte link no seu navegador:
-
-$3
-
-Caso a conta *não* lhe pertença, siga o seguinte link
-para cancelar a confirmação do endereço de e-mail:
-
-$5
-
-Este código de confirmação irá expirar em $4.',
-	'confirmemail_body_set' => 'Alguém, provavelmente você com o endereço IP $1,
-definiu o endereço de correio eletrónico da conta "$2" para este na {{SITENAME}}.
-
-Para confirmar que esta conta é realmente sua e reativar
-as funcionalidades de correio electrónico na {{SITENAME}},
-abra o seguinte link no seu browser:
-
-$3
-
-Caso a conta *não* lhe pertença, siga o seguinte link
-para cancelar a confirmação do endereço de correio electrónico:
-
-$5
-
-Este código de confirmação irá expirar em $4.',
-	'confirmemail_invalidated' => 'Confirmação de endereço de e-mail cancelada',
-	'confirmrecreate' => "O usuário [[User:$1|$1]] ([[User talk:$1|Discussão]]) eliminou esta página após você ter começado a editar, pelo seguinte motivo:
-: ''$2''
-Por favor, confirme que realmente deseja recriar esta página.",
-	'confirmrecreate-noreason' => 'O usuário [[User:$1|$1]] ([[User talk:$1|discussão]]) eliminou esta página depois de você ter começado a editá-la. Confirme que deseja recriar a página, por favor.',
-	'confirm_purge_button' => 'OK',
-	'confirm-purge-top' => 'Limpar a memória cache desta página?',
-	'confirm-purge-bottom' => "Purgar uma página limpa o ''cache'' e força a sua versão mais recente a aparecer.",
-	'confirm-watch-button' => 'OK',
-	'confirm-watch-top' => 'Adicionar esta página às suas páginas vigiadas?',
-	'confirm-unwatch-button' => 'OK',
-	'confirm-unwatch-top' => 'Remover esta página das páginas vigiadas?',
-	'comparepages' => 'Comparar páginas',
-	'compare-selector' => 'Comparar edições da página',
-	'compare-page1' => 'Página 1',
-	'compare-page2' => 'Página 2',
-	'compare-rev1' => 'Edição 1',
-	'compare-rev2' => 'Edição 2',
-	'compare-submit' => 'Comparar',
-	'compare-invalid-title' => 'O título que você especificou é inválido.',
-	'compare-title-not-exists' => 'O título que você especificou não existe.',
-	'compare-revision-not-exists' => 'A revisão que você especificou não existe.',
-	'contris_s' => 'Contribuições',
 );
 
 $messages['qu'] = array(
@@ -24792,7 +24522,7 @@ $3 {{GENDER:$3|указал|указала}} следующую причину: 
 	'cant-move-user-page' => 'У вас нет разрешения переименовывать основные страницы участников.',
 	'cant-move-to-user-page' => 'У вас нет прав переименовывать страницу в страницу участника (можно переименовать в подстраницу).',
 	'cantmove-titleprotected' => 'Невозможно переименовать страницу, так как новое название входит в список запрещённых.',
-	'common.css' => '/** Размещённый здесь CSS будет применяться ко всем темам оформления */',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
 	'common.js' => '/* Размещённый здесь JavaScript код будет загружаться всем пользователям при обращении к каждой странице */',
 	'creditspage' => 'Благодарности',
 	'confirmemail' => 'Подтверждение адреса электронной почты',
@@ -32120,109 +31850,6 @@ Also see [[Special:WantedCategories|wanted categories]].',
 	'contribslink' => 'biedraegen',
 );
 
-$messages['zh'] = array(
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
-	'cannotundelete' => '恢复失败；可能先前已经被人恢复。',
-	'cantcreateaccounttitle' => '不能创建帐户',
-	'cantrollback' => '无法恢复编辑；最后的参与者是本文的唯一作者。',
-	'cascadeprotected' => "{{#ifexist:{{FULLPAGENAME}}|這個頁面已經被保護，因為這個頁面被以下已標註「連鎖保護」的被保護頁-{面}-包含：|
-<div style=\"background-color: #eee; border: 1px solid #aa8; margin: 0.5em; padding: 0.5em;\" class=\"plainlinks\">'''本页已经被删除，并被[[wikipedia:頁面保護方針|保护]]以防止重复创建。除非您有正当的理由，请不要新建该条目。'''
-[[Image:Icono archivo borrar.png|80px|right|]]
-如果您正在搜寻关于这个题目的信息，你可以[http://zh.wikipedia.org/wiki/Special:Search?search={{FULLPAGENAMEE}}&fulltext=Search 搜索“{{FULLPAGENAME}}”]其他条目。
-
-*删除的原因请参见[[Wikipedia:可以快速删除的条目的标准|可以快速删除的条目的标准]]，[[Wikipedia:删除投票/侵权]]，[[Wikipedia:删除投票和请求|删除投票和请求]]。 
-*本页被删除的历史记录可以在'''[{{fullurl:Special:Log|page={{FULLPAGENAMEE}}}} 它的活动日志]'''中找到。或者也可以联系保护本页的[[wikipedia:管理员|管理员]]了解详情。
-*如果你是从其他条目的链接中来到本页，你可以帮助维基百科移除这个[[Special:Whatlinkshere/{{FULLPAGENAME}}|错误的链接]]。
-*恢复或者编辑这个条目，请在{{#switch:{{NAMESPACE}}
-|Category|Help|Portal|Template|Image|User|Wikipedia|=[[{{TALKPAGENAME}}|讨论页]]}}或者[[wikipedia:删除检讨|删除检讨]]中提出请求。
-*管理员可以在[[Special:Undelete/{{FULLPAGENAME}}]]查看页面的历史和内容。
-</div>
-
-您可以在以下的頁面找到有關的資訊：
-}}",
-	'cascadeprotectedwarning' => "'''警告：'''本頁已經被保護，只有擁有管理員權限的用戶才可修改，因為本頁已被以下連鎖保護的頁面所包含：",
-	'category-media-header' => '類別「$1」中的媒體檔',
-	'changed' => '被改变',
-	'community' => '社群',
-	'compareselectedversions' => '比较被选版本',
-	'confirmemail' => '确认电子邮件地址',
-	'confirmemail_error' => '你的确认过程发生错误.',
-	'confirmemail_invalid' => '不正确的确认码. 这个确认码已经过期.
-
-Send a new code by clicking [[Special:ConfirmEmail|here]].',
-	'confirmemail_loggedin' => '您的电子邮件已被确认.',
-	'confirmemail_noemail' => '你没有在账户的[[Special:Preferences|参数设置]]中验证你的电子邮件地址。',
-	'confirmemail_send' => '寄出确认码',
-	'confirmemail_sendfailed' => '不能发出确认信件. 请检查地址中是否包括不可用的字符.',
-	'confirmemail_sent' => '确认信已发出',
-	'confirmemail_success' => '您的电子邮件地址已经确认. 您现在可以登入并开始享受您的Wikia之旅了.',
-	'confirmemail_text' => '您需要先确认电子邮件地址，您才能收到通过Wikia送出的电子邮件。请点击下方的确认按钮，这将会向您所登记的地址发出确认信件。确认信包括一个含有确认码的超连结，您在浏览器中打开这个连结即可完成确认。如果你已经通过验证，请参看[[Special:Preferences|您的参数设置]]。',
-	'confirmedittext' => '在编辑页面前你需要确认你的电子邮件地址。请在[[Special:Preferences|参数设定]]中设置并验证你的电子邮件地址。',
-	'confirmrecreate' => "在你编辑这个条目後, 用户[[User:$1|$1]]([[User talk:$1|讨论]])以下列原因删除了这个条目:
-: ''$2''
-请在重新创建条目前三思.",
-	'contris' => '用户贡献',
-	'contris_s' => '用户贡献',
-	'copyrightwarning' => "若您不希望您貢獻的內容被任意修改或被他人再度分發，請不要提交這些內容。
-
-* {{SITENAME}}的所有文本資料均依創作共同-姓名標示-相同方式分享（cc-by-sa 3.0）的條款釋出(請見$1）。
-* 在未得到著作權利人准許的情況下，'''請勿發佈受著作權保護的資料'''。
-* 只有公有領域的資料，才可在無須授權下複製到本站；大多數的網頁都不在此範圍內。",
-	'copyrightwarning2' => '请注意您在{{SITENAME}}所做出的所有贡献都可能被其他贡献者编辑, 修改或删除.
-如果您不想您写的文章被他人修改, 请不要在这里提交.<br />
-你也必须向我们保证你所写的一切都出自你自己的笔下, 或者是复制于公共领域或其他类似的自由来源(详情请参见 $1).
-<strong>请不要在未获授权的情况下发表受版权保护的作品！</strong>',
-	'createpage' => '新增文章',
-	'createaccountblock' => '禁止创建帐户',
-	'createwikipagetitle' => '申请wiki',
-	'created' => '已被创建',
-	'creditspage' => '页面作者',
-	'currentevents-url' => 'Portal:新聞動態',
-	'currentrevisionlink' => '查看当前版本',
-);
-
-$messages['zh-classical'] = array(
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
-);
-
-$messages['zh-cn'] = array(
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
-	'cantcreateaccounttitle' => '不能创建帐户',
-	'cascadeprotected' => '{{MediaWiki:Cascadeprotected}}',
-	'cascadeprotectedwarning' => '{{MediaWiki:Cascadeprotectedwarning}}',
-	'category-media-header' => '“$1”分类中的媒体文件',
-	'community' => '社区',
-	'compareselectedversions' => '比较被选版本',
-	'confirmemail' => '确认电子邮件地址',
-	'confirmemail_error' => '你的确认过程发生错误.',
-	'confirmemail_invalid' => '不正确的确认码. 这个确认码已经过期.
-
-Send a new code by clicking [[Special:ConfirmEmail|here]].',
-	'confirmemail_loggedin' => '您的电子邮件已被确认.',
-	'confirmemail_noemail' => '你没有在账户的[[Special:Preferences|参数设置]]中验证你的电子邮件地址。',
-	'confirmemail_send' => '寄出确认码',
-	'confirmemail_sendfailed' => '不能发出确认信件. 请检查地址中是否包括不可用的字符.',
-	'confirmemail_sent' => '确认信已发出',
-	'confirmemail_success' => '您的电子邮件地址已经确认. 您现在可以登入并开始享受您的Wikia之旅了.',
-	'confirmemail_text' => '您需要先确认电子邮件地址，您才能收到通过Wikia送出的电子邮件。请点击下方的确认按钮，这将会向您所登记的地址发出确认信件。确认信包括一个含有确认码的超连结，您在浏览器中打开这个连结即可完成确认。如果你已经通过验证，请参看[[Special:Preferences|您的参数设置]]。',
-	'confirmedittext' => '在编辑页面前你需要确认你的电子邮件地址。请在[[Special:Preferences|参数设定]]中设置并验证你的电子邮件地址。',
-	'confirmrecreate' => "在你编辑这个条目後, 用户[[User:$1|$1]]([[User talk:$1|讨论]])以下列原因删除了这个条目:
-: ''$2''
-请在重新创建条目前三思.",
-	'copyrightwarning2' => '请注意您在{{SITENAME}}所做出的所有贡献都可能被其他贡献者编辑, 修改或删除.
-如果您不想您写的文章被他人修改, 请不要在这里提交.<br />
-你也必须向我们保证你所写的一切都出自你自己的笔下, 或者是复制于公共领域或其他类似的自由来源(详情请参见 $1).
-<strong>请不要在未获授权的情况下发表受版权保护的作品！</strong>',
-	'createpage' => '新增文章',
-	'createaccountblock' => '禁止创建帐户',
-	'createwiki' => '申请wiki',
-	'createwikipagetitle' => '申请wiki',
-	'created' => '已被创建',
-	'creditspage' => '页面作者',
-	'currentevents-url' => 'Portal:新聞動態',
-	'currentrevisionlink' => '查看当前版本',
-);
-
 $messages['zh-hans'] = array(
 	'category_header' => '<span style="font-size: 80%;">分类“$1”中的页面</span>',
 	'category-media-header' => '<span style="font-size: 80%;">分类“$1”中的媒体文件</span>',
@@ -32320,18 +31947,7 @@ $3的理由是''$2''",
 	'cant-move-user-page' => '您并没有许可权去移动用户页面（它的子页面除外）。',
 	'cant-move-to-user-page' => '您并没有许可权去移动到用户页面（它的子页面除外）。',
 	'cantmove-titleprotected' => '您无法将页面移动到该位置，因为新标题已被保护以防止创建。',
-	'common.css' => '/*****在此处添加CSS将应用于整个网站。*****/
-
-/* 在Special:Allpages和Special:Watchlist标记重定向。*/
-.allpagesredirect {
-   font-style: italic;
-}
-.allpagesredirect:after {
-   color: #808080; content: " (redirect)"
-}
-.watchlistredir {
-   font-style: italic;
-}',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
 	'common.js' => '/* 此处的JavaScript将加载于所有用户每一个页面。 */',
 	'creditspage' => '页面致谢',
 	'confirmemail' => '确认邮箱地址',
@@ -32430,7 +32046,7 @@ $5
 	'compare-invalid-title' => '您指定的标题无效。',
 	'compare-title-not-exists' => '您指定的标题不存在。',
 	'compare-revision-not-exists' => '你指定的版本不存在。',
-	'create-account-new' => '创建您的Fandom帐户',
+	'create-account-new' => '创建您的FANDOM帐户',
 	'community' => '社区',
 	'contris' => '贡献',
 	'contris_s' => '贡献',
@@ -32639,18 +32255,7 @@ ___________________________________________
 	'cant-move-user-page' => '您並沒有許可權去移動用戶頁面（它的子頁面除外）。',
 	'cant-move-to-user-page' => '您並沒有將頁面移動到用戶頁面的權限（它的子頁面除外）。',
 	'cantmove-titleprotected' => '您不可以移動頁面到這個位置，因為該新標題已經被保護以防止建立。',
-	'common.css' => '/*****在此處的CSS將應用於全站。*****/
-
-/* 在Special:Allpages和Special:Watchlist中標記重定向。*/
-.allpagesredirect {
-   font-style: italic;
-}
-.allpagesredirect:after {
-   color: #808080; content: " (redirect)"
-}
-.watchlistredir {
-   font-style: italic;
-}',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
 	'common.js' => '/* 此處的JavaScript將在所有用戶載入每個頁面時使用。 */',
 	'creditspage' => '頁面致謝',
 	'confirmemail' => '確認郵箱位址',
@@ -32749,7 +32354,7 @@ $5
 	'compare-invalid-title' => '所指定標題無效。',
 	'compare-title-not-exists' => '所指定的標題不存在。',
 	'compare-revision-not-exists' => '所指定的修訂不存在。',
-	'create-account-new' => '創建您的Fandom帳戶',
+	'create-account-new' => '創建您的FANDOM帳戶',
 	'community' => '社區',
 	'contris' => '貢獻',
 	'contris_s' => '貢獻',
@@ -32855,221 +32460,6 @@ $5
 	'create_an_account' => '註冊',
 	'choose_reason' => '選擇理由',
 	'cockpit_hide' => '隱藏 cockpit',
-);
-
-$messages['zh-hk'] = array(
-	'contribslink' => '貢獻',
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
-	'cannotundelete' => '恢復失敗；可能先前已經被人恢復。',
-	'cantcreateaccounttitle' => '不能創建帳户',
-	'cantrollback' => '無法恢復編輯；最後的參與者是本文的唯一作者。',
-	'cascadeprotected' => "{{#ifexist:{{FULLPAGENAME}}|這個頁面已經被保護，因為這個頁面被以下已標註「連鎖保護」的被保護頁-{面}-包含：|
-<div style=\"background-color: #eee; border: 1px solid #aa8; margin: 0.5em; padding: 0.5em;\" class=\"plainlinks\">'''本頁已經被删除，并被[[wikipedia:頁面保護方針|保護]]以防止重復創建。除非您有正當的理由，請不要新建該條目。'''
-[[Image:Icono archivo borrar.png|80px|right|]]
-如果您正在搜尋關于這個題目的信息，你可以[http://zh-hk.wikipedia.org/wiki/Special:Search?search={{FULLPAGENAMEE}}&fulltext=Search 搜索“{{FULLPAGENAME}}”]其他條目。
-
-*删除的原因請參見[[Wikipedia:可以快速删除的條目的標准|可以快速删除的條目的標准]]，[[Wikipedia:删除投票/侵權]]，[[Wikipedia:删除投票和請求|删除投票和請求]]。 
-*本頁被删除的歷史記録可以在'''[{{fullurl:Special:Log|page={{FULLPAGENAMEE}}}} 它的活動日志]'''中找到。或者也可以聯系保護本頁的[[wikipedia:管理員|管理員]]了解詳情。
-*如果你是從其他條目的鏈接中來到本頁，你可以幫助維基百科移除這個[[Special:Whatlinkshere/{{FULLPAGENAME}}|錯誤的鏈接]]。
-*恢復或者編輯這個條目，請在{{#switch:{{NAMESPACE}}
-|Category|Help|Portal|Template|Image|User|Wikipedia|=[[{{TALKPAGENAME}}|討論頁]]}}或者[[wikipedia:删除檢討|删除檢討]]中提出請求。
-*管理員可以在[[Special:Undelete/{{FULLPAGENAME}}]]查看頁面的歷史和内容。
-</div>
-
-您可以在以下的頁面找到有關的資訊：
-}}",
-	'cascadeprotectedwarning' => '{{MediaWiki:Cascadeprotectedwarning}}',
-	'category-media-header' => '類別「$1」中的媒體檔',
-	'compareselectedversions' => '比較被選版本',
-	'confirmemail' => '確認電子郵件地址',
-	'confirmemail_error' => '你的確認過程發生錯誤.',
-	'confirmemail_invalid' => '不正確的確認碼. 這個確認碼已經過期.
-
-Send a new code by clicking [[Special:ConfirmEmail|here]].',
-	'confirmemail_loggedin' => '您的電子郵件已被確認.',
-	'confirmemail_noemail' => '你没有在賬户的[[Special:Preferences|參數設置]]中驗證你的電子郵件地址。',
-	'confirmemail_send' => '寄出確認碼',
-	'confirmemail_sendfailed' => '不能發出確認信件. 請檢查地址中是否包括不可用的字符.',
-	'confirmemail_sent' => '確認信已發出',
-	'confirmemail_success' => '您的電子郵件地址已經確認. 您現在可以登入并開始享受您的Wikia之旅了.',
-	'confirmemail_text' => '您需要先確認電子郵件地址，您才能收到通過Wikia送出的電子郵件。請點撃下方的確認按鈕，這將會向您所登記的地址發出確認信件。確認信包括一個含有確認碼的超連結，您在瀏覧器中打開這個連結即可完成確認。如果你已經通過驗證，請參看[[Special:Preferences|您的參數設置]]。',
-	'confirmedittext' => '在編輯頁面前你需要確認你的電子郵件地址。請在[[Special:Preferences|參數設定]]中設置并驗證你的電子郵件地址。',
-	'confirmrecreate' => "在你編輯這個條目後, 用户[[User:$1|$1]]([[User talk:$1|討論]])以下列原因删除了這個條目:
-: ''$2''
-請在重新創建條目前三思.",
-	'contris' => '用戶貢獻',
-	'contris_s' => '用戶貢獻',
-	'copyrightwarning2' => '請注意您在{{SITENAME}}所做出的所有貢獻都可能被其他貢獻者編輯, 修改或删除.
-如果您不想您寫的文章被他人修改, 請不要在這裏提交.<br />
-你也必須向我們保證你所寫的一切都出自你自己的筆下, 或者是復制于公共領域或其他類似的自由來源(詳情請參見 $1).
-<strong>請不要在未獲授權的情况下發表受版權保護的作品！</strong>',
-	'createpage' => '新增文章',
-	'createaccountblock' => '禁止創建帳户',
-	'createwiki' => '申請wiki',
-	'createwikipagetitle' => '申請wiki',
-	'created' => '已被創建',
-	'creditspage' => '頁面作者',
-	'currentevents-url' => 'Portal:新聞動態',
-	'currentrevisionlink' => '查看當前版本',
-);
-
-$messages['zh-min-nan'] = array(
-	'contribslink' => '貢獻',
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
-);
-
-$messages['zh-mo'] = array(
-	'contribslink' => '貢獻',
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
-);
-
-$messages['zh-my'] = array(
-	'contribslink' => '貢獻',
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
-);
-
-$messages['zh-sg'] = array(
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
-	'cantcreateaccounttitle' => '{{MediaWiki:Cantcreateaccounttitle}}',
-	'cascadeprotected' => '{{MediaWiki:Cascadeprotected}}',
-	'cascadeprotectedwarning' => '{{MediaWiki:Cascadeprotectedwarning}}',
-	'category-media-header' => '“$1”分类中的媒体文件',
-	'compareselectedversions' => '比较被选版本',
-	'confirmemail' => '确认电子邮件地址',
-	'confirmemail_error' => '你的确认过程发生错误.',
-	'confirmemail_invalid' => '不正确的确认码. 这个确认码已经过期.
-
-Send a new code by clicking [[Special:ConfirmEmail|here]].',
-	'confirmemail_loggedin' => '您的电子邮件已被确认.',
-	'confirmemail_noemail' => '你没有在账户的[[Special:Preferences|参数设置]]中验证你的电子邮件地址。',
-	'confirmemail_send' => '寄出确认码',
-	'confirmemail_sendfailed' => '不能发出确认信件. 请检查地址中是否包括不可用的字符.',
-	'confirmemail_sent' => '确认信已发出',
-	'confirmemail_success' => '您的电子邮件地址已经确认. 您现在可以登入并开始享受您的Wikia之旅了.',
-	'confirmemail_text' => '您需要先确认电子邮件地址，您才能收到通过Wikia送出的电子邮件。请点击下方的确认按钮，这将会向您所登记的地址发出确认信件。确认信包括一个含有确认码的超连结，您在浏览器中打开这个连结即可完成确认。如果你已经通过验证，请参看[[Special:Preferences|您的参数设置]]。',
-	'confirmedittext' => '在编辑页面前你需要确认你的电子邮件地址。请在[[Special:Preferences|参数设定]]中设置并验证你的电子邮件地址。',
-	'confirmrecreate' => "在你编辑这个条目後, 用户[[User:$1|$1]]([[User talk:$1|讨论]])以下列原因删除了这个条目:
-: ''$2''
-请在重新创建条目前三思.",
-	'copyrightwarning2' => '请注意您在{{SITENAME}}所做出的所有贡献都可能被其他贡献者编辑, 修改或删除.
-如果您不想您写的文章被他人修改, 请不要在这里提交.<br />
-你也必须向我们保证你所写的一切都出自你自己的笔下, 或者是复制于公共领域或其他类似的自由来源(详情请参见 $1).
-<strong>请不要在未获授权的情况下发表受版权保护的作品！</strong>',
-	'createaccountblock' => '禁止创建帐户',
-	'createwiki' => '申请wiki',
-	'createwikipagetitle' => '申请wiki',
-	'created' => '已被创建',
-	'creditspage' => '页面作者',
-	'currentevents-url' => 'Portal:新聞動態',
-	'currentrevisionlink' => '查看当前版本',
-);
-
-$messages['zh-tw'] = array(
-	'create' => '建立',
-	'copyright' => '本站的文字內容除另有聲明外，全部以 $1 條款授權使用。',
-	'cannotdelete' => '無法刪除選定的頁面或圖片（它可能已經被其他人刪除了）。',
-	'createaccount' => '建立新帳號',
-	'createaccount-title' => '在{{SITENAME}}中建立新帳號',
-	'createaccount-text' => '有人在{{SITENAME}}中為 $2 建立了一個新帳號($4)。 "$2" 的密碼是 "$3" 。您應該立即登入並更改密碼。
-
-如果該帳號建立錯誤的話，您可以忽略此訊息。',
-	'confirmedittext' => '在編輯頁面前你需要確認你的電子郵件地址。請在[[Special:Preferences|參數設定]]中設置并驗證你的電子郵件地址。',
-	'clearyourcache' => "'''注意:''' 在儲存以後, 您必須清除瀏覽器的快取才能看到所作出的改變。 '''Mozilla / Firefox / Safari:''' 按著 ''Shift'' 再點擊''重新整理''(或按下''Ctrl-Shift-R''，在蘋果Mac上按下''Cmd-Shift-R'')；'''IE:''' 按著 ''Ctrl'' 再點擊 ''重新整理''，或按下 ''Ctrl-F5''；'''Konqueror:''' 只需點擊 ''重新整理''；'''Opera:''' 使用者需要在 ''工具-設定'' 中完整地清除它們的快取。",
-	'cascadeprotectedwarning' => '{{MediaWiki:Cascadeprotectedwarning}}',
-	'cantcreateaccounttitle' => '無法創建帳戶',
-	'cantcreateaccount-text' => "從這個IP地址 (<b>$1</b>) 建立帳號已經被[[User:$3|$3]]禁止。
-
-當中被$3封鎖的原因是''$2''",
-	'compareselectedversions' => '比較被選版本',
-	'confirmdeletetext' => '您即將從資料庫中永遠刪除一個頁面或圖片以及其歷史。
-請確定您要進行此項操作，並且了解其後果，同時您的行為符合[[{{MediaWiki:Policy-url}}]]。',
-	'cantrollback' => '無法恢復編輯；最後的參與者是本文的唯一作者。',
-	'cannotundelete' => '復原失敗；可能之前已經被其他人復原。',
-	'contributions' => '使用者編修記錄',
-	'contribsub2' => '$1的編修記錄 ($2)',
-	'createaccountblock' => '禁止創建帳户',
-	'confirmemail' => '確認電子郵件地址',
-	'confirmemail_noemail' => '你没有在賬户的[[Special:Preferences|參數設置]]中驗證你的電子郵件地址。',
-	'confirmemail_text' => '您需要先確認電子郵件地址，您才能收到通過Wikia送出的電子郵件。請點撃下方的確認按鈕，這將會向您所登記的地址發出確認信件。確認信包括一個含有確認碼的超連結，您在瀏覧器中打開這個連結即可完成確認。如果你已經通過驗證，請參看[[Special:Preferences|您的參數設置]]。',
-	'confirmemail_sendfailed' => '不能發出確認信件. 請檢查地址中是否包括不可用的字符.',
-	'confirmemail_needlogin' => '您需要$1以確認您的電子郵件地址。',
-	'confirmemail_success' => '您的電子郵件地址已經確認. 您現在可以登入並開始享受您的Wikia之旅了.',
-	'confirmemail_loggedin' => '您的電子郵件已被確認.',
-	'confirmemail_subject' => '{{SITENAME}}電子郵件地址確認',
-	'confirmrecreate' => "在你編輯這個條目後, 用户[[User:$1|$1]]([[User talk:$1|討論]])以下列原因删除了這個條目:
-: ''$2''
-請在重新創建條目前三思.",
-	'create_an_account' => '開啟新用戶帳號',
-	'createpage' => '新增文章',
-	'choose_reason' => '選擇原因',
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
-	'cascadeprotected' => '{{MediaWiki:Cascadeprotected}}',
-	'category-media-header' => '「$1」分類中的媒體檔',
-	'community' => '社群',
-	'confirmemail_error' => '你的確認過程發生錯誤.',
-	'confirmemail_invalid' => '不正確的確認碼. 這個確認碼已經過期.
-
-Send a new code by clicking [[Special:ConfirmEmail|here]].',
-	'confirmemail_pending' => '<div class="error">
-一個確認代碼已經被發送到您的郵箱，您可能需要等幾分鐘才能收到。如果無法收到，請再申請一個新的確認碼！
-</div>',
-	'confirmemail_send' => '寄出確認碼',
-	'confirmemail_sent' => '確認信已發出',
-	'contris' => '用戶貢獻',
-	'contris_s' => '用戶貢獻',
-	'copyrightwarning2' => '請注意您在{{SITENAME}}所做出的所有貢獻都可能被其他貢獻者編輯, 修改或删除.
-如果您不想您寫的文章被他人修改, 請不要在這裏提交.<br />
-你也必須向我們保證你所寫的一切都出自你自己的筆下, 或者是復制于公共領域或其他類似的自由來源(詳情請參見 $1).
-<strong>請不要在未獲授權的情况下發表受版權保護的作品！</strong>',
-	'createwiki' => '申請wiki',
-	'createwikipagetitle' => '申請wiki',
-	'created' => '已被創建',
-	'creditspage' => '頁面作者',
-	'currentevents-url' => 'Portal:新聞動態',
-	'currentrevisionlink' => '查看當前版本',
-);
-
-$messages['zh-yue'] = array(
-	'create' => '建立',
-	'copyright' => '本站的文字內容除另有聲明外，全部以 $1 條款授權使用。',
-	'cannotdelete' => '無法刪除選定的頁面或圖片（它可能已經被其他人刪除了）。',
-	'createaccount' => '建立新帳號',
-	'createaccount-title' => '在{{SITENAME}}中建立新帳號',
-	'createaccount-text' => '有人在{{SITENAME}}中為 $2 建立了一個新帳號($4)。 "$2" 的密碼是 "$3" 。您應該立即登入並更改密碼。
-
-如果該帳號建立錯誤的話，您可以忽略此訊息。',
-	'confirmedittext' => '在編輯此頁之前您必須確認您的電子郵件地址。請透過[[Special:Preferences|參數設定]]設定並驗証您的電子郵件地址。',
-	'clearyourcache' => "'''注意:''' 在儲存以後, 您必須清除瀏覽器的快取才能看到所作出的改變。 '''Mozilla / Firefox / Safari:''' 按著 ''Shift'' 再點擊''重新整理''(或按下''Ctrl-Shift-R''，在蘋果Mac上按下''Cmd-Shift-R'')；'''IE:''' 按著 ''Ctrl'' 再點擊 ''重新整理''，或按下 ''Ctrl-F5''；'''Konqueror:''' 只需點擊 ''重新整理''；'''Opera:''' 使用者需要在 ''工具-設定'' 中完整地清除它們的快取。",
-	'cascadeprotectedwarning' => '警告: 本頁已經被保護，只有擁有管理員權限的使用者才可修改，因為本頁已被以下連鎖保護的{{PLURAL:$1|一個|多個}}頁面所包含:',
-	'cantcreateaccounttitle' => '無法建立帳號',
-	'cantcreateaccount-text' => "從這個IP地址 (<b>$1</b>) 建立帳號已經被[[User:$3|$3]]禁止。
-
-當中被$3封鎖的原因是''$2''",
-	'compareselectedversions' => '比較選定的版本',
-	'confirmdeletetext' => '您即將從資料庫中永遠刪除一個頁面或圖片以及其歷史。
-請確定您要進行此項操作，並且了解其後果，同時您的行為符合[[{{MediaWiki:Policy-url}}]]。',
-	'cantrollback' => '無法復原編輯；最後的貢獻者是本文的唯一作者。',
-	'cannotundelete' => '復原失敗；可能之前已經被其他人復原。',
-	'contributions' => '使用者編修記錄',
-	'contribsub2' => '$1的編修記錄 ($2)',
-	'createaccountblock' => '禁止建立帳號',
-	'confirmemail' => '確認電子郵件地址',
-	'confirmemail_noemail' => '您沒有在您的[[Special:Preferences|使用者設定]]裡面輸入一個有效的 email 位址。',
-	'confirmemail_text' => '此網站要求您在使用郵件功能之前驗證您的電子郵件地址。
-點擊以下按鈕可向您的郵箱發送一封確認郵件。該郵件包含有一行代碼連結；
-請在您的瀏覽器中加載此連結以確認您的電子郵件地址是有效的。',
-	'confirmemail_sendfailed' => '不能發送確認郵件，請檢查電子郵件地址是否包含非法字元。
-
-郵件傳送員回應: $1',
-	'confirmemail_needlogin' => '您需要$1以確認您的電子郵件地址。',
-	'confirmemail_success' => '您的郵箱已經被確認。您現下可以登錄並使用此網站了。',
-	'confirmemail_loggedin' => '您的電子郵件地址現下已被確認。',
-	'confirmemail_subject' => '{{SITENAME}}電子郵件地址確認',
-	'confirmrecreate' => '在您編輯這個頁面後，使用者[[User:$1|$1]]([[User talk:$1|對話]])以下列原因刪除了這個頁面: $2。請在重新建立頁面前三思。',
-	'create_an_account' => '開啟新用戶帳號',
-	'createpage' => '開啟新文章',
-	'choose_reason' => '選擇原因',
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 );
 
 $messages['zu'] = array(

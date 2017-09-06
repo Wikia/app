@@ -279,7 +279,7 @@ function wfExtractThumbParams( $uri ) {
 			}
 			return $params; // valid thumbnail URL
 		// Hooks return false if they manage to *resolve* the parameters
-		} elseif ( !wfRunHooks( 'ExtractThumbParameters', array( $thumbname, &$params ) ) ) {
+		} elseif ( !Hooks::run( 'ExtractThumbParameters', array( $thumbname, &$params ) ) ) {
 			return $params; // valid thumbnail URL (via extension or config)
 		}
 	}

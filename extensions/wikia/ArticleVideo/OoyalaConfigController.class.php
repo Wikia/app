@@ -28,7 +28,6 @@ class OoyalaConfigController extends WikiaController {
 			'availableLanguageFile' => [
 				0 => [
 					'language' => 'en',
-					'languageFile' => '//player.ooyala.com/static/v4/stable/4.6.9/skin-plugin/en.json',
 					'androidResource' => 'skin-config/en.json',
 					'iosResource' => 'en',
 				],
@@ -107,7 +106,7 @@ class OoyalaConfigController extends WikiaController {
 		'adScreen' => [
 			'showAdMarquee' => true,
 			'showAdCountDown' => true,
-			'showControlBar' => false,
+			'showControlBar' => true,
 		],
 		'shareScreen' => [
 			'shareContent' => [
@@ -118,8 +117,12 @@ class OoyalaConfigController extends WikiaController {
 				'source' => "<iframe width='640' height='480' frameborder='0' allowfullscreen src='//player.ooyala.com/static/v4/stable/4.10.6/skin-plugin/iframe.html?ec=<ASSET_ID>&pbid=<PLAYER_ID>&pcode=<PUBLISHER_ID>'></iframe>",
 			],
 		],
+		"discoveryScreen" => [
+			"showCountDownTimerOnEndScreen" => true,
+			"countDownTime" => 5
+		],
 		'upNext' => [
-			'showUpNext' => true,
+			'showUpNext' => false,
 			'timeToShow' => '10',
 		],
 		'controlBar' => [
@@ -163,6 +166,10 @@ class OoyalaConfigController extends WikiaController {
 				'scrubberHandleBorderColor' => 'rgba(255,255,255,1)',
 				'thumbnailPreview' => true,
 			],
+		     'autoplayToggle' => true,
+
+			// to set autoplay cookie name use:
+		    // 'autoplayCookieName': 'cookie-name'
 		],
 		'buttons' => [
 			'desktopContent' => [
@@ -177,6 +184,12 @@ class OoyalaConfigController extends WikiaController {
 					'location' => 'controlBar',
 					'whenDoesNotFit' => 'keep',
 					'minWidth' => 240,
+				],
+				[
+					'name' => 'adTimeLeft',
+					'location' => 'controlBar',
+					'whenDoesNotFit' => 'keep',
+					'minWidth' => 100,
 				],
 				[
 					'name' => 'live',
@@ -205,7 +218,7 @@ class OoyalaConfigController extends WikiaController {
 				[
 					'name' => 'quality',
 					'location' => 'controlBar',
-					'whenDoesNotFit' => 'drop',
+					'whenDoesNotFit' => 'keep',
 					'minWidth' => 45,
 				],
 				[
@@ -213,7 +226,7 @@ class OoyalaConfigController extends WikiaController {
 					'location' => 'controlBar',
 					'whenDoesNotFit' => 'keep',
 					'minWidth' => 45,
-				],
+				]
 			],
 		],
 		'icons' => [
@@ -258,10 +271,7 @@ class OoyalaConfigController extends WikiaController {
 				'fontString' => 'n',
 				'fontStyleClass' => 'oo-icon oo-icon-system-settings',
 			],
-			'dismiss' => [
-				'fontFamilyName' => 'ooyala-slick-type',
-				'fontString' => 'e',
-				'fontStyleClass' => 'oo-icon oo-icon-system-close',
+			'dismiss' => [// svg set in skin()
 			],
 			'toggleOn' => [
 				'fontFamilyName' => 'fontawesome',
@@ -307,6 +317,8 @@ class OoyalaConfigController extends WikiaController {
 	];
 
 	public function skin() {
+		global $wgCookieDomain;
+
 		$config = self::CONFIG;
 		$config['icons']['play']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-play-triangle-small' );
 		$config['icons']['pause']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-pause-small' );
@@ -320,10 +332,16 @@ class OoyalaConfigController extends WikiaController {
 		$config['icons']['shareFacebook']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-facebook' );
 		$config['icons']['shareGoogle']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-googleplus' );
 		$config['icons']['shareMail']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-mail' );
+		$config['icons']['dismiss']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-cross' );
+
+		$config['localization']['availableLanguageFile'][0]['languageFile'] =
+			'/extensions/wikia/ArticleVideo/bower_components/skin-config/languageFiles/en.json';
 
 		if ( $this->getVal( 'isMobile' ) ) {
 			$config['controlBar']['volumeControl']['sliderVisible'] = false;
 		}
+
+		$config['controlBar']['autoplayCookieDomain'] = $wgCookieDomain;
 
 		$this->getResponse()->setData( $config );
 		$this->getResponse()->setFormat( WikiaResponse::FORMAT_JSON );

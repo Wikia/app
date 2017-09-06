@@ -268,7 +268,7 @@ class UserProfilePageController extends WikiaController {
 			];
 		}
 
-		wfRunHooks( 'UserProfilePageAfterGetActionButtonData', [ &$actionButtonArray, $namespace, $canRename, $canProtect, $canDelete, $isUserPageOwner ] );
+		Hooks::run( 'UserProfilePageAfterGetActionButtonData', [ &$actionButtonArray, $namespace, $canRename, $canProtect, $canDelete, $isUserPageOwner ] );
 
 		$actionButton = F::app()->renderView( 'MenuButton', 'Index', $actionButtonArray );
 		$this->setVal( 'actionButton', $actionButton );

@@ -4,9 +4,8 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.adContext',
 	'wikia.log',
-	'wikia.window',
-	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
-], function (adInfoTrackerHelper, adTracker, adContext, log, win, mercuryListener) {
+	'wikia.window'
+], function (adInfoTrackerHelper, adTracker, adContext, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adInfoTracker',
@@ -37,27 +36,18 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 		return adContext.getContext().opts.enableAdInfoLog;
 	}
 
-	function setAdEnginePvUID() {
-		win.adEnginePvUID = win.adEnginePvUID || adInfoTrackerHelper.generateUUID();
-	}
-
 	function run() {
-		setAdEnginePvUID();
-		if (mercuryListener) {
-			mercuryListener.onEveryPageChange(function() {
-				win.adEnginePvUID = adInfoTrackerHelper.generateUUID();
-			});
-		}
-
 		if (isEnabled()) {
 			log('run', log.levels.debug, logGroup);
 
 			win.addEventListener('adengine.slot.status', function (event) {
-				var data,
-					slot = event.detail.slot;
+				var adType = event.detail.adInfo && event.detail.adInfo.adType,
+					data,
+					slot = event.detail.slot,
+					status = adType === 'blocked' ? 'blocked' : event.detail.status;
 
 				if (adInfoTrackerHelper.shouldHandleSlot(slot, enabledSlots)) {
-					data = adInfoTrackerHelper.prepareData(slot, event.detail.status);
+					data = adInfoTrackerHelper.prepareData(slot, status);
 
 					log(['adengine.slot.status', event], log.levels.debug, logGroup);
 					if (data) {

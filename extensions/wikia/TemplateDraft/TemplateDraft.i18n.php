@@ -5,10 +5,10 @@ $messages['en'] = array(
 	'templatedraft-description' => 'TemplateDraft extension',
 	'right-templatedraft' => 'Allows access to a wizard that helps convert non-portable infoboxes to the new markup',
 	'templatedraft-subpage' => 'Draft',
-	'templatedraft-editintro' => "Here you go! We've generated a draft version of your infobox with our new markup. We'll save it as a sub-page so you can review it and make any needed changes. You may want to $1 or $2.",
-	'templatedraft-approval-no-page-error' => "Approval failed as draft page doesn't exist",
-	'templatedraft-approval-no-templatedraft-error' => 'Approve draft action is not applicable on non template draft pages',
-	'templatedraft-approval-success-confirmation' => 'This template contents was replaced with updated version from draft template and the draft was removed',
+	'templatedraft-editintro' => 'Here is a draft version of your template that has been generated with our new markup. Please review and make any changes before saving. For more, please view the help page on $1 or $2.',
+	'templatedraft-approval-no-page-error' => 'There has been a problem approving the draft. This draft has already been approved or deleted. Please review the [{{fullurl:{{ns:Template}}:{{PAGENAME}}}}?action=history history and differences] for this template.',
+	'templatedraft-approval-no-templatedraft-error' => 'There has been a problem approving the draft. This page is not recognized as a valid template draft.',
+	'templatedraft-approval-success-confirmation' => 'The content within this template has been replaced with the updated version from the draft template. The draft template has been removed.',
 	'templatedraft-approval-summary' => 'Infobox updated using the [[Help:PortableInfoboxes|portable infobox]] migration tool',
 	'templatedraft-draft-removal-summary' => 'Cleanup. Draft approved to parent page.',
 	'templatedraft-module-title-create' => 'Migrate this infobox',
@@ -437,6 +437,45 @@ $2
 	'templatedraft-protect-edit' => 'Вы не имеете разрешения на редактирование родительской страницы.',
 	'right-templatedraft' => 'Доступ к инструменту конвертации немодульных инфобоксов с использованием новой разметки',
 	'templatedraft-preview-example-value' => 'Тест',
+);
+
+$messages['xw-3171'] = array(
+	'templatedraft-description' => '模板草稿的擴展功能',
+	'right-templatedraft' => '允許使用將非行動訊息框轉變為新標記方式的協助精靈',
+	'templatedraft-subpage' => '模版草稿',
+	'templatedraft-editintro' => '這是由我們的新標記檔案中生成的模板草稿。請審核和更改之後再進行保存。有關詳細資訊，請在$1查看幫助頁或閱讀$2。',
+	'templatedraft-approval-no-page-error' => '批准這個草稿出現錯誤。草稿可能已經被批准或刪除。請查看這個模板的[{{fullurl:{{ns:Template}}:{{PAGENAME}}}}?action=history 歷史記錄和差異]。',
+	'templatedraft-approval-no-templatedraft-error' => '批准這個草稿出現錯誤。 這個頁面不被視為有效的模板草稿。',
+	'templatedraft-approval-success-confirmation' => '此模板中的內容已被更新後的模板草稿版本替代。模板草稿已刪除。',
+	'templatedraft-approval-summary' => '使用[[w:c:zh.community:Help:移動化訊息框|行動化訊息框]]遷移工具進行更新',
+	'templatedraft-draft-removal-summary' => '清理完畢。 草稿已批准而成為主頁面。',
+	'templatedraft-module-title-create' => '變更這個訊息框',
+	'templatedraft-module-subtitle-create' => '這個模板沒有使用新的[[w:c:zh.community:Help:移動化訊息框|行動化訊息框]]。',
+	'templatedraft-module-content-create' => '我們可以從現在用的訊息框生成標記文件的草稿，並保存為子頁面，以便於你查看並進行必要的更改。',
+	'templatedraft-module-button-create' => '生成標記文件草稿',
+	'templatedraft-module-button-title-create' => '開啟一個有預填充編輯表單的新標籤',
+	'templatedraft-module-title-approve' => '移動這個模板草稿',
+	'templatedraft-module-content-approve' => '對這個草稿感到滿意，並希望讓它生效成為主模板？',
+	'templatedraft-module-button-approve' => '批准這個模板的草稿',
+	'templatedraft-module-approve-protected' => '此模板受到保護。 請諮詢[[Special:ListAdmins|管理員]]批准這個草稿。',
+	'templatedraft-preview-n-docs' => '== 使用與預覽 ==
+鍵入下面的資訊：
+
+<pre>
+$1
+</pre>
+
+可以看到下面的資訊：
+
+$2
+
+[{{fullurl:{{ns:Template}}:{{PAGENAME}}}}?action=purge 按一下這裡刷新上面的預覽内容]',
+	'templatedraft-preview-example-value' => '這是一個測試',
+	'templatedraft-module-editintro-please-convert' => '我們可以用我們的新標記文件為你生成資訊框的草稿，只需按一下$1就可以了。',
+	'templatedraft-module-view-parent' => '主模板wiki文本',
+	'templatedraft-module-help' => '訊息框標記',
+	'templatedraft-invalid-template' => '提供的模版名稱無效',
+	'templatedraft-protect-edit' => '您沒有權限編輯主頁面。',
 );
 
 $messages['zh-hans'] = array(

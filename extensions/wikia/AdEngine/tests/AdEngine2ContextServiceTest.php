@@ -237,7 +237,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$catId = WikiFactoryHub::CATEGORY_ID_LIFESTYLE;
 		$shortCat = 'shortcat';
 		$expectedAdEngineResourceURLFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/%s';
-		$expectedPrebidBidderUrl = 'http://i2.john-doe.wikia-dev.com/__am/123/group/-/prebid_prod_js';
+		$expectedPrebidBidderUrl = 'http://i2.john-doe.wikia-dev.com/__am/123/group/-/pr3b1d_prod_js';
 
 		$assetsManagerMock = $this->getMockBuilder( 'AssetsManager' )
 			->disableOriginalConstructor()
@@ -339,7 +339,8 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'delayBtf' => true,
 				'sourcePointMMSDomain' => 'mms.bre.wikia-dev.com',
 				'sourcePointRecovery' => true,
-				'pageFairRecovery' => true
+				'pageFairRecovery' => true,
+				'instartLogicRecovery' => true
 			],
 			'targeting' => [
 				'esrbRating' => 'teen',

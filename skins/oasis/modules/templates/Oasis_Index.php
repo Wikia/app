@@ -59,6 +59,7 @@
 
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>" <?= $itemType ?>>
+<?= $instartLogic ?>
 <?= $recoveryTopBodyBootstrapCode ?>
 <? if ( BodyController::isResponsiveLayoutEnabled() || BodyController::isOasisBreakpoints() ): ?>
 	<div class="background-image-gradient"></div>
@@ -68,6 +69,7 @@
 <?= $quantServe ?>
 <?= $rubiconFastlane ?>
 <?= $amazonMatch ?>
+<?= $a9 ?>
 <?= $prebid ?>
 <?= $krux ?>
 <?= $netzathleten ?>

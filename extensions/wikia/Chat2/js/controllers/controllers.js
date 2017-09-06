@@ -58,20 +58,22 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 			// set up socket events
 			// @see https://socket.io/docs/server-api/#event-disconnect
 			socket.on('message', this.proxy(this.onMsgReceived, this));
+
 			socket.on('connect', this.proxy(function () {
 				this.log('Connected to Chat server at ' + url);
 				this.onConnect(socket);
 			}, this));
-			socket.on('reconnecting', this.proxy(function (delay, count) {
-				this.log('Reconnecting...');
 
-				if (count === 8) {
-					if (socket) {
-						socket.disconnect();
-					}
-					this.fire("reConnectFail", {});
+			// SUS-2245: when re-connections limit is reached reload the page.
+			socket.on('reconnecting', this.proxy(function (attemptNumber) {
+				this.log('reconnecting: attempt #' + attemptNumber);
+
+				if (attemptNumber > window.wgChatReconnectMaxTries) {
+					this.log('reconnect_attempt: limit reached, reload the page');
+					window.location.reload();
 				}
 			}, this));
+
 			socket.on('error', this.proxy(function (err) {
 				this.log('socket.onerror: ' + err + ' - ' + err.code);
 			}, this));
@@ -180,6 +182,7 @@ var NodeRoomController = $.createClass(Observable, {
 		this.socket.bind('longMessage', $.proxy(this.onLongMessage, this));
 
 		this.socket.bind('logout', $.proxy(this.onLogout, this));
+		this.socket.bind('freeze', this.onFreeze.bind(this));
 
 		this.viewDiscussion = new NodeChatDiscussion({model: this.model, el: $('body'), roomId: roomId});
 		this.viewDiscussion.bind('clickAnchor', $.proxy(this.clickAnchor, this));
@@ -198,6 +201,37 @@ var NodeRoomController = $.createClass(Observable, {
 
 	isMain: function () {
 		return this.mainController == null;
+	},
+
+	/**
+	 * Disable the input form for some time if the user exceeded the rate limit and was throttled
+	 * @param message
+	 */
+	onFreeze: function (message) {
+		var $input = $('#Write textarea');
+
+		if (!$input.prop('disabled')) {
+			var frozenEvent = new models.FrozenEvent(),
+				freezeDuration;
+
+			frozenEvent.mport(message.data);
+			freezeDuration = frozenEvent.get('freezeDuration');
+
+			$input.prop('disabled', true);
+			$input.val('');
+			$input.attr('placeholder', mw.message('chat-user-throttled', freezeDuration / 1000).text());
+
+			setTimeout(this.onFreezeFinish.bind(this, $input), freezeDuration);
+		}
+	},
+
+	/**
+	 * Reenable the input field after the throttle time expired
+	 * @param $input
+	 */
+	onFreezeFinish: function ($input) {
+		$input.prop('disabled', false);
+		$input.removeAttr('placeholder');
 	},
 
 	onReConnectFail: function () {
@@ -557,8 +591,6 @@ var NodeChatController = $.createClass(NodeRoomController, {
 		this.viewUsers.bind('showPrivateMessage', $.proxy(this.privateMessage, this));
 		this.viewUsers.bind('kick', $.proxy(this.kick, this));
 		this.viewUsers.bind('ban', $.proxy(this.ban, this));
-		this.viewUsers.bind('giveChatMod', $.proxy(this.giveChatMod, this));
-
 
 		this.viewUsers.bind('blockPrivateMessage', $.proxy(this.blockPrivate, this));
 		this.viewUsers.bind('allowPrivateMessage', $.proxy(this.allowPrivate, this));
@@ -624,10 +656,6 @@ var NodeChatController = $.createClass(NodeRoomController, {
 			}
 		} else {
 			actions.regular.push('private-allow');
-		}
-
-		if (this.userMain.get('canPromoteModerator') === true && user.get('isModerator') === false) {
-			actions.admin.push('give-chat-mod');
 		}
 
 		if (this.userMain.get('isModerator') === true && user.get('isModerator') === false) {
@@ -863,14 +891,6 @@ var NodeChatController = $.createClass(NodeRoomController, {
 			var newChatEntry = new models.InlineAlert({text: mw.message('chat-ban-cannt-undo').escaped()});
 			this.model.chats.add(newChatEntry);
 		}
-	},
-
-	giveChatMod: function (user) {
-		$().log("Attempting to give chat mod to user: " + user.name);
-		var giveChatModCommand = new models.GiveChatModCommand({userToPromote: user.name});
-		this.socket.send(giveChatModCommand.xport());
-
-		this.viewUsers.hideMenu();
 	},
 
 	onUpdateUser: function (message) {

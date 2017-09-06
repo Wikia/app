@@ -45,7 +45,7 @@ class WikiFilePage extends WikiPage {
 			$this->mFile = wfFindFile( $this->mTitle );
 
 			/** Wikia change start (@author Garth Webb) */
-			wfRunHooks('WikiFilePageCheckFile', [&$this->mFile]);
+			Hooks::run('WikiFilePageCheckFile', [&$this->mFile]);
 			/** Wikia change end */
 
 			if ( !$this->mFile ) {

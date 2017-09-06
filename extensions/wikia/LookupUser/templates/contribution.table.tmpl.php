@@ -37,6 +37,8 @@ $(document).ready(function() {
 			{ sName: "url" },
 			{ sName: "lastedit" },
 			{ sName: "edits" },
+			{ sName: "posts" },
+			{ sName: "lastpost" },
 			{ sName: "userrights" },
 			{ sName: "blocked" }
 		],
@@ -59,7 +61,9 @@ $(document).ready(function() {
 			{ bVisible: true, aTargets: [3], bSortable: true },
 			{ bVisible: true, aTargets: [4], bSortable: true },
 			{ bVisible: true, aTargets: [5], bSortable: false },
-			{ bVisible: true, aTargets: [6], bSortable: false }
+			{ bVisible: true, aTargets: [6], bSortable: false },
+			{ bVisible: true, aTargets: [7], bSortable: false },
+			{ bVisible: true, aTargets: [8], bSortable: false }
 		],
 		bProcessing: true,
 		bServerSide: true,
@@ -220,10 +224,12 @@ $(document).ready(function() {
 	<thead>
 		<tr>
 			<th width="2%">#</th>
-			<th width="25%"><?= wfMessage( 'lookupuser-table-title' )->escaped() ?></th>
-			<th width="20%"><?= wfMessage( 'lookupuser-table-url' )->escaped() ?></th>
+			<th width="20%"><?= wfMessage( 'lookupuser-table-title' )->escaped() ?></th>
+			<th width="15%"><?= wfMessage( 'lookupuser-table-url' )->escaped() ?></th>
 			<th width="20%"><?= wfMessage( 'lookupuser-table-lastedited' )->escaped() ?></th>
 			<th width="15%"><?= wfMessage( 'lookupuser-table-editcount' )->escaped() ?></th>
+			<th width="5%"><?= wfMessage( 'lookupuser-table-posts' )->escaped() ?></th>
+			<th width="5%"><?= wfMessage( 'lookupuser-table-last-post' )->escaped() ?></th>
 			<th width="15%"><?= wfMessage( 'lookupuser-table-userrights' )->escaped() ?></th>
 			<th width="3%"><?= wfMessage( 'lookupuser-table-blocked' )->escaped() ?></th>
 		</tr>
@@ -236,10 +242,12 @@ $(document).ready(function() {
 	<tfoot>
 		<tr>
 			<th width="2%">#</th>
-			<th width="25%"><?= wfMessage( 'lookupuser-table-title' )->escaped() ?></th>
-			<th width="20%"><?= wfMessage( 'lookupuser-table-url' )->escaped() ?></th>
+			<th width="20%"><?= wfMessage( 'lookupuser-table-title' )->escaped() ?></th>
+			<th width="15%"><?= wfMessage( 'lookupuser-table-url' )->escaped() ?></th>
 			<th width="20%"><?= wfMessage( 'lookupuser-table-lastedited' )->escaped() ?></th>
 			<th width="15%"><?= wfMessage( 'lookupuser-table-editcount' )->escaped() ?></th>
+			<th width="5%"><?= wfMessage( 'lookupuser-table-posts' )->escaped() ?></th>
+			<th width="5%"><?= wfMessage( 'lookupuser-table-last-post' )->escaped() ?></th>
 			<th width="15%"><?= wfMessage( 'lookupuser-table-userrights' )->escaped() ?></th>
 			<th width="3%"><?= wfMessage( 'lookupuser-table-blocked' )->escaped() ?></th>
 		</tr>

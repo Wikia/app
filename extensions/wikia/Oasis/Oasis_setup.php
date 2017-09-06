@@ -25,14 +25,11 @@ function wfOasisSetup() {
 
 	// modules and services
 	$wgHooks['ArticleSaveComplete'][] = 'LatestActivityController::onArticleSaveComplete';
-	$wgHooks['ArticleSaveComplete'][] = 'PageHeaderController::onArticleSaveComplete';
 	$wgHooks['BlogTemplateGetResults'][] = 'BlogListingController::getResults';
 	$wgHooks['BlogsRenderBlogArticlePage'][] = 'BlogListingController::renderBlogListing';
 	$wgHooks['DoEditSectionLink'][] = 'ContentDisplayController::onDoEditSectionLink';
 	$wgHooks['EditPage::showEditForm:initial'][] = 'BodyController::onEditPageRender';
-	$wgHooks['EditPageMakeGlobalVariablesScript'][] = 'WikiNavigationController::onEditPageMakeGlobalVariablesScript';
 	$wgHooks['MakeHeadline'][] = 'ContentDisplayController::onMakeHeadline';
-	$wgHooks['MessageCacheReplace'][] = 'WikiNavigationController::onMessageCacheReplace';
 	$wgHooks['Parser::showEditLink'][] = 'ContentDisplayController::onShowEditLink';
 
 	// notifications

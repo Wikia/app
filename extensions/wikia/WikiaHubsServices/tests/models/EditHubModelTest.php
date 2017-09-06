@@ -103,13 +103,7 @@ class EditHubModelTest extends WikiaBaseTest {
 			->method('makeList')
 			->will($this->returnValue(''));
 
-		$functionWrapperMock = $this->getMock('WikiaFunctionWrapper', array('GetDB'));
-
-		$functionWrapperMock->expects($this->any())
-			->method('GetDB')
-			->will($this->returnValue($dbMock));
-
-		$app = new WikiaApp(null, null, null, $functionWrapperMock);
+		$app = new WikiaApp();
 
 		// Mock model
 		$modelMock = $this->getMock('EditHubModel', array('getModulesDataFromDb', 'getModuleUrl', 'getLastPublishedTimestamp'), array($app));
@@ -197,13 +191,7 @@ class EditHubModelTest extends WikiaBaseTest {
 			->method('makeList')
 			->will($this->returnValue(''));
 
-		$functionWrapperMock = $this->getMock('WikiaFunctionWrapper', array('GetDB'));
-
-		$functionWrapperMock->expects($this->any())
-			->method('GetDB')
-			->will($this->returnValue($dbMock));
-
-		$app = new WikiaApp(null, null, null, $functionWrapperMock);
+		$app = new WikiaApp();
 
 		// User Mock
 		$userMock = $this->getMock(

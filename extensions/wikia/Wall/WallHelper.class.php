@@ -175,7 +175,7 @@ class WallHelper {
 			$item = [ ];
 		}
 
-		wfRunHooks( 'AfterWallWikiActivityFilter', [ &$item, $wmessage ] );
+		Hooks::run( 'AfterWallWikiActivityFilter', [ &$item, $wmessage ] );
 
 		wfProfileOut( __METHOD__ );
 		return $item;
@@ -316,9 +316,9 @@ class WallHelper {
 			if ( $user instanceof User ) {
 				$items[$i]['real-name'] = $user->getName();
 				if ( !empty( F::app()->wg->EnableWallExt ) ) {
-					$userLinkTitle = Title::newFromText( $user->getName(), NS_USER_WALL );
+					$userLinkTitle = $user->getTalkPage();
 				} else {
-					$userLinkTitle = Title::newFromText( $user->getName(), NS_USER );
+					$userLinkTitle = $user->getUserPage();
 				}
 				$items[$i]['user-profile-url'] = $userLinkTitle->getFullUrl();
 			} else {

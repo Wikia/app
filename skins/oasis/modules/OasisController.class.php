@@ -55,11 +55,13 @@ class OasisController extends WikiaController {
 		$this->comScore = null;
 		$this->quantServe = null;
 		$this->amazonMatch = null;
+		$this->a9 = null;
 		$this->gfc = null;
 		$this->nielsen = null;
 		$this->prebid = null;
 		$this->rubiconFastlane = null;
 		$this->sourcePoint = null;
+		$this->instartLogic = null;
 		$this->dynamicYield = null;
 		$this->krux = null;
 		$this->netzathleten = null;
@@ -146,14 +148,7 @@ class OasisController extends WikiaController {
 
 		$jsPackages = array();
 		$scssPackages = array();
-		$this->app->runHook(
-			'WikiaAssetsPackages',
-			array(
-				&$wgOut,
-				&$jsPackages,
-				&$scssPackages
-			)
-		);
+		Hooks::run( 'WikiaAssetsPackages', [ $wgOut, &$jsPackages, &$scssPackages ] );
 
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
 
@@ -256,11 +251,13 @@ class OasisController extends WikiaController {
 			$this->comScore = AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->quantServe = AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->amazonMatch = AnalyticsEngine::track('AmazonMatch', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->a9 = AnalyticsEngine::track('A9', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->gfc = AnalyticsEngine::track('GoogleFundingChoices', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->nielsen = AnalyticsEngine::track('Nielsen', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->prebid = AnalyticsEngine::track('Prebid', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->rubiconFastlane = AnalyticsEngine::track('RubiconFastlane', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->sourcePoint = ARecoveryBootstrapCode::getSourcePointBootstrapCode();
+			$this->instartLogic = ARecoveryBootstrapCode::getInstartLogicBootstrapCode();
 			$this->dynamicYield = AnalyticsEngine::track('DynamicYield', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->krux = AnalyticsEngine::track('Krux', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->netzathleten = AnalyticsEngine::track('NetzAthleten', AnalyticsEngine::EVENT_PAGEVIEW);
@@ -335,7 +332,7 @@ class OasisController extends WikiaController {
 		$jsReferences = array();
 
 		$jsAssetGroups = array( 'oasis_blocking' );
-		wfRunHooks('OasisSkinAssetGroupsBlocking', array(&$jsAssetGroups));
+		Hooks::run('OasisSkinAssetGroupsBlocking', array(&$jsAssetGroups));
 		$blockingScripts = $this->assetsManager->getURL($jsAssetGroups);
 
 		foreach($blockingScripts as $blockingFile) {
@@ -377,7 +374,7 @@ class OasisController extends WikiaController {
 
 		$jsLoader = '';
 
-		wfRunHooks('OasisSkinAssetGroups', array(&$assetGroups));
+		Hooks::run('OasisSkinAssetGroups', array(&$assetGroups));
 
 		// add groups queued via OasisController::addSkinAssetGroup
 		$assetGroups = array_merge($assetGroups, self::$skinAssetGroups);

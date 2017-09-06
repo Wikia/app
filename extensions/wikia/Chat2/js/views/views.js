@@ -456,7 +456,6 @@ var NodeChatUsers = Backbone.View.extend({
 	triggerEvents: {
 			"click .kick": "kick",
 			"click .ban": "ban",
-			"click .give-chat-mod": "giveChatMod",
 			"click .private-block": "blockPrivateMessage",
 			"click .private-allow": "allowPrivateMessage",
 			"click .private": "showPrivateMessage",

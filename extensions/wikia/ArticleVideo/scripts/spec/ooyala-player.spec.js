@@ -9,28 +9,28 @@ describe('ext.wikia.articleVideo.ooyalaPlayer', function () {
 		var OoyalaHTML5Player = modules['ooyala-player'](),
 			testCases = [
 				{
-					value: 615000,
+					value: 615,
 					expected: '10:15'
 				}, {
 					value: 0,
 					expected: '0:00'
 				}, {
-					value: 1000,
+					value: 1,
 					expected: '0:01'
 				}, {
-					value: 60000,
+					value: 60,
 					expected: '1:00'
 				}, {
-					value: 125401,
+					value: 125.401,
 					expected: '2:05'
 				}, {
-					value: 5940000,
+					value: 5940,
 					expected: '1:39:00'
 				}, {
-					value: 54000000,
+					value: 54000,
 					expected: '15:00:00'
 				}, {
-					value: 720000000,
+					value: 720000,
 					expected: '200:00:00'
 				}
 			];

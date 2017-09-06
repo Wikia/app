@@ -7,6 +7,7 @@
  * This file deals with database interface functions
  * and query specifics/optimisations
  */
+
 use Wikia\Logger\WikiaLogger;
 use Wikia\Util\Statistics\BernoulliTrial;
 
@@ -239,6 +240,9 @@ abstract class DatabaseBase implements DatabaseType {
 	protected $htmlErrors;
 
 	protected $delimiter = ';';
+
+	/** @var array Map of (table name => 1) for TEMPORARY tables */
+	protected $mSessionTempTables = [];
 
 # ------------------------------------------------------------------------------
 # Accessors
@@ -831,6 +835,42 @@ abstract class DatabaseBase implements DatabaseType {
 	}
 
 	/**
+	 * @param string $sql A SQL query
+	 * @return bool Whether $sql is SQL for TEMPORARY table operation
+	 */
+	protected function registerTempTableOperation( $sql ) {
+		if ( preg_match(
+			'/^CREATE\s+TEMPORARY\s+TABLE\s+(?:IF\s+NOT\s+EXISTS\s+)?[`"\']?(\w+)[`"\']?/i',
+			$sql,
+			$matches
+		) ) {
+			$this->mSessionTempTables[$matches[1]] = 1;
+			return true;
+		} elseif ( preg_match(
+			'/^DROP\s+(?:TEMPORARY\s+)?TABLE\s+(?:IF\s+EXISTS\s+)?[`"\']?(\w+)[`"\']?/i',
+			$sql,
+			$matches
+		) ) {
+			$isTemp = isset( $this->mSessionTempTables[$matches[1]] );
+			unset( $this->mSessionTempTables[$matches[1]] );
+			return $isTemp;
+		} elseif ( preg_match(
+			'/^TRUNCATE\s+(?:TEMPORARY\s+)?TABLE\s+(?:IF\s+EXISTS\s+)?[`"\']?(\w+)[`"\']?/i',
+			$sql,
+			$matches
+		) ) {
+			return isset( $this->mSessionTempTables[$matches[1]] );
+		} elseif ( preg_match(
+			'/^(?:INSERT\s+(?:\w+\s+)?INTO|UPDATE|DELETE\s+FROM)\s+[`"\']?(\w+)[`"\']?/i',
+			$sql,
+			$matches
+		) ) {
+			return isset( $this->mSessionTempTables[$matches[1]] );
+		}
+		return false;
+	}
+
+	/**
 	 * Run an SQL query and return the result. Normally throws a DBQueryError
 	 * on failure. If errors are ignored, returns false instead.
 	 *
@@ -875,6 +915,8 @@ abstract class DatabaseBase implements DatabaseType {
 
 		$this->mLastQuery = $sql;
 		$is_writeable = $this->isWriteQuery( $sql );
+		$isTemporaryTableOperation = $this->registerTempTableOperation( $sql );
+
 		if ( !$this->mDoneWrites && $is_writeable ) {
 			# Set a flag indicating that writes have been done
 			wfDebug( __METHOD__ . ": Writes done: $sql\n" );
@@ -883,7 +925,7 @@ abstract class DatabaseBase implements DatabaseType {
 
 		# <Wikia>
 		global $wgDBReadOnly, $wgReadOnly;
-		if ( $is_writeable && $wgDBReadOnly ) {
+		if ( $is_writeable && !$isTemporaryTableOperation && $wgDBReadOnly ) {
 			if ( !Profiler::instance()->isStub() ) {
 				wfProfileOut( $queryProf );
 				wfProfileOut( $totalProf );
@@ -1129,8 +1171,8 @@ abstract class DatabaseBase implements DatabaseType {
 		reset( $args );
 		$this->preparedArgs =& $args;
 
-		return preg_replace_callback( '/(\\\\[?!&]|[?!&])/',
-			array( &$this, 'fillPreparedArg' ), $preparedQuery );
+		return preg_replace_callback( '/(\\\\[?!&]|[?!&])/', [ $this, 'fillPreparedArg' ],
+			$preparedQuery );
 	}
 
 	/**
@@ -2665,7 +2707,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @param string $table Table name
 	 * @param $conds String|Array of conditions. See $conds in DatabaseBase::select() for
 	 *               the format. Use $conds == "*" to delete all rows
-	 * @param $fname String name of the calling function
+	 * @param $fname string name of the calling function
 	 *
 	 * @return bool
 	 * @throws DBUnexpectedError
@@ -2745,7 +2787,7 @@ abstract class DatabaseBase implements DatabaseType {
 		list( $startOpts, $useIndex, $tailOpts ) = $this->makeSelectOptions( $selectOptions );
 
 		if ( is_array( $srcTable ) ) {
-			$srcTable =  implode( ',', array_map( array( &$this, 'tableName' ), $srcTable ) );
+			$srcTable = implode( ',', array_map( [ $this, 'tableName' ], $srcTable ) );
 		} else {
 			$srcTable = $this->tableName( $srcTable );
 		}

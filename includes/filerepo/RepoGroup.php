@@ -180,7 +180,7 @@ class RepoGroup {
 				// check if the foreign repo allows local repo file blocking
 				if ( $repo->allowBlocking ) {
 					$isDeleted = false;
-					wfRunHooks( 'ForeignFileDeleted', array( $image, &$isDeleted ) );
+					Hooks::run( 'ForeignFileDeleted', array( $image, &$isDeleted ) );
 					if ( $isDeleted ) {
 						return false;
 					}
@@ -196,7 +196,7 @@ class RepoGroup {
 		/* Wikia changes begin */
 		if ( $title->isRedirect() ) {
 			// get redirected file if the foreign repo allows file redirecting
-			wfRunHooks( 'FindRedirectedFile', array( $this->foreignRepos, $title, $options, $useCache, &$image, &$cacheEntry ) );
+			Hooks::run( 'FindRedirectedFile', array( $this->foreignRepos, $title, $options, $useCache, &$image, &$cacheEntry ) );
 			if ( $image ) {
 				return $image;
 			}

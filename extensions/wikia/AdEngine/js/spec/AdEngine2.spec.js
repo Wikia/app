@@ -54,6 +54,9 @@ describe('ext.wikia.adEngine.adEngine', function () {
 			log: noop,
 			pageFair: {
 				isSlotRecoverable: noop
+			},
+			viewabilityTracker: {
+				track: noop
 			}
 		};
 
@@ -90,6 +93,7 @@ describe('ext.wikia.adEngine.adEngine', function () {
 			mocks.slotRegistry,
 			mocks.slotTracker,
 			mocks.slotTweaker,
+			mocks.viewabilityTracker,
 			mocks.hooks,
 			mocks.doc,
 			lazyQueueMock,

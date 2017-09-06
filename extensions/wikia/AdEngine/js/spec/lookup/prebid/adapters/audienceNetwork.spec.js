@@ -1,4 +1,4 @@
-/*global describe, expect, it, jasmine, modules*/
+/*global describe, expect, it, jasmine, modules, spyOn*/
 describe('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork', function () {
 	'use strict';
 
@@ -14,12 +14,16 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork', function (
 		slotsContext: {},
 		adContext: {
 			getContext: noop
+		},
+		instartLogic: {
+			isBlocking: noop
 		}
 	};
 
 	function getAudienceNetwork() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork'](
 			mocks.slotsContext,
+			mocks.instartLogic,
 			mocks.geo,
 			mocks.instantGlobals,
 			mocks.adContext
@@ -31,6 +35,9 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork', function (
 		spyOn(mocks.adContext, 'getContext').and.returnValue({
 			targeting: {
 				skin: 'mercury'
+			},
+			providers: {
+				audienceNetwork: true
 			}
 		});
 		var audienceNetwork = getAudienceNetwork();
@@ -43,6 +50,9 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork', function (
 		spyOn(mocks.adContext, 'getContext').and.returnValue({
 			targeting: {
 				skin: 'oasis'
+			},
+			providers: {
+				audienceNetwork: true
 			}
 		});
 
@@ -56,11 +66,31 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork', function (
 		spyOn(mocks.adContext, 'getContext').and.returnValue({
 			targeting: {
 				skin: 'mercury'
+			},
+			providers: {
+				audienceNetwork: true
 			}
 		});
 
 		var audienceNetwork = getAudienceNetwork();
 
 		expect(audienceNetwork.isEnabled()).toBeTruthy();
+	});
+
+	it('Is disabled when geo matches, skin is merury but traffic is recovered', function () {
+		spyOn(mocks.geo, 'isProperGeo').and.returnValue(true);
+		spyOn(mocks.adContext, 'getContext').and.returnValue({
+			targeting: {
+				skin: 'mercury'
+			},
+			providers: {
+				audienceNetwork: true
+			}
+		});
+		spyOn(mocks.instartLogic, 'isBlocking').and.returnValue(true);
+
+		var audienceNetwork = getAudienceNetwork();
+
+		expect(audienceNetwork.isEnabled()).toBeFalsy();
 	});
 });

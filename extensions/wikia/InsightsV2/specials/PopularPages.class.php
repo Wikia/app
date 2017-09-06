@@ -60,7 +60,7 @@ class PopularPages extends PageQueryPage {
 			wfWaitForSlaves();
 		}
 
-		wfRunHooks( 'PopularPagesQueryRecached' );
+		Hooks::run( 'PopularPagesQueryRecached' );
 
 		return $num;
 	}

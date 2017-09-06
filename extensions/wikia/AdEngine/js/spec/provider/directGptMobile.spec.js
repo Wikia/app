@@ -1,5 +1,5 @@
 /*global beforeEach, describe, it, modules, expect, spyOn*/
-describe('ext.wikia.adEngine.provider.directGpt', function () {
+describe('ext.wikia.adEngine.provider.directGptMobile', function () {
 	'use strict';
 
 	var noop = function () {},
@@ -14,46 +14,38 @@ describe('ext.wikia.adEngine.provider.directGpt', function () {
 
 				}
 			},
-			uapContext: {},
 			factory: {
 				createProvider: noop
 			},
-			defaultAdUnitBuilder: {name: 'defaultAdUnit'},
 			kiloAdUnitBuilder: {name: 'kiloAdUnit'},
-			slotTweaker: {},
-			pageFairRecovery: {},
-			sourcePointRecovery: {}
+			megaAdUnitBuilder: {name: 'megaAdUnit'}
 		};
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.provider.directGpt'](
+		return modules['ext.wikia.adEngine.provider.directGptMobile'](
 			mocks.adContext,
-			mocks.uapContext,
-			mocks.factory,
-			mocks.defaultAdUnitBuilder,
 			mocks.kiloAdUnitBuilder,
-			mocks.slotTweaker,
-			mocks.pageFairRecovery,
-			mocks.sourcePointRecovery
+			mocks.megaAdUnitBuilder,
+			mocks.factory
 		);
 	}
 
-	it('Return default adUnit if there is no param in context', function () {
+	it('Return kilo adUnit if there is no param in context', function () {
 		spyOn(mocks.factory, 'createProvider');
 
 		getModule();
 
-		expect(mocks.factory.createProvider.calls.argsFor(0)[4].adUnitBuilder)
-			.toEqual(mocks.defaultAdUnitBuilder);
+		expect(mocks.factory.createProvider.calls.argsFor(0)[4].getAdUnitBuilder())
+			.toEqual(mocks.kiloAdUnitBuilder);
 	});
 
-	it('Return KILO adUnit if there is param in context', function () {
+	it('Return MEGA adUnit if there is correct param turned on', function () {
 		spyOn(mocks.factory, 'createProvider');
-		spyOn(mocks.adContext, 'getContext').and.returnValue({opts: {enableKILOAdUnit: true}});
+		spyOn(mocks.adContext, 'getContext').and.returnValue({opts:{megaAdUnitBuilderEnabled: true}});
 
 		getModule();
 
-		expect(mocks.factory.createProvider.calls.argsFor(0)[4].adUnitBuilder)
-			.toEqual(mocks.kiloAdUnitBuilder);
+		expect(mocks.factory.createProvider.calls.argsFor(0)[4].getAdUnitBuilder())
+			.toEqual(mocks.megaAdUnitBuilder);
 	});
 });

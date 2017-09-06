@@ -61,7 +61,7 @@ class SpecialNewpages extends IncludableSpecialPage {
 		$opts->add( 'tagfilter', '' );
 
 		$this->customFilters = array();
-		wfRunHooks( 'SpecialNewPagesFilters', array( $this, &$this->customFilters ) );
+		Hooks::run( 'SpecialNewPagesFilters', array( $this, &$this->customFilters ) );
 		foreach( $this->customFilters as $key => $params ) {
 			$opts->add( $key, $params['default'] );
 		}
@@ -520,8 +520,8 @@ class NewPagesPager extends ReverseChronologicalPager {
 		);
 		$join_conds = array( 'page' => array( 'INNER JOIN', 'page_id=rc_cur_id' ) );
 
-		wfRunHooks( 'SpecialNewpagesConditions',
-			array( &$this, $this->opts, &$conds, &$tables, &$fields, &$join_conds ) );
+		Hooks::run( 'SpecialNewpagesConditions',
+			[ $this, $this->opts, &$conds, &$tables, &$fields, &$join_conds ] );
 
 		$info = array(
 			'tables' 	 => $tables,

@@ -1,11 +1,12 @@
-/*global define*/
+/*global define, require*/
 define('ext.wikia.adEngine.provider.btfBlocker', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.uapContext',
+	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.lazyqueue',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, uapContext, lazyQueue, log, win) {
+], function (adContext, uapContext, adBlockDetection, lazyQueue, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.btfBlocker',
@@ -35,12 +36,15 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 			unblockedSlots = [];
 		});
 
+		// as soon as we know that user has adblock, unblock BTF slots
+		win.addEventListener('wikia.blocking', startBtfQueue);
+
 		function processBtfSlot(slot) {
 			var context = adContext.getContext();
 			log(['processBtfSlot', slot.name], 'debug', logGroup);
 
-			if (context.opts.adMixExperimentEnabled && !uapContext.isUapLoaded()) {
-				if (context.slots.adMixToUnblock.indexOf(slot.name) !== -1) {
+			if (context.opts.premiumAdLayoutEnabled && !uapContext.isUapLoaded()) {
+				if (context.slots.premiumAdLayoutSlotsToUnblock.indexOf(slot.name) !== -1) {
 					fillInSlot(slot);
 					return;
 				}
@@ -66,9 +70,9 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 				return;
 			}
 
-			if (context.opts.adMixExperimentEnabled) {
+			if (context.opts.premiumAdLayoutEnabled) {
 				win.ads.runtime.disableBtf = true;
-				context.slots.adMixToUnblock.map(unblock);
+				context.slots.premiumAdLayoutSlotsToUnblock.map(unblock);
 			}
 
 			lazyQueue.makeQueue(btfQueue, processBtfSlot);
@@ -94,6 +98,14 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 			}
 		}
 
+		function shouldDelaySlotFillIn(slotName) {
+			var shouldDelay = adContext.getContext().opts.delayBtf;
+
+			log(['shouldDelaySlotFillIn', shouldDelay, slotName], log.levels.debug, logGroup);
+
+			return shouldDelay;
+		}
+
 		function fillInSlotWithDelay(slot) {
 			log(['fillInSlotWithDelay', slot.name], 'debug', logGroup);
 
@@ -101,7 +113,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 				onSlotResponse(slot.name);
 			}
 
-			if (!adContext.getContext().opts.delayBtf) {
+			if (!shouldDelaySlotFillIn(slot.name)) {
 				fillInSlot(slot);
 				return;
 			}

@@ -8235,69 +8235,6 @@ Em conjunto com este programa deve ter recebido [{{SERVER}}{{SCRIPTPATH}}/COPYIN
 	'vertical-comedy' => 'Comedy',
 );
 
-$messages['pt-br'] = array(
-	'variants' => 'Variantes',
-	'view' => 'Ver',
-	'viewdeleted_short' => 'Ver {{PLURAL:$1|uma edição eliminada|$1 edições eliminadas}}',
-	'views' => 'Visualizações',
-	'viewcount' => 'Esta página foi acessada {{PLURAL:$1|uma vez|$1 vezes}}.',
-	'view-pool-error' => 'Desculpe-nos, os servidores estão sobrecarregados neste momento.
-Muitos usuários estão tentando ver esta página.
-Aguarde um instante antes de tentar acessar esta página novamente.
-
-$1',
-	'versionrequired' => 'É necessária a versão $1 do MediaWiki',
-	'versionrequiredtext' => 'Esta página requer a versão $1 do MediaWiki para ser utilizada.
-Veja a [[Special:Version|página sobre a versão do sistema]].',
-	'viewsourceold' => 'ver código-fonte',
-	'viewsourcelink' => 'ver código-fonte',
-	'viewdeleted' => 'Ver $1?',
-	'viewsource' => 'Ver código-fonte',
-	'viewsource-title' => 'Exibir código-fonte para $1',
-	'viewsourcetext' => 'Você pode ver e copiar o código desta página:',
-	'viewyourtext' => "Pode ver e copiar o código fonte '''das suas edições''' nesta página:",
-	'virus-badscanner' => "Má configuração: antivírus desconhecido: ''$1''",
-	'virus-scanfailed' => 'a verificação falhou (código $1)',
-	'virus-unknownscanner' => 'antivírus desconhecido:',
-	'viewpagelogs' => 'Ver registros para esta página',
-	'viewprevnext' => 'Ver ($1 {{int:pipe-separator}} $2) ($3).',
-	'verification-error' => 'Este arquivo não passou pela verificação de arquivos.',
-	'viewdeletedpage' => 'Ver páginas eliminadas',
-	'version' => 'Versão',
-	'version-extensions' => 'Extensões instaladas',
-	'version-specialpages' => 'Páginas especiais',
-	'version-parserhooks' => 'Hooks do analisador (parser)',
-	'version-variables' => 'Variáveis',
-	'version-antispam' => 'Prevenção contra spam',
-	'version-skins' => 'Temas',
-	'version-other' => 'Diversos',
-	'version-mediahandlers' => 'Executores de média',
-	'version-hooks' => 'Hooks',
-	'version-extension-functions' => 'Funções de extensão',
-	'version-parser-extensiontags' => 'Etiquetas de extensões de tipo "parser"',
-	'version-parser-function-hooks' => 'Funções "hooks" de "parser"',
-	'version-hook-name' => 'Nome do hook',
-	'version-hook-subscribedby' => 'Subscrito por',
-	'version-version' => '(Versão $1)',
-	'version-license' => 'Licença',
-	'version-poweredby-credits' => "Este é um wiki '''[//www.mediawiki.org/ MediaWiki]''', copyright © 2001-$1 $2.",
-	'version-poweredby-others' => 'outros',
-	'version-license-info' => 'O MediaWiki é software livre; pode redistribuí-lo e/ou modificá-lo nos termos da licença GNU General Public License, tal como publicada pela Free Software Foundation; tanto a versão 2 da Licença, como (por opção sua) qualquer versão posterior.
-
-O MediaWiki é distribuído na esperança de que seja útil, mas SEM QUALQUER GARANTIA; inclusive, sem a garantia implícita da POSSIBILIDADE DE SER COMERCIALIZADO ou de ADEQUAÇÂO PARA QUALQUER FINALIDADE ESPECÍFICA. Consulte a licença GNU General Public License para mais detalhes.
-
-Em conjunto com este programa deve ter recebido [{{SERVER}}{{SCRIPTPATH}}/COPYING uma cópia da licença GNU General Public License]; se não a recebeu, peça-a por escrito para Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA ou [//www.gnu.org/licenses/old-licenses/gpl-2.0.html leia-a na internet].',
-	'version-software' => 'Software instalado',
-	'version-software-product' => 'Produto',
-	'version-software-version' => 'Versão',
-	'version-entrypoints' => 'URLs dos pontos de entrada',
-	'version-entrypoints-header-entrypoint' => 'Ponto de entrada',
-	'version-entrypoints-header-url' => 'URL',
-	'vertical-games' => 'Jogos',
-	'vertical-lifestyle' => 'Estilo de Vida',
-	'vertical-movies' => 'Entretenimento',
-);
-
 $messages['qu'] = array(
 	'variants' => "Ñawra rikch'akuykuna",
 	'view' => 'Qhaway',
@@ -11240,41 +11177,6 @@ $1",
 	'viewprevnext' => 'Bekiek ($1 {{int:pipe-separator}} $2) ($3).',
 );
 
-$messages['zh'] = array(
-	'variantname-zh-hans' => '简体',
-	'variantname-zh-hant' => '繁體',
-	'variantname-zh-cn' => 'disable',
-	'variantname-zh-tw' => 'disable',
-	'variantname-zh-hk' => 'disable',
-	'variantname-zh-mo' => 'disable',
-	'variantname-zh-sg' => 'disable',
-	'variantname-zh-my' => 'disable',
-	'variantname-zh' => 'disable',
-	'vertical-books' => '阅读新知',
-	'vertical-comics' => '动漫',
-	'vertical-games' => '游戏',
-	'vertical-lifestyle' => '生活',
-	'vertical-movies' => '电影',
-	'vertical-music' => '音乐',
-	'vertical-tv' => '电视',
-);
-
-$messages['zh-classical'] = array(
-	'variantname-zh-hans' => '简体',
-	'variantname-zh-hant' => '繁體',
-	'variantname-zh-cn' => 'disable',
-	'variantname-zh-tw' => 'disable',
-	'variantname-zh-hk' => 'disable',
-	'variantname-zh-mo' => 'disable',
-	'variantname-zh-sg' => 'disable',
-	'variantname-zh-my' => 'disable',
-	'variantname-zh' => 'disable',
-);
-
-$messages['zh-cn'] = array(
-	'version' => '版本',
-);
-
 $messages['zh-hans'] = array(
 	'variants' => '变换',
 	'view' => '查看',
@@ -11303,12 +11205,12 @@ $1',
 	'verification-error' => '文件未通过验证。',
 	'viewdeletedpage' => '查看被删页面',
 	'variantname-zh-hans' => '简体',
-	'variantname-zh-hant' => '繁体',
-	'variantname-zh-cn' => '大陆简体',
-	'variantname-zh-tw' => '台湾正体',
-	'variantname-zh-hk' => '香港繁体',
-	'variantname-zh-sg' => '新加坡简体',
-	'variantname-zh' => '不转换',
+	'variantname-zh-hant' => '繁體',
+	'variantname-zh-cn' => 'disable',
+	'variantname-zh-tw' => 'disable',
+	'variantname-zh-hk' => 'disable',
+	'variantname-zh-sg' => 'disable',
+	'variantname-zh' => 'disable',
 	'variantname-gan-hans' => 'hans',
 	'variantname-kk-cyrl' => 'kk-cyrl',
 	'version' => '版本',
@@ -11346,8 +11248,8 @@ MediaWiki是基于使用目的而加以发布，然而不负任何担保责任�
 	'vertical-music' => '音乐',
 	'vertical-tv' => '电视',
 	'video-dims' => '$1, $2 × $3',
-	'variantname-zh-mo' => 'mo',
-	'variantname-zh-my' => 'my',
+	'variantname-zh-mo' => 'disable',
+	'variantname-zh-my' => 'disable',
 	'variantname-gan-hant' => 'hant',
 	'variantname-gan' => 'gan',
 	'variantname-sr-ec' => 'sr-ec',
@@ -11404,7 +11306,7 @@ $1',
 	'viewprevnext' => '檢視 （$1 {{int:pipe-separator}} $2） （$3）',
 	'verification-error' => '檔案未通過驗證。',
 	'viewdeletedpage' => '檢視被刪除的頁面',
-	'variantname-zh-hans' => '簡體',
+	'variantname-zh-hans' => '简体',
 	'variantname-zh-hant' => '繁體',
 	'variantname-zh-cn' => '大陸簡體',
 	'variantname-zh-tw' => '台灣正體',
@@ -11477,42 +11379,5 @@ MediaWiki是基於使用目的而加以發佈，然而不負任何擔保責任�
 	'version-svn-revision' => '(r$2)',
 	'version-file-extensions-allowed' => 'File extensions allowed for upload',
 	'vertical-comedy' => 'Comedy',
-);
-
-$messages['zh-hk'] = array(
-	'version' => '版本',
-	'vertical-books' => '閱讀新知',
-	'vertical-comics' => '動漫',
-	'vertical-games' => '遊戲',
-	'vertical-lifestyle' => '生活',
-	'vertical-movies' => '電影',
-	'vertical-music' => '音樂',
-	'vertical-tv' => '電視',
-);
-
-$messages['zh-tw'] = array(
-	'viewsourcetext' => '你可以檢視並複製本頁面的原始碼。',
-	'variantname-zh-tw' => '台灣正體',
-	'version-parserhooks' => '語法鉤',
-	'version-hooks' => '鉤',
-	'version-parser-function-hooks' => '語法函數鉤',
-	'version-hook-name' => '鉤名',
-	'version' => '版本',
-	'vertical-books' => '閱讀新知',
-	'vertical-comics' => '動漫',
-	'vertical-games' => '遊戲',
-	'vertical-lifestyle' => '生活',
-	'vertical-movies' => '電影',
-	'vertical-music' => '音樂',
-	'vertical-tv' => '電視',
-);
-
-$messages['zh-yue'] = array(
-	'viewsourcetext' => '你可以檢視並複製本頁面的原始碼。',
-	'variantname-zh-tw' => '台灣繁體',
-	'version-parserhooks' => '語法鉤',
-	'version-hooks' => '鉤',
-	'version-parser-function-hooks' => '語法函數鉤',
-	'version-hook-name' => '鉤名',
 );
 

@@ -116,7 +116,7 @@ class Article extends Page {
 		}
 
 		$page = null;
-		wfRunHooks( 'ArticleFromTitle', array( &$title, &$page ) );
+		Hooks::run( 'ArticleFromTitle', array( &$title, &$page ) );
 		if ( !$page ) {
 			switch( $title->getNamespace() ) {
 				case NS_FILE:
@@ -196,11 +196,9 @@ class Article extends Page {
 	 * This function has side effects! Do not use this function if you
 	 * only want the real revision text if any.
 	 *
-	 * @return Return the text of this revision
+	 * @return string the text of this revision
 	 */
 	public function getContent() {
-		global $wgUser;
-
 		wfProfileIn( __METHOD__ );
 
 		if ( $this->mPage->getID() === 0 ) {
@@ -212,7 +210,7 @@ class Article extends Page {
 					$text = '';
 				}
 			} else {
-				$text = wfMsgExt( $wgUser->isLoggedIn() ? 'noarticletext' : 'noarticletextanon', 'parsemag' );
+				$text = wfMessage( 'noarticletext' )->text();
 			}
 			wfProfileOut( __METHOD__ );
 
@@ -353,7 +351,7 @@ class Article extends Page {
 
 		$this->mRevIdFetched = $this->mRevision->getId();
 
-		wfRunHooks( 'ArticleAfterFetchContent', array( &$this, &$this->mContent ) );
+		Hooks::run( 'ArticleAfterFetchContent', [ $this, &$this->mContent ] );
 
 		wfProfileOut( __METHOD__ );
 
@@ -512,7 +510,7 @@ class Article extends Page {
 		while ( !$outputDone && ++$pass ) {
 			switch( $pass ) {
 				case 1:
-					wfRunHooks( 'ArticleViewHeader', array( &$this, &$outputDone, &$useParserCache ) );
+					Hooks::run( 'ArticleViewHeader', [ $this, &$outputDone, &$useParserCache ] );
 					break;
 				case 2:
 					# Early abort if the page doesn't exist
@@ -521,15 +519,15 @@ class Article extends Page {
 						$this->showMissingArticle();
 						wfProfileOut( __METHOD__ );
 						/* Wikia change begin - @author: Marcin, #BugId: 30436 */
-							$text = '';
-							if (wfRunHooks('ArticleNonExistentPage', array( &$this, $wgOut, &$text))) {
-								$this->mParserOutput = $wgParser->parse(
-									$text,
-									$this->getTitle(),
-									$parserOptions
-								);
-								$wgOut->addParserOutput( $this->mParserOutput );
-							}
+						$text = '';
+						if ( Hooks::run( 'ArticleNonExistentPage', [ $this, $wgOut, &$text ] ) ) {
+							$this->mParserOutput = $wgParser->parse(
+								$text,
+								$this->getTitle(),
+								$parserOptions
+							);
+							$wgOut->addParserOutput( $this->mParserOutput );
+						}
 						/* Wikia change end */
 						return;
 					}
@@ -551,7 +549,7 @@ class Article extends Page {
 							}
 							$wgOut->addParserOutput( $this->mParserOutput );
 							// Wikia change - begin - @author: wladek
-							wfRunHooks('ArticleViewAddParserOutput',array( $this, $this->mParserOutput ) );
+							Hooks::run('ArticleViewAddParserOutput',array( $this, $this->mParserOutput ) );
 							// Wikia change - end
 							# Ensure that UI elements requiring revision ID have
 							# the correct version information.
@@ -610,7 +608,7 @@ class Article extends Page {
 						wfDebug( __METHOD__ . ": showing CSS/JS source\n" );
 						$this->showCssOrJsPage();
 						$outputDone = true;
-					} elseif( !wfRunHooks( 'ArticleViewCustom', array( $this->mContent, $this->getTitle(), $wgOut ) ) ) {
+					} elseif( !Hooks::run( 'ArticleViewCustom', array( $this->mContent, $this->getTitle(), $wgOut ) ) ) {
 						# Allow extensions do their own custom view for certain pages
 						$outputDone = true;
 					} else {
@@ -655,7 +653,7 @@ class Article extends Page {
 					// Wikia change - begin - @author: wladek
 					Transaction::setAttribute( Transaction::PARAM_PARSER_CACHE_USED, $poolArticleView->getIsDirty() );
 
-					wfRunHooks('ArticleViewAddParserOutput',array( $this, $this->mParserOutput ) );
+					Hooks::run('ArticleViewAddParserOutput',array( $this, $this->mParserOutput ) );
 					// Wikia change - end
 
 					# Don't cache a dirty ParserOutput object
@@ -666,7 +664,7 @@ class Article extends Page {
 
 					# <Wikia>
 					if ( !$poolArticleView->getIsDirty() ) {
-						wfRunHooks('ArticleViewAfterParser',array( $this, $this->mParserOutput ) );
+						Hooks::run('ArticleViewAfterParser',array( $this, $this->mParserOutput ) );
 					}
 					# </Wikia>
 
@@ -772,7 +770,7 @@ class Article extends Page {
 			'clearyourcache' );
 
 		// Give hooks a chance to customise the output
-		if ( wfRunHooks( 'ShowRawCssJs', array( $this->mContent, $this->getTitle(), $wgOut ) ) ) {
+		if ( Hooks::run( 'ShowRawCssJs', array( $this->mContent, $this->getTitle(), $wgOut ) ) ) {
 			// Wrap the whole lot in a <pre> and don't parse
 			$m = array();
 			preg_match( '!\.(css|js)$!u', $this->getTitle()->getText(), $m );
@@ -796,7 +794,7 @@ class Article extends Page {
 		$ns = $this->getTitle()->getNamespace();
 
 		$specialPolicy = array();
-		wfRunHooks( 'ArticleRobotPolicy', array( &$specialPolicy, $this->getTitle() ) );
+		Hooks::run( 'ArticleRobotPolicy', array( &$specialPolicy, $this->getTitle() ) );
 		if ( !empty($specialPolicy) ) {
 			return $specialPolicy;
 		}
@@ -908,7 +906,7 @@ class Article extends Page {
 		if ( isset( $this->mRedirectedFrom ) ) {
 			// This is an internally redirected page view.
 			// We'll need a backlink to the source page for navigation.
-			if ( wfRunHooks( 'ArticleViewRedirect', array( &$this ) ) ) {
+			if ( Hooks::run( 'ArticleViewRedirect', [ $this ] ) ) {
 				# start wikia change
 				global $wgWikiaUseNoFollow;
 				$redirAttribs = array();
@@ -991,7 +989,7 @@ class Article extends Page {
 		# chance to mark this new article as patrolled.
 		$this->showPatrolFooter();
 
-		wfRunHooks( 'ArticleViewFooter', array( $this ) );
+		Hooks::run( 'ArticleViewFooter', array( $this ) );
 
 	}
 
@@ -1037,7 +1035,7 @@ class Article extends Page {
 	 * namespace, show the default message text. To be called from Article::view().
 	 */
 	public function showMissingArticle() {
-		global $wgOut, $wgRequest, $wgUser, $wgSend404Code;
+		global $wgOut, $wgRequest, $wgSend404Code;
 
 		# Show info in user (talk) namespace. Does the user exist? Is he blocked?
 		if ( $this->getTitle()->getNamespace() == NS_USER || $this->getTitle()->getNamespace() == NS_USER_TALK ) {
@@ -1069,7 +1067,7 @@ class Article extends Page {
 			}
 		}
 
-		wfRunHooks( 'ShowMissingArticle', array( $this ) );
+		Hooks::run( 'ShowMissingArticle', array( $this ) );
 
 		# Show delete and move logs
 		LogEventsList::showLogExtract( $wgOut, array( 'delete', 'move' ), $this->getTitle()->getPrefixedText(), '',
@@ -1085,7 +1083,7 @@ class Article extends Page {
 			$wgRequest->response()->header( "HTTP/1.1 404 Not Found" );
 		}
 
-		$hookResult = wfRunHooks( 'BeforeDisplayNoArticleText', array( $this ) );
+		$hookResult = Hooks::run( 'BeforeDisplayNoArticleText', array( $this ) );
 
 		if ( ! $hookResult ) {
 			return;
@@ -1101,15 +1099,7 @@ class Article extends Page {
 			// Use the default message text
 			$text = $this->getTitle()->getDefaultMessageText();
 		} else {
-			$createErrors = $this->getTitle()->getUserPermissionsErrors( 'create', $wgUser );
-			$editErrors = $this->getTitle()->getUserPermissionsErrors( 'edit', $wgUser );
-			$errors = array_merge( $createErrors, $editErrors );
-
-			if ( !count( $errors ) ) {
-				$text = wfMsgNoTrans( 'noarticletext' );
-			} else {
-				$text = wfMsgNoTrans( 'noarticletext-nopermission' );
-			}
+			$text = wfMessage( 'noarticletext' )->inContentLanguage()->plain();
 		}
 		$text = "<div class='noarticletext'>\n$text\n</div>";
 
@@ -1168,7 +1158,7 @@ class Article extends Page {
 	public function setOldSubtitle( $oldid = 0 ) {
 		global $wgLang, $wgOut, $wgUser, $wgRequest;
 
-		if ( !wfRunHooks( 'DisplayOldSubtitle', array( &$this, &$oldid ) ) ) {
+		if ( !Hooks::run( 'DisplayOldSubtitle', [ $this, &$oldid ] ) ) {
 			return;
 		}
 
@@ -1351,7 +1341,7 @@ class Article extends Page {
 	 */
 	public function protect() {
 		# Wikia change @author nAndy
-		wfRunHooks( 'BeforePageProtect', array(&$this) );
+		Hooks::run( 'BeforePageProtect', [ $this ] );
 		# End of Wikia change
 		$form = new ProtectionForm( $this );
 		$form->execute();
@@ -1362,7 +1352,7 @@ class Article extends Page {
 	 */
 	public function unprotect() {
 		# Wikia change @author nAndy
-		wfRunHooks( 'BeforePageUnprotect', array(&$this) );
+		Hooks::run( 'BeforePageUnprotect', [ $this ] );
 		# End of Wikia change
 		$this->protect();
 	}
@@ -1374,7 +1364,7 @@ class Article extends Page {
 		global $wgOut, $wgRequest, $wgLang;
 
 		# Wikia change @author nAndy
-		wfRunHooks( 'BeforePageDelete', array(&$this) );
+		Hooks::run( 'BeforePageDelete', [ $this ] );
 		# End of Wikia change
 
 		# This code desperately needs to be totally rewritten
@@ -1386,7 +1376,7 @@ class Article extends Page {
 		$permission_errors = $title->getUserPermissionsErrors( 'delete', $user );
 
 		# Wikia change @author nAndy (DAR-1133)
-		wfRunHooks( 'BeforeDeletePermissionErrors', [ &$this, &$title, &$user, &$permission_errors ] );
+		Hooks::run( 'BeforeDeletePermissionErrors', [ $this, $title, $user, &$permission_errors ] );
 		# End of Wikia change
 
 		if ( count( $permission_errors ) ) {
@@ -1490,7 +1480,7 @@ class Article extends Page {
 		$wgOut->setRobotPolicy( 'noindex,nofollow' );
 		$wgOut->addWikiMsg( 'confirmdeletetext' );
 
-		wfRunHooks( 'ArticleConfirmDelete', array( $this, $wgOut, &$reason ) );
+		Hooks::run( 'ArticleConfirmDelete', array( $this, $wgOut, &$reason ) );
 
 		$user = $this->getContext()->getUser();
 
@@ -1666,7 +1656,7 @@ class Article extends Page {
 				&& !$this->mRedirectedFrom && !$this->getTitle()->isRedirect();
 			// Extension may have reason to disable file caching on some pages.
 			if ( $cacheable ) {
-				$cacheable = wfRunHooks( 'IsFileCacheable', array( &$this ) );
+				$cacheable = Hooks::run( 'IsFileCacheable', [ $this ] );
 			}
 		}
 

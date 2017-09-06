@@ -204,7 +204,7 @@ abstract class File implements UrlGeneratorInterface {
 
 		/** Wikia change start, author Jacek Jursza, bug id: 31194 - not able to rename video files **/
 		$result = $mimeMagic->isMatchingExtension( $newExt, $oldMime );
-		wfRunHooks( 'File::checkExtensionCompatibilityResult', array( &$result, &$old, &$oldMime, &$newExt ) );
+		Hooks::run( 'File::checkExtensionCompatibilityResult', array( &$result, &$old, &$oldMime, &$newExt ) );
 
 		return $result;
 		/** Wikia change end **/
@@ -296,22 +296,7 @@ abstract class File implements UrlGeneratorInterface {
 	 * @return string
 	 */
 	public function getUrl() {
-		global $wgEnableVignette;
-		if ( $wgEnableVignette ) {
-			return ( string ) $this->getUrlGenerator();
-		} else {
-			if ( !isset( $this->url ) ) {
-				$this->assertRepoDefined();
-				$this->url = $this->repo->getZoneUrl( 'public' ) . '/' . $this->getUrlRel();
-
-				# start wikia change
-				$this->originalUrl = $this->url;
-				$this->url = wfReplaceImageServer( $this->url, $this->getTimestamp() ); // rewrite URL in all envirnoments (BAC-939)
-				# end wikia change
-			}
-
-			return $this->url;
-		}
+		return ( string ) $this->getUrlGenerator();
 	}
 
 	# start wikia change
@@ -820,7 +805,7 @@ abstract class File implements UrlGeneratorInterface {
 	 * @return MediaTransformOutput|false
 	 */
 	function transform( $params, $flags = 0 ) {
-		global $wgUseSquid, $wgIgnoreImageErrors, $wgThumbnailEpoch, $wgEnableVignette;
+		global $wgUseSquid, $wgIgnoreImageErrors, $wgThumbnailEpoch;
 
 		wfProfileIn( __METHOD__ );
 		do {
@@ -850,11 +835,7 @@ abstract class File implements UrlGeneratorInterface {
 			$thumbName = $this->thumbName( $normalisedParams );
 			$thumbPath = $this->getThumbPath( $thumbName ); // final thumb path
 
-			if ( $wgEnableVignette ) {
-				$thumbUrl = $this->getVignetteThumbUrl( $normalisedParams );
-			} else {
-				$thumbUrl = $this->getThumbUrl( $thumbName );
-			}
+			$thumbUrl = $this->getVignetteThumbUrl( $normalisedParams );
 
 			if ( $this->repo ) {
 				// Defer rendering if a 404 handler is set up...

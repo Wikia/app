@@ -12,8 +12,19 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 				return {};
 			}
 		},
+		slotRegistry: {
+			getScrollY: noop
+		},
 		adBlockDetection: {
 			isBlocking: noop
+		},
+		browserDetect: {
+			getOS: function () {
+				return 'BarOS';
+			},
+			getBrowser: function () {
+				return 'Foo 50';
+			}
 		},
 		window: {},
 		log: noop
@@ -22,7 +33,9 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 	function getModule() {
 		return modules['ext.wikia.adEngine.adInfoTrackerHelper'](
 			mocks.lookupServices,
+			mocks.slotRegistry,
 			mocks.adBlockDetection,
+			mocks.browserDetect,
 			mocks.log,
 			mocks.window
 		);
@@ -236,5 +249,17 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 		data = getModule().prepareData(slot);
 
 		expect(data.bidder_won).toBe('rubicon');
+	});
+
+	it('include browser information data', function () {
+		var data,
+			slot = getTopLeaderboardSlotWithPageParams(fakeJSONString);
+
+		slot.container.firstChild.dataset.gptSlotParams = JSON.stringify({});
+		slot.container.firstChild.dataset.gptCreativeSize = fakeJSONString;
+
+		data = getModule().prepareData(slot);
+
+		expect(data.browser).toBe('BarOS Foo 50');
 	});
 });

@@ -200,7 +200,7 @@ class AbuseFilter {
 		}
 
 		$realValues = self::$builderValues;
-		wfRunHooks( 'AbuseFilter-builder', array( &$realValues ) );
+		Hooks::run( 'AbuseFilter-builder', array( &$realValues ) );
 
 		return $realValues;
 	}
@@ -666,7 +666,7 @@ class AbuseFilter {
 		global $wgUser, $wgTitle;
 
 		/* Wikia change begin: Needed to be able to bypass filters */
-		if ( !wfRunHooks( 'AbuseFilterShouldFilter', array( $wgUser ) ) ) {
+		if ( !Hooks::run( 'AbuseFilterShouldFilter', array( $wgUser ) ) ) {
 			return true;
 		}
 		/* Wikia change end */
@@ -678,7 +678,7 @@ class AbuseFilter {
 		}
 
 		// Add vars from extensions
-		wfRunHooks( 'AbuseFilter-filterAction', array( &$vars, $title ) );
+		Hooks::run( 'AbuseFilter-filterAction', array( $vars, $title ) );
 
 		// Set context
 		$vars->setVar( 'context', 'filter' );
@@ -1001,7 +1001,7 @@ class AbuseFilter {
 			case 'rangeblock':
 				$filterUser = AbuseFilter::getFilterUser();
 
-				$range = IP::sanitizeRange( wfGetIP() . '/16' );
+				$range = static::getIpRangeToBlock();
 
 				// Create a block.
 				$block = new Block;
@@ -1102,6 +1102,22 @@ class AbuseFilter {
 		}
 
 		return $display;
+	}
+
+	/**
+	 * Wikia change
+	 * Helper function to determine the IP range to block depending on configured CIDR limits.
+	 * @return string
+	 */
+	protected static function getIpRangeToBlock(): string {
+		global $wgBlockCIDRLimit;
+		$ip = RequestContext::getMain()->getRequest()->getIP();
+
+		if ( IP::isIPv6( $ip ) ) {
+			return IP::sanitizeRange( "$ip/{$wgBlockCIDRLimit['IPv6']}");
+		}
+
+		return IP::sanitizeRange( "$ip/{$wgBlockCIDRLimit['IPv4']}");
 	}
 
 	public static function isThrottled( $throttleId, $types, $title, $rateCount, $ratePeriod ) {

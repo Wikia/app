@@ -59,13 +59,6 @@ body {
 	float: none;
 }
 
-// remove global header shadow
-.WikiaHeader {
-	nav:before {
-		background: none;
-	}
-}
-
 .EditPage {
 	@include clearfix;
 	background: $color-epl-page-secondary;
@@ -332,7 +325,7 @@ body {
 				padding: 10px;
 				position: relative;
 
-				.banner-notifications-wrapper {
+				.wds-banner-notification__container {
 					// FB#48494 - change nav2 error styling for modal preview
 					width: auto;
 				}

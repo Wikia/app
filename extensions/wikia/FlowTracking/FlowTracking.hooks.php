@@ -48,7 +48,7 @@ class FlowTrackingHooks {
 	 * @return bool
 	 */
 	public static function onArticleInsertComplete( Page $page, User $user, $text, $summary, $minoredit,
-		$watchThis, $sectionAnchor, &$flags, Revision $revision ) {
+		$watchThis, $sectionAnchor, $flags, Revision $revision ) {
 		$title = $revision->getTitle();
 		if ( $title && $title->inNamespace( NS_MAIN ) ) {
 			$request = RequestContext::getMain()->getRequest();
@@ -77,38 +77,11 @@ class FlowTrackingHooks {
 		return true;
 	}
 
-	public static function onContributeMenuAfterDropdownItems( &$dropdownItems ) {
-		foreach ( $dropdownItems as $specialPageName => &$item ) {
-			if ( $specialPageName === 'createpage' ) {
-				$item['href'] = http_build_url(
-					$item['href'],
-					[ 'query' => 'flow=' . static::CREATE_PAGE_CONTRIBUTE_BUTTON ],
-					HTTP_URL_JOIN_QUERY
-				);
-			}
-		}
-
-		return true;
-	}
-
-	public static function onPageHeaderAfterAddNewPageButton( &$href ) {
-		$href = wfAppendQuery( $href, [
-			'flow' => static::CREATE_PAGE_CONTRIBUTE_BUTTON
-		] );
-
-		return true;
-	}
-
 	public static function getParamsFromUrlQuery( $url ) {
 		parse_str( parse_url( $url, PHP_URL_QUERY ), $queryParams );
 		return $queryParams;
 	}
 
-	/**
-	 * @param PageHeaderController $header
-	 * @param $actions
-	 * @return bool
-	 */
 	public static function onBeforePrepareActionButtons( $header, &$actions ) {
 		global $wgTitle;
 

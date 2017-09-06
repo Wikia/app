@@ -15,7 +15,6 @@ abstract class WikiaSkin extends SkinTemplate {
 
 	protected $app = null;
 	protected $wg = null;
-	protected $wf = null;
 
 	//strict mode for checking if an asset's URL is registered for the current skin
 	//@see AssetsManager::checkAssetUrlForSkin
@@ -34,7 +33,6 @@ abstract class WikiaSkin extends SkinTemplate {
 	function __construct( $templateClassName = null, $skinName = null, $themeName = null, $styleName = null ) {
 		$this->app = F::app();
 		$this->wg = $this->app->wg;
-		$this->wf = $this->app->wf;
 
 		$this->assetsManager = AssetsManager::getInstance();
 
@@ -125,68 +123,6 @@ abstract class WikiaSkin extends SkinTemplate {
 
 		wfProfileOut( __METHOD__ );
 		return $res;
-	}
-
-	/**
-	 * This method extracts script tags from $this->getScripts() method
-	 * and generates a single <script> tag to load all required AssetsManager
-	 * groups in a single HTTP request.
-	 *
-	 * Bottom scripts are added to the end of the output.
-	 *
-	 * Additionaly, all groups from $groups array will be loaded as well.
-	 *
-	 * Once this function ends its run $groups will be updated (via a reference)
-	 * with all AM groups extracted from getScripts().
-	 *
-	 * @param array $groups additional list of AM groups to load
-	 * @return string <script> tags with extracted JS files and the rest
-	 */
-	public function getScriptsWithCombinedGroups(Array &$groups) {
-		wfProfileIn(__METHOD__);
-		$scripts = $this->getScripts();
-		$bottomScripts = $this->bottomScripts();
-
-		// extract all <script> tags that load a single AssetsManager group
-		if ( is_array( $scripts ) ) {
-			foreach ( $scripts as $idx => $script ) {
-				if ( isset( $script['url'] ) ) {
-					if ( $this->assetsManager->isGroupURL( $script['url'] ) ) {
-						$groups[] = $this->assetsManager->getGroupNameFromUrl( $script['url'] );
-						unset( $scripts[$idx] );
-					}
-
-					// remove this entry from bottom scripts as it was extracted
-					// from there by $this->getScripts() call above
-					$bottomScripts = str_replace(Html::linkedScript($script['url']) . "\n" , '', $bottomScripts);
-				}
-			}
-		}
-
-		// render script tags
-		$scriptTags = '';
-
-		// load these groups with a skin check
-		foreach ( $this->assetsManager->getURL( $groups ) as $src ) {
-			if ( $this->assetsManager->checkAssetUrlForSkin( $src, $this ) ) {
-				$scriptTags .= "<script src='{$src}'></script>\n";
-			}
-		}
-
-		// load all remaining scripts
-		foreach ( $scripts as $script ) {
-			if (isset($script['url'])) {
-				$scriptTags .= "<script src='{$script['url']}'></script>\n";
-			}
-		}
-
-		wfDebug( sprintf( "%s: combined %d JS groups\n", __METHOD__, count($groups) ) );
-
-		// append bottom scripts to the output
-		$scriptTags .= $bottomScripts;
-
-		wfProfileOut(__METHOD__);
-		return $scriptTags;
 	}
 
 	/**
@@ -295,12 +231,12 @@ abstract class WikiaSkin extends SkinTemplate {
 			'Wikia' => new stdClass(),
 		];
 
-		wfRunHooks( 'WikiaSkinTopScripts', array( &$vars, &$scripts, $this ) );
+		Hooks::run( 'WikiaSkinTopScripts', array( &$vars, &$scripts, $this ) );
 
 		$scripts .= $this->renderTopShortTTLModules();
 
 		$scriptModules = array( 'amd', 'wikia.tracker.stub' );
-		wfRunHooks( 'WikiaSkinTopModules', array( &$scriptModules, $this ) );
+		Hooks::run( 'WikiaSkinTopModules', array( &$scriptModules, $this ) );
 		if ( !empty($scriptModules) ) {
 			// Mocking mw.loader.state so the script can be loaded up high
 			// Whatever is passed to mw.loader.state is saved to window.preMwLdrSt
@@ -326,7 +262,7 @@ abstract class WikiaSkin extends SkinTemplate {
 	protected function renderTopShortTTLModules() {
 		$shortTtlScriptModules = [];
 
-		wfRunHooks( 'WikiaSkinTopShortTTLModules', [ &$shortTtlScriptModules, $this ] );
+		Hooks::run( 'WikiaSkinTopShortTTLModules', [ &$shortTtlScriptModules, $this ] );
 
 		if ( !empty($shortTtlScriptModules) ) {
 			$scripts = ResourceLoader::makeCustomLink( $this->wg->out, $shortTtlScriptModules, 'scripts' ) . "\n";
@@ -367,7 +303,6 @@ abstract class WikiaSkin extends SkinTemplate {
 	}
 
 	static function makeInlineVariablesScript( $data ) {
-		$wf = F::app()->wf;
 		wfProfileIn( __METHOD__ );
 
 		if( $data ) {

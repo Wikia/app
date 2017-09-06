@@ -21,7 +21,6 @@ class MysqlUpdater extends DatabaseUpdater {
 			array( 'addField', 'ipblocks',      'ipb_expiry',       'patch-ipb_expiry.sql' ),
 			array( 'doInterwikiUpdate' ),
 			array( 'doIndexUpdate' ),
-			array( 'addTable', 'hitcounter',                        'patch-hitcounter.sql' ),
 			array( 'addField', 'recentchanges', 'rc_type',          'patch-rc_type.sql' ),
 
 			// 1.3
@@ -161,7 +160,6 @@ class MysqlUpdater extends DatabaseUpdater {
 			array( 'addTable', 'iwlinks',                           'patch-iwlinks.sql' ),
 			array( 'addIndex', 'iwlinks', 'iwl_prefix_title_from',  'patch-rename-iwl_prefix.sql' ),
 			array( 'addField', 'updatelog',     'ul_value',         'patch-ul_value.sql' ),
-			array( 'addField', 'interwiki',     'iw_api',           'patch-iw_api_and_wikiid.sql' ),
 			array( 'dropIndex', 'iwlinks',      'iwl_prefix',       'patch-kill-iwl_prefix.sql' ),
 			array( 'dropIndex', 'iwlinks',      'iwl_prefix_from_title', 'patch-kill-iwl_pft.sql' ),
 			array( 'addField', 'categorylinks', 'cl_collation',     'patch-categorylinks-better-collation.sql' ),
@@ -191,6 +189,13 @@ class MysqlUpdater extends DatabaseUpdater {
 			array( 'addField',	'uploadstash',	'us_chunk_inx',		'patch-uploadstash_chunk.sql' ),
 			array( 'addfield', 'job',           'job_timestamp',    'patch-jobs-add-timestamp.sql' ),
 			array( 'modifyField', 'user_former_groups', 'ufg_group', 'patch-ufg_group-length-increase.sql' ),
+
+			// backports
+
+			// 1.25 / SUS-2651
+			array( 'dropTable', 'hitcounter' ),
+			array( 'dropField', 'site_stats', 'ss_total_views', 'patch-drop-ss_total_views.sql' ),
+			array( 'dropField', 'page', 'page_counter', 'patch-drop-page_counter.sql' ),
 		);
 	}
 
@@ -388,7 +393,6 @@ class MysqlUpdater extends DatabaseUpdater {
 			page_namespace int NOT NULL,
 			page_title varchar(255) binary NOT NULL,
 			page_restrictions tinyblob NOT NULL,
-			page_counter bigint(20) unsigned NOT NULL default '0',
 			page_is_redirect tinyint(1) unsigned NOT NULL default '0',
 			page_is_new tinyint(1) unsigned NOT NULL default '0',
 			page_random real unsigned NOT NULL,
@@ -458,9 +462,9 @@ class MysqlUpdater extends DatabaseUpdater {
 
 		$this->output( wfTimestamp( TS_DB ) );
 		$this->output( "......Setting up page table.\n" );
-		$this->db->query( "INSERT INTO $page (page_id, page_namespace, page_title, page_restrictions, page_counter,
+		$this->db->query( "INSERT INTO $page (page_id, page_namespace, page_title, page_restrictions,
 			page_is_redirect, page_is_new, page_random, page_touched, page_latest, page_len)
-			SELECT cur_id, cur_namespace, cur_title, cur_restrictions, cur_counter, cur_is_redirect, cur_is_new,
+			SELECT cur_id, cur_namespace, cur_title, cur_restrictions, cur_is_redirect, cur_is_new,
 				cur_random, cur_touched, rev_id, LENGTH(cur_text)
 			FROM $cur,$revision
 			WHERE cur_id=rev_page AND rev_timestamp=cur_timestamp AND rev_id > {$maxold}", __METHOD__ );

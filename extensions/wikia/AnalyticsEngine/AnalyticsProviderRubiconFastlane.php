@@ -2,6 +2,7 @@
 
 class AnalyticsProviderRubiconFastlane implements iAnalyticsProvider {
 	const COUNTRIES_VARIABLE = 'wgAdDriverRubiconFastlaneCountries';
+	const PREBID_COUNTRIES_VARIABLE = 'wgAdDriverRubiconDisplayPrebidCountries';
 	const MODULE_NAME = 'ext.wikia.adEngine.lookup.rubicon.rubiconFastlane';
 	const TEMPLATE = 'extensions/wikia/AnalyticsEngine/templates/bidder.mustache';
 
@@ -27,7 +28,8 @@ class AnalyticsProviderRubiconFastlane implements iAnalyticsProvider {
 				static::TEMPLATE,
 				[
 					'moduleName' => static::MODULE_NAME,
-					'wgCountriesVariable' => static::COUNTRIES_VARIABLE
+					'wgCountriesVariable' => static::COUNTRIES_VARIABLE,
+					'wgPrebidCountriesVariable' => static::PREBID_COUNTRIES_VARIABLE
 				]
 			);
 		}

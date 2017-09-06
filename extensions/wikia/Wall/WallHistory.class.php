@@ -29,7 +29,7 @@ class WallHistory extends WikiaModel {
 			case WH_EDIT:
 			case WH_NEW:
 				// wall the wall action goes through this point.
-				wfRunHooks( 'WallAction', [ $type, $feed->data->parent_id, $feed->data->title_id ] );
+				Hooks::run( 'WallAction', [ $type, $feed->data->parent_id, $feed->data->title_id ] );
 				$this->addNewOrEdit( $type, $feed, $user );
 			break;
 			case WH_ARCHIVE:
@@ -38,7 +38,7 @@ class WallHistory extends WikiaModel {
 			case WH_REMOVE:
 			case WH_RESTORE:
 				// wall the wall action goes through this point.
-				wfRunHooks( 'WallAction', [ $type, $feed->data->parent_id, $feed->data->message_id ] );
+				Hooks::run( 'WallAction', [ $type, $feed->data->parent_id, $feed->data->message_id ] );
 				$this->addStatChangeAction( $type, $feed );
 			break;
 		}

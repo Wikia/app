@@ -91,7 +91,7 @@ class CloseMyAccountMaintenance extends Maintenance {
 	public function setCurrentUser() {
 		global $wgUser;
 
-		$wgUser = User::newFromName( 'Wikia' );
+		$wgUser = User::newFromName( Wikia::USER );
 	}
 }
 

@@ -5,6 +5,8 @@ namespace SMW\MediaWiki\Hooks;
 use SMW\ApplicationFactory;
 use SMW\Factbox\FactboxCache;
 use SMW\EventHandler;
+use Title;
+use User;
 
 /**
  * TitleMoveComplete occurs whenever a request to move an article
@@ -52,11 +54,11 @@ class TitleMoveComplete {
 	 *
 	 * @param Title $oldTitle old title
 	 * @param Title $newTitle: new title
-	 * @param Use $user user who did the move
+	 * @param User $user user who did the move
 	 * @param $oldId database ID of the page that's been moved
 	 * @param $newId database ID of the created redirect
 	 */
-	public function __construct( &$oldTitle, &$newTitle, &$user, $oldId, $newId ) {
+	public function __construct( Title $oldTitle, Title $newTitle, User $user, $oldId, $newId ) {
 		$this->oldTitle = $oldTitle;
 		$this->newTitle = $newTitle;
 		$this->user = $user;

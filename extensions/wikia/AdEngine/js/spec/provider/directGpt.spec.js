@@ -1,5 +1,5 @@
 /*global beforeEach, describe, it, modules, expect, spyOn*/
-describe('ext.wikia.adEngine.provider.directGptMobile', function () {
+describe('ext.wikia.adEngine.provider.directGpt', function () {
 	'use strict';
 
 	var noop = function () {},
@@ -14,38 +14,56 @@ describe('ext.wikia.adEngine.provider.directGptMobile', function () {
 
 				}
 			},
+			uapContext: {},
 			factory: {
 				createProvider: noop
 			},
-			defaultAdUnitBuilder: {name: 'defaultAdUnit'},
-			kiloAdUnitBuilder: {name: 'kiloAdUnit'}
+			kiloAdUnitBuilder: {name: 'kiloAdUnit'},
+			megaAdUnitBuilder: {name: 'megaAdUnit'},
+			slotTweaker: {},
+			pageFairRecovery: {},
+			sourcePointRecovery: {}
 		};
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.provider.directGptMobile'](
+		return modules['ext.wikia.adEngine.provider.directGpt'](
 			mocks.adContext,
-			mocks.defaultAdUnitBuilder,
+			mocks.uapContext,
+			mocks.factory,
 			mocks.kiloAdUnitBuilder,
-			mocks.factory
+			mocks.megaAdUnitBuilder,
+			mocks.slotTweaker,
+			mocks.pageFairRecovery,
+			mocks.sourcePointRecovery
 		);
 	}
 
-	it('Return default adUnit if there is no param in context', function () {
+	it('Return kilo adUnit if there is no param in context', function () {
 		spyOn(mocks.factory, 'createProvider');
 
 		getModule();
 
-		expect(mocks.factory.createProvider.calls.argsFor(0)[4].adUnitBuilder)
-			.toEqual(mocks.defaultAdUnitBuilder);
+		expect(mocks.factory.createProvider.calls.argsFor(0)[4].getAdUnitBuilder())
+			.toEqual(mocks.kiloAdUnitBuilder);
 	});
 
-	it('Return KILO adUnit if there is param in context', function () {
+	it('Return mega adUnit builder if there is premium ad layout set in context', function () {
 		spyOn(mocks.factory, 'createProvider');
-		spyOn(mocks.adContext, 'getContext').and.returnValue({opts: {enableKILOAdUnit: true}});
+		spyOn(mocks.adContext, 'getContext').and.returnValue({opts:{megaAdUnitBuilderEnabled: true}});
 
 		getModule();
 
-		expect(mocks.factory.createProvider.calls.argsFor(0)[4].adUnitBuilder)
+		expect(mocks.factory.createProvider.calls.argsFor(0)[4].getAdUnitBuilder())
+			.toEqual(mocks.megaAdUnitBuilder);
+	});
+
+	it('Return kilo adUnit builder if there premium ad layout is turned off', function () {
+		spyOn(mocks.factory, 'createProvider');
+		spyOn(mocks.adContext, 'getContext').and.returnValue({opts:{megaAdUnitBuilderEnabled: false}});
+
+		getModule();
+
+		expect(mocks.factory.createProvider.calls.argsFor(0)[4].getAdUnitBuilder())
 			.toEqual(mocks.kiloAdUnitBuilder);
 	});
 });

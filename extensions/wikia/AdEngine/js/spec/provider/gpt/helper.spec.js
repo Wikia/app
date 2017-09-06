@@ -68,7 +68,6 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			slotTargetingHelper: {
 				getAbTestId: noop,
 				getOutstreamData: noop,
-				getPrebidSlotId: noop,
 				getWikiaSlotId: noop
 			},
 			googleTag: {
@@ -85,6 +84,11 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 				addSlot: noop,
 				flush: noop,
 				setPageLevelParams: noop
+			},
+			geo: {
+				isProperGeo: function() {
+					return false;
+				}
 			},
 			log: noop
 		};
@@ -105,7 +109,11 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			mocks.adBlockDetection,
 			mocks.adBlockRecovery,
 			mocks.slotTweaker,
+			mocks.geo,
+			{},
 			mocks.log,
+			undefined,
+			undefined,
 			mocks.sraHelper,
 			mocks.pageFair
 		);

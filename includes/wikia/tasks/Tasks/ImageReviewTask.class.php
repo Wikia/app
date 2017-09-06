@@ -8,6 +8,7 @@
 namespace Wikia\Tasks\Tasks;
 
 use \Wikia\Logger\WikiaLogger;
+use WikiaDataAccess;
 
 class ImageReviewTask extends BaseTask {
 
@@ -19,7 +20,12 @@ class ImageReviewTask extends BaseTask {
 		$articlesDeleted = 0;
 
 		foreach ( $pageList as $imageData ) {
-			list( $wikiId, $imageId ) = $imageData;
+			// prevent notices
+			if ( count( $imageData ) == 3 ) {
+				list( $wikiId, $imageId, $revisionId ) = $imageData;
+			} else {
+				list( $wikiId, $imageId ) = $imageData;
+			}
 
 			if ( !\WikiFactory::isPublic( $wikiId ) ) {
 				$this->notice( 'wiki has been disabled', ['wiki_id' => $wikiId] );
@@ -39,38 +45,66 @@ class ImageReviewTask extends BaseTask {
 			}
 
 			$cityLang = \WikiFactory::getVarValueByName( 'wgLanguageCode', $wikiId );
-			$reason = wfMsgExt( 'imagereview-reason', ['language' => $cityLang] );
+			$reason = wfMessage( 'imagereview-reason' )->inLanguage( $cityLang );
 
-			$command = "SERVER_ID={$wikiId} php {$IP}/maintenance/wikia/deleteOn.php" .
-				' -u ' . escapeshellarg( $userName ) .
-				' --id ' . $imageId;
+			if ( count( $imageData ) == 3 ) {
+				$command =
+					"/usr/wikia/backend/bin/run_maintenance --id=${wikiId} --script='wikia/deleteImageRevision.php --pageId=${imageId} --revisionId=${revisionId}'";
 
-			if ( $reason ) {
-				$command .= ' -r ' . escapeshellarg( $reason );
-			}
-			if ( $suppress ) {
-				$command .= ' -s';
-			}
+				$output = wfShellExec( $command, $exitStatus );
 
-			$title = wfShellExec( $command, $exitStatus );
+				if ( $exitStatus !== 0 ) {
+					$this->error( 'article deletion error', [
+						'cityId' => $wikiId,
+						'pageId' => $imageId,
+						'revisionId' => $revisionId,
+						'exit_status' => $exitStatus,
+						'output' => $output,
+					] );
 
-			if ( $exitStatus !== 0 ) {
-				$this->error( 'article deletion error', [
-					'city_url' => $cityUrl,
+					continue;
+				}
+
+				$this->info( 'removed image', [
+					'cityId' => $wikiId,
+					'pageId' => $imageId,
+					'revisionId' => $revisionId,
 					'exit_status' => $exitStatus,
-					'error' => $title,
 				] );
 
-				continue;
+			} else {
+				$command = "SERVER_ID={$wikiId} php {$IP}/maintenance/wikia/deleteOn.php" .
+					' -u ' . escapeshellarg( $userName ) .
+					' --id ' . $imageId;
+
+				if ( $reason ) {
+					$command .= ' -r ' . escapeshellarg( $reason );
+				}
+				if ( $suppress ) {
+					$command .= ' -s';
+				}
+
+				$title = wfShellExec( $command, $exitStatus );
+
+				if ( $exitStatus !== 0 ) {
+					$this->error( 'article deletion error', [
+						'city_url' => $cityUrl,
+						'exit_status' => $exitStatus,
+						'error' => $title,
+					] );
+
+					continue;
+				}
+
+				$cityPath = \WikiFactory::getVarValueByName( 'wgScript', $wikiId );
+				$escapedTitle = wfEscapeWikiText( $title );
+
+				$this->info( 'removed image', [
+					'link' => "{$cityUrl}{$cityPath}?title={$escapedTitle}",
+					'title' => $escapedTitle,
+				] );
 			}
 
-			$cityPath = \WikiFactory::getVarValueByName( 'wgScript', $wikiId );
-			$escapedTitle = wfEscapeWikiText( $title );
-
-			$this->info( 'removed image', [
-				'link' => "{$cityUrl}{$cityPath}?title={$escapedTitle}",
-				'title' => $escapedTitle,
-			] );
 
 			++$articlesDeleted;
 		}
@@ -81,6 +115,20 @@ class ImageReviewTask extends BaseTask {
 		}
 
 		return $success;
+	}
+
+	public function update( $pageList ) {
+		foreach ( $pageList as list( $cityId, $pageId, $revisionId ) ) {
+			$key = wfForeignMemcKey( $cityId, 'image-review', $pageId, $revisionId );
+
+			WikiaDataAccess::cachePurge( $key );
+
+			// SUS-2650: invalidate file page of reviewed image
+			$task = new ImageReviewTask();
+			$task->call( 'invalidateFilePage', (int) $pageId );
+			$task->wikiId( $cityId );
+			$task->queue();
+		}
 	}
 
 	public function deleteFromQueue( Array $aDeletionList ) {
@@ -145,6 +193,23 @@ class ImageReviewTask extends BaseTask {
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Invalidates provided file page (use page ID) by bumping page_touched entry in `page` table
+	 * and purging CDN cache.
+	 *
+	 * This task is queued when image review status changes to reflect this change on the file page.
+	 *
+	 * @see SUS-2650
+	 *
+	 * @param int $pageId
+	 */
+	public function invalidateFilePage( int $pageId ) {
+		$title = \Title::newFromId( $pageId );
+
+		$title->invalidateCache();
+		$title->purgeSquid();
 	}
 
 	private function isTop200( $wikiId ) {

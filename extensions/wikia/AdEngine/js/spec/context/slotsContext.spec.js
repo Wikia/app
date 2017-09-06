@@ -19,11 +19,6 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 				return mocks.context;
 			}
 		},
-		adLogicZoneParams: {
-			getPageType: function () {
-				return mocks.context.pageType;
-			}
-		},
 		videoFrequencyMonitor: {
 			canLaunchVideo: true,
 			videoCanBeLaunched: function () {
@@ -57,7 +52,6 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 	function getContext() {
 		return modules['ext.wikia.adEngine.context.slotsContext'](
 			mocks.adContext,
-			mocks.adLogicZoneParams,
 			mocks.videoFrequencyMonitor,
 			mocks.doc,
 			mocks.geo,
@@ -68,7 +62,7 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 
 	beforeEach(function () {
 		mocks.context.opts = {};
-		mocks.context.pageType = 'article';
+		mocks.context.targeting.pageType = 'article';
 		mocks.instantGlobals = {};
 	});
 
@@ -82,7 +76,7 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 	});
 
 	it('on home page mark article slots and one home specific slot as enabled', function () {
-		mocks.context.pageType = 'home';
+		mocks.context.targeting.pageType = 'home';
 		var context = getContext();
 
 		expect(context.isApplicable('TOP_LEADERBOARD')).toBeTruthy();
@@ -158,7 +152,7 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 	});
 
 	it('filter slot map based on status (home page type)', function () {
-		mocks.context.pageType = 'home';
+		mocks.context.targeting.pageType = 'home';
 		var context = getContext(),
 			slotMap = {
 				TOP_LEADERBOARD: 1,
@@ -179,5 +173,27 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 		var context = getContext();
 
 		expect(context.filterSlotMap()).toEqual({});
+	});
+
+	it('filter slot map for premum ad layout', function () {
+		mocks.context.opts.premiumAdLayoutEnabled = true;
+		var context = getContext(),
+			slotMap = {
+				TOP_LEADERBOARD: 1,
+				TOP_RIGHT_BOXAD: 2,
+				PREFOOTER_LEFT_BOXAD: 3,
+				PREFOOTER_MIDDLE_BOXAD: 4,
+				PREFOOTER_RIGHT_BOXAD: 5,
+				LEFT_SKYSCRAPER_2: 6,
+				LEFT_SKYSCRAPER_3: 7,
+				INVISIBLE_HIGH_IMPACT_2: 8,
+				BOTTOM_LEADERBOARD: 9
+			};
+
+		expect(context.filterSlotMap(slotMap)).toEqual({
+			TOP_LEADERBOARD: 1,
+			TOP_RIGHT_BOXAD: 2,
+			BOTTOM_LEADERBOARD: 9
+		});
 	});
 });

@@ -694,7 +694,7 @@ class WikiFactory {
 			 * city_language or city_url) and do some basic validation
 			 */
 			wfProfileIn( __METHOD__."-citylist" );
-			wfRunHooks( 'WikiFactoryChanged', [ $variable->cv_name , $city_id, $value ] );
+			Hooks::run( 'WikiFactoryChanged', [ $variable->cv_name , $city_id, $value ] );
 			switch ( $variable->cv_name ) {
 				case "wgServer":
 				case "wgScriptPath":
@@ -870,6 +870,16 @@ class WikiFactory {
 		$bStatus = false;
 		wfProfileIn( __METHOD__ );
 
+		// SUS-1634 added per-cluster control of database read-only mode. It sets $wgReadOnly global variable
+		// than affects read-only checks that take place before queries are made to other database clusters.
+		// This ugly hack makes removing wgReadOnlyCluster value possible when it was used to put A cluster into read-only mode.
+		global $wgReadOnly, $wgDBReadOnly;
+		if ( $wgReadOnly === WikiFactoryLoader::PER_CLUSTER_READ_ONLY_MODE_REASON ) {
+			$wgReadOnly = false;
+			$wgDBReadOnly = false;
+			wfDebug( __METHOD__ . " - removed read-only flag triggered by wgReadOnlyCluster variable\n" );
+		}
+
 		$variable = static::getVarById( $variable_id, $wiki );
 		$dbw = static::db( DB_MASTER );
 		$dbw->begin();
@@ -905,7 +915,7 @@ class WikiFactory {
 				global $wgMemc;
 				$wgMemc->delete( static::getVarValueKey( $wiki, $variable_id ) );
 
-				wfRunHooks( 'WikiFactoryVariableRemoved', [ $variable->cv_name , $wiki ] );
+				Hooks::run( 'WikiFactoryVariableRemoved', [ $variable->cv_name , $wiki ] );
 			}
 		}
 		catch ( DBQueryError $e ) {
@@ -1609,7 +1619,7 @@ class WikiFactory {
 	 */
 	static public function getDomainKey( $domain ) {
 		$domainHash = static::getDomainHash($domain);
-		return "wikifactory:domains:by_domain_hash:{$domainHash}";
+		return "wikifactory:domains:by_domain_hash:{$domainHash}:v2";
 	}
 
 	/**
@@ -1935,7 +1945,7 @@ class WikiFactory {
 
 		wfProfileIn( __METHOD__ );
 
-		wfRunHooks( 'WikiFactoryPublicStatusChange', [ &$city_public, &$city_id, $reason ] );
+		Hooks::run( 'WikiFactoryPublicStatusChange', [ &$city_public, &$city_id, $reason ] );
 
 		$update = [
 			"city_public" => $city_public,
@@ -3008,7 +3018,7 @@ class WikiFactory {
 	 * @param $user
 	 * @return bool
 	 */
-	static public function updateCityDescription( &$article, &$user ) {
+	static public function updateCityDescription( WikiPage $article, User $user ): bool {
 		global $wgCityId;
 
 		if ( strtolower($article->getTitle()) == "mediawiki:description" ) {

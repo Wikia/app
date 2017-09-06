@@ -1,29 +1,32 @@
 #!/bin/bash
 #
-# Update the stats table about discussion migration.  Run whenever migrations take place
-# Remove when migraitons are done.
+# Update the stats table about discussion migration. Run whenever migrations take place
+# Remove when migrations are done.
 
 DATE=`date "+%Y-%m-%d"`
-LOG_DIR="/home/garth/update-forum-activity-logs/$DATE"
+LOG_DIR="$HOME/update-forum-activity-logs/$DATE"
+mkdir -p $LOG_DIR
 
-APP_DIR="/usr/wikia/slot1/current/src"
+# Please note that this won't work if current directory is a sym-link
+CUR_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+echo "Discussions maintenance $CUR_DIR"
 
-WIKIA_MAINTENANCE="$APP_DIR/maintenance/wikia"
-DISCUSSION_MAINTENANCE="$APP_DIR/extensions/wikia/Discussions/maintenance"
+WIKIA_MAINTENANCE="$CUR_DIR/../../../../maintenance/wikia"
+echo "Wikia maintenance $WIKIA_MAINTENANCE"
+
+ls $WIKIA_MAINTENANCE
 
 RUNNER_SCRIPT="$WIKIA_MAINTENANCE/runOnCluster.php"
-RUNNER_FILE="$DISCUSSION_MAINTENANCE/SiteStatus.class.php"
-
-mkdir -p $LOG_DIR
+RUNNER_FILE="$CUR_DIR/SiteStatus.class.php"
 
 for cluster in $(seq 1 7); do
 	LOG_FILE="$LOG_DIR/c$cluster.log"
 	echo -e "Updating activity for cluster $cluster"
 	echo -e "\tWriting to log $LOG_FILE"
 
-	CMD="php $RUNNER_SCRIPT --file $RUNNER_FILE -c $cluster --filter all --no-db-check > $LOG_FILE"
-	echo -e "\t$CMD"	
-	$CMD 
+	CMD="php -d display_errors=1 $RUNNER_SCRIPT --file $RUNNER_FILE -c $cluster --filter all --no-db-check > $LOG_FILE"
+	echo -e "\t$CMD"
+	$CMD
 #	echo -e "\tStarted with PID $! ..."
 done
 
