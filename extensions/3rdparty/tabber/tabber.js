@@ -274,6 +274,9 @@ tabberObj.prototype.init = function(e)
 		DOM_ul.appendChild(document.createElement('wbr'));
 		// end wikia change
 
+		// Wikia change - to avoid iterating over the ten bazillion divs in the document
+		// we use getElementsByClassName on initial sweep
+		// because of this we must check recursively for child tabs if they contain nested tabbers
 		var nestedChildTabbers = t.div.getElementsByClassName(this.classMain);
 		for (var j = 0; j < nestedChildTabbers.length; j++) {
 			var childTabberArgs = {
