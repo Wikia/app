@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Discussions;
 
 class WallHistoryFinder {
@@ -8,6 +7,7 @@ class WallHistoryFinder {
 	const TABLE_WALL_HISTORY = 'wall_history';
 	const COLUMNS = [
 		'revision_id',
+		'comment_id',
 		'deleted_or_removed',
 		'event_date',
 		'reason',
@@ -27,7 +27,9 @@ class WallHistoryFinder {
 			->FROM( self::TABLE_WALL_HISTORY )
 			->WHERE( 'post_ns' )
 			->EQUAL_TO( NS_WIKIA_FORUM_BOARD )
-			->run( $this->dbh );
+			->runLoop( $this->dbh, function ( &$entries, $row ) {
+				$entries[] = get_object_vars($row);
+			} );
 	}
 
 }

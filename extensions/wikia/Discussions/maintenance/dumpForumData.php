@@ -112,7 +112,7 @@ class DumpForumData extends Maintenance {
 
 		foreach ( $history as $data ) {
 			$insert = $this->createInsert(
-				'import_wall_history',
+				'import_history',
 				Discussions\WallHistoryFinder::COLUMNS,
 				$data
 			);
