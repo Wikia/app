@@ -194,7 +194,7 @@ tabberObj.prototype.init = function(e)
 		t.headingText = t.div.title;
 
 		/* Remove the title attribute to prevent a tooltip from appearing */
-		if (this.removeTitle) { t.div.title = ''; }
+		if (this.removeTitle) { t.div.removeAttribute('title'); }
 
 		if (!t.headingText) {
 
@@ -273,6 +273,15 @@ tabberObj.prototype.init = function(e)
 		// manually insert word break points
 		DOM_ul.appendChild(document.createElement('wbr'));
 		// end wikia change
+
+		var nestedChildTabbers = t.div.getElementsByClassName(this.classMain);
+		for (var j = 0; j < nestedChildTabbers.length; j++) {
+			var childTabberArgs = {
+				div: nestedChildTabbers[j]
+			};
+
+			nestedChildTabbers[j].tabber = new tabberObj(childTabberArgs);
+		}
 	}
 
 	/* Add the UL list to the beginning of the tabber div */
