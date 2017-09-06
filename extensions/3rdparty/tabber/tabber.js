@@ -156,22 +156,24 @@ tabberObj.prototype.init = function(e)
 	this.tabs.length = 0;
 
 	/* Loop through an array of all the child nodes within our tabber element. */
-	childNodes = e.getElementsByClassName(this.classTab);
+	childNodes = e.childNodes;
 	for (i=0; i < childNodes.length; i++) {
-		/* Create a new object to save info about this tab */
-		t = {};
+		if (childNodes[i].classList.contains(this.classTab)) {
+			/* Create a new object to save info about this tab */
+			t = {};
 
-		/* Save a pointer to the div for this tab */
-		t.div = childNodes[i];
+			/* Save a pointer to the div for this tab */
+			t.div = childNodes[i];
 
-		/* Add the new object to the array of tabs */
-		this.tabs[this.tabs.length] = t;
+			/* Add the new object to the array of tabs */
+			this.tabs[this.tabs.length] = t;
 
-		/* If the class name contains classTabDefault,
-		 then select this tab by default.
-		 */
-		if (childNodes[i].classList.contains(this.classTabDefault)) {
-			defaultTab = this.tabs.length-1;
+			/* If the class name contains classTabDefault,
+			 then select this tab by default.
+			 */
+			if (childNodes[i].classList.contains(this.classTabDefault)) {
+				defaultTab = this.tabs.length - 1;
+			}
 		}
 	}
 
