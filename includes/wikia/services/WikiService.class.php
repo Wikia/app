@@ -245,7 +245,6 @@ class WikiService extends WikiaModel {
 
 				if ( $row ) {
 					$sitestats = array(
-						'views' => $row->ss_total_views,
 						'edits' => $row->ss_total_edits,
 						'articles' => $row->ss_good_articles,
 						'pages' => $row->ss_total_pages,

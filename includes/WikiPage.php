@@ -77,11 +77,6 @@ class WikiPage extends Page implements IDBAccessObject {
 	protected $mTouched = '19700101000000';
 
 	/**
-	 * @var int|null
-	 */
-	protected $mCounter = null;
-
-	/**
 	 * Constructor and clear the article
 	 * @param $title Title Reference to a Title object.
 	 */
@@ -205,7 +200,6 @@ class WikiPage extends Page implements IDBAccessObject {
 		$this->mDataLoaded = false;
 		$this->mDataLoadedFrom = self::READ_NONE;
 
-		$this->mCounter = null;
 		$this->mRedirectTarget = null; # Title object if set
 		$this->mLastRevision = null; # Latest revision
 		$this->mTouched = '19700101000000';
@@ -227,7 +221,6 @@ class WikiPage extends Page implements IDBAccessObject {
 			'page_namespace',
 			'page_title',
 			'page_restrictions',
-			'page_counter',
 			'page_is_redirect',
 			'page_is_new',
 			'page_random',
@@ -349,7 +342,6 @@ class WikiPage extends Page implements IDBAccessObject {
 			# Old-fashioned restrictions
 			$this->mTitle->loadRestrictions( $data->page_restrictions );
 
-			$this->mCounter     = intval( $data->page_counter );
 			$this->mTouched     = wfTimestamp( TS_MW, $data->page_touched );
 			$this->mIsRedirect  = intval( $data->page_is_redirect );
 			$this->mLatest      = intval( $data->page_latest );
@@ -387,17 +379,6 @@ class WikiPage extends Page implements IDBAccessObject {
 	 */
 	public function hasViewableContent() {
 		return $this->mTitle->exists() || $this->mTitle->isAlwaysKnown();
-	}
-
-	/**
-	 * @return int The view count for the page
-	 */
-	public function getCount() {
-		if ( !$this->mDataLoaded ) {
-			$this->loadPageData();
-		}
-
-		return $this->mCounter;
 	}
 
 	/**
@@ -965,15 +946,8 @@ class WikiPage extends Page implements IDBAccessObject {
 	 * @param $user User The relevant user
 	 */
 	public function doViewUpdates( User $user ) {
-		global $wgDisableCounters;
 		if ( wfReadOnly() ) {
 			return;
-		}
-
-		# Don't update page view counters on views from bot users (bug 14044)
-		if ( !$wgDisableCounters && !$user->isAllowed( 'bot' ) && $this->mTitle->exists() ) {
-			DeferredUpdates::addUpdate( new ViewCountUpdate( $this->getId() ) );
-			DeferredUpdates::addUpdate( new SiteStatsUpdate( 1, 0, 0 ) );
 		}
 
 		# Update newtalk / watchlist notification status
@@ -1038,7 +1012,6 @@ class WikiPage extends Page implements IDBAccessObject {
 			'page_id'           => $page_id,
 			'page_namespace'    => $this->mTitle->getNamespace(),
 			'page_title'        => $this->mTitle->getDBkey(),
-			'page_counter'      => 0,
 			'page_restrictions' => '',
 			'page_is_redirect'  => 0, # Will set this shortly...
 			'page_is_new'       => 1,
