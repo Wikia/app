@@ -102,6 +102,11 @@ $navbar-size-for-sticky-element: 65px;
 			height: auto;
 			width: 100%;
 		}
+
+		.video-player > iframe {
+			// Hide Learn more text
+			z-index: -1;
+		}
 	}
 
 	.wds-community-header {
@@ -111,6 +116,11 @@ $navbar-size-for-sticky-element: 65px;
 
 .bfab-template {
 	position: relative;
+
+	.video-player > iframe {
+		// Hide Learn more text
+		z-index: -1;
+	}
 }
 
 #TOP_BUTTON_WIDE {
