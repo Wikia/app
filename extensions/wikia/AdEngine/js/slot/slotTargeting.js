@@ -89,11 +89,9 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 	function getOutstreamData() {
 		var context = adContext.getContext(),
 			getAdserverTargeting = prebid && prebid.get().getAdserverTargetingForAdUnitCode,
-			slotName = videoSlots[context.targeting.skin],
-			videoTargeting = getAdserverTargeting && getAdserverTargeting(slotName);
+			videoTargeting = getAdserverTargeting && getAdserverTargeting(videoSlots[context.targeting.skin]);
 
-		// prebid doesn't reset bids for disabled slots so we need to check if slot is still applicable on next pv
-		if (videoTargeting && slotsContext.isApplicable(slotName)) {
+		if (videoTargeting) {
 			return constructOutstreamString(videoTargeting);
 		}
 	}
