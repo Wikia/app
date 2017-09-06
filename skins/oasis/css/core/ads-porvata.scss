@@ -193,11 +193,6 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 			}
 		}
 	}
-
-	.mobile-porvata .video-player > iframe {
-		// Hide Learn more text
-		z-index: -1;
-	}
 }
 
 /* Floating */

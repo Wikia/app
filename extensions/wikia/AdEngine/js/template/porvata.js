@@ -60,7 +60,7 @@ define('ext.wikia.adEngine.template.porvata', [
 	}
 
 	function isVpaid(contentType) {
-		return contentType.indexOf('application/') === 0;
+		return contentType === 'application/javascript';
 	}
 
 	function enabledFallbackBidHandling(video, params) {
