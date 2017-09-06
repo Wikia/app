@@ -50,7 +50,9 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		biddersPerformanceMap = performanceTracker.setupPerformanceMap(skin);
 		adUnits = helper.setupAdUnits(skin);
 
-		win.pbjs._bidsReceived = [];
+		if (win.pbjs) {
+			win.pbjs._bidsReceived = [];
+		}
 
 		if (adUnits.length > 0) {
 
