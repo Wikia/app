@@ -46,7 +46,7 @@ define('ext.wikia.adEngine.video.player.ui.volumeControl', [
 			updateCurrentState(video, volumeControl);
 		});
 
-		video.addEventListener('wikiaAdStarted', function () {
+		video.addEventListener('wikiaAdPlay', function () {
 			updateCurrentState(video, volumeControl);
 			volumeControl.classList.remove('hidden');
 		});

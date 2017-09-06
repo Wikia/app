@@ -16,6 +16,7 @@ $floating-ad-animation-speed: $video-collapse-animation-speed;
 $floating-ad-featured-video-gap: $video-container-width;
 
 $vpaid-z-index: 10;
+$controls-z-index: 11;
 $video-interactive-area-z-index: $vpaid-z-index + 1;
 
 .wikia-ad {
@@ -75,6 +76,7 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 		left: 0;
 		position: absolute;
 		width: 100%;
+		z-index: $controls-z-index;
 	}
 
 	.current-time {
@@ -83,6 +85,7 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 		height: 100%;
 		max-width: 100%;
 		width: 0;
+		z-index: $controls-z-index;
 	}
 
 	.pause-overlay {
@@ -91,6 +94,7 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 		position: absolute;
 		top: 0;
 		width: 100%;
+		z-index: $controls-z-index;
 	}
 
 	.close-ad {
@@ -102,6 +106,7 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 		right: 0;
 		top: 0;
 		width: $video-player-button-size;
+		z-index: $controls-z-index;
 	}
 
 	/* TODO remove .ima-mute-div and all references in next releases (keep .volume-control only) */
@@ -114,6 +119,7 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 		cursor: pointer;
 		position: absolute;
 		right: 10px;
+		z-index: $controls-z-index;
 
 		.speaker {
 			&.mute {
