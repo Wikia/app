@@ -7430,7 +7430,7 @@ $1',
 	'unrate_it' => 'Bewertung entfernen',
 	'use_old_formatting' => 'Zu Monobook wechseln',
 	'use_new_formatting' => 'Neue Formatierung verwenden',
-	'usesitejs-disabled-warning' => 'Benutzerdefiniertes JavaScript ist in diesem Wiki deaktiviert.',
+	'usesitejs-disabled-warning' => 'In diesem Wiki ist das benutzerdefinierte JavaScript deaktiviert. [[w:c:de.community:Hilfe:JavaScript-Überprüfungsprozess|Hier]] erfährst du mehr über JavaScript in Wikis.',
 	'unable-block-edit' => 'Du hast nicht die Berechtigung, diese Seite zu bearbeiten. Versuche es später erneut.',
 	'undeletedarticle' => 'stellte "[[$1]]" wieder her',
 	'unlockdb-wikifactory-error' => 'Es ist ein Fehler aufgetreten. Speichern oder leeren des Caches fehlgeschlagen. Die Datenbank ist unter Umständen nicht gesperrt. Bitte versuche es erneut oder kontaktiere das TechTeam.',
@@ -7474,6 +7474,7 @@ $1',
 	'user-properties-handler-not-registered' => 'Handler not registered',
 	'user-properties-method-nonexistent' => 'Handler method non-existent',
 	'user-properties-handler-nonexistent' => 'Handler class non-existent',
+	'upload-scripted-dtd' => 'Cannot upload SVG files that contain a non-standard DTD declaration.',
 );
 
 $messages['de-ch'] = array(
@@ -8928,7 +8929,7 @@ $1',
 	'unrate_it' => 'Anula tu voto',
 	'use_old_formatting' => 'Cambiar a diseño Monobook',
 	'use_new_formatting' => 'Probar un diseño nuevo',
-	'usesitejs-disabled-warning' => 'El JavaScript personalizado está deshabilitado en este wiki.',
+	'usesitejs-disabled-warning' => 'El JavaScript personalizado está personalizado en este wiki. Puedes leer más acerca de JavaScript en wiki [[Ayuda:Proceso_de_revisión_de_JavaScript|aquí]].',
 	'unable-block-edit' => 'No estás autorizado para editar esta página. Inténtalo de nuevo más tarde.',
 	'unsubscribe-email' => 'Si no quieres recibir más emails de Wikia, puedes cancelar tu suscripción aquí: $1',
 	'uploadtext-ext' => 'Una lista completa de extensiones permitidas está disponible en la [[{{ns:Special}}:Version|página de la versión del wiki]].',
@@ -8975,6 +8976,7 @@ Remember that custom .css and .js pages use a lowercase title, e.g. {{ns:user}}:
 	'user-properties-handler-not-registered' => 'Handler not registered',
 	'user-properties-method-nonexistent' => 'Handler method non-existent',
 	'user-properties-handler-nonexistent' => 'Handler class non-existent',
+	'upload-scripted-dtd' => 'Cannot upload SVG files that contain a non-standard DTD declaration.',
 );
 
 $messages['et'] = array(
@@ -10547,7 +10549,7 @@ Veuillez confirmer que c’est bien là ce que vous voulez faire.',
 	'unrate_it' => 'Annuler votre vote',
 	'use_old_formatting' => "Passer à l'affichage Monobook",
 	'use_new_formatting' => 'Essayer le nouvel habillage',
-	'usesitejs-disabled-warning' => 'Le JavaScript personnalisé est désactivé sur ce wiki.',
+	'usesitejs-disabled-warning' => 'Le JavaScript personnalisé est désactivé sur ce wiki. Pour en savoir plus au sujet de JavaScript sur les wikis, consultez [[w:c:fr:Aide:Processus_de_vérification_du_JavaScript|cette page]].',
 	'unsubscribe-email' => "Si vous ne souhaitez plus recevoir d'e-mails de la part de Wikia vous pouvez vous désabonner ici : $1",
 	'userlogin-bad-birthday' => 'Merci de choisir une date de naissance correctement.',
 	'userlogin-bad-email' => 'Vous n’avez pas saisi une adresse email valide.',
@@ -10593,6 +10595,7 @@ Remember that custom .css and .js pages use a lowercase title, e.g. {{ns:user}}:
 	'user-properties-handler-not-registered' => 'Handler not registered',
 	'user-properties-method-nonexistent' => 'Handler method non-existent',
 	'user-properties-handler-nonexistent' => 'Handler class non-existent',
+	'upload-scripted-dtd' => 'Cannot upload SVG files that contain a non-standard DTD declaration.',
 );
 
 $messages['frc'] = array(
@@ -15809,7 +15812,7 @@ $1',
 	'unlockdbsuccesssub' => 'Sblocco del database eseguito',
 	'unlockdbsuccesstext' => 'Il database è stato sbloccato.',
 	'unknown_extension_tag' => 'Tag estensione sconosciuto: "$1"',
-	'usesitejs-disabled-warning' => 'Il JavaScript personalizzato è disabilitato per questa wiki.',
+	'usesitejs-disabled-warning' => "Il JavaScript personalizzato è disabilitato per questa wiki. Puoi leggere di più sull'uso del JavaScript nelle wiki [[w:it:Aiuto:Processo di revisione del JavaScript|su questa pagina]].",
 	'userlogin-bad-birthday' => 'Inserisci la data di nascita corretta.',
 	'userlogin-bad-email' => "L'indirizzo e-mail specificato non è valido.",
 	'userlogin-bad-password' => 'La password inserita non è valida.',
@@ -15828,8 +15831,8 @@ $1',
 	'usercaptcha' => 'Parola sfocata -',
 	'usercaptchatext' => "Per favore inserisci il testo dell'immagine.",
 	'users' => 'Utenti',
-	'userinvalidcssjstitle' => "<span class='error'>'''Warning:''' There is no skin \"\$1\".
-Remember that custom .css and .js pages use a lowercase title, e.g. {{ns:user}}:Foo/wikia.css as opposed to {{ns:user}}:Foo/Wikia.css.</span>",
+	'userinvalidcssjstitle' => "<span class='error'>'''Attenzione:''' non esiste nessuna skin \"\$1\".
+Ricorda che le pagine .css e .js personali usano il titolo minuscolo, ad esempio {{ns:user}}:Tizio/wikia.css invece di {{ns:user}}:Tizio/Wikia.css.</span>",
 	'userrights-summary' => '',
 	'userrights-irreversible-marker' => '$1*',
 	'unpatrolledletter' => '!',
@@ -15853,10 +15856,11 @@ Remember that custom .css and .js pages use a lowercase title, e.g. {{ns:user}}:
 	'unlocked' => 'unlocked',
 	'unable-block-edit' => 'You are not allowed to edit this page. Try again later.',
 	'unlockdb-wikifactory-error' => 'An error occurred. Failed to save or clear cache. The database might not be unlocked. Please try again or contact the TechTeam.',
-	'unsubscribe-email' => 'If you no longer want to receive email from Wikia you can unsubscribe here: $1',
+	'unsubscribe-email' => 'Se non vuoi più ricevere email da FANDOM, puoi disiscriverti qui: $1',
 	'user-properties-handler-not-registered' => 'Handler not registered',
 	'user-properties-method-nonexistent' => 'Handler method non-existent',
 	'user-properties-handler-nonexistent' => 'Handler class non-existent',
+	'upload-scripted-dtd' => 'Cannot upload SVG files that contain a non-standard DTD declaration.',
 );
 
 $messages['iu'] = array(
@@ -16296,7 +16300,7 @@ $1',
 	'unrate_it' => '評価を取り消す',
 	'use_old_formatting' => 'monobookの外装に変更する',
 	'use_new_formatting' => '新しい外装を試す',
-	'usesitejs-disabled-warning' => 'このwikiではカスタムJavaScriptは無効になっています。',
+	'usesitejs-disabled-warning' => 'カスタムJavaScriptはこのWikiでは無効です。 JavaScriptについて詳しくは[[Help:JavaScript_review_process|こちら]]からご参照ください。',
 	'unable-block-edit' => 'このページの編集は許可されておりません。後で編集してください。',
 	'uploadtext-ext' => '[[{{ns:Special}}:Version|バージョン情報]]のページで、利用できる拡張子を確認できます。',
 	'userlogin-bad-birthday' => '正しい日付を選んでください。',
@@ -16339,6 +16343,7 @@ $1',
 	'user-properties-handler-not-registered' => 'Handler not registered',
 	'user-properties-method-nonexistent' => 'Handler method non-existent',
 	'user-properties-handler-nonexistent' => 'Handler class non-existent',
+	'upload-scripted-dtd' => 'Cannot upload SVG files that contain a non-standard DTD declaration.',
 );
 
 $messages['jam'] = array(
@@ -25194,7 +25199,8 @@ Bevestig dat je deze handeling wil uitvoeren.",
 	'user-properties-handler-not-registered' => 'Handler not registered',
 	'user-properties-method-nonexistent' => 'Handler method non-existent',
 	'user-properties-handler-nonexistent' => 'Handler class non-existent',
-	'usesitejs-disabled-warning' => 'Custom JavaScript is disabled on this wiki.',
+	'usesitejs-disabled-warning' => 'Custom JavaScript is disabled on this wiki. You can read about JavaScript on wikis [[Help:JavaScript_review_process|here]].',
+	'upload-scripted-dtd' => 'Cannot upload SVG files that contain a non-standard DTD declaration.',
 );
 
 $messages['nl-informal'] = array(
@@ -26754,7 +26760,7 @@ $1',
 	'unrate_it' => 'Cofnij ocenę',
 	'use_old_formatting' => 'Przełącz na styl Monobook',
 	'use_new_formatting' => 'Wypróbuj nowe formatowanie',
-	'usesitejs-disabled-warning' => 'Niestandardowy JavaScript jest wyłączony na tej wiki.',
+	'usesitejs-disabled-warning' => 'Własny kod JavaScript jest wyłączony na tej wiki. Możesz przeczytać o wykorzystaniu JavaScript na wiki [[w:pl:Pomoc:Proces przeglądu kodu JavaScript|tutaj]].',
 	'uploadtext-ext' => 'Pełna lista rozszerzeń dostępna na [[{{ns:Special}}:Version|stronie wersji]].',
 	'userlogin-bad-birthday' => 'Wybierz poprawną datę urodzenia.',
 	'userlogin-bad-email' => 'To nie jest poprawny adres email.',
@@ -26798,6 +26804,7 @@ $1',
 	'user-properties-handler-not-registered' => 'Handler not registered',
 	'user-properties-method-nonexistent' => 'Handler method non-existent',
 	'user-properties-handler-nonexistent' => 'Handler class non-existent',
+	'upload-scripted-dtd' => 'Cannot upload SVG files that contain a non-standard DTD declaration.',
 );
 
 $messages['pms'] = array(
@@ -27809,7 +27816,7 @@ Por favor, confirme que realmente pretende fazer isso.',
 	'unrate_it' => 'Desclassificar',
 	'use_old_formatting' => 'Mude para o Monobook skin',
 	'use_new_formatting' => 'Experimente o novo skin',
-	'usesitejs-disabled-warning' => 'O JavaScript personalizado está desabilitado nesta wiki.',
+	'usesitejs-disabled-warning' => 'JavaScript personalizado está desabilitado nesta wiki. Você pode ler sobre JavaScript em wikis [[ajuda: JavaScript_review_process|aqui]].',
 	'userinvalidcssjstitle' => "<span class='error'>'''Warning:''' There is no skin \"\$1\".
 Remember that custom .css and .js pages use a lowercase title, e.g. {{ns:user}}:Foo/wikia.css as opposed to {{ns:user}}:Foo/Wikia.css.</span>",
 	'userrights-summary' => '',
@@ -27855,6 +27862,7 @@ Remember that custom .css and .js pages use a lowercase title, e.g. {{ns:user}}:
 	'user-properties-handler-not-registered' => 'Handler não registrado',
 	'user-properties-method-nonexistent' => 'Método do handler inexistente',
 	'user-properties-handler-nonexistent' => 'Classe de handler inexistente',
+	'upload-scripted-dtd' => 'Cannot upload SVG files that contain a non-standard DTD declaration.',
 );
 
 $messages['qu'] = array(
@@ -28993,7 +29001,7 @@ $1',
 	'unrate_it' => 'Сбросить оценку',
 	'use_old_formatting' => 'Используйте старый формат',
 	'use_new_formatting' => 'Neue Formatierung verwenden',
-	'usesitejs-disabled-warning' => 'Пользовательский JavaScript отключён на этой вики.',
+	'usesitejs-disabled-warning' => 'Пользовательский JavaScript отключен на этой вики. Подробную информацию об использовании JavaScript можно найти [[Справка:Проверка_JavaScript|на этой странице]].',
 	'unable-block-edit' => 'Вы не можете редактировать эту страницу. Попробуйте ещё раз позже.',
 	'unlockdb-wikifactory-error' => 'Произошла ошибка. Не удалось сохранить или очистить кэш. База данных не может быть разблокирована. Пожалуйста, попробуйте ещё раз или обратитесь к инженерам.',
 	'unlocked' => 'разблокировано',
@@ -29037,6 +29045,7 @@ Remember that custom .css and .js pages use a lowercase title, e.g. {{ns:user}}:
 	'user-properties-handler-not-registered' => 'Handler not registered',
 	'user-properties-method-nonexistent' => 'Handler method non-existent',
 	'user-properties-handler-nonexistent' => 'Handler class non-existent',
+	'upload-scripted-dtd' => 'Cannot upload SVG files that contain a non-standard DTD declaration.',
 );
 
 $messages['rue'] = array(
@@ -38417,7 +38426,7 @@ $1',
 	'unlockdbsuccesssub' => '数据库解锁成功',
 	'unlockdbsuccesstext' => '数据库已解锁。',
 	'unknown_extension_tag' => '不明的扩展标签“$1”',
-	'usesitejs-disabled-warning' => '自定义JavaScript在此维基上被禁用。',
+	'usesitejs-disabled-warning' => '自定义JavaScript在这个Wiki上被禁用。你可以点击[[Help:JavaScript_review_process|这里]]了解详情。',
 	'userinvalidcssjstitle' => "<span class='error'>'''Warning:''' There is no skin \"\$1\".
 Remember that custom .css and .js pages use a lowercase title, e.g. {{ns:user}}:Foo/wikia.css as opposed to {{ns:user}}:Foo/Wikia.css.</span>",
 	'userrights-summary' => '',
@@ -38467,6 +38476,7 @@ Remember that custom .css and .js pages use a lowercase title, e.g. {{ns:user}}:
 	'user-properties-handler-not-registered' => 'Handler not registered',
 	'user-properties-method-nonexistent' => 'Handler method non-existent',
 	'user-properties-handler-nonexistent' => 'Handler class non-existent',
+	'upload-scripted-dtd' => 'Cannot upload SVG files that contain a non-standard DTD declaration.',
 );
 
 $messages['zh-hant'] = array(
@@ -38677,7 +38687,7 @@ $1',
 	'unlockdbsuccesssub' => '資料庫開放',
 	'unlockdbsuccesstext' => '{{SITENAME}}資料庫重新開放。',
 	'unknown_extension_tag' => '不明的擴展標籤 "$1"',
-	'usesitejs-disabled-warning' => '自訂JavaScript在這個wiki上被禁用。',
+	'usesitejs-disabled-warning' => '在這個Wiki上自訂JavaScript亡關閉。你可以按[[Help:JavaScript_review_process|這裡]]閱讀相關內容。',
 	'uploadtext-ext' => 'Wikia支援的所有延申套件請見[[{{ns:Special}}:Version|版本頁]]。',
 	'userinvalidcssjstitle' => "<span class='error'>'''Warning:''' There is no skin \"\$1\".
 Remember that custom .css and .js pages use a lowercase title, e.g. {{ns:user}}:Foo/wikia.css as opposed to {{ns:user}}:Foo/Wikia.css.</span>",
@@ -38727,6 +38737,7 @@ Remember that custom .css and .js pages use a lowercase title, e.g. {{ns:user}}:
 	'user-properties-handler-not-registered' => 'Handler not registered',
 	'user-properties-method-nonexistent' => 'Handler method non-existent',
 	'user-properties-handler-nonexistent' => 'Handler class non-existent',
+	'upload-scripted-dtd' => 'Cannot upload SVG files that contain a non-standard DTD declaration.',
 );
 
 $messages['zu'] = array(
