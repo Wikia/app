@@ -186,7 +186,7 @@ class Parser {
 	 * Wikia vars
 	 */
 
-	var $mIsMainParse;	# Is main article content currently parsed
+	public $mIsMainParse;	# Is main article content currently parsed
 	var $mFlagsParsed = false; # Have you already parsed the article's flags?
 
 	/**
@@ -1182,6 +1182,9 @@ class Parser {
 	 */
 	function internalParse( $text, $isMain = true, $frame = false ) {
 		wfProfileIn( __METHOD__ );
+
+		// Wikia change - let extensions know parser is currently not parsing main wikitext
+		$this->mIsMainParse = $isMain;
 
 		$origText = $text;
 
@@ -4362,10 +4365,6 @@ class Parser {
 	 */
 	function formatHeadings( $text, $origText, $isMain=true ) {
 		global $wgMaxTocLevel, $wgHtml5, $wgExperimentalHtmlIds;
-
-		// Wikia change start
-		$this->mIsMainParse = $isMain;
-		// Wikia change end
 
 		# Inhibit editsection links if requested in the page
 		if ( isset( $this->mDoubleUnderscores['noeditsection'] ) ) {

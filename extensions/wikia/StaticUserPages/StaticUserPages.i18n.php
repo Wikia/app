@@ -109,7 +109,7 @@ FANDOMウェルカムツールについてご不明な点がございました�
 
 $messages['lol'] = array(
 	'static-user-pages-user-content' => 'crwdns70364:0crwdne70364:0',
-	'static-user-pages-bot-content' => 'crwdns70365:0crwdne70365:0',
+	'static-user-pages-bot-content' => 'crwdns71006:0crwdne71006:0',
 );
 
 $messages['pl'] = array(

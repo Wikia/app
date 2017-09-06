@@ -37625,7 +37625,7 @@ $1',
 	'user-properties-handler-not-registered' => 'Handler not registered',
 	'user-properties-method-nonexistent' => 'Handler method non-existent',
 	'user-properties-handler-nonexistent' => 'Handler class non-existent',
-	'usesitejs-disabled-warning' => '自訂JavaScript在這個Wiki上被禁用。你可以按[[Help:JavaScript_review_process|這裡]]閱讀相關內容。',
+	'usesitejs-disabled-warning' => '在這個Wiki上自訂JavaScript亡關閉。你可以按[[Help:JavaScript_review_process|這裡]]閱讀相關內容。',
 );
 
 $messages['yi'] = array(
