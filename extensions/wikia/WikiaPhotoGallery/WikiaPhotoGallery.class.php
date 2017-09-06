@@ -961,13 +961,13 @@ class WikiaPhotoGallery extends ImageGallery {
 
 				# margin calculation for image positioning
 
-				if ( $thumbParams['height'] > $image['height'] ) {
+				if ( isset( $thumbParams['height'] ) && $thumbParams['height'] > $image['height'] ) {
 					$tempTopMargin = -1 * ( $thumbParams['height'] - $image['height'] ) / 2;
 				} else {
 					unset ( $tempTopMargin );
 				}
 
-				if ( $thumbParams['width'] > $image['width'] ) {
+				if ( isset( $thumbParams['width'] ) && $thumbParams['width'] > $image['width'] ) {
 					$tempLeftMargin = -1 * ( $thumbParams['width'] - $image['width'] ) / 2;
 				} else {
 					unset ( $tempLeftMargin );

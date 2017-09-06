@@ -15828,8 +15828,8 @@ $1',
 	'usercaptcha' => 'Parola sfocata -',
 	'usercaptchatext' => "Per favore inserisci il testo dell'immagine.",
 	'users' => 'Utenti',
-	'userinvalidcssjstitle' => "<span class='error'>'''Warning:''' There is no skin \"\$1\".
-Remember that custom .css and .js pages use a lowercase title, e.g. {{ns:user}}:Foo/wikia.css as opposed to {{ns:user}}:Foo/Wikia.css.</span>",
+	'userinvalidcssjstitle' => "<span class='error'>'''Attenzione:''' non esiste nessuna skin \"\$1\".
+Ricorda che le pagine .css e .js personali usano il titolo minuscolo, ad esempio {{ns:user}}:Tizio/wikia.css invece di {{ns:user}}:Tizio/Wikia.css.</span>",
 	'userrights-summary' => '',
 	'userrights-irreversible-marker' => '$1*',
 	'unpatrolledletter' => '!',
@@ -15853,7 +15853,7 @@ Remember that custom .css and .js pages use a lowercase title, e.g. {{ns:user}}:
 	'unlocked' => 'unlocked',
 	'unable-block-edit' => 'You are not allowed to edit this page. Try again later.',
 	'unlockdb-wikifactory-error' => 'An error occurred. Failed to save or clear cache. The database might not be unlocked. Please try again or contact the TechTeam.',
-	'unsubscribe-email' => 'If you no longer want to receive email from Wikia you can unsubscribe here: $1',
+	'unsubscribe-email' => 'Se non vuoi più ricevere email da FANDOM, puoi disiscriverti qui: $1',
 	'user-properties-handler-not-registered' => 'Handler not registered',
 	'user-properties-method-nonexistent' => 'Handler method non-existent',
 	'user-properties-handler-nonexistent' => 'Handler class non-existent',
@@ -37616,7 +37616,7 @@ $1',
 	'user-properties-handler-not-registered' => 'Handler not registered',
 	'user-properties-method-nonexistent' => 'Handler method non-existent',
 	'user-properties-handler-nonexistent' => 'Handler class non-existent',
-	'usesitejs-disabled-warning' => '自訂JavaScript在這個Wiki上被禁用。你可以按[[Help:JavaScript_review_process|這裡]]閱讀相關內容。',
+	'usesitejs-disabled-warning' => '在這個Wiki上自訂JavaScript亡關閉。你可以按[[Help:JavaScript_review_process|這裡]]閱讀相關內容。',
 );
 
 $messages['yi'] = array(
