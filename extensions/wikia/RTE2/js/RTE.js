@@ -20,7 +20,7 @@
 			contentsCss: [$.getSassLocalURL('extensions/wikia/RTE2/css/content.scss'), window.RTESiteCss],
 			coreStyles_bold: {element: 'b', overrides: 'strong'},
 			coreStyles_italic: {element: 'i', overrides: 'em'},
-			customConfig: '',//'config.js' to add additional statements
+			customConfig: 'config.js',//'config.js' to add additional statements
 			dialog_backgroundCoverColor: '#000',
 			dialog_backgroundCoverOpacity: 0.8,
 			disableDragDrop: false,
@@ -95,7 +95,7 @@
 			skin: 'moono-lisa',
 			startupFocus: true, // Also used for determining wether to focus after modeswitch (BugId:19807)
 	//			theme: 'wikia'
-			removePlugins: 'toolbar,notification,clipboard,pastetext', //temporary, till toolbar dependancies are fixed...
+//			removePlugins: 'toolbar,notification,clipboard,pastetext', //temporary, till toolbar dependancies are fixed...
 			
 		},
 

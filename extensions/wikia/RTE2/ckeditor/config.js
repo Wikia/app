@@ -13,11 +13,11 @@ CKEDITOR.editorConfig = function( config ) {
 	// %REMOVE_END%
 
 	
-	config.toolbar = [
+//	config.toolbar = [
 //		{ name: 'something', items: [ 'Bold','Italic','BulletedList','NumberedList','Indent','Outdent','Format','JustifyLeft','JustifyCenter','JustifyRight','Undo','Redo','Table','Underline','Strike','RemoveFormat' ] },
 //		{name: 'somethink', items : [ "Link","Signature",'ModeWysiwyg','ModeSource','Template','Gallery','Image','Slider','Slideshow','Video' ] }
-		{ name: 'something', items: [ 'JustifyRight' ] } 
-	];
+		 
+//	];
 
 
 
