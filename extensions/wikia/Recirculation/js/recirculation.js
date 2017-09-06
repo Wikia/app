@@ -56,64 +56,88 @@ require([
 			}
 		};
 
-	if (window.wgContentLanguage !== 'en') {
+	function prepareEnglishRecirculation () {
+		// prepare & render right rail recirculation module
+		liftigniter.prepare(railRecirculation).done(function (data) {
+			require(['ext.wikia.recirculation.views.premiumRail'], function (viewFactory) {
+				var view = viewFactory();
+				view.render(data)
+					.then(view.setupTracking())
+					.then(function () {
+						liftigniter.setupTracking(view.itemsSelector, railRecirculation);
+					});
+			});
+		});
+
+		// prepare & render mixed content footer module
+		var mixedContentFooterData = [
+			liftigniter.prepare(mixedContentFooter.nsItems),
+			liftigniter.prepare(mixedContentFooter.wikiItems),
+			discussions.prepare()
+		];
+		$.when.apply($, mixedContentFooterData).done(function (nsItems, wikiItems, discussions) {
+			$mixedContentFooterContent.show();
+			require(['ext.wikia.recirculation.views.mixedFooter'], function (viewFactory) {
+				var view = viewFactory();
+				view.render({
+					nsItems: nsItems,
+					wikiItems: wikiItems,
+					discussions: discussions
+				}).then(function () {
+					liftigniter.setupTracking(view.nsItemsSelector, mixedContentFooter.nsItems);
+					liftigniter.setupTracking(view.wikiItemsSelector, mixedContentFooter.wikiItems);
+				});
+			});
+		});
+	}
+
+	function prepareInternationalRecirculation () {
+		var mixedContentFooterData = [
+			liftigniter.prepare(mixedContentFooter.wikiItems),
+			discussions.prepare()
+		];
+		$.when.apply($, mixedContentFooterData).done(function (wikiItems, discussions) {
+			$mixedContentFooterContent.show();
+			require(['ext.wikia.recirculation.views.mixedFooter'], function (viewFactory) {
+				var view = viewFactory();
+				view.render({
+					wikiItems: wikiItems,
+					discussions: discussions
+				}).then(function () {
+					liftigniter.setupTracking(view.wikiItemsSelector, mixedContentFooter.wikiItems);
+				});
+			});
+		});
+	}
+
+
+	if (window.wgContentLanguage === 'en') {
+		prepareEnglishRecirculation();
+
+		// fetch data for all recirculation modules
+		liftigniter.fetch('ns');
+	} else {
+		prepareInternationalRecirculation();
 		if (videosModule) {
 			videosModule('#recirculation-rail');
 		}
-		oldDiscussions();
-		return;
 	}
 
-	// prepare & render right rail recirculation module
-	liftigniter.prepare(railRecirculation).done(function (data) {
-		require(['ext.wikia.recirculation.views.premiumRail'], function (viewFactory) {
-			var view = viewFactory();
-			view.render(data)
-				.then(view.setupTracking())
-				.then(function () {
-					liftigniter.setupTracking(view.itemsSelector, railRecirculation);
-				});
-		});
-	});
-
-	// prepare & render mixed content footer module
-	var mixedContentFooterData = [
-		liftigniter.prepare(mixedContentFooter.nsItems),
-		liftigniter.prepare(mixedContentFooter.wikiItems),
-		discussions.prepare()
-	];
-	$.when.apply($, mixedContentFooterData).done(function (nsItems, wikiItems, discussions) {
-		$mixedContentFooterContent.show();
-		require(['ext.wikia.recirculation.views.mixedFooter'], function (viewFactory) {
-			var view = viewFactory();
-			view.render({
-				nsItems: nsItems,
-				wikiItems: wikiItems,
-				discussions: discussions
-			}).then(function () {
-				liftigniter.setupTracking(view.nsItemsSelector, mixedContentFooter.nsItems);
-				liftigniter.setupTracking(view.wikiItemsSelector, mixedContentFooter.wikiItems);
-			});
-		});
-	});
-
-	// fetch data for all recirculation modules
-	liftigniter.fetch('ns');
-
 	var lazyLoadHandler = $.throttle(50, function () {
-			var mcfOffset = $mixedContentFooter.offset().top,
-				scrollPosition = $(window).scrollTop(),
-				windowInnerHeight = $(window).height(),
-				lazyLoadOffset = 500,
-				aproachingMCF = scrollPosition > mcfOffset - windowInnerHeight - lazyLoadOffset;
+		var mcfOffset = $mixedContentFooter.offset().top,
+			scrollPosition = $(window).scrollTop(),
+			windowInnerHeight = $(window).height(),
+			lazyLoadOffset = 500,
+			aproachingMCF = scrollPosition > mcfOffset - windowInnerHeight - lazyLoadOffset;
 
-			if (aproachingMCF) {
-				liftigniter.fetch('wiki');
-				discussions.fetch();
-				window.removeEventListener('scroll', lazyLoadHandler);
+		if (aproachingMCF) {
+			liftigniter.fetch('wiki');
+			discussions.fetch();
+			window.removeEventListener('scroll', lazyLoadHandler);
 
-			}
+		}
 	});
 
 	window.addEventListener('scroll', lazyLoadHandler);
+	lazyLoadHandler();
 });
