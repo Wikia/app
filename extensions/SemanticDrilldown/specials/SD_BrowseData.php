@@ -216,9 +216,10 @@ class SDBrowseDataPage extends QueryPage {
 
 		$databaseConnection->queryWithAutoCommit( 'CREATE TEMPORARY TABLE semantic_drilldown_values ( id INT NOT NULL )', __METHOD__ );
 		$databaseConnection->queryWithAutoCommit( 'CREATE INDEX id_index ON semantic_drilldown_values ( id )', __METHOD__ );
-		$databaseConnection->queryWithAutoCommit( 'INSERT INTO semantic_drilldown_values SELECT ids.smw_id AS id\n', __METHOD__ );
 
-		$sqlQuery = $this->getSQLFromClause( $category, $subcategory, $subcategories, $applied_filters );
+		$sqlQuery = 'INSERT INTO semantic_drilldown_values SELECT ids.smw_id AS id' . PHP_EOL;
+		$sqlQuery .= $this->getSQLFromClause( $category, $subcategory, $subcategories,
+			$applied_filters );
 
 		$databaseConnection->queryWithAutoCommit( $sqlQuery, __METHOD__ );
 	}
