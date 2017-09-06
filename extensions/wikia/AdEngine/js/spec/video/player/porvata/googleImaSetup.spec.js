@@ -9,11 +9,7 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaSetup', function () {
 		MEGA_AD_UNIT = 'mega/ad/unit',
 		mocks = {
 			context: {
-				getContext: function () {
-					return {
-						opts: {}
-					};
-				}
+				get: noop
 			},
 			browserDetect: {
 				isMobile: function () {
@@ -57,6 +53,10 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaSetup', function () {
 			mocks.log,
 			mocks.win
 		);
+	}
+
+	function megaTurnedOn(name) {
+		return name === 'opts.megaAdUnitBuilderEnabled' ? true : undefined;
 	}
 
 	mocks.log.levels = {};
@@ -155,7 +155,7 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaSetup', function () {
 
 	it('create VAST url with overwritten custom MEGA adUnit if it is set on context (without option)', function () {
 		spyOn(mocks.vastUrlBuilder, 'build');
-		spyOn(mocks.context, 'getContext').and.returnValue({opts: {megaAdUnitBuilderEnabled: true}});
+		spyOn(mocks.context, 'get').and.callFake(megaTurnedOn);
 
 		imaSetup.createRequest({
 			width: 100,
@@ -168,7 +168,7 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaSetup', function () {
 
 	it('create VAST url with default adUnit if option is set to false, even if global enable it', function () {
 		spyOn(mocks.vastUrlBuilder, 'build');
-		spyOn(mocks.context, 'getContext').and.returnValue({opts: {megaAdUnitBuilderEnabled: true}});
+		spyOn(mocks.context, 'get').and.callFake(megaTurnedOn);
 
 		imaSetup.createRequest({
 			width: 100,

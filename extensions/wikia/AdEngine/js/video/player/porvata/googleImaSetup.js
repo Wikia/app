@@ -13,7 +13,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaSetup', [
 
 	function megaIsEnabled(params) {
 		return params.useMegaAdUnitBuilder !== false &&
-			(params.useMegaAdUnitBuilder || adContext.getContext().opts.megaAdUnitBuilderEnabled);
+			(params.useMegaAdUnitBuilder || adContext.get('opts.megaAdUnitBuilderEnabled'));
 	}
 
 	function getPosBasedOnProduct(params) {
