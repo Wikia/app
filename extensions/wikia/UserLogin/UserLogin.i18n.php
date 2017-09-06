@@ -475,14 +475,12 @@ Falls du kein neues Passwort beantragt hast, kannst du diese E-Mail ignorieren u
 <br /><br />
 Bei Fragen oder Bedenken kannst du uns jederzeit <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">kontaktieren</a>.',
 	'userlogin-password-email-signature' => 'Wikia Community Support',
-	'userlogin-password-email-body' => 'Hi $2,
-Please use this temporary password to log in to Wikia: "$3"
-If you didn\'t request a new password, don\'t worry! Your account is safe and secure. You can ignore this email and continue log in to Wikia with your old password.
-Questions or concerns? Feel free to contact us: http://community.wikia.com/wiki/Special:Contact/account-issue
+	'userlogin-password-email-body' => 'Hallo $2,gib dieses temporäre Passwort an, um dich bei Wikia anzumelden: "$3"Falls du kein neues Passwort beantragt hast kannst du diese E-Mail ignorieren und weiterhin dein altes Passwort verwenden. Keine Sorge! Dein Benutzerkonto ist immernoch sicher.Bei Fragen oder Bedenken kannst du uns jederzeit kontaktieren: http://community.wikia.com/wiki/Special:Contact/account-issue
 Wikia Community Support
+
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
-Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
+Bleib auf dem Laufenden und besuche unser Community-Wiki: http://de.community.wikia.com
+Möchtest du deine E-Mail-Einstellungen ändern? Besuche {{fullurl:{{ns:special}}:Preferences}}',
 	'userlogin-email-footer-line1' => 'Bleib auf dem Laufenden und besuche unser Community-Wiki unter <a style="color:#2a87d5;text-decoration:none;" href="http://de.community.wikia.com">de.community.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Möchtest du deine E-Mail-Einstellungen ändern? Besuche <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">deine Einstellungen</a>',
 	'userlogin-loginreqlink' => 'anmelden',
@@ -584,14 +582,14 @@ Si no solicitaste una nueva contraseña, ¡no te preocupes! Tu cuenta está segu
 <br /><br />
 ¿Tienes preguntas o inquietudes? No dudes en ponerte en <a href="http://comunidad.wikia.com/wiki/Especial:Contactar/account-issue">contacto con nosotros</a>.',
 	'userlogin-password-email-signature' => 'Soporte comunitario de Fandom',
-	'userlogin-password-email-body' => 'Hi $2,
-Please use this temporary password to log in to Wikia: "$3"
-If you didn\'t request a new password, don\'t worry! Your account is safe and secure. You can ignore this email and continue log in to Wikia with your old password.
-Questions or concerns? Feel free to contact us: http://community.wikia.com/wiki/Special:Contact/account-issue
-Wikia Community Support
+	'userlogin-password-email-body' => 'Hola $2,Utiliza esta contraseña temporal para iniciar sesión en Fandom: "$3"Si no solicitaste una nueva contraseña, ¡no te preocupes! Tu cuenta está segura. Puedes ignorar este mensaje y continuar iniciando sesión en Wikia con tu antigua contraseña.¿Tienes preguntas o inquietudes? No dudes en contactarnos: http://comunidad.wikia.com/wiki/Especial:Contactar/account-issue
+Equipo Comunitario de Fandom
+
+
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
-Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
+
+Para comprobar los acontecimientos más recientes en Fandom, visita http://comunidad.wikia.com
+¿Deseas controlar qué mensajes de correo electrónico recibes? Ve a: {{fullurl:{{ns:special}}:Preferences}}',
 	'userlogin-email-footer-line1' => 'Para comprobar las últimas novedades en Fandom, visita <a style="color:#2a87d5;text-decoration:none;" href="http://es.wikia.com">es.wikia.com</a>',
 	'userlogin-email-footer-line2' => '¿Deseas controlar los correos electrónicos que recibes? Ve a tus <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">preferencias</a>',
 	'userlogin-loginreqlink' => 'iniciar sesión',
@@ -789,14 +787,14 @@ Si vous n\'avez pas demandé de nouveau mot de passe, ne vous inquiétez pas ! V
 <br /><br />
 Vous avez des questions ? N’hésitez pas à <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">nous contacter</a>.',
 	'userlogin-password-email-signature' => 'Support de la communauté Wikia',
-	'userlogin-password-email-body' => 'Hi $2,
-Please use this temporary password to log in to Wikia: "$3"
-If you didn\'t request a new password, don\'t worry! Your account is safe and secure. You can ignore this email and continue log in to Wikia with your old password.
-Questions or concerns? Feel free to contact us: http://community.wikia.com/wiki/Special:Contact/account-issue
-Wikia Community Support
+	'userlogin-password-email-body' => "Bonjour $2,Veuillez utiliser ce mot de passe temporaire pour vous connecter à Wikia : $3Si vous n'avez pas demandé de nouveau mot de passe, ne vous inquiétez pas ! Votre compte est sain et sauf. Vous pouvez ignorer cet e-mail et continuer à vous connecter sur Wikia avec votre ancien mot de passe.Vous avez des questions ? N’hésitez pas à nous contacter : http://community.wikia.com/wiki/Special:Contact/account-issue
+Support de la communauté Wikia
+
+
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
-Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
+
+Pour voir les dernières actualités de Wikia, allez sur http://communaute.wikia.com
+Vous souhaitez contrôler les e-mails que vous recevez ? Allez sur : {{fullurl:{{ns:special}}:Preferences}}",
 	'userlogin-email-footer-line1' => 'Pour voir les dernières actualités de Wikia, allez sur <a style="color:#2a87d5;text-decoration:none;" href="http://communaute.wikia.com">communaute.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Vous souhaitez contrôler les e-mails que vous recevez ? Allez dans vos <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">préférences</a>',
 	'userlogin-loginreqlink' => 'vous connecter',
@@ -1059,14 +1057,14 @@ Se non hai richiesto una nuova password, non preoccuparti! Il tuo account è al 
 <br /><br />
 Domande o dubbi? Sentiti libero di <a href="http://it.community.wikia.com/wiki/Special:Contact/account-issue">contattarci</a>.',
 	'userlogin-password-email-signature' => 'Wikia Community Support',
-	'userlogin-password-email-body' => 'Hi $2,
-Please use this temporary password to log in to Wikia: "$3"
-If you didn\'t request a new password, don\'t worry! Your account is safe and secure. You can ignore this email and continue log in to Wikia with your old password.
-Questions or concerns? Feel free to contact us: http://community.wikia.com/wiki/Special:Contact/account-issue
+	'userlogin-password-email-body' => 'Ciao $2,Per favore usa questa password temporarea per effettuare il login su Wikia: "$3"Se non hai richiesto una nuova password, non preoccuparti! Il tuo account è al sicuro. Puoi ignorare questa email e continuare a effettuare il login su Wikia con la tua vecchia password.Domande o dubbi? Sentiti libero di contattarci: http://it.community.wikia.com/wiki/Special:Contact/account-issue
 Wikia Community Support
+
+
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
-Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
+
+Per tenerti informato sulle novità di Wikia, visita http://it.community.wikia.com
+Vuoi controllare quali email ricevi? Vai a: {{fullurl:{{ns:special}}:Preferenze}}',
 	'userlogin-email-footer-line1' => 'Per tenerti informato sulle novità di Wikia, visita <a style="color:#2a87d5;text-decoration:none;" href="http://it.community.wikia.com">it.community.wikia.com</a>',
 	'userlogin-email-footer-line2' => '
 Vuoi controllare quali email ricevi? Vai alle tue <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Preferenze</a>',
@@ -1152,14 +1150,12 @@ $messages['ja'] = array(
 新しいパスワードをリクエストした覚えがない場合でも、心配しないでください。アカウントの安全性は保たれています。このメールを無視し、これまで使用していたパスワードでウィキアにログインし続けることができます。<br /><br />
 質問や気になることがあれば、遠慮なくお問い合わせください。',
 	'userlogin-password-email-signature' => 'Wikia コミュニティサポート',
-	'userlogin-password-email-body' => 'Hi $2,
-Please use this temporary password to log in to Wikia: "$3"
-If you didn\'t request a new password, don\'t worry! Your account is safe and secure. You can ignore this email and continue log in to Wikia with your old password.
-Questions or concerns? Feel free to contact us: http://community.wikia.com/wiki/Special:Contact/account-issue
-Wikia Community Support
+	'userlogin-password-email-body' => '$2 さん、Wikiaにログインするには、以下の仮パスワードを使用してください: $3新しいパスワードをリクエストした覚えがない場合でも、心配しないでください。アカウントは安全に保たれています。このメールを無視し、これまで使用していたパスワードでWikiaにログインし続けることができます。質問や気になることがあれば、遠慮なくお問い合わせください。
+Wikiaサポートチーム
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
-Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
+
+Wikiaの最新情報は http://ja.wikia.com/ で確認できます。
+メール通知に関する設定は {{fullurl:{{ns:special}}:Preferences}} で行えます。',
 	'userlogin-email-footer-line1' => 'Wikiaの最新情報は <a style="color:#2a87d5;text-decoration:none;" href="http://ja.wikia.com/">http://ja.wikia.com/</a> で確認できます。',
 	'userlogin-email-footer-line2' => 'メール通知に関する設定は<a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">個人設定</a>のページで行えます。',
 	'userlogin-loginreqlink' => 'ログイン',
@@ -1578,14 +1574,12 @@ Maak u geen zorgen als u geen nieuw wachtwoord hebt opgevraagd. Uw gebruiker is 
 <br /><br />
 Vragen of zorgen? Neem vooral <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">contact met ons op</a>.',
 	'userlogin-password-email-signature' => 'Wikia Community Support',
-	'userlogin-password-email-body' => 'Hi $2,
-Please use this temporary password to log in to Wikia: "$3"
-If you didn\'t request a new password, don\'t worry! Your account is safe and secure. You can ignore this email and continue log in to Wikia with your old password.
-Questions or concerns? Feel free to contact us: http://community.wikia.com/wiki/Special:Contact/account-issue
-Wikia Community Support
+	'userlogin-password-email-body' => 'Hallo $2,Gebruik het volgende tijdelijke wachtwoord om aan te melden bij Wikia: "$3".Maak u geen zorgen als u geen nieuw wachtwoord hebt opgevraagd. Uw gebruiker is veilig. U kunt deze e-mail negeren en blijven aanmelden bij Wikia met uw oude wachtwoord.Neem contact met ons op als u vragen of zorgen hebt: http://community.wikia.com/wiki/Special:Contact/account-issue
+Wikia Gemeenschapsondersteuning
+
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
-Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
+Bezoek http://community.wikia.com voor het laatste nieuws over Wikia.
+Om in te stellen welke e-mails u wilt ontvangen, gaat u naar {{fullurl:{{ns:special}}:Preferences}}.',
 	'userlogin-email-footer-line1' => 'Ga naar <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a> om de laatste ontwikkelingen bij Wikia te volgen',
 	'userlogin-email-footer-line2' => 'Wilt u bepalen welke e-mails u krijgt? Ga naar uw [{{fullurl:{{ns:special}}:Preferences}} voorkeuren]',
 	'userlogin-loginreqlink' => 'aanmelden',
@@ -1692,14 +1686,14 @@ Jeśli nie zgłaszałeś prośby o nowe hasło, nie martw się! Twoje konto jest
 <br /><br />
 Masz pytania lub wątpliwości? Daj nam znać.',
 	'userlogin-password-email-signature' => 'Zespół Wikii',
-	'userlogin-password-email-body' => 'Hi $2,
-Please use this temporary password to log in to Wikia: "$3"
-If you didn\'t request a new password, don\'t worry! Your account is safe and secure. You can ignore this email and continue log in to Wikia with your old password.
-Questions or concerns? Feel free to contact us: http://community.wikia.com/wiki/Special:Contact/account-issue
-Wikia Community Support
+	'userlogin-password-email-body' => 'Witaj $2,Użyj tego tymczasowego hasła, aby zalogować się na Wikii: „$3”Jeśli nie zgłaszałeś prośby o nowe hasło, nie martw się! Twoje konto jest bezpieczne. Możesz zignorować tą wiadomość i zalogować się przy użyciu starego hasła.Masz pytania lub wątpliwości? Daj nam znać poprzez : http://community.wikia.com/wiki/Special:Contact/account-issue
+Zespół Wikii
+
+
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
-Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
+
+Aby zapoznać się z nowościami, odwiedź http://spolecznosc.wikia.com
+Chcesz zmienić ustawienia otrzymywanych powiadomień? Zajrzyj tutaj: {{fullurl:{{ns:special}}:Preferences}}.',
 	'userlogin-email-footer-line1' => 'Aby zapoznać się z nowościami, odwiedź <a style="color:#2a87d5;text-decoration:none;" href="http://spolecznosc.wikia.com">spolecznosc.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Chcesz zmienić ustawienia otrzymywanych powiadomień? Zajrzyj tutaj: <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Ustawienia</a>',
 	'userlogin-loginreqlink' => 'Zaloguj się',
@@ -1859,14 +1853,14 @@ $messages['pt'] = array(
 Se você não solicitou uma nova senha, não se preocupe! Sua conta está segura e protegida. Você pode ignorar este e-mail e continuar fazendo o login na Wikia com sua antiga senha.
 <br /><br />
 Dúvidas ou preocupações? Sinta-se livre para <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">nos contatar</a>.',
-	'userlogin-password-email-body' => 'Hi $2,
-Please use this temporary password to log in to Wikia: "$3"
-If you didn\'t request a new password, don\'t worry! Your account is safe and secure. You can ignore this email and continue log in to Wikia with your old password.
-Questions or concerns? Feel free to contact us: http://community.wikia.com/wiki/Special:Contact/account-issue
-Wikia Community Support
+	'userlogin-password-email-body' => 'Olá $2,Por favor, use essa senha temporária para se conectar na Wikia: "$3"Se você não solicitou uma nova senha, não se preocupe! Sua conta está segura e protegida. Você pode ignorar este e-mail e continuar fazendo o login na Wikia com sua antiga senha.Dúvidas ou preocupações? Sinta-se livre para nos contatar: http://community.wikia.com/wiki/Special:Contact/account-issue
+Suporte da Comunidade Wikia
+
+
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
-Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
+
+Para ver os últimos acontecimentos na Wikia, visite http://pt.community.wikia.com
+Deseja controlar quais e-mails você recebe? Vá para: {{fullurl:{{ns:special}}:Preferences}}',
 	'userlogin-password-email-body-HTML' => '',
 	'userlogin-email-footer-line1' => 'Para ver os últimos acontecimentos na Wikia, visite <a style="color:#2a87d5;text-decoration:none;" href="http://pt.community.wikia.com">pt.community.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Deseja controlar os e-mails que você recebe? Vá para suas <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Preferências</a>',
@@ -1958,14 +1952,15 @@ $messages['ru'] = array(
 <br /><br />
 Вопросы или проблемы? <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">Свяжитесь с нами</a>.',
 	'userlogin-password-email-signature' => 'Команда Викия',
-	'userlogin-password-email-body' => 'Hi $2,
-Please use this temporary password to log in to Wikia: "$3"
-If you didn\'t request a new password, don\'t worry! Your account is safe and secure. You can ignore this email and continue log in to Wikia with your old password.
-Questions or concerns? Feel free to contact us: http://community.wikia.com/wiki/Special:Contact/account-issue
-Wikia Community Support
+	'userlogin-password-email-body' => 'Здравствуйте, $2Пожалуйста, используйте этот временный пароль для входа в Викия: «$3»Если вы не запрашивали новый пароль, не волнуйтесь! Ваша учётная запись в безопасности и надёжно защищена. Вы можете игнорировать это сообщение и использовать старый пароль для входа на Викия.Вопросы или проблемы? Свяжитесь с нами: http://ru.community.wikia.com/wiki/Special:Contact/account-issue
+
+Команда Викия
+
+
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
-Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
+
+Чтобы проверить последние новости Викия, посетите http://community.wikia.com
+Хотите настроить рассылки и оповещения от Викия? Перейдите в {{fullurl:{{ns:special}}:Preferences}}',
 	'userlogin-email-footer-line1' => 'Чтобы узнать о последних новостях Викия, посетите <a style="color:#2a87d5;text-decoration:none;" href="http://ru.community.wikia.com">ru.community.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Хотите настроить рассылки и оповещения от Викия? Перейдите в <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">личные настройки</a>',
 	'userlogin-loginreqlink' => 'войти',
@@ -2649,14 +2644,12 @@ $messages['zh-hans'] = array(
 <br /><br />
 如果您有任何问题，请<a href="http://community.wikia.com/wiki/Special:Contact/account-issue">联系我们</a>。',
 	'userlogin-password-email-signature' => 'Wikia社区支持',
-	'userlogin-password-email-body' => 'Hi $2,
-Please use this temporary password to log in to Wikia: "$3"
-If you didn\'t request a new password, don\'t worry! Your account is safe and secure. You can ignore this email and continue log in to Wikia with your old password.
-Questions or concerns? Feel free to contact us: http://community.wikia.com/wiki/Special:Contact/account-issue
-Wikia Community Support
+	'userlogin-password-email-body' => '嗨！$2请使用临时密码登录Wikia：“$3”如果您没有申请新密码，不用担心！您的帐户十分安全可靠。您可以忽略该邮件并继续使用旧密码登录Wikia。如果您有任何问题，请联系我们：http://community.wikia.com/wiki/Special:Contact/account-issue
+Wikia社区支持
+
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
-Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
+如果您想查询Wikia最新资讯，请查看http://community.wikia.com
+希望控制您接收的电子邮件么？请至{{fullurl:{{ns:special}}:Preferences}}',
 	'userlogin-email-footer-line1' => '为了查看Wikia最新发生的事，请点击<a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'userlogin-email-footer-line2' => '想控制您地接收邮件？请查看您的<a href="{{fullurl:{{ns:specia}}:Preferences}}" style="color:#2a87d5; text-decoration:none;">属性</a>',
 	'userlogin-loginreqlink' => '登录',
@@ -2737,14 +2730,13 @@ $messages['zh-hant'] = array(
 <br /><br />
 仍然有問題？請隨時<a href="http://community.wikia.com/wiki/Special:Contact/account-issue">聯繫我們</a>。',
 	'userlogin-password-email-signature' => 'Wikia 社區支援',
-	'userlogin-password-email-body' => 'Hi $2,
-Please use this temporary password to log in to Wikia: "$3"
-If you didn\'t request a new password, don\'t worry! Your account is safe and secure. You can ignore this email and continue log in to Wikia with your old password.
-Questions or concerns? Feel free to contact us: http://community.wikia.com/wiki/Special:Contact/account-issue
-Wikia Community Support
+	'userlogin-password-email-body' => '$2 您好，請使用下列臨時密碼登入Wikia："$3"如果您並未請求一個新密碼，請不要擔心。您的帳戶仍然安全可靠。您可以忽略這封電子郵件，並且繼續使用您的舊密碼登陸Wikia。仍然有問題？請隨時聯絡我們：http://community.wikia.com/wiki/Special:Contact/account-issue
+Wikia社群支援
+
 ___________________________________________
-To check out the latest happenings on Wikia, visit http://community.wikia.com
-Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
+
+要瞭解Wikia的最新動態，請造訪 http://community.wikia.com 。
+希望調整您將會收到的電子郵件的類型嗎？請造訪：{{fullurl:{{ns:special}}:Preferences}}',
 	'userlogin-email-footer-line1' => '要查看Wikia最新發生的事，請至<a style="color:#2a87d5;text-decoration:none;" href="http://zh.community.wikia.com">zh.community.wikia.com</a>',
 	'userlogin-email-footer-line2' => '想選擇您要接收那些郵件？請至您的<a href="{{fullurl:{{ns:specia}}:Preferences}}" style="color:#2a87d5; text-decoration:none;">偏好設定</a>',
 	'userlogin-loginreqlink' => '登入',
