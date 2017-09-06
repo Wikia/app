@@ -23,7 +23,7 @@ class WallHistoryFinder {
 	}
 
 	public function find() {
-		return ( new \WikiaSQL() )->SELECT( self::COLUMNS )
+		return ( new \WikiaSQL() )->SELECT( ...self::COLUMNS )
 			->FROM( self::TABLE_WALL_HISTORY )
 			->WHERE( 'post_ns' )
 			->EQUAL_TO( NS_WIKIA_FORUM_BOARD )
