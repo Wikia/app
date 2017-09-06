@@ -82,6 +82,7 @@ ve.init.mw.ViewPageTarget = function VeInitMwViewPageTarget() {
 		saveErrorAbuseFilter: 'onSaveErrorAbuseFilter',
 		saveErrorNewUser: 'onSaveErrorNewUser',
 		saveErrorCaptcha: 'onSaveErrorCaptcha',
+		saveErrorReadOnly: 'onSaveErrorReadOnly',
 		saveErrorUnknown: 'onSaveErrorUnknown',
 		saveErrorPageDeleted: 'onSaveErrorPageDeleted',
 		loadError: 'onLoadError',
@@ -762,6 +763,17 @@ ve.init.mw.ViewPageTarget.prototype.onSaveErrorUnknown = function ( editApi, dat
 		) ),
 		false // prevents reapply
 	);
+};
+
+/**
+ * Update save dialog message if database is in read-only state
+ *
+ * @method
+ * @param {Object} editApi
+ * @param {Object} data
+ */
+ve.init.mw.ViewPageTarget.prototype.onSaveErrorReadOnly = function ( editApi, data ) {
+	this.showSaveError( $( $.parseHTML( mw.message( 'readonlywarning', data.error.readonlyreason ).parse() ) ), true, true );
 };
 
 /**
