@@ -4,6 +4,7 @@ CKEDITOR.plugins.add('rte-modeswitch',
 	messages: {},
 
 	init: function(editor) {
+		debugger;
 		this.messages = editor.lang.modeSwitch;
 
 		this.addCommands(editor);
@@ -190,6 +191,7 @@ CKEDITOR.plugins.add('rte-modeswitch',
 
 	// get jQuery object for mode switching tab
 	getSwitchTab: function(editor, commandName) {
+		debugger;
 		var nodeId = editor.getCommand(commandName).uiItems[0]._.id;
 		return $('#' + nodeId);
 	},
