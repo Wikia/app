@@ -562,7 +562,7 @@ class WikiRecommendations {
 				'url' => 'http://ja.battlefront.wikia.com',
 			],
 			[
-				'thumbnailUrl' => 'http://ja.gameofthrones.wikia.com/wiki/%E7%89%B9%E5%88%A5:%E7%94%BB%E5%83%8F?page=2&file=GOTS7-E5-25.jpg',
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/gameofthrones/images/7/75/GOTS7-E5-25.jpg/revision/latest?cb=20170822083703&path-prefix=ja',
 				'title' => 'ゲームオブスローンズ Wiki',
 				'url' => 'http://ja.gameofthrones.wikia.com',
 			],
