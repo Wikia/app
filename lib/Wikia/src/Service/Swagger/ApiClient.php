@@ -52,19 +52,17 @@ class ApiClient extends \Swagger\Client\ApiClient {
 			'requestTimeMS' => (int)((microtime(true) - $start) * 1000.0)
 		];
 
-		if ($exception instanceof \Swagger\Client\ApiException) {
+		if ( $exception instanceof ApiException ) {
 			$params[ 'exception' ] = $exception;
-			$level = 'error';
 			$message = "HTTP request failed - {$this->serviceName} service";
 		}
 		else {
 			$message = "Http request";
-			$level = 'debug';
 		}
 
 		// keep sampled logging of all requests, but log all server-side errors (HTTP 500+)
 		if ( $this->logSampler->shouldSample() ||  ( $code >= 500 ) ) {
-			$this->$level( $message, $params );
+			$this->logRequestContext( $message, $params, $code );
 		}
 
 		if ($exception != null) {
@@ -72,6 +70,15 @@ class ApiClient extends \Swagger\Client\ApiClient {
 		}
 
 		return $response;
+	}
+
+	protected function logRequestContext( string $message, array $params, int $code ) {
+		if ( $code >= 500 ) {
+			$this->error( $message, $params );
+			return;
+		}
+
+		$this->debug( $message, $params );
 	}
 
 	protected function getLoggerContext() {
