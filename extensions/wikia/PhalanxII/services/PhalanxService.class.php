@@ -174,6 +174,7 @@ class PhalanxService {
 		$options = F::app()->wg->PhalanxServiceOptions;
 
 		$url = $this->getPhalanxUrl( $action );
+		$shadowUrl = $this->getPhalanxShadowUrl( $action );
 		$loggerPostParams = [];
 		$tries = 1;
 		/**
@@ -267,6 +268,19 @@ class PhalanxService {
 				] );
 			}
 			$requestTime = (int)( ( microtime( true ) - $requestTime ) * 10000.0 );
+
+			// calling on the shadow ninja powers - making call to k8s Phalanx instance to check if the response
+			// from k8s instances match one received from the mesos instances
+			$shadowResponse = Http::post( $shadowUrl, $options );
+			if ( $response != $shadowResponse && ( new \Wikia\Util\Statistics\BernoulliTrial( 0.001 ) )->shouldSample() ) {
+				$this->error( "Phalanx shadow call differs", [
+					"phalanxUrl" => $url,
+					"shadowUrl" => $shadowUrl,
+					"response" => $response,
+					"shadow_response" => $shadowResponse,
+					"postParams" => json_encode( $loggerPostParams ),
+				] );
+			}
 		}
 
 		if ( $response === false ) {
@@ -328,6 +342,12 @@ class PhalanxService {
 			}
 		}
 		return $res;
+	}
+
+	private function getPhalanxShadowUrl( $action ) {
+		global $wgPhalanxShadowUrl, $wgWikiaDatacenter;
+
+		return sprintf("http://%s.%s/%s", $wgWikiaDatacenter, $wgPhalanxShadowUrl, $action != "status" ? $action : "" );
 	}
 
 	private function getPhalanxUrl( $action ) {
