@@ -16,8 +16,7 @@ require([
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.sourcePointDetection',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
-	'wikia.window',
-	require.optional('ext.wikia.adEngine.template.floatingRail')
+	'wikia.window'
 ], function (
 	adContext,
 	adEngineRunner,
@@ -34,8 +33,7 @@ require([
 	slotTweaker,
 	sourcePointDetection,
 	adBlockDetection,
-	win,
-	floatingRail
+	win
 ) {
 	'use strict';
 
@@ -57,10 +55,6 @@ require([
 
 	// Everything starts after content and JS
 	win.wgAfterContentAndJS.push(function () {
-		if (floatingRail) {
-			pageLevelParams.add('ah', floatingRail.getArticleHeightParameter().toString());
-		}
-
 		adInfoTracker.run();
 		slotStateMonitor.run();
 
