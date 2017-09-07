@@ -18,7 +18,7 @@ define('ext.wikia.adEngine.slot.inContent', [
 			label = msg('adengine-advertisement');
 
 		adHtml.id = 'INCONTENT_WRAPPER';
-		adHtml.innerHTML = '<div id="' + slotName + '" class="wikia-ad default-height" data-label="' + label + '"></div>';
+		adHtml.innerHTML = '<div id="' + slotName + '" class="wikia-ad hidden" data-label="' + label + '"></div>';
 
 		return adHtml;
 	}
