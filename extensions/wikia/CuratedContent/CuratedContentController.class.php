@@ -461,8 +461,9 @@ class CuratedContentController extends WikiaController {
 		}, [ ] );
 	}
 
-	private function extendItemsWithImages( array $items ) {
-		return array_map( [ $this, 'extendWithImageData' ], $items );
+	private function extendItemsWithImages( array $items ) : array {
+		// SUS-2733 | keep continuous keys in the returned array so that it can be JSON-encoded as an array rather than an object
+		return array_values( array_map( [ $this, 'extendWithImageData' ], $items ) );
 	}
 
 	private function extendWithImageData( $item ) {
