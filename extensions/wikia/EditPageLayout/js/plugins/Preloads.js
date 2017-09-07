@@ -10,13 +10,13 @@
 
 		// find and setup preload areas
 		init: function() {
-			console.trace('WE.plugins');		this.preloads = this.editor.element.find('.editpage-intro');
+					this.preloads = this.editor.element.find('.editpage-intro');
 			this.preloads.each(this.proxy(this.setupPreloadArea));
 		},
 
 		// bind events to a given preload area
 		setupPreloadArea: function(i, area) {
-			console.trace('WE.plugins');		area = $(area);
+					area = $(area);
 			area.data('expanded', false);
 
 			var content = area.find('.editpage-intro-wrapper > div'),
@@ -32,7 +32,7 @@
 
 		// expand / collapse given preload area
 		expand: function(ev) {
-			console.trace('WE.plugins');		var expandLink = $(ev.target).closest('.expand'), 
+					var expandLink = $(ev.target).closest('.expand'), 
 				area = expandLink.parent(),
 				isExpanded = !!area.data('expanded');
 

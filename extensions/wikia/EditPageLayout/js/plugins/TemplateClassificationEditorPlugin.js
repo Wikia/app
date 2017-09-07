@@ -12,14 +12,14 @@
 		WE.plugins.templateclassificationeditorplugin = $.createClass(WE.plugin, {
 
 			init: function () {
-			console.trace('WE.plugins');			this.editor.on('save', this.proxy(this.forceType));
+						this.editor.on('save', this.proxy(this.forceType));
 				require(['TemplateClassificationModalForce'], function forceTemplateClassificationModal(tcForce) {
 					templateClassificationForceModal = tcForce;
 				});
 			},
 
 			forceType: function () {
-			console.trace('WE.plugins');			/* Break article submit if modal was forced */
+						/* Break article submit if modal was forced */
 				return !templateClassificationForceModal.forceType();
 			}
 

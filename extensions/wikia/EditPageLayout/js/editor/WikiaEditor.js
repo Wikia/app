@@ -403,14 +403,13 @@
 		uiReadyFired: false,
 
 		initConfig: function() {
-			debugger;
 			this.items = {};
 			this.handlers = {};
 			this.providers = [this];
 		},
 
 		beforeInit: function() {
-			debugger;
+			
 			this.editor.ui = this;
 			var self = this;
 			$('body').click(function(ev){
@@ -419,7 +418,7 @@
 		},
 
 		init: function() {
-			debugger;
+			
 			var chk = function() {
 				if (!this.initDomCalled) return;
 				if (this.uiReadyFired) return;
@@ -677,7 +676,7 @@
 		},
 
 		renderToolbars: function() {
-			debugger;	
+				
 			// Find all toolbars
 			var spaces = this.editor.getSpaces();
 			var toolbars = this.toolbars = {};
@@ -975,8 +974,9 @@
 		// in WYSIWYG mode, this is the iframe's body element
 		// in source mode, this is CKE generated textarea
 		getEditbox: function() {
+			debugger;
 			return $(this.editor.ck.mode == 'wysiwyg' ?
-				this.editor.ck.document.getBody().$ : this.editor.ck.textarea.$);
+				this.editor.ck.document.getBody().$ : this.editor.ck.container.$);
 		},
 
 		getEditboxWrapper: function() {
@@ -1080,7 +1080,7 @@
 		stateProxiedCommands: {},
 
 		beforeInit: function() {
-			debugger;
+			
 			this.editor.ui.addExternalProvider(this);
 			this.editor.on('ck-themeLoaded',this.ckReady,this);
 			this.editor.on('uiBuildClickHandler',this.buildWysiwygClickHandler,this);
@@ -1089,7 +1089,7 @@
 		},
 
 		modeChanged: function( editor, mode ) {
-			debugger;
+			
 			// show/hide appropriate buttons
 			for (var name in this.modeAwareCommands) {
 				var command = this.editor.ck.getCommand(name);
@@ -1110,13 +1110,13 @@
 		},
 
 		proxyAllCommandsState: function() {
-			debugger;
+			
 			for (var commandName in this.stateProxiedCommands)
 				this.proxyCommandState( commandName );
 		},
 
 		proxyCommandState: function( commandName ) {
-			debugger;
+			
 			var command = this.editor.ck.getCommand(commandName),
 				state = command && command.state,
 				elements = this.stateProxiedCommands[commandName];
@@ -1142,7 +1142,7 @@
 		},
 
 		elementCreated: function( editor, element, data ) {
-			debugger;
+			
 			if (element.ckcommand) {
 				var commandName = element.ckcommand;
 				// auto state by ck command
@@ -1161,20 +1161,20 @@
 		},
 
 		ckReady: function() {
-			debugger;
+			
 			this.ready = true;
 			this.editor.fire('uiExternalProviderReady',this.editor);
 		},
 
 		buildWysiwygClickHandler: function( editor, button ) {
-			debugger;
+			
 			button.clickwysiwyg = function() {
 				this.editor.ck.execCommand(button.ckcommand,button.clickdatawysiwyg);
 			};
 		},
 
 		createElement: function( name ) {
-			debugger;
+			
 			var ck = this.editor.ck, ui = this.editor.ck.ui, item;
 			if (ui.items[name] && (item = ui.create(name)) ) {
 				var output = [];

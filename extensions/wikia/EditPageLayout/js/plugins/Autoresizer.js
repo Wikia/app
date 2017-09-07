@@ -26,7 +26,7 @@
 		wikiaBarEnabled: false,
 
 		beforeInit: function() {
-			console.trace('WE.plugins');		this.mode = this.editor.config.autoResizeMode;
+					this.mode = this.editor.config.autoResizeMode;
 			this.wikiaBarEnabled = window.wgEnableWikiaBarExt && typeof window.WikiaBar === 'object';
 			if (this.mode !== false) {
 				this.editor.on('editboxReady',this.proxy(this.editboxReady));
@@ -40,7 +40,7 @@
 		},
 
 		initDom: function() {
-			console.trace('WE.plugins');		this.editarea = $('#EditPageEditor');
+					this.editarea = $('#EditPageEditor');
 			this.editPage = $('#EditPage');
 			this.editPageEditorWrapper = $('#EditPageEditorWrapper');
 			this.editPageMain = $('#EditPageMain');
@@ -57,7 +57,7 @@
 		},
 
 		editboxReady: function(editor, editbox) {
-			console.trace('WE.plugins');
+			
 			var node,
 				footerHeight = $("#WikiaFooter").outerHeight(true) || 0,
 				offsetHeight = 0,
@@ -85,12 +85,12 @@
 		},
 
 		delayedResize: function() {
-			console.trace('WE.plugins');		setTimeout(this.proxy(this.resize),10);
+					setTimeout(this.proxy(this.resize),10);
 		},
 
 		// get height needed to fit given node into browser's viewport height
 		getHeightToFit: function(node) {
-			console.trace('WE.plugins');				
+							
 			var topOffset = node.offset().top,
 				viewportHeight = $window.height(),
 				dimensions = {
@@ -110,7 +110,7 @@
 		},
 
 		resize: function() {
-			console.trace('WE.plugins');	
+				
 			switch(this.mode) {
 				// resize editor area
 				case 'editarea':

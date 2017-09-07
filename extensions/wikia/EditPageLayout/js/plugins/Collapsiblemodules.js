@@ -16,12 +16,12 @@
 		modules: false,
 
 		beforeInit: function() {
-			console.trace('WE.plugins');		this.modules = {};
+					this.modules = {};
 			this.editor.collapsiblemodules = this;
 		},
 
 		add: function( moduleObj, el ) {
-			console.trace('WE.plugins');		if (!el.children('h3').exists()) { // skip modules without header line
+					if (!el.children('h3').exists()) { // skip modules without header line
 				return;
 			}
 
@@ -53,7 +53,7 @@
 		},
 
 		toggle: function( id ) {
-			console.trace('WE.plugins');		var module = this.modules[id],
+					var module = this.modules[id],
 				state = module.state;
 
 			this[ state ? 'collapse' : 'expand' ](id,true);
@@ -61,7 +61,7 @@
 		},
 
 		collapse: function(id, animate) {
-			console.trace('WE.plugins');		var module = this.modules[id];
+					var module = this.modules[id];
 
 			if (animate) {
 				module.content.slideUp(this.proxy(this.fireToolbarsResized));
@@ -75,7 +75,7 @@
 		},
 
 		expand: function(id, animate) {
-			console.trace('WE.plugins');		var module = this.modules[id];
+					var module = this.modules[id];
 
 			if (animate) {
 				module.content.slideDown(this.proxy(this.fireToolbarsResized));
@@ -89,7 +89,7 @@
 		},
 
 		readState: function( id, defaultState /* true = expanded */ ) {
-			console.trace('WE.plugins');		var stateSet = $.storage.get(this.storageEntry),
+					var stateSet = $.storage.get(this.storageEntry),
 				retval;
 
 			if (stateSet && (typeof stateSet[id] != 'undefined')) {
@@ -106,13 +106,13 @@
 		},
 
 		saveState: function( id, state ) {
-			console.trace('WE.plugins');		var stateSet = $.storage.get(this.storageEntry) || {};
+					var stateSet = $.storage.get(this.storageEntry) || {};
 			stateSet[id] = !!state;
 			$.storage.set(this.storageEntry, stateSet);
 		},
 
 		setState: function( id, state ) {
-			console.trace('WE.plugins');		var module = this.modules[id];
+					var module = this.modules[id];
 
 			module.state = state;
 
@@ -122,7 +122,7 @@
 
 		// BugId:4335
 		getDefaultState: function() {
-			console.trace('WE.plugins');		var viewport = $(window).height();
+					var viewport = $(window).height();
 
 			if (viewport < 600) {
 				// expand the first module only
@@ -138,7 +138,7 @@
 		},
 
 		fireToolbarsResized: function() {
-			console.trace('WE.plugins');		this.editor.fire('toolbarsResized',this.editor);
+					this.editor.fire('toolbarsResized',this.editor);
 		}
 
 	});

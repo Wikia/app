@@ -226,7 +226,6 @@
 
 		// final setup of editor's instance
 		onEditorReady: function(event) {
-			debugger;
 			var editor = event.editor,
 			instanceId = editor.instanceId;
 
@@ -375,7 +374,6 @@ CKEDITOR.on('instanceCreated', function(event) {
 CKEDITOR.on('instanceReady', RTE.onEditorReady);
 //Kacper Olek
 CKEDITOR.on('instanceReady', function() {
-debugger;
 WikiaEditor.instances.wpTextbox1.plugins.ckeditor.themeLoaded();
 WikiaEditor.instances.wpTextbox1.plugins['ui-ckeditor'].ckReady();
 });

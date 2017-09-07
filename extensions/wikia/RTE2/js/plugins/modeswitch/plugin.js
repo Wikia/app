@@ -4,7 +4,6 @@ CKEDITOR.plugins.add('rte-modeswitch',
 	messages: {},
 
 	init: function(editor) {
-		debugger;
 		this.messages = editor.lang.modeSwitch;
 
 		this.addCommands(editor);
@@ -73,8 +72,12 @@ CKEDITOR.plugins.add('rte-modeswitch',
 
 					editor.setMode('source');
 					editor.setData(data.wikitext, function() {
-						editor.textarea.$.scrollTop = 0;
-						editor.textarea.$.setSelectionRange(0, 0);
+						debugger;
+						editor.element.$.scrollTop = 0;
+						editor.element.$.setSelectionRange(0,0);
+						//Kacper olek Temporary fix(?)
+						//editor.textarea.$.scrollTop = 0;
+						//editor.textarea.$.setSelectionRange(0, 0);
 					});
 				});
 				break;
@@ -190,8 +193,7 @@ CKEDITOR.plugins.add('rte-modeswitch',
 	},
 
 	// get jQuery object for mode switching tab
-	getSwitchTab: function(editor, commandName) {
-		debugger;
+	getSwitchTab: function(editor, commandName) {	
 		var nodeId = editor.getCommand(commandName).uiItems[0]._.id;
 		return $('#' + nodeId);
 	},

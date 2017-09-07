@@ -22,7 +22,7 @@
 		],
 
 		beforeInit: function() {
-			console.trace('WE.plugins');		var i = 0,
+					var i = 0,
 				l = this.proxyEvents.length;
 
 			// Set up proxy events on the body element
@@ -39,7 +39,7 @@
 		},
 
 		init: function() {
-		console.trace('WE.plugins');
+		
 			// The height of the element we are replacing
 			this.originalHeight = this.editor.config.body.outerHeight(true);
 
@@ -75,7 +75,7 @@
 		},
 
 		editorActivated: function(event) {
-		console.trace('WE.plugins');
+		
 			$(window).on('beforeunload.PreventLeaveBeforeSave', function (e) {
 				if (this.editor.getContent().length) {
 					return $.msg('wikia-editor-leaveconfirm-message');
@@ -105,7 +105,7 @@
 		},
 
 		editorKeyUp: function() {
-			console.trace('WE.plugins');		this.editorToggleButtonsDisabled();
+					this.editorToggleButtonsDisabled();
 
 			if ( this.editor.ck != undefined ) {
 				this.editorResize();
@@ -113,11 +113,11 @@
 		},
 
 		editorToggleButtonsDisabled: function() {
-			console.trace('WE.plugins');		this.buttons.prop( 'disabled', !this.editor.getContent().length );
+					this.buttons.prop( 'disabled', !this.editor.getContent().length );
 		},
 
 		editorAfterActivated: function() {
-			console.trace('WE.plugins');		this.showButtons();
+					this.showButtons();
 			this.showToolbar();
 
 			this.editor.element.addClass('editor-open').removeClass('editor-closed');
@@ -128,15 +128,15 @@
 		},
 
 		editorBeforeReady: function() {
-			console.trace('WE.plugins');		// Intentionally blank. Used by editor element (see proxy events above).
+					// Intentionally blank. Used by editor element (see proxy events above).
 		},
 
 		editorBlur: function() {
-			console.trace('WE.plugins');		this.editor.element.removeClass('focused');
+					this.editor.element.removeClass('focused');
 		},
 
 		editorClear: function() {
-			console.trace('WE.plugins');		if (this.editor.ck) {
+					if (this.editor.ck) {
 				this.editor.ck.setData('');
 
 			} else {
@@ -145,7 +145,7 @@
 		},
 
 		editorDeactivated: function(force) {
-			console.trace('WE.plugins');		$(window).off('beforeunload.PreventLeaveBeforeSave');
+					$(window).off('beforeunload.PreventLeaveBeforeSave');
 			var animations = this.editor.config.animations;
 
 			this.hideToolbar();
@@ -160,11 +160,11 @@
 		},
 
 		editorAfterDeactivated: function() {
-			console.trace('WE.plugins');		this.editor.element.removeClass('editor-open').addClass('editor-closed');
+					this.editor.element.removeClass('editor-open').addClass('editor-closed');
 		},
 
 		editorFocus: function() {
-			console.trace('WE.plugins');		if (this.editor.instanceId != WikiaEditor.instanceId) {
+					if (this.editor.instanceId != WikiaEditor.instanceId) {
 				this.editor.setAsActiveInstance();
 			}
 
@@ -172,7 +172,7 @@
 		},
 
 		editorReady: function(event) {
-		console.trace('WE.plugins');
+		
 			// Finish benchmarking initialization time
 			MiniEditor.initTime = (new Date().getTime() - MiniEditor.initTimer.getTime());
 			$().log('End initialization (' + MiniEditor.initTime + 'ms)', 'MiniEditor');
@@ -191,7 +191,7 @@
 		},
 
 		editorReset: function() {
-			console.trace('WE.plugins');		this.editor.fire('editorClear');
+					this.editor.fire('editorClear');
 			this.editor.fire('editorDeactivated', true);
 			this.editor.getEditorElement().blur();
 		},
@@ -199,7 +199,7 @@
 		// Resizes the CKEditor body tag on keydown between min height and max height
 		// This doesn't work for RTE disabled.
 		editorResize: function() {
-			console.trace('WE.plugins');		var editbox = this.editor.getEditbox(),
+					var editbox = this.editor.getEditbox(),
 				currentHeight = editbox.outerHeight(true),
 				newHeight = currentHeight > this.editor.config.maxHeight ?
 					this.editor.config.maxHeight : currentHeight > this.editor.config.minHeight ?
@@ -212,7 +212,7 @@
 		},
 
 		hideButtons: function(callback) {
-			console.trace('WE.plugins');		if (this.buttonsWrapper.length) {
+					if (this.buttonsWrapper.length) {
 				this.buttons.attr('disabled', true);
 				this.buttonsWrapper.slideUp(this.proxy(callback));
 
@@ -222,18 +222,18 @@
 		},
 
 		hideToolbar: function() {
-			console.trace('WE.plugins');		this.toolbar.slideUp();
+					this.toolbar.slideUp();
 		},
 
 		showButtons: function() {
-			console.trace('WE.plugins');		if (this.buttonsWrapper.length) {
+					if (this.buttonsWrapper.length) {
 				this.buttonsWrapper.slideDown();
 				this.buttons.show();
 			}
 		},
 
 		showToolbar: function() {
-			console.trace('WE.plugins');		this.toolbar.slideDown();
+					this.toolbar.slideDown();
 		}
 	});
 

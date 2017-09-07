@@ -12,7 +12,7 @@
 		minorEditCheck: false,
 
 		beforeInit: function () {
-			console.trace('WE.plugins');		this.editor.controls = this;
+					this.editor.controls = this;
 
 			// Disable the 'Publish' button.
 			$('#wpSave').attr('disabled', true);
@@ -23,7 +23,7 @@
 
 		// init page controls widget
 		init: function () {
-			console.trace('WE.plugins');		var $pageControls = $('#EditPageRail .module_page_controls'),
+					var $pageControls = $('#EditPageRail .module_page_controls'),
 				self = this;
 
 			this.categories = $('#categories');
@@ -98,12 +98,12 @@
 
 		// Enable 'Publish' button when the editor is ready (BugId:13957)
 		onEditorReady: function () {
-			console.trace('WE.plugins');		$('#wpSave').removeAttr('disabled');
+					$('#wpSave').removeAttr('disabled');
 		},
 
 		// handle "Save" button
 		onSave: function (event) {
-			console.trace('WE.plugins');		event.preventDefault();
+					event.preventDefault();
 
 			if (this.editor.fire('save') === false) {
 				return;
@@ -139,7 +139,7 @@
 
 		// handle keypressing in "Edit summary" field
 		onSummaryKeypress: function (ev) {
-			console.trace('WE.plugins');		if (ev.keyCode == 13 /* enter */) {
+					if (ev.keyCode == 13 /* enter */) {
 				this.editor.track({
 					action: Wikia.Tracker.ACTIONS.SUBMIT,
 					label: 'summary-enter'
@@ -151,7 +151,7 @@
 
 		// handle keypressing on "Minor edit" checkbox
 		onMinorEditKeypress: function (ev) {
-			console.trace('WE.plugins');		if (ev.keyCode == 13 /* enter */) {
+					if (ev.keyCode == 13 /* enter */) {
 				ev.preventDefault();
 				return;
 			}
@@ -159,7 +159,7 @@
 
 		// send AJAX request
 		ajax: function (method, params, callback, skin) {
-			console.trace('WE.plugins');		var editor = typeof RTE == 'object' ? RTE.getInstance() : false;
+					var editor = typeof RTE == 'object' ? RTE.getInstance() : false;
 
 			params = $.extend({
 				page: window.wgEditPageClass ? window.wgEditPageClass : "",
@@ -182,7 +182,7 @@
 
 		// get value of wpTitle field and update wgEditedTitle JS variable and page header title
 		updateEditedTitle: function () {
-			console.trace('WE.plugins');		var title = $('[name=wpTitle]');
+					var title = $('[name=wpTitle]');
 
 			this.editor.fire('changeTitle', window.wgEditedTitle, title.val());
 
@@ -212,7 +212,7 @@
 
 		// return true if any of the required fields has no value
 		checkForEmptyFields: function (fields) {
-			console.trace('WE.plugins');		var emptyRequiredFields = fields.find('label > *[data-required="1"]'), emptyCounter = 0;
+					var emptyRequiredFields = fields.find('label > *[data-required="1"]'), emptyCounter = 0;
 
 			emptyRequiredFields.each(function () {
 				if ($(this).val() == '') {
@@ -225,7 +225,7 @@
 
 		// show dialog for providing required data (e.g. page title)
 		renderHiddenFieldsDialog: function () {
-			console.trace('WE.plugins');		var self = this, dialogTitle = document.title;
+					var self = this, dialogTitle = document.title;
 
 			$.showCustomModal(dialogTitle, '<div class="fields"></div>', {
 				id: 'HiddenFieldsDialog',
@@ -278,7 +278,7 @@
 
 		// render dialog for callback form (eg. captcha)
 		renderCallbackFieldsDialog: function () {
-			console.trace('WE.plugins');		var self = this, dialogTitle = document.title;
+					var self = this, dialogTitle = document.title;
 
 			// update modal's title when showing a captcha
 			if ( $('#wpCaptchaWord').exists() ) {
@@ -320,7 +320,7 @@
 		// internal method, based on the editor content and some extraData, prepare a preview markup for the
 		// preview dialog and pass it to the callback
 		getPreviewContent: function (content, extraData, callback, skin) {
-			console.trace('WE.plugins');		// add section name when adding new section (BugId:7658)
+					// add section name when adding new section (BugId:7658)
 			if (window.wgEditPageSection === 'new') {
 				content = '== ' + this.getSummary() + ' ==\n\n' + content;
 			} else {
@@ -348,7 +348,7 @@
 		// of any widthType/gridLayout settings when the responsive layout goes out
 		// for a global release.
 		renderPreview: function (extraData, type) {
-			console.trace('WE.plugins');		var self = this;
+					var self = this;
 
 			require([ 'wikia.breakpointsLayout' ], function (breakpointsLayout) {
 				var previewPadding = 22, // + 2px for borders
@@ -409,7 +409,7 @@
 
 		// render "show diff" modal
 		renderChanges: function () {
-			console.trace('WE.plugins');		var self = this;
+					var self = this;
 			require([ 'wikia.ui.factory' ], function(uiFactory){
 				uiFactory.init([ 'modal' ]).then(function(uiModal) {
 					var previewModalConfig = {
@@ -461,7 +461,7 @@
 		},
 
 		getSummary: function () {
-			console.trace('WE.plugins');		var $wpSummary = $('#wpSummary'),
+					var $wpSummary = $('#wpSummary'),
 				summary = $wpSummary.val();
 
 			// bugid-93498: IE fakes placeholder functionality by setting a real val
@@ -476,7 +476,7 @@
 		// get editor's content (either wikitext or HTML)
 		// and call provided callback with wikitext as its parameter
 		getContent: function (callback) {
-			console.trace('WE.plugins');		var editor = typeof RTE == 'object' ? RTE.getInstance() : false, mode = editor ? editor.mode : 'mw';
+					var editor = typeof RTE == 'object' ? RTE.getInstance() : false, mode = editor ? editor.mode : 'mw';
 
 			callback = callback || function () {};
 

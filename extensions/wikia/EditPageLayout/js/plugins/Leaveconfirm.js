@@ -21,7 +21,7 @@
 
 
 		init: function() {
-			console.trace('WE.plugins');		this.leaveMessage = $.msg('wikia-editor-leaveconfirm-message');
+					this.leaveMessage = $.msg('wikia-editor-leaveconfirm-message');
 			this.editor.on('editorReady', this.proxy(this.onEditorReady));
 
 			// allow other plugins to mark content as changed
@@ -37,16 +37,16 @@
 		},
 
 		onEditorReady: function() {
-			console.trace('WE.plugins');		this.initialContent = this.editor.getContent();
+					this.initialContent = this.editor.getContent();
 		},
 
 		onMarkDirty: function() {
-			console.trace('WE.plugins');		this.isDirtyFlag = true;
+					this.isDirtyFlag = true;
 			this.editor.log('edit page marked as dirty');
 		},
 
 		onStateChange: function(editor, state) {
-			console.trace('WE.plugins');		var states = editor.states;
+					var states = editor.states;
 
 			switch (state) {
 				// page is being saved
@@ -60,7 +60,7 @@
 
 		// @see https://developer.mozilla.org/en/DOM/window.onbeforeunload
 		onBeforeUnload: function(ev) {
-			console.trace('WE.plugins');		if (this.shouldDisplayConfirm()) {
+					if (this.shouldDisplayConfirm()) {
 				this.dialogShown = true;
 
 				if (ev) {
@@ -72,11 +72,11 @@
 		},
 
 		onUserLoginSubmit: function() {
-			console.trace('WE.plugins');		this.disableLeaveConfirm = true;
+					this.disableLeaveConfirm = true;
 		},
 
 		isEditorDirty: function() {
-			console.trace('WE.plugins');		if (this.editor.ck) {
+					if (this.editor.ck) {
 				// @see http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.editor.html#checkDirty
 				return this.editor.ck.checkDirty();
 			}
@@ -87,11 +87,11 @@
 
 		// was any change to the page made?
 		isDirty: function() {
-			console.trace('WE.plugins');		return this.isDirtyFlag || this.isEditorDirty();
+					return this.isDirtyFlag || this.isEditorDirty();
 		},
 
 		shouldDisplayConfirm: function() {
-			console.trace('WE.plugins');		return (!this.disableLeaveConfirm && this.isDirty());
+					return (!this.disableLeaveConfirm && this.isDirty());
 		}
 	});
 })(this,jQuery);
