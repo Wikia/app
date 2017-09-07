@@ -9,7 +9,7 @@
 	WE.plugins.sizechangedevent = $.createClass(WE.plugin,{
 
 		initDom: function() {
-			console.trace('WE.plugins');		var self = this, editor = this.editor;
+					var self = this, editor = this.editor;
 
 			this.fireResizeEvent();
 
@@ -27,7 +27,7 @@
 		},
 
 		fireResizeEvent: function() {
-			console.trace('WE.plugins');		this.editor.fire('sizeChanged',this.editor);
+					this.editor.fire('sizeChanged',this.editor);
 		}
 
 	});

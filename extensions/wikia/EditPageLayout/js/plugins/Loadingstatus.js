@@ -13,7 +13,7 @@
 		extraStatesCount: 0,
 
 		init: function() {
-			console.trace('WE.plugins');		if ((this.el = this.editor.getSpace('loading-status'))) {
+					if ((this.el = this.editor.getSpace('loading-status'))) {
 				this.textEl = this.el.find('.loading-text');
 
 				// overlay just an edit area (BugId:6349)
@@ -25,7 +25,7 @@
 		},
 
 		extraStateChanged: function( editor, name, state ) {
-			console.trace('WE.plugins');		var states = editor.states;
+					var states = editor.states;
 
 			if (state == states.INITIALIZING) {
 				if (!this.extraStates[name]) {
@@ -43,7 +43,7 @@
 		},
 
 		stateChanged: function( editor, state ) {
-			console.trace('WE.plugins');		var states = editor.states, value = false;
+					var states = editor.states, value = false;
 
 			if (state == states.INITIALIZING) {
 				value = 'loading';
@@ -66,7 +66,7 @@
 		},
 
 		set: function( state ) {
-			console.trace('WE.plugins');		this.editor.log('loading-status: ', state);
+					this.editor.log('loading-status: ', state);
 			if ((this.state = state)) {
 				var text = this.editor.msg(this.MESSAGE_PREFIX + state);
 
