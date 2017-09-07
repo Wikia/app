@@ -21,3 +21,24 @@ $wgHooks['EditPage::showEditForm:initial'][] = 'Wikia\PageHeader\Hooks::onEditPa
 
 // i18n
 $wgExtensionMessagesFiles[ 'PageHeader' ] = $dir . 'PageHeader.i18n.php';
+
+$wgResourceModules['ext.wikia.pageHeader.styles'] = [
+	'styles' => [ 'styles/index.scss' ],
+
+	// use domain sharding
+	'source' => 'common',
+
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/PageHeader',
+];
+
+$wgResourceModules['ext.wikia.pageHeader.js'] = [
+	'scripts' => [ 'scripts/tracking.js' ],
+	'dependencies' => [ 'wikia.window', 'wikia.tracker' ],
+
+	// use domain sharding
+	'source' => 'common',
+
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/PageHeader',
+];
