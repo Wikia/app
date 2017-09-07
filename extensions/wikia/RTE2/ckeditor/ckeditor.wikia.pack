@@ -152,6 +152,7 @@ packages :
 				'plugins/floatpanel/plugin.js'
 				'plugins/richcombo/plugin.js'	
 				'plugins/format/plugin.js'
+
 				//'plugins/justify/plugin.js' - rte-justify now
 				'plugins/undo/plugin.js'
 				'plugins/menu/plugin.js'

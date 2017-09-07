@@ -599,6 +599,7 @@
 
 			// Load all plugin specific language files in a row.
 			CKEDITOR.scriptLoader.load( languageFiles, function() {
+				debugger;
 				// Initialize all plugins that have the "beforeInit" and "init" methods defined.
 				var methods = [ 'beforeInit', 'init', 'afterInit' ];
 				for ( var m = 0; m < methods.length; m++ ) {
@@ -623,7 +624,7 @@
 				// Setup the configured blocked keystrokes.
 				for ( i = 0; i < editor.config.blockedKeystrokes.length; i++ )
 					editor.keystrokeHandler.blockedKeystrokes[ editor.config.blockedKeystrokes[ i ] ] = 1;
-				debugger;
+			
 				editor.status = 'loaded';
 				editor.fireOnce( 'loaded' );
 				CKEDITOR.fire( 'instanceLoaded', null, editor );

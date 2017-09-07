@@ -226,12 +226,12 @@
 
 		// final setup of editor's instance
 		onEditorReady: function(event) {
-
+			debugger;
 			var editor = event.editor,
 			instanceId = editor.instanceId;
 
 			// base colors: use color / background-color from .color1 CSS class
-			//RTE.tools.getThemeColors();
+			RTE.tools.getThemeColors();
 			//No more theme
 
 			// remove HTML indentation
@@ -373,7 +373,12 @@ CKEDITOR.on('instanceCreated', function(event) {
 
 // editor is loaded
 CKEDITOR.on('instanceReady', RTE.onEditorReady);
-
+//Kacper Olek
+CKEDITOR.on('instanceReady', function() {
+debugger;
+WikiaEditor.instances.wpTextbox1.plugins.ckeditor.themeLoaded();
+WikiaEditor.instances.wpTextbox1.plugins['ui-ckeditor'].ckReady();
+});
 //
 // CKEDITOR.dtd fixes
 //

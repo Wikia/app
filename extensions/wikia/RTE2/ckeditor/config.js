@@ -9,7 +9,7 @@ CKEDITOR.editorConfig = function( config ) {
 	// The configuration options below are needed when running CKEditor from source files.
 //	config.plugins = 'wysiwygarea,button,autogrow,toolbar,indent,sourcearea';
 	
-	config.skin = 'moono-lisa';
+//	config.skin = 'moono-lisa';
 	// %REMOVE_END%
 
 	
@@ -35,5 +35,5 @@ CKEDITOR.editorConfig = function( config ) {
 	//config.removeButtons = 'Cut,Copy,Paste,Undo,Redo,Anchor,Underline,Strike,Subscript,Superscript';
 
 	// Dialog windows are also simplified.
-	config.removeDialogTabs = 'link:advanced';
+//	config.removeDialogTabs = 'link:advanced';
 };
