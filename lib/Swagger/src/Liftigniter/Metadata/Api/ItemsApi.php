@@ -298,7 +298,7 @@ class ItemsApi
      *
      * @param string $product  (required)
      * @param string $id  (required)
-     * @return void
+     * @return \Liftigniter\Metadata\Models\Item
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function getItem($product, $id)
@@ -314,7 +314,7 @@ class ItemsApi
      *
      * @param string $product  (required)
      * @param string $id  (required)
-     * @return Array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return Array of \Liftigniter\Metadata\Models\Item, HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function getItemWithHttpInfo($product, $id)
@@ -383,13 +383,17 @@ class ItemsApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                null,
+                '\Liftigniter\Metadata\Models\Item',
                 '/items/{product}/{id}'
             );
 
-            return array(null, $statusCode, $httpHeader);
+            return array($this->apiClient->getSerializer()->deserialize($response, '\Liftigniter\Metadata\Models\Item', $httpHeader), $statusCode, $httpHeader);
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 200:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Liftigniter\Metadata\Models\Item', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
             }
 
             throw $e;
@@ -401,7 +405,7 @@ class ItemsApi
      *
      * 
      *
-     * @return void
+     * @return \Liftigniter\Metadata\Models\Item[]
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function getItems()
@@ -415,7 +419,7 @@ class ItemsApi
      *
      * 
      *
-     * @return Array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return Array of \Liftigniter\Metadata\Models\Item[], HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function getItemsWithHttpInfo()
@@ -460,13 +464,17 @@ class ItemsApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                null,
+                '\Liftigniter\Metadata\Models\Item[]',
                 '/items'
             );
 
-            return array(null, $statusCode, $httpHeader);
+            return array($this->apiClient->getSerializer()->deserialize($response, '\Liftigniter\Metadata\Models\Item[]', $httpHeader), $statusCode, $httpHeader);
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 200:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Liftigniter\Metadata\Models\Item[]', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
             }
 
             throw $e;

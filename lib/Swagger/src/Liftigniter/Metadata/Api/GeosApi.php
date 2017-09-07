@@ -107,7 +107,7 @@ class GeosApi
      *
      * 
      *
-     * @return void
+     * @return \Liftigniter\Metadata\Models\Geo[]
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function getGeos()
@@ -121,7 +121,7 @@ class GeosApi
      *
      * 
      *
-     * @return Array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return Array of \Liftigniter\Metadata\Models\Geo[], HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function getGeosWithHttpInfo()
@@ -166,13 +166,17 @@ class GeosApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                null,
+                '\Liftigniter\Metadata\Models\Geo[]',
                 '/geos'
             );
 
-            return array(null, $statusCode, $httpHeader);
+            return array($this->apiClient->getSerializer()->deserialize($response, '\Liftigniter\Metadata\Models\Geo[]', $httpHeader), $statusCode, $httpHeader);
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 200:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Liftigniter\Metadata\Models\Geo[]', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
             }
 
             throw $e;
