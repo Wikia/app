@@ -142,7 +142,6 @@ class ImagePage extends Article {
 		if($showmeta) {
 			$this->imageMetadata($formattedMetadata);
 		}
-		$this->imageFooter();
 		/* End Wikia Change */
 
 		// Add remote Filepage.css
@@ -224,13 +223,6 @@ class ImagePage extends Article {
 		$wgOut->addWikiText( $this->makeMetadataTable( $formattedMetadata ) );
 		$wgOut->addModules( array( 'mediawiki.action.view.metadata' ) );
 	 }
-
-	/**
-	 * Wikia - called in view() function, so it can be used by ImagePageTabbed
-	 */
-	protected function imageFooter() {
-		// to be used by child classes
-	}
 
 	/**
 	 * Wikia - abstracted out part of view() function, so it can be overwritten by ImagePageTabbed
