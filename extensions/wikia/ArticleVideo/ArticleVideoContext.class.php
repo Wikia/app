@@ -33,12 +33,10 @@ class ArticleVideoContext {
 	public static function getFeaturedVideos() {
 		$wg = F::app()->wg;
 
-		$featuredVideos = array_merge(
+		return array_merge(
 			$wg->articleVideoFeaturedVideos,
 			$wg->articleVideoFeaturedVideos2
 		);
-
-		return $featuredVideos;
 	}
 
 	/**

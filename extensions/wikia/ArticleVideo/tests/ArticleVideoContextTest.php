@@ -89,6 +89,12 @@ class ArticleVideoContextTest extends WikiaBaseTest {
 				[ 'test' => [ 'wrong' => 'data' ] ],
 				[ 'test' => [ 'wrong' => 'data' ] ],
 				[],
+				'Will properly merge non-empty array to empty array'
+			],
+			[
+				[ 'test' => [ 'wrong' => 'data' ] ],
+				[],
+				[ 'test' => [ 'wrong' => 'data' ] ],
 				'Will properly merge empty array to non-empty array'
 			],
 			[
