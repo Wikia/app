@@ -72,7 +72,8 @@ class RecirculationHooks {
 		     in_array( $wg->Title->getNamespace(), $showableNameSpaces ) &&
 		     $wg->request->getVal( 'action', 'view' ) === 'view' &&
 		     $wg->request->getVal( 'diff' ) === null &&
-		     !WikiFactory::isWikiPrivate( $wg->CityId )
+		     !WikiFactory::isWikiPrivate( $wg->CityId ) &&
+		     !$wg->IsPrivateWiki
 		) {
 			return true;
 		} else {
