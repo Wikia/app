@@ -84,8 +84,8 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 		function setAutoPlay(value) {
 			// mobileVideoAd DOM element is present on mobile only
 			if (mobileVideoAd) {
-				mobileVideoAd.autoplay = value;
-				mobileVideoAd.muted = value;
+				mobileVideoAd.setAttribute('muted', value);
+				mobileVideoAd.setAttribute('autoplay', value);
 			}
 		}
 
