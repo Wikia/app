@@ -38,7 +38,7 @@
  * Do not edit the class manually.
  */
 
-namespace Liftigniter\Metadata\Api;
+namespace Swagger\Client\Liftigniter\Metadata\Api;
 
 use \Swagger\Client\Configuration;
 use \Swagger\Client\ApiClient;
@@ -107,7 +107,7 @@ class GeosApi
      *
      * 
      *
-     * @return \Liftigniter\Metadata\Models\Geo[]
+     * @return \Swagger\Client\Liftigniter\Metadata\Models\Geo[]
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function getGeos()
@@ -121,7 +121,7 @@ class GeosApi
      *
      * 
      *
-     * @return Array of \Liftigniter\Metadata\Models\Geo[], HTTP status code, HTTP response headers (array of strings)
+     * @return Array of \Swagger\Client\Liftigniter\Metadata\Models\Geo[], HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function getGeosWithHttpInfo()
@@ -166,15 +166,15 @@ class GeosApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Liftigniter\Metadata\Models\Geo[]',
+                '\Swagger\Client\Liftigniter\Metadata\Models\Geo[]',
                 '/geos'
             );
 
-            return array($this->apiClient->getSerializer()->deserialize($response, '\Liftigniter\Metadata\Models\Geo[]', $httpHeader), $statusCode, $httpHeader);
+            return array($this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Liftigniter\Metadata\Models\Geo[]', $httpHeader), $statusCode, $httpHeader);
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Liftigniter\Metadata\Models\Geo[]', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Liftigniter\Metadata\Models\Geo[]', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }

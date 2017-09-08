@@ -1,7 +1,7 @@
 <?php
 
-use Liftigniter\Metadata\Api\ItemsInternalApi;
-use Liftigniter\Metadata\Models\Item;
+use Swagger\Client\Liftigniter\Metadata\Api\ItemsInternalApi;
+use Swagger\Client\Liftigniter\Metadata\Models\Item;
 use Swagger\Client\ApiException;
 use Wikia\DependencyInjection\Injector;
 use Wikia\Logger\WikiaLogger;
@@ -26,7 +26,7 @@ class LiftigniterMetadataService {
 	 *
 	 * @return Item on success, null otherwise
 	 */
-	public function getLiMetadataForArticle( $cityId, $pageId): Item {
+	public function getLiMetadataForArticle( $cityId, $pageId) {
 		$api = $this->getItemsInternalApiClient();
 		$api->getApiClient()
 			->getConfig()

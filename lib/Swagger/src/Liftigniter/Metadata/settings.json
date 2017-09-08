@@ -1,6 +1,6 @@
 {
   "packagePath": "Swagger",
   "srcBasePath": "src",
-  "modelPackage": "Liftigniter\\Metadata\\Models",
-  "apiPackage": "Liftigniter\\Metadata\\Api"
+  "modelPackage": "Swagger\\Client\\Liftigniter\\Metadata\\Models",
+  "apiPackage": "Swagger\\Client\\Liftigniter\\Metadata\\Api"
 }

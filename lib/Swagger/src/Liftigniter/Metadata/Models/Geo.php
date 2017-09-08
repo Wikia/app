@@ -39,7 +39,7 @@
  * Do not edit the class manually.
  */
 
-namespace Liftigniter\Metadata\Models;
+namespace Swagger\Client\Liftigniter\Metadata\Models;
 
 use \ArrayAccess;
 
