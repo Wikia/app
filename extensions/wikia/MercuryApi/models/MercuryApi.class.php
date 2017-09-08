@@ -119,8 +119,9 @@ class MercuryApi {
 		global $wgCacheBuster, $wgCityId, $wgContLang, $wgContentNamespaces, $wgDBname,
 		       $wgDefaultSkin, $wgDisableAnonymousEditing, $wgDisableAnonymousUploadForMercury,
 		       $wgDisableMobileSectionEditor, $wgEnableCommunityData, $wgEnableDiscussions,
-		       $wgEnableDiscussionsImageUpload, $wgEnableNewAuth, $wgLanguageCode, $wgSitename,
-		       $wgWikiDirectedAtChildrenByFounder, $wgWikiDirectedAtChildrenByStaff;
+		       $wgEnableDiscussionsImageUpload, $wgDiscussionThemeOveride, $wgEnableNewAuth,
+		       $wgLanguageCode, $wgSitename, $wgWikiDirectedAtChildrenByFounder,
+		       $wgWikiDirectedAtChildrenByStaff;
 
 		return [
 			'appleTouchIcon' => Wikia::getWikiLogoMetadata(),
