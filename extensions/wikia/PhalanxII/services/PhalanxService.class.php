@@ -1,6 +1,7 @@
 <?php
 
 use Wikia\Service\Gateway\ConsulUrlProvider;
+use Wikia\Service\Gateway\KubernetesUrlProvider;
 
 /**
  * @method PhalanxService setLimit( int $limit )
@@ -14,6 +15,7 @@ class PhalanxService {
 	private $limit = 1;
 	/** @var User */
 	private $user = null;
+	private $k8sUrlProvider = null;
 
 	const RES_OK = 'ok';
 	const RES_FAILURE = 'failure';
@@ -34,6 +36,18 @@ class PhalanxService {
 	 * saving/modifying a block.
 	 */
 	const PHALANX_SERVICE_RELOAD_TIMEOUT = 25;
+
+	/**
+	 * @Inject({
+	 *   Wikia\Service\Gateway\KubernetesUrlProvider::class
+	 * })
+	 * @param KubernetesUrlProvider $urlProvider
+	 */
+	public function __construct(
+		KubernetesUrlProvider $urlProvider
+	) {
+		$this->k8sUrlProvider = $urlProvider;
+	}
 
 	protected function getLoggerContext() {
 		return [
@@ -272,7 +286,7 @@ class PhalanxService {
 			// calling on the shadow ninja powers - making call to k8s Phalanx instance to check if the response
 			// from k8s instances match one received from the mesos instances
 			$shadowResponse = Http::post( $shadowUrl, $options );
-			if ( $response != $shadowResponse && ( new \Wikia\Util\Statistics\BernoulliTrial( 0.001 ) )->shouldSample() ) {
+			if ( $response !== $shadowResponse && ( new \Wikia\Util\Statistics\BernoulliTrial( 0.01 ) )->shouldSample() ) {
 				$this->error( "Phalanx shadow call differs", [
 					"phalanxUrl" => $url,
 					"shadowUrl" => $shadowUrl,
@@ -345,9 +359,7 @@ class PhalanxService {
 	}
 
 	private function getPhalanxShadowUrl( $action ) {
-		global $wgPhalanxShadowUrl, $wgWikiaDatacenter;
-
-		return sprintf("http://%s.%s/%s", $wgWikiaDatacenter, $wgPhalanxShadowUrl, $action != "status" ? $action : "" );
+		return sprintf("http://%s/%s", $this->k8sUrlProvider->getUrl('phalanx'), $action != "status" ? $action : "" );
 	}
 
 	private function getPhalanxUrl( $action ) {
