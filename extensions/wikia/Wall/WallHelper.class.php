@@ -560,7 +560,7 @@ class WallHelper {
 	 */
 	public static function getWallTitleData( $rc = null, $row = null ) {
 		if ( is_object( $row ) ) {
-			$objTitle = Title::newFromText( $row->page_title, $row->page_namespace );
+			$objTitle = Title::makeTitle( $row->page_namespace, $row->page_title );
 			$userText = !empty( $row->rev_user_text ) ? $row->rev_user_text : '';
 
 			$isNew = ( !empty( $row->page_is_new ) && $row->page_is_new === '1' ) ? true : false;
@@ -583,18 +583,16 @@ class WallHelper {
 		}
 
 		// SUS-1777: Don't bother trying to load Wall Message if this is the Wall itself
-		if ( $row->page_namespace === NS_USER_WALL ) {
+		if ( $objTitle->inNamespace( NS_USER_WALL ) ) {
 			// change in NS_USER_WALL namespace mean that wall page was created (bugid:95249)
-			$title = Title::makeTitle( NS_USER_WALL, $row->page_title );
-
 			return [
-				'articleTitle' => $title->getPrefixedText(),
-				'articleFullUrl' => $title->getFullUrl(),
+				'articleTitle' => $objTitle->getPrefixedText(),
+				'articleFullUrl' => $objTitle->getFullUrl(),
 				'articleTitleVal' => '',
 				'articleTitleTxt' => wfMessage(  'wall-recentchanges-wall-created-title' )->text(),
-				'wallTitleTxt' => $title->getPrefixedText(),
-				'wallPageFullUrl' =>  $title->getFullUrl(),
-				'wallPageName' => $row->page_title,
+				'wallTitleTxt' => $objTitle->getPrefixedText(),
+				'wallPageFullUrl' =>  $objTitle->getFullUrl(),
+				'wallPageName' => $objTitle->getText(),
 				'actionUser' => $userText,
 				'isThread' => true,
 				'isNew' => $isNew
