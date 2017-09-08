@@ -104,6 +104,9 @@ define('ext.wikia.adEngine.template.porvata', [
 				params.container.addEventListener('mouseleave', function () {
 					adsManager.setVolume(0);
 				});
+				if (typeof params.fallbackBidBlockOutOfViewportPausing !== 'undefined') {
+					params.blockOutOfViewportPausing = params.fallbackBidBlockOutOfViewportPausing;
+				}
 			}
 		});
 
