@@ -325,7 +325,6 @@ END;
 				$date_string = SDUtils::monthToString( $row[1] ) . ' ' . $row[2] . ', ' . $row[0];
 				$possible_dates[$date_string] = $row[3];
 			} elseif ( $this->getTimePeriod() == 'month' ) {
-				global $sdgMonthValues;
 				$date_string = SDUtils::monthToString( $row[1] ) . ' ' . $row[0];
 				$possible_dates[$date_string] = $row[2];
 			} elseif ( $this->getTimePeriod() == 'year' ) {
@@ -403,7 +402,6 @@ END;
 		$smw_ids = $dbr->tableName( SDUtils::getIDsTableName() );
 		$valuesTable = $dbr->tableName( $this->getTableName() );
 		$value_field = $this->getValueField();
-		$property_field = 'p_id';
 		$query_property = $this->escaped_property;
 
 		$sql = <<<END
@@ -417,7 +415,9 @@ END;
 			$sql .= "	JOIN $smw_ids o_ids ON $valuesTable.o_id = o_ids.smw_id\n";
 		}
 		$sql .= "	WHERE p_ids.smw_title = '$query_property'";
-		$dbr->query( $sql );
+
+		$temporaryTableManager = new TemporaryTableManager( $dbr );
+		$temporaryTableManager->queryWithAutoCommit( $sql, __METHOD__ );
 	}
 
 	/**
@@ -425,9 +425,11 @@ END;
 	 */
 	function dropTempTable() {
 		$dbr = wfGetDB( DB_SLAVE, 'smw' );
+		$temporaryTableManager = new TemporaryTableManager( $dbr );
+
 		// DROP TEMPORARY TABLE would be marginally safer, but it's
 		// not supported on all RDBMS's.
 		$sql = "DROP TABLE semantic_drilldown_filter_values";
-		$dbr->query( $sql );
+		$temporaryTableManager->queryWithAutoCommit( $sql, __METHOD__ );
 	}
 }
