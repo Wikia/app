@@ -587,7 +587,7 @@ class WallHelper {
 			// change in NS_USER_WALL namespace mean that wall page was created (bugid:95249)
 			$title = Title::makeTitle( NS_USER_WALL, $row->page_title );
 
-			$out = [
+			return [
 				'articleTitle' => $title->getPrefixedText(),
 				'articleFullUrl' => $title->getFullUrl(),
 				'articleTitleVal' => '',
@@ -599,8 +599,6 @@ class WallHelper {
 				'isThread' => true,
 				'isNew' => $isNew
 			];
-
-			return $out;
 		}
 
 		$wm = WallMessage::newFromId( $objTitle->getArticleId() );
@@ -634,7 +632,7 @@ class WallHelper {
 
 		$title = Title::makeTitle( NS_USER_WALL_MESSAGE, $articleId );
 
-		$out = [
+		return [
 			'articleTitle' => $title->getPrefixedText(),
 			'articleFullUrl' => $wm->getMessagePageUrl(),
 			'articleTitleVal' => $articleTitleTxt,
@@ -646,7 +644,5 @@ class WallHelper {
 			'isThread' => $wm->isMain(),
 			'isNew' => $isNew
 		];
-
-		return $out;
 	}
 }
