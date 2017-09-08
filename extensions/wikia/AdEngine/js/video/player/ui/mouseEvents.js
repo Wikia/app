@@ -11,7 +11,7 @@ define('ext.wikia.adEngine.video.player.ui.mouseEvents', [
 	}
 
 	function add(video, params) {
-		var isTouchDevice = ('ontouchstart' in win || 'onmsgesturechange' in win),
+		var isTouchDevice = 'ontouchstart' in win || 'onmsgesturechange' in win,
 			onMouseEnter = function () {
 				video.setVolume(1);
 			},
