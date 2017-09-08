@@ -2,7 +2,9 @@
 
 use Liftigniter\Metadata\Api\ItemsInternalApi;
 use Liftigniter\Metadata\Models\Item;
+use Swagger\Client\ApiException;
 use Wikia\DependencyInjection\Injector;
+use Wikia\Logger\WikiaLogger;
 use Wikia\Service\Swagger\ApiProvider;
 
 /**
@@ -18,6 +20,12 @@ class LiftigniterMetadataService {
 
 	private $imageApiClient = null;
 
+	/**
+	 * @param $cityId
+	 * @param $pageId
+	 *
+	 * @return Item on success, null otherwise
+	 */
 	public function getLiMetadataForArticle( $cityId, $pageId): Item {
 		$api = $this->getItemsInternalApiClient();
 		$api->getApiClient()
@@ -26,13 +34,16 @@ class LiftigniterMetadataService {
 
 		try {
 			return $api->getItem( $cityId, $pageId );
-		} catch ( \Swagger\Client\ApiException $e ) {
+		} catch ( ApiException $e ) {
+			$code = $e->getCode();
 
-			\Wikia\Logger\WikiaLogger::instance()->error( 'Failed to contact liftigniter-metadata service', [
-				'exception' => $e,
-				'wiki_id' => intval( $cityId ),
-				'page_id' => intval( $pageId )
-			] );
+			if (intval($code) != 404) {
+				WikiaLogger::instance()->debug( 'could not fetch data from liftigniter-metadata service', [
+					'exception' => $e,
+					'wiki_id' => intval( $cityId ),
+					'page_id' => intval( $pageId )
+				] );
+			}
 		}
 
 		return null;
