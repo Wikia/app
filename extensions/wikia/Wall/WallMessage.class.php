@@ -667,7 +667,7 @@ class WallMessage {
 
 		$postFix = $this->getPageUrlPostFix();
 		$postFix = empty( $postFix ) ? "" : ( '#' . $postFix );
-		$title = Title::newFromText( $id, NS_USER_WALL_MESSAGE );
+		$title = Title::makeTitle( NS_USER_WALL_MESSAGE, $id );
 
 		$this->messagePageUrl = [ ];
 
