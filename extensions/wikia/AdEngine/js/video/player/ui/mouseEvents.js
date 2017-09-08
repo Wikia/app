@@ -19,22 +19,24 @@ define('ext.wikia.adEngine.video.player.ui.mouseEvents', [
 				video.setVolume(0);
 			};
 
+		video.addEventListener('loaded', function () {
+			muteVideo(video);
+		});
+		video.addEventListener('start', function () {
+			muteVideo(video);
+		});
+
 		if (isTouchDevice) {
 			return;
 		}
 
 		video.addEventListener('loaded', function () {
-			muteVideo(video);
 			params.container.addEventListener('mouseenter', onMouseEnter);
 			params.container.addEventListener('mouseleave', onMouseLeave);
 			video.addEventListener('wikiaVolumeChangeClicked', function () {
 				params.container.removeEventListener('mouseenter', onMouseEnter);
 				params.container.removeEventListener('mouseleave', onMouseLeave);
 			});
-		});
-
-		video.addEventListener('start', function () {
-			muteVideo(video);
 		});
 	}
 
