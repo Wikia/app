@@ -48,11 +48,10 @@ class RecirculationHooks {
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
 		global $wgNoExternals;
 
-		if ( empty( $wgNoExternals ) ) {
-			$jsAssets[] = 'recirculation_liftigniter_tracker';
-		}
-
 		if ( static::isCorrectPageType() ) {
+			if ( empty( $wgNoExternals ) ) {
+				$jsAssets[] = 'recirculation_liftigniter_tracker';
+			}
 			$jsAssets[] = 'recirculation_js';
 		}
 
@@ -69,10 +68,11 @@ class RecirculationHooks {
 
 		$showableNameSpaces = array_merge( $wg->ContentNamespaces, [ NS_FILE ] );
 
-		if ( $wg->Title->exists()
-				&& in_array( $wg->Title->getNamespace(), $showableNameSpaces )
-				&& $wg->request->getVal( 'action', 'view' ) === 'view'
-				&& $wg->request->getVal( 'diff' ) === null
+		if ( $wg->Title->exists() &&
+		     in_array( $wg->Title->getNamespace(), $showableNameSpaces ) &&
+		     $wg->request->getVal( 'action', 'view' ) === 'view' &&
+		     $wg->request->getVal( 'diff' ) === null &&
+		     !WikiFactory::isWikiPrivate( $wg->CityId )
 		) {
 			return true;
 		} else {
