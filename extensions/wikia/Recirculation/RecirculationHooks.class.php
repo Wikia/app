@@ -71,9 +71,7 @@ class RecirculationHooks {
 		if ( $wg->Title->exists() &&
 		     in_array( $wg->Title->getNamespace(), $showableNameSpaces ) &&
 		     $wg->request->getVal( 'action', 'view' ) === 'view' &&
-		     $wg->request->getVal( 'diff' ) === null &&
-		     !WikiFactory::isWikiPrivate( $wg->CityId ) &&
-		     !$wg->IsPrivateWiki
+		     $wg->request->getVal( 'diff' ) === null
 		) {
 			return true;
 		} else {
@@ -124,7 +122,7 @@ class RecirculationHooks {
 	}
 
 	private static function addLiftIgniterMetadata( OutputPage $outputPage ) {
-		global $wgDevelEnvironment, $wgLanguageCode, $wgStagingEnvironment;
+		global $wgDevelEnvironment, $wgLanguageCode, $wgStagingEnvironment, $wgIsPrivateWiki, $wgCityId;;
 
 		$context = RequestContext::getMain();
 		$title = $context->getTitle();
@@ -136,8 +134,9 @@ class RecirculationHooks {
 
 		$metaData['language'] = $wgLanguageCode;
 		$isProduction = empty( $wgDevelEnvironment ) && empty( $wgStagingEnvironment );
+		$isPrivateWiki = WikiFactory::isWikiPrivate( $wgCityId ) || $wgIsPrivateWiki;
 
-		if ( !$isProduction || $title->inNamespace( NS_FILE ) ) {
+		if ( !$isProduction || $isPrivateWiki || $title->inNamespace( NS_FILE ) ) {
 			$metaData['noIndex'] = 'true';
 		}
 
