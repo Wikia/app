@@ -103,7 +103,7 @@ class WikiRecommendations {
 		],
 		'fr' => [
 			[
-				'thumbnailUrl' => 'https://vignette4.wikia.nocookie.net/elsas-test/images/c/cd/LIS_Spotlight.jpg/revision/latest/scale-to-width-down/1000?cb=20170831132858&path-prefix=fr',
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/elsas-test/images/c/cf/Picsou_Spotlight.jpg/revision/latest/scale-to-width-down/640?cb=20170831132857&path-prefix=fr',
 				'title' => 'Picsou Wiki',
 				'url' => 'http://fr.picsou.wikia.com/wiki/Picsou_Wiki',
 			],
