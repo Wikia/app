@@ -122,7 +122,7 @@ class RecirculationHooks {
 	}
 
 	private static function addLiftIgniterMetadata( OutputPage $outputPage ) {
-		global $wgDevelEnvironment, $wgLanguageCode, $wgStagingEnvironment, $wgIsPrivateWiki, $wgCityId;
+		global $wgDevelEnvironment, $wgLanguageCode, $wgStagingEnvironment, $wgWikiaEnvironment, $wgIsPrivateWiki, $wgCityId;
 
 		$context = RequestContext::getMain();
 		$title = $context->getTitle();
@@ -133,7 +133,9 @@ class RecirculationHooks {
 		}
 
 		$metaData['language'] = $wgLanguageCode;
-		$isProduction = empty( $wgDevelEnvironment ) && empty( $wgStagingEnvironment );
+		$isProduction =
+			empty( $wgDevelEnvironment ) && empty( $wgStagingEnvironment ) &&
+			$wgWikiaEnvironment !== WIKIA_ENV_STAGING;
 		$isPrivateWiki = WikiFactory::isWikiPrivate( $wgCityId ) || $wgIsPrivateWiki;
 
 		if ( !$isProduction || $isPrivateWiki || $title->inNamespace( NS_FILE ) ) {
