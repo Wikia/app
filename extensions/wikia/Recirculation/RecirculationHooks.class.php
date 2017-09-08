@@ -126,13 +126,20 @@ class RecirculationHooks {
 
 		$context = RequestContext::getMain();
 		$title = $context->getTitle();
+		$articleId = $title->getArticleID();
 		$metaData = [];
+		$metaDataService = new LiftigniterMetadataService();
+		$metaDataFromService = $metaDataService->getLiMetadataForArticle($wgCityId, $articleId);
 
 		if ( $title->isMainPage() ) {
 			$siteAttributeData = self::getLiftIgniterMetadataFromSiteAttributeService();
 		}
 
 		$metaData['language'] = $wgLanguageCode;
+		$metaData['geolocation'] = $metaDataFromService->getGeos();
+		$metaData['start_date'] = $metaDataFromService->getDateFrom();
+		$metaData['end_date'] = $metaDataFromService->getDateTo();
+
 		$isProduction =
 			empty( $wgDevelEnvironment ) && empty( $wgStagingEnvironment ) &&
 			$wgWikiaEnvironment !== WIKIA_ENV_STAGING;
