@@ -1,11 +1,13 @@
 /*global define*/
 define('ext.wikia.adEngine.video.vastUrlBuilder', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.slot.adUnitBuilder',
 	'ext.wikia.adEngine.slot.slotTargeting',
+	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'wikia.location',
 	'wikia.log'
-], function (page, adUnitBuilder, slotTargeting, loc, log) {
+], function (adContext, page, adUnitBuilder, slotTargeting, megaAdUnitBuilder, loc, log) {
 	'use strict';
 	var adSizes = {
 			vertical: '320x480',
@@ -52,6 +54,11 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 		var correlator = options.correlator || Math.round(Math.random() * 10000000000),
 			params,
 			url;
+
+		if (!options.adUnit && adContext.get('opts.megaAdUnitBuilderEnabled')) {
+			// TODO: remove it after merge & release ADEN-5825 mobile-wiki, this is cache related backward compatibility
+			options.adUnit = adUnitBuilder.build(slotParams.pos, slotParams.src);
+		}
 
 		params = [
 			'output=vast',

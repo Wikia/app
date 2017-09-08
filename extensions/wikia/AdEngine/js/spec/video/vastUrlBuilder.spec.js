@@ -8,9 +8,19 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 	var AD_UNIT_QUERY_PARAM = '&iu=',
 		REGULAR_AD_UNIT_QUERY_PARAM = AD_UNIT_QUERY_PARAM + 'my\/ad\/unit&',
 		mocks = {
+			adContext: {
+				get: function () {
+					return false;
+				}
+			},
 			adUnitBuilder: {
 				build: function () {
 					return 'my/ad/unit';
+				}
+			},
+			megaAdUnitBuilder: {
+				build: function () {
+					return 'mega/ad/unit';
 				}
 			},
 			slotTargeting: {
@@ -43,9 +53,11 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.video.vastUrlBuilder'](
+			mocks.adContext,
 			mocks.page,
 			mocks.adUnitBuilder,
 			mocks.slotTargeting,
+			mocks.megaAdUnitBuilder,
 			mocks.loc,
 			mocks.log
 		);
