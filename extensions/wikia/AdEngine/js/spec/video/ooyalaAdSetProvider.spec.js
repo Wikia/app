@@ -233,4 +233,49 @@ describe('ext.wikia.adEngine.video.ooyalaAdSetProvider', function () {
 		expect(mocks.vastUrlBuilder.build.calls.argsFor(0)[2].contentSourceId).toEqual(111);
 		expect(mocks.vastUrlBuilder.build.calls.argsFor(0)[2].videoId).toEqual(222);
 	});
+
+	it('does not pass bidder info to mid and post roll', function () {
+		spyOn(mocks.vastUrlBuilder, 'build');
+		spyOn(mocks.adContext, 'getContext').and.returnValue({
+			opts: {
+				isFVMidrollEnabled: true,
+				isFVPostrollEnabled: true,
+				replayAdsForFV: true,
+				showAds: true
+			}
+		});
+
+		var bidParams = {
+			bidid: 789
+		};
+
+		getModule().get(1, 666, {}, bidParams);
+		expect(mocks.vastUrlBuilder.build.calls.argsFor(0)[1].bidid).toEqual(789);
+		expect(mocks.vastUrlBuilder.build.calls.argsFor(1)[1].bidid).toBeUndefined();
+		expect(mocks.vastUrlBuilder.build.calls.argsFor(2)[1].bidid).toBeUndefined();
+	});
+
+	it('does not pass bidder info to any ad on next video', function () {
+		spyOn(mocks.vastUrlBuilder, 'build');
+		spyOn(mocks.adContext, 'getContext').and.returnValue({
+			opts: {
+				isFVMidrollEnabled: true,
+				isFVPostrollEnabled: true,
+				fvAdsFrequency: 1,
+				replayAdsForFV: true,
+				showAds: true
+			}
+		});
+
+		var bidParams = {
+			bidid: 789
+		};
+
+		getModule().get(1, 666, {}, bidParams); // first video
+
+		getModule().get(2, 666, {}, bidParams); // second video
+		expect(mocks.vastUrlBuilder.build.calls.argsFor(3)[1].bidid).toBeUndefined(); // preroll
+		expect(mocks.vastUrlBuilder.build.calls.argsFor(4)[1].bidid).toBeUndefined(); // midroll
+		expect(mocks.vastUrlBuilder.build.calls.argsFor(5)[1].bidid).toBeUndefined(); // postroll
+	});
 });

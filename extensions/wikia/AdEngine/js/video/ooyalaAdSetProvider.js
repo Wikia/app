@@ -80,6 +80,7 @@ define('ext.wikia.adEngine.video.ooyalaAdSetProvider', [
 
 		videoDepth = videoDepth || 1;
 		correlator = correlator || Math.round(Math.random() * 10000000000);
+		bidParams = videoDepth === 1 ? bidParams : {};
 
 		var adSet = [],
 			adsFrequency = adContext.getContext().opts.fvAdsFrequency,
@@ -90,11 +91,11 @@ define('ext.wikia.adEngine.video.ooyalaAdSetProvider', [
 		}
 
 		if (adContext.getContext().opts.isFVMidrollEnabled && canAdBePlayed(videoDepth, adsFrequency)) {
-			adSet.push(generateSet(AD.MIDROLL, rv, correlator, videoInfo, bidParams));
+			adSet.push(generateSet(AD.MIDROLL, rv, correlator, videoInfo));
 		}
 
 		if (adContext.getContext().opts.isFVPostrollEnabled && canAdBePlayed(videoDepth, adsFrequency)) {
-			adSet.push(generateSet(AD.POSTROLL, rv, correlator, videoInfo, bidParams));
+			adSet.push(generateSet(AD.POSTROLL, rv, correlator, videoInfo));
 		}
 
 		return adSet;
