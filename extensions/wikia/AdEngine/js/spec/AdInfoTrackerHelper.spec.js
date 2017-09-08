@@ -26,7 +26,13 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 				return 'Foo 50';
 			}
 		},
-		window: {},
+		window: {
+			document: {
+				body: {
+					scrollHeight: undefined
+				}
+			}
+		},
 		log: noop
 	}, fakeJSONString = JSON.stringify({foo: 1});
 
@@ -157,7 +163,6 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 				esrb: 'esrb',
 				ref: 'ref',
 				top: 'top',
-				ah: 'ah'
 			}));
 
 		slot.container.firstChild.dataset.gptSlotParams = fakeJSONString;
@@ -176,7 +181,6 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 		expect(data.kv_esrb).toBe('esrb');
 		expect(data.kv_ref).toBe('ref');
 		expect(data.kv_top).toBe('top');
-		expect(data.kv_ah).toBe('ah');
 	});
 
 	it('prepareData correctly calculates bidder_won for no bidders', function () {
@@ -261,5 +265,19 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 		data = getModule().prepareData(slot);
 
 		expect(data.browser).toBe('BarOS Foo 50');
+	});
+
+	it('include article height', function () {
+		var data,
+			slot = getTopLeaderboardSlotWithPageParams(fakeJSONString);
+
+		slot.container.firstChild.dataset.gptSlotParams = JSON.stringify({});
+		slot.container.firstChild.dataset.gptCreativeSize = fakeJSONString;
+
+		mocks.window.document.body.scrollHeight = 57
+
+		data = getModule().prepareData(slot);
+
+		expect(data.kv_ah).toBe(57);
 	});
 });

@@ -1,6 +1,7 @@
 <?php
 
 use Wikia\Service\Gateway\ConsulUrlProvider;
+use Wikia\Rabbit\ConnectionBase;
 
 /**
  * @method PhalanxService setLimit( int $limit )
@@ -19,6 +20,7 @@ class PhalanxService {
 	const RES_FAILURE = 'failure';
 	const RES_STATUS = 'PHALANX ALIVE';
 	const PHALANX_LOG_PARAM_LENGTH_LIMIT = 64;
+	const ROUTING_KEY = 'onUpdate';
 
 	// number of retries for phalanx POST requests
 	const PHALANX_SERVICE_TRIES_LIMIT = 3;
@@ -129,8 +131,16 @@ class PhalanxService {
 			: [];
 
 		$result = $this->sendToPhalanxDaemon( "reload", $params );
+		$this->sendToPhalanxQueue( $changed );
 		wfProfileOut( __METHOD__ );
 		return $result;
+	}
+
+	private function sendToPhalanxQueue( $changed ) {
+		global $wgPhalanxQueue;
+
+		$rabbitConnection = new ConnectionBase( $wgPhalanxQueue );
+		$rabbitConnection->publish ( self::ROUTING_KEY, implode( ",", $changed ) );
 	}
 
 	/**

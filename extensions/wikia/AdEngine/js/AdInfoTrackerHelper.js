@@ -53,7 +53,7 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 			'kv_esrb': pageParams.esrb || '',
 			'kv_ref': pageParams.ref || '',
 			'kv_top': pageParams.top || '',
-			'kv_ah': pageParams.ah || '',
+			'kv_ah': win.document.body.scrollHeight || '',
 			'kv_abi': slotParams.abi || '',
 			'bidder_won': bidderWon,
 			'bidder_won_price': bidderWon ? realSlotPrices[bidderWon] : '',

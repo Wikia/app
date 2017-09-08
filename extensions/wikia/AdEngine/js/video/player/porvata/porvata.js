@@ -67,8 +67,6 @@ define('ext.wikia.adEngine.video.player.porvata', [
 				function shouldResume(isVisible) {
 					// Don't resume when video was paused manually
 					return isVisible && autoPaused &&
-						// Do not resume automatically when video has controls
-						!videoSettings.hasUiControls() &&
 						// Do not resume when video floating is active
 						!isFloatingEnabled(params);
 				}

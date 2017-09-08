@@ -24,7 +24,6 @@ define('ext.wikia.adEngine.template.floatingRail', [
 		railWidth = 300,
 
 		availableSpace,
-		articleHeight,
 		floatingSpace,
 		scrollTop,
 		startPosition,
@@ -82,14 +81,6 @@ define('ext.wikia.adEngine.template.floatingRail', [
 		return availableSpace;
 	}
 
-	function getArticleHeight() {
-		if (!articleHeight) {
-			articleHeight = $wikiaMainContent.height();
-			log(['getArticleHeight', articleHeight], 'debug', logGroup);
-		}
-		return articleHeight;
-	}
-
 	function show(params) {
 		var offset = params.offset || 0,
 			context = adContext.getContext(),
@@ -106,13 +97,7 @@ define('ext.wikia.adEngine.template.floatingRail', [
 		win.addEventListener('resize', update);
 	}
 
-	function getArticleHeightParameter() {
-		var space = getArticleHeight();
-		return math.getBucket(space, 1500);
-	}
-
 	return {
-		getArticleHeightParameter: getArticleHeightParameter,
 		show: show
 	};
 });

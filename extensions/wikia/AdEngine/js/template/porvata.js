@@ -45,25 +45,6 @@ define('ext.wikia.adEngine.template.porvata', [
 		veles.markBidsAsUsed(params.hbAdId);
 	}
 
-	function createInteractiveArea() {
-		var controlBar = doc.createElement('div'),
-			controlBarItems = doc.createElement('div'),
-			interactiveArea = doc.createElement('div');
-
-		controlBar.classList.add('control-bar');
-		controlBarItems.classList.add('control-bar-items');
-		interactiveArea.classList.add('interactive-area');
-
-		controlBar.appendChild(controlBarItems);
-		interactiveArea.appendChild(controlBar);
-
-		return {
-			controlBar: controlBar,
-			controlBarItems: controlBarItems,
-			interactiveArea: interactiveArea
-		};
-	}
-
 	function getVideoContainer(slotName) {
 		var container = doc.createElement('div'),
 			displayWrapper = doc.createElement('div'),
@@ -79,79 +60,40 @@ define('ext.wikia.adEngine.template.porvata', [
 	}
 
 	function isVpaid(contentType) {
-		return contentType.indexOf('application/') === 0;
+		return contentType === 'application/javascript';
+	}
+
+	function enabledFallbackBidHandling(video, params) {
+		var fallbackAdRequested = false;
+
+		video.addEventListener('wikiaEmptyAd', function () {
+			var fallbackBid;
+
+			if (fallbackAdRequested) {
+				return;
+			}
+
+			fallbackBid = prebid.getWinningVideoBidBySlotName(params.slotName, fallbackBidders);
+			if (fallbackBid) {
+				fallbackAdRequested = true;
+				video.reload({
+					height: params.height,
+					width: params.width,
+					vastResponse: fallbackBid.vastContent,
+					vastUrl: fallbackBid.vastUrl
+				});
+			}
+		});
 	}
 
 	function onReady(video, params) {
-		var fallbackAdRequested = false,
-			slot = doc.getElementById(params.slotName),
-			slotExpanded = false,
+		var slot = doc.getElementById(params.slotName),
 			slotWidth;
 
+		slot.classList.add('porvata-outstream');
 		video.addEventListener('loaded', function () {
-			var adsManager = video.ima.getAdsManager(),
-				videoContainer = video.container || video.ima.container;
-
-			setTimeout(function () {
-				adsManager.setVolume(0);
-			});
-			videoContainer.classList.remove('hidden');
-
-			if (!params.hasUiControls) {
-				params.container.addEventListener('mouseenter', function () {
-					adsManager.setVolume(1);
-				});
-				params.container.addEventListener('mouseleave', function () {
-					adsManager.setVolume(0);
-				});
-			}
+			video.container.classList.remove('hidden');
 		});
-
-		video.addEventListener('start', function () {
-			setTimeout(function () {
-				video.ima.getAdsManager().setVolume(0);
-			});
-
-			if (params.isDynamic && !slotExpanded) {
-				slotTweaker.expand(params.slotName);
-				slotExpanded = true;
-				video.ima.dispatchEvent('wikiaSlotExpanded');
-			}
-
-			if (params.isDynamic) {
-				slotWidth = slot.scrollWidth;
-				video.resize(slotWidth, slotWidth / videoAspectRatio);
-			}
-		});
-
-		video.addEventListener('allAdsCompleted', function () {
-			video.ima.getAdsManager().pause();
-			if (params.isDynamic) {
-				slotTweaker.collapse(params.slotName);
-			}
-		});
-
-		if (params.useBidAsFallback) {
-			video.addEventListener('wikiaEmptyAd', function () {
-				var fallbackBid;
-
-				if (fallbackAdRequested) {
-					return;
-				}
-
-				fallbackBid = prebid.getWinningVideoBidBySlotName(params.slotName, fallbackBidders);
-				if (fallbackBid) {
-					fallbackAdRequested = true;
-					video.reload({
-						height: params.height,
-						width: params.width,
-						vastResponse: fallbackBid.vastContent,
-						vastUrl: fallbackBid.vastUrl
-					});
-				}
-			});
-		}
-
 		if (params.isDynamic) {
 			win.addEventListener('resize', function () {
 				if (!(video.isFloating && video.isFloating())) {
@@ -175,7 +117,7 @@ define('ext.wikia.adEngine.template.porvata', [
 	 * @param {object} params.width - Player width
 	 * @param {object} params.height - Player height
 	 * @param {string} [params.hbAdId] - Prebid ad id of winning offer
-	 * @param {string} [params.onReady] - Callback executed once player is ready
+	 * @param {function} [params.onReady] - Callback executed once player is ready
 	 * @param {string} [params.useBidAsFallback] - Decides whether use bid as fallback
 	 * @param {string} [params.vastUrl] - Vast URL (DFP URL with page level targeting will be used if not passed)
 	 * @param {integer} [params.vpaidMode] - VPAID mode from IMA: https://developers.google.com/interactive-media-ads/docs/sdks/html5/v3/apis#ima.ImaSdkSettings.VpaidMode
@@ -205,12 +147,12 @@ define('ext.wikia.adEngine.template.porvata', [
 			});
 
 			return;
-		} else {
-			slotRegistry.get(params.slotName).success({
-				adType: params.adType,
-				source: 'porvata'
-			});
 		}
+
+		slotRegistry.get(params.slotName).success({
+			adType: params.adType,
+			source: 'porvata'
+		});
 
 		if (params.vpaidMode === imaVpaidModeInsecure) {
 			params.originalContainer = params.container;
@@ -224,19 +166,8 @@ define('ext.wikia.adEngine.template.porvata', [
 
 		settings = videoSettings.create(params);
 		porvata.inject(settings).then(function (video) {
-			if (typeof params.onReady === 'function') {
-				params.onReady(video);
-			} else {
-				onReady(video, params);
-			}
-
-			video.addEventListener('start', function () {
-				videoFrequencyMonitor.registerLaunchedVideo();
-			});
-
-			return video;
-		}).then(function (video) {
 			var imaVpaidMode = win.google.ima.ImaSdkSettings.VpaidMode,
+				templateName = params.isDynamic ? 'outstreamIncontent' : 'outstreamLeaderboard',
 				videoPlayer;
 
 			if (params.vpaidMode === imaVpaidMode.INSECURE) {
@@ -256,21 +187,33 @@ define('ext.wikia.adEngine.template.porvata', [
 				});
 			}
 
+			if (typeof params.onReady === 'function') {
+				// TODO remove this when Veles 1.0 is killed
+				params.onReady(video);
+			} else {
+				onReady(video, params);
+			}
+
+			if (params.useBidAsFallback) {
+				enabledFallbackBidHandling(video, params);
+			}
+			video.addEventListener('start', function () {
+				videoFrequencyMonitor.registerLaunchedVideo();
+			});
+
 			if (mercuryListener) {
 				mercuryListener.onPageChange(function () {
 					video.destroy();
 				});
 			}
 
+			videoInterface.setup(video, uiTemplate[templateName], {
+				container: params.container,
+				isDynamic: params.isDynamic,
+				slotName: params.slotName
+			});
+
 			return video;
-		}).then(function (video) {
-			if (settings.hasUiControls()) {
-				var elements = createInteractiveArea();
-
-				video.container.appendChild(elements.interactiveArea);
-
-				videoInterface.setup(video, uiTemplate.featureVideo, elements);
-			}
 		});
 	}
 
