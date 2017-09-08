@@ -436,7 +436,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			// hasFeaturedVideo result,
 			// wgEnableArticleFeaturedVideo,
 			// wgArticleVideoFeaturedVideos,
-			// wgArticleVideoFeaturedVideos,
+			// wgArticleVideoFeaturedVideos2,
 			// message
 			[ false, false, [], [], 'hasFeaturedVideo is set when extension disabled' ],
 			[ false, true, [], [], 'hasFeaturedVideo is set when no data available' ],

@@ -76,7 +76,11 @@ class ArticleVideoContextTest extends WikiaBaseTest {
 		$this->assertEquals( $expected, $result, $message );
 	}
 
-	// expected, wgEnableArticleFeaturedVideo, wgArticleVideoFeaturedVideos, message
+	// expected,
+	// wgEnableArticleFeaturedVideo,
+	// wgArticleVideoFeaturedVideos,
+	// wgArticleVideoFeaturedVideos2,
+	// message
 	public function featuredVideoSetsProvider() {
 		return [
 			[
