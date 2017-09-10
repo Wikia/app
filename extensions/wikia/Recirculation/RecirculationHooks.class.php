@@ -136,10 +136,13 @@ class RecirculationHooks {
 		}
 
 		$metaData['language'] = $wgLanguageCode;
-		$metaData['guaranteed_impression'] = $metaDataFromService->getGuaranteedNumber();
-		$metaData['start_date'] = $metaDataFromService->getDateFrom()->getTimestamp();
-		$metaData['end_date'] = $metaDataFromService->getDateTo()->getTimestamp();
-		$metaData['geolocation'] = $metaDataFromService->getGeos();
+
+		if ( !is_null( $metaDataFromService ) ) {
+			$metaData['guaranteed_impression'] = $metaDataFromService->getGuaranteedNumber();
+			$metaData['start_date'] = $metaDataFromService->getDateFrom()->getTimestamp();
+			$metaData['end_date'] = $metaDataFromService->getDateTo()->getTimestamp();
+			$metaData['geolocation'] = $metaDataFromService->getGeos();
+		}
 
 		$isProduction =
 			empty( $wgDevelEnvironment ) && empty( $wgStagingEnvironment ) &&
