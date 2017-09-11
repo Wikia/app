@@ -171,15 +171,15 @@ class GeosApi
             );
 
             return array($this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Liftigniter\Metadata\Models\Geo[]', $httpHeader), $statusCode, $httpHeader);
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
+        } catch (ApiException $apiException) {
+            switch ($apiException->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Liftigniter\Metadata\Models\Geo[]', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
+                    $data = $this->apiClient->getSerializer()->deserialize($apiException->getResponseBody(), '\Swagger\Client\Liftigniter\Metadata\Models\Geo[]', $apiException->getResponseHeaders());
+                    $apiException->setResponseObject($data);
                     break;
             }
 
-            throw $e;
+            throw $apiException;
         }
     }
 

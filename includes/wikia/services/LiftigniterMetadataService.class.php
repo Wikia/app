@@ -7,13 +7,6 @@ use Wikia\DependencyInjection\Injector;
 use Wikia\Logger\WikiaLogger;
 use Wikia\Service\Swagger\ApiProvider;
 
-/**
- * Created by PhpStorm.
- * User: ryba
- * Date: 07/09/2017
- * Time: 17:44
- */
-
 class LiftigniterMetadataService {
 	const SERVICE_NAME = 'liftigniter-metadata';
 	const INTERNAL_REQUEST_HEADER = 'X-Wikia-Internal-Request';
@@ -24,9 +17,9 @@ class LiftigniterMetadataService {
 	 * @param $cityId
 	 * @param $pageId
 	 *
-	 * @return Item on success, null otherwise
+	 * @return null|Item
 	 */
-	public function getLiMetadataForArticle( $cityId, $pageId) {
+	public function getLiMetadataForArticle( $cityId, $pageId ) {
 		$api = $this->getItemsInternalApiClient();
 		$api->getApiClient()
 			->getConfig()
@@ -34,12 +27,12 @@ class LiftigniterMetadataService {
 
 		try {
 			return $api->getItem( $cityId, $pageId );
-		} catch ( ApiException $e ) {
-			$code = $e->getCode();
+		} catch ( ApiException $apiException ) {
+			$code = $apiException->getCode();
 
 			if (intval($code) != 404) {
 				WikiaLogger::instance()->debug( 'could not fetch data from liftigniter-metadata service', [
-					'exception' => $e,
+					'exception' => $apiException,
 					'wiki_id' => intval( $cityId ),
 					'page_id' => intval( $pageId )
 				] );
@@ -69,7 +62,7 @@ class LiftigniterMetadataService {
 	 */
 	private function createItemsInternalApiClient(): ItemsInternalApi {
 		/** @var ApiProvider $apiProvider */
-		$apiProvider = Injector::getInjector()->get(ApiProvider::class);
+		$apiProvider = Injector::getInjector()->get( ApiProvider::class );
 		$api = $apiProvider->getApi( self::SERVICE_NAME, ItemsInternalApi::class );
 
 		// default CURLOPT_TIMEOUT for API client is set to 0 which means no timeout.

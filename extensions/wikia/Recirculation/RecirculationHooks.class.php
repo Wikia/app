@@ -129,7 +129,7 @@ class RecirculationHooks {
 		$articleId = $title->getArticleID();
 		$metaData = [];
 		$metaDataService = new LiftigniterMetadataService();
-		$metaDataFromService = $metaDataService->getLiMetadataForArticle($wgCityId, $articleId);
+		$metaDataFromService = $metaDataService->getLiMetadataForArticle( $wgCityId, $articleId );
 
 		if ( $title->isMainPage() ) {
 			$siteAttributeData = self::getLiftIgniterMetadataFromSiteAttributeService();
@@ -137,10 +137,10 @@ class RecirculationHooks {
 
 		$metaData['language'] = $wgLanguageCode;
 
-		if ( !is_null( $metaDataFromService ) ) {
+		if ( !empty( $metaDataFromService ) ) {
 			$metaData['guaranteed_impression'] = $metaDataFromService->getGuaranteedNumber();
-			$metaData['start_date'] = $metaDataFromService->getDateFrom()->getTimestamp();
-			$metaData['end_date'] = $metaDataFromService->getDateTo()->getTimestamp();
+			$metaData['start_date'] = date ( 'Y-m-d H:i:s', $metaDataFromService->getDateFrom()->getTimestamp() );
+			$metaData['end_date'] = date ( 'Y-m-d H:i:s', $metaDataFromService->getDateTo()->getTimestamp() );
 			$metaData['geolocation'] = $metaDataFromService->getGeos();
 		}
 
