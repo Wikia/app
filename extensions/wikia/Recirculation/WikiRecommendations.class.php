@@ -574,6 +574,24 @@ class WikiRecommendations {
 		],
 	];
 
+    const STAGING_RECOMMENDATIONS = [
+        [
+            'thumbnailUrl' => 'https://vignette.wikia-staging.nocookie.net/gameofthrones/images/3/3a/WhiteWalker_%28Hardhome%29.jpg/revision/latest?cb=20150601151110',
+            'title' => 'Game of Thrones',
+            'url' => 'http://gameofthrones.wikia.com/wiki/Game_of_Thrones_Wiki',
+        ],
+        [
+            'thumbnailUrl' => 'https://vignette.wikia-staging.nocookie.net/deathnote/images/1/1d/Light_Holding_Death_Note.png/revision/latest?cb=20120525180447',
+            'title' => 'Death Note',
+            'url' => 'http://deathnote.wikia.com/wiki/Main_Page',
+        ],
+        [
+            'thumbnailUrl' => 'https://vignette.wikia-staging.nocookie.net/midnight-texas/images/b/b0/Blinded_by_the_Light_106-01-Rev-Sheehan-Davy-Deputy.jpg/revision/latest?cb=20170820185915',
+            'title' => 'Midnight Texas',
+            'url' => 'http://midnight-texas.wikia.com/wiki/Midnight,_Texas_Wikia',
+        ]
+    ];
+
 	const DEV_RECOMMENDATIONS = [
 		[
 			'thumbnailUrl' => 'https://vignette.wikia-dev.pl/gameofthrones/images/3/3a/WhiteWalker_%28Hardhome%29.jpg/revision/latest?cb=20150601151110',
@@ -593,8 +611,7 @@ class WikiRecommendations {
 	];
 	
 	public static function getRecommendations( $contentLanguage ) {
-		global $wgDevelEnvironment;
-
+		global $wgDevelEnvironment, $wgWikiaEnvironment;
 
 		if ( empty( $wgDevelEnvironment ) ) {
 			$recommendations = self::RECOMMENDATIONS['en'];
@@ -603,7 +620,9 @@ class WikiRecommendations {
 				$recommendations = self::RECOMMENDATIONS[$contentLanguage];
 			}
 			shuffle( $recommendations );
-		} else {
+		} elseif ($wgWikiaEnvironment == WIKIA_ENV_STAGING){
+            $recommendations = self::STAGING_RECOMMENDATIONS;
+        } else {
 			$recommendations = self::DEV_RECOMMENDATIONS;
 		}
 
