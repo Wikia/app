@@ -142,6 +142,10 @@ class RecirculationHooks {
 			$metaData['noIndex'] = 'true';
 		}
 
+		if ( ArticleVideoContext::isFeaturedVideoEmbedded( $title->getPrefixedDBkey() ) ) {
+			$metaData['type'] = 'video';
+		}
+
 		if ( !empty( $siteAttributeData ) ) {
 			$metaData = array_merge( $siteAttributeData, $metaData );
 		}
