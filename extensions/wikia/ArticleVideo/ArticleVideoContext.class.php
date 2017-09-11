@@ -11,11 +11,32 @@ class ArticleVideoContext {
 	public static function isFeaturedVideoEmbedded( $title ) {
 		$wg = F::app()->wg;
 
-		return $wg->enableArticleFeaturedVideo &&
-			isset( $wg->articleVideoFeaturedVideos[$title] ) &&
-			self::isFeaturedVideosValid( $wg->articleVideoFeaturedVideos[$title] ) &&
+		if (!$wg->enableArticleFeaturedVideo) {
+			return false;
+		}
+
+		$featuredVideos = self::getFeaturedVideos();
+
+		return isset( $featuredVideos[$title] ) &&
+			self::isFeaturedVideosValid( $featuredVideos[$title] ) &&
 			// Prevents to show video on ?action=history etc.
 			!WikiaPageType::isActionPage();
+	}
+
+	/**
+	 * We are temporarily using two variables for storing the videos data
+	 * as we've run out of memory for one WF field. This will be replaced
+	 * soon by introducing a service to handle featured videos
+	 *
+	 * @return array
+	 */
+	public static function getFeaturedVideos() {
+		$wg = F::app()->wg;
+
+		return array_merge(
+			$wg->articleVideoFeaturedVideos,
+			$wg->articleVideoFeaturedVideos2
+		);
 	}
 
 	/**
@@ -30,7 +51,7 @@ class ArticleVideoContext {
 		if ( self::isFeaturedVideoEmbedded( $title ) ) {
 			$api = OoyalaBacklotApiService::getInstance();
 
-			$videoData = $wg->articleVideoFeaturedVideos[$title];
+			$videoData = self::getFeaturedVideos()[$title];
 			$videoData['title'] = $api->getTitle( $videoData['videoId'] );
 			$videoData['labels'] = $api->getLabels( $videoData['videoId'] );
 			$videoData['duration'] = $api->getDuration( $videoData['videoId'] );
