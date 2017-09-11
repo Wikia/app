@@ -1865,13 +1865,16 @@ $messages['pt'] = array(
 Se você não solicitou uma nova senha, não se preocupe! Sua conta está segura e protegida. Você pode ignorar este e-mail e continuar fazendo o login na Wikia com sua antiga senha.
 <br /><br />
 Dúvidas ou preocupações? Sinta-se livre para <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">nos contatar</a>.',
-	'userlogin-password-email-body' => 'Olá $2,Por favor, use essa senha temporária para se conectar na Wikia: "$3"Se você não solicitou uma nova senha, não se preocupe! Sua conta está segura e protegida. Você pode ignorar este e-mail e continuar fazendo o login na Wikia com sua antiga senha.Dúvidas ou preocupações? Sinta-se livre para nos contatar: http://community.wikia.com/wiki/Special:Contact/account-issue
+	'userlogin-password-email-body' => 'Olá $2
+Por favor, use essa senha temporária para se conectar no FANDOM: "$3"
+Se você não solicitou uma nova senha, não se preocupe! Sua conta está segura e protegida. Você pode ignorar este e-mail e continuar fazendo o login no FANDOM com sua antiga senha.
+Dúvidas ou preocupações? Sinta-se livre para nos contatar: http://comunidade.wikia.com/wiki/Especial:Contact/account-issue
 Suporte da Comunidade Wikia
 
 
 ___________________________________________
 
-Para ver os últimos acontecimentos na Wikia, visite http://pt.community.wikia.com
+Para ver os últimos acontecimentos na Wikia, visite http://comunidade.wikia.com
 Deseja controlar quais e-mails você recebe? Vá para: {{fullurl:{{ns:special}}:Preferences}}',
 	'userlogin-password-email-body-HTML' => '',
 	'userlogin-email-footer-line1' => 'Para ver os últimos acontecimentos na Wikia, visite <a style="color:#2a87d5;text-decoration:none;" href="http://pt.community.wikia.com">pt.community.wikia.com</a>',
