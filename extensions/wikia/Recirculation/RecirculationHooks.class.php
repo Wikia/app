@@ -122,7 +122,13 @@ class RecirculationHooks {
 	}
 
 	private static function addLiftIgniterMetadata( OutputPage $outputPage ) {
-		global $wgDevelEnvironment, $wgLanguageCode, $wgStagingEnvironment, $wgWikiaEnvironment, $wgIsPrivateWiki, $wgCityId;
+		global $wgCityId,
+		       $wgDevelEnvironment,
+		       $wgEnableArticleFeaturedVideo,
+		       $wgIsPrivateWiki,
+		       $wgLanguageCode,
+		       $wgStagingEnvironment,
+		       $wgWikiaEnvironment;
 
 		$context = RequestContext::getMain();
 		$title = $context->getTitle();
@@ -142,7 +148,9 @@ class RecirculationHooks {
 			$metaData['noIndex'] = 'true';
 		}
 
-		if ( ArticleVideoContext::isFeaturedVideoEmbedded( $title->getPrefixedDBkey() ) ) {
+		if ( !empty( $wgEnableArticleFeaturedVideo ) &&
+		     ArticleVideoContext::isFeaturedVideoEmbedded( $title->getPrefixedDBkey() )
+		) {
 			$metaData['type'] = 'video';
 		}
 
