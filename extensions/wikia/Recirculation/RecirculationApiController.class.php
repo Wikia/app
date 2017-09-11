@@ -19,26 +19,15 @@ class RecirculationApiController extends WikiaApiController {
 		$this->cors->setHeaders( $this->response );
 
 		$type = $this->getParamType();
-		$cityId = $this->getParamCityId();
 		$limit = $this->getParamLimit();
-		$fill = $this->getParamFill();
 
 		$title = wfMessage( 'recirculation-fandom-title' )->plain();
 
 		if ( $type === 'curated' ) {
 			$dataService = new CuratedContentService();
-		} elseif ( $type === 'hero' || $type === 'category' || $type === 'latest' ) {
-			$dataService = new FandomDataService( $cityId, $type );
-		} else {
-			$dataService = new ParselyDataService( $cityId );
 		}
 
 		$posts = $dataService->getPosts( $type, $limit );
-
-		if ( $fill === 'true' && count( $posts ) < $limit ) {
-			$ds = new ParselyDataService( $cityId );
-			$posts = array_slice( array_merge( $posts, $ds->getPosts( 'recent_popular', $limit ) ), 0, $limit );
-		}
 
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 		$this->response->setData( [
@@ -83,16 +72,6 @@ class RecirculationApiController extends WikiaApiController {
 		}
 
 		return $type;
-	}
-
-	private function getParamFill() {
-		$fill = $this->request->getVal( 'fill', 'false' );
-
-		if ( $fill !== 'true' && $fill !== 'false' ) {
-			throw new InvalidParameterApiException( 'fill' );
-		}
-
-		return $fill;
 	}
 
 	private function getParamLimit() {

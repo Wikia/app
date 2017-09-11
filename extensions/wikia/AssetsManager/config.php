@@ -150,7 +150,6 @@ $config['recirculation_js'] = [
 	'assets' => [
 		'//extensions/wikia/Recirculation/js/tracker.js',
 		'//extensions/wikia/Recirculation/js/utils.js',
-		'//extensions/wikia/Recirculation/js/helpers/FandomHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/DiscussionsHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/CuratedContentHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/LiftigniterHelper.js',
@@ -177,16 +176,6 @@ $config['recirculation_scss'] = [
 		'//extensions/wikia/Recirculation/styles/recirculation.scss',
 	],
 ];
-
-$config['spotlights_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		// ads
-		'//extensions/wikia/Spotlights/js/AdProviderOpenX.js',
-		'//extensions/wikia/Spotlights/js/LazyLoadAds.js',
-	],
-];
-
 
 $config['adengine2_top_js'] = [
 	'type' => AssetsManager::TYPE_JS,
