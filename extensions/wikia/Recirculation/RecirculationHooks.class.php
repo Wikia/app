@@ -71,7 +71,8 @@ class RecirculationHooks {
 		if ( $wg->Title->exists() &&
 		     in_array( $wg->Title->getNamespace(), $showableNameSpaces ) &&
 		     $wg->request->getVal( 'action', 'view' ) === 'view' &&
-		     $wg->request->getVal( 'diff' ) === null
+		     $wg->request->getVal( 'diff' ) === null &&
+		     !WikiaPageType::isCorporatePage()
 		) {
 			return true;
 		} else {
