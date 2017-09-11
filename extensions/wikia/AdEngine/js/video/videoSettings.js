@@ -81,6 +81,9 @@ define('ext.wikia.adEngine.video.videoSettings', [
 			},
 			isMoatTrackingEnabled: function () {
 				return state.moatTracking;
+			},
+			setMoatTracking: function (status) {
+				state.moatTracking = status;
 			}
 		};
 	}

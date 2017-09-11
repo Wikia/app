@@ -185,5 +185,16 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 
 		expect(mocks.sampler.sample).toHaveBeenCalled();
 	});
+
+	it('Should be able to disable moat tracking on runtime', function () {
+		spyOn(mocks.sampler, 'sample').and.returnValue(true);
+
+		var videoSettings = getSettings({
+			moatTracking: 100
+		});
+		videoSettings.setMoatTracking(false);
+
+		expect(videoSettings.isMoatTrackingEnabled()).toBeFalsy();
+	});
 });
 

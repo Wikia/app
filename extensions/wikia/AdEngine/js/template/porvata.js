@@ -63,7 +63,7 @@ define('ext.wikia.adEngine.template.porvata', [
 		return contentType === 'application/javascript';
 	}
 
-	function enabledFallbackBidHandling(video, params) {
+	function enabledFallbackBidHandling(video, videoSettings, params) {
 		var fallbackAdRequested = false;
 
 		video.addEventListener('wikiaEmptyAd', function () {
@@ -76,6 +76,7 @@ define('ext.wikia.adEngine.template.porvata', [
 			fallbackBid = prebid.getWinningVideoBidBySlotName(params.slotName, fallbackBidders);
 			if (fallbackBid) {
 				fallbackAdRequested = true;
+				videoSettings.setMoatTracking(false);
 				video.reload({
 					height: params.height,
 					width: params.width,
@@ -198,7 +199,7 @@ define('ext.wikia.adEngine.template.porvata', [
 			}
 
 			if (params.useBidAsFallback) {
-				enabledFallbackBidHandling(video, params);
+				enabledFallbackBidHandling(video, settings, params);
 			}
 			video.addEventListener('start', function () {
 				videoFrequencyMonitor.registerLaunchedVideo();
