@@ -73,7 +73,7 @@ define('ext.wikia.adEngine.template.porvata', [
 		}
 	}
 
-	function enabledFallbackBidHandling(video, params) {
+	function enabledFallbackBidHandling(video, videoSettings, params) {
 		var hasDirectAd = true,
 			fallbackAdRequested = false;
 
