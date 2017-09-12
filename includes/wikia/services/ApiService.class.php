@@ -26,17 +26,14 @@ class ApiService {
 	 * @return array|bool
 	 */
 	static function call( Array $params ) {
-		wfProfileIn(__METHOD__);
-
 		$res = false;
 
 		try {
 			$api = new ApiMain( new FauxRequest( $params ) );
 			$api->execute();
 			$res = $api->getResultData();
-		} catch ( Exception $e ) {};
-
-		wfProfileOut( __METHOD__ );
+		} catch ( Exception $e ) {
+		};
 
 		return $res;
 	}
@@ -60,7 +57,7 @@ class ApiService {
 		}
 
 		// request JSON format of API response
-		$params['format'] = 'json';
+		$params[ 'format' ] = 'json';
 
 		$url = "{$hostName}/{$endpoint}?" . http_build_query( $params );
 		wfDebug( __METHOD__ . ": {$url}\n" );
@@ -117,17 +114,17 @@ class ApiService {
 		global $wgCookiePrefix;
 		$context = RequestContext::getMain();
 
-		$options = array();
+		$options = [];
 		$user = $context->getUser();
 		if ( !$user->isLoggedIn() ) {
 			return $options;
 		}
 
-		$params = array(
+		$params = [
 			'UserID' => $user->getId(),
 			'UserName' => $user->getName(),
 			'Token' => $user->getToken(),
-		);
+		];
 
 		$cookie = '';
 		foreach ( $params as $key => $value ) {
@@ -138,7 +135,7 @@ class ApiService {
 		if ( !empty( $token ) ) {
 			$cookie .= HeliosCookieHelper::ACCESS_TOKEN_COOKIE_NAME . '=' . $token . ';';
 		}
-		$options['curlOptions'] = array( CURLOPT_COOKIE => $cookie );
+		$options[ 'curlOptions' ] = [ CURLOPT_COOKIE => $cookie ];
 
 		return $options;
 	}
