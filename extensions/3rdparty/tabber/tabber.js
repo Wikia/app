@@ -273,18 +273,6 @@ tabberObj.prototype.init = function(e)
 		// manually insert word break points
 		DOM_ul.appendChild(document.createElement('wbr'));
 		// end wikia change
-
-		// Wikia change - to avoid iterating over the ten bazillion divs in the document
-		// we use getElementsByClassName on initial sweep
-		// because of this we must check recursively for child tabs if they contain nested tabbers
-		var nestedChildTabbers = t.div.getElementsByClassName(this.classMain);
-		for (var j = 0; j < nestedChildTabbers.length; j++) {
-			var childTabberArgs = {
-				div: nestedChildTabbers[j]
-			};
-
-			nestedChildTabbers[j].tabber = new tabberObj(childTabberArgs);
-		}
 	}
 
 	/* Add the UL list to the beginning of the tabber div */
@@ -523,11 +511,15 @@ function tabberAutomatic(tabberArgs)
 
 	/* Find all DIV elements in the document that have class=tabber */
 
-	/* Get all tabbers */
-	divs = document.getElementsByClassName(tempObj.classMain);
+	/* First get an array of all DIV elements and loop through them */
+	divs = document.getElementsByTagName("div");
 	for (i=0; i < divs.length; i++) {
-		tabberArgs.div = divs[i];
-		divs[i].tabber = new tabberObj(tabberArgs);
+		/* Is this DIV the correct class? */
+		if (divs[i].classList.contains(tempObj.classMain)) {
+			/* Now tabify the DIV */
+			tabberArgs.div = divs[i];
+			divs[i].tabber = new tabberObj(tabberArgs);
+		}
 	}
 
 	return this;
