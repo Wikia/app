@@ -2739,6 +2739,8 @@ $config['article_featured_video_js'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/ArticleVideo/scripts/article-featured-video.js',
+		'//extensions/wikia/ArticleVideo/scripts/ooyala-service.js',
+		'//extensions/wikia/ArticleVideo/scripts/tracking-queue.js',
 		'//extensions/wikia/ArticleVideo/scripts/video-feedback.js',
 	],
 ];
