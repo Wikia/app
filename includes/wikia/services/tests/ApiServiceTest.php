@@ -9,7 +9,7 @@ class ApiAccessServiceTest extends \WikiaBaseTest {
 			"key",
 			"value"
 		];
-		$apiMock = $this->mockClassWithMethods( "ApiMain", [
+		$this->mockClassWithMethods( "ApiMain", [
 			'execute' => null,
 			'getResultData' => $mockResults
 		] );
@@ -21,11 +21,10 @@ class ApiAccessServiceTest extends \WikiaBaseTest {
 	public function testForeignCall() {
 
 		# used by private method ApiService::getHostByDbName
-		$this->mockStaticMethod( "WikiFactory", 'DBtoID', "1" );
-		$this->mockStaticMethod( "WikiFactory", 'getVarValueByName', "foo.wikia.com" );
+		$this->mockStaticMethod( "WikiFactory", 'DBtoUrl', "foo.wikia.com" );
 
 		$fakeJson = '{"a": "b"}'; // some non-null json formatted data
-		$httpMock = $this->mockStaticMethod( "Http", 'get', $fakeJson );
+		$this->mockStaticMethod( "Http", 'get', $fakeJson );
 
 		$result = ApiService::foreignCall( "foo", [] );
 		$this->assertEquals( $result, json_decode( $fakeJson, true ) );

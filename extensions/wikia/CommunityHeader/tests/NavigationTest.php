@@ -31,7 +31,7 @@ class NavigationTest extends WikiaBaseTest {
 			}
 		);
 
-		$result = new Navigation( new DesignSystemCommunityHeaderModel( self::WIKI_ID ) );
+		$result = new Navigation( new DesignSystemCommunityHeaderModel( self::WIKI_ID, 'en' ) );
 
 		// used `array_values` to reset keys of array
 		$this->assertEquals( $expectedExploreItems, array_values( $result->exploreItems ) );
@@ -54,7 +54,7 @@ class NavigationTest extends WikiaBaseTest {
 			}
 		);
 
-		$result = new Navigation( new DesignSystemCommunityHeaderModel( self::WIKI_ID ) );
+		$result = new Navigation( new DesignSystemCommunityHeaderModel( self::WIKI_ID, 'en' ) );
 
 		$this->assertEquals( $expected, $result->discussLink );
 	}
