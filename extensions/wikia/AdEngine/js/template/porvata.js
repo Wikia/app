@@ -63,20 +63,42 @@ define('ext.wikia.adEngine.template.porvata', [
 		return contentType === 'application/javascript';
 	}
 
+	function dispatchEventWhenInViewport(video, eventName) {
+		if (video.wasInViewport) {
+			video.ima.dispatchEvent(eventName);
+		} else {
+			video.addEventListener('wikiaFirstTimeInViewport', function () {
+				video.ima.dispatchEvent(eventName);
+			});
+		}
+	}
+
 	function enabledFallbackBidHandling(video, videoSettings, params) {
-		var fallbackAdRequested = false;
+		var hasDirectAd = true,
+			fallbackAdRequested = false;
+
+		video.addEventListener('wikiaAdsManagerLoaded', function () {
+			if (hasDirectAd) {
+				dispatchEventWhenInViewport(video, 'wikiaInViewportWithDirect');
+			}
+		});
 
 		video.addEventListener('wikiaEmptyAd', function () {
-			var fallbackBid;
+			var fallbackBid,
+				offerEvent = 'wikiaInViewportWithoutOffer';
 
 			if (fallbackAdRequested) {
 				return;
 			}
 
+			hasDirectAd = false;
 			fallbackBid = prebid.getWinningVideoBidBySlotName(params.slotName, fallbackBidders);
 			if (fallbackBid) {
 				fallbackAdRequested = true;
+
+				offerEvent = 'wikiaInViewportWithFallbackBid';
 				videoSettings.setMoatTracking(false);
+
 				video.reload({
 					height: params.height,
 					width: params.width,
@@ -87,6 +109,8 @@ define('ext.wikia.adEngine.template.porvata', [
 					params.blockOutOfViewportPausing = params.fallbackBidBlockOutOfViewportPausing;
 				}
 			}
+
+			dispatchEventWhenInViewport(video, offerEvent);
 		});
 	}
 

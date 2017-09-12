@@ -40,6 +40,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 				);
 			}
 
+			dispatchEvent('wikiaAdsManagerLoaded');
 			log('AdsManager loaded', log.levels.debug, logGroup);
 		}
 
