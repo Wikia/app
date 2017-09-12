@@ -87,7 +87,7 @@ class ApiService {
 	 *
 	 * @return string HTTP domain
 	 */
-	private static function getHostByDbName( string $dbName ) {
+	private static function getHostByDbName( string $dbName ): string {
 		global $wgDevelEnvironment, $wgDevDomain;
 
 		/**
