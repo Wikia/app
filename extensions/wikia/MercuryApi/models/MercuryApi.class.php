@@ -120,7 +120,7 @@ class MercuryApi {
 		       $wgDefaultSkin, $wgDisableAnonymousEditing, $wgDisableAnonymousUploadForMercury,
 		       $wgDisableMobileSectionEditor, $wgEnableCommunityData, $wgEnableDiscussions,
 		       $wgEnableDiscussionsImageUpload, $wgEnableNewAuth, $wgLanguageCode, $wgSitename,
-		       $wgWikiDirectedAtChildrenByFounder, $wgWikiDirectedAtChildrenByStaff;
+		       $wgWikiDirectedAtChildrenByFounder, $wgWikiDirectedAtChildrenByStaff, $wgEnableOptimizelyForMobileWiki;
 
 		return [
 			'appleTouchIcon' => Wikia::getWikiLogoMetadata(),
@@ -135,6 +135,7 @@ class MercuryApi {
 			'enableDiscussions' => $wgEnableDiscussions,
 			'enableDiscussionsImageUpload' => $wgEnableDiscussionsImageUpload,
 			'enableNewAuth' => $wgEnableNewAuth,
+			'enableOptimizelyForMobileWiki' => $wgEnableOptimizelyForMobileWiki,
 			'favicon' => Wikia::getFaviconFullUrl(),
 			'homepage' => $this->getHomepageUrl(),
 			'id' => (int) $wgCityId,
