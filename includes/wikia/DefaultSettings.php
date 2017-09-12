@@ -787,7 +787,7 @@ $wgMaxThumbnailArea = 0.9e7;
 $wgWikiaMaxNameChars = 50;
 
 /**
- * If this is set to true, then no externals (ads, spotlights, beacons such as google analytics and quantcast)
+ * If this is set to true, then no externals (ads, beacons such as google analytics and quantcast)
  * will be used.  This is used to help us get a good baseline for testing performance of in-house stuff only.
  *
  * To change this value, add noexternals=1 to the URL.
@@ -1893,19 +1893,6 @@ $wgEnableHostnameInHtmlTitle = true;
  * Use template types from Template Classification Service in MW context
  */
 include_once("$IP/includes/wikia/parser/templatetypes/TemplateTypes.setup.php");
-
-/**
- * @name $wgEnableReviveSpotlights
- * Enables Revive Spotlights
- */
-$wgEnableReviveSpotlights = true;
-
-/**
- * @name $wgReviveSpotlightsCountries
- * Enables Revive Spotlights in these countries (given wgEnableReviveSpotlights is also true).
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgReviveSpotlightsCountries = null;
 
 /**
  * Enable SourcePoint recovery
