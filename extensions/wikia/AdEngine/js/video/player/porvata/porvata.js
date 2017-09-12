@@ -112,6 +112,8 @@ define('ext.wikia.adEngine.video.player.porvata', [
 					if (!viewportListener) {
 						viewportListener = viewportObserver.addListener(params.container, inViewportCallback);
 					}
+
+					tryEnablingFloating(video, inViewportCallback);
 				});
 				video.addEventListener('resume', function () {
 					video.ima.dispatchEvent('wikiaAdPlay');
@@ -132,8 +134,6 @@ define('ext.wikia.adEngine.video.player.porvata', [
 				}
 
 				viewportListener = viewportObserver.addListener(params.container, inViewportCallback);
-
-				tryEnablingFloating(video, inViewportCallback);
 
 				return video;
 			});
