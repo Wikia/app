@@ -47,11 +47,11 @@ class ApiService {
 	 * @param string $dbName database name
 	 * @param array $params API query parameters
 	 * @param string $endpoint (api.php or wikia.php, generally)
-	 * @param boolean $setUser
+	 * @param boolean|array $setUser
 	 *
 	 * @return mixed API response
 	 */
-	static function foreignCall( string $dbName, Array $params, string $endpoint = self::API, bool $setUser = false ) {
+	static function foreignCall( string $dbName, Array $params, string $endpoint = self::API, $setUser = false ) {
 		$hostName = self::getHostByDbName( $dbName );
 
 		// If hostName is empty, this would make a request to the current host.
