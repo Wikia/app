@@ -101,6 +101,19 @@ class AdEngine2Hooks {
 	}
 
 	/**
+	 * Register "instant" global JS
+	 *
+	 * @param array $vars
+	 *
+	 * @return bool
+	 */
+	public static function onInstantGlobalsGetNewsAndStoriesVariables( array &$vars ) {
+		$vars[] = 'wgAdDriverNewsAndStoriesSrcKeyValueCountries';
+
+		return true;
+	}
+
+	/**
 	 * Register ad-related vars on top
 	 *
 	 * @param array $vars
