@@ -57,7 +57,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 							'href' => $this->mainPageUrl,
 							'image-data' => [
 								'type' => 'image-external',
-								'url' => $this->settings->getWordmarkUrl(),
+								'url' => $this->themeSettings->getWordmarkUrl(),
 								'width' => $file->width,
 								'height' => $file->height
 							],
