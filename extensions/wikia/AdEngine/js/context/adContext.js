@@ -282,11 +282,11 @@ define('ext.wikia.adEngine.adContext', [
 	}
 
 	function get(path) {
-		var isInputVariableCorrect = path === undefined || path === '',
+		var isPathValid = path !== undefined && path !== '',
 			nextElement = getContext(),
 			nodes = (path || '').split('.');
 
-		while (!isInputVariableCorrect && nodes.length > 0 && typeof nextElement === 'object') {
+		while (isPathValid && nodes.length > 0 && typeof nextElement === 'object') {
 			nextElement = nextElement[nodes.shift()];
 		}
 

@@ -47,6 +47,15 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 		return aspectRatio >= 1 || !isNumeric(aspectRatio) ? adSizes.horizontal : adSizes.vertical;
 	}
 
+	function getAdUnit(options, slotParams) {
+		if (!options.adUnit && adContext.get('opts.megaAdUnitBuilderEnabled')) {
+			// TODO: remove it after merge & release ADEN-5825 mobile-wiki, this is cache related backward compatibility
+			options.adUnit = adUnitBuilder.build(slotParams.pos, slotParams.src);
+		}
+
+		return (options.adUnit || adUnitBuilder.build(slotParams.pos, slotParams.src));
+	}
+
 	function build(aspectRatio, slotParams, options) {
 		options = options || {};
 		slotParams = slotParams || {};
@@ -55,18 +64,13 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 			params,
 			url;
 
-		if (!options.adUnit && adContext.get('opts.megaAdUnitBuilderEnabled')) {
-			// TODO: remove it after merge & release ADEN-5825 mobile-wiki, this is cache related backward compatibility
-			options.adUnit = adUnitBuilder.build(slotParams.pos, slotParams.src);
-		}
-
 		params = [
 			'output=vast',
 			'env=vp',
 			'gdfp_req=1',
 			'impl=s',
 			'unviewed_position_start=1',
-			'iu=' + (options.adUnit || adUnitBuilder.build(slotParams.pos, slotParams.src)),
+			'iu=' + getAdUnit(options, slotParams),
 			'sz=' + getSizeByAspectRatio(aspectRatio),
 			'url=' + encodeURIComponent(loc.href),
 			'description_url=' + encodeURIComponent(loc.href),
