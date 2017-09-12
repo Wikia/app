@@ -399,20 +399,27 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 	 * @param $expected
 	 * @param $wgEnableArticleFeaturedVideo
 	 * @param $wgArticleVideoFeaturedVideos
+	 * @param $wgArticleVideoFeaturedVideos2
 	 * @param $message
 	 *
 	 * @dataProvider featuredVideoDataProvider
 	 */
-	public function testFeaturedVideoInContext( $expected, $wgEnableArticleFeaturedVideo, $wgArticleVideoFeaturedVideos, $message ) {
+	public function testFeaturedVideoInContext(
+		$expected,
+		$wgEnableArticleFeaturedVideo,
+		$wgArticleVideoFeaturedVideos,
+		$wgArticleVideoFeaturedVideos2,
+		$message
+	) {
 		$this->mockGlobalVariable( 'wgEnableArticleFeaturedVideo', $wgEnableArticleFeaturedVideo );
 		$this->mockGlobalVariable( 'wgArticleVideoFeaturedVideos', $wgArticleVideoFeaturedVideos );
+		$this->mockGlobalVariable( 'wgArticleVideoFeaturedVideos2', $wgArticleVideoFeaturedVideos2 );
 		$titleMock = $this->getMockBuilder( 'Title' )
 			->disableOriginalConstructor()
 			->setMethods( [ 'getPrefixedDBkey' ] )
 			->getMock();
 		$titleMock->method( 'getPrefixedDBkey' )
 			->willReturn( 'test' );
-
 
 		$adContextService = new AdEngine2ContextService();
 		$result = $adContextService->getContext( $titleMock, 'test' );
@@ -426,10 +433,14 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 
 	public function featuredVideoDataProvider() {
 		return [
-			// hasFeaturedVideo result, wgEnableArticleFeaturedVideo, wgArticleVideoFeaturedVideos, message
-			[ false, false, [], 'hasFeaturedVideo is set when extension disabled' ],
-			[ false, true, [], 'hasFeaturedVideo is set when no data available' ],
-			[ false, true, [ 'test' => [] ], 'hasFeaturedVideo is set when data missing' ],
+			// hasFeaturedVideo result,
+			// wgEnableArticleFeaturedVideo,
+			// wgArticleVideoFeaturedVideos,
+			// wgArticleVideoFeaturedVideos2,
+			// message
+			[ false, false, [], [], 'hasFeaturedVideo is set when extension disabled' ],
+			[ false, true, [], [], 'hasFeaturedVideo is set when no data available' ],
+			[ false, true, [ 'test' => [] ], [], 'hasFeaturedVideo is set when data missing' ],
 			[ true, true, [
 				'test' => [
 					'time' => '0:00',
@@ -437,7 +448,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 					'videoId' => 'aksdjlfkjsdlf',
 					'thumbnailUrl' => 'http://img.com'
 			]
-			], 'hasFeaturedVideo is not set when correct data available' ],
+			], [], 'hasFeaturedVideo is not set when correct data available' ],
 			[ false, true, [
 				'wrong_article_name' => [
 					'time' => '0:00',
@@ -445,7 +456,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 					'videoId' => 'aksdjlfkjsdlf',
 					'thumbnailUrl' => 'http://img.com'
 				]
-			], 'hasFeaturedVideo is set when data missing for title' ],
+			], [], 'hasFeaturedVideo is set when data missing for title' ],
 			[ false, false, [
 				'test' => [
 					'time' => '0:00',
@@ -453,7 +464,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 					'videoId' => 'aksdjlfkjsdlf',
 					'thumbnailUrl' => 'http://img.com'
 				]
-			], 'hasFeaturedVideo is set when data is set but extension is disabled' ],
+			], [], 'hasFeaturedVideo is set when data is set but extension is disabled' ],
 		];
 	}
 }

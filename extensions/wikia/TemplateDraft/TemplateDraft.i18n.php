@@ -136,7 +136,7 @@ $2
 
 [{{fullurl:{{ns:Template}}:{{PAGENAME}}}}?action=purge Haz clic aquí para renovar la previsualización anterior]',
 	'templatedraft-module-editintro-please-convert' => 'Podemos generar un borrador de tu infobox con nuestro nuevo marcador. Solo haz clic en $1.',
-	'templatedraft-module-view-parent' => 'ver wikitext de la plantilla principal',
+	'templatedraft-module-view-parent' => 'ver wikitexto de la plantilla principal',
 	'templatedraft-module-help' => 'marcador de infobox',
 	'templatedraft-invalid-template' => 'El nombre de la plantilla es inválido.',
 	'templatedraft-module-approve-protected' => 'Esta plantilla está protegida. Por favor pregunta a un [[{{#Special:ListAdmins}}|administrador]] que apruebe este borrador.',
@@ -365,7 +365,7 @@ $messages['pt'] = array(
 	'templatedraft-description' => 'Extensão TemplateDraft',
 	'templatedraft-subpage' => 'Rascunho',
 	'templatedraft-editintro' => 'Aqui está uma versão preliminar de sua predefinição que foi gerada com nossa nova marcação. Revise e faça as alterações antes de salvar. Para obter mais informações, por favor veja a página de ajuda em $1 ou $2.',
-	'templatedraft-approval-no-page-error' => 'Houve um problema com a aprovação do rascunho. Este rascunho já foi aprovado ou excluído. Por favor, revise a [{{fullurl:{{ns:Template}}:{{PAGENAME}}}}? ação = história história e diferenças] para esta predefinição.',
+	'templatedraft-approval-no-page-error' => 'Houve um problema com a aprovação do rascunho. Este rascunho já foi aprovado ou excluído. Por favor, revise a [{{fullurl:{{ns:Template}}:{{PAGENAME}}}}?action=history história e diferenças] para esta predefinição.',
 	'templatedraft-approval-no-templatedraft-error' => 'Houve um problema na aprovação do rascunho. Esta página não é reconhecida como um rascunho de predefinição válido.',
 	'templatedraft-approval-success-confirmation' => 'O conteúdo dentro desta predefinição foi substituído com a versão atualizada baseada no rascunho. O modelo de rascunho foi removido.',
 	'templatedraft-approval-summary' => 'A infobox foi atualizada usando a ferramenta de migração de [[Ajuda:Infoboxes|infoboxes portáteis]]',
@@ -508,7 +508,7 @@ $2
 
 [{{fullurl:{{ns:Template}}:{{PAGENAME}}}}?action=purge 点击此处刷新上面的预览内容]',
 	'templatedraft-module-editintro-please-convert' => '我们可以用我们的新标记文件为您生成讯息框草稿，只需点击$1即可。',
-	'templatedraft-module-view-parent' => '主模版的wikitext',
+	'templatedraft-module-view-parent' => '主模版Wiki文本',
 	'templatedraft-module-help' => '讯息框标记',
 	'templatedraft-invalid-template' => '提供的模版名称无效',
 	'templatedraft-module-approve-protected' => '此模板受到保护。请询问[[Special:ListAdmins|管理员]]批准这一草稿。',
@@ -520,7 +520,7 @@ $2
 $messages['zh-hant'] = array(
 	'templatedraft-description' => '模板草稿的擴展功能',
 	'templatedraft-subpage' => '模版草稿',
-	'templatedraft-editintro' => '這是由我們的新標記檔案中生成的模板草稿。請審核和更改之後再進行保存。有關詳細資訊，請在$1查看幫助頁或閱讀$2。',
+	'templatedraft-editintro' => '這是由我們的新標記檔案中生成的模板草稿。請審核和更改之後再進行保存。有關詳細資訊，請查看$1幫助頁或閱讀$2。',
 	'templatedraft-approval-no-page-error' => '批准這個草稿出現錯誤。草稿可能已經被批准或刪除。請查看這個模板的[{{fullurl:{{ns:Template}}:{{PAGENAME}}}}?action=history 歷史記錄和差異]。',
 	'templatedraft-approval-no-templatedraft-error' => '批准這個草稿出現錯誤。 這個頁面不被視為有效的模板草稿。',
 	'templatedraft-approval-success-confirmation' => '此模板中的內容已被更新後的模板草稿版本替代。模板草稿已刪除。',

@@ -157,6 +157,8 @@ class SassUtil {
 
 	/**
 	 * Get normalized color value (RT #74057)
+	 * @param string $color
+	 * @return string
 	 */
 	public static function sanitizeColor($color) {
 		$color = trim(strtolower($color));
