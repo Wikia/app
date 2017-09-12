@@ -98,29 +98,6 @@ class RecirculationHooks {
 		}
 	}
 
-	private static function getLiftIgniterMetadataFromSiteAttributeService() {
-		return WikiaDataAccess::cache(
-			wfMemcKey( 'site-attribute-liftigniterMetadata' ),
-			3600,
-			function () {
-				global $wgCityId;
-
-				$rawData = ( new SiteAttributeService() )
-					->getAttribute( $wgCityId, 'liftigniterMetadata' );
-
-				if ( !empty( $rawData ) ) {
-					$decodedData = json_decode( $rawData, true );
-
-					if ( !empty( $decodedData ) ) {
-						return $decodedData;
-					}
-				}
-
-				return [];
-			}
-		);
-	}
-
 	private static function addLiftIgniterMetadata( OutputPage $outputPage ) {
 		global $wgDevelEnvironment, $wgLanguageCode, $wgStagingEnvironment, $wgWikiaEnvironment, $wgIsPrivateWiki, $wgCityId;
 
@@ -130,10 +107,6 @@ class RecirculationHooks {
 		$metaData = [];
 		$metaDataService = new LiftigniterMetadataService();
 		$metaDataFromService = $metaDataService->getLiMetadataForArticle( $wgCityId, $articleId );
-
-		if ( $title->isMainPage() ) {
-			$siteAttributeData = self::getLiftIgniterMetadataFromSiteAttributeService();
-		}
 
 		$metaData['language'] = $wgLanguageCode;
 
@@ -153,10 +126,6 @@ class RecirculationHooks {
 
 		if ( !$isProduction || $isPrivateWiki || $title->inNamespace( NS_FILE ) ) {
 			$metaData['noIndex'] = 'true';
-		}
-
-		if ( !empty( $siteAttributeData ) ) {
-			$metaData = array_merge( $siteAttributeData, $metaData );
 		}
 
 		$metaDataJson = json_encode( $metaData );
