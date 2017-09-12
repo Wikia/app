@@ -9,7 +9,7 @@ class InstantGlobalsApiController extends WikiaController {
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
-		$this->response->setVal( 'instantGlobals', $instantGlobals );
+		$this->response->setData( $instantGlobals );
 	}
 
 	/**
@@ -32,6 +32,6 @@ class InstantGlobalsApiController extends WikiaController {
 			}
 		}
 
-		return (object) $ret;
+		return $ret;
 	}
 }
