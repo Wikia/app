@@ -103,7 +103,7 @@ $navbar-size-for-sticky-element: 65px;
 			width: 100%;
 		}
 
-		.video-player > iframe {
+		.mobile-porvata .video-player > iframe {
 			// Hide Learn more text
 			z-index: -1;
 		}
@@ -117,7 +117,7 @@ $navbar-size-for-sticky-element: 65px;
 .bfab-template {
 	position: relative;
 
-	.video-player > iframe {
+	.mobile-porvata .video-player > iframe {
 		// Hide Learn more text
 		z-index: -1;
 	}
