@@ -141,7 +141,9 @@ class RecirculationHooks {
 			$metaData['guaranteed_impression'] = $metaDataFromService->getGuaranteedNumber();
 			$metaData['start_date'] = $metaDataFromService->getDateFrom()->format('Y-m-d H:i:s');
 			$metaData['end_date'] = $metaDataFromService->getDateTo()->format('Y-m-d H:i:s');
-			$metaData['geolocation'] = $metaDataFromService->getGeos();
+			if ( !empty( $metaDataFromService->getGeos() ) ) {
+				$metaData['geolocation'] = $metaDataFromService->getGeos();
+			}
 		}
 
 		$isProduction =
