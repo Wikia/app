@@ -609,7 +609,7 @@ class WikiRecommendations {
 			'url' => 'http://midnight-texas.wikia.com/wiki/Midnight,_Texas_Wikia',
 		]
 	];
-	
+
 	public static function getRecommendations( $contentLanguage ) {
 		global $wgWikiaEnvironment;
 
