@@ -577,18 +577,18 @@ class WikiRecommendations {
     const STAGING_RECOMMENDATIONS = [
         [
             'thumbnailUrl' => 'https://vignette.wikia-staging.nocookie.net/muppet/images/4/4b/Image001.png/revision/latest?cb=20170911141514',
-            'title' => 'Game of Thrones',
-            'url' => 'http://gameofthrones.wikia.com/wiki/Game_of_Thrones_Wiki',
+            'title' => 'Selenium',
+            'url' => 'http://selenium.wikia-staging.com',
         ],
         [
             'thumbnailUrl' => 'https://vignette.wikia-staging.nocookie.net/selenium/images/e/e2/Image009.jpg/revision/latest?cb=20170911141722',
-            'title' => 'Death Note',
-            'url' => 'http://deathnote.wikia.com/wiki/Main_Page',
+            'title' => 'Halloween',
+            'url' => 'http://halloween.wikia-staging.com',
         ],
         [
             'thumbnailUrl' => 'https://vignette.wikia-staging.nocookie.net/selenium/images/2/2e/WallPaperHD_138.jpg/revision/latest?cb=20170911141722',
-            'title' => 'Midnight Texas',
-            'url' => 'http://midnight-texas.wikia.com/wiki/Midnight,_Texas_Wikia',
+            'title' => 'Sktest123',
+            'url' => 'http://sktest123.wikia-staging.com',
         ]
     ];
 
