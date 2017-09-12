@@ -574,23 +574,41 @@ class WikiRecommendations {
 		],
 	];
 
-    const STAGING_RECOMMENDATIONS = [
-        [
-            'thumbnailUrl' => 'https://vignette.wikia-staging.nocookie.net/muppet/images/4/4b/Image001.png/revision/latest?cb=20170911141514',
-            'title' => 'Selenium',
-            'url' => 'http://selenium.wikia-staging.com',
-        ],
-        [
-            'thumbnailUrl' => 'https://vignette.wikia-staging.nocookie.net/selenium/images/e/e2/Image009.jpg/revision/latest?cb=20170911141722',
-            'title' => 'Halloween',
-            'url' => 'http://halloween.wikia-staging.com',
-        ],
-        [
-            'thumbnailUrl' => 'https://vignette.wikia-staging.nocookie.net/selenium/images/2/2e/WallPaperHD_138.jpg/revision/latest?cb=20170911141722',
-            'title' => 'Sktest123',
-            'url' => 'http://sktest123.wikia-staging.com',
-        ]
-    ];
+	const STAGING_RECOMMENDATIONS = [
+		[
+			'thumbnailUrl' => 'https://vignette.wikia-staging.nocookie.net/muppet/images/4/4b/Image001.png/revision/latest?cb=20170911141514',
+			'title' => 'Selenium',
+			'url' => 'http://selenium.wikia-staging.com',
+		],
+		[
+			'thumbnailUrl' => 'https://vignette.wikia-staging.nocookie.net/selenium/images/e/e2/Image009.jpg/revision/latest?cb=20170911141722',
+			'title' => 'Halloween',
+			'url' => 'http://halloween.wikia-staging.com',
+		],
+		[
+			'thumbnailUrl' => 'https://vignette.wikia-staging.nocookie.net/selenium/images/2/2e/WallPaperHD_138.jpg/revision/latest?cb=20170911141722',
+			'title' => 'Sktest123',
+			'url' => 'http://sktest123.wikia-staging.com',
+		]
+	];
+
+	const DEV_RECOMMENDATIONS = [
+		[
+			'thumbnailUrl' => 'https://vignette.wikia-dev.pl/gameofthrones/images/3/3a/WhiteWalker_%28Hardhome%29.jpg/revision/latest?cb=20150601151110',
+			'title' => 'Game of Thrones',
+			'url' => 'http://gameofthrones.wikia.com/wiki/Game_of_Thrones_Wiki',
+		],
+		[
+			'thumbnailUrl' => 'https://vignette.wikia-dev.pl/deathnote/images/1/1d/Light_Holding_Death_Note.png/revision/latest?cb=20120525180447',
+			'title' => 'Death Note',
+			'url' => 'http://deathnote.wikia.com/wiki/Main_Page',
+		],
+		[
+			'thumbnailUrl' => 'https://vignette.wikia-dev.pl/midnight-texas/images/b/b0/Blinded_by_the_Light_106-01-Rev-Sheehan-Davy-Deputy.jpg/revision/latest?cb=20170820185915',
+			'title' => 'Midnight Texas',
+			'url' => 'http://midnight-texas.wikia.com/wiki/Midnight,_Texas_Wikia',
+		]
+	];
 
 	const DEV_RECOMMENDATIONS = [
 		[
@@ -613,17 +631,17 @@ class WikiRecommendations {
 	public static function getRecommendations( $contentLanguage ) {
 		global $wgWikiaEnvironment;
 
-        if ( $wgWikiaEnvironment == WIKIA_ENV_STAGING ){
-            $recommendations = self::STAGING_RECOMMENDATIONS;
-        } elseif ( $wgWikiaEnvironment == WIKIA_ENV_DEV ) {
-            $recommendations = self::DEV_RECOMMENDATIONS;
+		if ( $wgWikiaEnvironment === WIKIA_ENV_STAGING ){
+			$recommendations = self::STAGING_RECOMMENDATIONS;
+		} elseif ( $wgWikiaEnvironment === WIKIA_ENV_DEV ) {
+			$recommendations = self::DEV_RECOMMENDATIONS;
 		} else {
-            $recommendations = self::RECOMMENDATIONS['en'];
+			$recommendations = self::RECOMMENDATIONS['en'];
 
-            if ( array_key_exists( $contentLanguage, self::RECOMMENDATIONS ) ) {
-                $recommendations = self::RECOMMENDATIONS[$contentLanguage];
-            }
-            shuffle( $recommendations );
+			if ( array_key_exists( $contentLanguage, self::RECOMMENDATIONS ) ) {
+				$recommendations = self::RECOMMENDATIONS[$contentLanguage];
+		}
+			shuffle( $recommendations );
 		}
 
 		$recommendations = array_slice( $recommendations, 0, self::WIKI_RECOMMENDATIONS_LIMIT );
