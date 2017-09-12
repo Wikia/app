@@ -32,6 +32,7 @@ class ArticleVideoController extends WikiaController {
 
 	public function labels() {
 		$videoId = $this->getVal( 'videoId', null );
+
 		if ( empty( $videoId ) ) {
 			throw new MissingParameterApiException( 'videoId' );
 		}
