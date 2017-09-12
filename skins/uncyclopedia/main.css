@@ -1837,14 +1837,6 @@ p.mw-ipb-conveniencelinks {
   display: none !important;
 }
 
-/* Spotlights */
-#spotlight_container {
-	width: 100%;
-	text-align: center;
-	padding-left: 12.2em;
-	background: none;
-}
-
 /* WW-93: ComScore tag in footer for uncyclo wikis */
 #uncyc-branding {
 	border: 1px solid #000;
