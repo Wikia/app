@@ -1137,16 +1137,6 @@ $config['filepage_scss_wikiamobile'] = [
 	],
 ];
 
-$config['relatedpages_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'monobook', 'wikiamobile' ],
-	'assets' => [
-		'//resources/wikia/libraries/sloth/sloth.js',
-		'//resources/wikia/libraries/mustache/mustache.js',
-		'//extensions/wikia/RelatedPages/js/RelatedPages.js',
-	],
-];
-
 $config['relatedpages_wikiamobile_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'wikiamobile' ],
