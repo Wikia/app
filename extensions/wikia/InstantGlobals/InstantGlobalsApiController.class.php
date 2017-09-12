@@ -5,7 +5,7 @@ class InstantGlobalsApiController extends WikiaController {
 	 * @return array
 	 */
 	public function getNewsAndStoriesVariables() {
-		$instantGlobals = $this->getVariablesValues();
+		$instantGlobals = $this->getNewsAndStoriesVariablesValues();
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
@@ -17,7 +17,7 @@ class InstantGlobalsApiController extends WikiaController {
 	 *
 	 * @return object key / value list variables
 	 */
-	private function getVariablesValues() {
+	private function getNewsAndStoriesVariablesValues() {
 		$ret = [];
 		$variables = [];
 
