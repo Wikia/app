@@ -613,16 +613,16 @@ class WikiRecommendations {
 	public static function getRecommendations( $contentLanguage ) {
 		global $wgDevelEnvironment, $wgWikiaEnvironment;
 
-		if ( empty( $wgDevelEnvironment ) ) {
+        if ($wgWikiaEnvironment == WIKIA_ENV_STAGING){
+            $recommendations = self::STAGING_RECOMMENDATIONS;
+        } elseif ( empty( $wgDevelEnvironment ) ) {
 			$recommendations = self::RECOMMENDATIONS['en'];
 
 			if ( array_key_exists( $contentLanguage, self::RECOMMENDATIONS ) ) {
 				$recommendations = self::RECOMMENDATIONS[$contentLanguage];
 			}
 			shuffle( $recommendations );
-		} elseif ($wgWikiaEnvironment == WIKIA_ENV_STAGING){
-            $recommendations = self::STAGING_RECOMMENDATIONS;
-        } else {
+		} else {
 			$recommendations = self::DEV_RECOMMENDATIONS;
 		}
 
