@@ -3,7 +3,6 @@
  * The AMD module to hold all the context needed for the client-side scripts to run.
  */
 define('ext.wikia.adEngine.adContext', [
-	'ext.wikia.adEngine.adLogicPageViewCounter',
 	'wikia.browserDetect',
 	'wikia.cookies',
 	'wikia.document',
@@ -12,7 +11,7 @@ define('ext.wikia.adEngine.adContext', [
 	'ext.wikia.adEngine.utils.sampler',
 	'wikia.window',
 	'wikia.querystring'
-], function (pvCounter, browserDetect, cookies, doc, geo, instantGlobals, sampler, w, Querystring) {
+], function (browserDetect, cookies, doc, geo, instantGlobals, sampler, w, Querystring) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
@@ -102,7 +101,7 @@ define('ext.wikia.adEngine.adContext', [
 	function updateAdContextBidders(context) {
 		var hasFeaturedVideo = context.targeting.hasFeaturedVideo;
 
-		context.bidders.fastlane = geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlanePrebidCountries);
+		context.bidders.rubiconDisplay = geo.isProperGeo(instantGlobals.wgAdDriverRubiconDisplayPrebidCountries);
 
 		context.bidders.veles = geo.isProperGeo(instantGlobals.wgAdDriverVelesBidderCountries) &&
 			!hasFeaturedVideo;
@@ -163,6 +162,7 @@ define('ext.wikia.adEngine.adContext', [
 	function setContext(newContext) {
 		var i,
 			len,
+			fvAdsFrequency = instantGlobals.wgAdDriverPlayAdsOnNextFVFrequency,
 			noExternals = w.wgNoExternals || isUrlParamSet('noexternals');
 
 		// Note: consider copying the value, not the reference
@@ -217,7 +217,7 @@ define('ext.wikia.adEngine.adContext', [
 		if (context.providers.rubiconFastlane) {
 			context.providers.rubiconFastlane = geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) &&
 				geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneProviderCountries) &&
-				!context.bidders.fastlane; // disable non-prebid implementation if Fastlane adapter is active
+				!context.bidders.rubiconDisplay; // disable non-prebid implementation if Rubicon (Prebid) adapter is active
 		}
 
 		context.opts.enableRemnantNewAdUnit = geo.isProperGeo(instantGlobals.wgAdDriverMEGACountries);
@@ -258,6 +258,13 @@ define('ext.wikia.adEngine.adContext', [
 
 		context.opts.premiumAdLayoutRubiconFastlaneTagsEnabled = context.opts.premiumAdLayoutEnabled &&
 			geo.isProperGeo(instantGlobals.wgAdDriverPremiumAdLayoutRubiconFastlaneTagsCountries);
+		context.opts.premiumAdLayoutAppNexusTagsEnabled = context.opts.premiumAdLayoutEnabled &&
+			geo.isProperGeo(instantGlobals.wgAdDriverPremiumAdLayoutAppNexusTagsCountries);
+
+		context.opts.isFVMidrollEnabled = geo.isProperGeo(instantGlobals.wgAdDriverFVMidrollCountries);
+		context.opts.isFVPostrollEnabled = geo.isProperGeo(instantGlobals.wgAdDriverFVPostrollCountries);
+		context.opts.replayAdsForFV = geo.isProperGeo(instantGlobals.wgAdDriverPlayAdsOnNextFVCountries);
+		context.opts.fvAdsFrequency = fvAdsFrequency !== undefined ? fvAdsFrequency : 3;
 
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
@@ -275,10 +282,6 @@ define('ext.wikia.adEngine.adContext', [
 	}
 
 	setContext(w.ads ? w.ads.context : {});
-
-	if (context.targeting.skin && context.targeting.skin !== 'mercury') {
-		pvCounter.increment();
-	}
 
 	return {
 		addCallback: addCallback,

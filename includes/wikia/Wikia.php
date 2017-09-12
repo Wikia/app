@@ -1188,6 +1188,13 @@ class Wikia {
 			}
 		}
 
+		// purge Special:RecentChanges too (SUS-2595)
+		$rcTitle = SpecialPage::getTitleFor('RecentChanges');
+
+		$urls[] = $rcTitle->getInternalURL();
+		$urls[] = $rcTitle->getInternalURL('feed=rss');
+		$urls[] = $rcTitle->getInternalURL('feed=atom');
+
 		wfProfileOut(__METHOD__);
 		return true;
 	}
@@ -2001,10 +2008,8 @@ class Wikia {
 		$title = $out->getTitle();
 
 		if ( !$wgUseSiteJs && $title->isJsPage() ) {
-			\BannerNotificationsController::addConfirmation(
-				wfMessage( 'usesitejs-disabled-warning' )->escaped(),
-				\BannerNotificationsController::CONFIRMATION_NOTIFY
-			);
+			\BannerNotificationsController::addConfirmation( wfMessage( 'usesitejs-disabled-warning' )->parse(),
+				\BannerNotificationsController::CONFIRMATION_NOTIFY );
 		}
 
 		return true;

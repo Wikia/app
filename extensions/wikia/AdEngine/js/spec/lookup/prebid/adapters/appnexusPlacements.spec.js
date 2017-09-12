@@ -11,165 +11,104 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', functio
 		context: {
 			targeting: {
 				mappedVerticalName: ''
+			},
+			opts: {
+				premiumAdLayoutEnabled: true,
+				premiumAdLayoutAppNexusTagsEnabled: false
 			}
 		},
-		log: function() {},
-		instantGlobals: {
-			dev: {
-				wgAdDriverAppNexusBidderPlacementsConfig: {
-					mercury: {
-						entertainment: "111111",
-						gaming: "111112",
-						lifestyle: "111113",
-						other: "111114"
-					},
-					oasis: {
-						entertainment: {
-							atf: '899999',
-							btf: '899998',
-							hivi: '899997'
-						},
-						gaming: {
-							atf: '899996',
-							btf: '899995',
-							hivi: '899994'
-						},
-						lifestyle: {
-							atf: '899993',
-							btf: '899992',
-							hivi: '899991'
-						},
-						other: {
-							atf: '899990',
-							btf: '899989',
-							hivi: '899988'
-						},
-						recovery: {
-							atf: '899987',
-							btf: '899986',
-							hivi: '899985'
-						}
-					}
-				}
-			},
-			prod: {
-				wgAdDriverAppNexusBidderPlacementsConfig: {
-					mercury: {
-						entertainment: '222222',
-						gaming: '222223',
-						lifestyle: '222224',
-						other: '222225'
-					},
-					oasis: {
-						entertainment: {
-							atf: '999999',
-							btf: '999998',
-							hivi: '999997'
-						},
-						gaming: {
-							atf: '999996',
-							btf: '999995',
-							hivi: '999994'
-						},
-						lifestyle: {
-							atf: '999993',
-							btf: '999992',
-							hivi: '999991'
-						},
-						other: {
-							atf: '999990',
-							btf: '999989',
-							hivi: '999988'
-						},
-						recovery: {
-							atf: '999987',
-							btf: '999986',
-							hivi: '999985'
-						}
-					}
-			}
-		}
-	}
+		log: function() {}
 	}, testCases = [
 		{
-			vertical: 'lifestyle',
+			vertical: 'life',
 			skin: 'mercury',
-			env: 'dev',
-			expected: '111113'
+			expected: 'string',
+			ANpalEnabled: false
 		}, {
-			vertical: 'lifestyle',
+			vertical: 'life',
 			skin: 'oasis',
-			env: 'dev',
 			pos: 'atf',
-			expected: '899993'
+			expected: 'string',
+			ANpalEnabled: false
 		}, {
-			vertical: 'entertainment',
+			vertical: 'ent',
 			skin: 'mercury',
-			env: 'prod',
-			expected: '222222'
+			expected: 'string',
+			ANpalEnabled: false
 		}, {
 			vertical: 'other',
 			skin: 'mercury',
-			env: 'prod',
-			expected: '222225'
+			expected: 'string',
+			ANpalEnabled: false
 		}, {
 			vertical: 'gaming',
 			skin: 'oasis',
-			env: 'prod',
 			pos: 'atf',
-			expected: '999996'
+			expected: 'string',
+			ANpalEnabled: false
 		}, {
 			vertical: 'gaming',
 			skin: 'oasis',
-			env: 'prod',
 			pos: 'btf',
-			expected: '999995'
+			expected: 'string',
+			ANpalEnabled: false
 		}, {
-			vertical: 'entertainment',
+			vertical: 'ent',
 			skin: 'oasis',
-			env: 'prod',
 			pos: 'btf',
 			isRecovering: false,
-			expected: '999998'
+			expected: 'string',
+			ANpalEnabled: false
 		}, {
-			vertical: 'entertainment',
+			vertical: 'ent',
 			skin: 'oasis',
-			env: 'prod',
 			pos: 'atf',
 			isRecovering: true,
-			expected: '999987'
+			expected: 'string',
+			ANpalEnabled: false
 		}, {
-			vertical: 'lifestyle',
+			vertical: 'life',
 			skin: 'oasis',
-			env: 'prod',
 			pos: 'hivi',
 			isRecovering: true,
-			expected: '999985'
-		},{
+			expected: 'string',
+			ANpalEnabled: false
+		}, {
 			vertical: 'NOT EXISTING',
 			skin: 'oasis',
-			env: 'prod',
 			pos: 'btf',
-			expected: undefined
+			expected: 'undefined',
+			ANpalEnabled: false
+		}, {
+			skin: 'oasis',
+			pos: 'atf',
+			expected: 'string',
+			ANpalEnabled: true
 		}
 	];
 
-	function getModule(vertical, env) {
+	function getModule(vertical, ANpalEnabled) {
 		mocks.context.targeting.mappedVerticalName = vertical;
+		mocks.context.opts.premiumAdLayoutAppNexusTagsEnabled = ANpalEnabled;
 
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements'](
 			mocks.adContext,
-			mocks.instantGlobals[env],
 			mocks.log
 		);
 	}
 
 	testCases.forEach(function (testCase) {
-		it('returns expected placementId for ' + testCase.skin + ':' + testCase.vertical + ':' + testCase.env, function () {
-			var appNexusPlacements = getModule(testCase.vertical, testCase.env),
-				result = appNexusPlacements.getPlacement(testCase.skin, testCase.pos, testCase.isRecovering);
+		var testCaseName = [
+				testCase.skin,
+				testCase.ANpalEnabled ? 'PAL' : 'non-PAL',
+				testCase.ANpalEnabled ? 'no-vertical' : testCase.vertical
+			];
 
-			expect(result).toEqual(testCase.expected);
+		it('returns expected placementId for ' + testCaseName.join(':'), function () {
+			var appNexusPlacements = getModule(testCase.vertical, testCase.ANpalEnabled),
+				resultType = typeof appNexusPlacements.getPlacement(testCase.skin, testCase.pos, testCase.isRecovering);
+
+			expect(resultType).toEqual(testCase.expected);
 		});
 	});
 })

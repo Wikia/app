@@ -3458,10 +3458,10 @@ class Title {
 
 
 	/**
-	 * Get a list of URLs to purge from the Squid cache when this
+	 * Get a list of URLs to purge from the CDN cache when this
 	 * page changes
 	 *
-	 * @return Array of String the URLs
+	 * @return string[] Array of String the URLs
 	 */
 	public function getSquidURLs() {
 		global $wgContLang;

@@ -1600,7 +1600,7 @@ abstract class ApiBase extends ContextSource {
 				continue;
 			}
 
-			$logContext[$paramName] = $paramValue;
+			$logContext[$paramName] = json_encode( $paramValue );
 		}
 
 		$logContext['module_name'] = $this->getModuleName();

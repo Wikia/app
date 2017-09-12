@@ -14,7 +14,12 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', function () {
 				return map;
 			}
 		},
-		log: function () {}
+		log: function () {},
+		instartLogic: {
+			isBlocking: function() {
+				return false;
+			}
+		}
 	};
 
 	mocks.log.levels = {};
@@ -23,6 +28,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', function () {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.rubicon'](
 			mocks.adContext,
 			mocks.slotsContext,
+			mocks.instartLogic,
 			mocks.log
 		);
 	}

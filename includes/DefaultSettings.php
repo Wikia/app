@@ -3098,15 +3098,6 @@ $wgArticleCountMethod = null;
 $wgUseCommaCount = false;
 
 /**
- * wgHitcounterUpdateFreq sets how often page counters should be updated, higher
- * values are easier on the database. A value of 1 causes the counters to be
- * updated on every hit, any higher value n cause them to update *on average*
- * every n hits. Should be set to either 1 or something largish, eg 1000, for
- * maximum efficiency.
- */
-$wgHitcounterUpdateFreq = 1;
-
-/**
  * How many days user must be idle before he is considered inactive. Will affect
  * the number shown on Special:Statistics and Special:ActiveUsers special page.
  * You might want to leave this as the default value, to provide comparable
@@ -3941,11 +3932,6 @@ $wgStatsMethod = 'cache';
  * will be used.
  */
 $wgAggregateStatsID = false;
-
-/** Whereas to count the number of time an article is viewed.
- * Does not work if pages are cached (for example with squid).
- */
-$wgDisableCounters = false;
 
 /**
  * Set this to an integer to only do synchronous site_stats updates

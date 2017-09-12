@@ -45,7 +45,7 @@ function getLiftIgniterGlobalContext() {
 $p("init", "l9ehhrb6mtv75bp2", {
     config: {
         sdk: {
-            queryServer: "//query.fandommetrics.com"
+            queryServer: "//query.fandommetrics.com",
         },
         activity: {
             activityServer: "//query.fandommetrics.com"
@@ -57,4 +57,4 @@ $p("init", "l9ehhrb6mtv75bp2", {
     }
 });
 $p("send", "pageview");
-$p("setRequestFields", ["rank", "thumbnail", "title", "url", "presented_by", "author"]);
+$p("setRequestFields", ["rank", "thumbnail", "title", "url", "presented_by", "author", "site_name", "type"]);

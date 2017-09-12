@@ -28,6 +28,9 @@ describe('ext.wikia.adEngine.video.player.ui.volumeControl', function () {
 			log: noop,
 			video: {
 				addEventListener: noop,
+				ima: {
+					dispatchEvent: noop
+				},
 				container: {
 					appendChild: function (element) {
 						mocks.video.volumeControl = element;

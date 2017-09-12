@@ -5260,8 +5260,8 @@ $messages['pl'] = array(
 	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
 	'group-fandom-editor' => 'News and Stories Wordpress access',
 	'group-fandom-editor-member' => 'News and Stories Wordpress access',
-	'group-global-discussions-moderator' => 'Globalny moderator Dyskusji',
-	'group-global-discussions-moderator-member' => 'Globalny moderator Dyskusji',
+	'group-global-discussions-moderator' => 'Globalni moderatorzy Dyskusji',
+	'group-global-discussions-moderator-member' => 'globalny moderator Dyskusji',
 );
 
 $messages['pms'] = array(

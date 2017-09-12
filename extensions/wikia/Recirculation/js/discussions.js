@@ -14,7 +14,8 @@ define('ext.wikia.recirculation.discussions', [
 			format: 'html',
 			type: 'get',
 			data: {
-				cityId: w.wgCityId
+				cityId: w.wgCityId,
+				limit: 5
 			},
 			callback: function (response) {
 				var $WikiaArticleFooter = $('#WikiaArticleFooter'),

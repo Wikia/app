@@ -41,7 +41,7 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 		};
 
 		// OTHER: 'INCONTENT_PLAYER'
-		return findSlotGroup(map, slotName) || 'OTHER';
+		return findSlotGroup(map, slotName.toUpperCase()) || 'OTHER';
 	}
 
 	function getDevice(params) {

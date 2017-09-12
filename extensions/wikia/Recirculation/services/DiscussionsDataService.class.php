@@ -3,16 +3,17 @@
 use Wikia\Service\Gateway\ConsulUrlProvider;
 
 class DiscussionsDataService {
-	const DISCUSSIONS_API_LIMIT = 5;
-	const DISCUSSIONS_API_SORT_KEY = 'trending';
+	const DISCUSSIONS_API_SORT_KEY_TRENDING = 'trending';
+	const DISCUSSIONS_API_SORT_KEY_LATEST = 'creation_date';
 	const DISCUSSIONS_API_SORT_DIRECTION = 'descending';
 	const DISCUSSIONS_API_VIEWABLE_ONLY = true;
 
 	const MCACHE_VER = '1.2';
 
-	private $cityId;
+	private $cityId, $limit;
 
-	public function __construct( $cityId ) {
+	public function __construct( $cityId, $limit ) {
+		$this->limit = $limit;
 		$discussionsAlias = WikiFactory::getVarValueByName( 'wgRecirculationDiscussionsAlias', $cityId );
 
 		if ( !empty( $discussionsAlias ) ) {
@@ -24,16 +25,14 @@ class DiscussionsDataService {
 		$this->server = WikiFactory::getVarValueByName( 'wgServer', $this->cityId );
 	}
 
-	public function getData( $type ) {
+	public function getData( $type, $sortKey = self::DISCUSSIONS_API_SORT_KEY_TRENDING ) {
 		$memcKey = wfMemcKey( __METHOD__, $this->cityId, $type, self::MCACHE_VER );
 
-		$rawData = WikiaDataAccess::cache(
-			$memcKey,
-			WikiaResponse::CACHE_VERY_SHORT,
-			function() {
-				return $this->apiRequest();
-			}
-		);
+		$rawData =
+			WikiaDataAccess::cache( $memcKey, WikiaResponse::CACHE_VERY_SHORT,
+				function () use ( $sortKey ) {
+					return $this->apiRequest( $sortKey );
+				} );
 
 		if ( $type === 'posts' ) {
 			$data = $this->getPosts( $rawData );
@@ -77,10 +76,13 @@ class DiscussionsDataService {
 	/**
 	 * Make an API request to parsely to gather posts
 	 * @param string $type
+	 * @param string $sortKey
 	 * @return an array of posts
 	 */
-	private function apiRequest() {
-		$options = [];
+	private function apiRequest( $sortKey ) {
+		$options = [
+			'sortKey' => $sortKey,
+		];
 		$endpoint = $this->cityId . '/threads';
 
 		$url = $this->buildUrl( $endpoint, $options );
@@ -97,8 +99,8 @@ class DiscussionsDataService {
 	 */
 	private function buildUrl( $endpoint, $options ) {
 		$defaultParams = [
-			'limit' => self::DISCUSSIONS_API_LIMIT,
-			'sortKey' => self::DISCUSSIONS_API_SORT_KEY,
+			'limit' => $this->limit,
+			'sortKey' => self::DISCUSSIONS_API_SORT_KEY_TRENDING,
 			'sortDirection' => self::DISCUSSIONS_API_SORT_DIRECTION,
 			'viewableOnly' => self::DISCUSSIONS_API_VIEWABLE_ONLY,
 		];
@@ -116,14 +118,20 @@ class DiscussionsDataService {
 
 	private function buildPost( $rawPost, $index ) {
 		$meta = [];
-		$meta['authorAvatarUrl'] = $rawPost['createdBy']['avatarUrl'];
 		$meta['upvoteCount'] = $rawPost['upvoteCount'];
 		$meta['postCount'] = $rawPost['postCount'];
+		$meta['forumName'] = $rawPost['forumName'];
+
+		$postTitle = $rawPost['title'];
+
+		if ( empty( $rawPost['title'] ) ) {
+			$postTitle = wfShortenText( $rawPost['rawContent'], 70 );
+		}
 
 		return new RecirculationContent( [
 			'url' => $this->server . '/d/p/' . $rawPost['id'],
 			'index' => $index,
-			'title' =>  wfShortenText( $rawPost['rawContent'], 120 ),
+			'title' =>  $postTitle,
 			'publishDate' => wfTimestamp( TS_ISO_8601, $rawPost['creationDate']['epochSecond'] ),
 			'author' => $rawPost['createdBy']['name'],
 			'source' => 'discussions',

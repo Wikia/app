@@ -48,11 +48,10 @@ class RecirculationHooks {
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
 		global $wgNoExternals;
 
-		if ( empty( $wgNoExternals ) ) {
-			$jsAssets[] = 'recirculation_liftigniter_tracker';
-		}
-
 		if ( static::isCorrectPageType() ) {
+			if ( empty( $wgNoExternals ) ) {
+				$jsAssets[] = 'recirculation_liftigniter_tracker';
+			}
 			$jsAssets[] = 'recirculation_js';
 		}
 
@@ -69,10 +68,10 @@ class RecirculationHooks {
 
 		$showableNameSpaces = array_merge( $wg->ContentNamespaces, [ NS_FILE ] );
 
-		if ( $wg->Title->exists()
-				&& in_array( $wg->Title->getNamespace(), $showableNameSpaces )
-				&& $wg->request->getVal( 'action', 'view' ) === 'view'
-				&& $wg->request->getVal( 'diff' ) === null
+		if ( $wg->Title->exists() &&
+		     in_array( $wg->Title->getNamespace(), $showableNameSpaces ) &&
+		     $wg->request->getVal( 'action', 'view' ) === 'view' &&
+		     $wg->request->getVal( 'diff' ) === null
 		) {
 			return true;
 		} else {
@@ -80,7 +79,7 @@ class RecirculationHooks {
 		}
 	}
 
-	static public function canShowDiscussions( $cityId ) {
+	static public function canShowDiscussions( $cityId, $ignoreWgEnableRecirculationDiscussions = false ) {
 		$discussionsAlias = WikiFactory::getVarValueByName( 'wgRecirculationDiscussionsAlias', $cityId );
 
 		if ( !empty( $discussionsAlias ) ) {
@@ -90,7 +89,9 @@ class RecirculationHooks {
 		$discussionsEnabled = WikiFactory::getVarValueByName( 'wgEnableDiscussions', $cityId );
 		$recirculationDiscussionsEnabled = WikiFactory::getVarValueByName( 'wgEnableRecirculationDiscussions', $cityId );
 
-		if ( !empty( $discussionsEnabled ) && !empty( $recirculationDiscussionsEnabled ) ) {
+		if ( !empty( $discussionsEnabled ) && ( $ignoreWgEnableRecirculationDiscussions ||
+		                                        !empty( $recirculationDiscussionsEnabled ) )
+		) {
 			return true;
 		} else {
 			return false;
@@ -121,7 +122,7 @@ class RecirculationHooks {
 	}
 
 	private static function addLiftIgniterMetadata( OutputPage $outputPage ) {
-		global $wgDevelEnvironment, $wgLanguageCode, $wgStagingEnvironment;
+		global $wgDevelEnvironment, $wgLanguageCode, $wgStagingEnvironment, $wgWikiaEnvironment, $wgIsPrivateWiki, $wgCityId;
 
 		$context = RequestContext::getMain();
 		$title = $context->getTitle();
@@ -132,9 +133,12 @@ class RecirculationHooks {
 		}
 
 		$metaData['language'] = $wgLanguageCode;
-		$isProduction = empty( $wgDevelEnvironment ) && empty( $wgStagingEnvironment );
+		$isProduction =
+			empty( $wgDevelEnvironment ) && empty( $wgStagingEnvironment ) &&
+			$wgWikiaEnvironment !== WIKIA_ENV_STAGING;
+		$isPrivateWiki = WikiFactory::isWikiPrivate( $wgCityId ) || $wgIsPrivateWiki;
 
-		if ( !$isProduction || $title->inNamespace( NS_FILE ) ) {
+		if ( !$isProduction || $isPrivateWiki || $title->inNamespace( NS_FILE ) ) {
 			$metaData['noIndex'] = 'true';
 		}
 

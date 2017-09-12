@@ -232,7 +232,6 @@ $wgAutoloadLocalClasses = array(
 	'UserBlockedError' => 'includes/Exception.php',
 	'UserMailer' => 'includes/UserMailer.php',
 	'UserRightsProxy' => 'includes/UserRightsProxy.php',
-	'ViewCountUpdate' => 'includes/ViewCountUpdate.php',
 	'WantedQueryPage' => 'includes/QueryPage.php',
 	'WatchedItem' => 'includes/WatchedItem.php',
 	'WebRequest' => 'includes/WebRequest.php',
@@ -649,6 +648,7 @@ $wgAutoloadLocalClasses = array(
 	'XCacheBagOStuff' => 'includes/objectcache/XCacheBagOStuff.php',
 
 	# includes/parser
+	'AbstractInvokableParserHook' => 'includes/parser/AbstractInvokableParserHook.php',
 	'CacheTime' => 'includes/parser/ParserOutput.php',
 	'CoreLinkFunctions' => 'includes/parser/CoreLinkFunctions.php',
 	'CoreParserFunctions' => 'includes/parser/CoreParserFunctions.php',
@@ -805,7 +805,6 @@ $wgAutoloadLocalClasses = array(
 	'MovePageForm' => 'includes/specials/SpecialMovepage.php',
 	'NewPagesPager' => 'includes/specials/SpecialNewpages.php',
 	'PageArchive' => 'includes/specials/SpecialUndelete.php',
-	'PopularPagesPage' => 'includes/specials/SpecialPopularpages.php',
 	'Randompage' => 'includes/specials/SpecialRandompage.php',
 	'RandomPage' => 'includes/specials/SpecialRandompage.php',
 	'ShortPagesPage' => 'includes/specials/SpecialShortpages.php',
