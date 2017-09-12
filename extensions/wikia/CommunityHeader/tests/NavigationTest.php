@@ -5,8 +5,8 @@ use \Wikia\CommunityHeader\Link;
 use \Wikia\CommunityHeader\Navigation;
 
 class NavigationTest extends WikiaBaseTest {
-	const WIKI_ID = 147;
-	const DOMAIN =  "http://starwars.wikia.com";
+	const WIKI_ID = 165;
+	const DOMAIN = "http://firefly.wikia.com";
 
 
 	protected function setUp() {
@@ -21,15 +21,13 @@ class NavigationTest extends WikiaBaseTest {
 	 * @param $expectedExploreItems
 	 */
 	public function testExploreItems( $globals, $expectedExploreItems ) {
-		$this->mockStaticMethodWithCallBack(
-			'WikiFactory',
-			'getVarValueByName',
-			function ( $variable/*, $id*/ ) use ( $globals ) {
-				$globals['wgServer'] = self::DOMAIN;
+		$this->mockStaticMethodWithCallBack( 'WikiFactory', 'getVarValueByName', function ( $variable/*, $id*/ ) use (
+			$globals
+		) {
+			$globals[ 'wgServer' ] = self::DOMAIN;
 
-				return $globals[$variable] ?? $GLOBALS[$variable] ?? false;
-			}
-		);
+			return $globals[ $variable ] ?? $GLOBALS[ $variable ] ?? false;
+		} );
 
 		$result = new Navigation( new DesignSystemCommunityHeaderModel( self::WIKI_ID, 'en' ) );
 
@@ -44,15 +42,13 @@ class NavigationTest extends WikiaBaseTest {
 	 * @param $expected
 	 */
 	public function testDiscussLink( $globals, $expected ) {
-		$this->mockStaticMethodWithCallBack(
-			'WikiFactory',
-			'getVarValueByName',
-			function ( $variable/*, $id*/ ) use ( $globals ) {
-				$globals['wgServer'] = self::DOMAIN;
+		$this->mockStaticMethodWithCallBack( 'WikiFactory', 'getVarValueByName', function ( $variable/*, $id*/ ) use (
+			$globals
+		) {
+			$globals[ 'wgServer' ] = self::DOMAIN;
 
-				return $globals[$variable] ?? $GLOBALS[$variable] ?? false;
-			}
-		);
+			return $globals[ $variable ] ?? $GLOBALS[ $variable ] ?? false;
+		} );
 
 		$result = new Navigation( new DesignSystemCommunityHeaderModel( self::WIKI_ID, 'en' ) );
 
@@ -60,16 +56,9 @@ class NavigationTest extends WikiaBaseTest {
 	}
 
 	private function prepareExploreItems( $raw ) {
-		return array_map(
-			function ( $rawItem ) {
-				return new Link(
-					new Label( $rawItem['label']['key'], $rawItem['label']['type'] ),
-					$rawItem['href'],
-					$rawItem['tracking']
-				);
-			},
-			$raw
-		);
+		return array_map( function ( $rawItem ) {
+			return new Link( new Label( $rawItem[ 'label' ][ 'key' ], $rawItem[ 'label' ][ 'type' ] ), $rawItem[ 'href' ], $rawItem[ 'tracking' ] );
+		}, $raw );
 	}
 
 	public function exploreItemsProvider() {
@@ -83,8 +72,7 @@ class NavigationTest extends WikiaBaseTest {
 					'wgEnableForumExt' => true,
 					'wgEnableSpecialVideosExt' => true,
 				],
-				'expectedExploreItems' => $this->prepareExploreItems(
-					[
+				'expectedExploreItems' => $this->prepareExploreItems( [
 						[
 							'label' => [
 								'type' => 'translatable-text',
@@ -140,8 +128,7 @@ class NavigationTest extends WikiaBaseTest {
 							'href' => $host . '/wiki/Special:Forum',
 							'tracking' => 'explore-forum',
 						],
-					]
-				),
+					] ),
 			],
 			[
 				'globals' => [
@@ -150,8 +137,7 @@ class NavigationTest extends WikiaBaseTest {
 					'wgEnableForumExt' => true,
 					'wgEnableSpecialVideosExt' => true,
 				],
-				'expectedExploreItems' => $this->prepareExploreItems(
-					[
+				'expectedExploreItems' => $this->prepareExploreItems( [
 						[
 							'label' => [
 								'type' => 'translatable-text',
@@ -197,8 +183,7 @@ class NavigationTest extends WikiaBaseTest {
 							'href' => $host . '/wiki/Special:Forum',
 							'tracking' => 'explore-forum',
 						],
-					]
-				),
+					] ),
 			],
 			[
 				'globals' => [
@@ -207,8 +192,7 @@ class NavigationTest extends WikiaBaseTest {
 					'wgEnableForumExt' => true,
 					'wgEnableSpecialVideosExt' => true,
 				],
-				'expectedExploreItems' => $this->prepareExploreItems(
-					[
+				'expectedExploreItems' => $this->prepareExploreItems( [
 						[
 							'label' => [
 								'type' => 'translatable-text',
@@ -254,8 +238,7 @@ class NavigationTest extends WikiaBaseTest {
 							'href' => $host . '/wiki/Special:Images',
 							'tracking' => 'explore-images',
 						],
-					]
-				),
+					] ),
 			],
 			[
 				'globals' => [
@@ -264,8 +247,7 @@ class NavigationTest extends WikiaBaseTest {
 					'wgEnableForumExt' => false,
 					'wgEnableSpecialVideosExt' => true,
 				],
-				'expectedExploreItems' => $this->prepareExploreItems(
-					[
+				'expectedExploreItems' => $this->prepareExploreItems( [
 						[
 							'label' => [
 								'type' => 'translatable-text',
@@ -311,8 +293,7 @@ class NavigationTest extends WikiaBaseTest {
 							'href' => $host . '/wiki/Special:Images',
 							'tracking' => 'explore-images',
 						],
-					]
-				),
+					] ),
 			],
 			[
 				'globals' => [
@@ -321,8 +302,7 @@ class NavigationTest extends WikiaBaseTest {
 					'wgEnableForumExt' => false,
 					'wgEnableSpecialVideosExt' => true,
 				],
-				'expectedExploreItems' => $this->prepareExploreItems(
-					[
+				'expectedExploreItems' => $this->prepareExploreItems( [
 						[
 							'label' => [
 								'type' => 'translatable-text',
@@ -368,18 +348,13 @@ class NavigationTest extends WikiaBaseTest {
 							'href' => $host . '/wiki/Special:Images',
 							'tracking' => 'explore-images',
 						],
-					]
-				),
+					] ),
 			],
 		];
 	}
 
 	private function prepareDiscussLink( $raw ) {
-		return new Link(
-			new Label( $raw['label']['key'], $raw['label']['type'], $raw['label']['iconKey'] ),
-			$raw['href'],
-			$raw['tracking']
-		);
+		return new Link( new Label( $raw[ 'label' ][ 'key' ], $raw[ 'label' ][ 'type' ], $raw[ 'label' ][ 'iconKey' ] ), $raw[ 'href' ], $raw[ 'tracking' ] );
 	}
 
 	public function discussLinkProvider() {
@@ -391,8 +366,7 @@ class NavigationTest extends WikiaBaseTest {
 					'wgEnableDiscussions' => true,
 					'wgEnableForumExt' => true,
 				],
-				'expected' => $this->prepareDiscussLink(
-					[
+				'expected' => $this->prepareDiscussLink( [
 						'label' => [
 							'type' => 'translatable-text',
 							'key' => 'community-header-discuss',
@@ -400,16 +374,14 @@ class NavigationTest extends WikiaBaseTest {
 						],
 						'href' => '/d/f',
 						'tracking' => 'discuss',
-					]
-				),
+					] ),
 			],
 			[
 				'globals' => [
 					'wgEnableDiscussions' => true,
 					'wgEnableForumExt' => false,
 				],
-				'expected' => $this->prepareDiscussLink(
-					[
+				'expected' => $this->prepareDiscussLink( [
 						'label' => [
 							'type' => 'translatable-text',
 							'key' => 'community-header-discuss',
@@ -417,16 +389,14 @@ class NavigationTest extends WikiaBaseTest {
 						],
 						'href' => '/d/f',
 						'tracking' => 'discuss',
-					]
-				),
+					] ),
 			],
 			[
 				'globals' => [
 					'wgEnableDiscussions' => false,
 					'wgEnableForumExt' => true,
 				],
-				'expected' => $this->prepareDiscussLink(
-					[
+				'expected' => $this->prepareDiscussLink( [
 						'label' => [
 							'type' => 'translatable-text',
 							'key' => 'community-header-forum',
@@ -434,8 +404,7 @@ class NavigationTest extends WikiaBaseTest {
 						],
 						'href' => $host . '/wiki/Special:Forum',
 						'tracking' => 'forum',
-					]
-				),
+					] ),
 			],
 			[
 				'globals' => [
