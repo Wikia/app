@@ -450,11 +450,11 @@ Wenn du lieber eine E-Mail schicken möchtest, kontaktiere uns unter [mailto:com
 	'specialcontact-label-bug-feature' => 'Um welche Funktion geht es?',
 	'specialcontact-label-bug-description' => 'Bitte beschreibe das Problem',
 	'specialcontact-label-close-account-confirm' => 'Ich bestätige, dass ich mein Benutzerkonto bei FANDOM schließen möchte',
-	'specialcontact-label-close-account-read-help' => 'Ich habe die [[w:c:de:Hilfe:Benutzerkonto_schließen|Hilfeseite zur Konto-Schließung gelesen]]',
+	'specialcontact-label-close-account-read-help' => 'Ich habe die [[w:c:de:Hilfe:Benutzerkonto schließen|Hilfeseite zur Konto-Schließung gelesen]]',
 	'specialcontact-label-account-issue-description' => 'Bitte füge eine detaillierte Beschreibung des Problems ein.',
 	'specialcontact-label-rename-newusername' => 'Gib den neuen Benutzernamen ein',
 	'specialcontact-label-rename-account-confirm' => 'Ich bestätige hiermit, dass der Name korrekt geschrieben ist',
-	'specialcontact-label-rename-account-read-help' => 'Ich habe die [[w:c:de:Hilfe:Benutzerkonto_umbenennen|Hilfeseiten zur Namensänderung gelesen]]',
+	'specialcontact-label-rename-account-read-help' => 'Ich habe die [[w:c:de:Hilfe:Benutzerkonto umbenennen|Hilfeseiten zur Namensänderung gelesen]]',
 	'specialcontact-form-header' => 'FANDOM kontaktieren',
 	'specialcontact-logged-in-as' => 'Du bist als $1 angemeldet. [[Special:UserLogout|Das bist nicht du?]]',
 	'specialcontact-mail-on-file' => 'Deine E-Mail ist $1. [[Special:Preferences|Möchtest du sie ändern?]]',
@@ -469,7 +469,7 @@ Wenn du lieber eine E-Mail schicken möchtest, kontaktiere uns unter [mailto:com
 	'specialcontact-ccheader' => 'Dies ist eine Kopie der Nachricht, die an den FANDOM-Support geschickt wurde',
 	'specialcontact-submitcomplete' => "Danke für deine Nachricht an FANDOM. Wir lesen alle Nachrichten, die uns hier geschickt werden. Wir tun unser Bestes, um innerhalb von 2-3 Arbeitstagen auf deine Nachricht zu antworten. Wir bitten um Geduld.
 
-Vergiss nicht: Du kannst dir jederzeit die '''[[w:c:de.community:Hilfe:Übersicht|Hilfeseiten]]''' ansehen, im [[w:c:community:Special:Forum|Community-Forum]] Fragen stellen oder den [[w:c:community:Blog:Fandom_Deutschland_News|FANDOM-Blog]] lesen!",
+Vergiss nicht: Du kannst dir jederzeit die '''[[w:c:de.community:Hilfe:Übersicht|Hilfeseiten]]''' ansehen, im [[w:c:de.community:Special:Forum|Community-Forum]] Fragen stellen oder den [[w:c:de.community:Blog:Fandom Deutschland News|FANDOM-Blog]] lesen!",
 	'specialcontact-seclink-security' => 'Ich glaube, ich habe ein Sicherheitsproblem entdeckt',
 	'specialcontact-seclink-dmca-request' => 'Ich habe eine Urheberrechtsbeschwerde',
 	'specialcontact-sectitle-security' => 'Bericht über Sicherheitsproblem',
