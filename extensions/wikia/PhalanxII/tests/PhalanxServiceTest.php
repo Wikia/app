@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\DependencyInjection\Injector;
+
 /**
  * @category Wikia
  * @group Integration
@@ -19,7 +21,7 @@ class PhalanxServiceTest extends WikiaBaseTest {
 	}
 
 	public function checkPhalanxAlive( ) {
-		$this->service = new PhalanxService();
+		$this->service = Injector::getInjector()->get( PhalanxService::class );
 		if ( !$this->service->status() ) {
 			// Skip test if phalanx service is not available
 			throw new Exception( "Can't connect to phalanx service" );
@@ -32,7 +34,7 @@ class PhalanxServiceTest extends WikiaBaseTest {
 	 */
 	public function testPhalanxServiceMethod() {
 		error_log( __CLASS__ . '::' . __FUNCTION__ );
-		$this->service = new PhalanxService();
+		$this->service = Injector::getInjector()->get( PhalanxService::class );
 		foreach ( array( "check", "match", "status", "reload", "validate", "stats" ) as $method ) {
 			$this->assertEquals( true, method_exists( $this->service, $method ), "Method '$method' doesnt exist in PhalanxService" );
 		}

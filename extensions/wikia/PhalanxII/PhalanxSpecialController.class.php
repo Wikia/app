@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\DependencyInjection\Injector;
+
 class PhalanxSpecialController extends WikiaSpecialPageController {
 
 	const RESULT_BLOCK_ADDED = 1;
@@ -14,7 +16,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$this->includable( false );
 
 		$this->title = SpecialPage::getTitleFor( 'Phalanx' );
-		$this->service = new PhalanxService();
+		$this->service = Injector::getInjector()->get( PhalanxService::class );
 	}
 
 	/**
@@ -259,7 +261,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	private function handleBlockTest( $blockText ) {
 		wfProfileIn( __METHOD__ );
 
-		$service = new PhalanxService();
+		$service = Injector::getInjector()->get( PhalanxService::class );
 		$service->setLimit( 20 );
 
 		$listing = '';
