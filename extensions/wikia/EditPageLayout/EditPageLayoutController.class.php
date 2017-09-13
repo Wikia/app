@@ -53,25 +53,6 @@ class EditPageLayoutController extends WikiaController {
 	 * Extra buttons are not needed
 	 */
 	public function executeCodeButtons() {
-		$dropdown = [
-			[
-				'id' => 'wpDiff',
-				'accesskey' => wfMessage( 'accesskey-diff' )->escaped(),
-				'text' => wfMessage( 'showdiff' )->escaped()
-			]
-		];
-
-		$this->button = [
-			'action' => [
-				'text' => wfMessage( 'savearticle' )->escaped(),
-				'class' => 'codepage-publish-button',
-				'id' => 'wpSave',
-			],
-			'name' => 'submit',
-			'class' => 'primary',
-			'dropdown' => $dropdown
-		];
-
 		if ( $this->wg->EnableContentReviewExt ) {
 			$helper = EditPageLayoutHelper::getInstance();
 			$title = $helper->getEditPage()->getTitle();

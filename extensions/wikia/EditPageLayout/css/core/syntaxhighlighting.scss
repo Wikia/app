@@ -31,7 +31,13 @@
 	}
 
 	.codepage-publish-button {
-		width: calc(100% - 22px);
+		#wpSave {
+			background: none;
+			border: 0;
+			display: inline;
+			margin: 0;
+			padding: 0;
+		}
 	}
 }
 
