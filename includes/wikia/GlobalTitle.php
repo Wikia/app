@@ -52,7 +52,7 @@ class GlobalTitle extends Title {
 
 	static protected $cachedObjects = array();
 
-	private static $extraExtensionNamespaces = [];
+	static $extraExtensionNamespaces = [];
 
 	/**
 	 * @desc Static constructor, Create new Title from name of page
@@ -104,6 +104,7 @@ class GlobalTitle extends Title {
 		$mainPageName = str_replace( ' ', '_', $mainPageTitle->getContent() );
 		$namespace = NS_MAIN;
 		// support for non-MAIN namespace pages, based on Title::secureAndSplit method
+		// extracting namespace from article name
 		$prefixRegexp = "/^(.+?)_*:_*(.*)$/S";
 		if ( preg_match( $prefixRegexp, $mainPageName, $matches ) ) {
 			$mainPageTitle->loadContLang();
