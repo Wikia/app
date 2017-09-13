@@ -22,8 +22,8 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		$this->productInstanceId = $cityId;
 		$this->langCode = $langCode;
 		$this->themeSettings = new ThemeSettings( $cityId );
-		$this->settings = $this->themeSettings->getSettings( $cityId );
-		$this->mainPageUrl = GlobalTitle::newMainPage( $this->productInstanceId )->getFullURL();
+		$this->settings = $this->themeSettings->getSettings();
+		$this->mainPageUrl = Title::newMainPage()->getFullURL();
 	}
 
 	public function getData(): array {
@@ -65,7 +65,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 							],
 							'title' => [
 								'type' => 'text',
-								'value' => $this->themeSettings->getSettings()[ 'wordmark-text' ],
+								'value' => $this->settings['wordmark-text'],
 							],
 							'tracking_label' => 'wordmark-image',
 						];
@@ -83,7 +83,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 				'type' => 'link-text',
 				'title' => [
 					'type' => 'text',
-					'value' => $this->themeSettings->getSettings()[ 'wordmark-text' ]
+					'value' => $this->settings['wordmark-text']
 				],
 				'href' => $this->mainPageUrl,
 				'tracking_label' => 'sitename'
