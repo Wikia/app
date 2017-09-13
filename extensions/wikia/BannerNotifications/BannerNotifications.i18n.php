@@ -167,7 +167,7 @@ $messages['roa-tara'] = array(
 
 $messages['ru'] = array(
 	'bannernotifications-desc' => 'Отображает системные уведомления для события, таких как сбои AJAX',
-	'bannernotifications-general-ajax-failure' => 'Браузер не смог подключиться к Фэндому. Попробуйте ещё раз позже.',
+	'bannernotifications-general-ajax-failure' => 'Браузер не смог подключиться к ФЭНДОМУ. Попробуйте ещё раз позже.',
 	'bannernotifications-not-confirmed-email' => 'Адрес вашей электронной почты ещё не подтверждён. Вы должны были получить сообщение о подтверждении на почту. Не получили? [[Служебная:ConfirmEmail|Нажмите здесь]], и мы вышлем вам новое письмо. Если вы хотите изменить адрес электронной почты, перейдите в соответствующий раздел [[Служебная:Preferences#mw-prefsection-emailv2|личных настроек]].',
 	'bannernotifications-no-email' => 'У вашей учётной записи не подтверждён адрес электронной почты. Пожалуйста, укажите адрес электронной почты на странице [[Special:Preferences#mw-prefsection-emailv2|личных настроек]].',
 );

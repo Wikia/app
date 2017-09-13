@@ -678,7 +678,7 @@ $messages['pt'] = array(
 );
 
 $messages['ru'] = array(
-	'templates' => 'Шаблоны Фэндома',
+	'templates' => 'Шаблоны ФЭНДОМА',
 	'template-classification-description' => 'Интерфейс классификации шаблонов для лучшего понимания их содержимого.',
 	'template-classification-type-unclassified' => 'Неклассифицированные',
 	'template-classification-type-infobox' => 'Инфобоксы',

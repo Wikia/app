@@ -40,7 +40,7 @@ $messages['qqq'] = array(
 );
 
 $messages['de'] = array(
-	'emailext-discussion-reply-with-title-subject' => 'Es gibt eine neue Antwort auf [$1 $2] auf [$3 $4].',
+	'emailext-discussion-reply-with-title-subject' => 'Es gibt eine neue Antwort zu [$1 $2] auf [$3 $4].',
 	'emailext-discussion-reply-subject' => 'Es gibt eine neue Antwort auf einen Beitrag, den du verfolgst auf [$1 $2]',
 	'emailext-discussion-button-text' => 'Komplette Diskussion',
 	'emailext-discussion-all-discussions' => '[$1 Alle Diskussionen auf $2]',
@@ -173,7 +173,7 @@ $messages['pl'] = array(
 );
 
 $messages['pt'] = array(
-	'emailext-discussion-reply-with-title-subject' => 'Há uma nova resposta para o seu post [$1 $2] na [$3 $4]',
+	'emailext-discussion-reply-with-title-subject' => 'Há uma nova resposta para [$1 $2] na [$3 $4]',
 	'emailext-discussion-reply-subject' => 'Há uma nova resposta para um post que você está seguindo na [$1 $2]',
 	'emailext-discussion-button-text' => 'Discussão completa',
 	'emailext-discussion-all-discussions' => '[$1 todas as discussões sobre $2]',
