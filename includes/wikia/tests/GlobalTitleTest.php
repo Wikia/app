@@ -127,7 +127,7 @@ class GlobalTitleTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider mainPageDataProvider
 	 */
-	function testMainPage( $mediaWikiMainpageContent, $exists, $expectedUrl ) {
+	function testNewMainPageUrls( $mediaWikiMainpageContent, $exists, $expectedUrl ) {
 		$this->mockProdEnv();
 
 		$globalTitleMock = $this->getMockBuilder( 'GlobalTitle' )->setMethods( [
