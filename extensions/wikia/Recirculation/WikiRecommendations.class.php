@@ -630,9 +630,9 @@ class WikiRecommendations {
 			case 'be':
 			case 'kk':
 				return 'ru';
+			default:
+				return $language;
 		}
-
-		return $language;
 	}
 
 	private static function getThumbnailUrl( $url ) {
