@@ -99,29 +99,6 @@ class RecirculationHooks {
 		}
 	}
 
-	private static function getLiftIgniterMetadataFromSiteAttributeService() {
-		return WikiaDataAccess::cache(
-			wfMemcKey( 'site-attribute-liftigniterMetadata' ),
-			3600,
-			function () {
-				global $wgCityId;
-
-				$rawData = ( new SiteAttributeService() )
-					->getAttribute( $wgCityId, 'liftigniterMetadata' );
-
-				if ( !empty( $rawData ) ) {
-					$decodedData = json_decode( $rawData, true );
-
-					if ( !empty( $decodedData ) ) {
-						return $decodedData;
-					}
-				}
-
-				return [];
-			}
-		);
-	}
-
 	private static function addLiftIgniterMetadata( OutputPage $outputPage ) {
 		global $wgCityId,
 		       $wgDevelEnvironment,
@@ -133,13 +110,22 @@ class RecirculationHooks {
 
 		$context = RequestContext::getMain();
 		$title = $context->getTitle();
+		$articleId = $title->getArticleID();
 		$metaData = [];
-
-		if ( $title->isMainPage() ) {
-			$siteAttributeData = self::getLiftIgniterMetadataFromSiteAttributeService();
-		}
+		$metaDataService = new LiftigniterMetadataService();
+		$metaDataFromService = $metaDataService->getLiMetadataForArticle( $wgCityId, $articleId );
 
 		$metaData['language'] = $wgLanguageCode;
+
+		if ( !empty( $metaDataFromService ) ) {
+			$metaData['guaranteed_impression'] = $metaDataFromService->getGuaranteedNumber();
+			$metaData['start_date'] = $metaDataFromService->getDateFrom()->format('Y-m-d H:i:s');
+			$metaData['end_date'] = $metaDataFromService->getDateTo()->format('Y-m-d H:i:s');
+			if ( !empty( $metaDataFromService->getGeos() ) ) {
+				$metaData['geolocation'] = $metaDataFromService->getGeos();
+			}
+		}
+
 		$isProduction =
 			empty( $wgDevelEnvironment ) && empty( $wgStagingEnvironment ) &&
 			$wgWikiaEnvironment !== WIKIA_ENV_STAGING;
@@ -153,10 +139,6 @@ class RecirculationHooks {
 		     ArticleVideoContext::isFeaturedVideoEmbedded( $title->getPrefixedDBkey() )
 		) {
 			$metaData['type'] = 'video';
-		}
-
-		if ( !empty( $siteAttributeData ) ) {
-			$metaData = array_merge( $siteAttributeData, $metaData );
 		}
 
 		$metaDataJson = json_encode( $metaData );
