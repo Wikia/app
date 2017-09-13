@@ -631,6 +631,7 @@ include_once( "$IP/extensions/wikia/Bucky/Bucky.setup.php" );
 include_once( "$IP/extensions/wikia/QuickTools/QuickTools.setup.php" );
 include_once( "$IP/extensions/wikia/TOC/TOC.setup.php" );
 include_once( "$IP/extensions/wikia/SEOTweaks/SEOTweaks.setup.php" );
+include_once( "$IP/extensions/wikia/StaticUserPages/StaticUserPages.setup.php" );
 
 /**
  * @name $wgSkipSkins
@@ -785,7 +786,7 @@ $wgMaxThumbnailArea = 0.9e7;
 $wgWikiaMaxNameChars = 50;
 
 /**
- * If this is set to true, then no externals (ads, spotlights, beacons such as google analytics and quantcast)
+ * If this is set to true, then no externals (ads, beacons such as google analytics and quantcast)
  * will be used.  This is used to help us get a good baseline for testing performance of in-house stuff only.
  *
  * To change this value, add noexternals=1 to the URL.
@@ -1173,6 +1174,12 @@ $wgEnableNetzAthleten = true;
 $wgAdDriverNetzAthletenCountries = null;
 
 /**
+ * @name $wgAdDriverDfpOoyalaContentSourceId
+ * Defines content source id sent in VAST url
+ */
+$wgAdDriverDfpOoyalaContentSourceId = '2458214';
+
+/**
  * @name $wgEnableAmazonMatch
  * Enables AmazonMatch new integration (id=3115)
  */
@@ -1192,6 +1199,14 @@ $wgAmazonMatchCountries = null;
  */
 $wgAmazonMatchCountriesMobile = null;
 
+
+/**
+ * @name $wgAdDriverA9BidderCountries
+ * List of countries where A9 bidding platform is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverA9BidderCountries = null;
+
 /**
  * @name $wgAdDriverEnableRubiconFastlane
  * Enables Rubicon Fastlane
@@ -1206,11 +1221,11 @@ $wgAdDriverEnableRubiconFastlane = true;
 $wgAdDriverRubiconFastlaneCountries = null;
 
 /**
- * @name $wgAdDriverRubiconFastlanePrebidCountries
- * Enables RubiconFastlane Prebid implementation and DISABLES the old one in these countries.
+ * @name $wgAdDriverRubiconDisplayPrebidCountries
+ * Enables Rubicon (Prebid) implementation and DISABLES the old one in these countries.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
-$wgAdDriverRubiconFastlanePrebidCountries = null;
+$wgAdDriverRubiconDisplayPrebidCountries = null;
 
 /**
  * @name $wgAdDriverRubiconFastlaneProviderCountries
@@ -1409,6 +1424,13 @@ $wgAdDriverSrcPremiumCountries = [];
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverPremiumAdLayoutRubiconFastlaneTagsCountries = [];
+
+/**
+ * @name $wgAdDriverPremiumAdLayoutAppNexusTagsCountries
+ * Enables Premium Ad Layout site and placementIds for AppNexus bidder.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverPremiumAdLayoutAppNexusTagsCountries = [];
 
 /**
  * @name $wgAdDriverKILOCountries
@@ -1870,19 +1892,6 @@ $wgEnableHostnameInHtmlTitle = true;
  * Use template types from Template Classification Service in MW context
  */
 include_once("$IP/includes/wikia/parser/templatetypes/TemplateTypes.setup.php");
-
-/**
- * @name $wgEnableReviveSpotlights
- * Enables Revive Spotlights
- */
-$wgEnableReviveSpotlights = true;
-
-/**
- * @name $wgReviveSpotlightsCountries
- * Enables Revive Spotlights in these countries (given wgEnableReviveSpotlights is also true).
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgReviveSpotlightsCountries = null;
 
 /**
  * Enable SourcePoint recovery

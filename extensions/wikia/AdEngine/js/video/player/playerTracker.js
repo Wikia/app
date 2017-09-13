@@ -59,21 +59,23 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'additional_2': floatingState
 			};
 
-		if (bidHelper && params.bid && params.adProduct === 'rubicon') {
-			trackingData['vast_id'] = [
-				params.bid.rubiconAdvertiserId || emptyValue.string,
-				params.bid.rubiconAdId || emptyValue.string
-			].join(':');
-			trackingData['price'] = bidHelper.transformPriceFromBid(params.bid);
-		}
+		if (bidHelper && params.bid) {
+			if (params.bid.bidderCode === 'rubicon') {
+				trackingData['vast_id'] = [
+					params.bid.rubiconAdvertiserId || emptyValue.string,
+					params.bid.rubiconAdId || emptyValue.string
+				].join(':');
+				trackingData['price'] = bidHelper.transformPriceFromBid(params.bid);
+			}
 
-		if (bidHelper && params.bid && params.adProduct === 'appnexusAst') {
-			trackingData['vast_id'] = params.bid.creative_id || emptyValue.string;
-			trackingData['price'] = bidHelper.transformPriceFromBid(params.bid);
-		}
+			if (params.bid.bidderCode === 'appnexusAst') {
+				trackingData['vast_id'] = params.bid.creative_id || emptyValue.string;
+				trackingData['price'] = bidHelper.transformPriceFromBid(params.bid);
+			}
 
-		if (bidHelper && params.bid && params.adProduct === 'veles') {
-			trackingData['vast_id'] = params.bid.vastId || emptyValue.string;
+			if (params.bid.bidderCode === 'veles') {
+				trackingData['vast_id'] = params.bid.vastId || emptyValue.string;
+			}
 		}
 
 		return trackingData;

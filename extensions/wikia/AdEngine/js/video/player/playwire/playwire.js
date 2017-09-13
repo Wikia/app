@@ -20,6 +20,9 @@ define('ext.wikia.adEngine.video.player.playwire', [
 			height = params.height,
 			playerId = 'playwire_' + Math.floor((1 + Math.random()) * 0x10000),
 			script = doc.createElement('script'),
+			vastUrlBuilderOptions = {
+				useMegaAdUnitBuilder: params.useMegaAdUnitBuilder
+			},
 			vastUrl = params.vastUrl,
 			vastTargeting = params.vastTargeting || {
 				passback: 'playwire',
@@ -33,7 +36,7 @@ define('ext.wikia.adEngine.video.player.playwire', [
 
 		return new Promise(function (resolve) {
 			configUrl = configUrl || getConfigUrl(params.publisherId, params.videoId);
-			vastUrl = vastUrl || vastUrlBuilder.build(width / height, vastTargeting);
+			vastUrl = vastUrl || vastUrlBuilder.build(width / height, vastTargeting, vastUrlBuilderOptions);
 
 			win[playerId + '_ready'] = function () {
 				var video = playerFactory.create(win.Bolt, playerId, params);

@@ -492,10 +492,8 @@ class WallHooksHelper {
 
 		if ( $title->getNamespace() === NS_USER_WALL_MESSAGE ) {
 			$wm = new WallMessage( $title );
-			$owner = $wm->getWallOwner();
 
-			$title = Title::newFromText( $owner->getName(), NS_USER_WALL );
-			$app->wg->Out->redirect( $title->getFullUrl(), 301 );
+			$app->wg->Out->redirect( $wm->getWallPageUrl(), 301 );
 			$app->wg->Out->enableRedirects( false );
 		}
 	}

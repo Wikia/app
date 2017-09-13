@@ -38,10 +38,14 @@ class ScribeEventProducer {
 				$this->mEventType = self::UNDELETE_CATEGORY_INT;
 				break;
 		}
-
+		$geo = json_decode( RequestContext::getMain()->getRequest()->getCookie( 'Geo', '' ) );
 		$this->setCityId( $this->app->wg->CityId );
 		$this->setServerName( $this->app->wg->Server );
-		$this->setIp( $this->app->wg->Request->getIP() );
+
+		$this->setIp( RequestContext::getMain()->getRequest()->getIP() );
+		$this->setGeoRegion( $geo->region );
+		$this->setGeoCountry( $geo->country );
+		$this->setGeoContinent( $geo->continent );
 		$this->setHostname( wfHostname() );
 		$this->setBeaconId ( wfGetBeaconId() );
 		$this->setArchive( $archive );
@@ -257,6 +261,18 @@ class ScribeEventProducer {
 		wfProfileOut( __METHOD__ );
 
 		return $this->buildEditPackage( $oPage, $oUser, $oRevision );
+	}
+
+	public function setGeoRegion ( $region ) {
+		$this->mParams['geoRegion'] = $region;
+	}
+
+	public function setGeoCountry ( $country ) {
+		$this->mParams['geoCountry'] = $country;
+	}
+
+	public function setGeoContinent ( $continent ) {
+		$this->mParams['geoContinent'] = $continent;
 	}
 
 	public function setCityId ( $city_id ) {

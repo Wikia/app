@@ -12,21 +12,17 @@
 		min-width: $width-outside-min;
 	}
 
-	.skin-oasis > .banner-notifications-wrapper,
+	.skin-oasis > .wds-banner-notification__container,
 	.WikiaPage {
 		max-width: $width-outside-max;
 	}
 
-	.banner-notifications-wrapper {
+	.wds-banner-notification__container {
 		box-sizing: border-box;
 		width: $width-outside;
 	}
 
-	.banner-notification {
-		box-sizing: border-box;
-	}
-
-	.banner-notifications-wrapper {
+	.wds-banner-notification__container {
 		&.float {
 			margin-left: -515px;
 		}
@@ -120,7 +116,7 @@
 	}
 
 	@media screen and (max-width: $breakpoint-content) {
-		.banner-notifications-wrapper {
+		.wds-banner-notification__container {
 			width: 100%;
 
 			&.float {

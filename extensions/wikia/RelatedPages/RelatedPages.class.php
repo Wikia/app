@@ -328,7 +328,6 @@ class RelatedPages {
 	/**
 	 * get a snippet of article text
 	 * @param int $articleId Article ID
-	 * @param int $length snippet length (in characters)
 	 */
 	public function getArticleSnippet( $articleId ) {
 		$service = new ArticleService( $articleId );
@@ -336,71 +335,16 @@ class RelatedPages {
 	}
 
 	/**
-	 * @param OutputPage $out
-	 * @param            $text
-	 *
-	 * Add needed messages to page and add JS assets
-	 *
-	 * @return bool
-	 */
-	public static function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
-		$app = F::app();
-		$wg = $app->wg;
-		$request = $app->wg->Request;
-		$title = $wg->Title;
-		$am = AssetsManager::getInstance();
-		$relatedPagesGroupName = 'relatedpages_js';
-
-		if ( $out->isArticle() && $request->getVal( 'action', 'view' ) == 'view' ) {
-			JSMessages::enqueuePackage( 'RelatedPages', JSMessages::INLINE );
-
-			if (
-				!( Wikia::isMainPage() || !empty( $title ) && !in_array( $title->getNamespace(), $wg->ContentNamespaces ) )
-				&& !$app->checkSkin( 'wikiamobile' )
-				&& $am->checkIfGroupForSkin( $relatedPagesGroupName, $out->getSkin() )
-			) {
-				if ( $app->checkSkin( 'oasis' ) ) {
-					OasisController::addSkinAssetGroup( $relatedPagesGroupName );
-				}
-				else {
-					$scripts = $am->getURL( $relatedPagesGroupName );
-
-					foreach ( $scripts as $script ) {
-						$wg->Out->addScript( "<script src='{$script}'></script>" );
-					}
-				}
-			}
-		}
-
-		return true;
-	}
-
-	/**
 	 * @param $jsStaticPackages
-	 * @param $jsExtensionPackages
-	 * @param $scssPackages
 	 *
 	 * Adds assets for RelatedPages on wikiamobile
 	 *
 	 * @return bool
 	 */
-	public static function onWikiaMobileAssetsPackages( &$jsStaticPackages, &$jsExtensionPackages, &$scssPackages ) {
+	public static function onWikiaMobileAssetsPackages( &$jsStaticPackages ) {
 		if ( F::app()->wg->Request->getVal( 'action', 'view' ) == 'view' ) {
 			$jsStaticPackages[] = 'relatedpages_wikiamobile_js';
 			// css is in WikiaMobile.scss as AM can't concatanate scss files currently
-		}
-
-		return true;
-	}
-
-	public static function onSkinAfterContent( &$text ) {
-		global $wgTitle;
-
-		$skin = RequestContext::getMain()->getSkin()->getSkinName();
-
-		// File pages handle their own rendering of related pages wrapper
-		if ( ( $skin === 'oasis' || $skin === 'monobook' ) && $wgTitle->getNamespace() !== NS_FILE ) {
-			$text = $text . '<div id="RelatedPagesModuleWrapper"></div>';
 		}
 
 		return true;

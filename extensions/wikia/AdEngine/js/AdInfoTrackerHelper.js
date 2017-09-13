@@ -1,17 +1,18 @@
 /*global define, JSON*/
 define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 	'ext.wikia.adEngine.lookup.services',
+	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.browserDetect',
 	'wikia.log',
 	'wikia.window'
-], function (lookupServices, adBlockDetection, browserDetect, log, win) {
+], function (lookupServices, slotRegistry, adBlockDetection, browserDetect, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adInfoTrackerHelper';
 
 	function shouldHandleSlot(slot, enabledSlots) {
-		var dataGptDiv = slot.container.firstChild;
+		var dataGptDiv = slot.container && slot.container.firstChild;
 
 		return (
 			enabledSlots[slot.name] &&
@@ -52,7 +53,7 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 			'kv_esrb': pageParams.esrb || '',
 			'kv_ref': pageParams.ref || '',
 			'kv_top': pageParams.top || '',
-			'kv_ah': pageParams.ah || '',
+			'kv_ah': win.document.body.scrollHeight || '',
 			'kv_abi': slotParams.abi || '',
 			'bidder_won': bidderWon,
 			'bidder_won_price': bidderWon ? realSlotPrices[bidderWon] : '',
@@ -66,6 +67,8 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 			'bidder_8': transformBidderPrice('veles', realSlotPrices, slotPricesIgnoringTimeout),
 			'bidder_9': transformBidderPrice('openx', realSlotPrices, slotPricesIgnoringTimeout),
 			'bidder_10': transformBidderPrice('appnexusAst', realSlotPrices, slotPricesIgnoringTimeout),
+			'bidder_11': transformBidderPrice('rubicon_display', realSlotPrices, slotPricesIgnoringTimeout),
+			'bidder_12': transformBidderPrice('a9', realSlotPrices, slotPricesIgnoringTimeout),
 			'product_chosen': '',
 			'product_lineitem_id': slotFirstChildData.gptLineItemId || '',
 			'creative_id': slotFirstChildData.gptCreativeId || '',
@@ -73,7 +76,8 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 				.replace('[', '').replace(']', '').replace(',', 'x'),
 			'viewport_height': win.innerHeight || 0,
 			'product_label': '',
-			'ad_status': status || 'unknown'
+			'ad_status': status || 'unknown',
+			'scroll_y': slotRegistry.getScrollY(slot.name) || 0
 		};
 
 		return data;
@@ -119,7 +123,7 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 			}
 
 			if (highestPriceBidders.indexOf('fastlane_private') >= 0) {
-				return 'fastlane_private'
+				return 'fastlane_private';
 			}
 		}
 

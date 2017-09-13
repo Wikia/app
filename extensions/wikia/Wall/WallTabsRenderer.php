@@ -36,7 +36,7 @@ class WallTabsRenderer extends ContextSource {
 		$contentActions['namespaces']['user_talk']['href'] = $userWallTitle->getLocalUrl();
 
 		// BugId:23000 Remove the class="new" to prevent the link from being displayed as a redlink in monobook.
-		$tabClasses = $contentActions['namespaces']['user_talk']['class'];
+		$tabClasses = (array) $contentActions['namespaces']['user_talk']['class'];
 		$contentActions['namespaces']['user_talk']['class'] =
 			array_filter( $tabClasses, function ( $class ) {
 				return $class !== 'new';
@@ -45,6 +45,11 @@ class WallTabsRenderer extends ContextSource {
 
 	public function renderWallContentActions( array &$contentActions ) {
 		$messageTitle = $this->getMessageTitle();
+
+		if ( empty( $messageTitle ) ) {
+			return;
+		}
+
 		$wallTitleText = $messageTitle->getBaseText();
 
 		$owningUser = User::newFromName( $wallTitleText, $validateUserName = false );
@@ -66,6 +71,11 @@ class WallTabsRenderer extends ContextSource {
 
 	public function renderUserTalkArchiveContentActions( array &$contentActions ) {
 		$messageTitle = $this->getMessageTitle();
+
+		if ( empty( $messageTitle ) ) {
+			return;
+		}
+
 		$wallTitleText = $messageTitle->getBaseText();
 
 		$userTalkPageTitle = Title::newFromText( $wallTitleText, NS_USER_TALK );
@@ -92,7 +102,10 @@ class WallTabsRenderer extends ContextSource {
 		// Message Wall page (Message Wall:John_Doe) or diff page
 		// (Thread:TK-999/@comment-SavageOpress1138-20170613235428?diff=prev)
 		// In this case we can safely use the context title
-		if ( $title->inNamespace( NS_USER_WALL ) || $this->getRequest()->getCheck( 'diff' ) ) {
+		if ( $title->inNamespace( NS_USER_WALL )
+		 	|| $this->getRequest()->getCheck( 'diff' )
+			|| $this->getRequest()->getCheck( 'oldid' )
+		) {
 			return $title;
 		}
 

@@ -11,7 +11,7 @@ class NavigationModel extends WikiaModel {
 	// 3 hours
 	const CACHE_TTL = 10800;
 
-	const CACHE_VERSION = '1';
+	const CACHE_VERSION = 1;
 	const ORIGINAL = 'original';
 	const PARENT_INDEX = 'parentIndex';
 	const CHILDREN = 'children';
@@ -45,8 +45,6 @@ class NavigationModel extends WikiaModel {
 	const GLOBALNAV_LEVEL_1_ITEMS_COUNT = 7;
 	const GLOBALNAV_LEVEL_2_ITEMS_COUNT = 4;
 	const GLOBALNAV_LEVEL_3_ITEMS_COUNT = 4;
-
-	const MEMC_VERSION = 2;
 
 	private $biggestCategories;
 	private $lastExtraIndex = 1000;
@@ -99,6 +97,11 @@ class NavigationModel extends WikiaModel {
 		return $this->errors;
 	}
 
+	/**
+	 * @param bool $msgName
+	 * @param string $wikiText
+	 * @return array
+	 */
 	public function getWiki( $msgName = false, $wikiText = '' ) {
 		$wikia = $this->parse(
 			self::TYPE_VARIABLE,
@@ -202,11 +205,11 @@ class NavigationModel extends WikiaModel {
 	 * @return array parsed menu wikitext
 	 */
 	public function parse(
-		$type,
-		$source,
+		string $type,
+		string $source,
 		Array $maxChildrenAtLevel = [],
-		$duration = 3600,
-		$filterInactiveSpecialPages = false
+		int $duration = 3600,
+		bool $filterInactiveSpecialPages = false
 	) {
 		$nodes = WikiaDataAccess::cacheWithOptions(
 			$this->getMemcKey( $source ),
