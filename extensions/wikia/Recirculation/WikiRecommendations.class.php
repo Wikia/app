@@ -598,9 +598,10 @@ class WikiRecommendations {
 
 		if ( empty( $wgDevelEnvironment ) ) {
 			$recommendations = self::RECOMMENDATIONS['en'];
+			$fallbackedContentLanguage = self::fallbackToSupportedLanguages( $contentLanguage );
 
-			if ( array_key_exists( $contentLanguage, self::RECOMMENDATIONS ) ) {
-				$recommendations = self::RECOMMENDATIONS[$contentLanguage];
+			if ( array_key_exists( $fallbackedContentLanguage, self::RECOMMENDATIONS ) ) {
+				$recommendations = self::RECOMMENDATIONS[$fallbackedContentLanguage];
 			}
 			shuffle( $recommendations );
 		} else {
@@ -617,6 +618,21 @@ class WikiRecommendations {
 		}
 
 		return $recommendations;
+	}
+
+	private static function fallbackToSupportedLanguages( $language ) {
+		switch ( $language ) {
+			case 'pt':
+				return 'pt-br';
+			case 'zh-tw':
+			case 'zh-hk':
+				return 'zh';
+			case 'be':
+			case 'kk':
+				return 'ru';
+		}
+
+		return $language;
 	}
 
 	private static function getThumbnailUrl( $url ) {
