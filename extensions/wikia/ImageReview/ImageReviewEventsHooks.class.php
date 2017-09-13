@@ -12,7 +12,7 @@ class ImageReviewEventsHooks {
 		// of the file
 		$title = Title::newFromID( $form->getTitle()->getArticleID() );
 
-		self::actionCreate( $title );
+		self::actionCreate( $title ?? $form->getTitle() );
 
 		return true;
 	}
