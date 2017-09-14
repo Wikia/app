@@ -1878,7 +1878,7 @@ var ControlBar = React.createClass({displayName: "ControlBar",
     if(this.props.responsiveView == this.props.skinConfig.responsive.breakpoints.xs.id) {
       this.props.controller.toggleScreen(CONSTANTS.SCREEN.VIDEO_QUALITY_SCREEN);
     } else {
-      this.toggleQualityPopover();
+      this.toggleQualityPopOver();
       this.closeCaptionPopover();
       this.closeConfigPopover();
     }
@@ -1904,7 +1904,7 @@ var ControlBar = React.createClass({displayName: "ControlBar",
 
   closeQualityPopover: function() {
     if(this.props.controller.state.videoQualityOptions.showVideoQualityPopover == true) {
-      this.toggleQualityPopover();
+      this.toggleQualityPopOver();
     }
   },
 
@@ -2374,6 +2374,9 @@ var CountDownClock = React.createClass({displayName: "CountDownClock",
       if(this.props.controller.state.screenToShow === CONSTANTS.SCREEN.DISCOVERY_SCREEN) {
         this.setState({hideClock: true});
         clearInterval(this.interval);
+        if(this.props.autoplayCanceled) {
+          this.props.autoplayCanceled();
+        }
       }
     }
   },
@@ -2832,9 +2835,11 @@ var DiscoveryPanel = React.createClass({displayName: "DiscoveryPanel",
   mixins: [ResizeMixin],
 
   getInitialState: function() {
+    var willShowDiscoveryCountDown = this.props.skinConfig.discoveryScreen.showCountDownTimerOnEndScreen || this.props.forceCountDownTimer;
     return {
       // WIKIA CHANGE - allow recommended video autoplay only if tab is active
-      showDiscoveryCountDown: !document.hidden && (this.props.skinConfig.discoveryScreen.showCountDownTimerOnEndScreen || this.props.forceCountDownTimer),
+      willShowDiscoveryCountDown: willShowDiscoveryCountDown,
+      showDiscoveryCountDown: !document.hidden && willShowDiscoveryCountDown,
       currentPage: 1,
       componentHeight: null
     };
@@ -2842,6 +2847,25 @@ var DiscoveryPanel = React.createClass({displayName: "DiscoveryPanel",
 
   componentDidMount: function () {
     this.detectHeight();
+    document.addEventListener('visibilitychange', this.showCountDown);
+  },
+
+  componentWillUnmount: function() {
+    document.removeEventListener('visibilitychange', this.showCountDown);
+  },
+
+  showCountDown: function () {
+    if(!document.hidden && !this.state.autoplayCanceled) {
+      this.setState({
+        showDiscoveryCountDown: this.state.willShowDiscoveryCountDown
+      });
+    }
+  },
+
+  autoplayCanceled: function () {
+    this.setState({
+      autoplayCanceled: true
+    });
   },
 
   handleResize: function(nextProps) {
@@ -2941,7 +2965,7 @@ var DiscoveryPanel = React.createClass({displayName: "DiscoveryPanel",
       React.createElement("div", {className: discoveryCountDownWrapperStyle}, 
         React.createElement("a", {className: "oo-discovery-count-down-icon-style", onClick: this.handleDiscoveryCountDownClick}, 
           React.createElement(CountDownClock, React.__spread({},  this.props, {timeToShow: this.props.skinConfig.discoveryScreen.countDownTime, 
-          ref: "CountDownClock"})), 
+          autoplayCanceled: this.autoplayCanceled, ref: "CountDownClock"})), 
           React.createElement(Icon, React.__spread({},  this.props, {icon: "pause"}))
         )
       )
@@ -5161,7 +5185,7 @@ var VideoQualityPanel = React.createClass({displayName: "VideoQualityPanel",
       selected: selectedBitrateId
     });
     this.props.togglePopoverAction();
-    this.props.toggleVideoQualityPanel();
+    this.props.toggleVideoQualityPopOver();
   },
 
     handleBackClick: function() {
@@ -5706,7 +5730,7 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
 
   if (OO.publicApi && OO.publicApi.VERSION) {
     // This variable gets filled in by the build script
-    OO.publicApi.VERSION.skin = {"releaseVersion": "4.14.8", "rev": "0a52b63ec9ab775311d7e33e50ca83d4e36410fc"};
+    OO.publicApi.VERSION.skin = {"releaseVersion": "4.14.8", "rev": "8618b2f605540ab7fbf22ab8e686f111f1a4260b"};
   }
 
   // WIKIA CHANGE - START
