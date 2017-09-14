@@ -1,5 +1,4 @@
 <?php
-
 $messages = array();
 
 $messages['en'] = array(
@@ -41,12 +40,9 @@ $messages['en'] = array(
 	'protectsite-upload-0' => 'Registered users and sysops',
 	'protectsite-upload-1' => 'Sysops only',
 	'action-protectsite' => 'temporarily block various site modifications',
+	'right-protectsite' => 'Limit actions that can be preformed for some groups for a limited time',
 );
 
-/** Message documentation (Message documentation)
- * @author EugeneZelenko
- * @author Umherirrender
- */
 $messages['qqq'] = array(
 	'specialprotectsite-desc' => '{{desc}}',
 	'protectsite-comment' => '{{Identical|Comment}}',
@@ -57,9 +53,6 @@ $messages['qqq'] = array(
 	'action-protectsite' => '{{doc-action|protectsite}}',
 );
 
-/** Afrikaans (Afrikaans)
- * @author Naudefj
- */
 $messages['af'] = array(
 	'protectsite' => 'Beskerm werf',
 	'protectsite-title' => 'Veiligheidsinstellings vir die werf',
@@ -74,9 +67,6 @@ $messages['af'] = array(
 	'protectsite-unprotect' => 'Verwyder beskerming',
 );
 
-/** Arabic (العربية)
- * @author OsamaK
- */
 $messages['ar'] = array(
 	'protectsite-allowall' => 'كل المستخدمين',
 	'protectsite-comment' => 'التعليق:',
@@ -84,19 +74,11 @@ $messages['ar'] = array(
 	'protectsite-unprotect' => 'أزل الحماية',
 );
 
-/** Azerbaijani (azərbaycanca)
- * @author Cekli829
- */
 $messages['az'] = array(
 	'protectsite-maxtimeout' => 'Maksimum:',
 	'protectsite-comment' => 'Şərh:',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
- * @author EugeneZelenko
- * @author Jim-by
- * @author Wizardist
- */
 $messages['be-tarask'] = array(
 	'specialprotectsite-desc' => 'Дазваляе адміністратару сайта [[Special:ProtectSite|часова блякаваць розныя зьмены сайту]]',
 	'protectsite' => 'Абарона сайту',
@@ -121,11 +103,6 @@ $messages['be-tarask'] = array(
 	'protectsite-unprotect' => 'Зьняць абарону',
 );
 
-/** Breton (brezhoneg)
- * @author Fulup
- * @author Gwenn-Ael
- * @author Y-M D
- */
 $messages['br'] = array(
 	'specialprotectsite-desc' => "Aotren a ra merour ul lechienn da [[Special:ProtectSite|stankañ kemmoù niverus bet degaset war al lec'hienn, evit ur prantad bennak]]",
 	'protectsite' => "Gwareziñ al lec'hienn",
@@ -150,9 +127,6 @@ $messages['br'] = array(
 	'protectsite-unprotect' => 'Diwareziñ',
 );
 
-/** Czech (česky)
- * @author Dontlietome7
- */
 $messages['cs'] = array(
 	'specialprotectsite-desc' => 'Umožňuje administrátorům [[Special:ProtectSite|dočasně zablokovat editaci dané stránky]]',
 	'protectsite' => 'Zamknout stránku',
@@ -177,25 +151,20 @@ $messages['cs'] = array(
 	'protectsite-unprotect' => 'Odemknout',
 );
 
-/** German (Deutsch)
- * @author LWChris
- * @author SVG
- * @author The Evil IP address
- */
 $messages['de'] = array(
 	'specialprotectsite-desc' => '[[Special:ProtectSite|Spezialseite]] zum Blocken diverser Seitenänderungen',
 	'protectsite' => 'Seite schützen',
 	'protectsite-text-protect' => '<!-- Anweisungen/Kommentare/Richtlinie zur Verwendung -->',
 	'protectsite-text-unprotect' => '<!-- Anweisungen/Kommentare wenn geschützt -->',
-	'protectsite-title' => 'Seitenschutz Einstellungen',
+	'protectsite-title' => 'Seitenschutz-Einstellungen',
 	'protectsite-allowall' => 'Alle Benutzer',
 	'protectsite-allowusersysop' => 'Registrierte Benutzer und Administratoren',
 	'protectsite-allowsysop' => 'Nur Administratoren',
-	'protectsite-createaccount' => 'Erlaube die Erstellung neuer Accounts von',
-	'protectsite-createpage' => 'Erlaube Erstellung von Seiten von',
-	'protectsite-edit' => 'Erlaube Bearbeiten von Seiten von',
-	'protectsite-move' => 'Erlaube Verschieben von Seiten von',
-	'protectsite-upload' => 'Erlaube Datei-Uploads von',
+	'protectsite-createaccount' => 'Erlaube die Erstellung neuer Benutzerkonten von',
+	'protectsite-createpage' => 'Erlaube die Erstellung von neuen Seiten von',
+	'protectsite-edit' => 'Erlaube das Bearbeiten von Seiten von',
+	'protectsite-move' => 'Erlaube das Verschieben von Seiten von',
+	'protectsite-upload' => 'Erlaube das Hochladen von Dateien von',
 	'protectsite-timeout' => 'Sperrdauer:',
 	'protectsite-timeout-error' => "'''Ungültige Sperrdauer.'''",
 	'protectsite-maxtimeout' => 'Maximum:',
@@ -205,23 +174,31 @@ $messages['de'] = array(
 	'protectsite-protect' => 'Schützen',
 	'protectsite-unprotect' => 'Freigeben',
 	'protectsite-nologs' => 'nicht in den Logbüchern anzeigen',
+	'action-protectsite' => 'blockiere temporär diverse Aktionen im Wiki',
+	'protectsite-createaccount-0' => 'Allen Benutzern',
+	'protectsite-createaccount-1' => 'Registrierten Benutzern und Administratoren',
+	'protectsite-createaccount-2' => 'Nur Administratoren',
+	'protectsite-createpage-0' => 'Allen Benutzern',
+	'protectsite-createpage-1' => 'Registrierten Benutzern und Administratoren',
+	'protectsite-createpage-2' => 'Nur Administratoren',
+	'protectsite-edit-0' => 'Allen Benutzern',
+	'protectsite-edit-1' => 'Registrierten Benutzern und Administratoren',
+	'protectsite-edit-2' => 'Nur Administratoren',
+	'protectsite-move-0' => 'Registrierten Benutzern und Administratoren',
+	'protectsite-move-1' => 'Nur Administratoren',
+	'protectsite-upload-0' => 'Registrierten Benutzern und Administratoren',
+	'protectsite-upload-1' => 'Nur Administratoren',
+	'protectsite-log-suppressed' => 'Length hidden',
+	'protectsite-hide-time-length' => 'Suppress protection length from logs',
+	'right-protectsite' => 'Limit actions that can be preformed for some groups for a limited time',
 );
 
-/** Zazaki (Zazaki)
- * @author Erdemaslancan
- */
 $messages['diq'] = array(
 	'protectsite-allowall' => 'Karberi pêro',
 	'protectsite-allowsysop' => 'Yew ke sysopi',
 	'protectsite-maxtimeout' => 'Maximum:',
 );
 
-/** Spanish (español)
- * @author Crazymadlover
- * @author Peter17
- * @author Translationista
- * @author VegaDark
- */
 $messages['es'] = array(
 	'specialprotectsite-desc' => 'Permite un administrador de sitio [[Special:ProtectSite|bloquear temporalmente varias modificaciones de sitio]]',
 	'protectsite' => 'Proteger el sitio',
@@ -231,7 +208,7 @@ $messages['es'] = array(
 	'protectsite-allowall' => 'Todos los usuarios',
 	'protectsite-allowusersysop' => 'Usuarios registrados y administradores de sistema',
 	'protectsite-allowsysop' => 'Sólo administradores de sistema',
-	'protectsite-createaccount' => 'Permitir creción de nuevas cuentas por',
+	'protectsite-createaccount' => 'Permitir creación de nuevas cuentas por',
 	'protectsite-createpage' => 'Permitir creación de páginas por',
 	'protectsite-edit' => 'Permitir edición de páginas por',
 	'protectsite-move' => 'Permitir movimiento de páginas por',
@@ -245,13 +222,25 @@ $messages['es'] = array(
 	'protectsite-protect' => 'Proteger',
 	'protectsite-unprotect' => 'Desproteger',
 	'protectsite-nologs' => 'no mostrar en los registros',
+	'protectsite-createaccount-0' => 'Permitir a todos',
+	'protectsite-createaccount-1' => 'Permitir usuarios y administradores',
+	'protectsite-createaccount-2' => 'Solo administradores',
+	'protectsite-createpage-0' => 'Permitir a todos',
+	'protectsite-createpage-1' => 'Permitir usuarios y administradores',
+	'protectsite-createpage-2' => 'Solo administradores',
+	'protectsite-edit-0' => 'Permitir a todos',
+	'protectsite-edit-1' => 'Permitir usuarios y administradores',
+	'protectsite-edit-2' => 'Solo administradores',
+	'protectsite-move-0' => 'Permitir usuarios y administradores',
+	'protectsite-move-1' => 'Solo administradores',
+	'protectsite-upload-0' => 'Permitir usuarios y administradores',
+	'protectsite-upload-1' => 'Solo administradores',
+	'protectsite-log-suppressed' => 'Length hidden',
+	'protectsite-hide-time-length' => 'Suppress protection length from logs',
+	'action-protectsite' => 'temporarily block various site modifications',
+	'right-protectsite' => 'Limit actions that can be preformed for some groups for a limited time',
 );
 
-/** Finnish (suomi)
- * @author Centerlink
- * @author Crt
- * @author Tofu II
- */
 $messages['fi'] = array(
 	'protectsite' => 'Suojaa sivu',
 	'protectsite-title' => 'Sivuston suojausasetukset',
@@ -268,14 +257,32 @@ $messages['fi'] = array(
 	'protectsite-until' => 'Suojattu, kunnes:',
 	'protectsite-protect' => 'Suojaa',
 	'protectsite-unprotect' => 'Poista suojaus',
+	'specialprotectsite-desc' => 'Allows a site administrator to [[Special:ProtectSite|temporarily block various site modifications]]',
+	'protectsite-text-protect' => '<!-- Instructions/Comments/Policy for use -->',
+	'protectsite-text-unprotect' => '<!-- Instructions/Comments when protected -->',
+	'protectsite-allowusersysop' => 'Registered users and sysops',
+	'protectsite-allowsysop' => 'Sysops only',
+	'protectsite-log-suppressed' => 'Length hidden',
+	'protectsite-hide-time-length' => 'Suppress protection length from logs',
+	'protectsite-timeout' => 'Timeout:',
+	'protectsite-nologs' => 'do not show in logs',
+	'protectsite-createaccount-0' => 'All users',
+	'protectsite-createaccount-1' => 'Registered users and sysops',
+	'protectsite-createaccount-2' => 'Sysops only',
+	'protectsite-createpage-0' => 'All users',
+	'protectsite-createpage-1' => 'Registered users and sysops',
+	'protectsite-createpage-2' => 'Sysops only',
+	'protectsite-edit-0' => 'All users',
+	'protectsite-edit-1' => 'Registered users and sysops',
+	'protectsite-edit-2' => 'Sysops only',
+	'protectsite-move-0' => 'Registered users and sysops',
+	'protectsite-move-1' => 'Sysops only',
+	'protectsite-upload-0' => 'Registered users and sysops',
+	'protectsite-upload-1' => 'Sysops only',
+	'action-protectsite' => 'temporarily block various site modifications',
+	'right-protectsite' => 'Limit actions that can be preformed for some groups for a limited time',
 );
 
-/** French (français)
- * @author IAlex
- * @author Peter17
- * @author Slamduck
- * @author Wyz
- */
 $messages['fr'] = array(
 	'specialprotectsite-desc' => 'Permet à un administrateur du site de [[Special:ProtectSite|bloquer temporairement de nombreuses modifications du site]]',
 	'protectsite' => 'Protéger le site',
@@ -299,11 +306,25 @@ $messages['fr'] = array(
 	'protectsite-protect' => 'Protéger',
 	'protectsite-unprotect' => 'Déprotéger',
 	'protectsite-nologs' => 'ne pas afficher dans les journaux',
+	'protectsite-createaccount-0' => 'Tous les utilisateurs',
+	'protectsite-createaccount-1' => 'Utilisateurs enregistrés et administrateurs',
+	'protectsite-createaccount-2' => 'Administrateurs uniquement',
+	'protectsite-createpage-0' => 'Tous les utilisateurs',
+	'protectsite-createpage-1' => 'Utilisateurs enregistrés et administrateurs',
+	'protectsite-createpage-2' => 'Administrateurs uniquement',
+	'protectsite-edit-0' => 'Tous les utilisateurs',
+	'protectsite-edit-1' => 'Utilisateurs enregistrés et administrateurs',
+	'protectsite-edit-2' => 'Administrateurs uniquement',
+	'protectsite-move-0' => 'Utilisateurs enregistrés et administrateurs',
+	'protectsite-move-1' => 'Administrateurs uniquement',
+	'protectsite-upload-0' => 'Utilisateurs enregistrés et administrateurs',
+	'protectsite-upload-1' => 'Administrateurs uniquement',
+	'protectsite-log-suppressed' => 'Length hidden',
+	'protectsite-hide-time-length' => 'Suppress protection length from logs',
+	'action-protectsite' => 'temporarily block various site modifications',
+	'right-protectsite' => 'Limit actions that can be preformed for some groups for a limited time',
 );
 
-/** Galician (Galego)
- * @author Toliño
- */
 $messages['gl'] = array(
 	'specialprotectsite-desc' => 'Permite que un administrador do sitio [[Special:ProtectSite|bloquee temporalmente varias modificacións do mesmo]]',
 	'protectsite' => 'Protexer o sitio',
@@ -329,14 +350,10 @@ $messages['gl'] = array(
 	'protectsite-nologs' => 'non mostrar nos rexistros',
 );
 
-/** Hausa (هَوُسَ) */
 $messages['ha'] = array(
 	'protectsite-comment' => 'Bahasi:',
 );
 
-/** Hungarian (magyar)
- * @author Glanthor Reviol
- */
 $messages['hu'] = array(
 	'protectsite' => 'Oldal védelme',
 	'protectsite-title' => 'Oldal védelmi beállításai',
@@ -350,9 +367,6 @@ $messages['hu'] = array(
 	'protectsite-unprotect' => 'Védelem feloldása',
 );
 
-/** Interlingua (interlingua)
- * @author McDutchie
- */
 $messages['ia'] = array(
 	'specialprotectsite-desc' => 'Permitte a un administrator del sito de [[Special:ProtectSite|blocar temporarimente varie modificationes del sito]]',
 	'protectsite' => 'Proteger sito',
@@ -378,32 +392,60 @@ $messages['ia'] = array(
 	'protectsite-nologs' => 'non monstrar in registros',
 );
 
-/** Indonesian (Bahasa Indonesia)
- * @author Kenrick95
- */
 $messages['id'] = array(
 	'protectsite-comment' => 'Komentar:',
 	'protectsite-protect' => 'Lindungi',
 );
 
-/** Italian (italiano) */
 $messages['it'] = array(
 	'protectsite-allowall' => 'Tutti gli utenti',
-	'protectsite-maxtimeout' => 'Massimo:',
-	'protectsite-comment' => 'Oggetto:',
+	'protectsite-maxtimeout' => 'Massima:',
+	'protectsite-comment' => 'Commento:',
+	'protectsite-allowsysop' => 'Solo amministratori',
+	'protectsite-allowusersysop' => 'Utenti registrati e amministratori',
+	'protectsite-createaccount-0' => 'Tutti gli utenti',
+	'protectsite-createaccount-1' => 'Utenti registrati e amministratori',
+	'protectsite-createaccount-2' => 'Solo amministratori',
+	'protectsite-createaccount' => 'Permetti la creazione di nuovi account da parte di',
+	'protectsite-createpage-0' => 'Tutti gli utenti',
+	'protectsite-createpage-1' => 'Utenti registrati e amministratori',
+	'protectsite-createpage-2' => 'Solo amministratori',
+	'protectsite-createpage' => 'Permetti la creazione di pagine da parte di',
+	'protectsite-edit-0' => 'Tutti gli utenti',
+	'protectsite-edit-1' => 'Utenti registrati e amministratori',
+	'protectsite-edit-2' => 'Solo amministratori',
+	'protectsite-edit' => 'Permetti la modifica delle pagine da parte di',
+	'protectsite-hide-time-length' => 'Nascondi la durata della protezione dai registri',
+	'protectsite-log-suppressed' => 'Durata nascosta',
+	'protectsite-move-0' => 'Utenti registrati e amministratori',
+	'protectsite-move-1' => 'Solo amministratori',
+	'protectsite-move' => 'Permetti lo spostamento delle pagine da parte di',
+	'protectsite-protect' => 'Proteggi',
+	'protectsite-text-protect' => '<!-- Istruzioni/Commenti/Regole di utilizzo -->',
+	'protectsite-text-unprotect' => '<!-- Istruzioni/Commenti durante la protezione -->',
+	'protectsite-timeout-error' => "'''Scadenza non valida.'''",
+	'protectsite-timeout' => 'Scadenza:',
+	'protectsite-title' => 'Impostazioni per la protezione del sito',
+	'protectsite-ucomment' => 'Commento per la revoca della protezione:',
+	'protectsite-unprotect' => 'Revoca la protezione',
+	'protectsite-until' => 'Protetto fino a:',
+	'protectsite-upload-0' => 'Utenti registrati e amministratori',
+	'protectsite-upload-1' => 'Solo amministratori',
+	'protectsite-upload' => 'Permetti il caricamento dei file da parte di',
+	'protectsite' => 'Proteggi il sito',
+	'specialprotectsite-desc' => 'Allows a site administrator to [[Special:ProtectSite|temporarily block various site modifications]]',
+	'protectsite-nologs' => 'do not show in logs',
+	'action-protectsite' => 'temporarily block various site modifications',
+	'right-protectsite' => 'Limit actions that can be preformed for some groups for a limited time',
 );
 
-/** Japanese (日本語)
- * @author Tommy6
- * @author 青子守歌
- */
 $messages['ja'] = array(
 	'specialprotectsite-desc' => 'サイト管理者が、[[Special:ProtectSite|サイトの様々な修正を一時的に制限]]することを許可する',
 	'protectsite' => 'サイトの保護',
 	'protectsite-text-protect' => '<!-- 利用時の方針/コメント/指示 -->',
 	'protectsite-text-unprotect' => '<!-- 保護された時のコメント/指示 -->',
 	'protectsite-title' => 'サイト保護の設定',
-	'protectsite-allowall' => '全利用者',
+	'protectsite-allowall' => 'すべての利用者',
 	'protectsite-allowusersysop' => '登録利用者および管理者',
 	'protectsite-allowsysop' => '管理者のみ',
 	'protectsite-createaccount' => '新規アカウント作成を許可する利用者グループ',
@@ -420,25 +462,75 @@ $messages['ja'] = array(
 	'protectsite-protect' => '保護',
 	'protectsite-unprotect' => '保護解除',
 	'protectsite-nologs' => 'ログに表示させない',
+	'protectsite-createaccount-0' => 'すべての利用者',
+	'protectsite-createaccount-1' => '登録利用者および管理者',
+	'protectsite-createaccount-2' => '管理者のみ',
+	'protectsite-createpage-0' => 'すべての利用者',
+	'protectsite-createpage-1' => '登録利用者および管理者',
+	'protectsite-createpage-2' => '管理者のみ',
+	'protectsite-edit-0' => 'すべての利用者',
+	'protectsite-edit-1' => '登録利用者および管理者',
+	'protectsite-edit-2' => '管理者のみ',
+	'protectsite-hide-time-length' => '保護期間をログに表示させない',
+	'protectsite-log-suppressed' => '期間は非公開です',
+	'protectsite-move-0' => '登録利用者および管理者',
+	'protectsite-move-1' => '管理者のみ',
+	'protectsite-upload-0' => '登録利用者および管理者',
+	'protectsite-upload-1' => '管理者のみ',
+	'action-protectsite' => 'temporarily block various site modifications',
+	'right-protectsite' => 'Limit actions that can be preformed for some groups for a limited time',
 );
 
-/** Colognian (Ripoarisch)
- * @author Purodha
- */
+$messages['ko'] = array(
+	'protectsite-allowall' => '모든 사용자',
+	'protectsite-allowsysop' => '관리자만',
+	'protectsite-allowusersysop' => '등록된 사용자 및 관리자',
+	'protectsite-comment' => '이유:',
+	'protectsite-createaccount-0' => '모든 사용자',
+	'protectsite-createaccount-1' => '등록된 사용자 및 관리자',
+	'protectsite-createaccount-2' => '관리자만',
+	'protectsite-createaccount' => '새 계정 생성 허용',
+	'protectsite-createpage-0' => '모든 사용자',
+	'protectsite-createpage-1' => '등록된 사용자 및 관리자',
+	'protectsite-createpage-2' => '관리자만',
+	'protectsite-createpage' => '새 문서 생성 허용',
+	'protectsite-edit-0' => '모든 사용자',
+	'protectsite-edit-1' => '등록된 사용자 및 관리자',
+	'protectsite-edit-2' => '관리자만',
+	'protectsite-edit' => '문서 편집 허용',
+	'protectsite-hide-time-length' => '로그에서 보호 기간 숨기기',
+	'protectsite-maxtimeout' => '최대 값:',
+	'protectsite-move-0' => '등록된 사용자 및 관리자',
+	'protectsite-move-1' => '관리자만',
+	'protectsite-move' => '문서 이동 허용',
+	'protectsite-protect' => '보호',
+	'protectsite-timeout-error' => "'''기간이 잘못 설정되어 있습니다.'''",
+	'protectsite-timeout' => '기간:',
+	'protectsite-title' => '위키 보호 설정',
+	'protectsite-ucomment' => '보호 해제 이유:',
+	'protectsite-unprotect' => '보호 해제',
+	'protectsite-upload-0' => '등록된 사용자 및 관리자',
+	'protectsite-upload-1' => '관리자만',
+	'protectsite-upload' => '파일 올리기 허용',
+	'protectsite' => '위키 보호',
+	'specialprotectsite-desc' => 'Allows a site administrator to [[Special:ProtectSite|temporarily block various site modifications]]',
+	'protectsite-text-protect' => '<!-- Instructions/Comments/Policy for use -->',
+	'protectsite-text-unprotect' => '<!-- Instructions/Comments when protected -->',
+	'protectsite-log-suppressed' => 'Length hidden',
+	'protectsite-until' => 'Protected until:',
+	'protectsite-nologs' => 'do not show in logs',
+	'action-protectsite' => 'temporarily block various site modifications',
+	'right-protectsite' => 'Limit actions that can be preformed for some groups for a limited time',
+);
+
 $messages['ksh'] = array(
 	'protectsite-comment' => 'Jrond:',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
- * @author George Animal
- */
 $messages['ku-latn'] = array(
 	'protectsite-allowall' => 'Hemû bikarhêneran',
 );
 
-/** Luxembourgish (Lëtzebuergesch)
- * @author Robby
- */
 $messages['lb'] = array(
 	'protectsite' => 'Site schützen',
 	'protectsite-text-protect' => '<!-- Instruktiounen/Commentairen/Richtlinne fir de Gebrauch -->',
@@ -460,17 +552,53 @@ $messages['lb'] = array(
 	'protectsite-unprotect' => 'Spär ophiewen',
 );
 
-/** Latgalian (latgaļu)
- * @author Dark Eagle
- */
+$messages['lol'] = array(
+	'specialprotectsite-desc' => 'crwdns65650:0crwdne65650:0',
+	'protectsite' => 'crwdns65651:0crwdne65651:0',
+	'protectsite-text-protect' => 'crwdns65652:0crwdne65652:0',
+	'protectsite-text-unprotect' => 'crwdns65653:0crwdne65653:0',
+	'protectsite-title' => 'crwdns65654:0crwdne65654:0',
+	'protectsite-allowall' => 'crwdns65655:0crwdne65655:0',
+	'protectsite-allowusersysop' => 'crwdns65656:0crwdne65656:0',
+	'protectsite-allowsysop' => 'crwdns65657:0crwdne65657:0',
+	'protectsite-createaccount' => 'crwdns65658:0crwdne65658:0',
+	'protectsite-createpage' => 'crwdns65659:0crwdne65659:0',
+	'protectsite-edit' => 'crwdns65660:0crwdne65660:0',
+	'protectsite-move' => 'crwdns65661:0crwdne65661:0',
+	'protectsite-upload' => 'crwdns65662:0crwdne65662:0',
+	'protectsite-log-suppressed' => 'crwdns65663:0crwdne65663:0',
+	'protectsite-hide-time-length' => 'crwdns65664:0crwdne65664:0',
+	'protectsite-timeout' => 'crwdns65665:0crwdne65665:0',
+	'protectsite-timeout-error' => 'crwdns65666:0crwdne65666:0',
+	'protectsite-maxtimeout' => 'crwdns65667:0crwdne65667:0',
+	'protectsite-comment' => 'crwdns65668:0crwdne65668:0',
+	'protectsite-ucomment' => 'crwdns65669:0crwdne65669:0',
+	'protectsite-until' => 'crwdns65670:0crwdne65670:0',
+	'protectsite-protect' => 'crwdns65671:0crwdne65671:0',
+	'protectsite-unprotect' => 'crwdns65672:0crwdne65672:0',
+	'protectsite-nologs' => 'crwdns65673:0crwdne65673:0',
+	'protectsite-createaccount-0' => 'crwdns65674:0crwdne65674:0',
+	'protectsite-createaccount-1' => 'crwdns65675:0crwdne65675:0',
+	'protectsite-createaccount-2' => 'crwdns65676:0crwdne65676:0',
+	'protectsite-createpage-0' => 'crwdns65677:0crwdne65677:0',
+	'protectsite-createpage-1' => 'crwdns65678:0crwdne65678:0',
+	'protectsite-createpage-2' => 'crwdns65679:0crwdne65679:0',
+	'protectsite-edit-0' => 'crwdns65680:0crwdne65680:0',
+	'protectsite-edit-1' => 'crwdns65681:0crwdne65681:0',
+	'protectsite-edit-2' => 'crwdns65682:0crwdne65682:0',
+	'protectsite-move-0' => 'crwdns65683:0crwdne65683:0',
+	'protectsite-move-1' => 'crwdns65684:0crwdne65684:0',
+	'protectsite-upload-0' => 'crwdns65685:0crwdne65685:0',
+	'protectsite-upload-1' => 'crwdns65686:0crwdne65686:0',
+	'action-protectsite' => 'crwdns65687:0crwdne65687:0',
+	'right-protectsite' => 'crwdns65688:0crwdne65688:0',
+);
+
 $messages['ltg'] = array(
 	'protectsite-protect' => 'Apsorguot',
 	'protectsite-unprotect' => 'Nūjimt apsardzeibu',
 );
 
-/** Macedonian (македонски)
- * @author Bjankuloski06
- */
 $messages['mk'] = array(
 	'specialprotectsite-desc' => 'Му овозможува на администраторот [[Special:ProtectSite|привремено да спречува разни измени на мреж-то место]]',
 	'protectsite' => 'Заштити мреж. место',
@@ -496,9 +624,6 @@ $messages['mk'] = array(
 	'protectsite-nologs' => 'не прикажувај во дневници',
 );
 
-/** Malay (Bahasa Melayu)
- * @author Anakmalaysia
- */
 $messages['ms'] = array(
 	'specialprotectsite-desc' => 'Membenarkan pentadbir tapak untuk [[Special:ProtectSite|menyekat pengubahsuaian tapak buat sementara]]',
 	'protectsite' => 'Lindungi laman',
@@ -524,9 +649,6 @@ $messages['ms'] = array(
 	'protectsite-nologs' => 'jangan tunjukkan dalam log',
 );
 
-/** Burmese (မြန်မာဘာသာ)
- * @author Erikoo
- */
 $messages['my'] = array(
 	'protectsite-allowall' => 'အသုံးပြုသူအားလုံး',
 	'protectsite-comment' => 'မှတ်ချက် :',
@@ -534,10 +656,6 @@ $messages['my'] = array(
 	'protectsite-unprotect' => 'မကာကွယ်တော့ရန်',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
- * @author Audun
- * @author Nghtwlkr
- */
 $messages['nb'] = array(
 	'specialprotectsite-desc' => 'Lar en sideadministrator [[Special:ProtectSite|midlertidig blokkere ulike sidemodifikasjoner]]',
 	'protectsite' => 'Beskytt side',
@@ -563,10 +681,6 @@ $messages['nb'] = array(
 	'protectsite-nologs' => 'ikke vis i logger',
 );
 
-/** Dutch (Nederlands)
- * @author SPQRobin
- * @author Siebrand
- */
 $messages['nl'] = array(
 	'specialprotectsite-desc' => 'Maakt het voor sitebeheerders mogelijk [[Special:ProtectSite|tijdelijk verschillende wijzigingen aan de site tegen te gaan]]',
 	'protectsite' => 'Site beveiligen',
@@ -590,21 +704,30 @@ $messages['nl'] = array(
 	'protectsite-protect' => 'Beveiligen',
 	'protectsite-unprotect' => 'Beveiliging opheffen',
 	'protectsite-nologs' => 'niet weergeven in logboeken',
+	'protectsite-log-suppressed' => 'Length hidden',
+	'protectsite-hide-time-length' => 'Suppress protection length from logs',
+	'protectsite-createaccount-0' => 'All users',
+	'protectsite-createaccount-1' => 'Registered users and sysops',
+	'protectsite-createaccount-2' => 'Sysops only',
+	'protectsite-createpage-0' => 'All users',
+	'protectsite-createpage-1' => 'Registered users and sysops',
+	'protectsite-createpage-2' => 'Sysops only',
+	'protectsite-edit-0' => 'All users',
+	'protectsite-edit-1' => 'Registered users and sysops',
+	'protectsite-edit-2' => 'Sysops only',
+	'protectsite-move-0' => 'Registered users and sysops',
+	'protectsite-move-1' => 'Sysops only',
+	'protectsite-upload-0' => 'Registered users and sysops',
+	'protectsite-upload-1' => 'Sysops only',
+	'action-protectsite' => 'temporarily block various site modifications',
+	'right-protectsite' => 'Limit actions that can be preformed for some groups for a limited time',
 );
 
-/** Deitsch (Deitsch)
- * @author Xqt
- */
 $messages['pdc'] = array(
 	'protectsite-comment' => 'Grund:',
 	'protectsite-protect' => 'Schitze',
 );
 
-/** Polish (polski)
- * @author BeginaFelicysym
- * @author Sovq
- * @author Sp5uhe
- */
 $messages['pl'] = array(
 	'specialprotectsite-desc' => 'Umożliwia administratorowi witryny [[Special:ProtectSite|tymczasowe blokowanie różnych zmian]]',
 	'protectsite' => 'Zabezpiecz witrynę',
@@ -623,17 +746,30 @@ $messages['pl'] = array(
 	'protectsite-timeout-error' => "'''Niepoprawny limit czasu.'''",
 	'protectsite-maxtimeout' => 'Maksimum:',
 	'protectsite-comment' => 'Komentarz:',
-	'protectsite-ucomment' => 'Niechroniony komentarz:',
+	'protectsite-ucomment' => 'Komentarz odbezpieczenia:',
 	'protectsite-until' => 'Chronione aż do:',
 	'protectsite-protect' => 'Zabezpiecz',
 	'protectsite-unprotect' => 'Nie chroń',
-	'protectsite-nologs' => 'nie pokazuj w rejestrze',
+	'protectsite-nologs' => 'Nie pokazuj w rejestrze',
+	'protectsite-createaccount-0' => 'Wszyscy użytkownicy',
+	'protectsite-createaccount-1' => 'Zarejestrowani użytkownicy i administratorzy',
+	'protectsite-createaccount-2' => 'Tylko administratorzy',
+	'protectsite-createpage-0' => 'Wszyscy użytkownicy',
+	'protectsite-createpage-1' => 'Zarejestrowani użytkownicy i administratorzy',
+	'protectsite-createpage-2' => 'Tylko administratorzy',
+	'protectsite-edit-0' => 'Wszyscy użytkownicy',
+	'protectsite-edit-1' => 'Zarejestrowani użytkownicy i administratorzy',
+	'protectsite-edit-2' => 'Tylko administratorzy',
+	'protectsite-move-0' => 'Zarejestrowani użytkownicy i administratorzy',
+	'protectsite-move-1' => 'Tylko administratorzy',
+	'protectsite-upload-0' => 'Zarejestrowani użytkownicy i administratorzy',
+	'protectsite-upload-1' => 'Tylko administratorzy',
+	'protectsite-log-suppressed' => 'Length hidden',
+	'protectsite-hide-time-length' => 'Suppress protection length from logs',
+	'action-protectsite' => 'temporarily block various site modifications',
+	'right-protectsite' => 'Limit actions that can be preformed for some groups for a limited time',
 );
 
-/** Piedmontese (Piemontèis)
- * @author Borichèt
- * @author Dragonòt
- */
 $messages['pms'] = array(
 	'specialprotectsite-desc' => "A përmët a n'aministrator d'un sit ëd [[Special:ProtectSite|bloché temporaneament vàire modìfiche dël sit]]",
 	'protectsite' => 'Sit protet',
@@ -659,9 +795,6 @@ $messages['pms'] = array(
 	'protectsite-nologs' => 'mostré nen ant ij registr',
 );
 
-/** Pashto (پښتو)
- * @author Ahmed-Najib-Biabani-Ibrahimkhel
- */
 $messages['ps'] = array(
 	'protectsite-allowall' => 'ټول کارنان',
 	'protectsite-allowsysop' => 'يوازې پازوالان',
@@ -670,41 +803,7 @@ $messages['ps'] = array(
 	'protectsite-unprotect' => 'نه ژغورل',
 );
 
-/** Portuguese (português)
- * @author Hamilton Abreu
- * @author Waldir
- */
 $messages['pt'] = array(
-	'specialprotectsite-desc' => 'Permite que um administrador [[Special:ProtectSite|bloqueie temporariamente várias modificações do site]]',
-	'protectsite' => 'Proteger o site',
-	'protectsite-text-protect' => '<!-- Instruções/Comentários/Normas de utilização -->',
-	'protectsite-text-unprotect' => '<!-- Instruções/Comentários quando sob protecção -->',
-	'protectsite-title' => 'Configurações de protecção do site',
-	'protectsite-allowall' => 'Todos os utilizadores',
-	'protectsite-allowusersysop' => 'Utilizadores registados e administradores',
-	'protectsite-allowsysop' => 'Só administradores',
-	'protectsite-createaccount' => 'Permitir a criação de contas novas por',
-	'protectsite-createpage' => 'Permitir a criação de páginas por',
-	'protectsite-edit' => 'Permitir a edição de páginas por',
-	'protectsite-move' => 'Permitir a movimentação de páginas por',
-	'protectsite-upload' => 'Permitir o envio de ficheiros por',
-	'protectsite-timeout' => 'Prazo de expiração:',
-	'protectsite-timeout-error' => "'''Prazo de expiração inválido.'''",
-	'protectsite-maxtimeout' => 'Máximo:',
-	'protectsite-comment' => 'Comentário:',
-	'protectsite-ucomment' => 'Comentário de desprotecção:',
-	'protectsite-until' => 'Sob protecção até:',
-	'protectsite-protect' => 'Proteger',
-	'protectsite-unprotect' => 'Desproteger',
-	'protectsite-nologs' => 'não mostrar nos registos',
-);
-
-/** Brazilian Portuguese (português do Brasil)
- * @author Aristóbulo
- * @author Giro720
- * @author Luckas Blade
- */
-$messages['pt-br'] = array(
 	'specialprotectsite-desc' => 'Permite que um administrador [[Special:ProtectSite|bloqueie temporariamente várias modificações do site]]',
 	'protectsite' => 'Proteger o site',
 	'protectsite-text-protect' => '<!-- Instruções/Comentários/Normas de utilização -->',
@@ -727,11 +826,25 @@ $messages['pt-br'] = array(
 	'protectsite-protect' => 'Proteger',
 	'protectsite-unprotect' => 'Desproteger',
 	'protectsite-nologs' => 'não mostrar nos registos',
+	'protectsite-log-suppressed' => 'Length hidden',
+	'protectsite-hide-time-length' => 'Suppress protection length from logs',
+	'protectsite-createaccount-0' => 'All users',
+	'protectsite-createaccount-1' => 'Registered users and sysops',
+	'protectsite-createaccount-2' => 'Sysops only',
+	'protectsite-createpage-0' => 'All users',
+	'protectsite-createpage-1' => 'Registered users and sysops',
+	'protectsite-createpage-2' => 'Sysops only',
+	'protectsite-edit-0' => 'All users',
+	'protectsite-edit-1' => 'Registered users and sysops',
+	'protectsite-edit-2' => 'Sysops only',
+	'protectsite-move-0' => 'Registered users and sysops',
+	'protectsite-move-1' => 'Sysops only',
+	'protectsite-upload-0' => 'Registered users and sysops',
+	'protectsite-upload-1' => 'Sysops only',
+	'action-protectsite' => 'temporarily block various site modifications',
+	'right-protectsite' => 'Limit actions that can be preformed for some groups for a limited time',
 );
 
-/** Romanian (română)
- * @author Stelistcristi
- */
 $messages['ro'] = array(
 	'protectsite' => 'Protejează un sait',
 	'protectsite-allowall' => 'Toţi utilizatorii',
@@ -740,11 +853,6 @@ $messages['ro'] = array(
 	'protectsite-unprotect' => 'Deprotejează',
 );
 
-/** Russian (русский)
- * @author Kuzura
- * @author Lockal
- * @author Александр Сигачёв
- */
 $messages['ru'] = array(
 	'specialprotectsite-desc' => 'Позволяет администратору сайта [[Special:ProtectSite|временно блокировать различные изменения сайта]]',
 	'protectsite' => 'Защита сайта',
@@ -768,13 +876,25 @@ $messages['ru'] = array(
 	'protectsite-protect' => 'Защитить',
 	'protectsite-unprotect' => 'Снять защиту',
 	'protectsite-nologs' => 'не записывать в журнал',
+	'protectsite-log-suppressed' => 'Length hidden',
+	'protectsite-hide-time-length' => 'Suppress protection length from logs',
+	'protectsite-createaccount-0' => 'All users',
+	'protectsite-createaccount-1' => 'Registered users and sysops',
+	'protectsite-createaccount-2' => 'Sysops only',
+	'protectsite-createpage-0' => 'All users',
+	'protectsite-createpage-1' => 'Registered users and sysops',
+	'protectsite-createpage-2' => 'Sysops only',
+	'protectsite-edit-0' => 'All users',
+	'protectsite-edit-1' => 'Registered users and sysops',
+	'protectsite-edit-2' => 'Sysops only',
+	'protectsite-move-0' => 'Registered users and sysops',
+	'protectsite-move-1' => 'Sysops only',
+	'protectsite-upload-0' => 'Registered users and sysops',
+	'protectsite-upload-1' => 'Sysops only',
+	'action-protectsite' => 'temporarily block various site modifications',
+	'right-protectsite' => 'Limit actions that can be preformed for some groups for a limited time',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
- * @author Rancher
- * @author Verlor
- * @author Жељко Тодоровић
- */
 $messages['sr-ec'] = array(
 	'protectsite' => 'Заштити сајт',
 	'protectsite-allowall' => 'Сви корисници',
@@ -792,10 +912,6 @@ $messages['sr-ec'] = array(
 	'protectsite-unprotect' => 'Скини заштиту',
 );
 
-/** Swedish (svenska)
- * @author Tobulos1
- * @author WikiPhoenix
- */
 $messages['sv'] = array(
 	'specialprotectsite-desc' => 'Låter en administratör [[Special:ProtectSite|tillfälligt blockera olika sidändringar]]',
 	'protectsite' => 'Skydda sida',
@@ -821,16 +937,10 @@ $messages['sv'] = array(
 	'protectsite-nologs' => 'visa inte i loggar',
 );
 
-/** Swahili (Kiswahili)
- * @author Lloffiwr
- */
 $messages['sw'] = array(
 	'protectsite-allowall' => 'Watumiaji wote',
 );
 
-/** Telugu (తెలుగు)
- * @author Veeven
- */
 $messages['te'] = array(
 	'protectsite-text-protect' => '<!-- ఉపయోగించడానికి సూచనలు/వ్యాఖ్యలు/విధానం -->',
 	'protectsite-title' => 'సైటు సంరక్షణ అమరికలు',
@@ -842,9 +952,6 @@ $messages['te'] = array(
 	'protectsite-protect' => 'సంరక్షించు',
 );
 
-/** Tagalog (Tagalog)
- * @author AnakngAraw
- */
 $messages['tl'] = array(
 	'specialprotectsite-desc' => 'Nagpapahintulot sa isang tagapangasiwa ng sityo upang [[Special:ProtectSite|pansamantalang harangin ang sari-saring mga pagbabago sa sityo]]',
 	'protectsite' => 'Prutektahan ang sayt',
@@ -870,10 +977,6 @@ $messages['tl'] = array(
 	'protectsite-nologs' => 'huwag ipakita sa loob ng mga talaan',
 );
 
-/** Ukrainian (українська)
- * @author Prima klasy4na
- * @author Тест
- */
 $messages['uk'] = array(
 	'specialprotectsite-desc' => 'Дозволяє адміністратору сайту [[Special:ProtectSite|тимчасово блокувати різні зміни сайту]]',
 	'protectsite' => 'Захист сайту',
@@ -898,14 +1001,129 @@ $messages['uk'] = array(
 	'protectsite-unprotect' => 'Зняти захист',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
- * @author Hydra
- */
+$messages['vi'] = array(
+	'specialprotectsite-desc' => 'Allows a site administrator to [[Special:ProtectSite|temporarily block various site modifications]]',
+	'protectsite' => 'Protect site',
+	'protectsite-text-protect' => '<!-- Instructions/Comments/Policy for use -->',
+	'protectsite-text-unprotect' => '<!-- Instructions/Comments when protected -->',
+	'protectsite-title' => 'Site protection settings',
+	'protectsite-allowall' => 'All users',
+	'protectsite-allowusersysop' => 'Registered users and sysops',
+	'protectsite-allowsysop' => 'Sysops only',
+	'protectsite-createaccount' => 'Allow creation of new accounts by',
+	'protectsite-createpage' => 'Allow creation of pages by',
+	'protectsite-edit' => 'Allow editing of pages by',
+	'protectsite-move' => 'Allow moving of pages by',
+	'protectsite-upload' => 'Allow file uploads by',
+	'protectsite-log-suppressed' => 'Length hidden',
+	'protectsite-hide-time-length' => 'Suppress protection length from logs',
+	'protectsite-timeout' => 'Timeout:',
+	'protectsite-timeout-error' => "'''Invalid Timeout.'''",
+	'protectsite-maxtimeout' => 'Maximum:',
+	'protectsite-comment' => 'Comment:',
+	'protectsite-ucomment' => 'Unprotect comment:',
+	'protectsite-until' => 'Protected until:',
+	'protectsite-protect' => 'Protect',
+	'protectsite-unprotect' => 'Unprotect',
+	'protectsite-nologs' => 'do not show in logs',
+	'protectsite-createaccount-0' => 'All users',
+	'protectsite-createaccount-1' => 'Registered users and sysops',
+	'protectsite-createaccount-2' => 'Sysops only',
+	'protectsite-createpage-0' => 'All users',
+	'protectsite-createpage-1' => 'Registered users and sysops',
+	'protectsite-createpage-2' => 'Sysops only',
+	'protectsite-edit-0' => 'All users',
+	'protectsite-edit-1' => 'Registered users and sysops',
+	'protectsite-edit-2' => 'Sysops only',
+	'protectsite-move-0' => 'Registered users and sysops',
+	'protectsite-move-1' => 'Sysops only',
+	'protectsite-upload-0' => 'Registered users and sysops',
+	'protectsite-upload-1' => 'Sysops only',
+	'action-protectsite' => 'temporarily block various site modifications',
+	'right-protectsite' => 'Limit actions that can be preformed for some groups for a limited time',
+);
+
 $messages['zh-hans'] = array(
 	'protectsite-allowall' => '所有用户',
 	'protectsite-allowsysop' => '管理员而已',
 	'protectsite-maxtimeout' => '最多：',
 	'protectsite-protect' => '保护',
-	'protectsite-unprotect' => '不保护',
+	'protectsite-unprotect' => '取消保护',
+	'protectsite' => '保护全站',
+	'specialprotectsite-desc' => 'Allows a site administrator to [[Special:ProtectSite|temporarily block various site modifications]]',
+	'protectsite-text-protect' => '<!-- Instructions/Comments/Policy for use -->',
+	'protectsite-text-unprotect' => '<!-- Instructions/Comments when protected -->',
+	'protectsite-title' => 'Site protection settings',
+	'protectsite-allowusersysop' => 'Registered users and sysops',
+	'protectsite-createaccount' => 'Allow creation of new accounts by',
+	'protectsite-createpage' => 'Allow creation of pages by',
+	'protectsite-edit' => 'Allow editing of pages by',
+	'protectsite-move' => 'Allow moving of pages by',
+	'protectsite-upload' => 'Allow file uploads by',
+	'protectsite-log-suppressed' => 'Length hidden',
+	'protectsite-hide-time-length' => 'Suppress protection length from logs',
+	'protectsite-timeout' => 'Timeout:',
+	'protectsite-timeout-error' => "'''Invalid Timeout.'''",
+	'protectsite-comment' => 'Comment:',
+	'protectsite-ucomment' => 'Unprotect comment:',
+	'protectsite-until' => 'Protected until:',
+	'protectsite-nologs' => 'do not show in logs',
+	'protectsite-createaccount-0' => 'All users',
+	'protectsite-createaccount-1' => 'Registered users and sysops',
+	'protectsite-createaccount-2' => 'Sysops only',
+	'protectsite-createpage-0' => 'All users',
+	'protectsite-createpage-1' => 'Registered users and sysops',
+	'protectsite-createpage-2' => 'Sysops only',
+	'protectsite-edit-0' => 'All users',
+	'protectsite-edit-1' => 'Registered users and sysops',
+	'protectsite-edit-2' => 'Sysops only',
+	'protectsite-move-0' => 'Registered users and sysops',
+	'protectsite-move-1' => 'Sysops only',
+	'protectsite-upload-0' => 'Registered users and sysops',
+	'protectsite-upload-1' => 'Sysops only',
+	'action-protectsite' => 'temporarily block various site modifications',
+	'right-protectsite' => 'Limit actions that can be preformed for some groups for a limited time',
+);
+
+$messages['zh-hant'] = array(
+	'protectsite-unprotect' => '取消保護',
+	'protectsite' => '保護全站',
+	'specialprotectsite-desc' => 'Allows a site administrator to [[Special:ProtectSite|temporarily block various site modifications]]',
+	'protectsite-text-protect' => '<!-- Instructions/Comments/Policy for use -->',
+	'protectsite-text-unprotect' => '<!-- Instructions/Comments when protected -->',
+	'protectsite-title' => 'Site protection settings',
+	'protectsite-allowall' => 'All users',
+	'protectsite-allowusersysop' => 'Registered users and sysops',
+	'protectsite-allowsysop' => 'Sysops only',
+	'protectsite-createaccount' => 'Allow creation of new accounts by',
+	'protectsite-createpage' => 'Allow creation of pages by',
+	'protectsite-edit' => 'Allow editing of pages by',
+	'protectsite-move' => 'Allow moving of pages by',
+	'protectsite-upload' => 'Allow file uploads by',
+	'protectsite-log-suppressed' => 'Length hidden',
+	'protectsite-hide-time-length' => 'Suppress protection length from logs',
+	'protectsite-timeout' => 'Timeout:',
+	'protectsite-timeout-error' => "'''Invalid Timeout.'''",
+	'protectsite-maxtimeout' => 'Maximum:',
+	'protectsite-comment' => 'Comment:',
+	'protectsite-ucomment' => 'Unprotect comment:',
+	'protectsite-until' => 'Protected until:',
+	'protectsite-protect' => 'Protect',
+	'protectsite-nologs' => 'do not show in logs',
+	'protectsite-createaccount-0' => 'All users',
+	'protectsite-createaccount-1' => 'Registered users and sysops',
+	'protectsite-createaccount-2' => 'Sysops only',
+	'protectsite-createpage-0' => 'All users',
+	'protectsite-createpage-1' => 'Registered users and sysops',
+	'protectsite-createpage-2' => 'Sysops only',
+	'protectsite-edit-0' => 'All users',
+	'protectsite-edit-1' => 'Registered users and sysops',
+	'protectsite-edit-2' => 'Sysops only',
+	'protectsite-move-0' => 'Registered users and sysops',
+	'protectsite-move-1' => 'Sysops only',
+	'protectsite-upload-0' => 'Registered users and sysops',
+	'protectsite-upload-1' => 'Sysops only',
+	'action-protectsite' => 'temporarily block various site modifications',
+	'right-protectsite' => 'Limit actions that can be preformed for some groups for a limited time',
 );
 

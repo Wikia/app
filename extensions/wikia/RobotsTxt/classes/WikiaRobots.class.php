@@ -64,6 +64,7 @@ class WikiaRobots {
 		NS_SPECIAL,
 		NS_TEMPLATE,
 		NS_TEMPLATE_TALK,
+		NS_USER_TALK,
 	];
 
 	/**
@@ -72,7 +73,15 @@ class WikiaRobots {
 	 * @var array
 	 */
 	private $blockedPaths = [
-		'/d/u/', // User pages for discussions
+		// User pages for discussions
+		'/d/u/',
+
+		// Fandom old URLs
+		'/fandom?p=',
+
+		// logging for ad-recovery (ADEN-3930)
+		'/wikia.php?controller=ARecoveryEngineApi',
+		'/api/v1/ARecoveryEngine'
 	];
 
 	/**
@@ -83,51 +92,13 @@ class WikiaRobots {
 	private $blockedParams = [
 		'action',
 		'feed',
+		'from', // user-supplied legacy MW pagination
 		'oldid',
 		'printable',
 		'redirect',
 		'useskin',
 		'uselang',
 		'veaction',
-	];
-
-	/**
-	 * Robots we want block on robots.txt level
-	 *
-	 * Only applied if $wgRobotsTxtRemoveDeprecatedDirectives = false
-	 *
-	 * @var string[]
-	 */
-	private $blockedRobots = [
-		'IsraBot',
-		'Orthogaffe',
-		'UbiCrawler',
-		'DOC',
-		'Zao',
-		'sitecheck.internetseer.com',
-		'Zealbot',
-		'MSIECrawler',
-		'SiteSnagger',
-		'WebStripper',
-		'WebCopier',
-		'Fetch',
-		'Offline Explorer',
-		'Teleport',
-		'TeleportPro',
-		'WebZIP',
-		'linko',
-		'HTTrack',
-		'Microsoft.URL.Control',
-		'Xenu',
-		'larbin',
-		'libwww',
-		'ZyBORG',
-		'Download Ninja',
-		'sitebot',
-		'wget',
-		'k2spider',
-		'NPBot',
-		'WebReaper',
 	];
 
 	/**
@@ -150,9 +121,7 @@ class WikiaRobots {
 	 * @param PathBuilder $pathBuilder
 	 */
 	public function __construct( PathBuilder $pathBuilder ) {
-		global $wgAllowSpecialImagesInRobots,
-			   $wgEnableLocalSitemap,
-			   $wgRequest,
+		global $wgRequest,
 			   $wgRobotsTxtCustomRules,
 			   $wgWikiaEnvironment;
 
@@ -164,14 +133,6 @@ class WikiaRobots {
 			foreach ( (array) $wgRobotsTxtCustomRules['allowSpecialPage'] as $page ) {
 				$this->allowedSpecialPages[$page] = 'allow';
 			}
-		}
-
-		if ( !empty( $wgEnableLocalSitemap ) ) {
-			$this->allowedSpecialPages['Allpages'] = 'allow';
-		}
-
-		if ( !empty( $wgAllowSpecialImagesInRobots ) ) {
-			$this->allowedSpecialPages['Images'] = 'allow';
 		}
 
 		// TODO: reverse the logic
@@ -186,17 +147,22 @@ class WikiaRobots {
 	}
 
 	public function configureRobotsBuilder( RobotsTxt $robots ) {
-		global $wgEnableSpecialSitemapExt, $wgRobotsTxtRemoveDeprecatedDirectives, $wgServer;
+		global $wgEnableSpecialSitemapExt,
+		       $wgEnableSitemapXmlExt,
+		       $wgRobotsTxtBlockedWiki,
+		       $wgSitemapXmlExposeInRobots,
+		       $wgServer;
 
-
-		if ( !$this->accessAllowed ) {
+		if ( !$this->accessAllowed || !empty( $wgRobotsTxtBlockedWiki ) ) {
 			// No crawling preview, verify, sandboxes, showcase, etc
 			$robots->addDisallowedPaths( [ '/' ] );
 			return $robots;
 		}
 
 		// Sitemap
-		if ( !empty( $wgEnableSpecialSitemapExt ) ) {
+		if ( !empty( $wgEnableSitemapXmlExt ) && !empty( $wgSitemapXmlExposeInRobots ) ) {
+			$robots->setSitemap( $wgServer . '/sitemap-newsitemapxml-index.xml' );
+		} elseif ( !empty( $wgEnableSpecialSitemapExt ) ) {
 			$robots->setSitemap( $wgServer . '/sitemap-index.xml' );
 		}
 
@@ -221,19 +187,6 @@ class WikiaRobots {
 		// Allow special pages
 		foreach ( array_keys( $this->allowedSpecialPages ) as $page ) {
 			$robots->addAllowedPaths( $this->pathBuilder->buildPathsForSpecialPage( $page, true ) );
-		}
-
-		if ( empty( $wgRobotsTxtRemoveDeprecatedDirectives ) ) {
-			// Block robots
-			$robots->addBlockedRobots( $this->blockedRobots );
-
-			// Deprecated items, probably we should delete them
-			$robots->addDisallowedPaths( [
-				'/w/',
-				'/trap/',
-				'/dbdumps/',
-				'/wikistats/',
-			] );
 		}
 
 		return $robots;

@@ -10,31 +10,29 @@
  *
  */
 
-$wgExtensionCredits['specialpage'][] = array(
+$wgExtensionCredits['specialpage'][] = [
 	'name' => 'Chat',
-	'author' => array( 'Christian Williams', 'Sean Colombo' ),
+	'author' => [ 'Christian Williams', 'Sean Colombo' ],
 	'url' => 'http://community.wikia.com/wiki/Chat',
 	'descriptionmsg' => 'chat-desc',
-);
+];
 
-$dir = dirname( __FILE__ );
-
-// Allow admins to control banning/unbanning and chatmod-status
-
+$dir = __DIR__;
 
 // autoloaded classes
 $wgAutoloadClasses['Chat'] = "$dir/Chat.class.php";
 $wgAutoloadClasses['ChatAjax'] = "$dir/ChatAjax.class.php";
-$wgAutoloadClasses['ChatHelper'] = "$dir/ChatHelper.php";
-$wgAutoloadClasses['ChatEntryPoint'] = "$dir/ChatEntryPoint.class.php";
+$wgAutoloadClasses['ChatWidget'] = "$dir/ChatWidget.class.php";
+$wgAutoloadClasses['ChatUser'] = "$dir/ChatUser.class.php";
+$wgAutoloadClasses['ChatConfig'] = "$dir/ChatConfig.class.php";
+$wgAutoloadClasses['ChatHooks'] = "$dir/ChatHooks.class.php";
 $wgAutoloadClasses['ChatController'] = "$dir/ChatController.class.php";
 $wgAutoloadClasses['ChatRailController'] = "$dir/ChatRailController.class.php";
+$wgAutoloadClasses['ChatBanTimeOptions'] = "$dir/ChatBanTimeOptions.class.php";
 $wgAutoloadClasses['SpecialChat'] = "$dir/SpecialChat.class.php";
-$wgAutoloadClasses['NodeApiClient'] = "$dir/NodeApiClient.class.php";
-$wgAutoloadClasses['ChatfailoverSpecialController'] = "$dir/ChatfailoverSpecialController.class.php";
+$wgAutoloadClasses['ChatServerApiClient'] = "$dir/ChatServerApiClient.class.php";
 $wgAutoloadClasses['ChatBanListSpecialController'] = "$dir/ChatBanListSpecialController.class.php";
-
-$wgSpecialPages[ 'Chatfailover'] = 'ChatfailoverSpecialController';
+$wgAutoloadClasses['ChatBanData'] = "$dir/ChatBanListSpecial_helper.php";
 
 // special pages
 $wgSpecialPages['Chat'] = 'SpecialChat';
@@ -43,19 +41,17 @@ $wgSpecialPages['ChatBanList'] = 'ChatBanListSpecialController';
 // i18n
 $wgExtensionMessagesFiles['Chat'] = $dir . '/Chat.i18n.php';
 $wgExtensionMessagesFiles['ChatAliases'] = $dir . '/Chat.aliases.php';
-$wgExtensionMessagesFiles['Chatfailover'] = $dir . '/Chatfailover.i18n.php';
 $wgExtensionMessagesFiles['ChatDefaultEmoticons'] = $dir . '/ChatDefaultEmoticons.i18n.php';
 
 // hooks
-$wgHooks[ 'GetRailModuleList' ][] = 'ChatHelper::onGetRailModuleList';
-$wgHooks[ 'StaffLog::formatRow' ][] = 'ChatHelper::onStaffLogFormatRow';
-$wgHooks[ 'MakeGlobalVariablesScript' ][] = 'ChatHelper::onMakeGlobalVariablesScript';
-$wgHooks[ 'ParserFirstCallInit' ][] = 'ChatEntryPoint::onParserFirstCallInit';
-$wgHooks[ 'LinkEnd' ][] = 'ChatHelper::onLinkEnd';
-$wgHooks[ 'BeforePageDisplay' ][] = 'ChatHelper::onBeforePageDisplay';
-$wgHooks[ 'ContributionsToolLinks' ][] = 'ChatHelper::onContributionsToolLinks';
-$wgHooks[ 'LogLine' ][] = 'ChatHelper::onLogLine';
-$wgHooks[ 'UserGetRights' ][] = 'chatAjaxonUserGetRights';
+$wgHooks['GetRailModuleList'][] = 'ChatHooks::onGetRailModuleList';
+$wgHooks['MakeGlobalVariablesScript'][] = 'ChatHooks::onMakeGlobalVariablesScript';
+$wgHooks['LinkEnd'][] = 'ChatHooks::onLinkEnd';
+$wgHooks['BeforePageDisplay'][] = 'ChatHooks::onBeforePageDisplay';
+$wgHooks['ContributionsToolLinks'][] = 'ChatHooks::onContributionsToolLinks';
+$wgHooks['LogLine'][] = 'ChatHooks::onLogLine';
+$wgHooks['UserGetRights'][] = 'ChatHooks::onUserGetRights';
+$wgHooks['ParserFirstCallInit'][] = 'ChatWidget::onParserFirstCallInit';
 
 // logs
 $wgLogTypes[] = 'chatban';
@@ -68,39 +64,88 @@ $wgLogNames['chatconnect'] = 'chat-chatconnect-log';
 $wgLogActions['chatconnect/chatconnect'] = 'chat-chatconnect-log-entry';
 $wgLogRestrictions["chatconnect"] = 'checkuser';
 
-$wgLogActionsHandlers['chatban/chatbanchange'] = "ChatHelper::formatLogEntry";
-$wgLogActionsHandlers['chatban/chatbanremove'] = "ChatHelper::formatLogEntry";
-$wgLogActionsHandlers['chatban/chatbanadd'] = "ChatHelper::formatLogEntry";
+$wgLogActionsHandlers['chatban/chatbanchange'] = "ChatHooks::formatLogEntry";
+$wgLogActionsHandlers['chatban/chatbanremove'] = "ChatHooks::formatLogEntry";
+$wgLogActionsHandlers['chatban/chatbanadd'] = "ChatHooks::formatLogEntry";
 
-// register messages package for JS
-JSMessages::registerPackage( 'Chat', array(
-	'chat-*',
-) );
+/**
+ * ResourceLoader module for chat ban modal
+ */
+$wgResourceModules['ext.Chat2.ChatBanModal'] = [
+	'scripts' => [
+		'js/views/ChatBanModal.js',
+		'js/controllers/ChatBanModalLogs.js'
+	],
+	'messages' => [
+		'chat-log-reason-banadd',
+		'chat-ban-modal-change-ban-heading',
+		'chat-ban-modal-button-cancel',
+		'chat-ban-modal-button-ok',
+		'chat-ban-modal-button-change-ban',
+	],
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/Chat2'
+];
 
-JSMessages::registerPackage( 'ChatBanModal', array(
-	'chat-log-reason-banadd',
-	'chat-ban-modal-change-ban-heading',
-	'chat-ban-modal-button-cancel',
-	'chat-ban-modal-button-ok',
-	'chat-ban-modal-button-change-ban',
-) );
+/**
+ * ResourceLoader module for Chat Rail module and widget
+ */
+$wgResourceModules['ext.Chat2.ChatWidget'] = [
+	'messages' => [
+		'chat-join-the-chat',
+		'chat-start-a-chat',
+		'chat-user-menu-message-wall',
+		'chat-user-menu-talk-page',
+		'chat-user-menu-contribs',
+		'chat-edit-count',
+		'chat-member-since',
+	],
+];
 
-JSMessages::registerPackage( 'ChatEntryPoint', array(
-	'chat-join-the-chat',
-	'chat-start-a-chat',
-	'chat-user-menu-message-wall',
-	'chat-user-menu-talk-page',
-	'chat-user-menu-contribs',
-	'chat-live2',
-	'chat-edit-count',
-	'chat-member-since'
-) );
+
+/**
+ * ResourceLoader module for Special:ChatBanList
+ */
+$wgResourceModules[ 'ext.Chat2.ChatBanList' ] = [
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/Chat2',
+	'messages' => [
+		'table_pager_limit',
+		'table_pager_empty',
+		'listusersrecordspager',
+		'search',
+		'livepreview-loading',
+		'table_pager_first',
+		'table_pager_prev',
+		'table_pager_next',
+		'table_pager_last',
+		'ipblocklist-submit',
+		'blocklist-timestamp',
+		'blocklist-target',
+		'blocklist-expiry',
+		'blocklist-by',
+		'blocklist-reason',
+	],
+	'styles' => [
+		'../Listusers/css/table.scss',
+	],
+	'scripts' => [
+		'js/ChatBanList.js',
+	],
+	'dependencies' => [
+		'jquery.dataTables',
+		'wikia.nirvana',
+	],
+
+];
+
 
 /**
  * ResourceLoader module
  */
 $wgResourceModules['ext.Chat2'] = [
 	'messages' => [
+		// Inline alerts
 		'chat-user-permanently-disconnected',
 		'chat-welcome-message',
 		'chat-user-joined',
@@ -115,38 +160,64 @@ $wgResourceModules['ext.Chat2'] = [
 		'chat-ban-modal-heading',
 		'chat-ban-cannt-undo',
 		'chat-browser-is-notsupported',
+		'chat-message-was-too-long',
+		'chat-kick-cant-kick-moderator',
+		'chat-err-connected-from-another-browser',
+		'chat-err-communicating-with-mediawiki',
+		'chat-kick-you-need-permission',
+		'chat-inlinealert-a-made-b-chatmod',
+		// Chat ban modal
+		'chat-ban-modal-heading',
+		'chat-ban-modal-change-ban-heading',
+		'chat-ban-modal-button-cancel',
+		'chat-ban-modal-button-ok',
+		'chat-ban-modal-button-change-ban',
+		'close',
+		// User menu options
+		'chat-member-since',
+		'chat-edit-count',
+		'chat-user-menu-message-wall',
+		'chat-user-menu-talk-page',
+		'chat-user-menu-contribs',
+		'chat-user-menu-private',
+		'chat-user-menu-give-chat-mod',
+		'chat-user-menu-kick',
+		'chat-user-menu-ban',
+		'chat-user-menu-private-block',
+		'chat-user-menu-private-allow',
+		'chat-user-menu-private-close',
 
+		// Private messages
+		'chat-private-headline',
+		'chat-user-blocked',
+		'chat-user-allow',
+
+		// misc
+		'chat-user-throttled',
 	],
+	'dependencies' => [ 'mediawiki.jqueryMsg' ],
 	'position' => 'top'
 ];
 
 
 define( 'CHAT_TAG', 'chat' );
-define( 'CUC_TYPE_CHAT', 128 );	// for CheckUser operation type
-
-/**
- * Add read right to ChatAjax am reqest.
- * That is solving problems with private wikis and chat (communitycouncil.wikia.com)
- */
-function chatAjaxonUserGetRights( $user, &$aRights ) {
-	global $wgRequest;
-	if ( $wgRequest->getVal( 'action' ) === 'ajax' && $wgRequest->getVal( 'rs' ) === 'ChatAjax' ) {
-		$aRights[] = 'read';
-	}
-	return true;
-}
+// for CheckUser operation type
+define( 'CUC_TYPE_CHAT', 128 );
 
 // ajax
 $wgAjaxExportList[] = 'ChatAjax';
 function ChatAjax() {
-	global $wgChatDebugEnabled;
+	global $wgChatDebugEnabled, $wgRequest, $wgUser, $wgMemc;
 
 	if ( !empty( $wgChatDebugEnabled ) ) {
 		Wikia::log( __METHOD__, "", "Chat debug:" . json_encode( $_REQUEST ) );
 	}
 
-	global $wgRequest, $wgUser, $wgMemc;
 	$method = $wgRequest->getVal( 'method', false );
+
+	$json = json_encode( [
+		'error' => 'Invalid method',
+	] );
 
 	if ( method_exists( 'ChatAjax', $method ) ) {
 		wfProfileIn( __METHOD__ );
@@ -155,8 +226,8 @@ function ChatAjax() {
 
 		// macbre: check to protect against BugId:27916
 		if ( !is_null( $key ) ) {
-			$data = $wgMemc->get( $key, false );
-			if ( !empty( $data ) ) {
+			$data = $wgMemc->get( $key );
+			if ( !empty( $data ) && !empty( $data['user_id'] ) ) {
 				$wgUser = User::newFromId( $data['user_id'] );
 			}
 		}
@@ -165,11 +236,13 @@ function ChatAjax() {
 
 		// send array as JSON
 		$json = json_encode( $data );
-		$response = new AjaxResponse( $json );
-		$response->setCacheDuration( 0 ); // don't cache any of these requests
-		$response->setContentType( 'application/json; charset=utf-8' );
-
-		wfProfileOut( __METHOD__ );
-		return $response;
 	}
+	$response = new AjaxResponse( $json );
+	// don't cache any of these requests
+	$response->setCacheDuration( 0 );
+	$response->setContentType( 'application/json; charset=utf-8' );
+
+	wfProfileOut( __METHOD__ );
+
+	return $response;
 }

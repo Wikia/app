@@ -105,18 +105,8 @@ function tabberObj(argsObj)
 	 */
 	for (arg in argsObj) { this[arg] = argsObj[arg]; }
 
-	/* Create regular expressions for the class names; Note: if you
-	 change the class names after a new object is created you must
-	 also change these regular expressions.
-	 */
-	this.REclassMain = new RegExp('\\b' + this.classMain + '\\b', 'gi');
-	this.REclassMainLive = new RegExp('\\b' + this.classMainLive + '\\b', 'gi');
-	this.REclassTab = new RegExp('\\b' + this.classTab + '\\b', 'gi');
-	this.REclassTabDefault = new RegExp('\\b' + this.classTabDefault + '\\b', 'gi');
-	this.REclassTabHide = new RegExp('\\b' + this.classTabHide + '\\b', 'gi');
-
 	/* Array of objects holding info about each tab */
-	this.tabs = new Array();
+	this.tabs = [];
 
 	/* If the main tabber div was specified, call init() now */
 	if (this.div) {
@@ -157,9 +147,6 @@ tabberObj.prototype.init = function(e)
 		aId, /* A unique id for DOM_a */
 		headingElement; /* searching for text to use in the tab */
 
-	/* Verify that the browser supports DOM scripting */
-	if (!document.getElementsByTagName) { return false; }
-
 	/* If the main DIV has an ID then save it. */
 	if (e.id) {
 		this.id = e.id;
@@ -170,14 +157,10 @@ tabberObj.prototype.init = function(e)
 
 	/* Loop through an array of all the child nodes within our tabber element. */
 	childNodes = e.childNodes;
-	for(i=0; i < childNodes.length; i++) {
-
-		/* Find the nodes where class="tabbertab" */
-		if(childNodes[i].className &&
-			childNodes[i].className.match(this.REclassTab)) {
-
+	for (i=0; i < childNodes.length; i++) {
+		if (childNodes[i].classList.contains(this.classTab)) {
 			/* Create a new object to save info about this tab */
-			t = new Object();
+			t = {};
 
 			/* Save a pointer to the div for this tab */
 			t.div = childNodes[i];
@@ -188,8 +171,8 @@ tabberObj.prototype.init = function(e)
 			/* If the class name contains classTabDefault,
 			 then select this tab by default.
 			 */
-			if (childNodes[i].className.match(this.REclassTabDefault)) {
-				defaultTab = this.tabs.length-1;
+			if (childNodes[i].classList.contains(this.classTabDefault)) {
+				defaultTab = this.tabs.length - 1;
 			}
 		}
 	}
@@ -211,7 +194,7 @@ tabberObj.prototype.init = function(e)
 		t.headingText = t.div.title;
 
 		/* Remove the title attribute to prevent a tooltip from appearing */
-		if (this.removeTitle) { t.div.title = ''; }
+		if (this.removeTitle) { t.div.removeAttribute('title'); }
 
 		if (!t.headingText) {
 
@@ -237,7 +220,7 @@ tabberObj.prototype.init = function(e)
 			/* Title was not found (or is blank) so automatically generate a
 			 number for the tab.
 			 */
-			t.headingText = i + 1;
+			t.headingText = '' + i + 1;
 		}
 
 		/* Create a list element for the tab */
@@ -296,7 +279,8 @@ tabberObj.prototype.init = function(e)
 	e.insertBefore(DOM_ul, e.firstChild);
 
 	/* Make the tabber div "live" so different CSS can be applied */
-	e.className = e.className.replace(this.REclassMain, this.classMainLive);
+	e.classList.remove(this.classMain);
+	e.classList.add(this.classMainLive);
 
 	/* Activate the default tab, and do not call the onclick handler */
 	/* Wikia Change Start */
@@ -308,6 +292,9 @@ tabberObj.prototype.init = function(e)
 	if (typeof this.onLoad == 'function') {
 		this.onLoad({tabber:this});
 	}
+
+	// Wikia change - hide tabbers by default and let JS show them -> for lazy loading images
+	e.style.display = 'block';
 
 	return this;
 };
@@ -388,9 +375,8 @@ tabberObj.prototype.tabHide = function(tabberIndex)
 	div = this.tabs[tabberIndex].div;
 
 	/* Hide the tab contents by adding classTabHide to the div */
-	if (!div.className.match(this.REclassTabHide)) {
-		div.className += ' ' + this.classTabHide;
-	}
+	div.classList.add(this.classTabHide);
+
 	this.navClearActive(tabberIndex);
 
 	return this;
@@ -412,7 +398,7 @@ tabberObj.prototype.tabShow = function(tabberIndex)
 	div = this.tabs[tabberIndex].div;
 
 	/* Remove classTabHide from the div */
-	div.className = div.className.replace(this.REclassTabHide, '');
+	div.classList.remove(this.classTabHide);
 
 	/* Mark this tab navigation link as "active" */
 	this.navSetActive(tabberIndex);
@@ -422,7 +408,8 @@ tabberObj.prototype.tabShow = function(tabberIndex)
 	// of some elements on the page may have changed as a result
 	// of switching tabs; e.g. lazy loaded images may now be visible
 	// and should load
-	$(window).trigger('scroll');
+	var scrollEvent = new CustomEvent('scroll');
+	window.dispatchEvent(scrollEvent);
 	/* Wikia change end */
 
 	/* If the user specified an onTabDisplay function, call it now. */
@@ -527,11 +514,8 @@ function tabberAutomatic(tabberArgs)
 	/* First get an array of all DIV elements and loop through them */
 	divs = document.getElementsByTagName("div");
 	for (i=0; i < divs.length; i++) {
-
 		/* Is this DIV the correct class? */
-		if (divs[i].className &&
-			divs[i].className.match(tempObj.REclassMain)) {
-
+		if (divs[i].classList.contains(tempObj.classMain)) {
 			/* Now tabify the DIV */
 			tabberArgs.div = divs[i];
 			divs[i].tabber = new tabberObj(tabberArgs);

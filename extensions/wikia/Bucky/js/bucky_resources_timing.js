@@ -16,7 +16,7 @@ define('bucky.resourceTiming', ['jquery', 'wikia.window', 'wikia.log', 'bucky'],
 	'use strict';
 
 	var assetIdx = 0,
-		wikiaAssetRegex = /^https?:\/\/([^\/]+)(\.wikia-dev\.com|\.wikia\.com|\.wikia\.nocookie\.net)\//;
+		wikiaAssetRegex = /^https?:\/\/([^\/]+)(\.wikia-dev\.(us|pl|com)|\.wikia\.com|\.wikia\.nocookie\.net)\//;
 
 	/**
 	 * Check the support of ResourceTiming
@@ -41,7 +41,7 @@ define('bucky.resourceTiming', ['jquery', 'wikia.window', 'wikia.log', 'bucky'],
 	/**
 	 * Returns the domain name from the full URL
 	 *
-	 * Only last two segments will be returned, e.g. "vignette1.wikia.nocookie.net" will give you "nocookie.net"
+	 * Only last two segments will be returned, e.g. "vignette.wikia.nocookie.net" will give you "nocookie.net"
 	 *
 	 * @param {string} url URL to get domain for
 	 * @return {string|false} domain or false when URLs in invalid

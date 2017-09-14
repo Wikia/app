@@ -4,13 +4,13 @@ namespace Wikia\Service\User\Preferences;
 
 use Doctrine\Common\Cache\CacheProvider;
 use Doctrine\Common\Cache\VoidCache;
+use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
-use PHPUnit_Framework_TestCase;
 use Wikia\Domain\User\Preferences\UserPreferences;
 use Wikia\Persistence\User\Preferences\PreferencePersistence;
 use Wikia\Service\PersistenceException;
 
-class PreferenceServiceImplTest extends PHPUnit_Framework_TestCase {
+class PreferenceServiceImplTest extends TestCase {
 	const TEST_WIKI_ID = 123;
 
 	/** @var int */
@@ -34,7 +34,13 @@ class PreferenceServiceImplTest extends PHPUnit_Framework_TestCase {
 			->setLocalPreference( 'wiki-pref', self::TEST_WIKI_ID, '0' );
 		$this->cache = new VoidCache();
 		$this->persistence = $this->getMockBuilder( PreferencePersistence::class )
-			->setMethods( ['save', 'get', 'deleteAll', 'findWikisWithLocalPreferenceValue'] )
+			->setMethods( [
+				'save',
+				'get',
+				'deleteAll',
+				'findWikisWithLocalPreferenceValue',
+				'findUsersWithGlobalPreferenceValue'
+			] )
 			->disableOriginalConstructor()
 			->getMock();
 	}

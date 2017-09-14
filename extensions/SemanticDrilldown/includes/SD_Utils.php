@@ -188,7 +188,7 @@ class SDUtils {
 		while ( $row = $dbr->fetchRow( $res ) ) {
 			// There should only be one row.
 			$filtersStr = $row['pp_value'];
-			$filtersInfo = Wikia\Util\Serialize::safeUnserialize( $filtersStr );
+			$filtersInfo = unserialize( $filtersStr, [ 'allowed_classes' => false ] );
 			foreach ( $filtersInfo as $filterName => $filterValues ) {
 				$curFilter = new SDFilter();
 				$curFilter->setName( $filterName );
@@ -423,8 +423,8 @@ class SDUtils {
 	 * Set values in the page_props table based on the presence of the
 	 * 'HIDEFROMDRILLDOWN' and 'SHOWINDRILLDOWN' magic words in a page
 	 */
-	static function handleShowAndHide( &$parser, &$text ) {
-		global $wgOut, $wgAction;
+	static function handleShowAndHide( Parser $parser, &$text ) {
+
 		$mw_hide = MagicWord::get( 'MAG_HIDEFROMDRILLDOWN' );
 		if ( $mw_hide->matchAndRemove( $text ) ) {
 			$parser->mOutput->setProperty( 'hidefromdrilldown', 'y' );
@@ -456,7 +456,7 @@ class SDUtils {
 		}
 	}
 
-	public static function addToAdminLinks( &$admin_links_tree ) {
+	public static function addToAdminLinks( $admin_links_tree ) {
 		$browse_search_section = $admin_links_tree->getSection( wfMessage( 'adminlinks_browsesearch' )->text() );
 		$sd_row = new ALRow( 'sd' );
 		$sd_row->addItem( ALItem::newFromSpecialPage( 'BrowseData' ) );

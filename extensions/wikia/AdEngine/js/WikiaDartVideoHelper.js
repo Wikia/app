@@ -35,28 +35,37 @@ define('ext.wikia.adEngine.dartVideoHelper', ['wikia.log', 'wikia.location', 'ex
 	 *
 	 * @return {String} URL of DART script
 	 */
-	function getUrl() {
+	function getUrl(extraParams) {
 		log('getUrl', 5, logGroup);
 
 		var ord = Math.round(Math.random() * 23945290875),
 			out = [
-			'http://pubads.g.doubleclick.net/gampad/ads?ciu_szs',
-			'&iu=/5441/wka.ooyalavideo/_page_targeting',
-			'&cust_params=' + encodeURIComponent(getCustParams()),
-			'&sz=320x240',
-			'&impl=s',
-			'&output=xml_vast2',
-			'&gdfp_req=1',
-			'&env=vp',
-			'&ad_rule=0',
-			'&unviewed_position_start=1',
-			'&url=' + location.origin,
-			'&correlator=' + ord
-		].join('');
+				'http://pubads.g.doubleclick.net/gampad/ads?ciu_szs',
+				'&iu=/5441/wka.ooyalavideo/_page_targeting',
+				'&cust_params=' + encodeURIComponent(getCustParams()),
+				'&sz=320x240',
+				'&impl=s',
+				'&output=xml_vast2',
+				'&gdfp_req=1',
+				'&env=vp',
+				'&ad_rule=0',
+				'&unviewed_position_start=1',
+				'&url=' + encodeURIComponent(location.href),
+				'&description_url=' + encodeURIComponent(location.href),
+				'&correlator=' + ord
+			],
+			url;
 
-		log(out, 5, logGroup);
+		extraParams = extraParams || [];
+		extraParams.forEach(function (param) {
+			out.push('&' + param);
+		});
 
-		return out;
+		url = out.join('');
+
+		log(url, 5, logGroup);
+
+		return url;
 	}
 
 	return {

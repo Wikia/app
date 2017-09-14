@@ -20,28 +20,26 @@ class WallController extends WallBaseController {
 	}
 
 	public function messageDeleted() {
-		$id = $this->app->wg->Title->getText();
+		$id = $this->wg->Title->getText();
 
 		$wm	= WallMessage::newFromId( $id );
 
 		if ( empty( $wm ) ) {
-			$this->response->setVal( 'wallOwner', '' );
-			$this->response->setVal( 'wallUrl',  '' );
-		} else {
-
-			$user = $wm->getWallOwner();
-			$user_displayname = $user->getName();
-
-			$this->response->setVal( 'wallOwner', $user_displayname );
-			$this->response->setVal( 'wallUrl', $wm->getArticleTitle()->getFullURL() );
-
-			$this->response->setVal( 'showViewLink', $wm->canViewDeletedMessage( $this->app->wg->User ) );
-			$this->response->setVal( 'viewUrl', $this->app->wg->Title->getFullUrl( 'show=1' ) );
-
-			$this->response->setVal( 'returnTo', wfMsg( 'wall-deleted-msg-return-to', $user_displayname ) );
-
-			wfRunHooks( 'WallMessageDeleted', [ &$wm, &$this->response ] );
+			$this->response->setVal( 'wallUrl', '' );
+			return;
 		}
+
+		$parentTitle = $wm->getArticleTitle();
+
+		$this->response->setVal( 'wallUrl', $parentTitle->getFullURL() );
+
+		$this->response->setVal( 'showViewLink', $wm->canViewDeletedMessage( $this->wg->User ) );
+		$this->response->setVal( 'viewUrl', $this->wg->Title->getFullUrl( 'show=1' ) );
+
+		$this->response->setVal( 'returnTo',
+			wfMessage( 'wall-deleted-msg-return-to', $parentTitle->getBaseText() )->escaped() );
+
+		Hooks::run( 'WallMessageDeleted', [ $parentTitle, $this->response ] );
 	}
 
 	/**
@@ -49,7 +47,7 @@ class WallController extends WallBaseController {
 	 *
 	 * @desc Renders old User_talk:[username] page in new place, using Wall_renderOldUserTalkPage.php template
 	 *
-	 * @author Andrzej 'nAndy' √Ö¬Åukaszewski
+	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function renderOldUserTalkPage() {
 		$wallUrl = $this->request->getVal( 'wallUrl' );
@@ -67,7 +65,7 @@ class WallController extends WallBaseController {
 	 *
 	 * @desc Renders old User_talk:[username]/[subpage] page in new place, using Wall_renderOldUserTalkSubpage.php template
 	 *
-	 * @author Andrzej 'nAndy' √Ö¬Åukaszewski
+	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function renderOldUserTalkSubpage() {
 		$subpageName = $this->request->getVal( 'subpage', null );
@@ -89,7 +87,7 @@ class WallController extends WallBaseController {
 	 *
 	 * @desc Renders an anchor to "User talk archive" page
 	 *
-	 * @author Andrzej 'nAndy' √Ö¬Åukaszewski
+	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 
 	public function renderUserTalkArchiveAnchor() {
@@ -102,14 +100,6 @@ class WallController extends WallBaseController {
 			$this->userTalkArchivePageUrl = ( empty( $title ) ? $this->wg->Title->getFullUrl(): $title->getFullUrl() ) . '/' . $this->helper->getArchiveSubPageText();
 		}
 	}
-
-	public function loadMore() {
-		$this->response->setVal( 'repliesNumber', $this->request->getVal( 'repliesNumber' ) );
-	}
-
-	public function deleteInfoBox() {
-	}
-
 
 	public function messageRemoved() {
 		$this->response->setVal( 'comment', $this->request->getVal( 'comment', false ) );
@@ -167,7 +157,7 @@ class WallController extends WallBaseController {
 	 *
 	 * @return Title
 	 *
-	 * @author Andrzej 'nAndy' √Ö¬Åukaszewski
+	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	private function getUserTalkContent( $subpageName = '' ) {
 		if ( !empty( $subpageName ) ) {

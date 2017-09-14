@@ -56,12 +56,11 @@ class PopularPages extends PageQueryPage {
 				->VALUES( $popularPages )
 				->run( $dbw );
 
-			wfWaitForSlaves();
 			$num = $dbw->affectedRows();
-
+			wfWaitForSlaves();
 		}
 
-		wfRunHooks( 'PopularPagesQueryRecached' );
+		Hooks::run( 'PopularPagesQueryRecached' );
 
 		return $num;
 	}
@@ -74,12 +73,12 @@ class PopularPages extends PageQueryPage {
 	 * @return array
 	 */
 	public function reallyDoQuery( $limit = false, $offset = false ) {
-		global $wgCityId;
+		global $wgCityId, $wgContentNamespaces;
 
 		$topArticles = DataMartService::getTopArticlesByPageview(
 			$wgCityId,
 			null,
-			null,
+			$wgContentNamespaces,
 			false,
 			self::LIMIT
 		);

@@ -2,51 +2,98 @@
 
 class MercuryApiCategoryHandler {
 
-	public static function getCategoryContent( Title $title ) {
-		$categoryPage = CategoryPage::newFromTitle( $title, RequestContext::getMain() );
-		return [
-			'members' => self::getMembers( $categoryPage )
-		];
-	}
+	const PARAM_CATEGORY_MEMBERS_PAGE = 'categoryMembersPage';
 
-	public static function getMembers( $categoryPage, $batchSize = 25 ) {
-		$alphabeticalList =  F::app()->sendRequest(
-			'WikiaMobileCategoryService',
-			'alphabeticalList',
-			['categoryPage' => $categoryPage, 'format' => 'json']
-		)->getData();
+	const TRENDING_ARTICLES_LIMIT = 6;
 
-		$sanitizedAlphabeticalList = ['sections' => [] ];
+	private static $categoryModel;
 
-		foreach ( $alphabeticalList['collections'] as $index => $collection ) {
-			$batch = ( $index == $alphabeticalList['requestedIndex'] ) ? $alphabeticalList['requestedBatch'] : 1;
-			$itemsBatch = wfPaginateArray( $collection, $batchSize, $batch );
-			$currentBatch = $itemsBatch['currentBatch'];
-			$nextBatch = $currentBatch + 1;
-
-			$sanitizedAlphabeticalList['sections'][$index] = [
-				'items' => $itemsBatch['items'],
-				'nextBatch' => $nextBatch,
-				'currentBatch' => $currentBatch,
-				'total' => $itemsBatch['total'],
-				'hasNext' => $itemsBatch['next'] > 0,
-				'batchSize' => $batchSize
-			];
+	/**
+	 * @return MercuryApiCategoryModel
+	 */
+	private static function getCategoryModel(): MercuryApiCategoryModel {
+		if ( !self::$categoryModel instanceof MercuryApiCategoryModel ) {
+			self::$categoryModel = new MercuryApiCategoryModel();
 		}
 
-		return $sanitizedAlphabeticalList;
+		return self::$categoryModel;
 	}
 
-	public static function hasArticle( $request, $article ) {
-		if ( $article instanceof Article && $article->getID() > 0 ) {
-			$data = MercuryApiArticleHandler::getArticleJson($request, $article);
-			return !empty( $data['content'] ) && strlen( $data['content'] ) > 0;
-		} else {
-			return false;
+	/**
+	 * @param Title $title
+	 * @param int $page
+	 * @param MercuryApi $mercuryApiModel
+	 *
+	 * @return array
+	 * @throws NotFoundApiException
+	 */
+	public static function getCategoryPageData( Title $title, int $page, MercuryApi $mercuryApiModel ): array {
+		$categoryDBKey = $title->getDBkey();
+		$categoryModel = self::getCategoryModel();
+		$membersGrouped = $categoryModel::getMembersGroupedByFirstLetter( $categoryDBKey, $page );
+
+		if ( empty( $membersGrouped ) ) {
+			throw new NotFoundApiException( 'Category has no members' );
 		}
+
+		return array_merge(
+			[
+				// TODO Remove after XW-2583 is released
+				'members' => $categoryModel::getCategoryMembersLegacy( $title ),
+				'membersGrouped' => $membersGrouped,
+				'trendingArticles' => $mercuryApiModel->getTrendingArticlesData(
+					self::TRENDING_ARTICLES_LIMIT,
+					$title
+				),
+			],
+			$categoryModel::getPagination( $title, $page )
+		);
 	}
 
-	public static function getCategoryMockedDetails( Title $title ) {
+	/**
+	 * @param Title $title
+	 * @param int $page
+	 *
+	 * @return array
+	 * @throws NotFoundApiException
+	 */
+	public static function getCategoryMembers( Title $title, int $page ): array {
+		$categoryModel = self::getCategoryModel();
+		$membersGrouped = $categoryModel::getMembersGroupedByFirstLetter( $title->getDBkey(), $page );
+
+		if ( empty( $membersGrouped ) ) {
+			throw new NotFoundApiException( 'Category has no members' );
+		}
+
+		return array_merge(
+			[ 'membersGrouped' => $membersGrouped ],
+			$categoryModel::getPagination( $title, $page )
+		);
+	}
+
+	/**
+	 * @param WikiaRequest $request
+	 *
+	 * @return int
+	 * @throws BadRequestApiException
+	 */
+	public static function getCategoryMembersPageFromRequest( WikiaRequest $request ): int {
+		$intValidator = new WikiaValidatorInteger( [ 'min' => 1 ] );
+		$page = $request->getInt( self::PARAM_CATEGORY_MEMBERS_PAGE, 1 );
+
+		if ( !$intValidator->isValid( $page ) ) {
+			throw new BadRequestApiException( 'Category members page should be a positive intenger' );
+		}
+
+		return $page;
+	}
+
+	/**
+	 * @param Title $title
+	 *
+	 * @return array
+	 */
+	public static function getCategoryMockedDetails( Title $title ): array {
 		return [
 			'description' => '',
 			'id' => $title->getArticleID(),

@@ -37,6 +37,8 @@ $(function () {
 			params.excludeScss = window.wgSassLoadedScss;
 		}
 
+		params.isPremiumAdLayoutEnabled = window.ads.context.opts.premiumAdLayoutEnabled;
+
 		$.extend(params, getParamsFromUrl());
 
 		$.nirvana.sendRequest({
@@ -65,8 +67,8 @@ $(function () {
 						});
 					}
 
-					if (window.ChatEntryPoint && typeof window.wgWikiaChatUsers !== 'undefined') {
-						window.ChatEntryPoint.init();
+					if (window.ChatWidget && typeof window.wgWikiaChatUsers !== 'undefined') {
+						window.ChatWidget.init();
 					}
 
 					// Fix any rail modules that use jQuery timeago (DAR-2344)
@@ -80,10 +82,25 @@ $(function () {
 					}
 
 					require([
-						'ext.wikia.adEngine.slot.floatingMedrec',
-						'wikia.window'
-					], function (floatingMedrec, win) {
-						win.wgAfterContentAndJS.push(floatingMedrec.init);
+						'wikia.window',
+						require.optional('ext.wikia.adEngine.adContext'),
+						require.optional('ext.wikia.adEngine.slot.premiumFloatingMedrec'),
+						require.optional('ext.wikia.adEngine.slot.floatingMedrec')
+					], function (win, adContext, premiumFloatingMedrec, floatingMedrec) {
+						if (!adContext) {
+							return;
+						}
+
+						var context = adContext.getContext();
+
+						if (context.opts.premiumAdLayoutEnabled && premiumFloatingMedrec) {
+							win.wgAfterContentAndJS.push(premiumFloatingMedrec.init);
+							return;
+						}
+
+						if (floatingMedrec) {
+							win.wgAfterContentAndJS.push(floatingMedrec.init);
+						}
 					});
 
 					if (window.wgEnableLightboxExt) {

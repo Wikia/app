@@ -1,10 +1,4 @@
 <?php
-/**
-* Internationalisation file for the SitemapPage extension.
-*
-* @addtogroup Languages
-*/
-
 $messages = array();
 
 $messages['en'] = array(
@@ -17,9 +11,6 @@ $messages['en'] = array(
 	'sitemap-page-wiki-description' => 'Description',
 );
 
-/**
- * Message documentation
- */
 $messages['qqq'] = array(
 	'sitemap-page-desc' => '{{desc}}',
 	'sitemap-page-header' => 'This is the title of the page',
@@ -32,44 +23,111 @@ $messages['qqq'] = array(
 
 $messages['de'] = array(
 	'sitemap-page-header' => 'Globale Sitemap',
+	'sitemap-page-desc' => 'Sitemap Page',
+	'sitemap-page-html-title' => 'Global Sitemap',
+	'sitemap-page-wiki-title' => 'Title',
+	'sitemap-page-wiki-language' => 'Language',
+	'sitemap-page-wiki-vertical' => 'Vertical',
+	'sitemap-page-wiki-description' => 'Description',
 );
 
 $messages['es'] = array(
 	'sitemap-page-header' => 'Mapa del sitio global',
+	'sitemap-page-desc' => 'Página de mapa del sitio',
+	'sitemap-page-html-title' => 'Global Sitemap',
+	'sitemap-page-wiki-title' => 'Título',
+	'sitemap-page-wiki-language' => 'Idioma',
+	'sitemap-page-wiki-vertical' => 'Categoría',
+	'sitemap-page-wiki-description' => 'Descripción',
 );
 
 $messages['fr'] = array(
 	'sitemap-page-header' => 'Plan du site - Global',
+	'sitemap-page-desc' => 'Sitemap Page',
+	'sitemap-page-html-title' => 'Global Sitemap',
+	'sitemap-page-wiki-title' => 'Title',
+	'sitemap-page-wiki-language' => 'Language',
+	'sitemap-page-wiki-vertical' => 'Vertical',
+	'sitemap-page-wiki-description' => 'Description',
 );
 
 $messages['it'] = array(
 	'sitemap-page-header' => 'Mappa del sito globale',
+	'sitemap-page-desc' => 'Sitemap Page',
+	'sitemap-page-html-title' => 'Global Sitemap',
+	'sitemap-page-wiki-title' => 'Title',
+	'sitemap-page-wiki-language' => 'Language',
+	'sitemap-page-wiki-vertical' => 'Vertical',
+	'sitemap-page-wiki-description' => 'Description',
 );
 
 $messages['ja'] = array(
 	'sitemap-page-header' => 'グローバル・サイトマップ',
+	'sitemap-page-desc' => 'Sitemap Page',
+	'sitemap-page-html-title' => 'Global Sitemap',
+	'sitemap-page-wiki-title' => 'Title',
+	'sitemap-page-wiki-language' => 'Language',
+	'sitemap-page-wiki-vertical' => 'Vertical',
+	'sitemap-page-wiki-description' => 'Description',
 );
 
 $messages['nl'] = array(
 	'sitemap-page-header' => 'Global Sitemap',
+	'sitemap-page-desc' => 'Sitemap Page',
+	'sitemap-page-html-title' => 'Global Sitemap',
+	'sitemap-page-wiki-title' => 'Title',
+	'sitemap-page-wiki-language' => 'Language',
+	'sitemap-page-wiki-vertical' => 'Vertical',
+	'sitemap-page-wiki-description' => 'Description',
 );
 
 $messages['pl'] = array(
 	'sitemap-page-header' => 'Globalna Mapa Strony',
+	'sitemap-page-desc' => 'Sitemap Page',
+	'sitemap-page-html-title' => 'Global Sitemap',
+	'sitemap-page-wiki-title' => 'Title',
+	'sitemap-page-wiki-language' => 'Language',
+	'sitemap-page-wiki-vertical' => 'Vertical',
+	'sitemap-page-wiki-description' => 'Description',
 );
 
 $messages['pt'] = array(
-	'sitemap-page-header' => 'Mapa do site global',
+	'sitemap-page-header' => 'Global Sitemap',
+	'sitemap-page-desc' => 'Sitemap Page',
+	'sitemap-page-html-title' => 'Global Sitemap',
+	'sitemap-page-wiki-title' => 'Title',
+	'sitemap-page-wiki-language' => 'Language',
+	'sitemap-page-wiki-vertical' => 'Vertical',
+	'sitemap-page-wiki-description' => 'Description',
 );
 
 $messages['ru'] = array(
 	'sitemap-page-header' => 'Глобальная карта сайта',
+	'sitemap-page-desc' => 'Sitemap Page',
+	'sitemap-page-html-title' => 'Global Sitemap',
+	'sitemap-page-wiki-title' => 'Title',
+	'sitemap-page-wiki-language' => 'Language',
+	'sitemap-page-wiki-vertical' => 'Vertical',
+	'sitemap-page-wiki-description' => 'Description',
 );
 
 $messages['zh-hans'] = array(
 	'sitemap-page-header' => '全球网站地图',
+	'sitemap-page-desc' => 'Sitemap Page',
+	'sitemap-page-html-title' => 'Global Sitemap',
+	'sitemap-page-wiki-title' => 'Title',
+	'sitemap-page-wiki-language' => 'Language',
+	'sitemap-page-wiki-vertical' => 'Vertical',
+	'sitemap-page-wiki-description' => 'Description',
 );
 
 $messages['zh-hant'] = array(
 	'sitemap-page-header' => '全球網站地圖',
+	'sitemap-page-desc' => 'Sitemap Page',
+	'sitemap-page-html-title' => 'Global Sitemap',
+	'sitemap-page-wiki-title' => 'Title',
+	'sitemap-page-wiki-language' => 'Language',
+	'sitemap-page-wiki-vertical' => 'Vertical',
+	'sitemap-page-wiki-description' => 'Description',
 );
+

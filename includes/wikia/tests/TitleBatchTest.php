@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group TitleBatch
+ */
 class TitleBatchTest extends WikiaBaseTest {
 
 	public function setUp() {
@@ -25,7 +28,7 @@ class TitleBatchTest extends WikiaBaseTest {
 			$titles[] = $this->getTestTitle( $titleId );
 		}
 
-		$mockDb = $this->getMockBuilder( '\DatabaseMysql' )
+		$mockDb = $this->getMockBuilder( '\DatabaseMysqli' )
 			->disableOriginalConstructor()
 			->setMethods( [ 'select' ] )
 			->getMock();
@@ -53,7 +56,7 @@ class TitleBatchTest extends WikiaBaseTest {
 
 		$this->assertEquals( $expectedPropValue1, $props[ $expectedId1 ] );
 		$this->assertEquals( $expectedPropValue2, $props[ $expectedId2 ] );
-		$this->assertEquals( $expectedPropValue3, $props[ $expectedId3 ] );
+		$this->assertArrayNotHasKey( $expectedId3, $props );
 	}
 
 

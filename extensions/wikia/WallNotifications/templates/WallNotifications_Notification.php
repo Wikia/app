@@ -1,7 +1,3 @@
-<?
-	//TODO: move it to controller
-	$helper = new WallHelper();
-?>
 <? if($unread): ?>
 <li class="unread_notification">
 <? else: ?>
@@ -16,7 +12,7 @@
 			<?php endforeach; ?>
 		</div>
 		<div class="notification">
-			<div class="msg-title"><?= $helper->shortenText($title, WallNotificationsController::NOTIFICATION_TITLE_LIMIT) ?></div>		
+			<div class="msg-title"><?= $title ?></div>
 			<? if($unread): ?>
 				<div class="msg-body">
 					<?= $msg ?>

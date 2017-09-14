@@ -90,8 +90,6 @@ $wgExtensionMessagesFiles['VideoHandlers'] = "$dir/VideoHandlers.i18n.php";
  * hooks
  *
 **/
-
-$wgHooks['MWNamespace:isMovable'][] = 'VideoHandlerHooks::WikiaVideo_isMovable';
 $wgHooks['ParserBeforeStrip'][] = 'VideoHandlerHooks::WikiaVideoParserBeforeStrip'; // <videogallery>
 
 $wgHooks['FileRevertFormBeforeUpload'][] = 'VideoHandlerHooks::onFileRevertFormBeforeUpload';
@@ -175,10 +173,6 @@ $wgAutoloadClasses['YoutubeVideoHandler'] =  $dir . '/handlers/YoutubeVideoHandl
 $wgAutoloadClasses['YoutubeApiWrapper'] =  $dir . '/apiwrappers/YoutubeApiWrapper.class.php';
 $wgMediaHandlers['video/youtube'] = 'YoutubeVideoHandler';
 
-$wgAutoloadClasses['GamestarVideoHandler'] =  $dir . '/handlers/GamestarVideoHandler.class.php';
-$wgAutoloadClasses['GamestarApiWrapper'] =  $dir . '/apiwrappers/GamestarApiWrapper.class.php';
-$wgMediaHandlers['video/gamestar'] = 'GamestarVideoHandler';
-
 $wgAutoloadClasses['AnyclipVideoHandler'] =  $dir . '/handlers/AnyclipVideoHandler.class.php';
 $wgAutoloadClasses['AnyclipApiWrapper'] =  $dir . '/apiwrappers/AnyclipApiWrapper.class.php';
 $wgMediaHandlers['video/anyclip'] = 'AnyclipVideoHandler';
@@ -246,7 +240,6 @@ $wgVideoMigrationProviderMap = array(
 	// a trick to make video.wikia and local files accessible via wrappers:
 	24 => 'Wikia',
 	*/
-	25 => 'Gamestar',
 	26 => 'Anyclip',
 	27 => 'Twitchtv',
 	28 => 'Ooyala',

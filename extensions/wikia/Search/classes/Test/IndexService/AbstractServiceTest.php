@@ -116,7 +116,7 @@ class AbstractServiceTest extends BaseTest
 		
 		$mwservice = $this->getMockBuilder( '\Wikia\Search\MediaWikiService' )
 		                  ->disableOriginalConstructor()
-		                  ->setMethods( array( 'pageIdExists' ) )
+		                  ->setMethods( array( 'pageIdExists', 'pageIdCanBeIndexed' ) )
 		                  ->getMock();
 		
 		$executeResponse = array( 'foo' => 'bar' );
@@ -125,6 +125,12 @@ class AbstractServiceTest extends BaseTest
 		$mwservice
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'pageIdExists' )
+		    ->with   ( 234 )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$mwservice
+		    ->expects( $this->any() )
+		    ->method ( 'pageIdCanBeIndexed' )
 		    ->with   ( 234 )
 		    ->will   ( $this->returnValue( true ) )
 		;
@@ -169,7 +175,7 @@ class AbstractServiceTest extends BaseTest
 		
 		$mwservice = $this->getMockBuilder( '\Wikia\Search\MediaWikiService' )
 		                  ->disableOriginalConstructor()
-		                  ->setMethods( array( 'pageIdExists' ) )
+		                  ->setMethods( array( 'pageIdExists', 'pageIdCanBeIndexed' ) )
 		                  ->getMock();
 		
 		$service->setPageIds( array( 456 ) );
@@ -183,6 +189,12 @@ class AbstractServiceTest extends BaseTest
 		    ->method ( 'pageIdExists' )
 		    ->with   ( 456 )
 		    ->will   ( $this->returnValue( true ) )
+		;
+		$mwservice
+			->expects( $this->any() )
+			->method ( 'pageIdCanBeIndexed' )
+			->with   ( 456 )
+			->will   ( $this->returnValue( true ) )
 		;
 		$service
 		    ->expects( $this->any() )

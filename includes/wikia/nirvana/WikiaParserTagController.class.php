@@ -32,6 +32,7 @@ abstract class WikiaParserTagController extends WikiaController {
 		$tag = new static();
 		$parser->setHook( $tag->getTagName(), [ $tag, 'renderTag' ] );
 		$wgHooks['ParserAfterTidy'][] = [ $tag, 'onParserAfterTidy' ];
+		$wgHooks['ArticleAsJsonBeforeEncode'][] = [ $tag, 'onArticleAsJsonBeforeEncode' ];
 
 		return true;
 	}
@@ -68,9 +69,20 @@ abstract class WikiaParserTagController extends WikiaController {
 		return $markerId;
 	}
 
-	public final function onParserAfterTidy( Parser &$parser, &$text ) {
-		$text = strtr( $text, $this->getMarkers() );
+	public final function onParserAfterTidy( Parser $parser, &$text ) {
+		if ( !$this->wg->ArticleAsJson ) {
+			$text = $this->replaceMarkers( $text );
+		}
 		return true;
+	}
+
+	public final function onArticleAsJsonBeforeEncode( &$text ) {
+		$text = $this->replaceMarkers( $text );
+		return true;
+	}
+
+	public final function replaceMarkers( $text ) {
+		return strtr( $text, $this->getMarkers() );
 	}
 
 	/**
@@ -85,8 +97,9 @@ abstract class WikiaParserTagController extends WikiaController {
 
 		foreach( $this->tagAttributes as $attrName ) {
 			$validator = $this->buildParamValidator( $attrName );
+			$value = array_key_exists( $attrName, $attributes ) ? $attributes[$attrName] : false;
 
-			if( !$validator->isValid( $attributes[$attrName] ) ) {
+			if( !$validator->isValid( $value ) ) {
 				$error = $validator->getError();
 
 				if ( !is_null($error) ) {
@@ -127,16 +140,7 @@ abstract class WikiaParserTagController extends WikiaController {
 	 */
 	protected function addMarkerOutput( $markerId, $output ) {
 		if( !empty( $this->wg->ArticleAsJson ) && $output instanceof WikiaResponse ) {
-			/**
-			 * This is tricky and I could not think about anything better than:
-			 * a) encode just double-quotes, so json_decode() won't fail but then if anything else should be encoded
-			 * we're doomed
-			 * b) use json_encode() so we'll encode everything which should be encoded and trim the added double-quotes
-			 * at the beginning since it's only a part of article content which will be wrapped with double-quotes
-			 *
-			 * I've chosen b) and if you think about anything which is better don't hesitate to let me know, please :)
-			 */
-			$this->markers[$markerId] = trim( json_encode( $output->toString() ), "\"" );
+			$this->markers[$markerId] = $output->toString();
 		} else {
 			$this->markers[$markerId] = $output;
 		}

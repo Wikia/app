@@ -21,42 +21,50 @@ ve.ui.commandRegistry.register(
 ve.ui.commandRegistry.register(
 	new ve.ui.Command(
 		'wikiaMediaInsert', 'window', 'open',
-		{ args: ['wikiaMediaInsert'] }
+		{
+			args: ['wikiaMediaInsert'],
+			supportedSelections: ['linear']
+		}
 	)
 );
 
 ve.ui.commandRegistry.register(
 	new ve.ui.Command(
 		'wikiaImageInsert', 'window', 'open',
-		{ args: ['wikiaImageInsert'] }
+		{
+			args: ['wikiaImageInsert'],
+			supportedSelections: ['linear']
+		}
 	)
 );
 
 ve.ui.commandRegistry.register(
 	new ve.ui.Command(
 		'wikiaVideoInsert', 'window', 'open',
-		{ args: ['wikiaVideoInsert'] }
+		{
+			args: ['wikiaVideoInsert'],
+			supportedSelections: ['linear']
+		}
 	)
 );
 
 ve.ui.commandRegistry.register(
 	new ve.ui.Command(
 		'wikiaSingleMedia', 'window', 'open',
-		{ args: ['wikiaSingleMedia'] }
-	)
-);
-
-ve.ui.commandRegistry.register(
-	new ve.ui.Command(
-		'wikiaMapInsert', 'window', 'open',
-		{ args: ['wikiaMapInsert'] }
+		{
+			args: ['wikiaSingleMedia'],
+			supportedSelections: ['linear']
+		}
 	)
 );
 
 ve.ui.commandRegistry.register(
 	new ve.ui.Command(
 		'wikiaInfoboxInsert', 'window', 'open',
-		{ args: ['wikiaInfoboxInsert'] }
+		{
+			args: ['wikiaInfoboxInsert'],
+			supportedSelections: ['linear']
+		}
 	)
 );
 
@@ -70,7 +78,10 @@ ve.ui.commandRegistry.register(
 ve.ui.commandRegistry.register(
 	new ve.ui.Command(
 		'wikiaTemplateInsert', 'window', 'open',
-		{ args: ['wikiaTemplateInsert'] }
+		{
+			args: ['wikiaTemplateInsert'],
+			supportedSelections: ['linear']
+		}
 	)
 );
 

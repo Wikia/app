@@ -47,7 +47,7 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 	private function setTitle() {
 		$this->getContext()->getOutput()->setHTMLTitle( "Special Send Email" );
 		$this->getContext()->getOutput()->setPageTitle( "Special Send Email" );
-		$this->wg->SupressPageSubtitle = true;
+		$this->wg->SuppressPageSubtitle = true;
 	}
 
 	/**
@@ -89,7 +89,7 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 		$postedFormValues = $this->request->getParams();
 		$controllerName = $postedFormValues['emailController'];
 		if ( !preg_match( EmailController::EMAIL_CONTROLLER_REGEX, $controllerName ) ) {
-			throw new Fatal("Invalid email type: {$controllerName}");
+			throw new Fatal( "Invalid email type: {$controllerName}" );
 		}
 		return \F::app()->sendRequest( $controllerName, 'handle', $postedFormValues );
 	}
@@ -163,7 +163,7 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 	 * @return bool
 	 */
 	private function isControllerBlacklisted( $baseName ) {
-		return in_array( $baseName, [ 'ForgotPassword', 'FacebookDisconnect' ] );
+		return in_array( $baseName, [ 'ForgotPassword', 'FacebookDisconnect', 'PasswordResetLink' ] );
 	}
 
 	/**

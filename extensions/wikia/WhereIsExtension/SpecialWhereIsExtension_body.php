@@ -17,6 +17,8 @@
  *     require_once("$IP/extensions/wikia/WhereIsExtension/SpecialWhereIsExtension.php");
  */
 
+use Wikia\Paginator\Paginator;
+
 if (!defined('MEDIAWIKI')) {
 	echo "This is MediaWiki extension named WhereIsExtension.\n";
 	exit(1) ;
@@ -84,32 +86,30 @@ class WhereIsExtension extends SpecialPage {
 		if (!empty($gVar)) {
 			$formData['selectedVar'] = $gVar;
 
-                        // assume an empty result
-                        $formData['count'] = 0;
-                        $formData['wikis'] = array();
+			// assume an empty result
+			$formData['count'] = 0;
+			$formData['wikis'] = array();
 
-                        if ( isset( $this->values[$gVal][1] ) && isset( $this->values[$gVal][2] ) ) {
+			if ( isset( $this->values[$gVal][1] ) && isset( $this->values[$gVal][2] ) ) {
 
-                            // check how many wikis meet the conditions
-                            $formData['count'] = WikiFactory::getCountOfWikisWithVar( $gVar, $gTypeVal, $this->values[$gVal][2], $this->values[$gVal][1], $gLikeVal );
+				// check how many wikis meet the conditions
+				$formData['count'] = WikiFactory::getCountOfWikisWithVar( $gVar, $gTypeVal, $this->values[$gVal][2], $this->values[$gVal][1], $gLikeVal );
 
-                            // if there are any, get the list and create a Paginator
-                            if (0 < $formData['count'] ) {
-                                // determine the offset (from the requested page)
-                                $iPage = $wgRequest->getVal( 'page', 1 );
-                                $iOffset = ( $iPage - 1 ) * self::ITEMS_PER_PAGE;
+				// if there are any, get the list and create a Paginator
+				if ( 0 < $formData['count'] ) {
+					// determine the offset (from the requested page)
+					$iPage = $wgRequest->getVal( 'page', 1 );
+					$iOffset = ( $iPage - 1 ) * self::ITEMS_PER_PAGE;
 
-                                // the list
-                                $formData['wikis'] = WikiFactory::getListOfWikisWithVar( $gVar, $gTypeVal, $this->values[$gVal][2], $this->values[$gVal][1], $gLikeVal, $iOffset, self::ITEMS_PER_PAGE );
+					// the list
+					$formData['wikis'] = WikiFactory::getListOfWikisWithVar( $gVar, $gTypeVal, $this->values[$gVal][2], $this->values[$gVal][1], $gLikeVal, $iOffset, self::ITEMS_PER_PAGE );
 
-                                // the Paginator, if we need more than one page
-                                if ( self::ITEMS_PER_PAGE < $formData['count'] ) {
-                                    $oPaginator = Paginator::newFromArray( array_fill( 0, $formData['count'], '' ), self::ITEMS_PER_PAGE, 5 );
-                                    $oPaginator->setActivePage( $iPage - 1 );
-                                    $sPager = $oPaginator->getBarHTML( sprintf( '%s?var=%s&val=%s&likeValue=%s&searchType=%s&page=%%s', $wgTitle->getFullURL(), $gVar, $gVal, $gLikeVal, $gTypeVal ) );
-                                }
-                            }
-                        }
+					$url = sprintf( '%s?var=%s&val=%s&likeValue=%s&searchType=%s', $wgTitle->getFullURL(), $gVar, $gVal, $gLikeVal, $gTypeVal );
+					$oPaginator = new Paginator( $formData['count'], self::ITEMS_PER_PAGE, $url );
+					$oPaginator->setActivePage( $iPage );
+					$sPager = $oPaginator->getBarHTML();
+				}
+			}
 		}
 
 		$oTmpl = new EasyTemplate(dirname( __FILE__ ) . '/templates/');

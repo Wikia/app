@@ -50,7 +50,7 @@ class EditPageLayoutHelper {
 	 * @author macbre
 	 */
 	function setupEditPage( Article $editedArticle, $fullScreen = true, $class = false ) {
-		global $wgHooks, $wgInfoboxPreviewURL, $wgEditPreviewMercuryUrl;
+		global $wgHooks, $wgEditPreviewMercuryUrl;
 
 		wfProfileIn( __METHOD__ );
 
@@ -130,9 +130,6 @@ class EditPageLayoutHelper {
 		// copyright warning for notifications (BugId:7951)
 		$this->addJsVariable( 'wgCopywarn', $this->editPage->getCopyrightNotice() );
 
-		// infobox preview url
-		$this->addJsVariable( 'wgInfoboxPreviewURL', $wgInfoboxPreviewURL );
-
 		// extra hooks for edit page
 		$wgHooks['MakeGlobalVariablesScript'][] = 'EditPageLayoutHooks::onMakeGlobalVariablesScript';
 		$wgHooks['SkinGetPageClasses'][] = 'EditPageLayoutHooks::onSkinGetPageClasses';
@@ -157,7 +154,10 @@ class EditPageLayoutHelper {
 		// on edit page so it will make proper list of modules
 		$action = $this->request->setVal( 'action',null );
 		$diff = $this->request->setVal( 'diff',null );
-		$railModuleList = (new BodyController)->getRailModuleList();
+
+		$bodyController = new BodyController();
+		$bodyController->setContext( RequestContext::getMain() );
+		$railModuleList = $bodyController->getRailModuleList();
 		$this->request->setVal( 'action',$action );
 		$this->request->setVal( 'diff',$diff );
 
@@ -328,7 +328,6 @@ class EditPageLayoutHelper {
 			'extensions/wikia/EditPageLayout/js/editor/Buttons.js',
 			'extensions/wikia/EditPageLayout/js/editor/Modules.js',
 			// >> Wikia specific editor plugins
-			'extensions/wikia/EditPageLayout/js/plugins/EditorSurvey.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Tracker.js',
 			'extensions/wikia/EditPageLayout/js/plugins/PageControls.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Autoresizer.js',
@@ -336,6 +335,7 @@ class EditPageLayoutHelper {
 			'extensions/wikia/EditPageLayout/js/plugins/Collapsiblemodules.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Cssloadcheck.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Edittools.js',
+			'extensions/wikia/EditPageLayout/js/plugins/FlowTracking.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Loadingstatus.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Noticearea.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Railminimumheight.js',

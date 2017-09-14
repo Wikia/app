@@ -6,10 +6,8 @@ describe('AdLogicPageDimensions', function () {
 
 	'use strict';
 
-	var adHelperMock = {
-		throttle: function (fn) {
-			return fn;
-		}
+	var throttleMock = function (fn) {
+		return fn;
 	};
 
 	function noop() {
@@ -35,11 +33,11 @@ describe('AdLogicPageDimensions', function () {
 			documentMock = {documentElement: {scrollHeight: pageLength, scrollWidth: 1280}},
 			slotTweakerMock = {hide: noop, show: noop, hackChromeRefresh: noop},
 			adLogicPageDimensions = modules['ext.wikia.adEngine.adLogicPageDimensions'](
-				windowMock,
+				slotTweakerMock,
 				documentMock,
 				logMock,
-				slotTweakerMock,
-				adHelperMock
+				throttleMock,
+				windowMock
 			),
 			fillInSlotCalled = false,
 			fillInSlotMock = function () { fillInSlotCalled = true; };
@@ -140,7 +138,6 @@ describe('AdLogicPageDimensions', function () {
 		expect(adShown('TOP_BUTTON_WIDE', 5000, 'responsive', width2000)).toBeTruthy('width=2000 slot=TOP_BUTTON_WIDE -> ADS');
 		expect(adShown('TOP_BUTTON_WIDE.force', 5000, 'responsive', width2000)).toBeTruthy('width=2000 slot=TOP_BUTTON_WIDE.force -> ADS');
 		expect(adShown('TOP_RIGHT_BOXAD', 5000, 'responsive', width2000)).toBeTruthy('width=2000 slot=TOP_RIGHT_BOXAD -> ADS');
-		expect(adShown('HOME_TOP_RIGHT_BOXAD', 5000, 'responsive', width2000)).toBeTruthy('width=2000 slot=HOME_TOP_RIGHT_BOXAD -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_2', 5000, 'responsive', width2000)).toBeTruthy('width=2000 slot=LEFT_SKYSCRAPER_2 -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_3', 5000, 'responsive', width2000)).toBeTruthy('width=2000 slot=LEFT_SKYSCRAPER_3 -> ADS');
 		expect(adShown('INCONTENT_BOXAD_1', 5000, 'responsive', width2000)).toBeTruthy('width=2000 slot=INCONTENT_BOXAD_1 -> ADS');
@@ -150,7 +147,6 @@ describe('AdLogicPageDimensions', function () {
 		expect(adShown('TOP_BUTTON_WIDE', 5000, 'responsive', width1024)).toBeFalsy('width=1024 slot=TOP_BUTTON_WIDE -> ADS');
 		expect(adShown('TOP_BUTTON_WIDE.force', 5000, 'responsive', width1024)).toBeFalsy('width=1024 slot=TOP_BUTTON_WIDE.force -> ADS');
 		expect(adShown('TOP_RIGHT_BOXAD', 5000, 'responsive', width1024)).toBeTruthy('width=1024 slot=TOP_RIGHT_BOXAD -> ADS');
-		expect(adShown('HOME_TOP_RIGHT_BOXAD', 5000, 'responsive', width1024)).toBeTruthy('width=1024 slot=HOME_TOP_RIGHT_BOXAD -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_2', 5000, 'responsive', width1024)).toBeTruthy('width=1024 slot=LEFT_SKYSCRAPER_2 -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_3', 5000, 'responsive', width1024)).toBeTruthy('width=1024 slot=LEFT_SKYSCRAPER_3 -> ADS');
 		expect(adShown('INCONTENT_BOXAD_1', 5000, 'responsive', width1024)).toBeTruthy('width=1024 slot=INCONTENT_BOXAD_1 -> ADS');
@@ -160,7 +156,6 @@ describe('AdLogicPageDimensions', function () {
 		expect(adShown('TOP_BUTTON_WIDE', 5000, 'responsive', width800)).toBeFalsy('width=800 slot=TOP_BUTTON_WIDE -> ADS');
 		expect(adShown('TOP_BUTTON_WIDE.force', 5000, 'responsive', width800)).toBeFalsy('width=800 slot=TOP_BUTTON_WIDE.force -> ADS');
 		expect(adShown('TOP_RIGHT_BOXAD', 5000, 'responsive', width800)).toBeFalsy('width=800 slot=TOP_RIGHT_BOXAD -> ADS');
-		expect(adShown('HOME_TOP_RIGHT_BOXAD', 5000, 'responsive', width800)).toBeFalsy('width=800 slot=HOME_TOP_RIGHT_BOXAD -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_2', 5000, 'responsive', width800)).toBeFalsy('width=800 slot=LEFT_SKYSCRAPER_2 -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_3', 5000, 'responsive', width800)).toBeFalsy('width=800 slot=LEFT_SKYSCRAPER_3 -> ADS');
 		expect(adShown('INCONTENT_BOXAD_1', 5000, 'responsive', width800)).toBeFalsy('width=800 slot=INCONTENT_BOXAD_1 -> ADS');
@@ -194,11 +189,11 @@ describe('AdLogicPageDimensions', function () {
 				hackChromeRefresh: noop
 			},
 			adLogicPageDimensions = modules['ext.wikia.adEngine.adLogicPageDimensions'](
-				windowMock,
+				slotTweakerMock,
 				documentMock,
 				logMock,
-				slotTweakerMock,
-				adHelperMock
+				throttleMock,
+				windowMock
 			),
 			fillInSlotMock = function () { adLoadCounter += 1; };
 

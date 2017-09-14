@@ -1,4 +1,4 @@
-require( ['jquery', 'wikia.toc', 'wikia.mustache'], function( $, toc, mustache ) {
+require( ['jquery', 'wikia.toc', 'wikia.mustache', require.optional('wikia.toc.mustache')], function( $, toc, mustache, tocTemplate ) {
 	'use strict';
 
 	/**
@@ -112,18 +112,25 @@ require( ['jquery', 'wikia.toc', 'wikia.mustache'], function( $, toc, mustache )
 	 */
 
 	function renderTOC( $target ) {
-		var $container = $target.parents( '#toc' ).children( 'ol' ),
+		var $tocContainer = $target.parents( '#toc' ),
+			$container = $tocContainer.children( 'ol' ),
 			$contentContainer = getContentContainer( $target ),
 			$headers = $contentContainer.find( 'h1, h2, h3, h4, h5, h6' ),
 			data = toc.getData( $headers, createTOCSection, getHeader );
 
+		function render( template ) {
+			$container.append( mustache.render( template, data ) );
+			$tocContainer.trigger('afterLoad.toc').data('loaded', true);
+			setHasTOC( $target, true );
+		}
+
 		data.wrapper = wrapper;
 
-		loadTemplate().done( function( template ) {
-			$container.append( mustache.render( template, data ) );
-
-			setHasTOC( $target, true );
-		} );
+		if ( tocTemplate ) {
+			render( tocTemplate );
+		} else {
+			loadTemplate().done( render );
+		}
 	}
 
 	/**

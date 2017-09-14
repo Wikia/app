@@ -49,7 +49,7 @@ function GetLinksArrayFromMessage( $messagename ) { // feel free to suggest bett
 					$text = $line[1];
 				if ( wfEmptyMsg( $line[0], $link ) )
 					$link = $line[0];
-					if ( preg_match( '/^(?:' . wfUrlProtocols() . ')/', $link ) ) {
+				if ( preg_match( '/^(?:' . wfUrlProtocols() . ')/', $link ) ) {
 					$href = $link;
 				} else {
 					$title = Title::newFromText( $link );
@@ -104,21 +104,13 @@ function print_pre( $param, $return = 0 )
  *
  * @author Inez Korczyński <inez@wikia-inc.com>
  *
- * @param String $url -- old url
- * @param String $timestamp -- last change timestamp
+ * @param string $url -- old url
+ * @param string|false $timestamp -- last change timestamp
  *
- * @return String -- new url
+ * @return string -- new url
  */
 function wfReplaceImageServer( $url, $timestamp = false ) {
 	$wg = F::app()->wg;
-
-	// Override image server location for Wikia development environment
-	// This setting should be images.developerName.wikia-dev.com or perhaps "localhost"
-	// FIXME: This needs to be removed. It should be encapsulated in the URL generation.
-	$overrideServer = !empty( $wg->DevBoxImageServerOverride ) && !$wg->EnableVignette;
-	if ( $overrideServer ) {
-		$url = preg_replace( "/\/\/(.*?)wikia-dev\.com\/(.*)/", "//{$wg->DevBoxImageServerOverride}/$2", $url );
-	}
 
 	wfDebug( __METHOD__ . ": requested url $url\n" );
 	if ( substr( strtolower( $url ), -4 ) != '.ogg' && isset( $wg->ImagesServers ) && is_int( $wg->ImagesServers ) ) {
@@ -146,19 +138,10 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 			// RT#98969 if the url already has a cb value, don't add another one...
 			$cb = ( $timestamp != '' && strpos( $url, "__cb" ) === false ) ? "__cb{$timestamp}/" : '';
 
-			if ( $overrideServer ) {
-				// Dev boxes
-				// TODO: support domains sharding on devboxes
-				$url = str_replace( 'http://images.wikia.com/', sprintf( "http://{$wg->DevBoxImageServerOverride}/%s", $cb ), $url );
-			} else {
-				// Production
-				$url = str_replace( 'http://images.wikia.com/', sprintf( "http://{$wg->ImagesDomainSharding}/%s", $serverNo, $cb ), $url );
-			}
+			// Production
+			$url = str_replace( 'http://images.wikia.com/', sprintf( "http://{$wg->ImagesDomainSharding}/%s", $serverNo, $cb ), $url );
 		}
-	} else if ( $overrideServer ) {
-		$url = str_replace( 'http://images.wikia.com/', "http://{$wg->DevBoxImageServerOverride}/", $url );
 	}
-
 	return $url;
 }
 
@@ -183,7 +166,7 @@ function wfReplaceAssetServer( $url ) {
 		$serverNo++;
 
 		$url = $matches['a'] . ( $serverNo ) . $matches['b'];
-	} elseif ( !empty( $wgDevelEnvironment ) && preg_match( '/^((https?:)?\/\/)(([a-z0-9]+)\.wikia-dev\.com\/(.*))$/', $url, $matches ) ) {
+	} elseif ( !empty( $wgDevelEnvironment ) && preg_match( '/^((https?:)?\/\/)(([a-z0-9]+)\.wikia-dev\.(pl|us|com)\/(.*))$/', $url, $matches ) ) {
 		$hash = sha1( $url );
 		$inthash = ord( $hash );
 
@@ -350,12 +333,13 @@ function wfStrToBool( $value ) {
  * @param mixed $variable: variable to be displayed/set
  * @param boolean $return default false: display or just return
  *
- * @return void or string: depends of $return param
+ * @return void|string: depends of $return param
  */
 function wfEchoIfSet( $variable, $return = false )
 {
     if ( empty( $return ) ) {
         echo isset( $variable ) ? $variable : "";
+		return null;
     }
     else {
         return isset( $variable ) ? $variable : "";
@@ -493,11 +477,12 @@ function getMessageAsArray( $messageKey, $params = [] ) {
 			return $lines;
 		}
 	}
+	return null;
 }
 
 /**
  * @author emil@wikia.com
- * @return default external cluster
+ * @return string default external cluster
  */
 function wfGetDefaultExternalCluster() {
 	global $wgDefaultExternalStore;
@@ -516,7 +501,7 @@ function wfGetDefaultExternalCluster() {
 
 /**
  * @author MoLi <moli@wikia.com>
- * @return db's handle for external storage
+ * @return DatabaseBase db's handle for external storage
  */
 function wfGetDBExt( $db = DB_MASTER, $cluster = null ) {
 	if ( !$cluster ) {
@@ -653,26 +638,6 @@ function getMenuHelper( $name, $limit = 7 ) {
  */
 function isMsgEmpty( $key ) {
 	return wfEmptyMsg( $key, trim( wfMsg( $key ) ) );
-}
-
-/**
- * Get a list of language names available for wiki request
- * (possibly filter some)
- *
- * @author nef@wikia-inc.com
- * @return array
- *
- * @see Language::getLanguageNames()
- * @see RT#11870
- */
-function wfGetFixedLanguageNames() {
-	$languages = Language::getLanguageNames();
-
-	$filter_languages = explode( ',', wfMsgForContent( 'requestwiki-filter-language' ) );
-	foreach ( $filter_languages as $key ) {
-		unset( $languages[$key] );
-	}
-	return $languages;
 }
 
 /**
@@ -822,7 +787,7 @@ function wfMsgHTMLwithLanguage( $key, $lang, $options = array(), $params = array
  */
 function wfMsgHTMLwithLanguageAndAlternative( $key, $keyAlternative, $lang, $options = array(), $params = array(), $wantHTML = true ) {
 	// inserted here for external i18n add-on, adjust params if needed
-	wfRunHooks( 'MsgHTMLwithLanguageAndAlternativeBefore' );
+	Hooks::run( 'MsgHTMLwithLanguageAndAlternativeBefore' );
 
 	list ( $msgPlainMain, $msgRichMain, $msgPlainMainFallback, $msgRichMainFallback ) = wfMsgHTMLwithLanguage( $key, $lang, $options, $params, $wantHTML );
 	list ( $msgPlainAlter, $msgRichAlter, $msgPlainAlterFallback, $msgRichAlterFallback ) = wfMsgHTMLwithLanguage( $keyAlternative, $lang, $options, $params, $wantHTML );
@@ -934,7 +899,7 @@ function wfTimeFormatAgo( $stamp, $hideCurrentYear = true ) {
 		// remove year from user's date format
 		$format = $wgLang->getDateFormatString( 'date', 'default' );
 		if ( $hideCurrentYear ) {
-			$format = trim( $format, ' ,yY' );
+			$format = trim( $format, ' ,yY年' );
 		}
 		$res = $wgLang->sprintfDate( $format, wfTimestamp( TS_MW, $stamp ) );
 	}
@@ -1059,9 +1024,9 @@ function wfLoadExtensionNamespaces( $extensionName, $nsList ) {
  * @author uberfuzzy
  * @return string
  */
-function wfGenerateUnsubToken( $email, $timestamp ) {
+function wfGenerateUnsubToken( $email ) {
 	global $wgUnsubscribeSalt;
-	$token = sha1( $timestamp . $email . $wgUnsubscribeSalt );
+	$token = sha1( $email . $wgUnsubscribeSalt );
 	return $token;
 }
 
@@ -1327,47 +1292,12 @@ function endsWith( $haystack, $needle, $case = true ) {
 	return ( strcasecmp( substr( $haystack, strlen( $haystack ) - strlen( $needle ) ), $needle ) === 0 );
 }
 
-function json_encode_jsfunc( $input = array(), $funcs = array(), $level = 0 )
- {
-  foreach ( $input as $key => $value )
-         {
-          if ( is_array( $value ) )
-             {
-              $ret = json_encode_jsfunc( $value, $funcs, 1 );
-              $input[$key] = $ret[0];
-              $funcs = $ret[1];
-             }
-          else
-             {
-              if ( substr( $value, 0, 10 ) == 'function()' )
-                 {
-                  $func_key = "#" . uniqid() . "#";
-                  $funcs[$func_key] = $value;
-                  $input[$key] = $func_key;
-                 }
-             }
-         }
-  if ( $level == 1 )
-     {
-      return array( $input, $funcs );
-     }
-  else
-     {
-      $input_json = json_encode( $input );
-      foreach ( $funcs as $key => $value )
-             {
-              $input_json = str_replace( '"' . $key . '"', $value, $input_json );
-             }
-      return $input_json;
-     }
- }
-
 /**
  * @brief Handles pagination for arrays
  *
  * @author Federico "Lox" Lucignano
  *
- * @param Array $data the array to paginate
+ * @param array $data the array to paginate
  * @param integer $limit the maximum number of items per page
  * @param integer $batch [OPTIONAL] the batch to retrieve
  *
@@ -1437,7 +1367,7 @@ function wfPaginateArray( $data, $limit, $batch = 1 ) {
  *
  * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
  *
- * @param Array $array typical array with key => value
+ * @param array $array typical array with key => value
  *
  * @return string string for debugging purposes
  */
@@ -1513,7 +1443,7 @@ function wfGetNamespaces() {
 	global $wgContLang;
 
 	$namespaces = $wgContLang->getFormattedNamespaces();
-	wfRunHooks( 'XmlNamespaceSelectorAfterGetFormattedNamespaces', array( &$namespaces ) );
+	Hooks::run( 'XmlNamespaceSelectorAfterGetFormattedNamespaces', array( &$namespaces ) );
 
 	return $namespaces;
 }
@@ -1621,6 +1551,7 @@ function wfGetUniqueArrayCI( array $arr ) {
  */
 function mb_pathinfo( $filepath ) {
 	preg_match( '%^(.*?)[\\\\/]*(([^/\\\\]*?)(\.([^\.\\\\/]+?)|))[\\\\/\.]*$%im', $filepath, $m );
+	$ret = [];
 	if ( $m[1] ) {
 		$ret['dirname'] = $m[1];
 	}
@@ -1681,4 +1612,35 @@ function wfHandleCrossSiteAJAXdomain() {
 			}
 		}
 	}
+}
+
+function wfGetValueExcerpt( $value ) {
+	$parts = [];
+	$parts[] = gettype( $value );
+
+	if ( is_object( $value ) ) {
+		$parts[] = get_class( $value );
+	} else if ( is_resource( $value ) ) {
+		$parts[] = get_resource_type( $value );
+	}
+
+	if ( is_string( $value ) ) {
+		$parts[] = strlen( $value );
+	}
+
+	if ( is_bool( $value ) ) {
+		$parts[] = $value ? "true" : "false";
+	} else if ( !is_null( $value ) ) {
+		if ( is_scalar( $value ) ) {
+			$stringValue = strval( $value );
+		} else {
+			$stringValue = var_export( $value, true );
+		}
+		if ( strlen( $stringValue ) > 1000 ) {
+			$stringValue = substr( $stringValue, 0, 1000 ) . "...";
+		}
+		$parts[] = $stringValue;
+	}
+
+	return "[" . implode( ':', $parts ) . "]";
 }

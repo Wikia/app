@@ -45,7 +45,6 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 		 * 1. Get the new data first
 		 */
 		$nonportableTemplates = $this->reallyDoQuery();
-		$dbw->begin();
 
 		/**
 		 * 2. Delete the existing records
@@ -72,15 +71,9 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 				->run( $dbw );
 
 			$num = $dbw->affectedRows();
-			if ( $num === 0 ) {
-				$dbw->rollback();
-				$num = false;
-			} else {
-				$dbw->commit();
-			}
 		}
 
-		wfRunHooks( 'UnconvertedInfoboxesQueryRecached', [ 'count' => $num ] );
+		Hooks::run( 'UnconvertedInfoboxesQueryRecached', [ 'count' => $num ] );
 
 		return $num;
 	}
@@ -96,8 +89,16 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 	public function reallyDoQuery( $limit = false, $offset = false ) {
 		global $wgCityId;
 
-		$tcs = new UserTemplateClassificationService();
-		$recognizedTemplates = $tcs->getTemplatesOnWiki( $wgCityId );
+		try {
+			$tcs = new UserTemplateClassificationService();
+			$recognizedTemplates = $tcs->getTemplatesOnWiki( $wgCityId );
+		}
+		catch ( Swagger\Client\ApiException $e ) {
+			Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ , [
+				'exception' => $e
+			]);
+			return [];
+		}
 
 		$nonportableInfoboxes = [];
 
@@ -105,6 +106,7 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 			if ( $tcs->isInfoboxType( $type ) ) {
 				$title = Title::newFromID( $templateId );
 				if ( $title instanceof Title
+					&& $title->inNamespace( NS_TEMPLATE )
 					&& !$title->isRedirect()
 					&& empty( PortableInfoboxDataService::newFromTitle( $title )->getData() )
 				) {

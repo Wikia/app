@@ -2,86 +2,93 @@
 define('ext.wikia.adEngine.adEngineRunner', [
 	'ext.wikia.adEngine.adEngine',
 	'ext.wikia.adEngine.adTracker',
+	'wikia.instantGlobals',
 	'wikia.log',
 	'wikia.window',
+	require.optional('ext.wikia.adEngine.lookup.a9'),
 	require.optional('ext.wikia.adEngine.lookup.amazonMatch'),
-	require.optional('ext.wikia.adEngine.lookup.rubiconFastlane')
-], function (adEngine, adTracker, log, win, amazonMatch, rubiconFastlane) {
+	require.optional('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane'),
+	require.optional('ext.wikia.adEngine.lookup.prebid'),
+	require.optional('ext.wikia.aRecoveryEngine.adBlockRecovery')
+], function (adEngine, adTracker, instantGlobals, log, win, a9, amazonMatch, rubiconFastlane, prebid, adBlockRecovery) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adEngineRunner',
-		supportedBidders = [amazonMatch, rubiconFastlane],
-		timeout = 2000;
+		supportedModules = [amazonMatch, a9, rubiconFastlane, prebid, adBlockRecovery],
+		timeout = instantGlobals.wgAdDriverDelayTimeout || 2000;
 
 	/**
-	 * Delay running AdEngine by bidder responses or by configured timeout
+	 * Delay running AdEngine by module responses or by configured timeout
 	 *
 	 * @param {function} runAdEngine
 	 */
 	function delayRun(runAdEngine) {
-		var biddersQueue = [],
-			enabledBidders = [],
-			startedByBidders = false;
+		var modulesQueue = [],
+			enabledModules = [],
+			startedByModules = false;
 
 		/**
-		 * Mark bidder as responded and trigger run if all bidders already responded
+		 * Mark module as responded and trigger run if all modules already responded
 		 *
 		 * @param {string} name
 		 */
-		function markBidder(name) {
-			log(name + ' responded', 'debug', logGroup);
-			if (biddersQueue.indexOf(name) === -1) {
-				biddersQueue.push(name);
+		function markModule(name) {
+			log(name + ' responded', log.levels.debug, logGroup);
+
+			if (modulesQueue.indexOf(name) === -1) {
+				modulesQueue.push(name);
 			}
-			if (biddersQueue.length === enabledBidders.length) {
-				log('All bidders responded', 'info', logGroup);
-				startedByBidders = true;
-				adTracker.measureTime('adengine_runner/bidders_responded', biddersQueue.join(',')).track();
+			if (modulesQueue.length === enabledModules.length) {
+				log('All modules responded', log.levels.info, logGroup);
+				startedByModules = true;
+				adTracker.measureTime('adengine_runner/modules_responded', modulesQueue.join(',')).track();
 				runAdEngine();
 			}
 		}
 
 		/**
-		 * Add bidder listener to mark bidder on response
+		 * Add module listener to mark module on response
 		 */
-		function registerBidders() {
-			log(['Register bidders', enabledBidders.length], 'debug', logGroup);
-			enabledBidders.forEach(function (bidder) {
-				var name = bidder.getName();
-				bidder.addResponseListener(function () {
-					markBidder(name);
+		function registerModules() {
+			log(['Register modules', enabledModules.length], log.levels.debug, logGroup);
+
+			enabledModules.forEach(function (module) {
+				var name = module.getName();
+
+				module.addResponseListener(function () {
+					markModule(name);
 				});
 			});
 		}
 
-		function getTimeoutBidders () {
-			var timeoutBidders = [];
+		function getTimeoutModules () {
+			var timeoutModules = [];
 
-			enabledBidders.forEach(function (enabledBidder) {
-				var enabledBidderName = enabledBidder.getName();
-				if (biddersQueue.indexOf(enabledBidderName) === -1) {
-					timeoutBidders.push(enabledBidderName);
+			enabledModules.forEach(function (enabledModule) {
+				var enabledModuleName = enabledModule.getName();
+				if (modulesQueue.indexOf(enabledModuleName) === -1) {
+					timeoutModules.push(enabledModuleName);
 				}
 			});
 
-			return timeoutBidders.join(',');
+			return timeoutModules.join(',');
 		}
 
-		supportedBidders.forEach(function (bidder) {
-			if (bidder && bidder.wasCalled()) {
-				enabledBidders.push(bidder);
+		supportedModules.forEach(function (module) {
+			if (module && module.wasCalled()) {
+				enabledModules.push(module);
 			}
 		});
 
-		if (enabledBidders.length === 0) {
-			log('All bidders are disabled', 'info', logGroup);
+		if (enabledModules.length === 0) {
+			log('All modules are disabled', log.levels.info, logGroup);
 			runAdEngine();
 		} else {
-			registerBidders();
+			registerModules();
 			win.setTimeout(function () {
-				if (!startedByBidders) {
-					log('Timeout exceeded', 'info', logGroup);
-					adTracker.measureTime('adengine_runner/bidders_timeout', getTimeoutBidders()).track();
+				if (!startedByModules) {
+					log(['Timeout exceeded', timeout], log.levels.info, logGroup);
+					adTracker.measureTime('adengine_runner/modules_timeout', getTimeoutModules()).track();
 					runAdEngine();
 				}
 			}, timeout);
@@ -107,7 +114,7 @@ define('ext.wikia.adEngine.adEngineRunner', [
 				return;
 			}
 			engineStarted = true;
-			log('Running AdEngine', 'info', logGroup);
+			log('Running AdEngine', log.levels.info, logGroup);
 			adTracker.measureTime('adengine.init', queueName).track();
 			adEngine.run(config, slots, queueName);
 		}
@@ -115,7 +122,7 @@ define('ext.wikia.adEngine.adEngineRunner', [
 		if (delayEnabled) {
 			delayRun(runAdEngine);
 		} else {
-			log('Run AdEngine without delay', 'info', logGroup);
+			log('Run AdEngine without delay', log.levels.info, logGroup);
 			runAdEngine();
 		}
 	}

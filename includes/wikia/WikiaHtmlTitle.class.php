@@ -7,11 +7,8 @@ class WikiaHtmlTitle {
 
 	/**
 	 * @var string - The separator used to separate parts of the HTML title
-	 *
-	 * Note there is a logic that guesses the separator from a MediaWiki message <pagetitle>
-	 * This logic might be removed later for consistency and simplicity (see the file below)
 	 */
-	private $separator = ' - ';
+	private $separator = ' | ';
 
 	/** @var array - Configurable parts of the title */
 	private $parts = [];
@@ -71,9 +68,11 @@ class WikiaHtmlTitle {
 			if ( $part instanceof Message ) {
 				return $part->inContentLanguage()->text();
 			}
+
 			if ( is_string( $part ) ) {
 				return $part;
 			}
+
 			return null;
 		}, $parts );
 
@@ -118,7 +117,7 @@ class WikiaHtmlTitle {
 
 		// Extra title for admin dashboard (and maybe other pages handled by extensions)
 		$parts = [];
-		wfRunHooks( 'WikiaHtmlTitleExtraParts', [ $title, &$parts ] );
+		Hooks::run( 'WikiaHtmlTitleExtraParts', [ $title, &$parts ] );
 		array_unshift( $parts, $name );
 
 		return $this->setParts( $parts );

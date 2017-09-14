@@ -57,7 +57,7 @@ class Scribunto_LuaSiteLibrary extends Scribunto_LuaLibraryBase {
 
 			$aliases = array_merge( $wgNamespaceAliases, $wgContLang->getNamespaceAliases() );
 			foreach ( $aliases as $title => $ns ) {
-				if ( !isset( $namespacesByName[$title] ) ) {
+				if ( !isset( $namespacesByName[$title] ) && isset( $namespaces[$ns] ) ) {
 					$ct = count( $namespaces[$ns]['aliases'] );
 					$namespaces[$ns]['aliases'][$ct+1] = $title;
 					$namespacesByName[$title] = $ns;
@@ -79,15 +79,12 @@ class Scribunto_LuaSiteLibrary extends Scribunto_LuaLibraryBase {
 	}
 
 	public function loadSiteStats() {
-		global $wgDisableCounters;
-
 		self::$siteStatsLoaded = true;
 		return array( array(
 			'pages' => (int)SiteStats::pages(),
 			'articles' => (int)SiteStats::articles(),
 			'files' => (int)SiteStats::images(),
 			'edits' => (int)SiteStats::edits(),
-			'views' => $wgDisableCounters ? null : (int)SiteStats::views(),
 			'users' => (int)SiteStats::users(),
 			'activeUsers' => (int)SiteStats::activeUsers(),
 		) );

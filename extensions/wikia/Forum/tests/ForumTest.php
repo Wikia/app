@@ -17,13 +17,20 @@ class ForumTest extends WikiaBaseTest {
 		$wikiaPropsReturn = [ 1 => 4, 2 => 7, 3 => 6, 5 => 2 ];
 		$expectedBoardsTitle = [ 1, 2, 3 ];
 
-		$titleBatchMock = $this->getMock( 'TitleBatch', [ ], [ ], '', false );
+		$titleBatchMock = $this->getMockBuilder( TitleBatch::class )
+			->disableOriginalConstructor()
+			->getMock();
+
+		$titleBatchMock->expects( $this->any() )
+			->method( 'getArticleIds' )
+			->willReturn( [] );
 
 		$titleBatchMock->expects( $this->any() )
 			->method( 'getById' )
 			->will( $this->returnCallback(
 				function ( $pageId ) use ( $titlesFromNamespace ) {
-					return $titlesFromNamespace[ $pageId ];
+					return isset( $titlesFromNamespace[ $pageId ] )
+						? $titlesFromNamespace[ $pageId ] : null;
 				} ) );
 
 		$titleBatchMock->expects( $this->once() )
@@ -32,9 +39,9 @@ class ForumTest extends WikiaBaseTest {
 
 		$this->mockStaticMethod( 'TitleBatch', 'newFromConds', $titleBatchMock );
 
-		$this->mockStaticMethodWithCallBack( 'ForumBoard', 'newFromTitle',
+		$this->mockStaticMethodWithCallBack( 'Wall', 'newFromTitle',
 			function ( $title ) {
-				return $this->getBoardMock();
+				return $this->getBoardMock( $title );
 			}
 		);
 
@@ -54,8 +61,17 @@ class ForumTest extends WikiaBaseTest {
 		return $titleMock;
 	}
 
-	private function getBoardMock() {
-		$boardMock = $this->getMock( 'ForumBoard', [ 'getBoardInfo', 'getDescriptionWithoutTemplates', 'getTitle' ] );
+	/**
+	 * @param $title Title
+	 * @return PHPUnit_Framework_MockObject_MockObject
+	 */
+	private function getBoardMock( Title $title ) {
+		$boardMock = $this->getMock( 'ForumBoard', [ 'getBoardInfo' ] );
+		$forumBoardInfo = new ForumBoardInfo();
+		$forumBoardInfo->setId( $title->getArticleID() );
+		$boardMock->expects( $this->any() )
+			->method( 'getBoardInfo' )
+			->willReturn( $forumBoardInfo );
 		return $boardMock;
 	}
 }

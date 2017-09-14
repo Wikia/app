@@ -289,7 +289,6 @@ img_minor_mime    varbinary(100) TEXT
 lc_lang           varbinary(32)  TEXT
 lc_value          varbinary(32)  TEXT
 img_sha1          varbinary(32)  TEXT
-iw_wikiid         varchar(64)    TEXT
 job_cmd           varbinary(60)  TEXT # Should we limit to 60 as well?
 keyname           varbinary(255) TEXT # No tablename prefix (objectcache)
 ll_lang           varbinary(20)  TEXT # Language code
@@ -333,7 +332,6 @@ iwl_prefix      varbinary(20)  TEXT
 ## Text URLs:
 el_index blob           TEXT
 el_to    blob           TEXT
-iw_api   blob           TEXT
 iw_url   blob           TEXT
 tb_url   blob           TEXT
 tc_url   varbinary(255) TEXT
@@ -375,7 +373,6 @@ ss_active_users  bigint INTEGER
 ss_good_articles bigint INTEGER
 ss_total_edits   bigint INTEGER
 ss_total_pages   bigint INTEGER
-ss_total_views   bigint INTEGER
 ss_users         bigint INTEGER
 
 ## True IP - keep an eye on these, coders tend to make textual assumptions

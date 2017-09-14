@@ -11,6 +11,7 @@ class NodeGroup extends Node {
 	const COLLAPSE_ATTR_NAME = 'collapse';
 	const COLLAPSE_OPEN_OPTION = 'open';
 	const COLLAPSE_CLOSED_OPTION = 'closed';
+	const ROW_ITEMS_ATTR_NAME = 'row-items';
 
 	private $supportedGroupLayouts = [
 		self::LAYOUT_DEFAULT_OPTION,
@@ -32,7 +33,8 @@ class NodeGroup extends Node {
 			$this->data = [
 				'value' => $this->getDataForChildren(),
 				'layout' => $this->getLayout(),
-				'collapse' => $this->getCollapse()
+				'collapse' => $this->getCollapse(),
+				'row-items' => $this->getRowItems()
 			];
 		}
 
@@ -54,7 +56,8 @@ class NodeGroup extends Node {
 			'data' => [
 				'value' => $value,
 				'layout' => $this->getLayout(),
-				'collapse' => $this->getCollapse()
+				'collapse' => $this->getCollapse(),
+				'row-items' => $this->getRowItems()
 			],
 		];
 	}
@@ -70,12 +73,15 @@ class NodeGroup extends Node {
 		return true;
 	}
 
-	public function getSource() {
-		return $this->getSourceForChildren();
+	public function getSources() {
+		return $this->getSourcesForChildren();
 	}
 
-	public function getSourceLabel() {
-		return $this->getSourceLabelForChildren();
+	public function getMetadata() {
+		return [
+			'type' => $this->getType(),
+			'metadata' => $this->getMetadataForChildren()
+		];
 	}
 
 	protected function showIncomplete() {
@@ -90,8 +96,8 @@ class NodeGroup extends Node {
 	}
 
 	protected function getCollapse() {
-		$layout = $this->getXmlAttribute( $this->xmlNode, self::COLLAPSE_ATTR_NAME );
-		return ( isset( $layout ) && in_array( $layout, $this->supportedGroupCollapses ) ) ? $layout : null;
+		$collapse = $this->getXmlAttribute( $this->xmlNode, self::COLLAPSE_ATTR_NAME );
+		return ( isset( $collapse ) && in_array( $collapse, $this->supportedGroupCollapses ) ) ? $collapse : null;
 	}
 
 	protected function getLayout() {
@@ -99,5 +105,11 @@ class NodeGroup extends Node {
 
 		return ( isset( $layout ) && in_array( $layout, $this->supportedGroupLayouts ) ) ? $layout
 			: self::LAYOUT_DEFAULT_OPTION;
+	}
+
+	protected function getRowItems() {
+		$rowItems = $this->getXmlAttribute( $this->xmlNode, self::ROW_ITEMS_ATTR_NAME );
+
+		return ( isset( $rowItems ) && ctype_digit( $rowItems ) ) ? intval( $rowItems ) : null;
 	}
 }

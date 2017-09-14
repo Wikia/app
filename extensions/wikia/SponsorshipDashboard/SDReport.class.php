@@ -83,7 +83,7 @@ class SponsorshipDashboardReport {
 
 		Wikia::log( __METHOD__, 'Depreciated?' );
 
-		$deserializedData = Wikia\Util\Serialize::safeUnserialize( $serializedData );
+		$deserializedData = unserialize( $serializedData, [ 'allowed_classes' => false ] );
 
 		parse_str( $deserializedData[0], $mainSerie );
 		if ( isset( $mainSerie[ SponsorshipDashboardSource::SD_PARAMS_LASTUNITDATE ] ) ){

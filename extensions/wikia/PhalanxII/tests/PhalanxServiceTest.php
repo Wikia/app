@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\DependencyInjection\Injector;
+
 /**
  * @category Wikia
  * @group Integration
@@ -13,16 +15,16 @@ class PhalanxServiceTest extends WikiaBaseTest {
 	 * setup tests
 	 */
 	public function setUp() {
-		$this->setupFile =  dirname(__FILE__) . '/../Phalanx_setup.php';
+		$this->setupFile =  dirname( __FILE__ ) . '/../Phalanx_setup.php';
 		parent::setUp();
 		$this->checkPhalanxAlive();
 	}
 
 	public function checkPhalanxAlive( ) {
-		$this->service = new PhalanxService();
-		if (!$this->service->status()) {
-			//Skip test if phalanx service is not available
-			throw new Exception("Can't connect to phalanx service on " . $this->app->wg->PhalanxServiceUrl);
+		$this->service = Injector::getInjector()->get( PhalanxService::class );
+		if ( !$this->service->status() ) {
+			// Skip test if phalanx service is not available
+			throw new Exception( "Can't connect to phalanx service" );
 		}
 	}
 
@@ -32,8 +34,8 @@ class PhalanxServiceTest extends WikiaBaseTest {
 	 */
 	public function testPhalanxServiceMethod() {
 		error_log( __CLASS__ . '::' . __FUNCTION__ );
-		$this->service = new PhalanxService();
-		foreach( array( "check", "match", "status", "reload", "validate", "stats" ) as $method ) {
+		$this->service = Injector::getInjector()->get( PhalanxService::class );
+		foreach ( array( "check", "match", "status", "reload", "validate", "stats" ) as $method ) {
 			$this->assertEquals( true, method_exists( $this->service, $method ), "Method '$method' doesnt exist in PhalanxService" );
 		}
 	}

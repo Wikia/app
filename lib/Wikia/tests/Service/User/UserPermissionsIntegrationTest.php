@@ -2,8 +2,6 @@
 
 namespace Wikia\Service\User\Permissions;
 
-use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
-
 class UserPermissionsIntegrationTest extends \WikiaBaseTest {
 	use PermissionsServiceAccessor;
 
@@ -43,12 +41,12 @@ class UserPermissionsIntegrationTest extends \WikiaBaseTest {
 		$this->staffUser = \User::newFromId( $this->staffUserId );
 		$this->anonUser = \User::newFromId( 0 );
 
+		$this->disableMemCache();
+
 		parent::setUp();
 	}
 
 	function testShouldReturnExplicitGroups() {
-		\WikiaDataAccess::cachePurge( PermissionsServiceImpl::getMemcKey( $this->staffUserId ) );
-
 		$groups = $this->permissionsService()->getExplicitGroups( $this->staffUser );
 		$this->assertContains("staff", $groups);
 		$this->assertContains("bureaucrat", $groups);
@@ -179,7 +177,7 @@ class UserPermissionsIntegrationTest extends \WikiaBaseTest {
 	public function testShouldReturnPermissionsNotDuplicated() {
 		$permissions = $this->permissionsService()->getConfiguration()->getPermissions();
 		$this->assertContains( 'move', $permissions );
-		$this->assertContains( 'oversight', $permissions );
+		$this->assertContains( 'proxyunbannable', $permissions );
 
 		$permissionCount = [];
 		foreach ( $permissions as $permission ) {

@@ -1,6 +1,5 @@
 <?php
-
-use \Wikia\Logger\WikiaLogger;
+use Wikia\CommunityHeader\Wordmark;
 
 /**
  * Oasis module for EditPageLayout
@@ -87,8 +86,6 @@ class EditPageLayoutController extends WikiaController {
 	 * Render template for <body> tag content
 	 */
 	public function executeEditPage() {
-		wfProfileIn( __METHOD__ );
-
 		$helper = EditPageLayoutHelper::getInstance();
 		$editPage = $helper->getEditPage();
 
@@ -122,13 +119,13 @@ class EditPageLayoutController extends WikiaController {
 		}
 
 		// render WikiLogo
-		$response = $this->app->sendRequest( 'WikiHeader', 'Wordmark' );
+		$response = $this->app->sendRequest( 'EditPageLayout', 'wordmark' );
 
 		// move wordmark data
 		$this->wordmark = $response->getData();
 
 		// render global and user navigation
-		$this->header = F::app()->renderView( 'GlobalNavigation', 'index' );
+		$this->header = F::app()->renderView( 'DesignSystemGlobalNavigationService', 'index' );
 
 		// Editing [foo]
 		$this->title = $editPage->getEditedTitle();
@@ -208,8 +205,6 @@ class EditPageLayoutController extends WikiaController {
 			? wfMessage( 'editpagelayout-notificationsLink-none' )->escaped()
 			: wfMessage( 'editpagelayout-notificationsLink', count( $this->notices ) )->parse();
 
-		$this->showInfoboxPreview = $this->shouldShowInfoboxPreview();
-
 		// check if we're in read only mode
 		// disable edit form when in read-only mode
 		if ( wfReadOnly() ) {
@@ -222,38 +217,37 @@ class EditPageLayoutController extends WikiaController {
 
 		$this->hideTitle = $editPage->hideTitle;
 
-		wfRunHooks( 'EditPageLayoutExecute', array( $this ) );
-
-		wfProfileOut( __METHOD__ );
+		Hooks::run( 'EditPageLayoutExecute', array( $this ) );
 	}
 
-	/**
-	 * Determines whether to display the infobox preview entry point
-	 */
-	public function shouldShowInfoboxPreview() {
-		global $wgCityId, $wgUser, $wgEnableTemplateClassificationExt, $wgInfoboxPreviewEnabled, $wgInfoboxPreviewSupportedLanuages;
+	public function wordmark() {
+		$themeSettings = new ThemeSettings();
+		$settings = $themeSettings->getSettings();
 
-		if ( !$wgInfoboxPreviewEnabled || !in_array( strtolower( $wgUser->getGlobalPreference( 'language' ) ), $wgInfoboxPreviewSupportedLanuages ) ) {
-			return false;
-		}
+		$this->wordmarkText = $settings['wordmark-text'];
+		$this->wordmarkType = $settings['wordmark-type'];
+		$this->wordmarkSize = $settings['wordmark-font-size'];
+		$this->wordmarkFont = $settings['wordmark-font'];
+		$this->wordmarkFontClass = !empty( $settings["wordmark-font"] ) ? "font-{$settings['wordmark-font']}" : '';
+		$this->wordmarkUrl = '';
+		if ( $this->wordmarkType == Wordmark::WORDMARK_TYPE_GRAPHIC ) {
+			$this->wordmarkUrl = $themeSettings->getWordmarkUrl();
+			$imageTitle = Title::newFromText( $themeSettings::WordmarkImageName, NS_IMAGE );
+			if ( $imageTitle instanceof Title ) {
+				$attributes = [ ];
+				$file = wfFindFile( $imageTitle );
+				if ( $file instanceof File ) {
+					$attributes [] = 'width="' . $file->width . '"';
+					$attributes [] = 'height="' . $file->height . '"';
 
-		if ( $wgEnableTemplateClassificationExt ) {
-			try {
-				$templateType = ( new TemplateClassificationService() )
-					->getType( $wgCityId, $this->title->getArticleID() );
-			} catch ( Exception $e ) {
-				$templateType = null;
-				WikiaLogger::instance()->error('TemplateClassificationService::getType() threw an exception', [
-					'ex' => $e
-				]);
+					if ( !empty( $attributes ) ) {
+						$this->wordmarkStyle = ' ' . implode( ' ', $attributes ) . ' ';
+					}
+				}
 			}
-		} else {
-			$templateType = null;
 		}
 
-		return !$wgEnableTemplateClassificationExt
-			|| $templateType === TemplateClassificationService::TEMPLATE_INFOBOX
-			|| $templateType === TemplateClassificationService::TEMPLATE_CUSTOM_INFOBOX;
+		$this->mainPageURL = Title::newMainPage()->getLocalURL();
 	}
 
 	public function addExtraHeaderHtml( $html ) {

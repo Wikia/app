@@ -1068,17 +1068,6 @@ $wgEnableEmail = true;
 $wgEnableUserEmail = true;
 
 /**
- * Minimum time, in hours, which must elapse between password reminder
- * emails for a given account. This is to prevent abuse by mail flooding.
- */
-$wgPasswordReminderResendTime = 24;
-
-/**
- * The time, in seconds, when an emailed temporary password expires.
- */
-$wgNewPasswordExpiry = 3600 * 24 * 7;
-
-/**
  * The time, in seconds, when an email confirmation email expires
  */
 $wgUserEmailConfirmationTokenExpiry = 7 * 24 * 60 * 60;
@@ -1126,6 +1115,11 @@ $wgEmailAuthentication = true;
  * Allow users to enable email notification ("enotif") on watchlist changes.
  */
 $wgEnotifWatchlist = false;
+
+/**
+ * Allow users to enable email notification ("enotif") on Discussions changes.
+ */
+$wgEnotifDiscussions = true;
 
 /**
  * Allow users to enable email notification ("enotif") when someone edits their
@@ -1899,6 +1893,7 @@ $wgDummyLanguageCodes = array(
 	'be-x-old' => 'be-tarask',
 	'bh' => 'bho',
 	'fiu-vro' => 'vro',
+	'lol' => 'lol', # Used for In Context Translations
 	'no' => 'nb',
 	'qqq' => 'qqq', # Used for message documentation.
 	'qqx' => 'qqx', # Used for viewing message keys.
@@ -2234,24 +2229,6 @@ $wgAllowMicrodataAttributes = false;
  * Cleanup as much presentational html like valign -> css vertical-align as we can
  */
 $wgCleanupPresentationalAttributes = true;
-
-/**
- * Should we try to make our HTML output well-formed XML?  If set to false,
- * output will be a few bytes shorter, and the HTML will arguably be more
- * readable.  If set to true, life will be much easier for the authors of
- * screen-scraping bots, and the HTML will arguably be more readable.
- *
- * Setting this to false may omit quotation marks on some attributes, omit
- * slashes from some self-closing tags, omit some ending tags, etc., where
- * permitted by HTML5.  Setting it to true will not guarantee that all pages
- * will be well-formed, although non-well-formed pages should be rare and it's
- * a bug if you find one.  Conversely, setting it to false doesn't mean that
- * all XML-y constructs will be omitted, just that they might be.
- *
- * Because of compatibility with screen-scraping bots, and because it's
- * controversial, this is currently left to true by default.
- */
-$wgWellFormedXml = true;
 
 /**
  * Permit other namespaces in addition to the w3.org default.
@@ -3121,15 +3098,6 @@ $wgArticleCountMethod = null;
 $wgUseCommaCount = false;
 
 /**
- * wgHitcounterUpdateFreq sets how often page counters should be updated, higher
- * values are easier on the database. A value of 1 causes the counters to be
- * updated on every hit, any higher value n cause them to update *on average*
- * every n hits. Should be set to either 1 or something largish, eg 1000, for
- * maximum efficiency.
- */
-$wgHitcounterUpdateFreq = 1;
-
-/**
  * How many days user must be idle before he is considered inactive. Will affect
  * the number shown on Special:Statistics and Special:ActiveUsers special page.
  * You might want to leave this as the default value, to provide comparable
@@ -3143,9 +3111,6 @@ $wgActiveUserDays = 30;
  * @name   User accounts, authentication
  * @{
  */
-
-/** For compatibility with old installations set to false */
-$wgPasswordSalt = true;
 
 /**
  * Specifies the minimal length of a user password. If set to 0, empty pass-
@@ -3278,7 +3243,7 @@ $wgHiddenPrefs = array();
  * This is used in a regular expression character class during
  * registration (regex metacharacters like / are escaped).
  */
-$wgInvalidUsernameCharacters = '@';
+$wgInvalidUsernameCharacters = '@:';
 
 /**
  * Character used as a delimiter when testing for interwiki userrights
@@ -3370,12 +3335,19 @@ $wgSysopEmailBans = true;
  * Limits on the possible sizes of range blocks.
  *
  * CIDR notation is hard to understand, it's easy to mistakenly assume that a
- * /1 is a small range and a /31 is a large range. Setting this to half the
- * number of bits avoids such errors.
+ * /1 is a small range and a /31 is a large range. For IPv4, setting a limit of
+ * half the number of bits avoids such errors, and allows entire ISPs to be
+ * blocked using a small number of range blocks.
+ *
+ * For IPv6, RFC 3177 recommends that a /48 be allocated to every residential
+ * customer, so range blocks larger than /64 (half the number of bits) will
+ * plainly be required. RFC 4692 implies that a very large ISP may be
+ * allocated a /19 if a generous HD-Ratio of 0.8 is used, so we will use that
+ * as our limit. As of 2012, blocking the whole world would require a /4 range.
  */
 $wgBlockCIDRLimit = array(
 	'IPv4' => 16, # Blocks larger than a /16 (64k addresses) will not be allowed
-	'IPv6' => 64, # 2^64 = ~1.8x10^19 addresses
+	'IPv6' => 19,
 );
 
 /**
@@ -3762,17 +3734,6 @@ $wgCookiePrefix = false;
  */
 $wgCookieHttpOnly = true;
 
-/**
- * If the requesting browser matches a regex in this blacklist, we won't
- * send it cookies with HttpOnly mode, even if $wgCookieHttpOnly is on.
- */
-$wgHttpOnlyBlacklist = array(
-	// Internet Explorer for Mac; sometimes the cookies work, sometimes
-	// they don't. It's difficult to predict, as combinations of path
-	// and expiration options affect its parsing.
-	'/^Mozilla\/4\.0 \(compatible; MSIE \d+\.\d+; Mac_PowerPC\)/',
-);
-
 /** A list of cookies that vary the cache (for use by extensions) */
 $wgCacheVaryCookies = array();
 
@@ -3972,10 +3933,15 @@ $wgStatsMethod = 'cache';
  */
 $wgAggregateStatsID = false;
 
-/** Whereas to count the number of time an article is viewed.
- * Does not work if pages are cached (for example with squid).
+/**
+ * Set this to an integer to only do synchronous site_stats updates
+ * one every *this many* updates. The other requests go into pending
+ * delta values in $wgMemc. Make sure that $wgMemc is a global cache.
+ * If set to -1, updates *only* go to $wgMemc (useful for daemons).
+ *
+ * @see PLATFORM-2275
  */
-$wgDisableCounters = false;
+$wgSiteStatsAsyncFactor = 1;
 
 /**
  * Parser test suite files to be run by parserTests.php when no specific
@@ -4730,9 +4696,10 @@ $wgJobTypesExcludedFromDefaultQueue = array();
  * Additional functions to be performed with updateSpecialPages.
  * Expensive Querypages are already updated.
  */
-$wgSpecialPageCacheUpdates = array(
-	'Statistics' => array( 'SiteStatsUpdate', 'cacheUpdate' )
-);
+$wgSpecialPageCacheUpdates = [
+	'SiteStatsRegenerate' => [ 'SiteStatsInit', 'doAllAndCommit' ], # PLATFORM-2275
+	'Statistics'          => [ 'SiteStatsUpdate', 'cacheUpdate' ],
+];
 
 /**
  * Hooks that are used for outputting exceptions.  Format is:
@@ -5318,7 +5285,7 @@ $wgAjaxLicensePreview = true;
  *
  */
 $wgCrossSiteAJAXdomains = [
-	'internal.vstf.wikia.com', # PLATFORM-1719
+	"internal.vstf.{$wgWikiaBaseDomain}", # PLATFORM-1719
 ];
 
 /**
@@ -5373,8 +5340,13 @@ $wgShellLocale = 'en_US.utf8';
 
 /**
  * Timeout for HTTP requests done internally
+ *
+ * Let's use different values when running a maintenance script (that includes Wikia Tasks)
+ * and when serving HTTP request
+ *
+ * @see PLATFORM-2385
  */
-$wgHTTPTimeout = 25;
+$wgHTTPTimeout = defined( 'RUN_MAINTENANCE_IF_MAIN' ) ? 25 : 5; # Wikia change
 
 /**
  * Timeout for Asynchronous (background) HTTP requests
@@ -5404,7 +5376,7 @@ $wgJobRunRate = 1;
 /**
  * Number of rows to update per job
  */
-$wgUpdateRowsPerJob = 50;
+$wgUpdateRowsPerJob = 500;
 
 /**
  * Number of rows to update per query

@@ -1,5 +1,7 @@
 <?php
-class ExceptionTest extends PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class ExceptionTest extends TestCase
 {
     /**
      * Exception message
@@ -9,9 +11,16 @@ class ExceptionTest extends PHPUnit_Framework_TestCase
     const ERROR_MESSAGE = 'Exception message';
 
     /**
+     * Exception message
+     *
+     * @var string
+     */
+    const ERROR_MESSAGE_REGEX = '#regex#';
+
+    /**
      * Exception code
      *
-     * @var integer
+     * @var int
      */
     const ERROR_CODE = 500;
 
@@ -97,6 +106,36 @@ class ExceptionTest extends PHPUnit_Framework_TestCase
      * @expectedExceptionMessage ExceptionTest::UNKNOWN_MESSAGE_CONSTANT
      */
     public function testUnknownConstants()
+    {
+    }
+
+    /**
+     * @expectedException Class
+     * @expectedExceptionCode 1234
+     * @expectedExceptionMessage Message
+     * @expectedExceptionMessageRegExp #regex#
+     */
+    public function testWithRegexMessage()
+    {
+    }
+
+    /**
+     * @expectedException Class
+     * @expectedExceptionCode 1234
+     * @expectedExceptionMessage Message
+     * @expectedExceptionMessageRegExp ExceptionTest::ERROR_MESSAGE_REGEX
+     */
+    public function testWithRegexMessageFromClassConstant()
+    {
+    }
+
+    /**
+     * @expectedException Class
+     * @expectedExceptionCode 1234
+     * @expectedExceptionMessage Message
+     * @expectedExceptionMessageRegExp ExceptionTest::UNKNOWN_MESSAGE_REGEX_CONSTANT
+     */
+    public function testWithUnknowRegexMessageFromClassConstant()
     {
     }
 }

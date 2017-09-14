@@ -1,0 +1,163 @@
+.wds-notifications {
+	$notifications-dropdown-content-color: $wds-color-light-c7;
+	$content-padding: 18px;
+
+	&__unread-mark {
+		align-items: center;
+		background-color: $wds-color-link;
+		//border-radius needs to be in pixels
+		//to handle 3 and more digits situation correctly
+		border-radius: 18px;
+		border: 1px solid $wds-color-white;
+		color: $wds-color-white;
+		display: flex;
+		font-size: $wds-typescale-size-minus-3;
+		height: 18px;
+		justify-content: center;
+		left: -2px;
+		min-width: 18px - 8px;
+		padding: 0 4px;
+		position: absolute;
+		top: 7px;
+	}
+
+	&__mark-all-as-read-button {
+		display: flex;
+		justify-content: flex-start;
+		margin-top: -7px;
+		width: 100%;
+	}
+
+	&__mark-all-as-read {
+		color: $wds-color-link;
+		cursor: pointer;
+		font-size: $wds-typescale-size-minus-2;
+		font-weight: bold;
+		line-height: 14px;
+		padding: 20px $content-padding $content-padding;
+		text-transform: uppercase;
+	}
+
+	&__dropdown-content {
+		align-items: center;
+		color: $notifications-dropdown-content-color;
+		flex-direction: column;
+		font-size: $wds-typescale-size-minus-1;
+		justify-content: center;
+		max-width: $content-padding * 2 + 320px;
+		min-height: 80px;
+		min-width: $content-padding * 2 + 320px;
+		width: 100%;
+	}
+
+	&__notification-list {
+		box-sizing: border-box;
+		overflow-y: auto;
+		width: 100%;
+
+		.wds-notifications__dropdown-content &.wds-list {
+			// notifications list has to be higher than dropdowns lists to show more notifications
+			max-height: 420px;
+		}
+
+		> li.wds-notification-card {
+			white-space: normal;
+		}
+	}
+
+	&__zero-state {
+		display: block;
+		padding: $content-padding $content-padding 4px;
+		color: $notifications-dropdown-content-color;
+	}
+}
+
+.wds-notification-card {
+	$text-color: $wds-color-dark-blue-gray;
+	$snippet-color: $wds-color-faint-gray;
+	$context-color: $wds-color-light-gray;
+	$icon-color: $wds-color-light-gray;
+
+	padding: 12px 0 8px;
+	text-align: left;
+
+	&__outer-body {
+		cursor: pointer;
+		display: flex;
+	}
+
+	&__icon-wrapper {
+		cursor: pointer;
+		display: flex;
+		height: 18px;
+		margin-left: 12px;
+		min-width: 18px;
+		width: 18px;
+
+		.wds-icon {
+			fill: $icon-color;
+			height: 18px;
+			min-width: inherit;
+			width: 18px;
+
+			.wds-is-unread & {
+				fill: $wds-color-link;
+			}
+		}
+	}
+
+	&__body {
+		display: flex;
+		flex-direction: column;
+		flex-grow: 1;
+		justify-content: flex-start;
+		overflow-wrap: break-word;
+		padding-left: 12px;
+		padding-right: 12px;
+		//word-break: break-word is not supported on Firefox, therefore word-wrap and overflow-wrap are used too
+		word-break: break-word;
+		word-wrap: break-word;
+	}
+
+	&__text {
+		color: $text-color;
+		font-size: $wds-typescale-size-minus-1;
+		line-height: 18px;
+		margin: 0;
+		b {
+			font-weight: bold;
+		}
+	}
+
+	&__snippet {
+		color: $snippet-color;
+		font-size: $wds-typescale-size-minus-1;
+		font-style: italic;
+		line-height: 18px;
+		margin: 8px 0 0;
+	}
+
+	&__context-list {
+		color: $context-color;
+		display: flex;
+		font-size: $wds-typescale-size-minus-2;
+		font-weight: bold;
+		list-style-type: none;
+		margin: 0;
+		padding: 8px 0 0;
+	}
+
+	&__community {
+		max-width: 150px;
+		text-overflow: ellipsis;
+	}
+
+	&__context-item {
+		overflow: hidden;
+		white-space: nowrap;
+	}
+
+	&__context-separator {
+		margin: 0 8px;
+	}
+}

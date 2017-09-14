@@ -1,0 +1,72 @@
+<!-- Begin SourcePoint recovery -->
+<script type="text/javascript">
+	require([
+		"ext.wikia.adEngine.adContext"
+	], function (adContext) {
+		var context = adContext.getContext(),
+		logGroup = 'ext.wikia.aRecoveryEngine.recovery.bootstrap';
+
+		if (context.opts.sourcePointBootstrap === true) {
+			window._sp_ = window._sp_ || {};
+			window._sp_.config = window._sp_.config || {};
+			window._sp_.config.account_id = 106;
+
+			{{{code}}}
+
+			window._sp_.config.content_control_callback = function () {
+				window.Wikia.log('content_control_callback called', window.Wikia.log.levels.debug, logGroup);
+				if (!window.wgUserName) {
+					document.getElementById('WikiaArticle').style.display = 'none';
+					document.getElementById('WikiaArticleMsg').style.display = 'block';
+					window.addEventListener('load', function () {
+						require(['ext.wikia.aRecoveryEngine.adBlockRecovery'], function (adBlockRecovery) {
+							'use strict';
+							adBlockRecovery.track('callback');
+						});
+					});
+				} else {
+					window.Wikia.log(['getBootstrap', 'content control disabled - user is logged in', window.wgUserName], log.levels.debug, logGroup);
+				}
+			};
+		}
+
+		if (context.opts.sourcePointRecovery === true) {
+			window._sp_.config.publisher_base = '{{domain}}/{{cs_endpoint}}';
+			window._sp_.config.enable_rid = true;
+
+			window._sp_.bootstrap('{{domain}}/api/v1/ARecoveryEngine/delivery');
+
+			window.addEventListener('load', function () {
+				require(['ext.wikia.aRecoveryEngine.adBlockRecovery'], function (adBlockRecovery) {
+					adBlockRecovery.verifyContent();
+				});
+			});
+		} else if (context.opts.sourcePointMMS === true) {
+			var mmsDomain = context.opts.sourcePointMMSDomain;
+
+			window._sp_.mms = window._sp_.mms || {};
+			window._sp_.mms.cmd = window._sp_.mms.cmd || [];
+
+			window._sp_.bootstrap('{{domain}}/api/v1/ARecoveryEngine/spmsg');
+			window._sp_.bootstrap('{{domain}}/api/v1/ARecoveryEngine/spmmsc');
+
+			window.addEventListener('load', function() {
+				window._sp_.config.mms_domain = mmsDomain;
+				window._sp_.config.mms_client_data_callback = function () {
+					window.Wikia.log(['getBootstrap', 'mms_client_data_callback called', arguments], window.Wikia.log.levels.debug, logGroup);
+				};
+
+				window._sp_.mms.cmd.push(function () {
+					window._sp_.mms.setTargeting("showmessage", "yes");
+				});
+				window._sp_.mms.cmd.push(function () {
+					window._sp_.mms.startMsg();
+				});
+			});
+		} else {
+			window.Wikia.log(['getBootstrap', 'MMS and Recovery are disabled'], window.Wikia.log.levels.debug, logGroup);
+		}
+	});
+
+</script>
+<!-- End SourcePoint recovery -->

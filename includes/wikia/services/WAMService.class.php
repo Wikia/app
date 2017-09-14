@@ -4,7 +4,7 @@
  * WAM Service
  * Service for handling WAM related queries
  */
-class WAMService extends Service {
+class WAMService {
 
 	const WAM_DEFAULT_ITEM_LIMIT_PER_PAGE = 20;
 	const WAM_BLACKLIST_EXT_VAR_NAME = 'wgEnableContentWarningExt';
@@ -89,6 +89,40 @@ class WAMService extends Service {
 	}
 
 	/**
+	 * Returns the latest WAM rank provided a wiki ID
+	 * @param int $wikiId
+	 * @return number
+	 */
+	public function getCurrentWamRankForWiki( $wikiId ) {
+		$memKey = wfSharedMemcKey( 'datamart', self::MEMCACHE_VER, 'wam_rank', $wikiId );
+
+		$getData = function () use ( $wikiId ) {
+			if ( $this->isDisabled() ) {
+				return 0;
+			}
+
+			$db = $this->getDB();
+
+			$result = $db->selectField(
+				[ 'fact_wam_scores' ],
+				'wam_rank',
+				[ 'wiki_id' => $wikiId ],
+				__METHOD__,
+				[
+					'ORDER BY' => 'time_id DESC',
+					'LIMIT' => 1
+				]
+			);
+
+			return $result ? $result : 0;
+		};
+
+		$wamRank = WikiaDataAccess::cacheWithLock( $memKey, self::CACHE_DURATION, $getData );
+
+		return $wamRank;
+	}
+
+	/**
 	 * @param array $inputOptions - available options:
 	 * 	int $currentTimestamp
 	 * 	int $previousTimestamp
@@ -149,7 +183,6 @@ class WAMService extends Service {
 			$join_conds
 		);
 
-		/* @var $db DatabaseMysql */
 		while ( $row = $db->fetchObject( $result ) ) {
 			$row = ( array )$row;
 			$row['vertical_name'] = $this->getVerticalName( $row['vertical_id'] );
@@ -176,26 +209,33 @@ class WAMService extends Service {
 
 		wfProfileIn(__METHOD__);
 
-		$db = $this->getDB();
+		$getData = function() {
+			$db = $this->getDB();
 
-		$fields = array(
-			'MAX(time_id) AS max_date',
-			'MIN(time_id) AS min_date'
-		);
+			$fields = array(
+				'MAX(time_id) AS max_date',
+				'MIN(time_id) AS min_date'
+			);
 
-		$result = $db->select(
-			'fact_wam_scores',
-			$fields,
-			'',
-			__METHOD__
-		);
+			$result = $db->select(
+				'fact_wam_scores',
+				$fields,
+				'',
+				__METHOD__
+			);
 
-		$row = $db->fetchRow($result);
+			$row = $db->fetchRow($result);
 
-		$dates['max_date'] = strtotime('+1 day', strtotime($row['max_date']));
-		$dates['min_date'] = strtotime('+1 day', strtotime($row['min_date']));
+			$dates = array();
+			$dates['max_date'] = strtotime('+1 day', strtotime($row['max_date']));
+			$dates['min_date'] = strtotime('+1 day', strtotime($row['min_date']));
 
-		wfProfileOut(__METHOD__);
+			return $dates;
+		};
+
+		$memKey = wfSharedMemcKey( 'wam-index-dates', self::MEMCACHE_VER );
+		$dates = WikiaDataAccess::cache( $memKey, self::CACHE_DURATION, $getData );
+		wfProfileOut( __METHOD__ );
 
 		return $dates;
 	}
@@ -203,7 +243,7 @@ class WAMService extends Service {
 	public function getWAMLanguages( $date ) {
 		wfProfileIn( __METHOD__ );
 
-		$date = empty( $date ) ? strtotime( '00:00 -1 day' ) : strtotime( '00:00 -1 day', $date );
+		$date = empty( $date ) ? strtotime( '00:00 -2 day' ) : strtotime( '00:00 -2 day', $date );
 		$memKey = wfSharedMemcKey( 'wam-languages', self::MEMCACHE_VER, $date );
 
 		$getData = function () use ( $date ) {
@@ -422,8 +462,8 @@ class WAMService extends Service {
 
 	protected function getDB() {
 		$app = F::app();
-		wfGetLB( $app->wg->DatamartDB )->allowLagged(true);
-		$db = wfGetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
+		wfGetLB( $app->wg->DWStatsDB )->allowLagged(true);
+		$db = wfGetDB( DB_SLAVE, array(), $app->wg->DWStatsDB );
 		$db->clearFlag( DBO_TRX );
 		return $db;
 	}

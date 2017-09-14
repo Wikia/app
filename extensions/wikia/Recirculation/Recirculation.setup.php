@@ -8,12 +8,15 @@ $wgExtensionCredits['other'][] = [
 ];
 
 // Autoload
-$wgAutoloadClasses['FandomDataService'] =  __DIR__ . '/services/FandomDataService.class.php';
 $wgAutoloadClasses['DiscussionsDataService'] =  __DIR__ . '/services/DiscussionsDataService.class.php';
+$wgAutoloadClasses['CuratedContentService'] =  __DIR__ . '/services/CuratedContentService.class.php';
 
 $wgAutoloadClasses['RecirculationController'] =  __DIR__ . '/RecirculationController.class.php';
 $wgAutoloadClasses['RecirculationApiController'] =  __DIR__ . '/RecirculationApiController.class.php';
 $wgAutoloadClasses['RecirculationHooks'] =  __DIR__ . '/RecirculationHooks.class.php';
+
+$wgAutoloadClasses['RecirculationContent'] =  __DIR__ . '/RecirculationContent.php';
+$wgAutoloadClasses['WikiRecommendations'] =  __DIR__ . '/WikiRecommendations.class.php';
 
 // Hooks
 $wgHooks['GetRailModuleList'][] = 'RecirculationHooks::onGetRailModuleList';
@@ -24,7 +27,5 @@ $wgHooks['BeforePageDisplay'][] = 'RecirculationHooks::onBeforePageDisplay';
 $wgExtensionMessagesFiles['Recirculation'] = __DIR__ . '/Recirculation.i18n.php';
 
 JSMessages::registerPackage('Recirculation', [
-	'recirculation-incontent-title',
-	'recirculation-fandom-title',
-	'recirculation-fandom-subtitle',
+	'recirculation-*',
 ]);

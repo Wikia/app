@@ -38,6 +38,19 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * employees who have been given the right explicitly.
 	 */
 	public function index() {
+		$contentLangCode = $this->app->wg->ContLang->getCode();
+
+		// Redirect to standalone NewAuth page if extension enabled
+		if ( $this->app->wg->EnableNewAuthModal ) {
+			$newSignupPageUrl = '/register?redirect=' . $this->userLoginHelper->getRedirectUrl();
+
+			if ( $contentLangCode !== 'en' ) {
+				$newSignupPageUrl .= '&uselang=' . $contentLangCode;
+			}
+
+			$this->getOutput()->redirect( $newSignupPageUrl );
+		}
+
 		JSMessages::enqueuePackage( 'UserSignup', JSMessages::EXTERNAL );
 
 		if ( $this->wg->User->isLoggedIn() && !$this->wg->User->isAllowed( 'createaccount' ) ) {
@@ -78,17 +91,8 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			$this->response->addAsset( 'user_signup_js' );
 		}
 
-		// We're not supporting connecting with facebook from this page while logged in
-		if (
-			!empty( $this->wg->EnableFacebookClientExt ) &&
-			!$this->wg->User->isLoggedIn() &&
-			!$this->isMonobookOrUncyclo
-		) {
-			$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js' );
-		}
-
 		// hide things in the skin
-		$this->wg->SuppressWikiHeader = true;
+		$this->wg->SuppressCommunityHeader = true;
 		$this->wg->SuppressPageHeader = true;
 		$this->wg->SuppressFooter = true;
 		$this->wg->SuppressAds = true;
@@ -107,9 +111,6 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$this->byemail = $this->request->getBool( 'byemail', false );
 		$this->signupToken = UserLoginHelper::getSignupToken();
 		$this->uselang = $this->request->getVal( 'uselang', 'en' );
-
-		// fb#38260 -- removed uselang
-		$this->avatars = $this->userLoginHelper->getRandomAvatars();
 
 		// template params
 		$this->pageHeading = wfMessage( 'usersignup-heading' )->escaped();
@@ -154,41 +155,12 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$result = $response->getVal( 'result', '' );
 
 		if ( $result == 'ok' ) {
-			/*
-			 * Remove when SOC-217 ABTest is finished
-			 */
-			$signupForm = new UserLoginForm( $this->wg->request );
-
-			if ( $signupForm->isAllowedRegisterUnconfirmed() ) {
-				$user = User::newFromName( $this->username );
-				// Get and clear redirect page
-				$userSignupRedirect = $user->getGlobalAttribute( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME );
-				$user->setGlobalAttribute( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME, null );
-
-				$user->saveSettings();
-
-				// redirect user
-				if ( !empty( $userSignupRedirect ) ) {
-					// Redirect user to the point where he finished (when signup on create wiki)
-					$title = SpecialPage::getTitleFor( 'CreateNewWiki' );
-					$query = $userSignupRedirect;
-				} else {
-					$title = $user->getUserPage();
-					$query = '';
-				}
-
-				$redirectUrl = $title->getFullURL( $query );
-			} else {
-				/*
-				 * end remove
-				 */
-				$params = [
-					'sendConfirmationEmail' => true,
-					'username' => $this->username,
-					'byemail' => intval( $this->byemail ),
-				];
-				$redirectUrl = $this->wg->title->getFullUrl( $params );
-			}
+			$params = [
+				'sendConfirmationEmail' => true,
+				'username' => $this->username,
+				'byemail' => intval( $this->byemail ),
+			];
+			$redirectUrl = $this->wg->title->getFullUrl( $params );
 
 			$this->track( 'signup-successful' );
 			$this->wg->out->redirect( $redirectUrl );
@@ -256,12 +228,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
-		$byemail = $this->wg->request->getBool( 'byemail', false );
-		if ( $byemail ) {
-			$ret = $signupForm->addNewAccountMailPassword();
-		} else {
-			$ret = $signupForm->addNewAccount();
-		}
+		$ret = $signupForm->addNewAccount();
 
 		// pass and ID of created account for FBConnect feature
 		if ( $ret instanceof User ) {
@@ -311,7 +278,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			$this->response->addAsset( 'extensions/wikia/UserLogin/js/ConfirmEmail.js' );
 
 			// hide things in the skin
-			$this->wg->SuppressWikiHeader = true;
+			$this->wg->SuppressCommunityHeader = true;
 			$this->wg->SuppressPageHeader = true;
 			$this->wg->SuppressFooter = true;
 			$this->wg->SuppressAds = true;
@@ -669,6 +636,9 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$this->result = ( $signupForm->msgType == 'error' ) ? $signupForm->msgType : 'ok';
 		$this->msg = $signupForm->msg;
 		$this->errParam = $signupForm->errParam;
+		if ( $this->request->getVal('retusername') ) {
+			$this->username = $signupForm->mUsername;
+		}
 	}
 
 	/**

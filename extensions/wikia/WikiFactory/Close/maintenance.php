@@ -7,7 +7,12 @@
  * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
  */
 
-ini_set( "include_path", dirname(__FILE__)."/../../../../maintenance/" );
+ini_set( "include_path", dirname(__FILE__) . "/../../../../maintenance/" );
+
+use Swagger\Client\Discussion\Api\SitesApi;
+use Wikia\DependencyInjection\Injector;
+use Wikia\Logger\WikiaLogger;
+use Wikia\Service\Swagger\ApiProvider;
 
 $optionsWithArgs = array( "limit", "sleep" );
 
@@ -18,7 +23,12 @@ class CloseWikiMaintenance {
 
 	const CLOSE_WIKI_DELAY = 30;
 
-	const S3_CONFIG = '/etc/s3cmd/sjc_prod.cfg'; # s3cmd config for Swift storage
+	/**
+	 * s3cmd + config for DFS storage
+	 *
+	 * This maintenance script needs to be run as root due to permissions set for /etc/s3cmd
+	 */
+	const S3_COMMAND = '/usr/bin/s3cmd -c /etc/s3cmd/sjc_prod.cfg';
 
 	private $mOptions;
 
@@ -215,6 +225,14 @@ class CloseWikiMaintenance {
 					),
 					__METHOD__
 				);
+				// SUS-2374
+				$dbw->delete(
+					"city_variables",
+					array(
+						"cv_city_id" => $row->city_id
+					),
+					__METHOD__
+				);
 				$this->log( "{$row->city_id} removed from WikiFactory tables" );
 
 				$this->cleanupSharedData( intval( $row->city_id ) );
@@ -232,7 +250,7 @@ class CloseWikiMaintenance {
 				$server = $local->getLBInfo( 'host' );
 
 				try {
-					$dbw = new DatabaseMysql($server, $wgDBadminuser, $wgDBadminpassword, $centralDB);
+					$dbw = new DatabaseMysqli($server, $wgDBadminuser, $wgDBadminpassword, $centralDB);
 					$dbw->begin( __METHOD__ );
 					$dbw->query("DROP DATABASE `{$row->city_dbname}`");
 					$dbw->commit( __METHOD__ );
@@ -258,7 +276,7 @@ class CloseWikiMaintenance {
 				/**
 				 * let other extensions remove entries for closed wiki
 				 */
-				wfRunHooks( 'WikiFactoryDoCloseWiki', [ $row ] );
+				Hooks::run( 'WikiFactoryDoCloseWiki', [ $row ] );
 
 				/**
 				 * there is nothing to set because row in city_list doesn't
@@ -281,6 +299,8 @@ class CloseWikiMaintenance {
 			] );
 
 			$this->log( "$dbname: completed" );
+
+			$this->removeDiscussions($cityid);
 
 			/**
 			 * just one?
@@ -307,42 +327,39 @@ class CloseWikiMaintenance {
 	 * @throws WikiaException thrown on failed backups
 	 */
 	private function tarFiles( $directory, $dbname, $cityid ) {
-		$swiftEnabled = WikiFactory::getVarValueByName( 'wgEnableSwiftFileBackend', $cityid );
 		$wgUploadPath = WikiFactory::getVarValueByName( 'wgUploadPath', $cityid );
 
-		if ( $swiftEnabled ) {
-			// check that S3 bucket for this wiki exists (PLATFORM-1199)
-			$swiftStorage = \Wikia\SwiftStorage::newFromWiki( $cityid );
-			$isEmpty = intval( $swiftStorage->getContainer()->object_count ) === 0;
+		// check that S3 bucket for this wiki exists (PLATFORM-1199)
+		$swiftStorage = \Wikia\SwiftStorage::newFromWiki( $cityid );
+		$isEmpty = intval( $swiftStorage->getContainer()->object_count ) === 0;
 
-			if ( $isEmpty ) {
-				$this->log( sprintf( "'%s' S3 bucket is empty, leave early\n", $swiftStorage->getContainerName() ) );
-				return false;
-			}
-
-			// sync Swift container to the local directory
-			$directory = sprintf( "/tmp/images/{$dbname}/" );
-
-			$path = trim( parse_url( $wgUploadPath, PHP_URL_PATH ), '/' );
-			$container = substr( $path, 0, -7 ); // eg. poznan/pl
-
-			$this->log( sprintf( 'Rsyncing images from "%s" Swift storage to "%s"...', $container, $directory ) );
-
-			wfMkdirParents( $directory );
-			$time = wfTime();
-
-			// s3cmd sync --dry-run s3://dilbert ~/images/dilbert/ --exclude "/thumb/*" --exclude "/temp/*"
-			$cmd = sprintf(
-				'sudo /usr/bin/s3cmd -c %s sync s3://%s/images "%s" --exclude "/thumb/*" --exclude "/temp/*"',
-				self::S3_CONFIG,
-				$container,
-				$directory
-			);
-
-			wfShellExec( $cmd, $iStatus );
-			$time = Wikia::timeDuration( wfTime() - $time );
-			Wikia::log( __METHOD__, "info", "Rsync to {$directory} from {$container} Swift storage: status: {$iStatus}, time: {$time}", true, true );
+		if ( $isEmpty ) {
+			$this->log( sprintf( "'%s' S3 bucket is empty, leave early\n", $swiftStorage->getContainerName() ) );
+			return false;
 		}
+
+		// sync Swift container to the local directory
+		$directory = sprintf( "/tmp/images/{$dbname}/" );
+
+		$path = trim( parse_url( $wgUploadPath, PHP_URL_PATH ), '/' );
+		$container = substr( $path, 0, -7 ); // eg. poznan/pl
+
+		$this->log( sprintf( 'Rsyncing images from "%s" Swift storage to "%s"...', $container, $directory ) );
+
+		wfMkdirParents( $directory );
+		$time = wfTime();
+
+		// s3cmd sync --dry-run s3://dilbert ~/images/dilbert/ --exclude "/thumb/*" --exclude "/temp/*"
+		$cmd = sprintf(
+			'%s sync s3://%s/images "%s" --exclude "/thumb/*" --exclude "/temp/*"',
+			self::S3_COMMAND,
+			$container,
+			$directory
+		);
+
+		wfShellExec( $cmd, $iStatus );
+		$time = Wikia::timeDuration( wfTime() - $time );
+		Wikia::log( __METHOD__, "info", "Rsync to {$directory} from {$container} Swift storage: status: {$iStatus}, time: {$time}", true, true );
 
 		/**
 		 * @name dumpfile
@@ -411,7 +428,7 @@ class CloseWikiMaintenance {
 	 * Remove DFS bucket of a given wiki
 	 *
 	 * @see PLATFORM-1700
-	 * @param int $cityId
+	 * @param int $cityid
 	 */
 	private function removeBucket( $cityid ) {
 		try {
@@ -420,18 +437,20 @@ class CloseWikiMaintenance {
 
 			// s3cmd --recursive del s3://BUCKET/OBJECT / Recursively delete files from bucket
 			$cmd = sprintf(
-				'sudo /usr/bin/s3cmd -c %s --recursive del s3://%s%s/',
-				self::S3_CONFIG,
+				'%s --recursive del s3://%s%s/',
+				self::S3_COMMAND,
 				$swift->getContainerName(),  # e.g. 'nordycka'
 				$swift->getPathPrefix()      # e.g. '/pl/images'
 			);
-			$out = wfShellExec( $cmd, $iStatus );
 			$this->log( $cmd );
+			$out = wfShellExec( $cmd, $iStatus );
 
 			if ( $iStatus !== 0 ) {
 				throw new Exception( 'Failed to remove a bucket content - ' . $cmd, $iStatus );
 			}
 		} catch ( Exception $ex ) {
+			$this->log( __METHOD__ . ' - ' . $ex->getMessage() );
+
 			Wikia\Logger\WikiaLogger::instance()->error( 'Removing DFS bucket failed', [
 				'exception' => $ex,
 				'city_id' => $cityid
@@ -500,6 +519,29 @@ class CloseWikiMaintenance {
 	 */
 	private function log( $message ) {
 		Wikia::log( "CloseWiki", false, $message, true, true );
+	}
+
+	private function removeDiscussions( int $cityId ) {
+		try {
+			$this->getSitesApi()->hardDeleteSite( $cityId, F::app()->wg->TheSchwartzSecretToken );
+		}
+		catch ( \Swagger\Client\ApiException $e ) {
+			WikiaLogger::instance()
+				->error( "{$cityId} Failed to hard delete Discussion site: {$e->getMessage()} \n" );
+		}
+	}
+
+	/**
+	 * @return SitesApi
+	 */
+	private function getSitesApi() {
+		/** @var ApiProvider $apiProvider */
+		$apiProvider = Injector::getInjector()->get( ApiProvider::class );
+		/** @var SitesApi $api */
+		$api = $apiProvider->getApi( 'discussion', SitesApi::class );
+		$api->getApiClient()->getConfig()->setCurlTimeout( 5 );
+
+		return $api;
 	}
 
 }

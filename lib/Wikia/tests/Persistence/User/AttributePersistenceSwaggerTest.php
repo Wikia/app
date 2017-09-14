@@ -2,6 +2,7 @@
 
 namespace Wikia\Persistence\User\Attributes;
 
+use PHPUnit\Framework\TestCase;
 use Swagger\Client\ApiException;
 use Swagger\Client\User\Attributes\Api\UsersAttributesApi;
 use Swagger\Client\User\Attributes\Models\AllUserAttributesHalResponse;
@@ -12,7 +13,7 @@ use Wikia\Service\ForbiddenException;
 use Wikia\Service\Swagger\ApiProvider;
 use Wikia\Service\UnauthorizedException;
 
-class AttributePersistenceSwaggerTest extends \PHPUnit_Framework_TestCase {
+class AttributePersistenceSwaggerTest extends TestCase {
 
 	protected $userId = 1;
 
@@ -34,7 +35,7 @@ class AttributePersistenceSwaggerTest extends \PHPUnit_Framework_TestCase {
 			->disableOriginalConstructor()
 			->getMock();
 		$this->userAttributesApi = $this->getMockBuilder( UsersAttributesApi::class )
-			->setMethods( [ 'saveAttributeForUser', 'getAllAttributesForUser', 'deleteAttributeForUser' ] )
+			->setMethods( [ 'saveAttribute', 'getAllAttributes', 'deleteAttribute' ] )
 			->disableOriginalConstructor()
 			->getMock();
 		$this->apiProvider->expects( $this->any() )
@@ -60,7 +61,7 @@ class AttributePersistenceSwaggerTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testGetAttributesNullResponse() {
 		$this->userAttributesApi->expects( $this->once() )
-			->method( 'getAllAttributesForUser' )
+			->method( 'getAllAttributes' )
 			->with( $this->userId )
 			->willReturn( null );
 
@@ -72,7 +73,7 @@ class AttributePersistenceSwaggerTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testGetAttributesError() {
 		$this->userAttributesApi->expects( $this->once() )
-			->method( 'getAllAttributesForUser' )
+			->method( 'getAllAttributes' )
 			->with( $this->userId )
 			->willThrowException( new ApiException( "", 500 ) );
 
@@ -82,7 +83,7 @@ class AttributePersistenceSwaggerTest extends \PHPUnit_Framework_TestCase {
 
 	public function testSaveAttributeForUserSuccess() {
 		$this->userAttributesApi->expects( $this->once() )
-			->method( 'saveAttributeForUser' )
+			->method( 'saveAttribute' )
 			->with( $this->userId, $this->attribute->getName(), $this->attribute->getValue() )
 			->willReturn( true );
 
@@ -94,7 +95,7 @@ class AttributePersistenceSwaggerTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testSaveAttributeForUserUnAuthorized() {
 		$this->userAttributesApi->expects( $this->once( ))
-			->method( 'saveAttributeForUser' )
+			->method( 'saveAttribute' )
 			->with( $this->userId, $this->attribute->getName(), $this->attribute->getValue() )
 			->willThrowException( new ApiException( "", UnauthorizedException::CODE ) );
 
@@ -106,7 +107,7 @@ class AttributePersistenceSwaggerTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testSaveAttributeForUserError() {
 		$this->userAttributesApi->expects( $this->once( ))
-			->method( 'saveAttributeForUser' )
+			->method( 'saveAttribute' )
 			->with( $this->userId, $this->attribute->getName(), $this->attribute->getValue() )
 			->willThrowException( new ApiException( "", 500 ) );
 
@@ -118,7 +119,7 @@ class AttributePersistenceSwaggerTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testSaveAttributeForUserForbidden() {
 		$this->userAttributesApi->expects( $this->once( ))
-			->method( 'saveAttributeForUser' )
+			->method( 'saveAttribute' )
 			->with( $this->userId, $this->attribute->getName(), $this->attribute->getValue() )
 			->willThrowException( new ApiException( "", ForbiddenException::CODE ) );
 
@@ -127,7 +128,7 @@ class AttributePersistenceSwaggerTest extends \PHPUnit_Framework_TestCase {
 
 	public function testDeleteAttributeSuccess() {
 		$this->userAttributesApi->expects( $this->once( ))
-			->method( 'deleteAttributeForUser' )
+			->method( 'deleteAttribute' )
 			->with( $this->userId, $this->attribute->getName() );
 
 		$this->assertTrue( $this->persistence->deleteAttribute( $this->userId, $this->attribute ) );
@@ -135,7 +136,7 @@ class AttributePersistenceSwaggerTest extends \PHPUnit_Framework_TestCase {
 
 	private function setUpGetAttributesHalResponse(){
 		$this->userAttributesApi->expects( $this->once() )
-			->method( 'getAllAttributesForUser' )
+			->method( 'getAllAttributes' )
 			->with( $this->userId )
 			->willReturn( $this->getAllUserAttributesHalResponse() );
 	}

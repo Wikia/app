@@ -20,7 +20,6 @@ return [
 			'wikia.geo',
 			'wikia.fbLocale',
 			'wikia.loader',
-			'wikia.localStorage',
 			'wikia.location',
 			'wikia.log',
 			'wikia.mw',
@@ -32,6 +31,7 @@ return [
 			'wikia.tracker',
 			'wikia.window',
 			'wikia.abTest',
+			'underscore',
 		],
 		'position' => 'top', // needs to be loaded before AssetsManager files
 	],
@@ -45,7 +45,6 @@ return [
 		'scripts' => 'resources/wikia/modules/cache.js',
 		'dependencies' => [
 			'amd',
-			'wikia.localStorage',
 			'wikia.window',
 		],
 	],
@@ -58,13 +57,6 @@ return [
 	],
 	'wikia.location' => [
 		'scripts' => 'resources/wikia/modules/location.js',
-		'dependencies' => [
-			'amd',
-			'wikia.window',
-		],
-	],
-	'wikia.localStorage' => [
-		'scripts' => 'resources/wikia/modules/localStorage.js',
 		'dependencies' => [
 			'amd',
 			'wikia.window',
@@ -151,6 +143,7 @@ return [
 		'dependencies' => [
 			'amd',
 			'wikia.cookies',
+			'wikia.querystring'
 		],
 	],
 	'wikia.tracker' => [
@@ -171,6 +164,12 @@ return [
 	],
 	'wikia.throbber' => [
 		'scripts' => 'resources/wikia/modules/throbber.js',
+		'dependencies' => [
+			'amd',
+		],
+	],
+	'underscore' => [
+		'scripts' => 'resources/wikia/libraries/underscore/underscore-min.js',
 		'dependencies' => [
 			'amd',
 		],
@@ -219,16 +218,6 @@ return [
 		]
 	],
 
-	'wikia.handlebars' => [
-		'scripts' => 'resources/wikia/libraries/handlebars/handlebars.js',
-		'dependencies' => 'amd',
-	],
-
-	'wikia.stringhelper' => [
-		'scripts' => 'resources/wikia/modules/stringhelper.js',
-		'dependencies' => 'amd',
-	],
-
 	// module loaded via $.loadjQuery UI and is a wrapper for MediaWiki jQuery UI modules
 	// this used to be static file located in /skins/common/jquery/jquery-ui-1.8.14.custom.js
 	'wikia.jquery.ui' => [
@@ -255,13 +244,12 @@ return [
 		'dependencies' => 'wikia.mustache',
 	],
 
-	'jquery.handlebars' => [
-		'scripts' => 'resources/wikia/libraries/handlebars/jquery.handlebars.js',
-		'dependencies' => 'wikia.handlebars',
-	],
-
 	'jquery.autocomplete' => [
 		'scripts' => 'resources/wikia/libraries/jquery/autocomplete/jquery.autocomplete.js'
+	],
+
+	'jquery.dataTables' => [
+		'scripts' => 'resources/wikia/libraries/jquery/datatables/jquery.dataTables.min.js',
 	],
 
 	// moved here from AssetsManager by wladek
@@ -299,6 +287,15 @@ return [
 		'scripts' => [
 			'resources/wikia/modules/importScript.js',
 			'resources/wikia/modules/importScriptHelper.js'
+		]
+	],
+
+	'wikia.article.edit' => [
+		'scripts' => [
+			'resources/wikia/modules/articleEditTracking.js',
+		],
+		'dependencies' => [
+			'wikia.tracker',
 		]
 	],
 ];

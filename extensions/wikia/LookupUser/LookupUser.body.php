@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Provides the special page to look up user info
  *
@@ -313,7 +314,9 @@ EOT
 
 			// checking and setting User::mBlockedGlobally if needed
 			// only for this instance of class User
-			wfRunHooks( 'GetBlockedStatus', array( &$user ) );
+
+			// SUS-423: Don't log user lookup in Phalanx stats
+			Hooks::run( 'GetBlockedStatus', [ $user, false /* don't log in Phalanx stats */ ] );
 
 			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 			$oTmpl->set_vars( array(
@@ -407,7 +410,7 @@ EOT
 			return json_encode( [ 'success' => false ] );
 		}
 
-		$apiUrl = $wiki->city_url . 'api.php?action=query&list=users&ususers=' . urlencode( $userName ) . '&usprop=blockinfo|groups|editcount&format=json';
+		$apiUrl = $wiki->city_url . 'api.php?action=query&list=users&ususers=' . urlencode( $userName ) . '&usprop=localblockinfo|groups|editcount&format=json';
 
 		$cachedData = $wgMemc->get( LookupUserPage::getUserLookupMemcKey( $userName, $wikiId ) );
 		if ( !empty( $cachedData ) ) {
@@ -516,4 +519,6 @@ EOT
 	private static function getFounderMemKey( $userName, $wikiId ) {
 		return wfSharedMemcKey( 'lookupUser', 'isUserFounder', $userName, $wikiId );
 	}
+
+
 }

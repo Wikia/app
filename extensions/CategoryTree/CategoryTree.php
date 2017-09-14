@@ -222,10 +222,18 @@ function efCategoryTree() {
  * @return bool
  */
 function efCategoryTreeSetHooks( $parser ) {
-	$parser->setHook( 'categorytree' , 'efCategoryTreeParserHook' );
+	// Wikia change begin
+	$parser->setHook( 'categorytree' , 'efCategoryTreeRender' );
+	// Wikia change end
 	$parser->setFunctionHook( 'categorytree' , 'efCategoryTreeParserFunction' );
 	return true;
 }
+
+// Wikia change begin
+function efCategoryTreeRender( $cat, $argv, $parser = null ) {
+	return efCategoryTreeParserHook( $cat, $argv, $parser = null, false );
+}
+// Wikia change end
 
 /**
  * Entry point for Ajax, registered in $wgAjaxExportList.

@@ -30,7 +30,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 		$this->response->addAsset( 'extensions/wikia/UserLogin/css/UserLogin.scss' );
 
 		// hide things in the skin
-		$this->wg->SuppressWikiHeader = false;
+		$this->wg->SuppressCommunityHeader = false;
 		$this->wg->SuppressPageHeader = false;
 		$this->wg->SuppressFooter = true;
 		$this->wg->SuppressAds = true;
@@ -109,7 +109,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 				return;
 			}
 
-			if ( $user->checkPassword( $this->password ) ) {
+			if ( $user->checkPassword( $this->password )->success() ) {
 				$this->wg->User = $user;
 
 				if ( $user->getGlobalFlag( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) != null ) {// Signup confirm
@@ -169,7 +169,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 						$this->wg->out->redirect( $userPage->getFullURL() );
 					}
 
-					wfRunHooks( 'EmailChangeConfirmed', array( $user ) );
+					Hooks::run( 'EmailChangeConfirmed', array( $user ) );
 					return;
 
 				}

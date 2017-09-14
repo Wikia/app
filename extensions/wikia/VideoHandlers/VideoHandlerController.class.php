@@ -58,7 +58,7 @@ class VideoHandlerController extends WikiaController {
 					 * Therefore we have to allow for accessing this API, from ie. file://
 					 */
 					(new CrossOriginResourceSharingHeaderHelper())
-						->setAllowOrigin( [ '*' ] )
+						->setAllowAllOrigins()
 						->setAllowMethod( [ 'GET' ] )
 						->setHeaders($this->response);
 				}
@@ -185,7 +185,7 @@ class VideoHandlerController extends WikiaController {
 				if ( $status->isOK() ) {
 					$oldimage = null;
 					$user = $this->wg->User;
-					wfRunHooks( 'FileDeleteComplete', array( &$file, &$oldimage, &$page, &$user, &$reason ) );
+					Hooks::run( 'FileDeleteComplete', array( &$file, &$oldimage, &$page, &$user, &$reason ) );
 				} else if ( !empty($error) ) {
 					$error = $status->getMessage();
 				}
@@ -194,7 +194,7 @@ class VideoHandlerController extends WikiaController {
 				if ( $title->exists() ) {
 					$article = Article::newFromID( $title->getArticleID() );
 				} else {
-					$botUser = User::newFromName( 'WikiaBot' );
+					$botUser = User::newFromName( Wikia::BOT_USER );
 					$flags = EDIT_NEW | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT;
 
 					// @FIXME Set $article here after calling addCategoryVideos so that the doDeleteArticle call below works properly
@@ -284,10 +284,11 @@ class VideoHandlerController extends WikiaController {
 			return $videos;
 		};
 
-		// Call the generator, caching the result, or not caching if we get null from the $dataGenerator
+		// Call the generator, caching the result, or caching it for only 5 seconds if we get null from the $dataGenerator
+		// (in case of some failure)
 		$videos = WikiaDataAccess::cacheWithOptions( $memcKey, $dataGenerator, [
 			'cacheTTL' => WikiaResponse::CACHE_STANDARD,
-			'negativeCacheTTL' => 0,
+			'negativeCacheTTL' => 5,
 		] );
 
 		// If file title was passed in as a string, return single associative array.
@@ -410,8 +411,7 @@ class VideoHandlerController extends WikiaController {
 	 * @return string
 	 */
 	public static function getVideoListSurrogateKey() {
-		global $wgCachePrefix;
-		return implode( '-', [ $wgCachePrefix, __CLASS__, 'getVideoList' ] );
+		return Wikia::surrogateKey( __CLASS__, 'getVideoList' );
 	}
 
 	protected function getVideoListParams() {

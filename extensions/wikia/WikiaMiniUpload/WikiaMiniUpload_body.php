@@ -99,11 +99,13 @@ class WikiaMiniUpload {
 		$constrain = array();
 		$exactHeight = $wgRequest->getVal('exactHeight');
 		if ( $exactHeight ) {
+			$exactHeight = intval($exactHeight);
 			$constrain[] = "img_height = $exactHeight";
 		}
 
 		$exactWidth = $wgRequest->getVal('exactWidth');
 		if ( $exactWidth ) {
+			$exactWidth = intval($exactWidth);
 			$constrain[] = "img_width = $exactWidth";
 		}
 
@@ -231,7 +233,7 @@ class WikiaMiniUpload {
 			$tempid = $this->tempFileStoreInfo( $tempname );
 			$props = array();
 			$props['file'] = $file;
-			$props['name'] = preg_replace("/[^".Title::legalChars()."]|:/", '-', trim($flickrResult['title']).'.jpg');
+			$props['name'] = preg_replace("/[^".Title::legalChars()."]|:/", '-', trim($flickrResult['title']['_content']).'.jpg');
 			$props['mwname'] = $tempname;
 			$props['extraId'] = $itemId;
 			$props['tempid'] = $tempid;
@@ -259,7 +261,7 @@ class WikiaMiniUpload {
 
 		$ret = $upload->verifyUpload();
 
-		if ( !wfRunHooks('WikiaMiniUpload:BeforeProcessing', array($mSrcName)) ) {
+		if ( !Hooks::run('WikiaMiniUpload:BeforeProcessing', array($mSrcName)) ) {
 			wfDebug( "Hook 'WikiaMiniUpload:BeforeProcessing' broke processing the file." );
 			return UploadBase::VERIFICATION_ERROR;
 		}
@@ -626,7 +628,7 @@ class WikiaMiniUpload {
 			$article_obj = new Article( $title_obj );
 			$text = $article_obj->getContent();
 
-			wfRunHooks( 'WikiaMiniUpload::fetchTextForImagePlaceholder', array( &$title_obj, &$text ) );
+			Hooks::run( 'WikiaMiniUpload::fetchTextForImagePlaceholder', array( &$title_obj, &$text ) );
 
 			$box = $wgRequest->getVal( 'box', '' );
 

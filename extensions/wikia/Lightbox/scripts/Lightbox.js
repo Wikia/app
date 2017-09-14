@@ -37,6 +37,9 @@
 		makeLightbox: function (params) {
 			var trackingObj, clickSource, trackingTitle;
 
+			// Clear the statically-added blackout
+			$('.lightbox-beforejs-blackout').remove();
+
 			// Allow other extensions to react when a Lightbox is opened.  Used in FilePage and VideoPageTool
 			$(window).trigger('lightboxOpened');
 
@@ -1106,16 +1109,14 @@
 				if (window.wgUserName) {
 					doShareEmail(addresses);
 				} else {
-					require(['AuthModal'], function (authModal) {
-						authModal.load({
-							url: '/signin?redirect=' + encodeURIComponent(window.location.href),
-							origin: 'image-lightbox',
-							onAuthSuccess: function () {
-								doShareEmail(addresses);
-								// see VID-473 - Reload page on lightbox close
-								LightboxLoader.reloadOnClose = true;
-							}
-						});
+					window.wikiaAuthModal.load({
+						forceLogin: true,
+						origin: 'image-lightbox',
+						onAuthSuccess: function () {
+							doShareEmail(addresses);
+							// see VID-473 - Reload page on lightbox close
+							LightboxLoader.reloadOnClose = true;
+						}
 					});
 				}
 			});

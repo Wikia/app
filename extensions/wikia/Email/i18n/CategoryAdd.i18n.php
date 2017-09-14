@@ -55,6 +55,13 @@ $messages['ja'] = array(
 	'emailext-categoryadd-see-all-pages' => '[$1 $2]ですべてのページをご覧ください。',
 );
 
+$messages['ko'] = array(
+	'emailext-categoryadd-details' => '{{SITENAME}}에서 귀하가 주시하고 있는 분류에 문서가 추가되었습니다.',
+	'emailext-categoryadd-see-all-pages' => '[$1 $2] 분류에 속한 모든 문서 보기',
+	'emailext-categoryadd-see-article' => '문서 보기',
+	'emailext-categoryadd-subject' => '{{SITENAME}}의 $1 문서에 분류가 추가되었습니다!',
+);
+
 $messages['nl'] = array(
 	'emailext-categoryadd-subject' => '$1 has been added to $2 on {{SITENAME}}!',
 	'emailext-categoryadd-details' => '[$1 $2] has been added to [$3 $4] on [{{SERVER}} {{SITENAME}}].',
@@ -98,14 +105,6 @@ $messages['zh-hans'] = array(
 $messages['zh-hant'] = array(
 	'emailext-categoryadd-subject' => '$1已添加到{{SITENAME}}上的$2類別頁面上！',
 	'emailext-categoryadd-details' => '標題為[$1 $2]的文章已添加到[{{SERVER}} {{SITENAME}}]上的[$3 $4]類中。',
-	'emailext-categoryadd-see-article' => '參閲文章',
-	'emailext-categoryadd-see-all-pages' => '參閲[$1 $2]類別頁面上的所有頁面。',
-);
-
-$messages['zh-tw'] = array(
-	'emailext-categoryadd-subject' => '$1已添加到{{SITENAME}}上的$2類別頁面上！',
-	'emailext-categoryadd-details' => '標題為[$1 $2]的文章已添加到[{{SERVER}} {{SITENAME}}]上的[$3 $4]類中。',
-	'emailext-categoryadd-footer-1' => '查看[$1 $2]類的所有頁面。',
 	'emailext-categoryadd-see-article' => '參閲文章',
 	'emailext-categoryadd-see-all-pages' => '參閲[$1 $2]類別頁面上的所有頁面。',
 );

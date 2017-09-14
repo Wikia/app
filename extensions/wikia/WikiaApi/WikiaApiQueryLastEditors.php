@@ -63,7 +63,7 @@ class WikiaApiQueryLastEditors extends ApiQueryBase {
 				'page_ns', 
 				'is_content', 
 				'is_redirect', 
-				'ip',
+				'ip_bin',
 				'rev_timestamp',
 				'image_links',
 				'video_links',
@@ -79,6 +79,7 @@ class WikiaApiQueryLastEditors extends ApiQueryBase {
 			__METHOD__,
 			array(
 				'ORDER BY' => 'rev_timestamp DESC',
+				'USE INDEX' => 'for_wikia_api_last_editors_idx',
 				'LIMIT'	=> $this->params['limit'],
 				'OFFSET' => $this->params['offset']
 			)
@@ -94,7 +95,7 @@ class WikiaApiQueryLastEditors extends ApiQueryBase {
 			$server = WikiFactory::getVarValueByName( "wgServer", $row->wiki_id );
 			# user
 			$oUser = null; 
-			$username = long2ip( $row->ip );
+			$username = inet_ntop( $row->ip_bin );
 			if ( $row->user_id > 0 ) {
 				$oUser = User::newFromId( $row->user_id );
 				$username = $oUser->getName();

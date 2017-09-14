@@ -50,18 +50,9 @@ define('videosmodule.views.bottomModule', [
 	 * Handle logic to display videos module or not based on related pages module
 	 */
 	VideoModule.prototype.handleRelatedPages = function () {
-		var self = this;
-
 		// check if related pages is loaded and visible
 		if (this.elContentPresent()) {
 			this.onRelatedPagesLoad();
-		} else {
-			// wait till after related pages has loaded to check if visible
-			this.$el.on('afterLoad.relatedPages', function () {
-				if (self.elContentPresent()) {
-					self.onRelatedPagesLoad();
-				}
-			});
 		}
 	};
 

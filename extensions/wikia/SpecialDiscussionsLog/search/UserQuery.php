@@ -13,16 +13,12 @@ class UserQuery implements SearchQuery {
 		return <<<JSON_BODY
 {
 	"query": {
-		"filtered": {
-			"query": {
-				"bool": {
-					"should": [{
-						"query_string": {
-							"query":"mobile_app.event.user_id:$userId"
-						}
-					}]
+		"bool": {
+			"should": [{
+				"query_string": {
+					"query":"rawTags:dis_service_* AND user_id:$userId"
 				}
-			}
+			}]
 		}
 	},
 	"size":$paginationSize,

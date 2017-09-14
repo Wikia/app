@@ -59,6 +59,7 @@ class WikiaRequest implements Wikia\Interfaces\IRequest {
 			return $this->params[$key];
 		}
 
+		taint( $default );
 		return $default;
 	}
 
@@ -202,7 +203,7 @@ class WikiaRequest implements Wikia\Interfaces\IRequest {
 	 * @return bool
 	 */
 	public function wasPosted() {
-		wfRunHooks( 'WikiaRequestWasPosted' );
+		Hooks::run( 'WikiaRequestWasPosted' );
 
 		return isset( $_SERVER['REQUEST_METHOD'] ) && $_SERVER['REQUEST_METHOD'] == 'POST';
 	}
@@ -273,7 +274,7 @@ class WikiaRequest implements Wikia\Interfaces\IRequest {
 	public function setSessionData( $key, $data ) {
 		$_SESSION[$key] = $data;
 	}
-	
+
 	/*
 	 * Get data from $_SERVER['SCRIPT_URL'], which is original path of the request, before mod_rewrite changed it.
 	 * Please be aware how our URL rewrites work before you think about using this.
@@ -292,7 +293,7 @@ class WikiaRequest implements Wikia\Interfaces\IRequest {
 	 * @return mixed
 	 * @throws BadRequestException
 	 */
-	public function isValidWriteRequest( \User $user ) {
+	public function assertValidWriteRequest( \User $user ) {
 		if ( !$this->wasPosted() || !$user->matchEditToken( $this->getVal( 'token' ) ) ) {
 			throw new BadRequestException( 'Request must be POSTed and provide a valid edit token.' );
 		}

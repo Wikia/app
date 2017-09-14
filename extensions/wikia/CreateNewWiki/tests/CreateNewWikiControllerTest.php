@@ -23,15 +23,13 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 		$wikiLanguage = 'en';
 		$wikiVertical = '3';
 		$wikiId = 322389;
-		$wikiAnswer = 12345;
 		$siteName = 'asdfasdf';
 		$mainPageUrl = 'muppet.wikia.com/wiki/Main_page';
 
 		$requestParams = array("wName" => $wikiName,
 			"wDomain" => $wikiDomain,
 			"wLanguage" => $wikiLanguage,
-			"wVertical" => $wikiVertical,
-			"wAnswer" => $wikiAnswer);
+			"wVertical" => $wikiVertical);
 
 		$wgRequest = $this->getMock('WebRequest');
 		$wgRequest->expects($this->any())
@@ -61,12 +59,24 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 
 		$this->mockGlobalVariable( 'wgUser', $wgUser );
 
-		$createWiki = $this->getMock('CreateWiki', array('create', 'getWikiInfo'), array(), '', false);
+		$createWiki = $this->getMockBuilder(CreateWiki::class )
+			->disableOriginalConstructor()
+			->setMethods( [ 'create', 'getWikiInfo', 'getCityId', 'getSiteName' ] )
+			->getMock();
 		$createWiki->expects($this->any())
 			->method('create');
 		$createWiki->expects($this->any())
 			->method('getWikiInfo')
 			->will($this->onConsecutiveCalls($wikiId, $siteName));
+
+		$createWiki
+			->expects($this->any())
+			->method('getCityId')
+			->willReturn(99);
+
+		$createWiki->expects( $this->any() )
+			->method( 'getSiteName' )
+			->willReturn( $siteName );
 
 		$mainPageTitle = $this->getMock('GlobalTitle', array(), array(), '', false);
 		$mainPageTitle->expects($this->any())
@@ -74,7 +84,7 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 			->will($this->returnValue($mainPageUrl));
 
 		$this->mockClass('CreateWiki', $createWiki);
-		$this->mockClass('GlobalTitle', $mainPageTitle);
+		$this->mockClass('GlobalTitle', $mainPageTitle, 'newFromText');
 
 		$requestMock = $this->getMock( 'WikiaRequest', [ 'wasPosted' ], [ [ 'token' => $testData['requestToken'] ] ] );
 		$requestMock->expects( $this->once() )
@@ -83,7 +93,7 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 		$response = new WikiaResponse( 'json', $requestMock );
 
 		if ( !empty( $testData['expectedException'] ) ) {
-			$this->setExpectedException( $testData['expectedException'] );
+			$this->expectException( $testData['expectedException'] );
 		}
 
 		$createNewWikiController = new CreateNewWikiController();
@@ -98,7 +108,7 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 
 		$this->assertEquals( $testData['status'], $response->getVal( 'status' ), $testCase );
 
-		if ( $userLoggedIn && $userEmailConfirmed ) {
+		if ( $testData['userLogged'] && $testData['userEmailConfirmed'] ) {
 			$this->assertEquals($siteName, $response->getVal('siteName'));
 			$this->assertEquals($mainPageUrl, $response->getval('finishCreateUrl'));
 		}
@@ -115,7 +125,7 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 					'userLogged' => true,
 					'userEmailConfirmed' => true,
 					'status' => 'ok',
-					'expectedException' => false,
+					'expectedException' => false
 				],
 			],
 			[
@@ -198,7 +208,7 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 		$app = $this->getMock('WikiaApp', array('getGlobal', 'runFunction'));
 
 		$this->mockGlobalVariable('wgRequest',$wgRequest);
-		$this->mockStaticMethod('AutoCreateWiki','checkWikiNameIsCorrect','');
+		$this->mockStaticMethod('CreateWikiChecks','checkWikiNameIsCorrect','');
 
 		$response = $app->sendRequest('CreateNewWiki', 'CheckWikiName');
 

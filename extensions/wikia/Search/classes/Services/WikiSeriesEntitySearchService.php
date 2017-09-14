@@ -15,9 +15,9 @@ class WikiSeriesEntitySearchService extends EntitySearchService {
 		return SearchCores::CORE_XWIKI;
 	}
 
-	protected function prepareQuery( $query ) {
+	protected function prepareQuery( string $query ) {
 		$this->getBlacklist()->addBlacklistedHostsProvider(
-			BlacklistFilter::staticProvider($this->blacklistedWikiHosts)
+			BlacklistFilter::staticProvider( $this->blacklistedWikiHosts )
 		);
 		$select = $this->getSelect();
 
@@ -32,27 +32,32 @@ class WikiSeriesEntitySearchService extends EntitySearchService {
 
 		$select = $this->getBlacklist()->applyFilters( $select );
 
-		$select->createFilterQuery( 'articles' )->setQuery( 'articles_i:[' . static::MINIMAL_WIKIA_ARTICLES . ' TO *]' );
+		$select->createFilterQuery( 'articles' )->setQuery(
+			'articles_i:[' . static::MINIMAL_WIKIA_ARTICLES . ' TO *]'
+		);
 
-		$dismax->setQueryFields( 'series_mv_tm^15 description_txt categories_txt top_categories_txt top_articles_txt ' .
-			'sitename_txt^2 all_domains_mv_wd^5' );
+		$dismax->setQueryFields(
+			'series_mv_tm^15 description_txt categories_txt top_categories_txt top_articles_txt ' .
+			'sitename_txt^2 all_domains_mv_wd^5'
+		);
 		$dismax->setPhraseFields( 'series_mv_tm^15 sitename_txt^2 all_domains_mv_wd^5' );
 
 		$dismax->setBoostFunctions( 'wam_i^4' );
 
-		$dismax->setQueryPhraseSlop(static::DEFAULT_SLOP);
-		$dismax->setPhraseSlop(static::DEFAULT_SLOP);
+		$dismax->setQueryPhraseSlop( static::DEFAULT_SLOP );
+		$dismax->setPhraseSlop( static::DEFAULT_SLOP );
 
 		return $select;
 	}
 
 	protected function consumeResponse( $response ) {
-		$result = [ ];
+		$result = [];
 		foreach ( $response as $doc ) {
-			if ( ( $doc[ 'id' ] && $doc[ 'url' ] ) && $doc[ 'score' ] > static::MINIMAL_WIKIA_SCORE ) {
-				$result[ ] = [ 'id' => $doc[ 'id' ] ];
+			if ( ( $doc['id'] && $doc['url'] ) && $doc['score'] > static::MINIMAL_WIKIA_SCORE ) {
+				$result[] = [ 'id' => $doc['id'] ];
 			}
 		}
+
 		return $result;
 	}
 

@@ -341,13 +341,8 @@ class LoadBalancer {
 		}
 
 		if ( $i !== false ) {
+			# Wikia change - SUS-1801: don't abuse MASTER_POS_WAIT when obtaining slave connection
 			# Slave connection successful
-			# Wait for the session master pos for a short time
-			if ( $this->mWaitForPos && $i > 0 ) {
-				if ( !$this->doWait( $i ) ) {
-					$this->mServers[$i]['slave pos'] = $conn->getSlavePos();
-				}
-			}
 			if ( $this->mReadIndex <=0 && $this->mLoads[$i]>0 && $i !== false ) {
 				$this->mReadIndex = $i;
 			}
@@ -787,7 +782,7 @@ class LoadBalancer {
 		if ( !is_object( $conn ) ) {
 			// No last connection, probably due to all servers being too busy
 			wfLogDBError( "LB failure with no last connection. Connection error: {$this->mLastError}\n" );
-			$conn = new Database;
+			$conn = new DatabaseMysqli;
 			// If all servers were busy, mLastError will contain something sensible
 			throw new DBConnectionError( $conn, $this->mLastError );
 		} else {

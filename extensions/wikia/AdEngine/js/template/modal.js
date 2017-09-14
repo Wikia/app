@@ -1,14 +1,14 @@
 /*global define*/
 define('ext.wikia.adEngine.template.modal', [
-	'ext.wikia.adEngine.adHelper',
 	'ext.wikia.adEngine.slot.adSlot',
 	'ext.wikia.adEngine.provider.gpt.adDetect',
 	'ext.wikia.adEngine.template.modalHandlerFactory',
 	'wikia.document',
 	'wikia.log',
 	'wikia.iframeWriter',
+	'wikia.throttle',
 	'wikia.window'
-], function (adHelper, adSlot, adDetect, modalHandlerFactory, doc, log, iframeWriter, win) {
+], function (adSlot, adDetect, modalHandlerFactory, doc, log, iframeWriter, throttle, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.template.modal',
@@ -78,7 +78,7 @@ define('ext.wikia.adEngine.template.modal', [
 		function scaleAdIfNeeded() {
 			if (params.scalable) {
 				scaleAd();
-				win.addEventListener('resize', adHelper.throttle(function () {
+				win.addEventListener('resize', throttle(function () {
 					scaleAd();
 				}));
 			}

@@ -17,7 +17,7 @@
 		},
 
 		initElements: function () {
-			this.buttons = $('#WallMessageBodyButtons');
+			this.buttons = $('#WallMessageBodyButtons button');
 			this.comments = $('#Wall').find('.comments');
 			this.message = $('.new-message');
 			this.loading = this.message.find('.loadingAjax');
@@ -127,8 +127,14 @@
 					this.clearNewMessageTitle();
 				}),
 				//fail callback
-				this.proxy(function () {
-					$.showModal($.msg('wall-posting-message-failed-title'), $.msg('wall-posting-message-failed-body'));
+				this.proxy(function (data) {
+					var dataJson = JSON.parse(data.responseText);
+
+					if (dataJson['reason'] == "badcontent") {
+						$.showModal($.msg('wall-posting-message-failed-filter-title'), $.msg('wall-posting-message-failed-filter-body') + "\n" + dataJson['blockInfo']);
+					} else {
+						$.showModal($.msg('wall-posting-message-failed-title'), $.msg('wall-posting-message-failed-body'));
+					}
 					this.buttons.removeAttr('disabled');
 				}.bind(this))
 			);

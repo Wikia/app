@@ -10,7 +10,7 @@ class TemplateDraftHelper {
 	 */
 	public static function isTitleNewDraft( Title $title ) {
 		return !$title->exists()
-			&& self::isTitleDraft( $title );
+		&& self::isTitleDraft( $title );
 	}
 
 	/**
@@ -21,9 +21,9 @@ class TemplateDraftHelper {
 	 */
 	public static function isTitleDraft( Title $title ) {
 		return $title->getNamespace() === NS_TEMPLATE
-			&& $title->isSubpage()
-			&& ( $title->getSubpageText() === wfMessage( 'templatedraft-subpage' )->inContentLanguage()->escaped()
-				|| $title->getSubpageText() === wfMessage( 'templatedraft-subpage' )->inLanguage( 'en' )->escaped() );
+		&& $title->isSubpage()
+		&& ( $title->getSubpageText() === wfMessage( 'templatedraft-subpage' )->inContentLanguage()->escaped()
+			|| $title->getSubpageText() === wfMessage( 'templatedraft-subpage' )->inLanguage( 'en' )->escaped() );
 	}
 
 	/**
@@ -41,8 +41,7 @@ class TemplateDraftHelper {
 	 * @return bool
 	 */
 	public static function allowedForTitle( Title $title ) {
-		return $title->exists()
-			&& $title->getNamespace() === NS_TEMPLATE;
+		return $title->exists() && $title->getNamespace() === NS_TEMPLATE;
 	}
 
 	/**
@@ -62,8 +61,7 @@ class TemplateDraftHelper {
 	 * @return bool
 	 */
 	public function isRailModuleAllowed( Title $title ) {
-		return self::allowedForTitle( $title )
-			&& $title->userCan( 'templatedraft' );
+		return self::allowedForTitle( $title ) && $title->userCan( 'templatedraft' );
 	}
 
 	/**
@@ -77,13 +75,13 @@ class TemplateDraftHelper {
 			 * $title is a draft page.
 			 * Add rail module for draft approval
 			 */
-			$railModuleList[1502] = [ 'TemplateDraftModule', 'Approve', null ];
+			$railModuleList[ 1502 ] = [ 'TemplateDraftModule', 'Approve', null ];
 		} elseif ( $this->shouldDisplayCreateModule( $title ) ) {
 			/**
 			 * $title is a parent page
 			 * Check if the template has not been classified before
 			 */
-			$railModuleList[1502] = [ 'TemplateDraftModule', 'Create', null ];
+			$railModuleList[ 1502 ] = [ 'TemplateDraftModule', 'Create', null ];
 		}
 	}
 
@@ -100,10 +98,10 @@ class TemplateDraftHelper {
 
 		try {
 			$type = $tc->getType( $wgCityId, $title->getArticleID() );
-			return empty( $type )
-				|| $type === TemplateClassificationService::TEMPLATE_CUSTOM_INFOBOX
-				|| ( $type === TemplateClassificationService::TEMPLATE_INFOBOX
-					&& !self::titleHasPortableInfobox( $title ) );
+			return ( empty( $type ) ||
+				$type === TemplateClassificationService::TEMPLATE_CUSTOM_INFOBOX ||
+				$type === TemplateClassificationService::TEMPLATE_INFOBOX )
+			&& !self::titleHasPortableInfobox( $title );
 		} catch ( Swagger\Client\ApiException $e ) {
 			// If we cannot reach the service assume false to avoid overwriting data
 			return false;

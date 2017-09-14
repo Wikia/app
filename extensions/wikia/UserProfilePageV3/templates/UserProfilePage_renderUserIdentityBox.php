@@ -35,35 +35,59 @@
 		</hgroup>
 
 		<? if ( $canEditProfile ): ?>
-			<span id="userIdentityBoxEdit">
-				<img src="<?= $wgBlankImgUrl ?>" class="sprite edit-pencil">
-				<a href="#"><?= wfMessage( 'user-identity-box-edit' )->escaped(); ?></a>
-			</span>
+			<ul class="user-identity-box-edit">
+				<li>
+					<?= DesignSystemHelper::renderSvg( 'wds-icons-pencil', 'wds-icon-tiny' ); ?>
+					<a id="userIdentityBoxEdit" href="#"><?= wfMessage( 'user-identity-box-edit' )->escaped(); ?></a>
+				</li>
+				<? if ( $canClearProfile && !$user[ 'showZeroStates' ] ): ?>
+					<li>
+						<?= DesignSystemHelper::renderSvg( 'wds-icons-trash', 'wds-icon-tiny' ); ?>
+						<a
+							id="userIdentityBoxClear"
+							href="#"
+							data-name="<?= Sanitizer::encodeAttribute( $user['name'] ); ?>"
+							data-confirm="<?= wfMessage( 'user-identity-box-clear-confirmation' )->escaped(); ?>"
+						>
+							<?= wfMessage( 'user-identity-box-clear' )->escaped(); ?>
+						</a>
+					</li>
+				<? endif; ?>
+			</ul>
 			<input type="hidden" id="user" value="<?= $user['id']; ?>"/>
 		<? endif; ?>
 		<div class="masthead-info-lower">
-			<div class="tally">
+			<div class="contributions-details tally">
 				<? if ( !empty( $user['registration'] ) ): ?>
-					<? if ( !empty( $user['edits'] ) || ( empty( $user['edits'] ) && !empty( $user['registration'] ) ) ): ?>
+					<a href="<?= Sanitizer::encodeAttribute( $user['contributionsURL'] ) ?>">
 						<em><?= $user['edits'] ?></em>
 						<span>
 							<?= wfMessage( 'user-identity-box-edits-since-joining', $user['registration'] )->plain() ?>
 						</span>
-					<? else: ?>
-						<?php if ( $user['edits'] >= 0 ): ?>
-							<?= wfMessage( 'user-identity-box-edits', $user['edits'] )->plain(); ?>
-						<?php else: ?>
-							<br/>
-						<?php endif; ?>
-					<?php endif; ?>
+					</a>
 				<? else: ?>
 					<?php if ( $user['edits'] >= 0 ): ?>
-						<?= wfMessage( 'user-identity-box-edits', $user['edits'] )->plain(); ?>
+						<a href="<?= Sanitizer::encodeAttribute( $user['contributionsURL'] ) ?>">
+							<?= wfMessage( 'user-identity-box-edits', $user['edits'] )->text(); ?>
+						</a>
 					<?php else: ?>
 						<br/>
 					<?php endif; ?>
 				<? endif; ?>
 			</div>
+
+			<? if ( $discussionPostsCountInUserIdentityBoxEnabled && $discussionActive ): ?>
+				<div class="discussion-details tally">
+					<? if (intval( $discussionPostsCount ) != 0 ): ?>
+						<a id="discussionAllPostsByUser" href="<?= $discussionAllPostsByUserLink ?>">
+					<? endif; ?>
+							<em><?= $discussionPostsCount ?></em>
+							<span class="discussion-label"><?= wfMessage( 'user-identity-box-discussion-posts' )->escaped(); ?></span>
+					<? if (intval( $discussionPostsCount ) != 0 ): ?>
+						</a>
+					<? endif; ?>
+				</div>
+			<? endif; ?>
 
 			<? if ( !$isBlocked ): ?>
 				<ul class="links">
@@ -122,14 +146,14 @@
 					<span><?= wfMessage( 'user-identity-box-fav-wikis' )->escaped(); ?></span>
 					<ul>
 						<? foreach ( $user['topWikis'] as $wiki ): ?>
-							<li><a href="<?= $wiki['wikiUrl']; ?>"><?= $wiki['wikiName']; ?></a></li>
+							<li><a href="<?= Sanitizer::encodeAttribute( $wiki['wikiUrl'] ); ?>"><?= htmlspecialchars( $wiki['wikiName'] ); ?></a></li>
 						<? endforeach; ?>
 					</ul>
 				</ul>
 			<? endif; ?>
 		</div>
-		<div>
-			<ul class="details">
+		<div class="details">
+			<ul>
 				<? if ( !empty( $user['location'] ) ): ?>
 					<li itemprop="address"><?= wfMessage( 'user-identity-box-location', $user['location'] )->plain(); ?></li>
 				<? else: ?>
@@ -160,6 +184,18 @@
 					<? if ( $user['showZeroStates'] && ( $isUserPageOwner || $canEditProfile ) ): ?>
 						<li><?= wfMessage( 'user-identity-box-zero-state-gender' )->escaped(); ?></li>
 					<? endif; ?>
+				<? endif; ?>
+				<? if ( !empty( $user['bio'] ) ): ?>
+					<li class="bio" id="bio-content">
+						<?= wfMessage( 'user-identity-bio' )
+							->rawParams( preg_replace( "/(?:\r\n|\r|\n)/", "<br />", $user['bio'] ) )
+							->parse(); ?>
+					</li>
+					<div class="bio-toggle" id="bio-toggler" data-modal-title="<?= wfMessage( 'user-identity-bio-modal-title' )->escaped(); ?>">
+						<span>
+							[<?= wfMessage( 'user-identity-bio-show-more' )->escaped(); ?>]
+						</span>
+					</div>
 				<? endif; ?>
 			</ul>
 		</div>

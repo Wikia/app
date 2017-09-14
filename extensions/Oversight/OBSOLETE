@@ -1,8 +1,10 @@
 As of MediaWiki 1.16.0 this extension is obsolete due to core functionality for
-revision deletion (oversight). As such, new installations of this extension are
-redundant. This extension is not actively maintained, and is only really kept around
-as it is still somewhat used on Wikimedia Wikis.
+revision deletion (oversight) [1]. As such, new installations of this extension are
+redundant. This extension is not actively maintained, and as of September 2015 is
+not is not even used on Wikimedia Wikis anymore.
 
-It will be deleted from subversion in the near future.
+Migration of any revisions hidden by the Oversight extension can be migrated to using
+revision delete by using the migrateToRevDel.php maintenance script that exists in the
+extension directory. You'll also want fixMigratedLogSearch.php.
 
-http://www.mediawiki.org/wiki/RevisionDelete
+[1] https://www.mediawiki.org/wiki/Manual:RevisionDelete

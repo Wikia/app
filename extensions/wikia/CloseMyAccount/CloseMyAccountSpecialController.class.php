@@ -28,7 +28,6 @@ class CloseMyAccountSpecialController extends WikiaSpecialPageController {
 	 * @return void
 	 */
 	public function index() {
-		wfProfileIn( __METHOD__ );
 
 		$user = $this->getUser();
 
@@ -36,12 +35,10 @@ class CloseMyAccountSpecialController extends WikiaSpecialPageController {
 
 		if ( $this->getPar() === 'reactivate' ) {
 			$this->forward( 'CloseMyAccountSpecial', 'reactivate' );
-			wfProfileOut( __METHOD__ );
 			return;
 		}
 
 		if ( !$user->isLoggedIn() ) {
-			wfProfileOut( __METHOD__ );
 			$this->displayRestrictionError();
 			return;
 		}
@@ -102,7 +99,6 @@ class CloseMyAccountSpecialController extends WikiaSpecialPageController {
 
 		}
 
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -125,119 +121,69 @@ class CloseMyAccountSpecialController extends WikiaSpecialPageController {
 	 * @return void
 	 */
 	public function reactivate() {
-		wfProfileIn( __METHOD__ );
 
 		$this->code = $this->getVal( 'code', false );
+		$user = $this->getUser();
 
 		if ( empty( $this->code ) ) {
-			if ( $this->request->getSessionData( 'closeAccountSessionId' ) !== null ) {
+			if ( $user->isLoggedIn() ) {
 				$this->forward( __CLASS__, 'reactivateRequest' );
 			} else {
 				$this->success = false;
 				$this->resultMessage = $this->msg( 'closemyaccount-reactivate-error-empty-code' )->parse();
 			}
-			wfProfileOut( __METHOD__ );
 			return;
 		}
 
 		$this->getOutput()->setPageTitle( $this->msg( 'closemyaccount-reactivate-page-title' )->plain() );
 		$this->response->addAsset( 'extensions/wikia/UserLogin/css/UserLogin.scss' );
 
-		$user = $this->getUser();
-
-		$this->username = $this->request->getVal( 'username', '' );
-		$this->password = $this->request->getVal( 'password', '' );
-		$this->loginToken = UserLoginHelper::getLoginToken();
-		$this->editToken = $user->getEditToken();
-
 		$helper = new CloseMyAccountHelper();
 
-		if ( $this->request->wasPosted() && $user->matchEditToken( $this->request->getVal( 'editToken' ) ) ) {
-			if ( $user->isAnon()
-				&& $this->request->getVal( 'loginToken' ) !== UserLoginHelper::getLoginToken()
-			) {
-				$this->success = false;
-				$this->resultMessage = $this->msg( 'sessionfailure' )->escaped();
-				wfProfileOut( __METHOD__ );
-				return;
-			}
-
-			if ( $this->username === '' ) {
-				$this->success = false;
-				$this->resultMessage = $this->msg( 'userlogin-error-noname' )->escaped();
-				$this->errParam = 'username';
-				wfProfileOut( __METHOD__ );
-				return;
-			}
-
-			if ( $this->password === '' ) {
-				$this->success = false;
-				$this->resultMessage = $this->msg( 'userlogin-error-wrongpasswordempty' )->escaped();
-				$this->errParam = 'password';
-				wfProfileOut( __METHOD__ );
-				return;
-			}
-
-			$expUser = User::newFromConfirmationCode( $this->code );
-			if ( !( $expUser instanceof User ) ) {
-				$this->success = false;
-				$this->resultMessage = $this->msg( 'closemyaccount-reactivate-error-invalid-code',
-					$this->username )->parse();
-				wfProfileOut( __METHOD__ );
-				return;
-			}
-
-			$user = User::newFromName( $this->username );
-			if ( $user->getId() != $expUser->getId() ) {
-				$this->success = false;
-				$this->resultMessage = $this->msg( 'wikiaconfirmemail-error-user-not-match' )->parse();
-				$this->errParam = 'username';
-				wfProfileOut( __METHOD__ );
-				return;
-			}
-
-			$userLoginHelper = new UserLoginHelper(); /* @var UserLoginHelper $userLoginHelper */
-			if ( $userLoginHelper->isPasswordThrottled( $this->username ) ) {
-				$this->success = false;
-				$this->resultMessage = $this-msg( 'userlogin-error-login-throttled' )->escaped();
-				$this->errParam = 'password';
-				wfProfileOut( __METHOD__ );
-				return;
-			}
-
-			if ( $helper->isClosed( $user ) ) {
-				$this->success = false;
-				$this->resultMessage = $this->msg( 'closemyaccount-reactivate-error-disabled' )->parse();
-				wfProfileOut( __METHOD__ );
-				return;
-			}
-
-			if ( !$helper->isScheduledForClosure( $user ) ) {
-				$this->success = false;
-				$this->resultMessage = $this->msg( 'closemyaccount-reactivate-error-not-scheduled' )->escaped();
-				wfProfileOut( __METHOD__ );
-				return;
-			}
-
-			if ( $user->checkPassword( $this->password ) ) {
-				$this->wg->User = $user;
-				$this->wg->User->setCookies();
-				LoginForm::clearLoginToken();
-				$userLoginHelper->clearPasswordThrottle( $this->username );
-
-				$helper->reactivateAccount( $user );
-				unset( $_SESSION['closeAccountSessionId'] );
-
-				$userPageTitle = $user->getUserPage();
-				$this->getOutput()->redirect( $userPageTitle->getFullURL() );
-			} else {
-				$this->success = false;
-				$this->resultMessage = $this->msg( 'userlogin-error-wrongpassword' )->escaped();
-				$this->errParam = 'password';
-			}
+		if ( $user->isAnon() ) {
+			$userLoginHelper = new UserLoginHelper();
+			$this->getOutput()->redirect( $userLoginHelper->getNewAuthUrl( '/signin' ) );
+			return;
 		}
 
-		wfProfileOut( __METHOD__ );
+		$expUser = User::newFromConfirmationCode( $this->code );
+		if ( !( $expUser instanceof User ) ) {
+			$this->success = false;
+			$this->resultMessage = $this->msg( 'closemyaccount-reactivate-error-invalid-code',
+				$this->username )->parse();
+			return;
+		}
+
+		$user = $this->getUser();
+		if ( $user->getId() != $expUser->getId() ) {
+			$this->success = false;
+			$this->resultMessage = $this->msg( 'wikiaconfirmemail-error-user-not-match' )->parse();
+			$this->errParam = 'username';
+			return;
+		}
+
+		if ( $helper->isClosed( $user ) ) {
+			$this->success = false;
+			$this->resultMessage = $this->msg( 'closemyaccount-reactivate-error-disabled' )->parse();
+			return;
+		}
+
+		if ( !$helper->isScheduledForClosure( $user ) ) {
+			$this->success = false;
+			$this->resultMessage = $this->msg( 'closemyaccount-reactivate-error-not-scheduled' )->escaped();
+			return;
+		}
+
+		// call to User::newFromConfirmationCode() is basically a token check
+		// tell CSRFDetector that we're fine here (PLATFORM-2206)
+		\Wikia\Security\CSRFDetector::onUserMatchEditToken();
+
+		$helper->reactivateAccount( $user );
+
+		BannerNotificationsController::addConfirmation( $this->msg( 'closemyaccount-reactivate-success' )->escaped() );
+
+		$userPageTitle = $user->getUserPage();
+		$this->getOutput()->redirect( $userPageTitle->getFullURL() );
 	}
 
 	/**
@@ -254,50 +200,43 @@ class CloseMyAccountSpecialController extends WikiaSpecialPageController {
 	 * @return void
 	 */
 	public function reactivateRequest() {
-		wfProfileIn( __METHOD__ );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
-		$userId = $this->request->getSessionData( 'closeAccountSessionId' );
 		$this->showForm = false;
 
 		// Paranoia, if they got here, this shouldn't happen
-		if ( $userId === null ) {
+		if ( $this->getUser()->isAnon() ) {
 			$this->error = $this->msg( 'closemyaccount-reactivate-error-id' )->escaped();
-			wfProfileOut( __METHOD__ );
-			return;
-		} elseif ( $this->getUser()->isLoggedIn() ) {
-			$this->error = $this->msg( 'closemyaccount-reactivate-error-logged-in' )->escaped();
-			wfProfileOut( __METHOD__ );
 			return;
 		}
 
 		$helper = new CloseMyAccountHelper();
 
-		$userObj = User::newFromId( $userId );
+		$user = $this->getUser();
 
-		if ( $helper->isClosed( $userObj ) ) {
+		if ( $helper->isClosed( $user ) ) {
 			$this->error = $this->msg( 'closemyaccount-reactivate-error-disabled' )->parse();
-			wfProfileOut( __METHOD__ );
 			return;
 		}
 
 		// Paranoia, shouldn't happen, but just in case...
-		if ( !$helper->isScheduledForClosure( $userObj ) ) {
+		if ( !$helper->isScheduledForClosure( $user ) ) {
 			$this->error = $this->msg( 'closemyaccount-reactivate-error-not-scheduled' )->escaped();
-			wfProfileOut( __METHOD__ );
 			return;
 		}
 
-		if ( !$userObj->isEmailConfirmed() ) {
+		if ( !$user->isEmailConfirmed() ) {
 			$this->error = $this->msg( 'closemyaccount-reactivate-error-email' )->parse();
-			wfProfileOut( __METHOD__ );
 			return;
 		}
 
 		$this->getOutput()->setPageTitle( $this->msg( 'closemyaccount-reactivate-page-title' )->plain() );
 
-		if ( $this->request->wasPosted() ) {
-			$result = $helper->requestReactivation( $userObj, $this->app );
+
+		$this->editToken = $user->getEditToken();
+
+		if ( $this->request->wasPosted() && $user->matchEditToken( $this->getVal( 'token' ) ) ) {
+			$result = $helper->requestReactivation( $user, $this->app );
 
 			if ( $result ) {
 				$this->introText = $this->msg( 'closemyaccount-reactivate-requested' )->parseAsBlock();
@@ -308,10 +247,10 @@ class CloseMyAccountSpecialController extends WikiaSpecialPageController {
 			$this->showForm = true;
 
 			// Show how many days they have before their account is permanently closed
-			$daysUntilClosure = $helper->getDaysUntilClosure( $userObj );
+			$daysUntilClosure = $helper->getDaysUntilClosure( $user );
 
 			$this->introText = $this->msg( 'closemyaccount-reactivate-intro',
-				$this->getLanguage()->formatNum( $daysUntilClosure ), $userObj->getName() )->parseAsBlock();
+				$this->getLanguage()->formatNum( $daysUntilClosure ), $user->getName() )->parseAsBlock();
 
 			$buttonParams = [
 				'type' => 'button',
@@ -326,6 +265,5 @@ class CloseMyAccountSpecialController extends WikiaSpecialPageController {
 			$this->submitButton = \Wikia\UI\Factory::getInstance()->init( 'button' )->render( $buttonParams );
 		}
 
-		wfProfileOut( __METHOD__ );
 	}
 }

@@ -5,8 +5,6 @@ CREATE TABLE IF NOT EXISTS `phalanx` (
   `p_author_id` int(6) NOT NULL,
 -- block content (plain text or regex)
   `p_text` blob NOT NULL,
--- Hexadecimal representation of IP blocks
-  `p_ip_hex` VARCHAR(35) default NULL,
 -- block type (mask of 16 bits determining which module will use that block)
   `p_type` smallint(1) unsigned NOT NULL,
 -- date of creation or last edit of this block
@@ -23,11 +21,14 @@ CREATE TABLE IF NOT EXISTS `phalanx` (
   `p_reason` tinyblob NOT NULL,
 -- language to which the block applies - just for Answers for legacy reasons
   `p_lang` varchar(10),
+-- internal comments for each block (BAC-534)
+  `p_comment` tinyblob NOT NULL,
   PRIMARY KEY (`p_id`),
-  KEY (`p_ip_hex`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `phalanx_stats` (
+-- unique ID for stats row
+  `ps_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
 -- foreign key to phalanx.p_id
   `ps_blocker_id` int(6) unsigned NOT NULL,
 -- type of match
@@ -38,8 +39,11 @@ CREATE TABLE IF NOT EXISTS `phalanx_stats` (
   `ps_blocked_user` varchar(255) binary NOT NULL default '',
 -- wiki_id where block matched
   `ps_wiki_id` int(9) NOT NULL,
+-- The block type that matched
+  `ps_blocker_hit` SMALLINT(1) UNSIGNED NOT NULL,
+-- Referring page (if any)
+  `ps_referrer` VARCHAR(150),
   KEY `ps_blocker_id_idx` (`ps_blocker_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- internal comments for each block (BAC-534)
-ALTER TABLE `phalanx` ADD `p_comment` tinyblob NOT NULL;
+

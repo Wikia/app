@@ -13,7 +13,7 @@ $wgHooks['ParserFirstCallInit'][] = 'wfSigSetup';
  * @param Parser $parser
  * @return bool
  */
-function wfSigSetup(&$parser) {
+function wfSigSetup( Parser $parser ): bool {
 	$parser->setHook( 'staff', 'wfMakeStaffSignature' );
 	$parser->setHook( 'helper', 'wfMakeHelperSignature' );
 	return true;
@@ -21,20 +21,25 @@ function wfSigSetup(&$parser) {
 
 function wfMakeStaffSignature( $contents, $attributes, $parser ) {
 	$title = GlobalTitle::newFromText('Staff', 4 /*project*/, 177);
-	return wfMakeSignatureCommon( $title->getFullURL(), "This user is a member of Wikia Staff" );
+	return wfMakeSignatureCommon( $title->getFullURL(), "This user is a member of Fandom Staff" );
 }
 
 function wfMakeHelperSignature( $contents, $attributes, $parser ) {
 	$title = GlobalTitle::newFromText('Helper_Group', 12 /*help*/, 177);
-	return wfMakeSignatureCommon( $title->getFullURL(), "This user is a Wikia Helper" );
+	return wfMakeSignatureCommon( $title->getFullURL(), "This user is a Fandom Helper" );
 }
 
 function wfMakeSignatureCommon($href, $title, $iurl=null) {
-	global $wgExtensionsPath, $wgBlankImgUrl;
+	global $wgBlankImgUrl;
 
 	if( empty($iurl) ) {
-		$iurl = $wgExtensionsPath . '/wikia/StaffSig/images/WikiaStaff.png';
+		$iurl = wfGetSignatureUrl();
 	}
 
-	return '<a href="'. $href .'" title="'. $title . '" class="staffSigLink"><img src="'. $wgBlankImgUrl .'" style="background-image: url('. $iurl .')" alt="@Wikia" class="staffSig" width="41" height="12" /></a>';
+	return '<a href="'. $href .'" title="'. $title . '" class="staffSigLink"><img src="'. $wgBlankImgUrl .'" style="background-image: url('. $iurl .'); background-size: 100% 100%;" alt="@fandom" class="staffSig" width="64" height="14" /></a>';
+}
+
+function wfGetSignatureUrl() {
+	global $wgExtensionsPath;
+	return $wgExtensionsPath . '/wikia/DesignSystem/bower_components/design-system/dist/svg/wds-company-logo-fandom.svg';
 }

@@ -64,13 +64,22 @@ $messages['ja'] = array(
 	'emailext-comment-view-all' => '[$1 すべてのコメントを表示]',
 );
 
+$messages['ko'] = array(
+	'emailext-articlecomment-subject' => '사람들이 {{SITENAME}}의 $1 문서에 대한 얘기를 나누고 있습니다!',
+	'emailext-articlecomment-summary' => '사람들이 [{{SERVER}} {{SITENAME}}]의 [$1 $2] 문서에 대한 얘기를 나누고 있습니다!',
+	'emailext-blogcomment-subject' => '사람들이 {{SITENAME}}의 $1 글에 대한 얘기를 나누고 있습니다!',
+	'emailext-blogcomment-summary' => '사람들이 [{{SERVER}} {{SITENAME}}]의 [$1 $2] 글에 대한 얘기를 나누고 있습니다!',
+	'emailext-comment-link-label' => '해당 댓글 보기',
+	'emailext-comment-view-all' => '[$1 모든 댓글 보기]',
+);
+
 $messages['nl'] = array(
-	'emailext-articlecomment-subject' => 'People are talking about $1 on {{SITENAME}}!',
-	'emailext-blogcomment-subject' => 'People are talking about the $1 post on {{SITENAME}}!',
-	'emailext-articlecomment-summary' => 'People are talking about [$1 $2] on [{{SERVER}} {{SITENAME}}]!',
-	'emailext-blogcomment-summary' => 'People are talking about the [$1 $2] post on [{{SERVER}} {{SITENAME}}]!',
-	'emailext-comment-link-label' => 'See this comment',
-	'emailext-comment-view-all' => '[$1 View all comments]',
+	'emailext-articlecomment-subject' => 'Op {{SITENAME}} hebben ze het over $1!',
+	'emailext-blogcomment-subject' => 'Op {{SITENAME}} hebben ze het over de $1 post!',
+	'emailext-articlecomment-summary' => 'Op [{{SERVER}} {{SITENAME}}] hebben ze het over [$1 $2]!',
+	'emailext-blogcomment-summary' => 'Op [{{SERVER}} {{SITENAME}}] hebben ze het over de [$1 $2] post!',
+	'emailext-comment-link-label' => 'Deze reactie bekijken',
+	'emailext-comment-view-all' => '[$1 Alle reacties bekijken]',
 );
 
 $messages['pl'] = array(
@@ -114,15 +123,6 @@ $messages['zh-hant'] = array(
 	'emailext-blogcomment-subject' => '有人在討論{{SITENAME}}上名為$1的網誌！',
 	'emailext-articlecomment-summary' => '有人在討論發佈在{{SITENAME}}上標題為$1的文章！',
 	'emailext-blogcomment-summary' => '有人在討論{{SITENAME}}上名為$1的網誌！',
-	'emailext-comment-link-label' => '查看評論',
-	'emailext-comment-view-all' => '[$1 查看所有評論]',
-);
-
-$messages['zh-tw'] = array(
-	'emailext-articlecomment-subject' => '大家都在談論發佈發佈在{{SITENAME}}上標題為$1的文章！',
-	'emailext-blogcomment-subject' => '大家都在談論發佈在{{SITENAME}}上名為$1的部落格！',
-	'emailext-articlecomment-summary' => '大家都在談論發佈發佈在[{{SERVER}} {{SITENAME}}]上標題為[$1 $2]的文章！',
-	'emailext-blogcomment-summary' => '大家都在談論發佈在[{{SERVER}} {{SITENAME}}]上名為[$1 $2]的部落格！',
 	'emailext-comment-link-label' => '查看評論',
 	'emailext-comment-view-all' => '[$1 查看所有評論]',
 );

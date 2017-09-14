@@ -2,20 +2,20 @@
 /*global define, require*/
 define('ext.wikia.adEngine.adLogicPageParams', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.adLogicPageViewCounter',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
-	'wikia.log',
 	'wikia.document',
+	'wikia.geo',
 	'wikia.location',
+	'wikia.log',
 	'wikia.window',
 	require.optional('wikia.abTest'),
 	require.optional('wikia.krux')
-], function (adContext, pvCounter, zoneParams, log, doc, loc, win, abTest, krux) {
+], function (adContext, zoneParams, doc, geo, loc, log, win, abTest, krux) {
 	'use strict';
 
 	var context = {},
 		logGroup = 'ext.wikia.adEngine.adLogicPageParams',
-		skin = adContext.getContext().targeting.skin;
+		runtimeParams = {};
 
 	function updateContext() {
 		context = adContext.getContext();
@@ -36,15 +36,6 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	}
 
 	/**
-	 * Get the AbPerformanceTesting experiment name
-	 *
-	 * @returns {string}
-	 */
-	function getPerformanceAb() {
-		return win.wgABPerformanceTest;
-	}
-
-	/**
 	 * Adds the info from the second hash into the first.
 	 * If the same key is in both, the key in the second object overrides what's in the first object.
 	 *
@@ -62,6 +53,10 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		}
 
 		return target;
+	}
+
+	function addParam(key, value) {
+		runtimeParams[key] = value;
 	}
 
 	/**
@@ -160,8 +155,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		log('getPageLevelParams', 9, logGroup);
 
 		var params,
-			targeting = context.targeting,
-			pvs = pvCounter.get();
+			targeting = context.targeting;
 
 		options = options || {};
 
@@ -173,7 +167,6 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			s2: zoneParams.getPageType(),
 			ab: getAb(),
 			ar: getAspectRatio(),
-			perfab: getPerformanceAb(),
 			artid: targeting.pageArticleId && targeting.pageArticleId.toString(),
 			cat: zoneParams.getPageCategories(),
 			dmn: zoneParams.getDomain(),
@@ -182,11 +175,12 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			lang: zoneParams.getLanguage(),
 			wpage: targeting.pageName && targeting.pageName.toLowerCase(),
 			ref: getRefParam(),
-			esrb: targeting.esrbRating
+			esrb: targeting.esrbRating,
+			geo: geo.getCountryCode() || 'none'
 		};
 
-		if (pvs) {
-			params.pv = pvs.toString();
+		if (win.pvNumber) {
+			params.pv = win.pvNumber.toString();
 		}
 
 		if (options.includeRawDbName) {
@@ -203,19 +197,17 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		}
 
 		extend(params, decodeLegacyDartParams(targeting.wikiCustomKeyValues));
+		extend(params, runtimeParams);
 
 		log(params, 9, logGroup);
 		return params;
-	}
-
-	if (skin && skin !== 'mercury') {
-		pvCounter.increment();
 	}
 
 	updateContext();
 	adContext.addCallback(updateContext);
 
 	return {
+		add: addParam,
 		getPageLevelParams: getPageLevelParams
 	};
 });

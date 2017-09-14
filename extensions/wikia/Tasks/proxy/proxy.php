@@ -3,8 +3,7 @@ set_time_limit( 0 );
 ini_set('display_errors', 0);
 
 # SEC-21: make sure that this is called internally
-$headers = apache_request_headers();
-if ( empty( $headers['X-Wikia-Internal-Request'] ) ) {
+if ( empty( $_SERVER['HTTP_X_WIKIA_INTERNAL_REQUEST'] ) ) {
 	$ip = isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : null;
 	trigger_error( "X-Wikia-Internal-Request header is missing (request from {$ip})", E_USER_WARNING );
 
@@ -35,6 +34,10 @@ foreach($traceEnv as $key => $val) {
 
 $command = "{$env}php {$script} --wiki_id={$wikiId} --task_id={$taskId} --task_list={$list} --call_order={$order} --created_by={$createdBy} --created_at={$createdAt}";
 
+// @todo (PLATFORM-2759): For a long-term fix, initialize the MW stack here, remove the shell_exec and execute the
+//                        TaskRunnerMaintenance directly. For now I'm removing the lines below as the composer autoload
+//                        fails to load some classes without MW and the whole script crashed on devboxes.
+/*
 // can't use globals here, this doesn't execute within mediawiki
 if ( getenv( 'WIKIA_ENVIRONMENT' ) == 'dev' ) {
 	require_once( __DIR__ . '/../../../../lib/Wikia/autoload.php' );
@@ -45,5 +48,6 @@ if ( getenv( 'WIKIA_ENVIRONMENT' ) == 'dev' ) {
 		'data' => $_POST,
 	] );
 }
+*/
 
 echo shell_exec( $command );

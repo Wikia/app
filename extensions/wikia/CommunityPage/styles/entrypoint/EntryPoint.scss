@@ -1,0 +1,53 @@
+@import 'skins/shared/color';
+@import "skins/shared/mixins/flexbox";
+@import '../components/variables';
+
+.community-page-rail-module {
+	border-top: 1px solid $color-page-border;
+	margin-top: 18px;
+	position: relative;
+
+	.avatars {
+		@include flexbox();
+		@include justify-content(center);
+
+		height: 32px;
+		margin: 0;
+		position: absolute;
+		top: -16px;
+		width: 100%;
+	}
+
+	.wds-avatar-stack {
+		margin: 0;
+		max-width: 120px;
+	}
+
+	.wds-avatar {
+		border-color: $color-page-border;
+		position: relative;
+	}
+
+	.content {
+		@include flexbox();
+		@include flex-direction(row);
+		@include justify-content(space-between);
+		@include align-items(center);
+
+		margin-top: 26px;
+	}
+
+	.description {
+		@include flex(1);
+
+		font-size: 14px;
+		line-height: 18px;
+		overflow: hidden;
+	}
+
+	html[lang^='zh'] & .wds-is-squished {
+		font-size: 12px;
+		font-weight: 400;
+		padding: 9px 12px 8px;
+	}
+}

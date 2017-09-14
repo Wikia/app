@@ -10,7 +10,9 @@
 namespace Wikia\Tasks;
 
 use PhpAmqpLib\Channel\AMQPChannel;
-use PhpAmqpLib\Connection\AMQPConnection;
+use PhpAmqpLib\Connection\AbstractConnection;
+use PhpAmqpLib\Connection\AMQPStreamConnection;
+use PhpAmqpLib\Exception\AMQPTimeoutException;
 use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Exception\AMQPRuntimeException;
 use PhpAmqpLib\Exception\AMQPExceptionInterface;
@@ -18,7 +20,6 @@ use Wikia\Logger\WikiaLogger;
 use Wikia\Tasks\Queues\ParsoidPurgePriorityQueue;
 use Wikia\Tasks\Queues\ParsoidPurgeQueue;
 use Wikia\Tasks\Queues\PriorityQueue;
-use Wikia\Tasks\Queues\NlpPipelineQueue;
 use Wikia\Tasks\Queues\PurgeQueue;
 use Wikia\Tasks\Queues\Queue;
 use Wikia\Tasks\Queues\SMWQueue;
@@ -32,7 +33,7 @@ class AsyncTaskList {
 	/** which config to grab when figuring out the executor (on the job queue side) */
 	const EXECUTOR_APP_NAME = 'mediawiki';
 
-	/** @var AMQPConnection connection to message broker */
+	/** @var AbstractConnection connection to message broker */
 	protected $connection;
 
 	/** @var Queue the queue this task list will go into */
@@ -91,9 +92,6 @@ class AsyncTaskList {
 				break;
 			case ParsoidPurgePriorityQueue::NAME:
 				$queue = new ParsoidPurgePriorityQueue();
-				break;
-			case NlpPipelineQueue::NAME:
-				$queue = new NlpPipelineQueue();
 				break;
 			case SMWQueue::NAME:
 				$queue = new SMWQueue();
@@ -235,25 +233,31 @@ class AsyncTaskList {
 
 	/**
 	 * Allows us to determine execution method and runner for a given environment
+	 *
+	 * If method and runner fields are not set here,
+	 * celeryd will use the defaults from /etc/celeryd/celeryd.conf ([mediawiki] section)
+	 *
 	 * @return array
 	 */
 	protected function getExecutor() {
-		global $IP, $wgWikiaEnvironment;
+		global $IP, $wgWikiaEnvironment, $wgDevDomain;
 		$executor = [
 			'app' => self::EXECUTOR_APP_NAME,
 		];
 
-		if ( $wgWikiaEnvironment != WIKIA_ENV_PROD ) {
+		if ( !in_array( $wgWikiaEnvironment, [ WIKIA_ENV_PROD, WIKIA_ENV_STAGING ] ) ) {
 			$host = gethostname();
 			$executionMethod = 'http';
 
-			if ( $wgWikiaEnvironment == WIKIA_ENV_DEV && preg_match( '/^dev-(.*?)$/', $host, $matches ) ) {
-				$executionRunner = ["http://tasks.{$matches[1]}.wikia-dev.com/proxy.php"];
+			if ( $wgWikiaEnvironment == WIKIA_ENV_DEV && preg_match( '/^dev-(.*?)$/', $host ) ) {
+				$executionRunner = ["http://tasks.{$wgDevDomain}/proxy.php"];
 			} elseif ($wgWikiaEnvironment == WIKIA_ENV_SANDBOX) {
 				$executionRunner = ["http://{$host}.community.wikia.com/extensions/wikia/Tasks/proxy/proxy.php"];
 			} elseif (in_array($wgWikiaEnvironment, [WIKIA_ENV_PREVIEW, WIKIA_ENV_VERIFY])) {
 				$executionRunner = ["http://{$wgWikiaEnvironment}.community.wikia.com/extensions/wikia/Tasks/proxy/proxy.php"];
 			} else { // in other environments or when apache isn't available, ssh into this exact node to execute
+				wfDebug( __METHOD__ . " - fallback to remote_shell execution mode on {$host}!\n" );
+
 				$executionMethod = 'remote_shell';
 				$executionRunner = [
 					$host,
@@ -273,16 +277,21 @@ class AsyncTaskList {
 	 * put this task list into the queue
 	 *
 	 * @param AMQPChannel $channel channel to publish messages to, if part of a batch
+	 * @param string $priority which queue to add this task list to
 	 * @return string the task list's id
 	 * @throws AMQPExceptionInterface
 	 */
-	public function queue( AMQPChannel $channel = null ) {
+	public function queue( AMQPChannel $channel = null, $priority = null ) {
 		global $wgUser;
 
 		$this->initializeWorkId();
 
 		if ( $this->createdBy == null ) {
 			$this->createdBy( $wgUser );
+		}
+
+		if ( is_string( $priority ) ) {
+			$this->setPriority( $priority );
 		}
 
 		$id = $this->generateId();
@@ -357,7 +366,7 @@ class AsyncTaskList {
 	}
 
 	/**
-	 * @return AMQPConnection connection to message broker
+	 * @return AbstractConnection connection to message broker
 	 * @throws AMQPExceptionInterface
 	 */
 	protected function connection() {
@@ -373,7 +382,7 @@ class AsyncTaskList {
 	 *
 	 * Throws AMQPRuntimeException when task broker is disabled in a cureent environment (PLATFORM-1740)
 	 *
-	 * @return AMQPConnection connection to message broker
+	 * @return AbstractConnection connection to message broker
 	 * @throws AMQPRuntimeException
 	 * @throws AMQPTimeoutException
 	 */
@@ -384,26 +393,14 @@ class AsyncTaskList {
 			throw new AMQPRuntimeException( 'Task broker is disabled' );
 		}
 
-		return new AMQPConnection( $wgTaskBroker['host'], $wgTaskBroker['port'], $wgTaskBroker['user'], $wgTaskBroker['pass'] );
+		return new AMQPStreamConnection( $wgTaskBroker['host'], $wgTaskBroker['port'], $wgTaskBroker['user'], $wgTaskBroker['pass'] );
 	}
 
 	/**
 	 * @return Queue queue this task list will go into
 	 */
 	protected function getQueue() {
-		if ( $this->queue == null ) {
-			global $wgEnableSemanticMediaWikiExt;
-
-			if ( $wgEnableSemanticMediaWikiExt ) {
-				$queue = new SMWQueue();
-			} else {
-				$queue = new Queue();
-			}
-		} else {
-			$queue = $this->queue;
-		}
-
-		return $queue;
+		return $this->queue == null ? new Queue() : $this->queue;
 	}
 
 	private function generateId() {
@@ -418,11 +415,12 @@ class AsyncTaskList {
 	 * send a group of AsyncTaskList objects to the broker
 	 *
 	 * @param array $taskLists AsyncTaskList objects to insert into the queue
+	 * @param string $priority which queue to add this task list to
 	 * @return array list of task ids
 	 * @throws \PhpAmqpLib\Exception\AMQPRuntimeException
 	 * @throws \PhpAmqpLib\Exception\AMQPTimeoutException
 	 */
-	public static function batch( $taskLists ) {
+	public static function batch( $taskLists, $priority = null ) {
 		$logError = function( \Exception $e ) {
 			WikiaLogger::instance()->error( 'AsyncTaskList::batch', [
 				'exception' => $e,
@@ -444,7 +442,7 @@ class AsyncTaskList {
 
 		foreach ( $taskLists as $task ) {
 			/** @var AsyncTaskList $task */
-			$ids [] = $task->queue( $channel );
+			$ids [] = $task->queue( $channel, $priority );
 		}
 
 		try {

@@ -187,7 +187,7 @@ class DatabaseOracle extends DatabaseBase {
 		global $wgDBprefix;
 		$tablePrefix = $tablePrefix == 'get from global' ? strtoupper( $wgDBprefix ) : strtoupper( $tablePrefix );
 		parent::__construct( $server, $user, $password, $dbName, $flags, $tablePrefix );
-		wfRunHooks( 'DatabaseOraclePostInit', array( $this ) );
+		Hooks::run( 'DatabaseOraclePostInit', array( $this ) );
 	}
 
 	function __destruct() {
@@ -617,7 +617,7 @@ class DatabaseOracle extends DatabaseBase {
 		}
 		list( $startOpts, $useIndex, $tailOpts ) = $this->makeSelectOptions( $selectOptions );
 		if ( is_array( $srcTable ) ) {
-			$srcTable =  implode( ',', array_map( array( &$this, 'tableName' ), $srcTable ) );
+			$srcTable = implode( ',', array_map( [ $this, 'tableName' ], $srcTable ) );
 		} else {
 			$srcTable = $this->tableName( $srcTable );
 		}
@@ -884,7 +884,7 @@ class DatabaseOracle extends DatabaseBase {
 	private function fieldInfoMulti( $table, $field ) {
 		$field = strtoupper( $field );
 		if ( is_array( $table ) ) {
-			$table = array_map( array( &$this, 'tableNameInternal' ), $table );
+			$table = array_map( [ $this, 'tableNameInternal' ], $table );
 			$tableWhere = 'IN (';
 			foreach( $table as &$singleTable ) {
 				$singleTable = $this->removeIdentifierQuotes($singleTable);

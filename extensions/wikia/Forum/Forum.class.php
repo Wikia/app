@@ -31,6 +31,7 @@ class Forum extends Walls {
 			[ 'page.page_namespace' => NS_WIKIA_FORUM_BOARD ],
 			__METHOD__,
 			[ 'ORDER BY' => 'page_title' ],
+			[],
 			$db
 		);
 
@@ -54,13 +55,7 @@ class Forum extends Walls {
 
 			/** @var $board ForumBoard */
 			$board = ForumBoard::newFromTitle( $title );
-
-			$boardInfo = $board->getBoardInfo();
-			$boardInfo['id'] = $title->getArticleID();
-			$boardInfo['name'] = $title->getText();
-			$boardInfo['description'] = $board->getDescriptionWithoutTemplates();
-			$boardInfo['url'] = $title->getFullURL();
-			$boards[] = $boardInfo;
+			$boards[] = $board->getBoardInfo()->toArray();
 		}
 
 		return $boards;
@@ -85,7 +80,7 @@ class Forum extends Walls {
 		);
 
 		wfProfileOut( __METHOD__ );
-		return $result['cnt'];
+		return $result[ 'cnt' ];
 	}
 
 	/**
@@ -236,7 +231,7 @@ class Forum extends Walls {
 
 	/**
 	 *  create or edit board, if $board = null then we are creating new one
-	 * @param ForumBoard $board
+	 * @param ForumBoard|null $board
 	 * @param $titletext
 	 * @param $body
 	 * @param bool $bot
@@ -244,10 +239,7 @@ class Forum extends Walls {
 	 * @throws MWException
 	 */
 	protected function createOrEditBoard( $board, $titletext, $body, $bot = false ) {
-		$id = null;
-		if ( !empty( $board ) ) {
-			$id = $board->getId();
-		}
+		$id = ( $board instanceof ForumBoard ) ? $board->getId() : null;
 
 		if (
 			self::LEN_OK !== $this->validateLength( $titletext, 'title' ) ||
@@ -287,6 +279,11 @@ class Forum extends Walls {
 
 		Forum::$allowToEditBoard = false;
 
+		// clear the cache only when we're editing an existing board
+		if ( $board instanceof ForumBoard ) {
+			$board->clearCacheBoardInfo();
+		}
+
 		return $retval;
 	}
 
@@ -299,8 +296,8 @@ class Forum extends Walls {
 	 * @return int
 	 */
 	public function getLengthLimits( $type, $field ) {
-		return ( isset( $this->fieldsLengths[$field] ) && isset( $this->fieldsLengths[$field][$type] ) ) ?
-			(int) $this->fieldsLengths[$field][$type] :
+		return ( isset( $this->fieldsLengths[ $field ] ) && isset( $this->fieldsLengths[ $field ][ $type ] ) ) ?
+			(int)$this->fieldsLengths[ $field ][ $type ] :
 			0;
 	}
 

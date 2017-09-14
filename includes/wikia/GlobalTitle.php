@@ -52,6 +52,8 @@ class GlobalTitle extends Title {
 
 	static protected $cachedObjects = array();
 
+	private static $extraExtensionNamespaces = [];
+
 	/**
 	 * @desc Static constructor, Create new Title from name of page
 	 *
@@ -70,6 +72,7 @@ class GlobalTitle extends Title {
 		}
 
 		$filteredText = Sanitizer::decodeCharReferences( $text );
+
 		$title = new GlobalTitle();
 
 		$title->mText = $filteredText;
@@ -81,7 +84,7 @@ class GlobalTitle extends Title {
 
 		return $title;
 	}
-	
+
 	/**
 	 * @desc Create a new Title for the Main Page
 	 *
@@ -97,8 +100,17 @@ class GlobalTitle extends Title {
 			throw new \Exception( 'Invalid $city_id.' );
 		}
 
-		// sure hope this redirects for the most part
-		$title = self::newFromText( 'Main Page', NS_MAIN, $city_id );
+		$mainPageName = self::newFromText( 'Mainpage', NS_MEDIAWIKI, $city_id )->getContent();
+		$title = self::newFromText( $mainPageName, NS_MAIN, $city_id );
+
+		// Don't give fatal errors if the message is broken
+		if ( !$title->exists() ) {
+			// $title->loadContentLang() works here even if exists() returns false because only mCityId is needed to get it
+			// and this is always set by newFromText method
+			$titleText = wfMessage( 'mainpage' )->inLanguage( $title->loadContLang() )->useDatabase( false )->plain();
+			$title = self::newFromText( $titleText, NS_MAIN, $city_id );
+		}
+
 		return $title;
 	}
 
@@ -287,7 +299,7 @@ class GlobalTitle extends Title {
 	/**
 	 * Get a real URL referring to this title
 	 *
-	 * @param string $query an optional query string
+	 * @param string|array $query an optional query string
 	 * @param string|bool $variant language variant of url (for sr, zh..)
 	 *
 	 * @return string the URL
@@ -300,6 +312,19 @@ class GlobalTitle extends Title {
 		if( $this->mNamespace != NS_MAIN ) {
 			$namespace .= ":";
 		}
+
+		$titleText = $this->mUrlform;
+		if ( $this->mNamespace === NS_SPECIAL ) {
+			$globalStateWrapper = new Wikia\Util\GlobalStateWrapper( [
+				'wgContLang' => $this->mContLang
+			] );
+			$localName = $globalStateWrapper->wrap( function () use ( $titleText ) {
+				return SpecialPageFactory::getLocalNameFor( $titleText );
+			} );
+
+			$titleText = wfUrlencode( $localName );
+		}
+
 		/**
 		 * replace $1 with article title with namespace
 		 */
@@ -308,7 +333,7 @@ class GlobalTitle extends Title {
 			$query = wfArrayToCGI( $query );
 		}
 
-		$url = str_replace( '$1', $namespace . $this->mUrlform, $this->mArticlePath );
+		$url = str_replace( '$1', $namespace . $titleText, $this->mArticlePath );
 		$url = wfAppendQuery( $this->mServer . $url, $query );
 
 		return $url;
@@ -647,7 +672,7 @@ class GlobalTitle extends Title {
 				array( 'page' ),
 				array( 'page_id' ),
 				array(
-					'page_title' => $this->mText,
+					'page_title' => $this->mDbkeyform,
 					'page_namespace' => $this->mNamespace
 				),
 				__METHOD__
@@ -680,7 +705,7 @@ class GlobalTitle extends Title {
 		 */
 		$server = WikiFactory::getVarValueByName( "wgServer", $this->mCityId );
 		if ( $server ) {
-			$this->mServer = self::normalizeEnvURL( $server );
+			$this->mServer = \WikiFactory::getLocalEnvURL( $server );
 			return $server;
 		}
 
@@ -698,27 +723,11 @@ class GlobalTitle extends Title {
 
 		if ( $city ) {
 			$server = rtrim( $city->city_url, "/" );
-			$this->mServer = self::normalizeEnvURL( $server );
+			$this->mServer = \WikiFactory::getLocalEnvURL( $server );
 			return $server;
 		}
 
 		return false;
-	}
-
-	/**
-	 *
-	 * Normalizes URL passed to this method to generate environment-specific paths
-	 *
-	 * @param $server
-	 * @return string
-	 */
-	private static function normalizeEnvURL( $server ) {
-		global $wgWikiaEnvironment;
-		if ( $wgWikiaEnvironment != WIKIA_ENV_PROD ) {
-			return WikiFactory::getLocalEnvURL( $server );
-		}
-
-		return $server;
 	}
 
 	/**
@@ -800,7 +809,7 @@ class GlobalTitle extends Title {
 				$this->mLang = "en";
 			}
 		}
-		$this->mContLang = Language::factory( $this->mLang );
+		$this->mContLang = Language::factory( $this->mLang, $this->mCityId );
 
 		return $this->mContLang;
 	}
@@ -822,20 +831,75 @@ class GlobalTitle extends Title {
 			return $this->mNamespaceNames;
 		}
 
-		$this->mNamespaceNames = array();
+		// $wgMetaNamespace is calculated per wiki and cached in Language singleton per language,
+		// so we have to override it manually in this method
+		$metaNamespace = WikiFactory::getVarValueByName( 'wgMetaNamespace', $this->mCityId );
+		$metaNamespaceTalk = WikiFactory::getVarValueByName( 'wgMetaNamespaceTalk', $this->mCityId );
+
+		if ( $metaNamespace === false ) {
+			$wiki = WikiFactory::getWikiByID( $this->mCityId );
+			// Copied from Setup.php - Namespaces can't use spaces
+			$metaNamespace = str_replace( ' ', '_', $wiki->city_title );
+		}
+
+		// $wgExtraNamespaces is calculated at MW init in context language.
+		// We have to override them to get correctly localized namespaces registered by extensions.
+		$globalStateWrapper = new Wikia\Util\GlobalStateWrapper( [
+			'wgExtraNamespaces' => $this->getExtraExtensionNamespaces(),
+			'wgMetaNamespace' => $metaNamespace,
+			'wgMetaNamespaceTalk' => $metaNamespaceTalk
+		] );
+		$langNamespaces = $globalStateWrapper->wrap( function () {
+			return $this->mContLang->getNamespaces();
+		} );
 
 		/**
 		 * get extra namespaces for city_id, they have to be defined in
 		 * $wgExtraNamespacesLocal variable
 		 */
-		$namespaces = WikiFactory::getVarValueByName( "wgExtraNamespacesLocal", $this->mCityId );
-		if( is_array( $namespaces ) ) {
-			$this->mNamespaceNames =  $wgCanonicalNamespaceNames + $namespaces;
+		$namespaces = WikiFactory::getVarValueByName( 'wgExtraNamespacesLocal', $this->mCityId, false, [] );
+		if ( !is_array( $namespaces ) ) {
+			$namespaces = [];
 		}
-		else {
-			$this->mNamespaceNames = $wgCanonicalNamespaceNames;
-		}
+
+		$this->mNamespaceNames = $namespaces + $langNamespaces + $wgCanonicalNamespaceNames;
+
 		return $this->mNamespaceNames;
+	}
+
+	/**
+	 * Get $wgExtraNamespaces for title language
+	 *
+	 * @return array
+	 */
+	private function getExtraExtensionNamespaces() {
+		global $wgExtensionNamespacesFiles;
+
+		if ( empty( static::$extraExtensionNamespaces ) ){
+			$extraExtensionNamespaces = [ ];
+
+			foreach ( $wgExtensionNamespacesFiles as $extFile ) {
+				$namespaces = [ ];
+				// Namespace files fill in $namespaces array
+				require $extFile;
+
+				foreach ( $namespaces as $langKey => $namespaceArray ) {
+					if ( array_key_exists( $langKey, $extraExtensionNamespaces ) ) {
+						$extraExtensionNamespaces[$langKey] += $namespaceArray;
+					} else {
+						$extraExtensionNamespaces[$langKey] = $namespaceArray;
+					}
+				}
+			}
+
+			static::$extraExtensionNamespaces = $extraExtensionNamespaces;
+		}
+
+		if ( $this->mLang === 'en' || empty( static::$extraExtensionNamespaces[$this->mLang] ) ) {
+			return static::$extraExtensionNamespaces['en'];
+		}
+
+		return static::$extraExtensionNamespaces[$this->mLang] + static::$extraExtensionNamespaces['en'];
 	}
 
 	/**
@@ -846,7 +910,7 @@ class GlobalTitle extends Title {
 	 * @return string
 	 */
 	private function memcKey() {
-		return wfSharedMemcKey( 'globaltitle', $this->mCityId );
+		return wfSharedMemcKey( 'globaltitlev1', $this->mCityId );
 	}
 
 	/**

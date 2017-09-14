@@ -7,6 +7,7 @@
  * This file deals with database interface functions
  * and query specifics/optimisations
  */
+
 use Wikia\Logger\WikiaLogger;
 use Wikia\Util\Statistics\BernoulliTrial;
 
@@ -239,6 +240,9 @@ abstract class DatabaseBase implements DatabaseType {
 	protected $htmlErrors;
 
 	protected $delimiter = ';';
+
+	/** @var array Map of (table name => 1) for TEMPORARY tables */
+	protected $mSessionTempTables = [];
 
 # ------------------------------------------------------------------------------
 # Accessors
@@ -651,22 +655,6 @@ abstract class DatabaseBase implements DatabaseType {
 	}
 
 	/**
-	 * Same as new DatabaseMysql( ... ), kept for backward compatibility
-	 * @deprecated since 1.17
-	 *
-	 * @param $server
-	 * @param $user
-	 * @param $password
-	 * @param $dbName
-	 * @param $flags int
-	 * @return DatabaseMysql
-	 */
-	static function newFromParams( $server, $user, $password, $dbName, $flags = 0 ) {
-		wfDeprecated( __METHOD__, '1.17' );
-		return new DatabaseMysql( $server, $user, $password, $dbName, $flags );
-	}
-
-	/**
 	 * Same as new factory( ... ), kept for backward compatibility
 	 * @deprecated since 1.18
 	 * @see Database::factory()
@@ -703,7 +691,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 */
 	final public static function factory( $dbType, $p = array() ) {
 		$canonicalDBTypes = array(
-			'mysql' => array( 'mysqli', 'mysql' ),
+			'mysql' => [ 'mysqli' ],
 			'postgres' => array(),
 			'sqlite' => array(),
 			'oracle' => array(),
@@ -847,6 +835,42 @@ abstract class DatabaseBase implements DatabaseType {
 	}
 
 	/**
+	 * @param string $sql A SQL query
+	 * @return bool Whether $sql is SQL for TEMPORARY table operation
+	 */
+	protected function registerTempTableOperation( $sql ) {
+		if ( preg_match(
+			'/^CREATE\s+TEMPORARY\s+TABLE\s+(?:IF\s+NOT\s+EXISTS\s+)?[`"\']?(\w+)[`"\']?/i',
+			$sql,
+			$matches
+		) ) {
+			$this->mSessionTempTables[$matches[1]] = 1;
+			return true;
+		} elseif ( preg_match(
+			'/^DROP\s+(?:TEMPORARY\s+)?TABLE\s+(?:IF\s+EXISTS\s+)?[`"\']?(\w+)[`"\']?/i',
+			$sql,
+			$matches
+		) ) {
+			$isTemp = isset( $this->mSessionTempTables[$matches[1]] );
+			unset( $this->mSessionTempTables[$matches[1]] );
+			return $isTemp;
+		} elseif ( preg_match(
+			'/^TRUNCATE\s+(?:TEMPORARY\s+)?TABLE\s+(?:IF\s+EXISTS\s+)?[`"\']?(\w+)[`"\']?/i',
+			$sql,
+			$matches
+		) ) {
+			return isset( $this->mSessionTempTables[$matches[1]] );
+		} elseif ( preg_match(
+			'/^(?:INSERT\s+(?:\w+\s+)?INTO|UPDATE|DELETE\s+FROM)\s+[`"\']?(\w+)[`"\']?/i',
+			$sql,
+			$matches
+		) ) {
+			return isset( $this->mSessionTempTables[$matches[1]] );
+		}
+		return false;
+	}
+
+	/**
 	 * Run an SQL query and return the result. Normally throws a DBQueryError
 	 * on failure. If errors are ignored, returns false instead.
 	 *
@@ -891,6 +915,8 @@ abstract class DatabaseBase implements DatabaseType {
 
 		$this->mLastQuery = $sql;
 		$is_writeable = $this->isWriteQuery( $sql );
+		$isTemporaryTableOperation = $this->registerTempTableOperation( $sql );
+
 		if ( !$this->mDoneWrites && $is_writeable ) {
 			# Set a flag indicating that writes have been done
 			wfDebug( __METHOD__ . ": Writes done: $sql\n" );
@@ -898,8 +924,8 @@ abstract class DatabaseBase implements DatabaseType {
 		}
 
 		# <Wikia>
-		global $wgDBReadOnly;
-		if ( $is_writeable && $wgDBReadOnly ) {
+		global $wgDBReadOnly, $wgReadOnly;
+		if ( $is_writeable && !$isTemporaryTableOperation && $wgDBReadOnly ) {
 			if ( !Profiler::instance()->isStub() ) {
 				wfProfileOut( $queryProf );
 				wfProfileOut( $totalProf );
@@ -907,7 +933,8 @@ abstract class DatabaseBase implements DatabaseType {
 			WikiaLogger::instance()->error( 'DB readonly mode', [
 				'exception' => new WikiaException( $fname . ' called in read-only mode' ),
 				'sql'       => $sql,
-				'server'    => $this->mServer
+				'server'    => $this->mServer,
+				'reason'    => (string) $wgReadOnly,
 			] );
 			wfDebug( sprintf( "%s: DB read-only mode prevented the following query: %s\n", __METHOD__, $sql ) );
 			return false;
@@ -985,7 +1012,7 @@ abstract class DatabaseBase implements DatabaseType {
 			wfDebug( "Query {$this->mDBname} (DB user: {$DBuser}) ($cnt) ($master): $sqlx\n" );
 		}
 
-		if ( istainted( $sql ) & TC_MYSQL ) {
+		if ( is_tainted( $sql ) ) {
 			throw new MWException( 'Tainted query found' );
 		}
 
@@ -1144,8 +1171,8 @@ abstract class DatabaseBase implements DatabaseType {
 		reset( $args );
 		$this->preparedArgs =& $args;
 
-		return preg_replace_callback( '/(\\\\[?!&]|[?!&])/',
-			array( &$this, 'fillPreparedArg' ), $preparedQuery );
+		return preg_replace_callback( '/(\\\\[?!&]|[?!&])/', [ $this, 'fillPreparedArg' ],
+			$preparedQuery );
 	}
 
 	/**
@@ -1751,20 +1778,6 @@ abstract class DatabaseBase implements DatabaseType {
 	}
 
 	/**
-	 * mysql_field_type() wrapper
-	 * @param $res
-	 * @param $index
-	 * @return string
-	 */
-	function fieldType( $res, $index ) {
-		if ( $res instanceof ResultWrapper ) {
-			$res = $res->result;
-		}
-
-		return mysql_field_type( $res, $index );
-	}
-
-	/**
 	 * Determines if a given index is unique
 	 *
 	 * @param $table string
@@ -1961,6 +1974,10 @@ abstract class DatabaseBase implements DatabaseType {
 				}
 			} else {
 				$first = false;
+			}
+
+			if ( is_bool( $value ) ) {
+				$value = (int) $value;
 			}
 
 			if ( ( $mode == LIST_AND || $mode == LIST_OR ) && is_numeric( $field ) ) {
@@ -2334,6 +2351,7 @@ abstract class DatabaseBase implements DatabaseType {
 
 	/**
 	 * If it's a string, adds quotes and backslashes
+	 * If it's a boolean, converts it to int
 	 * Otherwise returns as-is
 	 *
 	 * @param $s string
@@ -2343,6 +2361,8 @@ abstract class DatabaseBase implements DatabaseType {
 	function addQuotes( $s ) {
 		if ( $s === null ) {
 			return 'NULL';
+		} elseif ( is_bool( $s ) ) {
+			return (int) $s;
 		} else {
 			# This will also quote numeric values. This should be harmless,
 			# and protects against weird problems that occur when they really
@@ -2356,7 +2376,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * Quotes an identifier using `backticks` or "double quotes" depending on the database type.
 	 * MySQL uses `backticks` while basically everything else uses double quotes.
 	 * Since MySQL is the odd one out here the double quotes are our generic
-	 * and we implement backticks in DatabaseMysql.
+	 * and we implement backticks in DatabaseMysqli.
 	 *
 	 * @param $s string
 	 *
@@ -2684,16 +2704,16 @@ abstract class DatabaseBase implements DatabaseType {
 	/**
 	 * DELETE query wrapper.
 	 *
-	 * @param $table Array Table name
+	 * @param string $table Table name
 	 * @param $conds String|Array of conditions. See $conds in DatabaseBase::select() for
 	 *               the format. Use $conds == "*" to delete all rows
-	 * @param $fname String name of the calling function
+	 * @param $fname string name of the calling function
 	 *
 	 * @return bool
 	 * @throws DBUnexpectedError
 	 * @throws MWException
 	 */
-	function delete( $table, $conds, $fname = 'DatabaseBase::delete' ) {
+	function delete( string $table, $conds, $fname = 'DatabaseBase::delete' ) {
 		if ( !$conds ) {
 			throw new DBUnexpectedError( $this, 'DatabaseBase::delete() called with no conditions' );
 		}
@@ -2767,7 +2787,7 @@ abstract class DatabaseBase implements DatabaseType {
 		list( $startOpts, $useIndex, $tailOpts ) = $this->makeSelectOptions( $selectOptions );
 
 		if ( is_array( $srcTable ) ) {
-			$srcTable =  implode( ',', array_map( array( &$this, 'tableName' ), $srcTable ) );
+			$srcTable = implode( ',', array_map( [ $this, 'tableName' ], $srcTable ) );
 		} else {
 			$srcTable = $this->tableName( $srcTable );
 		}
@@ -3230,7 +3250,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * installations. Most callers should use LoadBalancer::safeGetLag()
 	 * instead.
 	 *
-	 * @return Database replication lag in seconds
+	 * @return int replication lag in seconds
 	 */
 	function getLag() {
 		return intval( $this->mFakeSlaveLag );
@@ -3683,19 +3703,23 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @param string $fname the function name
 	 * @param bool $isMaster is this against the master
 	 *
-	 * @return ResultWrapper|resource|bool see doQuery
+	 * @return ResultWrapper|mysqli_result|bool see doQuery
 	 */
 	protected function executeAndProfileQuery( $sql, $fname, $isMaster ) {
 		$queryId = MWDebug::query( $sql, $fname, $isMaster );
 		$start = microtime( true );
 
-		// Wikia change: DatabaseMysql returns a resource instead of ResultWrapper instance
-		/* @var $ret resource|bool */
+		/* @var $ret mysqli_result|bool */
 		$ret = $this->doQuery( $sql );
 
 		$this->logSql( $sql, $ret, $fname, microtime( true ) - $start, $isMaster );
 
 		MWDebug::queryTime( $queryId );
+
+		if ( $this->wasDeadlock() ) {
+			$this->logDeadlock();
+		}
+
 		return $ret;
 	}
 
@@ -3704,13 +3728,13 @@ abstract class DatabaseBase implements DatabaseType {
 	 * at the rate defined in self::QUERY_SAMPLE_RATE.
 	 *
 	 * @param string $sql the query
-	 * @param ResultWrapper|resource|bool $ret database results
+	 * @param ResultWrapper|mysqli_result|bool $ret database results
 	 * @param string $fname the name of the function that made this query
 	 * @param bool $isMaster is this against the master
 	 * @return void
 	 */
 	protected function logSql( $sql, $ret, $fname, $elapsedTime, $isMaster ) {
-		global $wgDBcluster;
+		global $wgDBcluster, $wgRequest;
 
 		if ( $ret instanceof ResultWrapper ) {
 			// NOP for MySQL driver
@@ -3719,9 +3743,6 @@ abstract class DatabaseBase implements DatabaseType {
 			// for SELECT queries report how many rows are sent to the client
 			// for INSERT, UPDATE, DELETE, DROP queries report affected rows
 			$num_rows = $ret->num_rows ?: $this->affectedRows();
-		} elseif ( is_resource( $ret ) ) {
-			// for SELECT queries report how many rows are sent to the client
-			$num_rows = mysql_num_rows( $ret );
 		} elseif ( $ret === true ) {
 			// for INSERT, UPDATE, DELETE, DROP queries report affected rows
 			$num_rows = $this->affectedRows();
@@ -3753,6 +3774,10 @@ abstract class DatabaseBase implements DatabaseType {
 			'exception'   => new Exception(), // log the backtrace
 		];
 
+		if ( $wgRequest && $wgRequest->getVal( 'action' ) == 'delete' ) {
+			$this->getWikiaLogger()->info( "SQL (action=delete) {$sql}", $context );
+		}
+
 		if ( $this->getSampler()->shouldSample() ) {
 			$this->getWikiaLogger()->info( "SQL {$sql}", $context );
 		}
@@ -3774,6 +3799,21 @@ abstract class DatabaseBase implements DatabaseType {
 		# e.g. queries on events_local_users via DataProvider::GetTopFiveUsers
 		if ( $elapsedTime > self::SLOW_QUERY_LOG_THRESHOLD ) {
 			$this->getWikiaLogger()->info( "Slow query {$sql}", $context );
+		}
+	}
+
+	protected function logDeadlock() {
+		$res = $this->doQuery( "SHOW ENGINE INNODB STATUS;" );
+		if ( $res && $row = $this->fetchRow( $res ) ) {
+			$statusString = $row['Status'];
+
+			if ( preg_match('/\nLATEST DETECTED DEADLOCK\n-+\n(.*?)(?:\n-+\n|$)/s', $statusString, $m) ) {
+				$deadlockDetails = $m[1];
+				$this->getWikiaLogger()->error( 'Database deadlock occurred', [
+					'latest_deadlock_details' => $deadlockDetails,
+					'exception' => new Exception(),
+				]);
+			}
 		}
 	}
 

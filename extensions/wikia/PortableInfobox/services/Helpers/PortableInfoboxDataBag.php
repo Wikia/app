@@ -9,6 +9,7 @@ namespace Wikia\PortableInfobox\Helpers;
 class PortableInfoboxDataBag {
 	private static $instance = null;
 	private $galleries = [ ];
+	private $firstInfoboxAlredyRendered = false;
 
 	private function __construct() {
 	}
@@ -36,5 +37,19 @@ class PortableInfoboxDataBag {
 		}
 
 		return null;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function isFirstInfoboxAlredyRendered() {
+		return $this->firstInfoboxAlredyRendered;
+	}
+
+	/**
+	 * @param boolean $firstInfoboxAlredyRendered
+	 */
+	public function setFirstInfoboxAlredyRendered( $firstInfoboxAlredyRendered ) {
+		$this->firstInfoboxAlredyRendered = $firstInfoboxAlredyRendered;
 	}
 }

@@ -1,13 +1,10 @@
 <?php
-/**
- * @addtogroup Extensions
-*/
-
 $messages = array();
 
 $messages['en'] = array(
 	'wikia-videohandlers-desc' => 'Handling of videos within MediaWiki file architecture',
 	'videohandler' => 'Video handler',
+	'right-specialvideohandler' => 'Allows access to Special:VideoHandler',
 	'prototype-videohandler-extension-desc' => 'Prototype video handler',
 	'movieclips-videohandler-extension-desc' => 'MovieClips video handler',
 	'screenplay-videohandler-extension-desc' => 'Screenplay video handler',
@@ -19,8 +16,8 @@ $messages['en'] = array(
 	'videohandler-category' => 'Videos',
 	'videohandler-description' => 'Description',
 	'videohandler-video-views' => '$1 {{PLURAL:$1|view|views}}',
-	'videohandler-non-premium-with-links' => 'This wiki only allows licensed content from [http://video.wikia.com Wikia Video Library] to be added. Please go to [http://video.wikia.com video.wikia.com] to search for videos.',
-	'videohandler-non-premium' => 'This wiki only allows licensed content from Wikia Video Library to be added. Please go to http://video.wikia.com to search for videos.',
+	'videohandler-non-premium-with-links' => 'This wiki only allows licensed content from [http://video.wikia.com Fandom Video Library] to be added. Please go to [http://video.wikia.com video.wikia.com] to search for videos.',
+	'videohandler-non-premium' => 'This wiki only allows licensed content from Fandom Video Library to be added. Please go to http://video.wikia.com to search for videos.',
 	'videohandler-remove' => 'Remove',
 	'videohandler-remove-video-modal-title' => 'Are you sure you want to remove this video from your wiki?',
 	'videohandler-remove-video-modal-ok' => 'Remove',
@@ -53,7 +50,6 @@ $messages['en'] = array(
 	'videos-error-provider-not-supported' => 'This video provider is not supported. View our list of [http://community.wikia.com/wiki/Help:Video_Embed_Tool#Supported_sites supported providers].',
 );
 
-/** Message documentation (Message documentation) */
 $messages['qqq'] = array(
 	'wikia-videohandlers-desc' => 'Description of module used for credits page',
 	'videohandler-error-missing-parameter' => 'Says, that a certain parameter is missing in the input data.
@@ -85,83 +81,48 @@ $messages['qqq'] = array(
 	'videos-error-admin-only' => 'Error message that shows up when the wgAllVideosAdminOnly is set to true and a non-admin attempts to upload a video',
 	'videos-update-edit-summary' => 'Edit summary used when updating a video in an article',
 	'videos-error-provider-not-supported' => 'Message when video provider is not supported',
+	'videohandler-non-premium' => 'Missing documentation',
+	'videohandler-non-premium-with-links' => 'Missing documentation',
 );
 
-/** Afrikaans (Afrikaans)
- * @author Naudefj
- */
 $messages['af'] = array(
 	'videohandler-category' => "Video's",
 );
 
-/** Azerbaijani (azərbaycanca)
- * @author Sortilegus
- * @author Vago
- */
 $messages['az'] = array(
 	'videohandler-category' => 'Videolar',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
- * @author EugeneZelenko
- * @author Jim-by
- */
 $messages['be-tarask'] = array(
 	'videohandler-category' => 'Відэа',
 );
 
-/** Bulgarian (български)
- * @author DCLXVI
- */
 $messages['bg'] = array(
 	'videohandler-category' => 'Видео',
 );
 
-/** Breton (brezhoneg)
- * @author Gwenn-Ael
- * @author Y-M D
- */
 $messages['br'] = array(
 	'videohandler-category' => 'Videoioù',
 	'videos-add-video-ok' => 'Graet',
 	'videos-add-video-label-all' => 'Gwelet pep tra',
 );
 
-/** Bosnian (bosanski)
- * @author Palapa
- */
 $messages['bs'] = array(
 	'videohandler-category' => 'Videa',
 );
 
-/** Catalan (català)
- * @author Gemmaa
- * @author Paucabot
- */
 $messages['ca'] = array(
 	'videohandler-category' => 'Vídeos',
 );
 
-/** Czech (česky)
- * @author Mr. Richard Bolla
- */
 $messages['cs'] = array(
 	'videohandler-category' => 'Videa',
 );
 
-/** Welsh (Cymraeg)
- * @author Lloffiwr
- */
 $messages['cy'] = array(
 	'videohandler-category' => 'Fideos',
 );
 
-/** German (Deutsch)
- * @author Inkowik
- * @author LWChris
- * @author PtM
- * @author Tiin
- */
 $messages['de'] = array(
 	'wikia-videohandlers-desc' => 'Handhabung von Videos innerhalb der MediaWiki-Dateiorganisation',
 	'videohandler' => 'Video-Steuerung',
@@ -210,20 +171,10 @@ $messages['de'] = array(
 	'videos-error-provider-not-supported' => 'Dieser Videoanbieter wird nicht von uns unterstützt. Hier findest du die Liste der von uns [http://de.community.wikia.com/wiki/Hilfe:Wikia-Video-Erweiterung#Unterstützte_Seiten unterstützten Anbieter].',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
- * @author LWChris
- */
 $messages['de-formal'] = array(
 	'videohandler-category' => 'Videos',
 );
 
-/** Spanish (español)
- * @author Bola
- * @author Ciencia Al Poder
- * @author Fitoschido
- * @author Translationista
- * @author VegaDark
- */
 $messages['es'] = array(
 	'wikia-videohandlers-desc' => 'Manejo de vídeos dentro de la arquitectura de archivos MediaWiki',
 	'videohandler' => 'Controlador de vídeo',
@@ -272,30 +223,20 @@ $messages['es'] = array(
 	'videos-error-provider-not-supported' => 'Este proveedor de videos no está respaldado. Consulta la lista de [http://comunidad.wikia.com/wiki/Ayuda:Herramienta_de_inclusi%C3%B3n_de_v%C3%ADdeos# sitios aceptados].',
 );
 
-/** Basque (euskara)
- * @author An13sa
- */
 $messages['eu'] = array(
 	'videohandler-category' => 'Bideoak',
 );
 
-/** Persian (فارسی) */
 $messages['fa'] = array(
 	'videohandler-category' => 'ویدیو‌ها',
 );
 
-/** Finnish (suomi)
- * @author Centerlink
- * @author Crt
- */
 $messages['fi'] = array(
 	'videohandler-category' => 'Videot',
+	'videohandler-video-views' => 'katsottu {{PLURAL:$1|kerran|$1 kertaa}}',
+	'videos-add-video' => 'Lisää video',
 );
 
-/** French (français)
- * @author IAlex
- * @author Wyz
- */
 $messages['fr'] = array(
 	'wikia-videohandlers-desc' => "Gestion des vidéos au sein de l'architecture de fichiers de MediaWiki",
 	'videohandler' => 'Gestionnaire de vidéos',
@@ -344,9 +285,6 @@ $messages['fr'] = array(
 	'videos-error-provider-not-supported' => "Ce fournisseur de vidéo n'est pas pris en charge. Consultez la liste des [http://communaute.wikia.com/wiki/Aide:Outil_d%27incorporation_de_vid%C3%A9o# fournisseurs pris en charge].",
 );
 
-/** Galician (galego)
- * @author Toliño
- */
 $messages['gl'] = array(
 	'wikia-videohandlers-desc' => 'Manipulación de vídeos dentro da arquitectura de ficheiros de MediaWiki',
 	'videohandler' => 'Manipulador de vídeos',
@@ -366,17 +304,10 @@ $messages['gl'] = array(
 	'videos-add-video-label-all' => 'Ollar todos',
 );
 
-/** Hebrew (עברית)
- * @author שומבלע
- */
 $messages['he'] = array(
 	'videohandler-category' => 'סרטוני וידאו',
 );
 
-/** Hungarian (magyar)
- * @author Glanthor Reviol
- * @author TK-999
- */
 $messages['hu'] = array(
 	'videohandler' => 'Videókezelő',
 	'prototype-videohandler-extension-desc' => 'Prototype videókezelő',
@@ -395,16 +326,10 @@ $messages['hu'] = array(
 	'videos-update-edit-summary' => 'Videó frissítve',
 );
 
-/** Armenian (Հայերեն)
- * @author Pandukht
- */
 $messages['hy'] = array(
 	'videohandler-category' => 'Տեսանյութեր',
 );
 
-/** Interlingua (interlingua)
- * @author McDutchie
- */
 $messages['ia'] = array(
 	'videohandler' => 'Gestor de videos',
 	'prototype-videohandler-extension-desc' => 'Gestor de videos Prototype',
@@ -422,17 +347,10 @@ $messages['ia'] = array(
 	'videos-add-video-label-all' => 'Vider totes',
 );
 
-/** Indonesian (Bahasa Indonesia)
- * @author Irwangatot
- * @author Kenrick95
- */
 $messages['id'] = array(
 	'videohandler-category' => 'Video',
 );
 
-/** Italian (italiano)
- * @author HalphaZ
- */
 $messages['it'] = array(
 	'videohandler-category' => 'Video',
 	'wikia-videohandlers-desc' => 'Gestione dei video con MediaWikia',
@@ -481,10 +399,6 @@ $messages['it'] = array(
 	'videos-error-provider-not-supported' => 'Questo provider di video non è supportato. Vedi la lista dei [http://community.wikia.com/wiki/Help:Video_Embed_Tool#Supported_sites provider supportati].',
 );
 
-/** Japanese (日本語)
- * @author Schu
- * @author Tommy6
- */
 $messages['ja'] = array(
 	'videohandler-category' => '動画',
 	'wikia-videohandlers-desc' => 'MediaWikiファイルのアーキテクチャ内における動画の処理',
@@ -533,30 +447,54 @@ $messages['ja'] = array(
 	'videos-error-provider-not-supported' => 'この動画の提供元は対応外です。対応サイトのリストについては、[http://ja.community.wikia.com/wiki/ヘルプ:動画埋め込みツール#対応サイト こちら]をご覧ください。',
 );
 
-/** Georgian (ქართული)
- * @author David1010
- */
 $messages['ka'] = array(
 	'videohandler-category' => 'ვიდეოები',
 );
 
-/** Karachay-Balkar (къарачай-малкъар)
- * @author Къарачайлы
- */
+$messages['ko'] = array(
+	'videohandler-non-premium' => '이 위키에 위키아 동영상 라이브러리의 저작권이 있는 동영상을 불러와 올릴 수 있습니다. 동영상을 찾아보려면 http://video.wikia.com 사이트를 방문하세요.',
+	'videohandler-non-premium-with-links' => '이 위키에 [http://video.wikia.com 위키아 동영상 라이브러리 (영어)]의 저작권이 있는 동영상을 불러와 올릴 수 있습니다. 동영상을 찾아보려면 [http://video.wikia.com video.wikia.com]을 방문하세요.',
+	'videohandler-category' => '동영상',
+	'videohandler-description' => '설명',
+	'videohandler-error-missing-parameter' => "값이 필수로 들어가야 하는 '$1' 변수가 누락되어 있습니다.",
+	'videohandler-error-restricted-video' => '이 동영상은 부적절한 내용을 포함하고 있어 이 위키에서 볼 수 없도록 차단되었습니다.',
+	'videohandler-error-video-no-exist' => '입력한 이름을 가진 동영상이 없습니다.',
+	'videohandler-remove-video-modal-cancel' => '취소',
+	'videohandler-remove-video-modal-ok' => '삭제',
+	'videohandler-remove-video-modal-success' => 'File:$1 이(가) 이 위키에서 삭제되었습니다.',
+	'videohandler-remove-video-modal-title' => '정말로 이 동영상을 이 위키에서 삭제하시겠습니까?',
+	'videohandler-remove' => '삭제',
+	'videohandler-unknown-title' => '이름 알 수 없음',
+	'videohandler-video-details' => '$1 (제공자: $2)',
+	'videohandler-video-views' => '$1회 조회됨',
+	'videos-add-video-label-all' => '모두 보기',
+	'videos-add-video-label-name' => '지원되는 동영상 사이트에 있는 동영상의 URL을 입력하세요.',
+	'videos-add-video-ok' => '추가',
+	'videos-add-video-to-this-wiki' => '이 위키에 동영상 추가하기',
+	'videos-add-video' => '동영상 추가하기',
+	'videos-error-blocked-user' => '이 위키에서 차단되어 있으므로 동영상을 올릴 수 없습니다.',
+	'videos-error-empty-title' => '동영상의 제목을 입력하세요.',
+	'videos-error-invalid-video-url' => '지원되는 동영상 사이트의 이용 가능한 URL을 입력하십시오.',
+	'videos-error-no-video-url' => '동영상의 URL이 입력되지 않았습니다.',
+	'videos-error-not-logged-in' => '동영상을 추가하기 위해서는 로그인이 필요합니다.',
+	'videos-error-old-type-video' => '오래된 형태의 동영상은 더 이상 지원되지 않습니다. (동영상 이름공간)',
+	'videos-error-permissions' => '이 동영상을 삭제할 수 있는 권한이 없습니다.',
+	'videos-error-readonly' => '현재 읽기 전용 상태입니다. 읽기 전용 상태가 해제된 후 다시 시도하세요.',
+	'videos-error-unknown' => '알 수 없는 오류가 발생했습니다. 오류 코드: $1',
+	'videos-error-while-loading' => '데이터를 불러오는 도중에 오류가 발생했습니다. 인터넷 연결 상태를 확인해보시고 페이지를 새로고침하세요.',
+	'videos-initial-upload-edit-summary' => '새 동영상을 올림',
+	'videos-notify' => '동영상을 처리하는 동안 잠시 기다려 주십시오.',
+	'videos-something-went-wrong' => '동영상을 추가하는 과정에서 오류가 발생했습니다.',
+);
+
 $messages['krc'] = array(
 	'videohandler-category' => 'Видеола',
 );
 
-/** Luxembourgish (Lëtzebuergesch)
- * @author Robby
- */
 $messages['lb'] = array(
 	'videohandler-category' => 'Videoen',
 );
 
-/** Macedonian (македонски)
- * @author Bjankuloski06
- */
 $messages['mk'] = array(
 	'wikia-videohandlers-desc' => 'Поставување на видеа во рамките на податотечната архитектура на МедијаВики',
 	'videohandler' => 'Поставување на видеа',
@@ -577,9 +515,6 @@ $messages['mk'] = array(
 	'videos-add-video-label-all' => 'Прикажи ги сите',
 );
 
-/** Malay (Bahasa Melayu)
- * @author Anakmalaysia
- */
 $messages['ms'] = array(
 	'videohandler' => 'Pengelola video',
 	'prototype-videohandler-extension-desc' => 'Pengelola video prototaip',
@@ -598,10 +533,6 @@ $messages['ms'] = array(
 	'videos-add-video-label-all' => 'Lihat semua',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
- * @author Audun
- * @author Nghtwlkr
- */
 $messages['nb'] = array(
 	'wikia-videohandlers-desc' => 'Behandling av videoer innenfor MediaWikis filarkitektur',
 	'videohandler' => 'Videobehandler',
@@ -621,10 +552,6 @@ $messages['nb'] = array(
 	'videos-add-video-label-all' => 'Vis alle',
 );
 
-/** Dutch (Nederlands)
- * @author AvatarTeam
- * @author Siebrand
- */
 $messages['nl'] = array(
 	'videohandler' => 'Videoverwerking',
 	'prototype-videohandler-extension-desc' => 'Prototype videoverwerking',
@@ -673,19 +600,10 @@ $messages['nl'] = array(
 	'videos-error-provider-not-supported' => 'This video provider is not supported. View our list of [http://community.wikia.com/wiki/Help:Video_Embed_Tool#Supported_sites supported providers].',
 );
 
-/** Punjabi (ਪੰਜਾਬੀ)
- * @author Aalam
- */
 $messages['pa'] = array(
 	'videohandler-category' => 'ਵਿਡੀਓ',
 );
 
-/** Polish (polski)
- * @author Marcin Łukasz Kiejzik
- * @author Sovq
- * @author Sp5uhe
- * @author Woytecr
- */
 $messages['pl'] = array(
 	'wikia-videohandlers-desc' => 'Obsługa filmów wewnątrz systemu plików MediaWiki',
 	'videohandler' => 'Odtwarzacz filmów',
@@ -734,27 +652,16 @@ $messages['pl'] = array(
 	'videos-error-provider-not-supported' => 'Ten dostawca filmów nie jest obsługiwany. Zobacz listę [http://spolecznosc.wikia.com/wiki/Pomoc:Video_Embed_Tool obsługiwanych dostawców].',
 );
 
-/** Piedmontese (Piemontèis)
- * @author Borichèt
- * @author Dragonòt
- */
 $messages['pms'] = array(
 	'videohandler-category' => 'Video',
 );
 
-/** Pashto (پښتو)
- * @author Ahmed-Najib-Biabani-Ibrahimkhel
- */
 $messages['ps'] = array(
 	'videohandler-category' => 'ويډيوګانې',
 	'videos-add-video-ok' => 'ورګډول',
 	'videos-add-video-label-all' => 'ټول کتل',
 );
 
-/** Portuguese (português)
- * @author Crazymadlover
- * @author Hamilton Abreu
- */
 $messages['pt'] = array(
 	'videohandler-category' => 'Vídeos',
 	'wikia-videohandlers-desc' => 'Manipulação de vídeos dentro da arquitetura de arquivo MediaWiki',
@@ -803,27 +710,10 @@ $messages['pt'] = array(
 	'videos-error-provider-not-supported' => 'Este provedor de vídeo não é suportado. Veja nossa lista de [http://community.wikia.com/wiki/Help:Video_Embed_Tool#Supported_sites suportada provedores].',
 );
 
-/** Brazilian Portuguese (português do Brasil)
- * @author Daemorris
- */
-$messages['pt-br'] = array(
-	'videohandler-category' => 'Vídeos',
-);
-
-/** Romanian (română)
- * @author Stelistcristi
- */
 $messages['ro'] = array(
 	'videohandler-category' => 'Videoclipuri',
 );
 
-/** Russian (русский)
- * @author DCamer
- * @author Eleferen
- * @author Kuzura
- * @author Lockal
- * @author Александр Сигачёв
- */
 $messages['ru'] = array(
 	'wikia-videohandlers-desc' => 'Обработка видео с файловой архитектурой MediaWiki',
 	'videohandler' => 'Инструмент обработки видео',
@@ -872,34 +762,18 @@ $messages['ru'] = array(
 	'videos-error-provider-not-supported' => 'Этот поставщик видеоконтента не поддерживается. Посмотрите наш список [http://ru.community.wikia.com/wiki/%D0%A1%D0%BF%D1%80%D0%B0%D0%B2%D0%BA%D0%B0:%D0%92%D0%B8%D0%B4%D0%B5%D0%BE поддерживаемых поставщиков].',
 );
 
-/** Sinhala (සිංහල)
- * @author තඹරු විජේසේකර
- */
 $messages['si'] = array(
 	'videohandler-category' => 'වීඩියෝ',
 );
 
-/** Slovenian (slovenščina)
- * @author Dbc334
- */
 $messages['sl'] = array(
 	'videohandler-category' => 'Videoposnetki',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
- * @author Charmed94
- * @author Rancher
- * @author Verlor
- * @author Михајло Анђелковић
- */
 $messages['sr-ec'] = array(
 	'videohandler-category' => 'Видео-снимци',
 );
 
-/** Swedish (svenska)
- * @author Tobulos1
- * @author WikiPhoenix
- */
 $messages['sv'] = array(
 	'videohandler' => 'Videohanterare',
 	'prototype-videohandler-extension-desc' => 'Videohanterare för Prototype',
@@ -916,17 +790,11 @@ $messages['sv'] = array(
 	'videos-add-video-label-all' => 'Se alla',
 );
 
-/** Tamil (தமிழ்)
- * @author Karthi.dr
- */
 $messages['ta'] = array(
 	'videos-add-video-ok' => 'முடிந்தது',
 	'videos-add-video-label-all' => 'எல்லாவற்றையும் பார்க்கவும்',
 );
 
-/** Tagalog (Tagalog)
- * @author AnakngAraw
- */
 $messages['tl'] = array(
 	'wikia-videohandlers-desc' => 'Pag-aasikaso ng mga bidyo na nasa loob ng arkitektura ng talaksan ng MediaWiki',
 	'videohandler' => 'Tagahawak ng bidyo',
@@ -946,26 +814,14 @@ $messages['tl'] = array(
 	'videos-add-video-label-all' => 'Tingnan lahat',
 );
 
-/** Turkish (Türkçe)
- * @author Mert.subay
- */
 $messages['tr'] = array(
 	'videohandler-category' => 'Videolar',
 );
 
-/** Ukrainian (українська)
- * @author A1
- * @author Prima klasy4na
- * @author Тест
- */
 $messages['uk'] = array(
 	'videohandler-category' => 'Відео',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
- * @author Hydra
- * @author Yanmiao liu
- */
 $messages['zh-hans'] = array(
 	'videohandler-category' => '影片（视频）',
 	'wikia-videohandlers-desc' => 'MediaWiki文件架构内的影片（视频）处理',
@@ -1014,35 +870,35 @@ $messages['zh-hans'] = array(
 	'videos-error-provider-not-supported' => '不支持该影片（视频）提供商。请查看我们[http://zh.community.wikia.com/wiki/Help:%E5%BD%B1%E7%89%87%E5%B5%8C%E5%85%A5%E5%B7%A5%E5%85%B7 支持的供应商]列表。',
 );
 
-$messages['zh-tw'] = array(
+$messages['zh-hant'] = array(
+	'videohandler-non-premium' => '這個維基只允許添加Wikia影片（視頻）庫中的許可内容。請轉到http://video.wikia.com搜索影片（視頻）。',
+	'videohandler-non-premium-with-links' => '這個維基只允許添加[http://video.wikia.com Wikia影片（視頻）庫]中的許可内容。請轉到[http://video.wikia.com video.wikia.com]搜索影片（視頻）。',
+	'videohandler-category' => '影片（視頻）',
+	'videohandler-description' => '描述',
+	'videohandler-error-missing-parameter' => '所需的“$ 1”參數缺失。',
+	'videohandler-error-restricted-video' => '這個影片（視頻）包含不能在此維基網站上顯示的受限內容。',
+	'videohandler-error-video-no-exist' => '按標題指定的影片（視頻）不存在。',
+	'videohandler-log-add-description' => '添加影片（視頻）描述',
+	'videohandler-log-add-video' => '影片（視頻）已創建',
+	'videohandler-remove-error-unknown' => '很抱歉，但刪除時出了問題。',
+	'videohandler-remove-video-modal-cancel' => '取消',
+	'videohandler-remove-video-modal-ok' => '移除',
+	'videohandler-remove-video-modal-success' => '文件$1已經從這個維基網站中移除。',
+	'videohandler-remove-video-modal-title' => '你確定想要從你的維基網站刪除此影片（視頻）？',
+	'videohandler-remove' => '移除',
+	'videohandler-unknown-title' => '未知標題',
+	'videohandler-video-views' => '$1 {{PLURAL:$1|view|次查看}}',
 	'wikia-videohandlers-desc' => 'MediaWiki文檔體系結構內的影片（視頻）處理',
 	'videohandler' => '影片處理器（或視頻處理器）',
 	'prototype-videohandler-extension-desc' => 'Prototype影片處理器（或Prototype視頻處理器）',
 	'movieclips-videohandler-extension-desc' => 'MovieClips影片處理器（或MovieClips視頻處理器）',
 	'screenplay-videohandler-extension-desc' => 'Screenplay影片處理器（或Screenplay視頻處理器）',
 	'youtube-videohandler-extension-desc' => 'YouTube影片處理器（或YouTube視頻處理器）',
-	'videohandler-error-missing-parameter' => '所需的“$ 1”參數缺失。',
-	'videohandler-error-video-no-exist' => '按標題指定的影片（視頻）不存在。',
-	'videohandler-unknown-title' => '未知標題',
 	'videohandler-video-details' => '$1（提供商: $2）',
-	'videohandler-category' => '影片（視頻）',
-	'videohandler-description' => '描述',
-	'videohandler-video-views' => '$1 {{PLURAL:$1|view|次查看}}',
-	'videohandler-non-premium-with-links' => '這個維基只允許添加[http://video.wikia.com Wikia影片（視頻）庫]中的許可内容。請轉到[http://video.wikia.com video.wikia.com]搜索影片（視頻）。',
-	'videohandler-non-premium' => '這個維基只允許添加Wikia影片（視頻）庫中的許可内容。請轉到http://video.wikia.com搜索影片（視頻）。',
-	'videohandler-remove' => '移除',
-	'videohandler-remove-video-modal-title' => '你確定想要從你的維基網站刪除此影片（視頻）？',
-	'videohandler-remove-video-modal-ok' => '移除',
-	'videohandler-remove-video-modal-success' => '文件$1已經從這個維基網站中移除。',
-	'videohandler-remove-video-modal-cancel' => '取消',
-	'videohandler-remove-error-unknown' => '很抱歉，但刪除時出了問題。',
-	'videohandler-log-add-description' => '添加影片（視頻）描述',
-	'videohandler-log-add-video' => '影片（視頻）已創建',
 	'videos-error-empty-title' => '標題為空。',
 	'videos-error-blocked-user' => '此用戶已被屏蔽。',
 	'videos-error-readonly' => '唯讀模式',
 	'videos-error-permissions' => '無法刪除此影片（視頻）。',
-	'videohandler-error-restricted-video' => '這個影片（視頻）包含不能在此維基網站上顯示的受限內容。',
 	'videos-add-video' => '添加影片（視頻）',
 	'videos-add-video-to-this-wiki' => '添加影片（視頻）到此維基網站',
 	'videos-add-video-label-name' => '請輸入來自任何受支持的網站的完整網址。',

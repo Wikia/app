@@ -160,6 +160,18 @@ class PreferenceServiceImpl implements PreferenceService {
 		}
 	}
 
+	public function findUsersWithGlobalPreferenceValue( $preferenceName, $value = null ) {
+		try {
+			return $this->persistence->findUsersWithGlobalPreferenceValue( $preferenceName, $value );
+		} catch (\Exception $e) {
+			$this->error( $e->getMessage(), [
+				'preferenceName' => $preferenceName,
+				'value' => $value, ] );
+			throw $e;
+		}
+	}
+
+
 	/**
 	 * @param string $userId
 	 * @return bool

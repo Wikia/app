@@ -1,81 +1,43 @@
 <?php
-/**
- * PHPUnit
+/*
+ * This file is part of PHPUnit.
  *
- * Copyright (c) 2001-2014, Sebastian Bergmann <sebastian@phpunit.de>.
- * All rights reserved.
+ * (c) Sebastian Bergmann <sebastian@phpunit.de>
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- *   * Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *
- *   * Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in
- *     the documentation and/or other materials provided with the
- *     distribution.
- *
- *   * Neither the name of Sebastian Bergmann nor the names of his
- *     contributors may be used to endorse or promote products derived
- *     from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
- * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
- * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
- * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- *
- * @package    PHPUnit
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @author     Jeroen Versteeg <jversteeg@gmail.com>
- * @copyright  2001-2014 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
- * @since      File available since Release 3.7.30
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
-/**
- *
- *
- * @package    PHPUnit
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @author     Jeroen Versteeg <jversteeg@gmail.com>
- * @copyright  2001-2014 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
- * @since      Class available since Release 3.7.30
- * @covers     PHPUnit_Framework_Constraint_Count
- */
-class CountTest extends PHPUnit_Framework_TestCase
+namespace PHPUnit\Framework\Constraint;
+
+use PHPUnit\Framework\TestCase;
+
+class CountTest extends TestCase
 {
     public function testCount()
     {
-        $countConstraint = new PHPUnit_Framework_Constraint_Count(3);
-        $this->assertTrue($countConstraint->evaluate(array(1,2,3), '', true));
+        $countConstraint = new Count(3);
+        $this->assertTrue($countConstraint->evaluate([1, 2, 3], '', true));
 
-        $countConstraint = new PHPUnit_Framework_Constraint_Count(0);
-        $this->assertTrue($countConstraint->evaluate(array(), '', true));
+        $countConstraint = new Count(0);
+        $this->assertTrue($countConstraint->evaluate([], '', true));
 
-        $countConstraint = new PHPUnit_Framework_Constraint_Count(2);
-        $it = new TestIterator(array(1, 2));
+        $countConstraint = new Count(2);
+        $it              = new \TestIterator([1, 2]);
+        $ia              = new \TestIteratorAggregate($it);
+        $ia2             = new \TestIteratorAggregate2($ia);
+
         $this->assertTrue($countConstraint->evaluate($it, '', true));
+        $this->assertTrue($countConstraint->evaluate($ia, '', true));
+        $this->assertTrue($countConstraint->evaluate($ia2, '', true));
     }
 
     public function testCountDoesNotChangeIteratorKey()
     {
-        $countConstraint = new PHPUnit_Framework_Constraint_Count(2);
+        $countConstraint = new Count(2);
 
         // test with 1st implementation of Iterator
-        $it = new TestIterator(array(1, 2));
+        $it = new \TestIterator([1, 2]);
 
         $countConstraint->evaluate($it, '', true);
         $this->assertEquals(1, $it->current());
@@ -89,9 +51,9 @@ class CountTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($it->valid());
 
         // test with 2nd implementation of Iterator
-        $it = new TestIterator2(array(1, 2));
+        $it = new \TestIterator2([1, 2]);
 
-        $countConstraint = new PHPUnit_Framework_Constraint_Count(2);
+        $countConstraint = new Count(2);
         $countConstraint->evaluate($it, '', true);
         $this->assertEquals(1, $it->current());
 
@@ -102,5 +64,85 @@ class CountTest extends PHPUnit_Framework_TestCase
         $it->next();
         $countConstraint->evaluate($it, '', true);
         $this->assertFalse($it->valid());
+
+        // test with IteratorAggregate
+        $it = new \TestIterator([1, 2]);
+        $ia = new \TestIteratorAggregate($it);
+
+        $countConstraint = new Count(2);
+        $countConstraint->evaluate($ia, '', true);
+        $this->assertEquals(1, $it->current());
+
+        $it->next();
+        $countConstraint->evaluate($ia, '', true);
+        $this->assertEquals(2, $it->current());
+
+        $it->next();
+        $countConstraint->evaluate($ia, '', true);
+        $this->assertFalse($it->valid());
+
+        // test with nested IteratorAggregate
+        $it  = new \TestIterator([1, 2]);
+        $ia  = new \TestIteratorAggregate($it);
+        $ia2 = new \TestIteratorAggregate2($ia);
+
+        $countConstraint = new Count(2);
+        $countConstraint->evaluate($ia2, '', true);
+        $this->assertEquals(1, $it->current());
+
+        $it->next();
+        $countConstraint->evaluate($ia2, '', true);
+        $this->assertEquals(2, $it->current());
+
+        $it->next();
+        $countConstraint->evaluate($ia2, '', true);
+        $this->assertFalse($it->valid());
+    }
+
+    public function testCountGeneratorsDoNotRewind()
+    {
+        $generatorMaker = new \TestGeneratorMaker;
+
+        $countConstraint = new Count(3);
+
+        $generator = $generatorMaker->create([1, 2, 3]);
+        $this->assertEquals(1, $generator->current());
+        $countConstraint->evaluate($generator, '', true);
+        $this->assertEquals(null, $generator->current());
+
+        $countConstraint = new Count(2);
+
+        $generator = $generatorMaker->create([1, 2, 3]);
+        $this->assertEquals(1, $generator->current());
+        $generator->next();
+        $this->assertEquals(2, $generator->current());
+        $countConstraint->evaluate($generator, '', true);
+        $this->assertEquals(null, $generator->current());
+
+        $countConstraint = new Count(1);
+
+        $generator = $generatorMaker->create([1, 2, 3]);
+        $this->assertEquals(1, $generator->current());
+        $generator->next();
+        $this->assertEquals(2, $generator->current());
+        $generator->next();
+        $this->assertEquals(3, $generator->current());
+        $countConstraint->evaluate($generator, '', true);
+        $this->assertEquals(null, $generator->current());
+    }
+
+    public function testCountTraversable()
+    {
+        $countConstraint = new Count(5);
+
+        // DatePeriod is used as an object that is Traversable but does not
+        // implement Iterator or IteratorAggregate. The following ISO 8601
+        // recurring time interval will yield five total DateTime objects.
+        $datePeriod = new \DatePeriod('R4/2017-05-01T00:00:00Z/P1D');
+
+        $this->assertInstanceOf(\Traversable::class, $datePeriod);
+        $this->assertNotInstanceOf(\Iterator::class, $datePeriod);
+        $this->assertNotInstanceOf(\IteratorAggregate::class, $datePeriod);
+        $this->assertTrue($countConstraint->evaluate($datePeriod, '', true));
     }
 }

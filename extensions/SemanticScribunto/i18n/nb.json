@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"Jon Harald Søby"
+		]
+	},
+	"smw-scribunto-desc": "En Semantic MediaWiki-utvidelse for å støtte Scribunto-utvidelsen"
+}

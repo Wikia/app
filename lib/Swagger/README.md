@@ -2,6 +2,8 @@
 A collection of clients for microservices annotated with [Swagger](http://swagger.io/), auto-generated using [swagger-codegen](https://github.com/swagger-api/swagger-codegen). *DO NOT* manually edit PHP classes here.
 
 ## Code Generation Settings
+The currently generated shared files (ApiClient, Configuration, etc) are compatible with swagger-codegen-2.2.0.
+
 Each service should have a `settings.json` file associated with it indicating parameters to the code generation, ex:
 ```json
 {
@@ -15,7 +17,9 @@ Each service should have a `settings.json` file associated with it indicating pa
 The `packagePath`, `srcBasePath`, and prefix `Swagger\Client\` should be consistent across all settings files so code will end up in this directory.
 
 ## Generating Code
-Follow the instructions on the [swagger-codegen](https://github.com/swagger-api/swagger-codegen) repo to get a local generator compiled, checkout the branch `develop_2.0` (this will NOT work on `master`), then run:
+**Note: must use `swagger-codegen` version 2.2.1.**
+Follow the instructions on the [swagger-codegen](https://github.com/swagger-api/swagger-codegen) repo to get a local generator compiled, then run
+(from `lib/Swagger`):
 
 ```bash
 java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
@@ -34,3 +38,5 @@ java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
   -o /Users/nelson/code/wikia/app/lib \
   -c /Users/nelson/code/wikia/app/lib/Swagger/src/User/Preferences/settings.json
 ```
+
+Afterwards, run ./cleanup.sh from `lib/Swagger` to remove unneeded generated files.

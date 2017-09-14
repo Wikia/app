@@ -10,12 +10,12 @@
 		this.input = this.el.find('.message-topic-input');
 		this.error = this.el.find('.message-topic-error');
 		this.inputMax = 4;
-		
+
 		this.el
 			.on('click.MessageTopic', '.topic .remove-swatch', $.proxy(this.handleRemove, this))
 			.on('keypress.MessageTopic', '.message-topic-input', $.proxy(this.handleKeypress, this));
 	};
-	
+
 	MessageTopic.prototype = {
 		addSelection: function(selection) {
 			if(this.getTopics().length === this.inputMax) {
@@ -24,21 +24,21 @@
 			} else {
 				this.error.html('');
 			}
-		
+
 			if(!this.selectedEntries[selection]) {
 				this.selectedEntries[selection] = true;
 				var topic = this.topicTemplate.mustache({articleTitle:selection});
 				this.topicList.append(topic);
 				return true;
 			}
-			
+
 			return false;
 		},
-				
+
 		removeSelection: function(selection) {
 			delete this.selectedEntries[selection];
 		},
-		
+
 		resetSelections: function(selections) {
 			this.selectedEntries = {};
 			this.topicList.children().remove();
@@ -48,13 +48,13 @@
 				}
 			}
 		},
-		
+
 		handleRemove: function(e) {
 			var topic = $(e.target).closest('.topic');
 			this.removeSelection(topic.data('article-title'));
 			topic.remove();
 		},
-		
+
 		getTopics: function() {
 			var topics = [];
 			for(var selection in this.selectedEntries) {
@@ -62,7 +62,7 @@
 			}
 			return topics;
 		},
-		
+
 		handleKeypress: function(e) {
 			var code = e.keyCode || e.which,
 				query = this.input.val();
@@ -78,7 +78,7 @@
 				this.input.val('');
 			}
 		},
-		
+
 		getSuggestions: function(q) {
 			var d = $.Deferred();
 			$.ajax({
@@ -96,20 +96,21 @@
 					d.resolve(response.suggestions);
 				}
 			});
-			
+
 			return d.promise();
 		},
 
-		checkTopic: function(q) {
+		checkTopic: function(title) {
 			var d = $.Deferred();
-			$.nirvana.sendRequest({
-				controller: 'WallNotificationsController',
-				method: 'checkTopic',
-				format: 'json',
-				data: { query: q },
-				callback: function(response) {
-					d.resolve(response.exists);
-				}
+			mw.loader.using('mediawiki.api', function() {
+				(new mw.Api()).get({
+					action: 'query',
+					titles: title,
+					prop: 'info'
+				}).done(function (res) {
+					var exists = !res.query.pages['-1'];
+					d.resolve(exists);
+				});
 			});
 			return d.promise();
 		}
@@ -147,9 +148,9 @@
 					}
 				}
 			});
-			
+
 			messageTopicContainer.data('messageTopic', messageTopic);
-			
+
 			return messageTopic;
 		});
 	};

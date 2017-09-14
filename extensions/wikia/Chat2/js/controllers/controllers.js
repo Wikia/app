@@ -13,13 +13,17 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 	socket: false,
 	constructor: function (roomId) {
 		NodeChatSocketWrapper.superclass.constructor.apply(this, arguments);
-		this.sessionData = null;
 		this.roomId = roomId;
-		this.serverId = WIKIA_NODE_INSTANCE;
+		this.wikiId = window.wgCityId;
+	},
+
+	log: function(msg, group) {
+		group = group || 'chat';
+		window.Wikia.log(msg, window.Wikia.log.levels.info, group);
 	},
 
 	send: function ($msg) {
-		$().log($msg, 'message');
+		this.log('Sending a message: ' + $msg);
 		if (this.socket) {
 			this.socket.emit('message', $msg);
 		}
@@ -27,9 +31,8 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 
 	connect: function () {
 		// Global vars from env
-		var url = 'http://' + WIKIA_NODE_HOST + ':' + WIKIA_NODE_PORT;
-		$().log(url, 'Chat server');
-		console.log("connecting to url: " + url);
+		var url = 'http://' + window.wgChatHost + ':' + window.wgChatPort;
+		this.log('Connecting to chat server: ' + url + ' ...');
 
 		if (this.socket) {
 			if (this.socket.connected) {
@@ -41,68 +44,69 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 			}
 		}
 		this.authRequestWithMW(function (data) {
-			var socket = io.connect(url, {
-				'force new connection': true,
-				'try multiple transports': true,
-				'connect timeout': false,
-				'query': data,
-				'max reconnection attempts': 8,
-				'reconnect': true
-			});
+			this.log('Authenticating using MediaWiki: ' + data);
 
+			var socket = io.connect(url, {
+					'force new connection': true,
+					'try multiple transports': true,
+					'connect timeout': false,
+					'query': data,
+					'max reconnection attempts': 8,
+					'reconnect': true
+				});
+
+			// set up socket events
+			// @see https://socket.io/docs/server-api/#event-disconnect
 			socket.on('message', this.proxy(this.onMsgReceived, this));
+
 			socket.on('connect', this.proxy(function () {
-				this.onConnect(socket, ['xhr-polling']);
+				this.log('Connected to Chat server at ' + url);
+				this.onConnect(socket);
 			}, this));
 
-			var connectionFail = this.proxy(function (delay, count) {
-				if (count == 8) {
-					if (socket) {
-						socket.disconnect();
-					}
-					this.fire("reConnectFail", {});
-				}
-			}, this);
+			// SUS-2245: when re-connections limit is reached reload the page.
+			socket.on('reconnecting', this.proxy(function (attemptNumber) {
+				this.log('reconnecting: attempt #' + attemptNumber);
 
-			socket.on('reconnecting', connectionFail);
+				if (attemptNumber > window.wgChatReconnectMaxTries) {
+					this.log('reconnect_attempt: limit reached, reload the page');
+					window.location.reload();
+				}
+			}, this));
+
+			socket.on('error', this.proxy(function (err) {
+				this.log('socket.onerror: ' + err + ' - ' + err.code);
+			}, this));
 		});
 	},
 
-	onConnect: function (socket, transport) {
+	onConnect: function (socket) {
 		this.socket = socket;
 
 		if (!this.firstConnected) {
 			var InitqueryCommand = new models.InitqueryCommand();
 			setTimeout($.proxy(function () {
+				this.log('Sending "initquery" command...');
 				this.socket.send(InitqueryCommand.xport());
 			}, this), 500);
 		}
-
-		$().log("connected.");
 	},
 
 	authRequestWithMW: function (callback) {
-		//hacky fix of fb#19714
-		//it seems socket.io decodes it -- that's why I double encoded it
-		//but maybe we should implement here authorization via user id instead of username?
-		var encodedWgUserName = encodeURIComponent(encodeURIComponent(wgUserName));
-		this.checkSession = function (data) {
-			$().log(encodedWgUserName);
-
-		};
-
-		this.proxy(callback, this)('name=' + encodedWgUserName + '&key=' + wgChatKey + '&roomId=' + this.roomId + '&serverId=' + this.serverId);
+		this.proxy(callback, this)('name=' + encodeURIComponent(wgUserName) + '&key=' + window.wgChatKey + '&roomId=' + this.roomId + '&serverId=' + this.wikiId );
 	},
 
 
 	forceReconnect: function () {
-		NodeChatSocketWrapper.sessionData = null;
 		this.socket.disconnectSync();
 		this.socket = null;
 		this.connect();
 	},
 
 	onMsgReceived: function (message) {
+		this.log('Message received: ' + message.event);
+		this.log(message);
+
 		switch (message.event) {
 			case 'disableReconnect':
 				this.autoReconnect = false;
@@ -111,17 +115,12 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 				this.forceReconnect();
 				break;
 			case 'initial':
-				this.firstConnected = true; //we are 100% sure about conenction
-			default:
-				if (this.firstConnected) {
-					this.fire(message.event, message);
-				}
+				this.firstConnected = true;	//we are 100% sure about conenction
 				break;
 		}
-	},
-
-	getAllowedEvents: function () {
-		return ['updateUser', 'initial', 'chat:add', 'join', 'part', 'kick', 'logout'];
+		if (this.firstConnected) {
+			this.fire(message.event, message);
+		}
 	}
 });
 
@@ -172,6 +171,7 @@ var NodeRoomController = $.createClass(Observable, {
 
 		this.socket.bind('join', $.proxy(this.onJoin, this));
 		this.socket.bind('initial', $.proxy(this.onInitial, this));
+		this.socket.bind('meta', $.proxy(this.onMeta, this));
 		this.socket.bind('chat:add', $.proxy(this.onChatAdd, this));
 
 		this.socket.bind('reConnectFail', $.proxy(this.onReConnectFail, this));
@@ -179,7 +179,10 @@ var NodeRoomController = $.createClass(Observable, {
 		this.socket.bind('kick', $.proxy(this.onKick, this));
 		this.socket.bind('ban', $.proxy(this.onBan, this));
 
+		this.socket.bind('longMessage', $.proxy(this.onLongMessage, this));
+
 		this.socket.bind('logout', $.proxy(this.onLogout, this));
+		this.socket.bind('freeze', this.onFreeze.bind(this));
 
 		this.viewDiscussion = new NodeChatDiscussion({model: this.model, el: $('body'), roomId: roomId});
 		this.viewDiscussion.bind('clickAnchor', $.proxy(this.clickAnchor, this));
@@ -200,7 +203,38 @@ var NodeRoomController = $.createClass(Observable, {
 		return this.mainController == null;
 	},
 
-	onReConnectFail: function (message) {
+	/**
+	 * Disable the input form for some time if the user exceeded the rate limit and was throttled
+	 * @param message
+	 */
+	onFreeze: function (message) {
+		var $input = $('#Write textarea');
+
+		if (!$input.prop('disabled')) {
+			var frozenEvent = new models.FrozenEvent(),
+				freezeDuration;
+
+			frozenEvent.mport(message.data);
+			freezeDuration = frozenEvent.get('freezeDuration');
+
+			$input.prop('disabled', true);
+			$input.val('');
+			$input.attr('placeholder', mw.message('chat-user-throttled', freezeDuration / 1000).text());
+
+			setTimeout(this.onFreezeFinish.bind(this, $input), freezeDuration);
+		}
+	},
+
+	/**
+	 * Reenable the input field after the throttle time expired
+	 * @param $input
+	 */
+	onFreezeFinish: function ($input) {
+		$input.prop('disabled', false);
+		$input.removeAttr('placeholder');
+	},
+
+	onReConnectFail: function () {
 		var chatEntry = new models.InlineAlert({text: mw.message('chat-user-permanently-disconnected').escaped()});
 		this.model.chats.add(chatEntry);
 	},
@@ -217,7 +251,7 @@ var NodeRoomController = $.createClass(Observable, {
 			this.model.mport(message.data);
 
 			this.isInitialized = true;
-			$().log(this.isInitialized, "isInitialized");
+			$().log("onInitial", "chat:controllers");
 			if (this.isMain()) {
 				var newChatEntry = new models.InlineAlert({text: mw.message('chat-welcome-message', wgSiteName).escaped()});
 				this.model.chats.add(newChatEntry);
@@ -240,6 +274,7 @@ var NodeRoomController = $.createClass(Observable, {
 
 			// TODO: update the entire userlist (if the server went down or something, you're not going to get "part" messages for the users who are gone).
 			// See BugzId 6107 for more info & partially completed code.
+			// https://wikia-inc.atlassian.net/browse/SUS-450
 		}
 
 		for (var i in this.afterInitQueue) {
@@ -247,6 +282,14 @@ var NodeRoomController = $.createClass(Observable, {
 		}
 
 		this.afterInitQueue = [];
+	},
+
+	// log server information useful when debugging
+	onMeta: function (message) {
+		var meta = message['data'];
+
+		// e.g. chat:meta:  Connected to dev-macbre running chat@0.10.3
+		this.socket.log('Connected to ' + meta['serverHostname'] + ' running chat@' + meta['serverVersion'], 'chat:meta');
 	},
 
 	setActive: function (status) {
@@ -290,7 +333,7 @@ var NodeRoomController = $.createClass(Observable, {
 					if (!this.isInitialized) {
 						this.afterInitQueue.push(chatEntry.xport());
 						//temp chat entry in case of slow connection time
-						chatEntry.set({temp: true, avatarSrc: wgAvatarUrl});
+						chatEntry.set({temp: true, avatarSrc: wgChatMyAvatarUrl});
 						this.model.chats.add(chatEntry);
 					} else {
 						this.socket.send(chatEntry.xport());
@@ -401,6 +444,13 @@ var NodeRoomController = $.createClass(Observable, {
 		}), 10000);
 	},
 
+	onLongMessage: function (message) {
+		if (message.user === wgUserName) {
+			var newChatEntry = new models.InlineAlert({text: mw.message('chat-message-was-too-long').escaped()});
+			this.model.chats.add(newChatEntry);
+		}
+	},
+
 	onKick: function (message) {
 		var kickEvent = new models.KickEvent();
 		kickEvent.mport(message.data);
@@ -465,7 +515,9 @@ var NodeRoomController = $.createClass(Observable, {
 	},
 
 	onPartBase: function (partedUser, skipAlert) {
-		if (typeof partedUser !== 'string') partedUser = partedUser.get('name');
+		if (typeof partedUser !== 'string') {
+			partedUser = partedUser.get('name');
+		}
 
 		var connectedUser = this.model.users.findByName(partedUser);
 
@@ -539,8 +591,6 @@ var NodeChatController = $.createClass(NodeRoomController, {
 		this.viewUsers.bind('showPrivateMessage', $.proxy(this.privateMessage, this));
 		this.viewUsers.bind('kick', $.proxy(this.kick, this));
 		this.viewUsers.bind('ban', $.proxy(this.ban, this));
-		this.viewUsers.bind('giveChatMod', $.proxy(this.giveChatMod, this));
-
 
 		this.viewUsers.bind('blockPrivateMessage', $.proxy(this.blockPrivate, this));
 		this.viewUsers.bind('allowPrivateMessage', $.proxy(this.allowPrivate, this));
@@ -608,16 +658,12 @@ var NodeChatController = $.createClass(NodeRoomController, {
 			actions.regular.push('private-allow');
 		}
 
-		if (this.userMain.get('isCanGiveChatMod') === true && user.get('isModerator') === false) {
-			actions.admin.push('give-chat-mod');
-		}
-
 		if (this.userMain.get('isModerator') === true && user.get('isModerator') === false) {
 			actions.admin.push('kick');
 			actions.admin.push('ban');
 		}
 
-		if (this.userMain.get('isCanGiveChatMod') === true && user.get('isStaff') == false && $.inArray('kick', actions.admin) == -1) {
+		if (this.userMain.get('canPromoteModerator') === true && user.get('isStaff') == false && $.inArray('kick', actions.admin) == -1) {
 			actions.admin.push('kick');
 			actions.admin.push('ban');
 		}
@@ -640,7 +686,7 @@ var NodeChatController = $.createClass(NodeRoomController, {
 	},
 
 	showRoom: function (roomId) {
-		$().log(roomId);
+		$().log(roomId, 'chat:showRoom');
 		if (this.activeRoom == roomId) {
 			return false;
 		}
@@ -686,7 +732,8 @@ var NodeChatController = $.createClass(NodeRoomController, {
 			type: 'POST',
 			url: wgScript + '?action=ajax&rs=ChatAjax&method=getPrivateRoomID',
 			data: {
-				users: JSON.stringify(users)
+				users: JSON.stringify(users),
+				token: mw.user.tokens.get('editToken')
 			},
 			success: $.proxy(function (data) {
 				$().log("Attempting create private room with users " + users.join(','));
@@ -750,12 +797,15 @@ var NodeChatController = $.createClass(NodeRoomController, {
 			}
 
 			if (typeof(privateUser) != "undefined") {
-				this.chats.privates[privateUser.get('roomId')].model.room.set({
+				var privateRoom = this.chats.privates[privateUser.get('roomId')];
+				privateRoom.model.room.set({
 					'hidden': false
 				});
+				this.setActive(false);
+				privateRoom.setActive(true);
 
 				var newChatEntry = new models.InlineAlert({text: mw.message('chat-user-allow', wgUserName, privateUser.get('name')).escaped()});
-				this.chats.privates[privateUser.get('roomId')].socket.send(newChatEntry.xport());
+				privateRoom.socket.send(newChatEntry.xport());
 			}
 		}, this));
 
@@ -843,14 +893,6 @@ var NodeChatController = $.createClass(NodeRoomController, {
 		}
 	},
 
-	giveChatMod: function (user) {
-		$().log("Attempting to give chat mod to user: " + user.name);
-		var giveChatModCommand = new models.GiveChatModCommand({userToPromote: user.name});
-		this.socket.send(giveChatModCommand.xport());
-
-		this.viewUsers.hideMenu();
-	},
-
 	onUpdateUser: function (message) {
 		var updatedUser = new models.User();
 		updatedUser.mport(message.data);
@@ -922,24 +964,23 @@ var NodeChatController = $.createClass(NodeRoomController, {
 			this.model.chats.add(newChatEntry);
 			return true;
 		}
-		$.getMessages('Chat', $.proxy(function () {
-			$.ajax({
-				type: 'POST',
-				url: wgScript + '?action=ajax&rs=ChatAjax&method=getListOfBlockedPrivate',
-				success: $.proxy(function (data) {
-					for (var i in data.blockedChatUsers) {
-						var userClear = new models.User({'name': data.blockedChatUsers[i]});
-						this.model.blockedUsers.add(userClear);
-					}
 
-					for (var i in data.blockedByChatUsers) {
-						var userClear = new models.User({'name': data.blockedByChatUsers[i]});
-						this.model.blockedByUsers.add(userClear);
-					}
-					this.socket.connect();
-				}, this)
-			});
-		}, this));
+		$.ajax({
+			type: 'POST',
+			url: wgScript + '?action=ajax&rs=ChatAjax&method=getPrivateBlocks',
+			success: $.proxy(function (data) {
+				for (var i in data.blockedChatUsers) {
+					var userClear = new models.User({'name': data.blockedChatUsers[i]});
+					this.model.blockedUsers.add(userClear);
+				}
+
+				for (var i in data.blockedByChatUsers) {
+					var userClear = new models.User({'name': data.blockedByChatUsers[i]});
+					this.model.blockedByUsers.add(userClear);
+				}
+				this.socket.connect();
+			}, this)
+		});
 
 		/*
 		 * we cannot bind to unload, cos it's too late for sending the command - the socket is already closed...
@@ -955,8 +996,8 @@ var NodeChatController = $.createClass(NodeRoomController, {
 // Bootstrap the app
 //
 $(function () {
-	if (typeof roomId !== "undefined") {
-		window.mainRoom = new NodeChatController(roomId);
+	if (typeof window.wgChatRoomId !== "undefined") {
+		window.mainRoom = new NodeChatController(window.wgChatRoomId);
 		window.mainRoom.init();
 	}
 });

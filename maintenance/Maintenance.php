@@ -119,6 +119,8 @@ abstract class Maintenance {
 	 */
 	protected static $mCoreScripts = null;
 
+	private $runtimeStatistics = [];
+
 	/**
 	 * Default constructor. Children should call this *first* if implementing
 	 * their own constructors
@@ -1096,12 +1098,8 @@ abstract class Maintenance {
 	 *
 	 * @return DatabaseBase
 	 */
-	protected function &getDB( $db, $groups = array(), $wiki = false ) {
-		if ( is_null( $this->mDb ) ) {
-			return wfGetDB( $db, $groups, $wiki );
-		} else {
-			return $this->mDb;
-		}
+	protected function getDB( $db, $groups = array(), $wiki = false ) {
+		return $this->mDb ?? wfGetDB( $db, $groups, $wiki );
 	}
 
 	/**
@@ -1279,6 +1277,13 @@ abstract class Maintenance {
 		}
 		print $prompt;
 		return fgets( STDIN, 1024 );
+	}
+
+	public function addRuntimeStatistics( array $runtimeStatistics ) {
+		$this->runtimeStatistics = array_merge($this->runtimeStatistics, $runtimeStatistics );
+	}
+	public function getRuntimeStatistics() {
+		return $this->runtimeStatistics;
 	}
 }
 

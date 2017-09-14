@@ -10,15 +10,11 @@ describe('ext.wikia.adEngine.provider.gpt.adElement', function () {
 			[300, 600]
 		],
 		mocks = {
-			adSizeConverter: {
-				convert: function () {
-					return adSizes;
-				}
-			},
 			adSizeFilter: {
-				filter: function (slotName, sizes) {
-					return sizes;
-				}
+				filter: noop
+			},
+			adSizeConverter: {
+				toArray: noop
 			},
 			log: noop
 		},
@@ -27,10 +23,10 @@ describe('ext.wikia.adEngine.provider.gpt.adElement', function () {
 
 	beforeEach(function () {
 		AdElement = modules['ext.wikia.adEngine.provider.gpt.adElement'](
-			document,
-			mocks.log,
 			mocks.adSizeConverter,
-			mocks.adSizeFilter
+			mocks.adSizeFilter,
+			document,
+			mocks.log
 		);
 		slot = {
 			setTargeting: noop
@@ -60,6 +56,7 @@ describe('ext.wikia.adEngine.provider.gpt.adElement', function () {
 	});
 
 	it('Set sizes and add as json to attribute', function () {
+		spyOn(mocks.adSizeFilter, 'filter').and.returnValue(adSizes);
 		slotTargeting.size = '300x250,300x600';
 
 		var element = new AdElement('TOP_RIGHT_BOXAD', '/ELEMENT_SLOTPATH', slotTargeting);
@@ -68,15 +65,21 @@ describe('ext.wikia.adEngine.provider.gpt.adElement', function () {
 		expect(element.getNode().getAttribute('data-gpt-slot-sizes')).toEqual('[[300,250],[300,600]]');
 	});
 
+	it('Set out-of-page type in attribute', function () {
+		var element = new AdElement('TOP_RIGHT_BOXAD', '/ELEMENT_SLOTPATH', slotTargeting);
+
+		expect(element.getNode().getAttribute('data-gpt-slot-type')).toEqual('out-of-page');
+	});
+
 	it('Set page level params as json on attribute', function () {
 		var element = new AdElement('TOP_RIGHT_BOXAD', '/ELEMENT_SLOTPATH', slotTargeting);
 
 		element.setPageLevelParams({
-			pageParam1: 'value1',
-			pageParam2: 'value2'
+			param1: 'val1',
+			param2: 'val2'
 		});
 
-		expect(element.getNode().getAttribute('data-gpt-page-params')).toEqual('{"pageParam1":"value1","pageParam2":"value2"}');
+		expect(element.getNode().getAttribute('data-gpt-page-params')).toEqual('{"param1":"val1","param2":"val2"}');
 	});
 
 	it('Set slot level params on slot object and add as json to attribute', function () {

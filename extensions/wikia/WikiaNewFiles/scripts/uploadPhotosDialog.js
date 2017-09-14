@@ -6,7 +6,7 @@ var UploadPhotos = {
 	status: false,
 	libinit: false,
 	init: function() {
-		$(".mw-special-Images").on('click', '.upphotos', $.proxy(this.loginBeforeShowDialog, this));
+		$('#page-header-add-new-photo').on('click', $.proxy(this.loginBeforeShowDialog, this));
 		if (Wikia.Querystring().getVal('modal') === 'UploadImage') {
 			this.loginBeforeShowDialog();
 		}
@@ -14,16 +14,14 @@ var UploadPhotos = {
 	loginBeforeShowDialog: function(evt) {
 		var UserLoginModal = window.UserLoginModal;
 		if (( wgUserName == null ) && ( !UserLogin.forceLoggedIn )) {
-			require(['AuthModal'], function (authModal) {
-				authModal.load({
-					url: '/signin?redirect=' + encodeURIComponent(window.location.href),
-					origin: 'latest-photos',
-					onAuthSuccess: $.proxy(function() {
-						UserLogin.forceLoggedIn = true;
-						this.showDialog(evt);
-					}, this)
-				});
-			}.bind(this));
+			window.wikiaAuthModal.load({
+				forceLogin: true,
+				origin: 'latest-photos',
+				onAuthSuccess: $.proxy(function() {
+					UserLogin.forceLoggedIn = true;
+					this.showDialog(evt);
+				}, this)
+			});
 		}
 		else {
 			this.showDialog(evt);

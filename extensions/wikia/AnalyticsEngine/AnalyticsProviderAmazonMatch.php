@@ -1,14 +1,14 @@
 <?php
 
+// TODO ADEN-5756 Remove AmazonMatch after A9 full rollout
 class AnalyticsProviderAmazonMatch implements iAnalyticsProvider {
 
 	public static function isEnabled() {
-		global $wgEnableAmazonMatch, $wgShowAds, $wgAdDriverUseSevenOneMedia;
+		global $wgEnableAmazonMatch, $wgShowAds;
 
-		return ( $wgEnableAmazonMatch )
+		return $wgEnableAmazonMatch
 			&& $wgShowAds
-			&& AdEngine2Service::areAdsShowableOnPage()
-			&& !$wgAdDriverUseSevenOneMedia;
+			&& AdEngine2Service::areAdsShowableOnPage();
 	}
 
 	private function getIntegrationScript( $moduleName, $instantGlobalName ) {
@@ -21,9 +21,10 @@ class AnalyticsProviderAmazonMatch implements iAnalyticsProvider {
 		"wikia.instantGlobals",
 		require.optional($moduleName),
 	], function (geo, globals, amazon) {
-		var ac = globals[$instantGlobalName];
+		var ac = globals[$instantGlobalName],
+			dc = globals.wgAdDriverA9BidderCountries;
 
-		if (geo.isProperGeo(ac)) {
+		if (geo.isProperGeo(ac) && !geo.isProperGeo(dc)) {
 			amazon.call();
 		}
 	});

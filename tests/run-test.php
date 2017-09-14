@@ -23,7 +23,7 @@ if (extension_loaded('xdebug')) {
 }
 
 if ( !isset( $params['slow-list'] ) ) {
-	PHPUnit_TextUI_Command::main();
+	\PHPUnit\TextUI\Command::main();
 } else {
 	include_once( 'SlowTestsFinder.php' );
 	SlowTestsFinder::main();

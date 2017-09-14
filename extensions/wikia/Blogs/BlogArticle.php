@@ -14,7 +14,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 class BlogArticle extends Article {
 
 	// Used when constructing memcached keys.  Up the version when the format of the data changes
-	const CACHE_VERSION = 3;
+	const CACHE_VERSION = 4;
 
 	// Cache results for an hour
 	const CACHE_TTL = 3600;
@@ -348,74 +348,6 @@ class BlogArticle extends Article {
 	}
 
 	/**
-	 * static methods used in Hooks
-	 */
-	static public function getOtherSection( &$catView, &$output ) {
-		wfProfileIn( __METHOD__ );
-
-		/* @var $catView CategoryViewer */
-		if ( !isset( $catView->blogs ) ) {
-			wfProfileOut( __METHOD__ );
-			return true;
-		}
-		$ti = htmlspecialchars( $catView->title->getText() );
-		$r = '';
-		$cat = $catView->getCat();
-
-		$dbcnt = self::blogsInCategory( $cat );
-		$rescnt = count( $catView->blogs );
-		$countmsg = self::getCountMessage( $catView, $rescnt, $dbcnt, 'article' );
-
-		if ( $rescnt > 0 ) {
-			$r = "<div id=\"mw-pages\">\n";
-			$r .= '<h2>' . wfMsg( "blog-header", $ti ) . "</h2>\n";
-			$r .= $countmsg;
-			$r .= $catView->getSectionPagingLinksExt( 'page' );
-			$r .= $catView->formatList( array_values( $catView->blogs ), $catView->blogs_start_char );
-			$r .= $catView->getSectionPagingLinksExt( 'page' );
-			$r .= "\n</div>";
-		}
-		$output = $r;
-
-		wfProfileOut( __METHOD__ );
-		return true;
-	}
-
-	static public function blogsInCategory( $cat ) {
-		global $wgMemc;
-		$titleText = $cat->getTitle()->getDBkey();
-		$memKey = self::getCountKey( $titleText );
-
-		$count = $wgMemc->get( $memKey );
-
-		if ( empty( $count ) ) {
-			$dbr = wfGetDB( DB_SLAVE );
-			$res = $dbr->select(
-				array( 'page', 'categorylinks' ),
-				'count(*) as count',
-				array(
-					'page_id = cl_from',
-					'page_namespace' => array( NS_BLOG_ARTICLE, NS_BLOG_LISTING ),
-					'cl_to' => $titleText,
-				),
-				__METHOD__
-			);
-
-			$count = 0;
-			if ( $res->numRows() > 0 ) {
-				while ( $row = $res->fetchObject() ) {
-					$count = $row->count;
-				}
-				$dbr->freeResult( $res );
-			}
-
-			$wgMemc->set( $memKey, $count );
-		}
-
-		return $count;
-	}
-
-	/**
 	 * Hook - AfterCategoriesUpdate
 	 */
 	static public function clearCountCache( $categoryInserts, $categoryDeletes, $title ) {
@@ -438,93 +370,6 @@ class BlogArticle extends Article {
 
 	static public function getCountKey( $catName ) {
 		return wfMemcKey( 'blog', 'category', 'count', $catName );
-	}
-
-	/**
-	 * static method to get number of pages in category
-	 *
-	 * @param $catView
-	 * @param $rescnt
-	 * @param $dbcnt
-	 * @param $type
-	 *
-	 * @return String
-	 */
-	static public function getCountMessage( &$catView, $rescnt, $dbcnt, $type ) {
-		global $wgLang;
-		# See CategoryPage->getCountMessage() function
-		$totalrescnt = count( $catView->blogs ) + count( $catView->children ) + ( $catView->showGallery ? $catView->gallery->count() : 0 );
-		if ( $dbcnt == $rescnt || ( ( $totalrescnt == $catView->limit || $catView->from || $catView->until ) && $dbcnt > $rescnt ) ) {
-			# Case 1: seems sane.
-			$totalcnt = $dbcnt;
-		} elseif ( $totalrescnt < $catView->limit && !$catView->from && !$catView->until ) {
-			# Case 2: not sane, but salvageable.
-			$totalcnt = $rescnt;
-		} else {
-			# Case 3: hopeless.  Don't give a total count at all.
-			return wfMsgExt( "blog-subheader", 'parse', $wgLang->formatNum( $rescnt ) );
-		}
-		return wfMsgExt( "blog-subheader-all", 'parse', $wgLang->formatNum( $rescnt ), $wgLang->formatNum( $totalcnt ) );
-	}
-
-	/**
-	 * Hook
-	 *
-	 * @param $catView
-	 * @param Title $title
-	 * @param $row
-	 * @param $sortkey
-	 *
-	 * @return bool
-	 * @internal param $CategoryViewer
-	 */
-	static public function addCategoryPage( &$catView, &$title, &$row, $sortkey ) {
-		if ( in_array( $row->page_namespace, array( NS_BLOG_ARTICLE, NS_BLOG_LISTING ) ) ) {
-			/**
-			 * initialize CategoryView->blogs array
-			 */
-			if ( !isset( $catView->blogs ) ) {
-				$catView->blogs = array();
-			}
-
-			// If request comes from wikiamobile or from MercuryApi return not-parsed output
-			if ( !empty( $catView->isJSON ) ) {
-				$catView->blogs[] = [
-					'name' => $title->getText(),
-					'url' => $title->getLocalUrl(),
-				];
-
-				return false;
-			}
-
-			/**
-			 * initialize CategoryView->blogs_start_char array
-			 */
-			if ( !isset( $catView->blogs_start_char ) ) {
-				$catView->blogs_start_char = array();
-			}
-
-			// remove user blog:foo from displayed titles (requested by Angie)
-			// "User blog:Homersimpson89/Best Simpsons episode..." -> "Best Simpsons episode..."
-			$text = $title->getSubpageText();
-			$userName = $title->getBaseText();
-			$link = $catView->getSkin()->link( $title, $userName . " - " . $text );
-
-			$catView->blogs[] = $row->page_is_redirect
-				? '<span class="redirect-in-category">' . $link . '</span>'
-				: $link;
-
-			// The blog entries should be sorted on the category page
-			// just like other pages
-			$catView->blogs_start_char[] = $catView->collation->getFirstLetter( $sortkey );
-
-			/**
-			 * when we return false it won't be displayed as normal category but
-			 * in "other" categories
-			 */
-			return false;
-		}
-		return true;
 	}
 
 	/**
@@ -584,21 +429,20 @@ class BlogArticle extends Article {
 	/**
 	 * write additinonal checkboxes on editpage
 	 *
-	 * @param $EditPage
-	 * @param $checkboxes
-	 *
+	 * @param EditPage $editPage
+	 * @param array $checkboxes
 	 * @return bool
+	 * @internal param $EditPage
 	 */
-	static public function editPageCheckboxes( &$EditPage, &$checkboxes ) {
-		if ( $EditPage->mTitle->getNamespace() != NS_BLOG_ARTICLE ) {
+	static public function editPageCheckboxes( EditPage $editPage, array &$checkboxes ): bool {
+		if ( $editPage->mTitle->getNamespace() != NS_BLOG_ARTICLE ) {
 			return true;
 		}
 		wfProfileIn( __METHOD__ );
-		Wikia::log( __METHOD__ );
 
 		$output = array();
-		if ( $EditPage->mTitle->mArticleID ) {
-			$props = self::getProps( $EditPage->mTitle->mArticleID );
+		if ( $editPage->mTitle->mArticleID ) {
+			$props = self::getProps( $editPage->mTitle->mArticleID );
 			$output["voting"] = Xml::checkLabel(
 				wfMsg( "blog-voting-label" ),
 				"wpVoting",
@@ -620,11 +464,11 @@ class BlogArticle extends Article {
 	/**
 	 * store properties for updated article
 	 *
-	 * @param $LinksUpdate
+	 * @param LinksUpdate $LinksUpdate
 	 *
 	 * @return bool
 	 */
-	static public function linksUpdate( &$LinksUpdate ) {
+	static public function linksUpdate( LinksUpdate $LinksUpdate ): bool {
 
 		$namespace = $LinksUpdate->mTitle->getNamespace();
 		if ( !in_array( $namespace, array( NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK ) ) ) {
@@ -734,7 +578,7 @@ class BlogArticle extends Article {
 		$results = [];
 
 		// VOLDEV-96: Do not credit edits to localhost
-		$wikiaUser = User::newFromName( 'Wikia' );
+		$wikiaUser = User::newFromName( Wikia::USER );
 
 		/**
 		 * create Blog:Recent posts page if not exists

@@ -1047,5 +1047,5 @@ table.floatleft {
 /* For developpers */
 .xdebug-error {
 	position: absolute;
-	z-index: 99;
+	z-index: 99999999; /* Wikia change */
 }

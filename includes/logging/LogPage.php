@@ -27,7 +27,6 @@
  * Class to simplify the use of log pages.
  * The logs are now kept in a table which is easier to manage and trim
  * than ever-growing wiki pages.
- *
  */
 class LogPage {
 	const DELETED_ACTION = 1;
@@ -37,21 +36,20 @@ class LogPage {
 	// Convenience fields
 	const SUPPRESSED_USER = 12;
 	const SUPPRESSED_ACTION = 9;
-	/* @access private */
-	var $type, $action, $comment, $params;
+
+	private $type, $action, $comment, $params;
 
 	/**
 	 * @var User
 	 */
-	var $doer;
+	private $doer;
 
 	/**
 	 * @var Title
 	 */
-	var $target;
+	private $target;
 
-	/* @acess public */
-	var $updateRecentChanges, $sendToUDP;
+	private $updateRecentChanges, $sendToUDP;
 
 	/**
 	 * Constructor
@@ -61,10 +59,28 @@ class LogPage {
 	 * @param $rc Boolean: whether to update recent changes as well as the logging table
 	 * @param $udp String: pass 'UDP' to send to the UDP feed if NOT sent to RC
 	 */
-	public function __construct( $type, $rc = true, $udp = 'skipUDP' ) {
+	public function __construct( $type = '', $rc = true, $udp = 'skipUDP' ) {
 		$this->type = $type;
 		$this->updateRecentChanges = $rc;
 		$this->sendToUDP = ( $udp == 'UDP' );
+	}
+
+	/**
+	 * Wikia change
+	 * Set the type of this log page
+	 * @param string $type one of '', 'block', 'protect', 'rights', 'delete', 'upload', 'move'
+	 */
+	public function setType( string $type ) {
+		$this->type = $type;
+	}
+
+	/**
+	 * Wikia change
+	 * Set if this log entry should show in Recent Changes
+	 * @param bool $updateRecentChanges
+	 */
+	public function setUpdateRecentChanges( bool $updateRecentChanges ) {
+		$this->updateRecentChanges = $updateRecentChanges;
 	}
 
 	/**
@@ -433,11 +449,11 @@ class LogPage {
 	/**
 	 * Add a log entry
 	 *
-	 * @param $action String: one of '', 'block', 'protect', 'rights', 'delete', 'upload', 'move', 'move_redir'
-	 * @param $target Title object
-	 * @param $comment String: description associated
-	 * @param $params Array: parameters passed later to wfMsg.* functions
-	 * @param $doer User object: the user doing the action
+	 * @param String $action One of '', 'block', 'protect', 'rights', 'delete', 'upload', 'move', 'move_redir'
+	 * @param Title $target
+	 * @param String $comment Description associated
+	 * @param array $params Parameters passed later to wfMsg.* functions
+	 * @param int|User $doer The user doing the action
 	 *
 	 * @return bool|int|null
 	 * @TODO: make this use LogEntry::saveContent()
@@ -453,7 +469,7 @@ class LogPage {
 			$comment = '';
 		}
 
-		# Truncate for whole multibyte characters.
+		# Truncate for whole multi-byte characters.
 		$comment = $wgContLang->truncate( $comment, 255 );
 
 		$this->action = $action;
@@ -542,18 +558,24 @@ class LogPage {
 	 * Convert a comma-delimited list of block log flags
 	 * into a more readable (and translated) form
 	 *
-	 * @param $flags Flags to format
+	 * @param $flags string Flags to format
 	 * @param $lang Language object to use
-	 * @return String
+	 * @return string
 	 */
-	public static function formatBlockFlags( $flags, $lang ) {
-		$flags = explode( ',', trim( $flags ) );
+	public static function formatBlockFlags( string $flags, Language $lang ): string {
+		$flags = str_getcsv( trim( $flags ) );
 
-		if( count( $flags ) > 0 ) {
-			for( $i = 0; $i < count( $flags ); $i++ ) {
-				$flags[$i] = self::formatBlockFlag( $flags[$i], $lang );
+		foreach ( $flags as $key => $flag ) {
+			// SUS-1528: Exclude legacy "account creation disabled" flag which may be set for old blocks
+			if ( $flag == 'nocreate' ) {
+				unset( $flags[$key] );
+			} else {
+				$flags[$key] = self::formatBlockFlag( $flag, $lang );
 			}
-			return '(' . $lang->commaList( $flags ) . ')';
+		}
+
+		if ( !empty( $flags ) ) {
+			return wfMessage( 'parentheses' )->inLanguage( $lang )->rawParams( $flags )->escaped();
 		} else {
 			return '';
 		}
@@ -562,7 +584,7 @@ class LogPage {
 	/**
 	 * Translate a block log flag if possible
 	 *
-	 * @param $flag int Flag to translate
+	 * @param $flag string Flag to translate
 	 * @param $lang Language object to use
 	 * @return String
 	 */
@@ -577,7 +599,6 @@ class LogPage {
 			// * block-log-flags-anononly
 			// * block-log-flags-hiddenname
 			// * block-log-flags-noautoblock
-			// * block-log-flags-nocreate
 			// * block-log-flags-noemail
 			// * block-log-flags-nousertalk
 			$msg = wfMessage( 'block-log-flags-' . $flag )->inLanguage( $lang );

@@ -49,6 +49,10 @@ class ApiUndelete extends ApiBase {
 			$this->dieUsageMsg( array( 'invalidtitle', $params['title'] ) );
 		}
 
+		if ( !$titleObj->userCan( 'undelete', $this->getUser(), true ) ) {
+			$this->dieUsageMsg( 'permdenied-undelete' );
+		}
+
 		// Convert timestamps
 		if ( !isset( $params['timestamps'] ) ) {
 			$params['timestamps'] = array();
@@ -67,7 +71,7 @@ class ApiUndelete extends ApiBase {
 		}
 
 		if ( $retval[1] ) {
-			wfRunHooks( 'FileUndeleteComplete',
+			Hooks::run( 'FileUndeleteComplete',
 				array( $titleObj, array(), $this->getUser(), $params['reason'] ) );
 		}
 

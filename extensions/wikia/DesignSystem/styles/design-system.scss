@@ -1,0 +1,92 @@
+// Importing CSS has to be done via absolute url - because SASS parser doesn't accept relative path for css files
+@import '/extensions/wikia/DesignSystem/bower_components/design-system/dist/css/styles.css';
+@import '../bower_components/design-system/dist/scss/wds-variables/index';
+@import 'skins/oasis/css/core/breakpoints-variables';
+
+// Legacy notification styles - copied here from original GlobalNavigation extension
+@import 'GlobalNavigationNotifications';
+
+// Platform-specific styles for DesignSystem integration
+$global-navigation-z-index: 5000101;
+
+.wds-hidden-svg {
+	height: 0;
+	overflow: hidden;
+	position: absolute;
+	width: 0;
+}
+
+.wds-global-navigation-wrapper {
+	height: $wds-global-navigation-height;
+}
+
+.wds-global-navigation {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: $global-navigation-z-index;
+
+	&.bfaa-pinned {
+		position: relative;
+	}
+
+	&.headroom--unpinned {
+		box-shadow: none;
+	}
+
+	a:hover {
+		text-decoration: none;
+	}
+
+	button,
+	button:focus,
+	button:hover,
+	button:active {
+		background-image: none;
+		border-radius: 0;
+		height: auto;
+	}
+
+	button:focus:disabled,
+	button:hover:disabled,
+	button:active:disabled {
+		background-color: $wds-color-link;
+	}
+
+	.notifications-container .bubbles {
+		background: none;
+		min-width: 0;
+		padding: 0;
+		position: static;
+		right: 0;
+		top: auto;
+	}
+
+	.ve & {
+		position: absolute;
+		z-index: $global-navigation-z-index - 1;
+	}
+
+	&__search-suggestions {
+		strong {
+			font-weight: bold;
+		}
+
+		a {
+			cursor: pointer;
+		}
+	}
+}
+
+.wds-global-footer {
+	position: relative;
+	z-index: 2;
+}
+
+@if $widthType == 0 {
+	@media #{$screen} and (max-width: #{$content-width-small}) {
+		.wds-global-footer {
+			width: $content-width-small;
+		}
+	}
+}

@@ -37,7 +37,7 @@ class SpecialController extends \WikiaSpecialPageController {
 	private function setTitle() {
 		$this->getContext()->getOutput()->setHTMLTitle( self::PAGE_TITLE );
 		$this->getContext()->getOutput()->setPageTitle( self::PAGE_TITLE );
-		$this->wg->SupressPageSubtitle = true;
+		$this->wg->SuppressPageSubtitle = true;
 	}
 
 	private function addAssets() {
@@ -80,15 +80,13 @@ class SpecialController extends \WikiaSpecialPageController {
 	}
 
 	private function getPagination( $total, $page, $order ) {
-		$pagination = '';
-		if ( $total > self::ITEMS_PER_PAGE ) {
-			$pages = \Paginator::newFromArray( array_fill( 0, $total, '' ), self::ITEMS_PER_PAGE );
-			$pages->setActivePage( $page - 1 );
+		$url = \SpecialPage::getTitleFor( 'UserActivity' )->escapeLocalUrl( [
+			'order' => $order
+		]);
 
-			$linkToSpecialPage = \SpecialPage::getTitleFor( 'UserActivity' )->escapeLocalUrl();
-			$pagination = $pages->getBarHTML( $linkToSpecialPage.'?page=%s&order='.$order );
-		}
+		$pages = new \Wikia\Paginator\Paginator( $total, self::ITEMS_PER_PAGE, $url );
+		$pages->setActivePage( $page );
 
-		return $pagination;
+		return $pages->getBarHTML();
 	}
 }

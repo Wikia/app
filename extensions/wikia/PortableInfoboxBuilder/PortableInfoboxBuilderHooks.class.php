@@ -8,7 +8,7 @@ class PortableInfoboxBuilderHooks {
 	 *
 	 * @return true
 	 */
-	public function onTCAfterEditPageAssets() {
+	public static function onTCAfterEditPageAssets() {
 		\Wikia::addAssetsToOutput( 'portable_infobox_builder_template_classification_helper_js' );
 
 		return true;
@@ -65,7 +65,9 @@ class PortableInfoboxBuilderHooks {
 
 		if ( $wgEnableVisualEditorExt && \VisualEditorHooks::isAvailable( \RequestContext::getMain()->getSkin() ) ) {
 			$aVars['wgEnablePortableInfoboxBuilderInVE'] = $wgEnablePortableInfoboxBuilderInVE &&
-				\RequestContext::getMain()->getUser()->isAllowed( 'createpage' );
+				// user needs permissions to create template when using infobox builder, we check those on dummy template
+				Title::newFromText( 'PortableInfoboxBuilderHooks::onMakeGlobalVariablesScript:dummy.template', NS_TEMPLATE )
+					->userCan( 'createpage' );
 		}
 
 		return true;
@@ -98,7 +100,7 @@ class PortableInfoboxBuilderHooks {
 	 * @param $context
 	 * @return bool
 	 */
-	protected function shouldPassInfoboxBuilderVars( $context ) {
+	protected static function shouldPassInfoboxBuilderVars( $context ) {
 		return ( new \Wikia\TemplateClassification\Permissions() )->shouldDisplayEntryPoint( $context->getUser(), $context->getTitle() )
 			&& \RequestContext::getMain()->getRequest()->getVal( 'action' ) === 'edit'
 			&& !\PortableInfoboxBuilderHelper::isForcedSourceMode( $context->getRequest() );

@@ -13,8 +13,12 @@ class HtmlHelper {
 	public static function createDOMDocumentFromText( $html ) {
 		$error_setting = libxml_use_internal_errors( true );
 		$document = new DOMDocument();
-		//encode for correct load
-		$document->loadHTML( mb_convert_encoding( $html, 'HTML-ENTITIES', 'UTF-8' ) );
+
+		if ( !empty( $html ) ) {
+			//encode for correct load
+			$document->loadHTML( mb_convert_encoding( $html, 'HTML-ENTITIES', 'UTF-8' ) );
+		}
+
 		// clear user generated html parsing errors
 		libxml_clear_errors();
 		libxml_use_internal_errors( $error_setting );
@@ -66,6 +70,23 @@ class HtmlHelper {
 		}
 
 		return $output;
+	}
+
+	/**
+	 * Removes wrapping node
+	 * eg.: "<div><p>test</p> <a>more test</a></div>" -> "<p>test</p> <a>more test</a>"
+	 *
+	 * @param DOMNode $node
+	 * @return DOMNode removed node
+	 */
+	public static function unwrapNode( DOMNode $node ) {
+		$previousNode = $node;
+		$currentLastChild = $node->lastChild;
+		while ( $currentLastChild !== null ) {
+			$previousNode = $node->parentNode->insertBefore( $currentLastChild, $previousNode );
+			$currentLastChild = $node->lastChild;
+		}
+		return HtmlHelper::removeNode( $node );
 	}
 
 	/**

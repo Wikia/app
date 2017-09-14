@@ -37,11 +37,14 @@ class Module {
 	 *
 	 * @param $captchaClass
 	 * @throws \Exception
+	 * @return bool true if valid
 	 */
 	public static function verifyCaptchaClass( $captchaClass ) {
 		if ( $captchaClass != self::DEFAULT_CAPTCHA && $captchaClass != self::FALLBACK_CAPTCHA ) {
 			throw new \Exception( "Invalid Captcha class: " . $captchaClass );
 		}
+
+		return true;
 	}
 
 	/**

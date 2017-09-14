@@ -1,6 +1,12 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+use Wikia\Service\Helios\ClientException;
+use Wikia\Service\User\Auth\AuthServiceAccessor;
+
 class ExternalUser_Wikia extends ExternalUser {
+	use AuthServiceAccessor;
+
 	static private $recentlyUpdated = array();
 	private $mRow, $mDb, $mUser;
 	private $lastAuthenticationError;
@@ -149,16 +155,6 @@ class ExternalUser_Wikia extends ExternalUser {
 		return $this->mRow->user_real_name;
 	}
 
-	public function getPassword() {
-		wfDebug( __METHOD__ . ": " . $this->mRow->user_password . " \n" );
-		return $this->mRow->user_password;
-	}
-
-	public function getNewPassword() {
-		wfDebug( __METHOD__ . ": " . $this->mRow->user_newpassword . " \n" );
-		return $this->mRow->user_newpassword;
-	}
-
 	public function getOptions() {
 		wfDebug( __METHOD__ . ": " . $this->mRow->user_options . " \n" );
 		return $this->mRow->user_options;
@@ -184,11 +180,6 @@ class ExternalUser_Wikia extends ExternalUser {
 		return $this->mRow->user_registration;
 	}
 
-	public function getNewpassTime() {
-		wfDebug( __METHOD__ . ": " . $this->mRow->user_newpass_time . " \n" );
-		return $this->mRow->user_newpass_time;
-	}
-
 	public function getEditCount() {
 		wfDebug( __METHOD__ . ": " . $this->mRow->user_editcount . " \n" );
 		return $this->mRow->user_editcount;
@@ -204,20 +195,16 @@ class ExternalUser_Wikia extends ExternalUser {
 	}
 
 	public function authenticate( $password ) {
-		$this->lastAuthenticationError = null;
-
-		$result = null;
-		$errorMessageKey = null;
-
-		wfRunHooks( 'UserCheckPassword', [ $this->getId(), $this->getName(), $this->getPassword(), $password, &$result, &$errorMessageKey ] );
-		if ( $result === null ) {
-			$result = User::comparePasswords( $this->getPassword(), $password, $this->getId() );
-		}
-		if ( $errorMessageKey ) {
-			$this->lastAuthenticationError = $errorMessageKey;
-		}
-
-		return $result;
+		// All authentication should now go through Helios
+		Wikia\Logger\WikiaLogger::instance()->error(
+			'Unsupported ExternalUser_Wikia::authenticate called',
+			[
+				'user_id' => $this->getId(),
+				'caller' => wfGetCaller(),
+				'exception' => new Exception()
+			]
+		);
+		return false;
 	}
 
 	public function getPref( $pref ) {
@@ -258,8 +245,6 @@ class ExternalUser_Wikia extends ExternalUser {
                         'user_id' => null,
                         'user_name' => $User->mName,
                         'user_real_name' => $realname,
-                        'user_password' => $User->mPassword,
-                        'user_newpassword' => '',
                         'user_email' => $email,
                         'user_touched' => '',
                         'user_token' => '',
@@ -281,8 +266,6 @@ class ExternalUser_Wikia extends ExternalUser {
             $User->saveSettings();
 
 			$dbw->commit( __METHOD__ );
-
-			wfRunHooks( 'ExternalUserAddUserToDatabaseComplete', [ &$User ] );
 
 			\Wikia\Logger\WikiaLogger::instance()->info(
 				'HELIOS_REGISTRATION_INSERTS',
@@ -429,9 +412,6 @@ class ExternalUser_Wikia extends ExternalUser {
 				'`user`',
 				array( /* SET */
 					'user_name' => $this->mUser->mName,
-					'user_password' => $this->mUser->mPassword,
-					'user_newpassword' => $this->mUser->mNewpassword,
-					'user_newpass_time' => $dbw->timestampOrNull( $this->mUser->mNewpassTime ),
 					'user_real_name' => $this->mUser->mRealName,
 					'user_email' => $this->mUser->mEmail,
 					'user_email_authenticated' => $dbw->timestampOrNull( $this->mUser->mEmailAuthenticated ),

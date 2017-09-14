@@ -8,7 +8,7 @@
 
 class DefaultThumbnail {
 
-	public static function isExist( DatabaseMysql $db, $verbose = false, $dryRun = false, $params = array() ) {
+	public static function isExist( DatabaseBase $db, $verbose = false, $dryRun = false, $params = array() ) {
 		echo "Wiki: $params[dbname] (ID:$params[cityId])\n";
 
 		if ( !$db->tableExists( 'image' ) ) {

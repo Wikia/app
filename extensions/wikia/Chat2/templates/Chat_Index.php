@@ -21,8 +21,8 @@
 		<script src="<?php echo $src ?>"></script>
 	<?php endforeach; ?>
 
-	<!-- temporary hack -->
-	<script src="<?= AssetsManager::getInstance()->getOneCommonURL( '/extensions/wikia/Chat2/js/lib/socket.io-1.3.5.js' ); ?>"></script>
+	<!-- temporary hack (who are you kidding?) -->
+	<script src="<?= AssetsManager::getInstance()->getOneCommonURL( '/extensions/wikia/Chat2/js/lib/socket.io-2.0.3.js' ); ?>"></script>
 	<?= $globalVariablesScript ?>
 	<?php // TODO: use js var?>
 
@@ -33,7 +33,7 @@
 		<h1 class="public wordmark">
 			<a href="<?= $mainPageURL ?>">
 			<? if ( $themeSettings['wordmark-type'] == 'graphic' ) { ?>
-			<img width="<?= ChatController::CHAT_WORDMARK_WIDTH ?>" height="<?= ChatController::CHAT_WORDMARK_HEIGHT ?>" src="<?= $wordmarkThumbnailUrl ?>">
+			<img height="<?= ChatController::CHAT_WORDMARK_HEIGHT ?>" src="<?= $wordmarkThumbnailUrl ?>">
 			<? } else { ?>
 			<span class="font-<?= $themeSettings['wordmark-font']?>"><?= $themeSettings['wordmark-text'] ?></span>
 			<? } ?>
@@ -49,18 +49,19 @@
 			<h1 class="public wordmark selected">
 				<img src="<?= $wg->BlankImgUrl ?>" class="chevron">
 				<? if ( $themeSettings['wordmark-type'] == 'graphic' ) { ?>
-				<img width="<?= ChatController::CHAT_WORDMARK_WIDTH ?>" height="<?= ChatController::CHAT_WORDMARK_HEIGHT ?>" src="<?= $wordmarkThumbnailUrl ?>" class="wordmark">
+				<img height="<?= ChatController::CHAT_WORDMARK_HEIGHT ?>" src="<?= $wordmarkThumbnailUrl ?>" class="wordmark">
 				<? } else { ?>
 				<span class="font-<?= $themeSettings['wordmark-font']?>"><?= $themeSettings['wordmark-text'] ?></span>
 				<? } ?>
 				<span id="MsgCount_<?php echo $roomId ?>" class="splotch">0</span>
 			</h1>
 			<ul id="WikiChatList" class="WikiChatList"></ul>
-			<h1 class="private"><?= wfMsg( 'chat-private-messages' ) ?></h1>
+			<h1 class="private"><?= wfMessage( 'chat-private-messages' )->escaped() ?></h1>
 			<ul id="PrivateChatList" class="PrivateChatList"></ul>
 		</div>
 
 		<form id="Write" class="Write" onsubmit="return false">
+			<div class="limit-reached-msg"><?= wfMessage( 'chat-message-was-too-long' ) ?></div>
 			<div class="remaining"></div>
 			<img width="<?= ChatController::CHAT_AVATAR_DIMENSION ?>" height="<?= ChatController::CHAT_AVATAR_DIMENSION ?>" src="<?= $avatarUrl ?>">
 			<div class="message">
@@ -91,9 +92,27 @@
 	</script>
 	<script type='text/template' id='user-template'>
 		<img src="<%= avatarSrc %>"/>
-		<span class="username"><%= name %></span>
+		<span class="username">
+			<%= name %>
+			<span class="badge">
+				<% if(groups.indexOf('staff') !== -1) { %>
+					<?= DesignSystemHelper::renderSvg('wds-avatar-badges-staff'); ?>
+				<% } else if (groups.indexOf('sysop') !== -1) { %>
+					<?= DesignSystemHelper::renderSvg('wds-avatar-badges-admin'); ?>
+				<% } else if (
+					groups.indexOf('chatmoderator') !== -1 ||
+					groups.indexOf('threadmoderator') !== -1
+				) { %>
+					<?= DesignSystemHelper::renderSvg('wds-avatar-badges-discussion-moderator'); ?>
+				<% } else if (groups.indexOf('helper') !== -1) { %>
+					<?= DesignSystemHelper::renderSvg('wds-avatar-badges-helper', 'wds-icon wds-icon-small'); ?>
+				<% } else if (groups.indexOf('vstf') !== -1) { %>
+					<?= DesignSystemHelper::renderSvg('wds-avatar-badges-vstf', 'wds-icon wds-icon-small'); ?>
+				<% } %>
+			</span>
+		</span>
 		<div class="details">
-			<span class="status"><?= wfMsg( 'chat-status-away' ); ?></span>
+			<span class="status"><?= wfMessage( 'chat-status-away' )->escaped(); ?></span>
 		</div>
 		<% if(isPrivate) { %>
 			<span id="MsgCount_<%= roomId %>" class="splotch">0</span>
@@ -103,29 +122,62 @@
 				<img src="<%= avatarSrc %>"/>
 				<ul>
 					<li class="username"><%= name %></li>
-					<li class="edits"><?= wfMsg( 'chat-edit-count', "<%= editCount %>" ) ?></li>
+					<li class="edits"><%= editCount %></li>
 					<% if (since) { %>
-						<li class="since"><?= wfMsg( 'chat-member-since', "<%= since %>" ) ?></li>
+						<li class="since"><%= since %></li>
 					<% } %>
 				</ul>
 			</div>
 			<div class="actions"></div>
 		</div>
 	</script>
-	<script type='text/template' id='user-action-template'>
+	<script type='text/template' id='user-action-profile-template'>
 		<li class="<%= actionName %>">
-			<a href="<%= actionUrl %>">
-				<span class="icon">&nbsp;</span>
+			<a href="<%= actionUrl %>" target="_blank">
+				<?= DesignSystemHelper::renderSvg( 'wds-icons-reply-small', 'wds-icon wds-icon-small' ) ?>
 				<span class="label"><%= actionDesc %></span>
 			</a>
 		</li>
 	</script>
-	<script type='text/template' id='user-action-template-no-url'>
+	<script type='text/template' id='user-action-contribs-template'>
 		<li class="<%= actionName %>">
-			<span class="icon">&nbsp;</span>
+			<a href="<%= actionUrl %>" target="_blank">
+				<?= DesignSystemHelper::renderSvg( 'wds-icons-pencil-small', 'wds-icon wds-icon-small' ) ?>
+				<span class="label"><%= actionDesc %></span>
+			</a>
+		</li>
+	</script>
+	<script type='text/template' id='user-action-private-template'>
+		<li class="<%= actionName %>">
+			<?= DesignSystemHelper::renderSvg( 'wds-icons-user', 'wds-icon wds-icon-small' ) ?>
 			<span class="label"><%= actionDesc %></span>
 		</li>
 	</script>
+	<script type='text/template' id='user-action-kick-template'>
+		<li class="<%= actionName %>">
+			<?= DesignSystemHelper::renderSvg( 'wds-icons-alert-small', 'wds-icon wds-icon-small' ) ?>
+			<span class="label"><%= actionDesc %></span>
+		</li>
+	</script>
+	<script type='text/template' id='user-action-ban-template'>
+		<li class="<%= actionName %>">
+			<?= DesignSystemHelper::renderSvg( 'wds-icons-lock-small', 'wds-icon wds-icon-small' ) ?>
+			<span class="label"><%= actionDesc %></span>
+		</li>
+	</script>
+	<script type='text/template' id='user-action-private-block-template'>
+		<li class="<%= actionName %>">
+			<?= DesignSystemHelper::renderSvg( 'wds-icons-cross', 'wds-icon wds-icon-small' ) ?>
+			<span class="label"><%= actionDesc %></span>
+		</li>
+	</script>
+	<script type='text/template' id='user-action-private-allow-template'>
+		<li class="<%= actionName %>">
+			<?= DesignSystemHelper::renderSvg( 'wds-icons-checkmark-circle', 'wds-icon wds-icon-small' ) ?>
+			<span class="label"><%= actionDesc %></span>
+		</li>
+	</script>
+
 	<!-- Load these after the DOM is built -->
 	<?php
 		$srcs = AssetsManager::getInstance()->getGroupCommonURL( 'chat_js2', array() );
@@ -133,7 +185,6 @@
 	<?php foreach ( $srcs as $src ): ?>
 		<script src="<?php echo $src ?>"></script>
 	<?php endforeach; ?>
-	<script src="<?php echo $jsMessagePackagesUrl ?>"></script>
 	<script type="text/javascript" src="/load.php?lang=en&mode=articles&articles=MediaWiki%3AChat.js%7CUser%3A<?php echo $wg->User->getName(); ?>%2Fchat.js&only=scripts"></script>
 </body>
 </html>

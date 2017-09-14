@@ -126,4 +126,8 @@ class DomHelper {
 		return trim( $text );
 	}
 
+	public static function cleanDescendantHeaderInternalCache() {
+		self::$hasDescendantHeaderInternalCache = [];
+	}
+
 }

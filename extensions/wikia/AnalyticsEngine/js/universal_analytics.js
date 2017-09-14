@@ -45,7 +45,47 @@
 		window.ga = function () {};
 	}
 
-	var cookieExists, isProductionEnv, blockingTracked = false;
+	var cookieExists,
+		isProductionEnv,
+		blockingTracked = {
+			sourcePoint: false,
+			pageFair: false
+		},
+		GASettings = {
+			sourcePoint: {
+				trackName: 'sourcePoint',
+				name: 'sourcepoint',
+				dimension: 6
+			},
+			pageFair: {
+				trackName: 'pageFair',
+				dimension: 7,
+				name: 'pagefair'
+			}
+		},
+		listenerSettings = [
+			{
+				eventName: 'sp.blocking',
+				value: true,
+				detectorSettings: GASettings.sourcePoint
+			},
+			{
+				eventName: 'sp.not_blocking',
+				value: false,
+				detectorSettings: GASettings.sourcePoint
+			},
+			{
+				eventName: 'pf.blocking',
+				value: true,
+				detectorSettings: GASettings.pageFair
+			},
+			{
+				eventName: 'pf.not_blocking',
+				value: false,
+				detectorSettings: GASettings.pageFair
+			}
+		];
+
 	/**
 	 * Main Tracker
 	 *
@@ -63,7 +103,7 @@
 		window.ga(
 			'create', 'UA-32129070-1', 'auto',
 			{
-				'sampleRate': (cookieExists('qualaroo_survey_submission') ? 100 : 10),
+				'sampleRate': 100,
 				'allowLinker': true,
 				'userId': window.wgGAUserIdHash
 
@@ -74,7 +114,7 @@
 		window.ga(
 			'create', 'UA-32129070-2', 'auto',
 			{
-				'sampleRate': (cookieExists('qualaroo_survey_submission') ? 100 : 10),
+				'sampleRate': 100,
 				'allowLinker': true,
 				'userId': window.wgGAUserIdHash
 			}
@@ -224,6 +264,22 @@
 		return rating;
 	}
 
+	function hasPortableInfobox() {
+		if (window.ads && window.ads.context.targeting.hasPortableInfobox) {
+			return 'Yes';
+		}
+
+		return 'No';
+	}
+
+	function hasFeaturedVideo() {
+		if (window.ads && window.ads.context.targeting.hasFeaturedVideo) {
+			return 'Yes';
+		}
+
+		return 'No';
+	}
+
 	function getKruxSegment() {
 		var kruxSegment = 'not set',
 			uniqueKruxSegments = {
@@ -253,15 +309,16 @@
 		return kruxSegment;
 	}
 
-	function trackBlocking(value) {
-		if (blockingTracked) {
+	function trackBlocking(detectorSettings, isBlocked) {
+		var value = isBlocked ? 'Yes' : 'No';
+		if (blockingTracked[detectorSettings.trackName]) {
 			return;
 		}
-		blockingTracked = true;
-		_gaWikiaPush(['set', 'dimension6', value]);
-		window.ga('ads.set', 'dimension6', value);
-		guaTrackAdEvent('ad/sourcepoint/detection', value, '', 0, true);
-		guaTrackEvent('ads-sourcepoint-detection', 'impression', value, 0, true);
+		blockingTracked[detectorSettings.trackName] = true;
+		_gaWikiaPush(['set', 'dimension' + detectorSettings.dimension, value]);
+		window.ga('ads.set', 'dimension' + detectorSettings.dimension, value);
+		guaTrackAdEvent('ad/' + detectorSettings.name + '/detection', value, '', 0, true);
+		guaTrackEvent('ads-' + detectorSettings.name + '-detection', 'impression', value, 0, true);
 	}
 
 	/**** High-Priority Custom Dimensions ****/
@@ -273,57 +330,26 @@
 		['set', 'dimension5', !!window.wgUserName ? 'user' : 'anon']  // LoginStatus
 	);
 
-	/*
-	 * Remove when SOC-217 ABTest is finished
-	 */
-	/**
-	 * Get unconfirmed email AbTest user type
-	 * @returns {string}
-	 */
-	function getUnconfirmedEmailUserType() {
-		if (!window.wgUserName) {
-			return 'anon';
-		} else {
-			switch (window.wgNotConfirmedEmail) {
-				case '1':
-					return 'unconfirmed';
-				case '2':
-					return 'confirmed';
-				default:
-					return 'old user';
-			}
-		}
-	}
-	/*
-	 * end remove
-	 */
-
 	/**** Medium-Priority Custom Dimensions ****/
 	_gaWikiaPush(
-		['set', 'dimension8', window.wikiaPageType],                            // PageType
-		['set', 'dimension9', window.wgCityId],                                 // CityId
-		['set', 'dimension13', getEsrbRating()],                                // ESRB rating
-		['set', 'dimension14', window.wgGaHasAds ? 'Yes' : 'No'],               // HasAds
-		['set', 'dimension15', window.wikiaPageIsCorporate ? 'Yes' : 'No'],     // IsCorporatePage
-		['set', 'dimension16', getKruxSegment()],                               // Krux Segment
-		['set', 'dimension17', window.wgWikiVertical],                          // Vertical
-		['set', 'dimension18', window.wgWikiCategories.join(',')],              // Categories
-		['set', 'dimension19', window.wgArticleType],                           // ArticleType
-		['set', 'dimension20', window.wgABPerformanceTest || 'not set'],        // Performance A/B testing
-		['set', 'dimension21', String(window.wgArticleId)],                     // ArticleId
-		['set', 'dimension23', window.wikiaIsPowerUserFrequent ? 'Yes' : 'No'], // IsPowerUser: Frequent
-		['set', 'dimension24', window.wikiaIsPowerUserLifetime ? 'Yes' : 'No'], // IsPowerUser: Lifetime
-		['set', 'dimension25', String(window.wgNamespaceNumber)],               // Namespace Number
-		['set', 'dimension26', String(window.wgSeoTestingBucket || 0)]          // SEO Testing bucket
+		['set', 'dimension8', window.wikiaPageType],                                // PageType
+		['set', 'dimension9', window.wgCityId],                                     // CityId
+		['set', 'dimension13', getEsrbRating()],                                    // ESRB rating
+		['set', 'dimension14', window.wgGaHasAds ? 'Yes' : 'No'],                   // HasAds
+		['set', 'dimension15', window.wikiaPageIsCorporate ? 'Yes' : 'No'],         // IsCorporatePage
+		['set', 'dimension16', getKruxSegment()],                                   // Krux Segment
+		['set', 'dimension17', window.wgWikiVertical],                              // Vertical
+		['set', 'dimension18', window.wgWikiCategories.join(',')],                  // Categories
+		['set', 'dimension19', window.wgArticleType],                               // ArticleType
+		['set', 'dimension20', 'not set'],                                          // Performance A/B testing (Not used any more)
+		['set', 'dimension21', String(window.wgArticleId)],                         // ArticleId
+		['set', 'dimension23', window.wikiaIsPowerUserFrequent ? 'Yes' : 'No'],     // IsPowerUser: Frequent
+		['set', 'dimension24', window.wikiaIsPowerUserLifetime ? 'Yes' : 'No'],     // IsPowerUser: Lifetime
+		['set', 'dimension25', String(window.wgNamespaceNumber)],                   // Namespace Number
+		['set', 'dimension27', String(window.wgCanonicalSpecialPageName || '')],    // Special page canonical name (SUS-1465)
+		['set', 'dimension28', hasPortableInfobox()],                               // If there is Portable Infobox on the page (ADEN-4708)
+		['set', 'dimension29', hasFeaturedVideo()]                                  // If there is Featured Video on the page (ADEN-5420)
 	);
-
-	/*
-	 * Remove when SOC-217 ABTest is finished
-	 */
-	_gaWikiaPush(['set', 'dimension39', getUnconfirmedEmailUserType()]);      // UnconfirmedEmailUserType
-	/*
-	 * end remove
-	 */
 
 	/**
 	 * Checks if Optimizely object and its crucial data attributes are available
@@ -413,13 +439,10 @@
 	_gaWikiaPush(['send', 'pageview']);
 
 	if (window.ads && window.ads.context.opts.showAds) {
-		document.addEventListener('sp.blocking', function () {
-			window.ads.runtime.sp.blocking = true;
-			trackBlocking('Yes');
-		});
-		document.addEventListener('sp.not_blocking', function () {
-			window.ads.runtime.sp.blocking = false;
-			trackBlocking('No');
+		listenerSettings.map(function (listenerSetting) {
+			document.addEventListener(listenerSetting.eventName, function () {
+				trackBlocking(listenerSetting.detectorSettings, listenerSetting.value);
+			});
 		});
 	}
 
@@ -471,12 +494,14 @@
 	window.ga('ads.set', 'dimension17', window.wgWikiVertical);                          // Vertical
 	window.ga('ads.set', 'dimension18', window.wgWikiCategories.join(','));              // Categories
 	window.ga('ads.set', 'dimension19', window.wgArticleType);                           // ArticleType
-	window.ga('ads.set', 'dimension21', String(window.wgArticleId));                     // ArticleId
+	window.ga('ads.set', 'dimension20', 'not set');                                      // Performance A/B testing (not used any more)
 	window.ga('ads.set', 'dimension21', String(window.wgArticleId));                     // ArticleId
 	window.ga('ads.set', 'dimension23', window.wikiaIsPowerUserFrequent ? 'Yes' : 'No'); // IsPowerUser: Frequent
 	window.ga('ads.set', 'dimension24', window.wikiaIsPowerUserLifetime ? 'Yes' : 'No'); // IsPowerUser: Lifetime
 	window.ga('ads.set', 'dimension25', String(window.wgNamespaceNumber));               // Namespace Number
-	window.ga('ads.set', 'dimension26', String(window.wgSeoTestingBucket || 0));         // SEO Testing bucket
+	window.ga('ads.set', 'dimension27', String(window.wgCanonicalSpecialPageName || '')); // Special page canonical name (SUS-1465)
+	window.ga('ads.set', 'dimension28', hasPortableInfobox());                            // If there is Portable Infobox on the page (ADEN-4708)
+	window.ga('ads.set', 'dimension29', hasFeaturedVideo());                              // If there is Featured Video on the page (ADEN-5420)
 
 	/**** Include A/B testing status ****/
 	if (window.Wikia && window.Wikia.AbTest) {
@@ -553,5 +578,15 @@
 		var nsPrefix = (opt_namespace) ? opt_namespace + '.' : '';
 		_gaWikiaPush([nsPrefix + 'send', 'pageview', fakePage]);
 	};
+
+	/**
+	 * Set Custom Dimension
+	 *
+	 * @param {number|string} index
+	 * @param {string} value
+	 */
+	window.guaSetCustomDimension = function (index, value) {
+		_gaWikiaPush(['set', 'dimension' + index, value]);
+	}
 
 }(window));

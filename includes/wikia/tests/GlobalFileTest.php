@@ -14,13 +14,12 @@ class GlobalFileTest extends WikiaBaseTest {
 	const DEFAULT_CB = 123456789;
 	const TIMESTAMP = '20111213221639';
 
-	public function setUp() {
+	protected function setUp() {
 		parent::setUp();
 
 		// assume we're in production environment
 		$this->mockGlobalVariable('wgDevelEnvironment', false);
 		$this->mockGlobalVariable('wgDevBoxImageServerOverride', false);
-		$this->mockGlobalVariable('wgEnableVignette', false);
 
 		$this->mockGlobalVariable('wgImagesDomainSharding', 'images%s.wikia.nocookie.net');
 		$this->mockGlobalVariable('wgCdnStylePath', sprintf('http://slot1.images.wikia.nocookie.net/__cb%s/common', self::DEFAULT_CB));
@@ -60,7 +59,7 @@ class GlobalFileTest extends WikiaBaseTest {
 		$this->assertEquals($url, $file->getUrl());
 
 		if ($file->exists()) {
-			$this->assertContains("/{$path}/images/thumb/0/06/Gzik.jpg/{$crop}", $file->getCrop(200, 200));
+			$this->assertContains("/window-crop/width/200/", $file->getCrop(200, 200));
 		}
 
 		// metadata
@@ -123,7 +122,7 @@ class GlobalFileTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider testNewFromTextDbNameMatchProvider
+	 * @dataProvider newFromTextDbNameMatchProvider
 	 * @group UsingDB
 	 */
 	public function testNewFromTextDbNameMatch($row, $cityId) {
@@ -154,7 +153,7 @@ class GlobalFileTest extends WikiaBaseTest {
 		$this->assertFalse( $file3->exists() );
 	}
 
-	public function testNewFromTextDbNameMatchProvider() {
+	public function newFromTextDbNameMatchProvider() {
 		return [
 			[
 				'row' => (object) [

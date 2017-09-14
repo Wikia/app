@@ -83,20 +83,20 @@ class ReCaptcha extends BaseCaptcha {
 	 */
 	public function getMessage( $action ) {
 		// Possible keys for easy grepping: recaptcha-edit, recaptcha-addurl, recaptcha-createaccount, recaptcha-create
-		$name = 'recaptcha-' . $action;
+		$name = 'captcha-recaptcha-' . $action;
 		$text = wfMessage( $name )->escaped();
 
 		// Obtain a more tailored message, if possible, otherwise, fall back to the default for edits
-		$msg = wfMessage( $name )->isBlank() ? wfMessage( 'recaptcha-edit' )->escaped() : $text;
+		$msg = wfMessage( $name )->isBlank() ? wfMessage( 'captcha-recaptcha-edit' )->escaped() : $text;
 
 		return $msg;
 	}
 
-	public function APIGetAllowedParams( &$module, &$params ) {
+	public function APIGetAllowedParams( \ApiBase $module, &$params ): bool {
 		return true;
 	}
 
-	public function APIGetParamDescription( &$module, &$desc ) {
+	public function APIGetParamDescription( \ApiBase $module, &$desc ): bool {
 		return true;
 	}
 }

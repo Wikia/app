@@ -84,15 +84,13 @@
 			return;
 		} else if (window.wgUserName === null && !window.UserLogin.forceLoggedIn) {
 			// handle login on article page
-			require(['AuthModal'], function (authModal) {
-				authModal.load({
-					url: '/signin?redirect=' + encodeURIComponent(window.location.href),
-					origin: 'vet',
-					onAuthSuccess: function () {
-						window.UserLogin.forceLoggedIn = true;
-						vetLoader.load(options);
-					}
-				});
+			window.wikiaAuthModal.load({
+				forceLogin: true,
+				origin: 'vet',
+				onAuthSuccess: function () {
+					window.UserLogin.forceLoggedIn = true;
+					vetLoader.load(options);
+				}
 			});
 			$elem.stopThrobbing();
 			return;

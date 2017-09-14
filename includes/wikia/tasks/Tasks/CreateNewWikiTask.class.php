@@ -12,9 +12,6 @@ namespace Wikia\Tasks\Tasks;
 use Wikia\Util\GlobalStateWrapper;
 
 class CreateNewWikiTask extends BaseTask {
-	const
-		DEFAULT_USER = 'Default',
-		WIKIA_USER = 'Wikia';
 
 	/** @var \User */
 	private $founder;
@@ -80,9 +77,7 @@ class CreateNewWikiTask extends BaseTask {
 
 		$hookParams = [ 'title' => $params['sitename'], 'url' => $params['url'], 'city_id' => $params['city_id'] ];
 
-		if ( empty( $params['disableCompleteHook'] ) ) {
-			wfRunHooks( 'CreateWikiLocalJob-complete', array( $hookParams ) );
-		}
+		\Hooks::run( 'CreateWikiLocalJob-complete', [ $hookParams ] );
 
 		return true;
 	}
@@ -155,7 +150,7 @@ class CreateNewWikiTask extends BaseTask {
 					'target' => $targetTitle->getPrefixedText(),
 				];
 				if ( $sourceTitle->getPrefixedText() !== $targetTitle->getPrefixedText() ) {
-					$wikiaUser = \User::newFromName( self::WIKIA_USER );
+					$wikiaUser = \User::newFromName( \Wikia::USER );
 					$wrapper = new GlobalStateWrapper( [
 						'wgUser' => $wikiaUser
 					] );
@@ -227,7 +222,7 @@ class CreateNewWikiTask extends BaseTask {
 	 */
 	private function changeStarterContributions( $params ) {
 		$dbw = wfGetDB( DB_MASTER );
-		$contributor = \User::newFromName( self::DEFAULT_USER );
+		$contributor = \User::newFromName( \Wikia::USER );
 		$lastRevTimestamp = 0;
 
 		/**
@@ -327,9 +322,17 @@ class CreateNewWikiTask extends BaseTask {
 		}
 
 		if ( !empty( $wgEnableWallExt ) ) {
-			$wallMessage = \WallMessage::buildNewMessageAndPost( $talkBody, $this->founder->getName(), $wgUser, $wallTitle,
-				false, array(), true, false );
-			if ( $wallMessage === false ) {
+			try {
+				$wallPage = $this->founder->getTalkPage();
+
+				( new \WallMessageBuilder() )
+					->setMessageAuthor( $wgUser )
+					->setMessageTitle( $wallTitle )
+					->setMessageText( $talkBody )
+					->setParentPageTitle( $wallPage )
+					->build();
+			} catch ( \WallBuilderException $builderException ) {
+				$this->error( $builderException->getMessage(), $builderException->getContext() );
 				return false;
 			}
 
@@ -374,7 +377,7 @@ class CreateNewWikiTask extends BaseTask {
 		global $wgUser, $wgWikiaKeyPages;
 
 		$saveUser = $wgUser;
-		$wgUser = \User::newFromName( self::WIKIA_USER );
+		$wgUser = \User::newFromName( \Wikia::USER );
 
 		if ( empty( $wgWikiaKeyPages ) ) {
 			$wgWikiaKeyPages = array( 'File:Wiki.png', 'File:Favicon.ico' );
@@ -450,6 +453,10 @@ class CreateNewWikiTask extends BaseTask {
 						$scribeProducer = new \ScribeEventProducer( $key, 0 );
 						if ( is_object( $scribeProducer ) ) {
 							if ( $scribeProducer->buildEditPackage( $article, $user, $revision ) ) {
+								// SUS-760 Do not send images images (creations and edits) for review while creating a wiki.
+								if ( $article->getTitle()->inNamespaces( NS_FILE, NS_IMAGE ) ) {
+									$scribeProducer->setIsImageForReview( false );
+								}
 								$scribeProducer->sendLog();
 							}
 						}

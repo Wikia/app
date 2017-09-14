@@ -11,7 +11,7 @@ class TemplateTypesParser {
 	 *
 	 * @return bool
 	 */
-	public static function onFetchTemplateAndTitle( &$text, &$finalTitle ) {
+	public static function onFetchTemplateAndTitle( &$text, Title $finalTitle ) {
 		global $wgEnableReferencesTemplateParsing,
 			   $wgEnableNavboxTemplateParsing,
 			   $wgEnableNoticeTemplateParsing,
@@ -63,8 +63,10 @@ class TemplateTypesParser {
 		global $wgEnableNavigationTemplateParsing;
 		wfProfileIn( __METHOD__ );
 
-		if ( self::shouldTemplateBeParsed() && $wgEnableNavigationTemplateParsing ) {
-			NavigationTemplate::resolve( $html );
+		if ( self::shouldTemplateBeParsed() ) {
+			if ( $wgEnableNavigationTemplateParsing ) {
+				NavigationTemplate::resolve( $html );
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -110,14 +112,21 @@ class TemplateTypesParser {
 	 *
 	 * @param string $templateTitle
 	 * @param string $templateWikitext
+	 * @param Parser $parser
 	 *
 	 * @return bool
 	 */
-	public static function onEndBraceSubstitution( $templateTitle, &$templateWikitext, &$parser ) {
-		global $wgEnableContextLinkTemplateParsing, $wgEnableInfoIconTemplateParsing;
+	public static function onEndBraceSubstitution(
+		$templateTitle, &$templateWikitext, Parser $parser
+	): bool {
+		global $wgEnableContextLinkTemplateParsing, $wgEnableInfoIconTemplateParsing, $wgEnableNavigationTemplateParsing;
 		wfProfileIn( __METHOD__ );
 
-		if ( self::isSuitableForProcessing( $templateWikitext ) ) {
+		if ( self::isSuitableForProcessing( $templateWikitext ) &&
+			 ( $wgEnableContextLinkTemplateParsing ||
+			   $wgEnableInfoIconTemplateParsing ||
+			   $wgEnableNavigationTemplateParsing )
+		) {
 			$title = self::getValidTemplateTitle( $templateTitle );
 
 			if ( $title ) {
@@ -126,6 +135,8 @@ class TemplateTypesParser {
 					$templateWikitext = ContextLinkTemplate::handle( $templateWikitext );
 				} elseif ( $wgEnableInfoIconTemplateParsing && $type == TemplateClassificationService::TEMPLATE_INFOICON ) {
 					$templateWikitext = InfoIconTemplate::handle( $templateWikitext, $parser );
+				} elseif ( $wgEnableNavigationTemplateParsing && $type == TemplateClassificationService::TEMPLATE_NAV ) {
+					$templateWikitext = NavigationTemplate::removeInnerMarks( $templateWikitext );
 				}
 			}
 		}

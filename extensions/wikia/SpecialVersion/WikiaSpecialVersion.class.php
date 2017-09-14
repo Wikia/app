@@ -15,19 +15,10 @@ class WikiaSpecialVersion extends SpecialVersion {
 		if ( file_exists( "$IP/../config" ) ) {
 			return self::getVersionFromDir("$IP/../config");
 		}
-		# transition only, remove when new deploytools are released
-		if ( file_exists("$IP/../docroot" ) ) {
-			return self::getVersionFromDir("$IP/../docroot");
-		}
 	}
 
 	public static function getVersionFromDir($dir) {
 		$filename = $dir . '/wikia.version.txt';
-		if ( file_exists( $filename ) ) {
-			return file_get_contents( $filename );
-		}
-		# transition only, remove when new deploytools are released
-		$filename = $dir . '/VERSION';
 		if ( file_exists( $filename ) ) {
 			return file_get_contents( $filename );
 		}
@@ -40,7 +31,7 @@ class WikiaSpecialVersion extends SpecialVersion {
 	 * @todo use MW 1.20 functionality for Git-based version
 	 */
 	private static function getGitBranch($dir) {
-		return shell_exec("cd $dir ; git branch | grep '*' | perl -pe 's/^\* (\S+).*$/$1/g'");
+		return shell_exec("cd $dir ; git branch 2> /dev/null | grep '*' | perl -pe 's/^\* (\S+).*$/$1/g'");
 	}
 
 	/**
@@ -60,7 +51,7 @@ class WikiaSpecialVersion extends SpecialVersion {
 	    $software[$dbr->getSoftwareLink()] = $dbr->getServerInfo();
 
 	    // Allow a hook to add/remove items.
-	    wfRunHooks( 'SoftwareInfo', array( &$software ) );
+	    Hooks::run( 'SoftwareInfo', array( &$software ) );
 
 		return $software;
 	}

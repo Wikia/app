@@ -49,8 +49,8 @@ OO.inheritClass( ve.ui.WikiaMediaResultsWidget, OO.ui.Widget );
  * @method
  * @param {ve.ui.WikiaMediaOptionWidget} item Item whose state is changing
  */
-ve.ui.WikiaMediaResultsWidget.prototype.onResultsCheck = function ( item ) {
-	this.emit( 'check', item );
+ve.ui.WikiaMediaResultsWidget.prototype.onResultsPreview = function ( item ) {
+	this.emit( 'preview', item );
 };
 
 /**
@@ -100,7 +100,7 @@ ve.ui.WikiaMediaResultsWidget.prototype.addItems = function ( items ) {
 	for ( i = 0; i < items.length; i++ ) {
 		optionWidget = ve.ui.WikiaMediaOptionWidget.newFromData( { $: this.$, size: this.size, data: items[i] } );
 		optionWidget.connect( this, {
-			check: 'onResultsCheck',
+			preview: 'onResultsPreview',
 			metadata: 'onResultsMetadata',
 			label: 'onResultsLabel'
 		} );

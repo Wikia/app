@@ -81,7 +81,7 @@ This gives a huge speed improvement for very large links tables which are MyISAM
 		}
 
 		$res = $dbw->query( "SELECT l_from FROM $links LIMIT 1" );
-		if ( $dbw->fieldType( $res, 0 ) == "int" ) {
+		if ( $dbw->fieldType( $res, 0 ) == MYSQLI_TYPE_LONG ) {
 			$this->output( "Schema already converted\n" );
 			return;
 		}

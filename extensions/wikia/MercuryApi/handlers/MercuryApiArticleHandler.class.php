@@ -5,14 +5,12 @@ class MercuryApiArticleHandler {
 	const NUMBER_CONTRIBUTORS = 5;
 
 	/**
-	 * @param WikiaRequest $request
 	 * @param MercuryApi $mercuryApiModel
 	 * @param Article $article
+	 *
 	 * @return array
 	 */
-	public static function getArticleData( WikiaRequest $request, MercuryApi $mercuryApiModel, Article $article ) {
-		$data['details'] = self::getArticleDetails( $article );
-		$data['article'] = self::getArticleJson( $request, $article );
+	public static function getArticleData( MercuryApi $mercuryApiModel, Article $article ) {
 		$data['topContributors'] = self::getTopContributorsDetails(
 			self::getTopContributorsPerArticle( $mercuryApiModel, $article )
 		);
@@ -29,13 +27,13 @@ class MercuryApiArticleHandler {
 	 * @desc returns article details
 	 *
 	 * @param Article $article
+	 *
 	 * @return mixed
 	 */
 	public static function getArticleDetails( Article $article ) {
 		$articleId = $article->getID();
-		$articleDetails = F::app()
-			->sendRequest( 'ArticlesApi', 'getDetails', [ 'ids' => $articleId ] )
-			->getData()['items'][$articleId];
+		$articleDetails = F::app()->sendRequest( 'ArticlesApi', 'getDetails', [ 'ids' => $articleId ] )->getData(
+			)['items'][$articleId];
 
 		$articleDetails['abstract'] = htmlspecialchars( $articleDetails['abstract'] );
 		$articleDetails['description'] = htmlspecialchars( self::getArticleDescription( $article ) );
@@ -50,6 +48,7 @@ class MercuryApiArticleHandler {
 	 *
 	 * @param Article $article
 	 * @param int $descLength
+	 *
 	 * @return string
 	 * @throws WikiaException
 	 */
@@ -78,6 +77,7 @@ class MercuryApiArticleHandler {
 	 *
 	 * @param WikiaRequest $request
 	 * @param Article $article
+	 *
 	 * @return array
 	 */
 	public static function getArticleJson( WikiaRequest $request, Article $article ) {
@@ -95,24 +95,49 @@ class MercuryApiArticleHandler {
 		)->getData();
 	}
 
+	public static function getFeaturedVideoDetails( Title $title ): array {
+		$featuredVideo = ArticleVideoContext::getFeaturedVideoData( $title->getPrefixedDBkey() );
+
+		if ( !empty( $featuredVideo ) ) {
+			return [
+				'type' => 'video',
+				'context' => 'featured-video',
+				'url' => $featuredVideo['thumbnailUrl'],
+				'provider' => 'ooyala-v4',
+				'embed' => [
+					'provider' => 'ooyala-v4',
+					'jsParams' => [
+						'dfpContentSourceId' => F::app()->wg->AdDriverDfpOoyalaContentSourceId,
+						'videoId' => $featuredVideo['videoId']
+					]
+				],
+				'title' => $featuredVideo['title'],
+				'duration' => $featuredVideo['duration'],
+				'labels' => $featuredVideo['labels']
+			];
+		}
+
+		return [];
+	}
+
 	/**
 	 * @desc returns top contributors user details
 	 *
 	 * @param array $ids
+	 *
 	 * @return mixed
 	 */
 	public static function getTopContributorsDetails( Array $ids ) {
 		if ( empty( $ids ) ) {
-			return [ ];
+			return [];
 		}
 
 		try {
-			return F::app()->sendRequest( 'UserApi', 'getDetails', [ 'ids' => implode( ',', $ids ) ] )
-				->getData()['items'];
+			return F::app()->sendRequest( 'UserApi', 'getDetails', [ 'ids' => implode( ',', $ids ) ] )->getData()['items'];
 		} catch ( NotFoundApiException $e ) {
 			// getDetails throws NotFoundApiException when no contributors are found
 			// and we want the article even if we don't have the contributors
-			return [ ];
+			return [];
 		}
 	}
 
@@ -121,9 +146,10 @@ class MercuryApiArticleHandler {
 	 *
 	 * @param MercuryApi $mercuryApiModel
 	 * @param Article $article
+	 *
 	 * @return int[]
 	 */
-	private static function getTopContributorsPerArticle(MercuryApi $mercuryApiModel, Article $article) {
+	private static function getTopContributorsPerArticle( MercuryApi $mercuryApiModel, Article $article ) {
 		return $mercuryApiModel->topContributorsPerArticle(
 			$article->getID(),
 			self::NUMBER_CONTRIBUTORS
@@ -135,6 +161,7 @@ class MercuryApiArticleHandler {
 	 *
 	 * @param Article $article
 	 * @param int $limit
+	 *
 	 * @return mixed
 	 */
 	public static function getRelatedPages( Article $article, $limit = 6 ) {

@@ -36,7 +36,7 @@ class BackupReader {
 	var $frss = false;
 	var $indx = array();
 
-	function BackupReader() {
+	function __construct() {
 		$this->stderr = fopen( "php://stderr", "wt" );
 	}
 
@@ -197,9 +197,8 @@ class BackupReader {
 		$source = new ImportStreamSource( $handle );
 		$importer = new WikiImporter( $source );
 
-		$importer->setPageCallback( array( &$this, 'reportPage' ) );
-		$this->importCallback =  $importer->setRevisionCallback(
-			array( &$this, 'handleRevision' ) );
+		$importer->setPageCallback( [ $this, 'reportPage' ] );
+		$this->importCallback = $importer->setRevisionCallback( [ $this, 'handleRevision' ] );
 
 		return $importer->doImport();
 	}

@@ -68,7 +68,7 @@ class DMCARequestHelperTest extends \WikiaBaseTest {
 			'dmca_signature' => 'Example User',
 		];
 
-		$dbMock = $this->getMock( '\DatabaseMysql', [ 'insert', 'insertId' ] );
+		$dbMock = $this->getMock( '\DatabaseMysqli', [ 'insert', 'insertId' ] );
 
 		$dbMock->expects( $this->once() )
 			->method( 'insertId' )

@@ -4,7 +4,7 @@
 	 * Category service
 	 * @author wladek
 	 */
-	class CategoryService extends Service {
+	class CategoryService {
 		const CACHE_VERSION = 1;
 
 		/**
@@ -27,7 +27,7 @@
 
 		/**
 		 * Creates the category service object
-		 * @param $title Title|string Title object os category name
+		 * @param $title Title|string Title object or category name
 		 */
 		public function __construct($title) {
 			if (!$title instanceof Title) {
@@ -64,7 +64,7 @@
 		 * @return array|int
 		 */
 		static protected function getPageViews( $pageIds ) {
-			global $wgStatsDB, $wgCityId, $wgDevelEnvironment, $wgStatsDBEnabled;
+			global $wgCityId;
 
 			wfProfileIn(__METHOD__);
 
@@ -102,8 +102,6 @@
 		 * @return array
 		 */
 		protected function fetchTopArticlesInfo( $count, $namespace = NS_MAIN ) {
-			global $wgDevelEnvironment;
-
 			wfProfileIn(__METHOD__);
 
 			$articles = array();
@@ -116,7 +114,10 @@
 					'page_namespace' => $namespace,
 				),
 				__METHOD__,
-				array(),
+				array(
+					// PLATFORM-2246: do not fetch all articles in the category as there can be tens of thousands of them
+					'LIMIT' => 5000
+				),
 				array( 'categorylinks'  => array( 'INNER JOIN', 'cl_from = page_id' ) )
 			);
 
@@ -264,19 +265,20 @@
 		/**
 		 * Hook entry for intercepting article moves to refresh memcached data if needed
 		 * @param $title Title
+		 * @param Title $newtitle
+		 * @param User $user
+		 * @param $pageid
+		 * @param $redirid
 		 * @return bool
 		 */
-		static public function onTitleMoveComplete( &$title, &$newtitle, &$user, $pageid, $redirid ) {
+		static public function onTitleMoveComplete(
+			Title $title, Title $newtitle, User $user, $pageid, $redirid
+		): bool {
 			global $wgMemc;
 
 			wfProfileIn(__METHOD__);
 
-			$article = Article::newFromID($pageid);
-
-			$id = $pageid;
 			$ns = $title->getNamespace();
-
-			$views = self::getPageViews($id);
 
 			$dbr = wfGetDB(DB_SLAVE);
 			$res = $dbr->select( 'categorylinks', array( 'cl_to' ),
@@ -318,7 +320,7 @@
 			$catDBkey = $catTitle->getDBKey();
 			$key = self::getTopArticlesKey($catDBkey, $ns);
 			$wgMemc->delete($key);
-			wfRunHooks('CategoryService::invalidateTopArticles',array($catTitle,$ns));
+			Hooks::run('CategoryService::invalidateTopArticles',array($catTitle,$ns));
 
 			wfProfileOut(__METHOD__);
 		}

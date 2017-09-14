@@ -12,7 +12,6 @@
  * @var string $createAccountButtonLabel
  * @var string $returnto
  * @var string $msg
- * @var array $avatars
  * @var array $popularWikis
  */
 
@@ -129,28 +128,18 @@ if ( !empty( $byemail ) ) {
 		</h2>
 		<h3 class="subheading"></h3>
 		<div class="wiki-info">
-			<?= F::app()->renderView( 'WikiHeader', 'Wordmark' ) ?>
 			<p><?= wfMessage( 'usersignup-marketing-wikia' )->escaped() ?></p>
 			<?= wfMessage( 'usersignup-marketing-login' )->parse() ?>
 		</div>
 	<? endif; ?>
 
 	<div class="form-container">
-		<? if ( !$isMonobookOrUncyclo ): ?>
-			<? // 3rd party providers buttons ?>
-			<?= $app->renderView( 'UserLoginSpecial', 'ProvidersTop', [ 'requestType' => 'signup' ] ) ?>
-		<? endif; ?>
 		<?= F::app()->renderView( 'WikiaStyleGuideForm', 'index', [ 'form' => $form ] ) ?>
 	</div>
 	<? if ( empty( $byemail ) ): ?>
 		<div class="marketing">
 			<h2><?= wfMessage( 'usersignup-marketing-benefits' )->escaped() ?></h2>
 			<div class="benefit">
-				<ul class="avatars">
-					<? foreach ( $avatars as $avatar ) { ?>
-					<li class="avatar"><img src="<?= $avatar ?>" width="30" height="30"></li>
-					<? } ?>
-				</ul>
 				<h3><?= wfMessage( 'usersignup-marketing-community-heading' )->escaped() ?></h3>
 				<p><?= wfMessage( 'usersignup-marketing-community' )->escaped() ?></p>
 			</div>

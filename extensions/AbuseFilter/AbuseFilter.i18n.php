@@ -1,59 +1,38 @@
 <?php
-/**
- * Internationalisation file for AbuseFilter extension.
- *
- * @file
- * @ingroup Extensions
- */
-
 $messages = array();
 
-/** English
- * @author Andrew Garrett
- */
 $messages['en'] = array(
-	// Description message
 	'abusefilter-desc' => 'Applies automatic heuristics to edits',
-
-	// Special pages
 	'abusefilter' => 'Abuse filter configuration',
 	'abuselog' => 'Abuse log',
-	'abusefilter-intro' => "Welcome to the Abuse Filter management interface.
+	'abusefilter-intro' => 'Welcome to the Abuse Filter management interface.
 The Abuse Filter is an automated software mechanism of applying automatic heuristics to all actions.
-This interface shows a list of defined filters, and allows them to be modified.",
+This interface shows a list of defined filters, and allows them to be modified.',
 	'abusefilter-mustbeeditor' => 'For security reasons, only users with the right to modify abuse filters may use this interface.',
+	'abusefilter-warning' => "Thanks for your edit. Please check this is what you meant to do before pressing save.
 
-	// Hooks
-	'abusefilter-warning' => "'''Warning''': This action has been automatically identified as harmful.
-Unconstructive edits will be quickly reverted,
-and egregious or repeated unconstructive editing will result in your account or IP address being blocked.
-If you believe this edit to be constructive, you may click Submit again to confirm it.
-A brief description of the abuse rule which your action matched is: $1",
-	'abusefilter-disallowed' => "This action has been automatically identified as harmful, and therefore disallowed.
+<small>Your edit will be flagged as ''$1''</small>",
+	'abusefilter-disallowed' => 'This action has been automatically identified as harmful, and therefore disallowed.
 If you believe your edit was constructive, please inform an administrator of what you were trying to do.
-A brief description of the abuse rule which your action matched is: $1",
-	'abusefilter-blocked-display' => "This action has been automatically identified as harmful,
+A brief description of the abuse rule which your action matched is: $1',
+	'abusefilter-blocked-display' => 'This action has been automatically identified as harmful,
 and you have been prevented from executing it.
 In addition, to protect {{SITENAME}}, your user account and all associated IP addresses have been blocked from editing.
 If this has occurred in error, please contact an administrator.
-A brief description of the abuse rule which your action matched is: $1",
-	'abusefilter-degrouped' => "This action has been automatically identified as harmful.
+A brief description of the abuse rule which your action matched is: $1',
+	'abusefilter-degrouped' => 'This action has been automatically identified as harmful.
 Consequently, it has been disallowed, and, since your account is suspected of being compromised, all rights have been revoked.
 If you believe this to have been in error, please contact a bureaucrat with an explanation of this action, and your rights may be restored.
-A brief description of the abuse rule which your action matched is: $1",
-	'abusefilter-autopromote-blocked' => "This action has been automatically identified as harmful, and it has been disallowed.
+A brief description of the abuse rule which your action matched is: $1',
+	'abusefilter-autopromote-blocked' => 'This action has been automatically identified as harmful, and it has been disallowed.
 In addition, as a security measure, some privileges routinely granted to established accounts have been temporarily revoked from your account.
-A brief description of the abuse rule which your action matched is: $1",
-
+A brief description of the abuse rule which your action matched is: $1',
 	'abusefilter-blocker' => 'Abuse filter',
 	'abusefilter-blockreason' => 'Automatically blocked by abuse filter.
 Description of matched rule: $1',
 	'abusefilter-degroupreason' => 'Rights automatically stripped by abuse filter.
 Rule description: $1',
-
 	'abusefilter-accountreserved' => 'This account name is reserved for use by the abuse filter.',
-
-	// Permissions
 	'right-abusefilter-modify' => 'Modify abuse filters',
 	'right-abusefilter-view' => 'View abuse filters',
 	'right-abusefilter-log' => 'View the abuse log',
@@ -64,7 +43,6 @@ Rule description: $1',
 	'right-abusefilter-view-private' => 'View abuse filters marked as private',
 	'right-abusefilter-hide-log' => 'Hide entries in the abuse log',
 	'right-abusefilter-hidden-log' => 'View hidden abuse log entries',
-
 	'action-abusefilter-modify' => 'modify abuse filters',
 	'action-abusefilter-view' => 'view abuse filters',
 	'action-abusefilter-log' => 'view the abuse log',
@@ -73,8 +51,6 @@ Rule description: $1',
 	'action-abusefilter-modify-restricted' => 'modify abuse filters with restricted actions',
 	'action-abusefilter-revert' => 'revert all changes by a given abuse filter',
 	'action-abusefilter-view-private' => 'view abuse filters marked as private',
-
-	// Abuse Log
 	'abusefilter-log' => 'Abuse filter log',
 	'abusefilter-log-summary' => 'This log shows a list of all actions caught by the filters.',
 	'abusefilter-log-search' => 'Search the abuse log',
@@ -103,11 +79,9 @@ Filter description: $7 ($8)',
 	'abusefilter-log-linkoncontribs' => 'abuse log',
 	'abusefilter-log-linkoncontribs-text' => 'Abuse log for this user',
 	'abusefilter-log-hidden' => '(entry hidden)',
-	'abusefilter-log-hide' => 'hide or unhide', // @todo FIXME: Message unused?
+	'abusefilter-log-hide' => 'hide or unhide',
 	'abusefilter-log-cannot-see-details' => 'You do not have permission to see details of this entry.',
 	'abusefilter-log-details-hidden' => 'You cannot view the details for this entry because it is hidden from public view.',
-
-	// Hiding log entries
 	'abusefilter-log-hide-legend' => 'Hide log entry',
 	'abusefilter-log-hide-id' => 'Log entry ID:',
 	'abusefilter-log-hide-hidden' => 'Hide this entry from public view',
@@ -115,8 +89,6 @@ Filter description: $7 ($8)',
 	'abusefilter-log-hide-forbidden' => 'You do not have permission to hide abuse log entries.',
 	'abusefilter-logentry-suppress' => 'hid "[[$1]]"',
 	'abusefilter-logentry-unsuppress' => 'unhid "[[$1]]"',
-
-	// Abuse filter management
 	'abusefilter-management' => 'Abuse filter management',
 	'abusefilter-list' => 'All filters',
 	'abusefilter-list-id' => 'Filter ID',
@@ -138,8 +110,6 @@ Filter description: $7 ($8)',
 	'abusefilter-new' => 'Create a new filter',
 	'abusefilter-return' => 'Return to filter management',
 	'abusefilter-status-global' => 'Global',
-
-	// Options form
 	'abusefilter-list-options' => 'Options',
 	'abusefilter-list-options-deleted' => 'Deleted filters:',
 	'abusefilter-list-options-deleted-only' => 'Show only deleted filters',
@@ -148,22 +118,16 @@ Filter description: $7 ($8)',
 	'abusefilter-list-options-disabled' => 'Disabled filters:',
 	'abusefilter-list-options-hidedisabled' => 'Hide disabled filters',
 	'abusefilter-list-options-submit' => 'Update',
-
-	// Abuse filter tools
 	'abusefilter-tools-text' => 'Here are some tools which may be useful in formulating and debugging abuse filters.',
 	'abusefilter-tools-expr' => 'Expression tester',
 	'abusefilter-tools-submitexpr' => 'Evaluate',
 	'abusefilter-tools-reautoconfirm' => 'Restore autoconfirmed status',
 	'abusefilter-tools-reautoconfirm-user' => 'User:',
 	'abusefilter-tools-reautoconfirm-submit' => 'Re-autoconfirm',
-	'abusefilter-reautoconfirm-none' => 'That user has not had {{GENDER:$1|his|her|their}} autoconfirmed status suspended.', # This message supports {{GENDER}}
+	'abusefilter-reautoconfirm-none' => 'That user has not had {{GENDER:$1|his|her|their}} autoconfirmed status suspended.',
 	'abusefilter-reautoconfirm-notallowed' => 'You are not allowed to restore autoconfirmed status.',
-	'abusefilter-reautoconfirm-done' => "Account's autoconfirmed status has been restored", # This message supports {{GENDER}}
-
-	// Abuse filter status
-	'abusefilter-status' => "Of the last $1 {{PLURAL:$1|action|actions}}, $2 ($3%) {{PLURAL:$2|has|have}} reached the condition limit of $4, and $5 ($6%) {{PLURAL:$5|has|have}} matched one of the filters currently enabled.",
-
-	// The edit screen
+	'abusefilter-reautoconfirm-done' => "Account's autoconfirmed status has been restored",
+	'abusefilter-status' => 'Of the last $1 {{PLURAL:$1|action|actions}}, $2 ($3%) {{PLURAL:$2|has|have}} reached the condition limit of $4, and $5 ($6%) {{PLURAL:$5|has|have}} matched one of the filters currently enabled.',
 	'abusefilter-edit-subtitle' => 'Editing filter $1',
 	'abusefilter-edit-oldwarning' => "<strong>You are editing an old version of this filter.
 The statistics quoted are for the most recent version of the filter.
@@ -197,7 +161,7 @@ It reached the limit of matching more than $1% of actions.",
 	'abusefilter-edit-action-degroup' => 'Remove the user from all privileged groups',
 	'abusefilter-edit-action-block' => 'Block the user and/or IP address from editing',
 	'abusefilter-edit-action-throttle' => 'Trigger actions only if the user trips a rate limit',
-	'abusefilter-edit-action-rangeblock' => 'Block the /16 range from which the user originates',
+	'abusefilter-edit-action-rangeblock' => 'Block the IP range from which the user originates',
 	'abusefilter-edit-action-tag' => 'Tag the edit for further review',
 	'abusefilter-edit-throttle-count' => 'Number of actions to allow:',
 	'abusefilter-edit-throttle-period' => 'Period of time:',
@@ -211,13 +175,13 @@ It reached the limit of matching more than $1% of actions.",
 	'abusefilter-edit-warn-actions' => 'Actions:',
 	'abusefilter-edit-warn-preview' => 'Preview selected message',
 	'abusefilter-edit-warn-edit' => 'Create/Edit selected message',
-	'abusefilter-edit-tag-tag' => 'Tags to apply (one per line):',
-	'abusefilter-edit-denied' => "You may not view details of this filter, because it is hidden from public view.",
+	'abusefilter-edit-tag-tag' => '[[Special:Tags|Tags]] to apply (one per line):',
+	'abusefilter-edit-denied' => 'You may not view details of this filter, because it is hidden from public view.',
 	'abusefilter-edit-main' => 'Filter parameters',
 	'abusefilter-edit-done-subtitle' => 'Filter edited',
-	'abusefilter-edit-done' => "You have successfully saved your changes to filter $1.",
-	'abusefilter-edit-badsyntax' => "There is a syntax error in the filter you specified.
-The output from the parser was: <pre>$1</pre>",
+	'abusefilter-edit-done' => 'You have successfully saved your changes to filter $1.',
+	'abusefilter-edit-badsyntax' => 'There is a syntax error in the filter you specified.
+The output from the parser was: <pre>$1</pre>',
 	'abusefilter-edit-restricted' => 'You cannot edit this filter, because it contains one or more restricted actions.
 Please ask a user with permission to add restricted actions to make the change for you.',
 	'abusefilter-edit-viewhistory' => "View this filter's history",
@@ -233,8 +197,6 @@ Please ask a user with permission to add restricted actions to make the change f
 	'abusefilter-edit-bad-tags' => 'One or more of the tags you specified is not valid.
 Tags should be short, and they should not contain special characters.',
 	'abusefilter-edit-notallowed' => 'You are not permitted to create or edit abuse filters',
-
-	// Filter editing helpers
 	'abusefilter-edit-builder-select' => 'Select an option to add it at the cursor',
 	'abusefilter-edit-builder-group-op-arithmetic' => 'Arithmetic operators',
 	'abusefilter-edit-builder-op-arithmetic-addition' => 'Addition (+)',
@@ -309,7 +271,7 @@ Tags should be short, and they should not contain special characters.',
 	'abusefilter-edit-builder-vars-user-name' => 'Name of user account',
 	'abusefilter-edit-builder-vars-user-groups' => 'Groups (including implicit) user is in',
 	'abusefilter-edit-builder-vars-user-emailconfirm' => 'Time email address was confirmed',
-	'abusefilter-edit-builder-vars-recent-contributors' => 'Last five contributors to the page',
+	'abusefilter-edit-builder-vars-recent-contributors' => 'Last ten users to contribute to the page',
 	'abusefilter-edit-builder-vars-all-links' => 'All external links in the new text',
 	'abusefilter-edit-builder-vars-added-links' => 'All external links added in the edit',
 	'abusefilter-edit-builder-vars-removed-links' => 'All external links removed in the edit',
@@ -317,7 +279,6 @@ Tags should be short, and they should not contain special characters.',
 	'abusefilter-edit-builder-vars-new-text' => 'New page wikitext, after the edit',
 	'abusefilter-edit-builder-vars-new-text-stripped' => 'New page text, stripped of any markup',
 	'abusefilter-edit-builder-vars-new-html' => 'Parsed HTML source of the new revision',
-	'abusefilter-edit-builder-vars-recent-contributors' => 'Last ten users to contribute to the page',
 	'abusefilter-edit-builder-vars-restrictions-edit' => 'Edit protection level of the page',
 	'abusefilter-edit-builder-vars-restrictions-move' => 'Move protection level of the page',
 	'abusefilter-edit-builder-vars-old-text-stripped' => 'Old page text, stripped of any markup',
@@ -325,9 +286,6 @@ Tags should be short, and they should not contain special characters.',
 	'abusefilter-edit-builder-vars-old-html' => 'Old page wikitext, parsed into HTML',
 	'abusefilter-edit-builder-vars-minor-edit' => 'Whether or not the edit is marked as minor',
 	'abusefilter-edit-builder-vars-file-sha1' => 'SHA1 hash of file contents',
-
-	// Filter history
-	// Message documentation complete up to here. Siebrand 2011-12-08.
 	'abusefilter-filter-log' => 'Recent filter changes',
 	'abusefilter-history' => 'Change history for Abuse Filter #$1',
 	'abusefilter-history-foruser' => 'Changes by $1',
@@ -349,8 +307,6 @@ Tags should be short, and they should not contain special characters.',
 	'abusefilter-history-select-submit' => 'Refine',
 	'abusefilter-history-diff' => 'Changes',
 	'abusefilter-history-error-hidden' => 'The filter you requested is hidden, and you cannot view its history.',
-
-	// Exceptions
 	'abusefilter-exception-unexpectedatend' => 'Unexpected "$2" at character $1.',
 	'abusefilter-exception-expectednotfound' => 'Expected a $2 at character $1, not found (found $3 $4 instead).',
 	'abusefilter-exception-unrecognisedkeyword' => 'Unrecognised keyword $2 at character $1.',
@@ -367,8 +323,6 @@ Tags should be short, and they should not contain special characters.',
 	'abusefilter-exception-overridebuiltin' => 'Illegal overriding of built-in variable "$2" at character $1.',
 	'abusefilter-exception-outofbounds' => 'Requesting non-existent list item $2 (list size = $3) at character $1.',
 	'abusefilter-exception-notlist' => 'Requesting array item of non-array at character $1.',
-
-	// Actions
 	'abusefilter-action-tag' => 'Tag',
 	'abusefilter-action-throttle' => 'Throttle',
 	'abusefilter-action-warn' => 'Warn',
@@ -377,8 +331,6 @@ Tags should be short, and they should not contain special characters.',
 	'abusefilter-action-degroup' => 'Remove from groups',
 	'abusefilter-action-rangeblock' => 'Range-block',
 	'abusefilter-action-disallow' => 'Disallow',
-
-	// Revert interface
 	'abusefilter-revert-title' => 'Revert all changes by filter $1',
 	'abusefilter-revert-intro' => 'This form allows you to revert all changes made by the abuse filter due to filter $1.
 Please exercise care in using this tool.',
@@ -396,8 +348,6 @@ Please check them carefully, and click "confirm" to confirm your selection.',
 	'abusefilter-revert-reason' => 'Automatic revert of all actions taken by the abuse filter due to filter $1.
 Reason given: $2',
 	'abusefilter-revert-reasonfield' => 'Reason for revert:',
-
-	// These messages are for batch checking
 	'abusefilter-test' => 'Test a filter against previous edits',
 	'abusefilter-test-intro' => 'This page allows you to check a filter entered in the box below against the last $1 {{PLURAL:$1|change|changes}}.
 To load an existing filter, type its filter ID into the box below the edit textbox, and click the "Load" button.',
@@ -413,8 +363,6 @@ To load an existing filter, type its filter ID into the box below the edit textb
 	'abusefilter-test-syntaxerr' => 'The filter you entered contained a syntax error.
 You can receive a full explanation by clicking the "Check Syntax" button.',
 	'abusefilter-changeslist-examine' => 'examine',
-
-	// And these messages are for examining specific actions.
 	'abusefilter-examine' => 'Examine individual changes',
 	'abusefilter-examine-intro' => 'This page allows you to examine the variables generated by the Abuse Filter for an individual change, and test it against filters.',
 	'abusefilter-examine-legend' => 'Select changes',
@@ -431,8 +379,6 @@ You can receive a full explanation by clicking the "Check Syntax" button.',
 	'abusefilter-examine-notfound' => 'The change you requested could not be found.',
 	'abusefilter-examine-incompatible' => 'The change you requested is not supported by the Abuse Filter',
 	'abusefilter-examine-noresults' => 'No results were found for the search parameters you provided.',
-
-	// Top navigation interface
 	'abusefilter-topnav' => "'''Abuse Filter navigation'''",
 	'abusefilter-topnav-home' => 'Home',
 	'abusefilter-topnav-test' => 'Batch testing',
@@ -440,15 +386,11 @@ You can receive a full explanation by clicking the "Check Syntax" button.',
 	'abusefilter-topnav-log' => 'Abuse Log',
 	'abusefilter-topnav-tools' => 'Debugging tools',
 	'abusefilter-topnav-import' => 'Import filter',
-
-	// Logging
 	'abusefilter-log-name' => 'Abuse Filter log',
-	'abusefilter-log-header' => "This log shows a summary of changes made to filters.
-For full details, see [[Special:AbuseFilter/history|the list]] of recent filter changes.",
+	'abusefilter-log-header' => 'This log shows a summary of changes made to filters.
+For full details, see [[Special:AbuseFilter/history|the list]] of recent filter changes.',
 	'abusefilter-log-entry-modify' => 'modified $1 ($2)',
 	'abusefilter-log-noresults' => 'No results',
-
-	// Diffs
 	'abusefilter-diff-title' => 'Differences between versions',
 	'abusefilter-diff-item' => 'Item',
 	'abusefilter-diff-version' => 'Version from $1 by $2',
@@ -456,41 +398,12 @@ For full details, see [[Special:AbuseFilter/history|the list]] of recent filter 
 	'abusefilter-diff-pattern' => 'Filter conditions',
 	'abusefilter-diff-invalid' => 'Unable to fetch the requested versions',
 	'abusefilter-diff-backhistory' => 'Back to filter history',
-
-	// Import interface
 	'abusefilter-import-intro' => 'You can use this interface to import filters from other wikis.
 On the source wiki, click "{{int:abusefilter-edit-export}}" under "{{int:abusefilter-tools-subtitle}}" on the editing interface.
 Copy from the textbox that appears, and paste it into this textbox, then click "{{int:abusefilter-import-submit}}".',
 	'abusefilter-import-submit' => 'Import data',
 );
 
-/** Message documentation (Message documentation)
- * @author Aotake
- * @author Bennylin
- * @author ChrisiPK
- * @author Darth Kule
- * @author EugeneZelenko
- * @author Fryed-peach
- * @author Hamilton Abreu
- * @author Huji
- * @author Iwan Novirion
- * @author Jon Harald Søby
- * @author Krinkle
- * @author Kwj2772
- * @author Lejonel
- * @author Lloffiwr
- * @author McDutchie
- * @author Meno25
- * @author Mormegil
- * @author Praveenp
- * @author Purodha
- * @author Raymond
- * @author Siebrand
- * @author The Evil IP address
- * @author Translationista
- * @author Umherirrender
- * @author Yekrats
- */
 $messages['qqq'] = array(
 	'abusefilter-desc' => '{{desc}}',
 	'abusefilter' => 'Name of Special:AbuseFilter in Special:SpecialPages and title of special page.',
@@ -844,32 +757,6 @@ This is also used in {{msg-mw|Abusefilter-revert-preview-intro}}. When changing 
 	'abusefilter-import-intro' => "Do not ''translate'' <nowiki>{{int:abusefilter-edit-export}}</nowiki>, <nowiki>{{int:abusefilter-tools-subtitle}}</nowiki>, and <nowiki>{{int:abusefilter-import-submit}}</nowiki> unless you absolute must substitute any of them.",
 );
 
-/** Faeag Rotuma (Faeag Rotuma)
- * @author Jose77
- */
-$messages['rtm'] = array(
-	'abusefilter-list-edit' => "A'tū'ạki",
-);
-
-/** Niuean (ko e vagahau Niuē)
- * @author Jose77
- */
-$messages['niu'] = array(
-	'abusefilter-log-search-submit' => 'Kumi',
-);
-
-/** Moroccan Spoken Arabic (Maġribi)
- * @author زكريا
- */
-$messages['ary'] = array(
-	'abusefilter-log-search-submit' => 'bheṫ',
-	'abusefilter-log-hide' => 'ĥbbi wlla byyen',
-);
-
-/** Afrikaans (Afrikaans)
- * @author Naudefj
- * @author පසිඳු කාවින්ද
- */
 $messages['af'] = array(
 	'abusefilter-desc' => 'Pas outomatiese heuristiek te wysigings',
 	'abusefilter' => 'Misbruik filter configuration',
@@ -1165,9 +1052,6 @@ Aksies wat teruggerol moet word: $5 ($6)",
 	'abusefilter-import-submit' => 'Importeer data',
 );
 
-/** Gheg Albanian (Gegë)
- * @author Mdupont
- */
 $messages['aln'] = array(
 	'abusefilter-edit-throttle-count' => 'Numri i veprimeve të lejojë:',
 	'abusefilter-edit-throttle-period' => 'Periudha kohore:',
@@ -1243,9 +1127,6 @@ $messages['aln'] = array(
 	'abusefilter-import-submit' => 'Të dhënat e importit',
 );
 
-/** Amharic (አማርኛ)
- * @author Codex Sinaiticus
- */
 $messages['am'] = array(
 	'abusefilter-log-search-title' => 'አርዕስት፡',
 	'abusefilter-log-search-submit' => 'ፍለጋ',
@@ -1253,9 +1134,6 @@ $messages['am'] = array(
 	'abusefilter-edit-history' => 'ታሪክ',
 );
 
-/** Aragonese (Aragonés)
- * @author Juanpabl
- */
 $messages['an'] = array(
 	'abusefilter-log-details-var' => 'Variable',
 	'abusefilter-log-noactions' => 'garra',
@@ -1268,20 +1146,6 @@ $messages['an'] = array(
 	'abusefilter-revert-filter' => 'Filtro:',
 );
 
-/** Arabic (العربية)
- * @author ;Hiba;1
- * @author Aiman titi
- * @author Alnokta
- * @author Ciphers
- * @author Loya
- * @author Meno25
- * @author Mido
- * @author Orango
- * @author OsamaK
- * @author Zack wadghiri
- * @author ترجمان05
- * @author زكريا
- */
 $messages['ar'] = array(
 	'abusefilter-desc' => 'يطبق قواعد آلية على التعديلات.',
 	'abusefilter' => 'ضبط مرشح الإساءة',
@@ -1683,10 +1547,6 @@ $messages['ar'] = array(
 	'abusefilter-import-submit' => 'استيراد البيانات',
 );
 
-/** Aramaic (ܐܪܡܝܐ)
- * @author Basharh
- * @author Michaelovic
- */
 $messages['arc'] = array(
 	'abusefilter-log-search-user' => 'ܡܦܠܚܢܐ:',
 	'abusefilter-log-search-filter' => 'ܗܝܝܘܬܐ ܕܡܨܦܝܢܝܬܐ:',
@@ -1777,12 +1637,11 @@ $messages['arc'] = array(
 	'abusefilter-import-submit' => 'ܡܥܠܢܘܬܐ ܕܓܠܝܬ̈ܐ',
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Ghaly
- * @author Meno25
- * @author OsamaK
- * @author Ramsis II
- */
+$messages['ary'] = array(
+	'abusefilter-log-search-submit' => 'bheṫ',
+	'abusefilter-log-hide' => 'ĥbbi wlla byyen',
+);
+
 $messages['arz'] = array(
 	'abusefilter-desc' => 'يطبق قواعد آليه على التعديلات.',
 	'abusefilter' => 'ضبط مرشح الإساءة',
@@ -2170,10 +2029,6 @@ $messages['arz'] = array(
 	'abusefilter-import-submit' => 'استيراد البيانات',
 );
 
-/** Assamese (অসমীয়া)
- * @author Chaipau
- * @author Psneog
- */
 $messages['as'] = array(
 	'abusefilter-log-search-user' => 'সভ্যৰ নাম:',
 	'abusefilter-log-search-submit' => 'সন্ধান',
@@ -2186,9 +2041,6 @@ $messages['as'] = array(
 	'abusefilter-examine-title' => 'পৃষ্ঠাখনৰ শিৰোনামা:',
 );
 
-/** Asturian (Asturianu)
- * @author Xuacu
- */
 $messages['ast'] = array(
 	'abusefilter-desc' => 'Aplica heurística automática a les ediciones.',
 	'abusefilter' => "Configuración de la peñera d'abusos",
@@ -2281,14 +2133,6 @@ Descripción de la peñera: $7 ($8)",
 	'abusefilter-list-status' => 'Estáu',
 );
 
-/** Azerbaijani (Azərbaycanca)
- * @author Cekli829
- * @author Hydra
- * @author PPerviz
- * @author Sortilegus
- * @author Vago
- * @author Vugar 1981
- */
 $messages['az'] = array(
 	'abusefilter-desc' => 'Düzəlişlərə evristik filtrlərin tətbiq olunmasına imkan verir.',
 	'abusefilter' => 'Sui-istifadə süzgəcinin tənzimlənməsi',
@@ -2524,11 +2368,6 @@ Süzgəcin təsviri: $7 ($8)',
 	'abusefilter-diff-pattern' => 'Süzgəcləmə şərtləri',
 );
 
-/** Bashkir (Башҡортса)
- * @author Assele
- * @author Comp1089
- * @author Haqmar
- */
 $messages['ba'] = array(
 	'abusefilter-desc' => 'Төҙәтеүҙәргә эвристик һөҙгөстәр ҡуйырға мөмкинлек бирә.',
 	'abusefilter' => 'Урынһыҙ файҙаланыуҙар һөҙгөсөн көйләү',
@@ -2928,9 +2767,6 @@ $3 {{PLURAL:$3|аргумент}} көтөлә, $4 бирелгән.',
 	'abusefilter-import-submit' => 'Мәғлүмәтте индерергә',
 );
 
-/** Bavarian (Boarisch)
- * @author Mucalexx
- */
 $messages['bar'] = array(
 	'abusefilter-desc' => 'Wendt autómaatiche "Heuristiken" auf Änderrungen å',
 	'abusefilter' => 'Missbrauchsfüter-Eihstöungen',
@@ -2948,10 +2784,6 @@ Dé Ówerflächen zoagt a Listen voh olle definierden Füter und dalaabts, dé z
 	'abusefilter-edit-builder-op-bool-xor' => 'XOR (^)',
 );
 
-/** Belarusian (Беларуская)
- * @author LexArt
- * @author Тест
- */
 $messages['be'] = array(
 	'abusefilter-log-search-user' => 'Удзельнік:',
 	'abusefilter-log-search-title' => 'Загаловак:',
@@ -2970,14 +2802,6 @@ $messages['be'] = array(
 	'abusefilter-revert-confirm' => 'Пацвердзіць',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
- * @author Cesco
- * @author EugeneZelenko
- * @author Jim-by
- * @author Red Winged Duck
- * @author Renessaince
- * @author Wizardist
- */
 $messages['be-tarask'] = array(
 	'abusefilter-desc' => 'Прыстасоўвае аўтаматычную эўрыстыку да рэдагаваньняў.',
 	'abusefilter' => 'Канфігурацыя фільтру злоўжываньняў',
@@ -3378,13 +3202,6 @@ $messages['be-tarask'] = array(
 	'abusefilter-import-submit' => 'Імпартаваць зьвесткі',
 );
 
-/** Bulgarian (Български)
- * @author DCLXVI
- * @author Spiritia
- * @author Stanqo
- * @author Turin
- * @author Петър Петров
- */
 $messages['bg'] = array(
 	'abusefilter-desc' => 'Прилага автоматични евристики към редакциите.',
 	'abusefilter' => 'Конфигуриране на филтъра срещу злоупотреби',
@@ -3765,12 +3582,6 @@ $messages['bg'] = array(
 	'abusefilter-import-submit' => 'Внасяне на данни',
 );
 
-/** Bengali (বাংলা)
- * @author Bellayet
- * @author Ehsanulhb
- * @author Samritmaity
- * @author Wikitanvir
- */
 $messages['bn'] = array(
 	'abusefilter-desc' => 'সম্পাদনায় স্বয়ংক্রিয় অনুসন্ধানমূলক পদ্ধতি প্রযোজ্য।',
 	'abusefilter' => 'অপব্যবহার ফিল্টার কনফিগারেশন',
@@ -3976,9 +3787,6 @@ $messages['bn'] = array(
 	'abusefilter-import-submit' => 'উপাত্ত আমদানী',
 );
 
-/** Tibetan (བོད་ཡིག)
- * @author Freeyak
- */
 $messages['bo'] = array(
 	'abusefilter-log-search-user' => 'བཀོལ་མི།',
 	'abusefilter-log-search-title' => 'ཁ་ཡིག',
@@ -3994,12 +3802,6 @@ $messages['bo'] = array(
 	'abusefilter-revert-confirm' => 'གཏན་འབེབས།',
 );
 
-/** Breton (Brezhoneg)
- * @author Fohanno
- * @author Fulup
- * @author Gwendal
- * @author Y-M D
- */
 $messages['br'] = array(
 	'abusefilter-desc' => "Lakaat a ra hentennoù klask emgefre da dalvezout evit ar c'hemmoù",
 	'abusefilter' => 'Kefluniadur ar siloù a-enep ar gwallimplij',
@@ -4405,11 +4207,6 @@ Eilit an takad testenn a teu war-well, ha pegit anezhañ e-barzh an takad testen
 	'abusefilter-import-submit' => 'Enporzhiañ roadennoù',
 );
 
-/** Bosnian (Bosanski)
- * @author CERminator
- * @author Palapa
- * @author Seha
- */
 $messages['bs'] = array(
 	'abusefilter-desc' => 'Dodaje automatske heuristike izmjenama.',
 	'abusefilter' => 'Konfiguracija filtera za zloupotrebu',
@@ -4803,17 +4600,6 @@ Kopirajte iz tekstualne kutije koja se pojavi i zalijepite u ovu kutiju, zatim k
 	'abusefilter-import-submit' => 'Uvezi podatke',
 );
 
-/** Catalan (Català)
- * @author Aleator
- * @author El libre
- * @author Gemmaa
- * @author Loupeter
- * @author Paucabot
- * @author SMP
- * @author Solde
- * @author Ssola
- * @author Vriullop
- */
 $messages['ca'] = array(
 	'abusefilter-desc' => 'Aplica heurística automàtica a les edicions',
 	'abusefilter' => "Configuració del filtre d'abús",
@@ -5217,9 +5003,6 @@ Copiï des de quadre de text que apareix i enganxar-lo a aquest quadre de text, 
 	'abusefilter-import-submit' => 'Importa dades',
 );
 
-/** Chechen (Нохчийн)
- * @author Sasan700
- */
 $messages['ce'] = array(
 	'abuselog' => 'Зулумаш долу тéптар',
 	'abusefilter-intro' => 'Марша догlийла, зулам литтаран Урхаллийн агlон тlе.
@@ -5253,7 +5036,6 @@ $messages['ce'] = array(
 	'abusefilter-examine-user' => 'Декъашхо:',
 );
 
-/** Sorani (کوردی) */
 $messages['ckb'] = array(
 	'abusefilter-log-search-user' => 'بەکارهێنەر:',
 	'abusefilter-log-search-submit' => 'گەڕان',
@@ -5266,7 +5048,6 @@ $messages['ckb'] = array(
 	'abusefilter-examine-submit' => 'گەڕان',
 );
 
-/** Corsican (Corsu) */
 $messages['co'] = array(
 	'abusefilter-log-search-user' => 'Utilizatore:',
 	'abusefilter-list-edit' => 'Mudificà',
@@ -5274,10 +5055,6 @@ $messages['co'] = array(
 	'abusefilter-history-user' => 'Utilizatore',
 );
 
-/** Czech (Česky)
- * @author Matěj Grabovský
- * @author Mormegil
- */
 $messages['cs'] = array(
 	'abusefilter-desc' => 'Podrobuje editace automatickým heuristikám',
 	'abusefilter' => 'Konfigurace filtrů zneužívání',
@@ -5674,19 +5451,12 @@ Zkopírujte si text, který se objeví v rámečku, vložte ho do tohoto formul�
 	'abusefilter-import-submit' => 'Importovat data',
 );
 
-/** Church Slavic (Словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
- * @author ОйЛ
- */
 $messages['cu'] = array(
 	'abusefilter-log-search-user' => 'по́льꙃєватєл҄ь :',
 	'abusefilter-log-search-title' => 'страницѧ имѧ :',
 	'abusefilter-log-hide-reason' => 'какъ съмꙑслъ :',
 );
 
-/** Welsh (Cymraeg)
- * @author Lloffiwr
- * @author Pwyll
- */
 $messages['cy'] = array(
 	'abusefilter-desc' => "Yn gosod tybiaethau i olygiadau'n awtomatig",
 	'abusefilter' => 'Ffurfweddiad hidlydd camddefnydd',
@@ -5748,13 +5518,6 @@ Disgrifiad o'r rheol sy'n cyfateb: $1",
 	'abusefilter-revert-filter' => 'Hidl:',
 );
 
-/** Danish (Dansk)
- * @author Aputtu
- * @author Froztbyte
- * @author Lhademmor
- * @author Peter Alberti
- * @author Sarrus
- */
 $messages['da'] = array(
 	'abusefilter-desc' => 'Anvender automatiske filtre på redigeringer',
 	'abusefilter' => 'Konfiguration af misbrugsfilter',
@@ -6113,25 +5876,6 @@ Handlinger som skal tilbagerulles: $5 ($6)',
 	'abusefilter-import-submit' => 'Importer data',
 );
 
-/** German (Deutsch)
- * @author Cedric31
- * @author ChrisiPK
- * @author Church of emacs
- * @author Giftpflanze
- * @author Kghbln
- * @author Leithian
- * @author Merlissimo
- * @author Metalhead64
- * @author Pill
- * @author Purodha
- * @author Revolus
- * @author Servien
- * @author The Evil IP address
- * @author Umherirrender
- * @author W (aka Wuzur)
- * @author Wikifan
- * @author Xqt
- */
 $messages['de'] = array(
 	'abusefilter-desc' => 'Wendet automatische Heuristiken auf Änderungen an',
 	'abusefilter' => 'Missbrauchsfilter-Einstellungen',
@@ -6288,7 +6032,7 @@ Im Durchschnitt betrug ihre Bearbeitungszeit $4 ms und sie benötigten $5 {{PLUR
 	'abusefilter-edit-action-degroup' => 'Benutzer aus allen Gruppen mit Sonderrechten entfernen',
 	'abusefilter-edit-action-block' => 'Benutzer/IP-Adresse sperren',
 	'abusefilter-edit-action-throttle' => 'Aktion nur auslösen, wenn der Benutzer ein bestimmtes Limit überschreitet',
-	'abusefilter-edit-action-rangeblock' => '/16-Range sperren, aus der der Benutzer stammt',
+	'abusefilter-edit-action-rangeblock' => 'Block the IP range from which the user originates',
 	'abusefilter-edit-action-tag' => 'Bearbeitung für eine spätere Überprüfung markieren',
 	'abusefilter-edit-throttle-count' => 'Anzahl erlaubter Aktionen:',
 	'abusefilter-edit-throttle-period' => 'Zeitraum:',
@@ -6527,16 +6271,9 @@ Für genauere Details, siehe [[Special:AbuseFilter/history|die Liste]] der letzt
 Klicke im Quellwiki auf die Schaltfläche „{{int:abusefilter-edit-export}}“ innerhalb von „{{int:abusefilter-tools-subtitle}}“.
 Kopiere den dort erscheinenden Code, füge ihn hier ein und klicke dann auf die Schaltfläche „{{int:abusefilter-import-submit}}“.',
 	'abusefilter-import-submit' => 'Daten importieren',
+	'abusefilter-edit-builder-op-bool-xor' => 'XOR (^)',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
- * @author ChrisiPK
- * @author Giftpflanze
- * @author Kghbln
- * @author MichaelFrey
- * @author The Evil IP address
- * @author Umherirrender
- */
 $messages['de-formal'] = array(
 	'abusefilter-warning' => "'''Achtung''': Diese Aktion wurde als potentiell unkonstruktiv erkannt.
 Solche Beiträge werden meist sehr schnell entfernt. In wiederholten und besonders schlimmen Fällen wird Ihr Benutzerkonto bzw. Ihre IP-Adresse gesperrt.
@@ -6580,12 +6317,6 @@ Um einen bestehenden Filter zu laden, geben Sie seine Filter-ID in das Feld unte
 	'abusefilter-import-intro' => 'Sie können diese Schnittstelle verwenden, um Filter aus anderen Wikis zu importieren. Klicken Sie im Quellwiki auf die Schaltfläche „<abusefilter-edit-export>“ innerhalb von „<abusefilter-tools-subtitle>“. Kopieren Sie dort den erscheinenden Code, fügen Sie ihn hier ein und klicken Sie dann auf die Schaltfläche „<abusefilter-import-submit>“.',
 );
 
-/** Zazaki (Zazaki)
- * @author Aspar
- * @author Erdemaslancan
- * @author Mirzali
- * @author Xoser
- */
 $messages['diq'] = array(
 	'abusefilter-desc' => 'Automatik heuristics vurnayîşan rê apply keno',
 	'abusefilter' => 'Konfigurasyonê filitere yê abusî',
@@ -6983,9 +6714,6 @@ Kutiyê nuştîşî kopye bike u ena kutiyê nuştîş rê na pa u klik bike "{{
 	'abusefilter-import-submit' => 'Data împort bike',
 );
 
-/** Lower Sorbian (Dolnoserbski)
- * @author Michawiki
- */
 $messages['dsb'] = array(
 	'abusefilter-desc' => 'Nałožujo awtomatisku heuristiku na změny.',
 	'abusefilter' => 'Konfiguracija znjewužywańskego filtra',
@@ -7376,10 +7104,6 @@ Klikni w žrědłowem wikiju na "{{int:abusefilter-edit-export}}" pód "{{int:ab
 	'abusefilter-import-submit' => 'Daty importěrowaś',
 );
 
-/** Central Dusun (Dusun Bundu-liwan)
- * @author FRANCIS5091
- * @author FRANELYA
- */
 $messages['dtp'] = array(
 	'abusefilter-desc' => 'Pokianu huristik mimpoporion hilo niditan',
 	'abusefilter' => 'Manahas sinalaguno nuludan',
@@ -7415,24 +7139,12 @@ Kointalangan do sinalaguno diti kooturan di kohompit do kinarajanu nopo nga oboy
 	'abusefilter-edit-tools' => 'Tangakakamot:',
 );
 
-/** Ewe (Eʋegbe) */
 $messages['ee'] = array(
 	'abusefilter-log-search-submit' => 'Dii',
 	'abusefilter-list-edit' => 'Trɔ asi le eŋu',
 	'abusefilter-examine-submit' => 'Dii',
 );
 
-/** Greek (Ελληνικά)
- * @author Badseed
- * @author Consta
- * @author Crazymadlover
- * @author Geraki
- * @author Glavkos
- * @author K sal 15
- * @author Konsnos
- * @author Omnipaedista
- * @author ZaDiak
- */
 $messages['el'] = array(
 	'abusefilter-desc' => 'Εφαρμόζει αυτόματη ανίχνευση σε επεξεργασίες',
 	'abusefilter' => 'Διαμόρφωση φίλτρου καταχρήσεων',
@@ -7836,11 +7548,6 @@ $3 {{PLURAL:$3|αναμενόμενο κατηγορούμενο|αναμενό�
 	'abusefilter-import-submit' => 'Εισαγωγή δεδομένων',
 );
 
-/** Esperanto (Esperanto)
- * @author AVRS
- * @author Amikeco
- * @author Yekrats
- */
 $messages['eo'] = array(
 	'abusefilter-desc' => 'Aplikas aŭtomatan heŭristikon al redaktoj.',
 	'abusefilter' => 'Konfiguri filtrilon de misuzado',
@@ -8243,27 +7950,6 @@ Kopiu de la tekstujo kiu aperas, kaj gluu ĝin en ĉi tiun tekstujon, kaj klaku 
 	'abusefilter-import-submit' => 'Importi datenojn',
 );
 
-/** Spanish (Español)
- * @author Aleator
- * @author Alvaro qc
- * @author Armando-Martin
- * @author Baiji
- * @author BicScope
- * @author Crazymadlover
- * @author Dferg
- * @author Fitoschido
- * @author Imre
- * @author Locos epraix
- * @author Manuelt15
- * @author McDutchie
- * @author Mor
- * @author Pertile
- * @author PieRRoMaN
- * @author Platonides
- * @author Remember the dot
- * @author Sanbec
- * @author Translationista
- */
 $messages['es'] = array(
 	'abusefilter-desc' => 'Aplicar automáticamente heurísticas para ediciones',
 	'abusefilter' => 'Configuración del filtro antiabusos',
@@ -8303,8 +7989,8 @@ Descripción de la regla disparada: $1',
 	'right-abusefilter-modify-restricted' => 'Modificar filtros antiabuso con acciones restringidas',
 	'right-abusefilter-revert' => 'Revertir todos los cambios realizados por un determinado filtro antiabusos',
 	'right-abusefilter-view-private' => 'Ver filtros antiabuso marcados como privados',
-	'right-abusefilter-hide-log' => 'Ocultar entradas en el registro del filtro antiabusos',
-	'right-abusefilter-hidden-log' => 'Ver entradas ocultas en el registro del filtro antiabusos',
+	'right-abusefilter-hide-log' => 'Ocultar entradas en el registro de abusos',
+	'right-abusefilter-hidden-log' => 'Ver entradas ocultas en el registro de abusos',
 	'action-abusefilter-modify' => 'modificar los filtros antiabuso',
 	'action-abusefilter-view' => 'ver los filtros antiabuso',
 	'action-abusefilter-log' => 'ver registro del filtro antiabusos',
@@ -8343,10 +8029,10 @@ Descripción del filtro: $7 ($8)',
 	'abusefilter-log-hidden' => '(entrada oculta)',
 	'abusefilter-log-hide' => 'ocultar o desocultar',
 	'abusefilter-log-cannot-see-details' => 'No tiene permiso para ver los detalles de esta entrada.',
-	'abusefilter-log-details-hidden' => 'No puede ver los detalles de esta entrada porque ésta es privada.',
+	'abusefilter-log-details-hidden' => 'No puede ver los detalles de esta entrada porque está oculta al público.',
 	'abusefilter-log-hide-legend' => 'Ocultar entrada del registro',
 	'abusefilter-log-hide-id' => 'ID de la entrada del registro:',
-	'abusefilter-log-hide-hidden' => 'Ocultar esta entrada de la vista pública',
+	'abusefilter-log-hide-hidden' => 'Ocultar esta entrada al público',
 	'abusefilter-log-hide-reason' => 'Motivo:',
 	'abusefilter-log-hide-forbidden' => 'No tiene permiso para ocultar entradas del registro de abusos',
 	'abusefilter-logentry-suppress' => 'ocultó "[[$1]]"',
@@ -8422,7 +8108,7 @@ El filtro ha sobrepasado el límite de más del $1% acciones.",
 	'abusefilter-edit-action-degroup' => 'Retirar al usuario todos los permisos de su cuenta',
 	'abusefilter-edit-action-block' => 'Bloquear al usuario y/o dirección IP',
 	'abusefilter-edit-action-throttle' => 'Disparar el filtro sólamente si el usuario sobrepasa un cierto límite de ritmo de edición',
-	'abusefilter-edit-action-rangeblock' => 'Bloquear el rango /16 del usuario que origina el disparo del filtro',
+	'abusefilter-edit-action-rangeblock' => 'Block the IP range from which the user originates',
 	'abusefilter-edit-action-tag' => 'Marcar la edición para una revisión posterior',
 	'abusefilter-edit-throttle-count' => 'Número de acciones a permitir:',
 	'abusefilter-edit-throttle-period' => 'Período de tiempo:',
@@ -8661,13 +8347,9 @@ Para detalles completos, ver [[Special:AbuseFilter/history|la lista]] de cambios
 En el wiki fuente, pulsa en «{{int:abusefilter-edit-export}}» bajo «{{int:abusefilter-tools-subtitle}}» en la interfaz de edición.
 Copia desde el cuadro de texto que aparece, y pegalo dentro de este cuadro de texto, luego pulsa en «{{int:abusefilter-import-submit}}».',
 	'abusefilter-import-submit' => 'Importar datos',
+	'abusefilter-edit-builder-op-bool-xor' => 'XOR (^)',
 );
 
-/** Estonian (Eesti)
- * @author Avjoska
- * @author Oop
- * @author Pikne
- */
 $messages['et'] = array(
 	'abusefilter-desc' => 'Rakendab muudatuste juures automaatset heuristikat.',
 	'abusefilter' => 'Väärtarvitusfiltri häälestus',
@@ -9067,15 +8749,6 @@ Kopeeri ilmuva tekstikasti sisu, kleebi see sellesse tekstikasti ja seejärel kl
 	'abusefilter-import-submit' => 'Impordi andmed',
 );
 
-/** Basque (Euskara)
- * @author Abel2es
- * @author An13sa
- * @author Joxemai
- * @author Kobazulo
- * @author Theklan
- * @author Unai Fdz. de Betoño
- * @author Xabier Armendaritz
- */
 $messages['eu'] = array(
 	'abusefilter-desc' => 'Edizioei heuristika automatikoa aplikatzen die',
 	'abusefilter' => 'Gehiegikerien iragazkiaren konfigurazioa',
@@ -9237,16 +8910,6 @@ $messages['eu'] = array(
 	'abusefilter-import-submit' => 'Datuak inportatu',
 );
 
-/** Persian (فارسی)
- * @author Ebraminio
- * @author Huji
- * @author Ladsgroup
- * @author Mjbmr
- * @author Reza1615
- * @author Sahim
- * @author Wayiran
- * @author ZxxZxxZ
- */
 $messages['fa'] = array(
 	'abusefilter-desc' => 'اکتشافات خودکاری را بر روی ویرایش‌های انجام می‌دهد.',
 	'abusefilter' => 'پیکربندی پالایهٔ خرابکاری',
@@ -9651,18 +9314,6 @@ $messages['fa'] = array(
 	'abusefilter-import-submit' => 'درون‌ریزی اطلاعات',
 );
 
-/** Finnish (Suomi)
- * @author Cimon Avaro
- * @author Crt
- * @author Ilaiho
- * @author Nike
- * @author Olli
- * @author Silvonen
- * @author Str4nd
- * @author Vililikku
- * @author Zache
- * @author ZeiP
- */
 $messages['fi'] = array(
 	'abusefilter-desc' => 'Mahdollistaa muokkauksien suodattamisen automaattisella heuristiikalla.',
 	'abusefilter' => 'Väärinkäyttösuodattimen asetukset',
@@ -9824,7 +9475,7 @@ Suodatin saavutti yli $1 % täsmäävän toiminnon rajan.",
 	'abusefilter-edit-action-degroup' => 'Poista käyttäjä kaikista etuoikeutetuista ryhmistä',
 	'abusefilter-edit-action-block' => 'Aseta käyttäjälle ja/tai IP-osoitteelle muokkausesto',
 	'abusefilter-edit-action-throttle' => 'Laukaise toiminnot vain jos käyttäjä ylittää rajan',
-	'abusefilter-edit-action-rangeblock' => 'Estä /16-alue, josta käyttäjä tulee',
+	'abusefilter-edit-action-rangeblock' => 'Block the IP range from which the user originates',
 	'abusefilter-edit-action-tag' => 'Merkitse muokkaus lisätarkastelun kohteeksi',
 	'abusefilter-edit-throttle-count' => 'Toimintojen sallimismäärä:',
 	'abusefilter-edit-throttle-period' => 'Aikaväli',
@@ -10064,11 +9715,9 @@ Lisätietoja saat suodattimen [[Special:AbuseFilter/history|viimeisimpien muutos
 Napsauta ”{{int:abusefilter-edit-export}}” kohdassa ”{{int:abusefilter-tools-subtitle}}” lähdewikin muokkausnäkymässä.
 Kopioi ilmestyvän tekstikentän sisältö ja liitä se tähän tekstikenttään, jonka jälkeen napsauta ”{{int:abusefilter-import-submit}}”.',
 	'abusefilter-import-submit' => 'Tuo tiedot',
+	'abusefilter-edit-builder-op-bool-xor' => 'XOR (^)',
 );
 
-/** Faroese (Føroyskt)
- * @author EileenSanda
- */
 $messages['fo'] = array(
 	'abusefilter-blockreason' => 'Sjálvvirkandi sperrað av misnýtslufilturi.
 Frágreiðing av passandi reglu: $1',
@@ -10090,23 +9739,6 @@ Reglu frágreiðing: $1',
 	'action-abusefilter-private' => 'vís privat dáta í misnýtslu logginum',
 );
 
-/** French (Français)
- * @author ChrisPtDe
- * @author Crochet.david
- * @author Gomoko
- * @author Grondin
- * @author IAlex
- * @author Jean-Frédéric
- * @author Kropotkine 113
- * @author McDutchie
- * @author Peter17
- * @author PieRRoMaN
- * @author Robby
- * @author Sherbrooke
- * @author Urhixidur
- * @author Verdy p
- * @author Zetud
- */
 $messages['fr'] = array(
 	'abusefilter-desc' => 'Applique des heuristiques automatiques aux modifications',
 	'abusefilter' => 'Configuration du filtre antiabus',
@@ -10268,7 +9900,7 @@ Il a atteint la limite de détection de plus de $1 % des actions.",
 	'abusefilter-edit-action-degroup' => 'Retirer l’utilisateur de tous les groupes privilégiés',
 	'abusefilter-edit-action-block' => 'Bloquer en écriture l’utilisateur et/ou l’adresse IP',
 	'abusefilter-edit-action-throttle' => 'Déclencher les actions uniquement si l’utilisateur a dépassé un taux limite',
-	'abusefilter-edit-action-rangeblock' => 'Bloquer la plage IP /16 d’origine de l’utilisateur.',
+	'abusefilter-edit-action-rangeblock' => 'Block the IP range from which the user originates',
 	'abusefilter-edit-action-tag' => 'Baliser la modification pour une relecture ultérieure.',
 	'abusefilter-edit-throttle-count' => 'Nombre d’actions autorisées :',
 	'abusefilter-edit-throttle-period' => 'Laps de temps :',
@@ -10376,7 +10008,7 @@ Les balises doivent être courtes et ne pas contenir de caractères spéciaux.',
 	'abusefilter-edit-builder-vars-user-age' => 'Âge du compte utilisateur',
 	'abusefilter-edit-builder-vars-user-name' => 'Nom du compte utilisateur',
 	'abusefilter-edit-builder-vars-user-groups' => 'Groupes (y compris implicites) dont l’utilisateur est membre',
-	'abusefilter-edit-builder-vars-user-emailconfirm' => 'Temps depuis la confirmation de l’adresse courriel',
+	'abusefilter-edit-builder-vars-user-emailconfirm' => 'Temps depuis la confirmation de l’adresse e-mail',
 	'abusefilter-edit-builder-vars-recent-contributors' => 'Les dix derniers contributeurs de la page',
 	'abusefilter-edit-builder-vars-all-links' => 'Tous les liens externes dans le nouveau texte',
 	'abusefilter-edit-builder-vars-added-links' => 'Tous les liens externes ajoutés dans la modification',
@@ -10508,12 +10140,9 @@ Pour plus de détails, voyez [[Special:AbuseFilter/history|la liste]] des modifi
 Sur le wiki d’origine, cliquez sur « {{int:abusefilter-edit-export}} » dans « {{int:abusefilter-tools-subtitle}} » depuis l’interface d’édition.
 Copiez la zone de texte qui s’affiche et collez-le dans cette zone de texte, puis cliquez sur « {{int:abusefilter-import-submit}} »,',
 	'abusefilter-import-submit' => 'Importer des données',
+	'abusefilter-edit-builder-op-bool-xor' => 'XOR (^)',
 );
 
-/** Franco-Provençal (Arpetan)
- * @author Cedric31
- * @author ChrisPtDe
- */
 $messages['frp'] = array(
 	'abusefilter-desc' => 'Aplique des heristiques ôtomatiques ux changements.',
 	'abusefilter' => 'Configuracion du filtro d’abus',
@@ -10918,9 +10547,6 @@ Copiyéd la zona de tèxto que sè montre et pués côlâd-lo dens cela zona de 
 	'abusefilter-import-submit' => 'Importar des balyês',
 );
 
-/** Friulian (Furlan)
- * @author Klenje
- */
 $messages['fur'] = array(
 	'abusefilter-log-search-user' => 'Utent:',
 	'abusefilter-log-search-title' => 'Titul:',
@@ -10932,10 +10558,6 @@ $messages['fur'] = array(
 	'abusefilter-list-status' => 'Stât',
 );
 
-/** Western Frisian (Frysk)
- * @author Pyt
- * @author Snakesteuben
- */
 $messages['fy'] = array(
 	'abusefilter-desc' => 'Fiert automatyske heuristyske analyse út op bewurkings',
 	'abusefilter' => 'Misbrûkfilterkonfiguraasje',
@@ -10946,24 +10568,16 @@ $messages['fy'] = array(
 	'abusefilter-history-user' => 'Meidogger',
 );
 
-/** Simplified Gan script (‪赣语(简体)‬) */
 $messages['gan-hans'] = array(
 	'abusefilter-log-search-submit' => '寻吖',
 	'abusefilter-examine-submit' => '寻吖',
 );
 
-/** Traditional Gan script (‪贛語(繁體)‬)
- * @author Symane
- */
 $messages['gan-hant'] = array(
 	'abusefilter-log-search-submit' => '尋吖',
 	'abusefilter-examine-submit' => '尋吖',
 );
 
-/** Galician (Galego)
- * @author Elisardojm
- * @author Toliño
- */
 $messages['gl'] = array(
 	'abusefilter-desc' => 'Aplica heurísticas automáticas ás edicións',
 	'abusefilter' => 'Configuración do filtro de abusos',
@@ -11364,11 +10978,6 @@ Copie a caixa de texto que aparece e péguea nestoutra caixa de texto, logo prem
 	'abusefilter-import-submit' => 'Importar os datos',
 );
 
-/** Ancient Greek (Ἀρχαία ἑλληνικὴ)
- * @author Crazymadlover
- * @author LeighvsOptimvsMaximvs
- * @author Omnipaedista
- */
 $messages['grc'] = array(
 	'abusefilter' => 'Διαμόρφωσις διηθητηρίου καταχρήσεων',
 	'abuselog' => 'Κατάλογος καταχρήσεων',
@@ -11462,12 +11071,6 @@ $messages['grc'] = array(
 	'abusefilter-import-submit' => 'Εἰσάγειν δεδομένα',
 );
 
-/** Swiss German (Alemannisch)
- * @author Als-Chlämens
- * @author Als-Holder
- * @author J. 'mach' wust
- * @author Melancholie
- */
 $messages['gsw'] = array(
 	'abusefilter-desc' => 'Wändet automatischi Heurischtike uf Änderigen aa.',
 	'abusefilter' => 'Missbruuchsfilter-Yystellige',
@@ -11859,41 +11462,26 @@ Kopier de Kode, wu det erschynt, un fieg en do yy, derno druck „{{int:abusefil
 	'abusefilter-import-submit' => 'Date importiere',
 );
 
-/** Gujarati (ગુજરાતી)
- * @author Dineshjk
- */
 $messages['gu'] = array(
 	'abusefilter-log-noactions' => 'કોઇ નહીં',
 );
 
-/** Manx (Gaelg)
- * @author MacTire02
- * @author Shimmin Beg
- */
 $messages['gv'] = array(
 	'abusefilter-log-search-user' => 'Ymmydeyr:',
 	'abusefilter-log-hide-reason' => 'Fa:',
 	'abusefilter-list-status' => 'Staydys',
 );
 
-/** Hausa (هَوُسَ) */
 $messages['ha'] = array(
 	'abusefilter-log-search-submit' => 'Nema',
 	'abusefilter-log-hide-reason' => 'Dalili:',
 	'abusefilter-examine-submit' => 'Nema',
 );
 
-/** Hakka (Hak-kâ-fa)
- * @author Hakka
- */
 $messages['hak'] = array(
 	'abusefilter-list-edit' => 'Piên-sip',
 );
 
-/** Hawaiian (Hawai`i)
- * @author Kalani
- * @author Singularity
- */
 $messages['haw'] = array(
 	'abusefilter-log-search-submit' => 'Huli',
 	'abusefilter-list-edit' => 'E hoʻololi',
@@ -11902,13 +11490,6 @@ $messages['haw'] = array(
 	'abusefilter-examine-submit' => 'Huli',
 );
 
-/** Hebrew (עברית)
- * @author Amire80
- * @author Rotemliss
- * @author StuB
- * @author YaronSh
- * @author Yonidebest
- */
 $messages['he'] = array(
 	'abusefilter-desc' => 'ביצוע בדיקות אוטומטיות לעריכות כדי לאתר השחתות',
 	'abusefilter' => 'ניהול מסנני ההשחתות',
@@ -12306,14 +11887,6 @@ $messages['he'] = array(
 	'abusefilter-import-submit' => 'ייבוא המידע',
 );
 
-/** Hindi (हिन्दी)
- * @author Akansha
- * @author Ansumang
- * @author Bhawani Gautam
- * @author Bhawani Gautam Rhk
- * @author Kaustubh
- * @author Kumar
- */
 $messages['hi'] = array(
 	'abusefilter-desc' => ' स्वचालित नियम संपादन पर लागू होता है',
 	'abusefilter' => 'दुर्व्यवहार फिल्टर विन्यास',
@@ -12556,12 +12129,6 @@ $messages['hi'] = array(
 	'abusefilter-import-submit' => 'डेटा आयात करें',
 );
 
-/** Croatian (Hrvatski)
- * @author Dalibor Bosits
- * @author Ex13
- * @author Roberta F.
- * @author SpeedyGonsales
- */
 $messages['hr'] = array(
 	'abusefilter-desc' => 'Primjenjuje automatsku heuristiku na uređivanja',
 	'abusefilter' => 'Konfiguracija filtra zloporaba',
@@ -12965,9 +12532,6 @@ Kopirajte tekst iz okvira koji će se pojaviti, i zalijepite ga u ovaj okvir, a 
 	'abusefilter-import-submit' => 'Uvoz podataka',
 );
 
-/** Upper Sorbian (Hornjoserbsce)
- * @author Michawiki
- */
 $messages['hsb'] = array(
 	'abusefilter-desc' => 'Nałožuje awtomatisku heuristiku na změny.',
 	'abusefilter' => 'Konfiguracija znjewužiwanskeho filtra',
@@ -13361,24 +12925,12 @@ Klikń w žórłowym wikiju na "{{int:abusefilter-edit-export}}" pod "{{int:abus
 	'abusefilter-import-submit' => 'Daty importować',
 );
 
-/** Haitian (Kreyòl ayisyen)
- * @author Masterches
- */
 $messages['ht'] = array(
 	'abusefilter-desc' => 'Aplike avètisman otomatik lè genyen modifikasyon',
 	'abusefilter' => 'Konfigirasyon filt tout abi yo',
 	'abuselog' => 'Jounal pou abi yo',
 );
 
-/** Hungarian (Magyar)
- * @author Bdamokos
- * @author Dani
- * @author Dj
- * @author Dunee
- * @author Glanthor Reviol
- * @author Misibacsi
- * @author Tgr
- */
 $messages['hu'] = array(
 	'abusefilter-desc' => 'Automatikus heurisztikát alkalmaz a szerkesztésekre.',
 	'abusefilter' => 'Vandálszűrő beállítása',
@@ -13779,9 +13331,6 @@ A megjelent szövegdoboz tartalmát ebbe a szövegdobozba másold át, majd katt
 	'abusefilter-import-submit' => 'Adatok importálása',
 );
 
-/** Interlingua (Interlingua)
- * @author McDutchie
- */
 $messages['ia'] = array(
 	'abusefilter-desc' => 'Applica heuristicas automatic al modificationes.',
 	'abusefilter' => 'Configuration del filtros anti-abuso',
@@ -14184,14 +13733,6 @@ Copia le contento del quadro de texto que appare, e colla lo in iste quadro de t
 	'abusefilter-import-submit' => 'Importar datos',
 );
 
-/** Indonesian (Bahasa Indonesia)
- * @author Bennylin
- * @author Farras
- * @author Irwangatot
- * @author IvanLanin
- * @author Iwan Novirion
- * @author Rex
- */
 $messages['id'] = array(
 	'abusefilter-desc' => 'Memberlakukan pemeriksaan heuristik otomatis atas kontribusi pengguna.',
 	'abusefilter' => 'Konfigurasi filter penyalahgunaan',
@@ -14595,9 +14136,6 @@ Salin dari kotak teks yang muncul, dan tempelkan di kotak teks ini, lalu klik "{
 	'abusefilter-import-submit' => 'Impor data',
 );
 
-/** Igbo (Igbo)
- * @author Ukabia
- */
 $messages['ig'] = array(
 	'abusefilter-log-search-title' => 'Ishi:',
 	'abusefilter-log-search-submit' => 'Chọwa',
@@ -14636,14 +14174,10 @@ $messages['ig'] = array(
 	'abusefilter-diff-item' => 'Ihnye',
 );
 
-/** Eastern Canadian (Latin script) (inuktitut) */
 $messages['ike-latn'] = array(
 	'abusefilter-list-edit' => 'Suqusiqpaa',
 );
 
-/** Iloko (Ilokano)
- * @author Lam-ang
- */
 $messages['ilo'] = array(
 	'abusefilter-desc' => 'Agikabil kadagiti automatiko a pinagsulbar ti parikut kadagiti pinagurnos',
 	'abusefilter' => 'Kita ti pinakaaramid ti sagat ti panag-abuso',
@@ -15046,10 +14580,6 @@ Kopian manipud idiay teksto ti kahon nga agparang, ken ikabil ditoy a kahon ti t
 	'abusefilter-import-submit' => 'Alaen ti data',
 );
 
-/** Ingush (ГІалгІай Ğalğaj)
- * @author Amire80
- * @author Sapral Mikail
- */
 $messages['inh'] = array(
 	'abusefilter-log-search-user' => 'Дакъалаьцархо:',
 	'abusefilter-log-search-filter' => 'ID цӀенаъерг:',
@@ -15076,9 +14606,6 @@ $messages['inh'] = array(
 	'abusefilter-examine-submit' => 'Лаха',
 );
 
-/** Ido (Ido)
- * @author Malafaya
- */
 $messages['io'] = array(
 	'abusefilter-log-search-user' => 'Uzanto:',
 	'abusefilter-log-search-title' => 'Titulo:',
@@ -15127,9 +14654,6 @@ $messages['io'] = array(
 	'abusefilter-diff-version' => 'Versiono ye $1 da $2',
 );
 
-/** Icelandic (Íslenska)
- * @author Snævar
- */
 $messages['is'] = array(
 	'abusefilter-desc' => 'Beitir sjálfvirkri brjóstvitsfræði á breytingar.',
 	'abusefilter' => 'Stillingar misnotkunar síunnar',
@@ -15413,19 +14937,6 @@ Til þess að prófa síu sem til er fyrir, settu auðkenni hennar í reitinn h�
 	'abusefilter-diff-backhistory' => 'Aftur í breytingarskrá síunnar',
 );
 
-/** Italian (Italiano)
- * @author Beta16
- * @author Blaisorblade
- * @author BrokenArrow
- * @author Brownout
- * @author Darth Kule
- * @author F. Cosoleto
- * @author Gianfranco
- * @author Melos
- * @author Nemo bis
- * @author Pietrodn
- * @author Valepert
- */
 $messages['it'] = array(
 	'abusefilter-desc' => "Applica un'euristica automatica alle modifiche.",
 	'abusefilter' => 'Configurazione del filtro anti abusi',
@@ -15585,7 +15096,7 @@ Il suo tempo medio di esecuzione è di $4 ms, e impiega $5 {{PLURAL:$5|condizion
 	'abusefilter-edit-action-degroup' => "Rimuovi l'utente da tutti i gruppi privilegiati",
 	'abusefilter-edit-action-block' => "Impedisci le modifiche all'utenza o indirizzo IP",
 	'abusefilter-edit-action-throttle' => "Attiva le azioni solo se l'utente supera un limite predeterminato",
-	'abusefilter-edit-action-rangeblock' => "Blocca l'intervallo /16 di origine dell'utente.",
+	'abusefilter-edit-action-rangeblock' => 'Block the IP range from which the user originates',
 	'abusefilter-edit-action-tag' => 'Evidenzia la modifica per una verifica ulteriore.',
 	'abusefilter-edit-throttle-count' => 'Numero di azioni da consentire:',
 	'abusefilter-edit-throttle-period' => 'Periodo di tempo:',
@@ -15599,7 +15110,7 @@ Il suo tempo medio di esecuzione è di $4 ms, e impiega $5 {{PLURAL:$5|condizion
 	'abusefilter-edit-warn-actions' => 'Azioni:',
 	'abusefilter-edit-warn-preview' => 'Anteprima messaggio selezionato',
 	'abusefilter-edit-warn-edit' => 'Crea o modifica il messaggio selezionato',
-	'abusefilter-edit-tag-tag' => 'Etichette da aggiungere (una per riga):',
+	'abusefilter-edit-tag-tag' => '[[Special:Tags|Etichette]] da aggiungere (una per riga):',
 	'abusefilter-edit-denied' => 'I dettagli di questo filtro non sono accessibili in quanto nascosti al pubblico.',
 	'abusefilter-edit-main' => 'Parametri del filtro',
 	'abusefilter-edit-done-subtitle' => 'Filtro modificato',
@@ -15828,17 +15339,6 @@ Copiare dalla casella che appare e copiare in questa casella, quindi fare clic s
 	'abusefilter-import-submit' => 'Importa dati',
 );
 
-/** Japanese (日本語)
- * @author Aotake
- * @author Fievarsty
- * @author Fryed-peach
- * @author Hosiryuhosi
- * @author Mizusumashi
- * @author Muttley
- * @author Ohgi
- * @author Yanajin66
- * @author 青子守歌
- */
 $messages['ja'] = array(
 	'abusefilter-desc' => '編集に対して自動的な発展的方法を適用する',
 	'abusefilter' => '不正利用フィルター設定',
@@ -15994,7 +15494,7 @@ $messages['ja'] = array(
 	'abusefilter-edit-action-degroup' => '利用者をすべての特権グループから除く',
 	'abusefilter-edit-action-block' => '利用者および/またはIPアドレスを編集ブロックする',
 	'abusefilter-edit-action-throttle' => '利用者が設定された速度限界を越えた場合にのみ、対処操作を発動する',
-	'abusefilter-edit-action-rangeblock' => '利用者の発信元を/16レンジでブロックする',
+	'abusefilter-edit-action-rangeblock' => 'Block the IP range from which the user originates',
 	'abusefilter-edit-action-tag' => '後で再検討するために編集にタグを付ける',
 	'abusefilter-edit-throttle-count' => '許可される操作数:',
 	'abusefilter-edit-throttle-period' => '期間:',
@@ -16223,16 +15723,9 @@ $3 つの{{PLURAL:$3|引数}}があるべきですが $4 つしかありませ�
 	'abusefilter-diff-backhistory' => 'フィルター履歴に戻る',
 	'abusefilter-import-intro' => 'このインタフェースを使って、別のウィキからフィルターをインポートすることができます。インポート元のウィキで、編集画面の「{{int:abusefilter-tools-subtitle}}」下にある「{{int:abusefilter-edit-export}}」をクリックします。そこで現れるテキストボックスの内容をコピーし、このテキストボックスにペーストして、「{{int:abusefilter-import-submit}}」をクリックします。',
 	'abusefilter-import-submit' => 'インポート',
+	'abusefilter-log-cannot-see-details' => 'You do not have permission to see details of this entry.',
 );
 
-/** Georgian (ქართული)
- * @author BRUTE
- * @author David1010
- * @author Dawid Deutschland
- * @author Malafaya
- * @author Temuri rajavi
- * @author გიორგიმელა
- */
 $messages['ka'] = array(
 	'abusefilter' => 'ბოროტად გამოყენების ფილტრის კონფიგურაცია',
 	'abuselog' => 'ბოროტად გამოყენების ჟურნალი',
@@ -16588,44 +16081,25 @@ $messages['ka'] = array(
 	'abusefilter-import-submit' => 'მონაცემების იმპორტირება',
 );
 
-/** Khowar (کھوار)
- * @author Rachitrali
- */
 $messages['khw'] = array(
 	'abusefilter-log-search-user' => 'یوزر',
 	'abusefilter-log-search-submit' => 'Search/تلاش',
 );
 
-/** Kirmanjki (Kırmancki)
- * @author Mirzali
- */
 $messages['kiu'] = array(
 	'abusefilter-log-search-submit' => 'Cı feteliye',
 );
 
-/** Kazakh (Cyrillic script) (‪Қазақша (кирил)‬)
- * @author GaiJin
- */
 $messages['kk-cyrl'] = array(
 	'abusefilter-log-search-submit' => 'Іздеу',
 	'abusefilter-examine-submit' => 'Іздеу',
 );
 
-/** Kalaallisut (Kalaallisut)
- * @author Qaqqalik
- */
 $messages['kl'] = array(
 	'abusefilter-log-search-submit' => 'Ujarlerit',
 	'abusefilter-examine-submit' => 'Ujarlerit',
 );
 
-/** Khmer (ភាសាខ្មែរ)
- * @author Lovekhmer
- * @author T-Rithy
- * @author Thearith
- * @author គីមស៊្រុន
- * @author វ័ណថារិទ្ធ
- */
 $messages['km'] = array(
 	'abusefilter' => 'ការកំណត់រចនាសម្ព័ន្ឋ​តម្រងការបំពានច្បាប់',
 	'abuselog' => 'កំណត់ហេតុ​នៃ​ការបំពានច្បាប់',
@@ -16816,9 +16290,6 @@ $messages['km'] = array(
 	'abusefilter-import-submit' => 'នាំចូល​ទិន្នន័យ​',
 );
 
-/** Kannada (ಕನ್ನಡ)
- * @author Nayvik
- */
 $messages['kn'] = array(
 	'abusefilter-log-search-title' => 'ಶೀರ್ಷಿಕೆ:',
 	'abusefilter-log-search-submit' => 'ಹುಡುಕು',
@@ -16829,14 +16300,6 @@ $messages['kn'] = array(
 	'abusefilter-examine-submit' => 'ಹುಡುಕು',
 );
 
-/** Korean (한국어)
- * @author Albamhandae
- * @author Gapo
- * @author Klutzy
- * @author Kwj2772
- * @author Pakman
- * @author Yknok29
- */
 $messages['ko'] = array(
 	'abusefilter-desc' => '사용자 편집에 문제가 있는지를 자동으로 검사하는 기능',
 	'abusefilter' => '부정 행위 방지 필터 관리',
@@ -16998,7 +16461,7 @@ $messages['ko'] = array(
 	'abusefilter-edit-action-degroup' => '모든 사용자 권한을 해제',
 	'abusefilter-edit-action-block' => '규칙을 위반한 사용자와 IP 사용자가 편집하지 못하게 차단하기',
 	'abusefilter-edit-action-throttle' => '속도 제한을 넘었을 때만 필터를 적용',
-	'abusefilter-edit-action-rangeblock' => '사용자가 사용한 IP의 /16광역을 차단',
+	'abusefilter-edit-action-rangeblock' => 'Block the IP range from which the user originates',
 	'abusefilter-edit-action-tag' => '나중에 검토를 위해 태그하기',
 	'abusefilter-edit-throttle-count' => '허용 횟수:',
 	'abusefilter-edit-throttle-period' => '주기:',
@@ -17241,18 +16704,12 @@ $3개의 변수가 있어야 하지만 $4개의 변수가 있습니다.',
 	'abusefilter-import-submit' => '데이터 가져오기',
 );
 
-/** Krio (Krio)
- * @author Jose77
- */
 $messages['kri'] = array(
 	'abusefilter-log-search-submit' => 'Luk foh am',
 	'abusefilter-list-edit' => 'Chenj',
 	'abusefilter-edit-history' => 'Istri',
 );
 
-/** Colognian (Ripoarisch)
- * @author Purodha
- */
 $messages['ksh'] = array(
 	'abusefilter-desc' => 'Dä Meßbruchsfelter deit Änderunge aan Sigge met Heurestikke pröfe.',
 	'abusefilter' => 'Enstellunge för dä Meßbruchsfelter',
@@ -17678,9 +17135,6 @@ Wann De dat jenouer explizeet han wells, dann donn dä Knopp „{{int:abusefilte
 	'abusefilter-import-submit' => 'Lohß Jonn!',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
- * @author George Animal
- */
 $messages['ku-latn'] = array(
 	'abusefilter-log-search-user' => 'Bikarhêner:',
 	'abusefilter-log-search-title' => 'Sernav:',
@@ -17722,10 +17176,6 @@ $messages['ku-latn'] = array(
 	'abusefilter-topnav-home' => 'Mal',
 );
 
-/** Latin (Latina)
- * @author Omnipaedista
- * @author UV
- */
 $messages['la'] = array(
 	'abusefilter' => 'Configuratio filtri iniuriarum',
 	'abuselog' => 'Acta iniuriarum',
@@ -17771,9 +17221,6 @@ $messages['la'] = array(
 	'abusefilter-log-name' => 'Acta filtri iniuriarum',
 );
 
-/** Ladino (Ladino)
- * @author Universal Life
- */
 $messages['lad'] = array(
 	'abusefilter-desc' => 'A los trocamientos, aplica maneras topadores (eurísticas)',
 	'abusefilter' => 'Konfiggurasyón del filtro contra-abusos',
@@ -17826,10 +17273,6 @@ Deskripsyón del filtro alcançado: $1',
 	'abusefilter-diff-invalid' => 'Las versiones demandadas, no se las está puediendo traer',
 );
 
-/** Luxembourgish (Lëtzebuergesch)
- * @author Les Meloures
- * @author Robby
- */
 $messages['lb'] = array(
 	'abusefilter-desc' => 'Applizéiert automatesch Heuristiken op Ännerungen',
 	'abusefilter' => 'Astellung vum Mëssbrauchsfilter',
@@ -18216,9 +17659,6 @@ Kopéiert vun der Textkëscht déi opgeet an dës Textkëscht a klickt op "{{int
 	'abusefilter-import-submit' => 'Donnéeën importéieren',
 );
 
-/** Lezghian (Лезги)
- * @author Namik
- */
 $messages['lez'] = array(
 	'abusefilter-log-search-user' => 'Иштиракчи:',
 	'abusefilter-log-search-submit' => 'Ахтармишун',
@@ -18232,9 +17672,6 @@ $messages['lez'] = array(
 	'abusefilter-topnav-home' => 'КIвал',
 );
 
-/** Lingua Franca Nova (Lingua Franca Nova)
- * @author Malafaya
- */
 $messages['lfn'] = array(
 	'abusefilter-log-search-user' => 'Usor:',
 	'abusefilter-log-search-title' => 'Titulo:',
@@ -18250,10 +17687,6 @@ $messages['lfn'] = array(
 	'abusefilter-history-user' => 'Usor',
 );
 
-/** Limburgish (Limburgs)
- * @author Ooswesthoesbes
- * @author Pahles
- */
 $messages['li'] = array(
 	'abusefilter-desc' => 'Veurtj automatisch heuristische analyse oet op bewerkinge',
 	'abusefilter' => 'Misbroekfilterinsjtellinge',
@@ -18651,10 +18084,6 @@ Zuuch de [[Special:AbuseFilter/history|lies mit recente filterverangeringe]] veu
 	'abusefilter-import-submit' => 'Veur data in',
 );
 
-/** Lumbaart (Lumbaart)
- * @author Dakrismeno
- * @author Sprüngli
- */
 $messages['lmo'] = array(
 	'abusefilter-desc' => "L'aplica de l'heuristega automatega a li edizion",
 	'abusefilter' => "Configuration del filter d'abus",
@@ -18665,9 +18094,6 @@ Li edizion miga construtivi i sarà revertid à bott, e grand o repetud edizion 
 	'abusefilter-diff-pattern' => 'Cundizión di filter',
 );
 
-/** Lingala (Lingála)
- * @author Eruedin
- */
 $messages['ln'] = array(
 	'abusefilter-log-search-user' => 'Mosáleli:',
 	'abusefilter-log-search-submit' => 'Boluki',
@@ -18675,15 +18101,366 @@ $messages['ln'] = array(
 	'abusefilter-log-hide-reason' => 'Ntína:',
 );
 
-/** Lithuanian (Lietuvių)
- * @author Eitvys200
- * @author Homo
- * @author Ignas693
- * @author Matasg
- * @author Perkunas
- * @author Tomasdd
- * @author Vpovilaitis
- */
+$messages['lol'] = array(
+	'abusefilter-desc' => 'crwdns64601:0crwdne64601:0',
+	'abusefilter' => 'crwdns64602:0crwdne64602:0',
+	'abuselog' => 'crwdns64603:0crwdne64603:0',
+	'abusefilter-intro' => 'crwdns64604:0crwdne64604:0',
+	'abusefilter-mustbeeditor' => 'crwdns64605:0crwdne64605:0',
+	'abusefilter-warning' => 'crwdns64606:0crwdne64606:0',
+	'abusefilter-disallowed' => 'crwdns64607:0crwdne64607:0',
+	'abusefilter-blocked-display' => 'crwdns64608:0{{SITENAME}}crwdne64608:0',
+	'abusefilter-degrouped' => 'crwdns64609:0crwdne64609:0',
+	'abusefilter-autopromote-blocked' => 'crwdns64610:0crwdne64610:0',
+	'abusefilter-blocker' => 'crwdns64611:0crwdne64611:0',
+	'abusefilter-blockreason' => 'crwdns64612:0crwdne64612:0',
+	'abusefilter-degroupreason' => 'crwdns64613:0crwdne64613:0',
+	'abusefilter-accountreserved' => 'crwdns64614:0crwdne64614:0',
+	'right-abusefilter-modify' => 'crwdns64615:0crwdne64615:0',
+	'right-abusefilter-view' => 'crwdns64616:0crwdne64616:0',
+	'right-abusefilter-log' => 'crwdns64617:0crwdne64617:0',
+	'right-abusefilter-log-detail' => 'crwdns64618:0crwdne64618:0',
+	'right-abusefilter-private' => 'crwdns64619:0crwdne64619:0',
+	'right-abusefilter-modify-restricted' => 'crwdns64620:0crwdne64620:0',
+	'right-abusefilter-revert' => 'crwdns64621:0crwdne64621:0',
+	'right-abusefilter-view-private' => 'crwdns64622:0crwdne64622:0',
+	'right-abusefilter-hide-log' => 'crwdns64623:0crwdne64623:0',
+	'right-abusefilter-hidden-log' => 'crwdns64624:0crwdne64624:0',
+	'action-abusefilter-modify' => 'crwdns64625:0crwdne64625:0',
+	'action-abusefilter-view' => 'crwdns64626:0crwdne64626:0',
+	'action-abusefilter-log' => 'crwdns64627:0crwdne64627:0',
+	'action-abusefilter-log-detail' => 'crwdns64628:0crwdne64628:0',
+	'action-abusefilter-private' => 'crwdns64629:0crwdne64629:0',
+	'action-abusefilter-modify-restricted' => 'crwdns64630:0crwdne64630:0',
+	'action-abusefilter-revert' => 'crwdns64631:0crwdne64631:0',
+	'action-abusefilter-view-private' => 'crwdns64632:0crwdne64632:0',
+	'abusefilter-log' => 'crwdns64633:0crwdne64633:0',
+	'abusefilter-log-summary' => 'crwdns64634:0crwdne64634:0',
+	'abusefilter-log-search' => 'crwdns64635:0crwdne64635:0',
+	'abusefilter-log-search-user' => 'crwdns64636:0crwdne64636:0',
+	'abusefilter-log-search-filter' => 'crwdns64637:0crwdne64637:0',
+	'abusefilter-log-search-title' => 'crwdns64638:0crwdne64638:0',
+	'abusefilter-log-search-submit' => 'crwdns64639:0crwdne64639:0',
+	'abusefilter-log-entry' => 'crwdns64640:0crwdne64640:0',
+	'abusefilter-log-detailedentry-meta' => 'crwdns64641:0crwdne64641:0',
+	'abusefilter-log-detailedentry-global' => 'crwdns64642:0crwdne64642:0',
+	'abusefilter-log-detailedentry-local' => 'crwdns64643:0crwdne64643:0',
+	'abusefilter-log-detailslink' => 'crwdns64644:0crwdne64644:0',
+	'abusefilter-log-hidelink' => 'crwdns64645:0crwdne64645:0',
+	'abusefilter-log-details-legend' => 'crwdns64646:0crwdne64646:0',
+	'abusefilter-log-details-var' => 'crwdns64647:0crwdne64647:0',
+	'abusefilter-log-details-val' => 'crwdns64648:0crwdne64648:0',
+	'abusefilter-log-details-vars' => 'crwdns64649:0crwdne64649:0',
+	'abusefilter-log-details-private' => 'crwdns64650:0crwdne64650:0',
+	'abusefilter-log-details-ip' => 'crwdns64651:0crwdne64651:0',
+	'abusefilter-log-noactions' => 'crwdns64652:0crwdne64652:0',
+	'abusefilter-log-details-diff' => 'crwdns64653:0crwdne64653:0',
+	'abusefilter-log-linkoncontribs' => 'crwdns64654:0crwdne64654:0',
+	'abusefilter-log-linkoncontribs-text' => 'crwdns64655:0crwdne64655:0',
+	'abusefilter-log-hidden' => 'crwdns64656:0crwdne64656:0',
+	'abusefilter-log-hide' => 'crwdns64657:0crwdne64657:0',
+	'abusefilter-log-cannot-see-details' => 'crwdns64658:0crwdne64658:0',
+	'abusefilter-log-details-hidden' => 'crwdns64659:0crwdne64659:0',
+	'abusefilter-log-hide-legend' => 'crwdns64660:0crwdne64660:0',
+	'abusefilter-log-hide-id' => 'crwdns64661:0crwdne64661:0',
+	'abusefilter-log-hide-hidden' => 'crwdns64662:0crwdne64662:0',
+	'abusefilter-log-hide-reason' => 'crwdns64663:0crwdne64663:0',
+	'abusefilter-log-hide-forbidden' => 'crwdns64664:0crwdne64664:0',
+	'abusefilter-logentry-suppress' => 'crwdns64665:0crwdne64665:0',
+	'abusefilter-logentry-unsuppress' => 'crwdns64666:0crwdne64666:0',
+	'abusefilter-management' => 'crwdns64667:0crwdne64667:0',
+	'abusefilter-list' => 'crwdns64668:0crwdne64668:0',
+	'abusefilter-list-id' => 'crwdns64669:0crwdne64669:0',
+	'abusefilter-list-status' => 'crwdns64670:0crwdne64670:0',
+	'abusefilter-list-public' => 'crwdns64671:0crwdne64671:0',
+	'abusefilter-list-consequences' => 'crwdns64672:0crwdne64672:0',
+	'abusefilter-list-visibility' => 'crwdns64673:0crwdne64673:0',
+	'abusefilter-list-hitcount' => 'crwdns64674:0crwdne64674:0',
+	'abusefilter-list-edit' => 'crwdns64675:0crwdne64675:0',
+	'abusefilter-list-details' => 'crwdns64676:0crwdne64676:0',
+	'abusefilter-list-limit' => 'crwdns64677:0crwdne64677:0',
+	'abusefilter-list-lastmodified' => 'crwdns64678:0crwdne64678:0',
+	'abusefilter-hidden' => 'crwdns64679:0crwdne64679:0',
+	'abusefilter-unhidden' => 'crwdns64680:0crwdne64680:0',
+	'abusefilter-enabled' => 'crwdns64681:0crwdne64681:0',
+	'abusefilter-deleted' => 'crwdns64682:0crwdne64682:0',
+	'abusefilter-disabled' => 'crwdns64683:0crwdne64683:0',
+	'abusefilter-hitcount' => 'crwdns64684:0{PLURAL:$1|hit|hits}crwdne64684:0',
+	'abusefilter-new' => 'crwdns64685:0crwdne64685:0',
+	'abusefilter-return' => 'crwdns64686:0crwdne64686:0',
+	'abusefilter-status-global' => 'crwdns64687:0crwdne64687:0',
+	'abusefilter-list-options' => 'crwdns64688:0crwdne64688:0',
+	'abusefilter-list-options-deleted' => 'crwdns64689:0crwdne64689:0',
+	'abusefilter-list-options-deleted-only' => 'crwdns64690:0crwdne64690:0',
+	'abusefilter-list-options-deleted-hide' => 'crwdns64691:0crwdne64691:0',
+	'abusefilter-list-options-deleted-show' => 'crwdns64692:0crwdne64692:0',
+	'abusefilter-list-options-disabled' => 'crwdns64693:0crwdne64693:0',
+	'abusefilter-list-options-hidedisabled' => 'crwdns64694:0crwdne64694:0',
+	'abusefilter-list-options-submit' => 'crwdns64695:0crwdne64695:0',
+	'abusefilter-tools-text' => 'crwdns64696:0crwdne64696:0',
+	'abusefilter-tools-expr' => 'crwdns64697:0crwdne64697:0',
+	'abusefilter-tools-submitexpr' => 'crwdns64698:0crwdne64698:0',
+	'abusefilter-tools-reautoconfirm' => 'crwdns64699:0crwdne64699:0',
+	'abusefilter-tools-reautoconfirm-user' => 'crwdns64700:0crwdne64700:0',
+	'abusefilter-tools-reautoconfirm-submit' => 'crwdns64701:0crwdne64701:0',
+	'abusefilter-reautoconfirm-none' => 'crwdns64702:0{GENDER:$1|his|her|their}crwdne64702:0',
+	'abusefilter-reautoconfirm-notallowed' => 'crwdns64703:0crwdne64703:0',
+	'abusefilter-reautoconfirm-done' => 'crwdns64704:0crwdne64704:0',
+	'abusefilter-status' => 'crwdns64705:0{PLURAL:$1|action|actions}crwdnd64705:0{PLURAL:$2|has|have}crwdnd64705:0{PLURAL:$5|has|have}crwdne64705:0',
+	'abusefilter-edit-subtitle' => 'crwdns64706:0crwdne64706:0',
+	'abusefilter-edit-oldwarning' => 'crwdns64707:0crwdne64707:0',
+	'abusefilter-edit-status-label' => 'crwdns64708:0crwdne64708:0',
+	'abusefilter-edit-status' => 'crwdns64709:0{PLURAL:$1|action|actions}crwdnd64709:0{PLURAL:$5|condition|conditions}crwdne64709:0',
+	'abusefilter-edit-throttled' => 'crwdns64710:0crwdne64710:0',
+	'abusefilter-edit-new' => 'crwdns64711:0crwdne64711:0',
+	'abusefilter-edit-save' => 'crwdns64712:0crwdne64712:0',
+	'abusefilter-edit-id' => 'crwdns64713:0crwdne64713:0',
+	'abusefilter-edit-description' => 'crwdns64714:0crwdne64714:0',
+	'abusefilter-edit-flags' => 'crwdns64715:0crwdne64715:0',
+	'abusefilter-edit-enabled' => 'crwdns64716:0crwdne64716:0',
+	'abusefilter-edit-deleted' => 'crwdns64717:0crwdne64717:0',
+	'abusefilter-edit-hidden' => 'crwdns64718:0crwdne64718:0',
+	'abusefilter-edit-rules' => 'crwdns64719:0crwdne64719:0',
+	'abusefilter-edit-notes' => 'crwdns64720:0crwdne64720:0',
+	'abusefilter-edit-lastmod' => 'crwdns64721:0crwdne64721:0',
+	'abusefilter-edit-lastmod-text' => 'crwdns64722:0crwdne64722:0',
+	'abusefilter-edit-hitcount' => 'crwdns64723:0crwdne64723:0',
+	'abusefilter-edit-consequences' => 'crwdns64724:0crwdne64724:0',
+	'abusefilter-edit-action-warn' => 'crwdns64725:0crwdne64725:0',
+	'abusefilter-edit-action-disallow' => 'crwdns64726:0crwdne64726:0',
+	'abusefilter-edit-action-flag' => 'crwdns64727:0crwdne64727:0',
+	'abusefilter-edit-action-blockautopromote' => 'crwdns64728:0crwdne64728:0',
+	'abusefilter-edit-action-degroup' => 'crwdns64729:0crwdne64729:0',
+	'abusefilter-edit-action-block' => 'crwdns64730:0crwdne64730:0',
+	'abusefilter-edit-action-throttle' => 'crwdns64731:0crwdne64731:0',
+	'abusefilter-edit-action-rangeblock' => 'crwdns71030:0crwdne71030:0',
+	'abusefilter-edit-action-tag' => 'crwdns64733:0crwdne64733:0',
+	'abusefilter-edit-throttle-count' => 'crwdns64734:0crwdne64734:0',
+	'abusefilter-edit-throttle-period' => 'crwdns64735:0crwdne64735:0',
+	'abusefilter-edit-throttle-seconds' => 'crwdns64736:0{PLURAL:$1|second|seconds}crwdne64736:0',
+	'abusefilter-edit-throttle-groups' => 'crwdns64737:0crwdne64737:0',
+	'abusefilter-edit-warn-message' => 'crwdns64738:0crwdne64738:0',
+	'abusefilter-edit-warn-other' => 'crwdns64739:0crwdne64739:0',
+	'abusefilter-edit-warn-other-label' => 'crwdns64740:0crwdne64740:0',
+	'abusefilter-edit-warn-actions' => 'crwdns64741:0crwdne64741:0',
+	'abusefilter-edit-warn-preview' => 'crwdns64742:0crwdne64742:0',
+	'abusefilter-edit-warn-edit' => 'crwdns64743:0crwdne64743:0',
+	'abusefilter-edit-tag-tag' => 'crwdns64744:0crwdne64744:0',
+	'abusefilter-edit-denied' => 'crwdns64745:0crwdne64745:0',
+	'abusefilter-edit-main' => 'crwdns64746:0crwdne64746:0',
+	'abusefilter-edit-done-subtitle' => 'crwdns64747:0crwdne64747:0',
+	'abusefilter-edit-done' => 'crwdns64748:0crwdne64748:0',
+	'abusefilter-edit-badsyntax' => 'crwdns64749:0crwdne64749:0',
+	'abusefilter-edit-restricted' => 'crwdns64750:0crwdne64750:0',
+	'abusefilter-edit-viewhistory' => 'crwdns64751:0crwdne64751:0',
+	'abusefilter-edit-history' => 'crwdns64752:0crwdne64752:0',
+	'abusefilter-edit-check' => 'crwdns64753:0crwdne64753:0',
+	'abusefilter-edit-badfilter' => 'crwdns64754:0crwdne64754:0',
+	'abusefilter-edit-revert' => 'crwdns64755:0crwdne64755:0',
+	'abusefilter-edit-tools' => 'crwdns64756:0crwdne64756:0',
+	'abusefilter-edit-test-link' => 'crwdns64757:0crwdne64757:0',
+	'abusefilter-edit-export' => 'crwdns64758:0crwdne64758:0',
+	'abusefilter-edit-syntaxok' => 'crwdns64759:0crwdne64759:0',
+	'abusefilter-edit-syntaxerr' => 'crwdns64760:0crwdne64760:0',
+	'abusefilter-edit-bad-tags' => 'crwdns64761:0crwdne64761:0',
+	'abusefilter-edit-notallowed' => 'crwdns64762:0crwdne64762:0',
+	'abusefilter-edit-builder-select' => 'crwdns64763:0crwdne64763:0',
+	'abusefilter-edit-builder-group-op-arithmetic' => 'crwdns64764:0crwdne64764:0',
+	'abusefilter-edit-builder-op-arithmetic-addition' => 'crwdns64765:0crwdne64765:0',
+	'abusefilter-edit-builder-op-arithmetic-subtraction' => 'crwdns64766:0crwdne64766:0',
+	'abusefilter-edit-builder-op-arithmetic-multiplication' => 'crwdns64767:0crwdne64767:0',
+	'abusefilter-edit-builder-op-arithmetic-divide' => 'crwdns64768:0crwdne64768:0',
+	'abusefilter-edit-builder-op-arithmetic-modulo' => 'crwdns64769:0crwdne64769:0',
+	'abusefilter-edit-builder-op-arithmetic-pow' => 'crwdns64770:0crwdne64770:0',
+	'abusefilter-edit-builder-group-op-comparison' => 'crwdns64771:0crwdne64771:0',
+	'abusefilter-edit-builder-op-comparison-equal' => 'crwdns64772:0crwdne64772:0',
+	'abusefilter-edit-builder-op-comparison-notequal' => 'crwdns64773:0crwdne64773:0',
+	'abusefilter-edit-builder-op-comparison-lt' => 'crwdns64774:0crwdne64774:0',
+	'abusefilter-edit-builder-op-comparison-gt' => 'crwdns64775:0crwdne64775:0',
+	'abusefilter-edit-builder-op-comparison-lte' => 'crwdns64776:0crwdne64776:0',
+	'abusefilter-edit-builder-op-comparison-gte' => 'crwdns64777:0crwdne64777:0',
+	'abusefilter-edit-builder-group-op-bool' => 'crwdns64778:0crwdne64778:0',
+	'abusefilter-edit-builder-op-bool-not' => 'crwdns64779:0crwdne64779:0',
+	'abusefilter-edit-builder-op-bool-and' => 'crwdns64780:0crwdne64780:0',
+	'abusefilter-edit-builder-op-bool-or' => 'crwdns64781:0crwdne64781:0',
+	'abusefilter-edit-builder-op-bool-xor' => 'crwdns64782:0crwdne64782:0',
+	'abusefilter-edit-builder-group-misc' => 'crwdns64783:0crwdne64783:0',
+	'abusefilter-edit-builder-misc-in' => 'crwdns64784:0crwdne64784:0',
+	'abusefilter-edit-builder-misc-like' => 'crwdns64785:0crwdne64785:0',
+	'abusefilter-edit-builder-misc-rlike' => 'crwdns64786:0crwdne64786:0',
+	'abusefilter-edit-builder-misc-irlike' => 'crwdns64787:0crwdne64787:0',
+	'abusefilter-edit-builder-misc-contains' => 'crwdns64788:0crwdne64788:0',
+	'abusefilter-edit-builder-misc-stringlit' => 'crwdns64789:0crwdne64789:0',
+	'abusefilter-edit-builder-misc-tern' => 'crwdns64790:0crwdne64790:0',
+	'abusefilter-edit-builder-misc-cond' => 'crwdns64791:0crwdne64791:0',
+	'abusefilter-edit-builder-group-funcs' => 'crwdns64792:0crwdne64792:0',
+	'abusefilter-edit-builder-funcs-length' => 'crwdns64793:0crwdne64793:0',
+	'abusefilter-edit-builder-funcs-lcase' => 'crwdns64794:0crwdne64794:0',
+	'abusefilter-edit-builder-funcs-ccnorm' => 'crwdns64795:0crwdne64795:0',
+	'abusefilter-edit-builder-funcs-rmdoubles' => 'crwdns64796:0crwdne64796:0',
+	'abusefilter-edit-builder-funcs-specialratio' => 'crwdns64797:0crwdne64797:0',
+	'abusefilter-edit-builder-funcs-norm' => 'crwdns64798:0crwdne64798:0',
+	'abusefilter-edit-builder-funcs-count' => 'crwdns64799:0crwdne64799:0',
+	'abusefilter-edit-builder-funcs-rcount' => 'crwdns64800:0crwdne64800:0',
+	'abusefilter-edit-builder-funcs-rmwhitespace' => 'crwdns64801:0crwdne64801:0',
+	'abusefilter-edit-builder-funcs-rmspecials' => 'crwdns64802:0crwdne64802:0',
+	'abusefilter-edit-builder-funcs-ip_in_range' => 'crwdns64803:0crwdne64803:0',
+	'abusefilter-edit-builder-funcs-contains-any' => 'crwdns64804:0crwdne64804:0',
+	'abusefilter-edit-builder-funcs-substr' => 'crwdns64805:0crwdne64805:0',
+	'abusefilter-edit-builder-funcs-strpos' => 'crwdns64806:0crwdne64806:0',
+	'abusefilter-edit-builder-funcs-str_replace' => 'crwdns64807:0crwdne64807:0',
+	'abusefilter-edit-builder-funcs-set_var' => 'crwdns64808:0crwdne64808:0',
+	'abusefilter-edit-builder-group-vars' => 'crwdns64809:0crwdne64809:0',
+	'abusefilter-edit-builder-vars-accountname' => 'crwdns64810:0crwdne64810:0',
+	'abusefilter-edit-builder-vars-timestamp' => 'crwdns64811:0crwdne64811:0',
+	'abusefilter-edit-builder-vars-action' => 'crwdns64812:0crwdne64812:0',
+	'abusefilter-edit-builder-vars-addedlines' => 'crwdns64813:0crwdne64813:0',
+	'abusefilter-edit-builder-vars-delta' => 'crwdns64814:0crwdne64814:0',
+	'abusefilter-edit-builder-vars-diff' => 'crwdns64815:0crwdne64815:0',
+	'abusefilter-edit-builder-vars-newsize' => 'crwdns64816:0crwdne64816:0',
+	'abusefilter-edit-builder-vars-oldsize' => 'crwdns64817:0crwdne64817:0',
+	'abusefilter-edit-builder-vars-removedlines' => 'crwdns64818:0crwdne64818:0',
+	'abusefilter-edit-builder-vars-summary' => 'crwdns64819:0crwdne64819:0',
+	'abusefilter-edit-builder-vars-article-id' => 'crwdns64820:0crwdne64820:0',
+	'abusefilter-edit-builder-vars-article-ns' => 'crwdns64821:0crwdne64821:0',
+	'abusefilter-edit-builder-vars-article-text' => 'crwdns64822:0crwdne64822:0',
+	'abusefilter-edit-builder-vars-article-prefixedtext' => 'crwdns64823:0crwdne64823:0',
+	'abusefilter-edit-builder-vars-movedfrom-id' => 'crwdns64824:0crwdne64824:0',
+	'abusefilter-edit-builder-vars-movedfrom-ns' => 'crwdns64825:0crwdne64825:0',
+	'abusefilter-edit-builder-vars-movedfrom-text' => 'crwdns64826:0crwdne64826:0',
+	'abusefilter-edit-builder-vars-movedfrom-prefixedtext' => 'crwdns64827:0crwdne64827:0',
+	'abusefilter-edit-builder-vars-movedto-id' => 'crwdns64828:0crwdne64828:0',
+	'abusefilter-edit-builder-vars-movedto-ns' => 'crwdns64829:0crwdne64829:0',
+	'abusefilter-edit-builder-vars-movedto-text' => 'crwdns64830:0crwdne64830:0',
+	'abusefilter-edit-builder-vars-movedto-prefixedtext' => 'crwdns64831:0crwdne64831:0',
+	'abusefilter-edit-builder-vars-user-editcount' => 'crwdns64832:0crwdne64832:0',
+	'abusefilter-edit-builder-vars-user-age' => 'crwdns64833:0crwdne64833:0',
+	'abusefilter-edit-builder-vars-user-name' => 'crwdns64834:0crwdne64834:0',
+	'abusefilter-edit-builder-vars-user-groups' => 'crwdns64835:0crwdne64835:0',
+	'abusefilter-edit-builder-vars-user-emailconfirm' => 'crwdns64836:0crwdne64836:0',
+	'abusefilter-edit-builder-vars-recent-contributors' => 'crwdns64837:0crwdne64837:0',
+	'abusefilter-edit-builder-vars-all-links' => 'crwdns64838:0crwdne64838:0',
+	'abusefilter-edit-builder-vars-added-links' => 'crwdns64839:0crwdne64839:0',
+	'abusefilter-edit-builder-vars-removed-links' => 'crwdns64840:0crwdne64840:0',
+	'abusefilter-edit-builder-vars-old-text' => 'crwdns64841:0crwdne64841:0',
+	'abusefilter-edit-builder-vars-new-text' => 'crwdns64842:0crwdne64842:0',
+	'abusefilter-edit-builder-vars-new-text-stripped' => 'crwdns64843:0crwdne64843:0',
+	'abusefilter-edit-builder-vars-new-html' => 'crwdns64844:0crwdne64844:0',
+	'abusefilter-edit-builder-vars-restrictions-edit' => 'crwdns64845:0crwdne64845:0',
+	'abusefilter-edit-builder-vars-restrictions-move' => 'crwdns64846:0crwdne64846:0',
+	'abusefilter-edit-builder-vars-old-text-stripped' => 'crwdns64847:0crwdne64847:0',
+	'abusefilter-edit-builder-vars-old-links' => 'crwdns64848:0crwdne64848:0',
+	'abusefilter-edit-builder-vars-old-html' => 'crwdns64849:0crwdne64849:0',
+	'abusefilter-edit-builder-vars-minor-edit' => 'crwdns64850:0crwdne64850:0',
+	'abusefilter-edit-builder-vars-file-sha1' => 'crwdns64851:0crwdne64851:0',
+	'abusefilter-filter-log' => 'crwdns64852:0crwdne64852:0',
+	'abusefilter-history' => 'crwdns64853:0crwdne64853:0',
+	'abusefilter-history-foruser' => 'crwdns64854:0crwdne64854:0',
+	'abusefilter-history-hidden' => 'crwdns64855:0crwdne64855:0',
+	'abusefilter-history-enabled' => 'crwdns64856:0crwdne64856:0',
+	'abusefilter-history-global' => 'crwdns64857:0crwdne64857:0',
+	'abusefilter-history-timestamp' => 'crwdns64858:0crwdne64858:0',
+	'abusefilter-history-user' => 'crwdns64859:0crwdne64859:0',
+	'abusefilter-history-public' => 'crwdns64860:0crwdne64860:0',
+	'abusefilter-history-flags' => 'crwdns64861:0crwdne64861:0',
+	'abusefilter-history-filter' => 'crwdns64862:0crwdne64862:0',
+	'abusefilter-history-comments' => 'crwdns64863:0crwdne64863:0',
+	'abusefilter-history-actions' => 'crwdns64864:0crwdne64864:0',
+	'abusefilter-history-backedit' => 'crwdns64865:0crwdne64865:0',
+	'abusefilter-history-deleted' => 'crwdns64866:0crwdne64866:0',
+	'abusefilter-history-filterid' => 'crwdns64867:0crwdne64867:0',
+	'abusefilter-history-select-legend' => 'crwdns64868:0crwdne64868:0',
+	'abusefilter-history-select-user' => 'crwdns64869:0crwdne64869:0',
+	'abusefilter-history-select-submit' => 'crwdns64870:0crwdne64870:0',
+	'abusefilter-history-diff' => 'crwdns64871:0crwdne64871:0',
+	'abusefilter-history-error-hidden' => 'crwdns64872:0crwdne64872:0',
+	'abusefilter-exception-unexpectedatend' => 'crwdns64873:0crwdne64873:0',
+	'abusefilter-exception-expectednotfound' => 'crwdns64874:0crwdne64874:0',
+	'abusefilter-exception-unrecognisedkeyword' => 'crwdns64875:0crwdne64875:0',
+	'abusefilter-exception-unexpectedtoken' => 'crwdns64876:0crwdne64876:0',
+	'abusefilter-exception-unclosedstring' => 'crwdns64877:0crwdne64877:0',
+	'abusefilter-exception-invalidoperator' => 'crwdns64878:0crwdne64878:0',
+	'abusefilter-exception-unrecognisedtoken' => 'crwdns64879:0crwdne64879:0',
+	'abusefilter-exception-noparams' => 'crwdns64880:0crwdne64880:0',
+	'abusefilter-exception-dividebyzero' => 'crwdns64881:0crwdne64881:0',
+	'abusefilter-exception-unrecognisedvar' => 'crwdns64882:0crwdne64882:0',
+	'abusefilter-exception-notenoughargs' => 'crwdns64883:0{PLURAL:$3|argument|arguments}crwdne64883:0',
+	'abusefilter-exception-regexfailure' => 'crwdns64884:0crwdne64884:0',
+	'abusefilter-exception-overridebuiltin' => 'crwdns64885:0crwdne64885:0',
+	'abusefilter-exception-outofbounds' => 'crwdns64886:0crwdne64886:0',
+	'abusefilter-exception-notlist' => 'crwdns64887:0crwdne64887:0',
+	'abusefilter-action-tag' => 'crwdns64888:0crwdne64888:0',
+	'abusefilter-action-throttle' => 'crwdns64889:0crwdne64889:0',
+	'abusefilter-action-warn' => 'crwdns64890:0crwdne64890:0',
+	'abusefilter-action-blockautopromote' => 'crwdns64891:0crwdne64891:0',
+	'abusefilter-action-block' => 'crwdns64892:0crwdne64892:0',
+	'abusefilter-action-degroup' => 'crwdns64893:0crwdne64893:0',
+	'abusefilter-action-rangeblock' => 'crwdns64894:0crwdne64894:0',
+	'abusefilter-action-disallow' => 'crwdns64895:0crwdne64895:0',
+	'abusefilter-revert-title' => 'crwdns64896:0crwdne64896:0',
+	'abusefilter-revert-intro' => 'crwdns64897:0crwdne64897:0',
+	'abusefilter-revert-preview-item' => 'crwdns64898:0crwdne64898:0',
+	'abusefilter-revert-search-legend' => 'crwdns64899:0crwdne64899:0',
+	'abusefilter-revert-periodstart' => 'crwdns64900:0crwdne64900:0',
+	'abusefilter-revert-periodend' => 'crwdns64901:0crwdne64901:0',
+	'abusefilter-revert-search' => 'crwdns64902:0crwdne64902:0',
+	'abusefilter-revert-filter' => 'crwdns64903:0crwdne64903:0',
+	'abusefilter-revert-preview-intro' => 'crwdns64904:0crwdne64904:0',
+	'abusefilter-revert-confirm' => 'crwdns64905:0crwdne64905:0',
+	'abusefilter-revert-success' => 'crwdns64906:0crwdne64906:0',
+	'abusefilter-revert-reason' => 'crwdns64907:0crwdne64907:0',
+	'abusefilter-revert-reasonfield' => 'crwdns64908:0crwdne64908:0',
+	'abusefilter-test' => 'crwdns64909:0crwdne64909:0',
+	'abusefilter-test-intro' => 'crwdns64910:0{PLURAL:$1|change|changes}crwdne64910:0',
+	'abusefilter-test-legend' => 'crwdns64911:0crwdne64911:0',
+	'abusefilter-test-load-filter' => 'crwdns64912:0crwdne64912:0',
+	'abusefilter-test-submit' => 'crwdns64913:0crwdne64913:0',
+	'abusefilter-test-load' => 'crwdns64914:0crwdne64914:0',
+	'abusefilter-test-user' => 'crwdns64915:0crwdne64915:0',
+	'abusefilter-test-period-start' => 'crwdns64916:0crwdne64916:0',
+	'abusefilter-test-period-end' => 'crwdns64917:0crwdne64917:0',
+	'abusefilter-test-page' => 'crwdns64918:0crwdne64918:0',
+	'abusefilter-test-shownegative' => 'crwdns64919:0crwdne64919:0',
+	'abusefilter-test-syntaxerr' => 'crwdns64920:0crwdne64920:0',
+	'abusefilter-changeslist-examine' => 'crwdns64921:0crwdne64921:0',
+	'abusefilter-examine' => 'crwdns64922:0crwdne64922:0',
+	'abusefilter-examine-intro' => 'crwdns64923:0crwdne64923:0',
+	'abusefilter-examine-legend' => 'crwdns64924:0crwdne64924:0',
+	'abusefilter-examine-diff' => 'crwdns64925:0crwdne64925:0',
+	'abusefilter-examine-user' => 'crwdns64926:0crwdne64926:0',
+	'abusefilter-examine-title' => 'crwdns64927:0crwdne64927:0',
+	'abusefilter-examine-submit' => 'crwdns64928:0crwdne64928:0',
+	'abusefilter-examine-vars' => 'crwdns64929:0crwdne64929:0',
+	'abusefilter-examine-test' => 'crwdns64930:0crwdne64930:0',
+	'abusefilter-examine-test-button' => 'crwdns64931:0crwdne64931:0',
+	'abusefilter-examine-match' => 'crwdns64932:0crwdne64932:0',
+	'abusefilter-examine-nomatch' => 'crwdns64933:0crwdne64933:0',
+	'abusefilter-examine-syntaxerror' => 'crwdns64934:0crwdne64934:0',
+	'abusefilter-examine-notfound' => 'crwdns64935:0crwdne64935:0',
+	'abusefilter-examine-incompatible' => 'crwdns64936:0crwdne64936:0',
+	'abusefilter-examine-noresults' => 'crwdns64937:0crwdne64937:0',
+	'abusefilter-topnav' => 'crwdns64938:0crwdne64938:0',
+	'abusefilter-topnav-home' => 'crwdns64939:0crwdne64939:0',
+	'abusefilter-topnav-test' => 'crwdns64940:0crwdne64940:0',
+	'abusefilter-topnav-examine' => 'crwdns64941:0crwdne64941:0',
+	'abusefilter-topnav-log' => 'crwdns64942:0crwdne64942:0',
+	'abusefilter-topnav-tools' => 'crwdns64943:0crwdne64943:0',
+	'abusefilter-topnav-import' => 'crwdns64944:0crwdne64944:0',
+	'abusefilter-log-name' => 'crwdns64945:0crwdne64945:0',
+	'abusefilter-log-header' => 'crwdns64946:0crwdne64946:0',
+	'abusefilter-log-entry-modify' => 'crwdns64947:0crwdne64947:0',
+	'abusefilter-log-noresults' => 'crwdns64948:0crwdne64948:0',
+	'abusefilter-diff-title' => 'crwdns64949:0crwdne64949:0',
+	'abusefilter-diff-item' => 'crwdns64950:0crwdne64950:0',
+	'abusefilter-diff-version' => 'crwdns64951:0crwdne64951:0',
+	'abusefilter-diff-info' => 'crwdns64952:0crwdne64952:0',
+	'abusefilter-diff-pattern' => 'crwdns64953:0crwdne64953:0',
+	'abusefilter-diff-invalid' => 'crwdns64954:0crwdne64954:0',
+	'abusefilter-diff-backhistory' => 'crwdns64955:0crwdne64955:0',
+	'abusefilter-import-intro' => 'crwdns64956:0{{int:abusefilter-edit-export}}crwdnd64956:0{{int:abusefilter-tools-subtitle}}crwdnd64956:0{{int:abusefilter-import-submit}}crwdne64956:0',
+	'abusefilter-import-submit' => 'crwdns64957:0crwdne64957:0',
+);
+
 $messages['lt'] = array(
 	'abusefilter-desc' => 'Pakeitimų tikrinimui naudojamas automatinis euristinis tikrinimas',
 	'abusefilter' => 'Piktnaudžiavimų filtravimo priemonė',
@@ -19081,9 +18858,6 @@ Kopijuoti iš teksto lauką, kad pasirodo, ir įklijuokite jį į šį teksto la
 	'abusefilter-import-submit' => 'Importuoti duomenis',
 );
 
-/** Latgalian (Latgaļu)
- * @author Dark Eagle
- */
 $messages['ltg'] = array(
 	'abusefilter-log-search-user' => 'Lītuotuojs:',
 	'abusefilter-list-status' => 'Statuss',
@@ -19098,11 +18872,6 @@ $messages['ltg'] = array(
 	'abusefilter-examine-user' => 'Lītuotuojs:',
 );
 
-/** Latvian (Latviešu)
- * @author GreenZeb
- * @author Marozols
- * @author Papuass
- */
 $messages['lv'] = array(
 	'abusefilter-desc' => 'Pielieto automātiskas heiristikas labojumiem',
 	'abusefilter' => 'Ļaunprātīgās izmantošanas filtru konfigurācija',
@@ -19478,9 +19247,6 @@ Pilnu paskaidrojumu vari saņemt, noklikšķinot uz pogas "Pārbadīt sintaksi".
 	'abusefilter-import-submit' => 'Importēt datus',
 );
 
-/** Maithili (मैथिली)
- * @author Vinitutpal
- */
 $messages['mai'] = array(
 	'abusefilter-blocker' => 'फिल्टरक दुरुपयोग',
 	'right-abusefilter-modify' => 'ख़राब फ़िल्टर के ठीक करू',
@@ -19507,9 +19273,6 @@ $messages['mai'] = array(
 	'abusefilter-edit-deleted' => 'मिटाबै के निशान दियो',
 );
 
-/** Malagasy (Malagasy)
- * @author Jagwar
- */
 $messages['mg'] = array(
 	'abuselog' => 'Tatitry ny Abuse Filter',
 	'right-abusefilter-modify' => 'Hanova ny Abuse filter',
@@ -19585,9 +19348,6 @@ $messages['mg'] = array(
 	'abusefilter-edit-builder-vars-oldsize' => 'Habem-pejy taloha',
 );
 
-/** Eastern Mari (Олык Марий)
- * @author Сай
- */
 $messages['mhr'] = array(
 	'abusefilter-log-search-user' => 'Пайдаланыше:',
 	'abusefilter-edit-status-label' => 'Иктешлымаш:',
@@ -19596,10 +19356,6 @@ $messages['mhr'] = array(
 	'abusefilter-revert-filter' => 'Фильтр:',
 );
 
-/** Macedonian (Македонски)
- * @author Bjankuloski06
- * @author Brest
- */
 $messages['mk'] = array(
 	'abusefilter-desc' => 'Извршува автоматски хевристички филтрирања во уредувањата',
 	'abusefilter' => 'Прилагодувања на филтерот на злоупотреби',
@@ -20007,10 +19763,6 @@ $messages['mk'] = array(
 	'abusefilter-import-submit' => 'Увези податоци',
 );
 
-/** Malayalam (മലയാളം)
- * @author Anoopan
- * @author Praveenp
- */
 $messages['ml'] = array(
 	'abusefilter-desc' => 'തിരുത്തലുകളിൽ സ്വയം പ്രതിരോധപ്രവർത്തനങ്ങൾ നടപ്പിലാക്കുന്നു',
 	'abusefilter' => 'ദുരുപയോഗ അരിപ്പയുടെ ക്രമീകരണങ്ങൾ',
@@ -20411,9 +20163,6 @@ $messages['ml'] = array(
 	'abusefilter-import-submit' => 'വിവരങ്ങൾ ഇറക്കുമതി ചെയ്യുക',
 );
 
-/** Mongolian (Монгол)
- * @author Chinneeb
- */
 $messages['mn'] = array(
 	'abusefilter-log-search-submit' => 'Хайх',
 	'abusefilter-history-comments' => 'Тайлбар',
@@ -20421,9 +20170,6 @@ $messages['mn'] = array(
 	'abusefilter-examine-submit' => 'Хайх',
 );
 
-/** Marathi (मराठी)
- * @author Htt
- */
 $messages['mr'] = array(
 	'abusefilter-log-details-val' => 'किंमत',
 	'abusefilter-log-noactions' => 'काहीही नाही',
@@ -20438,14 +20184,6 @@ $messages['mr'] = array(
 	'abusefilter-examine-user' => 'सदस्य:',
 );
 
-/** Malay (Bahasa Melayu)
- * @author Anakmalaysia
- * @author Aurora
- * @author Aviator
- * @author Izzudin
- * @author Kurniasan
- * @author Zamwan
- */
 $messages['ms'] = array(
 	'abusefilter-desc' => 'Mengenakan heuristik automatik pada suntingan.',
 	'abusefilter' => 'Tatarajah penapis salah guna',
@@ -20851,11 +20589,6 @@ Salin dari ruangan teks yang muncul, kemudian tampalkannya ke dalam ruangan teks
 	'abusefilter-import-submit' => 'Import data',
 );
 
-/** Maltese (Malti)
- * @author Chrisportelli
- * @author Giangian15
- * @author Roderick Mallia
- */
 $messages['mt'] = array(
 	'abusefilter-desc' => 'Tapplika ewristika awtomatika lill-modifiki',
 	'abusefilter' => 'Konfigurazzjoni tal-filtru tal-abbuż',
@@ -21223,9 +20956,6 @@ Ikkopja mill-kaxxa li tidher u itfagħha f\'din il-kaxxa, u imbagħad iklikkja "
 	'abusefilter-import-submit' => 'Importa informazzjoni',
 );
 
-/** Burmese (မြန်မာဘာသာ)
- * @author Erikoo
- */
 $messages['my'] = array(
 	'abusefilter-log-search-user' => 'အသုံးပြုသူ -',
 	'abusefilter-log-search-title' => 'ခေါင်းစဉ် :',
@@ -21234,9 +20964,6 @@ $messages['my'] = array(
 	'abusefilter-log-hide-reason' => 'အ​ကြောင်း​ပြ​ချက်:',
 );
 
-/** Erzya (Эрзянь)
- * @author Botuzhaleny-sodamo
- */
 $messages['myv'] = array(
 	'abuselog' => 'Аволь истя тевс нолдамодо тешкстамот',
 	'abusefilter-blocker' => 'А тевде сувтеме',
@@ -21335,17 +21062,10 @@ $messages['myv'] = array(
 	'abusefilter-topnav-log' => 'А тевде тешкстамот',
 );
 
-/** Mazanderani (مازِرونی)
- * @author محک
- */
 $messages['mzn'] = array(
 	'abusefilter-test-load' => 'باربی‌یشتن',
 );
 
-/** Nahuatl (Nāhuatl)
- * @author Fluence
- * @author Teòtlalili
- */
 $messages['nah'] = array(
 	'abusefilter-log-search-user' => 'Tlatequitiltilīlli:',
 	'abusefilter-log-search-title' => 'Tōcāitl:',
@@ -21359,16 +21079,6 @@ $messages['nah'] = array(
 	'abusefilter-topnav-home' => 'Pèwalòyàn',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Event
- * @author Guaca
- * @author Harald Khan
- * @author Jon Harald Søby
- * @author Laaknor
- * @author Nghtwlkr
- * @author Njardarlogar
- * @author Stigmj
- */
 $messages['nb'] = array(
 	'abusefilter-desc' => 'Legger automatisk til heuristikk til redigeringer.',
 	'abusefilter' => 'Konfigurasjon av misbruksfilter',
@@ -21757,9 +21467,6 @@ Kopier fra tekstruten som kommer frem og lim inn i denne tekstruten. Klikk så p
 	'abusefilter-import-submit' => 'Importer data',
 );
 
-/** Low German (Plattdüütsch)
- * @author Slomox
- */
 $messages['nds'] = array(
 	'abusefilter-desc' => 'Föhrt automaatsch heuristische Analysen op Ännern ut',
 	'abusefilter' => 'Missbruukfilter instellen',
@@ -22136,9 +21843,6 @@ Kopeer de Textbox, de dor wiest warrt, un föög den Text in disse Textbox in, k
 	'abusefilter-import-submit' => 'Daten importeren',
 );
 
-/** Nedersaksisch (Nedersaksisch)
- * @author Servien
- */
 $messages['nds-nl'] = array(
 	'abusefilter-accountreserved' => 'Disse gebrukersnaam is ereserveerd veur de misbruukfilter',
 	'abusefilter-log-search-user' => 'Gebruker:',
@@ -22273,11 +21977,6 @@ $messages['nds-nl'] = array(
 	'abusefilter-revert-filter' => 'Filter:',
 );
 
-/** Nepali (नेपाली)
- * @author Bhawani Gautam
- * @author Bhawani Gautam Rhk
- * @author सरोज कुमार ढकाल
- */
 $messages['ne'] = array(
 	'abusefilter-desc' => 'स्वचालित अनुमानित सम्पादनहरुकोनिम्ति लागु हुन्छ',
 	'abusefilter' => 'दुर्व्यवहार फिल्टर विन्यास',
@@ -22300,20 +21999,20 @@ $messages['ne'] = array(
 लगाइएकोछ।
 यदि यो गल्तीले भएको भए कृपया प्रबन्धकसित सम्पर्क गर्नुहोला।
 यस गलत कार्य नीतिसित तपाईंको कार्यले मेल खाँदैछ, एउटा संक्षिप्त विवरण यस प्रकार छ :$1',
-	'abusefilter-blocker' => 'दुर्व्यवहार फिल्टर \\',
+	'abusefilter-blocker' => 'दुर्व्यवहार फिल्टर ',
 	'right-abusefilter-view' => 'दुर्व्यवहार फिल्टरहरु हेर्ने',
 	'right-abusefilter-log' => 'दुर्व्यवहार लग हेर्ने',
 	'action-abusefilter-modify' => 'दुर्व्यवहार फिल्टर परिवर्तन गर्ने',
 	'action-abusefilter-view' => 'दुर्व्यवहार फिल्टरहरु हेर्ने',
-	'action-abusefilter-log' => 'दुरुपयोग लगहरु हेर्नुहोस् \\',
-	'action-abusefilter-log-detail' => 'विस्तृत दुरुपयोग लग प्रविष्टीहरु हेर्नुहोस् \\',
-	'abusefilter-log' => 'दुर्व्यवहार लग \\',
+	'action-abusefilter-log' => 'दुरुपयोग लगहरु हेर्नुहोस् ',
+	'action-abusefilter-log-detail' => 'विस्तृत दुरुपयोग लग प्रविष्टीहरु हेर्नुहोस् ',
+	'abusefilter-log' => 'दुर्व्यवहार लग ',
 	'abusefilter-log-search' => 'दुर्व्यवहार लग खोज्ने',
 	'abusefilter-log-search-user' => 'प्रयोगकर्ता:',
 	'abusefilter-log-search-filter' => 'फिल्टर परिचय:',
 	'abusefilter-log-search-title' => 'शीर्षक:',
 	'abusefilter-log-search-submit' => 'खोज्नुहोस्',
-	'abusefilter-log-detailedentry-global' => ' विश्वव्यापी फिल्टर "$1" \\',
+	'abusefilter-log-detailedentry-global' => ' विश्वव्यापी फिल्टर "$1" ',
 	'abusefilter-log-detailedentry-local' => '$1 फिल्टर गर्ने',
 	'abusefilter-log-detailslink' => 'विवरण',
 	'abusefilter-log-hidelink' => 'दर्शिता मिलाउने',
@@ -22321,7 +22020,7 @@ $messages['ne'] = array(
 	'abusefilter-log-details-ip' => 'सुरुवात गरिएको IP ठेगाना',
 	'abusefilter-log-noactions' => 'कुनै पनि हैन',
 	'abusefilter-log-details-diff' => 'सम्पादनमा गरिएका परिवर्तनहरु',
-	'abusefilter-log-linkoncontribs' => 'दुर्व्यवहार लग \\',
+	'abusefilter-log-linkoncontribs' => 'दुर्व्यवहार लग ',
 	'abusefilter-log-hidden' => '(प्रविष्टि लुकाइएको)',
 	'abusefilter-log-hide' => 'लुकाउने अथवा देखाउने',
 	'abusefilter-log-hide-legend' => 'लग प्रविष्टि लुकाउने',
@@ -22358,7 +22057,7 @@ $messages['ne'] = array(
 	'abusefilter-tools-reautoconfirm-user' => 'प्रयोगकर्ता:',
 	'abusefilter-tools-reautoconfirm-submit' => 'पुनः स्वतः निश्चय गर्ने',
 	'abusefilter-reautoconfirm-none' => 'प्रयोगकर्ताद्वारा {{GENDER:$1|उनको|उनको|उनिहरु}}को स्वतः निश्चय स्थिति निलम्बन गरिएको थिएन।',
-	'abusefilter-edit-subtitle' => ' फिल्टर "$1" सम्पादन गरिदै \\',
+	'abusefilter-edit-subtitle' => ' फिल्टर "$1" सम्पादन गरिदै ',
 	'abusefilter-edit-status' => 'विगत $1 {{PLURAL:$1|को कार्य|का कार्यहरु}}सित, $2 ($3%) मेल खान्छ।
 औसतमा, यसको संचालन $4ms समय छ र यसले शर्त सीमाको $5 {{PLURAL:$5|शर्त|शर्तहरु}} खपत गर्छ।',
 	'abusefilter-edit-new' => 'नयाँ फिल्टर',
@@ -22494,16 +22193,10 @@ $messages['ne'] = array(
 	'abusefilter-import-submit' => 'आँकड़ा ल्याउने',
 );
 
-/** Dutch (Nederlands)
- * @author Annabel
- * @author GerardM
- * @author Mwpnl
- * @author Romaine
- * @author SPQRobin
- * @author Siebrand
- * @author Tjcool007
- * @author Tvdm
- */
+$messages['niu'] = array(
+	'abusefilter-log-search-submit' => 'Kumi',
+);
+
 $messages['nl'] = array(
 	'abusefilter-desc' => 'Voert automatisch heuristische analyse uit op bewerkingen',
 	'abusefilter' => 'Filterinstellingen',
@@ -22662,7 +22355,7 @@ De gemiddelde looptijd van de filtercontrole is $4ms, en deze gebruikt $5 {{PLUR
 	'abusefilter-edit-action-degroup' => 'De gebruiker uit alle gebruikersgroepen verwijderen',
 	'abusefilter-edit-action-block' => 'Bewerken door de gebruiker en/of het IP-adres blokkeren',
 	'abusefilter-edit-action-throttle' => 'Maatregel alleen uitvoeren als de gebruiker een drempelwaarde overschrijdt',
-	'abusefilter-edit-action-rangeblock' => 'De /16-reeks blokkeren waar de gebruiker vandaan komt.',
+	'abusefilter-edit-action-rangeblock' => 'Block the IP range from which the user originates',
 	'abusefilter-edit-action-tag' => 'De bewerking voor nadere beoordeling markeren.',
 	'abusefilter-edit-throttle-count' => 'Aantal toe te laten handelingen:',
 	'abusefilter-edit-throttle-period' => 'Tijdsduur:',
@@ -22903,11 +22596,9 @@ Zie de [[Special:AbuseFilter/history|lijst met recente filterwijzigingen]] voor 
 Klik "{{int:abusefilter-edit-export}}i" bij "{{int:abusefilter-tools-subtitle}}".
 Kopieer de tekst die in het bewerkingsvenster verschijnt naar dit bewerkingsvenster en klik dan op "{{int:abusefilter-import-submit}}".',
 	'abusefilter-import-submit' => 'Filtergegevens importeren',
+	'abusefilter-edit-builder-op-bool-xor' => 'XOR (^)',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
- * @author Siebrand
- */
 $messages['nl-informal'] = array(
 	'abusefilter-warning' => "'''Waarschuwing''': Deze handeling is automatisch geïdentificeerd als schadelijk.
 Onconstructieve bewerkingen worden snel teruggedraaid, en herhaald onconstructief bewerken eindigt in een blokkade van jouw gebruiker of jouw IP-adres.
@@ -22959,12 +22650,6 @@ Klik "{{int:abusefilter-edit-export}}i" bij "{{int:abusefilter-tools-subtitle}}"
 Kopieer de tekst die in het bewerkingsvenster verschijnt naar dit bewerkingsvenster en klik dan op "{{int:abusefilter-import-submit}}".',
 );
 
-/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
- * @author Gunnernett
- * @author Harald Khan
- * @author Nghtwlkr
- * @author Njardarlogar
- */
 $messages['nn'] = array(
 	'abusefilter-desc' => 'Legg automatisk til heuristikk til endringar.',
 	'abusefilter' => 'Konfigurasjon av misbruksfilter',
@@ -23349,9 +23034,6 @@ Kopier frå tekstboksen som dukkar opp og lim det inn i tekstboksen her. Trykk s
 	'abusefilter-import-submit' => 'Importer data',
 );
 
-/** Northern Sotho (Sesotho sa Leboa)
- * @author Mohau
- */
 $messages['nso'] = array(
 	'abusefilter-log-search-user' => 'Mošomiši:',
 	'abusefilter-log-search-title' => 'Thaetlele:',
@@ -23362,9 +23044,6 @@ $messages['nso'] = array(
 	'abusefilter-history-user' => 'Mošumiši',
 );
 
-/** Occitan (Occitan)
- * @author Cedric31
- */
 $messages['oc'] = array(
 	'abusefilter-desc' => "Aplica d'euristicas automaticas a las modificacions",
 	'abusefilter' => 'Configuracion del filtre dels abuses',
@@ -23742,13 +23421,6 @@ Copiatz l'airal de tèxte que s’aficha e empegatz-lo dins aqueste airal de tè
 	'abusefilter-import-submit' => 'Importar de donadas',
 );
 
-/** Oriya (ଓଡ଼ିଆ)
- * @author Ansumang
- * @author Jnanaranjan Sahu
- * @author Jose77
- * @author Odisha1
- * @author Psubhashish
- */
 $messages['or'] = array(
 	'abusefilter-desc' => 'ଆପେଆପେ ଅଧିକତର ସମ୍ଭାବନା ସମ୍ପାଦନାରେ ଯୋଡ଼ିଥାଏ',
 	'abusefilter' => 'ଅପବ୍ୟବ‌ହାର ଛଣା ସଜାଣି',
@@ -24094,10 +23766,6 @@ $messages['or'] = array(
 	'abusefilter-import-submit' => 'ଆୟାତ ତଥ୍ୟ',
 );
 
-/** Ossetic (Ирон)
- * @author Amikeco
- * @author Bouron
- */
 $messages['os'] = array(
 	'abusefilter-log-search-user' => 'Архайæг:',
 	'abusefilter-log-search-title' => 'Сæргонд:',
@@ -24128,17 +23796,11 @@ $messages['os'] = array(
 	'abusefilter-examine-title' => 'Фарсы сæргонд:',
 );
 
-/** Punjabi (ਪੰਜਾਬੀ)
- * @author Aalam
- */
 $messages['pa'] = array(
 	'abusefilter-list-options-submit' => 'ਅੱਪਡੇਟ',
 	'abusefilter-tools-reautoconfirm-user' => 'ਯੂਜ਼ਰ:',
 );
 
-/** Deitsch (Deitsch)
- * @author Xqt
- */
 $messages['pdc'] = array(
 	'abusefilter-log-search-user' => 'Yuuser:',
 	'abusefilter-log-search-title' => 'Titel:',
@@ -24175,17 +23837,11 @@ $messages['pdc'] = array(
 	'abusefilter-diff-version' => 'Version vum $1 vun $2',
 );
 
-/** Plautdietsch (Plautdietsch)
- * @author Slomox
- */
 $messages['pdt'] = array(
 	'abusefilter-log-search-user' => 'Brucker:',
 	'abusefilter-history-user' => 'Brucker',
 );
 
-/** Pälzisch (Pälzisch)
- * @author Xqt
- */
 $messages['pfl'] = array(
 	'abusefilter-log-noactions' => 'kään',
 	'abusefilter-list-edit' => 'Bearwaide',
@@ -24195,17 +23851,6 @@ $messages['pfl'] = array(
 	'abusefilter-examine-user' => 'Benutzer:',
 );
 
-/** Polish (Polski)
- * @author Airwolf
- * @author BeginaFelicysym
- * @author Derbeth
- * @author Jwitos
- * @author Leinad
- * @author Maikking
- * @author Matma Rex
- * @author Olgak85
- * @author Sp5uhe
- */
 $messages['pl'] = array(
 	'abusefilter-desc' => 'Zastosowanie automatycznej heurystyki do edycji',
 	'abusefilter' => 'Konfiguracja filtru nadużyć',
@@ -24364,7 +24009,7 @@ wpisów w rejestrze nadużyć.',
 	'abusefilter-edit-action-degroup' => 'Usuń użytkownika ze wszystkich uprzywilejowanych grup',
 	'abusefilter-edit-action-block' => 'Zablokuj użytkownikowi i/lub adresowi IP możliwość edycji',
 	'abusefilter-edit-action-throttle' => 'Uruchom akcje tylko wtedy, gdy użytkownik przekroczy poziom limitu',
-	'abusefilter-edit-action-rangeblock' => 'Zablokuj zakres /16 adresów, z którego pochodzi użytkownik',
+	'abusefilter-edit-action-rangeblock' => 'Block the IP range from which the user originates',
 	'abusefilter-edit-action-tag' => 'Oznacz edycję do późniejszego sprawdzenia.',
 	'abusefilter-edit-throttle-count' => 'Liczba dozwolonych akcji',
 	'abusefilter-edit-throttle-period' => 'Okres',
@@ -24604,10 +24249,6 @@ Skopiuj zawartość pola tekstowego, które się pojawi, i wklej ją do poniższ
 	'abusefilter-import-submit' => 'Importuj dane',
 );
 
-/** Piedmontese (Piemontèis)
- * @author Borichèt
- * @author Dragonòt
- */
 $messages['pms'] = array(
 	'abusefilter-desc' => "A àplica dj'eurìstiche automàtiche a le modìfiche",
 	'abusefilter' => "Configurassion dël fìlter contra j'abus",
@@ -25012,9 +24653,6 @@ Ch'a còpia la casela ëd test ch'a compariss, e ch'a l'ancòla an costa casela 
 	'abusefilter-import-submit' => 'Amporté dij dat',
 );
 
-/** Pashto (پښتو)
- * @author Ahmed-Najib-Biabani-Ibrahimkhel
- */
 $messages['ps'] = array(
 	'abusefilter-warning' => "'''ګواښنه''': همدا کړنه په اتوماتيک ډول زيانمنه وپېژندل شوه.
 نارغوونکې سمونې به ډېر ژر پر شا خپلې پخوانۍ بڼې ته واړول شي،
@@ -25121,430 +24759,7 @@ $messages['ps'] = array(
 	'abusefilter-diff-info' => 'بنسټيز مالومات',
 );
 
-/** Portuguese (Português)
- * @author 555
- * @author Giro720
- * @author Hamilton Abreu
- * @author Lijealso
- * @author MF-Warburg
- * @author Malafaya
- * @author Pedroca cerebral
- * @author Waldir
- */
 $messages['pt'] = array(
-	'abusefilter-desc' => 'Aplica heurísticas automáticas às edições.',
-	'abusefilter' => 'Configuração do filtro de edições',
-	'abuselog' => 'Registo de abusos',
-	'abusefilter-intro' => 'Bem-vindo à interface de gestão do Filtro de Abusos.
-O Filtro de Abusos é um mecanismo de software automatizado de aplicação de heurísticas automáticas a todas as operações.
-Esta interface mostra uma lista dos filtros definidos e permite que estes sejam modificados.',
-	'abusefilter-mustbeeditor' => 'Por razões de segurança, apenas os utilizadores com o direito de modificar filtros de abuso podem usar esta interface.',
-	'abusefilter-warning' => "'''Aviso:''' esta operação foi identificada de forma automática como prejudicial.
-As edições não construtivas serão revertidas rapidamente,
-e a repetição destas edições resultará no bloqueio da sua conta ou do seu endereço IP.
-Se crê que esta edição é construtiva, pode clicar novamente o botão \"Enviar\" para confirmá-lo.
-Uma breve descrição da regra de abuso com a qual a sua acção coincidiu é: \$1",
-	'abusefilter-disallowed' => 'Esta operação foi identificada automaticamente como prejudicial,
-e foi consequentemente bloqueada.
-Se crê que a sua edição foi construtiva, por favor contacte um administrador, e informe-o do que estava a tentar fazer.
-Uma breve descrição da regra de abuso com a qual a sua acção coincidiu é: $1',
-	'abusefilter-blocked-display' => 'Esta operação foi automaticamente identificada como prejudicial e está impedido de executá-la.
-Adicionalmente, para proteger a {{SITENAME}}, foram bloqueadas as edições pela sua conta e por todos os endereços IP associados.
-Se considera que este bloqueio é indevido, por favor contacte um administrador.
-Uma breve descrição da regra de abuso com a qual a sua acção coincidiu é: $1',
-	'abusefilter-degrouped' => 'Esta operação foi identificada automaticamente como prejudicial.
-Em consequência, foi bloqueada, e, já que se suspeita que a sua conta esteja comprometida, todas as permissões foram removidas.
-Se crê que esta acção é incorrecta, por favor contacte um burocrata indicando uma justificação para a operação, e as suas permissões poderão ser repostas.
-Uma breve descrição da regra de abuso com a qual a sua acção coincidiu é: $1',
-	'abusefilter-autopromote-blocked' => 'Esta ação foi identificada automaticamente como prejudicial, e foi bloqueada.
-Além disso, como medida de segurança, alguns privilégios automaticamente concedidos a contas estabelecidas foram temporariamente removidos da sua conta.
-Segue-se uma breve descrição da regra de prevenção de abuso com a qual a sua ação coincidiu: $1',
-	'abusefilter-blocker' => 'Filtro de abusos',
-	'abusefilter-blockreason' => 'Automaticamente bloqueado pelo filtro de abusos.
-Descrição da regra correspondida: $1',
-	'abusefilter-degroupreason' => 'Direitos automaticamente retirados pelo filtro de abusos. Descrição da regra: $1',
-	'abusefilter-accountreserved' => 'Este nome de conta está reservado para uso pelo filtro de abusos.',
-	'right-abusefilter-modify' => 'Modificar filtros de abuso',
-	'right-abusefilter-view' => 'Ver filtros de abuso',
-	'right-abusefilter-log' => 'Ver o registo de abusos',
-	'right-abusefilter-log-detail' => 'Ver entradas detalhadas do registo de abusos',
-	'right-abusefilter-private' => 'Ver dados privados no registo de abusos',
-	'right-abusefilter-modify-restricted' => 'Modificar filtros de abuso com acções restritas',
-	'right-abusefilter-revert' => 'Reverter todas as alterações feitas por um dado filtro de abuso',
-	'right-abusefilter-view-private' => 'Ver filtros de abuso marcados como privados',
-	'right-abusefilter-hide-log' => 'Ocultar entradas do filtro de abusos',
-	'right-abusefilter-hidden-log' => 'Ver entradas ocultadas do registo de abusos',
-	'action-abusefilter-modify' => 'modificar filtros de abuso',
-	'action-abusefilter-view' => 'ver filtros de abuso',
-	'action-abusefilter-log' => 'ver o registo de abusos',
-	'action-abusefilter-log-detail' => 'ver entradas detalhadas do registo de abusos',
-	'action-abusefilter-private' => 'ver dados privados do registo de abusos',
-	'action-abusefilter-modify-restricted' => 'modificar filtros de abuso com acções restritas',
-	'action-abusefilter-revert' => 'reverter todas as alterações feitas por um dado filtro de abuso',
-	'action-abusefilter-view-private' => 'ver filtros de abuso marcados como privados',
-	'abusefilter-log' => 'Registo do filtro de abusos',
-	'abusefilter-log-summary' => 'Este registo mostra uma lista de todas as acções capturadas pelos filtros.',
-	'abusefilter-log-search' => 'Pesquisar o registo de abusos',
-	'abusefilter-log-search-user' => 'Utilizador:',
-	'abusefilter-log-search-filter' => 'ID do filtro:',
-	'abusefilter-log-search-title' => 'Título:',
-	'abusefilter-log-search-submit' => 'Pesquisar',
-	'abusefilter-log-entry' => '$1: $2 despoletou um filtro de abuso, executando a operação "$3" em $4.
-Acções tomadas: $5;
-Descrição do filtro: $6',
-	'abusefilter-log-detailedentry-meta' => '$1: $2 despoletou o $3, executando a operação "$4" em $5.
-Acções tomadas: $6;
-Descrição do filtro: $7 ($8)',
-	'abusefilter-log-detailedentry-global' => 'filtro global $1',
-	'abusefilter-log-detailedentry-local' => 'filtro $1',
-	'abusefilter-log-detailslink' => 'detalhes',
-	'abusefilter-log-hidelink' => 'ajustar a visibilidade',
-	'abusefilter-log-details-legend' => 'Detalhes da entrada de registo $1',
-	'abusefilter-log-details-var' => 'Variável',
-	'abusefilter-log-details-val' => 'Valor',
-	'abusefilter-log-details-vars' => 'Parâmetros de acção',
-	'abusefilter-log-details-private' => 'Dados privados',
-	'abusefilter-log-details-ip' => 'Endereço IP de origem',
-	'abusefilter-log-noactions' => 'nenhum',
-	'abusefilter-log-details-diff' => 'Modificações feitas na edição',
-	'abusefilter-log-linkoncontribs' => 'registo de abusos',
-	'abusefilter-log-linkoncontribs-text' => 'Registo de Abusos para este utilizador',
-	'abusefilter-log-hidden' => '(entrada ocultada)',
-	'abusefilter-log-hide' => 'ocultar ou revelar',
-	'abusefilter-log-details-hidden' => 'Não pode ver os detalhes desta entrada porque estes estão ocultados ao público.',
-	'abusefilter-log-hide-legend' => 'Ocultar entrada',
-	'abusefilter-log-hide-id' => 'ID da entrada:',
-	'abusefilter-log-hide-hidden' => 'Ocultar esta entrada da vista do público',
-	'abusefilter-log-hide-reason' => 'Motivo:',
-	'abusefilter-log-hide-forbidden' => 'Não tem permissão para ocultar
-entradas do registo de abusos.',
-	'abusefilter-logentry-suppress' => 'ocultou [[$1]]',
-	'abusefilter-logentry-unsuppress' => 'revelou [[$1]]',
-	'abusefilter-management' => 'Gestão do filtro de abusos',
-	'abusefilter-list' => 'Todos os filtros',
-	'abusefilter-list-id' => 'ID do filtro',
-	'abusefilter-list-status' => 'Estado',
-	'abusefilter-list-public' => 'Descrição pública',
-	'abusefilter-list-consequences' => 'Consequências',
-	'abusefilter-list-visibility' => 'Visibilidade',
-	'abusefilter-list-hitcount' => 'Contagem de correspondências',
-	'abusefilter-list-edit' => 'Editar',
-	'abusefilter-list-details' => 'Detalhes',
-	'abusefilter-list-limit' => 'Número por página:',
-	'abusefilter-list-lastmodified' => 'Última modificação',
-	'abusefilter-hidden' => 'Privado',
-	'abusefilter-unhidden' => 'Público',
-	'abusefilter-enabled' => 'Activado',
-	'abusefilter-deleted' => 'Eliminado',
-	'abusefilter-disabled' => 'Desactivado',
-	'abusefilter-hitcount' => '$1 {{PLURAL:$1|resultado|resultados}}',
-	'abusefilter-new' => 'Criar um filtro novo',
-	'abusefilter-return' => 'Voltar à gestão de filtros',
-	'abusefilter-status-global' => 'Global',
-	'abusefilter-list-options' => 'Opções',
-	'abusefilter-list-options-deleted' => 'Filtros eliminados:',
-	'abusefilter-list-options-deleted-only' => 'Mostrar apenas filtros eliminados',
-	'abusefilter-list-options-deleted-hide' => 'Ocultar filtros eliminados',
-	'abusefilter-list-options-deleted-show' => 'Incluir filtros eliminados',
-	'abusefilter-list-options-disabled' => 'Filtros desactivados:',
-	'abusefilter-list-options-hidedisabled' => 'Ocultar filtros desactivados',
-	'abusefilter-list-options-submit' => 'Actualizar',
-	'abusefilter-tools-text' => 'Aqui estão algumas ferramentas que poderão ser úteis na formulação e depuração dos filtros de abuso.',
-	'abusefilter-tools-expr' => 'Testador de expressões',
-	'abusefilter-tools-submitexpr' => 'Calcular',
-	'abusefilter-tools-reautoconfirm' => 'Restaurar estatuto autoconfirmado',
-	'abusefilter-tools-reautoconfirm-user' => 'Utilizador:',
-	'abusefilter-tools-reautoconfirm-submit' => 'Re-autoconfirmar',
-	'abusefilter-reautoconfirm-none' => 'Não foi suspendido o estado autoconfirmado {{GENDER:$1|desse utilizador|dessa utilizadora|desse utilizador}}.',
-	'abusefilter-reautoconfirm-notallowed' => 'Não está autorizado a repor o estado autoconfirmado.',
-	'abusefilter-reautoconfirm-done' => 'O estado autoconfirmado da conta foi restaurado',
-	'abusefilter-status' => '{{PLURAL:$1|Da última 1 acção|Das últimas $1 acções}}, $2 ($3%) {{PLURAL:$2|atingiu|atingiram}} a condição limite de $4, e $5 ($6%) {{PLURAL:$5|correspondeu|corresponderam}} a um dos filtros neste momento activos.',
-	'abusefilter-edit-subtitle' => 'A editar filtro $1',
-	'abusefilter-edit-oldwarning' => '<strong>Está a editar uma versão antiga deste filtro.
-As estatísticas transcritas são relativas à versão mais recente do filtro.
-Se gravar as suas modificações, irá sobrepor todas as modificações desde a revisão que está a editar.</strong> &bull;
-[[Special:AbuseFilter/history/$2|Voltar ao histórico deste filtro]].',
-	'abusefilter-edit-status-label' => 'Estatísticas:',
-	'abusefilter-edit-status' => '{{PLURAL:$1|Da última 1 acção|Das últimas $1 acções}}, este filtro correspondeu com $2 ($3%).
-Em média, o seu tempo de execução é de $4ms, e consome $5 {{PLURAL:$5|condição|condições}} do seu limite de condições.',
-	'abusefilter-edit-throttled' => "'''Aviso''': Este filtro foi automaticamente desactivado como medida de segurança.
-O filtro atingiu o limite de correspondência com mais de $1% de ações.",
-	'abusefilter-edit-new' => 'Novo filtro',
-	'abusefilter-edit-save' => 'Gravar filtro',
-	'abusefilter-edit-id' => 'ID do filtro:',
-	'abusefilter-edit-description' => "Descrição:
-:''(publicamente visível)''",
-	'abusefilter-edit-flags' => 'Sinalizações:',
-	'abusefilter-edit-enabled' => 'Activar este filtro',
-	'abusefilter-edit-deleted' => 'Marcar como eliminado',
-	'abusefilter-edit-hidden' => 'Ocultar detalhes deste filtro do visionamento público',
-	'abusefilter-edit-rules' => 'Condições:',
-	'abusefilter-edit-notes' => "Notas:
-:''(privado)",
-	'abusefilter-edit-lastmod' => 'Última modificação do filtro:',
-	'abusefilter-edit-lastmod-text' => '$1 por $2',
-	'abusefilter-edit-hitcount' => 'Correspondências de filtros:',
-	'abusefilter-edit-consequences' => 'Acções tomadas quando correspondido',
-	'abusefilter-edit-action-warn' => 'Despoletar estas acções após emitir um aviso ao utilizador',
-	'abusefilter-edit-action-disallow' => 'Impedir o utilizador de realizar a acção em questão',
-	'abusefilter-edit-action-flag' => 'Assinalar a edição no registo de abusos',
-	'abusefilter-edit-action-blockautopromote' => 'Revogar o estatuto autoconfirmado do utilizador',
-	'abusefilter-edit-action-degroup' => 'Remover o utilizador de todos os grupos privilegiados',
-	'abusefilter-edit-action-block' => 'Bloquear o utilizador e/ou endereço IP para edição',
-	'abusefilter-edit-action-throttle' => 'Despoletar acções apenas se o utilizador passar um limite de rapidez',
-	'abusefilter-edit-action-rangeblock' => 'Bloquear o intervalo /16 do qual este utilizador provém',
-	'abusefilter-edit-action-tag' => 'Etiquetar a edição para posterior revisão',
-	'abusefilter-edit-throttle-count' => 'Número de acções a permitir:',
-	'abusefilter-edit-throttle-period' => 'Período de tempo:',
-	'abusefilter-edit-throttle-seconds' => '$1 {{PLURAL:$1|segundo|segundos}}',
-	'abusefilter-edit-throttle-groups' => "Agrupar limitador por:
-:''(um por linha, combinar com vírgulas)''",
-	'abusefilter-edit-warn-message' => 'Mensagem de sistema a usar como aviso:',
-	'abusefilter-edit-warn-other' => 'Outra mensagem',
-	'abusefilter-edit-warn-other-label' => "Nome da página de outra mensagem:
-:''(sem prefixo MediaWiki)''",
-	'abusefilter-edit-warn-actions' => 'Acções:',
-	'abusefilter-edit-warn-preview' => 'Antever mensagem seleccionada',
-	'abusefilter-edit-warn-edit' => 'Criar/Editar mensagem seleccionada',
-	'abusefilter-edit-tag-tag' => 'Etiquetas a aplicar (uma por linha):',
-	'abusefilter-edit-denied' => 'Não pode ver detalhes deste filtro, porque ele está ocultado de vista pública',
-	'abusefilter-edit-main' => 'Parâmetros do filtro',
-	'abusefilter-edit-done-subtitle' => 'Filtro editado',
-	'abusefilter-edit-done' => 'Gravou com sucesso as alterações ao filtro $1.',
-	'abusefilter-edit-badsyntax' => 'Há um erro de sintaxe no filtro que especificou.
-O resultado de saída do analisador foi: <pre>$1</pre>',
-	'abusefilter-edit-restricted' => 'Não pode editar este filtro, porque ele contém uma ou mais acções restritas.
-Por favor, peça a um utilizador com permissão de adicionamento de acções restritas para efectuar a alteração por si.',
-	'abusefilter-edit-viewhistory' => 'Ver o histórico deste filtro',
-	'abusefilter-edit-history' => 'Histórico:',
-	'abusefilter-edit-check' => 'Verificar sintaxe',
-	'abusefilter-edit-badfilter' => 'O filtro que especificou não existe',
-	'abusefilter-edit-revert' => 'Reverter ações tomadas por este filtro',
-	'abusefilter-edit-tools' => 'Ferramentas:',
-	'abusefilter-edit-test-link' => 'Testar este filtro com edições recentes',
-	'abusefilter-edit-export' => 'Exportar este filtro para outra wiki',
-	'abusefilter-edit-syntaxok' => 'Nenhum erro de sintaxe foi detectado.',
-	'abusefilter-edit-syntaxerr' => 'Erro de sintaxe detectado: $1',
-	'abusefilter-edit-bad-tags' => 'Uma ou mais das etiquetas que especificou não são válidas.
-Etiquetas devem ser curtas e não devem conter caracteres especiais.',
-	'abusefilter-edit-notallowed' => 'Não tem permissão de criar ou editar filtros de abuso',
-	'abusefilter-edit-builder-select' => 'Seleccione uma opção para inserir no cursor',
-	'abusefilter-edit-builder-group-op-arithmetic' => 'Operadores aritméticos',
-	'abusefilter-edit-builder-op-arithmetic-addition' => 'Adição (+)',
-	'abusefilter-edit-builder-op-arithmetic-subtraction' => 'Subtração (-)',
-	'abusefilter-edit-builder-op-arithmetic-multiplication' => 'Multiplicação (*)',
-	'abusefilter-edit-builder-op-arithmetic-divide' => 'Divisão (/)',
-	'abusefilter-edit-builder-op-arithmetic-modulo' => 'Módulo (%)',
-	'abusefilter-edit-builder-op-arithmetic-pow' => 'Potência (**)',
-	'abusefilter-edit-builder-group-op-comparison' => 'Operadores de comparação',
-	'abusefilter-edit-builder-op-comparison-equal' => 'Igual a (==)',
-	'abusefilter-edit-builder-op-comparison-notequal' => 'Diferente de (!=)',
-	'abusefilter-edit-builder-op-comparison-lt' => 'Menor que (<)',
-	'abusefilter-edit-builder-op-comparison-gt' => 'Maior que (>)',
-	'abusefilter-edit-builder-op-comparison-lte' => 'Menor ou igual a (<=)',
-	'abusefilter-edit-builder-op-comparison-gte' => 'Maior ou igual a (>=)',
-	'abusefilter-edit-builder-group-op-bool' => 'Operadores booleanos',
-	'abusefilter-edit-builder-op-bool-not' => 'Negação (!)',
-	'abusefilter-edit-builder-op-bool-and' => 'Conjunção/E (&)',
-	'abusefilter-edit-builder-op-bool-or' => 'Disjunção/Ou (|)',
-	'abusefilter-edit-builder-group-misc' => 'Diversos',
-	'abusefilter-edit-builder-misc-in' => 'contido num texto (in)',
-	'abusefilter-edit-builder-misc-like' => 'Corresponde a um padrão (like)',
-	'abusefilter-edit-builder-misc-rlike' => 'Corresponde a uma regex (rlike)',
-	'abusefilter-edit-builder-misc-irlike' => 'Corresponde a regex, sem distinguir maiúsculas de minúsculas (irlike)',
-	'abusefilter-edit-builder-misc-contains' => 'Texto da esquerda contém o da direita (contains)',
-	'abusefilter-edit-builder-misc-stringlit' => 'Texto literal ("")',
-	'abusefilter-edit-builder-misc-tern' => 'Operador ternário (X ? Y : Z)',
-	'abusefilter-edit-builder-misc-cond' => 'Condicional (if X then Y else Z)',
-	'abusefilter-edit-builder-group-funcs' => 'Funções',
-	'abusefilter-edit-builder-funcs-length' => 'Comprimento do texto (length)',
-	'abusefilter-edit-builder-funcs-lcase' => 'Para minúscula (lcase)',
-	'abusefilter-edit-builder-funcs-ccnorm' => 'Normalizar caracteres confundíveis (ccnorm)',
-	'abusefilter-edit-builder-funcs-rmdoubles' => 'Remover caracteres duplos (rmdoubles)',
-	'abusefilter-edit-builder-funcs-specialratio' => 'Caracteres especiais / total de caracteres (specialratio)',
-	'abusefilter-edit-builder-funcs-norm' => 'Normalizar (norm)',
-	'abusefilter-edit-builder-funcs-count' => 'Número de vezes que o texto X aparece no texto Y (count)',
-	'abusefilter-edit-builder-funcs-rcount' => 'Número de vezes que a regex X aparece no texto Y (rcount)',
-	'abusefilter-edit-builder-funcs-rmwhitespace' => 'Remover espaços em branco (rmwhitespace)',
-	'abusefilter-edit-builder-funcs-rmspecials' => 'Remover caracteres especiais (rmspecials)',
-	'abusefilter-edit-builder-funcs-ip_in_range' => 'O IP está no intervalo? (ip_in_range)',
-	'abusefilter-edit-builder-funcs-contains-any' => 'Pesquisar num texto vários outros textos (contains_any)',
-	'abusefilter-edit-builder-funcs-substr' => 'Subtexto (substr)',
-	'abusefilter-edit-builder-funcs-strpos' => 'Posição do subtexto no texto (strpos)',
-	'abusefilter-edit-builder-funcs-str_replace' => 'Substituir o subtexto pelo texto (str_replace)',
-	'abusefilter-edit-builder-funcs-set_var' => 'Atribuir variável (set_var)',
-	'abusefilter-edit-builder-group-vars' => 'Variáveis',
-	'abusefilter-edit-builder-vars-accountname' => 'Nome de conta (na criação da conta)',
-	'abusefilter-edit-builder-vars-timestamp' => 'Data Unix da mudança',
-	'abusefilter-edit-builder-vars-action' => 'Acção',
-	'abusefilter-edit-builder-vars-addedlines' => 'Linhas adicionadas na edição',
-	'abusefilter-edit-builder-vars-delta' => 'Alteração de tamanho na edição',
-	'abusefilter-edit-builder-vars-diff' => 'Diferença unificada das modificações feitas pela edição',
-	'abusefilter-edit-builder-vars-newsize' => 'Tamanho de página novo',
-	'abusefilter-edit-builder-vars-oldsize' => 'Tamanho de página anterior',
-	'abusefilter-edit-builder-vars-removedlines' => 'Linhas removidas na edição',
-	'abusefilter-edit-builder-vars-summary' => 'Resumo ou motivo da edição',
-	'abusefilter-edit-builder-vars-article-id' => 'ID da página',
-	'abusefilter-edit-builder-vars-article-ns' => 'Espaço nominal da página',
-	'abusefilter-edit-builder-vars-article-text' => 'Título da página (sem espaço nominal)',
-	'abusefilter-edit-builder-vars-article-prefixedtext' => 'Título completo da página',
-	'abusefilter-edit-builder-vars-movedfrom-id' => 'ID da página fonte da movimentação',
-	'abusefilter-edit-builder-vars-movedfrom-ns' => 'Espaço nominal da página fonte da movimentação',
-	'abusefilter-edit-builder-vars-movedfrom-text' => 'Título da página fonte da movimentação',
-	'abusefilter-edit-builder-vars-movedfrom-prefixedtext' => 'Título completo da página fonte da movimentação',
-	'abusefilter-edit-builder-vars-movedto-id' => 'ID da página destino da movimentação',
-	'abusefilter-edit-builder-vars-movedto-ns' => 'Espaço nominal da página destino da movimentação',
-	'abusefilter-edit-builder-vars-movedto-text' => 'Título da página destino da movimentação',
-	'abusefilter-edit-builder-vars-movedto-prefixedtext' => 'Título completo da página destino da movimentação',
-	'abusefilter-edit-builder-vars-user-editcount' => 'Contagem de edições do utilizador',
-	'abusefilter-edit-builder-vars-user-age' => 'Idade da conta de utilizador',
-	'abusefilter-edit-builder-vars-user-name' => 'Nome da conta de utilizador',
-	'abusefilter-edit-builder-vars-user-groups' => 'Grupos (incluindo implícitos) nos quais o utilizador se encontra',
-	'abusefilter-edit-builder-vars-user-emailconfirm' => 'Há quanto tempo o endereço de correio electrónico foi confirmado',
-	'abusefilter-edit-builder-vars-recent-contributors' => 'Últimos dez utilizadores que colaboraram na página',
-	'abusefilter-edit-builder-vars-all-links' => 'Todos os links externos no novo texto',
-	'abusefilter-edit-builder-vars-added-links' => 'Todos os links externos adicionados na edição',
-	'abusefilter-edit-builder-vars-removed-links' => 'Todos os links externos removidos na edição',
-	'abusefilter-edit-builder-vars-old-text' => 'Texto Wiki anterior da página, antes da edição',
-	'abusefilter-edit-builder-vars-new-text' => 'Texto Wiki novo da página, após a edição',
-	'abusefilter-edit-builder-vars-new-text-stripped' => 'Nova página de texto, sem qualquer formatação',
-	'abusefilter-edit-builder-vars-new-html' => 'Fonte HTML analisada, da nova revisão',
-	'abusefilter-edit-builder-vars-restrictions-edit' => 'Nível de protecção de edição da página',
-	'abusefilter-edit-builder-vars-restrictions-move' => 'Nível de protecção de movimentação da página',
-	'abusefilter-edit-builder-vars-old-text-stripped' => 'Texto anterior da página, sem a formatação',
-	'abusefilter-edit-builder-vars-old-links' => 'Links na página, antes da edição',
-	'abusefilter-edit-builder-vars-old-html' => 'Texto Wiki anterior da página, convertido para HTML',
-	'abusefilter-edit-builder-vars-minor-edit' => 'Se a edição está marcada ou não como menor',
-	'abusefilter-edit-builder-vars-file-sha1' => 'Hash SHA1 do conteúdo do ficheiro',
-	'abusefilter-filter-log' => 'Modificações recentes de filtros',
-	'abusefilter-history' => 'Histórico de modificações do Filtro de Abusos #$1',
-	'abusefilter-history-foruser' => 'Modificações por $1',
-	'abusefilter-history-hidden' => 'Ocultado',
-	'abusefilter-history-enabled' => 'Activado',
-	'abusefilter-history-global' => 'Global',
-	'abusefilter-history-timestamp' => 'Data',
-	'abusefilter-history-user' => 'Utilizador',
-	'abusefilter-history-public' => 'Descrição pública do filtro',
-	'abusefilter-history-flags' => 'Sinalizações',
-	'abusefilter-history-filter' => 'Regra de filtro',
-	'abusefilter-history-comments' => 'Comentários',
-	'abusefilter-history-actions' => 'Acções',
-	'abusefilter-history-backedit' => 'Voltar ao editor de filtro',
-	'abusefilter-history-deleted' => 'Eliminado',
-	'abusefilter-history-filterid' => 'Filtro',
-	'abusefilter-history-select-legend' => 'Melhorar pesquisa',
-	'abusefilter-history-select-user' => 'Utilizador:',
-	'abusefilter-history-select-submit' => 'Melhorar',
-	'abusefilter-history-diff' => 'Alterações',
-	'abusefilter-history-error-hidden' => 'O filtro que solicitou está ocultado e não pode ver o seu histórico.',
-	'abusefilter-exception-unexpectedatend' => '"$2" inesperado na posição $1.',
-	'abusefilter-exception-expectednotfound' => 'Código $2, esperado na posição $1, não foi encontrado (foi encontrado $3 $4).',
-	'abusefilter-exception-unrecognisedkeyword' => 'Palavra-chave $2 não reconhecida na posição $1.',
-	'abusefilter-exception-unexpectedtoken' => 'Excerto "$3" (de tipo $2) inesperado na posição $1.',
-	'abusefilter-exception-unclosedstring' => 'Texto com início na posição $1, não foi fechado.',
-	'abusefilter-exception-invalidoperator' => 'Operador "$2" inválido, na posição $1.',
-	'abusefilter-exception-unrecognisedtoken' => 'Excerto "$2" não reconhecido, na posição $1.',
-	'abusefilter-exception-noparams' => 'Não foram fornecidos parâmetros à função "$2", na posição $1.',
-	'abusefilter-exception-dividebyzero' => 'Tentativa ilegal de dividir $2 por zero, na posição $1.',
-	'abusefilter-exception-unrecognisedvar' => 'Variável não reconhecida $2, na posição $1',
-	'abusefilter-exception-notenoughargs' => 'Argumentos insuficientes para a função $2, na posição $1.
-Esperava-se $3 {{PLURAL:$3|argumento|argumentos}}, obteve-se $4',
-	'abusefilter-exception-regexfailure' => 'Erro na expressão regular "$3", na posição $1: "$2"',
-	'abusefilter-exception-overridebuiltin' => 'Sobreposição ilegal da variável integrada "$2", na posição $1.',
-	'abusefilter-exception-outofbounds' => 'Solicitando item $2 não existente na lista (tamanho da lista = $3) na posição $1.',
-	'abusefilter-exception-notlist' => 'Solicitando uma entrada de matriz a uma não matriz, na posição $1.',
-	'abusefilter-action-tag' => 'Etiquetar',
-	'abusefilter-action-throttle' => 'Limitador',
-	'abusefilter-action-warn' => 'Avisar',
-	'abusefilter-action-blockautopromote' => 'Bloquear autopromoção',
-	'abusefilter-action-block' => 'Bloquear',
-	'abusefilter-action-degroup' => 'Remover de grupos',
-	'abusefilter-action-rangeblock' => 'Bloqueio de intervalo',
-	'abusefilter-action-disallow' => 'Não autorizar',
-	'abusefilter-revert-title' => 'Reverter todas as alterações feitas pelo filtro $1',
-	'abusefilter-revert-intro' => 'Este formulário permite-lhe reverter todas as alterações feitas pelo filtro de abusos devido ao filtro $1.
-Por favor, tenha cuidado ao usar esta ferramenta.',
-	'abusefilter-revert-preview-item' => '$1: $2 fez $3 em $4.
-Acções a reverter: $5 ($6)',
-	'abusefilter-revert-search-legend' => 'Seleccione as acções do filtro de abusos a reverter',
-	'abusefilter-revert-periodstart' => 'Início do período:',
-	'abusefilter-revert-periodend' => 'Fim do período:',
-	'abusefilter-revert-search' => 'Seleccionar acções',
-	'abusefilter-revert-filter' => 'Filtro:',
-	'abusefilter-revert-preview-intro' => 'Abaixo estão as alterações feitas pelo filtro de abusos que serão revertidas por esta operação.
-Por favor, verifique-as cuidadosamente e clique "confirmar" para confirmar a sua selecção.',
-	'abusefilter-revert-confirm' => 'Confirmar',
-	'abusefilter-revert-success' => 'Reverteu todas as alterações feitas pelo filtro de abusos devido ao [[Special:AbuseFilter/$1|filtro $1]].',
-	'abusefilter-revert-reason' => 'Reversão automática de todas as alterações feitas pelo filtro de abusos devido ao filtro $1.
-Motivo dado: $2',
-	'abusefilter-revert-reasonfield' => 'Motivo da reversão:',
-	'abusefilter-test' => 'Testar um filtro nas edições anteriores',
-	'abusefilter-test-intro' => 'Esta página permite-lhe verificar o filtro introduzido na caixa abaixo {{PLURAL:$1|na última alteração|nas últimas $1 alterações}}.
-Para carregar um filtro existente, insira o ID do filtro na caixa abaixo da caixa de edição, e clique o botão "Carregar".',
-	'abusefilter-test-legend' => 'Teste de filtro',
-	'abusefilter-test-load-filter' => 'Carregar filtro com ID:',
-	'abusefilter-test-submit' => 'Testar',
-	'abusefilter-test-load' => 'Carregar',
-	'abusefilter-test-user' => 'Modificações pelo utilizador:',
-	'abusefilter-test-period-start' => 'Modificações feitas após:',
-	'abusefilter-test-period-end' => 'Modificações feitas antes de:',
-	'abusefilter-test-page' => 'Alterações à página:',
-	'abusefilter-test-shownegative' => 'Mostrar alterações que não correspondam ao filtro',
-	'abusefilter-test-syntaxerr' => 'O filtro que introduziu continha um erro de sintaxe.
-Para ver uma explicação completa clique o botão "Verificar sintaxe".',
-	'abusefilter-changeslist-examine' => 'examinar',
-	'abusefilter-examine' => 'Examinar alterações individuais',
-	'abusefilter-examine-intro' => 'Esta página permite-lhe examinar as variáveis geradas pelo Filtro de Abusos para uma alteração individual, e testá-la com os filtros.',
-	'abusefilter-examine-legend' => 'Selecionar alterações',
-	'abusefilter-examine-diff' => 'URL de diferenças:',
-	'abusefilter-examine-user' => 'Utilizador:',
-	'abusefilter-examine-title' => 'Título da página:',
-	'abusefilter-examine-submit' => 'Pesquisar',
-	'abusefilter-examine-vars' => 'Variáveis geradas para esta alteração',
-	'abusefilter-examine-test' => 'Testar esta alteração com o filtro',
-	'abusefilter-examine-test-button' => 'Testar filtro',
-	'abusefilter-examine-match' => 'O filtro coincide com esta alteração.',
-	'abusefilter-examine-nomatch' => 'O filtro não coincide com esta alteração.',
-	'abusefilter-examine-syntaxerror' => 'O filtro tem sintaxe inválida',
-	'abusefilter-examine-notfound' => 'A alteração solicitada não foi encontrada.',
-	'abusefilter-examine-incompatible' => 'A alteração solicitada não é suportada pelo Filtro de Abusos',
-	'abusefilter-examine-noresults' => 'Não foram encontrados resultados para os parâmetros de pesquisa fornecidos.',
-	'abusefilter-topnav' => "'''Navegação no Filtro de Abusos'''",
-	'abusefilter-topnav-home' => 'Início',
-	'abusefilter-topnav-test' => 'Teste em bloco',
-	'abusefilter-topnav-examine' => 'Examinar edições passadas',
-	'abusefilter-topnav-log' => 'Registo de Abusos',
-	'abusefilter-topnav-tools' => 'Ferramentas de depuração',
-	'abusefilter-topnav-import' => 'Importar filtro',
-	'abusefilter-log-name' => 'Registo do Filtro de Abusos',
-	'abusefilter-log-header' => 'Este registo mostra um resumo das alterações efectuadas a filtros.
-Para detalhes completos, ver [[Special:AbuseFilter/history|a lista]] de alterações recentes a filtros.',
-	'abusefilter-log-entry-modify' => 'modificou $1 ($2)',
-	'abusefilter-log-noresults' => 'Não foram encontrados resultados.',
-	'abusefilter-diff-title' => 'Diferenças entre versões',
-	'abusefilter-diff-item' => 'Entrada',
-	'abusefilter-diff-version' => 'Versão de $1 por $2',
-	'abusefilter-diff-info' => 'Informações básicas',
-	'abusefilter-diff-pattern' => 'Condições do filtro',
-	'abusefilter-diff-invalid' => 'Não foi possível obter as versões requeridas',
-	'abusefilter-diff-backhistory' => 'Regressar ao histórico do filtro',
-	'abusefilter-import-intro' => 'Pode usar esta interface para importar filtros de outras wikis.
-Na wiki de origem, clique "{{int:abusefilter-edit-export}}", sob "{{int:abusefilter-tools-subtitle}}" na interface de edição.
-Copie da caixa de texto que aparece, coloque nesta caixa de texto e depois clique "{{int:abusefilter-import-submit}}".',
-	'abusefilter-import-submit' => 'Importar dados',
-);
-
-/** Brazilian Portuguese (Português do Brasil)
- * @author Giro720
- * @author Hamilton Abreu
- * @author Helder.wiki
- * @author Heldergeovane
- * @author Luckas Blade
- * @author MetalBrasil
- * @author Pedroca cerebral
- * @author Rafael Vargas
- */
-$messages['pt-br'] = array(
 	'abusefilter-desc' => 'Aplica heurísticas automáticas às edições.',
 	'abusefilter' => 'Configuração do filtro de edições',
 	'abuselog' => 'Registro de abusos',
@@ -25708,7 +24923,7 @@ O filtro atingiu o limite de correspondência com mais de $1% de ações.",
 	'abusefilter-edit-action-degroup' => 'Remover o usuário de todos os grupos privilegiados',
 	'abusefilter-edit-action-block' => 'Bloquear o usuário e/ou endereço IP para edição',
 	'abusefilter-edit-action-throttle' => 'Disparar ações apenas se o usuário passar um limite de rapidez',
-	'abusefilter-edit-action-rangeblock' => 'Bloquear o intervalo /16 do qual este usuário provém',
+	'abusefilter-edit-action-rangeblock' => 'Block the IP range from which the user originates',
 	'abusefilter-edit-action-tag' => 'Etiquetar a edição para revisão posterior',
 	'abusefilter-edit-throttle-count' => 'Número de ações a permitir:',
 	'abusefilter-edit-throttle-period' => 'Período de tempo:',
@@ -25948,37 +25163,19 @@ Para detalhes completos, ver [[Special:AbuseFilter/history|a lista]] de alteraç
 Na wiki de origem, clique em "{{int:abusefilter-edit-export}}", sob "{{int:abusefilter-tools-subtitle}}" na interface de edição.
 Copie da caixa de texto que aparece, e cole nesta caixa de texto, e a seguir clique em "{{int:abusefilter-import-submit}}".',
 	'abusefilter-import-submit' => 'Importar dados',
+	'abusefilter-edit-builder-op-bool-xor' => 'XOR (^)',
 );
 
-/** Quechua (Runa Simi)
- * @author AlimanRuna
- */
 $messages['qu'] = array(
 	'abusefilter' => "Millay ruray ch'illchina churana",
 	'abuselog' => "Millay ruray hallch'a",
 );
 
-/** Tarifit (Tarifit)
- * @author Jose77
- */
 $messages['rif'] = array(
 	'abusefilter-log-search-submit' => 'Tarzzut',
 	'abusefilter-list-edit' => 'Arri',
 );
 
-/** Romanian (Română)
- * @author Cin
- * @author Ervinutz
- * @author Firilacroco
- * @author KlaudiuMihaila
- * @author Mihai
- * @author Minisarm
- * @author Misterr
- * @author Rsocol
- * @author Silviubogan
- * @author Stelistcristi
- * @author Strainu
- */
 $messages['ro'] = array(
 	'abusefilter-desc' => 'Aplică euristici automate modificărilor.',
 	'abusefilter' => 'Configurare filtru de abuz',
@@ -26381,10 +25578,6 @@ Copiază din spațiul textului care apare și lipește în aceast spațiu de tex
 	'abusefilter-import-submit' => 'Importă datele',
 );
 
-/** Tarandíne (Tarandíne)
- * @author Joetaras
- * @author Reder
- */
 $messages['roa-tara'] = array(
 	'abusefilter-desc' => 'Applichesce le euristeche automateche pe le cangiaminde',
 	'abusefilter' => "Configurazione d'u filtre de le abbuse",
@@ -26778,18 +25971,10 @@ Copià da \'a caselle de teste ce vide, e \'ngolle jidde sus a quiste cambe de t
 	'abusefilter-import-submit' => "'Mborte date",
 );
 
-/** Russian (Русский)
- * @author Ahonc
- * @author Aleksandrit
- * @author AlexSm
- * @author Ferrer
- * @author HalanTul
- * @author Lockal
- * @author MaxSem
- * @author VasilievVV
- * @author Александр Сигачёв
- * @author Сrower
- */
+$messages['rtm'] = array(
+	'abusefilter-list-edit' => "A'tū'ạki",
+);
+
 $messages['ru'] = array(
 	'abusefilter-desc' => 'Позволяет применять эвристические фильтры к правкам.',
 	'abusefilter' => 'Настройка фильтра злоупотреблений',
@@ -26948,7 +26133,7 @@ $messages['ru'] = array(
 	'abusefilter-edit-action-degroup' => 'Исключить участника из всех привилегированных групп',
 	'abusefilter-edit-action-block' => 'Заблокировать участника или IP-адрес',
 	'abusefilter-edit-action-throttle' => 'Применять меры только если участник превышает предел',
-	'abusefilter-edit-action-rangeblock' => 'Блокировать диапазон /16, из которого работает участник.',
+	'abusefilter-edit-action-rangeblock' => 'Block the IP range from which the user originates',
 	'abusefilter-edit-action-tag' => 'Отметить правку для дальнейшей проверки',
 	'abusefilter-edit-throttle-count' => 'Количество разрешённых действий:',
 	'abusefilter-edit-throttle-period' => 'Отрезок времени:',
@@ -27188,10 +26373,6 @@ $messages['ru'] = array(
 	'abusefilter-import-submit' => 'Импортировать данные',
 );
 
-/** Rusyn (Русиньскый)
- * @author Dim Grits
- * @author Gazeb
- */
 $messages['rue'] = array(
 	'abusefilter-desc' => 'Придавать автоматічны геврістікы до едітовань',
 	'abusefilter' => 'Конфіґурація філтрів знеужываня',
@@ -27590,9 +26771,6 @@ $messages['rue'] = array(
 	'abusefilter-import-submit' => 'Імпортовати дата',
 );
 
-/** Sanskrit (संस्कृतम्)
- * @author Ansumang
- */
 $messages['sa'] = array(
 	'abusefilter-log-search-user' => 'योजकः',
 	'abusefilter-list-edit' => 'सम्पाद्यताम्',
@@ -27606,9 +26784,6 @@ $messages['sa'] = array(
 	'abusefilter-topnav-home' => 'गृहम्',
 );
 
-/** Sakha (Саха тыла)
- * @author HalanTul
- */
 $messages['sah'] = array(
 	'abusefilter-desc' => 'Көннөрүүлэргэ эвристика сиидэлэрин (фильтрдарын) туһанарга туттуллар',
 	'abusefilter' => 'Аһара түһүү фильтрын туоруоруута',
@@ -28010,9 +27185,6 @@ $3 {{PLURAL:$3|аргумент кэтэһиллэр|аргуменнаах бу
 	'abusefilter-import-submit' => 'Импортаа',
 );
 
-/** Sardinian (Sardu)
- * @author Andria
- */
 $messages['sc'] = array(
 	'abuselog' => 'Registru de is abusos',
 	'abusefilter-blocker' => "Filtru contra s'abusu",
@@ -28037,9 +27209,6 @@ $messages['sc'] = array(
 	'abusefilter-log-noactions' => 'peruna',
 );
 
-/** Sicilian (Sicilianu)
- * @author Aushulz
- */
 $messages['scn'] = array(
 	'abusefilter-log-search-user' => 'Utenti:',
 	'abusefilter-log-search-filter' => 'ID firtru:',
@@ -28103,9 +27272,6 @@ $messages['scn'] = array(
 	'abusefilter-topnav-home' => 'Paggina principali',
 );
 
-/** Tachelhit (Tašlḥiyt/ⵜⴰⵛⵍⵃⵉⵜ)
- * @author Dalinanir
- */
 $messages['shi'] = array(
 	'abusefilter-log-search-title' => 'Aswl:',
 	'abusefilter-log-search-submit' => 'Cabba',
@@ -28116,13 +27282,6 @@ $messages['shi'] = array(
 	'abusefilter-log-details-val' => 'Atig',
 );
 
-/** Sinhala (සිංහල)
- * @author Singhalawap
- * @author පසිඳු කාවින්ද
- * @author බිඟුවා
- * @author ශ්වෙත
- * @author සුරනිමල
- */
 $messages['si'] = array(
 	'abusefilter-desc' => 'සංස්කරණ සඳහා ස්වයංක්‍රීය විවරණෝපයෝගී යෙදේ',
 	'abusefilter' => 'අනිසි පෙරහන් සැකසුම',
@@ -28443,10 +27602,6 @@ This interface shows a list of defined filters, and allows them to be modified.'
 	'abusefilter-import-submit' => 'දත්ත ආයාත කරන්න',
 );
 
-/** Slovak (Slovenčina)
- * @author Helix84
- * @author Mormegil
- */
 $messages['sk'] = array(
 	'abusefilter-desc' => 'Vykonáva automatickú heuristiku úprav.',
 	'abusefilter' => 'Nastavenie filtra zneužití',
@@ -28838,9 +27993,6 @@ Skopírujte ho z textového poľa, kde sa objaví a vložte ho do tohto textové
 	'abusefilter-import-submit' => 'Importovať údaje',
 );
 
-/** Slovenian (Slovenščina)
- * @author Dbc334
- */
 $messages['sl'] = array(
 	'abusefilter-desc' => 'Pri urejanjih uporabi samodejno hevristiko',
 	'abusefilter' => 'Konfiguracija filtrov zlorab',
@@ -29245,18 +28397,11 @@ Nato skopirajte besedilo v prikazanem polju, prilepite ga v to polje in kliknite
 	'abusefilter-import-submit' => 'Uvozi podatke',
 );
 
-/** Somali (Soomaaliga)
- * @author Maax
- */
 $messages['so'] = array(
 	'abusefilter-log-search-submit' => 'Raadi',
 	'abusefilter-examine-submit' => 'Raadi',
 );
 
-/** Albanian (Shqip)
- * @author Marinari
- * @author Vinie007
- */
 $messages['sq'] = array(
 	'abusefilter-desc' => 'Zbaton automatikisht deduktimin e redaktimeve',
 	'abusefilter' => 'Shpërdoron filter konfigurimin',
@@ -29583,12 +28728,6 @@ E pritshme $3 {{PLURAL:$3|argumenti|argumentet}}, mori $4',
 	'abusefilter-action-disallow' => 'Refuzo',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
- * @author Rancher
- * @author Sasa Stefanovic
- * @author Жељко Тодоровић
- * @author Михајло Анђелковић
- */
 $messages['sr-ec'] = array(
 	'abusefilter-desc' => 'Извршава аутоматско хеуристичко филтрирање измена',
 	'abusefilter' => 'Поставке филтера против злоупотребе',
@@ -29932,11 +29071,6 @@ $messages['sr-ec'] = array(
 	'abusefilter-import-submit' => 'Увези податке',
 );
 
-/** Serbian (Latin script) (‪Srpski (latinica)‬)
- * @author Michaello
- * @author Rancher
- * @author Михајло Анђелковић
- */
 $messages['sr-el'] = array(
 	'abusefilter-desc' => 'Primenjuje automatsku heuristiku na izmene',
 	'abusefilter' => 'Postavke filtera protiv zloupotrebe',
@@ -30261,9 +29395,6 @@ Akcije koje će biti vraćene: $5 ($6)',
 	'abusefilter-import-submit' => 'Uvezi podatke',
 );
 
-/** Seeltersk (Seeltersk)
- * @author Pyt
- */
 $messages['stq'] = array(
 	'abusefilter-desc' => 'Woant automatiske Heuristike ap Annerengen an.',
 	'abusefilter' => 'Misbruukssieuwe-Ienstaalengen',
@@ -30488,9 +29619,6 @@ In n Truchsnit bedruuch hiere Beoarbaidengstied $4 ms un do benöödigeden $5 {{
 	'abusefilter-history-deleted' => 'Läsked',
 );
 
-/** Sundanese (Basa Sunda)
- * @author Kandar
- */
 $messages['su'] = array(
 	'abusefilter-log-search-user' => 'Pamaké:',
 	'abusefilter-log-search-title' => 'Judul:',
@@ -30533,25 +29661,6 @@ $messages['su'] = array(
 	'abusefilter-edit-builder-vars-accountname' => 'Landihan (dina nyieun akun)',
 );
 
-/** Swedish (Svenska)
- * @author Ainali
- * @author Boivie
- * @author Fluff
- * @author Gabbe.g
- * @author GameOn
- * @author Lejonel
- * @author Leo Johannes
- * @author M.M.S.
- * @author MagnusA
- * @author Najami
- * @author Nghtwlkr
- * @author Njaelkies Lea
- * @author Petter Strandmark
- * @author Poxnar
- * @author Rotsee
- * @author Sertion
- * @author WikiPhoenix
- */
 $messages['sv'] = array(
 	'abusefilter-desc' => 'Tillämpar automatiska filter på redigeringar',
 	'abusefilter' => 'Konfiguration av missbruksfilter',
@@ -30941,10 +30050,6 @@ Kopiera från textrutan som kommer fram och klistra in det till denna ruta. Klic
 	'abusefilter-import-submit' => 'Importera data',
 );
 
-/** Swahili (Kiswahili)
- * @author Ikiwaner
- * @author Lloffiwr
- */
 $messages['sw'] = array(
 	'abusefilter-log-search-user' => 'Mtumiaji:',
 	'abusefilter-log-search-title' => 'Cheo:',
@@ -30970,9 +30075,6 @@ $messages['sw'] = array(
 	'abusefilter-diff-info' => 'Maelezo ya msingi',
 );
 
-/** Silesian (Ślůnski)
- * @author Britscher
- */
 $messages['szl'] = array(
 	'abusefilter-desc' => 'Automatyczno heurystyko do edycyj',
 	'abusefilter' => 'Konfiguracyjo filtra zńyłużyćůw',
@@ -30993,14 +30095,6 @@ Krůtki uopis zńyłużyćo, ke keremu bůła przipasowano twojo akcyjo: $1',
 	'abusefilter-list-options-submit' => 'Aktualizacyjo',
 );
 
-/** Tamil (தமிழ்)
- * @author Kanags
- * @author Karthi.dr
- * @author Logicwiki
- * @author Shanmugamp7
- * @author TRYPPN
- * @author செல்வா
- */
 $messages['ta'] = array(
 	'abusefilter-desc' => 'தொகுப்புகள் தானியங்கியாய் முறைவரிசைப்படுத்துதலைச் செயற்படுத்தும்',
 	'abusefilter' => 'முறைகேடு வடிக்கட்டி அமைப்பு',
@@ -31239,12 +30333,6 @@ Filter description: $7 ($8)',
 	'abusefilter-import-submit' => 'தரவை இறக்குமதி செய்',
 );
 
-/** Telugu (తెలుగు)
- * @author Chaduvari
- * @author Kiranmayee
- * @author Veeven
- * @author వైజాసత్య
- */
 $messages['te'] = array(
 	'abusefilter' => 'దుర్వినియోగ వడపోతల స్వరూపణం',
 	'abuselog' => 'దురుపయోగాల చర్యానివేదిక',
@@ -31531,9 +30619,6 @@ $messages['te'] = array(
 	'abusefilter-import-submit' => 'భోగట్టాని దిగుమతించు',
 );
 
-/** Tetum (Tetun)
- * @author MF-Warburg
- */
 $messages['tet'] = array(
 	'abusefilter-log-search-title' => 'Títulu:',
 	'abusefilter-log-search-submit' => 'Buka',
@@ -31542,9 +30627,6 @@ $messages['tet'] = array(
 	'abusefilter-examine-submit' => 'Buka',
 );
 
-/** Tajik (Cyrillic script) (Тоҷикӣ)
- * @author Ibrahim
- */
 $messages['tg-cyrl'] = array(
 	'abusefilter-log-search-user' => 'Корбар:',
 	'abusefilter-log-search-title' => 'Унвон:',
@@ -31553,9 +30635,6 @@ $messages['tg-cyrl'] = array(
 	'abusefilter-list-edit' => 'Вироиш',
 );
 
-/** Tajik (Latin script) (tojikī)
- * @author Liangent
- */
 $messages['tg-latn'] = array(
 	'abusefilter-log-search-user' => 'Korbar:',
 	'abusefilter-log-search-title' => 'Unvon:',
@@ -31564,16 +30643,6 @@ $messages['tg-latn'] = array(
 	'abusefilter-list-edit' => 'Viroiş',
 );
 
-/** Thai (ไทย)
- * @author Akkhaporn
- * @author Ans
- * @author Harley Hartwell
- * @author Horus
- * @author Korrawit
- * @author Octahedron80
- * @author Passawuth
- * @author Woraponboonkerd
- */
 $messages['th'] = array(
 	'abusefilter-desc' => 'วิเคราะห์พฤติกรรมการแก้ไขโดยอัตโนมัติ',
 	'abusefilter' => 'การกำหนดตัวกรองการละเมิดกฎ',
@@ -31807,9 +30876,6 @@ $messages['th'] = array(
 	'abusefilter-examine-submit' => 'สืบค้น',
 );
 
-/** Turkmen (Türkmençe)
- * @author Hanberke
- */
 $messages['tk'] = array(
 	'abusefilter-desc' => 'Özgerdişlerde awtomatik ewristik filtleri ulanýar',
 	'abusefilter' => 'Erbet ulanmak filtri konfigurasiýasy',
@@ -32150,9 +31216,6 @@ Peýda bolan tekst gutusyndan göçürip alyň we ony şu tekst gutusyna ýelmä
 	'abusefilter-import-submit' => 'Maglumatlary importirle',
 );
 
-/** Tagalog (Tagalog)
- * @author AnakngAraw
- */
 $messages['tl'] = array(
 	'abusefilter-desc' => 'Naghahain ng mga kusang gabay-aral/heuristiko sa mga pamamatnugot',
 	'abusefilter' => 'Pagkakaayos ng pansala ng pang-aabuso',
@@ -32541,9 +31604,6 @@ Kopyahin mula sa kahong pangteksto na lilitaw, at idikit ito sa kahong pangtekst
 	'abusefilter-import-submit' => 'Angkatin ang dato',
 );
 
-/** Tok Pisin (Tok Pisin)
- * @author Iketsi
- */
 $messages['tpi'] = array(
 	'abusefilter-log-search-user' => 'Yusa:',
 	'abusefilter-log-hide-reason' => 'As bilong en:',
@@ -32557,13 +31617,6 @@ $messages['tpi'] = array(
 	'abusefilter-history-select-user' => 'Yusa:',
 );
 
-/** Turkish (Türkçe)
- * @author Emperyan
- * @author Joseph
- * @author Mach
- * @author Srhat
- * @author Vito Genovese
- */
 $messages['tr'] = array(
 	'abusefilter-desc' => 'Değişikliklere otomatik bulucu yöntemler uygular',
 	'abusefilter' => 'Değişiklik süzgeci yapılandırması',
@@ -32969,20 +32022,12 @@ Görünen metin kutusundan kopyalayın, ve bu metin kutusuna yapıştırın, dah
 	'abusefilter-import-submit' => 'Verileri içe aktar',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
- * @author Ajdar
- * @author Zahidulla
- * @author Ильнар
- */
 $messages['tt-cyrl'] = array(
 	'abusefilter-desc' => 'Үзгәртүләргә эвристик ысуллар кулланырга мөмкинлек бирә.',
 	'abuselog' => 'Яман эшләр журналы',
 	'abusefilter-status-global' => 'Глобаль',
 );
 
-/** Uyghur (Arabic script) (ئۇيغۇرچە)
- * @author Sahran
- */
 $messages['ug-arab'] = array(
 	'abusefilter-desc' => 'تەھرىرلەش قىلمىشىغا ئۆزلۈكىدىن شەرت ھۆكۈم قىل',
 	'abusefilter' => 'سۈيىئىستىمال سۈزگۈچ سەپلىمىسى',
@@ -33291,22 +32336,10 @@ $1 ماس كەلگەن مەشغۇلات چېكىگە يەتتى.",
 	'abusefilter-log-name' => 'سۈيىئىستىمال سۈزگۈچ خاتىرىسى',
 );
 
-/** Uyghur (Latin script) (Uyghurche‎) */
 $messages['ug-latn'] = array(
 	'abusefilter-examine-submit' => 'Izdash',
 );
 
-/** Ukrainian (Українська)
- * @author AS
- * @author Ahonc
- * @author Alex Khimich
- * @author JenVan
- * @author Microcell
- * @author NickK
- * @author Prima klasy4na
- * @author SamOdin
- * @author Тест
- */
 $messages['uk'] = array(
 	'abusefilter-desc' => 'Застосовує до редагувань автоматичні евристики.',
 	'abusefilter' => 'Налаштування фільтра редагувань',
@@ -33706,18 +32739,12 @@ $messages['uk'] = array(
 	'abusefilter-import-submit' => 'Імпортувати дані',
 );
 
-/** Urdu (اردو) */
 $messages['ur'] = array(
 	'abusefilter-log-search-user' => 'صارف:',
 	'abusefilter-log-search-title' => 'عنوان:',
 	'abusefilter-log-hide-reason' => 'وجہ:',
 );
 
-/** Vèneto (Vèneto)
- * @author Candalua
- * @author Nemo bis
- * @author Nick1915
- */
 $messages['vec'] = array(
 	'abusefilter-desc' => 'Àplica dele eurìstiche automatiche a le modifiche.',
 	'abusefilter' => 'Configurassion del filtro abusi',
@@ -34120,9 +33147,6 @@ Copia da la casèla che apare e copia in sta casèla qua, quindi struca "{{int:a
 	'abusefilter-import-submit' => 'Inporta dati',
 );
 
-/** Veps (Vepsän kel')
- * @author Игорь Бродский
- */
 $messages['vep'] = array(
 	'abusefilter-log-search-user' => 'Kävutai:',
 	'abusefilter-log-search-title' => 'Pälkirjutez:',
@@ -34204,10 +33228,6 @@ $messages['vep'] = array(
 	'abusefilter-import-submit' => 'Importiruida andmused',
 );
 
-/** Vietnamese (Tiếng Việt)
- * @author Minh Nguyen
- * @author Vinhtantran
- */
 $messages['vi'] = array(
 	'abusefilter-desc' => 'Áp dụng heuristic tự động vào các sửa đổi',
 	'abusefilter' => 'Thiết lập bộ lọc lạm dụng',
@@ -34363,7 +33383,7 @@ Thời gian chạy trung bình là $4ms, và sử dụng $5 {{PLURAL:$5||}} đi�
 	'abusefilter-edit-action-degroup' => 'Xóa người dùng ra khỏi tất cả các nhóm có quyền hạn',
 	'abusefilter-edit-action-block' => 'Cấm người dùng và/hoặc địa chỉ IP không được sửa đổi',
 	'abusefilter-edit-action-throttle' => 'Chỉ kích hoạt tác vụ nếu người dùng vượt một giới hạn tỷ lệ',
-	'abusefilter-edit-action-rangeblock' => 'Cấm dải /16 từ IP gốc của người dùng.',
+	'abusefilter-edit-action-rangeblock' => 'Block the IP range from which the user originates',
 	'abusefilter-edit-action-tag' => 'Đánh dấu sửa đổi này để xem xét về sau.',
 	'abusefilter-edit-throttle-count' => 'Số tác vụ cho phép:',
 	'abusefilter-edit-throttle-period' => 'Thời gian:',
@@ -34600,12 +33620,9 @@ Lý do: $2',
 Tại trang sửa đổi của wiki nguồn, hãy bấm “{{int:abusefilter-edit-export}}” dưới đề mục “{{int:abusefilter-tools-subtitle}}”.
 Sau đó, chép văn bản từ hộp sẽ hiện ra, dán nó vào hộp ở đây, và bấm “{{int:abusefilter-import-submit}}”.',
 	'abusefilter-import-submit' => 'Nhập dữ liệu',
+	'abusefilter-edit-builder-op-bool-xor' => 'XOR (^)',
 );
 
-/** Volapük (Volapük)
- * @author Malafaya
- * @author Smeira
- */
 $messages['vo'] = array(
 	'abusefilter-log-search-user' => 'Geban:',
 	'abusefilter-log-search-title' => 'Tiäd:',
@@ -34621,31 +33638,20 @@ $messages['vo'] = array(
 	'abusefilter-examine-submit' => 'Sukön',
 );
 
-/** Walloon (Walon)
- * @author Lucyin
- */
 $messages['wa'] = array(
 	'abusefilter-log-hide-reason' => 'Råjhon:',
 	'abusefilter-deleted' => 'Disfacé',
 	'abusefilter-history-deleted' => 'Disfacé',
 );
 
-/** Wu (吴语) */
 $messages['wuu'] = array(
 	'abusefilter-log-hide-reason' => '理由：',
 );
 
-/** Kalmyk (Хальмг)
- * @author Huuchin
- */
 $messages['xal'] = array(
 	'abusefilter-diff-item' => 'Махбуд',
 );
 
-/** Yiddish (ייִדיש)
- * @author Imre
- * @author פוילישער
- */
 $messages['yi'] = array(
 	'abuselog' => 'שלעכט־באניצן לאג',
 	'abusefilter-warning' => "'''ווארענונג''': די פעולה איז געווארן אויטאמאַטיש אידענטיציפירט אלס שעדלעך.
@@ -34780,9 +33786,6 @@ $messages['yi'] = array(
 	'abusefilter-import-submit' => 'אימפארטירן דאַטן',
 );
 
-/** Yoruba (Yorùbá)
- * @author Demmy
- */
 $messages['yo'] = array(
 	'abusefilter-mustbeeditor' => 'Fún ìdáàbò, àwọn oníṣe tí wọ́n ní ẹ̀tọ́ láti ṣàtúnṣe àwọn ajọ̀ ìbàjẹ́ nìkan ni wọ́n le lo ìfojúkojú yìí.',
 	'abusefilter-disallowed' => 'Ìgbéṣe yìí ti jẹ́ dídámọ̀ fúnrararẹ̀ bíi eléwu, bíi bẹ́ẹ̀ ó ti jẹ́ dídílọ́nà.
@@ -34865,11 +33868,6 @@ Tó bá jẹ́ pé àsìṣe ló ṣẹlẹ̀, ẹ jọ̀wọ́ ẹ fi tó olùm
 	'abusefilter-examine-submit' => 'Ṣàwárí',
 );
 
-/** Cantonese (粵語)
- * @author Horacewai2
- * @author Shinjiman
- * @author Waihorace
- */
 $messages['yue'] = array(
 	'abusefilter-desc' => '應用自動行為到編輯',
 	'abusefilter' => '濫用過濾器設定',
@@ -35261,37 +34259,6 @@ $messages['yue'] = array(
 	'abusefilter-import-submit' => '倒入資料',
 );
 
-/** Chinese (China) (‪中文(中国大陆)‬)
- * @author Gzdavidwong
- */
-$messages['zh-cn'] = array(
-	'abusefilter-edit-builder-vars-article-id' => '页面ID',
-	'abusefilter-edit-builder-vars-article-ns' => '页面名字空间',
-	'abusefilter-edit-builder-vars-article-text' => '页面标题（没有名字空间）',
-	'abusefilter-edit-builder-vars-movedfrom-id' => '要移动的源页面页面ID',
-	'abusefilter-edit-builder-vars-movedfrom-ns' => '要移动的源名字空间',
-);
-
-/** Simplified Chinese (‪中文(简体)‬)
- * @author Anakmalaysia
- * @author Bbqyee
- * @author Bencmq
- * @author Chenxiaoqino
- * @author Chenzw
- * @author Fantasticfears
- * @author FireJackey
- * @author Gaoxuewei
- * @author Gzdavidwong
- * @author Hydra
- * @author Jimmy xu wrk
- * @author Liangent
- * @author PhiLiP
- * @author Philip <philip.npc@gmail.com>
- * @author Skjackey tse
- * @author Wmr89502270
- * @author Xiaomingyan
- * @author Yanmiao liu
- */
 $messages['zh-hans'] = array(
 	'abusefilter-desc' => '对编辑行为自动进行条件判定',
 	'abusefilter' => '防滥用过滤器配置',
@@ -35431,7 +34398,7 @@ $messages['zh-hans'] = array(
 	'abusefilter-edit-action-degroup' => '将用户从所有权限组中移除',
 	'abusefilter-edit-action-block' => '封禁进行编辑的用户和／或IP地址',
 	'abusefilter-edit-action-throttle' => '只当用户触犯频率上限后方触发操作',
-	'abusefilter-edit-action-rangeblock' => '根据用户使用的IP地址进行/16的广域封禁',
+	'abusefilter-edit-action-rangeblock' => 'Block the IP range from which the user originates',
 	'abusefilter-edit-action-tag' => '标记该编辑以供进一步检查',
 	'abusefilter-edit-throttle-count' => '允许的操作次数：',
 	'abusefilter-edit-throttle-period' => '时长：',
@@ -35662,22 +34629,6 @@ $messages['zh-hans'] = array(
 	'abusefilter-import-submit' => '导入数据',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
- * @author Alexsh
- * @author Anakmalaysia
- * @author Bencmq
- * @author Gzdavidwong
- * @author Horacewai2
- * @author Jimmy xu wrk
- * @author Liangent
- * @author Mark85296341
- * @author Pbdragonwang
- * @author Skjackey tse
- * @author Waihorace
- * @author Wong128hk
- * @author Wrightbus
- * @author Zanhsieh
- */
 $messages['zh-hant'] = array(
 	'abusefilter-desc' => '套用自動試誤結果到編輯',
 	'abusefilter' => '防濫用過濾器配置',
@@ -35827,7 +34778,7 @@ $messages['zh-hant'] = array(
 	'abusefilter-edit-action-degroup' => '將用戶移離所有權力群組',
 	'abusefilter-edit-action-block' => '禁止用戶及/或IP地址進行編輯',
 	'abusefilter-edit-action-throttle' => '僅在用戶觸犯頻率限制後觸發行動',
-	'abusefilter-edit-action-rangeblock' => '根據用戶使用的IP地址自動進行/16廣域封禁',
+	'abusefilter-edit-action-rangeblock' => 'Block the IP range from which the user originates',
 	'abusefilter-edit-action-tag' => '標記該編輯為需要進一步審查',
 	'abusefilter-edit-throttle-count' => '容許的動作次數：',
 	'abusefilter-edit-throttle-period' => '時間長度：',
@@ -36066,39 +35017,5 @@ $messages['zh-hant'] = array(
 	'abusefilter-diff-backhistory' => '返回過濾器歷史頁面',
 	'abusefilter-import-intro' => '您可以使用本介面來導入其他wiki的過濾器。在來源處點擊過濾器編輯介面處“{{int:abusefilter-tools-subtitle}}”下的“{{int:abusefilter-edit-export}}”。複製隨後出現的文字框中的內容，並複製至下方的文字框中，並點擊“{{int:abusefilter-import-submit}}”。',
 	'abusefilter-import-submit' => '導入數據',
-);
-
-/** Chinese (Hong Kong) (‪中文(香港)‬)
- * @author Gzdavidwong
- */
-$messages['zh-hk'] = array(
-	'abusefilter-edit-builder-vars-addedlines' => '編輯增加了行數',
-	'abusefilter-edit-builder-vars-delta' => '編輯改變了大小',
-	'abusefilter-edit-builder-vars-diff' => '編輯造成了統一的變化',
-	'abusefilter-edit-builder-vars-newsize' => '新頁面大小',
-	'abusefilter-edit-builder-vars-oldsize' => '舊頁面大小',
-	'abusefilter-edit-builder-vars-article-id' => '頁面ID',
-	'abusefilter-edit-builder-vars-article-ns' => '頁面名字空間',
-	'abusefilter-edit-builder-vars-article-text' => '頁面標題（沒有名字空間）',
-	'abusefilter-edit-builder-vars-movedfrom-id' => '要移動的源頁面頁面ID',
-	'abusefilter-edit-builder-vars-movedfrom-ns' => '要移動的源名字空間',
-);
-
-/** Chinese (Taiwan) (‪中文(台灣)‬)
- * @author Gzdavidwong
- * @author Pbdragonwang
- */
-$messages['zh-tw'] = array(
-	'abuselog' => '過濾日誌',
-	'abusefilter-edit-builder-vars-addedlines' => '編輯增加了行數',
-	'abusefilter-edit-builder-vars-delta' => '編輯改變了大小',
-	'abusefilter-edit-builder-vars-diff' => '編輯造成了統一的變化',
-	'abusefilter-edit-builder-vars-newsize' => '新頁面大小',
-	'abusefilter-edit-builder-vars-oldsize' => '舊頁面大小',
-	'abusefilter-edit-builder-vars-article-id' => '頁面ID',
-	'abusefilter-edit-builder-vars-article-ns' => '頁面名字空間',
-	'abusefilter-edit-builder-vars-article-text' => '頁面標題（沒有名字空間）',
-	'abusefilter-edit-builder-vars-movedfrom-id' => '要移動的源頁面頁面ID',
-	'abusefilter-edit-builder-vars-movedfrom-ns' => '要移動的源名字空間',
 );
 

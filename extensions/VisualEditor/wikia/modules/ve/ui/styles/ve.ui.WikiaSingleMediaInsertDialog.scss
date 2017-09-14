@@ -44,16 +44,16 @@ $width-results: 552px;
 			margin: 0 5px 60px;
 
 			.ve-ui-wikiaMediaOptionWidget-metaData {
-				@include cursor( 'zoom-in' );
-				margin-top: 160px;
-				padding: 2px 0;
-				position: absolute;
-				width: 100%;
+				display: none;
 			}
+
 			.oo-ui-labelElement-label {
-				@include cursor( 'zoom-in' );
-				margin-top: 178px;
-				padding: 0;
+				background: $color-page;
+				bottom: auto;
+				color: $color-text;
+				font-weight: bold;
+				margin-top: 160px;
+				text-shadow: none;
 			}
 		}
 	}
@@ -184,12 +184,4 @@ $width-results: 552px;
 	height: 120px;
 	margin-left: 20px;
 	width: 530px;
-}
-
-.ve-ui-wikiaMediaOptionWidget-metaData {
-	color: $color-alternate-text;
-	font-size: .8em;
-	font-weight: bold;
-	margin-top: 162px;
-	position: absolute;
 }

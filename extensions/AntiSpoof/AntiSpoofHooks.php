@@ -85,7 +85,7 @@ class AntiSpoofHooks {
 	 * @param $template UsercreateTemplate
 	 * @return bool
 	 */
-	public static function asUserCreateFormHook( &$template ) {
+	public static function asUserCreateFormHook( UsercreateTemplate $template ): bool {
 		global $wgRequest, $wgAntiSpoofAccounts, $wgUser;
 
 		if ( $wgAntiSpoofAccounts && $wgUser->isAllowed( 'override-antispoof' ) ) {
@@ -121,6 +121,23 @@ class AntiSpoofHooks {
 	public static function asAddRenameUserHook( $uid, $oldName, $newName ) {
 		$spoof = self::makeSpoofUser( $newName );
 		$spoof->update( $oldName );
+		return true;
+	}
+
+	/**
+	 * Wikia Addition
+	 * (After a successful user rename using Wikia Tool)
+	 *
+	 * @param $dbw DatabaseBase
+	 * @param $uid
+	 * @param $oldusername string
+	 * @param $newusername string
+	 * @param $process
+	 * @param $tasks
+	 */
+	public static function asAfterWikiaRenameUserHook( $dbw, $uid, $oldusername, $newusername, $process, &$tasks ) {
+		$spoof = static::makeSpoofUser( $newusername );
+		$spoof->record();
 		return true;
 	}
 }
