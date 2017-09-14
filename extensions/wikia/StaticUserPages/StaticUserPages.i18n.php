@@ -33,7 +33,7 @@ Falls du Hilfe brauchst, kannst du der Person, die die Willkommensnachricht unte
 Für allgemeine Fragen rund um FANDOM besuche bitte die [[Help:Contents|FANDOM-Hilfe]] und [[Special:Contact|kontaktiere unsere Mitarbeiter]], falls deine Fragen dort nicht ausreichend geklärt werden.
 
 ==Informationen und Unterstützung für die Begrüßungshilfe==
-Weitere Informationen zu den automatisch erstellten Willkommensnachrichten findest du auf der [[Help:Welcome tool|Hilfeseite zu automatischen Begrüßungen]].
+Weitere Informationen zu den automatisch erstellten Willkommensnachrichten findest du auf der [[Hilfe:Begrüßungshilfe|Hilfeseite zu automatischen Begrüßungen]].
 
 Wenn du Probleme mit der FANDOM-Begrüßungshilfe hast, [[Special:Contact|wende dich bitte an die FANDOM-Mitarbeiter]].
 ',
