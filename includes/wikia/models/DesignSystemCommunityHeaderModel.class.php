@@ -133,8 +133,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 				$localNavData = ApiService::foreignCall( WikiFactory::getWikiByID( $this->productInstanceId )->city_dbname, [
 					'controller' => 'NavigationApi',
 					'method' => 'getData',
-					'uselang' => $this->langCode,
-					'wikitext' => $wikitext
+					'uselang' => $this->langCode
 				], ApiService::WIKIA )[ 'navigation' ][ 'wiki' ];
 			}
 
