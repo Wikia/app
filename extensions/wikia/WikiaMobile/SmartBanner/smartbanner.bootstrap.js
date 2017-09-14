@@ -13,7 +13,7 @@ $(function () {
 			)) {
 				type = 'ios';
 			}
-		} else if (ua.match(/Android/i) !== null) {
+		} else if (ua.match(/Android/i) !== null && (ua.match(/Windows Phone/i) === null)) {
 			type = 'android';
 		}
 
