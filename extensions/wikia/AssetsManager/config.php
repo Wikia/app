@@ -921,6 +921,7 @@ $config['mercury_ads_js'] = [
 		'#group_adengine2_playwire_js',
 		'#group_adengine2_porvata_js',
 		'#group_adengine2_video_ui_js',
+		'//extensions/wikia/AdEngine/js/video/ooyalaAdSetProvider.js',
 		'//extensions/wikia/AdEngine/js/video/uapVideo.js',
 		'//extensions/wikia/AdEngine/js/video/videoSettings.js',
 		'//resources/wikia/modules/abTest.js',
