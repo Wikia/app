@@ -104,7 +104,7 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 			}
 			$db->freeResult($res);
 		} else {
-			$this->addFields(array('city_id', 'city_url', 'city_lang'));
+			$this->addFields(array('city_id', 'city_dbname', 'city_url', 'city_lang'));
 			$this->addOption( "ORDER BY ", "city_id" );
 			$this->addOption( 'LIMIT', $limit );
 
@@ -119,6 +119,7 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 					$data[$row->city_id] = array(
 						"id"		=> $row->city_id,
 						"domain"	=> $domain,
+						"dbname"	=> $row->city_dbname,
 						"lang"   => $row->city_lang,
 					);
 					ApiResult :: setContent( $data[$row->city_id], $domain );
