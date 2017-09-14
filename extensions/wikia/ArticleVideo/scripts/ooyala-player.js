@@ -11,6 +11,10 @@ define('ooyala-player', ['wikia.browserDetect'], function (browserDetect) {
 		this.params.width = playerWidth;
 		this.params.height = Math.floor((playerWidth * 9) / 16);
 		this.params.onCreate = this.onCreate.bind(this);
+		this.params.initialBitrate = {
+			level: 0.8,
+			duration: 2
+		};
 
 		this.onPlayerCreate = onPlayerCreate;
 
