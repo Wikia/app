@@ -163,9 +163,6 @@ class WikiMetrics {
 		$this->getLangs();
 
 		$params = $wgRequest->getValues();
-		if ( empty($params['from']) ) {
-			$params['from'] = date('Y/m/d', time() - WikiMetrics::TIME_DELTA * 60 * 60 * 24 );
-		}
 		$oCloseWikiTitle = Title::makeTitle( NS_SPECIAL, "CloseWiki" );
 		$action = $oCloseWikiTitle->getFullURL();
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
