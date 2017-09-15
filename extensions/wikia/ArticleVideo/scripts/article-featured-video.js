@@ -378,8 +378,11 @@ require([
 				}));
 				// we need to hold tracking until we update custom dimensions with next video data
 				trackingQueue.hold();
-				ooyalaService.getLabels(nextVideoId).then(function (data) {
+				ooyalaService.getLabels(nextVideoId).done(function (data) {
 					videoLabels = data.labels.join(',');
+				}).fail(function () {
+					videoLabels = '';
+				}).always(function () {
 					updateVideoCustomDimensions(nextVideoId, nextVideoData.name, videoLabels);
 					trackingQueue.release();
 				});
