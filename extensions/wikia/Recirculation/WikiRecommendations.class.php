@@ -593,30 +593,53 @@ class WikiRecommendations {
 	];
 
 	const DEV_RECOMMENDATIONS = [
-		[
-			'thumbnailUrl' => 'https://vignette.wikia-dev.pl/gameofthrones/images/3/3a/WhiteWalker_%28Hardhome%29.jpg/revision/latest?cb=20150601151110',
-			'title' => 'Game of Thrones',
-			'url' => 'http://gameofthrones.wikia.com/wiki/Game_of_Thrones_Wiki',
+		'us' => [
+			[
+				'thumbnailUrl' => 'https://vignette.wikia-dev.us/gameofthrones/images/3/3a/WhiteWalker_%28Hardhome%29.jpg/revision/latest?cb=20150601151110',
+				'title' => 'Game of Thrones',
+				'url' => 'http://gameofthrones.wikia.com/wiki/Game_of_Thrones_Wiki',
+			],
+			[
+				'thumbnailUrl' => 'https://vignette.wikia-dev.us/deathnote/images/1/1d/Light_Holding_Death_Note.png/revision/latest?cb=20120525180447',
+				'title' => 'Death Note',
+				'url' => 'http://deathnote.wikia.com/wiki/Main_Page',
+			],
+			[
+				'thumbnailUrl' => 'https://vignette.wikia-dev.us/midnight-texas/images/b/b0/Blinded_by_the_Light_106-01-Rev-Sheehan-Davy-Deputy.jpg/revision/latest?cb=20170820185915',
+				'title' => 'Midnight Texas',
+				'url' => 'http://midnight-texas.wikia.com/wiki/Midnight,_Texas_Wikia',
+			]
 		],
-		[
-			'thumbnailUrl' => 'https://vignette.wikia-dev.pl/deathnote/images/1/1d/Light_Holding_Death_Note.png/revision/latest?cb=20120525180447',
-			'title' => 'Death Note',
-			'url' => 'http://deathnote.wikia.com/wiki/Main_Page',
-		],
-		[
-			'thumbnailUrl' => 'https://vignette.wikia-dev.pl/midnight-texas/images/b/b0/Blinded_by_the_Light_106-01-Rev-Sheehan-Davy-Deputy.jpg/revision/latest?cb=20170820185915',
-			'title' => 'Midnight Texas',
-			'url' => 'http://midnight-texas.wikia.com/wiki/Midnight,_Texas_Wikia',
-		]
+	    'pl' => [
+		    [
+			    'thumbnailUrl' => 'https://vignette.wikia-dev.pl/gameofthrones/images/3/3a/WhiteWalker_%28Hardhome%29.jpg/revision/latest?cb=20150601151110',
+			    'title' => 'Game of Thrones',
+			    'url' => 'http://gameofthrones.wikia.com/wiki/Game_of_Thrones_Wiki',
+		    ],
+		    [
+			    'thumbnailUrl' => 'https://vignette.wikia-dev.pl/deathnote/images/1/1d/Light_Holding_Death_Note.png/revision/latest?cb=20120525180447',
+			    'title' => 'Death Note',
+			    'url' => 'http://deathnote.wikia.com/wiki/Main_Page',
+		    ],
+		    [
+			    'thumbnailUrl' => 'https://vignette.wikia-dev.pl/midnight-texas/images/b/b0/Blinded_by_the_Light_106-01-Rev-Sheehan-Davy-Deputy.jpg/revision/latest?cb=20170820185915',
+			    'title' => 'Midnight Texas',
+			    'url' => 'http://midnight-texas.wikia.com/wiki/Midnight,_Texas_Wikia',
+		    ]
+	    ]
 	];
 
 	public static function getRecommendations( $contentLanguage ) {
-		global $wgWikiaEnvironment;
+		global $wgWikiaDatacenter, $wgWikiaEnvironment;
 
-		if ( $wgWikiaEnvironment === WIKIA_ENV_STAGING ){
+		if ( $wgWikiaEnvironment === WIKIA_ENV_STAGING ) {
 			$recommendations = self::STAGING_RECOMMENDATIONS;
 		} elseif ( $wgWikiaEnvironment === WIKIA_ENV_DEV ) {
-			$recommendations = self::DEV_RECOMMENDATIONS;
+			if ( $wgWikiaDatacenter === WIKIA_DC_POZ ) {
+				$recommendations = self::DEV_RECOMMENDATIONS['pl'];
+			} else {
+				$recommendations = self::DEV_RECOMMENDATIONS['us'];
+			}
 		} else {
 			$recommendations = self::RECOMMENDATIONS['en'];
 			$fallbackedContentLanguage = self::fallbackToSupportedLanguages( $contentLanguage );
