@@ -29,17 +29,19 @@ define('ext.wikia.adEngine.video.ooyalaAdSetProvider', [
 			}
 		};
 
-	function generateSet(ad, rv, correlator, videoInfo) {
+	function generateSet(ad, rv, correlator, videoInfo, bidParams) {
 		videoInfo = videoInfo || {};
+		var slotParams = bidParams || {};
+
+		slotParams.pos = 'FEATURED';
+		slotParams.src = 'premium';
+		slotParams.rv = rv;
+
 		var options = {
 			vpos: ad.vpos,
 			correlator: correlator,
 			contentSourceId: videoInfo.contentSourceId,
 			videoId: videoInfo.videoId
-		}, slotParams = {
-			pos: 'FEATURED',
-			src: 'premium',
-			rv: rv
 		};
 
 		if (adContext.get('opts.megaAdUnitBuilderEnabled')) {
@@ -79,20 +81,21 @@ define('ext.wikia.adEngine.video.ooyalaAdSetProvider', [
 		return !isReplay || (isReplay && cappingAllowsToShowNextVideo(videoDepth, adsFrequency));
 	}
 
-	function get(videoDepth, correlator, videoInfo) {
+	function get(videoDepth, correlator, videoInfo, bidParams) {
 		if (!canShowAds() || !isVideoDepthValid(videoDepth)) {
 			return [];
 		}
 
 		videoDepth = videoDepth || 1;
 		correlator = correlator || Math.round(Math.random() * 10000000000);
+		bidParams = videoDepth === 1 ? bidParams : {};
 
 		var adSet = [],
 			adsFrequency = adContext.get('opts.fvAdsFrequency'),
 			rv = calculateRV(videoDepth, adsFrequency);
 
 		if (canAdBePlayed(videoDepth, adsFrequency)) {
-			adSet.push(generateSet(AD.PREROLL, rv, correlator, videoInfo));
+			adSet.push(generateSet(AD.PREROLL, rv, correlator, videoInfo, bidParams));
 		}
 
 		if (adContext.get('opts.isFVMidrollEnabled') && canAdBePlayed(videoDepth, adsFrequency)) {

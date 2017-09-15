@@ -7,8 +7,10 @@ require([
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.articleVideo.videoFeedbackBox',
+	'ext.wikia.adEngine.adContext',
 	'wikia.articleVideo.trackingQueue',
 	'wikia.articleVideo.ooyalaService',
+	require.optional('ext.wikia.adEngine.lookup.a9'),
 	require.optional('ext.wikia.adEngine.video.player.ooyala.ooyalaTracker'),
 	require.optional('ext.wikia.adEngine.video.ooyalaAdSetProvider')
 ], function (
@@ -20,8 +22,10 @@ require([
 	geo,
 	instantGlobals,
 	VideoFeedbackBox,
+	adContext,
 	TrackingQueue,
 	ooyalaService,
+	a9,
 	playerTracker,
 	ooyalaAdSetProvider
 ) {
@@ -70,7 +74,8 @@ require([
 			recommendedVideoDepth = 0;
 
 		function initVideo(onCreate) {
-			var inlineSkinConfig = {
+			var context = adContext.getContext(),
+				inlineSkinConfig = {
 					controlBar: {
 						autoplayCookieName: autoplayCookieName,
 						autoplayToggle: inAutoplayCountries
@@ -89,22 +94,42 @@ require([
 				};
 
 			if (ooyalaAdSetProvider.canShowAds()) {
-				options.adSet = ooyalaAdSetProvider.get(1, correlator, {
-					contentSourceId: videoData.dfpContentSourceId,
-					videoId: videoId
-				});
 				options.replayAds = ooyalaAdSetProvider.adsCanBePlayedOnNextVideoViews();
+
+				if (a9 && context.bidders && context.bidders.a9Video) {
+					a9.waitForResponse()
+						.then(function () { return a9.getSlotParams('FEATURED'); })
+						.catch(function () { return {}; })
+						.then(function (additionalSlotParams) { // finally
+							options.adSet = setupFirstAdSet(additionalSlotParams);
+							initPlayerWithTracking(options, onCreate);
+						});
+				} else {
+					options.adSet = setupFirstAdSet();
+					initPlayerWithTracking(options, onCreate);
+				}
+
 			} else {
 				playerTrackerParams.adProduct = 'featured-video-no-preroll';
+				initPlayerWithTracking(options, onCreate);
 			}
 
+			document.addEventListener('visibilitychange', handleTabChange);
+		}
+
+		function initPlayerWithTracking(options, onCreate) {
 			if (playerTracker) {
 				playerTracker.track(playerTrackerParams, 'init');
 			}
 
 			ooyalaVideoController = OoyalaPlayer.initHTML5Player(ooyalaVideoElementId, options, onCreate);
+		}
 
-			document.addEventListener('visibilitychange', handleTabChange);
+		function setupFirstAdSet(additionalSlotParams) {
+			return ooyalaAdSetProvider.get(1, correlator, {
+				contentSourceId: videoData.dfpContentSourceId,
+				videoId: videoId
+			}, additionalSlotParams);
 		}
 
 		function handleTabChange() {
