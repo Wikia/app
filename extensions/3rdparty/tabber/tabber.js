@@ -537,7 +537,7 @@ function tabberAutomaticOnLoad(tabberArgs)
 	if (!tabberArgs) { tabberArgs = {}; }
 	/* Taken from: http://simon.incutio.com/archive/2004/05/26/addLoadEvent */
 
-	$(function() {
+	mw.hook('wikipage.content').add(function () {
 		tabberAutomatic(tabberArgs);
 	});
 
@@ -550,7 +550,7 @@ function tabberAutomaticOnLoad(tabberArgs)
 /* Run tabberAutomaticOnload() unless the "manualStartup" option was specified */
 if (typeof tabberOptions == 'undefined') {
 
-	tabberAutomaticOnLoad();
+	$(tabberAutomaticOnLoad);
 
 } else {
 
