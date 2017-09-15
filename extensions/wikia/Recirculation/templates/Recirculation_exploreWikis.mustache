@@ -1,0 +1,17 @@
+<div class="mcf-card mcf-card-related-wikis">
+	<header class="mcf-card-related-wikis__header">
+		{{recirculationExploreWikis}}
+	</header>
+	<ul class="mcf-card-related-wikis__list">
+		{{#items}}
+			<li class="mcf-card-related-wikis__item">
+				<a href="{{url}}" class="mcf-card-related-wikis__item-link" data-tracking="explore-wikis-{{index}}" title="{{title}}">
+					<img src="{{thumbnailUrl}}" class="mcf-card-related-wikis__item-image">
+					<div>
+						<span class="mcf-card-related-wikis__title">{{title}}</span>
+					</div>
+				</a>
+			</li>
+		{{/items}}
+	</ul>
+</div>

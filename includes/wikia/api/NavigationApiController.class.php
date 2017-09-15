@@ -17,7 +17,12 @@ class NavigationApiController extends WikiaApiController {
 
 	public function getData() {
 		$model = new NavigationModel();
-		$nav = $model->getFormattedWiki();
+		$wikitext = $this->request->getVal( 'wikitext' );
+		if ( !empty($wikitext) ) {
+			$nav = $model->getFormattedWiki( NavigationModel::WIKI_LOCAL_MESSAGE, $wikitext );
+		} else {
+			$nav = $model->getFormattedWiki();
+		}
 
 		$this->setResponseData(
 			[ 'navigation' => $nav ],

@@ -26,17 +26,14 @@ class ApiService {
 	 * @return array|bool
 	 */
 	static function call( Array $params ) {
-		wfProfileIn(__METHOD__);
-
 		$res = false;
 
 		try {
 			$api = new ApiMain( new FauxRequest( $params ) );
 			$api->execute();
 			$res = $api->getResultData();
-		} catch ( Exception $e ) {};
-
-		wfProfileOut( __METHOD__ );
+		} catch ( Exception $e ) {
+		};
 
 		return $res;
 	}
@@ -51,19 +48,16 @@ class ApiService {
 	 *
 	 * @return mixed API response
 	 */
-	static function foreignCall( $dbName, Array $params, $endpoint = self::API, $setUser = false ) {
-		wfProfileIn(__METHOD__);
-
+	static function foreignCall( string $dbName, array $params, string $endpoint = self::API, bool $setUser = false ) {
 		$hostName = self::getHostByDbName( $dbName );
 
 		// If hostName is empty, this would make a request to the current host.
 		if ( empty( $hostName ) ) {
-			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
 		// request JSON format of API response
-		$params['format'] = 'json';
+		$params[ 'format' ] = 'json';
 
 		$url = "{$hostName}/{$endpoint}?" . http_build_query( $params );
 		wfDebug( __METHOD__ . ": {$url}\n" );
@@ -83,8 +77,6 @@ class ApiService {
 			$res = json_decode( $resp, true /* $assoc */ );
 		}
 
-		wfProfileOut( __METHOD__ );
-
 		return $res;
 	}
 
@@ -95,18 +87,24 @@ class ApiService {
 	 *
 	 * @return string HTTP domain
 	 */
-	private static function getHostByDbName( $dbName ) {
+	private static function getHostByDbName( string $dbName ): string {
 		global $wgDevelEnvironment, $wgDevDomain;
 
-		$cityId = WikiFactory::DBtoID( $dbName );
-		$hostName = WikiFactory::getVarValueByName( 'wgServer', $cityId );
-
+		/**
+		 * wgServer is generated in runtime on devboxes therefore we
+		 * can't use it to get host by db name
+		 */
 		if ( !empty( $wgDevelEnvironment ) ) {
+			$hostName = WikiFactory::DBtoUrl( $dbName );
+
 			if ( strpos( $hostName, 'wikia.com' ) ) {
 				$hostName = str_replace( 'wikia.com', $wgDevDomain, $hostName );
 			} else {
 				$hostName = WikiFactory::getLocalEnvURL( $hostName );
 			}
+		} else {
+			$cityId = WikiFactory::DBtoID( $dbName );
+			$hostName = WikiFactory::getVarValueByName( 'wgServer', $cityId );
 		}
 
 		return rtrim( $hostName, '/' );
@@ -120,17 +118,17 @@ class ApiService {
 		global $wgCookiePrefix;
 		$context = RequestContext::getMain();
 
-		$options = array();
+		$options = [];
 		$user = $context->getUser();
 		if ( !$user->isLoggedIn() ) {
 			return $options;
 		}
 
-		$params = array(
+		$params = [
 			'UserID' => $user->getId(),
 			'UserName' => $user->getName(),
 			'Token' => $user->getToken(),
-		);
+		];
 
 		$cookie = '';
 		foreach ( $params as $key => $value ) {
@@ -141,7 +139,7 @@ class ApiService {
 		if ( !empty( $token ) ) {
 			$cookie .= HeliosCookieHelper::ACCESS_TOKEN_COOKIE_NAME . '=' . $token . ';';
 		}
-		$options['curlOptions'] = array( CURLOPT_COOKIE => $cookie );
+		$options[ 'curlOptions' ] = [ CURLOPT_COOKIE => $cookie ];
 
 		return $options;
 	}

@@ -48,11 +48,10 @@ class RecirculationHooks {
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
 		global $wgNoExternals;
 
-		if ( empty( $wgNoExternals ) ) {
-			$jsAssets[] = 'recirculation_liftigniter_tracker';
-		}
-
 		if ( static::isCorrectPageType() ) {
+			if ( empty( $wgNoExternals ) ) {
+				$jsAssets[] = 'recirculation_liftigniter_tracker';
+			}
 			$jsAssets[] = 'recirculation_js';
 		}
 
@@ -69,10 +68,11 @@ class RecirculationHooks {
 
 		$showableNameSpaces = array_merge( $wg->ContentNamespaces, [ NS_FILE ] );
 
-		if ( $wg->Title->exists()
-				&& in_array( $wg->Title->getNamespace(), $showableNameSpaces )
-				&& $wg->request->getVal( 'action', 'view' ) === 'view'
-				&& $wg->request->getVal( 'diff' ) === null
+		if ( $wg->Title->exists() &&
+		     in_array( $wg->Title->getNamespace(), $showableNameSpaces ) &&
+		     $wg->request->getVal( 'action', 'view' ) === 'view' &&
+		     $wg->request->getVal( 'diff' ) === null &&
+		     !WikiaPageType::isCorporatePage()
 		) {
 			return true;
 		} else {
@@ -80,7 +80,7 @@ class RecirculationHooks {
 		}
 	}
 
-	static public function canShowDiscussions( $cityId ) {
+	static public function canShowDiscussions( $cityId, $ignoreWgEnableRecirculationDiscussions = false ) {
 		$discussionsAlias = WikiFactory::getVarValueByName( 'wgRecirculationDiscussionsAlias', $cityId );
 
 		if ( !empty( $discussionsAlias ) ) {
@@ -90,56 +90,55 @@ class RecirculationHooks {
 		$discussionsEnabled = WikiFactory::getVarValueByName( 'wgEnableDiscussions', $cityId );
 		$recirculationDiscussionsEnabled = WikiFactory::getVarValueByName( 'wgEnableRecirculationDiscussions', $cityId );
 
-		if ( !empty( $discussionsEnabled ) && !empty( $recirculationDiscussionsEnabled ) ) {
+		if ( !empty( $discussionsEnabled ) && ( $ignoreWgEnableRecirculationDiscussions ||
+		                                        !empty( $recirculationDiscussionsEnabled ) )
+		) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	private static function getLiftIgniterMetadataFromSiteAttributeService() {
-		return WikiaDataAccess::cache(
-			wfMemcKey( 'site-attribute-liftigniterMetadata' ),
-			3600,
-			function () {
-				global $wgCityId;
-
-				$rawData = ( new SiteAttributeService() )
-					->getAttribute( $wgCityId, 'liftigniterMetadata' );
-
-				if ( !empty( $rawData ) ) {
-					$decodedData = json_decode( $rawData, true );
-
-					if ( !empty( $decodedData ) ) {
-						return $decodedData;
-					}
-				}
-
-				return [];
-			}
-		);
-	}
-
 	private static function addLiftIgniterMetadata( OutputPage $outputPage ) {
-		global $wgDevelEnvironment, $wgLanguageCode, $wgStagingEnvironment;
+		global $wgCityId,
+		       $wgDevelEnvironment,
+		       $wgEnableArticleFeaturedVideo,
+		       $wgIsPrivateWiki,
+		       $wgLanguageCode,
+		       $wgStagingEnvironment,
+		       $wgWikiaEnvironment;
 
 		$context = RequestContext::getMain();
 		$title = $context->getTitle();
+		$articleId = $title->getArticleID();
 		$metaData = [];
-
-		if ( $title->isMainPage() ) {
-			$siteAttributeData = self::getLiftIgniterMetadataFromSiteAttributeService();
-		}
+		$metaDataService = new LiftigniterMetadataService();
+		$metaDataFromService = $metaDataService->getLiMetadataForArticle( $wgCityId, $articleId );
 
 		$metaData['language'] = $wgLanguageCode;
-		$isProduction = empty( $wgDevelEnvironment ) && empty( $wgStagingEnvironment );
 
-		if ( !$isProduction || $title->inNamespace( NS_FILE ) ) {
+		if ( !empty( $metaDataFromService ) ) {
+			$metaData['guaranteed_impression'] = $metaDataFromService->getGuaranteedNumber();
+			$metaData['start_date'] = $metaDataFromService->getDateFrom()->format('Y-m-d H:i:s');
+			$metaData['end_date'] = $metaDataFromService->getDateTo()->format('Y-m-d H:i:s');
+			if ( !empty( $metaDataFromService->getGeos() ) ) {
+				$metaData['geolocation'] = $metaDataFromService->getGeos();
+			}
+		}
+
+		$isProduction =
+			empty( $wgDevelEnvironment ) && empty( $wgStagingEnvironment ) &&
+			$wgWikiaEnvironment !== WIKIA_ENV_STAGING;
+		$isPrivateWiki = WikiFactory::isWikiPrivate( $wgCityId ) || $wgIsPrivateWiki;
+
+		if ( !$isProduction || $isPrivateWiki || $title->inNamespace( NS_FILE ) ) {
 			$metaData['noIndex'] = 'true';
 		}
 
-		if ( !empty( $siteAttributeData ) ) {
-			$metaData = array_merge( $siteAttributeData, $metaData );
+		if ( !empty( $wgEnableArticleFeaturedVideo ) &&
+		     ArticleVideoContext::isFeaturedVideoEmbedded( $title->getPrefixedDBkey() )
+		) {
+			$metaData['type'] = 'video';
 		}
 
 		$metaDataJson = json_encode( $metaData );

@@ -7,7 +7,7 @@
  */
 class EmailIntegrationTest extends WikiaBaseTest {
 
-	const VIGNETTE_BASE_URL_PROD = 'http://vignette<SHARD>.wikia.nocookie.net';
+	const VIGNETTE_BASE_URL_PROD = 'http://vignette.wikia.nocookie.net';
 
 	function setUp() {
 		$this->setupFile = __DIR__ . '/../Email.setup.php';

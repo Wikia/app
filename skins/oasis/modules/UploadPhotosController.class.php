@@ -147,13 +147,7 @@ class UploadPhotosController extends WikiaController {
 				break;
 
 			case UploadBase::VERIFICATION_ERROR:
-				$message = wfMessage( array_shift( $details['details'] ) );
-
-				if ( count( $details['details'] ) > 1 ) {
-					$message->numParams( $details['details'] );
-				}
-
-				$msg = $message->escaped();
+				$msg = wfMessage($details['details'][0])->escaped();
 				break;
 
 			case UploadBase::UPLOAD_VERIFICATION_ERROR:

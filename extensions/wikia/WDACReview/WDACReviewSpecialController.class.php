@@ -16,7 +16,6 @@ class WDACReviewSpecialController extends WikiaSpecialPageController {
 	protected function setGlobalDisplayVars() {
 		// get more space for review list
 		$this->wg->OasisFluid = true;
-		$this->wg->SuppressSpotlights = true;
 		$this->wg->SuppressCommunityHeader = true;
 		$this->wg->SuppressPageHeader = true;
 		$this->wg->SuppressFooter = true;

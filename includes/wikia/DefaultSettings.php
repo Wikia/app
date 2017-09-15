@@ -339,6 +339,7 @@ $wgAutoloadClasses['TemplateClassificationService'] = $IP . '/includes/wikia/ser
 $wgAutoloadClasses['CommunityDataService'] = $IP . '/includes/wikia/services/CommunityDataService.class.php';
 $wgAutoloadClasses['SiteAttributeService'] = $IP . '/includes/wikia/services/SiteAttributeService.class.php';
 $wgAutoloadClasses['ImageReviewService'] = $IP . '/includes/wikia/services/ImageReviewService.class.php';
+$wgAutoloadClasses['LiftigniterMetadataService'] = $IP . '/includes/wikia/services/LiftigniterMetadataService.class.php';
 
 // services hooks
 $wgHooks['ArticleEditUpdates'][] = 'MediaQueryService::onArticleEditUpdates';
@@ -349,7 +350,6 @@ $wgHooks['ArticleSaveComplete'][] = 'PageStatsService::onArticleSaveComplete';
 
 // controllers
 $wgAutoloadClasses['Wikia\Helios\HelperController'] = "{$IP}/includes/wikia/controllers/HeliosHelperController.class.php";
-$wgAutoloadClasses['Wikia\Helios\SampleController'] = "{$IP}/includes/wikia/controllers/HeliosSampleController.class.php";
 
 // data models
 $wgAutoloadClasses['WikisModel'] = "{$IP}/includes/wikia/models/WikisModel.class.php";
@@ -632,6 +632,7 @@ include_once( "$IP/extensions/wikia/Bucky/Bucky.setup.php" );
 include_once( "$IP/extensions/wikia/QuickTools/QuickTools.setup.php" );
 include_once( "$IP/extensions/wikia/TOC/TOC.setup.php" );
 include_once( "$IP/extensions/wikia/SEOTweaks/SEOTweaks.setup.php" );
+include_once( "$IP/extensions/wikia/StaticUserPages/StaticUserPages.setup.php" );
 
 /**
  * @name $wgSkipSkins
@@ -786,7 +787,7 @@ $wgMaxThumbnailArea = 0.9e7;
 $wgWikiaMaxNameChars = 50;
 
 /**
- * If this is set to true, then no externals (ads, spotlights, beacons such as google analytics and quantcast)
+ * If this is set to true, then no externals (ads, beacons such as google analytics and quantcast)
  * will be used.  This is used to help us get a good baseline for testing performance of in-house stuff only.
  *
  * To change this value, add noexternals=1 to the URL.
@@ -1433,6 +1434,13 @@ $wgAdDriverSrcPremiumCountries = [];
 $wgAdDriverPremiumAdLayoutRubiconFastlaneTagsCountries = [];
 
 /**
+ * @name $wgAdDriverPremiumAdLayoutAppNexusTagsCountries
+ * Enables Premium Ad Layout site and placementIds for AppNexus bidder.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverPremiumAdLayoutAppNexusTagsCountries = [];
+
+/**
  * @name $wgAdDriverKILOCountries
  * Enables transitional to MEGA way of building adUnits (for GPT provider, NOT ONLY REMNANT).
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1892,19 +1900,6 @@ $wgEnableHostnameInHtmlTitle = true;
  * Use template types from Template Classification Service in MW context
  */
 include_once("$IP/includes/wikia/parser/templatetypes/TemplateTypes.setup.php");
-
-/**
- * @name $wgEnableReviveSpotlights
- * Enables Revive Spotlights
- */
-$wgEnableReviveSpotlights = true;
-
-/**
- * @name $wgReviveSpotlightsCountries
- * Enables Revive Spotlights in these countries (given wgEnableReviveSpotlights is also true).
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgReviveSpotlightsCountries = null;
 
 /**
  * Enable SourcePoint recovery

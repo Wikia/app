@@ -52,8 +52,6 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 	}
 
 	function runOnReady(iframe, params, videoSettings) {
-		var spotlightFooter = doc.getElementById('SPOTLIGHT_FOOTER');
-
 		nav.style.top = '';
 		page.classList.add('bfaa-template');
 		if (!win.ads.runtime.disableCommunitySkinOverride) {
@@ -69,10 +67,6 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 
 		if (win.WikiaBar) {
 			win.WikiaBar.hideContainer();
-		}
-
-		if (spotlightFooter) {
-			spotlightFooter.parentNode.style.display = 'none';
 		}
 
 		if (recoveryTweaker && recoveryTweaker.isTweakable()) {

@@ -1,5 +1,6 @@
 <?php
 
+use Wikia\DependencyInjection\Injector;
 use \Wikia\Logger\WikiaLogger;
 
 class PhalanxHooks extends WikiaObject {
@@ -174,7 +175,7 @@ class PhalanxHooks extends WikiaObject {
 		}
 
 		if ( $result !== false ) {
-			$service = new PhalanxService();
+			$service = Injector::getInjector()->get( PhalanxService::class );
 			$ret = $service->reload( $result["success"] );
 		} else {
 			$ret = $result;
@@ -205,7 +206,7 @@ class PhalanxHooks extends WikiaObject {
 
 		$id = $phalanx->delete();
 		if ( $id ) {
-			$service = new PhalanxService();
+			$service = Injector::getInjector()->get( PhalanxService::class );
 			$ids = array( $id );
 			$ret = $service->reload( $ids );
 		} else {

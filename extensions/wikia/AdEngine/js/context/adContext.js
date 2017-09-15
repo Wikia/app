@@ -260,6 +260,8 @@ define('ext.wikia.adEngine.adContext', [
 
 		context.opts.premiumAdLayoutRubiconFastlaneTagsEnabled = context.opts.premiumAdLayoutEnabled &&
 			geo.isProperGeo(instantGlobals.wgAdDriverPremiumAdLayoutRubiconFastlaneTagsCountries);
+		context.opts.premiumAdLayoutAppNexusTagsEnabled = context.opts.premiumAdLayoutEnabled &&
+			geo.isProperGeo(instantGlobals.wgAdDriverPremiumAdLayoutAppNexusTagsCountries);
 
 		context.opts.isFVMidrollEnabled = geo.isProperGeo(instantGlobals.wgAdDriverFVMidrollCountries);
 		context.opts.isFVPostrollEnabled = geo.isProperGeo(instantGlobals.wgAdDriverFVPostrollCountries);
@@ -281,9 +283,22 @@ define('ext.wikia.adEngine.adContext', [
 		callbacks.push(callback);
 	}
 
+	function get(path) {
+		var isPathValid = path !== undefined && path !== '',
+			nextElement = getContext(),
+			nodes = (path || '').split('.');
+
+		while (isPathValid && nodes.length > 0 && typeof nextElement === 'object') {
+			nextElement = nextElement[nodes.shift()];
+		}
+
+		return nextElement;
+	}
+
 	setContext(w.ads ? w.ads.context : {});
 
 	return {
+		get: get,
 		addCallback: addCallback,
 		getContext: getContext,
 		setContext: setContext

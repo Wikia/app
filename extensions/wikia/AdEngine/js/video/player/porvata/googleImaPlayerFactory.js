@@ -40,6 +40,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 				);
 			}
 
+			dispatchEvent('wikiaAdsManagerLoaded');
 			log('AdsManager loaded', log.levels.debug, logGroup);
 		}
 
@@ -84,8 +85,8 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 		function setAutoPlay(value) {
 			// mobileVideoAd DOM element is present on mobile only
 			if (mobileVideoAd) {
-				mobileVideoAd.autoplay = value;
-				mobileVideoAd.muted = value;
+				mobileVideoAd.setAttribute('muted', value);
+				mobileVideoAd.setAttribute('autoplay', value);
 			}
 		}
 
@@ -117,10 +118,12 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			}
 		}
 
-		function reload() {
-			adsManager.destroy();
+		function reload(reloadParams) {
+			if (adsManager) {
+				adsManager.destroy();
+			}
 			adsLoader.contentComplete();
-			adsLoader.requestAds(imaSetup.createRequest(params));
+			adsLoader.requestAds(imaSetup.createRequest(reloadParams || params));
 
 			log('IMA player reloaded', log.levels.debug, logGroup);
 		}
@@ -158,13 +161,26 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			return adsManager;
 		}
 
+		if (mobileVideoAd) {
+			params.container.classList.add('mobile-porvata');
+		}
+
 		adsLoader.addEventListener(
 			win.google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED,
 			adsManagerLoadedCallback,
 			false
 		);
 
+		adsLoader.addEventListener(win.google.ima.AdErrorEvent.Type.AD_ERROR, function (event) {
+			var emptyVastErrorCode = win.google.ima.AdError.ErrorCode.VAST_EMPTY_RESPONSE;
+
+			if (typeof event.getError === 'function' && event.getError().getErrorCode() === emptyVastErrorCode) {
+				dispatchEvent('wikiaEmptyAd');
+			}
+		});
+
 		adsLoader.requestAds(imaSetup.createRequest(params));
+
 		if (videoSettings.isAutoPlay()) {
 			setAutoPlay(true);
 		}

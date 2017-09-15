@@ -114,7 +114,9 @@ define('ooyala-player', ['wikia.browserDetect'], function (browserDetect) {
 			return module.name === 'adManagerController';
 		});
 
-		if (controller && controller.instance && controller.instance.pageSettings) {
+		if (controller && controller.instance &&
+			controller.instance.pageSettings &&
+			controller.instance.pageSettings['google-ima-ads-manager']) {
 			controller.instance.pageSettings['google-ima-ads-manager'].all_ads = adSet;
 		}
 	};

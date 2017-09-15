@@ -149,9 +149,10 @@ class HAWelcomeTask extends BaseTask {
 		if ( ! $recipientProfile->exists() ) {
 			$this->info( sprintf( "creating welcome user page for %s",
 				$this->recipientObject->getName() ) );
+
 			$recipientProfile->doEdit(
 				$this->getWelcomePageTemplateForRecipient(),
-				false,
+				$this->getTextVersionOfMessage( 'welcome-message-log' ),
 				$this->integerFlags,
 				false,
 				$this->getDefaultWelcomerUser()
