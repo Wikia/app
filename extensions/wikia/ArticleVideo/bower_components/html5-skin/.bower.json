@@ -12,13 +12,12 @@
     "!/vendor"
   ],
   "homepage": "https://github.com/Wikia/html5-skin",
-  "_release": "f3677fe6c9",
+  "_release": "56e9142f4b",
   "_resolution": {
-    "type": "branch",
-    "branch": "XW-3991",
-    "commit": "f3677fe6c9084ea0055ee41e5368b5345c0afc53"
+    "type": "commit",
+    "commit": "56e9142f4b889d65c0c9cbba15047f066e7e41f2"
   },
   "_source": "git://github.com/Wikia/html5-skin.git",
-  "_target": "XW-3991",
+  "_target": "56e9142f4b889d65c0c9cbba15047f066e7e41f2",
   "_originalSource": "Wikia/html5-skin"
 }
