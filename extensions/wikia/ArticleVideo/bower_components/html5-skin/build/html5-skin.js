@@ -1878,7 +1878,7 @@ var ControlBar = React.createClass({displayName: "ControlBar",
     if(this.props.responsiveView == this.props.skinConfig.responsive.breakpoints.xs.id) {
       this.props.controller.toggleScreen(CONSTANTS.SCREEN.VIDEO_QUALITY_SCREEN);
     } else {
-      this.toggleQualityPopover();
+      this.toggleQualityPopOver();
       this.closeCaptionPopover();
       this.closeConfigPopover();
     }
@@ -1904,7 +1904,7 @@ var ControlBar = React.createClass({displayName: "ControlBar",
 
   closeQualityPopover: function() {
     if(this.props.controller.state.videoQualityOptions.showVideoQualityPopover == true) {
-      this.toggleQualityPopover();
+      this.toggleQualityPopOver();
     }
   },
 
@@ -5185,7 +5185,7 @@ var VideoQualityPanel = React.createClass({displayName: "VideoQualityPanel",
       selected: selectedBitrateId
     });
     this.props.togglePopoverAction();
-    this.props.toggleVideoQualityPanel();
+    this.props.toggleVideoQualityPopOver();
   },
 
     handleBackClick: function() {
@@ -5730,7 +5730,7 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
 
   if (OO.publicApi && OO.publicApi.VERSION) {
     // This variable gets filled in by the build script
-    OO.publicApi.VERSION.skin = {"releaseVersion": "4.14.8", "rev": "8444db95cfa1d1e203b2efaf43b0839e9ca15fdb"};
+    OO.publicApi.VERSION.skin = {"releaseVersion": "4.14.8", "rev": "8618b2f605540ab7fbf22ab8e686f111f1a4260b"};
   }
 
   // WIKIA CHANGE - START
