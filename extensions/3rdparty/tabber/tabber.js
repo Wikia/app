@@ -553,7 +553,9 @@ if (typeof tabberOptions == 'undefined') {
 } else {
 
 	if (!tabberOptions['manualStartup']) {
-		tabberAutomaticOnLoad(tabberOptions);
+		$(function(){
+			tabberAutomaticOnLoad(tabberOptions);
+		});
 	}
 
 }
