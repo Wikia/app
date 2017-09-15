@@ -531,13 +531,11 @@ function tabberAutomatic(tabberArgs)
 
 function tabberAutomaticOnLoad(tabberArgs)
 {
-	/* This function adds tabberAutomatic to the window.onload event,
-	 so it will run after the document has finished loading.
-	 */
-	if (!tabberArgs) { tabberArgs = {}; }
-	/* Taken from: http://simon.incutio.com/archive/2004/05/26/addLoadEvent */
 
-	$(function() {
+	if (!tabberArgs) { tabberArgs = {}; }
+
+	// Wikia change - init tabbers every time wikitext is added to the page
+	mw.hook('wikipage.content').add(function () {
 		tabberAutomatic(tabberArgs);
 	});
 
@@ -550,12 +548,14 @@ function tabberAutomaticOnLoad(tabberArgs)
 /* Run tabberAutomaticOnload() unless the "manualStartup" option was specified */
 if (typeof tabberOptions == 'undefined') {
 
-	tabberAutomaticOnLoad();
+	$(tabberAutomaticOnLoad);
 
 } else {
 
 	if (!tabberOptions['manualStartup']) {
-		tabberAutomaticOnLoad(tabberOptions);
+		$(function(){
+			tabberAutomaticOnLoad(tabberOptions);
+		});
 	}
 
 }
