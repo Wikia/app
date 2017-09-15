@@ -212,13 +212,13 @@ class OoyalaConfigController extends WikiaController {
 				[
 					'name' => 'share',
 					'location' => 'controlBar',
-					'whenDoesNotFit' => 'moveToMoreOptions',
+					'whenDoesNotFit' => 'drop',
 					'minWidth' => 45,
 				],
 				[
 					'name' => 'quality',
 					'location' => 'controlBar',
-					'whenDoesNotFit' => 'keep',
+					'whenDoesNotFit' => 'drop',
 					'minWidth' => 45,
 				],
 				[
