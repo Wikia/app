@@ -7,6 +7,8 @@ require([
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.articleVideo.videoFeedbackBox',
+	'wikia.articleVideo.trackingQueue',
+	'wikia.articleVideo.ooyalaService',
 	require.optional('ext.wikia.adEngine.video.player.ooyala.ooyalaTracker'),
 	require.optional('ext.wikia.adEngine.video.ooyalaAdSetProvider')
 ], function (
@@ -18,6 +20,8 @@ require([
 	geo,
 	instantGlobals,
 	VideoFeedbackBox,
+	TrackingQueue,
+	ooyalaService,
 	playerTracker,
 	ooyalaAdSetProvider
 ) {
@@ -41,10 +45,11 @@ require([
 				adProduct: 'featured-video-preroll',
 				slotName: 'FEATURED'
 			},
-			track = tracker.buildTrackingFunction({
+			trackingQueue = new TrackingQueue({
 				category: 'article-video',
 				trackingMethod: 'analytics'
 			}),
+			track = trackingQueue.track.bind(trackingQueue),
 			collapsedVideoSize = {
 				width: 300,
 				height: 169
@@ -222,9 +227,13 @@ require([
 			});
 		}
 
-		window.guaSetCustomDimension(34, videoId);
-		window.guaSetCustomDimension(35, videoTitle);
-		window.guaSetCustomDimension(36, videoLabels);
+		function updateVideoCustomDimensions(videoId, videoTitle, videoLabels) {
+			window.guaSetCustomDimension(34, videoId);
+			window.guaSetCustomDimension(35, videoTitle);
+			window.guaSetCustomDimension(36, videoLabels);
+		}
+
+		updateVideoCustomDimensions(videoId, videoTitle, videoLabels);
 		window.guaSetCustomDimension(37, willAutoplay ? 'Yes' : 'No');
 
 		initVideo(function (player) {
@@ -251,9 +260,6 @@ require([
 						ooyalaVideoController.getFormattedDuration(player.getDuration())
 					);
 					$onScrollAttribution.remove();
-
-					window.guaSetCustomDimension(34, player.getItem().embed_code);
-					window.guaSetCustomDimension(35, title);
 				}
 			});
 
@@ -352,7 +358,8 @@ require([
 				// bucket_info has '2' before the JSON string
 				var bucketInfo = JSON.parse(eventData.clickedVideo.bucket_info.substring(1)),
 					position = bucketInfo.position,
-					nextVideoData = eventData.clickedVideo || {};
+					nextVideoData = eventData.clickedVideo || {},
+					nextVideoId = nextVideoData.embed_code;
 
 				recommendedVideoDepth++;
 
@@ -367,8 +374,15 @@ require([
 
 				ooyalaVideoController.updateAdSet(ooyalaAdSetProvider.get(recommendedVideoDepth + 1, correlator, {
 					contentSourceId: videoData.dfpContentSourceId,
-					videoId: nextVideoData.embed_code
+					videoId: nextVideoId
 				}));
+				// we need to hold tracking until we update custom dimensions with next video data
+				trackingQueue.hold();
+				ooyalaService.getLabels(nextVideoId).then(function (data) {
+					videoLabels = data.labels.join(',');
+					updateVideoCustomDimensions(nextVideoId, nextVideoData.name, videoLabels);
+					trackingQueue.release();
+				});
 			});
 
 			track({

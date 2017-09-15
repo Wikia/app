@@ -150,7 +150,6 @@ $config['recirculation_js'] = [
 	'assets' => [
 		'//extensions/wikia/Recirculation/js/tracker.js',
 		'//extensions/wikia/Recirculation/js/utils.js',
-		'//extensions/wikia/Recirculation/js/helpers/FandomHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/DiscussionsHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/CuratedContentHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/LiftigniterHelper.js',
@@ -177,16 +176,6 @@ $config['recirculation_scss'] = [
 		'//extensions/wikia/Recirculation/styles/recirculation.scss',
 	],
 ];
-
-$config['spotlights_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		// ads
-		'//extensions/wikia/Spotlights/js/AdProviderOpenX.js',
-		'//extensions/wikia/Spotlights/js/LazyLoadAds.js',
-	],
-];
-
 
 $config['adengine2_top_js'] = [
 	'type' => AssetsManager::TYPE_JS,
@@ -315,11 +304,11 @@ $config['adengine2_video_ui_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/AdEngine/js/video/player/ui/closeButton.js',
+		'//extensions/wikia/AdEngine/js/video/player/ui/dynamicReveal.js',
+		'//extensions/wikia/AdEngine/js/video/player/ui/mouseEvents.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/pauseOverlay.js',
-		'//extensions/wikia/AdEngine/js/video/player/ui/playPauseButton.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/progressBar.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/replayOverlay.js',
-		'//extensions/wikia/AdEngine/js/video/player/ui/soundControl.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/toggleAnimation.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/toggleVideo.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/videoInterface.js',
@@ -932,6 +921,7 @@ $config['mercury_ads_js'] = [
 		'#group_adengine2_playwire_js',
 		'#group_adengine2_porvata_js',
 		'#group_adengine2_video_ui_js',
+		'//extensions/wikia/AdEngine/js/video/ooyalaAdSetProvider.js',
 		'//extensions/wikia/AdEngine/js/video/uapVideo.js',
 		'//extensions/wikia/AdEngine/js/video/videoSettings.js',
 		'//resources/wikia/modules/abTest.js',
@@ -1134,16 +1124,6 @@ $config['filepage_scss_wikiamobile'] = [
 	'skin' => 'wikiamobile',
 	'assets' => [
 		'//extensions/wikia/FilePage/css/FilePage.wikiamobile.scss',
-	],
-];
-
-$config['relatedpages_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'monobook', 'wikiamobile' ],
-	'assets' => [
-		'//resources/wikia/libraries/sloth/sloth.js',
-		'//resources/wikia/libraries/mustache/mustache.js',
-		'//extensions/wikia/RelatedPages/js/RelatedPages.js',
 	],
 ];
 
@@ -2119,7 +2099,6 @@ $config['banner_notifications_js'] = [
 	'skin' => [ 'oasis', 'monobook' ],
 	'assets' => [
 		'//extensions/wikia/BannerNotifications/js/BannerNotifications.js',
-		'//extensions/wikia/BannerNotifications/js/templates.mustache.js',
 	],
 ];
 
@@ -2661,7 +2640,7 @@ $config['contribution_prototype_scss'] = [
 
 $config['design_system_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis' ],
+	'skin' => [ 'oasis', 'monobook' ],
 	'assets' => [
 		'//extensions/wikia/DesignSystem/styles/design-system.scss'
 	],
@@ -2740,6 +2719,8 @@ $config['article_featured_video_js'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/ArticleVideo/scripts/article-featured-video.js',
+		'//extensions/wikia/ArticleVideo/scripts/ooyala-service.js',
+		'//extensions/wikia/ArticleVideo/scripts/tracking-queue.js',
 		'//extensions/wikia/ArticleVideo/scripts/video-feedback.js',
 	],
 ];

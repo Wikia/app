@@ -174,6 +174,7 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			adProduct: 'rubicon',
 			slotName: 'TOP_LEADERBOARD',
 			bid: {
+				bidderCode: 'rubicon',
 				rubiconAdId: '56bar',
 				rubiconAdvertiserId: 'foo89',
 				cpm: 123
@@ -189,6 +190,7 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			adProduct: 'appnexusAst',
 			slotName: 'TOP_LEADERBOARD',
 			bid: {
+				bidderCode: 'appnexusAst',
 				creative_id: '87765',
 				cpm: 1.20
 			}
@@ -223,6 +225,7 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			adProduct: 'veles',
 			slotName: 'TOP_LEADERBOARD',
 			bid: {
+				bidderCode: 'veles',
 				vastId: 'GDFP:123'
 			}
 		}, 'fooPlayer', 'barEvent', undefined, 'application/javascript');

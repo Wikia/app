@@ -2008,10 +2008,8 @@ class Wikia {
 		$title = $out->getTitle();
 
 		if ( !$wgUseSiteJs && $title->isJsPage() ) {
-			\BannerNotificationsController::addConfirmation(
-				wfMessage( 'usesitejs-disabled-warning' )->escaped(),
-				\BannerNotificationsController::CONFIRMATION_NOTIFY
-			);
+			\BannerNotificationsController::addConfirmation( wfMessage( 'usesitejs-disabled-warning' )->parse(),
+				\BannerNotificationsController::CONFIRMATION_NOTIFY );
 		}
 
 		return true;

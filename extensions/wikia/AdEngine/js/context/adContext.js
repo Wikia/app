@@ -281,9 +281,22 @@ define('ext.wikia.adEngine.adContext', [
 		callbacks.push(callback);
 	}
 
+	function get(path) {
+		var isPathValid = path !== undefined && path !== '',
+			nextElement = getContext(),
+			nodes = (path || '').split('.');
+
+		while (isPathValid && nodes.length > 0 && typeof nextElement === 'object') {
+			nextElement = nextElement[nodes.shift()];
+		}
+
+		return nextElement;
+	}
+
 	setContext(w.ads ? w.ads.context : {});
 
 	return {
+		get: get,
 		addCallback: addCallback,
 		getContext: getContext,
 		setContext: setContext

@@ -15,7 +15,7 @@ For more information on the automatic welcome messages, see the [[Help:Welcome t
 
 If you have any questions about the FANDOM Welcome tool, please [[Special:Contact|contact FANDOM staff]].
 ',
-	'static-user-pages-bot-content' => 'User:FANDOMbot is a bot account operated by FANDOM Staff for bulk edits and changes.',
+	'static-user-pages-bot-content' => 'User:FANDOMbot is a [[Help:Bots|bot account]] operated by FANDOM Staff for bulk edits and changes.',
 );
 
 $messages['qqq'] = array(
@@ -109,7 +109,7 @@ FANDOMウェルカムツールについてご不明な点がございました�
 
 $messages['lol'] = array(
 	'static-user-pages-user-content' => 'crwdns70364:0crwdne70364:0',
-	'static-user-pages-bot-content' => 'crwdns70365:0crwdne70365:0',
+	'static-user-pages-bot-content' => 'crwdns71006:0crwdne71006:0',
 );
 
 $messages['pl'] = array(
@@ -126,7 +126,7 @@ Aby uzyskać więcej informacji o automatycznych wiadomościach powitalnych, zob
 
 Jeśli masz jakiekolwiek pytania dotyczące narzędzia witania FANDOMU, [[Special:Contact|skontaktuj się z pracownikami FANDOMU]].
 ',
-	'static-user-pages-bot-content' => 'Użytkownik:FANDOMbot to konto bota, obsługiwane przez pracowników FANDOMU w celu dokonywania zbiorczych zmian i edycji.',
+	'static-user-pages-bot-content' => 'Użytkownik:FANDOMbot to [[Pomoc:Boty|konto bota]], obsługiwane przez pracowników FANDOMU w celu dokonywania zbiorczych zmian i edycji.',
 );
 
 $messages['pt'] = array(
@@ -136,22 +136,22 @@ Se você recebeu as boas-vindas desta conta, então você é um novo editor dest
 
 Se você está buscando ajuda, você pode deixar uma mensagem para a pessoa que assinou a mensagem de boas-vindas. Siga o link para sua página de discussão e em seguida, edite a página para escrever a sua mensagem.
 
-Para ajuda geral no FANDOM, visite [[ajuda: Conteúdo|ajuda FANDOM]], e [[especial: Contato|entre em contato com o staff]] se você ainda tiver dúvidas.
+Para ajuda geral no FANDOM, visite [[Ajuda:Conteúdo|ajuda FANDOM]], e [[Especial:Contat|entre em contato com o staff]] se você ainda tiver dúvidas.
 
 ==Bem-vindo à ferramenta informações e ajuda==
-Para obter mais informações sobre as mensagens de boas-vindas automáticas, consulte a [[ferramenta ajuda: Bem-vindo|Bem-vindo a página de ajuda]].
+Para obter mais informações sobre as mensagens de boas-vindas automáticas, consulte a [[Ajuda: Ferramenta de boas-vindas|ferramenta de boas-vindas]].
 
-Se você tiver quaisquer perguntas sobre a ferramenta de boas-vindas do FANDOM, por favor [[especial:Contato|entre em contato com o staff do FANDOM]].
+Se você tiver quaisquer perguntas sobre a ferramenta de boas-vindas do FANDOM, por favor [[Especial:Contat|entre em contato com o staff do FANDOM]].
 ',
-	'static-user-pages-bot-content' => 'Usuário: o FANDOMbot é uma conta robô operada pelo staff do FANDOM para edições em massa e alterações.',
+	'static-user-pages-bot-content' => 'O Usuário:FANDOMbot é uma [[Ajuda:Bots|conta robô]] operada pelo staff do FANDOM para edições em massa e alterações.',
 );
 
 $messages['ru'] = array(
 	'static-user-pages-user-content' => '<h2 style="overflow:auto">Добро пожаловать на ФЭНДОМ!</h2>
 
-Если вы получили приглашение с этого адреса, значит теперь вы новый редактор этой вики. Поздравляем!
+Если вы получили приглашение от этого участника, значит теперь вы новый редактор этой вики. Поздравляем!
 
-Если вам потребуется помощь, отправьте сообщение участнику, указанному в подписи письма. Перейдите по ссылке на страницу обсуждения и напишите свое сообщение, отредактировав страницу.
+Если вам потребуется помощь, отправьте сообщение участнику, указанному в подписи сообщения. Перейдите по ссылке на страницу обсуждения и напишите своё сообщение.
 
 Если у вас появятся вопросы о ФЭНДОМЕ, посетите [[Справка:Содержание|страницу справки]] или [[Служебная:Contact|свяжитесь с сотрудниками ФЭНДОМА]].
 
@@ -160,7 +160,7 @@ $messages['ru'] = array(
 
 Если у вас есть вопросы об автоматических приветствиях, [[Служебная:Contact|свяжитесь с сотрудниками ФЭНДОМА]].
 ',
-	'static-user-pages-bot-content' => 'User:FANDOMbot — это бот под управлением команды ФЭНДОМА. Мы используем его для массового внесения изменений и правок.',
+	'static-user-pages-bot-content' => 'User:FANDOMbot — это бот под управлением сотрудников ФЭНДОМА. Он используется для массовых изменений и правок.',
 );
 
 $messages['zh-hans'] = array(

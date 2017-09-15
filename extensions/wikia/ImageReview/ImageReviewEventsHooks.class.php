@@ -8,44 +8,26 @@ class ImageReviewEventsHooks {
 	const ROUTING_KEY = 'image-review.mw-context.on-upload';
 
 	public static function onUploadComplete( UploadBase $form ) {
-		global $wgCityId, $wgImageReviewTestCommunities;
+		// $form->getTitle() returns Title object with not updated latestRevisionId when uploading new revision
+		// of the file
+		$title = Title::newFromID( $form->getTitle()->getArticleID() );
 
-		if ( in_array( $wgCityId, $wgImageReviewTestCommunities ) ) {
-			// $form->getTitle() returns Title object with not updated latestRevisionId when uploading new revision
-			// of the file
-			$title = Title::newFromID( $form->getTitle()->getArticleID() );
-
-			self::actionCreate( $title );
-		} else {
-			static::createAddTask( $form->getTitle() );
-		}
+		self::actionCreate( $title ?? $form->getTitle() );
 
 		return true;
 	}
 
 	public static function onFileRevertComplete( Page $page ) {
-		global $wgCityId, $wgImageReviewTestCommunities;
-
-		if ( in_array( $wgCityId, $wgImageReviewTestCommunities ) ) {
-			// $page->getTitle() returns Title object created before revert, so latestRevisionId is not updated there
-			$title = Title::newFromID( $page->getTitle()->getArticleID() );
-			self::actionCreate( $title );
-		} else {
-			static::createAddTask( $page->getTitle() );
-		}
+		// $page->getTitle() returns Title object created before revert, so latestRevisionId is not updated there
+		$title = Title::newFromID( $page->getTitle()->getArticleID() );
+		self::actionCreate( $title );
 
 		return true;
 	}
 
 	public static function onArticleUndelete( Title $title, $created, $comment ) {
 		if ( static::isFileForReview( $title ) ) {
-			global $wgCityId, $wgImageReviewTestCommunities;
-
-			if ( in_array( $wgCityId, $wgImageReviewTestCommunities ) ) {
-				self::actionCreate( $title );
-			} else {
-				static::createAddTask( $title );
-			}
+			self::actionCreate( $title );
 		}
 
 		return true;
@@ -55,53 +37,24 @@ class ImageReviewEventsHooks {
 		$title = $page->getTitle();
 
 		if ( static::isFileForReview( $title ) ) {
-			global $wgCityId, $wgImageReviewTestCommunities;
-
-			if ( in_array( $wgCityId, $wgImageReviewTestCommunities ) ) {
-				self::actionDelete( $articleId );
-			} else {
-				WikiaLogger::instance()->debug(
-					'Image Review - Adding delete task',
-					[
-						'method' => __METHOD__,
-						'title' => $title->getPrefixedText(),
-					]
-				);
-
-				$task = new ImageReviewTask();
-				$task->call(
-					'deleteFromQueue',
-					[
-						[
-							'wiki_id' => $wgCityId,
-							'page_id' => $articleId,
-						]
-					]
-				);
-				$task->prioritize();
-				$task->queue();
-			}
+			self::actionDelete( $articleId );
 		}
 
 		return true;
 	}
 
 	public static function onOldFileDeleteComplete( Title $title, $oi_timestamp ) {
-		global $wgCityId, $wgImageReviewTestCommunities;
+		$revisionId = wfGetDB( DB_SLAVE )->selectField(
+			[ 'revision' ],
+			'rev_id',
+			[
+				'rev_page' => $title->getArticleID(),
+				'rev_timestamp' => $oi_timestamp
+			],
+			__METHOD__
+		);
 
-		if ( in_array( $wgCityId, $wgImageReviewTestCommunities ) ) {
-			$revisionId = wfGetDB( DB_SLAVE )->selectField(
-				[ 'revision' ],
-				'rev_id',
-				[
-					'rev_page' => $title->getArticleID(),
-					'rev_timestamp' => $oi_timestamp
-				],
-				__METHOD__
-			);
-
-			self::actionDelete( $title->getArticleID(), $revisionId );
-		}
+		self::actionDelete( $title->getArticleID(), $revisionId );
 
 		return true;
 	}
@@ -142,29 +95,6 @@ class ImageReviewEventsHooks {
 		}
 
 		return false;
-	}
-
-	private static function createAddTask( Title $title ) {
-		global $wgCityId;
-
-		if ( !preg_match( '/.(png|bmp|gif|jpg|ico|svg|jpeg)$/', $title->getPrefixedText() ) ) {
-			return;
-		}
-
-		WikiaLogger::instance()->debug(
-			'Image Review - Adding task',
-			[
-				'method' => __METHOD__,
-				'title' => $title->getPrefixedText(),
-			]
-		);
-
-		$task = new ImageReviewTask();
-		$task->call( 'addToQueue' );
-		$task->wikiId( $wgCityId );
-		$task->title( $title );
-		$task->prioritize();
-		$task->queue();
 	}
 
 	private static function actionCreate( Title $title, $revisionId = null, $action = 'created' ) {

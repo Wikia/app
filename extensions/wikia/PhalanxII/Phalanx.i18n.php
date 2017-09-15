@@ -46,7 +46,7 @@ $messages['en'] = array(
 	'phalanx-bulkmode' => 'Bulk mode',
 	'phalanx-singlemode' => 'Single mode',
 	'phalanx-block-success' => 'The block was successfully added',
-	'phalanx-block-failure' => 'There was an error during adding the block',
+	'phalanx-block-failure' => 'There was a problem with adding the block',
 	'phalanx-modify-success' => 'The block was successfully modified',
 	'phalanx-modify-failure' => 'There was an error modifying the block',
 	'phalanx-modify-warning' => 'You are editing block ID #$1.
@@ -273,7 +273,7 @@ $messages['de'] = array(
 	'phalanx-tab-main' => 'Filter verwalten',
 	'phalanx-tab-secondary' => 'Filter testen',
 	'phalanx-block-success' => 'Die Sperre wurde erfolgreich hinzugefügt',
-	'phalanx-block-failure' => 'Es gab einen Fehler beim Hinzufügen der Sperre',
+	'phalanx-block-failure' => 'Beim Hinzufügen der Sperre ist ein Fehler aufgetreten.',
 	'phalanx-modify-success' => 'Die Sperre wurde erfolgreich geändert',
 	'phalanx-modify-failure' => 'Es gab einen Fehler beim Ändern der Sperre',
 	'phalanx-modify-warning' => 'Du bearbeitest die Sperre mit der ID #$1.
@@ -434,7 +434,7 @@ $messages['es'] = array(
 	'phalanx-tab-main' => 'Administrar filtros',
 	'phalanx-tab-secondary' => 'Probar filtros',
 	'phalanx-block-success' => 'El bloqueo fue añadido satisfactoriamente.',
-	'phalanx-block-failure' => 'Ha ocurrido un error mientras se añadía el bloqueo.',
+	'phalanx-block-failure' => 'Ha ocurrido un error mientras se añadía el bloqueo',
 	'phalanx-modify-success' => 'El bloqueo fue modificado satisfactoriamente.',
 	'phalanx-modify-failure' => 'A ocurrido un error para modificar el bloqueo.',
 	'phalanx-modify-warning' => 'Estás editando el bloqueo ID #$1.
@@ -623,7 +623,7 @@ $messages['fr'] = array(
 	'phalanx-tab-main' => 'Gérer les filtres',
 	'phalanx-tab-secondary' => 'Tester les filtres',
 	'phalanx-block-success' => 'Le blocage a été ajouté avec succès',
-	'phalanx-block-failure' => 'Une erreur est survenue durant l’ajout du blocage',
+	'phalanx-block-failure' => "Un problème est survenu lors de l'ajout du blocage.",
 	'phalanx-modify-success' => 'Le blocage a été modifié avec succès',
 	'phalanx-modify-failure' => 'Une erreur est survenue durant la modification du blocage',
 	'phalanx-modify-warning' => 'Vous éditez le bloc d\'identifiant #$1.
@@ -1152,7 +1152,7 @@ Per favore, [[Special:Contact|contatta FANDOM]] in merito al problema.',
 	'phalanx-bulkmode' => 'Modalità in blocco',
 	'phalanx-singlemode' => 'Modalità singola',
 	'phalanx-block-success' => 'Il blocco è stato aggiunto con successo',
-	'phalanx-block-failure' => "Errore durante l'aggiunta del blocco",
+	'phalanx-block-failure' => "Si è verificato un problema con l'aggiunta del blocco.",
 	'phalanx-modify-success' => 'Il blocco è stato modificato con successo',
 	'phalanx-modify-failure' => 'Errore durante la modifica del blocco',
 	'phalanx-modify-warning' => 'Si sta modificando il blocco di ID #$1.
@@ -1307,7 +1307,7 @@ $messages['ja'] = array(
 	'phalanx-bulkmode' => '一括モード',
 	'phalanx-singlemode' => '単一モード',
 	'phalanx-block-success' => 'ブロックを追加しました',
-	'phalanx-block-failure' => 'ブロックの追加中にエラーが発生しました',
+	'phalanx-block-failure' => 'ブロックの追加で問題が発生しました。',
 	'phalanx-modify-success' => 'ブロックを変更しました',
 	'phalanx-modify-failure' => 'ブロックの変更中にエラーが発生しました',
 	'phalanx-modify-warning' => 'ブロックID#$1を編集しています。
@@ -1952,7 +1952,7 @@ $messages['pl'] = array(
 	'phalanx-validate-regexp-invalid' => 'Regex jest niepoprawny',
 	'phalanx-unblock-failure' => 'Wystąpił błąd podczas usuwania blokady',
 	'phalanx-block-success' => 'Pomyślnie dodano blokadę',
-	'phalanx-block-failure' => 'Wystąpił błąd podczas dodawania blokady',
+	'phalanx-block-failure' => 'Wystąpił problem z dodaniem blokady',
 	'phalanx-modify-success' => 'Blokada została pomyślnie zmodyfikowana',
 	'phalanx-modify-failure' => 'Wystąpił błąd podczas modyfikowania blokady',
 	'phalanx-modify-warning' => 'Edytujesz blokadę o ID #$1.
@@ -2212,7 +2212,7 @@ $messages['pt'] = array(
 	'phalanx-tab-main' => 'Administrar filtros',
 	'phalanx-tab-secondary' => 'Testar filtros',
 	'phalanx-block-success' => 'O bloqueio foi adicionado com sucesso',
-	'phalanx-block-failure' => 'Ocorreu um erro durante a adição do bloqueio',
+	'phalanx-block-failure' => 'Houve um problema com a adição do bloqueio',
 	'phalanx-modify-success' => 'O bloqueio foi modificado com sucesso',
 	'phalanx-modify-failure' => 'Ocorreu um erro durante a alteração do bloqueio',
 	'phalanx-modify-warning' => 'Você está editando o bloqueio ID #$1. Clique em "{{int:phalanx-edit-block}}" para salvar as alterações!',
@@ -2383,19 +2383,19 @@ $messages['ru'] = array(
 
 Примечание: работает только на вики для ответов.',
 	'phalanx-help-type-email' => 'Этот фильтр предотвращает создание учётной записи с использованием заблокированного электронного адреса.',
-	'phalanx-user-block-reason-ip' => 'Участнику с этим IP-адресом запрещено редактировать на всём пространстве Фэндома из-за вандализма или другого нарушения, совершённого вами или другим пользователем с этим IP-адресом. 
-Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|поддержкой Фэндома]].',
-	'phalanx-user-block-reason-exact' => 'Участнику с этим именем или IP-адресом запрещено редактировать на всём пространстве Фэндома из-за вандализма или другого нарушения. 
-Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|поддержкой Фэндома]].',
-	'phalanx-user-block-reason-similar' => 'Участнику с этим именем запрещено редактировать на всём пространстве Фэндома из-за вандализма или другого нарушения. 
-Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|поддержкой Фэндома]].',
+	'phalanx-user-block-reason-ip' => 'Участнику с этим IP-адресом запрещено редактировать на всём пространстве ФЭНДОМА из-за вандализма или другого нарушения, совершённого вами или другим пользователем с этим IP-адресом. 
+Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|сотрудниками ФЭНДОМА]].',
+	'phalanx-user-block-reason-exact' => 'Участнику с этим именем или IP-адресом запрещено редактировать на всём пространстве ФЭНДОМА из-за вандализма или другого нарушения. 
+Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|сотрудниками ФЭНДОМА]].',
+	'phalanx-user-block-reason-similar' => 'Участнику с этим именем запрещено редактировать на всём пространстве ФЭНДОМАа из-за вандализма или другого нарушения. 
+Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|сотрудниками ФЭНДОМА]].',
 	'phalanx-user-block-new-account' => 'Это имя пользователя не доступно для регистрации. Пожалуйста, выберите другое.',
-	'phalanx-user-block-withreason-ip' => 'Участнику с этим IP-адресом запрещено редактировать на всём пространстве Фэндома из-за вандализма или другого нарушения, совершённого вами или другим пользователем с этим IP-адресом. 
-Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|поддержкой Фэндома]].<br />Причина блокировки: $1.',
-	'phalanx-user-block-withreason-exact' => 'Участнику с этим именем или IP-адресом запрещено редактировать на всём пространстве Фэндома из-за вандализма или другого нарушения. 
-Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|поддержкой Фэндома]].<br />Причина блокировки: $1.',
-	'phalanx-user-block-withreason-similar' => 'Участнику с этим именем запрещено редактировать на всём пространстве Фэндома из-за вандализма или другого нарушения. 
-Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|поддержкой Фэндома]].<br />Причина блокировки: $1.',
+	'phalanx-user-block-withreason-ip' => 'Участнику с этим IP-адресом запрещено редактировать на всём пространстве ФЭНДОМА из-за вандализма или другого нарушения, совершённого вами или другим пользователем с этим IP-адресом. 
+Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|сотрудниками ФЭНДОМА]].<br />Причина блокировки: $1.',
+	'phalanx-user-block-withreason-exact' => 'Участнику с этим именем или IP-адресом запрещено редактировать на всём пространстве ФЭНДОМА из-за вандализма или другого нарушения. 
+Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|сотрудниками ФЭНДОМА]].<br />Причина блокировки: $1.',
+	'phalanx-user-block-withreason-similar' => 'Участнику с этим именем запрещено редактировать на всём пространстве ФЭНДОМА из-за вандализма или другого нарушения. 
+Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|сотрудниками ФЭНДОМА]].<br />Причина блокировки: $1.',
 	'phalanx-title-move-summary' => 'Причина, по которой вы добавляете эту фразу для блокировки.',
 	'phalanx-content-spam-summary' => 'Текст, найденный в описании изменений.',
 	'phalanx-stats-title' => 'Статистика Phalanx',
@@ -2429,7 +2429,7 @@ $messages['ru'] = array(
 	'right-phalanx' => 'Можно управлять глобальными блокировками и спам-фильтрами',
 	'right-phalanxexempt' => 'Освобождено от правил Phalanx',
 	'right-phalanxemailblock' => 'Можно просматривать и управлять блокировками по электронному адресу',
-	'phalanx-sp-contributions-blocked-globally' => 'В настоящее время этот участник заблокирован на всём пространстве Фэндома.',
+	'phalanx-sp-contributions-blocked-globally' => 'В настоящее время этот участник заблокирован на всём пространстве ФЭНДОМА.',
 	'phalanx-modify-block' => 'Изменить фильтр',
 	'phalanx-label-comment' => 'Комментарий (скрытый):',
 	'phalanx-expires' => 'Истекает $1',
@@ -2826,7 +2826,7 @@ $messages['xw-3171'] = array(
 	'phalanx-bulkmode' => '批量模式',
 	'phalanx-singlemode' => '單一模式',
 	'phalanx-block-success' => '已成功添加封禁',
-	'phalanx-block-failure' => '添加封禁時出錯',
+	'phalanx-block-failure' => '添加封禁時發生錯誤',
 	'phalanx-modify-success' => '已成功修改封禁',
 	'phalanx-modify-failure' => '修改封禁時出錯',
 	'phalanx-modify-warning' => '您正在編輯封禁ID#$1。
@@ -2988,7 +2988,7 @@ $messages['zh-hans'] = array(
 	'phalanx-bulkmode' => '批量模式',
 	'phalanx-singlemode' => '单一模式',
 	'phalanx-block-success' => '已成功添加封禁',
-	'phalanx-block-failure' => '添加封禁过程出错',
+	'phalanx-block-failure' => '添加封禁时出错',
 	'phalanx-modify-success' => '已成功修改封禁',
 	'phalanx-modify-failure' => '修改封禁过程出错',
 	'phalanx-modify-warning' => '您正在编辑封禁ID#$1。
@@ -3121,7 +3121,7 @@ $messages['zh-hant'] = array(
 	'phalanx-bulkmode' => '批量模式',
 	'phalanx-singlemode' => '單一模式',
 	'phalanx-block-success' => '已成功添加封禁',
-	'phalanx-block-failure' => '添加封禁時出錯',
+	'phalanx-block-failure' => '添加封禁時發生錯誤',
 	'phalanx-modify-success' => '已成功修改封禁',
 	'phalanx-modify-failure' => '修改封禁時出錯',
 	'phalanx-modify-warning' => '您正在編輯封禁ID#$1。
