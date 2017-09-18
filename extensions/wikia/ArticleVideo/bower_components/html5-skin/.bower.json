@@ -12,11 +12,11 @@
     "!/vendor"
   ],
   "homepage": "https://github.com/Wikia/html5-skin",
-  "_release": "a9c0ccafac",
+  "_release": "7bea7b9d78",
   "_resolution": {
     "type": "branch",
     "branch": "XW-4000",
-    "commit": "a9c0ccafac08f7f02cdd30e28c6d6d50250b995d"
+    "commit": "7bea7b9d7876fe818a4915bc54e1e09dce3be484"
   },
   "_source": "git://github.com/Wikia/html5-skin.git",
   "_target": "XW-4000",
