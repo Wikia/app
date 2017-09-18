@@ -131,7 +131,8 @@ define('ooyala-player', ['wikia.browserDetect'], function (browserDetect) {
 				autoplay: options.autoplay,
 				initialVolume: options.autoplay ? 0 : 1,
 				pcode: options.pcode,
-				playerBrandingId: options.playerBrandingId
+				playerBrandingId: options.playerBrandingId,
+				platform: 'html5'
 			},
 			html5Player;
 
