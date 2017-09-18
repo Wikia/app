@@ -192,9 +192,7 @@ class YoutubeApiWrapper extends ApiWrapper {
 	protected function checkForResponseErrors( $status, $content, $apiUrl ) {
 		wfProfileIn( __METHOD__ );
 
-		$code = $content['error']['code'];
-
-		if ( $code == 400 ) {
+		if ( isset( $content['error']['code'] ) && $content['error']['code'] === 400 ) {
 			wfProfileOut( __METHOD__ );
 			WikiaLogger::instance()->error( 'Youtube API call  returns 400', [
 				'content' => $content
