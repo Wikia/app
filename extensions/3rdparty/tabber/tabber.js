@@ -23,6 +23,12 @@
 				content.show();
 				nav.find('.tabberactive').removeClass('tabberactive');
 				nav.find('a[title="' + title + '"]').parent().addClass('tabberactive');
+
+				// Wikia change begin - trigger scroll event to lazy load any new images
+				var scrollEvent = new CustomEvent('scroll');
+				window.dispatchEvent(scrollEvent);
+				// Wikia change end
+
 				return true;
 			}
 			// setup initial state
