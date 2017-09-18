@@ -84,7 +84,11 @@ class RefreshCategoryCountsTask extends BaseTask {
 		}
 
 		// Batch load titles for empty categories for performance
-		$categoryTitles = $this->getCategoryTitles( array_keys( $emptyCategories ) );
+		$categoryTitles = [];
+		if ( !empty( $emptyCategories ) ) {
+			$categoryTitles = $this->getCategoryTitles( array_keys( $emptyCategories ) );
+		}
+
 		$entriesToDelete = [];
 
 		foreach ( $emptyCategories as $catName => $row ) {
