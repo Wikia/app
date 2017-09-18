@@ -1231,7 +1231,7 @@ class ExtDynamicPageList {
 
 		if ( !defined( "MW_UPDATER" ) ) {
 			// make sure page "Template:Extension DPL" exists
-			$user = User::newFromName( 'FandomBot' );
+			$user = User::newFromName( Wikia::BOT_USER );
 			$title = Title::newFromText( 'Template:Extension DPL' );
 			if ( !$title->exists() ) {
 				$article = new Article( $title );
