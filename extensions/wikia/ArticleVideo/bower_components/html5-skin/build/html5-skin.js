@@ -5730,7 +5730,7 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
 
   if (OO.publicApi && OO.publicApi.VERSION) {
     // This variable gets filled in by the build script
-    OO.publicApi.VERSION.skin = {"releaseVersion": "4.14.8", "rev": "8618b2f605540ab7fbf22ab8e686f111f1a4260b"};
+    OO.publicApi.VERSION.skin = {"releaseVersion": "4.14.8", "rev": "a9c0ccafac08f7f02cdd30e28c6d6d50250b995d"};
   }
 
   // WIKIA CHANGE - START
@@ -5975,13 +5975,15 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
       //initial DOM manipulation
       this.state.mainVideoContainer.addClass('oo-player-container');
       // WIKIA CHANGE - START
+      if (params.initialVolume === 0) {
+	    this.state.volumeState.muted = true;
+	    this.state.volumeState.volume = 0;
+	    this.state.volumeState.oldVolume = 1;
+	    this.setVolume(0);
+	  }
       if (params.autoplay && this.state.isMobile) {
         // set autoplay data attribute which is read by main_html5 plugin
         this.state.mainVideoInnerWrapper.attr('data-autoplay', 'autoplay');
-        this.state.volumeState.muted = true;
-        this.state.volumeState.volume = 0;
-        this.state.volumeState.oldVolume = 1;
-        this.setVolume(0);
       }
       // WIKIA CHANGE - END
       this.state.mainVideoInnerWrapper.addClass('oo-player');
