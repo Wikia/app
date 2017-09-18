@@ -52,7 +52,7 @@ class GlobalTitle extends Title {
 
 	static protected $cachedObjects = array();
 
-	private static $extraExtensionNamespaces = [];
+	static $extraExtensionNamespaces = [];
 
 	/**
 	 * @desc Static constructor, Create new Title from name of page
@@ -100,8 +100,22 @@ class GlobalTitle extends Title {
 			throw new \Exception( 'Invalid $city_id.' );
 		}
 
-		$mainPageName = self::newFromText( 'Mainpage', NS_MEDIAWIKI, $city_id )->getContent();
-		$title = self::newFromText( $mainPageName, NS_MAIN, $city_id );
+		$mainPageTitle = self::newFromText( 'Mainpage', NS_MEDIAWIKI, $city_id );
+		$mainPageName = str_replace( ' ', '_', $mainPageTitle->getContent() );
+		$namespace = NS_MAIN;
+		// support for non-MAIN namespace pages, based on Title::secureAndSplit method
+		// extracting namespace from article name
+		$prefixRegexp = "/^(.+?)_*:_*(.*)$/S";
+		if ( preg_match( $prefixRegexp, $mainPageName, $matches ) ) {
+			$mainPageTitle->loadContLang();
+			$namespaceIndex = $mainPageTitle->mContLang->getNsIndex( $matches[1] );
+			if ( $namespaceIndex !== false ) {
+				$namespace = $namespaceIndex;
+				$mainPageName = $matches[2];
+			}
+		}
+
+		$title = self::newFromText( $mainPageName, $namespace, $city_id );
 
 		// Don't give fatal errors if the message is broken
 		if ( !$title->exists() ) {
