@@ -1244,7 +1244,7 @@ class WikiFactory {
 		}
 
 		// strip env-specific pre- and suffixes for staging environment
-		$server = preg_replace( '/^(stable|preview|verify|sandbox-[a-z0-9]+)\./', '', $server );
+		$server = preg_replace( '/^(externaltest|preview|sandbox-[a-z0-9]+|showcase|stable|verify)\./', '', $server );
 		if ( !empty( $wgDevDomain ) ) {
 			$server = str_replace( ".{$wgDevDomain}", '', $server );
 		}
