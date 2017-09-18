@@ -1642,7 +1642,7 @@ $messages['pt'] = array(
 	'themedesigner-buttons' => 'botões',
 	'themedesigner-links' => 'links',
 	'themedesigner-header' => 'cabeçalho',
-	'themedesigner-text-wordmark' => 'Community name',
+	'themedesigner-text-wordmark' => 'Nome da Comunidade',
 	'themedesigner-graphic-wordmark' => 'Logo',
 	'themedesigner-tile-background' => 'Repetir imagem de fundo',
 	'themedesigner-fix-background' => 'fixar',
@@ -1684,11 +1684,11 @@ $messages['pt'] = array(
 	'themedesigner-wordmark-preview-error' => 'Opa! O nome da wiki não pode ficar vazio,
 por favor, escreva o nome da wiki para salvar.',
 	'themedesigner-upload-disabled' => 'Lamentamos, desativamos temporariamente os envies. Verifica mais tarde para fazer alterações',
-	'themedesigner-community-header-graphic' => 'header graphic',
-	'themedesigner-community-header-color' => 'header',
+	'themedesigner-community-header-graphic' => 'imagem de cabeçalho',
+	'themedesigner-community-header-color' => 'cabeçalho',
 	'themedesigner-toolbar-color' => 'barra de ferramentas',
 	'right-themedesigner' => 'Crie um tema para a sua wiki em [[Special:ThemeDesigner]]',
-	'themedesigner-community-header' => 'local nav',
+	'themedesigner-community-header' => 'navegação local',
 );
 
 $messages['ro'] = array(

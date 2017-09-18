@@ -30,10 +30,10 @@ Wenn du von diesem Konto aus eine Willkommensnachricht erhalten hast, bist du ei
 
 Falls du Hilfe brauchst, kannst du der Person, die die Willkommensnachricht unterzeichnet hat, eine Nachricht hinterlassen. Folge dazu einfach dem Link zu deren Diskussionsseite und bearbeite dann die Seite, um deine Nachricht hinzuzufügen.
 
-Für allgemeine Fragen rund um FANDOM besuche bitte die [[Help:Contents|FANDOM-Hilfe]] und [[Special:Contact|kontaktiere unsere Mitarbeiter]], falls deine Fragen dort nicht ausreichend geklärt werden.
+Für allgemeine Fragen rund um FANDOM besuche bitte die [[Hilfe:Übersicht|FANDOM-Hilfe]] und [[Special:Contact|kontaktiere unsere Mitarbeiter]], falls deine Fragen dort nicht ausreichend geklärt werden.
 
 ==Informationen und Unterstützung für die Begrüßungshilfe==
-Weitere Informationen zu den automatisch erstellten Willkommensnachrichten findest du auf der [[Help:Welcome tool|Hilfeseite zu automatischen Begrüßungen]].
+Weitere Informationen zu den automatisch erstellten Willkommensnachrichten findest du auf der [[Hilfe:Begrüßungshilfe|Hilfeseite zu automatischen Begrüßungen]].
 
 Wenn du Probleme mit der FANDOM-Begrüßungshilfe hast, [[Special:Contact|wende dich bitte an die FANDOM-Mitarbeiter]].
 ',
