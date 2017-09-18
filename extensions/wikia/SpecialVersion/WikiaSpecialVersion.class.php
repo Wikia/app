@@ -31,7 +31,7 @@ class WikiaSpecialVersion extends SpecialVersion {
 	 * @todo use MW 1.20 functionality for Git-based version
 	 */
 	private static function getGitBranch($dir) {
-		return shell_exec("cd $dir ; git branch 2> /dev/null | grep '*' | perl -pe 's/^\* (\S+).*$/$1/g'");
+		return shell_exec("cd $dir; release=$(git describe --abbrev=0 --tags); release_date=$(git log -1 --format=%ar $release); echo $release_date':' $release;");
 	}
 
 	/**
