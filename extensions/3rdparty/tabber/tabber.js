@@ -293,9 +293,6 @@ tabberObj.prototype.init = function(e)
 		this.onLoad({tabber:this});
 	}
 
-	// Wikia change - hide tabbers by default and let JS show them -> for lazy loading images
-	e.style.display = 'block';
-
 	return this;
 };
 

@@ -33,11 +33,8 @@ function renderTabber( $paramstring, $params, Parser $parser ) {
 	// Wikia change - add styles and scripts to output:
 	$parser->getOutput()->addModules( 'ext.tabber' );
 
-	// Wikia change - hide tabbers by default and let JS show them -> for lazy loading images
-	$style = 'display:none;';
-
 	$arr = explode( "|-|", $paramstring );
-	$htmlTabs = Html::openElement( 'div', [ 'class' => 'tabber', 'style' => $style ] );
+	$htmlTabs = Html::openElement( 'div', [ 'class' => 'tabber' ] );
 
 	foreach ( $arr as $tab ) {
 		$htmlTabs .= buildTab( $tab, $parser ); # macbre: pass Parser object (refs RT #34513)
