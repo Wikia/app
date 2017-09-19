@@ -13,7 +13,13 @@ spl_autoload_register( function( $class ) {
 } );
 
 $wgHooks['NavigationApigetDataAfterExecute'][] = function( WikiaDispatchableObject $dispatchable ) {
-	global $wgMaxLevelOneNavElements, $wgMaxLevelTwoNavElements, $wgMaxLevelThreeNavElements;
-	\FandomCreator\Hooks::onNavigationApiGetData( $dispatchable, [$wgMaxLevelOneNavElements, $wgMaxLevelTwoNavElements, $wgMaxLevelThreeNavElements] );
+	global $wgMaxLevelOneNavElements, $wgFandomCreatorCommunityId, $wgMaxLevelTwoNavElements, $wgMaxLevelThreeNavElements;
+
+	\FandomCreator\Hooks::onNavigationApiGetData(
+			$dispatchable,
+			$wgFandomCreatorCommunityId,
+			[$wgMaxLevelOneNavElements, $wgMaxLevelTwoNavElements, $wgMaxLevelThreeNavElements]
+	);
+
 	return true;
 };

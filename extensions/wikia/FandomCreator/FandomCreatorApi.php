@@ -10,25 +10,20 @@ class FandomCreatorApi {
 	/** @var string */
 	private $baseUrl;
 
-	/** @var string */
-	private $communityId;
-
 	/**
 	 * FandomCreatorApi constructor.
 	 * @param string $baseUrl
-	 * @param string $communityId
 	 */
-	public function __construct( string $baseUrl, string $communityId ) {
+	public function __construct( string $baseUrl ) {
 		$this->baseUrl = $baseUrl;
-		$this->communityId = $communityId;
 	}
 
-	public function getCommunity() {
-		$response = $this->doApiRequest( "{$this->baseUrl}/communities/{$this->communityId}" );
+	public function getCommunity($communityId) {
+		$response = $this->doApiRequest( "{$this->baseUrl}/communities/{$communityId}" );
 	}
 
-	public function getSitemap() {
-		$response = $this->doApiRequest( "{$this->baseUrl}/communities/{$this->communityId}/sitemap" );
+	public function getSitemap($communityId) {
+		$response = $this->doApiRequest( "{$this->baseUrl}/communities/{$communityId}/sitemap" );
 		if ( !$response->status->isOK() ) {
 			return null;
 		}
