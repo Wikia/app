@@ -51,6 +51,7 @@ function LyricWikiVariableDefaults()
 	$lwVars["albumfletter"] = "ALBUMFLETTER";
 	$lwVars["song"] = "SONG";
 	$lwVars["songfletter"] = "SONGFLETTER";
+	$lwVars["songsubpage"] = "SONGSUBPAGE";
 	$lwVars["artistsortname"] = "ARTISTSORTNAME";
 	return $lwVars;
 }
@@ -102,6 +103,10 @@ function parseLyricWikiTitle($titleStr,&$lwVars)
 		$song = $lwVars["song"];
 		$lwVars["artistfletter"] = findFirstLetterOf($lwVars["artist"]);
 		$lwVars["songfletter"] = findFirstLetterOf($lwVars["song"]);
+		if( 0 < preg_match("/^.+\/(.+)$/",$lwVars["song"],$m2) )
+		{
+			$lwVars["songsubpage"] = trim($m2[1]);
+		}
 	}
 	else
 	{
