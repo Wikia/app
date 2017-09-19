@@ -104,7 +104,7 @@
 			$.loadLibrary(
 				'GoogleMaps',
 				[{
-					url: 'http://maps.googleapis.com/maps/api/js?sensor=false&callback=onGoogleMapsLoaded',
+					url: 'https://maps.googleapis.com/maps/api/js?sensor=false&callback=onGoogleMapsLoaded',
 					type: 'js'
 				}],
 				typeof (window.google && window.google.maps)

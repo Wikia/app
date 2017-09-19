@@ -11,7 +11,7 @@ var ContentFeeds = {
 	},
 
 	getTweets: function(options) {
-		$.getJSON("http://search.twitter.com/search.json?callback=?", {
+		$.getJSON("https://search.twitter.com/search.json?callback=?", {
 			q: options.phrase,
 			rpp: options.limit
 		}, function(data) {
@@ -31,7 +31,7 @@ var ContentFeeds = {
 	},
 
 	getUserTweets: function(options) {
-		$.getJSON("http://api.twitter.com/1/statuses/user_timeline.json?callback=?", {
+		$.getJSON("https://api.twitter.com/1/statuses/user_timeline.json?callback=?", {
 			'screen_name': options.user,
 			count: options.limit
 		}, function(posts) {
