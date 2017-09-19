@@ -13,7 +13,7 @@ class Hooks {
 		self::api();
 	}
 
-	private static function createFcLink($entityId) {
+	private static function getEntityPath($entityId) {
 		return "/wiki/${entityId}";
 	}
 
