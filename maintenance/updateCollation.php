@@ -30,7 +30,6 @@ require_once( dirname( __FILE__ ) . '/Maintenance.php' );
 
 class UpdateCollation extends Maintenance {
 	const BATCH_SIZE = 50; // Number of rows to process in one batch
-	const SYNC_INTERVAL = 20; // Wait for slaves after this many batches
 
 	public function __construct() {
 		parent::__construct();
@@ -89,7 +88,6 @@ TEXT;
 		}
 
 		$count = 0;
-		$batchCount = 0;
 		$batchConds = array();
 		do {
 			$this->output( "Selecting next " . self::BATCH_SIZE . " rows..." );
@@ -155,12 +153,6 @@ TEXT;
 
 			$count += $res->numRows();
 			$this->output( "$count done.\n" );
-
-			if ( ++$batchCount % self::SYNC_INTERVAL == 0 ) {
-				$this->output( "Waiting for slaves ... " );
-				wfWaitForSlaves();
-				$this->output( "done\n" );
-			}
 		} while ( $res->numRows() == self::BATCH_SIZE );
 	}
 }
