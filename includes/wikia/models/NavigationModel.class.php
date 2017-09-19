@@ -49,7 +49,6 @@ class NavigationModel extends WikiaModel {
 	private $biggestCategories;
 	private $lastExtraIndex = 1000;
 	private $extraWordsMap = [
-		'voted' => 'GetTopVotedArticles',
 		'popular' => 'GetMostPopularArticles',
 		'visited' => 'GetMostVisitedArticles',
 		'newlychanged' => 'GetNewlyChangedArticles',

@@ -183,7 +183,7 @@ class ArticleCommentList {
 	 * @return array
 	 */
 	public function getCommentList( $master = true ) {
-		global $wgRequest, $wgMemc, $wgArticleCommentsEnableVoting;
+		global $wgRequest, $wgMemc;
 
 		$action = $wgRequest->getText( 'action', false );
         $title = $this->getTitle();
@@ -207,16 +207,6 @@ class ArticleCommentList {
 			$options = [ 'ORDER BY' => 'page_id DESC' ];
 			$join_conds = [ ];
 
-			if ( !empty( $wgArticleCommentsEnableVoting ) ) {
-				// add votes to the result set
-				$table[] = 'page_vote';
-				$vars[] = 'count(vote) as vote_cnt';
-				$options['GROUP BY'] = 'page_id, page_title';
-				$join_conds['page_vote'] = [ 'LEFT JOIN', 'page_id = article_id' ];
-
-				// a placeholder for 3 top voted answers
-				$top3 = [ ];
-			}
 			$res = $dbr->select( $table, $vars, $conds, __METHOD__, $options, $join_conds );
 
 			$helperArray = [ ];
@@ -232,25 +222,6 @@ class ArticleCommentList {
 					$helperArray[$p0] = $row->page_id;
 
 					$pages[$row->page_id]['level1'] = $row->page_id;
-
-					if ( !empty( $wgArticleCommentsEnableVoting ) ) {
-						// check if the answer is in top 3
-						for ( $i = 0; $i < 3; $i++ ) {
-							if ( !isset( $top3[$i] ) ) {
-								$top3[$i] = [ 'id' => $row->page_id, 'votes' => $row->vote_cnt ];
-								break;
-							}
-							if ( $top3[$i]['votes'] > $row->vote_cnt ) {
-								continue;
-							}
-							if ( $top3[$i]['votes'] == $row->vote_cnt && $top3[$i]['id'] > $row->page_id ) {
-								continue;
-							}
-							$top3[$i + 1] = $top3[$i];
-							$top3[$i] = [ 'id' => $row->page_id, 'votes' => $row->vote_cnt ];
-							break;
-						}
-					}
 				}
 			}
 			// attach replies to comments
@@ -265,23 +236,6 @@ class ArticleCommentList {
 				// restored children or a child without restoring parent
 				// --nAndy
 				}
-			}
-
-			if ( !empty( $wgArticleCommentsEnableVoting ) ) {
-				// move 3 most voted answers to the top
-				$newPages = [ ];
-				for ( $i = 0; $i < 3; $i++ ) {
-					if ( isset( $top3[$i] ) ) {
-						$newPages[$top3[$i]['id']] = $pages[$top3[$i]['id']];
-						$pages[$top3[$i]['id']] = null;
-					}
-				}
-				foreach ( $pages as $id => $val ) {
-					if ( $val ) {
-						$newPages[$id] = $val;
-					}
-				}
-				$pages = $newPages;
 			}
 
 			$dbr->freeResult( $res );
