@@ -15,8 +15,10 @@ class HeliosHelperControllerTest extends WikiaBaseTest {
 
 	const METHOD_SEND_PWD_RESET_LINK_EMAIL = 'sendPasswordResetLinkEmail';
 
+	/**
+	 * @expectedException ForbiddenException
+	 */
 	public function test_shouldFailWithInvalidSecret() {
-		$this->setExpectedException( '\ForbiddenException' );
 		$response = $this->app->sendRequest( self::WIKIA_HELIOS_HELPER_CONTROLLER, self::METHOD_SEND_PWD_RESET_LINK_EMAIL, [] );
 	}
 

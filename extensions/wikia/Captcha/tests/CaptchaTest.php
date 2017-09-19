@@ -1,4 +1,5 @@
 <?php
+use PHPUnit\Framework\TestCase;
 
 /**
  * Captcha test
@@ -6,29 +7,26 @@
  * @category Wikia
  * @group MediaFeatures
  */
-class Captcha extends WikiaBaseTest {
+class CaptchaTest extends TestCase {
 
-	public function setUp() {
-		$this->setupFile = dirname(__FILE__) . '/../Captcha.setup.php';
+	protected function setUp() {
 		parent::setUp();
+		require_once __DIR__ . '/../Factory/Module.class.php';
 	}
 
-	public function testVerifyCaptcha() {
+	/**
+	 * @expectedException Exception
+	 * @expectedExceptionMessage Invalid Captcha class: BadCaptchaClass
+	 */
+	public function testVerifyCaptchaThrowsExceptionWhenPassedBadData() {
+		\Captcha\Factory\Module::verifyCaptchaClass( 'BadCaptchaClass' );
+	}
 
-		// Test verifyCaptcha throws an exception when passed bad data
-		try {
-			\Captcha\Factory\Module::verifyCaptchaClass( 'BadCaptchaClass' );
-			$this->fail( 'verifyCaptchaClass should throw exception' );
-		} catch ( Exception $e ) {
+	public function testVerifyCaptchaDoesNotThrowExceptionWhenPassedGoodData() {
+		$res = \Captcha\Factory\Module::verifyCaptchaClass( '\Captcha\Module\ReCaptcha' );
+		$this->assertTrue( $res );
 
-		};
-
-		// Test verifyCaptcha does not throws an exception when passed good data
-		try {
-			\Captcha\Factory\Module::verifyCaptchaClass( '\Captcha\Module\ReCaptcha' );
-			\Captcha\Factory\Module::verifyCaptchaClass( '\Captcha\Module\FancyCaptcha' );
-		} catch ( Exception $e ) {
-			$this->fail( 'verifyCaptchaClass should not throw exception' );
-		};
+		$res = \Captcha\Factory\Module::verifyCaptchaClass( '\Captcha\Module\FancyCaptcha' );
+		$this->assertTrue( $res );
 	}
 }

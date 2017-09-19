@@ -1,14 +1,15 @@
 <?php
 
-class FatalTest extends PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class FatalTest extends TestCase
 {
     public function testFatalError()
     {
-        if(extension_loaded('xdebug')) {
+        if (extension_loaded('xdebug')) {
             xdebug_disable();
         }
 
-        non_existing_function();
+        eval('class FatalTest {}');
     }
-
 }

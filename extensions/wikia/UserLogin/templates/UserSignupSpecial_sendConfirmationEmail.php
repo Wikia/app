@@ -2,7 +2,6 @@
 <? if ( !$isMonobookOrUncyclo ) { ?>
 	<h2 class="pageheading"><?= $heading ?></h2>
 	<h3 class="subheading"><?= $subheading ?></h3>
-	<?= F::app()->renderView( 'WikiHeader', 'Wordmark' ) ?>
 <? } ?>
 	<div class="general-messaging">
 		<?= $msg ?>

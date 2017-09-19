@@ -58,7 +58,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	 * @param $data
 	 * @param $expected
 	 *
-	 * @dataProvider testFilterImagesDataProvider
+	 * @dataProvider filterImagesDataProvider
 	 */
 	public function testFilterImages( $data, $expected ) {
 		$method = ( new ReflectionClass( 'PortableInfoboxRenderService' ) )->getMethod( 'filterImageData' );
@@ -69,7 +69,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 		$this->assertEquals( $expected, $method->invokeArgs( $renderService, [ $data ] ) );
 	}
 
-	public function testFilterImagesDataProvider() {
+	public function filterImagesDataProvider() {
 		return [
 			[
 				'data' => [
@@ -225,7 +225,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	 * @param $mockParams
 	 * @param $accentColor
 	 * @param $accentColorText
-	 * @dataProvider testRenderInfoboxDataProvider
+	 * @dataProvider renderInfoboxDataProvider
 	 */
 	public function testRenderInfobox( $input, $expectedOutput, $description, $mockParams, $accentColor, $accentColorText ) {
 		$this->mockInfoboxRenderServiceHelper( $mockParams );
@@ -238,7 +238,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 		$this->assertEquals( $expectedHtml, $actualHtml, $description );
 	}
 
-	public function testRenderInfoboxDataProvider() {
+	public function renderInfoboxDataProvider() {
 		return [
 			[
 				'input' => [ ],

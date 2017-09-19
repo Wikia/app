@@ -22,7 +22,7 @@ class WallEditBuilder extends WallBuilder {
 	 */
 	public function editWallMessage(): WallEditBuilder {
 		if ( !$this->message->canEdit( $this->editor ) ) {
-			$this->throwException( 'User not allowed to edit message' );
+			$this->throwException( WallBuilderException::class, 'User not allowed to edit message' );
 		}
 
 		/**
@@ -34,7 +34,15 @@ class WallEditBuilder extends WallBuilder {
 		$comment = $this->message->getArticleComment();
 		$result = $comment->doSaveComment( $this->messageText, $this->editor );
 		if ( !$result || !$result[0]->isOK() ) {
-			$this->throwException( 'Failed to save edited message' );
+			if ( $result && in_array( 'EditFilter', $result[0]->errors[0]['params'] ) ) {
+				$this->throwException(
+					InappropriateContentException::class,
+					'Inappropriate content detected',
+					[ 'block' => $result[0]->errors[0]['params'][1] ]
+				);
+			} else {
+				$this->throwException( WallBuilderException::class, 'Failed to save edited message' );
+			}
 		}
 
 		if ( !$this->message->isMain() ) {
@@ -97,18 +105,20 @@ class WallEditBuilder extends WallBuilder {
 
 	/**
 	 * Populate an exception with proper context for logging, and throw it
+	 *
+	 * @param string $class
 	 * @param string $message
-	 * @throws WallBuilderException
+	 * @param array $additionalContext
 	 */
-	protected function throwException( string $message ) {
-		$context = [
-			'parentPageTitle' => $this->message->getArticleTitle()->getPrefixedText(),
-			'parentPageId' => $this->message->getArticleTitle()->getArticleID(),
-			'messageTitle' => $this->message->getTitle()->getPrefixedText(),
-			'messageId' => $this->message->getTitle()->getArticleID()
-		];
+	protected function throwException( string $class, string $message, array $additionalContext=[] ) {
+		$context = array_merge( $additionalContext, [
+				'parentPageTitle' => $this->message->getArticleTitle()->getPrefixedText(),
+				'parentPageId' => $this->message->getArticleTitle()->getArticleID(),
+				'messageTitle' => $this->message->getTitle()->getPrefixedText(),
+				'messageId' => $this->message->getTitle()->getArticleID(),
+			]);
 
-		throw new WallBuilderException( $message, $context );
+		throw new $class( $message, $context );
 	}
 
 	/**

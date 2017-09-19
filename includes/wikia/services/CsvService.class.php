@@ -1,6 +1,6 @@
 <?php
 
-	class CsvService extends Service {
+	class CsvService {
 
 		protected $delimiter = ',';
 		protected $enclosure = '"';

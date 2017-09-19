@@ -1,59 +1,12 @@
-@import 'horizontal';
-@import 'rail';
-@import 'discussions';
-@import 'perfect-scrollbar';
-@import 'scroller';
-@import 'impact-footer';
-
+@import 'skins/oasis/css/core/responsive-variables';
+@import 'skins/oasis/css/core/breakpoints-variables';
+@import 'skins/shared/mixins/flexbox';
 @import 'skins/shared/color';
 
-
-// GOOGLE MATCHED CONTENT
-.recirculation-incontent.adsbygoogle {
-	border: 1px solid $color-page-border;
-	display: block;
-	height: 230px;
-	margin: 20px auto;
-	overflow: hidden;
-	width: 95%;
-
-	iframe {
-		margin: -1px;
-	}
-}
-
-#recirculation-footer-index-container {
-	background-color: darken($color-page, 4%);
-	margin: 0 -20px;
-	padding: 0 20px;
-
-	#recirculation-footer-container {
-		margin-top: -30px;
-	}
-}
+@import 'premium-rail';
+@import 'mixed-content-footer';
 
 .recirculation-unit {
-
-	.recirculation-sponsored-header {
-		position: absolute;
-		background: #666666;
-		z-index: 1;
-		padding: 6px 12px;
-		font-size: 12px;
-		font-family: "Helvetica Neue", sans-serif;
-		color: white;
-	}
-
-	.recirculation-wiki-header {
-		position: absolute;
-		background: #1a5eb8 url('/extensions/wikia/Recirculation/images/house-tiny.svg') no-repeat 10px 6px;
-		z-index: 1;
-		padding: 6px 12px 6px 26px;
-		font-size: 12px;
-		font-family: "Helvetica Neue", sans-serif;
-		color: white;
-	}
-
 	.recirculation-sponsored-footer {
 		opacity: 0.35;
 		font-size: 10px;
@@ -64,7 +17,6 @@
 		letter-spacing: .5px;
 	}
 
-	.rail-item.is-video,
 	.item.is-video {
 		.image-thumbnail,
 		.thumbnail {

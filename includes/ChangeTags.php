@@ -26,7 +26,7 @@ class ChangeTags {
 
 		$tags = explode( ',', $tags );
 
-		wfRunHooks( 'FormatSummaryRow', [ &$tags ] );
+		Hooks::run( 'FormatSummaryRow', [ &$tags ] );
 
 		if( !$tags )
 			return array( '', array() );
@@ -176,10 +176,10 @@ class ChangeTags {
 			throw new MWException( 'Unable to determine appropriate JOIN condition for tagging.' );
 		}
 
-		// JOIN on tag_summary
-		$tables[] = 'tag_summary';
-		$join_conds['tag_summary'] = array( 'LEFT JOIN', "ts_$join_cond=$join_cond" );
-		$fields[] = 'ts_tags';
+		// SUS-2741: ported from MW 1.23, adjusted for compatibility
+		$fields[] = wfGetDB( DB_SLAVE )->buildGroupConcatField(
+			',', 'change_tag', 'ct_tag', "ct_$join_cond=$join_cond"
+		) . ' AS ts_tags';
 
 		if( $wgUseTagFilter && $filter_tag ) {
 			// Somebody wants to filter on a tag.
@@ -257,7 +257,7 @@ class ChangeTags {
 			$emptyTags[] = $row->vt_tag;
 		}
 
-		wfRunHooks( 'ListDefinedTags', array( &$emptyTags ) );
+		Hooks::run( 'ListDefinedTags', array( &$emptyTags ) );
 
 		$emptyTags = array_filter( array_unique( $emptyTags ) );
 

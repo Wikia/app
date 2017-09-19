@@ -1,4 +1,5 @@
 @import "skins/shared/color";
+@import "skins/oasis/css/core/breakpoints-variables";
 @import "skins/oasis/css/core/layout";
 @import "skins/oasis/css/core/responsive-variables";
 @import "skins/shared/mixins/menus";
@@ -24,7 +25,7 @@ $animationSpeed: 200ms;
 
 .WikiaBarWrapper {
 	bottom: 0;
-	height: 25px;
+	height: $wikia-bar-height;
 	padding: 0;
 	position: fixed;
 	width: 100%;
@@ -177,7 +178,25 @@ body {
 
 .WikiaBarWrapper .wikia-bar {
 	margin: auto;
-	width: $wikiaheader-width;
+
+	// The same width as .wds-community-header, see /extensions/wikia/CommunityHeader/styles/index.scss
+	@if ($widthType == 0) {
+		@media #{$breakpoint-small-only} {
+			width: $page-width-small + $padding-width-small * 2 + $content-border-width * 2;
+		}
+
+		@media #{$breakpoint-small-plus} {
+			width: $page-width-small-plus + $padding-width-small-plus * 2 + $content-border-width * 2;
+		}
+
+		@media #{$breakpoint-medium-only} {
+			width: $page-width-medium + $padding-width-medium * 2 + $content-border-width * 2;
+		}
+
+		@media #{$breakpoint-large-up} {
+			width: $page-width-large + $padding-width-large * 2 + $content-border-width * 2;
+		}
+	}
 }
 
 @if ( $responsive-layout-enabled ) {

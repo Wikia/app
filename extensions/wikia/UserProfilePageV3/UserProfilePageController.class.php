@@ -58,6 +58,7 @@ class UserProfilePageController extends WikiaController {
 
 		$this->response->addAsset( 'extensions/wikia/UserProfilePageV3/css/UserProfilePage.scss' );
 		$this->response->addAsset( 'extensions/wikia/UserProfilePageV3/js/UserProfilePage.js' );
+		$this->response->addAsset( 'extensions/wikia/UserProfilePageV3/js/BioModal.js' );
 
 		$sessionUser = $this->wg->User;
 
@@ -267,7 +268,7 @@ class UserProfilePageController extends WikiaController {
 			];
 		}
 
-		wfRunHooks( 'UserProfilePageAfterGetActionButtonData', [ &$actionButtonArray, $namespace, $canRename, $canProtect, $canDelete, $isUserPageOwner ] );
+		Hooks::run( 'UserProfilePageAfterGetActionButtonData', [ &$actionButtonArray, $namespace, $canRename, $canProtect, $canDelete, $isUserPageOwner ] );
 
 		$actionButton = F::app()->renderView( 'MenuButton', 'Index', $actionButtonArray );
 		$this->setVal( 'actionButton', $actionButton );

@@ -43,7 +43,13 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		} else {
 			$this->showVideoLink = false;
 		}
-		$this->urlCreateBlogPage = SpecialPage::getTitleFor( 'CreateBlogPage' )->getFullURL();
+    
+    if ( !empty( $this->wg->EnableBlogArticles ) ) {
+      $this->showNewBlogLink = true;
+		  $this->urlCreateBlogPage = SpecialPage::getTitleFor( 'CreateBlogPage' )->getFullURL();
+    } else {
+			$this->showNewBlogLink = false;
+		}
 		$this->urlMultipleUpload = SpecialPage::getTitleFor( 'MultipleUpload' )->getFullURL();
 		$this->urlSpecialCss = SpecialPage::getTitleFor( 'CSS' )->getFullURL();
 
@@ -84,7 +90,7 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 			if ( !AdminDashboardLogic::isGeneralApp( $pagename ) && $page->isListed() ) {
 				$group = SpecialPageFactory::getGroup( $page );
 				if ( !isset( $groups[$group] ) ) {
-					$groups[$group] = [ ];
+					$groups[$group] = [];
 				}
 				$groups[$group][$page->getDescription()] = [ $page->getTitle(), $page->isRestricted() ];
 			}

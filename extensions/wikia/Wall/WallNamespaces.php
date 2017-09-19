@@ -14,3 +14,5 @@ $wgWallVotesNS = [ ];
 $wgWallNotifyEveryoneNS = [ ];
 $wgWallThreadCloseNS = [ NS_USER_WALL ];
 $wgWallTopicsNS = [ ];
+
+$wgNamespacesWithSubpages[ NS_USER_WALL_MESSAGE ] = true;

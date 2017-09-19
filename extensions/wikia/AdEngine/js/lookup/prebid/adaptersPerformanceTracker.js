@@ -1,10 +1,10 @@
 define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.lookup.prebid.adaptersRegistry',
-	'ext.wikia.adEngine.lookup.prebid.priceGranularityHelper',
+	'ext.wikia.adEngine.lookup.prebid.bidHelper',
 	'ext.wikia.adEngine.utils.timeBuckets',
 	'ext.wikia.adEngine.wrappers.prebid'
-], function (adTracker, adaptersRegistry, priceGranularityHelper, timeBuckets, prebid) {
+], function (adTracker, adaptersRegistry, bidHelper, timeBuckets, prebid) {
 	'use strict';
 
 	var buckets = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0],
@@ -78,16 +78,26 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 	}
 
 	function getParamsFromBidForTracking(bid) {
-		var bucket = timeBuckets.getTimeBucket(buckets, bid.timeToRespond / 1000);
+		var price,
+			bucket = timeBuckets.getTimeBucket(buckets, bid.timeToRespond / 1000);
 
 		if (bid.getStatusCode() === prebid.errorResponseStatusCode) {
 			return [emptyResponseMsg, bucket].join(';');
 		}
 
+		if (bid.notInvolved) {
+			price = 'NOT_INVOLVED';
+		} else if (bid.used) {
+			price = 'USED';
+		} else {
+			price = bidHelper.transformPriceFromBid(bid);
+		}
+
 		return [
 			bid.getSize(),
-			priceGranularityHelper.transformPriceFromCpm(bid.cpm),
-			bucket].join(';');
+			price,
+			bucket
+		].join(';');
 	}
 
 
@@ -96,5 +106,5 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 		trackBidderOnLookupEnd: trackBidderOnLookupEnd,
 		trackBidderSlotState: trackBidderSlotState,
 		updatePerformanceMap: updatePerformanceMap
-	}
+	};
 });

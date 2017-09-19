@@ -70,8 +70,5 @@
 	$form[ 'errorMsg' ] = '';
 
 	echo $app->renderView( 'WikiaStyleGuideForm', 'index', [ 'form' => $form ] );
-
-	// 3rd party providers buttons
-	echo $app->renderView( 'UserLoginSpecial', 'Providers', [ 'tabindex' => ++$tabIndex ] );
 	?>
 </div>

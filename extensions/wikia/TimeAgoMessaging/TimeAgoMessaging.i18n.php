@@ -1,8 +1,7 @@
 <?php
-/** Internationalization file for /extensions/wikia/TimeAgoMessaging/TimeAgoMessaging extension. */
-$messages = [];
+$messages = array();
 
-$messages['en'] = [
+$messages['en'] = array(
 	'timeagomessaging-desc' => 'Provides i18n for jquery.timeago.js plugin',
 	'timeago-year' => '{{PLURAL:$1|a year|$1 years}} ago',
 	'timeago-month' => '{{PLURAL:$1|a month|$1 months}} ago',
@@ -15,9 +14,9 @@ $messages['en'] = [
 	'timeago-minute-from-now' => '{{PLURAL:$1|a minute|$1 minutes}} from now',
 	'timeago-month-from-now' => '{{PLURAL:$1|a month|$1 months}} from now',
 	'timeago-second-from-now' => 'a minute from now',
-];
+);
 
-$messages['qqq'] = [
+$messages['qqq'] = array(
 	'timeagomessaging-desc' => '{{desc}}',
 	'timeago-month' => 'Message saying that something happened x months ago ($1 is number of months)',
 	'timeago-day' => 'Message saying that something happened x days ago ($1 is number of days)',
@@ -27,17 +26,17 @@ $messages['qqq'] = [
 	'timeago-hour-from-now' => 'Message saying that something will happen in x hours ($1 is number of hours)',
 	'timeago-minute-from-now' => 'Message saying that something will happen in x minutes ($1 is number of minutes)',
 	'timeago-month-from-now' => 'Message saying that something will happen in x months ($1 is number of months)',
-];
+);
 
-$messages['af'] = [
+$messages['af'] = array(
 	'timeagomessaging-desc' => 'Bied i18n vir die plugin jquery.timeago.js',
-	'timeago-day' => '{{PLURAL:$1|\'n dag|$1 dae}} gelede',
-	'timeago-hour' => '{{PLURAL:$1|\'n uur|$1 ure}} gelede',
-	'timeago-minute' => '{{PLURAL:$1|\'n minuut|$1 minute}} gelede',
-	'timeago-second' => '\'n minuut gelede',
-];
+	'timeago-day' => "{{PLURAL:$1|'n dag|$1 dae}} gelede",
+	'timeago-hour' => "{{PLURAL:$1|'n uur|$1 ure}} gelede",
+	'timeago-minute' => "{{PLURAL:$1|'n minuut|$1 minute}} gelede",
+	'timeago-second' => "'n minuut gelede",
+);
 
-$messages['ar'] = [
+$messages['ar'] = array(
 	'timeagomessaging-desc' => 'يزود بـi18n لــjquery.timeago.js plugin',
 	'timeago-year' => 'منذ {{PLURAL:$1|صفر سنوات|سنة واحدة|سنتان|$1 سنوات|$1 سنة}}',
 	'timeago-month' => 'منذ {{PLURAL:$1|صفر أشهر|شهر واحد|شهرين|$1 أشهر|$1 شهرا}}',
@@ -50,16 +49,16 @@ $messages['ar'] = [
 	'timeago-minute-from-now' => 'منذ {{PLURAL:$1|دقيقة واحدة|$1 دقيقة}}',
 	'timeago-month-from-now' => 'منذ {{PLURAL:$1|شهر واحد|$1 أشهر}}',
 	'timeago-second-from-now' => 'دقيقة من الآن',
-];
+);
 
-$messages['bg'] = [
+$messages['bg'] = array(
 	'timeago-day' => 'преди {{PLURAL:$1|един ден|$1 дни}}',
 	'timeago-hour' => 'преди {{PLURAL:$1|един час|$1 часа}}',
 	'timeago-minute' => 'преди {{PLURAL:$1|една минута|$1 минути}}',
 	'timeago-second' => 'преди една минута',
-];
+);
 
-$messages['br'] = [
+$messages['br'] = array(
 	'timeago-year' => '{{PLURAL:$1|ur|$1}} bloaz zo',
 	'timeago-month' => '{{PLURAL:$1|ur|$1}} miz zo',
 	'timeago-day' => '{{PLURAL:$1|un devezh|$1 devezh}} zo',
@@ -71,9 +70,9 @@ $messages['br'] = [
 	'timeago-minute-from-now' => '{{PLURAL:$1|ur|$1}} munutenn adalek bremañ',
 	'timeago-month-from-now' => '{{PLURAL:$1|ur|$1}} miz adalek bremañ',
 	'timeago-second-from-now' => 'ur munutenn adalek bremañ',
-];
+);
 
-$messages['ca'] = [
+$messages['ca'] = array(
 	'timeagomessaging-desc' => 'Proporciona internacionalització pel plugin jquery.timeago.js',
 	'timeago-year' => 'fa {{PLURAL:$1|un any|$1 anys}}',
 	'timeago-month' => 'fa {{PLURAL:$1|un mes|$1 mesos}}',
@@ -81,14 +80,14 @@ $messages['ca'] = [
 	'timeago-hour' => 'fa {{PLURAL:$1|una hora|$1 hores}}',
 	'timeago-minute' => 'fa {{PLURAL:$1|un minut|$1 minuts}}',
 	'timeago-second' => 'fa un minut',
-	'timeago-day-from-now' => '{{PLURAL:$1|un dia|$1 dies}} des d\'ara',
-	'timeago-hour-from-now' => '{{PLURAL:$1|una hora|$1 hores}} des d\'ara',
-	'timeago-minute-from-now' => '{{PLURAL:$1|un minut|$1 minuts}} des d\'ara',
-	'timeago-month-from-now' => '{{PLURAL:$1|un mes|$1 mesos}} des d\'ara',
-	'timeago-second-from-now' => 'un minut des d\'ara',
-];
+	'timeago-day-from-now' => "{{PLURAL:$1|un dia|$1 dies}} des d'ara",
+	'timeago-hour-from-now' => "{{PLURAL:$1|una hora|$1 hores}} des d'ara",
+	'timeago-minute-from-now' => "{{PLURAL:$1|un minut|$1 minuts}} des d'ara",
+	'timeago-month-from-now' => "{{PLURAL:$1|un mes|$1 mesos}} des d'ara",
+	'timeago-second-from-now' => "un minut des d'ara",
+);
 
-$messages['ce'] = [
+$messages['ce'] = array(
 	'timeago-year' => '$1 {{PLURAL:$1|шо}} хьалха',
 	'timeago-month' => '$1 {{PLURAL:$1|бутт}} хьалха',
 	'timeago-day' => '{{PLURAL:$1|$1 де}} хьалха',
@@ -100,9 +99,9 @@ $messages['ce'] = [
 	'timeago-minute-from-now' => '$1 {{PLURAL:$1|минот}} хьалха',
 	'timeago-month-from-now' => '$1 {{PLURAL:$1|бутт}} хьалха',
 	'timeago-second-from-now' => 'минот хьалха',
-];
+);
 
-$messages['cs'] = [
+$messages['cs'] = array(
 	'timeagomessaging-desc' => 'Poskytuje i18n pro zásuvný modul jquery.timeago.js',
 	'timeago-year' => 'před {{PLURAL:$1|$1 rokem|$1 roky|$1 lety}}',
 	'timeago-month' => 'před $1 {{PLURAL:$1|měsícem|měsíci|měsíci}}',
@@ -115,9 +114,9 @@ $messages['cs'] = [
 	'timeago-minute-from-now' => 'před {{PLURAL:$1| minutou|$1 minutami}}',
 	'timeago-month-from-now' => 'před {{PLURAL:$1|měsícem|$1 měsíci}}',
 	'timeago-second-from-now' => 'před minutou',
-];
+);
 
-$messages['de'] = [
+$messages['de'] = array(
 	'timeagomessaging-desc' => 'Stellt i18n für das jquery.timeago.js Plugin bereit',
 	'timeago-year' => 'vor {{PLURAL:$1|einem Jahr|$1 Jahren}}',
 	'timeago-month' => 'vor {{PLURAL:$1|einem Monat|$1 Monaten}}',
@@ -125,22 +124,22 @@ $messages['de'] = [
 	'timeago-hour' => 'vor {{PLURAL:$1|einer Stunde|$1 Stunden}}',
 	'timeago-minute' => 'vor {{PLURAL:$1|einer Minute|$1 Minuten}}',
 	'timeago-second' => 'vor einer Minute',
-	'timeago-day-from-now' => '{{PLURAL:$1|einen Tag|$1 Tagen}} ab jetzt',
-	'timeago-hour-from-now' => '{{PLURAL:$1|eine Stunde|$1 Stunden}} ab jetzt',
-	'timeago-minute-from-now' => '{{PLURAL:$1|eine Minute|$1 Minuten}} ab jetzt',
-	'timeago-month-from-now' => '{{PLURAL:$1|einen Monat|$1 Monate}} ab jetzt',
-	'timeago-second-from-now' => 'eine Minute ab jetzt',
-];
+	'timeago-day-from-now' => 'in {{PLURAL:$1|einem Tag|$1 Tagen}}',
+	'timeago-hour-from-now' => 'in {{PLURAL:$1|einer Stunde|$1 Stunden}}',
+	'timeago-minute-from-now' => 'in {{PLURAL:$1|einer Minute|$1 Minuten}}',
+	'timeago-month-from-now' => 'in {{PLURAL:$1|einem Monat|$1 Monaten}}',
+	'timeago-second-from-now' => 'in einer Minute',
+);
 
-$messages['diq'] = [
+$messages['diq'] = array(
 	'timeago-month' => 'Verde {{PLURAL:$1|meng|$1 mengan}}',
 	'timeago-day' => 'Verdê {{PLURAL:$1|$1 rocan|$1 rocan}}',
 	'timeago-hour' => 'Verdê {{PLURAL:$1|$1 seata|$1 seata}}',
 	'timeago-minute' => 'verdê {{PLURAL:$1|$1 daka|$1 dakan}}',
 	'timeago-second' => 'verdê dekana',
-];
+);
 
-$messages['es'] = [
+$messages['es'] = array(
 	'timeagomessaging-desc' => 'Proporciona internacionalización para el plugin jquery.timeago.js',
 	'timeago-year' => 'hace {{PLURAL:$1|un año|$1 años}}',
 	'timeago-month' => 'hace {{PLURAL:$1|un mes|$1 meses}}',
@@ -153,22 +152,22 @@ $messages['es'] = [
 	'timeago-minute-from-now' => '{{PLURAL:$1|un minuto|$1 minutos}} desde ahora',
 	'timeago-month-from-now' => '{{PLURAL:$1|un mes|$1 mes}} desde ahora',
 	'timeago-second-from-now' => 'un minuto desde ahora',
-];
+);
 
-$messages['eu'] = [
+$messages['eu'] = array(
 	'timeago-year' => 'Duela {{PLURAL:$1|urte bat|$1 urte}}',
 	'timeago-month' => 'Duela {{PLURAL:$1|hilabete bat|$1 hilabete}}',
 	'timeago-day' => 'Duela {{PLURAL:$1|egun bat|$1 egun}}',
 	'timeago-hour' => 'Duela {{PLURAL:$1|ordu bat|$1 ordu}}',
 	'timeago-minute' => 'Duela {{PLURAL:$1|minutu bat|$1 minutu}}',
 	'timeago-second' => 'duela minutu bat',
-];
+);
 
-$messages['fa'] = [
+$messages['fa'] = array(
 	'timeago-second' => 'یک دقیقه پیش',
-];
+);
 
-$messages['fi'] = [
+$messages['fi'] = array(
 	'timeagomessaging-desc' => 'Antaa i18n jquery.timeago.js lisäosan',
 	'timeago-year' => '{{PLURAL:$1|vuosi|$1 vuotta}} sitten',
 	'timeago-month' => '{{PLURAL:$1|kuukausi|$1 kuukautta}} sitten',
@@ -181,10 +180,10 @@ $messages['fi'] = [
 	'timeago-minute-from-now' => '{{PLURAL:$1|minuutti|$1 minuuttia}} sitten',
 	'timeago-month-from-now' => '{{PLURAL:$1|kuukausi|$1 kuukautta}} sitten',
 	'timeago-second-from-now' => 'minuutti sitten',
-];
+);
 
-$messages['fr'] = [
-	'timeagomessaging-desc' => 'Support de l\'internationalisation pour le plugin jquery.timeago.js',
+$messages['fr'] = array(
+	'timeagomessaging-desc' => "Support de l'internationalisation pour le plugin jquery.timeago.js",
 	'timeago-year' => 'il y a {{PLURAL:$1|un an|$1 ans}}',
 	'timeago-month' => 'il y a {{PLURAL:$1|un mois|$1 mois}}',
 	'timeago-day' => '{{PLURAL:$1|la veille|il y a $1 jours}}',
@@ -196,9 +195,9 @@ $messages['fr'] = [
 	'timeago-minute-from-now' => '{{PLURAL:$1|une minute|$1 minutes}} à partir de maintenant',
 	'timeago-month-from-now' => '{{PLURAL:$1|un mois|$1 mois}} à partir de maintenant',
 	'timeago-second-from-now' => 'une minute à partir de maintenant',
-];
+);
 
-$messages['gl'] = [
+$messages['gl'] = array(
 	'timeagomessaging-desc' => 'Proporciona internacionalización para o complemento jquery.timeago.js',
 	'timeago-year' => 'hai {{PLURAL:$1|un ano|$1 anos}}',
 	'timeago-month' => 'hai {{PLURAL:$1|un mes|$1 meses}}',
@@ -211,9 +210,9 @@ $messages['gl'] = [
 	'timeago-minute-from-now' => 'hai {{PLURAL:$1|un minuto|$1 minutos}} desde agora',
 	'timeago-month-from-now' => 'hai {{PLURAL:$1|un mes|$1 meses}} desde agora',
 	'timeago-second-from-now' => 'un minuto desde agora',
-];
+);
 
-$messages['hu'] = [
+$messages['hu'] = array(
 	'timeagomessaging-desc' => 'Honosítást biztosít a jquery.timeago.js plugin számára.',
 	'timeago-year' => '{{PLURAL:$1|egy|$1}} éve',
 	'timeago-month' => '{{PLURAL:$1|egy|$1}} hónappal ezelőtt',
@@ -226,9 +225,9 @@ $messages['hu'] = [
 	'timeago-minute-from-now' => '{{PLURAL:$1|egy|$1}} perc múlva',
 	'timeago-month-from-now' => '{{PLURAL:$1|egy|$1}} hónap múlva',
 	'timeago-second-from-now' => 'egy perc múlva',
-];
+);
 
-$messages['ia'] = [
+$messages['ia'] = array(
 	'timeagomessaging-desc' => 'Forni internationalisation pro le plug-in jquery.timeago.js',
 	'timeago-year' => '{{PLURAL:$1|un anno|$1 annos}} retro',
 	'timeago-month' => '{{PLURAL:$1|un mense|$1 menses}} retro',
@@ -241,25 +240,25 @@ $messages['ia'] = [
 	'timeago-minute-from-now' => '{{PLURAL:$1|un minuta|$1 minutas}} ab nunc',
 	'timeago-month-from-now' => '{{PLURAL:$1|un mense|$1 menses}} ab nunc',
 	'timeago-second-from-now' => 'un minuta ab nunc',
-];
+);
 
-$messages['it'] = [
-	'timeagomessaging-desc' => 'Fornisce l\'internazionalizzazione del plugin jquery.timeago.js',
+$messages['it'] = array(
+	'timeagomessaging-desc' => "Fornisce l'internazionalizzazione del plugin jquery.timeago.js",
 	'timeago-year' => '
 {{PLURAL:$1|un anno|$1 anni}} fa',
 	'timeago-month' => '{{PLURAL:$1|un mese|$1 mesi}} fa',
 	'timeago-day' => '{{PLURAL:$1|un giorno|$1 giorni}} fa',
-	'timeago-hour' => '{{PLURAL:$1|un\'ora|$1 ore}} fa',
+	'timeago-hour' => "{{PLURAL:$1|un'ora|$1 ore}} fa",
 	'timeago-minute' => '{{PLURAL:$1|un minuto|$1 minuti}} fa',
 	'timeago-second' => 'un minuto fa',
 	'timeago-day-from-now' => '{{PLURAL:$1|un giorno|$1 giorni}} da ora',
-	'timeago-hour-from-now' => '{{PLURAL:$1|un\'ora|$1 ore}} da ora',
+	'timeago-hour-from-now' => "{{PLURAL:$1|un'ora|$1 ore}} da ora",
 	'timeago-minute-from-now' => '{{PLURAL:$1|un minuto|$1 minuti}} da ora',
 	'timeago-month-from-now' => '{{PLURAL:$1|un mese|$1 mesi}} da ora',
 	'timeago-second-from-now' => 'un minuto da ora',
-];
+);
 
-$messages['ja'] = [
+$messages['ja'] = array(
 	'timeagomessaging-desc' => 'jquery.timeago.js プラグインを国際化する',
 	'timeago-year' => '$1年前',
 	'timeago-month' => '$1ヶ月前',
@@ -272,16 +271,16 @@ $messages['ja'] = [
 	'timeago-minute-from-now' => '$1分前',
 	'timeago-month-from-now' => '$1ヶ月前',
 	'timeago-second-from-now' => '1分前',
-];
+);
 
-$messages['ka'] = [
+$messages['ka'] = array(
 	'timeago-day' => '$1 დღის წინ',
 	'timeago-hour' => '$1 საათის წინ',
 	'timeago-minute' => '$1 წუთის წინ',
 	'timeago-second' => '1 წუთის წინ',
-];
+);
 
-$messages['kk-cyrl'] = [
+$messages['kk-cyrl'] = array(
 	'timeago-year' => '{{PLURAL:$1|$1 жыл|$1 жыл}} бұрын',
 	'timeago-month' => '{{PLURAL:$1|$1 ай|$1 ай}} бұрын',
 	'timeago-day' => '{{PLURAL:$1|$1 күн|$1 күн}} бұрын',
@@ -293,9 +292,9 @@ $messages['kk-cyrl'] = [
 	'timeago-minute-from-now' => '{{PLURAL:$1|$1 минут|$1 минут}} бұрын',
 	'timeago-month-from-now' => '{{PLURAL:$1|$1 ай|$1 ай}} бұрын',
 	'timeago-second-from-now' => 'минут бұрын',
-];
+);
 
-$messages['ko'] = [
+$messages['ko'] = array(
 	'timeago-year' => '$1년 전',
 	'timeago-month' => '$1개월 전',
 	'timeago-day' => '$1일 전',
@@ -307,9 +306,9 @@ $messages['ko'] = [
 	'timeago-hour-from-now' => '$1시간 전',
 	'timeago-minute-from-now' => '$1분 전',
 	'timeago-month-from-now' => '$1개월 전',
-];
+);
 
-$messages['krc'] = [
+$messages['krc'] = array(
 	'timeagomessaging-desc' => 'jquery.timeago.js плагиннге i18n береди',
 	'timeago-year' => '{{PLURAL:$1|бир джыл|$1 джыл}} алгъа',
 	'timeago-month' => '{{PLURAL:$1|бир ай|$1 ай}} алгъа',
@@ -322,15 +321,15 @@ $messages['krc'] = [
 	'timeago-minute-from-now' => 'бусагъатдан {{PLURAL:$1|бир минут|$1 минут}} алгъа',
 	'timeago-month-from-now' => 'бусагъатдан {{PLURAL:$1|бир ай|$1 ай}} алгъа',
 	'timeago-second-from-now' => 'бусагъатдан минут алгъа',
-];
+);
 
-$messages['lb'] = [
+$messages['lb'] = array(
 	'timeagomessaging-desc' => 'i18n fir de Plugin jquery.timeago.js',
 	'timeago-second' => 'virun enger Minutt',
 	'timeago-second-from-now' => 'eng Minutt vun elo un',
-];
+);
 
-$messages['mk'] = [
+$messages['mk'] = array(
 	'timeagomessaging-desc' => 'Овозможува i18n за приклучокот jquery.timeago.js',
 	'timeago-year' => 'пред {{PLURAL:$1|$1 година|$1 години}}',
 	'timeago-month' => '{{PLURAL:$1|пред еден месец|пред $1 месеци}}',
@@ -343,9 +342,9 @@ $messages['mk'] = [
 	'timeago-minute-from-now' => 'пред {{PLURAL:$1|една минута|$1 минути}}',
 	'timeago-month-from-now' => 'пред {{PLURAL:$1|$1 месец|$1 месеци}}',
 	'timeago-second-from-now' => 'пред една минута',
-];
+);
 
-$messages['ms'] = [
+$messages['ms'] = array(
 	'timeagomessaging-desc' => 'Menyediakan i18n untuk pemalam jqurey.timeago.js',
 	'timeago-year' => '{{PLURAL:$1|setahun|$1 tahun}} yang lalu',
 	'timeago-month' => '{{PLURAL:$1|sebulan|$1 bulan}} yang lalu',
@@ -358,9 +357,9 @@ $messages['ms'] = [
 	'timeago-minute-from-now' => '{{PLURAL:$1|seminit|$1 minit}} dari sekarang',
 	'timeago-month-from-now' => '{{PLURAL:$1|sebulan|$1 bulan}} dari sekarang',
 	'timeago-second-from-now' => 'seminit dari sekarang',
-];
+);
 
-$messages['nb'] = [
+$messages['nb'] = array(
 	'timeagomessaging-desc' => 'Gir i18n til jquery.timeago.js plugginnen',
 	'timeago-year' => '{{PLURAL:$1|et år|$1 år}} siden',
 	'timeago-month' => '{{PLURAL:$1|én måned|$1 måneder}} siden',
@@ -373,9 +372,9 @@ $messages['nb'] = [
 	'timeago-minute-from-now' => '{{PLURAL:$1|et minutt|$1 minutter}} siden',
 	'timeago-month-from-now' => '{{PLURAL:$1|en måned|$1 måned}} siden',
 	'timeago-second-from-now' => 'et øyeblikk siden',
-];
+);
 
-$messages['nl'] = [
+$messages['nl'] = array(
 	'timeagomessaging-desc' => 'Biedt i18n voor de plug-in jquery.timeago.js',
 	'timeago-year' => '{{PLURAL:$1|een jaar|$1 jaar}} geleden',
 	'timeago-month' => '{{PLURAL:$1|een maand|$1 maanden}} geleden',
@@ -388,9 +387,9 @@ $messages['nl'] = [
 	'timeago-minute-from-now' => 'over {{PLURAL:$1|een minuut|$1 minuten}}',
 	'timeago-month-from-now' => 'over {{PLURAL:$1|een maand|$1 maanden}}',
 	'timeago-second-from-now' => 'een minuut van nu',
-];
+);
 
-$messages['oc'] = [
+$messages['oc'] = array(
 	'timeagomessaging-desc' => 'Supòrt del i18n pel plugin jquery.timeago.js',
 	'timeago-year' => 'i a {{PLURAL:$1|un an|$1 ans}}',
 	'timeago-month' => 'i a {{PLURAL:$1|un mes|$1 meses}}',
@@ -398,19 +397,19 @@ $messages['oc'] = [
 	'timeago-hour' => 'i a {{PLURAL:$1|una ora|$1 oras}}',
 	'timeago-minute' => 'i a {{PLURAL:$1|una minuta|$1 minutas}}',
 	'timeago-second' => 'i a una minuta',
-	'timeago-day-from-now' => '{{PLURAL:$1|un jorn|$1 jorns}} a partir d\'ara',
-	'timeago-hour-from-now' => '{{PLURAL:$1|una ora|$1 oras}} a partir d\'ara',
-	'timeago-minute-from-now' => '{{PLURAL:$1|una minuta|$1 minutas}} a partir d\'ara',
-	'timeago-month-from-now' => '{{PLURAL:$1|un mes|$1 meses}} a partir d\'ara',
-	'timeago-second-from-now' => 'una minuta a partir d\'ara',
-];
+	'timeago-day-from-now' => "{{PLURAL:$1|un jorn|$1 jorns}} a partir d'ara",
+	'timeago-hour-from-now' => "{{PLURAL:$1|una ora|$1 oras}} a partir d'ara",
+	'timeago-minute-from-now' => "{{PLURAL:$1|una minuta|$1 minutas}} a partir d'ara",
+	'timeago-month-from-now' => "{{PLURAL:$1|un mes|$1 meses}} a partir d'ara",
+	'timeago-second-from-now' => "una minuta a partir d'ara",
+);
 
-$messages['pl'] = [
+$messages['pl'] = array(
 	'timeagomessaging-desc' => 'Umozliwia lokalizowanie wtyczki jquery.timeago.js',
 	'timeago-year' => '{{PLURAL:$1|rok|$1 lata|$1 lat}} temu',
 	'timeago-month' => '{{PLURAL:$1|miesiąc|$1 miesiące|$1 miesięcy}} temu',
 	'timeago-day' => '{{PLURAL:$1|dzień|$1 dni}} temu',
-	'timeago-hour' => '{{PLURAL:$1|1 godzinę|$1 godziny|$1 godzin}} temu',
+	'timeago-hour' => '{{PLURAL:$1|godzinę|$1 godziny|$1 godzin}} temu',
 	'timeago-minute' => '{{PLURAL:$1|minutę|$1 minuty|$1 minut}} temu',
 	'timeago-second' => 'minutę temu',
 	'timeago-day-from-now' => '{{PLURAL:$1|jutro|za $1 dni}}',
@@ -418,48 +417,33 @@ $messages['pl'] = [
 	'timeago-minute-from-now' => 'za {{PLURAL:$1|minutę|$1 minuty|$1 minut}}',
 	'timeago-month-from-now' => 'za {{PLURAL:$1|miesiąc|$1 miesiące|$1 miesięcy}}',
 	'timeago-second-from-now' => 'za minutę',
-];
+);
 
-$messages['pms'] = [
+$messages['pms'] = array(
 	'timeagomessaging-desc' => 'A forniss i18n për ël plugin jquery.timeago.js',
 	'timeago-year' => '{{PLURAL:$1|un di|$1 di}} da adess',
 	'timeago-month' => '{{PLURAL:$1|un mèis|$1 mèis}} fà',
 	'timeago-day' => '{{PLURAL:$1|un di|$1 di}} fà',
-	'timeago-hour' => '{{PLURAL:$1|n\'ora|$1 ore}} fà',
+	'timeago-hour' => "{{PLURAL:$1|n'ora|$1 ore}} fà",
 	'timeago-minute' => '{{PLURAL:$1|na minuta|$1 minute}} fà',
 	'timeago-second' => 'na minuta fà',
 	'timeago-day-from-now' => '{{PLURAL:$1|un di|$1 di}} da adess',
-	'timeago-hour-from-now' => '{{PLURAL:$1|n\'ora|$1 ore}} da adess',
+	'timeago-hour-from-now' => "{{PLURAL:$1|n'ora|$1 ore}} da adess",
 	'timeago-minute-from-now' => '{{PLURAL:$1|na minuta|$1 minute}} da adess',
 	'timeago-month-from-now' => '{{PLURAL:$1|un mèis|$1 mèis}} da adess',
 	'timeago-second-from-now' => 'na minuta da adess',
-];
+);
 
-$messages['ps'] = [
+$messages['ps'] = array(
 	'timeago-year' => '{{PLURAL:$1|يو کال|$1 کالونه}} دمخه',
 	'timeago-month' => '{{PLURAL:$1|يوه مياشت|$1 مياشتې}} دمخه',
 	'timeago-day' => '{{PLURAL:$1|يوه ورځ|$1 ورځې}} دمخه',
 	'timeago-hour' => '{{PLURAL:$1|يو گړۍ|$1 گړۍ}} دمخه',
 	'timeago-minute' => '{{PLURAL:$1|يوه دقيقه|$1 دقيقې}} دمخه',
 	'timeago-second' => 'يوه دقيقه دمخه',
-];
+);
 
-$messages['pt'] = [
-	'timeagomessaging-desc' => 'Fornece a internacionalização do plugin jquery.timeago.js',
-	'timeago-year' => '{{PLURAL:$1|um ano|$1 anos}} atrás',
-	'timeago-month' => 'há {{PLURAL:$1|um mês|$1 meses}} atrás',
-	'timeago-day' => 'há {{PLURAL:$1|um dia|$1 dias}}',
-	'timeago-hour' => 'há {{PLURAL:$1|uma hora|$1 horas}}',
-	'timeago-minute' => 'há {{PLURAL:$1|um minuto|$1 minutos}}',
-	'timeago-second' => 'há um minuto',
-	'timeago-day-from-now' => '{{PLURAL:$1|um dia|$1 dias}} atrás',
-	'timeago-hour-from-now' => '{{PLURAL:$1|uma hora|$1 horas}} atrás',
-	'timeago-minute-from-now' => '{{PLURAL:$1|um minuto|$1 minutos}} atrás',
-	'timeago-month-from-now' => '{{PLURAL:$1|um mês|$1 meses}} atrás',
-	'timeago-second-from-now' => 'à um minuto atrás',
-];
-
-$messages['pt-br'] = [
+$messages['pt'] = array(
 	'timeagomessaging-desc' => 'Fornece a internacionalização do plugin jquery.timeago.js',
 	'timeago-year' => '{{PLURAL:$1|um ano|$1 anos}} atrás',
 	'timeago-month' => '{{PLURAL:$1|um mês|$1 meses}} atrás',
@@ -472,28 +456,28 @@ $messages['pt-br'] = [
 	'timeago-minute-from-now' => 'daqui a {{PLURAL:$1|um minuto|$1 minutos}}',
 	'timeago-month-from-now' => 'daqui a {{PLURAL:$1|um mês|$1 meses}}',
 	'timeago-second-from-now' => 'daqui a um minuto',
-];
+);
 
-$messages['ro'] = [
+$messages['ro'] = array(
 	'timeago-second' => 'un minut în urmă',
-];
+);
 
-$messages['roa-tara'] = [
+$messages['roa-tara'] = array(
 	'timeagomessaging-desc' => 'Dèje i18n pu plugin jquery.timeago.js',
-	'timeago-year' => '{{PLURAL:$1|\'n\'anne|$1 anne}} fà',
-	'timeago-month' => '{{PLURAL:$1|\'nu mese|$1 mise}} fà',
-	'timeago-day' => '{{PLURAL:$1|\'nu sciurne|$1 sciurne}} fà',
-	'timeago-hour' => '{{PLURAL:$1|\'n\'ore|$1 ore}} fà',
-	'timeago-minute' => '{{PLURAL:$1|\'nu minute|$1 minute}} fà',
-	'timeago-second' => '\'nu minute fà',
-	'timeago-day-from-now' => '{{PLURAL:$1|\'nu sciurne|$1 sciurne}} da mò',
-	'timeago-hour-from-now' => '{{PLURAL:$1|\'n\'ore|$1 ore}} da mò',
-	'timeago-minute-from-now' => '{{PLURAL:$1|\'nu minute|$1 minute}} da mò',
-	'timeago-month-from-now' => '{{PLURAL:$1|\'nu mese|$1 mise}} da mò',
-	'timeago-second-from-now' => '\'nu minute da mò',
-];
+	'timeago-year' => "{{PLURAL:$1|'n'anne|$1 anne}} fà",
+	'timeago-month' => "{{PLURAL:$1|'nu mese|$1 mise}} fà",
+	'timeago-day' => "{{PLURAL:$1|'nu sciurne|$1 sciurne}} fà",
+	'timeago-hour' => "{{PLURAL:$1|'n'ore|$1 ore}} fà",
+	'timeago-minute' => "{{PLURAL:$1|'nu minute|$1 minute}} fà",
+	'timeago-second' => "'nu minute fà",
+	'timeago-day-from-now' => "{{PLURAL:$1|'nu sciurne|$1 sciurne}} da mò",
+	'timeago-hour-from-now' => "{{PLURAL:$1|'n'ore|$1 ore}} da mò",
+	'timeago-minute-from-now' => "{{PLURAL:$1|'nu minute|$1 minute}} da mò",
+	'timeago-month-from-now' => "{{PLURAL:$1|'nu mese|$1 mise}} da mò",
+	'timeago-second-from-now' => "'nu minute da mò",
+);
 
-$messages['ru'] = [
+$messages['ru'] = array(
 	'timeagomessaging-desc' => 'Предоставляет i18n для плагина jquery.timeago.js',
 	'timeago-year' => '{{PLURAL:$1|$1 год|$1 года|$1 лет}} назад',
 	'timeago-month' => '{{PLURAL:$1|месяц|$1 месяца|$1 месяцев}} назад',
@@ -506,29 +490,29 @@ $messages['ru'] = [
 	'timeago-minute-from-now' => '{{PLURAL:$1|$1 минута|$1 минуты|$1 минут}} назад',
 	'timeago-month-from-now' => '{{PLURAL:$1|месяц|$1 месяца|$1 месяцев}} назад',
 	'timeago-second-from-now' => 'минуту назад',
-];
+);
 
-$messages['sc'] = [
+$messages['sc'] = array(
 	'timeago-minute' => '{{PLURAL:$1|unu minutu|$1 minutos}} a como',
-];
+);
 
-$messages['so'] = [
+$messages['so'] = array(
 	'timeago-year' => '$1 {{PLURAL:$1|sanad|sanadood}} ka hor',
 	'timeago-month' => '$1 {{PLURAL:$1|bil|bilood}} ka hor',
 	'timeago-day' => '{{PLURAL:$1|hal maalin|$1 maalin}} ka hor',
 	'timeago-hour' => '{{PLURAL:$1|saacad|$1 saacadood}} ka hor',
 	'timeago-second' => 'daqiiqad ka hor',
 	'timeago-month-from-now' => '$1 {{PLURAL:$1|bil|bilood}} muddo laga joogo',
-];
+);
 
-$messages['sr-ec'] = [
+$messages['sr-ec'] = array(
 	'timeagomessaging-desc' => 'Пружа i18n за jquery.timeago.js додатак',
 	'timeago-day' => 'Пре {{PLURAL:$1|један дан|$1 дана|$1 дана}}',
 	'timeago-hour' => 'Пре {{PLURAL:$1|сат времена|$1 сата|$1 сати}}',
 	'timeago-second' => 'пре минут',
-];
+);
 
-$messages['sv'] = [
+$messages['sv'] = array(
 	'timeagomessaging-desc' => 'Ger i18n till jquery.timeago.js-tillägget',
 	'timeago-year' => '{{PLURAL:$1|ett år|$1 år}} sedan',
 	'timeago-month' => '{{PLURAL:$1|en månad|$1 månader}} sedan',
@@ -541,16 +525,16 @@ $messages['sv'] = [
 	'timeago-minute-from-now' => '{{PLURAL:$1|en minut|$1 minuter}} från nu',
 	'timeago-month-from-now' => '{{PLURAL:$1|en månad|$1 månader}} från nu',
 	'timeago-second-from-now' => 'en minut från nu',
-];
+);
 
-$messages['te'] = [
+$messages['te'] = array(
 	'timeago-day' => '{{PLURAL:$1|ఒక రోజు|$1 రోజుల}} క్రితం',
 	'timeago-hour' => '{{PLURAL:$1|ఒక గంట|$1 గంటల}} క్రితం',
 	'timeago-minute' => '{{PLURAL:$1|ఒక నిమిషం|$1 నిమిషాల}} క్రితం',
 	'timeago-second' => 'ఒక నిమిషం క్రితం',
-];
+);
 
-$messages['tl'] = [
+$messages['tl'] = array(
 	'timeagomessaging-desc' => 'Nagbibigay ng i18n para sa pamasak na jquery.timeago.js plugin',
 	'timeago-year' => '{{PLURAL:$1|isang taon|$1 mga taon}} na ang nakalipas',
 	'timeago-month' => '{{PLURAL:$1|isang buwan|$1 mga buwan}} na ang nakalilipas',
@@ -563,13 +547,13 @@ $messages['tl'] = [
 	'timeago-minute-from-now' => '{{PLURAL:$1|isang minuto|$1 mga minuto}} magmula ngayon',
 	'timeago-month-from-now' => '{{PLURAL:$1|isang buwan|$1 mga buwan}} magmula ngayon',
 	'timeago-second-from-now' => 'isang minuto magmula ngayon',
-];
+);
 
-$messages['tt-cyrl'] = [
+$messages['tt-cyrl'] = array(
 	'timeago-minute' => '{{PLURAL:$1|$1 минут|$1 минут|$1 минут}} элек',
-];
+);
 
-$messages['uk'] = [
+$messages['uk'] = array(
 	'timeagomessaging-desc' => 'Забезпечує i18n для додатка jquery.timeago.js',
 	'timeago-year' => '{{PLURAL:$1|$1 рік|$1 роки|$1 років}} тому',
 	'timeago-month' => '{{PLURAL:$1|$1 місяць|$1 місяці|$1 місяців}} тому',
@@ -582,9 +566,9 @@ $messages['uk'] = [
 	'timeago-minute-from-now' => '{{PLURAL:$1|$1 хвилина|$1 хвилини|$1 хвилин}} тому',
 	'timeago-month-from-now' => '{{PLURAL:$1|$1 місяць|$1 місяці|$1 місяців}} назад',
 	'timeago-second-from-now' => 'хвилин тому',
-];
+);
 
-$messages['vi'] = [
+$messages['vi'] = array(
 	'timeagomessaging-desc' => 'Cung cấp i18n cho phần mềm jquery.timeago.js',
 	'timeago-year' => '{{PLURAL:$1|một năm|$1 năm}} trước',
 	'timeago-month' => '{{PLURAL:$1|một tháng|$1 tháng}} trước',
@@ -597,20 +581,35 @@ $messages['vi'] = [
 	'timeago-minute-from-now' => 'cách đây {{PLURAL:$1|một phút|$1 phút}}',
 	'timeago-month-from-now' => 'cách đây {{PLURAL:$1|một tháng|$1 tháng}}',
 	'timeago-second-from-now' => 'cách đây một phút',
-];
+);
 
-$messages['zh-hans'] = [
+$messages['zh-hans'] = array(
 	'timeagomessaging-desc' => '为jquery.timeago.js插件提供国际化(i18n)',
 	'timeago-year' => '{{PLURAL:$1|1年|$1年}}前',
-	'timeago-month' => '{{PLURAL:$1|1月|$1月}}前',
-	'timeago-day' => '$1天前',
-	'timeago-hour' => '$1小时前',
-	'timeago-minute' => '$1分钟前',
-	'timeago-second' => '一分钟前',
-	'timeago-day-from-now' => '$1天前',
-	'timeago-hour-from-now' => '{{PLURAL:$1|1小时|$1小时}}以后',
-	'timeago-minute-from-now' => '{{PLURAL:$1|1分钟|$1分钟}}以后',
-	'timeago-month-from-now' => '{{PLURAL:$1|1月|$1月}}以后',
-	'timeago-second-from-now' => '一分钟前',
-];
+	'timeago-month' => '{{PLURAL:$1|1个月|$1个月}}前',
+	'timeago-day' => '{{PLURAL:$1|1天|$1天}}前',
+	'timeago-hour' => '{{PLURAL:$1|1个小时|$1个小时}}前',
+	'timeago-minute' => '{{PLURAL:$1|1分钟|$1分钟}}前',
+	'timeago-second' => '1分钟前',
+	'timeago-day-from-now' => '之后的{{PLURAL:$1|1天|$1天}}',
+	'timeago-hour-from-now' => '之后的{{PLURAL:$1|1小时|$1小时}}',
+	'timeago-minute-from-now' => '之后的{{PLURAL:$1|1分钟|$1分钟}}',
+	'timeago-month-from-now' => '之后的{{PLURAL:$1|1个月|$1个月}}',
+	'timeago-second-from-now' => '之后的1分钟',
+);
+
+$messages['zh-hant'] = array(
+	'timeagomessaging-desc' => '提供jquery.timeago.js插件國際化(i18n)',
+	'timeago-year' => '{{PLURAL:$1|1年|$1年}}前',
+	'timeago-month' => '{{PLURAL:$1|1個月|$1個月}}前',
+	'timeago-day' => '{{PLURAL:$1|1天|$1天}}前',
+	'timeago-hour' => '{{PLURAL:$1|1小時|$1小時}}前',
+	'timeago-minute' => '{{PLURAL:$1|1分鐘|$1分鐘}}前',
+	'timeago-second' => '1分鐘前',
+	'timeago-day-from-now' => '之後的{{PLURAL:$1|1天|$1天}}',
+	'timeago-hour-from-now' => '之後的{{PLURAL:$1|1小時|$1小時}}',
+	'timeago-minute-from-now' => '之後的{{PLURAL:$1|1分鐘|$1分鐘}}',
+	'timeago-month-from-now' => '之後的{{PLURAL:$1|1個月|$1個月}}',
+	'timeago-second-from-now' => '一分鐘後',
+);
 

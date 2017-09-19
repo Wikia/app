@@ -6,6 +6,7 @@ describe('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', functio
 		mocks = {
 		ima: {
 			addEventListener: noop,
+			dispatchEvent: noop,
 			getAdsManager: noop,
 			getStatus: noop,
 			playVideo: noop,
@@ -18,8 +19,7 @@ describe('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', functio
 			pause: noop,
 			resume: noop,
 			setVolume: noop,
-			stop: noop,
-			dispatchEvent: noop
+			stop: noop
 		},
 		domElementTweaker: {
 			show: noop,
@@ -122,6 +122,9 @@ describe('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', functio
 
 		createdPlayer.reload();
 		expect(reloadSpy).toHaveBeenCalled();
+
+		createdPlayer.reload('foo');
+		expect(reloadSpy).toHaveBeenCalledWith('foo');
 
 		createdPlayer.resize(600, 600);
 		expect(resizeSpy).toHaveBeenCalledWith(600, 600);

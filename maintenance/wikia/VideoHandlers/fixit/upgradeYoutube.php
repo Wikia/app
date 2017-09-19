@@ -25,7 +25,7 @@ class UpgradeYoutube extends Maintenance {
 		}
 
 		// Load wikia user
-		$wgUser = User::newFromName( 'WikiaBot' );
+		$wgUser = User::newFromName( Wikia::BOT_USER );
 		if ( !$wgUser ) {
 			echo "WARN: Could not load WikiaBot user\n";
 			exit(1);
@@ -231,7 +231,7 @@ class UpgradeYoutube extends Maintenance {
 
 		// Fall back to user WikiaBot if we can't find this user
 		if ( !$wgUser ) {
-			$wgUser = User::newFromName( 'WikiaBot' );
+			$wgUser = User::newFromName( Wikia::BOT_USER );
 		}
 
 		// If we still can't load the user, bail here
@@ -336,7 +336,7 @@ class UpgradeYoutube extends Maintenance {
 
 /*
 		// Load wikia user
-		$wgUser = User::newFromName( 'WikiaBot' );
+		$wgUser = User::newFromName( Wikia::BOT_USER );
 		if ( !$wgUser ) {
 			echo "WARN: Could not load WikiaBot user\n";
 			return false;

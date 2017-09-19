@@ -9,6 +9,17 @@ class ThumbnailController extends WikiaController {
 	const MIN_INFO_ICON_WIDTH = 100;
 
 	/**
+	 * SUS-2504: prevent access via wikia.php
+	 * @throws ForbiddenException
+	 */
+	public function init() {
+		parent::init();
+		if ( !$this->request->isInternal() ) {
+			throw new ForbiddenException();
+		}
+	}
+
+	/**
 	 * Render core video thumbnail HTML
 	 * @requestParam MediaTransformOutput thumb
 	 * @requestParam array options - See ThumbnailHelper class for more detail

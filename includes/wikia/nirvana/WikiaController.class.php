@@ -12,7 +12,7 @@
  */
 abstract class WikiaController extends WikiaDispatchableObject {
 
-	final public function allowsExternalRequests(){
+	public function allowsExternalRequests(){
 		return true;
 	}
 

@@ -10,7 +10,7 @@
 				</div>
 				<span class="count"><?= $x ?>.</span>
 				<div class="input-group border">
-					<label for="category-name-<?= $x ?>"><?= wfMessage( 'videopagetool-category-label-name' )->plain() ?></label>
+					<label for="category-name-<?= $x ?>"><?= wfMessage( 'videopagetool-category-label-name' )->escaped() ?></label>
 					<input
 						data-autocomplete
 						autocomplete="off"
@@ -18,20 +18,24 @@
 						id="category-name-<?= $x ?>"
 						type="text"
 						name="categoryName[]"
-						placeholder="<?= wfMessage( 'videopagetool-category-name-placeholder' )->plain() ?>"
-						value="<?= $category[ 'categoryName' ] ?>">
+						placeholder="<?= wfMessage( 'videopagetool-category-name-placeholder' )->escaped() ?>"
+						value="<?= Sanitizer::encodeAttribute( $category[ 'categoryName' ] ); ?>">
 				</div>
-				<button class="search-button"><?= wfMessage( 'videopagetool-button-search' )->plain() ?></button>
+				<button class="search-button">
+					<?= wfMessage( 'videopagetool-button-search' )->escaped(); ?>
+				</button>
 
 				<div class="input-group">
-					<label for="display-title-<?= $x ?>"><?= wfMessage( 'videopagetool-category-label-display-title' )->plain() ?></label>
+					<label for="display-title-<?= $x ?>">
+						<?= wfMessage( 'videopagetool-category-label-display-title' )->escaped(); ?>
+					</label>
 					<input
 						class="display-title"
 						id="display-title-<?= $x ?>"
 						type="text"
 						name="displayTitle[]"
-						placeholder="<?= wfMessage( 'videopagetool-category-display-title-placeholder' )->plain() ?>"
-						value="<?= $category[ 'displayTitle' ] ?>">
+						placeholder="<?= wfMessage( 'videopagetool-category-display-title-placeholder' )->escaped(); ?>"
+						value="<?= Sanitizer::encodeAttribute( $category[ 'displayTitle' ] ); ?>">
 				</div>
 				<button class="secondary navigation nav-up">
 					<img class="chevron chevron-up" src="<?= $wg->BlankImgUrl ?>">
@@ -42,17 +46,25 @@
 			</div>
 			<div class="carousel-wrapper">
 			</div>
-			<a class="preview" href="#"><span></span><?= wfMessage( 'videopagetool-category-preview' )->plain() ?><span></span></a>
+			<a class="preview" href="#">
+				<span></span>
+				<?= wfMessage( 'videopagetool-category-preview' )->escaped(); ?>
+				<span></span>
+			</a>
 		</div>
 
 	<? endfor; ?>
 
-	<input type="hidden" value="<?= $date ?>" name="date">
-	<input type="hidden" value="<?= $language ?>" name="language">
+	<input type="hidden" value="<?= Sanitizer::encodeAttribute( $date ); ?>" name="date">
+	<input type="hidden" value="<?= Sanitizer::encodeAttribute( $language ); ?>" name="language">
 
 	<div class="submits">
-		<button type="submit"><?= wfMessage( 'videopagetool-button-save' )->text() ?></button>
-		<button class="secondary reset"><?= wfMessage( 'videopagetool-button-clear' )->text() ?></button>
+		<button type="submit">
+			<?= wfMessage( 'videopagetool-button-save' )->escaped(); ?>
+		</button>
+		<button class="secondary reset">
+			<?= wfMessage( 'videopagetool-button-clear' )->escaped(); ?>
+		</button>
 	</div>
 
 </form>

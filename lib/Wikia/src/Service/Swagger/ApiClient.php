@@ -39,7 +39,8 @@ class ApiClient extends \Swagger\Client\ApiClient {
 			$code = $e->getCode();
 		}
 
-		wfRunHooks( 'AfterHttpRequest', [ $method, $this->config->getHost(), $this->serviceName, $start, null ] ); # PLATFORM-2079
+		\Hooks::run( 'AfterHttpRequest', [ $method, $this->config->getHost(), $this->serviceName,
+										   $start, null ] ); # PLATFORM-2079
 
 		$params = [
 			'statusCode' => (int) $code,

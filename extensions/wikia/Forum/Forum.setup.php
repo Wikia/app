@@ -55,15 +55,11 @@ $wgHooks['WallMessageDeleted'][] = 'ForumHooksHelper::onWallMessageDeleted';
 $wgHooks['ContributionsLineEnding'][] = 'ForumHooksHelper::onContributionsLineEnding';
 $wgHooks['OasisAddPageDeletedConfirmationMessage'][] = 'ForumHooksHelper::onOasisAddPageDeletedConfirmationMessage';
 $wgHooks['FilePageImageUsageSingleLink'][] = 'ForumHooksHelper::onFilePageImageUsageSingleLink';
+$wgHooks['AfterPageHeaderPageSubtitle'][] = 'ForumHooksHelper::onAfterPageHeaderPageSubtitle';
+$wgHooks['PageHeaderActionButtonShouldDisplay'][] = 'ForumHooksHelper::onPageHeaderActionButtonShouldDisplay';
 
 // notification hooks
 $wgHooks['NotificationGetNotificationMessage'][] = 'ForumNotificationPlugin::onGetNotificationMessage';
-
-// make sure that when an article is deleted, if it has a comments_index,
-// that record is properly marked as deleted. this needs to happen within
-// the transaction in  WikiPage::doDeleteArticleReal which is why it's being hooked
-// here and not in ArticleDeleteComplete
-$wgHooks['ArticleDoDeleteArticleBeforeLogEntry'][] = 'ForumHooksHelper::onArticleDoDeleteArticleBeforeLogEntry';
 
 // forum discussion on article
 // It need to be first one !!!
@@ -91,11 +87,14 @@ $wgHooks['ArticleDeleteComplete'][] = 'ForumHooksHelper::onArticleDeleteComplete
 // SUS-260: Prevent moving pages within, into or out of Forum namespaces
 $wgHooks['MWNamespace:isMovable'][] = 'ForumHooksHelper::onNamespaceIsMovable';
 
+$wgHooks['AfterPageHeaderButtons'][] = 'ForumHooksHelper::onAfterPageHeaderButtons';
+
 include ( $dir . '/Forum.namespace.setup.php' );
 
 // add this namespace to list of wall namespaces
-$app->registerNamespaceControler( NS_WIKIA_FORUM_BOARD, 'ForumController', 'board', true );
-$app->registerNamespaceControler( NS_WIKIA_FORUM_TOPIC_BOARD, 'ForumController', 'board', true );
+$app->registerNamespaceController( NS_WIKIA_FORUM_BOARD, 'ForumController', 'board', true );
+$app->registerNamespaceController( NS_WIKIA_FORUM_TOPIC_BOARD, 'ForumController', 'board',
+	true );
 
 JSMessages::registerPackage( 'Forum', [
 	'back',

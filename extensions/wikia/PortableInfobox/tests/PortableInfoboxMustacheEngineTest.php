@@ -1,16 +1,17 @@
 <?php
-
+use PHPUnit\Framework\TestCase;
 use Wikia\PortableInfobox\Helpers\PortableInfoboxMustacheEngine;
 
-class PortableInfoboxMustacheEngineTest extends WikiaBaseTest {
+class PortableInfoboxMustacheEngineTest extends TestCase {
 
 	protected function setUp() {
-		$this->setupFile = dirname( __FILE__ ) . '/../PortableInfobox.setup.php';
 		parent::setUp();
+		require_once __DIR__ . '/../services/Helpers/PortableInfoboxMustacheEngine.php';
 	}
 
 	/**
-	 * @dataProvider testIsTypeSupportedInTemplatesDataProvider
+	 * @covers PortableInfoboxMustacheEngine::isSupportedType
+	 * @dataProvider isTypeSupportedInTemplatesDataProvider
 	 */
 	public function testIsTypeSupportedInTemplates( $type, $result, $description ) {
 		$this->assertEquals(
@@ -20,7 +21,7 @@ class PortableInfoboxMustacheEngineTest extends WikiaBaseTest {
 		);
 	}
 
-	public function testIsTypeSupportedInTemplatesDataProvider() {
+	public function isTypeSupportedInTemplatesDataProvider() {
 		return [
 			[
 				'type' => 'title',

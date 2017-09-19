@@ -32,6 +32,17 @@ define('ext.wikia.adEngine.video.player.uiTemplate', [
 			'replayOverlay',
 			'closeButton'
 		],
+		outstreamIncontent = [
+			'dynamicReveal',
+			'mouseEvents',
+			'progressBar',
+			'volumeControl'
+		],
+		outstreamLeaderboard = [
+			'mouseEvents',
+			'progressBar',
+			'volumeControl'
+		],
 		logGroup = 'ext.wikia.adEngine.video.player.uiTemplate';
 
 	function selectTemplate(videoSettings) {
@@ -53,6 +64,8 @@ define('ext.wikia.adEngine.video.player.uiTemplate', [
 		autoPlayLayout: autoPlayLayout,
 		defaultLayout: defaultLayout,
 		splitLayout: splitLayout,
+		outstreamIncontent: outstreamIncontent,
+		outstreamLeaderboard: outstreamLeaderboard,
 		selectTemplate: selectTemplate
 	};
 });

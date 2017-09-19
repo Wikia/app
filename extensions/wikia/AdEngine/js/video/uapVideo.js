@@ -16,7 +16,10 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.video.uapVideo',
-		positionVideoPlayerClassName = 'video-player-';
+		positionVideoPlayerClassName = 'video-player-',
+		uapTypesToMegaMap = {
+			'abcd': true
+		};
 
 	function getVideoSize(slot, params, videoSettings) {
 		var width = slot.clientWidth;
@@ -35,6 +38,10 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		};
 	}
 
+	function shouldUseMegaAdUnitBuilder(type) {
+		return uapTypesToMegaMap[type];
+	}
+
 	function loadPorvata(params, slotContainer, providerContainer, videoSettings) {
 		params.container = slotContainer;
 
@@ -42,6 +49,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 
 		return porvata.inject(videoSettings)
 			.then(function (video) {
+				video.container.style.position = 'relative';
 				if (mercuryListener) {
 					mercuryListener.onPageChange(function () {
 						video.destroy();
@@ -115,6 +123,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		var params = videoSettings.getParams(),
 			loadedPlayer,
 			providerContainer = adSlot.getProviderContainer(params.slotName),
+			uapType = uapContext.getType(),
 			videoContainer = providerContainer.parentNode,
 			size;
 
@@ -123,11 +132,11 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		size = getVideoSize(videoContainer, params, videoSettings);
 		params.width = size.width;
 		params.height = size.height;
-		params.adProduct = 'vuap';
+		params.useMegaAdUnitBuilder = shouldUseMegaAdUnitBuilder(uapType);
 		params.vastTargeting = {
 			src: params.src,
 			pos: params.slotName,
-			passback: 'vuap',
+			passback: uapType,
 			uap: uapContext.getUapId()
 		};
 

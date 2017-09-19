@@ -67,7 +67,7 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 				}
 			},
 			log: noop,
-			recoveryHelper: {
+			sourcePoint: {
 				addOnBlockingCallback: noop
 			},
 			win: {
@@ -79,7 +79,8 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 			},
 			adaptersPricesTracker: {},
 			adaptersRegistry: {
-				setupCustomAdapters: noop
+				setupCustomAdapters: noop,
+				registerAliases: noop
 			},
 			prebidHelper: {
 				setupAdUnits: function () {
@@ -129,7 +130,7 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 		return modules['ext.wikia.adEngine.lookup.lookupFactory'](
 			mocks.adContext,
 			mocks.adTracker,
-			mocks.recoveryHelper,
+			mocks.sourcePoint,
 			mocks.lazyQueue,
 			mocks.log
 		);

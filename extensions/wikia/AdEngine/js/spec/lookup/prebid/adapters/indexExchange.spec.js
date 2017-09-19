@@ -13,12 +13,18 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange', function () 
 			filterSlotMap: function (map) {
 				return map;
 			}
+		},
+		instartLogic: {
+			isBlocking: function() {
+				return false;
+			}
 		}
 	};
 
 	function getIndexExchange() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.indexExchange'](
 			mocks.slotsContext,
+			mocks.instartLogic,
 			mocks.geo,
 			mocks.instantGlobals
 		);
@@ -31,8 +37,8 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange', function () 
 	});
 
 	it('prepareAdUnit returns data in correct shape', function () {
-		var appNexus = getIndexExchange();
-		expect(appNexus.prepareAdUnit('TOP_LEADERBOARD', {
+		var indexExchange = getIndexExchange();
+		expect(indexExchange.prepareAdUnit('TOP_LEADERBOARD', {
 			sizes: [
 				[728, 90],
 				[970, 250]

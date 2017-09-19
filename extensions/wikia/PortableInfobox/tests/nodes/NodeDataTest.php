@@ -597,7 +597,7 @@ class NodeDataTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider testIsEmptyDataProvider
+	 * @dataProvider isEmptyDataProvider
 	 */
 	public function testIsEmpty( $season, $expectedOutput ) {
 		$string = '<data source="season"><label>Season</label></data>';
@@ -608,7 +608,7 @@ class NodeDataTest extends WikiaBaseTest {
 		$this->assertTrue( $node->isEmpty( $nodeData ) == $expectedOutput );
 	}
 
-	public function testIsEmptyDataProvider() {
+	public function isEmptyDataProvider() {
 		return [
 			[
 				'season' => '0',

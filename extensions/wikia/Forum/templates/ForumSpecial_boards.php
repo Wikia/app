@@ -22,8 +22,8 @@
 				<!-- placeholder for future feature -->
 			</div>
 			<ul class="activity">
-				<li class="threads"><?= wfMessage( 'forum-specialpage-board-threads', $wg->Lang->formatNum( $board['threadCount'] ) )->escaped(); ?></li>
-				<li class="posts"><?= wfMessage( 'forum-specialpage-board-posts', $wg->Lang->formatNum( $board['postCount'] ) )->escaped(); ?></li>
+				<li class="threads"><?= wfMessage( 'forum-specialpage-board-threads' )->numParams( $board['threadCount'] )->escaped(); ?></li>
+				<li class="posts"><?= wfMessage( 'forum-specialpage-board-posts' )->numParams( $board['postCount'] )->escaped(); ?></li>
 			</ul>
 			<? if ( !$isEditMode && $board['postCount'] > 0 ): ?>
 				<p class="last-post"><?= $lastPostByMsg ?>

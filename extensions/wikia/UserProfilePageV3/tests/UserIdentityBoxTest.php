@@ -208,7 +208,8 @@ class UserIdentityBoxTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider testSaveUserData_spamFilterProvider
+	 * @dataProvider saveUserDataSpamFilterProvider
+	 * @group Broken
 	 */
 	public function testSaveUserData_spamFilter($userData) {
 		$userMock =  $this->getMock( 'User', [ 'setOption' ] );
@@ -254,7 +255,7 @@ class UserIdentityBoxTest extends WikiaBaseTest {
 		$userIdentityBoxMock->saveUserData($userData);
 	}
 
-	public function testSaveUserData_spamFilterProvider() {
+	public function saveUserDataSpamFilterProvider() {
 		return array(
 			array(
 				array(

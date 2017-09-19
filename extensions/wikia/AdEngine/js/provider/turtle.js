@@ -1,13 +1,19 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.turtle', [
 	'wikia.log',
+	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.provider.gpt.helper',
-	'ext.wikia.adEngine.slotTweaker',
-	require.optional('ext.wikia.adEngine.lookup.openx.openXBidderHelper')
-], function (log, gptHelper, slotTweaker, openXHelper) {
+	'ext.wikia.adEngine.slotTweaker'
+], function (log, btfBlocker, gptHelper, slotTweaker) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.provider.turtle',
+	var atfSlots = [
+			'INVISIBLE_SKIN',
+			'TOP_LEADERBOARD',
+			'TOP_RIGHT_BOXAD',
+			'TURTLE_FLUSH'
+		],
+		logGroup = 'ext.wikia.adEngine.provider.turtle',
 		slotMap = {
 			INVISIBLE_SKIN:          {size: '1000x1000,1x1'},
 			LEFT_SKYSCRAPER_2:       {size: '160x600,300x600'},
@@ -32,9 +38,6 @@ define('ext.wikia.adEngine.provider.turtle', [
 			slotTweaker.removeTopButtonIfNeeded(slot.name);
 			slotTweaker.adjustLeaderboardSize(slot.name);
 		});
-		slot.pre('hop', function() {
-			openXHelper && openXHelper.addOpenXSlot(slot.name);
-		});
 		gptHelper.pushAd(
 			slot,
 			'/98544404/Wikia/Nordics_RoN/' + slot.name,
@@ -51,6 +54,8 @@ define('ext.wikia.adEngine.provider.turtle', [
 	return {
 		name: 'Turtle',
 		canHandleSlot: canHandleSlot,
-		fillInSlot: fillInSlot
+		fillInSlot: btfBlocker.decorate(fillInSlot, {
+			atfSlots: atfSlots
+		})
 	};
 });

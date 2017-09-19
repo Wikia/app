@@ -333,7 +333,7 @@ class CityVisualization extends WikiaModel {
 			$data['city_id'] = $wikiId;
 			$mdb->Insert($table, $data, __METHOD__);
 			$data['city_flags'] = null;
-			wfRunHooks('CityVisualization::wikiDataInserted', array($wikiId));
+			Hooks::run('CityVisualization::wikiDataInserted', array($wikiId));
 		}
 		$mdb->commit();
 	}

@@ -32,14 +32,13 @@ define('wikia.krux', [
 	}
 
 	function addConfigScript(confid) {
-		var k, m, src, s;
+		var k, s;
 
 		k = document.createElement('script');
 		k.type = 'text/javascript';
 		k.id = kruxScriptId;
 		k.async = true;
-		src = (m = location.href.match(/\bkxsrc=([^&]+)\b/)) && decodeURIComponent(m[1]);
-		k.src = src || (location.protocol === 'https:' ? 'https:' : 'http:') + '//cdn.krxd.net/controltag?confid=' + confid;
+		k.src = (location.protocol === 'https:' ? 'https:' : 'http:') + '//cdn.krxd.net/controltag?confid=' + confid;
 		s = document.getElementsByTagName('script')[0];
 		s.parentNode.insertBefore(k, s);
 	}

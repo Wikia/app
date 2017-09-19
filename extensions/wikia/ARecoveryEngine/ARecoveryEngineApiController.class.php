@@ -8,11 +8,11 @@ class ARecoveryEngineApiController extends WikiaController {
 		$this->loadScript(new ResourceLoaderAdEngineSourcePointCSDelivery());
 	}
 
-	public function getSourcePointMessaging() {
+	public function getspmsg() {
 		$this->loadScript(new ResourceLoaderAdEngineSourcePointMessage());
 	}
 
-	public function getSourcePointMMSClient() {
+	public function getspmmsc() {
 		$this->loadScript(new ResourceLoaderAdEngineSourcePointMMSClient());
 	}
 
@@ -23,6 +23,29 @@ class ARecoveryEngineApiController extends WikiaController {
 		$this->response->setVal( 'domain', F::app()->wg->server );
 		$this->response->setVal( 'cs_endpoint', ResourceLoaderAdEngineSourcePointCSDelivery::CS_ENDPOINT );
 	}
+
+	public function getPageFairBootstrapHead() {
+		$resourceLoader = new ResourceLoaderAdEnginePageFairRecoveryModule();
+		$this->response->getView()->setTemplate( 'ARecoveryEngineApiController', 'getPageFairBootstrap' );
+		$this->response->setVal( 'code', $resourceLoader->getScriptObserver() );
+	}
+
+	public function getPageFairBootstrapTopBody() {
+		$resourceLoader = new ResourceLoaderAdEnginePageFairRecoveryModule();
+		$this->response->getView()->setTemplate( 'ARecoveryEngineApiController', 'getPageFairBootstrap' );
+		$this->response->setVal( 'code', $resourceLoader->getScriptWrapper() );
+	}
+
+	public function getPageFairBootstrapBottomBody() {
+		$resourceLoader = new ResourceLoaderAdEnginePageFairRecoveryModule();
+		$this->response->setVal( 'code', $resourceLoader->getScriptLoader() );
+	}
+
+	public function getInstartLogicBootstrap() {
+        $resourceLoader = new ResourceLoaderAdEngineInstartLogicModule();
+        $resourceLoaderContext = new ResourceLoaderContext( new ResourceLoader(), new FauxRequest() );
+        $this->response->setVal( 'code', $resourceLoader->getScript( $resourceLoaderContext ) );
+    }
 
 	public function getLogInfo() {
 		\Wikia\Logger\WikiaLogger::instance()

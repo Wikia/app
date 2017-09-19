@@ -12,34 +12,74 @@ class CleanupCommentsIndex extends Maintenance {
 	public function execute() {
 		global $wgDBname;
 
-		$db = wfGetDB( DB_MASTER );
+		$dbMaster = wfGetDB( DB_MASTER );
+		$dbSlave = wfGetDB( DB_SLAVE );
 
-		$ids = $db->selectFieldValues(
+		$updated = $this->updateDeletedFlag( $dbMaster, $dbSlave );
+		$deleted = $this->removeBrokenRows( $dbMaster, $dbSlave );
+
+		$this->output( "db: {$wgDBname} before: {$deleted['count']} updated: {$updated} deleted: {$deleted['deleted']}\n" );
+	}
+
+	public function updateDeletedFlag( DatabaseMysqli $dbMaster, DatabaseMysqli $dbSlave ) {
+		$ids = $dbSlave->selectFieldValues(
+			[ 'archive', 'comments_index' ],
+			'comment_id',
+			[ 'archived=0', 'deleted=0', 'removed=0', 'comment_id=ar_page_id', 'ar_namespace in (500,501,1200,1201,2000,2001)', 'comment_id not in (SELECT page_id from page)' ],
+			__METHOD__,
+			[ 'DISTINCT' ]
+		);
+
+		if ( is_array( $ids ) ) {
+			$ids = array_map( function( $item ) {
+				return intval( $item );
+			}, $ids );
+
+			if ( !$this->hasOption('dry-run') && !empty( $ids ) ) {
+				$dbMaster->update(
+					'comments_index',
+					[ 'deleted' => 1 ],
+					[ 'comment_id' => $ids ],
+					__METHOD__
+				);
+			}
+
+			wfWaitForSlaves();
+		}
+
+		return count( $ids );
+	}
+
+	public function removeBrokenRows( DatabaseMysqli $dbMaster, DatabaseMysqli $dbSlave ) {
+		$count = $dbSlave->selectField(
+			'comments_index',
+			'count(*)',
+			[],
+			__METHOD__
+		);
+
+		$ids = $dbSlave->selectFieldValues(
 			[ 'page', 'comments_index' ],
 			'comment_id',
-			[ 'page_id=comment_id', 'page_namespace not in (500,501,1200,1201,2000,2001)' ],
+			[ 'page_id=comment_id', 'archived=0', 'deleted=0', 'removed=0', 'page_namespace not in (500,501,1200,1201,2000,2001)' ],
 			__METHOD__
 		);
 
 		if ( is_array( $ids ) ) {
 			$ids = array_map( function( $item ) {
 				return intval( $item );
-			}, $ids);
-
-			\Wikia\Logger\WikiaLogger::instance()->info(
-				"{$wgDBname}: " . count( $ids ) . " rows affected",
-				[ "rows_count" => count( $ids ) ]
-			);
-
-			$this->output( "{$wgDBname}: " . count( $ids ) . " rows affected\n" );
+			}, $ids );
 
 			if ( !$this->hasOption('dry-run') && !empty( $ids ) ) {
-				$db->delete(
+				$dbMaster->delete(
 					'comments_index',
-					[ "comment_id" => $ids ]
+					[ "comment_id" => $ids ],
+					__METHOD__
 				);
 			}
 		}
+
+		return [ 'count' => $count, 'deleted' => count( $ids ) ];
 	}
 }
 

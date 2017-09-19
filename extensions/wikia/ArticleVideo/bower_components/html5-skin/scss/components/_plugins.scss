@@ -1,0 +1,48 @@
+.oo-player-skin-plugins {
+  z-index: $zindex-player-skin-plugins;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: $control-bar-height;
+  position: absolute;
+  overflow: hidden;
+  display: none;
+}
+
+.oo-player-skin-plugins.oo-showing:not(:empty) {
+  display: block;
+}
+
+.oo-player-skin-plugins.oo-overlay-showing:not(:empty) {
+  display: block;
+}
+
+.oo-player-skin-plugins.oo-overlay-blur:not(:empty) {
+  -webkit-filter: blur(3px);
+  -moz-filter: blur(3px);
+  filter: blur(3px);
+  z-index: $zindex-player-skin-plugins-blur;
+  position: absolute;
+}
+
+.oo-player-skin-plugins-click-layer {
+  z-index: $zindex-player-skin-plugins-click-layer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: $control-bar-height;
+  position: absolute;
+  display: none;
+}
+
+.oo-player-skin-plugins.oo-full:not(.oo-overlay-showing), .oo-player-skin-plugins-click-layer.oo-full {
+  bottom: 0;
+}
+
+.oo-player-skin-plugins-click-layer.oo-showing {
+  display: block;
+}
+
+.oo-plugins {
+  @extend .oo-expand;
+}

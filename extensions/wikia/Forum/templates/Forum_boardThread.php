@@ -9,8 +9,8 @@
 	</div>
 	<div class="thread-right">
 		<ul class="activity">
-			<li class="threads"><?= wfMessage( 'forum-board-thread-replies', $wg->Lang->formatNum( $repliesNumber ) )->escaped() ?></li>
-			<li class="posts"><?= wfMessage( 'forum-board-thread-kudos', $wg->Lang->formatNum( $kudosNumber ) )->escaped() ?></li>
+			<li class="threads"><?= wfMessage( 'forum-board-thread-replies' )->numParams( $repliesNumber )->escaped() ?></li>
+			<li class="posts"><?= wfMessage( 'forum-board-thread-kudos' )->numParams( $kudosNumber )->escaped() ?></li>
 			<? if ( $isWatched ): ?>
 				<li class="follow following" data-iswatched="1"><?= wfMessage( 'forum-board-thread-following' )->escaped() ?></li>
 			<? else : ?>

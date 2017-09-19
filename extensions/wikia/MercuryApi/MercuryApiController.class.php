@@ -59,7 +59,7 @@ class MercuryApiController extends WikiaController {
 		} else {
 			$localNavigation = $navData['navigation']['wiki'];
 		}
-    
+
 		return $localNavigation;
 	}
 
@@ -180,7 +180,7 @@ class MercuryApiController extends WikiaController {
 		$htmlTitle = new WikiaHtmlTitle();
 		$wikiVariables['htmlTitle'] = [
 			'separator' => $htmlTitle->getSeparator(),
-			'parts' => $htmlTitle->getAllParts(),
+			'parts' => array_values( $htmlTitle->getAllParts() ),
 		];
 
 		return $wikiVariables;
@@ -248,7 +248,8 @@ class MercuryApiController extends WikiaController {
 		$dimensions[18] = $wikiCategoryNames;
 		$dimensions[23] = in_array( 'poweruser_lifetime', $powerUserTypes ) ? 'yes' : 'no';
 		$dimensions[24] = in_array( 'poweruser_frequent', $powerUserTypes ) ? 'yes' : 'no';
-		$dimensions[28] = !empty($adContext['targeting']['hasPortableInfobox']) ? 'yes' : 'no';
+		$dimensions[28] = !empty( $adContext['targeting']['hasPortableInfobox'] ) ? 'yes' : 'no';
+		$dimensions[29] = !empty( $adContext['targeting']['hasFeaturedVideo'] ) ? 'yes' : 'no';
 
 		if ( !empty( $this->request->getBool( 'isanon' ) ) ) {
 			$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
@@ -324,10 +325,20 @@ class MercuryApiController extends WikiaController {
 				'ns' => $title->getNamespace()
 			];
 
-			if ( $this->isSupportedByMercury( $title ) ) {
-				// Empty category pages are not known but contain article list
+			// handle cases like starwars.wikia.com/wiki/w:c:clashroyale:Tesla (interwiki links)
+			$interWikiUrl = InterwikiDispatcher::getInterWikiaURL( $title );
+
+			if ( empty( $interWikiUrl ) && $this->isSupportedByMercury( $title ) ) {
+				// Empty category pages are not known but contain article list;
 				if ( !$title->isKnown() && $title->getNamespace() !== NS_CATEGORY ) {
 					throw new NotFoundApiException( 'Page doesn\'t exist' );
+				}
+
+				// InterwikiDispatcher::getInterWikiaURL does not support other prefixes than InterwikiDispatcher::SUPPORTED_IW_PREFIXES
+				// but other prefixes may be defined in `interwiki` table for given wiki - in such case $title->isKnown()
+				// returns true in previous `if` statement
+				if ( !empty( $title->mInterwiki ) && !InterwikiDispatcher::isSupportedPrefix( $title->mInterwiki ) ) {
+					throw new InvalidParameterApiException( 'title' );
 				}
 
 				// getPage is cached (see the bottom of the method body) so there is no need for additional caching here
@@ -360,17 +371,17 @@ class MercuryApiController extends WikiaController {
 				// Set it before we remove the namespace from $displayTitle
 				$data['htmlTitle'] = $this->mercuryApi->getHtmlTitleForPage( $title, $displayTitle );
 
-				$otherLanguages = $this->getOtherLanguages( $title );
-
-				if ( !empty( $otherLanguages ) ) {
-					$data['otherLanguages'] = $otherLanguages;
-				}
-
 				if ( MercuryApiMainPageHandler::shouldGetMainPageData( $isMainPage ) ) {
 					$data['curatedMainPageData'] = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi );
 				} else {
 					if ( !empty( $articleData['content'] ) ) {
 						$data['article'] = $articleData;
+						$data['article']['hasPortableInfobox'] = !empty( \Wikia::getProps( $title->getArticleID(), PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME ) );
+
+						$featuredVideo = MercuryApiArticleHandler::getFeaturedVideoDetails( $title );
+						if ( !empty( $featuredVideo ) ) {
+							$data['article']['featuredVideo'] = $featuredVideo;
+						}
 
 						if ( !$title->isContentPage() ) {
 							// Remove the namespace prefix from display title
@@ -409,6 +420,8 @@ class MercuryApiController extends WikiaController {
 					}
 				}
 			}
+
+			\Hooks::run( 'MercuryPageData', [ $title, &$data ] );
 		} catch ( WikiaHttpException $exception ) {
 			$this->response->setCode( $exception->getCode() );
 
@@ -422,6 +435,13 @@ class MercuryApiController extends WikiaController {
 					'details' => $exception->getDetails()
 				]
 			);
+		}
+
+		// if $interwikiUrl is not empty it means that we should redirect to other wiki (follow interwiki link)
+		if ( !empty( $interWikiUrl ) ) {
+			$data = [
+				'redirectTo' => $interWikiUrl,
+			];
 		}
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
@@ -510,49 +530,15 @@ class MercuryApiController extends WikiaController {
 		);
 	}
 
-	private function getOtherLanguages( Title $title ) {
-		global $wgEnableLillyExt;
-
-		if ( empty( $wgEnableLillyExt ) ) {
-			return null;
-		}
-
-		$url = $title->getFullURL();
-
-		$lilly = new Lilly();
-		$links = $lilly->getCluster( $url );
-		if ( !count( $links ) ) {
-			return null;
-		}
-
-		// Remove link to self
-		$langCode = $title->getPageLanguage()->getCode();
-		unset( $links[$langCode] );
-
-		// Construct the structure for Mercury
-		$langMap = array_map( function ( $langCode, $url ) {
-			$urlPath = parse_url( $url, PHP_URL_PATH );
-			$articleTitle = preg_replace( '|^/(wiki/)?|', '', rawurldecode( $urlPath ) );
-			return [
-				'languageCode' => $langCode,
-				'languageName' => Language::getLanguageName( $langCode ),
-				'articleTitle' => str_replace( '_', ' ', $articleTitle ),
-				'url' => $url,
-			];
-		}, array_keys( $links ), array_values( $links ) );
-
-		// Sort by localized language name
-		$c = Collator::create( 'en_US.UTF-8' );
-		usort( $langMap, function ( $lang1, $lang2 ) use ( $c ) {
-			return $c->compare( $lang1['languageName'], $lang2['languageName'] );
-		} );
-
-		return $langMap;
-	}
-
 	private function isSupportedByMercury( Title $title ) {
+		$nsList = [ NS_FILE, NS_CATEGORY ];
+
+		if ( defined( 'NS_BLOG_ARTICLE' ) ) {
+			$nsList[] = NS_BLOG_ARTICLE;
+		}
+
 		return MercuryApiMainPageHandler::shouldGetMainPageData( $title->isMainPage() ) ||
 			$title->isContentPage() ||
-			in_array( $title->getNamespace(), [ NS_FILE, NS_CATEGORY ]);
+			in_array( $title->getNamespace(), $nsList );
 	}
 }

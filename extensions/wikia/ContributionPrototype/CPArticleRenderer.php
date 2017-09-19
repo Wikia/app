@@ -5,6 +5,7 @@ namespace ContributionPrototype;
 use Http;
 use MWHttpRequest;
 use OutputPage;
+use Title;
 use Wikia;
 use Wikia\Logger\Loggable;
 use Wikia\Service\Gateway\UrlProvider;
@@ -14,6 +15,7 @@ class CPArticleRenderer {
 	use Loggable;
 
 	const SERVICE_NAME = "structdata";
+	const CP_TITLE_HEADER = 'X-Page-Title';
 
 	/** @var string */
 	private $publicHost;
@@ -42,19 +44,28 @@ class CPArticleRenderer {
 	}
 
 	/**
-	 * @param string $title
+	 * @param Title $title
 	 * @param OutputPage $output
 	 */
-	public function render($title, OutputPage $output, $action='view') {
-		$content = $this->getArticleContent($title, $action);
-		
-		if ($content === false) {
-			// TODO: what do we want to show here?
+	public function render(Title $title, OutputPage $output, $action='view') {
+		if ( $title->getPartialURL() == '' ) {
+			$output->redirect( '/wiki/Home' );
+		}
+
+		$output->setPageTitle($title->getPrefixedText());
+		$cpArticle = $this->getArticle($title->getPartialURL(), $action);
+		$this->addStyles($output);
+
+		if ($cpArticle === false) {
+			$output->addHTML("<p>We're currently experiencing some technical difficulties. Hang tight, we're working to fix these ASAP.</p>");
 			return;
 		}
 
-		$output->addHTML($content);
-		$this->addStyles($output);
+		$output->addHTML($cpArticle->getContent());
+		if (!empty($cpArticle->getTitle())) {
+			$output->setPageTitle($cpArticle->getTitle());
+		}
+
 		$this->addScripts($output);
 	}
 
@@ -77,10 +88,28 @@ class CPArticleRenderer {
 		$output->addHTML(\DesignSystemHelper::renderSvg('sprite'));
 	}
 
-	private function getArticleContent($title, $action) {
-//		$internalHost = $this->urlProvider->getUrl(self::SERVICE_NAME);
+	private function splitArticleIdAndTitle($title) {
+		if (preg_match('/^(\d+)\/(.*$)$/', urldecode($title), $matches) == 1) {
+			return [$matches[1], rawurlencode($matches[2])];
+		}
+
+		return false;
+	}
+
+	private function getFCRequestPath($title) {
+		$parts = $this->splitArticleIdAndTitle($title);
+		if ($parts === false) {
+			return "wiki/{$title}";
+		}
+
+		list($id, $slug) = $parts;
+		return "wiki/{$id}/{$slug}";
+	}
+
+	private function getArticle($title, $action) {
 		$internalHost = $this->publicHost;
-		$path = "wiki/{$title}";
+
+		$path = $this->getFCRequestPath($title);
 
 		if ($action != 'view') {
 			$path .= "/${action}";
@@ -91,20 +120,22 @@ class CPArticleRenderer {
 				'GET',
 				"{$internalHost}/{$path}",
 				[
+					'userAgent' => $_SERVER['HTTP_USER_AGENT'],
 					'noProxy' => true,
 					'returnInstance' => true,
 					'followRedirects'=> true,
 					'headers' => [
 						'X-Wikia-Community' => $this->dbName,
+						'X-Wikia-PremiumHeader' => true
 					]
 				]
 		);
 
-		if ($response->getStatus() >= 500) {
+		if (!$response->status->isOK()) {
 			// Http::request logs when http status > 399
 			return false;
 		}
 
-		return $response->getContent();
+		return new CPArticle($response->getContent(), $response->getResponseHeader(self::CP_TITLE_HEADER));
 	}
 }

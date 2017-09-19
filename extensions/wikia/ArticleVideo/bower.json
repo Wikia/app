@@ -1,0 +1,9 @@
+{
+	"name": "article-video",
+	"private": true,
+
+	"dependencies": {
+		"html5-skin": "Wikia/html5-skin#f4a7353a7841cc757ac009e42451052f3a40b90e",
+		"skin-config": "Wikia/skin-config#master"
+	}
+}

@@ -270,7 +270,7 @@ class SwiftFileBackend extends FileBackendStore {
 			$this->logException( $e, __METHOD__, $params );
 		}
 
-		wfRunHooks( 'SwiftFileBackend::doStoreInternal', array( $params, &$status ) );
+		Hooks::run( 'SwiftFileBackend::doStoreInternal', array( $params, &$status ) );
 
 		return $status;
 	}
@@ -331,7 +331,7 @@ class SwiftFileBackend extends FileBackendStore {
 			$this->logException( $e, __METHOD__, $params );
 		}
 		
-		wfRunHooks( 'SwiftFileBackend::doCopyInternal', array( $params, &$status ) );
+		Hooks::run( 'SwiftFileBackend::doCopyInternal', array( $params, &$status ) );
 
 		return $status;
 	}
@@ -368,7 +368,7 @@ class SwiftFileBackend extends FileBackendStore {
 			$this->logException( $e, __METHOD__, $params );
 		}
 
-		wfRunHooks( 'SwiftFileBackend::doDeleteInternal', array( $params, &$status ) );
+		Hooks::run( 'SwiftFileBackend::doDeleteInternal', array( $params, &$status ) );
 		
 		return $status;
 	}

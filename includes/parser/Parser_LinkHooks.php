@@ -59,7 +59,7 @@ class Parser_LinkHooks extends Parser {
 		CoreLinkFunctions::register( $this );
 		$this->initialiseVariables();
 
-		wfRunHooks( 'ParserFirstCallInit', array( &$this ) );
+		Hooks::run( 'ParserFirstCallInit', [ $this ] );
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -138,7 +138,8 @@ class Parser_LinkHooks extends Parser {
 		
 		$offset = 0;
 		$offsetStack = array();
-		$markers = new LinkMarkerReplacer( $this, $holders, array( &$this, 'replaceInternalLinksCallback' ) );
+		$markers =
+			new LinkMarkerReplacer( $this, $holders, [ $this, 'replaceInternalLinksCallback' ] );
 		while( true ) {
 			$startBracketOffset = strpos( $s, '[[', $offset );
 			$endBracketOffset   = strpos( $s, ']]', $offset );
@@ -292,7 +293,8 @@ class LinkMarkerReplacer {
 	}
 	
 	function expand( $string ) {
-		return StringUtils::delimiterReplaceCallback( "<!-- LINKMARKER ", " -->", array( &$this, 'callback' ), $string );
+		return StringUtils::delimiterReplaceCallback( "<!-- LINKMARKER ", " -->",
+			[ $this, 'callback' ], $string );
 	}
 	
 	function callback( $m ) {

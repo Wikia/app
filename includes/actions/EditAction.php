@@ -39,7 +39,7 @@ class EditAction extends FormlessAction {
 		$user = $this->getUser();
 		$context = $this->getContext();
 
-		if ( wfRunHooks( 'CustomEditor', array( $page, $user ) ) ) {
+		if ( Hooks::run( 'CustomEditor', array( $page, $user ) ) ) {
 			if ( ExternalEdit::useExternalEngine( $context, 'edit' )
 				&& $this->getName() == 'edit' && !$request->getVal( 'section' )
 				&& !$request->getVal( 'oldid' ) )
@@ -51,7 +51,7 @@ class EditAction extends FormlessAction {
 
 				/* Wikia change begin - @author: macbre */
 				/* Allow extensions to change EditPage class used for rendering edit pages */
-				wfRunHooks('AlternateEditPageClass', array(&$editor));
+				Hooks::run('AlternateEditPageClass', array(&$editor));
 				/* Wikia change - end */
 				
 				$editor->edit();

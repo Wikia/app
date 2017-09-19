@@ -1,5 +1,4 @@
 <?php
-require_once( $IP . '/extensions/wikia/CommunityPage/helpers/LinkHelper.php' );
 
 class LinkHelperTest extends WikiaBaseTest {
 	const ANON = false;
@@ -12,6 +11,11 @@ class LinkHelperTest extends WikiaBaseTest {
 	const ARTICLE_LOCAL_EDIT_URL = '/wiki/Test_article?veaction=edit';
 	const SIGNUP_URL_WITH_EDIT = '/wiki/Special:SignUp?returnto=Test+article&returntoquery=veaction%253Dedit&type=login';
 	const SIGNUP_URL_WITHOUT_EDIT = '/wiki/Special:SignUp?returnto=Test+article&type=login';
+
+	protected function setUp() {
+		$this->setupFile = __DIR__ . '/../CommunityPage.setup.php';
+		parent::setUp();
+	}
 
 	/**
 	 * @dataProvider forceLoginLinkTestCases
@@ -27,6 +31,8 @@ class LinkHelperTest extends WikiaBaseTest {
 	}
 
 	public function forceLoginLinkTestCases() {
+		require_once  __DIR__ . '/../helpers/LinkHelper.php';
+		
 		return [
 			[ $this->getUser( static::ANON ), LinkHelper::WITH_EDIT_MODE, static::ANNON_EDITS_ALLOWED, static::ARTICLE_LOCAL_EDIT_URL ],
 			[ $this->getUser( static::ANON ), LinkHelper::WITH_EDIT_MODE, static::ANNOON_EDITS_FORBIDDEN, static::SIGNUP_URL_WITH_EDIT ],

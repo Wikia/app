@@ -14,7 +14,7 @@ class WikiaHomePageImageResizeTest extends WikiaBaseTest {
 	 * @param $originalWidth
 	 * @param $originalHeight
 	 * @param $expParams
-	 * @dataProvider testGetImageResizeParamsDataProvider
+	 * @dataProvider getImageResizeParamsDataProvider
 	 */
 	public function testGetImageResizeParams($originalWidth, $originalHeight, $requestedWidth, $requestedHeight, $expParams) {
 		/* @var $helper WikiaHomePageHelper */
@@ -23,7 +23,7 @@ class WikiaHomePageImageResizeTest extends WikiaBaseTest {
 		$this->assertEquals($expParams, $params);
 	}
 
-	public function testGetImageResizeParamsDataProvider() {
+	public function getImageResizeParamsDataProvider() {
 		return array(
 			array(320, 320, 320, 320, array(null, 320, array('w' => 320, 'h' => 320))),	// no change
 			array(480, 320, 320, 320, array(null, 320, array('w' => 320, 'h' => 320))),	// crop width

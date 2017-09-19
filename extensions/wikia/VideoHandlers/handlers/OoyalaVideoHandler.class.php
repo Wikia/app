@@ -28,6 +28,7 @@ EOT;
 			'jsParams' => array(
 				'playerId' => $playerId,
 				'videoId' => $this->videoId,
+				'dfpContentSourceId' => F::app()->wg->AdDriverDfpOoyalaContentSourceId,
 				'autoPlay' => $autoPlayStr,
 				'title' => $this->title,
 				'jsFile' => array(

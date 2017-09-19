@@ -36,6 +36,8 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'vanguard',
 		'voldev',
 		'vstf',
+		'fandom-editor',
+		'global-discussions-moderator'
 	];
 
 	private $implicitGroups = [
@@ -104,7 +106,6 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'userrights-interwiki',
 		'writeapi',
 		'canremovemap',
-		'wikiawidget',
 		'wikifactory',
 		'wikifactorymetrics',
 		'dumpsondemand',
@@ -117,7 +118,6 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'soapfailures',
 		'moderatesotd',
 		'hiderevision',
-		'oversight',
 		'abusefilter-modify',
 		'abusefilter-log-detail',
 		'abusefilter-view',
@@ -199,11 +199,9 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'piggyback',
 		'places-enable-category-geolocation',
 		'metadata',
-		'powerdelete',
 		'quicktools',
 		'quickadopt',
 		'restrictsession',
-		'scribeevents',
 		'performancestats',
 		'messagetool',
 		'forceview',
@@ -248,6 +246,8 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'hideblockername',
 		'clearuserprofile',
 		'smw-patternedit',
+		'smw-admin',
+		'fandom-admin'
 	];
 
 	public function __construct() {
@@ -400,8 +400,8 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		$this->groupsRemovableByGroup['bureaucrat'] = [ 'rollback', 'sysop', 'bot', 'content-moderator' ];
 		$this->groupsSelfRemovableByGroup['bureaucrat'] = [ 'bureaucrat' ];
 
-		$this->groupsAddableByGroup['staff'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator' ];
-		$this->groupsRemovableByGroup['staff'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator' ];
+		$this->groupsAddableByGroup['staff'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator', 'fandom-editor', 'global-discussions-moderator' ];
+		$this->groupsRemovableByGroup['staff'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator', 'fandom-editor', 'global-discussions-moderator' ];
 
 		$this->groupsAddableByGroup['helper'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator' ];
 		$this->groupsRemovableByGroup['helper'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator' ];
@@ -422,6 +422,7 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		$this->groupsSelfRemovableByGroup['bot'] = [ 'bot' ];
 		$this->groupsSelfRemovableByGroup['rollback'] = [ 'rollback' ];
 		$this->groupsSelfRemovableByGroup['vanguard'] = [ 'vanguard' ];
+		$this->groupsSelfRemovableByGroup['global-discussions-moderator'] = [ 'global-discussions-moderator' ];
 
 		// the $wgXXXLocal variables are loaded from wiki factory - we should use it as is
 		if ( !empty( $wgAddGroupsLocal ) )

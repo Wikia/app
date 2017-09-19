@@ -20,8 +20,23 @@ define('ext.wikia.adEngine.video.player.porvata.porvataTracker', [
 			'viewable_impression': 'viewable_impression',
 			'adError': 'error',
 			'wikiaAdPlayTriggered': 'play_triggered',
-			'wikiaAdStop': 'closed'
+			'wikiaAdStop': 'closed',
+			'wikiaInViewportWithDirect': 'in_viewport_with_direct',
+			'wikiaInViewportWithFallbackBid': 'in_viewport_with_fallback_bid',
+			'wikiaInViewportWithoutOffer': 'in_viewport_without_offer'
 		};
+
+	function getContentType(player) {
+		var ad;
+
+		if (player) {
+			ad = player.ima.getAdsManager() && player.ima.getAdsManager().getCurrentAd();
+
+			if (ad) {
+				return ad.getContentType();
+			}
+		}
+	}
 
 	/**
 	 * @param {object} params
@@ -36,9 +51,10 @@ define('ext.wikia.adEngine.video.player.porvata.porvataTracker', [
 	 * @param {object} [player]
 	 */
 	function track(params, eventName, errorCode, player) {
-		var data = playerTracker.track(params, playerName, eventName, errorCode);
+		var contentType = getContentType(player),
+			data = playerTracker.track(params, playerName, eventName, errorCode, contentType);
 
-		if (data && params.adProduct === 'vulcan') {
+		if (data && params.adProduct === 'rubicon') {
 			logger.logVast(player, params, data);
 		}
 	}

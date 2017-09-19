@@ -17,6 +17,8 @@ class WallMessage {
 	protected static $wallURLCache = [ ];
 
 	protected static $wallMessageCache = [];
+	protected static $titleCache = [];
+	protected static $emptyTitle;
 
 	/**
 	 * @var $commentsIndex CommentsIndexEntry
@@ -44,6 +46,10 @@ class WallMessage {
 		wfProfileOut( __METHOD__ );
 	}
 
+	static public function emptyTitle(): Title {
+		return static::$emptyTitle ?? ( static::$emptyTitle = Title::newFromText( 'empty' ));
+	}
+
 	/**
 	 * @param int $id
 	 * @param bool $master
@@ -65,7 +71,7 @@ class WallMessage {
 
 		$title = Title::newFromID( $id, $master == true ? Title::GAID_FOR_UPDATE : 0 );
 
-		if ( $title instanceof Title && $title->exists() ) {
+		if ( $title instanceof Title && $title->exists() && self::isWallMessage( $title ) ) {
 			wfProfileOut( __METHOD__ );
 			return self::$wallMessageCache[$id] = WallMessage::newFromTitle( $title );
 		}
@@ -100,7 +106,7 @@ class WallMessage {
 
 		//double check if all titles are correct
 		foreach ( $titles as $title ) {
-			if ( $title->exists() ) {
+			if ( $title->exists() && self::isWallMessage( $title ) ) {
 				$wallMessages[ $title->getArticleID() ] = WallMessage::newFromTitle( $title );
 				$correctIds[] = $title->getArticleID();
 			}
@@ -133,6 +139,10 @@ class WallMessage {
 		return array_values( $wallMessages );
 	}
 
+	static public function isWallMessage( Title $title ) {
+		return $title->inNamespaces( NS_USER_WALL_MESSAGE, NS_USER_WALL_MESSAGE_GREETING, NS_WIKIA_FORUM_BOARD_THREAD );
+	}
+
 	static public function newFromTitle( Title $title ) {
 		wfProfileIn( __METHOD__ );
 		$class = new WallMessage( $title );
@@ -158,9 +168,13 @@ class WallMessage {
 	/**
 	 * @return CommentsIndexEntry
 	 */
-		public function getCommentsIndexEntry() {
-		if ( false === $this->commentsIndex ) { // false means we didn't call newFromId yet
-			$this->commentsIndex = CommentsIndex::getInstance()->entryFromId( $this->getId() ); // note: can return null
+	public function getCommentsIndexEntry() {
+		if ( !( $this->commentsIndex instanceof CommentsIndexEntry ) ) {
+			if ( !empty( $this->commentsIndex ) ) {
+				$this->getThread()->invalidateCache();
+			}
+
+			$this->commentsIndex = CommentsIndex::getInstance()->entryFromId( $this->getId() );
 		}
 
 		return $this->commentsIndex;
@@ -184,10 +198,10 @@ class WallMessage {
 	}
 
 	public function storeRelatedTopicsInDB( $relatedTopicURLs ) {
-		wfRunHooks( 'WallBeforeStoreRelatedTopicsInDB', [ $this->getTopParentId(), $this->getTitle()->getArticleId(), $this->getTitle()->getNamespace() ] );
+		Hooks::run( 'WallBeforeStoreRelatedTopicsInDB', [ $this->getTopParentId(), $this->getTitle()->getArticleId(), $this->getTitle()->getNamespace() ] );
 		$rp = new WallRelatedPages();
 		$rp->setWithURLs( $this->getId(), $relatedTopicURLs );
-		wfRunHooks( 'WallAfterStoreRelatedTopicsInDB', [ $this->getTopParentId(), $this->getTitle()->getArticleId(), $this->getTitle()->getNamespace() ] );
+		Hooks::run( 'WallAfterStoreRelatedTopicsInDB', [ $this->getTopParentId(), $this->getTitle()->getArticleId(), $this->getTitle()->getNamespace() ] );
 	}
 
 	public function getRelatedTopics() {
@@ -527,42 +541,31 @@ class WallMessage {
 		$parts = explode( '/', $title->getText() );
 		$wallOwnerName = $parts[ 0 ];
 
-		wfRunHooks( 'WallMessageGetWallOwnerName', [ $title, &$wallOwnerName ] );
+		Hooks::run( 'WallMessageGetWallOwnerName', [ $title, &$wallOwnerName ] );
 
 		return $wallOwnerName;
 	}
 
-	public function getWallOwner( $useMasterDB = false ) {
-		$parts = explode( '/', $this->getArticleTitle( $useMasterDB )->getText() );
-		$userName = $parts[ 0 ];
-		$titleText = $this->title->getText();
-		$parts = explode( '/', $titleText );
-		if ( mt_rand( 1, 100 ) < 2 ) {  // doing this experiment for all requests pollutes the logs
+	private function getTitleBaseText( Title $title ): string {
+		$titleText = $title->getText();
+		$slashPosition = strpos( $titleText, '/' );
 
-			// mech: I'm not sure we have to create wall title doing db queries on both, page and comments_index tables.
-			// as the user name is the first part on comment's title. But I'm not able to go through all wall/forum
-			// usecases. I'm going to check production logs for the next 2-3 sprints and make sure the result is
-			// always correct
-			if ( $parts[ 0 ] != $userName ) {
-				Wikia::log( __METHOD__, false, 'WALL_PERF article title owner does not match ci username (' . $userName .
-					' vs ' . $parts[ 0 ] . ') for ' . $this->getId() . ' (title is ' . $titleText . ')', true );
-			}
-
+		if ( $slashPosition === false ) {
+			return $titleText;
 		}
 
-		// mech: when the wall message is not in the db yet, the getWallTitle will return 'Empty' as is cannot find
-		// the row in comments_index. After I'll make sure that call to getWallTitle is not needed, the check below
-		// can be safely removed
-		if ( $userName == 'Empty' && !empty( $parts[ 0 ] ) ) {
-			$userName = $parts[ 0 ];
+		return substr( $titleText, 0, $slashPosition );
+	}
+
+	public function getWallOwner() {
+		if ( $this->title->inNamespace( NS_USER_WALL_MESSAGE ) ) {
+			$ownerUserName = $this->getTitleBaseText( $this->title );
+			return User::newFromName( $ownerUserName, false );
 		}
 
-		$wall_owner = User::newFromName( $userName, false );
-
-		if ( empty( $wall_owner ) ) {
-			error_log( 'EMPTY_WALL_OWNER: (id)' . $this->getId() );
-		}
-		return $wall_owner;
+		// horribile visu: Forum threads treat board name as user!
+		$boardName = $this->getTitleBaseText( $this->getArticleTitle() );
+		return User::newFromName( $boardName, false );
 	}
 
 	public function getWallPageUrl() {
@@ -572,46 +575,38 @@ class WallMessage {
 	/**
 	 * @return Title
 	 */
-	public function getArticleTitle( $useMasterDB = false ) {
-		$entry = $this->getCommentsIndexEntry();
-		if ( empty( $entry ) ) {
-			$this->error( __METHOD__ . ' - SUS-1680 - No comments_index entry for message', [
-				'messageTitle' => $this->getTitle()->getPrefixedText(),
-				'messageId' => $this->getTitle()->getArticleID()
+	public function getArticleTitle(): Title {
+		$title = $this->getTitle();
+
+		// Wall Threads always belong to the user wall they were posted on
+		// No need to check comments index here
+		if ( $title->inNamespace( NS_USER_WALL_MESSAGE ) ) {
+			$parentPageText = $this->getTitleBaseText( $title );
+
+			return Title::makeTitle( NS_USER_WALL, $parentPageText );
+		}
+
+		// Forum Threads may have been moved to another board - use comments index as data source
+		try {
+			$commentsIndexEntry = $this->getCommentsIndexEntry();
+			$parentPageId = $commentsIndexEntry->getParentPageId();
+
+			$parentTitle =
+				static::$titleCache[$parentPageId] ??
+				Title::newFromID( $parentPageId ) ??
+				Title::newFromID( $parentPageId, Title::GAID_FOR_UPDATE ) ??
+				static::emptyTitle();
+
+			return ( static::$titleCache[$parentPageId] = $parentTitle );
+		} catch ( CommentsIndexEntryNotFoundException $entryNotFoundException ) {
+			WikiaLogger::instance()->error( 'SUS-1680: No comments index entry for message', [
+				'messageTitle' => $title->getPrefixedText(),
+				'messageId' => $title->getArticleID(),
+				'exception' => $entryNotFoundException
 			] );
-			return Title::newFromText( 'empty' );
+
+			return static::emptyTitle();
 		}
-		$pageId = $entry->getParentPageId();
-		static $cache = [ ];
-		if ( empty( $cache[ $pageId ] ) ) {
-			if ( !$useMasterDB ) {
-				$cache[ $pageId ] = Title::newFromId( $pageId );
-				// make sure this did not happen due to master-slave delay
-				// if so, this is a bug in the code, as $master flag should be set to true
-				// we want to log this and fix it
-				if ( empty( $cache[ $pageId ] ) ) {
-					$cache[ $pageId ] = Title::newFromId( $pageId, Title::GAID_FOR_UPDATE );
-					if ( !empty( $cache[ $pageId ] ) ) {
-						$this->error( __METHOD__ . ' - SUS-1680 - message article title does not exist in slave', [
-							'messageTitle' => $this->getTitle()->getPrefixedText(),
-							'messageId' => $this->getTitle()->getArticleID(),
-							'parentPageTitle' => $cache[$pageId]->getPrefixedText(),
-							'parentPageId' => $cache[$pageId]->getArticleID()
-						] );
-					}
-				}
-			} else {
-				$cache[ $pageId ] = Title::newFromId( $pageId, Title::GAID_FOR_UPDATE );
-			}
-		}
-		if ( empty( $cache[ $pageId ] ) ) {
-			$this->error( __METHOD__ . ' - SUS-1680 - No title for message parent', [
-				'messageTitle' => $this->getTitle()->getPrefixedText(),
-				'messageId' => $this->getTitle()->getArticleID()
-			] );
-			return Title::newFromText( 'empty' );
-		}
-		return $cache[ $pageId ];
 	}
 
 	/**
@@ -672,7 +667,7 @@ class WallMessage {
 
 		$postFix = $this->getPageUrlPostFix();
 		$postFix = empty( $postFix ) ? "" : ( '#' . $postFix );
-		$title = Title::newFromText( $id, NS_USER_WALL_MESSAGE );
+		$title = Title::makeTitle( NS_USER_WALL_MESSAGE, $id );
 
 		$this->messagePageUrl = [ ];
 
@@ -719,14 +714,13 @@ class WallMessage {
 	 * @return bool true when the user is the owner
 	 */
 	public function isWallOwner( User $user ) {
-		$wallUser = $this->getWallOwner();
-		if ( empty( $wallUser ) ) {
+		// SUS-1777: Of course the user cannot be the Wall owner of a Forum thread
+		if ( !$this->title->inNamespace( NS_USER_WALL_MESSAGE ) ) {
 			return false;
 		}
 
-		// we're using names instead of ids, as ids for anonymous users are equal 0. This will cause bugs
-		// while verifying anonymous wall owners
-		return $wallUser->getName() == $user->getName();
+		$wallUser = $this->getWallOwner();
+		return !empty( $wallUser ) && $wallUser->equals( $user );
 	}
 
 	public function load( $master = false ) {
@@ -756,7 +750,7 @@ class WallMessage {
 		} else {
 			// this only happend for wrong enties in DB
 			// without revision information
-			return User::newFromName( '0.0.0.0', false );
+			return User::newFromName( NON_ROUTABLE_IPV6, false );
 		}
 	}
 
@@ -936,7 +930,7 @@ class WallMessage {
 			$this->addAdminNotificationFromEntity( $wnae );
 		}
 
-		$wh = new WallHistory( $this->cityId );
+		$wh = new WallHistory();
 		$wh->add( $history, $wnae, $user );
 	}
 
@@ -1079,7 +1073,7 @@ class WallMessage {
 				$this->addAdminNotificationFromEntity( $wnae );
 			}
 
-			$wh = new WallHistory( $this->cityId );
+			$wh = new WallHistory();
 			$wh->add( WH_DELETE, $wnae, $user );
 
 			if ( $this->isMain() === true ) {
@@ -1235,7 +1229,7 @@ class WallMessage {
 		$this->customActionNotifyRC( $user, 'wall_restore', $reason );
 
 		$wne = $this->getAdminNotificationEntity( $user, $reason );
-		$wh = new WallHistory( $this->cityId );
+		$wh = new WallHistory();
 		$wh->add( WH_RESTORE, $wne, $user );
 
 		$this->addWatch( $user );
@@ -1535,7 +1529,7 @@ class WallMessage {
 	 */
 	public function invalidateCache() {
 		if ( $this->title instanceof Title ) {
-			$this->getWall()->getTitle()->invalidateCache();
+			$this->getWall()->getTitle()->invalidateCache(); // bumps page_touched
 			wfWaitForSlaves();
 			$this->title->purgeSquid();
 		}

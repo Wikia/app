@@ -37,7 +37,7 @@ class ConfigureSmartBanner extends Maintenance {
 	public function execute() {
 
 		// Act as WikiaBot. Informative for Wikia staff in WikiFactory logs.
-		F::app()->wg->user = User::newFromName( 'WikiaBot' );
+		F::app()->wg->user = User::newFromName( Wikia::BOT_USER );
 		$wikiId = F::app()->wg->cityId;
 
 		// Disable the smart banner.

@@ -40,7 +40,7 @@ if (!empty($aRows)) {
 		?>
 		<div class="wk_blogs_comments">
 			<ul class="links">
-			<?php $commentTitle = clone $oTitle; $commentTitle->setFragment('#comments'); ?>
+			<?php $commentTitle = clone $oTitle; $commentTitle->setFragment('#WikiaArticleComments'); ?>
 				<li class="blog-comment"><img src="<?= $wgBlankImgUrl ?>" border="0" class="sprite talk" /> <?= $skin->makeLinkObj($commentTitle, wfMsg('blog-nbrcomments', intval($aRow['comments']))) ?></li>
 				<?php if (!empty($isVoting)) { ?>
 				<li class="wk_star_list"><?= $aRow['votes']?></li>

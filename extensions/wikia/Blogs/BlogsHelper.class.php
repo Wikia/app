@@ -1,4 +1,7 @@
 <?php
+
+use Wikia\PageHeader\Button;
+
 /**
  * Created by JetBrains PhpStorm.
  * User: mech
@@ -54,7 +57,9 @@ class BlogsHelper {
 	 * @see grep -r 'BugId:25123' *
 	 * @see doc/hooks.txt
 	 */
-	public static function OnParserBeforeInternalParse( &$oParser, &$sText, &$oStripState ) {
+	public static function OnParserBeforeInternalParse(
+		Parser $oParser, &$sText, &$oStripState
+	): bool {
 		wfProfileIn( __METHOD__ );
 		// The name of the bloglist tag is defined in a constant.
 		$sRegExp = sprintf( '/<%s[^>]*>(.*)<\/%s>/siU', BLOGTPL_TAG, BLOGTPL_TAG );
@@ -84,7 +89,7 @@ class BlogsHelper {
 	 * @see grep -r 'BugId:25123' *
 	 * @see doc/hooks.txt
 	 */
-	public static function OnArticleInsertComplete( &$oArticle ) {
+	public static function OnArticleInsertComplete( WikiPage $oArticle ): bool {
 		wfProfileIn( __METHOD__ );
 		// schedule a BloglistDeferredPurge job if the article is a blog article.
 		if ( NS_BLOG_ARTICLE == $oArticle->getTitle()->getNamespace() ) {
@@ -167,6 +172,42 @@ class BlogsHelper {
 		if ( $targetTitle->inNamespace( NS_BLOG_ARTICLE_TALK ) && !$sourceTitle->inNamespace( $targetTitle->getNamespace() ) ) {
 			$err = wfMessage( 'immobile-target-namespace', $targetTitle->getNsText() )->escaped();
 			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * @param Title $title
+	 * @param bool $shouldDisplayActionButton
+	 *
+	 * @return bool
+	 */
+	public static function onPageHeaderActionButtonShouldDisplay( \Title $title, bool &$shouldDisplayActionButton ): bool {
+		if ( $title->getNamespace() === NS_BLOG_LISTING ) {
+			$shouldDisplayActionButton = false;
+		} else if ( $title->getNamespace() === NS_BLOG_ARTICLE && !$title->userCan( 'edit' ) ) {
+			$shouldDisplayActionButton = false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * @param Title $title
+	 * @param array $buttons
+	 *
+	 * @return bool
+	 */
+	public static function onAfterPageHeaderButtons( \Title $title, array &$buttons ): bool {
+		if ( $title->getNamespace() === NS_BLOG_LISTING ) {
+			$label = wfMessage( 'blog-create-post-label' )->escaped();
+			array_unshift(
+				$buttons,
+				new Button(
+					$label, 'wds-icons-plus', SpecialPage::getTitleFor( 'CreateBlogPage' )->getLocalUrl()
+				)
+			);
 		}
 
 		return true;

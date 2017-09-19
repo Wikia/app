@@ -1,6 +1,6 @@
 <?php
 
-class ImagesService extends Service {
+class ImagesService {
 	const FILE_DATA_COMMENT_OPION_NAME = 'comment';
 	const FILE_DATA_DESC_OPION_NAME = 'description';
 

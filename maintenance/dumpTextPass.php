@@ -269,8 +269,8 @@ class TextPassDumper extends BackupDumper {
 		$parser = xml_parser_create( "UTF-8" );
 		xml_parser_set_option( $parser, XML_OPTION_CASE_FOLDING, false );
 
-		xml_set_element_handler( $parser, array( &$this, 'startElement' ), array( &$this, 'endElement' ) );
-		xml_set_character_data_handler( $parser, array( &$this, 'characterData' ) );
+		xml_set_element_handler( $parser, [ $this, 'startElement' ], [ $this, 'endElement' ] );
+		xml_set_character_data_handler( $parser, [ $this, 'characterData' ] );
 
 		$offset = 0; // for context extraction on error reporting
 		$bufferSize = 512 * 1024;

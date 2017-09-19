@@ -37,6 +37,10 @@ class AutomatedDeadWikisDeletionMaintenance {
 	const DELETE_NOW = 'deleteNow';
 	const DELETE_SOON = 'deleteSoon';
 
+	// The following email account is owned by SUS and has been created
+	// for automation purposes.
+	const EMAIL_SENDER = 'mholmes@fandom.com';
+
 	static protected $conditions = array(
 		self::DELETE_NOW => array(
 			'created' => array(
@@ -155,15 +159,6 @@ class AutomatedDeadWikisDeletionMaintenance {
 		return $result;
 	}
 
-	protected $statsCache = null;
-
-	protected function getStatsCache() {
-		if (empty($this->statsCache)) {
-			$this->statsCache = new WikiEvaluationCache();
-		}
-		return $this->statsCache;
-	}
-
 	protected function ts( $ts ) {
 		if ($ts == 0) {
 			return '1970-01-01 00:00:01';
@@ -172,31 +167,11 @@ class AutomatedDeadWikisDeletionMaintenance {
 		}
 	}
 
-	protected function updateWikiStats( $wiki ) {
-		$data = $wiki;
-
-		$data['city_id'] = $data['id'];
-		$data['city_public'] = $data['public'];
-		$data['created'] = $this->ts($data['created']);
-		$data['lastedited'] = $this->ts($data['lastedited']);
-
-		$catData = WikiFactory::getCategory($data['id']);
-		$data['city_cat_name'] = $catData ? $catData->cat_name : '';
-
-		unset($data['public']);
-		unset($data['id']);
-		unset($data['url']);
-
-		$this->getStatsCache()->update($data);
-	}
-
-	protected function deleteWikiStats( $id ) {
-		$this->getStatsCache()->delete($id);
-	}
-
-
 	protected $oracle = null;
 
+	/**
+	 * @return WikiEvaluationOracle
+	 */
 	protected function getOracle() {
 		if (empty($this->oracle)) {
 			$this->oracle = new WikiEvaluationOracle(self::$conditions);
@@ -274,7 +249,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 	}
 
 	// Current criteria for wikis to skip:
-	// Any wiki which is set "official" in the CityVisualization/ManageWikiaHome tool
+	// Any wiki which is set "official" in the CityVisualization tool
 	// Any wiki which has the WikiFactory "protect" flag set
 
 	protected function getWikisList() {
@@ -382,7 +357,6 @@ class AutomatedDeadWikisDeletionMaintenance {
 			if ($this->doDisableWiki($id,$flags,self::DELETION_REASON)) {
 				echo "ok\n";
 				$this->disableDiscussion( $id );
-				$this->deleteWikiStats($id);
 				$deleted[$id] = $wiki;
 				$this->deletedCount++;
 			} else {
@@ -537,11 +511,6 @@ class AutomatedDeadWikisDeletionMaintenance {
 				if (isset($classifications[self::DELETE_SOON][$id])) {
 					$status = 'deleteSoon';
 				}
-				if (!$this->readOnly) {
-					$this->updateWikiStats(array_merge($wiki, array(
-							'status' => $status,
-					)));
-				}
 			}
 			echo "Disabling wikis...\n";
 			if ($this->debug) {
@@ -581,7 +550,10 @@ class AutomatedDeadWikisDeletionMaintenance {
 		$count = count($this->deleted);
 		echo "Sending e-mail about $count deleted wikis...\n";
 		$this->sendEmail(
-			"wladek@wikia-inc.com",
+			self::EMAIL_SENDER,
+
+			// Warning: only active Google accounts can be used
+			// to post messages to mailing lists.
 			"wikis-deleted-l@wikia-inc.com",
 			"[dead wikis] {$dateNice} - $count wikis were deleted",
 			"{$count} wikis have been deleted today, full list of affected wikis is provided in the attachment.",
@@ -592,7 +564,10 @@ class AutomatedDeadWikisDeletionMaintenance {
 		$count = count($this->toBeDeleted);
 		echo "Sending e-mail about $count wikis that may be deleted soon...\n";
 		$this->sendEmail(
-			"wladek@wikia-inc.com",
+			self::EMAIL_SENDER,
+			
+			// Warning: only active Google accounts can be used
+			// to post messages to mailing lists.
 			"wikis-to-be-deleted-l@wikia-inc.com",
 			"[dead wikis] {$dateNice} - $count wikis may be deleted soon",
 			"{$count} candidate wikis have been found that may be deleted soon, full list of affected wikis is provided in the attachment.",
@@ -633,8 +608,8 @@ class AutomatedDeadWikisDeletionMaintenance {
 				$response .= " contentpages=" . (int)$dataSource->getContentPagesCount();
 				$response .= " pvlastmonth=" . (int)$dataSource->getPageViews( '-30 days' );
 				$response .= " pvlastmonthm5=" . (int)$dataSource->getPageViews( '-25 days' );
-                                $response .= " pvlast3month=" . (int)$dataSource->getPageViews( '-90 days' );
-                                $response .= " pvlast3monthm5=" . (int)$dataSource->getPageViews( '-85 days' );
+				$response .= " pvlast3month=" . (int)$dataSource->getPageViews( '-90 days' );
+				$response .= " pvlast3monthm5=" . (int)$dataSource->getPageViews( '-85 days' );
 				$response .= "\n";
 				echo $response;
 			} catch (Exception $e) {
@@ -712,6 +687,5 @@ class AutomatedDeadWikisDeletionMaintenance {
  */
 $wgAutoloadClasses['WikiEvaluationDataSource'] = dirname(__FILE__). "/WikiEvaluationDataSource.class.php";
 $wgAutoloadClasses['WikiEvaluationOracle'] = dirname(__FILE__). "/WikiEvaluationOracle.class.php";
-$wgAutoloadClasses['WikiEvaluationCache'] = dirname(__FILE__). "/WikiEvaluationCache.class.php";
 $maintenance = new AutomatedDeadWikisDeletionMaintenance( $options );
 $maintenance->execute();

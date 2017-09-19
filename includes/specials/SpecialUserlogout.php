@@ -28,8 +28,11 @@
  */
 class SpecialUserlogout extends UnlistedSpecialPage {
 
+	private $logger;
+
 	function __construct() {
 		parent::__construct( 'Userlogout' );
+		$this->logger = Wikia\Logger\WikiaLogger::instance();
 	}
 
 	function execute( $par ) {
@@ -46,6 +49,8 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 			throw new HttpError( 400, wfMessage( 'suspicious-userlogout' ),
 				wfMessage( 'loginerror' ) );
 		}
+
+		$this->logger->info( 'IRIS-4228 Logout has been called' );
 
 		$this->setHeaders();
 		$this->outputHeader();
@@ -70,7 +75,7 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 		wfResetSessionID();
 
 		$injectedHTML = '';
-		wfRunHooks( 'UserLogoutComplete', array( &$user, &$injectedHTML, $oldName ) );
+		Hooks::run( 'UserLogoutComplete', array( &$user, &$injectedHTML, $oldName ) );
 
 		// redirection
 

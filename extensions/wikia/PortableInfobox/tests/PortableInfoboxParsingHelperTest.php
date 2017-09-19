@@ -1,26 +1,31 @@
 <?php
+use PHPUnit\Framework\TestCase;
 
-class PortableInfoboxParsingHelperTest extends WikiaBaseTest {
+class PortableInfoboxParsingHelperTest extends TestCase {
 
 	protected function setUp() {
-		$this->setupFile = dirname( __FILE__ ) . '/../PortableInfobox.setup.php';
 		parent::setUp();
+		require_once __DIR__ . '/../services/Helpers/PortableInfoboxParsingHelper.php';
 	}
 
 	/**
-	 * @dataProvider testsProvider
+	 * @dataProvider parsingIncludeonlyInfoboxesDataProvider
 	 */
 	public function testParsingIncludeonlyInfoboxes( $markup, $expected ) {
-		$helper = $this->getMockBuilder( 'Wikia\PortableInfobox\Helpers\PortableInfoboxParsingHelper' )
-			->setMethods( [ 'fetchArticleContent' ] )->getMock();
-		$helper->expects( $this->once() )->method( 'fetchArticleContent' )->will( $this->returnValue( $markup ) );
+		/** @var PHPUnit_Framework_MockObject_MockObject|\Wikia\PortableInfobox\Helpers\PortableInfoboxParsingHelper $helper */
+		$helper = $this->getMockBuilder( \Wikia\PortableInfobox\Helpers\PortableInfoboxParsingHelper::class )
+			->setMethods( [ 'fetchArticleContent' ] )
+			->getMock();
+		$helper->expects( $this->once() )
+			->method( 'fetchArticleContent' )
+			->willReturn( $markup );
 
 		$result = $helper->parseIncludeonlyInfoboxes( new Title() );
 
 		$this->assertEquals( $expected, $result );
 	}
 
-	public function testsProvider() {
+	public function parsingIncludeonlyInfoboxesDataProvider() {
 		return [
 			[ 'test', false ],
 			[

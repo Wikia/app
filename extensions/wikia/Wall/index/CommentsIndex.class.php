@@ -152,7 +152,8 @@ class CommentsIndex {
 	 * Return a single Comments Index Entry corresponding to the row in comments_index table with matching comment_id
 	 *
 	 * @param int $commentId
-	 * @return CommentsIndexEntry|null
+	 * @return CommentsIndexEntry
+	 * @throws CommentsIndexEntryNotFoundException
 	 */
 	public function entryFromId( int $commentId ) {
 		if ( isset( $this->objectCache[$commentId] ) ) {
@@ -162,21 +163,12 @@ class CommentsIndex {
 		$dbr = wfGetDB( DB_SLAVE );
 		$row = $dbr->selectRow( 'comments_index', '*', [ 'comment_id' => $commentId ], __METHOD__ );
 
-		// TODO: Monitor if this actually gets executed and remove if not
 		if ( !$row ) {
-			$this->error( 'SUS-1680 - No match for comment id in slave comments_index - retry from master', [
+			$this->error( 'SUS-1680 - No match for comment id in comments_index', [
 				'commentId' => $commentId
 			] );
 
-			$dbw = wfGetDB( DB_MASTER );
-			$row = $dbw->selectRow( 'comments_index', '*', [ 'comment_id' => $commentId ], __METHOD__ );
-
-			if ( !$row ) {
-				$this->error( 'SUS-1680 - No match for comment id in master comments_index', [
-					'commentId' => $commentId
-				] );
-				return null;
-			}
+			throw new CommentsIndexEntryNotFoundException();
 		}
 
 		$entry = CommentsIndexEntry::newFromRow( $row );
