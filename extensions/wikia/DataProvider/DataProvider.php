@@ -106,7 +106,6 @@ class DataProvider {
 		$links['most_popular'] = 'GetMostPopularArticles';
 		$links['most_visited'] = 'GetMostVisitedArticles';
 		$links['newly_changed'] = 'GetNewlyChangedArticles';
-		$links['highest_ratings'] = 'GetTopVotedArticles';
 		$links['community'] = 'GetTopFiveUsers';
 
 		if ( isset ( $_COOKIE['topfive'] ) && isset ( $links[$_COOKIE['topfive']] ) ) {
