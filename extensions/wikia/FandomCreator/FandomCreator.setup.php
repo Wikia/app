@@ -24,14 +24,14 @@ $wgHooks['NavigationApigetDataAfterExecute'][] = function( WikiaDispatchableObje
 	return true;
 };
 
-$wgHooks['DesignSystemApigetAllElementsAfterExecute'][] = function(WikiaDispatchableObject $dispatchable) {
+$wgHooks['DesignSystemApigetAllElementsAfterExecute'][] = function( WikiaDispatchableObject $dispatchable ) {
 	$params = $dispatchable->getRequest()->getParams();
 	$product = $params[DesignSystemApiController::PARAM_PRODUCT];
 
-	if ($product === 'wikis') {
+	if ( $product === 'wikis' ) {
 		$cityId = $params[DesignSystemApiController::PARAM_ID];
-		$fandomCreatorCommunityId = WikiFactory::getVarValueByName("wgFandomCreatorCommunityId", $cityId, false, "");
-		FandomCreator\Hooks::onDesignSystemApiGetAllElements($dispatchable, $fandomCreatorCommunityId);
+		$fandomCreatorCommunityId = WikiFactory::getVarValueByName( "wgFandomCreatorCommunityId", $cityId, false, "" );
+		FandomCreator\Hooks::onDesignSystemApiGetAllElements( $dispatchable, $fandomCreatorCommunityId );
 	}
 
 	return true;
