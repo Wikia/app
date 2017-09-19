@@ -175,8 +175,10 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 		expect(context.filterSlotMap()).toEqual({});
 	});
 
-	it('filter slot map for premum ad layout', function () {
+	it('filter slot map for premium ad layout', function () {
 		mocks.context.opts.premiumAdLayoutEnabled = true;
+		mocks.instantGlobals['wgAdDriverHighImpact2SlotCountries'] = ['XX'];
+
 		var context = getContext(),
 			slotMap = {
 				TOP_LEADERBOARD: 1,
@@ -193,6 +195,7 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 		expect(context.filterSlotMap(slotMap)).toEqual({
 			TOP_LEADERBOARD: 1,
 			TOP_RIGHT_BOXAD: 2,
+			INVISIBLE_HIGH_IMPACT_2: 8,
 			BOTTOM_LEADERBOARD: 9
 		});
 	});
