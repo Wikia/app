@@ -2633,13 +2633,6 @@ $config['create_new_wiki_scss'] = [
 	],
 ];
 
-$config['contribution_prototype_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'assets' => [
-		'//extensions/wikia/ContributionPrototype/styles/ContributionPrototype.scss',
-	],
-];
-
 $config['design_system_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis', 'monobook' ],
