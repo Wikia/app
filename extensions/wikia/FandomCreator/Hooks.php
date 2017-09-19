@@ -9,7 +9,7 @@ use WikiaDispatchableObject;
 class Hooks {
 	const SERVICE_NAME = "content-graph-service";
 
-	public static function onNavigationApiGetData(WikiaDispatchableObject $dispatchable, int $maxTopLevelElements) {
+	public static function onNavigationApiGetData(WikiaDispatchableObject $dispatchable, array $maxElementsPerLevel) {
 		$sitemap = self::api()->getSitemap();
 		if ($sitemap === null || !isset($sitemap->home->children)) {
 			return;
@@ -17,11 +17,14 @@ class Hooks {
 
 		$sitemapData = [];
 		foreach ($sitemap->home->children as $i => $child) {
-			if ($i >= $maxTopLevelElements) {
+			if ($i >= $maxElementsPerLevel[0]) {
 				break;
 			}
 
-			$sitemapData[] = self::convertToSitemapData($child);
+			$nextData = self::convertToSitemapData($child, 1, $maxElementsPerLevel);
+			if ($nextData !== null) {
+				$sitemapData[] = $nextData;
+			}
 		}
 
 		$dispatchable->getResponse()->setData([
@@ -32,16 +35,26 @@ class Hooks {
 		]);
 	}
 
-	private static function convertToSitemapData($entry) {
+	private static function convertToSitemapData($entry, $currentLevel, $maxElementsPerLevel) {
+		$numLevels = count($maxElementsPerLevel);
+		if ($currentLevel > $numLevels) {
+			return null;
+		}
+
 		$data = [
 				'text' => $entry->name,
 				'href' => self::getEntityPath($entry->id)
 		];
 
-		if (isset($entry->children)) {
+		$nextLevel = $currentLevel + 1;
+		if (isset($entry->children) && $nextLevel <= $numLevels) {
 			$data['children'] = [];
-			foreach ($entry->children as $child) {
-				$data['children'][] = self::convertToSitemapData($child);
+			foreach ($entry->children as $i => $child) {
+				if ($i >= $maxElementsPerLevel[$currentLevel]) {
+					break;
+				}
+
+				$data['children'][] = self::convertToSitemapData($child, $nextLevel, $maxElementsPerLevel);
 			}
 		}
 
