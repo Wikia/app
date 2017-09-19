@@ -13,6 +13,7 @@ spl_autoload_register(function($class) {
 });
 
 $wgHooks['NavigationApigetDataAfterExecute'][] = function(WikiaDispatchableObject $dispatchable) {
-	\FandomCreator\Hooks::onNavigationApiGetData($dispatchable);
+	global $wgMaxLevelOneNavElements, $wgMaxLevelTwoNavElements, $wgMaxLevelThreeNavElements;
+	\FandomCreator\Hooks::onNavigationApiGetData($dispatchable, $wgMaxLevelOneNavElements);
 	return true;
 };
