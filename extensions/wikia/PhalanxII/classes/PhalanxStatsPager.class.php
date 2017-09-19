@@ -97,11 +97,9 @@ class PhalanxStatsPager extends PhalanxPager {
 			'wgDBmysql5' => true
 		] );
 
-		$db = $wrapper->wrap( function () use ( $dbType ) {
+		return $wrapper->wrap( function () use ( $dbType ) {
 			global $wgSpecialsDB;
 			return wfGetDB( $dbType, [], $wgSpecialsDB );
 		} );
-
-		return $db;
 	}
 }
