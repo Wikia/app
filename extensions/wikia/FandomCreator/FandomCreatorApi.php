@@ -20,6 +20,11 @@ class FandomCreatorApi {
 
 	public function getCommunity($communityId) {
 		$response = $this->doApiRequest( "{$this->baseUrl}/communities/{$communityId}" );
+		if (!$response->status->isOK()) {
+			return null;
+		}
+
+		return json_decode($response->getContent());
 	}
 
 	public function getSitemap($communityId) {
