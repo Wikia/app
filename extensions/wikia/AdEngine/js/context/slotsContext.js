@@ -44,7 +44,7 @@ define('ext.wikia.adEngine.context.slotsContext', [
 		setStatus('LEFT_SKYSCRAPER_3', !isPremiumAdLayoutEnabled && !isHome);
 		setStatus('INCONTENT_BOXAD_1', !isHome);
 
-		setStatus('INVISIBLE_HIGH_IMPACT_2', !isPremiumAdLayoutEnabled && geo.isProperGeo(instantGlobals.wgAdDriverHighImpact2SlotCountries));
+		setStatus('INVISIBLE_HIGH_IMPACT_2', geo.isProperGeo(instantGlobals.wgAdDriverHighImpact2SlotCountries));
 		setStatus('PREFOOTER_RIGHT_BOXAD', !isPremiumAdLayoutEnabled && !context.opts.overridePrefootersSizes);
 		setStatus('PREFOOTER_LEFT_BOXAD', !isPremiumAdLayoutEnabled);
 
