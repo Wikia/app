@@ -12,7 +12,7 @@ spl_autoload_register(function($class) {
 	}
 });
 
-$wgHooks['NavigationApigetDataAfterExecute'][] = function(WikiaController $controller) {
-	\FandomCreator\Hooks::onNavigationApiGetData($controller);
+$wgHooks['NavigationApigetDataAfterExecute'][] = function(WikiaDispatchableObject $dispatchable) {
+	\FandomCreator\Hooks::onNavigationApiGetData($dispatchable);
 	return true;
 };

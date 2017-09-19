@@ -4,12 +4,12 @@ namespace FandomCreator;
 
 use Wikia\DependencyInjection\Injector;
 use Wikia\Service\Gateway\UrlProvider;
-use WikiaController;
+use WikiaDispatchableObject;
 
 class Hooks {
 	const SERVICE_NAME = "content-graph-service";
 
-	public static function onNavigationApiGetData(WikiaController $controller) {
+	public static function onNavigationApiGetData(WikiaDispatchableObject $dispatchable) {
 		self::api();
 	}
 
