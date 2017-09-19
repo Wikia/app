@@ -45,7 +45,49 @@ class Hooks {
 			return;
 		}
 
+		$community = self::api()->getCommunity($communityId);
+		if ($community === null) {
+			return;
+		}
+
 		$currentData = $dispatchable->getResponse()->getData();
+		$currentData['community-header']['sitename']['title']['value'] = $community->displayName;
+		$currentData['community-header']['sitename']['href'] = '/';
+
+		$theme = null;
+		if (isset($community->configurations)) {
+			foreach ($community->configurations as $config) {
+				if ($config->key === 'theme') {
+					$theme = json_decode($config->value);
+					break;
+				}
+			}
+		}
+
+		if (!empty($theme->graphics->wordmark)) {
+			// need to recreate entirely in case it wasn't set by the DS api
+			$currentData['community-header']['wordmark'] = [
+					'type' => 'link-image',
+					'href' => '/',
+					'image-data' => [
+							'type' => 'image-external',
+							'url' => $theme->graphics->wordmark,
+							'width' => '250',
+							'height' => '65',
+					],
+					'title' => [
+							'type' => 'text',
+							'value' => $community->displayName,
+					],
+					'tracking_label' => 'wordmark-image',
+			];
+		}
+
+		if (!empty($theme->graphics->header)) {
+			$currentData['community-header']['background_image'] = $theme->graphics->header;
+		}
+
+		$dispatchable->getResponse()->setData($currentData);
 	}
 
 	private static function convertToSitemapData( $entry, $currentLevel, $maxElementsPerLevel ) {
