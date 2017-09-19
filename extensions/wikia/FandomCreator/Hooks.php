@@ -8,7 +8,7 @@ use WikiaDispatchableObject;
 
 class Hooks {
 	const SERVICE_NAME = "content-graph-service";
-	const COMMUNITY_CENTRAL_ID_VALUE = '0';
+	const COMMUNITY_CENTRAL_ID_VALUE = '-1';
 
 	public static function onNavigationApiGetData( WikiaDispatchableObject $dispatchable, string $communityId, array $maxElementsPerLevel ) {
 		if (!self::isValidCommunityId($communityId)) {
@@ -40,6 +40,14 @@ class Hooks {
 		] );
 	}
 
+	public static function onDesignSystemApiGetAllElements(WikiaDispatchableObject $dispatchable, string $communityId) {
+		if (!self::isValidCommunityId($communityId)) {
+			return;
+		}
+
+		$currentData = $dispatchable->getResponse()->getData();
+	}
+
 	private static function convertToSitemapData( $entry, $currentLevel, $maxElementsPerLevel ) {
 		$numLevels = count( $maxElementsPerLevel );
 		if ( $currentLevel > $numLevels ) {
@@ -69,7 +77,7 @@ class Hooks {
 	// having '0' here is kinda crappy but we need the extension enabled on community
 	// because the design system api is only accessible on community
 	private static function isValidCommunityId($communityId) {
-		return is_string($communityId) && $communityId !== self::COMMUNITY_CENTRAL_ID_VALUE;
+		return is_string($communityId) && !empty($communityId) && $communityId !== self::COMMUNITY_CENTRAL_ID_VALUE;
 	}
 
 	private static function getEntityPath( $entityId ) {
