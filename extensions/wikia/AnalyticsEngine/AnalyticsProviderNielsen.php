@@ -4,7 +4,7 @@ class AnalyticsProviderNielsen implements iAnalyticsProvider {
 
 	private static $bodyTemplate = 'extensions/wikia/AnalyticsEngine/templates/nielsen.body.mustache';
 	private static $headTemplate = 'extensions/wikia/AnalyticsEngine/templates/nielsen.head.mustache';
-	private static $libraryUrl = 'http://secure-dcr.imrworldwide.com/novms/js/2/ggcmb500.js';
+	private static $libraryUrl = 'https://secure-dcr.imrworldwide.com/novms/js/2/ggcmb500.js';
 
 	function getSetupHtml( $params=array() ) {
 		return null;

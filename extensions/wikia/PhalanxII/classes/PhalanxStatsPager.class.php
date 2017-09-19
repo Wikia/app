@@ -4,11 +4,11 @@ class PhalanxStatsPager extends PhalanxPager {
 	public $pInx = 'blockId';
 
 	public function __construct( $id ) {
-		global $wgSpecialsDB;
-
 		parent::__construct();
+
 		$this->id = (int) $id;
-		$this->mDb = wfGetDB( DB_SLAVE, array(), $wgSpecialsDB );
+		$this->mDb = $this->getDatabase( DB_SLAVE );
+
 		if ( !empty( $this->pInx ) ) {
 			$this->mDefaultQuery[$this->pInx] = $this->id;
 		}
@@ -77,5 +77,29 @@ class PhalanxStatsPager extends PhalanxPager {
 		$html .= Html::closeElement( 'li' );
 
 		return $html;
+	}
+
+	/**
+	 * Get connection to Phalanx Stats table on specials DB
+	 *
+	 * Phalanx stats table is encoded in utf-8, while in most cases MW communicates with
+	 * databases using latin1, so sometimes we get strings in wrong encoding.
+	 * The only way to force utf-8 communication (adding SET NAMES utf8) is setting
+	 * global variable wgDBmysql5.
+	 *
+	 * @see https://github.com/Wikia/app/blob/dev/includes/db/DatabaseMysqlBase.php#L113
+	 *
+	 * @param int $dbType master or slave
+	 * @return DatabaseBase
+	 */
+	protected function getDatabase( int $dbType = DB_SLAVE ): DatabaseBase {
+		$wrapper = new Wikia\Util\GlobalStateWrapper( [
+			'wgDBmysql5' => true
+		] );
+
+		return $wrapper->wrap( function () use ( $dbType ) {
+			global $wgSpecialsDB;
+			return wfGetDB( $dbType, [], $wgSpecialsDB );
+		} );
 	}
 }
