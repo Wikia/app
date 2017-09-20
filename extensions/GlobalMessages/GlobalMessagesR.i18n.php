@@ -35948,7 +35948,7 @@ ___________________________________________
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
 	'registerintro-title' => 'Quando você cria uma conta no FANDOM, você se torna parte da comunidade!',
-	'registerintro-text' => 'Você recebe crédito por todas as suas contribuições, e também pode criar seu próprio perfil de usuário, marcar suas páginas favoritas e obter acesso a todos os tipos de ferramentas interessantes.',
+	'registerintro-text' => 'Você recebe crédito por todas as suas contribuições e também pode criar seu próprio perfil de usuário, marcar suas páginas favoritas e obter acesso a todos os tipos de ferramentas interessantes.',
 	'rcshowhidelogs' => '$1 registros',
 	'right-hideblockername' => 'Não exibir o nome do usuário em notificações de bloqueio',
 );
