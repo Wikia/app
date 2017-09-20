@@ -51,5 +51,9 @@
 })(jQuery);
 
 $(document).ready(function() {
-	$('.tabber').tabber();
+	$('.tabber:not(.tabberlive)').tabber();
+});
+
+mw.hook('wikipage.content').add(function ($content) {
+	$content.find('.tabber:not(.tabberlive)').tabber();
 });
