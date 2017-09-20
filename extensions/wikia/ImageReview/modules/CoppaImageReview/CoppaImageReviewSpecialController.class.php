@@ -16,6 +16,7 @@ class CoppaImageReviewSpecialController extends WikiaSpecialPageController {
 		}
 
 		$this->wg->OasisFluid = true;
+		$this->wg->SuppressSpotlights = true;
 		$this->response->addAsset( 'extensions/wikia/ImageReview/css/ImageReview.scss' );
 		$this->specialPage->setHeaders();
 
