@@ -7,13 +7,17 @@ class Hooks {
 	public static $onEditPage = false;
 
 	/**
-	 * @return bool
+	 * @param \OutputPage $out
+	 * @param \Skin $skin
 	 */
-	public static function onBeforePageDisplay( /*\OutputPage $out, \Skin $skin*/ ) {
-		\Wikia::addAssetsToOutput('page_header_js');
-		\Wikia::addAssetsToOutput('page_header_scss');
+	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
+		if ( $skin->getSkinName() === 'oasis' ) {
+			// load CSS via <link /> tag
+			$out->addModuleStyles( 'ext.wikia.pageHeader.styles' );
 
-		return true;
+			// load JS with the rest of the modules
+			$out->addModules( 'ext.wikia.pageHeader.js' );
+		}
 	}
 
 	/**
