@@ -4,7 +4,7 @@
  * ArticleCommentList is a listing, basically it's an array of comments
  */
 class ArticleCommentList {
-	const CACHE_VERSION = 'v2';
+	const CACHE_VERSION = 'v3';
 
 	/** @var Title */
 	private $mTitle;
@@ -130,45 +130,43 @@ class ArticleCommentList {
 
 		// pagination
 		if ( $page !== false && ( $showall != 1 || $this->getCountAllNested() > 200 /*see RT#64641*/ ) ) {
-			$this->mComments = array_slice( $this->mCommentsAll, ( $page - 1 ) * $this->mMaxPerPage, $this->mMaxPerPage, true );
+			$this->mComments = array_slice( $this->mCommentsAll, ( $page - 1 ) * $this->mMaxPerPage, $this->mMaxPerPage );
 		} else {
 			$this->mComments = $this->mCommentsAll;
 		}
 
-		$this->mCount = count( $this->mComments );
-		$this->mCountNested = 0;
-
-		// grab list of required article IDs
-		$commentsQueue = [ ];
-		foreach ( $this->mComments as $id => &$levels ) {
-			if ( isset( $levels['level1'] ) ) {
-				$commentsQueue[] = $id;
-			}
-			if ( isset( $levels['level2'] ) ) {
-				$commentsQueue = array_merge( $commentsQueue, array_keys( $levels['level2'] ) );
-			}
-		}
-
-		$titles = Title::newFromIds( $commentsQueue );
-
-		$comments = [ ];
-		foreach ( $titles as $title ) {
-			$comments[$title->getArticleID()] = ArticleComment::newFromTitle( $title );
-		}
+		$this->mCount = $this->mCountNested = 0;
 
 		// grab article contents for each comment
-		foreach ( $this->mComments as $id => &$levels ) {
-			if ( isset( $levels['level1'] ) ) {
-				$levels['level1'] = $comments[$id];
-				$this->mCountNested++;
-			}
-			if ( isset( $levels['level2'] ) ) {
-				foreach ( $levels['level2'] as $subid => &$sublevel ) {
-					$sublevel = $comments[$subid];
+		$articleComments = [];
+
+		foreach ( $this->mComments as $commentInfo ) {
+			if ( isset( $commentInfo['title'] ) ) {
+				$title = Title::newFromRow( $commentInfo['title'] );
+				$titleId = $title->getArticleID();
+
+				$replies = [];
+
+				foreach ( $commentInfo['replies'] as $reply ) {
+					$replyTitle = Title::newFromRow( $reply );
+					$replyId = $replyTitle->getArticleID();
+
+					$replies[$replyId] = new ArticleComment( $replyTitle );
+
 					$this->mCountNested++;
 				}
+
+				$articleComments[$titleId] = [
+					'level1' => new ArticleComment( $title ),
+					'level2' => $replies,
+				];
+
+				$this->mCountNested++;
+				$this->mCount++;
 			}
 		}
+
+		$this->mComments = $articleComments;
 
 		return $this->mComments;
 	}
@@ -197,49 +195,35 @@ class ArticleCommentList {
 		}
 
 		if ( empty( $this->mCommentsAll ) ) {
-			$pages = [ ];
-			$subpages = [ ];
 			$dbr = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
 
 			$table = [ 'page' ];
-			$vars = [ 'page_id', 'page_title' ];
+			$vars = [ 'page_id', 'page_title', 'page_namespace' ];
 			$conds = $this->getQueryWhere( $dbr );
 			$options = [ 'ORDER BY' => 'page_id DESC' ];
-			$join_conds = [ ];
 
-			$res = $dbr->select( $table, $vars, $conds, __METHOD__, $options, $join_conds );
+			$res = $dbr->select( $table, $vars, $conds, __METHOD__, $options );
 
-			$helperArray = [ ];
-			while ( $row = $dbr->fetchObject( $res ) ) {
+			$comments = [];
+
+			foreach ( $res as $row ) {
 				$parts = ArticleComment::explode( $row->page_title );
-				$p0 = $parts['partsStripped'][0];
 
-				if ( count( $parts['partsStripped'] ) == 2 ) {
-					// push comment replies aside, we'll merge them later
-					$subpages[$p0][$row->page_id] = $row->page_id;
-				} else {
-					// map title to page_id
-					$helperArray[$p0] = $row->page_id;
+				$isReply = count( $parts['partsStripped'] ) === 2;
+				$parentTitle = $parts['partsStripped'][0];
 
-					$pages[$row->page_id]['level1'] = $row->page_id;
+				$comments[$parentTitle] = $comments[$parentTitle] ?? [ 'replies' => [] ];
+
+				if ( $isReply ) {
+					$comments[$parentTitle]['replies'][] = $row;
+					continue;
 				}
-			}
-			// attach replies to comments
-			foreach ( $subpages as $p0 => $level2 ) {
-				if ( !empty( $helperArray[$p0] ) ) {
-					$idx = $helperArray[$p0];
-					$pages[$idx]['level2'] = array_reverse( $level2, true );
-				} else {
-				// if its empty it's an error in our database
-				// someone removed a parent and left its children
-				// or someone removed parent and children and
-				// restored children or a child without restoring parent
-				// --nAndy
-				}
+
+				$comments[$parentTitle]['title'] = $row;
 			}
 
 			$dbr->freeResult( $res );
-			$this->mCommentsAll = $pages;
+			$this->mCommentsAll = $comments;
 
 			if ( empty( $this->mCommentId ) ) {
 				$wgMemc->set( $memckey, $this->mCommentsAll, 3600 );
@@ -251,8 +235,8 @@ class ArticleCommentList {
 		$this->mCountAllNested = 0;
 		foreach ( $this->mCommentsAll as $comment ) {
 			$this->mCountAllNested++;
-			if ( isset( $comment['level2'] ) ) {
-				$this->mCountAllNested += count( $comment['level2'] );
+			if ( isset( $comment['replies'] ) ) {
+				$this->mCountAllNested += count( $comment['replies'] );
 			}
 		}
 
@@ -271,14 +255,15 @@ class ArticleCommentList {
 
 		$res = $dbr->select(
 			[ 'page' ],
-			[ 'page_id', 'page_title' ],
+			[ 'page_id', 'page_title', 'page_namespace' ],
 			$this->getQueryWhere( $dbr ),
 			__METHOD__
 		);
 
 		$pages = [ ];
 		while ( $row = $dbr->fetchObject( $res ) ) {
-			$pages[$row->page_id] = ArticleComment::newFromId( $row->page_id );
+			$title = Title::newFromRow( $row );
+			$pages[$row->page_id] = ArticleComment::newFromTitle( $title );
 		}
 
 		$dbr->freeResult( $res );
@@ -906,7 +891,9 @@ class ArticleCommentList {
 
 		if ( $permalink ) {
 			$redirectTitle->setFragment( "#comm-$permalink" );
-			$page = self::getPageForComment( $redirectTitle, $permalink );
+
+			$commentMainOrParentTitle = $parts['partsStripped'][0];
+			$page = self::getPageForComment( $redirectTitle, $commentMainOrParentTitle );
 			if ( $page > 1 ) {
 				$query = [ 'page' => $page ];
 			}
@@ -954,30 +941,18 @@ class ArticleCommentList {
 		);
 	}
 
-	static private function getPageForComment( $title, $id ) {
-		$page = 0;
-
-		$articleComment = ArticleCommentList::newFromTitle( $title );
+	static private function getPageForComment( Title $parentArticleTitle, $commentMainOrParentTitle ) {
+		$articleComment = ArticleCommentList::newFromTitle( $parentArticleTitle );
 		$commentList = $articleComment->getCommentList( false );
-		$topLevel = array_keys( $commentList );
-		$found = array_search( $id, $topLevel );
-		if ( $found !== false ) {
-			$page = ceil( ( $found + 1 ) / $articleComment->mMaxPerPage );
-		} else {
-			// not found in top level comments so we have to search 2nd level comments
-			$index = 0;
-			foreach ( $commentList as $comment ) {
-				$index ++;
-				if ( isset( $comment['level2'] ) ) {
-					$found = array_search( $id, $comment['level2'] );
-					if ( $found !== false ) {
-						$page = ceil ( $index / $articleComment->mMaxPerPage  );
-					}
-				}
-			}
+
+		$topLevelComments = array_keys( $commentList );
+		$indexOfCommentMainOrParentTitle = array_search( $commentMainOrParentTitle, $topLevelComments );
+
+		if ( $indexOfCommentMainOrParentTitle !== false ) {
+			return ceil( ( $indexOfCommentMainOrParentTitle + 1 ) / $articleComment->mMaxPerPage );
 		}
 
-		return $page;
+		return 0;
 	}
 
 	/**
