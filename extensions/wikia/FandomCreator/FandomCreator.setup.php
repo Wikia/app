@@ -36,3 +36,11 @@ $wgHooks['DesignSystemApigetAllElementsAfterExecute'][] = function( WikiaDispatc
 
 	return true;
 };
+
+$wgHooks['MercuryApigetWikiVariablesAfterExecute'][] = function(WikiaDispatchableObject $dispatchable) {
+	global $wgFandomCreatorCommunityId;
+
+	FandomCreator\Hooks::onMercuryApiGetWikiVariables($dispatchable, $wgFandomCreatorCommunityId);
+
+	return true;
+};

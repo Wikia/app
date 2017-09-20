@@ -24,7 +24,19 @@ class FandomCreatorApi {
 			return null;
 		}
 
-		return json_decode( $response->getContent() );
+		$community = json_decode( $response->getContent() );
+
+		$community->theme = null;
+		if ( isset( $community->configurations ) ) {
+			foreach ( $community->configurations as $config ) {
+				if ( $config->key === 'theme' ) {
+					$community->theme = json_decode( $config->value );
+					break;
+				}
+			}
+		}
+
+		return $community;
 	}
 
 	public function getSitemap( $communityId ) {

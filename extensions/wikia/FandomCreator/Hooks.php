@@ -50,28 +50,18 @@ class Hooks {
 			return;
 		}
 
-		$currentData = $dispatchable->getResponse()->getData();
-		$currentData['community-header']['sitename']['title']['value'] = $community->displayName;
-		$currentData['community-header']['sitename']['href'] = '/';
+		$data = $dispatchable->getResponse()->getData();
+		$data['community-header']['sitename']['title']['value'] = $community->displayName;
+		$data['community-header']['sitename']['href'] = '/';
 
-		$theme = null;
-		if ( isset( $community->configurations ) ) {
-			foreach ( $community->configurations as $config ) {
-				if ( $config->key === 'theme' ) {
-					$theme = json_decode( $config->value );
-					break;
-				}
-			}
-		}
-
-		if ( !empty( $theme->graphics->wordmark ) ) {
+		if ( !empty( $community->theme->graphics->wordmark ) ) {
 			// need to recreate entirely in case it wasn't set by the DS api
-			$currentData['community-header']['wordmark'] = [
+			$data['community-header']['wordmark'] = [
 					'type' => 'link-image',
 					'href' => '/',
 					'image-data' => [
 							'type' => 'image-external',
-							'url' => $theme->graphics->wordmark,
+							'url' => $community->theme->graphics->wordmark,
 							'width' => '250',
 							'height' => '65',
 					],
@@ -83,11 +73,60 @@ class Hooks {
 			];
 		}
 
-		if ( !empty( $theme->graphics->header ) ) {
-			$currentData['community-header']['background_image'] = $theme->graphics->header;
+		if ( !empty( $community->theme->graphics->header ) ) {
+			$data['community-header']['background_image'] = $community->theme->graphics->header;
 		}
 
-		$dispatchable->getResponse()->setData( $currentData );
+		$dispatchable->getResponse()->setData( $data );
+	}
+
+	public static function onMercuryApiGetWikiVariables(WikiaDispatchableObject $dispatchable, $communityId) {
+		if (!self::isValidCommunityId($communityId)) {
+			return;
+		}
+
+		$community = self::api()->getCommunity($communityId);
+		if ($community === null) {
+			return;
+		}
+
+		$data = $dispatchable->getResponse()->getData()['data'];
+		$data['siteName'] = $community->displayName;
+		if (isset($data['htmlTitle']['parts'][0])) {
+			$data['htmlTitle']['parts'][0] = $community->displayName;
+		}
+
+		$data['theme']['page-opacity'] = '100';
+		if (!empty($community->theme->colors->buttons)) {
+			$data['theme']['color-buttons'] = $community->theme->colors->buttons;
+		}
+
+		if (!empty($community->theme->colors->links)) {
+			$data['theme']['color-links'] = $community->theme->colors->links;
+		}
+
+		if (!empty($community->theme->colors->header)) {
+			$data['theme']['color-community-header'] = $community->theme->colors->header;
+		}
+
+		if (!empty($community->theme->colors->pageBackground)) {
+			$data['theme']['color-body'] = $community->theme->colors->pageBackground;
+			$data['theme']['color-body-middle'] = $community->theme->colors->pageBackground;
+		}
+
+		if (!empty($community->theme->colors->articleBackground)) {
+			$data['theme']['color-page'] = $community->theme->colors->articleBackground;
+		}
+
+		if (!empty($community->theme->graphics->background)) {
+			$data['theme']['background-image'] = $community->theme->graphics->background;
+			$data['theme']['background-image-width'] = '';
+			$data['theme']['background-image-height'] = '';
+			$data['theme']['background-fixed'] = true;
+			$data['theme']['background-tiled'] = false;
+		}
+
+		$dispatchable->getResponse()->setData(['data' => $data]);
 	}
 
 	private static function convertToSitemapData( $entry, $currentLevel, $maxElementsPerLevel ) {
