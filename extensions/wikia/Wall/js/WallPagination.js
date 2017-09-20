@@ -21,7 +21,6 @@ Wall.Pagination = $.createClass(Observable, {
 
 		this.$page.animate({ opacity: 0.5 }, 'slow');
 		this.model.loadPage(this.page, page);
-		window.location.hash = '#page-' + page;
 
 		e.preventDefault();
 	},
