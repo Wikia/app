@@ -1,0 +1,617 @@
+// @autosprite-start
+@mixin sprite-edit-page-base() {
+	background-color: transparent;
+	background-image: url('/extensions/wikia/EditPageLayout/images/sprite-edit-page.png'); /* wgCdnStylePath */
+	background-repeat: no-repeat;
+}
+@mixin sprite-edit-page($imageName,$width: 0,$height: 0,$offset-x: 0,$offset-y: 0) {
+	$image-x: -1;
+	$image-y: -1;
+	$image-width: -1;
+	$image-height: -1;
+	// @autosprite-image-details: add_video_small.png@72,0,08c684854af9e9259d0206b4336eb3ab
+	@if $imageName == 'add_video_small' {
+		$image-x: 72px;
+		$image-y: 0px;
+		$image-width: 14px;
+		$image-height: 16px;
+	}
+	// @autosprite-image-details: addlink-dark.png@98,0,bdd90978ae1ad4a3bfb47ad323ae641b
+	@if $imageName == 'addlink-dark' {
+		$image-x: 98px;
+		$image-y: 0px;
+		$image-width: 16px;
+		$image-height: 16px;
+	}
+	// @autosprite-image-details: addlink-light.png@126,0,d62fb91c7b3007348a8a052cf0113669
+	@if $imageName == 'addlink-light' {
+		$image-x: 126px;
+		$image-y: 0px;
+		$image-width: 16px;
+		$image-height: 16px;
+	}
+	// @autosprite-image-details: aligncenter-dark.png@154,0,0cb3140ecb532013e9659a2508ce39e9
+	@if $imageName == 'aligncenter-dark' {
+		$image-x: 154px;
+		$image-y: 0px;
+		$image-width: 12px;
+		$image-height: 11px;
+	}
+	// @autosprite-image-details: aligncenter-light.png@178,0,780afc0ac370ee118ac02e7a3e0903e9
+	@if $imageName == 'aligncenter-light' {
+		$image-x: 178px;
+		$image-y: 0px;
+		$image-width: 12px;
+		$image-height: 11px;
+	}
+	// @autosprite-image-details: alignleft-dark.png@202,0,05aaf9aad3240bee5752ed37c9feb9b3
+	@if $imageName == 'alignleft-dark' {
+		$image-x: 202px;
+		$image-y: 0px;
+		$image-width: 12px;
+		$image-height: 12px;
+	}
+	// @autosprite-image-details: alignleft-light.png@226,0,56ba4b882814eccff4dddb31a366579b
+	@if $imageName == 'alignleft-light' {
+		$image-x: 226px;
+		$image-y: 0px;
+		$image-width: 12px;
+		$image-height: 12px;
+	}
+	// @autosprite-image-details: alignright-dark.png@250,0,e814493c02df6edef126d9fc67bb870b
+	@if $imageName == 'alignright-dark' {
+		$image-x: 250px;
+		$image-y: 0px;
+		$image-width: 12px;
+		$image-height: 11px;
+	}
+	// @autosprite-image-details: alignright-light.png@274,0,33de186c5d3b859ed089a3c0e3073c5c
+	@if $imageName == 'alignright-light' {
+		$image-x: 274px;
+		$image-y: 0px;
+		$image-width: 12px;
+		$image-height: 11px;
+	}
+	// @autosprite-image-details: attribution.png@298,0,adbc6d17d011555699e8b607096fe722
+	@if $imageName == 'attribution' {
+		$image-x: 298px;
+		$image-y: 0px;
+		$image-width: 18px;
+		$image-height: 18px;
+	}
+	// @autosprite-image-details: bold-dark.png@328,0,cde9cc3be281305e9c9916592b93cd74
+	@if $imageName == 'bold-dark' {
+		$image-x: 328px;
+		$image-y: 0px;
+		$image-width: 11px;
+		$image-height: 13px;
+	}
+	// @autosprite-image-details: bold-light.png@351,0,794f53099732a12e7fc9f0f790d6f29d
+	@if $imageName == 'bold-light' {
+		$image-x: 351px;
+		$image-y: 0px;
+		$image-width: 11px;
+		$image-height: 13px;
+	}
+	// @autosprite-image-details: carrot-dark.png@374,0,52891b6e447fc33311e48001d2b02b67
+	@if $imageName == 'carrot-dark' {
+		$image-x: 374px;
+		$image-y: 0px;
+		$image-width: 10px;
+		$image-height: 7px;
+	}
+	// @autosprite-image-details: carrot-light.png@396,0,6ade92048389386bc9fe205844a258ad
+	@if $imageName == 'carrot-light' {
+		$image-x: 396px;
+		$image-y: 0px;
+		$image-width: 10px;
+		$image-height: 7px;
+	}
+	// @autosprite-image-details: cc_by_new.png@418,0,b8dda96262ad46f66bff7c97d2bb68b7
+	@if $imageName == 'cc_by_new' {
+		$image-x: 418px;
+		$image-y: 0px;
+		$image-width: 18px;
+		$image-height: 18px;
+	}
+	// @autosprite-image-details: cc_logo_circle.png@448,0,d6f961e68f9d5a9334b1aaa58eb2103c
+	@if $imageName == 'cc_logo_circle' {
+		$image-x: 448px;
+		$image-y: 0px;
+		$image-width: 18px;
+		$image-height: 18px;
+	}
+	// @autosprite-image-details: external_link.png@478,0,fedac4e086862195fb989d2f3da36e73
+	@if $imageName == 'external_link' {
+		$image-x: 478px;
+		$image-y: 0px;
+		$image-width: 16px;
+		$image-height: 16px;
+	}
+	// @autosprite-image-details: formula.png@506,0,bbb2e033d18ba74264f101dfcc8bf615
+	@if $imageName == 'formula' {
+		$image-x: 506px;
+		$image-y: 0px;
+		$image-width: 21px;
+		$image-height: 15px;
+	}
+	// @autosprite-image-details: gallery.png@539,0,17e6e437175833cfe4b149b4d6117a6f
+	@if $imageName == 'gallery' {
+		$image-x: 539px;
+		$image-y: 0px;
+		$image-width: 32px;
+		$image-height: 32px;
+	}
+	// @autosprite-image-details: horizontal_line.png@583,0,2d72a3c5fb5922a2052a31cda0881786
+	@if $imageName == 'horizontal_line' {
+		$image-x: 583px;
+		$image-y: 0px;
+		$image-width: 20px;
+		$image-height: 4px;
+	}
+	// @autosprite-image-details: ignore_wikia.png@615,0,d2fe02cc0ef52efb16836c69eafd06ff
+	@if $imageName == 'ignore_wikia' {
+		$image-x: 615px;
+		$image-y: 0px;
+		$image-width: 23px;
+		$image-height: 23px;
+	}
+	// @autosprite-image-details: indent-dark.png@650,0,7d57c97a09ab6bdd24989ebc9975f448
+	@if $imageName == 'indent-dark' {
+		$image-x: 650px;
+		$image-y: 0px;
+		$image-width: 16px;
+		$image-height: 15px;
+	}
+	// @autosprite-image-details: indent-light.png@678,0,689b57dbd984a0a0bdfa35bafa324060
+	@if $imageName == 'indent-light' {
+		$image-x: 678px;
+		$image-y: 0px;
+		$image-width: 16px;
+		$image-height: 15px;
+	}
+	// @autosprite-image-details: italic-dark.png@706,0,9de6c65a9964f37554a782d876927949
+	@if $imageName == 'italic-dark' {
+		$image-x: 706px;
+		$image-y: 0px;
+		$image-width: 5px;
+		$image-height: 13px;
+	}
+	// @autosprite-image-details: italic-light.png@723,0,64d67c548de52ea2bbe3bd908e10f867
+	@if $imageName == 'italic-light' {
+		$image-x: 723px;
+		$image-y: 0px;
+		$image-width: 5px;
+		$image-height: 13px;
+	}
+	// @autosprite-image-details: level_2_headline.png@740,0,bd6c1497619fa1dd85a780ee0cfaeb7a
+	@if $imageName == 'level_2_headline' {
+		$image-x: 740px;
+		$image-y: 0px;
+		$image-width: 19px;
+		$image-height: 22px;
+	}
+	// @autosprite-image-details: minor_edit.png@771,0,55ce05a6d166805936688d286a500800
+	@if $imageName == 'minor_edit' {
+		$image-x: 771px;
+		$image-y: 0px;
+		$image-width: 12px;
+		$image-height: 13px;
+	}
+	// @autosprite-image-details: more.png@795,0,1693133ea974fab0d79200153fed1531
+	@if $imageName == 'more' {
+		$image-x: 795px;
+		$image-y: 0px;
+		$image-width: 9px;
+		$image-height: 9px;
+	}
+	// @autosprite-image-details: ordered-dark.png@816,0,d2e96f2e389d4da8dac1fb9d4e7caa32
+	@if $imageName == 'ordered-dark' {
+		$image-x: 816px;
+		$image-y: 0px;
+		$image-width: 16px;
+		$image-height: 16px;
+	}
+	// @autosprite-image-details: ordered-light.png@844,0,b4fbca992573ced1e0f4924c0e72b396
+	@if $imageName == 'ordered-light' {
+		$image-x: 844px;
+		$image-y: 0px;
+		$image-width: 16px;
+		$image-height: 16px;
+	}
+	// @autosprite-image-details: outdent-dark.png@872,0,793fd30c2dcdbbfea304b1ffa6f1f383
+	@if $imageName == 'outdent-dark' {
+		$image-x: 872px;
+		$image-y: 0px;
+		$image-width: 16px;
+		$image-height: 15px;
+	}
+	// @autosprite-image-details: outdent-light.png@900,0,dd5be4e259cac4c0d15a6ae5ee11d328
+	@if $imageName == 'outdent-light' {
+		$image-x: 900px;
+		$image-y: 0px;
+		$image-width: 16px;
+		$image-height: 15px;
+	}
+	// @autosprite-image-details: pencil_small.png@928,0,01673a850e1f1f6d3c4f525952088ba6
+	@if $imageName == 'pencil_small' {
+		$image-x: 928px;
+		$image-y: 0px;
+		$image-width: 11px;
+		$image-height: 11px;
+	}
+	// @autosprite-image-details: photo.png@951,0,dbdd2f15f1f1b072a34cb14659168ae7
+	@if $imageName == 'photo' {
+		$image-x: 951px;
+		$image-y: 0px;
+		$image-width: 25px;
+		$image-height: 21px;
+	}
+	// @autosprite-image-details: photo_small.png@988,0,de9d9975ec45db1d95aa998701cd7dd5
+	@if $imageName == 'photo_small' {
+		$image-x: 988px;
+		$image-y: 0px;
+		$image-width: 17px;
+		$image-height: 14px;
+	}
+	// @autosprite-image-details: poll.png@1017,0,6901384f0e1e496876876a3026eac9e8
+	@if $imageName == 'poll' {
+		$image-x: 1017px;
+		$image-y: 0px;
+		$image-width: 30px;
+		$image-height: 27px;
+	}
+	// @autosprite-image-details: puzzle_piece.png@1059,0,3b38ca4abb12d099d4a1fbd37ee768d2
+	@if $imageName == 'puzzle_piece' {
+		$image-x: 1059px;
+		$image-y: 0px;
+		$image-width: 30px;
+		$image-height: 30px;
+	}
+	// @autosprite-image-details: quotation.png@1101,0,6af5e3856ef8ea36fd522aa195e5666a
+	@if $imageName == 'quotation' {
+		$image-x: 1101px;
+		$image-y: 0px;
+		$image-width: 10px;
+		$image-height: 8px;
+	}
+	// @autosprite-image-details: redo-dark.png@1123,0,a344b92eac5a0948a507370471e8848c
+	@if $imageName == 'redo-dark' {
+		$image-x: 1123px;
+		$image-y: 0px;
+		$image-width: 16px;
+		$image-height: 14px;
+	}
+	// @autosprite-image-details: redo-light.png@1151,0,06bb7dd469207f10ee1febaf5599b8f5
+	@if $imageName == 'redo-light' {
+		$image-x: 1151px;
+		$image-y: 0px;
+		$image-width: 16px;
+		$image-height: 14px;
+	}
+	// @autosprite-image-details: share_alike.png@1179,0,04b7f38d553f1fcdbf561392af2b97c2
+	@if $imageName == 'share_alike' {
+		$image-x: 1179px;
+		$image-y: 0px;
+		$image-width: 18px;
+		$image-height: 18px;
+	}
+	// @autosprite-image-details: signature-dark.png@1209,0,db7a4aa86c423b9c057633fdbf5a142b
+	@if $imageName == 'signature-dark' {
+		$image-x: 1209px;
+		$image-y: 0px;
+		$image-width: 25px;
+		$image-height: 22px;
+	}
+	// @autosprite-image-details: signature-light.png@1246,0,a861f170dae140f8b48c1189432642fa
+	@if $imageName == 'signature-light' {
+		$image-x: 1246px;
+		$image-y: 0px;
+		$image-width: 25px;
+		$image-height: 22px;
+	}
+	// @autosprite-image-details: slider.png@1283,0,dc64457ddc904fc1b8097ba5dd257bd2
+	@if $imageName == 'slider' {
+		$image-x: 1283px;
+		$image-y: 0px;
+		$image-width: 43px;
+		$image-height: 29px;
+	}
+	// @autosprite-image-details: slideshow.png@1338,0,9bfd24dd3caff6032309712b2f07a75a
+	@if $imageName == 'slideshow' {
+		$image-x: 1338px;
+		$image-y: 0px;
+		$image-width: 41px;
+		$image-height: 32px;
+	}
+	// @autosprite-image-details: strike-dark.png@1391,0,c53de58f14cc024ba7562b8b7182ee22
+	@if $imageName == 'strike-dark' {
+		$image-x: 1391px;
+		$image-y: 0px;
+		$image-width: 22px;
+		$image-height: 13px;
+	}
+	// @autosprite-image-details: strike-light.png@1425,0,94f4db6f50b855f972c7913bd2845291
+	@if $imageName == 'strike-light' {
+		$image-x: 1425px;
+		$image-y: 0px;
+		$image-width: 26px;
+		$image-height: 13px;
+	}
+	// @autosprite-image-details: switch.png@1463,0,edd02b9a42dc9b20af95f0f30b8a3bc4
+	@if $imageName == 'switch' {
+		$image-x: 1463px;
+		$image-y: 0px;
+		$image-width: 15px;
+		$image-height: 11px;
+	}
+	// @autosprite-image-details: table.png@1490,0,2d94a3d7167eb011485a18b754de080e
+	@if $imageName == 'table' {
+		$image-x: 1490px;
+		$image-y: 0px;
+		$image-width: 25px;
+		$image-height: 25px;
+	}
+	// @autosprite-image-details: trash_small.png@1527,0,bdfc186e0663b90cfcf4081fda42650a
+	@if $imageName == 'trash_small' {
+		$image-x: 1527px;
+		$image-y: 0px;
+		$image-width: 11px;
+		$image-height: 12px;
+	}
+	// @autosprite-image-details: underline-dark.png@1550,0,9d194dccfd9b5c7553adc2bc1a2dd6a0
+	@if $imageName == 'underline-dark' {
+		$image-x: 1550px;
+		$image-y: 0px;
+		$image-width: 13px;
+		$image-height: 19px;
+	}
+	// @autosprite-image-details: underline-light.png@1575,0,6f4f2cf9f270462dc3fbe68c8256981d
+	@if $imageName == 'underline-light' {
+		$image-x: 1575px;
+		$image-y: 0px;
+		$image-width: 13px;
+		$image-height: 19px;
+	}
+	// @autosprite-image-details: undo-dark.png@1600,0,3566f9179a0355abd55f1ebf12bd97be
+	@if $imageName == 'undo-dark' {
+		$image-x: 1600px;
+		$image-y: 0px;
+		$image-width: 16px;
+		$image-height: 14px;
+	}
+	// @autosprite-image-details: undo-light.png@1628,0,3bab099197f9e63d71faf54d5e415b30
+	@if $imageName == 'undo-light' {
+		$image-x: 1628px;
+		$image-y: 0px;
+		$image-width: 16px;
+		$image-height: 14px;
+	}
+	// @autosprite-image-details: unordered-dark.png@1656,0,d3e3b6f2971e93187c4ec497b5a7bb7e
+	@if $imageName == 'unordered-dark' {
+		$image-x: 1656px;
+		$image-y: 0px;
+		$image-width: 16px;
+		$image-height: 15px;
+	}
+	// @autosprite-image-details: unordered-light.png@1684,0,d1c2eb74b2ec44b64d7a2424383b2d9e
+	@if $imageName == 'unordered-light' {
+		$image-x: 1684px;
+		$image-y: 0px;
+		$image-width: 16px;
+		$image-height: 15px;
+	}
+	// @autosprite-image-details: video.png@1712,0,68010c42c38a1a894d8a16b4dae6c9a4
+	@if $imageName == 'video' {
+		$image-x: 1712px;
+		$image-y: 0px;
+		$image-width: 28px;
+		$image-height: 30px;
+	}
+	// @autosprite-image-details: wikia_link.png@1752,0,52d62a1d0281620a2877b27acd4693db
+	@if $imageName == 'wikia_link' {
+		$image-x: 1752px;
+		$image-y: 0px;
+		$image-width: 18px;
+		$image-height: 14px;
+	}
+	@if $image-x != -1 {
+		$position-x: 0px - $image-x;
+		$position-y: 0px - $image-y;
+		@if $width > 0 {
+			$position-x: $position-x + ( $width - $image-width ) / 2;
+		}
+		@if $height > 0 {
+			$position-y: $position-y + ( $height - $image-height ) / 2;
+		}
+		@if $offset-x != 0 {
+			$position-x: $position-x + $offset-x;
+		}
+		@if $offset-y != 0 {
+			$position-y: $position-y + $offset-y;
+		}
+		background-position: $position-x $position-y;
+	}
+}
+@mixin sprite-edit-page-full($imageName, $width: 0, $height: 0,$offset-x: 0,$offset-y: 0) {
+	@include sprite-edit-page-base;
+	@include sprite-edit-page($imageName,$width,$height,$offset-x,$offset-y);
+}
+@mixin sprite-edit-page-deep($width: 0,$height: 0) {
+	@include sprite-edit-page-base;
+	&.add-video-small {
+		@include sprite-edit-page('add_video_small',$width,$height);
+	}
+	&.addlink-dark {
+		@include sprite-edit-page('addlink-dark',$width,$height);
+	}
+	&.addlink-light {
+		@include sprite-edit-page('addlink-light',$width,$height);
+	}
+	&.aligncenter-dark {
+		@include sprite-edit-page('aligncenter-dark',$width,$height);
+	}
+	&.aligncenter-light {
+		@include sprite-edit-page('aligncenter-light',$width,$height);
+	}
+	&.alignleft-dark {
+		@include sprite-edit-page('alignleft-dark',$width,$height);
+	}
+	&.alignleft-light {
+		@include sprite-edit-page('alignleft-light',$width,$height);
+	}
+	&.alignright-dark {
+		@include sprite-edit-page('alignright-dark',$width,$height);
+	}
+	&.alignright-light {
+		@include sprite-edit-page('alignright-light',$width,$height);
+	}
+	&.attribution {
+		@include sprite-edit-page('attribution',$width,$height);
+	}
+	&.bold-dark {
+		@include sprite-edit-page('bold-dark',$width,$height);
+	}
+	&.bold-light {
+		@include sprite-edit-page('bold-light',$width,$height);
+	}
+	&.carrot-dark {
+		@include sprite-edit-page('carrot-dark',$width,$height);
+	}
+	&.carrot-light {
+		@include sprite-edit-page('carrot-light',$width,$height);
+	}
+	&.cc-by-new {
+		@include sprite-edit-page('cc_by_new',$width,$height);
+	}
+	&.cc-logo-circle {
+		@include sprite-edit-page('cc_logo_circle',$width,$height);
+	}
+	&.external-link {
+		@include sprite-edit-page('external_link',$width,$height);
+	}
+	&.formula {
+		@include sprite-edit-page('formula',$width,$height);
+	}
+	&.gallery {
+		@include sprite-edit-page('gallery',$width,$height);
+	}
+	&.horizontal-line {
+		@include sprite-edit-page('horizontal_line',$width,$height);
+	}
+	&.ignore-wikia {
+		@include sprite-edit-page('ignore_wikia',$width,$height);
+	}
+	&.indent-dark {
+		@include sprite-edit-page('indent-dark',$width,$height);
+	}
+	&.indent-light {
+		@include sprite-edit-page('indent-light',$width,$height);
+	}
+	&.italic-dark {
+		@include sprite-edit-page('italic-dark',$width,$height);
+	}
+	&.italic-light {
+		@include sprite-edit-page('italic-light',$width,$height);
+	}
+	&.level-2-headline {
+		@include sprite-edit-page('level_2_headline',$width,$height);
+	}
+	&.minor-edit {
+		@include sprite-edit-page('minor_edit',$width,$height);
+	}
+	&.more {
+		@include sprite-edit-page('more',$width,$height);
+	}
+	&.ordered-dark {
+		@include sprite-edit-page('ordered-dark',$width,$height);
+	}
+	&.ordered-light {
+		@include sprite-edit-page('ordered-light',$width,$height);
+	}
+	&.outdent-dark {
+		@include sprite-edit-page('outdent-dark',$width,$height);
+	}
+	&.outdent-light {
+		@include sprite-edit-page('outdent-light',$width,$height);
+	}
+	&.pencil-small {
+		@include sprite-edit-page('pencil_small',$width,$height);
+	}
+	&.photo {
+		@include sprite-edit-page('photo',$width,$height);
+	}
+	&.photo-small {
+		@include sprite-edit-page('photo_small',$width,$height);
+	}
+	&.poll {
+		@include sprite-edit-page('poll',$width,$height);
+	}
+	&.puzzle-piece {
+		@include sprite-edit-page('puzzle_piece',$width,$height);
+	}
+	&.quotation {
+		@include sprite-edit-page('quotation',$width,$height);
+	}
+	&.redo-dark {
+		@include sprite-edit-page('redo-dark',$width,$height);
+	}
+	&.redo-light {
+		@include sprite-edit-page('redo-light',$width,$height);
+	}
+	&.share-alike {
+		@include sprite-edit-page('share_alike',$width,$height);
+	}
+	&.signature-dark {
+		@include sprite-edit-page('signature-dark',$width,$height);
+	}
+	&.signature-light {
+		@include sprite-edit-page('signature-light',$width,$height);
+	}
+	&.slider {
+		@include sprite-edit-page('slider',$width,$height);
+	}
+	&.slideshow {
+		@include sprite-edit-page('slideshow',$width,$height);
+	}
+	&.strike-dark {
+		@include sprite-edit-page('strike-dark',$width,$height);
+	}
+	&.strike-light {
+		@include sprite-edit-page('strike-light',$width,$height);
+	}
+	&.switch {
+		@include sprite-edit-page('switch',$width,$height);
+	}
+	&.table {
+		@include sprite-edit-page('table',$width,$height);
+	}
+	&.trash-small {
+		@include sprite-edit-page('trash_small',$width,$height);
+	}
+	&.underline-dark {
+		@include sprite-edit-page('underline-dark',$width,$height);
+	}
+	&.underline-light {
+		@include sprite-edit-page('underline-light',$width,$height);
+	}
+	&.undo-dark {
+		@include sprite-edit-page('undo-dark',$width,$height);
+	}
+	&.undo-light {
+		@include sprite-edit-page('undo-light',$width,$height);
+	}
+	&.unordered-dark {
+		@include sprite-edit-page('unordered-dark',$width,$height);
+	}
+	&.unordered-light {
+		@include sprite-edit-page('unordered-light',$width,$height);
+	}
+	&.video {
+		@include sprite-edit-page('video',$width,$height);
+	}
+	&.wikia-link {
+		@include sprite-edit-page('wikia_link',$width,$height);
+	}
+}
+// @autosprite-end

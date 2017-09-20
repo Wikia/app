@@ -14,7 +14,7 @@ CKEDITOR.plugins.add('rte-template',
 			multiSelect : false,
 
 			panel : {
-				css : [ CKEDITOR.getUrl( editor.skinPath + 'editor.css' ) ] . concat( editor.config.contentsCss )
+				css : [ CKEDITOR.getUrl( editor.skinPath + 'editor.scss' ) ] . concat( editor.config.contentsCss )
 			},
 
 			init : function() {

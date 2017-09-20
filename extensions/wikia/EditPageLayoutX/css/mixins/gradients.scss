@@ -1,0 +1,12 @@
+@mixin gradient-button-hover {
+	@include linear-gradient($color-epl-hover, top, $color-epl-button, 0%, $color-epl-hover, 100%);
+	text-decoration: none;
+}
+
+@mixin gradient-module {
+	@include linear-gradient($color-epl-gradient, top, $color-epl-gradient-light, 0%, $color-epl-gradient, 60%, $color-epl-gradient-dark, 100%);
+}
+
+@mixin gradient-module-header {
+	@include linear-gradient($color-epl-gradient-dark, top, $color-epl-gradient-light, 30%, $color-epl-gradient-dark, 100%);
+}

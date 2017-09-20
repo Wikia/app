@@ -1,0 +1,123 @@
+
+Wikia Editor Introduction
+=========================
+
+Editor is an event-driven platform which is designed to have all features implemented as plugins.
+The main editor object does not handle anything more than being able to bootstrap plugins
+and allow message and data exchange between plugins (+ logging capabilities, which might have
+been done as a separate plugin too).
+
+
+Bootstrapping editor instance
+=============================
+
+How to create new editor instance?
+----------------------------------
+
+Editor needs the plugins list which are to be loaded and a configuration data. Both are passed
+as arguments to the editor class constructor. Each plugin may use any configuration data to
+adjust its behavior.
+
+	window.WikiaEditor.create(plugins,config)
+
+The logic for creating the plugins list and configuration data is often so big that
+a class can be created to perform the whole process. Working examples are in directory:
+
+	js/loaders/*
+
+Editor pre-initialization events
+--------------------------------
+
+These events are the only ones which are not called in the editor instance context.
+
+GlobalTriggers :: wikiaeditoraddons ( WikiaEditor_namespace )
+	- run once per page while initializing the first instance of editor
+	- good place to define new plugins etc
+
+WikiaEditor :: newInstance ( plugins, config )
+	- run once for each editor created
+	- allows other extensions or entities to modify the plugins list or configuration
+		just before the editor instance is created
+
+
+Editor initialization work-flow
+-------------------------------
+
+Staged initialization:
+
+* initConfig( editor )
+	- config overrides by plugins should happen here
+* beforeInit( editor )
+	- plugins should bind to events, expose theirs public interfaces
+* init( editor )
+	- the actual initialization should happen here
+* initEditor( editor, editorElement )
+	- editor DOM should be created here
+* initDom( editor )
+	- other DOM related things should be initialized here
+
+Asynchronous initialization events (components ready reports):
+
+* uiReady( editor )
+	- UI is ready now and you are able to create UI elements too
+		(will not be called before initDom initialization)
+* editorReady( editor )
+	- editor is ready
+* editboxReady( editor, editbox )
+	- editor editbox is ready
+
+Standard editor events
+----------------------
+
+* state( editor, state )
+	- editor internal state has just changed
+* mode( editor, mode )
+	- editor mode has just been switched
+* editorFocus( editor )
+	- editor has just gained focus
+* editorBlur( editor )
+	- editor has just lost focus
+* bodyClick( event, bodyElement )
+	- click event bubbled up to body element
+* uiBuildClickHandler( editor, elementConfig )
+	- UI element without click handler is registering and is being autobuilt now
+* uiFetchDefaults( editor, elements )
+	- fired just before adding the default list of UI elements defined in configuration
+		(it's possible to add and remove entries)
+* uiAddExternalProvider( editor, externalProvider )
+	- UI elements external provider has just been added
+* uiExternalProviderReady( editor )
+	- UI elements external provider has been initialized
+* uiAddHandler( editor, type, handler )
+	- new UI element type handler (renderer) has just been registered
+* uiAddElement( editor, name, definition )
+	- new UI element definition has just been added
+* uiStandardElementCreated( editor, elementDefinition, data )
+	- new UI element has just been rendered into HTML
+* toolbarsRendered( editor )
+	- toolbar spaces has just been filled in according to their configuration
+* toolbarsResized( editor )
+	- toolbar size might have been changed
+
+
+Plugin architecture
+-------------------
+
+The following method names are *magic-like*: initConfig, beforeInit, init, initEditor, initDom
+and gets run automatically during the corresponding initalization phase of the editor.
+
+The "editor" property keeps the reference to the parent editor object.
+
+Plugins may be added to the editor *statically* (as an item in the plugins list or one of their
+dependency) or *dynamically* (added by call to initPlugin() of the editor object).
+
+The *dynamic* initialization has the following differences:
+- the plugin skips already passed initialization phases (e.g. initConfig, beforeInit is not called
+  when the editor is in "init" initialization phase
+
+ Wikiacore plugin contains list of plugins to be loaded.
+
+
+Modules architecture
+--------------------
+
