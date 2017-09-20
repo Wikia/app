@@ -79,17 +79,17 @@ class Hooks {
 
 		// remove "explore" menu since it's forcefully added by the DS api. array_values is needed because array_filter
 		// turns the array into an assoc. array, so when json_encoded navigation is an object instead of an array
-		$data['community-header']['navigation'] = array_values(array_filter($data['community-header']['navigation'], function($navItem) {
-			$type = isset($navItem['type']) ? $navItem['type'] : false;
-			$titleType = isset($navItem['title']['type']) ? $navItem['title']['type'] : false;
-			$titleKey = isset($navItem['title']['key']) ? $navItem['title']['key'] : false;
+		$data['community-header']['navigation'] = array_values( array_filter( $data['community-header']['navigation'], function( $navItem ) {
+			$type = isset( $navItem['type'] ) ? $navItem['type'] : false;
+			$titleType = isset( $navItem['title']['type'] ) ? $navItem['title']['type'] : false;
+			$titleKey = isset( $navItem['title']['key'] ) ? $navItem['title']['key'] : false;
 
-			if ($type === 'dropdown' && $titleType === 'translatable-text' && $titleKey === 'community-header-explore') {
+			if ( $type === 'dropdown' && $titleType === 'translatable-text' && $titleKey === 'community-header-explore' ) {
 				return false;
 			}
 
 			return true;
-		}));
+		} ) );
 
 		$dispatchable->getResponse()->setData( $data );
 	}
