@@ -31,7 +31,7 @@ class Forum extends WikiaObject {
 	 * @param int $dbType
 	 * @return array array of serialized ForumBoardInfo
 	 */
-	public function getBoardList( int $dbType = DB_SLAVE ) {
+	public function getBoardList( int $dbType = DB_SLAVE ): array {
 		$db = wfGetDB( $dbType );
 
 		$result = $db->select(
