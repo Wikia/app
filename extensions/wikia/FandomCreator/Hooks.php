@@ -80,45 +80,45 @@ class Hooks {
 		$dispatchable->getResponse()->setData( $data );
 	}
 
-	public static function onMercuryApiGetWikiVariables(WikiaDispatchableObject $dispatchable, $communityId) {
-		if (!self::isValidCommunityId($communityId)) {
+	public static function onMercuryApiGetWikiVariables( WikiaDispatchableObject $dispatchable, $communityId ) {
+		if ( !self::isValidCommunityId( $communityId ) ) {
 			return;
 		}
 
-		$community = self::api()->getCommunity($communityId);
-		if ($community === null) {
+		$community = self::api()->getCommunity( $communityId );
+		if ( $community === null ) {
 			return;
 		}
 
 		$data = $dispatchable->getResponse()->getData()['data'];
 		$data['siteName'] = $community->displayName;
-		if (isset($data['htmlTitle']['parts'][0])) {
+		if ( isset( $data['htmlTitle']['parts'][0] ) ) {
 			$data['htmlTitle']['parts'][0] = $community->displayName;
 		}
 
 		$data['theme']['page-opacity'] = '100';
-		if (!empty($community->theme->colors->buttons)) {
+		if ( !empty( $community->theme->colors->buttons ) ) {
 			$data['theme']['color-buttons'] = $community->theme->colors->buttons;
 		}
 
-		if (!empty($community->theme->colors->links)) {
+		if ( !empty( $community->theme->colors->links ) ) {
 			$data['theme']['color-links'] = $community->theme->colors->links;
 		}
 
-		if (!empty($community->theme->colors->header)) {
+		if ( !empty( $community->theme->colors->header ) ) {
 			$data['theme']['color-community-header'] = $community->theme->colors->header;
 		}
 
-		if (!empty($community->theme->colors->pageBackground)) {
+		if ( !empty( $community->theme->colors->pageBackground ) ) {
 			$data['theme']['color-body'] = $community->theme->colors->pageBackground;
 			$data['theme']['color-body-middle'] = $community->theme->colors->pageBackground;
 		}
 
-		if (!empty($community->theme->colors->articleBackground)) {
+		if ( !empty( $community->theme->colors->articleBackground ) ) {
 			$data['theme']['color-page'] = $community->theme->colors->articleBackground;
 		}
 
-		if (!empty($community->theme->graphics->background)) {
+		if ( !empty( $community->theme->graphics->background ) ) {
 			$data['theme']['background-image'] = $community->theme->graphics->background;
 			$data['theme']['background-image-width'] = '';
 			$data['theme']['background-image-height'] = '';
@@ -126,7 +126,7 @@ class Hooks {
 			$data['theme']['background-tiled'] = false;
 		}
 
-		$dispatchable->getResponse()->setData(['data' => $data]);
+		$dispatchable->getResponse()->setData( ['data' => $data] );
 	}
 
 	private static function convertToSitemapData( $entry, $currentLevel, $maxElementsPerLevel ) {
