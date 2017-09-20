@@ -2516,8 +2516,7 @@ OO.ui.Dialog.prototype.initialize = function () {
 		this.closeButton = new OO.ui.ButtonWidget( {
 			'$': this.$,
 			'framed': false,
-			'icon': 'close',
-			'title': OO.ui.msg( 'ooui-dialog-action-close' )
+			'icon': 'close'
 		} );
 		this.closeButton.connect( this, { 'click': 'onCloseButtonClick' } );
 		this.closeButton.$element
