@@ -40,7 +40,7 @@ class ForumController extends WallBaseController {
 		$wall = $this->response->getVal( 'wall' );
 
 		if ( $ns == NS_WIKIA_FORUM_TOPIC_BOARD ) {
-			$board = ForumBoard::getEmpty();
+			$board = new ForumBoard();
 
 			$this->response->setVal( 'activeThreads', $board->getTotalActiveThreads( $wall->getRelatedPageId() ) );
 			$this->response->setVal( 'isTopicPage', true );

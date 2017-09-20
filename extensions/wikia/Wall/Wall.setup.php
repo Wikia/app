@@ -29,7 +29,6 @@ $wgAutoloadClasses['CommentsIndexHooks'] = __DIR__ . '/index/CommentsIndexHooks.
 $wgAutoloadClasses['CommentsIndexEntryNotFoundException'] = __DIR__ . '/index/CommentsIndexEntryNotFoundException.php';
 
 $wgAutoloadClasses['Wall'] =  $dir . '/Wall.class.php';
-$wgAutoloadClasses['Walls'] =  $dir . '/Walls.class.php';
 $wgAutoloadClasses['WallThread'] =  $dir . '/WallThread.class.php';
 
 $wgAutoloadClasses['WallMessage'] =  $dir . '/WallMessage.class.php';
