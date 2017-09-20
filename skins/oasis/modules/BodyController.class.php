@@ -148,7 +148,7 @@ class BodyController extends WikiaController {
 	public function getRailModuleList() {
 		$title = $this->getContext()->getTitle();
 		$user = $this->getContext()->getUser();
-		
+
 		$namespace = $title->getNamespace();
 		$subjectNamespace = MWNamespace::getSubject( $namespace );
 
@@ -238,8 +238,7 @@ class BodyController extends WikiaController {
 			$isEditPage = BodyController::isEditPage();
 		}
 
-		// allow the right rail when using the external cms since it changes the page state without requiring a page refresh
-		if ( ( $isEditPage && !$this->wg->EnableContributionPrototypeViewing )|| WikiaPageType::isMainPage() ) {
+		if ( $isEditPage || WikiaPageType::isMainPage() ) {
 			$modules = [ ];
 			Hooks::run( 'GetEditPageRailModuleList', [ &$modules ] );
 			return $modules;
