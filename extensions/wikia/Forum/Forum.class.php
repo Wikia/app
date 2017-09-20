@@ -58,15 +58,21 @@ class Forum extends WikiaObject {
 			$board = ForumBoard::newFromTitle( $boardTitle );
 			$boardInfo = $board->getBoardInfo()->toArray();
 
-			// SUS-2519: if explicit sorting info is present, then use it...
-			if ( !empty( $row->props ) ) {
-				$orderIndex = wfUnserializeProp( $row->propname, $row->props );
-				$boardInfoByOrderIndex[$orderIndex] = $boardInfo;
+			// SUS-2519: if there is no explicit sorting info present, then use page ID
+			if ( empty( $row->props ) ) {
+				$boardInfoByOrderIndex[$row->page_id] = $boardInfo;
 				continue;
 			}
 
-			// ...else rely on page ID for sorting.
-			$boardInfoByOrderIndex[$row->page_id] = $boardInfo;
+			$orderIndex = wfUnserializeProp( $row->propname, $row->props );
+
+			// IRIS-1493: Sorting info may be duplicated - if this is the case, then use page ID
+			if ( isset( $boardInfoByOrderIndex[$orderIndex] ) ) {
+				$boardInfoByOrderIndex[$row->page_id] = $boardInfo;
+				continue;
+			}
+
+			$boardInfoByOrderIndex[$orderIndex] = $boardInfo;
 		}
 
 		krsort( $boardInfoByOrderIndex );
