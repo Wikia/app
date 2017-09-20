@@ -148,7 +148,7 @@ class SpecialCategoryIntersection extends SpecialPage {
 		$html .= "<h3>". wfMsg('categoryintersection-form-title') ."</h3>";
 
 		$html .= "<div>\n";
-		$html .= "<form name='categoryintersection' id='CategoryAutoComplete' class='WikiaForm' action='' method='GET'>\n";
+		$html .= "<form name='categoryintersection' id='CategoryAutoComplete' class='WikiaForm' action='#ci_results' method='GET'>\n";
 
 			// Display a couple of rows
 			$html .= $this->getHtmlForCategoryBox(1);
@@ -169,7 +169,7 @@ class SpecialCategoryIntersection extends SpecialPage {
 			$html .= "</select><br/>\n";
 
 			// Display submit button
-			$html .= "<input class='wikia-button' type='submit' name='wpSubmit' value='". wfMsg('categoryintersection-form-submit') ."'/>\n";
+			$html .= "<button class='wikia-button' type='submit' name='wpSubmit' value='submit'>". wfMsg('categoryintersection-form-submit') ."</button>\n";
 
 		$html .= "</form>\n";
 		$html .= "</div>\n";
@@ -204,7 +204,7 @@ class SpecialCategoryIntersection extends SpecialPage {
 		global $wgRequest, $wgServer, $wgScriptPath;
 
 		$html = "";
-		$html .= "<div class='ci_results'>\n";
+		$html .= "<div class='ci_results' id='ci_results'>\n";
 
 			$html .= "<h2>". wfMsg('categoryintersection-results-title') ."</h2>\n";
 
@@ -218,10 +218,11 @@ class SpecialCategoryIntersection extends SpecialPage {
 					if(startsWith($key, self::$CAT_PREFIX)){
 						$cat = $wgRequest->getVal($key);
 						if(!empty($cat)){
-							$categories[] = $cat;
-
-							if(!startsWith($cat, $this->CATEGORY_NS_PREFIX)){
-								$html .= "<em>Warning: \"$cat\" does not start with \"{$this->CATEGORY_NS_PREFIX}\".</em><br/>\n";
+							if(!startsWith($cat, $this->CATEGORY_NS_PREFIX) and !startsWith($cat, NS_CATEGORY))) {
+								$categories[] =  $this->CATEGORY_NS_PREFIX.$cat
+							}
+							else {
+								$categories[] = $cat;
 							}
 						}
 					}
