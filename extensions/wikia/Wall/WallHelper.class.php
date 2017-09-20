@@ -118,7 +118,7 @@ class WallHelper {
 	 *
 	 * @return array | boolean returns false if ArticleComment class does not exist
 	 *
-	 * @author Andrzej 'nAndy' Åukaszewski
+	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function wikiActivityFilterMessageWall( $title, &$res ) {
 		wfProfileIn( __METHOD__ );
