@@ -41,19 +41,26 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 
 		function processBtfSlot(slot) {
 			var context = adContext.getContext();
-			log(['processBtfSlot', slot.name], 'debug', logGroup);
 
-			if (context.opts.premiumAdLayoutEnabled && !uapContext.isUapLoaded()) {
+			if (context.opts.premiumAdLayoutEnabled) {
+				if (uapContext.isUapLoaded() && slot.name === 'INVISIBLE_HIGH_IMPACT_2') {
+					log(['PAL IHI2 disabled when UAP on page'], 'info', logGroup);
+					return;
+				}
+
 				if (context.slots.premiumAdLayoutSlotsToUnblock.indexOf(slot.name) !== -1) {
+					log(['PAL enabled, filling slot', slot.name], 'info', logGroup);
 					fillInSlot(slot);
 					return;
 				}
 			} else {
 				if (win.ads.runtime.unblockHighlyViewableSlots && config.highlyViewableSlots) {
+					log(['PAL disabled, unblocking HiVi slots', slot.name], 'info', logGroup);
 					config.highlyViewableSlots.map(unblock);
 				}
 
 				if (unblockedSlots.indexOf(slot.name) > -1 || !win.ads.runtime.disableBtf) {
+					log(['PAL disabled, filling slot', slot.name], 'info', logGroup);
 					fillInSlot(slot);
 					return;
 				}
