@@ -156,6 +156,7 @@
 
 			// fire event when new article comment is/will be added to DOM
 			mw.hook('wikipage.content').fire(newmsg);
+			mw.hook('wall.sendmessage').fire(newmsg);
 
 			this.comments.prepend(newmsg);
 
