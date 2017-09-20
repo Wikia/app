@@ -1,6 +1,8 @@
 <?php
 
-if (!defined('MEDIAWIKI')) die();
+if ( !defined( 'MEDIAWIKI' ) ) {
+	die();
+}
 
 class Editcount extends SpecialPage {
 	const ONE_QUERY = 1;
@@ -49,8 +51,6 @@ class Editcount extends SpecialPage {
 		if ( $this->including() ) {
 			if ( !isset($namespace) ) {
 				if ($uid != 0) {
-					// ADi: can't do that, we need count per wiki
-					// $out = $wgContLang->formatNum( User::edits( $uid ) );
 					$out = $wgContLang->formatNum( $this->getTotal( $this->editsByNs( $uid ) ) + $arcount );
 				} else {
 					$out = "";
@@ -104,11 +104,7 @@ class Editcount extends SpecialPage {
 	 * @return int
 	 */
 	function getTotal( $nscount ) {
-		$total = 0;
-		foreach ( array_values( $nscount ) as $i )
-			$total += $i;
-
-		return $total;
+		return array_sum( $nscount );
 	}
 
 	/**
@@ -274,6 +270,15 @@ class EditcountHTML extends Editcount {
 	var $totalall;
 
 	/**
+	 * @var int
+	 */
+	var $wikitotal;
+	/**
+	 * @var int
+	 */
+	var $arcount;
+
+	/**
 	 * Output the HTML form on Special:Editcount
 	 *
 	 * @param string $username
@@ -328,17 +333,17 @@ class EditcountHTML extends Editcount {
 	 *
 	 */
 	function makeTable() {
-		global $wgCityId, $wgSitename;
+		global $wgSitename;
         wfProfileIn( __METHOD__ );
 
 		$total = wfMessage( 'editcount_total' )->escaped();
 		$wikiName = $wgSitename;
 		/* current wiki */
 		$ftotal = $this->getLanguage()->formatNum( $this->wikitotal );
-		$percent = ($this->wikitotal > 0) ? wfPercent( $this->wikitotal / $this->wikitotal * 100 , 2 ) : wfPercent( 0 ); // @bug 4400
+		$percent = ( $this->wikitotal > 0 ) ? wfPercent( 100 ) : wfPercent( 0 );
 		/* all wikis */
 		$ftotalall = $this->getLanguage()->formatNum( $this->totalall );
-		$percentall = ($this->totalall > 0) ? wfPercent( $this->totalall / $this->totalall * 100 , 2 ) : wfPercent( 0 );
+		$percentall = ( $this->totalall > 0 ) ? wfPercent( 100 ) : wfPercent( 0 );
 
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(
@@ -363,7 +368,7 @@ class EditcountHTML extends Editcount {
 	/**
 	 * Adds to output information for user when cached data will be refreshed next time
 	 *
-	 * @param $refreshTimestamps Array of timestamps in format YmdHis e.g. 20131107192200
+	 * @param $refreshTimestamps array of timestamps in format YmdHis e.g. 20131107192200
 	 *
 	 */
 	function addRefreshTimestampsToOut( $refreshTimestamps ) {
