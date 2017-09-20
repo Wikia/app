@@ -38,18 +38,30 @@ class WantedTemplatesPage extends WantedQueryPage {
 	}
 
 	function getQueryInfo() {
-		return array (
-			'tables' => array ( 'templatelinks', 'page' ),
-			'fields' => array ( 'tl_namespace AS namespace',
-					'tl_title AS title',
-					'COUNT(*) AS value' ),
-			'conds' => array ( 'page_title IS NULL',
-					'tl_namespace' => NS_TEMPLATE ),
-			'options' => array (
-				'GROUP BY' => 'tl_namespace, tl_title' ),
-			'join_conds' => array ( 'page' => array ( 'LEFT JOIN',
-					array ( 'page_namespace = tl_namespace',
-						'page_title = tl_title' ) ) )
-		);
+		return [
+			'tables' => [
+				'templatelinks',
+				'pg1' => 'page',
+				'pg2' => 'page'
+			],
+			'fields' => [
+				'namespace' => 'tl_namespace',
+				'title' => 'tl_title',
+				'value' => 'COUNT(*)'
+			],
+			'conds' => [
+				'pg1.page_title IS NULL',
+				'tl_namespace' => NS_TEMPLATE,
+				"NOT (RIGHT(pg2.page_title, 3) = '.js' OR RIGHT(pg2.page_title, 4) = '.css' OR pg2.page_namespace = '" . NS_MODULE . "')"
+			],
+			'options' => [ 'GROUP BY' => [ 'tl_namespace', 'tl_title' ] ],
+			'join_conds' => [
+				'pg1' => [ 'LEFT JOIN', [
+					'pg1.page_namespace = tl_namespace',
+					'pg1.page_title = tl_title'
+				] ],
+				'pg2' => [ 'LEFT JOIN', 'pg2.page_id = tl_from' ]
+			]
+		];
 	}
 }

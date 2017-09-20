@@ -53,37 +53,40 @@ class WantedPagesPage extends WantedQueryPage {
 	function getQueryInfo() {
 		global $wgWantedPagesThreshold;
 		$count = $wgWantedPagesThreshold - 1;
-		$query = array(
-			'tables' => array(
+		$query = [
+			'tables' => [
 				'pagelinks',
 				'pg1' => 'page',
 				'pg2' => 'page'
-			),
-			'fields' => array(
-				'pl_namespace AS namespace',
-				'pl_title AS title',
-				'COUNT(*) AS value'
-			),
-			'conds' => array(
+			],
+			'fields' => [
+				'namespace' => 'pl_namespace',
+				'title' => 'pl_title',
+				'value' => 'COUNT(*)'
+			],
+			'conds' => [
 				'pg1.page_namespace IS NULL',
-				"pl_namespace NOT IN ( '" . NS_USER .
-					"', '" . NS_USER_TALK . "' )",
-				"pg2.page_namespace != '" . NS_MEDIAWIKI . "'"
-			),
-			'options' => array(
-				'HAVING' => "COUNT(*) > $count",
-				'GROUP BY' => 'pl_namespace, pl_title'
-			),
-			'join_conds' => array(
-				'pg1' => array(
-					'LEFT JOIN', array(
+				"pl_namespace NOT IN ( '" . NS_USER . "', '" . NS_USER_TALK . "' )",
+				"pg2.page_namespace != '" . NS_MEDIAWIKI . "'",
+				"NOT (RIGHT(pg2.page_title, 3) = '.js' OR RIGHT(pg2.page_title, 4) = '.css' OR pg2.page_namespace = '" . NS_MODULE . "')"
+			],
+			'options' => [
+				'HAVING' => [
+					"COUNT(*) > $count",
+					"COUNT(*) > SUM(pg2.page_is_redirect)"
+				],
+				'GROUP BY' => [ 'pl_namespace', 'pl_title' ]
+			],
+			'join_conds' => [
+				'pg1' => [
+					'LEFT JOIN', [
 						'pg1.page_namespace = pl_namespace',
 						'pg1.page_title = pl_title'
-					)
-				),
-				'pg2' => array( 'LEFT JOIN', 'pg2.page_id = pl_from' )
-			)
-		);
+					]
+				],
+				'pg2' => [ 'LEFT JOIN', 'pg2.page_id = pl_from' ]
+			]
+		];
 		// Replacement for the WantedPages::getSQL hook
 		Hooks::run( 'WantedPages::getQueryInfo', [ $this, &$query ] );
 

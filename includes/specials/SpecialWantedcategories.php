@@ -35,17 +35,30 @@ class WantedCategoriesPage extends WantedQueryPage {
 	}
 
 	function getQueryInfo() {
-		return array (
-			'tables' => array ( 'categorylinks', 'page' ),
-			'fields' => array ( "'" . NS_CATEGORY . "' AS namespace",
-					'cl_to AS title',
-					'COUNT(*) AS value' ),
-			'conds' => array ( 'page_title IS NULL' ),
-			'options' => array ( 'GROUP BY' => 'cl_to' ),
-			'join_conds' => array ( 'page' => array ( 'LEFT JOIN',
-				array ( 'page_title = cl_to',
-					'page_namespace' => NS_CATEGORY ) ) )
-		);
+		return [
+			'tables' => [
+				'categorylinks',
+				'pg1' => 'page',
+				'pg2' => 'page'
+			],
+			'fields' => [
+				'namespace' => NS_CATEGORY,
+				'title' => 'cl_to',
+				'value' => 'COUNT(*)'
+			],
+			'conds' => [
+				'pg1.page_title IS NULL',
+				"NOT (RIGHT(pg2.page_title, 3) = '.js' OR RIGHT(pg2.page_title, 4) = '.css' OR pg2.page_namespace = '" . NS_MODULE . "')"
+			],
+			'options' => [ 'GROUP BY' => 'cl_to' ],
+			'join_conds' => [
+				'pg1' => [ 'LEFT JOIN', [
+					'pg1.page_title = cl_to',
+					'pg1.page_namespace' => NS_CATEGORY
+				] ],
+				'pg2' => [ 'LEFT JOIN', 'pg2.page_id = cl_from' ]
+			]
+		];
 	}
 
 	/**

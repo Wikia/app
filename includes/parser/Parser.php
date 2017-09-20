@@ -5413,7 +5413,7 @@ class Parser {
 		$shouldAddTrackingCategory = true;
 		Hooks::run( 'ParserShouldAddTrackingCategory', array( $this, $title, $file, &$shouldAddTrackingCategory ) );
 
-		if ( !$file && $shouldAddTrackingCategory ) {
+		if ( !$file && $this->mTitle->isWikitextPage() && $shouldAddTrackingCategory ) {
 		# wikia end
 
 			$this->addTrackingCategory( 'broken-file-category' );

@@ -72,19 +72,34 @@ class WantedFilesPage extends WantedQueryPage {
 	}
 
 	function getQueryInfo() {
-		$queryInfo = array (
-			'tables' => array ( 'imagelinks', 'image' ),
-			'fields' => array ( "'" . NS_FILE . "' AS namespace",
-					'il_to AS title',
-					'COUNT(*) AS value' ),
-			'conds' => array ( 'img_name IS NULL' ),
-			'options' => array ( 'GROUP BY' => 'il_to' ),
-			'join_conds' => array ( 'image' =>
-				array ( 'LEFT JOIN',
-					array ( 'il_to = img_name' )
-				)
-			)
-		);
+		$queryInfo = [
+			'tables' => [
+				'imagelinks',
+				'pg1' => 'page',
+				'pg2' => 'page',
+				'image'
+			],
+			'fields' => [
+				'namespace' => NS_FILE,
+				'title' => 'il_to',
+				'value' => 'COUNT(*)'
+			],
+			'conds' => [
+				'img_name' => null,
+				"NOT (RIGHT(pg2.page_title, 3) = '.js' OR RIGHT(pg2.page_title, 4) = '.css' OR pg2.page_namespace = '" . NS_MODULE . "')"
+			],
+			'options' => [ 'GROUP BY' => 'il_to' ],
+			'join_conds' => [
+				'image' => [ 'LEFT JOIN',
+					'il_to = img_name'
+				],
+				'pg1' => [ 'LEFT JOIN', [
+					'il_to = pg1.page_title',
+					'pg1.page_namespace' => NS_FILE,
+				] ],
+				'pg2' => [ 'LEFT JOIN', 'pg2.page_id = il_from' ]
+			]
+		];
 		
 		Hooks::run( 'WantedFiles::getQueryInfo', array( &$queryInfo ) ); 
 		
