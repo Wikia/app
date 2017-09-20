@@ -1,0 +1,93 @@
+/*
+ * the colors, duke, the colors!
+ */
+
+// Page
+$color-epl-hover: darken($color-page, 10%);
+$color-epl-page-secondary: darken($color-page, 10%);
+$color-epl-page-tertiary: darken($color-page, 5%);
+$color-epl-text-secondary: lighten($color-text, 15%);
+
+@if $is-dark-wiki {
+	$color-epl-hover: lighten($color-page, 5%);
+	$color-epl-page-secondary: lighten($color-page, 3%);
+	$color-epl-page-tertiary: lighten($color-page, 7%);
+	$color-epl-text-secondary: mix($color-text, $color-page, 50%);
+}
+
+// Gradients
+$color-epl-gradient: $color-page;
+$color-epl-gradient-dark: darken($color-epl-gradient, 8%);
+$color-epl-gradient-light: lighten($color-epl-gradient, 2%);
+$color-epl-gradient-shadow: darken($color-epl-gradient, 20%);
+
+@if $is-dark-wiki {
+	$color-epl-gradient: lighten($color-page, 5%);
+
+	@if lightness($color-page) < 15 {
+		$color-epl-gradient: lighten($color-page, 10%);
+	}
+
+	$color-epl-gradient-dark: darken($color-epl-gradient, 5%);
+	$color-epl-gradient-light: lighten($color-epl-gradient, 5%);
+	$color-epl-gradient-shadow: darken($color-epl-gradient, 10%);
+}
+
+// Header
+$color-epl-header: mix($color-page, $color-buttons, 65%);
+$color-epl-header-shadow: darken($color-epl-header, 5%);
+$color-epl-header-secondary: lighten($color-epl-header, 11%);
+$color-epl-header-text: white;
+
+@if lightness($color-epl-header) > 75 {
+	$color-epl-header-text: black;
+} @else {
+	$color-epl-header-shadow: darken($color-epl-header, 3%);
+}
+
+// EditPageToolbar
+$color-epl-separator: darken($color-page, 5%);
+$color-epl-separator-tips: lighten($color-epl-separator, 3%);
+$color-epl-toolbar-top: lighten($color-page, 5%);
+$color-epl-toolbar-bottom: mix($color-page, $color-page-border, 50%);
+
+@if $is-dark-wiki {
+	$color-epl-separator: lighten($color-page, 5%);
+	$color-epl-separator-tips: lighten($color-epl-separator, 5%);
+}
+
+// Buttons
+$color-epl-button: darken($color-page, 2%);
+$color-epl-button-active: darken($color-epl-button, 5%);
+$color-epl-button-border: darken($color-epl-button, 20%);
+$color-epl-button-shadow: darken($color-epl-button, 15%);
+
+@if $is-dark-wiki {
+	$color-epl-button: lighten($color-page, 10%);
+
+	@if lightness($color-epl-button) < 15 {
+		$color-epl-button: lighten($color-page, 17%);
+	}
+
+	$color-epl-button-active: darken($color-epl-button, 5%);
+	$color-epl-button-border: lighten($color-epl-button, 15%);
+	$color-epl-button-shadow: darken($color-epl-button, 25%);
+}
+
+// Inputs
+$color-epl-input: darken($color-page, 5%);
+$color-epl-input-border: darken($color-page, 20%);
+
+@if $is-dark-wiki {
+	$color-epl-input: lighten($color-page, 2%);
+	$color-epl-input-border: lighten($color-page, 20%);
+}
+
+// Notices
+$color-epl-notices-background: #ffffc6; // yellow
+$color-epl-notices-border: #c4c1a2; // darker yellow
+$color-epl-notices-color: #3a3a3a; // dark grey
+
+// Splotch
+$color-epl-splotch-background: #dc0d0e; // red
+$color-epl-splotch-highlight: #e63031; // lighter red

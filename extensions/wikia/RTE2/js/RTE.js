@@ -30,7 +30,6 @@
 			height: 400, // default height when "auto resizing" is not applied
 			indentOffset: 24, // match WikiaArticle styles (BugId:25379)
 			language: window.wgUserLanguage,
-			toolbarCanCollapse: false,
 			plugins:
 				'basicstyles,' +
 				'button,' +
@@ -90,9 +89,10 @@
 				'rte-tools',
 			// TODO: Too buggy. Try to use this after we update to 3.6.2 (BugId:23061)
 			//readOnly: true,
+			toolbarCanCollapse: true,
 			resize_enabled: false,
-			richcomboCss: $.getSassCommonURL('extensions/wikia/RTE2/css/richcombo.scss'),
-			skin: 'moono-lisa',
+		//	richcomboCss: $.getSassCommonURL('extensions/wikia/RTE2/css/richcombo.scss'), depracated
+			skin: 'wikia',
 			startupFocus: true, // Also used for determining wether to focus after modeswitch (BugId:19807)
 	//			theme: 'wikia'
 //			removePlugins: 'toolbar,notification,clipboard,pastetext', //temporary, till toolbar dependancies are fixed...
@@ -376,6 +376,7 @@ CKEDITOR.on('instanceReady', RTE.onEditorReady);
 CKEDITOR.on('instanceReady', function() {
 WikiaEditor.instances.wpTextbox1.plugins.ckeditor.themeLoaded();
 WikiaEditor.instances.wpTextbox1.plugins['ui-ckeditor'].ckReady();
+console.trace('Editor Ready!');
 });
 //
 // CKEDITOR.dtd fixes

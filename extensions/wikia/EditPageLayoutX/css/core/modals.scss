@@ -1,0 +1,24 @@
+.modalContent {
+	@include bodytext;
+	b {
+		font-weight: bold;
+	}
+}
+
+/* Style "Paste as Plain text" dialog textarea */
+.cke_skin_wikia .cke_pastetext {
+	.cke_dialog_ui_input_textarea {
+		background: transparent;
+		border: none;
+		> textarea {
+			@include epl-textfield;
+			color: black;
+			font-style: normal;
+			height: 160px;
+			line-height: 15px;
+			padding: 7px 8px;
+			resize: none; /* remove resize grip in Webkit / Fx4 */
+			width: 315px;
+		}
+	}
+}
