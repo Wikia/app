@@ -131,12 +131,10 @@ window.TabViewClass = $.createClass(Object, {
 			$.get(tabUrl, {action: 'render'}, function (html) {
 				containerSelector.html(html).data('loaded', true).stopThrobbing();
 
-				// fire event when tabview content is/will be added to DOM
-				mw.hook('wikipage.content').fire(containerSelector);
-
 				// MAIN-11456: initialize tabbers in tabview
 				mw.loader.using('ext.tabber', function () {
-					containerSelector.find('.tabber:not(.tabberlive)').tabber();
+					// fire event when tabview content is/will be added to DOM
+					mw.hook('wikipage.content').fire(containerSelector);
 				});
 			});
 		}
