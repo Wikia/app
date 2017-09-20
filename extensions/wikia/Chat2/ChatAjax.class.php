@@ -29,7 +29,6 @@ class ChatAjax {
 		global $wgMemc, $wgServer, $wgArticlePath, $wgRequest, $wgCityId, $wgContLang;
 
 		wfProfileIn( __METHOD__ );
-		Chat::info( __METHOD__ . ': Method called' );
 
 		if ( !self::authenticateServer() ) {
 			wfProfileOut( __METHOD__ );
@@ -117,7 +116,6 @@ class ChatAjax {
 		global $wgRequest;
 
 		wfProfileIn( __METHOD__ );
-		Chat::info( __METHOD__ . ': Method called' );
 
 		if ( !self::authenticateServer() ) {
 			wfProfileOut( __METHOD__ );
@@ -140,7 +138,6 @@ class ChatAjax {
 		global $wgRequest, $wgUser;
 
 		wfProfileIn( __METHOD__ );
-		Chat::info( __METHOD__ . ': Method called' );
 
 		if ( !self::authenticateServerOrUser() ) {
 			wfProfileOut( __METHOD__ );
@@ -171,7 +168,6 @@ class ChatAjax {
 		global $wgRequest, $wgUser;
 
 		wfProfileIn( __METHOD__ );
-		Chat::info( __METHOD__ . ': Method called' );
 
 		if ( !self::authenticateServerOrUser() ) {
 			wfProfileOut( __METHOD__ );
@@ -245,7 +241,6 @@ class ChatAjax {
 		global $wgRequest, $wgLang;
 
 		wfProfileIn( __METHOD__ );
-		Chat::info( __METHOD__ . ': Method called' );
 
 		$userId = $wgRequest->getVal( 'userId', 0 );
 
