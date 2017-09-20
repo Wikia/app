@@ -38,7 +38,7 @@ class Forum extends WikiaObject {
 			[ 'page', 'page_wikia_props'],
 			// SUS-2519: Only load the fields we actually use
 			// This allows the query planner to use proper index for page table
-			[ 'page.page_id', 'page_title', 'page_namespace', 'propname', 'props' ],
+			[ 'page.page_id AS page_id', 'page_title', 'page_namespace', 'propname', 'props' ],
 			[
 				// SUS-2519: Order of conditions matter.
 				// First reduce the list to Forum Boards only to reduce the number of rows scanned.
@@ -58,13 +58,15 @@ class Forum extends WikiaObject {
 			$board = ForumBoard::newFromTitle( $boardTitle );
 			$boardInfo = $board->getBoardInfo()->toArray();
 
+			// SUS-2519: if explicit sorting info is present, then use it...
 			if ( !empty( $row->props ) ) {
 				$orderIndex = wfUnserializeProp( $row->propname, $row->props );
 				$boardInfoByOrderIndex[$orderIndex] = $boardInfo;
 				continue;
 			}
 
-			$boardInfoByOrderIndex[] = $boardInfo;
+			// ...else rely on page ID for sorting.
+			$boardInfoByOrderIndex[$row->page_id] = $boardInfo;
 		}
 
 		krsort( $boardInfoByOrderIndex );
