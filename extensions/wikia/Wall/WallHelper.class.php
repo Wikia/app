@@ -36,7 +36,7 @@ class WallHelper {
 	 *
 	 * @return Title
 	 *
-	 * @author Andrzej 'nAndy' Åukaszewski
+	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function getTitle( $namespace = null, $subpage = null, $user = null ) {
 		if ( empty( $user ) ) {
@@ -67,7 +67,7 @@ class WallHelper {
 	 *
 	 * @return User
 	 *
-	 * @author Andrzej 'nAndy' Åukaszewski
+	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	// TODO: remove call to UserProfilePage
 	public function getUser() {
@@ -424,7 +424,7 @@ class WallHelper {
 	 * @param integer $textId article's text id in text table
 	 *
 	 * @return string
-	 * @author Andrzej 'nAndy' Åukaszewski
+	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function getDeletedArticleTitleTxt( $textId ) {
 		$dbr = wfGetDB( DB_SLAVE );
@@ -456,7 +456,7 @@ class WallHelper {
 	 * TODO: remove it we don't need to operate on delete wall messages anymore
 	 *
 	 * @return string
-	 * @author Andrzej 'nAndy' Åukaszewski
+	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function getTitleTxtFromMetadata( $text ) {
 		$pattern = '#<ac_metadata title="([^"]*)">(.*)</ac_metadata>#i';
