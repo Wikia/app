@@ -153,7 +153,10 @@ class ReplyForumController extends ForumController {
 	}
 
 	public function getSubject() {
-		return $this->getMessage( $this->getSubjectKey(), $this->titleText )->text();
+		return $this->getMessage( $this->getSubjectKey() )
+			// No need to encode HTML entities in subject
+			->rawParams( $this->titleText )
+			->text();
 	}
 
 	protected function getSummary() {
