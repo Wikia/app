@@ -218,40 +218,37 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	 * @return int
 	 */
 	private function handleBlockPost() {
-		wfProfileIn( __METHOD__ );
+		$request = $this->getContext()->getRequest();
 
-		$expire = $this->wg->Request->getText( 'wpPhalanxExpire' );
+		$expire = $request->getText( 'wpPhalanxExpire' );
 		if ( $expire === 'custom' ) {
-			$expire = $this->wg->Request->getText( 'wpPhalanxExpireCustom' );
+			$expire = $request->getText( 'wpPhalanxExpireCustom' );
 		}
 
-		$id = $this->wg->Request->getInt( 'id', 0 );
+		$id = $request->getInt( 'id', 0 );
 		$isBlockUpdate = ( $id !== 0 );
 		$data = [
 			'id'         => $id,
-			'text'       => $this->wg->Request->getText( 'wpPhalanxFilter' ),
-			'exact'      => $this->wg->Request->getCheck( 'wpPhalanxFormatExact' ) ? 1 : 0,
-			'case'       => $this->wg->Request->getCheck( 'wpPhalanxFormatCase' ) ? 1 : 0,
-			'regex'      => $this->wg->Request->getCheck( 'wpPhalanxFormatRegex' ) ? 1 : 0,
+			'text'       => $request->getText( 'wpPhalanxFilter' ),
+			'exact'      => $request->getCheck( 'wpPhalanxFormatExact' ) ? 1 : 0,
+			'case'       => $request->getCheck( 'wpPhalanxFormatCase' ) ? 1 : 0,
+			'regex'      => $request->getCheck( 'wpPhalanxFormatRegex' ) ? 1 : 0,
 			'timestamp'  => wfTimestampNow(),
-			'author_id'  => $this->wg->User->getId(),
-			'reason'     => $this->wg->Request->getText( 'wpPhalanxReason' ),
-			'comment'    => $this->wg->Request->getText( 'wpPhalanxComment' ),
-			'lang'       => $this->wg->Request->getVal( 'wpPhalanxLanguages', null ),
-			'type'       => $this->wg->Request->getArray( 'wpPhalanxType' ),
-			'multitext'  => $this->wg->Request->getText( 'wpPhalanxFilterBulk' ),
+			'author_id'  => $this->getUser()->getId(),
+			'reason'     => $request->getText( 'wpPhalanxReason' ),
+			'comment'    => $request->getText( 'wpPhalanxComment' ),
+			'lang'       => $request->getVal( 'wpPhalanxLanguages', null ),
+			'type'       => $request->getArray( 'wpPhalanxType' ),
+			'multitext'  => $request->getText( 'wpPhalanxFilterBulk' ),
 			'expire'     => $expire
 		];
 
 		// SUS-1207: call handler directly, don't use hook dispatcher for single handler
 		if ( !PhalanxHooks::onEditPhalanxBlock( $data ) ) {
-			$ret = self::RESULT_ERROR;
-		} else {
-			$ret = $isBlockUpdate ? self::RESULT_BLOCK_UPDATED : self::RESULT_BLOCK_ADDED;
+			return self::RESULT_ERROR;
 		}
 
-		wfProfileOut( __METHOD__ );
-		return $ret;
+		return $isBlockUpdate ? self::RESULT_BLOCK_UPDATED : self::RESULT_BLOCK_ADDED;
 	}
 
 	/**
