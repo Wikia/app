@@ -41,13 +41,18 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 
 		function processBtfSlot(slot) {
 			var context = adContext.getContext();
+			log(
+				[slot, context.opts.premiumAdLayoutEnabled, uapContext.isUapLoaded()],
+				log.levels.info,
+				logGroup
+			);
+
+			if (uapContext.isUapLoaded() && slot.name === 'INVISIBLE_HIGH_IMPACT_2') {
+				log(['IHI2 disabled when UAP on page'], log.levels.info, logGroup);
+				return;
+			}
 
 			if (context.opts.premiumAdLayoutEnabled) {
-				if (uapContext.isUapLoaded() && slot.name === 'INVISIBLE_HIGH_IMPACT_2') {
-					log(['PAL IHI2 disabled when UAP on page'], log.levels.info, logGroup);
-					return;
-				}
-
 				if (context.slots.premiumAdLayoutSlotsToUnblock.indexOf(slot.name) !== -1) {
 					log(['PAL enabled, filling slot', slot.name], log.levels.info, logGroup);
 					fillInSlot(slot);
