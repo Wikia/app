@@ -280,4 +280,28 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 
 		expect(data.kv_ah).toBe(57);
 	});
+
+	it('include default product_chosen', function () {
+		var data,
+			slot = getTopLeaderboardSlotWithPageParams(fakeJSONString);
+
+		slot.container.firstChild.dataset.gptSlotParams = JSON.stringify({});
+		slot.container.firstChild.dataset.gptCreativeSize = fakeJSONString;
+
+		data = getModule().prepareData(slot);
+
+		expect(data.product_chosen).toBe('unknown');
+	});
+
+	it('include given product_chosen', function () {
+		var data,
+			slot = getTopLeaderboardSlotWithPageParams(fakeJSONString);
+
+		slot.container.firstChild.dataset.gptSlotParams = JSON.stringify({});
+		slot.container.firstChild.dataset.gptCreativeSize = fakeJSONString;
+
+		data = getModule().prepareData(slot, undefined, {adProduct: 'chosen_product'});
+
+		expect(data.product_chosen).toBe('chosen_product');
+	});
 });

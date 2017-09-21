@@ -22,7 +22,7 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 		);
 	}
 
-	function prepareData(slot, status) {
+	function prepareData(slot, status, adInfo) {
 		log(['prepareData', slot, status], log.levels.debug, logGroup);
 
 		var data,
@@ -33,6 +33,8 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 			realSlotPrices = lookupServices.getDfpSlotPrices(slot.name),
 			slotSize = JSON.parse(slotFirstChildData.gptCreativeSize),
 			bidderWon = getBidderWon(slotParams, realSlotPrices);
+
+		adInfo = adInfo || {};
 
 		data = {
 			'pv': pageParams.pv || '',
@@ -69,7 +71,7 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 			'bidder_10': transformBidderPrice('appnexusAst', realSlotPrices, slotPricesIgnoringTimeout),
 			'bidder_11': transformBidderPrice('rubicon_display', realSlotPrices, slotPricesIgnoringTimeout),
 			'bidder_12': transformBidderPrice('a9', realSlotPrices, slotPricesIgnoringTimeout),
-			'product_chosen': '',
+			'product_chosen': adInfo.adProduct || 'unknown',
 			'product_lineitem_id': slotFirstChildData.gptLineItemId || '',
 			'creative_id': slotFirstChildData.gptCreativeId || '',
 			'creative_size': (slotFirstChildData.gptCreativeSize || '')
