@@ -128,7 +128,8 @@ class Phalanx extends WikiaModel implements ArrayAccess {
 				'regex'     => $row->p_regex,
 				'case'      => $row->p_case,
 				'reason'    => $row->p_reason,
-				'comment'   => $row->p_comment
+				'comment'   => $row->p_comment,
+				'lang'      => $row->p_lang,
 			];
 		}
 

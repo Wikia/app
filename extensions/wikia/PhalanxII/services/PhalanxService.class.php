@@ -214,10 +214,13 @@ class PhalanxService {
 		 * for any other we're sending POST
 		 */
 		else {
-			/**
-			 * city_id should be always known
-			 */
-			$parameters[ 'wiki' ] = F::app()->wg->CityId;
+			global $wgCityId, $wgLanguageCode;
+
+			// Specify wiki ID parameter, for Phalanx Stats logging
+			$parameters[ 'wiki' ] = $wgCityId;
+
+			// SUS-2759: pass on content language code to the service
+			$parameters[ 'lang' ] = $wgLanguageCode;
 
 			if ( ( $action == "match" || $action == "check" ) ) {
 				if ( !is_null( $this->user ) ) {
