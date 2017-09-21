@@ -154,7 +154,7 @@ class ReplyForumController extends ForumController {
 
 	public function getSubject() {
 		return $this->getMessage( $this->getSubjectKey() )
-			// No need to encode HTML entities in subject
+			// We should not encode HTML entities in the subject
 			->rawParams( $this->titleText )
 			->text();
 	}
