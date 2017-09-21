@@ -1208,9 +1208,9 @@ class BlogTemplateClass {
 							$result = self::__makeRssOutput( $aResult );
 						}
 					} elseif ( !empty( self::$oTitle ) && self::$oTitle->getNamespace() == NS_BLOG_ARTICLE ) {
-							$result = wfMessage( 'blog-empty-user-blog' )->parseAsBlock();
+						$result = wfMessage( 'blog-empty-user-blog' )->parseAsBlock();
 					} else {
-							$result = "";
+						$result = "";
 					}
 				}
 			}
