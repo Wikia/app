@@ -140,7 +140,11 @@ define('ext.wikia.adEngine.adContext', [
 			);
 
 		context.opts.premiumAdLayoutEnabled = isPALEnabledOnDesktopFeaturedVideo || isPALEnabledOnRegularArticle;
-		context.slots.premiumAdLayoutSlotsToUnblock = ['INCONTENT_BOXAD_1', 'BOTTOM_LEADERBOARD'];
+		context.slots.premiumAdLayoutSlotsToUnblock = [
+			'INVISIBLE_HIGH_IMPACT_2',
+			'INCONTENT_BOXAD_1',
+			'BOTTOM_LEADERBOARD'
+		];
 
 		context.opts.megaAdUnitBuilderEnabled = isMEGAEnabledForFVOasis(context, isPALEnabledOnDesktopFeaturedVideo) ||
 			isMEGAEnabledForFVMobile(context);
