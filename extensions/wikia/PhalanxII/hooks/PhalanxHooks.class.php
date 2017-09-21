@@ -14,7 +14,7 @@ class PhalanxHooks extends WikiaObject {
 	 *
 	 * @param $id Integer: user ID
 	 * @param $nt Title: user page title
-	 * @param $links Array: tool links
+	 * @param $links array: tool links
 	 * @return boolean true
 	 */
 	static public function loadLinks( $id, $nt, &$links ) {
@@ -23,7 +23,7 @@ class PhalanxHooks extends WikiaObject {
 		$user = RequestContext::getMain()->getUser();
 
 		if ( $user->isAllowed( 'phalanx' ) ) {
-			$links[] = Linker::makeKnownLinkObj(
+			$links[] = Linker::linkKnown(
 				GlobalTitle::newFromText( 'Phalanx', NS_SPECIAL, WikiFactory::COMMUNITY_CENTRAL ),
 				'PhalanxBlock',
 				wfArrayToCGI(

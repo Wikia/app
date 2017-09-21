@@ -144,6 +144,7 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 		$data['regex'] = $data['regex'] ? 'Yes' : 'No';
 		$data['case']  = $data['case']  ? 'Yes' : 'No';
 		$data['exact'] = $data['exact'] ? 'Yes' : 'No';
+		$data['lang'] = empty( $data['lang'] ) ? 'All' : $data['lang'];
 
 		if ( $data->isTypeEmail() && !$this->getUser()->isAllowed( 'phalanxemailblock' ) ) {
 			/* hide email from non-privileged users */
