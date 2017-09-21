@@ -52,7 +52,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 				return;
 			}
 
-			if (context.opts.premiumAdLayoutEnabled) {
+			if (context.opts.premiumAdLayoutEnabled && !uapContext.isUapLoaded()) {
 				if (context.slots.premiumAdLayoutSlotsToUnblock.indexOf(slot.name) !== -1) {
 					log(['PAL enabled, filling slot', slot.name], log.levels.info, logGroup);
 					fillInSlot(slot);
@@ -60,12 +60,12 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 				}
 			} else {
 				if (win.ads.runtime.unblockHighlyViewableSlots && config.highlyViewableSlots) {
-					log(['PAL disabled, unblocking HiVi slots', slot.name], log.levels.info, logGroup);
+					log(['Unblocking HiVi slots', slot.name], log.levels.info, logGroup);
 					config.highlyViewableSlots.map(unblock);
 				}
 
 				if (unblockedSlots.indexOf(slot.name) > -1 || !win.ads.runtime.disableBtf) {
-					log(['PAL disabled, filling slot', slot.name], log.levels.info, logGroup);
+					log(['Filling slot', slot.name], log.levels.info, logGroup);
 					fillInSlot(slot);
 					return;
 				}
