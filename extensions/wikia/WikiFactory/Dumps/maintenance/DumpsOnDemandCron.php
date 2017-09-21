@@ -41,12 +41,23 @@ class DumpsOnDemandCron extends Maintenance {
             exit( 0 );
         }
 
-        global $IP, $wgWikiaLocalSettingsPath;
+        global $IP, $wgWikiaLocalSettingsPath, $wgMaxShellTime, $wgMaxShellFileSize;
 
-        $this->output( "INFO: Creating dumps for Wikia #{$sWikiaId}.\n" );
+	    /**
+	     * This prevents runBackups.php from timing out due to default values of $wgMaxShellTime used by wfShellExec()
+	     *
+	     * @see SUS-1395
+	     */
+	    $wgMaxShellTime     = 0;
+	    $wgMaxShellFileSize	= 0;
+
+	    $this->output( "INFO: Creating dumps for Wikia #{$sWikiaId}.\n" );
 
         $sCommand = sprintf( 'SERVER_ID=%d php %s/extensions/wikia/WikiFactory/Dumps/runBackups.php --conf %s --id=%d --both --tmp --s3 2>&1', Wikia::COMMUNITY_WIKI_ID, $IP, $wgWikiaLocalSettingsPath, $sWikiaId );
+		$this->output( "INFO: Running {$sCommand} ...\n" );
+
 		$sOutput = wfShellExec( $sCommand, $iStatus );
+		$this->output( "INFO: Command finished with exit code #{$iStatus}\n{$sOutput}\n" );
 
         $oDB = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 

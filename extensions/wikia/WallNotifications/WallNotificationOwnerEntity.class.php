@@ -17,7 +17,7 @@ class WallNotificationOwnerEntity {
 		$this->data->message_id = $data['messageId'];
 		$this->data->is_reply = $data['isReply'];
 		$this->data->hide_for_userid = [ $data['userIdRemoving'], $data['userIdWallOwner'] ];
-		$this->data->parent_id = $data['parentId'];
+		$this->data->parent_id = $data['parentMessageId'];
 		$this->data->reason = $data['reason'];
 
 	}

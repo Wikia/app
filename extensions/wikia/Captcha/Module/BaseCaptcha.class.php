@@ -92,7 +92,7 @@ abstract class BaseCaptcha extends \WikiaObject {
 		$text = wfMessage( $name )->escaped();
 		# Obtain a more tailored message, if possible, otherwise, fall back to
 		# the default for edits
-		return wfEmptyMsg( $name, $text ) ? wfMessage( 'captcha-edit' )->escaped() : $text;
+		return wfEmptyMsg( $name ) ? wfMessage( 'captcha-edit' )->escaped() : $text;
 	}
 
 	/**
@@ -116,7 +116,7 @@ abstract class BaseCaptcha extends \WikiaObject {
 	 *
 	 * @return bool
 	 */
-	public function APIGetAllowedParams( &$module, &$params ) {
+	public function APIGetAllowedParams( \ApiBase $module, &$params ): bool {
 		if ( $module instanceof \ApiEditPage ) {
 			$params['captchaword'] = null;
 			$params['captchaid'] = null;
@@ -129,7 +129,7 @@ abstract class BaseCaptcha extends \WikiaObject {
 	 * @param array $desc
 	 * @return bool
 	 */
-	public function APIGetParamDescription( &$module, &$desc ) {
+	public function APIGetParamDescription( \ApiBase $module, &$desc ): bool {
 		if ( $module instanceof \ApiEditPage ) {
 			$desc['captchaid'] = 'CAPTCHA ID from previous request';
 			$desc['captchaword'] = 'Answer to the CAPTCHA';

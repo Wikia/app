@@ -10,8 +10,9 @@
 
 class ApiVisualEditorEdit extends ApiVisualEditor {
 
-	public function __construct( ApiMain $main, $name /*, Config $config */ ) {
-		parent::__construct( $main, $name, $config );
+	public function __construct( ApiMain $main, $name ) {
+		parent::__construct( $main, $name );
+		$main->setShouldCheckWriteApiPermission( false );
 	}
 
 	protected function saveWikitext( $title, $wikitext, $params ) {
@@ -47,6 +48,7 @@ class ApiVisualEditorEdit extends ApiVisualEditor {
 			true // enable write
 		);
 
+		$api->setShouldCheckWriteApiPermission( false );
 		$api->execute();
 
 		return $api->getResultData();

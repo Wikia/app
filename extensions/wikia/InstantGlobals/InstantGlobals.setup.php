@@ -31,8 +31,11 @@ $wgExtensionCredits['other'][] = [
  */
 $dir = __DIR__;
 
+$wgAutoloadClasses['InstantGlobalsApiController'] = "{$dir}/InstantGlobalsApiController.class.php";
 $wgAutoloadClasses['InstantGlobalsHooks'] = "{$dir}/InstantGlobalsHooks.class.php";
 $wgAutoloadClasses['InstantGlobalsModule'] = "{$dir}/InstantGlobalsModule.class.php";
+
+$wgWikiaApiControllers['InstantGlobalsApiController'] = $dir . 'InstantGlobalsApiController.class.php';
 
 // i18n
 $wgExtensionMessagesFiles['InstantGlobals'] = $dir . '/InstantGlobals.i18n.php';

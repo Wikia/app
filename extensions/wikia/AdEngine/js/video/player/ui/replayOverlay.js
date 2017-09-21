@@ -24,16 +24,44 @@ define('ext.wikia.adEngine.video.player.ui.replayOverlay', [
 			overlay.style.width = '';
 		});
 
-		video.addEventListener('wikiaAdCompleted', function() {
-			if (!overlayPercentWidth) {
-				overlayPercentWidth = getOverlayWidth(params);
-			}
+		if (!params.autoPlay) {
+			overlayPercentWidth = computeOverlayWidth(params, overlayPercentWidth);
+			showOverlay(overlay, overlayPercentWidth);
+		}
 
+		video.addEventListener('wikiaAdCompleted', function () {
+			overlayPercentWidth = computeOverlayWidth(params, overlayPercentWidth);
 			// make overlay visible after ad finishes
-			overlay.style.width = overlayPercentWidth;
+			showOverlay(overlay, overlayPercentWidth);
 		});
 
 		video.container.parentElement.insertBefore(overlay, video.container);
+	}
+
+	/**
+	 * Computes overlay percent width if value have been not computed yet
+	 * @param params
+	 * @param overlayPercentWidth - previously computed percent width
+	 * @return string in form '55%'
+	 */
+	function computeOverlayWidth(params, overlayPercentWidth) {
+		var width = overlayPercentWidth;
+
+		if (!width) {
+			width = getOverlayWidth(params);
+		}
+
+		return width;
+	}
+
+	/**
+	 * Show replay overlay
+	 * @param overlay
+	 * @param overlayPercentWidth
+	 * @returns void
+	 */
+	function showOverlay(overlay, overlayPercentWidth) {
+		overlay.style.width = overlayPercentWidth;
 	}
 
 	/**

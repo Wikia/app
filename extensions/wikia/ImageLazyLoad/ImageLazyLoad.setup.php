@@ -2,7 +2,7 @@
 /* Lazy loading for images inside articles (skips wikiamobile skin)
  * @author Piotr Bablok <pbablok@wikia-inc.com>
  */
- 
+
 $wgExtensionCredits[ 'other' ][ ] = array(
 	'name' => 'ImageLazyLoad',
 	'author' => 'Piotr Bablok',
@@ -20,7 +20,6 @@ $wgAutoloadClasses[ 'ImageLazyLoad'] =  $dir . 'ImageLazyLoad.class.php' ;
 /* Hooks */
 $wgHooks['BeforePageDisplay'][] = 'ImageLazyLoad::onBeforePageDisplay';
 $wgHooks['ParserClearState'][] = 'ImageLazyLoad::onParserClearState';
-$wgHooks['MakeGlobalVariablesScript'][] = 'ImageLazyLoad::onMakeGlobalVariablesScript';
 $wgHooks['ThumbnailImageHTML'][] = 'ImageLazyLoad::onThumbnailImageHTML';
 $wgHooks['ThumbnailVideoHTML'][] = 'ImageLazyLoad::onThumbnailImageHTML';
 

@@ -56,7 +56,7 @@ class TitleBatchTest extends WikiaBaseTest {
 
 		$this->assertEquals( $expectedPropValue1, $props[ $expectedId1 ] );
 		$this->assertEquals( $expectedPropValue2, $props[ $expectedId2 ] );
-		$this->assertEquals( $expectedPropValue3, $props[ $expectedId3 ] );
+		$this->assertArrayNotHasKey( $expectedId3, $props );
 	}
 
 

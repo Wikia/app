@@ -82,16 +82,6 @@ var STATUS_STATE_AWAY = 'away';
 		}
 	});
 
-	models.GiveChatModCommand = models.Command.extend({
-		initialize: function(options){
-			if(!options) return;
-			this.set({
-				command: 'givechatmod',
-				userToPromote: options.userToPromote
-			});
-		}
-	});
-
 	models.SetStatusCommand = models.Command.extend({
 		initialize: function(options){
 			if(!options) return;
@@ -137,6 +127,20 @@ var STATUS_STATE_AWAY = 'away';
 				time: info.time ? info.time:0,
 				reason: info.reason ? info.reason : ''
 			});
+		}
+	});
+
+	models.FrozenEvent = Backbone.Model.extend({
+		defaults: {
+			freezeDuration: 0
+		},
+
+		initialize: function (info) {
+			if (info) {
+				this.set({
+					freezeDuration: info.freezeDuration
+				});
+			}
 		}
 	});
 
@@ -230,6 +234,7 @@ var STATUS_STATE_AWAY = 'away';
 			'statusState': STATUS_STATE_PRESENT,
 			'isModerator': false,
 			'isStaff': false,
+			'groups' : [],
 			'canPromoteModerator': false,
 			'avatarSrc': "http://placekitten.com/50/50",
 			'editCount': '?',

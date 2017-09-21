@@ -131,7 +131,7 @@ class SpecialEmailUser extends UnlistedSpecialPage {
 		$form->setWrapperLegend( wfMsgExt( 'email-legend', 'parsemag' ) );
 		$form->loadData();
 
-		if( !wfRunHooks( 'EmailUserForm', array( &$form ) ) ) {
+		if( !Hooks::run( 'EmailUserForm', array( &$form ) ) ) {
 			return false;
 		}
 
@@ -209,7 +209,7 @@ class SpecialEmailUser extends UnlistedSpecialPage {
 		}
 
 		$hookErr = false;
-		wfRunHooks( 'EmailUserPermissionsErrors', array( $user, $editToken, &$hookErr ) );
+		Hooks::run( 'EmailUserPermissionsErrors', array( $user, $editToken, &$hookErr ) );
 		if ( $hookErr ) {
 			return $hookErr;
 		}
@@ -265,7 +265,7 @@ class SpecialEmailUser extends UnlistedSpecialPage {
 		);
 
 		$error = '';
-		if( !wfRunHooks( 'EmailUser', array( &$to, &$from, &$subject, &$text, &$error ) ) ) {
+		if( !Hooks::run( 'EmailUser', array( &$to, &$from, &$subject, &$text, &$error ) ) ) {
 			return $error;
 		}
 
@@ -299,12 +299,12 @@ class SpecialEmailUser extends UnlistedSpecialPage {
 					$target->getName(),
 					$subject
 				);
-				wfRunHooks( 'EmailUserCC', array( &$from, &$from, &$cc_subject, &$text ) );
+				Hooks::run( 'EmailUserCC', array( &$from, &$from, &$cc_subject, &$text ) );
 				$ccStatus = UserMailer::send( $from, $from, $cc_subject, $text );
 				$status->merge( $ccStatus );
 			}
 
-			wfRunHooks( 'EmailUserComplete', array( $to, $from, $subject, $text ) );
+			Hooks::run( 'EmailUserComplete', array( $to, $from, $subject, $text ) );
 			return $status;
 		}
 	}

@@ -1,11 +1,12 @@
 <?php
 
 namespace Wikia\Service\User\Attributes;
+use PHPUnit\Framework\TestCase;
 use Wikia\Domain\User\Attribute;
 use Wikia\Persistence\User\Attributes\AttributePersistence;
 use Wikia\Service\PersistenceException;
 
-class AttributeKeyValueTest extends \PHPUnit_Framework_TestCase {
+class AttributeKeyValueTest extends TestCase {
 
 	protected $userId = 1;
 	protected $anonUserId = 0;

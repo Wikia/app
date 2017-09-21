@@ -248,7 +248,7 @@ class NodeImageTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider testVideoProvider
+	 * @dataProvider videoProvider
 	 * @param $markup
 	 * @param $params
 	 * @param $expected
@@ -264,7 +264,7 @@ class NodeImageTest extends WikiaBaseTest {
 		$this->assertEquals( $expected, $nodeImage->getData() );
 	}
 
-	public function testVideoProvider() {
+	public function videoProvider() {
 		return [
 			[
 				'<image source="img" />',

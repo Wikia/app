@@ -65,7 +65,7 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', function () {
 				}
 			},
 			log: noop,
-			recoveryHelper: {
+			sourcePoint: {
 				addOnBlockingCallback: noop
 			},
 			rubiconTargeting: {
@@ -133,7 +133,7 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', function () {
 		return modules['ext.wikia.adEngine.lookup.lookupFactory'](
 			mocks.adContext,
 			mocks.adTracker,
-			mocks.recoveryHelper,
+			mocks.sourcePoint,
 			mocks.lazyQueue,
 			mocks.log
 		);
@@ -188,7 +188,7 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', function () {
 
 		rubiconFastlane.call();
 
-		expect(mocks.win.rubicontag.defineSlot.calls.count()).toEqual(6);
+		expect(mocks.win.rubicontag.defineSlot.calls.count()).toEqual(8);
 	});
 
 	it('Define all 3 slots for mercury skin', function () {

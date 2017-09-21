@@ -1,46 +1,197 @@
 .wds-dropdown {
 	$content-z-index: 1;
+	$link-transition-duration: 0.2s;
 
 	display: inline-block;
 	position: relative;
 
 	&__toggle {
-		cursor: pointer;
+		cursor: default;
 		position: relative;
-		// dropdown content has shadow that should be hidden below the toggle
-		z-index: $content-z-index + 1;
 	}
 
-	&__toggle-chevron {
+	&__toggle-chevron:not(:only-child) {
 		margin-left: 5px;
 	}
 
 	&__content {
 		background-color: $wds-color-white;
-		box-shadow: 0 0 10px 0 rgba($wds-color-black, .2);
+		border: $wds-dropdown-border-width solid $wds-color-faint-gray;
+		border-radius: $wds-dropdown-border-radius;
 		display: none;
-		left: 0;
+		left: 50%;
+		// it's for long dropdowns toggles, to make sure dropdown content is always below the nodge
+		min-width: 70%;
+		// we assume that there will be regular size .wds-list inside the dropdown content
+		padding: $wds-dropdown-padding - $wds-list-item-vertical-padding 0;
 		position: absolute;
 		top: 100%;
+		transform: translateX(-50%);
 		z-index: $content-z-index;
-
-		&.wds-is-dark {
-			box-shadow: 0 0 20px 0 rgba($wds-color-black, .3);
-		}
 
 		&.wds-is-right-aligned {
 			left: auto;
 			right: 0;
+			transform: none;
+		}
+
+		&.wds-is-left-aligned {
+			left: 0;
+			transform: none;
+		}
+
+		// The default is to show scroll on long dropdowns
+		&:not(.wds-is-not-scrollable) {
+			.wds-list {
+				@include scrollable-list($wds-dropdown-height);
+			}
+		}
+
+		&.wds-is-not-scrollable {
+			.wds-list {
+				position: relative;
+			}
+		}
+
+		.wds-list {
+			padding: 0;
+
+			> li {
+				margin: 0 $wds-dropdown-padding / 2;
+				padding-left: $wds-dropdown-padding / 2;
+				padding-right: $wds-dropdown-padding / 2;
+				white-space: nowrap;
+			}
+
+			&.wds-is-linked {
+				> li {
+					padding: 0;
+
+					> a {
+						color: $wds-color-dark-blue-gray;
+						padding-left: $wds-dropdown-padding / 2;
+						padding-right: $wds-dropdown-padding / 2;
+						text-decoration: none;
+						transition-duration: $link-transition-duration;
+						transition-property: background-color, color;
+					}
+
+					&:hover, &.wds-is-selected {
+						> a {
+							@include wds-dropdown-linked-list-item-hover;
+						}
+					}
+				}
+			}
 		}
 	}
 
-	&.wds-is-active .wds-dropdown {
-		&__content {
+	&::before, &::after {
+		bottom: -$wds-dropdown-border-width;
+		content: '';
+		display: none;
+		height: 0;
+		left: 50%;
+		pointer-events: none;
+		position: absolute;
+		width: 0;
+		z-index: $content-z-index + 1;
+	}
+
+	&::after {
+		border: 8px solid transparent;
+		border-bottom-color: $wds-color-white;
+		margin-left: -8px;
+	}
+
+	&::before {
+		border: 9px solid transparent;
+		border-bottom-color: $wds-color-faint-gray;
+		margin-left: -9px;
+	}
+
+	&.wds-is-active,
+	&:hover {
+		&::before, &::after {
+			display: block;
+		}
+
+		.wds-dropdown__content {
 			display: inline-block;
 		}
 
-		&__toggle-chevron {
+		.wds-dropdown__toggle-chevron {
 			transform: rotate(180deg);
+		}
+
+		&.wds-has-shadow, &.wds-has-dark-shadow {
+			&::before {
+				display: none;
+			}
+		}
+	}
+
+	&.wds-has-shadow {
+		.wds-dropdown__content {
+			box-shadow: 0 0 10px 0 rgba($wds-color-black, .2);
+		}
+	}
+
+	&.wds-has-dark-shadow {
+		.wds-dropdown__content {
+			box-shadow: 0 0 20px 0 rgba($wds-color-black, .3);
+		}
+	}
+
+	&.wds-has-shadow, &.wds-has-dark-shadow {
+		.wds-dropdown__content {
+			border: 0;
+		}
+	}
+}
+
+.wds-dropdown__content .wds-list.wds-is-linked .wds-dropdown-level-2 {
+	margin-right: 0;
+
+	> a {
+		padding-right: $wds-dropdown-padding;
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.wds-dropdown-chevron {
+		transform: rotate(-90deg);
+		margin-left: 18px;
+	}
+
+	&.wds-is-sticked-to-parent {
+		position: relative;
+
+		.wds-dropdown-level-2__content {
+			top: auto;
+			bottom: -($wds-dropdown-padding - $wds-list-item-vertical-padding + $wds-dropdown-border-width);
+		}
+	}
+
+	.wds-dropdown-level-2__content {
+		background-color: $wds-color-white;
+		border: $wds-dropdown-border-width solid $wds-color-faint-gray;
+		border-radius: $wds-dropdown-border-radius;
+		display: none;
+		left: 100%;
+		padding: $wds-dropdown-padding - $wds-list-item-vertical-padding 0;
+		position: absolute;
+		top: -($wds-dropdown-padding - $wds-list-item-vertical-padding + $wds-dropdown-border-width);
+
+		.wds-list.wds-is-linked > li > a {
+			font-size: $wds-typescale-size-minus-2;
+		}
+	}
+
+	&:hover,
+	&.wds-is-active {
+		.wds-dropdown-level-2__content {
+			display: block;
 		}
 	}
 }

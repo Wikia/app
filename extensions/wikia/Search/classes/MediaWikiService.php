@@ -483,7 +483,7 @@ class MediaWikiService {
 	 * @return mixed
 	 */
 	public function invokeHook( $hookName, array $args = [] ) {
-		return wfRunHooks( $hookName, $args );
+		return \Hooks::run( $hookName, $args );
 	}
 
 	/**
@@ -1022,7 +1022,7 @@ class MediaWikiService {
 	 * @deprecated
 	 */
 	public function registerHook( $event, $class, $method ) {
-		$this->app->registerHook( $event, $class, $method );
+		\Hooks::register( $event, "$class::$method" );
 	}
 
 	/**
@@ -1094,7 +1094,7 @@ class MediaWikiService {
 	 *
 	 * @param int $pageId
 	 *
-	 * @return \Article
+	 * @return \Article|null
 	 */
 	protected function getPageFromPageId( $pageId ) {
 
@@ -1214,16 +1214,13 @@ class MediaWikiService {
 	 *
 	 * @param int $pageId
 	 *
-	 * @return \Title
+	 * @return \Title|null
 	 */
 	protected function getTitleFromPageId( $pageId ) {
 
 		if ( !isset( static::$pageIdsToTitles[$pageId] ) ) {
 			$page = $this->getPageFromPageId( $pageId );
-
-			\Wikia\Util\Assert::true( $page instanceof \Article, __METHOD__ . ' - Invalid article ID' ); // SUS-1403
-
-			static::$pageIdsToTitles[$pageId] = $page->getTitle();
+			static::$pageIdsToTitles[$pageId] = $page instanceof \Article ? $page->getTitle() : null;
 		}
 
 		return static::$pageIdsToTitles[$pageId];

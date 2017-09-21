@@ -5,7 +5,7 @@ class WikiaValidatorDependentTest extends WikiaBaseTest {
 	 * @dataProvider dataProviderWithInvalidConfigParams
 	 */
 	public function testIsValidWithInvalidConfigParams($validator, $exceptionName) {
-		$this->setExpectedException($exceptionName);
+		$this->expectException( $exceptionName );
 		$validator->isValid('testValue');
 	}
 	

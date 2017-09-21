@@ -278,7 +278,12 @@ class CuratedContentController extends WikiaController {
 		$this->response->setHeader( 'Access-Control-Allow-Origin', '*' );
 
 		if ( $wgUser->isAllowed( 'curatedcontent' ) ) {
-			$data = $this->request->getArray( 'data', [ ] );
+			$data = json_decode( $this->request->getVal( 'data' ), true );
+			// TODO: remove fallback after format change is released to mercury (see: XW-2854)
+			if ( $data === null ) {
+				// fallback to old format
+				$data = $this->request->getArray( 'data', [ ] );
+			}
 			$properData = [ ];
 			$status = false;
 
@@ -313,7 +318,12 @@ class CuratedContentController extends WikiaController {
 			if ( !empty( $errors ) ) {
 				$this->response->setVal( 'errors', $errors );
 			} else {
-				$community_data = $this->request->getArray( 'community_data', [ ] );
+				$community_data = json_decode( $this->request->getVal( 'community_data' ), true );
+				// TODO: remove fallback after format change is released to mercury (see: XW-2854)
+				if ( $community_data === null ) {
+					// fallback to old format
+					$community_data = $this->request->getArray( 'community_data', [ ] );
+				}
 				if ( $community_data ) {
 					$community_data[ 'community_data' ] = 'true';
 					$sections[] = $community_data;
@@ -322,7 +332,7 @@ class CuratedContentController extends WikiaController {
 				$status = ( new CommunityDataService( $wgCityId ) )->setCuratedContent( $sections );
 
 				if ( !empty( $status ) ) {
-					wfRunHooks( 'CuratedContentSave', [ $sections ] );
+					Hooks::run( 'CuratedContentSave', [ $sections ] );
 				}
 			}
 			$this->response->setVal( 'status', $status );
@@ -341,45 +351,55 @@ class CuratedContentController extends WikiaController {
 		$this->response->setHeader( 'Access-Control-Allow-Origin', '*' );
 
 		if ( $wgUser->isAllowed( 'curatedcontent' ) ) {
-			$data = [ ];
+			$sections = [];
+
 			if ( $this->communityDataService->hasData() ) {
-				// extend images
-				$curated = array_map( function ( $section ) {
+				$curated = $this->communityDataService->getCurated();
+				foreach ( $curated as $section ) {
+					$section[ 'curated' ] = 'true';
 					$section[ 'image_url' ] = CuratedContentHelper::findImageUrl( $section[ 'image_id' ] );
-					return $section;
-				}, $this->communityDataService->getCurated() );
+					$section = $this->extendSectionAndItems( $section );
+					$section = $this->validateCuratedSection( $section );
+
+					if ( !empty( $section ) ) {
+						$sections[] = $section;
+					}
+				}
 
 				$featured = $this->communityDataService->getFeatured();
 				if ( !empty( $featured ) ) {
 					$featured[ 'featured' ] = 'true';
-					$curated[] = $featured;
-				}
-				$optional = $this->communityDataService->getOptional();
-				if ( !empty( $optional ) ) {
-					$curated[] = $optional;
+					$featured = $this->extendSectionAndItems( $featured );
+					$featured = $this->validateFeaturedSection( $featured );
+
+					if ( !empty( $featured ) ) {
+						$sections[] = $featured;
+					}
 				}
 
-				$data = array_map( function ( $section ) {
-					$section[ 'node_type' ] = 'section';
-					$section[ 'items' ] = $this->extendItemsWithImages( $section[ 'items' ] );
-					$section[ 'items' ] = $this->extendItemsWithType( $section[ 'items' ] );
-					return $section;
-				}, $curated );
+				$optional = $this->communityDataService->getOptional();
+				if ( !empty( $optional ) ) {
+					$optional[ 'optional' ] = 'true';
+					$optional = $this->extendSectionAndItems( $optional );
+					$optional = $this->validateOptionalSection( $optional );
+
+					if ( !empty( $optional ) ) {
+						$sections[] = $optional;
+					}
+				}
 
 				$community = $this->communityDataService->getCommunityData();
 				if ( !empty( $community ) ) {
 					$community[ 'community_data' ] = 'true';
 
 					if ( !empty( $community[ 'image_id' ] ) ) {
-						$url = CuratedContentHelper::getImageUrl( $community[ 'image_id' ] );
-						$community[ 'image_url' ] = $url;
+						$community[ 'image_url' ] = CuratedContentHelper::getImageUrl( $community[ 'image_id' ] );
 					}
-					$data[] = $community;
+					$sections[] = $community;
 				}
-
 			}
 
-			$this->response->setVal( 'data', $data );
+			$this->response->setVal( 'data', $sections );
 		} else {
 			$this->response->setCode( \Wikia\Service\ForbiddenException::CODE );
 			$this->response->setVal( 'message', 'No permissions to access curated content' );
@@ -441,8 +461,9 @@ class CuratedContentController extends WikiaController {
 		}, [ ] );
 	}
 
-	private function extendItemsWithImages( array $items ) {
-		return array_map( [ $this, 'extendWithImageData' ], $items );
+	private function extendItemsWithImages( array $items ) : array {
+		// SUS-2733 | keep continuous keys in the returned array so that it can be JSON-encoded as an array rather than an object
+		return array_values( array_map( [ $this, 'extendWithImageData' ], $items ) );
 	}
 
 	private function extendWithImageData( $item ) {
@@ -590,6 +611,81 @@ class CuratedContentController extends WikiaController {
 			}
 			return $accu;
 		}, [ 'tooLongTitlesCount' => 0, 'missingImagesCount' => 0, 'totalNumberOfItems' => 0 ] );
+	}
+
+	/**
+	 * @param array $section curated content single section data
+	 * @return array section extended with node type, image data and items type
+	 */
+	private function extendSectionAndItems( array $section ): array {
+		$section['node_type'] = 'section';
+
+		if ( !empty( $section['items'] ) ) {
+			$section['items'] = $this->extendItemsWithImages( $section['items'] );
+			$section['items'] = $this->extendItemsWithType( $section['items'] );
+		}
+
+		return $section;
+	}
+
+	/**
+	 * @param array $section featured categories section data
+	 * @return array input data (full section return only if valid) with validated items only (featured categories).
+	 */
+	private function validateCuratedSection( array $section ): array {
+		if ( empty( $section['items'] ) ) {
+			return [];
+		}
+
+		$validator = new CuratedContentValidator();
+		$error = $validator->validateSection( $section );
+
+		if ( !empty( $error ) ) {
+			return [];
+		}
+
+		$section['items'] = array_filter( $section['items'], function ( $item ) use ( $validator ) {
+			$error = $validator->validateSectionItem( $item );
+			return empty( $error );
+		} );
+
+		return $section;
+	}
+
+	/**
+	 * @param array $section featured content section data
+	 * @return array input data but with validated items only (featured content slide).
+	 */
+	private function validateFeaturedSection( array $section ): array {
+		if ( empty( $section['items'] ) ) {
+			return [];
+		}
+
+		$validator = new CuratedContentValidator();
+		$section['items'] = array_filter( $section['items'], function ( $item ) use ( $validator ) {
+			$error = $validator->validateFeaturedItem( $item );
+			return empty( $error );
+		} );
+
+		return $section;
+	}
+
+	/**
+	 * @param array $section optional categories section data
+	 * @return array input data with validated items only (optional categories).
+	 */
+	private function validateOptionalSection( array $section ): array {
+		if ( empty( $section['items'] ) ) {
+			return [];
+		}
+
+		$validator = new CuratedContentValidator();
+		$section['items'] = array_filter( $section['items'], function ( $item ) use ( $validator ) {
+			$error = $validator->validateSectionItem( $item );
+			return empty( $error );
+		} );
+
+		return $section;
 	}
 }
 

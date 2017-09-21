@@ -25,6 +25,12 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 }
 
 .Wall {
+
+	/* overrides /resources/jquery/jquery.makeCollapsible.css */
+	li .mw-collapsible-toggle {
+		float: right;
+	}
+
 	&.Board {
 		.deleteorremove-infobox {
 			margin-left: 75px;
@@ -331,6 +337,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 				height: 19px;
 				left: -204px;
 				line-height: 19px;
+				max-width: 200px;
 				position: absolute;
 				text-align: center;
 				top: 4px;

@@ -1,0 +1,6 @@
+{
+	"packagePath": "Swagger",
+	"srcBasePath": "src",
+	"modelPackage": "Swagger\\Client\\CurationCMS\\Models",
+	"apiPackage": "Swagger\\Client\\CurationCMS\\Api"
+}

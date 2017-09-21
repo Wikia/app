@@ -21,7 +21,11 @@ class AuthModule implements Module {
 				return $wgTheSchwartzSecretToken;
 			} )
 			->bind( HeliosClientImpl::BASE_URI )->to( function ( Container $c ) {
-					global $wgAuthServiceName;
+					global $wgAuthServiceName, $wgAuthServiceInternalUrl;
+
+					if ( !empty( $wgAuthServiceInternalUrl ) ) {
+						return $wgAuthServiceInternalUrl;
+					}
 
 					/** @var UrlProvider $urlProvider */
 					$urlProvider = $c->get(UrlProvider::class);

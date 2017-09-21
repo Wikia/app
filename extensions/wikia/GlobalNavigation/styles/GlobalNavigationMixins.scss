@@ -1,8 +1,0 @@
-@import "GlobalNavigationColors";
-
-@mixin global-nav-chevron {
-	border: 4px solid transparent;
-	border-top-color: $global-navigation-text-color;
-	content: ' ';
-	display: inline-block;
-}

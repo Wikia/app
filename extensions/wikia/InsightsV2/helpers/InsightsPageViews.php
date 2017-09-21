@@ -99,13 +99,20 @@ class InsightsPageViews {
 	 * @return array An array with dates of the last four Sundays
 	 */
 	private function getLastFourTimeIds() {
-		$lastTimeId = ( new DateTime() )->modify( 'last Sunday' );
-		$format = 'Y-m-d H:i:s';
-		return [
-			$lastTimeId->modify( '-1 week' )->format( $format ),
-			$lastTimeId->modify( '-1 week' )->format( $format ),
-			$lastTimeId->modify( '-1 week' )->format( $format ),
-			$lastTimeId->modify( '-1 week' )->format( $format ),
-		];
+		$lastRollupsDate = DataMartService::findLastRollupsDate( DataMartService::PERIOD_ID_WEEKLY );
+
+		if ( !empty( $lastRollupsDate ) ) {
+			$lastTimeId = new DateTime( $lastRollupsDate );
+			$format = 'Y-m-d H:i:s';
+
+			return [
+				$lastTimeId->modify( '-1 week' )->format( $format ),
+				$lastTimeId->modify( '-1 week' )->format( $format ),
+				$lastTimeId->modify( '-1 week' )->format( $format ),
+				$lastTimeId->modify( '-1 week' )->format( $format ),
+			];
+		}
+
+		return [];
 	}
 }

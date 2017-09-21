@@ -105,8 +105,8 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 			$vars['wgMWSuggestTemplate'] = SearchEngine::getMWSuggestTemplate();
 		}
 
-		wfRunHooks( 'ResourceLoaderGetConfigVars', array( &$vars ) );
-		wfRunHooks( 'ResourceLoaderGetConfigVarsWithContext', array( &$vars, $context ) );
+		Hooks::run( 'ResourceLoaderGetConfigVars', array( &$vars ) );
+		Hooks::run( 'ResourceLoaderGetConfigVarsWithContext', array( &$vars, $context ) );
 
 		return $vars;
 	}
@@ -202,7 +202,7 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 
 			// The core modules:
 			$modules = array( 'jquery', 'mediawiki' );
-			wfRunHooks( 'ResourceLoaderGetStartupModules', array( &$modules ) );
+			Hooks::run( 'ResourceLoaderGetStartupModules', array( &$modules ) );
 
 			// Get the latest version
 			$version = 0;

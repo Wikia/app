@@ -118,7 +118,7 @@ class WallHelper {
 	 *
 	 * @return array | boolean returns false if ArticleComment class does not exist
 	 *
-	 * @author Andrzej 'nAndy' Åukaszewski
+	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function wikiActivityFilterMessageWall( $title, &$res ) {
 		wfProfileIn( __METHOD__ );
@@ -175,7 +175,7 @@ class WallHelper {
 			$item = [ ];
 		}
 
-		wfRunHooks( 'AfterWallWikiActivityFilter', [ &$item, $wmessage ] );
+		Hooks::run( 'AfterWallWikiActivityFilter', [ &$item, $wmessage ] );
 
 		wfProfileOut( __METHOD__ );
 		return $item;
@@ -316,9 +316,9 @@ class WallHelper {
 			if ( $user instanceof User ) {
 				$items[$i]['real-name'] = $user->getName();
 				if ( !empty( F::app()->wg->EnableWallExt ) ) {
-					$userLinkTitle = Title::newFromText( $user->getName(), NS_USER_WALL );
+					$userLinkTitle = $user->getTalkPage();
 				} else {
-					$userLinkTitle = Title::newFromText( $user->getName(), NS_USER );
+					$userLinkTitle = $user->getUserPage();
 				}
 				$items[$i]['user-profile-url'] = $userLinkTitle->getFullUrl();
 			} else {
@@ -357,21 +357,21 @@ class WallHelper {
 	 *
 	 * @desc Text is truncated to given limit (by default limit is equal to WA_WALL_COMMENTS_MAX_LEN constant) then it truncates it to last spacebar and adds ellipses.
 	 *
+	 * @param Language $language Language object to be used in formatting string
 	 * @param string $text text which needs to be shorter
 	 * @param integer $limit limit of characters
 	 *
 	 * @return string
 	 */
-	public function shortenText( $text, $limit = self::WA_WALL_COMMENTS_MAX_LEN ) {
-		$app = F::app();
+	public static function shortenText( Language $language, string $text, int $limit = self::WA_WALL_COMMENTS_MAX_LEN ): string {
 		wfProfileIn( __METHOD__ );
 
 		if ( mb_strlen( $text ) > $limit ) {
-			$text = $app->wg->Lang->truncate( $text, $limit );
+			$text = $language->truncate( $text, $limit );
 			$lastSpacePos = strrpos( $text, ' ' );
 
 			if ( $lastSpacePos !== false ) {
-				$text = $app->wg->Lang->truncate( $text, $lastSpacePos );
+				$text = $language->truncate( $text, $lastSpacePos );
 			}
 		}
 
@@ -407,9 +407,13 @@ class WallHelper {
 	 * @return string
 	 */
 	public function getMessageSnippet( WallMessage $wallMessage ) {
-		$formatted = Linker::formatComment( $wallMessage->getRawText(), $wallMessage->getTitle() );
+		$messageText = $wallMessage->getRawText();
+		// SUS-1684: Remove quotes and other HTML tags before parsing
+		$messageText = Sanitizer::stripAllTags( $messageText );
 
-		return $this->shortenText( $formatted );
+		$formatted = Linker::formatComment( $messageText, $wallMessage->getTitle() );
+
+		return static::shortenText( RequestContext::getMain()->getLanguage(), $formatted );
 	}
 
 	/**
@@ -471,13 +475,21 @@ class WallHelper {
 		return $comments->getCountAll() > 0;
 	}
 
-	public function sendNotification( $revOldId, $rcType = RC_NEW, $useMasterDB = false ) {
-		$app = F::App();
-		$rev = Revision::newFromId( $revOldId );
-		$notif = WallNotificationEntity::createFromRev( $rev, $useMasterDB );
-		$wh = new WallHistory( $app->wg->CityId );
+	/**
+	 * Create a new Wall Notification from revision info, and dispatch it to wall_notifications table.
+	 *
+	 * @deprecated this interface should be converted to use background task at some point
+	 * @param Revision $rev
+	 * @param int $rcType whether this is a new thread/reply (RC_NEW = 1) or edit to existing one/wall action (RC_EDIT = 2)
+	 * @param bool $useMasterDB
+	 */
+	public static function sendNotification( Revision $rev, $rcType = RC_NEW, $useMasterDB = false ) {
+		global $wgUser;
 
-		$wh->add( $rcType == RC_NEW ? WH_NEW : WH_EDIT, $notif, $app->wg->User );
+		$notif = WallNotificationEntity::createFromRev( $rev, $useMasterDB );
+		$wh = new WallHistory();
+
+		$wh->add( $rcType == RC_NEW ? WH_NEW : WH_EDIT, $notif, $wgUser );
 
 		if ( $rcType == RC_NEW ) {
 			$wn = new WallNotifications();
@@ -547,11 +559,8 @@ class WallHelper {
 	 * @return array|bool
 	 */
 	public static function getWallTitleData( $rc = null, $row = null ) {
-
-		wfProfileIn( __METHOD__ );
-
 		if ( is_object( $row ) ) {
-			$objTitle = Title::newFromText( $row->page_title, $row->page_namespace );
+			$objTitle = Title::makeTitle( $row->page_namespace, $row->page_title );
 			$userText = !empty( $row->rev_user_text ) ? $row->rev_user_text : '';
 
 			$isNew = ( !empty( $row->page_is_new ) && $row->page_is_new === '1' ) ? true : false;
@@ -570,15 +579,30 @@ class WallHelper {
 		if ( !( $objTitle instanceof Title ) ) {
 			// it can be media wiki deletion of an article -- we ignore them
 			Wikia::log( __METHOD__, false, "WALL_NOTITLE_FOR_MSG_OPTS " . print_r( [ $rc, $row ], true ) );
-			wfProfileOut( __METHOD__ );
 			return true;
+		}
+
+		// SUS-1777: Don't bother trying to load Wall Message if this is the Wall itself
+		if ( $objTitle->inNamespace( NS_USER_WALL ) ) {
+			// change in NS_USER_WALL namespace mean that wall page was created (bugid:95249)
+			return [
+				'articleTitle' => $objTitle->getPrefixedText(),
+				'articleFullUrl' => $objTitle->getFullUrl(),
+				'articleTitleVal' => '',
+				'articleTitleTxt' => wfMessage(  'wall-recentchanges-wall-created-title' )->text(),
+				'wallTitleTxt' => $objTitle->getPrefixedText(),
+				'wallPageFullUrl' =>  $objTitle->getFullUrl(),
+				'wallPageName' => $objTitle->getText(),
+				'actionUser' => $userText,
+				'isThread' => true,
+				'isNew' => $isNew
+			];
 		}
 
 		$wm = WallMessage::newFromId( $objTitle->getArticleId() );
 		if ( empty( $wm ) ) {
 			// it can be media wiki deletion of an article -- we ignore them
 			Wikia::log( __METHOD__, false, "WALL_NOTITLE_FOR_MSG_OPTS " . print_r( [ $rc, $row ], true ) );
-			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
@@ -586,7 +610,6 @@ class WallHelper {
 		if ( !$wm->isMain() ) {
 			$wmw = $wm->getTopParentObj();
 			if ( empty( $wmw ) ) {
-				wfProfileOut( __METHOD__ );
 				return true;
 			}
 			$wmw->load();
@@ -605,43 +628,19 @@ class WallHelper {
 			$articleTitleTxt = strip_tags( $articleTitleTxt );
 		}
 
-		$ci = $wm->getCommentsIndex();
-		if ( empty( $ci ) && ( $row->page_namespace == NS_USER_WALL ) ) {
-			// change in NS_USER_WALL namespace mean that wall page was created (bugid:95249)
-			$title = Title::newFromText( $row->page_title, NS_USER_WALL );
+		$title = Title::makeTitle( NS_USER_WALL_MESSAGE, $articleId );
 
-			$out = [
-				'articleTitle' => $title->getPrefixedText(),
-				'articleFullUrl' => $title->getFullUrl(),
-				'articleTitleVal' => '',
-				'articleTitleTxt' => wfMessage(  'wall-recentchanges-wall-created-title' )->text(),
-				'wallTitleTxt' => $title->getPrefixedText(),
-				'wallPageFullUrl' =>  $title->getFullUrl(),
-				'wallPageName' => $row->page_title,
-				'actionUser' => $userText,
-				'isThread' => $wm->isMain(),
-				'isNew' => $isNew
-			];
-
-		} else {
-			$title = Title::newFromText( $articleId, NS_USER_WALL_MESSAGE );
-
-			$out = [
-				'articleTitle' => $title->getPrefixedText(),
-				'articleFullUrl' => $wm->getMessagePageUrl(),
-				'articleTitleVal' => $articleTitleTxt,
-				'articleTitleTxt' => empty( $articleTitleTxt ) ? wfMessage( 'wall-recentchanges-deleted-reply-title' )->text() : $articleTitleTxt,
-				'wallTitleTxt' => $wm->getArticleTitle()->getPrefixedText(),
-				'wallPageFullUrl' => $wm->getArticleTitle()->getFullUrl(),
-				'wallPageName' => $wm->getArticleTitle()->getText(),
-				'actionUser' => $userText,
-				'isThread' => $wm->isMain(),
-				'isNew' => $isNew
-			];
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $out;
+		return [
+			'articleTitle' => $title->getPrefixedText(),
+			'articleFullUrl' => $wm->getMessagePageUrl(),
+			'articleTitleVal' => $articleTitleTxt,
+			'articleTitleTxt' => empty( $articleTitleTxt ) ? wfMessage( 'wall-recentchanges-deleted-reply-title' )->text() : $articleTitleTxt,
+			'wallTitleTxt' => $wm->getArticleTitle()->getPrefixedText(),
+			'wallPageFullUrl' => $wm->getArticleTitle()->getFullUrl(),
+			'wallPageName' => $wm->getArticleTitle()->getText(),
+			'actionUser' => $userText,
+			'isThread' => $wm->isMain(),
+			'isNew' => $isNew
+		];
 	}
 }

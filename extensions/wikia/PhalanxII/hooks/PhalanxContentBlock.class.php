@@ -27,6 +27,7 @@ class PhalanxContentBlock extends WikiaObject {
 		if ( $contentIsBlocked ) {
 			// we found block
 			$editPage->spamPageWithContent( $errorMessage );
+			$hookError = $errorMessage; // SUS-1189
 
 			Wikia\Logger\WikiaLogger::instance()->warning( __METHOD__ . ' - block applied SUS-1188', [ 'title' => $editPage->getTitle()->getPrefixedDBkey(), 'error_message' => $errorMessage ] );
 		}

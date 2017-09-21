@@ -1,12 +1,11 @@
 <?php
-/** Internationalization file for /extensions/wikia/NotAValidWikia/NotAValidWikia extension. */
-$messages = [];
+$messages = array();
 
-$messages['en'] = [
+$messages['en'] = array(
 	'not-a-valid-wikia' => '<div class="center" style="padding: 1em 0; font-weight:bold; font-size:120%; margin-bottom:1em">This is not the wiki you\'re looking for! We didn\'t recognize the URL you provided.</div>
 
 {| style="margin: 1em auto 0; font-weight: bold; text-align: center" cellpadding="7" cellspacing="5"
-!colspan="3" style="font-size: 120%"|Looking for help on Fandom?
+!colspan="3" style="font-size: 120%"|Looking for help on FANDOM?
 |-
 |[[Help:Contents|Explore our Help pages]]
 |
@@ -14,19 +13,19 @@ $messages['en'] = [
 |-
 |[[homepage:Special:CreateWiki|Start your own wiki]]
 |
-|[[Blog:Fandom Staff Blog|Read the latest Fandom news]]
+|[[Blog:FANDOM Staff Blog|Read the latest FANDOM news]]
 |}',
-];
+);
 
-$messages['qqq'] = [
+$messages['qqq'] = array(
 	'not-a-valid-wikia' => 'Missing documentation',
-];
+);
 
-$messages['de'] = [
-	'not-a-valid-wikia' => '<div class="center" style="padding: 1em 0; font-weight:bold; font-size:120%; margin-bottom:1em">Das ist nicht das Wiki, nach dem du gesucht hast! Wir konnten die von dir eingegebene URL nicht zuordnen.</div>
+$messages['de'] = array(
+	'not-a-valid-wikia' => '<div class="center" style="padding: 1em 0; font-weight:bold; font-size:120%; margin-bottom:1em">Dies ist nicht das Wiki, nach dem du gesucht hast! Wir konnten die von dir eingegebene URL nicht zuordnen.</div>
 
 {| style="margin: 1em auto 0; font-weight: bold; text-align: center" cellpadding="7" cellspacing="5"
-!colspan="3" style="font-size: 120%"|Brauchst du Hilfe bei Fandom?
+!colspan="3" style="font-size: 120%"|Brauchst du Hilfe bei FANDOM?
 |-
 |[[w:c:de.community:Hilfe:Übersicht|Sieh dir unsere Hilfeseiten an]]
 |
@@ -34,47 +33,47 @@ $messages['de'] = [
 |-
 |[[homepage:Special:CreateWiki|Starte dein eigenes Wiki]]
 |
-|[[w:c:de.community:Blog:Fandom_Deutschland_News|Lies die neuesten Neuigkeiten bei Fandom]]
+|[[w:c:de.community:Blog:Fandom_Deutschland_News|Lies die neuesten Neuigkeiten bei FANDOM]]
 |}',
-];
+);
 
-$messages['es'] = [
+$messages['es'] = array(
 	'not-a-valid-wikia' => '<div class="center" style="padding: 1em 0; font-weight:bold; font-size:120%; margin-bottom:1em">¡Este no es el wiki que estás buscando! No hemos reconocido el URL que has colocado. Regresa a la [{{fullurl:homepage:Special:Search|search={{urlencode:$1}}}} búsqueda] para encontrar el wiki.</div>
 
 {| style="margin: 1em auto 0; font-weight: bold; text-align: center" cellpadding="7" cellspacing="5"
-!colspan="3" style="font-size: 120%"|¿Buscas ayuda en Fandom?
+!colspan="3" style="font-size: 120%"|¿Buscas ayuda en FANDOM?
 |-
-|[[Ayuda:Contenido|Revisa nuestras páginas de ayuda]]
+|[[w:c:comunidad:Ayuda:Contenido|Revisa nuestras páginas de ayuda]]
 |
-|[[Especial:Foro|Realiza preguntas en el foro]]
+|[[w:c:comunidad:Especial:Foro|Realiza preguntas en el foro]]
 |-
 |[[homepage:Special:CreateWiki|Crea tu propio wiki]]
 |
-|[[[[:Blog:Noticias_de_Fandom|Lee las últimas novedades dentro de Fandom]]
+|[[w:c:comunidad:Blog:Noticias_de_Fandom|Lee las últimas novedades dentro de FANDOM]]
 |}',
-];
+);
 
-$messages['fr'] = [
+$messages['fr'] = array(
 	'not-a-valid-wikia' => '<div class="center" style="padding: 1em 0; font-weight:bold; font-size:120%; margin-bottom:1em">Ce wiki n\'est pas celui que vous recherchez. Nous n\'avons pas reconnu l\'URL fournie.</div>
 
 {| style="margin: 1em auto 0; font-weight: bold; text-align: center" cellpadding="7" cellspacing="5"
-!colspan="3" style="font-size: 120%"|Besoin d\'aide sur Fandom ?
+!colspan="3" style="font-size: 120%"|Besoin d\'aide sur FANDOM ?
 |-
-|[[Aide:Contenu|Explorez nos pages d\'aide.]]
+|[[w:fr:Aide:Contenu|Explorez nos pages d\'aide.]]
 |
-|[[Spécial:Forum|Posez des questions dans Forum.]]
+|[[w:fr:Spécial:Forum|Posez des questions dans le Forum.]]
 |-
 |[http://www.wikia.com/Special:CreateNewWiki?uselang=fr Créez votre propre wiki.]
 |
-|[[Blog:Actualité_Wikia|Lisez les dernières actualités Fandom.]]
+|[[w:fr:Blog:Actualité_Fandom|Lisez les dernières actualités FANDOM.]]
 |}',
-];
+);
 
-$messages['it'] = [
-	'not-a-valid-wikia' => '<div class="center" style="padding: 1em 0; font-weight:bold; font-size:120%; margin-bottom:1em;">Questa non è la wiki che stai cercando! Non abbiamo riconosciuto l\'URL fornito.</div>
+$messages['it'] = array(
+	'not-a-valid-wikia' => '<div class="center" style="padding: 1em 0; font-weight:bold; font-size:120%; margin-bottom:1em;">Questa non è la wiki che stavi cercando! Non abbiamo riconosciuto l\'URL fornito.</div>
 
 {| style="margin: 1em auto 0; font-weight: bold; text-align: center;" cellpadding="7" cellspacing="5"
-! colspan="3" style="font-size: 120%;" | Cerchi aiuto su Fandom?
+! colspan="3" style="font-size: 120%;" | Cerchi aiuto su FANDOM?
 |-
 | [[w:it:Aiuto:Contenuti|Esplora le pagine della Guida]]
 |
@@ -82,58 +81,59 @@ $messages['it'] = [
 |-
 | [[homepage:Special:CreateWiki|Crea la tua wiki]]
 |
-| [[w:it:Blog:Blog ufficiale di Fandom Italia|Leggi le ultime novità su Fandom]]
+| [[w:it:Blog:Blog ufficiale di FANDOM Italia|Leggi le ultime novità su FANDOM]]
 |}',
-];
+);
 
-$messages['ja'] = [
-	'not-a-valid-wikia' => '<div class="center" style="padding: 1em 0; font-weight:bold; font-size:120%; margin-bottom:1em">これはお探しのwikiではないようです。指定されたURLを認識できませんでした。</div>
+$messages['ja'] = array(
+	'not-a-valid-wikia' => '<div class="center" style="padding: 1em 0; font-weight:bold; font-size:120%; margin-bottom:1em">お探しのWikiが見つかりません。指定されたURLを認識できませんでした。</div>
+
 
 {| style="margin: 1em auto 0; font-weight: bold; text-align: center" cellpadding="7" cellspacing="5"
-!colspan="3" style="font-size: 120%"|Fandomのサポートが必要な場合
+!colspan="3" style="font-size: 120%"|FANDOMのサポートが必要な場合
 |-
-|[[ヘルプ:コンテンツ|ヘルプページの記事を探す]]
+|[[w:ja:ヘルプ:コンテンツ|ヘルプページで探す]]
 |
-|[[Special:Forum|フォーラムに質問を投稿する]]
+|[[w:ja:特別:フォーラム|フォーラムに質問を投稿する]]
 |-
-|[[homepage:Special:CreateWiki|wikiを始める]]
+|[[homepage:Special:CreateWiki|Wikiをはじめる]]
 |
-|[[Blog:Fandom_Staff_Blog|Fandomの最新情報を読む]]
+|[[w:ja:ブログ:FANDOMスタッフブログ|FANDOMの最新情報を読む]]
 |}',
-];
+);
 
-$messages['pl'] = [
-	'not-a-valid-wikia' => '<div class="center" style="padding: 1em 0; font-weight:bold; font-size:120%; margin-bottom:1em">To nie jest wiki, której szukasz! Nie rozpoznajemy adresu, który wprowadziłeś.</div>
+$messages['pl'] = array(
+	'not-a-valid-wikia' => '<div class="center" style="padding: 1em 0; font-weight:bold; font-size:120%; margin-bottom:1em">To nie jest wiki, której szukasz! Nie rozpoznajemy adresu, który {{GENDER:|wprowadziłeś|wprowadziłaś}}.</div>
 
-{| style="margin: 1em auto 0; font-weight: bold; text-align: center" cellpadding="7" cellspacing="5" !colspan="3" style="font-size: 120%"|Potrzebujesz pomocy na portalu Fandom?
+{| style="margin: 1em auto 0; font-weight: bold; text-align: center" cellpadding="7" cellspacing="5" !colspan="3" style="font-size: 120%"|Potrzebujesz pomocy na Fandomie?
 |-
-|[[Help:Contents|Przeglądaj strony pomocy]]
+|[[w:pl:Pomoc:Zawartość|Przeglądaj strony pomocy]]
 |
-|[[Special:Forum|Zadaj pytanie na forum]]
+|[[w:pl:Special:Forum|Zadaj pytanie na forum]]
 |-
 |[[homepage:Special:CreateWiki|Stwórz własną wiki]]
 |
-|[[Blog:Fandom Staff Blog|Czytaj najnowsze informacje z Fandomu]]
-|}',
-];
+|[[w:pl:Blog:FANDOM News|Czytaj najnowsze informacje z Fandomu]]
+|}<div class="center" style="padding: 1em 0; font-weight:bold; font-size:120%; margin-bottom:1em">',
+);
 
-$messages['pt'] = [
+$messages['pt'] = array(
 	'not-a-valid-wikia' => '<div class="center" style="padding: 1em 0; font-weight:bold; font-size:120%; margin-bottom:1em"> Esta não é a wiki que você está procurando! Não reconhecemos a URL que você forneceu.</div> 
 
- {| stily = "margin: 1em auto 0; font-weight: bold; text-align: center" cellpadding = "7" cellspacing = "5"
-!colspan = "3" style = "font-size: 120%"| À procura de ajuda no Fandom? 
+ {| style = "margin: 1em auto 0; font-weight: bold; text-align: center" cellpadding = "7" cellspacing = "5"
+!colspan = "3" style = "font-size: 120%"| À procura de ajuda no FANDOM? 
 |-
-| [[Ajuda:Conteúdos|Explore nossas páginas de ajuda]]
+|[[w:c:comunidade:Ajuda:Conteúdos|Explore nossas páginas de ajuda]]
 |
-| [[Especial:Fórum|Fazer perguntas no fórum]]
+|[[w:c:comunidade:Especial:Forum|Faça perguntas no fórum]]
 |-
-|[[homepage:Special:CreateNewWiki?uselang=pt-br|Crie sua própria wiki]]
+|[[homepage:Special:CreateWiki|Crie a sua própria wiki]]
 |
-|[[w:c:comunidade:Categoria:Notícias_da_Comunidade|Leia as últimas notícias do Fandom]]
+|[[w:c:comunidade:Blog:Notícias_do_Fandom|Leia as últimas notícias do FANDOM]]
 |}',
-];
+);
 
-$messages['ru'] = [
+$messages['ru'] = array(
 	'not-a-valid-wikia' => '<div class="center" style="padding: 1em 0; font-weight:bold; font-size:120%; margin-bottom:1em">Эта не та вики, которую вы искали. Мы не смогли распознать предоставленный вами адрес.</div>
 
 {| style="margin: 1em auto 0; font-weight: bold; text-align: center" cellpadding="7" cellspacing="5"
@@ -145,39 +145,39 @@ $messages['ru'] = [
 |-
 |[http://www.wikia.com/Special:CreateNewWiki?uselang=ru Создайте свою вики]
 |
-|[[w:c:ru.community.wikia.com/wiki/Блог:Блоги_сотрудников|будьте в курсе последних новостей Фэндома]]
+|[[w:c:ru.community:Блог:Блоги_сотрудников|Оставайтесь в курсе последних новостей Фэндома]]
 |}',
-];
+);
 
-$messages['zh-hans'] = [
-	'not-a-valid-wikia' => '<div class="center" style="padding: 1em 0; font-weight:bold; font-size:120%; margin-bottom:1em">很抱歉，找不到您要查找的维基！您所提供的URL地址无效。请单击[{{fullurl:homepage:Special:Search|search={{urlencode:$1}}}} 这里]查找其它维基社区。</div>
+$messages['zh-hans'] = array(
+	'not-a-valid-wikia' => '<div class="center" style="padding: 1em 0; font-weight:bold; font-size:120%; margin-bottom:1em">很抱歉，找不到您要查找的社区！您所提供的URL地址无效。</div>
 
 {| style="margin: 1em auto 0; font-weight: bold; text-align: center" cellpadding="7" cellspacing="5"
-!colspan="3" style="font-size: 120%"|在Fandom上寻求帮助？
+!colspan="3" style="font-size: 120%"|在FANDOM上寻求帮助？
 |-
-|[[Help:Contents|查看帮助中心]]
+|[[w:c:zh.community:Help:内容|查看帮助中心]]
 |
-|[[Special:Forum|在论坛上提问]]
+|[[w:c:zh.community:Special:Forum|在论坛上提问]]
 |-
 |[[homepage:Special:CreateWiki|创建你的维基]]
 |
-|[[博客:社区中心|查看最新Fandom讯息]]
+|[[w:c:zh.community:博客:社区中心|查看FANDOM新闻]]
 |}',
-];
+);
 
-$messages['zh-hant'] = [
-	'not-a-valid-wikia' => '<div class="center" style="padding: 1em 0; font-weight:bold; font-size:120%; margin-bottom:1em">很抱歉，找不到您要查找wiki！您所提供的URL地址無效。請按一下[{{fullurl:homepage:Special:Search|search={{urlencode:$1}}}} 這裡]查找其它wiki社群。 </div>
+$messages['zh-hant'] = array(
+	'not-a-valid-wikia' => '<div class="center" style="padding: 1em 0; font-weight:bold; font-size:120%; margin-bottom:1em">很抱歉，找不到您要查找的wiki！您所提供的URL網址無效。</div>
 
 {| style="margin: 1em auto 0; font-weight: bold; text-align: center" cellpadding="7" cellspacing="5"
-!colspan="3" style="font-size: 120%"|在Fandom上尋求幫助？
+!colspan="3" style="font-size: 120%"|在FANDOM上尋求幫助？
 |-
-|[[Help:Contents|查看幫助中心]]
+|[[w:c:zh.community:Help:内容|查看幫助中心]]
 |
-|[[Special:Forum|在論壇上提問]]
+|[[w:c:zh.community:Special:Forum|在論壇上提問]]
 |-
 |[[homepage:Special:CreateWiki|創建你的wiki]]
 |
-|[[博客:社区中心|查看最新Fandom訊息]]
+|[[w:c:zh.community:博客:社区中心|查看最新FANDOM訊息]]
 |}',
-];
+);
 

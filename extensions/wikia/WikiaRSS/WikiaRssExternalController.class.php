@@ -10,6 +10,7 @@ class WikiaRssExternalController extends WikiaController {
 	public function getRssFeeds() {
 		$this->response->setVal( 'status', false );
 		$options = $this->request->getVal( 'options', false );
+
 		$this->response->setCacheValidity( self::CACHE_TIME ); //cache it on varnish for 1h
 
 		//somehow empty arrays are lost
@@ -46,6 +47,7 @@ class WikiaRssExternalController extends WikiaController {
 			}
 
 			$rss = $feedData['rss'];
+
 			$short = ( $options['short'] == 'true' ) ? true : false;
 			$reverse = ( $options['reverse'] == 'true' ) ? true : false;
 
@@ -93,11 +95,14 @@ class WikiaRssExternalController extends WikiaController {
 	 * @return Array
 	 */
 	private function getFullItemList($items, $options) {
+		// TODO DRY see getShortItemList()
+
 		$app = F::app();
 		$result = array();
 
 		$charset = !empty( $options['charset'] ) ? $options['charset'] : array();
-		$date = $options['dateFormat'];
+		// dateFormat is only for backwards compatibility of requests.
+		$date = $options['date'] || $options['dateFormat'];
 		$rssFilter = $options['filter'];
 		$rssFilterout = $options['filterout'];
 		$rssHighlight = $options['highlight'];
@@ -111,11 +116,12 @@ class WikiaRssExternalController extends WikiaController {
 			$d_title = true;
 
 			$href = htmlspecialchars(trim(mb_convert_encoding($item['link'],$outputEncoding,$charset)));
+			$sanitizedHref = Sanitizer::validateAttributes( [ 'href' => $href ], [ 'href' ] );
 			$title = htmlspecialchars(trim(mb_convert_encoding($item['title'],$outputEncoding,$charset)));
 
 			if( $date != 'false' && isset($item['dc']) && is_array($item['dc']) && isset($item['dc']['date']) ) {
 				$pubdate = trim(mb_convert_encoding($item['dc']['date'],$outputEncoding,$charset));
-				$pubdate = date($date, strtotime($pubdate));
+				$pubdate = $app->wg->ContLang->date( strtotime( $pubdate ), false, false );
 			} else {
 				$pubdate = false;
 			}
@@ -127,6 +133,12 @@ class WikiaRssExternalController extends WikiaController {
 			if( $item['description'] ) {
 				$text = trim(mb_convert_encoding($item['description'],$outputEncoding,$charset));
 				$text = str_replace( array("\r", "\n", "\t", '<br>'), ' ', $text );
+				$text = strip_tags( $text, '<img><a><br>' );
+
+				$globalStateWrapper = new \Wikia\Util\GlobalStateWrapper( [ 'wgAllowImageTag' => true ] );
+				$text = $globalStateWrapper->wrap( function () use ( $text ) {
+					return Sanitizer::removeHTMLtags( $text, null, [], [ 'a' ] );
+				} );
 
 				$d_text = $this->doRssFilter($text, $rssFilter );
 				$d_text = $this->doRssFilterOut($text, $rssFilterout);
@@ -140,7 +152,7 @@ class WikiaRssExternalController extends WikiaController {
 
 			if( $display ) {
 				$result[$i] = array(
-					'href' => $href,
+					'href' => isset( $sanitizedHref['href'] ) ? $sanitizedHref['href'] : '',
 					'title' => $title,
 				);
 
@@ -171,8 +183,11 @@ class WikiaRssExternalController extends WikiaController {
 		$app = F::app();
 		$result = array();
 
-		$charset = !empty( $options['charset'] ) ? $options['charset'] : array();
-		$date = $options['dateFormat'];
+		$supportedEncodings = array_map( 'strtolower', mb_list_encodings() );
+		$charset = !empty( $options['charset'] ) && in_array( strtolower( $options['charset'] ), $supportedEncodings ) ?
+			$options['charset'] : [ ];
+		// dateFormat is only for backwards compatibility of requests.
+		$date = ( $options['date'] ?? false ) || $options['dateFormat'];
 		$rssFilter = $options['filter'];
 		$rssFilterout = $options['filterout'];
 		$rssHighlight = $options['highlight'];
@@ -184,6 +199,7 @@ class WikiaRssExternalController extends WikiaController {
 
 		foreach( $items as $i => $item ) {
 			$href = htmlspecialchars( trim( mb_convert_encoding( $item['link'], $outputEncoding, $charset ) ) );
+			$sanitizedHref = Sanitizer::validateAttributes( [ 'href' => $href ], [ 'href' ] );
 			$title = htmlspecialchars( trim( mb_convert_encoding( $item['title'], $outputEncoding, $charset ) ) );
 
 			$d_title = $this->doRssFilter($title, $rssFilter) && $this->doRssFilterOut($title, $rssFilterout);
@@ -198,14 +214,14 @@ class WikiaRssExternalController extends WikiaController {
 						trim( mb_convert_encoding( $item['dc']['date'], $outputEncoding, $charset ) ) : false;
 				}
 
-				$pubdate = date($date, strtotime($pubdate));
+				$pubdate = $app->wg->ContLang->date( strtotime( $pubdate ), false, false );
 			} else {
 				$pubdate = false;
 			}
 
 			if( $d_title && !in_array( $title, $displayed ) ) {
 				$result[$i] = array(
-					'href' => $href,
+					'href' => isset( $sanitizedHref['href'] ) ? $sanitizedHref['href'] : '',
 					'title' => $title,
 					'attrTitle' => $attrTitle,
 				);

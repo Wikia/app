@@ -120,7 +120,7 @@ class UpdateSpecialPages extends Maintenance {
 						}
 						$this->output( sprintf( "%.2fs\n", $seconds ) );
 
-						wfRunHooks( 'AfterUpdateSpecialPages', [ $queryPage ] );
+						Hooks::run( 'AfterUpdateSpecialPages', [ $queryPage ] );
 					}
 
 					# Commit the results

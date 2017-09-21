@@ -1,12 +1,12 @@
-<div id="notificationsEntryPoint" class="wds-global-navigation__notifications-menu wds-global-navigation__notifications-menu wds-dropdown notifications-container">
-	<div class="wds-dropdown__toggle wds-global-navigation__dropdown-toggle" title="<?=wfMessage( 'global-navigation-notifications-title' )->escaped()?>">
+<div id="notificationsEntryPoint" class="wds-global-navigation__notifications-menu wds-dropdown notifications-container">
+	<div class="wds-dropdown__toggle wds-global-navigation__dropdown-toggle" title="<?=wfMessage( 'global-navigation-messages-title' )->escaped()?>">
 		<div class="bubbles">
 			<div class="wds-global-navigation__notifications-menu-counter notifications-count"></div>
 		</div>
 		<?= DesignSystemHelper::renderSvg(
-			'wds-icons-bell',
+			'wds-icons-note',
 			'wds-icon wds-icon-small',
-			wfMessage( 'global-navigation-notifications-title' )->escaped()
+			wfMessage( 'global-navigation-messages-title' )->escaped()
 		) ?>
 		<?= DesignSystemHelper::renderSvg(
 			'wds-icons-dropdown-tiny',

@@ -1,8 +1,7 @@
 <?php
-/** Internationalization file for /extensions/GlobalMessages/GlobalMessagesB extension. */
-$messages = [];
+$messages = array();
 
-$messages['en'] = [
+$messages['en'] = array(
 	'broken-file-category' => 'Pages with broken file links',
 	'badaccess' => 'Permission error',
 	'badaccess-group0' => 'You are not allowed to execute the action you have requested.',
@@ -10,8 +9,8 @@ $messages['en'] = [
 	'backlinksubtitle' => '← $1',
 	'badarticleerror' => 'This action cannot be performed on this page. This page may have been deleted since your request was submitted.',
 	'badtitle' => 'Bad title',
-	'badtitletext' => 'The requested page title was invalid, empty, or an incorrectly linked inter-language or inter-wiki title.
-It may contain one or more characters that can\'t be used in titles.',
+	'badtitletext' => "The requested page title was invalid, empty, or an incorrectly linked inter-language or inter-wiki title.
+It may contain one or more characters that can't be used in titles.",
 	'badretype' => 'The passwords you entered do not match.',
 	'blocked-mailpassword' => 'Your IP address is blocked from editing, and so is not allowed to use the password recovery function to prevent abuse.',
 	'bold_sample' => 'Bold text',
@@ -109,7 +108,6 @@ The suppress log is provided below for reference:',
 Automatically blocked IP addresses are not listed.
 See the [[Special:BlockList|IP block list]] for the list of currently operational bans and blocks.',
 	'block-log-flags-anononly' => 'anonymous users only',
-	'block-log-flags-nocreate' => 'account creation disabled',
 	'block-log-flags-noautoblock' => 'autoblock disabled',
 	'block-log-flags-noemail' => 'e-mail blocked',
 	'block-log-flags-nousertalk' => 'cannot edit own talk page',
@@ -140,15 +138,15 @@ Avatar3.jpg
 Avatar4.jpg
 Avatar5.jpg
 Avatar6.jpg',
-];
+);
 
-$messages['qqq'] = [
+$messages['qqq'] = array(
 	'badaccess' => 'Title shown within page indicating unauthorized access.',
 	'badaccess-group0' => 'Shown when you are not allowed to do something.',
-	'badaccess-groups' => 'Error message when you aren\'t allowed to do something.
+	'badaccess-groups' => "Error message when you aren't allowed to do something.
 
 * $1 is a list of groups.
-* $2 is the number of groups.',
+* $2 is the number of groups.",
 	'badtitle' => 'The page title when a user requested a page with invalid page name. The content will be {{msg-mw|badtitletext}}.',
 	'badtitletext' => 'The message shown when a user requested a page with invalid page name. The page title will be {{msg-mw|badtitle}}.',
 	'bold_sample' => 'This is the sample text that you get when you press the first button on the left on the edit toolbar.
@@ -207,10 +205,10 @@ Parameters:
 
 See also {{msg-mw|Blocklogentry}}.',
 	'blocklist-nousertalk' => 'Used in [[Special:IPBlockList]] when "Allow this user to edit own talk page while blocked" option hasn\'t been flagged. See also {{msg-mw|Block-log-flags-nousertalk}}.',
-	'blocklink' => 'Display name for a link that, when selected, leads to a form where a user can be blocked. Used in page history and recent changes pages. Example: "\'\'UserName (Talk | contribs | \'\'\'block\'\'\')\'\'".',
-	'blocklogpage' => 'The page name of [[Special:Log/block]]. Also appears in the drop down menu of [[Special:Log]] pages and in the action links of Special:Contributions/\'\'Username\'\' pages (e.g. "For Somebody (talk | block log | logs)").
+	'blocklink' => "Display name for a link that, when selected, leads to a form where a user can be blocked. Used in page history and recent changes pages. Example: \"''UserName (Talk | contribs | '''block''')''\".",
+	'blocklogpage' => "The page name of [[Special:Log/block]]. Also appears in the drop down menu of [[Special:Log]] pages and in the action links of Special:Contributions/''Username'' pages (e.g. \"For Somebody (talk | block log | logs)\").
 
-{{Identical|Block log}}',
+{{Identical|Block log}}",
 	'blocklog-showlog' => 'Parameters:
 * $1 is the blocked user. Can be used for GENDER (optional)',
 	'blocklog-showsuppresslog' => 'Parameters:
@@ -222,29 +220,29 @@ See also {{msg-mw|Blocklogentry}}.',
 See also {{msg-mw|Blocklistline}}.',
 	'blocklogtext' => 'Appears on top of [[Special:Log/block]].',
 	'block-log-flags-noautoblock' => '{{Identical|Autoblock disabled}}',
-	'block-log-flags-noemail' => 'Log message for [[Special:Log/block]] to note that a user cannot use the \'email another user\' option.
+	'block-log-flags-noemail' => "Log message for [[Special:Log/block]] to note that a user cannot use the 'email another user' option.
 
-{{Identical|E-mail blocked}}',
+{{Identical|E-mail blocked}}",
 	'block-log-flags-nousertalk' => 'Used in [[Special:Log/block]] when "Allow this user to edit own talk page while blocked" option hasn\'t been flagged. See also {{msg-mw|Blocklist-nousertalk}}.',
 	'blockme' => 'The page title of [[Special:Blockme]], a feature which is disabled by default.',
 	'bydate' => '{{Identical|Date}}',
 	'bad_image_list' => 'This is only message appears to guide administrators to add links with right format. This will not appear anywhere else in Mediawiki.',
 	'blog-avatar-defaults' => '{{doc-important|Do not translate ".jpg"}}',
-];
+);
 
-$messages['ab'] = [
+$messages['ab'] = array(
 	'brokenredirects-edit' => 'ариашамҭа',
-];
+);
 
-$messages['ace'] = [
+$messages['ace'] = array(
 	'badaccess' => 'Salah khut/hak tamöng',
 	'badtitle' => 'Nan hana sah',
 	'badtitletext' => 'Nan ôn nyang neulakèë hana sah, soh, atawa nan antarabahsa atawa antarawiki nyang salah sambông.',
 	'bold_sample' => 'Citak teubay naseukah nyoë',
 	'bold_tip' => 'Citak teubay',
-	'blockedtext' => '\'\'\'Nan ureuëng nguy atawa alamat IP Droëneuh  ka geutheun.\'\'\'
+	'blockedtext' => "'''Nan ureuëng nguy atawa alamat IP Droëneuh  ka geutheun.'''
 
-Geutheun lé $1. Dalèh jih nakeuh \'\'$2\'\'.
+Geutheun lé $1. Dalèh jih nakeuh ''$2''.
 
 * Geutheun yôh: $8
 * Neutheun maté tanggay bak: $6
@@ -252,9 +250,9 @@ Geutheun lé $1. Dalèh jih nakeuh \'\'$2\'\'.
 
 Droëneuh   jeuët neutanyong bak $1 atawa [[{{MediaWiki:Grouppage-sysop}}|nyang urôh nyang la’én]] keu peugah haba bhah nyoë.
 
-Droëneuh   h’an jeuët neunguy alat \'Kirém surat-e ureuëng nguy nyoë\' keucuali ka neupasoë alamat surat-e nyang sah di [[Special:Preferences|Geunalak]] Droëneuh ngön Droëneuh ka geutheun keu nguy nyan.
+Droëneuh   h’an jeuët neunguy alat 'Kirém surat-e ureuëng nguy nyoë' keucuali ka neupasoë alamat surat-e nyang sah di [[Special:Preferences|Geunalak]] Droëneuh ngön Droëneuh ka geutheun keu nguy nyan.
 
-Alamat IP Droëneuh nakeuh $3, ngön ID neutheun nakeuh $5. Tulông peuseureuta salah saboh atawa ban duwa beurita nyoë bak tiëp teunanyöng nyang neupeugöt.',
+Alamat IP Droëneuh nakeuh $3, ngön ID neutheun nakeuh $5. Tulông peuseureuta salah saboh atawa ban duwa beurita nyoë bak tiëp teunanyöng nyang neupeugöt.",
 	'boteditletter' => 'b',
 	'brokenredirects' => 'Peuninah reulöh',
 	'booksources' => 'Nè kitab',
@@ -265,40 +263,39 @@ Alamat IP Droëneuh nakeuh $3, ngön ID neutheun nakeuh $5. Tulông peuseureuta 
 	'blocklink' => 'theun',
 	'blocklogpage' => 'Log peutheun',
 	'blocklogentry' => 'theun [[$1]] ngön watèë maté tanggay $2 $3',
-	'block-log-flags-nocreate' => 'pumeugöt nan geupumaté',
 	'bad_image_list' => 'Beuntukjih lagèë di miyub nyoë:
 
 Cit buté dapeuta (baréh nyang geupeuphôn ngon tanda *) nyang geukira. Hubông phôn bak saboh baréh beukeu hubông u beureukah nyang brôk.
 Hubông-hubông lheuëh nyan bak baréh nyang saban geukira sibagoë keucuali, nakeu teunuléh nyang jeuët peuleumah beureukah nyan.',
-];
+);
 
-$messages['af'] = [
+$messages['af'] = array(
 	'broken-file-category' => 'Bladsye met gebreekte lêer skakels',
 	'badaccess' => 'Toestemmingsfout',
 	'badaccess-group0' => 'U is nie toegelaat om die aksie uit te voer wat u aangevra het nie.',
 	'badaccess-groups' => 'Die aksie wat u aangevra het is beperk tot gebruikers in {{PLURAL:$2|die groep|een van die groepe}}: $1.',
 	'badarticleerror' => 'Die aksie kon nie op hierdie bladsy uitgevoer word nie.',
 	'badtitle' => 'Ongeldige titel',
-	'badtitletext' => 'Die bladsytitel waarvoor gevra is, is ongeldig, leeg, of
-\'n verkeerd geskakelde tussen-taal of tussen-wiki titel.',
+	'badtitletext' => "Die bladsytitel waarvoor gevra is, is ongeldig, leeg, of
+'n verkeerd geskakelde tussen-taal of tussen-wiki titel.",
 	'badretype' => 'Die ingetikte wagwoorde is nie dieselfde nie.',
 	'blocked-mailpassword' => 'U IP-adres is tans teen wysigings geblokkeer. Om verdere misbruik te voorkom is dit dus nie moontlik om die wagwoordherwinningfunksie te gebruik nie.',
 	'bold_sample' => 'Vetgedrukte teks',
 	'bold_tip' => 'Vetdruk',
 	'blockedtitle' => 'Gebruiker is geblokkeer',
-	'blockedtext' => '\'\'\'U gebruikersnaam of IP-adres is geblokkeer.\'\'\'
+	'blockedtext' => "'''U gebruikersnaam of IP-adres is geblokkeer.'''
 
 Die blokkering is deur $1 gedoen.
-Die rede gegee is \'\'$2\'\'.
+Die rede gegee is ''$2''.
 
 * Begin van blokkade: $8
 * Blokkade eindig: $6
 * Blokkering gemik op: $7
 
 U mag $1 of een van die ander [[{{MediaWiki:Grouppage-sysop}}|administreerders]] kontak om dit te bespreek.
-U kan nie die \'e-pos hierdie gebruiker\'-opsie gebruik tensy \'n geldige e-pos adres gespesifiseer is in u [[Special:Preferences|rekening voorkeure]] en u nie geblokkeer is om dit te gebruik nie.
+U kan nie die 'e-pos hierdie gebruiker'-opsie gebruik tensy 'n geldige e-pos adres gespesifiseer is in u [[Special:Preferences|rekening voorkeure]] en u nie geblokkeer is om dit te gebruik nie.
 U huidige IP-adres is $3, en die blokkering ID is #$5.
-Sluit asseblief een of albei hierdie verwysings in by enige navrae.',
+Sluit asseblief een of albei hierdie verwysings in by enige navrae.",
 	'blockednoreason' => 'geen rede verskaf nie',
 	'blocked-notice-logextract' => 'Hierdie gebruiker is tans geblokkeer.
 Die laaste inskrywing in die blokkeerlogboek word hieronder vertoon:',
@@ -308,10 +305,10 @@ Dit mag nie meer as $1 {{PLURAL:$1|karakter|karakters}} bevat nie.',
 	'boteditletter' => 'b',
 	'badfilename' => 'Prentnaam is verander na "$1".',
 	'backend-fail-stream' => 'Kon nie die lêer $1 uitstroom nie.',
-	'backend-fail-backup' => 'Kon nie \'n rugsteunkopie van die lêer $1 maak nie.',
+	'backend-fail-backup' => "Kon nie 'n rugsteunkopie van die lêer $1 maak nie.",
 	'backend-fail-notexists' => 'Die lêer $1 bestaan nie.',
-	'backend-fail-notsame' => '\'n Nie-identiese lêer bestaan al reeds by $1.',
-	'backend-fail-invalidpath' => '$1 is nie \'n geldige stoorplek nie.',
+	'backend-fail-notsame' => "'n Nie-identiese lêer bestaan al reeds by $1.",
+	'backend-fail-invalidpath' => "$1 is nie 'n geldige stoorplek nie.",
 	'backend-fail-delete' => 'Die lêer $1 kon nie geskrap word nie.',
 	'backend-fail-alreadyexists' => 'Die lêer $1 bestaan al reeds.',
 	'backend-fail-store' => 'Kon nie lêer $1 in $2 stoor nie.',
@@ -329,20 +326,20 @@ Dit mag nie meer as $1 {{PLURAL:$1|karakter|karakters}} bevat nie.',
 	'booksources' => 'Boekbronne',
 	'booksources-search-legend' => 'Soek vir boekbronne',
 	'booksources-go' => 'Soek',
-	'booksources-text' => 'Gevolg is \'n lys van skakels wat na ander webtuistes lei wat nuwe en gebruikte boeke verkoop, en wat dalk meer inligting kan bevat oor die boeke waarop u opsoek is:',
+	'booksources-text' => "Gevolg is 'n lys van skakels wat na ander webtuistes lei wat nuwe en gebruikte boeke verkoop, en wat dalk meer inligting kan bevat oor die boeke waarop u opsoek is:",
 	'booksources-invalid-isbn' => 'Die ingevoerde ISBN-kode blyk asof dit ongeldig is; maak asseblief seker dat u dit sonder fout oorgekopiëer het vanaf die oorspronklike bron.',
 	'blanknamespace' => '(Hoof)',
 	'block' => 'Blok gebruiker',
 	'blockip' => 'Blokkeer gebruiker',
 	'blockip-title' => 'Blokkeer gebruiker',
 	'blockip-legend' => 'Blokkeer gebruiker of IP-adres',
-	'blockiptext' => 'Gebruik die vorm hier onder om skryftoegang van \'n sekere IP-adres te blok.
+	'blockiptext' => "Gebruik die vorm hier onder om skryftoegang van 'n sekere IP-adres te blok.
 Dit moet net gedoen word om vandalisme te voorkom en in ooreenstemming met [[{{MediaWiki:Policy-url}}|{{SITENAME}}-beleid]].
-Vul \'n spesifieke rede hier onder in (haal byvoorbeeld spesifieke bladsye wat gevandaliseer is, aan).',
+Vul 'n spesifieke rede hier onder in (haal byvoorbeeld spesifieke bladsye wat gevandaliseer is, aan).",
 	'badipaddress' => 'Die IP-adres is nie in die regte formaat nie.',
 	'blockipsuccesssub' => 'Blokkering het geslaag',
-	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] is geblokkeer.<br />
-Sien die [[Special:BlockList|IP-bloklys]] vir \'n oorsig van blokkerings.',
+	'blockipsuccesstext' => "[[Special:Contributions/$1|$1]] is geblokkeer.<br />
+Sien die [[Special:BlockList|IP-bloklys]] vir 'n oorsig van blokkerings.",
 	'blocklist' => 'Geblokkeerde gebruikers',
 	'blocklist-userblocks' => 'Versteek geblokkeerde gebruikers',
 	'blocklist-tempblocks' => 'Versteek tydelike blokkades',
@@ -362,10 +359,9 @@ Die blokkeerlogboek word hieronder ter verwysing weergegee:',
 	'blocklog-showsuppresslog' => 'Hierdie gebruiker was voorheen geblokkeer gewees en (dele van) wysigings van hierdie gebruiker is verborge.
 Die verbergingslogboek word hieronder ter verwysing weergegee:',
 	'blocklogentry' => '"[[$1]]" is vir \'n periode van $2 $3 geblok',
-	'blocklogtext' => 'Hier is \'n lys van onlangse blokkeer en deblokkeer aksies. Outomaties geblokkeerde IP-adresse word nie vertoon nie.
-Sien die [[Special:BlockList|IP-bloklys]] vir geblokkeerde adresse.',
+	'blocklogtext' => "Hier is 'n lys van onlangse blokkeer en deblokkeer aksies. Outomaties geblokkeerde IP-adresse word nie vertoon nie.
+Sien die [[Special:BlockList|IP-bloklys]] vir geblokkeerde adresse.",
 	'block-log-flags-anononly' => 'anonieme gebruikers alleenlik',
-	'block-log-flags-nocreate' => 'registrasie van gebruikers geblokkeer',
 	'block-log-flags-noautoblock' => 'outoblokkering is afgeskakel',
 	'block-log-flags-noemail' => 'e-pos versper',
 	'block-log-flags-nousertalk' => 'kan nie eie besprekingsblad wysig nie',
@@ -373,15 +369,15 @@ Sien die [[Special:BlockList|IP-bloklys]] vir geblokkeerde adresse.',
 	'block-log-flags-hiddenname' => 'gebruikernaam versteek',
 	'blockme' => 'Versper my',
 	'bydate' => 'volgens datum',
-	'bad_image_list' => 'Die formaat is as volg:
+	'bad_image_list' => "Die formaat is as volg:
 
 Slegs lys-items (lyne wat met * begin) word verwerk.
-Die eerste skakel op \'n lyn moet na \'n ongewenste lêer skakel.
-Enige opeenvolgende skakels op dieselfde lyn word as uitsonderings beskou, bv. blaaie waar die lêer inlyn kan voorkom.',
+Die eerste skakel op 'n lyn moet na 'n ongewenste lêer skakel.
+Enige opeenvolgende skakels op dieselfde lyn word as uitsonderings beskou, bv. blaaie waar die lêer inlyn kan voorkom.",
 	'blankpage' => 'Leë bladsy',
-];
+);
 
-$messages['aln'] = [
+$messages['aln'] = array(
 	'badaccess' => 'Gabim tagri',
 	'badaccess-group0' => 'Nuk keni tagër me ekzekutue veprimin e kërkuem.',
 	'badaccess-groups' => 'Në veprimin e kërkuem kanë tagër vetëm përdoruesit nga {{PLURAL:$2|grupi|grupet}}: $1.',
@@ -394,19 +390,19 @@ Ndodh që ka shêja që nuk munden me u përdorë në titull.',
 	'bold_sample' => 'Tekst i nximë',
 	'bold_tip' => 'Tekst i nximë',
 	'blockedtitle' => 'Përdoruesi âsht i bllokuem',
-	'blockedtext' => '\'\'\'Llogaria juej apo adresa IP âsht bllokue.\'\'\'
+	'blockedtext' => "'''Llogaria juej apo adresa IP âsht bllokue.'''
 
 Bllokim âsht bâ prej $1.
-Arsyeja e dhânë âsht \'\'$2\'\'.
+Arsyeja e dhânë âsht ''$2''.
 
 * Fillimi i bllokimit: $8
 * Përfundimi i bllokimit: $6
 * I bllokuemi i synuem: $7
 
 Mundeni me kontaktue $1 ose ndonji [[{{MediaWiki:Grouppage-sysop}}|administrator]] për me diskutue bllokimin.
-Nuk mundeni me shfrytëzue funksionin \'dërgo email këtij përdoruesi\' përveç nëse keni specifikue adresë emaili në [[Special:Preferences|parapëlqimet e llogarisë]] dhe nuk jeni bllokue.
+Nuk mundeni me shfrytëzue funksionin 'dërgo email këtij përdoruesi' përveç nëse keni specifikue adresë emaili në [[Special:Preferences|parapëlqimet e llogarisë]] dhe nuk jeni bllokue.
 Adresa juej aktuale e IP âsht $3, dhe ID e bllokimit âsht #$5.
-Ju lutemi përfshini këto shenime në të gjitha shkresat që i bâni.',
+Ju lutemi përfshini këto shenime në të gjitha shkresat që i bâni.",
 	'blockednoreason' => 'nuk âsht dhânë arsye',
 	'badsig' => 'Sintaksa e nënshkrimit asht e pavlefshme, kontrolloni HTML-n.',
 	'badsiglength' => 'Emri i zgjedhun asht shumë i gjatë; duhet me pas ma pak se $1 shkronja',
@@ -419,15 +415,14 @@ Ju lutemi përfshini këto shenime në të gjitha shkresat që i bâni.',
 	'blocklink' => 'bllokoje',
 	'blocklogpage' => 'Regjistri i bllokimeve',
 	'blocklogentry' => 'bllokue [[$1]] për kohëzgjatje prej $2 $3',
-	'block-log-flags-nocreate' => 'krijimi i llogarive âsht pamundësue',
 	'bad_image_list' => 'Formati âsht si vijon:
 
 Vetëm elementet listë (rreshtat që fillojnë me *) merren parasysh.
 Vegza e parë në rresht duhet me u lidhë në nji skedë të keqe.
 Krejt vegzat tjera në të njêjtin rresht do të konsiderohen si përjashtime, dmth. faqe ku skeda paraqitet mbrenda.',
-];
+);
 
-$messages['als'] = [
+$messages['als'] = array(
 	'badaccess' => 'Gabim tagri',
 	'badaccess-group0' => 'Nuk keni tagër me ekzekutue veprimin e kërkuem.',
 	'badaccess-groups' => 'Në veprimin e kërkuem kanë tagër vetëm përdoruesit nga {{PLURAL:$2|grupi|grupet}}: $1.',
@@ -440,19 +435,19 @@ Ndodh që ka shêja që nuk munden me u përdorë në titull.',
 	'bold_sample' => 'Tekst i nximë',
 	'bold_tip' => 'Tekst i nximë',
 	'blockedtitle' => 'Përdoruesi âsht i bllokuem',
-	'blockedtext' => '\'\'\'Llogaria juej apo adresa IP âsht bllokue.\'\'\'
+	'blockedtext' => "'''Llogaria juej apo adresa IP âsht bllokue.'''
 
 Bllokim âsht bâ prej $1.
-Arsyeja e dhânë âsht \'\'$2\'\'.
+Arsyeja e dhânë âsht ''$2''.
 
 * Fillimi i bllokimit: $8
 * Përfundimi i bllokimit: $6
 * I bllokuemi i synuem: $7
 
 Mundeni me kontaktue $1 ose ndonji [[{{MediaWiki:Grouppage-sysop}}|administrator]] për me diskutue bllokimin.
-Nuk mundeni me shfrytëzue funksionin \'dërgo email këtij përdoruesi\' përveç nëse keni specifikue adresë emaili në [[Special:Preferences|parapëlqimet e llogarisë]] dhe nuk jeni bllokue.
+Nuk mundeni me shfrytëzue funksionin 'dërgo email këtij përdoruesi' përveç nëse keni specifikue adresë emaili në [[Special:Preferences|parapëlqimet e llogarisë]] dhe nuk jeni bllokue.
 Adresa juej aktuale e IP âsht $3, dhe ID e bllokimit âsht #$5.
-Ju lutemi përfshini këto shenime në të gjitha shkresat që i bâni.',
+Ju lutemi përfshini këto shenime në të gjitha shkresat që i bâni.",
 	'blockednoreason' => 'nuk âsht dhânë arsye',
 	'badsig' => 'Sintaksa e nënshkrimit asht e pavlefshme, kontrolloni HTML-n.',
 	'badsiglength' => 'Emri i zgjedhun asht shumë i gjatë; duhet me pas ma pak se $1 shkronja',
@@ -465,15 +460,14 @@ Ju lutemi përfshini këto shenime në të gjitha shkresat që i bâni.',
 	'blocklink' => 'bllokoje',
 	'blocklogpage' => 'Regjistri i bllokimeve',
 	'blocklogentry' => 'bllokue [[$1]] për kohëzgjatje prej $2 $3',
-	'block-log-flags-nocreate' => 'krijimi i llogarive âsht pamundësue',
 	'bad_image_list' => 'Formati âsht si vijon:
 
 Vetëm elementet listë (rreshtat që fillojnë me *) merren parasysh.
 Vegza e parë në rresht duhet me u lidhë në nji skedë të keqe.
 Krejt vegzat tjera në të njêjtin rresht do të konsiderohen si përjashtime, dmth. faqe ku skeda paraqitet mbrenda.',
-];
+);
 
-$messages['am'] = [
+$messages['am'] = array(
 	'broken-file-category' => 'የማይኖሩ ፋይሎች ያሉባቸው ገጾች',
 	'badaccess' => 'ያልተፈቀደ - አይቻልም',
 	'badaccess-group0' => 'የጠየቁት አድራጎት እንዲፈጸም ፈቃድ የለዎም።',
@@ -486,15 +480,15 @@ $messages['am'] = [
 	'bold_sample' => 'ጉልህ ፊደላት',
 	'bold_tip' => 'በጉልህ ፊደላት ይጻፍ',
 	'blockedtitle' => 'አባል ተከለክሏል',
-	'blockedtext' => '\'\'\'የርስዎ ብዕር ስም ወይም ቁጥር አድራሻ ከማዘጋጀት ተከለክሏል።\'\'\'
+	'blockedtext' => "'''የርስዎ ብዕር ስም ወይም ቁጥር አድራሻ ከማዘጋጀት ተከለክሏል።'''
 
-በእርስዎ ላይ ማገጃ የጣለው መጋቢ $1 ነበረ። ምክንያቱም፦ \'\'$2\'\'
+በእርስዎ ላይ ማገጃ የጣለው መጋቢ $1 ነበረ። ምክንያቱም፦ ''$2''
 
 * ማገጃ የጀመረበት ግዜ፦ $8
 * ማገጃ የሚያልቅበት ግዜ፦ $6
 * የታገደው ተጠቃሚ፦ $7
 
-$1ን ወይም ማንም ሌላ [[{{MediaWiki:Grouppage-sysop}}|መጋቢ]] ስለ ማገጃ ለመጠይቅ ይችላሉ። ነገር ግን በ[[Special:Preferences|ምርጫዎችዎ]] ትክክለኛ ኢሜል ካልኖረ ከጥቅሙም ካልተከለከሉ በቀር ለሰው ኢሜል ለመላክ አይችሉም። የአሁኑኑ ቁጥር አድራሻዎ $3 ህኖ የማገጃው ቁጥር #$5 ነው። ምንም ጥያቄ ካለዎ ይህን ቁጥር ይጨምሩ።',
+$1ን ወይም ማንም ሌላ [[{{MediaWiki:Grouppage-sysop}}|መጋቢ]] ስለ ማገጃ ለመጠይቅ ይችላሉ። ነገር ግን በ[[Special:Preferences|ምርጫዎችዎ]] ትክክለኛ ኢሜል ካልኖረ ከጥቅሙም ካልተከለከሉ በቀር ለሰው ኢሜል ለመላክ አይችሉም። የአሁኑኑ ቁጥር አድራሻዎ $3 ህኖ የማገጃው ቁጥር #$5 ነው። ምንም ጥያቄ ካለዎ ይህን ቁጥር ይጨምሩ።",
 	'blockednoreason' => 'ምንም ምክንያት አልተሰጠም',
 	'badsig' => 'ትክክለኛ ያልሆነ ጥሬ ፊርማ፤ HTML ተመልከት።',
 	'badsiglength' => 'ያ ቁልምጫ ስም ከመጠን በላይ ይረዝማል፤ ከ$1 ፊደል በታች መሆን አለበት።',
@@ -523,7 +517,6 @@ $1ን ወይም ማንም ሌላ [[{{MediaWiki:Grouppage-sysop}}|መጋቢ]] ስ
 	'blocklogentry' => 'እስከ $2 ድረስ [[$1]] አገዳ $3',
 	'blocklogtext' => 'ይህ መዝገብ ተጠቃሚዎች መቸም ሲታገዱ ወይም ማገጃ ሲነሣ የሚዘረዝር ነው። ለአሁኑ የታገዱት ሰዎች [[Special:BlockList|በአሁኑ ማገጃዎች ዝርዝር]] ይታያሉ።',
 	'block-log-flags-anononly' => 'ያልገቡት የቁ. አድራሻዎች ብቻ',
-	'block-log-flags-nocreate' => 'አዲስ ብዕር ስም ከማውጣት ተከለከለ',
 	'block-log-flags-noautoblock' => 'የቀጥታ ማገጃ እንዳይሠራ ተደረገ',
 	'block-log-flags-noemail' => 'ኢ-ሜል ታገደ',
 	'block-log-flags-nousertalk' => 'የገዛ ውይይት ገጹን ማዘጋጀት አይችልም',
@@ -533,62 +526,62 @@ $1ን ወይም ማንም ሌላ [[{{MediaWiki:Grouppage-sysop}}|መጋቢ]] ስ
 
 በ* የሚጀምሩ መስመሮች ብቻ ይቆጠራል። በመስመሩ መጀመርያው መያያዣ የመጥፎ ስዕል መያያዣ መሆን አለበት።  ከዚያ ቀጥሎ በዚያው በመስመር መያያዣ ቢገኝ ግን ስዕሉ እንደ ተፈቀደበት ገጽ ይቆጠራል።',
 	'blankpage' => 'ባዶ ገጽ',
-];
+);
 
-$messages['an'] = [
+$messages['an'] = array(
 	'broken-file-category' => 'Pachinas con vinclos a fichero trencaus',
 	'badaccess' => 'Error de premisos',
-	'badaccess-group0' => 'No tiene premisos ta fer l\'acción que ha demandato.',
-	'badaccess-groups' => 'L\'acción que ha demandato no ye premitita que ta os usuarios {{PLURAL:$2|d\'a colla|d\'as collas}}: $1.',
+	'badaccess-group0' => "No tiene premisos ta fer l'acción que ha demandato.",
+	'badaccess-groups' => "L'acción que ha demandato no ye premitita que ta os usuarios {{PLURAL:$2|d'a colla|d'as collas}}: $1.",
 	'badarticleerror' => 'Ista acción no se puede no se puede reyalizar en ista pachina.',
 	'badtitle' => 'Títol incorrecto',
-	'badtitletext' => 'O títol d\'a pachina demandata ye buedo, incorrecto, u tiene un vinclo interwiki mal feito. Puede contener uno u más caracters que no se pueden fer servir en títols.',
+	'badtitletext' => "O títol d'a pachina demandata ye buedo, incorrecto, u tiene un vinclo interwiki mal feito. Puede contener uno u más caracters que no se pueden fer servir en títols.",
 	'badretype' => 'As claus que ha escrito no son iguals.',
-	'blocked-mailpassword' => 'A suya adreza IP ye bloqueyata y, ta privar abusos, no se li premite emplegar d\'a función de recuperación de claus.',
+	'blocked-mailpassword' => "A suya adreza IP ye bloqueyata y, ta privar abusos, no se li premite emplegar d'a función de recuperación de claus.",
 	'bold_sample' => 'Texto en negreta',
 	'bold_tip' => 'Texto en negreta',
-	'blockedtitle' => 'L\'usuario ye bloqueyato',
-	'blockedtext' => '\'\'\'O suyo nombre d\'usuario u adreza IP ye bloqueyato.\'\'\'
+	'blockedtitle' => "L'usuario ye bloqueyato",
+	'blockedtext' => "'''O suyo nombre d'usuario u adreza IP ye bloqueyato.'''
 
 O bloqueyo lo fació $1.
-A razón data ye \'\'$2\'\'.
+A razón data ye ''$2''.
 
-* Prencipio d\'o bloqueyo: $8
-* Fin d\'o bloqueyo: $6
+* Prencipio d'o bloqueyo: $8
+* Fin d'o bloqueyo: $6
 * Indentificación bloqueyata: $7
 
 Puede contautar con $1 u con atro [[{{MediaWiki:Grouppage-sysop}}|almenistrador]] ta letigar sobre o bloqueyo.
-No puede fer servir o vinclo \'ninviar correu electronico ta iste usuario\' si no ha rechistrato una adreza conforme de correu electronico en as suyas [[Special:Preferences|preferencias]] y si no se l\'ha vedau d\'emplegar-la. A suya adreza IP actual ye $3, y o identificador d\'o bloqueyo ye #$5. Por favor incluiga ixos datos quan faiga qualsiquier consulta.',
-	'blockednoreason' => 'No s\'ha dato garra causa',
-	'blocked-notice-logextract' => 'Ista cuenta d\'usuario ye actualment bloqueyata.
-A zaguera dentrada d\'o rechistro de bloqueyos s\'amuestra contino:',
+No puede fer servir o vinclo 'ninviar correu electronico ta iste usuario' si no ha rechistrato una adreza conforme de correu electronico en as suyas [[Special:Preferences|preferencias]] y si no se l'ha vedau d'emplegar-la. A suya adreza IP actual ye $3, y o identificador d'o bloqueyo ye #$5. Por favor incluiga ixos datos quan faiga qualsiquier consulta.",
+	'blockednoreason' => "No s'ha dato garra causa",
+	'blocked-notice-logextract' => "Ista cuenta d'usuario ye actualment bloqueyata.
+A zaguera dentrada d'o rechistro de bloqueyos s'amuestra contino:",
 	'badsig' => 'A suya sinyadura no ye conforme; comprebe as etiquetas HTML.',
 	'badsiglength' => 'A sinyadura ye masiau larga.
 Habría de tener menos de $1 {{PLURAL:$1|carácter|carácters}}.',
 	'boteditletter' => 'b',
 	'badfilename' => 'O nombre d\'a imachen s\'ha cambiato por "$1".',
-	'backend-fail-stream' => 'No s\'ha puesto transmitir o fichero «$1».',
-	'backend-fail-backup' => 'No s\'ha puesto fer copia de seguranza d\'o fichero «$1».',
+	'backend-fail-stream' => "No s'ha puesto transmitir o fichero «$1».",
+	'backend-fail-backup' => "No s'ha puesto fer copia de seguranza d'o fichero «$1».",
 	'backend-fail-notexists' => 'O fichero $1 no existe.',
-	'backend-fail-hashes' => 'No s\'han puesto obtener os hashes d\'os fichers ta comparar-los.',
+	'backend-fail-hashes' => "No s'han puesto obtener os hashes d'os fichers ta comparar-los.",
 	'backend-fail-notsame' => 'Ya existe un fichero diferent en $1.',
-	'backend-fail-invalidpath' => '$1 no ye una rota d\'almagazenamiento valida',
-	'backend-fail-delete' => 'No s\'ha puesto borrar o fichero «$1».',
+	'backend-fail-invalidpath' => "$1 no ye una rota d'almagazenamiento valida",
+	'backend-fail-delete' => "No s'ha puesto borrar o fichero «$1».",
 	'backend-fail-alreadyexists' => 'O fichero $1 ya existe.',
 	'backend-fail-store' => 'No se podió almagazenar o fichero $1 en $2.',
 	'backend-fail-copy' => 'No s\'ha puesto cambiar o nombre d\'o fichero "$1" a "$2".',
 	'backend-fail-move' => 'No se podió mover o fichero $1 ta $2.',
-	'backend-fail-opentemp' => 'No s\'ha puesto ubrir un fichero temporal.',
-	'backend-fail-writetemp' => 'No s\'ha puesto escribir en o fichero temporal.',
-	'backend-fail-closetemp' => 'No s\'ha puesto zarrar o fichero temporal.',
-	'backend-fail-read' => 'No s\'ha puesto leyer o fichero «$1».',
-	'backend-fail-create' => 'No s\'ha puesto creyar o fichero «$1».',
+	'backend-fail-opentemp' => "No s'ha puesto ubrir un fichero temporal.",
+	'backend-fail-writetemp' => "No s'ha puesto escribir en o fichero temporal.",
+	'backend-fail-closetemp' => "No s'ha puesto zarrar o fichero temporal.",
+	'backend-fail-read' => "No s'ha puesto leyer o fichero «$1».",
+	'backend-fail-create' => "No s'ha puesto creyar o fichero «$1».",
 	'backend-fail-readonly' => 'O backend d\'almagazenamiento "$1" ye agora nomás de lectura. A razón dada estió: "$2"',
 	'backend-fail-synced' => 'O fichero "$1" ye en un estau inconsistent en os backends d\'almagazenamiento internos',
 	'backend-fail-connect' => 'No s\'ha puesto connectar ta o backend d\'almagazenamiento "$1".',
 	'backend-fail-internal' => 'S\'ha produciu una error desconoixida en o fichero de backend d\'almagazenamiento "$1".',
 	'backend-fail-contenttype' => 'No s\'ha puesto determinar a mena de contenius d\'o fichero a almagazenar en "$1".',
-	'backend-fail-batchsize' => 'O backend d\'almagazenamiento ha recibiu un lot {{PLURAL:$1|d\'$1 operación|de $1 operacions}} de fichero; o limite ye de $2 {{PLURAL:$2|operación|operacions}}',
+	'backend-fail-batchsize' => "O backend d'almagazenamiento ha recibiu un lot {{PLURAL:$1|d'$1 operación|de $1 operacions}} de fichero; o limite ye de $2 {{PLURAL:$2|operación|operacions}}",
 	'brokenredirects' => 'Reendreceras crebatas',
 	'brokenredirectstext' => 'As siguients endreceras levan enta pachinas inexistents.',
 	'brokenredirects-edit' => 'editar',
@@ -597,57 +590,56 @@ Habría de tener menos de $1 {{PLURAL:$1|carácter|carácters}}.',
 	'booksources-search-legend' => 'Mirar fuents de libros',
 	'booksources-go' => 'Ir-ie',
 	'booksources-text' => 'Contino ye una lista de vinclos ta atros puestos an que venden libros nuevos y usatos, talment bi haiga más información sobre os libros que ye mirando.',
-	'booksources-invalid-isbn' => 'O numero d\'ISBN dato pareix que no ye conforme; comprebe si no bi ha garra error en copiar d\'a fuent orichinal.',
+	'booksources-invalid-isbn' => "O numero d'ISBN dato pareix que no ye conforme; comprebe si no bi ha garra error en copiar d'a fuent orichinal.",
 	'blanknamespace' => '(Prencipal)',
 	'block' => 'Bloqueyar usuario',
 	'blockip' => 'Bloqueyar usuario',
 	'blockip-title' => 'Bloqueyar usuario',
 	'blockip-legend' => 'Bloqueyar usuario',
-	'blockiptext' => 'Replene o siguient formulario ta bloqueyar l\'acceso
-d\'escritura dende una cuenta d\'usuario u una adreza IP especifica.
-Isto habría de fer-se nomás ta privar vandalismos, y d\'alcuerdo con
+	'blockiptext' => "Replene o siguient formulario ta bloqueyar l'acceso
+d'escritura dende una cuenta d'usuario u una adreza IP especifica.
+Isto habría de fer-se nomás ta privar vandalismos, y d'alcuerdo con
 as [[{{MediaWiki:Policy-url}}|politicas]].
 Escriba a razón especifica ta o bloqueyo (por exemplo, quaternando
-as pachinas que s\'han vandalizato).',
-	'badipaddress' => 'L\'adreza IP no ye conforme.',
-	'blockipsuccesssub' => 'O bloqueyo s\'ha feito correctament',
-	'blockipsuccesstext' => 'L\'adreza IP [[Special:Contributions/$1|$1]] ye bloqueyata. <br />Ir t\'a [[Special:BlockList|lista d\'adrezas IP bloqueyatas]] ta veyer os bloqueyos.',
+as pachinas que s'han vandalizato).",
+	'badipaddress' => "L'adreza IP no ye conforme.",
+	'blockipsuccesssub' => "O bloqueyo s'ha feito correctament",
+	'blockipsuccesstext' => "L'adreza IP [[Special:Contributions/$1|$1]] ye bloqueyata. <br />Ir t'a [[Special:BlockList|lista d'adrezas IP bloqueyatas]] ta veyer os bloqueyos.",
 	'blocklist' => 'Usuarios bloqueyaus',
 	'blocklist-userblocks' => 'Amagar bloqueyos de cuenta',
 	'blocklist-tempblocks' => 'Amagar bloqueyos temporals',
-	'blocklist-addressblocks' => 'Amagar bloqueyos d\'una sola adreza IP',
+	'blocklist-addressblocks' => "Amagar bloqueyos d'una sola adreza IP",
 	'blocklist-rangeblocks' => 'Amagar bloqueyos de rango',
 	'blocklist-timestamp' => 'Marca de tiempo',
 	'blocklist-target' => 'Destín',
 	'blocklist-expiry' => 'Circumducción:',
-	'blocklist-by' => 'Bloqueyo d\'administrador',
+	'blocklist-by' => "Bloqueyo d'administrador",
 	'blocklist-params' => 'Parametros de bloqueyo',
 	'blocklist-reason' => 'Razón',
 	'blocklist-nousertalk' => 'No puet editar a suya propia pachina de descusión',
 	'blocklink' => 'bloqueyar',
 	'blocklogpage' => 'Rechistro de bloqueyos',
-	'blocklog-showlog' => 'Iste usuario ya ha estau bloqueyau.
-Ta más detalles, debaixo s\'amuestro o rechistro de bloqueyos:',
-	'blocklog-showsuppresslog' => 'Iste usuario ha estau bloqueyau y amagau.
-Ta más detalles, debaixo s\'amuestra o rechistro de supresions:',
-	'blocklogentry' => 'S\'ha bloqueyato a [[$1]] con una durada de $2 $3',
-	'blocklogtext' => 'Isto ye un rechistro de bloqueyos y desbloqueyos d\'usuarios. As adrezas bloqueyatas automaticament no amaneixen aquí. Mire-se a [[Special:BlockList|lista d\'adrezas IP bloqueyatas]] ta veyer a lista actual de vedas y bloqueyos.',
+	'blocklog-showlog' => "Iste usuario ya ha estau bloqueyau.
+Ta más detalles, debaixo s'amuestro o rechistro de bloqueyos:",
+	'blocklog-showsuppresslog' => "Iste usuario ha estau bloqueyau y amagau.
+Ta más detalles, debaixo s'amuestra o rechistro de supresions:",
+	'blocklogentry' => "S'ha bloqueyato a [[$1]] con una durada de $2 $3",
+	'blocklogtext' => "Isto ye un rechistro de bloqueyos y desbloqueyos d'usuarios. As adrezas bloqueyatas automaticament no amaneixen aquí. Mire-se a [[Special:BlockList|lista d'adrezas IP bloqueyatas]] ta veyer a lista actual de vedas y bloqueyos.",
 	'block-log-flags-anononly' => 'nomás os usuarios anonimos',
-	'block-log-flags-nocreate' => 's\'ha desactivato a creyación de cuentas',
-	'block-log-flags-noautoblock' => 's\'ha desactivato o bloqueyo automatico',
-	'block-log-flags-noemail' => 's\'ha desactivato o ninvío de mensaches por correu electronico',
+	'block-log-flags-noautoblock' => "s'ha desactivato o bloqueyo automatico",
+	'block-log-flags-noemail' => "s'ha desactivato o ninvío de mensaches por correu electronico",
 	'block-log-flags-nousertalk' => 'no puet editar a suya pachina de descusión',
-	'block-log-flags-angry-autoblock' => 's\'ha activato l\'autobloqueyo amillorato',
-	'block-log-flags-hiddenname' => 'nombre d\'usuario oculto',
+	'block-log-flags-angry-autoblock' => "s'ha activato l'autobloqueyo amillorato",
+	'block-log-flags-hiddenname' => "nombre d'usuario oculto",
 	'blockme' => 'bloqueyar-me',
 	'bydate' => 'por a calendata',
-	'bad_image_list' => 'O formato ha d\'estar o siguient:
+	'bad_image_list' => "O formato ha d'estar o siguient:
 
-Nomás se consideran os elementos de lista (ringleras que escomienzan por *). O primer vinclo de cada linia ha d\'estar un vinclo ta un fichero malo. Qualsiquier atros vinclos en a mesma linia se consideran excepcions, ye dicir, pachinas an que o fichero puede amaneixer.',
+Nomás se consideran os elementos de lista (ringleras que escomienzan por *). O primer vinclo de cada linia ha d'estar un vinclo ta un fichero malo. Qualsiquier atros vinclos en a mesma linia se consideran excepcions, ye dicir, pachinas an que o fichero puede amaneixer.",
 	'blankpage' => 'Pachina en blanco',
-];
+);
 
-$messages['ang'] = [
+$messages['ang'] = array(
 	'badaccess' => 'Þafunȝe ƿōh',
 	'badaccess-group0' => 'Þū ne mōst dōn þā dǣde þǣre þe þū hafast abeden.',
 	'badaccess-groups' => 'Þēos dǣd þǣre þū hafast abeden is synderlīce alȳfedlic brūcendum on {{PLURAL:$2|þissum þrēate|ānum þāra þrēata}}: $1.',
@@ -671,12 +663,11 @@ $messages['ang'] = [
 	'blanknamespace' => '(Hēafod)',
 	'blockip' => 'Brūcend fortȳnan',
 	'blocklink' => 'fortȳnan',
-	'block-log-flags-nocreate' => 'Hordcleofan scieppende forboden',
 	'bydate' => 'be tælmearce',
 	'blankpage' => 'Blæċu sīde',
-];
+);
 
-$messages['anp'] = [
+$messages['anp'] = array(
 	'badaccess' => 'अनुमति त्रुटि',
 	'badtitletext' => 'आपनॆ द्वारा आग्रहत लेख केरॊ शीर्षक अयोग्य, ख़ाली या गलती सॆं जुडलॊ आंतर-भाषिय या आंतर-विकि शीर्षक छेकै . एकरा मॆ एक या एक सॆं ज्यादा ऐनहॊ कॅरेक्टर छै जे शीर्षक मॆं इस्तेमाल नै करलॊ जाबॆ सकॆ छै.',
 	'bold_sample' => 'मोटा पाठ',
@@ -690,14 +681,13 @@ $messages['anp'] = [
 	'blocklink' => 'अवरोधित करॊ',
 	'blocklogpage' => 'ब्लॉक सूची',
 	'blocklogentry' => '"[[$1]]" कॆ $2 $3 तलक बदलाव करै सॆं रोकी देलॊ गेलॊ छै.',
-	'block-log-flags-nocreate' => 'खाता निर्माण पर रोक',
 	'bad_image_list' => 'फोर्मेट निम्न अनुसार छै:
 खाली सूची सामग्री (* सॆं शुरु होय वाला पंक्ति ) चुनलॊ जैतै.
 पंक्ति पर पहिला लिंक एगो खराब फाईल के साथ जुड़ल होना चाहियॊ.
 कोय भी बाद वाला लिंक ओही पंक्ति पर अईला पर ओकरा अपवाद मानलॊ जैतै, अर्थात वू पन्ना जेकरॊ अंदर इ फाईल जुङलॊ हुऎ सकॆ छै.',
-];
+);
 
-$messages['ar'] = [
+$messages['ar'] = array(
 	'broken-file-category' => 'صفحات تحتوي وصلات ملفات معطوبة',
 	'badaccess' => 'خطأ في السماح',
 	'badaccess-group0' => 'ليس من المسموح لك تنفيذ الفعل الذي طلبته.',
@@ -711,19 +701,19 @@ $messages['ar'] = [
 	'bold_sample' => 'نص غليظ',
 	'bold_tip' => 'نص غليظ',
 	'blockedtitle' => 'المستخدم ممنوع',
-	'blockedtext' => '\'\'\'اسم المستخدم أو عنوان الأيبي الخاص بك تم منعه.\'\'\'
+	'blockedtext' => "'''اسم المستخدم أو عنوان الأيبي الخاص بك تم منعه.'''
 
 قام بالمنع $1.
-سبب المنع هو: \'\'$2\'\'.
+سبب المنع هو: ''$2''.
 
 * بداية المنع: $8
 * انتهاء المنع: $6
 * الممنوع المقصود: $7
 
 يمكنك الاتصال ب$1 أو مع أحد [[{{MediaWiki:Grouppage-sysop}}|الإداريين]] للنقاش حول المنع.
-لا يمكنك استخدام خاصية \'مراسلة هذا المستخدم\' إلا إذا كنت قد وضعت عنوان بريدي صحيح في [[Special:Preferences|تفضيلات حسابك]] ولم يتم منعك من استخدامها.
+لا يمكنك استخدام خاصية 'مراسلة هذا المستخدم' إلا إذا كنت قد وضعت عنوان بريدي صحيح في [[Special:Preferences|تفضيلات حسابك]] ولم يتم منعك من استخدامها.
 عنوان الأيبي الخاص بك حاليا هو $3، ورقم المنع هو #$5.
-من فضلك اذكر كل التفاصيل بالأعلى في أي استعلامات تقوم بها.',
+من فضلك اذكر كل التفاصيل بالأعلى في أي استعلامات تقوم بها.",
 	'blockednoreason' => 'لا سبب معطى',
 	'blocked-notice-logextract' => 'هذا المستخدم ممنوع حاليا.
 آخر مدخلة في سجل المنع موفرة بالأسفل كمرجع:',
@@ -779,7 +769,6 @@ $messages['ar'] = [
 عناوين الأيبي الممنوعة تلقائيا ليست معروضة.
 انظر [[Special:BlockList|عناوين الأيبي الممنوعة]] لرؤية عمليات المنع المفعلة حاليا.',
 	'block-log-flags-anononly' => 'المستخدمون المجهولون فقط',
-	'block-log-flags-nocreate' => 'إنشاء الحسابات ممنوع',
 	'block-log-flags-noautoblock' => 'المنع التلقائي معطل',
 	'block-log-flags-noemail' => 'البريد الإلكتروني ممنوع',
 	'block-log-flags-nousertalk' => 'لا يمكن تعديل صفحة النقاش الخاصة',
@@ -793,9 +782,9 @@ $messages['ar'] = [
 يجب أن تكون أول وصلة في السطر وصلة لملف سيىء.
 أي وصلات تالية في السطر نفسه تعتبر استثناءات، أي صفحات قد يكون الملف فيها سطريا.',
 	'blankpage' => 'صفحة فارغة',
-];
+);
 
-$messages['arc'] = [
+$messages['arc'] = array(
 	'badaccess' => 'ܦܘܕܐ ܒܦܣܣܐ',
 	'badaccess-group0' => 'ܠܬ ܠܟ ܦܣܣܐ ܠܚܘܩܩܐ ܕܥܒܕܐ ܕܐܢܬ ܫܐܠܬܝ.',
 	'badtitle' => 'ܟܘܢܝܐ ܠܐ ܛܒܐ',
@@ -827,9 +816,9 @@ $messages['arc'] = [
 	'blockme' => 'ܚܪܘܡ ܠܝ',
 	'bydate' => 'ܒܣܝܩܘܡܐ',
 	'blankpage' => 'ܦܐܬܐ ܣܦܝܩܬܐ',
-];
+);
 
-$messages['arn'] = [
+$messages['arn'] = array(
 	'badtitle' => 'Nornongey ta üy',
 	'badtitletext' => 'Tüfachi wülngiñ ñi üy kümelay, welliley kam niey weda lasun nülkükawlelu kake dungun kam kake wiki wülngiñ ñi üy.
 Nieafuy falinochi wirin püñamtuam wülngiñ ñi üy.',
@@ -845,7 +834,6 @@ Nieafuy falinochi wirin püñamtuam wülngiñ ñi üy.',
 	'blocklink' => 'Katrütukun',
 	'blocklogpage' => 'Katrüntukun ñi wirintukun',
 	'blocklogentry' => 'Katrüntukufi [[$1]] $2 antü/ora mew, $3',
-	'block-log-flags-nocreate' => 'Pepi dewmangelay konün',
 	'block-log-flags-hiddenname' => 'Üy kellufe ellkan',
 	'bad_image_list' => 'Feychi chumkünuwe ta femngechi:
 
@@ -853,9 +841,9 @@ Wif chemkün (llitulu * mew) kimngey müten.
 Feychi wünen lasun wif mew müleay ñi nülkükawael weda eltukawün.
 Chem lason rume rupalu feychi wif mew ta feyke. Famngechireke, wülngiñ püneley feychi eltukawün.',
 	'blankpage' => 'welli pakina',
-];
+);
 
-$messages['ary'] = [
+$messages['ary'] = array(
 	'broken-file-category' => 'ṣfaḫi fiha wṣlat milffaṫ mhrrsa',
 	'badaccess' => 'Ġalat fe s-smaḫ',
 	'badaccess-group0' => 'mamsmohch lik tdkhl had ttbiq li bghiti',
@@ -868,19 +856,19 @@ $messages['ary'] = [
 	'bold_sample' => 'Kṫaba ġliḍa',
 	'bold_tip' => 'Kṫaba ġliḍa',
 	'blockedtitle' => 'had lmostakhdim tbloka',
-	'blockedtext' => '\'\'\'smiṫ l-mosṫĥdim wlla ĝonwan l-IP ṫaĝk rah ṫbloka.\'\'\'
+	'blockedtext' => "'''smiṫ l-mosṫĥdim wlla ĝonwan l-IP ṫaĝk rah ṫbloka.'''
 
 lli blokak howa $1.
-s-sabab lli ĝtah howa \'\'$2\'\'.
+s-sabab lli ĝtah howa ''$2''.
 
 * bda l-blok: $8
 * ġa ystala: $6
 * lli mqṣod b-lblok: $7
 
 ymkn lik ṫṫaṣl b-$1 wlla ċi [[{{MediaWiki:Grouppage-sysop}}|idari]] aĥor baċ ṫnaqċ l-blok.
-ma ymkn-likċ ṫĥddm l-ĥaṣṣiya ṫaĝ \'{{MediaWiki:emailpage}}\' ġir ila konti ĥṫariṫi ċi ĝonwan dl-email is f-[[Special:Preferences|ṫfḍilaṫ l-ḫisab]] ṫaĝk o-ma konti-ċ mbloki mn l-ĥdma bih.
+ma ymkn-likċ ṫĥddm l-ĥaṣṣiya ṫaĝ '{{MediaWiki:emailpage}}' ġir ila konti ĥṫariṫi ċi ĝonwan dl-email is f-[[Special:Preferences|ṫfḍilaṫ l-ḫisab]] ṫaĝk o-ma konti-ċ mbloki mn l-ĥdma bih.
 ĝonwan l-IP ṫaĝk daba howa $3, o-lmoĝrrif d-lblok howa #$5.
-mli ṫkṫb ċi talab ĥaṣṣk ṫĝti fih gaĝ had ṫ-ṫafaṣil lli l-foq.',
+mli ṫkṫb ċi talab ĥaṣṣk ṫĝti fih gaĝ had ṫ-ṫafaṣil lli l-foq.",
 	'blockednoreason' => 'ta sabab mamaatich',
 	'blocked-notice-logextract' => 'had l-mosṫĥdim mbloki daba.
 aĥir mdĥl f-sijill l-blok mĝti lṫḫṫ:',
@@ -895,7 +883,7 @@ aĥir mdĥl f-sijill l-blok mĝti lṫḫṫ:',
 	'booksources-search-legend' => 'Qelleb ĝla l-kṫoba',
 	'booksources-isbn' => 'ISBN:',
 	'booksources-go' => 'Sir',
-	'blanknamespace' => '(Re\'si)',
+	'blanknamespace' => "(Re'si)",
 	'blockip' => 'Bloké l-mosṫeĥdim',
 	'blockip-title' => 'Bloki l-mosṫeḫdim',
 	'blockip-legend' => 'Bloki l-mosṫeḫdim',
@@ -903,7 +891,7 @@ aĥir mdĥl f-sijill l-blok mĝti lṫḫṫ:',
 	'blockipsuccesssub' => 'Blokaj najeḫ',
 	'blocklist' => 'l-mosṫĥdimin lli ṫblokaw',
 	'blocklist-userblocks' => 'ĥbbi blokaṫ l-ḫisab',
-	'blocklist-tempblocks' => 'ĥbbi l-blokaṫ l-mo\'qqaṫa',
+	'blocklist-tempblocks' => "ĥbbi l-blokaṫ l-mo'qqaṫa",
 	'blocklist-timestamp' => 'tabĝ zamani',
 	'blocklist-target' => 'hadaf',
 	'blocklist-expiry' => 'ytsala',
@@ -915,7 +903,6 @@ aĥir mdĥl f-sijill l-blok mĝti lṫḫṫ:',
 	'blocklogpage' => 'Ṫariĥ l-blokajaṫ',
 	'blocklogentry' => 'bloka [[$1]] limoddaṫ $2 $3',
 	'block-log-flags-anononly' => 'Ġir l-mosṫeĥdimin li ma mċejjlinċ',
-	'block-log-flags-nocreate' => 'mmnoĝ ṫsayeb ċi ḫsab',
 	'block-log-flags-noautoblock' => 'blokaj otomaṫiki dyal l-ĝanawin IP mḫiyyed',
 	'block-log-flags-noemail' => 'imayl mbloki',
 	'block-log-flags-nousertalk' => 'ma ymken loċ yṣayeb ṣfeḫṫo dyal n-niqaċ',
@@ -923,15 +910,15 @@ aĥir mdĥl f-sijill l-blok mĝti lṫḫṫ:',
 	'block-log-flags-hiddenname' => 'smiyṫ l-mosṫeĥdim mĥebbya',
 	'blockme' => 'blokini',
 	'bydate' => 'hassab tarikh',
-	'bad_image_list' => 'L-forma howa ṫ-ṫali :
+	'bad_image_list' => "L-forma howa ṫ-ṫali :
 
 L-lisṫaṫ dyal ṫ-ṫiĝdad (ṣ-ṣtor li badyin be *) homa l-li nĝṫabro.
-L-lyan l-owwel dyal ċi ṣter ĥaṣṣo walabedda ikon dyal ċi ṫeṣwira ĥat\'a.
-L-lyanaṫ l-ĥrin l-li fe nefs ṣ-ṣter ka-nĝṫabrohom bḫal sṫiṫna\'aṫ, maṫalan bḫal ċi ṣefḫaṫ l-li imken ṫban fihom ṫ-ṫeṣwira.',
+L-lyan l-owwel dyal ċi ṣter ĥaṣṣo walabedda ikon dyal ċi ṫeṣwira ĥat'a.
+L-lyanaṫ l-ĥrin l-li fe nefs ṣ-ṣter ka-nĝṫabrohom bḫal sṫiṫna'aṫ, maṫalan bḫal ċi ṣefḫaṫ l-li imken ṫban fihom ṫ-ṫeṣwira.",
 	'blankpage' => 'sfha khawiya',
-];
+);
 
-$messages['arz'] = [
+$messages['arz'] = array(
 	'badaccess' => 'غلطه فى السماح',
 	'badaccess-group0' => 'انت مش مسموح لك تنفذ الطلب بتاعك',
 	'badaccess-groups' => 'الفعل اللى طلبته مسموح بيه بس لليوزرز اللى فى {{PLURAL:$2|المجموعة|واحده من المجموعات}}: $1.',
@@ -944,9 +931,9 @@ $messages['arz'] = [
 	'bold_sample' => 'حروف عريضه',
 	'bold_tip' => 'حروف عريضه',
 	'blockedtitle' => 'اليوزر ممنوع',
-	'blockedtext' => '\'\'\'تم منع اسم اليوزر أو عنوان الااى بى بتاعك .\'\'\'
+	'blockedtext' => "'''تم منع اسم اليوزر أو عنوان الااى بى بتاعك .'''
 
-سبب المنع هو: \'\'$2\'\'. وقام بالمنع $1.
+سبب المنع هو: ''$2''. وقام بالمنع $1.
 
 * بداية المنع: $8
 * انتهاء المنع: $6
@@ -954,7 +941,7 @@ $messages['arz'] = [
 
 ممكن التواصل مع $1 لمناقشة المنع، أو مع واحد من [[{{MediaWiki:Grouppage-sysop}}|الاداريين]] عن المنع>
 افتكر انه مش ممكن تبعت ايميل  لليوزرز الا اذا كنت سجلت عنوان ايميل صحيح فى صفحة [[Special:Preferences|التفضيلات]] بتاعتك.
-عنوان الااى بى بتاعك حاليا هو $3 وكود المنع هو #$5.من فضلك ضيف اى واحد منهم أو كلاهما فى اى رسالة للتساؤل عن المنع.',
+عنوان الااى بى بتاعك حاليا هو $3 وكود المنع هو #$5.من فضلك ضيف اى واحد منهم أو كلاهما فى اى رسالة للتساؤل عن المنع.",
 	'blockednoreason' => 'ما فيش سبب',
 	'blocked-notice-logextract' => 'اليوزر ده معمول له بلوك دلوقتى.
 اخر بلوك فى السجل موجود تحت للمراجعه:',
@@ -997,7 +984,6 @@ $messages['arz'] = [
 عناوين الأيبى اللى اتمنعت اوتوماتيكى مش معروضة.
 شوف [[Special:BlockList|عناوين الأيبى الممنوعة]] علشان تشوف عمليات المنع الشغالة دلوقتي.',
 	'block-log-flags-anononly' => 'اليوزرز المجهولين  بس',
-	'block-log-flags-nocreate' => ' فتح الحسابات ممنوع',
 	'block-log-flags-noautoblock' => 'المنع التلقائى متعطل',
 	'block-log-flags-noemail' => 'الإيميل ممنوع',
 	'block-log-flags-nousertalk' => 'لا يمكن تعديل صفحة النقاش الخاصة',
@@ -1011,9 +997,9 @@ $messages['arz'] = [
 اول لينك فى سطر لازم يكون لينك لـ فايل مش شغال.
 اى لينكات فى نفس السطر, تعتبر انها استثناء, يعنى صفح ممكن يكون موجود فيها الفايل جوّا سطر.',
 	'blankpage' => 'صفحة فاضية',
-];
+);
 
-$messages['as'] = [
+$messages['as'] = array(
 	'broken-file-category' => 'অবৈধ ফাইল সংযোগযুক্ত পৃষ্ঠাবোৰ',
 	'badaccess' => 'অনুমোদন ত্ৰুটি',
 	'badaccess-group0' => 'আপুনি কৰিব বিচৰা কামতো কৰাৰ অধিকাৰ আপোনাৰ নাই।',
@@ -1026,10 +1012,10 @@ $messages['as'] = [
 	'bold_sample' => 'গাঢ় পাঠ্য',
 	'bold_tip' => 'গাঢ় পাঠ্য',
 	'blockedtitle' => 'সদস্যজনক অবৰোধ কৰা হৈছে',
-	'blockedtext' => '\'\'\'আপোনাৰ সদস্যনাম অথবা আই-পি ঠিকনা অৱৰোধ কৰা হৈছে ।\'\'\'
+	'blockedtext' => "'''আপোনাৰ সদস্যনাম অথবা আই-পি ঠিকনা অৱৰোধ কৰা হৈছে ।'''
 
 $1ৰ দ্বাৰা এই অৱৰোধ কৰা হৈছে ।
-ইয়াৰ বাবে দিয়া কাৰণ হৈছে \'\'$2\'\' ।
+ইয়াৰ বাবে দিয়া কাৰণ হৈছে ''$2'' ।
 
 * অৱৰোধ আৰম্ভণি: $8
 * অৱৰোধ সমাপ্তি: $6
@@ -1038,31 +1024,31 @@ $1ৰ দ্বাৰা এই অৱৰোধ কৰা হৈছে ।
 আপুনি এই অৱৰোধৰ বিষয়ে আলোচনা কৰিবলৈ $1 বা [[{{MediaWiki:Grouppage-sysop}}|প্ৰবন্ধকৰ]] লগত সম্পৰ্ক স্থাপন কৰিব পাৰে ।
 আপুনি যেতিয়ালৈ [[Special:Preferences|সদস্য পছন্দ]] পৃষ্ঠাত আপোনাৰ ই-মেইল ঠিকনা নিদিয়ে তেতিয়ালৈ ’সদস্যক ই-মেইল পঠাওক’ সুবিধাতো ব্যৱহাৰ কৰিব নোৱাৰিব, আৰু আপোনাক এয়া কৰিবলৈ ৰোধ কৰা হোৱা নাই ।
 আপোনাৰ এতিয়াৰ আই-পি ঠিকনা হল $3, আৰু আপোনাৰ অবৰোধ ক্ৰমিক হৈছে #$5 ।
-এই বিষয়ে হোৱা আলোচনাত ইয়াৰ সবিশেষ সদৰী কৰে যেন।',
+এই বিষয়ে হোৱা আলোচনাত ইয়াৰ সবিশেষ সদৰী কৰে যেন।",
 	'blockednoreason' => 'কাৰণ দিয়া নাই',
-	'blocked-notice-logextract' => 'বৰ্তমানে এই সদস্যক বাৰণ কৰা হৈছে ।
-প্ৰসংগক্ৰমে সাম্প্ৰতিক বাৰণ সূচী তলত দিয়া হ\'ল ।',
+	'blocked-notice-logextract' => "বৰ্তমানে এই সদস্যক বাৰণ কৰা হৈছে ।
+প্ৰসংগক্ৰমে সাম্প্ৰতিক বাৰণ সূচী তলত দিয়া হ'ল ।",
 	'badsig' => 'অনুপযোগী স্বাক্ষ্যৰ, HTML টেগ পৰীক্ষা কৰি লওক।',
 	'badsiglength' => 'আপোনাৰ স্বাক্ষৰ অত্যাধিক দীঘলীয়া ।
 আপোনাৰ স্বাক্ষৰ {{PLURAL:$1|এটা আখৰৰ|টা আখৰৰ}} বেছি হ’ব নালাগে ।',
 	'boteditletter' => 'ব',
 	'badfilename' => 'ফাইলনাম "$1"-লৈ সলনি কৰা হ\'ল ।',
-	'backend-fail-stream' => '$1 ফাইলটো ষ্ট্ৰীম কৰিব পৰা নগ\'ল।',
-	'backend-fail-backup' => '$1 ফাইলটো বেকআপ্‌ কৰিব পৰা নগ\'ল।',
+	'backend-fail-stream' => "$1 ফাইলটো ষ্ট্ৰীম কৰিব পৰা নগ'ল।",
+	'backend-fail-backup' => "$1 ফাইলটো বেকআপ্‌ কৰিব পৰা নগ'ল।",
 	'backend-fail-notexists' => '$1 ফাইলটোৰ কোনো অস্তিত্ব নাই।',
-	'backend-fail-hashes' => 'তুলনা কৰিবৰ বাবে ফাইল হেছ্‌সমূহ পাব পৰা নগ\'ল।',
+	'backend-fail-hashes' => "তুলনা কৰিবৰ বাবে ফাইল হেছ্‌সমূহ পাব পৰা নগ'ল।",
 	'backend-fail-notsame' => '$1ত ইতিমধ্যে বেলেগ এটা ফাইল আছে।',
 	'backend-fail-invalidpath' => '$1টো বৈধ সঞ্চয় পথ নহয়।',
 	'backend-fail-delete' => '$1 ফাইলটো বিলোপ কৰিব পৰা নগল।',
 	'backend-fail-alreadyexists' => '$1 ফাইলটো ইতিমধ্যে আছেই।',
-	'backend-fail-store' => '$1 ফাইলটো $2ত সাঁচিব পৰা নগ\'ল।',
+	'backend-fail-store' => "$1 ফাইলটো $2ত সাঁচিব পৰা নগ'ল।",
 	'backend-fail-copy' => '$1 ফাইলটো $2 লৈ প্ৰতিলিপি কৰিব পৰা নগ’ল',
-	'backend-fail-move' => '$1 ফাইলটো $2লৈ স্থানান্তৰ কৰিব পৰা নগ\'ল',
-	'backend-fail-opentemp' => 'অস্থায়ী ফাইল খুলিব পৰা নগ\'ল।',
-	'backend-fail-writetemp' => 'অস্থায়ী ফাইলত লিখিব পৰা নগ\'ল।',
-	'backend-fail-closetemp' => 'অস্থায়ী ফাইল বন্ধ কৰিব পৰা নগ\'ল।',
-	'backend-fail-read' => '$1 ফাইলটো পঢ়িব পৰা নগ\'ল',
-	'backend-fail-create' => '$1 ফাইলটো সৃষ্টি কৰিব পৰা নগ\'ল',
+	'backend-fail-move' => "$1 ফাইলটো $2লৈ স্থানান্তৰ কৰিব পৰা নগ'ল",
+	'backend-fail-opentemp' => "অস্থায়ী ফাইল খুলিব পৰা নগ'ল।",
+	'backend-fail-writetemp' => "অস্থায়ী ফাইলত লিখিব পৰা নগ'ল।",
+	'backend-fail-closetemp' => "অস্থায়ী ফাইল বন্ধ কৰিব পৰা নগ'ল।",
+	'backend-fail-read' => "$1 ফাইলটো পঢ়িব পৰা নগ'ল",
+	'backend-fail-create' => "$1 ফাইলটো সৃষ্টি কৰিব পৰা নগ'ল",
 	'brokenredirects' => 'ভঙা পুনৰ্নিৰ্দেশনাসমূহ',
 	'brokenredirectstext' => 'তলৰ পুনৰ্নিৰ্দেশনাসমূহে অস্তিত্বহীন পৃষ্ঠাক সংযোগ কৰিছে:',
 	'brokenredirects-edit' => 'সম্পাদনা কৰক',
@@ -1081,7 +1067,7 @@ $1ৰ দ্বাৰা এই অৱৰোধ কৰা হৈছে ।
 কেৱল ধ্বংসপ্ৰৱণতা ৰোধ কৰিবলৈ আৰু [[{{MediaWiki:Policy-url}}|নীতি]] মানি চলি এনে কৰক ।
 তলত এটা নিৰ্দিষ্ট কাৰণ উল্লেখ কৰক (যেনে, ধ্বংসসাধন কৰা পৃষ্ঠাৰ নাম) ।',
 	'badipaddress' => 'অগ্ৰহণযোগ্য আই-পি ঠিকনা',
-	'blockipsuccesssub' => 'বাৰণ কৰা সফল হ\'ল',
+	'blockipsuccesssub' => "বাৰণ কৰা সফল হ'ল",
 	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]]ক বাধা দিয়া হৈছে ।<br />
 প্ৰতিবন্ধকৰ পুনৰ্বিবেচনাৰ বাবে [[Special:BlockList|IP প্ৰতিবন্ধক তালিকা]]',
 	'blocklist' => 'বাৰণ কৰা সদস্য',
@@ -1107,7 +1093,6 @@ $1ৰ দ্বাৰা এই অৱৰোধ কৰা হৈছে ।
 স্বয়ংক্ৰিয়ভাৱে প্ৰতিবন্ধক পোৱা আই.পি. ঠিকনাবোৰ ইয়াত তালিকাভুক্ত কৰা হোৱা নাই ।
 সাম্প্ৰতিক কাৰ্যৰত নিষেধ আৰু প্ৰতিবন্ধকৰ বাবে [[Special:BlockList|আই.পি. প্ৰতিবন্ধক তালিকা]] চাওক ।',
 	'block-log-flags-anononly' => 'কেৱল বেনামী সদস্য',
-	'block-log-flags-nocreate' => 'একাউন্ট সৃষ্টি নিষ্ক্ৰিয় কৰা হৈছে',
 	'block-log-flags-noautoblock' => 'স্বয়ংক্ৰিয়-প্ৰতিবন্ধক নিষ্ক্ৰিয় কৰা হৈছে',
 	'block-log-flags-noemail' => 'ই-মেইল অৱৰোধ কৰা হৈছে',
 	'block-log-flags-nousertalk' => 'নিজৰ কথা-বতৰা পৃষ্ঠা সম্পাদনা কৰিব নোৱাৰি',
@@ -1121,39 +1106,39 @@ Only list items (lines starting with *) are considered.
 The first link on a line must be a link to a bad file.
 Any subsequent links on the same line are considered to be exceptions, i.e. pages where the file may occur inline.',
 	'blankpage' => 'খালী পৃষ্ঠা',
-];
+);
 
-$messages['ast'] = [
+$messages['ast'] = array(
 	'broken-file-category' => 'Páxines con enllaces frañaos a ficheros',
 	'badaccess' => 'Error de permisos',
-	'badaccess-group0' => 'Nun tienes permisu pa executar l\'aición solicitada.',
-	'badaccess-groups' => 'L\'aición solicitada ta llimitada a usuarios {{PLURAL:$2|del grupu|d\'ún de los grupos}}: $1.',
+	'badaccess-group0' => "Nun tienes permisu pa executar l'aición solicitada.",
+	'badaccess-groups' => "L'aición solicitada ta llimitada a usuarios {{PLURAL:$2|del grupu|d'ún de los grupos}}: $1.",
 	'badarticleerror' => 'Esta aición nun pue facese nesta páxina',
 	'badtitle' => 'Títulu incorreutu',
 	'badtitletext' => 'El títulu de páxina solicitáu nun ye válidu, ta baleru o tien enllaces inter-llingua o inter-wiki incorreutos.
 Pue contener ún o más caráuteres que nun se puen usar nos títulos.',
-	'badretype' => 'Les claves qu\'escribisti nun concuayen.',
+	'badretype' => "Les claves qu'escribisti nun concuayen.",
 	'blocked-mailpassword' => 'La edición dende la to direición IP ta bloquiada, y poro nun se pue usar la función de recuperación de conseña pa evitar abusos.',
 	'bold_sample' => 'Testu en negrina',
 	'bold_tip' => 'Testu en negrina',
-	'blockedtitle' => 'L\'usuariu ta bloquiáu',
-	'blockedtext' => '\'\'\'El to nome d\'usuariu o la to direición IP foi bloquiáu.\'\'\'
+	'blockedtitle' => "L'usuariu ta bloquiáu",
+	'blockedtext' => "'''El to nome d'usuariu o la to direición IP foi bloquiáu.'''
 
 El bloquéu féxolu $1.
-El motivu conseñáu ye \'\'$2\'\'.
+El motivu conseñáu ye ''$2''.
 
 * Entamu del bloquéu: $8
 * Caducidá del bloquéu: $6
 * Usuariu que se quier bloquiar: $7
 
 Pues ponete en contautu con $1 o con cualesquier otru [[{{MediaWiki:Grouppage-sysop}}|alministrador]] pa discutir el bloquéu.
-Nun pues usar la funcionalidá \'manda-y un email a esti usuariu\' a nun ser que tea especificada una direición de corréu válida
+Nun pues usar la funcionalidá 'manda-y un email a esti usuariu' a nun ser que tea especificada una direición de corréu válida
 na to [[Special:Preferences|páxina de preferencies]] y que nun te tengan bloquiao el so usu.
-La to direición IP actual ye $3, y el númberu d\'identificación del bloquéu ye $5.
-Por favor, amiesta dalgún o dambos d\'estos datos nes tos consultes.',
+La to direición IP actual ye $3, y el númberu d'identificación del bloquéu ye $5.
+Por favor, amiesta dalgún o dambos d'estos datos nes tos consultes.",
 	'blockednoreason' => 'nun se dio nengún motivu',
-	'blocked-notice-logextract' => 'Esti usuariu anguaño ta bloquiáu.
-La cabera entrada del rexistru de bloqueos s\'ufre darréu pa referencia:',
+	'blocked-notice-logextract' => "Esti usuariu anguaño ta bloquiáu.
+La cabera entrada del rexistru de bloqueos s'ufre darréu pa referencia:",
 	'badsig' => 'Firma cruda non válida; comprueba les etiquetes HTML.',
 	'badsiglength' => 'La to robla ye demasiao llarga.
 Ha tener menos de $1 {{PLURAL:$1|caráuter|carauteres}}.',
@@ -1164,7 +1149,7 @@ Ha tener menos de $1 {{PLURAL:$1|caráuter|carauteres}}.',
 	'backend-fail-notexists' => 'El ficheru $1 nun esiste.',
 	'backend-fail-hashes' => 'Nun se pudieron alcontrar los hashes del ficheru pa comparar.',
 	'backend-fail-notsame' => 'Yá esiste un ficheru non idénticu en $1.',
-	'backend-fail-invalidpath' => '$1 nun ye una ruta d\'almacenamientu válida.',
+	'backend-fail-invalidpath' => "$1 nun ye una ruta d'almacenamientu válida.",
 	'backend-fail-delete' => 'Nun se pudo desaniciar el ficheru $1.',
 	'backend-fail-alreadyexists' => 'El ficheru $1 yá esiste.',
 	'backend-fail-store' => 'Nun se pudo guardar el ficheru $1 en $2.',
@@ -1180,7 +1165,7 @@ Ha tener menos de $1 {{PLURAL:$1|caráuter|carauteres}}.',
 	'backend-fail-connect' => 'Nun se pudo coneutar col motor d\'almacenamientu "$1".',
 	'backend-fail-internal' => 'Hebo un fallu desconocíu nel motor d\'almacenamientu "$1".',
 	'backend-fail-contenttype' => 'Non se pudo determinar la triba de conteníu de ficheru a guardar en "$1".',
-	'backend-fail-batchsize' => 'El motor d\'almacenamientu dio un llote de $1 {{PLURAL:$1|operación|operaciones}} en ficheros; el llímite ye de $2 {{PLURAL:$2|operación|operaciones}}.',
+	'backend-fail-batchsize' => "El motor d'almacenamientu dio un llote de $1 {{PLURAL:$1|operación|operaciones}} en ficheros; el llímite ye de $2 {{PLURAL:$2|operación|operaciones}}.",
 	'brokenredirects' => 'Redireiciones rotes',
 	'brokenredirectstext' => 'Les siguientes redireiciones enllacien a páxines non esistentes:',
 	'brokenredirects-edit' => 'editar',
@@ -1188,59 +1173,58 @@ Ha tener menos de $1 {{PLURAL:$1|caráuter|carauteres}}.',
 	'booksources' => 'Fontes de llibros',
 	'booksources-search-legend' => 'Busca de fontes de llibros',
 	'booksources-go' => 'Dir',
-	'booksources-text' => 'Esta ye una llista d\'enllaces a otros sitios que vienden llibros nuevos y usaos, y que puen tener más información sobre llibros que pueas tar guetando:',
+	'booksources-text' => "Esta ye una llista d'enllaces a otros sitios que vienden llibros nuevos y usaos, y que puen tener más información sobre llibros que pueas tar guetando:",
 	'booksources-invalid-isbn' => 'El códigu ISBN que puxisti nun paez que valga; mira que te vien copiáu de la fonte orixinal.',
 	'blanknamespace' => '(Principal)',
 	'block' => 'Bloquiar usuariu',
 	'blockip' => 'Bloquiar usuariu',
 	'blockip-title' => 'Bloquiar usuariu',
 	'blockip-legend' => 'Bloquiar usuariu',
-	'blockiptext' => 'Usa\'l siguiente formulariu pa bloquiar el permisu d\'escritura a una IP o a un usuariu concretu.
-Esto debería facese sólo pa prevenir vandalismu como indiquen les [[{{MediaWiki:Policy-url}}|polítiques]]. Da un motivu específicu (como por exemplu citar páxines que fueron vandalizaes).',
+	'blockiptext' => "Usa'l siguiente formulariu pa bloquiar el permisu d'escritura a una IP o a un usuariu concretu.
+Esto debería facese sólo pa prevenir vandalismu como indiquen les [[{{MediaWiki:Policy-url}}|polítiques]]. Da un motivu específicu (como por exemplu citar páxines que fueron vandalizaes).",
 	'badipaddress' => 'IP non válida',
 	'blockipsuccesssub' => 'Bloquéu fechu correctamente',
-	'blockipsuccesstext' => 'Bloquióse al usuariu [[Special:Contributions/$1|$1]].
-<br />Mira na [[Special:BlockList|llista d\'IPs bloquiaes]] pa revisar los bloqueos.',
+	'blockipsuccesstext' => "Bloquióse al usuariu [[Special:Contributions/$1|$1]].
+<br />Mira na [[Special:BlockList|llista d'IPs bloquiaes]] pa revisar los bloqueos.",
 	'blocklist' => 'Usuarios bloquiaos',
 	'blocklist-userblocks' => 'Anubrir los bloqueos de cuenta',
 	'blocklist-tempblocks' => 'Anubrir los bloqueos temporales',
-	'blocklist-addressblocks' => 'Anubrir los bloqueos d\'IP simples',
+	'blocklist-addressblocks' => "Anubrir los bloqueos d'IP simples",
 	'blocklist-rangeblocks' => 'Anubrir los bloqueos de rangu',
-	'blocklist-timestamp' => 'Marca d\'hora',
+	'blocklist-timestamp' => "Marca d'hora",
 	'blocklist-target' => 'Oxetivu',
 	'blocklist-expiry' => 'Caduca',
 	'blocklist-by' => 'Alministración de bloqueos',
 	'blocklist-params' => 'Parámetros de bloquéu',
 	'blocklist-reason' => 'Motivu',
-	'blocklist-nousertalk' => 'nun pue editar la so páxina d\'alderique',
+	'blocklist-nousertalk' => "nun pue editar la so páxina d'alderique",
 	'blocklink' => 'bloquiar',
 	'blocklogpage' => 'Rexistru de bloqueos',
-	'blocklog-showlog' => 'Esti usuariu recibió un bloquéu previamente.
-El rexistru de bloqueos s\'ufre darréu pa referencia:',
-	'blocklog-showsuppresslog' => 'Esti usuariu recibió un bloquéu y s\'anubrió previamente.
-El rexistru de desanicios s\'ufre darréu pa referencia:',
+	'blocklog-showlog' => "Esti usuariu recibió un bloquéu previamente.
+El rexistru de bloqueos s'ufre darréu pa referencia:",
+	'blocklog-showsuppresslog' => "Esti usuariu recibió un bloquéu y s'anubrió previamente.
+El rexistru de desanicios s'ufre darréu pa referencia:",
 	'blocklogentry' => 'bloquió [[$1]] con una caducidá de $2 $3',
-	'blocklogtext' => 'Esti ye un rexistru de los bloqueos y desbloqueos d\'usuarios.
+	'blocklogtext' => "Esti ye un rexistru de los bloqueos y desbloqueos d'usuarios.
 Les direcciones IP bloquiaes automáticamente nun salen equí.
-Pa ver los bloqueos qu\'hai agora mesmo, mira na [[Special:BlockList|llista d\'IP bloquiaes]].',
+Pa ver los bloqueos qu'hai agora mesmo, mira na [[Special:BlockList|llista d'IP bloquiaes]].",
 	'block-log-flags-anononly' => 'namái usuarios anónimos',
-	'block-log-flags-nocreate' => 'creación de cuentes desactivada',
 	'block-log-flags-noautoblock' => 'bloquéu automáticu deshabilitáu',
 	'block-log-flags-noemail' => 'corréu electrónicu bloquiáu',
-	'block-log-flags-nousertalk' => 'nun pue editar la páxina d\'alderique propia',
+	'block-log-flags-nousertalk' => "nun pue editar la páxina d'alderique propia",
 	'block-log-flags-angry-autoblock' => 'autobloquéu ameyoráu activáu',
-	'block-log-flags-hiddenname' => 'nome d\'usuariu anubríu',
+	'block-log-flags-hiddenname' => "nome d'usuariu anubríu",
 	'blockme' => 'Blóquiame',
 	'bydate' => 'por fecha',
-	'bad_image_list' => 'El formatu ye\'l que sigue:
+	'bad_image_list' => "El formatu ye'l que sigue:
 
-Namái se consideren los elementos de llista (llinies qu\'emprimen con *).
-El primer enllaz d\'una llinia tien de ser ún qu\'enllacie a un archivu non válidu.
-Los demás enllaces de la mesma llinia considérense esceiciones, p.ex. páxines nes que\'l ficheru pue apaecer en llinia.',
+Namái se consideren los elementos de llista (llinies qu'emprimen con *).
+El primer enllaz d'una llinia tien de ser ún qu'enllacie a un archivu non válidu.
+Los demás enllaces de la mesma llinia considérense esceiciones, p.ex. páxines nes que'l ficheru pue apaecer en llinia.",
 	'blankpage' => 'Páxina en blanco',
-];
+);
 
-$messages['avk'] = [
+$messages['avk'] = array(
 	'badaccess' => 'Noverarokla',
 	'badaccess-group0' => 'Ta kucilana skura me zo rictal.',
 	'badaccess-groups' => 'Kucilana skura gan favesik ke {{PLURAL:$2|lospa|tana lospa}} anton zo rictar : $1.',
@@ -1265,8 +1249,8 @@ Ta keyaksera va $1 ok konar [[{{MediaWiki:Grouppage-sysop}}|ristusik]] rotuzeral
 Va \'"e-mail" staksara pu bat favesik\' me rofavel vaxede "e-mail" mane tir koe rinaf [[Special:Preferences|lodamaceem]] ise vaon faveson me zo elekayal.
 Rinaf tise IP mane tir $3 ise ID elekara tir #$5. Va bate ik bane mane ko kota erura vay bazel !',
 	'blockednoreason' => 'Meka bazena lazava',
-	'blockedoriginalsource' => 'Klita ke \'\'\'$1\'\'\' vleveon zo nedir :',
-	'blockededitsource' => 'Krent ke \'\'\'rinaf betakseem\'\'\' va \'\'\'$1\'\'\' vleveon zo betar :',
+	'blockedoriginalsource' => "Klita ke '''$1''' vleveon zo nedir :",
+	'blockededitsource' => "Krent ke '''rinaf betakseem''' va '''$1''' vleveon zo betar :",
 	'badsig' => 'Meenafa rilafa sugdara; va HTML tcala yo stujel !',
 	'badsiglength' => 'Sugdara tir abrotcarsafa.
 Gotir le $1 {{PLURAL:$1|staa|staa}}.',
@@ -1287,14 +1271,13 @@ Mana sabegara zo goskur ta weyonara va cidara is dotrakason va [[{{MediaWiki:Pol
 Va lazavanha (tulon ozwason va cidayanu bu se) vlevon bazel !',
 	'badipaddress' => 'IP mane tir mewadafe.',
 	'blockipsuccesssub' => 'Elekanhara',
-	'blockipsuccesstext' => 'L\'adresse IP « $1 » a été bloquée.<br />Vous pouvez consulter sur cette [[Special:IPBlockList|page]] la liste des adresses IP bloquées.',
+	'blockipsuccesstext' => "L'adresse IP « $1 » a été bloquée.<br />Vous pouvez consulter sur cette [[Special:IPBlockList|page]] la liste des adresses IP bloquées.",
 	'blocklistline' => '$1 (tenuwer ba $4): $2 va $3 al elekar',
 	'blocklink' => 'elekara',
 	'blocklogpage' => 'Elekara log',
 	'blocklogentry' => 'Elekan [[$1]] kali $2 ke $3 evledja',
 	'blocklogtext' => 'Ceci est la trace des blocages et déblocages des utilisateurs. Les adresses IP automatiquement bloquées ne sont pas listées. Consultez la [[Special:IPBlockList|liste des utilisateurs bloqués]] pour voir qui est actuellement effectivement bloqué.',
 	'block-log-flags-anononly' => 'anton yoltiskaf favesik',
-	'block-log-flags-nocreate' => 'Pataredura gritegirana',
 	'block-log-flags-noemail' => 'e-mail elekan',
 	'blockme' => 'Zo eleká !',
 	'bydate' => 'kan evla',
@@ -1303,13 +1286,13 @@ Va lazavanha (tulon ozwason va cidayanu bu se) vlevon bazel !',
 Anton vexalolk (conha dem * toza) zo krafiar. Teli taneafi gluyasiki moe conha lanon tir van ewavaja.
 Kotari milconhafi gluyasiki roklon zo krafiar.',
 	'blankpage' => 'Butuvlardara',
-];
+);
 
-$messages['ay'] = [
+$messages['ay'] = array(
 	'booksources-go' => 'Saraña',
-];
+);
 
-$messages['az'] = [
+$messages['az'] = array(
 	'broken-file-category' => 'İşləməyən fayl keçidləri olan səhifələr',
 	'badaccess' => 'İcazə xətası',
 	'badaccess-group0' => 'Bu fəaliyyəti icra etmək səlahiyyətiniz yoxdur.',
@@ -1370,7 +1353,6 @@ Bax [[Special:BlockList|IP blok siyahısı]] bloklanmış IP-lər.',
 Avtomatik bloklanmış IP-ünvanlar burada göstərilmir.
 Hal-hazırkı [[Special:BlockList|qadağaların və bloklamaların siyahısı]]na bax.',
 	'block-log-flags-anononly' => 'yalnız qeydiyyatsız istifadəçilər',
-	'block-log-flags-nocreate' => 'Yeni hesab yaratma bloklanıb',
 	'block-log-flags-noautoblock' => 'avtobloklama qeyri-mümkündür',
 	'block-log-flags-noemail' => 'E-mail bloklanıb',
 	'block-log-flags-nousertalk' => 'Müzakirə səhifəsini redaktə edə bilməz.',
@@ -1384,9 +1366,9 @@ Yalnız siyahı bəndləri (* işarəsi ilə başlayan sətirlər) nəzərə al�
 Sətirdəki ilk keçid, əlavə olunması qadağan olunmuş şəkilə keçid olmalıdır.
 Həmin sətirdəki növbəti keçidlər istisna hesab olunur. Məsələn, fayl məqalədə sətrin içində görünə bilər.',
 	'blankpage' => 'Boş səhifə',
-];
+);
 
-$messages['ba'] = [
+$messages['ba'] = array(
 	'broken-file-category' => 'Файлға һылтанмалары эшләмәгән биттәр',
 	'badaccess' => 'Кереү хатаһы',
 	'badaccess-group0' => 'Һоратылған ғәмәлде үтәй алмайһығыҙ.',
@@ -1399,10 +1381,10 @@ $messages['ba'] = [
 	'bold_sample' => 'Ҡалын яҙылыш',
 	'bold_tip' => 'Ҡалын яҙылыш',
 	'blockedtitle' => 'Ҡулланыусы блокланған',
-	'blockedtext' => '\'\'\'Иҫәп яҙыуығыҙ йәки IP-адресығыҙ блокланған.\'\'\'
+	'blockedtext' => "'''Иҫәп яҙыуығыҙ йәки IP-адресығыҙ блокланған.'''
 
 Блоклаусы хәким: $1.
-Белдерелгән сәбәп: \'\'$2\'\'.
+Белдерелгән сәбәп: ''$2''.
 
 * Блоклау башланған ваҡыт: $8
 * Блоклау  аҙағы: $6
@@ -1411,7 +1393,7 @@ $messages['ba'] = [
 Һеҙ $1 йәки башҡа [[{{MediaWiki:Grouppage-sysop}}|хәкимгә]] блоклау буйынса һорауҙарығыҙҙы ебәрә алаһығыҙ.
 Иҫегеҙҙе тотоғоҙ: әгәр һеҙ теркәлмәгән һәм электрон почта адресығыҙҙы раҫламаған булһағыҙ ([[Special:Preferences|көйләүҙәрем битендә]]), хәкимгә хат ебәрә алмайһығыҙ. Шулай ук блоклау ваҡытында һеҙҙең хат ебәреү мөмкинлегегеҙ сикләгән булырға ла мөмкин.
 Һеҙҙең IP-адрес — $3, блоклау идентификаторы — #$5.
-Хаттарҙа был мәғлүмәттәрҙе күрһәтергә онотмағыҙ.',
+Хаттарҙа был мәғлүмәттәрҙе күрһәтергә онотмағыҙ.",
 	'blockednoreason' => 'сәбәп белдерелмәгән',
 	'blocked-notice-logextract' => 'Хәҙергә был ҡатнашыусы ябылған. Һуңғы ҡулланыусы ябыу яҙмаһы:',
 	'badsig' => 'Хаталы имза. HTML-тегдарҙың дөрөҫлөгөн тикшерегеҙ.',
@@ -1479,7 +1461,6 @@ $messages['ba'] = [
 Авто бикләнеүсе IP адрестар бында күрһәтелмәй.
 [[Special:BlockList|Ғәмәлдәге тыйыуҙырҙы һәм бикләүҙәрҙе]] ҡарай алаһығыҙ.',
 	'block-log-flags-anononly' => 'танылмаған ҡатнашыусылар ғына',
-	'block-log-flags-nocreate' => 'иҫәп яҙыуҙарын теркәү тыйылған',
 	'block-log-flags-noautoblock' => 'авто бикләү һүндерелгән',
 	'block-log-flags-noemail' => 'электрон хат ебәреү тыйылған',
 	'block-log-flags-nousertalk' => 'үҙенең фекер алышыу битен мөхәррирләй алмай',
@@ -1493,12 +1474,12 @@ $messages['ba'] = [
 Юлдың беренсе һылтанмаһы, ҡуйылырға рөхсәт ителмәгән рәсемгә һылтанма булырға тейеш.
 Шул уҡ юлдағы башҡа һылтанмалар ҡағиҙәнән тыш, йәғни рәсем ҡуйырға рөхсәт ителгән бит тип һаналасаҡтар.',
 	'blankpage' => 'Буш бит',
-];
+);
 
-$messages['bar'] = [
+$messages['bar'] = array(
 	'broken-file-category' => 'Seiten mid kaputte Daateilinks',
 	'badaccess' => 'Koane ausreichenden Rechtt',
-	'badaccess-group0' => 'Du host néd d\' daforderliche Berechtigung fyr dé Akzión do.',
+	'badaccess-group0' => "Du host néd d' daforderliche Berechtigung fyr dé Akzión do.",
 	'badaccess-groups' => 'Dé Akzión is bschränkt auf Benutzer, dé {{PLURAL:$2|da Gruppm|oahne voh dé Gruppm}} „$1“ åghern.',
 	'badarticleerror' => 'Dé Akzión kå néd auf dé Seiten ågwendt wern.',
 	'badtitle' => 'néd gütiger Titel',
@@ -1507,8 +1488,8 @@ $messages['bar'] = [
 	'bold_sample' => 'Fetter Text',
 	'bold_tip' => 'Fetter Text',
 	'blockedtitle' => 'Da Benytzer is gsperrt',
-	'blocked-notice-logextract' => '{{GENDER:$1|Der Benutzer|De Benutzarin|Der Benutzer do}} is zurzeid gesperrd.
-Zua da Informazion foigt a aktueller Auszug aus \'m Benutzersperr-Logbiache:',
+	'blocked-notice-logextract' => "{{GENDER:$1|Der Benutzer|De Benutzarin|Der Benutzer do}} is zurzeid gesperrd.
+Zua da Informazion foigt a aktueller Auszug aus 'm Benutzersperr-Logbiache:",
 	'boteditletter' => 'B',
 	'badfilename' => 'Da Daateinåm is auf „$1“ gänderd worn.',
 	'brokenredirects-edit' => 'werkeln',
@@ -1521,33 +1502,32 @@ Zua da Informazion foigt a aktueller Auszug aus \'m Benutzersperr-Logbiache:',
 	'blockip' => 'IP-Adress/Benytzer sperrn',
 	'blockip-title' => 'Benytzer sperrn',
 	'blockip-legend' => 'IP-Adresse/Benutzer sperrn',
-	'blockiptext' => 'Mid dem Formular sperrst a IP-Adress oder an Benytzernåmen, das vo durten aus koane Endarungen mer vurgnumma wern kennan.
-Des soid nur dafoing, um an Vandalismus z\' vahindern und in Yweraistimmung mid d\' [[{{MediaWiki:Policy-url}}|Richtlinien]].
-Gib bittschee an Grund fyr d\' Sperrn å.',
+	'blockiptext' => "Mid dem Formular sperrst a IP-Adress oder an Benytzernåmen, das vo durten aus koane Endarungen mer vurgnumma wern kennan.
+Des soid nur dafoing, um an Vandalismus z' vahindern und in Yweraistimmung mid d' [[{{MediaWiki:Policy-url}}|Richtlinien]].
+Gib bittschee an Grund fyr d' Sperrn å.",
 	'badipaddress' => 'De IP-Adress hod a foischs Format.',
 	'blockipsuccesssub' => 'De Sperrn is erfoigraich gween',
 	'blockipsuccesstext' => 'Da Benytzer/de IP-Adress [[Special:Contributions/$1|$1]] is gsperrt worn.<br />
 Zur da Aufheewung vo da Sperrn schau unter da [[Special:BlockList|Listen vo olle aktivm Sperrn]].',
 	'blocklink' => 'sperrn',
 	'blocklogpage' => 'Benutzersperrlogbiaché',
-	'blocklog-showlog' => '{{GENDER:$1|Der Benutzer|Dé Benutzerrin|Der Benutzer}} do is schoh friarer gsperrd worn. Es fóigt a Eihtrog aus\'m Benutzersperrlogbiaché:',
-	'blocklog-showsuppresslog' => '{{GENDER:$1|Der Benutzer|Dé Benutzerrin|Der Benutzer}} do is schoh friarer gsperrd und vastéckt worn. Es fóigt a Eihtrog aus\'m Benutzersperrlogbiaché:',
+	'blocklog-showlog' => "{{GENDER:$1|Der Benutzer|Dé Benutzerrin|Der Benutzer}} do is schoh friarer gsperrd worn. Es fóigt a Eihtrog aus'm Benutzersperrlogbiaché:",
+	'blocklog-showsuppresslog' => "{{GENDER:$1|Der Benutzer|Dé Benutzerrin|Der Benutzer}} do is schoh friarer gsperrd und vastéckt worn. Es fóigt a Eihtrog aus'm Benutzersperrlogbiaché:",
 	'blocklogentry' => 'hod „[[$1]]“ fyrn fóigenden Zeidraum gsperrd: $2; $3',
 	'block-log-flags-anononly' => 'netter Anónyme',
-	'block-log-flags-nocreate' => '\'s erstön voh Benutzerkontós is gsperrd',
 	'block-log-flags-noautoblock' => 'Autóblóck deaktivierd',
 	'block-log-flags-noemail' => 'E-Post vaschicka gspead',
-	'bad_image_list' => 'Formaat:
+	'bad_image_list' => "Formaat:
 
-Netter Zeun, dé mid am * åfångern, wern ausgwertt. Ois ersters noch \'m * muass a Link auf a unerwynschde Daatei steh.
-Dodrauf fóigende Links auf Seiten in da söm Zeun definirn Ausnåmen, in dénen eanern Zåmmenhång dé Daatei trótzdém vawendt wern derf.',
+Netter Zeun, dé mid am * åfångern, wern ausgwertt. Ois ersters noch 'm * muass a Link auf a unerwynschde Daatei steh.
+Dodrauf fóigende Links auf Seiten in da söm Zeun definirn Ausnåmen, in dénen eanern Zåmmenhång dé Daatei trótzdém vawendt wern derf.",
 	'blankpage' => 'Laare Seiten',
-];
+);
 
-$messages['bat-smg'] = [
+$messages['bat-smg'] = array(
 	'broken-file-category' => 'Seiten mid kaputte Daateilinks',
 	'badaccess' => 'Koane ausreichenden Rechtt',
-	'badaccess-group0' => 'Du host néd d\' daforderliche Berechtigung fyr dé Akzión do.',
+	'badaccess-group0' => "Du host néd d' daforderliche Berechtigung fyr dé Akzión do.",
 	'badaccess-groups' => 'Dé Akzión is bschränkt auf Benutzer, dé {{PLURAL:$2|da Gruppm|oahne voh dé Gruppm}} „$1“ åghern.',
 	'badarticleerror' => 'Dé Akzión kå néd auf dé Seiten ågwendt wern.',
 	'badtitle' => 'néd gütiger Titel',
@@ -1556,8 +1536,8 @@ $messages['bat-smg'] = [
 	'bold_sample' => 'Fetter Text',
 	'bold_tip' => 'Fetter Text',
 	'blockedtitle' => 'Da Benytzer is gsperrt',
-	'blocked-notice-logextract' => '{{GENDER:$1|Der Benutzer|De Benutzarin|Der Benutzer do}} is zurzeid gesperrd.
-Zua da Informazion foigt a aktueller Auszug aus \'m Benutzersperr-Logbiache:',
+	'blocked-notice-logextract' => "{{GENDER:$1|Der Benutzer|De Benutzarin|Der Benutzer do}} is zurzeid gesperrd.
+Zua da Informazion foigt a aktueller Auszug aus 'm Benutzersperr-Logbiache:",
 	'boteditletter' => 'B',
 	'badfilename' => 'Da Daateinåm is auf „$1“ gänderd worn.',
 	'brokenredirects-edit' => 'werkeln',
@@ -1570,30 +1550,29 @@ Zua da Informazion foigt a aktueller Auszug aus \'m Benutzersperr-Logbiache:',
 	'blockip' => 'IP-Adress/Benytzer sperrn',
 	'blockip-title' => 'Benytzer sperrn',
 	'blockip-legend' => 'IP-Adresse/Benutzer sperrn',
-	'blockiptext' => 'Mid dem Formular sperrst a IP-Adress oder an Benytzernåmen, das vo durten aus koane Endarungen mer vurgnumma wern kennan.
-Des soid nur dafoing, um an Vandalismus z\' vahindern und in Yweraistimmung mid d\' [[{{MediaWiki:Policy-url}}|Richtlinien]].
-Gib bittschee an Grund fyr d\' Sperrn å.',
+	'blockiptext' => "Mid dem Formular sperrst a IP-Adress oder an Benytzernåmen, das vo durten aus koane Endarungen mer vurgnumma wern kennan.
+Des soid nur dafoing, um an Vandalismus z' vahindern und in Yweraistimmung mid d' [[{{MediaWiki:Policy-url}}|Richtlinien]].
+Gib bittschee an Grund fyr d' Sperrn å.",
 	'badipaddress' => 'De IP-Adress hod a foischs Format.',
 	'blockipsuccesssub' => 'De Sperrn is erfoigraich gween',
 	'blockipsuccesstext' => 'Da Benytzer/de IP-Adress [[Special:Contributions/$1|$1]] is gsperrt worn.<br />
 Zur da Aufheewung vo da Sperrn schau unter da [[Special:BlockList|Listen vo olle aktivm Sperrn]].',
 	'blocklink' => 'sperrn',
 	'blocklogpage' => 'Benutzersperrlogbiaché',
-	'blocklog-showlog' => '{{GENDER:$1|Der Benutzer|Dé Benutzerrin|Der Benutzer}} do is schoh friarer gsperrd worn. Es fóigt a Eihtrog aus\'m Benutzersperrlogbiaché:',
-	'blocklog-showsuppresslog' => '{{GENDER:$1|Der Benutzer|Dé Benutzerrin|Der Benutzer}} do is schoh friarer gsperrd und vastéckt worn. Es fóigt a Eihtrog aus\'m Benutzersperrlogbiaché:',
+	'blocklog-showlog' => "{{GENDER:$1|Der Benutzer|Dé Benutzerrin|Der Benutzer}} do is schoh friarer gsperrd worn. Es fóigt a Eihtrog aus'm Benutzersperrlogbiaché:",
+	'blocklog-showsuppresslog' => "{{GENDER:$1|Der Benutzer|Dé Benutzerrin|Der Benutzer}} do is schoh friarer gsperrd und vastéckt worn. Es fóigt a Eihtrog aus'm Benutzersperrlogbiaché:",
 	'blocklogentry' => 'hod „[[$1]]“ fyrn fóigenden Zeidraum gsperrd: $2; $3',
 	'block-log-flags-anononly' => 'netter Anónyme',
-	'block-log-flags-nocreate' => '\'s erstön voh Benutzerkontós is gsperrd',
 	'block-log-flags-noautoblock' => 'Autóblóck deaktivierd',
 	'block-log-flags-noemail' => 'E-Post vaschicka gspead',
-	'bad_image_list' => 'Formaat:
+	'bad_image_list' => "Formaat:
 
-Netter Zeun, dé mid am * åfångern, wern ausgwertt. Ois ersters noch \'m * muass a Link auf a unerwynschde Daatei steh.
-Dodrauf fóigende Links auf Seiten in da söm Zeun definirn Ausnåmen, in dénen eanern Zåmmenhång dé Daatei trótzdém vawendt wern derf.',
+Netter Zeun, dé mid am * åfångern, wern ausgwertt. Ois ersters noch 'm * muass a Link auf a unerwynschde Daatei steh.
+Dodrauf fóigende Links auf Seiten in da söm Zeun definirn Ausnåmen, in dénen eanern Zåmmenhång dé Daatei trótzdém vawendt wern derf.",
 	'blankpage' => 'Laare Seiten',
-];
+);
 
-$messages['bcc'] = [
+$messages['bcc'] = array(
 	'badaccess' => 'حطا اجازت',
 	'badaccess-group0' => 'شما مجاز نهیت عملی که درخواست کت اجرا کنیت',
 	'badaccess-groups' => 'کاری که شما درخواست کت محدود په کابران ته یکی چه گروهان {{PLURAL:$2|گروه|یکی چه گروهان}}: $1.',
@@ -1606,17 +1585,17 @@ $messages['bcc'] = [
 	'bold_sample' => 'پررنگین متن',
 	'bold_tip' => 'پررنگین متن',
 	'blockedtitle' => 'کاربر محدود بوتت',
-	'blockedtext' => '\'\'\'شمی نام کاربری یا آی پی محدود بیتت.\'\'\'\'
+	'blockedtext' => "'''شمی نام کاربری یا آی پی محدود بیتت.''''
 
-محدودیت توسط $1 شر بوتت. دلیل داتت \'\'$2\'\'.
+محدودیت توسط $1 شر بوتت. دلیل داتت ''$2''.
 
 *شروع محدودیت: $8*
 *هلاسی محدودیت:$6
 * لوٹتگین محدود بی یوک: $7
 
 شما تونیت گون $1 یا دگه [[{{MediaWiki:Grouppage-sysop}}|مدیر]] په بحث محدودیت باره تماس گیرت.
-شما نه تونیت چه ویژگی\'ایمیل ای کاربر\' استفاده کنیت مگر شی که یم معتبرین آدرس ایمیلی مشخص بیت ته شمی  [[Special:Preferences|ترجیحات حساب]] و شما چه استفاده ی آیی محدود نه بیت.
-  $3 شمی هنوکین آی پی شی ان و شماره محدودیت شی ینت #$5. لطفا هر دو تا یا یکی په وهد سوال کتن هور کنیت.',
+شما نه تونیت چه ویژگی'ایمیل ای کاربر' استفاده کنیت مگر شی که یم معتبرین آدرس ایمیلی مشخص بیت ته شمی  [[Special:Preferences|ترجیحات حساب]] و شما چه استفاده ی آیی محدود نه بیت.
+  $3 شمی هنوکین آی پی شی ان و شماره محدودیت شی ینت #$5. لطفا هر دو تا یا یکی په وهد سوال کتن هور کنیت.",
 	'blockednoreason' => 'هچ دلیلی دهگ نه بیته',
 	'badsig' => 'نامعتبرین حامین امضا تگان HTML چک کن',
 	'badsiglength' => 'شمل امضا باز مزنتت.
@@ -1651,7 +1630,6 @@ $messages['bcc'] = [
 اتوماتیکی محدود بوتگین آدرس آی پی ادان لیست نهنت.
 بچار [[Special:BlockList|لیست محدودیت آی پی]] په لیست هنوکین عملی محدودیتان و بند کتان.',
 	'block-log-flags-anononly' => 'ناشناس کابران فقط',
-	'block-log-flags-nocreate' => 'شرکتن حساب غیر فعال',
 	'block-log-flags-noautoblock' => 'اتوماتیکی محدوددیت غیر فعال',
 	'block-log-flags-noemail' => 'ایمیل محدودانت',
 	'block-log-flags-nousertalk' => 'نه تونیت صفحه بحثء وتیء اصلاح کنیت',
@@ -1665,9 +1643,9 @@ $messages['bcc'] = [
 اولین لینک ته یک خط باید یک لینکی په یک بدین فایلی بیت.
 هر لینکی که کیت ته هما خط اسنثتا بینت.',
 	'blankpage' => 'هالیکین صفحه',
-];
+);
 
-$messages['bcl'] = [
+$messages['bcl'] = array(
 	'badaccess' => 'Salang permiso',
 	'badaccess-group0' => 'Dai ka tinotogotan na gibohon an aksyon na saimong hinahagad.',
 	'badaccess-groups' => 'An aksyon na saimong hinahagad limitado sa mga parágamit sa sarô sa mga grupong $1.',
@@ -1679,22 +1657,22 @@ $messages['bcl'] = [
 	'bold_sample' => 'Tekstong mahìbog',
 	'bold_tip' => 'Mahìbog na teksto',
 	'blockedtitle' => 'Pigbágat an parágamit',
-	'blockedtext' => '\'\'\'Pigbagat an pangaran o IP mo.\'\'\'
+	'blockedtext' => "'''Pigbagat an pangaran o IP mo.'''
 
-Si $1 an nagbagat. Ini an itinaong rasón, \'\'$2\'\'.
+Si $1 an nagbagat. Ini an itinaong rasón, ''$2''.
 
 * Pagpoon kan pagbagat: $8
 * Pagpasó kan pagbagat: $6
 * Piniling bagaton: $7
 
 Pwede mong suratan si $1 o an iba pang [[{{MediaWiki:Grouppage-sysop}}|administrador]] para pagoralayan an manonongod sa pagbagat.
-Dai mo pwedeng gamiton an \' e-koreohan an paragamit \' kun mayong tamang e-surat sa  [[Special:Preferences|mga kabòtan kan account]] mo asin dai ka pigbagat sa paggamit kaini.
-$3 an presente mong IP, asin #$5 an ID nin pigbagat. Ikaag tabì an arin man o pareho sain man na hapót.',
+Dai mo pwedeng gamiton an ' e-koreohan an paragamit ' kun mayong tamang e-surat sa  [[Special:Preferences|mga kabòtan kan account]] mo asin dai ka pigbagat sa paggamit kaini.
+$3 an presente mong IP, asin #$5 an ID nin pigbagat. Ikaag tabì an arin man o pareho sain man na hapót.",
 	'blockednoreason' => 'mayong itinaong rason',
 	'badsig' => 'Dai pwede an bâgong pirmang ini; isúsog an mga HTML na takód.',
 	'badsiglength' => 'Halabâon an gahâ; kaipuhan dai mababà sa $1 na mga karakter.',
 	'boteditletter' => 'b',
-	'badfilename' => 'Rinibayan an \'\'filename\'\' nin "$1".',
+	'badfilename' => "Rinibayan an ''filename'' nin \"\$1\".",
 	'brokenredirects' => 'Putol na mga paglikay',
 	'brokenredirectstext' => 'An nagsusunod naglilikay kan takod sa mga pahinang mayo man:',
 	'brokenredirects-edit' => 'hirahón',
@@ -1702,7 +1680,7 @@ $3 an presente mong IP, asin #$5 an ID nin pigbagat. Ikaag tabì an arin man o p
 	'booksources' => 'Ginikanang libro',
 	'booksources-search-legend' => 'Maghanap nin mga ginikanang libro',
 	'booksources-go' => 'Dumanán',
-	'booksources-text' => 'Mahihiling sa babâ an lista kan mga takod sa ibang \'\'site\'\' na nagbenbenta nin mga bâgo asin nagamit nang libro, asin pwede ser na igwa pang mga ibang impormasyon manonongod sa mga librong pighahanap mo:',
+	'booksources-text' => "Mahihiling sa babâ an lista kan mga takod sa ibang ''site'' na nagbenbenta nin mga bâgo asin nagamit nang libro, asin pwede ser na igwa pang mga ibang impormasyon manonongod sa mga librong pighahanap mo:",
 	'blanknamespace' => '(Principal)',
 	'blockip' => 'Bagáton an paragamit',
 	'blockiptext' => 'Gamiton an pormularyo sa babâ para bagaton an pagsurat kan sarong espesipikong IP o ngaran nin parágamit.
@@ -1718,7 +1696,6 @@ Magkaag nin espisipikong rason (halimbawa, magtao nin ehemplo kan mga páhinang 
 	'blocklogtext' => 'Ini an historial kan pagbagat asin pagbawi sa pagbagat nin mga paragamit. An mga enseguidang binagat na direccion nin
 IP dai nakalista digdi. Hilingon an [[Special:BlockList|IP lista nin mga binagat]] para sa lista nin mga nakaandar na mga pagpangalad buda mga pagbagat.',
 	'block-log-flags-anononly' => 'Mga paragamit na anónimo sana',
-	'block-log-flags-nocreate' => 'pigpopondohán an paggibo nin \'\'account\'',
 	'block-log-flags-noautoblock' => 'pigpopondo an enseguidang pagbagat',
 	'block-log-flags-noemail' => 'binagát an e-surat',
 	'bydate' => 'sa petsa',
@@ -1728,9 +1705,9 @@ An mga nakalista sana (mga linyang nagpopoon sa *) an pigkokonsiderar.
 An enot na takod sa linya seguradong sarong takod sa sarong salang file.
 Ano man na takod sa parehong linyang ini pigkokonsiderar na eksepsyon, i.e. mga pahina na may file sa laog nin linya.',
 	'blankpage' => 'Blangkong pahina',
-];
+);
 
-$messages['be'] = [
+$messages['be'] = array(
 	'broken-file-category' => 'Старонкі з няслушнымі спасылкамі на файлы',
 	'badaccess' => 'Памылка ў дазволах',
 	'badaccess-group0' => 'Вам не дазволена выконваць аперацыю, па якую вы звярталіся.',
@@ -1743,17 +1720,17 @@ $messages['be'] = [
 	'bold_sample' => 'Цёмны тэкст',
 	'bold_tip' => 'Цёмны тэкст',
 	'blockedtitle' => 'Удзельнік заблакаваны',
-	'blockedtext' => '\'\'\'Ваша імя ўдзельніка або адрас IP былі пастаўлены пад блок.\'\'\'
+	'blockedtext' => "'''Ваша імя ўдзельніка або адрас IP былі пастаўлены пад блок.'''
 
-Блок быў пастаўлены ўдзельнікам: $1. Пададзеная прычына: \'\'$2\'\'.
+Блок быў пастаўлены ўдзельнікам: $1. Пададзеная прычына: ''$2''.
 
 * Блок пастаўлены: $8
 * Блок канчаецца: $6
 * Атрымальнік блока: $7
 
 Вы можаце звярнуцца да $1 або да аднаго з іншых [[{{MediaWiki:Grouppage-sysop}}|адміністратараў]], каб паразмаўляць пра гэты блок.
-Вы не зможаце дзеля гэтага карыстацца функцыяй \'\'{{:{{ns:mediawiki}}:emailuser/be}}\'\', калі гэта вам забаронена, або калі вы не наставілі правільнага пацверджанага адрасу эл.пошты ў сваіх [[Special:Preferences|настаўленнях]].
-Ваш адрас IP: $3, нумар блоку: #$5. Падавайце ўсе гэтыя звесткі ў кожным сваім звароце адносна гэтага блоку.',
+Вы не зможаце дзеля гэтага карыстацца функцыяй ''{{:{{ns:mediawiki}}:emailuser/be}}'', калі гэта вам забаронена, або калі вы не наставілі правільнага пацверджанага адрасу эл.пошты ў сваіх [[Special:Preferences|настаўленнях]].
+Ваш адрас IP: $3, нумар блоку: #$5. Падавайце ўсе гэтыя звесткі ў кожным сваім звароце адносна гэтага блоку.",
 	'blockednoreason' => 'прычына не вызначана',
 	'blocked-notice-logextract' => 'Гэты карыстальнік у дадзены момант заблакаваны.
  Апошні запіс журнала блакіровак прыводзіцца ніжэй для даведкі:',
@@ -1766,7 +1743,7 @@ $messages['be'] = [
 	'backend-fail-notexists' => 'Файл $1 не існуе.',
 	'backend-fail-hashes' => 'Не ўдалося атрымаць хэшы файлаў для параўнання.',
 	'backend-fail-notsame' => 'Ужо існуе неідэнтычны файл $1.',
-	'backend-fail-invalidpath' => '$1 не з\'яўляецца дапушчальным шляхам',
+	'backend-fail-invalidpath' => "$1 не з'яўляецца дапушчальным шляхам",
 	'backend-fail-delete' => 'Не ўдалося сцерці файл "$1".',
 	'backend-fail-alreadyexists' => 'Файл $1 ужо існуе.',
 	'backend-fail-store' => 'Не ўдалося захаваць файл $1 на $2 .',
@@ -1824,7 +1801,6 @@ $messages['be'] = [
 	'blocklogentry' => 'пастаўлены блок на "[[$1]]", з часам трывання $2 $3',
 	'blocklogtext' => 'Журнал пастаноўкі і здымання блокаў. Аўтаматычна блакаваныя адрасы IP тут не паказваюцца. Спіс актуальных забарон і блокаў бач у [[Special:BlockList|спісе блокаў IP]].',
 	'block-log-flags-anononly' => 'толькі ананімныя ўдзельнікі',
-	'block-log-flags-nocreate' => 'стварэнне рахунку не дазволена',
 	'block-log-flags-noautoblock' => 'аўта-блок не дазволены',
 	'block-log-flags-noemail' => 'пастаўлены блок на эл.пошту',
 	'block-log-flags-nousertalk' => 'нельга правіць уласную размову',
@@ -1837,9 +1813,9 @@ $messages['be'] = [
 Улічваюцца толькі складнікі спісаў (радкі, пачатыя з зорачкі *). Першая спасылка ў радку павінна быць спасылкай на кепскую выяву.
 Усе наступныя спасылкі ў тым самым радку лічацца выняткамі, г.зн. старонкамі, у якіх файл можа быць устаўлены ў тэкст.',
 	'blankpage' => 'Пустая старонка',
-];
+);
 
-$messages['be-tarask'] = [
+$messages['be-tarask'] = array(
 	'broken-file-category' => 'Старонкі зь няслушнымі спасылкамі на файлы',
 	'badaccess' => 'Памылка доступу',
 	'badaccess-group0' => 'Вам не дазволена выканаць запытанае Вамі дзеяньне.',
@@ -1852,10 +1828,10 @@ $messages['be-tarask'] = [
 	'bold_sample' => 'Тлусты тэкст',
 	'bold_tip' => 'Тлусты тэкст',
 	'blockedtitle' => 'Удзельнік заблякаваны',
-	'blockedtext' => '\'\'\'Ваш рахунак ўдзельніка ці IP-адрас быў заблякаваны.\'\'\'
+	'blockedtext' => "'''Ваш рахунак ўдзельніка ці IP-адрас быў заблякаваны.'''
 
 Блякаваньне выканаў $1.
-Прычына гэтага: \'\'$2\'\'.
+Прычына гэтага: ''$2''.
 
 * Пачатак блякаваньня: $8
 * Сканчэньне блякаваньня: $6
@@ -1863,7 +1839,7 @@ $messages['be-tarask'] = [
 
 Вы можаце скантактавацца з $1 ці адным зь іншых [[{{MediaWiki:Grouppage-sysop}}|адміністратараў]], каб абмеркаваць блякаваньне. Заўважце, што Вы ня зможаце ўжыць магчымасьць «даслаць ліст па электроннай пошце», пакуль не пазначыце сапраўдны адрас электроннай пошты ў Вашых [[Special:Preferences|наладах]], і калі гэта Вам не было забаронена.
 Ваш IP-адрас — $3, ідэнтыфікатар блякаваньня — #$5.
-Калі ласка, улучайце ўсю вышэйпададзеную інфармацыю ва ўсе запыты, што Вы будзеце рабіць.',
+Калі ласка, улучайце ўсю вышэйпададзеную інфармацыю ва ўсе запыты, што Вы будзеце рабіць.",
 	'blockednoreason' => 'прычына не пазначана',
 	'blocked-notice-logextract' => 'Гэты ўдзельнік у дадзены момант заблякаваны.
 Апошні запіс з журналу блякаваньняў пададзены ніжэй для даведкі:',
@@ -1933,7 +1909,6 @@ $messages['be-tarask'] = [
 	'blocklogentry' => 'заблякаваны [[$1]] на тэрмін: $2 $3',
 	'blocklogtext' => 'Гэта журнал уліку блякаваньняў і разблякаваньняў удзельнікаў. Аўтаматычна заблякаваныя IP-адрасы не пазначаныя. Глядзіце [[Special:BlockList|сьпіс заблякаваных IP-адрасоў]], каб пабачыць дзейныя ў гэты момант блякаваньні.',
 	'block-log-flags-anononly' => 'толькі ананімныя ўдзельнікі',
-	'block-log-flags-nocreate' => 'стварэньне рахункаў забароненае',
 	'block-log-flags-noautoblock' => 'аўтаматычнае блякаваньне адключанае',
 	'block-log-flags-noemail' => 'электронная пошта заблякаваная',
 	'block-log-flags-nousertalk' => 'ня можа рэдагаваць уласную старонку гутарак',
@@ -1945,9 +1920,9 @@ $messages['be-tarask'] = [
 
 Разглядаюцца толькі элемэнты сьпісу (радкі, якія пачынаюцца з *). Першая спасылка ў радку мусіць быць спасылкай на кепскую выяву. Усе наступныя спасылкі ў тым жа радку будуць разглядацца як выключэньні, напрыклад, старонкі, дзе можа зьяўляцца выява.',
 	'blankpage' => 'Пустая старонка',
-];
+);
 
-$messages['be-x-old'] = [
+$messages['be-x-old'] = array(
 	'broken-file-category' => 'Старонкі зь няслушнымі спасылкамі на файлы',
 	'badaccess' => 'Памылка доступу',
 	'badaccess-group0' => 'Вам не дазволена выканаць запытанае Вамі дзеяньне.',
@@ -1960,10 +1935,10 @@ $messages['be-x-old'] = [
 	'bold_sample' => 'Тлусты тэкст',
 	'bold_tip' => 'Тлусты тэкст',
 	'blockedtitle' => 'Удзельнік заблякаваны',
-	'blockedtext' => '\'\'\'Ваш рахунак ўдзельніка ці IP-адрас быў заблякаваны.\'\'\'
+	'blockedtext' => "'''Ваш рахунак ўдзельніка ці IP-адрас быў заблякаваны.'''
 
 Блякаваньне выканаў $1.
-Прычына гэтага: \'\'$2\'\'.
+Прычына гэтага: ''$2''.
 
 * Пачатак блякаваньня: $8
 * Сканчэньне блякаваньня: $6
@@ -1971,7 +1946,7 @@ $messages['be-x-old'] = [
 
 Вы можаце скантактавацца з $1 ці адным зь іншых [[{{MediaWiki:Grouppage-sysop}}|адміністратараў]], каб абмеркаваць блякаваньне. Заўважце, што Вы ня зможаце ўжыць магчымасьць «даслаць ліст па электроннай пошце», пакуль не пазначыце сапраўдны адрас электроннай пошты ў Вашых [[Special:Preferences|наладах]], і калі гэта Вам не было забаронена.
 Ваш IP-адрас — $3, ідэнтыфікатар блякаваньня — #$5.
-Калі ласка, улучайце ўсю вышэйпададзеную інфармацыю ва ўсе запыты, што Вы будзеце рабіць.',
+Калі ласка, улучайце ўсю вышэйпададзеную інфармацыю ва ўсе запыты, што Вы будзеце рабіць.",
 	'blockednoreason' => 'прычына не пазначана',
 	'blocked-notice-logextract' => 'Гэты ўдзельнік у дадзены момант заблякаваны.
 Апошні запіс з журналу блякаваньняў пададзены ніжэй для даведкі:',
@@ -2041,7 +2016,6 @@ $messages['be-x-old'] = [
 	'blocklogentry' => 'заблякаваны [[$1]] на тэрмін: $2 $3',
 	'blocklogtext' => 'Гэта журнал уліку блякаваньняў і разблякаваньняў удзельнікаў. Аўтаматычна заблякаваныя IP-адрасы не пазначаныя. Глядзіце [[Special:BlockList|сьпіс заблякаваных IP-адрасоў]], каб пабачыць дзейныя ў гэты момант блякаваньні.',
 	'block-log-flags-anononly' => 'толькі ананімныя ўдзельнікі',
-	'block-log-flags-nocreate' => 'стварэньне рахункаў забароненае',
 	'block-log-flags-noautoblock' => 'аўтаматычнае блякаваньне адключанае',
 	'block-log-flags-noemail' => 'электронная пошта заблякаваная',
 	'block-log-flags-nousertalk' => 'ня можа рэдагаваць уласную старонку гутарак',
@@ -2053,9 +2027,9 @@ $messages['be-x-old'] = [
 
 Разглядаюцца толькі элемэнты сьпісу (радкі, якія пачынаюцца з *). Першая спасылка ў радку мусіць быць спасылкай на кепскую выяву. Усе наступныя спасылкі ў тым жа радку будуць разглядацца як выключэньні, напрыклад, старонкі, дзе можа зьяўляцца выява.',
 	'blankpage' => 'Пустая старонка',
-];
+);
 
-$messages['bg'] = [
+$messages['bg'] = array(
 	'broken-file-category' => 'Страници с неработещи препратки към файлове',
 	'badaccess' => 'Грешка при достъп',
 	'badaccess-group0' => 'Нямате права да извършите исканото действие',
@@ -2068,9 +2042,9 @@ $messages['bg'] = [
 	'bold_sample' => 'Получер текст',
 	'bold_tip' => 'Получер (удебелен) текст',
 	'blockedtitle' => 'Потребителят е блокиран',
-	'blockedtext' => '\'\'\'Вашето потребителско име (или IP-адрес) беше блокирано.\'\'\'
+	'blockedtext' => "'''Вашето потребителско име (или IP-адрес) беше блокирано.'''
 
-Блокирането е извършено от $1. Посочената причина е: \'\'$2\'\'
+Блокирането е извършено от $1. Посочената причина е: ''$2''
 
 *Начало на блокирането: $8
 *Край на блокирането: $6
@@ -2080,7 +2054,7 @@ $messages['bg'] = [
 
 Можете да използвате услугата „Пращане писмо на потребител“ само ако не ви е забранена употребата й и ако сте посочили валидна електронна поща в [[Special:Preferences|настройките]] си.
 
-Вашият IP адрес е $3, а номерът на блокирането е $5. Включвайте едно от двете или и двете във всяко запитване, което правите.',
+Вашият IP адрес е $3, а номерът на блокирането е $5. Включвайте едно от двете или и двете във всяко запитване, което правите.",
 	'blockednoreason' => 'не е указана причина',
 	'blocked-notice-logextract' => 'В момента този потребител е блокиран.
 По-долу за справка е показан последният запис от Дневника на блокиранията:',
@@ -2144,7 +2118,6 @@ $messages['bg'] = [
 Автоматично блокираните IP-адреси не са показани.
 Вижте [[Special:BlockList|списъка на блокираните IP-адреси]] за текущото състояние на блокиранията.',
 	'block-log-flags-anononly' => 'само анонимни потребители',
-	'block-log-flags-nocreate' => 'създаването на сметки е изключено',
 	'block-log-flags-noautoblock' => 'автоблокировката е изключена',
 	'block-log-flags-noemail' => 'е-пощенската услуга е блокирана',
 	'block-log-flags-nousertalk' => 'забрана за редактиране на личната беседа',
@@ -2156,9 +2129,9 @@ $messages['bg'] = [
 
 Отчитат се само записите в списъчен вид (редове, започващи със *). Първата препратка в реда трябва да сочи към неприемлив файл. Всички последващи препратки на същия ред се считат за изключения, т.е. страници, в които този файл може да се визуализира.',
 	'blankpage' => 'Празна страница',
-];
+);
 
-$messages['bh'] = [
+$messages['bh'] = array(
 	'broken-file-category' => 'Страници с неработещи препратки към файлове',
 	'badaccess' => 'Грешка при достъп',
 	'badaccess-group0' => 'Нямате права да извършите исканото действие',
@@ -2171,9 +2144,9 @@ $messages['bh'] = [
 	'bold_sample' => 'Получер текст',
 	'bold_tip' => 'Получер (удебелен) текст',
 	'blockedtitle' => 'Потребителят е блокиран',
-	'blockedtext' => '\'\'\'Вашето потребителско име (или IP-адрес) беше блокирано.\'\'\'
+	'blockedtext' => "'''Вашето потребителско име (или IP-адрес) беше блокирано.'''
 
-Блокирането е извършено от $1. Посочената причина е: \'\'$2\'\'
+Блокирането е извършено от $1. Посочената причина е: ''$2''
 
 *Начало на блокирането: $8
 *Край на блокирането: $6
@@ -2183,7 +2156,7 @@ $messages['bh'] = [
 
 Можете да използвате услугата „Пращане писмо на потребител“ само ако не ви е забранена употребата й и ако сте посочили валидна електронна поща в [[Special:Preferences|настройките]] си.
 
-Вашият IP адрес е $3, а номерът на блокирането е $5. Включвайте едно от двете или и двете във всяко запитване, което правите.',
+Вашият IP адрес е $3, а номерът на блокирането е $5. Включвайте едно от двете или и двете във всяко запитване, което правите.",
 	'blockednoreason' => 'не е указана причина',
 	'blocked-notice-logextract' => 'В момента този потребител е блокиран.
 По-долу за справка е показан последният запис от Дневника на блокиранията:',
@@ -2247,7 +2220,6 @@ $messages['bh'] = [
 Автоматично блокираните IP-адреси не са показани.
 Вижте [[Special:BlockList|списъка на блокираните IP-адреси]] за текущото състояние на блокиранията.',
 	'block-log-flags-anononly' => 'само анонимни потребители',
-	'block-log-flags-nocreate' => 'създаването на сметки е изключено',
 	'block-log-flags-noautoblock' => 'автоблокировката е изключена',
 	'block-log-flags-noemail' => 'е-пощенската услуга е блокирана',
 	'block-log-flags-nousertalk' => 'забрана за редактиране на личната беседа',
@@ -2259,9 +2231,9 @@ $messages['bh'] = [
 
 Отчитат се само записите в списъчен вид (редове, започващи със *). Първата препратка в реда трябва да сочи към неприемлив файл. Всички последващи препратки на същия ред се считат за изключения, т.е. страници, в които този файл може да се визуализира.',
 	'blankpage' => 'Празна страница',
-];
+);
 
-$messages['bho'] = [
+$messages['bho'] = array(
 	'badaccess' => 'अनुमति त्रुटी',
 	'badaccess-group0' => 'रउआ जवन कार्रवाई खातिर अनुरोध कईले बानी उ के निष्पादन करे के अनुमति नईखे।',
 	'badretype' => 'रउआ जौन गुप्त शब्द डालत बानी उ नईखे मेल खात।',
@@ -2278,9 +2250,9 @@ $messages['bho'] = [
 खाली सूची सामग्री (* से शुरु होवे वाला पंक्ति ) मानल गईल बा।
 पंक्ति पर पहिला लिंक एगो खराब फाईल के साथ जुड़ल होवे के चाहीं।
 कोई भी बाद वाला लिंक ओही पंक्ति पर अईला पर उ के अपवाद मानल जाई, अर्थात जौन पन्ना पर फाईल इनलाईन हो सकत बा।',
-];
+);
 
-$messages['bjn'] = [
+$messages['bjn'] = array(
 	'broken-file-category' => 'Tutungkaran lawan tatautan barakas pagat',
 	'badaccess' => 'Parijinan tasalah',
 	'badaccess-group0' => 'Pian kadada ijin hagan malakuakan nang Pian mintai.',
@@ -2294,19 +2266,19 @@ Nangini bisa baisi satu atawa labih hurup nang saharusnya kadada di judul.',
 	'bold_sample' => 'Naskah kandal',
 	'bold_tip' => 'Naskah kandal',
 	'blockedtitle' => 'Pamuruk diblukir',
-	'blockedtext' => '\'\'\'Ngaran pamuruk Pian atawa alamat IP sudah diblukir.\'\'\'
+	'blockedtext' => "'''Ngaran pamuruk Pian atawa alamat IP sudah diblukir.'''
 
 Pamblukiran diulah ulih $1.
-Alasannya \'\'$2\'\'.
+Alasannya ''$2''.
 
 * Mulai diblukir: $8
 * Kadaluarsa blukir: $6
 * Tujuan pamblukiran: $7
 
 Pian kawa mangiwau $1 atawa nang lain [[{{MediaWiki:Grouppage-sysop}}|pambakal]] hagan mamandirakan pamblukiran nangini.
-Pian kada kawa mamuruk pitur \'surili pamuruk ini\' amun kadada sabuah alamat suril nang sah nang diajukan dalam [[Special:Preferences|kakatujuan akun]] Pian wan  Pian kada lagi diblukir mamuruk nangini.
+Pian kada kawa mamuruk pitur 'surili pamuruk ini' amun kadada sabuah alamat suril nang sah nang diajukan dalam [[Special:Preferences|kakatujuan akun]] Pian wan  Pian kada lagi diblukir mamuruk nangini.
 Alamat IP Pian parhatan ini $3, wan ID nang diblukir adalah $5.
-Muhun sampaiakan samunyaan rarinci di atas dalam parmintaan nag Pian ulah.',
+Muhun sampaiakan samunyaan rarinci di atas dalam parmintaan nag Pian ulah.",
 	'blockednoreason' => 'kadada alasan nang diunjukakan',
 	'blocked-notice-logextract' => 'Pamuruk nangini parhatan ini diblukir.
 Log blukir pahabisannya tasadia di bawah ini gasan rujukan:',
@@ -2375,7 +2347,6 @@ Log panikinan disadiakan di bawah gasan rujukan:',
 Blukir alamat IP utumatis kada didaptar.
 Janaki [[Special:BlockList|daptar IP diblukir]] gasan daptar oparasi diikat wan diblukir tadamini.',
 	'block-log-flags-anononly' => 'papamuruk kada bangaran haja',
-	'block-log-flags-nocreate' => 'Paulahan akun dipajahakan',
 	'block-log-flags-noautoblock' => 'pamblukiran utumatis dipajahakan',
 	'block-log-flags-noemail' => 'suril diblukir',
 	'block-log-flags-nousertalk' => 'kada kawa mambabak tungkaran pamandiran surang',
@@ -2383,15 +2354,15 @@ Janaki [[Special:BlockList|daptar IP diblukir]] gasan daptar oparasi diikat wan 
 	'block-log-flags-hiddenname' => 'ngaran-pamuruk tasungkup',
 	'blockme' => 'Blokir ulun',
 	'bydate' => 'ulih tanggal',
-	'bad_image_list' => 'Purmatnya nangkaya di bawah ni:
+	'bad_image_list' => "Purmatnya nangkaya di bawah ni:
 
 Daptar buting (baris bamula wan *) haja nang dipartimbangkan.
-Tautan ta\'asa dalam sabuah baris mustinya sabuah tautan ka barakas nang buruk.
-Tautan-tautan abis tu pada baris sama dipartimbangkan sabagai pangacualian, nangkaya tungkaran-tungkaran di mana barakas itu ada.',
+Tautan ta'asa dalam sabuah baris mustinya sabuah tautan ka barakas nang buruk.
+Tautan-tautan abis tu pada baris sama dipartimbangkan sabagai pangacualian, nangkaya tungkaran-tungkaran di mana barakas itu ada.",
 	'blankpage' => 'Tungkaran puang',
-];
+);
 
-$messages['bn'] = [
+$messages['bn'] = array(
 	'broken-file-category' => 'অকার্যকর চিত্র সংযোগসহ পাতাসমূহ',
 	'badaccess' => 'অনুমোদন ত্রুটি',
 	'badaccess-group0' => 'আপনি যে কাজের জন্য অনুরোধ করেছেন, যে কাজটি সম্পন্ন করার অনুমতি নেই',
@@ -2404,9 +2375,9 @@ $messages['bn'] = [
 	'bold_sample' => 'গাঢ় লেখা',
 	'bold_tip' => 'গাঢ় লেখা',
 	'blockedtitle' => 'ব্যবহারকারীকে বাধা দেয়া হয়েছে',
-	'blockedtext' => 'আপনার ব্যবহারকারী নাম বা আইপি ঠিকানার ঊপর নিষেধাজ্ঞা আরোপিত হয়েছে।
+	'blockedtext' => "আপনার ব্যবহারকারী নাম বা আইপি ঠিকানার ঊপর নিষেধাজ্ঞা আরোপিত হয়েছে।
 
-$1 নিষেধাজ্ঞা আরোপ করেছেন। নিষেধের কারণ হিসেবে বলা হয়েছে:\'\'$2\'\'।
+$1 নিষেধাজ্ঞা আরোপ করেছেন। নিষেধের কারণ হিসেবে বলা হয়েছে:''$2''।
 
 * নিষেধাজ্ঞা শুরুর সময়:$8
 * নিষেধাজ্ঞা উঠিয়ে নেয়ার সময়: $6
@@ -2414,11 +2385,11 @@ $1 নিষেধাজ্ঞা আরোপ করেছেন। নিষ�
 
 আপনি $1 অথবা [[{{MediaWiki:Grouppage-sysop}}|প্রশাসকদের]] কারও সাথে এই নিষেধাজ্ঞা সংক্রান্ত বিষয়ে আলোচনা করতে পারেন।
 
-আপনি \'(ব্যবহারকারীকে) ইমেইল করুন\' ফিচারটি ব্যবহার করতে পারবেন না। তবে [[Special:Preferences|আপনার পছন্দ তালিকাতে]] যদি একটি বৈধ ই-মেইল ঠিকানা নির্দিষ্ট করা হয়ে থাকে এবং ফিচারটি ব্যবহারে যদি আপনাকে বাধা না দেওয়া হয়ে থাকে, তবে আপনি ফিচারটি ব্যবহার করতে পারবেন।
+আপনি '(ব্যবহারকারীকে) ইমেইল করুন' ফিচারটি ব্যবহার করতে পারবেন না। তবে [[Special:Preferences|আপনার পছন্দ তালিকাতে]] যদি একটি বৈধ ই-মেইল ঠিকানা নির্দিষ্ট করা হয়ে থাকে এবং ফিচারটি ব্যবহারে যদি আপনাকে বাধা না দেওয়া হয়ে থাকে, তবে আপনি ফিচারটি ব্যবহার করতে পারবেন।
 
 আপনার বর্তমান আইপি ঠিকানা $3, এবং আপনার নিষেধাজ্ঞা নং হল #$5।
 
-দয়া করে আপনার যেকোন জিজ্ঞাসাতে উপরের সমস্ত বিবরণ অন্তর্ভুক্ত করুন।',
+দয়া করে আপনার যেকোন জিজ্ঞাসাতে উপরের সমস্ত বিবরণ অন্তর্ভুক্ত করুন।",
 	'blockednoreason' => 'কোন কারণ দেওয়া হয়নি',
 	'blocked-notice-logextract' => 'এই ব্যবহারকারী বর্তমানে ব্লক রয়েছে।
 রেফারেন্সের জন্য সাম্প্রতিক ব্লক লগ ভুক্তি নিচে দেওয়া হল:',
@@ -2468,7 +2439,6 @@ $1 নিষেধাজ্ঞা আরোপ করেছেন। নিষ�
 	'blocklogentry' => '[[$1]]এর উপর $2 $3 মেয়াদের জন্য নিষেধাজ্ঞা আরোপিত হয়েছে।',
 	'blocklogtext' => 'এটি ব্যবহারকারীদেরকে বাধা দানের বা বাধা তুলে নেওয়ার লগ। স্বয়ংক্রিয়ভাবে বাধাদানকৃত আইপি ঠিকানাগুলি এখানে তালিকাবদ্ধ করা হয়নি। বর্তমানে সক্রিয় নিষিদ্ধকরণ ও বাধাদানের তালিকার জন্য [[Special:BlockList|আইপি বাধাদান তালিকা]] দেখুন।',
 	'block-log-flags-anononly' => 'কেবল বেনামী ব্যবহারকারীরা',
-	'block-log-flags-nocreate' => 'অ্যাকাউন্ট সৃষ্টি নিষ্ক্রিয় করা হয়েছে',
 	'block-log-flags-noautoblock' => 'স্বয়ংক্রিয় বাধাদান নিষ্ক্রিয়',
 	'block-log-flags-noemail' => 'ই-মেইলে বাধা আছে',
 	'block-log-flags-nousertalk' => 'নিজের আলাপের পাতা সম্পাদনা করতে পারবে না',
@@ -2480,9 +2450,9 @@ $1 নিষেধাজ্ঞা আরোপ করেছেন। নিষ�
 কেবল তালিকা আইটেমগুলি (* দিয়ে শুরু হওয়া লাইনগুলি) গণ্য করা হবে। কোন লাইনের প্রথম সংযোগটিকে অবশ্যই কোন অচল ফাইলের প্রতি সংযোগ হতে হবে।
 একই লাইনের পরবর্তী সমস্ত সংযোগ ব্যতিক্রম হিসেবে গণ্য করা হবে, অর্থাৎ যেসমস্ত পাতায় ফাইলটি ইনলাইন হিসেবে বিদ্যমান।',
 	'blankpage' => 'খালি পাতা',
-];
+);
 
-$messages['bo'] = [
+$messages['bo'] = array(
 	'badaccess' => 'ཆོག་ཆན་ལ་ནོར་འཁྲུལ།',
 	'badtitle' => 'ཁ་བྱང་སྐྱོན་ཅན།',
 	'badretype' => 'ལམ་ཡིག་གང་བཅུག་པ་ཐོ་ཐུག་མ་བྱུང་།',
@@ -2500,9 +2470,9 @@ $messages['bo'] = [
 	'blockip' => 'སྤྱོད་མི་འགོག་སྡོམ།',
 	'blocklink' => 'འགོག་པ།',
 	'blocklogpage' => 'རྩོམ་ཡིག་བཀག་འགོག',
-];
+);
 
-$messages['bpy'] = [
+$messages['bpy'] = array(
 	'broken-file-category' => 'কামনাকরের ফাইলন আসে পাতাহানি',
 	'badaccess' => 'য়্যাথাঙে লালসে',
 	'badaccess-group0' => 'তি যে কামহানর হেইচা করিসত, তরতা অহান করানির য়্যাথাং নেই।',
@@ -2515,17 +2485,17 @@ $messages['bpy'] = [
 	'bold_sample' => 'গাঢ়পা ৱাহি',
 	'bold_tip' => 'গাঢ়পা ৱাহি',
 	'blockedtitle' => 'আতাকুরাগরে থেপ করানি অসে',
-	'blockedtext' => '\'\'\'তর আতাকুরা নাঙহান নাইলেউ আইপি ঠিকানাহানরে থেপকরানি অসে।\'\'\'
+	'blockedtext' => "'''তর আতাকুরা নাঙহান নাইলেউ আইপি ঠিকানাহানরে থেপকরানি অসে।'''
 
 থেপকরিসেতাই: $1
-এহানর কারণহান অসেতাইঃ: \'\'$2\'\'
+এহানর কারণহান অসেতাইঃ: ''$2''
 
 * থেপকরানি অকরিসিতা: $8
 * থেপকরানিহান লমিতইতা: $6
 * থেপকরানি মনাসিলাতা: $7
 
 তি $1 নাইলেউ [[{{MediaWiki:Grouppage-sysop}}|প্রশাসকর]] মা যে কোন আগর লগে বিষয় এহান্ন য়্যারি পরি দে পারর। বিশেষ মাতিলতাঃ তর ই-মেইল ঠিকানাহান যদি [[Special:Preferences|তর পছন তালিকাত]] বরিয়া নাথার, অতা ইলে তি উইকিপিডিয়াত হের আতাকুরারে ই-মেইল করানি নুৱারবে। তর আইপি ঠিকানাহান ইলতাই $3 বারো থেপকরিসি আইপিগ ইলতাই #$5।
-কৃপা করিয়া যে কোন যোগাযোগর সময়ত এরে আইপি ঠিকানাহানি যেসাদেউ বরিস।',
+কৃপা করিয়া যে কোন যোগাযোগর সময়ত এরে আইপি ঠিকানাহানি যেসাদেউ বরিস।",
 	'blockednoreason' => 'কোন কারণ দেনা নাইসে',
 	'boteditletter' => 'ব',
 	'badfilename' => 'ফাইলগর নাঙহান পতিয়া $1" করানি ইল।',
@@ -2547,7 +2517,6 @@ $messages['bpy'] = [
 	'blocklink' => 'থেপ কর',
 	'blocklogpage' => 'থেপকরানির log',
 	'blocklogentry' => '"[[$1]]"-রে $2 মেয়াদর কা থেপকরানি অসে। $3',
-	'block-log-flags-nocreate' => 'অ্যাকাউন্ট হঙকরানিহান থেপকরিয়া থনা অসে',
 	'bydate' => 'তারিখর সিজিলন',
 	'bad_image_list' => 'ফরমেটহান তলর সাদে:
 
@@ -2555,9 +2524,9 @@ $messages['bpy'] = [
 পইলাকার লাইনহান যেসাদেই হবানেই ফাইলর মিলাপ করতই।
 লাইন অহানর ভিতরে আর আর মিলাপ অতা ব্যতিক্রম বুলিয়া ধরানি অইতই, যেসাদে: যেহাত পাতাহানির ফইলগ লাইনহানর মা মাতানি অইতই।',
 	'blankpage' => 'হুদালা পাতাহান',
-];
+);
 
-$messages['bqi'] = [
+$messages['bqi'] = array(
 	'badaccess' => 'خطا :اجازه بگیر',
 	'badaccess-group0' => 'ایسا اجازه انجام کاری که خواستین را ندارین',
 	'badaccess-groups' => 'او کاری که ایسا درخواست کردین فقط سی کاربرانیه که من ای  گروهن
@@ -2592,47 +2561,47 @@ $messages['bqi'] = [
 
 فقط سطرهایی که با * آغاز ابون در نظر گریده ابون. اولین لینک در هر سطر، باید لینکی به یک تصویر بد باشد.
 لینکهای بعدی در همان سطر، به عنوان موارد استثنا در نظر گریده ابون',
-];
+);
 
-$messages['br'] = [
+$messages['br'] = array(
 	'broken-file-category' => 'Pajennoù enno liamm torr war-zu restroù',
 	'badaccess' => 'Fazi aotre',
-	'badaccess-group0' => 'N\'oc\'h ket aotreet da seveniñ ar pezh hoc\'h eus goulennet.',
+	'badaccess-group0' => "N'oc'h ket aotreet da seveniñ ar pezh hoc'h eus goulennet.",
 	'badaccess-groups' => 'Miret eo an ober-mañ evit an implijerien zo {{PLURAL:$2|er strollad|en unan eus ar strolladoù}} : $1.',
-	'badarticleerror' => 'N\'haller ket seveniñ an ober-mañ war ar bajenn-mañ.',
+	'badarticleerror' => "N'haller ket seveniñ an ober-mañ war ar bajenn-mañ.",
 	'badtitle' => 'Titl fall',
-	'badtitletext' => 'Faziek pe c\'houllo eo titl ar bajenn goulennet; pe neuze eo faziek al liamm etreyezhel',
+	'badtitletext' => "Faziek pe c'houllo eo titl ar bajenn goulennet; pe neuze eo faziek al liamm etreyezhel",
 	'badretype' => 'Ne glot ket ar gerioù-tremen an eil gant egile.',
-	'blocked-mailpassword' => 'N\'haller ket kemmañ pajennoù gant ar chomlec\'h IP-mañ ken rak stanket eo bet. Gant se n\'hallit ket implijout an arc\'hwel adtapout gerioù-tremen, kuit m\'en em ledfe gwallimplijoù.',
+	'blocked-mailpassword' => "N'haller ket kemmañ pajennoù gant ar chomlec'h IP-mañ ken rak stanket eo bet. Gant se n'hallit ket implijout an arc'hwel adtapout gerioù-tremen, kuit m'en em ledfe gwallimplijoù.",
 	'bold_sample' => 'Testenn dev',
 	'bold_tip' => 'Testenn dev',
 	'blockedtitle' => 'Implijer stanket',
-	'blockedtext' => '\'\'\'Stanket eo bet ho kont implijer pe ho chomlec\'h IP\'\'\'
+	'blockedtext' => "'''Stanket eo bet ho kont implijer pe ho chomlec'h IP'''
 
 Gant $1 eo bet graet.
-Setu an abeg evit se : \'\'$2\'\'.
+Setu an abeg evit se : ''$2''.
 
 * Stanket adalek : $8
 * Stanket betek : $6
 * Pad ar stankadenn : $7
 
-Gallout a rit mont e darempred gant $1 pe gant unan eus ar [[{{MediaWiki:Grouppage-sysop}}|verourien]] all evit eskemm ganto war se. N\'hallit implijout an arc\'hwel \'kas ur postel d\'an implijer-mañ\' nemet ma\'z eus bet spisaet ganeoc\'h ur chomlec\'h postel reizh en ho [[Special:Preferences|penndibaboù kont]] ha ma n\'eo ket bet stanket.
-$3 eo ho chomlec\'h IP, ha #$5 eo niverenn an identelezh stanket.
-Merkit anezho en ho koulennoù bep tro.',
-	'blockednoreason' => 'n\'eus bet roet abeg ebet',
-	'blocked-notice-logextract' => 'Stanket eo an implijer-mañ evit poent.
-Dindan emañ merket moned diwezhañ marilh ar stankadennoù, d\'ho kelaouiñ :',
+Gallout a rit mont e darempred gant $1 pe gant unan eus ar [[{{MediaWiki:Grouppage-sysop}}|verourien]] all evit eskemm ganto war se. N'hallit implijout an arc'hwel 'kas ur postel d'an implijer-mañ' nemet ma'z eus bet spisaet ganeoc'h ur chomlec'h postel reizh en ho [[Special:Preferences|penndibaboù kont]] ha ma n'eo ket bet stanket.
+$3 eo ho chomlec'h IP, ha #$5 eo niverenn an identelezh stanket.
+Merkit anezho en ho koulennoù bep tro.",
+	'blockednoreason' => "n'eus bet roet abeg ebet",
+	'blocked-notice-logextract' => "Stanket eo an implijer-mañ evit poent.
+Dindan emañ merket moned diwezhañ marilh ar stankadennoù, d'ho kelaouiñ :",
 	'badsig' => 'Direizh eo ho sinadur kriz; gwiriit ho palizennoù HTML.',
-	'badsiglength' => 'Re hir eo ho sinadur.
-Dre ret e rank bezañ nebeutoc\'h eget {{PLURAL:$1|arouezenn|arouezenn}} ennañ.',
+	'badsiglength' => "Re hir eo ho sinadur.
+Dre ret e rank bezañ nebeutoc'h eget {{PLURAL:$1|arouezenn|arouezenn}} ennañ.",
 	'boteditletter' => 'b',
 	'badfilename' => 'Adanvet eo bet ar skeudenn « $1 ».',
 	'backend-fail-stream' => 'Dibosupl lenn ar restr $1.',
 	'backend-fail-backup' => 'Dibosupl enrollañ ar restr $1.',
-	'backend-fail-notexists' => 'N\'eus ket eus ar restr $1.',
+	'backend-fail-notexists' => "N'eus ket eus ar restr $1.",
 	'backend-fail-hashes' => 'Dibosupl eo bet tapout hacherezh ar restr evit keñveriañ.',
-	'backend-fail-notsame' => 'Ur restr disheñvel zo e $1 c\'hoazh.',
-	'backend-fail-invalidpath' => '$1 n\'eo ket un hent stokañ reizh.',
+	'backend-fail-notsame' => "Ur restr disheñvel zo e $1 c'hoazh.",
+	'backend-fail-invalidpath' => "$1 n'eo ket un hent stokañ reizh.",
 	'backend-fail-delete' => 'Dibosupl eo diverkañ a restr $1.',
 	'backend-fail-alreadyexists' => 'Ar restr "$1" zo anezhi c\'hoazh.',
 	'backend-fail-store' => 'Dibosupl stokañ ar restr $1 e $2.',
@@ -2650,24 +2619,24 @@ Dre ret e rank bezañ nebeutoc\'h eget {{PLURAL:$1|arouezenn|arouezenn}} ennañ.
 	'backend-fail-contenttype' => 'Dibosupl termeniñ ar seurt danvez da enrollañ e "$1".',
 	'backend-fail-batchsize' => 'Pourvezet he deus an dermenell stokañ ur pakad a $1 {{PLURAL:$1|oberiadenn|oberiadenn}}; sevel a ra ar vevenn da $2 {{PLURAL:$2|oberiadenn|oberiadenn}}.',
 	'brokenredirects' => 'Adkasoù torret',
-	'brokenredirectstext' => 'Kas a ra an adkasoù-mañ da bajennoù n\'eus ket anezho.',
+	'brokenredirectstext' => "Kas a ra an adkasoù-mañ da bajennoù n'eus ket anezho.",
 	'brokenredirects-edit' => 'kemmañ',
 	'brokenredirects-delete' => 'diverkañ',
 	'booksources' => 'Oberennoù dave',
 	'booksources-search-legend' => 'Klask en oberennoù dave',
 	'booksources-isbn' => 'ISBN :',
 	'booksources-go' => 'Kadarnaat',
-	'booksources-text' => 'Ur roll liammoù a gas da lec\'hiennoù all ma werzher levrioù kozh ha nevez a gavot a-is; marteze e kavot eno titouroù pelloc\'h war al levrioù a glaskit :',
-	'booksources-invalid-isbn' => 'Evit doare n\'eo ket reizh an ISBN merket; gwiriit ha n\'oc\'h ket faziet en ur eilañ adal ar vammenn orin.',
+	'booksources-text' => "Ur roll liammoù a gas da lec'hiennoù all ma werzher levrioù kozh ha nevez a gavot a-is; marteze e kavot eno titouroù pelloc'h war al levrioù a glaskit :",
+	'booksources-invalid-isbn' => "Evit doare n'eo ket reizh an ISBN merket; gwiriit ha n'oc'h ket faziet en ur eilañ adal ar vammenn orin.",
 	'blanknamespace' => '(Pennañ)',
 	'block' => 'Stankañ an implijer',
-	'blockip' => 'Stankañ ur chomlec\'h IP',
+	'blockip' => "Stankañ ur chomlec'h IP",
 	'blockip-title' => 'Stankañ an implijer',
 	'blockip-legend' => 'Stankañ an implijer',
-	'blockiptext' => 'Grit gant ar furmskrid a-is evit stankañ ar moned skrivañ ouzh ur chomlec\'h IP pe un implijer bennak.
-Seurt diarbennoù n\'hallont bezañ kemeret nemet evit mirout ouzh ar vandalerezh hag a-du gant an [[{{MediaWiki:Policy-url}}|erbedadennoù ha reolennoù da heuliañ]].
-Roit a-is an abeg resis (o verkañ, da skouer, roll ar pajennoù bet graet gaou outo).',
-	'badipaddress' => 'Kamm eo ar chomlec\'h IP.',
+	'blockiptext' => "Grit gant ar furmskrid a-is evit stankañ ar moned skrivañ ouzh ur chomlec'h IP pe un implijer bennak.
+Seurt diarbennoù n'hallont bezañ kemeret nemet evit mirout ouzh ar vandalerezh hag a-du gant an [[{{MediaWiki:Policy-url}}|erbedadennoù ha reolennoù da heuliañ]].
+Roit a-is an abeg resis (o verkañ, da skouer, roll ar pajennoù bet graet gaou outo).",
+	'badipaddress' => "Kamm eo ar chomlec'h IP.",
 	'blockipsuccesssub' => 'Stankadenn deuet da benn vat',
 	'blockipsuccesstext' => 'Stanket eo bet chomlec\'h IP "$1".
 <br />Gallout a rit sellet ouzh ar [[Special:BlockList|bajenn-mañ]] evit gwelet roll ar chomlec\'hioù IP stanket.
@@ -2677,38 +2646,37 @@ Sellit ouzh [[Special:BlockList|roll ar chomlec\'hioù IP ha kontoù stanket]] e
 	'blocklist' => 'Implijerien stanket',
 	'blocklist-userblocks' => 'Kuzhat ar stankadennoù kont',
 	'blocklist-tempblocks' => 'Kuzhat ar stankadennoù berrbad',
-	'blocklist-addressblocks' => 'Kuzhat stankadennoù ar chomlec\'hioù IP en o-unan',
-	'blocklist-rangeblocks' => 'Kuzhat ar bloc\'hadoù renkennek',
+	'blocklist-addressblocks' => "Kuzhat stankadennoù ar chomlec'hioù IP en o-unan",
+	'blocklist-rangeblocks' => "Kuzhat ar bloc'hadoù renkennek",
 	'blocklist-timestamp' => 'Deiziad hag eur',
 	'blocklist-target' => 'pal',
-	'blocklist-expiry' => 'A ya d\'e dermen',
+	'blocklist-expiry' => "A ya d'e dermen",
 	'blocklist-by' => 'Merour ar stankadenn',
 	'blocklist-params' => 'Arventennoù stankañ',
 	'blocklist-reason' => 'Abeg',
-	'blocklist-nousertalk' => 'n\'hall ket kemmañ e bajenn gaozeal dezhañ e-unan',
+	'blocklist-nousertalk' => "n'hall ket kemmañ e bajenn gaozeal dezhañ e-unan",
 	'blocklink' => 'stankañ',
 	'blocklogpage' => 'Roll ar stankadennoù',
-	'blocklog-showlog' => 'Stanket eo bet an implijer-mañ c\'hoazh. A-is emañ marilh ar stankadennoù, d\'ho titouriñ :',
-	'blocklog-showsuppresslog' => 'Stanket ha kuzhet eo bet an implijer-mañ c\'hoazh. A-is emañ marilh ar diverkadennoù, d\'ho titouriñ :',
+	'blocklog-showlog' => "Stanket eo bet an implijer-mañ c'hoazh. A-is emañ marilh ar stankadennoù, d'ho titouriñ :",
+	'blocklog-showsuppresslog' => "Stanket ha kuzhet eo bet an implijer-mañ c'hoazh. A-is emañ marilh ar diverkadennoù, d'ho titouriñ :",
 	'blocklogentry' => 'en/he deus stanket [[$1]] betek an $2 $3',
-	'blocklogtext' => 'Setu roud stankadennoù ha distankadennoù an implijerien. N\'eo ket bet rollet ar chomlec\'hioù IP bet stanket outo ent emgefre. Sellet ouzh [[Special:BlockList|roll an implijerien stanket]] evit gwelet piv zo stanket e gwirionez.',
+	'blocklogtext' => "Setu roud stankadennoù ha distankadennoù an implijerien. N'eo ket bet rollet ar chomlec'hioù IP bet stanket outo ent emgefre. Sellet ouzh [[Special:BlockList|roll an implijerien stanket]] evit gwelet piv zo stanket e gwirionez.",
 	'block-log-flags-anononly' => 'implijerien dizanv hepken',
-	'block-log-flags-nocreate' => 'berzet eo krouiñ kontoù',
 	'block-log-flags-noautoblock' => 'Emstankañ diweredekaet',
 	'block-log-flags-noemail' => 'postel stanket',
-	'block-log-flags-nousertalk' => 'n\'hall ket kemmañ e bajenn gaozeal dezhañ e-unan',
+	'block-log-flags-nousertalk' => "n'hall ket kemmañ e bajenn gaozeal dezhañ e-unan",
 	'block-log-flags-angry-autoblock' => 'Emstankañ gwellaet gweredekaet',
 	'block-log-flags-hiddenname' => 'anv implijer kuzhet',
-	'blockme' => 'Stankit ac\'hanon',
+	'blockme' => "Stankit ac'hanon",
 	'bydate' => 'dre an deiziad anezho',
-	'bad_image_list' => 'Setu doare ar furmad :
+	'bad_image_list' => "Setu doare ar furmad :
 
-Ne seller nemet ouzh roll an elfennoù (linennoù a grog gant *). Ret eo d\'al liamm kentañ war ul linenn bezañ ul liamm war-du ur skeudenn fall.
-Kement liamm all war an hevelep linenn a seller outañ evel un nemedenn, da skouer pennadoù ma c\'hall ar skeudenn dont war wel.',
-	'blankpage' => 'Pajenn c\'houllo',
-];
+Ne seller nemet ouzh roll an elfennoù (linennoù a grog gant *). Ret eo d'al liamm kentañ war ul linenn bezañ ul liamm war-du ur skeudenn fall.
+Kement liamm all war an hevelep linenn a seller outañ evel un nemedenn, da skouer pennadoù ma c'hall ar skeudenn dont war wel.",
+	'blankpage' => "Pajenn c'houllo",
+);
 
-$messages['brh'] = [
+$messages['brh'] = array(
 	'badaccess' => 'Mokal radí',
 	'bold_sample' => 'Zanđ nivişt',
 	'bold_tip' => 'Zanđ nivişt',
@@ -2720,10 +2688,9 @@ $messages['brh'] = [
 	'blockip' => 'Kárband á rok xaļ',
 	'blocklink' => 'rok xaļ',
 	'blocklogpage' => 'Rok hisáb',
-	'block-log-flags-nocreate' => 'pinváxubí á rok xallingá',
-];
+);
 
-$messages['bs'] = [
+$messages['bs'] = array(
 	'broken-file-category' => 'Stranice sa neispravnim linkovima do datoteka',
 	'badaccess' => 'Greška pri odobrenju',
 	'badaccess-group0' => 'Nije vam dozvoljeno izvršiti akciju koju ste zahtjevali.',
@@ -2736,10 +2703,10 @@ $messages['bs'] = [
 	'bold_sample' => 'Podebljan tekst',
 	'bold_tip' => 'Podebljan tekst',
 	'blockedtitle' => 'Korisnik je blokiran',
-	'blockedtext' => '\'\'\'Vaše korisničko ime ili IP adresa je blokirana.\'\'\'
+	'blockedtext' => "'''Vaše korisničko ime ili IP adresa je blokirana.'''
 
 Blokada izvršena od strane $1.
-Dati razlog je slijedeći: \'\'$2\'\'.
+Dati razlog je slijedeći: ''$2''.
 
 *Početak blokade: $8
 *Kraj perioda blokade: $6
@@ -2747,9 +2714,9 @@ Dati razlog je slijedeći: \'\'$2\'\'.
 
 Možete kontaktirati $1 ili nekog drugog [[{{MediaWiki:Grouppage-sysop}}|administratora]] da biste razgovarali o blokadi.
 
-Ne možete koristiti opciju \'\'Pošalji e-mail korisniku\'\' osim ako niste unijeli e-mail adresu u [[Special:Preferences|Vaše postavke]].
+Ne možete koristiti opciju ''Pošalji e-mail korisniku'' osim ako niste unijeli e-mail adresu u [[Special:Preferences|Vaše postavke]].
 Vaša trenutna IP adresa je $3, a oznaka blokade je #$5.
-Molimo Vas da navedete gornje podatke pri zahtjevu za deblokadu.',
+Molimo Vas da navedete gornje podatke pri zahtjevu za deblokadu.",
 	'blockednoreason' => 'razlog nije naveden',
 	'blocked-notice-logextract' => 'Ovaj korisnik je trenutno blokiran.
 Posljednje stavke zapisnika blokiranja možete pogledati ispod:',
@@ -2800,7 +2767,6 @@ Mora biti manji od $1 {{PLURAL:$1|znaka|znaka|znakova}}.',
 Automatsko blokirane IP adrese nisu uspisane ovde.
 Pogledajte [[Special:BlockList|blokirane IP adrese]] za spisak trenutnih zabrana i blokiranja.',
 	'block-log-flags-anononly' => 'samo anonimni korisnici',
-	'block-log-flags-nocreate' => 'pravljenje računa onemogućeno',
 	'block-log-flags-noautoblock' => 'automatsko blokiranje onemogućeno',
 	'block-log-flags-noemail' => 'e-mail je blokiran',
 	'block-log-flags-nousertalk' => 'ne može uređivati vlastitu stranicu za razgovor',
@@ -2808,15 +2774,15 @@ Pogledajte [[Special:BlockList|blokirane IP adrese]] za spisak trenutnih zabrana
 	'block-log-flags-hiddenname' => 'korisničko ime sakriveno',
 	'blockme' => 'Blokiraj me',
 	'bydate' => 'po datumu',
-	'bad_image_list' => 'Koristi se sljedeći format:
+	'bad_image_list' => "Koristi se sljedeći format:
 
 Razmatraju se samo stavke u spisku (linije koje počinju sa *).
 Prvi link u liniji mora biti povezan sa lošom slikom.
-Svi drugi linkovi u istoj liniji se smatraju izuzecima, npr. kod stranica gdje se slike pojavljuju \'\'inline\'\'.',
+Svi drugi linkovi u istoj liniji se smatraju izuzecima, npr. kod stranica gdje se slike pojavljuju ''inline''.",
 	'blankpage' => 'Prazna stranica',
-];
+);
 
-$messages['bug'] = [
+$messages['bug'] = array(
 	'badtitle' => 'Judul dek essa',
 	'bold_tip' => 'Teks maumpek',
 	'blockedtitle' => 'Papaké riblok',
@@ -2824,13 +2790,13 @@ $messages['bug'] = [
 	'blanknamespace' => '(Utama)',
 	'blocklink' => 'blok',
 	'blankpage' => 'Leppa kosoŋë',
-];
+);
 
-$messages['ca'] = [
+$messages['ca'] = array(
 	'broken-file-category' => 'Pàgines amb enllaços a fitxer trencats',
 	'badaccess' => 'Error de permisos',
-	'badaccess-group0' => 'No teniu permís per a executar l\'acció que heu soŀlicitat.',
-	'badaccess-groups' => 'L\'acció que heu soŀlicitat es limita als usuaris {{PLURAL:$2|del grup|dels grups}}: $1.',
+	'badaccess-group0' => "No teniu permís per a executar l'acció que heu soŀlicitat.",
+	'badaccess-groups' => "L'acció que heu soŀlicitat es limita als usuaris {{PLURAL:$2|del grup|dels grups}}: $1.",
 	'badarticleerror' => 'Aquesta operació no es pot dur a terme en aquesta pàgina',
 	'badtitle' => 'El títol no és correcte',
 	'badtitletext' => 'El títol de la pàgina que heu introduït no és correcte, és en blanc o conté un enllaç trencat amb un altre projecte. També podria contenir algun caràcter no acceptat als títols de pàgina.',
@@ -2838,11 +2804,11 @@ $messages['ca'] = [
 	'blocked-mailpassword' => 'La vostra adreça IP ha estat blocada. Se us ha desactivat la funció de recuperació de contrasenya per a prevenir abusos.',
 	'bold_sample' => 'Text en negreta',
 	'bold_tip' => 'Text en negreta',
-	'blockedtitle' => 'L\'usuari està blocat',
-	'blockedtext' => '\'\'\'S\'ha procedit al blocatge del vostre compte d\'usuari o la vostra adreça IP.\'\'\'
+	'blockedtitle' => "L'usuari està blocat",
+	'blockedtext' => "'''S'ha procedit al blocatge del vostre compte d'usuari o la vostra adreça IP.'''
 
-El blocatge l\'ha dut a terme l\'usuari $1.
-El motiu donat és \'\'$2\'\'.
+El blocatge l'ha dut a terme l'usuari $1.
+El motiu donat és ''$2''.
 
 * Inici del blocatge: $8
 * Final del blocatge: $6
@@ -2850,40 +2816,40 @@ El motiu donat és \'\'$2\'\'.
 
 Podeu contactar amb $1 o un dels [[{{MediaWiki:Grouppage-sysop}}|administradors]] per a discutir-ho.
 
-Tingueu en compte que no podeu fer servir el formulari d\'enviament de missatges de correu electrònic a cap usuari, a menys que tingueu una adreça de correu vàlida registrada a les vostres [[Special:Preferences|preferències d\'usuari]] i no ho tingueu tampoc blocat.
+Tingueu en compte que no podeu fer servir el formulari d'enviament de missatges de correu electrònic a cap usuari, a menys que tingueu una adreça de correu vàlida registrada a les vostres [[Special:Preferences|preferències d'usuari]] i no ho tingueu tampoc blocat.
 
-La vostra adreça IP actual és $3, i el número d\'identificació del blocatge és #$5.
-Si us plau, incloeu aquestes dades en totes les consultes que feu.',
-	'blockednoreason' => 'no s\'ha donat cap motiu',
-	'blocked-notice-logextract' => 'En aquests moments aquest compte d\'usuari es troba blocat.
-Per més detalls, la darrera entrada del registre es mostra a continuació:',
+La vostra adreça IP actual és $3, i el número d'identificació del blocatge és #$5.
+Si us plau, incloeu aquestes dades en totes les consultes que feu.",
+	'blockednoreason' => "no s'ha donat cap motiu",
+	'blocked-notice-logextract' => "En aquests moments aquest compte d'usuari es troba blocat.
+Per més detalls, la darrera entrada del registre es mostra a continuació:",
 	'badsig' => 'La signatura que heu inserit no és vàlida; verifiqueu les etiquetes HTML que heu emprat.',
 	'badsiglength' => 'La signatura és massa llarga.
 Ha de tenir com a molt {{PLURAL:$1|un caràcter|$1 caràcters}}.',
 	'boteditletter' => 'b',
-	'badfilename' => 'El nom de la imatge s\'ha canviat a «$1».',
-	'backend-fail-stream' => 'No s\'ha pogut transmetre el fitxer $1.',
-	'backend-fail-backup' => 'No s\'ha pogut fer una còpia de seguretat del fitxer $1.',
+	'badfilename' => "El nom de la imatge s'ha canviat a «$1».",
+	'backend-fail-stream' => "No s'ha pogut transmetre el fitxer $1.",
+	'backend-fail-backup' => "No s'ha pogut fer una còpia de seguretat del fitxer $1.",
 	'backend-fail-notexists' => 'El fitxer $1 no existeix.',
-	'backend-fail-hashes' => 'No s\'han pogut obtenir els resums dels fitxer per fer-ne comparació.',
+	'backend-fail-hashes' => "No s'han pogut obtenir els resums dels fitxer per fer-ne comparació.",
 	'backend-fail-notsame' => 'Ja existeix un fitxer no idèntic a $1.',
-	'backend-fail-invalidpath' => '$1 no és un camí d\'emmagatzemament vàlid.',
-	'backend-fail-delete' => 'No s\'ha pogut suprimir el fitxer $1.',
+	'backend-fail-invalidpath' => "$1 no és un camí d'emmagatzemament vàlid.",
+	'backend-fail-delete' => "No s'ha pogut suprimir el fitxer $1.",
 	'backend-fail-alreadyexists' => 'El fitxer $1 ja existeix.',
-	'backend-fail-store' => 'No s\'ha pogut emmagatzemar el fitxer $1 a $2.',
-	'backend-fail-copy' => 'No s\'ha pogut copiar el fitxer $1 a $2.',
-	'backend-fail-move' => 'No s\'ha pogut moure el fitxer $1 a $2.',
-	'backend-fail-opentemp' => 'No s\'ha pogut obrir el fitxer temporal.',
-	'backend-fail-writetemp' => 'No s\'ha pogut escriure el fitxer temporal.',
-	'backend-fail-closetemp' => 'No s\'ha pogut tancar el fitxer temporal.',
-	'backend-fail-read' => 'No s\'ha pogut llegir el fitxer $1.',
-	'backend-fail-create' => 'No s\'ha pogut crear el fitxer $1.',
-	'backend-fail-readonly' => 'El rerefons d\'emmagatzemament «$1» actualment només és de lectura. Es va donar el motiu: «$2»',
-	'backend-fail-synced' => 'El fitxer «$1» es troba en un estat inconsistent amb els rerefons d\'emmagatzemament interns.',
-	'backend-fail-connect' => 'No s\'ha pogut connectar al fitxer de rerefons d\'emmagatzemament «$1».',
-	'backend-fail-internal' => 'S\'ha produït un error desconegut en el fitxer de rerefons d\'emmagatzemament «$1».',
+	'backend-fail-store' => "No s'ha pogut emmagatzemar el fitxer $1 a $2.",
+	'backend-fail-copy' => "No s'ha pogut copiar el fitxer $1 a $2.",
+	'backend-fail-move' => "No s'ha pogut moure el fitxer $1 a $2.",
+	'backend-fail-opentemp' => "No s'ha pogut obrir el fitxer temporal.",
+	'backend-fail-writetemp' => "No s'ha pogut escriure el fitxer temporal.",
+	'backend-fail-closetemp' => "No s'ha pogut tancar el fitxer temporal.",
+	'backend-fail-read' => "No s'ha pogut llegir el fitxer $1.",
+	'backend-fail-create' => "No s'ha pogut crear el fitxer $1.",
+	'backend-fail-readonly' => "El rerefons d'emmagatzemament «$1» actualment només és de lectura. Es va donar el motiu: «$2»",
+	'backend-fail-synced' => "El fitxer «$1» es troba en un estat inconsistent amb els rerefons d'emmagatzemament interns.",
+	'backend-fail-connect' => "No s'ha pogut connectar al fitxer de rerefons d'emmagatzemament «$1».",
+	'backend-fail-internal' => "S'ha produït un error desconegut en el fitxer de rerefons d'emmagatzemament «$1».",
 	'backend-fail-contenttype' => 'No es pot determinar el tipus de contingut del fitxer per emmagatzemar a «$1».',
-	'backend-fail-batchsize' => 'El rerefons d\'emmagatzemament ha rebut un lot {{PLURAL:$1|d\'$1 operació|de $1 operacions}} de fitxer; el límit és $2 {{PLURAL:$2|operació|operacions}}.',
+	'backend-fail-batchsize' => "El rerefons d'emmagatzemament ha rebut un lot {{PLURAL:$1|d'$1 operació|de $1 operacions}} de fitxer; el límit és $2 {{PLURAL:$2|operació|operacions}}.",
 	'brokenredirects' => 'Redireccions rompudes',
 	'brokenredirectstext' => 'Les següents redireccions enllacen a pàgines inexistents:',
 	'brokenredirects-edit' => 'modifica',
@@ -2891,27 +2857,27 @@ Ha de tenir com a molt {{PLURAL:$1|un caràcter|$1 caràcters}}.',
 	'booksources' => 'Obres de referència',
 	'booksources-search-legend' => 'Cerca fonts de llibres',
 	'booksources-go' => 'Vés-hi',
-	'booksources-text' => 'A sota hi ha una llista d\'enllaços d\'altres llocs que venen llibres nous i de segona mà, i també podrien tenir més informació dels llibres que esteu cercant:',
-	'booksources-invalid-isbn' => 'El codi ISBN donat no és vàlid. Comproveu si l\'heu copiat correctament.',
+	'booksources-text' => "A sota hi ha una llista d'enllaços d'altres llocs que venen llibres nous i de segona mà, i també podrien tenir més informació dels llibres que esteu cercant:",
+	'booksources-invalid-isbn' => "El codi ISBN donat no és vàlid. Comproveu si l'heu copiat correctament.",
 	'blanknamespace' => '(Principal)',
-	'block' => 'Blocatge d\'usuaris',
-	'blockip' => 'Bloqueig d\'usuaris',
-	'blockip-title' => 'Bloquejar l\'usuari',
-	'blockip-legend' => 'Bloca l\'usuari',
-	'blockiptext' => 'Empreu el següent formulari per blocar l\'accés
-d\'escriptura des d\'una adreça IP específica o des d\'un usuari determinat.
-això només s\'hauria de fer per prevenir el vandalisme, i
-d\'acord amb la [[{{MediaWiki:Policy-url}}|política del projecte]].
+	'block' => "Blocatge d'usuaris",
+	'blockip' => "Bloqueig d'usuaris",
+	'blockip-title' => "Bloquejar l'usuari",
+	'blockip-legend' => "Bloca l'usuari",
+	'blockiptext' => "Empreu el següent formulari per blocar l'accés
+d'escriptura des d'una adreça IP específica o des d'un usuari determinat.
+això només s'hauria de fer per prevenir el vandalisme, i
+d'acord amb la [[{{MediaWiki:Policy-url}}|política del projecte]].
 Empleneu el diàleg de sota amb un motiu específic (per exemple, citant
-quines pàgines en concret estan sent vandalitzades).',
-	'badipaddress' => 'L\'adreça IP no té el format correcte.',
-	'blockipsuccesssub' => 'S\'ha blocat amb èxit',
-	'blockipsuccesstext' => 'L\'usuari «[[Special:Contributions/$1|$1]]» ha estat blocat.
-<br />Vegeu la [[Special:BlockList|llista d\'IP blocades]] per revisar els bloquejos.',
+quines pàgines en concret estan sent vandalitzades).",
+	'badipaddress' => "L'adreça IP no té el format correcte.",
+	'blockipsuccesssub' => "S'ha blocat amb èxit",
+	'blockipsuccesstext' => "L'usuari «[[Special:Contributions/$1|$1]]» ha estat blocat.
+<br />Vegeu la [[Special:BlockList|llista d'IP blocades]] per revisar els bloquejos.",
 	'blocklist' => 'Usuaris blocats',
 	'blocklist-userblocks' => 'Amaga bloquejos de compte',
 	'blocklist-tempblocks' => 'Amaga bloquejos temporals',
-	'blocklist-addressblocks' => 'Amaga bloquejos d\'una sola IP',
+	'blocklist-addressblocks' => "Amaga bloquejos d'una sola IP",
 	'blocklist-rangeblocks' => 'Amaga els blocatges de rang',
 	'blocklist-timestamp' => 'Marca horària',
 	'blocklist-target' => 'Usuari blocat',
@@ -2926,31 +2892,30 @@ quines pàgines en concret estan sent vandalitzades).',
 Per més detalls, a sota es mostra el registre de bloquejos:',
 	'blocklog-showsuppresslog' => 'Aquest usuari ha estat blocat i amagat prèviament.
 Per més detalls, a sota es mostra el registre de supressions:',
-	'blocklogentry' => 'ha blocat l\'{{GENDER:$1|usuari|usuària}} [[$1]] per un període de: $2 $3',
-	'blocklogtext' => 'Això és una relació de accions de bloqueig i desbloqueig. Les adreces IP bloquejades automàticament no apareixen. Vegeu la [[Special:BlockList|llista d\'usuaris actualment bloquejats]].',
+	'blocklogentry' => "ha blocat l'{{GENDER:$1|usuari|usuària}} [[$1]] per un període de: $2 $3",
+	'blocklogtext' => "Això és una relació de accions de bloqueig i desbloqueig. Les adreces IP bloquejades automàticament no apareixen. Vegeu la [[Special:BlockList|llista d'usuaris actualment bloquejats]].",
 	'block-log-flags-anononly' => 'només els usuaris anònims',
-	'block-log-flags-nocreate' => 's\'ha desactivat la creació de comptes',
 	'block-log-flags-noautoblock' => 'sense bloqueig automàtic',
 	'block-log-flags-noemail' => 'correu-e blocat',
 	'block-log-flags-nousertalk' => 'no podeu modificar la pàgina de discussió pròpia',
 	'block-log-flags-angry-autoblock' => 'autoblocatge avançat activat',
-	'block-log-flags-hiddenname' => 'nom d\'usuari ocult',
-	'blockme' => 'Bloca\'m',
+	'block-log-flags-hiddenname' => "nom d'usuari ocult",
+	'blockme' => "Bloca'm",
 	'bydate' => 'per data',
-	'bad_image_list' => 'El format ha de ser el següent:
+	'bad_image_list' => "El format ha de ser el següent:
 
-Només els elements de llista (les línies que comencin amb un *) es prenen en consideració. El primer enllaç de cada línia ha de ser el d\'un fitxer dolent.
-La resta d\'enllaços de la línia són les excepcions, és a dir, les pàgines on s\'hi pot encabir el fitxer.',
+Només els elements de llista (les línies que comencin amb un *) es prenen en consideració. El primer enllaç de cada línia ha de ser el d'un fitxer dolent.
+La resta d'enllaços de la línia són les excepcions, és a dir, les pàgines on s'hi pot encabir el fitxer.",
 	'blankpage' => 'Pàgina en blanc',
-];
+);
 
-$messages['cbk-zam'] = [
+$messages['cbk-zam'] = array(
 	'blockedtitle' => 'El usuario es prohibido o bloqueado',
 	'blockip' => 'Usuario prohibido',
 	'blockipsuccesssub' => 'El prohibicion es confirmado con exito',
-];
+);
 
-$messages['cdo'] = [
+$messages['cdo'] = array(
 	'bold_sample' => 'Chŭ-tā̤ ùng-cê',
 	'bold_tip' => 'Chŭ-tā̤ ùng-cê',
 	'blockedtitle' => 'Ê̤ṳng-hô ké̤ṳk hŭng-sō̤ lāu',
@@ -2970,11 +2935,10 @@ $messages['cdo'] = [
 	'blocklogpage' => 'Hŭng-sō̤ nĭk-cé',
 	'blocklogentry' => 'hŭng-sō̤ [[$1]], gáu $2 hâiu guó-gĭ, $3',
 	'block-log-flags-anononly' => 'nâ mò̤-miàng ê̤ṳng-hô',
-	'block-log-flags-nocreate' => 'huòng-cī kŭi dióng-hô̤',
 	'bydate' => 'áng nĭk-gĭ',
-];
+);
 
-$messages['ce'] = [
+$messages['ce'] = array(
 	'badaccess' => 'Тlекхачарехь гlалат',
 	'badaccess-group0' => 'Шуьга кхочуш далур дац дехарца деш дерг',
 	'badaccess-groups' => 'Дехарца деш дерг кхочуш далундерш бу хlара декъашхой оцу {{PLURAL:$2|тобанашах|тобанах}} $1.',
@@ -2998,16 +2962,15 @@ $messages['ce'] = [
 	'blocklink' => 'сацаве',
 	'blocklogpage' => 'Сацораш долу тептар',
 	'blocklogentry' => 'сацийна [[$1]] цхьана ханна $2 $3',
-	'block-log-flags-nocreate' => 'цамагдо дlаязвалар дlаязбаларшца',
 	'bad_image_list' => 'Барам хила беза ишта:
 
 Лораш хира йу могlамяхь йолу хlумнаш (могlийн, йола луш йолу сабол тlира *).
 Дуьхьаралера хьажориг магlарши хила беза хьажориг кху цамагдо сурт дуьлаче.
 Тlяхьа йогlуш йолу хьажориг оцу могlарехь хира йу магóш, билгалла аьлча яззамаш долуче, сурт хьаллаточехь.',
 	'blankpage' => 'Йаьсса агlо',
-];
+);
 
-$messages['ceb'] = [
+$messages['ceb'] = array(
 	'badaccess' => 'Sayop sa permiso',
 	'badaccess-group0' => 'Wala ikaw tugoti sa pagpadayon sa aksyon nga imong gipangayo.',
 	'badaccess-groups' => 'Ang aksyon nga imong gipangayo mahimo lamang ihatag sa mga miyembro sa mga grupong $1.',
@@ -3031,59 +2994,58 @@ Dili kini puyde molapas sa $1 {{PLURAL:$1|ka karakter|ka mga karakter}}.',
 	'blocklink' => 'i-block',
 	'blocklogpage' => 'Log sa block',
 	'blocklogentry' => 'na-block si [[$1]] nga may expiry time nga $2 $3',
-	'block-log-flags-nocreate' => 'ang paghimo\'g akawnt gipugngan',
 	'bad_image_list' => 'Ang pormat mao ang mosunod:
 
 Ang mga list items (mga linya nga nagsugod sa*) ang gikonsiderar.
 Ang unang sumpay sa linya kinahanglang sumpay sa payl nga daot.
 Ang bisan unsang mosunod nga mga sumpay sa parehong linya gikonsiderar nga mga eksepsyon, i.e. mga panid diin ang payl mahimong inline.',
-];
+);
 
-$messages['ch'] = [
+$messages['ch'] = array(
 	'badaccess' => 'Lachi gi petmisu',
-	'badaccess-group0' => 'Ti siña un cho\'gue i aksion ni finaisen-mu.',
-	'badaccess-groups' => 'Solamente masedi i muna\'sesetbi ni grupun $1 chumo\'gue i aksion ni finaisen-mu.',
+	'badaccess-group0' => "Ti siña un cho'gue i aksion ni finaisen-mu.",
+	'badaccess-groups' => "Solamente masedi i muna'sesetbi ni grupun $1 chumo'gue i aksion ni finaisen-mu.",
 	'badtitle' => 'Båba na titulo',
-	'badretype' => 'Ti parehu i password siha ni un po\'lo.',
-	'blocked-mailpassword' => 'Machomma\' i IP-mu tumulaika påhina, ya ti masedi ha usa i fonksion manlaknos password ya u fanåtaha mama\'baba.',
-	'bold_sample' => 'Tinige\' potpot',
-	'bold_tip' => 'Tinige\' potpot',
-	'blockedtitle' => 'Machoma\' i muna\'sesetbi',
-	'blockedtext' => '\'\'\'Machomma\' i na\'an-mu muna\'sesetbi pat IP-mu.\'\'\'
+	'badretype' => "Ti parehu i password siha ni un po'lo.",
+	'blocked-mailpassword' => "Machomma' i IP-mu tumulaika påhina, ya ti masedi ha usa i fonksion manlaknos password ya u fanåtaha mama'baba.",
+	'bold_sample' => "Tinige' potpot",
+	'bold_tip' => "Tinige' potpot",
+	'blockedtitle' => "Machoma' i muna'sesetbi",
+	'blockedtext' => "'''Machomma' i na'an-mu muna'sesetbi pat IP-mu.'''
 
-Manchomma\' as $1.
-Pot i rason: \'\'$2\'\'.
+Manchomma' as $1.
+Pot i rason: ''$2''.
 
-* Matutuhon manchomma\' gi: $8
-* Para u funhayan manchomma\' gi: $6
-* Håyi para u chomma\': $7
+* Matutuhon manchomma' gi: $8
+* Para u funhayan manchomma' gi: $6
+* Håyi para u chomma': $7
 
-Siña un kuentusi si $1 pat otru na [[{{MediaWiki:Grouppage-sysop}}|administradot]] para un diskuti i chinemma\'.
-Ti siña un usa i ramientan \'e-mail i muna\'sesetbi,\' solo guåha e-mail address minaolek gi i [[Special:Preferences|priferensia i kuenta-mu]] ya ti machomma\' hao manu\'usa ha\'.
-På\'go, $3 iyo-mu IP, ya machomma\' i ID #$5.
-Pot fabot, na\'hålom i infotmasion gi sanhilo\' gi i finaisen-mu siha.',
-	'blockednoreason' => 'ti mana\'i rason',
+Siña un kuentusi si $1 pat otru na [[{{MediaWiki:Grouppage-sysop}}|administradot]] para un diskuti i chinemma'.
+Ti siña un usa i ramientan 'e-mail i muna'sesetbi,' solo guåha e-mail address minaolek gi i [[Special:Preferences|priferensia i kuenta-mu]] ya ti machomma' hao manu'usa ha'.
+På'go, $3 iyo-mu IP, ya machomma' i ID #$5.
+Pot fabot, na'hålom i infotmasion gi sanhilo' gi i finaisen-mu siha.",
+	'blockednoreason' => "ti mana'i rason",
 	'badsig' => 'Ti maolek i fitma raw; chek i HTML tags.',
-	'badsiglength' => 'Mampos anakko\'-ña i na\'an;
-na\'lakadada\' $1 {{PLURAL:$1|na simbolo|na simbolo siha}}.',
+	'badsiglength' => "Mampos anakko'-ña i na'an;
+na'lakadada' $1 {{PLURAL:$1|na simbolo|na simbolo siha}}.",
 	'boteditletter' => 'b',
-	'brokenredirects' => 'Manmayulang na muna\'dirihi siha',
+	'brokenredirects' => "Manmayulang na muna'dirihi siha",
 	'brokenredirects-edit' => 'tulaika',
 	'booksources' => 'I source i lepblo',
 	'booksources-go' => 'Hånao',
 	'blanknamespace' => '(Fanhaluman)',
-	'blockip' => 'Chomma\' i muna\'sesetbi',
-	'blocklink' => 'chomma\'',
-	'blocklogpage' => 'Log ni manmachomma\'',
-	'blocklogentry' => 'ha chomma\' [[$1]] ya u funhayan gi $2 $3',
-	'bad_image_list' => 'Estague\' i plantiyas:
+	'blockip' => "Chomma' i muna'sesetbi",
+	'blocklink' => "chomma'",
+	'blocklogpage' => "Log ni manmachomma'",
+	'blocklogentry' => "ha chomma' [[$1]] ya u funhayan gi $2 $3",
+	'bad_image_list' => "Estague' i plantiyas:
 
-I manmana\'lista na attikulu siha ha\' (i liña siha yan * gi sanme\'na) para u konsidera.
-Nesesario ha\' na\'chetton i fine\'nena na liña yan un atkibu båba.
-Ti mantattiyi i areklo ni sigienten ina\'chetton siha gi mismo liña, i.e. i påhina siha ni masedi mamo\'lu atkibu gi halom i liña.',
-];
+I manmana'lista na attikulu siha ha' (i liña siha yan * gi sanme'na) para u konsidera.
+Nesesario ha' na'chetton i fine'nena na liña yan un atkibu båba.
+Ti mantattiyi i areklo ni sigienten ina'chetton siha gi mismo liña, i.e. i påhina siha ni masedi mamo'lu atkibu gi halom i liña.",
+);
 
-$messages['ckb'] = [
+$messages['ckb'] = array(
 	'badaccess' => 'ھەڵە لە بە دەست ھێنان',
 	'badaccess-group0' => 'ڕێگەت پێ نەدراوە بۆ بەجێهێنای ئەو ئەنجامە وا داخوازیت کردووه.',
 	'badaccess-groups' => 'ئەو ئەنجامەی وا داخوازیت کردووه مەحدود کراوە بۆ بەکارهێنەرانی {{PLURAL:$2|دەستەی|یەکێک لە دەستەکانی}}: $1',
@@ -3107,8 +3069,8 @@ $messages['ckb'] = [
 ئای‌پی ئەدرەسی ئێستای تۆ $3 و پەێناسەی بەربەست‌کراو #$5.<br />
 تکایە لە هەر پرس و داواکاریەکت‌دا هەموو وردەکاریەکانی سەرەوە بگونجێنە.',
 	'blockednoreason' => 'هیچ هۆکارێک نەدراوە',
-	'blockedoriginalsource' => 'سەرچاوەی \'\'\'$1\'\'\' لەخوارەوە پیشاندراوە:',
-	'blockededitsource' => 'دەقی \'\'\'دەستکاریەکانی تۆ\'\'\' بۆ \'\'\'$1\'\'\' لە خوارەوە نیشان‌دراوە:',
+	'blockedoriginalsource' => "سەرچاوەی '''$1''' لەخوارەوە پیشاندراوە:",
+	'blockededitsource' => "دەقی '''دەستکاریەکانی تۆ''' بۆ '''$1''' لە خوارەوە نیشان‌دراوە:",
 	'badsig' => 'ئیمزاكه‌ هه‌ڵه‌یه‌، ته‌ماشای كۆدی HTML بكه‌‌',
 	'badsiglength' => 'واژۆکەت زۆر درێژە.
 واژۆ نابێ لە $1 {{PLURAL:$1|نووسە|نووسە}} درێژتر بێت.',
@@ -3142,7 +3104,6 @@ $messages['ckb'] = [
 بەربەست‌کرانی خۆکاری ئای‌پی لەم لیستەدا نەهاتوون.
 بۆ دیتنی ئەو بەربەستانە ئێستە لە ئارادان چاو لە [[Special:IPBlockList|لیستی بەربەستی ئای‌پی]] بکە.',
 	'block-log-flags-anononly' => 'تەنها بەکارهێنەرە نەناسراوەکان',
-	'block-log-flags-nocreate' => 'دروستکردنی هەژمار ناچالاککراوە',
 	'block-log-flags-noautoblock' => 'بەربست‌کردنی خۆکار لە کار خسترا',
 	'block-log-flags-noemail' => 'ئی‌مەیل بەربەست‌کراوە',
 	'block-log-flags-nousertalk' => 'دەستکاری لاپەڕەی وتووێژی خۆ ناکرێت',
@@ -3156,19 +3117,18 @@ $messages['ckb'] = [
 یەکەم بەستەر لە سەر دێڕێک دەبێت بەستەری فایلێکی خراپ بێت.
 ھەموو بەستەرەکانی دوای ئەو کە لەسەر ھەمان دێڕن وەکوو نائاسایی دێتە ھەژمار، واتە ئەو لاپەڕانەی کە ڕەنگە تێدا فایل بە شێوەی ئینلاین بێت',
 	'blankpage' => 'پەڕەی واڵا',
-];
+);
 
-$messages['co'] = [
+$messages['co'] = array(
 	'brokenredirects-edit' => 'mudificà',
 	'blanknamespace' => '(Principale)',
 	'blocklist-reason' => 'Mutivu',
 	'blocklink' => 'bluccà',
 	'block-log-flags-anononly' => 'solu cuntributori anonimi',
-	'block-log-flags-nocreate' => 'registramentu pruibitu',
 	'bydate' => 'per data',
-];
+);
 
-$messages['cps'] = [
+$messages['cps'] = array(
 	'broken-file-category' => 'Mga pahina nga may guba nga mga file links',
 	'badaccess' => 'Sala sa pagla-ong',
 	'badaccess-group0' => 'Indi ka pwede ubrahon ang aksyon nga imo ginla-ong.',
@@ -3189,15 +3149,14 @@ Pwede nga naga-unod mini sang isa ukon madamo pa nga mga karakter nga indi pwede
 	'blocklink' => 'lipdan/banggaan',
 	'blocklogpage' => 'Lista sang pagbangal',
 	'blocklogentry' => 'nabangga-an nga [[$1]] nga magatapos sa $2 $3',
-	'block-log-flags-nocreate' => 'pag-ubra sang account ginbawalan',
 	'bad_image_list' => 'Ang dagway amo ang mga nagasunod:
 
 Mga nakalista nga bagay lang gid (mga linya nga nagasugod sa *) ang ginatagaan sang pagtalupangod.
 Ang una nga tabid sa isa ka linya dapat nagatabid sa isa ka mala-in nga akta.
 Anuman nga mga nagasunod nga tabid sa ginhalinan nga linya ginakabig nga mga pagkatuhay, i.e. mina nga mga pahina nga kung sa diin ang mga akta ginatugutan nga maglutaw sa sulod sang linya.',
-];
+);
 
-$messages['crh'] = [
+$messages['crh'] = array(
 	'broken-file-category' => 'Mga pahina nga may guba nga mga file links',
 	'badaccess' => 'Sala sa pagla-ong',
 	'badaccess-group0' => 'Indi ka pwede ubrahon ang aksyon nga imo ginla-ong.',
@@ -3218,15 +3177,14 @@ Pwede nga naga-unod mini sang isa ukon madamo pa nga mga karakter nga indi pwede
 	'blocklink' => 'lipdan/banggaan',
 	'blocklogpage' => 'Lista sang pagbangal',
 	'blocklogentry' => 'nabangga-an nga [[$1]] nga magatapos sa $2 $3',
-	'block-log-flags-nocreate' => 'pag-ubra sang account ginbawalan',
 	'bad_image_list' => 'Ang dagway amo ang mga nagasunod:
 
 Mga nakalista nga bagay lang gid (mga linya nga nagasugod sa *) ang ginatagaan sang pagtalupangod.
 Ang una nga tabid sa isa ka linya dapat nagatabid sa isa ka mala-in nga akta.
 Anuman nga mga nagasunod nga tabid sa ginhalinan nga linya ginakabig nga mga pagkatuhay, i.e. mina nga mga pahina nga kung sa diin ang mga akta ginatugutan nga maglutaw sa sulod sang linya.',
-];
+);
 
-$messages['crh-cyrl'] = [
+$messages['crh-cyrl'] = array(
 	'broken-file-category' => 'Ичинде бозукъ файл багълантылары олгъан саифелер',
 	'badaccess' => 'Изин хатасы',
 	'badaccess-group0' => 'Япаджакъ олгъан арекетинъизни япмагъа акъкъынъыз ёкъ.',
@@ -3239,10 +3197,10 @@ $messages['crh-cyrl'] = [
 	'bold_sample' => 'Къалын язылыш',
 	'bold_tip' => 'Къалын язылыш',
 	'blockedtitle' => 'Къулланыджы блок этильди.',
-	'blockedtext' => '\'\'\'Эсабынъыз я да IP адресинъиз блок этильди.\'\'\'
+	'blockedtext' => "'''Эсабынъыз я да IP адресинъиз блок этильди.'''
 
 Блок япкъан идареджи: $1 .
-Блок себеби: \'\'«$2»\'\'.
+Блок себеби: ''«$2»''.
 
 * Блокнынъ башы: $8
 * Блокнынъ сонъу: $6
@@ -3250,7 +3208,7 @@ $messages['crh-cyrl'] = [
 
 Блок этювни музакере этмек ичюн $1 къулланыджысына я да башкъа эр анги [[{{MediaWiki:Grouppage-sysop}}|идареджиге]] мектюп ёллап оласынъыз.
 Дикъкъат этинъиз ки, къайд олунмагъан ве e-mail адресинъизни [[Special:Preferences|шахсий сазламаларда]] тасдыкъламагъан алда, эм де блок этильгенде сизге мектюп ёлламакъ ясакъ этильген олса, идареджиге мектюп ёллап оламазсынъыз.
-Шимдики IP адресинъиз — $3, блок этюв идентификаторы — #$5. Лютфен, идареджилерге мектюплеринъизде бу малюматны бильдиринъиз.',
+Шимдики IP адресинъиз — $3, блок этюв идентификаторы — #$5. Лютфен, идареджилерге мектюплеринъизде бу малюматны бильдиринъиз.",
 	'blockednoreason' => 'себеп бильдирильмеди',
 	'blocked-notice-logextract' => 'Бу къулланыджы шимди блок этильген.
 Блок этюв журналынынъ сонъки язысы ашагъыда косьтерильген:',
@@ -3277,7 +3235,6 @@ $messages['crh-cyrl'] = [
 	'blocklogpage' => 'Блок этюв журналы',
 	'blocklogentry' => '"[[$1]]" иришими $2 $3 токътатылды. Себеп',
 	'blocklogtext' => 'Мында къулланыджы иришимине ёнелик блок этюв ве блок чыкъарув къайдлары косьтериле. Автоматик IP адреси блок этювлери джедвельге кирсетильмеди. Шимди иришими токътатылгъан къулланыджыларны [[Special:BlockList|IP блок этюв джедвели]] саифесинден корип оласынъыз.',
-	'block-log-flags-nocreate' => 'янъы эсап ачмакъ ясакъ этильди',
 	'block-log-flags-noemail' => 'e-mail блок этильди',
 	'bydate' => 'хронологик сыранен',
 	'bad_image_list' => 'Формат бойле олмалы:
@@ -3285,9 +3242,9 @@ $messages['crh-cyrl'] = [
 Эр сатыр * ишаретинен башламалы. Сатырнынъ биринджи багълантысы къошмагъа ясакълангъан файлгъа багъланмалы.
 Шу сатырда илеридеки багълантылар истисна олурлар, яни шу саифелерде ишбу файл къулланмакъ мумкюн.',
 	'blankpage' => 'Бош саифе',
-];
+);
 
-$messages['crh-latn'] = [
+$messages['crh-latn'] = array(
 	'broken-file-category' => 'İçinde bozuq fayl bağlantıları olğan saifeler',
 	'badaccess' => 'İzin hatası',
 	'badaccess-group0' => 'Yapacaq olğan areketiñizni yapmağa aqqıñız yoq.',
@@ -3338,7 +3295,6 @@ Blok etmelerni közden keçirmek içün [[Special:BlockList|IP adresi blok etilg
 	'blocklogpage' => 'Blok etüv jurnalı',
 	'blocklogentry' => '"[[$1]]" irişimi $2 $3 toqtatıldı. Sebep',
 	'blocklogtext' => 'Mında qullanıcı irişimine yönelik blok etüv ve blok çıqaruv qaydları kösterile. Avtomatik IP adresi blok etüvleri cedvelge kirsetilmedi. Şimdi irişimi toqtatılğan qullanıcılarnı [[Special:BlockList|IP blok etüv cedveli]] saifesinden körip olasıñız.',
-	'block-log-flags-nocreate' => 'yañı esap açmaq yasaq etildi',
 	'block-log-flags-noemail' => 'e-mail blok etildi',
 	'bydate' => 'hronologik sıranen',
 	'bad_image_list' => 'Format böyle olmalı:
@@ -3346,9 +3302,9 @@ Blok etmelerni közden keçirmek içün [[Special:BlockList|IP adresi blok etilg
 Er satır * işaretinen başlamalı. Satırnıñ birinci bağlantısı qоşmağa yasaqlanğan faylğa bağlanmalı.
 Şu satırda ilerideki bağlantılar istisna olurlar, yani şu saifelerde işbu fayl qullanmaq mümkün.',
 	'blankpage' => 'Bоş saife',
-];
+);
 
-$messages['cs'] = [
+$messages['cs'] = array(
 	'broken-file-category' => 'Stránky s odkazy na neexistující soubory',
 	'badaccess' => 'Nedostatečná oprávnění',
 	'badaccess-group0' => 'Nemáte oprávnění k provedení požadované činnosti.',
@@ -3361,10 +3317,10 @@ $messages['cs'] = [
 	'bold_sample' => 'Tučný text',
 	'bold_tip' => 'Tučný text',
 	'blockedtitle' => 'Uživatel zablokován',
-	'blockedtext' => 'Vaší IP adrese či uživatelskému jménu byla zablokována možnost editace.\'\'\'
+	'blockedtext' => "Vaší IP adrese či uživatelskému jménu byla zablokována možnost editace.'''
 
 Zablokování provedl{{gender:$1||a}} $1.
-Udaným důvodem bylo \'\'$2\'\'.
+Udaným důvodem bylo ''$2''.
 
 * Začátek blokování: $8
 * Zablokování vyprší: $6
@@ -3372,7 +3328,7 @@ Udaným důvodem bylo \'\'$2\'\'.
 
 Pokud chcete zablokování prodiskutovat, můžete kontaktovat {{gender:$1|uživatele|uživatelku}} $1 či jiného [[{{MediaWiki:Grouppage-sysop}}|správce]].
 Uvědomte si, že nemůžete použít nabídku „Poslat e-mail“, jestliže nemáte ve svém [[Special:Preferences|nastavení]] uvedenu platnou e-mailovou adresu nebo pokud vám byla tato možnost zakázána.
-Vaše IP adresa je $3 a&nbsp;identifikační číslo bloku je #$5; tyto údaje uvádějte ve všech dotazech na správce.',
+Vaše IP adresa je $3 a&nbsp;identifikační číslo bloku je #$5; tyto údaje uvádějte ve všech dotazech na správce.",
 	'blockednoreason' => 'důvod nebyl zadán',
 	'blocked-notice-logextract' => 'Tento uživatel je momentálně zablokován.
 Zde je pro přehled zobrazen nejnovější záznam z knihy zablokování:',
@@ -3447,7 +3403,6 @@ Zde je pro přehled zobrazen výpis z knihy zablokování:',
 Automaticky blokované IP adresy nejsou vypsány.
 Vizte též [[Special:BlockList|seznam všech probíhajících bloků]].',
 	'block-log-flags-anononly' => 'pouze anonymní uživatelé',
-	'block-log-flags-nocreate' => 'vytváření účtů zablokováno',
 	'block-log-flags-noautoblock' => 'automatické blokování vypnuto',
 	'block-log-flags-noemail' => 'e-maily zablokovány',
 	'block-log-flags-nousertalk' => 'nemůže editovat svou diskusní stránku',
@@ -3459,9 +3414,9 @@ Vizte též [[Special:BlockList|seznam všech probíhajících bloků]].',
 
 Obsahuje pouze seznam s odrážkami (řádka začíná s *). První odkaz na řádce musí být odkaz na soubor, kterému se zakazuje zobrazování na stránkách. Všechny další odkazy na řádce jsou považovány za výjimky, tedy stránky na kterých se obrázek může zobrazit.',
 	'blankpage' => 'Prázdná stránka',
-];
+);
 
-$messages['csb'] = [
+$messages['csb'] = array(
 	'badaccess' => 'Procëmprawne ùdowierzenie',
 	'badaccess-group0' => 'Ni môsz dosc prawa dlô zrëszeniô tegò dzéjaniô',
 	'badarticleerror' => 'Nie dô zrobic ti akcëji na ti starnie.',
@@ -3471,10 +3426,10 @@ $messages['csb'] = [
 	'bold_sample' => 'Wëtłëszczony drëk',
 	'bold_tip' => 'Wëtłëszczony drëk',
 	'blockedtitle' => 'Brëkòwnik je zascëgóny',
-	'blockedtext' => '\'\'\'Twòje kònto abò ë IP-adresa òstałë zablokòwóné.\'\'\'
+	'blockedtext' => "'''Twòje kònto abò ë IP-adresa òstałë zablokòwóné.'''
 
 Zablokòwôł je $1.
-Pòdónô przëczëna to:\'\'$2\'\'.
+Pòdónô przëczëna to:''$2''.
 
  * Zôczątk blokadë: $8
  * Kùńc blokadë: $6
@@ -3484,7 +3439,7 @@ Pòdónô przëczëna to:\'\'$2\'\'.
 Bë zgwësnic sprawã zablokòwaniô mòżesz skòntaktowac sã z $1 abò jińszim [[{{MediaWiki:Grouppage-sysop}}|administratorã]].
 Boczë, że të ni mòżesz stądka sélac e-mailów, jeżlë nié môsz jesz zaregisterowóné e-mailowé adresë w [[Special:Preferences|nastôwach]].
 Twòjô aktualnô adresa IP to $3, a zablokòwónô adresa ID to #$5.
-Proszëmë pòdac wëższé pòdôłczi przë wszëtczich pëtaniach.',
+Proszëmë pòdac wëższé pòdôłczi przë wszëtczich pëtaniach.",
 	'badsig' => 'Òchëbny pòdpisënk, sprôwdzë tadżi HTML.',
 	'badsiglength' => 'Pòdpisënk je za dłudżi.
 Mô bëc mni jakno $1 {{PLURAL:$1|znak|znaczi/znaków}}.',
@@ -3504,16 +3459,15 @@ Biéj do [[Special:BlockList|lëstë zascëgónëch adresów IP]] abë òbaczëc
 	'blocklink' => 'blokùjë',
 	'blocklogpage' => 'Historëjô blokòwaniô',
 	'blocklogentry' => 'zablokòwôł [[$1]], czas blokadë: $2 $3',
-	'block-log-flags-nocreate' => 'blokada ùsôdzaniô kònta',
 	'bydate' => 'wedle datumù',
 	'bad_image_list' => 'Fòrmat do wpisaniô je jakno niżi:
 
 Blós elementë lëstë (réżczi naczynającé sã òd *) bãdą ùwzglãdniwóné.
 Pierszi lënk w réżczi mùãzi bëc lënkã do zakazónegò lopka.
 Nôslédné lënczi w réżce bãdą ùwzglãdniwóné jakno wëjimczi – są to miona starnów, na chtërnëch lopk ò zakazónym mionie mòze bëc brëkòwóny.',
-];
+);
 
-$messages['cu'] = [
+$messages['cu'] = array(
 	'blockedtitle' => 'польꙃєватєл҄ь ꙁаграждєнъ ѥстъ',
 	'boteditletter' => 'а҃ѵ',
 	'brokenredirects-edit' => 'исправи',
@@ -3524,9 +3478,9 @@ $messages['cu'] = [
 	'blocklist-reason' => 'какъ съмꙑслъ',
 	'blocklink' => 'ꙁагради',
 	'blocklogpage' => 'ꙁаграждєниꙗ їсторїꙗ',
-];
+);
 
-$messages['cv'] = [
+$messages['cv'] = array(
 	'badaccess' => 'Доступ йăнăшĕ',
 	'badaccess-group0' => 'Эсир ыйтакан ĕçе тăваймастăр',
 	'badaccess-groups' => 'Ку ĕçе $1 шутне кĕрекен хутшăнакан кăна тума пултарать.',
@@ -3538,9 +3492,9 @@ $messages['cv'] = [
 	'bold_sample' => 'Çурмахулăм текст',
 	'bold_tip' => 'Çурмахулăм текст',
 	'blockedtitle' => 'Хутшăнакана ĕçлеме чарнă',
-	'blockedtext' => '\'\'\'Ку аккаунта е IP-адреса ĕçлеме чарнă.\'\'\'
+	'blockedtext' => "'''Ку аккаунта е IP-адреса ĕçлеме чарнă.'''
 
-$1 администратор ĕçлеме чарнă. Сăлтавĕ çакă: \'\'«$2»\'\'.
+$1 администратор ĕçлеме чарнă. Сăлтавĕ çакă: ''«$2»''.
 
 * Чарнă вăхăт: $8
 * Çак вăхăтчен чарнă: $6
@@ -3550,7 +3504,7 @@ $1 хутшăнакан патне, е ытти [[{{MediaWiki:Grouppage-sysop}}|
 
 Асăрхар: [[Special:Preferences|хăвăрăн ĕнерлевсенче]] эл. почта адресне çирĕплетмен пулсан, е сайта кĕмен пулсан — администратор патне çыру яраймастăр. Администратор сире çыру яма чарнă пулсан — ку хутĕнче те çыру яраймăр.
 
-Сирĕн IP-адрес — $3, чару идентификаторĕ — #$5. Çырусенче, тархасшăн, вĕсене пĕлтерĕр.',
+Сирĕн IP-адрес — $3, чару идентификаторĕ — #$5. Çырусенче, тархасшăн, вĕсене пĕлтерĕр.",
 	'blockednoreason' => 'сăлтавне пĕлтермен',
 	'badsig' => 'Алă пуснинче йăнăш пур. HTML тэгĕсене тĕрĕслĕр.',
 	'badsiglength' => 'Алă пусни ытла вăрăм, $1 символтан кĕскерех пулмалла.',
@@ -3570,77 +3524,76 @@ $1 хутшăнакан патне, е ытти [[{{MediaWiki:Grouppage-sysop}}|
 	'blocklink' => 'ĕçлеме чар',
 	'blocklogpage' => 'Ĕçлеме чарнисен журналĕ',
 	'block-log-flags-anononly' => 'анонимлă хутшăнакансем кăна',
-	'block-log-flags-nocreate' => 'хутшăнакансене регистрациленме чарнă',
 	'block-log-flags-noemail' => 'çыру яма чарнă',
 	'bydate' => 'дата тăрăх',
-];
+);
 
-$messages['cy'] = [
+$messages['cy'] = array(
 	'broken-file-category' => 'Tudalennau a chysylltiadau toredig i ffeiliau ynddynt',
 	'badaccess' => 'Gwall caniatâd',
 	'badaccess-group0' => 'Ni chaniateir i chi wneud y weithred y gwnaethoch gais amdani.',
-	'badaccess-groups' => 'Dim ond defnyddwyr o blith y {{PLURAL:$2|grwp|grwp|grwpiau|grwpiau|grwpiau|grwpiau}} $1 sy\'n cael gwneud y weithred y gwnaethoch gais amdani.',
-	'badarticleerror' => 'Mae\'n amhosib cyflawni\'r weithred hon ar y dudalen hon.',
+	'badaccess-groups' => "Dim ond defnyddwyr o blith y {{PLURAL:$2|grwp|grwp|grwpiau|grwpiau|grwpiau|grwpiau}} $1 sy'n cael gwneud y weithred y gwnaethoch gais amdani.",
+	'badarticleerror' => "Mae'n amhosib cyflawni'r weithred hon ar y dudalen hon.",
 	'badtitle' => 'Teitl gwael',
-	'badtitletext' => 'Mae\'r teitl a ofynnwyd amdano yn annilys, yn wag, neu cysylltu\'n anghywir rhwng ieithoedd neu wicïau. Gall fod ynddo un nod neu ragor na ellir eu defnyddio mewn teitlau.',
-	'badretype' => 'Nid yw\'r cyfrineiriau\'n union yr un fath.',
+	'badtitletext' => "Mae'r teitl a ofynnwyd amdano yn annilys, yn wag, neu cysylltu'n anghywir rhwng ieithoedd neu wicïau. Gall fod ynddo un nod neu ragor na ellir eu defnyddio mewn teitlau.",
+	'badretype' => "Nid yw'r cyfrineiriau'n union yr un fath.",
 	'blocked-mailpassword' => 'Gan fod eich cyfeiriad IP wedi ei atal rhag golygu, ni ellir adfer y cyfrinair.',
 	'bold_sample' => 'Testun cryf',
 	'bold_tip' => 'Testun cryf',
-	'blockedtitle' => 'Mae\'r defnyddiwr hwn wedi cael ei flocio',
-	'blockedtext' => '\'\'\'Mae eich enw defnyddiwr neu gyfeiriad IP wedi cael ei flocio.\'\'\'
+	'blockedtitle' => "Mae'r defnyddiwr hwn wedi cael ei flocio",
+	'blockedtext' => "'''Mae eich enw defnyddiwr neu gyfeiriad IP wedi cael ei flocio.'''
 
 $1 a osododd y bloc.
-Y rheswm a roddwyd dros y blocio yw: \'\'$2\'\'.
+Y rheswm a roddwyd dros y blocio yw: ''$2''.
 
 *Dechreuodd y bloc am: $8
 *Bydd y bloc yn dod i ben am: $6
 *Bwriadwyd blocio: $7
 
-Gallwch gysylltu â $1 neu un arall o\'r [[{{MediaWiki:Grouppage-sysop}}|gweinyddwyr]] i drafod y bloc.
-Sylwch mai dim ond y rhai sydd wedi gosod cyfeiriad e-bost yn eu [[Special:Preferences|dewisiadau defnyddiwr]], a hwnnw heb ei flocio, sydd yn gallu \'anfon e-bost at ddefnyddiwr\' trwy\'r wici.
+Gallwch gysylltu â $1 neu un arall o'r [[{{MediaWiki:Grouppage-sysop}}|gweinyddwyr]] i drafod y bloc.
+Sylwch mai dim ond y rhai sydd wedi gosod cyfeiriad e-bost yn eu [[Special:Preferences|dewisiadau defnyddiwr]], a hwnnw heb ei flocio, sydd yn gallu 'anfon e-bost at ddefnyddiwr' trwy'r wici.
 $3 yw eich cyfeiriad IP presennol. Cyfeirnod y bloc yw #$5.
-Pan yn ysgrifennu at weinyddwr, cofiwch gynnwys yr holl fanylion uchod, os gwelwch yn dda.',
+Pan yn ysgrifennu at weinyddwr, cofiwch gynnwys yr holl fanylion uchod, os gwelwch yn dda.",
 	'blockednoreason' => 'dim rheswm wedi ei roi',
-	'blocked-notice-logextract' => 'Mae\'r defnyddiwr hwn wedi ei flocio ar hyn o bryd.
-Dyma\'r cofnod lòg diweddaraf, er gwybodaeth:',
+	'blocked-notice-logextract' => "Mae'r defnyddiwr hwn wedi ei flocio ar hyn o bryd.
+Dyma'r cofnod lòg diweddaraf, er gwybodaeth:",
 	'badsig' => 'Llofnod crai annilys; gwiriwch y tagiau HTML.',
-	'badsiglength' => 'Mae\'ch llysenw\'n rhy hir.
-Gall fod hyd at $1 {{PLURAL:$1|llythyren|lythyren|lythyren|llythyren|llythyren|llythyren}} o hyd.',
+	'badsiglength' => "Mae'ch llysenw'n rhy hir.
+Gall fod hyd at $1 {{PLURAL:$1|llythyren|lythyren|lythyren|llythyren|llythyren|llythyren}} o hyd.",
 	'boteditletter' => 'b',
 	'badfilename' => 'Newidiwyd enw\'r ffeil i "$1".',
-	'backend-fail-stream' => 'Wedi methu ffrydio\'r ffeil $1.',
-	'backend-fail-backup' => 'Wedi methu gwneud copi wrth gefn o\'r ffeil $1.',
-	'backend-fail-notexists' => 'Nid yw\'r ffeil $1 ar gael.',
-	'backend-fail-notsame' => 'Mae ffeil gwahanol a\'r enw $1 arni eisoes ar gael.',
+	'backend-fail-stream' => "Wedi methu ffrydio'r ffeil $1.",
+	'backend-fail-backup' => "Wedi methu gwneud copi wrth gefn o'r ffeil $1.",
+	'backend-fail-notexists' => "Nid yw'r ffeil $1 ar gael.",
+	'backend-fail-notsame' => "Mae ffeil gwahanol a'r enw $1 arni eisoes ar gael.",
 	'backend-fail-invalidpath' => 'Nid yw $1 yn lwybr dilys i roi ffeil ar gadw.',
-	'backend-fail-delete' => 'Wedi methu dileu\'r ffeil $1.',
-	'backend-fail-alreadyexists' => 'Mae\'r ffeil $1 ar gael yn barod.',
-	'backend-fail-store' => 'Wedi methu rhoi\'r ffeil $1 ar gadw yn $2.',
-	'backend-fail-copy' => 'Wedi methu copïo\'r ffeil $1 i $2.',
+	'backend-fail-delete' => "Wedi methu dileu'r ffeil $1.",
+	'backend-fail-alreadyexists' => "Mae'r ffeil $1 ar gael yn barod.",
+	'backend-fail-store' => "Wedi methu rhoi'r ffeil $1 ar gadw yn $2.",
+	'backend-fail-copy' => "Wedi methu copïo'r ffeil $1 i $2.",
 	'backend-fail-move' => 'Wedi methu symud y ffeil $1 i $2.',
 	'backend-fail-opentemp' => 'Wedi methu agor y ffeil dros dro.',
-	'backend-fail-writetemp' => 'Wedi methu ysgrifennu i\'r ffeil dros dro.',
-	'backend-fail-closetemp' => 'Wedi methu cau\'r ffeil dros dro.',
+	'backend-fail-writetemp' => "Wedi methu ysgrifennu i'r ffeil dros dro.",
+	'backend-fail-closetemp' => "Wedi methu cau'r ffeil dros dro.",
 	'backend-fail-read' => 'Wedi methu darllen y ffeil $1.',
-	'backend-fail-create' => 'Wedi methu creu\'r ffeil $1.',
-	'brokenredirects' => 'Ailgyfeiriadau wedi\'u torri',
-	'brokenredirectstext' => 'Mae\'r ailgyfeiriadau isod yn cysylltu â thudalennau nad ydynt ar gael:',
+	'backend-fail-create' => "Wedi methu creu'r ffeil $1.",
+	'brokenredirects' => "Ailgyfeiriadau wedi'u torri",
+	'brokenredirectstext' => "Mae'r ailgyfeiriadau isod yn cysylltu â thudalennau nad ydynt ar gael:",
 	'brokenredirects-edit' => 'golygu',
 	'brokenredirects-delete' => 'dileu',
 	'booksources' => 'Ffynonellau llyfrau',
 	'booksources-search-legend' => 'Chwilier am lyfrau',
 	'booksources-go' => 'Mynd',
-	'booksources-text' => 'Mae\'r rhestr isod yn cynnwys cysylltiadau i wefannau sy\'n gwerthu llyfrau newydd a rhai ail-law. Mae rhai o\'r gwefannau hefyd yn cynnig gwybodaeth pellach am y llyfrau hyn:',
-	'booksources-invalid-isbn' => 'Ymddengys nad yw\'r rhif ISBN hwn yn ddilys; efallai y cafwyd gwall wrth drosglwyddo\'r rhif.',
+	'booksources-text' => "Mae'r rhestr isod yn cynnwys cysylltiadau i wefannau sy'n gwerthu llyfrau newydd a rhai ail-law. Mae rhai o'r gwefannau hefyd yn cynnig gwybodaeth pellach am y llyfrau hyn:",
+	'booksources-invalid-isbn' => "Ymddengys nad yw'r rhif ISBN hwn yn ddilys; efallai y cafwyd gwall wrth drosglwyddo'r rhif.",
 	'blanknamespace' => '(Prif)',
 	'block' => 'Rhwystro defnyddiwr',
-	'blockip' => 'Rhwystro\'r defnyddiwr',
-	'blockip-title' => 'Rhwystro\'r defnyddiwr',
-	'blockip-legend' => 'Rhwystro\'r defnyddiwr',
-	'blockiptext' => 'Defnyddiwch y ffurflen hon i rwystro cyfeiriad IP neu ddefnyddiwr rhag ysgrifennu i\'r gronfa ddata.
-Dylech chi ddim ond gwneud hyn er mwyn rhwystro fandaliaeth, a chan ddilyn [[{{MediaWiki:Policy-url}}|polisi\'r wici]].
-Rhowch reswm dros rwystro\'r defnyddiwr (er enghraifft, dywedwch pa dudalen(au) a fandaleiddiwyd).',
+	'blockip' => "Rhwystro'r defnyddiwr",
+	'blockip-title' => "Rhwystro'r defnyddiwr",
+	'blockip-legend' => "Rhwystro'r defnyddiwr",
+	'blockiptext' => "Defnyddiwch y ffurflen hon i rwystro cyfeiriad IP neu ddefnyddiwr rhag ysgrifennu i'r gronfa ddata.
+Dylech chi ddim ond gwneud hyn er mwyn rhwystro fandaliaeth, a chan ddilyn [[{{MediaWiki:Policy-url}}|polisi'r wici]].
+Rhowch reswm dros rwystro'r defnyddiwr (er enghraifft, dywedwch pa dudalen(au) a fandaleiddiwyd).",
 	'badipaddress' => 'Cyfeiriad IP annilys.',
 	'blockipsuccesssub' => 'Llwyddodd y rhwystr',
 	'blockipsuccesstext' => 'Mae cyfeiriad IP [[Special:Contributions/$1|$1]] wedi cael ei flocio.<br />
@@ -3659,14 +3612,13 @@ Gwelwch y [[Special:BlockList|rhestr flociau IP]] er mwyn arolygu blociau.',
 	'blocklist-nousertalk' => 'ni all olygu ei dudalen/ei thudalen sgwrs ei hunan',
 	'blocklink' => 'rhwystro',
 	'blocklogpage' => 'Lòg rhwystrau',
-	'blocklog-showlog' => 'Cafodd y defnyddiwr hwn ei flocio o\'r blaen.
-Dyma\'r lòg rhwystro perthnasol:',
-	'blocklog-showsuppresslog' => 'Cafodd y defnyddiwr hwn ei flocio a\'i guddio o\'r blaen.
-Dyma\'r lòg cuddio perthnasol:',
+	'blocklog-showlog' => "Cafodd y defnyddiwr hwn ei flocio o'r blaen.
+Dyma'r lòg rhwystro perthnasol:",
+	'blocklog-showsuppresslog' => "Cafodd y defnyddiwr hwn ei flocio a'i guddio o'r blaen.
+Dyma'r lòg cuddio perthnasol:",
 	'blocklogentry' => 'wedi rhwystro "[[$1]]" sy\'n dod i\'w ben ar $2 $3',
-	'blocklogtext' => 'Dyma lòg o\'r holl weithredoedd rhwystro a dadrwystro. Nid yw\'r cyfeiriadau IP sydd wedi cael ei rwystro\'n awtomatig ar y rhestr. Gweler y [[Special:BlockList|rhestr rhwystrau IP]] am restr y rhwystrau a\'r gwaharddiadau sydd yn weithredol ar hyn o bryd.',
+	'blocklogtext' => "Dyma lòg o'r holl weithredoedd rhwystro a dadrwystro. Nid yw'r cyfeiriadau IP sydd wedi cael ei rwystro'n awtomatig ar y rhestr. Gweler y [[Special:BlockList|rhestr rhwystrau IP]] am restr y rhwystrau a'r gwaharddiadau sydd yn weithredol ar hyn o bryd.",
 	'block-log-flags-anononly' => 'defnyddwyr anhysbys yn unig',
-	'block-log-flags-nocreate' => 'analluogwyd creu cyfrif',
 	'block-log-flags-noautoblock' => 'analluogwyd rhwystro awtomatig',
 	'block-log-flags-noemail' => 'analluogwyd e-bostio',
 	'block-log-flags-nousertalk' => 'ni all olygu ei dudalen/ei thudalen sgwrs ei hunan',
@@ -3674,15 +3626,15 @@ Dyma\'r lòg cuddio perthnasol:',
 	'block-log-flags-hiddenname' => 'cuddiwyd yr enw defnyddiwr',
 	'blockme' => 'Rhwystro fi',
 	'bydate' => 'yn ôl dyddiad',
-	'bad_image_list' => 'Dyma\'r fformat:
+	'bad_image_list' => "Dyma'r fformat:
 
-Dim ond eitemau mewn rhestr (llinellau\'n dechrau a *) gaiff eu hystyried.
-Rhaid i\'r cyswllt cyntaf ar linell fod yn gyswllt at ffeil wallus.
-Mae unrhyw gysylltau eraill ar yr un llinell yn cael eu trin fel eithriadau, h.y. tudalennau lle mae\'r ffeil yn gallu ymddangos.',
+Dim ond eitemau mewn rhestr (llinellau'n dechrau a *) gaiff eu hystyried.
+Rhaid i'r cyswllt cyntaf ar linell fod yn gyswllt at ffeil wallus.
+Mae unrhyw gysylltau eraill ar yr un llinell yn cael eu trin fel eithriadau, h.y. tudalennau lle mae'r ffeil yn gallu ymddangos.",
 	'blankpage' => 'Tudalen wag',
-];
+);
 
-$messages['da'] = [
+$messages['da'] = array(
 	'broken-file-category' => 'Sider med brudte filhenvisninger',
 	'badaccess' => 'Manglende rettigheder',
 	'badaccess-group0' => 'Du har ikke de nødvendige rettigheder til denne handling.',
@@ -3695,21 +3647,21 @@ $messages['da'] = [
 	'bold_sample' => 'Fed tekst',
 	'bold_tip' => 'Fed tekst',
 	'blockedtitle' => 'Brugeren er blokeret',
-	'blockedtext' => '\'\'\'Dit brugernavn eller din IP-adresse er blevet blokeret.\'\'\'
+	'blockedtext' => "'''Dit brugernavn eller din IP-adresse er blevet blokeret.'''
 
 Blokeringen er foretaget af $1.
-Den anførte grund er \'\'$2\'\'.
+Den anførte grund er ''$2''.
 
 Blokeringen starter: $8
 Blokeringen udløber: $6
 Blokeringen er rettet mod: $7
 
 Du kan kontakte $1 eller en af de andre [[{{MediaWiki:Grouppage-sysop}}|administratorer]] for at diskutere blokeringen.
-Du kan ikke bruge funktionen \'e-mail til denne bruger\' medmindre der er angivet en gyldig email-adresse i dine
+Du kan ikke bruge funktionen 'e-mail til denne bruger' medmindre der er angivet en gyldig email-adresse i dine
 [[Special:Preferences|kontoindstillinger]], og du ikke er blevet blokeret fra at bruge den.
 
 Din nuværende IP-adresse er $3, og blokerings-id er #$5.
-Angiv venligst alle ovenstående detaljer ved henvendelser om blokeringen.',
+Angiv venligst alle ovenstående detaljer ved henvendelser om blokeringen.",
 	'blockednoreason' => 'ingen begrundelse givet',
 	'blocked-notice-logextract' => 'Denne bruger er i øjeblikket blokeret.
 Loggen over den seneste blokering ses nedenfor:',
@@ -3781,7 +3733,6 @@ Skjulningsloggen vises nedenfor som reference:',
 	'blocklogentry' => 'blokerede [[$1]] med en varighed på $2 $3',
 	'blocklogtext' => 'Dette er en liste med blokerede brugere og ophævede blokeringer af brugere. Automatisk blokerede IP-adresser er ikke anført her. Se [[Special:BlockList|blokeringslisten]] for den nuværende liste med blokerede brugere.',
 	'block-log-flags-anononly' => 'kun anonyme',
-	'block-log-flags-nocreate' => 'Oprettelse af brugerkonti blokeret',
 	'block-log-flags-noautoblock' => 'Autoblok deaktiveret',
 	'block-log-flags-noemail' => 'e-mail blokeret',
 	'block-log-flags-nousertalk' => 'kan ikke redigere egen diskussionsside',
@@ -3793,28 +3744,33 @@ Skjulningsloggen vises nedenfor som reference:',
 
 Kun indholdet af lister (linjer startende med *) bliver brugt. Den første henvisning på en linje er til det uønskede billede. Efterfølgende links på samme linjer er undtagelser, dvs. sider hvor billedet må optræde.',
 	'blankpage' => 'Blank side',
-];
+);
 
-$messages['de'] = [
+$messages['de'] = array(
 	'broken-file-category' => 'Seiten mit defekten Dateilinks',
-	'badaccess' => 'Keine ausreichenden Rechte',
+	'badaccess' => 'Berechtigungsfehler',
 	'badaccess-group0' => 'Du hast nicht die erforderliche Berechtigung für diese Aktion.',
 	'badaccess-groups' => 'Diese Aktion ist auf Benutzer beschränkt, die {{PLURAL:$2|der Gruppe|einer der Gruppen}} „$1“ angehören.',
-	'badarticleerror' => 'Diese Aktion kann auf diese Seite nicht angewendet werden.',
+	'badarticleerror' => 'Diese Aktion kann auf diese Seite nicht durchgeführt werden. Die Seite wurde vielleicht bereits gelöscht seit du deine Anfrage gestellt hast.',
 	'badtitle' => 'Ungültiger Titel',
-	'badtitletext' => 'Der Titel der angeforderten Seite ist ungültig, leer oder ein ungültiger Sprachlink von einem anderen Wiki.',
+	'badtitletext' => 'Der Titel der angeforderten Seite ist ungültig, leer oder ein ungültiger Sprachlink von einem anderen Wiki. Möglicherweise enthält er Zeichen, die in Titeln nicht benutzt werden können.',
 	'badretype' => 'Die beiden Passwörter stimmen nicht überein.',
-	'blocked-mailpassword' => 'Die von dir verwendete IP-Adresse ist für das Ändern von Seiten gesperrt. Um einen Missbrauch zu verhindern, wurde die Möglichkeit zur Anforderung eines neuen Passwortes ebenfalls gesperrt.',
+	'blocked-mailpassword' => 'Die von dir verwendete IP-Adresse ist für das Ändern von Seiten gesperrt. Um einen Missbrauch zu verhindern, wurde das Anfordern eines neuen Passwortes ebenfalls gesperrt.',
 	'bold_sample' => 'Fetter Text',
 	'bold_tip' => 'Fetter Text',
 	'blockedtitle' => 'Benutzer ist gesperrt',
-	'blockedtext' => 'Dein Benutzername oder Deine IP-Adresse wurde von $1 blockiert.
+	'blockedtext' => 'Dein Benutzername oder deine IP-Adresse wurde von $1 gesperrt.
 
-Folgender Grund wurde angegeben: $2
+* Folgender Grund wurde angegeben: $2
+* Beginn der Sperre: $8
+* Ablaufdatum der Sperre: $6
+* Gesperrt ist: $7
+* Sperrnummer (ID): $5
+* Aktuelle IP-Adresse: $3
 
-Du kannst $1 oder andere [[Project:Administratoren|Administratoren]] kontaktieren, um über die Blockierung zu diskutieren. Bei Problemen kannst Du [[Special:Contact|Kontakt zu Wikia]] aufnehmen.
+Du kannst $1 oder andere [[Special:ListAdmins|Administratoren]] kontaktieren, um über die Sperre zu sprechen. Bei Problemen kannst Du [[Special:Contact|Kontakt zu Fandom]] aufnehmen.
 
-Bitte gib bei entsprechenden Anfragen immer Deine IP-Adresse ($3), den Namen dieses Wikis und das heutige Datum an.',
+Bitte gib bei entsprechenden Anfragen immer den Namen dieses Wikis und die Sperrnummer an.',
 	'blockednoreason' => 'keine Begründung angegeben',
 	'blocked-notice-logextract' => '{{GENDER:$1|Dieser Benutzer|Diese Benutzerin|Dieser Benutzer}} ist zurzeit gesperrt.
 Zur Information folgt ein aktueller Auszug aus dem Benutzersperr-Logbuch:',
@@ -3839,30 +3795,28 @@ Zur Information folgt ein aktueller Auszug aus dem Benutzersperr-Logbuch:',
 	'backend-fail-read' => 'Die Datei $1 konnte nicht gelesen werden.',
 	'backend-fail-create' => 'Die Datei $1 konnte nicht erstellt werden.',
 	'backend-fail-readonly' => 'Das Speicher-Backend „$1“ befindet sich derzeit im Lesemodus. Der angegebene Grund lautet: „$2“',
-	'backend-fail-synced' => 'Die Datei „$1“ befindet sich, innerhalb des internen Speicher-Backends, in einem inkonsistenten Zustand.',
-	'backend-fail-connect' => 'Es konnte keine Verbindung zum Speicher-Backend „$1“ hergestellt werden.',
-	'backend-fail-internal' => 'Im Speicher-Backend „$1“ ist ein unbekannter Fehler aufgetreten.',
-	'backend-fail-contenttype' => 'Der Inhaltstyp, der im Pfad „$1“ zu speichernden Datei, konnte nicht bestimmt werden.',
-	'backend-fail-batchsize' => 'Eine Stapelverarbeitungsdatei, die {{PLURAL:$1|eine Operation|$1 Operationen}} enthält, wurde an das Speicher-Backend gesandt. Die Begrenzung liegt allerdings bei {{PLURAL:$2|einer Operation|$2 Operationen}}.',
+	'backend-fail-synced' => 'Die Datei „$1“ befindet sich im internen Speicher in einem inkonsistenten Zustand.',
+	'backend-fail-connect' => 'Es konnte keine Verbindung zum Speicher „$1“ hergestellt werden.',
+	'backend-fail-internal' => 'Im Speicher „$1“ ist ein unbekannter Fehler aufgetreten.',
+	'backend-fail-contenttype' => 'Der Inhaltstyp der im Pfad „$1“ zu speichernden Datei konnte nicht bestimmt werden.',
+	'backend-fail-batchsize' => 'Eine Stapelverarbeitungsdatei, die {{PLURAL:$1|eine Operation|$1 Operationen}} enthält, wurde an den Speicher gesandt. Die Begrenzung liegt allerdings bei {{PLURAL:$2|einer Operation|$2 Operationen}}.',
 	'brokenredirects' => 'Defekte Weiterleitungen',
-	'brokenredirectstext' => 'Die folgenden Weiterleitungen führen zu einer nicht (mehr) existenten Seite.',
+	'brokenredirectstext' => 'Die folgenden Weiterleitungen führen zu nicht (mehr) existenten Seiten:',
 	'brokenredirects-edit' => 'bearbeiten',
 	'brokenredirects-delete' => 'löschen',
 	'booksources' => 'ISBN-Suche',
 	'booksources-search-legend' => 'Suche nach Bezugsquellen für Bücher',
-	'booksources-go' => 'Suchen',
-	'booksources-text' => 'Dies ist eine Liste mit Links zu Internetseiten, die neue und gebrauchte Bücher verkaufen. Dort kann es auch weitere Informationen über die Bücher geben. {{SITENAME}} ist mit keinem dieser Anbieter geschäftlich verbunden.',
+	'booksources-go' => 'Los',
+	'booksources-text' => 'Dies sind Links zu Internetseiten, die neue und gebrauchte Bücher verkaufen. Dort kann es auch weitere Informationen über die von dir gesuchten Bücher geben:',
 	'booksources-invalid-isbn' => 'Vermutlich ist die ISBN ungültig.
 Bitte prüfe, ob sie korrekt von der Quelle übertragen wurde.',
 	'blanknamespace' => '(Seiten)',
 	'block' => 'Benutzer sperren',
 	'blockip' => 'Benutzer sperren',
 	'blockip-title' => 'Benutzer sperren',
-	'blockip-legend' => 'IP-Adresse/Benutzer sperren',
-	'blockiptext' => 'Mit diesem Formular sperrst du eine IP-Adresse oder einen Benutzernamen, so dass von dort keine Änderungen mehr vorgenommen werden können.
-Dies sollte nur erfolgen, um Vandalismus zu verhindern und in Übereinstimmung mit den [[{{ns:project}}:Leitlinien|Projektleitlinien]] geschehen.
-Bitte gib immer einen Grund für die Blockade an.',
-	'badipaddress' => 'Die IP-Adresse hat ein falsches Format.',
+	'blockip-legend' => 'Benutzer sperren',
+	'blockiptext' => 'Mit diesem Formular sperrst du eine IP-Adresse oder einen Benutzernamen, sodass diese(r) keine Änderungen mehr vornehmen kann. Mehr dazu unter [[w:c:de.community:Hilfe:Benutzersperre|Hilfe:Benutzersperre]].',
+	'badipaddress' => 'Ungültige IP-Adresse',
 	'blockipsuccesssub' => 'Sperre erfolgreich',
 	'blockipsuccesstext' => 'Der Benutzer/die IP-Adresse [[Special:Contributions/$1|$1]] wurde gesperrt.<br />
 Zur Aufhebung der Sperre siehe die [[Special:BlockList|Liste aller aktiven Sperren]].',
@@ -3870,7 +3824,7 @@ Zur Aufhebung der Sperre siehe die [[Special:BlockList|Liste aller aktiven Sperr
 	'blocklist-userblocks' => 'Benutzersperren ausblenden',
 	'blocklist-tempblocks' => 'Befristete Sperren ausblenden',
 	'blocklist-addressblocks' => 'Sperren einzelner IP-Adressen ausblenden',
-	'blocklist-rangeblocks' => 'Bereichssperren ausblenden',
+	'blocklist-rangeblocks' => 'IP-Bereichssperren ausblenden',
 	'blocklist-timestamp' => 'Zeitstempel',
 	'blocklist-target' => 'Ziel',
 	'blocklist-expiry' => 'Sperrdauer bis',
@@ -3880,19 +3834,18 @@ Zur Aufhebung der Sperre siehe die [[Special:BlockList|Liste aller aktiven Sperr
 	'blocklist-nousertalk' => 'darf eigene Diskussionsseite nicht bearbeiten',
 	'blocklink' => 'Sperren',
 	'blocklogpage' => 'Benutzersperr-Logbuch',
-	'blocklog-showlog' => '{{GENDER:$1|Dieser Benutzer|Diese Benutzerin|Dieser Benutzer}} wurde schon früher gesperrt. Es folgt der Eintrag aus dem Benutzersperr-Logbuch:',
-	'blocklog-showsuppresslog' => '{{GENDER:$1|Dieser Benutzer|Diese Benutzerin|Dieser Benutzer}} wurde schon früher gesperrt und versteckt.
+	'blocklog-showlog' => '{{GENDER:$1|Dieser Benutzer|Diese Benutzerin|Dieser Benutzer}} wurde schon einmal gesperrt. Es folgt der Eintrag aus dem Benutzersperr-Logbuch:',
+	'blocklog-showsuppresslog' => '{{GENDER:$1|Dieser Benutzer|Diese Benutzerin|Dieser Benutzer}} wurde schon einmal gesperrt und ausgeblendet.
 Es folgt der Eintrag aus dem Unterdrückungs-Logbuch:',
 	'blocklogentry' => 'sperrte „[[$1]]“ für den Zeitraum: $2 $3',
-	'blocklogtext' => 'Dies ist das Logbuch über Sperrungen und Entsperrungen von Benutzern und IP-Adressen. Die Spezialseite [[Special:Ipblocklist|Liste gesperrter Benutzer/IP-Adressen]] führt alle aktuell gesperrten Benutzer auf, einschließlich automatisch geblockter IP-Adressen.',
-	'block-log-flags-anononly' => 'nur Anonyme',
-	'block-log-flags-nocreate' => 'Erstellung von Benutzerkonten gesperrt',
+	'blocklogtext' => 'Dies ist das Logbuch über Sperrungen und Entsperrungen von Benutzern und IP-Adressen. Die Spezialseite [[Special:Ipblocklist|Liste gesperrter Benutzer/IP-Adressen]] führt alle aktuell gesperrten Benutzer auf, einschließlich automatisch gesperrter IP-Adressen.',
+	'block-log-flags-anononly' => 'nur anonyme Benutzer',
 	'block-log-flags-noautoblock' => 'Autoblock deaktiviert',
 	'block-log-flags-noemail' => 'E-Mail-Versand gesperrt',
 	'block-log-flags-nousertalk' => 'darf eigene Diskussionsseite nicht bearbeiten',
-	'block-log-flags-angry-autoblock' => 'erweiterter Autoblock aktiviert',
-	'block-log-flags-hiddenname' => 'Benutzername versteckt',
-	'blockme' => 'Sperre mich',
+	'block-log-flags-angry-autoblock' => 'erweiterte Autosperre aktiviert',
+	'block-log-flags-hiddenname' => 'Benutzername ausgeblendet',
+	'blockme' => 'Sperr mich',
 	'bydate' => 'nach Datum',
 	'bad_image_list' => 'Format:
 
@@ -3900,16 +3853,37 @@ Nur Zeilen, die mit einem * anfangen, werden ausgewertet. Als erstes nach dem * 
 Darauf folgende Seitenlinks in derselben Zeile definieren Ausnahmen, in deren Kontext die Datei trotzdem erscheinen darf.',
 	'blankpage' => 'Leere Seite',
 	'back' => 'Zurück',
-	'button-createpage' => 'Neue Seite',
-];
+	'button-createpage' => 'Seite hinzufügen',
+	'backlinksubtitle' => '← $1',
+	'brokenredirects-summary' => '',
+	'booksources-summary' => '',
+	'booksources-isbn' => 'ISBN:',
+	'blocklist-summary' => '',
+	'block-log-flags-nocreate' => 'Erstellung von Benutzerkonten gesperrt',
+	'bitrate-bits' => '$1bps',
+	'bitrate-kilobits' => '$1kbps',
+	'bitrate-megabits' => '$1Mbps',
+	'bitrate-gigabits' => '$1Gbps',
+	'bitrate-terabits' => '$1Tbps',
+	'bitrate-petabits' => '$1Pbps',
+	'bitrate-exabits' => '$1Ebps',
+	'bitrate-zetabits' => '$1Zbps',
+	'bitrate-yottabits' => '$1Ybps',
+	'blog-avatar-defaults' => 'Avatar.jpg
+Avatar2.jpg
+Avatar3.jpg
+Avatar4.jpg
+Avatar5.jpg
+Avatar6.jpg',
+);
 
-$messages['de-formal'] = [
+$messages['de-formal'] = array(
 	'badaccess-group0' => 'Sie haben nicht die erforderliche Berechtigung für diese Aktion.',
 	'blocked-mailpassword' => 'Die von Ihnen verwendete IP-Adresse ist für das Ändern von Seiten gesperrt. Um einen Missbrauch zu verhindern, wurde die Möglichkeit zur Anforderung eines neuen Passwortes ebenfalls gesperrt.',
-	'blockedtext' => '\'\'\'Ihr Benutzername oder Ihre IP-Adresse wurde gesperrt.\'\'\'
+	'blockedtext' => "'''Ihr Benutzername oder Ihre IP-Adresse wurde gesperrt.'''
 
 Die Sperrung wurde von $1 durchgeführt.
-Als Grund wurde \'\'$2\'\' angegeben.
+Als Grund wurde ''$2'' angegeben.
 
 * Beginn der Sperre: $8
 * Ende der Sperre: $6
@@ -3918,16 +3892,16 @@ Als Grund wurde \'\'$2\'\' angegeben.
 Sie könnten $1 oder einen der anderen [[{{MediaWiki:Grouppage-sysop}}|Administratoren]] kontaktieren, um über die Sperre zu diskutieren.
 Sie können die „E-Mail an diesen Benutzer“-Funktion nicht nutzen, solange keine gültige E-Mail-Adresse in Ihren [[Special:Preferences|Benutzerkonto-Einstellungen]] eingetragen ist, oder diese Funktion für Sie gesperrt wurde.
 Ihre aktuelle IP-Adresse ist $3, und die Sperr-ID ist $5.
-Bitte fügen Sie alle Informationen jeder Anfrage hinzu, die Sie stellen.',
-	'blockededitsource' => 'Der Quelltext \'\'\'Ihrer Änderungen\'\'\' an \'\'\'$1\'\'\':',
+Bitte fügen Sie alle Informationen jeder Anfrage hinzu, die Sie stellen.",
+	'blockededitsource' => "Der Quelltext '''Ihrer Änderungen''' an '''$1''':",
 	'booksources-invalid-isbn' => 'Vermutlich ist die ISBN ungültig.
 Bitte prüfen Sie, ob sie korrekt von der Quelle übertragen wurde.',
 	'blockiptext' => 'Mit diesem Formular sperren Sie eine IP-Adresse oder einen Benutzernamen, so dass von dort keine Änderungen mehr vorgenommen werden können.
 Dies sollte nur erfolgen, um Vandalismus zu verhindern und in Übereinstimmung mit den [[{{MediaWiki:Policy-url}}|Richtlinien]].
 Bitte geben Sie den Grund für die Sperre an.',
-];
+);
 
-$messages['de-weigsbrag'] = [
+$messages['de-weigsbrag'] = array(
 	'bugreports' => 'Gondagd',
 	'bugreportspage' => 'Project:Gondagd',
 	'badaccess' => 'Noggs ausreigendes Regdes',
@@ -3966,8 +3940,8 @@ Gön $1 od eines won anderes [[{{MediaWiki:Grouppage-sysop}}|Adminisdradores]] g
 *Schber-ID: #$5
 </div>',
 	'blockednoreason' => 'haddar gar noggs Begründ angeb',
-	'blockedoriginalsource' => 'Dose Gueldegsd won dose \'\'\'$1\'\'\' da anseig:',
-	'blockededitsource' => 'Dose Gueldegsd won \'\'\'Deines Ändes\'\'\' an dose \'\'\'$1\'\'\':',
+	'blockedoriginalsource' => "Dose Gueldegsd won dose '''$1''' da anseig:",
+	'blockededitsource' => "Dose Gueldegsd won '''Deines Ändes''' an dose '''$1''':",
 	'boteditletter' => 'B',
 	'badfilename' => 'Dose Dadeinam haddar änd in „$1“.',
 	'brokenredirects' => 'Gabuddes Weidleides',
@@ -3997,7 +3971,6 @@ Wür Auwheb won Schber seddar dose [[{{ns:special}}:Ipblocklist|Lisd won ales ag
 	'blocklogentry' => 'haddar schber dose „[[$1]]“ wür dose Dseidraum: $2 $3',
 	'blocklogtext' => 'Dose dose Logbug sei üb Schberes und Endschberes won Benudses und IB-Adreses. Audomadisches geschberdes IB-Adreses dose noggs erwas. Seddar dose [[{{ns:special}}:Ipblocklist|{{int:ipblocklist}}]] wür ales agdiwes Schberes.',
 	'block-log-flags-anononly' => 'nur Anonymes',
-	'block-log-flags-nocreate' => 'Erschdel won Benudsesgondes geschberdes',
 	'block-log-flags-noautoblock' => 'Audoblogg deagdiwärdes',
 	'block-log-flags-noemail' => 'I-Mehl-Wersand geschberdes',
 	'blockme' => 'Schber mig',
@@ -4007,9 +3980,9 @@ Wür Auwheb won Schber seddar dose [[{{ns:special}}:Ipblocklist|Lisd won ales ag
 Nur dose Dseiles auswerd, wo mid eines * anwäng. Als ersderes nag dose * musdar eines Werweis auw eines noggserwünschdes Bild schdeddar.
 Seideswerweises wo auw dose in gleiges wolg dewinär Ausnahmes, in doses Gondegsd dose Bild drodsd dörw gom.',
 	'blankpage' => 'Leeres Seid',
-];
+);
 
-$messages['diq'] = [
+$messages['diq'] = array(
 	'badaccess' => 'Xeta mısadey',
 	'badaccess-group0' => 'Heqa şıma çıniya, karo ke şıma waşt, bıkerê.',
 	'badaccess-groups' => 'No fealiyetê şımawo waşte tenya karberanê {{PLURAL:$2|grubi|gruban ra yewi}} rê akerdeyo: $1.',
@@ -4042,7 +4015,7 @@ Etiketê HTMLî kontrol bike.',
 	'badsiglength' => 'İmzayê şıma zaf dergo.
 $1 gani bınê no {{PLURAL:$1|karakter|karakter}}de bıbo.',
 	'boteditletter' => 'b',
-	'badfilename' => 'Nameyanê dosyayî \'\'$1\'\' rê vurneyî biye.',
+	'badfilename' => "Nameyanê dosyayî ''$1'' rê vurneyî biye.",
 	'brokenredirects' => 'Redireksiyonî ke hin nixebitiyeno',
 	'brokenredirectstext' => 'Redireksiyonê ey ki pelanê hama çiniyeno ra link dano:',
 	'brokenredirects-edit' => 'bıvurne',
@@ -4074,7 +4047,6 @@ $1 gani bınê no {{PLURAL:$1|karakter|karakter}}de bıbo.',
 Adresê IPyê ke otomatikmen kılit biyê lista de çıniyê.
 Seba lista karberanê ke heta nıka kılit biyê [[Special:BlockList|lista kılitkerdışê IPy]] bıvênên.',
 	'block-log-flags-anononly' => 'teyna karberê anonîmî',
-	'block-log-flags-nocreate' => 'akerdışê hesabi qapan bi',
 	'block-log-flags-noautoblock' => 'otoblok wedariyo',
 	'block-log-flags-noemail' => 'e-mail blok biyo',
 	'block-log-flags-nousertalk' => 'ti nieşkena pela minaqeşe xo bivurne',
@@ -4088,9 +4060,9 @@ Tenya çiyo ke beno lista (rezê ke be * dest kenê cı) çıman ver de vêniyen
 Yew rêze de gırêyo sıfteyın gani gırêyo de dosya xırabıne bo.
 Na rêze de her gırêyo bin zey istisna vêniyeno, yanê pelê ke dosya beno ke sero rêzbiyaye asena.',
 	'blankpage' => 'Pela venge',
-];
+);
 
-$messages['dsb'] = [
+$messages['dsb'] = array(
 	'broken-file-category' => 'Boki z njepłaśiwymi datajowymi wótkazami',
 	'badaccess' => 'Njamaš trěbnu dowólnosć.',
 	'badaccess-group0' => 'Njamaš trěbnu dowólnosć za toś tu akciju.',
@@ -4103,19 +4075,19 @@ $messages['dsb'] = [
 	'bold_sample' => 'Tucny tekst',
 	'bold_tip' => 'Tucny tekst',
 	'blockedtitle' => 'Wužywaŕ jo se blokěrował',
-	'blockedtext' => '\'\'\'Twójo wužywarske mě abo IP-adresa stej se blokěrowałej.\'\'\'
+	'blockedtext' => "'''Twójo wužywarske mě abo IP-adresa stej se blokěrowałej.'''
 
 Blokěrowanje pśez $1.
-Pódana pśicyna: \'\'$2\'\'.
+Pódana pśicyna: ''$2''.
 
 * Zachopjeńk blokěrowanja: $8
 * Kóńc blokěrowanja: $6
 * Blokěrowany wužywaŕ: $7
 
 Móžoš $1 abo drugego [[{{MediaWiki:Grouppage-sysop}}|administratora]] kontaktěrowaś, aby wó blokěrowanju diskutěrował.
-Njamóžoš funkciju \'Toś tomu wužywarjeju e-mail pósłaś\' wužywaś, snaźkuli płaśiwa e-mailowa adresa jo pódana w swójich kontowych [[Special:Preferences|nastajenjach]] a njeblokěrujos se ju wužywaś.
+Njamóžoš funkciju 'Toś tomu wužywarjeju e-mail pósłaś' wužywaś, snaźkuli płaśiwa e-mailowa adresa jo pódana w swójich kontowych [[Special:Preferences|nastajenjach]] a njeblokěrujos se ju wužywaś.
 Twója IP-adresa jo $3, a ID blokěrowanja jo #$5.
-Pšosym zapśimjej wše górjejcne drobonosći do napšašowanjo, kótarež cyniš.',
+Pšosym zapśimjej wše górjejcne drobonosći do napšašowanjo, kótarež cyniš.",
 	'blockednoreason' => 'Pśicyna njejo dana',
 	'blocked-notice-logextract' => 'Toś ten wužywaŕ jo tuchylu blokěrowany.
 Nejnowšy zapisk blokěrowańskego protokola pódawa se dołojce ako referenca:',
@@ -4185,7 +4157,6 @@ Glědaj do [[Special:BlockList|lisćiny blokěrowanjow]], aby blokěrowanja pśe
 	'blocklogentry' => '[[$1]] blokěrujo se na $2 $3',
 	'blocklogtext' => 'To jo protokol blokěrowanja a wótblokěrowanja wužywarjow. Awtomatiski blokěrowane IP-adrese se njenalistuju. Glědaj [[Special:BlockList|lisćinu blokěrowanjow]] za lisćinu tuchylnych wugnanjow a blokěrowanjow.',
 	'block-log-flags-anononly' => 'jano anonymne',
-	'block-log-flags-nocreate' => 'stwórjenje konta jo se znjemóžniło',
 	'block-log-flags-noautoblock' => 'awtomatiske blokěrowanje jo deaktiwěrowane',
 	'block-log-flags-noemail' => 'e-mailowanje jo blokěrowane',
 	'block-log-flags-nousertalk' => 'njejo móžno swójski diskusijny bok wobźěłaś',
@@ -4198,9 +4169,9 @@ Glědaj do [[Special:BlockList|lisćiny blokěrowanjow]], aby blokěrowanja pśe
 Jano smužki, kótarež zachopiju z *, se wugódnośiju. Prědny wótkaz na smužce musy wótkaz na njekśětu dataju byś.
 Slědujuce wótkaze w tej samej smužce se za wuwześa naglědaju, w kótarychž móžo dataja weto se pokazaś.',
 	'blankpage' => 'Prozny bok',
-];
+);
 
-$messages['dtp'] = [
+$messages['dtp'] = array(
 	'badaccess' => 'Nokosilap papasaga',
 	'badaccess-group0' => 'Pogoduhan ko do papapanau di pingkarajaon it pinokianu nu.',
 	'badaccess-groups' => 'Pingkarajaon di pinokianu nu pinatantu montok momomoguno do {{PLURAL:$2|kotinimungan|iso mantad kotinimungan}}: $1.',
@@ -4213,19 +4184,19 @@ Haro kaanto sokukuri do iso pimato it awu milo gunoon id pongkotuluhon.',
 	'bold_sample' => 'Polombono tik',
 	'bold_tip' => 'Polombono tik',
 	'blockedtitle' => 'Nantaban momoguno',
-	'blockedtext' => '\'\'\'Ngaran momogunonu toi kinoyonon IP nantaban.\'\'\'
+	'blockedtext' => "'''Ngaran momogunonu toi kinoyonon IP nantaban.'''
 
 Nantaban di $1.
-Sabab pinatahak \'\'$2\'\'.
+Sabab pinatahak ''$2''.
 
 * Tinimpuun nantaban: $8
 * Olimpupusan nantaban: $6
 * Koinggisaman tantob: $7
 
 Milo ko do tumurubung $1 toi [[{{MediaWiki:Grouppage-sysop}}|mandur]] suai do miboros kokomoi diti tantob.
-Awu ko milo do mongoguno kakamot \'ponurat-i montok momoguno diti\' nung ingaa kinoyonon surat-i pointantu id [[Special:Preferences|takaunnu]] om awu ko nantaban do momoguno dilo.
+Awu ko milo do mongoguno kakamot 'ponurat-i montok momoguno diti' nung ingaa kinoyonon surat-i pointantu id [[Special:Preferences|takaunnu]] om awu ko nantaban do momoguno dilo.
 Kinoyonon IPnu nopo nga $3, on ID nantaban nopo nga #$5.
-Alansan do potonudon oinsanan kointalangan id sawat montok nunu-nunu ponguhatannu.',
+Alansan do potonudon oinsanan kointalangan id sawat montok nunu-nunu ponguhatannu.",
 	'blockednoreason' => 'ingaa pinatahak sabab',
 	'blocked-notice-logextract' => 'Maso do nantaban momomoguno diti.
 Riporon id siriba kokomoi nantaban di tohuri no:',
@@ -4238,51 +4209,50 @@ Riporon id siriba kokomoi nantaban di tohuri no:',
 	'blocklink' => 'antabai',
 	'blocklogpage' => 'Antabai log',
 	'blocklogentry' => 'naantaban [[$1]] gisom $2 $3',
-	'block-log-flags-nocreate' => 'awu milo momonsoi akaun',
 	'bad_image_list' => 'Kouludan nopo nga miagal dilo siriba:
 
 Iri ahal poinlis (baris di tumimpuun *) maan pitimbango.
 Toput kumoiso id baris nokomoi nopo nga toput kumaa id pail naraag.
 Awu nokohompit iri nonggo-nonggo toput suai id baris dilo, miagal do kiharo ilo pail.',
-];
+);
 
-$messages['dv'] = [
+$messages['dv'] = array(
 	'badaccess' => 'ހުއްދައިގެ ކުށެއް',
 	'badtitle' => 'ނުރަނގަޅު ސުރުހީއެއް',
 	'badretype' => 'ތިޔަ ލިޔުއްވި ދެ ސިއްރުބަސް އެއް ސިއްރު ބަހާއި އަނެއް ސިއްރު ބަހާއި ދިމަލެއް ނުވޭ. އަދި ސިއްރުބަސް ރަނގަޅަށް ޖައްސަވާށެވެ!',
 	'bold_sample' => 'ބޯ އިބާރާތް',
 	'bold_tip' => 'ބޯ އިބާރާތް',
 	'blockedtitle' => 'މެންބަރާމެދު ވަނީ ފިޔަވަޅުއެޅިފައި',
-	'blockedtext' => 'ތިޔަ މެމްބަރު، ނުވަތަ ތިޔަ ބޭފުޅާގެ އައި.ޕީ އެޑްރެސް ވަނީ ބްލޮކް ކުރެވިފައެވ
+	'blockedtext' => "ތިޔަ މެމްބަރު، ނުވަތަ ތިޔަ ބޭފުޅާގެ އައި.ޕީ އެޑްރެސް ވަނީ ބްލޮކް ކުރެވިފައެވ
 
 މި އައި.ޕީ އެޑްރެސް ބްލޮކް ކުރީ $1 އެވެ.
 
-ބްލޮކް ކުރުމުގެ ސަބަބަކަށް ދެވިފައިވަނީ \'\'$2\'\'.
+ބްލޮކް ކުރުމުގެ ސަބަބަކަށް ދެވިފައިވަނީ ''$2''.
 
 މި ބްލޮކްގެ މުއްދަތު ހަމަވާނީ: $6<br />
 ބްލޮކް ކުރެވިފައިވަނީ: $7
 
 މި ބްލޮކް އާއި މެދު ޚިޔާލު ފާޅުކުރައްވާނަމަ  $1 އާއި ނުވަތަ އެހެން [[{{MediaWiki:Grouppage-sysop}}|އެޑްމިނިސްޓްރޭޓަރަކާއި]] ވާހަކަ ދައްކަވާށެވެ.
-އެހެންނަމަވެސް ތިބޭފުޅާގެ [[Special:Preferences|ތަރުޖީހު]] ގައި ރަނގަޅު އީމޭލް އެޑްރެހެއް ކަނޑައަޅުއްވާފައި ނުވާ ނަމަ ތިބޭފުޅާ އަކަށް \'މެމްބަރަށް އީމޭލް ފޮނުއްވަވާ\' ގެ ޚިދުމަތެއް ބޭނުން ނުކުރެއްވޭނެއެވެ.
+އެހެންނަމަވެސް ތިބޭފުޅާގެ [[Special:Preferences|ތަރުޖީހު]] ގައި ރަނގަޅު އީމޭލް އެޑްރެހެއް ކަނޑައަޅުއްވާފައި ނުވާ ނަމަ ތިބޭފުޅާ އަކަށް 'މެމްބަރަށް އީމޭލް ފޮނުއްވަވާ' ގެ ޚިދުމަތެއް ބޭނުން ނުކުރެއްވޭނެއެވެ.
 
 ތިބޭފުޅޭގެ އައި.ޕީ އެޑް ރެސް އަކީ  $3 އެވެ.
-އަދި ބްލޮކް އައި.ޑީ އަކީ #$5 އެވެ.',
+އަދި ބްލޮކް އައި.ޑީ އަކީ #$5 އެވެ.",
 	'brokenredirects' => 'އޮޅިފައިވާ މިސްރާބުތައް',
 	'booksources' => 'ފޮތްތަކުގެ މަސްދަރުތައް',
 	'blanknamespace' => '(މައި)',
 	'blockip' => 'މެންބަރާ މެދު ފިޔަވަޅުއަޅުއްވާ',
 	'badipaddress' => 'ނުރަނގަޅު އައި.ޕީ އެޑްރެހެއް',
 	'blocklink' => 'ފިޔަވަޅުއަޅުއްވާ',
-];
+);
 
-$messages['dz'] = [
+$messages['dz'] = array(
 	'badtitle' => 'མགོ་མིང་བྱང་ཉེས།',
 	'badtitletext' => 'ཞུ་བ་འབད་ཡོད་པའི་ཤོག་ལེབ་མགོ་མིང་འདི་ ནུས་མེད་ སྟོངམ་ ཡང་ན་ བདེན་མེད་འབྲེལ་མཐུད་ཅན་གྱི་ནང་ཁུལ་-སྐད་ཡིག་ ཡངན་ ནང་ཁུལ་-ཝི་ཀི་མགོ་མིང་ཨིན་པས། དེ་ནང་ མགོ་མིང་ནང་ལུ་ལག་ལེན་འཐབ་མ་བཏུབ་པའི་ཡིག་འབྲུ་གཅིག་ ཡང་ན་ ལེ་ཤ་ཡོདཔ་འོང་།',
 	'bold_sample' => 'ཚིག་ཡིག་རྒྱགས་པ།',
 	'bold_tip' => 'ཚིག་ཡིག་རྒྱགས་པ།',
-	'blockedtext' => '\'\'\'ཁྱོད་ཀྱི་ ལག་ལེན་པའི་མིང་ ཡང་ན་ ཨའི་པི་ཁ་བྱང་འདི་ བཀག་དམ་འབད་ཡོདཔ།\'\'\'
+	'blockedtext' => "'''ཁྱོད་ཀྱི་ ལག་ལེན་པའི་མིང་ ཡང་ན་ ཨའི་པི་ཁ་བྱང་འདི་ བཀག་དམ་འབད་ཡོདཔ།'''
 
-དེ་ཡང་ $1 གིས་ བཀག་ཡོདཔ། བཀག་དགོ་པའི་རྒྱུ་མཚན་འདི་  \'\'$2\'\'ཨིན་པས།
+དེ་ཡང་ $1 གིས་ བཀག་ཡོདཔ། བཀག་དགོ་པའི་རྒྱུ་མཚན་འདི་  ''$2''ཨིན་པས།
 
 * འགག་བསུབ་འགོ་བཙུགས་: $8
 * འགག་བསུབ་དུས་ཡོལ་: $6
@@ -4290,8 +4260,8 @@ $messages['dz'] = [
 
 ཁྱོད་ཀྱིས་ འགག་བསུབ་ཀྱི་སྐོར་ལས་ གྲོས་བསྡུར་འབད་ནི་གི་དོན་ལས་ $1 དང་ཡང་ན་ གཞན་  [[{{MediaWiki:Grouppage-sysop}}|administrator]] དང་འབྲེལ་བ་འཐབ།
 
-ཁྱོད་ཀྱིས་ ཁྱོད་རའི་ [[Special:Preferences|account preferences]] ནང་ ནུས་ལྡན་གློག་འཕྲིན་ཁ་བྱང་ཅིག་ གསལ་བཀོད་མ་འབད་ཚུན་དང་ དེ་ལག་ལེན་འཐབ་ནི་ལས་འགག་བསུབ་མ་འབད་བ་ཅིན་རྐྱངམ་ཅིག་ \'ལག་ལེན་པ་ལུ་ གློག་འཕྲིན་གཏང་\' གི་ཁྱད་ཆོས་འདི་ ལག་ལེན་འཐབ་མི་བཏུབ་ཨིན།
-ཁྱོད་ཀྱི་ད་ལྟོའི་ཨའི་པི་ཁ་བྱང་འདི་ $3, དང་ འགག་བསུབ་ཨའི་ཌི་འདི་ #$5 ཨིན། དེ་གཉིས་ ཡང་ན་ ག་ཨིན་རུང་ཅིག་ འདྲི་དཔྱད་གང་རུང་གི་གྲངས་སུ་བཙུགས་གནང་།',
+ཁྱོད་ཀྱིས་ ཁྱོད་རའི་ [[Special:Preferences|account preferences]] ནང་ ནུས་ལྡན་གློག་འཕྲིན་ཁ་བྱང་ཅིག་ གསལ་བཀོད་མ་འབད་ཚུན་དང་ དེ་ལག་ལེན་འཐབ་ནི་ལས་འགག་བསུབ་མ་འབད་བ་ཅིན་རྐྱངམ་ཅིག་ 'ལག་ལེན་པ་ལུ་ གློག་འཕྲིན་གཏང་' གི་ཁྱད་ཆོས་འདི་ ལག་ལེན་འཐབ་མི་བཏུབ་ཨིན།
+ཁྱོད་ཀྱི་ད་ལྟོའི་ཨའི་པི་ཁ་བྱང་འདི་ $3, དང་ འགག་བསུབ་ཨའི་ཌི་འདི་ #$5 ཨིན། དེ་གཉིས་ ཡང་ན་ ག་ཨིན་རུང་ཅིག་ འདྲི་དཔྱད་གང་རུང་གི་གྲངས་སུ་བཙུགས་གནང་།",
 	'boteditletter' => 'b',
 	'brokenredirects' => 'མེདཔ་འགྱོ་ཡོད་པའི་སླར་ལོག',
 	'booksources' => 'ཀི་དེབ་འབྱུང་ས།',
@@ -4305,9 +4275,9 @@ $messages['dz'] = [
 (གྲལ་ཐིག་ * གིས་འགོ་བཙུགས་པའི) ཐོ་ཡིག་དངོས་གྲངས་ཚུ་རྐྱངམ་ཅིག་ བརྩི་འཇོག་ཡོད།
 གྲལ་ཐིག་གུ་གི་འབྲེལ་ལམ་དང་པ་འདི་ ཡིག་སྣོད་བྱང་ཉེས་ཅིག་ལུ་ འབྲེལ་མཐུད་ཡོད་དགོ།
 གྲལ་ཐིག་ཅོག་འཐད་མི་གུ་ལུ་ ཤུལ་མའི་འབྲེལ་ལམ་ག་ཅི་ཨིན་རུང་ དེའི་གྲངས་སུ་མི་རྩིས་ དེ་ཡང་ གྱལ་རིམ་ནང་ཡོད་པའི་ཡིག་སྣོད་ཤོགལེབ་ཚུ།',
-];
+);
 
-$messages['ee'] = [
+$messages['ee'] = array(
 	'badaccess' => 'Mɔɖeɖe vodada',
 	'badaccess-group0' => 'Se meɖe mɔ be nawɔ nusi wòle babiam be yeawɔ o.',
 	'badarticleerror' => 'Wòmateŋu awɔ nusia le axa sia dzi o.',
@@ -4322,10 +4292,9 @@ $messages['ee'] = [
 	'blockipsuccesssub' => 'Mɔxexea dze edzi',
 	'blocklink' => 'xemɔ',
 	'blocklogentry' => 'xemɔ na [[$1]] vaseɖe $2 megbe $3',
-	'block-log-flags-nocreate' => 'wo xemɔ na ŋkɔ ŋɔŋlɔ',
-];
+);
 
-$messages['el'] = [
+$messages['el'] = array(
 	'broken-file-category' => 'Σελίδες με κατεστραμμένες συνδέσεις',
 	'badaccess' => 'Ακατάλληλη άδεια',
 	'badaccess-group0' => 'Δεν επιτρέπεται να εκτελέσετε την ενέργεια που ζητήσατε.',
@@ -4339,10 +4308,10 @@ $messages['el'] = [
 	'bold_sample' => 'Έντονο κείμενο',
 	'bold_tip' => 'Έντονο κείμενο',
 	'blockedtitle' => 'Ο χρήστης έχει υποστεί φραγή.',
-	'blockedtext' => '\'\'\'Το όνομα χρήστη σας ή η διεύθυνση IP σας έχει υποστεί φραγή.\'\'\'
+	'blockedtext' => "'''Το όνομα χρήστη σας ή η διεύθυνση IP σας έχει υποστεί φραγή.'''
 
 Η φραγή έγινε από τον/την $1.
-Η αιτιολογία που δόθηκε είναι: \'\'$2\'\'.
+Η αιτιολογία που δόθηκε είναι: ''$2''.
 
 * Έναρξη φραγής: $8
 * Λήξη φραγής: $6
@@ -4351,7 +4320,7 @@ $messages['el'] = [
 Μπορείτε να απευθυνθείτε στον/στην $1 ή σε κάποιον άλλον [[{{MediaWiki:Grouppage-sysop}}|διαχειριστή]] για να συζητήσετε τη φραγή.
 Δεν μπορείτε να χρησιμοποιήσετε την δυνατότητα «αποστολή e-mail σε αυτό το χρήστη» εκτός αν μια έγκυρη ηλεκτρονική διεύθυνση έχει οριστεί στις [[Special:Preferences|προτιμήσεις χρήστη]] σας.
 Η τρέχουσα διεύθυνση IP σας είναι $3, και ο αριθμός αναγνώρισης της φραγής είναι #$5.
-Παρακαλούμε περιλαμβάνετε οποιοδήποτε ή και τα δύο από αυτά σε οποιαδήποτε ερωτήματα σας.',
+Παρακαλούμε περιλαμβάνετε οποιοδήποτε ή και τα δύο από αυτά σε οποιαδήποτε ερωτήματα σας.",
 	'blockednoreason' => 'δεν δόθηκε λόγος',
 	'blocked-notice-logextract' => 'Επί του παρόντος, αυτός ο χρήστης έχει υποστεί φραγή. Παρακάτω παρέχεται για αναφορά η πιο πρόσφατη καταχώρηση του αρχείου φραγών.',
 	'badsig' => 'Άκυρη υπογραφή raw: ελέγξτε τις ετικέτες HTML.',
@@ -4416,7 +4385,6 @@ $messages['el'] = [
 Δεν συμπεριλαμβάνονται οι διευθύνσεις IP που υπέστησαν αυτόματα φραγή.
 Δείτε τον [[Special:BlockList|κατάλογο φραγμένων διευθύνσεων IP]] για τη λίστα των τρεχόντων ενεργών αποκλεισμών και φραγών.',
 	'block-log-flags-anononly' => 'μόνο ανώνυμοι χρήστες',
-	'block-log-flags-nocreate' => 'δημιουργία λογαριασμού απενεργοποιημένη',
 	'block-log-flags-noautoblock' => 'αυτόματη φραγή απενεργοποιημένη',
 	'block-log-flags-noemail' => 'Το ηλεκτρονικό ταχυδρομείο έχει φραγεί',
 	'block-log-flags-nousertalk' => 'δεν μπορεί να επεξεργαστεί τη σελίδα συζήτησής του',
@@ -4429,26 +4397,26 @@ $messages['el'] = [
 Μόνο τα αντικείμενα λίστας (γραμμές που ξεκινάνε με *) λαμβάνονται υπόψη. Ο πρώτος σύνδεσμος σε μια γραμμή πρέπει να είναι σύνδεσμος σε ένα κακό αρχείο.
 Οποιοιδήποτε σύνδεσμοι ακολουθούν στην ίδια γραμμή θεωρούνται εξαιρέσεις, δηλαδή σελίδες όπου η εικόνα μπορεί να συναντάται σε σύνδεση.',
 	'blankpage' => 'Κενή σελίδα',
-];
+);
 
-$messages['eml'] = [
-	'blocked-mailpassword' => 'Al tô indirézz IP l\'an pôl più feèr di cambiamèint, e l\'en brisa abilitê par user la funziòun ed recópper ed password par evitèr di abûs.',
+$messages['eml'] = array(
+	'blocked-mailpassword' => "Al tô indirézz IP l'an pôl più feèr di cambiamèint, e l'en brisa abilitê par user la funziòun ed recópper ed password par evitèr di abûs.",
 	'blocklink' => 'blòchel',
-];
+);
 
-$messages['en-gb'] = [
+$messages['en-gb'] = array(
 	'blockiptext' => 'Use the form below to block write access from a specific IP address or username.
 This should be done only to prevent vandalism, and in accordance with [[{{MediaWiki:Policy-url}}|policy]].
 Fill in a specific reason below (for example, citing particular pages that were vandalised).',
-];
+);
 
-$messages['en-rtl'] = [
+$messages['en-rtl'] = array(
 	'blockiptext' => 'Use the form below to block write access from a specific IP address or username.
 This should be done only to prevent vandalism, and in accordance with [[{{MediaWiki:Policy-url}}|policy]].
 Fill in a specific reason below (for example, citing particular pages that were vandalised).',
-];
+);
 
-$messages['eo'] = [
+$messages['eo'] = array(
 	'broken-file-category' => 'Paĝoj kun eraraj dosierligiloj',
 	'badaccess' => 'Vi ne havas sufiĉe da redaktorajtoj por tiu paĝo.',
 	'badaccess-group0' => 'Vi ne rajtas plenumi la agon, kiun vi petis.',
@@ -4463,19 +4431,19 @@ ne rajtas uzi la pasvorto-rekovran funkcion por malebligi misuzon.',
 	'bold_sample' => 'Grasa teksto',
 	'bold_tip' => 'Grasa teksto',
 	'blockedtitle' => 'La uzanto estas forbarita.',
-	'blockedtext' => '\'\'\'Via konto aŭ IP-adreso estis forbarita\'\'\'
+	'blockedtext' => "'''Via konto aŭ IP-adreso estis forbarita'''
 
 La forbaro estis farita de $1.
-La skribita kialo estas \'\'$2\'\'.
+La skribita kialo estas ''$2''.
 
 * Komenco de forbaro: $8
 * Findato de forbarado: $6
 * Intencita forbarito: $7
 
 Vi rajtas kontakti $1 aŭ alian [[{{MediaWiki:Grouppage-sysop}}|administranton]] por pridiskuti la forbaradon.
-Vi ne povas uzi la \'retpoŝtan\' funkcion, escepte se vi indikis validan retpoŝtan adreson en viaj [[Special:Preferences|kontaj agordoj]] kaj vi ne estas blokita uzi ĝin.
+Vi ne povas uzi la 'retpoŝtan' funkcion, escepte se vi indikis validan retpoŝtan adreson en viaj [[Special:Preferences|kontaj agordoj]] kaj vi ne estas blokita uzi ĝin.
 Via IP-adreso estas $3 kaj la ID de la forbarado ests $5.
-Bonvolu mencii jenajn indikojn en viaj ĉi-temaj kontaktoj.',
+Bonvolu mencii jenajn indikojn en viaj ĉi-temaj kontaktoj.",
 	'blockednoreason' => 'nenia kialo donata',
 	'blocked-notice-logextract' => 'Ĉi tiu uzanto estas ĉi-momente forbarita.
 La lasta protokolero estas jene montrata por via referenco:',
@@ -4517,7 +4485,7 @@ komprenata kiel rekomendo aŭ reklamo.',
 	'blockip' => 'Forbari uzanton/IP-adreson',
 	'blockip-title' => 'Forbari uzanton',
 	'blockip-legend' => 'Forbari uzanton',
-	'blockiptext' => 'Per jena formularo vi povas forpreni de ajna nomo aŭ IP-adreso la rajton skribi en la vikio. Oni faru tion \'\'nur\'\' por eviti vandalismon, kaj sekvante la [[{{MediaWiki:Policy-url}}|regulojn pri forbarado]]. Klarigu la precizan kialon malsupre (ekzemple, citu paĝojn, kiuj estis vandaligitaj).',
+	'blockiptext' => "Per jena formularo vi povas forpreni de ajna nomo aŭ IP-adreso la rajton skribi en la vikio. Oni faru tion ''nur'' por eviti vandalismon, kaj sekvante la [[{{MediaWiki:Policy-url}}|regulojn pri forbarado]]. Klarigu la precizan kialon malsupre (ekzemple, citu paĝojn, kiuj estis vandaligitaj).",
 	'badipaddress' => 'Neniu uzanto, aŭ la IP-adreso estas misformita.',
 	'blockipsuccesssub' => 'Oni sukcese forbaris la adreson/nomon.',
 	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] estas forbarita. <br />
@@ -4541,7 +4509,6 @@ Vidu la [[Special:BlockList|liston de IP-forbaroj]] por kontroli.',
 	'blocklogentry' => 'forbaris [[$1]] por daŭro de $2 $3',
 	'blocklogtext' => 'Ĉi tio estas protokolo pri forbaraj kaj malforbaraj agoj. Aŭtomate forbaritaj IP adresoj ne estas listigitaj. Vidu la [[Special:BlockList|IP forbarliston]] por ĉi-momente fobaritaj uzantoj kaj IP-adresoj.',
 	'block-log-flags-anononly' => 'nur anonimaj uzantoj',
-	'block-log-flags-nocreate' => 'kreado de kontoj malebligita',
 	'block-log-flags-noautoblock' => 'aŭtomata forbaro malŝaltita',
 	'block-log-flags-noemail' => 'retpoŝto blokita',
 	'block-log-flags-nousertalk' => 'ne povas redakti propran diskuto-paĝon',
@@ -4555,12 +4522,12 @@ Nur listeroj (kun linio komence de steleto *) estas konsiderata.
 La komenca ligilo de linio devas esti ligilo al malbona bildo.
 Sekvaj ligilo en la sama linio estas konsiderata kiel esceptoj (paĝoj kiel la bildo rajtas esti montrata.)',
 	'blankpage' => 'Malplena paĝo',
-];
+);
 
-$messages['es'] = [
+$messages['es'] = array(
 	'broken-file-category' => 'Páginas con enlaces rotos a archivos',
 	'badaccess' => 'Error de permisos',
-	'badaccess-group0' => 'No tienes autorización para ejecutar la acción que ha solicitado.',
+	'badaccess-group0' => 'No tienes autorización para ejecutar la acción que has solicitado.',
 	'badaccess-groups' => 'La acción que has solicitado está restringida a los usuarios {{PLURAL:$2|del grupo|de uno de estos $2 grupos}}: $1.',
 	'badarticleerror' => 'Esta acción no se puede llevar a cabo en esta página.',
 	'badtitle' => 'Título incorrecto',
@@ -4571,44 +4538,47 @@ Puede que contenga uno o más caracteres que no se pueden usar en los títulos.'
 	'bold_sample' => 'Texto en negrita',
 	'bold_tip' => 'Texto en negrita',
 	'blockedtitle' => 'El usuario está bloqueado',
-	'blockedtext' => '\'\'\'Tu nombre de usuario o dirección IP ha sido bloqueada.\'\'\'
+	'blockedtext' => '<big>\'\'\'Tu nombre de usuario o dirección IP ha sido bloqueada.\'\'\'</big>
 
+<div id="mw-message-blockedtext" style="border:1px solid black; padding-left:0.5em;">
 El bloqueo fue hecho por $1.
-La razón dada es \'\'$2\'\'.
 
+*El motivo dado fue \'\'$2\'\'.
 * Inicio del bloqueo: $8
 * Caducidad del bloqueo: $6
 * Bloqueo destinado a: $7
+* ID de bloqueo: #$5
+* Dirección IP actual: $3
+</div>
 
-Puedes contactar con $1 u otro [[{{MediaWiki:Grouppage-sysop}}|administrador]] para discutir el bloqueo.
-No puedes utilizar la función «enviar correo electrónico a este usuario»  a menos que tengas una dirección de correo electrónico válida registrada en tus [[Special:Preferences|preferencias de usuario]] y que el bloqueo no haya inhabilitado esta función.
-
-Tu dirección IP actual es $3, y el identificador del bloqueo es #$5.
+Puedes contactar con $1 u otro de los [[{{#Special:ListUsers}}{{MediaWiki:Grouppage-sysop}}]] para discutir el bloqueo.
 Por favor incluye todos los datos aquí mostrados en cualquier consulta que hagas.',
 	'blockednoreason' => 'no se ha especificado el motivo',
 	'blocked-notice-logextract' => 'Este usuario está actualmente bloqueado.
 La última entrada del registro de bloqueos se proporciona debajo para mayor referencia:',
-	'badsig' => 'El código de tu firma no es válido; comprueba las etiquetas HTML.',
-	'badsiglength' => 'La firma es muy larga. Debe contener un máximo de {{PLURAL:$1|un carácter|$1 caracteres}}.',
+	'badsig' => 'El código de tu firma no es válido. 
+Comprueba las etiquetas HTML.',
+	'badsiglength' => 'La firma es muy larga. 
+Debe contener un máximo de {{PLURAL:$1|un carácter|$1 caracteres}}.',
 	'boteditletter' => 'b',
 	'badfilename' => 'El nombre de la imagen se ha cambiado a «$1».',
 	'backend-fail-stream' => 'No se pudo transmitir el archivo «$1».',
-	'backend-fail-backup' => 'No pudo hacer copia de seguridad del archivo «$1».',
+	'backend-fail-backup' => 'No se pudo hacer copia de seguridad del archivo «$1».',
 	'backend-fail-notexists' => 'El archivo  $1  no existe.',
-	'backend-fail-hashes' => 'No se pudieron obtener los hashes de los ficheros para compararlos.',
-	'backend-fail-notsame' => 'Ya existe un fichero distinto en $1.',
+	'backend-fail-hashes' => 'No se pudieron obtener los hashes de los archivos para compararlos.',
+	'backend-fail-notsame' => 'Ya existe un archivo distinto en $1.',
 	'backend-fail-invalidpath' => '$1 no es una ruta de almacenamiento válida',
 	'backend-fail-delete' => 'No se pudo borrar el archivo «$1».',
-	'backend-fail-alreadyexists' => 'El archivo  $1  ya existe.',
+	'backend-fail-alreadyexists' => 'El archivo $1 ya existe.',
 	'backend-fail-store' => 'No se pudo almacenar el archivo $1 en $2.',
 	'backend-fail-copy' => 'No se pudo copiar el archivo $1 a $2.',
 	'backend-fail-move' => 'No se pudo mover el archivo $1 a $2.',
 	'backend-fail-opentemp' => 'No se pudo crear archivo temporal.',
 	'backend-fail-writetemp' => 'No se pudo escribir en el archivo temporal.',
 	'backend-fail-closetemp' => 'No se pudo cerrar el archivo temporal.',
-	'backend-fail-read' => 'No se pudo leer el archivo «$1».',
-	'backend-fail-create' => 'No se pudo crear el archivo «$1».',
-	'backend-fail-readonly' => 'El servidor (back-end) de almacenamiento "$1" está actualmente en estado de sólo lectura. La razón aducida fue: "$2"',
+	'backend-fail-read' => 'No se pudo leer el archivo $1.',
+	'backend-fail-create' => 'No se pudo crear el archivo $1.',
+	'backend-fail-readonly' => 'El servidor (back-end) de almacenamiento "$1" está actualmente en estado de sólo lectura. El motivo dado fue: "$2"',
 	'backend-fail-synced' => 'El archivo "$1" se encuentra en un estado incoherente dentro de los servidores (backends) de almacenamiento interno',
 	'backend-fail-connect' => 'No se pudo conectar al servidor (backend) de almacenamiento "$1".',
 	'backend-fail-internal' => 'Se ha producido un error desconocido en el servidor (backend) de almacenamiento "$1".',
@@ -4616,34 +4586,32 @@ La última entrada del registro de bloqueos se proporciona debajo para mayor ref
 	'backend-fail-batchsize' => 'El servidor (back-end) de almacenamiento ha suministrado un lote de $1 {{PLURAL:$1|operación|operaciones}} de archivo; el límite es de $2 {{PLURAL:$2|operación|operaciones}}.',
 	'brokenredirects' => 'Redirecciones incorrectas',
 	'brokenredirectstext' => 'Las siguientes redirecciones enlazan a páginas que no existen:',
-	'brokenredirects-edit' => '(editar)',
-	'brokenredirects-delete' => '(borrar)',
+	'brokenredirects-edit' => 'editar',
+	'brokenredirects-delete' => 'borrar',
 	'booksources' => 'Fuentes de libros',
 	'booksources-search-legend' => 'Buscar fuentes de libros',
 	'booksources-go' => 'Ir',
 	'booksources-text' => 'Abajo hay una lista de enlaces a otros sitios que venden libros nuevos y usados, puede que contengan más información sobre los libros que estás buscando.',
 	'booksources-invalid-isbn' => 'El número de ISBN no parece ser válido; comprueba los errores copiándolo de la fuente original.',
-	'blanknamespace' => '(Principal)',
+	'blanknamespace' => 'Principal',
 	'block' => 'Bloquear usuario',
 	'blockip' => 'Bloquear usuario',
 	'blockip-title' => 'Bloquear usuario',
 	'blockip-legend' => 'Bloquear usuario',
-	'blockiptext' => 'Usa el siguiente formulario para bloquear el acceso de escritura desde una dirección IP específica o nombre de usuario.
-Esto debería hacerse sólo para prevenir vandalismos, y de acuerdo a las [[{{MediaWiki:Policy-url}}|políticas]].
-Explica la razón específica del bloqueo (por ejemplo, citando las páginas en particular que han sido objeto de vandalismo).',
-	'badipaddress' => 'La dirección IP no tiene el formato correcto.',
+	'blockiptext' => 'Usa el siguiente formulario para bloquear el acceso de una dirección IP específica o nombre de usuario. Ver además [[Help:Blocking]].',
+	'badipaddress' => 'Dirección IP inválida',
 	'blockipsuccesssub' => 'Bloqueo realizado con éxito',
-	'blockipsuccesstext' => '"[[Special:Contributions/$1|$1]]" ha sido bloqueado.<br />
-Véase la [[Special:BlockList|lista de bloqueos]] para revisarlo.',
+	'blockipsuccesstext' => '"[[{{#Special:Contributions/$1}}|$1]]" ha sido bloqueado.<br />
+Ver la [[{{#Special:BlockList}}|lista de bloqueos]] para revisarlo.',
 	'blocklist' => 'Usuarios bloqueados',
 	'blocklist-userblocks' => 'Ocultar bloqueos de cuenta',
 	'blocklist-tempblocks' => 'Ocultar bloqueos temporales',
 	'blocklist-addressblocks' => 'Ocultar bloqueos de una sola dirección IP',
 	'blocklist-rangeblocks' => 'Ocultar bloqueos de rango',
 	'blocklist-timestamp' => 'Marca de tiempo',
-	'blocklist-target' => 'Destino',
-	'blocklist-expiry' => 'Caduca',
-	'blocklist-by' => 'Bloqueo de administrador',
+	'blocklist-target' => 'Destinatario',
+	'blocklist-expiry' => 'Expira',
+	'blocklist-by' => 'Administrador que bloqueó',
 	'blocklist-params' => 'Parámetros de bloqueo',
 	'blocklist-reason' => 'Motivo',
 	'blocklist-nousertalk' => 'no puede editar su propia página de discusión',
@@ -4651,14 +4619,13 @@ Véase la [[Special:BlockList|lista de bloqueos]] para revisarlo.',
 	'blocklogpage' => 'Registro de bloqueos',
 	'blocklog-showlog' => 'Este usuario ha sido bloqueado previamente. Debajo se provee el registro de bloqueos para mayor referencia:',
 	'blocklog-showsuppresslog' => 'Este usuario ha sido bloqueado y ocultado. Se provee el registro de supresiones para más detalle:',
-	'blocklogentry' => 'bloqueó a [[$1]] $3 durante un plazo de $2',
+	'blocklogentry' => 'bloqueó a [[$1]] $3 por $2',
 	'blocklogtext' => 'Esto es un registro de bloqueos y desbloqueos de usuarios.
 Las direcciones bloqueadas automáticamente no aparecen aquí.
-Consulte la [[Special:BlockList|lista de direcciones IP bloqueadas]] para ver la lista de bloqueos vigente.',
+Consulte la [[{{#Special:BlockList}}|lista de direcciones IP bloqueadas]] para ver la lista de bloqueos vigente.',
 	'block-log-flags-anononly' => 'sólo anónimos',
-	'block-log-flags-nocreate' => 'desactivada la creación de cuentas',
 	'block-log-flags-noautoblock' => 'bloqueo automático desactivado',
-	'block-log-flags-noemail' => 'correo electrónico deshabilitado',
+	'block-log-flags-noemail' => 'correo electrónico bloqueado',
 	'block-log-flags-nousertalk' => 'no puede editar su propia página de discusión',
 	'block-log-flags-angry-autoblock' => 'autobloqueo avanzado habilitado',
 	'block-log-flags-hiddenname' => 'nombre de usuario oculto',
@@ -4669,7 +4636,7 @@ Consulte la [[Special:BlockList|lista de direcciones IP bloqueadas]] para ver la
 Solo se reconocen elementos de lista (líneas que comienzan con «*»).
 El primer enlace de cada línea debe ser un enlace al archivo que se quiere bloquear.
 Todos los demás enlaces en la misma línea se tomarán como excepciones (es decir, páginas donde sí se puede usar el archivo).',
-	'blankpage' => 'Página vacía',
+	'blankpage' => 'Página en blanco',
 	'back' => 'Atrás',
 	'blog-avatar-defaults' => 'Avatar.jpg
 Avatar2.jpg
@@ -4678,9 +4645,24 @@ Avatar4.jpg
 Avatar5.jpg
 Avatar6.jpg',
 	'button-createpage' => 'Crear una página',
-];
+	'backlinksubtitle' => '← $1',
+	'brokenredirects-summary' => '',
+	'booksources-summary' => '',
+	'booksources-isbn' => 'ISBN:',
+	'blocklist-summary' => '',
+	'block-log-flags-nocreate' => 'desactivada la creación de cuentas',
+	'bitrate-bits' => '$1bps',
+	'bitrate-kilobits' => '$1kbps',
+	'bitrate-megabits' => '$1Mbps',
+	'bitrate-gigabits' => '$1Gbps',
+	'bitrate-terabits' => '$1Tbps',
+	'bitrate-petabits' => '$1Pbps',
+	'bitrate-exabits' => '$1Ebps',
+	'bitrate-zetabits' => '$1Zbps',
+	'bitrate-yottabits' => '$1Ybps',
+);
 
-$messages['et'] = [
+$messages['et'] = array(
 	'broken-file-category' => 'Katkiste pildilinkidega leheküljed',
 	'badaccess' => 'Õigus puudub',
 	'badaccess-group0' => 'Sul ei ole õigust läbi viia toimingut, mida üritasid.',
@@ -4694,10 +4676,10 @@ See võib sisaldada ühte või enamat märki, mida ei saa pealkirjades kasutada.
 	'bold_sample' => 'Rasvane kiri',
 	'bold_tip' => 'Rasvane kiri',
 	'blockedtitle' => 'Kasutaja on blokeeritud',
-	'blockedtext' => '\'\'\'Sinu kasutajanimi või IP-aadress on blokeeritud.\'\'\'
+	'blockedtext' => "'''Sinu kasutajanimi või IP-aadress on blokeeritud.'''
 
 Blokeeris $1.
-Tema põhjendus on järgmine: \'\'$2\'\'.
+Tema põhjendus on järgmine: ''$2''.
 
 * Blokeeringu algus: $8
 * Blokeeringu lõpp: $6
@@ -4707,7 +4689,7 @@ Küsimuse arutamiseks võid pöörduda kasutaja $1 või mõne teise [[{{MediaWik
 
 Pane tähele, et sa ei saa kasutajale teadet saata, kui sa pole kinnitanud oma [[Special:Preferences|eelistuste lehel]] kehtivat e-posti aadressi.
 
-Sinu praegune IP-aadress on $3 ning blokeeringu number on #$5. Lisa need andmed kõigile järelepärimistele, mida kavatsed teha.',
+Sinu praegune IP-aadress on $3 ning blokeeringu number on #$5. Lisa need andmed kõigile järelepärimistele, mida kavatsed teha.",
 	'blockednoreason' => 'põhjendust ei ole kirja pandud',
 	'blocked-notice-logextract' => 'See kasutaja on praegu blokeeritud.
 Allpool on toodud viimane blokeerimislogi sissekanne:',
@@ -4778,7 +4760,6 @@ Kehtivaid blokeeringuid vaata [[Special:BlockList|blokeerimisnimekirjast]].',
 Automaatselt blokeeritud IP-aadresse siin ei näidata.
 Praegu jõus olevad blokeeringud ja redigeerimiskeelud leiad [[Special:BlockList|blokeerimisnimekirjast]].',
 	'block-log-flags-anononly' => 'ainult anonüümsed kasutajad',
-	'block-log-flags-nocreate' => 'kontode loomine on blokeeritud',
 	'block-log-flags-noautoblock' => 'ei blokeerita automaatselt',
 	'block-log-flags-noemail' => 'e-kirjade saatmine keelatud',
 	'block-log-flags-nousertalk' => 'ei saa muuta enda arutelulehte',
@@ -4790,9 +4771,9 @@ Praegu jõus olevad blokeeringud ja redigeerimiskeelud leiad [[Special:BlockList
 Esimene link real peab olema link kõlbmatule failile.
 Samal real olevaid järgmiseid linke vaadeldakse kui erandeid, see tähendab artikleid, mille koosseisu kujutise võib lülitada.',
 	'blankpage' => 'Tühi leht',
-];
+);
 
-$messages['eu'] = [
+$messages['eu'] = array(
 	'broken-file-category' => 'Fitxategiren baterako lotura hautsia duten orriak',
 	'badaccess' => 'Baimen errorea',
 	'badaccess-group0' => 'Ez daukazu ekintza hori burutzeko baimenik.',
@@ -4805,10 +4786,10 @@ $messages['eu'] = [
 	'bold_sample' => 'Testu beltza',
 	'bold_tip' => 'Testu beltza',
 	'blockedtitle' => 'Erabiltzailea blokeatuta dago',
-	'blockedtext' => '\'\'\'Zure erabiltzaile izena edo IP helbidea blokeaturik dago.\'\'\'
+	'blockedtext' => "'''Zure erabiltzaile izena edo IP helbidea blokeaturik dago.'''
 
 $1 administratzaileak ezarri du blokeoa.
-Emandako arrazoia hau da: \'\'$2\'\'.
+Emandako arrazoia hau da: ''$2''.
 
 * Blokeoaren hasiera: $8
 * Blokeoaren bukaera: $6
@@ -4817,7 +4798,7 @@ Emandako arrazoia hau da: \'\'$2\'\'.
 Blokeoari buruz eztabaidatzeko, jo ezazu $1 administratzailearengana edo beste [[{{MediaWiki:Grouppage-sysop}}|administratzaile]] batengana.
 «Bidali mezu elektronikoa lankide honi» tresna erabili ahal izateko, ezinbestekoa da zure [[Special:Preferences|hobespenetan]] baliozkoa den helbide elektroniko bat emanda izatea, eta tresna hori erabiltzeko aukera zuri blokeatu ez izana.
 Orain duzun IP helbidea $3 da, eta blokeoaren zenbakia #$5 da.
-Eman itzazu datu hauek guztiak, blokeoari buruzko edozein eskaera egitean.',
+Eman itzazu datu hauek guztiak, blokeoari buruzko edozein eskaera egitean.",
 	'blockednoreason' => 'ez da arrazoirik zehaztu',
 	'blocked-notice-logextract' => 'Erabiltzaile hau blokeatuta dago une honetan.
 Azken blokeoaren erregistroa ageri da behean, erreferentzia gisa:',
@@ -4858,7 +4839,6 @@ Erregistroa ematen da azpian erreferentziarako:',
 	'blocklogentry' => '"[[$1]]" wikilariari blokeoa ezarri zaio. Blokeoaldia: $2 $3',
 	'blocklogtext' => 'Erabiltzaileen blokeoen ezarpen eta ezabaketen erregistroa da hau. Ez dira automatikoki blokeatutako IP helbideak zerrendatzen. Ikus [[Special:BlockList|IP blokeoen zerrenda]] aktibo dauden blokeoak aztertzeko.',
 	'block-log-flags-anononly' => 'erabiltzaile anonimoak bakarrik',
-	'block-log-flags-nocreate' => 'kontuak sortzea ezgaituta',
 	'block-log-flags-noautoblock' => 'auto-blokeaketa ezgaitu da',
 	'block-log-flags-noemail' => 'e-posta blokeatuta',
 	'block-log-flags-nousertalk' => 'ezin da aldatu norbere eztabaida-orria',
@@ -4870,9 +4850,9 @@ Erregistroa ematen da azpian erreferentziarako:',
 
 Zerrenda elementuak (hasieran * duten lerroak) baino ez dira kontuan hartzen. Lerro bateko lehen lotura irudi ezegoki batera zuzendutakoa izan behar da. Lerro bereko gainontzeko loturak salbuespentzat hartzen dira, adib. irudia izan dezaketen artikuluak.',
 	'blankpage' => 'Orrialde txuria',
-];
+);
 
-$messages['ext'] = [
+$messages['ext'] = array(
 	'badaccess' => 'Marru colos tus premisus',
 	'badaccess-group0' => 'Nu se te premiti hazel esa ación.',
 	'badaccess-groups' => 'Solu los usuárius {{PLURAL:$2|del grupu|de los grupus}} $1 puein hazel esa ación.',
@@ -4880,23 +4860,23 @@ $messages['ext'] = [
 	'badtitle' => 'Mal entitulau',
 	'badtitletext' => 'El entítulu la páhina está vaciu, nu es váliu, u es un atihu entelluenga u entelgüiqui encorretu.',
 	'badretype' => 'Las consínias nu conciin.',
-	'blocked-mailpassword' => 'La tu direción d\'IP está atarugá, polo que nu se te premiti
-gastal la hunción p\'arrecuperal consínias pa previnil abusionis.',
+	'blocked-mailpassword' => "La tu direción d'IP está atarugá, polo que nu se te premiti
+gastal la hunción p'arrecuperal consínias pa previnil abusionis.",
 	'bold_sample' => 'Testu en letra "Bold"',
 	'bold_tip' => 'Testu en letra "Bold"',
 	'blockedtitle' => 'Esti usuáriu está atarugau',
-	'blockedtext' => '\'\'\'El tu nombri d\'usuáriu/direción IP está atarugau/á.\'\'\'
+	'blockedtext' => "'''El tu nombri d'usuáriu/direción IP está atarugau/á.'''
 
-$1 jue quien jidu el tarugu, pola siguienti razón: \'\'$2\'\'.
+\$1 jue quien jidu el tarugu, pola siguienti razón: ''\$2''.
 
-* Fecha en qu\'el tarugu prencipió: $8
-* Fecha en qu\'el tarugu acabijará: $6
-* Tarugu: $7
+* Fecha en qu'el tarugu prencipió: \$8
+* Fecha en qu'el tarugu acabijará: \$6
+* Tarugu: \$7
 
-Pueis contatal con $1 u con otru [[{{MediaWiki:Grouppage-sysop}}|çahoril]] pa chalral al tentu el tarugu.
-Si nu as escrebiu enas tus [[Special:Preferences|preferéncias]] una direción d\'email, u si t\'á siu atarugau el correu, nu te sedrá possibri gastal el botón "Envial un email a esti ussuáriu".
-$3 es la tu direción IP atual, i el ID del tarugu es #$5. Pol favol, escrebi dambus los dos datus en cualisquiel consurta que hagas.',
-	'blockednoreason' => 'nu s\'an dau razonis',
+Pueis contatal con \$1 u con otru [[{{MediaWiki:Grouppage-sysop}}|çahoril]] pa chalral al tentu el tarugu.
+Si nu as escrebiu enas tus [[Special:Preferences|preferéncias]] una direción d'email, u si t'á siu atarugau el correu, nu te sedrá possibri gastal el botón \"Envial un email a esti ussuáriu\".
+\$3 es la tu direción IP atual, i el ID del tarugu es #\$5. Pol favol, escrebi dambus los dos datus en cualisquiel consurta que hagas.",
+	'blockednoreason' => "nu s'an dau razonis",
 	'badsig' => 'Nu se premiti esa firma; compreba las etiquetas HTML.',
 	'badsiglength' => 'El tu moti es mu largu.
 Ebi tenel menus de $1 {{PLURAL:$1|caratel|carateris}}.',
@@ -4909,25 +4889,24 @@ Ebi tenel menus de $1 {{PLURAL:$1|caratel|carateris}}.',
 	'booksources' => 'Huentis de librus',
 	'booksources-search-legend' => 'Landeal huentis de librus',
 	'booksources-go' => 'Dil',
-	'booksources-text' => 'Embahu se muestra una lista d\'atihus a páhinas que vendin librus usaus i nuevus, i ondi pueis alcuentral enhormación al tentu los librus qu\'estás landeandu:',
+	'booksources-text' => "Embahu se muestra una lista d'atihus a páhinas que vendin librus usaus i nuevus, i ondi pueis alcuentral enhormación al tentu los librus qu'estás landeandu:",
 	'blanknamespace' => '(Prencipal)',
 	'blockip' => 'Atarugal usuáriu',
 	'blockip-legend' => 'Atarugal usuáriu',
-	'blockiptext' => 'Gasta el hormuláriu d\'embahu p\'atarugal el acesu duna IP u dun usuáriu.
+	'blockiptext' => "Gasta el hormuláriu d'embahu p'atarugal el acesu duna IP u dun usuáriu.
 Estu solu ebi hazelsi pa evital el vandalismu, i dalcuerdu cola [[{{MediaWiki:Policy-url}}|póliça]].
-Escrebi una razón concreta embahu (pol sabulugal, almientandu páhinas qu\'aigan siu vandalizás pol esti usuáriu).',
+Escrebi una razón concreta embahu (pol sabulugal, almientandu páhinas qu'aigan siu vandalizás pol esti usuáriu).",
 	'badipaddress' => 'Direción IP nu premitia',
 	'blockipsuccesssub' => 'Usuáriu atarugau!',
-	'blockipsuccesstext' => 'La direción IP [[Special:Contributions/$1|$1]] á siu atarugá.
-<br />Consurta la [[Special:BlockList|lista d\'IP atarugás]] pa visoreal los tarugus.',
+	'blockipsuccesstext' => "La direción IP [[Special:Contributions/$1|$1]] á siu atarugá.
+<br />Consurta la [[Special:BlockList|lista d'IP atarugás]] pa visoreal los tarugus.",
 	'blocklink' => 'atarugal',
 	'blocklogpage' => 'Rustrihu e tarugus',
 	'blocklogentry' => 'atarugó a "[[$1]]" $3 duranti un praçu e "$2"',
 	'block-log-flags-anononly' => 'sólu usuárius anónimus',
-	'block-log-flags-nocreate' => 'Desativau el criaeru e cuentas',
 	'block-log-flags-noautoblock' => 'autu-tarugu esativau',
 	'block-log-flags-noemail' => 'email atarugau',
-	'block-log-flags-hiddenname' => 'nombri d\'ussuáriu açonchau.',
+	'block-log-flags-hiddenname' => "nombri d'ussuáriu açonchau.",
 	'blockme' => 'Atarugami',
 	'bydate' => 'pol fecha',
 	'bad_image_list' => 'El hormatu ebi sel asina:
@@ -4935,9 +4914,9 @@ Escrebi una razón concreta embahu (pol sabulugal, almientandu páhinas qu\'aiga
 Solu las frasis en hormatu lista (cuandu se prencipia la frasi con *) son consierás. El primel atihu nuna frasi ebi sel a una mala imahin.
 Cualisquiel otru atihu ena mesma línia se consierará ececión, p.s. páhinas ondi la imahin puei ocurril ena línia.',
 	'blankpage' => 'Branqueal página',
-];
+);
 
-$messages['fa'] = [
+$messages['fa'] = array(
 	'broken-file-category' => 'صفحه‌های دارای پیوندهای پروندهٔ خراب',
 	'badaccess' => 'خطای دسترسی',
 	'badaccess-group0' => 'شما اجازهٔ اجرای عملی که درخواست کرده‌اید را ندارید.',
@@ -4952,10 +4931,10 @@ $messages['fa'] = [
 	'bold_sample' => 'متن پررنگ',
 	'bold_tip' => 'متن پررنگ',
 	'blockedtitle' => 'کاربر بسته شده‌است',
-	'blockedtext' => '\'\'\'دسترسی حساب کاربری یا نشانی آی‌پی شما بسته شده‌است.\'\'\'
+	'blockedtext' => "'''دسترسی حساب کاربری یا نشانی آی‌پی شما بسته شده‌است.'''
 
 این کار توسط $1 انجام شده‌است.
-دلیل ارائه‌شده چنین است: $2\'\'
+دلیل ارائه‌شده چنین است: $2''
 
 * شروع قطع دسترسی: $8
 * پایان قطع دسترسی: $6
@@ -4964,7 +4943,7 @@ $messages['fa'] = [
 شما می‌توانید با $1 یا  [[{{MediaWiki:Grouppage-sysop}}|مدیری]] دیگر تماس بگیرید و در این باره صحبت کنید.
 توجه کنید که شما نمی‌توانید از ویژگی «فرستادن پست الکترونیکی به این کاربر» استفاده کنید مگر آنکه نشانی پست الکترونیکی معتبری در [[Special:Preferences|ترجیحات کاربری]]‌تان ثبت کرده باشید و نیز باید امکان استفاده از این ویژگی برای شما قطع نشده باشد.
 نشانی آی‌پی فعلی شما $3 و شمارهٔ قطع دسترسی شما $5 است.
-لطفاً تمامی جزئیات فوق را در کلیهٔ درخواست‌هایی که در این باره مطرح می‌کنید ذکر کنید.',
+لطفاً تمامی جزئیات فوق را در کلیهٔ درخواست‌هایی که در این باره مطرح می‌کنید ذکر کنید.",
 	'blockednoreason' => 'دلیلی مشخص نشده‌است',
 	'blocked-notice-logextract' => 'دسترسی این کاربر در حال حاضر بسته است.
 آخرین مورد سیاهه قطع دسترسی در زیر آمده‌است:',
@@ -5041,7 +5020,6 @@ $messages['fa'] = [
 نشانی‌های آی‌پی که به طور خودکار بسته شده‌اند فهرست نشده‌اند.
 برای فهرست محرومیت‌ها و بسته‌شدن‌های فعال در لحظهٔ حاضر، به [[Special:BlockList|فهرست آی‌پی‌های بسته]] مراجعه کنید.',
 	'block-log-flags-anononly' => 'فقط کاربران گمنام',
-	'block-log-flags-nocreate' => 'قابلیت ایجاد حساب غیرفعال شد',
 	'block-log-flags-noautoblock' => 'قطع دسترسی خودکار غیرفعال شد',
 	'block-log-flags-noemail' => 'پست الکترونیکی مسدود شد',
 	'block-log-flags-nousertalk' => 'صفحهٔ بحث خود را نمی‌تواند ویرایش کند',
@@ -5055,9 +5033,9 @@ $messages['fa'] = [
 نخستین پیوند هر سطر باید پیوندی به یک پروندهٔ معیوب باشد.
 پیوندهایی بعدی در همان سطر استثنا در نظر گرفته می‌شوند.',
 	'blankpage' => 'صفحهٔ خالی',
-];
+);
 
-$messages['fi'] = [
+$messages['fi'] = array(
 	'broken-file-category' => 'Sivut, joilla toimimattomia tiedostolinkkejä',
 	'badaccess' => 'Lupa evätty',
 	'badaccess-group0' => 'Sinulla ei ole lupaa suorittaa pyydettyä toimintoa.',
@@ -5070,10 +5048,10 @@ $messages['fi'] = [
 	'bold_sample' => 'Lihavoitu teksti',
 	'bold_tip' => 'Lihavointi',
 	'blockedtitle' => 'Pääsy estetty',
-	'blockedtext' => '\'\'\'Käyttäjätunnuksesi tai IP-osoitteesi on estetty.\'\'\'
+	'blockedtext' => "'''Käyttäjätunnuksesi tai IP-osoitteesi on estetty.'''
 
 Eston on asettanut $1.
-Syy: \'\'\'$2\'\'\'
+Syy: '''$2'''
 
 * Eston alkamisaika: $8
 * Eston päättymisaika: $6
@@ -5082,7 +5060,7 @@ Syy: \'\'\'$2\'\'\'
 Voit keskustella ylläpitäjän $1 tai toisen [[{{MediaWiki:Grouppage-sysop}}|ylläpitäjän]] kanssa estosta.
 Huomaa, ettet voi lähettää sähköpostia {{GRAMMAR:genitive|{{SITENAME}}}} kautta, ellet ole asettanut olemassa olevaa sähköpostiosoitetta [[Special:Preferences|asetuksissa]] tai jos esto on asetettu koskemaan myös sähköpostin lähettämistä.
 IP-osoitteesi on $3 ja estotunnus on #$5.
-Liitä kaikki yllä olevat tiedot mahdollisiin kyselyihisi.',
+Liitä kaikki yllä olevat tiedot mahdollisiin kyselyihisi.",
 	'blockednoreason' => '(syytä ei annettu)',
 	'blocked-notice-logextract' => 'Tämä käyttäjä on tällä hetkellä estetty.
 Alla on viimeisin estolokin tapahtuma:',
@@ -5147,7 +5125,6 @@ Alla on ote häivytyslokista.',
 	'blocklogentry' => 'esti käyttäjän tai IP-osoitteen [[$1]]. Eston kesto $2 $3',
 	'blocklogtext' => 'Tämä on loki muokkausestoista ja niiden purkamisista. Automaattisesti estettyjä IP-osoitteita ei kirjata. Tutustu [[Special:BlockList|estolistaan]] nähdäksesi listan tällä hetkellä voimassa olevista estoista.',
 	'block-log-flags-anononly' => 'vain kirjautumattomat käyttäjät',
-	'block-log-flags-nocreate' => 'tunnusten luonti estetty',
 	'block-log-flags-noautoblock' => 'ei automaattista IP-osoitteiden estoa',
 	'block-log-flags-noemail' => 'sähköpostin lähettäminen estetty',
 	'block-log-flags-nousertalk' => 'oman keskustelusivun muokkaaminen estetty',
@@ -5162,9 +5139,9 @@ Rivin ensimmäisen linkin on osoitettava tiedostoon.
 Kaikki muut linkit ovat poikkeuksia eli toisin sanoen sivuja, joissa tiedostoa saa käyttää.',
 	'blankpage' => 'Tyhjä sivu',
 	'back' => 'Takaisin',
-];
+);
 
-$messages['fiu-vro'] = [
+$messages['fiu-vro'] = array(
 	'broken-file-category' => 'Sivut, joilla toimimattomia tiedostolinkkejä',
 	'badaccess' => 'Lupa evätty',
 	'badaccess-group0' => 'Sinulla ei ole lupaa suorittaa pyydettyä toimintoa.',
@@ -5177,10 +5154,10 @@ $messages['fiu-vro'] = [
 	'bold_sample' => 'Lihavoitu teksti',
 	'bold_tip' => 'Lihavointi',
 	'blockedtitle' => 'Pääsy estetty',
-	'blockedtext' => '\'\'\'Käyttäjätunnuksesi tai IP-osoitteesi on estetty.\'\'\'
+	'blockedtext' => "'''Käyttäjätunnuksesi tai IP-osoitteesi on estetty.'''
 
 Eston on asettanut $1.
-Syy: \'\'\'$2\'\'\'
+Syy: '''$2'''
 
 * Eston alkamisaika: $8
 * Eston päättymisaika: $6
@@ -5189,7 +5166,7 @@ Syy: \'\'\'$2\'\'\'
 Voit keskustella ylläpitäjän $1 tai toisen [[{{MediaWiki:Grouppage-sysop}}|ylläpitäjän]] kanssa estosta.
 Huomaa, ettet voi lähettää sähköpostia {{GRAMMAR:genitive|{{SITENAME}}}} kautta, ellet ole asettanut olemassa olevaa sähköpostiosoitetta [[Special:Preferences|asetuksissa]] tai jos esto on asetettu koskemaan myös sähköpostin lähettämistä.
 IP-osoitteesi on $3 ja estotunnus on #$5.
-Liitä kaikki yllä olevat tiedot mahdollisiin kyselyihisi.',
+Liitä kaikki yllä olevat tiedot mahdollisiin kyselyihisi.",
 	'blockednoreason' => '(syytä ei annettu)',
 	'blocked-notice-logextract' => 'Tämä käyttäjä on tällä hetkellä estetty.
 Alla on viimeisin estolokin tapahtuma:',
@@ -5254,7 +5231,6 @@ Alla on ote häivytyslokista.',
 	'blocklogentry' => 'esti käyttäjän tai IP-osoitteen [[$1]]. Eston kesto $2 $3',
 	'blocklogtext' => 'Tämä on loki muokkausestoista ja niiden purkamisista. Automaattisesti estettyjä IP-osoitteita ei kirjata. Tutustu [[Special:BlockList|estolistaan]] nähdäksesi listan tällä hetkellä voimassa olevista estoista.',
 	'block-log-flags-anononly' => 'vain kirjautumattomat käyttäjät',
-	'block-log-flags-nocreate' => 'tunnusten luonti estetty',
 	'block-log-flags-noautoblock' => 'ei automaattista IP-osoitteiden estoa',
 	'block-log-flags-noemail' => 'sähköpostin lähettäminen estetty',
 	'block-log-flags-nousertalk' => 'oman keskustelusivun muokkaaminen estetty',
@@ -5268,14 +5244,14 @@ Vain *-merkillä alkavat rivit otetaan huomioon.
 Rivin ensimmäisen linkin on osoitettava tiedostoon.
 Kaikki muut linkit ovat poikkeuksia eli toisin sanoen sivuja, joissa tiedostoa saa käyttää.',
 	'blankpage' => 'Tyhjä sivu',
-];
+);
 
-$messages['fj'] = [
+$messages['fj'] = array(
 	'brokenredirects-edit' => 'Veisautaki',
 	'brokenredirects-delete' => 'Vakarusa',
-];
+);
 
-$messages['fo'] = [
+$messages['fo'] = array(
 	'broken-file-category' => 'Síður við brotnum fílu slóðum',
 	'badaccess' => 'Loyvisbrek',
 	'badaccess-group0' => 'Tú hevur ikki loyvi til at útføra hatta sum tú hevur biðið um.',
@@ -5288,19 +5264,19 @@ $messages['fo'] = [
 	'bold_sample' => 'Feitir stavir',
 	'bold_tip' => 'Feitir stavir',
 	'blockedtitle' => 'Brúkarin er bannaður',
-	'blockedtext' => '\'\'\'Títt brúkaranavn ella IP adressa er sperrað.\'\'\'
+	'blockedtext' => "'''Títt brúkaranavn ella IP adressa er sperrað.'''
 
 Sperringin varð gjørd av $1.
-Orsøkin segðist vera \'\'$2\'\'.
+Orsøkin segðist vera ''$2''.
 
 * Sperringin byrjaði: $8
 * Sperringin endar: $6
 * Sperringin er rættað móti: $7
 
 Tú kanst seta teg í samband við $1 ella ein annan [[{{MediaWiki:Grouppage-sysop}}|administrator]] fyri at kjakast um sperringina.
-Tú kanst ikki brúka \'send t-post til henda brúkara\' funktiónina, uttan so at ein galdandi t-post adressa er givin í tínum [[Special:Preferences|konto innstillingum]] og um tú ikki ert blivin sperraður frá at brúka hana.
+Tú kanst ikki brúka 'send t-post til henda brúkara' funktiónina, uttan so at ein galdandi t-post adressa er givin í tínum [[Special:Preferences|konto innstillingum]] og um tú ikki ert blivin sperraður frá at brúka hana.
 Tín verandi IP adressa er $3, og sperrings ID er #$5.
-Vinarliga tak allir hesir upplýsingar við í einum hvørjum fyrispurningi ið tí hevur.',
+Vinarliga tak allir hesir upplýsingar við í einum hvørjum fyrispurningi ið tí hevur.",
 	'blockednoreason' => 'Ongin orsøk er givin',
 	'blocked-notice-logextract' => 'Hesin brúkarin er í løtuni sperraður.
 Tann seinasti sperringar gerðalistin er her niðanfyri fyri ávísing:',
@@ -5334,16 +5310,15 @@ Tann seinasti sperringar gerðalistin er her niðanfyri fyri ávísing:',
 	'blocklink' => 'banna',
 	'blocklogpage' => 'Bannagerðabók',
 	'blocklogentry' => 'sperring [[$1]]  sum varir til $2 $3',
-	'block-log-flags-nocreate' => 'upprætting av brúkarakonto er sperrað',
 	'bydate' => 'eftir dato',
 	'bad_image_list' => 'Støddin er soleiðis:
 
 Bert innihaldið av listum (linjur sum byrja við *) verða brúkt.
 Fyrsta slóðin á linjuni má vera ein leinkja til eina óynskta mynd.
 Fylgjandi slóðir á somu linju eru undantøk, tvs. síður har fílan kann fyrikoma innline.',
-];
+);
 
-$messages['fr'] = [
+$messages['fr'] = array(
 	'broken-file-category' => 'Pages avec des liens de fichiers brisés',
 	'badaccess' => 'Erreur de permission',
 	'badaccess-group0' => 'Vous n’avez pas les droits suffisants pour réaliser l’action demandée.',
@@ -5356,18 +5331,20 @@ $messages['fr'] = [
 	'bold_sample' => 'Texte gras',
 	'bold_tip' => 'Texte gras',
 	'blockedtitle' => 'L’utilisateur est bloqué.',
-	'blockedtext' => '\'\'\'Votre compte utilisateur ou votre adresse IP a été bloqué.\'\'\'
+	'blockedtext' => '<big>\'\'\'\'Votre compte utilisateur ou votre adresse IP a été bloqué.\'\'\'</big>
 
+<div id="mw-message-blockedtext" style="border:1px solid black; padding-left:0.5em;">
 Le blocage a été effectué par $1.
-La raison invoquée est la suivante : \'\'$2\'\'.
 
+* Raison invoquée : $2
 * Début du blocage : $8
 * Expiration du blocage : $6
-* Compte bloqué : $7.
+* Compte bloqué : $7
+* ID bloqué : #$5
+* Adresse IP actuelle : $3
+</div>
 
-Vous pouvez contacter $1 ou un autre [[{{MediaWiki:Grouppage-sysop}}|administrateur]] pour en discuter.
-Vous ne pouvez utiliser la fonction « {{MediaWiki:emailpage}} » que si une adresse e-mail valide est spécifiée dans vos [[Special:Preferences|préférences]] et que cette fonctionnalité n’a pas été bloquée.
-Votre adresse IP actuelle est $3 et votre identifiant de blocage est $5.
+Vous pouvez contacter $1 ou un autre [[Special:ListUsers|{{MediaWiki:group-sysop-member}}]] pour en discuter.
 Veuillez préciser ces indications dans toutes les requêtes que vous ferez.',
 	'blockednoreason' => 'aucune raison donnée',
 	'blocked-notice-logextract' => 'Cet utilisateur est actuellement bloqué.
@@ -5380,8 +5357,8 @@ Elle ne doit pas dépasser $1 caractère{{PLURAL:$1||s}}.',
 	'badfilename' => 'Le fichier a été renommé en « $1 ».',
 	'backend-fail-stream' => 'Impossible de lire le fichier $1.',
 	'backend-fail-backup' => 'Impossible de sauvegarder le fichier $1.',
-	'backend-fail-notexists' => 'Le fichier $1 n\'existe pas.',
-	'backend-fail-hashes' => 'Impossible d\'obtenir les hachages du fichier pour comparaison.',
+	'backend-fail-notexists' => "Le fichier $1 n'existe pas.",
+	'backend-fail-hashes' => "Impossible d'obtenir les hachages du fichier pour comparaison.",
 	'backend-fail-notsame' => 'Un fichier différent existe déjà pour $1 .',
 	'backend-fail-invalidpath' => '$1 n’est pas un chemin de stockage valide.',
 	'backend-fail-delete' => 'Impossible de supprimer le fichier $1.',
@@ -5389,8 +5366,8 @@ Elle ne doit pas dépasser $1 caractère{{PLURAL:$1||s}}.',
 	'backend-fail-store' => 'Impossible de stocker le fichier $1 en $2.',
 	'backend-fail-copy' => 'Impossible de copier le fichier $1 en $2.',
 	'backend-fail-move' => 'Impossible de déplacer le fichier $1 en $2.',
-	'backend-fail-opentemp' => 'Impossible d\'ouvrir le fichier temporaire.',
-	'backend-fail-writetemp' => 'Impossible d\'écrire dans le fichier temporaire.',
+	'backend-fail-opentemp' => "Impossible d'ouvrir le fichier temporaire.",
+	'backend-fail-writetemp' => "Impossible d'écrire dans le fichier temporaire.",
 	'backend-fail-closetemp' => 'Impossible de fermer le fichier temporaire.',
 	'backend-fail-read' => 'Impossible de lire le fichier $1.',
 	'backend-fail-create' => 'Impossible de créer le fichier $1.',
@@ -5443,9 +5420,8 @@ Consultez la [[Special:BlockList|liste des adresses IP et comptes bloqués]] pou
 Les adresses IP automatiquement bloquées ne sont pas listées.
 Consultez la [[Special:BlockList|liste des IP bloquées]] pour voir les bannissements et blocages effectivement en cours.',
 	'block-log-flags-anononly' => 'utilisateurs anonymes seulement',
-	'block-log-flags-nocreate' => 'création de compte interdite',
 	'block-log-flags-noautoblock' => 'autoblocage des IP désactivé',
-	'block-log-flags-noemail' => 'envoi d\'e-mails interdit',
+	'block-log-flags-noemail' => "envoi d'e-mails interdit",
 	'block-log-flags-nousertalk' => 'ne peut modifier sa propre page de discussion',
 	'block-log-flags-angry-autoblock' => 'autoblocage amélioré activé',
 	'block-log-flags-hiddenname' => 'nom d’utilisateur caché',
@@ -5458,41 +5434,60 @@ Les autres liens sur la même ligne sont considérés comme des exceptions, par 
 	'blankpage' => 'Page vide',
 	'back' => 'Retour',
 	'button-createpage' => 'Créer page',
-];
+	'backlinksubtitle' => '← $1',
+	'brokenredirects-summary' => '',
+	'booksources-summary' => '',
+	'blocklist-summary' => '',
+	'block-log-flags-nocreate' => 'création de compte interdite',
+	'bitrate-bits' => '$1bps',
+	'bitrate-kilobits' => '$1kbps',
+	'bitrate-megabits' => '$1Mbps',
+	'bitrate-gigabits' => '$1Gbps',
+	'bitrate-terabits' => '$1Tbps',
+	'bitrate-petabits' => '$1Pbps',
+	'bitrate-exabits' => '$1Ebps',
+	'bitrate-zetabits' => '$1Zbps',
+	'bitrate-yottabits' => '$1Ybps',
+	'blog-avatar-defaults' => 'Avatar.jpg
+Avatar2.jpg
+Avatar3.jpg
+Avatar4.jpg
+Avatar5.jpg
+Avatar6.jpg',
+);
 
-$messages['frc'] = [
+$messages['frc'] = array(
 	'badaccess' => 'Erreur de permission',
 	'badaccess-group0' => 'Vous avez pas assez de permission de faire ça que vous demandez.',
-	'badaccess-groups' => 'L\'action que vous avez demandé est juste pour les useurs dans une des groupes $1.',
+	'badaccess-groups' => "L'action que vous avez demandé est juste pour les useurs dans une des groupes $1.",
 	'badarticleerror' => 'Cette action peut pas être faite sus cette page.',
 	'badtitle' => 'Mauvais titre',
 	'badtitletext' => 'Le titre que vous avez demandé était pas bon, vide, ou y avait un mauvais titre entre-langue ou entre-wiki.  Ça pourrait avoir des caractères qui pouvont pas être usés dans les titres.',
 	'badretype' => 'Les mots de passe que vous avez mis sont pas pareils.',
-	'blocked-mailpassword' => 'Votre adresse IP est bloquée.  Pour empêcher l\'abus, vous pouvez ni faire des changements ni user la fonction de rappel du mot de passe.',
+	'blocked-mailpassword' => "Votre adresse IP est bloquée.  Pour empêcher l'abus, vous pouvez ni faire des changements ni user la fonction de rappel du mot de passe.",
 	'bold_sample' => 'Gras',
 	'bold_tip' => 'Gras',
-	'blockedtitle' => 'L\'useur est bloqué',
-	'blockedtext' => '\'\'\'Votre compte d\'useur (ou votre adresse IP) est bloqué.\'\'\'
+	'blockedtitle' => "L'useur est bloqué",
+	'blockedtext' => "'''Votre compte d'useur (ou votre adresse IP) est bloqué.'''
 
-Le blocage a été fait par $1.  La raison donnée est \'\'$2\'\'.
+Le blocage a été fait par $1.  La raison donnée est ''$2''.
 
 * La date du blocage: $8
 * Le blocage va être ôté: $6
-* L\'useur bloqué: $7
+* L'useur bloqué: $7
 
-Vous pouvez contacter $1 ou un autre [[{{MediaWiki:Grouppage-sysop}}|administrateur]] pour discuter le blocage.  Vous pouvez pas user la fonction \'envoyer un e-mail à cet useur\' hormis que vous avez une adresse e-mail confirmée dans votre [[Special:Preferences|réglage de compte]] et vous avez la permission de l\'user.  Votre adresse IP est $3, et le numéro du blocage est #$5.  Mettez donc cette information dans toutes vos demandes.',
+Vous pouvez contacter $1 ou un autre [[{{MediaWiki:Grouppage-sysop}}|administrateur]] pour discuter le blocage.  Vous pouvez pas user la fonction 'envoyer un e-mail à cet useur' hormis que vous avez une adresse e-mail confirmée dans votre [[Special:Preferences|réglage de compte]] et vous avez la permission de l'user.  Votre adresse IP est $3, et le numéro du blocage est #$5.  Mettez donc cette information dans toutes vos demandes.",
 	'badsig' => 'Votre signature brute est pas bonne.  Regardez-voir les tags HTML.',
-	'badsiglength' => 'Votre \'tit nom est trop long.  Il faut que ça soye moins que $1 caractères.',
+	'badsiglength' => "Votre 'tit nom est trop long.  Il faut que ça soye moins que $1 caractères.",
 	'blanknamespace' => '(Principal)',
 	'blocklink' => 'bloquer',
-	'block-log-flags-nocreate' => 'création de compte interdite',
 	'bad_image_list' => 'Le format est le suivant :
 
 Seules les listes d’énumération (commençant par *) sont prises en compte. Le premier lien d’une ligne doit être celui d’une mauvaise image.
 Les autres liens sur la même ligne sont considérés comme des exceptions, par exemple des pages sur lesquelles l’image peut apparaître.',
-];
+);
 
-$messages['frp'] = [
+$messages['frp'] = array(
 	'broken-file-category' => 'Pâges avouéc des lims de fichiérs câssos',
 	'badaccess' => 'Èrror de pèrmission',
 	'badaccess-group0' => 'Vos avéd pas los drêts sufisents por rèalisar l’accion que vos demandâd.',
@@ -5506,10 +5501,10 @@ Contint sûrement yon ou ben un mouél de caractèros que pôvont pas étre util
 	'bold_sample' => 'Tèxto en grâs',
 	'bold_tip' => 'Tèxto en grâs',
 	'blockedtitle' => 'L’usanciér est blocâ.',
-	'blockedtext' => '\'\'\'Voutron compto usanciér ou ben voutra adrèce IP at étâ blocâ.\'\'\'
+	'blockedtext' => "'''Voutron compto usanciér ou ben voutra adrèce IP at étâ blocâ.'''
 
 Lo blocâjo at étâ fêt per $1.
-La rêson balyê est ceta : \'\'$2\'\'.
+La rêson balyê est ceta : ''$2''.
 
 * Comencement du blocâjo : $8
 * Èxpiracion du blocâjo : $6
@@ -5518,7 +5513,7 @@ La rêson balyê est ceta : \'\'$2\'\'.
 Vos vos pouede veriér vers $1 ou ben yon des ôtros [[{{MediaWiki:Grouppage-sysop}}|administrators]] por nen discutar.
 Vos pouede pas utilisar la fonccionalitât « Lui mandar un mèssâjo » a muens que vos èyâd una adrèce èlèctronica valida encartâ dens voutres [[Special:Preferences|prèferences]] et que la fonccionalitât èye pas étâ dèsactivâ.
 Voutra adrèce IP d’ora est $3, et lo numerô de blocâjo est $5.
-Volyéd spècefiar cetes endicacions dens totes les requétes que vos faréd.',
+Volyéd spècefiar cetes endicacions dens totes les requétes que vos faréd.",
 	'blockednoreason' => 'gins de rêson balyê',
 	'blocked-notice-logextract' => 'Ceti usanciér est ora blocâ.
 La dèrriére entrâ du jornal des blocâjos est disponibla ce-desot :',
@@ -5589,7 +5584,6 @@ Lo jornal de les suprèssions est disponiblo ce-desot :',
 Les adrèces IP blocâs ôtomaticament sont pas listâs.
 Vêde la [[Special:BlockList|lista des blocâjos]] por vêre los banissements et los blocâjos que sont ora opèracionèls.',
 	'block-log-flags-anononly' => 'solament los usanciérs pas encartâs',
-	'block-log-flags-nocreate' => 'crèacion de compto dèfendua',
 	'block-log-flags-noautoblock' => 'ôtoblocâjo a les adrèces IP dèsactivâ',
 	'block-log-flags-noemail' => 'èxpèdicion de mèssâjo dèfendua',
 	'block-log-flags-nousertalk' => 'pôt pas changiér sa prôpra pâge de discussion',
@@ -5603,9 +5597,9 @@ Solament les listes d’ènumèracion (que començont per *) sont considèrâs.
 Lo premiér lim d’una legne dêt étre vers celi d’una crouye émâge.
 Los ôtros lims sur la méma legne sont considèrâs coment des èxcèpcions, per ègzemplo des pâges sur lesquintes l’émâge pôt aparêtre.',
 	'blankpage' => 'Pâge voueda',
-];
+);
 
-$messages['frr'] = [
+$messages['frr'] = array(
 	'broken-file-category' => 'Sid ma önjstöögne ferwisinge',
 	'badaccess' => 'Niinj tulingende ruchte',
 	'badaccess-group0' => 'Dü hääst ai jü nüsie beruchtiging for jüdeer aksjoon',
@@ -5635,7 +5629,6 @@ For informasjoon füliet di leeste üttooch üt dåt benjüterspär-logbök:',
 Automatisch spärd IP-adräse wårde ai footed.
 Sii jü [[Special:BlockList|list foon da spärd IP-adräse än brükernoome]] for ål da aktive späre.',
 	'block-log-flags-anononly' => 'bloot anonyme',
-	'block-log-flags-nocreate' => 'Måågen foon brükerkonte spärd',
 	'block-log-flags-noautoblock' => 'autoblock deaktiviird',
 	'block-log-flags-noemail' => 'e-mail-fersiinjing spärd',
 	'block-log-flags-nousertalk' => 'mötj äine diskusjoonssid ai beårbe',
@@ -5645,9 +5638,9 @@ Sii jü [[Special:BlockList|list foon da spärd IP-adräse än brükernoome]] fo
 
 Bloot rae, da ma en * begane, wårde ütwjarted. As jarste eefter dåt * mötj en link aw en ai wansched dååtäi stönje.
 Deeraw föliende sidelinke önj dåtseelwi ra definiire ütnååme, önj di kontäkst weerfoon jü dååtäi duch tu schüns kaame mötj.',
-];
+);
 
-$messages['fur'] = [
+$messages['fur'] = array(
 	'badaccess' => 'Permès no suficients',
 	'badtitle' => 'Titul sbaliât',
 	'badtitletext' => 'Il titul de pagjine che tu âs inserît nol è valit, al è vuelit, o al veve un erôr tal colegament tra wiki diviersis o tra versions in altris lenghis.
@@ -5656,9 +5649,9 @@ Al podarès vê dentri caratars che no podin jessi doprâts tai titui.',
 	'bold_sample' => 'Test in gruessut',
 	'bold_tip' => 'Test in gruessut',
 	'blockedtitle' => 'Utent blocât',
-	'blockedtext' => '\'\'\'Chest non utent o direzion IP a son stâts blocâts.\'\'\'
+	'blockedtext' => "'''Chest non utent o direzion IP a son stâts blocâts.'''
 
-Il bloc al è stât metût di $1. La reson furnide e je: \'\'$2\'\'
+Il bloc al è stât metût di $1. La reson furnide e je: ''$2''
 
 * Inizi dal bloc: $8
 * Scjadencje dal blocco: $6
@@ -5666,9 +5659,9 @@ Il bloc al è stât metût di $1. La reson furnide e je: \'\'$2\'\'
 
 Se tu vuelis tu puedis contatâ $1 o un altri [[{{MediaWiki:Grouppage-sysop}}|aministradôr]] par fevelâ dal bloc.
 
-Visiti che no tu puedis doprâ la funzion \'Messaç di pueste a chest utent\' se no tu âs specificât une direzion di pueste eletroniche valide tes [[Special:Preferences|preferencis]] e se no tu sês stât blocât al ûs di cheste funzion.
+Visiti che no tu puedis doprâ la funzion 'Messaç di pueste a chest utent' se no tu âs specificât une direzion di pueste eletroniche valide tes [[Special:Preferences|preferencis]] e se no tu sês stât blocât al ûs di cheste funzion.
 
-Par plasê inclût la to direzion IP atuâl ($3) o il numar dal bloc (ID #$5) in ogni richieste di sclariments.',
+Par plasê inclût la to direzion IP atuâl ($3) o il numar dal bloc (ID #$5) in ogni richieste di sclariments.",
 	'badsig' => 'Firme crude invalide; controle i tags HTML.',
 	'boteditletter' => 'b',
 	'badfilename' => 'File non gambiât in "$1".',
@@ -5681,13 +5674,12 @@ Par plasê inclût la to direzion IP atuâl ($3) o il numar dal bloc (ID #$5) in
 	'booksources-go' => 'Va',
 	'blanknamespace' => '(Principâl)',
 	'blockip' => 'Bloche utent',
-	'blockip-title' => 'Bloche l\'utent',
-	'blockip-legend' => 'Bloche l\'utent',
+	'blockip-title' => "Bloche l'utent",
+	'blockip-legend' => "Bloche l'utent",
 	'badipaddress' => 'La direzion IP no je valide',
 	'blocklink' => 'bloche',
 	'blocklogpage' => 'Regjistri dai blocs',
 	'blocklogentry' => 'al à blocât "[[$1]]"; scjadence $2 $3',
-	'block-log-flags-nocreate' => 'creazion identitât blocade',
 	'bydate' => 'par date',
 	'bad_image_list' => 'Il formât al è cussi:
 
@@ -5695,12 +5687,12 @@ a vegnin considerâts dome i elements des listis (riis che a scomencin cul catat
 Il prin leam intune rie al à di jessi un leam aun file indesiderâtI.
 I leams sucessîfs, su la stesse rie, a son considerâts come ecezions (ven a stâi pagjinis dulà che il file al pues jessi inserît normalmentri).',
 	'blankpage' => 'Pagjine vueide',
-];
+);
 
-$messages['fy'] = [
+$messages['fy'] = array(
 	'badaccess' => 'Gjin tastimming',
 	'badaccess-group0' => 'Jo hawwe gjin rjochten om de frege hanneling út te fieren.',
-	'badaccess-groups' => 'De frege hanneling is foarbehâlden oan brûkers yn {{PLURAL:$2|\'e groep|ien fan de groepen}}: $1.',
+	'badaccess-groups' => "De frege hanneling is foarbehâlden oan brûkers yn {{PLURAL:$2|'e groep|ien fan de groepen}}: $1.",
 	'badarticleerror' => 'Dat kin op dizze side net dien wurden.',
 	'badtitle' => 'Misse titel',
 	'badtitletext' => 'De opfrege sidetitel wie ûnjildich, leech, of in miskeppele yntertaal of ynterwiki titel.',
@@ -5709,40 +5701,40 @@ $messages['fy'] = [
 	'bold_sample' => 'Fette tekst',
 	'bold_tip' => 'Fette tekst',
 	'blockedtitle' => 'Meidogger is útsletten troch',
-	'blockedtext' => '\'\'\'Jo meidoggernamme of Ynternet-adres is útsletten.\'\'\'
+	'blockedtext' => "'''Jo meidoggernamme of Ynternet-adres is útsletten.'''
 
 De útsluting is útfierd troch $1.
-De opjûne reden is \'\'$2\'\'.
+De opjûne reden is ''$2''.
 
 * Begjin útsluting : $8
 * Ein útsluting : $6
 * Bedoeld út te sluten: $7
 
 Jo kinne kontakt opnimme mei $1 of in oare [[{{MediaWiki:Grouppage-sysop}}|behearder]] om de útsluting te besprekken.
-Jo kinne gjin gebrûk meitsje fan \'e funksje \'Skriuw meidogger\', of jo moatte in jildich e-postadres opjûn hawwe yn jo [[Special:Preferences|foarkarren]] en it gebrûk fan dy funksje moat net útsletten wêze.
-Jo tsjintwurdich e-postadres is $3 en it útsletnûmer is #$5. Neam beide gegevens as jo earne op dizze útsluting reagearje.',
+Jo kinne gjin gebrûk meitsje fan 'e funksje 'Skriuw meidogger', of jo moatte in jildich e-postadres opjûn hawwe yn jo [[Special:Preferences|foarkarren]] en it gebrûk fan dy funksje moat net útsletten wêze.
+Jo tsjintwurdich e-postadres is $3 en it útsletnûmer is #$5. Neam beide gegevens as jo earne op dizze útsluting reagearje.",
 	'blockednoreason' => 'gjin reden opjûn',
 	'badsig' => 'Unjildige ûndertekening; kontrolearje de HTML-tags.',
 	'badsiglength' => 'Bynamme is te lang; dy moat koarter as $1 {{PLURAL:$1|teken|tekens}} wêze.',
 	'boteditletter' => 'b',
 	'badfilename' => 'De ôfbyldnamme is feroare nei "$1".',
 	'brokenredirects' => 'Misse synonimen',
-	'brokenredirectstext' => 'De siden dêr\'t dizze titels synonym oan wêze moatte, bestean net.',
+	'brokenredirectstext' => "De siden dêr't dizze titels synonym oan wêze moatte, bestean net.",
 	'brokenredirects-edit' => 'bewurkje',
 	'brokenredirects-delete' => 'wiskje',
 	'booksources' => 'Boekynformaasje',
 	'booksources-search-legend' => 'Boarnen en ynformaasje oer in boek sykje',
 	'booksources-go' => 'Sykje',
-	'booksources-text' => 'Hjirûnder is in list mei keppelings nei oare websites dy\'t nije of brûkte boeken ferkeapje en dy\'t faaks mear ynformaasje hawwe oer it boek dat jo sykje:',
+	'booksources-text' => "Hjirûnder is in list mei keppelings nei oare websites dy't nije of brûkte boeken ferkeapje en dy't faaks mear ynformaasje hawwe oer it boek dat jo sykje:",
 	'booksources-invalid-isbn' => 'It ynjûne ISBN liket net jildich te wêzen.
 Kontrolearje oft jo faaks in flater makke hawwe by de ynfier.',
 	'blanknamespace' => '(Haadnammerûmte)',
 	'blockip' => 'Slút meidogger út',
 	'blockip-legend' => 'Slút brûker út',
-	'blockiptext' => 'Brûk dizze fjilden om in meidogger fan skriuwtagong út te sluten.
-Dat soe allinnich fanwege fandalisme dien wurde moatte, sa\'t de
+	'blockiptext' => "Brûk dizze fjilden om in meidogger fan skriuwtagong út te sluten.
+Dat soe allinnich fanwege fandalisme dien wurde moatte, sa't de
 [[{{MediaWiki:Policy-url}}|útslut-rie]] it oanjout.
-Meld de krekte reden! Neam bygelyks de siden dy\'t oantaaste waarden.',
+Meld de krekte reden! Neam bygelyks de siden dy't oantaaste waarden.",
 	'badipaddress' => 'Gjin jildige IP-adres',
 	'blockipsuccesssub' => 'Utsluting slagge',
 	'blockipsuccesstext' => 'Meidogger [[Special:Contributions/$1|$1]] is útsletten.<br />
@@ -5752,22 +5744,22 @@ Meld de krekte reden! Neam bygelyks de siden dy\'t oantaaste waarden.',
 	'blocklogentry' => '"[[$1]]" útsletten foar $2 $3',
 	'blocklogtext' => 'Dit is in loch fan it útsluten en talitten fan meidoggers. Fansels útsletten net-adressen binne net opnaam. Sjoch de [[Special:BlockList|útsletlist]] foar de no jildende utslettings.',
 	'bydate' => 'datum',
-	'bad_image_list' => 'De opmaak is as folget:
+	'bad_image_list' => "De opmaak is as folget:
 
-Allinne rigels fan in list (rigels dy\'t begjinne mei *) wurde ferwurke. De earste link op in rigel moat in link wêze nei in net winske ôfbylding.
-Alle folgjende links dy\'t op deselde rigel steane, wurde behannele as útsûndering, lykas bygelyks siden dêr\'t de ôfbylding yn\'e tekst opnommen is.',
+Allinne rigels fan in list (rigels dy't begjinne mei *) wurde ferwurke. De earste link op in rigel moat in link wêze nei in net winske ôfbylding.
+Alle folgjende links dy't op deselde rigel steane, wurde behannele as útsûndering, lykas bygelyks siden dêr't de ôfbylding yn'e tekst opnommen is.",
 	'blankpage' => 'Side is leech',
-];
+);
 
-$messages['ga'] = [
+$messages['ga'] = array(
 	'badaccess' => 'Earráid ceada',
 	'badaccess-group0' => 'Níl cead agat an gníomh a roghnaigh tú a dhéanamh.',
 	'badaccess-groups' => 'Níl cead ag daoine é sin a dhéanamh ach amháin {{PLURAL:$2|duine sa ghrúpa|daoine sna grúpaí}}: $1.',
 	'badarticleerror' => 'Ní féidir an gníomh seo a dhéanamh ar an leathanach seo.',
 	'badtitle' => 'Teideal neamhbhailí',
-	'badtitletext' => 'Bhí teideal an leathanaigh a d\'iarr tú ar neamhbhailí, folamh, nó
-teideal idirtheangach nó idirvicí nasctha go mícheart.',
-	'badretype' => 'D\'iontráil tú dhá fhocal faire difriúla.',
+	'badtitletext' => "Bhí teideal an leathanaigh a d'iarr tú ar neamhbhailí, folamh, nó
+teideal idirtheangach nó idirvicí nasctha go mícheart.",
+	'badretype' => "D'iontráil tú dhá fhocal faire difriúla.",
 	'bold_sample' => 'Cló trom',
 	'bold_tip' => 'Cló trom',
 	'blockedtitle' => 'Tá an úsáideoir seo faoi chosc',
@@ -5805,7 +5797,7 @@ mar a deirtear sa [[{{MediaWiki:Policy-url}}|polasaí {{GRAMMAR:genitive|{{SITEN
 Líonaigh cúis áirithe anseo thíos (mar shampla, is féidir leat a luaigh
 leathanaigh áirithe a rinne an duine damáiste ar).',
 	'badipaddress' => 'Níl aon úsáideoir ann leis an ainm seo.',
-	'blockipsuccesssub' => 'D\'éirigh leis an cosc',
+	'blockipsuccesssub' => "D'éirigh leis an cosc",
 	'blockipsuccesstext' => 'Choisceadh [[Special:Contributions/$1|$1]].
 <br />Féach ar an g[[Special:BlockList|liosta coisc IP]] chun coisc a athbhreithniú.',
 	'blocklink' => 'coisc',
@@ -5815,7 +5807,6 @@ leathanaigh áirithe a rinne an duine damáiste ar).',
 seoltaí IP a raibh coiscthe go huathoibríoch ar an liosta seo. Féach ar an
 [[Special:BlockList|Liosta coisc IP]] chun
 liosta a fháil de coisc atá i bhfeidhm faoi láthair.',
-	'block-log-flags-nocreate' => 'cuntas chruthú díchumasaithe',
 	'block-log-flags-noemail' => 'cosc ar ríomhphost',
 	'bydate' => 'de réir dáta',
 	'bad_image_list' => 'An formáid ná a leanas:
@@ -5824,9 +5815,9 @@ Míreanna liosta amháin (líonta a tosú le *) atá eisithe.
 Tá ar an chead nasc ar líne, naiscthe le drochchomhad.
 Aon naisc a leanas ar an líne céanna atá eisithe mar eisceachtaí; leathanaigh ina tarlaigh an comhad inlíne.',
 	'blankpage' => 'Leathanach bán',
-];
+);
 
-$messages['gag'] = [
+$messages['gag'] = array(
 	'badaccess' => 'İzin kusurluu',
 	'badaccess-group0' => 'Bu işlemi yapmaa kuvediniz yok.',
 	'badaccess-groups' => 'O işlem ani yapmaa neetlendiniz var nicä yapılsın sadä {{PLURAL:$2|gruppa|gruppalarınnan}} birinin kullanıcıları tarafınnan: $1.',
@@ -5859,15 +5850,14 @@ Herliim girmediniz [[Special:Preferences|seçimner]] bölümünde geçerli bir e
 	'blocklink' => 'köstek ol',
 	'blocklogpage' => 'Köstek jurnalı',
 	'blocklogentry' => '[[$1]] sebep $2 $3 durduruldu',
-	'block-log-flags-nocreate' => 'esap yaratmaa kösteklendi',
 	'bad_image_list' => 'Bu format läazım olsun sansın aşaada:
 
 Sadä listadaki êlementlarä (* nışannan çekedän liniyalar) bakılacêk. 
 Liniyadaki seftä baalantı läazım olsun koymaa yasak resim için baalantı. 
 Hep o liniyadaki übür baalantılara bakılacêk sansın bir maasus hal, ani onnar o yazılar angısına resim var nicä koymaa.',
-];
+);
 
-$messages['gan-hans'] = [
+$messages['gan-hans'] = array(
 	'badaccess' => '权限错误',
 	'badaccess-group0' => '倷𠮶要求冇拖批准。',
 	'badaccess-groups' => '汝要求𠮶操作单就$1𠮶用户（{{PLURAL:$2|组|组员}}）才扤得正。',
@@ -5879,15 +5869,15 @@ $messages['gan-hans'] = [
 	'bold_sample' => '粗体字',
 	'bold_tip' => '粗体字',
 	'blockedtitle' => '用户封到嘞',
-	'blockedtext' => '倷𠮶用户名或IP地址拖$1封到嘞。
+	'blockedtext' => "倷𠮶用户名或IP地址拖$1封到嘞。
 
-个道封锁系$1封𠮶。个中原因系\'\'$2\'\'。
+个道封锁系$1封𠮶。个中原因系''$2''。
 
 * 个回封锁𠮶开始时间系：$8
 * 个回封锁𠮶到期时间系：$6
 * 对于拖查封𠮶人：$7
 
-倷联系得正$1或别𠮶[[{{MediaWiki:Grouppage-sysop}}|管理员]]，讨论个回封锁。除非倷到倷𠮶[[Special:Preferences|帐号参数设置]]里度设正嘞有效𠮶email，伓然𠮶话倷系用伓正“email到个只用户”𠮶功能。设正嘞有效𠮶email后，个只功能系伓会拖封到𠮶。倷𠮶IP地址系$3，许拖封到𠮶ID系 #$5。请倷到全部𠮶查询里度注明个只地址同／或查封ID。',
+倷联系得正$1或别𠮶[[{{MediaWiki:Grouppage-sysop}}|管理员]]，讨论个回封锁。除非倷到倷𠮶[[Special:Preferences|帐号参数设置]]里度设正嘞有效𠮶email，伓然𠮶话倷系用伓正“email到个只用户”𠮶功能。设正嘞有效𠮶email后，个只功能系伓会拖封到𠮶。倷𠮶IP地址系$3，许拖封到𠮶ID系 #$5。请倷到全部𠮶查询里度注明个只地址同／或查封ID。",
 	'blockednoreason' => '冇话理由',
 	'badsig' => '原始签名错误，请检查HTML。',
 	'badsiglength' => '花名咁长？佢𠮶长度要少过$1只字符。',
@@ -5912,7 +5902,6 @@ $messages['gan-hans'] = [
 	'blocklogentry' => '[[$1]]拖封到$3 ，结束时间到$2',
 	'blocklogtext' => '个系用户封锁同解封操作𠮶日志。拖自动封锁𠮶IP冇列出。请参看[[Special:BlockList|拖封IP地址列表]]。',
 	'block-log-flags-anononly' => '单限制匿名用户',
-	'block-log-flags-nocreate' => '禁止个只IP/用户新开帐户',
 	'block-log-flags-noautoblock' => '禁用自动封禁',
 	'block-log-flags-noemail' => '禁止email',
 	'blockme' => '封吥偶去',
@@ -5922,9 +5911,9 @@ $messages['gan-hans'] = [
 会考虑单列到𠮶项目（以*开头𠮶项目）。
 头只链接非要连到只坏图。
 之后同一行𠮶链接会考虑系特殊，也就系话系幅图都能到哪篇文章同时显示得正。',
-];
+);
 
-$messages['gan-hant'] = [
+$messages['gan-hant'] = array(
 	'badaccess' => '許可權錯誤',
 	'badaccess-group0' => '倷嗰要求冇拕批准。',
 	'badaccess-groups' => '汝要求嗰操作單就$1嗰用戶（{{PLURAL:$2|組|組員}}）才扤得正。',
@@ -5936,15 +5925,15 @@ $messages['gan-hant'] = [
 	'bold_sample' => '粗體字',
 	'bold_tip' => '粗體字',
 	'blockedtitle' => '用戶封到嘞',
-	'blockedtext' => '倷嗰用戶名或IP地址拕$1封到嘞。
+	'blockedtext' => "倷嗰用戶名或IP地址拕$1封到嘞。
 
-箇道封鎖係$1封嗰。個中原因係\'\'$2\'\'。
+箇道封鎖係$1封嗰。個中原因係''$2''。
 
 * 箇回封鎖嗰開始時間係：$8
 * 箇回封鎖嗰到期時間係：$6
 * 對於拕查封嗰人：$7
 
-倷聯繫得正$1或別嗰[[{{MediaWiki:Grouppage-sysop}}|管理員]]，討論箇回封鎖。除非倷到倷嗰[[Special:Preferences|帳號參數設置]]裡度設正嘞有效嗰email，伓然嗰話倷係用伓正「email到箇隻用戶」嗰功能。設正嘞有效嗰email後，箇隻功能係伓會拕封到嗰。倷嗰IP地址係$3，許拕封到嗰ID係 #$5。請倷到全部嗰查詢裡度注明箇隻地址同／或查封ID。',
+倷聯繫得正$1或別嗰[[{{MediaWiki:Grouppage-sysop}}|管理員]]，討論箇回封鎖。除非倷到倷嗰[[Special:Preferences|帳號參數設置]]裡度設正嘞有效嗰email，伓然嗰話倷係用伓正「email到箇隻用戶」嗰功能。設正嘞有效嗰email後，箇隻功能係伓會拕封到嗰。倷嗰IP地址係$3，許拕封到嗰ID係 #$5。請倷到全部嗰查詢裡度注明箇隻地址同／或查封ID。",
 	'blockednoreason' => '冇話理由',
 	'badsig' => '原始簽名錯誤，請檢查HTML。',
 	'badsiglength' => '花名咁長？佢嗰長度要少過$1隻字符。',
@@ -5969,7 +5958,6 @@ $messages['gan-hant'] = [
 	'blocklogentry' => '[[$1]]拕封到$3 ，結束時間到$2',
 	'blocklogtext' => '箇係用戶封鎖同解封操作嗰日誌。拕自動封鎖嗰IP冇列出。請參看[[Special:BlockList|拕封IP地址列表]]。',
 	'block-log-flags-anononly' => '單限制匿名用戶',
-	'block-log-flags-nocreate' => '禁止箇隻IP/用戶新開帳戶',
 	'block-log-flags-noautoblock' => '禁用自動封禁',
 	'block-log-flags-noemail' => '禁止email',
 	'blockme' => '封吥我去',
@@ -5979,47 +5967,46 @@ $messages['gan-hant'] = [
 會考慮單列到嗰項目（以*開頭嗰項目）。
 頭隻連結非要連到隻壞圖。
 之後同一行嗰連結會考慮係特殊，也就係話係幅圖都能到哪篇文章同時顯示得正。',
-];
+);
 
-$messages['gd'] = [
+$messages['gd'] = array(
 	'broken-file-category' => 'Duilleagan sa bheil ceanglaichean faidhle a tha briste',
 	'badaccess' => 'Meareachd le cead',
-	'badaccess-group0' => 'Chan eil cead agad an gnìomh a dh\'iarr thu a thoirt gu buil.',
-	'badaccess-groups' => 'Tha an gnìomh a dh\'iarr thu cuingichte \'s cha dèan ach buill {{PLURAL:$2|a\' bhuidhinn|nam buidhnean}} a leanas e: $1.',
+	'badaccess-group0' => "Chan eil cead agad an gnìomh a dh'iarr thu a thoirt gu buil.",
+	'badaccess-groups' => "Tha an gnìomh a dh'iarr thu cuingichte 's cha dèan ach buill {{PLURAL:$2|a' bhuidhinn|nam buidhnean}} a leanas e: $1.",
 	'badarticleerror' => 'Cha ghabh an gnìomh seo a dhèanamh air an duilleag seo.',
 	'badtitle' => 'Droch thiotal',
-	'badtitletext' => 'Bha an duilleag a dh\'iarr thu mì-dhligheach, falamh no le tiotal eadar-chànanach no eadar-uici air a dhroch cheangal.
-Faodaidh gu bheil aon no barrachd charactairean ann nach urrainn dhut a chleachdadh ann an tiotalan.',
-	'badretype' => 'Chan eil an dà fhacal-faire a chuir thu a-steach a\' freagairt ri chèile.',
-	'blocked-mailpassword' => 'Chaidh bacadh a chur air an t-seòladh IP agad \'s chan eil cead deasachaidh agad agus chan urrainn dhut an gleus a chum aiseag an fhacail-fhaire a chleachdadh gus casg a chur air mì-ghnàthachadh.',
+	'badtitletext' => "Bha an duilleag a dh'iarr thu mì-dhligheach, falamh no le tiotal eadar-chànanach no eadar-uici air a dhroch cheangal.
+Faodaidh gu bheil aon no barrachd charactairean ann nach urrainn dhut a chleachdadh ann an tiotalan.",
+	'badretype' => "Chan eil an dà fhacal-faire a chuir thu a-steach a' freagairt ri chèile.",
+	'blocked-mailpassword' => "Chaidh bacadh a chur air an t-seòladh IP agad 's chan eil cead deasachaidh agad agus chan urrainn dhut an gleus a chum aiseag an fhacail-fhaire a chleachdadh gus casg a chur air mì-ghnàthachadh.",
 	'bold_sample' => 'Teacs trom',
 	'bold_tip' => 'Teacs trom',
 	'blockedtitle' => 'Tha an cleachdair air a bhacadh',
 	'boteditletter' => 'bt',
 	'badfilename' => 'Ainm ìomhaigh air atharrachadh ri "$1".',
 	'brokenredirects' => 'Ath-stiùireidhean briste',
-	'booksources' => 'Tùsan a tha \'nan leabhraichean',
-	'booksources-search-legend' => 'Lorg tùsan a tha \'nan leabhraichean',
+	'booksources' => "Tùsan a tha 'nan leabhraichean",
+	'booksources-search-legend' => "Lorg tùsan a tha 'nan leabhraichean",
 	'booksources-go' => 'Rach',
 	'blanknamespace' => '(Prìomh)',
 	'blockip' => 'Bac cleachdaiche',
-	'badipaddress' => 'Chan eil an seòladh IP aig a\' cleachdair seo iomchaidh',
-	'blockipsuccesssub' => 'Shoirbhich leat leis a\' bhacadh',
-	'blockipsuccesstext' => 'Tha [[Special:Contributions/$1|$1]] air a bhacadh.
-<br />Faic [[Special:BlockList|Liosta nan IP baicte]] na bacaidhean a dh\'ath-sgrùdadh.',
+	'badipaddress' => "Chan eil an seòladh IP aig a' cleachdair seo iomchaidh",
+	'blockipsuccesssub' => "Shoirbhich leat leis a' bhacadh",
+	'blockipsuccesstext' => "Tha [[Special:Contributions/$1|$1]] air a bhacadh.
+<br />Faic [[Special:BlockList|Liosta nan IP baicte]] na bacaidhean a dh'ath-sgrùdadh.",
 	'blocklink' => 'bac',
 	'blocklogpage' => 'Loga nam bacadh',
 	'blocklogentry' => 'Chaidh bacadh a chrìochnaicheas ann an $2 a chur air [[$1]] $3',
-	'block-log-flags-nocreate' => 'cruthachadh de chunntasan ùra à comas',
 	'bydate' => 'air ceann-latha',
-	'bad_image_list' => 'Seo mar a tha am fòrmat:
+	'bad_image_list' => "Seo mar a tha am fòrmat:
 
 Cha bheachdaichear ach air buill liosta (loidhniche a tha * air am beulaibh).
-Feumaidh a\' chiad cheangal air loidhne a bhith \'na cheangal ri droch fhaidhle.
-Thathar a\' coimhead air ceangal sam bith eile san loidhne sin mar eisgeachdan, \'s e sin duilleagan far am faod am faidhle a bhith sa loidhne.',
-];
+Feumaidh a' chiad cheangal air loidhne a bhith 'na cheangal ri droch fhaidhle.
+Thathar a' coimhead air ceangal sam bith eile san loidhne sin mar eisgeachdan, 's e sin duilleagan far am faod am faidhle a bhith sa loidhne.",
+);
 
-$messages['gl'] = [
+$messages['gl'] = array(
 	'broken-file-category' => 'Páxinas con ligazóns rotas cara a ficheiros',
 	'badaccess' => 'Erro de permisos',
 	'badaccess-group0' => 'Non ten os permisos necesarios para executar a acción que solicitou.',
@@ -6118,7 +6105,6 @@ Olle a [[Special:BlockList|lista de enderezos IP e usuarios bloqueados]] para re
 Non se listan os enderezos IP bloqueados automaticamente.
 Olle a [[Special:BlockList|lista de enderezos IP e usuarios bloqueados]] se quere comprobar a lista cos bloqueos vixentes.',
 	'block-log-flags-anononly' => 'só os usuarios anónimos',
-	'block-log-flags-nocreate' => 'desactivada a creación de contas',
 	'block-log-flags-noautoblock' => 'bloqueo automático deshabilitado',
 	'block-log-flags-noemail' => 'correo electrónico bloqueado',
 	'block-log-flags-nousertalk' => 'desactivada a edición da súa conversa',
@@ -6132,26 +6118,26 @@ Só se consideran os elementos dunha lista (liñas que comezan por *).
 A primeira ligazón dunha liña ten que apuntar cara a un ficheiro que se queira bloquear.
 As ligazóns posteriores da mesma liña considéranse excepcións, isto é, páxinas nas que o ficheiro pode aparecer inserido.',
 	'blankpage' => 'Baleirar a páxina',
-];
+);
 
-$messages['glk'] = [
+$messages['glk'] = array(
 	'blocklink' => 'دَوَسته ببه',
-];
+);
 
-$messages['gn'] = [
+$messages['gn'] = array(
 	'bold_sample' => 'Haipyre oñemohũvéva',
 	'bold_tip' => 'Haipyre oñemohũvéva',
-	'brokenredirects' => 'Ñembohapejey hekopegua\'ỹva',
+	'brokenredirects' => "Ñembohapejey hekopegua'ỹva",
 	'brokenredirects-edit' => 'jehaijey',
-	'brokenredirects-delete' => 'mboje\'o',
-	'booksources' => 'Heñóiva kuatiañe\'ẽme',
+	'brokenredirects-delete' => "mboje'o",
+	'booksources' => "Heñóiva kuatiañe'ẽme",
 	'blanknamespace' => '(Tenondeguáva)',
 	'blockip' => 'Ejoko puruhára',
 	'blocklink' => 'ejoko',
 	'blocklogtext' => 'Esto es un registro de bloqueos y desbloqueos de usuarios. Las direcciones bloqueadas automáticamente no aparecen aquí. Consulte la [[Special:BlockList|IP mbohape rysýi imbotypyréva]] para ver la lista de prohibiciones y bloqueos actualmente vigente.',
-];
+);
 
-$messages['got'] = [
+$messages['got'] = array(
 	'bold_sample' => '𐌰𐌱𐍂𐍃 𐌱𐍉𐌺𐌰',
 	'bold_tip' => '𐌰𐌱𐍂 𐍅𐌰𐌿𐍂𐌳𐌰',
 	'boteditletter' => 'b',
@@ -6162,9 +6148,9 @@ $messages['got'] = [
 	'blocklink' => '𐍅𐌰𐍂𐌲𐌾𐌰𐌽',
 	'blocklogpage' => '𐌻𐍉𐌲𐌱𐍉𐌺𐌰 𐌰𐍆 𐌰𐍆𐌳𐍂𐌰𐌿𐍃𐌾𐌰𐌽',
 	'blocklogentry' => '𐌰𐍆𐌳𐍂𐌰𐌿𐍃𐌹𐌸 [[$1]] 𐍆𐌰𐌿𐍂 $2 $3',
-];
+);
 
-$messages['grc'] = [
+$messages['grc'] = array(
 	'badaccess' => 'Σφάλμα ἀδείας',
 	'badaccess-group0' => 'Οὐκ ἔξεστί σοι ταῦτα διαπράττειν.',
 	'badaccess-groups' => 'Ἡ ὑπἐσοῦ ᾐτημένη πρᾶξις προωρισμένη ἐστὶν διὰ τοὺς χρωμένους {{PLURAL:$2|τῆς ὁμάδος|τῶν ὁμάδων}}: $1.',
@@ -6176,10 +6162,10 @@ $messages['grc'] = [
 	'bold_sample' => 'Γράμματα παχέα',
 	'bold_tip' => 'Γράμματα παχέα',
 	'blockedtitle' => 'Ἀποκεκλεισμένος ὁ χρώμενος',
-	'blockedtext' => '\'\'\'Τὸ ὄνομα χρωμένου σου ἢ ἡ IP-διεύθυνσις σου πεφραγμένα εἰσίν.\'\'\'
+	'blockedtext' => "'''Τὸ ὄνομα χρωμένου σου ἢ ἡ IP-διεύθυνσις σου πεφραγμένα εἰσίν.'''
 
 Ἡ φραγὴ γέγονε ὑπὸ τὸν/τὴν $1.
-Ἡ δεδομένη αἰτιολογία ἐστίν: \'\'$2\'\'.
+Ἡ δεδομένη αἰτιολογία ἐστίν: ''$2''.
 
 * Ἔναρξις φραγῆς: $8
 * Λῆξις φραγῆς: $6
@@ -6188,10 +6174,10 @@ $messages['grc'] = [
 Ἀποτάθητι εἰς τὸν/τὴν $1 ἢ ὅντινα ἕτερον [[{{MediaWiki:Grouppage-sysop}}|γέροντα]] διὰ τὸ διαλέγεσθαι περὶ τῆς φραγῆς.
 Οὐ δύνασαι χρῆσθαι τῇ δυνατότητι «ἀποστολῆς ἠλεκτρονικῆς ἐπιστολῆς τῷδε τῷ χρωμένῳ» εἰ οὐχ ὁρίσεις ἔγκυρόν τινα ἠλεκτρονικὴν διεύθυνσιν ἐν ταῖς [[Special:Preferences|προκρίσεσί]] σου.
 Ἡ τρέχουσα IP-διεύθυνσις σου $3 ἐστίν, καὶ ἡ ἀναγνώρισις τῆς φραγῆς #$5 ἐστίν.
-Παρακαλοῦμεν σε περιλαμβάνειν οἱανδήποτε ἐξ αὐτῶν ἢ καὶ ἀμφοτέρας ἐν ταῖς ἐρωτήσεσί σου.',
+Παρακαλοῦμεν σε περιλαμβάνειν οἱανδήποτε ἐξ αὐτῶν ἢ καὶ ἀμφοτέρας ἐν ταῖς ἐρωτήσεσί σου.",
 	'blockednoreason' => 'οὐδεμία αἰτία ἐδόθη',
-	'blockedoriginalsource' => 'Ἡ πηγὴ τοῦ \'\'\'$1\'\'\' δείκνυται κατωτέρω:',
-	'blockededitsource' => 'Τὸ κείμενον τῶν \'\'\'μεταγραφῶν ὑπ\' ἐσοῦ\'\'\' τοῦ \'\'\'$1\'\'\' δείκνυται κάτωθι:',
+	'blockedoriginalsource' => "Ἡ πηγὴ τοῦ '''$1''' δείκνυται κατωτέρω:",
+	'blockededitsource' => "Τὸ κείμενον τῶν '''μεταγραφῶν ὑπ' ἐσοῦ''' τοῦ '''$1''' δείκνυται κάτωθι:",
 	'badsig' => 'Ἄκυρος πρωτογενὴς ὑπογραφή. Ἔλεγξον τὰ HTML-σήμαντρα.',
 	'badsiglength' => 'Ἡ ὑπογραφή σου πέρα τοῦ δέοντος μεγάλη ἐστίν.
 Οὐκ ἔξεστί ταύτῃ πλέον τῶν $1 {{PLURAL:$1|χαρακτῆρος|χαρακτῆρας}} ἔχει.',
@@ -6217,7 +6203,6 @@ $messages['grc'] = [
 	'blocklogpage' => 'Αἱ ἀποκλῄσεις',
 	'blocklogentry' => 'Κεκλῃμένος [[$1]] μέχρι οὗ $2 $3',
 	'block-log-flags-anononly' => 'μόνον ἀνώνυμοι χρώμενοι',
-	'block-log-flags-nocreate' => 'ποίησις λογισμοῦ κατεσταλμένη',
 	'block-log-flags-noautoblock' => 'αὐτόματος φραγὴ κατεσταλμένη',
 	'block-log-flags-noemail' => 'ἠλ-ταχυδρομεῖον πεφραγμένον',
 	'block-log-flags-nousertalk' => 'μὴ δυναμένη ἡ μεταγραφή τῆς δέλτου σου ἐστίν',
@@ -6231,9 +6216,9 @@ $messages['grc'] = [
 Ὁ πρῶτος σύνδεσμος ἐν πάσῃ γραμμῇ ὀφείλει εἶναι σύνδεσμος πρὸς κακὸν ἀρχεῖόν τι.
 Οἷοι δήποτε ἐπακόλουθοι σύνδεσμοι ἐν τῇ αὐτῇ γραμμῇ θεωρούμενοι ὡς ἐξαιρέσεις εἰσίν, δῆλα δὴ δέλτοι ὅπου τὸ ἀρχεῖον φανῆναι ἐν συνδέσει δύναται.',
 	'blankpage' => 'Κενὴ δέλτος',
-];
+);
 
-$messages['gsw'] = [
+$messages['gsw'] = array(
 	'broken-file-category' => 'Syte mit kaputtige Dateilink',
 	'badaccess' => 'Dyyni Rächt länge nit.',
 	'badaccess-group0' => 'Du hesch d Berächtigung nit, wu s brucht fir die Aktion.',
@@ -6247,10 +6232,10 @@ Zum Missbruuch z verhindere, isch au d Megligkeit gsperrt wore, e nej Passwort a
 	'bold_sample' => 'fetti Schrift',
 	'bold_tip' => 'Fetti Schrift',
 	'blockedtitle' => 'Benutzer isch gsperrt.',
-	'blockedtext' => '\'\'\'Dyy Benutzername oder Dyyni IP-Adräss isch gsperrt wore.\'\'\'
+	'blockedtext' => "'''Dyy Benutzername oder Dyyni IP-Adräss isch gsperrt wore.'''
 
 D Sperrig isch vu $1 uusgfiert wore.
-As Grund isch \'\'$2\'\' aagee wore.
+As Grund isch ''$2'' aagee wore.
 
 * Aafang vu dr Sperrig: $8
 * Ändi vu dr Sperrig: $6
@@ -6259,7 +6244,7 @@ As Grund isch \'\'$2\'\' aagee wore.
 Du chasch $1 oder e andere [[{{MediaWiki:Grouppage-sysop}}|Ammann]] kontaktiere go dischpetiere iber die Sperrig.
 Du chasch d „E-Mail an dää Benutzer“-Funktion nit bruche, solang kei giltigi E-Mail-Adräss in Dyyne [[Special:Preferences|Benutzerkonto-Yystellige]] yydrait isch, oder solang die Funktion fir Di gsperrt isch.
 Dyy aktuälli IP-Adräss isch $3, un d Sperr-ID isch #$5.
-Bitte fieg in jedi Aafrog, wu du stellsch, alli Information yy.',
+Bitte fieg in jedi Aafrog, wu du stellsch, alli Information yy.",
 	'blockednoreason' => 'kei Begrindig aagee',
 	'blocked-notice-logextract' => 'Dää Benutzer isch zur Zyt gsperrt.
 As Information chunnt do ne aktuälle Uuszug us em Benutzersperr-Logbuech:',
@@ -6306,7 +6291,6 @@ Go d Sperri ufhebe lueg d [[Special:BlockList|Lisch vu allene aktive Sperrine]].
 	'blocklogentry' => 'sperrt [[$1]] für d Ziit vo: $2 $3',
 	'blocklogtext' => 'Des isch s Logbuech iber Sperrige un Entsperrige vu Benutzer. Automatisch blockierti IP-Adrässe wäre nit erfasst. Lueg au [[Special:BlockList|IP-Block Lischt]] fir e Lischt vu gsperrte Benutzer.',
 	'block-log-flags-anononly' => 'nume Anonymi',
-	'block-log-flags-nocreate' => 'Aalege vu Benutzerchonte gsperrt',
 	'block-log-flags-noautoblock' => 'Autoblock deaktiviert',
 	'block-log-flags-noemail' => 'E-Mail-Versand gsperrt',
 	'block-log-flags-nousertalk' => 'derf di eigene Diskussionssyte nit bearbeite',
@@ -6320,9 +6304,9 @@ Nume Zylene, wo mit emne * afö, wärde berücksichtigt.
 Nach em * mues zersch e Link zuren Unerwünschte Datei cho.
 Wyteri Links uf der glyche Zyle wärden als Usnahme behandlet, wo die Datei trotzdäm darff vorcho.',
 	'blankpage' => 'E leeri Syte',
-];
+);
 
-$messages['gu'] = [
+$messages['gu'] = array(
 	'broken-file-category' => 'ફાઇલોની ત્રૂટક કડીઓવાળાં પાનાં',
 	'badaccess' => 'પરવાનગીની ખામી',
 	'badaccess-group0' => 'તમને વિનંતી કરાયેલ ક્રિયાને ક્રિયાન્વિત કરવાની છૂટ નથી.',
@@ -6337,19 +6321,19 @@ $messages['gu'] = [
 	'bold_sample' => 'ઘાટા અક્ષર',
 	'bold_tip' => 'ઘાટું લખાણ',
 	'blockedtitle' => 'સભ્ય પ્રતિબંધિત છે',
-	'blockedtext' => '\'\'\'આપનાં સભ્ય નામ અથવા આઇ.પી. એડ્રેસ પર પ્રતિબંધ મુકવામાં આવ્યો છે.\'\'\'
+	'blockedtext' => "'''આપનાં સભ્ય નામ અથવા આઇ.પી. એડ્રેસ પર પ્રતિબંધ મુકવામાં આવ્યો છે.'''
 
 આ પ્રતિબંધ  $1એ મુક્યો છે.
-જેને માટે કારણ આપવામાં આવ્યું છે કે, \'\'$2\'\'.
+જેને માટે કારણ આપવામાં આવ્યું છે કે, ''$2''.
 
 * પ્રતિબંધ મુક્યા તારીખ: $8
 * પ્રતિબંધ ઉઠાવવાની તારીખ: $6
 * જેના ઉપર પ્રતિબંધ મુક્યો છે તે: $7
 
 આપનાં પર મુકવામાં આવેલાં પ્રતિબંધ વિષે ચર્ચા કરવા માટે આપ $1નો કે અન્ય [[{{MediaWiki:Grouppage-sysop}}|પ્રબંધક]]નો સંપર્ક કરી શકો છો.
-આપ \'સભ્યને ઇ-મેલ કરો\' ની કડી વાપરી નહી શકો, પરંતુ જો આપનાં [[Special:Preferences|મારી પસંદ]]માં યોગ્ય ઇ-મેલ સરનામું વાપર્યું હશે અને તમારા તે ખાતું વાપરવા ઉપર પ્રતિબંધ નહી મુક્યો હોય તો તમે તે કડીનો ઉપયોગ કરી શકશો.
+આપ 'સભ્યને ઇ-મેલ કરો' ની કડી વાપરી નહી શકો, પરંતુ જો આપનાં [[Special:Preferences|મારી પસંદ]]માં યોગ્ય ઇ-મેલ સરનામું વાપર્યું હશે અને તમારા તે ખાતું વાપરવા ઉપર પ્રતિબંધ નહી મુક્યો હોય તો તમે તે કડીનો ઉપયોગ કરી શકશો.
 તમારૂં હાલનું આઇ.પી સરનામું છે $3, અને જેના પર પ્રતિબંધ મુકવામાં આવ્યો છે તે છે  #$5.
-મહેરબાની કરીને કોઇ પણ પત્ર વ્યવહારમાં ઉપરની બધીજ માહિતીનો ઉલ્લેખ કરશો.',
+મહેરબાની કરીને કોઇ પણ પત્ર વ્યવહારમાં ઉપરની બધીજ માહિતીનો ઉલ્લેખ કરશો.",
 	'blockednoreason' => 'કોઇ કારણ દર્શાવવામાં આવ્યું નથી',
 	'blocked-notice-logextract' => 'આ સભ્ય હાલમાં પ્રતિબંધિત છે.
 તમારા નીરીક્ષણ માટે તાજેતરમાં પ્રતિબંધિત થયેલા સભ્યોની યાદિ આપી છે.',
@@ -6426,7 +6410,6 @@ HTML નાકું ચકાસો',
 સ્વયંચાલિત રીતે રોક લગાવાયેલ IP સરનામાની યાદિ અહીં નથી આપી.
 હાલમાં પ્રવર્તમાન રોક ની યાદિ અહીં જુઓ [[Special:BlockList|IP block list]].',
 	'block-log-flags-anononly' => 'માત્ર અજ્ઞાત સભ્ય',
-	'block-log-flags-nocreate' => 'ખાતું ખોલવા પર પ્રતિબંધ છે',
 	'block-log-flags-noautoblock' => 'સ્વયંચાલિત પ્રતિબંધ ક્રિયા નિષ્ક્રીય કરાઈ',
 	'block-log-flags-noemail' => 'ઇ-મેલ પ્ર પ્રતિબંધ મુકાયો',
 	'block-log-flags-nousertalk' => 'તમે પોતાનું ચર્ચા પાનામાં ફેરફાર ન કરી શકો.',
@@ -6440,27 +6423,27 @@ HTML નાકું ચકાસો',
 પંક્તિમાં રહેલી પહેલી કડી ખરાબ ફાઇલને જોડતી હોવી જ જોઇએ.
 તે જ પંક્તિમાં બાદમાં આવતી કડીઓ અપવાદ રૂપ ગણવામાં આવશે, જેમકે એવા લેખો કે જેમાં ફાઇલ વણી લેવામાં આવી (inline) હોય.',
 	'blankpage' => 'કોરું પાનું',
-];
+);
 
-$messages['gv'] = [
+$messages['gv'] = array(
 	'badaccess' => 'Marranys y chied',
 	'badarticleerror' => 'Cha nod oo jannoo shen er y duillag shoh.',
 	'badtitle' => 'Drogh-ennym',
-	'badtitletext' => 'Va marrantys bentyn rish ennym y ghuillag v\'ou shirrey.  Foddee dy vel eh follym ny gyn vree, ny kianglt dy moal myr kiangley eddyr-wiki.  Foddee dy row cowraghyn \'syn ennym nagh nod oo jannoo ymmyd jeu ayns enmyn.',
+	'badtitletext' => "Va marrantys bentyn rish ennym y ghuillag v'ou shirrey.  Foddee dy vel eh follym ny gyn vree, ny kianglt dy moal myr kiangley eddyr-wiki.  Foddee dy row cowraghyn 'syn ennym nagh nod oo jannoo ymmyd jeu ayns enmyn.",
 	'bold_sample' => 'Clou trome',
 	'bold_tip' => 'Clou trome',
-	'blockedtitle' => 'Ta\'n ymmydeyr glast magh',
-	'blockedtext' => '\'\'\'Ta dt\'ennym ymmydeyr ny dt\'enmys IP currit fo ghlass.\'\'\'
+	'blockedtitle' => "Ta'n ymmydeyr glast magh",
+	'blockedtext' => "'''Ta dt'ennym ymmydeyr ny dt'enmys IP currit fo ghlass.'''
 
-V\'ou glassit magh ec $1. T\'eh yn oyr na \'\'$2\'\'.
+V'ou glassit magh ec $1. T'eh yn oyr na ''$2''.
 
 * Toshiaght y ghlass: $8
 * Jerrey yn ghlass: $6
 * Currit da: $7
 
 Foddee oo cur fys er $1 ny [[{{MediaWiki:Grouppage-sysop}}|reireyder]] elley dy resooney magh y ghlass.
-Cha nod oo jannoo ymmyd jeh\'n chummey \'cur post-L da\'n ymmydeyr shoh\' mannagh vel eh sonrit ayns dty [[Special:Preferences|choontys tosheeaghtyn]] as mannagh vel ou glasst magh.<br />
-She $3 dt\'enmys IP roie, as she dt\'enney ghlass na #$5. Cur ad lesh dagh ooilley eysht.',
+Cha nod oo jannoo ymmyd jeh'n chummey 'cur post-L da'n ymmydeyr shoh' mannagh vel eh sonrit ayns dty [[Special:Preferences|choontys tosheeaghtyn]] as mannagh vel ou glasst magh.<br />
+She $3 dt'enmys IP roie, as she dt'enney ghlass na #$5. Cur ad lesh dagh ooilley eysht.",
 	'blockednoreason' => 'cha nel fa currit',
 	'boteditletter' => 'r',
 	'badfilename' => 'T\'ennym y choadan aa-enmyssit myr "$1".',
@@ -6479,19 +6462,18 @@ She $3 dt\'enmys IP roie, as she dt\'enney ghlass na #$5. Cur ad lesh dagh ooill
 	'blocklogpage' => 'Lioar chooishyn ghlassaghyn magh',
 	'blocklogentry' => 'er nglassey magh [[$1]] rish/derrey $2 $3',
 	'block-log-flags-anononly' => 'ymmydeyryn neuenmyssit ynrican',
-	'block-log-flags-nocreate' => 'gyn kiart coontyssyn y chroo',
 	'bydate' => 'rere date',
-	'bad_image_list' => 'Shoh yn aght:
+	'bad_image_list' => "Shoh yn aght:
 
 Cha nel agh meeryn ayns rolley (linnaghyn as * ec y toshiaght) ta goll er smooinaghtyn er.
-Shegin da\'n chied chiangley er linney ve ny chiangley da drogh choadan.
-Kianglaghyn eiyrtyssagh erbee er yn linney shoh, t\'ad goll er loaghtey myr lhimmaghyn, shen gra, duillagyn as ta\'n coadan ayns-linney, foddee.',
-];
+Shegin da'n chied chiangley er linney ve ny chiangley da drogh choadan.
+Kianglaghyn eiyrtyssagh erbee er yn linney shoh, t'ad goll er loaghtey myr lhimmaghyn, shen gra, duillagyn as ta'n coadan ayns-linney, foddee.",
+);
 
-$messages['ha'] = [
+$messages['ha'] = array(
 	'badaccess' => 'Tangarɗar lamuncewa',
-	'badtitletext' => 'Kan shafin da aka nema bai da ma\'ana, ko kango ne, ko kuma wani kai ne na tsakanin harsuna ko shire-shire da bai da mahaɗi mai kyau.
-Tana yiyuwa yana da harafi ko haruffa da ba su karɓuwa cikin kanu.',
+	'badtitletext' => "Kan shafin da aka nema bai da ma'ana, ko kango ne, ko kuma wani kai ne na tsakanin harsuna ko shire-shire da bai da mahaɗi mai kyau.
+Tana yiyuwa yana da harafi ko haruffa da ba su karɓuwa cikin kanu.",
 	'bold_sample' => 'Rubutu mai gwaɓi',
 	'bold_tip' => 'Rubutu mai gwaɓi',
 	'boteditletter' => 'b',
@@ -6500,19 +6482,18 @@ Tana yiyuwa yana da harafi ko haruffa da ba su karɓuwa cikin kanu.',
 	'booksources-search-legend' => 'Nemo tushen littattafai',
 	'booksources-go' => 'Mu je',
 	'blanknamespace' => '(Babba)',
-	'blockip' => 'Hana ma\'aikaci',
+	'blockip' => "Hana ma'aikaci",
 	'blocklink' => 'Hanawa',
 	'blocklogpage' => 'Rajistan hani',
-	'blocklogentry' => 'an hana [[$1]] da wa\'adin $2 $3',
-	'block-log-flags-nocreate' => 'babu damar buɗa sabon akwanti',
+	'blocklogentry' => "an hana [[$1]] da wa'adin $2 $3",
 	'bad_image_list' => 'Fasalin yana kamar haka:
 
 Za a lura da layukan jeri kawai (masu farawa da *).
 Zaren farko a kan layi ya kamata ya nuna fayil maras kyau.
 Sauran mahaɗai a kan layin keɓaɓɓu ne, wato zuwa ga shafuna inda fayil kin zai iya kasancewa.',
-];
+);
 
-$messages['hak'] = [
+$messages['hak'] = array(
 	'badaccess' => 'Khièn-han chho-ngu',
 	'badaccess-group0' => 'Ngì kông-chhòi ke chhiáng-khiù mò yún-chún chṳp-hàng.',
 	'badaccess-groups' => 'Ngì kông-chhòi ke chhiáng-khiù chṳ́-yû $1 yung-fu-chû ke yung-fu chhòi-nèn sṳ́-yung.',
@@ -6524,9 +6505,9 @@ $messages['hak'] = [
 	'bold_sample' => 'Chhû-thí vùn-sṳ',
 	'bold_tip' => 'Chhû-thí vùn-sṳ',
 	'blockedtitle' => 'Yung-fu pûn chhà-fûng',
-	'blockedtext' => 'Ngì-ke yung-fu-miàng fe̍t-chá IP thi-tiám yí-kîn pûn $1 chhà-fûng.
+	'blockedtext' => "Ngì-ke yung-fu-miàng fe̍t-chá IP thi-tiám yí-kîn pûn $1 chhà-fûng.
 
-Liá-chhṳ chhà-fûng he yù $1 só fûng ke. Tông-chûng ke ngièn-yîn he \'\'$2\'\'. Ngì khó-yî lièn-lo̍k $1 fe̍t-chá khì-thâ ke [[{{MediaWiki:Grouppage-sysop}}|Kón-lî-yèn]], thó-lun liá-chhṳ ke chhà-fûng. Chhù-fî ngì yí-kîn chhai ngì-ke [[Special:Preferences|Chong-ho chhâm-su sat-chṳ]] chûng sat-thin liáu yit-ke yû-háu ke email, féu-chet ngì-he put-nèn sṳ́-yung “email liá-vi yung-fu” ke kûng-yung. Ngì-ke IP thi-tiám he $3, yì-yèn ke chhà-fûng ID he #$5. Chhiáng ngì chhai só-yû chhà-chhìm chûng chu-mìn liá-ke thi-tiám khi̍p／fe̍t-he chhà-fûng ID.',
+Liá-chhṳ chhà-fûng he yù $1 só fûng ke. Tông-chûng ke ngièn-yîn he ''$2''. Ngì khó-yî lièn-lo̍k $1 fe̍t-chá khì-thâ ke [[{{MediaWiki:Grouppage-sysop}}|Kón-lî-yèn]], thó-lun liá-chhṳ ke chhà-fûng. Chhù-fî ngì yí-kîn chhai ngì-ke [[Special:Preferences|Chong-ho chhâm-su sat-chṳ]] chûng sat-thin liáu yit-ke yû-háu ke email, féu-chet ngì-he put-nèn sṳ́-yung “email liá-vi yung-fu” ke kûng-yung. Ngì-ke IP thi-tiám he $3, yì-yèn ke chhà-fûng ID he #$5. Chhiáng ngì chhai só-yû chhà-chhìm chûng chu-mìn liá-ke thi-tiám khi̍p／fe̍t-he chhà-fûng ID.",
 	'badsig' => 'Chho-ngu ke ngièn-sṳ́ chhiâm-miàng; chhiáng kiám-chhà HTML phêu-chhiâm.',
 	'badsiglength' => 'Tshiâm-miàng ko-liong.
 Tshòng-tón pit-sî chhai $1-ke sṳ-ngièn yî-ha.',
@@ -6551,16 +6532,15 @@ Tshòng-tón pit-sî chhai $1-ke sṳ-ngièn yî-ha.',
 	'blocklogentry' => '"[[$1]]" yí-kîn pûn chhà-fûng $3, chûng-chṳ́ sṳ̀-kiên he $2',
 	'blocklogtext' => 'Liá-he kôan-yî yung-fu fûng-kim lâu kié-chhù fûng-kim chhâu-chok ke ki-liu̍k. Pûn chhṳ-thung fûng-kim ke IP thi-tiám mò-yû lie̍t-chhut. Chhiáng chhâm-kháu [[Special:BlockList|Pûn chhà-fûng ke IP thi-tiám lâu yung-fu lie̍t-péu]].',
 	'block-log-flags-anononly' => 'Han-chṳ ngia̍k-miàng ke yung-fu',
-	'block-log-flags-nocreate' => 'Kim-chṳ́ chhṳ́ IP/Yung-fu kien-li̍p sîn chong-fu',
 	'block-log-flags-noautoblock' => 'Thìn-chṳ́ yung chhṳ-thung fûng-kim',
 	'bydate' => 'on-cheu ngit-khì',
 	'bad_image_list' => 'Chhiáng on-cheu yî-ha kiet-sṳt phiên-siá：
 
 Chṳ́-yû (yung * khôi-thèu) lie̍t-chhut ke hong-muk chhòi-nèn pûn kháu-li. Mî-yit-hòng ke thi-yit ke lièn-chiap pit-sî he mò-ngâ vùn-khien ke lièn-chiap.
 yèn-heu thùng yit-hòng heu-fông ke lièn-chiap chiông-voi pûn sṳ-vì li-ngoi, he liá-ke vùn-khien khó-yî chhai hong-muk nui pûn hién-sṳ.',
-];
+);
 
-$messages['haw'] = [
+$messages['haw'] = array(
 	'badaccess' => 'Hewa me ka ‘ae',
 	'badtitle' => 'Inoa ‘ino',
 	'badretype' => 'ʻAʻole like nā ʻōlelo hūnā āu i hoʻokomo ai',
@@ -6578,9 +6558,9 @@ $messages['haw'] = [
 	'badipaddress' => 'Mana ‘ole ka wahi noho IP',
 	'blocklink' => 'e keʻa',
 	'blockme' => 'E ke‘a ia‘u',
-];
+);
 
-$messages['he'] = [
+$messages['he'] = array(
 	'broken-file-category' => 'דפים עם קישורים שבורים לקבצים',
 	'badaccess' => 'שגיאה בהרשאות',
 	'badaccess-group0' => 'אינכם מורשים לבצע את הפעולה שביקשתם.',
@@ -6684,7 +6664,6 @@ $messages['he'] = [
 כתובות IP שנחסמו אוטומטית אינן מופיעות.
 ראו גם את [[Special:BlockList|רשימת החסומים]] לרשימה של החרמות וחסימות פעילות כעת.',
 	'block-log-flags-anononly' => 'משתמשים אנונימיים בלבד',
-	'block-log-flags-nocreate' => 'יצירת חשבונות נחסמה',
 	'block-log-flags-noautoblock' => 'חסימה אוטומטית מבוטלת',
 	'block-log-flags-noemail' => 'שליחת דוא"ל נחסמה',
 	'block-log-flags-nousertalk' => 'עריכת דף השיחה האישי נחסמה',
@@ -6698,9 +6677,9 @@ $messages['he'] = [
 הקישור הראשון בשורה חייב להיות קישור לקובץ בעייתי.
 כל הקישורים הבאים באותה השורה נחשבים לחריגים, כלומר לדפים שבהם ניתן להציג את הקובץ.',
 	'blankpage' => 'דף ריק',
-];
+);
 
-$messages['hi'] = [
+$messages['hi'] = array(
 	'badaccess' => 'अनुमति त्रुटि',
 	'badaccess-group0' => 'जिस क्रिया का अनुरोध आपने किया है उसे संचालित करने की अनुमति आपको नही है।',
 	'badaccess-groups' => 'आपने जो क्रिया आजमाई है वह केवल {{PLURAL:$2|$1 समह|$1 समूहों}} के सदस्य ही कर सकते हैं।',
@@ -6712,22 +6691,22 @@ $messages['hi'] = [
 	'bold_sample' => 'मोटा पाठ',
 	'bold_tip' => 'मोटे अक्षर',
 	'blockedtitle' => 'सदस्य अवरुद्ध है',
-	'blockedtext' => '\'\'\'आपका सदस्यनाम अथवा आईपी पता अवरोधित कर दिया गया हैं ।\'\'\'
+	'blockedtext' => "'''आपका सदस्यनाम अथवा आईपी पता अवरोधित कर दिया गया हैं ।'''
 
 अवरोध $1 द्वारा किया गया था।
-अवरोध का कारण है \'\'$2\'\'.
+अवरोध का कारण है ''$2''.
 
 * अवरोध का आरंभ: $8
 * अवरोध की समाप्ति: $6
 * अवरोधित इकाई: $7
 
 इस अवरोध के बारे में चर्चा करने के लिए आप $1 या किसी अन्य [[{{MediaWiki:Grouppage-sysop}}|प्रबन्धक]] से संपर्क कर सकते हैं।
-अगर आपने [[Special:Preferences|सदस्य वरीयताएँ]] में वैध डाक पता प्रविष्ट किया है तो ही आप \'इस प्रयोक्ता को डाक भेजें\' वाली सुविधा का इस्तेमाल कर सकते हैं और आपको इसका इस्तेमाल करने से नहीं रोका गया है।
+अगर आपने [[Special:Preferences|सदस्य वरीयताएँ]] में वैध डाक पता प्रविष्ट किया है तो ही आप 'इस प्रयोक्ता को डाक भेजें' वाली सुविधा का इस्तेमाल कर सकते हैं और आपको इसका इस्तेमाल करने से नहीं रोका गया है।
 आपका मौजूदा आईपी पता $3 है और अवरोध क्रमांक #$5 है।
-आप जो भी तफ़्तीश करें उसमें उपरोक्त सभी जानकारी भी शामिल करें।',
+आप जो भी तफ़्तीश करें उसमें उपरोक्त सभी जानकारी भी शामिल करें।",
 	'blockednoreason' => 'कारण दिया नहीं हैं',
-	'blockedoriginalsource' => '\'\'\'$1\'\'\' का स्रोत इसके नीचे दिया गया है:',
-	'blockededitsource' => '\'\'\'$1\'\'\' को \'\'\'आपके बदलाव\'\'\' का पाठ्य नीचे दर्शाया गया हैं:',
+	'blockedoriginalsource' => "'''$1''' का स्रोत इसके नीचे दिया गया है:",
+	'blockededitsource' => "'''$1''' को '''आपके बदलाव''' का पाठ्य नीचे दर्शाया गया हैं:",
 	'blocked-notice-logextract' => 'यह सदस्य फ़िलहाल अवरोधित हैं। सदंर्भ के लिए ताज़ातरीन अवरोध चिट्ठा प्रविष्टि नीचे है:',
 	'badsig' => 'गलत कच्चा दस्तखत, HTML टैग की जाँच करें ।',
 	'badsiglength' => 'यह हस्ताक्षर बहुत बड़ा है।
@@ -6764,7 +6743,6 @@ $messages['hi'] = [
 स्वत: बाधित होने वाले IP पते इस सूची में उपलब्ध नहीं है।
 वर्त्तमान में क्रियाशील प्रतिबंधों और बाध्यों की सूची के लिए [[Special:IPBlockList|IP बाधित सूची]] देखें।',
 	'block-log-flags-anononly' => 'सिर्फ अनामक सदस्य',
-	'block-log-flags-nocreate' => 'खाता निर्माण पर रोक',
 	'block-log-flags-noautoblock' => 'ऑटोब्लॉक बंद हैं',
 	'block-log-flags-noemail' => 'इ-मेल बंद हैं',
 	'block-log-flags-nousertalk' => 'अपना वार्ता पन्ना भी नहीं बदल सकते हैं',
@@ -6778,9 +6756,9 @@ $messages['hi'] = [
 किसी भी पक्ति में मौजूद पहली कड़ी, गलत संचिका की कड़ी होनी चाहिए
 उसी पंक्ति मे आगे आने वाली अन्य कड़ियों को अपवाद माना जाता है, अर्थात् ये ऐसे पन्ने होंगे जिनके अंदर यह संचिका जड़ी हुई है।',
 	'blankpage' => 'खाली पन्ना',
-];
+);
 
-$messages['hif'] = [
+$messages['hif'] = array(
 	'badaccess' => 'अनुमति त्रुटि',
 	'badaccess-group0' => 'जिस क्रिया का अनुरोध आपने किया है उसे संचालित करने की अनुमति आपको नही है।',
 	'badaccess-groups' => 'आपने जो क्रिया आजमाई है वह केवल {{PLURAL:$2|$1 समह|$1 समूहों}} के सदस्य ही कर सकते हैं।',
@@ -6792,22 +6770,22 @@ $messages['hif'] = [
 	'bold_sample' => 'मोटा पाठ',
 	'bold_tip' => 'मोटे अक्षर',
 	'blockedtitle' => 'सदस्य अवरुद्ध है',
-	'blockedtext' => '\'\'\'आपका सदस्यनाम अथवा आईपी पता अवरोधित कर दिया गया हैं ।\'\'\'
+	'blockedtext' => "'''आपका सदस्यनाम अथवा आईपी पता अवरोधित कर दिया गया हैं ।'''
 
 अवरोध $1 द्वारा किया गया था।
-अवरोध का कारण है \'\'$2\'\'.
+अवरोध का कारण है ''$2''.
 
 * अवरोध का आरंभ: $8
 * अवरोध की समाप्ति: $6
 * अवरोधित इकाई: $7
 
 इस अवरोध के बारे में चर्चा करने के लिए आप $1 या किसी अन्य [[{{MediaWiki:Grouppage-sysop}}|प्रबन्धक]] से संपर्क कर सकते हैं।
-अगर आपने [[Special:Preferences|सदस्य वरीयताएँ]] में वैध डाक पता प्रविष्ट किया है तो ही आप \'इस प्रयोक्ता को डाक भेजें\' वाली सुविधा का इस्तेमाल कर सकते हैं और आपको इसका इस्तेमाल करने से नहीं रोका गया है।
+अगर आपने [[Special:Preferences|सदस्य वरीयताएँ]] में वैध डाक पता प्रविष्ट किया है तो ही आप 'इस प्रयोक्ता को डाक भेजें' वाली सुविधा का इस्तेमाल कर सकते हैं और आपको इसका इस्तेमाल करने से नहीं रोका गया है।
 आपका मौजूदा आईपी पता $3 है और अवरोध क्रमांक #$5 है।
-आप जो भी तफ़्तीश करें उसमें उपरोक्त सभी जानकारी भी शामिल करें।',
+आप जो भी तफ़्तीश करें उसमें उपरोक्त सभी जानकारी भी शामिल करें।",
 	'blockednoreason' => 'कारण दिया नहीं हैं',
-	'blockedoriginalsource' => '\'\'\'$1\'\'\' का स्रोत इसके नीचे दिया गया है:',
-	'blockededitsource' => '\'\'\'$1\'\'\' को \'\'\'आपके बदलाव\'\'\' का पाठ्य नीचे दर्शाया गया हैं:',
+	'blockedoriginalsource' => "'''$1''' का स्रोत इसके नीचे दिया गया है:",
+	'blockededitsource' => "'''$1''' को '''आपके बदलाव''' का पाठ्य नीचे दर्शाया गया हैं:",
 	'blocked-notice-logextract' => 'यह सदस्य फ़िलहाल अवरोधित हैं। सदंर्भ के लिए ताज़ातरीन अवरोध चिट्ठा प्रविष्टि नीचे है:',
 	'badsig' => 'गलत कच्चा दस्तखत, HTML टैग की जाँच करें ।',
 	'badsiglength' => 'यह हस्ताक्षर बहुत बड़ा है।
@@ -6844,7 +6822,6 @@ $messages['hif'] = [
 स्वत: बाधित होने वाले IP पते इस सूची में उपलब्ध नहीं है।
 वर्त्तमान में क्रियाशील प्रतिबंधों और बाध्यों की सूची के लिए [[Special:IPBlockList|IP बाधित सूची]] देखें।',
 	'block-log-flags-anononly' => 'सिर्फ अनामक सदस्य',
-	'block-log-flags-nocreate' => 'खाता निर्माण पर रोक',
 	'block-log-flags-noautoblock' => 'ऑटोब्लॉक बंद हैं',
 	'block-log-flags-noemail' => 'इ-मेल बंद हैं',
 	'block-log-flags-nousertalk' => 'अपना वार्ता पन्ना भी नहीं बदल सकते हैं',
@@ -6858,9 +6835,9 @@ $messages['hif'] = [
 किसी भी पक्ति में मौजूद पहली कड़ी, गलत संचिका की कड़ी होनी चाहिए
 उसी पंक्ति मे आगे आने वाली अन्य कड़ियों को अपवाद माना जाता है, अर्थात् ये ऐसे पन्ने होंगे जिनके अंदर यह संचिका जड़ी हुई है।',
 	'blankpage' => 'खाली पन्ना',
-];
+);
 
-$messages['hif-latn'] = [
+$messages['hif-latn'] = array(
 	'badaccess' => 'Anumati nai hai',
 	'badaccess-group0' => 'Aap jon chij kare mangta uske ijajat aap ke nai hai.',
 	'badaccess-groups' => 'Aap jon chij kare mangtaa hai uske khali ii group $1 {{PLURAL:$2|the group|one of the groups}} ke ek sadasya kare sake hai.',
@@ -6872,22 +6849,22 @@ $messages['hif-latn'] = [
 	'bold_sample' => 'Motaa text',
 	'bold_tip' => 'Motaa text',
 	'blockedtitle' => 'Sadasya ke rok dewa gais hai',
-	'blockedtext' => '\'\'\'Aapke user name nai to IP address ke rok dewa gae hai.\'\'\'
+	'blockedtext' => "'''Aapke user name nai to IP address ke rok dewa gae hai.'''
 
 Roke waala hai $1.
-Iske kaaran hai \'\'$2\'\'.
+Iske kaaran hai ''$2''.
 
 * Roke ke suruu: $8
 * Roke kab khatam hoi: $6
 * Kiske rokaa jae hai: $7
 
 Aap $1 ke mile saktaa hai nai to duusra [[{{MediaWiki:Grouppage-sysop}}|administrator]] se rukawat ke baare me baat karo.
-Aap ii sadasya ke \'email this user\' feature ke kaam me lae ke baat nai kare saktaa hai jab tak ki ek kanuni email address aapke [[Special:Preferences|account preferences]] me nai hai aur aap ke iske kaam me laae ke roka nai gae hai.
+Aap ii sadasya ke 'email this user' feature ke kaam me lae ke baat nai kare saktaa hai jab tak ki ek kanuni email address aapke [[Special:Preferences|account preferences]] me nai hai aur aap ke iske kaam me laae ke roka nai gae hai.
 Aap ke abhi ke IP address $3 hai, aur roka gae ID hai #$5.
-Meharbani kar ke chahe ek nai to duno ke aapan sawaal me rakho.',
+Meharbani kar ke chahe ek nai to duno ke aapan sawaal me rakho.",
 	'blockednoreason' => 'koi kaaran nai dewa gais hai',
-	'blockedoriginalsource' => '\'\'\'$1\'\'\' ke kahaan se suruu bhais hai, niche likha hai:',
-	'blockededitsource' => 'Aap ke \'\'\'$1 ke badlao\'\'\' ke akchhar niche likha hai:',
+	'blockedoriginalsource' => "'''$1''' ke kahaan se suruu bhais hai, niche likha hai:",
+	'blockededitsource' => "Aap ke '''$1 ke badlao''' ke akchhar niche likha hai:",
 	'blocked-notice-logextract' => 'Ii sadasya ke abhi rok dewa gais hae.
 Sab se nawaa block log entry, aap ke reference ke khatir,  niche dewa gais hae:',
 	'badsig' => 'Invalid raw signature; HTML tags ke check karo.',
@@ -6928,7 +6905,6 @@ Iske suchi ke niche dekhawa jaawe hae aap ke jankari ke khatir.',
 Apne se rokaa gais IP adress ii suchi me nai hai.
 Abhi ke rukawat ke dekhe ke khatir meharbani kar ke [[Special:IPBlockList|IP block list]] ke dekho.',
 	'block-log-flags-anononly' => 'khaali bina naam ke sadasya',
-	'block-log-flags-nocreate' => 'nawaa account banae ke nai hai',
 	'block-log-flags-noautoblock' => 'apne se block kare ke ijajat nai hai',
 	'block-log-flags-noemail' => 'e-mail ke rok dewa gais hai',
 	'block-log-flags-nousertalk' => 'aapan baat waala panna ke apne se nai badle sakta hai',
@@ -6941,9 +6917,9 @@ Abhi ke rukawat ke dekhe ke khatir meharbani kar ke [[Special:IPBlockList|IP blo
 Khaali suchi waala chij  (jon line * se suruu hoe hai) ke dekha jaai. Line me pahila jorr kharab file ke jorr hoe ke chaahi.
 Wahii line pe aur koi jorr exception consider karaa jai i.e. jahaan pe panna sake inline hoe.',
 	'blankpage' => 'Khaali panna',
-];
+);
 
-$messages['hil'] = [
+$messages['hil'] = array(
 	'broken-file-category' => 'Mga panid nga may guba nga link sang hilera',
 	'badaccess' => 'Permiso sala/eror',
 	'badaccess-group0' => 'Indi ka mahimo nga magbuhat sang hulag nga imo ginpangayo.',
@@ -6957,19 +6933,19 @@ Siguro may-ara ini sang isa ukon madamo nga karakter nga indi ginabaton kag gina
 	'bold_sample' => 'Dukot nga teksto',
 	'bold_tip' => 'Dukot nga teksto',
 	'blockedtitle' => 'Ang manuggamit ginapunggan',
-	'blockedtext' => '\'\'\'Ang imo gamit-pangalan ukon adres sang IP ginpunggan.\'\'\'
+	'blockedtext' => "'''Ang imo gamit-pangalan ukon adres sang IP ginpunggan.'''
 
 Ang pagpuggon ginhimo ni $1.
-Ang rason amo ang \'\'$2\'\'.
+Ang rason amo ang ''$2''.
 
 * Pag-umpisa sa pagpuggong: $8
 * Katapusan sang pagpuggong: $6
 * Tuyo nga pagapunggan: $7
 
 Mahimo ka nga makipag-angot kay $1 ukon sa iban [[{{MediaWiki:Grouppage-sysop}}|administrator]] agod nga ma-estoryahan ang pagpuggong.
-Indi mo magamit ang \'i-email ining manuggamit\' samtang wala ka sang matood nga e-mail adres nga ibutang sa imo [[Special:Preferences|espesyal nga pagpalabi]] kag kon wala ka ginapunggan sa paggamit sini.
+Indi mo magamit ang 'i-email ining manuggamit' samtang wala ka sang matood nga e-mail adres nga ibutang sa imo [[Special:Preferences|espesyal nga pagpalabi]] kag kon wala ka ginapunggan sa paggamit sini.
 Ang imo adres sang IP karon amo ang $3, kag ang ID sang pagpuggong amo ang #$5.
-Palihog dala sang mga nasulat sa ibabaw sa mga pagpamangkot nga imo ubrahon.',
+Palihog dala sang mga nasulat sa ibabaw sa mga pagpamangkot nga imo ubrahon.",
 	'blockednoreason' => 'wala sang rason nga ginhatag',
 	'blocked-notice-logextract' => 'Ang ini nga manuggamit ginapunggan karon.
 Ang pinaka-ulihi nga log sa pagpuggong yara sa idalom para mahibaluan nimo:',
@@ -6988,15 +6964,14 @@ Ini indi dapat nga magsobra sa $1 {{PLURAL:$1|ka karakter|ka mga karakter}} ang 
 	'blocklink' => 'harang',
 	'blocklogpage' => 'Pugong log',
 	'blocklogentry' => 'napunggan [[$1]] nga may-ara oras nga pag-ekspayr na $2 $3',
-	'block-log-flags-nocreate' => 'paghimo sang akawnt ay gin untat',
 	'bad_image_list' => 'Ang sulundan nga sulundon:
 
 Amo lang gid nga lista sang mga gamit (mga linya nga gasugod sa *)ang ginapasugtan.
 Ang una nga tabid sa isa ka linya ay kilanlan naga tabid sa law-ay nga file.
 Ano man nga pasunod nga tabid sa parehas nga linya ay ginasugtan bilang eksepsiyon, i.e. mga pahina nga kun diin ang file naga pasunod.',
-];
+);
 
-$messages['hr'] = [
+$messages['hr'] = array(
 	'broken-file-category' => 'Stranice s neispravnim poveznicama datoteka',
 	'badaccess' => 'Pogreška u ovlaštenjima',
 	'badaccess-group0' => 'Nije Vam dopušteno izvršiti ovaj zahvat.',
@@ -7075,7 +7050,6 @@ Zapisnik skrivanja je prikazan ispod kao napomena:',
 	'blocklogentry' => 'Blokiran je "[[$1]]" na rok $2 $3',
 	'blocklogtext' => 'Ovo je evidencija blokiranja i deblokiranja. Na popisu nema automatski blokiranih IP adresa. Za popis trenutačnih zabrana i blokiranja vidi [[Special:BlockList|popis IP blokiranja]].',
 	'block-log-flags-anononly' => 'samo za neprijavljene suradnike',
-	'block-log-flags-nocreate' => 'otvaranje novih suradničkih imena nije moguće',
 	'block-log-flags-noautoblock' => 'autoblok je onemogućen',
 	'block-log-flags-noemail' => 'e-mail je blokiran',
 	'block-log-flags-nousertalk' => 'bez uređivanja vlastite stranice za razgovor',
@@ -7083,14 +7057,14 @@ Zapisnik skrivanja je prikazan ispod kao napomena:',
 	'block-log-flags-hiddenname' => 'suradničko ime skriveno',
 	'blockme' => 'Blokiraj me',
 	'bydate' => 'po datumu',
-	'bad_image_list' => 'Rabi se sljedeći format:
+	'bad_image_list' => "Rabi se sljedeći format:
 
 Samo retci koji počinju sa zvjezdicom su prikazani. Prva poveznica u retku mora biti poveznica na nevaljanu sliku.
-Svaka sljedeća poveznica u istom retku je izuzetak, npr. kod stranica gdje se slike pojavljuju \'\'inline\'\'.',
+Svaka sljedeća poveznica u istom retku je izuzetak, npr. kod stranica gdje se slike pojavljuju ''inline''.",
 	'blankpage' => 'Prazna stranica',
-];
+);
 
-$messages['hsb'] = [
+$messages['hsb'] = array(
 	'broken-file-category' => 'Strony z njepłaćiwymi datajowymi wotkazami',
 	'badaccess' => 'Nimaš trěbne prawa',
 	'badaccess-group0' => 'Nimaš trěbne prawa za tutu akciju.',
@@ -7103,18 +7077,18 @@ $messages['hsb'] = [
 	'bold_sample' => 'Tučny tekst',
 	'bold_tip' => 'Tučny tekst',
 	'blockedtitle' => 'Wužiwar je zablokowany',
-	'blockedtext' => '\'\'\'Twoje wužiwarske mjeno bu zablokowane abo twoja IP-adresa bu zablokowana.\'\'\'
+	'blockedtext' => "'''Twoje wužiwarske mjeno bu zablokowane abo twoja IP-adresa bu zablokowana.'''
 
 Blokowar je $1.
-Podata přičina je \'\'$2\'\'.
+Podata přičina je ''$2''.
 
 * Spočatk blokowanja: $8
 * Kónc blokowanja: $6
 * Zablokowany wužiwar: $7
 
 Móžeš $1 abo druheho [[{{MediaWiki:Grouppage-sysop}}|administratora]] kontaktować, zo by wo blokowanju diskutował.
-Njemóžeš funkciju \'Tutomu wužiwarjej e-mejlować\' wužiwać, chibazo sy płaćiwu e-mejlowu adresu w swojich [[Special:Preferences|kontowych nastajenjach]] podał a njebu přećiwo jeje wužiwanju zablokowany.
-Twoja tuchwilna IP-adresa je $3 a blokowanski ID je #$5. Prošu podaj wšě horjeka naspomnjene podrobnosće w swojich naprašowanjach.',
+Njemóžeš funkciju 'Tutomu wužiwarjej e-mejlować' wužiwać, chibazo sy płaćiwu e-mejlowu adresu w swojich [[Special:Preferences|kontowych nastajenjach]] podał a njebu přećiwo jeje wužiwanju zablokowany.
+Twoja tuchwilna IP-adresa je $3 a blokowanski ID je #$5. Prošu podaj wšě horjeka naspomnjene podrobnosće w swojich naprašowanjach.",
 	'blockednoreason' => 'žana přičina podata',
 	'blocked-notice-logextract' => 'Tutón wužiwar je tuchwilu zablokowany. Najnowši protokolowy zapisk so deleka jako referenca podawa:',
 	'badsig' => 'Njepłaćiwa signatura, prošu HTML přepruwować.',
@@ -7182,7 +7156,6 @@ Smě mjenje hač $1 {{PLURAL:$1|znamješko|znamješce|znamješka|znamješkow}} d
 	'blocklogentry' => 'je wužiwarja [[$1]] zablokował z časom spadnjenja $2 $3',
 	'blocklogtext' => 'To je protokol blokowanja a wotblokowanja wužiwarjow. Awtomatisce blokowane IP-adresy so njenalistuja. Hlej [[Special:BlockList|lisćinu zablokowanych IP-adresow]] za lisćinu tuchwilnych wuhnaćow a zablokowanjow.',
 	'block-log-flags-anononly' => 'jenož anonymnych',
-	'block-log-flags-nocreate' => 'wutworjenje wužiwarskich kontow znjemóžnjene',
 	'block-log-flags-noautoblock' => 'awtomatiske zablokowanje znjemóžnjene',
 	'block-log-flags-noemail' => 'wotpósłanje mejlkow bu znjemóžnjene',
 	'block-log-flags-nousertalk' => 'njeje móžno swójsku diskusijnu stronu wobdźěłać',
@@ -7195,9 +7168,9 @@ Smě mjenje hač $1 {{PLURAL:$1|znamješko|znamješce|znamješka|znamješkow}} d
 Jenož zapiski lisćiny (linki, kotrež so z * započinaja), so wobkedźbuja. Prěni wotkaz na lince dyrbi wotkaz k njewitanemu wobrazej być.
 Nasledne wotkazy na samsnej lince definuja wuwzaća, hdźež so wobraz smě najebać toho jewić.',
 	'blankpage' => 'Prózdna strona',
-];
+);
 
-$messages['ht'] = [
+$messages['ht'] = array(
 	'badaccess' => 'Erè nan pèmisyon',
 	'badaccess-group0' => 'Ou pa genyen pèmisyon pou ou ekzekite demand sa.',
 	'badaccess-groups' => 'Aksyon ke w vle reyalize a limite sèlman pou itilizatè ki nan {{PLURAL:$2|gwoup sa |yonn nan gwoup sa yo}}: $1.',
@@ -7209,17 +7182,17 @@ $messages['ht'] = [
 	'bold_sample' => 'Tèks fonse',
 	'bold_tip' => 'Tèks fonse',
 	'blockedtitle' => 'itilizatè a bloke.',
-	'blockedtext' => '\'\'\'Kont itilizatè ou an (oubyen adrès IP ou an) bloke.\'\'\'
+	'blockedtext' => "'''Kont itilizatè ou an (oubyen adrès IP ou an) bloke.'''
 
 Blokaj an fèt pa $1.
-Rezon li bay se : \'\'$2\'\'.
+Rezon li bay se : ''$2''.
 
 
 * Komansman blokaj an : $8
 * Dat pou blokaj an fini : $6
 * Kont bloke a : $7.
 
-Ou mèt kontakte $1 oubyen yon lòt [[{{MediaWiki:Grouppage-sysop}}|administratè]] pou diskite plis. Ou pa kapab itilize fonksyon  « Voye yon imèl ba itilizatè sa a » eksepte si ou mete yon adrès imèl nan paj  [[Special:Preferences|preferans ou an]]. Adrès IP ou an kounye a se $3 e idantifyan blokaj ou an se #$5. Mete souple referans adrès sa a nan demann ou yo.',
+Ou mèt kontakte $1 oubyen yon lòt [[{{MediaWiki:Grouppage-sysop}}|administratè]] pou diskite plis. Ou pa kapab itilize fonksyon  « Voye yon imèl ba itilizatè sa a » eksepte si ou mete yon adrès imèl nan paj  [[Special:Preferences|preferans ou an]]. Adrès IP ou an kounye a se $3 e idantifyan blokaj ou an se #$5. Mete souple referans adrès sa a nan demann ou yo.",
 	'blockednoreason' => 'Li pa bay pyès rezon pou aksyon sa',
 	'blocked-notice-logextract' => 'Itilizatè sa a bloke kounye a.
 Dènye jounal pou blokaj yo parèt anba kòm referans:',
@@ -7235,15 +7208,14 @@ Dènye jounal pou blokaj yo parèt anba kòm referans:',
 	'blocklink' => 'Bloke',
 	'blocklogpage' => 'Istorik blokaj yo',
 	'blocklogentry' => 'te bloke « [[$1]] » - rive : $2 $3',
-	'block-log-flags-nocreate' => 'kreyasyon kont pa otorize',
 	'bad_image_list' => 'Fòma la se konsa :
 
 Se itèm ki nan lis sèlman (liy ki kòmanse ak *) ki konsidere.
 Premye lyen nan yon liy sipoze yon lyen pou yon move dosye.
 Nenpòt lòt lyen nan menm liy nan konsidere kòm yon eksèpsyon, i.e. paj kote yon dosye ka parèt nan lign.',
-];
+);
 
-$messages['hu'] = [
+$messages['hu'] = array(
 	'broken-file-category' => 'Hibás fájlhivatkozásokat tartalmazó lapok',
 	'badaccess' => 'Engedélyezési hiba',
 	'badaccess-group0' => 'Ezt a tevékenységet nem végezheted el.',
@@ -7256,20 +7228,20 @@ $messages['hu'] = [
 	'bold_sample' => 'Félkövér szöveg',
 	'bold_tip' => 'Félkövér szöveg',
 	'blockedtitle' => 'A szerkesztő blokkolva van',
-	'blockedtext' => '\'\'\'A szerkesztőnevedet vagy az IP-címedet blokkoltuk.\'\'\'
+	'blockedtext' => "'''A szerkesztőnevedet vagy az IP-címedet blokkoltuk.'''
 
 A blokkolást $1 végezte el.
-Az általa felhozott indok: \'\'$2\'\'.
+Az általa felhozott indok: ''$2''.
 
 * A blokk kezdete: $8
 * A blokk lejárata: $6
 * Blokkolt szerkesztő: $7
 
 Kapcsolatba léphetsz $1 szerkesztőnkkel, vagy egy másik [[{{MediaWiki:Grouppage-sysop}}|adminisztrátorral]], és megbeszélheted vele a blokkolást.
-Az \'E-mail küldése ennek a szerkesztőnek\' funkciót csak akkor használhatod, ha érvényes e-mail címet adtál meg
+Az 'E-mail küldése ennek a szerkesztőnek' funkciót csak akkor használhatod, ha érvényes e-mail címet adtál meg
 [[Special:Preferences|fiókbeállításaidban]], és nem blokkolták a használatát.
 Jelenlegi IP-címed: $3, a blokkolás azonosítószáma: #$5.
-Kérjük, hogy érdeklődés esetén mindkettőt add meg.',
+Kérjük, hogy érdeklődés esetén mindkettőt add meg.",
 	'blockednoreason' => 'nem adott meg okot',
 	'blocked-notice-logextract' => 'A felhasználó jelenleg blokkolva van.
 A blokkolási napló legutóbbi ide vonatkozó bejegyzése a következő:',
@@ -7341,7 +7313,6 @@ Add meg a blokkolás okát is (például idézd a blokkolandó személy által v
 	'blocklogentry' => '„[[$1]]” blokkolva $2 $3 időtartamra',
 	'blocklogtext' => 'Ez a felhasználókra helyezett blokkoknak és azok feloldásának listája. Az IP-autoblokkok nem szerepelnek a listában. Lásd még [[Special:BlockList|a jelenleg életben lévő blokkok listáját]].',
 	'block-log-flags-anononly' => 'csak anonok',
-	'block-log-flags-nocreate' => 'nem hozhat létre új fiókot',
 	'block-log-flags-noautoblock' => 'autoblokk kikapcsolva',
 	'block-log-flags-noemail' => 'e-mail blokkolva',
 	'block-log-flags-nousertalk' => 'saját vitalapját sem szerkesztheti',
@@ -7354,9 +7325,9 @@ Add meg a blokkolás okát is (például idézd a blokkolandó személy által v
 Csak a listatételek (csillaggal * kezdődő tételek) vannak figyelembe véve. Egy sor első hivatkozásának egy rossz képre mutató hivatkozásnak kell lennie.
 Ugyanazon sor további hivatkozásai kivételnek tekintettek, pl. a szócikkek, ahol a kép bennük fordulhat elő.',
 	'blankpage' => 'Üres lap',
-];
+);
 
-$messages['hy'] = [
+$messages['hy'] = array(
 	'broken-file-category' => 'Կոտրված ֆայլի հղումով էջեր',
 	'badaccess' => 'Թույլատրման սխալ',
 	'badaccess-group0' => 'Ձեզ չի թույլատրվում կատարել տվյալ գործողությունը։',
@@ -7369,10 +7340,10 @@ $messages['hy'] = [
 	'bold_sample' => 'Թավատառ տեքստ',
 	'bold_tip' => 'Թավատառ տեքստ',
 	'blockedtitle' => 'Մասնակիցը արգելափակված է',
-	'blockedtext' => '\'\'\'Ձեր մասնակցի անունը կամ IP-հասցեն արգելափակված է։\'\'\'
+	'blockedtext' => "'''Ձեր մասնակցի անունը կամ IP-հասցեն արգելափակված է։'''
 
 Արգելափակումը կատարվել է $1 ադմինիստրատորի կողմից։
-Տրված պատճառն է. \'\'«$2»\'\'
+Տրված պատճառն է. ''«$2»''
 
 * Արգելափակման սկիզբ՝ $8
 * Արգելափակման մարում՝ $6
@@ -7382,7 +7353,7 @@ $messages['hy'] = [
 Դուք չեք կարող օգտվել` «էլ-նամակ ուղարկել այս մասնակցին» հնարավորությունից, քանի դեռ ինքներդ գործող էլ-փոստի հասցե չէք  նշել ձեր [[Special:Preferences|մասնակցի նախընտրություններում]] և չեք արգելափակվել այս հնարավորւությունը օգտագործելուց։
 
 Ձեր ընթացիկ IP-հասցեն է` $3, արգելափակման իդենտիֆիկատորը՝ #$5։
-Խնդրում ենք նշել այս տվյալները ձեր հարցումների ժամանակ։',
+Խնդրում ենք նշել այս տվյալները ձեր հարցումների ժամանակ։",
 	'blockednoreason' => 'պատճառ չի տրվել',
 	'badsig' => 'Սխալ ստորագրություն. ստուգեք HTML-թեգերը։',
 	'badsiglength' => 'Ստորագրությունը շատ երկար է։
@@ -7416,7 +7387,6 @@ $messages['hy'] = [
 Ավտոմատիկ արգելափակված IP-հասցեները ընդգրկված չեն այստեղ։
 Տես [[Special:BlockList|նաերկայումս գործող արգելափակումների ցանկը]]։',
 	'block-log-flags-anononly' => 'միայն անանուն մասնակիցներ',
-	'block-log-flags-nocreate' => 'մասնակցային հաշվի ստեղծումը արգելված է',
 	'block-log-flags-noautoblock' => 'ավտոմատ արգելափակումը անջատված է',
 	'block-log-flags-noemail' => 'էլ-փոստը արգելափակված է',
 	'bydate' => 'ըստ ամսաթվի',
@@ -7426,9 +7396,9 @@ $messages['hy'] = [
 Տողի առաջին հղումը պետք է լինի դեպի արգելված պատկերը։
 Տողի հետագա հղումները ընկալվելու են որպես բացառություններ, այսինքն էջեր, որտեղ նշված պատկերի փակցնումը չի արգելվում։',
 	'blankpage' => 'Դատարկ էջ',
-];
+);
 
-$messages['ia'] = [
+$messages['ia'] = array(
 	'broken-file-category' => 'Paginas con ligamines rupte a files',
 	'badaccess' => 'Error de permission',
 	'badaccess-group0' => 'Tu non ha le permission de executar le action que tu ha requestate.',
@@ -7442,20 +7412,20 @@ Es possibile que illo contine un o plure characteres que non pote esser usate in
 	'bold_sample' => 'Texto grasse',
 	'bold_tip' => 'Texto grasse',
 	'blockedtitle' => 'Le usator es blocate',
-	'blockedtext' => '\'\'\'Tu nomine de usator o adresse IP ha essite blocate.\'\'\'
+	'blockedtext' => "'''Tu nomine de usator o adresse IP ha essite blocate.'''
 
 Le blocada esseva facite per $1.
-Le motivo presentate es \'\'$2\'\'.
+Le motivo presentate es ''$2''.
 
 * Initio del blocada: $8
 * Expiration del blocada: $6
 * Le blocato intendite: $7
 
 Tu pote contactar $1 o un altere [[{{MediaWiki:Grouppage-sysop}}|administrator]] pro discuter le blocada.
-Tu non pote usar le function \'inviar e-mail a iste usator\' salvo que un adresse de e-mail valide es specificate in le
+Tu non pote usar le function 'inviar e-mail a iste usator' salvo que un adresse de e-mail valide es specificate in le
 [[Special:Preferences|preferentias de tu conto]] e que tu non ha essite blocate de usar lo.
 Tu adresse IP actual es $3, e le ID del blocada es #$5.
-Per favor include tote le detalios supra specificate in omne correspondentia.',
+Per favor include tote le detalios supra specificate in omne correspondentia.",
 	'blockednoreason' => 'nulle motivo specificate',
 	'blocked-notice-logextract' => 'Iste usator es actualmente blocate.
 Le ultime entrata del registro de blocadas es reproducite ci infra pro information:',
@@ -7531,7 +7501,6 @@ Vide le [[Special:BlockList|lista de adresses IP blocate]] pro revider le blocad
 Le adresses IP automaticamente blocate non es includite.
 Vide le [[Special:BlockList|lista de blocadas IP]] pro le lista de bannimentos e blocadas actualmente in operation.',
 	'block-log-flags-anononly' => 'usatores anonyme solmente',
-	'block-log-flags-nocreate' => 'creation de contos disactivate',
 	'block-log-flags-noautoblock' => 'autoblocadas disactivate',
 	'block-log-flags-noemail' => 'e-mail blocate',
 	'block-log-flags-nousertalk' => 'non pote modificar su proprie pagina de discussion',
@@ -7545,9 +7514,9 @@ Solmente punctos de lista (lineas que comencia con *) es considerate.
 Le prime ligamine in un linea debe esser un ligamine a un file invalide.
 Omne ligamines posterior in le mesme linea es considerate como exceptiones, i.e. paginas in que le file pote esser directemente incorporate.',
 	'blankpage' => 'Pagina vacue',
-];
+);
 
-$messages['id'] = [
+$messages['id'] = array(
 	'broken-file-category' => 'Halaman dengan gambar rusak',
 	'badaccess' => 'Kesalahan hak akses',
 	'badaccess-group0' => 'Anda tidak diizinkan untuk melakukan tindakan yang Anda minta.',
@@ -7560,10 +7529,10 @@ $messages['id'] = [
 	'bold_sample' => 'Teks ini akan dicetak tebal',
 	'bold_tip' => 'Teks tebal',
 	'blockedtitle' => 'Pengguna diblokir',
-	'blockedtext' => '\'\'\'Nama pengguna atau alamat IP Anda telah diblokir.\'\'\'
+	'blockedtext' => "'''Nama pengguna atau alamat IP Anda telah diblokir.'''
 
 Blokir dilakukan oleh $1.
-Alasan yang diberikan adalah \'\'$2\'\'.
+Alasan yang diberikan adalah ''$2''.
 
 * Diblokir sejak: $8
 * Blokir kedaluwarsa pada: $6
@@ -7571,10 +7540,10 @@ Alasan yang diberikan adalah \'\'$2\'\'.
 
 Anda dapat menghubungi $1 atau [[{{MediaWiki:Grouppage-sysop}}|pengurus lainnya]] untuk membicarakan hal ini.
 
-Anda tidak dapat menggunakan fitur \'Kirim surel ke pengguna ini\' kecuali Anda telah memasukkan alamat surel yang sah di [[Special:Preferences|preferensi akun]] dan Anda tidak diblokir untuk menggunakannya.
+Anda tidak dapat menggunakan fitur 'Kirim surel ke pengguna ini' kecuali Anda telah memasukkan alamat surel yang sah di [[Special:Preferences|preferensi akun]] dan Anda tidak diblokir untuk menggunakannya.
 
 Alamat IP Anda adalah $3, dan ID pemblokiran adalah $5.
-Tolong sertakan salah satu atau kedua informasi ini pada setiap pertanyaan yang Anda buat.',
+Tolong sertakan salah satu atau kedua informasi ini pada setiap pertanyaan yang Anda buat.",
 	'blockednoreason' => 'tidak ada alasan yang diberikan',
 	'blocked-notice-logextract' => 'Pengguna ini sedang diblokir.
 Entri log pemblokiran terakhir tersedia di bawah ini sebagai rujukan.',
@@ -7633,7 +7602,6 @@ Lihat [[Special:BlockList|Daftar IP]] untuk meninjau kembali pemblokiran.',
 Alamat IP yang diblokir secara otomatis tidak terdapat di dalam daftar ini.
 Lihat [[Special:BlockList|daftar alamat IP yang diblokir]] untuk daftar pemblokiran terkini.',
 	'block-log-flags-anononly' => 'hanya pengguna anonim',
-	'block-log-flags-nocreate' => 'pembuatan akun dimatikan',
 	'block-log-flags-noautoblock' => 'pemblokiran otomatis dimatikan',
 	'block-log-flags-noemail' => 'surel diblokir',
 	'block-log-flags-nousertalk' => 'tidak dapat menyunting halaman pembicaraan sendiri',
@@ -7647,9 +7615,9 @@ Hanya butir daftar (baris yang diawali dengan tanda *) yang diperhitungkan.
 Pranala pertama pada suatu baris haruslah pranala ke berkas yang buruk.
 Pranala-pranala selanjutnya pada baris yang sama dianggap sebagai pengecualian, yaitu halaman yang dapat menampilkan berkas tersebut.',
 	'blankpage' => 'Halaman kosong',
-];
+);
 
-$messages['ie'] = [
+$messages['ie'] = array(
 	'badtitle' => 'Titul mal',
 	'badtitletext' => 'Li titul de págine solicitat esset ínvalid, vacui, o íncorectmen ligat inter-lingue o un titul inter-wiki.
 It posse contene un o plu carácteres quel ne posse esser usat in titules.',
@@ -7667,19 +7635,18 @@ It posse contene un o plu carácteres quel ne posse esser usat in titules.',
 	'blocklink' => 'blocar',
 	'blocklogpage' => 'Diarium de bloc',
 	'blocklogentry' => '"[[$1]]" hat blocat che un témpor de expiration de $2 $3',
-	'block-log-flags-nocreate' => 'creation de conto debilisat',
 	'bad_image_list' => 'Li formate es quam seque:
 
 Solmen listar detallies (lineas comensant che *) es considerat.
 Li prim catenun in un linea deve esser un catenun por un file maliciosi.
 Alqual catenunes subsequent in li linea identic es considerat por esser exceptiones, i.e. págines u li file posse ocurrer in linea identic.',
-];
+);
 
-$messages['ig'] = [
+$messages['ig'] = array(
 	'broken-file-category' => 'Ihü nwere jkọdọ na ga fail gbajírí',
 	'badaccess' => 'Nsogbu ébé ha na nyé ike I bàtá',
 	'badaccess-group0' => 'I nwéghị ọdà Í kpárá ihe Í chọrí mė.',
-	'badaccess-groups' => 'Ihe Í chọrí me bu ihe ndi ọ\'bànifé nke ntàkírí nọr na {{PLURAL:$2|the group|ótù ọtú}} ne me náni: $1',
+	'badaccess-groups' => "Ihe Í chọrí me bu ihe ndi ọ'bànifé nke ntàkírí nọr na {{PLURAL:$2|the group|ótù ọtú}} ne me náni: $1",
 	'badarticleerror' => 'Áká nke ènwèghịkị mẹ nà ihü nke.',
 	'badtitle' => 'Ishi edemede öjö',
 	'badtitletext' => 'Íshí ihü Í chọrọ à díghị ézíbóté, efù, mà ȯ dị jikodo di jikodo nke ojö na nke íshí asụsụ-mmékotárí ma wiki-mmékotárí.
@@ -7689,8 +7656,8 @@ O nwèríkí nwé édé ótù ma nke ozor nke ékwéghị na íshí ihü.',
 	'bold_tip' => 'Mkpúrù èdè íke',
 	'blockedtitle' => 'Há gbachiri onye á ezí',
 	'blockednoreason' => 'amaghi ihe omẹrẹ ya maka',
-	'blocked-notice-logextract' => 'Ha gbàchìrì ọ\'bànifé nke.
-Ndetu nchèta mbgàchì ǹkè ógè nso di na àlà màkà ádià má àmá:',
+	'blocked-notice-logextract' => "Ha gbàchìrì ọ'bànifé nke.
+Ndetu nchèta mbgàchì ǹkè ógè nso di na àlà màkà ádià má àmá:",
 	'boteditletter' => 'b',
 	'brokenredirects' => 'Nkúfù gbàjịrị',
 	'brokenredirects-edit' => 'mèzi',
@@ -7699,13 +7666,12 @@ Ndetu nchèta mbgàchì ǹkè ógè nso di na àlà màkà ádià má àmá:',
 	'booksources-search-legend' => 'Tuó íshí akwúkwó shì',
 	'booksources-go' => 'Gá',
 	'blanknamespace' => 'Gawa ihü nwere ahạ otuá ma o di',
-	'blockip' => 'Kwàchí ọ\'bànifé',
-	'blockip-title' => 'Kwàchí ọ\'bànifé',
-	'blockip-legend' => 'Kwàchí ọ\'bànifé',
+	'blockip' => "Kwàchí ọ'bànifé",
+	'blockip-title' => "Kwàchí ọ'bànifé",
+	'blockip-legend' => "Kwàchí ọ'bànifé",
 	'blocklink' => 'mèché',
 	'blocklogpage' => 'Ndetù échìchè nke mbàchì',
 	'blocklogentry' => 'kwụchi [[$1]] jí ógè ne $2 $3',
-	'block-log-flags-nocreate' => 'Í ké ọ\'bànifé bàchìrì',
 	'block-log-flags-noemail' => 'ha kwàchịrị e-mail',
 	'blockme' => 'Kwàchím',
 	'bydate' => 'shi afọ',
@@ -7715,9 +7681,9 @@ Nání ndétu ihe (áhirí jí * bídó) dị na ihe ȯ chọrọ.
 Jikodo bu nke mbu na áhìrì gí jikodo ya nà ȧkwúkwó orünotu di njö.
 Jikodo nke gị byá àzú na áhìrì nke òfu á bu nke nwéríkí gáfè, díkà ihü ébé ȧkwúkwó orünotu áhu di ímé áhìrì ya.',
 	'blankpage' => 'Ihü ochá',
-];
+);
 
-$messages['ike-cans'] = [
+$messages['ike-cans'] = array(
 	'badtitle' => 'ᐊᔪᖅᑐᖅ ᐊᑎᖅ',
 	'bold_sample' => 'ᐃᔾᔪᔪᒡ ᑕᖅᓴᓕᖅᐹ',
 	'bold_tip' => 'ᐃᔾᔪᔪᒡ ᑕᖅᓴᓕᖅᐹ',
@@ -7734,12 +7700,11 @@ $messages['ike-cans'] = [
 	'blocklink' => 'ᐃᖅ',
 	'blocklogpage' => 'ᐅᒥᙵᓯᓯᔪᖅ/ᐃᖅ ᑎᑎᖅᑲᖁᑎᑦ ᑐᖅᑯᖅᓯᒪᔭᐃᑦ',
 	'block-log-flags-anononly' => 'ᐃᓕᓴᕐᓇᙱᑎᑦᑐᖅ ᐋᖅᑭᒃᓱᐃᔨ ᑭᓯᐊᓂ',
-	'block-log-flags-nocreate' => 'ᑮᓇᐅᔭᖃᕐᕕᒃ ᐃᓄᐃᕈᑎᕚ ᐃᓂᖅᑎᐹ ᐱᒋᕗᖅ',
 	'block-log-flags-noemail' => 'ᑭᒍᑎᐅᑉ ᓯᑎᓂᖅᐹᖓ',
 	'bydate' => 'ᐱᑖᕈᑦᑐᖅ ᐃᓅᓕᕐᕕᒃ',
-];
+);
 
-$messages['ike-latn'] = [
+$messages['ike-latn'] = array(
 	'badtitle' => 'ajuqtuq atiq',
 	'bold_sample' => 'ijjujug taqsaliqpaa',
 	'bold_tip' => 'ijjujug taqsaliqpaa',
@@ -7755,12 +7720,11 @@ $messages['ike-latn'] = [
 	'blocklink' => 'iq',
 	'blocklogpage' => 'uminngasisijuq/iq titiqqaqutit tuqquqsimajait',
 	'block-log-flags-anononly' => 'ilisarnanngitittuq aaqqiksuiji kisiani',
-	'block-log-flags-nocreate' => 'kiinaujaqarvik inuirutivaa iniqtipaa pigivuq',
 	'block-log-flags-noemail' => 'kigutiup sitiniqpaanga uminngasisijuq',
 	'bydate' => 'pitaaruttuq inuulirvik',
-];
+);
 
-$messages['ilo'] = [
+$messages['ilo'] = array(
 	'broken-file-category' => 'Dagiti panid a nadadael ti panag-silpo na iti papeles',
 	'badaccess' => 'Biddut ti pammalubos',
 	'badaccess-group0' => 'Saanka a mapalubosan a mangpataray ti aramid a kiniddawmo.',
@@ -7774,18 +7738,18 @@ Adda ngata nagyan a maysa wenno ad-adu pay a kababalin a saan a mausar iti titul
 	'bold_sample' => 'Napuskol a teksto',
 	'bold_tip' => 'Napuskol a teksto',
 	'blockedtitle' => 'Naseraan ti agar-aramat',
-	'blockedtext' => '\'\'\'Naseraan ti nagan wenno ti IP a pagtaengam.\'\'\'
+	'blockedtext' => "'''Naseraan ti nagan wenno ti IP a pagtaengam.'''
 
 Ni $1 ti nangserra kenka.
-Ti rason ket \'\'$2\'\'.
+Ti rason ket ''$2''.
 
 * Rugi ti panangserra: $8
 * Panagpaso ti panangserra: $6
 * Ti kuma a serraan na: $7
 
 Mabalinmo a kontaken ni $1 wenno sabali pay nga [[{{MediaWiki:Grouppage-sysop}}|administrador]] no kayatmo a maipalawag daytoy a panag-serra.
-Dimo mabalin nga aramaten ti ramit nga e-suratan daytoy nga agar-aramat\' malaksid no adda napudno nga e-surat a pagtaengan a naipan iti  [[Special:Preferences|pakabilangan ti kaykayatmo]] ken no saanka a naparitan nga agaramat iti daytoy.
-Ti agdama nga IP a pagtaengam ket $3, ti naserraan nga  ID ket #$5. Pangngaasim nga iramanmo nga ited ti ania man wenno agpada kadagitoy iti ania man a panagsaludsodmo.',
+Dimo mabalin nga aramaten ti ramit nga e-suratan daytoy nga agar-aramat' malaksid no adda napudno nga e-surat a pagtaengan a naipan iti  [[Special:Preferences|pakabilangan ti kaykayatmo]] ken no saanka a naparitan nga agaramat iti daytoy.
+Ti agdama nga IP a pagtaengam ket $3, ti naserraan nga  ID ket #$5. Pangngaasim nga iramanmo nga ited ti ania man wenno agpada kadagitoy iti ania man a panagsaludsodmo.",
 	'blockednoreason' => 'awan ti naited a rason',
 	'blocked-notice-logextract' => 'Naserraan tatta daytoy nga agar-aramat.
 Ti naudi a listaan ti panaka-serra ket adda dita baba tapno mausar a reperensia:',
@@ -7860,7 +7824,6 @@ Ti listaan ti napasardeng ket naikabil dita baba tapno mausar a reperensia:',
 Dagiti na-automatiko a panakaserra ti IP a pagtaengan ket saan a nailista.
 Kitaen ti [[Special:BlockList|Listaan ti serra ti IP]] ti listaan kadagiti agdama a naiparit a pagpataray ken dagiti serra.',
 	'block-log-flags-anononly' => 'dagiti di am-ammo nga agar-aramat laeng',
-	'block-log-flags-nocreate' => 'naisardeng ti pinagaramid iti pakabilangan',
 	'block-log-flags-noautoblock' => 'naiddep ti auto-serra',
 	'block-log-flags-noemail' => 'naserraan ti e-surat',
 	'block-log-flags-nousertalk' => 'saan na a mabalin nga urnosen ti kapatang na a panid',
@@ -7874,9 +7837,9 @@ Dagiti laeng banag iti listaan (linlinia a mangrugi iti *) ti mabalin.
 Ti umuna a panilpo iti maysa a linia ket nasken a nakasilpo iti maysa a saan a nasayaat a papeles.
 Ania man a sumarsaruno a panpanilpo iti isu met la a linia ket maikonsidera kas mailaksid, kas pagarigan, dagiti pampanid a pakasarakan ti papeles a kas nakalinia.',
 	'blankpage' => 'Awan ti nagyan na a panid',
-];
+);
 
-$messages['inh'] = [
+$messages['inh'] = array(
 	'broken-file-category' => 'Болхбеш йоаца паьла Ӏинкашца оагӀувнаш',
 	'badaccess' => 'Чуваларa гӀалат',
 	'badaccess-group0' => 'Оаш хьадийха дулархам шунна де йийшяц.',
@@ -7898,19 +7861,18 @@ $messages['inh'] = [
 	'blocklink' => 'чIегa тоха',
 	'blocklogpage' => 'ЧIегаш тoха таптар',
 	'blocklogentry' => '[[$1]] чIега белаб,  $2 $3 ха ялалца',
-	'block-log-flags-nocreate' => 'Лархамий дагарчена цIи яккхар пурам янза я.',
 	'blockme' => 'ЧIега бола сона',
 	'bad_image_list' => 'Бустам цу тайпара хила беза:
 
 Дагарена хьаракъаш мара лоархаш хургьяц (укх тамагIалгацa * дувлашду мугIараш).
 МугIарена хьалхара Iинк, сурт Iоттае пурам доаца Iинка, хила еза. 
 Цу мугIар тIа тIехьайоагIа Iинкаш, арадаккхар мо лоархаш хургья, вешта аьлча, йоазувашка чуIоттаде мегаш дола сурт санна ларха мега.',
-];
+);
 
-$messages['io'] = [
+$messages['io'] = array(
 	'badaccess' => 'Eroro permisal',
 	'badaccess-group0' => 'Vu ne permisesas agar quale vu demandas.',
-	'badaccess-groups' => 'L\'ago quan vu demandabas es limitizita al uzanti en {{PLURAL:$2|la grupo|un ek la grupi}}: $1.',
+	'badaccess-groups' => "L'ago quan vu demandabas es limitizita al uzanti en {{PLURAL:$2|la grupo|un ek la grupi}}: $1.",
 	'badarticleerror' => 'Ica ago ne povas facesar en ca pagino.',
 	'badtitle' => 'Nekorekta titulo',
 	'badtitletext' => 'La solicitita pagino esas nevalida, vakua od esas
@@ -7943,9 +7905,9 @@ Videz [[Special:BlockList|IP-blokuslisto]] por revizor blokusadi.',
 	'blocklogentry' => 'blokusis [[$1]] dum periodo de $2 $3',
 	'bydate' => 'per dato',
 	'blankpage' => 'Pagino sen-skribura',
-];
+);
 
-$messages['is'] = [
+$messages['is'] = array(
 	'broken-file-category' => 'Síður með brotna myndatengla',
 	'badaccess' => 'Aðgangsvilla',
 	'badaccess-group0' => 'Þú hefur ekki leyfi til að framkvæma þá aðgerð sem þú baðst um.',
@@ -7958,10 +7920,10 @@ $messages['is'] = [
 	'bold_sample' => 'Feitletraður texti',
 	'bold_tip' => 'Feitletraður texti',
 	'blockedtitle' => 'Notandi er bannaður',
-	'blockedtext' => '\'\'\'Notandanafn þitt eða vistfang hefur verið bannað.\'\'\'
+	'blockedtext' => "'''Notandanafn þitt eða vistfang hefur verið bannað.'''
 
 Bannið var sett af $1.
-Ástæðan er eftirfarandi: \'\'$2\'\'.
+Ástæðan er eftirfarandi: ''$2''.
 
 * Bannið hófst: $8
 * Banninu lýkur: $6
@@ -7970,7 +7932,7 @@ Bannið var sett af $1.
 Þú getur haft samband við $1 eða annan [[{{MediaWiki:Grouppage-sysop}}|stjórnanda]] til að ræða bannið.
 Þú getur ekki notað „Senda þessum notanda tölvupóst“ aðgerðina nema gilt netfang sé skráð í [[Special:Preferences|notandastillingum þínum]] og að þér hafi ekki verið óheimilað það.
 Núverandi vistfang þitt er $3, og bönnunarnúmerið er #$5.
-Vinsamlegast tilgreindu allt að ofanverðu í fyrirspurnum þínum.',
+Vinsamlegast tilgreindu allt að ofanverðu í fyrirspurnum þínum.",
 	'blockednoreason' => 'engin ástæða gefin',
 	'blocked-notice-logextract' => 'Þessi notandi er í banni.
 Síðasta færsla notandans úr bönnunarskrá er sýnd hér fyrir neðan til skýringar:',
@@ -8041,7 +8003,6 @@ Síðasta færsla notandans úr bælingarskrá er sýnd hér fyrir neðan til sk
 Vistföng sem sett hafa verið í bann sjálfvirkt birtast ekki hér.
 Sjá [[Special:BlockList|ítarlegri lista]] fyrir öll núgildandi bönn.',
 	'block-log-flags-anononly' => 'bara ónefndir notendur',
-	'block-log-flags-nocreate' => 'gerð aðganga bönnuð',
 	'block-log-flags-noautoblock' => 'sjálfkrafa bann óvirkt',
 	'block-log-flags-noemail' => 'netfang bannað',
 	'block-log-flags-nousertalk' => 'getur ekki breytt eigin spjallsíðu',
@@ -8055,12 +8016,12 @@ Aðeins listaeigindi (línur sem byrja á *) eru meðtalin.
 Fyrsti tengillinn í hverri línu verður að tengja í slæma skrá.
 Allir síðari tenglar á sömu línu eru taldir vera undantekningar, þ.e. síður þar sem að skráin kann að koma fyrir innfelld.',
 	'blankpage' => 'Tóm síða',
-];
+);
 
-$messages['it'] = [
+$messages['it'] = array(
 	'broken-file-category' => 'Pagine che includono file inesistenti',
 	'badaccess' => 'Permessi non sufficienti',
-	'badaccess-group0' => 'Non si dispone dei permessi necessari per eseguire l\'azione richiesta.',
+	'badaccess-group0' => "Non si dispone dei permessi necessari per eseguire l'azione richiesta.",
 	'badaccess-groups' => 'La funzione richiesta è riservata agli utenti che appartengono {{PLURAL:$2|al gruppo|a uno dei seguenti gruppi}}: $1.',
 	'badarticleerror' => 'Operazione non consentita per questa pagina.',
 	'badtitle' => 'Titolo non corretto',
@@ -8070,23 +8031,25 @@ $messages['it'] = [
 	'bold_sample' => 'Grassetto',
 	'bold_tip' => 'Grassetto',
 	'blockedtitle' => 'Utente bloccato.',
-	'blockedtext' => '\'\'\'Questo nome utente o indirizzo IP sono stati bloccati.\'\'\'
+	'blockedtext' => "<big>'''Questo nome utente o indirizzo IP sono stati bloccati.'''</big>
 
-Il blocco è stato imposto da $1. La motivazione del blocco è la seguente: \'\'$2\'\'
+<div id=\"mw-message-blockedtext\" style=\"border:1px solid black; padding-left:0.5em;\">
+Il blocco è stato imposto da ''\$1''.
 
-* Inizio del blocco: $8
-* Scadenza del blocco: $6
-* Intervallo di blocco: $7
+* Ragione fornita: \$2
+* Inizio del blocco: \$8
+* Scadenza del blocco: \$6
+* Obiettivo del blocco: \$7
+* ID del blocco: #\$5
+* Indirizzo IP corrente: \$3
+</div>
 
-Se lo si desidera, è possibile contattare $1 o un altro [[{{MediaWiki:Grouppage-sysop}}|amministratore]] per discutere del blocco.
+Se lo si desidera, è possibile contattare ''\$1'' o un altro [[Special:ListUsers/sysop|amministratore]] per discutere del blocco.
 
-Si noti che la funzione \'Scrivi all\'utente\' non è attiva se non è stato registrato un indirizzo e-mail valido nelle proprie [[Special:Preferences|preferenze]] o se l\'utilizzo di tale funzione è stato bloccato.
-
-L\'indirizzo IP attuale è $3, il numero ID del blocco è #$5.
-Si prega di specificare tutti i dettagli precedenti in qualsiasi richiesta di chiarimenti.',
+Si prega di specificare tutti i dettagli precedenti in qualsiasi richiesta di chiarimenti.",
 	'blockednoreason' => 'nessuna motivazione indicata',
-	'blocked-notice-logextract' => 'Questo utente è attualmente bloccato.
-L\'ultimo elemento del registro dei blocchi è riportato di seguito per informazione:',
+	'blocked-notice-logextract' => "Questo utente è attualmente bloccato.
+L'ultimo elemento del registro dei blocchi è riportato di seguito per informazione:",
 	'badsig' => 'Errore nella firma non standard, verificare i tag HTML.',
 	'badsiglength' => 'La firma scelta è troppo lunga, non deve superare $1 {{PLURAL:$1|carattere|caratteri}}.',
 	'boteditletter' => 'b',
@@ -8122,15 +8085,13 @@ L\'ultimo elemento del registro dei blocchi è riportato di seguito per informaz
 	'booksources-isbn' => 'Codice ISBN:',
 	'booksources-go' => 'Vai',
 	'booksources-text' => 'Di seguito sono elencati alcuni collegamenti verso siti esterni che vendono libri nuovi e usati, attraverso i quali è possibile ottenere maggiori informazioni sul testo cercato.',
-	'booksources-invalid-isbn' => 'L\'ISBN inserito sembra non essere valido; verificare che non siano stati commessi errori nel copiarlo dalla fonte originale.',
+	'booksources-invalid-isbn' => "L'ISBN inserito sembra non essere valido; verificare che non siano stati commessi errori nel copiarlo dalla fonte originale.",
 	'blanknamespace' => '(Principale)',
 	'block' => 'Blocca utente',
 	'blockip' => 'Blocco utente',
 	'blockip-title' => 'Blocca utente',
 	'blockip-legend' => 'Blocca l’utente',
-	'blockiptext' => 'Usare il modulo sottostante per bloccare l\'accesso in scrittura a uno specifico indirizzo IP o un utente registrato.
-Il blocco dev\'essere operato per prevenire atti di vandalismo e in stretta osservanza della [[{{MediaWiki:Policy-url}}|policy di {{SITENAME}}]].
-Indicare il motivo specifico per il quale si procede al blocco (per esempio, citando i titoli di eventuali pagine oggetto di vandalismo).',
+	'blockiptext' => 'Usa il modulo sottostante per impedire di modificare ad uno specifico indirizzo IP o nome utente. Per maggiori informazioni, leggi [[w:it:Aiuto:Bloccare|Aiuto:Bloccare]].',
 	'badipaddress' => 'Indirizzo IP non valido.',
 	'blockipsuccesssub' => 'Blocco eseguito',
 	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] è stato bloccato. <br />
@@ -8152,9 +8113,8 @@ Consultare la [[Special:BlockList|lista degli IP bloccati]] per vedere i blocchi
 	'blocklog-showlog' => 'Questo utente è stato bloccato in precedenza. Il registro dei blocchi è riportato di seguito per informazione:',
 	'blocklog-showsuppresslog' => 'Questo utente è stato bloccato e nascosto in precedenza. Il registro delle rimozioni è riportato di seguito per informazione:',
 	'blocklogentry' => 'ha bloccato [[$1]] per un periodo di $2 $3',
-	'blocklogtext' => 'Di seguito sono elencate le azioni di blocco e sblocco utenti. Gli indirizzi IP bloccati automaticamente non sono elencati. Consultare l\'[[Special:BlockList|elenco IP bloccati]] per l\'elenco degli indirizzi e nomi utente il cui blocco è operativo.',
+	'blocklogtext' => "Di seguito sono elencate le azioni di blocco e sblocco utenti. Gli indirizzi IP bloccati automaticamente non sono elencati. Consultare l'[[Special:BlockList|elenco IP bloccati]] per l'elenco degli indirizzi e nomi utente il cui blocco è operativo.",
 	'block-log-flags-anononly' => 'solo utenti anonimi',
-	'block-log-flags-nocreate' => 'creazione account bloccata',
 	'block-log-flags-noautoblock' => 'blocco automatico disattivato',
 	'block-log-flags-noemail' => 'e-mail bloccate',
 	'block-log-flags-nousertalk' => 'non può modificare la propria pagina di discussione',
@@ -8162,10 +8122,10 @@ Consultare la [[Special:BlockList|lista degli IP bloccati]] per vedere i blocchi
 	'block-log-flags-hiddenname' => 'nome utente nascosto',
 	'blockme' => 'Bloccami',
 	'bydate' => 'per data',
-	'bad_image_list' => 'Il formato è il seguente:
+	'bad_image_list' => "Il formato è il seguente:
 
-Vengono considerati soltanto gli elenchi puntati (righe che cominciano con il carattere *). Il primo collegamento su ciascuna riga dev\'essere un collegamento a un file indesiderato.
-I collegamenti successivi, sulla stessa riga, sono considerati come eccezioni (ovvero, pagine nelle quali il file può essere richiamato normalmente).',
+Vengono considerati soltanto gli elenchi puntati (righe che cominciano con il carattere *). Il primo collegamento su ciascuna riga dev'essere un collegamento a un file indesiderato.
+I collegamenti successivi, sulla stessa riga, sono considerati come eccezioni (ovvero, pagine nelle quali il file può essere richiamato normalmente).",
 	'blankpage' => 'Pagina vuota',
 	'back' => 'Indietro',
 	'blog-avatar-defaults' => 'Avatar.jpg
@@ -8174,12 +8134,27 @@ Avatar3.jpg
 Avatar4.jpg
 Avatar5.jpg
 Avatar6.jpg',
-];
+	'backlinksubtitle' => '← $1',
+	'brokenredirects-summary' => '',
+	'booksources-summary' => '',
+	'blocklist-summary' => '',
+	'block-log-flags-nocreate' => 'creazione account bloccata',
+	'bitrate-bits' => '$1bps',
+	'bitrate-kilobits' => '$1kbps',
+	'bitrate-megabits' => '$1Mbps',
+	'bitrate-gigabits' => '$1Gbps',
+	'bitrate-terabits' => '$1Tbps',
+	'bitrate-petabits' => '$1Pbps',
+	'bitrate-exabits' => '$1Ebps',
+	'bitrate-zetabits' => '$1Zbps',
+	'bitrate-yottabits' => '$1Ybps',
+	'button-createpage' => 'Add a Page',
+);
 
-$messages['iu'] = [
+$messages['iu'] = array(
 	'broken-file-category' => 'Pagine che includono file inesistenti',
 	'badaccess' => 'Permessi non sufficienti',
-	'badaccess-group0' => 'Non si dispone dei permessi necessari per eseguire l\'azione richiesta.',
+	'badaccess-group0' => "Non si dispone dei permessi necessari per eseguire l'azione richiesta.",
 	'badaccess-groups' => 'La funzione richiesta è riservata agli utenti che appartengono {{PLURAL:$2|al gruppo|a uno dei seguenti gruppi}}: $1.',
 	'badarticleerror' => 'Operazione non consentita per questa pagina.',
 	'badtitle' => 'Titolo non corretto',
@@ -8189,9 +8164,9 @@ $messages['iu'] = [
 	'bold_sample' => 'Grassetto',
 	'bold_tip' => 'Grassetto',
 	'blockedtitle' => 'Utente bloccato.',
-	'blockedtext' => '\'\'\'Questo nome utente o indirizzo IP sono stati bloccati.\'\'\'
+	'blockedtext' => "'''Questo nome utente o indirizzo IP sono stati bloccati.'''
 
-Il blocco è stato imposto da $1. La motivazione del blocco è la seguente: \'\'$2\'\'
+Il blocco è stato imposto da $1. La motivazione del blocco è la seguente: ''$2''
 
 * Inizio del blocco: $8
 * Scadenza del blocco: $6
@@ -8199,13 +8174,13 @@ Il blocco è stato imposto da $1. La motivazione del blocco è la seguente: \'\'
 
 Se lo si desidera, è possibile contattare $1 o un altro [[{{MediaWiki:Grouppage-sysop}}|amministratore]] per discutere del blocco.
 
-Si noti che la funzione \'Scrivi all\'utente\' non è attiva se non è stato registrato un indirizzo e-mail valido nelle proprie [[Special:Preferences|preferenze]] o se l\'utilizzo di tale funzione è stato bloccato.
+Si noti che la funzione 'Scrivi all'utente' non è attiva se non è stato registrato un indirizzo e-mail valido nelle proprie [[Special:Preferences|preferenze]] o se l'utilizzo di tale funzione è stato bloccato.
 
-L\'indirizzo IP attuale è $3, il numero ID del blocco è #$5.
-Si prega di specificare tutti i dettagli precedenti in qualsiasi richiesta di chiarimenti.',
+L'indirizzo IP attuale è $3, il numero ID del blocco è #$5.
+Si prega di specificare tutti i dettagli precedenti in qualsiasi richiesta di chiarimenti.",
 	'blockednoreason' => 'nessuna motivazione indicata',
-	'blocked-notice-logextract' => 'Questo utente è attualmente bloccato.
-L\'ultimo elemento del registro dei blocchi è riportato di seguito per informazione:',
+	'blocked-notice-logextract' => "Questo utente è attualmente bloccato.
+L'ultimo elemento del registro dei blocchi è riportato di seguito per informazione:",
 	'badsig' => 'Errore nella firma non standard, verificare i tag HTML.',
 	'badsiglength' => 'La firma scelta è troppo lunga, non deve superare $1 {{PLURAL:$1|carattere|caratteri}}.',
 	'boteditletter' => 'b',
@@ -8241,15 +8216,15 @@ L\'ultimo elemento del registro dei blocchi è riportato di seguito per informaz
 	'booksources-isbn' => 'Codice ISBN:',
 	'booksources-go' => 'Vai',
 	'booksources-text' => 'Di seguito sono elencati alcuni collegamenti verso siti esterni che vendono libri nuovi e usati, attraverso i quali è possibile ottenere maggiori informazioni sul testo cercato.',
-	'booksources-invalid-isbn' => 'L\'ISBN inserito sembra non essere valido; verificare che non siano stati commessi errori nel copiarlo dalla fonte originale.',
+	'booksources-invalid-isbn' => "L'ISBN inserito sembra non essere valido; verificare che non siano stati commessi errori nel copiarlo dalla fonte originale.",
 	'blanknamespace' => '(Principale)',
 	'block' => 'Blocca utente',
 	'blockip' => 'Blocco utente',
 	'blockip-title' => 'Blocca utente',
-	'blockip-legend' => 'Blocca l\'utente',
-	'blockiptext' => 'Usare il modulo sottostante per bloccare l\'accesso in scrittura a uno specifico indirizzo IP o un utente registrato.
-Il blocco dev\'essere operato per prevenire atti di vandalismo e in stretta osservanza della [[{{MediaWiki:Policy-url}}|policy di {{SITENAME}}]].
-Indicare il motivo specifico per il quale si procede al blocco (per esempio, citando i titoli di eventuali pagine oggetto di vandalismo).',
+	'blockip-legend' => "Blocca l'utente",
+	'blockiptext' => "Usare il modulo sottostante per bloccare l'accesso in scrittura a uno specifico indirizzo IP o un utente registrato.
+Il blocco dev'essere operato per prevenire atti di vandalismo e in stretta osservanza della [[{{MediaWiki:Policy-url}}|policy di {{SITENAME}}]].
+Indicare il motivo specifico per il quale si procede al blocco (per esempio, citando i titoli di eventuali pagine oggetto di vandalismo).",
 	'badipaddress' => 'Indirizzo IP non valido.',
 	'blockipsuccesssub' => 'Blocco eseguito',
 	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] è stato bloccato. <br />
@@ -8271,9 +8246,8 @@ Consultare la [[Special:BlockList|lista degli IP bloccati]] per vedere i blocchi
 	'blocklog-showlog' => 'Questo utente è stato bloccato in precedenza. Il registro dei blocchi è riportato di seguito per informazione:',
 	'blocklog-showsuppresslog' => 'Questo utente è stato bloccato e nascosto in precedenza. Il registro delle rimozioni è riportato di seguito per informazione:',
 	'blocklogentry' => 'ha bloccato [[$1]] per un periodo di $2 $3',
-	'blocklogtext' => 'Di seguito sono elencate le azioni di blocco e sblocco utenti. Gli indirizzi IP bloccati automaticamente non sono elencati. Consultare l\'[[Special:BlockList|elenco IP bloccati]] per l\'elenco degli indirizzi e nomi utente il cui blocco è operativo.',
+	'blocklogtext' => "Di seguito sono elencate le azioni di blocco e sblocco utenti. Gli indirizzi IP bloccati automaticamente non sono elencati. Consultare l'[[Special:BlockList|elenco IP bloccati]] per l'elenco degli indirizzi e nomi utente il cui blocco è operativo.",
 	'block-log-flags-anononly' => 'solo utenti anonimi',
-	'block-log-flags-nocreate' => 'creazione account bloccata',
 	'block-log-flags-noautoblock' => 'blocco automatico disattivato',
 	'block-log-flags-noemail' => 'e-mail bloccate',
 	'block-log-flags-nousertalk' => 'non può modificare la propria pagina di discussione',
@@ -8281,14 +8255,14 @@ Consultare la [[Special:BlockList|lista degli IP bloccati]] per vedere i blocchi
 	'block-log-flags-hiddenname' => 'nome utente nascosto',
 	'blockme' => 'Bloccami',
 	'bydate' => 'per data',
-	'bad_image_list' => 'Il formato è il seguente:
+	'bad_image_list' => "Il formato è il seguente:
 
-Vengono considerati soltanto gli elenchi puntati (righe che cominciano con il carattere *). Il primo collegamento su ciascuna riga dev\'essere un collegamento a un file indesiderato.
-I collegamenti successivi, sulla stessa riga, sono considerati come eccezioni (ovvero, pagine nelle quali il file può essere richiamato normalmente).',
+Vengono considerati soltanto gli elenchi puntati (righe che cominciano con il carattere *). Il primo collegamento su ciascuna riga dev'essere un collegamento a un file indesiderato.
+I collegamenti successivi, sulla stessa riga, sono considerati come eccezioni (ovvero, pagine nelle quali il file può essere richiamato normalmente).",
 	'blankpage' => 'Pagina vuota',
-];
+);
 
-$messages['ja'] = [
+$messages['ja'] = array(
 	'broken-file-category' => '壊れたファイルへのリンクがあるページ',
 	'badaccess' => '権限がありません',
 	'badaccess-group0' => '要求した操作を行うことは許可されていません。',
@@ -8302,19 +8276,19 @@ $messages['ja'] = [
 	'bold_sample' => '太字',
 	'bold_tip' => '太字',
 	'blockedtitle' => '利用者はブロックされています',
-	'blockedtext' => '\'\'\'この利用者名またはIPアドレスはブロックされています。\'\'\'
+	'blockedtext' => "'''このユーザー名またはIPアドレスはブロックされています。'''
 
 ブロックは$1によって実施されました。
-ブロックの理由は「$2」です。
 
+*ブロックの理由：$2
 * ブロック開始時期：$8
 * ブロック解除予定：$6
 * ブロック対象：$7
+*ブロックID: #$5
+*現在のIPアドレス: $3
 
-このブロックについて、$1もしくは他の[[{{MediaWiki:Grouppage-sysop}}|管理者]]に問い合わせることができます。
-ただし、[[Special:Preferences|個人設定]]で有効なメールアドレスが登録されていない場合、またはメール送信機能の使用がブロックされている場合、「この利用者にメールを送信」の機能は使えません。
-現在のIPアドレスは$3、このブロックIDは&#x23;$5です。
-問い合わせを行う際には、上記の情報を必ず書いてください。',
+このブロックについて、$1もしくは他の[[Special:ListUsers|{{MediaWiki:Grouppage-sysop}}]]に問い合わせることができます。
+問い合わせを行う際には、上記のボックスに詳細を記入してください。",
 	'blockednoreason' => '理由が設定されていません',
 	'blocked-notice-logextract' => 'この利用者は現在ブロックされています。
 参考のために最新のブロック記録を以下に表示します。',
@@ -8385,7 +8359,6 @@ HTMLタグを見直してください。',
 自動的にブロックされたIPアドレスは表示されていません。
 現時点で有効なブロックは[[Special:BlockList|ブロックの一覧]]をご覧ください。',
 	'block-log-flags-anononly' => '匿名利用者のみ',
-	'block-log-flags-nocreate' => 'アカウント作成のブロック',
 	'block-log-flags-noautoblock' => '自動ブロック無効',
 	'block-log-flags-noemail' => 'メール送信のブロック',
 	'block-log-flags-nousertalk' => '自身のトークページの編集禁止',
@@ -8407,9 +8380,28 @@ Avatar4.jpg
 Avatar5.jpg
 Avatar6.jpg',
 	'button-createpage' => '次へ',
-];
+	'backlinksubtitle' => '← $1',
+	'backend-fail-hashes' => '比較用ハッシュを取得できませんでした。',
+	'backend-fail-connect' => 'ストレージバックエンド「$1」に接続できませんでした。',
+	'backend-fail-internal' => 'ストレージバックエンド「$1」でエラーが発生しました。',
+	'backend-fail-batchsize' => '$1ファイル{{PLURAL:$1|オペレーション|オペレーション}}のバッチのストレージバックエンド; 上限は$2 {{PLURAL:$2|オペレーション|オペレーション}}までです。',
+	'brokenredirects-summary' => '',
+	'booksources-summary' => '',
+	'booksources-isbn' => 'ISBN:',
+	'blocklist-summary' => '',
+	'block-log-flags-nocreate' => 'アカウント作成のブロック',
+	'bitrate-bits' => '$1bps',
+	'bitrate-kilobits' => '$1kbps',
+	'bitrate-megabits' => '$1Mbps',
+	'bitrate-gigabits' => '$1Gbps',
+	'bitrate-terabits' => '$1Tbps',
+	'bitrate-petabits' => '$1Pbps',
+	'bitrate-exabits' => '$1Ebps',
+	'bitrate-zetabits' => '$1Zbps',
+	'bitrate-yottabits' => '$1Ybps',
+);
 
-$messages['jam'] = [
+$messages['jam'] = array(
 	'badaccess' => 'Poermishan era',
 	'badaccess-group0' => 'Yu no lou fi exikyuut di akshan yu rikwes.',
 	'badaccess-groups' => 'Di akshan yu rikwes limit tu yuuza ina {{PLURAL:$2|di gruup|wan a di gruup}}: $1.',
@@ -8421,19 +8413,19 @@ $messages['jam'] = [
 	'bold_sample' => 'Buol tex',
 	'bold_tip' => 'Buol tex',
 	'blockedtitle' => 'Yuuza blak',
-	'blockedtext' => '\'\'\'Yu yuuza niem ar IP ajres get blak.\'\'\'
+	'blockedtext' => "'''Yu yuuza niem ar IP ajres get blak.'''
 
 Di blak mek bai $1.
-Di riizn dehn gi a \'\'$2\'\'.
+Di riizn dehn gi a ''$2''.
 
 * Taat a blak: $8
 * Expairi a blak: $6
 * Intendid blakii: $7
 
 Yu kiahn kantak $1 ar aneda [[{{MediaWiki:Grouppage-sysop}}|adminischrieta]] fi diskos di blak.
-Yu kyaahn yuuz di \'e-miel dis yuuza\' fiicha anles a valid e-miel ajress spesifai ina yu [[Special:Preferences|akount prefransdem]] ahn yu no  blak frahn yuuzi.
+Yu kyaahn yuuz di 'e-miel dis yuuza' fiicha anles a valid e-miel ajress spesifai ina yu [[Special:Preferences|akount prefransdem]] ahn yu no  blak frahn yuuzi.
 Yu korant IP ajress a $3, ahn di blak ID a #$5.
-Begyu inkluud aal abov ditiel ina eni kwieri yu mek.',
+Begyu inkluud aal abov ditiel ina eni kwieri yu mek.",
 	'blockednoreason' => 'no riizn no gi',
 	'blocked-notice-logextract' => 'Dis yuuza korantli blak.
 Di lietis blak lag enchri provaid biluo fi refrans:',
@@ -8446,21 +8438,20 @@ Di lietis blak lag enchri provaid biluo fi refrans:',
 	'blocklink' => 'blak',
 	'blocklogpage' => 'Blak lag',
 	'blocklogentry' => 'blak [[$1]] wid expairi taim a $2 $3',
-	'block-log-flags-nocreate' => 'akount krieshan disiebl',
 	'bad_image_list' => 'Di faamat go so:
 
 Onggl lis aitem (lain taat wid *) wi kansida.
 Di fos lingk pan a lain mos bi a lingk tu a bad fail.
 Eni sobsikwent lingk pahn di siem lain kansida fi bi eksepshan, i.e. piej we di fail maita okor inlain.',
-];
+);
 
-$messages['jbo'] = [
+$messages['jbo'] = array(
 	'boteditletter' => 'z',
 	'blanknamespace' => '(ralju)',
 	'blocklink' => 'zunti',
-];
+);
 
-$messages['jut'] = [
+$messages['jut'] = array(
 	'badaccess' => 'Manglende rettigheder',
 	'badaccess-group0' => 'Du harst ekke de nødvendege rettegheder til denne håndlenge.',
 	'badaccess-groups' => 'Denne håndlenge ken kun udføres åf brugere, søm tilhører en åf grupperne „$1“.',
@@ -8468,17 +8459,17 @@ $messages['jut'] = [
 	'badtitletext' => 'Den ønskede sides nav var ekke tilladt, tøm æller æ side er førkert henvest frå en {{SITENAME}} på et andet språĝ.',
 	'bold_sample' => 'Fed skrevselenger',
 	'bold_tip' => 'Fed skrevselenger',
-	'blockedtext' => '\'\'\'Dit brugernav æller din IP-adresse er blevet blokeret.\'\'\'
+	'blockedtext' => "'''Dit brugernav æller din IP-adresse er blevet blokeret.'''
 
-Æ blokerenge er lavet åf $1. Æ begrundelse er \'\'$2\'\'.
+Æ blokerenge er lavet åf $1. Æ begrundelse er ''$2''.
 
 Æ blokerenge starter: $8
 Æ blokerenge udløber: $6
 Æ blokerenge er rettet mod: $7
 
 Du ken kåle $1 æller en åf de andre [[{{MediaWiki:Grouppage-sysop}}|administratårer]] før at diskutere æ blokerenge.
-Du ken ekke bruge æ funksje \'e-mail til denne bruger\' vemendre der er ångevet en gyldig email-addresse i dine
-[[Special:Preferences|kontoendstellenger]]. Din nuværende IP-addresse er $3, og blokerengs-ID er #$5. Ångev venlegst en æller begge i åle henvendelser.',
+Du ken ekke bruge æ funksje 'e-mail til denne bruger' vemendre der er ångevet en gyldig email-addresse i dine
+[[Special:Preferences|kontoendstellenger]]. Din nuværende IP-addresse er $3, og blokerengs-ID er #$5. Ångev venlegst en æller begge i åle henvendelser.",
 	'boteditletter' => 'b',
 	'brokenredirects' => 'Bråken åmstyrenger',
 	'booksources' => 'Boĝkelder',
@@ -8487,12 +8478,12 @@ Du ken ekke bruge æ funksje \'e-mail til denne bruger\' vemendre der er ångeve
 	'blocklink' => 'blåker',
 	'blocklogpage' => 'Blokerengslog',
 	'blocklogentry' => 'blokerede "[[$1]]" ve\'n udløbstid på $2 $3',
-	'bad_image_list' => 'Æ førmåt er:
+	'bad_image_list' => "Æ førmåt er:
 
-Kun endholtet åf æ liste (lenjer startende ve *) bliver brugt. Den første henvesnenge på\'n lenje er til det uønskede billet. Æfterfølgende lenker på samme lenjer er undtagelser, dvs. sider vår æ billet må åptræde.',
-];
+Kun endholtet åf æ liste (lenjer startende ve *) bliver brugt. Den første henvesnenge på'n lenje er til det uønskede billet. Æfterfølgende lenker på samme lenjer er undtagelser, dvs. sider vår æ billet må åptræde.",
+);
 
-$messages['jv'] = [
+$messages['jv'] = array(
 	'badaccess' => 'Aksès ora olèh',
 	'badaccess-group0' => 'Panjenengan ora pareng nglakokaké tindhakan sing panjenengan gayuh.',
 	'badaccess-groups' => 'Pratingkah panjenengan diwatesi tumrap panganggo ing {{PLURAL:$2|klompoké|klompoké}}: $1.',
@@ -8500,14 +8491,14 @@ $messages['jv'] = [
 	'badtitle' => 'Judhulé ora sah',
 	'badtitletext' => 'Judhul kaca sing panjenengan ora bisa dituduhaké, kosong, utawa dadi judhul antar-basa utawa judhul antar-wiki. Iku bisa uga ana  sawijining utawa luwih aksara sing ora bisa didadèkaké judhul.',
 	'badretype' => 'Sandhi panjenengan ora gathuk',
-	'blocked-mailpassword' => 'Alamat IP panjenengan diblokir saka panyuntingan, mulané panjenengan ora olèh nganggo fungsi pèngetan tembung sandhi kanggo \'\'mencegah penyalahgunaan\'\'.',
+	'blocked-mailpassword' => "Alamat IP panjenengan diblokir saka panyuntingan, mulané panjenengan ora olèh nganggo fungsi pèngetan tembung sandhi kanggo ''mencegah penyalahgunaan''.",
 	'bold_sample' => 'Tèks iki bakal dicithak kandel',
 	'bold_tip' => 'Cithak kandel',
 	'blockedtitle' => 'Panganggo diblokir',
-	'blockedtext' => '\'\'\'Asma panganggo utawa alamat IP panjenengan diblokir.\'\'\'
+	'blockedtext' => "'''Asma panganggo utawa alamat IP panjenengan diblokir.'''
 
 Blokir iki sing nglakoni $1.
-Alesané \'\'$2\'\'.
+Alesané ''$2''.
 
 * Diblokir wiwit: $8
 * Kadaluwarsa pemblokiran ing: $6
@@ -8515,13 +8506,13 @@ Alesané \'\'$2\'\'.
 
 Panjenengan bisa ngubungi $1 utawa [[{{MediaWiki:Grouppage-sysop}}|pangurus liyané]] kanggo ngomongaké prakara iki.
 
-Panjenengan ora bisa nggunakaké fitur \'Kirim layang e-mail panganggo iki\' kejaba panjenengan wis nglebokaké alamat e-mail sing sah ing [[Special:Preferences|préferènsi]] panjenengan.
+Panjenengan ora bisa nggunakaké fitur 'Kirim layang e-mail panganggo iki' kejaba panjenengan wis nglebokaké alamat e-mail sing sah ing [[Special:Preferences|préferènsi]] panjenengan.
 
 Alamat IP panjenengan iku $3, lan ID pamblokiran iku #$5.
-Tulung kabèh informasi ing ndhuwur iki disertakaké ing saben pitakon panjenengan.',
+Tulung kabèh informasi ing ndhuwur iki disertakaké ing saben pitakon panjenengan.",
 	'blockednoreason' => 'ora ana alesan sing diwènèhaké',
-	'blockedoriginalsource' => 'Isi sumber \'\'\'$1\'\'\' dituduhaké ing ngisor iki:',
-	'blockededitsource' => 'Tèks \'\'\'suntingan panjenengan\'\'\' tumrap ing \'\'\'$1\'\'\' dituduhaké ing ngisor iki:',
+	'blockedoriginalsource' => "Isi sumber '''$1''' dituduhaké ing ngisor iki:",
+	'blockededitsource' => "Tèks '''suntingan panjenengan''' tumrap ing '''$1''' dituduhaké ing ngisor iki:",
 	'blocked-notice-logextract' => 'Panganggo iki saiki lagi diblokir.
 Log pamblokiran pungkasan dituduhaké ing ngisor iki minangka bahan rujukan:',
 	'badsig' => 'Tapak astanipun klèntu; cèk rambu HTML.',
@@ -8558,7 +8549,6 @@ Pirsani [[Special:IPBlockList|Daftar blokir IP]] kanggo ninjo ulang pamblokiran.
 Alamat IP sing diblokir sacara otomatis ora ana ing daftar iki.
 Mangga mirsani [[Special:IPBlockList|daftar alamat IP sing diblokir]] kanggo daftar blokir pungkasan.',
 	'block-log-flags-anononly' => 'namung panganggo anonim waé',
-	'block-log-flags-nocreate' => 'opsi nggawé akun utawa rékening dipatèni',
 	'block-log-flags-noautoblock' => 'blokir otomatis dipatèni',
 	'block-log-flags-noemail' => 'e-mail diblokir',
 	'block-log-flags-nousertalk' => 'ora éntuk nyunting kaca gunemané dhéwé',
@@ -8566,14 +8556,14 @@ Mangga mirsani [[Special:IPBlockList|daftar alamat IP sing diblokir]] kanggo daf
 	'block-log-flags-hiddenname' => 'jeneng panganggo didhelikaké',
 	'blockme' => 'Blokiren aku',
 	'bydate' => 'miturut tanggal',
-	'bad_image_list' => 'Formaté kaya mengkéné:
+	'bad_image_list' => "Formaté kaya mengkéné:
 
 Namung butir daftar (baris sing diawali mawa tandha *) sing mèlu diitung. Pranala kapisan ing sawijining baris kudu pranala ing berkas sing ala.
-Pranala-pranala sabanjuré ing baris sing padha dianggep minangka \'\'pengecualian\'\', yaiku artikel sing bisa nuduhaké berkas iku.',
+Pranala-pranala sabanjuré ing baris sing padha dianggep minangka ''pengecualian'', yaiku artikel sing bisa nuduhaké berkas iku.",
 	'blankpage' => 'Kaca kosong',
-];
+);
 
-$messages['ka'] = [
+$messages['ka'] = array(
 	'badaccess' => 'ნებართვის შეცდომა',
 	'badaccess-group0' => 'თქვენ არ გაქვთ მოთხოვნილი მოქმედების შესრულების უფლება',
 	'badaccess-groups' => 'მოთხოვნილი მოქმედების შესრულება შეუძლიათ მხოლოდ {{PLURAL:$2|შემდეგ ჯგუფში|შემდეგი ჯგუფებიდან ერთ-ერთში}} მყოფ მომხმარებლებს: $1.',
@@ -8599,8 +8589,8 @@ $messages['ka'] = [
 თქვენი ამჟამინდელი IP მისამართია $3, ხოლო ბლოკის იდენტიფიკატორი #$5.
 გთხოვთ, მიუთითოთ ყველა ზემოთხსენებული მონაცემი თქვენს კორესპონდენციაში.',
 	'blockednoreason' => 'საბაბი მითითებული არ არის',
-	'blockedoriginalsource' => '\'\'\'$1\'\'\'-ის წყარო მოყვანილია ქვემოთ:',
-	'blockededitsource' => 'ქვემოთ მოყვანილია \'\'\'$1\'\'\'-ში თქვენი რედაქტირების ტექსტი:',
+	'blockedoriginalsource' => "'''$1'''-ის წყარო მოყვანილია ქვემოთ:",
+	'blockededitsource' => "ქვემოთ მოყვანილია '''$1'''-ში თქვენი რედაქტირების ტექსტი:",
 	'blocked-notice-logextract' => 'ეს მომხმარებელი უკვე დაიბლოკა.
 დაბლოკვის მიზეზი შემდეგშია:',
 	'badsig' => 'არასწორი ნედლი ხელმოწერა; შეამოწმეთ HTML ჭდეები.',
@@ -8642,7 +8632,6 @@ $messages['ka'] = [
 	'blocklogentry' => '"[[$1]]" ბლოკირების ვადის გასვლის თარიღი $2 $3.',
 	'blocklogtext' => 'ეს არის მომხმარებლების დაბლოკვის და განბლოკვის ჟურნალი. ავტომატურად დაბლოკილი IP მისამართები არაა ჩამოთვლილი. იხილეთ [[Special:IPBlockList|IP ბლოკირების სია]] მიმდინარე დაბლოკვებისთვის.',
 	'block-log-flags-anononly' => 'მხოლოდ ანონიმური მომხმარებლები',
-	'block-log-flags-nocreate' => 'ანგარიშის შექმნა გამორთულია',
 	'block-log-flags-noautoblock' => 'ავტობლოკირება გათიშულია',
 	'block-log-flags-noemail' => 'დაიბლოკა ელ. ფოსტა',
 	'block-log-flags-nousertalk' => 'ვერ შეასწორებს განხილვის გვერდს',
@@ -8656,69 +8645,68 @@ $messages['ka'] = [
 პირველი ბმული ხაზზე უნდა იყოს ბმული ხარვეზიან ფაილზე.
 ნებისმიერი შემდგომი ბმული იმავე ხაზზე მიჩნეულია, როგორც გამონაკლისი, მაგ. გვერდები, სადაც ფაილი შეიძლება ხაზებს შორის იყოს ჩასმული.',
 	'blankpage' => 'ცარიელი გვერდი',
-];
+);
 
-$messages['kaa'] = [
+$messages['kaa'] = array(
 	'badaccess' => 'Ruxsatnama qateligi',
-	'badaccess-group0' => 'Soralıp atırg\'an ha\'reketin\'izdi bejeriwge ruqsatın\'ız joq.',
-	'badaccess-groups' => 'Soralıp atırg\'an ha\'reketin\'iz to\'mendegi {{PLURAL:$2|topar|toparlardın\' birinin\'}} paydalanıwshılarına sheklengen: $1',
-	'badarticleerror' => 'Bunday ha\'reket bul bette atqarılmaydı.',
+	'badaccess-group0' => "Soralıp atırg'an ha'reketin'izdi bejeriwge ruqsatın'ız joq.",
+	'badaccess-groups' => "Soralıp atırg'an ha'reketin'iz to'mendegi {{PLURAL:$2|topar|toparlardın' birinin'}} paydalanıwshılarına sheklengen: $1",
+	'badarticleerror' => "Bunday ha'reket bul bette atqarılmaydı.",
 	'badtitle' => 'Jaramsız atama',
-	'badtitletext' => 'Sorag\'an betin\'izdin\' ataması natuwrı, bos, tillerara yamasa inter-wiki ataması natuwrı ko\'rsetilgen. Atamada qollanıwg\'a bolmaytug\'ın bir yamasa bir neshe simvollar bolıwı mu\'mkin.',
+	'badtitletext' => "Sorag'an betin'izdin' ataması natuwrı, bos, tillerara yamasa inter-wiki ataması natuwrı ko'rsetilgen. Atamada qollanıwg'a bolmaytug'ın bir yamasa bir neshe simvollar bolıwı mu'mkin.",
 	'badretype' => 'Siz kiritken parol tuwra kelmedi.',
-	'blocked-mailpassword' => 'IP adresin\'iz o\'zgeris kiritiwden bloklang\'an, so\'nın\' ushın paroldi tiklew funktsiyasın ha\'m paydalana almaysız.',
+	'blocked-mailpassword' => "IP adresin'iz o'zgeris kiritiwden bloklang'an, so'nın' ushın paroldi tiklew funktsiyasın ha'm paydalana almaysız.",
 	'bold_sample' => 'Yarım juwan tekst',
 	'bold_tip' => 'Yarım juwan tekst',
-	'blockedtitle' => 'Paydalanıwshı bloklang\'an',
-	'blockedtext' => '\'\'\'Paydalaniwshı atın\'ız yamasa IP adresin\'iz bloklang\'an.\'\'\'
+	'blockedtitle' => "Paydalanıwshı bloklang'an",
+	'blockedtext' => "'''Paydalaniwshı atın'ız yamasa IP adresin'iz bloklang'an.'''
 
-Bloklawdı $1 a\'melge asırg\'an.
-Keltirilgen sebebi: \'\'$2\'\'.
+Bloklawdı \$1 a'melge asırg'an.
+Keltirilgen sebebi: ''\$2''.
 
-* Bloklaw baslang\'an: $8
-* Bloklaw tamamlang\'an: $6
-* Bloklaw maqseti: $7
+* Bloklaw baslang'an: \$8
+* Bloklaw tamamlang'an: \$6
+* Bloklaw maqseti: \$7
 
-Usı bloklawdı diskussiya qılıw ushın $1 yamasa basqa [[{{MediaWiki:Grouppage-sysop}}|administratorlar]] menen baylanısqa shıg\'ıwın\'ızg\'a boladı.
-Siz [[Special:Preferences|akkaunt sazlawların\'ızda]] haqıyqıy e-mailin\'izdı ko\'rsetpegenin\'izshe ha\'mde onı paydalanıwdan bloklang\'an bolg\'anısha "Usı paydalanıwshıg\'a xat jazıw" qa\'siyetinen qollana almaysız.
-Sizin\' ha\'zirgi IP adresin\'iz: $3, bloklaw IDı: #$5.
-Usılardın\' birewin yamasa ekewinde ha\'r bir sorawın\'ızg\'a qosın\'.',
+Usı bloklawdı diskussiya qılıw ushın \$1 yamasa basqa [[{{MediaWiki:Grouppage-sysop}}|administratorlar]] menen baylanısqa shıg'ıwın'ızg'a boladı.
+Siz [[Special:Preferences|akkaunt sazlawların'ızda]] haqıyqıy e-mailin'izdı ko'rsetpegenin'izshe ha'mde onı paydalanıwdan bloklang'an bolg'anısha \"Usı paydalanıwshıg'a xat jazıw\" qa'siyetinen qollana almaysız.
+Sizin' ha'zirgi IP adresin'iz: \$3, bloklaw IDı: #\$5.
+Usılardın' birewin yamasa ekewinde ha'r bir sorawın'ızg'a qosın'.",
 	'blockednoreason' => 'hesh sebep keltirilmegen',
-	'badsig' => 'Shala imzalar nadurıs; HTML teglerin tekserip ko\'rin\'.',
-	'badsiglength' => 'İmzan\'ız dım uzın.
-{{PLURAL:$1|simvoldan|simvoldan}} aspawı kerek.',
+	'badsig' => "Shala imzalar nadurıs; HTML teglerin tekserip ko'rin'.",
+	'badsiglength' => "İmzan'ız dım uzın.
+{{PLURAL:$1|simvoldan|simvoldan}} aspawı kerek.",
 	'boteditletter' => 'b',
 	'badfilename' => 'Fayl atı bug\'an o\'zgertildi: "$1".',
-	'brokenredirects' => 'Hesh betke bag\'ıtlamaytug\'ın burıwshılar',
-	'brokenredirectstext' => 'To\'mendegi qayta bag\'ıtlawshı betler ha\'zirgi waqıtta joq betlerge silteydi:',
-	'brokenredirects-edit' => 'o\'zgertiw',
-	'brokenredirects-delete' => 'o\'shiriw',
+	'brokenredirects' => "Hesh betke bag'ıtlamaytug'ın burıwshılar",
+	'brokenredirectstext' => "To'mendegi qayta bag'ıtlawshı betler ha'zirgi waqıtta joq betlerge silteydi:",
+	'brokenredirects-edit' => "o'zgertiw",
+	'brokenredirects-delete' => "o'shiriw",
 	'booksources' => 'Kitap derekleri',
 	'booksources-search-legend' => 'Kitap haqqında informatsiya izlew',
-	'booksources-go' => 'O\'tin\'',
+	'booksources-go' => "O'tin'",
 	'blanknamespace' => '(Baslı)',
 	'blockip' => 'Paydalanıwshını bloklaw',
 	'blockip-legend' => 'Paydalanıwshını bloklaw',
 	'badipaddress' => 'Jaramsız IP adres',
 	'blockipsuccesssub' => 'Tabıslı qulplaw',
-	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] bloklang\'an.<br />
-Basqa bloklawlar ushın [[Special:BlockList|IP bloklaw dizimin]] ko\'rip shıg\'ın\'iz.',
+	'blockipsuccesstext' => "[[Special:Contributions/$1|$1]] bloklang'an.<br />
+Basqa bloklawlar ushın [[Special:BlockList|IP bloklaw dizimin]] ko'rip shıg'ın'iz.",
 	'blocklink' => 'bloklaw',
 	'blocklogpage' => 'Bloklaw jurnalı',
-	'blocklogentry' => '[[$1]] $2 waqıt aralıg\'ına bloklandı $3',
+	'blocklogentry' => "[[$1]] $2 waqıt aralıg'ına bloklandı $3",
 	'block-log-flags-anononly' => 'tek anonim paydalanıwshılar',
-	'block-log-flags-nocreate' => 'Akkaunt jaratıw o\'shirilgen',
-	'block-log-flags-noautoblock' => 'Avtoqulplaw o\'shirilgen',
-	'block-log-flags-noemail' => 'e-mail bloklang\'an',
-	'bydate' => 'sa\'ne boyınsha',
-	'bad_image_list' => 'Formatı to\'mendegishe:
+	'block-log-flags-noautoblock' => "Avtoqulplaw o'shirilgen",
+	'block-log-flags-noemail' => "e-mail bloklang'an",
+	'bydate' => "sa'ne boyınsha",
+	'bad_image_list' => "Formatı to'mendegishe:
 
-Tek dizim elementleri (* menen baslanatug\'ın qatarlar) esaplanadi.
-Qatardın\' birinshi siltewi natuwrı faylg\'a siltewi sha\'rt.
-Sol qatardag\'ı keyingi ha\'r bir siltewler tısqarı qabıl etiledi, mısalı qatar ishindegi ushırasatug\'ın faylı bar betler.',
-];
+Tek dizim elementleri (* menen baslanatug'ın qatarlar) esaplanadi.
+Qatardın' birinshi siltewi natuwrı faylg'a siltewi sha'rt.
+Sol qatardag'ı keyingi ha'r bir siltewler tısqarı qabıl etiledi, mısalı qatar ishindegi ushırasatug'ın faylı bar betler.",
+);
 
-$messages['kab'] = [
+$messages['kab'] = array(
 	'badaccess' => 'Agul n turagt',
 	'badaccess-group0' => 'Ur tettalaseḍ ara ad texedmeḍ tigawt i tseqsiḍ.',
 	'badaccess-groups' => 'Tigawt i steqsiḍ, llan ala imseqdacen seg yiwen n yiderman n $1 i zemren a t-xedmen.',
@@ -8731,12 +8719,12 @@ ur tezmireḍ ara ad tesɛuḍ awal n tbaḍnit i tettuḍ.',
 	'bold_sample' => 'Aḍris aberbuz',
 	'bold_tip' => 'Aḍris aberbuz',
 	'blockedtitle' => 'Amseqdac iɛekkel',
-	'blockedtext' => '\'\'\'Isem n wemseqdac neɣ tansa n IP inek ɛekkelen.\'\'\'
+	'blockedtext' => "'''Isem n wemseqdac neɣ tansa n IP inek ɛekkelen.'''
 
-$1 iɛekkel-it u yenna-d \'\'$2\'\'.
+$1 iɛekkel-it u yenna-d ''$2''.
 
 Tzemreḍ ad tmeslayeḍ akk d $1 neɣ [[{{MediaWiki:Grouppage-sysop}}|anedbal]] nniḍen iwakken ad tsmelayem ɣef uɛekkil-nni.
-Lukan ur tefkiḍ ara email saḥih deg [[Special:Preferences|isemyifiyen n wemseqdac]], ur tezmireḍ ara ad tazneḍ email. Tansa n IP inek n tura d $3, ID n uɛekkil d #$5. Smekti-ten u fka-ten i unedbal-nni.',
+Lukan ur tefkiḍ ara email saḥih deg [[Special:Preferences|isemyifiyen n wemseqdac]], ur tezmireḍ ara ad tazneḍ email. Tansa n IP inek n tura d $3, ID n uɛekkil d #$5. Smekti-ten u fka-ten i unedbal-nni.",
 	'badsig' => 'Azmul mačči d ṣaḥiḥ; Ssenqed tags n HTML.',
 	'badfilename' => 'Isem ufaylu yettubeddel ar "$1".',
 	'brokenredirects' => 'Isemmimḍen imerẓa',
@@ -8753,9 +8741,9 @@ Lukan ur tefkiḍ ara email saḥih deg [[Special:Preferences|isemyifiyen n wems
 	'blocklink' => 'ɛekkel',
 	'block-log-flags-anononly' => 'Imseqdacen udrigen kan',
 	'bydate' => 's uzemz',
-];
+);
 
-$messages['kbd'] = [
+$messages['kbd'] = array(
 	'badaccess' => 'Agul n turagt',
 	'badaccess-group0' => 'Ur tettalaseḍ ara ad texedmeḍ tigawt i tseqsiḍ.',
 	'badaccess-groups' => 'Tigawt i steqsiḍ, llan ala imseqdacen seg yiwen n yiderman n $1 i zemren a t-xedmen.',
@@ -8768,12 +8756,12 @@ ur tezmireḍ ara ad tesɛuḍ awal n tbaḍnit i tettuḍ.',
 	'bold_sample' => 'Aḍris aberbuz',
 	'bold_tip' => 'Aḍris aberbuz',
 	'blockedtitle' => 'Amseqdac iɛekkel',
-	'blockedtext' => '\'\'\'Isem n wemseqdac neɣ tansa n IP inek ɛekkelen.\'\'\'
+	'blockedtext' => "'''Isem n wemseqdac neɣ tansa n IP inek ɛekkelen.'''
 
-$1 iɛekkel-it u yenna-d \'\'$2\'\'.
+$1 iɛekkel-it u yenna-d ''$2''.
 
 Tzemreḍ ad tmeslayeḍ akk d $1 neɣ [[{{MediaWiki:Grouppage-sysop}}|anedbal]] nniḍen iwakken ad tsmelayem ɣef uɛekkil-nni.
-Lukan ur tefkiḍ ara email saḥih deg [[Special:Preferences|isemyifiyen n wemseqdac]], ur tezmireḍ ara ad tazneḍ email. Tansa n IP inek n tura d $3, ID n uɛekkil d #$5. Smekti-ten u fka-ten i unedbal-nni.',
+Lukan ur tefkiḍ ara email saḥih deg [[Special:Preferences|isemyifiyen n wemseqdac]], ur tezmireḍ ara ad tazneḍ email. Tansa n IP inek n tura d $3, ID n uɛekkil d #$5. Smekti-ten u fka-ten i unedbal-nni.",
 	'badsig' => 'Azmul mačči d ṣaḥiḥ; Ssenqed tags n HTML.',
 	'badfilename' => 'Isem ufaylu yettubeddel ar "$1".',
 	'brokenredirects' => 'Isemmimḍen imerẓa',
@@ -8790,9 +8778,9 @@ Lukan ur tefkiḍ ara email saḥih deg [[Special:Preferences|isemyifiyen n wems
 	'blocklink' => 'ɛekkel',
 	'block-log-flags-anononly' => 'Imseqdacen udrigen kan',
 	'bydate' => 's uzemz',
-];
+);
 
-$messages['kbd-cyrl'] = [
+$messages['kbd-cyrl'] = array(
 	'badaccess' => 'Техьэным щыуагъэ иӀэщ',
 	'badaccess-group0' => 'Ебгъэжьа Ӏохугъуэр быщӀэн пӀалъэ уиӀэкъым.',
 	'badaccess-groups' => 'Егъэжьа Ӏохугъуэр зыщӀэн пӀалъэ зиӀэр {{PLURAL:$2|гупхэм|гупым}} $1 хэтхэра',
@@ -8804,10 +8792,10 @@ $messages['kbd-cyrl'] = [
 	'bold_sample' => 'Ӏуву щӀын хьэрыфхэр',
 	'bold_tip' => 'Ӏуву щӀын хьэрыфхэр',
 	'blockedtitle' => 'ЦӀыхухэтыр теубыдащ',
-	'blockedtext' => '\'\'\'Уи аккаунтыр иэ IP-адресыр теубыдащ.\'\'\'
+	'blockedtext' => "'''Уи аккаунтыр иэ IP-адресыр теубыдащ.'''
 
 Тезубыдар тхьэмадэ $1.
-Ар къызхэкӀауэ щытыр: \'\'«$2»\'\'.
+Ар къызхэкӀауэ щытыр: ''«$2»''.
 
 * Теубыдыгъэр щыкӀэдзар: $8
 * Теубыдыгъэр щиухыр: $6
@@ -8816,7 +8804,7 @@ $messages['kbd-cyrl'] = [
 Тхыгъэ къыхуэбгъэнэфыну цӀыхухэт $1 -м иэ пэмыкӀ узыхуэй [[{{MediaWiki:Grouppage-sysop}}|тхьэмадэм]], теубыдыгъэм тепсэлъыхьыным щхьэкӀэ.
 Гу лъытэ тхыгъэ зэрумгъэхьыфынур тхьэмадэм дежь, системэм зыкъебгъэцӀыхуауэ, уи адрес электронэ почтэр къумылъытауэ щытмэ [[Special:Preferences|уи зэгъэзэхуэгъуэхэм]], абым пэмыкӀыу тхыгъэ егъэхьынхэри пхуамыдауэ щытмэ уи теубыдэгъуэм.
 Уи IP-адресыр - $3, теубыдыгъуэм и идентификаторыр - #$5.
-Уи тхыгъэхэм ахэр игъувурэ щӀы.',
+Уи тхыгъэхэм ахэр игъувурэ щӀы.",
 	'blockednoreason' => 'щхьэусыгъуэр итхакъым',
 	'blocked-notice-logextract' => 'Мы цӀыхухэтыр иджыпсту теубыдауэ щытщ.
 ИщӀагъымкӀэ теубыдыгъэ тхылъым и яужырей итхэгъуэр гъэлъэгъуа:',
@@ -8829,30 +8817,29 @@ $messages['kbd-cyrl'] = [
 	'blocklink' => 'гъэбыдэн',
 	'blocklogpage' => 'Теубыдыныгъэхэм я тхылъ',
 	'blocklogentry' => 'Триубыда [[$1]] $2 $3 нэгъунэ',
-	'block-log-flags-nocreate' => 'аккаунт регистрациэхэр теубыдауэ щытщ',
 	'bad_image_list' => 'Форматыр зэрщытын хуэр:
 
 Гулытэ зиӀэнур тхылъым и дэмыгъэхэм (сатыр дэмыгъэ * къежьэхэр).
 Сатырым и техьэпӀэ япэрейм сурэт иплъхьэ мыхъунум и техьэпӀэ иӀэн хуэй.
 Яужырыт техьэпӀэхэр хэгъэкӀа хуэду къилъытэну, сурэтыр здиплъэ хъуну тхыгъэхэр.',
-];
+);
 
-$messages['khw'] = [
+$messages['khw'] = array(
 	'badaccess' => 'خطائے اجازت',
 	'badaccess-group0' => 'تو ھیہ کورمو کوریکو مُجاز نو',
 	'badaccess-groups' => 'تہ درخاس کاردو عمل {{PLURAL:$2|گروہ|گروہان موژار ای}}: $1 ممبارا پت محدود شیر',
 	'badarticleerror' => 'ھیہ صفحہا ھیہ عمل انجام دیونو نو ھوی۔',
 	'badtitle' => 'خراب عنوان',
-	'badtitletext' => '\'درخاس شدہ صفحہو عنوان ناقص، خالی، یا کیہ غلط ربط شدہ بین لسانی یا بین ویکی عنوان شیر.
-شاید ھیارا ای یا زیات ھش حروف موجود شینی کہ ھیت عنوانا استعمال نو بونیان.\',',
+	'badtitletext' => "'درخاس شدہ صفحہو عنوان ناقص، خالی، یا کیہ غلط ربط شدہ بین لسانی یا بین ویکی عنوان شیر.
+شاید ھیارا ای یا زیات ھش حروف موجود شینی کہ ھیت عنوانا استعمال نو بونیان.',",
 	'badretype' => 'درج شدہ کلمۂ شناخت اصلو مطابقت نو لاکھویان',
 	'blocked-mailpassword' => 'تہ  آئی.پی پتہو تدوین کوریکار  روکاو کورونو بیتی شیر، تھے، ناجائز استعمالو روکاو کوریکو بچے ، تہ آئی.پی پتہو کلمۂ شناختو بحالیو فعل استعمال کوریکو اِجازت نیکی',
 	'bold_sample' => 'بوسک متن',
 	'bold_tip' => 'بولڈ ٹیکسٹ',
 	'blockedtitle' => 'صارفو بلاک کورونو بیتی شیر',
 	'blockednoreason' => 'کیہ وجہ دیونو نو ھوی',
-	'badsig' => 'ناقص خام دسخط.
-HTML tags لوڑے.\',',
+	'badsig' => "ناقص خام دسخط.
+HTML tags لوڑے.',",
 	'badsiglength' => 'تہ دسخط کافی درونگار شیر.
 ھیہ $1 {{PLURAL:$1|حرف|حروفاری}} زیات نو بیلک.',
 	'boteditletter' => 'خودکار',
@@ -8864,30 +8851,29 @@ HTML tags لوڑے.\',',
 	'blocklink' => 'پاوبندی لیگاوے',
 	'blocklogpage' => 'نوشتۂ پاوبندی',
 	'blocklogentry' => 'بلاک[[$1]] وختہ پت $2 $3',
-	'block-log-flags-nocreate' => 'کھاتہ کھولاو کوریکو سورا پاوپندی شیر',
 	'bad_image_list' => 'شکلبند درج ذیل شیر:
 
 صرف فہرستی عناصرار (* شروع باک لکیر) شامل کورونو بونیان
 کیہ لکیرا آویلو ربط کیہ خراب فایلو بیلیک۔
 ھتے لکیرا باقی گیاک ربطو مستثنیٰ قرار دیونو بویان، مثلاً صفحات کورا کہ فایل لکیرو موژا گویان۔',
-];
+);
 
-$messages['kiu'] = [
+$messages['kiu'] = array(
 	'broken-file-category' => 'Peli be gıreunê dosyeunê sıkıtau',
 	'badaccess' => 'Xeta desturi',
 	'badaccess-group0' => 'Faeliyeto ke sıma wazenê, sıma nêşikinê ney ravêr berê.',
 	'badaccess-groups' => 'No faeliyet teyna, keso ke {{PLURAL:$2|grube|grubu ra jüye}}: $1 dero, serba dino.',
 	'badarticleerror' => 'No faeliyet na pele de nêvıracino.',
 	'badtitle' => 'Sernameo xırabın',
-	'badtitletext' => 'Sernamê pela ke sıma wast, nêvêrde, thal, ya girê mabênê zoni ğelet ya ki sernamê mabênê \'\'wiki\'\' bi.
-Beno ke, tede jü ya ki jêdê isareti estê ke sernameu de nêgurinê.',
+	'badtitletext' => "Sernamê pela ke sıma wast, nêvêrde, thal, ya girê mabênê zoni ğelet ya ki sernamê mabênê ''wiki'' bi.
+Beno ke, tede jü ya ki jêdê isareti estê ke sernameu de nêgurinê.",
 	'badretype' => 'Parola sıma nêvêrena.',
 	'bold_sample' => 'Nusto qolınd',
 	'bold_tip' => 'Nusto qolınd',
 	'blockedtitle' => 'Karber kilıt bi',
 	'blockednoreason' => 'sebeb nêdiyo',
-	'badsig' => 'İmza kala nêvêrdiye.
-Etiketê \'\'HTML\'\'i qontrol ke.',
+	'badsig' => "İmza kala nêvêrdiye.
+Etiketê ''HTML''i qontrol ke.",
 	'badsiglength' => 'İmza to zaf derga.
 Gunê $1 {{PLURAL:$1|herfe|herfun}} ra senık bo.',
 	'boteditletter' => 'b',
@@ -8908,11 +8894,10 @@ Gunê $1 {{PLURAL:$1|herfe|herfun}} ra senık bo.',
 	'blocklink' => 'kilıt ke',
 	'blocklogpage' => 'Protokolê kilıti',
 	'blocklogentry' => '[[$1]] hata peyê $2 $3ine kilıt bi',
-	'blocklogtext' => 'No jü protokolê faeliyetê kilıt- u rakerdena karberuno.
-Otomatikmen kilıt biyaiyê adresê \'\'IP\'\'y lista de çinê.
-Serba men- u kilıt-biyaene nıkaêne qaytê [[Special:BlockList|lista kilıt-kerdena \'\'IP\'\'y]] ke.',
+	'blocklogtext' => "No jü protokolê faeliyetê kilıt- u rakerdena karberuno.
+Otomatikmen kilıt biyaiyê adresê ''IP''y lista de çinê.
+Serba men- u kilıt-biyaene nıkaêne qaytê [[Special:BlockList|lista kilıt-kerdena ''IP''y]] ke.",
 	'block-log-flags-anononly' => 'teyna karberê bênamey',
-	'block-log-flags-nocreate' => 'afernaena hesabi qapan biye',
 	'block-log-flags-noautoblock' => 'kilıto otomatik qapan bi',
 	'block-log-flags-noemail' => 'e-mail kilıt bi',
 	'block-log-flags-nousertalk' => 'pela hurênaişi ho nêşikina bıvurnê',
@@ -8923,9 +8908,9 @@ Teyna çiyo ke beno lista (rezê ke be * dest kenê cı) çımun ver de vênino.
 Jü rêze de girêo sıftein gunê girêo de dosya xırabıne bo.
 Na rêze de her girêo bin jê istisna vênino, yanê pelê ke dosya beno ke sero rêzbiyae asena.',
 	'blankpage' => 'Pela thale',
-];
+);
 
-$messages['kk-arab'] = [
+$messages['kk-arab'] = array(
 	'badaccess' => 'رۇقسات قاتەسى',
 	'badaccess-group0' => 'سۇراتىلعان ارەكەتىڭىزدى جەگۋىڭىزگە رۇقسات ەتىلمەيدى.',
 	'badaccess-groups' => 'سۇراتىلعان ارەكەتىڭىز $1 توپتارى ٴبىرىنىڭ قاتۋسىشىلارىنا شەكتەلەدى.',
@@ -8938,9 +8923,9 @@ $messages['kk-arab'] = [
 	'bold_sample' => 'جۋان ٴماتىن',
 	'bold_tip' => 'جۋان ٴماتىن',
 	'blockedtitle' => 'قاتىسۋشى بۇعاتتالعان',
-	'blockedtext' => '\'\'\'قاتىسۋشى اتىڭىز نە IP مەكەنجايىڭىز بۇعاتتالعان.\'\'\'
+	'blockedtext' => "'''قاتىسۋشى اتىڭىز نە IP مەكەنجايىڭىز بۇعاتتالعان.'''
 
-وسى بۇعاتتاۋدى $1 ىستەگەن. كەلتىرىلگەن سەبەبى: \'\'$2\'\'.
+وسى بۇعاتتاۋدى $1 ىستەگەن. كەلتىرىلگەن سەبەبى: ''$2''.
 
 * بۇعاتتاۋ باستالعانى: $8
 * بۇعاتتاۋ بىتەتىنى: $6
@@ -8948,7 +8933,7 @@ $messages['kk-arab'] = [
 
 وسى بۇعاتتاۋدى تالقىلاۋ ٴۇشىن $1 دەگەنمەن, نە وزگە [[{{{{ns:mediawiki}}:grouppage-sysop}}|اكىمشىمەن]] قاتىناسۋىڭىزعا بولادى.
 [[{{#special:Preferences}}|تىركەلگىڭىز باپتالىمدارىن]] قولدانىپ جارامدى ە-پوشتا مەكەنجايىن ەنگىزگەنشە دەيىن جانە بۇنى پايدالانۋى بۇعاتتالماعانشا دەيىن «قاتىسۋشىعا حات جازۋ» مۇمكىندىگىن قولدانا المايسىز.
-اعىمدىق IP مەكەنجايىڭىز: $3, جانە بۇعاتاۋ ٴنومىرى: $5. سونىڭ بىرەۋىن, نەمەسە ەكەۋىن دە ٴاربىر سۇرانىمىڭىزعا كىرىستىرىڭىز.',
+اعىمدىق IP مەكەنجايىڭىز: $3, جانە بۇعاتاۋ ٴنومىرى: $5. سونىڭ بىرەۋىن, نەمەسە ەكەۋىن دە ٴاربىر سۇرانىمىڭىزعا كىرىستىرىڭىز.",
 	'blockednoreason' => 'ەش سەبەبى كەلتىرىلمەگەن',
 	'badsig' => 'قام قولتاڭباڭىز جارامسىز; HTML بەلگىشەلەرىن تەكسەرىڭىز.',
 	'badsiglength' => 'لاقاپ اتىڭىز تىم ۇزىن;
@@ -8980,7 +8965,6 @@ $messages['kk-arab'] = [
 وزدىكتىك بۇعاتتالعان IP مەكەنجايلار وسىندا تىزىمدەلگەمەگەن.
 اعىمداعى بەلسەندى تىيىمدار مەن بۇعاتتاۋلاردى [[{{#special:Ipblocklist}}|IP بۇعاتتاۋ تىزىمىنەن]] قاراڭىز.',
 	'block-log-flags-anononly' => 'تەك تىركەلگىسىزدەر',
-	'block-log-flags-nocreate' => 'تىركەلۋ وشىرىلگەن',
 	'block-log-flags-noautoblock' => 'وزبۇعاتتاۋ وشىرىلگەن',
 	'block-log-flags-noemail' => 'ە-پوشتا بۇعاتتالعان',
 	'blockme' => 'وزدىكتىك_بۇعاتتاۋ',
@@ -8990,9 +8974,9 @@ $messages['kk-arab'] = [
 تەك ٴتىزىم دانالارى (* نىشانىمەن باستالىتىن جولدار) ەسەپتەلەدى.
 جولدىڭ ٴبىرىنشى سىلتەمەسى جارامسىز سۋرەتكە سىلتەۋ ٴجون.
 سول جولداعى كەيىنگى ٴاربىر سىلتەمەلەر ەرەن بولىپ ەسەپتەلەدى, مىسالى جول ىشىندەگى كەزدەسەتىن سۋرەتى بار بەتتەر.',
-];
+);
 
-$messages['kk-cn'] = [
+$messages['kk-cn'] = array(
 	'badaccess' => 'رۇقسات قاتەسى',
 	'badaccess-group0' => 'سۇراتىلعان ارەكەتىڭىزدى جەگۋىڭىزگە رۇقسات ەتىلمەيدى.',
 	'badaccess-groups' => 'سۇراتىلعان ارەكەتىڭىز $1 توپتارى ٴبىرىنىڭ قاتۋسىشىلارىنا شەكتەلەدى.',
@@ -9005,9 +8989,9 @@ $messages['kk-cn'] = [
 	'bold_sample' => 'جۋان ٴماتىن',
 	'bold_tip' => 'جۋان ٴماتىن',
 	'blockedtitle' => 'قاتىسۋشى بۇعاتتالعان',
-	'blockedtext' => '\'\'\'قاتىسۋشى اتىڭىز نە IP مەكەنجايىڭىز بۇعاتتالعان.\'\'\'
+	'blockedtext' => "'''قاتىسۋشى اتىڭىز نە IP مەكەنجايىڭىز بۇعاتتالعان.'''
 
-وسى بۇعاتتاۋدى $1 ىستەگەن. كەلتىرىلگەن سەبەبى: \'\'$2\'\'.
+وسى بۇعاتتاۋدى $1 ىستەگەن. كەلتىرىلگەن سەبەبى: ''$2''.
 
 * بۇعاتتاۋ باستالعانى: $8
 * بۇعاتتاۋ بىتەتىنى: $6
@@ -9015,7 +8999,7 @@ $messages['kk-cn'] = [
 
 وسى بۇعاتتاۋدى تالقىلاۋ ٴۇشىن $1 دەگەنمەن, نە وزگە [[{{{{ns:mediawiki}}:grouppage-sysop}}|اكىمشىمەن]] قاتىناسۋىڭىزعا بولادى.
 [[{{#special:Preferences}}|تىركەلگىڭىز باپتالىمدارىن]] قولدانىپ جارامدى ە-پوشتا مەكەنجايىن ەنگىزگەنشە دەيىن جانە بۇنى پايدالانۋى بۇعاتتالماعانشا دەيىن «قاتىسۋشىعا حات جازۋ» مۇمكىندىگىن قولدانا المايسىز.
-اعىمدىق IP مەكەنجايىڭىز: $3, جانە بۇعاتاۋ ٴنومىرى: $5. سونىڭ بىرەۋىن, نەمەسە ەكەۋىن دە ٴاربىر سۇرانىمىڭىزعا كىرىستىرىڭىز.',
+اعىمدىق IP مەكەنجايىڭىز: $3, جانە بۇعاتاۋ ٴنومىرى: $5. سونىڭ بىرەۋىن, نەمەسە ەكەۋىن دە ٴاربىر سۇرانىمىڭىزعا كىرىستىرىڭىز.",
 	'blockednoreason' => 'ەش سەبەبى كەلتىرىلمەگەن',
 	'badsig' => 'قام قولتاڭباڭىز جارامسىز; HTML بەلگىشەلەرىن تەكسەرىڭىز.',
 	'badsiglength' => 'لاقاپ اتىڭىز تىم ۇزىن;
@@ -9047,7 +9031,6 @@ $messages['kk-cn'] = [
 وزدىكتىك بۇعاتتالعان IP مەكەنجايلار وسىندا تىزىمدەلگەمەگەن.
 اعىمداعى بەلسەندى تىيىمدار مەن بۇعاتتاۋلاردى [[{{#special:Ipblocklist}}|IP بۇعاتتاۋ تىزىمىنەن]] قاراڭىز.',
 	'block-log-flags-anononly' => 'تەك تىركەلگىسىزدەر',
-	'block-log-flags-nocreate' => 'تىركەلۋ وشىرىلگەن',
 	'block-log-flags-noautoblock' => 'وزبۇعاتتاۋ وشىرىلگەن',
 	'block-log-flags-noemail' => 'ە-پوشتا بۇعاتتالعان',
 	'blockme' => 'وزدىكتىك_بۇعاتتاۋ',
@@ -9057,9 +9040,9 @@ $messages['kk-cn'] = [
 تەك ٴتىزىم دانالارى (* نىشانىمەن باستالىتىن جولدار) ەسەپتەلەدى.
 جولدىڭ ٴبىرىنشى سىلتەمەسى جارامسىز سۋرەتكە سىلتەۋ ٴجون.
 سول جولداعى كەيىنگى ٴاربىر سىلتەمەلەر ەرەن بولىپ ەسەپتەلەدى, مىسالى جول ىشىندەگى كەزدەسەتىن سۋرەتى بار بەتتەر.',
-];
+);
 
-$messages['kk-cyrl'] = [
+$messages['kk-cyrl'] = array(
 	'broken-file-category' => 'Ақаулы файлдық сілтемелері бар беттер',
 	'badaccess' => 'Рұқсат беру қатесі',
 	'badaccess-group0' => 'Сұратылған әрекетіңізді жегуіңізге рұқсат етілмейді.',
@@ -9073,9 +9056,9 @@ $messages['kk-cyrl'] = [
 	'bold_sample' => 'Жуан мәтін',
 	'bold_tip' => 'Жуан мәтін',
 	'blockedtitle' => 'Қатысушы бұғатталған',
-	'blockedtext' => '\'\'\'Қатысушы атыңыз не IP мекенжайыңыз бұғатталған.\'\'\'
+	'blockedtext' => "'''Қатысушы атыңыз не IP мекенжайыңыз бұғатталған.'''
 
-Осы бұғаттауды $1 істеген. Келтірілген себебі: \'\'$2\'\'.
+Осы бұғаттауды $1 істеген. Келтірілген себебі: ''$2''.
 
 * Бұғаттаудың басталғаны: $8
 * Бұғаттаудың бітетіні: $6
@@ -9084,7 +9067,7 @@ $messages['kk-cyrl'] = [
 Осы бұғаттауды талқылау үшін $1, не өзге [[{{MediaWiki:Grouppage-sysop}}|әкімшімен]] қатынасуыңызға болады.
 [[Special:Preferences|Тіркелгі бапталымдары]]ңызда жарамды е-пошта мекенжайын ұсынып және де оны пайдаланудан бұғатталмаған жағдайыңызда ғана «Қатысушыға хат жазу» қызметін қолдана аласыз.
 Ағымдық IP мекенжайыңыз: $3, және бұғатау нөмірі: $5.
-Сұраным жасағанда осының екеуін де кірістіруіңізді сұраймыз.',
+Сұраным жасағанда осының екеуін де кірістіруіңізді сұраймыз.",
 	'blockednoreason' => 'еш себебі келтірілмеген',
 	'badsig' => 'Қам қолтаңбаңыз жарамсыз; HTML белгішелерін тексеріңіз.',
 	'badsiglength' => 'Лақап атыңыз тым ұзын;
@@ -9116,7 +9099,6 @@ $messages['kk-cyrl'] = [
 Өздіктік бұғатталған IP мекенжайлар осында тізімделгемеген.
 Ағымдағы белсенді тиымдар мен бұғаттауларды [[{{#special:Ipblocklist}}|IP бұғаттау тізімінен]] қараңыз.',
 	'block-log-flags-anononly' => 'тек тіркелгісіздер',
-	'block-log-flags-nocreate' => 'тіркелу өшірілген',
 	'block-log-flags-noautoblock' => 'өзбұғаттау өшірілген',
 	'block-log-flags-noemail' => 'е-пошта бұғатталған',
 	'blockme' => 'Өздіктік_бұғаттау',
@@ -9127,9 +9109,9 @@ $messages['kk-cyrl'] = [
 Жолдың бірінші сілтемесі жарамсыз суретке сілтеу жөн.
 Сол жолдағы кейінгі әрбір сілтемелер ерен болып есептеледі, мысалы жол ішіндегі кездесетін суреті бар беттер.',
 	'blankpage' => 'Бос бет',
-];
+);
 
-$messages['kk-kz'] = [
+$messages['kk-kz'] = array(
 	'broken-file-category' => 'Ақаулы файлдық сілтемелері бар беттер',
 	'badaccess' => 'Рұқсат беру қатесі',
 	'badaccess-group0' => 'Сұратылған әрекетіңізді жегуіңізге рұқсат етілмейді.',
@@ -9143,9 +9125,9 @@ $messages['kk-kz'] = [
 	'bold_sample' => 'Жуан мәтін',
 	'bold_tip' => 'Жуан мәтін',
 	'blockedtitle' => 'Қатысушы бұғатталған',
-	'blockedtext' => '\'\'\'Қатысушы атыңыз не IP мекенжайыңыз бұғатталған.\'\'\'
+	'blockedtext' => "'''Қатысушы атыңыз не IP мекенжайыңыз бұғатталған.'''
 
-Осы бұғаттауды $1 істеген. Келтірілген себебі: \'\'$2\'\'.
+Осы бұғаттауды $1 істеген. Келтірілген себебі: ''$2''.
 
 * Бұғаттаудың басталғаны: $8
 * Бұғаттаудың бітетіні: $6
@@ -9154,7 +9136,7 @@ $messages['kk-kz'] = [
 Осы бұғаттауды талқылау үшін $1, не өзге [[{{MediaWiki:Grouppage-sysop}}|әкімшімен]] қатынасуыңызға болады.
 [[Special:Preferences|Тіркелгі бапталымдары]]ңызда жарамды е-пошта мекенжайын ұсынып және де оны пайдаланудан бұғатталмаған жағдайыңызда ғана «Қатысушыға хат жазу» қызметін қолдана аласыз.
 Ағымдық IP мекенжайыңыз: $3, және бұғатау нөмірі: $5.
-Сұраным жасағанда осының екеуін де кірістіруіңізді сұраймыз.',
+Сұраным жасағанда осының екеуін де кірістіруіңізді сұраймыз.",
 	'blockednoreason' => 'еш себебі келтірілмеген',
 	'badsig' => 'Қам қолтаңбаңыз жарамсыз; HTML белгішелерін тексеріңіз.',
 	'badsiglength' => 'Лақап атыңыз тым ұзын;
@@ -9186,7 +9168,6 @@ $messages['kk-kz'] = [
 Өздіктік бұғатталған IP мекенжайлар осында тізімделгемеген.
 Ағымдағы белсенді тиымдар мен бұғаттауларды [[{{#special:Ipblocklist}}|IP бұғаттау тізімінен]] қараңыз.',
 	'block-log-flags-anononly' => 'тек тіркелгісіздер',
-	'block-log-flags-nocreate' => 'тіркелу өшірілген',
 	'block-log-flags-noautoblock' => 'өзбұғаттау өшірілген',
 	'block-log-flags-noemail' => 'е-пошта бұғатталған',
 	'blockme' => 'Өздіктік_бұғаттау',
@@ -9197,9 +9178,9 @@ $messages['kk-kz'] = [
 Жолдың бірінші сілтемесі жарамсыз суретке сілтеу жөн.
 Сол жолдағы кейінгі әрбір сілтемелер ерен болып есептеледі, мысалы жол ішіндегі кездесетін суреті бар беттер.',
 	'blankpage' => 'Бос бет',
-];
+);
 
-$messages['kk-latn'] = [
+$messages['kk-latn'] = array(
 	'badaccess' => 'Ruqsat qatesi',
 	'badaccess-group0' => 'Suratılğan äreketiñizdi jegwiñizge ruqsat etilmeýdi.',
 	'badaccess-groups' => 'Suratılğan äreketiñiz $1 toptarı biriniñ qatwsışılarına şekteledi.',
@@ -9212,9 +9193,9 @@ Mında taqırıp atında qoldalmaýtın birqatar tañbalar bolwı mümkin.',
 	'bold_sample' => 'Jwan mätin',
 	'bold_tip' => 'Jwan mätin',
 	'blockedtitle' => 'Qatıswşı buğattalğan',
-	'blockedtext' => '\'\'\'Qatıswşı atıñız ne IP mekenjaýıñız buğattalğan.\'\'\'
+	'blockedtext' => "'''Qatıswşı atıñız ne IP mekenjaýıñız buğattalğan.'''
 
-Osı buğattawdı $1 istegen. Keltirilgen sebebi: \'\'$2\'\'.
+Osı buğattawdı $1 istegen. Keltirilgen sebebi: ''$2''.
 
 * Buğattaw bastalğanı: $8
 * Buğattaw bitetini: $6
@@ -9222,7 +9203,7 @@ Osı buğattawdı $1 istegen. Keltirilgen sebebi: \'\'$2\'\'.
 
 Osı buğattawdı talqılaw üşin $1 degenmen, ne özge [[{{{{ns:mediawiki}}:grouppage-sysop}}|äkimşimen]] qatınaswıñızğa boladı.
 [[{{#special:Preferences}}|Tirkelgiñiz baptalımdarın]] qoldanıp jaramdı e-poşta mekenjaýın engizgenşe deýin jäne bunı paýdalanwı buğattalmağanşa deýin «Qatıswşığa xat jazw» mümkindigin qoldana almaýsız.
-Ağımdıq IP mekenjaýıñız: $3, jäne buğataw nömiri: $5. Sonıñ birewin, nemese ekewin de ärbir suranımıñızğa kiristiriñiz.',
+Ağımdıq IP mekenjaýıñız: $3, jäne buğataw nömiri: $5. Sonıñ birewin, nemese ekewin de ärbir suranımıñızğa kiristiriñiz.",
 	'blockednoreason' => 'eş sebebi keltirilmegen',
 	'badsig' => 'Qam qoltañbañız jaramsız; HTML belgişelerin tekseriñiz.',
 	'badsiglength' => 'Laqap atıñız tım uzın;
@@ -9254,7 +9235,6 @@ Buğattardı şolıp şığw üşin [[{{#special:Ipblocklist}}|IP buğattaw tizi
 Özdiktik buğattalğan IP mekenjaýlar osında tizimdelgemegen.
 Ağımdağı belsendi tïımdar men buğattawlardı [[{{#special:Ipblocklist}}|IP buğattaw tiziminen]] qarañız.',
 	'block-log-flags-anononly' => 'tek tirkelgisizder',
-	'block-log-flags-nocreate' => 'tirkelw öşirilgen',
 	'block-log-flags-noautoblock' => 'özbuğattaw öşirilgen',
 	'block-log-flags-noemail' => 'e-poşta buğattalğan',
 	'blockme' => 'Özdiktik_buğattaw',
@@ -9264,9 +9244,9 @@ Ağımdağı belsendi tïımdar men buğattawlardı [[{{#special:Ipblocklist}}|I
 Tek tizim danaları (* nışanımen bastalıtın joldar) esepteledi.
 Joldıñ birinşi siltemesi jaramsız swretke siltew jön.
 Sol joldağı keýingi ärbir siltemeler eren bolıp esepteledi, mısalı jol işindegi kezdesetin swreti bar better.',
-];
+);
 
-$messages['kk-tr'] = [
+$messages['kk-tr'] = array(
 	'badaccess' => 'Ruqsat qatesi',
 	'badaccess-group0' => 'Suratılğan äreketiñizdi jegwiñizge ruqsat etilmeýdi.',
 	'badaccess-groups' => 'Suratılğan äreketiñiz $1 toptarı biriniñ qatwsışılarına şekteledi.',
@@ -9279,9 +9259,9 @@ Mında taqırıp atında qoldalmaýtın birqatar tañbalar bolwı mümkin.',
 	'bold_sample' => 'Jwan mätin',
 	'bold_tip' => 'Jwan mätin',
 	'blockedtitle' => 'Qatıswşı buğattalğan',
-	'blockedtext' => '\'\'\'Qatıswşı atıñız ne IP mekenjaýıñız buğattalğan.\'\'\'
+	'blockedtext' => "'''Qatıswşı atıñız ne IP mekenjaýıñız buğattalğan.'''
 
-Osı buğattawdı $1 istegen. Keltirilgen sebebi: \'\'$2\'\'.
+Osı buğattawdı $1 istegen. Keltirilgen sebebi: ''$2''.
 
 * Buğattaw bastalğanı: $8
 * Buğattaw bitetini: $6
@@ -9289,7 +9269,7 @@ Osı buğattawdı $1 istegen. Keltirilgen sebebi: \'\'$2\'\'.
 
 Osı buğattawdı talqılaw üşin $1 degenmen, ne özge [[{{{{ns:mediawiki}}:grouppage-sysop}}|äkimşimen]] qatınaswıñızğa boladı.
 [[{{#special:Preferences}}|Tirkelgiñiz baptalımdarın]] qoldanıp jaramdı e-poşta mekenjaýın engizgenşe deýin jäne bunı paýdalanwı buğattalmağanşa deýin «Qatıswşığa xat jazw» mümkindigin qoldana almaýsız.
-Ağımdıq IP mekenjaýıñız: $3, jäne buğataw nömiri: $5. Sonıñ birewin, nemese ekewin de ärbir suranımıñızğa kiristiriñiz.',
+Ağımdıq IP mekenjaýıñız: $3, jäne buğataw nömiri: $5. Sonıñ birewin, nemese ekewin de ärbir suranımıñızğa kiristiriñiz.",
 	'blockednoreason' => 'eş sebebi keltirilmegen',
 	'badsig' => 'Qam qoltañbañız jaramsız; HTML belgişelerin tekseriñiz.',
 	'badsiglength' => 'Laqap atıñız tım uzın;
@@ -9321,7 +9301,6 @@ Buğattardı şolıp şığw üşin [[{{#special:Ipblocklist}}|IP buğattaw tizi
 Özdiktik buğattalğan IP mekenjaýlar osında tizimdelgemegen.
 Ağımdağı belsendi tïımdar men buğattawlardı [[{{#special:Ipblocklist}}|IP buğattaw tiziminen]] qarañız.',
 	'block-log-flags-anononly' => 'tek tirkelgisizder',
-	'block-log-flags-nocreate' => 'tirkelw öşirilgen',
 	'block-log-flags-noautoblock' => 'özbuğattaw öşirilgen',
 	'block-log-flags-noemail' => 'e-poşta buğattalğan',
 	'blockme' => 'Özdiktik_buğattaw',
@@ -9331,9 +9310,9 @@ Ağımdağı belsendi tïımdar men buğattawlardı [[{{#special:Ipblocklist}}|I
 Tek tizim danaları (* nışanımen bastalıtın joldar) esepteledi.
 Joldıñ birinşi siltemesi jaramsız swretke siltew jön.
 Sol joldağı keýingi ärbir siltemeler eren bolıp esepteledi, mısalı jol işindegi kezdesetin swreti bar better.',
-];
+);
 
-$messages['kl'] = [
+$messages['kl'] = array(
 	'badretype' => 'Isissutissat allanneqartut assigiinngillat.',
 	'boteditletter' => 'b',
 	'booksources-go' => 'Ujaruk',
@@ -9342,9 +9321,9 @@ $messages['kl'] = [
 	'blockip-legend' => 'Atuisoq asseruk',
 	'blocklink' => 'assersoruk',
 	'blocklogentry' => 'asserpaa [[$1]] $2-mik sivissusilimmik $3',
-];
+);
 
-$messages['km'] = [
+$messages['km'] = array(
 	'broken-file-category' => 'ទំព័រទាំងឡាយដែលមានតំណភ្ជាប់ខូច',
 	'badaccess' => 'បញ្ហាច្បាប់អនុញ្ញាត',
 	'badaccess-group0' => 'សកម្មភាពដែលអ្នកបានស្នើសុំត្រូវបានហាមឃាត់។',
@@ -9423,7 +9402,6 @@ $messages['km'] = [
 	'blocklogentry' => 'បានហាមឃាត់ [[$1]]​ដោយរយៈពេលផុតកំណត់$2 $3',
 	'blocklogtext' => 'នេះជាកំណត់ហេតុនៃការហាមឃាត់និងឈប់ហាមឃាត់អ្នកប្រើប្រាស់។ អាសយដ្ឋានIPដែលត្រូវបានហាមឃាត់ដោយស្វ័យប្រវត្តិមិនត្រូវបានដាក់ក្នុងបញ្ជីនេះទេ។ សូមមើល[[Special:BlockList|បញ្ជីនៃការហាមឃាត់IP]]ចំពោះបញ្ជីនៃហាមឃាត់នាថ្មីៗ។',
 	'block-log-flags-anononly' => 'សម្រាប់​តែ​អ្នកប្រើប្រាស់​អនាមិក​ប៉ុណ្ណោះ',
-	'block-log-flags-nocreate' => 'ការបង្កើតគណនីត្រូវបានហាមឃាត់',
 	'block-log-flags-noautoblock' => 'ការហាមឃាត់ដោយស្វ័យប្រវត្តិមិនត្រូវបានអនុញ្ញាតទេ',
 	'block-log-flags-noemail' => 'អ៊ីមែលត្រូវបានហាមឃាត់',
 	'block-log-flags-nousertalk' => 'មិនអាចកែប្រែទំព័រពិភាក្សាផ្ទាល់ខ្លួនទេ',
@@ -9435,9 +9413,9 @@ $messages['km'] = [
 មានតែ បញ្ជីរាយមុខរបស់ (ឃ្លា ផ្តើមដោយ *) ត្រូវបាន យកជាការ ។ តំណភ្ជាប់ដំបូង នៃឃ្លា ត្រូវតែ ជាតំណភ្ជាប់ ទៅ មួយរូបភាពអន់ ។
 តំណភ្ជាប់បន្ទាប់ លើឃ្លាតែមួយ ត្រូវបានយល់ថា ជា ករណីលើកលែង, ឧទាហរណ៍ ទំព័រ ដែលលើនោះ រូបភាព អាចនឹងលេចឡើង ។',
 	'blankpage' => 'ទំព័រទទេ',
-];
+);
 
-$messages['kn'] = [
+$messages['kn'] = array(
 	'broken-file-category' => 'ಪುತಗಲ್ಲಿ ಮುರುದಿರುವ ಕಡತ ಕೊಂಡಿಗಳು',
 	'badaccess' => 'ಅನುಮತಿ ದೋಷ',
 	'badaccess-group0' => 'ನೀವು ಕೋರಿರುವ ಕ್ರಿಯೆಯನ್ನು ನಿರ್ವಹಿಲು ನಿಮಗೆ ಅನುಮತಿ ಇಲ್ಲ.',
@@ -9451,19 +9429,19 @@ $messages['kn'] = [
 	'bold_sample' => 'ದಪ್ಪಗಿನ ಅಚ್ಚು',
 	'bold_tip' => 'ದಪ್ಪಗಿನ ಅಚ್ಚು',
 	'blockedtitle' => 'ಈ ಸದಸ್ಯರನ್ನು ತಡೆ ಹಿಡಿಯಲಾಗಿದೆ.',
-	'blockedtext' => '\'\'\'ನಿಮ್ಮ ಸದಸ್ಯತ್ವವನ್ನು ಅಥವ IP ವಿಳಾಸವನ್ನು ನಿರ್ಬಂಧಿಸಲಾಗಿದೆ.\'\'\'
+	'blockedtext' => "'''ನಿಮ್ಮ ಸದಸ್ಯತ್ವವನ್ನು ಅಥವ IP ವಿಳಾಸವನ್ನು ನಿರ್ಬಂಧಿಸಲಾಗಿದೆ.'''
 
-$1 ಅವರು ಈ ನಿರ್ಬಂಧನೆಯನ್ನು ಒಡ್ಡಿರುವರು.
-ಇದಕ್ಕೆ ಅವರು ನೀಡಿರುವ ಕಾರಣ: \'\'$2\'\'.
+\$1 ಅವರು ಈ ನಿರ್ಬಂಧನೆಯನ್ನು ಒಡ್ಡಿರುವರು.
+ಇದಕ್ಕೆ ಅವರು ನೀಡಿರುವ ಕಾರಣ: ''\$2''.
 
-* ನಿರ್ಬಂಧನೆಯ ಪ್ರಾರಂಭ: $8
-* ನಿರ್ಬಂಧನೆ ಮುಗಿಯುವುದು: $6
-* ನಿರ್ಬಂಧನೆ ಹೇರಲ್ಪಟ್ಟವರು: $7
+* ನಿರ್ಬಂಧನೆಯ ಪ್ರಾರಂಭ: \$8
+* ನಿರ್ಬಂಧನೆ ಮುಗಿಯುವುದು: \$6
+* ನಿರ್ಬಂಧನೆ ಹೇರಲ್ಪಟ್ಟವರು: \$7
 
-ನೀವು $1 ಅಥವ ಇತರ [[{{MediaWiki:Grouppage-sysop}}|ನಿರ್ವಾಹಕರನ್ನು]] ಈ ನಿರ್ಬಂಧನೆಯನ್ನು ಚರ್ಚಿಸಲು ಸಂಪರ್ಕಿಸಬಹುದು.
-ನೀವು \'ಸದಸ್ಯರಿಗೆ ಇ-ಅಂಚೆ ಕಳುಹಿಸಿ\' ಸೌಲಭ್ಯವನ್ನು ಉಪಯೋಗಿಸಲು ನಿಮ್ಮ "[[Special:Preferences|ನನ್ನ ಪ್ರಾಶಸ್ತ್ಯಗಳು]]" ಪುಟದಲ್ಲಿ ನಿಮ್ಮ ಇ-ಅಂಚೆ ವಿಳಾಸವನ್ನು ನೀಡಿರಬೇಕು. ಈಗ ಆ ಪುಟವನ್ನು ನೀವು ಉಪಯೋಗಿಸದಂತೆ ನಿರ್ಬಂಧಿಸಲಾಗಿಲ್ಲ.
-ನಿಮ್ಮ ಪ್ರಸಕ್ತ IP ವಿಳಾಸವು $3, ಮತ್ತು ಈ ನಿರ್ಭಂಧನೆಯ ಕ್ರಮಸಂಖ್ಯೆ (ID) #$5.
-ದಯವಿಟ್ಟು ನಿಮ್ಮ ಸಂಪರ್ಕಗಳಲ್ಲಿ ಈ ಸಂಖ್ಯೆಗಳನ್ನು ಸೇರಿಸಿ.',
+ನೀವು \$1 ಅಥವ ಇತರ [[{{MediaWiki:Grouppage-sysop}}|ನಿರ್ವಾಹಕರನ್ನು]] ಈ ನಿರ್ಬಂಧನೆಯನ್ನು ಚರ್ಚಿಸಲು ಸಂಪರ್ಕಿಸಬಹುದು.
+ನೀವು 'ಸದಸ್ಯರಿಗೆ ಇ-ಅಂಚೆ ಕಳುಹಿಸಿ' ಸೌಲಭ್ಯವನ್ನು ಉಪಯೋಗಿಸಲು ನಿಮ್ಮ \"[[Special:Preferences|ನನ್ನ ಪ್ರಾಶಸ್ತ್ಯಗಳು]]\" ಪುಟದಲ್ಲಿ ನಿಮ್ಮ ಇ-ಅಂಚೆ ವಿಳಾಸವನ್ನು ನೀಡಿರಬೇಕು. ಈಗ ಆ ಪುಟವನ್ನು ನೀವು ಉಪಯೋಗಿಸದಂತೆ ನಿರ್ಬಂಧಿಸಲಾಗಿಲ್ಲ.
+ನಿಮ್ಮ ಪ್ರಸಕ್ತ IP ವಿಳಾಸವು \$3, ಮತ್ತು ಈ ನಿರ್ಭಂಧನೆಯ ಕ್ರಮಸಂಖ್ಯೆ (ID) #\$5.
+ದಯವಿಟ್ಟು ನಿಮ್ಮ ಸಂಪರ್ಕಗಳಲ್ಲಿ ಈ ಸಂಖ್ಯೆಗಳನ್ನು ಸೇರಿಸಿ.",
 	'blockednoreason' => 'ಯಾವ ಕಾರಣವೂ ನೀಡಲಾಗಿಲ್ಲ',
 	'badsiglength' => 'ನಿಮ್ಮ ಅಡ್ಡಹೆಸರು ತುಂಬಾ ಉದ್ದವಾಗಿದೆ.
 ಅದು $1 {{PLURAL:$1|ಅಕ್ಷರಕ್ಕಿಂತ|ಅಕ್ಷರಗಳಿಗಿಂತ}} ಕಡಿಮೆ ಇರಬೇಕು.',
@@ -9486,7 +9464,6 @@ $1 ಅವರು ಈ ನಿರ್ಬಂಧನೆಯನ್ನು ಒಡ್ಡಿ�
 	'blocklogpage' => 'ತಡೆಹಿಡಿದ ಸದಸ್ಯರ ದಿನಚರಿ',
 	'blocklogentry' => '[[$1]] ಖಾತೆಯನ್ನು $2 $3 ಸಮಯದವರೆಗೆ ತಡೆಹಿಡಿಯಲಾಗಿದೆ',
 	'block-log-flags-anononly' => 'ಅನಾಮಧೇಯ ಬಳಕೆದಾರರು ಮಾತ್ರ',
-	'block-log-flags-nocreate' => 'ಖಾತೆ ಸೃಷ್ಟಿ ತಡೆಹಿಡಿಯಲಾಗಿದೆ',
 	'block-log-flags-noemail' => 'ಇ-ಅಂಚೆ ತಡೆಹಿಡಿಯಲಾಗಿದೆ',
 	'blockme' => 'ನನ್ನನ್ನು ತಡೆಹಿಡಿ',
 	'bydate' => 'ದಿನಾಂಕಕ್ಕನುಗುಣವಾಗಿ',
@@ -9496,9 +9473,9 @@ $1 ಅವರು ಈ ನಿರ್ಬಂಧನೆಯನ್ನು ಒಡ್ಡಿ�
 ಪ್ರತಿ ಸಾಲಿನ ಮೊದಲ ಕೊಂಡಿಯು ಒಂದು ದೋಷಯುಕ್ತ ಫೈಲಿಗೆ ಕೊಂಡಿಯಾಗಿರಬೇಕು.
 ಅದೇ ಸಾಲಿನ ಮುಂದಿನ ಎಲ್ಲಾ ಕೊಂಡಿಗಳನ್ನು ಪರಿಗಣನೆಯಿಂದ ವಿನಾಯತಿ ಮಾಡಲಾಗುತ್ತದೆ, ಅಂದರೆ ಎಲ್ಲಿ ಪುಟಗಳ ಒಳಗೆ ಫೈಲು ಇರುತ್ತದೆಯೊ ಅಲ್ಲಿ.',
 	'blankpage' => 'ಖಾಲಿ ಪುಟ',
-];
+);
 
-$messages['ko'] = [
+$messages['ko'] = array(
 	'broken-file-category' => '잘못된 파일 링크가 포함된 문서',
 	'badaccess' => '권한 오류',
 	'badaccess-group0' => '요청한 동작을 실행할 권한이 없습니다.',
@@ -9511,7 +9488,7 @@ $messages['ko'] = [
 	'bold_sample' => '굵은 글씨',
 	'bold_tip' => '굵은 글씨',
 	'blockedtitle' => '차단됨',
-	'blockedtext' => '\'\'\'당신의 계정 혹은 IP 주소가 차단되었습니다.\'\'\'
+	'blockedtext' => "'''당신의 계정 혹은 IP 주소가 차단되었습니다.'''
 
 차단한 사람은 $1이고, 차단한 이유는 다음과 같습니다: $2
 
@@ -9519,9 +9496,9 @@ $messages['ko'] = [
 * 차단이 끝나는 시간: $6
 * 차단된 사용자: $7
 
-$1, 또는 [[{{MediaWiki:Grouppage-sysop}}|다른 관리자]]에게 차단에 대해 문의할 수 있습니다. [[Special:Preferences|계정 환경 설정]]에 올바른 이메일 주소가 있어야만 \'이메일 보내기\' 기능을 사용할 수 있습니다. 또 이메일 보내기 기능이 차단되어 있으면 이메일을 보낼 수 없습니다.
+$1, 또는 [[{{MediaWiki:Grouppage-sysop}}|다른 관리자]]에게 차단에 대해 문의할 수 있습니다. [[Special:Preferences|계정 환경 설정]]에 올바른 이메일 주소가 있어야만 '이메일 보내기' 기능을 사용할 수 있습니다. 또 이메일 보내기 기능이 차단되어 있으면 이메일을 보낼 수 없습니다.
 지금 당신의 IP 주소는 $3이고, 차단 ID는 #$5입니다.
-문의할 때에 이 정보를 같이 알려주세요.',
+문의할 때에 이 정보를 같이 알려주세요.",
 	'blockednoreason' => '이유를 입력하지 않음',
 	'blocked-notice-logextract' => '이 사용자는 현재 차단되어 있습니다.
 해당 사용자의 최근 차단 기록을 참고하십시오:',
@@ -9548,7 +9525,7 @@ $1, 또는 [[{{MediaWiki:Grouppage-sysop}}|다른 관리자]]에게 차단에 �
 	'backend-fail-create' => '$1 파일을 쓸 수 없습니다.',
 	'backend-fail-readonly' => '‘$1’ 저장 백엔드가 읽기 전용입니다. 자세한 이유는 다음과 같습니다: “$2”',
 	'backend-fail-synced' => '파일 "$1"은 내부 저장 백엔드에 불안정한 상태로 있습니다.',
-	'backend-fail-connect' => '\'$1\' 저장 백엔드에 접속하지 못했습니다.',
+	'backend-fail-connect' => "'$1' 저장 백엔드에 접속하지 못했습니다.",
 	'backend-fail-internal' => '"$1" 저장 백엔드에 알 수 없는 오류가 발생했습니다.',
 	'backend-fail-contenttype' => '"$1"에 저장하기 위한 파일의 내용 유형을 판별하지 못했습니다.',
 	'backend-fail-batchsize' => '저장 백엔드에서 $1개의 파일 {{PLURAL:$1|작업}}이 쌓여 있습니다; 한계는 $2개입니다.',
@@ -9591,7 +9568,6 @@ $1, 또는 [[{{MediaWiki:Grouppage-sysop}}|다른 관리자]]에게 차단에 �
 	'blocklogentry' => '[[$1]] 사용자를 $2 차단함 $3',
 	'blocklogtext' => '이 목록은 사용자 차단/차단 해제 기록입니다. 자동으로 차단된 IP 주소는 여기에 나오지 않습니다. [[Special:BlockList|여기]]에서 현재 차단된 사용자 목록을 볼 수 있습니다.',
 	'block-log-flags-anononly' => 'IP만 막음',
-	'block-log-flags-nocreate' => '계정 생성 막음',
 	'block-log-flags-noautoblock' => '자동 차단 비활성화됨',
 	'block-log-flags-noemail' => '이메일 막음',
 	'block-log-flags-nousertalk' => '자신의 토론 문서 편집 불가',
@@ -9607,9 +9583,9 @@ $1, 또는 [[{{MediaWiki:Grouppage-sysop}}|다른 관리자]]에게 차단에 �
 	'blankpage' => '빈 문서',
 	'back' => '뒤로',
 	'button-createpage' => '새 문서 만들기',
-];
+);
 
-$messages['ko-kp'] = [
+$messages['ko-kp'] = array(
 	'broken-file-category' => '잘못된 파일 링크가 포함된 문서',
 	'badaccess' => '권한 오류',
 	'badaccess-group0' => '요청한 동작을 실행할 권한이 없습니다.',
@@ -9622,7 +9598,7 @@ $messages['ko-kp'] = [
 	'bold_sample' => '굵은 글씨',
 	'bold_tip' => '굵은 글씨',
 	'blockedtitle' => '차단됨',
-	'blockedtext' => '\'\'\'당신의 계정 혹은 IP 주소가 차단되었습니다.\'\'\'
+	'blockedtext' => "'''당신의 계정 혹은 IP 주소가 차단되었습니다.'''
 
 차단한 사람은 $1이고, 차단한 이유는 다음과 같습니다: $2
 
@@ -9630,9 +9606,9 @@ $messages['ko-kp'] = [
 * 차단이 끝나는 시간: $6
 * 차단된 사용자: $7
 
-$1, 또는 [[{{MediaWiki:Grouppage-sysop}}|다른 관리자]]에게 차단에 대해 문의할 수 있습니다. [[Special:Preferences|계정 환경 설정]]에 올바른 이메일 주소가 있어야만 \'이메일 보내기\' 기능을 사용할 수 있습니다. 또 이메일 보내기 기능이 차단되어 있으면 이메일을 보낼 수 없습니다.
+$1, 또는 [[{{MediaWiki:Grouppage-sysop}}|다른 관리자]]에게 차단에 대해 문의할 수 있습니다. [[Special:Preferences|계정 환경 설정]]에 올바른 이메일 주소가 있어야만 '이메일 보내기' 기능을 사용할 수 있습니다. 또 이메일 보내기 기능이 차단되어 있으면 이메일을 보낼 수 없습니다.
 지금 당신의 IP 주소는 $3이고, 차단 ID는 #$5입니다.
-문의할 때에 이 정보를 같이 알려주세요.',
+문의할 때에 이 정보를 같이 알려주세요.",
 	'blockednoreason' => '이유를 입력하지 않음',
 	'blocked-notice-logextract' => '이 사용자는 현재 차단되어 있습니다.
 해당 사용자의 최근 차단 기록을 참고하십시오:',
@@ -9659,7 +9635,7 @@ $1, 또는 [[{{MediaWiki:Grouppage-sysop}}|다른 관리자]]에게 차단에 �
 	'backend-fail-create' => '$1 파일을 쓸 수 없습니다.',
 	'backend-fail-readonly' => '‘$1’ 저장 백엔드가 읽기 전용입니다. 자세한 이유는 다음과 같습니다: “$2”',
 	'backend-fail-synced' => '파일 "$1"은 내부 저장 백엔드에 불안정한 상태로 있습니다.',
-	'backend-fail-connect' => '\'$1\' 저장 백엔드에 접속하지 못했습니다.',
+	'backend-fail-connect' => "'$1' 저장 백엔드에 접속하지 못했습니다.",
 	'backend-fail-internal' => '"$1" 저장 백엔드에 알 수 없는 오류가 발생했습니다.',
 	'backend-fail-contenttype' => '"$1"에 저장하기 위한 파일의 내용 유형을 판별하지 못했습니다.',
 	'backend-fail-batchsize' => '저장 백엔드에서 $1개의 파일 {{PLURAL:$1|작업}}이 쌓여 있습니다; 한계는 $2개입니다.',
@@ -9702,7 +9678,6 @@ $1, 또는 [[{{MediaWiki:Grouppage-sysop}}|다른 관리자]]에게 차단에 �
 	'blocklogentry' => '[[$1]] 사용자를 $2 차단함 $3',
 	'blocklogtext' => '이 목록은 사용자 차단/차단 해제 기록입니다. 자동으로 차단된 IP 주소는 여기에 나오지 않습니다. [[Special:BlockList|여기]]에서 현재 차단된 사용자 목록을 볼 수 있습니다.',
 	'block-log-flags-anononly' => 'IP만 막음',
-	'block-log-flags-nocreate' => '계정 생성 막음',
 	'block-log-flags-noautoblock' => '자동 차단 비활성화됨',
 	'block-log-flags-noemail' => '이메일 막음',
 	'block-log-flags-nousertalk' => '자신의 토론 문서 편집 불가',
@@ -9716,9 +9691,9 @@ $1, 또는 [[{{MediaWiki:Grouppage-sysop}}|다른 관리자]]에게 차단에 �
 매 줄의 첫번째 링크는 부적절한 파일을 가리켜야 합니다.
 같은 줄에 따라오는 모든 링크는 예외로 봅니다. (예: 파일이 사용되어야 하는 문서)',
 	'blankpage' => '빈 문서',
-];
+);
 
-$messages['koi'] = [
+$messages['koi'] = array(
 	'badaccess' => 'Пырикö сорасьöм',
 	'badtitletext' => 'Кошшана листбок нимыс абу веськыт, тыртöм, либо соралiн кыввезколасся нето интервики ним. А натьтö нимын эмöсь нелэдзан пассэз.',
 	'bold_sample' => 'Кызкодя гижан',
@@ -9737,11 +9712,10 @@ $messages['koi'] = [
 	'blocklink' => 'падмöтны',
 	'blocklogpage' => 'Падмöтаннэз сьöртi журнал',
 	'blocklogentry' => 'падмöтiс  [[$1]]-сö   $3 $2 -öдз',
-	'block-log-flags-nocreate' => 'виль уджкерисьöн лоны оз позь',
 	'bad_image_list' => 'Формат лöсьöтiкö видз тöд вылын: Уджавны пондасö токö нимлёдзись визёккез (кöдналöн пондöтчанын эм *). Визёклöн медодзза ыстöт ась лоö йитöм неуджалан файлкöт.  Мöдiк ыстöттэз сiя жö визёкын огö пыртö сы лыдö,  м.ш. гижöттэз, кытчö медиа-файл позьö пыртны.',
-];
+);
 
-$messages['krc'] = [
+$messages['krc'] = array(
 	'badaccess' => 'Кириуню халаты',
 	'badaccess-group0' => 'Сизни соргъан амалны этерге эркинлигигиз джокъду.',
 	'badaccess-groups' => 'Сиз соргъан амалны къуру $1 {{PLURAL:$2|группаны|группаланы}} къошулуучуларыны этерге мадарлары барды.',
@@ -9753,10 +9727,10 @@ $messages['krc'] = [
 	'bold_sample' => 'Къалын джазыу',
 	'bold_tip' => 'Къалын джазыу',
 	'blockedtitle' => 'Къошулуучу блок этилиниб турады',
-	'blockedtext' => '\'\'\'Сизни тергеу джазыуугъуз (аккаунтугъуз) неда IP-адресигиз блокга салыннганды.\'\'\'
+	'blockedtext' => "'''Сизни тергеу джазыуугъуз (аккаунтугъуз) неда IP-адресигиз блокга салыннганды.'''
 
 Блокга салгъан администратор: $1.
-Чертилген чурум: \'\'«$2»\'\'.
+Чертилген чурум: ''«$2»''.
 
 * Блокну башланнганы: $8
 * Блокну бошалыуу: $6
@@ -9765,7 +9739,7 @@ $messages['krc'] = [
 Сиз $1 къошулуучугъа неда башха [[{{MediaWiki:Grouppage-sysop}}|администраторгъа]] письмо джиберирге боллукъсуз, блокну сюзер ючюн.
 Сиз регистрацияны ётюб электрон почтагъызны адресин [[Special:Preferences|энчи джарашдырыулада]] бегитмеген эсегиз эмда блок бла письмола джиберирге къоюлмай эсе, администраторгъа письмо джибераллыкъ тюйюлсюз.
 Сизни IP-адресигиз — $3, блокну идентификатору — #$5.
-Бу информацияны ажымсыз чертигиз билдириулеригизде.',
+Бу информацияны ажымсыз чертигиз билдириулеригизде.",
 	'blockednoreason' => 'Чурум белгиленмегенди',
 	'blocked-notice-logextract' => 'Бу къошулуучу бусагъатда блокланыб турады.
 Тюбюнде блокланыуланы журналындан ахыр джазыу бериледи:',
@@ -9806,7 +9780,6 @@ $1 {{PLURAL:$1|символдан|символладан}} кеб болургъ
 Автомат халда тыйылгъан IP-адресле былайда кёргюзюлмейдиле.
 Банла бла блокланы кёрюр ючюн [[Special:BlockList|IP блок списогуна]] къарагъыз.',
 	'block-log-flags-anononly' => 'джангыз аноним къошулуучула',
-	'block-log-flags-nocreate' => 'Тергеу джазыуланы (аккаунтланы) регистрациялары тыйылыбды',
 	'block-log-flags-noautoblock' => 'автоблок джукъланыбды',
 	'block-log-flags-noemail' => 'e-mail джибериу амал блокга салыннганды',
 	'block-log-flags-nousertalk' => 'кесини сюзюу бетин тюрлендирелмейди',
@@ -9820,9 +9793,9 @@ $1 {{PLURAL:$1|символдан|символладан}} кеб болургъ
 Тизгинни биринчи джибериую салыргъа болмагъан (аман) суратха джибериу болургъа керекди.
 Андан ары баргъан джибериуле ол тизгинде, сурат къошулургъа болгъан статьялагъа джибериулеге саналлыкъдыла.',
 	'blankpage' => 'Бош бет',
-];
+);
 
-$messages['kri'] = [
+$messages['kri'] = array(
 	'badaccess' => 'Pamishon problem',
 	'badaccess-group0' => 'Yu no get pamishon foh du wetin yu jos chuz',
 	'badaccess-groups' => 'Na di yuza-dem we don join {{PLURAL:$2|di grup|wan pa di grup-dem}}: $1 nomo ebul du wetin yu jos chuz.',
@@ -9832,18 +9805,18 @@ $messages['kri'] = [
 	'booksources-go' => 'Go',
 	'blocklink' => 'blok',
 	'blocklogpage' => 'Blok log',
-];
+);
 
-$messages['krj'] = [
+$messages['krj'] = array(
 	'badaccess' => 'Sayup sa lisensya',
 	'badaccess-group0' => 'Indi kaw ginpasogtan nga himoon ang lihuk nga ginalaum mo.',
 	'badaccess-groups' => 'Ang imo ginpangayo nga lihuk ay para lang sa mga users sa {{PLURAL:$2|nga grupo|sara sa mga grupo}}: $1.',
 	'brokenredirects-edit' => 'Iislan',
 	'brokenredirects-delete' => 'para',
 	'booksources-go' => 'Agto',
-];
+);
 
-$messages['ksh'] = [
+$messages['ksh'] = array(
 	'broken-file-category' => 'Sigge met kappodde Lengks op Datteije',
 	'badaccess' => 'Nit jenoch Räächde',
 	'badaccess-group0' => 'Do häs nit jenoch Räächde.',
@@ -9861,25 +9834,25 @@ Muss De repareere.',
 	'bold_sample' => 'Fätte Schreff',
 	'bold_tip' => 'Fätte Schreff',
 	'blockedtitle' => 'Dä Metmaacher es jesperrt',
-	'blockedtext' => '\'\'\'Dinge Metmaacher-Name oder IP Adress es vun „$1“ jesperrt woode.\'\'\'
+	'blockedtext' => "'''Dinge Metmaacher-Name oder IP Adress es vun „\$1“ jesperrt woode.'''
 
-Als Jrund es enjedrage: „\'\'$2\'\'“
+Als Jrund es enjedrage: „''\$2''“
 
 Do kanns heh em Wiki immer noch lesse. Do sühß ävver di Sigg heh, wann De op rude Links klicks, neu Sigge aanlääje, odder Sigge ändere wells, denn doför bes De jetz jesperrt.
 
-Do kanns met $1 oder enem andere [[{{MediaWiki:Grouppage-sysop}}|Wiki-Köbes]] üvver dat Sperre schwaade, wann De wells.
-Do kanns ävver nor dann „\'\'E-Mail aan dä Metmaacher\'\'“ aanwende, wann De ald en E-Mail Adress en Dinge [[Special:Preferences|Enstellunge]] enjedrage un freijejovve häs un wann et E-mail schecke nit metjesperrt es.
+Do kanns met \$1 oder enem andere [[{{MediaWiki:Grouppage-sysop}}|Wiki-Köbes]] üvver dat Sperre schwaade, wann De wells.
+Do kanns ävver nor dann „''E-Mail aan dä Metmaacher''“ aanwende, wann De ald en E-Mail Adress en Dinge [[Special:Preferences|Enstellunge]] enjedrage un freijejovve häs un wann et E-mail schecke nit metjesperrt es.
 
 Dun en Ding Aanfroge nenne:
-* Dä Wiki-Köbeß, dä jesperrt hät: $1
-* Der Jrond för et Sperre: $2
-* Da wood jesperrt: $8
-* De Sperr soll loufe bes: $6
-* De Nommer vun dä Sperr: #$5
-* Ding IP-Adress is jetz: $3
-* Di Sperr es wäje odde jäje: $7
+* Dä Wiki-Köbeß, dä jesperrt hät: \$1
+* Der Jrond för et Sperre: \$2
+* Da wood jesperrt: \$8
+* De Sperr soll loufe bes: \$6
+* De Nommer vun dä Sperr: #\$5
+* Ding IP-Adress is jetz: \$3
+* Di Sperr es wäje odde jäje: \$7
 
-Do kanns och noch en et <span class="plainlinks">[{{fullurl:Special:IPBlockList|&action=search&limit=&ip=%23}}$5 Logboch met de Sperre]</span> loore.',
+Do kanns och noch en et <span class=\"plainlinks\">[{{fullurl:Special:IPBlockList|&action=search&limit=&ip=%23}}\$5 Logboch met de Sperre]</span> loore.",
 	'blockednoreason' => 'Keine Aanlass aanjejovve',
 	'blocked-notice-logextract' => 'Dä Metmaacher es jraad jesperrt.
 Heh kütt der neuste Enndraach drövver uss_em Logbooch övver et Metmaacher_Sperre:',
@@ -9953,7 +9926,6 @@ un och wann De se ändere wells.',
 	'blocklogtext' => 'Heh es dat Logboch för et Metmaacher Sperre un Freijevve.
 Automatich jesperrte IP-Adresse sin nit heh, ävver en de [[Special:BlockList|{{int:ipblocklist}}]] ze finge.',
 	'block-log-flags-anononly' => 'nor de namelose Metmaacher sperre',
-	'block-log-flags-nocreate' => 'neu Metmaacher aanlääje es verbodde',
 	'block-log-flags-noautoblock' => 'nit automatesch all däm sing IP-Adresse sperre',
 	'block-log-flags-noemail' => 'och et E-Mail Verschecke sperre',
 	'block-log-flags-nousertalk' => 'kann de eije Klaafsigg nit ändere',
@@ -9966,9 +9938,9 @@ Nur Reije met ennem * am Aanfang don jet.
 Tirek noh däm * moß ene Link op en Datei sin, die mer nit han welle.
 Donoh kumme, en däsellve Reih, Links op Sigge wo die Datei trotz dämm jenehm eß.',
 	'blankpage' => 'Vakat-Sigg',
-];
+);
 
-$messages['ku'] = [
+$messages['ku'] = array(
 	'broken-file-category' => 'Sigge met kappodde Lengks op Datteije',
 	'badaccess' => 'Nit jenoch Räächde',
 	'badaccess-group0' => 'Do häs nit jenoch Räächde.',
@@ -9986,25 +9958,25 @@ Muss De repareere.',
 	'bold_sample' => 'Fätte Schreff',
 	'bold_tip' => 'Fätte Schreff',
 	'blockedtitle' => 'Dä Metmaacher es jesperrt',
-	'blockedtext' => '\'\'\'Dinge Metmaacher-Name oder IP Adress es vun „$1“ jesperrt woode.\'\'\'
+	'blockedtext' => "'''Dinge Metmaacher-Name oder IP Adress es vun „\$1“ jesperrt woode.'''
 
-Als Jrund es enjedrage: „\'\'$2\'\'“
+Als Jrund es enjedrage: „''\$2''“
 
 Do kanns heh em Wiki immer noch lesse. Do sühß ävver di Sigg heh, wann De op rude Links klicks, neu Sigge aanlääje, odder Sigge ändere wells, denn doför bes De jetz jesperrt.
 
-Do kanns met $1 oder enem andere [[{{MediaWiki:Grouppage-sysop}}|Wiki-Köbes]] üvver dat Sperre schwaade, wann De wells.
-Do kanns ävver nor dann „\'\'E-Mail aan dä Metmaacher\'\'“ aanwende, wann De ald en E-Mail Adress en Dinge [[Special:Preferences|Enstellunge]] enjedrage un freijejovve häs un wann et E-mail schecke nit metjesperrt es.
+Do kanns met \$1 oder enem andere [[{{MediaWiki:Grouppage-sysop}}|Wiki-Köbes]] üvver dat Sperre schwaade, wann De wells.
+Do kanns ävver nor dann „''E-Mail aan dä Metmaacher''“ aanwende, wann De ald en E-Mail Adress en Dinge [[Special:Preferences|Enstellunge]] enjedrage un freijejovve häs un wann et E-mail schecke nit metjesperrt es.
 
 Dun en Ding Aanfroge nenne:
-* Dä Wiki-Köbeß, dä jesperrt hät: $1
-* Der Jrond för et Sperre: $2
-* Da wood jesperrt: $8
-* De Sperr soll loufe bes: $6
-* De Nommer vun dä Sperr: #$5
-* Ding IP-Adress is jetz: $3
-* Di Sperr es wäje odde jäje: $7
+* Dä Wiki-Köbeß, dä jesperrt hät: \$1
+* Der Jrond för et Sperre: \$2
+* Da wood jesperrt: \$8
+* De Sperr soll loufe bes: \$6
+* De Nommer vun dä Sperr: #\$5
+* Ding IP-Adress is jetz: \$3
+* Di Sperr es wäje odde jäje: \$7
 
-Do kanns och noch en et <span class="plainlinks">[{{fullurl:Special:IPBlockList|&action=search&limit=&ip=%23}}$5 Logboch met de Sperre]</span> loore.',
+Do kanns och noch en et <span class=\"plainlinks\">[{{fullurl:Special:IPBlockList|&action=search&limit=&ip=%23}}\$5 Logboch met de Sperre]</span> loore.",
 	'blockednoreason' => 'Keine Aanlass aanjejovve',
 	'blocked-notice-logextract' => 'Dä Metmaacher es jraad jesperrt.
 Heh kütt der neuste Enndraach drövver uss_em Logbooch övver et Metmaacher_Sperre:',
@@ -10078,7 +10050,6 @@ un och wann De se ändere wells.',
 	'blocklogtext' => 'Heh es dat Logboch för et Metmaacher Sperre un Freijevve.
 Automatich jesperrte IP-Adresse sin nit heh, ävver en de [[Special:BlockList|{{int:ipblocklist}}]] ze finge.',
 	'block-log-flags-anononly' => 'nor de namelose Metmaacher sperre',
-	'block-log-flags-nocreate' => 'neu Metmaacher aanlääje es verbodde',
 	'block-log-flags-noautoblock' => 'nit automatesch all däm sing IP-Adresse sperre',
 	'block-log-flags-noemail' => 'och et E-Mail Verschecke sperre',
 	'block-log-flags-nousertalk' => 'kann de eije Klaafsigg nit ändere',
@@ -10091,9 +10062,9 @@ Nur Reije met ennem * am Aanfang don jet.
 Tirek noh däm * moß ene Link op en Datei sin, die mer nit han welle.
 Donoh kumme, en däsellve Reih, Links op Sigge wo die Datei trotz dämm jenehm eß.',
 	'blankpage' => 'Vakat-Sigg',
-];
+);
 
-$messages['ku-latn'] = [
+$messages['ku-latn'] = array(
 	'broken-file-category' => 'Rûpelên bi girêdanên xerabûyî',
 	'badaccess' => 'Çewtiya destûrê',
 	'badaccess-group0' => 'Tu nikarî vî tiştî bikî.',
@@ -10103,21 +10074,21 @@ $messages['ku-latn'] = [
 	'badtitletext' => 'Sernavê rûpelê yê xwestî ne derbasdar, vala an jî ne xwediyê girêdaneke rast e.
 Dibe ku di sernavê de karakterên nayên bikaranîn hatibin nivîsandin.',
 	'badretype' => 'Her du şîfreyên ku te nivîsîn li hevdu nayên.',
-	'blocked-mailpassword' => 'IP\'ya te yê ji te niha tê bikaranin ji bo guherandinê ra hatîye astengkirin. Ji bo tiştên şaş çênebin, xastinê te ji bo şifreyeka nuh jî hatîye qedexekirin.',
+	'blocked-mailpassword' => "IP'ya te yê ji te niha tê bikaranin ji bo guherandinê ra hatîye astengkirin. Ji bo tiştên şaş çênebin, xastinê te ji bo şifreyeka nuh jî hatîye qedexekirin.",
 	'bold_sample' => 'Nivîsa stûr',
 	'bold_tip' => 'Nivîsa stûr',
 	'blockedtitle' => 'Bikarhêner hate astengkirin',
-	'blockedtext' => '\'\'\'Navê te yê bikarhêneriyê an jî IP\'ya te hate astengkirin.\'\'\'
+	'blockedtext' => "'''Navê te yê bikarhêneriyê an jî IP'ya te hate astengkirin.'''
 
-Astengkirin ji aliyê $1 ve pêkhat. Sedema astengkirina te ev e: \'\'$2\'\'.
+Astengkirin ji aliyê $1 ve pêkhat. Sedema astengkirina te ev e: ''$2''.
 
 * Destpêka astengkirinê: $8
 * Xelasbûna astengkirinê: $6
 * Astengkirin ji van re: $7
 
-Tu dikarî bi $1  re an jî [[{{MediaWiki:Grouppage-sysop}}|koordînatorên]] din re ji bo astengkirinê bikevî têkiliyê. Tu nikarî \'Ji vê/vî bikarhênerê/î re e-name bişîne\' bikarbînî heta  di [[Special:Preferences|tercihên xwe]] de navnîşana e-nameyeke derbasdar bikarbînî û tu ji bo bikaranîna vê fonksiyonê nehatî astengkirin.
+Tu dikarî bi $1  re an jî [[{{MediaWiki:Grouppage-sysop}}|koordînatorên]] din re ji bo astengkirinê bikevî têkiliyê. Tu nikarî 'Ji vê/vî bikarhênerê/î re e-name bişîne' bikarbînî heta  di [[Special:Preferences|tercihên xwe]] de navnîşana e-nameyeke derbasdar bikarbînî û tu ji bo bikaranîna vê fonksiyonê nehatî astengkirin.
 
-IP\'ya te ya niha $3 ye, û ID\'ya astengkirina te #$5 e. Ji kerema xwe yek ji van hejmaran têxe nav peyama xwe.',
+IP'ya te ya niha $3 ye, û ID'ya astengkirina te #$5 e. Ji kerema xwe yek ji van hejmaran têxe nav peyama xwe.",
 	'blockednoreason' => 'sedem nehatiye gotin',
 	'blocked-notice-logextract' => 'Ev bikarhêner hatiye astengkirin.
 Astengkirina dawî bi referansa li jêr hatiye piştrastkirin:',
@@ -10156,9 +10127,8 @@ Sedemekê binivîse!',
 	'blocklink' => 'asteng bike',
 	'blocklogpage' => 'Astengkirina bikarhêner',
 	'blocklogentry' => '"[[$1]]" ji bo dema $2 $3 hatîye asteng kirin',
-	'blocklogtext' => 'Ev reşahîyek ji astengkirinên û rakirina astengkirinên bikarhêneran ra ye. Adrêsên IP\'yan, yê otomatîk hatine astengkirin, nehatine nivîsandin. [[Special:BlockList|Lîsteya IP\'yên astengkirî]] bibîne ji bo dîtina astengkirinên IP\'yan.',
+	'blocklogtext' => "Ev reşahîyek ji astengkirinên û rakirina astengkirinên bikarhêneran ra ye. Adrêsên IP'yan, yê otomatîk hatine astengkirin, nehatine nivîsandin. [[Special:BlockList|Lîsteya IP'yên astengkirî]] bibîne ji bo dîtina astengkirinên IP'yan.",
 	'block-log-flags-anononly' => 'bes bikarhênerên neqeydkirî',
-	'block-log-flags-nocreate' => 'çêkirina hesaban hate qedexekirin',
 	'block-log-flags-noautoblock' => 'astengkirina otomatik tune',
 	'block-log-flags-noemail' => 'Şandina e-nameyan hatîye qedexekirin',
 	'block-log-flags-nousertalk' => 'nikare guftûgoyê xwe biguherîne',
@@ -10166,13 +10136,13 @@ Sedemekê binivîse!',
 	'blockme' => 'Min astengbike',
 	'bydate' => 'li gor dîrokê',
 	'blankpage' => 'Rûpela vala',
-];
+);
 
-$messages['kv'] = [
+$messages['kv'] = array(
 	'boteditletter' => 'б',
-];
+);
 
-$messages['kw'] = [
+$messages['kw'] = array(
 	'badaccess' => 'Gwall cubmyes',
 	'badtitle' => 'Titel drog',
 	'badretype' => 'Na wra parya an geryow-tremena an eyl gen y gila.',
@@ -10191,9 +10161,9 @@ $messages['kw'] = [
 	'blocklogentry' => 'a lettyas [[$1]], $2 $3 y/hy termen diwedh',
 	'block-log-flags-anononly' => 'devnydhyoryon dihanow hepken',
 	'block-log-flags-hiddenname' => 'hanow-usyer covys',
-];
+);
 
-$messages['ky'] = [
+$messages['ky'] = array(
 	'badtitle' => 'Ыксыз аталыш',
 	'badtitletext' => 'Талап кылынган барак аталышы туура эмес, бош, же тилдер-аралык же уики-аралык аталышы туура эмес шилтемеленген.
 Балким аталышта колдонулбай турган бир же андан көп белги камтылган.',
@@ -10207,16 +10177,15 @@ $messages['ky'] = [
 	'blocklink' => 'тосмоло',
 	'blocklogpage' => 'Тосмоолордун тизмеси',
 	'blocklogentry' => '[[$1]] тосмолонду, тосмолоо мөөнөтү: $2 $3',
-	'block-log-flags-nocreate' => 'Каттоо мүмкүн эмес',
 	'bydate' => 'Күнү боюнча',
 	'bad_image_list' => 'Төмөнкү калыпта болуш керек:
 
 Тизмедегилер гана окулат (* белги менен башталган саптар).
 Саптын биринчи шилтемеси койгонго тыюу салынган файлга шилтеме болуш керек.
 Ошол саптагы кийинки шилтемелер айрыкча каралып, же файл киргизиле бере турган макалалар.',
-];
+);
 
-$messages['la'] = [
+$messages['la'] = array(
 	'badaccess' => 'Permissus erratum',
 	'badaccess-group0' => 'Non licet tibi actum quod petivisti agere.',
 	'badaccess-groups' => 'Actum quod petivisti solum potest agi ab usoribus ex {{PLURAL:$2|grege|uno gregum}}: $1.',
@@ -10271,7 +10240,6 @@ Commodule notatio obstructionum subter datur.',
 	'blocklogentry' => 'obstruxit [[$1]], exire $2 $3',
 	'blocklogtext' => 'Hic est index actorum obstructionis deobstructionisque. Loci IP qui automatice obstructi sunt non enumerantur. Vide [[Special:BlockList|indicem usorum locorumque IP obstructorum]] pro indice toto.',
 	'block-log-flags-anononly' => 'solum usores anonymi',
-	'block-log-flags-nocreate' => 'creatio rationum prohibita',
 	'block-log-flags-noautoblock' => 'obstructio automatica prohibita',
 	'block-log-flags-noemail' => 'Litterae electronicae obstructae',
 	'block-log-flags-nousertalk' => 'non potest paginam disputationis suam recensere',
@@ -10279,9 +10247,9 @@ Commodule notatio obstructionum subter datur.',
 	'blockme' => 'Usor obstructus',
 	'bydate' => 'ex die',
 	'blankpage' => 'Pagina vacua',
-];
+);
 
-$messages['lad'] = [
+$messages['lad'] = array(
 	'broken-file-category' => 'Hojas que tienen atamientos rotos de arxivos',
 	'badaccess' => 'Yerro de permissión',
 	'badtitletext' => 'El título de la hoja demandada está vazío, no es valible, o es un link interlingua o interwiki incorrecto.
@@ -10299,48 +10267,47 @@ Puede ser que contiene uno o más caracteres que no se pueden usar en los títul
 	'blocklink' => 'blokea',
 	'blocklogpage' => 'Bloqueos de usuarios',
 	'blocklogentry' => 'bloqueó a [[$1]] $3 durante un tiempo de $2',
-	'block-log-flags-nocreate' => 'desactivada la creación de cuentos',
-	'bad_image_list' => 'El formato es ańsina:
+	'bad_image_list' => "El formato es ańsina:
 
-Cale akavidar sólo elementos de lista (quere dezir: shurás/satires qu\'empeçan con *).
+Cale akavidar sólo elementos de lista (quere dezir: shurás/satires qu'empeçan con *).
 El primer atamiento de cada shurá deve de ser un atamiento á una dosya negra (á la dosya que se quere blokear).
-Los atamientos venideros que stan en la mesma shurá s\'aprecian como eksepsiones, por eńxemplo, hojas ande la dosya se ve en la shurá.',
-];
+Los atamientos venideros que stan en la mesma shurá s'aprecian como eksepsiones, por eńxemplo, hojas ande la dosya se ve en la shurá.",
+);
 
-$messages['lb'] = [
+$messages['lb'] = array(
 	'broken-file-category' => 'Säite mat futtisse Linken op Fichieren',
 	'badaccess' => 'Net genuch Rechter',
 	'badaccess-group0' => 'Dir hutt net déi néideg Rechter fir dës Aktioun duerchzeféieren.',
-	'badaccess-groups' => 'D\'Aktioun déi dir gewielt hutt, kann nëmme vu Benotzer aus {{PLURAL:$2|der Grupp|enger vun de Gruppen}} $1 duerchgefouert ginn.',
+	'badaccess-groups' => "D'Aktioun déi dir gewielt hutt, kann nëmme vu Benotzer aus {{PLURAL:$2|der Grupp|enger vun de Gruppen}} $1 duerchgefouert ginn.",
 	'badarticleerror' => 'Dës Aktioun kann net op dëser Säit duerchgefouert ginn.',
 	'badtitle' => 'Schlechten Titel',
 	'badtitletext' => 'De gewënschten Titel ass net valabel, eidel, oder een net korrekten Interwiki Link.',
 	'badretype' => 'Är Passwierder stëmmen net iwwerdeneen.',
-	'blocked-mailpassword' => 'Déi vun Iech benotzten IP-Adress ass fir d\'Ännere vu Säite gespaart. Fir Mëssbrauch ze verhënneren, gouf d\'Méiglechkeet fir een neit Passwuert unzefroen och gespaart.',
+	'blocked-mailpassword' => "Déi vun Iech benotzten IP-Adress ass fir d'Ännere vu Säite gespaart. Fir Mëssbrauch ze verhënneren, gouf d'Méiglechkeet fir een neit Passwuert unzefroen och gespaart.",
 	'bold_sample' => 'Fettgedréckten Text',
 	'bold_tip' => 'Fettgedréckten Text',
 	'blockedtitle' => 'Benotzer ass gespaart',
-	'blockedtext' => 'Äre Benotzernumm oder är IP Adress gouf gespaart.
+	'blockedtext' => "Äre Benotzernumm oder är IP Adress gouf gespaart.
 
-D\'Spär gouf vum $1 gemaach. Als Grond gouf \'\'$2\'\' uginn.
+D'Spär gouf vum \$1 gemaach. Als Grond gouf ''\$2'' uginn.
 
-* Ufank vun der Spär: $8
-* Ënn vun der Spär: $6
-* Spär betrëfft: $7
+* Ufank vun der Spär: \$8
+* Ënn vun der Spär: \$6
+* Spär betrëfft: \$7
 
-Dir kënnt den/d\' $1 kontaktéieren oder ee vun den aneren [[{{MediaWiki:Grouppage-sysop}}|Administrateure]] fir iwwer d\'Spär ze schwätzen.
+Dir kënnt den/d' \$1 kontaktéieren oder ee vun den aneren [[{{MediaWiki:Grouppage-sysop}}|Administrateure]] fir iwwer d'Spär ze schwätzen.
 
-Dëst sollt Der besonnesch maachen, wann Der d\'Gefill hutt, datt de Grond fir d\'Spären net bei Iech läit.
-D\'Ursaach dofir ass an deem Fall, datt der eng dynamesch IP hutt, iwwert en Access-Provider, iwwer deen och aner Leit fueren.
-Aus deem Grond ass et recommandéiert, sech e Benotzernumm zouzeleeën, fir all Mëssverständnes z\'evitéieren.
+Dëst sollt Der besonnesch maachen, wann Der d'Gefill hutt, datt de Grond fir d'Spären net bei Iech läit.
+D'Ursaach dofir ass an deem Fall, datt der eng dynamesch IP hutt, iwwert en Access-Provider, iwwer deen och aner Leit fueren.
+Aus deem Grond ass et recommandéiert, sech e Benotzernumm zouzeleeën, fir all Mëssverständnes z'evitéieren.
 
-Dir kënnt d\'Funktioun "Dësem Benotzer eng E-Mail schécken" nëmme benotzen, wann Dir eng gëlteg E-Mail Adress bei Ären [[Special:Preferences|Astellungen]] aginn hutt.
-Är aktuell-IP Adress ass $3 an d\'Nummer vun der Spär ass #$5.
-Schreift all dës Informatioune w.e.g. bei all Ufro derbäi.',
+Dir kënnt d'Funktioun \"Dësem Benotzer eng E-Mail schécken\" nëmme benotzen, wann Dir eng gëlteg E-Mail Adress bei Ären [[Special:Preferences|Astellungen]] aginn hutt.
+Är aktuell-IP Adress ass \$3 an d'Nummer vun der Spär ass #\$5.
+Schreift all dës Informatioune w.e.g. bei all Ufro derbäi.",
 	'blockednoreason' => 'Kee Grond uginn',
 	'blocked-notice-logextract' => 'Dëse Benotzer ass elo gespaart.
 Déi lescht Entrée am Logbuch vun de Späre steet als Referenz hei drënner:',
-	'badsig' => 'D\'Syntax vun ärer Ënnerschëft ass net korrekt; iwwerpréift w.e.g. ären HTML Code.',
+	'badsig' => "D'Syntax vun ärer Ënnerschëft ass net korrekt; iwwerpréift w.e.g. ären HTML Code.",
 	'badsiglength' => 'Är Ënnerschrëft ass ze laang.
 Si muss manner wéi $1 {{PLURAL:$1|Zeechen|Zeechen}} hunn.',
 	'boteditletter' => 'B',
@@ -10369,18 +10336,18 @@ Si muss manner wéi $1 {{PLURAL:$1|Zeechen|Zeechen}} hunn.',
 	'booksources-search-legend' => 'No Bicherreferenze sichen',
 	'booksources-go' => 'Sichen',
 	'booksources-text' => 'Hei ass eng Lëscht mat Linken op Internetsäiten, déi nei a gebraucht Bicher verkafen. Do kann et sinn datt Dir méi Informatiounen iwwer déi Bicher fannt déi Dir sicht.',
-	'booksources-invalid-isbn' => 'D\'ISBN-Nummer déi Dir uginn hutt schéngt net gëlteg ze sinn. Kuckt w.e.g. no ob beim Kopéiere kee Feeler geschitt ass.',
+	'booksources-invalid-isbn' => "D'ISBN-Nummer déi Dir uginn hutt schéngt net gëlteg ze sinn. Kuckt w.e.g. no ob beim Kopéiere kee Feeler geschitt ass.",
 	'blanknamespace' => '(Haapt)',
 	'block' => 'Benotzer spären',
 	'blockip' => 'Benotzer spären',
 	'blockip-title' => 'Benotzer spären',
 	'blockip-legend' => 'Benotzer spären',
 	'blockiptext' => 'Benotzt dëse Formulaire fir eng spezifesch IP-Adress oder e Benotzernumm ze spären. Dëst soll nëmmen am Fall vu Vandalismus gemaach ginn, en accordance mat den [[{{MediaWiki:Policy-url}}|interne Richlinen]]. Gitt e spezifesche Grond un (zum Beispill Säite wou Vandalismus virgefall ass).',
-	'badipaddress' => 'D\'IP-Adress huet dat falscht Format.',
+	'badipaddress' => "D'IP-Adress huet dat falscht Format.",
 	'blockipsuccesssub' => 'Gouf gespaart',
-	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] gouf gespaart. <br />
+	'blockipsuccesstext' => "[[Special:Contributions/$1|$1]] gouf gespaart. <br />
 
-Kuckt d\'[[Special:BlockList|IP Spär-Lëscht]] fir all Spären ze gesin.',
+Kuckt d'[[Special:BlockList|IP Spär-Lëscht]] fir all Spären ze gesin.",
 	'blocklist' => 'Gespaarte Benotzer',
 	'blocklist-userblocks' => 'Benotzerspäre verstoppen',
 	'blocklist-tempblocks' => 'Temporär Späre verstoppen',
@@ -10395,14 +10362,13 @@ Kuckt d\'[[Special:BlockList|IP Spär-Lëscht]] fir all Spären ze gesin.',
 	'blocklist-nousertalk' => 'däerf seng eegen Diskussiounssäit net ännereen',
 	'blocklink' => 'spären',
 	'blocklogpage' => 'Spärlëscht',
-	'blocklog-showlog' => 'Dëse Benotzer war virdru gespaart. D\'Lëscht vun de Späre ass als Referenz hei ënnendrënner:',
-	'blocklog-showsuppresslog' => 'Dëse Benotzer war virdru gespaart a verstoppt. D\'Logbuch vun de Suppressiounen steet als Referenz hei ënnendrënner:',
+	'blocklog-showlog' => "Dëse Benotzer war virdru gespaart. D'Lëscht vun de Späre ass als Referenz hei ënnendrënner:",
+	'blocklog-showsuppresslog' => "Dëse Benotzer war virdru gespaart a verstoppt. D'Logbuch vun de Suppressiounen steet als Referenz hei ënnendrënner:",
 	'blocklogentry' => '"[[$1]]" gespaart fir $2 $3',
-	'blocklogtext' => 'Dëst ass eng Lëscht vu Spären a vu Spären déi opgehuewe goufen.
+	'blocklogtext' => "Dëst ass eng Lëscht vu Spären a vu Spären déi opgehuewe goufen.
 Automatesch gespaarten IP-Adresse sinn hei net opgelëscht.
-Kuckt d\'[[Special:BlockList|IP Spärlëscht]] fir déi aktuell Spären.',
+Kuckt d'[[Special:BlockList|IP Spärlëscht]] fir déi aktuell Spären.",
 	'block-log-flags-anononly' => 'Nëmmen anonym Benotzer',
-	'block-log-flags-nocreate' => 'Schafe vu Benotzerkonte gespaart',
 	'block-log-flags-noautoblock' => 'Autoblock deaktivéiert',
 	'block-log-flags-noemail' => 'E-Mail gespaart',
 	'block-log-flags-nousertalk' => 'däerf seng Diskussiounssäiten net änneren',
@@ -10415,9 +10381,9 @@ Kuckt d\'[[Special:BlockList|IP Spärlëscht]] fir déi aktuell Spären.',
 Nëmmen Zeilen, déi mat engem * ufänken, ginn ausgewäert. Als éischt no dem * muss ee Link op een net gewënscht Bild stoen.
 Duerno sti Linken déi Ausnamen definéieren, an deenen hirem Kontext dat Bild awer opdauchen däerf.',
 	'blankpage' => 'Eidel Säit',
-];
+);
 
-$messages['lez'] = [
+$messages['lez'] = array(
 	'broken-file-category' => 'ЧIуру файлдин элячIунар авай ччинар',
 	'badaccess' => 'ГЬатунин гъалатlдин',
 	'badtitle' => 'Ииже текъвер тIвар',
@@ -10435,34 +10401,33 @@ $messages['lez'] = [
 	'blocklink' => 'Блок авун',
 	'blocklogpage' => 'Блокарунин журнал',
 	'blocklogentry' => '[[$1]] блокарна,  $2 $3 чIав кьван',
-	'block-log-flags-nocreate' => 'Аккаунт туькIуьрдай ихтияр авач',
 	'bad_image_list' => 'Формат икl хьана кlанзава:
 
 Анжах сиягьда авай (* лишандихъ галаз эгеч!завай ц!арариз) зат!ариз килигда.
 ЦlарцIе авай сад лагьай элячIун ттун патал къадагъа алай шикилдиз  элячIун хьана кlанзава.
 ГЬа са цlарцIе  авай гьар са ахпагьан элячIунар  кьетIендинбур хьиз кьабулда, мисал яз, суьрет тваз мумкинвал авай ччинар.',
-];
+);
 
-$messages['lfn'] = [
+$messages['lfn'] = array(
 	'badtitle' => 'Titulo es mal',
 	'badtitletext' => 'La titulo de la paje tu ia desira ia es nonlegal, es vacua, o es un titulo intervici o interlingual no liada coreta. Es posable ce es un o plu simboles ce no pote es usada en titulos.',
 	'bold_sample' => 'Testo en leteras forte',
 	'bold_tip' => 'Testo en leteras forte',
 	'blockedtitle' => 'Usor es impedida',
-	'blockedtext' => '\'\'\'Tu nom de usor o adirije de IP ia es impedida.\'\'\'
+	'blockedtext' => "'''Tu nom de usor o adirije de IP ia es impedida.'''
 
 La impedi ia es fada par $1.
-La razon donada es \'\'$2\'\'.
+La razon donada es ''$2''.
 
 * Comensa de impedi: $8
 * Fini de impedi: $6
 * Ci algun intende impedi: $7
 
 Tu pote contata $1 o un otra [[{{MediaWiki:Grouppage-sysop}}|dirijor]] per discute esta impedi.
-Tu no pote usa la \'envia un eposta a esta usor\' sin un adirije de eposta legal es indicada en tu
+Tu no pote usa la 'envia un eposta a esta usor' sin un adirije de eposta legal es indicada en tu
 [[Special:Preferences|preferis de conta]] e tu no es impedida de usa el.
 Tu adirije de IP es aora $3, e la identia de la impedi es #$5.
-Per favore inclui tota esta detales en tu demandas.',
+Per favore inclui tota esta detales en tu demandas.",
 	'boteditletter' => 'b',
 	'brokenredirects' => 'Redirijes rompeda',
 	'booksources' => 'Orijines de libros',
@@ -10478,42 +10443,42 @@ Per favore inclui tota esta detales en tu demandas.',
 Sola linias de un lista (ce comensa con *) es considerada.
 La lia prima a la linia nesesa es un lia a un mal fix.
 Cada lias seguente a la mesma linia es considerada es esetas, ce es, la pajes do la fix pote aveni enlinia.',
-];
+);
 
-$messages['lg'] = [
+$messages['lg'] = array(
 	'broken-file-category' => 'Empapula eziriko ennyunzi ezitalina kwe zigguka',
 	'badaccess' => 'Endukusa zo tezikukkiriza kukola ku bino',
 	'badaccess-group0' => 'Ekikolwa ekyo tolina buyinza okukituukiriza.',
 	'badaccess-groups' => 'Ekikolwa ekyo kikkirizibwa abo bokka abali mu {{PLURAL:$2|kiti kya|kimu ku biti bino}}: $1.',
 	'badarticleerror' => 'Ku lupapula luno ekikolwa ekyo tekisoboka.',
 	'badtitle' => 'Buzibu ku linnya lya lupapula',
-	'badtitletext' => 'Onoonyezza erinnya ly\'olupapula eritakkirizibwa, oba ery\'olupapula olwereere, oba ery\'oluli ku wiki endala nga teruyungidwa ku eno obulungi.<br />
-Erinnya eryo liyinza ate okubaamu ennukuta oba obubonero ebitakkirizibwa mu mannya ga mpapula.',
-	'badretype' => 'Ebigambo ebikuumi by\'owandise tebifaanagana.',
-	'blocked-mailpassword' => 'Okulwanyisa nkozesa mbi, tetukkiriza okukyusa eby\'oku {{SITENAME}} okuva ku ndagiriro eya IP kw\'oyimye.<br />
-Kino kitwaliramu n\'obutakkiriza okufuna ebigambo bikuumi ebipya.',
-	'bold_sample' => 'Ennukuta z\'owandika wano zonna ziba nziggumivu',
-	'bold_tip' => 'Bw\'onyiga kano, ofuna w\'oyinza okuwandikira ennukuta ezo ne zivaamu nga nziggumivu',
+	'badtitletext' => "Onoonyezza erinnya ly'olupapula eritakkirizibwa, oba ery'olupapula olwereere, oba ery'oluli ku wiki endala nga teruyungidwa ku eno obulungi.<br />
+Erinnya eryo liyinza ate okubaamu ennukuta oba obubonero ebitakkirizibwa mu mannya ga mpapula.",
+	'badretype' => "Ebigambo ebikuumi by'owandise tebifaanagana.",
+	'blocked-mailpassword' => "Okulwanyisa nkozesa mbi, tetukkiriza okukyusa eby'oku {{SITENAME}} okuva ku ndagiriro eya IP kw'oyimye.<br />
+Kino kitwaliramu n'obutakkiriza okufuna ebigambo bikuumi ebipya.",
+	'bold_sample' => "Ennukuta z'owandika wano zonna ziba nziggumivu",
+	'bold_tip' => "Bw'onyiga kano, ofuna w'oyinza okuwandikira ennukuta ezo ne zivaamu nga nziggumivu",
 	'blockedtitle' => 'Ono agaanidwa',
-	'blockedtext' => '\'\'\'Ebikolebwa mu linnya lyo ery\'obwa memba, oba okuva ku ndagiriro yo eya \'IP\', bisibidwa.\'\'\'
+	'blockedtext' => "'''Ebikolebwa mu linnya lyo ery'obwa memba, oba okuva ku ndagiriro yo eya 'IP', bisibidwa.'''
 
-$1 y\'ataddewo natti eyo.<br />
-Ensonga gy\'awadde eri nti \'\'$2\'\'.
+$1 y'ataddewo natti eyo.<br />
+Ensonga gy'awadde eri nti ''$2''.
 
 * Natti eyo yateeredwako ku: $8 <br />
 * Ekoma ku: $6 <br />
 * Natti eteredwawo ekole ku: $7
 
 Osobola okubyogerako ne $1 oba [[{{MediaWiki:Grouppage-sysop}}|omutesitesi]] omulala.<br />
-Ekya \'Memba ono musindikire e-mail\' toosobole okukikozesa okugyako nga mu [[Special:Preferences|nteekateeka]] ey\'akawunti yo mulimu e-mail ennamu era nga yo teriko natti.<br />
-Kakano endagiriro eya \'IP\' gy\'oliko eri $3, yo ennamba eya natti gyebakusibye eri #$5.<br />
-Gw\'ogenda okwogera naye ku natti mutegeeze ennamba oba endagiriro eyo, oba byombi.',
+Ekya 'Memba ono musindikire e-mail' toosobole okukikozesa okugyako nga mu [[Special:Preferences|nteekateeka]] ey'akawunti yo mulimu e-mail ennamu era nga yo teriko natti.<br />
+Kakano endagiriro eya 'IP' gy'oliko eri $3, yo ennamba eya natti gyebakusibye eri #$5.<br />
+Gw'ogenda okwogera naye ku natti mutegeeze ennamba oba endagiriro eyo, oba byombi.",
 	'blockednoreason' => 'tebawadde ensonga',
-	'blocked-notice-logextract' => 'Memba ono mu kaakano agaanidwa.<br />
-Bino ebiddako bye ebikwata ku nsonga eyo mu lukalala lw\'ebifuddeyo mu by\'okugaana:',
+	'blocked-notice-logextract' => "Memba ono mu kaakano agaanidwa.<br />
+Bino ebiddako bye ebikwata ku nsonga eyo mu lukalala lw'ebifuddeyo mu by'okugaana:",
 	'boteditletter' => 'b',
 	'booksources' => 'Ebitabo ebijulizidwa',
-	'booksources-search-legend' => 'Noonya ebitabo eby\'okujuliza',
+	'booksources-search-legend' => "Noonya ebitabo eby'okujuliza",
 	'booksources-go' => 'Nona',
 	'blanknamespace' => '(Kuŋaanyizo lya byonna)',
 	'blockip' => 'Gaana memba okuwandika',
@@ -10521,16 +10486,15 @@ Bino ebiddako bye ebikwata ku nsonga eyo mu lukalala lw\'ebifuddeyo mu by\'okuga
 	'blocklink' => 'Ono agaanibwe okuwandika',
 	'blocklogpage' => 'Abagaanidwa',
 	'blocklogentry' => '[[$1]] agaanidwa. Obuyinza bumuddizibwa ku $2 $3',
-	'block-log-flags-nocreate' => 'okukolawo akawunti empya kusibidwa',
 	'bad_image_list' => 'Empandika entuufu:
 
 Ennyiriri ezikola lukalala (ezitandika ne *) ze zokka ezikola.
 Enyunzi esoka mu lunyiriri eteekwa okuba nga egguka ku fayiro eriko kiremya.
 Enyunzi endala eziba ku lunyiriri olwo zibalibwa nga ezigguka ku mpapula ezikozesa fayiro eya kiremya eyo.',
-];
+);
 
-$messages['li'] = [
-	'broken-file-category' => 'Pazjena\'s mit ónjuuste bestandjsverwiezinge',
+$messages['li'] = array(
+	'broken-file-category' => "Pazjena's mit ónjuuste bestandjsverwiezinge",
 	'badaccess' => 'Toeganksfout',
 	'badaccess-group0' => 'Doe höbs gein rechte óm de gevraogde hanjeling oet te veure.',
 	'badaccess-groups' => 'De gevraogde hanjeling is veurbehauwe aan gebroekers in {{PLURAL:$2|de gróp|ein van de gróppe}}: $1.',
@@ -10538,43 +10502,43 @@ $messages['li'] = [
 	'badtitle' => 'Óngeljige paginatitel',
 	'badtitletext' => 'De opgevraogde pagina is neet besjikbaar of laeg.',
 	'badretype' => 'De ingeveurde wachwäörd versjille vanein.',
-	'blocked-mailpassword' => 'Dien IP-adres is geblokkeerd veur \'t make van verangeringe. Om misbroek te veurkomme is \'t neet meugelik om \'n nuuj wachwaord aan te vraoge.',
+	'blocked-mailpassword' => "Dien IP-adres is geblokkeerd veur 't make van verangeringe. Om misbroek te veurkomme is 't neet meugelik om 'n nuuj wachwaord aan te vraoge.",
 	'bold_sample' => 'Vètten teks',
 	'bold_tip' => 'Vetten teks',
 	'blockedtitle' => 'Gebroeker is geblokkeerd',
-	'blockedtext' => '\'\'\'Dien gebroekersaccount of IP-adres is geblokkeerd.\'\'\'
+	'blockedtext' => "'''Dien gebroekersaccount of IP-adres is geblokkeerd.'''
 
-De blokkade is oetgeveurd door $1. De opgegaeve raej is \'\'$2\'\'.
+De blokkade is oetgeveurd door $1. De opgegaeve raej is ''$2''.
 
 * Aanvang blokkade: $8
 * Ènj blokkade: $6
 * Bedoeld te blokkere: $7
 
-De kèns contak opnumme mit $1 of \'ne angere [[{{MediaWiki:Grouppage-sysop}}|systeemwèrker]] óm de blokkade te besjpraeke.
-De kèns gein gebroek make van de functie \'e-mail deze gebroeker\', behauve es te \'n geldig e-mailadres höbs opgegaeve in dien [[Special:Preferences|veurkäöre]] en \'t gebroek van deze fónksie neet geblokkeerd is.
-Dien hujig IP-adres is $3 en \'t nómmer van de blokkade is #$5. Vermeld beide gegaeves wens te örges op dees blokkade reageers.',
+De kèns contak opnumme mit $1 of 'ne angere [[{{MediaWiki:Grouppage-sysop}}|systeemwèrker]] óm de blokkade te besjpraeke.
+De kèns gein gebroek make van de functie 'e-mail deze gebroeker', behauve es te 'n geldig e-mailadres höbs opgegaeve in dien [[Special:Preferences|veurkäöre]] en 't gebroek van deze fónksie neet geblokkeerd is.
+Dien hujig IP-adres is $3 en 't nómmer van de blokkade is #$5. Vermeld beide gegaeves wens te örges op dees blokkade reageers.",
 	'blockednoreason' => 'geine ree opgegaeve',
-	'blocked-notice-logextract' => 'Deze gebroeker is noe geblok.
-De leste bloklogregel wuuertj hiejónger t\'r raodpleging gegaeve:',
+	'blocked-notice-logextract' => "Deze gebroeker is noe geblok.
+De leste bloklogregel wuuertj hiejónger t'r raodpleging gegaeve:",
 	'badsig' => 'Óngeljige roew handjteikening; kiek de HTML-tags nao.',
 	'badsiglength' => 'De handjteikening is te lank.
 Zie maag neet mie es $1 {{PLURAL:$1|karakter|karakters}} bevatte.',
 	'boteditletter' => 'b',
 	'badfilename' => 'De naom van \'t besjtand is verangerd in "$1".',
-	'backend-fail-stream' => '\'t Waes neet mäögelik  \'t besjtand $1 te streame.',
-	'backend-fail-backup' => '\'t Waes neet mäögeljk \'n reservekopie van \'t besjtand $1 te make.',
-	'backend-fail-notexists' => '\'t Besjtand $1 besjteit neet.',
-	'backend-fail-hashes' => '\'t Waes neet mäögelik de hashes veur \'t besjtand op te haole um ze te vergelieke.',
-	'backend-fail-notsame' => 'Dao besjteit al \'n neet-identiek besjtand op de plaats $1.',
+	'backend-fail-stream' => "'t Waes neet mäögelik  't besjtand $1 te streame.",
+	'backend-fail-backup' => "'t Waes neet mäögeljk 'n reservekopie van 't besjtand $1 te make.",
+	'backend-fail-notexists' => "'t Besjtand $1 besjteit neet.",
+	'backend-fail-hashes' => "'t Waes neet mäögelik de hashes veur 't besjtand op te haole um ze te vergelieke.",
+	'backend-fail-notsame' => "Dao besjteit al 'n neet-identiek besjtand op de plaats $1.",
 	'backend-fail-invalidpath' => '$1 is gein geljig opslaagpad.',
 	'backend-fail-delete' => 'Kós bestjand $1 neet ewegsjaffe.',
-	'backend-fail-alreadyexists' => '\'t Besjtand $1 besjteit al.',
-	'backend-fail-store' => '\'t Waes neet mäögelik \'t besjtand $1 op te sloon op lokasie $2.',
+	'backend-fail-alreadyexists' => "'t Besjtand $1 besjteit al.",
+	'backend-fail-store' => "'t Waes neet mäögelik 't besjtand $1 op te sloon op lokasie $2.",
 	'backend-fail-copy' => 'Besjtand $1 kós neet nao $2 gekopieerd waere.',
 	'backend-fail-move' => 'Besjtand $1 kós neet nao $2 verplaats waere.',
-	'backend-fail-opentemp' => '\'t Waes neet mäögelik \'n tiedelik besjtand te äöpene.',
-	'backend-fail-writetemp' => '\'t Waes neet mäögelik nao \'n tiedelik besjtand te sjrieve.',
-	'backend-fail-closetemp' => '\'t Waes neet mäögelik \'n tiedelik besjtand te sjlete.',
+	'backend-fail-opentemp' => "'t Waes neet mäögelik 'n tiedelik besjtand te äöpene.",
+	'backend-fail-writetemp' => "'t Waes neet mäögelik nao 'n tiedelik besjtand te sjrieve.",
+	'backend-fail-closetemp' => "'t Waes neet mäögelik 'n tiedelik besjtand te sjlete.",
 	'backend-fail-read' => 'Kós bestjand $1 neet laeze.',
 	'backend-fail-create' => 'Kós bestjand $1 neet aanmake.',
 	'backend-fail-readonly' => 'Vannen opslaag "$1" kin op dit memènt allein gelaeze waere. De opgegaeve raeje is: "$2"',
@@ -10584,22 +10548,22 @@ Zie maag neet mie es $1 {{PLURAL:$1|karakter|karakters}} bevatte.',
 	'backend-fail-contenttype' => 'Kós \'t inhawdtype van \'t bestnadj óm es "$1" op te slaon neet bepaole.',
 	'backend-fail-batchsize' => 'Reiks van $1 {{PLURAL:$1|bestandjsoperatie|bestandjsoperaties}} in de opslaagbackend; de limiet is $2 {{PLURAL:$2|operatie|operaties}}.',
 	'brokenredirects' => 'Gebraoke redirects',
-	'brokenredirectstext' => 'De óngersjtaonde redirectpazjena\'s bevatte \'n redirect nao \'n neet-besjtaonde pazjena:',
+	'brokenredirectstext' => "De óngersjtaonde redirectpazjena's bevatte 'n redirect nao 'n neet-besjtaonde pazjena:",
 	'brokenredirects-edit' => 'bewerke',
 	'brokenredirects-delete' => 'wisse',
 	'booksources' => 'Bookwinkele',
-	'booksources-search-legend' => 'Zeuk informatie euver \'n book',
+	'booksources-search-legend' => "Zeuk informatie euver 'n book",
 	'booksources-go' => 'Zeuk',
-	'booksources-text' => 'Hiej onger stuit \'n lies met koppelinge nao anger websites die nuuje of gebroekde beuk verkoupe, en die wellich meer informatie euver \'t book detse zeuks höbbe:',
+	'booksources-text' => "Hiej onger stuit 'n lies met koppelinge nao anger websites die nuuje of gebroekde beuk verkoupe, en die wellich meer informatie euver 't book detse zeuks höbbe:",
 	'booksources-invalid-isbn' => 't Ingegaeve ISBN liek neet geldig te zeen.
 Controleer of se wellich n fout höbs gemaak bie de inveur.',
 	'blanknamespace' => '(hoofnaamruumde)',
 	'block' => 'Blok gebroeker',
 	'blockip' => 'Blokkeer dit IP-adres',
 	'blockip-title' => 'Blok gebroeker',
-	'blockip-legend' => '\'ne Gebroeker of IP-adres blokkere',
-	'blockiptext' => 'Gebroek \'t óngerstjaondj formeleer óm sjrieftoegank van e zeker IP-adres te verbeje. Dit maag allein gedaon weure om vandalisme te veurkómme en in euvereinkóms mitte [[{{MediaWiki:Policy-url}}|beleid]]. Gaef hiejónger de raeje óp (bv. inkel vandaliseerdje paazjes).',
-	'badipaddress' => '\'t IP-adres haet \'n ongeldige opmaak.',
+	'blockip-legend' => "'ne Gebroeker of IP-adres blokkere",
+	'blockiptext' => "Gebroek 't óngerstjaondj formeleer óm sjrieftoegank van e zeker IP-adres te verbeje. Dit maag allein gedaon weure om vandalisme te veurkómme en in euvereinkóms mitte [[{{MediaWiki:Policy-url}}|beleid]]. Gaef hiejónger de raeje óp (bv. inkel vandaliseerdje paazjes).",
+	'badipaddress' => "'t IP-adres haet 'n ongeldige opmaak.",
 	'blockipsuccesssub' => 'Blokkaad gelök',
 	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] is geblokkeerd.<br />
 Zuug de [[Special:BlockList|lies van geblokkeerde IP-adresse]].',
@@ -10617,13 +10581,12 @@ Zuug de [[Special:BlockList|lies van geblokkeerde IP-adresse]].',
 	'blocklist-nousertalk' => 'kan eige euverlèkpagina neet bewèrke',
 	'blocklink' => 'Blokkeer',
 	'blocklogpage' => 'Blokkeerlogbook',
-	'blocklog-showlog' => 'Dizze gebroeker is eerder geblokkeerd gewaes.
-\'t Blokkeerlogbook wört hiejonger weergaeve:',
-	'blocklog-showsuppresslog' => 'Deze gebroeker is al geblok gewaes en d\'r zeen (deil van) bewerkinge van deze gebroeker verbórge. \'t Verbèrgingslogbook steit hieónger:',
+	'blocklog-showlog' => "Dizze gebroeker is eerder geblokkeerd gewaes.
+'t Blokkeerlogbook wört hiejonger weergaeve:",
+	'blocklog-showsuppresslog' => "Deze gebroeker is al geblok gewaes en d'r zeen (deil van) bewerkinge van deze gebroeker verbórge. 't Verbèrgingslogbook steit hieónger:",
 	'blocklogentry' => '"[[$1]]" is geblokkeerd veur d\'n tied van $2 $3',
-	'blocklogtext' => 'Dit is \'n log van blokkades van gebroekers. Automatisch geblokkeerde IP-adresse sjtoon hie neet bie. Zuug de [[Special:BlockList|Lies van geblokkeerde IP-adresse]] veur de lies van op dit mement wèrkende blokkades.',
+	'blocklogtext' => "Dit is 'n log van blokkades van gebroekers. Automatisch geblokkeerde IP-adresse sjtoon hie neet bie. Zuug de [[Special:BlockList|Lies van geblokkeerde IP-adresse]] veur de lies van op dit mement wèrkende blokkades.",
 	'block-log-flags-anononly' => 'allein anoniem',
-	'block-log-flags-nocreate' => 'aanmake gebroekers geblokkeerd',
 	'block-log-flags-noautoblock' => 'autoblok ongedaon gemaak',
 	'block-log-flags-noemail' => 'e-mail geblokkeerd',
 	'block-log-flags-nousertalk' => 'kan eige euverlèkpagina neet bewèrke',
@@ -10631,39 +10594,39 @@ Zuug de [[Special:BlockList|lies van geblokkeerde IP-adresse]].',
 	'block-log-flags-hiddenname' => 'gebroeker verbórge',
 	'blockme' => 'Blokkeer mich',
 	'bydate' => 'op datum',
-	'bad_image_list' => 'De opmaak is es volg:
+	'bad_image_list' => "De opmaak is es volg:
 
-Allein regele in \'n lies (regele die mit * beginnen) waere verwirk. De ierste link op \'ne regel mót \'ne link zeen nao \'n óngewunsj plaetje.
-Alle volgende links die op dezelfde regel sjtaon, waere behanjeld es oetzunjering, zoe wie pazjena\'s woe-op \'t plaetje in de teks opgenómme is.',
+Allein regele in 'n lies (regele die mit * beginnen) waere verwirk. De ierste link op 'ne regel mót 'ne link zeen nao 'n óngewunsj plaetje.
+Alle volgende links die op dezelfde regel sjtaon, waere behanjeld es oetzunjering, zoe wie pazjena's woe-op 't plaetje in de teks opgenómme is.",
 	'blankpage' => 'Laeg pazjena',
-];
+);
 
-$messages['lij'] = [
-	'badaccess' => 'No ti g\'hæ o permisso',
-	'badaccess-group0' => 'No ti g\'hæ o permisso pe fâ quest\'assion.',
-	'badaccess-groups' => 'L\'assion che ti vêu fâ a l\'è permissa solo a i ûtenti de ûn di grûppi $1.',
-	'badarticleerror' => 'L\'açion che ti te veu fâ a non l\'è permissa in sta pagina.',
-	'badtitle' => 'O tìtolo o no l\'è corretto.',
-	'badtitletext' => 'O tittolo da paggina çercâa o l\'è vêuo, sballiòu o con caratteri no accettæ, oppûre o deriva da \'n errô inti collegamenti tra scîti Wiki diversci o verscioîn in léngue diversce do mæximo scîto.',
-	'badretype' => 'E paròlle d\'ordine che t\'hæ scrîo son despægie.',
-	'blocked-mailpassword' => 'O teu indirisso IP o l\'è affirmoö, e pe sta razon o non se peu usâ a funscion de remandâ a pòula segretta.',
+$messages['lij'] = array(
+	'badaccess' => "No ti g'hæ o permisso",
+	'badaccess-group0' => "No ti g'hæ o permisso pe fâ quest'assion.",
+	'badaccess-groups' => "L'assion che ti vêu fâ a l'è permissa solo a i ûtenti de ûn di grûppi $1.",
+	'badarticleerror' => "L'açion che ti te veu fâ a non l'è permissa in sta pagina.",
+	'badtitle' => "O tìtolo o no l'è corretto.",
+	'badtitletext' => "O tittolo da paggina çercâa o l'è vêuo, sballiòu o con caratteri no accettæ, oppûre o deriva da 'n errô inti collegamenti tra scîti Wiki diversci o verscioîn in léngue diversce do mæximo scîto.",
+	'badretype' => "E paròlle d'ordine che t'hæ scrîo son despægie.",
+	'blocked-mailpassword' => "O teu indirisso IP o l'è affirmoö, e pe sta razon o non se peu usâ a funscion de remandâ a pòula segretta.",
 	'bold_sample' => 'Grascetto',
 	'bold_tip' => 'Grascetto',
-	'blockedtitle' => 'L\'utente o l\'é bloccòu',
-	'blockedtext' => '\'\'\'\'Sto nomme d\'ûtente ou indirisso IP o l\'è stæto bloccòu.\'\'\'
+	'blockedtitle' => "L'utente o l'é bloccòu",
+	'blockedtext' => "''''Sto nomme d'ûtente ou indirisso IP o l'è stæto bloccòu.'''
 
-O blòcco o l\'è stæto fæto da $1. A raxon dæta a l\'è \'\'$2\'\'.
+O blòcco o l'è stæto fæto da \$1. A raxon dæta a l'è ''\$2''.
 
-* Iniçio de l\'affermassion: $8
-* Iniçio de l\'affermassion: $6
-* Intervallo de l\'affermassion: $7
+* Iniçio de l'affermassion: \$8
+* Iniçio de l'affermassion: \$6
+* Intervallo de l'affermassion: \$7
 
-O l\'è poscibbile contattâ $1 o \'n âtro [[{{MediaWiki:Grouppage-sysop}}|amministratô]] pe discûtte inscio blòcco.
-O no se pêu ûsâ o comando "Inviâ \'na léttia elettronega a quest\'ûtente" se ti no ti g\'hæ \'n indirisso e-mail registròu inte têu [[Special:Preferences|preferense]] e se o no l\'è stæto bloccòu ascì.
-O têu indirisso IP o l\'è $3, e o têu blòcco ID o l\'è #$5.
-Pe piaxei mettighe ûn di doî in tûtte e domande che ti fæ.',
+O l'è poscibbile contattâ \$1 o 'n âtro [[{{MediaWiki:Grouppage-sysop}}|amministratô]] pe discûtte inscio blòcco.
+O no se pêu ûsâ o comando \"Inviâ 'na léttia elettronega a quest'ûtente\" se ti no ti g'hæ 'n indirisso e-mail registròu inte têu [[Special:Preferences|preferense]] e se o no l'è stæto bloccòu ascì.
+O têu indirisso IP o l'è \$3, e o têu blòcco ID o l'è #\$5.
+Pe piaxei mettighe ûn di doî in tûtte e domande che ti fæ.",
 	'badsig' => 'Errô in ta firma; controlla i comandi HTML.',
-	'badsiglength' => 'O nommeaggio o l\'é tròppo lóngo; o dêve avéi meno de $1 caratteri.',
+	'badsiglength' => "O nommeaggio o l'é tròppo lóngo; o dêve avéi meno de $1 caratteri.",
 	'boteditletter' => 'b',
 	'badfilename' => 'O nomme do papê o l\'è stæto cangioö in "$1".',
 	'brokenredirects' => 'Rindirissamenti sballiæ',
@@ -10676,29 +10639,28 @@ Pe piaxei mettighe ûn di doî in tûtte e domande che ti fæ.',
 	'booksources-go' => 'Vànni',
 	'booksources-text' => 'De sotta unn-a lista de ingançi a ätri sciti che vendan neuvi e vegi libbri, e che peuvre avei informaçioin in sci libbri che ti te çerchi',
 	'blanknamespace' => '(Prinçipâ)',
-	'blockip' => 'Blocca l\'ûtente',
+	'blockip' => "Blocca l'ûtente",
 	'badipaddress' => 'Indirisso IP non valido',
 	'blockipsuccesssub' => 'Affermaçion arriescïa',
-	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] o l\'è stæto affermoö.
-<br />Veddi [[Special:BlockList|Lista de i indirissi IP affermæ]] te cangia e affermaçioin.',
+	'blockipsuccesstext' => "[[Special:Contributions/$1|$1]] o l'è stæto affermoö.
+<br />Veddi [[Special:BlockList|Lista de i indirissi IP affermæ]] te cangia e affermaçioin.",
 	'blocklink' => 'Afermaçion',
 	'blocklogpage' => 'Blòcchi',
-	'blocklogentry' => 'l\'a blocòu [[$1]] pe in periodo de $2 $3',
-	'blocklogtext' => 'Sta chie a l\'è unn-a lista de affermaçioin fæte e levæ.
+	'blocklogentry' => "l'a blocòu [[$1]] pe in periodo de $2 $3",
+	'blocklogtext' => "Sta chie a l'è unn-a lista de affermaçioin fæte e levæ.
 I indirissi IP affermæ automaticamente non son  consideræ.
-Veddi a [[Special:BlockList|Lista de i indirissi IP affermæ]] pe e informaçioin neuve.',
+Veddi a [[Special:BlockList|Lista de i indirissi IP affermæ]] pe e informaçioin neuve.",
 	'block-log-flags-anononly' => 'Utenti anonimmi soö',
-	'block-log-flags-nocreate' => 'Neuve registrascioin non son permisse',
-	'block-log-flags-noautoblock' => 'O blocco automatego o non l\'è attïvo',
-	'block-log-flags-noemail' => 'A posta elettronega a non l\'è attïva',
+	'block-log-flags-noautoblock' => "O blocco automatego o non l'è attïvo",
+	'block-log-flags-noemail' => "A posta elettronega a non l'è attïva",
 	'bydate' => 'pe dâta',
-	'bad_image_list' => 'O formato o l\'è coscì:
+	'bad_image_list' => "O formato o l'è coscì:
 Van conscideræ sôlo e righe che comensan co-o càratere *.
-O primmo inganso in sce ògni riga o deiv\'ese \'n inganso ch\'o no fonçionn-a
-L\'ingansi sucescivi, in scia mæxima riga, van conscideræ comme eceçioìn (pagine donde o file o pêu ese reciamòu normalmente).',
-];
+O primmo inganso in sce ògni riga o deiv'ese 'n inganso ch'o no fonçionn-a
+L'ingansi sucescivi, in scia mæxima riga, van conscideræ comme eceçioìn (pagine donde o file o pêu ese reciamòu normalmente).",
+);
 
-$messages['liv'] = [
+$messages['liv'] = array(
 	'badaccess' => 'Õigõm pūtõb',
 	'badtitle' => 'Vigāli pēļikēra',
 	'badtitletext' => 'Tōdõd līed pēļikēra vȯļ vigāli, tijā agā tuoizõst kīel versiōnist agā vikist äbõigistiz sidtõd. Sīe sizzõl võib vȱlda ikš agā jemīņ simbōlõ, midā äb sō pēļikēris kȭlbatõ.',
@@ -10713,24 +10675,23 @@ $messages['liv'] = [
 	'blocklink' => 'blokīer',
 	'blocklogpage' => 'Blokīerimiz log',
 	'blocklogentry' => 'Blokīerimiz kȭlbatijiz [[$1]], jarā loppõmiz āiga um $2 $3',
-	'block-log-flags-nocreate' => 'kontod lūomi um kīeldtõd',
 	'bad_image_list' => 'Tǟdõl panābõd setku nimkēra elementõd ( rīndad, mis irgõbõd simbōlõks *) . Ežmi siḑīm rīndas um kilāb siḑīm äbkȭlbatõb fail jūrõ. Sīel īž rīndas vȯlbiži pierrõ tulbiži siḑīmḑi vaņtlõbõd nemē mūšti ulzõ võtāmiži, se tǟntõb kēratõkši, mis jūrõ failõ võib pānda.',
-];
+);
 
-$messages['lmo'] = [
+$messages['lmo'] = array(
 	'badaccess' => 'Permiss sbajaa',
-	'badaccess-group0' => 'Te gh\'è mía \'l permiss per tirà inanz cun \'sta uperazión chì.',
-	'badaccess-groups' => 'Quela funzión chì l\'è reservada ai druvat che i henn in {{PLURAL:$2|del grüp|vün di grüp chì suta}}: $1.',
+	'badaccess-group0' => "Te gh'è mía 'l permiss per tirà inanz cun 'sta uperazión chì.",
+	'badaccess-groups' => "Quela funzión chì l'è reservada ai druvat che i henn in {{PLURAL:$2|del grüp|vün di grüp chì suta}}: $1.",
 	'badtitle' => 'Títul mía bun',
-	'badtitletext' => 'El titul de la pagina ciamada a l\'è vöj, sbajaa o cun carater minga acetaa, opüra al vegn d\'un erur in di ligam intra sit wiki diferent o versión in lenguv diferent de l\'istess sit.',
-	'badretype' => 'I password che t\'hee miss a hinn diferent.',
-	'blocked-mailpassword' => '\'L to indirizz IP l\'è blucaa, e per quela resón lì te pö mía druvà la funzion de recüper de la password.',
+	'badtitletext' => "El titul de la pagina ciamada a l'è vöj, sbajaa o cun carater minga acetaa, opüra al vegn d'un erur in di ligam intra sit wiki diferent o versión in lenguv diferent de l'istess sit.",
+	'badretype' => "I password che t'hee miss a hinn diferent.",
+	'blocked-mailpassword' => "'L to indirizz IP l'è blucaa, e per quela resón lì te pö mía druvà la funzion de recüper de la password.",
 	'bold_sample' => 'Test in grasset',
 	'bold_tip' => 'Test in grasset',
-	'blockedtext' => '\'\'\'El to nom del druvadur o el to indirizz IP l\'è stat blucaa.\'\'\'
+	'blockedtext' => "'''El to nom del druvadur o el to indirizz IP l'è stat blucaa.'''
 
-El bloch l\'è stat fat da $1.
-El mutiv per el bloch l\'è: \'\'$2\'\'
+El bloch l'è stat fat da $1.
+El mutiv per el bloch l'è: ''$2''
 
 * Principi del bloch: $8
 * Scadenza del bloch: $6
@@ -10738,10 +10699,10 @@ El mutiv per el bloch l\'è: \'\'$2\'\'
 
 Se a vurii, a pudii cuntatà $1 o un olter [[{{MediaWiki:Grouppage-sysop}}|aministradur]] per discüt el bloch.
 
-Feegh a ment che la funzion \'Manda un email a quel druvadur chì\' l\'è mia ativa se avii mia registraa un indirizz e-mail valid ind i voster [[Special:Preferences|preferenz]] o se l\'üsagg de \'sta funzion l\' è stat blucaa.
+Feegh a ment che la funzion 'Manda un email a quel druvadur chì' l'è mia ativa se avii mia registraa un indirizz e-mail valid ind i voster [[Special:Preferences|preferenz]] o se l'üsagg de 'sta funzion l' è stat blucaa.
 
-L\'indirizz IP curent l\'è $3, el nümer ID del bloch l\'è #$5.
-Fee el piasè d\'inclüd tüt i detaj chì de sura in qualsessìa dumanda che a decidii de fà.',
+L'indirizz IP curent l'è $3, el nümer ID del bloch l'è #$5.
+Fee el piasè d'inclüd tüt i detaj chì de sura in qualsessìa dumanda che a decidii de fà.",
 	'boteditletter' => 'b',
 	'brokenredirects' => 'Redirezziún interótt',
 	'booksources' => 'Surgent per i lìber',
@@ -10749,32 +10710,31 @@ Fee el piasè d\'inclüd tüt i detaj chì de sura in qualsessìa dumanda che a 
 	'booksources-go' => 'Va',
 	'blanknamespace' => '(Principal)',
 	'blockip' => 'Bloca el dovrat',
-	'blockip-title' => 'Bloca \'l druvadur',
-	'blockip-legend' => 'Bloca \'l druvadur',
-	'blockiptext' => 'Druvee \'l mòdul chì de suta per blucà l\'acess cun dirit de scritüra a un indirizz IP specifegh o a un druvadur registraa.
-El bloch gh\'è de druvàl dumà per evità el vandalism e in acord cun i [[{{MediaWiki:Policy-url}}|regulament de {{SITENAME}}]].
-Scrivee chì de suta \'l mutiv specifegh per el bloch (presempi, a pudii scriv i titul di paginn che i henn stat suget a vandalism).',
+	'blockip-title' => "Bloca 'l druvadur",
+	'blockip-legend' => "Bloca 'l druvadur",
+	'blockiptext' => "Druvee 'l mòdul chì de suta per blucà l'acess cun dirit de scritüra a un indirizz IP specifegh o a un druvadur registraa.
+El bloch gh'è de druvàl dumà per evità el vandalism e in acord cun i [[{{MediaWiki:Policy-url}}|regulament de {{SITENAME}}]].
+Scrivee chì de suta 'l mutiv specifegh per el bloch (presempi, a pudii scriv i titul di paginn che i henn stat suget a vandalism).",
 	'badipaddress' => 'Adrèss IP mia valid',
 	'blockipsuccesssub' => 'Blucagg bel-e faa',
-	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] a l\'è staa blucaa.<br />
-Varda [[Special:BlockList|lista di IP blucaa]] per vidè anmò i bloch.',
+	'blockipsuccesstext' => "[[Special:Contributions/$1|$1]] a l'è staa blucaa.<br />
+Varda [[Special:BlockList|lista di IP blucaa]] per vidè anmò i bloch.",
 	'blocklist-nousertalk' => 'el pö mía mudifegà la soa pagina de discüssión',
 	'blocklink' => 'bloca',
 	'blocklogpage' => 'Log di blocch',
-	'blocklogentry' => 'l\'ha blucaa [[$1]] per un temp de $2 $3',
-	'blocklogtext' => 'Quel chì l\'è el register di bloch e desbloch di druvadur.
+	'blocklogentry' => "l'ha blucaa [[$1]] per un temp de $2 $3",
+	'blocklogtext' => "Quel chì l'è el register di bloch e desbloch di druvadur.
 I indirizz IP che i henn staa blucaa utumaticament i henn mía cumpres int la lista.
-Varda el [[Special:BlockList|register di IP blucaa]] per la lista de tüt i bloch uperaziunaj ativ.',
+Varda el [[Special:BlockList|register di IP blucaa]] per la lista de tüt i bloch uperaziunaj ativ.",
 	'block-log-flags-anononly' => 'dumà druvadur anònim',
-	'block-log-flags-nocreate' => 'blucada la creazión de cünt növ',
-	'bad_image_list' => 'El furmaa a l\'è quest chì:
+	'bad_image_list' => "El furmaa a l'è quest chì:
 
 Se tegnen bón dumà i list póntaa (i righ che scumincen per *).
-El prim ligam de ogni riga la gh\'ha de vess un ligam a un file minga desideraa.
-I ligam che i vegnen dopu, in sü l\'istessa riga, i vegnen cónsideraa di ecezión (che\'l vör dì paginn induè che \'l file se\'l pö riciamà in manera nurmala).',
-];
+El prim ligam de ogni riga la gh'ha de vess un ligam a un file minga desideraa.
+I ligam che i vegnen dopu, in sü l'istessa riga, i vegnen cónsideraa di ecezión (che'l vör dì paginn induè che 'l file se'l pö riciamà in manera nurmala).",
+);
 
-$messages['ln'] = [
+$messages['ln'] = array(
 	'bold_sample' => 'Nkomá ya mbinga',
 	'bold_tip' => 'Nkomá ya mbinga',
 	'boteditletter' => 'b',
@@ -10784,10 +10744,9 @@ $messages['ln'] = [
 	'blocklink' => 'kotɛ́lɛmisa',
 	'blocklogpage' => 'Zuluná ya botɛ́lɛmisi',
 	'blocklogentry' => '[[$1]] atɛ́lɛ́mísámí ; bosílisi : $2 $3',
-	'block-log-flags-nocreate' => 'bokeli bwa konti botendísámí',
-];
+);
 
-$messages['lo'] = [
+$messages['lo'] = array(
 	'badaccess' => 'ການອະນຸມັດບໍ່ຖືກຕ້ອງ',
 	'badaccess-group0' => 'ທ່ານ ບໍ່ໄດ້ຮັບອະນຸຍາດ ໃຫ້ປະຕິບັດການ ທີ່ ທ່ານ ສັ່ງ.',
 	'badtitle' => 'ຫົວຂໍ້ບໍ່ຖືກຕ້ອງ',
@@ -10810,33 +10769,33 @@ $messages['lo'] = [
 	'blocklogpage' => 'ບັນທຶກການຫ້າມ',
 	'blocklogentry' => 'ໄດ້ຫ້າມ "[[$1]]" ຈົນຮອດ $2 $3',
 	'bydate' => 'ຕາມວັນເວລາ',
-];
+);
 
-$messages['loz'] = [
+$messages['loz'] = array(
 	'badaccess' => 'Bufosi pemiko',
 	'badaccess-group0' => 'Zwa eksyon ni sa di sebelu kwa zwa kattegorina. Kyon ni sa vanu.',
 	'badaccess-groups' => 'Zwa eksyon sa di sebelu kwa 1 di kattegorina $1.',
 	'badtitle' => 'Sebu sa bani',
-	'badtitletext' => 'Bufosi di petulo sigirikisize, kusize, interling\'ki. A sa selt di bufosi.',
+	'badtitletext' => "Bufosi di petulo sigirikisize, kusize, interling'ki. A sa selt di bufosi.",
 	'badretype' => 'Sebu dafi ni sa identikali.',
 	'bold_sample' => 'Selt ombelu',
 	'bold_tip' => 'Selt ombelu',
 	'blockedtitle' => 'Sebelu sa bolok',
-	'blockedtext' => '\'\'\'Zwa sebelu/IP sa bolok.\'\'\'
+	'blockedtext' => "'''Zwa sebelu/IP sa bolok.'''
 
-$1 bolok a. Lyangutukezireason sa \'\'$2\'\'.
+$1 bolok a. Lyangutukezireason sa ''$2''.
 
 * Bolok ungekile: $8
 * Bolok simpekile: $6
 * Tokwezi bolok: $7
 
 A bulelezi $1/[[{{MediaWiki:Grouppage-sysop}}|xetewi sesop]] bolok.
-A ni sebilize \'meli sebelu\' ka a ni afi adresi di meli kwa zwa [[Special:Preferences|petohoni]] e no sa bolok di sebelize.
-A IP sa $3, e ID di bolok sa #$5. Bulelezi IP e ID kwa bukizisize.',
+A ni sebilize 'meli sebelu' ka a ni afi adresi di meli kwa zwa [[Special:Preferences|petohoni]] e no sa bolok di sebelize.
+A IP sa $3, e ID di bolok sa #$5. Bulelezi IP e ID kwa bukizisize.",
 	'badsig' => 'Ro sebu di sebelu con xete data bufosi; kamukile HTML tegina.',
 	'boteditletter' => 'r',
 	'brokenredirects' => 'Petulo abezi bufosi',
-	'brokenredirects-edit' => 'hloli ye ng\'i',
+	'brokenredirects-edit' => "hloli ye ng'i",
 	'brokenredirects-delete' => 'afi kulobala',
 	'booksources' => 'Desusorsi',
 	'booksources-go' => 'Afi',
@@ -10846,13 +10805,13 @@ A IP sa $3, e ID di bolok sa #$5. Bulelezi IP e ID kwa bukizisize.',
 	'blocklink' => 'bolok',
 	'blocklogpage' => 'Desu di bolok',
 	'blocklogentry' => 'sa bolok [[$1]] e simpekile sa $2 $3',
-	'bad_image_list' => 'A fumato sa:
+	'bad_image_list' => "A fumato sa:
 
-Xi mukoloko petulo (di *) sa konsidisize. 1-ling\'ki di lina sa ling\'ki dimegi bufosi.
-Xete ling\'ki kwa lina sa konsidisize desepo. Petulo dimedi inlinenikusize.',
-];
+Xi mukoloko petulo (di *) sa konsidisize. 1-ling'ki di lina sa ling'ki dimegi bufosi.
+Xete ling'ki kwa lina sa konsidisize desepo. Petulo dimedi inlinenikusize.",
+);
 
-$messages['lt'] = [
+$messages['lt'] = array(
 	'broken-file-category' => 'Puslapiai su neteisingomis nuorodomis į failus',
 	'badaccess' => 'Teisių klaida',
 	'badaccess-group0' => 'Jums neleidžiama įvykdyti veiksmo, kurio prašėte.',
@@ -10865,9 +10824,9 @@ $messages['lt'] = [
 	'bold_sample' => 'Paryškintas tekstas',
 	'bold_tip' => 'Paryškinti tekstą',
 	'blockedtitle' => 'Naudotojas yra užblokuotas',
-	'blockedtext' => '\'\'\'Jūsų naudotojo vardas arba IP adresas yra užblokuotas.\'\'\'
+	'blockedtext' => "'''Jūsų naudotojo vardas arba IP adresas yra užblokuotas.'''
 
-Užblokavo $1. Nurodyta priežastis yra \'\'$2\'\'.
+Užblokavo $1. Nurodyta priežastis yra ''$2''.
 
 * Blokavimo pradžia: $8
 * Blokavimo pabaiga: $6
@@ -10876,7 +10835,7 @@ Užblokavo $1. Nurodyta priežastis yra \'\'$2\'\'.
 Jūs galite susisiekti su $1 arba kuriuo nors kitu [[{{MediaWiki:Grouppage-sysop}}|administratoriumi]] ir aptarti neaiškumus dėl blokavimo.
 Atkreipkite dėmesį, kad negalėsite naudotis funkcija „Rašyti laišką šiam naudotojui“, jei nesate užsiregistravę ir pateikę realaus savo el. pašto adreso naudotojo [[Special:Preferences|nustatymuose]], arba, jei jums užblokuotas šios funkcijos naudojimas.
 Jūsų IP adresas yra $3, o blokavimo ID yra #$5.
-Prašome nurodyti vieną iš jų ar abu, kai kreipiatės dėl blokavimo.',
+Prašome nurodyti vieną iš jų ar abu, kai kreipiatės dėl blokavimo.",
 	'blockednoreason' => 'priežastis nenurodyta',
 	'blocked-notice-logextract' => 'Šis naudotojas šiuo metu yra užblokuotas.
 Žemiau pateikiamas paskutinis blokavimo istorijos įrašas:',
@@ -10949,7 +10908,6 @@ Pateikiamas paskutinis blokavimo istorijos įrašas.',
 Automatiškai blokuoti IP adresai neišvardinti.
 Jei norite pamatyti dabar blokuojamus adresus, žiūrėkite [[Special:BlockList|IP blokavimų sąrašą]].',
 	'block-log-flags-anononly' => 'tik anoniminiai naudotojai',
-	'block-log-flags-nocreate' => 'paskyrų kūrimas išjungtas',
 	'block-log-flags-noautoblock' => 'automatinis blokavimas išjungtas',
 	'block-log-flags-noemail' => 'el. paštas užblokuotas',
 	'block-log-flags-nousertalk' => 'negali redaguoti savo naudotojo aptarimo puslapio',
@@ -10963,9 +10921,9 @@ Tik eilutės, prasidedančios *, yra įtraukiamos.
 Pirmoji nuoroda eilutėje turi būti nuoroda į blogą failą.
 Visos kitos nuorodos toje pačioje eilutėje yra laikomos išimtimis, t. y. puslapiai, kuriuose leidžiama įterpti failą.',
 	'blankpage' => 'Tuščias puslapis',
-];
+);
 
-$messages['ltg'] = [
+$messages['ltg'] = array(
 	'badaccess' => 'Atļuovis klaida',
 	'badtitletext' => 'Pīpraseituo lopa ir ar klaidu, tukša voi napareizai saisteits dažaidu volūdu voi dažaidu wiki viersroksti. Tys var saturēt vīnu voi vairuokus simbolus, kū navar izmontuot viersrokstūs.',
 	'bold_sample' => 'Pamalnais roksts',
@@ -10979,11 +10937,10 @@ $messages['ltg'] = [
 	'blocklink' => 'nūblokēt',
 	'blocklogpage' => 'Blokiejumu registris',
 	'blocklogentry' => 'noblokieja [[$1]] iz $2 $3',
-	'block-log-flags-nocreate' => 'Kontu radeišonys atslāga',
 	'bad_image_list' => 'Formats ir taids: tikai saroksta elementi (ryndys, suocūt ar *), ir skaitams par failu. Pyrmuo saite iz ryndys ir saite uz nalobu failu. Sevkurys vāluokys saitis tymā pošā ryndā tīk skaiteitys par izjāmumim, t.i., lopom, kur fails var atsarast ryndys vydā.',
-];
+);
 
-$messages['lv'] = [
+$messages['lv'] = array(
 	'broken-file-category' => 'Lapas, kurās ir bojātas failu saites',
 	'badaccess' => 'Atļaujas kļūda',
 	'badaccess-group0' => 'Tev nav atļauts izpildīt darbību, kuru tu pieprasīji.',
@@ -10992,29 +10949,29 @@ $messages['lv'] = [
 	'badtitle' => 'Nepiemērots nosaukums',
 	'badtitletext' => 'Pieprasītā lapa ir kļūdaina, tukša, vai nepareizi saistīts starpvalodu vai starp-vikiju virsrakstas. Tas var saturēt vienu vai vairākus simbolus, ko nedrīkst izmantot nosaukumos.',
 	'badretype' => 'Tevis ievadītās paroles nesakrīt.',
-	'blocked-mailpassword' => 'Tava IP adrese ir bloķēta un tāpēc nevar lietot paroles atjaunošanas (\'\'recovery\'\') funkciju, lai nevarētu apiet bloku.',
+	'blocked-mailpassword' => "Tava IP adrese ir bloķēta un tāpēc nevar lietot paroles atjaunošanas (''recovery'') funkciju, lai nevarētu apiet bloku.",
 	'bold_sample' => 'Teksts boldā',
 	'bold_tip' => 'Teksts treknrakstā',
 	'blockedtitle' => 'Lietotājs ir bloķēts.',
-	'blockedtext' => '\'\'\'Tavs lietotāja vārds vai IP adrese ir nobloķēta.\'\'\'
+	'blockedtext' => "'''Tavs lietotāja vārds vai IP adrese ir nobloķēta.'''
 
-$1 nobloķēja tavu lietotāja vārdu vai IP adresi.
-Bloķējot norādītais iemesls bija: \'\'$2\'\'.
+\$1 nobloķēja tavu lietotāja vārdu vai IP adresi.
+Bloķējot norādītais iemesls bija: ''\$2''.
 
-*Bloka sākums: $8
-*Bloka beigas: $6
-*Bija domāts nobloķēt: $7
+*Bloka sākums: \$8
+*Bloka beigas: \$6
+*Bija domāts nobloķēt: \$7
 
-Tu vari sazināties ar $1 vai kādu citu [[{{MediaWiki:Grouppage-sysop}}|administratoru]] lai apspriestu šo bloku.
+Tu vari sazināties ar \$1 vai kādu citu [[{{MediaWiki:Grouppage-sysop}}|administratoru]] lai apspriestu šo bloku.
 
-Pievērs uzmanību, tam, ka ja tu neesi norādījis derīgu e-pasta adresi \'\'[[Special:Preferences|savās izvēlēs]]\'\', tev nedarbosies "sūtīt e-pastu" iespēja.
+Pievērs uzmanību, tam, ka ja tu neesi norādījis derīgu e-pasta adresi ''[[Special:Preferences|savās izvēlēs]]'', tev nedarbosies \"sūtīt e-pastu\" iespēja.
 
-Tava IP adrese ir $3 un bloka identifikators ir #$5. Lūdzu iekļauj vienu no tiem, vai abus, visos turpmākajos pieprasījumos.',
+Tava IP adrese ir \$3 un bloka identifikators ir #\$5. Lūdzu iekļauj vienu no tiem, vai abus, visos turpmākajos pieprasījumos.",
 	'blockednoreason' => 'iemesls nav norādīts',
 	'blocked-notice-logextract' => 'Šis lietotājs pašlaik ir nobloķēts.
 
 Pēdējais bloķēšanas reģistra ieraksts ir apskatāms zemāk:',
-	'badsig' => 'Kļūdains \'\'paraksta\'\' kods; pārbaudi HTML (ja tāds ir lietots).',
+	'badsig' => "Kļūdains ''paraksta'' kods; pārbaudi HTML (ja tāds ir lietots).",
 	'badsiglength' => 'Paraksts ir pārāk garš.
 Tam ir jābūt īsākam par  $1 {{PLURAL:$1|simbolu|simboliem}}.',
 	'boteditletter' => 'b',
@@ -11067,7 +11024,6 @@ Te apakšā var apskatīties bloķēšanas reģistru:',
 Te neparādās automātiski nobloķētās IP adreses.
 Šobrīd aktīvos blokus var apskatīties bloķēto lietotāju [[Special:BlockList|IP adrešu sarakstā]].',
 	'block-log-flags-anononly' => 'tikai anonīmiem lietotājiem',
-	'block-log-flags-nocreate' => 'kontu veidošana atslēgta',
 	'block-log-flags-noautoblock' => 'automātiskā bloķēšana atslēgta',
 	'block-log-flags-noemail' => 'e-pasts bloķēts',
 	'block-log-flags-nousertalk' => 'nevar izmainīt savu diskusiju lapu',
@@ -11080,9 +11036,9 @@ Tiek ņemti vērā tikai ieraksti rindiņā kas sākas ar *
 Pirmajai saitei rindiņā ir jābūt uz attiecīgo failu
 Jebkuras sekojošas saites tiks uzskatītas par izņēmumiem t.i. lapām kurās fails drīkt tikt izmantots',
 	'blankpage' => 'Tukša lapa',
-];
+);
 
-$messages['lzh'] = [
+$messages['lzh'] = array(
 	'badaccess' => '子未逮',
 	'badaccess-group0' => '子未逮，歉限之。',
 	'badaccess-groups' => '子未逮，歉限之有{{PLURAL:$2|一|多}}：$1',
@@ -11094,13 +11050,13 @@ $messages['lzh'] = [
 	'bold_sample' => '粗體',
 	'bold_tip' => '粗體',
 	'blockedtitle' => '子見禁',
-	'blockedtext' => '\'\'\'子名、IP見禁。\'\'\'禁者$1也，因\'\'$2\'\'故。
+	'blockedtext' => "'''子名、IP見禁。'''禁者$1也，因''$2''故。
 
 * 始之時為：$8
 * 終之時為：$6
 * 見禁之人：$7
 
-存惑可詢$1，或[[{{MediaWiki:Grouppage-sysop}}|有秩]]，[[Special:Preferences|簿註]]無驛則信不遣。另，子IP為$3，其禁號為#$5。詢時切附之。',
+存惑可詢$1，或[[{{MediaWiki:Grouppage-sysop}}|有秩]]，[[Special:Preferences|簿註]]無驛則信不遣。另，子IP為$3，其禁號為#$5。詢時切附之。",
 	'blocked-notice-logextract' => '該簿現鎖也。
 下列之記鎖，以察之：',
 	'badsig' => '無效之自畫。
@@ -11133,7 +11089,6 @@ $messages['lzh'] = [
 	'blocklogentry' => '禁[[$1]]屆$2$3',
 	'blocklogtext' => '此誌禁赦；自禁不示。見[[Special:BlockList|此]]列今禁者。',
 	'block-log-flags-anononly' => '惟禁匿',
-	'block-log-flags-nocreate' => '禁增簿',
 	'block-log-flags-noautoblock' => '止自禁',
 	'block-log-flags-noemail' => '郵禁焉',
 	'block-log-flags-nousertalk' => '禁己議',
@@ -11145,9 +11100,9 @@ $messages['lzh'] = [
 
 單列數鏈，首通壞檔；而後所鏈之文，允圖見於其內。',
 	'blankpage' => '白頁',
-];
+);
 
-$messages['lzz'] = [
+$messages['lzz'] = array(
 	'badaccess' => 'İzini çilata',
 	'badtitletext' => 'Na içʼaren butʼkʼaşi coxo ya çilatoni ren ya boşi ren varna inter-nena do inter-vikʼişi kʼontʼaktʼis na uğutʼu şeni mtini varen.
 Dudicoxopes oxmaruşi yasaği na ren ar, varna daha dido kʼarakʼtʼeri uğun.',
@@ -11164,15 +11119,14 @@ Dudicoxopes oxmaruşi yasaği na ren ar, varna daha dido kʼarakʼtʼeri uğun.'
 	'blocklink' => 'bloği qʼvi',
 	'blocklogpage' => 'Bloğiş kʼayitʼepe',
 	'blocklogentry' => ', [[$1]] maxmare kododginu, dodginuşi ora: $2 $3',
-	'block-log-flags-nocreate' => 'hesabi okʼidu geinkʼilu',
 	'bad_image_list' => 'Formatʼi aşo ren:
 
 Xvala listeşi dudi ondepe (* kʼala na gyoçʼkʼaps ondepe) beciti ren.
 Satʼirişi maartani kʼontʼaktʼi, pʼatʼi dosyaşa na ulun ar kʼontʼaktʼi oqʼopinu dvaçʼirs.
 Ukʼaçxe na mulunan kʼontʼaktʼepe istʼisna oqʼopinot kʼabuli ixvenen. Mesela: dosya, butʼkʼas, satʼiriş doloxe iz*iren.',
-];
+);
 
-$messages['mai'] = [
+$messages['mai'] = array(
 	'broken-file-category' => 'पन्ना सभ जाइमे फाइल लिंक सभ टूटल हुअए',
 	'badaccess' => 'आज्ञा गल्ती',
 	'badaccess-group0' => 'अहाँकेँ आग्रह कएल क्रियाकेँ करबाक अनुमति नै अछि।',
@@ -11186,10 +11140,10 @@ $messages['mai'] = [
 	'bold_sample' => 'गँहीर लेखन',
 	'bold_tip' => 'गँहीर लेखन',
 	'blockedtitle' => 'प्रयोक्ता प्रतिबन्धित अछि।',
-	'blockedtext' => '\'\'\' अहाँक प्रयोक्तानाम वा अनिकेत प्रतिबन्धित कऽ देल गेल अछि।\'\'\'
+	'blockedtext' => "''' अहाँक प्रयोक्तानाम वा अनिकेत प्रतिबन्धित कऽ देल गेल अछि।'''
 
 ई प्रतिबन्ध $1 द्वारा कएल गेल।
-एकर कारण अछि \'\'$2\'\' ।
+एकर कारण अछि ''$2'' ।
 
 * प्रतिबन्धक प्रारम्भ: $8
 * प्रतिबन्धक समाप्ति: $6
@@ -11198,7 +11152,7 @@ $messages['mai'] = [
 अहाँ $1 सँ सम्पर्क कऽ सकै छी वा दोसर [[{{MediaWiki:Grouppage-sysop}}|संचालक]] सँ प्रतिबन्धक विषयमे सम्पर्क कऽ सकै छी।
 अहाँ ’ऐ प्रयोक्ताकेँ ई-पत्र दिअ’ सुविधाक प्रयोग नै कऽ सकै छी यावत एकटा मान्य ई-पत्र संकेतक विवरण अहाँक  [[Special:Preferences|खाता विकल्प]] मे नै देल अछि आ अहाँकेँ एकर प्रयोग करबासँ रोकि नै देल गेल हो।
 अहाँक वर्तमान अनिकेत अछि $3, आ प्रतिबन्ध संख्या अछि # $5 ।
-ऐ सभ विवरणक उल्लेख अहाँ अपन कोनो कएल जाइबला प्रश्नमे करू।',
+ऐ सभ विवरणक उल्लेख अहाँ अपन कोनो कएल जाइबला प्रश्नमे करू।",
 	'blockednoreason' => 'कोनो कारण देल नै अछि।',
 	'blocked-notice-logextract' => 'ई प्रयोक्ता अखन प्रतिबन्धित अछि।
 अद्यतन प्रतिबन्धित  वृत्तलेख लेखा सन्दर्भ लेल नीचाँ देल अछि:',
@@ -11253,7 +11207,6 @@ $messages['mai'] = [
 स्वचालित रूपेँ प्रतिबन्धित कएल अनिकेत एतए दर्ज नै अछि।
 देखू [[Special:BlockList|IP block list]] अखन लागू क्रियाशील बन्द आ प्रतिबन्ध सूची लेल।',
 	'block-log-flags-anononly' => 'गुप्त प्रयोक्ता मात्र',
-	'block-log-flags-nocreate' => 'लेखा निर्माण अशक्त कएल',
 	'block-log-flags-noautoblock' => 'स्वचालित प्रतिबन्ध अशक्त',
 	'block-log-flags-noemail' => 'ई-मेल अवरुद्ध',
 	'block-log-flags-nousertalk' => 'अपन वार्ता पन्ना सम्पादित नै कऽ सकब',
@@ -11267,9 +11220,9 @@ $messages['mai'] = [
 
 ओही पंक्त्तिक कोनो आर लिंक अपवाद स्वरूप अछि, उदाहरणस्वरूप पन्ना जतय चित्र पंक्त्तिअहि पर होय।',
 	'blankpage' => 'खाली पन्ना',
-];
+);
 
-$messages['map-bms'] = [
+$messages['map-bms'] = array(
 	'broken-file-category' => 'Kaca-kaca sing duwe pranala berkas bodhol',
 	'badaccess' => 'Kesalahan hak akses',
 	'badaccess-group0' => 'Rika ora olih nglakokna tindakan sing dejaluk Rika mau.',
@@ -11279,7 +11232,7 @@ $messages['map-bms'] = [
 	'badtitletext' => 'Judul kaca sing dijaluk ora sah, kosong, utawa salah nyambungna judul antar-basa utawa antarwiki.
 Kiya ndeyane ana siji utawa lewih karakter sing ora teyeng digunakna nang judul.',
 	'badretype' => 'Tembung sandhi sing Rika lebokna ora gathuk.',
-	'blocked-mailpassword' => 'Alamat IP-ne Rika diblokir sekang panyuntingan, mulane kuwe Rika ora olih nganggo fungsi pèngetan tembung sandhi kanggo \'\'mencegah penyalahgunaan\'\'.',
+	'blocked-mailpassword' => "Alamat IP-ne Rika diblokir sekang panyuntingan, mulane kuwe Rika ora olih nganggo fungsi pèngetan tembung sandhi kanggo ''mencegah penyalahgunaan''.",
 	'bold_sample' => 'Tèks kiye bakal dicithak kandel',
 	'bold_tip' => 'Cithak kandel',
 	'blockedtitle' => 'Panganggo diblokir',
@@ -11304,15 +11257,14 @@ Aja lewih sekang $1 {{PLURAL:$1|karakter|karakter}} dawane.',
 	'blocklink' => 'blokir',
 	'blocklogpage' => 'Log pamblokiran',
 	'blocklogentry' => 'mblokir [[$1]] nganti gutul $2 $3',
-	'block-log-flags-nocreate' => 'opsi nggawé akun dipatèni (\'\'disabled\'\')',
 	'bad_image_list' => 'Formate kaya kiye:
 
 Mung butir daftar (baris sing diawali karo tanda*) sing melu diitung.
 Pranala disit dhewek nang baris kuwe kudu pranala maring berkas sing ala.
 Pranala seteruse nang baris sing padha dianggep dadi "pengecualian", yakuwe artikel sing bisa nampilna berkas kuwe mau.',
-];
+);
 
-$messages['mdf'] = [
+$messages['mdf'] = array(
 	'badaccess' => 'Мярьговома эльбятькс',
 	'badaccess-group0' => 'Тондейть аф мярьгови тиемс ся мезе тон вешеть.',
 	'badaccess-groups' => 'Тевсь тон вешеть мярьгови тиемс аньцек {{PLURAL:$2|полгань|фкя полгаста}} тиихненди: $1.',
@@ -11370,7 +11322,6 @@ $messages['mdf'] = [
 Эсь сёлгови IP адресне тязк аф сувсихть.
 Ванк [[Special:BlockList|IP пякстаматнень лувомать]] тяниень якамань кардафкснень ди пякстаматнень мархта.',
 	'block-log-flags-anononly' => 'аньцек лемфтома тиихне',
-	'block-log-flags-nocreate' => 'од сёрматфтомась аф тиеви',
 	'block-log-flags-noautoblock' => 'эсь тиеви пякстама аф тиеви',
 	'block-log-flags-noemail' => 'электрононь адрессь пякстазь',
 	'block-log-flags-nousertalk' => 'аш кода петнемс эсь корхнема лопанц',
@@ -11382,61 +11333,61 @@ $messages['mdf'] = [
 Аньцек лувк пакшкянза (киксне, конат ушедовихть * тяшкста) кармайхть лувовома. Васенце киксонь сюлмафксонцты эряви улемс аф кондясти архтофксонь сюлмафксокс.
 Эрь кона сай  сюлмафксне тя киксса кармайхть лувовома кода синнеда башкат, илякс мярьгомс кода лопат коза ули кода архтофкснень сувафнемс.',
 	'blankpage' => 'Шава лопа',
-];
+);
 
-$messages['mg'] = [
+$messages['mg'] = array(
 	'broken-file-category' => 'Pejy misy rohin-drakitra tapaka',
 	'badaccess' => 'Tsy manana alàlana',
 	'badaccess-group0' => 'Tsy afaka manantontosa ny asa nangatahinao ianao tompoko',
-	'badaccess-groups' => 'Ny asa andramanao atao io dia voafetra amin\'ny mpikambana ao amin\'ny vondrona $1.{{PLURAL:$2||}}',
-	'badarticleerror' => 'Tsy azo atao eto amin\'ity pejy ity io asa io.',
+	'badaccess-groups' => "Ny asa andramanao atao io dia voafetra amin'ny mpikambana ao amin'ny vondrona $1.{{PLURAL:$2||}}",
+	'badarticleerror' => "Tsy azo atao eto amin'ity pejy ity io asa io.",
 	'badtitle' => 'Tsy mety ny lohateny',
-	'badtitletext' => 'Tsy mety io anaram-pejy nangatahinao io na tsy misy n\'inon\'inona na rohy dikan-teny vahiny misy diso tsipelina.',
+	'badtitletext' => "Tsy mety io anaram-pejy nangatahinao io na tsy misy n'inon'inona na rohy dikan-teny vahiny misy diso tsipelina.",
 	'badretype' => 'Tsy mitovy ny tenimiafina nampidirinao.',
-	'blocked-mailpassword' => 'Voasakana ny adiresy IP-nao, nesorina aminao ny asa \'\'password recovery\'\' mba tsy hanararaotra.',
+	'blocked-mailpassword' => "Voasakana ny adiresy IP-nao, nesorina aminao ny asa ''password recovery'' mba tsy hanararaotra.",
 	'bold_sample' => 'Soratra matavy',
 	'bold_tip' => 'Soratra matavy',
 	'blockedtitle' => 'Mpikambana voasakana',
-	'blockedtext' => '\'\'\'Voasakana ny solonanaranao na ny adiresy IP anao.\'\'\'
+	'blockedtext' => "'''Voasakana ny solonanaranao na ny adiresy IP anao.'''
 
-Nataon\'i $1 ny fisakanana.
-Ny antony : \'\'$2\'\'.
+Nataon'i $1 ny fisakanana.
+Ny antony : ''$2''.
 
-* Fanombohan\'ilay fisakanana : $8
+* Fanombohan'ilay fisakanana : $8
 * Farany : $6
 * Kaonty voasakana : $7.
 
-Afaka antsoinao i $1 na [[{{MediaWiki:Grouppage-sysop}}|ny mpandrindra]] mba hiresaka mombamomba n\'izany.
-Afaka andefasanao imailaka ra nampiditra ny adiresy imailakanao ianao ao anatin\'ny [[Special:Preferences|mombamombanao]].
-\'\'\'$3\'\'\' ny adiresy IP-nao ary ny \'\'identifiant de blocage\'\'-nao dia #$5.
-Asio ao anaty ny fangatahanao io adiresy io.',
+Afaka antsoinao i $1 na [[{{MediaWiki:Grouppage-sysop}}|ny mpandrindra]] mba hiresaka mombamomba n'izany.
+Afaka andefasanao imailaka ra nampiditra ny adiresy imailakanao ianao ao anatin'ny [[Special:Preferences|mombamombanao]].
+'''$3''' ny adiresy IP-nao ary ny ''identifiant de blocage''-nao dia #$5.
+Asio ao anaty ny fangatahanao io adiresy io.",
 	'blockednoreason' => 'tsy nisy antony nomeny',
-	'blocked-notice-logextract' => 'Ankehitriny ity mpikambana ity dia voasakana.
-Ny fampidirana faran\'ny laogin\'ny fanakanam-pikambana dia naseho teo ambany ho an\'ny fampahalalàna :',
+	'blocked-notice-logextract' => "Ankehitriny ity mpikambana ity dia voasakana.
+Ny fampidirana faran'ny laogin'ny fanakanam-pikambana dia naseho teo ambany ho an'ny fampahalalàna :",
 	'badsig' => 'Tsy mety io sonia io; hamarino ny kialo HTML.',
-	'badsiglength' => 'Lava loatra ny sonianao. {{PLURAL:$1||}}
-Tokony mba manana lohavy ambanimbany kokoa non\'ny $1',
+	'badsiglength' => "Lava loatra ny sonianao. {{PLURAL:$1||}}
+Tokony mba manana lohavy ambanimbany kokoa non'ny $1",
 	'boteditletter' => 'r',
 	'badfilename' => 'Novana ho "$1" ny anaran\'ny rakitra.',
 	'brokenredirects' => 'Tapaka ny redirection',
-	'brokenredirectstext' => 'Mitondra makany amin\'ny pejy tsy misy ireo fihodinana ireo :',
+	'brokenredirectstext' => "Mitondra makany amin'ny pejy tsy misy ireo fihodinana ireo :",
 	'brokenredirects-edit' => 'ovao',
 	'brokenredirects-delete' => 'fafao',
 	'booksources' => 'boky tsiahy',
-	'booksources-search-legend' => 'hikaroka anatin\'ny boky todika',
+	'booksources-search-legend' => "hikaroka anatin'ny boky todika",
 	'booksources-go' => 'Ataovy lisitra',
-	'booksources-text' => 'Ity misy lisitra maneho ny rohy makany amin\'ny sehatra mivarotra boky vaovao sy efa vaky ary mety ahitanao fampahalalàna momban\'ny boky sy soratra notadiavinao :',
+	'booksources-text' => "Ity misy lisitra maneho ny rohy makany amin'ny sehatra mivarotra boky vaovao sy efa vaky ary mety ahitanao fampahalalàna momban'ny boky sy soratra notadiavinao :",
 	'booksources-invalid-isbn' => 'Ny ISBN nomena dia mety diso ; marino raha diso ianao teo am-pandikanana ny loharano fotony.',
 	'blanknamespace' => '(fotony)',
 	'block' => 'Hanakana ilay mpikambana',
 	'blockip' => 'Sakano ny mpikambana',
 	'blockip-title' => 'Hanakana ilay mpikambana',
 	'blockip-legend' => 'Sakano ny mpikambana',
-	'blockiptext' => 'Ampiasao ity formulaire ity hisakanana ny fahazoan-dàlana hanoratra
-ananan\'ny adiresy IP iray na solonanarana iray.
-Tokony ho antony fisorohana ny fisomparana ihany, ary mifanaraka amin\'ny [[{{MediaWiki:Policy-url}}|fepetra]]
+	'blockiptext' => "Ampiasao ity formulaire ity hisakanana ny fahazoan-dàlana hanoratra
+ananan'ny adiresy IP iray na solonanarana iray.
+Tokony ho antony fisorohana ny fisomparana ihany, ary mifanaraka amin'ny [[{{MediaWiki:Policy-url}}|fepetra]]
 ihany no hanaovana ny fisakanana.
-Fenoy etsy ambany ny antony manokana (ohatra, mitanisà pejy nosomparana).',
+Fenoy etsy ambany ny antony manokana (ohatra, mitanisà pejy nosomparana).",
 	'badipaddress' => 'Tsy mety ny adiresy IP (invalid)',
 	'blockipsuccesssub' => 'Vita soa aman-tsara ny sakana',
 	'blockipsuccesstext' => 'Voasakana i [[Special:Contributions/$1|$1]].
@@ -11453,17 +11404,16 @@ Fenoy etsy ambany ny antony manokana (ohatra, mitanisà pejy nosomparana).',
 	'blocklist-reason' => 'Antony',
 	'blocklist-nousertalk' => 'Tsy afaka manova ny pejin-dresany',
 	'blocklink' => 'sakano',
-	'blocklogpage' => 'Tantaran\'ny sakana',
+	'blocklogpage' => "Tantaran'ny sakana",
 	'blocklog-showlog' => 'Efa voasakana ity mpikambana ity taloha.
 Eo ambany ny laogim-panakanana.',
 	'blocklog-showsuppresslog' => 'Efa voasakana sy voasitrika ity mpikambana ity.
 Eo ambany ny laogim-pamafana.',
 	'blocklogentry' => 'voasakana i "[[$1]]" mandritra ny $2 ; antony : $3',
-	'blocklogtext' => 'Eto no ahitana ny tantaran\'ny hetsika momba ny fisakanana sy ny fanafoanana fisakanana mpandray anjara.
-Ireo adiresy IP voasakana ho azy dia tsy miseho eto. Jereo ao amin\'ny [[Special:BlockList|lisitry ny IP voasakana]]
-ny lisitry ny fisakanana sy fandrarana na tanteraka misy ankehitriny.',
+	'blocklogtext' => "Eto no ahitana ny tantaran'ny hetsika momba ny fisakanana sy ny fanafoanana fisakanana mpandray anjara.
+Ireo adiresy IP voasakana ho azy dia tsy miseho eto. Jereo ao amin'ny [[Special:BlockList|lisitry ny IP voasakana]]
+ny lisitry ny fisakanana sy fandrarana na tanteraka misy ankehitriny.",
 	'block-log-flags-anononly' => 'mpikambana tsy nisoratra anarana ihany',
-	'block-log-flags-nocreate' => 'tsy mahazo manokatra kaonty',
 	'block-log-flags-noautoblock' => 'fanakanana ny IP nesorina',
 	'block-log-flags-noemail' => 'voarara ny fandefasana imailaka',
 	'block-log-flags-nousertalk' => 'tsy azo ovainy ny pejin-dresany',
@@ -11471,15 +11421,15 @@ ny lisitry ny fisakanana sy fandrarana na tanteraka misy ankehitriny.',
 	'block-log-flags-hiddenname' => 'anaram-pikambana nasitrika',
 	'blockme' => 'Sakano ahy',
 	'bydate' => 'araka ny daty',
-	'bad_image_list' => 'Ity ny andrefiny :
+	'bad_image_list' => "Ity ny andrefiny :
 
-Ny lisitra ny takelaka (andalana manomboka amin\'ny *) ihany no mandanja.
+Ny lisitra ny takelaka (andalana manomboka amin'ny *) ihany no mandanja.
 Tokony sary tsy misy na sary tsy izy ny rohy voalohany anaty andalana iray .
-\'\'Exception\'\' ny rohy hafa anatin\'ilay andalana iray, ohatra ny pejy mety mampiasa ilay sary.',
+''Exception'' ny rohy hafa anatin'ilay andalana iray, ohatra ny pejy mety mampiasa ilay sary.",
 	'blankpage' => 'Pejy fotsy',
-];
+);
 
-$messages['mhr'] = [
+$messages['mhr'] = array(
 	'badaccess' => 'Пурымаште йоҥылыш',
 	'badtitle' => 'Сай огыл лӱм',
 	'badtitletext' => 'Йодмо лаштыкын лӱмжӧ йоҥылыш, але яра, але йылме кокла але интер-вики лӱмжӧ йоҥылыш. Ала лӱмыштӧ кӱлдымӧ тамга улыт.',
@@ -11497,15 +11447,14 @@ $messages['mhr'] = [
 	'blocklink' => 'йӧным петыраш',
 	'blocklogpage' => 'Йӧным вашталтыме журнал',
 	'blocklogentry' => '[[$1]] лан йӧным петрен $2 $3 мучашлалтеш',
-	'block-log-flags-nocreate' => 'у пайдаланыше-влаклан регистрацийым чактарыме',
 	'bad_image_list' => 'Формат тыгай лийшаш:
 
 Лӱмерын ужашыже-влак гына шотыш налалташ тӱналалтыт (* дене туҥалше корно-влак).
 Корнышто икымше кылвер шӱкшӧ файлыш кылвер семын лийшаш.
 Тиде корнышто вара лийше кылвер-влак лийын кертдыме семын ончалтыт: файлыш кылверан лаштык-влак.',
-];
+);
 
-$messages['min'] = [
+$messages['min'] = array(
 	'broken-file-category' => 'Laman jo gambar rusak',
 	'badaccess' => 'Kesalahan hak akses',
 	'badaccess-group0' => 'Sanak indak diizinkan untuak malakukan tindakan nan Sanak minta.',
@@ -11518,10 +11467,10 @@ $messages['min'] = [
 	'bold_sample' => 'Teks dicetak taba',
 	'bold_tip' => 'Teks dicetak taba',
 	'blockedtitle' => 'Pangguno diblokir',
-	'blockedtext' => '\'\'\'Namo pangguno atau alamaik IP Sanak alah diblokir.\'\'\'
+	'blockedtext' => "'''Namo pangguno atau alamaik IP Sanak alah diblokir.'''
 
 Blokir dilakuan oleh $1.
-Alasan nan diagiahan adolah \'\'$2\'\'.
+Alasan nan diagiahan adolah ''$2''.
 
 * Diblokir sajak: $8
 * Blokir kadaluwarsa pado: $6
@@ -11529,10 +11478,10 @@ Alasan nan diagiahan adolah \'\'$2\'\'.
 
 Sanak dapek mahubungi $1 atau [[{{MediaWiki:Grouppage-sysop}}|pangurus lainnyo]] untuak mambicarokan hal iko.
 
-Sanak indak dapek manggunoan fitur \'Kirim surel ka pangguna iko\' kacuali Sanak alah mamasuakan alamaik surel nan sah di [[Special:Preferences|preferensi akun]] dan Sanak indak diblokir untuak manggunoannyo.
+Sanak indak dapek manggunoan fitur 'Kirim surel ka pangguna iko' kacuali Sanak alah mamasuakan alamaik surel nan sah di [[Special:Preferences|preferensi akun]] dan Sanak indak diblokir untuak manggunoannyo.
 
 Alamaik IP Sanak adolah $3, dan ID pamblokiran adolah $5.
-Toloang saratokan ciek atau kaduo informasi ini pado satiok patanyaan nan Sanak buek.',
+Toloang saratokan ciek atau kaduo informasi ini pado satiok patanyaan nan Sanak buek.",
 	'blockednoreason' => 'indak ado alasan nan diagiah.',
 	'blocked-notice-logextract' => 'Pangguno iko sadang diblokir.
 Entri log pamblokiran tabaharu iko disadioan di bawah iko untuak referensi:',
@@ -11545,15 +11494,14 @@ Entri log pamblokiran tabaharu iko disadioan di bawah iko untuak referensi:',
 	'blocklink' => 'blokir',
 	'blocklogpage' => 'Log pemblokiran',
 	'blocklogentry' => 'memblokir [[$1]] dalam maso berlaku $2 $3',
-	'block-log-flags-nocreate' => 'cipta akun dimatikan',
 	'bad_image_list' => 'Formatnyo sabagai berikut:
 
 Hanyo butir senarai (barih diawali jo tando *) yang dihituang.
 Pranala partamo pado barih tu mesti bakaik ka berkas nan buruak.
 Pranala-pranala salanjuiknyo pado barih nan samo dianggap sabagai pengecualian, yaitu laman nan dapek manampilkan berkas tu.',
-];
+);
 
-$messages['mk'] = [
+$messages['mk'] = array(
 	'broken-file-category' => 'Страници со прекинати врски до податотеки',
 	'badaccess' => 'Немате овластување',
 	'badaccess-group0' => 'Немате дозвола да го извршите бараното дејство.',
@@ -11566,10 +11514,10 @@ $messages['mk'] = [
 	'bold_sample' => 'Задебелен текст',
 	'bold_tip' => 'Задебелен текст',
 	'blockedtitle' => 'Корисникот е блокиран',
-	'blockedtext' => '\'\'\'Вашето корисничко име или IP-адреса е блокирано.\'\'\'
+	'blockedtext' => "'''Вашето корисничко име или IP-адреса е блокирано.'''
 
 Блокирањето е направено од страна на $1.
-Даденото образложение е \'\'$2\'\'.
+Даденото образложение е ''$2''.
 
 * Почеток на блокирањето: $8
 * Истекување на блокирањето: $6
@@ -11578,7 +11526,7 @@ $messages['mk'] = [
 Може да контактирате со $1 или некој друг [[{{MediaWiki:Grouppage-sysop}}|администратор]] за да разговарате во врска со блокирањето.
 Можете да ја искористите можноста „Е-пошта до овој корисник“ ако е назначена важечка е-поштенска адреса во [[Special:Preferences|вашите нагодувања]] и не ви е забрането да ја користите.
 Вашата сегашна IP-адреса е $3, а назнака на блокирањето гласи #$5.
-Ве молиме наведете ги сите детали прикажани погоре, во вашата евентуална реакција.',
+Ве молиме наведете ги сите детали прикажани погоре, во вашата евентуална реакција.",
 	'blockednoreason' => 'не е дадено образложение',
 	'blocked-notice-logextract' => 'Овој корисник е моментално блокиран.
 Подолу е прикажан последниот дневнички запис:',
@@ -11654,7 +11602,6 @@ $messages['mk'] = [
 Автоматски блокираните IP-адреси не се наведени.
 Видете го [[Special:BlockList|списокот на блокирани IP-адреси]].',
 	'block-log-flags-anononly' => 'само анонимни корисници',
-	'block-log-flags-nocreate' => 'оневозможено создавање кориснички сметки',
 	'block-log-flags-noautoblock' => 'автоблокирање исклучено',
 	'block-log-flags-noemail' => 'блокирана е-поштенска адреса',
 	'block-log-flags-nousertalk' => 'без можност за уредување на својата страница за разговор',
@@ -11677,9 +11624,9 @@ $messages['mk'] = [
 	'bitrate-zetabits' => '$1 Зб/с',
 	'bitrate-yottabits' => '$1 Јб/с',
 	'blankpage' => 'Празна страница',
-];
+);
 
-$messages['ml'] = [
+$messages['ml'] = array(
 	'broken-file-category' => 'പ്രമാണത്തിലേക്കുള്ള പ്രവർത്തനരഹിതമായ കണ്ണി ഉൾക്കൊള്ളുന്ന താളുകൾ',
 	'badaccess' => 'അനുമതിപ്രശ്നം',
 	'badaccess-group0' => 'താങ്കൾ ആവശ്യപ്പെട്ട കാര്യം ചെയ്യാനുള്ള അനുമതി താങ്കൾക്കില്ല',
@@ -11692,15 +11639,15 @@ $messages['ml'] = [
 	'bold_sample' => 'കടുപ്പിച്ച എഴുത്ത്',
 	'bold_tip' => 'കടുപ്പിച്ചെഴുതുവാൻ',
 	'blockedtitle' => 'ഉപയോക്താവിനെ തടഞ്ഞിരിക്കുന്നു',
-	'blockedtext' => '\'\'\'താങ്കളുടെ ഉപയോക്തൃനാമത്തേയോ താങ്കൾ ഇപ്പോൾ ലോഗിൻ ചെയ്തിട്ടുള്ള ഐ.പി. വിലാസത്തേയോ ഈ വിക്കി തിരുത്തുന്നതിൽ നിന്നു തടഞ്ഞിരിക്കുന്നു\'\'\'
+	'blockedtext' => "'''താങ്കളുടെ ഉപയോക്തൃനാമത്തേയോ താങ്കൾ ഇപ്പോൾ ലോഗിൻ ചെയ്തിട്ടുള്ള ഐ.പി. വിലാസത്തേയോ ഈ വിക്കി തിരുത്തുന്നതിൽ നിന്നു തടഞ്ഞിരിക്കുന്നു'''
 
-$1 ആണ് ഈ തടയൽ നടത്തിയത്. \'\'$2\'\' എന്നതാണു് അതിനു രേഖപ്പെടുത്തിയിട്ടുള്ള കാരണം.
+$1 ആണ് ഈ തടയൽ നടത്തിയത്. ''$2'' എന്നതാണു് അതിനു രേഖപ്പെടുത്തിയിട്ടുള്ള കാരണം.
 
 * തടയലിന്റെ തുടക്കം: $8
 * തടയലിന്റെ കാലാവധി: $6
 * തടയപ്പെട്ട ഉപയോക്താവ്: $7
 
-ഈ തടയലിനെ പറ്റി ചർച്ച ചെയ്യാൻ താങ്കൾക്ക് $1 എന്ന ഉപയോക്താവിനേയോ മറ്റ് [[{{MediaWiki:Grouppage-sysop}}|കാര്യനിർവാഹകരെയോ]] സമീപിക്കാവുന്നതാണ്. [[Special:Preferences|താങ്കളുടെ ക്രമീകരണങ്ങളിൽ]] താങ്കൾ സാധുവായ ഇമെയിൽ വിലാസം കൊടുത്തിട്ടുണ്ടെങ്കിൽ, അതു അയക്കുന്നതിൽ നിന്നു താങ്കൾ തടയപ്പെട്ടിട്ടില്ലെങ്കിൽ, \'ഇദ്ദേഹത്തിന് ഇമെയിൽ അയക്കൂ\' എന്ന സം‌വിധാനം ഉപയോഗിച്ച് താങ്കൾക്ക് മറ്റുപയോക്താക്കളുമായി ബന്ധപ്പെടാം. താങ്കളുടെ നിലവിലുള്ള ഐ.പി. വിലാസം $3 ഉം, താങ്കളുടെ തടയൽ ഐ.ഡി. #$5 ഉം ആണ്. ഇവ രണ്ടും താങ്കൾ കാര്യനിർവാഹകനെ ബന്ധപ്പെടുമ്പോൾ ചേർക്കുക.',
+ഈ തടയലിനെ പറ്റി ചർച്ച ചെയ്യാൻ താങ്കൾക്ക് $1 എന്ന ഉപയോക്താവിനേയോ മറ്റ് [[{{MediaWiki:Grouppage-sysop}}|കാര്യനിർവാഹകരെയോ]] സമീപിക്കാവുന്നതാണ്. [[Special:Preferences|താങ്കളുടെ ക്രമീകരണങ്ങളിൽ]] താങ്കൾ സാധുവായ ഇമെയിൽ വിലാസം കൊടുത്തിട്ടുണ്ടെങ്കിൽ, അതു അയക്കുന്നതിൽ നിന്നു താങ്കൾ തടയപ്പെട്ടിട്ടില്ലെങ്കിൽ, 'ഇദ്ദേഹത്തിന് ഇമെയിൽ അയക്കൂ' എന്ന സം‌വിധാനം ഉപയോഗിച്ച് താങ്കൾക്ക് മറ്റുപയോക്താക്കളുമായി ബന്ധപ്പെടാം. താങ്കളുടെ നിലവിലുള്ള ഐ.പി. വിലാസം $3 ഉം, താങ്കളുടെ തടയൽ ഐ.ഡി. #$5 ഉം ആണ്. ഇവ രണ്ടും താങ്കൾ കാര്യനിർവാഹകനെ ബന്ധപ്പെടുമ്പോൾ ചേർക്കുക.",
 	'blockednoreason' => 'കാരണമൊന്നും സൂചിപ്പിച്ചിട്ടില്ല',
 	'blocked-notice-logextract' => 'ഈ ഉപയോക്താവ് ഇപ്പോൾ തടയപ്പെട്ടിരിക്കുകയാണ്.
 തടയൽ രേഖയിലെ പുതിയ ഉൾപ്പെടുത്തൽ അവലംബമായി താഴെ നൽകിയിരിക്കുന്നു:',
@@ -11756,7 +11703,6 @@ $1 ആണ് ഈ തടയൽ നടത്തിയത്. \'\'$2\'\' എന്�
 	'blocklogentry' => '$2 കാലത്തേക്കു [[$1]] എന്ന അംഗത്വത്തെ തടഞ്ഞിരിക്കുന്നു $3',
 	'blocklogtext' => '{{SITENAME}} സംരംഭത്തിൽ പ്രവർത്തിക്കുന്നതിൽ നിന്ന് ഉപയോക്താക്കളെ തടഞ്ഞതിന്റേയും, പുനഃപ്രവർത്തനാനുമതി നൽകിയതിന്റേയും രേഖകൾ താഴെ കാണാം. {{SITENAME}} സംരംഭം സ്വയം  തടയുന്ന ഐ.പി. വിലാസങ്ങൾ ഈ പട്ടികയിലില്ല. [[Special:BlockList|തടയപ്പെട്ടിട്ടുള്ള ഐ.പി. വിലാസങ്ങളുടെ പട്ടിക]] എന്ന താളിൽ നിലവിലുള്ള നിരോധനങ്ങളേയും തടയലുകളേയും കാണാവുന്നതാണ്.',
 	'block-log-flags-anononly' => 'അജ്ഞാത ഉപയോക്താക്കളെ മാത്രം',
-	'block-log-flags-nocreate' => 'അംഗത്വം സൃഷ്ടിക്കുന്നതും തടഞ്ഞിരിക്കുന്നു',
 	'block-log-flags-noautoblock' => 'യാന്ത്രികതടയൽ സജ്ജമല്ലാതാക്കിയിരിക്കുന്നു',
 	'block-log-flags-noemail' => 'ഇമെയിൽ അയയ്ക്കുന്നത് തടഞ്ഞിരിക്കുന്നു',
 	'block-log-flags-nousertalk' => 'സ്വന്തം സംവാദം താളിൽ തിരുത്താനനുവാദമില്ല',
@@ -11768,9 +11714,9 @@ $1 ആണ് ഈ തടയൽ നടത്തിയത്. \'\'$2\'\' എന്�
 
 ലിസ്റ്റിലെ ഉൾപ്പെടുത്തലുകൾ മാത്രമേ കണക്കാക്കുകയുള്ളു (* എന്ന് തുടങ്ങുന്ന വരികൾ). മോശം പ്രമാണത്തിലേയ്ക്കുള്ള കണ്ണിയാവണം വരിയിലെ ആദ്യ കണ്ണി. അതേ വരിയിലുള്ള മറ്റ് കണ്ണികൾ അപവാദങ്ങളായിരിക്കും, അതായത്. പ്രമാണത്തിലേയ്ക്കുള്ള താളുകൾ ഒരു വരിയിൽ ഉൾപ്പെടുത്തണം.',
 	'blankpage' => 'ശൂന്യതാൾ',
-];
+);
 
-$messages['mn'] = [
+$messages['mn'] = array(
 	'broken-file-category' => 'Эвдэрсэн файлын холбоостой хуудас',
 	'badaccess' => 'Зөвшөөрлийн алдаа',
 	'badaccess-group0' => 'Таньд энэ үйлдлийг гүйцэтгэх зөвшөөрөл байхгүй байна.',
@@ -11783,17 +11729,17 @@ $messages['mn'] = [
 	'bold_sample' => 'Тодруулсан бичиг',
 	'bold_tip' => 'Тодруулсан бичиг',
 	'blockedtitle' => 'Хэрэглэгч түгжигдлээ.',
-	'blockedtext' => '\'\'\'Таны хэрэглэгчийн нэр эсвэл IP хаяг түгжигдсэн байна.\'\'\'
+	'blockedtext' => "'''Таны хэрэглэгчийн нэр эсвэл IP хаяг түгжигдсэн байна.'''
 
-Түгжээг $1 хийсэн. Шалтгаан нь \'\'$2\'\' байна.
+Түгжээг $1 хийсэн. Шалтгаан нь ''$2'' байна.
 
 * Түгжээ эхлэсэн огноо: $8
 * Түгжээ дуусах огноо: $6
 * Түгжигдсэн: $7
 
 Та $1 эсвэл бусад [[{{MediaWiki:Grouppage-sysop}}|администраторуудтай]] харилцаж түгжээнийхээ талаар хэлэлцэж болно.
-Таны [[Special:Preferences|хувийн тохиргоонд]] мэйл хаяг заагдсан бөгөөд түүний хэрэглээ түгжигдээгүй үед та \'энэ хэрэглэгчид мэйл илгээх\' функцийг хэрэглэх боломжтой.
-Таны одоогийн IP хаяг бол $3, түгжээний ID нь #$5 байна. Түгжээний талаарх хэлэлцүүлэгт энэ хоёрыг заавал оруулаарай.',
+Таны [[Special:Preferences|хувийн тохиргоонд]] мэйл хаяг заагдсан бөгөөд түүний хэрэглээ түгжигдээгүй үед та 'энэ хэрэглэгчид мэйл илгээх' функцийг хэрэглэх боломжтой.
+Таны одоогийн IP хаяг бол $3, түгжээний ID нь #$5 байна. Түгжээний талаарх хэлэлцүүлэгт энэ хоёрыг заавал оруулаарай.",
 	'blockednoreason' => 'шалтгаан өгөгдөөгүй байна',
 	'blocked-notice-logextract' => 'Энэхүү хэрэглэгч одоогоор түгжигдсэн байна.
 Лавлагааны зориулалтаар түгжээний лог дээрх хамгийн сүүлийн нэмэлтийг доор оруулав:',
@@ -11850,7 +11796,6 @@ $1 тэмдэгтээс богино байх ёстой.',
 Автоматаар түгжигдсэн IP хаягууд жагсаагдаагүй.
 [[Special:BlockList|IP хаягийн түгжээний жагсаалтыг]] харж одоо түгжигдсэн хаягуудыг харна уу.',
 	'block-log-flags-anononly' => 'зөвхөн нэргүй хэрэглэгчид',
-	'block-log-flags-nocreate' => 'Бүртгэл үүсгэх боломжгүй',
 	'block-log-flags-noautoblock' => 'автотүгжээ зогсоогдсон',
 	'block-log-flags-noemail' => 'и-мэйл түгжигдсэн',
 	'block-log-flags-nousertalk' => 'өөрийн ярианы хуудсыг засварлах боломжгүй байна',
@@ -11864,9 +11809,9 @@ $1 тэмдэгтээс богино байх ёстой.',
 Мөр дэх эхний линк муу файл руух холбоос байж таарна.
 Үүнтэй адил мөр дэх бусад линкүүд тооцогдохгүй. Өөрөөр хэлбэл, файлын орж болзошгүй хуудсууд юм.',
 	'blankpage' => 'Хоосон хуудас',
-];
+);
 
-$messages['mo'] = [
+$messages['mo'] = array(
 	'badaccess' => 'Ероаре пермисиуне',
 	'bold_sample' => 'Текст алдин',
 	'bold_tip' => 'Текст алдин',
@@ -11877,15 +11822,14 @@ $messages['mo'] = [
 	'blockip' => 'Блокязэ утилизатор',
 	'blocklink' => 'блокязэ',
 	'blocklogpage' => 'Журнал блокэрь',
-	'block-log-flags-nocreate' => 'креаря де контурь дезактиватэ',
 	'bad_image_list' => 'Форматул есте умэторул:
 
 Нумай елементеле уней листе (линий че ынчеп ку *) сынт луате ын консидераре.
 Прима легэтурэ де пе линие требуе сэ фие спре ун фишиер дефектуос.
 Орьче легэтурь че урмязэ пе ачеяшь линие сынт консидерате ексчепций, адикэ паӂинь унде фишиерул поате апэря инклус директ.',
-];
+);
 
-$messages['mr'] = [
+$messages['mr'] = array(
 	'broken-file-category' => 'तुटलेल्या संचिका दुव्यांसह असलेली पाने',
 	'badaccess' => 'परवानगी नाकारण्यात आली आहे',
 	'badaccess-group0' => 'तुम्ही करत असलेल्या क्रियेचे तुम्हाला अधिकार नाहीत.',
@@ -11898,10 +11842,10 @@ $messages['mr'] = [
 	'bold_sample' => 'ठळक मजकूर',
 	'bold_tip' => 'ठळक',
 	'blockedtitle' => 'या सदस्यासाठी प्रवेश नाकारण्यात आलेला आहे.',
-	'blockedtext' => '\'\'\'तुमचे सदस्यनाव अथवा IP पत्ता ब्लॉक केलेला आहे.\'\'\'
+	'blockedtext' => "'''तुमचे सदस्यनाव अथवा IP पत्ता ब्लॉक केलेला आहे.'''
 
 हा ब्लॉक $1 यांनी केलेला आहे.
-यासाठी \'\'$2\'\' हे कारण दिलेले आहे.
+यासाठी ''$2'' हे कारण दिलेले आहे.
 
 * ब्लॉकची सुरूवात: $8
 * ब्लॉकचा शेवट: $6
@@ -11910,7 +11854,7 @@ $messages['mr'] = [
 तुम्ही ह्या ब्लॉक संदर्भातील चर्चेसाठी $1 अथवा [[{{MediaWiki:Grouppage-sysop}}|प्रबंधकांशी]] संपर्क करू शकता.
 तुम्ही जोवर वैध ई-मेल पत्ता आपल्या [[Special:Preferences|माझ्या पसंती]] पानावर देत नाही तोवर तुम्ही ’सदस्याला ई-मेल पाठवा’ हा दुवा वापरू शकत नाही. तसेच असे करण्यापासून आपल्याला ब्लॉक केलेले नाही.
 तुमचा सध्याचा IP पत्ता $3 हा आहे, व तुमचा ब्लॉक क्रमांक #$5 हा आहे.
-कृपया या संदर्भातील चर्चेमध्ये यापैकी काहीही उद्घृत करा.',
+कृपया या संदर्भातील चर्चेमध्ये यापैकी काहीही उद्घृत करा.",
 	'blockednoreason' => 'कारण दिलेले नाही',
 	'blocked-notice-logextract' => 'हा सदस्य सध्या प्रतिबंधित आहे.
 सर्वांत नवीन प्रतिबंधन यादी खाली संदर्भासाठी दिली आहे:',
@@ -11985,7 +11929,6 @@ $messages['mr'] = [
 आपोआप प्रतिबंधीत केलेले अंकपत्ते नमूद केलेले नाहीत.
 सध्या लागू असलेली बंदी व प्रतिबंधनांच्या यादीकरिता [[Special:BlockList|अंकपत्ता प्रतिबंधन सूची]] पहा.',
 	'block-log-flags-anononly' => 'केवळ अनामिक सदस्य',
-	'block-log-flags-nocreate' => 'खाते तयारकरणे अवरूद्ध केले',
 	'block-log-flags-noautoblock' => 'स्वयंचलित प्रतिबंधन अवरूद्ध केले',
 	'block-log-flags-noemail' => 'विपत्र अवरूद्ध केले',
 	'block-log-flags-nousertalk' => 'ला स्वतःचे चर्चापान संपादता येत नाही',
@@ -11998,9 +11941,9 @@ $messages['mr'] = [
 फक्त सूचीमधील संचिका (ज्यांच्यापुढे * हे चिन्ह आहे, अशा ओळी) लक्षात घेतल्या आहेत. ओळीवरील पहिला दुवा हा चुकीच्या संचिकेचा असल्याची खात्री करा.
 त्याच ओळीवरील पुढील दुवे हे अपवाद मानावेत, अर्थात ती अशी पाने आहेत, ज्यांत ही संचिका मिळू शकते.',
 	'blankpage' => 'रिकामे पान',
-];
+);
 
-$messages['mrj'] = [
+$messages['mrj'] = array(
 	'badaccess' => 'Коргӹш сирӓлтмӓштӹдӓ тама самынь улы',
 	'badtitletext' => 'Ядмы ӹлӹштӓшдӓн лӹмжӹ самынь, охыр, лин кердеш тӧр агыл лӹмӹм ӓль интервикым анжыктендӓ,  ӓнят лӹмӹштӹ кычылташ лидӹмӹ символым сирендӓ.',
 	'bold_sample' => 'Пеле кӹжгӹн сирӹмӹ',
@@ -12014,15 +11957,14 @@ $messages['mrj'] = [
 	'blocklink' => 'блокируяш',
 	'blocklogpage' => 'Блокировкывлӓн журналышты',
 	'blocklogentry' => 'периодеш [[$1]] блокируйымы$2 $3',
-	'block-log-flags-nocreate' => 'учётный сирмӓшвлӓн регистрацим запрещӓйӹмӹ',
 	'bad_image_list' => 'Техень форматан лишӓшлык:
 
 Лач списокын элементвлӓжӹм веле шотыш нӓлмӹ лиэш (* пӓлӹк доно тӹнгӓлӓлтшӹ символвлӓ)
 Корнын пӹтӓриш ажедмӓшӹжӹ ӹштӓш ак ли ылмы лаштыкым анжыктышашлык, тӹшкӹ ажедшӓшлык.
 Тидӹ паштек ажедмӓшвлӓ, кыдывлӓм ти корнышты анжыктымы, исключени семӹнь анжымы лит дӓ тӹшкӹ ти изображеним шӹндӓш лиэш.',
-];
+);
 
-$messages['ms'] = [
+$messages['ms'] = array(
 	'broken-file-category' => 'Laman yang ada pautan fail yang terputus',
 	'badaccess' => 'Tidak dibenarkan',
 	'badaccess-group0' => 'Anda tidak dibenarkan melaksanakan tindakan ini.',
@@ -12125,7 +12067,6 @@ Log sekatan disediakan di bawah sebagai rujukan:',
 Alamat IP yang disekat secara automatik tidak disenaraikan di sini.
 Sila lihat juga [[Special:BlockList|senarai sekatan IP]] yang sedang berkuatkuasa.',
 	'block-log-flags-anononly' => 'pengguna tanpa nama sahaja',
-	'block-log-flags-nocreate' => 'pembukaan akaun dimatikan',
 	'block-log-flags-noautoblock' => 'sekatan automatik dimatikan',
 	'block-log-flags-noemail' => 'e-mail disekat',
 	'block-log-flags-nousertalk' => 'tidak boleh menyunting laman perbincangan sendiri',
@@ -12138,34 +12079,34 @@ Sila lihat juga [[Special:BlockList|senarai sekatan IP]] yang sedang berkuatkuas
 Hanya item senarai (baris yang dimulakan dengan *) diambil kira. Pautan pertama pada sesebuah baris mestilah merupakan pautan ke sebuah imej rosak.
 Sebarang pautan berikutnya pada baris yang sama dikira sebagai pengecualian (rencana yang dibenarkan disertakan imej).',
 	'blankpage' => 'Laman kosong',
-];
+);
 
-$messages['mt'] = [
-	'broken-file-category' => 'Paġni b\'ħoloq lejn fajls miksura',
+$messages['mt'] = array(
+	'broken-file-category' => "Paġni b'ħoloq lejn fajls miksura",
 	'badaccess' => 'Problema bil-permess',
-	'badaccess-group0' => 'M\'għandekx permess twettaq din l-azzjoni.',
-	'badaccess-groups' => 'L-azzjoni li rrikjedejt hija riservata għall-utenti membri {{PLURAL:$2|tal-grupp|ta\' wieħed minn dawn il-gruppi}}: $1.',
+	'badaccess-group0' => "M'għandekx permess twettaq din l-azzjoni.",
+	'badaccess-groups' => "L-azzjoni li rrikjedejt hija riservata għall-utenti membri {{PLURAL:$2|tal-grupp|ta' wieħed minn dawn il-gruppi}}: $1.",
 	'badarticleerror' => 'Din l-azzjoni ma setgħetx isseħħ fuq din il-paġna.',
 	'badtitle' => 'Titlu ħażin',
-	'badtitletext' => 'It-titlu tal-paġna rikjesta huwa invalidu, vojt, jew ġej minn żball fil-ħolqa bejn siti wiki differenti jew verżjonijiet ta\' lingwi differenti tal-istess sit. Jista\' wkoll ikollu wieħed jew aktar karattri li ma jistgħux jintużaw għat-titli.',
+	'badtitletext' => "It-titlu tal-paġna rikjesta huwa invalidu, vojt, jew ġej minn żball fil-ħolqa bejn siti wiki differenti jew verżjonijiet ta' lingwi differenti tal-istess sit. Jista' wkoll ikollu wieħed jew aktar karattri li ma jistgħux jintużaw għat-titli.",
 	'badretype' => 'Il-passwords li daħħalt ma jaqblux.',
 	'blocked-mailpassword' => 'L-indirizz tal-IP tiegħek huwa bblokkjat u miżmum milli jwettaq modifiki. Għaldaqstant, mhuwiex possibli għalik li tuża l-funzjoni sabiex iġġib lura l-password, u dan sabiex ma jkunx hemm abbużi.',
 	'bold_sample' => 'Tipa ħoxna',
 	'bold_tip' => 'Tipa ħoxna',
 	'blockedtitle' => 'L-utent ġie bblokkjat',
-	'blockedtext' => '\'\'\'L-isem tal-utent jew l-indirizz IP tiegħek ġew imblukkat.\'\'\'
+	'blockedtext' => "'''L-isem tal-utent jew l-indirizz IP tiegħek ġew imblukkat.'''
 
-Il-blokk twettaq minn $1. Ir-raġuni mogħtiha kienet \'\'$2\'\'.
+Il-blokk twettaq minn \$1. Ir-raġuni mogħtiha kienet ''\$2''.
 
-* Il-blokk jibda: $8
-* Il-blokk jintemm: $6
-* Il-blokk kien għal: $7
+* Il-blokk jibda: \$8
+* Il-blokk jintemm: \$6
+* Il-blokk kien għal: \$7
 
-Tista\' tikkuntattja lil $1 jew xi [[{{MediaWiki:Grouppage-sysop}}|amministratur]] ieħor biex tiddiskuti dan il-blokk.
+Tista' tikkuntattja lil \$1 jew xi [[{{MediaWiki:Grouppage-sysop}}|amministratur]] ieħor biex tiddiskuti dan il-blokk.
 
-Ma tistax tuża\' l-faċilità "ikteb lil dan l-utent" sakemm m\'għandekx indirizz validu tal-email fil-[[Special:Preferences|preferenzi tal-kont]] tiegħek u ma ġejtx miżmum milli tużah.
+Ma tistax tuża' l-faċilità \"ikteb lil dan l-utent\" sakemm m'għandekx indirizz validu tal-email fil-[[Special:Preferences|preferenzi tal-kont]] tiegħek u ma ġejtx miżmum milli tużah.
 
-L-IP kurrenti tiegħek huwa $3, u l-ID tal-imblukkar huwa #$5.<br />Jekk jogħġbok inkludi mqar wieħed minn dawn it-tnejn f\'kwalunkwe rikjesta.',
+L-IP kurrenti tiegħek huwa \$3, u l-ID tal-imblukkar huwa #\$5.<br />Jekk jogħġbok inkludi mqar wieħed minn dawn it-tnejn f'kwalunkwe rikjesta.",
 	'blockednoreason' => 'ma ingħatat l-ebda raġuni',
 	'blocked-notice-logextract' => 'L-utent attwalment jinsab imblukkat.
 L-aħħar daħla fir-reġistru tal-imblokki hi mogħtiha hawn taħt għal referenza:',
@@ -12181,17 +12122,17 @@ L-aħħar daħla fir-reġistru tal-imblokki hi mogħtiha hawn taħt għal refere
 	'booksources-search-legend' => 'Fittex għal sorsi tal-kotba',
 	'booksources-isbn' => 'Kodiċi ISBN:',
 	'booksources-go' => 'Mur',
-	'booksources-text' => 'Hawn taħt hawn lista ta\' ħoloq għal siti oħrajn li jbiegħu kotba ġodda u wżati, u jistgħu jkollhom aktar informazzjoni dwar il-kotba li qiegħed tfittex:',
+	'booksources-text' => "Hawn taħt hawn lista ta' ħoloq għal siti oħrajn li jbiegħu kotba ġodda u wżati, u jistgħu jkollhom aktar informazzjoni dwar il-kotba li qiegħed tfittex:",
 	'booksources-invalid-isbn' => 'L-ISBN li ngħata jidher li mhuwiex validu; iċċekkja għal xi żbalji mis-sors oriġinali.',
 	'blanknamespace' => '(Prinċipali)',
 	'block' => 'Imblokka utent',
 	'blockip' => 'Imblokka lil utent',
-	'blockip-title' => 'Imblokka \'l-utent',
-	'blockip-legend' => 'Imblokka \'l-utent',
-	'blockiptext' => 'Uża l-formola t\'hawn taħt sabiex biex tibblokkja l-aċċess tal-kitba lil IP speċifiku jew utent.
-Il-blokk irid ikun użat biss sabiex jitnaqqas iċ-ċans ta\' vandaliżmu, u għandu josservja b\'mod strett il-[[{{MediaWiki:Policy-url}}|politika ta\' {{SITENAME}}]].
-Indika r-raġuni speċifika għalfejn tixtieq tipproċedi bil-blokk (per eżempju, billi turi l-paġni partikolari li ġew ivvandalizzati).',
-	'badipaddress' => 'Indirizz ta\' IP invalidu',
+	'blockip-title' => "Imblokka 'l-utent",
+	'blockip-legend' => "Imblokka 'l-utent",
+	'blockiptext' => "Uża l-formola t'hawn taħt sabiex biex tibblokkja l-aċċess tal-kitba lil IP speċifiku jew utent.
+Il-blokk irid ikun użat biss sabiex jitnaqqas iċ-ċans ta' vandaliżmu, u għandu josservja b'mod strett il-[[{{MediaWiki:Policy-url}}|politika ta' {{SITENAME}}]].
+Indika r-raġuni speċifika għalfejn tixtieq tipproċedi bil-blokk (per eżempju, billi turi l-paġni partikolari li ġew ivvandalizzati).",
+	'badipaddress' => "Indirizz ta' IP invalidu",
 	'blockipsuccesssub' => 'Il-blokk irnexxa',
 	'blockipsuccesstext' => 'L-utent [[Special:Contributions/$1|$1]] ġie imblukkat.<br />
 Ara l-[[Special:BlockList|lista tal-IP imblukkati]] biex tara l-blokki attivi.',
@@ -12199,38 +12140,37 @@ Ara l-[[Special:BlockList|lista tal-IP imblukkati]] biex tara l-blokki attivi.',
 	'blocklist-userblocks' => 'Aħbi blokki tal-kontijiet',
 	'blocklist-tempblocks' => 'Aħbi blokki temporanji',
 	'blocklist-addressblocks' => 'Aħbi blokki waħdanija tal-IP',
-	'blocklist-rangeblocks' => 'Aħbi blokki ta\' firxiet',
+	'blocklist-rangeblocks' => "Aħbi blokki ta' firxiet",
 	'blocklist-timestamp' => 'Data u ħin',
 	'blocklist-target' => 'Destinazzjoni',
 	'blocklist-expiry' => 'Skadenza',
 	'blocklist-by' => 'Amministratur li għamel il-blokk',
 	'blocklist-params' => 'Parametri tal-blokk',
 	'blocklist-reason' => 'Raġuni',
-	'blocklist-nousertalk' => 'ma tistax timmodifika l-paġna ta\' diskussjoni personali',
+	'blocklist-nousertalk' => "ma tistax timmodifika l-paġna ta' diskussjoni personali",
 	'blocklink' => 'imblokka',
 	'blocklogpage' => 'Blokki',
 	'blocklog-showlog' => 'Dan l-utent ġie imblukkat qabel. Ir-reġistru tal-blokki jinsab hawn taħt bħala referenza:',
 	'blocklog-showsuppresslog' => 'Dan l-utent ġie imblukkat u moħbi qabel. Ir-reġistru tal-blokki jinsab hawn taħt bħala referenza:',
 	'blocklogentry' => 'imblokka lil "[[$1]]" għal perjodu ta\' $2 $3',
-	'blocklogtext' => 'Dan huwa log tal-azzjonijiet tal-blokkar u sblokkar ta\' utent. Indirizzi tal-IP blokkati awtomatikament m\'humiex fil-lista. Ara l-[[Special:BlockList|lista tal-IP blokkati]] għal lista tal-blokki attivi bħalissa.',
+	'blocklogtext' => "Dan huwa log tal-azzjonijiet tal-blokkar u sblokkar ta' utent. Indirizzi tal-IP blokkati awtomatikament m'humiex fil-lista. Ara l-[[Special:BlockList|lista tal-IP blokkati]] għal lista tal-blokki attivi bħalissa.",
 	'block-log-flags-anononly' => 'utenti anonimi biss',
-	'block-log-flags-nocreate' => 'ħolqien tal-kont imblukkat',
 	'block-log-flags-noautoblock' => 'blokkar awtomatiku disattivat',
 	'block-log-flags-noemail' => 'posta elettronika imblukkata',
-	'block-log-flags-nousertalk' => 'ma jistax jimmodifika l-paġna ta\' diskussjoni personali',
+	'block-log-flags-nousertalk' => "ma jistax jimmodifika l-paġna ta' diskussjoni personali",
 	'block-log-flags-angry-autoblock' => 'blokkar awtomatiku avvanzat attivat',
 	'block-log-flags-hiddenname' => 'l-isem tal-utent huwa moħbi',
 	'blockme' => 'Imblukkani',
 	'bydate' => 'data',
-	'bad_image_list' => 'Il-format huwa kif imiss:
+	'bad_image_list' => "Il-format huwa kif imiss:
 
-Jiġu kkunsidrati biss listi ppuntati (linji li jibdew b\'*).
+Jiġu kkunsidrati biss listi ppuntati (linji li jibdew b'*).
 L-ewwel link fil-linja hija link għal fajl ħażin.
-Il-links suċċessivi fuq l-istess linja huma kkunsidrati bħala eċċezzjonijiet, ċoè, paġni fejn il-fajl jista\' jiġi rikjamat b\'mod normali.',
+Il-links suċċessivi fuq l-istess linja huma kkunsidrati bħala eċċezzjonijiet, ċoè, paġni fejn il-fajl jista' jiġi rikjamat b'mod normali.",
 	'blankpage' => 'Paġna vojta',
-];
+);
 
-$messages['mwl'] = [
+$messages['mwl'] = array(
 	'badaccess' => 'Erro de premisson',
 	'badarticleerror' => 'Esta acion nun puode ser feita nesta páigina.',
 	'badtitle' => 'Títalo ambálido',
@@ -12263,14 +12203,13 @@ La tue morada de IP atual ye $3 i l ID de l bloqueio ye $5. Por fabor, anclui un
 	'blocklink' => 'bloquiar',
 	'blocklogpage' => 'Registro de l bloqueio',
 	'blocklogentry' => '"[[$1]]" fui bloquiado cun un tiempo de balidade de $2 $3',
-	'block-log-flags-nocreate' => 'criaçon de cuontas zatibada',
 	'bad_image_list' => 'L formato ye l seguinte:
 
 Solo son cunsiderados cousas de la lista (lhinhas ampeçadas por *). La purmeira lhigaçon nua lhinha debe ser ua lhigaçon pa ua "bad image".
 Lhigaçones a seguir na mesma lhinha son cunsideradas eicepçones, i.e. artigos adonde la eimaige puode acuntecer "inline".',
-];
+);
 
-$messages['my'] = [
+$messages['my'] = array(
 	'broken-file-category' => 'ကျိုးပျက်နေသော ဖိုင်လင့်များပါသည့် စာမျက်နှာများ',
 	'badaccess' => 'ခွင့်ပြုချက်မှ အမှား',
 	'badtitle' => 'ညံ့ဖျင်းသော ခေါင်းစဉ်',
@@ -12304,7 +12243,6 @@ HTML tags ကို စစ်ဆေးပါ။',
 	'blocklogpage' => 'ပိတ်ပင်တားဆီးမှု မှတ်တမ်း',
 	'blocklogentry' => '[[$1]] ကို $2 ကြာအောင် ပိတ်ပင် တားဆီးလိုက်သည် $3',
 	'block-log-flags-anononly' => 'အမည်မသိ အသုံးပြုသူများသာ',
-	'block-log-flags-nocreate' => 'အကောင့်ဖန်တီးခြင်းကို ပိတ်ထားသည်',
 	'block-log-flags-noautoblock' => 'အလိုအလျောက်ပိတ်ပင်ခြင်းကို ပိတ်ထားသည်',
 	'block-log-flags-noemail' => 'အီးမေးကို ပိတ်ပင်ထားသည်',
 	'block-log-flags-nousertalk' => 'မိမိ၏ဆွေးနွေးချက်စာမျက်နှာကို တည်းဖြတ်မရနိုင်ပါ',
@@ -12317,9 +12255,9 @@ HTML tags ကို စစ်ဆေးပါ။',
 စာကြောင်း၏ ပထမဆုံး လင့်သည် ဖိုင်ညံ့ ဖြစ်ရမည်။
 ယင်းစာကြောင်းတွင်ပင် နောက်ထပ်လာသောလင့်များကို ချွင်းချက်အဖြစ် စဉ်းစားမည်။ ဆိုလိုသည်မှာ ၎င်းလင့်များတွင်လည်း အဆိုပါ ဖိုင်ညံ့ ပါကောင်း ပါဝင်နေမည်။',
 	'blankpage' => 'ဗလာစာမျက်နှာ',
-];
+);
 
-$messages['myv'] = [
+$messages['myv'] = array(
 	'badaccess' => 'Меревемань асатыкс',
 	'badaccess-group0' => 'Тонеть а мерить теемс мезе вешить.',
 	'badarticleerror' => 'Те лопасонть вешезь тевесь а тееви.',
@@ -12329,18 +12267,18 @@ $messages['myv'] = [
 	'bold_sample' => 'Эчке текст',
 	'bold_tip' => 'Эчке текст',
 	'blockedtitle' => 'Совицясь аравтозь саймас',
-	'blockedtext' => '\'\'\'Тонть теицянь леметь эли IP-тешкстэть совавтозь саймас.\'\'\'
+	'blockedtext' => "'''Тонть теицянь леметь эли IP-тешкстэть совавтозь саймас.'''
 
-Саймас совавтынзеть $1 прявт кирдицясь. Максозь истямо тувталось: \'\'«$2»\'\'.
+Саймас совавтынзеть $1 прявт кирдицясь. Максозь истямо тувталось: ''«$2»''.
 
 * Саймас совавтозят: $8
 * Саймасто нолдамсат: $6
 * Саймас совавтозесь: $7
 
 Ули мелеть пачтт сёрма теицянтень $1 эли лиятненень [[{{MediaWiki:Grouppage-sysop}}|прявт кирдицятненень]], сынст марто маштови кортамс саймас совавтомадонть.
-Мель явт, эзик максо е-почта сёрмапаргот (адресэть) [[Special:Preferences|эсеть аравтоматнесэ]], а нолдави тевс \'сёрмадт те теицянтень\' функциясь. Истяжо функциясь а нолдави сестэяк, зярдо тосояк саймас совавтозят.
+Мель явт, эзик максо е-почта сёрмапаргот (адресэть) [[Special:Preferences|эсеть аравтоматнесэ]], а нолдави тевс 'сёрмадт те теицянтень' функциясь. Истяжо функциясь а нолдави сестэяк, зярдо тосояк саймас совавтозят.
 
-IP-тешкстэть — $3, саймас совавтоманть ID-сь — #$5. Инескеть, кевкстемат улить, невттяя нетнень лангс.',
+IP-тешкстэть — $3, саймас совавтоманть ID-сь — #$5. Инескеть, кевкстемат улить, невттяя нетнень лангс.",
 	'blockednoreason' => 'тувтал апак максо',
 	'badsiglength' => 'Кедень путомат пек кувака.
 Эйсэнзэ иляст уле $1 -до ламо {{PLURAL:$1|тешкст|тешкст}}.',
@@ -12366,7 +12304,6 @@ IP-тешкстэть — $3, саймас совавтоманть ID-сь — 
 	'blocklogpage' => 'Пекстамонь журналось',
 	'blocklogentry' => 'пектстамонзо [[$1]]  ютазь шканть марто $2 $3',
 	'block-log-flags-anononly' => 'ансяк лемтеме теицятненень',
-	'block-log-flags-nocreate' => 'од теицянь тарканть шкамось-теемась лоткавтозь',
 	'block-log-flags-noemail' => 'е-сёрма озавтозь саймес',
 	'block-log-flags-hiddenname' => 'лисиенть-совиенть лемезэ кекшезь',
 	'blockme' => 'Озавтомак саймес',
@@ -12375,9 +12312,9 @@ IP-тешкстэть — $3, саймас совавтоманть ID-сь — 
 
 Тесэ ансяк потмонть пакшкетне (рисьметне, конат ушодовить * тешкстсэ) лововить. Рисьмень васень сюлмавома пентень эряви невтемс амаштовикс файла лангс. Секе рисьминентень понгиндеряйть лия сюлмавома петь, сынь лововить башка, лиякс меремс сынь лопат, косо файлат маштовить невтемс.',
 	'blankpage' => 'Чаво лопа',
-];
+);
 
-$messages['mzn'] = [
+$messages['mzn'] = array(
 	'broken-file-category' => 'صفحه‌ئونی که اتا عکس اسا وشون سر دنی‌یه',
 	'badaccess' => 'نتوندی هچی ره هارشی',
 	'badaccess-group0' => 'شما این کار ره نتونی هاکنین.',
@@ -12387,10 +12324,10 @@ $messages['mzn'] = [
 	'badretype' => 'دِتا پسوردی که بنویشتی اتجور نینه',
 	'bold_sample' => 'ضخیم',
 	'bold_tip' => 'ضخیم',
-	'blockedtext' => '\'\'\'شمه آی پی دوسته بیّه.\'\'\'
+	'blockedtext' => "'''شمه آی پی دوسته بیّه.'''
 
 این کار ره $1 انجام هدائه.
-اینت وسه که ته این کار ره هکردی: $2\'\'
+اینت وسه که ته این کار ره هکردی: $2''
 
 * شروع دوسته بین: $8
 * زمون پایان این دوسته گی: $6
@@ -12399,7 +12336,7 @@ $messages['mzn'] = [
 شما بتونی با $1 با اتا از [[{{MediaWiki:Grouppage-sysop}}|مدیر|مدیرا]] تماس بیرین و ونجه گپ بزنین.
 
  شمه یاد دواشه که اگه شه ایمیل ره ننوشت بائین نتونی مدیرا وسه ایمیل بزنین اگه ایمیل ره ننوشنی ترجیحات دله بنویسین[[Special:Preferences|اینجه ایمیل ره بنویس]]
-نشونی آی‌پی شما $3 و شماره قطع دسترسی شما $5 هسته. حتما این دِتا شوماره ره گپ بزوئن دله به کار بورین.',
+نشونی آی‌پی شما $3 و شماره قطع دسترسی شما $5 هسته. حتما این دِتا شوماره ره گپ بزوئن دله به کار بورین.",
 	'blockednoreason' => 'معلوم نی‌یه چچی وسه اینتی بیّه!',
 	'blocked-notice-logextract' => 'دسترسی اینتا کارور الآن دوستوئه.
 آخرین مورد سیاهه قطع دسترسی زیر بموئه:',
@@ -12415,14 +12352,14 @@ $messages['mzn'] = [
 	'blocklink' => 'دَوستن',
 	'blocklogentry' => '[[$1]] دأبـه‌سـتـو بـأیـه ئو وه‌نـه دأبه‌ستو بوئه‌ن زأمـون، تـا  $2 $3 هـأسـه',
 	'bydate' => 'تاریخ رو جه',
-];
+);
 
-$messages['na'] = [
+$messages['na'] = array(
 	'bold_sample' => 'Eõ mangiyungiy',
 	'bold_tip' => 'Eõ mangiyungiy',
-];
+);
 
-$messages['nah'] = [
+$messages['nah'] = array(
 	'badaccess' => 'Tlahuelītiliztechcopa ahcuallōtl',
 	'badaccess-group0' => 'Tehhuātl ahmo tiquichīhua inōn tiquiēlēhuia.',
 	'badaccess-groups' => 'Inōn tiquiēlēhuia zan quichīhuah tlatequitiltilīlli {{PLURAL:$2|oncān|oncān}}: $1.',
@@ -12453,9 +12390,9 @@ Ahmo quihuīquilia quimpiya achi $1 {{PLURAL:$1|machiyōtlahtōliztli|machiyōtl
 	'blockme' => 'Timitzcuilīz',
 	'bydate' => 'tōnalcopa',
 	'blankpage' => 'Iztāc zāzanilli',
-];
+);
 
-$messages['nan'] = [
+$messages['nan'] = array(
 	'broken-file-category' => 'Sit-khì tóng-àn liân-kiat ê ia̍h.',
 	'badaccess' => 'Siū-khoân chhò-ngō͘',
 	'badaccess-group0' => 'Lí bô ún-chún chò lí iau-kiû ê tōng-chok.',
@@ -12468,10 +12405,10 @@ $messages['nan'] = [
 	'bold_sample' => 'Chho·-thé bûn-jī',
 	'bold_tip' => 'Chho·-thé jī',
 	'blockedtitle' => '用者hông封鎖',
-	'blockedtext' => '\'\'\'你的用者名稱抑是IP地址已經hông封鎖\'\'\'
+	'blockedtext' => "'''你的用者名稱抑是IP地址已經hông封鎖'''
 
 這擺的封鎖是由$1所做的，
-原因是\'\'$2\'\'。
+原因是''$2''。
 
 * 這擺封鎖開始的時間是：$8
 * 這擺封鎖到期的時間是：$6
@@ -12480,7 +12417,7 @@ $messages['nan'] = [
 妳會使聯絡$1抑是其他的[[{{MediaWiki:Grouppage-sysop}}|管理員]]來討論這擺封鎖。
 除非你有佇你的[[Special:Preferences|口座設定]]當中，有設一个有效的電子批地址，若無，你是袂當使用「寄電子批予用者」的功能。若有，這个功能是無封鎖。
 你這馬IP地址是$3，被封鎖用者ID是 #$5，
-請佇你的詢問當中包括以上資料。',
+請佇你的詢問當中包括以上資料。",
 	'blockednoreason' => '無寫理由',
 	'blocked-notice-logextract' => '這个用者這馬hông封鎖，
 下跤有最近封鎖的紀錄通參考：',
@@ -12527,7 +12464,6 @@ $messages['nan'] = [
 	'blocklogentry' => 'hong-só [[$1]], siat kî-hān chì $2 $3',
 	'blocklogtext' => 'Chit-ê log lia̍t-chhut block/unblock ê tōng-chok. Chū-tōng block ê IP chū-chí bô lia̍t--chhut-lâi ([[Special:BlockList]] ū hiān-chú-sî ū-hāu ê block/ban o·-miâ-toaⁿ).',
 	'block-log-flags-anononly' => '只會當是無名氏用者',
-	'block-log-flags-nocreate' => 'Khui kháu-chō thêng-iōng ah',
 	'block-log-flags-noautoblock' => '自動封鎖袂當用',
 	'block-log-flags-noemail' => '電子批封鎖牢咧',
 	'block-log-flags-nousertalk' => '袂當改家己的討論頁',
@@ -12540,20 +12476,20 @@ $messages['nan'] = [
 每一逝的第一个連結是bad file的連結。
 了後仝一逝後壁的連結會看做是例外，也就是彼个檔案會使佇佗位的頁面通顯示。',
 	'blankpage' => '空的頁',
-];
+);
 
-$messages['nap'] = [
-	'badaccess' => 'Nun haje \'e premmesse abbastante.',
-	'badtitle' => '\'O nnomme nun è jùsto',
+$messages['nap'] = array(
+	'badaccess' => "Nun haje 'e premmesse abbastante.",
+	'badtitle' => "'O nnomme nun è jùsto",
 	'blockip' => 'Ferma utelizzatóre',
 	'blockipsuccesssub' => 'Blocco aseguito',
 	'blocklink' => 'ferma',
 	'blocklogpage' => 'Blocche',
 	'blocklogentry' => 'ha fermato "[[$1]]" pe\' nu mumento \'e $2 $3',
-	'blocklogtext' => 'Chesta è \'a lista d\'\'e azzione \'e blocco e sblocco utente.  \'E nnerizze IP bloccate automaticamente nun nce so\'. Addumannà \'a [[Special:BlockList|lista IP bloccate]] pp\' \'a lista d\'\'e nnerizze e nomme utente \'o ca blocco nce sta.',
-];
+	'blocklogtext' => "Chesta è 'a lista d''e azzione 'e blocco e sblocco utente.  'E nnerizze IP bloccate automaticamente nun nce so'. Addumannà 'a [[Special:BlockList|lista IP bloccate]] pp' 'a lista d''e nnerizze e nomme utente 'o ca blocco nce sta.",
+);
 
-$messages['nb'] = [
+$messages['nb'] = array(
 	'broken-file-category' => 'Sider med brutte fillenker',
 	'badaccess' => 'Rettighetsfeil',
 	'badaccess-group0' => 'Du har ikke tilgang til å utføre handlingen du prøvde på.',
@@ -12567,9 +12503,9 @@ Den inneholder kanskje ett eller flere tegn som ikke kan brukes i titler.',
 	'bold_sample' => 'Fet tekst',
 	'bold_tip' => 'Fet tekst',
 	'blockedtitle' => 'Brukeren er blokkert',
-	'blockedtext' => '\'\'\'Ditt brukernavn eller din IP-adresse har blitt blokkert.\'\'\'
+	'blockedtext' => "'''Ditt brukernavn eller din IP-adresse har blitt blokkert.'''
 
-Blokkeringen ble utført av $1. Grunnen som ble oppgitt var \'\'$2\'\'.
+Blokkeringen ble utført av $1. Grunnen som ble oppgitt var ''$2''.
 
 * Blokkeringen begynte: $8
 * Blokkeringen utgår: $6
@@ -12578,7 +12514,7 @@ Blokkeringen ble utført av $1. Grunnen som ble oppgitt var \'\'$2\'\'.
 Du kan kontakte $1 eller en annen [[{{MediaWiki:Grouppage-sysop}}|administrator]] for å diskutere blokkeringen.
 Du kan ikke bruke «E-post til denne brukeren»-funksjonen med mindre du har oppgitt en gyldig e-postadresse i [[Special:Preferences|innstillingene dine]] og du ikke er blokkert fra å sende e-post.
 Din nåværende IP-adresse er $3, og blokkerings-ID-en er #$5.
-Vennligst ta all denne informasjonen ved henvendelser.',
+Vennligst ta all denne informasjonen ved henvendelser.",
 	'blockednoreason' => 'ingen grunn gitt',
 	'blocked-notice-logextract' => 'Denne brukeren er for tiden blokkert.
 Siste blokkeringsloggelement kan sees nedenfor.',
@@ -12649,7 +12585,6 @@ Skjulingsloggen vises nedenfor.',
 	'blocklogentry' => 'blokkerte [[$1]] med en varighet på $2 $3',
 	'blocklogtext' => 'Dette er en logg som viser hvilke brukere som har blitt blokkert og avblokkert. Automatisk blokkerte IP-adresser vises ikke. Se [[Special:BlockList|blokkeringslisten]] for en liste over IP-adresser som er blokkert akkurat nå.',
 	'block-log-flags-anononly' => 'kun uregistrerte brukere',
-	'block-log-flags-nocreate' => 'kontooppretting deaktivert',
 	'block-log-flags-noautoblock' => 'autoblokkering slått av',
 	'block-log-flags-noemail' => 'e-post blokkert',
 	'block-log-flags-nousertalk' => 'kan ikke redigere egen diskusjonsside',
@@ -12663,9 +12598,9 @@ Kun listeelementer (linjer som starter med *) tas med.
 Den første lenken på en linje må være en lenke til en dårlig fil.
 Alle andre lenker på samme linje anses for å være unntak, altså sider der filen kan opptre.',
 	'blankpage' => 'Tom side',
-];
+);
 
-$messages['nds'] = [
+$messages['nds'] = array(
 	'broken-file-category' => 'Sieden mit kaputten Dateilenken',
 	'badaccess' => 'Fehler bi de Rechten',
 	'badaccess-group0' => 'Du hest keen Verlööf för disse Akschoon.',
@@ -12726,7 +12661,6 @@ Op de [[Special:BlockList|IP-Blocklist]] is en List vun alle Blocks to finnen.',
 	'blocklogtext' => 'Dit is en Logbook över Blocks un Freegaven vun Brukern. Automatisch blockte IP-Adressen sünd nich opföhrt.
 Kiek [[Special:BlockList|IP-Blocklist]] för en List vun den blockten Brukern.',
 	'block-log-flags-anononly' => 'blots anonyme Brukers',
-	'block-log-flags-nocreate' => 'Brukerkonten opstellen sperrt',
 	'block-log-flags-noautoblock' => 'Autoblock utschalt',
 	'block-log-flags-noemail' => 'E-Mail schrieven sperrt',
 	'block-log-flags-nousertalk' => 'kann de egene Diskuschoonssied nich ännern',
@@ -12739,34 +12673,34 @@ Kiek [[Special:BlockList|IP-Blocklist]] för en List vun den blockten Brukern.',
 Blot na Regen, de mit en * anfangt, warrt keken. Na dat Teken * mutt toeerst en Lenk op dat Bild stahn, dat nich bruukt warrn dröff.
 Wat denn noch an Lenken kummt in de Reeg, dat sünd Utnahmen, bi de dat Bild liekers noch bruukt warrn dröff.',
 	'blankpage' => 'Leddige Sied',
-];
+);
 
-$messages['nds-nl'] = [
-	'broken-file-category' => 'Pagina\'s mit verkeerde bestaandsverwiezingen',
+$messages['nds-nl'] = array(
+	'broken-file-category' => "Pagina's mit verkeerde bestaandsverwiezingen",
 	'badaccess' => 'Gien toestemming',
 	'badaccess-group0' => 'Je hebben gien toestemming um disse aksie uut te voeren.',
 	'badaccess-groups' => 'Disse aksie kan allinnig uutevoerd wörden deur gebrukers uut {{PLURAL:$2|de groep|één van de groepen}}: $1.',
 	'badarticleerror' => 'Disse haandeling kan op disse pagina niet uutevoerd wörden.',
 	'badtitle' => 'Ongeldige naam',
 	'badtitletext' => 'De naam van de op-evreugen pagina is niet geldig, leeg, of n interwiki-verwiezing naor n onbekende of ongeldige wiki.',
-	'badretype' => 'De wachtwoorden die\'j in-etikt hebben bin niet liek alleens.',
-	'blocked-mailpassword' => 'Dit IP-adres is eblokkeerd. Dit betekent da\'j niet bewarken kunnen en dat {{SITENAME}} joew wachtwoord niet weerummehaolen kan, dit wörden edaon um misbruuk tegen te gaon.',
+	'badretype' => "De wachtwoorden die'j in-etikt hebben bin niet liek alleens.",
+	'blocked-mailpassword' => "Dit IP-adres is eblokkeerd. Dit betekent da'j niet bewarken kunnen en dat {{SITENAME}} joew wachtwoord niet weerummehaolen kan, dit wörden edaon um misbruuk tegen te gaon.",
 	'bold_sample' => 'Vet-edrokten tekste',
 	'bold_tip' => 'Vet-edrokten tekste',
 	'blockedtitle' => 'Gebruker is eblokkeerd',
-	'blockedtext' => '\'\'\'Joew gebrukersnaam of IP-adres is eblokkeerd.\'\'\'
+	'blockedtext' => "'''Joew gebrukersnaam of IP-adres is eblokkeerd.'''
 
 Je bin eblokkeerd deur: $1.
-De op-egeven reden is: \'\'$2\'\'.
+De op-egeven reden is: ''$2''.
 
 * Eblokkeerd vanaof: $8
 * Eblokkeerd tot: $6
 * Bedoeld um te blokkeren: $7
 
 Je kunnen kontakt opnemen mit $1 of n aandere [[{{MediaWiki:Grouppage-sysop}}|beheerder]] um de blokkering te bepraoten.
-Je kunnen gien gebruukmaken van de funksie \'een bericht sturen\', behalven a\'j n geldig netpostadres op-egeven hebben in joew [[Special:Preferences|veurkeuren]] en t gebruuk van disse funksie niet eblokkeerd is.
-t IP-adres da\'j noen gebruken is $3 en t blokkeringsnummer is #$5.
-Vermeld t allebeie a\'j argens op disse blokkering reageren.',
+Je kunnen gien gebruukmaken van de funksie 'een bericht sturen', behalven a'j n geldig netpostadres op-egeven hebben in joew [[Special:Preferences|veurkeuren]] en t gebruuk van disse funksie niet eblokkeerd is.
+t IP-adres da'j noen gebruken is $3 en t blokkeringsnummer is #$5.
+Vermeld t allebeie a'j argens op disse blokkering reageren.",
 	'blockednoreason' => 'gien reden op-egeven',
 	'blocked-notice-logextract' => 'Disse gebruker is op t moment eblokkeerd.
 De leste regel uut t blokkeerlogboek steet hieronder as referensie:',
@@ -12804,14 +12738,14 @@ t Mut minder as {{PLURAL:$1|letter|letters}} hebben.',
 	'booksources' => 'Boekinformasie',
 	'booksources-search-legend' => 'Zeuk informasie over n boek',
 	'booksources-go' => 'Zeuk',
-	'booksources-text' => 'Hieronder steet n lieste mit verwiezingen naor aandere websteeën die nieje of wat ouwere boeken verkopen, en daor hebben ze warschienlik meer informasie over t boek da\'j zeuken:',
-	'booksources-invalid-isbn' => 'De op-egeven ISBN klop niet; kiek effen nao o\'j gien fout emaakt hebben bie de invoer.',
+	'booksources-text' => "Hieronder steet n lieste mit verwiezingen naor aandere websteeën die nieje of wat ouwere boeken verkopen, en daor hebben ze warschienlik meer informasie over t boek da'j zeuken:",
+	'booksources-invalid-isbn' => "De op-egeven ISBN klop niet; kiek effen nao o'j gien fout emaakt hebben bie de invoer.",
 	'blanknamespace' => '(Heufdnaamruumte)',
 	'block' => 'Gebruker blokkeren',
 	'blockip' => 'Gebruker blokkeren',
 	'blockip-title' => 'Gebruker blokkeren',
 	'blockip-legend' => 'n Gebruker of IP-adres blokkeren',
-	'blockiptext' => 'Gebruuk dit formulier um n IP-adres of gebrukersnaam te blokkeren. t Is bedoeld um vandelisme te veurkoemen en mit in akkerderen mit t [[{{MediaWiki:Policy-url}}|beleid]]. Geef hieronder n reden op (bieveurbeeld op welke pagina\'s de vandelisme epleeg is)',
+	'blockiptext' => "Gebruuk dit formulier um n IP-adres of gebrukersnaam te blokkeren. t Is bedoeld um vandelisme te veurkoemen en mit in akkerderen mit t [[{{MediaWiki:Policy-url}}|beleid]]. Geef hieronder n reden op (bieveurbeeld op welke pagina's de vandelisme epleeg is)",
 	'badipaddress' => 'Ongeldig IP-adres of onbestaonde gebrukersnaam',
 	'blockipsuccesssub' => 'Suksesvol eblokkeerd',
 	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] is noen eblokkeerd.<br />
@@ -12835,9 +12769,8 @@ t Blokkeerlogboek steet hieronder as referensie:',
 	'blocklog-showsuppresslog' => 'Disse gebruker is al eerder eblokkeerd en wele bewarkingen van disse gebruker bin verbörgen.
 t Logboek mit onderdrokten versies steet hieronder as referensie:',
 	'blocklogentry' => 'blokkeren "[[$1]]" veur $2 $3',
-	'blocklogtext' => 'Hier zie\'j n lieste van de leste blokkeringen en deblokkeringen. Automatiese blokkeringen en deblokkeringen koemen niet in t logboek te staon. Zie de [[Special:BlockList|IP-blokkeerlieste]] veur de lieste van adressen die noen eblokkeerd bin.',
+	'blocklogtext' => "Hier zie'j n lieste van de leste blokkeringen en deblokkeringen. Automatiese blokkeringen en deblokkeringen koemen niet in t logboek te staon. Zie de [[Special:BlockList|IP-blokkeerlieste]] veur de lieste van adressen die noen eblokkeerd bin.",
 	'block-log-flags-anononly' => 'allinnig anoniemen',
-	'block-log-flags-nocreate' => 'anmaken van gebrukersprofielen uuteschakeld',
 	'block-log-flags-noautoblock' => 'autoblokkeren uuteschakeld',
 	'block-log-flags-noemail' => 't versturen van berichten is eblokkeerd',
 	'block-log-flags-nousertalk' => 'kan zien eigen overlegpagina niet bewarken',
@@ -12845,15 +12778,15 @@ t Logboek mit onderdrokten versies steet hieronder as referensie:',
 	'block-log-flags-hiddenname' => 'gebrukersnaam verbörgen',
 	'blockme' => 'Mien blokkeren',
 	'bydate' => 'op daotum',
-	'bad_image_list' => 'De opmaak is as volgt:
+	'bad_image_list' => "De opmaak is as volgt:
 
 Allinnig regels in n lieste (regels die beginnen mit *) wörden verwarkt.
 De eerste verwiezing op n regel mut n verwiezing ween naor n ongewunst bestaand.
-Alle volgende verwiezingen die op de zelfde regel staon, wörden behaandeld as uutzundering, zo as pagina\'s waorop t bestaand in te tekste op-eneumen is.',
+Alle volgende verwiezingen die op de zelfde regel staon, wörden behaandeld as uutzundering, zo as pagina's waorop t bestaand in te tekste op-eneumen is.",
 	'blankpage' => 'Lege pagina',
-];
+);
 
-$messages['ne'] = [
+$messages['ne'] = array(
 	'badaccess' => 'आज्ञा त्रुटि',
 	'badaccess-group0' => 'तपाईले अनुरोध गर्नुभएको कार्य गर्न तपाईलाई अनुमति दिइएको छैन।',
 	'badaccess-groups' => 'तपाईले अनुरोध गर्नुभएको कार्य  {{PLURAL:$2|समूह |कुनै एक समूह}}: $1 मा रहेका प्रयोगकर्ताहरुले मात्र गर्नसक्छन ।',
@@ -12865,22 +12798,22 @@ $messages['ne'] = [
 	'bold_sample' => 'गाढा अक्षर',
 	'bold_tip' => 'गाढा अक्षर',
 	'blockedtitle' => 'प्रयोककर्तालाई रोक लगाइएको छ',
-	'blockedtext' => '\'\'\'तपाईँको प्रयोगकर्ता नाम या IP ठेगानालाई रोक लगाइएको छ ।\'\'\'
+	'blockedtext' => "'''तपाईँको प्रयोगकर्ता नाम या IP ठेगानालाई रोक लगाइएको छ ।'''
 
 रोक लगाउने  $1.
-रोक लगाउनाको कारण \'\'$2\'\'.
+रोक लगाउनाको कारण ''$2''.
 
 * रोक सुरूहुने : $8
 * रोक सकिने: $6
 * रोकबाट लक्षित: $7
 
 तपाईले  $1 वा अरु कुनै  [[{{MediaWiki:Grouppage-sysop}}|administrator]] सँग रोकको बारेमा छलफल गर्न सम्पर्क गर्न सक्नुहुन्छ ।
-तपाईँले  \'प्रयोगकर्तालाई इ-मेल गर्ने \' सुविधा मान्य इमेल ठेगाना [[Special:Preferences|account preferences]] मा नखुलाए सम्म प्रयोगगर्न पाउनुहुने छैन र यसको प्रयोग गर्नबाट रोक लगाइएको छैन ।
+तपाईँले  'प्रयोगकर्तालाई इ-मेल गर्ने ' सुविधा मान्य इमेल ठेगाना [[Special:Preferences|account preferences]] मा नखुलाए सम्म प्रयोगगर्न पाउनुहुने छैन र यसको प्रयोग गर्नबाट रोक लगाइएको छैन ।
 तपाईको IP ठेगाना $3 को, र रोक्का संख्या #$5.
-कृपया तपाईँको प्रश्नमा सबै जानकारी खुलाउनुहोला ।',
+कृपया तपाईँको प्रश्नमा सबै जानकारी खुलाउनुहोला ।",
 	'blockednoreason' => 'कारण दिइएको छैन',
-	'blockedoriginalsource' => '\'\'\'$1\'\'\' को स्रोत तल देखाइएको छ:',
-	'blockededitsource' => '\'\'\'$1\'\'\'को \'\'\'तपाईँको सम्पादन\'\'\'को पाठ तल देखाइएको छ:',
+	'blockedoriginalsource' => "'''$1''' को स्रोत तल देखाइएको छ:",
+	'blockededitsource' => "'''$1'''को '''तपाईँको सम्पादन'''को पाठ तल देखाइएको छ:",
 	'blocked-notice-logextract' => 'यो प्रयोगकर्ता हाल प्रतिबन्धित छ।
 The latest block log entry is provided below for reference:',
 	'badsig' => 'अमान्य कच्चा दस्तखत।
@@ -12920,7 +12853,6 @@ HTML ट्यागहरु जाँच्नुहोस् ।',
 स्वतः रोकिएका IP ठेगानाहरु सूचीमा छैनन्।
 वर्तमानका चालू रोक र प्रतिबन्धहरुको सूचीकोलागि हेर्नुहोस् [[Special:IPBlockList|IP रोकावट सूची]]।',
 	'block-log-flags-anononly' => 'अज्ञात प्रयोगकर्तामात्र',
-	'block-log-flags-nocreate' => 'खाता खोल्न निस्क्रिय पारिएको',
 	'block-log-flags-noautoblock' => 'स्वत रोक निस्कृय पारिएको',
 	'block-log-flags-noemail' => 'इमेल रोकियो',
 	'block-log-flags-nousertalk' => 'आफ्नै वार्तालाप पृष्ठ सम्पादन गर्न सकिंदैन',
@@ -12930,23 +12862,23 @@ HTML ट्यागहरु जाँच्नुहोस् ।',
 	'bydate' => 'मिति अनुसार',
 	'bad_image_list' => '(* बाट शुरु हुने पंक्ति)को  विषय सूची मात्र मान्य छ।  पंक्तिको पहिलो लिङ्क नराम्रो फाइलसित लिङ्क हुनैपर्छ । एउटै पंक्तिमा कुनै पछिबाट हुने लिंकलाई अपवाद मानिनेछ अर्थात् जुन पृष्ठमा फाइल इन-लाइन हुनसक्छ।',
 	'blankpage' => 'खाली पृष्ठहरु',
-];
+);
 
-$messages['new'] = [
+$messages['new'] = array(
 	'badaccess' => 'पर्मिसन इरर',
 	'badaccess-group0' => 'छिं अनुरोध यानादिगु ज्या छिं याये मछिं।',
 	'badaccess-groups' => 'छिं अनुरोध यानादिगु ज्या {{PLURAL:$2|पुचः|पुचःतः}}: $1या छ्यलामिं जक्क याये दु।',
 	'blanknamespace' => '(मू)',
-];
+);
 
-$messages['niu'] = [
+$messages['niu'] = array(
 	'brokenredirects-edit' => 'fakahakohako',
 	'brokenredirects-delete' => 'tamate',
 	'booksources-go' => 'Fano',
-];
+);
 
-$messages['nl'] = [
-	'broken-file-category' => 'Pagina\'s met onjuiste bestandsverwijzingen',
+$messages['nl'] = array(
+	'broken-file-category' => "Pagina's met onjuiste bestandsverwijzingen",
 	'badaccess' => 'Geen toestemming',
 	'badaccess-group0' => 'Je hebt geen rechten om de gevraagde handeling uit te voeren.',
 	'badaccess-groups' => 'De gevraagde handeling is voorbehouden aan gebruikers in {{PLURAL:$2|de groep $1|een van de volgende groepen: $1}}.',
@@ -13004,7 +12936,7 @@ Deze moet minder dan $1 {{PLURAL:$1|karakters|karakters}} bevatten.',
 	'backend-fail-contenttype' => 'Kon het inhoudstype van het bestand om op "$1" op te slaan niet bepalen.',
 	'backend-fail-batchsize' => 'Reeks van $1 bestands{{PLURAL:$1|operatie|operaties}} in de opslagbackend; de limiet is $2 {{PLURAL:$2|operatie|operaties}}.',
 	'brokenredirects' => 'Defecte doorverwijzingen',
-	'brokenredirectstext' => 'De onderstaande doorverwijzigingen verwijzen naar niet-bestaande pagina\'s.',
+	'brokenredirectstext' => "De onderstaande doorverwijzigingen verwijzen naar niet-bestaande pagina's.",
 	'brokenredirects-edit' => 'bewerken',
 	'brokenredirects-delete' => 'verwijderen',
 	'booksources' => 'Boekinformatie',
@@ -13018,9 +12950,9 @@ Controleer of u wellicht een fout hebt gemaakt bij de invoer.',
 	'blockip' => 'Gebruiker blokkeren',
 	'blockip-title' => 'Gebruiker blokkeren',
 	'blockip-legend' => 'Gebruiker blokkeren',
-	'blockiptext' => 'Gebruik het onderstaande formulier om schrijftoegang voor een gebruiker of IP-adres in te trekken.
+	'blockiptext' => "Gebruik het onderstaande formulier om schrijftoegang voor een gebruiker of IP-adres in te trekken.
 Doe dit alleen als bescherming tegen vandalisme en in overeenstemming met het [[{{MediaWiki:Policy-url}}|beleid]].
-Geef hieronder een reden op (bijvoorbeeld welke pagina\'s gevandaliseerd zijn).',
+Geef hieronder een reden op (bijvoorbeeld welke pagina's gevandaliseerd zijn).",
 	'badipaddress' => 'Geen geldig IP-adres',
 	'blockipsuccesssub' => 'De blokkering is ingesteld',
 	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] is geblokkeerd.<br />
@@ -13048,7 +12980,6 @@ Het verbergingslogboek wordt hieronder ter referentie weergegeven:',
 Automatische blokkeringen en deblokkeringen komen niet in het logboek.
 Zie ook [[Special:BlockList|Geblokkeerde IP-adressen en gebruikers]].',
 	'block-log-flags-anononly' => 'alleen anoniemen',
-	'block-log-flags-nocreate' => 'registreren gebruikers geblokkeerd',
 	'block-log-flags-noautoblock' => 'autoblokkeren is uitgeschakeld',
 	'block-log-flags-noemail' => 'e-mail geblokkeerd',
 	'block-log-flags-nousertalk' => 'kan eigen overlegpagina niet bewerken',
@@ -13056,15 +12987,38 @@ Zie ook [[Special:BlockList|Geblokkeerde IP-adressen en gebruikers]].',
 	'block-log-flags-hiddenname' => 'gebruiker verborgen',
 	'blockme' => 'Mij blokkeren',
 	'bydate' => 'op datum',
-	'bad_image_list' => 'De opmaak is als volgt:
+	'bad_image_list' => "De opmaak is als volgt:
 
 Alleen regels in een lijst (regels die beginnen met *) worden verwerkt.
 De eerste verwijzing op een regel moet een verwijzing zijn naar een ongewenst bestand.
-Alle volgende verwijzingen die op dezelfde regel staan, worden behandeld als uitzondering, zoals bijvoorbeeld pagina\'s waarop het bestand in de tekst is opgenomen.',
+Alle volgende verwijzingen die op dezelfde regel staan, worden behandeld als uitzondering, zoals bijvoorbeeld pagina's waarop het bestand in de tekst is opgenomen.",
 	'blankpage' => 'Lege pagina',
-];
+	'backlinksubtitle' => '← $1',
+	'brokenredirects-summary' => '',
+	'booksources-summary' => '',
+	'booksources-isbn' => 'ISBN:',
+	'blocklist-summary' => '',
+	'block-log-flags-nocreate' => 'registreren gebruikers geblokkeerd',
+	'bitrate-bits' => '$1bps',
+	'bitrate-kilobits' => '$1kbps',
+	'bitrate-megabits' => '$1Mbps',
+	'bitrate-gigabits' => '$1Gbps',
+	'bitrate-terabits' => '$1Tbps',
+	'bitrate-petabits' => '$1Pbps',
+	'bitrate-exabits' => '$1Ebps',
+	'bitrate-zetabits' => '$1Zbps',
+	'bitrate-yottabits' => '$1Ybps',
+	'back' => 'Back',
+	'button-createpage' => 'Add a Page',
+	'blog-avatar-defaults' => 'Avatar.jpg
+Avatar2.jpg
+Avatar3.jpg
+Avatar4.jpg
+Avatar5.jpg
+Avatar6.jpg',
+);
 
-$messages['nl-informal'] = [
+$messages['nl-informal'] = array(
 	'badaccess-group0' => 'Je hebt geen rechten om de gevraagde handeling uit te voeren.',
 	'blocked-mailpassword' => 'Je IP-adres is geblokkeerd voor het maken van wijzigingen.
 Om misbruik te voorkomen is het niet mogelijk om een nieuw wachtwoord aan te vragen.',
@@ -13084,9 +13038,9 @@ Vermeld alle bovenstaande gegevens als je ergens op deze blokkade reageert.',
 	'badsiglength' => 'Uw ondertekening is te lang.
 Deze moet minder dan $1 {{PLURAL:$1|karakters|karakters}} bevatten.',
 	'booksources-text' => 'Hieronder staat een lijst met koppelingen naar andere websites die nieuwe of gebruikte boeken verkopen, en die wellicht meer informatie over het boek dat je zoekt hebben:',
-];
+);
 
-$messages['nn'] = [
+$messages['nn'] = array(
 	'broken-file-category' => 'Sider med brotne fillenkjer',
 	'badaccess' => 'Tilgangsfeil',
 	'badaccess-group0' => 'Du har ikkje lov til å utføre handlinga du ba om.',
@@ -13099,10 +13053,10 @@ $messages['nn'] = [
 	'bold_sample' => 'Halvfeit skrift',
 	'bold_tip' => 'Halvfeit skrift',
 	'blockedtitle' => 'Brukaren er blokkert',
-	'blockedtext' => '\'\'\'Brukarnamnet ditt eller IP-adressa di er blokkert frå endring\'\'\'
+	'blockedtext' => "'''Brukarnamnet ditt eller IP-adressa di er blokkert frå endring'''
 
 Blokkeringa vart gjort av $1.
-Denne grunnen vart gjeven: \'\'$2\'\'.
+Denne grunnen vart gjeven: ''$2''.
 
 * Blokkeringa byrja: $8
 * Blokkeringa endar: $6
@@ -13111,7 +13065,7 @@ Denne grunnen vart gjeven: \'\'$2\'\'.
 Du kan kontakte $1 eller ein annan [[{{MediaWiki:Grouppage-sysop}}|administrator]] for å diskutere blokkeringa.
 Ver merksam på at du ikkje kan bruke «send e-post til brukar»-funksjonen så lenge du ikkje har ei gyldig e-postadresse registrert i [[Special:Preferences|innstillingane dine]]. Du kan heller ikkje bruke funksjonen dersom du er blokkert frå å sende e-post.
 IP-adressa di er $3, og blokkeringsnummeret er $5.
-Ver venleg og opplys om dette ved eventuelle førespurnader.',
+Ver venleg og opplys om dette ved eventuelle førespurnader.",
 	'blockednoreason' => 'inga grunngjeving',
 	'blocked-notice-logextract' => 'Denne brukaren er for tida blokkert.
 Det siste elementet i blokkeringsloggen er oppgjeve nedanfor:',
@@ -13159,7 +13113,6 @@ Loggføringa er synt nedanfor som referanse:',
 	'blocklogtext' => 'Dette er ein logg over blokkeringar og oppheving av blokkeringar gjorde.
 IP-adresser som blir automatisk blokkerte er ikkje lista her. Sjå [[Special:BlockList|blokkeringslista]] for alle aktive blokkeringar.',
 	'block-log-flags-anononly' => 'berre anonyme brukarar',
-	'block-log-flags-nocreate' => 'kontooppretting slått av',
 	'block-log-flags-noautoblock' => 'automatisk blokkering slått av',
 	'block-log-flags-noemail' => 'sending av e-post blokkert',
 	'block-log-flags-nousertalk' => 'kan ikkje endre eiga diskusjonsside',
@@ -13173,9 +13126,9 @@ Berre liner som startar med asterisk (*) vert tekne med.
 Den fyrste lenkja på ei line må gå til ei uønskt fil.
 Alle andre lenkjer på same line vert sett på som unnatak, med andre ord sider der fila kan brukast.',
 	'blankpage' => 'Tom side',
-];
+);
 
-$messages['no'] = [
+$messages['no'] = array(
 	'broken-file-category' => 'Sider med brotne fillenkjer',
 	'badaccess' => 'Tilgangsfeil',
 	'badaccess-group0' => 'Du har ikkje lov til å utføre handlinga du ba om.',
@@ -13188,10 +13141,10 @@ $messages['no'] = [
 	'bold_sample' => 'Halvfeit skrift',
 	'bold_tip' => 'Halvfeit skrift',
 	'blockedtitle' => 'Brukaren er blokkert',
-	'blockedtext' => '\'\'\'Brukarnamnet ditt eller IP-adressa di er blokkert frå endring\'\'\'
+	'blockedtext' => "'''Brukarnamnet ditt eller IP-adressa di er blokkert frå endring'''
 
 Blokkeringa vart gjort av $1.
-Denne grunnen vart gjeven: \'\'$2\'\'.
+Denne grunnen vart gjeven: ''$2''.
 
 * Blokkeringa byrja: $8
 * Blokkeringa endar: $6
@@ -13200,7 +13153,7 @@ Denne grunnen vart gjeven: \'\'$2\'\'.
 Du kan kontakte $1 eller ein annan [[{{MediaWiki:Grouppage-sysop}}|administrator]] for å diskutere blokkeringa.
 Ver merksam på at du ikkje kan bruke «send e-post til brukar»-funksjonen så lenge du ikkje har ei gyldig e-postadresse registrert i [[Special:Preferences|innstillingane dine]]. Du kan heller ikkje bruke funksjonen dersom du er blokkert frå å sende e-post.
 IP-adressa di er $3, og blokkeringsnummeret er $5.
-Ver venleg og opplys om dette ved eventuelle førespurnader.',
+Ver venleg og opplys om dette ved eventuelle førespurnader.",
 	'blockednoreason' => 'inga grunngjeving',
 	'blocked-notice-logextract' => 'Denne brukaren er for tida blokkert.
 Det siste elementet i blokkeringsloggen er oppgjeve nedanfor:',
@@ -13248,7 +13201,6 @@ Loggføringa er synt nedanfor som referanse:',
 	'blocklogtext' => 'Dette er ein logg over blokkeringar og oppheving av blokkeringar gjorde.
 IP-adresser som blir automatisk blokkerte er ikkje lista her. Sjå [[Special:BlockList|blokkeringslista]] for alle aktive blokkeringar.',
 	'block-log-flags-anononly' => 'berre anonyme brukarar',
-	'block-log-flags-nocreate' => 'kontooppretting slått av',
 	'block-log-flags-noautoblock' => 'automatisk blokkering slått av',
 	'block-log-flags-noemail' => 'sending av e-post blokkert',
 	'block-log-flags-nousertalk' => 'kan ikkje endre eiga diskusjonsside',
@@ -13264,9 +13216,9 @@ Alle andre lenkjer på same line vert sett på som unnatak, med andre ord sider 
 	'blankpage' => 'Tom side',
 	'back' => 'Tilbake',
 	'button-createpage' => 'Legg til side',
-];
+);
 
-$messages['nov'] = [
+$messages['nov'] = array(
 	'badaccess' => 'Permisione erore',
 	'badtitle' => 'Mali title',
 	'badtitletext' => 'Li pregati pagine esed non-valid, vakui, o non-korektim linkat inter-lingue o inter-wiki title. Lu povud kontena un o plusi karakteres kel on non pove usa in titles.',
@@ -13280,9 +13232,9 @@ $messages['nov'] = [
 	'blanknamespace' => '(Chefi)',
 	'badipaddress' => 'Non-valid IP adrese',
 	'bydate' => 'segun date',
-];
+);
 
-$messages['nso'] = [
+$messages['nso'] = array(
 	'badaccess' => 'Thušo ya tumello',
 	'badaccess-group0' => 'Ga wa dumelwa go dira seo o lekago go se dira.',
 	'badaccess-groups' => 'Seo o lekago go se dira se dumelwetše go bašomiši bao balego {{PLURAL:$2|dihlopeng tša|sehlopheng sa}}: $1.',
@@ -13291,27 +13243,27 @@ $messages['nso'] = [
 	'badretype' => 'Ditlhaka-tša-siphiri tše o di šomišitšego ga di swane.',
 	'blocked-mailpassword' => 'IP atrese ya gago e thibetšwe go dira diphetogo, ka fao ga wa dumellwa
 go šomiša thulusu ya go hwetša Ditlhaka-tša-siphiri go thibela go hlapanya.',
-	'bold_sample' => 'Mongwalo wa \'\'\'Bold\'\'\'',
+	'bold_sample' => "Mongwalo wa '''Bold'''",
 	'bold_tip' => 'Ditlhaka tše Bold',
 	'blockedtitle' => 'Mošomiši o thibilwe',
-	'blockedtext' => '\'\'\'Leina la gago la mošomiši goba IP atrese e thibilwe.\'\'\'
+	'blockedtext' => "'''Leina la gago la mošomiši goba IP atrese e thibilwe.'''
 
-O thibilwe ke $1. Makaba a go thiba ke \'\'$2\'\'.
+O thibilwe ke $1. Makaba a go thiba ke ''$2''.
 
 * Go thoma gago thiba: $8
 * Fetatšatši yago thiba: $6
 * Mothibiwa: $7
 
 O ka leka go boledišana le $1 goba [[{{MediaWiki:Grouppage-sysop}}|molaudi]] ka go thibiwa go.
-O ka se kgone go šumiša thulusu ya \'romela mošomiši molaetša\' ka ntle gage o loketše e-mail ya gago go
+O ka se kgone go šumiša thulusu ya 'romela mošomiši molaetša' ka ntle gage o loketše e-mail ya gago go
 [[Special:Preferences|dikgatlhegelo]] gape ge o sa thibelwa go e šomiša.
-IP atrese ya gago ke $3, ge ID ya go thiba ele #$5. Ka kgopelo šumiša ID le IP go dipoledišano ka moka tšeo dilego mabapi le go go thiba.',
+IP atrese ya gago ke $3, ge ID ya go thiba ele #$5. Ka kgopelo šumiša ID le IP go dipoledišano ka moka tšeo dilego mabapi le go go thiba.",
 	'blockednoreason' => 'gago lebaka leo le filwego',
-	'blockedoriginalsource' => 'Mothopo wa \'\'\'$1\'\'\' oa botšhwa tlase:',
+	'blockedoriginalsource' => "Mothopo wa '''$1''' oa botšhwa tlase:",
 	'badsiglength' => 'Leina la boreelo le letelele kudu.
 Le swanela goba fase ga $1 {{PLURAL:$1|ya tlhaka|tša ditlhaka}}',
 	'boteditletter' => 'b',
-	'brokenredirects' => '\'\'redirect\'\' tša go robega',
+	'brokenredirects' => "''redirect'' tša go robega",
 	'brokenredirects-edit' => 'fetola',
 	'brokenredirects-delete' => 'phumula',
 	'booksources' => 'Dipuku tša mothopo',
@@ -13321,40 +13273,39 @@ Le swanela goba fase ga $1 {{PLURAL:$1|ya tlhaka|tša ditlhaka}}',
 	'blockip' => 'Thibela mošomiši go tsena',
 	'blocklistline' => '$1, $2 o thibile $3 ($4)',
 	'blocklink' => 'thibela',
-	'blocklogpage' => '\'\'log\'\' yago Thiba',
+	'blocklogpage' => "''log'' yago Thiba",
 	'blocklogentry' => 'Thibela [[$1]] ka fetšatši ya $2 $3',
-	'block-log-flags-nocreate' => 'Go hloma tšhupaleloko gago dumelege',
 	'block-log-flags-noemail' => 'e-mail e thibilwe',
 	'bydate' => 'ka letšatšikgwedi',
-	'bad_image_list' => '\'\'Format\'\' e ka mokgwa wo o latelago:
+	'bad_image_list' => "''Format'' e ka mokgwa wo o latelago:
 
 Ke fela tšeo dilego lenano (methalo ya go thoma ka *) yeo e dumeletšwego.
 Hlomaganyo ya mathomo mothalong e swanetše go hlomaganya le seswantšho sa go senyega.
-Dihlomaganyo tše dilatelago mothalong o tee di tšewa bjalo ka maarogi, ka mantšwe a mangwe, matlakala a we seswantšsho se ka bago gona mothalong.',
-];
+Dihlomaganyo tše dilatelago mothalong o tee di tšewa bjalo ka maarogi, ka mantšwe a mangwe, matlakala a we seswantšsho se ka bago gona mothalong.",
+);
 
-$messages['nv'] = [
+$messages['nv'] = array(
 	'blanknamespace' => '(Íiyisíí)',
 	'blocklogentry' => '[[$1]] bichʼą́ą́h niiníyá ($2 $3)',
-];
+);
 
-$messages['oc'] = [
+$messages['oc'] = array(
 	'broken-file-category' => 'Paginas amb ligams copats',
 	'badaccess' => 'Error de permission',
 	'badaccess-group0' => 'Avètz pas los dreches sufisents per realizar l’accion que demandatz.',
-	'badaccess-groups' => 'L’accion qu\'ensajatz de realizar es pas accessibla qu’als utilizaires {{PLURAL:$2|del grop|d´un d´aquestes gropes}}: $1.',
+	'badaccess-groups' => "L’accion qu'ensajatz de realizar es pas accessibla qu’als utilizaires {{PLURAL:$2|del grop|d´un d´aquestes gropes}}: $1.",
 	'badarticleerror' => 'Aquesta accion pòt pas èsser efectuada sus aquesta pagina.',
 	'badtitle' => 'Títol marrit',
 	'badtitletext' => 'Lo títol de la pagina demandada es invalid, void o s’agís d’un títol interlenga o interprojècte mal ligat. Benlèu conten un o maites caractèrs que pòdon pas èsser utilizats dins los títols.',
-	'badretype' => 'Los senhals qu\'avètz picats son pas identics.',
+	'badretype' => "Los senhals qu'avètz picats son pas identics.",
 	'blocked-mailpassword' => 'Vòstra adreça IP es blocada en edicion, la foncion de rapèl del senhal es doncas desactivada per evitar los abuses.',
 	'bold_sample' => 'Tèxte en gras',
 	'bold_tip' => 'Tèxte en gras',
-	'blockedtitle' => 'L\'utilizaire es blocat',
-	'blockedtext' => '\'\'\'Vòstre compte d\'utilizaire o vòstra adreça IP es estat blocat\'\'\'
+	'blockedtitle' => "L'utilizaire es blocat",
+	'blockedtext' => "'''Vòstre compte d'utilizaire o vòstra adreça IP es estat blocat'''
 
 Lo blocatge es estat efectuat per $1.
-La rason invocada es la seguenta : \'\'$2\'\'.
+La rason invocada es la seguenta : ''$2''.
 
 * Començament del blocatge : $8
 * Expiracion del blocatge : $6
@@ -13363,7 +13314,7 @@ La rason invocada es la seguenta : \'\'$2\'\'.
 Podètz contactar $1 o un autre [[{{MediaWiki:Grouppage-sysop}}|administrator]] per ne discutir.
 Podètz pas utilizar la foncion « Mandar un corrièr electronic a aqueste utilizaire » que se una adreça de corrièr valida es especificada dins vòstras [[Special:Preferences|preferéncias]].
 Vòstra adreça IP actuala es $3 e vòstre identificant de blocatge es #$5.
-Incluissètz aquesta adreça dins tota requèsta.',
+Incluissètz aquesta adreça dins tota requèsta.",
 	'blockednoreason' => 'Cap de rason balhada',
 	'blocked-notice-logextract' => 'Aqueste utilizaire es actualament blocat.
 La darrièra entrada del jornal dels blocatges es indicada çaijós a títol d’informacion :',
@@ -13371,26 +13322,26 @@ La darrièra entrada del jornal dels blocatges es indicada çaijós a títol d�
 	'badsiglength' => 'Vòstra signatura es tròp longa.
 Deu aver, al maximum $1 caractèr{{PLURAL:$1||s}}.',
 	'boteditletter' => 'b',
-	'badfilename' => 'L\'imatge es estat renomenat « $1 ».',
+	'badfilename' => "L'imatge es estat renomenat « $1 ».",
 	'brokenredirects' => 'Redireccions copadas',
-	'brokenredirectstext' => 'Aquestas redireccions mènan cap a de paginas qu\'existisson pas :',
+	'brokenredirectstext' => "Aquestas redireccions mènan cap a de paginas qu'existisson pas :",
 	'brokenredirects-edit' => 'modificar',
 	'brokenredirects-delete' => 'suprimir',
 	'booksources' => 'Obratges de referéncia',
-	'booksources-search-legend' => 'Recercar demest d\'obratges de referéncia',
+	'booksources-search-legend' => "Recercar demest d'obratges de referéncia",
 	'booksources-isbn' => 'ISBN :',
 	'booksources-go' => 'Validar',
-	'booksources-text' => 'Vaquí una lista de ligams cap a d’autres sites que vendon de libres nòus e d’ocasion e suls quals trobaretz benlèu d\'entresenhas suls obratges que cercatz. {{SITENAME}} es pas ligada a cap d\'aquestas societats, a pas l’intencion de ne far la promocion.',
-	'booksources-invalid-isbn' => 'Lo numèro ISBN balhat sembla pas èsser valid ; verificatz s\'avètz fach una error al moment de la còpia dempuèi la font.',
+	'booksources-text' => "Vaquí una lista de ligams cap a d’autres sites que vendon de libres nòus e d’ocasion e suls quals trobaretz benlèu d'entresenhas suls obratges que cercatz. {{SITENAME}} es pas ligada a cap d'aquestas societats, a pas l’intencion de ne far la promocion.",
+	'booksources-invalid-isbn' => "Lo numèro ISBN balhat sembla pas èsser valid ; verificatz s'avètz fach una error al moment de la còpia dempuèi la font.",
 	'blanknamespace' => '(Principal)',
 	'block' => 'Blocar un utilizaire',
 	'blockip' => 'Blocar en escritura',
 	'blockip-title' => 'Blocar l’utilizaire',
 	'blockip-legend' => 'Blocar en escritura',
-	'blockiptext' => 'Utilizatz lo formulari çaijós per blocar l\'accès a las modificacions a partir d\'una adreça IP especifica o d\'un nom d\'utilizaire.
+	'blockiptext' => "Utilizatz lo formulari çaijós per blocar l'accès a las modificacions a partir d'una adreça IP especifica o d'un nom d'utilizaire.
 Una tala mesura deu pas èsser presa pas que per empachar lo vandalisme e en acòrdi amb las [[{{MediaWiki:Policy-url}}|règlas intèrnas]].
-Donatz çaijós un motiu precís (per exemple en citant las paginas que son estadas vandalizadas).',
-	'badipaddress' => 'L\'adreça IP es incorrècta',
+Donatz çaijós un motiu precís (per exemple en citant las paginas que son estadas vandalizadas).",
+	'badipaddress' => "L'adreça IP es incorrècta",
 	'blockipsuccesssub' => 'Blocatge capitat',
 	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] es estat blocat.<br />
 Podètz consultar la [[Special:BlockList|lista dels comptes e de las adreças IP blocats]].',
@@ -13401,24 +13352,23 @@ Podètz consultar la [[Special:BlockList|lista dels comptes e de las adreças IP
 	'blocklog-showlog' => 'Aqueste utilizaire es estat blocat precedentament. Lo jornal dels blocatges es disponible çaijós :',
 	'blocklog-showsuppresslog' => 'Aqueste utilizaire es estat blocat e amagat precedentament. Lo jornal de las supressions es disponible çaijós :',
 	'blocklogentry' => 'a blocat « [[$1]] » - durada : $2 $3',
-	'blocklogtext' => 'Aquò es l\'istoric dels blocatges e desblocatges dels utilizaires. Las adreças IP automaticament blocadas son pas listadas. Consultatz la [[Special:BlockList|lista dels utilizaires blocats]] per veire qui es actualament efectivament blocat.',
+	'blocklogtext' => "Aquò es l'istoric dels blocatges e desblocatges dels utilizaires. Las adreças IP automaticament blocadas son pas listadas. Consultatz la [[Special:BlockList|lista dels utilizaires blocats]] per veire qui es actualament efectivament blocat.",
 	'block-log-flags-anononly' => 'utilizaires anonims solament',
-	'block-log-flags-nocreate' => 'creacion de compte interdicha',
 	'block-log-flags-noautoblock' => 'autoblocatge de las IP desactivat',
 	'block-log-flags-noemail' => 'Mandadís de corrièr electronic blocat',
 	'block-log-flags-nousertalk' => 'pòt pas modificar sa pròpria pagina de discussion',
 	'block-log-flags-angry-autoblock' => 'autoblocatge melhorat en servici',
-	'block-log-flags-hiddenname' => 'nom d\'utilizaire amagat',
+	'block-log-flags-hiddenname' => "nom d'utilizaire amagat",
 	'blockme' => 'Blocatz-me',
 	'bydate' => 'per data',
-	'bad_image_list' => 'Lo format es lo seguent :
+	'bad_image_list' => "Lo format es lo seguent :
 
-Solas las listas d\'enumeracion (las linhas començant per *) son presas en compte. Lo primièr ligam d\'una linha deu èsser cap a un imatge marrit.
-Los autres ligams sus la meteissa linha son considerats coma d\'excepcions, per exemple d\'articles sulsquals l\'imatge deu aparéisser.',
+Solas las listas d'enumeracion (las linhas començant per *) son presas en compte. Lo primièr ligam d'una linha deu èsser cap a un imatge marrit.
+Los autres ligams sus la meteissa linha son considerats coma d'excepcions, per exemple d'articles sulsquals l'imatge deu aparéisser.",
 	'blankpage' => 'Pagina voida',
-];
+);
 
-$messages['or'] = [
+$messages['or'] = array(
 	'broken-file-category' => 'ଭଙ୍ଗା ଫାଇଲ ଲିଙ୍କ ଥିବା ପୃଷ୍ଠାସମୂହ',
 	'badaccess' => 'ଅନୁମତି ମିଳିବାରେ ଅସୁବିଧା',
 	'badaccess-group0' => 'ଆପଣ ଅନୁରୋଷ କରିଥିବା ପୃଷ୍ଠାଟିରେ କିଛି କାମ କରିବା ନିମନ୍ତେ ଆପଣଙ୍କୁ ଅନୁମତି ମିଳିନାହିଁ',
@@ -13432,7 +13382,7 @@ $messages['or'] = [
 	'bold_sample' => 'ମୋଟା ଲେଖା',
 	'bold_tip' => 'ମୋଟା ଲେଖା',
 	'blockedtitle' => 'ସଭ୍ୟଙ୍କୁ ଅଟକାଯାଇଅଛି',
-	'blockedtext' => '\'\'\' ଆପଣଙ୍କ ଇଉସରନେମକୁ ପ୍ରତିରୋଧ କରାଯାଇଛି
+	'blockedtext' => "''' ଆପଣଙ୍କ ଇଉସରନେମକୁ ପ୍ରତିରୋଧ କରାଯାଇଛି
 
 $1 ଦ୍ଵାରା ପ୍ରତିରୋଧ କରାଯାଇଛି
 ଦିଆଯାଇଥିବା କାରଣଟି ହେଉଛି $2
@@ -13442,9 +13392,9 @@ $1 ଦ୍ଵାରା ପ୍ରତିରୋଧ କରାଯାଇଛି
 * ଅଭିପ୍ରେତ ପ୍ରତିରୋଧକରି : $7
 
 ଏହି ପ୍ରତିରୋଧ ବିଷୟରେ ଅଧିକ ଜାଣିବାକୁ ଚାହୁଥିଲେ ଆପଣ $1 କିମ୍ବା [[{{MediaWiki:Grouppage-sysop}}|administrator]]ଙ୍କୁ ଯୋଗାଯୋଗ  କରିପାରିବେ ।
-ଯେ ପର୍ଯ୍ୟନ୍ତ ଆପଣଙ୍କ [[Special:Preferences|account preferences]]ରେ ଗୋଟିଏ ଉପଲବ୍ଧ ଇମେଲ ଠିକଣା ଦିଆ ଯାଇନାହି ଏବଂ ଆପଣ ଏହାକୁ ବ୍ୟବହାର କରିବାରେ କିଛି ପ୍ରତିରୋଧ ଲଗାଯାଇଅଛି ସେ ପର୍ଯ୍ୟନ୍ତ ଆପଣ \'ଏହି ସଦସ୍ୟଙ୍କୁ ଲେଖନ୍ତୁ \' ବିଭାଗଟିକୁ ବ୍ୟବହାର କରିପାରିବେନି ।
+ଯେ ପର୍ଯ୍ୟନ୍ତ ଆପଣଙ୍କ [[Special:Preferences|account preferences]]ରେ ଗୋଟିଏ ଉପଲବ୍ଧ ଇମେଲ ଠିକଣା ଦିଆ ଯାଇନାହି ଏବଂ ଆପଣ ଏହାକୁ ବ୍ୟବହାର କରିବାରେ କିଛି ପ୍ରତିରୋଧ ଲଗାଯାଇଅଛି ସେ ପର୍ଯ୍ୟନ୍ତ ଆପଣ 'ଏହି ସଦସ୍ୟଙ୍କୁ ଲେଖନ୍ତୁ ' ବିଭାଗଟିକୁ ବ୍ୟବହାର କରିପାରିବେନି ।
 ବର୍ତମାନ ଆପଣଙ୍କ ଆଇପି ଠିକଣା ହେଇଛି $3, ଏବଂ ପ୍ରତିରୋଧ ଆଇଡି ହେଉଛି #$5 ।
-ଯଦି ଅପଙ୍କର କିଛି କହିବାକୁ ଥାଏ ତାହେଲେ ଆପଣଙ୍କ ଲେଖାରେ ଉପରୋକ୍ତ ଲେଖାଗୁଡ଼ିକ ଯୋଡିଦେବେ',
+ଯଦି ଅପଙ୍କର କିଛି କହିବାକୁ ଥାଏ ତାହେଲେ ଆପଣଙ୍କ ଲେଖାରେ ଉପରୋକ୍ତ ଲେଖାଗୁଡ଼ିକ ଯୋଡିଦେବେ",
 	'blockednoreason' => 'କିଛି କାରଣ ଦିଆଯାଇ ନାହିଁ',
 	'blocked-notice-logextract' => 'ଏହି ସଭ୍ୟଙ୍କୁ ଏବେ ପାଇଁ ଅଟକାଯାଇଅଛି ।
 ଆପଣଙ୍କ ଜାଣିବା ନିମନ୍ତେ ନଗଦ ଇତିହାସ ତଳେ ଦିଆଗଲା:',
@@ -13514,7 +13464,6 @@ HTML ଟାଗ ପରଖିନିଅନ୍ତୁ ।',
 ଆପେଆପେ ଅଟକାଯାଇଥିବା IP ଠିକଣା ଏଠାରେ ସ୍ଥାନିତ ହୋଇନାହିଁ ।
 ଏବେ ସଚଳ କରାଯାଇଥିବା ଅଟକ ଓ ବାରଣସବୁ ଦେଖବା ନିମନ୍ତେ [[Special:BlockList|IP ଅଟକ ତାଲିକା]] ଦେଖନ୍ତୁ ।',
 	'block-log-flags-anononly' => 'କେବଳ ବେନାମି ସଭ୍ୟ',
-	'block-log-flags-nocreate' => 'ନୂଆ ଖାତା ଖୋଲିବା ଅଚଳ କରାଯାଇଅଛି',
 	'block-log-flags-noautoblock' => 'ଆପେଆପେ କରାଯାଇଥିବା ଅଟକ ଅଚଳ କରାଗଲା',
 	'block-log-flags-noemail' => 'ଇ-ମେଲ ଅଟକାଗଲା',
 	'block-log-flags-nousertalk' => 'ଆପଣା ଆଲୋଚନା ପୃଷ୍ଠାକୁ ବଦଳାଇ ପାରିବେ ନାହିଁ',
@@ -13528,9 +13477,9 @@ HTML ଟାଗ ପରଖିନିଅନ୍ତୁ ।',
 ଗୋଟିଏ ଧାଡ଼ିର ପ୍ରଥମ ଲିଙ୍କଟି ଗୋଟିଏ ଖରାପ ଫାଇଲର ଲିଙ୍କ ହୋଇଥିବା ଦରକାର ।
 ପ୍ରଥମ ଲିଙ୍କ ପରର ସବୁ ଲିଙ୍କକୁ ନିଆରା ବୋଲି ଧରାଯିବ । ମାନେ, ସେଇସବୁ ପୃଷ୍ଠାଦରେ ଯେଉଁଠି ଫାଇଲଟି ଧାଡ଼ି ଭିତରେ ରହିଥିବ ।',
 	'blankpage' => 'ଖାଲି ପୃଷ୍ଠା',
-];
+);
 
-$messages['os'] = [
+$messages['os'] = array(
 	'broken-file-category' => 'Файлтæм саст æрвитæнтæ кæм ис, ахæм фæрстæ',
 	'badaccess' => 'Бацæуæны рæдыд',
 	'badaccess-group0' => 'Ацы архайд ракæныны бар дæм нæй.',
@@ -13556,16 +13505,15 @@ $messages['os'] = [
 	'blocklink' => 'бахъоды кæн',
 	'blocklogpage' => 'Хъодыты лог',
 	'blocklogentry' => 'бахъоды кодта [[$1]] $2 æмгъуыдмæ $3',
-	'block-log-flags-nocreate' => 'аккаунт аразæн нал ис',
 	'bydate' => 'рæстæгмæ гæсгæ',
 	'bad_image_list' => 'Формат у ахæм:
 
 Æрмæстдæр рæгъон рæнхъытæ (рæнхъытæ, кæдон байдауынц * символæй) нымады кæнынц.
 Фыццаг æрвитæн рæнхъы хъуамæ æрвита æвзæр файлмæ.
 Иннæ æрвитæнтæ уыцы рæнхъы нымады кæнынц куыд уæлвæткытæ, кæдон сты фæрстæ кæдæм ис бар бавæрын файл.',
-];
+);
 
-$messages['pa'] = [
+$messages['pa'] = array(
 	'badaccess' => 'ਅਧਿਕਾਰ ਗਲਤੀ',
 	'badaccess-group0' => 'ਤੁਹਾਨੂੰ ਉਹ ਐਕਸ਼ਨ ਕਰਨ ਦੀ ਮਨਜ਼ੂਰੀ ਨਹੀਂ, ਜਿਸ ਦੀ ਤੁਸੀਂ ਮੰਗ ਕੀਤੀ ਹੈ।',
 	'badtitle' => 'ਗਲਤ ਟਾਇਟਲ',
@@ -13590,9 +13538,9 @@ $messages['pa'] = [
 ਕੇਵਲ ਸੂਚੀਬੱਧ ਮੱਦਾਂ (* ਨਾਲ ਸ਼ੁਰੂ ਹੋਣ ਵਾਲੀਆਂ ਪੰਕਤੀਆਂ) ਹੀ ਵਿਚਾਰ ਅਧੀਨ ਹੋਣਗੀਆਂ।
 ਪੰਕਤੀ ਵਿਚ ਪਹਿਲੀ ਕੜੀ ਗਲਤ ਫਾਈਲ ਦੀ ਕੜੀ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।ਉਸ ਪੰਕਤੀ ਵਿਚ ਅੱਗੇ ਦਿਤੀਆਂ ਕੜੀਆਂ ਨੂੰ ਅਪਵਾਦ ਮੰਨਿਆ ਜਾਵੇਗਾ, ਭਾਵ ਉਹ ਪੰਨੇ ਜਿਨ੍ਹਾਂ ਵਿਚ ਫਾਈਲ ਕਿਸੇ ਪੰਕਤੀ ਵਿਚ ਸਥਿਤ ਹੋ ਸਕਦੀ ਹੇ।',
 	'blankpage' => 'ਖ਼ਾਲੀ ਪੇਜ',
-];
+);
 
-$messages['pag'] = [
+$messages['pag'] = array(
 	'badaccess-group0' => 'Agmo sarag ya gaween so action ya kekerewen mo.',
 	'badarticleerror' => 'Aga sarag ya gaween so ayan action ed sayan bolong.',
 	'badtitle' => 'Aga sarag ya titulo',
@@ -13607,9 +13555,9 @@ $messages['pag'] = [
 	'blockip' => 'Isara ed para ayan manag-usar',
 	'badipaddress' => 'Aga nayarin IP address',
 	'blocklink' => 'isara',
-];
+);
 
-$messages['pam'] = [
+$messages['pam'] = array(
 	'badaccess' => 'Kapintulutan kamalian',
 	'badaccess-group0' => 'Ala kang paintulut para daptan mu ing pamipamuk a inyawad mu.',
 	'badaccess-groups' => 'Ing pamipamuk a inyawad mu kareng yang talagamit karing metung a lupun $1.',
@@ -13622,17 +13570,17 @@ e malyaring gumamit king password recovery function bang e mayayabusu iti.',
 	'bold_sample' => 'Makapasalang kulitan',
 	'bold_tip' => 'Makapal pangasulat',
 	'blockedtitle' => 'Ing talagamit mesabat ya',
-	'blockedtext' => '\'\'\'Mesabat ya ing kekang lagiung talagamit (user name) o IP address.\'\'\'
+	'blockedtext' => "'''Mesabat ya ing kekang lagiung talagamit (user name) o IP address.'''
 
-I $1 ing menyabat. Ini ing binie nang sangkan \'\'$2\'\'.
+I $1 ing menyabat. Ini ing binie nang sangkan ''$2''.
 
 * Umpisa ning pamaniabat: $8
 * Angganan ning pamaniabat: $6
 * Ing talagamit a sabatan: $7
 
 Malyari meng pabaluan i $1 o deng aliwang [[{{MediaWiki:Grouppage-sysop}}|talapanibala]] ba yeng pisabian ing pangasabat.
-E me malyaring gamitan ing \'e-mail this user\' feature liban namu nung ating mababanggit a e-mail address a gagana ketang kekang[[Special:Preferences|account preferences]], at e ka mesabat king pamangamit kaniti.
-Ing salukuyan mung IP address $3 ya, at ing blocked ID #$5 ya. Pakibanggit me ing sanu man kareti o detang adua kareng kekang kutang a maniad pamipalino.',
+E me malyaring gamitan ing 'e-mail this user' feature liban namu nung ating mababanggit a e-mail address a gagana ketang kekang[[Special:Preferences|account preferences]], at e ka mesabat king pamangamit kaniti.
+Ing salukuyan mung IP address $3 ya, at ing blocked ID #$5 ya. Pakibanggit me ing sanu man kareti o detang adua kareng kekang kutang a maniad pamipalino.",
 	'blockednoreason' => 'alang mibieng sangkan',
 	'badsig' => 'E ustu ing simpling pirma (raw signature); lon mo reng HTML tag.',
 	'badsiglength' => 'Masiadu yang makaba ing kekang pirma (signature). Kailangan, mas makuyad ya kesa king $1 kulit (characters).',
@@ -13666,7 +13614,6 @@ mu nung sanu retang bulung a sinira da).',
 E la makabili deng IP address a tambing nang makasabat.
 Lon me ing [[Special:BlockList|IP block list]] para king tala da reng kasalungsungan a makabawal o makasabat.',
 	'block-log-flags-anononly' => 'den mung gagamit a e pepakilala',
-	'block-log-flags-nocreate' => 'pamilalang account e malyari',
 	'block-log-flags-noautoblock' => 'makapatda ya ing tambing a pangasabat (autoblock)',
 	'block-log-flags-noemail' => 'makasabat ing e-mail',
 	'blockme' => 'Sabatan muku',
@@ -13676,9 +13623,9 @@ Lon me ing [[Special:BlockList|IP block list]] para king tala da reng kasalungsu
 Den mung bageng makalista (gulis a magumpisa king *) ing makayabe.
 Kailangan yang suglung king simpan (file) a maki dipirensia (bad file) ing mumunang sulung king gulis.
 Kailangan, e la mamayun king patakaran (exceptions) deng suglung katuki na, alimbawa, deng bulung nung nu ya lunto king gulis (inline) ing simpan.',
-];
+);
 
-$messages['pap'] = [
+$messages['pap'] = array(
 	'badaccess' => 'Eror di outorisashon',
 	'badaccess-group0' => 'Bo no tin outorisashon pa ehekutá e akshon ku bo a skohe.',
 	'badtitle' => 'Título inválido',
@@ -13693,42 +13640,41 @@ $messages['pap'] = [
 	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] tabata blokiá.<br />
 Wak e [[Special:BlockList|lista di blokeonan]] pa wak tur blokeo aktivo.',
 	'blocklink' => 'blokia',
-];
+);
 
-$messages['pcd'] = [
-	'broken-file-category' => 'Paches aveuc des loïens d\'fichiés bérzillés',
+$messages['pcd'] = array(
+	'broken-file-category' => "Paches aveuc des loïens d'fichiés bérzillés",
 	'badaccess' => 'Bérlure éd pérmission',
 	'badaccess-group0' => 'Vos n’avez poin chés droéts pour foaire l’action dmindée.',
-	'badarticleerror' => 'Os n\'povez poin foaire cha su l\'pache-lo.',
+	'badarticleerror' => "Os n'povez poin foaire cha su l'pache-lo.",
 	'badtitle' => 'Méchant tite',
-	'badtitletext' => 'Ch\'tite del pache écmindée n\'est poin valabe, est vide, ou bin ch\'est un tite inter-langue ou inter-proujé aveuc des méchands loïens. Pététe qu\'il y o un ou des caractére(s) éq i feut poin mette din chés tites.',
-	'badretype' => 'Chés mots d\'passe intrés, is sont poin bon.',
+	'badtitletext' => "Ch'tite del pache écmindée n'est poin valabe, est vide, ou bin ch'est un tite inter-langue ou inter-proujé aveuc des méchands loïens. Pététe qu'il y o un ou des caractére(s) éq i feut poin mette din chés tites.",
+	'badretype' => "Chés mots d'passe intrés, is sont poin bon.",
 	'bold_sample' => 'Cros teske',
 	'bold_tip' => 'Cros teske',
 	'badsiglength' => 'Vote signature est gramint longue.
 Ale doét mie éte pu longue éq $1 {{PLURAL:$1|caracter|caractéres}}.',
 	'boteditletter' => 'b',
 	'booksources' => 'Sources dech live',
-	'booksources-search-legend' => 'Tracher chés référinches d\'chés lives',
+	'booksources-search-legend' => "Tracher chés référinches d'chés lives",
 	'booksources-go' => 'Aler',
 	'blanknamespace' => '(Moaite)',
-	'blockip' => 'Blotcher l\'uzeu',
-	'blockip-title' => 'Blotcher l\'uzeu',
-	'blockip-legend' => 'Blotcher l\'uzeu',
-	'blockiptext' => 'Uzer dech teske-lo pour blotcher l’ahérse aux canjemints foaits dpui eune adrèche IP éspéchifique o bin d’un nom d’uzeu.
-I feut l\'foaire seleumint pour inréyer ech vindalime et pi i feut ète acordant aveuc chés [[{{MediaWiki:Policy-url}}|usages intérnes]].
-Donner apré ch\'motif  (pèr egzimpe chiter chés paches qu\'ont té vindalisées).',
+	'blockip' => "Blotcher l'uzeu",
+	'blockip-title' => "Blotcher l'uzeu",
+	'blockip-legend' => "Blotcher l'uzeu",
+	'blockiptext' => "Uzer dech teske-lo pour blotcher l’ahérse aux canjemints foaits dpui eune adrèche IP éspéchifique o bin d’un nom d’uzeu.
+I feut l'foaire seleumint pour inréyer ech vindalime et pi i feut ète acordant aveuc chés [[{{MediaWiki:Policy-url}}|usages intérnes]].
+Donner apré ch'motif  (pèr egzimpe chiter chés paches qu'ont té vindalisées).",
 	'blocklink' => 'blotcher',
 	'blocklogpage' => 'jornal éd chés paches blotchées',
 	'blocklogentry' => '[[$1]] est blotché aveuc eune durèe éd $2 $3',
-	'block-log-flags-nocreate' => 'créhachon d\'conpte intérdite',
-	'bad_image_list' => 'Ch\'format ch\'est:
+	'bad_image_list' => "Ch'format ch'est:
 
-In érbéye seulemint chés lisses éd limérachon (aveuc * al copéte). <br /> Ech preumié loïen d\'eune line i doét éte échti d\'eune méchante image. <br /> Chés eutes loïens su el méme line s\'ront érbéyés conme des éssékcions, pèr eximpe des paches où l\'image put aparoète.',
+In érbéye seulemint chés lisses éd limérachon (aveuc * al copéte). <br /> Ech preumié loïen d'eune line i doét éte échti d'eune méchante image. <br /> Chés eutes loïens su el méme line s'ront érbéyés conme des éssékcions, pèr eximpe des paches où l'image put aparoète.",
 	'blankpage' => 'Blanke pache',
-];
+);
 
-$messages['pdc'] = [
+$messages['pdc'] = array(
 	'bold_sample' => 'Wadde fett gmarrickt',
 	'bold_tip' => 'Wadde fett gmarrickt',
 	'blockednoreason' => 'ken Grund gewwe',
@@ -13741,16 +13687,16 @@ $messages['pdc'] = [
 	'blanknamespace' => '(Bledder)',
 	'blocklink' => 'Aabinne',
 	'blankpage' => 'Leeres Blatt',
-];
+);
 
-$messages['pdt'] = [
+$messages['pdt'] = array(
 	'badaccess' => 'Nich utretjende Rajchte',
 	'badaccess-group0' => 'Du hast nich daut needje Rajcht fe dise Aktioon.',
 	'badtitle' => 'Schlajchta Titel',
 	'badretype' => 'Dee beid Pauswed stemme nich ewaeen.',
 	'blockedtitle' => 'Dis Brucka es jeblockt.',
 	'boteditletter' => 'b',
-	'brokenredirects' => 'Ka\'put Wiedawiesinj',
+	'brokenredirects' => "Ka'put Wiedawiesinj",
 	'blanknamespace' => '(Haupt)',
 	'blocklink' => 'blocke',
 	'blocklogpage' => 'Block-Logbok',
@@ -13758,9 +13704,9 @@ $messages['pdt'] = [
 	'bad_image_list' => 'Format:
 
 Bloos items, woone mett eenem * aunfange, woare jenome. Dee eschta Link no dem * mott een Link opp een schlajchtet Dokument (file) senne. Dee Links, woone dan kome, wiese opp Utnohme, aulsoo soone Siede, woo daut Dokument (file) jewese en jeseene woare kaun.',
-];
+);
 
-$messages['pfl'] = [
+$messages['pfl'] = array(
 	'badaccess' => 'Kää ausraichende Recht',
 	'badtitletext' => 'De Titel vun de aageforderte Said isch nid giltich, leer, odder e nid giltiche Link vun eme annere Wiki.
 S kann sai, dass es ää odder meh Zaiche drin hot, wu im Titel vun de Said nid gebraucht werre därfe.',
@@ -13777,44 +13723,44 @@ S kann sai, dass es ää odder meh Zaiche drin hot, wu im Titel vun de Said nid 
 	'blocklink' => 'sperre',
 	'blocklogpage' => 'Sperrlogbuch',
 	'blocklogentry' => 'hot [[$1]] gsperrt fer e Zaidraum vun $2 $3',
-	'block-log-flags-nocreate' => 'Aaleche vun Benutzerkonte isch gsperrt',
 	'bad_image_list' => 'Format:
 
 nur Zaile, die wu mit eme * aafange werre bericksichticht.
 De erscht Link muss e Link zu ere unerwinschte Datei sai.
 Annere Links in der glaiche Zail werre als Ausnahme behannelt, d. h. Saide, wu d Datei drin vorkumme därft.',
-];
+);
 
-$messages['pi'] = [
+$messages['pi'] = array(
 	'booksources-go' => 'गच्छामि',
-];
+);
 
-$messages['pl'] = [
+$messages['pl'] = array(
 	'broken-file-category' => 'Strony z odwołaniami do nieistniejących plików',
 	'badaccess' => 'Niewłaściwe uprawnienia',
 	'badaccess-group0' => 'Nie masz uprawnień wymaganych do wykonania tej operacji.',
 	'badaccess-groups' => 'Wykonywanie tej operacji zostało ograniczone do użytkowników w {{PLURAL:$2|grupie|jednej z grup:}} $1.',
-	'badarticleerror' => 'Dla tej strony ta operacja nie może być wykonana.',
+	'badarticleerror' => 'Ta operacja nie może zostać wykonana dla tej strony. Strona mogła zostać usunięta przed jej wykonaniem.',
 	'badtitle' => 'Niepoprawny tytuł',
-	'badtitletext' => 'Podano niepoprawny tytuł strony. Prawdopodobnie jest pusty lub zawiera znaki, których użycie jest zabronione.',
+	'badtitletext' => 'Podano niepoprawny tytuł strony. Prawdopodobnie jest pusty lub zawiera niedozwolone znaki.',
 	'badretype' => 'Wprowadzone hasła różnią się między sobą.',
 	'blocked-mailpassword' => 'Twój adres IP został zablokowany i nie możesz używać funkcji odzyskiwania hasła z powodu możliwości jej nadużywania.',
 	'bold_sample' => 'Tekst tłustą czcionką',
 	'bold_tip' => 'Tekst tłustą czcionką',
 	'blockedtitle' => 'Użytkownik jest zablokowany',
-	'blockedtext' => '\'\'\'Twoje konto lub adres IP zostały zablokowane.\'\'\'
+	'blockedtext' => "<big>'''Twoje konto lub adres IP zostały zablokowane.'''</big>
 
 Blokada została nałożona przez $1.
-Podany powód to: \'\'$2\'\'.
 
+* Podany powód: $2
 * Początek blokady: $8
 * Wygaśnięcie blokady: $6
 * Zablokowany został: $7
+* ID blokady: #$5
+* Twój obecny adres IP: $3
 
-W celu wyjaśnienia przyczyny zablokowania możesz się skontaktować z $1 lub innym [[{{MediaWiki:Grouppage-sysop}}|administratorem]].
-Twój obecny adres IP to $3, a numer identyfikacyjny blokady to $5.
-Prosimy o podanie obu tych informacji przy wyjaśnianiu blokady.',
-	'blockednoreason' => 'nie podano przyczyny',
+W celu wyjaśnienia przyczyny zablokowania możesz się skontaktować z $1 lub innym [[Special:ListAdmins|administratorem]].
+Prosimy o podanie powyższych informacji przy wyjaśnianiu blokady.",
+	'blockednoreason' => 'nie podano powodu',
 	'blocked-notice-logextract' => '{{GENDER:$1|Ten użytkownik|Ta użytkowniczka}} jest obecnie {{GENDER:$1|zablokowany|zablokowana}}.
 Ostatni wpis rejestru blokad jest pokazany poniżej.',
 	'badsig' => 'Nieprawidłowy podpis, sprawdź znaczniki HTML.',
@@ -13824,13 +13770,13 @@ Dopuszczalna długość to $1 {{PLURAL:$1|znak|znaki|znaków}}.',
 	'badfilename' => 'Nazwa pliku została zmieniona na „$1”.',
 	'backend-fail-stream' => 'Nie można odczytać pliku $1.',
 	'backend-fail-backup' => 'Nie można utworzyć kopii zapasowej pliku  $1 .',
-	'backend-fail-notexists' => 'Plik  $1  nie istnieje.',
+	'backend-fail-notexists' => 'Plik $1 nie istnieje.',
 	'backend-fail-hashes' => 'Nie można uzyskać sum kontrolnych do porównania.',
 	'backend-fail-notsame' => 'Plik o podobnej nazwie już istnieje w $1.',
-	'backend-fail-invalidpath' => '$1nie jest poprawną ścieżką zapisu.',
+	'backend-fail-invalidpath' => '$1 nie jest poprawną ścieżką zapisu.',
 	'backend-fail-delete' => 'Nie można usunąć pliku $1.',
 	'backend-fail-alreadyexists' => 'Plik „$1” już istnieje',
-	'backend-fail-store' => 'Nie może zapisać pliku  $1  w  $2 .',
+	'backend-fail-store' => 'Nie może zapisać pliku $1 w $2.',
 	'backend-fail-copy' => 'Nie może skopiować pliku $1 do $2.',
 	'backend-fail-move' => 'Nie można przenieść pliku $1 do $2.',
 	'backend-fail-opentemp' => 'Nie można otworzyć pliku tymczasowego.',
@@ -13838,11 +13784,11 @@ Dopuszczalna długość to $1 {{PLURAL:$1|znak|znaki|znaków}}.',
 	'backend-fail-closetemp' => 'Nie można zamknąć pliku tymczasowego.',
 	'backend-fail-read' => 'Nie można odczytać pliku $1.',
 	'backend-fail-create' => 'Nie można utworzyć pliku $1.',
-	'backend-fail-readonly' => 'Interfejs magazynowania "$1" jest obecnie tylko do odczytu. Powód: "$2"',
-	'backend-fail-synced' => 'Plik "$1" jest w niespójnym stanie w ramach wewnętrznych funkcji magazynowania',
-	'backend-fail-connect' => 'Nie można nawiązać połączenia do wewnętrznych funkcji magazynowania "$1".',
-	'backend-fail-internal' => 'Wystąpił nieznany błąd w wewnętrznych funkcjach magazynowania "$1".',
-	'backend-fail-contenttype' => 'Nie można określić typ zawartości pliku do przechowywania w "$1".',
+	'backend-fail-readonly' => 'Interfejs magazynowania „$1” jest obecnie tylko do odczytu. Powód: „$2”',
+	'backend-fail-synced' => 'Plik „$1” jest w niespójnym stanie w ramach wewnętrznych funkcji magazynowania',
+	'backend-fail-connect' => 'Nie można nawiązać połączenia do wewnętrznych funkcji magazynowania „$1”.',
+	'backend-fail-internal' => 'Wystąpił nieznany błąd w wewnętrznych funkcjach magazynowania „$1”.',
+	'backend-fail-contenttype' => 'Nie można określić typ zawartości pliku do przechowywania w „$1”.',
 	'backend-fail-batchsize' => 'Wewnętrzne funkcje magazynowania otrzymały $1 {{PLURAL:$1|operację|operacje|operacji}} na pliku; limit wynosi $2 {{PLURAL:$2| operacja|operacje|operacji}}.',
 	'brokenredirects' => 'Zerwane przekierowania',
 	'brokenredirectstext' => 'Poniższe przekierowania wskazują na nieistniejące strony.',
@@ -13881,12 +13827,11 @@ Przejdź do [[Special:BlockList|listy zablokowanych adresów IP]], by przejrzeć
 	'blocklogpage' => 'Historia blokad',
 	'blocklog-showlog' => '{{GENDER:$1|Ten użytkownik był|Ta użytkowniczka była}} już wcześniej {{GENDER:$1|blokowany|blokowana}}. Poniżej znajduje się rejestr blokad:',
 	'blocklog-showsuppresslog' => '{{GENDER:$1|Ten użytkownik był|Ta użytkowniczka była}} już wcześniej {{GENDER:$1|blokowany oraz ukrywany|blokowana oraz ukrywana}}. Poniżej znajduje się rejestr ukrywania:',
-	'blocklogentry' => 'zablokował [[$1]], czas blokady: $2 $3',
+	'blocklogentry' => 'zablokował(a) [[$1]], czas blokady: $2 $3',
 	'blocklogtext' => 'Poniżej znajduje się lista blokad założonych i zdjętych z poszczególnych adresów IP.
 Na liście nie znajdą się adresy IP, które zablokowano w sposób automatyczny.
 By przejrzeć listę obecnie aktywnych blokad, przejdź na stronę [[Special:BlockList|zablokowanych adresów i użytkowników]].',
 	'block-log-flags-anononly' => 'tylko anonimowi',
-	'block-log-flags-nocreate' => 'blokada tworzenia konta',
 	'block-log-flags-noautoblock' => 'automatyczne blokowanie wyłączone',
 	'block-log-flags-noemail' => 'e‐mail zablokowany',
 	'block-log-flags-nousertalk' => 'nie może edytować własnej strony dyskusji',
@@ -13902,125 +13847,145 @@ Następne linki w linii są traktowane jako wyjątki – są to nazwy stron, na 
 	'blankpage' => 'Pusta strona',
 	'back' => 'Powrót',
 	'button-createpage' => 'Dodaj stronę',
-];
+	'backlinksubtitle' => '← $1',
+	'brokenredirects-summary' => '',
+	'booksources-summary' => '',
+	'booksources-isbn' => 'ISBN:',
+	'blocklist-summary' => '',
+	'block-log-flags-nocreate' => 'blokada tworzenia konta',
+	'bitrate-bits' => '$1 bps',
+	'bitrate-kilobits' => '$1 kbps',
+	'bitrate-megabits' => '$1 Mbps',
+	'bitrate-gigabits' => '$1 Gbps',
+	'bitrate-terabits' => '$1 Tbps',
+	'bitrate-petabits' => '$1 Pbps',
+	'bitrate-exabits' => '$1 Ebps',
+	'bitrate-zetabits' => '$1 Zbps',
+	'bitrate-yottabits' => '$1 Ybps',
+	'blog-avatar-defaults' => 'Avatar.jpg
+Avatar2.jpg
+Avatar3.jpg
+Avatar4.jpg
+Avatar5.jpg
+Avatar6.jpg',
+);
 
-$messages['pms'] = [
+$messages['pms'] = array(
 	'broken-file-category' => 'Pàgine con colegament pa giust a archivi',
 	'badaccess' => 'Përmess nen giust',
-	'badaccess-group0' => 'A l\'ha pa ij përmess dont a fa dë manca për fé st\'operassion-sì.',
-	'badaccess-groups' => 'Costa funsion-sì a l\'é riservà a j\'utent che a sio almanch ant {{PLURAL:$2|la partìa|un-a dle partìe}}: $1.',
-	'badarticleerror' => 'N\'operassion parèj as peul pa fesse ansima a sta pàgina-sì.',
+	'badaccess-group0' => "A l'ha pa ij përmess dont a fa dë manca për fé st'operassion-sì.",
+	'badaccess-groups' => "Costa funsion-sì a l'é riservà a j'utent che a sio almanch ant {{PLURAL:$2|la partìa|un-a dle partìe}}: $1.",
+	'badarticleerror' => "N'operassion parèj as peul pa fesse ansima a sta pàgina-sì.",
 	'badtitle' => 'Tìtol nen giust',
-	'badtitletext' => 'La pàgina che a l\'ha ciamà a peul pa esse mostrà. A podrìa tratesse ëd na pàgina nen bon-a, veujda, ò pura a podrìa ëdcò esse n\'eror ant n\'anliura antra lenghe diferente ò tra diferente version ëd {{SITENAME}}.',
-	'badretype' => 'Le doe ciav che a l\'ha scrivù a resto diferente antra lor, e a venta che a sio mideme.',
-	'blocked-mailpassword' => 'Për evité dj\'assion nen corete as peul pa dovresse la funsion "Mand-me na ciav neuva" da \'nt n\'adrëssa IP ëd cole blocà.',
+	'badtitletext' => "La pàgina che a l'ha ciamà a peul pa esse mostrà. A podrìa tratesse ëd na pàgina nen bon-a, veujda, ò pura a podrìa ëdcò esse n'eror ant n'anliura antra lenghe diferente ò tra diferente version ëd {{SITENAME}}.",
+	'badretype' => "Le doe ciav che a l'ha scrivù a resto diferente antra lor, e a venta che a sio mideme.",
+	'blocked-mailpassword' => "Për evité dj'assion nen corete as peul pa dovresse la funsion \"Mand-me na ciav neuva\" da 'nt n'adrëssa IP ëd cole blocà.",
 	'bold_sample' => 'Test an grassèt',
 	'bold_tip' => 'Test an grassèt',
-	'blockedtitle' => 'Belavans cost ëstranòm-sì a resta col ëd n\'utent che a l\'é stàit disabilità a fé \'d modìfiche a j\'artìcoj.',
-	'blockedtext' => '\'\'\'Sò stranòm ò pura adrëssa IP a l\'é stàit blocà.\'\'\'
+	'blockedtitle' => "Belavans cost ëstranòm-sì a resta col ëd n'utent che a l'é stàit disabilità a fé 'd modìfiche a j'artìcoj.",
+	'blockedtext' => "'''Sò stranòm ò pura adrëssa IP a l'é stàit blocà.'''
 
-Ël blocagi a l\'é stàit fàit da $1.
-Coma rason a l\'ha butà \'\'$2\'\'.
+Ël blocagi a l'é stàit fàit da \$1.
+Coma rason a l'ha butà ''\$2''.
 
-* Blocà a parte dal: $8
-* Fin al: $6
-* As veul blochesse: $7
+* Blocà a parte dal: \$8
+* Fin al: \$6
+* As veul blochesse: \$7
 
-A peul butesse an contat con $1 ò pura n\'àotr [[{{MediaWiki:Grouppage-sysop}}|aministrator]] për discute ëd sò blocagi.
-Ch\'a ten-a present ch\'a podrà dovré la fonsion "mandeje un messagi ëd pòsta a l\'utent" mach s\'a l\'ha specificà n\'adrëssa ëd pòsta vàlida ant [[Special:Preferences|sò gust]] e se sta fonsion a l\'é nen ëstàita blocà \'cò chila.
-Soa adrëssa IP corenta a l\'é $3, e l\'identificativ dël blocagi a l\'é #$5.
-Për piasì, ch\'a-j buta tut e doj ant soe comunicassion ant sta question-sì.',
-	'blockednoreason' => 'a l\'han pa butà gnun-a rason',
-	'blocked-notice-logextract' => 'S\'utent a l\'é al moment blocà.
-\'Me arferiment, sì-sota a-i é la dariera anotassion da l\'argistr dij blocagi.',
-	'badsig' => 'Soa firma a l\'é nen giusta, che a controla j\'istrussion HTML.',
-	'badsiglength' => 'Sò stranòm a l\'é tròp longh.
-A deuv nen esse pì longh che $1 {{PLURAL:$1|caràter|caràter}}.',
+A peul butesse an contat con \$1 ò pura n'àotr [[{{MediaWiki:Grouppage-sysop}}|aministrator]] për discute ëd sò blocagi.
+Ch'a ten-a present ch'a podrà dovré la fonsion \"mandeje un messagi ëd pòsta a l'utent\" mach s'a l'ha specificà n'adrëssa ëd pòsta vàlida ant [[Special:Preferences|sò gust]] e se sta fonsion a l'é nen ëstàita blocà 'cò chila.
+Soa adrëssa IP corenta a l'é \$3, e l'identificativ dël blocagi a l'é #\$5.
+Për piasì, ch'a-j buta tut e doj ant soe comunicassion ant sta question-sì.",
+	'blockednoreason' => "a l'han pa butà gnun-a rason",
+	'blocked-notice-logextract' => "S'utent a l'é al moment blocà.
+'Me arferiment, sì-sota a-i é la dariera anotassion da l'argistr dij blocagi.",
+	'badsig' => "Soa firma a l'é nen giusta, che a controla j'istrussion HTML.",
+	'badsiglength' => "Sò stranòm a l'é tròp longh.
+A deuv nen esse pì longh che $1 {{PLURAL:$1|caràter|caràter}}.",
 	'boteditletter' => 't',
 	'badfilename' => 'Ël nòm dl\'archivi a l\'é stait cambià an "$1".',
-	'backend-fail-stream' => 'A peul pa sequensialisé l\'archivi $1.',
-	'backend-fail-backup' => 'As peul pa fesse na còpia ëd l\'archivi $1.',
-	'backend-fail-notexists' => 'L\'archivi $1 a esist pa.',
-	'backend-fail-hashes' => 'As peul pa oten-se la s-ciapura dl\'archivi për paragon.',
-	'backend-fail-notsame' => 'N\'archivi nen idéntich a esist già a $1.',
-	'backend-fail-invalidpath' => '$1 a l\'é pa un përcors ëd memorisassion bon.',
-	'backend-fail-delete' => 'As peul pa scanselesse l\'archivi $1.',
+	'backend-fail-stream' => "A peul pa sequensialisé l'archivi $1.",
+	'backend-fail-backup' => "As peul pa fesse na còpia ëd l'archivi $1.",
+	'backend-fail-notexists' => "L'archivi $1 a esist pa.",
+	'backend-fail-hashes' => "As peul pa oten-se la s-ciapura dl'archivi për paragon.",
+	'backend-fail-notsame' => "N'archivi nen idéntich a esist già a $1.",
+	'backend-fail-invalidpath' => "$1 a l'é pa un përcors ëd memorisassion bon.",
+	'backend-fail-delete' => "As peul pa scanselesse l'archivi $1.",
 	'backend-fail-alreadyexists' => 'L\'archivi "$1" a esist già.',
-	'backend-fail-store' => 'As peul pa memorisesse l\'archivi $1 a $2.',
-	'backend-fail-copy' => 'As peul pa copiesse l\'archivi $1 su $2.',
-	'backend-fail-move' => 'As peul pa tramudesse l\'archivi $1 su $2.',
-	'backend-fail-opentemp' => 'As peul pa duvertesse l\'archivi temporani.',
-	'backend-fail-writetemp' => 'As peul pa scrivse sl\'archivi temporani.',
-	'backend-fail-closetemp' => 'As peul pa saresse l\'archivi temporani.',
-	'backend-fail-read' => 'As peul pa les-se l\'archivi $1.',
-	'backend-fail-create' => 'As peul pa creesse l\'archivi $1.',
-	'backend-fail-readonly' => 'Ël dispositiv ëd memòria «$1» a l\'é al moment an sola letura. La rason dàita a l\'era: «$2»',
-	'backend-fail-synced' => 'L\'archivi «$1» a l\'é ant në stat incoerent andrinta ai dispositiv ëd memòria intern',
+	'backend-fail-store' => "As peul pa memorisesse l'archivi $1 a $2.",
+	'backend-fail-copy' => "As peul pa copiesse l'archivi $1 su $2.",
+	'backend-fail-move' => "As peul pa tramudesse l'archivi $1 su $2.",
+	'backend-fail-opentemp' => "As peul pa duvertesse l'archivi temporani.",
+	'backend-fail-writetemp' => "As peul pa scrivse sl'archivi temporani.",
+	'backend-fail-closetemp' => "As peul pa saresse l'archivi temporani.",
+	'backend-fail-read' => "As peul pa les-se l'archivi $1.",
+	'backend-fail-create' => "As peul pa creesse l'archivi $1.",
+	'backend-fail-readonly' => "Ël dispositiv ëd memòria «$1» a l'é al moment an sola letura. La rason dàita a l'era: «$2»",
+	'backend-fail-synced' => "L'archivi «$1» a l'é ant në stat incoerent andrinta ai dispositiv ëd memòria intern",
 	'backend-fail-connect' => 'Impossìbil coleghesse al dispositiv ëd memòria «$1».',
-	'backend-fail-internal' => 'N\'eror pa conossù a l\'é rivaje ant ël dispositiv ëd memòria «$1».',
-	'backend-fail-contenttype' => 'As peul pa determinesse la sòrt ëd contnù dl\'archivi da memorisé a «$1».',
-	'backend-fail-batchsize' => 'Ël dispositiv ëd memòria a l\'ha dàit un total ëd $1 {{PLURAL:$1|operassion|operassion}} d\'archivi; ël lìmit a l\'é $2 {{PLURAL:$1|operassion|operassion}}.',
+	'backend-fail-internal' => "N'eror pa conossù a l'é rivaje ant ël dispositiv ëd memòria «$1».",
+	'backend-fail-contenttype' => "As peul pa determinesse la sòrt ëd contnù dl'archivi da memorisé a «$1».",
+	'backend-fail-batchsize' => "Ël dispositiv ëd memòria a l'ha dàit un total ëd $1 {{PLURAL:$1|operassion|operassion}} d'archivi; ël lìmit a l'é $2 {{PLURAL:$1|operassion|operassion}}.",
 	'brokenredirects' => 'Ridiression nen giuste',
-	'brokenredirectstext' => 'Coste ridiression-sì a men-o a d\'artìcoj ch\'a-i son pa:',
+	'brokenredirectstext' => "Coste ridiression-sì a men-o a d'artìcoj ch'a-i son pa:",
 	'brokenredirects-edit' => 'modifiché',
 	'brokenredirects-delete' => 'scancelé',
 	'booksources' => 'Andoa trové dij lìber',
 	'booksources-search-legend' => 'Sërca dle sorgiss ëd lìber',
 	'booksources-go' => 'Va',
-	'booksources-text' => 'Ambelessì sota a-i é na lista d\'àotri sit che a vendo lìber neuv e dë sconda man, e che a peulo ëdcò smon-e dj\'anformassion rësgoard a ij test che a l\'é antramentr che al sërca:',
-	'booksources-invalid-isbn' => 'L\'ISBN dàit a smija che a sia pa vàlid; contròla për eror an copiand da la sorziss original.',
+	'booksources-text' => "Ambelessì sota a-i é na lista d'àotri sit che a vendo lìber neuv e dë sconda man, e che a peulo ëdcò smon-e dj'anformassion rësgoard a ij test che a l'é antramentr che al sërca:",
+	'booksources-invalid-isbn' => "L'ISBN dàit a smija che a sia pa vàlid; contròla për eror an copiand da la sorziss original.",
 	'blanknamespace' => '(Prinsipal)',
-	'block' => 'Bloché l\'utent',
-	'blockip' => 'Bloché l\'utent',
-	'blockip-title' => 'Bloché l\'utent',
-	'blockip-legend' => 'Bloché l\'utent',
-	'blockiptext' => 'Che a deuvra ël mòdulo ëd domanda \'d blocagi ambelessì sota për bloché l\'acess con drit dë scritura da chèich adrëssa IP o stranòm.<br />
+	'block' => "Bloché l'utent",
+	'blockip' => "Bloché l'utent",
+	'blockip-title' => "Bloché l'utent",
+	'blockip-legend' => "Bloché l'utent",
+	'blockiptext' => "Che a deuvra ël mòdulo ëd domanda 'd blocagi ambelessì sota për bloché l'acess con drit dë scritura da chèich adrëssa IP o stranòm.<br />
 Ës blocagi-sì as dev dovresse MACH për evité dij comportament vandàlich, ën strèita osservansa ëd tùit ij prinsipi dle [[{{MediaWiki:Policy-url}}|régole ëd {{SITENAME}}]].<br />
-Ël blocagi a peul ën gnun-a manera esse dovrà për dle question d\'ideologìa.
+Ël blocagi a peul ën gnun-a manera esse dovrà për dle question d'ideologìa.
 
-Che a scriva codì che st\'adrëssa IP o së stranòm a dev second chiel esse blocà (pr\'esempi, che a buta ij tìtoj ëd pàgine che a l\'abio già patì dj\'at vandàlich da cost\'adrëssa IP o së stranòm).',
-	'badipaddress' => 'L\'adrëssa IP che a l\'ha dane a l\'é nen giusta.',
+Che a scriva codì che st'adrëssa IP o së stranòm a dev second chiel esse blocà (pr'esempi, che a buta ij tìtoj ëd pàgine che a l'abio già patì dj'at vandàlich da cost'adrëssa IP o së stranòm).",
+	'badipaddress' => "L'adrëssa IP che a l'ha dane a l'é nen giusta.",
 	'blockipsuccesssub' => 'Blocagi fàit',
-	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] a l\'é stàit blocà.<br />
-Ch\'a consulta la [[Special:BlockList|lista dj\'IP blocà]] për rivëdde ij blocagi.',
+	'blockipsuccesstext' => "[[Special:Contributions/$1|$1]] a l'é stàit blocà.<br />
+Ch'a consulta la [[Special:BlockList|lista dj'IP blocà]] për rivëdde ij blocagi.",
 	'blocklist' => 'Utent blocà',
 	'blocklist-userblocks' => 'Stërmé ij blocagi dij cont',
 	'blocklist-tempblocks' => 'Stërmé ij blocagi a temp',
-	'blocklist-addressblocks' => 'Stërmé ij blocagi d\'adrësse IP ùniche',
-	'blocklist-rangeblocks' => 'Stërmé ij blocagi d\'antërval',
+	'blocklist-addressblocks' => "Stërmé ij blocagi d'adrësse IP ùniche",
+	'blocklist-rangeblocks' => "Stërmé ij blocagi d'antërval",
 	'blocklist-timestamp' => 'Stampin data e ora',
 	'blocklist-target' => 'Bërsaj',
 	'blocklist-expiry' => 'Scadensa',
-	'blocklist-by' => 'Aministrator ch\'a l\'ha blocà',
+	'blocklist-by' => "Aministrator ch'a l'ha blocà",
 	'blocklist-params' => 'Paràmeter ëd blocage',
 	'blocklist-reason' => 'Rason',
 	'blocklist-nousertalk' => 'a peul nen modifiché soa pàgina ëd discussion',
 	'blocklink' => 'bloché',
 	'blocklogpage' => 'Registr dij blocagi',
-	'blocklog-showlog' => 'St\'utent-sì a l\'é già stàit blocà ant ël passà. Ël registr dij blocagi a l\'é disponìbil sì-sota \'me arferiment:',
-	'blocklog-showsuppresslog' => 'St\'utent-sì a l\'é già stàit blocà e stërmà. Ël registr ëd j\'eliminassion a l\'é smonù sì-sota për arferiment:',
-	'blocklogentry' => '«[[$1]]» a l\'é stait blocà për $2 $3',
-	'blocklogtext' => 'Sossì a l\'é ël registr dij blocagi e dësblocagi dj\'Utent. J\'adrësse che
-a son ëstàite blocà n\'automàtich ambelessì a së s-ciàiro nen.
-Che a varda la [[Special:BlockList|lista dj\'adrësse IP blocà]] për vëdde
-coj che sio ij blocagi ativ al dì d\'ancheuj.',
+	'blocklog-showlog' => "St'utent-sì a l'é già stàit blocà ant ël passà. Ël registr dij blocagi a l'é disponìbil sì-sota 'me arferiment:",
+	'blocklog-showsuppresslog' => "St'utent-sì a l'é già stàit blocà e stërmà. Ël registr ëd j'eliminassion a l'é smonù sì-sota për arferiment:",
+	'blocklogentry' => "«[[$1]]» a l'é stait blocà për $2 $3",
+	'blocklogtext' => "Sossì a l'é ël registr dij blocagi e dësblocagi dj'Utent. J'adrësse che
+a son ëstàite blocà n'automàtich ambelessì a së s-ciàiro nen.
+Che a varda la [[Special:BlockList|lista dj'adrësse IP blocà]] për vëdde
+coj che sio ij blocagi ativ al dì d'ancheuj.",
 	'block-log-flags-anononly' => 'mach utent anònim',
-	'block-log-flags-nocreate' => 'creassion ëd cont neuv blocà',
-	'block-log-flags-noautoblock' => 'blocagi n\'autòmatich dësmòrt',
+	'block-log-flags-noautoblock' => "blocagi n'autòmatich dësmòrt",
 	'block-log-flags-noemail' => 'pòsta eletrònica blocà',
 	'block-log-flags-nousertalk' => 'a peul nen modifiché soa pàgina ëd discussion',
 	'block-log-flags-angry-autoblock' => 'blocagi automàtich avansà ativà',
 	'block-log-flags-hiddenname' => 'stranòm stërmà',
 	'blockme' => 'Blòch-me',
 	'bydate' => 'për data',
-	'bad_image_list' => 'La forma a l\'é costa-sì:
+	'bad_image_list' => "La forma a l'é costa-sì:
 
-As ten-o bon-e mach le liste pontà (cole faite ëd righe ch\'as ancamin-o për *). La prima anliura ëd minca riga a l\'ha da mné a n\'archivi multimojen nen bon.
-J\'anliure ch\'a-i ven-o dapress, ant sla midema riga, as conto për ecession (visadì, për pàgine andova st\'archivi as peul butesse).',
+As ten-o bon-e mach le liste pontà (cole faite ëd righe ch'as ancamin-o për *). La prima anliura ëd minca riga a l'ha da mné a n'archivi multimojen nen bon.
+J'anliure ch'a-i ven-o dapress, ant sla midema riga, as conto për ecession (visadì, për pàgine andova st'archivi as peul butesse).",
 	'blankpage' => 'Pàgina bianca',
-];
+);
 
-$messages['pnb'] = [
+$messages['pnb'] = array(
 	'broken-file-category' => 'ٹٹے ہوۓ جوڑاں آلے صفحے',
 	'badaccess' => 'اجازت دے وچ غلطی اے',
 	'badaccess-group0' => 'تھاونوں ایس کم دی اجازت نیں جیہڑا تسیں آکھیا اے۔',
@@ -14034,10 +13999,10 @@ $messages['pnb'] = [
 	'bold_sample' => 'موٹی لکھائی',
 	'bold_tip' => 'موٹی لکھائی',
 	'blockedtitle' => 'ورتن آلے نوں روکیا ہویا اے',
-	'blockedtext' => 'تواڈا ورتن والا ناں یا فیر آئی پی ایڈریس روک دتا گیا اے۔\'\'\'
+	'blockedtext' => "تواڈا ورتن والا ناں یا فیر آئی پی ایڈریس روک دتا گیا اے۔'''
 
 توانوں $1 نے روکیا اے۔<br />
-ایدی وجہ \'\'$2\'\' اے۔
+ایدی وجہ ''$2'' اے۔
 
 * رکوائی دی پہل:$8
 * رکوائی دا انت:$6
@@ -14046,7 +14011,7 @@ $messages['pnb'] = [
 تسی $1 نال مل ملسکدے او یا اک ہور [[{{MediaWiki:Grouppage-sysop}}|ایڈمنسٹریٹر]] نال روک دے بارے چ گل بات کر سکدے او۔<br />
 تسی اس ورتن آلے نوں ای میل نئیں کر سکدے جدوں تک توانوں [[Special:Preferences|account preferences]] کوئی ای میل ایڈریس نا دتا جاۓ تے توانوں اس دے استعمال توں روکیا نا گیا ہوۓ۔
 تواڈا موجودہ آئی پی پتہ $3 اے تے روکی گئی آئی ڈی #$5 اے۔
-مہربانی کر کے کوئی وی سوال جواب کرن آسطے اتے دتیاں گئیاں تفصیلات ضرور دیو۔',
+مہربانی کر کے کوئی وی سوال جواب کرن آسطے اتے دتیاں گئیاں تفصیلات ضرور دیو۔",
 	'blockednoreason' => 'کوئی وجہ نئیں دسی گئی',
 	'blocked-notice-logextract' => 'اے ورتن آلے تے روک اے۔
 روکن دی وجہ اے دسی گئی اے:',
@@ -14122,7 +14087,6 @@ $messages['pnb'] = [
 
 [[Special:BlockList|IP block lis]] ویکھو ہن دے روکے گۓ یا بند کیتے پتیاں دی لسٹ لئی۔',
 	'block-log-flags-anononly' => 'گم نام ورتن آلا',
-	'block-log-flags-nocreate' => 'کھاتا کھولنے تے پابندی اے',
 	'block-log-flags-noautoblock' => 'اپنے آپ روک نکارہ',
 	'block-log-flags-noemail' => 'ای میل روکی گئی اے',
 	'block-log-flags-nousertalk' => 'اپنا گل بات والا صفہ آپ تبدیل نئیں کرسکدا۔',
@@ -14134,34 +14098,34 @@ $messages['pnb'] = [
 
 صرف لسٹ آلیاں چیزاں (او لائناں جیڑیاں * توں شروع ہوندیاں نے) تے فور کیتا جاندا اے۔ لائن تے پہلا جوڑ لازمی طور تے غلط فائل نال جڑدا اے۔ اسے لائن تے کوئی بعد چ آنے آلا جوڑ خاص سمجھیا جاۓ گا یعنی او صفحے جتھے فائل ان لائن ہو سکدی اے۔',
 	'blankpage' => 'خالی صفہ',
-];
+);
 
-$messages['pnt'] = [
+$messages['pnt'] = array(
 	'badaccess' => 'Σφάλμαν άδειας',
-	'badarticleerror' => 'Αβούτη η ενέργειαν \'κ επορεί να ίνεται σ\'αβούτεν τη σελίδαν.',
+	'badarticleerror' => "Αβούτη η ενέργειαν 'κ επορεί να ίνεται σ'αβούτεν τη σελίδαν.",
 	'badtitle' => 'Άχρηστον τίτλος',
-	'badtitletext' => 'Το ψαλαφεμένον ο τίτλος τη σελίδας εν άκυρον, γιά εύκαιρον γιά τσακωμένον διαγλωσσικόν σύνδεσμος.
-Τερέστεν αν έχ\' έναν γιά πολλά γράμματα που \'κ ίνεται να κουλανεύκουνταν απές σε τίτλον.',
-	'badretype' => 'Τα σημάδε ντ\' εγράψετεν \'κ ταιριάζνε.',
+	'badtitletext' => "Το ψαλαφεμένον ο τίτλος τη σελίδας εν άκυρον, γιά εύκαιρον γιά τσακωμένον διαγλωσσικόν σύνδεσμος.
+Τερέστεν αν έχ' έναν γιά πολλά γράμματα που 'κ ίνεται να κουλανεύκουνταν απές σε τίτλον.",
+	'badretype' => "Τα σημάδε ντ' εγράψετεν 'κ ταιριάζνε.",
 	'bold_sample' => 'Χοντρόν κείμενον',
 	'bold_tip' => 'Χοντρόν κείμενον',
 	'blockedtitle' => 'Ο χρήστες εν ασπαλιζμένος',
-	'blockedtext' => '\'\'\'Τ\' όνομαν ή το IP εσούν εκλείστεν.\'\'\'
+	'blockedtext' => "'''Τ' όνομαν ή το IP εσούν εκλείστεν.'''
 
-Τ\' ασπάλιγμαν εποίκενατο ο χρήστες $1.
-Έδωκεν την αιτίαν \'\'$2\'\'.
+Τ' ασπάλιγμαν εποίκενατο ο χρήστες $1.
+Έδωκεν την αιτίαν ''$2''.
 
 * Ασπάλιγμαν αχπάσκεται: $8
 * Ασπάλιγμαν τελείται: $6
 * Θα κλείσκεται ο χρήστες: $7
 
-Για τ\' ασπάλιγμαν επορείτε να συντισένετε με τον $1 ή με τ\' αλλτς τοι [[{{MediaWiki:Grouppage-sysop}}|νοματέοις]].
-Για να γράφετε ελεκτρονικόν μένεμαν (\'e-mail this user\') βαλέστεν το τεσέτερον το σωστόν το e-mail address σα [[Special:Preferences|προτιμήσαι τη λογαρίας εσούν]]. Επεκεί \'κ θα είστουν ασπαλιγμένος για γράψιμον τη μενεματί.
-Τ\' ατοριζνόν το IP εσούν εν $3, και το ID τ\' ασπαλιγματί εν #$5.
-Ποδεδίζουμε σας να γράφετε τα και τα δυο σο μένεμανεσουν απές.',
-	'blockednoreason' => '\'Κ εγράφτεν αιτίαν',
-	'badsiglength' => 'Το σημάδινεσουν εν πολλά τρανόν.
-Πρέπ\' να εχ\' λιγότερα ασά $1 {{PLURAL:$1|γράμμαν|γράμματα}}.',
+Για τ' ασπάλιγμαν επορείτε να συντισένετε με τον $1 ή με τ' αλλτς τοι [[{{MediaWiki:Grouppage-sysop}}|νοματέοις]].
+Για να γράφετε ελεκτρονικόν μένεμαν ('e-mail this user') βαλέστεν το τεσέτερον το σωστόν το e-mail address σα [[Special:Preferences|προτιμήσαι τη λογαρίας εσούν]]. Επεκεί 'κ θα είστουν ασπαλιγμένος για γράψιμον τη μενεματί.
+Τ' ατοριζνόν το IP εσούν εν $3, και το ID τ' ασπαλιγματί εν #$5.
+Ποδεδίζουμε σας να γράφετε τα και τα δυο σο μένεμανεσουν απές.",
+	'blockednoreason' => "'Κ εγράφτεν αιτίαν",
+	'badsiglength' => "Το σημάδινεσουν εν πολλά τρανόν.
+Πρέπ' να εχ' λιγότερα ασά $1 {{PLURAL:$1|γράμμαν|γράμματα}}.",
 	'boteditletter' => 'b',
 	'badfilename' => 'Τόνεμαν ταρχείου ελλάγεν κιεγέντον "$1".',
 	'brokenredirects' => 'Τσακωμένα διπλά συνδέσμ',
@@ -14174,21 +14138,20 @@ $messages['pnt'] = [
 	'blockip' => 'Ασπάλιγμαν τη χρήστε',
 	'blockip-legend' => 'Ασπάλισον το χρήστ',
 	'badipaddress' => 'Άχρηστον IP',
-	'blockipsuccesssub' => 'Τ\' ασπάλιγμαν εγέντον',
+	'blockipsuccesssub' => "Τ' ασπάλιγμαν εγέντον",
 	'blocklink' => 'Ασπάλιγμαν',
 	'blocklogpage' => 'Αρχείον ασπαλιγματίων',
 	'blocklogentry' => 'εσπάλισεν [[$1]] για $2 $3',
-	'block-log-flags-nocreate' => 'ποίσιμον λογαρίας \'κ ίνεται',
 	'blockme' => 'Ασπάλισον με',
 	'bydate' => 'ημερομηνίας',
-	'bad_image_list' => 'Η σύνταξην εν αέτς:
+	'bad_image_list' => "Η σύνταξην εν αέτς:
 
-Τα αντικείμενα τη λίστας (τα γραμμάς ντ\' αχπάσκουνταν με *) και μόνον τερούμε. Ο πρώτον ο σύνδεσμον σε μιαν γραμμήν πρέπ\' να δεκνίζ\' σε κακόν αρχείον.
-Ήντιαν συνδέσμ\' ντ\' έρταν ασην ίδιαν γραμμήν οπίς θεωρούματα εξαιρέσεις, δηλαδή σελίδας όπου επορούμ\' να συναντούμε την εικόναν σε σύνδεσην.',
+Τα αντικείμενα τη λίστας (τα γραμμάς ντ' αχπάσκουνταν με *) και μόνον τερούμε. Ο πρώτον ο σύνδεσμον σε μιαν γραμμήν πρέπ' να δεκνίζ' σε κακόν αρχείον.
+Ήντιαν συνδέσμ' ντ' έρταν ασην ίδιαν γραμμήν οπίς θεωρούματα εξαιρέσεις, δηλαδή σελίδας όπου επορούμ' να συναντούμε την εικόναν σε σύνδεσην.",
 	'blankpage' => 'Κενόν σελίδα',
-];
+);
 
-$messages['prg'] = [
+$messages['prg'] = array(
 	'badaccess' => 'Preiwērpsenes blānda',
 	'badaccess-group0' => 'Ni assei enwarīntan kāi izpilninlai šin dīlasenin.',
 	'badaccess-groups' => 'Šisses dīlasenes izpilninsnā ast arāikintan prei tērpautajans en {{PLURAL:$2|gruppei|ainassei iz gruppins}}: $1.',
@@ -14214,7 +14177,7 @@ Tū ni mazzi tērpautun "tenginnais e-mailin tērpautaju" mazīngiskwan, ik tikr
 Twajā bigantī IP adressi ast $3 be blōkisenes ID nummeri ast #$5.
 Madli ebimmais wissans šins malkans en wisēimans prasīsenins ezze blōkisenin.',
 	'blockednoreason' => 'ni padāi di tikslin',
-	'badsig' => 'Nitikrōmiskas papeisāsenis, izbandais HTML\'as zentlīntajans.',
+	'badsig' => "Nitikrōmiskas papeisāsenis, izbandais HTML'as zentlīntajans.",
 	'badsiglength' => 'Twajs papeisāsenis ast per ilgan.
 Preiwērptan ilgan ast $1 {{PLURAL:$1|zentlin|zentlai}}.',
 	'boteditletter' => 'b',
@@ -14247,7 +14210,6 @@ Jaīs en [[Special:BlockList|listin stēisan IP adressin]] kai widālai blōkise
 Autōmatiskai blōkitas IP adressis ni ast waidīntan.
 Jaīs en [[Special:BlockList|IP blōkisenin listin]] ki widālai wissans tēnti aktīwans blōkisenins.',
 	'block-log-flags-anononly' => 'tēr anōnimai tērpautajai',
-	'block-log-flags-nocreate' => 'rekkenas teiksnā izklaūtan',
 	'block-log-flags-noautoblock' => 'autōmatiska blōkisna izklaūtan',
 	'block-log-flags-noemail' => 'e-mail blōkitan',
 	'block-log-flags-nousertalk' => 'ni mazzi redigītun swajjan diskusiōnis pāusan',
@@ -14261,9 +14223,9 @@ Tēr listis elamēntai (rīndas pagaūnintes si sen *) ast endirītan.
 Pirmas autengīnsenis en rīndai turri būtwei autengīnsenis prei drēuditan zūrbrukin.
 Ripīntei autengīnsenei en rīndai ast laikātan per izīmsenins, s.z. pāusans en kawīdamans drēudits zūrbrukis mazzi būtwei tērpautan.',
 	'blankpage' => 'Pāustan pāusan',
-];
+);
 
-$messages['ps'] = [
+$messages['ps'] = array(
 	'broken-file-category' => 'د دوتنو د ماتو تړنو مخونه',
 	'badaccess' => 'د لاسرسۍ تېروتنه',
 	'badaccess-group0' => 'تاسې د غوښتل شوې کړنې د ترسره کولو اجازه نه لرۍ.',
@@ -14277,17 +14239,17 @@ $messages['ps'] = [
 	'bold_sample' => 'زغرد متن',
 	'bold_tip' => 'زغرد متن',
 	'blockedtitle' => 'پر کارن بنديز لګېدلی',
-	'blockedtext' => '\'\'\'ستاسې د کارن-نوم يا آی پي پتې مخنيوی شوی.\'\'\'
+	'blockedtext' => "'''ستاسې د کارن-نوم يا آی پي پتې مخنيوی شوی.'''
 
-همدا بنديز د $1 له خوا پر تاسې لږېدلی. او د همدې کړنې سبب \'\'$2\'\' دی.
+همدا بنديز د $1 له خوا پر تاسې لږېدلی. او د همدې کړنې سبب ''$2'' دی.
 
 * د بنديز د پېل نېټه: $8
 * د بنديز د پای نېټه: $6
 * بنديزونه دي پر: $7
 
 تاسې کولای شی چې د $1 او يا هم د يو بل [[{{MediaWiki:Grouppage-sysop}}|پازوال]] سره اړيکې ټينګې کړی او د بنديز ستونزې مو هوارې کړی.
-تاسې نه شی کولای چې د \'کارن ته برېښلک لېږل\' کړنې نه ګټه پورته کړی تر څو چې تاسې د خپل ګڼون په [[Special:Preferences|غوره توبونو]] کې يوه کره برېښليک پته نه وي ځانګړې کړې او تر دې بريده چې پر تاسې د هغې د کارولو بنديز نه وي لګېدلی.
-ستاسې د دم مهال آی پي پته $3 ده، او ستاسې د بنديز پېژند #$5 دی. مهرباني وکړۍ د خپلې يادونې پر مهال د دغو دوو څخه د يوه او يا هم د دواړو ورکول مه هېروۍ.',
+تاسې نه شی کولای چې د 'کارن ته برېښلک لېږل' کړنې نه ګټه پورته کړی تر څو چې تاسې د خپل ګڼون په [[Special:Preferences|غوره توبونو]] کې يوه کره برېښليک پته نه وي ځانګړې کړې او تر دې بريده چې پر تاسې د هغې د کارولو بنديز نه وي لګېدلی.
+ستاسې د دم مهال آی پي پته $3 ده، او ستاسې د بنديز پېژند #$5 دی. مهرباني وکړۍ د خپلې يادونې پر مهال د دغو دوو څخه د يوه او يا هم د دواړو ورکول مه هېروۍ.",
 	'blockednoreason' => 'هېڅ سبب نه دی ورکړ شوی',
 	'blocked-notice-logextract' => 'دم مهال په دې کارن بنديز لګېدلی.
 دلته لاندې د بنديز تازه يادښت د سرچينې په توګه ورکړ شوی:',
@@ -14325,7 +14287,6 @@ $messages['ps'] = [
 	'blocklogpage' => 'د مخنيوي يادښت',
 	'blocklogentry' => 'په [[$1]] بنديز لګېدلی چې د بنديز د پای وخت يې $2 $3 دی',
 	'block-log-flags-anononly' => 'يواځې ورکنومي کارنان',
-	'block-log-flags-nocreate' => 'د ګڼون جوړول ناچارن شوی',
 	'block-log-flags-noemail' => 'ددې برېښليک مخه نيول شوی',
 	'block-log-flags-hiddenname' => 'پټ کارن-نوم',
 	'blockme' => 'پر ما بنديز لګول',
@@ -14336,154 +14297,36 @@ $messages['ps'] = [
 بايد چې په يوه کرښه کې لومړنۍ تړنه د يوې خرابې دوتنې سره وي.
 په يوې کرښې باندې هر ډول وروستۍ تړنې به د استثنا په توګه وګڼلای شي، د ساري په توګه هغه مخونو کې چې يوه دوتنه پر کرښه پرته وي.',
 	'blankpage' => 'تش مخ',
-];
+);
 
-$messages['pt'] = [
-	'broken-file-category' => 'Páginas com links quebrados para ficheiros',
-	'badaccess' => 'Erro de permissão',
-	'badaccess-group0' => 'Não está autorizado a executar a operação solicitada.',
-	'badaccess-groups' => 'A operação solicitada está limitada a utilizadores {{PLURAL:$2|do grupo|de um dos seguintes grupos}}: $1.',
-	'badarticleerror' => 'Esta operação não pode ser realizada nesta página.',
-	'badtitle' => 'Título inválido',
-	'badtitletext' => 'O título de página solicitado era inválido, vazio, ou um link interlínguas ou interwikis incorrecto.
-Talvez contenha um ou mais caracteres que não podem ser usados em títulos.',
-	'badretype' => 'As palavras-chave que introduziu não são iguais.',
-	'blocked-mailpassword' => 'O seu endereço IP foi bloqueado e, portanto, não será possível utilizar a função de recuperação da palavra-chave, para prevenir o uso abusivo.',
-	'bold_sample' => 'Texto a negrito',
-	'bold_tip' => 'Texto a negrito',
-	'blockedtitle' => 'O utilizador está bloqueado',
-	'blockedtext' => 'O seu nome de utilizador ou endereço IP foram bloqueados
-
-O bloqueio foi realizado por $1.
-O motivo apresentado foi \'\'$2\'\'.
-
-* Início do bloqueio: $8
-* Expiração do bloqueio: $6
-* Destinatário do bloqueio: $7
-
-Pode contactar $1 ou outro [[{{MediaWiki:Grouppage-sysop}}|administrador]] para discutir o bloqueio.
-
-Note que para utilizar a funcionalidade "Contactar utilizador" precisa de ter um endereço de correio electrónico válido nas suas [[Special:Preferences|preferências de utilizador]] e de não lhe ter sido bloqueado o uso desta funcionalidade.
-
-O seu endereço IP neste momento é $3 e a identificação (ID) do bloqueio é #$5.
-Inclua todos os detalhes acima em quaisquer contactos relacionados com este bloqueio, por favor.',
-	'blockednoreason' => 'sem motivo especificado',
-	'blocked-notice-logextract' => 'Este utilizador encontra-se actualmente bloqueado.
-Para referência, o último registo de bloqueio é apresentado abaixo:',
-	'badsig' => 'Assinatura inválida; verifique o código HTML utilizado.',
-	'badsiglength' => 'A sua assinatura é demasiado longa.
-Não deverá conter mais de $1 {{PLURAL:$1|carácter|caracteres}}.',
-	'boteditletter' => 'b',
-	'badfilename' => 'O nome do ficheiro foi alterado para "$1".',
-	'backend-fail-stream' => 'Não foi possível transmitir o ficheiro $1.',
-	'backend-fail-backup' => 'Não foi possível fazer backup do ficheiro $1.',
-	'backend-fail-notexists' => 'O ficheiro $1 não existe.',
-	'backend-fail-hashes' => 'Não foi possível obter os hashes do ficheiro para comparação.',
-	'backend-fail-notsame' => 'Já existe um ficheiro não idêntico em $1 .',
-	'backend-fail-invalidpath' => '$1 não é um caminho de armazenamento válido.',
-	'backend-fail-delete' => 'Não foi possível excluir o ficheiro $1.',
-	'backend-fail-alreadyexists' => 'O ficheiro $1 já existe.',
-	'backend-fail-store' => 'Não foi possível armazenar o arquivo $1 em $2.',
-	'backend-fail-copy' => 'Não foi possível copiar o ficheiro $1 para $2.',
-	'backend-fail-move' => 'Não é possível mover o ficheiro $1 para $2.',
-	'backend-fail-opentemp' => 'Não foi possível abrir o arquivo temporário.',
-	'backend-fail-writetemp' => 'Não foi possível gravar para arquivo temporário.',
-	'backend-fail-closetemp' => 'Não foi possível fechar o arquivo temporário.',
-	'backend-fail-read' => 'Não foi possível ler o arquivo $1.',
-	'backend-fail-create' => 'Não foi possível criar o arquivo $1.',
-	'brokenredirects' => 'Redireccionamentos quebrados',
-	'brokenredirectstext' => 'Os seguintes redireccionamentos ligam para páginas inexistentes:',
-	'brokenredirects-edit' => 'editar',
-	'brokenredirects-delete' => 'eliminar',
-	'booksources' => 'Fontes de livros',
-	'booksources-search-legend' => 'Procurar fontes de livros',
-	'booksources-go' => 'Prosseguir',
-	'booksources-text' => 'É apresentada abaixo uma lista de links para outros sites na internet que vendem livros novos e usados e talvez possuam informações adicionais sobre os livros que procura:',
-	'booksources-invalid-isbn' => 'O número ISBN fornecido não parece ser válido; verifique a existência de erros ao copiar da fonte original.',
-	'blanknamespace' => '(Principal)',
-	'block' => 'Bloquear utilizador',
-	'blockip' => 'Bloquear utilizador',
-	'blockip-title' => 'Bloquear utilizador',
-	'blockip-legend' => 'Bloquear utilizador',
-	'blockiptext' => 'Utilize o formulário abaixo para bloquear o acesso de escrita a um endereço IP específico ou a um nome de utilizador.
-Isto só deve ser feito para prevenir vandalismo e de acordo com a [[{{MediaWiki:Policy-url}}|política]]. Indique a seguir um motivo de bloqueio específico (por exemplo, indicando as páginas que foram alvo de vandalismo).',
-	'badipaddress' => 'Endereço IP inválido',
-	'blockipsuccesssub' => 'Bloqueio bem sucedido',
-	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] foi bloqueado.<br />
-Consulte a [[Special:BlockList|lista de IPs bloqueados]] para rever os bloqueios.',
-	'blocklist' => 'Utilizadores bloqueados',
-	'blocklist-userblocks' => 'Esconder bloqueios de contas',
-	'blocklist-tempblocks' => 'Esconder bloqueios temporários',
-	'blocklist-addressblocks' => 'Esconder bloqueios de IP único',
-	'blocklist-rangeblocks' => 'Ocultar range blocks',
-	'blocklist-timestamp' => 'Data e hora',
-	'blocklist-target' => 'Destinatário',
-	'blocklist-expiry' => 'Duração',
-	'blocklist-by' => 'Administrador que realizou o bloqueio',
-	'blocklist-params' => 'Parâmetros do bloqueio',
-	'blocklist-reason' => 'Motivo',
-	'blocklist-nousertalk' => 'impedido de editar a própria página de discussão',
-	'blocklink' => 'bloquear',
-	'blocklogpage' => 'Registo de bloqueio',
-	'blocklog-showlog' => 'Este utilizador foi já bloqueado anteriormente.
-O registo de bloqueios é fornecido abaixo para referência:',
-	'blocklog-showsuppresslog' => 'Este utilizador foi bloqueado e ocultado anteriomente.
-O registo de supressão é fornecido abaixo para referência:',
-	'blocklogentry' => 'bloqueou "[[$1]]" $3. O bloqueio expira em $2.',
-	'blocklogtext' => 'Este é um registo de acções de bloqueio e desbloqueio.
-Endereços IP sujeitos a bloqueio automático não são listados.
-Consulte a [[Special:BlockList|lista de IPs bloqueados]] para obter a lista de bloqueios e banimentos actualmente válidos.',
-	'block-log-flags-anononly' => 'apenas utilizadores anónimos',
-	'block-log-flags-nocreate' => 'criação de contas impossibilitada',
-	'block-log-flags-noautoblock' => 'bloqueio automático desactivado',
-	'block-log-flags-noemail' => 'correio electrónico bloqueado',
-	'block-log-flags-nousertalk' => 'impossibilitado de editar a própria página de discussão',
-	'block-log-flags-angry-autoblock' => 'activado o bloqueio automático melhorado',
-	'block-log-flags-hiddenname' => 'nome de utilizador ocultado',
-	'blockme' => 'Bloquear-me',
-	'bydate' => 'por data',
-	'bad_image_list' => 'O formato é o seguinte:
-
-Só são reconhecidos elementos na forma de lista (linhas começadas por *).
-O primeiro link em cada linha deve apontar para o ficheiro que se pretende bloquear.
-Quaisquer outros links nessa mesma linha são considerados excepções (ou seja, páginas de onde se pode aceder ao ficheiro).',
-	'blankpage' => 'Página em branco',
-	'blog-avatar-defaults' => 'Avatar.jpg
-Avatar2.jpg
-Avatar3.jpg
-Avatar4.jpg
-Avatar5.jpg
-Avatar6.jpg',
-];
-
-$messages['pt-br'] = [
+$messages['pt'] = array(
 	'broken-file-category' => 'Páginas com links quebrados para arquivos',
 	'badaccess' => 'Erro de permissão',
 	'badaccess-group0' => 'Você não está autorizado a executar a ação requisitada.',
 	'badaccess-groups' => 'A ação que você tentou executar está limitada a usuários {{PLURAL:$2|do grupo|de um dos seguintes grupos}}: $1.',
-	'badarticleerror' => 'Esta ação não pode ser realizada nesta página.',
+	'badarticleerror' => 'Esta ação não pode ser executada nesta página. Nesta página pode ter sido excluída desde o envio do seu pedido.',
 	'badtitle' => 'Título inválido',
 	'badtitletext' => 'O título de página solicitado era inválido, vazio, ou um link interlínguas ou interwikis incorreto.
 Talvez contenha um ou mais caracteres que não podem ser usados em títulos.',
 	'badretype' => 'As senhas que você digitou não são iguais.',
-	'blocked-mailpassword' => 'O seu endereço de IP foi bloqueado de editar e, portanto, não será possível utilizar o lembrete de senha (para serem evitados envios abusivos a outras pessoas).',
+	'blocked-mailpassword' => 'O seu endereço de IP foi bloqueado para edições e, portanto, não será possível utilizar o lembrete de senha (para serem evitados envios abusivos a outras pessoas).',
 	'bold_sample' => 'Texto em negrito',
 	'bold_tip' => 'Texto em negrito',
 	'blockedtitle' => 'O usuário está bloqueado',
-	'blockedtext' => '\'\'\'O seu nome de usuário ou endereço de IP foi bloqueado.\'\'\'
+	'blockedtext' => "'''O seu nome de usuário ou endereço de IP foi bloqueado.'''
 
-O bloqueio foi realizado por $1.
-O motivo apresentado foi \'\'$2\'\'.
+O bloqueio foi realizado por \$1.
+O motivo apresentado foi ''\$2''.
 
-* Início do bloqueio: $8
-* Expiração do bloqueio: $6
-* Destino do bloqueio: $7
+* Início do bloqueio: \$8
+* Expiração do bloqueio: \$6
+* Destino do bloqueio: \$7
 
-Você pode contatar $1 ou outro [[{{MediaWiki:Grouppage-sysop}}|administrador]] para discutir sobre o bloqueio.
+Você pode contatar \$1 ou outro [[{{MediaWiki:Grouppage-sysop}}|administrador]] para discutir sobre o bloqueio.
 
-Você só poderá utilizar a funcionalidade "Contatar usuário" se um endereço de \'\'e-mail\'\' válido estiver especificado em suas [[Special:Preferences|preferências de usuário]] e você não tiver sido bloqueado de utilizar tal recurso.
-O seu endereço de IP atual é $3 e a ID de bloqueio é #$5.
-Por favor, inclua todos os detalhes acima em quaisquer tentativas de esclarecimento.',
+Você só poderá utilizar a funcionalidade \"Contatar usuário\" se um endereço de ''e-mail'' válido estiver especificado em suas [[Special:Preferences|preferências de usuário]] e você não tiver sido bloqueado de utilizar tal recurso.
+O seu endereço de IP atual é \$3 e a ID de bloqueio é #\$5.
+Por favor, inclua todos os detalhes acima em quaisquer tentativas de esclarecimento.",
 	'blockednoreason' => 'sem motivo especificado',
 	'blocked-notice-logextract' => 'Este usuário está atualmente bloqueado.
 O registro de bloqueio mais recente é fornecido abaixo, para referência:',
@@ -14508,13 +14351,6 @@ Ela deve ter menos de $1 {{PLURAL:$1|caractere|caracteres}}.',
 	'backend-fail-closetemp' => 'Não foi possível fechar o arquivo temporário.',
 	'backend-fail-read' => 'Não foi possível ler o arquivo $1.',
 	'backend-fail-create' => 'Não foi possível criar ou alterar o arquivo $1.',
-	'backend-fail-maxsize' => 'Não foi possível criar ou alterar o arquivo $1 por ele ser maior que {{PLURAL:$2|1 byte|$2 bytes}}.',
-	'backend-fail-readonly' => 'O servidor de armazenamento "$1" está atualmente no modo "somente leitura". A razão dada foi: "$2"',
-	'backend-fail-synced' => 'O arquivo "$1" está em um estado inconsistente dentro do sistema de armazenamento interno',
-	'backend-fail-connect' => 'Não foi possível se conectar com o servidor de armazenamento "$1".',
-	'backend-fail-internal' => 'Ocorreu um erro desconhecido no servidor de armazenamento "$1".',
-	'backend-fail-contenttype' => 'Não foi possível determinar o tipo de conteúdo do arquivo para armazenar em "$1".',
-	'backend-fail-batchsize' => 'O servidor de armazenamento retornou um conjunto de $1 {{PLURAL:$1|operação|operações}} de arquivo, enquanto seu limite é de $2 {{PLURAL:$1|operação|operações}}.',
 	'brokenredirects' => 'Redirecionamentos quebrados',
 	'brokenredirectstext' => 'Os seguintes redirecionamentos ligam para páginas inexistentes:',
 	'brokenredirects-edit' => 'editar',
@@ -14558,7 +14394,6 @@ O registro de supressão é fornecido abaixo para referência:',
 Endereços IP sujeitos a bloqueio automático não são listados.
 Consulte a [[Special:BlockList|lista de bloqueios]] para obter a lista de bloqueios e banimentos em efeito neste momento.',
 	'block-log-flags-anononly' => 'apenas usuários anônimos',
-	'block-log-flags-nocreate' => 'criação de contas desabilitada',
 	'block-log-flags-noautoblock' => 'bloqueio automático desabilitado',
 	'block-log-flags-noemail' => 'impedido de enviar e-mail',
 	'block-log-flags-nousertalk' => 'impossibilitado de editar a própria página de discussão',
@@ -14572,36 +14407,65 @@ Só são reconhecidos elementos na forma de lista (linhas começadas por *).
 O primeiro link em cada linha deve direcionar para o arquivo que se pretende bloquear.
 Quaisquer outros links nessa mesma linha são considerados exceções (ou seja, páginas onde o arquivo pode estar presente).',
 	'blankpage' => 'Página em branco',
-];
+	'blog-avatar-defaults' => 'Avatar.jpg
+Avatar2.jpg
+Avatar3.jpg
+Avatar4.jpg
+Avatar5.jpg
+Avatar6.jpg',
+	'backlinksubtitle' => '← $1',
+	'backend-fail-readonly' => 'O servidor de armazenamento "$1" está atualmente no modo "somente leitura". A razão dada foi: "$2"',
+	'backend-fail-synced' => 'O arquivo "$1" está em um estado inconsistente dentro do sistema de armazenamento interno',
+	'backend-fail-connect' => 'Não foi possível se conectar com o servidor de armazenamento "$1".',
+	'backend-fail-internal' => 'Ocorreu um erro desconhecido no servidor de armazenamento "$1".',
+	'backend-fail-contenttype' => 'Não foi possível determinar o tipo de conteúdo do arquivo para armazenar em "$1".',
+	'backend-fail-batchsize' => 'O servidor de armazenamento retornou um conjunto de $1 {{PLURAL:$1|operação|operações}} de arquivo, enquanto seu limite é de $2 {{PLURAL:$1|operação|operações}}.',
+	'brokenredirects-summary' => '',
+	'booksources-summary' => '',
+	'booksources-isbn' => 'ISBN:',
+	'blocklist-summary' => '',
+	'block-log-flags-nocreate' => 'criação de contas desabilitada',
+	'bitrate-bits' => '$1bps',
+	'bitrate-kilobits' => '$1kbps',
+	'bitrate-megabits' => '$1Mbps',
+	'bitrate-gigabits' => '$1Gbps',
+	'bitrate-terabits' => '$1Tbps',
+	'bitrate-petabits' => '$1Pbps',
+	'bitrate-exabits' => '$1Ebps',
+	'bitrate-zetabits' => '$1Zbps',
+	'bitrate-yottabits' => '$1Ybps',
+	'back' => 'Voltar',
+	'button-createpage' => 'Adicionar uma página',
+);
 
-$messages['qu'] = [
-	'broken-file-category' => 'P\'akisqa willañiqi t\'inkiyuq p\'anqakuna',
+$messages['qu'] = array(
+	'broken-file-category' => "P'akisqa willañiqi t'inkiyuq p'anqakuna",
 	'badaccess' => 'Saqillay pantasqa',
 	'badaccess-group0' => 'Manam saqillasunkichu munasqayta rurayta.',
 	'badaccess-groups' => 'Munasqay ruranaqa kay {{PLURAL:$2|huñupi|$2 huñukunapi}} kachkaq ruraqkunallatam rurayta saqillan: $1.',
-	'badarticleerror' => 'Kay p\'anqapiqa manam saqillanchu kay hina rurayta.',
-	'badtitle' => 'P\'anqap sutinqa manam allinchu',
-	'badtitletext' => 'Kay p\'anqap sutinqa manam allinchu, mana allin interwiki t\'inkichá icha ch\'usaqchá, p\'anqa sutipaq mana saqillasqa sananchayuqchá.',
+	'badarticleerror' => "Kay p'anqapiqa manam saqillanchu kay hina rurayta.",
+	'badtitle' => "P'anqap sutinqa manam allinchu",
+	'badtitletext' => "Kay p'anqap sutinqa manam allinchu, mana allin interwiki t'inkichá icha ch'usaqchá, p'anqa sutipaq mana saqillasqa sananchayuqchá.",
 	'badretype' => 'Qusqayki yaykuna rimakunaqa manam kaqllachu.',
-	'blocked-mailpassword' => 'IP tiyayniykiqa hark\'asqam, chayrayku manam saqillanchu yaykuna rimata musuqmanta chaskiyta, millay rurayta hark\'anapaq.',
+	'blocked-mailpassword' => "IP tiyayniykiqa hark'asqam, chayrayku manam saqillanchu yaykuna rimata musuqmanta chaskiyta, millay rurayta hark'anapaq.",
 	'bold_sample' => 'Yanasapa qillqa',
 	'bold_tip' => 'Yanasapa qillqa',
-	'blockedtitle' => 'Ruraqqa hark\'asqam',
-	'blockedtext' => '\'\'\'Ruraqpa sutiykiqa icha IP huchhaykiqa hark\'asqam.\'\'\'
+	'blockedtitle' => "Ruraqqa hark'asqam",
+	'blockedtext' => "'''Ruraqpa sutiykiqa icha IP huchhaykiqa hark'asqam.'''
 
-$1 sutiyuqmi hark\'asurqunki \'\'$2\'\' nisqarayku.
+$1 sutiyuqmi hark'asurqunki ''$2'' nisqarayku.
 
-* Hark\'aypa qallarisqan: $8
-* Hark\'aypa puchukanan: $6
-* Awaytiyasqa hark\'ana ruraq: $7
+* Hark'aypa qallarisqan: $8
+* Hark'aypa puchukanan: $6
+* Awaytiyasqa hark'ana ruraq: $7
 
-Hark\'aymanta rimanakunapaqqa $1-man icha huk [[{{MediaWiki:Grouppage-sysop}}|kamachiqman]] willariy.
-Manam saqillasunkichu \'Kay ruraqman e-chaskita kachay\' nisqata llamk\'achiyta manaraq allin e-chaski imamaytaykita [[Special:Preferences|allinkachinaykikunaman]] quptiyki manaraqpas chaymanta hark\'asqa kaptiyki.
-Kunan IP huchhaykiqa $3 nisqam, hark\'ay huchhataq #$5 nisqam. Mañakuspaykiqa kay p\'anqapi tukuy nisqakunata willay.',
-	'blockednoreason' => 'hark\'aqqa manam ninchu imarayku',
-	'blocked-notice-logextract' => 'Kay ruraqqa hark\'asqam kachkan.
-Hark\'ay hallch\'api qhipaq hark\'asqataqa kaypim rikunki willasunaykipaq:',
-	'badsig' => 'Chawa silq\'usqaykiqa manam allinchu; HTML sananchakunata llanchiy.',
+Hark'aymanta rimanakunapaqqa $1-man icha huk [[{{MediaWiki:Grouppage-sysop}}|kamachiqman]] willariy.
+Manam saqillasunkichu 'Kay ruraqman e-chaskita kachay' nisqata llamk'achiyta manaraq allin e-chaski imamaytaykita [[Special:Preferences|allinkachinaykikunaman]] quptiyki manaraqpas chaymanta hark'asqa kaptiyki.
+Kunan IP huchhaykiqa $3 nisqam, hark'ay huchhataq #$5 nisqam. Mañakuspaykiqa kay p'anqapi tukuy nisqakunata willay.",
+	'blockednoreason' => "hark'aqqa manam ninchu imarayku",
+	'blocked-notice-logextract' => "Kay ruraqqa hark'asqam kachkan.
+Hark'ay hallch'api qhipaq hark'asqataqa kaypim rikunki willasunaykipaq:",
+	'badsig' => "Chawa silq'usqaykiqa manam allinchu; HTML sananchakunata llanchiy.",
 	'badsiglength' => 'Chutu sutiykiqa nisyu sunim.
 $1 {{PLURAL:$1|sanampamanta|sanampakunamanta}} aswan pisi kananmi.',
 	'boteditletter' => 'r',
@@ -14609,7 +14473,7 @@ $1 {{PLURAL:$1|sanampamanta|sanampakunamanta}} aswan pisi kananmi.',
 	'backend-fail-stream' => 'Manam atinichu $1 sutiyuq willañiqita wantuyta.',
 	'backend-fail-backup' => 'Manam atinichu $1 sutiyuq willañiqita iskaychaspa waqaychayta.',
 	'backend-fail-notexists' => '$1 sutiyuq willañiqiqa manam kanchu.',
-	'backend-fail-hashes' => 'Manam atinichu willañiqikunap ch\'iqisqankunata chaskiyta wakichanapaq.',
+	'backend-fail-hashes' => "Manam atinichu willañiqikunap ch'iqisqankunata chaskiyta wakichanapaq.",
 	'backend-fail-notsame' => '$1 nisqapiqa mana kaqlla willañiqim kachkanña.',
 	'backend-fail-invalidpath' => '$1 nisqaqa manam allin pirwa ñanchu.',
 	'backend-fail-delete' => 'Manam atinichu $1 sutiyuq willañiqita qulluyta.',
@@ -14617,9 +14481,9 @@ $1 {{PLURAL:$1|sanampamanta|sanampakunamanta}} aswan pisi kananmi.',
 	'backend-fail-store' => 'Manam atinichu $1 sutiyuq willañiqita $2-pi pirwayta.',
 	'backend-fail-copy' => 'Manam atinichu willañiqita $1-manta $2-man iskaychayta.',
 	'backend-fail-move' => 'Manam atinichu willañiqita $1-manta $2-man astayta.',
-	'backend-fail-opentemp' => 'Manam atinichu mit\'alla willañiqita kichariyta.',
-	'backend-fail-writetemp' => 'Manam atinichu mit\'alla willañiqiman qillqayta.',
-	'backend-fail-closetemp' => 'Manam atinichu mit\'alla willañiqita wichq\'ayta.',
+	'backend-fail-opentemp' => "Manam atinichu mit'alla willañiqita kichariyta.",
+	'backend-fail-writetemp' => "Manam atinichu mit'alla willañiqiman qillqayta.",
+	'backend-fail-closetemp' => "Manam atinichu mit'alla willañiqita wichq'ayta.",
 	'backend-fail-read' => 'Manam atinichu $1 sutiyuq willañiqita ñawiriyta.',
 	'backend-fail-create' => 'Manam atinichu $1 sutiyuq willañiqita qillqayta.',
 	'backend-fail-maxsize' => 'Manam atinichu $1 sutiyuq willañiqita qillqayta, {{PLURAL:$2|huk bytemanta|$2 bytemanta}} aswan hatun kaptinmi.',
@@ -14628,63 +14492,62 @@ $1 {{PLURAL:$1|sanampamanta|sanampakunamanta}} aswan pisi kananmi.',
 	'backend-fail-connect' => 'Manam atinichu "$1" sutiyuq willañiqi hallch\'ana sirwiqwan t\'inkinakuyta.',
 	'backend-fail-internal' => '"$1" sutiyuq willañiqi hallch\'ana sirwiqpi mana riqsisqa pantasqam tukurqan.',
 	'backend-fail-contenttype' => 'Manam atinichu "$1" nisqapi hallch\'ana willañiqip samiqninpa layanta yuqanchayta.',
-	'backend-fail-batchsize' => 'Willañiqi hallch\'ana sirwiqmanqa $1 willañiqi {{PLURAL:$1|ruranayuq|ruranayuq}} tawqam qusqa; saywataq $2 {{PLURAL:$1|ruranam|ruranam}}.',
+	'backend-fail-batchsize' => "Willañiqi hallch'ana sirwiqmanqa $1 willañiqi {{PLURAL:$1|ruranayuq|ruranayuq}} tawqam qusqa; saywataq $2 {{PLURAL:$1|ruranam|ruranam}}.",
 	'backend-fail-usable' => 'Manam atinichu $1 sutiyuq willañiqita qillqayta, mana aypalla saqillaykuna icha mana churanakuna/qullqakuna kaptinmi.',
 	'brokenredirects' => 'Panta pusapunakuna',
-	'brokenredirectstext' => 'Kay pusapuna p\'anqakunaqa mana kachkaq p\'anqakunamanmi pusapuchkan:',
-	'brokenredirects-edit' => 'llamk\'apuy',
+	'brokenredirectstext' => "Kay pusapuna p'anqakunaqa mana kachkaq p'anqakunamanmi pusapuchkan:",
+	'brokenredirects-edit' => "llamk'apuy",
 	'brokenredirects-delete' => 'qulluy',
 	'booksources' => 'Liwrukunapi pukyukuna',
 	'booksources-search-legend' => 'Liwrukunapi pukyukunata maskay',
 	'booksources-go' => 'Riy',
-	'booksources-text' => 'Kay qatiqpiqa huk llika tiyaykunaman t\'inkikunatam rikunki, musuq icha mawk\'a liwrukunata qhatuq, maskasqayki liwrukunamantachá astawan willaq:',
+	'booksources-text' => "Kay qatiqpiqa huk llika tiyaykunaman t'inkikunatam rikunki, musuq icha mawk'a liwrukunata qhatuq, maskasqayki liwrukunamantachá astawan willaq:",
 	'booksources-invalid-isbn' => 'ISBN huchhaqa manachá allinchu; pantasqata llanchiriy qallariy qillqamanta iskaychamuspa.',
 	'blanknamespace' => '(Uma)',
-	'block' => 'Ruraqta hark\'ay',
-	'blockip' => 'Ruraqta hark\'ay',
-	'blockip-title' => 'Ruraqta hark\'ay',
-	'blockip-legend' => 'Ruraqta hark\'ay',
-	'blockiptext' => 'Kay qatiq hunt\'ana p\'anqata llamk\'achiy huk sapaq IP huchhamanta icha ruraqpa rakiqunanmanta qillqay atiyta hark\'anapaq.
-Kayqa rurasqa kachun wandalismullatam hark\'anapaq, [[{{MediaWiki:Policy-url}}|{{SITENAME}}pa kawpayninkamallam]].
-Willariy imaraykum hark\'anki (ahinataq: sapaq wandaluchasqa p\'anqakunamanta willaspa).',
+	'block' => "Ruraqta hark'ay",
+	'blockip' => "Ruraqta hark'ay",
+	'blockip-title' => "Ruraqta hark'ay",
+	'blockip-legend' => "Ruraqta hark'ay",
+	'blockiptext' => "Kay qatiq hunt'ana p'anqata llamk'achiy huk sapaq IP huchhamanta icha ruraqpa rakiqunanmanta qillqay atiyta hark'anapaq.
+Kayqa rurasqa kachun wandalismullatam hark'anapaq, [[{{MediaWiki:Policy-url}}|{{SITENAME}}pa kawpayninkamallam]].
+Willariy imaraykum hark'anki (ahinataq: sapaq wandaluchasqa p'anqakunamanta willaspa).",
 	'badipaddress' => 'IP huchhaqa manam allinchu.',
-	'blockipsuccesssub' => 'Ruraqqa hark\'asqañam',
-	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] nisqaqa hark\'asqam. <br />[[Special:BlockList|Hark\'ay sutisuyuta]] qhaway hark\'akunata hukchanaykipaq.',
-	'blocklist' => 'Hark\'asqa ruraqkuna',
-	'blocklist-userblocks' => 'Rakiquna hark\'asqakunata pakay',
-	'blocklist-tempblocks' => 'Mit\'alla hark\'asqakunata pakay',
-	'blocklist-addressblocks' => 'Sapaq IP-paq hark\'asqakunata pakay',
-	'blocklist-rangeblocks' => 'Tawqa hark\'ayta pakay',
-	'blocklist-timestamp' => 'Pacha q\'illpay',
+	'blockipsuccesssub' => "Ruraqqa hark'asqañam",
+	'blockipsuccesstext' => "[[Special:Contributions/$1|$1]] nisqaqa hark'asqam. <br />[[Special:BlockList|Hark'ay sutisuyuta]] qhaway hark'akunata hukchanaykipaq.",
+	'blocklist' => "Hark'asqa ruraqkuna",
+	'blocklist-userblocks' => "Rakiquna hark'asqakunata pakay",
+	'blocklist-tempblocks' => "Mit'alla hark'asqakunata pakay",
+	'blocklist-addressblocks' => "Sapaq IP-paq hark'asqakunata pakay",
+	'blocklist-rangeblocks' => "Tawqa hark'ayta pakay",
+	'blocklist-timestamp' => "Pacha q'illpay",
 	'blocklist-target' => 'Taripana',
-	'blocklist-expiry' => 'Hark\'aypa puchukaynin',
-	'blocklist-by' => 'Hark\'aq kamachiq',
-	'blocklist-params' => 'Hark\'ay kuskanachina tupukuna',
+	'blocklist-expiry' => "Hark'aypa puchukaynin",
+	'blocklist-by' => "Hark'aq kamachiq",
+	'blocklist-params' => "Hark'ay kuskanachina tupukuna",
 	'blocklist-reason' => 'Kayrayku',
-	'blocklist-nousertalk' => 'kikinpa rimanakuy p\'anqanta manam hukchayta atinchu',
-	'blocklink' => 'hark\'ay',
-	'blocklogpage' => 'Ruraq hark\'asqakuna',
-	'blocklog-showlog' => 'Kay ruraqqa ñawpaqta hark\'asqam. Hark\'ay hallch\'ataqa kaypim rikunki willasunaykipaq:',
-	'blocklog-showsuppresslog' => 'Kay ruraqqa ñawpaqta hark\'asqam pakasqapas. Ñit\'ipay hallch\'ataqa kaypim rikunki willasunaykipaq:',
-	'blocklogentry' => 'hark\'an [[$1]]-ta kay pachakama: $2 $3',
-	'blocklogtext' => 'Kayqa ruraqta hark\'asqakunap qispichisqakunappas hallch\'anmi. Kikinmanta hark\'asqa tiyaykunataqa manam kaypi rikunkichu. [[Special:BlockList|Hark\'ay sutisuyuta]] qhaway kunan hark\'asqakunata rikunaykipaq.',
+	'blocklist-nousertalk' => "kikinpa rimanakuy p'anqanta manam hukchayta atinchu",
+	'blocklink' => "hark'ay",
+	'blocklogpage' => "Ruraq hark'asqakuna",
+	'blocklog-showlog' => "Kay ruraqqa ñawpaqta hark'asqam. Hark'ay hallch'ataqa kaypim rikunki willasunaykipaq:",
+	'blocklog-showsuppresslog' => "Kay ruraqqa ñawpaqta hark'asqam pakasqapas. Ñit'ipay hallch'ataqa kaypim rikunki willasunaykipaq:",
+	'blocklogentry' => "hark'an [[$1]]-ta kay pachakama: $2 $3",
+	'blocklogtext' => "Kayqa ruraqta hark'asqakunap qispichisqakunappas hallch'anmi. Kikinmanta hark'asqa tiyaykunataqa manam kaypi rikunkichu. [[Special:BlockList|Hark'ay sutisuyuta]] qhaway kunan hark'asqakunata rikunaykipaq.",
 	'block-log-flags-anononly' => 'sutinnaqlla',
-	'block-log-flags-nocreate' => 'rakiquna kichariyman ama nisqa',
-	'block-log-flags-noautoblock' => 'kikinmanta hark\'ayman ama nisqa',
+	'block-log-flags-noautoblock' => "kikinmanta hark'ayman ama nisqa",
 	'block-log-flags-noemail' => 'e-chaskiman ama nisqa',
-	'block-log-flags-nousertalk' => 'kikinpa rimanakuy p\'anqanta manam hukchayta atinchu',
-	'block-log-flags-angry-autoblock' => 'ñawparikusqa kikinmanta hark\'ayman arí nisqa',
+	'block-log-flags-nousertalk' => "kikinpa rimanakuy p'anqanta manam hukchayta atinchu",
+	'block-log-flags-angry-autoblock' => "ñawparikusqa kikinmanta hark'ayman arí nisqa",
 	'block-log-flags-hiddenname' => 'ruraqpa sutin pakasqa',
-	'blockme' => 'Hark\'away',
-	'bydate' => 'p\'unchawkama',
-	'bad_image_list' => 'Chantaqa kay hinam:
+	'blockme' => "Hark'away",
+	'bydate' => "p'unchawkama",
+	'bad_image_list' => "Chantaqa kay hinam:
 
-Sutisuyu imakunallam (* sananchawan qallariq siq\'ikunapi) hamut\'arisqa. Siq\'ipi ñawpaq ñiqin t\'inkipqa mana allin rikchaman t\'inkimunanmi.
-Kikin siq\'ipi ima qatiq t\'inkillapas sapaqllatam hamut\'arisqa, ahinataq siq\'ipi rikchayuq p\'anqakunam.',
-	'blankpage' => 'Ch\'usaq p\'anqa',
-];
+Sutisuyu imakunallam (* sananchawan qallariq siq'ikunapi) hamut'arisqa. Siq'ipi ñawpaq ñiqin t'inkipqa mana allin rikchaman t'inkimunanmi.
+Kikin siq'ipi ima qatiq t'inkillapas sapaqllatam hamut'arisqa, ahinataq siq'ipi rikchayuq p'anqakunam.",
+	'blankpage' => "Ch'usaq p'anqa",
+);
 
-$messages['qug'] = [
+$messages['qug'] = array(
 	'broken-file-category' => 'Pakishka archivukunaman tinkiyuk pankakuna',
 	'badaccess' => 'Pita sakina nishka pantay tiyarka',
 	'badaccess-group0' => 'Shuk imata ruranata munapanki, kayta rurankapak na sakinata ushanchikchu.',
@@ -14703,16 +14566,15 @@ $messages['qug'] = [
 	'blocklink' => 'Wichkana',
 	'blocklogpage' => 'Wichkaykunapa kamu',
 	'blocklogentry' => '[[$1]]-ta chay pachakaman wichkarka: $2 $3',
-	'block-log-flags-nocreate' => 'Mushuk rurak shutipa kamayta wichkashkami',
 	'bad_image_list' => 'Kay shina killkanami kapanki:
 Tukuy aspikunaka kuyllurwan (*) kallarinami kan
 Shuk aspipi, shukniki tinkika ima tinkita wichkashkami kanka nin, kay aspipi shuk tinkikunapi ima pankakunapi wichkashka tinkita charinata ushanmi nin.',
-];
+);
 
-$messages['rgn'] = [
+$messages['rgn'] = array(
 	'badaccess' => 'Parméss non sufizént',
-	'badtitletext' => 'La pàgina ch\' t\'ê cmandè, l\'è vuda, sbaglieda o ta l\'ê scrètta cun dal lettar particulèri. Oppure, ê pò dès ch\'u j sèja un eror inter-lèngua o inter-wiki. Guèrda ben cus t\'e scrètt: êt druvè dal lettar cu n\' s pò druvè in t\'j nom dal pàgin?',
-	'bold_sample' => 'Pàroli in \'\'\'gros\'\'\'',
+	'badtitletext' => "La pàgina ch' t'ê cmandè, l'è vuda, sbaglieda o ta l'ê scrètta cun dal lettar particulèri. Oppure, ê pò dès ch'u j sèja un eror inter-lèngua o inter-wiki. Guèrda ben cus t'e scrètt: êt druvè dal lettar cu n' s pò druvè in t'j nom dal pàgin?",
+	'bold_sample' => "Pàroli in '''gros'''",
 	'bold_tip' => 'Gros',
 	'boteditletter' => 'b',
 	'booksources' => 'Va a truvè dj libar',
@@ -14721,35 +14583,34 @@ $messages['rgn'] = [
 	'blanknamespace' => '(Prèma)',
 	'blockip' => 'Indirèzz IP bluché',
 	'blocklink' => 'Met-j é carnaz',
-	'blocklogpage' => 'Regèstar d\'j blocch',
+	'blocklogpage' => "Regèstar d'j blocch",
 	'blocklogentry' => '"[[$1]]" l\'è sté bluché par $2 $3',
-	'block-log-flags-nocreate' => 'Un\' s\'pò brisa registrès un\'étra volta',
-	'bad_image_list' => 'E\' quèdar l\'è quest\'aquè:
+	'bad_image_list' => "E' quèdar l'è quest'aquè:
 
-As t\'nèn bon sol j elemént dal lèsti (al righ chj cmènza par *)
-E\' prèm culegamént d\'una riga l\'à da èsar un culegamént a un file c\'un gn\'entra gninto
-Tot i culegamént ch\'j ven dop, sora la stèsa riga, j conta cumpagna d\'j eceziòn (e\' vò dì, pàgin indov e\' file u\'s pò infilè nurmalment)',
-];
+As t'nèn bon sol j elemént dal lèsti (al righ chj cmènza par *)
+E' prèm culegamént d'una riga l'à da èsar un culegamént a un file c'un gn'entra gninto
+Tot i culegamént ch'j ven dop, sora la stèsa riga, j conta cumpagna d'j eceziòn (e' vò dì, pàgin indov e' file u's pò infilè nurmalment)",
+);
 
-$messages['rif'] = [
+$messages['rif'] = array(
 	'badtitle' => 'isem war icni ca',
 	'badtitletext' => 'Isem n Tasna itexised war icni ca, ixwa, niɣ  isem n ajar-tutlayt niɣ ajar-wiki war icni ca.
 teqqad ad yilli days ca n usekkil war itwagg deg isem .',
 	'bold_sample' => 'Tirra tizurarin',
 	'bold_tip' => 'Tira tizurarin',
-	'blockedtext' => '\'\'\'Isem useqdac niɣ tansa IP inecc tewabluca  .\'\'\'
+	'blockedtext' => "'''Isem useqdac niɣ tansa IP inecc tewabluca  .'''
 
 iblocat  $1.
-Maynzi \'\'$2\'\'.
+Maynzi ''$2''.
 
 * Abluki ibda di: $8
 * Ad ikemmel di: $6
 * Abluki ig itwaxsen d: $7
 
 Tzemred ad temsawaded ag $1 niɣ [[{{MediaWiki:Grouppage-sysop}}|administrator]] nniḍn bac ad tsiwled x ubluki a.
-war tzemred ca ad ad tesxedmed \'e-mail this user\' ɣar mala ca n e-mail illa ɣark di [[Special:Preferences|Isemyifiyen n umiḍan]] u war twabluki ca usexdem ines.
+war tzemred ca ad ad tesxedmed 'e-mail this user' ɣar mala ca n e-mail illa ɣark di [[Special:Preferences|Isemyifiyen n umiḍan]] u war twabluki ca usexdem ines.
 Tansa IP inecc n ruxa d $3, u ID icecc iteblukan d #$5.
-maṛṛa manaya deg ujenna eggit di tabrat i ɣ-ad tsekked.',
+maṛṛa manaya deg ujenna eggit di tabrat i ɣ-ad tsekked.",
 	'boteditletter' => 'b',
 	'brokenredirects' => '(redirects) arẓent',
 	'brokenredirects-edit' => 'arri',
@@ -14761,44 +14622,43 @@ maṛṛa manaya deg ujenna eggit di tabrat i ɣ-ad tsekked.',
 	'blocklink' => 'Sbedd',
 	'blocklogpage' => 'Ẓareqq aɣmis',
 	'blocklogentry' => 'ibloka [[$1]] ar $2 $3',
-	'block-log-flags-nocreate' => 'timggit n imiḍanen imaynutn ttwasbdd',
 	'bad_image_list' => 'Tameslayt amya :
 
 imagraden n tebdart (ɣarsent * deg umzwaru) ig iteten waha.
 Tazdayt tamzwarut di tebrit ixessa atzdi ɣa afaylu war icni  .
 kur tazdayt tdeffad a tmekkas .',
-];
+);
 
-$messages['rm'] = [
+$messages['rm'] = array(
 	'broken-file-category' => 'Paginas cun colliaziuns da datoteca che na funcziunan betg',
-	'badaccess' => 'Errur dad access: vus n\'avais betg avunda dretgs',
-	'badaccess-group0' => 'Vus na dastgais betg exequir l\'acziun giavischada.',
-	'badaccess-groups' => 'L\'acziun che vus vulais far dastgan mo utilisaders en {{PLURAL:$2|las gruppas|la gruppa}} $1 exequir.',
+	'badaccess' => "Errur dad access: vus n'avais betg avunda dretgs",
+	'badaccess-group0' => "Vus na dastgais betg exequir l'acziun giavischada.",
+	'badaccess-groups' => "L'acziun che vus vulais far dastgan mo utilisaders en {{PLURAL:$2|las gruppas|la gruppa}} $1 exequir.",
 	'badarticleerror' => 'Questa acziun na po betg vegnir exequida sin questa pagina.',
-	'badtitle' => 'Il num da titel endatà n\'è betg valid',
+	'badtitle' => "Il num da titel endatà n'è betg valid",
 	'badtitletext' => 'Il titel da pagina era betg valid, vids u in titel inter-lingua u inter-wiki betg correct.
 El po cuntegnair in u plirs segns che na pon betg vegnir utilisads en titels.',
 	'badretype' => 'Ils dus pleds-clav na corrispundan betg.',
-	'blocked-mailpassword' => 'L\'adressa dad IP che ti utiliseschas è vegnida bloccada per midar paginas. Plinavant è era la funcziun da generar in nov pled-clav vegnida bloccada per impedir in abus da questa funcziun.',
+	'blocked-mailpassword' => "L'adressa dad IP che ti utiliseschas è vegnida bloccada per midar paginas. Plinavant è era la funcziun da generar in nov pled-clav vegnida bloccada per impedir in abus da questa funcziun.",
 	'bold_sample' => 'Text grass',
 	'bold_tip' => 'Text grass',
 	'blockedtitle' => 'Utilisader è bloccà',
-	'blockedtext' => '\'\'\'Tes num d\'utilisader u tia adressa dad IP è vegnida bloccada.\'\'\'
+	'blockedtext' => "'''Tes num d'utilisader u tia adressa dad IP è vegnida bloccada.'''
 
-\'\'$1\'\' ha bloccà tai.
-Il motiv inditgà è: \'\'$2\'\'.
+''$1'' ha bloccà tai.
+Il motiv inditgà è: ''$2''.
 
 * Bloccà davent da: $8
 * Bloccà enfin: $6
 * Bloccada pertutga: $7
 
 Ti pos contactar $1 u in auter [[{{MediaWiki:Grouppage-sysop}}|administratur]] per discutar questa bloccada.
-Ti na pos betg utilisar la funcziun \'Trametter in e-mail a quest utilisader\' senza avair inditgà in\'adressa valaivla en tias [[Special:Preferences|preferenzas]] e sche ti n\'ès betg vegnì bloccà per utilisar la funcziun.
-Ti\'adressa dad IP actuala è $3, ed la block ID è #$5.
-Integrescha per plaschair tut las indicaziuns survart sche ti contacteschas insatgi.',
+Ti na pos betg utilisar la funcziun 'Trametter in e-mail a quest utilisader' senza avair inditgà in'adressa valaivla en tias [[Special:Preferences|preferenzas]] e sche ti n'ès betg vegnì bloccà per utilisar la funcziun.
+Ti'adressa dad IP actuala è $3, ed la block ID è #$5.
+Integrescha per plaschair tut las indicaziuns survart sche ti contacteschas insatgi.",
 	'blockednoreason' => 'inditgà nagina raschun',
-	'blocked-notice-logextract' => 'Quai utilisader è bloccà actualmain.
-L\'ultima endataziun dal log da bloccar vegn mussà sutvart sco referenza:',
+	'blocked-notice-logextract' => "Quai utilisader è bloccà actualmain.
+L'ultima endataziun dal log da bloccar vegn mussà sutvart sco referenza:",
 	'badsig' => 'Signatura invalida.
 Controllai ils tags da HTML.',
 	'badsiglength' => 'Vossa signatura è memia lunga.
@@ -14813,13 +14673,13 @@ Ella na dastga betg esser pli lunga che $1 {{PLURAL:$1|caracter|caracters}}.',
 	'booksources-search-legend' => 'Tschertgar pussaivladad da cumpra per cudeschs',
 	'booksources-go' => 'Leger',
 	'blanknamespace' => '(principal)',
-	'blockip' => 'Bloccar l\'utilisader',
-	'blockip-title' => 'Bloccar l\'utilisader',
-	'blockip-legend' => 'Bloccar l\'utilisader',
-	'blockiptext' => 'Utilisescha il formular sutvart per bloccar ina adressa IP u in utilisader uschia ch\'el na po betg pli far midadas.
+	'blockip' => "Bloccar l'utilisader",
+	'blockip-title' => "Bloccar l'utilisader",
+	'blockip-legend' => "Bloccar l'utilisader",
+	'blockiptext' => "Utilisescha il formular sutvart per bloccar ina adressa IP u in utilisader uschia ch'el na po betg pli far midadas.
 Ti duessas be far quai per impedir vandalissem e en ina moda confurma a las [[{{MediaWiki:Policy-url}}|directivas]].
-Inditgescha sutvart in motiv (per exempel pos ti inditgar paginas ch\'èn vegnidas destruidas).',
-	'badipaddress' => 'L\'adressa IP è nunvalida',
+Inditgescha sutvart in motiv (per exempel pos ti inditgar paginas ch'èn vegnidas destruidas).",
+	'badipaddress' => "L'adressa IP è nunvalida",
 	'blockipsuccesssub' => 'Bloccà cun success',
 	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] è vegnì bloccà.<br />
 Sin [[Special:BlockList|la glista dad IPs bliccadas]] pos ti repassar tut las bloccadas.',
@@ -14833,7 +14693,7 @@ Sin [[Special:BlockList|la glista dad IPs bliccadas]] pos ti repassar tut las bl
 	'blocklist-by' => 'Administratur che ha bloccà',
 	'blocklist-params' => 'Parameters da la bloccada',
 	'blocklist-reason' => 'Motiv',
-	'blocklist-nousertalk' => 'na po betg modifitgar l\'atgna pagina da discussiun',
+	'blocklist-nousertalk' => "na po betg modifitgar l'atgna pagina da discussiun",
 	'blocklink' => 'bloccar',
 	'blocklogpage' => 'Log dal bloccar',
 	'blocklog-showlog' => 'Quest utilisader è gia vegnì bloccà pli baud.
@@ -14842,30 +14702,29 @@ Qua il log da bloccaziun sco infurmaziun:',
 Quai è il log da supprimer sco infurmaziun:',
 	'blocklogentry' => 'bloccà [[$1]] per $2. Motiv: $3',
 	'block-log-flags-anononly' => 'be utilisaders anonims',
-	'block-log-flags-nocreate' => 'deactivà la creaziun da contos',
 	'block-log-flags-noautoblock' => 'deactivà la bloccada automatica',
-	'block-log-flags-noemail' => 'bloccà la spediziun d\'e-mails',
-	'block-log-flags-nousertalk' => 'na po betg modifitgar l\'atgna pagina da discussiun',
+	'block-log-flags-noemail' => "bloccà la spediziun d'e-mails",
+	'block-log-flags-nousertalk' => "na po betg modifitgar l'atgna pagina da discussiun",
 	'block-log-flags-angry-autoblock' => 'activà la bloccada automatica extendida',
-	'block-log-flags-hiddenname' => 'zuppentà il num d\'utilisader',
+	'block-log-flags-hiddenname' => "zuppentà il num d'utilisader",
 	'blockme' => 'Bloccar mai',
 	'bydate' => 'tenor data',
-	'bad_image_list' => 'Il format è sco suonda:
+	'bad_image_list' => "Il format è sco suonda:
 
 Be elements da glistas (lingias che entschaivan cun in *) vegnan risguardads.
-L\'emprima colliaziun duai esser ina colliaziun ad in maletg betg giavischà.
-Tut las colliaziuns che suandan sin la medema lingia vegnan risguardadas sco excepziuns.',
+L'emprima colliaziun duai esser ina colliaziun ad in maletg betg giavischà.
+Tut las colliaziuns che suandan sin la medema lingia vegnan risguardadas sco excepziuns.",
 	'blankpage' => 'Pagina vida',
-];
+);
 
-$messages['rmy'] = [
+$messages['rmy'] = array(
 	'badretype' => 'Le nakhavipnaske lava so lekhavdyan nai myazutne.',
 	'badsig' => 'Bilachhi semnatura; dikh le tagurya HTML.',
 	'badfilename' => 'O chitrosko anav sas paruvdo; o nevo anav si "$1".',
 	'blockip' => 'De avri jenes/IP',
-];
+);
 
-$messages['ro'] = [
+$messages['ro'] = array(
 	'broken-file-category' => 'Pagini cu legături invalide către fișiere',
 	'badaccess' => 'Eroare permisiune',
 	'badaccess-group0' => 'Execuția acțiunii cerute nu este permisă.',
@@ -14880,18 +14739,18 @@ Poate conține unul sau mai multe caractere ce nu poate fi folosit în titluri.'
 	'bold_sample' => 'Text aldin',
 	'bold_tip' => 'Text aldin',
 	'blockedtitle' => 'Utilizatorul este blocat',
-	'blockedtext' => '\'\'\'Adresa IP sau contul dumneavoastră de utilizator a fost blocat.\'\'\'
+	'blockedtext' => "'''Adresa IP sau contul dumneavoastră de utilizator a fost blocat.'''
 
 Blocarea a fost făcută de $1.
-Motivul blocării este \'\'$2\'\'.
+Motivul blocării este ''$2''.
 
 * Începutul blocării: $8
 * Sfârșitul blocării: $6
 * Utilizatorul vizat: $7
 
 Îl puteți contacta pe $1 sau pe alt [[{{MediaWiki:Grouppage-sysop}}|administrator]] pentru a discuta blocarea.
-Nu puteți folosi opțiunea \'trimite un e-mai utilizatorului\' decât dacă o adresă de e-mail validă este specificată în [[Special:Preferences|preferințele contului]] și nu sunteți blocat la folosirea ei.
-Adresa dumneavoastră IP curentă este $3, iar ID-ul blocării este $5. Vă rugăm să includeți oricare sau ambele informații în orice interogări.',
+Nu puteți folosi opțiunea 'trimite un e-mai utilizatorului' decât dacă o adresă de e-mail validă este specificată în [[Special:Preferences|preferințele contului]] și nu sunteți blocat la folosirea ei.
+Adresa dumneavoastră IP curentă este $3, iar ID-ul blocării este $5. Vă rugăm să includeți oricare sau ambele informații în orice interogări.",
 	'blockednoreason' => 'nici un motiv oferit',
 	'blocked-notice-logextract' => 'Acest utilizator este momentan blocat.
 Ultima intrare în jurnalul blocărilor este afișată mai jos pentru referință:',
@@ -14931,9 +14790,9 @@ Lungimea trebuie să fie mai mică de $1 {{PLURAL:$1|caracter|caractere}}.',
 	'blockip' => 'Blocare utilizator',
 	'blockip-title' => 'Blocare utilizator',
 	'blockip-legend' => 'Blocare utilizator/adresă IP',
-	'blockiptext' => 'Pentru a bloca un utilizator completați rubricile de mai jos.<br />
-\'\'\'Respectați [[{{MediaWiki:Policy-url}}|politica de blocare]].\'\'\'<br />
-Precizați motivul blocării; de exemplu indicați paginile vandalizate de acest utilizator.',
+	'blockiptext' => "Pentru a bloca un utilizator completați rubricile de mai jos.<br />
+'''Respectați [[{{MediaWiki:Policy-url}}|politica de blocare]].'''<br />
+Precizați motivul blocării; de exemplu indicați paginile vandalizate de acest utilizator.",
 	'badipaddress' => 'Adresa IP este invalidă.',
 	'blockipsuccesssub' => 'Utilizatorul a fost blocat',
 	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] a fost blocată.<br />
@@ -14959,7 +14818,6 @@ Jurnalul suprimărilor este indicat mai jos:',
 	'blocklogentry' => 'a blocat utilizatorul „[[$1]]” pe o perioadă de $2 $3',
 	'blocklogtext' => 'Acest jurnal cuprinde acțiunile de blocare și deblocare. Adresele IP blocate automat nu sunt afișate. Vizitați [[Special:BlockList|lista de adrese blocate]] pentru o listă explicită a adreselor blocate în acest moment.',
 	'block-log-flags-anononly' => 'doar utilizatorii anonimi',
-	'block-log-flags-nocreate' => 'crearea de conturi dezactivată',
 	'block-log-flags-noautoblock' => 'autoblocarea dezactivată',
 	'block-log-flags-noemail' => 'e-mail blocat',
 	'block-log-flags-nousertalk' => 'nu poate edita propria pagină de discuție',
@@ -14975,92 +14833,92 @@ Prima legătură de pe linie trebuie să fie spre un fișier defectuos.
 
 Orice legături ce urmează pe aceeași linie sunt considerate excepții, adică pagini unde fișierul poate apărea inclus direct.',
 	'blankpage' => 'Pagină goală',
-];
+);
 
-$messages['roa-rup'] = [
+$messages['roa-rup'] = array(
 	'brokenredirects-edit' => 'Alãxiri',
 	'brokenredirects-delete' => 'Ashcirdzire',
 	'booksources-go' => 'Du-vã',
-];
+);
 
-$messages['roa-tara'] = [
+$messages['roa-tara'] = array(
 	'broken-file-category' => 'Pàggene cu collegaminde a le file scuasciate',
 	'badaccess' => 'Errore de permesse',
-	'badaccess-group0' => 'Tu non ge puè fa l\'azione ca è richieste.',
-	'badaccess-groups' => 'L\'azione ca tu è richieste è limitete a l\'utinde ca stonne jndr\'à {{PLURAL:$2|\'u gruppe|une de ste gruppe}}: $1.',
+	'badaccess-group0' => "Tu non ge puè fa l'azione ca è richieste.",
+	'badaccess-groups' => "L'azione ca tu è richieste è limitete a l'utinde ca stonne jndr'à {{PLURAL:$2|'u gruppe|une de ste gruppe}}: $1.",
 	'backlinksubtitle' => '← $1',
-	'badarticleerror' => 'Quest\'azione non ge pò essere fatte sus \'a sta pàgene.',
+	'badarticleerror' => "Quest'azione non ge pò essere fatte sus 'a sta pàgene.",
 	'badtitle' => 'Titele sbagliete',
-	'badtitletext' => '\'A pàgene ca è cerchete tène \'nu titele errete, vacande, o jè \'nu collegamende inter-lènghe o inter-uicchi errete.
-Pò essere ca tène une o cchiù carattere ca non ge ponne essere ausete jndr\'à le titele.',
+	'badtitletext' => "'A pàgene ca è cerchete tène 'nu titele errete, vacande, o jè 'nu collegamende inter-lènghe o inter-uicchi errete.
+Pò essere ca tène une o cchiù carattere ca non ge ponne essere ausete jndr'à le titele.",
 	'badretype' => 'Le passuord ca è scritte non ge sonde uguale.',
-	'blocked-mailpassword' => 'L\'indirizze IP tue jè blocchete pe le cangiaminde e accussì tu non ge puè ausà \'a funzione de recupere d\'a password pe prevenìe l\'abbuse.',
+	'blocked-mailpassword' => "L'indirizze IP tue jè blocchete pe le cangiaminde e accussì tu non ge puè ausà 'a funzione de recupere d'a password pe prevenìe l'abbuse.",
 	'bold_sample' => 'Teste grascette',
 	'bold_tip' => 'Teste grascette',
-	'blockedtitle' => 'L\'utende è blocchete',
-	'blockedtext' => '\'\'\'\'U nome de l\'utende o l\'indirizze IP ha state blocchete.\'\'\'
+	'blockedtitle' => "L'utende è blocchete",
+	'blockedtext' => "''''U nome de l'utende o l'indirizze IP ha state blocchete.'''
 
-\'U blocche ha state fatte da $1.
-\'U mutive date jè \'\'$2\'\'.
+'U blocche ha state fatte da $1.
+'U mutive date jè ''$2''.
 
-* \'U Blocche accumenze: $8
-* \'U Blocche spicce: $6
+* 'U Blocche accumenze: $8
+* 'U Blocche spicce: $6
 * Tipe de blocche: $7
 
-Tu puè condatta $1 o n\'otre [[{{MediaWiki:Grouppage-sysop}}|amministratore]] pe \'ngazzarte sus a \'u blocche.
-Tu non ge puè ausà \'u strumende \'manne \'na mail a stu utende\' senza ca mitte n\'indirizze e-mail valide jndr\'à le
-[[Special:Preferences|preferenze tue]] e ce è state blocchete sus \'a l\'use sue.
-L\'IP ca tine mò jè $3 e \'u codece d\'u blocche jè #$5.
-Pe piacere mitte ste doje \'mbormaziune ce manne \'na richieste de sblocche.',
+Tu puè condatta $1 o n'otre [[{{MediaWiki:Grouppage-sysop}}|amministratore]] pe 'ngazzarte sus a 'u blocche.
+Tu non ge puè ausà 'u strumende 'manne 'na mail a stu utende' senza ca mitte n'indirizze e-mail valide jndr'à le
+[[Special:Preferences|preferenze tue]] e ce è state blocchete sus 'a l'use sue.
+L'IP ca tine mò jè $3 e 'u codece d'u blocche jè #$5.
+Pe piacere mitte ste doje 'mbormaziune ce manne 'na richieste de sblocche.",
 	'blockednoreason' => 'nisciune mutive',
-	'blocked-notice-logextract' => 'Stu utende jè correndemende bloccate.<br />
-L\'urteme archivije de le bloccaminde se iacche aqquà sotte pe referimende:',
-	'badsig' => '\'A firme grezze jè sbagliete.
-Condrolle le tag HTML.',
-	'badsiglength' => '\'A firme jè troppe longhe.
-Addà essere assaje assaje sotte a $1 {{PLURAL:$1|carattere|carattere}}.',
+	'blocked-notice-logextract' => "Stu utende jè correndemende bloccate.<br />
+L'urteme archivije de le bloccaminde se iacche aqquà sotte pe referimende:",
+	'badsig' => "'A firme grezze jè sbagliete.
+Condrolle le tag HTML.",
+	'badsiglength' => "'A firme jè troppe longhe.
+Addà essere assaje assaje sotte a $1 {{PLURAL:$1|carattere|carattere}}.",
 	'boteditletter' => 'b',
 	'badfilename' => '\'U nome d\'u file ha state cangete jndr\'à "$1".',
-	'backend-fail-stream' => 'Non ge pozze trasmettere \'u file $1.',
-	'backend-fail-backup' => 'Non ge pozze cupià \'u file $1.',
-	'backend-fail-notexists' => '\'U file $1 non g\'esiste.',
-	'backend-fail-hashes' => 'Non ge pozze pigghià le hash d\'u file pu combronde.',
-	'backend-fail-notsame' => '\'Nu file non-indendiche esiste già cumme $1.',
-	'backend-fail-invalidpath' => '$1 non g\'è \'nu percorse de memorizzazzione valide.',
+	'backend-fail-stream' => "Non ge pozze trasmettere 'u file $1.",
+	'backend-fail-backup' => "Non ge pozze cupià 'u file $1.",
+	'backend-fail-notexists' => "'U file $1 non g'esiste.",
+	'backend-fail-hashes' => "Non ge pozze pigghià le hash d'u file pu combronde.",
+	'backend-fail-notsame' => "'Nu file non-indendiche esiste già cumme $1.",
+	'backend-fail-invalidpath' => "$1 non g'è 'nu percorse de memorizzazzione valide.",
 	'backend-fail-delete' => 'Non ge pozze scangellà \'u file "$1".',
-	'backend-fail-alreadyexists' => '\'U file $1 già esiste.',
-	'backend-fail-store' => 'Non ge pozze reggistrà \'u file $1 sus a $2.',
-	'backend-fail-copy' => 'Non ge pozze cupià \'u file $1 jndr\'à $2.',
-	'backend-fail-move' => 'Non ge pozze spustà \'u file $1 jndr\'à $2.',
+	'backend-fail-alreadyexists' => "'U file $1 già esiste.",
+	'backend-fail-store' => "Non ge pozze reggistrà 'u file $1 sus a $2.",
+	'backend-fail-copy' => "Non ge pozze cupià 'u file $1 jndr'à $2.",
+	'backend-fail-move' => "Non ge pozze spustà 'u file $1 jndr'à $2.",
 	'backend-fail-opentemp' => 'Non ge pozze aprè file temboranèe.',
 	'backend-fail-writetemp' => 'Non ge pozze scrivere sus a file temboranèe.',
 	'backend-fail-closetemp' => 'Non ge pozze achiudere file temboranèe.',
-	'backend-fail-read' => 'Non ge pozze leggere \'u file $1.',
-	'backend-fail-create' => 'Non ge pozze ccrejà \'u file $1.',
+	'backend-fail-read' => "Non ge pozze leggere 'u file $1.",
+	'backend-fail-create' => "Non ge pozze ccrejà 'u file $1.",
 	'brokenredirects' => 'Redirezionamninde scuasciete',
-	'brokenredirectstext' => 'Le ridirezionaminde ca seguene appondene a pàggene ca non g\'esistene:',
+	'brokenredirectstext' => "Le ridirezionaminde ca seguene appondene a pàggene ca non g'esistene:",
 	'brokenredirects-edit' => 'cange',
 	'brokenredirects-delete' => 'scangille',
 	'booksources' => 'Sorgende de le libbre',
 	'booksources-search-legend' => 'Cirche pe le fonde de le libbre',
 	'booksources-isbn' => 'ISBN:',
 	'booksources-go' => 'Veje',
-	'booksources-text' => 'Sotte stè \'na liste de collegaminde a otre site ca vennene libbre nuève e ausete e puà pure acchià cchiù \'mbormaziune sus a le libbre ca tu ste cirche:',
-	'booksources-invalid-isbn' => 'L\'ISBN ca è mise non ge pare ca ète corrette; verifiche ce è commesse quacche errore quanne ste cupiave quidde origginale.',
+	'booksources-text' => "Sotte stè 'na liste de collegaminde a otre site ca vennene libbre nuève e ausete e puà pure acchià cchiù 'mbormaziune sus a le libbre ca tu ste cirche:",
+	'booksources-invalid-isbn' => "L'ISBN ca è mise non ge pare ca ète corrette; verifiche ce è commesse quacche errore quanne ste cupiave quidde origginale.",
 	'blanknamespace' => '(Prengepàle)',
-	'block' => 'Bluècche l\'utende',
-	'blockip' => 'Blocche l\'utende',
-	'blockip-title' => 'Bluecche l\'utende',
-	'blockip-legend' => 'Bluecche l\'utende',
-	'blockiptext' => 'Ause \'a schermata de sotte pe bloccà l\'accesse in scritture de \'nu specifiche indirizze IP o utende.
-Quiste avessa essere fatte sulamende pe prevenìe \'u vandalisme e in accorde cu [[{{MediaWiki:Policy-url}}|le reghele]].
-Mitte pure \'nu mutive specifiche aqquà sotte (pe esembije, nnomene \'a pàgene addò è acchiate \'u vandalisme).',
+	'block' => "Bluècche l'utende",
+	'blockip' => "Blocche l'utende",
+	'blockip-title' => "Bluecche l'utende",
+	'blockip-legend' => "Bluecche l'utende",
+	'blockiptext' => "Ause 'a schermata de sotte pe bloccà l'accesse in scritture de 'nu specifiche indirizze IP o utende.
+Quiste avessa essere fatte sulamende pe prevenìe 'u vandalisme e in accorde cu [[{{MediaWiki:Policy-url}}|le reghele]].
+Mitte pure 'nu mutive specifiche aqquà sotte (pe esembije, nnomene 'a pàgene addò è acchiate 'u vandalisme).",
 	'badipaddress' => 'Indirizze IP invalide',
 	'blockipsuccesssub' => 'Blocche effettuate',
-	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] ha state bloccate.<br />
-Vide [[Special:BlockList|\'a liste de le IP bloccate]] pe revedè le blocche.',
+	'blockipsuccesstext' => "[[Special:Contributions/$1|$1]] ha state bloccate.<br />
+Vide [[Special:BlockList|'a liste de le IP bloccate]] pe revedè le blocche.",
 	'blocklist' => 'Utinde bloccate',
-	'blocklist-userblocks' => 'Scunne le blocche sus a le cunde de l\'utinde',
+	'blocklist-userblocks' => "Scunne le blocche sus a le cunde de l'utinde",
 	'blocklist-tempblocks' => 'Scunne le blocche temboranèe',
 	'blocklist-addressblocks' => 'Scunne le blocche de le IP singole',
 	'blocklist-rangeblocks' => 'Scunne le indervalle de blocche',
@@ -15068,71 +14926,74 @@ Vide [[Special:BlockList|\'a liste de le IP bloccate]] pe revedè le blocche.',
 	'blocklist-target' => 'Destinazione',
 	'blocklist-expiry' => 'Scade',
 	'blocklist-by' => 'Amministrazioe de le blocche',
-	'blocklist-params' => 'Parametre d\'u blocche',
+	'blocklist-params' => "Parametre d'u blocche",
 	'blocklist-reason' => 'Mutive',
-	'blocklist-nousertalk' => 'Non ge puè cangià \'a pàgene de le \'ngazzaminde toje',
+	'blocklist-nousertalk' => "Non ge puè cangià 'a pàgene de le 'ngazzaminde toje",
 	'blocklink' => 'blocche',
 	'blocklogpage' => 'Archivije de le Bloccaminde',
-	'blocklog-showlog' => 'Stu utende ha state bloccate precedendemende.
-L\'archivije de le bloccaminde \'u puè acchià aqquà sotte pe riferimende:',
-	'blocklog-showsuppresslog' => 'Stu utende ha state bloccate e scunnute precedendemende.
-L\'archivije de le soppressiune \'u puè acchià aqquà sotte pe riferimende:',
-	'blocklogentry' => 'blocchete [[$1]] pe \'nu timbe de $2 $3',
-	'blocklogtext' => 'Quiste è l\'archivije de l\'aziune de blocche e sblocche pe l\'utinde.
-L\'indirizze IP automaticamende bloccate non ge stonne jndr\'à liste.
-Vide \'a [[Special:BlockList|liste de le IP bloccate]] pa liste de le operaziune de ban e blocche ca stonne attive mò.',
-	'block-log-flags-anononly' => 'sulamende l\'utinde anonime',
-	'block-log-flags-nocreate' => 'ccreazione de le cunde utinde disabbilitete',
+	'blocklog-showlog' => "Stu utende ha state bloccate precedendemende.
+L'archivije de le bloccaminde 'u puè acchià aqquà sotte pe riferimende:",
+	'blocklog-showsuppresslog' => "Stu utende ha state bloccate e scunnute precedendemende.
+L'archivije de le soppressiune 'u puè acchià aqquà sotte pe riferimende:",
+	'blocklogentry' => "blocchete [[$1]] pe 'nu timbe de $2 $3",
+	'blocklogtext' => "Quiste è l'archivije de l'aziune de blocche e sblocche pe l'utinde.
+L'indirizze IP automaticamende bloccate non ge stonne jndr'à liste.
+Vide 'a [[Special:BlockList|liste de le IP bloccate]] pa liste de le operaziune de ban e blocche ca stonne attive mò.",
+	'block-log-flags-anononly' => "sulamende l'utinde anonime",
 	'block-log-flags-noautoblock' => 'auto blocche disabbilitete',
 	'block-log-flags-noemail' => 'e-mail blocchete',
-	'block-log-flags-nousertalk' => 'non ge puè cangià \'a pàgene de le \'ngazzaminde toje',
+	'block-log-flags-nousertalk' => "non ge puè cangià 'a pàgene de le 'ngazzaminde toje",
 	'block-log-flags-angry-autoblock' => 'auto blocche avanzate abbilitate',
-	'block-log-flags-hiddenname' => 'nome de l\'utende scunnute',
+	'block-log-flags-hiddenname' => "nome de l'utende scunnute",
 	'blockme' => 'Bloccheme',
 	'bydate' => 'pe date',
-	'bad_image_list' => '\'U formete jè \'u seguende:
+	'bad_image_list' => "'U formete jè 'u seguende:
 
-Sulamende le eleminde d\'a liste (le linee ca accumènzene cu *) sonde considerete.
-\'U prime collegamende sus a \'na linea addà essere \'nu collegamende a \'nu fail cattive.
-Tutte le sottosequenze ca appondene a stessa linea sonde considerete eccezziune, p.e. le pàggene addò \'u fail pò sce \'\'inlain\'\'.',
+Sulamende le eleminde d'a liste (le linee ca accumènzene cu *) sonde considerete.
+'U prime collegamende sus a 'na linea addà essere 'nu collegamende a 'nu fail cattive.
+Tutte le sottosequenze ca appondene a stessa linea sonde considerete eccezziune, p.e. le pàggene addò 'u fail pò sce ''inlain''.",
 	'blankpage' => 'Pàgene vacande',
-];
+);
 
-$messages['ru'] = [
+$messages['ru'] = array(
 	'broken-file-category' => 'Страницы с неработающими файловыми ссылками',
 	'badaccess' => 'Ошибка доступа',
 	'badaccess-group0' => 'У вас недостаточно прав на выполнение запрошенного действия.',
-	'badaccess-groups' => 'Запрошенное действие могут выполнять только участники из {{PLURAL:$2|группы|групп}} «$1».',
-	'badarticleerror' => 'Это действие не может быть выполнено на данной странице.',
+	'badaccess-groups' => 'Запрошенное действие могут выполнять только участники из {{PLURAL:$2|группы|групп}} $1.',
+	'badarticleerror' => 'Это действие не может быть выполнено на данной странице. Возможно, страница была удалена на момент вашего запроса к ней.',
 	'badtitle' => 'Недопустимое название',
-	'badtitletext' => 'Запрашиваемое название страницы неправильно, пусто, либо неправильно указано межъязыковое или интервики название. Возможно, в названии используются недопустимые символы.',
+	'badtitletext' => 'Запрашиваемое название страницы недопустимо, пустое или неправильно указано межъязыковое название.
+Возможно, в названии используются недопустимые символы.',
 	'badretype' => 'Введённые вами пароли не совпадают.',
 	'blocked-mailpassword' => 'Редактирование с вашего IP-адреса запрещено, поэтому заблокирована и функция восстановления пароля.',
-	'bold_sample' => 'Полужирное начертание',
-	'bold_tip' => 'Полужирное начертание',
+	'bold_sample' => 'Полужирный текст',
+	'bold_tip' => 'Полужирный текст',
 	'blockedtitle' => 'Участник заблокирован',
-	'blockedtext' => '\'\'\'Ваша учётная запись или IP-адрес заблокированы.\'\'\'
+	'blockedtext' => '<big>\'\'\'Ваша учётная запись или IP-адрес заблокированы.\'\'\'</big>
 
-Блокировка произведена администратором $1.
-Указана следующая причина: «\'\'$2\'\'».
+<div id="mw-message-blockedtext" style="border:1px solid black; padding-left:0.5em;">
+Блокировка произведена участником $1.
 
+*Причина блокировки: «\'\'$2\'\'».
 * Начало блокировки: $8
 * Окончание блокировки: $6
 * Цель блокировки: $7
+* ID блокировки: #$5
+* Ваш IP адрес: $3
+</div>
 
-Вы можете связаться с $1 или любым другим [[{{MediaWiki:Grouppage-sysop}}|администратором]], чтобы обсудить блокировку.
-
-Ваш IP-адрес — $3, идентификатор блокировки — $5.
-Пожалуйста, указывайте эти сведения в любых своих обращениях.',
+Вы можете связаться с $1 или любым другим [[Special:ListUsers|{{MediaWiki:group-sysop-member}}]], чтобы обсудить блокировку.
+Пожалуйста, приводите все указанные выше сведения в своих обращениях.',
 	'blockednoreason' => 'причина не указана',
 	'blocked-notice-logextract' => 'Этот участник в данный момент заблокирован.
 Ниже приведена последняя запись из журнала блокировок:',
-	'badsig' => 'Неверная подпись. Проверьте корректность HTML-тегов.',
+	'badsig' => 'Неверная подпись.
+Проверьте корректность HTML-тегов.',
 	'badsiglength' => 'Слишком длинная подпись.
 Подпись не должна превышать $1 {{PLURAL:$1|символа|символов|символов}}.',
 	'boteditletter' => 'б',
-	'badfilename' => 'Название файла было изменено на $1.',
-	'backend-fail-stream' => 'Не удалось транслировать файл $1.',
+	'badfilename' => 'Название файла было изменено на «$1».',
+	'backend-fail-stream' => 'Не удалось отправить файл $1.',
 	'backend-fail-backup' => 'Невозможно сделать резервную копию файла $1.',
 	'backend-fail-notexists' => 'Файл $1 не существует.',
 	'backend-fail-hashes' => 'Не удалось получить хэши файлов для сравнения.',
@@ -15153,7 +15014,7 @@ $messages['ru'] = [
 	'backend-fail-connect' => 'Не удалось подключиться к хранилищу «$1».',
 	'backend-fail-internal' => 'Произошла неизвестная ошибка в хранилище «$1».',
 	'backend-fail-contenttype' => 'Не удалось определить тип содержимого файла, чтобы сохранить его в «$1».',
-	'backend-fail-batchsize' => 'Хранилище болучило блок из $1 {{PLURAL:$1|файловой операции|файловых операций|файловых операций}}, ограничение составляет $2 {{PLURAL:$1|операцию|операции|файловых операций}}.',
+	'backend-fail-batchsize' => 'Хранилище получило пакет из $1 {{PLURAL:$1|файловой операции|файловых операций|файловых операций}}, ограничение составляет $2 {{PLURAL:$1|операцию|операции|файловых операций}}.',
 	'brokenredirects' => 'Разорванные перенаправления',
 	'brokenredirectstext' => 'Следующие перенаправления указывают на несуществующие страницы:',
 	'brokenredirects-edit' => 'править',
@@ -15163,25 +15024,24 @@ $messages['ru'] = [
 	'booksources-isbn' => 'ISBN:',
 	'booksources-go' => 'Найти',
 	'booksources-text' => 'На этой странице приведён список ссылок на сайты, где вы, возможно, найдёте дополнительную информацию о книге. Это интернет-магазины и системы поиска в библиотечных каталогах.',
-	'booksources-invalid-isbn' => 'Указанный номер ISBN, судя по всему, содержит ошибку. Пожалуйста, проверьте, что при переносе номера из первоисточника не возникло искажений.',
+	'booksources-invalid-isbn' => 'Указанный номер ISBN, судя по всему, содержит ошибку. Пожалуйста, проверьте, что при переносе номера из первоисточника не возникло ошибки.',
 	'blanknamespace' => '(основное)',
 	'block' => 'Блокировка участника',
 	'blockip' => 'Заблокировать',
 	'blockip-title' => 'Блокирование участника',
 	'blockip-legend' => 'Блокировка участника',
-	'blockiptext' => 'Используйте форму ниже, чтобы заблокировать возможность записи с определённого IP-адреса.
-Это может быть сделано только для предотвращения вандализма и только в соответствии с [[{{MediaWiki:Policy-url}}|правилами]].
-Ниже укажите конкретную причину (к примеру, процитируйте некоторые страницы с признаками вандализма).',
-	'badipaddress' => 'IP-адрес записан в неправильном формате, или участника с таким именем не существует.',
+	'blockiptext' => 'Используйте форму ниже, чтобы заблокировать правки участника или IP-адреса.
+Подробнее смотрите [[Справка:Блокирование]].',
+	'badipaddress' => 'IP-адрес неправильный.',
 	'blockipsuccesssub' => 'Блокировка произведена',
-	'blockipsuccesstext' => '[[Special:Contributions/$1|«$1»]] заблокирован.<br />
+	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] заблокирован.<br />
 См. [[Special:BlockList|список заблокированных IP-адресов]].',
 	'blocklist' => 'Заблокированные участники',
-	'blocklist-userblocks' => 'Скрыть блокировки учётных записей',
+	'blocklist-userblocks' => 'Скрыть блокировки участников',
 	'blocklist-tempblocks' => 'Скрыть временные блокировки',
 	'blocklist-addressblocks' => 'Скрыть блокировки отдельных IP',
 	'blocklist-rangeblocks' => 'Скрыть блокировки диапазонов',
-	'blocklist-timestamp' => 'Дата/время',
+	'blocklist-timestamp' => 'Время/дата',
 	'blocklist-target' => 'Цель',
 	'blocklist-expiry' => 'Истекает',
 	'blocklist-by' => 'Заблокировавший администратор',
@@ -15195,8 +15055,7 @@ $messages['ru'] = [
 	'blocklog-showsuppresslog' => '{{GENDER:$1|Этот участник уже заблокирован и скрыт|Эта участница уже заблокирована и скрыта}}. Журнал сокрытий приведён ниже:',
 	'blocklogentry' => 'заблокировал [[$1]] на период $2 $3',
 	'blocklogtext' => 'Журнал блокировок и разблокировок участников. Автоматически блокируемые IP-адреса здесь не указываются. См. [[Special:BlockList|список текущих блокировок]].',
-	'block-log-flags-anononly' => 'только анонимные пользователи',
-	'block-log-flags-nocreate' => 'запрещена регистрация учётных записей',
+	'block-log-flags-anononly' => 'только анонимные участники',
 	'block-log-flags-noautoblock' => 'автоблокировка отключена',
 	'block-log-flags-noemail' => 'запрещена отправка писем',
 	'block-log-flags-nousertalk' => 'не может править свою страницу обсуждения',
@@ -15223,9 +15082,18 @@ Avatar4.jpg
 Avatar5.jpg
 Avatar6.jpg',
 	'button-createpage' => 'Добавить страницу',
-];
+	'backlinksubtitle' => '← $1',
+	'brokenredirects-summary' => '',
+	'booksources-summary' => '',
+	'blocklist-summary' => '',
+	'block-log-flags-nocreate' => 'запрещена регистрация учётных записей',
+	'bitrate-petabits' => '$1 Пб/с',
+	'bitrate-exabits' => '$1Ebps',
+	'bitrate-zetabits' => '$1Zbps',
+	'bitrate-yottabits' => '$1Ybps',
+);
 
-$messages['rue'] = [
+$messages['rue'] = array(
 	'broken-file-category' => 'Сторінкы, што ся одказують на неекзістуючі файлы',
 	'badaccess' => 'Хыба оправнїня',
 	'badaccess-group0' => 'Вам не є поволено выконавати тоту дїю.',
@@ -15239,19 +15107,19 @@ $messages['rue'] = [
 	'bold_sample' => 'Тучный текст',
 	'bold_tip' => 'Шырокый текст',
 	'blockedtitle' => 'Хоснователь є блокованый',
-	'blockedtext' => '\'\'\'Ваше хосновательске мено або IP адреса была заблокована.\'\'\'
+	'blockedtext' => "'''Ваше хосновательске мено або IP адреса была заблокована.'''
 
 Блокованя зробив $1.
-Причіна є \'\'$2\'\'.
+Причіна є ''$2''.
 
 * Початок блокованя: $8
 * Конец блокованя: $6
 * Блокованый хоснователь: $7
 
 Можете контактовати $1 або іншого [[{{MediaWiki:Grouppage-sysop}}|адміністратора]].
-Уважте, же не можете поужыти \'Послати e-mail\', кідь не маєте платну адресу ел. пошты во вашых [[Special:Preferences|наставлїня конта]] і кідь вам тота можность не была заказана.
+Уважте, же не можете поужыти 'Послати e-mail', кідь не маєте платну адресу ел. пошты во вашых [[Special:Preferences|наставлїня конта]] і кідь вам тота можность не была заказана.
 Ваша IP адреса є $3, і ID блокованя є #$5.
-Просиме Вас, пиште тоты детайлы во вшыткых запытах на адміністратора.',
+Просиме Вас, пиште тоты детайлы во вшыткых запытах на адміністратора.",
 	'blockednoreason' => 'причіна не была задана',
 	'blocked-notice-logextract' => 'Тот хоснователь є теперь блокованый.
 Послїднїй запис в лоґах блоковань є такый:',
@@ -15302,7 +15170,6 @@ $messages['rue'] = [
 	'blocklogentry' => 'заблокoвав [[$1]] на термін $2 $3',
 	'blocklogtext' => 'Тото є книга блокованя і одблокованя хоснователїв. Автоматічно блокованы IP-адресы не суть выписаны. Попозерайте ся на  [[Special:BlockList|список блокованя IP]] з выписом актуалный заказів і блоковань.',
 	'block-log-flags-anononly' => 'лем анонімны хоснователї',
-	'block-log-flags-nocreate' => 'вытваряня конт не поволене',
 	'block-log-flags-noautoblock' => 'автоматічне блокованя выпнуте',
 	'block-log-flags-noemail' => 'е-маіл блокованый',
 	'block-log-flags-nousertalk' => 'не може едітовати властну сторінку діскузії',
@@ -15317,21 +15184,21 @@ $messages['rue'] = [
 Першый одказ рядка має быти одказом на планый файл.
 Далшы одказы у тім самім рядку будуть уважены як выняткы, наприклад сторінкы, де зображіня може быти вложене.',
 	'blankpage' => 'Порожня сторінка',
-];
+);
 
-$messages['rup'] = [
+$messages['rup'] = array(
 	'brokenredirects-edit' => 'Alãxiri',
 	'brokenredirects-delete' => 'Ashcirdzire',
 	'booksources-go' => 'Du-vã',
-];
+);
 
-$messages['ruq'] = [
+$messages['ruq'] = array(
 	'brokenredirects-edit' => 'Alãxiri',
 	'brokenredirects-delete' => 'Ashcirdzire',
 	'booksources-go' => 'Du-vã',
-];
+);
 
-$messages['ruq-cyrl'] = [
+$messages['ruq-cyrl'] = array(
 	'bold_sample' => 'Ескрире алдин',
 	'bold_tip' => 'Ескрире алдин',
 	'boteditletter' => 'б',
@@ -15345,9 +15212,9 @@ $messages['ruq-cyrl'] = [
 Прима легајтурај де пе линие требуие се фие спре ун фишиер дефецтуос.
 
 Орице легајтури це урмеазај пе аценаши линие сунт цонсидераете еџцепћии, дицај пажи унде фишиерул поате пајреа инцлус дирецт.',
-];
+);
 
-$messages['ruq-latn'] = [
+$messages['ruq-latn'] = array(
 	'bold_sample' => 'Eskrire aldin',
 	'bold_tip' => 'Eskrire aldin',
 	'boteditletter' => 'b',
@@ -15361,9 +15228,9 @@ Numai elementîle unei liste sunt luate en consideraere. (Açestea sunt linii ce
 Prima legătură de pe linie trebuie se fie spre un fişier defectuos.
 
 Orice legături ce urmează pe acenaşi linie sunt consideraete excepţii, dică paži unde fişierul poate părea inclus direct.',
-];
+);
 
-$messages['sa'] = [
+$messages['sa'] = array(
 	'broken-file-category' => 'भग्नसम्बन्धैः युक्तानि पृष्ठाणि',
 	'badaccess' => 'अनुज्ञा-प्रमादः',
 	'badaccess-group0' => 'भवदर्थम्, अत्र प्रार्थितक्रियायाः प्रवर्तनं न अनुमतम्।',
@@ -15395,7 +15262,6 @@ $messages['sa'] = [
 	'blocklink' => 'अवरोधः क्रियताम्',
 	'blocklogpage' => 'अवरोधानां सूची',
 	'blocklogentry' => '[[$1]] इत्येतद् अवरुद्धम्, $2 $3 इति अवसान-समयेन सह',
-	'block-log-flags-nocreate' => 'सदस्यता प्राप्तिः अवरुद्धा अस्ति',
 	'bad_image_list' => 'रूपम् एवम् अस्ति -
 
 केवलं सूच्यन्तर्गताः विषयाः (* इति चिन्हात् आरभमाणाः पंक्तयः)परामृष्टाः।
@@ -15403,9 +15269,9 @@ $messages['sa'] = [
 प्रथमः सम्पर्कतन्तुः दोषपूर्णां सञ्चिकां प्रत्येव गच्छेत्।
 तस्याम् एव पङ्क्तौ उत्तरोत्तरसम्पर्कतन्तवः अपवादाः ज्ञेयाः। अर्थात् येषु पृष्ठेषु एषा सञ्चिका योजिता स्यात्।',
 	'blankpage' => 'रिक्तानि पृष्ठानि',
-];
+);
 
-$messages['sah'] = [
+$messages['sah'] = array(
 	'broken-file-category' => 'Билэҕэ сигэлэрэ алҕастаах сирэйдэр',
 	'badaccess' => 'Сатаан киирбэтэ',
 	'badaccess-group0' => 'Эн бу дьайыыны оҥорор кыаҕыҥ суох.',
@@ -15419,10 +15285,10 @@ $messages['sah'] = [
 	'bold_sample' => 'Модьу бичик',
 	'bold_tip' => 'Модьу бичик',
 	'blockedtitle' => 'Кыттааччы уларытар кыаҕа быһылынна',
-	'blockedtext' => '\'\'\'Эн аатыҥ эбэтэр IP-аадырыһыҥ бобулуннулар.\'\'\'
+	'blockedtext' => "'''Эн аатыҥ эбэтэр IP-аадырыһыҥ бобулуннулар.'''
 
 Боппут киһи $1.
-Төрүөтэ: \'\'«$2»\'\'.
+Төрүөтэ: ''«$2»''.
 
 *Бобуллубут: $8
 *Бобуу болдьоҕо: $6
@@ -15431,7 +15297,7 @@ $messages['sah'] = [
 Эн $1 диэн киһиэхэ эбэтэр атын [[{{MediaWiki:Grouppage-sysop}}|администраатарга]] суруйан быһаарсыаххын сөп.
 Болҕой, өскө регистрацияламматах буоллаххына, эбэтэр эл. аадырыскын [[Special:Preferences|бигэргэппэтэх]] буоллаххына, эбэтэр сурук суруйарыҥ бобуллубут буоллаҕына администраатарга суруйар кыаҕыҥ суох.
 Эн IP-аадырыһыҥ — $3, бобуу нүөмэрэ — #$5.
-Ону суруккар киллэрээр.',
+Ону суруккар киллэрээр.",
 	'blockednoreason' => 'биир да биричиинэ сөп түбэспэт',
 	'blocked-notice-logextract' => 'Бу кыттааччы билигин бобуллубут.
 Манна бобуу сурунаалын бүтэһик суруга көстөр:',
@@ -15501,7 +15367,6 @@ $1 {{PLURAL:$1|бэлиэттэн|бэлиэттэн (буукубаттан)}} 
 Аптамаатынан хааччахтаммыт IP-лар манна көстүбэттэр.
 [[Special:BlockList|Билигин баар хааччахтаныылар испииһэктэрин]] көр.',
 	'block-log-flags-anononly' => 'ааттамматах кыттааччылар эрэ',
-	'block-log-flags-nocreate' => 'саҥа бэлиэтэнии бобуллубут',
 	'block-log-flags-noautoblock' => 'аптаамаатынан хааччахтааһын араарыллыбыт',
 	'block-log-flags-noemail' => 'суруктар бобуллубуттар',
 	'block-log-flags-nousertalk' => 'бэйэтин ырытар сирэйин уларытар кыаҕа суох',
@@ -15513,31 +15378,31 @@ $1 {{PLURAL:$1|бэлиэттэн|бэлиэттэн (буукубаттан)}} 
 
 Испииһэк курдук көрүҥнээх (маннык бэлиэлээх *) строкалар эрэ учуоттаныахтара. Строка бастакы ыйынньыга бобуллубут ойууну ыйыахтаах. Бу строкаҕа баар атын ыйынньыктар исключение курдук сыаналаныахтара (ол аата ойуу онно көҥүллэнэр).',
 	'blankpage' => 'Кураанах сирэй',
-];
+);
 
-$messages['sc'] = [
+$messages['sc'] = array(
 	'badaccess' => 'Permissu non bastante',
 	'badarticleerror' => 'Operatzione non cunsentida pro custa pàgina.',
 	'badtitle' => 'Tìtulu malu',
-	'badtitletext' => 'Su tìtulu de sa pàgina ch\'as pediu est bùidu, isballiau, o iscritu in is cullegamentus inter-wiki in manera non currègia o cun caràteres no amìtius.',
+	'badtitletext' => "Su tìtulu de sa pàgina ch'as pediu est bùidu, isballiau, o iscritu in is cullegamentus inter-wiki in manera non currègia o cun caràteres no amìtius.",
 	'badretype' => 'Sas passwords chi as insertau non currenspundint.',
 	'bold_sample' => 'Grassu',
 	'bold_tip' => 'Grassu',
-	'blockedtitle' => 'S\'usuàriu est istadu bloccau',
-	'blockedtext' => '\'\'\'Custu nùmene usuàriu o indiritzu IP est stadu bloccadu.\'\'\'
+	'blockedtitle' => "S'usuàriu est istadu bloccau",
+	'blockedtext' => "'''Custu nùmene usuàriu o indiritzu IP est stadu bloccadu.'''
 
-Su bloccu est stadu postu dae $1. Su motivu de su bloccu est: \'\'$2\'\'
+Su bloccu est stadu postu dae $1. Su motivu de su bloccu est: ''$2''
 
 * Su bloccu incumentzat: $8
 * Su bloccu scadit: $6
 * Intervallu de bloccu: $7
 
-Si boles, podes tzerriare $1 o un\'àteru [[{{MediaWiki:Grouppage-sysop}}|amministradore]] pro faeddare de su bloccu.
+Si boles, podes tzerriare $1 o un'àteru [[{{MediaWiki:Grouppage-sysop}}|amministradore]] pro faeddare de su bloccu.
 
-Nota ca sa funtzione \'Ispedi un\'e-mail a custu usuàriu\' no est ativa ki no est stadu registradu un\'indiritzu e-mail vàlidu in is [[Special:Preferences|preferèntzias]] tuas o ki s\'usu de custa funtzione est stadu bloccadu.
+Nota ca sa funtzione 'Ispedi un'e-mail a custu usuàriu' no est ativa ki no est stadu registradu un'indiritzu e-mail vàlidu in is [[Special:Preferences|preferèntzias]] tuas o ki s'usu de custa funtzione est stadu bloccadu.
 
-S\'indiritzu IP atuale est $3, su nùmeru ID de su bloccu est #$5.
-Pro praxere spetzìfica totu is particulares in antis in carche siat pregunta de acrarimentu.',
+S'indiritzu IP atuale est $3, su nùmeru ID de su bloccu est #$5.
+Pro praxere spetzìfica totu is particulares in antis in carche siat pregunta de acrarimentu.",
 	'blockednoreason' => 'perunu motivu indicadu',
 	'boteditletter' => 'b',
 	'badfilename' => 'Su nùmene de su file est stadu cunvertidu in "$1".',
@@ -15553,16 +15418,15 @@ Pro praxere spetzìfica totu is particulares in antis in carche siat pregunta de
 	'blockip' => 'Blocca usuàriu',
 	'blockip-title' => 'Blocca usuàriu',
 	'blockip-legend' => 'Blocca usuàriu',
-	'blockiptext' => 'Usa il modulo sottostante per bloccare l\'accesso con diritto di scrittura da uno specifico indirizzo IP. Questo blocco deve essere operato SOLO per prevenire atti di vandalismo, ed in stretta osservanza dei principi tutti della [[{{MediaWiki:Policy-url}}|policy di {{SITENAME}}]]. Il blocco non può in nessun caso essere applicato per motivi ideologici.
-Scrivi un motivo specifico per il quale questo indirizzo IP dovrebbe a tuo avviso essere bloccato (per esempio, cita i titoli di pagine eventualmente già oggetto di vandalismo editoriale).',
-	'badipaddress' => 'S\'indiritzu IP indicadu non est currègidu.',
+	'blockiptext' => "Usa il modulo sottostante per bloccare l'accesso con diritto di scrittura da uno specifico indirizzo IP. Questo blocco deve essere operato SOLO per prevenire atti di vandalismo, ed in stretta osservanza dei principi tutti della [[{{MediaWiki:Policy-url}}|policy di {{SITENAME}}]]. Il blocco non può in nessun caso essere applicato per motivi ideologici.
+Scrivi un motivo specifico per il quale questo indirizzo IP dovrebbe a tuo avviso essere bloccato (per esempio, cita i titoli di pagine eventualmente già oggetto di vandalismo editoriale).",
+	'badipaddress' => "S'indiritzu IP indicadu non est currègidu.",
 	'blockipsuccesssub' => 'Bloccu esecutivu',
 	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] è stadu bloccadu. <br />
 Abbàida sa [[Special:BlockList|lista de IP bloccados]] pro bìder sas bloccaduras.',
 	'blocklink' => 'blocca',
 	'blocklogpage' => 'Bloccos de usuàrios',
 	'blocklogentry' => 'bloccau [[$1]] pro unu tempu de $2 $3',
-	'block-log-flags-nocreate' => 'creatzione account bloccada',
 	'blockme' => 'Blocca·mi',
 	'bydate' => 'data',
 	'bad_image_list' => 'Su formau est su chi sighit:
@@ -15570,42 +15434,42 @@ Abbàida sa [[Special:BlockList|lista de IP bloccados]] pro bìder sas bloccadur
 Benint consideraus isceti is listas putadas (lìnias chi incumentzant cun *).
 Su primu cullegamentu depit èssere unu acàpiu a unu file malu (o indesiderau).
 Is acàpius chi sighint in sa matessi lìnia sunt cunsideraus comente eccetziones (ossiat, pàginas innui si podet usare su file).',
-];
+);
 
-$messages['scn'] = [
+$messages['scn'] = array(
 	'broken-file-category' => 'Pàggini ca nclùdunu file inesistenti',
 	'badaccess' => 'Pirmessi nun sufficienti',
-	'badaccess-group0' => 'Nun hai li pirmessi nicissari p\'esèquiri l\'azzioni addumannata.',
-	'badaccess-groups' => 'La funzioni addumannata è risirvata a l\'utenti ca appartèninu {{PLURAL:$2|ô gruppu|a unu dî gruppi siquenti}}: $1.',
+	'badaccess-group0' => "Nun hai li pirmessi nicissari p'esèquiri l'azzioni addumannata.",
+	'badaccess-groups' => "La funzioni addumannata è risirvata a l'utenti ca appartèninu {{PLURAL:$2|ô gruppu|a unu dî gruppi siquenti}}: $1.",
 	'badarticleerror' => 'Opirazzioni nun cunzintita pi sta pàggina.',
 	'badtitle' => 'Tìtulu nun currettu',
-	'badtitletext' => 'Lu tìtulu dâ pàggina addumannata è vacanti, erratu o cu caràttiri nun ammessi oppuru diriva di n\'erruri ntê culligamenti tra siti wiki diversi o virsioni n lingui diversi dû stissu situ.',
-	'badretype' => 'La \'\'password\'\' chi mittisti nun è bona.',
+	'badtitletext' => "Lu tìtulu dâ pàggina addumannata è vacanti, erratu o cu caràttiri nun ammessi oppuru diriva di n'erruri ntê culligamenti tra siti wiki diversi o virsioni n lingui diversi dû stissu situ.",
+	'badretype' => "La ''password'' chi mittisti nun è bona.",
 	'blocked-mailpassword' => 'Pi privèniri abbusi, nun è cunzititu usari la funzioni "Nvia nova password" d\'un ndirizzu IP bluccatu.',
 	'bold_sample' => 'Grassettu',
 	'bold_tip' => 'Grassettu',
 	'blockedtitle' => 'Utenti bluccatu.',
-	'blockedtext' => '\'\'\'Stu nomu d\'utenti o nnirizzu IP havi statu bluccatu.\'\'\'
+	'blockedtext' => "'''Stu nomu d'utenti o nnirizzu IP havi statu bluccatu.'''
 
-Lu bloccu fu fattu di $1. Lu mutivu dû bloccu è: \'\'$2\'\'.
+Lu bloccu fu fattu di $1. Lu mutivu dû bloccu è: ''$2''.
 
 * Accuminzata dû bloccu: $8
 * Fini dû bloccu: $6
 * Ntirvallu dû bloccu: $7
 
-Poi cuntattari a $1 o a n\'àutru [[{{MediaWiki:Grouppage-sysop}}|amministraturi]] pi discùtiri dû bloccu.
+Poi cuntattari a $1 o a n'àutru [[{{MediaWiki:Grouppage-sysop}}|amministraturi]] pi discùtiri dû bloccu.
 
-Nun poi usari la carattirìstica \'manna n\'email a st\'utenti\' siddu nun è spicificatu nu nnirizzu email vàlidu nta li toi [[Special:Preferences|prifirenzi]] e siddu nun hai statu bluccatu di l\'usari.
+Nun poi usari la carattirìstica 'manna n'email a st'utenti' siddu nun è spicificatu nu nnirizzu email vàlidu nta li toi [[Special:Preferences|prifirenzi]] e siddu nun hai statu bluccatu di l'usari.
 
 Lu tò nnirizzu IP attuali è $3, e lu nùmmiru ID dû bloccu è #$5.
 
-Spicìfica tutti li dittagghi pricidenti nta quarsiasi addumannata di chiarimenti.',
+Spicìfica tutti li dittagghi pricidenti nta quarsiasi addumannata di chiarimenti.",
 	'blockednoreason' => 'nudda motivazioni ndicata',
 	'badsig' => 'Erruri ntâ firma nun standard, virificari li tag HTML.',
 	'badsiglength' => 'Lu Nickname è troppu longu. Nun pò aviri cchiù di $1 {{PLURAL:$1|caràttiri|caràttiri}}.',
 	'boteditletter' => 'b',
 	'badfilename' => 'Lu nomu dû file è statu cummirtutu n "$1".',
-	'brokenredirects' => 'Riinnirizzamenti (\'\'redirects\'\') rumputi.',
+	'brokenredirects' => "Riinnirizzamenti (''redirects'') rumputi.",
 	'brokenredirectstext' => 'Li rinnirizzamenti siquenti pùntanu a pàggini ca nun asìstinu:',
 	'brokenredirects-edit' => 'cancia',
 	'brokenredirects-delete' => 'cancella',
@@ -15613,23 +15477,22 @@ Spicìfica tutti li dittagghi pricidenti nta quarsiasi addumannata di chiariment
 	'booksources-search-legend' => 'Ricerca di fonti libbrari',
 	'booksources-isbn' => 'Còdici ISBN:',
 	'booksources-go' => 'Vai',
-	'booksources-text' => 'Di sèquitu veni prisintatu n\'alencu di culligamenti versu siti sterni ca vìnninu libbra novi e usati, attraversu li quali è pussìbbili ottèniri maiuri nfurmazzioni supra lu testu circatu:',
-	'booksources-invalid-isbn' => 'L\'ISBN datu pari ca nun è vàlidu; cuntrolla l\'erruri di ricupiatura dâ surgenti urigginali.',
+	'booksources-text' => "Di sèquitu veni prisintatu n'alencu di culligamenti versu siti sterni ca vìnninu libbra novi e usati, attraversu li quali è pussìbbili ottèniri maiuri nfurmazzioni supra lu testu circatu:",
+	'booksources-invalid-isbn' => "L'ISBN datu pari ca nun è vàlidu; cuntrolla l'erruri di ricupiatura dâ surgenti urigginali.",
 	'blanknamespace' => '(Principali)',
-	'blockip' => 'Blocca l\'utenti',
-	'blockip-legend' => 'Blocca l\'utenti',
-	'blockiptext' => 'Usa lu mòdulu cassutta pi bluccari la pussibbilità di scrìviri pi n\'utenti o pi nu ndirizzu IP spicìficu. Chistu s\'havi a fari sulu pi privèniri lu vannalismu e secunnu la [[{{MediaWiki:Policy-url}}|pulìtica di {{SITENAME}}]]. Scrivi na raggiùni valida ccà sutta (pi asempiu, cita li pàggini chi foru vannalizzati).',
+	'blockip' => "Blocca l'utenti",
+	'blockip-legend' => "Blocca l'utenti",
+	'blockiptext' => "Usa lu mòdulu cassutta pi bluccari la pussibbilità di scrìviri pi n'utenti o pi nu ndirizzu IP spicìficu. Chistu s'havi a fari sulu pi privèniri lu vannalismu e secunnu la [[{{MediaWiki:Policy-url}}|pulìtica di {{SITENAME}}]]. Scrivi na raggiùni valida ccà sutta (pi asempiu, cita li pàggini chi foru vannalizzati).",
 	'badipaddress' => 'Ndirizzu IP nun vàlidu.',
 	'blockipsuccesssub' => 'Bloccu esiquitu',
-	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] fu bluccatu.<br />
-Pi maggiuri nfurmazzioni, talìa la [[Special:BlockList|lista di l\'IP bluccati]] .',
+	'blockipsuccesstext' => "[[Special:Contributions/$1|$1]] fu bluccatu.<br />
+Pi maggiuri nfurmazzioni, talìa la [[Special:BlockList|lista di l'IP bluccati]] .",
 	'blocklist-nousertalk' => 'nun pò mudificari la sò pròpia pàggina di discussioni',
 	'blocklink' => 'blocca',
 	'blocklogpage' => 'Blocchi',
 	'blocklogentry' => 'hà bluccatu [[$1]]; scadenza $2 $3',
-	'blocklogtext' => 'Chistu è l\'alencu di l\'azzioni di bloccu e sbloccu utenti. Li ndirizzi IP bluccati automaticamenti nun sunu alincati. Cunzurtari l\'[[Special:BlockList|alencu IP bluccati]] pi l\'alencu dî ndirizzi e noma utenti lu cui bloccu è opirativu.',
+	'blocklogtext' => "Chistu è l'alencu di l'azzioni di bloccu e sbloccu utenti. Li ndirizzi IP bluccati automaticamenti nun sunu alincati. Cunzurtari l'[[Special:BlockList|alencu IP bluccati]] pi l'alencu dî ndirizzi e noma utenti lu cui bloccu è opirativu.",
 	'block-log-flags-anononly' => 'sulu utenti anònimi',
-	'block-log-flags-nocreate' => 'criazzioni account bluccata',
 	'block-log-flags-noautoblock' => 'bloccu automàticu disattivatu',
 	'block-log-flags-noemail' => 'email bluccati',
 	'block-log-flags-nousertalk' => 'nun pò mudificari la sò pròpia pàggina di discussioni',
@@ -15637,14 +15500,14 @@ Pi maggiuri nfurmazzioni, talìa la [[Special:BlockList|lista di l\'IP bluccati]
 	'block-log-flags-hiddenname' => 'nnomu utenti ammucciatu',
 	'blockme' => 'Blocca a mia',
 	'bydate' => 'pi data',
-	'bad_image_list' => 'Lu furmatu è lu siquenti:
+	'bad_image_list' => "Lu furmatu è lu siquenti:
 
-Vèninu cunzidirati sulu l\'alenchi puntati (righi ca accumènzanu cû sìmmulu *). Lu primu lijami supra ogni riga havi a èssiri nu lijami a nu file nun addisiatu.
-Li lijami succissivi, supra la stissa riga, sunnu cunzidirati comu eccizzioni (pàggini ntê quali lu file pò èssiri richiamatu \'n modu nurmali).',
+Vèninu cunzidirati sulu l'alenchi puntati (righi ca accumènzanu cû sìmmulu *). Lu primu lijami supra ogni riga havi a èssiri nu lijami a nu file nun addisiatu.
+Li lijami succissivi, supra la stissa riga, sunnu cunzidirati comu eccizzioni (pàggini ntê quali lu file pò èssiri richiamatu 'n modu nurmali).",
 	'blankpage' => 'Pàggina vacanti',
-];
+);
 
-$messages['sco'] = [
+$messages['sco'] = array(
 	'badaccess' => 'Permeission mishanter',
 	'badaccess-group0' => 'WARNIN: Ye arnae alloued tae dae whit you hae requestit!',
 	'badaccess-groups' => 'The action ye hae requestit is limitit tae uisers in {{PLURAL:$2|the group|ane o the groups}}: $1.',
@@ -15691,30 +15554,29 @@ Yer IP address is $3, and the block ID is #$5. Please include this address in on
 	'blocklogpage' => 'Block log',
 	'blocklogentry' => 'blockit [[$1]] wi an expiry time o $2 $3',
 	'blocklogtext' => 'This is a log o uiser blockin an unblockin actions. Autaematically blockit IP addresses isna leetit. See the [[Special:BlockList|IP block leet]] for the leet o bans and blocks on the gae the nou.',
-	'block-log-flags-nocreate' => 'accoont-makkin blockit',
 	'bydate' => 'bi date',
-	'bad_image_list' => 'Th\' format is as follows:
+	'bad_image_list' => "Th' format is as follows:
 
-Ainlie list items (lines starting wi\' *) are considered. Th\' foremaist link oan a line mist be a link tae a ill image. Ony subsequent links oan th\' same line are considered tae be exceptions, i,e., pages whaur th\' image kin occur inline.',
-];
+Ainlie list items (lines starting wi' *) are considered. Th' foremaist link oan a line mist be a link tae a ill image. Ony subsequent links oan th' same line are considered tae be exceptions, i,e., pages whaur th' image kin occur inline.",
+);
 
-$messages['sd'] = [
+$messages['sd'] = array(
 	'badtitle' => 'غيردرست عنوان',
 	'bold_sample' => 'گهري تحرير',
 	'bold_tip' => 'گهري لکت',
 	'blockedtitle' => 'يُوزر بندشيل آهي.',
-	'blockedtext' => '\'\'\'توهان جي يوزرنانءُ يا آءِ پي کي بندشيو ويو آهي.\'\'\'
+	'blockedtext' => "'''توهان جي يوزرنانءُ يا آءِ پي کي بندشيو ويو آهي.'''
 
-بندش $1 هنئي. جڏهن ته ڄاڻايل سبب \'\'$2\'\' آهي.
+بندش $1 هنئي. جڏهن ته ڄاڻايل سبب ''$2'' آهي.
 
 
 * بندش جو آغاز: $8
 * بندش جو انجام: $6
 * بندش جو هدف: $7
 
-اهڙي روڪ تي بحث ڪرڻ لاءِ توهان $1 يا ڪنهن ٻي [[{{MediaWiki:Grouppage-sysop}}|منتظم]] سان رابطو ڪري سگھو ٿا. جيڪڏهن توهان جو درست [[Special:ترجيحات|کاتو ترجيحات]] ۾ درست برق ٽپال پتو درج ٿيل نه آهي ته توهان \'هن يوزر کي برق ٽپال ڪريو\' وارو فيچر نه ٿا 
-You cannot use the \'e-mail this user\' feature unless a valid e-mail address is specified in your [[Special:Preferences|account preferences]] and you have not been blocked from using it.
-استعمال ڪري سگھو. توهان جو هاڻوڪو آءِ پي پتو $3 آهي، ۽ بندش سڃاڻپ $5 آهي. مهرباني ڪري ڪنهن به پڇا ڳاڇا يا لهوچڙ  لاءِ انهن مان ڪنهن هڪ يا ٻنهي جو حوالو ڏيندا.',
+اهڙي روڪ تي بحث ڪرڻ لاءِ توهان $1 يا ڪنهن ٻي [[{{MediaWiki:Grouppage-sysop}}|منتظم]] سان رابطو ڪري سگھو ٿا. جيڪڏهن توهان جو درست [[Special:ترجيحات|کاتو ترجيحات]] ۾ درست برق ٽپال پتو درج ٿيل نه آهي ته توهان 'هن يوزر کي برق ٽپال ڪريو' وارو فيچر نه ٿا 
+You cannot use the 'e-mail this user' feature unless a valid e-mail address is specified in your [[Special:Preferences|account preferences]] and you have not been blocked from using it.
+استعمال ڪري سگھو. توهان جو هاڻوڪو آءِ پي پتو $3 آهي، ۽ بندش سڃاڻپ $5 آهي. مهرباني ڪري ڪنهن به پڇا ڳاڇا يا لهوچڙ  لاءِ انهن مان ڪنهن هڪ يا ٻنهي جو حوالو ڏيندا.",
 	'blockednoreason' => 'سبب اڻڄاڻايل',
 	'badsiglength' => 'اها صحيح تمام وڏي آهي.
 $1 {{PLURAL:$1|اکر|اکرن}} کان ننڍي هوڻ گھرجي.',
@@ -15731,36 +15593,36 @@ $1 {{PLURAL:$1|اکر|اکرن}} کان ننڍي هوڻ گھرجي.',
 	'blocklogentry' => '"[[$1]]" کي بندشيو ويو $2 $3 جي عرصي لاء',
 	'block-log-flags-anononly' => 'فقط نامعلوم يوزرس',
 	'bydate' => 'تاريخوار',
-];
+);
 
-$messages['sdc'] = [
+$messages['sdc'] = array(
 	'badaccess' => 'Primmissi no suffizenti',
-	'badaccess-group0' => 'Nò si diponi di li primmissi nezzessàri pa eseguì l\'azioni dumandadda.',
+	'badaccess-group0' => "Nò si diponi di li primmissi nezzessàri pa eseguì l'azioni dumandadda.",
 	'badaccess-groups' => 'La funzioni dumandadda è riseivvadda a li utenti chi apparthènini a unu di li sighenti gruppi: $1.',
 	'badarticleerror' => 'Operazioni no cunsintidda pa chistha pàgina.',
 	'badtitle' => 'Tìturu no currettu',
-	'badtitletext' => 'Lu tìturu di la pàgina dumandadda è bioddu, ibbagliaddu o cun caràtteri no ammessi oppuru deriba da un errori i\' li cullegamenti tra siti wiki dibessi o versioni in linghi dibessi di lu matessi situ.',
-	'badretype' => 'Li paràuri d\'órdhini insiriddi nò cuinzidhini tra èddi.',
+	'badtitletext' => "Lu tìturu di la pàgina dumandadda è bioddu, ibbagliaddu o cun caràtteri no ammessi oppuru deriba da un errori i' li cullegamenti tra siti wiki dibessi o versioni in linghi dibessi di lu matessi situ.",
+	'badretype' => "Li paràuri d'órdhini insiriddi nò cuinzidhini tra èddi.",
 	'blocked-mailpassword' => 'Pa pribinì abusi, nò è cunsintiddu usà la funzioni "Invia noba paràura d\'órdhini" da un indirizzu IP broccaddu.',
 	'bold_sample' => 'Grassetu',
 	'bold_tip' => 'Grassetu',
 	'blockedtitle' => 'Utenti broccaddu.',
-	'blockedtext' => '\'\'\'Chisth\'innòmmu utenti o indirizzu IP so isthaddi broccaddi.\'\'\'
+	'blockedtext' => "'''Chisth'innòmmu utenti o indirizzu IP so isthaddi broccaddi.'''
 
-Lu broccu è isthaddu dizzisu da $1. La rasgioni frunidda è: \'\'$2\'\'.
+Lu broccu è isthaddu dizzisu da $1. La rasgioni frunidda è: ''$2''.
 
 * Prinzìpiu di lu broccu: $8
 * Ischadènzia: $6
 * Duradda: $7
 
-Pói ciamà $1 o un\'althru [[{{MediaWiki:Grouppage-sysop}}|amministhradore]] pa ciaramiddà di lu broccu.
+Pói ciamà $1 o un'althru [[{{MediaWiki:Grouppage-sysop}}|amministhradore]] pa ciaramiddà di lu broccu.
 
-Attinzioni chi la funzioni \'\'\'Ischribì a l\'utenti\'\'\' nò è attiba si nò è isthaddu rigisthraddu un\'indirizzu di postha erettrònica variddu i\' li [[Special:Preferences|prifirenzi]].
+Attinzioni chi la funzioni '''Ischribì a l'utenti''' nò è attiba si nò è isthaddu rigisthraddu un'indirizzu di postha erettrònica variddu i' li [[Special:Preferences|prifirenzi]].
 
-Si vói ciaramiddanne, pa piazeri prizzisa sempri lu nùmaru di lu broccu (ID #$5) e l\'indirizzu IP tóiu ($3).',
+Si vói ciaramiddanne, pa piazeri prizzisa sempri lu nùmaru di lu broccu (ID #$5) e l'indirizzu IP tóiu ($3).",
 	'blockednoreason' => 'nisciuna mutibazioni indicadda',
-	'badsig' => 'Errori i\' la fimma nò standard, verifiggà i tag HTML.',
-	'badsiglength' => 'L\'ingiugliu sciubaraddu è troppu longu, nò débi prubassà $1 {{PLURAL:$1|caratteri|caratteri}}.',
+	'badsig' => "Errori i' la fimma nò standard, verifiggà i tag HTML.",
+	'badsiglength' => "L'ingiugliu sciubaraddu è troppu longu, nò débi prubassà $1 {{PLURAL:$1|caratteri|caratteri}}.",
 	'boteditletter' => 'b',
 	'badfilename' => 'L\'innòmmu di lu file è isthaddu ciambaddu in "$1".',
 	'brokenredirects' => 'Rinvii ibbagliaddi',
@@ -15770,29 +15632,28 @@ Si vói ciaramiddanne, pa piazeri prizzisa sempri lu nùmaru di lu broccu (ID #$
 	'booksources' => 'Rifirimenti di libri',
 	'booksources-search-legend' => 'Zercha rifirimenti di libri',
 	'booksources-go' => 'Vai',
-	'booksources-text' => 'Inogghi v\'è una listha di cullegamenti bessu siti estherni chi vindani libri nobi e usaddi, attrabessu li quari è pussìbiri uttinì maggiori infuimmazioni i\' lu testhu zirchaddu.',
+	'booksources-text' => "Inogghi v'è una listha di cullegamenti bessu siti estherni chi vindani libri nobi e usaddi, attrabessu li quari è pussìbiri uttinì maggiori infuimmazioni i' lu testhu zirchaddu.",
 	'blanknamespace' => '(Prinzipari)',
 	'blockip' => 'Brocca utenti',
 	'badipaddress' => 'Indirizzu IP invàriddu',
 	'blockipsuccesssub' => 'Broccu eseguiddu',
-	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] è isthaddu broccaddu.
-<br />Cunsulthà la [[Special:BlockList|listha di l\'IP broccaddi]] pa vidé i brocchi attibi.',
+	'blockipsuccesstext' => "[[Special:Contributions/$1|$1]] è isthaddu broccaddu.
+<br />Cunsulthà la [[Special:BlockList|listha di l'IP broccaddi]] pa vidé i brocchi attibi.",
 	'blocklink' => 'brocca',
 	'blocklogpage' => 'Brocchi',
-	'blocklogentry' => 'à broccaddu [[$1]] cu\' l\'ischadènzia $2 $3',
-	'blocklogtext' => 'Chisthu è l\'erencu di l\'azioni di broccu e ibbruccu utenti. Li indirizzi IP broccaddi automatiggamenti nò so erencaddi. Cunsulthà la [[Special:BlockList|listha di l\'IP broccaddi]] pa l\'erencu di l\'indirizzi e innòmmi utenti chi so broccaddi abà.',
+	'blocklogentry' => "à broccaddu [[$1]] cu' l'ischadènzia $2 $3",
+	'blocklogtext' => "Chisthu è l'erencu di l'azioni di broccu e ibbruccu utenti. Li indirizzi IP broccaddi automatiggamenti nò so erencaddi. Cunsulthà la [[Special:BlockList|listha di l'IP broccaddi]] pa l'erencu di l'indirizzi e innòmmi utenti chi so broccaddi abà.",
 	'block-log-flags-anononly' => 'soru utenti anònimi',
-	'block-log-flags-nocreate' => 'criazioni registhrazioni broccadda',
 	'block-log-flags-noautoblock' => 'broccu otomàtiggu',
 	'block-log-flags-noemail' => 'postha erettrònica broccadda',
 	'blockme' => 'Broccami',
 	'bydate' => 'data',
-	'bad_image_list' => 'Lu fuimmaddu è lu sighenti:
+	'bad_image_list' => "Lu fuimmaddu è lu sighenti:
 
-So cunsidaraddi soru l\'erenchi puntaddi (righi ch\'ischumenzani cu\' lu caràtteri *). Lu primmu cullegamentu i\' ugna riga déb\'assé un cullegamentu a un file no disizadda. I cullugamenti chi veni appoi, i\' la matessi riga, so cunsidaraddi eccezzioni (ossia, pàgini i\' li quari l\'immàgina pó assé riciamadda noimmaimmenti).',
-];
+So cunsidaraddi soru l'erenchi puntaddi (righi ch'ischumenzani cu' lu caràtteri *). Lu primmu cullegamentu i' ugna riga déb'assé un cullegamentu a un file no disizadda. I cullugamenti chi veni appoi, i' la matessi riga, so cunsidaraddi eccezzioni (ossia, pàgini i' li quari l'immàgina pó assé riciamadda noimmaimmenti).",
+);
 
-$messages['se'] = [
+$messages['se'] = array(
 	'badarticleerror' => 'Doaimma ii leat vejolaš dahkat dán siiddus.',
 	'badtitle' => 'Feaila bájilčállagis',
 	'badtitletext' => 'Siiddu bájilčállagis lei feaila, dahje dat lei guoros dahje boastut ráhkaduvvon wikiid- dahje gielaidgaskasaš liŋka.',
@@ -15815,14 +15676,14 @@ $messages['se'] = [
 	'blockip' => 'Eastte rievdadusaid',
 	'badipaddress' => 'IP-čujuhus lea boastut.',
 	'blockipsuccesssub' => 'Easttan lihkosmuvai',
-	'blockipsuccesstext' => 'Geavaheaddji dahje IP-čujuhus \'\'\'$1\'\'\' lea eston.<br />Dálá easttut gávdnot [[Special:BlockList|easttolisttus]].',
+	'blockipsuccesstext' => "Geavaheaddji dahje IP-čujuhus '''$1''' lea eston.<br />Dálá easttut gávdnot [[Special:BlockList|easttolisttus]].",
 	'bydate' => 'beaivemeari mielde',
-];
+);
 
-$messages['sei'] = [
+$messages['sei'] = array(
 	'badaccess' => 'Römjde permicion',
 	'badaccess-group0' => 'Menepermicion executan accion z hecocmíiit.',
-	'badaccess-groups' => 'Accion hecocmíiit coccebj diilimáat czo\'d $1.',
+	'badaccess-groups' => "Accion hecocmíiit coccebj diilimáat czo'd $1.",
 	'badarticleerror' => 'Jan accion neperformon jan páhina iti.',
 	'badtitle' => 'Ahisharliit',
 	'badtitletext' => 'Zo páhina coccebj ahisharliit zo.
@@ -15832,17 +15693,17 @@ Jan pos-coccebj plusöxde 1 jöx 1 characterám jan nepos-coccebj usadas titlen�
 	'bold_sample' => 'Text ccomca',
 	'bold_tip' => 'Text ccomca',
 	'blockedtitle' => 'Caitom blockámit',
-	'blockedtext' => '\'\'\'Hexuatl jöx adressade IP cáablockom.\'\'\'
+	'blockedtext' => "'''Hexuatl jöx adressade IP cáablockom.'''
 
-Block zo expondal $1. Rasonna zo coccebj: \'\'$2\'\'.
+Block zo expondal $1. Rasonna zo coccebj: ''$2''.
 
 * Start block zo: $8
 * Xanzo block zo: $6
 * Jonzicuatl blockam zo: $7
 
 Me contactam $1 jöx pac [[{{MediaWiki:Grouppage-sysop}}|sysop]] discussom iti block zo.
-Me nenusor e-iitom päzxo hab\' adressade e-iitom validom coccebj [[Special:Preferences|mequáatlaác]] ö\'me neblockomde e-iitom.
-Me adressa IP coccebj $3 ö ID block z coccebj #$5. Includam 1 jöx 2 pac querinám iti.',
+Me nenusor e-iitom päzxo hab' adressade e-iitom validom coccebj [[Special:Preferences|mequáatlaác]] ö'me neblockomde e-iitom.
+Me adressa IP coccebj $3 ö ID block z coccebj #$5. Includam 1 jöx 2 pac querinám iti.",
 	'badsig' => 'Signatura raw invalidaw; checkom HTML tagám.',
 	'badsiglength' => 'Brazzi coccebj bajlip; brazzi correctom minusde $1 characterám.',
 	'boteditletter' => 'R',
@@ -15856,17 +15717,17 @@ Me adressa IP coccebj $3 ö ID block z coccebj #$5. Includam 1 jöx 2 pac querin
 	'blocklink' => 'blockom',
 	'block-log-flags-noemail' => 'blocköx e-iitom',
 	'bydate' => 'de datum',
-];
+);
 
-$messages['sg'] = [
+$messages['sg'] = array(
 	'broken-file-category' => 'Âlêmbëtï sô ayeke na âfängö gbê tî kuru',
 	'brokenredirects-edit' => 'fa na mbi',
 	'blanknamespace' => '(Tö)',
 	'bad_image_list' => 'Funda nî ayeke töngasô:
 Gï âkâmba tî molongö (sô atö ndâ nî na *) laâ a yeke bâa lêgë nî. Kôzo gbê tî yâ tî kâmba ôko ôko adu tî gbùe na mbênî kpäkë kuru. Âtanga tî âgbê sô na yâ tî ôko kâmba nî sô, a bâa nî töngana yê ndê, sô ^tî tene, töngana âlêmbëtï sô kuru nî alîngbi tî tua daä na gbegbê nî.',
-];
+);
 
-$messages['sgs'] = [
+$messages['sgs'] = array(
 	'badaccess' => 'Privėlėju klaida',
 	'badaccess-group0' => 'Tomstā nelēdama ivīkdītė veiksma, katruo prašiet.',
 	'badtitle' => 'Bluogs pavadėnėms',
@@ -15876,10 +15737,10 @@ $messages['sgs'] = [
 	'bold_sample' => 'Pastuorints teksts',
 	'bold_tip' => 'Pastuorintė teksta',
 	'blockedtitle' => 'Nauduotuos īr ožblokouts',
-	'blockedtext' => '\'\'\'Tamstas nauduotuojė vards a IP adresos īr ožblokouts.\'\'\'
+	'blockedtext' => "'''Tamstas nauduotuojė vards a IP adresos īr ožblokouts.'''
 
 Ožbluokava $1.
-Nuruodīta prižastis īr \'\'$2\'\'.
+Nuruodīta prižastis īr ''$2''.
 
 * Bluokavėma pradžia: $8
 * Bluokavėma pabenga: $6
@@ -15888,7 +15749,7 @@ Nuruodīta prižastis īr \'\'$2\'\'.
 Tamsta galėt sosėsėiktė so $1 a kėtu
 [[{{MediaWiki:Grouppage-sysop}}|adminėstratuoriom]], kū aptartė ožbluokavėma.
 Tamsta negalėt nauduotės funkcėjė „Rašītė laiška tam nauduotuojō“, jēgo nesot pateikis tėkra sava el. pašta adresa sava [[Special:Preferences|paskīruos nustatīmūs]] ė nesot ožblokouts nu anuos nauduojėma.
-Tamstas dabartėnis IP adresos īr $3, a bluokavėma ID īr #$5. Prašuom nuruodītė šėtā, kumet kreipiatės diel atbluokavėma.',
+Tamstas dabartėnis IP adresos īr $3, a bluokavėma ID īr #$5. Prašuom nuruodītė šėtā, kumet kreipiatės diel atbluokavėma.",
 	'blockednoreason' => 'prīžastis nier nuruodīta',
 	'badsig' => 'Neteisings parašas; patėkrinkėt HTML žīmės.',
 	'badsiglength' => 'Tamstas parašos īr par ėlgs.
@@ -15916,7 +15777,6 @@ Ana gal sodarītė ne daugiau kāp $1 {{PLURAL:$1|sėmbuolis|sėmbuolē|sėmbuol
 	'blocklogentry' => 'ožblokava „[[$1]]“, blokavėma čiesos - $2 $3',
 	'blocklogtext' => 'Čė īr nauduotuoju blokavėma ėr atblokavėma sārašos. Autuomatėškā blokoutė IP adresā nier ėšvardėntė. Jeigu nuorėt paveizėtė nūnā blokoujamus adresus, veizėkėt [[Special:BlockList|IP ožbluokavėmu istuorėjė]].',
 	'block-log-flags-anononly' => 'vėn anonėmėnē nauduotuojē',
-	'block-log-flags-nocreate' => 'privėlėju kūrėms ėšjungts',
 	'block-log-flags-noautoblock' => 'automatėnis blokavėms ėšjungts',
 	'block-log-flags-noemail' => 'e-pašts bluokouts īr',
 	'bydate' => 'palē data',
@@ -15925,9 +15785,9 @@ Ana gal sodarītė ne daugiau kāp $1 {{PLURAL:$1|sėmbuolis|sėmbuolē|sėmbuol
 Tėk eilotės, prasėdedantės *, īr itraukiamas. Pėrmuojė nūruoda eilotie tor būtė nūruoda i bluoga abruozdieli.
 Vėsas kėtas nūoruodas tuo patiuo eilotie īr laikomas ėšėmtim, tas rēšk ka poslapē, katrūs leidama iterptė abruozdieli.',
 	'blankpage' => 'Toščias poslapis',
-];
+);
 
-$messages['sh'] = [
+$messages['sh'] = array(
 	'broken-file-category' => 'Stranice sa neispravnim linkovima do datoteka',
 	'badaccess' => 'Greška pri odobrenju',
 	'badaccess-group0' => 'Nije vam dozvoljeno izvršiti akciju koju ste zahtjevali.',
@@ -15941,10 +15801,10 @@ Može sadržavati jedno ili više slova koja se ne mogu koristiti u naslovima.',
 	'bold_sample' => 'Podebljan tekst',
 	'bold_tip' => 'Podebljan tekst',
 	'blockedtitle' => 'Korisnik je blokiran',
-	'blockedtext' => '\'\'\'Vaše korisničko ime ili IP adresa je blokirana.\'\'\'
+	'blockedtext' => "'''Vaše korisničko ime ili IP adresa je blokirana.'''
 
 Blokada izvršena od strane $1.
-Dati razlog je slijedeći: \'\'$2\'\'.
+Dati razlog je slijedeći: ''$2''.
 
 *Početak blokade: $8
 *Kraj perioda blokade: $6
@@ -15952,9 +15812,9 @@ Dati razlog je slijedeći: \'\'$2\'\'.
 
 Možete kontaktirati $1 ili nekog drugog [[{{MediaWiki:Grouppage-sysop}}|administratora]] da biste razgovarali o blokadi.
 
-Ne možete koristiti opciju \'\'Pošalji e-mail korisniku\'\' osim ako niste unijeli e-mail adresu u [[Special:Preferences|Vaše postavke]].
+Ne možete koristiti opciju ''Pošalji e-mail korisniku'' osim ako niste unijeli e-mail adresu u [[Special:Preferences|Vaše postavke]].
 Vaša trenutna IP adresa je $3, a oznaka blokade je #$5.
-Molimo Vas da navedete gornje podatke u zahtjevu za deblokadu.',
+Molimo Vas da navedete gornje podatke u zahtjevu za deblokadu.",
 	'blockednoreason' => 'razlog nije naveden',
 	'blocked-notice-logextract' => 'Ovaj korisnik je trenutno blokiran.
 Posljednje stavke evidencije blokiranja možete pogledati ispod:',
@@ -16030,7 +15890,6 @@ Evidencija sakrivanja je prikazana ispod kao referenca:',
 Automatsko blokirane IP adrese nisu uspisane ovde.
 Pogledajte [[Special:BlockList|blokirane IP adrese]] za spisak trenutnih zabrana i blokiranja.',
 	'block-log-flags-anononly' => 'samo anonimni korisnici',
-	'block-log-flags-nocreate' => 'pravljenje računa onemogućeno',
 	'block-log-flags-noautoblock' => 'automatsko blokiranje onemogućeno',
 	'block-log-flags-noemail' => 'e-mail je blokiran',
 	'block-log-flags-nousertalk' => 'ne može uređivati vlastitu stranicu za razgovor',
@@ -16038,15 +15897,15 @@ Pogledajte [[Special:BlockList|blokirane IP adrese]] za spisak trenutnih zabrana
 	'block-log-flags-hiddenname' => 'korisničko ime sakriveno',
 	'blockme' => 'Blokiraj me',
 	'bydate' => 'po datumu',
-	'bad_image_list' => 'Koristi se sljedeći format:
+	'bad_image_list' => "Koristi se sljedeći format:
 
 Razmatraju se samo stavke u spisku (linije koje počinju sa *).
 Prvi link u liniji mora biti povezan sa lošom datotekom/fajlom.
-Svi drugi linkovi u istoj liniji se smatraju izuzecima, npr. kod stranica gdje se datoteka/fajl pojavljuje \'\'inline\'\'.',
+Svi drugi linkovi u istoj liniji se smatraju izuzecima, npr. kod stranica gdje se datoteka/fajl pojavljuje ''inline''.",
 	'blankpage' => 'Prazna stranica',
-];
+);
 
-$messages['shi'] = [
+$messages['shi'] = array(
 	'badaccess' => 'Anezri (uras tufit)',
 	'badaccess-group0' => 'Ur ak ittuyskar at sbadelt ma trit',
 	'badaccess-groups' => 'Ɣaylli trit at tskrt ɣid ittuyzlay ɣir imsxdamn ɣ tamsmunt{{PLURAL:$2|tamsmunt|yat ɣ timsmuna}}: $1.',
@@ -16058,8 +15917,8 @@ $messages['shi'] = [
 	'bold_tip' => 'Aḍṛiṣ iḍnin',
 	'blockedtitle' => 'lmostkhdim ad itbloka',
 	'blockednoreason' => 'ta yan sabab oritfki',
-	'blockedoriginalsource' => 'Tangalt taɣbalut \'\'\'$1\'\'\'  ar ttuymmal ɣ uzddar.',
-	'blockededitsource' => 'Aṭṛiṣ n iẓṛign nk llid tiwid i \'\'\'$1\'\'\' rad tnin taft ɣiḍ ɣ uzddar',
+	'blockedoriginalsource' => "Tangalt taɣbalut '''$1'''  ar ttuymmal ɣ uzddar.",
+	'blockededitsource' => "Aṭṛiṣ n iẓṛign nk llid tiwid i '''$1''' rad tnin taft ɣiḍ ɣ uzddar",
 	'boteditletter' => 'q',
 	'booksources' => 'Iɣbula n udlis',
 	'booksources-search-legend' => 'Acnubc s iɣbula n idlisn',
@@ -16072,14 +15931,13 @@ $messages['shi'] = [
 	'blocklog-showlog' => '↓ Amsqdac ikkattin ittuyqqan. anɣmis n willi ttuyqqanin  ɣid:',
 	'blocklog-showsuppresslog' => '↓ Amsqdac ikkattin ittuyqqan d iḥba. Anɣmis n willi ttuyqqanin  ɣid:',
 	'blocklogentry' => '↓ tqn [[$1]] s tizi izrin n $2 $3',
-	'block-log-flags-nocreate' => '↓ Ammurzm n umiḍan urak ittuyskar',
 	'bad_image_list' => 'zud ghikad :
 
 ghir lhwayj n lista (stour libdounin s *) karaytyo7asab',
 	'blankpage' => 'tawriqt orgiss walo',
-];
+);
 
-$messages['si'] = [
+$messages['si'] = array(
 	'broken-file-category' => 'භින්න වූ ගොනු සබැඳි සහිත පිටු',
 	'badaccess' => 'අවසරදීමේ දෝෂයකි',
 	'badaccess-group0' => 'ඔබ විසින් අයැදුම් කර සිටි කාර්යය ක්‍රියාත්මක කිරීමට ඔබ හට ඉඩ ලබා දෙනු නොලැබේ.',
@@ -16093,19 +15951,19 @@ $messages['si'] = [
 	'bold_sample' => 'තදකුරු පෙළ',
 	'bold_tip' => 'තදකුරු පෙළ',
 	'blockedtitle' => 'පරිශීලකයා වාරණය කර ඇත',
-	'blockedtext' => 'ඔබගේ පරිශීලක නාමය හෝ IP ලිපිනය වාරණය කොට ඇත.\'\'\'
+	'blockedtext' => "ඔබගේ පරිශීලක නාමය හෝ IP ලිපිනය වාරණය කොට ඇත.'''
 
 මෙම වාරණය සිදුකොට ඇත්තේ  $1 විසිනි.
-මේ සඳහා දී ඇති හේතුව \'\'$2\'\' වේ.
+මේ සඳහා දී ඇති හේතුව ''$2'' වේ.
 
 * වාරණයෙහි ඇරඹුම: $8
 *වාරණයයෙහි අවසානය: $6
 * අදහස් කරන ලද  වාරණ-ලාභී: $7
 
 වාරණය පිළිබඳ සංවාදයකට එළඹීමෙනු වස්, $1 හෝ  වෙනත් [[{{MediaWiki:Grouppage-sysop}}|පරිපාලකයෙකු]] හෝ සම්බන්ධ කරගැනීමට ඔබ හට හැකිය.
-ඔබගේ  [[Special:Preferences|ගිණුම් අභිරුචි]] වල, වලංගු විද්‍යුත්-තැපැල් ලිපිනයක් නිරූපනය කොට  ඇති නම් හා ඔබ විසින් එය භාවිත කිරීම වාරණය කොට නොමැති නම් මිස,  \'මෙම පරිශීලකයාට විද්‍යුත්-තැපෑලක් යවන්න\' යන අංගය ඔබ විසින් භාවිතා කල නොහැකිය.
+ඔබගේ  [[Special:Preferences|ගිණුම් අභිරුචි]] වල, වලංගු විද්‍යුත්-තැපැල් ලිපිනයක් නිරූපනය කොට  ඇති නම් හා ඔබ විසින් එය භාවිත කිරීම වාරණය කොට නොමැති නම් මිස,  'මෙම පරිශීලකයාට විද්‍යුත්-තැපෑලක් යවන්න' යන අංගය ඔබ විසින් භාවිතා කල නොහැකිය.
 ඔබගේ වත්මන් අන්තර්ජාල ලිපිනය  $3 වන අතර, වාරණ අනන්‍යතාවය #$5 වේ.
-ඔබ විසින් සිදු කරන ඕනෑම විමසුමකදී ඉහත සියළු විස්තර අඩංගු කරන්න.',
+ඔබ විසින් සිදු කරන ඕනෑම විමසුමකදී ඉහත සියළු විස්තර අඩංගු කරන්න.",
 	'blockednoreason' => 'කිසිදු හේතුවක් දක්වා නොමැත',
 	'blocked-notice-logextract' => 'මෙම පරිශීලකයා දැනට අවහිර කරනු ලැබ ඇත.
 ආශ්‍රය තකා නවතම අවහිර කිරීම් ලඝු-සටහන පහත සැපයේ:',
@@ -16176,7 +16034,6 @@ HTML ටැගයන් පිරික්සන්න.',
 ස්වයංක්‍රීයව වාරණය කල අන්තර්ජාල ලිපිනයන් ලැයිස්තුගත කොට නොමැත.
 වර්තමානයෙහි ක්‍රියාත්මක වන තහනම් හා වාරණ සඳහා [[Special:BlockList|අන්තර්ජාල ලිපිනයන් වාරණ ලැයිස්තුව]] බලන්න.',
 	'block-log-flags-anononly' => 'නිර්නාමික පරිශීලකයන් පමණි',
-	'block-log-flags-nocreate' => 'ගිණුම් තැනීම අක්‍රීය කර ඇත',
 	'block-log-flags-noautoblock' => 'ස්වයංක්‍රීය වාරණය අක්‍රීය කොට ඇත',
 	'block-log-flags-noemail' => 'විද්‍යුත්-තැපෑල වාරණය කොට ඇත',
 	'block-log-flags-nousertalk' => 'ස්වීය සාකච්ඡා පිටුව සංස්කරණය කල නොහැක',
@@ -16190,9 +16047,9 @@ HTML ටැගයන් පිරික්සන්න.',
 පේළිය මත ඇති පළමු සබැඳිය අයහපත් ගොනුවකට යොමු වන සබැඳියක් විය යුතුය.
 එම පේළියෙහිම ඉනික්බිති හමුවන ඕනෑම සබැඳියක් සලකනු ලබන්නේ ව්‍යහිවාරයක් ලෙසටය, එනම්, ගොනු එක පේළියට පැවතිය හැකි පිටු.',
 	'blankpage' => 'හිස් පිටුව',
-];
+);
 
-$messages['sk'] = [
+$messages['sk'] = array(
 	'broken-file-category' => 'Stránky s odkazom na neexistujúci súbor',
 	'badaccess' => 'Chyba povolenia',
 	'badaccess-group0' => 'Nemáte povolenie na vykonanie požadovanej operácie.',
@@ -16205,9 +16062,9 @@ $messages['sk'] = [
 	'bold_sample' => 'Tučný text',
 	'bold_tip' => 'Tučný text',
 	'blockedtitle' => 'Používateľ je zablokovaný',
-	'blockedtext' => '\'\'\'Vaše používateľské meno alebo IP adresa bola zablokovaná.\'\'\'
+	'blockedtext' => "'''Vaše používateľské meno alebo IP adresa bola zablokovaná.'''
 
-Zablokoval vás správca $1. Udáva tento dôvod:<br />\'\'$2\'\'
+Zablokoval vás správca $1. Udáva tento dôvod:<br />''$2''
 
 * Blokovanie začalo: $8
 * Blokovanie vyprší: $6
@@ -16216,7 +16073,7 @@ Zablokoval vás správca $1. Udáva tento dôvod:<br />\'\'$2\'\'
 Môžete kontaktovať $1 alebo s jedného z ďalších [[{{MediaWiki:Grouppage-sysop}}|správcov]] a prediskutovať blokovanie.
 Uvedomte si, že nemôžete použiť funkciu „{{int:Emailuser}}“, pokiaľ nemáte registrovanú platnú e-mailovú adresu vo svojich [[Special:Preferences|nastaveniach]].
 Vaša IP adresa je $3 a ID blokovania je #$5.
-Prosím, uveďte oba tieto údaje do každej správy, ktorú posielate.',
+Prosím, uveďte oba tieto údaje do každej správy, ktorú posielate.",
 	'blockednoreason' => 'nebol uvedený dôvod',
 	'blocked-notice-logextract' => 'Tento používateľ je momentálne zablokovaný.
 Dolu je pre informáciu posledná položka zo záznamu blokovaní:',
@@ -16291,7 +16148,6 @@ Nižšie uveďte konkrétny dôvod (napríklad uveďte konkrétne stránky, ktor
 blokované IP adresy nie sú zahrnuté. Pozri zoznam
 [[Special:BlockList|aktuálnych blokovaní]].',
 	'block-log-flags-anononly' => 'iba anonymní používatelia',
-	'block-log-flags-nocreate' => 'možnosť vytvoriť si účet bola vypnutá',
 	'block-log-flags-noautoblock' => 'autoblokovanie vypnuté',
 	'block-log-flags-noemail' => 'email blokovaný',
 	'block-log-flags-nousertalk' => 'nemôže upravovať vlastnú diskusnú stránku',
@@ -16304,9 +16160,9 @@ blokované IP adresy nie sú zahrnuté. Pozri zoznam
 Berú sa do úvahy iba položky zoznamu (riadky začínajúce *). Prvý odkaz na riadku musí byť odkaz na zlý súbor.
 Každý ďalší odkaz na rovnakom riadku sa považuje za výnimku, t.j. články, v ktorých sa súbor môže vyskytnúť.',
 	'blankpage' => 'Prázdna stránka',
-];
+);
 
-$messages['sl'] = [
+$messages['sl'] = array(
 	'broken-file-category' => 'Strani s pretrganimi povezavami do datotek',
 	'badaccess' => 'Napaka pri dovoljenju',
 	'badaccess-group0' => 'Zahtevanega dejanja vam ni dovoljeno izvesti.',
@@ -16320,10 +16176,10 @@ Morda vsebuje enega ali več nepodprtih znakov.',
 	'bold_sample' => 'Krepko besedilo',
 	'bold_tip' => 'Krepko besedilo',
 	'blockedtitle' => 'Uporabnik je blokiran',
-	'blockedtext' => '\'\'\'Urejanje z vašim uporabniškim imenom oziroma IP-naslovom je bilo onemogočeno.\'\'\'
+	'blockedtext' => "'''Urejanje z vašim uporabniškim imenom oziroma IP-naslovom je bilo onemogočeno.'''
 
 Blokiral vas je $1.
-Podan razlog je \'\'$2\'\'.
+Podan razlog je ''$2''.
 
 * Začetek blokade: $8
 * Potek blokade: $6
@@ -16332,7 +16188,7 @@ Podan razlog je \'\'$2\'\'.
 O blokiranju se lahko pogovorite z $1 ali katerim drugim [[{{MediaWiki:Grouppage-sysop}}|administratorjem]].
 Vedite, da lahko ukaz »Pošlji uporabniku e-pismo« uporabite le, če ste v [[Special:Preferences|nastavitvah]] vpisali in potrdili svoj elektronski naslov ter le-ta ni bil blokiran.
 Vaš IP-naslov je $3, številka blokade pa #$5.
-Prosimo, vključite ju v vse morebitne poizvedbe.',
+Prosimo, vključite ju v vse morebitne poizvedbe.",
 	'blockednoreason' => 'razlog ni podan',
 	'blocked-notice-logextract' => 'Ta uporabnik je trenutno blokiran.
 Najnovejši vnos v dnevniku blokad je prikazan spodaj:',
@@ -16377,9 +16233,9 @@ Ne sme biti daljši od $1 {{PLURAL:$1|znaka|znakov}}.',
 	'blockip' => 'Blokiranje IP-naslova ali uporabniškega imena',
 	'blockip-title' => 'Blokiraj uporabnika',
 	'blockip-legend' => 'Blokiraj uporabnika',
-	'blockiptext' => 'Naslednji obrazec vam omogoča, da določenemu IP-naslovu ali uporabniškemu imenu preprečite urejanje.
+	'blockiptext' => "Naslednji obrazec vam omogoča, da določenemu IP-naslovu ali uporabniškemu imenu preprečite urejanje.
 To storimo le zaradi zaščite pred nepotrebnim uničevanjem in po [[{{MediaWiki:Policy-url}}|pravilih]].
-Vnesite tudi razlog (\'\'na primer\'\' seznam strani, ki jih je uporabnik po nepotrebnem kvaril).',
+Vnesite tudi razlog (''na primer'' seznam strani, ki jih je uporabnik po nepotrebnem kvaril).",
 	'badipaddress' => 'Neveljaven IP-naslov ali uporabniško ime.',
 	'blockipsuccesssub' => 'Blokiranje je uspelo',
 	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] je {{GENDER:$1|blokiran|blokirana|blokiran(-a)}}.<br />
@@ -16405,7 +16261,6 @@ Dnevnik skrivanja je na voljo spodaj:',
 	'blocklogentry' => '[[$1]] blokiran s časom poteka blokade $2 $3',
 	'blocklogtext' => 'Prikazan je dnevnik blokiranja in deblokiranja uporabnikov. Samodejno blokirani IP-naslovi niso navedeni. Trenutno veljavna blokiranja so navedena na [[Special:BlockList|seznamu blokiranih IP-naslovov]].',
 	'block-log-flags-anononly' => 'samo za brezimne uporabnike',
-	'block-log-flags-nocreate' => 'ustvarjanje uporabniških računov onemogočeno',
 	'block-log-flags-noautoblock' => 'samodejno blokiranje onemogočeno',
 	'block-log-flags-noemail' => 'e-naslov blokiran',
 	'block-log-flags-nousertalk' => 'prepreči urejanje lastne pogovorne strani',
@@ -16419,31 +16274,31 @@ Upoštevane so le postavke seznama (vrstice, ki se začnejo z *).
 Prva povezava v vrstici mora biti povezava do neželene datoteke.
 Vse nadaljnje povezave v isti vrstici se štejejo za izjeme, tj. za strani, kjer je datoteka lahko vključena.',
 	'blankpage' => 'Prazna stran',
-];
+);
 
-$messages['sli'] = [
+$messages['sli'] = array(
 	'badaccess' => 'Kenne ausreichenden Rechte',
 	'badaccess-groups' => 'Diese Aktion ies beschränkt uff Benutzer, de {{PLURAL:$2|der Gruppe|anner der Gruppen}} „$1“ angehören.',
 	'badtitle' => 'Ungültiger Tittel',
 	'badtitletext' => 'Dar Tittel dar oagefurderta Seite ies ungieltig, laar oder a ungieltiger Sproachlink voo eenem andern Wiki.',
 	'badretype' => 'De beida Passwörter stimma nä ieberein.',
-	'blocked-mailpassword' => 'De vu dir verwendete IP-Atresse ies fier doas Ändern vu Seyta gesperrt. Im an\'n Missbrauch zu verhindern, wurde de Meeglichkeet zer Oaforderung annes neua Poaßwurtes ebenfoalls gesperrt.',
+	'blocked-mailpassword' => "De vu dir verwendete IP-Atresse ies fier doas Ändern vu Seyta gesperrt. Im an'n Missbrauch zu verhindern, wurde de Meeglichkeet zer Oaforderung annes neua Poaßwurtes ebenfoalls gesperrt.",
 	'bold_sample' => 'Fetter Text',
 	'bold_tip' => 'Fetter Text',
 	'blockedtitle' => 'Benutzer ies gesperrt',
-	'blockedtext' => 'big>\'\'\'Dei Nutzernoame oder denne IP-Atresse wurde gesperrt.\'\'\'
+	'blockedtext' => "big>'''Dei Nutzernoame oder denne IP-Atresse wurde gesperrt.'''
 
 De Sperrung wurde vu $1 durchgefiehrt.
-Ols Grund wurde \'\'$2\'\' oagegahn.
+Ols Grund wurde ''$2'' oagegahn.
 
 * Beginn der Sperre: $8
 * Ende der Sperre: $6
 * Sperre betrifft: $7
 
-Du koast $1 oder an\'n der andern [[{{MediaWiki:Grouppage-sysop}}|Administratorn]] kontaktiern, im ieber de Sperre zu diskuriren.
+Du koast $1 oder an'n der andern [[{{MediaWiki:Grouppage-sysop}}|Administratorn]] kontaktiern, im ieber de Sperre zu diskuriren.
 Du koast de „E-Mail oa diesa Nutzer“-Funksjonn ne nutzen, solange kenne gültige E-Mail-Atresse ei denna [[Special:Preferences|Nutzerkonto-Einstellunga]] eengetraga ies, oder diese Funksjonn fier diech gesperrt wurde.
 Denne aktuelle IP-Atresse ies $3, und de Sperr-ID ies $5.
-Bitte fiege olle Informationen jeder Oafroage hinzu, de du stallt.',
+Bitte fiege olle Informationen jeder Oafroage hinzu, de du stallt.",
 	'blockednoreason' => 'keene Begründung oagegahn',
 	'badsig' => 'De Syntax dar Underschrift ies ungiltig; bitte HTML ieberpriefa.',
 	'badsiglength' => 'Ihre Underschrift derf ne länger sein als wie $1 {{PLURAL:$1|character|Zeecha}}.',
@@ -16462,9 +16317,9 @@ Bitte priefe, ob korrekt vu dar Quelle iebertraga wurde.',
 	'blanknamespace' => '(Seyta)',
 	'blockip' => 'IP-Atresse/Benutzer sperra',
 	'blockip-legend' => 'IP-Atresse/Benutzer sperra',
-	'blockiptext' => 'Mit diesem Formular sperrst du anne IP-Atresse oder an\'n Nutzernoama, su doaß vu dort kenne Änderunga meh vorgenumma waan kinna.
+	'blockiptext' => "Mit diesem Formular sperrst du anne IP-Atresse oder an'n Nutzernoama, su doaß vu dort kenne Änderunga meh vorgenumma waan kinna.
 Dies sullte ock erfolga, im Vandalismus zu verhindern und ei Iebereinstimmung miet dann [[{{MediaWiki:Policy-url}}|Richtlinien]].
-Bitte gib dann Grund fier de Sperre oa.',
+Bitte gib dann Grund fier de Sperre oa.",
 	'badipaddress' => 'De IP-Atresse hoot a foalsches Furmat.',
 	'blockipsuccesstext' => 'Dar Nutzer/de IP-Atresse [[Special:Contributions/$1|$1]] wurde gesperrt.<br />
 Zur Uffhebung dar Sperre siehe ie [[Special:BlockList|Liste oller aktiven Sperra]].',
@@ -16476,7 +16331,6 @@ Zur Uffhebung dar Sperre siehe ie [[Special:BlockList|Liste oller aktiven Sperra
 Automatisch gesperrte IP-Atressa waan ne erfasst.
 Siehe de [[Special:BlockList|Liste dar gesperrta IP-Atressa und Nutzernoama]] fier olle aktiven Sperra.',
 	'block-log-flags-anononly' => 'ock Anonyme',
-	'block-log-flags-nocreate' => 'Erstellung voo Benutzerkonta gesperrt',
 	'block-log-flags-nousertalk' => 'darf eegne Dischkurseite nee beoarbta',
 	'block-log-flags-hiddenname' => 'Nutzernoame versteckt',
 	'blockme' => 'Sperre miech',
@@ -16486,13 +16340,13 @@ Siehe de [[Special:BlockList|Liste dar gesperrta IP-Atressa und Nutzernoama]] fi
 Ock Zeila, de mit eenem * oafanga, waan oausgewertet. Ols erschtes noach dam * muuß a Link uff eene unerwünschte Datei stieha.
 Darauf folgende Seitalinks ei derselba Zeile definiera Ausnahma, ei deren Kontext de Datei trotzdem erscheina doarf.',
 	'blankpage' => 'Laare Seite',
-];
+);
 
-$messages['sm'] = [
+$messages['sm'] = array(
 	'booksources-go' => 'Alu',
-];
+);
 
-$messages['sma'] = [
+$messages['sma'] = array(
 	'badtitle' => 'Gååre nomme',
 	'badtitletext' => 'Dïhte bielietiitele lea nov sån ijje luhpede, bielie lea gåaroes, jallh lea bielie gåarhmede lïenghke gåajkoe.',
 	'bold_sample' => 'Buajtehks tjaalege',
@@ -16508,26 +16362,25 @@ $messages['sma'] = [
 	'blocklink' => 'tjöödtjehtidh',
 	'blocklogpage' => 'Tjöödtjehtidh logge',
 	'blocklogentry' => 'blåhkedidh "[[$1]]" $2 $3',
-];
+);
 
-$messages['so'] = [
+$messages['so'] = array(
 	'badaccess' => 'Qalad dhinaca idanka',
 	'badaccess-group0' => 'Laguuma ogala in aad sameyso waxaad dooneysid.',
 	'badtitle' => 'Cinwaan qaldan',
 	'badretype' => 'Ereysiryada aad gelisay ismalaha.',
-	'blockededitsource' => 'Qoraalkii \'\'\'aad waxkaga bedashay\'\'\' \'\'\'$1\'\'\' waxaad ku arkikartaa hoos:',
+	'blockededitsource' => "Qoraalkii '''aad waxkaga bedashay''' '''$1''' waxaad ku arkikartaa hoos:",
 	'badsiglength' => 'Naaneysta aad bey u dheertahay.
 Waa in aysan ka badanin $1 {{PLURAL:$1|eray|erayo}}.',
 	'badfilename' => 'Faylka magaciisa waxaa lagu badalay "$1".',
 	'brokenredirects-edit' => 'wax ka bedel',
 	'brokenredirects-delete' => 'tirtir',
 	'booksources-go' => 'Soco',
-	'block-log-flags-anononly' => 'Isticmaalayaasha aanan la\'aqoonsanin oo kaliya',
-	'block-log-flags-nocreate' => 'sameynta gudagalah lamaogola',
+	'block-log-flags-anononly' => "Isticmaalayaasha aanan la'aqoonsanin oo kaliya",
 	'bydate' => 'hab taariikheed',
-];
+);
 
-$messages['sq'] = [
+$messages['sq'] = array(
 	'broken-file-category' => 'Faqet me lidhjet file thyer',
 	'badaccess' => 'Leje: gabim',
 	'badaccess-group0' => 'Nuk ju lejohet veprimi i kërkuar',
@@ -16541,9 +16394,9 @@ Mund të përmbajë një ose më shumë germa, të cilat nuk mund të përdoren 
 	'bold_sample' => 'Stil i theksuar i tekstit',
 	'bold_tip' => 'Stil i theksuar i tekstit',
 	'blockedtitle' => 'Përdoruesi është bllokuar',
-	'blockedtext' => '\'\'\'Llogaria juaj ose adresa e IP është bllokuar\'\'\'
+	'blockedtext' => "'''Llogaria juaj ose adresa e IP është bllokuar'''
 
-Bllokimi u bë nga $1 dhe arsyeja e dhënë ishte \'\'\'$2\'\'\'.
+Bllokimi u bë nga $1 dhe arsyeja e dhënë ishte '''$2'''.
 
 *Fillimi i bllokimit: $8
 *Skadimi i bllokimit: $6
@@ -16551,12 +16404,12 @@ Bllokimi u bë nga $1 dhe arsyeja e dhënë ishte \'\'\'$2\'\'\'.
 
 Mund të kontaktoni $1 ose një nga [[{{MediaWiki:Grouppage-sysop}}|administruesit]] e tjerë për të diskutuar bllokimin.
 
-Vini re se nuk mund t\'i dërgoni email përdoruesit nëse nuk keni një adresë të saktë të dhënë tek [[Special:Preferences|parapëlqimet e përdoruesit]] ose nëse kjo është një nga mundësitë që ju është bllokuar.
+Vini re se nuk mund t'i dërgoni email përdoruesit nëse nuk keni një adresë të saktë të dhënë tek [[Special:Preferences|parapëlqimet e përdoruesit]] ose nëse kjo është një nga mundësitë që ju është bllokuar.
 
-Adresa e IP-së që keni është $3 dhe numri i identifikimit të bllokimit është #$5. Përfshini këto dy të dhëna në çdo ankesë.',
+Adresa e IP-së që keni është $3 dhe numri i identifikimit të bllokimit është #$5. Përfshini këto dy të dhëna në çdo ankesë.",
 	'blockednoreason' => 'nuk është dhënë ësnje arsye',
-	'blocked-notice-logextract' => 'Ky përdorues është  aktualisht i bllokuar.
-Më poshtë mund t\'i referoheni shënimit të regjistruar për bllokimin e fundit:',
+	'blocked-notice-logextract' => "Ky përdorues është  aktualisht i bllokuar.
+Më poshtë mund t'i referoheni shënimit të regjistruar për bllokimin e fundit:",
 	'badsig' => 'Sintaksa e signaturës është e pavlefshme, kontrolloni HTML-in.',
 	'badsiglength' => 'Nënshkrimi është tepër i gjatë.
 Nuk duhet të jetë më i gjatë se $1 {{PLURAL:$1|karakter|karaktere}}.',
@@ -16579,7 +16432,7 @@ Nuk duhet të jetë më i gjatë se $1 {{PLURAL:$1|karakter|karaktere}}.',
 	'backend-fail-read' => 'Nuk mund të lexojë skedën $1.',
 	'backend-fail-create' => 'Nuk mund të krijojë skedën $1.',
 	'brokenredirects' => 'Përcjellime të prishura',
-	'brokenredirectstext' => 'Përcjellimet që vijojnë lidhen tek një artikull që s\'ekziston:',
+	'brokenredirectstext' => "Përcjellimet që vijojnë lidhen tek një artikull që s'ekziston:",
 	'brokenredirects-edit' => 'redakto',
 	'brokenredirects-delete' => 'grise',
 	'booksources' => 'Burime librash',
@@ -16620,7 +16473,6 @@ Regjistri i bllokimeve është poshtë për referncë:',
 	'blocklogentry' => 'bllokoi [[$1]] për një kohë prej: $2 $3',
 	'blocklogtext' => 'Ky është një regjistër bllokimesh dhe çbllokimesh të përdoruesve. IP-të e bllokuara automatikisht nuk janë të dhëna. Shikoni dhe [[Special:BlockList|listën e IP-ve të bllokuara]] për një listë të bllokimeve të tanishme.',
 	'block-log-flags-anononly' => 'vetëm anonimët',
-	'block-log-flags-nocreate' => 'krijimi i kontove është pamundësuar',
 	'block-log-flags-noautoblock' => 'vetëbllokimi është pamundësuar',
 	'block-log-flags-noemail' => 'posta elektronike është e bllokuar',
 	'block-log-flags-nousertalk' => 'nuk mund të redaktojë faqen e tij të diskutimit',
@@ -16634,118 +16486,9 @@ Vetëm elementët listë ( rreshtat duhet të fillojnë me * ) merren parasysh.
 Lidhja e parë në një rresht duhet të lidhet me një skedë të prishur.
 Çdo lidhje pasuese në rreshtin e njëjtë konsiderohet si përjashtim, p.sh. faqe në të cilat skeda mund të shfaqet në të njëjtin rresht.',
 	'blankpage' => 'Faqe e zbrazët',
-];
+);
 
-$messages['sr'] = [
-	'broken-file-category' => 'Faqet me lidhjet file thyer',
-	'badaccess' => 'Leje: gabim',
-	'badaccess-group0' => 'Nuk ju lejohet veprimi i kërkuar',
-	'badaccess-groups' => 'Veprimi që kërkuat lejohet vetëm nga përdorues të {{PLURAL:$2|grupit|grupeve}}: $1.',
-	'badarticleerror' => 'Ky veprim nuk mund të bëhet në këtë faqe.',
-	'badtitle' => 'Titull i pasaktë',
-	'badtitletext' => 'Titulli i faqes që kërkuat nuk ishte i saktë, ishte bosh, ose ishte një titull ndër-gjuhësor/inter-wiki me lidhje të pasaktë.
-Mund të përmbajë një ose më shumë germa, të cilat nuk mund të përdoren në tituj.',
-	'badretype' => 'Fjalëkalimet nuk janë njësoj.',
-	'blocked-mailpassword' => 'IP adresa juaj është bllokuar , si e tillë nuk lejohet të përdor funksionin pë rikthim të fjalkalimit , në mënyrë që të parandalohet abuzimi.',
-	'bold_sample' => 'Stil i theksuar i tekstit',
-	'bold_tip' => 'Stil i theksuar i tekstit',
-	'blockedtitle' => 'Përdoruesi është bllokuar',
-	'blockedtext' => '\'\'\'Llogaria juaj ose adresa e IP është bllokuar\'\'\'
-
-Bllokimi u bë nga $1 dhe arsyeja e dhënë ishte \'\'\'$2\'\'\'.
-
-*Fillimi i bllokimit: $8
-*Skadimi i bllokimit: $6
-*I bllokuari i shënjestruar: $7
-
-Mund të kontaktoni $1 ose një nga [[{{MediaWiki:Grouppage-sysop}}|administruesit]] e tjerë për të diskutuar bllokimin.
-
-Vini re se nuk mund t\'i dërgoni email përdoruesit nëse nuk keni një adresë të saktë të dhënë tek [[Special:Preferences|parapëlqimet e përdoruesit]] ose nëse kjo është një nga mundësitë që ju është bllokuar.
-
-Adresa e IP-së që keni është $3 dhe numri i identifikimit të bllokimit është #$5. Përfshini këto dy të dhëna në çdo ankesë.',
-	'blockednoreason' => 'nuk është dhënë ësnje arsye',
-	'blocked-notice-logextract' => 'Ky përdorues është  aktualisht i bllokuar.
-Më poshtë mund t\'i referoheni shënimit të regjistruar për bllokimin e fundit:',
-	'badsig' => 'Sintaksa e signaturës është e pavlefshme, kontrolloni HTML-in.',
-	'badsiglength' => 'Nënshkrimi është tepër i gjatë.
-Nuk duhet të jetë më i gjatë se $1 {{PLURAL:$1|karakter|karaktere}}.',
-	'boteditletter' => 'b',
-	'badfilename' => 'Emri i skedës është ndërruar në "$1".',
-	'backend-fail-stream' => 'Nuk mund të kalojë skedën $1.',
-	'backend-fail-backup' => 'Nuk mund të rezervojë skedën $1.',
-	'backend-fail-notexists' => 'Skeda $1 nuk ekziston.',
-	'backend-fail-hashes' => 'Nuk mund të marrë rrëmujat e skedave për krahasim.',
-	'backend-fail-notsame' => 'Një skedë joidentike ekziston tashmë tek $1.',
-	'backend-fail-invalidpath' => '$1 nuk është një rrugë e vlefshme ruajtjeje.',
-	'backend-fail-delete' => 'Nuk mund të grisë skedën $1.',
-	'backend-fail-alreadyexists' => 'Skeda $1 ekziston tashmë.',
-	'backend-fail-store' => 'Nuk mund të ruajë skedën $1 tek $2.',
-	'backend-fail-copy' => 'Nuk mund të kopjojë skedën $1 tek $2.',
-	'backend-fail-move' => 'Nuk mund të zhvendosë skedën $1 tek $2.',
-	'backend-fail-opentemp' => 'Nuk mund të hapë skedën e përkohshme.',
-	'backend-fail-writetemp' => 'Nuk mund të shkruajë te skeda e përkohshme.',
-	'backend-fail-closetemp' => 'Nuk mund të mbyllë skedën e përkohshme.',
-	'backend-fail-read' => 'Nuk mund të lexojë skedën $1.',
-	'backend-fail-create' => 'Nuk mund të krijojë skedën $1.',
-	'brokenredirects' => 'Përcjellime të prishura',
-	'brokenredirectstext' => 'Përcjellimet që vijojnë lidhen tek një artikull që s\'ekziston:',
-	'brokenredirects-edit' => 'redakto',
-	'brokenredirects-delete' => 'grise',
-	'booksources' => 'Burime librash',
-	'booksources-search-legend' => 'Kërkim burimor librash',
-	'booksources-go' => 'Shko',
-	'booksources-text' => 'Më posht është një listë me lidhje të cilët shesin ose përdorin libra dhe munden të kenë informacione për librat që kërkoni ju:',
-	'booksources-invalid-isbn' => 'ISBN-ja e dhënë nuk duket të jetë e vlefshme; kontrolloni oër gabime gjatë kopjimit nga burimi origjinal.',
-	'blanknamespace' => '(Artikujt)',
-	'block' => 'Blloko përdoruesin',
-	'blockip' => 'Blloko përdorues',
-	'blockip-title' => 'Përdorues i Bllokuar',
-	'blockip-legend' => 'Blloko përdoruesin',
-	'blockiptext' => 'Përdorni formularin e mëposhtëm për të hequr lejen e shkrimit për një përdorues ose IP specifike.
-Kjo duhet bërë vetëm në raste vandalizmi, dhe në përputhje me [[{{MediaWiki:Policy-url}}|rregullat e {{SITENAME}}-s]].
-Plotësoni arsyen specifike më poshtë (p.sh., tregoni faqet specifike që u vandalizuan).',
-	'badipaddress' => 'Nuk ka asnjë përdorues me atë emër',
-	'blockipsuccesssub' => 'Bllokimi u bë me sukses',
-	'blockipsuccesstext' => 'Përdoruesi/IP-Adresa [[Special:Contributions/$1|$1]] u bllokua.<br />
-Shiko te [[Special:BlockList|Lista e përdoruesve dhe e IP adresave të bllokuara]] për të çbllokuar Përdorues/IP.',
-	'blocklist' => 'Përdorues i Bllokuar',
-	'blocklist-userblocks' => 'Fsheh bllokimin e llogarisë',
-	'blocklist-tempblocks' => 'Fsheh bllokimin e përkohshëm',
-	'blocklist-addressblocks' => 'Fsheh bllokimin e IP vetanake',
-	'blocklist-rangeblocks' => 'Fsheh varg bllokimet',
-	'blocklist-timestamp' => 'Kohë-caktimi',
-	'blocklist-target' => 'Objektivi',
-	'blocklist-expiry' => 'Skadon',
-	'blocklist-by' => 'Administratori i bllokimit',
-	'blocklist-params' => 'Parametrat e Bllokimit',
-	'blocklist-reason' => 'Arsyeja',
-	'blocklist-nousertalk' => 'nuk mund të editohet faqja personale e diskutimit',
-	'blocklink' => 'blloko',
-	'blocklogpage' => 'Regjistri i bllokimeve',
-	'blocklog-showlog' => 'Ky përdorues ka qenë bllokuar më parë.
-Regjistri i bllokimeve është poshtë për referncë:',
-	'blocklog-showsuppresslog' => 'Ky përdorues ka qenë i bllokuar dhe i fshehur më parë.
-Regjistri i bllokimeve është poshtë për referncë:',
-	'blocklogentry' => 'bllokoi [[$1]] për një kohë prej: $2 $3',
-	'blocklogtext' => 'Ky është një regjistër bllokimesh dhe çbllokimesh të përdoruesve. IP-të e bllokuara automatikisht nuk janë të dhëna. Shikoni dhe [[Special:BlockList|listën e IP-ve të bllokuara]] për një listë të bllokimeve të tanishme.',
-	'block-log-flags-anononly' => 'vetëm anonimët',
-	'block-log-flags-nocreate' => 'krijimi i kontove është pamundësuar',
-	'block-log-flags-noautoblock' => 'vetëbllokimi është pamundësuar',
-	'block-log-flags-noemail' => 'posta elektronike është e bllokuar',
-	'block-log-flags-nousertalk' => 'nuk mund të redaktojë faqen e tij të diskutimit',
-	'block-log-flags-angry-autoblock' => 'Autobllokimi i zgjeruar u aktivizua',
-	'block-log-flags-hiddenname' => 'emri i përdoruesit i fshehur',
-	'blockme' => 'Më blloko',
-	'bydate' => 'datës',
-	'bad_image_list' => 'Formati është si vijon:
-
-Vetëm elementët listë ( rreshtat duhet të fillojnë me * ) merren parasysh.
-Lidhja e parë në një rresht duhet të lidhet me një skedë të prishur.
-Çdo lidhje pasuese në rreshtin e njëjtë konsiderohet si përjashtim, p.sh. faqe në të cilat skeda mund të shfaqet në të njëjtin rresht.',
-	'blankpage' => 'Faqe e zbrazët',
-];
-
-$messages['sr-ec'] = [
+$messages['sr-ec'] = array(
 	'broken-file-category' => 'Странице с неисправним везама до датотека',
 	'badaccess' => 'Грешке у овлашћењима',
 	'badaccess-group0' => 'Није вам дозвољено да извршите захтевану радњу.',
@@ -16760,10 +16503,10 @@ $messages['sr-ec'] = [
 	'bold_sample' => 'Подебљан текст',
 	'bold_tip' => 'Подебљан текст',
 	'blockedtitle' => 'Корисник је блокиран',
-	'blockedtext' => '\'\'\'Ваше корисничко име или ИП адреса је блокирана.\'\'\'
+	'blockedtext' => "'''Ваше корисничко име или ИП адреса је блокирана.'''
 
 Блокирање је {{GENDER:$1|извршио|извршила|извршио}} $1.
-Разлог: \'\'$2\'\'.
+Разлог: ''$2''.
 
 * Датум блокирања: $8
 * Блокирање истиче: $6
@@ -16772,7 +16515,7 @@ $messages['sr-ec'] = [
 Обратите се {{GENDER:$1|кориснику|корисници|кориснику}} $1 или [[{{MediaWiki:Grouppage-sysop}}|администратору]] да разјасните ствар.
 Не можете користити могућност „Пошаљи поруку овом кориснику“ ако нисте унели исправну е-адресу у [[Special:Preferences|подешавањима]].
 Ваша блокирана ИП адреса је $3, а ИБ $5.
-Наведите све податке изнад при стварања било каквих упита.',
+Наведите све податке изнад при стварања било каквих упита.",
 	'blockednoreason' => 'разлог није наведен',
 	'blocked-notice-logextract' => 'Овај корисник је тренутно блокиран.
 Извештај о последњем блокирању можете погледати испод:',
@@ -16849,7 +16592,6 @@ $messages['sr-ec'] = [
 Аутоматски блокиране ИП адресе нису наведене.
 Погледајте [[Special:BlockList|списак блокираних ИП адреса]].',
 	'block-log-flags-anononly' => 'само анонимни корисници',
-	'block-log-flags-nocreate' => 'онемогућено отварање налога',
 	'block-log-flags-noautoblock' => 'аутоматско блокирање је онемогућено',
 	'block-log-flags-noemail' => 'е-пошта је блокирана',
 	'block-log-flags-nousertalk' => 'забрањено уређивање сопствене странице за разговор',
@@ -16863,9 +16605,9 @@ $messages['sr-ec'] = [
 Прва веза у реду мора да буде веза до неисправне датотеке.
 Све даљње везе у истом реду сматрају се изузецима.',
 	'blankpage' => 'Празна страница',
-];
+);
 
-$messages['sr-el'] = [
+$messages['sr-el'] = array(
 	'badaccess' => 'Greška u dozvolama',
 	'badaccess-group0' => 'Nije vam dozvoljeno da izvršite akciju koju ste pokrenuli.',
 	'badaccess-groups' => 'Akcija koju ste pokrenuli je rezervisana za korisnike iz {{PLURAL:$2|grupe|iz jedne od grupa}}: $1.',
@@ -16890,8 +16632,8 @@ Razlog za blokiranje je \'\'$2\'\'.
 Možete kontaktirati korisnika $1 ili nekog drugog [[{{MediaWiki:Grouppage-sysop}}|administratora]] kako biste razgovarali o blokadi. Ne možete da koristite opciju "Pošalji e-poštu ovom korisniku" ukoliko nemate valjanu adresu e-pošte navedenu u vašim [[Special:Preferences|podešavanjima]]. Vaša trenutna IP adresa je $3 i ID bloka je #$5.
 Molimo uključite gornje detalje u svaki vaš zahtev.',
 	'blockednoreason' => 'nije dat razlog',
-	'blockedoriginalsource' => 'Izvor \'\'\'$1\'\'\' je prikazan ispod:',
-	'blockededitsource' => 'Tekst \'\'\'vaših izmena\'\'\' za \'\'\'$1\'\'\' je prikazan ispod:',
+	'blockedoriginalsource' => "Izvor '''$1''' je prikazan ispod:",
+	'blockededitsource' => "Tekst '''vaših izmena''' za '''$1''' je prikazan ispod:",
 	'blocked-notice-logextract' => 'Ovaj korisnik je trenutno blokrian.
 Podaci o poslednjem blokiranju su priloženi ispod kao dodatna informacija:',
 	'badsig' => 'Greška u potpisu; proverite HTML tagove.',
@@ -16932,7 +16674,6 @@ Dnevnik blokiranja je ponuđen ispod  kao referenca:',
 	'blocklogtext' => 'Ovo je istorija blokiranja i odblokiranja korisnika. Automatski
 blokirane IP adrese nisu navedene. Pogledajte [[{{ns:special}}:Ipblocklist|spisak blokiranih IP adresa]] za spisak trenutnih zabrana i blokiranja.',
 	'block-log-flags-anononly' => 'samo anonimni korisnici',
-	'block-log-flags-nocreate' => 'zabranjeno pravljenje naloga',
 	'block-log-flags-noautoblock' => 'isključeno automatsko blokiranje',
 	'block-log-flags-noemail' => 'blokirano slanje e-pošte',
 	'block-log-flags-nousertalk' => 'ne može da izmeni sopstvenu stranu za razgovor',
@@ -16946,9 +16687,9 @@ Razmatraju se samo stavke u spisku (linije koje počinju sa *).
 Prva veza u liniji mora biti veza na visoko rizičnu sliku.
 Sve druge veze u istoj liniji se smatraju izuzecima tj. članci u kojima se slika može prikazati.',
 	'blankpage' => 'prazna stranica',
-];
+);
 
-$messages['srn'] = [
+$messages['srn'] = array(
 	'badaccess' => 'Primisi fowtu',
 	'badaccess-group0' => 'Yu no abi primisi fu du a sani san yu wani',
 	'badaccess-groups' => 'Soso kebroikiman fu wan fu den grupu $1 kan du a sani disi.',
@@ -16960,17 +16701,17 @@ A kan taki a abi wan noso moro karakter san no bun fu kebroiki gi nen.',
 	'bold_sample' => 'Fatu skrifi',
 	'bold_tip' => 'Fatu',
 	'blockedtitle' => 'Masyin ben spikri',
-	'blockedtext' => '\'\'\'Pasi tapu gi yu kebroikiman-nen noso IP.\'\'\'
+	'blockedtext' => "'''Pasi tapu gi yu kebroikiman-nen noso IP.'''
 
-$1 tapu pasi gi yu. Disi na fu sanede \'\'$2\'\'.
+$1 tapu pasi gi yu. Disi na fu sanede ''$2''.
 
 * Bigin fu tapu pasi: $8
 * Kaba fu tapu pasi: $6
 * Tapu pasi gi: $7
 
 Yu kan skrifi $1 noso wan tra [[{{MediaWiki:Grouppage-sysop}}|beheerder]] fu taki abra a tapu pasi disi.
-Yu n\'o man kebroiki \'e-mail a kebroikiman disi\', efu yu no abi wan bun email-nen ini yu [[Special:Preferences|seti]] én pasi tapu fu yu kebroiki en.
-Yu IP now na $3 en a tapu pasi ID na #$5. Gi wan, noso ala tu, ini yu brifi te yu o skrifi fu aksi san psa.',
+Yu n'o man kebroiki 'e-mail a kebroikiman disi', efu yu no abi wan bun email-nen ini yu [[Special:Preferences|seti]] én pasi tapu fu yu kebroiki en.
+Yu IP now na $3 en a tapu pasi ID na #$5. Gi wan, noso ala tu, ini yu brifi te yu o skrifi fu aksi san psa.",
 	'boteditletter' => 'b',
 	'brokenredirects' => 'Seni-doro di no bun',
 	'brokenredirectstext' => 'Dyaso ben stirpeprewoysi dy wan stir ben na wan papira dy no da ben.',
@@ -16988,21 +16729,21 @@ Yu IP now na $3 en a tapu pasi ID na #$5. Gi wan, noso ala tu, ini yu brifi te y
 
 Wawan lina ini a rei (lina dy bigin nanga *) ben awroko. A foswan skaki opo a lina mu a skaki ben na a owinsi gefre.
 Ala trawan skaki dy opo se lina ben, ben awroko leki spesyal, leki fru eksempre peprewoysi pe opo a gefre ini a si ben opoteki.',
-];
+);
 
-$messages['ss'] = [
+$messages['ss'] = array(
 	'badaccess' => 'Liphutsa lemalungelo',
 	'badaccess-group0' => 'Awukavunyelwa kwenta lesento lobowutama kusenta.',
 	'badaccess-groups' => 'Lesento losicelile sincishiselwe bantfu labakule {{PLURAL:$2|ncumbi|labakunobe nguyiphi incumbi}}: $1.',
 	'brokenredirects-edit' => 'hlela',
 	'booksources-go' => 'Hamba',
-];
+);
 
-$messages['st'] = [
+$messages['st'] = array(
 	'badretype' => 'Mapetjo a mabedi o a ngotseng ha a tshwane.',
-];
+);
 
-$messages['stq'] = [
+$messages['stq'] = array(
 	'badaccess' => 'Neen uträkkende Gjuchte',
 	'badaccess-group0' => 'Du hääst nit ju ärfoarderelke Begjuchtigenge foar disse Aktion.',
 	'badaccess-groups' => 'Disse Aktion is bloot muugelk foar Benutsere, do der {{PLURAL:$2|ju Gruppe|een fon do Gruppen}} „$1“ anheere.',
@@ -17079,7 +16820,6 @@ Hier foulget die Iendraach uut dät Unnerdrukkengs-Logbouk:',
 Automatisk speerde IP-Adrässe sunt nit apnuumen.
 Sjuch ju [[Special:BlockList|Lieste fon de speerde IP-Adrässe un Benutsernoomen]] foar aal aktive Speeren.',
 	'block-log-flags-anononly' => 'bloot Anonyme',
-	'block-log-flags-nocreate' => 'Dät Moakjen fon Benutserkonten speerd',
 	'block-log-flags-noautoblock' => 'Autoblock deaktivierd',
 	'block-log-flags-noemail' => 'E-Mail-Fersoand speerd',
 	'block-log-flags-nousertalk' => 'duur oaine Diskussionssiede nit beoarbaidje',
@@ -17093,9 +16833,9 @@ Bloot Liestnummere (Riegen, do der mäd n * ounfange), wäide betrachted.
 As eerste ap ne Riege mout ne Ferbiendenge ap ne nit wonskede Doatäi stounde.
 Deerap foulgjende Siedenferbiendengen in jusälge Riege wäide as Uutnoamen betrachted, dät sunt Sieden wierap ju Doatäi daach ärskiene duur.',
 	'blankpage' => 'Loose Siede',
-];
+);
 
-$messages['su'] = [
+$messages['su'] = array(
 	'broken-file-category' => 'Kaca anu ngandung tutumbu buntu',
 	'badaccess' => 'Kasalahan widi',
 	'badaccess-group0' => 'Anjeun teu wenang ngalaksanakeun peta nu dipundut.',
@@ -17109,20 +16849,20 @@ is not allowed to use the password recovery function to prevent abuse.',
 	'bold_sample' => 'Téks kandel',
 	'bold_tip' => 'Téks kandel',
 	'blockedtitle' => 'Pamaké dipeungpeuk',
-	'blockedtext' => '\'\'\'Ngaran pamaké atawa alamat IP anjeun dipeungpeuk.\'\'\'
+	'blockedtext' => "'''Ngaran pamaké atawa alamat IP anjeun dipeungpeuk.'''
 
-Dipeungpeuk ku $1.
-Alesanana \'\'$2\'\'.
+Dipeungpeuk ku \$1.
+Alesanana ''\$2''.
 
-* Mimiti dipeungpeuk : $8
-* dipeungpeuk kadaluarsa dina: $6
-* Sasaran nudipeungpeuk : $7
+* Mimiti dipeungpeuk : \$8
+* dipeungpeuk kadaluarsa dina: \$6
+* Sasaran nudipeungpeuk : \$7
 
-Anjeun bisa nepungan $1 atawa salasahiji [[{{MediaWiki:Grouppage-sysop}}|kuncén]] séjén pikeun nyawalakeun hal ieu.
-\'\'\'<u>Catet</u>\'\'\': yén anjeun teu bisa maké fungsi "surélékan pamaké ieu" mun anjeun teu ngadaptarkeun alamat surélék nu sah kana [[Special:Preferences|préferénsi pamaké]] anjeun.
+Anjeun bisa nepungan \$1 atawa salasahiji [[{{MediaWiki:Grouppage-sysop}}|kuncén]] séjén pikeun nyawalakeun hal ieu.
+'''<u>Catet</u>''': yén anjeun teu bisa maké fungsi \"surélékan pamaké ieu\" mun anjeun teu ngadaptarkeun alamat surélék nu sah kana [[Special:Preferences|préferénsi pamaké]] anjeun.
 
-Alamat IP anjeun $3 jeung ID na #$5.
-Lampirkeun informasi ieu dina unggal \'\'query\'\' anjeun.',
+Alamat IP anjeun \$3 jeung ID na #\$5.
+Lampirkeun informasi ieu dina unggal ''query'' anjeun.",
 	'blockednoreason' => 'taya alesan',
 	'blocked-notice-logextract' => 'Ieu pamaké keur dipeungpeuk.
 Pikeun rujukan, éntri log panungtung dipidangkeun di handap:',
@@ -17175,7 +16915,6 @@ Pikeun rujukan, logna dipidangkeun di handap ieu:',
 	'blocklogentry' => 'meungpeuk [[$1]] nepi ka $2 $3',
 	'blocklogtext' => 'Ieu mangrupa log peta meungpeuk jeung muka peungpeuk pamaké, teu kaasup alamat IP nu dipeungpeukna otomatis. Tempo [[Special:BlockList|daptar peungpeuk IP]] pikeun daptar cegahan jeung peungpeuk.',
 	'block-log-flags-anononly' => 'pamaké anonim wungkul',
-	'block-log-flags-nocreate' => 'teu bisa nyieun akun',
 	'block-log-flags-noautoblock' => 'meungpeuk otomatis dipaéhan',
 	'block-log-flags-noemail' => 'surélek di peungpeuk',
 	'block-log-flags-nousertalk' => 'teu bisa ngédit kaca obrolan sorangan',
@@ -17188,9 +16927,9 @@ Ngan daptar butiran (baris anu dimimitian ku tanda *) anu diitung.
 Tutumbu kahiji dina hiji baris dianggap numbu ka berkas anu goréng.
 Tutumbu sanggeusna dina baris anu sarua dianggap bener, nyaéta artikel anu midangkeun éta berkas.',
 	'blankpage' => 'Kaca kosong',
-];
+);
 
-$messages['sv'] = [
+$messages['sv'] = array(
 	'broken-file-category' => 'Sidor med trasiga fillänkar',
 	'badaccess' => 'Behörighetsfel',
 	'badaccess-group0' => 'Du har inte behörighet att utföra den handling du begärt.',
@@ -17291,7 +17030,6 @@ Undanhållandeloggen visas nedan för referens:',
 Automatiskt blockerade IP-adresser listas ej.
 I [[Special:BlockList|blockeringslistan]] listas alla IP-adresser och användare som är blockerade för närvarande.',
 	'block-log-flags-anononly' => 'bara oinloggade',
-	'block-log-flags-nocreate' => 'hindrar kontoregistrering',
 	'block-log-flags-noautoblock' => 'utan automatblockering',
 	'block-log-flags-noemail' => 'e-post blockerad',
 	'block-log-flags-nousertalk' => 'kan inte redigera sin diskussionssida',
@@ -17311,9 +17049,9 @@ Avatar3.jpg
 Avatar4.jpg
 Avatar5.jpg
 Avatar6.jpg',
-];
+);
 
-$messages['sw'] = [
+$messages['sw'] = array(
 	'broken-file-category' => 'Kurasa zenye viungo vilivyovunjika',
 	'badaccess' => 'Kuna hitilafu ya ruhusa',
 	'badaccess-group0' => 'Hauruhusiwi kutenda jambo hilo uliloomba.',
@@ -17326,19 +17064,19 @@ $messages['sw'] = [
 	'bold_sample' => 'Maandishi ya kooze',
 	'bold_tip' => 'Kukoozesha maandishi',
 	'blockedtitle' => 'Mtumiaji amezuiwa',
-	'blockedtext' => '\'\'\'Jina lako la mtumiaji au anwani yako ya IP imezuiwa.\'\'\'
+	'blockedtext' => "'''Jina lako la mtumiaji au anwani yako ya IP imezuiwa.'''
 
 Umezuiwa na $1.
-Sababu aliyetambua ni \'\'$2\'\'
+Sababu aliyetambua ni ''$2''
 
 * Mwanzo wa uzuio: $8
 * Mwisho wa uzuio: $6
 * Aliyezuiwa: $7
 
 Unaweza kuwasiliana na $1 au [[{{MediaWiki:Grouppage-sysop}}|mkabidhi]] kuzungumza uzuio.
-Huwezi kutumia kipengele \'kumtuma mtumiaji barua pepe\' isipopatikana anwani halisi ya barua pepe katika
+Huwezi kutumia kipengele 'kumtuma mtumiaji barua pepe' isipopatikana anwani halisi ya barua pepe katika
 [[Special:Preferences|mapendekezo ya akaunti]] yako, na usipozuiwa kuitumia.
-Anwani yako ya IP ni $3, na namba ya uzuio ni #$5. Tafadhali taja namba hizi ukitaka kuwasiliana kuhusu uzuio huu.',
+Anwani yako ya IP ni $3, na namba ya uzuio ni #$5. Tafadhali taja namba hizi ukitaka kuwasiliana kuhusu uzuio huu.",
 	'blockednoreason' => 'sababu haikutajwa',
 	'blocked-notice-logextract' => 'Mtumiaji huyu bado amezuiwa.
 Rejea kumbukumbu ya uzuio ya mwisho inayoandikwa chini:',
@@ -17374,7 +17112,6 @@ Andika sababu ya kuzuia chini (kwa mfano, kwa kutaja mifano ya kurasa zilizohari
 	'blocklink' => 'zuia',
 	'blocklogpage' => 'Kumbukumbu ya uzuio',
 	'blocklogentry' => 'amemzuia [[$1]] mpaka $2 $3',
-	'block-log-flags-nocreate' => 'uwezo wa kuunda akaunti imesitishwa',
 	'block-log-flags-noemail' => 'barua pepe imezuiliwa',
 	'block-log-flags-hiddenname' => 'jina la mtumiaji limefichwa',
 	'blockme' => 'Unizuishe',
@@ -17385,9 +17122,9 @@ Tunazingatia madondoo katika orodha (mistari inayoanza na *) tu.
 Inabidi kiungo cha kwanza katika mstari kiunge na faili baya.
 Viungo vinavyofuata katika mstari ule ule vitaelewa kuwa mambo ya pekee, yaani kurasa zinazoruhusiwa kuonyesha faili hilo.',
 	'blankpage' => 'Ukurasa tupu',
-];
+);
 
-$messages['szl'] = [
+$messages['szl'] = array(
 	'broken-file-category' => 'Zajty ze linkomi lo ńyistniejących ůobrozkůw',
 	'badaccess' => 'Felerne uprawńyńo',
 	'badaccess-group0' => 'Ńy moš uprawńyń coby wykůnać ta uoperacyjo.',
@@ -17439,11 +17176,10 @@ Přyńdź do [[Special:BlockList|listy zawartych adresůw IP]] coby přejřeć z
 	'blocklink' => 'blokuj',
 	'blocklogpage' => 'Gyszichta zawjyrańo',
 	'blocklogentry' => 'zawarto [[$1]], bydźe uodymkńynty: $2 $3',
-	'blocklogtext' => 'Půńižej znojdowo śe lista zawarć zouožůnych i zdjyntych s poščygůlnych adresůw IP.
-Na li\'śće ńy mo adresůw IP, kere zawarto w sposůb autůmatyčny.
-Coby přejřeć lista uobecńy aktywnych zawarć, přyńdź na zajta [[Special:BlockList|zawartych adresůw i užytkowńikůw]].',
+	'blocklogtext' => "Půńižej znojdowo śe lista zawarć zouožůnych i zdjyntych s poščygůlnych adresůw IP.
+Na li'śće ńy mo adresůw IP, kere zawarto w sposůb autůmatyčny.
+Coby přejřeć lista uobecńy aktywnych zawarć, přyńdź na zajta [[Special:BlockList|zawartych adresůw i užytkowńikůw]].",
 	'block-log-flags-anononly' => 'ino anůnimowi',
-	'block-log-flags-nocreate' => 'tworzińy kůnta je zawrzite',
 	'block-log-flags-noautoblock' => 'autůmatyčne zawjerańy uod sprawjyń wůuůnčůne',
 	'block-log-flags-noemail' => 'e-brif zawarty',
 	'block-log-flags-nousertalk' => 'ńy może sprowjać włosnyj zajty godki',
@@ -17456,9 +17192,9 @@ Jyno tajle listy (lińije, kere śe napoczynajům uod *) absztychujemy.
 Pjyrszy link we lińiji muśi być linkym do zakozanygo pliku.
 Dolsze linki we lińiji sům uwożane za wyjimki  – sům to mjana zajtůw, na kerych idzie użyć plik ze zakozanym mjanym.',
 	'blankpage' => 'Pusto zajta',
-];
+);
 
-$messages['ta'] = [
+$messages['ta'] = array(
 	'broken-file-category' => 'அறுபட்ட கோப்பு இணைப்புகள் உள்ள பக்கங்கள்',
 	'badaccess' => 'அனுமதிப் பிழை',
 	'badaccess-group0' => 'நீங்கள் கோரிய செயலைச் செய்வதற்கு உங்களுக்கு அனுமதி கிடையாது.',
@@ -17471,15 +17207,15 @@ $messages['ta'] = [
 	'bold_sample' => 'தடித்த எழுத்துக்கள்',
 	'bold_tip' => 'தடித்த எழுத்து',
 	'blockedtitle' => 'பயனர் தடுக்கப்பட்டுள்ளார்',
-	'blockedtext' => '\'\'\'உங்கள் பயனர் பெயர் அல்லது ஐ.பி. முகவரி தடுக்கப்பட்டுள்ளது.\'\'\'
+	'blockedtext' => "'''உங்கள் பயனர் பெயர் அல்லது ஐ.பி. முகவரி தடுக்கப்பட்டுள்ளது.'''
 
-\'\'$2\'\' காரணத்தை(களை)க் காட்டி $1 உங்களை தடை செய்துள்ளார்.
+''$2'' காரணத்தை(களை)க் காட்டி $1 உங்களை தடை செய்துள்ளார்.
 
 * தடை தொடக்கம்: $8
 * தடை முடிவு: $6
 * தடை செய்யப்பட்டவர்: $7
 
-$1 பயனரையோ அல்லது வேறு [[{{MediaWiki:Grouppage-sysop}}|நிர்வாகி]] ஒருவரையோ அனுகி தடைப் பற்றி கலந்துரையாடலாம். \'இப் பயனருக்கு மின்னஞ்சல் செய்\' என்ற வசதியை நீங்கள் பயன்படுத்துவதுலிருந்து தடைச் செய்யப்பட்டிருந்தாலோ அல்லது [[Special:Preferences|என் விருப்பத்தேர்வுகள்]] பக்கத்தில் இயங்குநிலையிலுள்ள மின்னஞ்சல் முகவரியை தராத போதோ பயனருக்கு மின்னஞ்சல் செய்ய முடியாது. உங்களது தற்போதைய ஐ.பி. முகவரி $3 மற்றும் தடை எண்  #$5 என்பவற்றை கேள்விகள் கேட்கும் போது கட்டாயம் குறிப்பிடவும்.',
+$1 பயனரையோ அல்லது வேறு [[{{MediaWiki:Grouppage-sysop}}|நிர்வாகி]] ஒருவரையோ அனுகி தடைப் பற்றி கலந்துரையாடலாம். 'இப் பயனருக்கு மின்னஞ்சல் செய்' என்ற வசதியை நீங்கள் பயன்படுத்துவதுலிருந்து தடைச் செய்யப்பட்டிருந்தாலோ அல்லது [[Special:Preferences|என் விருப்பத்தேர்வுகள்]] பக்கத்தில் இயங்குநிலையிலுள்ள மின்னஞ்சல் முகவரியை தராத போதோ பயனருக்கு மின்னஞ்சல் செய்ய முடியாது. உங்களது தற்போதைய ஐ.பி. முகவரி $3 மற்றும் தடை எண்  #$5 என்பவற்றை கேள்விகள் கேட்கும் போது கட்டாயம் குறிப்பிடவும்.",
 	'blockednoreason' => 'காரணம் தரப்படவில்லை',
 	'blocked-notice-logextract' => 'இந்தப் பயனர் தற்சமயம் தடை செய்யப்பட்டுள்ளார்.
 இவரது தடை பதிகையின் அண்மைய மாற்றம் கிழே தரப்பட்டுள்ளது:',
@@ -17546,7 +17282,6 @@ $1 பயனரையோ அல்லது வேறு [[{{MediaWiki:Grouppage
 	'blocklogentry' => '$2, $3 அன்று காலாவதியாகும் வகையில் [[$1]] தடுக்கப்பட்டது',
 	'blocklogtext' => 'இது ஒரு பயனரின் தடுப்பு தடை நீக்கல் செயற்பாடுகளுக்கான பதிவாகும். தானியங்கி முறையில் தடுக்கப்படும் ஐபி முகவரிகள் இப்பட்டியலில் இடம்பெறா.  தற்போது செயற்பாட்டிலுள்ள தடைகளையும் முடக்கங்களையும் [[Special:BlockList|ஐ.பி. தடுப்பு பட்டியலில்]] பார்க்க.',
 	'block-log-flags-anononly' => 'அடையாளம் காட்டாத பயனர் மட்டும்',
-	'block-log-flags-nocreate' => 'கணக்கு தொடக்கம் முடக்கப்பட்டுள்ளது',
 	'block-log-flags-noautoblock' => 'தானியக்கமான தடை முடக்கப்பட்டுள்ளது',
 	'block-log-flags-noemail' => 'மின்னஞ்சல் தடுக்கப்பட்டது',
 	'block-log-flags-nousertalk' => 'சொந்த உரையாடல் பக்கத்தை திருத்த முடியாது.',
@@ -17559,9 +17294,9 @@ $1 பயனரையோ அல்லது வேறு [[{{MediaWiki:Grouppage
 பட்டியல் உள்ளடக்கங்கள் (* குறியீட்டுடன் தொடங்கும் வரிகள்) மட்டுமே கருத்தில் கொள்ளப்படும். பழுதுள்ளக் கோப்புடைய இணைப்பு ஒரு வரியில் முதலாவதாக தரப்பட வேண்டும்.
 தொடர்ந்து வரும் இணைப்புகள் விதிவிலக்குகளாக கருதப்படும், அதாவது வரியில் படிமங்கள் வரக்கூடிய பக்கங்கள்.',
 	'blankpage' => 'வெற்று பக்கம்',
-];
+);
 
-$messages['tcy'] = [
+$messages['tcy'] = array(
 	'broken-file-category' => 'ಪುಟಡ್ ಇಜ್ಜಂದಿನ ಕಡತದ ಕೊಂಡಿಲು',
 	'badaccess' => 'ಅನುಮತಿ ದೋಷ',
 	'badaccess-group0' => 'ಈರ್ ಕೇನಿನ ಬೇಲೆನ್ ಮಲ್ಪೆರೆ ಇರೆಗ್ ಅನುಮತಿ ಇಜ್ಜಿ.',
@@ -17584,15 +17319,14 @@ $messages['tcy'] = [
 	'blocklink' => 'ಅಡ್ಡ ಪತ್ತ್’ಲೆ',
 	'blocklogpage' => 'ತಡೆಪತ್ತ್’ದ್’ನ ಸದಸ್ಯೆರ್ನ ದಿನಚರಿ',
 	'blocklogentry' => '[[$1]] ಖಾತೆನ್ $2 $3 ಮುಟ್ಟ ತಡೆಪತ್ತ್’ದ್’ನ್ಡ್',
-	'block-log-flags-nocreate' => 'ಖಾತೆ ಸೃಷ್ಟಿನ್ ತಡೆಪತ್ತ್’ದ್’ನ್ಡ್',
 	'bad_image_list' => 'ವ್ಯವಸ್ಥೆದ ಆಕಾರ ಈ ರೀತಿ ಉಂಡು:
 
 ಪಟ್ಟಿಡುಪ್ಪುನಂಚಿನ ದಾಖಲೆಲೆನ್ (* ರ್ದ್ ಶುರು ಆಪುನ ಸಾಲ್’ಲು) ಮಾತ್ರ ಪರಿಗಣನೆಗ್ ದೆತೊನೆರಾಪುಂಡು.
 ಪ್ರತಿ ಸಾಲ್’ದ ಶುರುತ ಲಿಂಕ್ ಒಂಜಿ ದೋಷ ಉಪ್ಪುನಂಚಿನ ಫೈಲ್’ಗ್ ಲಿಂಕಾದುಪ್ಪೊಡು.
 ಅವ್ವೇ ಸಾಲ್’ದ ಶುರುತ ಪೂರಾ ಲಿಂಕ್’ಲೆನ್ ಪರಿಗನೆರ್ದ್ ದೆಪ್ಪೆರಾಪುಂಡು, ಪಂಡ ಓವು ಪುಟೊಲೆಡ್ ಫೈಲ್’ದ ಬಗ್ಗೆ ಬರ್ಪುಂಡೋ ಔಲು.',
-];
+);
 
-$messages['te'] = [
+$messages['te'] = array(
 	'broken-file-category' => 'తెగిపోయిన ఫైలులింకులు గల పేజీలు',
 	'badaccess' => 'అనుమతి లోపం',
 	'badaccess-group0' => 'మీరు చేయతలపెట్టిన పనికి మీకు హక్కులు లేవు.',
@@ -17672,7 +17406,6 @@ $messages['te'] = [
 	'blocklogentry' => '"[[$1]]" పై నిరోధం అమలయింది. నిరోధ కాలం $2 $3',
 	'blocklogtext' => 'వాడుకరుల నిరోధాలు, పునస్థాపనల చిట్టా ఇది. ఆటోమాటిక్‌గా నిరోధానికి గురైన ఐ.పి. చిరునామాలు ఈ జాబితాలో ఉండవు. ప్రస్తుతం అమల్లో ఉన్న నిరోధాలు, నిషేధాల కొరకు [[Special:BlockList|ఐ.పి. నిరోధాల జాబితా]]ను చూడండి.',
 	'block-log-flags-anononly' => 'అజ్ఞాత వాడుకర్లు మాత్రమే',
-	'block-log-flags-nocreate' => 'ఖాతా సృష్టించడాన్ని అశక్తం చేసాం',
 	'block-log-flags-noautoblock' => 'ఆటోమాటిక్ నిరోధాన్ని అశక్తం చేసాం',
 	'block-log-flags-noemail' => 'ఈ-మెయిలుని నిరోధించాం',
 	'block-log-flags-nousertalk' => 'తమ చర్చాపేజీని మార్చలేరు',
@@ -17685,49 +17418,47 @@ $messages['te'] = [
 జాబితాలో ఉన్నవాటినే (* గుర్తుతో మొదలయ్యే వాక్యాలు) పరిగణలోకి తీసుకుంటారు. వ్యాక్యంలో ఉన్న మొదటి లింకు ఒక చెడిపోయిన బొమ్మకు లింకు అయ్యుండాలి.
 అదే వాక్యంలో ఈ లింకు తరువాత వచ్చే లింకులను పట్టించుకోదు, ఆ పేజీలలో బొమ్మలు సరిగ్గా చేర్చారని భావిస్తుంది.',
 	'blankpage' => 'ఖాళీ పేజీ',
-];
+);
 
-$messages['tet'] = [
+$messages['tet'] = array(
 	'badaccess' => 'Ita la iha permisaun...',
-	'badaccess-group0' => 'Ó la bele halo ne\'e.',
-	'badaccess-groups' => 'De\'it uza-na\'in sira-ne\'ebé iha {{PLURAL:$2|grupu|grupu ida husi}} $1 bele halo ne\'e.',
-	'blockedtitle' => 'Uza-na\'in la bele edita (blokeiu)',
+	'badaccess-group0' => "Ó la bele halo ne'e.",
+	'badaccess-groups' => "De'it uza-na'in sira-ne'ebé iha {{PLURAL:$2|grupu|grupu ida husi}} $1 bele halo ne'e.",
+	'blockedtitle' => "Uza-na'in la bele edita (blokeiu)",
 	'blockednoreason' => 'laiha motivu',
 	'boteditletter' => 'b',
 	'brokenredirects-edit' => 'edita',
 	'brokenredirects-delete' => 'halakon',
 	'booksources-go' => 'Bá',
 	'blanknamespace' => '(Prinsipál)',
-	'blockip' => 'Blokeiu uza-na\'in',
-	'blockip-legend' => 'Blokeiu uza-na\'in',
+	'blockip' => "Blokeiu uza-na'in",
+	'blockip-legend' => "Blokeiu uza-na'in",
 	'blocklist-reason' => 'Razaun',
 	'blocklink' => 'blokeiu',
-	'block-log-flags-nocreate' => 'la bele kria konta foun',
 	'block-log-flags-noemail' => 'korreiu eletróniku blokeiu',
 	'blankpage' => 'Pájina mamuk',
-];
+);
 
-$messages['tg'] = [
+$messages['tg'] = array(
 	'badaccess' => 'Ita la iha permisaun...',
-	'badaccess-group0' => 'Ó la bele halo ne\'e.',
-	'badaccess-groups' => 'De\'it uza-na\'in sira-ne\'ebé iha {{PLURAL:$2|grupu|grupu ida husi}} $1 bele halo ne\'e.',
-	'blockedtitle' => 'Uza-na\'in la bele edita (blokeiu)',
+	'badaccess-group0' => "Ó la bele halo ne'e.",
+	'badaccess-groups' => "De'it uza-na'in sira-ne'ebé iha {{PLURAL:$2|grupu|grupu ida husi}} $1 bele halo ne'e.",
+	'blockedtitle' => "Uza-na'in la bele edita (blokeiu)",
 	'blockednoreason' => 'laiha motivu',
 	'boteditletter' => 'b',
 	'brokenredirects-edit' => 'edita',
 	'brokenredirects-delete' => 'halakon',
 	'booksources-go' => 'Bá',
 	'blanknamespace' => '(Prinsipál)',
-	'blockip' => 'Blokeiu uza-na\'in',
-	'blockip-legend' => 'Blokeiu uza-na\'in',
+	'blockip' => "Blokeiu uza-na'in",
+	'blockip-legend' => "Blokeiu uza-na'in",
 	'blocklist-reason' => 'Razaun',
 	'blocklink' => 'blokeiu',
-	'block-log-flags-nocreate' => 'la bele kria konta foun',
 	'block-log-flags-noemail' => 'korreiu eletróniku blokeiu',
 	'blankpage' => 'Pájina mamuk',
-];
+);
 
-$messages['tg-cyrl'] = [
+$messages['tg-cyrl'] = array(
 	'badaccess' => 'Иштибоҳи иҷоза',
 	'badaccess-group0' => 'Шумо рухсати иҷрои амали дархостшударо надоред.',
 	'badaccess-groups' => 'Амале ки дархост кардаед маҳдуд ба корбарони {{PLURAL:$2|гурӯҳи|яке аз гурӯҳҳои}} аст: $1.',
@@ -17739,19 +17470,19 @@ $messages['tg-cyrl'] = [
 	'bold_sample' => 'Матни пурранг',
 	'bold_tip' => 'Матни пурранг',
 	'blockedtitle' => 'Корбар баста шудааст',
-	'blockedtext' => '\'\'\'Номи корбарии Шумо ё нишонаи IP баста шудааст.\'\'\'
+	'blockedtext' => "'''Номи корбарии Шумо ё нишонаи IP баста шудааст.'''
 
 Бастан аз тарафи $1 иҷро шуд.
-Сабаби он \'\'$2\'\' аст.
+Сабаби он ''$2'' аст.
 
 * Замони қатъ кардан: $8
 * Замони саромадани қатъи дастрасӣ: $6
 * Қатъкунанда: $7
 
 Шумо метавонед бо $1 ё яке дигаре аз [[{{MediaWiki:Grouppage-sysop}}|мудирон]] барои гуфтугӯ роҷеъ ба қатъи дастрасӣ тамос гиред.
-Таваҷҷӯҳ кунед, ки аз қобилияти \'фиристодаи почтаи электронӣ ба ин корбар\' наметавоне истифода кард, магар ин ки як нишони мӯътабари почтаи электронӣ дар [[Special:Preferences|тарҷиҳоти корбарии]] худ сабт карда бошед ва аз корбурди он манъ нашуда бошед.
+Таваҷҷӯҳ кунед, ки аз қобилияти 'фиристодаи почтаи электронӣ ба ин корбар' наметавоне истифода кард, магар ин ки як нишони мӯътабари почтаи электронӣ дар [[Special:Preferences|тарҷиҳоти корбарии]] худ сабт карда бошед ва аз корбурди он манъ нашуда бошед.
 Нишонаи кунунии IP Шумо $3 аст, ва шиносаи қатъи дастрасии Шумо #$5 аст.
-Лутфан ин ё онро ва ё ҳардуи онро дар дархостҳои худ зикр кунед.',
+Лутфан ин ё онро ва ё ҳардуи онро дар дархостҳои худ зикр кунед.",
 	'blockednoreason' => 'далеле мушаххас нашудааст',
 	'badsig' => 'Имзои хом нодуруст аст; барҷасбҳои HTML-ро баррасӣ кунед.',
 	'badsiglength' => 'Тахаллус хеле дароз аст.
@@ -17783,7 +17514,6 @@ $messages['tg-cyrl'] = [
 Нишонаҳои IP-и бо таври худкор баста шуда, феҳрист нашудаанд.
 Барои феҳристи маҳрумиятҳо ва баста шуданҳои амалиёти кунунӣ ба [[Special:BlockList|феҳристи IP-ҳои баста]] муроҷиат кунед.',
 	'block-log-flags-anononly' => 'фақат корбарони гумном',
-	'block-log-flags-nocreate' => 'қобилияти эҷоди ҳисоб ғайрифаъол шуд',
 	'block-log-flags-noautoblock' => 'қатъи дастрасии худкор ғайрифаъол шуд',
 	'block-log-flags-noemail' => 'почтаи электронӣ баста шуд',
 	'blockme' => 'Дастрасии манро қать кун',
@@ -17792,33 +17522,33 @@ $messages['tg-cyrl'] = [
 
 Фақат сатрҳое, ки бо * шурӯъ шаванд ба назар гирифта мешаванд. Аввалин пайванд дар ҳар сатр, бояд пайванде ба як тасвир ва ё акси бад бошад. Пайвандҳои баъдӣ дар ҳамон сатр, ба унвони мавриди истисно ба назар гирифта мешавад.',
 	'blankpage' => 'Саҳифаи холӣ',
-];
+);
 
-$messages['tg-latn'] = [
+$messages['tg-latn'] = array(
 	'badaccess' => 'Iştibohi içoza',
 	'badaccess-group0' => 'Şumo ruxsati içroi amali darxostşudaro nadored.',
 	'badaccess-groups' => 'Amale ki darxost kardaed mahdud ba korbaroni {{PLURAL:$2|gurūhi|jake az gurūhhoi}} ast: $1.',
 	'badarticleerror' => 'Nametavon in amalro bar in sahifa ançom dod.',
 	'badtitle' => 'Unvoni nomunosib',
-	'badtitletext' => 'Unvoni sahifai darxostşuda nomū\'tabar, xolī, jo pajvandi bajnizaboni jo bajnivikiji nodurust bud. On metavonad jak jo jakcand alomathoero dar bar girad, ki dar unvonho istifoda şuda nametavonand.',
+	'badtitletext' => "Unvoni sahifai darxostşuda nomū'tabar, xolī, jo pajvandi bajnizaboni jo bajnivikiji nodurust bud. On metavonad jak jo jakcand alomathoero dar bar girad, ki dar unvonho istifoda şuda nametavonand.",
 	'badretype' => 'Kalimahoi ubure, ki vorid kardaed bo hamdigar muvofiqat namekunand.',
 	'blocked-mailpassword' => 'Nişonai IP şumo az viroiş boz doşta şudaast va az in rū ba manzuri çilavgirī az sūiistifoda az bahragirī az qobilijati barqaror kardani kalimai uburro nadorad.',
 	'bold_sample' => 'Matni purrang',
 	'bold_tip' => 'Matni purrang',
 	'blockedtitle' => 'Korbar basta şudaast',
-	'blockedtext' => '\'\'\'Nomi korbariji Şumo jo nişonai IP basta şudaast.\'\'\'
+	'blockedtext' => "'''Nomi korbariji Şumo jo nişonai IP basta şudaast.'''
 
 Bastan az tarafi $1 içro şud.
-Sababi on \'\'$2\'\' ast.
+Sababi on ''$2'' ast.
 
-* Zamoni qat\' kardan: $8
-* Zamoni saromadani qat\'i dastrasī: $6
-* Qat\'kunanda: $7
+* Zamoni qat' kardan: $8
+* Zamoni saromadani qat'i dastrasī: $6
+* Qat'kunanda: $7
 
-Şumo metavoned bo $1 jo jake digare az [[{{MediaWiki:Grouppage-sysop}}|mudiron]] baroi guftugū roçe\' ba qat\'i dastrasī tamos gired.
-Tavaççūh kuned, ki az qobilijati \'firistodai poctai elektronī ba in korbar\' nametavone istifoda kard, magar in ki jak nişoni mū\'tabari poctai elektronī dar [[Special:Preferences|tarçihoti korbarii]] xud sabt karda boşed va az korburdi on man\' naşuda boşed.
-Nişonai kununiji IP Şumo $3 ast, va şinosai qat\'i dastrasiji Şumo #$5 ast.
-Lutfan in jo onro va jo hardui onro dar darxosthoi xud zikr kuned.',
+Şumo metavoned bo $1 jo jake digare az [[{{MediaWiki:Grouppage-sysop}}|mudiron]] baroi guftugū roçe' ba qat'i dastrasī tamos gired.
+Tavaççūh kuned, ki az qobilijati 'firistodai poctai elektronī ba in korbar' nametavone istifoda kard, magar in ki jak nişoni mū'tabari poctai elektronī dar [[Special:Preferences|tarçihoti korbarii]] xud sabt karda boşed va az korburdi on man' naşuda boşed.
+Nişonai kununiji IP Şumo $3 ast, va şinosai qat'i dastrasiji Şumo #$5 ast.
+Lutfan in jo onro va jo hardui onro dar darxosthoi xud zikr kuned.",
 	'blockednoreason' => 'dalele muşaxxas naşudaast',
 	'badsig' => 'Imzoi xom nodurust ast; barçasbhoi HTML-ro barrasī kuned.',
 	'badsiglength' => 'Taxallus xele daroz ast.
@@ -17835,10 +17565,10 @@ On bojad kamtar az $1 {{PLURAL:$1|alomat|alomatho}} boşad.',
 	'blanknamespace' => '(Aslī)',
 	'blockip' => 'Bastani korbar',
 	'blockip-legend' => 'Bastani korbar',
-	'blockiptext' => 'Baroi bastani dastrasiji viroişi nişonai IP jo nomi korbarī muşaxxas az formi zerin istifoda kuned.
-In kor faqat bojad baroi çilavgirī az xarobkori va muvofiqi bo [[{{MediaWiki:Policy-url}}|sijosati qat\'i dastrasī]] ançom şavad.
-Daleli muşaxxas baroi in korro dar zer zikr kuned (baroi misol, zikri sahifahoe, ki xarobkorī şudaand).',
-	'badipaddress' => 'IP nişonai nomū\'tabar',
+	'blockiptext' => "Baroi bastani dastrasiji viroişi nişonai IP jo nomi korbarī muşaxxas az formi zerin istifoda kuned.
+In kor faqat bojad baroi çilavgirī az xarobkori va muvofiqi bo [[{{MediaWiki:Policy-url}}|sijosati qat'i dastrasī]] ançom şavad.
+Daleli muşaxxas baroi in korro dar zer zikr kuned (baroi misol, zikri sahifahoe, ki xarobkorī şudaand).",
+	'badipaddress' => "IP nişonai nomū'tabar",
 	'blockipsuccesssub' => 'Bastan muvaffaq щud',
 	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] basta şudaast.<br />
 Baroi barrasī ba [[Special:BlockList|fehristi nişonahoi IP va nomhoi korbariji basta şuda]] nigared.',
@@ -17849,18 +17579,17 @@ Baroi barrasī ba [[Special:BlockList|fehristi nişonahoi IP va nomhoi korbariji
 Nişonahoi IP-i bo tavri xudkor basta şuda, fehrist naşudaand.
 Baroi fehristi mahrumijatho va basta şudanhoi amalijoti kununī ba [[Special:BlockList|fehristi IP-hoi basta]] muroçiat kuned.',
 	'block-log-flags-anononly' => 'faqat korbaroni gumnom',
-	'block-log-flags-nocreate' => 'qobilijati eçodi hisob ƣajrifa\'ol şud',
-	'block-log-flags-noautoblock' => 'qat\'i dastrasiji xudkor ƣajrifa\'ol şud',
+	'block-log-flags-noautoblock' => "qat'i dastrasiji xudkor ƣajrifa'ol şud",
 	'block-log-flags-noemail' => 'poctai elektronī basta şud',
 	'blockme' => 'Dastrasiji manro qatь kun',
 	'bydate' => 'az rūi sana',
-	'bad_image_list' => 'Ittilootro bojad bo in şakl vorid kuned:
+	'bad_image_list' => "Ittilootro bojad bo in şakl vorid kuned:
 
-Faqat satrhoe, ki bo * şurū\' şavand ba nazar girifta meşavand. Avvalin pajvand dar har satr, bojad pajvande ba jak tasvir va jo aksi bad boşad. Pajvandhoi ba\'dī dar hamon satr, ba unvoni mavridi istisno ba nazar girifta meşavad.',
+Faqat satrhoe, ki bo * şurū' şavand ba nazar girifta meşavand. Avvalin pajvand dar har satr, bojad pajvande ba jak tasvir va jo aksi bad boşad. Pajvandhoi ba'dī dar hamon satr, ba unvoni mavridi istisno ba nazar girifta meşavad.",
 	'blankpage' => 'Sahifai xolī',
-];
+);
 
-$messages['th'] = [
+$messages['th'] = array(
 	'broken-file-category' => 'หน้าที่มีลิงก์ไฟล์เสีย',
 	'badaccess' => 'มีข้อผิดพลาดในการใช้สิทธิ',
 	'badaccess-group0' => 'คุณไม่ได้รับอนุญาตให้ดำเนินการตามที่ร้องขอนี้',
@@ -17873,17 +17602,17 @@ $messages['th'] = [
 	'bold_sample' => 'ทำตัวหนา',
 	'bold_tip' => 'ทำตัวหนา',
 	'blockedtitle' => 'ผู้ใช้ถูกห้ามใช้งาน',
-	'blockedtext' => '\'\'\'ชื่อผู้ใช้หรือหมายเลขไอพีถูกของคุณถูกบล็อกการใช้งาน\'\'\'
+	'blockedtext' => "'''ชื่อผู้ใช้หรือหมายเลขไอพีถูกของคุณถูกบล็อกการใช้งาน'''
 
-$1 เป็นผู้ดำเนินการบล็อกในครั้งนี้ โดยให้เหตุผลไว้ว่า \'\'$2\'\'
+$1 เป็นผู้ดำเนินการบล็อกในครั้งนี้ โดยให้เหตุผลไว้ว่า ''$2''
 
 * เริ่มการบล็อก: $8
 * สิ้นสุดการบล็อก: $6
 * ผู้ถูกบล็อก: $7
 
-คุณสามารถติดต่อ $1 หรือ [[{{MediaWiki:Grouppage-sysop}}|ผู้ดูแลระบบ]]คนอื่นเพื่อหารือเกี่ยวกับการบล็อกนี้ หรือสามารถที่จะอีเมลผ่านระบบวิกิด้วยคำสั่ง \'อีเมลหาผู้ใช้นี้\'
+คุณสามารถติดต่อ $1 หรือ [[{{MediaWiki:Grouppage-sysop}}|ผู้ดูแลระบบ]]คนอื่นเพื่อหารือเกี่ยวกับการบล็อกนี้ หรือสามารถที่จะอีเมลผ่านระบบวิกิด้วยคำสั่ง 'อีเมลหาผู้ใช้นี้'
 (ถ้าคุณได้ตั้งค่ารองรับการใช้คำสั่งพิเศษผ่านทางอีเมลในส่วน [[Special:Preferences|การตั้งค่าผู้ใช้]] และคุณไม่ได้ถูกบล็อกจากการใช้คำสั่งนี้)
-หมายเลขไอพีปัจจุบันของคุณคือ $3 และหมายเลขการบล็อกคือ #$5 กรุณาระบุหมายเลขเหล่านี้ในการติดต่อผู้ดูแล',
+หมายเลขไอพีปัจจุบันของคุณคือ $3 และหมายเลขการบล็อกคือ #$5 กรุณาระบุหมายเลขเหล่านี้ในการติดต่อผู้ดูแล",
 	'blockednoreason' => 'ไม่ได้ให้เหตุผลไว้',
 	'blocked-notice-logextract' => 'ปัจจุบันเลขที่อยู่ไอพีนี้ถูกบล็อก
 ปูมการบล็อกล่าสุดแสดงด้านล่างนี้เพื่อการอ้างอิง:',
@@ -17939,7 +17668,6 @@ $1 เป็นผู้ดำเนินการบล็อกในคร�
 	'blocklogentry' => 'บล็อก "[[$1]]" หมดอายุ $2 $3',
 	'blocklogtext' => 'ด้านล่างเป็นบันทึกการบล็อกและการเลิกบล็อก  ส่วนการบล็อกอัตโนมัติจะไม่ถูกรวมอยู่ในรายการนี้ ดู [[Special:BlockList|รายการบล็อกไอพี]] สำหรับการบล็อกทั้งหมด',
 	'block-log-flags-anononly' => 'ผู้ใช้นิรนามเท่านั้น',
-	'block-log-flags-nocreate' => 'ห้ามสร้างบัญชีผู้ใช้',
 	'block-log-flags-noautoblock' => 'ยกเลิกการบล็อกอัตโนมัติ',
 	'block-log-flags-noemail' => 'บล็อกการส่งอีเมล',
 	'block-log-flags-nousertalk' => 'ไม่สามารถแก้ไขหน้าอภิปรายของตนเอง',
@@ -17952,13 +17680,13 @@ $1 เป็นผู้ดำเนินการบล็อกในคร�
 เฉพาะรายการที่แสดง (ในแถวขึ้นต้นด้วย *) โดยลิงก์แรกของแต่ละแถวเป็นลิงก์ไปยังภาพที่เสีย
 โดยลิงก์ถัดไปเป็นข้อยกเว้น เช่น บทความที่ภาพถูกจัดในบรรทัดเดียวกับส่วนข้อความ',
 	'blankpage' => 'หน้าว่างเปล่า',
-];
+);
 
-$messages['ti'] = [
+$messages['ti'] = array(
 	'booksources-go' => 'ኪድ',
-];
+);
 
-$messages['tk'] = [
+$messages['tk'] = array(
 	'badaccess' => 'Rugsat säwligi',
 	'badaccess-group0' => 'Talap edýän bu işiňizi ýerine ýetirmäge size ygtyýar berilmeýär.',
 	'badaccess-groups' => 'Talap edýän bu işiňizi diňe $1 {{PLURAL:$2|toparyndaky|toparlaryndan birindäki}} ulanyjylar amala aşyryp bilýär.',
@@ -18022,7 +17750,6 @@ Bökdeme gündeligi salgylanmak üçin aşakda berilýär:',
 Awtomatik usulda blokirlenen IP adresleri sanawda görkezilmeýär.
 Häzirki wagtda blokirlengi duran ulanyjylary [[Special:BlockList|IP blokirleme sanawyndan]] görüp bilersiňiz.',
 	'block-log-flags-anononly' => 'diňe anonim ulanyjylar',
-	'block-log-flags-nocreate' => 'hasap açmaklyk blokirlendi',
 	'block-log-flags-noautoblock' => 'awtoblokirleme ýapyk',
 	'block-log-flags-noemail' => 'e-poçta blokirlendi',
 	'block-log-flags-nousertalk' => 'öz pikir alyşma sahypasyny redaktirläp bilmeýär',
@@ -18035,9 +17762,9 @@ Häzirki wagtda blokirlengi duran ulanyjylary [[Special:BlockList|IP blokirleme 
 Diňe sanawyň elementleri (* bilen başlaýanlar) nazara alynýar. Setirdäki ilkinji çykgyt ýaramaz suratyň çykgydy bolmalydyr.
 Ondan soňraky çykgyt(lar) kadadan çykma hökmünde kabul edilýär, meselem: surat sahypada setiriçinde görünip biler.',
 	'blankpage' => 'Boş sahypa',
-];
+);
 
-$messages['tl'] = [
+$messages['tl'] = array(
 	'broken-file-category' => 'Mga pahina na may sirang mga kawing ng talaksan',
 	'badaccess' => 'Kamalian sa pahintulot',
 	'badaccess-group0' => 'Hindi ka pinahintulutang isagawa ang hiniling mong kilos.',
@@ -18051,18 +17778,18 @@ Maaaring naglalaman ito ng isa o higit pang mga panitik (karakter) na hindi maaa
 	'bold_sample' => 'Makapal na panitik',
 	'bold_tip' => 'Makapal na panitik',
 	'blockedtitle' => 'Hinarang ang tagagamit',
-	'blockedtext' => '\'\'\'Hinarang/hinadlangan ang iyong pangalan ng tagagamit o adres ng IP.\'\'\'
+	'blockedtext' => "'''Hinarang/hinadlangan ang iyong pangalan ng tagagamit o adres ng IP.'''
 
-Ginawa ang pagharang/paghadlang ni $1. Ito ang ibinigay na dahilan: \'\'$2\'\'.
+Ginawa ang pagharang/paghadlang ni $1. Ito ang ibinigay na dahilan: ''$2''.
 
 * Simula ng pagharang/paghadlang: $8
 * Katapusan ng pagharang/paghadlang: $6
 * Ang hinarang/hinadlangan ay si: $7
 
 Maaari kang makipag-ugnayan kay $1 o sa iba pang [[{{MediaWiki:Grouppage-sysop}}|tagapangasiwa]] upang pagusapan ang pagharang/paghadlang na ito.
-Hindi mo magagamit ang kasangkapang-katangiang \'magpadala ng e-liham sa tagagamit\' hangga\'t hindi tinutukoy ang isang tanggap na adres ng e-liham sa iyong [[Special:Preferences|mga kagustuhan]] at hindi ka pa hinaharangan/hinahadlangan sa paggamit nito.
+Hindi mo magagamit ang kasangkapang-katangiang 'magpadala ng e-liham sa tagagamit' hangga't hindi tinutukoy ang isang tanggap na adres ng e-liham sa iyong [[Special:Preferences|mga kagustuhan]] at hindi ka pa hinaharangan/hinahadlangan sa paggamit nito.
 Ang pangkasalukuyang adres ng IP mo ay $3, at ang ID ay #$5.
-Pakisama ang lahat ng mga detalye sa anumang mga pagtatanong na ginagawa/gagawin mo.',
+Pakisama ang lahat ng mga detalye sa anumang mga pagtatanong na ginagawa/gagawin mo.",
 	'blockednoreason' => 'walang binigay na dahilan',
 	'blocked-notice-logextract' => 'Kasalukuyang hinarang ang tagagamit na ito.
 Ang pinakahuling entrada sa talaan  ng pagharang ay ibinigay sa baba para sa inyong pagsasangguni:',
@@ -18116,7 +17843,6 @@ Ang tala ng pagpigil ay ibinigay sa ibaba upang mapagsanggunian:',
 Hindi nakatala rito ang mga awtomatiko/kusang hinarang/hinadlangang mga adres ng IP.
 Tingnan ang [[Special:BlockList|talaan ng mga hinarang na/hinadlangang IP]] para sa talaan ng pangkasalukuyang gumagana pang mga pinagbabawalan at mga pagharang/paghadlang.',
 	'block-log-flags-anononly' => 'mga di-kilalang tagagamit lamang',
-	'block-log-flags-nocreate' => 'Nakapatay ang paglikha ng akawnt',
 	'block-log-flags-noautoblock' => 'Nakapatay ang awtomatikong pagharang',
 	'block-log-flags-noemail' => 'hinadlangan/hinarang ang e-liham',
 	'block-log-flags-nousertalk' => 'hindi mo mababago ang iyong pansariling pahina ng usapan',
@@ -18130,15 +17856,15 @@ Tanging mga nakatalang bagay lamang (mga linyang nagsisimula sa *) ang pinaguuku
 Ang unang kawing sa isang linya ay dapat na nakakawing sa isang talaksang may masamang kalagayan.
 Anumang susunod na mga kawing sa pinanggalingang linya ay tinuturing na mga eksepsyon o bukod-tangi, iyong mga pahina kung saan ang mga talaksan ay maaaring lumitaw sa loob ng linya.',
 	'blankpage' => 'Walang laman na pahina',
-];
+);
 
-$messages['to'] = [
+$messages['to'] = array(
 	'badaccess' => 'Halaʻi fakangofua',
 	'badaccess-group0' => 'ʻOku ʻikai ngofua kia te koe ʻo fai ʻa e ngāue naʻa ke eke ki ai.',
 	'badaccess-groups' => 'Ko e ngāue naʻa ke eke ki ai, ʻoku fakangatangata ki he kau ʻetita ʻi he taha ʻo e ngaahi kulupu $1 pē.',
 	'badarticleerror' => 'ʻOku ikai lava ke ke fai ʻa e ngāuē ni ki he peesi koʻeni.',
 	'badtitle' => 'Hingoa ʻikai sai',
-	'badtitletext' => 'Naʻe taʻeʻaonga ʻa e hingoa ʻo e peesi naʻa ke fili, pe naʻe ʻi ai ha fehokotaki māhehei fakalea kehe pe fehokotaki māhehei faka\'\'wiki\'\' kehe. Mahalo pe ʻoku ʻi loto ha ʻū mataʻitohi ʻoku ʻikai lava ngāueʻaki ʻi ha hingoa.',
+	'badtitletext' => "Naʻe taʻeʻaonga ʻa e hingoa ʻo e peesi naʻa ke fili, pe naʻe ʻi ai ha fehokotaki māhehei fakalea kehe pe fehokotaki māhehei faka''wiki'' kehe. Mahalo pe ʻoku ʻi loto ha ʻū mataʻitohi ʻoku ʻikai lava ngāueʻaki ʻi ha hingoa.",
 	'badretype' => 'ʻOku kehe hoʻo ongo leatapu.',
 	'bold_sample' => 'Tohi sinolahi',
 	'bold_tip' => 'Tohi sinolahi',
@@ -18162,9 +17888,9 @@ $messages['to'] = [
 	'blocklogentry' => 'taʻofia [[$1]] mo ha fuoloa $2 $3',
 	'blocklogtext' => 'Ko e tohinoa ʻeni ʻo e ngāue ʻo e ngaahi taʻofi mo e taʻetaʻofi ʻo e kau ʻetita. ʻOku ʻikai ʻasi ha ngaahi tuʻasila IP ʻoku taʻofi ngaue ʻia te ia pē. Vakai ki he [[Special:BlockList|hokohoko taʻofi IP]] kapau te ke fiemaʻu ʻa e hokohoko ʻo e ngaahi taʻofi taka kotoa.',
 	'bydate' => 'ʻi honau ʻaho',
-];
+);
 
-$messages['tpi'] = [
+$messages['tpi'] = array(
 	'badaccess' => 'Kranki long tok orait.',
 	'badtitle' => 'Nem bilong pes i no stret',
 	'blockedtitle' => 'Yusa i pas',
@@ -18177,9 +17903,9 @@ $messages['tpi'] = [
 	'blockip' => 'Pasim yusa (Block user)',
 	'blocklink' => 'pasim',
 	'blocklogpage' => 'Ripot long pasim ol yusa',
-];
+);
 
-$messages['tr'] = [
+$messages['tr'] = array(
 	'broken-file-category' => 'Bozuk dosya bağlantıları içeren sayfalar',
 	'badaccess' => 'İzin hatası',
 	'badaccess-group0' => 'Bu işlemi yapma yetkiniz yok.',
@@ -18231,7 +17957,7 @@ $1 {{PLURAL:$1|karakterin|karakterin}} altında olmalı.',
 	'blockip' => 'Kullanıcıyı engelle',
 	'blockip-title' => 'Kullanıcıyı engelle',
 	'blockip-legend' => 'Kullanıcıyı engelle',
-	'blockiptext' => 'Aşağıdaki formu kullanarak belli bir IP\'nin veya kayıtlı kullanıcının değişiklik yapmasını engelleyebilirsiniz. Bu sadece vandalizmi engellemek için ve [[{{MediaWiki:Policy-url}}|kurallara]] uygun olarak yapılmalı. Aşağıya mutlaka engelleme ile ilgili bir açıklama yazınız. (örnek: -Şu- sayfalarda vandalizm yapmıştır).',
+	'blockiptext' => "Aşağıdaki formu kullanarak belli bir IP'nin veya kayıtlı kullanıcının değişiklik yapmasını engelleyebilirsiniz. Bu sadece vandalizmi engellemek için ve [[{{MediaWiki:Policy-url}}|kurallara]] uygun olarak yapılmalı. Aşağıya mutlaka engelleme ile ilgili bir açıklama yazınız. (örnek: -Şu- sayfalarda vandalizm yapmıştır).",
 	'badipaddress' => 'Geçersiz IP adresi',
 	'blockipsuccesssub' => 'IP adresi engelleme işlemi başarılı oldu',
 	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] engellendi.
@@ -18256,7 +17982,6 @@ Gizleme günlüğü referans için aşağıda sağlanmıştır:',
 	'blocklogentry' => ', [[$1]] kullanıcısını engelledi, engelleme süresi: $2 $3',
 	'blocklogtext' => 'Burada kullanıcı erişimine yönelik engelleme ya da engelleme kaldırma kayıtları listelenmektedir. Otomatik  IP adresi engellemeleri listeye dahil değildir. Şu anda erişimi durdurulmuş kullanıcıları [[Special:BlockList|IP engelleme listesi]] sayfasından görebilirsiniz.',
 	'block-log-flags-anononly' => 'sadece anonim kullanıcılar',
-	'block-log-flags-nocreate' => 'hesap yaratımı engellendi',
 	'block-log-flags-noautoblock' => 'Otomatik engelleme iptal edildi',
 	'block-log-flags-noemail' => 'e-posta engellendi',
 	'block-log-flags-nousertalk' => 'kendi tartışma sayfasını değiştiremez',
@@ -18270,15 +17995,15 @@ Sadece liste öğeleri (* ile başlayan satırlar) dikkate alınmaktadır.
 Satırdaki ilk bağlantı, kötü dosyaya giden bir bağlantı olmalıdır.
 Takip eden bağlantılar istisna olarak kabul edilmektedir. Örneğin: dosya, sayfada satır içinde görünebilir.',
 	'blankpage' => 'Boş sayfa',
-];
+);
 
-$messages['ts'] = [
+$messages['ts'] = array(
 	'badaccess' => 'Xihoxo hita mpfumelelo',
 	'badaccess-group0' => 'U hava mpumelelo wo endla xikombelo lexi.',
 	'blanknamespace' => '(Ntsindza)',
-];
+);
 
-$messages['tt-cyrl'] = [
+$messages['tt-cyrl'] = array(
 	'broken-file-category' => 'Эшләми торган файл сылтамаларлы битләр',
 	'badaccess' => 'Керү хатасы',
 	'badaccess-group0' => 'Сез сораган гамәлне башкара алмыйсыз.',
@@ -18291,10 +18016,10 @@ $messages['tt-cyrl'] = [
 	'bold_sample' => 'Калын язылыш',
 	'bold_tip' => 'Калын язылыш',
 	'blockedtitle' => 'Кулланучы тыелды',
-	'blockedtext' => '\'\'\'Сезнең хисап язмагыз яки IP адресыгыз тыелган.\'\'\'
+	'blockedtext' => "'''Сезнең хисап язмагыз яки IP адресыгыз тыелган.'''
 
 Тыючы идарәче: $1.
-Күрсәтелгән сәбәп: \'\'$2\'\'.
+Күрсәтелгән сәбәп: ''$2''.
 
 * Тыю башланган вакыт: $8
 * Тыю ахыры: $6
@@ -18303,7 +18028,7 @@ $messages['tt-cyrl'] = [
 Сез $1 яки башка [[{{MediaWiki:Grouppage-sysop}}|идарәчегә]] тыю буенча сорауларыгызны җибәрә аласыз.
 Исегездә тотыгыз: әгәр сез теркәлмәгән һәм электрон почта адресыгызны дәлилләмәгән булсагыз ([[Special:Preferences|дәлилләү өчен шәхси көйләүләр монда]]), идарәчегә хат җибәрә алмыйсыз. Шулай ук тыю вакытында сезнең хат җибәрү мөмкинлегегезне чикләгән булырга да мөмкиннәр.
 Сезнең IP адресы — $3, тыю идентификаторы — #$5.
-Хатларда бу мәгълүматны күрсәтергә онытмагыз.',
+Хатларда бу мәгълүматны күрсәтергә онытмагыз.",
 	'blockednoreason' => 'сәбәп күрсәтелмәгән',
 	'blocked-notice-logextract' => 'Бу кулланучы хәзергә тыелды.
 Түбәндә тыю көндәлегенең соңгы язу бирелгән:',
@@ -18330,7 +18055,6 @@ $messages['tt-cyrl'] = [
 	'blocklink' => 'тыю',
 	'blocklogpage' => 'Тыю көндәлеге',
 	'blocklogentry' => '[[$1]] $2 вакытка тыелды $3',
-	'block-log-flags-nocreate' => 'яңа хисап язмасы теркәү тыелган',
 	'block-log-flags-noemail' => 'хат җибәрү тыелган',
 	'block-log-flags-hiddenname' => 'кулланучының исеме яшерелгән',
 	'bad_image_list' => 'Киләчәк рәвеш кирәк:
@@ -18339,9 +18063,9 @@ $messages['tt-cyrl'] = [
 Юлның беренче сылтамасы куйма өчен тыелган рәсемгә сылтама булырга тиеш.
 Шул ук юлның киләчәк сылтамалары чыгармалар, рәсемгә тыелмаган битләре, саналырлар.',
 	'blankpage' => 'Буш бит',
-];
+);
 
-$messages['tt-latn'] = [
+$messages['tt-latn'] = array(
 	'badaccess' => 'Kerü xatası',
 	'badaccess-group0' => 'Sez sorağan ğämälne başqara almıysız.',
 	'badaccess-groups' => 'Soralğan ğämälne $1 {{PLURAL:$2|törkemeneñ|törkemeneñ}} qullanuçıları ğına başqara ala.',
@@ -18353,10 +18077,10 @@ $messages['tt-latn'] = [
 	'bold_sample' => 'Qalın yazılış',
 	'bold_tip' => 'Qalın yazılış',
 	'blockedtitle' => 'Qullanuçı tıyıldı',
-	'blockedtext' => '\'\'\'Sezneñ xisap yazmağız yäki IP adresığız tıyılğan.\'\'\'
+	'blockedtext' => "'''Sezneñ xisap yazmağız yäki IP adresığız tıyılğan.'''
 
 Tıyuçı idaräçe: $1.
-Kürsätelgän säbäp: \'\'$2\'\'.
+Kürsätelgän säbäp: ''$2''.
 
 * Tıyu başlanğan waqıt: $8
 * Tıyu axırı: $6
@@ -18365,7 +18089,7 @@ Kürsätelgän säbäp: \'\'$2\'\'.
 Sez $1 yäki başqa [[{{MediaWiki:Grouppage-sysop}}|idaräçegä]] tıyu buyınça sorawlarığıznı cibärä alasız.
 İsegezdä totığız: ägär sez terkälmägän häm elektron poçta adresığıznı dälillämägän bulsağız ([[Special:Preferences|dälilläw öçen şäxsi köyläwlär monda]]), idaräçegä xat cibärä almıysız. Şulay uq tıyu waqıtında sezneñ xat cibärü mömkinlegegezne çiklägän bulırğa da mömkinnär.
 Sezneñ IP adresı — $3, tıyu identifikatorı — #$5.
-Xatlarda bu mäğlümatnı kürsätergä onıtmağız.',
+Xatlarda bu mäğlümatnı kürsätergä onıtmağız.",
 	'blockednoreason' => 'säbäp kürsätelmägän',
 	'blocked-notice-logextract' => 'Bu qullanuçı xäzergä tıyıldı.
 Tübändä tıyu köndälegeneñ soñğı yazu birelgän:',
@@ -18392,7 +18116,6 @@ Ul $1 {{PLURAL:$1|xäreftän}} kübräk bulırğa tieş tügel.',
 	'blocklink' => 'tıyu',
 	'blocklogpage' => 'Tıyu köndälege',
 	'blocklogentry' => '[[$1]] $2 waqıtqa tıyıldı $3',
-	'block-log-flags-nocreate' => 'yaña xisap yazması terkäw tıyılğan',
 	'block-log-flags-noemail' => 'xat cibärü tıyılğan',
 	'block-log-flags-hiddenname' => 'qullanuçınıñ iseme yäşerelgän',
 	'bydate' => 'waqıt buyınça',
@@ -18402,9 +18125,9 @@ Ul $1 {{PLURAL:$1|xäreftän}} kübräk bulırğa tieş tügel.',
 Yulnıñ berençe sıltaması quyma öçen tıyılğan räsemgä sıltama bulırğa tieş.
 Şul uq yulnıñ kiläçäk sıltamaları çığarmalar, räsemgä tıyılmağan bitläre, sanalırlar.',
 	'blankpage' => 'Buş bit',
-];
+);
 
-$messages['tyv'] = [
+$messages['tyv'] = array(
 	'badtitle' => 'Багай ат',
 	'badretype' => 'Силерниң парлаан чажыт созуңер таарышпас.',
 	'bold_sample' => 'Карартыр',
@@ -18416,9 +18139,9 @@ $messages['tyv'] = [
 	'badipaddress' => 'Багай ИП-адрес',
 	'block-log-flags-anononly' => 'чүгле ат эвес ажыглакчылар',
 	'blankpage' => 'Куруг арын',
-];
+);
 
-$messages['ug-arab'] = [
+$messages['ug-arab'] = array(
 	'broken-file-category' => 'بۇزۇلغان ھۆججەتكە ئۇلانغان بەتلەر',
 	'badaccess' => 'ھوقۇق چېكى خاتالىقى',
 	'badaccess-group0' => 'سىزنىڭ بايىقى ئىلتىماسىڭىزنى ئىجرا قىلىشقا يول قويمايدۇ.',
@@ -18432,19 +18155,19 @@ $messages['ug-arab'] = [
 	'bold_sample' => 'توم خەت',
 	'bold_tip' => 'توم خەت',
 	'blockedtitle' => 'ئىشلەتكۈچى چەكلەنگەن',
-	'blockedtext' => '\'\'\'ئىشلەتكۈچى ئاتىڭىز ياكى IP ئادرېسىڭىزنى $1 چەكلىگەن .\'\'\'
+	'blockedtext' => "'''ئىشلەتكۈچى ئاتىڭىز ياكى IP ئادرېسىڭىزنى $1 چەكلىگەن .'''
 
  بۇنى $1 چەكلىگەن.
-سەۋەبى \'\'$2\'\'.
+سەۋەبى ''$2''.
 
 * چەكلەش باشلانغان ۋاقىت: $8
 * چەكلەش ئاخىرلىشىدىغان ۋاقىت: $6
 * چەكلەنگۈچى: $7
 
  $1 بىلەن ئالاقىلىشىڭ ياكى باشقا [[{{MediaWiki:Grouppage-sysop}}|باشقۇرغۇچى]] بىلەن بۇ قېتىملىق چەكلەشنى سۆزلىشىشڭ.
-سىز [[Special:Preferences|ھېسابات مايىللىقى]] تەڭشىكىڭىزدە ئىناۋەتلىك ئېلخەت ئادرېسى بەلگىلىمىگەن بولسىڭىز، \'بۇ ئىشلەتكۈچىگە ئېلخەت يوللا\' ئىقتىدارىنى ئىشلىتەلمەيسىز. ئىناۋەتلىك ئېلخەتتىن بىرنى بەلگىلىگەندىن كېيىن، بۇ ئىقتىدار چەكلەنمەيدۇ.
+سىز [[Special:Preferences|ھېسابات مايىللىقى]] تەڭشىكىڭىزدە ئىناۋەتلىك ئېلخەت ئادرېسى بەلگىلىمىگەن بولسىڭىز، 'بۇ ئىشلەتكۈچىگە ئېلخەت يوللا' ئىقتىدارىنى ئىشلىتەلمەيسىز. ئىناۋەتلىك ئېلخەتتىن بىرنى بەلگىلىگەندىن كېيىن، بۇ ئىقتىدار چەكلەنمەيدۇ.
 سىزنىڭ نۆۋەتتىكى IP ئادرېسىڭىز $3، چەكلەنگەن كىملىك   #$5.
-سوئالىڭىزدا يۇقىرىقى بارلىق ماتېرىياللارنى ئىزاھلاڭ.',
+سوئالىڭىزدا يۇقىرىقى بارلىق ماتېرىياللارنى ئىزاھلاڭ.",
 	'blockednoreason' => 'سەۋەبى يوق',
 	'blocked-notice-logextract' => 'بۇ ئىشلەتكۈچى نۆۋەتتە چەكلەنگەن.
 پايدىلىنىش ئۈچۈن يېقىنقى تۆۋەندە چەكلەش خاتىرە تۈرلىرى تەمىنلەندى:',
@@ -18500,7 +18223,6 @@ HTML بەلگىسىنى تەكشۈرۈڭ.',
 ئۆزلۈكىدىن چەكلەنگەن IP ئادرېس كۆرسىتىلمىدى.
  [[Special:BlockList|چەكلەنگەنIP تىزىملىكى]] دىن كۆرۈڭ.',
 	'block-log-flags-anononly' => 'ئىمزاسىز ئىشلەتكۈچىلا',
-	'block-log-flags-nocreate' => 'ھېسابات قۇرۇش چەكلەنگەن',
 	'block-log-flags-noautoblock' => 'ئۆزلۈكىدىن چەكلەشنى چەكلە',
 	'block-log-flags-noemail' => 'ئېلخەت چەكلەنگەن',
 	'block-log-flags-nousertalk' => 'شەخسىي مۇنازىرە بېتىنى تەھرىرلىگىلى بولمايدۇ',
@@ -18515,15 +18237,15 @@ HTML بەلگىسىنى تەكشۈرۈڭ.',
  بۇ ھۆججەت قايسى بەتلەردە كۆرسىتىلىشىدىن قەتئىي نەزەر،
  ئوخشاش بىر قۇرنىڭ ئاخىرىدىكى ئۇلانما مۇستەسنا دەپ قارىلىدۇ،',
 	'blankpage' => 'بوش بەت',
-];
+);
 
-$messages['ug-latn'] = [
+$messages['ug-latn'] = array(
 	'brokenredirects-edit' => 'uzgartish',
 	'brokenredirects-delete' => 'yukhutush',
 	'booksources-go' => 'Kuchush',
-];
+);
 
-$messages['uk'] = [
+$messages['uk'] = array(
 	'broken-file-category' => 'Сторінки, що посилаються на неіснуючі файли',
 	'badaccess' => 'Помилка доступу',
 	'badaccess-group0' => 'Вам не дозволено виконувати цю дію.',
@@ -18537,10 +18259,10 @@ $messages['uk'] = [
 	'bold_sample' => 'Жирний текст',
 	'bold_tip' => 'Жирний текст',
 	'blockedtitle' => 'Користувача заблоковано',
-	'blockedtext' => '\'\'\'Ваш обліковий запис або IP-адреса заблоковані.\'\'\'
+	'blockedtext' => "'''Ваш обліковий запис або IP-адреса заблоковані.'''
 
 Блокування виконане адміністратором $1.
-Зазначена наступна причина: \'\'$2\'\'.
+Зазначена наступна причина: ''$2''.
 
 * Початок блокування: $8
 * Закінчення блокування: $6
@@ -18550,7 +18272,7 @@ $messages['uk'] = [
 
 Зверніть увагу, що ви не зможете надіслати листа адміністратору, якщо ви не зареєстровані або не підтвердили свою електронну адресу в [[Special:Preferences|особистих налаштуваннях]], а також якщо вам було заборонено надсилати листи при блокуванні.
 
-Ваша поточна IP-адреса — $3, ідентифікатор блокування — #$5. Будь ласка, зазначайте ці дані у своїх запитах.',
+Ваша поточна IP-адреса — $3, ідентифікатор блокування — #$5. Будь ласка, зазначайте ці дані у своїх запитах.",
 	'blockednoreason' => 'не вказано причини',
 	'blocked-notice-logextract' => 'Цей користувач наразі заблокований.
 Останній запис у журналі блокувань такий:',
@@ -18597,9 +18319,9 @@ $messages['uk'] = [
 	'blockip' => 'Блокування',
 	'blockip-title' => 'Блокування користувача',
 	'blockip-legend' => 'Блокування користувача',
-	'blockiptext' => 'Використовуйте форму нижче, щоб заблокувати можливість редагування із зазначеної IP-адреси або або ім\'я користувача.
+	'blockiptext' => "Використовуйте форму нижче, щоб заблокувати можливість редагування із зазначеної IP-адреси або або ім'я користувача.
 Це слід робити лише для попередження вандалізму і у відповідності до [[{{MediaWiki:Policy-url}}|правил]].
-Заповніть конкретну причину нижче (наприклад, вкажіть точні сторінки, на яких було зроблено акт вандалізму).',
+Заповніть конкретну причину нижче (наприклад, вкажіть точні сторінки, на яких було зроблено акт вандалізму).",
 	'badipaddress' => 'IP-адреса записана в невірному форматі, або користувача з таким іменем не існує.',
 	'blockipsuccesssub' => 'Блокування проведено',
 	'blockipsuccesstext' => '[[Special:Contributions/$1|«$1»]] заблоковано.<br />
@@ -18625,12 +18347,11 @@ $messages['uk'] = [
 IP-адреси, що блокуються автоматично тут не вказуються. Див.
 [[Special:BlockList|список поточних заборон і блокувань]].',
 	'block-log-flags-anononly' => 'тільки анонімні користувачі',
-	'block-log-flags-nocreate' => 'заборонена реєстрація облікових записів',
 	'block-log-flags-noautoblock' => 'автоблокування вимкнене',
 	'block-log-flags-noemail' => 'електронні листи заборонені',
 	'block-log-flags-nousertalk' => 'не може редагувати власну сторінку обговорення',
 	'block-log-flags-angry-autoblock' => 'увімкнене покращене автоблокування',
-	'block-log-flags-hiddenname' => 'ім\'я користувача приховане',
+	'block-log-flags-hiddenname' => "ім'я користувача приховане",
 	'blockme' => 'Заблокуй мене',
 	'bydate' => 'за датою',
 	'bad_image_list' => 'Формат має бути наступним:
@@ -18639,9 +18360,9 @@ IP-адреси, що блокуються автоматично тут не в
 Перше посилання рядка має бути посиланням на заборонений для вставлення файл.
 Наступні посилання у тому самому рядку будуть розглядатися як винятки, тобто статті, куди зображення може бути включене.',
 	'blankpage' => 'Порожня сторінка',
-];
+);
 
-$messages['ur'] = [
+$messages['ur'] = array(
 	'badaccess' => 'خطائے اجازت',
 	'badaccess-group0' => 'آپ متمنی عمل کا اجراء کرنے کے مُجاز نہیں۔',
 	'badaccess-groups' => 'آپ کا درخواست‌کردہ عمل {{PLURAL:$2|گروہ|گروہوں میں سے ایک}}: $1 کے صارفین تک محدود ہے.',
@@ -18654,10 +18375,10 @@ $messages['ur'] = [
 	'bold_sample' => 'دبیز متن',
 	'bold_tip' => 'دبیز متن',
 	'blockedtitle' => 'صارف مسدود ہے',
-	'blockedtext' => '\'\'\'آپکا اسمِ صارف یا آئی پی پتہ پر پابندی ہے.\'\'\'
+	'blockedtext' => "'''آپکا اسمِ صارف یا آئی پی پتہ پر پابندی ہے.'''
 
 $1 نے پابندی لگائی تھی.
-وجہ یہ بتائی گئی کہ \'\'$2\'\'.
+وجہ یہ بتائی گئی کہ ''$2''.
 
 * پابندی کی ابتداء : $8
 * پابندی کا اختتام : $6
@@ -18666,7 +18387,7 @@ $1 نے پابندی لگائی تھی.
 آپ $1 یا کسی دوسرے [[{{MediaWiki:Grouppage-sysop}}|منتظم]] سے رابطہ کرکے پابندی پر بات چیت کرسکتے ہیں.
 آپ ‘صارف کو برقی خط ارسال کریں’ کی خاصیت اُس وقت تک استعمال نہیں کرسکتے جب تک آپ اپنے [[Special:Preferences|کھاتہ کے ترجیحات]] میں صحیح برقی پتہ معیّن نہ کریں، اور آپ کو اِسے استعمال کرنے سے پابند نہیں کیا گیا ہے.
 آپکا موجودہ آئی پی پتہ $3 ہے، اور پابندی کی شناخت #$5 ہے.
-براہِ مہربانی کسی بھی قسم کے استفسار میں درج بالا تمام تفاصیل شامل کریں.',
+براہِ مہربانی کسی بھی قسم کے استفسار میں درج بالا تمام تفاصیل شامل کریں.",
 	'blockednoreason' => 'کوئی وجہ نہیں دی گئی',
 	'badsig' => 'ناقص خام دستخط.
 HTML tags جانچئے.',
@@ -18682,42 +18403,41 @@ HTML tags جانچئے.',
 	'blockip' => 'داخلہ ممنوع براۓ صارف',
 	'blocklink' => 'پابندی لگائیں',
 	'blocklogpage' => 'نوشتۂ پابندی',
-	'block-log-flags-nocreate' => 'کھاتے کی تخلیق غیرفعال',
 	'bydate' => 'بالحاظ تاریخ',
 	'bad_image_list' => 'شکلبند درج ذیل ہے:
 
 صرف فہرستی عناصر (* سے شروع ہونے والی لکیری) شامل کی جاتی ہیں۔
 کسی لکیر میں پہلا ربط کوئی خراب ملف کا ہونا چاہئے۔
 اُسی لکیر میں باقی آنے والے ربط کو مستثنیٰ قرار دیا جاتا ہے، مثلاً صفحات جہاں ملف لکیر کے وسط میں آسکتا ہے۔',
-];
+);
 
-$messages['uz'] = [
+$messages['uz'] = array(
 	'badtitle' => 'Notoʻgʻri sarlavha',
 	'bold_sample' => 'Qalin matn',
 	'bold_tip' => 'Qalin matn',
-	'blockedtext' => '\'\'\'Siz (foydalanuvchi ismingiz yoki IP manzilingiz) tahrir qilishdan chetlashtirildingiz.\'\'\'
+	'blockedtext' => "'''Siz (foydalanuvchi ismingiz yoki IP manzilingiz) tahrir qilishdan chetlashtirildingiz.'''
 
-Sizni $1 chetlashtirdi. Bunga sabab: \'\'$2\'\'.
+Sizni $1 chetlashtirdi. Bunga sabab: ''$2''.
 
 * Chetlashtirish muddati boshi: $8
 * Chetlashtirish muddati yakuni: $6
 
 Siz $1 yoki boshqa [[{{MediaWiki:Grouppage-sysop}}|administrator]] bilan bogʻlanib, arz qilishingiz mumkin.
-You cannot use the \'e-mail this user\' feature unless a valid e-mail address is specified in your [[Special:Preferences|account preferences]] and you have not been blocked from using it.
-Sizning hozirgi IP manzilingiz - $3, chetlashtirish raqamingiz - #$5. Arizaga bularni ilova qilishingiz mumkin.',
+You cannot use the 'e-mail this user' feature unless a valid e-mail address is specified in your [[Special:Preferences|account preferences]] and you have not been blocked from using it.
+Sizning hozirgi IP manzilingiz - $3, chetlashtirish raqamingiz - #$5. Arizaga bularni ilova qilishingiz mumkin.",
 	'blockip' => 'Foydalanuvchini chetlashtir',
 	'blocklink' => 'chetlashtir',
 	'blocklogpage' => 'Chetlashtirish qaydlari',
-];
+);
 
-$messages['val'] = [
-	'bugreports' => 'Informes d\'errors del programa',
-	'bugreportspage' => 'Proyecte:Informes d\'errors',
+$messages['val'] = array(
+	'bugreports' => "Informes d'errors del programa",
+	'bugreportspage' => "Proyecte:Informes d'errors",
 	'badaccess' => 'Error de permissos',
-	'badaccess-group0' => 'No tens permissos per a eixecutar l\'acció que has solicitat.',
-	'badaccess-group1' => 'L\'acció que has solicitat se llimita als usuaris del grup $1.',
-	'badaccess-group2' => 'L\'acció que has solicitat se llimita a un dels usuaris dels grups $1.',
-	'badaccess-groups' => 'L\'acció que has solicitat se llimita als usuaris d\'un dels grups $1.',
+	'badaccess-group0' => "No tens permissos per a eixecutar l'acció que has solicitat.",
+	'badaccess-group1' => "L'acció que has solicitat se llimita als usuaris del grup $1.",
+	'badaccess-group2' => "L'acció que has solicitat se llimita a un dels usuaris dels grups $1.",
+	'badaccess-groups' => "L'acció que has solicitat se llimita als usuaris d'un dels grups $1.",
 	'badarticulerror' => 'Esta operació no se pot dur a terme en esta pàgina',
 	'badtitle' => 'El títul no es correcte',
 	'badtitletext' => 'El títul de la pàgina que has demanat no es correcte, està en blanc o es un enllaç inter-lingüístic trencat. Podria haver-hi algun caràcter no permés per al seu ús en els títuls.',
@@ -18726,23 +18446,23 @@ $messages['val'] = [
 	'blocked-mailpassword' => 'La teua direcció IP ha segut bloquejada. Se us ha desactivat la funció de recuperació de contrasenya per a previndre abusos.',
 	'bold_sample' => 'Text en negreta',
 	'bold_tip' => 'Text en negreta',
-	'blockedtitle' => 'L\'usuari està bloquejat',
-	'blockedtext' => '<big>\'\'\'S\'ha procedit al bloqueig del teu conte d\'usuari o la teua direcció IP.\'\'\'</big>
+	'blockedtitle' => "L'usuari està bloquejat",
+	'blockedtext' => "<big>'''S'ha procedit al bloqueig del teu conte d'usuari o la teua direcció IP.'''</big>
 
-El bloqueig l\'ha dut a terme $1, en el següent motiu: \'\'$2\'\'
+El bloqueig l'ha dut a terme $1, en el següent motiu: ''$2''
 
 Pots contactar $1 o un dels [[{{MediaWiki:grouppage-sysop}}|administradors]] per a discutir el blocage.
 
-Tin un conte que no pots utilisar el formulari d\'enviament de mensages de correu a cap usuari, fins que tingues una direcció de correu vàlida registrada a les teues [[Special:Preferences|preferències d\'usuari]].
+Tin un conte que no pots utilisar el formulari d'enviament de mensages de correu a cap usuari, fins que tingues una direcció de correu vàlida registrada a les teues [[Special:Preferences|preferències d'usuari]].
 
-La teua direcció IP es $3, i el núm. ID del bloqueig es #$5. Per favor, inclou esta direcció en totes les consultes que fases.',
-	'blockedoriginalsource' => 'La font de \'\'\'$1\'\'\' se mostra a sota:',
-	'blockededitsource' => 'El text de les teues edicions a \'\'\'$1\'\'\' se mostra a continuació:',
+La teua direcció IP es $3, i el núm. ID del bloqueig es #$5. Per favor, inclou esta direcció en totes les consultes que fases.",
+	'blockedoriginalsource' => "La font de '''$1''' se mostra a sota:",
+	'blockededitsource' => "El text de les teues edicions a '''$1''' se mostra a continuació:",
 	'badquery' => 'Consulta formulada de manera incorrecta',
-	'badquerytext' => 'No s\'ha pogut processar la búsqueda.
+	'badquerytext' => "No s'ha pogut processar la búsqueda.
 El motiu es provablement perque has intentat buscar una paraula de menys de tres lletres, la qual cosa encara no es possible.
 També pot ser que hajau comés un error en escriure el terme.
-Torna a provar en una atra búsqueda.',
+Torna a provar en una atra búsqueda.",
 	'blanknamespace' => '(Portada)',
 	'boteditletter' => 'b',
 	'badfilename' => 'El nom de la image s\'ha canviat a "$1".',
@@ -18756,57 +18476,56 @@ Torna a provar en una atra búsqueda.',
 	'booksources' => 'Obres de referència',
 	'booksources-search-legend' => 'Busca fonts de llibres',
 	'booksources-go' => 'Anar',
-	'booksources-text' => 'A baix hi ha una llista d\'enllaços d\'atres llocs que venen llibres nous i de segona mà, i també podrien tenir més informació dels llibres que estas buscant:',
-	'blockip' => 'Bloqueja l\'usuari',
-	'blockiptext' => 'Utilisa el següent formulari per bloquejar l\'accés
-d\'escritura des d\'una direcció IP específica o des d\'un usuari determinat.
-això només s\'hauria de fer per previndre el vandalisme, i
-d\'acort en la [[{{MediaWiki:policy-url}}|política del proyecte]].
+	'booksources-text' => "A baix hi ha una llista d'enllaços d'atres llocs que venen llibres nous i de segona mà, i també podrien tenir més informació dels llibres que estas buscant:",
+	'blockip' => "Bloqueja l'usuari",
+	'blockiptext' => "Utilisa el següent formulari per bloquejar l'accés
+d'escritura des d'una direcció IP específica o des d'un usuari determinat.
+això només s'hauria de fer per previndre el vandalisme, i
+d'acort en la [[{{MediaWiki:policy-url}}|política del proyecte]].
 Plena el diàlec de baix en un motiu específic (per eixemple, citant
-quines pàgines en concret estan sent vandalisades).',
+quines pàgines en concret estan sent vandalisades).",
 	'badipaddress' => 'La direcció IP no té el format correcte.',
-	'blockipsuccesssub' => 'S\'ha bloquejat en èxit',
+	'blockipsuccesssub' => "S'ha bloquejat en èxit",
 	'blockipsuccesstext' => 'L\'usuari "[[Special:Contributions/$1|$1]]" ha segut bloquejat.
 <br />Mira la [[Special:Ipblocklist|llista d\'IP blocades]] per revisar els bloquejos.',
 	'blocklistline' => '$1, $2 bloqueja $3 ($4)',
 	'blocklink' => 'bloqueja',
 	'blocklogpage' => 'Registre de bloquejats',
 	'blocklogentry' => 's\'ha bloquejat "[[$1]]" per a un periodo de $2 $3',
-	'blocklogtext' => 'Això es una relació de accions de bloqueig i desbloqueig. Les direccions IP bloquejades automàticament no apareixen. mira la [[Special:Ipblocklist|llista d\'usuaris actualment bloquejats]].',
+	'blocklogtext' => "Això es una relació de accions de bloqueig i desbloqueig. Les direccions IP bloquejades automàticament no apareixen. mira la [[Special:Ipblocklist|llista d'usuaris actualment bloquejats]].",
 	'block-log-flags-anononly' => 'només els usuaris anònims',
-	'block-log-flags-nocreate' => 's\'ha desactivat la creació de contes',
-];
+);
 
-$messages['vec'] = [
-	'broken-file-category' => 'Pajine co\' i link roti',
+$messages['vec'] = array(
+	'broken-file-category' => "Pajine co' i link roti",
 	'badaccess' => 'Parmesi no sufisienti',
-	'badaccess-group0' => 'No te disponi de i parmesi nesesari par eseguire l\'asion richiesta.',
+	'badaccess-group0' => "No te disponi de i parmesi nesesari par eseguire l'asion richiesta.",
 	'badaccess-groups' => 'Ła funsion richiesta ła xè riservà a i utenti che apartien {{PLURAL:$2|al grupo|a uno de i seguenti grupi}}: $1.',
 	'badarticleerror' => 'Operasion no consentia par sta pajina.',
 	'badtitle' => 'Titoło mia justo',
-	'badtitletext' => 'El titoło de ła pajina richiesta xè vodo, erà o con carateri no amesi opure el deriva da n\'erore ne i cołegamenti tra siti wiki diversi o version en łengue diverse de ło steso sito.',
+	'badtitletext' => "El titoło de ła pajina richiesta xè vodo, erà o con carateri no amesi opure el deriva da n'erore ne i cołegamenti tra siti wiki diversi o version en łengue diverse de ło steso sito.",
 	'badretype' => 'Le do password le xe difarenti.',
 	'blocked-mailpassword' => 'Per prevegner abusi, no se pol mìa doparar la funzion "Invia nova password" da un indirizo IP blocà.',
 	'bold_sample' => 'Testo in grosso',
 	'bold_tip' => 'Testo in grosso',
 	'blockedtitle' => 'Utente blocà',
-	'blockedtext' => '\'\'\'Sto nome utente o indirizo IP el xe stà blocà.\'\'\'
+	'blockedtext' => "'''Sto nome utente o indirizo IP el xe stà blocà.'''
 
 El bloco el xe stà messo da $1.
-La motivazion del bloco la xe sta qua: \'\'$2\'\'.
+La motivazion del bloco la xe sta qua: ''$2''.
 
 * Inizio del bloco: $8
 * Scadensa del bloco: $6
 * Intervalo del bloco: $7
 
-Se te vol, te pol contatar $1 o n\'altro [[{{MediaWiki:Grouppage-sysop}}|aministrador]] par discùtar del bloco.
+Se te vol, te pol contatar $1 o n'altro [[{{MediaWiki:Grouppage-sysop}}|aministrador]] par discùtar del bloco.
 
-Nota che la funzion \'Scrivi a l\'utente\' no la xe mìa ativa se no te ghè registrà un indirizo e-mail valido ne le to [[Special:Preferences|preferenze]] e se sto indirizo no\'l xe stà blocà.
+Nota che la funzion 'Scrivi a l'utente' no la xe mìa ativa se no te ghè registrà un indirizo e-mail valido ne le to [[Special:Preferences|preferenze]] e se sto indirizo no'l xe stà blocà.
 
-Se prega de specificare l\'indirizo IP atuale ($3) o el nùmaro del bloco (ID #$5) in qualsiasi richiesta de ciarimenti.',
+Se prega de specificare l'indirizo IP atuale ($3) o el nùmaro del bloco (ID #$5) in qualsiasi richiesta de ciarimenti.",
 	'blockednoreason' => 'nissuna motivazion indicà',
-	'blocked-notice-logextract' => 'Sto utente xè atualmente blocà.
-L\'ultimo ełemento del rejistro de i blochi xè riportà de seguito par informasion:',
+	'blocked-notice-logextract' => "Sto utente xè atualmente blocà.
+L'ultimo ełemento del rejistro de i blochi xè riportà de seguito par informasion:",
 	'badsig' => 'Erór ne ła firma non standard, verifica i tag HTML.',
 	'badsiglength' => 'La to firma la xe massa longa.
 La gà da verghe al massimo $1 {{PLURAL:$1|caràtere|caràteri}}.',
@@ -18820,17 +18539,17 @@ La gà da verghe al massimo $1 {{PLURAL:$1|caràtere|caràteri}}.',
 	'booksources-search-legend' => 'Riserca de fonti librarie',
 	'booksources-go' => 'Va',
 	'booksources-text' => 'De seguito vien presentà un elenco de colegamenti verso siti foresti che vende libri novi e usài, atraverso i quali se pol otegner piassè informazioni sul testo sercà.',
-	'booksources-invalid-isbn' => 'El nùmaro ISBN inserìo no\'l xe mia valido: controla de novo se te lo ghè copià justo da la fonte originale.',
+	'booksources-invalid-isbn' => "El nùmaro ISBN inserìo no'l xe mia valido: controla de novo se te lo ghè copià justo da la fonte originale.",
 	'blanknamespace' => '(Prinsipale)',
 	'blockip' => 'Bloco utente',
-	'blockip-title' => 'Bloca l\'utente',
-	'blockip-legend' => 'Bloca l\'utente',
-	'blockiptext' => 'Dòpara el moduło qua soto par blocar l\'accesso in scritura a un speçifico utente o indirizo IP. El bloco el gà de èssar operà par prevegner ati de vandalismo e in streta osservansa de ła [[{{MediaWiki:Policy-url}}|policy de {{SITENAME}}]]. Speçifica in detałio el motivo del bloco nel canpo seguente (ad es. indicando i titołi de łe pàxene ogeto de vandalismo).',
-	'badipaddress' => 'L\'indirisso IP indicà no\'l xè mìa coreto.',
+	'blockip-title' => "Bloca l'utente",
+	'blockip-legend' => "Bloca l'utente",
+	'blockiptext' => "Dòpara el moduło qua soto par blocar l'accesso in scritura a un speçifico utente o indirizo IP. El bloco el gà de èssar operà par prevegner ati de vandalismo e in streta osservansa de ła [[{{MediaWiki:Policy-url}}|policy de {{SITENAME}}]]. Speçifica in detałio el motivo del bloco nel canpo seguente (ad es. indicando i titołi de łe pàxene ogeto de vandalismo).",
+	'badipaddress' => "L'indirisso IP indicà no'l xè mìa coreto.",
 	'blockipsuccesssub' => 'Bloco eseguìo',
-	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] l\'è sta bloccà.<br />
-Varda [[Special:BlockList|lista IP bloccati]] par védar tuti i blochi.',
-	'blocklist-nousertalk' => 'no\'l pol scrivar su la so pàxena de discussion',
+	'blockipsuccesstext' => "[[Special:Contributions/$1|$1]] l'è sta bloccà.<br />
+Varda [[Special:BlockList|lista IP bloccati]] par védar tuti i blochi.",
+	'blocklist-nousertalk' => "no'l pol scrivar su la so pàxena de discussion",
 	'blocklink' => 'bloca',
 	'blocklogpage' => 'Blochi',
 	'blocklog-showlog' => 'Sto utente el xe stà zà blocà tenpo fa.
@@ -18838,12 +18557,11 @@ Qua soto ghe xe el registro dei blochi:',
 	'blocklog-showsuppresslog' => 'Sto utente el xe stà zà blocà e sconto tenpo fa.
 Qua soto ghe xe el registro de le sopression:',
 	'blocklogentry' => 'ga blocà [[$1]] par un periodo de $2 $3',
-	'blocklogtext' => 'Sto qua xè un elenco de azioni de bloco e sbloco dei indirizi IP. I indirizi blocai in automatico no i xè mìa elencai. Varda l\'[[Special:BlockList|elenco dei IP blocà]] par la lista dei indirizi el cui bloco el xè operativo.',
+	'blocklogtext' => "Sto qua xè un elenco de azioni de bloco e sbloco dei indirizi IP. I indirizi blocai in automatico no i xè mìa elencai. Varda l'[[Special:BlockList|elenco dei IP blocà]] par la lista dei indirizi el cui bloco el xè operativo.",
 	'block-log-flags-anononly' => 'solo utenti anonimi',
-	'block-log-flags-nocreate' => 'creasion acount blocà',
 	'block-log-flags-noautoblock' => 'bloco automatico disativà',
 	'block-log-flags-noemail' => 'e-mail blocàe',
-	'block-log-flags-nousertalk' => 'no\'l pode scrìvar su la so pàxena de discussion',
+	'block-log-flags-nousertalk' => "no'l pode scrìvar su la so pàxena de discussion",
 	'block-log-flags-angry-autoblock' => 'bloco automatico avansado ativo',
 	'block-log-flags-hiddenname' => 'nome utente sconto',
 	'blockme' => 'Blòcheme',
@@ -18854,9 +18572,9 @@ Xe boni solo i elenchi puntai (righe che scumissia col caratere *).
 El primo colegamento su de ogni riga el gà da èssar un colegamento a un file indesiderà.
 I colegamenti dopo, su la stessa riga, i xe considerai come ecession (cioè, pagine in do che el file se pole riciamarlo normalmente).',
 	'blankpage' => 'Pagina voda',
-];
+);
 
-$messages['vep'] = [
+$messages['vep'] = array(
 	'broken-file-category' => 'Lehptoled, kudambil om radmatomid kosketusid',
 	'badaccess' => 'Laskendan petuz',
 	'badaccess-group0' => 'Teile ei sa tehta pakitud tegendad.',
@@ -18866,30 +18584,30 @@ $messages['vep'] = [
 	'badtitletext' => 'Ectud lehtpolen nimi om vär, vai mugošt nimed ei ole, vai kelidenkeskeline (interwiki) nimi om kirjutadud värin.
 Siš voib olda simvoloid, kudambid ei sa panda nimihe.',
 	'badretype' => 'Teil kirjutadud peitsanad ei kožugoi toine toižhe.',
-	'blocked-mailpassword' => 'Redaktiruind teiden IP-adresalpäi om kel\'tud, peitsanan udištandan funkcii om mugažo blokiruidud, miše kaitas abidoičendaspäi.',
+	'blocked-mailpassword' => "Redaktiruind teiden IP-adresalpäi om kel'tud, peitsanan udištandan funkcii om mugažo blokiruidud, miše kaitas abidoičendaspäi.",
 	'bold_sample' => 'Lihavoitud tekst',
 	'bold_tip' => 'Lihavoitud tekst',
 	'blockedtitle' => 'Kävutai om blokiruidud',
-	'blockedtext' => '\'\'\'Teiden kävutajan nimi vai IP-adres om blokiruidud.\'\'\'
+	'blockedtext' => "'''Teiden kävutajan nimi vai IP-adres om blokiruidud.'''
 
 Teid om blokiruinu $1.
-Sü: \'\'$2\'\'.
+Sü: ''$2''.
 
 * Blokiruindan augotižaig: $8
 * Blokiruindan lopaig: $6
 * Blokiruidud kävutai: $7
 
-Otkat sil\'mnägubale, miše teile ei sa oigeta kirješt [[{{MediaWiki:Grouppage-sysop}}|administratorale]], ku tö et olgoi sanuded registracijad i et olgoi vahvištoitnuded ičetoi e-počtan adresad
-[[Special:Preferences|teiden järgendusiden lehtpolel]], vai teile oma kel\'tnuded kirjeižid oigendamha blokiruindan aigan.
+Otkat sil'mnägubale, miše teile ei sa oigeta kirješt [[{{MediaWiki:Grouppage-sysop}}|administratorale]], ku tö et olgoi sanuded registracijad i et olgoi vahvištoitnuded ičetoi e-počtan adresad
+[[Special:Preferences|teiden järgendusiden lehtpolel]], vai teile oma kel'tnuded kirjeižid oigendamha blokiruindan aigan.
 Teiden IP-adres om $3, teiden blokiruindan ID om #$5.
-Olgat hüväd, kirjutagat nened andmused kaikiš kirjeižiš administratorile.',
+Olgat hüväd, kirjutagat nened andmused kaikiš kirjeižiš administratorile.",
 	'blockednoreason' => 'Ei ole kirjutadud ni-mittušt süd.',
-	'blocked-notice-logextract' => 'Nece kävutai om nügüd\' blokiruidud.
-Alemba om anttud jälgmäine kirjutuz blokiruindaiglehtesespäi:',
+	'blocked-notice-logextract' => "Nece kävutai om nügüd' blokiruidud.
+Alemba om anttud jälgmäine kirjutuz blokiruindaiglehtesespäi:",
 	'badsig' => 'Vär allekirjutez.
 Kodvgat HTML-virgad.',
-	'badsiglength' => 'Pit\'kähk allekirjutez.
-Pidab tehta se $1 {{PLURAL:$1|simvolaspäi|simvoloišpäi}}.',
+	'badsiglength' => "Pit'kähk allekirjutez.
+Pidab tehta se $1 {{PLURAL:$1|simvolaspäi|simvoloišpäi}}.",
 	'boteditletter' => 'b',
 	'badfilename' => 'Failan nimi om vajehtud, sen uz\' nimi om "$1".',
 	'backend-fail-backup' => 'Ei voi tehta $1-failan rezervkopijad.',
@@ -18926,30 +18644,29 @@ Kc. [[Special:BlockList|blokiruidud IP-adresoiden nimikirjuteshe]].',
 	'blocklist-by' => 'Brokirui admin',
 	'blocklist-params' => 'Blokiruindan parametrad',
 	'blocklist-reason' => 'Sü',
-	'blocklist-nousertalk' => 'ei sa redaktiruida ičeze lodulehtpol\'t',
+	'blocklist-nousertalk' => "ei sa redaktiruida ičeze lodulehtpol't",
 	'blocklink' => 'blokiruida',
 	'blocklogpage' => 'Blokiruindoiden aigkirj',
 	'blocklog-showlog' => 'Nece kävutai blokiruiltihe jo.
 Alemba om anttud blokiruindaiglehtez:',
 	'blocklogentry' => 'blokiruidihe [[$1]] pordoks $2 $3',
 	'block-log-flags-anononly' => 'vaiše anonimižed kävutajad',
-	'block-log-flags-nocreate' => 'uziden kävutajiden registracii om kel\'tud',
 	'block-log-flags-noautoblock' => 'avtoblokiruind ei ole kävutamas',
-	'block-log-flags-noemail' => 'e-počtan oigendamine om kel\'tud',
-	'block-log-flags-nousertalk' => 'ei voi redaktiruida ičeze lodulehtpol\'t',
+	'block-log-flags-noemail' => "e-počtan oigendamine om kel'tud",
+	'block-log-flags-nousertalk' => "ei voi redaktiruida ičeze lodulehtpol't",
 	'block-log-flags-angry-autoblock' => 'levitadud avtoblokiruind om kävutamas',
 	'block-log-flags-hiddenname' => 'kävutajan nimi om peittud',
 	'blockme' => 'Blokiruigat mindai',
 	'bydate' => 'datan mödhe',
-	'bad_image_list' => 'Formatale pidab olda mugoman:
+	'bad_image_list' => "Formatale pidab olda mugoman:
 
-Vaiše nimikirjutesen elementad (rived, kudambad augotase *-znamaižespäi) oma ottud sil\'mnägubale.
+Vaiše nimikirjutesen elementad (rived, kudambad augotase *-znamaižespäi) oma ottud sil'mnägubale.
 Ezmäižele kosketusele rives pidab ozutada hondole faile.
-Jäl\'ghižed kosketused siš-žo rives oma arvostadud kut erindad (lehtpoled, kudambihe sab mülütada kuvid).',
-	'blankpage' => 'Puhtaz lehtpol\'',
-];
+Jäl'ghižed kosketused siš-žo rives oma arvostadud kut erindad (lehtpoled, kudambihe sab mülütada kuvid).",
+	'blankpage' => "Puhtaz lehtpol'",
+);
 
-$messages['vi'] = [
+$messages['vi'] = array(
 	'broken-file-category' => 'Trang nhúng tập tin không tồn tại',
 	'badaccess' => 'Lỗi về quyền truy cập',
 	'badaccess-group0' => 'Bạn không được phép thực hiện thao tác này.',
@@ -18962,10 +18679,10 @@ $messages['vi'] = [
 	'bold_sample' => 'Chữ đậm',
 	'bold_tip' => 'Chữ đậm',
 	'blockedtitle' => 'Thành viên bị cấm',
-	'blockedtext' => '\'\'\'Tên người dùng hoặc địa chỉ IP của bạn đã bị cấm.\'\'\'
+	'blockedtext' => "'''Tên người dùng hoặc địa chỉ IP của bạn đã bị cấm.'''
 
 Người thực hiện cấm là $1.
-Lý do được cung cấp là \'\'$2\'\'.
+Lý do được cung cấp là ''$2''.
 
 * Bắt đầu cấm: $8
 * Kết thúc cấm: $6
@@ -18974,7 +18691,7 @@ Lý do được cung cấp là \'\'$2\'\'.
 Bạn có thể liên hệ với $1 hoặc một [[{{MediaWiki:Grouppage-sysop}}|bảo quản viên]] khác để thảo luận về việc cấm.
 Bạn không thể sử dụng tính năng “gửi thư cho người này” trừ khi bạn đã đăng ký một địa chỉ thư điện tử hợp lệ trong [[Special:Preferences|tùy chọn tài khoản]] và bạn không bị khóa chức năng đó.
 Địa chỉ IP hiện tại của bạn là $3, và mã số cấm là #$5.
-Xin hãy ghi kèm tất cả các thông tin trên vào thư yêu cầu của bạn.',
+Xin hãy ghi kèm tất cả các thông tin trên vào thư yêu cầu của bạn.",
 	'blockednoreason' => 'không đưa ra lý do',
 	'blocked-notice-logextract' => 'Người dùng này hiện đang bị cấm sửa đổi. Nhật trình cấm gần nhất được ghi ở dưới để tiện theo dõi:',
 	'badsig' => 'Chữ ký không hợp lệ; hãy kiểm tra thẻ HTML.',
@@ -19044,7 +18761,6 @@ Nó không được dài quá $1 ký tự.',
 	'blocklogentry' => 'đã cấm [[$1]] với thời hạn là $2 $3',
 	'blocklogtext' => 'Đây là nhật trình ghi lại những lần cấm và bỏ cấm. Các địa chỉ IP bị cấm tự động không được liệt kê ở đây. Xem thêm [[Special:BlockList|danh sách cấm]] để có danh sách cấm và cấm hẳn hiện tại.',
 	'block-log-flags-anononly' => 'chỉ cấm người dùng vô danh',
-	'block-log-flags-nocreate' => 'cấm mở tài khoản',
 	'block-log-flags-noautoblock' => 'tắt tự động cấm',
 	'block-log-flags-noemail' => 'cấm thư điện tử',
 	'block-log-flags-nousertalk' => 'không được sửa trang thảo luận của mình',
@@ -19058,20 +18774,20 @@ Chỉ có những mục được liệt kê (những dòng bắt đầu bằng *
 Các liên kết sau đó trên cùng một dòng được xem là các ngoại lệ, có nghĩa là các trang mà tại đó có thể dùng được tập tin.',
 	'blankpage' => 'Trang trắng',
 	'back' => 'Trở lại',
-];
+);
 
-$messages['vmf'] = [
+$messages['vmf'] = array(
 	'badaccess' => 'Des däfsd duu ned',
 	'badaccess-group0' => 'So ebâs däfsch duu ned machn',
 	'badaccess-groups' => 'Des däfm bloos lajd machng, dii wo baj {{PLURAL:$2|där grubbm|anâr fon dâ grubm}} „$1“ sin.',
-	'badtitletext' => 'Dii fârlangde sajdn gibd\'s ned, odâr sii had ân uugildichn sajdnnôôma ghabd, odâr s\'wôôr â gschlambdâr fârwajs fonâm andârn wighi häär. Filajchd is aa â buuchschdôôb drin\'n, däär in sajdnnôôm gôôr ned schdena däf.',
+	'badtitletext' => "Dii fârlangde sajdn gibd's ned, odâr sii had ân uugildichn sajdnnôôma ghabd, odâr s'wôôr â gschlambdâr fârwajs fonâm andârn wighi häär. Filajchd is aa â buuchschdôôb drin'n, däär in sajdnnôôm gôôr ned schdena däf.",
 	'bold_sample' => 'Dägsd in fäd',
 	'bold_tip' => 'Fädâr dhägschd',
 	'blockedtitle' => 'Dr bajdreechâr is gschbärd.',
-	'blockedtext' => '\'\'\'Du bisd gschbärd wôrn, jee nachdeem mid\'m nôômn odâr mid dr IP-adresn.\'\'\'
+	'blockedtext' => "'''Du bisd gschbärd wôrn, jee nachdeem mid'm nôômn odâr mid dr IP-adresn.'''
 
 Gmachd had des: $1
-Desweechn: \'\'$2\'\'
+Desweechn: ''$2''
 
 * Dii schbärung had dôô ôôgfangn: $8
 * Dii schbärung lefd dôô aus: $6
@@ -19083,7 +18799,7 @@ Wen De ghâ gildiche iimejl-adresn in Dajn [[Special:Preferences|Ajschdelungn]] 
 
 Dâj IP-adressn is: $3
 Dii schbärr-ID is: $5
-Schrajb des bide als dâdsu, wen De Dich meldsd.',
+Schrajb des bide als dâdsu, wen De Dich meldsd.",
 	'boteditletter' => 'B',
 	'booksources' => 'ISBN-Suuche',
 	'booksources-search-legend' => 'Gugn, woo mr biâchâr häärgrichd',
@@ -19095,13 +18811,12 @@ Schrajb des bide als dâdsu, wen De Dich meldsd.',
 	'blocklink' => 'Schbärn',
 	'blocklogpage' => 'Benudsär-Schbärr-Logbuch',
 	'blocklogentry' => 'had „[[$1]]“ gschbärd fir dii dsajd: $2 wii genau un wesweechn: $3',
-	'block-log-flags-nocreate' => 'Naj ôôdsmeldn is gschbärd.',
 	'bad_image_list' => 'Fôrmaad:
 
 Bloos  dsajln, dii mi´m dsajchn * ôôfanga, wärn berigsichdichd. Un dä ärschde linggh af dr dsajln mus dan af â uubasnde dadaj saj. Wen dahindâr noch meâ linggs ghuma, dan geldn dii als ausnôma, wo dâgeechn des - dsum bajschbiil  - bild schdeen däf.',
-];
+);
 
-$messages['vo'] = [
+$messages['vo'] = array(
 	'badaccess' => 'Dälapöl',
 	'badaccess-group0' => 'No pedälol ad ledunön atosi, kelosi ebegol.',
 	'badaccess-groups' => 'Utos, kelosi vilol dunön, padälon te gebanes dutöl lü {{PLURAL:$2|grup|bal grupas}}: $1.',
@@ -19113,20 +18828,20 @@ $messages['vo'] = [
 	'bold_sample' => 'Vödem bigik',
 	'bold_tip' => 'Vödem bigik',
 	'blockedtitle' => 'Geban peblokon',
-	'blockedtext' => '\'\'\'Gebananem u ladet-IP olik(s) peblokon(s).\'\'\'
+	'blockedtext' => "'''Gebananem u ladet-IP olik(s) peblokon(s).'''
 
 Blokam at pejenükon fa geban: $1.
-Kod binon: \'\'$2\'\'.
+Kod binon: ''$2''.
 
 * Prim blokama: $8
 * Fin blokama: $6
 * Geban pedesinöl: $7
 
 Kanol penön gebane: $1, u [[{{MediaWiki:Grouppage-sysop}}|guvane]] votik, ad bespikön blokami.
-Kanol gebön yümi: \'penön gebane at\' bisä ladet leäktronik verätik lonöföl patuvon in [[Special:Preferences|buükams kala]] olik e geb onik no peblokon. Ladet-IP nuik ola binon $3 e nüm blokama binon #$5. Mäniotolös nünis löpik valik in peneds ola.',
+Kanol gebön yümi: 'penön gebane at' bisä ladet leäktronik verätik lonöföl patuvon in [[Special:Preferences|buükams kala]] olik e geb onik no peblokon. Ladet-IP nuik ola binon $3 e nüm blokama binon #$5. Mäniotolös nünis löpik valik in peneds ola.",
 	'blockednoreason' => 'kod nonik pegivon',
-	'blockedoriginalsource' => 'Fonät pada: \'\'\'$1\'\'\' pajonon dono:',
-	'blockededitsource' => 'Vödem \'\'\'redakamas olik\'\'\' pada: \'\'\'$1\'\'\' pajonon dono:',
+	'blockedoriginalsource' => "Fonät pada: '''$1''' pajonon dono:",
+	'blockededitsource' => "Vödem '''redakamas olik''' pada: '''$1''' pajonon dono:",
 	'badsig' => 'Dispenäd no lonöföl: dönulogolös eli HTML.',
 	'badsiglength' => 'Dispenäd olik binon tu lunik.
 Muton labön {{PLURAL:$1|malati|malatis}} läs $1.',
@@ -19157,7 +18872,6 @@ Muton labön {{PLURAL:$1|malati|malatis}} läs $1.',
 	'blocklogentry' => '"[[$1]]" peblokon dü: $2 $3',
 	'blocklogtext' => 'Is binon lised gebanablokamas e gebanasäblokamas. Ladets-IP itjäfidiko pebloköls no pajonons. Logolös blokamis e xilis anu lonöfölis in [[Special:IPBlockList|lised IP-blokamas]].',
 	'block-log-flags-anononly' => 'te gebans nennemik',
-	'block-log-flags-nocreate' => 'kalijaf penemögükon',
 	'block-log-flags-noautoblock' => 'blokam itjäfidik penemögükon',
 	'block-log-flags-noemail' => 'ladet leäktronik peblokon',
 	'block-log-flags-nousertalk' => 'no dalon redakön bespikapadi okik',
@@ -19169,9 +18883,9 @@ Muton labön {{PLURAL:$1|malati|malatis}} läs $1.',
 
 Te lisedaliens (liens me * primöl) pabevobons. Yüm balid liena muton binön yüm ad magod badik. Yüms votik valik su lien ot palelogons as pläams, a.s. pads, in kelas vödems magod dalon pagebön.',
 	'blankpage' => 'Pad vagik',
-];
+);
 
-$messages['vot'] = [
+$messages['vot'] = array(
 	'badaccess' => 'Lupa tšeeltistü',
 	'badtitletext' => 'Tšüzüttü artikkelizagolofkka õli vilpilliin, tühjä vai väärii linkitettü tšeelijeväliin vai vikiiväliin linkki.',
 	'bold_sample' => 'Pimmiä teksti',
@@ -19185,31 +18899,30 @@ $messages['vot'] = [
 	'blocklink' => 'piättee',
 	'blocklogpage' => 'Piätüzlogi',
 	'blocklogentry' => 'piätteli tšäüttijää vai IP-tšislaa [[$1]]. Piättelemin lõpub $2 $3',
-	'block-log-flags-nocreate' => 'lukuloomin piäteltü',
 	'bad_image_list' => 'Spiizgaa formatti on:
 
 Ainult viirud, kummad alkõa merkiigaa * leeväd pantu panõlõõ.
 Esimein linkki viirulla piäb õllaa linkki kahõpäälizõlõõ faililõõ.
 Kõik muud linkid leeväd pantu panõlõõ nii ku ero.',
-];
+);
 
-$messages['vro'] = [
+$messages['vro'] = array(
 	'badaccess' => 'Lubamalda tallitus',
 	'badaccess-group0' => 'Sul olõ-i õigust seod tallitust tetäq.',
 	'badaccess-groups' => 'Seod tallitust saavaq tetäq õnnõ {{PLURAL:$2|rühmä|rühmi}} $1 liikmõq.',
 	'badarticleerror' => 'Taad tallitust saa ei seo leheküle pääl tetäq.',
 	'badtitle' => 'Viganõ päälkiri',
-	'badtitletext' => 'Küsüt artiklipäälkiri oll\' kas viganõ, tühi vai sis
-võlssi näüdät kiili- vai wikidevaihõlinõ päälkiri.',
+	'badtitletext' => "Küsüt artiklipäälkiri oll' kas viganõ, tühi vai sis
+võlssi näüdät kiili- vai wikidevaihõlinõ päälkiri.",
 	'badretype' => 'Kirotõduq salasõnaq ei klapiq kokko.',
 	'blocked-mailpassword' => 'Su võrgonumbrilõ om pant pääle toimõndamiskiild, miä lasõ-i salasõnna miilde tulõtaq.',
 	'bold_sample' => 'Paks kiri',
 	'bold_tip' => 'Paks kiri',
 	'blockedtitle' => 'Pruukja om kinniq peet',
-	'blockedtext' => '\'\'\'Su pruukjanimi vai puutri võrgoaadrõs om kinniq pant.\'\'\'
+	'blockedtext' => "'''Su pruukjanimi vai puutri võrgoaadrõs om kinniq pant.'''
 
 Kinniqpandja om $1.
-Timä põhjõndus om sääne: \'\'$2\'\'.
+Timä põhjõndus om sääne: ''$2''.
 
 * Kinniqpandmisõ algus: $8
 * Kinniqpandmisõ lõpp: $6
@@ -19217,11 +18930,11 @@ Timä põhjõndus om sääne: \'\'$2\'\'.
 
 Küsümüst saat arotaq $1 vai mõnõ tõõsõ [[{{MediaWiki:Grouppage-sysop}}|kõrraldajaga]].
 Panõq tähele, et sa saa-i taalõ pruukjalõ sõnomit saataq, ku sa olõ-i kirjä pandnuq umma [[Special:Preferences|säädmislehe]] e-posti aadrõssit.
-Suq puutri võrgoaadrõs om $3 ja kinnipandmistunnus om #$5. Panõq naaq kõiki perräküsümiisi manoq, midä tiit.',
+Suq puutri võrgoaadrõs om $3 ja kinnipandmistunnus om #$5. Panõq naaq kõiki perräküsümiisi manoq, midä tiit.",
 	'blockednoreason' => 'põhjust olõ-i näüdät',
 	'badsig' => 'Seo alakirotus olõ-i masva.',
-	'badsiglength' => 'Alakirotus om pall\'o pikk.
-Taa tohe-i ollaq rohkõmb ku $1 {{PLURAL:$1|märk|märki}}.',
+	'badsiglength' => "Alakirotus om pall'o pikk.
+Taa tohe-i ollaq rohkõmb ku $1 {{PLURAL:$1|märk|märki}}.",
 	'boteditletter' => 'rb',
 	'badfilename' => 'Teedüstü nimi om ärq muudõt. Vahtsõnõ nimi om "$1".',
 	'brokenredirects' => 'Vigadsõq ümbresaatmisõq',
@@ -19234,7 +18947,7 @@ Taa tohe-i ollaq rohkõmb ku $1 {{PLURAL:$1|märk|märki}}.',
 	'booksources-text' => 'Tan om linke lehekülile, kon müvväs raamatit vai andas raamatidõ kotsilõ teedüst.',
 	'blanknamespace' => '(Artikliq)',
 	'blockip' => 'Piäq puutri võrgoaadrõs kinniq',
-	'blockiptext' => 'Taa vorm om kimmä puutri võrgoaadrõsi päält tettüisi kirotuisi kinniqpidämises. \'\'\'Taad tohis tetäq õnnõ lehti ts\'urkmisõ vasta ni [[{{MediaWiki:Policy-url}}|{{SITENAME}} sisekõrra perrä]]\'\'\'. Kimmähe tulõ täütäq ka rida "põhjus". Sinnäq võinuq pandaq nt lingiq noilõ lehile, midä rikuti.',
+	'blockiptext' => "Taa vorm om kimmä puutri võrgoaadrõsi päält tettüisi kirotuisi kinniqpidämises. '''Taad tohis tetäq õnnõ lehti ts'urkmisõ vasta ni [[{{MediaWiki:Policy-url}}|{{SITENAME}} sisekõrra perrä]]'''. Kimmähe tulõ täütäq ka rida \"põhjus\". Sinnäq võinuq pandaq nt lingiq noilõ lehile, midä rikuti.",
 	'badipaddress' => 'Puutri võrgoaadrõs om võlssi kirotõt.',
 	'blockipsuccesssub' => 'Kinniqpidämine läts kõrda',
 	'blockipsuccesstext' => 'Puutri võrgoaadrõs "$1" om kinniq peet.
@@ -19244,59 +18957,58 @@ Taa tohe-i ollaq rohkõmb ku $1 {{PLURAL:$1|märk|märki}}.',
 	'blocklogentry' => 'pidi kinniq pruukja vai puutri võrgoaadrõsi "[[$1]]". Kinniqpidämise tähtaig $2 $3',
 	'blocklogtext' => 'Taa om kinniqpidämiisi ja naidõ maahavõtmiisi nimekiri. Automaatsõhe kinniqpeetüisi puutridõ võrgoaadrõssiid tan näüdätä-i, noid kaeq [[Special:BlockList|puutridõ võrgoaadrõssidõ kinniqpidämise nimekiräst]].',
 	'block-log-flags-anononly' => 'õnnõ nimeldä pruukjaq',
-	'block-log-flags-nocreate' => 'pruukjanime luuminõ kinniq peet',
 	'block-log-flags-noautoblock' => 'automaatnõ kinniqpidämine maaha võet',
 	'block-log-flags-noemail' => 'e-post kinniq peet',
 	'bydate' => 'kuupäävä perrä',
 	'bad_image_list' => 'Nimekirä muud om sääne:
 
 Õnnõ *-märgiga algajaq riaq võetasõq arvõhe. Edimäne link piät näütämä keeledü teedüstü pääle. Kõik tõõsõq lingiq ommaq eränguq, tuu tähendäs leheq, kon pilti või pruukiq.',
-];
+);
 
-$messages['wa'] = [
-	'badaccess' => 'Åk n\' a nén stî avou les permissions',
-	'badarticleerror' => 'Cisse accion la n\' si pout nén fé so cisse pådje ci.',
+$messages['wa'] = array(
+	'badaccess' => "Åk n' a nén stî avou les permissions",
+	'badarticleerror' => "Cisse accion la n' si pout nén fé so cisse pådje ci.",
 	'badtitle' => 'Måva tite',
-	'badtitletext' => 'Li tite del pådje dimandêye n\' esteut nén valide, il estet vude, oudonbén c\' esteut on cron loyén eterlingaedje ou eterwiki. Ça s\' pout k\' il åye onk ou sacwants caracteres ki n\' polèt nén esse eployîs dins les tites.',
+	'badtitletext' => "Li tite del pådje dimandêye n' esteut nén valide, il estet vude, oudonbén c' esteut on cron loyén eterlingaedje ou eterwiki. Ça s' pout k' il åye onk ou sacwants caracteres ki n' polèt nén esse eployîs dins les tites.",
 	'badretype' => 'Vos avoz dné deus screts diferins.',
 	'bold_sample' => 'Cråssès letes',
 	'bold_tip' => 'Tecse e cråssès letes',
-	'blockedtitle' => 'L\' uzeu est bloké',
-	'blockedtext' => 'Vosse no d\' uzeu ou voste adresse IP a stî blokêye pa $1.
-Li råjhon dnêye est:<br />\'\'$2\'\'<p>Vos ploz contacter $1 oudonbén onk des
+	'blockedtitle' => "L' uzeu est bloké",
+	'blockedtext' => "Vosse no d' uzeu ou voste adresse IP a stî blokêye pa $1.
+Li råjhon dnêye est:<br />''$2''<p>Vos ploz contacter $1 oudonbén onk des
 [[{{MediaWiki:Grouppage-sysop}}|manaedjeus]] po discuter do blocaedje.
 
-Notez ki vos n\' poloz nén eployî l\' fonccion «emiler a l\' uzeu» a moens ki vos åyîz ene adresse emile valide dins vos [[Special:Preferences|preferinces]].
+Notez ki vos n' poloz nén eployî l' fonccion «emiler a l' uzeu» a moens ki vos åyîz ene adresse emile valide dins vos [[Special:Preferences|preferinces]].
 
-Voste adresse IP est $3. S\' i vs plait racsegnoz ciste adresse IP la dins les dmandes ki vos frîz.',
+Voste adresse IP est $3. S' i vs plait racsegnoz ciste adresse IP la dins les dmandes ki vos frîz.",
 	'badsig' => 'Sinateure brute nén valide; verifyîz les etiketes HTML.',
-	'badfilename' => 'Li no d\' l\' imådje a stî candjî a «$1».',
+	'badfilename' => "Li no d' l' imådje a stî candjî a «$1».",
 	'brokenredirects' => 'Pierdous redjiblaedjes',
-	'brokenredirectstext' => 'Les redjiblaedjes shuvants evoyèt so ene pådje ki n\' egzistêye nén.',
+	'brokenredirectstext' => "Les redjiblaedjes shuvants evoyèt so ene pådje ki n' egzistêye nén.",
 	'brokenredirects-edit' => 'candjî',
 	'brokenredirects-delete' => 'disfacer',
 	'booksources' => 'Sourdants po les lives',
 	'blanknamespace' => '(Mwaisse)',
 	'blockip' => 'Bloker èn uzeu',
-	'blockiptext' => 'Rimplixhoz les tchamps chal pa dzo po bloker
-l\' accès e scrijhaedje d\' èn uzeu dné ou a pårt d\' ene
+	'blockiptext' => "Rimplixhoz les tchamps chal pa dzo po bloker
+l' accès e scrijhaedje d' èn uzeu dné ou a pårt d' ene
 adresse IP dnêye. Çouci èn doet esse fwait ki po-z arester les
 vandales, et çoula doet esse fwait tot shuvant les
 [[{{MediaWiki:Policy-url}}|rîles]].
-Dinez ene råjhon do blocaedje (eg: dijhoz les pådjes k\' ont
-stî vandalijheyes).',
-	'badipaddress' => 'Nol uzeu avou ç\' no la, ou adresse IP nén valide',
+Dinez ene råjhon do blocaedje (eg: dijhoz les pådjes k' ont
+stî vandalijheyes).",
+	'badipaddress' => "Nol uzeu avou ç' no la, ou adresse IP nén valide",
 	'blockipsuccesssub' => 'Li blocaedje a stî comifåt',
 	'blockipsuccesstext' => '«[[Special:Contributions/$1|$1]]» a stî bloké.<br />Loukîz li [[Special:BlockList|djivêye des blocaedjes]] po candjî on blocaedje.',
 	'blocklist-reason' => 'Råjhon',
 	'blocklink' => 'bloker',
 	'blocklogpage' => 'Djournå des blocaedjes',
 	'blocklogentry' => '«[[$1]]» a stî bloké po ene termene di $2',
-	'blocklogtext' => 'Çouchal, c\' est on djournå des blocaedjes eyet disblocaedjes d\' uzeus. Les adresses IP blokêyes otomaticmint èn sont nén håynêyes. Loukîz li [[Special:BlockList|djivêye des adresses IP blokêyes]] po vey les blocaedjes d\' adresses IP do moumint.',
+	'blocklogtext' => "Çouchal, c' est on djournå des blocaedjes eyet disblocaedjes d' uzeus. Les adresses IP blokêyes otomaticmint èn sont nén håynêyes. Loukîz li [[Special:BlockList|djivêye des adresses IP blokêyes]] po vey les blocaedjes d' adresses IP do moumint.",
 	'bydate' => 'pazès dates',
-];
+);
 
-$messages['war'] = [
+$messages['war'] = array(
 	'badaccess' => 'Pagtugot nga sayop',
 	'badaccess-group0' => 'Diri ka gintutugutan pagbuhat han buruhaton nga imo ginhangyo.',
 	'badaccess-groups' => 'An buruhaton nga imo ginhangyo gintutugotan la ha mga nágámit {{PLURAL:$2|han grupo|hin usa han mga grupo}}: $1.',
@@ -19326,16 +19038,15 @@ Dapat diri malabaw ha $1 {{PLURAL:$1|agi|mga agi}} nga kahilaba.',
 	'blocklink' => 'igpugong',
 	'blocklogpage' => 'Talaan han pagpugong',
 	'blocklogentry' => 'ginpugngan hi [[$1]] nga natatapos ha takna hin $2 $3',
-	'block-log-flags-nocreate' => 'diri gintutugutan an paghimo hin akawnt',
 	'bad_image_list' => 'An kabutangan in masunod:
 
 An nakatalala la nga mga butang (mga bagis nga nagtitikang hin *) in mahiuupod paglabot.
 An syahan nga sumpay ha uska bagis in dapat may-ada sumpay ngadto ha maraot nga fayl.
 An bisan ano nga masunod nga mga sumpay ha kapareho nga bagis in igtratrato nga eksepsyon, sugad hin, mga pakli kun diin an mga fayl in puydi mabubutang ha sulod han bagis.',
 	'blankpage' => 'Blanko nga pakli',
-];
+);
 
-$messages['wo'] = [
+$messages['wo'] = array(
 	'badaccess' => 'Njuumte ci ndigël gi',
 	'badaccess-group0' => 'Amoo ay sañ-sañ yu doy ngir man a def li nga bëgg a def.',
 	'badaccess-groups' => 'Jëf ji ngay jéem a def dañu koo jagleel jëfandikukat yi bokk ci {{PLURAL:$2|mbooloo mu|benn ci mbooloo yi toftal}}: $1.',
@@ -19388,7 +19099,6 @@ Xoolal [[Special:BlockList|limu IP yees téye]] ngir gis ñees téye ñépp.',
 	'blocklogentry' => 'moo téye « [[$1]] » - ci diirub : $2 $3',
 	'blocklogtext' => 'Lii ab lim la ci téye ak téyedi yu jëfandikukat yi. Màkkaani IP yi ñu téye cig boppal limuñu leen fi. yëral [[Special:BlockList|limu jëfandikukat yiñ téye]] ngi gis ñi ñu téye nii-nii.',
 	'block-log-flags-anononly' => 'jëfandikukat yi binduwul rek',
-	'block-log-flags-nocreate' => 'Tere nañ sa sosum sàq',
 	'block-log-flags-noautoblock' => 'Téye gu boppu yu IP yi doxadi na',
 	'block-log-flags-noemail' => 'm-bataaxal yi téye nañ leen',
 	'block-log-flags-nousertalk' => 'Du man a soppi xëtu waxtaanuwaayam',
@@ -19399,9 +19109,9 @@ Xoolal [[Special:BlockList|limu IP yees téye]] ngir gis ñees téye ñépp.',
 	'bad_image_list' => 'Limu  cër yi nekk ci rëdd yi tàmbalee * rekk lees di faale.
 Lëkkalekaay bu njëkk bu aw rëdd dafa war a nekk bu ab dencukaay bu baaxul.
 Lëkkalekaay yiy toftal, ci wenn rëdd wi, dees leen di jàppee nikiy sette, maanaam xët yi dencukaay bi man a feeñ.',
-];
+);
 
-$messages['wuu'] = [
+$messages['wuu'] = array(
 	'badaccess' => '权限',
 	'badaccess-group0' => '箇只操作是弗允许个。',
 	'badaccess-groups' => '侬刚刚只请求只有{{PLURAL:$2|迭只}}用户组个用户再好使用：$1',
@@ -19413,9 +19123,9 @@ $messages['wuu'] = [
 	'bold_sample' => '黑体文本',
 	'bold_tip' => '黑体文本',
 	'blockedtitle' => '用户拨查封',
-	'blockedtext' => '侬个用户名或IP地址已经拨$1查封。
+	'blockedtext' => "侬个用户名或IP地址已经拨$1查封。
 
-箇趟查封是由$1所封个。原因是\'\'$2\'\'。
+箇趟查封是由$1所封个。原因是''$2''。
 
 * 箇趟查封开始个辰光是：$8
 * 箇趟查封到期个辰光是：$6
@@ -19424,7 +19134,7 @@ $messages['wuu'] = [
 侬可以联络$1或者其他个 [[{{MediaWiki:Grouppage-sysop}}|管理员]]，讨论箇趟查封。
 除非侬已经垃侬个 [[Special:Preferences|个人设置]]里向设置仔一只有效个电子邮件地址，弗然侬弗好使用「e-mail箇位用户」功能。当设置了一只有效个电子邮件地址之后，箇只功能是弗会畀封锁个。
 
-侬个IP地址是$3，而该查封ID是 #$5。 请垃拉侬个查询里向注明以上所有资料。',
+侬个IP地址是$3，而该查封ID是 #$5。 请垃拉侬个查询里向注明以上所有资料。",
 	'blockednoreason' => '弗曾拨原因',
 	'blocked-notice-logextract' => '箇位用户箇歇畀封锁垃许。
 下头有最近个封锁纪录以供参考：',
@@ -19444,15 +19154,14 @@ $messages['wuu'] = [
 	'blocklogpage' => '封禁日志',
 	'blocklogentry' => '“[[$1]]”拨查封拉许，终止辰光为$2 $3',
 	'blocklogtext' => '该个是用户封禁搭仔解禁操作个记录。自动封禁个IP地址弗会列勒该答。到[[Special:BlockList|IP 封禁列表]]去看当前生效个封禁列表。',
-	'block-log-flags-nocreate' => '开户已经拨禁用',
 	'bad_image_list' => '格式如下：
 
 只列出项目（线开始* ）的审议。
 第一个环节上线必须是一个链接到一个坏文件。
 其后的任何链接在同一行被认为是例外情况，即网页的文件，则可能会发生内部。',
-];
+);
 
-$messages['xal'] = [
+$messages['xal'] = array(
 	'badaccess' => 'Зөвәнә эндү',
 	'badaccess-group0' => 'Та сурсн үүл кеҗ болшго.',
 	'badaccess-groups' => 'Эн үүл һанцхн {{PLURAL:$2|багас|багудас}} $1 кеҗ чадна.',
@@ -19472,7 +19181,6 @@ $messages['xal'] = [
 	'blocklink' => 'бүслх',
 	'blocklogpage' => 'Бүсллһнә сеткүл',
 	'blocklogentry' => '[[$1]] бүслсн $2 күртл, $3 учрта',
-	'block-log-flags-nocreate' => 'бичгдлһиг бүтәҗ болшго',
 	'blockme' => 'Намаг бүслчк',
 	'bad_image_list' => 'Эн темдглһн кергтә:
 
@@ -19480,28 +19188,28 @@ $messages['xal'] = [
 Түрүн мөрәнә заалһ - тәвх хөрсн зургин заалһ.
 Дарук заалһуд эн мөрәд хаҗилһн болх (халхс зургиг орулҗ болх).',
 	'blankpage' => 'Хоосн халх',
-];
+);
 
-$messages['xmf'] = [
+$messages['xmf'] = array(
 	'badaccess' => 'ალობაშ ჩილათა',
 	'badtitle' => 'ცაგანა სათაური',
 	'badtitletext' => 'მოთხილ ხასილაშ ჯოხო ჩილათირ რდუ, ვარა ჩოლიერ, ვარა ხოლო გოხოლუდეს ჩილათირო გინორცხუაფილ ინტერ–ნინა ვარა ინტერ–წიკი ჯოხო. 
 თენა შილებე იკათუანდას ართ ვარა უმოს თიშნერ ნიშანს ნამუშ გუმორინაფა ჯოხოს ვა შილებე.',
 	'bold_sample' => 'რუმე ტექსტი',
 	'bold_tip' => 'რუმე ტექსტ',
-	'blockedtext' => '\'\'\'თქვან მახვარებუშ ჯოხო ვარა IP მიოწურაფუქ ბლოკირქ იჸუ. \'\'\'
+	'blockedtext' => "'''თქვან მახვარებუშ ჯოხო ვარა IP მიოწურაფუქ ბლოკირქ იჸუ. '''
 
-ბლოკირაფა ღოლუ $-ქ.
-სამანჯელო წუმორინაფილქ იჸუ გეჸვენჯიქ: \'\'$2\'\'.
+ბლოკირაფა ღოლუ \$-ქ.
+სამანჯელო წუმორინაფილქ იჸუ გეჸვენჯიქ: ''\$2''.
 
-* ბლოკუაშ დაჭყაფური: $8
-* ბლოკიშ ვადაშ გულა ბორჯი: $6
-* ბლოკირქ იჸუ: $7
+* ბლოკუაშ დაჭყაფური: \$8
+* ბლოკიშ ვადაშ გულა ბორჯი: \$6
+* ბლოკირქ იჸუ: \$7
 
-შეილებუნა დეკავშირათ $1-ს ვარა ნამთინე შხვა [[{{MediaWiki:Grouppage-sysop}}|ადმინისტრატორს]] ბლოკუაშ კილასხუნალო.
-გეთოლწონით, ნამდა თქვა ვაგუმგარინენა ფუნქცია: \'\'მახვარებუშა ელ-ფოშტაშ ჯღონუა\'\', ვაგაფუნა მეღანკილი მოქმენდი ელ-ფოშტაშ მიოწურაფუ თქვანი [[Special:Preferences|ანგარიშიშ კონფიგურაციას]], ვარა დობლოკუაშ გეშა თე ფუნქციაშ გუმორინაფაშ ნება მიდაღალირ გაფუნა და.
-თქვან ასეიან IP მიოწურაფუ რე $3, დო ბლოკიშ იდენტიფიკატორი #$5.
-რთხიინთ ქიმიოღანკათ თე მუნაჩემეფშე ნამდგაიჸინი (ვარა ჟირხოლო) თქვან კორესპონდენციას.',
+შეილებუნა დეკავშირათ \$1-ს ვარა ნამთინე შხვა [[{{MediaWiki:Grouppage-sysop}}|ადმინისტრატორს]] ბლოკუაშ კილასხუნალო.
+გეთოლწონით, ნამდა თქვა ვაგუმგარინენა ფუნქცია: ''მახვარებუშა ელ-ფოშტაშ ჯღონუა'', ვაგაფუნა მეღანკილი მოქმენდი ელ-ფოშტაშ მიოწურაფუ თქვანი [[Special:Preferences|ანგარიშიშ კონფიგურაციას]], ვარა დობლოკუაშ გეშა თე ფუნქციაშ გუმორინაფაშ ნება მიდაღალირ გაფუნა და.
+თქვან ასეიან IP მიოწურაფუ რე \$3, დო ბლოკიშ იდენტიფიკატორი #\$5.
+რთხიინთ ქიმიოღანკათ თე მუნაჩემეფშე ნამდგაიჸინი (ვარა ჟირხოლო) თქვან კორესპონდენციას.",
 	'boteditletter' => 'ბ',
 	'booksources' => 'წინგიშ წყუეფ',
 	'booksources-search-legend' => 'წიგნიშ წყუშ გორუა',
@@ -19511,13 +19219,12 @@ $messages['xmf'] = [
 	'blocklink' => 'ბლოკირაფა',
 	'blocklogpage' => 'ბლოკირეფიშ ერკებულ',
 	'blocklogentry' => 'ბლოკირ რე [[$1]] ბლოკირაფაშ ვადაშ ათე გულა ბორჯით: $2 $3.',
-	'block-log-flags-nocreate' => 'ანგარიშიშ გონწყუმა მეჭყვადილ რე',
-	'bad_image_list' => 'ფორმატ რე უკულიანიშნერო:\n\n ხვალე ერკებულშე გიშნაგორეფ (ლაწკარეფ, ნამუთ იჭყაფუ *-ით) ისხუნუ.
+	'bad_image_list' => 'ფორმატ რე უკულიანიშნერო:\\n\\n ხვალე ერკებულშე გიშნაგორეფ (ლაწკარეფ, ნამუთ იჭყაფუ *-ით) ისხუნუ.
 ლაწკარიშ პირველ რცხი ოკო რდას რცხი გლახა ფაილშა.
 კინ თი ლაწკარს რინელ ნამდგაინ უკულიან რცხი კილესხუნუ მუჭოთ გიმნარკეში, ნამუთ ნიშნენს  ხასილეფს, სოდგა ფაილეფ შილებე რდას ღოზეფს შკას დინოხუნაფილ.',
-];
+);
 
-$messages['yi'] = [
+$messages['yi'] = array(
 	'broken-file-category' => 'בלעטער מיט צעבראכענע טעקע לינקען',
 	'badaccess' => 'דערלויבניש גרײַז',
 	'badaccess-group0' => 'איר זענט נישט בארעכטיגט צו טאן די אקציע וואס איר ווילט.',
@@ -19525,7 +19232,7 @@ $messages['yi'] = [
 	'backlinksubtitle' => '→ $1',
 	'badarticleerror' => 'מען קען נישט טאן די אקציע וואס איר ווילט אויף דעם בלאט.',
 	'badtitle' => 'שלעכט קעפל',
-	'badtitletext' => 'דאס קעפל פון דעם געזוכטן בלאט איז געווען אומגעזעצליך, ליידיג, אן אינטערשפראך אדער אינטערוויקי לינק וואס פאסט נישט, אדער אנטהאט כאראקטערס וואס מ\'קען נישט ניצן אין א קעפל.',
+	'badtitletext' => "דאס קעפל פון דעם געזוכטן בלאט איז געווען אומגעזעצליך, ליידיג, אן אינטערשפראך אדער אינטערוויקי לינק וואס פאסט נישט, אדער אנטהאט כאראקטערס וואס מ'קען נישט ניצן אין א קעפל.",
 	'badretype' => 'די פאסווערטער וואס איר האט אריינגעלייגט זענען נישט אייניג.',
 	'blocked-mailpassword' => 'אייער איי פי אדרעס איז בלאקירט צו רעדאקטירן, דערוועגן זענט איר נישט ערלויבט צו באניצן מיטן פאסווארט ווידעראויפלעבונג פֿונקציע כדי צו פארמיידן סיסטעם קרומבאניץ.',
 	'bold_sample' => 'דיקער טעקסט',
@@ -19552,7 +19259,7 @@ $messages['yi'] = [
 	'boteditletter' => 'ב',
 	'badfilename' => 'טעקע נאמען איז געטוישט צו "$1".',
 	'backend-fail-alreadyexists' => 'די טעקע $1 עקזיסטירט שוין.',
-	'backend-fail-store' => 'מ\'קען נישט שפייכלערן טעקע $1 בײַ $2.',
+	'backend-fail-store' => "מ'קען נישט שפייכלערן טעקע $1 בײַ $2.",
 	'backend-fail-copy' => 'האט נישט געקענט קאפירן "$1" צו "$2".',
 	'backend-fail-move' => 'האט נישט געקענט באוועגן "$1" צו "$2".',
 	'backend-fail-opentemp' => 'קען נישט עפֿענען צייַטווייַליקע טעקע.',
@@ -19574,11 +19281,11 @@ $messages['yi'] = [
 	'blockip' => 'בלאקירן באַניצער',
 	'blockip-title' => 'בלאקירן באַניצער',
 	'blockip-legend' => 'בלאקירן באַניצער',
-	'blockiptext' => 'באניצט די פארעם דא אונטן כדי צו בלאקירן שרײַבן רעכטן פֿון איינגעשריבענע באניצער אדער סתם ספעציפישע איי פי אדרעסן.
+	'blockiptext' => "באניצט די פארעם דא אונטן כדי צו בלאקירן שרײַבן רעכטן פֿון איינגעשריבענע באניצער אדער סתם ספעציפישע איי פי אדרעסן.
 
 אזאלכע בלאקירונגען מוזן דורכגעפירט ווערן בלויז צו פֿאַרמײַדן וואַנדאַליזם, און לויט די [[{{MediaWiki:Policy-url}}|פארשריפטן און פאליסיס]].
 
-ביטע שרײַבט ארויס קלאָר די ספעציפֿישע סיבה (למשל, ציטירן וועלכע בלעטער מ\'האט וואַנדאַליזירט).',
+ביטע שרײַבט ארויס קלאָר די ספעציפֿישע סיבה (למשל, ציטירן וועלכע בלעטער מ'האט וואַנדאַליזירט).",
 	'badipaddress' => 'נישט קיין גוטער IP אַדרעס.',
 	'blockipsuccesssub' => 'בלאק איז דורכגפירט מיט דערפֿאלג',
 	'blockipsuccesstext' => 'באַניצער [[Special:Contributions/$1|$1]] <br />איז פֿאַרשפאַרט.
@@ -19604,7 +19311,6 @@ $messages['yi'] = [
 	'blocklogtext' => 'דאס איז א לאג בוך פון אלע בלאקירונגען און באפרייונגען פֿון באניצערס. איי פי אדרעסן וואס זענען בלאקירט אויטאמאטיש ווערן נישט אויסגערעכענט דא.
 זעט די איצטיגע [[Special:BlockList|ליסטע פון בלאקירטע באניצערס]].',
 	'block-log-flags-anononly' => 'בלויז אַנאנימע באַניצער',
-	'block-log-flags-nocreate' => 'קאָנטע שאַפֿן איז פֿאַרשפּאַרט',
 	'block-log-flags-noautoblock' => 'אויטא-בלאקיר איז בטל',
 	'block-log-flags-noemail' => 'שיקן ע-פאסט  בלאקירט',
 	'block-log-flags-nousertalk' => 'ענדערן אייגן שמועס בלאט בלאקירט',
@@ -19620,11 +19326,11 @@ $messages['yi'] = [
 
 אַלע פֿאָלגנדיקע פֿאַרבינדונגען אין דער זעלבער שורה זײַנען גערעכנט װי אַן אױסנאַם, װי צום בײַשפּיל, בלעטער װעלכע די טעקע קען װערן געפֿאַלן אין קאָנטינואיטער.',
 	'blankpage' => 'ליידיגער בלאַט',
-];
+);
 
-$messages['yo'] = [
+$messages['yo'] = array(
 	'badaccess' => 'Àṣìṣe ìyọ̀nda',
-	'badaccess-group0' => 'A kò gbàyín l\'áyè l\'áti ṣe ohun tí ẹ bèrè fún.',
+	'badaccess-group0' => "A kò gbàyín l'áyè l'áti ṣe ohun tí ẹ bèrè fún.",
 	'badaccess-groups' => 'Ohun tí ẹ bèèrè fún wà fún àwọn oníṣe {{PLURAL:$2|inú ẹgbẹ́ yìí|inú ikan nínú àwọn ẹgbẹ́ yìí}}: $1.',
 	'badarticleerror' => 'Ìgbéṣẹ̀ yìí kò ṣe é ṣe lórí ojúewé yìí.',
 	'badtitle' => 'Àkọ́lé búrurú',
@@ -19635,22 +19341,22 @@ $messages['yo'] = [
 	'bold_sample' => 'Ìkọ kedere',
 	'bold_tip' => 'Ìkọ kedere',
 	'blockedtitle' => 'Ìdínà oníṣe',
-	'blockedtext' => '\'\'\'Orúkọ oníṣe yín tàbí àdírẹ́sì IP yín ti jẹ́ dídílọ́nà.\'\'\'
+	'blockedtext' => "'''Orúkọ oníṣe yín tàbí àdírẹ́sì IP yín ti jẹ́ dídílọ́nà.'''
 
 $1 ni ó ṣe ìdínà.
-Ìdí tó fun ni \'\'$2\'\'.
+Ìdí tó fun ni ''$2''.
 
 * Ìbẹ̀rẹ̀ ìdínà: $8
 * Ìparí ìdínà: $6
 * Ẹni tí a fẹ́ dínà: $7
 
-Ẹ ṣ\'èránṣẹ́ sí $1 tàbí [[{{MediaWiki:Grouppage-sysop}}|alámùójútó]] mìíràn láti fọ̀rọ̀wérọ̀ lórí ìdínà ọ̀ún.
-Ẹ kò le è \'ránṣẹ́ sí oníṣe yìí pẹ̀lú e-mail\' àyàfi tí ojúọ̀nà e-mail tó dájú wà ní [[Special:Preferences|àwọn ìfẹ́ràn àpamọ́]] yín tí wọn kò sì ti dínà yín láti lò ó.
+Ẹ ṣ'èránṣẹ́ sí $1 tàbí [[{{MediaWiki:Grouppage-sysop}}|alámùójútó]] mìíràn láti fọ̀rọ̀wérọ̀ lórí ìdínà ọ̀ún.
+Ẹ kò le è 'ránṣẹ́ sí oníṣe yìí pẹ̀lú e-mail' àyàfi tí ojúọ̀nà e-mail tó dájú wà ní [[Special:Preferences|àwọn ìfẹ́ràn àpamọ́]] yín tí wọn kò sì ti dínà yín láti lò ó.
 Àdírẹ́sì IP yín lọ́wọ́lọ́wọ́ ni $3, bẹ́ ẹ̀ sì ni ID fún ìdínà yín ni #$5.
-Ẹ jọ̀wọ́ ẹ fi gbogbo ẹ̀kúnrẹ́rẹ́ òkè yìí kún ìbérè tí ẹ bá ṣe.',
+Ẹ jọ̀wọ́ ẹ fi gbogbo ẹ̀kúnrẹ́rẹ́ òkè yìí kún ìbérè tí ẹ bá ṣe.",
 	'blockednoreason' => 'kó sí àlàyé kankan',
-	'blockedoriginalsource' => 'Orísun fún \'\'\'$1\'\'\' hàn ni sàlẹ̀:',
-	'blockededitsource' => 'Ìkọ̀wé fún \'\'\'àwọn atúnṣe yín\'\'\' sí \'\'\'$1\'\'\' hàn nísàlẹ̀ yìí:',
+	'blockedoriginalsource' => "Orísun fún '''$1''' hàn ni sàlẹ̀:",
+	'blockededitsource' => "Ìkọ̀wé fún '''àwọn atúnṣe yín''' sí '''$1''' hàn nísàlẹ̀ yìí:",
 	'blocked-notice-logextract' => 'Lọ́wọ́lọ́wọ́ oníṣe yìí jẹ́ dídílọ́nà.
 Àkọsílẹ̀ ìdínà àìpẹ́ nìyí nísàlẹ̀ fún ìtọ́kasí:',
 	'badsiglength' => 'Ìtọwọ́bọ̀ yín ti gùnjù.
@@ -19676,7 +19382,6 @@ Kò gbodọ̀ ju $1 {{PLURAL:$1|àmìlẹ́tà|àwọn àmìlẹ́tà}} lọ.',
 	'blocklogpage' => 'Àkosílẹ̀ ìdínà',
 	'blocklogentry' => 'ìdínà [[$1]] yíò parí ní $2 $3',
 	'block-log-flags-anononly' => 'àwọn oníṣe aláìlórúkọ nìkan',
-	'block-log-flags-nocreate' => 'ìdálẹ́kun ṣíṣèdá àkópamọ́',
 	'block-log-flags-noautoblock' => 'dídálẹ́kun ìdínà fúnrararẹ̀',
 	'block-log-flags-noemail' => 'e-mail jẹ́ dídílọ́nà',
 	'block-log-flags-hiddenname' => 'orúkọ oníṣe jẹ́ bíbòmọ́lẹ̀',
@@ -19687,9 +19392,9 @@ Kò gbodọ̀ ju $1 {{PLURAL:$1|àmìlẹ́tà|àwọn àmìlẹ́tà}} lọ.',
 Ìjápọ̀ àkọ́kọ́ lórí ìlà gbọdọ̀ jẹ́ ìjápọ̀ mọ́ fáìlì búburú.
 Àwọn ìjápọ̀ yìówù lẹ́yìn èyí lórí ìlà kannáà jẹ́ gbígbà pé wọ́n jẹ́ ọ̀tọ̀, wípé àwọn ojúewé níbití fáìlì náà le ṣẹlẹ̀ nínú ìlà.',
 	'blankpage' => 'Ojúewé òfo',
-];
+);
 
-$messages['yue'] = [
+$messages['yue'] = array(
 	'badaccess' => '權限錯誤',
 	'badaccess-group0' => '你係唔准執行你要求嘅動作。',
 	'badaccess-groups' => '你所要求嘅動作只係限制畀{{PLURAL:$2|呢個|呢啲}}組嘅其中一位用戶: $1',
@@ -19701,9 +19406,9 @@ $messages['yue'] = [
 	'bold_sample' => '粗體字',
 	'bold_tip' => '粗體字',
 	'blockedtitle' => '用戶已經封鎖',
-	'blockedtext' => '你嘅用戶名或者 IP 位址已經被 $1 封咗。
+	'blockedtext' => "你嘅用戶名或者 IP 位址已經被 $1 封咗。
 
-呢次封鎖係由$1所封嘅。當中嘅原因係\'\'$2\'\'。
+呢次封鎖係由$1所封嘅。當中嘅原因係''$2''。
 
 * 呢次封鎖嘅開始時間係：$8
 * 呢次封鎖嘅到期時間係：$6
@@ -19712,7 +19417,7 @@ $messages['yue'] = [
 你可以聯絡 $1 或者其他嘅[[{{MediaWiki:Grouppage-sysop}}|管理員]]，討論呢次封鎖。
 除非你已經響你嘅[[Special:Preferences|戶口喜好設定]]入面設定咗有效嘅電郵地址，否則你係唔可以用「電郵呢個用戶」嘅功能。當設定咗一個有效嘅電郵地址之後，呢個功能係唔會封鎖嘅。
 
-你現時嘅 IP 位址係 $3 ，而個封鎖 ID 係 #$5。 請你喺你嘅查詢都註明以上封鎖嘅資料。',
+你現時嘅 IP 位址係 $3 ，而個封鎖 ID 係 #$5。 請你喺你嘅查詢都註明以上封鎖嘅資料。",
 	'blockednoreason' => '無原因畀低',
 	'blocked-notice-logextract' => '呢位用戶而家被封鎖緊。
 下面有最近嘅封鎖紀錄以供參考：',
@@ -19749,7 +19454,6 @@ $messages['yue'] = [
 	'blocklogentry' => '已封鎖[[$1]]，到期時間為$2 $3',
 	'blocklogtext' => '呢個係封鎖同埋解封動作嘅日誌。自動封鎖IP地址嘅動作冇列出嚟。去[[Special:BlockList|IP封鎖名單]]睇現時生效嘅封鎖名單',
 	'block-log-flags-anononly' => '只限匿名用戶',
-	'block-log-flags-nocreate' => '停用開新戶口',
 	'block-log-flags-noautoblock' => '停用自動封鎖器',
 	'block-log-flags-noemail' => '封咗電郵',
 	'block-log-flags-nousertalk' => '唔可以編輯自己嘅討論版',
@@ -19762,43 +19466,43 @@ $messages['yue'] = [
 只有列示項目（以 * 開頭嘅項目）會考慮。第一個連結一定要連去幅壞檔度。
 之後響同一行嘅連結會考慮做例外，即係個檔可以響邊版度同時顯示。',
 	'blankpage' => '空白頁',
-];
+);
 
-$messages['za'] = [
+$messages['za'] = array(
 	'badaccess' => 'Loengloek gienzhanh',
 	'badaccess-group0' => 'Cingjgouz mwngz mbouj haengj ciuqguh.',
 	'badaccess-groups' => 'Cingjgouz mwngz hanh youq {{PLURAL:$2|neix|gijneix}} bouxyungh: $1',
 	'boteditletter' => 'g',
 	'booksources-go' => 'Bae',
 	'blanknamespace' => '（Cujyau）',
-];
+);
 
-$messages['zea'] = [
-	'broken-file-category' => 'Pagina\'s mei \'n onjuuste bestandsverwiezienge',
+$messages['zea'] = array(
+	'broken-file-category' => "Pagina's mei 'n onjuuste bestandsverwiezienge",
 	'badaccess' => 'Fout in toegangsrechten',
 	'badaccess-group0' => 'Jie mag de opgevraegde actie nie zelf uutvoere.',
 	'badaccess-groups' => 'De actie die-a je opgevroge ei is gerizzerveerd vò gebrukers uut de groepen $1.',
 	'badarticleerror' => 'Dit kan mee deêze bladzie nie gedaen ore.',
 	'badtitle' => 'Verkeerde titel',
-	'badtitletext' => 'De bladzie die-a je angevrogen ei was ongeldig, leeg, of fout gelinkt vanuut \'n aore wiki. Mischien stae d\'r eên of meer teêkens in die-an nie in titels gebruukt kunne ore.',
+	'badtitletext' => "De bladzie die-a je angevrogen ei was ongeldig, leeg, of fout gelinkt vanuut 'n aore wiki. Mischien stae d'r eên of meer teêkens in die-an nie in titels gebruukt kunne ore.",
 	'badretype' => 'De wachtwoôrden die-a je ingegeven typ bin nie eênder.',
 	'blocked-mailpassword' => 'Jen IP-adres is geblokkeerd, en vò zoôlank as dat
 diert kan je, om misbruuk te vorkommen, geên nieuw wachtwoord laete opstiere.',
 	'bold_sample' => 'Vette tekst',
 	'bold_tip' => 'Vet',
 	'blockedtitle' => 'Gebruker is geblokkeerd',
-	'blockedtext' => '\'\'\'Je gebruker of IP-adres is eblokkeerd.\'\'\'
+	'blockedtext' => "'''Je gebruker of IP-adres is eblokkeerd.'''
 
 De blokkaode is uutevoerd deur $1.
-De opeheven reeën is \'\'$2\'\'.
+De opeheven reeën is ''$2''.
 
 * Behun blokkaode: $8
 * Ènde blokkaode: $6
 * Bedoeld te blokkeren: $7
 
 Je kan contact opnemen mie $1 of een aore [[{{MediaWiki:Grouppage-sysop}}|opzichter]] om de blokkaode te bespreken.
-Je kan hin gebruuk maeken van de functie \'e-mail deêze gebruker\', tenzie a je een heldig e-mailadres ei opeheven in je [[Special:Preferences|vòkeuren]] en \'t gebruuk van deêze functie nie eblokkeerd is.
-Je udihe IP-adres is $3 en \'t blokkaodenummer is #$5. Vermeld beie hehevens a je erhens op deêze blokkaode wil reaheern.',
+Je kan hin gebruuk maeken van de functie 'e-mail deêze gebruker', tenzie a je een heldig e-mailadres ei opeheven in je [[Special:Preferences|vòkeuren]] en 't gebruuk van deêze functie nie eblokkeerd is.
+Je udihe IP-adres is $3 en 't blokkaodenummer is #$5. Vermeld beie hehevens a je erhens op deêze blokkaode wil reaheern.",
 	'blockednoreason' => 'hin reeën opeheven',
 	'badsig' => 'Ongeldege andteêkenienge; kiek de [[HTML]]-expressies nae.',
 	'badsiglength' => 'Te lange naem; ie mag uut maximaol $1 {{PLURAL:$1|letter|letters}} bestae.',
@@ -19806,31 +19510,30 @@ Je udihe IP-adres is $3 en \'t blokkaodenummer is #$5. Vermeld beie hehevens a j
 	'badfilename' => 'Bestandsnaem is veranderd nae "$1".',
 	'brokenredirectstext' => 'De volgende deuverwieziengen stiere deu nae bladzie die nie bestae:',
 	'booksources' => 'Bronnen vò boeken',
-	'booksources-search-legend' => 'Bronn\'n en informaosie over \'n boek zoek\'n',
+	'booksources-search-legend' => "Bronn'n en informaosie over 'n boek zoek'n",
 	'booksources-go' => 'OK',
 	'blanknamespace' => '(Artikels)',
 	'blockip' => 'Blokkeer gebruker',
 	'badipaddress' => 'Ongeldig IP-adres',
 	'blockipsuccesssub' => 'Blokkaode is gelukt.',
-	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] is geblokkeerd.<br />
-Ziet de [[Special:BlockList|IP-blokliest]] vo \'n overzicht van blokkaodes.',
+	'blockipsuccesstext' => "[[Special:Contributions/$1|$1]] is geblokkeerd.<br />
+Ziet de [[Special:BlockList|IP-blokliest]] vo 'n overzicht van blokkaodes.",
 	'blocklink' => 'blokkeer',
 	'blocklogpage' => 'Blokkeerlogboek',
 	'blocklogentry' => 'ei "[[$1]]" geblokkeerd mee \'n afloôptied van $2 $3',
-	'blocklogtext' => 'Dit is \'n logboek van gebrukersblokkaodes en -deblokkeriengen.
-Automaotisch geblokte ip-adressen stae d\'r nie bie.
-Ziet de [[Special:BlockList|Lieste van ip-blokkeriengen]] vò blokkaodes die op dit moment in werkienge bin.',
+	'blocklogtext' => "Dit is 'n logboek van gebrukersblokkaodes en -deblokkeriengen.
+Automaotisch geblokte ip-adressen stae d'r nie bie.
+Ziet de [[Special:BlockList|Lieste van ip-blokkeriengen]] vò blokkaodes die op dit moment in werkienge bin.",
 	'block-log-flags-anononly' => 'allene anonieme gebrukers',
-	'block-log-flags-nocreate' => 'uutgeslote van anmaeken gebrukersnaemen',
 	'block-log-flags-noautoblock' => 'gin autoblokkaode',
-	'bad_image_list' => 'De opmaek is as vogt:
+	'bad_image_list' => "De opmaek is as vogt:
 
-Alleên regels in \'n lieste (regels die beginn\'n mè *) worr\'n verwarkt.
-De eêste verwiezienge op \'n regel moe \'n verwiezienge zin nir \'n ongewenst bestand.
-Aolle voggende verwieziengen die op dezelfde regel staen, worr\'n behandeld as uutzonderienge, zoas bievòbild pagina\'s wirop \'t bestand in de tekst is opgenaem\'n.',
-];
+Alleên regels in 'n lieste (regels die beginn'n mè *) worr'n verwarkt.
+De eêste verwiezienge op 'n regel moe 'n verwiezienge zin nir 'n ongewenst bestand.
+Aolle voggende verwieziengen die op dezelfde regel staen, worr'n behandeld as uutzonderienge, zoas bievòbild pagina's wirop 't bestand in de tekst is opgenaem'n.",
+);
 
-$messages['zh-hans'] = [
+$messages['zh-hans'] = array(
 	'broken-file-category' => '损坏的文件的链接的页面',
 	'badaccess' => '权限错误',
 	'badaccess-group0' => '你被禁止执行你刚才请求的操作。',
@@ -19843,15 +19546,21 @@ $messages['zh-hans'] = [
 	'bold_sample' => '粗体文字',
 	'bold_tip' => '粗体文字',
 	'blockedtitle' => '用户被封禁',
-	'blockedtext' => '\'\'\'您的用户名或IP地址已被封禁。\'\'\'
+	'blockedtext' => '<big>\'\'\'您的用户名或IP地址已被封禁。\'\'\'</big>
 
-此次封禁操作由$1完成，封禁原因为\'\'$2\'\'。
+<div id="mw-message-blockedtext" style="border:1px solid black; padding-left:0.5em;">
+此次封禁操作由$1完成。
 
+* 封禁原因：$2\'
 * 起始时间：$8
 * 终止时间：$6
 * 拟封禁对象：$7
+* 封禁ID：#$5
+* 当前IP地址：$3
+</div>
 
-您可以联系$1或其他的[[{{MediaWiki:Grouppage-sysop}}|管理员]]讨论此次封禁。若您已在[[Special:Preferences|帐号设置]]中配置了一个有效的电子邮件地址，且未被封禁电子邮件功能，则您可通过“发送电子邮件给这位用户”功能来联络相关管理员。您当前的IP地址是$3，此次封禁的ID为#$5。请在您的查询中注明上述所有信息。',
+您可以联系$1或其他的[[Special:ListUsers|{{MediaWiki:group-sysop-member}}]]讨论此次封禁。
+请在上面的方框中详细写明所有问询信息。',
 	'blockednoreason' => '无给出原因',
 	'blocked-notice-logextract' => '这位用户目前已被封禁。以下提供最近的封禁日志以供参考：',
 	'badsig' => '错误的原始签名。请检查HTML标签。',
@@ -19922,7 +19631,6 @@ $messages['zh-hans'] = [
 	'blocklogentry' => '封禁[[$1]]，终止时间为$2$3',
 	'blocklogtext' => '此处给出了封禁和解封用户的操作日志，被自动封禁的IP地址不在此表。请查看[[Special:BlockList|封禁列表]]获知当前被封禁的用户和IP地址。',
 	'block-log-flags-anononly' => '仅限匿名用户',
-	'block-log-flags-nocreate' => '停用账户创建',
 	'block-log-flags-noautoblock' => '禁用自动封禁',
 	'block-log-flags-noemail' => '禁止电子邮件',
 	'block-log-flags-nousertalk' => '禁止编辑自己的用户讨论页',
@@ -19935,34 +19643,57 @@ $messages['zh-hans'] = [
 只有（以 * 开头）列出的项目会被考虑。每一行的第一个链接必须是不雅文件的链接。
 然后同一行后方的链接会被视为例外，即是该文件可以在哪些页面内被显示。',
 	'blankpage' => '空白页面',
-];
+	'backlinksubtitle' => '← $1',
+	'brokenredirects-summary' => '',
+	'booksources-summary' => '',
+	'blocklist-summary' => '',
+	'block-log-flags-nocreate' => '停用账户创建',
+	'bitrate-bits' => '$1bps',
+	'bitrate-kilobits' => '$1kbps',
+	'bitrate-megabits' => '$1Mbps',
+	'bitrate-gigabits' => '$1Gbps',
+	'bitrate-terabits' => '$1Tbps',
+	'bitrate-petabits' => '$1Pbps',
+	'bitrate-exabits' => '$1Ebps',
+	'bitrate-zetabits' => '$1Zbps',
+	'bitrate-yottabits' => '$1Ybps',
+	'back' => 'Back',
+	'button-createpage' => 'Add a Page',
+	'blog-avatar-defaults' => 'Avatar.jpg
+Avatar2.jpg
+Avatar3.jpg
+Avatar4.jpg
+Avatar5.jpg
+Avatar6.jpg',
+);
 
-$messages['zh-hant'] = [
+$messages['zh-hant'] = array(
 	'broken-file-category' => '有連結至已損壞檔案頁的連結之頁面',
 	'badaccess' => '權限錯誤',
-	'badaccess-group0' => '你所請求執行的操作被禁止。',
+	'badaccess-group0' => '你被禁止執行所請求的操作。',
 	'badaccess-groups' => '您剛才的請求只有{{PLURAL:$2|這個|這些}}用戶組的用戶才能使用：$1',
 	'badarticleerror' => '無法在此頁進行該操作。',
 	'badtitle' => '錯誤的標題',
 	'badtitletext' => '所請求頁面的標題是無效的、不存在，跨語言或跨wiki連結的標題錯誤。它可能包含一個或更多的不能用於標題的字符。',
 	'badretype' => '您所輸入的密碼並不相同。',
-	'blocked-mailpassword' => '您的IP地址處於查封狀態而不允許編輯，為了安全起見，密碼恢復功能已被禁用。',
+	'blocked-mailpassword' => '您的IP地址處於封禁狀態而不允許編輯，為了安全起見，密碼恢復功能已被禁用。',
 	'bold_sample' => '粗體文字',
 	'bold_tip' => '粗體文字',
-	'blockedtitle' => '用戶被查封',
-	'blockedtext' => '{{GENDER:|你|妳|你}}的用戶名或IP地址已經被$1查封。
+	'blockedtitle' => '用戶被封禁',
+	'blockedtext' => "{{GENDER:|你|妳|你}}的用戶名或IP地址已經被$1封禁。
 
-這次查封是由$1所封的。當中的原因是\'\'$2\'\'。
+這次封禁是由$1所執行的。原因是''$2''。
 
-* 這次查封開始的時間是：$8
-* 這次查封到期的時間是：$6
-* 對於被查封者：$7
+* 這次封禁開始的時間是：$8
+* 這次封禁到期的時間是：$6
+* 被封禁者：$7
 
-{{GENDER:|你|妳|你}}可以聯絡$1或者其他的[[{{MediaWiki:Grouppage-sysop}}|管理員]]，討論這次查封。
-除非{{GENDER:|你|妳|你}}已經在{{GENDER:|你|妳|你}}的[[Special:Preferences|賬號參數設置]]中設定了一個有效的電子郵件地址，否則{{GENDER:|你|妳|你}}是不能使用「電郵這位用戶」的功能。當設定了一個有效的電子郵件地址後，這個功能是不會封鎖的。
 
-{{GENDER:|你|妳|你}}目前的IP地址是$3，而該查封ID是 #$5。 請在{{GENDER:|你|妳|你}}的查詢中註明以上所有的資料。',
-	'blockednoreason' => '無給出原因',
+{{GENDER:|你|妳|你}}可以聯絡$1或者其他的[[{{MediaWiki:Grouppage-sysop}}|管理員]]，討論這次封禁。
+除非{{GENDER:|你|妳|你}}已經在{{GENDER:|你|妳|你}}的[[Special:Preferences|個人設定]]中設定了一個有效的電子郵件地址，否則{{GENDER:|你|妳|你}}是不能使用「電郵這位用戶」的功能。當設定了一個有效的電子郵件地址後，這個功能是不會封鎖的。
+
+{{GENDER:|你|妳|你}}目前的IP地址是$3，而該查封ID是 #$5。 請在{{GENDER:|你|妳|你}}的查詢中註明以上所有的資料。",
+	'blockednoreason' => '未給出原因',
 	'blocked-notice-logextract' => '這位用戶現正被封鎖。
 下面有最近的封鎖紀錄以供參考：',
 	'badsig' => '錯誤的原始簽名。請檢查HTML標籤。',
@@ -19972,20 +19703,20 @@ $messages['zh-hant'] = [
 	'badfilename' => '檔案名已被改為「$1」。',
 	'backend-fail-stream' => '無法流傳送文件$1。',
 	'backend-fail-backup' => '無法備份文件$1。',
-	'backend-fail-notexists' => '條目$1不存在。',
+	'backend-fail-notexists' => '檔案$1不存在。',
 	'backend-fail-hashes' => '比較無法獲取文件hashes',
 	'backend-fail-notsame' => '$1已存在不同的文件。',
-	'backend-fail-invalidpath' => '$1不是有效的存儲路徑。',
+	'backend-fail-invalidpath' => '$1不是有效的儲存路徑。',
 	'backend-fail-delete' => '無法刪除「$1」檔案。',
-	'backend-fail-alreadyexists' => '“$1”頁面已存在',
-	'backend-fail-store' => '無法在$2存儲文件$1。',
-	'backend-fail-copy' => '無法複製文件$1到$2。',
-	'backend-fail-move' => '無法移動文件$1到$2。',
+	'backend-fail-alreadyexists' => '“$1”檔案已存在',
+	'backend-fail-store' => '無法在$2儲存檔案$1。',
+	'backend-fail-copy' => '無法複製檔案$1到$2。',
+	'backend-fail-move' => '無法移動檔案$1到$2。',
 	'backend-fail-opentemp' => '無法打開臨時文件。',
-	'backend-fail-writetemp' => '無法寫臨時文件。',
-	'backend-fail-closetemp' => '無法創建臨時文件。',
-	'backend-fail-read' => '找不到文件“$1”。',
-	'backend-fail-create' => '找不到「$1」檔案。',
+	'backend-fail-writetemp' => '無法寫入臨時文件。',
+	'backend-fail-closetemp' => '無法關閉臨時文件。',
+	'backend-fail-read' => '無法閱讀文件「$1」。',
+	'backend-fail-create' => '無法創建「$1」檔案。',
 	'backend-fail-readonly' => '「$1」儲存後端目前是唯讀模式，因為：「$2」',
 	'backend-fail-synced' => '文件"$1"在內部後端是不一致的區域。',
 	'backend-fail-connect' => '無法連結至檔案後方“$1”。',
@@ -20006,40 +19737,39 @@ $messages['zh-hant'] = [
 	'block' => '封禁用戶',
 	'blockip' => '封禁用戶',
 	'blockip-title' => '封禁用戶',
-	'blockip-legend' => '查封用戶',
+	'blockip-legend' => '封禁用戶',
 	'blockiptext' => '用下面的表單來禁止來自某一特定IP地址的修改許可權。
 只有在為防止破壞，及符合[[{{MediaWiki:Policy-url}}|守則]]的情況下才可採取此行動。
 請在下面輸入一個具體的理由（例如引述一個被破壞的頁面）。',
 	'badipaddress' => '無效IP地址',
-	'blockipsuccesssub' => '查封成功',
+	'blockipsuccesssub' => '封禁成功',
 	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]]已經被查封。
 <br />參看[[Special:BlockList|被封IP地址列表]]以覆審查封。',
-	'blocklist' => '封禁用戶',
+	'blocklist' => '被封禁用戶',
 	'blocklist-userblocks' => '隱藏用戶封禁',
 	'blocklist-tempblocks' => '隱藏臨時封禁',
 	'blocklist-addressblocks' => '隱藏單一IP封禁',
-	'blocklist-rangeblocks' => '隱藏IP段封禁',
+	'blocklist-rangeblocks' => '隱藏IP區段封禁',
 	'blocklist-timestamp' => '時間',
 	'blocklist-target' => '目標',
-	'blocklist-expiry' => '過期',
+	'blocklist-expiry' => '期限',
 	'blocklist-by' => '封禁管理員',
 	'blocklist-params' => '封禁參數',
 	'blocklist-reason' => '原因',
 	'blocklist-nousertalk' => '禁止編輯自己的用戶討論頁',
-	'blocklink' => '查封',
-	'blocklogpage' => '查封日誌',
+	'blocklink' => '封禁',
+	'blocklogpage' => '封禁日誌',
 	'blocklog-showlog' => '這位用戶曾經被封鎖過。在下列提供封鎖記錄以便參考：',
-	'blocklog-showsuppresslog' => '這位用戶曾經被封鎖和隱藏過。在下列提供廢止記錄以便參考：',
+	'blocklog-showsuppresslog' => '這位用戶曾經被封鎖和隱藏過。在下列提供相關記錄以便參考：',
 	'blocklogentry' => '已封禁“[[$1]]” $3而終止時間為$2',
 	'blocklogtext' => '這是關於用戶封禁和解除封禁操作的記錄。被自動封禁的IP地址沒有被列出。請參閱[[Special:BlockList|被查封的IP地址和用戶列表]]。',
 	'block-log-flags-anononly' => '僅限匿名用戶',
-	'block-log-flags-nocreate' => '建立帳號已禁用',
 	'block-log-flags-noautoblock' => '停用自動封禁',
 	'block-log-flags-noemail' => '禁止電子郵件',
 	'block-log-flags-nousertalk' => '禁止編輯自己的用戶討論頁',
 	'block-log-flags-angry-autoblock' => '加強自動封鎖已啟用',
 	'block-log-flags-hiddenname' => '隱藏用戶名稱',
-	'blockme' => '查封我',
+	'blockme' => '封禁我',
 	'bydate' => '按日期',
 	'bad_image_list' => '請按照下列格式編寫：
 
@@ -20047,100 +19777,31 @@ $messages['zh-hant'] = [
 每一行的第一個連結必須是損壞檔案的連結。
 然後同一行後方的連結會被視為例外，即是該檔案可以在哪些頁面內被顯示。',
 	'blankpage' => '空白頁面',
-];
-
-$messages['zh-tw'] = [
-	'badaccess-groups' => '{{MediaWiki:Badaccess-groups}}',
-	'badretype' => '你所輸入的密碼並不相同。',
-	'blocked-mailpassword' => '由於這個使用者被封鎖，我們暫時禁止您請求申請新密碼。造成不便敬請見諒',
-	'blockedtitle' => '使用者被封鎖',
-	'badsig' => '錯誤的原始簽名；請檢查HTML標籤。',
-	'badsiglength' => '你的簽名過長；簽名長度必須在$1個字元以下。',
-	'badfilename' => '檔案名已被改為"$1"。',
-	'blockip' => '封鎖使用者',
-	'blockipsuccesssub' => '封鎖成功',
-	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]]已經被封鎖。
-<br />參看[[Special:BlockList|被封IP地址列表]]以覆審封鎖。',
-	'blocklink' => '禁封',
-	'blocklogentry' => '[[$1]]已被封鎖 $3 ，終止時間為$2',
-	'blocklogtext' => '這是關於使用者封鎖和解除封鎖操作的記錄。被自動封鎖的IP地址沒有被列出。請參閱[[Special:BlockList|被封鎖的IP地址和使用者列表]]。',
-	'block-log-flags-anononly' => '僅匿名用戶',
-	'block-log-flags-nocreate' => '禁止此IP/使用者建立新帳號',
-	'block-log-flags-noautoblock' => '停用自動封鎖',
-	'blockme' => '封鎖我',
-	'bad_image_list' => '請根據以下的格式去編寫:
-
-只有列示項目（以 * 開頭的項目）會被考慮。第一個連結一定要連接去壞圖片中。
-然後在同一行的連結會考慮作例外，即是幅圖片可以在哪一個頁面中同時顯示。',
-	'badaccess-group0' => '{{MediaWiki:Badaccess-group0}}',
-	'badaccess' => '沒有權限',
-	'booksources' => '站外書源',
-];
-
-$messages['zh-yue'] = [
-	'badaccess-groups' => '您剛才的請求只有{{PLURAL:$2|這個|這些}}使用者組的使用者才能使用: $1',
-	'badretype' => '你所輸入的密碼並不相同。',
-	'blocked-mailpassword' => '由於這個使用者被封鎖，我們暫時禁止您請求申請新密碼。造成不便敬請見諒',
-	'blockedtitle' => '使用者被封鎖',
-	'badsig' => '錯誤的原始簽名；請檢查HTML標籤。',
-	'badsiglength' => '你的簽名過長；簽名長度必須在$1個字元以下。',
-	'badfilename' => '檔案名已被改為"$1"。',
-	'blockip' => '封鎖使用者',
-	'blockipsuccesssub' => '封鎖成功',
-	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]]已經被封鎖。
-<br />參看[[Special:BlockList|被封IP地址列表]]以覆審封鎖。',
-	'blocklink' => '禁封',
-	'blocklogentry' => '[[$1]]已被封鎖 $3 ，終止時間為$2',
-	'blocklogtext' => '這是關於使用者封鎖和解除封鎖操作的記錄。被自動封鎖的IP地址沒有被列出。請參閱[[Special:BlockList|被封鎖的IP地址和使用者列表]]。',
-	'block-log-flags-anononly' => '僅限匿名使用者',
-	'block-log-flags-nocreate' => '禁止此IP/使用者建立新帳號',
-	'block-log-flags-noautoblock' => '停用自動封鎖',
-	'blockme' => '封鎖我',
-	'bad_image_list' => '請根據以下的格式去編寫:
-
-只有列示項目（以 * 開頭的項目）會被考慮。第一個連結一定要連接去壞圖片中。
-然後在同一行的連結會考慮作例外，即是幅圖片可以在哪一個頁面中同時顯示。',
-];
-
-$messages['zu'] = [
-	'blockip' => 'Vimbela lo msebenzisi',
-];
-
-$messages['zh'] = [
-	'badaccess-group0' => '你所请求执行的操作被禁止。',
-	'badaccess-groups' => '你所请求执行的操作仅限于 $1 组成员。',
-	'badaccess' => '拒绝访问',
-	'badsig' => '错误的原始签名；请检查HTML标签。',
-	'block-log-flags-anononly' => '仅匿名用戶',
-	'block-log-flags-nocreate' => '创建账户已禁用',
-	'blocked-mailpassword' => '你的IP地址已经被查封而无法编辑，为了防止滥用而停用了你的密码恢复功能。',
-	'blocklogtext' => '这是关于用户查封和解封操作的日志。 
-被自动查封的IP地址没有被列出。请参看[[Special:Ipblocklist|被查封的IP地址和用户列表]]。',
-	'booksources-text' => '以下是一份销售新书或二手书的列表，并可能有你正寻找的书的进一步信息：',
-	'booksources' => '站外书源',
-	'broken-file-category' => '含有损坏文件链接的页面',
-	'brokenredirects-delete' => '(删除)',
-	'brokenredirects-edit' => '(编辑)',
-	'button-createpage' => '添加页面',
-];
-
-$messages['zh-hk'] = [
-	'badaccess-group0' => '您剛才的請求不允許執行。',
-	'badaccess-groups' => '您剛才的請求只有$1用戶組的用戶才能使用。',
+	'backlinksubtitle' => '← $1',
+	'brokenredirects-summary' => '',
+	'booksources-summary' => '',
+	'blocklist-summary' => '',
+	'block-log-flags-nocreate' => '已禁止建立帳號',
+	'bitrate-bits' => '$1bps',
+	'bitrate-kilobits' => '$1kbps',
+	'bitrate-megabits' => '$1Mbps',
+	'bitrate-gigabits' => '$1Gbps',
+	'bitrate-terabits' => '$1Tbps',
+	'bitrate-petabits' => '$1Pbps',
+	'bitrate-exabits' => '$1Ebps',
+	'bitrate-zetabits' => '$1Zbps',
+	'bitrate-yottabits' => '$1Ybps',
+	'back' => '返回',
+	'button-createpage' => '增加頁面',
 	'blog-avatar-defaults' => 'Avatar.jpg
 Avatar2.jpg
 Avatar3.jpg
 Avatar4.jpg
 Avatar5.jpg
 Avatar6.jpg',
-	'booksources' => '站外書源',
-	'brokenredirects-delete' => '(刪除)',
-	'brokenredirects-edit' => '(編輯)',
-];
+);
 
-$messages['zh-cn'] = [
-	'badsig' => '{{MediaWiki:Badsig}}',
-	'block-log-flags-anononly' => '仅匿名用戶',
-	'booksources' => '站外书源',
-];
+$messages['zu'] = array(
+	'blockip' => 'Vimbela lo msebenzisi',
+);
 

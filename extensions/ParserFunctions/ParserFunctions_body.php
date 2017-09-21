@@ -901,7 +901,7 @@ class ExtParserFunctions {
 	 * Returns count($chars).
 	 * copied from StringFunctions by eloy
 	 */
-	static protected function mwSplit( &$parser, $str, &$chars ) {
+	static protected function mwSplit( $parser, $str, &$chars ) {
 		# Get marker prefix & suffix
 		$prefix = preg_quote( $parser->mUniqPrefix, '/' );
 		if ( defined( 'Parser::MARKER_SUFFIX' ) ) {
@@ -926,7 +926,7 @@ class ExtParserFunctions {
 	 *
 	 * copied from StringFunctions by eloy
 	 */
-	static function runPad( &$parser, $inStr = '', $inLen = 0, $inWith = '', $inDirection = '' ) {
+	static function runPad( $parser, $inStr = '', $inLen = 0, $inWith = '', $inDirection = '' ) {
 		global $wgPFStringLengthLimit;
 
 		# direction

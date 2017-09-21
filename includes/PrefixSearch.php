@@ -62,7 +62,7 @@ class PrefixSearch {
 			}
 		}
 		$srchres = array();
-		if( wfRunHooks( 'PrefixSearchBackend', array( $namespaces, $search, $limit, &$srchres ) ) ) {
+		if( Hooks::run( 'PrefixSearchBackend', array( $namespaces, $search, $limit, &$srchres ) ) ) {
 			return self::defaultSearchBackend( $namespaces, $search, $limit );
 		}
 		return $srchres;

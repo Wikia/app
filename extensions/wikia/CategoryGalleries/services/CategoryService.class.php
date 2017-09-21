@@ -4,7 +4,7 @@
 	 * Category service
 	 * @author wladek
 	 */
-	class CategoryService extends Service {
+	class CategoryService {
 		const CACHE_VERSION = 1;
 
 		/**
@@ -265,9 +265,15 @@
 		/**
 		 * Hook entry for intercepting article moves to refresh memcached data if needed
 		 * @param $title Title
+		 * @param Title $newtitle
+		 * @param User $user
+		 * @param $pageid
+		 * @param $redirid
 		 * @return bool
 		 */
-		static public function onTitleMoveComplete( &$title, &$newtitle, &$user, $pageid, $redirid ) {
+		static public function onTitleMoveComplete(
+			Title $title, Title $newtitle, User $user, $pageid, $redirid
+		): bool {
 			global $wgMemc;
 
 			wfProfileIn(__METHOD__);
@@ -314,7 +320,7 @@
 			$catDBkey = $catTitle->getDBKey();
 			$key = self::getTopArticlesKey($catDBkey, $ns);
 			$wgMemc->delete($key);
-			wfRunHooks('CategoryService::invalidateTopArticles',array($catTitle,$ns));
+			Hooks::run('CategoryService::invalidateTopArticles',array($catTitle,$ns));
 
 			wfProfileOut(__METHOD__);
 		}

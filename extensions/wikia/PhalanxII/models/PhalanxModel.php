@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\DependencyInjection\Injector;
+
 /**
  * @method PhalanxModel setBlock( $block )
  * @method object getBlock
@@ -9,6 +11,7 @@
  * @method bool getShouldLogInStats
  * @method User getUser
  * @method PhalanxModel setUser( User $user )
+ * @method PhalanxModel setService( PhalanxService $service )
  */
 abstract class PhalanxModel extends WikiaObject {
 	/** @var string $text */
@@ -30,7 +33,7 @@ abstract class PhalanxModel extends WikiaObject {
 		parent::__construct();
 
 		$this->user = $this->wg->user;
-		$this->service = new PhalanxService();
+		$this->service = Injector::getInjector()->get( PhalanxService::class );
 		$this->ip = $this->wg->request->getIp();
 	}
 
@@ -129,20 +132,6 @@ abstract class PhalanxModel extends WikiaObject {
 		return $result;
 	}
 
-	protected function fallback( $method, $type ) {
-		$fallback = "{$method}_{$type}_old";
-		$ret = false;
-		if ( method_exists( $this, $fallback ) ) {
-			Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
-				'method' => $method,
-				'exception' => new Exception( 'Phalanx fallback triggered' )
-			] );
-
-			$ret = call_user_func( array( $this, $fallback ) );
-		}
-		return $ret;
-	}
-
 	public function logBlock() {
 		$txt = $this->getText();
 		wfDebug( __METHOD__ . ":" . __LINE__ . ": Block '#{$this->block->id}' blocked '{" . ( ( is_array( $txt ) ) ? implode( ",", $txt ) : $txt ) . "}'.\n", true );
@@ -166,8 +155,6 @@ abstract class PhalanxModel extends WikiaObject {
 					$this->setBlock( $result )->$method();
 					$ret = false;
 				}
-			} else {
-				$ret = $this->fallback( "match", $type );
 			}
 		}
 
@@ -182,7 +169,7 @@ abstract class PhalanxModel extends WikiaObject {
 			# we have response from Phalanx service - 0/1
 			$ret = $result;
 		} else {
-			$ret = $this->fallback( "check", $type );
+			$ret = true;
 		}
 
 		return $ret;

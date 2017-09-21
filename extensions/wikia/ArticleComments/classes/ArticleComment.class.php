@@ -7,7 +7,6 @@ use Wikia\Logger\WikiaLogger;
 
 class ArticleComment {
 
-	const MOVE_USER = 'WikiaBot';
 	const AVATAR_BIG_SIZE = 50;
 	const AVATAR_SMALL_SIZE = 30;
 
@@ -48,8 +47,10 @@ class ArticleComment {
 
 	protected $minRevIdFromSlave;
 
-	private $isTextLoaded = false;
 	private $isRevisionLoaded = false;
+
+	/** @var ParserOptions $mParserOptions Parser options that can be used for processing this article comment */
+	private $mParserOptions = null;
 
 	/**
 	 * @param Title $title
@@ -215,13 +216,13 @@ class ArticleComment {
 			return false;
 		}
 
-		if ( $this->isTextLoaded ) {
+		// SUS-1557: If raw comment text was already set, don't bother loading it from DB
+		if ( is_string( $this->mRawtext ) ) {
 			return true;
 		}
 
 		$this->setRawText( $this->mLastRevision->getText() );
 
-		$this->isTextLoaded = true;
 		return true;
 	}
 
@@ -374,15 +375,35 @@ class ArticleComment {
 	}
 
 	/**
+	 * Lazy-initialize and cache a ParserOptions instance that can be used to parse this article comment
+	 * @return ParserOptions
+	 */
+	private function getParserOptions(): ParserOptions {
+		if ( !( $this->mParserOptions instanceof ParserOptions ) ) {
+			$this->mParserOptions = ParserOptions::newFromContext( RequestContext::getMain() );
+
+			// VOLDEV-68: Remove broken section edit links
+			$this->mParserOptions->setEditSection( false );
+		}
+
+		return $this->mParserOptions;
+	}
+
+	/**
 	 * Parse the comment content in a lazy fashion: when either getText() or getHeadItems() is called
 	 */
 	private function parseText() {
 		wfProfileIn( __METHOD__ );
-		$this->load();
 
-		// VOLDEV-68: Remove broken section edit links
-		$opts = ParserOptions::newFromContext( RequestContext::getMain() );
-		$opts->setEditSection( false );
+		// SUS-1557: only load from DB if raw text was not set manually
+		if ( !is_string( $this->mRawtext ) ) {
+			$this->load();
+		}
+
+		$opts = $this->getParserOptions();
+
+		// SUS-1527: {{Special:RecentChanges}} in message on wall breaks page
+		$opts->setAllowSpecialInclusion( false );
 
 		$data = WikiaDataAccess::cache(
 			wfMemcKey( __METHOD__, md5( $this->mRawtext . $this->mTitle->getPrefixedDBkey() ), $opts->optionsHash( ParserOptions::legacyOptions() ) ),
@@ -411,12 +432,47 @@ class ArticleComment {
 	}
 
 	/**
+	 * SUS-1557: Perform pre-save transformation on comment text
+	 * This is necessary when someone edits Wall/Forum content - we're sending back parsed user-passed text that has not passed through pre-save transformation
+	 */
+	private function transformText() {
+		// We can safely skip if mRawText is not set
+		// In that case it has to be loaded from DB, which means it has already gone through pre-save transofmration
+		if ( !is_string( $this->mRawtext ) ) {
+			return;
+		}
+
+		$parser = ParserPool::get();
+		$parserOptions = $this->getParserOptions();
+		$user = $parserOptions->getUser();
+
+		$this->mRawtext = $parser->preSaveTransform( $this->mRawtext, $this->mTitle, $user, $parserOptions );
+
+		ParserPool::release( $parser );
+	}
+
+	/**
 	 * Return HTML content of parsed comment
 	 *
 	 * @return string
 	 */
 	public function getText() {
 		if ( !is_string( $this->mText ) ) {
+			$this->parseText();
+		}
+
+		return $this->mText;
+	}
+
+	/**
+	 * Return HTML content of parsed comment, and additionally perform pre-save transformations
+	 * This is necessary if raw comment text is not fetched from DB but passed directly from user, since it skips transformation in that case
+	 *
+	 * @return string
+	 */
+	public function getTransformedParsedText(): string {
+		if ( !is_string( $this->mText ) ) {
+			$this->transformText();
 			$this->parseText();
 		}
 
@@ -479,7 +535,7 @@ class ArticleComment {
 	}
 
 	public function getData( $master = false ) {
-		global $wgUser, $wgBlankImgUrl, $wgMemc, $wgArticleCommentsEnableVoting;
+		global $wgUser, $wgBlankImgUrl, $wgMemc;
 
 		$title = $this->getTitle();
 		$commentId = $title->getArticleId();
@@ -546,7 +602,7 @@ class ArticleComment {
 			$links['edit'] = '#comment' . $commentId;
 		}
 
-		if ( !$this->mTitle->isNewPage( Title::GAID_FOR_UPDATE ) ) {
+		if ( !$this->mTitle->isNewPage() ) {
 			$buttons[] = Linker::linkKnown(
 				$title,
 				wfMessage( 'article-comments-history' )->escaped(),
@@ -580,10 +636,6 @@ class ArticleComment {
 			'title' => $title->getText(),
 			'isStaff' => $isStaff,
 		];
-
-		if ( !empty( $wgArticleCommentsEnableVoting ) ) {
-			$comment['votes'] = $this->getVotesCount();
-		}
 
 		$wgMemc->set( $articleDataKey, $comment, self::AN_HOUR );
 
@@ -790,7 +842,7 @@ class ArticleComment {
 	 * @param string $summary
 	 * @param bool $preserveMetadata : hack to fix bug 102384 (prevent metadata override when trying to modify one of metadata keys)
 	 *
-	 * @return array|bool TODO: Document what the array contains.
+	 * @return array|bool False on failure, array on success. First element is Status instance returned by EditPage::internalAttemptSave, second is Article instance.
 	 */
 	public function doSaveComment( $text, $user, $title = null, $commentId = 0, $force = false, $summary = '', $preserveMetadata = false ) {
 		global $wgTitle;
@@ -830,7 +882,8 @@ class ArticleComment {
 			if ( $preserveMetadata ) {
 				$this->mMetadata = $metadata;
 			}
-			$retval = self::doSaveAsArticle( $text, $article, $user, $this->mMetadata, $summary );
+
+			$status = self::doSaveAsArticle( $text, $article, $user, $this->mMetadata, $summary );
 
 			if ( !empty( $title ) ) {
 				$purgeTarget = $title;
@@ -839,13 +892,22 @@ class ArticleComment {
 			}
 
 			ArticleCommentList::purgeCache( $purgeTarget );
-			$res = [ $retval, $article ];
+			$res = [ $status, $article ];
 		} else {
 			$res = false;
 		}
 
-		$this->mLastRevId = $this->mTitle->getLatestRevID( Title::GAID_FOR_UPDATE );
-		$this->mLastRevision = Revision::newFromId( $this->mLastRevId );
+		// If the edit was successful, set revision info returned by edit method
+		if ( isset( $status ) && $status->isOK() ) {
+			/** @var Revision $rev */
+			$rev = $status->revision;
+			$this->mLastRevision = $rev;
+			$this->mLastRevId = $rev->getId();
+		} else {
+			// Edit failed, let's work with slave data
+			$this->mLastRevId = $this->mTitle->getLatestRevID();
+			$this->mLastRevision = Revision::newFromId( $this->mLastRevId );
+		}
 
 		return $res;
 	}
@@ -987,8 +1049,6 @@ class ArticleComment {
 
 		/** @var Article|WikiPage $article */
 		$article = new Article( $commentTitle, 0 );
-
-		CommentsIndex::addCommentInfo( $commentTitleText, $title, $parentId );
 
 		$retVal = self::doSaveAsArticle( $text, $article, $user, $metadata );
 		$res = ArticleComment::doAfterPost( $retVal, $article, $parentId );
@@ -1178,10 +1238,8 @@ class ArticleComment {
 	 *
 	 * @return Bool true -- because it's a hook
 	 */
-	static public function watchlistNotify( RecentChange &$oRC ) {
+	static public function watchlistNotify( RecentChange $oRC ): bool {
 		global $wgEnableGroupedArticleCommentsRC;
-
-		Hooks::run( 'AC_RecentChange_Save', [ &$oRC ] );
 
 		if ( !empty( $wgEnableGroupedArticleCommentsRC ) && ( $oRC instanceof RecentChange ) ) {
 			$title = $oRC->getAttribute( 'rc_title' );
@@ -1286,7 +1344,7 @@ class ArticleComment {
 	 * @return array|Mixed
 	 * @throws MWException
 	 */
-	static private function moveComment( $oCommentTitle, &$oNewTitle, $reason = '' ) {
+	static private function moveComment( Title $oCommentTitle, Title $oNewTitle, $reason = '' ) {
 		global $wgUser;
 
 		if ( !is_object( $oCommentTitle ) ) {
@@ -1294,7 +1352,7 @@ class ArticleComment {
 		}
 
 		$currentUser = $wgUser;
-		$wgUser = User::newFromName( self::MOVE_USER );
+		$wgUser = User::newFromName( Wikia::BOT_USER );
 
 		$parts = self::explode( $oCommentTitle->getDBkey() );
 		$commentTitleText = implode( '/', $parts['partsOriginal'] );
@@ -1319,14 +1377,14 @@ class ArticleComment {
 	 *
 	 * @return bool
 	 */
-	static public function moveComments( MovePageForm &$form , Title &$oOldTitle , Title &$oNewTitle ) {
-		global $wgUser, $wgRC2UDPEnabled, $wgMaxCommentsToMove, $wgEnableMultiDeleteExt, $wgCityId;
+	static public function moveComments( MovePageForm $form , Title $oOldTitle , Title $oNewTitle ): bool {
+		global $wgRC2UDPEnabled, $wgMaxCommentsToMove, $wgEnableMultiDeleteExt, $wgCityId;
 
-		if ( !$wgUser->isAllowed( 'move' ) ) {
+		if ( !$form->getUser()->isAllowed( 'move' ) ) {
 			return true;
 		}
 
-		if ( $wgUser->isBlocked() ) {
+		if ( $form->getUser()->isBlocked() ) {
 			return true;
 		}
 
@@ -1397,7 +1455,7 @@ class ArticleComment {
 					'lang'		=> '',
 					'cat'		=> '',
 					'selwikia'	=> $wgCityId,
-					'user'		=> self::MOVE_USER
+					'user'		=> Wikia::BOT_USER
 				];
 
 				for ( $i = $finish + 1; $i < count( $comments ); $i++ ) {
@@ -1451,68 +1509,6 @@ class ArticleComment {
 			$this->mProps = BlogArticle::getProps( $this->mTitle->getArticleID() );
 		}
 		return $this->mProps;
-	}
-
-	// Voting functions
-
-	public function getVotesCount() {
-		$pageId = $this->mTitle->getArticleId();
-		$oFauxRequest = new FauxRequest( [
-			'action' => 'query',
-			'list' => 'wkvoteart',
-			'wkpage' => $pageId,
-			'wkuservote' => 0,
-			'wktimestamps' => 1
-		] );
-		$oApi = new ApiMain( $oFauxRequest );
-		$oApi->execute();
-		$aResult = $oApi->getResultData();
-
-		if ( isset( $aResult['query']['wkvoteart'][$pageId]['votescount'] ) ) {
-			return $aResult['query']['wkvoteart'][$pageId]['votescount'];
-		} else {
-			return 0;
-		}
-	}
-
-	public function vote() {
-		$oFauxRequest = new FauxRequest( [
-			'action' => 'insert',
-			'list' => 'wkvoteart',
-			'wkpage' => $this->mTitle->getArticleId(),
-			'wkvote' => 3
-		] );
-		$oApi = new ApiMain( $oFauxRequest );
-
-		$oApi->execute();
-
-		$aResult = $oApi->getResultData();
-
-		$success = !empty( $aResult );
-
-		return $success;
-	}
-
-	public function userCanVote() {
-		$pageId = $this->mTitle->getArticleId();
-
-		$oFauxRequest = new FauxRequest( [
-			'action' => 'query',
-			'list' => 'wkvoteart',
-			'wkpage' => $pageId,
-			'wkuservote' => 1
-		] );
-		$oApi = new ApiMain( $oFauxRequest );
-		$oApi->execute();
-		$aResult = $oApi->GetResultData();
-
-		if ( isset( $aResult['query']['wkvoteart'][$pageId]['uservote'] ) ) {
-			$result = false;
-		} else {
-			$result = true;
-		}
-
-		return $result;
 	}
 
 	public function getTopParent() {
@@ -1599,7 +1595,9 @@ class ArticleComment {
 	 *
 	 * @return boolean because it's a hook
 	 */
-	static public function onBeforeDeletePermissionErrors( &$article, &$title, &$user, &$permission_errors ) {
+	static public function onBeforeDeletePermissionErrors(
+		Article $article, Title $title, User $user, &$permission_errors
+	): bool {
 		if ( self::isCommentingEnabled() &&
 			$user->isAllowed( 'commentdelete' ) &&
 			ArticleComment::isTitleComment( $title )
@@ -1635,7 +1633,7 @@ class ArticleComment {
 	 * @param bool $result Whether $user can perform $action on $title
 	 * @return bool Whether to continue checking hooks
 	 */
-	static public function userCan( Title &$title, User &$user, $action, &$result ) {
+	static public function userCan( Title $title, User $user, string $action, &$result ): bool {
 		$wg = F::app()->wg;
 		$commentsNS = $wg->ArticleCommentsNamespaces;
 		$ns = $title->getNamespace();

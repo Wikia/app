@@ -157,11 +157,6 @@ class QueryEngine {
 
 		$db = $this->store->getConnection( 'mw.db.queryengine' );
 
-		// #1605
-		// "... creating temporary tables in a transaction is not replication-safe
-		// and causes errors in MySQL 5.6. ..."
-		$db->disableTransactions();
-
 		$this->queryMode = $query->querymode;
 		$this->querySegmentList = array();
 
@@ -209,7 +204,6 @@ class QueryEngine {
 				$query->querymode != Query::MODE_DEBUG &&
 				count( $this->errors ) > 0 ) {
 			$query->addErrors( $this->errors );
-			$db->enableTransactions();
 			return new QueryResult( $query->getDescription()->getPrintrequests(), $query, array(), $this->store, false );
 		}
 
@@ -236,8 +230,6 @@ class QueryEngine {
 
 		$this->querySegmentListProcessor->cleanUp();
 		$query->addErrors( $this->errors );
-
-		$db->enableTransactions();
 
 		return $result;
 	}
@@ -291,8 +283,12 @@ class QueryEngine {
 		$db = $this->store->getConnection( 'mw.db.queryengine' );
 		list( $startOpts, $useIndex, $tailOpts ) = $db->makeSelectOptions( $sqlOptions );
 
+		// #2078
+		$sortfields = implode( $qobj->sortfields, ',' );
+		$sortfields = $sortfields ? ', ' . $sortfields : '';
+
 		$entries['SQL Query'] =
-		           "SELECT DISTINCT $qobj->alias.smw_id AS id,$qobj->alias.smw_title AS t,$qobj->alias.smw_namespace AS ns,$qobj->alias.smw_iw AS iw,$qobj->alias.smw_subobject AS so,$qobj->alias.smw_sortkey AS sortkey FROM " .
+		           "SELECT DISTINCT $qobj->alias.smw_id AS id,$qobj->alias.smw_title AS t,$qobj->alias.smw_namespace AS ns,$qobj->alias.smw_iw AS iw,$qobj->alias.smw_subobject AS so,$qobj->alias.smw_sortkey AS sortkey $sortfields FROM " .
 		           $db->tableName( $qobj->joinTable ) . " AS $qobj->alias" . $qobj->from .
 		           ( ( $qobj->where === '' ) ? '':' WHERE ' ) . $qobj->where . "$tailOpts $startOpts $useIndex LIMIT " .
 		           $sqlOptions['LIMIT'] . ' OFFSET ' . $sqlOptions['OFFSET'];
@@ -416,13 +412,15 @@ class QueryEngine {
 
 		$sql_options = $this->getSQLOptions( $query, $rootid );
 
+		// #2078
 		// Selecting those is required in standard SQL (but MySQL does not require it).
 		$sortfields = implode( $qobj->sortfields, ',' );
+		$sortfields = $sortfields ? ',' . $sortfields : '';
 
 		$res = $db->select(
 			$db->tableName( $qobj->joinTable ) . " AS $qobj->alias" . $qobj->from,
 			"DISTINCT $qobj->alias.smw_id AS id,$qobj->alias.smw_title AS t,$qobj->alias.smw_namespace AS ns,$qobj->alias.smw_iw AS iw,$qobj->alias.smw_subobject AS so,$qobj->alias.smw_sortkey AS sortkey" .
-			  ( $dbType == 'postgres' ? ( ( $sortfields ? ',' : '' ) . $sortfields ) : '' ),
+			$sortfields,
 			$qobj->where,
 			__METHOD__,
 			$sql_options

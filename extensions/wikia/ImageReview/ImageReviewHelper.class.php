@@ -1,5 +1,6 @@
 <?php
 
+use \Wikia\Tasks\Tasks\ImageReviewTask;
 use \Wikia\Logger\WikiaLogger;
 
 /**
@@ -51,6 +52,12 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 				'review_state' => $image['state'],
 				'reviewer_id' => $this->user_id
 			);
+
+			// SUS-2650: invalidate file page of reviewed image
+			$task = new ImageReviewTask();
+			$task->call( 'invalidateFilePage', (int) $image['pageId'] );
+			$task->wikiId( $image['wiki_id'] );
+			$task->queue();
 		}
 
 		$db = $this->getDatawareDB( DB_MASTER );

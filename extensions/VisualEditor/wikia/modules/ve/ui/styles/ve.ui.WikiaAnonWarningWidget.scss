@@ -9,11 +9,11 @@ $padding-left-right: 13px;
 	padding: $padding-top-bottom $padding-left-right;
 	width: calc(100% - #{2 * $padding-left-right});
 
-	.ve-ui-wikia-anon-warning__login-link {
+	.ve-ui-wikia-anon-warning__login-link,
+	.ve-ui-wikia-anon-warning__register-link {
 		color: $color-button-text;
 		cursor: pointer;
 		font-weight: bold;
-		margin-left: 5px;
 		text-decoration: underline;
 	}
 }

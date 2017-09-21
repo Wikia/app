@@ -6,25 +6,30 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	'ext.wikia.adEngine.video.player.playwire',
 	'ext.wikia.adEngine.video.player.ui.videoInterface',
 	'ext.wikia.adEngine.video.player.uiTemplate',
+	'ext.wikia.adEngine.video.videoSettings',
 	'wikia.document',
 	'wikia.log',
 	'wikia.throttle',
-	'wikia.window'
-], function (uapContext, adSlot, porvata, playwire, videoInterface, UITemplate, doc, log, throttle, win) {
+	'wikia.window',
+	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
+], function (uapContext, adSlot, porvata, playwire, videoInterface, UITemplate, VideoSettings, doc, log, throttle, win, mercuryListener) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.video.uapVideo',
-		positionVideoPlayerClassName = 'video-player-';
+		positionVideoPlayerClassName = 'video-player-',
+		uapTypesToMegaMap = {
+			'abcd': true
+		};
 
-	function getVideoSize(slot, params) {
+	function getVideoSize(slot, params, videoSettings) {
 		var width = slot.clientWidth;
 
 		// we don't want to have fullscreen (slot.clientWidth) video in case of split
 		// layout or on mercury.
 		// On mercury splitLayoutVideoPosition and videoPlaceholderElement will be empty
 		// because we always display video in the same way there.
-		if (params.splitLayoutVideoPosition && params.videoPlaceholderElement) {
-			width = params.videoPlaceholderElement.width;
+		if (videoSettings.isSplitLayout() && params.videoPlaceholderElement) {
+			width = params.videoPlaceholderElement.offsetWidth;
 		}
 
 		return {
@@ -33,30 +38,37 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		};
 	}
 
-	function loadPorvata(params, slotContainer, providerContainer) {
+	function shouldUseMegaAdUnitBuilder(type) {
+		return uapTypesToMegaMap[type];
+	}
+
+	function loadPorvata(params, slotContainer, providerContainer, videoSettings) {
 		params.container = slotContainer;
 
 		log(['VUAP loadPorvata', params], log.levels.debug, logGroup);
 
-		return porvata.inject(params)
+		return porvata.inject(videoSettings)
 			.then(function (video) {
-				var splitLayoutVideoPosition = params.splitLayoutVideoPosition,
-					template = UITemplate.defaultLayout;
-
-				if (params.splitLayoutVideoPosition) {
-					template = UITemplate.splitLayout;
-				} else if (params.autoPlay) {
-					template = UITemplate.autoPlayLayout;
+				video.container.style.position = 'relative';
+				if (mercuryListener) {
+					mercuryListener.onPageChange(function () {
+						video.destroy();
+					});
 				}
 
-				log(['VUAP UI elements', template], log.levels.debug, logGroup);
+				return video;
+			})
+			.then(function (video) {
+				var splitLayoutVideoPosition = params.splitLayoutVideoPosition,
+					template = UITemplate.selectTemplate(videoSettings);
 
 				videoInterface.setup(video, template, {
-					image: providerContainer,
-					container: slotContainer,
 					aspectRatio: params.aspectRatio,
-					videoAspectRatio: params.videoAspectRatio,
-					hideWhenPlaying: params.videoPlaceholderElement || params.image
+					autoPlay: videoSettings.isAutoPlay(),
+					container: slotContainer,
+					hideWhenPlaying: params.videoPlaceholderElement || params.image,
+					image: providerContainer,
+					videoAspectRatio: params.videoAspectRatio
 				});
 
 				if (splitLayoutVideoPosition) {
@@ -72,7 +84,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 			});
 	}
 
-	function loadPlaywire(params, adSlot, providerContainer) {
+	function loadPlaywire(params, adSlot, providerContainer, videoSettings) {
 		var container = doc.createElement('div');
 
 		container.classList.add('video-player', 'hidden');
@@ -94,12 +106,12 @@ define('ext.wikia.adEngine.video.uapVideo', [
 				});
 
 				video.addEventListener('wikiaAdStarted', function () {
-					var size = getVideoSize(adSlot, params);
+					var size = getVideoSize(adSlot, params, videoSettings);
 					video.resize(size.width, size.height);
 				});
 
 				if (params.autoPlay) {
-					var size = getVideoSize(adSlot, params);
+					var size = getVideoSize(adSlot, params, videoSettings);
 					video.play(size.width, size.height);
 				}
 
@@ -107,43 +119,53 @@ define('ext.wikia.adEngine.video.uapVideo', [
 			});
 	}
 
-	function loadVideoAd(params) {
-		var loadedPlayer,
+	function loadVideoAd(videoSettings) {
+		var params = videoSettings.getParams(),
+			loadedPlayer,
 			providerContainer = adSlot.getProviderContainer(params.slotName),
+			uapType = uapContext.getType(),
 			videoContainer = providerContainer.parentNode,
 			size;
 
 		log(['loadVideoAd params', params], log.levels.debug, logGroup);
 
-		size = getVideoSize(videoContainer, params);
+		size = getVideoSize(videoContainer, params, videoSettings);
 		params.width = size.width;
 		params.height = size.height;
-		params.adProduct = 'vuap';
+		params.useMegaAdUnitBuilder = shouldUseMegaAdUnitBuilder(uapType);
 		params.vastTargeting = {
 			src: params.src,
 			pos: params.slotName,
-			passback: 'vuap',
+			passback: uapType,
 			uap: uapContext.getUapId()
 		};
 
 		log(['loadVideoAd upadated params', params], log.levels.debug, logGroup);
 
 		if (params.player === 'playwire') {
-			loadedPlayer = loadPlaywire(params, videoContainer, providerContainer);
+			loadedPlayer = loadPlaywire(params, videoContainer, providerContainer, videoSettings);
 		} else {
-			loadedPlayer = loadPorvata(params, videoContainer, providerContainer);
+			loadedPlayer = loadPorvata(params, videoContainer, providerContainer, videoSettings);
 		}
 
 		return loadedPlayer.then(function (video) {
+			function playVideo() {
+				var videoSize = getVideoSize(videoContainer, params, videoSettings);
+				video.play(videoSize.width, videoSize.height);
+			}
+
 			win.addEventListener('resize', throttle(function () {
-				var size = getVideoSize(videoContainer, params);
-				video.resize(size.width, size.height);
+				var videoSize = getVideoSize(videoContainer, params, videoSettings);
+				video.resize(videoSize.width, videoSize.height);
 			}));
 
-			params.videoTriggerElement.addEventListener('click', function () {
-				var size = getVideoSize(videoContainer, params);
-				video.play(size.width, size.height);
-			});
+			if (params.videoTriggerElement) {
+				params.videoTriggerElement.addEventListener('click', playVideo);
+			} else if (params.videoTriggers) {
+				params.videoTriggers.forEach(function (trigger) {
+					trigger.addEventListener('click', playVideo);
+				});
+			}
 
 			return video;
 		});
@@ -156,7 +178,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	 * @returns bool
 	 */
 	function isEnabled(params) {
-		return !!params.videoAspectRatio;
+		return !!params.videoAspectRatio && (params.videoTriggerElement || params.videoTriggers);
 	}
 
 	return {

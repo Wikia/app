@@ -4,24 +4,32 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	'ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker',
 	'ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker',
 	'ext.wikia.adEngine.lookup.prebid.adaptersRegistry',
-	'ext.wikia.adEngine.lookup.prebid.adapters.wikia',
 	'ext.wikia.adEngine.lookup.prebid.prebidHelper',
 	'ext.wikia.adEngine.lookup.prebid.prebidSettings',
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'wikia.document',
 	'wikia.window'
-], function (adContext, performanceTracker, pricesTracker, adaptersRegistry, wikiaAdapter, helper, settings, factory, doc, win) {
+], function (
+	adContext,
+	performanceTracker,
+	pricesTracker,
+	adaptersRegistry,
+	helper,
+	settings,
+	factory,
+	doc,
+	win
+) {
 	'use strict';
-
-	/*
-	 * When updating prebid.js (https://github.com/prebid/Prebid.js/) to a new version
-	 * remember about the additional [320, 480] slot size, see:
-	 * https://github.com/Wikia/app/pull/12269/files#diff-5bbaaa809332f9adaddae42c8847ae5bR6015
-	 */
-
 	var adUnits = [],
 		biddersPerformanceMap = {},
 		prebidLoaded = false;
+
+	function removeAdUnits() {
+		(win.pbjs.adUnits || []).forEach(function (adUnit) {
+			win.pbjs.removeAdUnit(adUnit.code);
+		});
+	}
 
 	function call(skin, onResponse) {
 		var prebid, node;
@@ -30,12 +38,8 @@ define('ext.wikia.adEngine.lookup.prebid', [
 			prebid = doc.createElement('script');
 			node = doc.getElementsByTagName('script')[0];
 
-			if (wikiaAdapter.isEnabled()) {
-				adaptersRegistry.push(wikiaAdapter);
-				win.pbjs.que.push(function () {
-					win.pbjs.registerBidAdapter(wikiaAdapter.create, 'wikia');
-				});
-			}
+			adaptersRegistry.setupCustomAdapters();
+			adaptersRegistry.registerAliases();
 
 			prebid.async = true;
 			prebid.type = 'text/javascript';
@@ -46,17 +50,22 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		biddersPerformanceMap = performanceTracker.setupPerformanceMap(skin);
 		adUnits = helper.setupAdUnits(skin);
 
+		if (win.pbjs) {
+			win.pbjs._bidsReceived = [];
+		}
+
 		if (adUnits.length > 0) {
 
 			if (!prebidLoaded) {
 				win.pbjs.que.push(function () {
 					win.pbjs.bidderSettings = settings.create();
-					win.pbjs.addAdUnits(adUnits);
 				});
 			}
 
 			win.pbjs.que.push(function () {
+				removeAdUnits();
 				win.pbjs.requestBids({
+					adUnits: adUnits,
 					bidsBackHandler: onResponse
 				});
 			});

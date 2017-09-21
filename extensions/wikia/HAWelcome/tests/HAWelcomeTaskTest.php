@@ -191,7 +191,7 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 
 		$profilePage->expects( $this->once() )
 			->method( 'doEdit' )
-			->with( $welcomePageTemplate, false, 0, false, $welcomer )
+			->with( $welcomePageTemplate, $this->isType( 'string' ), 0, false, $welcomer )
 			->will( $this->returnValue( null ) );
 
 		$task->setRecipientObject( $recipient );

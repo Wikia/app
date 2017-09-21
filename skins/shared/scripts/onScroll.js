@@ -4,7 +4,7 @@
 define('wikia.onScroll', ['jquery', 'wikia.window'], function ($, window) {
 	'use strict';
 	var handlers = [],
-		debounceRate = 5;
+		delay = 5;
 
 	/**
 	 * Bind handler to the global scroll event
@@ -45,7 +45,7 @@ define('wikia.onScroll', ['jquery', 'wikia.window'], function ($, window) {
 	function init() {
 		window.addEventListener(
 			'scroll',
-			$.debounce(debounceRate, true, trigger)
+			$.throttle(delay, trigger)
 		);
 	}
 

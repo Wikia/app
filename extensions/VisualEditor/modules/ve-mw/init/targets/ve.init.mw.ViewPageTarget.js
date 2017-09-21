@@ -82,6 +82,7 @@ ve.init.mw.ViewPageTarget = function VeInitMwViewPageTarget() {
 		saveErrorAbuseFilter: 'onSaveErrorAbuseFilter',
 		saveErrorNewUser: 'onSaveErrorNewUser',
 		saveErrorCaptcha: 'onSaveErrorCaptcha',
+		saveErrorReadOnly: 'onSaveErrorReadOnly',
 		saveErrorUnknown: 'onSaveErrorUnknown',
 		saveErrorPageDeleted: 'onSaveErrorPageDeleted',
 		loadError: 'onLoadError',
@@ -191,7 +192,6 @@ ve.init.mw.ViewPageTarget.prototype.verifyPopState = function ( popState ) {
  * @inheritdoc
  */
 ve.init.mw.ViewPageTarget.prototype.setupToolbar = function ( surface ) {
-	var $firstHeading;
 	// Parent method
 	ve.init.mw.Target.prototype.setupToolbar.call( this, surface );
 
@@ -206,13 +206,6 @@ ve.init.mw.ViewPageTarget.prototype.setupToolbar = function ( surface ) {
 
 	this.getToolbar().$element
 		.addClass( 've-init-mw-viewPageTarget-toolbar' );
-
-	// Wikia change - #WikiaPageHeader instead of #firstHeading and after instead of before
-	// Move the toolbar to before #firstHeading if it exists
-	$firstHeading = $( '#WikiaPageHeader' );
-	if ( $firstHeading.length ) {
-		this.getToolbar().$element.insertAfter( $firstHeading );
-	}
 
 	this.getToolbar().$bar.slideDown( 'fast', function () {
 		// Check the surface wasn't torn down while the toolbar was animating
@@ -481,7 +474,6 @@ ve.init.mw.ViewPageTarget.prototype.afterHideSpinner = function ( surfaceReadyTi
 	this.hidePageContent();
 
 	this.toolbar.initialize();
-	this.surface.getFocusWidget().$element.show();
 
 	this.surface.getView().focus();
 
@@ -774,6 +766,17 @@ ve.init.mw.ViewPageTarget.prototype.onSaveErrorUnknown = function ( editApi, dat
 };
 
 /**
+ * Update save dialog message if database is in read-only state
+ *
+ * @method
+ * @param {Object} editApi
+ * @param {Object} data
+ */
+ve.init.mw.ViewPageTarget.prototype.onSaveErrorReadOnly = function ( editApi, data ) {
+	this.showSaveError( $( $.parseHTML( mw.message( 'readonlywarning', data.error.readonlyreason ).parse() ) ), true, true );
+};
+
+/**
  * Update save dialog message on page deleted error
  *
  * @method
@@ -968,7 +971,11 @@ ve.init.mw.ViewPageTarget.prototype.saveDocument = function ( saveDeferred ) {
 		this.captchaResponse = null;
 	}
 
-	if ( this.shouldShowMissingSummaryMessage( saveOptions ) ) {
+	if (
+		+mw.user.options.get( 'forceeditsummary' ) &&
+		saveOptions.summary === '' &&
+		!this.saveDialog.messages.missingsummary
+	) {
 		this.saveDialog.showMessage(
 			'missingsummary',
 			// Wrap manually since this core message already includes a bold "Warning:" label
@@ -980,12 +987,6 @@ ve.init.mw.ViewPageTarget.prototype.saveDocument = function ( saveDeferred ) {
 		this.save( this.docToSave, saveOptions );
 		this.saveDeferred = saveDeferred;
 	}
-};
-
-ve.init.mw.ViewPageTarget.prototype.shouldShowMissingSummaryMessage = function ( saveOptions ) {
-	return +mw.user.options.get( 'forceeditsummary' ) &&
-			saveOptions.summary === '' &&
-			!this.saveDialog.messages.missingsummary;
 };
 
 /**

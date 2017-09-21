@@ -39,7 +39,7 @@ class WikiaRssHelper {
 	private static function getJSSnippet($options) {
 		$html = JSSnippets::addToStack(
 			array(
-//				'/extensions/wikia/WikiaRSS/css/WikiaRss.scss', //it's empty; we don't need it here...
+				'/extensions/wikia/WikiaRSS/css/WikiaRss.scss',
 				'/extensions/wikia/WikiaRSS/js/WikiaRss.js',
 			),
 			array(),

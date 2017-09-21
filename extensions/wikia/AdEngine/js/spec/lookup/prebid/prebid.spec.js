@@ -67,7 +67,7 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 				}
 			},
 			log: noop,
-			recoveryHelper: {
+			sourcePoint: {
 				addOnBlockingCallback: noop
 			},
 			win: {
@@ -77,22 +77,10 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 					}
 				}
 			},
-			adapters: {
-				appnexus: {
-					isEnabled: function () {
-						return true;
-					}
-				},
-				indexExchange: {
-					isEnabled: function () {
-						return true;
-					}
-				},
-				wikia: {
-					isEnabled: function () {
-						return false;
-					}
-				}
+			adaptersPricesTracker: {},
+			adaptersRegistry: {
+				setupCustomAdapters: noop,
+				registerAliases: noop
 			},
 			prebidHelper: {
 				setupAdUnits: function () {
@@ -142,7 +130,7 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 		return modules['ext.wikia.adEngine.lookup.lookupFactory'](
 			mocks.adContext,
 			mocks.adTracker,
-			mocks.recoveryHelper,
+			mocks.sourcePoint,
 			mocks.lazyQueue,
 			mocks.log
 		);
@@ -152,9 +140,8 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 		return modules['ext.wikia.adEngine.lookup.prebid'](
 			mocks.adContext,
 			mocks.adaptersPerformanceTracker,
-			mocks.adapters.appnexus,
-			mocks.adapters.indexExchange,
-			mocks.adapters.wikia,
+			mocks.adaptersPricesTracker,
+			mocks.adaptersRegistry,
 			mocks.prebidHelper,
 			mocks.prebidSettings,
 			getFactory(),

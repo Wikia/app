@@ -26,23 +26,23 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			adTracker: {
 				trackDW: noop
 			},
+			browserDetect: {
+				getOS: function () {
+					return 'Fake';
+				},
+				getBrowser: function () {
+					return 'Foo 9';
+				}
+			},
 			geo: {
 				getCountryCode: function () {
 					return 'XY';
 				}
 			},
 			log: noop,
-			rubiconVulcan: {
-				getSingleResponse: function () {
-					return {
-						network: 7872,
-						advertiser: 5381
-					};
-				},
-				getBestSlotPrice: function () {
-					return {
-						vulcan: '0.90'
-					};
+			bidHelper: {
+				transformPriceFromBid: function () {
+					return '1.20';
 				}
 			},
 			slotTargeting: {
@@ -51,7 +51,7 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 				}
 			},
 			window: {
-				adEnginePvUID: 'superFooUniqueID'
+				pvUID: 'superFooUniqueID'
 			}
 		},
 		tracker;
@@ -62,10 +62,11 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			mocks.adLogicPageParams,
 			mocks.adTracker,
 			mocks.slotTargeting,
+			mocks.browserDetect,
 			mocks.geo,
 			mocks.log,
 			mocks.window,
-			mocks.rubiconVulcan
+			mocks.bidHelper
 		);
 	}
 
@@ -135,10 +136,9 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 		expect(getTrackedValue('country')).toEqual('XY');
 		expect(getTrackedValue('skin')).toEqual('oasis');
 		expect(getTrackedValue('ad_error_code')).toBeFalsy();
-		expect(getTrackedValue('vulcan_network')).toBeFalsy();
-		expect(getTrackedValue('vulcan_advertiser')).toBeFalsy();
-		expect(getTrackedValue('vulcan_price')).toEqual(-1);
+		expect(getTrackedValue('price')).toEqual(-1);
 		expect(getTrackedValue('wsi')).toEqual('(none)');
+		expect(getTrackedValue('browser')).toEqual('Fake Foo 9');
 	});
 
 	it('Track data with slot name', function () {
@@ -169,15 +169,35 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 		expect(getTrackedValue('creative_id')).toEqual(92);
 	});
 
-	it('Track data with vulcan data for vulcan ad product', function () {
+	it('Track data with Rubicon data for rubicon ad product', function () {
 		tracker.track({
-			adProduct: 'vulcan',
-			slotName: 'TOP_LEADERBOARD'
+			adProduct: 'rubicon',
+			slotName: 'TOP_LEADERBOARD',
+			bid: {
+				bidderCode: 'rubicon',
+				rubiconAdId: '56bar',
+				rubiconAdvertiserId: 'foo89',
+				cpm: 123
+			}
 		}, 'fooPlayer', 'barEvent');
 
-		expect(getTrackedValue('vulcan_network')).toEqual(7872);
-		expect(getTrackedValue('vulcan_advertiser')).toEqual(5381);
-		expect(getTrackedValue('vulcan_price')).toEqual('0.90');
+		expect(getTrackedValue('vast_id')).toEqual('foo89:56bar');
+		expect(getTrackedValue('price')).toEqual('1.20');
+	});
+
+	it('Track data with AppNexus data for appnexusAst ad product', function () {
+		tracker.track({
+			adProduct: 'appnexusAst',
+			slotName: 'TOP_LEADERBOARD',
+			bid: {
+				bidderCode: 'appnexusAst',
+				creative_id: '87765',
+				cpm: 1.20
+			}
+		}, 'fooPlayer', 'barEvent');
+
+		expect(getTrackedValue('vast_id')).toEqual('87765');
+		expect(getTrackedValue('price')).toEqual('1.20');
 	});
 
 	it('Track data with wsi when src is available', function () {
@@ -198,5 +218,19 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 		}, 'fooPlayer', 'barEvent');
 
 		expect(getTrackedValue('wsi')).toEqual('MR-remnant');
+	});
+
+	it('Track veles vast id and content type', function () {
+		tracker.track({
+			adProduct: 'veles',
+			slotName: 'TOP_LEADERBOARD',
+			bid: {
+				bidderCode: 'veles',
+				vastId: 'GDFP:123'
+			}
+		}, 'fooPlayer', 'barEvent', undefined, 'application/javascript');
+
+		expect(getTrackedValue('vast_id')).toEqual('GDFP:123');
+		expect(getTrackedValue('content_type')).toEqual('application/javascript');
 	});
 });

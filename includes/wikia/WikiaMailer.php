@@ -58,8 +58,6 @@ class WikiaSendgridMailer {
 		global $wgEnotifMaxRecips, $wgSMTP;
 
 		wfProfileIn( __METHOD__ );
-		require_once( 'Mail2.php' );
-		require_once( 'Mail2/mime.php' );
 
 		$logContext = array_merge( $headers, [
 			'issue' => 'SOC-910',
@@ -189,7 +187,7 @@ class WikiaSendgridMailer {
 
 		// If for some reason we weren't called the way we expect, only cut off the call
 		// to this function and increase the amount of context we show
-		if ( !empty( $trace[5]['function'] ) && $trace[5]['function'] != 'wfRunHooks' ) {
+		if ( !empty( $trace[5]['function'] ) && $trace[5]['function'] != 'Hooks::run' ) {
 			$removeCallsUpTo = 1;
 			$depth += 10;
 		}

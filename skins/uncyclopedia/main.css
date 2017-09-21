@@ -398,9 +398,6 @@ table.small {
 	padding-left: 0;
 	text-align: left;
 }
-.TOC_hide #toctitle + ul {
-	display: none;
-}
 #toc ul ul,
 .toc ul ul {
 	margin: 0 0 0 2em;
@@ -1838,14 +1835,6 @@ p.mw-ipb-conveniencelinks {
 #notifyReport .ft
 {
   display: none !important;
-}
-
-/* Spotlights */
-#spotlight_container {
-	width: 100%;
-	text-align: center;
-	padding-left: 12.2em;
-	background: none;
 }
 
 /* WW-93: ComScore tag in footer for uncyclo wikis */

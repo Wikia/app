@@ -57,23 +57,19 @@
 			<input type="hidden" id="user" value="<?= $user['id']; ?>"/>
 		<? endif; ?>
 		<div class="masthead-info-lower">
-			<div class="tally">
+			<div class="contributions-details tally">
 				<? if ( !empty( $user['registration'] ) ): ?>
-					<? if ( !empty( $user['edits'] ) || ( empty( $user['edits'] ) && !empty( $user['registration'] ) ) ): ?>
+					<a href="<?= Sanitizer::encodeAttribute( $user['contributionsURL'] ) ?>">
 						<em><?= $user['edits'] ?></em>
 						<span>
 							<?= wfMessage( 'user-identity-box-edits-since-joining', $user['registration'] )->plain() ?>
 						</span>
-					<? else: ?>
-						<?php if ( $user['edits'] >= 0 ): ?>
-							<?= wfMessage( 'user-identity-box-edits', $user['edits'] )->plain(); ?>
-						<?php else: ?>
-							<br/>
-						<?php endif; ?>
-					<?php endif; ?>
+					</a>
 				<? else: ?>
 					<?php if ( $user['edits'] >= 0 ): ?>
-						<?= wfMessage( 'user-identity-box-edits', $user['edits'] )->plain(); ?>
+						<a href="<?= Sanitizer::encodeAttribute( $user['contributionsURL'] ) ?>">
+							<?= wfMessage( 'user-identity-box-edits', $user['edits'] )->text(); ?>
+						</a>
 					<?php else: ?>
 						<br/>
 					<?php endif; ?>
@@ -156,8 +152,8 @@
 				</ul>
 			<? endif; ?>
 		</div>
-		<div>
-			<ul class="details">
+		<div class="details">
+			<ul>
 				<? if ( !empty( $user['location'] ) ): ?>
 					<li itemprop="address"><?= wfMessage( 'user-identity-box-location', $user['location'] )->plain(); ?></li>
 				<? else: ?>
@@ -188,6 +184,18 @@
 					<? if ( $user['showZeroStates'] && ( $isUserPageOwner || $canEditProfile ) ): ?>
 						<li><?= wfMessage( 'user-identity-box-zero-state-gender' )->escaped(); ?></li>
 					<? endif; ?>
+				<? endif; ?>
+				<? if ( !empty( $user['bio'] ) ): ?>
+					<li class="bio" id="bio-content">
+						<?= wfMessage( 'user-identity-bio' )
+							->rawParams( preg_replace( "/(?:\r\n|\r|\n)/", "<br />", $user['bio'] ) )
+							->parse(); ?>
+					</li>
+					<div class="bio-toggle" id="bio-toggler" data-modal-title="<?= wfMessage( 'user-identity-bio-modal-title' )->escaped(); ?>">
+						<span>
+							[<?= wfMessage( 'user-identity-bio-show-more' )->escaped(); ?>]
+						</span>
+					</div>
 				<? endif; ?>
 			</ul>
 		</div>

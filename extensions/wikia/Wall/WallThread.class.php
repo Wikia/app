@@ -17,14 +17,13 @@ class WallThread {
 	}
 
 	protected function initializeReplyData() {
-		$this->data = new StdClass();
+		$this->data = new stdClass();
 		$this->data->threadReplyIds = false;
 		$this->data->threadReplyObjs = false;
 	}
 
 	/**
-	 * @static
-	 * @param $id
+	 * @param int $id
 	 * @return WallThread
 	 */
 	static public function newFromId( $id ) {
@@ -42,9 +41,9 @@ class WallThread {
 	}
 
 	public function move( Wall $dest, $user ) {
-		CommentsIndex::changeParent( 0, $dest->getId(), $this->mThreadId );
+		CommentsIndex::getInstance()->moveThread( $this->mThreadId, $dest->getId() );
 
-		$wallHistory = new WallHistory( $this->mCityId );
+		$wallHistory = new WallHistory();
 		$wallHistory->moveThread( $this->mThreadId, $dest->getId() );
 
 		$main = $this->getThreadMainMsg();
@@ -54,16 +53,11 @@ class WallThread {
 		$this->invalidateCache();
 	}
 
-
-	public function setReplies( $ids ) {
-		// set and cache replies of this thread
-		$this->initializeReplyData();
-
-		$this->data->threadReplyIds = $ids;
-
-		$this->saveToMemcache();
-	}
-
+	/**
+	 * Fetch data for replies on this thread from DB, then cache the result.
+	 * Result is cached indefinitely and is purged when thread is updated
+	 * @see WallThread::invalidateCache()
+	 */
 	private function loadReplyObjs() {
 		if ( $this->data->threadReplyIds === false ) {
 			$this->loadReplyIdsFromDB();
@@ -77,12 +71,14 @@ class WallThread {
 
 		$replyMessages = WallMessage::newFromIds( $this->data->threadReplyIds );
 
-		/** @var WallMessage $reply */
 		foreach ( $replyMessages as $reply ) {
 			if ( !$reply->isAdminDelete() ) {
 				$this->data->threadReplyObjs[] = $reply;
 			}
 		}
+
+		// SUS-262: Save state to cache at this point, after objects have been initialized (using WallMessage::newFromIds)
+		$this->saveToMemcache();
 	}
 
 	/**
@@ -95,7 +91,6 @@ class WallThread {
 	private function getReplyIdsFromDB( $dbr, $afterId = 0 ) {
 		// this is a direct way to get IDs
 		// the other one is in Wall.class done in a grouped way
-		// (fetch for many threads at once, set with ->setReplies)
 
 		$query = ( new WikiaSQL() )
 			->SELECT( 'distinct comment_id' )
@@ -117,14 +112,13 @@ class WallThread {
 			: array_merge( $list, $this->getReplyIdsFromDB( $dbr, end( $list ) ) );
 	}
 
-	private function loadReplyIdsFromDB( $master = false ) {
-		if ( empty( Title::newFromId( $this->mThreadId ) ) ) {
+	private function loadReplyIdsFromDB() {
+		if ( empty( Title::newFromID( $this->mThreadId ) ) ) {
 			return;
 		}
 
-		$dbr = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
-
-		$this->setReplies( $this->getReplyIdsFromDB( $dbr ) );
+		$dbr = wfGetDB( DB_SLAVE );
+		$this->data->threadReplyIds = $this->getReplyIdsFromDB( $dbr );
 	}
 
 	public function invalidateCache() {
@@ -139,7 +133,7 @@ class WallThread {
 	}
 
 	private function getCache() {
-		return F::App()->wg->Memc;
+		return F::app()->wg->Memc;
 	}
 
 	private function loadFromMemcache() {
@@ -197,21 +191,27 @@ class WallThread {
 		WikiaDataAccess::cachePurge( $key );
 	}
 
+	/**
+	 * TODO: used by ForumController::boardThread() method only. Move it there?
+	 *
+	 * @return null|WallMessage
+	 */
 	public function getLastMessage() {
 		$key = wfMemcKey( __CLASS__, '-thread-lastreply-key', $this->mThreadId );
-		$threadId = $this->mThreadId;
-		$data = WikiaDataAccess::cache( $key, 30 * 24 * 60 * 60, function() use ( $threadId ) {
+		$fname = __METHOD__;
+
+		$data = WikiaDataAccess::cache( $key, 30 * 24 * 60 * 60, function() use ( $fname ) {
 			$db = wfGetDB( DB_SLAVE );
 			$row = $db->selectRow(
 				[ 'comments_index' ],
 				[ 'max(first_rev_id) rev_id' ],
 				[
-						'parent_comment_id' => $threadId,
+						'parent_comment_id' => $this->mThreadId,
 						'archived' => 0,
 						'deleted' => 0,
 						'removed' => 0
 				],
-				__METHOD__
+				$fname
 			);
 			return $row;
 		} );
@@ -220,7 +220,7 @@ class WallThread {
 		$revision = Revision::newFromId( $data->rev_id );
 		if ( $revision instanceof Revision ) {
 			$title = $revision->getTitle();
-			$wallMessage = WallMessage::newFromId( $title->getArticleId() );
+			$wallMessage = WallMessage::newFromId( $title->getArticleID() );
 			if ( !empty( $wallMessage ) ) {
 				$wallMessage->load();
 				return $wallMessage;

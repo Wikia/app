@@ -1,89 +1,85 @@
 <?php
-/**
- * PHPUnit
+/*
+ * This file is part of PHPUnit.
  *
- * Copyright (c) 2001-2014, Sebastian Bergmann <sebastian@phpunit.de>.
- * All rights reserved.
+ * (c) Sebastian Bergmann <sebastian@phpunit.de>
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- *   * Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *
- *   * Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in
- *     the documentation and/or other materials provided with the
- *     distribution.
- *
- *   * Neither the name of Sebastian Bergmann nor the names of his
- *     contributors may be used to endorse or promote products derived
- *     from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
- * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
- * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
- * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- *
- * @package    PHPUnit
- * @author     Bastian Feder <php@bastian-feder.de>
- * @copyright  2001-2014 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause
- * @link       http://www.phpunit.de/
- * @since      File available since Release 3.7.0
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
-/**
- * @package    PHPUnit
- * @author     Bastian Feder <php@bastian-feder.de>
- * @copyright  2001-2014 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause
- * @link       http://www.phpunit.de/
- * @since      File available since Release 3.7.0
- */
-class Framework_Constraint_JsonMatchesTest extends PHPUnit_Framework_TestCase
+namespace PHPUnit\Framework\Constraint;
+
+use PHPUnit\Framework\ExpectationFailedException;
+use PHPUnit\Framework\TestCase;
+
+class JsonMatchesTest extends TestCase
 {
-
     /**
      * @dataProvider evaluateDataprovider
-     * @covers PHPUnit_Framework_Constraint_JsonMatches::evaluate
-     * @covers PHPUnit_Framework_Constraint_JsonMatches::matches
-     * @covers PHPUnit_Framework_Constraint_JsonMatches::__construct
      */
     public function testEvaluate($expected, $jsonOther, $jsonValue)
     {
-        $constraint = new PHPUnit_Framework_Constraint_JsonMatches($jsonValue);
+        $constraint = new JsonMatches($jsonValue);
+
         $this->assertEquals($expected, $constraint->evaluate($jsonOther, '', true));
     }
 
     /**
-     * @covers PHPUnit_Framework_Constraint_JsonMatches::toString
+     * @dataProvider evaluateThrowsExpectationFailedExceptionWhenJsonIsValidButDoesNotMatchDataprovider
      */
+    public function testEvaluateThrowsExpectationFailedExceptionWhenJsonIsValidButDoesNotMatch($jsonOther, $jsonValue)
+    {
+        $constraint = new JsonMatches($jsonValue);
+        try {
+            $constraint->evaluate($jsonOther, '', false);
+            $this->fail(\sprintf('Expected %s to be thrown.', ExpectationFailedException::class));
+        } catch (ExpectationFailedException $expectedException) {
+            $comparisonFailure = $expectedException->getComparisonFailure();
+            $this->assertNotNull($comparisonFailure);
+            $this->assertSame($jsonOther, $comparisonFailure->getExpectedAsString());
+            $this->assertSame($jsonValue, $comparisonFailure->getActualAsString());
+            $this->assertSame('Failed asserting that two json values are equal.', $comparisonFailure->getMessage());
+        }
+    }
+
     public function testToString()
     {
-        $jsonValue = json_encode(array('Mascott' => 'Tux'));
-        $constraint = new PHPUnit_Framework_Constraint_JsonMatches($jsonValue);
+        $jsonValue  = \json_encode(['Mascott' => 'Tux']);
+        $constraint = new JsonMatches($jsonValue);
 
         $this->assertEquals('matches JSON string "' . $jsonValue . '"', $constraint->toString());
     }
 
-
     public static function evaluateDataprovider()
     {
-        return array(
-            'valid JSON' => array(true, json_encode(array('Mascott' => 'Tux')), json_encode(array('Mascott' => 'Tux'))),
-            'error syntax' => array(false, '{"Mascott"::}', json_encode(array('Mascott' => 'Tux'))),
-            'error UTF-8' => array(false, json_encode('\xB1\x31'), json_encode(array('Mascott' => 'Tux'))),
-            'invalid JSON in class instantiation' => array(false, json_encode(array('Mascott' => 'Tux')), '{"Mascott"::}'),
-        );
+        return [
+            'valid JSON'                              => [true, \json_encode(['Mascott'                           => 'Tux']), \json_encode(['Mascott'                           => 'Tux'])],
+            'error syntax'                            => [false, '{"Mascott"::}', \json_encode(['Mascott'         => 'Tux'])],
+            'error UTF-8'                             => [false, \json_encode('\xB1\x31'), \json_encode(['Mascott' => 'Tux'])],
+            'invalid JSON in class instantiation'     => [false, \json_encode(['Mascott'                          => 'Tux']), '{"Mascott"::}'],
+            'string type not equals number'           => [false, '{"age": "5"}', '{"age": 5}'],
+            'string type not equals boolean'          => [false, '{"age": "true"}', '{"age": true}'],
+            'string type not equals null'             => [false, '{"age": "null"}', '{"age": null}'],
+            'object fields are unordered'             => [true, '{"first":1, "second":"2"}', '{"second":"2", "first":1}'],
+            'child object fields are unordered'       => [true, '{"Mascott": {"name":"Tux", "age":5}}', '{"Mascott": {"age":5, "name":"Tux"}}'],
+            'null field different from missing field' => [false, '{"present": true, "missing": null}', '{"present": true}'],
+            'array elements are ordered'              => [false, '["first", "second"]', '["second", "first"]'],
+            'single boolean valid json'               => [true, 'true', 'true'],
+            'single number valid json'                => [true, '5.3', '5.3'],
+            'single null valid json'                  => [true, 'null', 'null'],
+        ];
+    }
+
+    public static function evaluateThrowsExpectationFailedExceptionWhenJsonIsValidButDoesNotMatchDataprovider()
+    {
+        return [
+            'error UTF-8'                             => [\json_encode('\xB1\x31'), \json_encode(['Mascott' => 'Tux'])],
+            'string type not equals number'           => ['{"age": "5"}', '{"age": 5}'],
+            'string type not equals boolean'          => ['{"age": "true"}', '{"age": true}'],
+            'string type not equals null'             => ['{"age": "null"}', '{"age": null}'],
+            'null field different from missing field' => ['{"present": true, "missing": null}', '{"present": true}'],
+            'array elements are ordered'              => ['["first", "second"]', '["second", "first"]']
+        ];
     }
 }

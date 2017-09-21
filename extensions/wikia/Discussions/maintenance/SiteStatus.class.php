@@ -32,6 +32,7 @@ class SiteStatus {
 
 	private $siteId;
 	private $dbName;
+	private $dbMissing;
 
 	private $hasStatusRecord = false;
 
@@ -39,12 +40,12 @@ class SiteStatus {
 	private $cityInfo;
 
 	private $status;
-	private $siteAvailable;
-	private $discussionsEnabled;
-	private $navigationEnabled;
-	private $forumsEnabled;
-	private $numThreadedForumPosts;
-	private $numWikiForumPosts;
+	private $siteAvailable = false;
+	private $discussionsEnabled = false;
+	private $navigationEnabled = false;
+	private $forumsEnabled = false;
+	private $numThreadedForumPosts = 0;
+	private $numWikiForumPosts = 0;
 
 	/** @var \DateTime */
 	private $lastPageEdit;
@@ -63,11 +64,13 @@ class SiteStatus {
 			$verbose,
 			$test,
 			$params[\RunOnCluster::PARAM_SITE_ID],
-			$params[\RunOnCluster::PARAM_DB_NAME]
+			$params[\RunOnCluster::PARAM_DB_NAME],
+			$params[\RunOnCluster::PARAM_DB_MISSING]
 		);
 
 		// Don't do anything if this has been recently updated by this script
 		if ( $status->skipCataloging() ) {
+			echo( "== Cataloged recently.  Skipping ..." );
 			return;
 		}
 
@@ -75,12 +78,13 @@ class SiteStatus {
 		$status->writeBack();
 	}
 
-	public function __construct( $localDbh, $verbose, $test, $siteId, $dbName ) {
+	public function __construct( $localDbh, $verbose, $test, $siteId, $dbName, $dbMissing ) {
 		$this->localDbh = $localDbh;
 		$this->verbose = $verbose;
 		$this->test = $test;
 		$this->siteId = $siteId;
 		$this->dbName = $dbName;
+		$this->dbMissing = $dbMissing;
 
 		$this->debug("== Checking status for site $siteId / $dbName");
 
@@ -133,16 +137,16 @@ class SiteStatus {
 		if ( !empty( $row->discussion_found ) ) {
 			$this->discussionsFound = new \DateTime( $row->discussions_found );
 		}
-		if ( !empty ( $row->first_post_found ) ) {
+		if ( !empty( $row->first_post_found ) ) {
 			$this->firstPostFound = new \DateTime( $row->first_post_found );
 		}
-		if ( !empty ( $row->last_migrated ) ) {
+		if ( !empty( $row->last_migrated ) ) {
 			$this->lastMigrated = new \DateTime( $row->last_migrated );
 		}
-		if ( !empty ( $row->last_updated ) ) {
+		if ( !empty( $row->last_updated ) ) {
 			$this->lastUpdated = new \DateTime( $row->last_updated );
 		}
-		if ( !empty ( $row->last_edit ) ) {
+		if ( !empty( $row->last_edit ) ) {
 			$this->lastPageEdit = new \DateTime( $row->last_edit );
 		}
 	}
@@ -163,10 +167,16 @@ class SiteStatus {
 			$statement
 				->UPDATE( self::TABLE_STATUS )
 				->WHERE( 'site_id' )->EQUAL_TO( $this->siteId );
-		} else {
+		} else if ( $this->siteAvailable ) {
+			// Only INSERT if the site is available.  We don't do this check with UPDATE
+			// so that if a site is ingested and then gets closed, we can update existing
+			// records to reflect the new status (rather than have it look like it was skipped)
 			$statement
 				->INSERT( self::TABLE_STATUS )
 				->SET( 'site_id', $this->siteId );
+		} else {
+			// If we don't meet either above conditions, skip writing this record.
+			return;
 		}
 
 		// Conditionally set these date columns only if we've found something
@@ -255,11 +265,23 @@ class SiteStatus {
 		$this->debug( "Updating wiki variables." );
 
 		$this->forumsEnabled = $this->getVariableValue( 'wgEnableForumExt' );
+
+		// If Forums are null (i.e. not explicitly false) it means there's no value set for
+		// this community in the DB.  The default value for forums is true in CommonExtensions
+		// so apply that default.
+		if ($this->forumsEnabled !== false) {
+			$this->forumsEnabled = true;
+		}
+
 		$this->discussionsEnabled = $this->getVariableValue( 'wgEnableDiscussions' );
 		$this->navigationEnabled = $this->getVariableValue( 'wgEnableDiscussionsNavigation' );
 	}
 
 	private function findLastEdit() {
+		if ( $this->dbMissing ) {
+			return;
+		}
+
 		$date = ( new \WikiaSQL() )
 			->SELECT( "MAX(page_touched)" )->AS_( "last_edit_date" )
 			->FROM( self::TABLE_PAGE )
@@ -278,18 +300,30 @@ class SiteStatus {
 				''
 			);
 
-		$this->debug("\tfound $date as most recent edit" );
-		$this->lastPageEdit = new \DateTime( $date );
+		if ( empty( $date ) ) {
+			$this->debug("\tCould not determine date of most recent edit" );
+		} else {
+			$this->debug("\tfound $date as most recent edit" );
+			$this->lastPageEdit = new \DateTime( $date );
+		}
 	}
 
 	private function findExistingPosts() {
 		$this->debug( "Finding existing posts" );
 
-		$this->findExistingThreadedForumPosts();
-		$this->findExistingWikiForumPosts();
+		try {
+			$this->findExistingThreadedForumPosts();
+			$this->findExistingWikiForumPosts();
+		} catch(\Exception $e) {
+			$this->debug("\tError finding existing posts: " . $e->getMessage() );
+		}
 	}
 
 	private function findExistingThreadedForumPosts() {
+		if ( $this->dbMissing ) {
+			return;
+		}
+
 		$num = ( new \WikiaSQL() )
 			->SELECT( "count(*)" )->AS_( "num_posts" )
 			->FROM( self::TABLE_COMMENTS )
@@ -319,13 +353,19 @@ class SiteStatus {
 	}
 
 	private function findExistingWikiForumPosts() {
-		$num = ( new \WikiaSQL() )
-			->SELECT( "count(*)" )->AS_( "num_posts" )
-			->FROM( self::TABLE_PAGE )
-			->WHERE( 'page_namespace' )->EQUAL_TO( NS_FORUM )
-			->run(
-				$this->localDbh,
-				function ( $result ) {
+		if ( $this->dbMissing ) {
+			return;
+		}
+
+		$num =
+			( new \WikiaSQL() )->SELECT( "count(*)" )
+				->AS_( "num_posts" )
+				->FROM( self::TABLE_PAGE )
+				->JOIN( self::TABLE_COMMENTS )
+				->ON( 'page_id', 'comment_id' )
+				->WHERE( 'page_namespace' )
+				->IN( NS_WIKIA_FORUM_BOARD, NS_WIKIA_FORUM_BOARD_THREAD )
+				->run( $this->localDbh, function ( $result ) {
 					/** @var \ResultWrapper|bool $result */
 					if ( !is_object( $result ) ) {
 						return 0;
@@ -334,11 +374,9 @@ class SiteStatus {
 					$row = $result->fetchObject();
 
 					return $row ? $row->num_posts : 0;
-				},
-				0
-			);
+				}, 0 );
 
-		$this->debug("\tfound $num wiki forum posts" );
+		$this->debug( "\tfound $num wiki forum posts" );
 		$this->numWikiForumPosts = $num;
 	}
 
@@ -367,8 +405,6 @@ class SiteStatus {
 			return;
 		}
 
-		$this->discussionsFound = new \DateTime();
-
 		$content = $response->getContent();
 		if ( empty( $content ) ) {
 			$this->debug( "\tGot no content back from discussion site: $url" );
@@ -380,6 +416,14 @@ class SiteStatus {
 			$this->debug( "\tGot no data when parsing JSON from discussion site: $url" );
 			return;
 		}
+
+		if ( empty( $data->_embedded->forums ) ) {
+			$this->debug( "Found no forums at discussion site: $url" );
+			return;
+		}
+
+		$this->debug( "\tFound forums" );
+		$this->discussionsFound = new \DateTime();
 
 		if ( empty( $data->_embedded->threads ) ) {
 			$this->debug( "Found no threads at discussion site: $url" );

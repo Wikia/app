@@ -106,7 +106,7 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 		$enabled = $this->getVal('enabled', null);
 		$feature = $this->getVal('feature', null);
 
-		wfRunHooks( 'WikiFeatures::onToggleFeature', [
+		Hooks::run( 'WikiFeatures::onToggleFeature', [
 			'name' => $feature,
 			'enabled' => $enabled
 		] );
@@ -141,15 +141,11 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 		$log->addEntry( 'wikifeatures', SpecialPage::getTitleFor('WikiFeatures'), $logMsg, array() );
 		WikiFactory::setVarByName( $feature, $this->wg->CityId, $enabled, 'WikiFeatures' );
 
-		if ( $feature == 'wgShowTopListsInCreatePage' ) {
-			WikiFactory::setVarByName( 'wgEnableTopListsExt', $this->wg->CityId, $enabled, 'WikiFeatures' );
-		}
-
 		// clear cache for active wikis
 		WikiFactory::clearCache( $this->wg->CityId );
 		$this->wg->Memc->delete( WikiFeaturesHelper::getInstance()->getMemcKeyNumActiveWikis( $feature ) );
 
-		wfRunHooks( 'WikiFeatures::afterToggleFeature', [ $feature, $enabled ] );
+		Hooks::run( 'WikiFeatures::afterToggleFeature', [ $feature, $enabled ] );
 
 		$this->setVal( 'result', 'ok' );
 	}

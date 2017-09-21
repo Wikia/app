@@ -22,19 +22,9 @@ class MercuryApiHooks {
 	 *
 	 * @param WikiPage $wikiPage
 	 * @param User $user
-	 * @param $text
-	 * @param $summary
-	 * @param $minoredit
-	 * @param $watchthis
-	 * @param $sectionanchor
-	 * @param $flags
-	 * @param $revision
-	 * @param $status
-	 * @param $baseRevId
 	 * @return bool
 	 */
-	public static function onArticleSaveComplete( WikiPage $wikiPage, User $user, $text, $summary, $minoredit, $watchthis,
-												  $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
+	public static function onArticleSaveComplete( WikiPage $wikiPage, User $user ) {
 		if ( !$user->isAnon() ) {
 			$articleId = $wikiPage->getId();
 			if ( $articleId ) {
@@ -55,6 +45,22 @@ class MercuryApiHooks {
 				}
 			}
 		}
+		return true;
+	}
+
+	/**
+	 * @param $categoryInserts
+	 * @param $categoryDeletes
+	 * @return bool
+	 */
+	static public function onAfterCategoriesUpdate( $categoryInserts, $categoryDeletes ) {
+		$categories = $categoryInserts + $categoryDeletes;
+
+		foreach ( array_keys( $categories ) as $categoryName ) {
+			$categoryTitle = Title::newFromText( $categoryName, NS_CATEGORY );
+			MercuryApiCategoryCacheHelper::setTouched( $categoryTitle->getDBkey() );
+		}
+
 		return true;
 	}
 
@@ -110,7 +116,7 @@ class MercuryApiHooks {
 		WikiaDataAccess::cachePurge( MercuryApiMainPageHandler::curatedContentDataMemcKey() );
 
 		foreach ( $sections as $section ) {
-			$sectionLabel = $section['label'];
+			$sectionLabel = $section['label'] ?? "";
 
 			if ( empty( $sectionLabel ) || !empty( $section['featured'] ) ) {
 				continue;

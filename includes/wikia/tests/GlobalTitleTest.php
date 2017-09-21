@@ -4,7 +4,7 @@
  * @group GlobalTitle
  */
 class GlobalTitleTest extends WikiaBaseTest {
-	function setUp() {
+	protected function setUp() {
 		parent::setUp();
 
 		$this->disableMemCache();
@@ -69,7 +69,7 @@ class GlobalTitleTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider testUrlsSpacesProvider
+	 * @dataProvider urlsSpacesProvider
 	 */
 	function testUrlsSpaces( $environment, $title, $namespace, $city_id, $expectedUrl ) {
 		$this->mockEnvironment( $environment );
@@ -125,6 +125,31 @@ class GlobalTitleTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @dataProvider mainPageDataProvider
+	 */
+	function testNewMainPageUrls( $mediaWikiMainpageContent, $exists, $expectedUrl ) {
+		$this->mockProdEnv();
+
+		$globalTitleMock = $this->getMockBuilder( 'GlobalTitle' )->setMethods( [
+			'getContent',
+			'exists',
+			'loadContLang',
+			'loadAll',
+		] )->getMock();
+		$globalTitleMock->expects( $this->any() )
+			->method( 'getContent' )
+			->willReturn( $mediaWikiMainpageContent );
+		$globalTitleMock->expects( $this->any() )->method( 'exists' )->willReturn( $exists );
+		$globalTitleMock->expects( $this->any() )->method( 'loadContLang' )->willReturn( null );
+		$globalTitleMock->expects( $this->any() )->method( 'loadAll' )->willReturn( null );
+		$this->mockClass( 'GlobalTitle', $globalTitleMock );
+
+		$title = GlobalTitle::newMainPage( 177 ); // community.wikia.com
+
+		$this->assertEquals( $title->getFullURL(), $expectedUrl );
+	}
+
+	/**
 	 * @dataProvider stripArticlePathDataProvider
 	 */
 	public function testStripArticlePath( $path, $articlePath, $expResult ) {
@@ -133,7 +158,7 @@ class GlobalTitleTest extends WikiaBaseTest {
 		$this->assertEquals( GlobalTitle::stripArticlePath( $path, $articlePath ), $expResult );
 	}
 
-	public function testUrlsSpacesProvider() {
+	public function urlsSpacesProvider() {
 		return [
 			[ WIKIA_ENV_DEV, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.' . self::MOCK_DEV_NAME . '.wikia-dev.us/wiki/Talk:Test_Ze_Spacjami' ],
 			[ WIKIA_ENV_PROD, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.wikia.com/wiki/Talk:Test_Ze_Spacjami' ],
@@ -163,6 +188,16 @@ class GlobalTitleTest extends WikiaBaseTest {
 			['/Aspatria_-_Bedford_Point_Expressway/subpage','/$1','Aspatria_-_Bedford_Point_Expressway/subpage'],
 			['/wiki/Manhattan_Research,_Inc./subpage','/wiki/$1','Manhattan_Research,_Inc./subpage'],
 			['/wiki/Ludovic_Hindman/subpage','/wiki/$1','Ludovic_Hindman/subpage'],
+		];
+	}
+
+	public function mainPageDataProvider() {
+		return [
+			['Whatever', true, 'http://community.wikia.com/wiki/Whatever'],
+			['Namespace:Test', true, 'http://community.wikia.com/wiki/Namespace:Test'],
+			['Namespace with spaces:Test', true, 'http://community.wikia.com/wiki/Namespace_with_spaces:Test'],
+			['Namespaces_with_underlines:Test', true, 'http://community.wikia.com/wiki/Namespaces_with_underlines:Test'],
+			['Notexists', false, 'http://community.wikia.com/wiki/Main_Page']
 		];
 	}
 }

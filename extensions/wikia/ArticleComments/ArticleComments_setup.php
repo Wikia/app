@@ -38,7 +38,7 @@ $wgAutoloadClasses['ArticleComment'] = __DIR__ . '/classes/ArticleComment.class.
 $wgAutoloadClasses['ArticleCommentList'] = __DIR__ . '/classes/ArticleCommentList.class.php';
 $wgAutoloadClasses['ArticleCommentsAjax'] = __DIR__ . '/classes/ArticleCommentsAjax.class.php';
 $wgAutoloadClasses['ArticleCommentsController'] = __DIR__ . '/modules/ArticleCommentsController.class.php';
-$wgAutoloadClasses['CommentsIndex'] = __DIR__ . '/classes/CommentsIndex.class.php';
+$wgAutoloadClasses['ArticleCommentsHooks'] = __DIR__ . '/ArticleCommentsHooks.class.php';
 
 $wgExtensionMessagesFiles['ArticleComments'] = __DIR__ . '/ArticleComments.i18n.php';
 
@@ -84,16 +84,9 @@ if (!empty($wgEnableWallEngine) || !empty($wgEnableArticleCommentsExt) || !empty
 	$wgHooks['BeforePageDisplay'][] = 'ArticleCommentsController::onBeforePageDisplay';
 	$wgHooks['SkinAfterContent'][] = 'ArticleCommentsController::onSkinAfterContent';
 
-	// adding comment_index rows for articles
-	$wgHooks['ArticleDoEdit'][] = 'CommentsIndex::onArticleDoEdit';
-
-	// comments_index table
-	$wgHooks['LoadExtensionSchemaUpdates'][] = 'CommentsIndex::onLoadExtensionSchemaUpdates';
-
 	$wgHooks['FilePageImageUsageSingleLink'][] = 'ArticleCommentInit::onFilePageImageUsageSingleLink';
+	$wgHooks['AfterPageHeaderButtons'][] = 'ArticleCommentsHooks::onAfterPageHeaderButtons';
 }
-
-//$wgHooks['BeforeDeletePermissionErrors'][] = 'ArticleComment::onBeforeDeletePermissionErrors';
 
 //JSMEssages setup
 JSMessages::registerPackage( 'ArticleCommentsCounter', [

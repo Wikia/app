@@ -22,20 +22,33 @@ class Starters {
 	 */
 	static private $mStarters = [
 		'*'  => 'aastarter',
+		'cs' => 'aastarter3',
 		'de' => 'destarter',
 		'en' => 'starter',
 		// It's required here for dumpStarters.php
 		'en:tv' => self::STARTER_EN_TV,
+		'el' => 'aastarter6',
 		'es' => 'esstarter',
 		'fi' => 'fistarter',
 		'fr' => 'starterbeta',
+		'hu' => 'aastarter5',
+		'id' => 'aastarter2',
 		'it' => 'italianstarter',
 		'ja' => 'jastarter',
 		'ko' => 'starterko',
 		'nl' => 'nlstarter',
 		'pl' => 'plstarter',
+		'pt' => 'aastarter1',
+		'pt-br' => 'aastarter1',
 		'ru' => 'rustarter',
+		'sv' => 'aastarter8',
+		'th' => 'aastarter7',
+		'tl' => 'tlstartertl',
+		'tr' => 'aastarter4',
+		'vi' => 'vistarter287',
 		'zh' => 'zhstarter',
+		'zh-hk' => 'aastarterzhtw',
+		'zh-tw' => 'aastarterzhtw'
 	];
 
 	/**

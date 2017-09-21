@@ -88,13 +88,15 @@ class ExtVariables {
 	 * @var StripState
 	 */
 	var $mFinalizedVarsStripState;
-	
+
 	/**
 	 * Sets up parser functions
-	 * 
+	 *
 	 * @since 1.4
+	 * @param Parser $parser
+	 * @return bool
 	 */
-	public static function init( Parser &$parser ) {
+	public static function init( Parser $parser ): bool {
 		
 		/*
 		 * store for variables per parser object. This will solve several bugs related to
@@ -112,7 +114,9 @@ class ExtVariables {
 		
 		return true;
 	}
-	private static function initFunction( Parser &$parser, $name, $functionCallback = null, $flags = 0 ) {
+	private static function initFunction(
+		Parser $parser, $name, $functionCallback = null, $flags = 0
+	) {
 		if( $functionCallback === null ) {
 			// prefix parser functions with 'pf_'
 			$functionCallback = array( __CLASS__, 'pf_' . $name );
@@ -146,7 +150,7 @@ class ExtVariables {
 	# Parser Functions #
 	####################
 	
-    static function pf_varexists( Parser &$parser, $varName = '', $exists=true, $noexists=false ) {
+    static function pf_varexists( Parser $parser, $varName = '', $exists=true, $noexists=false ) {
         if( self::get( $parser )->varExists( $varName ) ) {
 			return $exists;
 		} else {
@@ -154,17 +158,17 @@ class ExtVariables {
 		}
     }
 	
-    static function pf_vardefine( Parser &$parser, $varName = '', $value = '' ) {
+    static function pf_vardefine( Parser $parser, $varName = '', $value = '' ) {
         self::get( $parser )->setVarValue( $varName, $value );
         return '';
     }
  
-    static function pf_vardefineecho( Parser &$parser, $varName = '', $value = '' ) {
+    static function pf_vardefineecho( Parser $parser, $varName = '', $value = '' ) {
         self::get( $parser )->setVarValue( $varName, $value );
         return $value;
     }
 		
-    static function pfObj_var( Parser &$parser, $frame, $args) {
+    static function pfObj_var( Parser $parser, $frame, $args) {
 		$varName = trim( $frame->expand( $args[0] ) ); // first argument expanded already but lets do this anyway
 		$varVal = self::get( $parser )->getVarValue( $varName, null );
 		
@@ -177,9 +181,7 @@ class ExtVariables {
 		return $varVal;
     }
 	
-	static function pf_var_final( Parser &$parser, $varName, $defaultVal = '' ) {
-		$varStore = self::get( $parser );
-		
+	static function pf_var_final( Parser $parser, $varName, $defaultVal = '' ) {
 		return self::get( $parser )->requestFinalizedVar( $parser, $varName, $defaultVal );
 	}
 	
@@ -188,7 +190,7 @@ class ExtVariables {
 	# Used Hooks #
 	##############
 	
-	static function onInternalParseBeforeLinks( Parser &$parser, &$text ) {
+	static function onInternalParseBeforeLinks( Parser $parser, &$text ) {
 		
 		$varStore = self::get( $parser );
 		
@@ -231,19 +233,19 @@ class ExtVariables {
 		 */
 		$text = Sanitizer::removeHTMLtags(
 				$text,
-				array( &$parser, 'attributeStripCallback' ),
-				false,
-				array_keys( $parser->mTransparentTagHooks )
+				[ $parser, 'attributeStripCallback' ]
 		);
 		return true;
 	}
-		
+
 	/**
 	 * This will clean up the variables store after parsing has finished. It will prevent strange things to happen
 	 * for example during import of several pages or job queue is running for multiple pages. In these cases variables
 	 * would become some kind of superglobals, being passed from one page to the other.
+	 * @param Parser $parser
+	 * @return bool
 	 */
-	static function onParserClearState( Parser &$parser ) {
+	static function onParserClearState( Parser $parser ) {
 		/**
 		 * MessageCaches Parser clone will mess things up if we don't reset the entire object.
 		 * Only resetting the array would unset it in the original object as well! This instead
@@ -286,11 +288,11 @@ class ExtVariables {
 	 * to a certain Parser object. Each parser has its own store which will be reset after
 	 * a parsing process [Parser::parse()] has finished.
 	 * 
-	 * @param Parser &$parser
+	 * @param Parser $parser
 	 * 
 	 * @return ExtVariables by reference so we still have the right object after 'ParserClearState'
 	 */
-	public static function &get( Parser &$parser ) {
+	public static function &get( Parser $parser ) {
 		return $parser->mExtVariables;
 	}
 	
@@ -357,7 +359,7 @@ class ExtVariables {
 	 *
 	 * @return string strip-item
 	 */
-	function requestFinalizedVar( Parser &$parser, $varName, $defaultVal = '' ) {
+	function requestFinalizedVar( Parser $parser, $varName, $defaultVal = '' ) {
 		if( $this->mFinalizedVarsStripState === null ) {
 			$this->mFinalizedVarsStripState = new StripState( $parser->mUniqPrefix );
 		}

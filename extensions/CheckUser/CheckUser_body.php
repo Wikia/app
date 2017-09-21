@@ -288,7 +288,6 @@ class CheckUser extends SpecialPage {
 			$block->mExpiry = $expiry;
 			$block->isHardblock( !IP::isIPAddress( $u->getName() ) );
 			$block->isAutoblocking( true );
-			$block->prevents( 'createaccount', true );
 			$block->prevents( 'sendemail', false );
 			$block->prevents( 'editownusertalk', false );
 
@@ -301,7 +300,6 @@ class CheckUser extends SpecialPage {
 				if ( $anonOnly ) {
 					$logParams[] = 'anononly';
 				}
-				$logParams[] = 'nocreate';
 				# Add log entry
 				$log->addEntry( 'block', $userTitle, $reason, $logParams );
 			}
@@ -480,7 +478,7 @@ class CheckUser extends SpecialPage {
 				# If this IP is blocked, give a link to the block log
 				$s .= $this->getIPBlockInfo( $ip );
 				$s .= '<div style="margin-left:5%">';
-				$s .= '<small>' . wfMessage( 'checkuser-toollinks', urlencode( $ip ) )->escaped() . '</small>';
+				$s .= '<small>' . wfMessage( 'checkuser-toollinks', urlencode( $ip ) )->parse() . '</small>';
 				$s .= '</div>';
 				$s .= "</li>\n";
 			}

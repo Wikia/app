@@ -3,26 +3,6 @@
 class WallRelatedPages extends WikiaModel {
 
 	/**
-	 * Create table if it dosen't exists
-	 */
-	function createTable() {
-		wfProfileIn( __METHOD__ );
-		$dir = dirname( __FILE__ );
-
-		if ( !wfReadOnly() ) {
-			$db = wfGetDB( DB_MASTER );
-			if ( !$db->tableExists( 'wall_related_pages' ) ) {
-				$db->sourceFile( $dir . '/sql/wall_related_pages.sql' );
-				wfProfileOut( __METHOD__ );
-				return true;
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
-		return false;
-	}
-
-	/**
 	 * set last update use for ordering on aritcle page
 	 *
 	 */
@@ -46,8 +26,6 @@ class WallRelatedPages extends WikiaModel {
 	function set( $messageId, $pages = [ ] ) {
 		wfProfileIn( __METHOD__ );
 		$db = wfGetDB( DB_MASTER );
-
-		$this->createTable();
 
 		$db->begin();
 		$db->delete( 'wall_related_pages', [
@@ -121,15 +99,6 @@ class WallRelatedPages extends WikiaModel {
 
 		// Loading from cache
 		$db = wfGetDB( $dbType );
-
-		if ( ! $db->tableExists( 'wall_related_pages' ) && wfReadOnly() ) {
-			wfProfileOut( __METHOD__ );
-			return [ ];
-		}
-
-		if ( $this->createTable() ) {
-			$db = wfGetDB( $dbType );
-		}
 
 		$result = $db->select(
 			[ 'wall_related_pages' ],
@@ -262,15 +231,6 @@ class WallRelatedPages extends WikiaModel {
 
 		// Loading from cache
 		$db = wfGetDB( DB_SLAVE );
-
-	    if ( ! $db->tableExists( 'wall_related_pages' ) && wfReadOnly() ) {
-			wfProfileOut( __METHOD__ );
-			return [ ];
-		}
-
-		if ( $this->createTable() ) {
-			$db = wfGetDB( DB_MASTER );
-		}
 
 		// Loading from cache
 		$result = $db->select(

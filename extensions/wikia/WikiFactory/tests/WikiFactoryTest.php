@@ -43,7 +43,7 @@ class WikiFactoryTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider testGetLocalEnvURLDataProvider
+	 * @dataProvider getLocalEnvURLDataProvider
 	 */
 	public function testGetLocalEnvURL( $environment, $forcedEnv, $url, $expected ) {
 		$this->mockEnvironment( $environment );
@@ -52,7 +52,7 @@ class WikiFactoryTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider testGetCurrentStagingHostDataProvider
+	 * @dataProvider getCurrentStagingHostDataProvider
 	 */
 	public function testGetCurrentStagingHost($host, $dbName, $devDomain, $expHost) {
 		$default = 'defaulthost';
@@ -77,14 +77,14 @@ class WikiFactoryTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider testPrepareUrlToParseDataProvider
+	 * @dataProvider prepareUrlToParseDataProvider
 	 */
 	public function testPrepareUrlToParse( $url, $expected ) {
 		$url = WikiFactory::prepareUrlToParse( $url );
 		$this->assertEquals( $expected, $url );
 	}
 
-	public function testGetCurrentStagingHostDataProvider() {
+	public function getCurrentStagingHostDataProvider() {
 		return [
 			[
 				'demo-sony-s1',
@@ -125,7 +125,7 @@ class WikiFactoryTest extends WikiaBaseTest {
 		];
 	}
 
-	public function testGetLocalEnvURLDataProvider() {
+	public function getLocalEnvURLDataProvider() {
 		return [
 			[
 				'env' => WIKIA_ENV_PREVIEW,
@@ -269,7 +269,7 @@ class WikiFactoryTest extends WikiaBaseTest {
 		];
 	}
 
-	public function testPrepareUrlToParseDataProvider() {
+	public function prepareUrlToParseDataProvider() {
 		return [
 			[
 				'http://www.community-name.wikia.com',

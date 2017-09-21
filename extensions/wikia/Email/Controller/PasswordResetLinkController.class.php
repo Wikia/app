@@ -70,6 +70,7 @@ class PasswordResetLinkController extends EmailController {
 		$query = [
 			'username' => $this->getTargetUserName(),
 			'token' => $this->token,
+			'uselang' => $this->targetLang
 		];
 
 		if ( !empty( $this->returnUrl ) ) {
@@ -106,10 +107,9 @@ class PasswordResetLinkController extends EmailController {
 			if ( !empty( $parts ) &&
 				preg_match( '/\.wikia-dev\.(com|us|pl)$/', $parts['host'] )
 			) {
-				return "{$parts['scheme']}://{$parts['host']}/resetpassword";
+				return "{$parts['scheme']}://{$parts['host']}/reset-password";
 			}
 		}
-
 		return self::RESET_URL;
 	}
 }

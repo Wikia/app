@@ -4,18 +4,25 @@
  */
 namespace Wikia\Search\Test\Controller;
 use Wikia, WikiaSearchController, ReflectionMethod, ReflectionProperty, SearchEngine, Exception, F;
+use Wikia\Search\Test\BaseTest;
+
 /**
  * Tests WikiaSearchController, currently in global namespace
  */
-class SearchControllerTest extends Wikia\Search\Test\BaseTest {
+class SearchControllerTest extends BaseTest {
 
-	public function setUp() {
+	/** @var \PHPUnit_Framework_MockObject_MockObject|WikiaSearchController $searchController */
+	private $searchController;
+
+	/** @var \PHPUnit_Framework_MockObject_MockObject|Wikia\Search\QueryService\Factory $mockFactory */
+	private $mockFactory;
+
+	protected function setUp() {
 		parent::setUp();
-		$this->searchController = $this->getMockBuilder( 'WikiaSearchController' )
-										->disableOriginalConstructor();
-		$this->mockFactory = $this->getMockBuilder( 'Wikia\Search\QueryService\Factory' )
-		                          ->setMethods( array( 'get', 'getFromConfig' ) )
-		                          ->getMock();
+		$this->searchController = $this->getMockBuilder( WikiaSearchController::class );
+		$this->mockFactory = $this->getMockBuilder( Wikia\Search\QueryService\Factory::class )
+			->setMethods( [ 'get', 'getFromConfig' ] )
+			->getMock();
 
 		$this->mockClass( 'Wikia\Search\QueryService\Factory', $this->mockFactory );
 	}
@@ -198,9 +205,8 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		                    ->disableOriginalConstructor()
 		                    ->setMethods( [ 'getTitle' ] )
 		                    ->getMock();
-		$mockRunHooks = $this->getGlobalFunctionMock( 'wfRunHooks' );
+		$mockRunHooks = $this->getStaticMethodMock( 'Hooks', 'run' );
 
-		$originalQuery = 'foo';
 		$redirectUrl = 'http://foo.wikia.com/Wiki/foo';
 
 		$searchConfig
@@ -237,7 +243,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 			->will( $this->returnValue( '0' ) );
 		$mockRunHooks
 			->expects( $this->once() )
-			->method( 'wfRunHooks' );
+			->method( 'run' );
 		$mockTitle
 			->expects( $this->any() )
 			->method( 'getFullURL' )
@@ -279,10 +285,9 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		                  ->setMethods( array( 'getFullUrl' ) )
 		                  ->getMock();
 		$mockResponse = $this->getMock( 'WikiaResponse', array( 'redirect' ), array( 'html' ) );
-		$mockRunHooks = $this->getGlobalFunctionMock( 'wfRunHooks' );
+		$mockRunHooks = $this->getStaticMethodMock( 'Hooks', 'run' );
 
 		$originalQuery = 'foo';
-		$redirectUrl = 'http://foo.wikia.com/Wiki/foo';
 
 		$searchConfig
 			->expects	( $this->any() )
@@ -306,7 +311,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		;
 		$mockRunHooks
 		    ->expects( $this->once() )
-		    ->method ( 'wfRunHooks' )
+		    ->method ( 'run' )
 		    ->with   ( 'SpecialSearchNogomatch', array( $mockTitle ) )
 		;
 
@@ -349,13 +354,8 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		                    ->setMethods( [ 'getTitle' ] )
 		                    ->getMock();
 		$mockResponse = $this->getMock( 'WikiaResponse', [ 'redirect' ], [ 'html' ] );
-		$mockWrapper = $this->getMockBuilder( 'WikiaFunctionWrapper' )
-		                    ->disableOriginalConstructor()
-		                    ->setMethods( [ 'RunHooks' ] )
-		                    ->getMock();
 
 		$originalQuery = 'foo';
-		$redirectUrl = 'http://foo.wikia.com/Wiki/foo';
 
 		$searchConfig
 			->expects( $this->once() )
@@ -393,10 +393,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$responserefl = new ReflectionProperty( 'WikiaSearchController', 'response' );
 		$responserefl->setAccessible( true );
 		$responserefl->setValue( $mockController, $mockResponse );
-
-		$wfrefl = new ReflectionProperty( 'WikiaSearchController', 'wf' );
-		$wfrefl->setAccessible( true );
-		$wfrefl->setValue( $mockController, $mockWrapper );
 
 		$this->mockClass( 'Article', $mockArticle, 'newFromID' );
 
@@ -1578,9 +1574,9 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	 * @group Slow
 	 * @slowExecutionTime 0.07818 ms
 	 * @covers WikiaSearchController::getSearchConfigFromRequest
-	 * @todo update
+	 * @group Broken
 	 */
-	public function testGetSearchConfigFromRequest() {return;
+	public function testGetSearchConfigFromRequest() {
 		$mockController = $this->getMockBuilder( 'WikiaSearchController' )
 		                       ->disableOriginalConstructor()
 		                       ->setMethods( array( 'getVal', 'getRequest', 'setNamespacesFromRequest', 'isCorporateWiki', 'getResponse' ) )
@@ -1790,6 +1786,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	 * @group Slow
 	 * @slowExecutionTime 0.07834 ms
 	 * @covers WikiaSearchController::getSearchConfigFromRequest
+	 * @group Broken
 	 * @todo fix
 	 */
 	public function testGetSearchConfigFromRequestWithJson() {return;
@@ -2158,28 +2155,28 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	public function testSetResponseValuesFromConfigAsJson()
 	{
 		$mockController = $this->getMockBuilder( 'WikiaSearchController' )
-		                       ->disableOriginalConstructor()
-		                       ->setMethods( array( 'getResponse', 'getVal' ) )
-		                       ->getMock();
+			->disableOriginalConstructor()
+			->setMethods( [ 'getResponse', 'getVal' ] )
+			->getMock();
 
-		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', array( 'getQueryForHtml' ), array( 'foo' ) );
+		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', [ 'getQueryForHtml' ], [ 'foo' ] );
 
 		$mockResponse = $this->getMockBuilder( 'WikiaResponse' )
-		                     ->disableOriginalConstructor()
-		                     ->setMethods( array( 'getFormat', 'setData' ) )
-		                     ->getMock();
+			->disableOriginalConstructor()
+			->setMethods( [ 'getFormat', 'setData' ] )
+			->getMock();
 
 		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
-		                   ->setMethods( array( 'getResults' ) )
-		                   ->getMock();
+			->setMethods( [ 'getResults', 'getInterwiki' ] )
+			->getMock();
 
 		$mockResults = $this->getMockBuilder( 'Wikia\Search\ResultSet\Base' )
-		                    ->disableOriginalConstructor()
-		                    ->setMethods( array( 'toArray' ) )
-		                    ->getMock();
+			->disableOriginalConstructor()
+			->setMethods( [ 'toArray' ] )
+			->getMock();
 
 		$mockController
-		    ->expects( $this->at( 0 ) )
+			->expects( $this->at( 0 ) )
 		    ->method ( 'getResponse' )
 		    ->will   ( $this->returnValue( $mockResponse ) )
 		;
@@ -2200,20 +2197,18 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		    ->will   ( $this->returnValue( 'title,url,pageid' ) )
 		;
 		$mockResults
-		    ->expects( $this->once() )
-		    ->method ( 'toArray' )
-		    ->with   ( array( 'title', 'url', 'pageid' ) )
-		    ->will   ( $this->returnValue( array( 'foo' ) ) )
-		;
+			->expects( $this->once() )
+			->method( 'toArray' )
+			->with( [ 'title', 'url', 'pageid' ] )
+			->will( $this->returnValue( [ 'foo' ] ) );
 		$mockResponse
-		    ->expects( $this->once() )
-		    ->method ( 'setData' )
-		    ->with   ( array( 'foo' ) )
-		;
+			->expects( $this->once() )
+			->method( 'setData' )
+			->with( [ 'foo' ] );
 		$mockConfig
-		    ->expects( $this->never() )
-		    ->method ( 'getInterWiki' )
-		;
+			->expects( $this->never() )
+			->method( 'getInterWiki' );
+
 		$reflSet = new ReflectionMethod( 'WikiaSearchController', 'setResponseValuesFromConfig' );
 		$reflSet->setAccessible( true );
 		$reflSet->invoke( $mockController, $mockConfig );

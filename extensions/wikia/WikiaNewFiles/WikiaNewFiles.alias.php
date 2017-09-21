@@ -25,7 +25,7 @@ $specialPageAliases['fr'] = [
 ];
 
 $specialPageAliases['it'] = [
-	'Images' => [ 'Immagini' ],
+	'Images' => [ 'UltimeImmagini' ],
 ];
 
 $specialPageAliases['ja'] = [

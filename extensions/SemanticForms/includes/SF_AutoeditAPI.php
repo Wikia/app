@@ -409,14 +409,14 @@ class SFAutoeditAPI extends ApiBase {
 
 		$previewOutput = $editor->getPreviewText();
 
-		Hooks::run( 'EditPage::showEditForm:initial', array( &$editor, &$wgOut ) );
+		Hooks::run( 'EditPage::showEditForm:initial', [ $editor, $wgOut ] );
 
 		$this->getOutput()->addStyle( 'common/IE80Fixes.css', 'screen', 'IE 8' );
 		$this->getOutput()->setRobotPolicy( 'noindex,nofollow' );
 
 		// This hook seems slightly odd here, but makes things more
 		// consistent for extensions.
-		Hooks::run( 'OutputPageBeforeHTML', array( &$wgOut, &$previewOutput ) );
+		Hooks::run( 'OutputPageBeforeHTML', [ $wgOut, &$previewOutput ] );
 
 		$this->getOutput()->addHTML( Html::rawElement( 'div', array( 'id' => 'wikiPreview' ), $previewOutput ) );
 
@@ -478,13 +478,14 @@ class SFAutoeditAPI extends ApiBase {
 				// show normal Edit page
 
 				// remove Preview and Diff standard buttons from editor page
-				Hooks::register('EditPageBeforeEditButtons', function( &$editor, &$buttons, &$tabindex ){
-					foreach (array_keys($buttons) as $key) {
-						if ($key !== 'save') {
-							unset($buttons[$key]);
+				Hooks::register( 'EditPageBeforeEditButtons',
+					function ( $editor, &$buttons, &$tabindex ) {
+						foreach ( array_keys( $buttons ) as $key ) {
+							if ( $key !== 'save' ) {
+								unset( $buttons[$key] );
+							}
 						}
-					}
-				});
+					} );
 
 				// Context title needed for correct Cancel link
 				$editor->setContextTitle( $title );

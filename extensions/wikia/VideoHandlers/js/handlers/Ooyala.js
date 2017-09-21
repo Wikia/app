@@ -8,14 +8,13 @@
  */
 
 define('wikia.videohandler.ooyala', [
-	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'jquery',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.adContext'),
 	require.optional('ext.wikia.adEngine.dartVideoHelper'),
 	'wikia.loader',
 	'wikia.log'
-], function (recoveryHelper, $, win, adContext, dartVideoHelper, loader, log) {
+], function ($, win, adContext, dartVideoHelper, loader, log) {
 	'use strict';
 
 	/**
@@ -86,7 +85,7 @@ define('wikia.videohandler.ooyala', [
 			}).fail(loadFail);
 		}
 
-		function initRegularPlayer() {
+		function initPlayer() {
 			log('Create Ooyala player', log.levels.info, logGroup);
 
 			win.OO.Player.create(containerId, params.videoId, createParams);
@@ -99,7 +98,10 @@ define('wikia.videohandler.ooyala', [
 				throw 'ext.wikia.adEngine.dartVideoHelper is not defined and it should as we need to display ads';
 			}
 
-			return dartVideoHelper.getUrl();
+			return dartVideoHelper.getUrl([
+				'cmsid=' + params.dfpContentSourceId,
+				'vid=' + params.videoId
+			]);
 		}
 
 		if (adContext && adContext.getContext().opts.showAds) {
@@ -119,41 +121,9 @@ define('wikia.videohandler.ooyala', [
 			log(message, log.levels.error, logGroup);
 		}
 
-		function initRecoveredPlayer() {
-			log('Create recovered Ooyala player', log.levels.info, logGroup);
-
-			win.googleImaSdkFailedCbList = {
-				originalCbList: [],
-				unshift: function (cb) {
-					this.originalCbList.unshift(cb);
-				}
-			};
-			ima3LibUrl = recoveryHelper.getSafeUri(ima3LibUrl);
-
-			createParams.vast.tagUrl = recoveryHelper.getSafeUri(createParams.vast.tagUrl);
-
-			loadJs(ima3LibUrl).done(function () {
-				log('Recovered ima3 lib is loaded', log.levels.info, logGroup);
-
-				initRegularPlayer();
-
-				win.OO._.each(win.googleImaSdkLoadedCbList, function (fn) {
-					fn();
-				}, win.OO);
-			}).fail(function() {
-				log('Recovered ima3 lib failed to load', log.levels.info, logGroup);
-
-				initRegularPlayer();
-
-				win.OO._.each(win.googleImaSdkFailedCbList.originalCbList, function (fn) {
-					fn();
-				}, win.OO);
-			});
-		}
-
 		// Only load the Ooyala player code once, Ooyala AgeGates will break if we load this asset more than once.
 		if (win.OO !== undefined) {
-			initRegularPlayer();
+			initPlayer();
 			return;
 		}
 
@@ -165,12 +135,7 @@ define('wikia.videohandler.ooyala', [
 				log('All Ooyala assets loaded', log.levels.info, logGroup);
 
 				win.OO.ready(function () {
-					if (recoveryHelper.isRecoveryEnabled()) {
-						recoveryHelper.addOnBlockingCallback(initRecoveredPlayer);
-						recoveryHelper.addOnNotBlockingCallback(initRegularPlayer);
-					} else {
-						initRegularPlayer();
-					}
+					initPlayer();
 				});
 			});
 		});

@@ -18,13 +18,13 @@ class DiscussionsThreadModel {
 
 	// TODO: Consider changing this request to use Swagger when unblocked. See JPN-631
 	private function apiRequest( $url ) {
-		return json_decode( Http::get( $url ), true );
+		return json_decode( Http::get( $url, 'default', [ 'noProxy' => true ] ), true );
 	}
 
 	private function getDiscussionsApiUrl() {
 		global $wgConsulServiceTag, $wgConsulUrl;
 
-		return ( new ConsulUrlProvider( $wgConsulUrl,
+		return 'http://'.( new ConsulUrlProvider( $wgConsulUrl,
 			$wgConsulServiceTag ) )->getUrl( 'discussion' );
 	}
 
@@ -39,10 +39,10 @@ class DiscussionsThreadModel {
 	 * @return array with name and id pairs for all valid requested categories
 	 */
 	public function getCategoryNames( $categoryIds ) {
-		$memcKey = wfMemcKey( __METHOD__, self::MCACHE_VER );
+		$memcKey = wfMemcKey( __METHOD__, self::MCACHE_VER, $categoryIds );
 		$rawData = WikiaDataAccess::cache(
 			$memcKey,
-			WikiaResponse::CACHE_STANDARD,
+			WikiaResponse::CACHE_VERY_SHORT,
 			function() {
 				return $this->apiRequest( $this->getCategoryRequestUrl() );
 			}
@@ -87,7 +87,7 @@ class DiscussionsThreadModel {
 			} );
 		}
 
-		return "/$this->cityId/threads?sortKey=$sortKey&limit=$limit&viewableOnly=false" . $categoryKey;
+		return "/$this->cityId/threads?sortKey=$sortKey&limit=$limit&viewableOnly=true" . $categoryKey;
 	}
 
 	private function getUpvoteRequestUrl() {

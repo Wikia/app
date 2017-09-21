@@ -1,7 +1,8 @@
 /*global define*/
 define('ext.wikia.adEngine.video.player.porvata.porvataTracker', [
-	'ext.wikia.adEngine.video.player.playerTracker'
-], function (playerTracker) {
+	'ext.wikia.adEngine.video.player.playerTracker',
+	'ext.wikia.adEngine.video.player.porvata.vastLogger'
+], function (playerTracker, logger) {
 	'use strict';
 	var playerName = 'porvata',
 		trackingEventsMap = {
@@ -19,8 +20,23 @@ define('ext.wikia.adEngine.video.player.porvata.porvataTracker', [
 			'viewable_impression': 'viewable_impression',
 			'adError': 'error',
 			'wikiaAdPlayTriggered': 'play_triggered',
-			'wikiaAdStop': 'closed'
+			'wikiaAdStop': 'closed',
+			'wikiaInViewportWithDirect': 'in_viewport_with_direct',
+			'wikiaInViewportWithFallbackBid': 'in_viewport_with_fallback_bid',
+			'wikiaInViewportWithoutOffer': 'in_viewport_without_offer'
 		};
+
+	function getContentType(player) {
+		var ad;
+
+		if (player) {
+			ad = player.ima.getAdsManager() && player.ima.getAdsManager().getCurrentAd();
+
+			if (ad) {
+				return ad.getContentType();
+			}
+		}
+	}
 
 	/**
 	 * @param {object} params
@@ -32,9 +48,15 @@ define('ext.wikia.adEngine.video.player.porvata.porvataTracker', [
 	 * @param {string} [params.trackingDisabled]
 	 * @param {string} eventName
 	 * @param {int} [errorCode]
+	 * @param {object} [player]
 	 */
-	function track(params, eventName, errorCode) {
-		playerTracker.track(params, playerName, eventName, errorCode);
+	function track(params, eventName, errorCode, player) {
+		var contentType = getContentType(player),
+			data = playerTracker.track(params, playerName, eventName, errorCode, contentType);
+
+		if (data && params.adProduct === 'rubicon') {
+			logger.logVast(player, params, data);
+		}
 	}
 
 	/**
@@ -52,12 +74,12 @@ define('ext.wikia.adEngine.video.player.porvata.porvataTracker', [
 			return;
 		}
 
-		playerTracker.track(params, playerName, 'ready');
+		track(params, 'ready');
 
 		Object.keys(trackingEventsMap).forEach(function (playerEvent) {
 			player.addEventListener(playerEvent, function(event) {
 				var errorCode = event.getError && event.getError().getErrorCode();
-				playerTracker.track(params, playerName, trackingEventsMap[playerEvent], errorCode);
+				track(params, trackingEventsMap[playerEvent], errorCode, player);
 			});
 		});
 	}

@@ -5,13 +5,12 @@ class MercuryApiArticleHandler {
 	const NUMBER_CONTRIBUTORS = 5;
 
 	/**
-	 * @param WikiaRequest $request
 	 * @param MercuryApi $mercuryApiModel
 	 * @param Article $article
 	 *
 	 * @return array
 	 */
-	public static function getArticleData( WikiaRequest $request, MercuryApi $mercuryApiModel, Article $article ) {
+	public static function getArticleData( MercuryApi $mercuryApiModel, Article $article ) {
 		$data['topContributors'] = self::getTopContributorsDetails(
 			self::getTopContributorsPerArticle( $mercuryApiModel, $article )
 		);
@@ -94,6 +93,31 @@ class MercuryApiArticleHandler {
 				'sections' => $sections
 			]
 		)->getData();
+	}
+
+	public static function getFeaturedVideoDetails( Title $title ): array {
+		$featuredVideo = ArticleVideoContext::getFeaturedVideoData( $title->getPrefixedDBkey() );
+
+		if ( !empty( $featuredVideo ) ) {
+			return [
+				'type' => 'video',
+				'context' => 'featured-video',
+				'url' => $featuredVideo['thumbnailUrl'],
+				'provider' => 'ooyala-v4',
+				'embed' => [
+					'provider' => 'ooyala-v4',
+					'jsParams' => [
+						'dfpContentSourceId' => F::app()->wg->AdDriverDfpOoyalaContentSourceId,
+						'videoId' => $featuredVideo['videoId']
+					]
+				],
+				'title' => $featuredVideo['title'],
+				'duration' => $featuredVideo['duration'],
+				'labels' => $featuredVideo['labels']
+			];
+		}
+
+		return [];
 	}
 
 	/**

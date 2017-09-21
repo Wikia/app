@@ -65,7 +65,9 @@ class ImageServingHelper {
 	 * @param WikiaPhotoGallery $ig
 	 * @return bool return true to continue hooks flow
 	 */
-	public static function onBeforeParserrenderImageGallery( $parser, &$ig) {
+	public static function onBeforeParserrenderImageGallery(
+		Parser $parser, WikiaPhotoGallery &$ig
+	): bool {
 		global $wgEnableWikiaPhotoGalleryExt;
 
 		if ((!self::$hookOnOff) || empty($wgEnableWikiaPhotoGalleryExt)) {
@@ -78,6 +80,7 @@ class ImageServingHelper {
 		$data = $ig->getData();
 
 		$ig = new FakeImageGalleryImageServing( $data['images'] );
+
 		wfProfileOut(__METHOD__);
 		return false;
 	}
@@ -167,7 +170,7 @@ class ImageServingHelper {
 		$out = array();
 		preg_match_all("/(?<=(image mw=')).*(?=')/U", $editInfo->output->getText(), $out );
 		$imageList = $out[0];
-		wfRunHooks( "ImageServing::buildAndGetIndex", [ &$imageList, $title ] );
+		Hooks::run( "ImageServing::buildAndGetIndex", [ &$imageList, $title ] );
 		$images = self::buildIndex($article->getID(), $imageList, $ignoreEmpty, $dryRun);
 
 		wfProfileOut(__METHOD__);

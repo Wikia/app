@@ -59,23 +59,16 @@ class HAWelcomeTaskHookDispatcher {
 		}
 		$this->markCurrentUserAsWelcomed();
 
-		if ( $this->revisionObject->getRawUser() ) {
-			// we are working with an edit from a registered contributor
 
-			if ( $this->currentUserIsWelcomeExempt() || $this->currentUserIsDefaultWelcomer() || $this->currentUserIsFounder() ) {
-				$this->info( "aborting the welcome hook for an exempt user, default welcomer, or founder" );
-				return true;
-			}
+		if ( $this->currentUserIsWelcomeExempt() || $this->currentUserIsDefaultWelcomer() || $this->currentUserIsFounder() ) {
+			$this->info( "aborting the welcome hook for an exempt user, default welcomer, or founder" );
+			return true;
+		}
 
-			if ( $this->currentUserHasLocalEdits() ) {
-				$this->info( "aborting the welcome hook for a user that has local edits" );
-				$this->updateAdminActivity();
-				return true;
-			}
-
-			$this->info( "queueing welcome task for user" );
-		} else {
-			$this->info( "queueing welcome task for an anonymous user" );
+		if ( $this->currentUserHasLocalEdits() ) {
+			$this->info( "aborting the welcome hook for a user that has local edits" );
+			$this->updateAdminActivity();
+			return true;
 		}
 
 		$this->markHAWelcomePosted();
@@ -98,7 +91,7 @@ class HAWelcomeTaskHookDispatcher {
 	}
 
 	protected function currentUserIsDefaultWelcomer() {
-		return $this->currentUser->getName() == HAWelcomeTask::DEFAULT_WELCOMER;
+		return $this->currentUser->getName() == Wikia::USER;
 	}
 
 	protected function currentUserIsFounder() {

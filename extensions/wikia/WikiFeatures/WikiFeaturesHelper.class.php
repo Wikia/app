@@ -28,8 +28,6 @@ class WikiFeaturesHelper extends WikiaModel {
 	// exists to verify that feedback from labs is for a known feature.
 	public static $feedbackAreaIDs = array (
 		'wgEnableAjaxPollExt' => 280,
-		'wgShowTopListsInCreatePage' => 199,
-		'wgEnableAchievementsExt' => 247,
 		'wgEnableBlogArticles' => 281,
 		'wgEnableArticleCommentsExt' => 200,
 		'wgEnableCategoryExhibitionExt' => 201,
@@ -42,8 +40,6 @@ class WikiFeaturesHelper extends WikiaModel {
 	// no need to add feature to $release_date if not require "new" flag
 	public static $release_date = array (
 		'wgEnableChat' => '2011-08-01',
-		'wgShowTopListsInCreatePage' => '2012-02-12',
-		'wgEnableAchievementsExt' => '2012-02-12',
 		'wgEnableForumExt' => '2012-11-29',
 	);
 
@@ -68,7 +64,7 @@ class WikiFeaturesHelper extends WikiaModel {
 
 		if (isset($this->wg->WikiFeatures['normal']) && is_array($this->wg->WikiFeatures['normal'])) {
 			//allow adding features in runtime
-			wfrunHooks( 'WikiFeatures::onGetFeatureNormal' );
+			Hooks::run( 'WikiFeatures::onGetFeatureNormal' );
 
 			foreach ($this->wg->WikiFeatures['normal'] as $feature) {
 				$list[] = array(
@@ -89,7 +85,7 @@ class WikiFeaturesHelper extends WikiaModel {
 		$list = array();
 		if (isset($this->wg->WikiFeatures['labs']) && is_array($this->wg->WikiFeatures['labs'])) {
 			//allow adding features in runtime
-			wfrunHooks( 'WikiFeatures::onGetFeatureLabs' );
+			Hooks::run( 'WikiFeatures::onGetFeatureLabs' );
 
 			foreach ($this->wg->WikiFeatures['labs'] as $feature) {
 				$list[] = array(

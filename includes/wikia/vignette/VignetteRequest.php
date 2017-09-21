@@ -6,7 +6,7 @@ class VignetteRequest {
 
 	/**
 	 * create a UrlGenerator from a config map. $config must have the following keys: relative-path.
-	 * optionally, it can also have timestamp, is-archive, path-prefix, bucket, base-url, and domain-shard-count.
+	 * optionally, it can also have timestamp, is-archive, path-prefix, bucket, and base-url.
 	 * if the optional values aren't in the map, they'll be generated from the current wiki environment
 	 *
 	 * @param $config
@@ -47,11 +47,6 @@ class VignetteRequest {
 			$config['bucket'] = self::parseBucket( $wgUploadPath );
 		}
 
-		if ( !isset( $config['domain-shard-count'] ) ) {
-			global $wgImagesServers;
-			$config['domain-shard-count'] = $wgImagesServers;
-		}
-
 		foreach ( $requiredKeys as $key ) {
 			if ( !isset( $config[$key] ) ) {
 				\Wikia\Logger\WikiaLogger::instance()->error( "missing key", array_merge( $config, ['missing_key' => $key] ) );
@@ -65,8 +60,7 @@ class VignetteRequest {
 			->setRelativePath( $config['relative-path'] )
 			->setPathPrefix( $pathPrefix )
 			->setBucket( $config['bucket'] )
-			->setBaseUrl( $config['base-url'] )
-			->setDomainShardCount( $config['domain-shard-count'] );
+			->setBaseUrl( $config['base-url'] );
 
 		if ( $timestamp > 0 ) {
 			$config->setTimestamp( $timestamp );
@@ -145,23 +139,24 @@ class VignetteRequest {
 	 * @return bool
 	 */
 	public static function isVignetteUrl( $url ) {
-		global $wgVignetteUrl, $wgImagesServers;
+		global $wgVignetteUrl, $wgLegacyVignetteUrl, $wgImagesServers;
 
-		$isVignetteUrl = false;
+		$urlHost = parse_url( $url, PHP_URL_HOST );
+		$vignetteHost = parse_url( $wgVignetteUrl, PHP_URL_HOST );
 
-		if ( strpos( $wgVignetteUrl, '<SHARD>' ) === false ) {
-			$isVignetteUrl = strpos( $url, $wgVignetteUrl ) === 0;
-		} else {
+		if ( $urlHost === $vignetteHost ) {
+			return true;
+		} elseif ( !empty( $wgLegacyVignetteUrl ) ) {
+			$vignetteHost = parse_url( $wgLegacyVignetteUrl, PHP_URL_HOST );
 			for ( $i = 1; $i <= $wgImagesServers; ++$i ) {
-				$candidate = str_replace( '<SHARD>', $i, $wgVignetteUrl );
-				if ( strpos( $url, $candidate ) === 0 ) {
-					$isVignetteUrl = true;
-					break;
+				$candidate = str_replace( '<SHARD>', $i, $vignetteHost );
+				if ( $urlHost === $candidate ) {
+					return true;
 				}
 			}
 		}
 
-		return $isVignetteUrl;
+		return false;
 	}
 
 	/**

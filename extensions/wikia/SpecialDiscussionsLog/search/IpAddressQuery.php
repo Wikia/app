@@ -13,16 +13,12 @@ class IpAddressQuery implements SearchQuery {
 		return <<<JSON_BODY
 {
 	"query": {
-		"filtered": {
-			"query": {
-				"bool": {
-					"should": [{
-						"query_string": {
-							"query":"rawTags:dis_service_* AND client_ip:$ipAddress"
-						}
-					}]
+		"bool": {
+			"should": [{
+				"query_string": {
+					"query":"rawTags:dis_service_* AND client_ip:\"$ipAddress\""
 				}
-			}
+			}]
 		}
 	},
 	"size":$paginationSize,

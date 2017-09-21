@@ -230,7 +230,7 @@ class LogPager extends ReverseChronologicalPager {
 		# Add log_search table if there are conditions on it.
 		# This filters the results to only include log rows that have
 		# log_search records with the specified ls_field and ls_value values.
-		if( array_key_exists( 'ls_field', $this->mConds ) ) {
+		if ( array_key_exists( 'ls_field', $this->mConds ) ) {
 			$tables[] = 'log_search';
 			$index['log_search'] = 'ls_field_val';
 			$index['logging'] = 'PRIMARY';
@@ -242,20 +242,7 @@ class LogPager extends ReverseChronologicalPager {
 				# no duplicate log rows. Otherwise, we need to remove the duplicates.
 				$options[] = 'DISTINCT';
 			}
-		# Avoid usage of the wrong index by limiting
-		# the choices of available indexes. This mainly
-		# avoids site-breaking filesorts.
-		} elseif( $this->title || $this->pattern || $this->performer ) {
-			$index['logging'] = array( 'page_time', 'user_time' );
-			if( count($this->types) == 1 ) {
-				$index['logging'][] = 'log_user_type_time';
-			}
-		} elseif( count($this->types) == 1 ) {
-			$index['logging'] = 'type_time';
-		} else {
-			$index['logging'] = 'times';
 		}
-		$options['USE INDEX'] = $index;
 		# Don't show duplicate rows when using log_search
 		$joins['log_search'] = array( 'INNER JOIN', 'ls_log_id=log_id' );
 

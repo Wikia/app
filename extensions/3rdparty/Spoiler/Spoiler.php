@@ -74,7 +74,7 @@ function wfSpoilerJavaScript() {
 				"</script>\n";
 }
 
-function spoilerParserHook( &$parser , &$text ) {
+function spoilerParserHook( OutputPage $out , &$text ) {
 	$text = wfSpoilerJavaScript() . $text;
 	return true;
 }
@@ -101,26 +101,26 @@ function renderSpoiler( $input, $argv, $parser ) {
 	#   <example argument="foo" argument2="bar">Testing text **example** in between the new tags</example>
 
 	$outputObj = $parser->recursiveTagParse( $input );
-	$spoilerId = wfMakeSpoilerId();
+	$spoilerId = Sanitizer::encodeAttribute( wfMakeSpoilerId() );
 
 	// quick hack to get rid of 'undefined index' notices...
-	foreach (array('collapsed', 'contentstyle', 'footwarningtext', 'headwarningtext', 'linkstyle', 'linktext', 'spoilerstyle', 'warningstyle') as $a)
+	foreach (array('collapsed', 'footwarningtext', 'headwarningtext', 'linktext') as $a)
 	{
 		if (!isset($argv[$a])) $argv[$a] = '';
 	}
 
-	$output  = "<span onClick=\"toggleObjectVisibility('" . $spoilerId . "'); return false;\" style=\"" . ($argv["linkstyle"] == '' ? "cursor:pointer; background-color:#ffdddd; color:#000000; font-weight:bold; padding:4px 4px 2px 4px; border:solid red 1px; line-height: 24px;" : $argv["linkstyle"] ) . "\">";
-	$output .= ($argv["linktext"] == '' ? wfMsg('spoiler-showhide-label') : $argv["linktext"]) . "</span>";
-	$output .= "<div id=\"" . $spoilerId . "\" style=\"visibility:visible; position:relative; " . ($argv["spoilerstyle"] == '' ? "" : $argv["spoilerstyle"]) . "\">";
+	$output  = "<span onClick=\"toggleObjectVisibility('" . $spoilerId . "'); return false;\" style=\"cursor:pointer; background-color:#ffdddd; color:#000000; font-weight:bold; padding:4px 4px 2px 4px; border:solid red 1px; line-height: 24px;\">";
+	$output .= ( $argv["linktext"] == '' ? wfMessage( 'spoiler-showhide-label' )->escaped() : htmlspecialchars( $argv["linktext"] ) ) . "</span>";
+	$output .= "<div id=\"" . $spoilerId . "\" style=\"visibility:visible; position:relative;\">";
 	if (!in_array("hidewarning", array_values($argv))) {
-		$output .= "<div style=\"" . ($argv["warningstyle"] == '' ? "border-top: 2px red solid; border-bottom: 2px red solid; padding:3px; line-height: 22px;" : $argv["warningstyle"]) . "\">";
-		$output .= ($argv["headwarningtext"] == '' ? wfMsg('spoiler-warning') : $argv["headwarningtext"]);
+		$output .= "<div style=\"border-top: 2px red solid; border-bottom: 2px red solid; padding:3px; line-height: 22px;\">";
+		$output .= ( $argv["headwarningtext"] == '' ? wfMessage( 'spoiler-warning' )->parse() : htmlspecialchars( $argv["headwarningtext"] ) );
 		$output .= "</div>";
 	}
-	$output .= "<div id=\"" . $spoilerId . "_content\" style=\"" . ($argv["contentstyle"] == '' ? "padding-top:4px; padding-bottom:4px;" : $argv["contentstyle"]) . "\">" . $outputObj . "</div>";
+	$output .= "<div id=\"" . $spoilerId . "_content\" style=\"padding-top:4px; padding-bottom:4px;\">" . $outputObj . "</div>";
 	if (!in_array("hidewarning", array_values($argv))) {
-		$output .= "<div style=\"" . ($argv["warningstyle"] == '' ? "border-top: 2px red solid; border-bottom: 2px red solid; padding:3px; line-height: 22px;" : $argv["warningstyle"]) . "\">";
-		$output .= ($argv["footwarningtext"] == '' ? wfMsg('spoiler-endshere') : $argv["footwarningtext"]);
+		$output .= "<div style=\"border-top: 2px red solid; border-bottom: 2px red solid; padding:3px; line-height: 22px;\">";
+		$output .= ( $argv["footwarningtext"] == '' ? wfMessage( 'spoiler-endshere' )->parse() : htmlspecialchars( $argv["footwarningtext"] ) );
 		$output .= "</div>";
 	}
 	$output .= "</div>";

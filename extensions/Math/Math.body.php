@@ -158,7 +158,7 @@ class MathRenderer {
 				$this->hash = substr( $contents, 1, 32 );
 			}
 
-			wfRunHooks( 'MathAfterTexvc', array( &$this, &$errmsg ) );
+			Hooks::run( 'MathAfterTexvc', [ $this, &$errmsg ] );
 
 			if ( $errmsg ) {
 				return $errmsg;
@@ -178,36 +178,16 @@ class MathRenderer {
 
 			// Wikia change - begin
 			// store on Swift (@author macbre)
-			global $wgEnableSwiftFileBackend, $wgCityId;
-			if ( !empty( $wgEnableSwiftFileBackend ) ) {
-				$swift = \Wikia\SwiftStorage::newFromWiki( $wgCityId );
+			global $wgCityId;
+			$swift = \Wikia\SwiftStorage::newFromWiki( $wgCityId );
 
-				$localFile = "$wgTmpDirectory/{$this->hash}.png";
-				$remotePath = $this->getSwiftPath();
+			$localFile = "$wgTmpDirectory/{$this->hash}.png";
+			$remotePath = $this->getSwiftPath();
 
-				$res = $swift->store( $localFile, $remotePath, [], 'image/png' );
+			$res = $swift->store( $localFile, $remotePath, [], 'image/png' );
 
-				if ( !$res->isOK() ) {
-					return $this->_error( 'math_output_error' );
-				}
-			}
-			else {
-				// use NFS
-				$hashpath = $this->_getHashPath();
-				if( !file_exists( $hashpath ) ) {
-					wfSuppressWarnings();
-					$ret = wfMkdirParents( $hashpath, 0755, __METHOD__ );
-					wfRestoreWarnings();
-					if( !$ret ) {
-						return $this->_error( 'math_bad_output' );
-					}
-				} elseif( !is_dir( $hashpath ) || !is_writable( $hashpath ) ) {
-					return $this->_error( 'math_bad_output' );
-				}
-
-				if( !rename( "$wgTmpDirectory/{$this->hash}.png", "$hashpath/{$this->hash}.png" ) ) {
-					return $this->_error( 'math_output_error' );
-				}
+			if ( !$res->isOK() ) {
+				return $this->_error( 'math_output_error' );
 			}
 			// Wikia change - end
 
@@ -259,7 +239,7 @@ class MathRenderer {
 	 * @return bool true if rendered PNG exists
 	 */
 	function _recall() {
-		global $wgMathDirectory, $wgMathCheckFiles;
+		global $wgMathCheckFiles;
 
 		$this->md5 = md5( $this->tex );
 		$dbr = wfGetDB( DB_SLAVE );
@@ -294,50 +274,12 @@ class MathRenderer {
 
 			// Wikia change - begin
 			// use Swift storage instead of NFS mount (@author macbre)
-			global $wgEnableSwiftFileBackend, $wgCityId;
-			if ( !empty( $wgEnableSwiftFileBackend ) ) {
-				$swift = \Wikia\SwiftStorage::newFromWiki( $wgCityId );
-				$remotePath = $this->getSwiftPath();
+			global $wgCityId;
+			$swift = \Wikia\SwiftStorage::newFromWiki( $wgCityId );
+			$remotePath = $this->getSwiftPath();
 
-				return $swift->exists( $remotePath );
-			}
-			// Wikia change - end
-
-			if( file_exists( $filename ) ) {
-				if( filesize( $filename ) == 0 ) {
-					// Some horrible error corrupted stuff :(
-					wfSuppressWarnings();
-					unlink( $filename );
-					wfRestoreWarnings();
-				} else {
-					return true;
-				}
-			}
-
-			if( file_exists( $wgMathDirectory . "/{$this->hash}.png" ) ) {
-				$hashpath = $this->_getHashPath();
-
-				if( !file_exists( $hashpath ) ) {
-					wfSuppressWarnings();
-					$ret = wfMkdirParents( $hashpath, 0755, __METHOD__ );
-					wfRestoreWarnings();
-					if( !$ret ) {
-						wfDebug(__METHOD__ . ": failed to create directory tree - {$hashpath}\n"); // Wikia change
-						return false;
-					}
-				} elseif( !is_dir( $hashpath ) || !is_writable( $hashpath ) ) {
-					wfDebug(__METHOD__ . ": can't write to {$hashpath}\n"); // Wikia change
-					return false;
-				}
-				if ( function_exists( 'link' ) ) {
-					return link( $wgMathDirectory . "/{$this->hash}.png",
-							$hashpath . "/{$this->hash}.png" );
-				} else {
-					return rename( $wgMathDirectory . "/{$this->hash}.png",
-							$hashpath . "/{$this->hash}.png" );
-				}
-			}
-
+			return $swift->exists( $remotePath );
+			// Wikia change - end - removed the rest of this method (SUS-2429)
 		}
 
 		# Missing from the database and/or the render cache

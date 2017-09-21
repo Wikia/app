@@ -176,7 +176,7 @@ class CreateBlogPage extends SpecialBlogPage {
 			return;
 		}
 
-		wfRunHooks( 'BlogsAlternateEdit', array( false ) );
+		Hooks::run( 'BlogsAlternateEdit', array( false ) );
 
 		$this->mFormData['postId'] = $wgRequest->getVal( 'blogPostId' );
 		$this->mFormData['postTitle'] = $wgRequest->getVal( 'blogPostTitle' );
@@ -276,7 +276,7 @@ class CreateBlogPage extends SpecialBlogPage {
 		if ( !empty( $wgEnableRTEExt ) ) {
 			$wgRequest->setVal( 'wpTextbox1', $sPostBody ); // RT #34055
 
-			wfRunHooks( 'AlternateEdit', array( &$this->mEditPage ) );
+			Hooks::run( 'AlternateEdit', array( &$this->mEditPage ) );
 			$this->mEditPage->textbox1 = $wgRequest->getVal( 'wpTextbox1' );
 
 			RTE::log( __METHOD__ . '::wikitext', $this->mEditPage->textbox1 );

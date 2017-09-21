@@ -7,7 +7,11 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', funct
 
 	var mocks = {
 		document: {
-			createElement: noop
+			createElement: function () {
+				return {
+					setAttribute: noop
+				};
+			}
 		},
 		adsLoaderMock: {
 			addEventListener: noop,
@@ -23,9 +27,49 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', funct
 			}
 		},
 		log: noop,
-		params: {
-			container: {
-				querySelector: noop
+		moatVideoTracker: {
+			init: noop()
+		},
+		videoSettings: {
+			getParams: function() {
+				return {
+					container: {
+						querySelector: noop
+					}
+				};
+			},
+			isAutoPlay: function() {
+				return false;
+			}
+		},
+		win: {
+			google: {
+				ima: {
+					AdEvent: {
+						Type: {
+							RESUMED: 'foo',
+							STARTED: 'foo',
+							PAUSED: 'foo',
+							COMPLETE: 'foo'
+						}
+					},
+					AdError: {
+						ErrorCode: {
+							VAST_EMPTY_RESPONSE: 1009
+						}
+					},
+					AdErrorEvent: {
+						Type: {
+							AD_ERROR: 'foo'
+						}
+					},
+					AdsManagerLoadedEvent: {
+						Type: {
+							ADS_MANAGER_LOADED: 'foo'
+						}
+					},
+					ViewMode: {}
+				}
 			}
 		}
 	};
@@ -35,8 +79,10 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', funct
 	function getModule() {
 		return modules['ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory'](
 			mocks.imaSetup,
+			mocks.moatVideoTracker,
 			mocks.document,
-			mocks.log
+			mocks.log,
+			mocks.win
 		);
 	}
 
@@ -44,7 +90,7 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', funct
 		var addEventListenerSpy = spyOn(mocks.adsLoaderMock, 'addEventListener'),
 			requestAdsSpy = spyOn(mocks.adsLoaderMock, 'requestAds'),
 			module = getModule(),
-			createdPlayer = module.create(mocks.adDisplayContainer, mocks.adsLoaderMock, mocks.params);
+			createdPlayer = module.create(mocks.adDisplayContainer, mocks.adsLoaderMock, mocks.videoSettings);
 
 		expect(typeof createdPlayer.addEventListener).toBe('function');
 		expect(typeof createdPlayer.dispatchEvent).toBe('function');

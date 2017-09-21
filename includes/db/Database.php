@@ -7,6 +7,7 @@
  * This file deals with database interface functions
  * and query specifics/optimisations
  */
+
 use Wikia\Logger\WikiaLogger;
 use Wikia\Util\Statistics\BernoulliTrial;
 
@@ -239,6 +240,9 @@ abstract class DatabaseBase implements DatabaseType {
 	protected $htmlErrors;
 
 	protected $delimiter = ';';
+
+	/** @var array Map of (table name => 1) for TEMPORARY tables */
+	protected $mSessionTempTables = [];
 
 # ------------------------------------------------------------------------------
 # Accessors
@@ -831,6 +835,42 @@ abstract class DatabaseBase implements DatabaseType {
 	}
 
 	/**
+	 * @param string $sql A SQL query
+	 * @return bool Whether $sql is SQL for TEMPORARY table operation
+	 */
+	protected function registerTempTableOperation( $sql ) {
+		if ( preg_match(
+			'/^CREATE\s+TEMPORARY\s+TABLE\s+(?:IF\s+NOT\s+EXISTS\s+)?[`"\']?(\w+)[`"\']?/i',
+			$sql,
+			$matches
+		) ) {
+			$this->mSessionTempTables[$matches[1]] = 1;
+			return true;
+		} elseif ( preg_match(
+			'/^DROP\s+(?:TEMPORARY\s+)?TABLE\s+(?:IF\s+EXISTS\s+)?[`"\']?(\w+)[`"\']?/i',
+			$sql,
+			$matches
+		) ) {
+			$isTemp = isset( $this->mSessionTempTables[$matches[1]] );
+			unset( $this->mSessionTempTables[$matches[1]] );
+			return $isTemp;
+		} elseif ( preg_match(
+			'/^TRUNCATE\s+(?:TEMPORARY\s+)?TABLE\s+(?:IF\s+EXISTS\s+)?[`"\']?(\w+)[`"\']?/i',
+			$sql,
+			$matches
+		) ) {
+			return isset( $this->mSessionTempTables[$matches[1]] );
+		} elseif ( preg_match(
+			'/^(?:INSERT\s+(?:\w+\s+)?INTO|UPDATE|DELETE\s+FROM)\s+[`"\']?(\w+)[`"\']?/i',
+			$sql,
+			$matches
+		) ) {
+			return isset( $this->mSessionTempTables[$matches[1]] );
+		}
+		return false;
+	}
+
+	/**
 	 * Run an SQL query and return the result. Normally throws a DBQueryError
 	 * on failure. If errors are ignored, returns false instead.
 	 *
@@ -875,6 +915,8 @@ abstract class DatabaseBase implements DatabaseType {
 
 		$this->mLastQuery = $sql;
 		$is_writeable = $this->isWriteQuery( $sql );
+		$isTemporaryTableOperation = $this->registerTempTableOperation( $sql );
+
 		if ( !$this->mDoneWrites && $is_writeable ) {
 			# Set a flag indicating that writes have been done
 			wfDebug( __METHOD__ . ": Writes done: $sql\n" );
@@ -883,7 +925,7 @@ abstract class DatabaseBase implements DatabaseType {
 
 		# <Wikia>
 		global $wgDBReadOnly, $wgReadOnly;
-		if ( $is_writeable && $wgDBReadOnly ) {
+		if ( $is_writeable && !$isTemporaryTableOperation && $wgDBReadOnly ) {
 			if ( !Profiler::instance()->isStub() ) {
 				wfProfileOut( $queryProf );
 				wfProfileOut( $totalProf );
@@ -1129,8 +1171,8 @@ abstract class DatabaseBase implements DatabaseType {
 		reset( $args );
 		$this->preparedArgs =& $args;
 
-		return preg_replace_callback( '/(\\\\[?!&]|[?!&])/',
-			array( &$this, 'fillPreparedArg' ), $preparedQuery );
+		return preg_replace_callback( '/(\\\\[?!&]|[?!&])/', [ $this, 'fillPreparedArg' ],
+			$preparedQuery );
 	}
 
 	/**
@@ -1934,6 +1976,10 @@ abstract class DatabaseBase implements DatabaseType {
 				$first = false;
 			}
 
+			if ( is_bool( $value ) ) {
+				$value = (int) $value;
+			}
+
 			if ( ( $mode == LIST_AND || $mode == LIST_OR ) && is_numeric( $field ) ) {
 				$list .= "($value)";
 			} elseif ( ( $mode == LIST_SET ) && is_numeric( $field ) ) {
@@ -2025,6 +2071,38 @@ abstract class DatabaseBase implements DatabaseType {
 	 */
 	function bitOr( $fieldLeft, $fieldRight ) {
 		return "($fieldLeft | $fieldRight)";
+	}
+
+	/**
+	 * Build a concatenation list to feed into a SQL query
+	 * @param array $stringList list of raw SQL expressions; caller is responsible for any quoting
+	 * @return String
+	 */
+	public function buildConcat( $stringList ) {
+		return 'CONCAT(' . implode( ',', $stringList ) . ')';
+	}
+
+	/**
+	 * Build a GROUP_CONCAT or equivalent statement for a query.
+	 *
+	 * This is useful for combining a field for several rows into a single string.
+	 * NULL values will not appear in the output, duplicated values will appear,
+	 * and the resulting delimiter-separated values have no defined sort order.
+	 * Code using the results may need to use the PHP unique() or sort() methods.
+	 *
+	 * @param string $delim Glue to bind the results together
+	 * @param string|array $table Table name
+	 * @param string $field Field name
+	 * @param string|array $conds Conditions
+	 * @param string|array $join_conds Join conditions
+	 * @return String SQL text
+	 * @since 1.23
+	 */
+	public function buildGroupConcatField(
+		$delim, $table, $field, $conds = '', $join_conds = array()
+	) {
+		$fld = "GROUP_CONCAT($field SEPARATOR " . $this->addQuotes( $delim ) . ')';
+		return '(' . $this->selectSQLText( $table, $fld, $conds, null, array(), $join_conds ) . ')';
 	}
 
 	/**
@@ -2305,6 +2383,7 @@ abstract class DatabaseBase implements DatabaseType {
 
 	/**
 	 * If it's a string, adds quotes and backslashes
+	 * If it's a boolean, converts it to int
 	 * Otherwise returns as-is
 	 *
 	 * @param $s string
@@ -2314,6 +2393,8 @@ abstract class DatabaseBase implements DatabaseType {
 	function addQuotes( $s ) {
 		if ( $s === null ) {
 			return 'NULL';
+		} elseif ( is_bool( $s ) ) {
+			return (int) $s;
 		} else {
 			# This will also quote numeric values. This should be harmless,
 			# and protects against weird problems that occur when they really
@@ -2655,16 +2736,16 @@ abstract class DatabaseBase implements DatabaseType {
 	/**
 	 * DELETE query wrapper.
 	 *
-	 * @param $table Array Table name
+	 * @param string $table Table name
 	 * @param $conds String|Array of conditions. See $conds in DatabaseBase::select() for
 	 *               the format. Use $conds == "*" to delete all rows
-	 * @param $fname String name of the calling function
+	 * @param $fname string name of the calling function
 	 *
 	 * @return bool
 	 * @throws DBUnexpectedError
 	 * @throws MWException
 	 */
-	function delete( $table, $conds, $fname = 'DatabaseBase::delete' ) {
+	function delete( string $table, $conds, $fname = 'DatabaseBase::delete' ) {
 		if ( !$conds ) {
 			throw new DBUnexpectedError( $this, 'DatabaseBase::delete() called with no conditions' );
 		}
@@ -2738,7 +2819,7 @@ abstract class DatabaseBase implements DatabaseType {
 		list( $startOpts, $useIndex, $tailOpts ) = $this->makeSelectOptions( $selectOptions );
 
 		if ( is_array( $srcTable ) ) {
-			$srcTable =  implode( ',', array_map( array( &$this, 'tableName' ), $srcTable ) );
+			$srcTable = implode( ',', array_map( [ $this, 'tableName' ], $srcTable ) );
 		} else {
 			$srcTable = $this->tableName( $srcTable );
 		}
@@ -3514,15 +3595,6 @@ abstract class DatabaseBase implements DatabaseType {
 	 */
 	protected function indexNameCallback( $matches ) {
 		return $this->indexName( $matches[1] );
-	}
-
-	/**
-	 * Build a concatenation list to feed into a SQL query
-	 * @param $stringList Array: list of raw SQL expressions; caller is responsible for any quoting
-	 * @return String
-	 */
-	function buildConcat( $stringList ) {
-		return 'CONCAT(' . implode( ',', $stringList ) . ')';
 	}
 
 	/**

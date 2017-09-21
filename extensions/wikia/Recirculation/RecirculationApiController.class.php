@@ -12,64 +12,27 @@ class RecirculationApiController extends WikiaApiController {
 	public function __construct() {
 		parent::__construct();
 		$this->cors = new CrossOriginResourceSharingHeaderHelper();
-		$this->cors->setAllowOrigin( [ '*' ] );
+		$this->cors->setAllowAllOrigins();
 	}
 
 	public function getFandomPosts() {
 		$this->cors->setHeaders( $this->response );
 
 		$type = $this->getParamType();
-		$cityId = $this->getParamCityId();
 		$limit = $this->getParamLimit();
-		$fill = $this->getParamFill();
 
 		$title = wfMessage( 'recirculation-fandom-title' )->plain();
 
 		if ( $type === 'curated' ) {
 			$dataService = new CuratedContentService();
-		} elseif ( $type === 'hero' || $type === 'category' || $type === 'latest' ) {
-			$dataService = new FandomDataService( $cityId, $type );
-		} else {
-			$dataService = new ParselyDataService( $cityId );
 		}
 
 		$posts = $dataService->getPosts( $type, $limit );
-
-		if ( $fill === 'true' && count( $posts ) < $limit ) {
-			$ds = new ParselyDataService( $cityId );
-			$posts = array_slice( array_merge( $posts, $ds->getPosts( 'recent_popular', $limit ) ), 0, $limit );
-		}
 
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 		$this->response->setData( [
 			'title' => $title,
 			'posts' => $posts,
-		] );
-	}
-
-	public function getCakeRelatedContent() {
-		$this->cors->setHeaders( $this->response );
-
-		$target = trim( $this->request->getVal( 'relatedTo' ) );
-		if ( empty( $target ) ) {
-			throw new InvalidParameterApiException( 'relatedTo' );
-		}
-
-		$limit = trim( $this->request->getVal( 'limit' ) );
-		$ignore = trim( $this->request->getVal( 'ignore' ) );
-		$namespaceId = trim( $this->request->getVal( 'namespaceId' ) );
-
-		$this->response->setCacheValidity( WikiaResponse::CACHE_SHORT );
-		$this->response->setData( [
-				'title' => wfMessage( 'recirculation-fandom-subtitle' )->plain(),
-				'items' => ( new CakeRelatedContentService() )->getContentRelatedTo(
-						$target,
-						$namespaceId,
-						$this->wg->cityId,
-						$this->wg->sitename,
-						$limit,
-						$ignore
-				),
 		] );
 	}
 
@@ -109,16 +72,6 @@ class RecirculationApiController extends WikiaApiController {
 		}
 
 		return $type;
-	}
-
-	private function getParamFill() {
-		$fill = $this->request->getVal( 'fill', 'false' );
-
-		if ( $fill !== 'true' && $fill !== 'false' ) {
-			throw new InvalidParameterApiException( 'fill' );
-		}
-
-		return $fill;
 	}
 
 	private function getParamLimit() {

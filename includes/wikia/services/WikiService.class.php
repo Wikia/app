@@ -28,7 +28,6 @@ class WikiService extends WikiaModel {
 	const WIKIAGLOBAL_CITY_ID = 80433;
 
 	const FLAG_PROMOTED = 4;
-	const FLAG_BLOCKED = 8;
 	const FLAG_OFFICIAL = 16;
 
 	static $botGroups = [ 'bot', 'bot-global' ];
@@ -246,7 +245,6 @@ class WikiService extends WikiaModel {
 
 				if ( $row ) {
 					$sitestats = array(
-						'views' => $row->ss_total_views,
 						'edits' => $row->ss_total_edits,
 						'articles' => $row->ss_good_articles,
 						'pages' => $row->ss_total_pages,
@@ -395,13 +393,15 @@ class WikiService extends WikiaModel {
 			$userStatsService = new UserStatsService($userId, $wikiId);
 			$stats = $userStatsService->getStats();
 
-			if(!empty($stats['firstRevisionDate'])) {
-				$date = getdate(strtotime($stats['firstRevisionDate']));
+			$placeHolderDate = getdate( strtotime( '2005-06-01' ) );
+
+			if ( !empty( $stats['firstContributionTimestamp'] ) ) {
+				$date = getdate( strtotime( $stats['firstContributionTimestamp'] ) );
 			} else {
-				$date = getdate(strtotime('2005-06-01'));
+				$date = $placeHolderDate;
 			}
 
-			$userInfo['lastRevision'] = $stats['lastRevisionDate'];
+			$userInfo['lastRevision'] = $stats['lastContributionTimestamp'] ?? '2005-06-01';
 
 			$userInfo['since'] = F::App()->wg->Lang->getMonthAbbreviation($date['mon']) . ' ' . $date['year'];
 		}
@@ -689,7 +689,9 @@ class WikiService extends WikiaModel {
 				}
 			}
 
-			$this->wg->Memc->set( $cacheKey, $results, 86400 /* 24h */ );
+			if ( !empty( $results ) ) {
+				$this->wg->Memc->set( $cacheKey, $results, 86400 /* 24h */ );
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -881,8 +883,7 @@ class WikiService extends WikiaModel {
 				),
 				array(
 					'city_list.city_public' => 1,
-					'city_list.city_id' => $wikiIds,
-					'((city_visualization.city_flags & ' . self::FLAG_BLOCKED . ') != ' . self::FLAG_BLOCKED . ' OR city_visualization.city_flags IS NULL)'
+					'city_list.city_id' => $wikiIds
 				),
 				__METHOD__,
 				array(),

@@ -86,7 +86,7 @@ class WantedFilesPage extends WantedQueryPage {
 			)
 		);
 		
-		wfRunHooks( 'WantedFiles::getQueryInfo', array( &$queryInfo ) ); 
+		Hooks::run( 'WantedFiles::getQueryInfo', array( &$queryInfo ) ); 
 		
 		return $queryInfo;
 	}

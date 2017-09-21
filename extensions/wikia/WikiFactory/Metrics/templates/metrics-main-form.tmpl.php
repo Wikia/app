@@ -11,7 +11,6 @@
 div#widget_sidebar { display: none !important; }
 div#wikia_page { margin-left: 5px; z-index:100; }
 div#sidebar { display: none !important; }
-#LEFT_SPOTLIGHT_1_load {display: none !important; }
 .TablePager { font-size:8.5pt }
 .TablePager td { padding:1px; }
 .TablePager th a {font-weight:normal;}

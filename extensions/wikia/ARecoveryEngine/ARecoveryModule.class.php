@@ -1,32 +1,62 @@
 <?php
 
 class ARecoveryModule {
-	const DISABLED_MESSAGE = PHP_EOL . '<!-- Recovery disabled. -->' . PHP_EOL;
-
 	/**
-	 * Checks whether recovery is enabled (on current wiki)
+	 * Checks whether PageFair recovery is enabled (on current wiki)
 	 *
 	 * @return bool
 	 */
-	public static function isDisabled() {
-		global $wgUser, $wgAdDriverEnableSourcePointRecovery, $wgAdDriverEnableSourcePointMMS;
+	public static function isPageFairRecoveryEnabled() {
+		global $wgAdDriverEnablePageFairRecovery;
 
-		if( $wgUser instanceof User && $wgUser->isLoggedIn() ) {
-			return true;
-		}
-
-		return $wgAdDriverEnableSourcePointRecovery === false && $wgAdDriverEnableSourcePointMMS === false;
+		return static::isRecoverablePage() && $wgAdDriverEnablePageFairRecovery === true;
 	}
 
-	public static function getSourcePointBootstrapCode() {
-		return static::isDisabled() ? self::DISABLED_MESSAGE : self::getBootstrapCode();
+	/**
+	 * Checks whether SourcePoint recovery is enabled (on current wiki)
+	 *
+	 * @return bool
+	 */
+	public static function isSourcePointRecoveryEnabled() {
+		global $wgAdDriverEnableSourcePointRecovery;
+
+		return static::isRecoverablePage() && $wgAdDriverEnableSourcePointRecovery;
 	}
 
-	public static function isLockEnabled() {
-		return !self::isDisabled();
+	/**
+	 * Checks whether InstartLogic recovery is enabled
+	 *
+	 * @return bool
+	 */
+	public static function isInstartLogicRecoveryEnabled() {
+		global $wgAdDriverEnableInstartLogicRecovery;
+
+		return static::isRecoverablePage() && $wgAdDriverEnableInstartLogicRecovery;
 	}
 
-	private static function getBootstrapCode() {
-		return F::app()->sendRequest( 'ARecoveryEngineApiController', 'getBootstrap' );
+	/**
+	 * Checks whether SourcePoint MMS is enabled (on current wiki)
+	 *
+	 * @return bool
+	 */
+	public static function isSourcePointMessagingEnabled() {
+		global $wgAdDriverEnableSourcePointMMS, $wgAdDriverEnableSourcePointRecovery;
+
+		return static::isRecoverablePage() && $wgAdDriverEnableSourcePointMMS && !$wgAdDriverEnableSourcePointRecovery;
+	}
+
+	/**
+	 * Checks whether should load SourcePoint bootstrap
+	 *
+	 * @return bool
+	 */
+	public static function shouldLoadSourcePointBootstrap() {
+		return self::isSourcePointRecoveryEnabled() || self::isSourcePointMessagingEnabled();
+	}
+
+	public static function isRecoverablePage() {
+		global $wgUser;
+
+		return $wgUser->isAnon() && F::app()->checkSkin( [ 'oasis' ] );
 	}
 }

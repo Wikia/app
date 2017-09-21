@@ -8,15 +8,14 @@ class LatestPhotosHooks {
 		return true;
 	}
 
-	public static function onImageUploadComplete( &$image ){
+	public static function onImageUploadComplete( UploadBase $image ): bool {
 		self::avoidUpdateRace();
 		return true;
 	}
 
-	public static function onImageRenameCompleated( &$this , &$ot , &$nt ){
+	public static function onImageRenameCompleted( MovePageForm $form, Title $ot, Title $nt ): bool {
 		global $wgMemc;
-		if ( $nt->getNamespace() == NS_FILE ) {
-			wfDebug(__METHOD__ . ": photo renamed\n");
+		if ( $nt->inNamespace( NS_FILE ) ) {
 			$wgMemc->delete( LatestPhotosController::memcacheKey() );
 		}
 		return true;

@@ -84,8 +84,6 @@ ve.ui.WikiaMediaOptionWidget.newFromData = function ( config ) {
 			return new ve.ui.WikiaPhotoOptionWidget( config );
 		case 'video':
 			return new ve.ui.WikiaVideoOptionWidget( config );
-		case 'map':
-			return new ve.ui.WikiaMapOptionWidget( config );
 		default:
 			throw new Error( 'Uknown type: ' + config.data.type );
 	}

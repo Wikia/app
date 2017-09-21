@@ -72,9 +72,7 @@ class AppPromoLandingController extends WikiaController {
 		$this->debug = "";
 
 		// render global and user navigation
-		$this->header = !empty( $this->wg->EnableDesignSystem ) ?
-			F::app()->renderView( 'DesignSystemGlobalNavigationService', 'index' ) :
-			F::app()->renderView( 'GlobalNavigation', 'index' );
+		$this->header = F::app()->renderView( 'DesignSystemGlobalNavigationService', 'index' );
 
 		// Get the config for this app, from the service.
 		$this->config = AppPromoLandingController::getConfigForWiki( $this->wg->CityId );
@@ -276,8 +274,11 @@ class AppPromoLandingController extends WikiaController {
 	 * We use the same general trick that Special:Chat uses to basically redirect rendering
 	 * to be done by a specific Oasis module.  However, instead of being located inside of
 	 * a special page, we are doing this by stealing the "Community_App" article title.
+	 * @param OutputPage $out
+	 * @param string $text
+	 * @return bool
 	 */
-	public static function onOutputPageBeforeHTML( OutputPage &$out, &$text ) {
+	public static function onOutputPageBeforeHTML( OutputPage $out, string &$text ): bool {
 		$title = $out->getTitle();
 		$origTitle = $title->getDBkey();
 
@@ -289,6 +290,6 @@ class AppPromoLandingController extends WikiaController {
 			}
 		}
 
-		return $out;
+		return true;
 	}
 }
