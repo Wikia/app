@@ -33,9 +33,11 @@
 		<h1 class="public wordmark">
 			<a href="<?= $mainPageURL ?>">
 			<? if ( $themeSettings['wordmark-type'] == 'graphic' ) { ?>
-			<img height="<?= ChatController::CHAT_WORDMARK_HEIGHT ?>" src="<?= $wordmarkThumbnailUrl ?>">
+			<img height="<?= ChatController::CHAT_WORDMARK_HEIGHT ?>" src="<?= Sanitizer::encodeAttribute( $wordmarkThumbnailUrl ); ?>">
 			<? } else { ?>
-			<span class="font-<?= $themeSettings['wordmark-font']?>"><?= $themeSettings['wordmark-text'] ?></span>
+			<span class="font-<?= Sanitizer::encodeAttribute( $themeSettings['wordmark-font'] ); ?>">
+				<?= htmlspecialchars( $themeSettings['wordmark-text'] ); ?>
+			</span>
 			<? } ?>
 			</a>
 		</h1>
