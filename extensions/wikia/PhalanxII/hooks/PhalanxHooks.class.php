@@ -135,6 +135,11 @@ class PhalanxHooks extends WikiaObject {
 
 		$phalanx['type'] = $typemask;
 
+		// SUS-2759: If a filter is meant to apply to all languages, the p_lang field must be NULL
+		if ( $phalanx['lang'] === 'all' ) {
+			$phalanx['lang'] = null;
+		}
+
 		if ( $phalanx['expire'] === '' || is_null( $phalanx['expire'] ) ) {
 			// don't change expire
 			unset( $phalanx['expire'] );
