@@ -18,8 +18,8 @@ Version 0.1	2008-02-16
 
 function findFirstLetterOf($fLetterOf)
 {
-	$fLetterOf = strtoupper(trim($fLetterOf));
-	$fLetter = strtoupper((strlen($fLetterOf) == 0)?"":substr($fLetterOf,0,1));
+	$fLetterOf = mb_strtoupper( trim( $fLetterOf ) );
+	$fLetter = mb_substr( $fLetterOf, 0, 1 );
 
 	if(is_numeric($fLetter))
 	{
