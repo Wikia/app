@@ -55,7 +55,8 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 					'ATF_SLOT'
 				],
 				highlyViewableSlots: [
-					'HIVI_BTF_SLOT'
+					'HIVI_BTF_SLOT',
+					'INVISIBLE_HIGH_IMPACT_2'
 				]
 			},
 			fillInSlot: function (slot) {
@@ -175,6 +176,45 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 		mocks.win.ads.runtime.disableBtf = true;
 		mocks.win.ads.runtime.unblockHighlyViewableSlots = true;
 		fillInSlot(getFakeSlot('HIVI_BTF_SLOT'));
+		fillInSlot(btfSlot);
+
+		expect(mocks.methodCalledInsideFillInSlot.calls.count()).toEqual(2);
+		expect(btfSlot.collapse).toHaveBeenCalled();
+	});
+
+	it('Do fill INVISIBLE_HIGH_IMPACT_2 slot when no UAP on page', function () {
+		var fillInSlot,
+			btfBlocker = getBtfBlocker(),
+			btfSlot = getFakeSlot('BTF_SLOT'),
+			fakeProvider = getFakeProvider();
+
+		fillInSlot = btfBlocker.decorate(fakeProvider.fillInSlot, fakeProvider.config);
+		fillInSlot(getFakeSlot('ATF_SLOT'));
+		mocks.win.ads.runtime.disableBtf = true;
+		mocks.win.ads.runtime.unblockHighlyViewableSlots = true;
+		fillInSlot(getFakeSlot('HIVI_BTF_SLOT'));
+		fillInSlot(btfSlot);
+		fillInSlot(getFakeSlot('INVISIBLE_HIGH_IMPACT_2'));
+		fillInSlot(btfSlot);
+
+		expect(mocks.methodCalledInsideFillInSlot.calls.count()).toEqual(3);
+		expect(btfSlot.collapse).toHaveBeenCalled();
+	});
+
+	it('Do not fill INVISIBLE_HIGH_IMPACT_2 slot when UAP on page', function () {
+		var fillInSlot,
+			btfBlocker = getBtfBlocker(),
+			btfSlot = getFakeSlot('BTF_SLOT'),
+			fakeProvider = getFakeProvider();
+
+		fillInSlot = btfBlocker.decorate(fakeProvider.fillInSlot, fakeProvider.config);
+		fillInSlot(getFakeSlot('ATF_SLOT'));
+		mocks.win.ads.runtime.disableBtf = true;
+		mocks.win.ads.runtime.unblockHighlyViewableSlots = true;
+		spyOn(mocks.uapContext, 'isUapLoaded').and.returnValue(true);
+		fillInSlot(getFakeSlot('HIVI_BTF_SLOT'));
+		fillInSlot(btfSlot);
+		fillInSlot(getFakeSlot('INVISIBLE_HIGH_IMPACT_2'));
 		fillInSlot(btfSlot);
 
 		expect(mocks.methodCalledInsideFillInSlot.calls.count()).toEqual(2);
