@@ -1207,20 +1207,10 @@ class BlogTemplateClass {
 							unset( $result );
 							$result = self::__makeRssOutput( $aResult );
 						}
+					} elseif ( !empty( self::$oTitle ) && self::$oTitle->getNamespace() == NS_BLOG_ARTICLE ) {
+						$result = wfMessage( 'blog-empty-user-blog' )->parseAsBlock();
 					} else {
-						if ( !empty( self::$oTitle ) && self::$oTitle->getNamespace() == NS_BLOG_ARTICLE ) {
-							$result = wfMsgExt( 'blog-empty-user-blog', array( 'parse' ) );
-						}
-						else {
-							if ( self::$aOptions['type'] != 'array' ) {
-								// $sk = RequestContext::getMain()->getSkin();
-								$result = ""; // RT #69906
-								// $result = wfMsg('blog-nopostfound') . " " . $sk->makeLinkObj(Title::newFromText('CreateBlogPage', NS_SPECIAL), wfMsg('blog-writeone' ) );
-							}
-							else {
-								$result = "";
-							}
-						}
+						$result = "";
 					}
 				}
 			}

@@ -74,12 +74,9 @@ $messages['en'] = array(
 	'blog-writeone' => 'Write one!',
 	'blog-empty-user-blog' => "<br/><big>'''No recent blog posts. [[Special:CreateBlogPage|Write one now!]]'''</big>
 
+FANDOM community blogs allow you to contribute a blog post to a wiki's [[{{MediaWiki:blogs-recent-url}}|Community Blog]].
 
-<big>'''What are Wikia Blogs?'''</big>
-
-Wikia community blogs allow you to contribute a blog post to any wiki's [[{{MediaWiki:blogs-recent-url}}|Community Blog]].
-
-Blogs are used by wiki communities for fan fiction or original work, news and announcements, questions or recommendations to the community, or reviews or op-eds. Check out [[w:c:fallout:The Vault:News|Fallout Wiki's News Blog]] and [[w:c:Lostpedia:Blog:Recent posts|Lostpedia's Theories Blog]] to see two examples.",
+Blogs are often used for news and announcements, reviews and recommendations, or questions for the local community. See [[Help:Blogs]] for more information.",
 	'blog-added' => 'added',
 	'blog-edited' => 'edited',
 	'blog-page' => 'Blog',
