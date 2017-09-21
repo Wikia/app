@@ -7,8 +7,8 @@ class PhalanxStatsWikiaPager extends PhalanxStatsPager {
 
 	public function __construct( $id ) {
 		parent::__construct( $id );
-		$this->mTitle = Title::newFromText( 'Phalanx', NS_SPECIAL );
-		$this->mTitleStats = Title::newFromText( 'PhalanxStats', NS_SPECIAL );
+		$this->mTitle = SpecialPage::getTitleFor( 'Phalanx' );
+		$this->mTitleStats = SpecialPage::getTitleFor( 'PhalanxStats' );
 	}
 
 	function formatRow( $row ) {
@@ -18,32 +18,34 @@ class PhalanxStatsWikiaPager extends PhalanxStatsPager {
 		$type = $this->buildTypeNames( $row );
 		$username = $row->ps_blocked_user;
 		$phalanxUrl = $this->buildPhalanxUrl( $blockId );
-		$timestamp = $this->app->wg->Lang->timeanddate( $row->ps_timestamp );
+		$timestamp = $this->getLanguage()->timeanddate( $row->ps_timestamp );
 		$statsUrl = $this->buildStatsUrl( $blockId );
-		$url = $row->ps_referrer;
+		$url = $this->getReferrerWikiLink( $row );
 
 		// Format the data with the phalanx-stats-row-per-wiki key and wrap it in an <li> tag
 		$html = Html::openElement( 'li' );
-		$html .= wfMsgExt(
-			'phalanx-stats-row-per-wiki',
-			[ 'parseinline', 'replaceafter' ],
-			$type, $username, $phalanxUrl, $timestamp, $statsUrl, $url
-		);
+		$html .= $this->msg( 'phalanx-stats-row-per-wiki' )
+			->params( $type, $username )
+			->rawParams( $phalanxUrl )
+			->params( $timestamp )
+			->rawParams( $statsUrl )
+			->params( $url )
+			->parse();
 		$html .= Html::closeElement( 'li' );
 
 		return $html;
 	}
 
 	private function buildPhalanxUrl( $blockId ) {
-		return $this->mSkin->makeLinkObj(
+		return Linker::linkKnown(
 			$this->mTitle, $blockId, "id=$blockId"
 		);
 	}
 
 	private function buildStatsUrl( $blockId ) {
-		return $this->mSkin->makeLinkObj(
+		return Linker::linkKnown(
 			$this->mTitleStats,
-			wfMessage( 'phalanx-link-stats' )->text(),
+			$this->msg( 'phalanx-link-stats' )->escaped(),
 			'blockId=' . $blockId
 		);
 	}

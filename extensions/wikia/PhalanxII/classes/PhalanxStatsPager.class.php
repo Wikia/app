@@ -50,13 +50,7 @@ class PhalanxStatsPager extends PhalanxPager {
 		$username = $row->ps_blocked_user;
 		$timestamp = $this->getLanguage()->timeanddate( $row->ps_timestamp );
 
-		$url = $row->ps_referrer ?: '';
-		if ( empty( $url ) ) {
-			$wiki = WikiFactory::getWikiByID( $row->ps_wiki_id );
-			if ( $wiki ) {
-				$url = $wiki->city_url;
-			}
-		}
+		$referrerLink = $this->getReferrerWikiLink( $row );
 
 		// SUS-184: Render usernames containing spaces correctly
 		$encUserName = str_replace( ' ', '_', $username );
@@ -73,10 +67,24 @@ class PhalanxStatsPager extends PhalanxPager {
 		}
 
 		$html  = Html::openElement( 'li' );
-		$html .= $this->msg( 'phalanx-stats-row', $type, $username, $url, $timestamp )->parse();
+		$html .= $this->msg( 'phalanx-stats-row', $type, $username, $referrerLink, $timestamp )->parse();
 		$html .= Html::closeElement( 'li' );
 
 		return $html;
+	}
+
+	protected function getReferrerWikiLink( $row ) {
+		$url = $row->ps_referrer ?: '';
+		if ( empty( $url ) ) {
+			$wiki = WikiFactory::getWikiByID( $row->ps_wiki_id );
+			if ( $wiki ) {
+				$url = $wiki->city_url;
+			}
+		}
+
+		$decodedUrl = urldecode( $url );
+
+		return "[$url $decodedUrl]";
 	}
 
 	/**
