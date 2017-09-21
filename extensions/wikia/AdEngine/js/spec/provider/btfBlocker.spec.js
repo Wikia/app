@@ -27,8 +27,11 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 			}
 		},
 		win: {
-			addEventListener: noop
-		}
+			addEventListener: noop,
+			setTimeout: function (callback) {
+				callback();
+			}
+		},
 	};
 
 	mocks.log.levels = {info: 'info', debug: 'debug'};

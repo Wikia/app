@@ -41,11 +41,6 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 
 		function processBtfSlot(slot) {
 			var context = adContext.getContext();
-			log(
-				[slot, context.opts.premiumAdLayoutEnabled, uapContext.isUapLoaded()],
-				log.levels.info,
-				logGroup
-			);
 
 			if (uapContext.isUapLoaded() && slot.name === 'INVISIBLE_HIGH_IMPACT_2') {
 				log(['IHI2 disabled when UAP on page'], log.levels.info, logGroup);
@@ -109,7 +104,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 					mobil require is asynchronous.
 					We need to wait for code that is executed by require (UAP) before we start executing BTF queue
 					 */
-					setTimeout(startBtfQueue, 0);
+					win.setTimeout(startBtfQueue, 0);
 				}
 			}
 		}
