@@ -208,7 +208,7 @@ class AutomaticWikiAdoptionHelper {
 			Hooks::run( 'UserRights', array( &$user, $addGroups, array() ) );
 			//log
 			self::addLogEntry($user, $oldGroups, $newGroups);
-			WikiFactory::log(WikiFactory::LOG_STATUS, $user->getName()." adopted wiki ".  $wiki_name);
+			WikiFactory::log(WikiFactory::LOG_STATUS, htmlspecialchars( $user->getName()." adopted wiki ". $wiki_name ) );
 		}
 		//set date of adoption - this will be used to check when next adoption is possible
 		$user->setGlobalAttribute('LastAdoptionDate', time());

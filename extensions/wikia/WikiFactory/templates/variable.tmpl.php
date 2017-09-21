@@ -82,7 +82,7 @@ New value:
 <?php if( $variable->cv_variable_type === "boolean" ): ?>
 
 	<select name="varValue" id="varValue">
-	<?php   if( unserialize( $variable->cv_value ) === true ): ?>
+	<?php   if( unserialize( $variable->cv_value, [ 'allowed_classes' => false ] ) === true ): ?>
 		<option value="1" selected="selected">true</option>
 		<option value="0">false</option>
 	<?php   else: ?>
@@ -148,7 +148,7 @@ New value:
 <?php if( $rel_var->cv_variable_type === "boolean" ): ?>
 
 	<select name="varValue" id="varValue">
-	<?php   if( unserialize( $rel_var->cv_value === true ) ): ?>
+	<?php   if( unserialize( $rel_var->cv_value, [ 'allowed_classes' => false ] ) ): ?>
 		<option value="1" selected="selected">true</option>
 		<option value="0">false</option>
 	<?php   else: ?>
