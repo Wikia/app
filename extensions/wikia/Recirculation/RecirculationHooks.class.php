@@ -7,7 +7,9 @@ class RecirculationHooks {
 
 	/**
 	 * Insert Recirculation to the right rail
+	 *
 	 * @param array $modules
+	 *
 	 * @return bool
 	 */
 	static public function onGetRailModuleList( &$modules ) {
@@ -22,7 +24,7 @@ class RecirculationHooks {
 		$app = F::App();
 		$pos = $app->wg->User->isAnon() ? 1305 : 1285;
 
-		$modules[$pos] = array( 'Recirculation', 'container', ['containerId' => 'recirculation-rail'] );
+		$modules[$pos] = [ 'Recirculation', 'container', [ 'containerId' => 'recirculation-rail' ] ];
 
 		return true;
 	}
@@ -61,18 +63,19 @@ class RecirculationHooks {
 	/**
 	 * Return whether we're on one of the pages where we want to show the Recirculation widgets,
 	 * specifically File pages, Article pages, and Main pages
+	 *
 	 * @return bool
 	 */
 	static public function isCorrectPageType() {
 		$wg = F::app()->wg;
 
-		$showableNameSpaces = array_merge( $wg->ContentNamespaces, [ NS_FILE ] );
+		$showableNameSpaces = array_merge( $wg->ContentNamespaces, [ NS_FILE, NS_BLOG_ARTICLE ] );
 
 		if ( $wg->Title->exists() &&
-		     in_array( $wg->Title->getNamespace(), $showableNameSpaces ) &&
-		     $wg->request->getVal( 'action', 'view' ) === 'view' &&
-		     $wg->request->getVal( 'diff' ) === null &&
-		     !WikiaPageType::isCorporatePage()
+			in_array( $wg->Title->getNamespace(), $showableNameSpaces ) &&
+			$wg->request->getVal( 'action', 'view' ) === 'view' &&
+			$wg->request->getVal( 'diff' ) === null &&
+			!WikiaPageType::isCorporatePage()
 		) {
 			return true;
 		} else {
@@ -88,10 +91,11 @@ class RecirculationHooks {
 		}
 
 		$discussionsEnabled = WikiFactory::getVarValueByName( 'wgEnableDiscussions', $cityId );
-		$recirculationDiscussionsEnabled = WikiFactory::getVarValueByName( 'wgEnableRecirculationDiscussions', $cityId );
+		$recirculationDiscussionsEnabled =
+			WikiFactory::getVarValueByName( 'wgEnableRecirculationDiscussions', $cityId );
 
-		if ( !empty( $discussionsEnabled ) && ( $ignoreWgEnableRecirculationDiscussions ||
-		                                        !empty( $recirculationDiscussionsEnabled ) )
+		if ( !empty( $discussionsEnabled ) &&
+			( $ignoreWgEnableRecirculationDiscussions || !empty( $recirculationDiscussionsEnabled ) )
 		) {
 			return true;
 		} else {
@@ -100,51 +104,57 @@ class RecirculationHooks {
 	}
 
 	private static function addLiftIgniterMetadata( OutputPage $outputPage ) {
-		global $wgCityId,
-		       $wgDevelEnvironment,
-		       $wgEnableArticleFeaturedVideo,
-		       $wgIsPrivateWiki,
-		       $wgLanguageCode,
-		       $wgStagingEnvironment,
-		       $wgWikiaEnvironment;
-
-		$context = RequestContext::getMain();
-		$title = $context->getTitle();
-		$articleId = $title->getArticleID();
-		$metaData = [];
-		$metaDataService = new LiftigniterMetadataService();
-		$metaDataFromService = $metaDataService->getLiMetadataForArticle( $wgCityId, $articleId );
-
-		$metaData['language'] = $wgLanguageCode;
-
-		if ( !empty( $metaDataFromService ) ) {
-			$metaData['guaranteed_impression'] = $metaDataFromService->getGuaranteedNumber();
-			$metaData['start_date'] = $metaDataFromService->getDateFrom()->format('Y-m-d H:i:s');
-			$metaData['end_date'] = $metaDataFromService->getDateTo()->format('Y-m-d H:i:s');
-			if ( !empty( $metaDataFromService->getGeos() ) ) {
-				$metaData['geolocation'] = $metaDataFromService->getGeos();
-			}
-		}
-
-		$isProduction =
-			empty( $wgDevelEnvironment ) && empty( $wgStagingEnvironment ) &&
-			$wgWikiaEnvironment !== WIKIA_ENV_STAGING;
-		$isPrivateWiki = WikiFactory::isWikiPrivate( $wgCityId ) || $wgIsPrivateWiki;
-
-		if ( !$isProduction || $isPrivateWiki || $title->inNamespace( NS_FILE ) ) {
-			$metaData['noIndex'] = 'true';
-		}
-
-		if ( !empty( $wgEnableArticleFeaturedVideo ) &&
-		     ArticleVideoContext::isFeaturedVideoEmbedded( $title->getPrefixedDBkey() )
-		) {
-			$metaData['type'] = 'video';
-		}
-
+		$metaData = self::getMetaData();
 		$metaDataJson = json_encode( $metaData );
 
 		$outputPage->addScript(
 			"<script id=\"liftigniter-metadata\" type=\"application/json\">${metaDataJson}</script>"
 		);
+	}
+
+	private static function getMetaData() {
+		global $wgLanguageCode, $wgCityId, $wgIsPrivateWiki, $wgEnableArticleFeaturedVideo;
+		$context = RequestContext::getMain();
+		$title = $context->getTitle();
+		$articleId = $title->getArticleID();
+		$metaDataService = new LiftigniterMetadataService();
+		$metaDataFromService = $metaDataService->getLiMetadataForArticle( $wgCityId, $articleId );
+		$title = $context->getTitle();
+		$metaData['language'] = $wgLanguageCode;
+		$isProduction = self::checkIfIsProduction();
+		$isPrivateWiki = WikiFactory::isWikiPrivate( $wgCityId ) || $wgIsPrivateWiki;
+		$shouldNoIndex = !$isProduction ||
+			$isPrivateWiki ||
+			$title->inNamespace( NS_FILE ) ||
+			( $title->inNamespace( NS_BLOG_ARTICLE ) && empty( $metaDataFromService ) );
+
+		if ( !empty( $metaDataFromService ) ) {
+			$metaData['guaranteed_impression'] = $metaDataFromService->getGuaranteedNumber();
+			$metaData['start_date'] = $metaDataFromService->getDateFrom()->format( 'Y-m-d H:i:s' );
+			$metaData['end_date'] = $metaDataFromService->getDateTo()->format( 'Y-m-d H:i:s' );
+			if ( !empty( $metaDataFromService->getGeos() ) ) {
+				$metaData['geolocation'] = $metaDataFromService->getGeos();
+			}
+		}
+
+		if ( $shouldNoIndex ) {
+			$metaData['noIndex'] = 'true';
+		}
+
+		if ( !empty( $wgEnableArticleFeaturedVideo ) &&
+			ArticleVideoContext::isFeaturedVideoEmbedded( $title->getPrefixedDBkey() )
+		) {
+			$metaData['type'] = 'video';
+		}
+
+		return $metaData;
+	}
+
+	private static function checkIfIsProduction() {
+		global $wgDevelEnvironment, $wgStagingEnvironment, $wgWikiaEnvironment;
+
+		return empty( $wgDevelEnvironment ) &&
+			empty( $wgStagingEnvironment ) &&
+			$wgWikiaEnvironment !== WIKIA_ENV_STAGING;
 	}
 }
