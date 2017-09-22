@@ -129,7 +129,7 @@ class WikiaApiQuerySiteinfo extends ApiQuerySiteinfo {
 		);
 	}
 	
-	static public function useExternalQuerySiteInfo ( $obj ) {
+	static public function useExternalQuerySiteInfo( ApiQuerySiteinfo $obj ): bool {
 		$obj->noErrors = true;
 		return true;
 	}

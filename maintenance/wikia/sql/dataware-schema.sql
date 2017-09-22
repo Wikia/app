@@ -89,23 +89,8 @@ CREATE TABLE `ab_experiments` (
 DROP TABLE IF EXISTS `blobs`;
 CREATE TABLE `blobs` (
   `blob_id` int(10) NOT NULL AUTO_INCREMENT,
-  `rev_wikia_id` int(8) unsigned NOT NULL,
-  `rev_id` int(10) unsigned DEFAULT NULL,
-  `rev_page_id` int(10) unsigned NOT NULL,
-  `rev_namespace` int(10) unsigned NOT NULL DEFAULT '0',
-  `rev_user` int(10) unsigned NOT NULL DEFAULT '0',
-  `rev_user_text` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
-  `rev_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `blob_text` mediumtext NOT NULL,
-  `rev_flags` tinyblob,
-  `rev_ip` int(10) unsigned DEFAULT NULL,
-  PRIMARY KEY (`blob_id`),
-  KEY `rev_page_id` (`rev_wikia_id`,`rev_page_id`,`rev_id`),
-  KEY `rev_namespace` (`rev_wikia_id`,`rev_page_id`,`rev_namespace`),
-  KEY `rev_user` (`rev_wikia_id`,`rev_user`,`rev_timestamp`),
-  KEY `rev_user_text` (`rev_wikia_id`,`rev_user_text`,`rev_timestamp`),
-  KEY `blobs_rev_timestamp` (`rev_timestamp`),
-  KEY `rev_ip` (`rev_ip`)
+  PRIMARY KEY (`blob_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
 (PARTITION p0 VALUES LESS THAN (10388840) ENGINE = InnoDB,
  PARTITION p1 VALUES LESS THAN (20777680) ENGINE = InnoDB,
@@ -151,26 +136,6 @@ CREATE TABLE `email_types` (
   `id` tinyint(3) unsigned NOT NULL,
   `type` varchar(64) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Table structure for table `emails_storage`
---
-
-DROP TABLE IF EXISTS `emails_storage`;
-CREATE TABLE `emails_storage` (
-  `entry_id` int(10) NOT NULL AUTO_INCREMENT,
-  `source_id` int(10) NOT NULL,
-  `page_id` int(10) NOT NULL,
-  `city_id` int(9) NOT NULL,
-  `email` tinytext,
-  `user_id` int(10) unsigned DEFAULT NULL,
-  `beacon_id` char(10) DEFAULT NULL,
-  `feedback` varchar(255) DEFAULT NULL,
-  `timestamp` char(14) DEFAULT NULL,
-  PRIMARY KEY (`entry_id`),
-  KEY `emails_storage_entry_source` (`source_id`),
-  KEY `emails_storage_entry_timestamp` (`city_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -279,24 +244,13 @@ CREATE TABLE `pages` (
   `page_wikia_id` int(8) unsigned NOT NULL,
   `page_id` int(8) unsigned NOT NULL,
   `page_namespace` int(8) unsigned NOT NULL DEFAULT '0',
-  `page_title_lower` varchar(255) DEFAULT NULL,
   `page_title` varchar(255) NOT NULL,
-  `page_status` smallint(4) unsigned DEFAULT '0',
   `page_is_content` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `page_is_redirect` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `page_edits` int(8) unsigned NOT NULL DEFAULT '0',
   `page_latest` int(8) unsigned NOT NULL DEFAULT '0',
   `page_last_edited` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `page_last_indexed` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`page_wikia_id`,`page_id`),
-  KEY `page_namespace` (`page_wikia_id`,`page_namespace`,`page_title`),
-  KEY `page_title_lower_wikia` (`page_title_lower`,`page_wikia_id`,`page_namespace`),
-  KEY `page_wikia_title_lower` (`page_wikia_id`,`page_title_lower`,`page_namespace`),
-  KEY `page_latest` (`page_wikia_id`,`page_namespace`,`page_latest`),
-  KEY `page_last_indexed` (`page_wikia_id`,`page_last_indexed`,`page_id`),
-  KEY `page_title_lower_edits` (`page_title_lower`,`page_wikia_id`,`page_edits`),
-  KEY `page_wikia_edited` (`page_wikia_id`,`page_last_edited`,`page_title_lower`),
-  KEY `page_namespace_lower` (`page_wikia_id`,`page_namespace`,`page_title_lower`)
+  KEY `page_title_namespace_latest_idx` (`page_title`,`page_namespace`,`page_latest`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -567,4 +521,4 @@ CREATE TABLE `wikiastaff_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- Dump completed on 2017-03-30  9:35:07
+-- Dump completed on 2017-07-06  8:12:51

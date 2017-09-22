@@ -28,6 +28,7 @@ $wgAutoloadClasses['ForumPostInfo'] =  $dir . 'ForumPostInfo.class.php' ;
 $wgAutoloadClasses['ForumHelper'] =  $dir . 'ForumHelper.class.php' ;
 $wgAutoloadClasses['ForumExternalController'] =  $dir . 'ForumExternalController.class.php' ;
 $wgAutoloadClasses['RelatedForumDiscussionController'] =  $dir . 'RelatedForumDiscussionController.class.php' ;
+$wgAutoloadClasses['ThreadWatchlistDeleteUpdate'] = $dir . 'ThreadWatchlistDeleteUpdate.php';
 
 // i18n mapping
 $wgExtensionMessagesFiles['Forum'] = $dir . 'Forum.i18n.php' ;
@@ -55,6 +56,8 @@ $wgHooks['WallMessageDeleted'][] = 'ForumHooksHelper::onWallMessageDeleted';
 $wgHooks['ContributionsLineEnding'][] = 'ForumHooksHelper::onContributionsLineEnding';
 $wgHooks['OasisAddPageDeletedConfirmationMessage'][] = 'ForumHooksHelper::onOasisAddPageDeletedConfirmationMessage';
 $wgHooks['FilePageImageUsageSingleLink'][] = 'ForumHooksHelper::onFilePageImageUsageSingleLink';
+$wgHooks['AfterPageHeaderPageSubtitle'][] = 'ForumHooksHelper::onAfterPageHeaderPageSubtitle';
+$wgHooks['PageHeaderActionButtonShouldDisplay'][] = 'ForumHooksHelper::onPageHeaderActionButtonShouldDisplay';
 
 // notification hooks
 $wgHooks['NotificationGetNotificationMessage'][] = 'ForumNotificationPlugin::onGetNotificationMessage';
@@ -85,11 +88,14 @@ $wgHooks['ArticleDeleteComplete'][] = 'ForumHooksHelper::onArticleDeleteComplete
 // SUS-260: Prevent moving pages within, into or out of Forum namespaces
 $wgHooks['MWNamespace:isMovable'][] = 'ForumHooksHelper::onNamespaceIsMovable';
 
+$wgHooks['AfterPageHeaderButtons'][] = 'ForumHooksHelper::onAfterPageHeaderButtons';
+
 include ( $dir . '/Forum.namespace.setup.php' );
 
 // add this namespace to list of wall namespaces
-$app->registerNamespaceControler( NS_WIKIA_FORUM_BOARD, 'ForumController', 'board', true );
-$app->registerNamespaceControler( NS_WIKIA_FORUM_TOPIC_BOARD, 'ForumController', 'board', true );
+$app->registerNamespaceController( NS_WIKIA_FORUM_BOARD, 'ForumController', 'board', true );
+$app->registerNamespaceController( NS_WIKIA_FORUM_TOPIC_BOARD, 'ForumController', 'board',
+	true );
 
 JSMessages::registerPackage( 'Forum', [
 	'back',

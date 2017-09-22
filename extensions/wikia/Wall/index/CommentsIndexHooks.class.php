@@ -23,7 +23,7 @@ class CommentsIndexHooks {
 	 */
 	static public function onArticleDoDeleteArticleBeforeLogEntry( WikiPage $page, $logtype, Title $title, $reason, $hookAddedLogEntry ) : bool {
 
-		if ( WallHelper::isWallNamespace( $title->getNamespace() ) ) {
+		if ( $title->isTalkPage() && WallHelper::isWallNamespace( $title->getNamespace() ) ) {
 			wfDebug(__METHOD__ . "\n\n");
 
 			// we have either Wall message or Forum post - mark comments_index entry
@@ -48,7 +48,7 @@ class CommentsIndexHooks {
 	 */
 	public static function onArticleUndelete( Title $title, $create, $comment, int $oldPageId ) : bool {
 
-		if ( WallHelper::isWallNamespace( $title->getNamespace() ) ) {
+		if ( $title->isTalkPage() && WallHelper::isWallNamespace( $title->getNamespace() ) ) {
 			wfDebug(__METHOD__ . "\n\n");
 
 			// we have either Wall message or Forum post - update comments_index entry

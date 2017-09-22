@@ -239,7 +239,6 @@ $magicWords = array(
 	'numberofusers'          => array( 1,    'NUMBEROFUSERS'          ),
 	'numberofactiveusers'    => array( 1,    'NUMBEROFACTIVEUSERS'    ),
 	'numberofedits'          => array( 1,    'NUMBEROFEDITS'          ),
-	'numberofviews'          => array( 1,    'NUMBEROFVIEWS'          ),
 	'pagename'               => array( 1,    'PAGENAME'               ),
 	'pagenamee'              => array( 1,    'PAGENAMEE'              ),
 	'namespace'              => array( 1,    'NAMESPACE'              ),
@@ -356,6 +355,10 @@ $magicWords = array(
 	'url_query'              => array( 0,    'QUERY' ),
 	'defaultsort_noerror'    => array( 0,    'noerror' ),
 	'defaultsort_noreplace'  => array( 0,    'noreplace' ),
+	'pagesincategory_all'    => array( 0,    'all' ),
+	'pagesincategory_pages'  => array( 0,    'pages' ),
+	'pagesincategory_subcats' => array( 0,   'subcats' ),
+	'pagesincategory_files'  => array( 0,    'files' ),
 );
 
 /**

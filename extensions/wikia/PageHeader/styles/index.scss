@@ -1,0 +1,177 @@
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-mixins/index';
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/flexbox';
+@import 'skins/shared/mixins/transform';
+@import 'skins/oasis/css/core/breakpoints-variables';
+
+.WikiaPage .page-header {
+	@include dropdown-theming($color-page, $color-text, $color-links, $color-page-border);
+
+	@include align-items(flex-start);
+	@include flexbox();
+	@include justify-content(flex-end);
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	padding: 16px 0 12px;
+	position: relative;
+	width: 100%;
+	z-index: 4;
+
+	button {
+		background-image: none;
+	}
+
+	.wds-button {
+		@include button-theming($color-buttons, $color-button-text, $color-text);
+	}
+
+	.wds-button-group {
+		@include button-group-theming($color-page);
+	}
+
+	&__counter {
+		color: $color-text;
+		padding-bottom: 12px;
+		font-size: $wds-typescale-size-minus-1;
+		font-weight: bold;
+		text-align: right;
+	}
+
+	&__contribution {
+		@include align-items(flex-end);
+		@include align-self(stretch);
+		@include flexbox();
+		@include flex-direction(column);
+		@include flex-shrink(0);
+		@include justify-content(space-between);
+		margin-left: 20px;
+
+	}
+
+	&__contribution-buttons {
+		> *:not(:last-child) {
+			margin-right: 3px;
+		}
+	}
+
+	&__languages {
+		padding-bottom: 12px;
+
+		.wds-dropdown__toggle-chevron {
+			vertical-align: text-top;
+		}
+	}
+
+	&__main {
+		@include align-self(flex-end);
+		@include flex-grow(1);
+		max-width: 100%;
+		min-width: 0;
+	}
+
+	&__categories {
+		@include align-items(flex-start);
+		@include flexbox();
+		font-size: $wds-typescale-size-minus-2;
+
+		&-in {
+			font-weight: 600;
+			padding-right: 4px;
+			white-space: nowrap;
+		}
+
+		&-dropdown {
+			padding-bottom: 12px;
+
+			&-content {
+				font-style: normal;
+				overflow-x: hidden;
+				width: 250px;
+			}
+
+			li {
+				white-space: normal;
+			}
+		}
+
+		&-links {
+			color: $color-links;
+			font-style: italic;
+			line-height: 16px;
+			overflow-wrap: break-word;
+			word-wrap: break-word;
+			-ms-word-break: break-all;
+			word-break: break-word;
+
+
+			> a:last-child {
+				display: inline-block;
+				padding-bottom: 10px;
+			}
+		}
+	}
+
+	&__title {
+		@include align-items(flex-end);
+		color: $color-text;
+		display: inline-block;
+		font-size: $wds-typescale-size-plus-4;
+		font-weight: bold;
+		line-height: 1;
+		max-width: 100%;
+		word-wrap: break-word;
+
+		i {
+			font-style: italic;
+		}
+	}
+
+	&__separator {
+		background-color: $color-page-border;
+		border: 0;
+		height: 1px;
+		margin-bottom: 18px;
+		margin-top: 0;
+		width: 100%;
+	}
+
+	&__subtitle {
+		margin-top: 6px;
+
+		&-back-icon {
+			fill: $color-links;
+			padding-right: 2px;
+			transform: rotate(270deg);
+			vertical-align: text-top;
+		}
+	}
+
+	&__page-subtitle {
+		margin-top: 6px;
+
+		.removed {
+			color: rgba($color-text, .6);
+		}
+	}
+
+	&__subtitle-blog-post {
+		@include align-items(center);
+		@include flexbox();
+	}
+
+	&__blog-post-details {
+		margin-left: 6px;
+	}
+
+	.wds-avatar {
+		border-color: $color-page-border;
+	}
+}
+//It's needed to add margin to allign article header with content on corporate pages with this one.
+.WikiaPage.WikiaGrid > div > header,
+.WikiaPage.WikiaGrid > div > hr  {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+

@@ -182,7 +182,7 @@ class VideoFileUploader {
 			File::DELETE_SOURCE
 		);
 
-		wfRunHooks('AfterVideoFileUploaderUpload', array($file, $result));
+		Hooks::run('AfterVideoFileUploaderUpload', array($file, $result));
 
 		// SUS-1195: make sure the file cache is up to date shortly after the video upload
 		if ( $result->isOK() ) {
@@ -551,6 +551,13 @@ class VideoFileUploader {
 				return $oTitle;
 			}
 		}
+
+		\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . ' - video upload failed', [
+			'video_url' => (string) $url,
+			'provider_name' => (string) $oUploader->sProvider,
+			'upload_status' => isset( $status ) ? $status : Status::newFatal( 'api-wrapper-not-found' )
+		] );
+
 		wfProfileOut( __METHOD__ );
 		return null;
 	}

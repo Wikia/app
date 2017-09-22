@@ -10,3 +10,5 @@ $wgHooks['UploadComplete'][] = 'ImageReviewEventsHooks::onUploadComplete';
 $wgHooks['FileRevertComplete'][] = 'ImageReviewEventsHooks::onFileRevertComplete';
 $wgHooks['ArticleDeleteComplete'][] = 'ImageReviewEventsHooks::onArticleDeleteComplete';
 $wgHooks['ArticleUndelete'][] = 'ImageReviewEventsHooks::onArticleUndelete';
+$wgHooks['OldFileDeleteComplete'][] = 'ImageReviewEventsHooks::onOldFileDeleteComplete';
+$wgHooks['OldImageRevisionVisibilityChange'][] = 'ImageReviewEventsHooks::onOldImageRevisionVisibilityChange';

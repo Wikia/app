@@ -522,6 +522,17 @@ class SpecialRevisionDelete extends UnlistedSpecialPage {
 		# If the save went through, go to success message...
 		$status = $this->save( $bitParams, $comment, $this->targetObj );
 		if ( $status->isGood() ) {
+
+			// Wikia change - @author ryba
+			$type = $this->getRequest()->getVal( 'type', '');
+			if ( $type === 'oldimage' ) {
+				$imageHidden = $this->getRequest()->getVal('wpHidePrimary', 0);
+				$oiRevision = $this->getRequest()->getVal('ids');
+
+				Hooks::run( 'OldImageRevisionVisibilityChange', [ $this->targetObj, $oiRevision, $imageHidden ] );
+			}
+			// Wikia change - end
+
 			$this->success();
 			return true;
 		# ...otherwise, bounce back to form...

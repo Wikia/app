@@ -1,0 +1,47 @@
+.wds-button-group {
+	@include button-group-theming($wds-color-white);
+
+	align-items: stretch;
+	display: inline-flex;
+	justify-content: flex-start;
+
+	> .wds-button {
+		//To achieve oneness of buttons, we overlap their border
+		height: auto;
+		margin-left: auto;
+		margin-right: -1px;
+
+		//on hover we want to show whole border of a button
+		&:hover {
+			z-index: 1;
+		}
+
+		&:not(.wds-is-secondary) {
+			&:not(:last-child) {
+				border-right-width: 1px;
+				border-right-style: solid;
+			}
+
+			&:not(:first-child) {
+				border-left-width: 1px;
+				border-left-style: solid;
+			}
+		}
+	}
+
+	> .wds-dropdown {
+		&:not(:last-child) {
+			.wds-button {
+				border-right-width: 1px;
+				border-right-style: solid;
+			}
+		}
+
+		&:not(:first-child) {
+			.wds-button {
+				border-left-width: 1px;
+				border-left-style: solid;
+			}
+		}
+	}
+}

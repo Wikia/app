@@ -130,7 +130,7 @@ class WebRequest implements Wikia\Interfaces\IRequest {
 					);
 				}
 
-				wfRunHooks( 'WebRequestPathInfoRouter', array( $router ) );
+				Hooks::run( 'WebRequestPathInfoRouter', array( $router ) );
 
 				$matches = $router->parse( $path );
 			}
@@ -558,7 +558,7 @@ class WebRequest implements Wikia\Interfaces\IRequest {
 	 * @return Boolean
 	 */
 	public function wasPosted() {
-		wfRunHooks( 'WebRequestWasPosted' ); # Wikia change
+		Hooks::run( 'WebRequestWasPosted' ); # Wikia change
 
 		return isset( $_SERVER['REQUEST_METHOD'] ) && $_SERVER['REQUEST_METHOD'] == 'POST';
 	}
@@ -1086,7 +1086,7 @@ HTML;
 		}
 
 		# Allow extensions to improve our guess
-		wfRunHooks( 'GetIP', array( &$ip ) );
+		Hooks::run( 'GetIP', array( &$ip ) );
 
 		if ( !$ip ) {
 			throw new MWException( "Unable to determine IP" );

@@ -4,16 +4,13 @@ require([
 	'ext.wikia.adEngine.adInfoTracker',
 	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.lookup.amazonMatch',
-	'ext.wikia.adEngine.lookup.openXBidder',
+	'ext.wikia.adEngine.lookup.a9',
 	'ext.wikia.adEngine.lookup.prebid',
 	'ext.wikia.adEngine.lookup.rubicon.rubiconFastlane',
-	'ext.wikia.adEngine.lookup.rubicon.rubiconVulcan',
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.mobile.mercuryListener',
-	'ext.wikia.adEngine.slotTweaker',
-	'ext.wikia.adEngine.slot.scrollHandler',
-	'ext.wikia.adEngine.provider.yavliTag',
+	'ext.wikia.adEngine.slot.service.actionHandler',
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.window'
@@ -22,70 +19,78 @@ require([
 	adInfoTracker,
 	slotStateMonitor,
 	amazon,
-	oxBidder,
+	a9,
 	prebid,
 	rubiconFastlane,
-	rubiconVulcan,
 	customAdsLoader,
 	messageListener,
 	mercuryListener,
-	slotTweaker,
-	scrollHandler,
-	yavliTag,
+	actionHandler,
 	geo,
 	instantGlobals,
 	win
 ) {
 	'use strict';
-
 	messageListener.init();
-	scrollHandler.init('mercury');
 
 	// Custom ads (skins, footer, etc)
 	win.loadCustomAd = customAdsLoader.loadCustomAd;
 
-	if (geo.isProperGeo(instantGlobals.wgAmazonMatchCountriesMobile)) {
-		amazon.call();
+	function callBiddersOnConsecutivePageView() {
+		var isRubiconDisplayPrebidAdapterActive = adContext.getContext().bidders.rubiconDisplay;
+
+		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
+			prebid.call();
+		}
+
+		if (geo.isProperGeo(instantGlobals.wgAdDriverA9BidderCountries)) {
+			a9.call();
+		}
+
+		if (
+			geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) &&
+			geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneMercuryFixCountries) &&
+			!isRubiconDisplayPrebidAdapterActive
+		) {
+			rubiconFastlane.call();
+		}
 	}
 
 	mercuryListener.onLoad(function () {
-		if (geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries)) {
-			rubiconFastlane.call();
+		var isRubiconDisplayPrebidAdapterActive = adContext.getContext().bidders.rubiconDisplay;
+
+		if (geo.isProperGeo(instantGlobals.wgAdDriverA9BidderCountries)) {
+			a9.call();
 		}
 
-		if (geo.isProperGeo(instantGlobals.wgAdDriverOpenXBidderCountries)) {
-			oxBidder.call();
+		// TODO ADEN-5756 remove 'if' after A9 full roll out
+		if (geo.isProperGeo(instantGlobals.wgAmazonMatchCountriesMobile) &&
+			!geo.isProperGeo(instantGlobals.wgAdDriverA9BidderCountries)) {
+			amazon.call();
+		}
+
+		if (geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) && !isRubiconDisplayPrebidAdapterActive) {
+			rubiconFastlane.call();
 		}
 
 		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
 			prebid.call();
 		}
 
-		if (geo.isProperGeo(instantGlobals.wgAdDriverRubiconVulcanCountries)) {
-			rubiconVulcan.call();
-		}
-
-		if (adContext.getContext().opts.yavli) {
-			yavliTag.add();
-		}
-
 		adInfoTracker.run();
 		slotStateMonitor.run();
-		slotTweaker.registerMessageListener();
+		actionHandler.registerMessageListener();
 	});
 
-	if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
-		mercuryListener.onEveryPageChange(function () {
-			prebid.call();
+	// TODO: Remove else statement, this step is required in order to keep bidders working during cache invalidation
+	// Why checking getSlots method - because this method has been removed in PR with required changes
+	if (!win.Mercury.Modules.Ads.getInstance().getSlots) {
+		mercuryListener.afterPageWithAdsRender(function () {
+			callBiddersOnConsecutivePageView();
 		});
-	}
-
-	if (
-		geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) &&
-		geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneMercuryFixCountries)
-	) {
+	} else {
 		mercuryListener.onEveryPageChange(function () {
-			rubiconFastlane.call();
+			callBiddersOnConsecutivePageView();
 		});
 	}
 });

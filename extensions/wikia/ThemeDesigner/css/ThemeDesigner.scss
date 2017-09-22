@@ -71,7 +71,6 @@ body {
 	}
 }
 
-
 .Toolbar {
 	@include linear-gradient(#cfe1ed, top, #cfe1ed, 0%, #a6c4dc, 100%);
 	border-bottom: 1px solid #999;
@@ -173,12 +172,12 @@ section {
 }
 
 fieldset {
-	border-left: 1px solid $color-borders;
+	border-right: 1px solid $color-borders;
 	float: left;
 	height: 165px;
 	margin: 15px 0 15px 14px;
-	&:first-child {
-		border-left: 0;
+	&:last-child {
+		border-right: 0;
 	}
 }
 

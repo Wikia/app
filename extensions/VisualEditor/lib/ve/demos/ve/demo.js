@@ -3,7 +3,7 @@
  *
  * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
  */
-
+/* jshint -W003 */
 $( function () {
 	ve.init.platform.initialize().done( function () {
 
@@ -278,3 +278,4 @@ $( function () {
 
 	} );
 } );
+/* jshint +W003 */

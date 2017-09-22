@@ -92,7 +92,7 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 
 		// pull these out of the array, so they don't get used in the top rows
 		$row = $data->toArray();
-		unset( $row['text'], $row['reason'], $row['comment'], $row['ip_hex'] );
+		unset( $row['text'], $row['reason'], $row['comment']);
 
 		$this->response->setValues( [
 			'firstRow' => $row,
@@ -144,8 +144,9 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 		$data['regex'] = $data['regex'] ? 'Yes' : 'No';
 		$data['case']  = $data['case']  ? 'Yes' : 'No';
 		$data['exact'] = $data['exact'] ? 'Yes' : 'No';
+		$data['lang'] = empty( $data['lang'] ) ? 'All' : $data['lang'];
 
-		if ( $data->isTypeEmail() && !$this->getUser()->isAllowed( 'phalanxemailblock' ) ) {
+		if ( $data->isOfType( Phalanx::TYPE_EMAIL ) && !$this->getUser()->isAllowed( 'phalanxemailblock' ) ) {
 			/* hide email from non-privileged users */
 			$data['text'] = $this->msg( 'phalanx-email-filter-hidden' )->escaped();
 		}

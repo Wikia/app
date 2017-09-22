@@ -11,17 +11,12 @@ require([
 	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.pageFairDetection',
-	'ext.wikia.adEngine.taboolaHelper',
-	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
-	'ext.wikia.adEngine.slot.scrollHandler',
+	'ext.wikia.adEngine.slot.service.actionHandler',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.sourcePointDetection',
-	'ext.wikia.adEngine.provider.yavliTag',
-	'wikia.window',
-	'wikia.loader',
-	require.optional('ext.wikia.adEngine.recovery.gcs'),
-	require.optional('ext.wikia.adEngine.template.floatingRail')
+	'ext.wikia.aRecoveryEngine.adBlockDetection',
+	'wikia.window'
 ], function (
 	adContext,
 	adEngineRunner,
@@ -33,22 +28,16 @@ require([
 	dartHelper,
 	messageListener,
 	pageFairDetection,
-	taboolaHelper,
-	sourcePoint,
-	scrollHandler,
+	actionHandler,
 	slotTracker,
 	slotTweaker,
 	sourcePointDetection,
-	yavliTag,
-	win,
-	loader,
-	gcs,
-	floatingRail
+	adBlockDetection,
+	win
 ) {
 	'use strict';
 
-	var context = adContext.getContext(),
-		skin = 'oasis';
+	var context = adContext.getContext();
 
 	win.AdEngine_getTrackerStats = slotTracker.getStats;
 
@@ -66,19 +55,14 @@ require([
 
 	// Everything starts after content and JS
 	win.wgAfterContentAndJS.push(function () {
-		if (floatingRail) {
-			pageLevelParams.add('ah', floatingRail.getArticleHeightParameter().toString());
-		}
-
 		adInfoTracker.run();
 		slotStateMonitor.run();
 
 		// Ads
-		scrollHandler.init(skin);
 		win.adslots2 = win.adslots2 || [];
 		adEngineRunner.run(adConfigDesktop, win.adslots2, 'queue.desktop', !!context.opts.delayEngine);
 
-		slotTweaker.registerMessageListener();
+		actionHandler.registerMessageListener();
 
 		sourcePointDetection.initDetection();
 
@@ -86,23 +70,8 @@ require([
 			pageFairDetection.initDetection(context);
 		}
 
-		// Recovery
-		sourcePoint.initEventQueues();
-
-		// Taboola
-		if (context.opts.loadTaboolaLibrary) {
-			sourcePoint.addOnBlockingCallback(function() {
-				taboolaHelper.loadTaboola();
-			});
-		}
-
-		if (context.opts.googleConsumerSurveys && gcs) {
-			gcs.addRecoveryCallback();
-		}
-
-		if (context.opts.yavli) {
-			yavliTag.add();
-		}
+		// Recovery & detection
+		adBlockDetection.initEventQueues();
 	});
 });
 
@@ -114,11 +83,8 @@ require([
 	'ext.wikia.adEngine.slot.highImpact',
 	'ext.wikia.adEngine.slot.inContent',
 	'ext.wikia.adEngine.slot.skyScraper3',
-	'ext.wikia.adEngine.slotTweaker',
 	'wikia.document',
-	'wikia.window',
-	require.optional('ext.wikia.adEngine.slot.exitstitial'),
-	require.optional('ext.wikia.adEngine.slot.revcontentSlots')
+	'wikia.window'
 ], function (
 	adContext,
 	slotsContext,
@@ -126,45 +92,24 @@ require([
 	highImpact,
 	inContent,
 	skyScraper3,
-	slotTweaker,
 	doc,
-	win,
-	exitstitial,
-	revcontentSlots
+	win
 ) {
 	'use strict';
-
-	var context = adContext.getContext();
+	var context = adContext.getContext(),
+		premiumSlots = context.slots.premiumAdLayoutSlotsToUnblock;
 
 	function initDesktopSlots() {
-		var incontentLeaderboardSlotName = 'INCONTENT_LEADERBOARD',
-			incontentPlayerSlotName = 'INCONTENT_PLAYER';
-
 		highImpact.init();
 		skyScraper3.init();
-
-		if (revcontentSlots && context.providers.revcontent) {
-			revcontentSlots.init();
-		}
-
-		if (slotsContext.isApplicable(incontentPlayerSlotName)) {
-			inContent.init(incontentPlayerSlotName);
-		}
-
-		if (slotsContext.isApplicable(incontentLeaderboardSlotName)) {
-			inContent.init(incontentLeaderboardSlotName, function () {
-				if (context.opts.incontentLeaderboardAsOutOfPage) {
-					slotTweaker.adjustIframeByContentSize(incontentLeaderboardSlotName);
-				}
-			});
-		}
-
-		if (exitstitial) {
-			exitstitial.init();
-		}
+		inContent.init('INCONTENT_PLAYER');
 	}
 
 	win.addEventListener('wikia.uap', bottomLeaderboard.init);
+
+	if (context.opts.premiumAdLayoutEnabled && premiumSlots.indexOf('BOTTOM_LEADERBOARD') >= 0) {
+		win.addEventListener('wikia.not_uap', bottomLeaderboard.init);
+	}
 
 	if (doc.readyState === 'complete') {
 		initDesktopSlots();

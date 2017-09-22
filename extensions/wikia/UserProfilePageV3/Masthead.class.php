@@ -245,7 +245,7 @@ class Masthead {
 				 * uploaded file, we are adding common/avatars path
 				 */
 				// avatars selected from "samples" are stored as full URLs (BAC-1105)
-				// e.g http://vignette4.wikia.nocookie.net/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width/150?format=jpg
+				// e.g http://vignette.wikia.nocookie.net/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width/150?format=jpg
 				// e.g http://images3.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/150px-Avatar.jpg
 				if ( !preg_match( '/^https?:\/\//', $url ) ) {
 					$url = $wgBlogAvatarPath . rtrim( $thumb, '/' ) . $url;
@@ -730,7 +730,10 @@ class Masthead {
 	 * @param $baseRevId
 	 * @return bool
 	 */
-	static public function userMastheadInvalidateCache( &$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
+	static public function userMastheadInvalidateCache(
+		WikiPage $article, User $user, $text, $summary, $minoredit, $watchthis, $sectionanchor,
+		$flags, $revision, Status &$status, $baseRevId
+	): bool {
 		if ( !$user->isAnon() ) {
 			if ( count( $status->errors ) == 0 ) {
 				global $wgMemc;

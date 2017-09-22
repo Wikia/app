@@ -7,26 +7,25 @@
 /** @var $isEditPage bool */
 ?>
 
+<? if ( !empty( $wg->InContextTranslationsProject ) ): ?>
+	<script type="text/javascript">
+		var _jipt = [['project', '<?= addslashes($wg->InContextTranslationsProject) ?>' ]];
+	</script>
+	<script type="text/javascript" src="//cdn.crowdin.com/jipt/jipt.js"></script>
+<? endif; ?>
+
 <? if ( $displayHeader ): ?>
 	<h2><?= wfMessage( 'oasis-global-page-header' )->escaped(); ?></h2>
 <? endif; ?>
-<div class="skiplinkcontainer">
-<a class="skiplink" rel="nofollow" href="#WikiaArticle"><?= wfMessage( 'oasis-skip-to-content' )->escaped(); ?></a>
-<a class="skiplink wikinav" rel="nofollow" href="#WikiHeader"><?= wfMessage( 'oasis-skip-to-wiki-navigation' )->escaped(); ?></a>
-<a class="skiplink sitenav" rel="nofollow" href="#GlobalNavigation"><?= wfMessage( 'oasis-skip-to-site-navigation' )->escaped(); ?></a>
-</div>
 <?= $afterBodyHtml ?>
 
 <div id="ad-skin" class="wikia-ad noprint"></div>
 
 <?= $app->renderView( 'DesignSystemGlobalNavigationService', 'index' ) ?>
-<? if ( !empty( $wg->EnablePremiumPageHeader ) && empty( $wg->SuppressWikiHeader ) ): ?>
-	<div class="banner-notifications-placeholder">
-		<?= $app->renderView( 'BannerNotifications', 'Confirmation' ) ?>
-	</div>
-<? endif; ?>
+<div class="banner-notifications-placeholder">
+	<?= $app->renderView( 'BannerNotifications', 'Confirmation' ) ?>
+</div>
 <?= $app->renderView( 'Ad', 'Top' ) ?>
-<?= empty( $wg->EnableEBS ) ? '' : $app->renderView( 'EmergencyBroadcastSystem', 'index' ); ?>
 
 <?= $app->renderView('AdEmptyContainer', 'Index', ['slotName' => 'TOP_LEADERBOARD_AB']); ?>
 
@@ -34,22 +33,14 @@
 
 <?= $beforeWikiaPageHtml ?>
 
-<section id="WikiaPage" class="WikiaPage<?= empty( $wg->OasisNavV2 ) ? '' : ' V2' ?><?= !empty( $isGridLayoutEnabled ) ? ' WikiaGrid' : '' ?>">
+<? if ( empty( $wg->SuppressCommunityHeader ) && !WikiaPageType::isCorporatePage() && $wg->user->isAllowed('read')) : ?>
+	<?= $app->renderView( 'CommunityHeaderService', 'index' ) ?>
+<? endif; ?>
+
+<!-- empty onclick event needs to be applied here to ensure that wds dropdowns work correctly on ios -->
+<section id="WikiaPage" class="WikiaPage<?= empty( $wg->OasisNavV2 ) ? '' : ' V2' ?><?= !empty( $isGridLayoutEnabled ) ? ' WikiaGrid' : '' ?>" onclick="">
 	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
 	<div class="WikiaPageContentWrapper">
-
-		<? if ( !empty( $wg->EnablePremiumPageHeader ) && empty( $wg->SuppressWikiHeader ) ) : ?>
-			<div class="PremiumPageHeader">
-				<?= $app->renderView( 'PremiumPageHeader', 'wikiHeader' ) ?>
-			</div>
-		<? else: ?>
-			<?= $app->renderView( 'BannerNotifications', 'Confirmation' ) ?>
-		<? endif; ?>
-
-		<? if ( empty( $wg->SuppressWikiHeader ) ) : ?>
-			<?= $app->renderView( 'WikiHeader', 'Index' ) ?>
-		<? endif; ?>
-
 		<? if ( !empty( $wg->EnableWikiAnswers ) ) : ?>
 			<?= $app->renderView( 'WikiAnswers', 'QuestionBox' ) ?>
 		<? endif; ?>
@@ -58,7 +49,7 @@
 			<?= $app->renderView( 'ArticleInterlang', 'Index' ) ?>
 		<? endif; ?>
 
-		<? if ( $headerModuleName == 'UserPagesHeader' && ( $headerModuleAction != 'BlogPost' && $headerModuleAction != 'BlogListing' ) ) : ?>
+		<? if ( $headerModuleName === 'UserPagesHeader' ) : ?>
 			<?= $app->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams ) ?>
 		<? endif; ?>
 
@@ -67,32 +58,20 @@
 			<?= $app->renderView( 'AdminDashboard', 'Chrome' ) ?>
 		<? endif; ?>
 
-		<? if ( !empty( $wg->EnablePremiumPageHeader ) ) : ?>
-			<div class="PremiumPageArticleHeader">
-				<?= $app->renderView( 'PremiumPageHeader', 'articleHeader' ) ?>
-			</div>
+		<? if ( empty( $wg->SuppressPageHeader ) ) : ?>
+			<?= $app->renderView('Wikia\PageHeader\PageHeader', 'index') ?>
 		<? endif; ?>
 
 		<article id="WikiaMainContent" class="WikiaMainContent<?= !empty( $isGridLayoutEnabled ) ? $railModulesExist ? ' grid-4' : ' grid-6' : '' ?>">
 			<div id="WikiaMainContentContainer" class="WikiaMainContentContainer">
 				<?php
-					if ( !empty( $wg->EnableForumExt ) && ForumHelper::isForum() ) {
-						echo $app->renderView( 'ForumController', 'header' );
-					}
-
-					// render UserPagesHeader or PageHeader or nothing...
-					if ( empty( $wg->SuppressPageHeader ) && $headerModuleName ) {
-						if ( $headerModuleName == 'UserPagesHeader' ) {
-							if ( $headerModuleAction == 'BlogPost' || $headerModuleAction == 'BlogListing' ) {
-								// Show blog post header
-								echo $app->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams );
-							} else {
-								// Show just the edit button
-								echo $app->renderView( 'UserProfilePage', 'renderActionButton', array() );
-							}
-						} else {
-							echo $app->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams );
-						}
+					if (
+						$headerModuleName === 'UserPagesHeader' &&
+						$headerModuleAction !== 'BlogPost' &&
+						$headerModuleAction !== 'BlogListing'
+					) {
+						// Show just the edit button
+						echo $app->renderView( 'UserProfilePage', 'renderActionButton', array() );
 					}
 				?>
 
@@ -104,7 +83,7 @@
 					<?= $app->renderView( 'ArticleVideo', 'related' ) ?>
 				<? endif; ?>
 
-				<? if ( $subtitle != '' && $headerModuleName == 'UserPagesHeader' ) : ?>
+				<? if ( $subtitle != '' && $headerModuleName === 'UserPagesHeader' ) : ?>
 					<div id="contentSub"><?= $subtitle ?></div>
 				<? endif; ?>
 
@@ -130,7 +109,7 @@
 
 				</div>
 
-				<? if ( (new ARecoveryModule)->isSourcePointRecoveryEnabled() ) : ?>
+				<? if ( ARecoveryModule::isSourcePointRecoveryEnabled() ) : ?>
 					<!--googleoff: all-->
 					<div id="WikiaArticleMsg">
 						<h2><?= wfMessage('arecovery-blocked-message-headline')->escaped() ?></h2>

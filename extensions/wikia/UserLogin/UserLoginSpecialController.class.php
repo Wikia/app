@@ -11,16 +11,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	/* @const NOT_CONFIRMED_SIGNUP_OPTION_NAME Name of user option saying that user hasn't confirmed email since sign up */
 	const NOT_CONFIRMED_SIGNUP_OPTION_NAME = 'NotConfirmedSignup';
 
-	/*
-	 * Remove when SOC-217 ABTest is finished
-	 */
-	const NOT_CONFIRMED_LOGIN_OPTION_NAME = 'NotConfirmedLogin';
-	const NOT_CONFIRMED_LOGIN_ALLOWED = '1';
-	const NOT_CONFIRMED_LOGIN_NOT_ALLOWED = '2';
-	/*
-	 * end remove
-	 */
-
 	/* @const SIGNUP_REDIRECT_OPTION_NAME Name of user option containing redirect path to return to after email confirmation */
 	const SIGNUP_REDIRECT_OPTION_NAME = 'SignupRedirect';
 
@@ -48,24 +38,16 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	}
 
 	private function initializeTemplate() {
-		// Load Facebook JS if extension is enabled and skin supports it
-		if ( !empty( $this->wg->EnableFacebookClientExt ) && !$this->isMonobookOrUncyclo ) {
-			$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js' );
-		}
 
 		$this->response->addAsset( 'extensions/wikia/UserLogin/css/UserLogin.scss' );
 
 		// Assets including 'wikiamobile' in the name will be included by AssetsManager when showing the mobile skin
 		$this->response->addAsset( 'userlogin_js_wikiamobile' );
 
-		if ( $this->wg->EnableFacebookClientExt ) {
-			$this->response->addAsset( 'userlogin_facebook_js_wikiamobile' );
-		}
-
 		$this->response->addAsset( 'userlogin_scss_wikiamobile' );
 
 		// hide things in the skin
-		$this->wg->SuppressWikiHeader = false;
+		$this->wg->SuppressCommunityHeader = false;
 		$this->wg->SuppressPageHeader = false;
 		$this->wg->SuppressFooter = false;
 		$this->wg->SuppressAds = true;
@@ -115,7 +97,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 */
 	public function loggedIn() {
 		// don't show "special page" text
-		$this->wg->SupressPageSubtitle = true;
+		$this->wg->SuppressPageSubtitle = true;
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
 		$userName = $this->wg->user->getName();
@@ -186,8 +168,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				$action === wfMessage( 'wikiamobile-sendpassword-label' )->escaped() ||
 				$type === 'forgotPassword'
 			) {
-				$this->result = $response->getVal( 'result', '' );
-				$this->msg = $response->getVal( 'msg', '' );
+				$this->result = $this->request->getVal( 'result', '' );
+				$this->msg = $this->request->getVal( 'msg', '' );
 			} else if ( $action === wfMessage( 'resetpass_submit' )->escaped() ) {
 				// change password
 				$this->editToken = $this->wg->request->getVal( 'editToken', '' );
@@ -296,101 +278,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->redirectUrl = SpecialPage::getTitleFor( 'CloseMyAccount', 'reactivate' )->getFullUrl();
 	}
 
-	/**
-	 * Renders html version that will be inserted into ajax based login interaction.
-	 * On GET, template partial for an ajax element will render
-	 */
-	public function dropdown() {
-		$query = $this->app->wg->Request->getValues();
-
-		$this->response->setVal( 'returnto', $this->getReturnToFromQuery( $query ) );
-		$this->response->setVal( 'returntoquery', $this->getReturnToQueryFromQuery( $query ) );
-
-		$requestParams = $this->getRequest()->getParams();
-		if ( !empty( $requestParams['registerLink'] ) ) {
-			$this->response->setVal( 'registerLink',  $requestParams['registerLink'] );
-		}
-
-		if ( !empty( $requestParams['template'] ) ) {
-			$this->overrideTemplate( $requestParams['template'] );
-		}
-	}
-
-	public function getReturnToFromQuery( $query ) {
-		if ( !is_array( $query ) ) {
-			return '';
-		}
-
-		// If there's already a returnto here, use it.
-		if ( isset( $query['returnto'] ) ) {
-			return $query['returnto'];
-		}
-
-		if ( isset( $query['title'] ) && !$this->isTitleBlacklisted( $query['title'] ) ) {
-			$returnTo = $query['title'];
-		} else {
-			$returnTo = $this->getMainPagePartialUrl();
-		}
-
-		return $returnTo;
-	}
-
-	private function getMainPagePartialUrl() {
-		return Title::newMainPage()->getPartialURL();
-	}
-
-	private function isTitleBlacklisted( $title ) {
-		return AccountNavigationController::isBlacklisted( $title );
-	}
-
-	private function getReturnToQueryFromQuery( $query ) {
-		if ( !is_array( $query ) ) {
-			return '';
-		}
-
-		if ( isset( $query['returnto'] ) ) {
-			// If we're already got a 'returnto' value, make sure to pair it with the 'returntoquery' or
-			// default to blank if there isn't one.
-			return array_key_exists( 'returntoquery', $query ) ? $query['returntoquery'] : '';
-		} elseif ( $this->request->wasPosted() ) {
-			// Don't use any query parameters if this was a POST and we couldn't find
-			// a returntoquery param
-			return '';
-		}
-
-		// Ignore the title parameter as it would either be used by the returnto or blacklisted
-		unset( $query['title'] );
-		return wfArrayToCGI( $query );
-	}
-
-	public function providers() {
-		$this->response->setVal( 'requestType',  $this->request->getVal( 'requestType', '' ) );
-
-		// don't render FBconnect button when the extension is disabled
-		if ( empty( $this->wg->EnableFacebookClientExt ) ) {
-			$this->skipRendering();
-		}
-
-		$this->tabindex = $this->request->getVal( 'tabindex', null );
-
-		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
-			$this->overrideTemplate( 'WikiaMobileProviders' );
-		}
-	}
-
-	public function providersTop() {
-		$this->response->setVal( 'requestType',  $this->request->getVal( 'requestType', '' ) );
-
-		// don't render FBconnect button when the extension is disabled
-		if ( empty( $this->wg->EnableFacebookClientExt ) ) {
-			$this->skipRendering();
-		}
-
-		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
-			$this->overrideTemplate( 'WikiaMobileProviders' );
-		}
-	}
-
 	public function modal() {
 		$this->response->setVal( 'loginToken', UserLoginHelper::getLoginToken() );
 		$this->response->setVal( 'signupUrl', Title::newFromText( 'UserSignup', NS_SPECIAL )->getFullUrl() );
@@ -446,15 +333,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		switch ( $loginCase ) {
 			case LoginForm::SUCCESS:
 				// first check if user has confirmed email after sign up
-				if ( $this->wg->User->getGlobalFlag( self::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) &&
-					/*
-					 * Remove when SOC-217 ABTest is finished
-					 */
-					$this->wg->User->getGlobalPreference( self::NOT_CONFIRMED_LOGIN_OPTION_NAME ) !== self::NOT_CONFIRMED_LOGIN_ALLOWED
-					/*
-					 * end remove
-					 */
-				) {
+				if ( $this->wg->User->getGlobalFlag( self::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) ) {
 					// User not confirmed on signup
 					LoginForm::clearLoginToken();
 					$this->userLoginHelper->setNotConfirmedUserSession( $this->wg->User->getId() );
@@ -466,7 +345,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				} else {
 					$result = '';
 					$resultMsg = '';
-					if ( !wfRunHooks( 'WikiaUserLoginSuccess', array( $this->wg->User, &$result, &$resultMsg ) ) ) {
+					if ( !Hooks::run( 'WikiaUserLoginSuccess', array( $this->wg->User, &$result, &$resultMsg ) ) ) {
 						$this->response->setValues( [
 							'result' => $result,
 							'msg' => $resultMsg,
@@ -476,7 +355,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 
 					// Login succesful
 					$injected_html = '';
-					wfRunHooks( 'UserLoginComplete', array( &$this->wg->User, &$injected_html ) );
+					Hooks::run( 'UserLoginComplete', array( &$this->wg->User, &$injected_html ) );
 
 					// set rememberpassword option
 					if ( (bool)$loginForm->mRemember != (bool)$this->wg->User->getGlobalPreference( 'rememberpassword' ) ) {
@@ -606,38 +485,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * Given a message key and any params for that key (exactly the same signature as wfMessage),
-	 * set the error response for this request
-	 *
-	 * @param string $key The message key
-	 * @param array ...$params The first element of this array will always be the message key
-	 */
-	private function setErrorResponse( $key, ...$params ) {
-		$this->setResponseGeneric(  $key, $params, 'error' );
-	}
-
-	/**
-	 * Same as setErrorResponse except the message key is parsed for wikitext
-	 *
-	 * @param string $key The message key
-	 * @param array ...$params The first element of this array will always be the message key
-	 */
-	private function setParsedErrorResponse( $key, ...$params ) {
-		$this->setResponseGeneric( $key, $params, 'error', 'parse' );
-	}
-
-	/**
-	 * Given a message key and any params for that key (exactly the same signature as wfMessage),
-	 * set a success response for this request
-	 *
-	 * @param string $key The message key
-	 * @param array ...$params The first element of this array will always be the message key
-	 */
-	private function setSuccessResponse( $key, ...$params ) {
-		$this->setResponseGeneric(  $key, $params );
-	}
-
-	/**
 	 * Set a success or fail status for the request.
 	 *
 	 * @param string $key The message key
@@ -725,7 +572,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				if ( $newPassword !== $retype ) {
 					$this->result = 'error';
 					$this->msg = wfMessage( 'badretype' )->escaped();
-					wfRunHooks( 'PrefsPasswordAudit', [ $user, $newPassword, 'badretype' ] );
+					Hooks::run( 'PrefsPasswordAudit', [ $user, $newPassword, 'badretype' ] );
 					return;
 				}
 
@@ -733,7 +580,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				if ( !$user->checkPassword( $password )->success() ) {
 					$this->result = 'error';
 					$this->msg = wfMessage( 'userlogin-error-wrongpassword' )->escaped();
-					wfRunHooks( 'PrefsPasswordAudit', [ $user, $newPassword, 'wrongpassword' ] );
+					Hooks::run( 'PrefsPasswordAudit', [ $user, $newPassword, 'wrongpassword' ] );
 					return;
 				}
 
@@ -745,7 +592,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				}
 
 				$user->setPassword( $newPassword );
-				wfRunHooks( 'PrefsPasswordAudit', [ $user, $newPassword, 'success' ] );
+				Hooks::run( 'PrefsPasswordAudit', [ $user, $newPassword, 'success' ] );
 				$user->saveSettings();
 
 				$this->result = 'ok';

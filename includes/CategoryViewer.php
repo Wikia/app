@@ -284,7 +284,7 @@ class CategoryViewer extends ContextSource {
 
 			/* Wikia change begin - @author: TomekO */
 			/* Changed by MoLi (1.19 ugrade) */
-			wfRunHooks( 'CategoryViewer::beforeCategoryData',array( &$extraConds ) );
+			Hooks::run( 'CategoryViewer::beforeCategoryData',array( &$extraConds ) );
 			/* Wikia change end */
 
 			$res = $dbr->select(
@@ -337,7 +337,7 @@ class CategoryViewer extends ContextSource {
 					$this->addImage( $title, $humanSortkey, $row->page_len, $row->page_is_redirect );
 				} else {
 					# <Wikia>
-					if( wfRunHooks( "CategoryViewer::addPage", array( &$this, &$title, &$row, $humanSortkey ) ) ) {
+					if( Hooks::run( "CategoryViewer::addPage", array( $this, $title, &$row, $humanSortkey ) ) ) {
 						$this->addPage( $title, $humanSortkey, $row->page_len, $row->page_is_redirect );
 					}
 					# </Wikia>
@@ -353,7 +353,7 @@ class CategoryViewer extends ContextSource {
 		$r = '';
 		/* Wikia change begin - @author: wladek */
 		/* Category Galleries hook */
-		wfRunHooks('CategoryPage::getCategoryTop',array($this,&$r));
+		Hooks::run('CategoryPage::getCategoryTop',array($this,&$r));
 		/* Wikia change end */
 
 		$r .= $this->getCategoryBottom();
@@ -442,7 +442,8 @@ class CategoryViewer extends ContextSource {
 	/* <Wikia> */
 	function getOtherSection() {
 		$r = "";
-		wfRunHooks( "CategoryViewer::getOtherSection", array( &$this, &$r ) );
+		Hooks::run( "CategoryViewer::getOtherSection", [ $this, &$r ] );
+
 		return $r;
 	}
 	/* </Wikia> */
@@ -699,7 +700,11 @@ class CategoryViewer extends ContextSource {
 			# to refresh the incorrect category table entry -- which should be
 			# quick due to the small number of entries.
 			$totalcnt = $rescnt;
-			$this->cat->refreshCounts();
+
+			// SUS-1782: Schedule a background task to update the bogus data
+			$task = new \Wikia\Tasks\Tasks\RefreshCategoryCountsTask();
+			$task->call( 'refreshCounts', $this->title->getDBkey() );
+			$task->queue();
 		} else {
 			# Case 3: hopeless.  Don't give a total count at all.
 			return wfMessage( "category-$type-count-limited" )->numParams( $rescnt )->parseAsBlock();

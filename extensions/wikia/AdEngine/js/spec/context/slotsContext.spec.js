@@ -1,6 +1,6 @@
 
 /*global beforeEach, describe, it, expect, modules, spyOn*/
-describe('ext.wikia.adEngine.context.uapContext', function () {
+describe('ext.wikia.adEngine.context.slotsContext', function () {
 	'use strict';
 
 	function noop() {
@@ -8,6 +8,9 @@ describe('ext.wikia.adEngine.context.uapContext', function () {
 
 	var mocks = {
 		context: {
+			targeting: {
+				skin: 'oasis'
+			},
 			opts: {}
 		},
 		adContext: {
@@ -16,9 +19,23 @@ describe('ext.wikia.adEngine.context.uapContext', function () {
 				return mocks.context;
 			}
 		},
-		adLogicZoneParams: {
-			getPageType: function () {
-				return mocks.context.pageType;
+		videoFrequencyMonitor: {
+			canLaunchVideo: true,
+			videoCanBeLaunched: function () {
+				return mocks.videoFrequencyMonitor.canLaunchVideo;
+			}
+		},
+		doc: {
+			querySelectorAll: function() {
+				return [
+					undefined,
+					{
+						offsetWidth: 30,
+						parentNode: {
+							offsetWidth: 30
+						}
+					}
+				];
 			}
 		},
 		geo: {
@@ -30,10 +47,13 @@ describe('ext.wikia.adEngine.context.uapContext', function () {
 		log: noop
 	};
 
+	mocks.log.levels = {};
+
 	function getContext() {
 		return modules['ext.wikia.adEngine.context.slotsContext'](
 			mocks.adContext,
-			mocks.adLogicZoneParams,
+			mocks.videoFrequencyMonitor,
+			mocks.doc,
 			mocks.geo,
 			mocks.instantGlobals,
 			mocks.log
@@ -42,7 +62,7 @@ describe('ext.wikia.adEngine.context.uapContext', function () {
 
 	beforeEach(function () {
 		mocks.context.opts = {};
-		mocks.context.pageType = 'article';
+		mocks.context.targeting.pageType = 'article';
 		mocks.instantGlobals = {};
 	});
 
@@ -52,23 +72,23 @@ describe('ext.wikia.adEngine.context.uapContext', function () {
 		expect(context.isApplicable('TOP_LEADERBOARD')).toBeTruthy();
 		expect(context.isApplicable('TOP_RIGHT_BOXAD')).toBeTruthy();
 		expect(context.isApplicable('PREFOOTER_MIDDLE_BOXAD')).toBeFalsy();
+		expect(context.isApplicable('INCONTENT_PLAYER')).toBeTruthy();
 	});
 
 	it('on home page mark article slots and one home specific slot as enabled', function () {
-		mocks.context.pageType = 'home';
+		mocks.context.targeting.pageType = 'home';
 		var context = getContext();
 
 		expect(context.isApplicable('TOP_LEADERBOARD')).toBeTruthy();
 		expect(context.isApplicable('TOP_RIGHT_BOXAD')).toBeTruthy();
 		expect(context.isApplicable('PREFOOTER_MIDDLE_BOXAD')).toBeTruthy();
+		expect(context.isApplicable('INCONTENT_PLAYER')).toBeFalsy();
 	});
 
 	it('geo restricted slots are disabled by default', function () {
 		var context = getContext();
 
 		expect(context.isApplicable('INVISIBLE_HIGH_IMPACT_2')).toBeFalsy();
-		expect(context.isApplicable('INCONTENT_LEADERBOARD')).toBeFalsy();
-		expect(context.isApplicable('INCONTENT_PLAYER')).toBeFalsy();
 	});
 
 	it('geo based slots', function () {
@@ -76,14 +96,6 @@ describe('ext.wikia.adEngine.context.uapContext', function () {
 			{
 				countriesVariable: 'wgAdDriverHighImpact2SlotCountries',
 				slotName: 'INVISIBLE_HIGH_IMPACT_2'
-			},
-			{
-				countriesVariable: 'wgAdDriverIncontentLeaderboardSlotCountries',
-				slotName: 'INCONTENT_LEADERBOARD'
-			},
-			{
-				countriesVariable: 'wgAdDriverIncontentPlayerSlotCountries',
-				slotName: 'INCONTENT_PLAYER'
 			}
 		];
 
@@ -116,6 +128,13 @@ describe('ext.wikia.adEngine.context.uapContext', function () {
 		expect(context.isApplicable('PREFOOTER_RIGHT_BOXAD')).toBeFalsy();
 	});
 
+	it('disable INCONTENT_PLAYER by vide frequency capping', function () {
+		mocks.videoFrequencyMonitor.canLaunchVideo = false;
+		var context = getContext();
+
+		expect(context.isApplicable('INCONTENT_PLAYER')).toBeFalsy();
+	});
+
 	it('filter slot map based on status (article page type)', function () {
 		var context = getContext(),
 			slotMap = {
@@ -133,7 +152,7 @@ describe('ext.wikia.adEngine.context.uapContext', function () {
 	});
 
 	it('filter slot map based on status (home page type)', function () {
-		mocks.context.pageType = 'home';
+		mocks.context.targeting.pageType = 'home';
 		var context = getContext(),
 			slotMap = {
 				TOP_LEADERBOARD: 1,
@@ -151,9 +170,58 @@ describe('ext.wikia.adEngine.context.uapContext', function () {
 	});
 
 	it('filter slot map that is undefined - no slot maps for given skin', function () {
-		var context = getContext(),
-			slotMap;
+		var context = getContext();
 
-		expect(context.filterSlotMap(slotMap)).toEqual({});
+		expect(context.filterSlotMap()).toEqual({});
+	});
+
+	it('filter slot map for premium ad layout (article page)', function () {
+		mocks.context.opts.premiumAdLayoutEnabled = true;
+		mocks.instantGlobals['wgAdDriverHighImpact2SlotCountries'] = ['XX'];
+
+		var context = getContext(),
+			slotMap = {
+				TOP_LEADERBOARD: 1,
+				TOP_RIGHT_BOXAD: 2,
+				PREFOOTER_LEFT_BOXAD: 3,
+				PREFOOTER_MIDDLE_BOXAD: 4,
+				PREFOOTER_RIGHT_BOXAD: 5,
+				LEFT_SKYSCRAPER_2: 6,
+				LEFT_SKYSCRAPER_3: 7,
+				INVISIBLE_HIGH_IMPACT_2: 8,
+				BOTTOM_LEADERBOARD: 9
+			};
+
+		expect(context.filterSlotMap(slotMap)).toEqual({
+			TOP_LEADERBOARD: 1,
+			TOP_RIGHT_BOXAD: 2,
+			INVISIBLE_HIGH_IMPACT_2: 8,
+			BOTTOM_LEADERBOARD: 9
+		});
+	});
+
+	it('filter slot map for premium ad layout (featured video page)', function () {
+		mocks.context.opts.premiumAdLayoutEnabled = true;
+		mocks.context.targeting.hasFeaturedVideo = true;
+		mocks.instantGlobals['wgAdDriverHighImpact2SlotCountries'] = ['XX'];
+
+		var context = getContext(),
+			slotMap = {
+				TOP_LEADERBOARD: 1,
+				TOP_RIGHT_BOXAD: 2,
+				PREFOOTER_LEFT_BOXAD: 3,
+				PREFOOTER_MIDDLE_BOXAD: 4,
+				PREFOOTER_RIGHT_BOXAD: 5,
+				LEFT_SKYSCRAPER_2: 6,
+				LEFT_SKYSCRAPER_3: 7,
+				INVISIBLE_HIGH_IMPACT_2: 8,
+				BOTTOM_LEADERBOARD: 9
+			};
+
+		expect(context.filterSlotMap(slotMap)).toEqual({
+			TOP_LEADERBOARD: 1,
+			TOP_RIGHT_BOXAD: 2,
+			BOTTOM_LEADERBOARD: 9
+		});
 	});
 });

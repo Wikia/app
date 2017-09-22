@@ -9,17 +9,16 @@ $(function() {
 					offset: globalNavigationHeight,
 					onPin: function() {
 						// Don't cache selector because notifications can appear after page load
-						$('.banner-notifications-wrapper').css('top', globalNavigationHeight);
+						$('.wds-banner-notification__container').css('top', globalNavigationHeight);
 					},
 					onUnpin: function() {
 						if (
-							globalNavigation.hasClass('wds-dropdown-is-open') ||
 							globalNavigation.hasClass('wds-search-is-active')
 						) {
 							// don't allow to unpin global nav when dropdown is open or search is active
 							$(this.elem).addClass(this.classes.pinned).removeClass(this.classes.unpinned);
 						} else {
-							$('.banner-notifications-wrapper').css('top', 0);
+							$('.wds-banner-notification__container').css('top', 0);
 						}
 
 					}

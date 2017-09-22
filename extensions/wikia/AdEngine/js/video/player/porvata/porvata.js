@@ -5,7 +5,7 @@ define('ext.wikia.adEngine.video.player.porvata', [
 	'ext.wikia.adEngine.video.player.porvata.porvataTracker',
 	'wikia.log',
 	'wikia.viewportObserver',
-	require.optional('ext.wikia.adEngine.video.player.porvata.floater'),
+	require.optional('ext.wikia.adEngine.video.player.porvata.floater')
 ], function (googleIma, porvataPlayerFactory, tracker, log, viewportObserver, floater) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata';
@@ -46,10 +46,10 @@ define('ext.wikia.adEngine.video.player.porvata', [
 		tracker.track(params, 'init');
 
 		params.vastTargeting = params.vastTargeting || {
-				src: params.src,
-				pos: params.slotName,
-				passback: 'porvata'
-			};
+			src: params.src,
+			pos: params.slotName,
+			passback: 'porvata'
+		};
 
 		return googleIma.load()
 			.then(function () {
@@ -61,14 +61,13 @@ define('ext.wikia.adEngine.video.player.porvata', [
 
 				return porvataPlayerFactory.create(videoSettings, ima);
 			}).then(function (video) {
+				video.wasInViewport = false;
 				log(['porvata video player created', video], log.levels.debug, logGroup);
 				tracker.register(video, params);
 
 				function shouldResume(isVisible) {
 					// Don't resume when video was paused manually
 					return isVisible && autoPaused &&
-						// Do not resume automatically when video has controls
-						!videoSettings.hasUiControls() &&
 						// Do not resume when video floating is active
 						!isFloatingEnabled(params);
 				}
@@ -83,8 +82,10 @@ define('ext.wikia.adEngine.video.player.porvata', [
 				}
 
 				function inViewportCallback(isVisible) {
+					video.wasInViewport = true;
 					// Play video automatically only for the first time
 					if (isVisible && !autoPlayed && videoSettings.isAutoPlay()) {
+						video.ima.dispatchEvent('wikiaFirstTimeInViewport');
 						video.play();
 						autoPlayed = true;
 					} else if (shouldResume(isVisible)) {
@@ -114,6 +115,8 @@ define('ext.wikia.adEngine.video.player.porvata', [
 					if (!viewportListener) {
 						viewportListener = viewportObserver.addListener(params.container, inViewportCallback);
 					}
+
+					tryEnablingFloating(video, inViewportCallback);
 				});
 				video.addEventListener('resume', function () {
 					video.ima.dispatchEvent('wikiaAdPlay');
@@ -133,13 +136,9 @@ define('ext.wikia.adEngine.video.player.porvata', [
 					muteFirstPlay(video);
 				}
 
-				if (params.onReady) {
-					params.onReady(video);
-				}
-
-				viewportListener = viewportObserver.addListener(params.container, inViewportCallback);
-
-				tryEnablingFloating(video, inViewportCallback);
+				video.addEventListener('wikiaAdsManagerLoaded', function () {
+					viewportListener = viewportObserver.addListener(params.container, inViewportCallback);
+				});
 
 				return video;
 			});

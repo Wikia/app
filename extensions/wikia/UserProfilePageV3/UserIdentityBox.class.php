@@ -407,7 +407,7 @@ class UserIdentityBox extends WikiaObject {
 		wfProfileIn( __METHOD__ );
 
 		$_ = array();
-		$res = wfRunHooks( 'SpamFilterCheck', array( $spamSubject, null, &$_ ) );
+		$res = Hooks::run( 'SpamFilterCheck', array( $spamSubject, null, &$_ ) );
 
 		wfProfileOut( __METHOD__ );
 		return $res;
@@ -589,7 +589,11 @@ class UserIdentityBox extends WikiaObject {
 	 * @return array
 	 */
 	public function getTopWikis( $refreshHidden = false ) {
-		return $this->getFavoriteWikisModel()->getTopWikis( $refreshHidden );
+		if ( $this->user->getGlobalPreference( 'hideEditsWikis' ) ) {
+			return [];
+		} else {
+			return $this->getFavoriteWikisModel()->getTopWikis( $refreshHidden );
+		}
 	}
 
 	/**

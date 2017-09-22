@@ -106,7 +106,7 @@ class WikiFactoryReporter extends SpecialPage
 		while ($row = $dbr->fetchObject($res))
 		{
 			$city_id = $row->city_id;
-			$cv_value = unserialize($row->cv_value);
+			$cv_value = unserialize( $row->cv_value, [ 'allowed_classes' => false ] );
 			$nom_value = $cv_value;
 			if (is_array($cv_value))
 			{

@@ -48,11 +48,12 @@ class ContentFeeds {
 
 	/**
 	 * parser hook for <wikitweets> tag
-	 * @return string tag body
+	 * @param $input
+	 * @param $args
+	 * @param Parser $parser
+	 * @return bool tag body
 	 */
-	public static function wikiTweetsParserHook( $input, $args, $parser ) {
-		global $wgOut, $wgExtensionsPath, $wgTitle;
-
+	public static function wikiTweetsParserHook( $input, $args, Parser $parser ): bool {
 		$limit = isset($args['size']) && intval($args['size']) ? $args['size'] : 5;
 		$phrase = isset($args['keywords']) ? $args['keywords'] : '';
 
@@ -61,7 +62,7 @@ class ContentFeeds {
 		}
 
 		// parse all "magic words" in the phrase
-		$phrase = trim( strip_tags( ParserPool::parse( $phrase, $wgTitle, $parser->mOptions )->getText() ) );
+		$phrase = trim( strip_tags( ParserPool::parse( $phrase, $parser->getTitle(), $parser->mOptions )->getText() ) );
 
 		$phrase = urlencode($phrase);
 		self::$wikiTweetsTagCount++;
@@ -91,8 +92,6 @@ class ContentFeeds {
 	 * @return string tag body
 	 */
 	public static function userTweetsParserHook( $input, $args, $parser ) {
-		global $wgOut, $wgExtensionsPath, $wgTitle;
-
 		$limit = isset($args['limit']) && intval($args['limit']) ? $args['limit'] : 5;
 		$user = isset($args['username']) ? $args['username'] : '';
 
@@ -146,22 +145,6 @@ class ContentFeeds {
 
 		$tagBody = '<ul class="cfTopUsersListTag">';
 		foreach ( DataProvider::singleton()->GetTopFiveUsers( $args['limit'] ) as $article ) {
-			$tagBody .= '<li><a href="' . htmlspecialchars( $article['url'] ) . '">' . htmlspecialchars( $article['text'] ) . '</a></li>';
-		}
-		$tagBody .= '</ul>';
-
-		return $tagBody;
-	}
-
-	/**
-	 * parser hook for <topvotedlist> tag
-	 * @return string tag body
-	 */
-	public static function highestRatedParserHook( $input, $args, $parser ) {
-		$args = self::extractArgs( $args );
-
-		$tagBody = '<ul class="cfTopVotedListTag">';
-		foreach ( DataProvider::singleton()->GetTopVotedArticles( $args['limit'] ) as $article ) {
 			$tagBody .= '<li><a href="' . htmlspecialchars( $article['url'] ) . '">' . htmlspecialchars( $article['text'] ) . '</a></li>';
 		}
 		$tagBody .= '</ul>';
@@ -261,46 +244,4 @@ class ContentFeeds {
 		}
 		return true;
 	}
-
-	/**
-	 * parser hook for <firstfewarticles> tag
-	 *
-	 * TODO: finish it
-	 *
-	 * @return string tag body
-	 */
-	public static function firstFewArticlesParserHook( $input, $args, $parser ) {
-		global $wgExtensionsPath;
-
-		$limit = isset( $args['limit'] ) ? $args['limit'] : 1;
-
-		$emptyTitleErrorMsg = wfMsg( 'contentfeeds-firstfewarticles-tag-empty-title-error' );
-		$emptyBodyErrorMsg = wfMsg( 'contentfeeds-firstfewarticles-tag-empty-body-error' );
-
-		// TODO: refactor using JS snippets (see wikiTweetsParserHook and userTweetsParserHook methods)
-		$jsBody = <<<SCRIPT
-<script type="text/javascript">/*<![CDATA[*/
-	wgAfterContentAndJS.push(function() {
-		$.getScript('{$wgExtensionsPath}/wikia/JavascriptAPI/Mediawiki.js', function() {
-			$( function() {
-				$.getScript('{$wgExtensionsPath}/wikia/ContentFeeds/js/FirstFewArticles.js', function() {
-					$( function() { } );
-				});
-			});
-		});
-	});
-/*]]>*/</script>
-SCRIPT;
-
-		// remove whitespaces from inline JS code
-		$jsBody = preg_replace("#[\n\t]+#", '', $jsBody);
-
-		$template = new EasyTemplate( dirname( __FILE__ )."/templates/" );
-		$template->set_vars( array() );
-
-		$tagBody = $template->render( 'firstFewArticlesTag' );
-
-		return $tagBody . $jsBody;
-	}
-
 }

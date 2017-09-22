@@ -11,7 +11,7 @@ class NavigationModel extends WikiaModel {
 	// 3 hours
 	const CACHE_TTL = 10800;
 
-	const CACHE_VERSION = '1';
+	const CACHE_VERSION = 1;
 	const ORIGINAL = 'original';
 	const PARENT_INDEX = 'parentIndex';
 	const CHILDREN = 'children';
@@ -46,14 +46,9 @@ class NavigationModel extends WikiaModel {
 	const GLOBALNAV_LEVEL_2_ITEMS_COUNT = 4;
 	const GLOBALNAV_LEVEL_3_ITEMS_COUNT = 4;
 
-	const MEMC_VERSION = 2;
-
-	private $menuNodes;
-
 	private $biggestCategories;
 	private $lastExtraIndex = 1000;
 	private $extraWordsMap = [
-		'voted' => 'GetTopVotedArticles',
 		'popular' => 'GetMostPopularArticles',
 		'visited' => 'GetMostVisitedArticles',
 		'newlychanged' => 'GetNewlyChangedArticles',
@@ -101,9 +96,12 @@ class NavigationModel extends WikiaModel {
 		return $this->errors;
 	}
 
+	/**
+	 * @param bool $msgName
+	 * @param string $wikiText
+	 * @return array
+	 */
 	public function getWiki( $msgName = false, $wikiText = '' ) {
-		global $wgUser, $wgOnTheWikiAsLastTab;
-
 		$wikia = $this->parse(
 			self::TYPE_VARIABLE,
 			self::WIKIA_GLOBAL_VARIABLE,
@@ -116,20 +114,21 @@ class NavigationModel extends WikiaModel {
 			true
 		);
 
-		$this->setShouldTranslateContent( false );
-		if ( !empty( $msgName ) && $msgName == self::WIKI_LOCAL_MESSAGE && !empty( $wikiText ) ) {
-			$wiki = $this->parseText(
-				$wikiText,
-				[
-					$this->wg->maxLevelOneNavElements,
-					$this->wg->maxLevelTwoNavElements,
-					$this->wg->maxLevelThreeNavElements
-				]
-			);
-		} else {
-			$wiki = ( $this->wg->User->isAllowed( 'read' ) ?
-				// Only show menu items if user is allowed to view wiki content (BugId:44632)
-				$this->parse(
+		$wiki = [];
+		// Only show menu items if user is allowed to view wiki content (BugId:44632)
+		if ( RequestContext::getMain()->getUser()->isAllowed( 'read' ) ) {
+			$this->setShouldTranslateContent( false );
+			if ( !empty( $msgName ) && $msgName == self::WIKI_LOCAL_MESSAGE && !empty( $wikiText ) ) {
+				$wiki = $this->parseText(
+					$wikiText,
+					[
+						$this->wg->maxLevelOneNavElements,
+						$this->wg->maxLevelTwoNavElements,
+						$this->wg->maxLevelThreeNavElements
+					]
+				);
+			} else {
+				$wiki = $this->parse(
 					self::TYPE_MESSAGE,
 					self::WIKI_LOCAL_MESSAGE,
 					[
@@ -138,132 +137,60 @@ class NavigationModel extends WikiaModel {
 						$this->wg->maxLevelThreeNavElements
 					],
 					self::CACHE_TTL
-				) : [] );
-		}
-		$this->setShouldTranslateContent( true );
-
-		// if user is anon 'On The Wiki' tab is displayed as last tab
-		if ( $wgOnTheWikiAsLastTab && $wgUser->isAnon() ) {
-			return [
-				'wiki' => $wiki,
-				'wikia' => $wikia
-			];
-		} else {
-			return [
-				'wikia' => $wikia,
-				'wiki' => $wiki
-			];
-		}
-	}
-
-	public function getLocalNavigationTree( $messageName, $refreshCache = false ) {
-		return $this->getTree(
-			NavigationModel::TYPE_MESSAGE,
-			$messageName,
-			[
-				self::LOCALNAV_LEVEL_1_ITEMS_COUNT,
-				self::LOCALNAV_LEVEL_2_ITEMS_COUNT,
-				self::LOCALNAV_LEVEL_3_ITEMS_COUNT
-			],
-			$refreshCache
-		);
-	}
-
-	public function getOnTheWikiNavigationTree( $variableName, $refreshCache = false ) {
-		return $this->getTree(
-			NavigationModel::TYPE_VARIABLE,
-			$variableName,
-			[
-				1,
-				self::LOCALNAV_LEVEL_2_ITEMS_COUNT,
-				self::LOCALNAV_LEVEL_3_ITEMS_COUNT
-			],
-			$refreshCache
-		);
-	}
-
-	private function getTreeMemcKey( /* args */ ) {
-		return $this->getMemcKey( implode( '-', func_get_args() + [ self::MEMC_VERSION ] ) );
-	}
-
-	/**
-	 * @param string $type
-	 * @param string $source
-	 * @param array $maxChildrenAtLevel
-	 * @param bool $refreshCache pass true to refresh the cache which stores parsed navigation tree
-	 *
-	 * @return Mixed|null
-	 */
-	public function getTree( $type, $source, Array $maxChildrenAtLevel = [], $refreshCache = false ) {
-		$menuData = WikiaDataAccess::cache(
-			$this->getTreeMemcKey( $type, $source, implode( $maxChildrenAtLevel, '-' ) ),
-			self::CACHE_TTL,
-			function () use ( $type, $source, $maxChildrenAtLevel ) {
-				$menuData = [];
-
-				$this->menuNodes = $this->parse(
-					$type,
-					$source,
-					$maxChildrenAtLevel,
-					self::CACHE_TTL
 				);
-
-				foreach ( $this->menuNodes[0][self::CHILDREN] as $id ) {
-					$menuData[] = $this->recursiveConvertMenuNodeToArray( $id );
-				}
-
-				return $menuData;
-			},
-			( $refreshCache === true ) ? WikiaDataAccess::REFRESH_CACHE : WikiaDataAccess::USE_CACHE
-		);
-
-		return $menuData;
-	}
-
-	/*
-	 * TODO we should refactor whole model when we remove Oasis
-	 *
-	 * This (recursive) function generates tree from menuNodes.
-	 * It basically reverts part of NavigationModel parse; changes simple array
-	 * structure to a nested tree of elements; contain text, href
-	 * and specialAttr for given menu node and all it's children nodes.
-	 * Source ticket: CON-804
-	 *
-	 * IMPORTANT: This function will be called 140 times as on 2014-06-27 - seven hubs,
-	 * four submenus for each hub, five links in each submenu.
-	 *
-	 * @param $index integer of menuitem index to generate data from
-	 * @return array tree of menu nodes for given index
-	 */
-	private function recursiveConvertMenuNodeToArray( $index ) {
-		$node = $this->menuNodes[$index];
-		$returnValue = [
-			self::TEXT => $node[self::TEXT],
-			'textEscaped' => htmlspecialchars( $node[self::TEXT], ENT_QUOTES | ENT_HTML5, 'UTF-8' ),
-			self::HREF => $node[self::HREF],
-		];
-		if ( !empty( $node[self::SPECIAL] ) ) {
-			$returnValue[self::SPECIAL] = $node[self::SPECIAL];
-		}
-		if ( !empty( $node[self::CANONICAL_NAME] ) ) {
-			$returnValue[self::CANONICAL_NAME] = $node[self::CANONICAL_NAME];
-			$returnValue[self::CANONICAL_ATTR] = 'data-canonical="' . strtolower( $node[self::CANONICAL_NAME] ) . '" ';
-		} else {
-			$returnValue[self::CANONICAL_ATTR] = null;
-		}
-
-		if ( isset( $node[self::CHILDREN] ) ) {
-			$children = [];
-
-			foreach ( $node[self::CHILDREN] as $childId ) {
-				$children[] = $this->recursiveConvertMenuNodeToArray( $childId );
 			}
-
-			$returnValue[self::CHILDREN] = $children;
+			$this->setShouldTranslateContent( true );
 		}
 
-		return $returnValue;
+		return [
+			'wikia' => $wikia,
+			'wiki' => $wiki
+		];
 	}
+
+	public function getFormattedWiki( $msgName = false, $wikiText = '' ) {
+		$nav = $this->getWiki( $msgName, $wikiText );
+
+		$ret = [];
+		foreach ( $nav as $type => $list ) {
+			$ret[$type] = $this->getChildren( $list );
+		}
+
+		return $ret;
+	}
+
+	private function getChildren( $list, $i = 0 ) {
+		$children = [];
+		$next = [];
+
+		if ( isset ( $list[$i] ) ) {
+			$element = $list[$i];
+		} else {
+			return [];
+		}
+
+		if ( isset( $element['children'] ) ) {
+			foreach ( $element['children'] as $child ) {
+				$children[] = $this->getChildren( $list, $child );
+			}
+		}
+
+		if ( isset( $element['text'] ) ) {
+			$next = [
+				'text' => $element['text'],
+				'href' => $element['href']
+			];
+
+			if ( !empty( $children ) ) {
+				$next['children'] = $children;
+			}
+		} else if ( !empty( $children ) ) {
+			$next = $children;
+		}
+
+		return $next;
+	}
+
 
 	/**
 	 * Parse wikitext from given "source" - either MediaWiki message or WikiFactory variable
@@ -277,11 +204,11 @@ class NavigationModel extends WikiaModel {
 	 * @return array parsed menu wikitext
 	 */
 	public function parse(
-		$type,
-		$source,
+		string $type,
+		string $source,
 		Array $maxChildrenAtLevel = [],
-		$duration = 3600,
-		$filterInactiveSpecialPages = false
+		int $duration = 3600,
+		bool $filterInactiveSpecialPages = false
 	) {
 		$nodes = WikiaDataAccess::cacheWithOptions(
 			$this->getMemcKey( $source ),

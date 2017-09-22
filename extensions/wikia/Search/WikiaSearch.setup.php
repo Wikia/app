@@ -5,12 +5,9 @@
  * @author Robert Elwell <robert(at)wikia-inc.com>
  */
 
-$app = F::app();
-$dir = dirname( __FILE__ ) . '/';
+$dir = __DIR__ . '/';
 
-require_once( $IP . '/lib/vendor/php-nlp-tools/autoloader.php' ); //@TODO find a better place for this
 require_once( $IP . '/lib/vendor/Solarium/Autoloader.php' );
-require_once( $IP . '/lib/vendor/simplehtmldom/simple_html_dom.php' );
 Solarium_Autoloader::register();
 
 /**
@@ -56,7 +53,8 @@ $wgSpecialPages['Search'] = 'WikiaSearchController';
 /**
  * Wikia API controllers
  */
-$app->registerApiController( 'SearchApiController', "{$dir}SearchApiController.class.php" );
+$wgAutoloadClasses['SearchApiController'] = $dir . 'SearchApiController.class.php';
+$wgWikiaApiControllers['SearchApiController'] = $dir . 'SearchApiController.class.php';
 
 /**
  * message files

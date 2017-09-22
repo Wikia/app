@@ -1,5 +1,6 @@
 <?php
 
+use Wikia\DependencyInjection\Injector;
 use \Wikia\Logger\WikiaLogger;
 
 class PhalanxHooks extends WikiaObject {
@@ -13,7 +14,7 @@ class PhalanxHooks extends WikiaObject {
 	 *
 	 * @param $id Integer: user ID
 	 * @param $nt Title: user page title
-	 * @param $links Array: tool links
+	 * @param $links array: tool links
 	 * @return boolean true
 	 */
 	static public function loadLinks( $id, $nt, &$links ) {
@@ -22,7 +23,7 @@ class PhalanxHooks extends WikiaObject {
 		$user = RequestContext::getMain()->getUser();
 
 		if ( $user->isAllowed( 'phalanx' ) ) {
-			$links[] = Linker::makeKnownLinkObj(
+			$links[] = Linker::linkKnown(
 				GlobalTitle::newFromText( 'Phalanx', NS_SPECIAL, WikiFactory::COMMUNITY_CENTRAL ),
 				'PhalanxBlock',
 				wfArrayToCGI(
@@ -85,7 +86,7 @@ class PhalanxHooks extends WikiaObject {
 	 * Add/edit Phalanx block
 	 *
 	 * @param array $data contains block information, possible keys: id, author_id, text, 
-	 * type, timestamp, expire, exact, regex, case, reason, lang, ip_hex
+	 * type, timestamp, expire, exact, regex, case, reason, lang
 	 * @return int id block or false if error
 	 *
 	 * @author moli
@@ -134,6 +135,11 @@ class PhalanxHooks extends WikiaObject {
 
 		$phalanx['type'] = $typemask;
 
+		// SUS-2759: If a filter is meant to apply to all languages, the p_lang field must be NULL
+		if ( $phalanx['lang'] === 'all' ) {
+			$phalanx['lang'] = null;
+		}
+
 		if ( $phalanx['expire'] === '' || is_null( $phalanx['expire'] ) ) {
 			// don't change expire
 			unset( $phalanx['expire'] );
@@ -174,7 +180,7 @@ class PhalanxHooks extends WikiaObject {
 		}
 
 		if ( $result !== false ) {
-			$service = new PhalanxService();
+			$service = Injector::getInjector()->get( PhalanxService::class );
 			$ret = $service->reload( $result["success"] );
 		} else {
 			$ret = $result;
@@ -205,7 +211,7 @@ class PhalanxHooks extends WikiaObject {
 
 		$id = $phalanx->delete();
 		if ( $id ) {
-			$service = new PhalanxService();
+			$service = Injector::getInjector()->get( PhalanxService::class );
 			$ids = array( $id );
 			$ret = $service->reload( $ids );
 		} else {
@@ -255,11 +261,13 @@ class PhalanxHooks extends WikiaObject {
 		$clientIPFromFastly = $wgRequest->getHeader( $wgClientIPHeader );
 
 		if ( !User::isIP( $clientIPFromFastly ) && !$wgRequest->isWikiaInternalRequest() ) {
+			$userAgent = $wgRequest->getHeader( 'User-Agent' );
 			WikiaLogger::instance()->error( 'Phalanx user IP incorrect', [
 				'ip_from_fastly' => $clientIPFromFastly,
 				'ip_from_user' => $user->getName(),
 				'ip_from_request' => $wgRequest->getIP(),
-				'user_agent' => $wgRequest->getHeader( 'User-Agent' ),
+				// SUS-2008, always log user_agent as string
+				'user_agent' => $userAgent ?: '',
 			] );
 		}
 

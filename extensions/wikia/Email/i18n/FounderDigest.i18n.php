@@ -13,9 +13,7 @@ $messages['en'] = array(
 	'emailext-founder-digest-views-description-2' => 'Keep up the great work adding interesting pages, discussions, photos and videos.',
 	'emailext-founder-digest-edits-header' => '$1 Contributions Made',
 	'emailext-founder-digest-edits-description' => 'Make sure to thank those who contribute so they feel the love!',
-	'emailext-founder-digest-users-header' => '$1 New community members',
-	'emailext-founder-digest-users-description' => 'Welcome new people to your community! Get them involved in the great fan community you created.',
-	'emailext-founder-digest-signature' => 'The Fandom Community Team',
+	'emailext-founder-digest-signature' => 'The FANDOM Community Team',
 );
 
 $messages['qqq'] = array(
@@ -30,8 +28,6 @@ $messages['qqq'] = array(
 	'emailext-founder-digest-views-description-2' => 'Alternate description text for the page views header in the page views digest',
 	'emailext-founder-digest-edits-header' => 'Header text for number of edits made. $1 is the number of page edits.',
 	'emailext-founder-digest-edits-description' => 'Description text for the number-of-edits header',
-	'emailext-founder-digest-users-header' => 'Header text for number of new users. $1 is the number of new users joined.',
-	'emailext-founder-digest-users-description' => 'Description text for the number-of-users header',
 	'emailext-founder-digest-signature' => 'The signature for this email',
 );
 
@@ -47,9 +43,9 @@ $messages['de'] = array(
 	'emailext-founder-digest-views-description-2' => 'Wir freuen uns, wenn du auch weiterhin so gute Arbeit leistest, interessante Seiten erstellst, zu Diskussionen beiträgst und Fotos und Videos bereitstellst.',
 	'emailext-founder-digest-edits-header' => '$1 Beiträge erstellt',
 	'emailext-founder-digest-edits-description' => 'Achte darauf, dich bei den Mitgliedern zu bedanken, die zur Community beitragen und lass sie wissen, wie wichtig sie sind!',
+	'emailext-founder-digest-signature' => 'Das FANDOM Community-Team',
 	'emailext-founder-digest-users-header' => '$1 neue Community-Mitglieder',
 	'emailext-founder-digest-users-description' => 'Heiße neue Leute in deiner Community willkommen! Lasse sie an der tollen Fan-Community teilhaben, die du erschaffen hast.',
-	'emailext-founder-digest-signature' => 'Das Fandom Community-Team',
 );
 
 $messages['es'] = array(
@@ -64,9 +60,9 @@ $messages['es'] = array(
 	'emailext-founder-digest-views-description-2' => 'Mantén el gran trabajo añadiendo artículos interesantes, debates, fotos y videos.',
 	'emailext-founder-digest-edits-header' => '$1 Contribuciones realizadas',
 	'emailext-founder-digest-edits-description' => '¡No te olvides de agradecer a quienes contribuyen en tu comunidad para que se sientan reconocidos!',
+	'emailext-founder-digest-signature' => 'El equipo comunitario de FANDOM',
 	'emailext-founder-digest-users-header' => '$1 nuevos miembros en la comunidad',
 	'emailext-founder-digest-users-description' => '¡Da la bienvenida a nuevos usuarios a tu wiki! Involúcralos en la gran comunidad de fanáticos que has creado.',
-	'emailext-founder-digest-signature' => 'El equipo comunitario de Fandom',
 );
 
 $messages['fr'] = array(
@@ -81,9 +77,9 @@ $messages['fr'] = array(
 	'emailext-founder-digest-views-description-2' => 'Vous êtes sur la bonne voie ! Continuez à ajouter des pages, des discussions, des photos et des vidéos.',
 	'emailext-founder-digest-edits-header' => '$1 contributions',
 	'emailext-founder-digest-edits-description' => "Assurez-vous de remercier ceux qui contribuent afin qu'ils se sentent appréciés !",
+	'emailext-founder-digest-signature' => "L'équipe de la communauté FANDOM",
 	'emailext-founder-digest-users-header' => '$1 nouveaux membres dans la communauté',
 	'emailext-founder-digest-users-description' => 'Accueillez de nouveaux utilisateurs au sein de votre communauté ! Faites-les participer à la grande communauté de fans que vous avez créée.',
-	'emailext-founder-digest-signature' => "L'équipe de la communauté Fandom",
 );
 
 $messages['it'] = array(
@@ -98,9 +94,9 @@ $messages['it'] = array(
 	'emailext-founder-digest-views-description-2' => 'Stai lavorando bene! Aggiungi articoli interessanti, discussioni, foto e video per i tuoi lettori.',
 	'emailext-founder-digest-edits-header' => '$1 contributi',
 	'emailext-founder-digest-edits-description' => 'Assicurati di ringraziare chi contribuisce così che si senta apprezzato!',
+	'emailext-founder-digest-signature' => 'Il team della Community di FANDOM',
 	'emailext-founder-digest-users-header' => '$1 nuovi membri della comunità',
 	'emailext-founder-digest-users-description' => 'Dai il benvenuto ai nuovi visitatori della tua comunità! Incoraggiali a partecipare alla grande comunità di fan che hai creato.',
-	'emailext-founder-digest-signature' => 'Il team della Community di Fandom',
 );
 
 $messages['ja'] = array(
@@ -115,17 +111,15 @@ $messages['ja'] = array(
 	'emailext-founder-digest-views-description-2' => 'この調子で、ページやトーク、写真、動画を追加していきましょう。',
 	'emailext-founder-digest-edits-header' => '投稿数：$1件',
 	'emailext-founder-digest-edits-description' => '投稿したユーザーには、ぜひ感謝の気持ちをお伝えください。',
+	'emailext-founder-digest-signature' => 'FANDOMコミュニティ・チーム',
 	'emailext-founder-digest-users-header' => '$1人の新しいコミュニティメンバー ',
 	'emailext-founder-digest-users-description' => '新しいコミュニティメンバーに歓迎の気持ちを伝え、コミュニティの発展に協力してもらいましょう。',
-	'emailext-founder-digest-signature' => 'Fandomコミュニティ・チーム',
 );
 
 $messages['ko'] = array(
 	'emailext-founder-activity-digest-footer' => '[http://ko.community.wikia.com 위키아 중앙 커뮤니티]에서 팁이나 도움을 얻을 수 있습니다.',
 	'emailext-founder-activity-digest-link-label' => '위키 활동 내역',
 	'emailext-founder-digest-edits-description' => '사용자들이 많을수록 커뮤니티는 더 빨리 발전할 수 있습니다. 사용자들을 응원하고 적극적으로 도와 주세요!',
-	'emailext-founder-digest-users-description' => '새로 온 사용자들을 환영해 주세요! 활발한 사용자가 많을수록 커뮤니티도 더욱더 활기를 띠게 됩니다.',
-	'emailext-founder-digest-users-header' => '신규 사용자 $1명',
 	'emailext-founder-digest-views-description-1' => '새로운 정보, 토론, 사진, 동영상 등 사람들이 관심 가질 만한 정보들을 커뮤니티에 추가해 주세요!',
 	'emailext-founder-digest-views-description-2' => '지속적으로 콘텐츠를 발전시키고, 커뮤니티를 홍보해 주세요. 활발한 커뮤니티에 더 많은 사용자가 모이는 법입니다. 언제나 응원하고 있을게요!',
 	'emailext-founder-activity-digest-subject' => '$1의 최근 활동',
@@ -148,9 +142,9 @@ $messages['nl'] = array(
 	'emailext-founder-digest-views-description-2' => 'Keep adding new stuff and promoting your wikia to encourage more people to read, contribute, and spread the word. Your community is looking great!',
 	'emailext-founder-digest-edits-header' => '$1 bijdragen gemaakt',
 	'emailext-founder-digest-edits-description' => 'Happy community members make happy wikias. Make sure to thank those who contribute so they feel the love!',
+	'emailext-founder-digest-signature' => 'The FANDOM Community Team',
 	'emailext-founder-digest-users-header' => '$1 New Wikians',
 	'emailext-founder-digest-users-description' => 'Welcome new people to your wikia! Get them involved in the great fan community you created.',
-	'emailext-founder-digest-signature' => 'The Fandom Community Team',
 );
 
 $messages['pl'] = array(
@@ -165,9 +159,9 @@ $messages['pl'] = array(
 	'emailext-founder-digest-views-description-2' => 'Nie przestawaj dodawać interesujących stron, dyskusji, zdjęć i filmów. Robisz kawał dobrej roboty!',
 	'emailext-founder-digest-edits-header' => 'Dokonane edycje: $1',
 	'emailext-founder-digest-edits-description' => 'Pamiętaj, żeby podziękować innym współtwórcom za ich wkład – niech poczują miłość!',
+	'emailext-founder-digest-signature' => 'Zespół Społeczności portalu FANDOM',
 	'emailext-founder-digest-users-header' => 'Nowi członkowie społeczności: $1',
 	'emailext-founder-digest-users-description' => 'Powitaj nowe osoby w Twojej wiki! Pomóż im zaangażować się w Twoją wspaniałą społeczność.',
-	'emailext-founder-digest-signature' => 'Zespół Społeczności portalu Fandom',
 );
 
 $messages['pt'] = array(
@@ -182,9 +176,9 @@ $messages['pt'] = array(
 	'emailext-founder-digest-views-description-2' => 'Continue o excelente trabalho adicionando páginas interessantes, discussões, fotos e vídeos.',
 	'emailext-founder-digest-edits-header' => '$1 contribuições feitas',
 	'emailext-founder-digest-edits-description' => 'Certifique-se de agradecer aqueles que fazem contribuições!',
+	'emailext-founder-digest-signature' => 'Equipe da Comunidade FANDOM',
 	'emailext-founder-digest-users-header' => '$1 novos membros da comunidade',
 	'emailext-founder-digest-users-description' => 'Dê boas-vindas às novas pessoas na sua comunidade! Envolva-as na grande comunidade de fãs que você criou.',
-	'emailext-founder-digest-signature' => 'Equipe da Comunidade Fandom',
 );
 
 $messages['ru'] = array(
@@ -199,9 +193,9 @@ $messages['ru'] = array(
 	'emailext-founder-digest-views-description-2' => 'Продолжайте добавлять интересные страницы, темы обсуждений, изображения и видео.',
 	'emailext-founder-digest-edits-header' => 'Сделано правок: $1',
 	'emailext-founder-digest-edits-description' => 'Не забудьте благодарить тех, кто делает вклад в ваше сообщество, чтобы их усилия не остались без внимания.',
+	'emailext-founder-digest-signature' => 'Команда Фэндома',
 	'emailext-founder-digest-users-header' => 'Новых участников в сообществе: $1',
 	'emailext-founder-digest-users-description' => 'Поддерживайте новых участников. Поощряйте их активное участие в вашем замечательном сообществе.',
-	'emailext-founder-digest-signature' => 'Команда Фэндома',
 );
 
 $messages['zh-hans'] = array(
@@ -216,9 +210,9 @@ $messages['zh-hans'] = array(
 	'emailext-founder-digest-views-description-2' => '继续添加有趣的文章、讨论、照片和视频供大家欣赏。',
 	'emailext-founder-digest-edits-header' => '已编辑$1次',
 	'emailext-founder-digest-edits-description' => '请记得一定感谢那些为社区做出贡献的人。感谢他们的参与！',
+	'emailext-founder-digest-signature' => 'FANDOM社区团队',
 	'emailext-founder-digest-users-header' => '$1个新社区成员',
 	'emailext-founder-digest-users-description' => '欢迎新用户访问您的社区！让他们一起参与到您的社区建设之中。',
-	'emailext-founder-digest-signature' => 'Fandom社区团队',
 );
 
 $messages['zh-hant'] = array(
@@ -233,24 +227,8 @@ $messages['zh-hant'] = array(
 	'emailext-founder-digest-views-description-2' => '繼續添加有趣的文章、討論、圖片和影片供大家欣賞。',
 	'emailext-founder-digest-edits-header' => '已編輯$1次',
 	'emailext-founder-digest-edits-description' => '請記得一定要感謝那些為社群做出貢獻的人，讓他們的成果得到讚賞！',
+	'emailext-founder-digest-signature' => 'FANDOM社區團隊',
 	'emailext-founder-digest-users-header' => '$1個新的社區用戶',
 	'emailext-founder-digest-users-description' => '歡迎新用戶訪問你的社區！讓他們也參與你創建的精彩粉絲社區。',
-	'emailext-founder-digest-signature' => 'Fandon社區團隊',
-);
-
-$messages['zh-tw'] = array(
-	'emailext-founder-activity-digest-subject' => '$1上的最新活動',
-	'emailext-founder-views-digest-subject' => '$1的今日訪問量',
-	'emailext-founder-digest-summary' => '又到了你參加$1上每日活動的時間了。',
-	'emailext-founder-activity-digest-link-label' => 'Wikia的最新活動',
-	'emailext-founder-activity-digest-footer' => '獲取如何創建維基的小訣竅、並在[http://zh.community.wikia.com 社區中心]提問。',
-	'emailext-founder-views-digest-link-label' => '添加頁面',
-	'emailext-founder-digest-views-header' => '已查看$1個頁面',
-	'emailext-founder-digest-views-description-1' => '繼續添加有趣的文章、 討論、 照片和視頻供大家欣賞。',
-	'emailext-founder-digest-views-description-2' => '不斷添加新的東西、宣傳你的維基，這樣可以鼓勵更多的人來閱讀、貢獻，並讓更多的人知道它。你的社區看起來棒極了!',
-	'emailext-founder-digest-edits-header' => '已編輯$1次',
-	'emailext-founder-digest-edits-description' => '快樂社區成員打造讓人快樂的維基。千萬別忘了一定要感謝那些貢獻者，讓他們感受到愛哦！',
-	'emailext-founder-digest-users-header' => '$1個新的維基用戶',
-	'emailext-founder-digest-users-description' => '歡迎新用戶訪問你的維基！讓他們也參與到你創建的精彩粉絲社區之中。',
 );
 

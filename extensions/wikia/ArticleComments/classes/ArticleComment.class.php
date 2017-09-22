@@ -7,7 +7,6 @@ use Wikia\Logger\WikiaLogger;
 
 class ArticleComment {
 
-	const MOVE_USER = 'WikiaBot';
 	const AVATAR_BIG_SIZE = 50;
 	const AVATAR_SMALL_SIZE = 30;
 
@@ -536,7 +535,7 @@ class ArticleComment {
 	}
 
 	public function getData( $master = false ) {
-		global $wgUser, $wgBlankImgUrl, $wgMemc, $wgArticleCommentsEnableVoting;
+		global $wgUser, $wgBlankImgUrl, $wgMemc;
 
 		$title = $this->getTitle();
 		$commentId = $title->getArticleId();
@@ -603,7 +602,7 @@ class ArticleComment {
 			$links['edit'] = '#comment' . $commentId;
 		}
 
-		if ( !$this->mTitle->isNewPage( Title::GAID_FOR_UPDATE ) ) {
+		if ( !$this->mTitle->isNewPage() ) {
 			$buttons[] = Linker::linkKnown(
 				$title,
 				wfMessage( 'article-comments-history' )->escaped(),
@@ -637,10 +636,6 @@ class ArticleComment {
 			'title' => $title->getText(),
 			'isStaff' => $isStaff,
 		];
-
-		if ( !empty( $wgArticleCommentsEnableVoting ) ) {
-			$comment['votes'] = $this->getVotesCount();
-		}
 
 		$wgMemc->set( $articleDataKey, $comment, self::AN_HOUR );
 
@@ -1243,10 +1238,8 @@ class ArticleComment {
 	 *
 	 * @return Bool true -- because it's a hook
 	 */
-	static public function watchlistNotify( RecentChange &$oRC ) {
+	static public function watchlistNotify( RecentChange $oRC ): bool {
 		global $wgEnableGroupedArticleCommentsRC;
-
-		Hooks::run( 'AC_RecentChange_Save', [ &$oRC ] );
 
 		if ( !empty( $wgEnableGroupedArticleCommentsRC ) && ( $oRC instanceof RecentChange ) ) {
 			$title = $oRC->getAttribute( 'rc_title' );
@@ -1351,7 +1344,7 @@ class ArticleComment {
 	 * @return array|Mixed
 	 * @throws MWException
 	 */
-	static private function moveComment( $oCommentTitle, &$oNewTitle, $reason = '' ) {
+	static private function moveComment( Title $oCommentTitle, Title $oNewTitle, $reason = '' ) {
 		global $wgUser;
 
 		if ( !is_object( $oCommentTitle ) ) {
@@ -1359,7 +1352,7 @@ class ArticleComment {
 		}
 
 		$currentUser = $wgUser;
-		$wgUser = User::newFromName( self::MOVE_USER );
+		$wgUser = User::newFromName( Wikia::BOT_USER );
 
 		$parts = self::explode( $oCommentTitle->getDBkey() );
 		$commentTitleText = implode( '/', $parts['partsOriginal'] );
@@ -1384,14 +1377,14 @@ class ArticleComment {
 	 *
 	 * @return bool
 	 */
-	static public function moveComments( MovePageForm &$form , Title &$oOldTitle , Title &$oNewTitle ) {
-		global $wgUser, $wgRC2UDPEnabled, $wgMaxCommentsToMove, $wgEnableMultiDeleteExt, $wgCityId;
+	static public function moveComments( MovePageForm $form , Title $oOldTitle , Title $oNewTitle ): bool {
+		global $wgRC2UDPEnabled, $wgMaxCommentsToMove, $wgEnableMultiDeleteExt, $wgCityId;
 
-		if ( !$wgUser->isAllowed( 'move' ) ) {
+		if ( !$form->getUser()->isAllowed( 'move' ) ) {
 			return true;
 		}
 
-		if ( $wgUser->isBlocked() ) {
+		if ( $form->getUser()->isBlocked() ) {
 			return true;
 		}
 
@@ -1462,7 +1455,7 @@ class ArticleComment {
 					'lang'		=> '',
 					'cat'		=> '',
 					'selwikia'	=> $wgCityId,
-					'user'		=> self::MOVE_USER
+					'user'		=> Wikia::BOT_USER
 				];
 
 				for ( $i = $finish + 1; $i < count( $comments ); $i++ ) {
@@ -1516,68 +1509,6 @@ class ArticleComment {
 			$this->mProps = BlogArticle::getProps( $this->mTitle->getArticleID() );
 		}
 		return $this->mProps;
-	}
-
-	// Voting functions
-
-	public function getVotesCount() {
-		$pageId = $this->mTitle->getArticleId();
-		$oFauxRequest = new FauxRequest( [
-			'action' => 'query',
-			'list' => 'wkvoteart',
-			'wkpage' => $pageId,
-			'wkuservote' => 0,
-			'wktimestamps' => 1
-		] );
-		$oApi = new ApiMain( $oFauxRequest );
-		$oApi->execute();
-		$aResult = $oApi->getResultData();
-
-		if ( isset( $aResult['query']['wkvoteart'][$pageId]['votescount'] ) ) {
-			return $aResult['query']['wkvoteart'][$pageId]['votescount'];
-		} else {
-			return 0;
-		}
-	}
-
-	public function vote() {
-		$oFauxRequest = new FauxRequest( [
-			'action' => 'insert',
-			'list' => 'wkvoteart',
-			'wkpage' => $this->mTitle->getArticleId(),
-			'wkvote' => 3
-		] );
-		$oApi = new ApiMain( $oFauxRequest );
-
-		$oApi->execute();
-
-		$aResult = $oApi->getResultData();
-
-		$success = !empty( $aResult );
-
-		return $success;
-	}
-
-	public function userCanVote() {
-		$pageId = $this->mTitle->getArticleId();
-
-		$oFauxRequest = new FauxRequest( [
-			'action' => 'query',
-			'list' => 'wkvoteart',
-			'wkpage' => $pageId,
-			'wkuservote' => 1
-		] );
-		$oApi = new ApiMain( $oFauxRequest );
-		$oApi->execute();
-		$aResult = $oApi->GetResultData();
-
-		if ( isset( $aResult['query']['wkvoteart'][$pageId]['uservote'] ) ) {
-			$result = false;
-		} else {
-			$result = true;
-		}
-
-		return $result;
 	}
 
 	public function getTopParent() {
@@ -1664,7 +1595,9 @@ class ArticleComment {
 	 *
 	 * @return boolean because it's a hook
 	 */
-	static public function onBeforeDeletePermissionErrors( &$article, &$title, &$user, &$permission_errors ) {
+	static public function onBeforeDeletePermissionErrors(
+		Article $article, Title $title, User $user, &$permission_errors
+	): bool {
 		if ( self::isCommentingEnabled() &&
 			$user->isAllowed( 'commentdelete' ) &&
 			ArticleComment::isTitleComment( $title )
@@ -1700,7 +1633,7 @@ class ArticleComment {
 	 * @param bool $result Whether $user can perform $action on $title
 	 * @return bool Whether to continue checking hooks
 	 */
-	static public function userCan( Title &$title, User &$user, $action, &$result ) {
+	static public function userCan( Title $title, User $user, string $action, &$result ): bool {
 		$wg = F::app()->wg;
 		$commentsNS = $wg->ArticleCommentsNamespaces;
 		$ns = $title->getNamespace();

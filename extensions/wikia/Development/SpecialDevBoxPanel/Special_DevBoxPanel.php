@@ -179,7 +179,7 @@ function wfDevBoxForceWiki(WikiFactoryLoader $wikiFactoryLoader){
 			wfDebug( __METHOD__ . ": checking if wiki #{$cityId} exists on {$cluster} cluster...\n" );
 
 			$dbname = WikiFactory::DomainToDB($forcedWikiDomain);
-			$db = wfGetDB( DB_MASTER, [], $wgExternalSharedDB . '_' . $cluster ); // force master - @see PLATFORM-528
+			$db = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB . '_' . $cluster );
 
 			$res = $db->query( 'SHOW DATABASES ' . $db->buildLike($dbname), __METHOD__ ); // SHOW DATABASES LIKE 'muppet'
 
@@ -329,7 +329,6 @@ function getHtmlForDatabaseComparisonTool(){
 	// Determine what databases are on this dev-box.
 	global $wgWikiFactoryDB;
 
-	//$db_dev = wfGetDB( DB_MASTER, "dump", $wgDBname );
 	$db1 = wfGetDB( DB_SLAVE, "dump", $wgWikiFactoryDB );
 	$db2 = wfGetDB( DB_SLAVE, "dump", $wgWikiFactoryDB . '_c2'); // lame
 

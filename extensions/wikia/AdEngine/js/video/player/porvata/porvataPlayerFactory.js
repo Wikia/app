@@ -12,7 +12,6 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 	function prepareVideoAdContainer(videoAdContainer, videoSettings) {
 		DOMElementTweaker.hide(videoAdContainer);
 		videoAdContainer.classList.add(videoPlayerClassName);
-		videoAdContainer.style.position = 'relative';
 
 		if (videoSettings.isAutoPlay()) {
 			videoAdContainer.classList.add(autoPlayClassName);
@@ -94,8 +93,8 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 
 				ima.playVideo(width, height);
 			},
-			reload: function () {
-				ima.reload();
+			reload: function (reloadParams) {
+				ima.reload(reloadParams);
 			},
 			removeEventListener: function (eventName, callback) {
 				ima.removeEventListener(eventName, callback);

@@ -10,7 +10,8 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 
 		var activeFloatingCssClass = 'floating',
 			withArticleVideoCssClass = 'with-article-video',
-			wikiFloatingVideoSelector = '.video-container';
+			wikiFloatingVideoSelector = '.video-container',
+			floatingContextCache = {};
 
 		function updateDimensions(element, width, height) {
 			if (element) {
@@ -197,6 +198,8 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 				enableFloating(floatingContext);
 			});
 
+			floatingContextCache[params.slotName] = floatingContext;
+
 			return floatingContext;
 		}
 
@@ -210,9 +213,15 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 			return floaterConfiguration.canFloat(params);
 		}
 
+		function isFloating(slotName) {
+			return floatingContextCache[slotName] &&
+				floatingContextCache[slotName].elements.adContainer.classList.contains(activeFloatingCssClass);
+		}
+
 		return {
 			canFloat: canFloat,
-			makeFloat: makeFloat
+			makeFloat: makeFloat,
+			isFloating: isFloating
 		};
 	}
 );

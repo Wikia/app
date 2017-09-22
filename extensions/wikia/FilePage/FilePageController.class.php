@@ -25,7 +25,7 @@ class FilePageController extends WikiaController {
 	}
 
 	protected function getSkipMethods() {
-		return [ 'fileUsage', 'relatedPages' ];
+		return [ 'fileUsage' ];
 	}
 
 	/**
@@ -422,7 +422,7 @@ SQL;
 					}
 
 					// Let the wall code clean up any links to the user wall or forums
-					wfRunHooks( 'FormatForumLinks', array( &$extraInfo, $info['title'], $info['namespace_id'] ) );
+					Hooks::run( 'FormatForumLinks', array( &$extraInfo, $info['title'], $info['namespace_id'] ) );
 
 					// Clean up any type of comment on any article page
 					$cleanedText = preg_replace( '/\/@comment-.+-[0-9]+$/', '', $extraInfo['titleText'] );
@@ -440,94 +440,6 @@ SQL;
 		wfProfileOut( __METHOD__ );
 
 		return $fullData;
-	}
-
-	/**
-	 * Controller to handle showing pages related to the current file.  Uses
-	 * the RelatedPages extension to render the final HTML
-	 */
-	public function relatedPages() {
-		wfProfileIn( __METHOD__ );
-
-		$this->text = '';
-
-		if ( !class_exists( 'RelatedPages' ) ) {
-			wfProfileOut( __METHOD__ );
-			return;
-		}
-
-		# Find the first page that links to this current file page that has a category
-		$pageId = $this->firstPageWithCategory();
-		if ( empty( $pageId ) ) {
-			wfProfileOut( __METHOD__ );
-			return;
-		}
-
-		# Get the title object
-		$title = Title::newFromID( $pageId );
-		if ( empty($title) ) {
-			wfProfileOut( __METHOD__ );
-			return;
-		}
-
-		# Get the categories for this title
-		$cats = $title->getParentCategories();
-		if ( !count( $cats ) ) {
-			wfProfileOut( __METHOD__ );
-			return;
-		}
-		$titleCats = array();
-
-		# Construct an array of category names to feed to the RelatedPages extension
-		foreach ( $cats as $cat_text => $title_text ) {
-			$categoryTitle = Title::newFromText( $cat_text );
-			$titleCats[] = $categoryTitle->getDBkey();
-		}
-
-		# Seed the RelatedPages instance with the categories we found.  Normally
-		# categories are set via a hook in the page render process, so we have to
-		# supply our own here.
-		$relatedPages = RelatedPages::getInstance();
-		$relatedPages->setCategories( $titleCats );
-
-		# Rendering the RelatedPages index with our alternate title and pre-seeded categories.
-		$this->text = $this->app->renderView( 'RelatedPages', 'section', [ "altTitle" => $title, "anyNS" => true ] );
-
-		wfProfileOut( __METHOD__ );
-	}
-
-	private function firstPageWithCategory () {
-		wfProfileIn( __METHOD__ );
-
-		$target = $this->wg->Title->getDBkey();
-		$dbr = wfGetDB( DB_SLAVE );
-
-		// We want to find the first page that has a link to the current file page AND
-		// has at least one category associated with it.  The categor(ies) are how
-		// the RelatedPages extention determines what's related.  The query looks something
-		// like:
-		//
-		//     SELECT distinct(page_id) as page_id
-		//       FROM imagelinks, page, categorylinks
-		//      WHERE il_to = 'Scooby_Eats_Scooby_Snacks'
-		//        AND il_from = page_id
-		//        AND page_is_redirect = 0
-		//        AND cl_from = page_id
-		//      LIMIT 1
-		$res = $dbr->select(
-			array( 'imagelinks', 'page', 'categorylinks' ),
-			array( 'distinct(page_id) as page_id' ),
-			array( 'il_to' => $target, 'il_from = page_id', 'page_is_redirect = 0', 'cl_from = page_id' ),
-			__METHOD__,
-			array( 'LIMIT' => 1 )
-		);
-
-		$info = $res->fetchObject();
-		$dbr->freeResult( $res );
-
-		wfProfileOut( __METHOD__ );
-
-		return empty($info) ? null : $info->page_id;
 	}
 
 

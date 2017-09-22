@@ -121,9 +121,10 @@ class ChatWidgetTest extends WikiaBaseTest {
 					'siteName' => 'Test wikia',
 					'profileType' => 'message-wall',
 					'userName' => 'testUsername',
-					'users' => [ 'User1', 'User2' ],
-					'usersCount' => 2,
+					'viewedUsersInfo' => [ 'User1', 'User2' ],
+					'moreUsersCount' => null,
 					'hasUsers' => true,
+					'chatLiveText' => 'message',
 				]
 			],
 			'user from rail without message wall (null)' => [
@@ -137,15 +138,16 @@ class ChatWidgetTest extends WikiaBaseTest {
 					'buttonIcon' => '<svg></svg>',
 					'guidelinesText' => 'message',
 					'fromParserTag' => false,
-					'sectionClassName' => 'module',
+					'sectionClassName' => 'rail-module',
 					'joinChatText' => 'message',
 					'linkToSpecialChat' => 'Chat',
 					'siteName' => 'Test wikia',
 					'profileType' => 'talk-page',
 					'userName' => 'testUsername',
-					'users' => [ 'User1', 'User2' ],
-					'usersCount' => 2,
+					'viewedUsersInfo' => [ 'User1', 'User2' ],
+					'moreUsersCount' => null,
 					'hasUsers' => true,
+					'chatLiveText' => 'message',
 				]
 			],
 			'user from rail without message wall (false)' => [
@@ -159,15 +161,16 @@ class ChatWidgetTest extends WikiaBaseTest {
 					'buttonIcon' => '<svg></svg>',
 					'guidelinesText' => 'message',
 					'fromParserTag' => false,
-					'sectionClassName' => 'module',
+					'sectionClassName' => 'rail-module',
 					'joinChatText' => 'message',
 					'linkToSpecialChat' => 'Chat',
 					'siteName' => 'Test wikia',
 					'profileType' => 'talk-page',
 					'userName' => 'testUsername',
-					'users' => [ 'User1', 'User2' ],
-					'usersCount' => 2,
+					'viewedUsersInfo' => [ 'User1', 'User2' ],
+					'moreUsersCount' => null,
 					'hasUsers' => true,
+					'chatLiveText' => 'message',
 				]
 			],
 			'anon from parser tag with message wall' => [
@@ -187,9 +190,16 @@ class ChatWidgetTest extends WikiaBaseTest {
 					'siteName' => 'Test wikia',
 					'profileType' => 'message-wall',
 					'userName' => null,
-					'users' => [ ],
-					'usersCount' => 0,
+					'viewedUsersInfo' => [
+						[
+							'username' => 'testUsername',
+							'profileUrl' => '/wiki/User:testUsername',
+							'avatarUrl' => 'www.image.com',
+						],
+					],
+					'moreUsersCount' => null,
 					'hasUsers' => false,
+					'chatLiveText' => 'message',
 				]
 			],
 			'anon from parser tag with no users' => [
@@ -209,9 +219,16 @@ class ChatWidgetTest extends WikiaBaseTest {
 					'siteName' => 'Test wikia',
 					'profileType' => 'message-wall',
 					'userName' => null,
-					'users' => [ ],
-					'usersCount' => 0,
+					'viewedUsersInfo' => [
+						[
+							'username' => 'testUsername',
+							'profileUrl' => '/wiki/User:testUsername',
+							'avatarUrl' => 'www.image.com',
+						],
+					],
+					'moreUsersCount' => null,
 					'hasUsers' => false,
+					'chatLiveText' => 'message',
 				]
 			],
 			'user from parser tag with no users' => [
@@ -231,10 +248,16 @@ class ChatWidgetTest extends WikiaBaseTest {
 					'siteName' => 'Test wikia',
 					'profileType' => 'message-wall',
 					'userName' => 'testUsername',
-					'myAvatarUrl' => 'www.image.com',
-					'users' => [ ],
-					'usersCount' => 0,
+					'viewedUsersInfo' => [
+						[
+							'username' => 'testUsername',
+							'profileUrl' => '/wiki/User:testUsername',
+							'avatarUrl' => 'www.image.com',
+						],
+					],
+					'moreUsersCount' => null,
 					'hasUsers' => false,
+					'chatLiveText' => 'message',
 				]
 			]
 		];

@@ -1,16 +1,12 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.floatingMedrec', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
-	'ext.wikia.aRecoveryEngine.recovery.slotFinder',
 	'jquery',
 	'wikia.log',
 	'wikia.throttle',
 	'wikia.window'
 ], function (
 	adContext,
-	sourcePoint,
-	slotFinder,
 	$,
 	log,
 	throttle,
@@ -26,6 +22,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 			enabled = false,
 			adPushed = false,
 			globalNavigationHeight = $('#globalNavigation').outerHeight(true),
+			handleFloatingMedrec,
 			margin = 10,
 			minDistance = 800,
 			leftSkyscraper3Selector = '#LEFT_SKYSCRAPER_3',
@@ -52,51 +49,17 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 			return stopPoint - globalNavigationHeight - 2 * margin - ad.height();
 		}
 
-		function replaceAdSlot() {
-			var recoveredElement = slotFinder.getRecoveredSlot(slotName);
+		handleFloatingMedrec = throttle(function () {
+			var scrollTop = $win.scrollTop();
 
-			if (recoveredElement) {
-				$adSlot = $(recoveredElement.parentNode.parentNode);
-			}
-		}
-
-		function update() {
-			if ($win.scrollTop() <= startPosition) {
-				$adSlot.css({
-					position: 'relative',
-					top: '0px',
-					visibility: 'visible'
-				});
-			}
-
-			if ($win.scrollTop() > startPosition && $win.scrollTop() < stopPosition) {
-				$adSlot.css({
-					position: 'fixed',
-					top: globalNavigationHeight + margin + 'px',
-					visibility: 'visible'
-				});
-			}
-
-			if ($win.scrollTop() >= stopPosition) {
-				$adSlot.css({
-					position: 'absolute',
-					top: stopPosition - startPosition + 'px',
-					visibility: 'visible'
-				});
-			}
-		}
-
-		function handleFloatingMedrec() {
 			startPosition = getStartPosition($placeHolder);
 			stopPosition = getStopPosition($adSlot, $footer, $(leftSkyscraper3Selector));
 			isEnoughSpace = stopPosition - startPosition > minDistance;
 
 			if (enabled && !isEnoughSpace) {
 				log(['handleFloatingMedrec',
-					 'Disabling floating medrec: not enough space in right rail'], 'debug', logGroup);
+					'Disabling floating medrec: not enough space in right rail'], 'debug', logGroup);
 
-				win.removeEventListener('scroll', update);
-				win.removeEventListener('resize', update);
 
 				$adSlot.css({
 					visibility: 'hidden'
@@ -105,29 +68,20 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 				enabled = false;
 			}
 
-			if (!enabled && isEnoughSpace && $win.scrollTop() > startPosition) {
-				log(['handleFloatingMedrec', 'Enabling floating medrec'], 'debug', logGroup);
+			if (!enabled && isEnoughSpace && scrollTop >= startPosition) {
+					log(['handleFloatingMedrec', 'Enabling floating medrec'], 'debug', logGroup);
 
-				enabled = true;
+					enabled = true;
 
-				if (!adPushed) {
-					$placeHolder.append($adSlot);
-					win.adslots2.push({
-						slotName: slotName,
-						onSuccess: function () {
-							if (sourcePoint.isEnabled()) {
-								sourcePoint.addOnBlockingCallback(replaceAdSlot);
-							}
+					if (!adPushed) {
+						$placeHolder.append($adSlot);
+						win.adslots2.push({ slotName: slotName });
+						adPushed = true;
 
-							win.addEventListener('scroll', update);
-							win.addEventListener('resize', update);
-
-						}
-					});
-					adPushed = true;
-				}
+						win.removeEventListener('scroll', handleFloatingMedrec);
+					}
 			}
-		}
+		});
 
 		function start() {
 			if (!context.opts.floatingMedrec) {
@@ -145,8 +99,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 				return;
 			}
 
-			win.addEventListener('scroll', throttle(handleFloatingMedrec));
-			win.addEventListener('resize', throttle(handleFloatingMedrec));
+			win.addEventListener('scroll', handleFloatingMedrec);
 		}
 
 		start();

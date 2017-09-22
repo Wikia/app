@@ -11,22 +11,28 @@ var ChatWidget = {
 
 	init: function () {
 		if (!ChatWidget.bindComplete) {
-			$('body').on('click', '.WikiaChatLink', function (event) {
-				event.preventDefault();
-				event.stopPropagation();
-				ChatWidget.onClickChatButton(this.href);
-			});
+			$('body').on('click', '.WikiaChatLink, .chat-module .start-a-chat-button, .chat-module .more-users-count', this.openChat);
 			ChatWidget.bindComplete = true;
 		}
 
 		// make sure we start processing after ChatModule templates is loaded
-		if ($('.ChatModule').length) {
+		// SUS-1202: refresh user list for in-content chat widget, the one on the right rail is always loaded fresh
+		if ($('.chat-module').not('.rail-module').length) {
 			if (!ChatWidget.loading) {
 				// if we're not loading yet - start it
 				ChatWidget.loading = true;
 				ChatWidget.loadDataAndInitializeModules();
 			}
 		}
+
+		// we do not need to wait for widgets to be initialized
+		ChatWidget.initializeChatModules();
+	},
+
+	openChat: function (event) {
+		event.preventDefault();
+		event.stopPropagation();
+		ChatWidget.onClickChatButton(this.href);
 	},
 
 	/**
@@ -39,19 +45,18 @@ var ChatWidget = {
 			ChatWidget.loadWidgetUserElementTemplate()
 		).then(function(usersData, templateData) {
 			if (usersData[1] === 'success' && templateData[1] === 'success') {
-				var users = usersData[0].users;
+				var users = usersData[0].users,
+					hasUsers = usersData[0].hasUsers;
 
 				ChatWidget.widgetUserElementTemplate = templateData[0].mustache[0];
 
 				if (users.length) {
-					ChatWidget.updateUsersList(users);
+					ChatWidget.updateUsersList(users, hasUsers);
 				}
 
 				// cache result
 				ChatWidget.users = users;
 			}
-
-			ChatWidget.initializeChatModules();
 		});
 	},
 
@@ -80,24 +85,25 @@ var ChatWidget = {
 	 *
 	 * @param users array of users on chat
 	 */
-	updateUsersList: function(users) {
+	updateUsersList: function(users, hasUsers) {
 		var output = Mustache.render(ChatWidget.widgetUserElementTemplate, {
-			users: users,
-			blankImageUrl: window.wgBlankImageUrl
-		});
+				viewedUsersInfo: users,
+				hasUsers: hasUsers,
+				blankImageUrl: window.wgBlankImageUrl
+			}),
+			$chatModule = $('.chat-module');
 
-		$('.chat-contents.chat-room-empty').each(function () {
-			$(this).eq(0)
-				.removeClass('chat-room-empty')
-				.addClass('chat-room-active');
-		});
+		if(hasUsers) {
+			$chatModule.find('.chat-contents.chat-room-empty').each(function () {
+				$(this).eq(0)
+					.removeClass('chat-room-empty')
+					.addClass('chat-room-active');
+			});
+		}
 
-		$('.chatCarousel').each(function () {
+		$chatModule.find('.wds-avatar-stack').each(function () {
 			$(this).get(0).innerHTML = output;
 		});
-
-		// update number of users
-		$('.chat-total').innerHTML = users.length;
 	},
 
 	initializeChatModules: function () {
@@ -148,7 +154,7 @@ var ChatWidget = {
 	 * @param $t chat module element
 	 */
 	processModuleTemplate: function ($t) {
-		ChatWidget.initCarousel($t.find('.chat-whos-here'));
+		ChatWidget.initPopover($t);
 
 		// process i18n the messages
 		$t.find('[data-msg-id]').each(function () {
@@ -161,15 +167,8 @@ var ChatWidget = {
 	 * change the user list into the carousel
 	 * @param $el chat who is here element
 	 */
-	initCarousel: function ($el) {
+	initPopover: function ($el) {
 		var popoverTimeout = 0;
-
-		$el.find('.carousel-container').carousel({
-			nextClass: 'arrow-right',
-			prevClass: 'arrow-left',
-			// differ number of users on chat according to it's width
-			itemsShown: ChatWidget.isWideChat ? 6 : 5
-		});
 
 		function setPopoverTimeout(elem) {
 			popoverTimeout = setTimeout(function () {
@@ -181,13 +180,16 @@ var ChatWidget = {
 			trigger: 'manual',
 			placement: 'bottom',
 			content: function () {
-				var userStatsMenu = $(this).find('.UserStatsMenu');
-
+				var userStatsMenu = $el.find('.UserStatsMenu').eq($(this).index());
 				return userStatsMenu.clone().wrap('<div>').parent().html();
 			}
 		}).on('mouseenter', function () {
 			clearTimeout(popoverTimeout);
-			$('.popover').remove();
+			$('body > .popover').remove();
+			$el.find('.UserStatsMenu img[data-src]').each(function () {
+				var image = $(this);
+				image.attr('src', image.attr('data-src')).removeAttr('data-src');
+			});
 			$(this).popover('show');
 
 		}).on('mouseleave', function () {

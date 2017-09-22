@@ -26,9 +26,9 @@ $wgNamespacesWithSubpages[ NS_USER_WALL ] = true;
 $wgAutoloadClasses['CommentsIndex'] = __DIR__ . '/index/CommentsIndex.class.php';
 $wgAutoloadClasses['CommentsIndexEntry'] = __DIR__ . '/index/CommentsIndexEntry.class.php';
 $wgAutoloadClasses['CommentsIndexHooks'] = __DIR__ . '/index/CommentsIndexHooks.class.php';
+$wgAutoloadClasses['CommentsIndexEntryNotFoundException'] = __DIR__ . '/index/CommentsIndexEntryNotFoundException.php';
 
 $wgAutoloadClasses['Wall'] =  $dir . '/Wall.class.php';
-$wgAutoloadClasses['Walls'] =  $dir . '/Walls.class.php';
 $wgAutoloadClasses['WallThread'] =  $dir . '/WallThread.class.php';
 
 $wgAutoloadClasses['WallMessage'] =  $dir . '/WallMessage.class.php';
@@ -44,6 +44,8 @@ $wgAutoloadClasses['WallBaseController'] =  $dir . '/WallBaseController.class.ph
 $wgAutoloadClasses['VoteHelper'] =  $dir . '/VoteHelper.class.php';
 $wgAutoloadClasses['WallRelatedPages'] =  $dir . '/WallRelatedPages.class.php';
 
+$wgAutoloadClasses['WallTabsRenderer'] = __DIR__ . '/WallTabsRenderer.php';
+
 $wgAutoloadClasses['WallBuilder'] = __DIR__ . '/builders/WallBuilder.class.php';
 $wgAutoloadClasses['WallMessageBuilder'] = __DIR__ . '/builders/WallMessageBuilder.class.php';
 $wgAutoloadClasses['WallEditBuilder'] = __DIR__ . '/builders/WallEditBuilder.class.php';
@@ -54,7 +56,6 @@ $wgAutoloadClasses['WallBuilderGenericException'] = __DIR__ . '/exceptions/WallB
 
 $wgExtensionMessagesFiles['Wall'] = $dir . '/Wall.i18n.php';
 
-$wgHooks['AccountNavigationModuleAfterDropdownItems'][] = 'WallHooksHelper::onAccountNavigationModuleAfterDropdownItems';
 $wgHooks['ArticleViewHeader'][] = 'WallHooksHelper::onArticleViewHeader';
 $wgHooks['SkinTemplateTabs'][] = 'WallHooksHelper::onSkinTemplateTabs';
 $wgHooks['AlternateEdit'][] = 'WallHooksHelper::onAlternateEdit';
@@ -66,7 +67,6 @@ $wgHooks['PersonalUrls'][] = 'WallHooksHelper::onPersonalUrls';
 $wgHooks['UserPagesHeaderModuleAfterGetTabs'][] = 'WallHooksHelper::onUserPagesHeaderModuleAfterGetTabs';
 $wgHooks['SkinSubPageSubtitleAfterTitle'][] = 'WallHooksHelper::onSkinSubPageSubtitleAfterTitle';
 $wgHooks['SkinTemplateContentActions'][] = 'WallHooksHelper::onSkinTemplateContentActions';
-$wgHooks['PageHeaderIndexAfterActionButtonPrepared'][] = 'WallHooksHelper::onPageHeaderIndexAfterActionButtonPrepared';
 $wgHooks['BlockIpCompleteWatch'][] = 'WallHooksHelper::onBlockIpCompleteWatch';
 $wgHooks['UserIsBlockedFrom'][] = 'WallHooksHelper::onUserIsBlockedFrom';
 
@@ -114,7 +114,6 @@ $wgHooks['UnwatchArticle'][] = 'WallHooksHelper::onUnwatchArticle';
 
 // diff page adjusting
 $wgHooks['DiffViewHeader'][] = 'WallHooksHelper::onDiffViewHeader';
-$wgHooks['PageHeaderEditPage'][] = 'WallHooksHelper::onPageHeaderEditPage';
 
 // right rail adjusting
 $wgHooks['GetRailModuleList'][] = 'WallRailHelper::onGetRailModuleList';
@@ -169,6 +168,8 @@ $wgHooks['MWNamespace:isMovable'][] = 'WallHooksHelper::onNamespaceIsMovable';
 // handle MediaWiki delete flow and comments_index updates
 $wgHooks['ArticleDoDeleteArticleBeforeLogEntry'][] = 'CommentsIndexHooks::onArticleDoDeleteArticleBeforeLogEntry';
 $wgHooks['ArticleUndelete'][] = 'CommentsIndexHooks::onArticleUndelete';
+
+$wgHooks['AfterPageHeaderPageSubtitle'][] = 'WallHooksHelper::onAfterPageHeaderPageSubtitle';
 
 JSMessages::registerPackage( 'Wall', [
 	'wall-notifications',

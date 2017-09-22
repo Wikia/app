@@ -33,7 +33,6 @@ define("WPP_IMAGE_SERVING", 0);
 define("WPP_PLB_PROPS", 1);
 define("WPP_PLB_LAYOUT_DELETE", 2);
 define("WPP_PLB_LAYOUT_NOT_PUBLISH", 3);
-define("WPP_BLOGS_VOTING", 4);
 define("WPP_BLOGS_COMMENTING", 5);
 define("WPP_PLACES_LATITUDE", 6);
 define("WPP_PLACES_LONGITUDE", 7);
@@ -64,9 +63,6 @@ define( "WPP_LYRICFIND_MARKED_FOR_REMOVAL", 23 );
 
 // Video status (ie, working, deleted, private, other)
 define("WPP_VIDEO_STATUS", 24);
-
-// Palantir metadata
-define("WPP_PALANTIR_METADATA", 250);
 
 // Any types listed in this array will not have their values serialized
 // This should only be used for properties that are simple strings or integers

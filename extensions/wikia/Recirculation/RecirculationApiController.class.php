@@ -12,7 +12,7 @@ class RecirculationApiController extends WikiaApiController {
 	public function __construct() {
 		parent::__construct();
 		$this->cors = new CrossOriginResourceSharingHeaderHelper();
-		$this->cors->setAllowOrigin( [ '*' ] );
+		$this->cors->setAllowAllOrigins();
 	}
 
 	public function getFandomPosts() {
@@ -44,32 +44,6 @@ class RecirculationApiController extends WikiaApiController {
 		$this->response->setData( [
 			'title' => $title,
 			'posts' => $posts,
-		] );
-	}
-
-	public function getCakeRelatedContent() {
-		$this->cors->setHeaders( $this->response );
-
-		$target = trim( $this->request->getVal( 'relatedTo' ) );
-		if ( empty( $target ) ) {
-			throw new InvalidParameterApiException( 'relatedTo' );
-		}
-
-		$limit = trim( $this->request->getVal( 'limit' ) );
-		$ignore = trim( $this->request->getVal( 'ignore' ) );
-		$namespaceId = trim( $this->request->getVal( 'namespaceId' ) );
-
-		$this->response->setCacheValidity( WikiaResponse::CACHE_SHORT );
-		$this->response->setData( [
-				'title' => wfMessage( 'recirculation-fandom-subtitle' )->plain(),
-				'items' => ( new CakeRelatedContentService() )->getContentRelatedTo(
-						$target,
-						$namespaceId,
-						$this->wg->cityId,
-						$this->wg->sitename,
-						$limit,
-						$ignore
-				),
 		] );
 	}
 

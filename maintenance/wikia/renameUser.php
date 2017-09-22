@@ -33,7 +33,7 @@ class RenameUserMaintenance extends Maintenance {
 	 */
 	public function execute() {
 		global $wgUser;
-		$wgUser = User::newFromName( 'WikiaBot' );
+		$wgUser = User::newFromName( Wikia::BOT_USER );
 
 		// get options
 		$oldName = $this->getOption( 'old-username' );

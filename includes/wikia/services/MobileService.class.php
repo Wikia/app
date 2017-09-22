@@ -5,7 +5,7 @@
  *
  * @author Federico "Lox" Lucignano
  */
-class MobileService extends Service {
+class MobileService {
 	private $mUserAgent;
 	private $mAgents;
 	private $mIsMobile;

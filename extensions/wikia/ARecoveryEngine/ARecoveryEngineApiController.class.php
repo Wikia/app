@@ -38,9 +38,14 @@ class ARecoveryEngineApiController extends WikiaController {
 
 	public function getPageFairBootstrapBottomBody() {
 		$resourceLoader = new ResourceLoaderAdEnginePageFairRecoveryModule();
-		$this->response->getView()->setTemplate( 'ARecoveryEngineApiController', 'getPageFairBootstrap' );
 		$this->response->setVal( 'code', $resourceLoader->getScriptLoader() );
 	}
+
+	public function getInstartLogicBootstrap() {
+        $resourceLoader = new ResourceLoaderAdEngineInstartLogicModule();
+        $resourceLoaderContext = new ResourceLoaderContext( new ResourceLoader(), new FauxRequest() );
+        $this->response->setVal( 'code', $resourceLoader->getScript( $resourceLoaderContext ) );
+    }
 
 	public function getLogInfo() {
 		\Wikia\Logger\WikiaLogger::instance()

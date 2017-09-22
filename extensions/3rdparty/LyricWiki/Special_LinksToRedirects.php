@@ -161,8 +161,8 @@ class Linkstoredirects extends SpecialPage{
 						1 => "Talk",
 						2 => "User",
 						3 => "User_talk",
-						4 => $wgSitename,
-						5 => $wgSitename."_talk",
+						4 => "Project",
+						5 => "Project_talk",
 						6 => ":File",
 						7 => "File_talk",
 						8 => "MediaWiki",
@@ -172,7 +172,9 @@ class Linkstoredirects extends SpecialPage{
 						12 => "Help",
 						13 => "Help_talk",
 						14 => ":Category",
-						15 => "Category_talk"
+						15 => "Category_talk",
+						500 => "User_blog",
+						501 => "User_blog_comment"
 					);
 					$idToTitle = array();
 					$ids = array_unique($ids);

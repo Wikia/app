@@ -117,7 +117,7 @@ class WikiaHtmlTitle {
 
 		// Extra title for admin dashboard (and maybe other pages handled by extensions)
 		$parts = [];
-		wfRunHooks( 'WikiaHtmlTitleExtraParts', [ $title, &$parts ] );
+		Hooks::run( 'WikiaHtmlTitleExtraParts', [ $title, &$parts ] );
 		array_unshift( $parts, $name );
 
 		return $this->setParts( $parts );

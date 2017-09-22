@@ -5,20 +5,6 @@ define('ext.wikia.recirculation.tracker', [
 ], function (tracker, abTest) {
 	'use strict';
 
-	function trackVerboseClick(experiment, label) {
-		var group = abTest.getGroup(experiment),
-			structuredLabel = [experiment, group, label].join('=');
-
-		trackClick(structuredLabel);
-	}
-
-	function trackVerboseImpression(experiment, label) {
-		var group = abTest.getGroup(experiment),
-			structuredLabel = [experiment, group, label].join('=');
-
-		trackImpression(structuredLabel);
-	}
-
 	function trackClick(label) {
 		tracker.track({
 			action: tracker.ACTIONS.CLICK,
@@ -38,8 +24,6 @@ define('ext.wikia.recirculation.tracker', [
 	}
 
 	return {
-		trackVerboseClick: trackVerboseClick,
-		trackVerboseImpression: trackVerboseImpression,
 		trackImpression: trackImpression,
 		trackClick: trackClick
 	};

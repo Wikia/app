@@ -64,8 +64,6 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 			pane.show();
 		}
 
-		$('.cnw-tooltip').tooltip();
-
 		// onload stuff
 		wikiName.focus();
 		if (wikiName.val() || wikiDomain.val()) {
@@ -163,12 +161,12 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 				},
 				callback: function (res) {
 					// check phalanx result
-					if (res.msgHeader) {
+					if (res.statusHeader) {
 						track({
 							action: tracker.ACTIONS.ERROR,
 							label: 'wiki-description-validation-error'
 						});
-						$.showModal(res.msgHeader, res.msgBody);
+						$.showModal(res.statusHeader, res.statusMsg);
 						descWikiNext.attr('disabled', false);
 					} else {
 						var descriptionLabel = (descriptionVal === WikiBuilderCfg.descriptionplaceholder) ?
@@ -189,7 +187,8 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 							transition('DescWiki', true);
 						});
 					}
-				}
+				},
+				onErrorCallback: generateAjaxErrorMsg
 			});
 		} else {
 			track({
@@ -597,13 +596,16 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 
 	function createWiki() {
 		var throbberWrapper = $themWikiWrapper.find('.controls'),
-			categories = [];
+			categories = [],
+			descriptionVal;
 
 		throbberWrapper.startThrobbing();
 
 		$('#categories-set-' + wikiVertical.data('categoriesset') + ' :checked').each(function () {
 			categories.push($(this).val());
 		});
+
+		descriptionVal = $('#Description').val();
 
 		$.get('/api.php', {
 			action: 'query',
@@ -630,7 +632,8 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 						wLanguage: wikiLanguage.val(),
 						wVertical: wikiVertical.val(),
 						wCategories: categories,
-						wAllAges: wikiAllAges.is(':checked') ? wikiAllAges.val() : null
+						wAllAges: wikiAllAges.is(':checked') ? wikiAllAges.val() : null,
+						wDescription: descriptionVal
 					},
 					token: preferencesToken
 				},

@@ -99,6 +99,18 @@
       <xs:element name="directory" type="xs:anyURI" minOccurs="0" maxOccurs="unbounded"/>
     </xs:choice>
   </xs:group>
+  <xs:simpleType name="columnsType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:integer"/>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="max"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
   <xs:complexType name="loggersType">
     <xs:sequence>
       <xs:element name="log" type="loggerType" maxOccurs="unbounded"/>
@@ -190,7 +202,8 @@
     <xs:attribute name="bootstrap" type="xs:anyURI"/>
     <xs:attribute name="cacheTokens" type="xs:boolean"/>
     <xs:attribute name="colors" type="xs:boolean" default="false"/>
-    <xs:attribute name="columns" type="xs:integer" default="80"/>
+    <xs:attribute name="columns" type="columnsType" default="80"/>
+    <xs:attribute name="convertDeprecationsToExceptions" type="xs:boolean" default="true"/>
     <xs:attribute name="convertErrorsToExceptions" type="xs:boolean" default="true"/>
     <xs:attribute name="convertNoticesToExceptions" type="xs:boolean" default="true"/>
     <xs:attribute name="convertWarningsToExceptions" type="xs:boolean" default="true"/>
@@ -213,11 +226,13 @@
     <xs:attribute name="beStrictAboutTodoAnnotatedTests" type="xs:boolean" default="false"/>
     <xs:attribute name="beStrictAboutCoversAnnotation" type="xs:boolean" default="false"/>
     <xs:attribute name="enforceTimeLimit" type="xs:boolean" default="false"/>
+    <xs:attribute name="ignoreDeprecatedCodeUnitsFromCodeCoverage" type="xs:boolean" default="false"/>
     <xs:attribute name="timeoutForSmallTests" type="xs:integer" default="1"/>
     <xs:attribute name="timeoutForMediumTests" type="xs:integer" default="10"/>
     <xs:attribute name="timeoutForLargeTests" type="xs:integer" default="60"/>
     <xs:attribute name="testSuiteLoaderClass" type="xs:string" default="PHPUnit_Runner_StandardTestSuiteLoader"/>
     <xs:attribute name="testSuiteLoaderFile" type="xs:anyURI"/>
+    <xs:attribute name="defaultTestSuite" type="xs:string" default=""/>
     <xs:attribute name="verbose" type="xs:boolean" default="false"/>
     <xs:attribute name="stderr" type="xs:boolean" default="false"/>
     <xs:attribute name="reverseDefectList" type="xs:boolean" default="false"/>

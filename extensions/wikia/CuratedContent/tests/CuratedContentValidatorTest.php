@@ -330,7 +330,7 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 	public function areLabelsUniqueDataProvider() {
 		return [
 			[
-				['foo', 'bar', 0, false, ''],
+				['foo', 'bar', 0, ''],
 				true
 			],
 			[

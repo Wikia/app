@@ -1,12 +1,11 @@
 /*global define*/
 define('ext.wikia.adEngine.slotTweaker', [
 	'ext.wikia.adEngine.domElementTweaker',
-	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.slot.adSlot',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (DOMElementTweaker, messageListener, adSlot, doc, log, win) {
+], function (DOMElementTweaker, adSlot, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slotTweaker',
@@ -156,11 +155,16 @@ define('ext.wikia.adEngine.slotTweaker', [
 		});
 	}
 
-	function collapse(slotName) {
+	function collapse(slotName, skipAnimation) {
 		var slot = doc.getElementById(slotName);
 
-		slot.style.maxHeight = slot.scrollHeight + 'px';
-		DOMElementTweaker.forceRepaint(slot);
+		// make max-height consistent with expand()
+		if (!skipAnimation) {
+			slot.style.maxHeight = 2 * slot.scrollHeight + 'px';
+			DOMElementTweaker.forceRepaint(slot);
+		}
+		DOMElementTweaker.removeClass(slot, 'expanded');
+		DOMElementTweaker.addClass(slot, 'collapsed');
 		DOMElementTweaker.addClass(slot, 'slot-animation');
 		slot.style.maxHeight = '0';
 	}
@@ -170,38 +174,11 @@ define('ext.wikia.adEngine.slotTweaker', [
 
 		slot.style.maxHeight = slot.offsetHeight + 'px';
 		DOMElementTweaker.removeClass(slot, 'hidden');
+		DOMElementTweaker.removeClass(slot, 'collapsed');
+		DOMElementTweaker.addClass(slot, 'expanded');
 		DOMElementTweaker.addClass(slot, 'slot-animation');
-		slot.style.maxHeight = slot.scrollHeight + 'px';
-	}
-
-	function messageCallback(data) {
-		if (!data.slotName) {
-			return log('messageCallback: missing slot name', log.levels.debug, logGroup);
-		}
-
-		switch (data.action) {
-			case 'expand':
-				expand(data.slotName);
-				break;
-			case 'collapse':
-				collapse(data.slotName);
-				break;
-			case 'hide':
-				hide(data.slotName);
-				break;
-			case 'show':
-				show(data.slotName);
-				break;
-			case 'make-responsive':
-				makeResponsive(data.slotName, data.aspectRatio);
-				break;
-			default:
-				log(['messageCallback: unknown action', data.action], log.levels.debug, logGroup);
-		}
-	}
-
-	function registerMessageListener() {
-		messageListener.register({dataKey: 'action', infinite: true}, messageCallback);
+		// make some space for slot content after page resize
+		slot.style.maxHeight = 2 * slot.scrollHeight + 'px';
 	}
 
 	/**
@@ -224,12 +201,13 @@ define('ext.wikia.adEngine.slotTweaker', [
 		addDefaultHeight: addDefaultHeight,
 		adjustIframeByContentSize: adjustIframeByContentSize,
 		adjustLeaderboardSize: adjustLeaderboardSize,
+		collapse: collapse,
+		expand: expand,
 		hackChromeRefresh: hackChromeRefresh,
 		hide: hide,
 		isTopLeaderboard: isTopLeaderboard,
 		makeResponsive: makeResponsive,
 		onReady: onReady,
-		registerMessageListener: registerMessageListener,
 		removeDefaultHeight: removeDefaultHeight,
 		removeTopButtonIfNeeded: removeTopButtonIfNeeded,
 		show: show,

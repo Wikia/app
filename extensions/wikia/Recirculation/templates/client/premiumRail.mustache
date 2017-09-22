@@ -1,0 +1,33 @@
+<section class="rail-module recirculation-unit premium-recirculation-rail">
+	<h2 class="has-icon">
+		{{{fandomHeartSvg}}}
+		{{title}}
+	</h2>
+	<ul class="thumbnails">
+		{{#items}}
+			<li class="item item-{{source}}{{#isVideo}} is-video{{/isVideo}}"
+				data-flag="{{flag}}"
+				data-index="{{index}}"
+				data-source="{{source}}"
+				{{#id}} data-id="{{id}}" {{/id}}
+				{{#meta}} data-meta="{{meta}}" {{/meta}}
+			>
+				<a href="{{url}}">
+					<div class="image image-thumbnail placeholder-thumbnail fluid small">
+						{{#thumbnail}}
+							<img src="{{thumbnail}}" alt="{{title}}" itemprop="thumbnail">
+						{{/thumbnail}}
+					</div>
+					<div class="content">
+						<div class="title" title="{{title}}">{{title}}</div>
+						{{#presented_by}}
+							<div class="recirculation-sponsored-footer">
+								Sponsored by {{presented_by}}
+							</div>
+						{{/presented_by}}
+					</div>
+				</a>
+			</li>
+		{{/items}}
+	</ul>
+</section>

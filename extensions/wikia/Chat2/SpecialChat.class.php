@@ -7,30 +7,22 @@ class SpecialChat extends UnlistedSpecialPage {
 	}
 
 	public function execute( $par ) {
-		wfProfileIn( __METHOD__ );
-		global $wgUser, $wgOut;
+		$this->setHeaders();
 
-		// check if logged in
-		if ( $wgUser->isLoggedIn() ) {
-			if ( Chat::canChat( $wgUser ) ) {
-				Chat::info( __METHOD__ . ': Method called - success' );
+		$user = $this->getUser();
+		$out = $this->getOutput();
+
+		if ( $user->isLoggedIn() ) {
+			// Check that the user is not blocked or banned from chat
+			if ( Chat::canChat( $user ) ) {
 				Wikia::setVar( 'OasisEntryControllerName', 'Chat' );
-				$wgOut->addModules( 'ext.Chat2' );
-				Chat::logChatWindowOpenedEvent();
+				$out->addModules( 'ext.Chat2' );
+				Chat::addConnectionLogEntry();
 			} else {
-				Chat::info( __METHOD__ . ': Method called - banned' );
-				$wgOut->showErrorPage( 'chat-you-are-banned', 'chat-you-are-banned-text' );
+				$out->showErrorPage( 'chat-you-are-banned', 'chat-you-are-banned-text' );
 			}
 		} else {
-			// TODO: FIXME: Make a link on this page which lets the user login.
-			// https://wikia-inc.atlassian.net/browse/SUS-448
-
-			Chat::info( __METHOD__ . ': Method called - logged out' );
-			// $wgOut->permissionRequired( 'chat' ); // this is a really useless message, don't use it.
-			$wgOut->showErrorPage( 'chat-no-login', 'chat-no-login-text' );
-
+			$out->showErrorPage( 'chat-no-login', 'chat-no-login-text' );
 		}
-
-		wfProfileOut( __METHOD__ );
 	}
 }

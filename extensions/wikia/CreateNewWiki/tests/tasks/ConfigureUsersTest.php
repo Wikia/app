@@ -4,30 +4,21 @@ namespace Wikia\CreateNewWiki\Tasks;
 
 class ConfigureUsersTest extends \WikiaBaseTest {
 
-	private $taskContextMock;
+	/** @var TaskContext $taskContext */
+	private $taskContext;
 
 	public function setUp() {
 		$this->setupFile = dirname( __FILE__ ) . '/../../CreateNewWiki_setup.php';
 		parent::setUp();
 
-		$this->taskContextMock = $this->getMock(
-			'\Wikia\CreateNewWiki\Tasks\TaskContext', [ 'setFounder', 'getFounder', 'getWikiDBW' ]
-		);
-		$this->mockClass( 'TaskContext', $this->taskContextMock );
-	}
-
-	public function tearDown() {
-		parent::tearDown();
+		$this->taskContext = new TaskContext( [] );
 	}
 
 	public function testPrepare() {
-		$configureUsersTask = new ConfigureUsers( $this->taskContextMock );
-
-		$this->taskContextMock
-			->expects( $this->once() )
-			->method( 'setFounder' );
-
+		$configureUsersTask = new ConfigureUsers( $this->taskContext );
 		$configureUsersTask->prepare();
+
+		$this->assertSame( $this->app->wg->User, $this->taskContext->getFounder() );
 	}
 
 	/**
@@ -36,18 +27,17 @@ class ConfigureUsersTest extends \WikiaBaseTest {
 	 * @param $expected
 	 */
 	public function testCheck( $isAnon, $expected ) {
-		$userMock = $this->getMock( 'User', [ 'isAnon' ] );
+		$userMock = $this->getMockBuilder( \User::class )
+			->setMethods( [ 'isAnon' ] )
+			->getMock();
 		$userMock
 			->expects( $this->any() )
 			->method( 'isAnon' )
 			->will( $this->returnValue( $isAnon ) );
 
-		$this->taskContextMock
-			->expects( $this->any() )
-			->method( 'getFounder' )
-			->willReturn( $userMock );
+		$this->taskContext->setFounder( $userMock );
 
-		$configureUsersTask = new ConfigureUsers( $this->taskContextMock );
+		$configureUsersTask = new ConfigureUsers( $this->taskContext );
 
 		$this->mockStaticMethod( '\Wikia\CreateNewWiki\Tasks\TaskResult', 'createForError', 'error' );
 		$this->mockStaticMethod( '\Wikia\CreateNewWiki\Tasks\TaskResult', 'createForSuccess', 'ok' );
@@ -72,30 +62,26 @@ class ConfigureUsersTest extends \WikiaBaseTest {
 	 * @dataProvider addUserToGroupDataProvider
 	 */
 	public function testAddUserToGroup( $userId, $replaceCalledCount, $expected ) {
-		$userMock = $this->getMock( 'User', [ 'getId' ] );
+		$userMock = $this->getMockBuilder( \User::class )
+			->setMethods( [ 'getId' ] )
+			->getMock();
 		$userMock
 			->expects( $this->any() )
 			->method( 'getId' )
 			->will( $this->returnValue( $userId ) );
 
-		$this->taskContextMock
-			->expects( $this->any() )
-			->method( 'getFounder' )
-			->willReturn( $userMock );
+		$this->taskContext->setFounder( $userMock );
 
-		$wikiDBWMock = $this->getMock( 'DatabaseMysqli', [ 'replace' ] );
+		$wikiDBWMock = $this->getDatabaseMock( [ 'replace' ] );
 		$wikiDBWMock
 			->expects( $this->exactly( $replaceCalledCount ) )
 			->method( 'replace' );
 
-		$this->taskContextMock
-			->expects( $this->any() )
-			->method( 'getWikiDBW' )
-			->willReturn( $wikiDBWMock );
+		$this->taskContext->setWikiDBW( $wikiDBWMock );
 
 		$configureUsersTask = $this->getMockBuilder( '\Wikia\CreateNewWiki\Tasks\ConfigureUsers' )
 			->enableOriginalConstructor()
-			->setConstructorArgs( [ $this->taskContextMock ] )
+			->setConstructorArgs( [ $this->taskContext ] )
 			->setMethods( [ 'warning', 'debug' ] )
 			->getMock();
 

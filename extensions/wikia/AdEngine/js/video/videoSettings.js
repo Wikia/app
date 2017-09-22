@@ -1,9 +1,13 @@
 /*global define*/
 define('ext.wikia.adEngine.video.videoSettings', [
 	'ext.wikia.adEngine.slot.resolvedState',
+	'ext.wikia.adEngine.utils.sampler',
+	'wikia.geo',
 	'wikia.window'
-], function (resolvedState, win) {
+], function (resolvedState, sampler, geo, win) {
 	'use strict';
+
+	var moatTrackingCountries = [ 'AU', 'CA', 'DE', 'UK', 'US' ];
 
 	function create(params) {
 		var state = {
@@ -14,21 +18,41 @@ define('ext.wikia.adEngine.video.videoSettings', [
 			withUiControls: false
 		};
 
-		init();
+		function calculateAutoPlayFlag(params) {
+			var defaultStateAutoPlay = params.autoPlay && !state.resolvedState,
+				resolvedStateAutoPlay = params.resolvedStateAutoPlay && state.resolvedState;
+
+			return Boolean(defaultStateAutoPlay || resolvedStateAutoPlay);
+		}
+
+		function calculateMoatTrackingFlag(params) {
+			var sampling = params.moatTracking || 0;
+
+			if (typeof params.moatTracking === 'boolean') {
+				return params.moatTracking;
+			}
+
+			if ((params.bid && params.bid.moatTracking === 100) || sampling === 100) {
+				return true;
+			}
+
+			if (sampling > 0) {
+				return sampler.sample('moatVideoTracking',  sampling, 100) &&
+					geo.isProperGeo(moatTrackingCountries);
+			}
+
+			return false;
+		}
 
 		function init() {
 			state.resolvedState = resolvedState.isResolvedState();
-			state.autoPlay = isAutoPlay(params);
+			state.autoPlay = calculateAutoPlayFlag(params);
 			state.splitLayout = Boolean(params.splitLayoutVideoPosition);
-			state.moatTracking = Boolean(params.moatTracking);
+			state.moatTracking = calculateMoatTrackingFlag(params);
 			state.withUiControls = Boolean(params.hasUiControls);
 		}
 
-		function isAutoPlay(params) {
-			var defaultStateAutoPlay = params.autoPlay && !state.resolvedState,
-				resolvedStateAutoPlay = params.resolvedStateAutoPlay && state.resolvedState;
-			return Boolean(defaultStateAutoPlay || resolvedStateAutoPlay);
-		}
+		init();
 
 		return {
 			getParams: function () {
@@ -57,6 +81,9 @@ define('ext.wikia.adEngine.video.videoSettings', [
 			},
 			isMoatTrackingEnabled: function () {
 				return state.moatTracking;
+			},
+			setMoatTracking: function (status) {
+				state.moatTracking = status;
 			}
 		};
 	}

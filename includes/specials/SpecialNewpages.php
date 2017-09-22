@@ -61,7 +61,7 @@ class SpecialNewpages extends IncludableSpecialPage {
 		$opts->add( 'tagfilter', '' );
 
 		$this->customFilters = array();
-		wfRunHooks( 'SpecialNewPagesFilters', array( $this, &$this->customFilters ) );
+		Hooks::run( 'SpecialNewPagesFilters', array( $this, &$this->customFilters ) );
 		foreach( $this->customFilters as $key => $params ) {
 			$opts->add( $key, $params['default'] );
 		}
@@ -515,13 +515,13 @@ class NewPagesPager extends ReverseChronologicalPager {
 		$fields = array(
 			'rc_namespace', 'rc_title', 'rc_cur_id', 'rc_user', 'rc_user_text',
 			'rc_comment', 'rc_timestamp', 'rc_patrolled','rc_id', 'rc_deleted',
-			'page_len AS length', 'page_latest AS rev_id', 'ts_tags', 'rc_this_oldid',
+			'page_len AS length', 'page_latest AS rev_id', 'rc_this_oldid',
 			'page_namespace', 'page_title'
 		);
 		$join_conds = array( 'page' => array( 'INNER JOIN', 'page_id=rc_cur_id' ) );
 
-		wfRunHooks( 'SpecialNewpagesConditions',
-			array( &$this, $this->opts, &$conds, &$tables, &$fields, &$join_conds ) );
+		Hooks::run( 'SpecialNewpagesConditions',
+			[ $this, $this->opts, &$conds, &$tables, &$fields, &$join_conds ] );
 
 		$info = array(
 			'tables' 	 => $tables,
@@ -531,13 +531,10 @@ class NewPagesPager extends ReverseChronologicalPager {
 			'join_conds' => $join_conds
 		);
 
-		// Empty array for fields, it'll be set by us anyway.
-		$fields = array();
-
 		// Modify query for tags
 		ChangeTags::modifyDisplayQuery(
 			$info['tables'],
-			$fields,
+			$info['fields'],
 			$info['conds'],
 			$info['join_conds'],
 			$info['options'],

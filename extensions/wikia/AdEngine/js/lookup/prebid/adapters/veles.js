@@ -1,22 +1,22 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.lookup.prebid.priceParsingHelper',
 	'ext.wikia.adEngine.wrappers.prebid',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
-	'wikia.geo',
-	'wikia.instantGlobals',
+	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, priceParsingHelper, prebid, vastUrlBuilder, geo, instantGlobals, log, win) {
+], function (adContext, slotsContext, priceParsingHelper, prebid, vastUrlBuilder, instartLogic, log, win) {
 	'use strict';
 
 	var bidderName = 'veles',
 		logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.veles',
 		allowedSlots = {
-			IC: ['INCONTENT_PLAYER', 'INCONTENT_LEADERBOARD', 'MOBILE_IN_CONTENT'],
+			IC: ['INCONTENT_PLAYER', 'MOBILE_IN_CONTENT'],
 			LB: ['TOP_LEADERBOARD'],
-			XX: ['TOP_LEADERBOARD', 'INCONTENT_PLAYER', 'INCONTENT_LEADERBOARD', 'MOBILE_IN_CONTENT']
+			XX: ['TOP_LEADERBOARD', 'INCONTENT_PLAYER', 'MOBILE_IN_CONTENT']
 		},
 		slots = {
 			// Order of slots is important - first slot name in group will be used to create ad unit
@@ -27,11 +27,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 					]
 				},
 				TOP_LEADERBOARD: {
-					sizes: [
-						[640, 480]
-					]
-				},
-				INCONTENT_LEADERBOARD: {
 					sizes: [
 						[640, 480]
 					]
@@ -47,8 +42,9 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		};
 
 	function isEnabled() {
-		var isVelesEnabled = geo.isProperGeo(instantGlobals.wgAdDriverVelesBidderCountries);
+		var isVelesEnabled = adContext.getContext().bidders.veles && !instartLogic.isBlocking();
 		log(['isEnabled', isVelesEnabled], log.levels.debug, logGroup);
+
 		return isVelesEnabled;
 	}
 
@@ -68,7 +64,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 	}
 
 	function getSlots(skin) {
-		return slots[skin];
+		return slotsContext.filterSlotMap(slots[skin]);
 	}
 
 	function getName() {
@@ -90,19 +86,27 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		log(['addBids', bidderRequest, vastResponse, velesParams], log.levels.debug, logGroup);
 
 		bidderRequest.bids.forEach(function (bid) {
-			if (allowedSlots[velesParams.position].indexOf(bid.placementCode) > -1 ) {
-				var bidResponse = prebid.get().createBid(1);
+			var bidResponse = prebid.get().createBid(1);
 
+			bidResponse.ad = '';
+			bidResponse.bidderCode = bidderRequest.bidderCode;
+			bidResponse.bidderRequestId = bidderRequest.bidderRequestId;
+			bidResponse.cpm = 0.00;
+			bidResponse.mediaType = 'video';
+			bidResponse.moatTracking = velesParams.moatTracking;
+			bidResponse.width = bid.sizes[0][0];
+			bidResponse.height = bid.sizes[0][1];
+			bidResponse.vastId = velesParams.vastId;
+			bidResponse.vastUrl = velesParams.vastUrl;
+
+			if (velesParams.valid && allowedSlots[velesParams.position].indexOf(bid.placementCode) > -1 ) {
 				bidResponse.ad = vastResponse;
-				bidResponse.bidderCode = bidderRequest.bidderCode;
-				bidResponse.bidderRequestId = bidderRequest.bidderRequestId;
 				bidResponse.cpm = velesParams.price;
-				bidResponse.mediaType = 'video';
-				bidResponse.width = bid.sizes[0][0];
-				bidResponse.height = bid.sizes[0][1];
-
-				prebid.get().addBidResponse(bid.placementCode, bidResponse);
+			} else if (velesParams.valid) {
+				bidResponse.notInvolved = true;
 			}
+
+			prebid.get().addBidResponse(bid.placementCode, bidResponse);
 		});
 	}
 
@@ -129,9 +133,11 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		var request = new win.XMLHttpRequest(),
 			skin = adContext.getContext().targeting.skin,
 			vastUrl = vastUrlBuilder.build(640 / 480, {
-				pos: Object.keys(slots[skin]),
-				src: 'gpt',
+				pos: (adContext.getContext().opts.megaAdUnitBuilderEnabled ? 'OUTSTREAM' : Object.keys(getSlots(skin))),
+				src: skin === 'oasis' ? 'gpt' : 'mobile',
 				passback: bidderName
+			}, {
+				numberOfAds: 1
 			});
 
 		request.onreadystatechange = function () {
@@ -155,11 +161,21 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		};
 	}
 
+	function markBidsAsUsed(adId) {
+		win.pbjs._bidsReceived.forEach(function (bid) {
+			if (bid.bidderCode === bidderName && bid.adId !== adId) {
+				bid.cpm = 0.00;
+				bid.used = true;
+			}
+		});
+	}
+
 	return {
 		create: create,
 		isEnabled: isEnabled,
 		getName: getName,
 		getSlots: getSlots,
+		markBidsAsUsed: markBidsAsUsed,
 		prepareAdUnit: prepareAdUnit
 	};
 });
