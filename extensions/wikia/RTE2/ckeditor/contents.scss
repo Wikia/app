@@ -2,6 +2,7 @@
 Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.md or http://ckeditor.com/license
 */
+@import "skins/shared/color";
 
 body
 {
@@ -10,10 +11,10 @@ body
 	font-size: 12px;
 
 	/* Text color */
-	color: #333;
+	color: $color-text;
 
 	/* Remove the background color to make it transparent */
-	background-color: #fff;
+	background-color: $color-page;
 
 	margin: 20px;
 }

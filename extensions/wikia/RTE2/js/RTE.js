@@ -92,7 +92,7 @@
 			toolbarCanCollapse: true,
 			resize_enabled: false,
 		//	richcomboCss: $.getSassCommonURL('extensions/wikia/RTE2/css/richcombo.scss'), depracated
-			skin: 'wikia',
+			skin: 'kama',
 			startupFocus: true, // Also used for determining wether to focus after modeswitch (BugId:19807)
 	//			theme: 'wikia'
 //			removePlugins: 'toolbar,notification,clipboard,pastetext', //temporary, till toolbar dependancies are fixed...

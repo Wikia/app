@@ -81,7 +81,7 @@ CKEDITOR.skin.ua_dialog = 'ie,iequirks,ie7,ie8';
 //
 // The "$color" placeholder can be used in the returned string. It'll be
 // replaced with the desired color.
-CKEDITOR.skin.chameleon = function( editor, part ) {
+/*CKEDITOR.skin.chameleon = function( editor, part ) {
 	var css;
 
 	// The Chameleon feature is available for each CKEditor instance,
@@ -200,7 +200,7 @@ CKEDITOR.skin.chameleon = function( editor, part ) {
 
 	return css;
 };
-
+*/
 // %REMOVE_START%
 
 // 4. Register the skin icons for development purposes only
@@ -219,7 +219,7 @@ CKEDITOR.skin.chameleon = function( editor, part ) {
 // If a required icon is not available here, the plugin defined icon will be
 // used instead. This means that a skin is not required to provide all icons.
 // Actually, it is not required to provide icons at all.
-
+/*
 ( function() {
 	// The available icons. This list must match the file names (without
 	// extension) available inside the "icons" folder.
@@ -243,6 +243,6 @@ CKEDITOR.skin.chameleon = function( editor, part ) {
 		CKEDITOR.skin.addIcon( icons[ i ], iconsFolder + icons[ i ] + '.png' );
 	}
 } )();
-
+*/
 // %REMOVE_END%
 
