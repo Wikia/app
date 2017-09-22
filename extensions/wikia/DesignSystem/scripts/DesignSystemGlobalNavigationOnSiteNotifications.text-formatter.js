@@ -21,7 +21,7 @@ define('ext.wikia.design-system.on-site-notifications.text-formatter', [
 
 			function getMessage(key) {
 				// TODO IRIS-4975 use mw.message(key).parse()
-				return window.mw.message().map.values[key];
+				return window.mw.messages.get(key);
 			}
 
 			this.getText = function (notification) {
