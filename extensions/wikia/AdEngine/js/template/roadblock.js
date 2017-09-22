@@ -5,7 +5,9 @@ define('ext.wikia.adEngine.template.roadblock', [
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.provider.gpt.googleSlots',
 	'ext.wikia.adEngine.provider.gpt.helper',
-	'ext.wikia.adEngine.template.skin',
+	require.optional('ext.wikia.adEngine.template.skin'),
+	'ext.wikia.adEngine.slotTweaker',
+	'wikia.document',
 	'wikia.log'
 ], function (
 	adContext,
@@ -14,34 +16,48 @@ define('ext.wikia.adEngine.template.roadblock', [
 	googleSlots,
 	helper,
 	skinTemplate,
+	slotTweaker,
+	doc,
 	log
 ) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.template.roadblock',
-		uapType = 'roadblock',
-		unblockedSlots = [
+		uapType = 'ruap',
+		tlbSlot = doc.getElementById('TOP_LEADERBOARD') || doc.getElementById('MOBILE_TOP_LEADERBOARD'),
+		medrecSlot = doc.getElementById('TOP_RIGHT_BOXAD'),
+		unblockedSlotsNames = [
 			'BOTTOM_LEADERBOARD',
-			'INCONTENT_BOXAD_1'
+			'INCONTENT_PLAYER',
+			'INCONTENT_BOXAD_1',
+			'INVISIBLE_HIGH_IMPACT_2'
 		];
 
 	/**
 	 * @param {object} params
-	 * @param {string} params.backgroundColor - Hex value of background color
-	 * @param {string} params.slotName - Slot name key-value needed for VastUrlBuilder
 	 * @param {string} [params.uap] - BFAA line item id
-	 */
+	 * @param {object} [params.skin] - skin template params (see skin template for more info)
+ 	 */
 	function show(params) {
+		var isSkinAvailable = params.skin && params.skin.skinImage;
+
 		uapContext.setUapId(params.uap);
 		uapContext.setType(uapType);
 
-		unblockedSlots.forEach(btfBlocker.unblock);
+		slotTweaker.onReady(tlbSlot.id, function () {
+			if (medrecSlot) {
+				log(['show', 'refreshing slot', medrecSlot.id], log.levels.info, logGroup);
+				helper.refreshSlot(googleSlots.getSlotByName(medrecSlot.id));
+			}
+		});
 
-		if (params.skin && params.skin.skinImage) {
+		if (isSkinAvailable) {
+			log(['show', 'loading skin', params.skin], log.levels.info, logGroup);
 			skinTemplate.show(params.skin);
 		}
 
-		log(['show', params.uap, params.skin], log.levels.info, logGroup);
+		unblockedSlotsNames.forEach(btfBlocker.unblock);
+		log(['show', params.uap], log.levels.info, logGroup);
 	}
 
 	return {
