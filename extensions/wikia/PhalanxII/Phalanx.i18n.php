@@ -12,6 +12,7 @@ $messages['en'] = array(
 	'phalanx-type-email' => 'email',
 	'phalanx-type-question-title' => 'question title',
 	'phalanx-type-recent-questions' => 'recent questions',
+	'phalanx-type-device' => 'device',
 	'phalanx-type-wiki-creation' => 'SITENAME',
 	'phalanx-add-block' => 'Add filter',
 	'phalanx-modify-block' => 'Modify filter',
@@ -84,6 +85,7 @@ It does not prevent those pages from being created.
 
 Note: works only on Answers-type wiks.',
 	'phalanx-help-type-email' => 'This filter prevents account creation using a blocked email address.',
+	'phalanx-help-type-device' => 'This filter blocks an user if their mobile device ID matches its value.',
 	'phalanx-user-block-reason-ip' => 'This IP address is prevented from editing across the entire FANDOM network due to vandalism or other disruption by you or by someone who shares your IP address.
 If you believe this is in error, please [[Special:Contact|contact FANDOM]].',
 	'phalanx-user-block-reason-exact' => 'This username or IP address is prevented from editing across the entire FANDOM network due to vandalism or other disruption.
@@ -170,6 +172,8 @@ $messages['qqq'] = array(
 	'phalanx-user-block-withreason-similar' => 'Missing documentation',
 	'phalanx-required-filter' => 'Error message for filter field',
 	'phalanx-required-type' => 'Error message for type checkboxes',
+	'phalanx-type-device' => 'Label for filter type checkbox',
+	'phalanx-help-type-device' => 'Info tooltip shown to user when hovering over the label',
 );
 
 $messages['ar'] = array(
