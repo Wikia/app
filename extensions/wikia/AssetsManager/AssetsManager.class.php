@@ -220,9 +220,6 @@ class AssetsManager {
 
 		$url = $prefix . $this->getAMLocalURL( 'sass', $scssFilePath, $params );
 
-		// apply domain sharding
-		$url = wfReplaceAssetServer( $url );
-
 		wfProfileOut( __METHOD__ );
 		return $url;
 	}
@@ -426,8 +423,6 @@ class AssetsManager {
 			// in varnish (BugId: 33905)
 			$url = $this->mCommonHost . $this->getOneLocalURL($filePath, $minify);
 		}
-		// apply domain sharding
-		$url = wfReplaceAssetServer( $url );
 
 		return $url;
 	}
@@ -479,9 +474,6 @@ class AssetsManager {
 			if ( !$isEmpty ) {
 				$url = $prefix . $this->getAMLocalURL('group', $groupName, $params);
 
-				// apply domain sharding
-				$url = wfReplaceAssetServer( $url );
-
 				$URLs[] = $url;
 			}
 		} else {
@@ -496,8 +488,6 @@ class AssetsManager {
 					// in varnish (BugId: 33905)
 					$url = $this->getOneCommonURL($asset,$minify);
 				}
-				// apply domain sharding
-				$url = wfReplaceAssetServer( $url );
 
 				$URLs[] = $url;
 			}
