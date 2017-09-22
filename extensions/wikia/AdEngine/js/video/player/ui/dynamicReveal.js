@@ -1,8 +1,9 @@
 /*global define, setTimeout*/
 define('ext.wikia.adEngine.video.player.ui.dynamicReveal', [
 	'ext.wikia.adEngine.slotTweaker',
+	'ext.wikia.adEngine.video.player.porvata.floater',
 	'wikia.document'
-], function (slotTweaker, doc) {
+], function (slotTweaker, floater, doc) {
 	'use strict';
 
 	var videoAspectRatio = 640 / 360;
@@ -23,7 +24,10 @@ define('ext.wikia.adEngine.video.player.ui.dynamicReveal', [
 				}
 
 				slotWidth = slot.scrollWidth;
-				video.resize(slotWidth, slotWidth / videoAspectRatio);
+
+				if (!floater.isFloating(params.slotName)) {
+					video.resize(slotWidth, slotWidth / videoAspectRatio);
+				}
 			});
 
 			video.addEventListener('allAdsCompleted', function () {
