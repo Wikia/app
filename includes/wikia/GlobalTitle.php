@@ -107,8 +107,8 @@ class GlobalTitle extends Title {
 		// extracting namespace from article name
 		$prefixRegexp = "/^(.+?)_*:_*(.*)$/S";
 		if ( preg_match( $prefixRegexp, $mainPageName, $matches ) ) {
-			$mainPageTitle->loadContLang();
-			$namespaceIndex = $mainPageTitle->mContLang->getNsIndex( $matches[1] );
+			$namespaces = $mainPageTitle->loadNamespaceNames();
+			$namespaceIndex = array_search( $matches[1], $namespaces );
 			if ( $namespaceIndex !== false ) {
 				$namespace = $namespaceIndex;
 				$mainPageName = $matches[2];
