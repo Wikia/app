@@ -116,6 +116,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 				Phalanx::TYPE_SUMMARY,
 				Phalanx::TYPE_TITLE,
 				Phalanx::TYPE_USER,
+				Phalanx::TYPE_DEVICE,
 			],
 			'account-creation' => [
 				Phalanx::TYPE_EMAIL,

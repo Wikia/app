@@ -12,7 +12,9 @@ class Phalanx extends WikiaModel implements ArrayAccess {
 	const TYPE_WIKI_CREATION = 64;
 	const TYPE_COOKIE = 128;
 	const TYPE_EMAIL = 256;
-	const MAX_TYPE_VALUE = self::TYPE_EMAIL;
+	const TYPE_DEVICE = 512;
+
+	const MAX_TYPE_VALUE = self::TYPE_DEVICE;
 
 	const SCRIBE_KEY = 'log_phalanx';
 	const LAST_UPDATE_KEY = 'phalanx:last-update';
@@ -39,7 +41,8 @@ class Phalanx extends WikiaModel implements ArrayAccess {
 		32  => 'recent_questions',
 		64  => 'wiki_creation',
 		128 => 'cookie',
-		256 => 'email'
+		256 => 'email',
+		512 => 'device',
 	];
 
 	// These types should not be made available when creating blocks but should still be shown
@@ -136,36 +139,13 @@ class Phalanx extends WikiaModel implements ArrayAccess {
 		wfProfileOut( __METHOD__ );
 	}
 
-	public function isTypeContent() {
-		return $this->data['type'] & self::TYPE_CONTENT;
-	}
-
-	public function isTypeSummary() {
-		return $this->data['type'] & self::TYPE_SUMMARY;
-	}
-
-	public function isTypeTitle() {
-		return $this->data['type'] & self::TYPE_TITLE;
-	}
-
-	public function isTypeUser() {
-		return $this->data['type'] & self::TYPE_USER;
-	}
-
-	public function isTypeQuestionTitle() {
-		return $this->data['type'] & self::TYPE_ANSWERS_QUESTION_TITLE;
-	}
-
-	public function isTypeRecentQuestions() {
-		return $this->data['type'] & self::TYPE_ANSWERS_RECENT_QUESTIONS;
-	}
-
-	public function isTypeWikiCreation() {
-		return $this->data['type'] & self::TYPE_WIKI_CREATION;
-	}
-
-	public function isTypeEmail() {
-		return $this->data['type'] & self::TYPE_EMAIL;
+	/**
+	 * Check if this Phalanx filter is of a givent ype
+	 * @param int $type one of the TYPE_* constants
+	 * @return bool
+	 */
+	public function isOfType( int $type ): bool {
+		return (bool)( $this->data['type'] & $type );
 	}
 
 	public function save() {
@@ -298,7 +278,7 @@ class Phalanx extends WikiaModel implements ArrayAccess {
 	public static function getTypeNames( $typeField ) {
 		$types = [];
 
-		// Start with the largest type bit mask we have, e.g. 0b10000000 = 0x80 = 256
+		// Start with the largest type bit mask we have, e.g. 0b100000000 = 512
 		$bitMask = self::MAX_TYPE_VALUE;
 
 		while ( $bitMask ) {
