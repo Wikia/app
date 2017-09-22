@@ -19,7 +19,7 @@ other files.
 @import url("reset.css");
 
 /* Styles the main interface structure (holding box). */
-@import url("mainui.css");
+@import url("mainui.scss");
 
 /* Styles all "panels", which are the floating elements that appear when
    opening toolbar combos, menu buttons, context menus, etc. */

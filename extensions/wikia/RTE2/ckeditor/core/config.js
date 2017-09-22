@@ -302,7 +302,7 @@ CKEDITOR.config = {
 	 *
 	 * @cfg {String/Array} [contentsCss=CKEDITOR.getUrl( 'contents.css' )]
 	 */
-	contentsCss: CKEDITOR.getUrl( 'contents.css' ),
+	contentsCss: CKEDITOR.getUrl( 'contents.scss' ),
 
 	/**
 	 * Comma-separated list of plugins to be used in an editor instance. Note that
