@@ -205,7 +205,7 @@ class GlobalTitle extends Title {
 	 *  constructor doesnt load anything from database. This is the place
 	 *  for that kind of things
 	 */
-	private function loadAll() {
+	protected function loadAll() {
 		$old = $this->loadFromCache();
 		$this->loadServer();
 		$this->loadArticlePath();
@@ -835,7 +835,7 @@ class GlobalTitle extends Title {
 	 *
 	 * @return Array
 	 */
-	private function loadNamespaceNames() {
+	protected function loadNamespaceNames() {
 		global $wgCanonicalNamespaceNames;
 
 		/**
