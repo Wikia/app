@@ -113,20 +113,14 @@ class RecirculationHooks {
 	}
 
 	private static function getMetaData() {
-		global $wgLanguageCode, $wgCityId, $wgIsPrivateWiki, $wgEnableArticleFeaturedVideo;
+		global $wgLanguageCode, $wgCityId, $wgEnableArticleFeaturedVideo;
 		$context = RequestContext::getMain();
 		$title = $context->getTitle();
 		$articleId = $title->getArticleID();
+		$shouldNoIndex = self::shouldIndex();
 		$metaDataService = new LiftigniterMetadataService();
 		$metaDataFromService = $metaDataService->getLiMetadataForArticle( $wgCityId, $articleId );
-		$title = $context->getTitle();
 		$metaData['language'] = $wgLanguageCode;
-		$isProduction = self::checkIfIsProduction();
-		$isPrivateWiki = WikiFactory::isWikiPrivate( $wgCityId ) || $wgIsPrivateWiki;
-		$shouldNoIndex = !$isProduction ||
-			$isPrivateWiki ||
-			$title->inNamespace( NS_FILE ) ||
-			( $title->inNamespace( NS_BLOG_ARTICLE ) && empty( $metaDataFromService ) );
 
 		if ( !empty( $metaDataFromService ) ) {
 			$metaData['guaranteed_impression'] = $metaDataFromService->getGuaranteedNumber();
@@ -156,5 +150,18 @@ class RecirculationHooks {
 		return empty( $wgDevelEnvironment ) &&
 			empty( $wgStagingEnvironment ) &&
 			$wgWikiaEnvironment !== WIKIA_ENV_STAGING;
+	}
+
+	private static function shouldIndex() {
+		global $wgCityId, $wgIsPrivateWiki;
+		$context = RequestContext::getMain();
+		$title = $context->getTitle();
+		$isProduction = self::checkIfIsProduction();
+		$isPrivateWiki = WikiFactory::isWikiPrivate( $wgCityId ) || $wgIsPrivateWiki;
+
+		return !$isProduction ||
+			$isPrivateWiki ||
+			$title->inNamespace( NS_FILE ) ||
+			( $title->inNamespace( NS_BLOG_ARTICLE ) && empty( $metaDataFromService ) );
 	}
 }
