@@ -61,8 +61,7 @@ define('ext.wikia.adEngine.adEngine', [
 	}
 
 	function prepareAdProviderContainer(providerName, slotName) {
-		// TODO: remove after Liftium-era
-		var providerContainerId = providerName + '_' + slotName.split('.')[0],
+		var providerContainerId = providerName + '_' + slotName,
 			adContainer = doc.getElementById(slotName),
 			providerContainer = doc.getElementById(providerContainerId);
 
